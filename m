@@ -2,74 +2,45 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id CE90427765D
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Sep 2020 18:15:05 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BE88A2777DA
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Sep 2020 19:31:48 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726774AbgIXQPE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 24 Sep 2020 12:15:04 -0400
-Received: from foss.arm.com ([217.140.110.172]:50194 "EHLO foss.arm.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726596AbgIXQPE (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 24 Sep 2020 12:15:04 -0400
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id B04161396;
-        Thu, 24 Sep 2020 09:15:03 -0700 (PDT)
-Received: from e107158-lin.cambridge.arm.com (e107158-lin.cambridge.arm.com [10.1.195.21])
-        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 93BBA3F718;
-        Thu, 24 Sep 2020 09:15:02 -0700 (PDT)
-Date:   Thu, 24 Sep 2020 17:15:00 +0100
-From:   Qais Yousef <qais.yousef@arm.com>
-To:     Rob Clark <robdclark@gmail.com>,
-        dri-devel <dri-devel@lists.freedesktop.org>,
-        Rob Clark <robdclark@chromium.org>,
-        Peter Zijlstra <peterz@infradead.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        open list <linux-kernel@vger.kernel.org>,
-        Tim Murray <timmurray@google.com>, Tejun Heo <tj@kernel.org>
-Subject: Re: [PATCH 0/3] drm: commit_work scheduling
-Message-ID: <20200924161356.5kezxwiqwtbi3o2p@e107158-lin.cambridge.arm.com>
-References: <20200919193727.2093945-1-robdclark@gmail.com>
- <20200921092154.GJ438822@phenom.ffwll.local>
- <CAF6AEGuDRk9D_aqyb6R8N5VHx2rvbZDf4uTqF3gQTrmzno+qtw@mail.gmail.com>
- <CAKMK7uEqDD-oDAQKyA9DQbxkCgEjC5yyjvKR7d8T0Gj0SqEZ4A@mail.gmail.com>
- <CAF6AEGtYAn+W8HxP7SXtxPr5FsEB1hYGU91WrHCtwX89UmUR5w@mail.gmail.com>
- <20200923152545.GQ438822@phenom.ffwll.local>
- <CAF6AEGs9xDOoG3n4E_+6iDaiJXp_hqvSV1VKE=vpvG-twYPoew@mail.gmail.com>
- <20200924084950.GY438822@phenom.ffwll.local>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20200924084950.GY438822@phenom.ffwll.local>
-User-Agent: NeoMutt/20171215
+        id S1728566AbgIXRbk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 24 Sep 2020 13:31:40 -0400
+Received: from alexa-out.qualcomm.com ([129.46.98.28]:33711 "EHLO
+        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728628AbgIXRbh (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 24 Sep 2020 13:31:37 -0400
+Received: from ironmsg-lv-alpha.qualcomm.com ([10.47.202.13])
+  by alexa-out.qualcomm.com with ESMTP; 24 Sep 2020 10:31:37 -0700
+Received: from ironmsg01-blr.qualcomm.com ([10.86.208.130])
+  by ironmsg-lv-alpha.qualcomm.com with ESMTP/TLS/AES256-SHA; 24 Sep 2020 10:31:35 -0700
+Received: from dikshita-linux.qualcomm.com ([10.204.65.237])
+  by ironmsg01-blr.qualcomm.com with ESMTP; 24 Sep 2020 23:01:17 +0530
+Received: by dikshita-linux.qualcomm.com (Postfix, from userid 347544)
+        id 9088D4E7E; Thu, 24 Sep 2020 23:01:16 +0530 (IST)
+From:   Dikshita Agarwal <dikshita@codeaurora.org>
+To:     linux-media@vger.kernel.org, stanimir.varbanov@linaro.org
+Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        vgarodia@codeaurora.org, Dikshita Agarwal <dikshita@codeaurora.org>
+Subject: [PATCH 0/2] Venus: fix handling of crop and s_fmt
+Date:   Thu, 24 Sep 2020 23:01:12 +0530
+Message-Id: <1600968674-11559-1-git-send-email-dikshita@codeaurora.org>
+X-Mailer: git-send-email 1.9.1
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 09/24/20 10:49, Daniel Vetter wrote:
+Dikshita Agarwal (1):
+  venus: venc: update output format based on capture format.
 
-[...]
+Stanimir Varbanov (1):
+  venus: venc: fix handlig of S_SELECTION and G_SELECTION
 
-> > > I also thought kernel threads can be distinguished from others, so
-> > > userspace shouldn't be able to sneak in and get elevated by accident.
-> > 
-> > I guess maybe you could look at the parent?  I still would like to
-> > think that we could come up with something a bit less shaking than
-> > matching thread names by regexp..
-> 
-> ps marks up kernel threads with [], so there is a way. But I haven't
-> looked at what it is exactly that tells kernel threads apart from others.
-> 
-> But aside from that sounds like "match right kernel thread with regex and
-> set its scheduler class" is how this is currently done, if I'm
-> understanding what Tejun and Peter said correctly.
-> 
-> Not pretty, but also *shrug* ...
+ drivers/media/platform/qcom/venus/venc.c | 48 ++++++++++++++++++--------------
+ 1 file changed, 27 insertions(+), 21 deletions(-)
 
-Isn't there a real danger that a sneaky application names its threads to match
-this regex and get a free promotion to RT without having the capability to do
-so?
+-- 
+1.9.1
 
-Cheers
-
---
-Qais Yousef
