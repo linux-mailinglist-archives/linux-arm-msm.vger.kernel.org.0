@@ -2,74 +2,129 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id ED125279265
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Sep 2020 22:42:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9BDBE2792C2
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Sep 2020 22:56:13 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727632AbgIYUmm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 25 Sep 2020 16:42:42 -0400
-Received: from mail.kernel.org ([198.145.29.99]:50560 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726119AbgIYUml (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 25 Sep 2020 16:42:41 -0400
-Received: from localhost (fw-tnat.cambridge.arm.com [217.140.96.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 0484720838;
-        Fri, 25 Sep 2020 20:42:40 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1601066561;
-        bh=cLGCGu0fXOBAhLAOL+Vx73SUpPBBubCY99whgp9Yt8I=;
-        h=Date:From:To:Cc:In-Reply-To:References:Subject:From;
-        b=cG6tfkw8+C5FbHzdHYHvGWf4Fo7TnI/OTRixxNF84vXWT/Ckzorapdlp82RIjpVX/
-         TvvlmpqCjG6goIBUzFF8/vqjgiK7i81XLHNNReq1qg86lOCiWvDpgKLWgCLK2eGp7t
-         4INvxD+3aZed8nHelL1Zgmi+E9F5Q5QGvzU/WYJI=
-Date:   Fri, 25 Sep 2020 21:41:46 +0100
-From:   Mark Brown <broonie@kernel.org>
-To:     robh+dt@kernel.org, srinivas.kandagatla@linaro.org,
-        lgirdwood@gmail.com, tiwai@suse.com, agross@kernel.org,
-        linux-kernel@vger.kernel.org, plai@codeaurora.org,
-        bgoswami@codeaurora.org, bjorn.andersson@linaro.org,
-        perex@perex.cz, Srinivasa Rao Mandadapu <srivasam@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org, rohitkr@codeaurora.org,
-        alsa-devel@alsa-project.org, devicetree@vger.kernel.org
-Cc:     vsujithk <vsujithk@codeaurora.org>
-In-Reply-To: <1600448073-6709-1-git-send-email-srivasam@codeaurora.org>
-References: <1600448073-6709-1-git-send-email-srivasam@codeaurora.org>
-Subject: Re: [PATCH] Asoc: qcom: lpass-cpu: Enable MI2S BCLK and LRCLK together
-Message-Id: <160106647646.2866.13772789972277251884.b4-ty@kernel.org>
+        id S1728733AbgIYU4M (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 25 Sep 2020 16:56:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57500 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727519AbgIYU4M (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 25 Sep 2020 16:56:12 -0400
+Received: from mail-ej1-x641.google.com (mail-ej1-x641.google.com [IPv6:2a00:1450:4864:20::641])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 785A3C0613D3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Sep 2020 13:56:12 -0700 (PDT)
+Received: by mail-ej1-x641.google.com with SMTP id lo4so464008ejb.8
+        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Sep 2020 13:56:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=Ln/na7/qnWvF6dKKBZBvNo59RWL2+7IcVO9uS/RNFZ8=;
+        b=iKie1V+tvcVyQuqfE4WQdCxzYbXhY7etZPsfwaGvN/SGilfmMrqKaq+Jwde5MhVhYL
+         PatFJw1D9j9NZHdM371ewnyJvHgnz0Wj019YJz6Ec/Z/Pw4BMV1bBYty2cYOf/xzuSjg
+         MvuR80FHP81gG8k0tGUxeEnZkqrdjxJ8GFhFc=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=Ln/na7/qnWvF6dKKBZBvNo59RWL2+7IcVO9uS/RNFZ8=;
+        b=VIhF8OssLvZYEWVAKc1WOaezB3ld3B5fZSk4t0MVVN5OdEOmgcUXsiO+KRD1JO7yuz
+         jniztHcgl+NKVXPRFstuE398PWGcqVI204OOLOn8/qtWl86Q508o7eBtjSaQg7CyATtz
+         U463ahAUBRknEU/Q/Fcc1621aWgM1F+QUbqh0ODH8KH9mMlfcRuvj8irIkOEv35jsjTT
+         /4ODOyl9JStEWKRcPJdMHmLA8isDmjZA38Je1cplYBN73MCnRn8buKOx8UhCLkwAAn1G
+         MTx8dHgUhqGxhYcIg/FSbn1IBoP4/03M10gyZhtWvNwywz1q9PehVKOZ32vYcxiJKkAp
+         f+Kw==
+X-Gm-Message-State: AOAM530160vDsMYuqoVqktRvXpA5WC57CRVwVpVkA2LCHmlEKWkrrzqF
+        +jpS7QmAa53pJjHwg5ddDabDNp5I/RqCIw==
+X-Google-Smtp-Source: ABdhPJwR0u8VaqZnzEuO36q+3WLmPKuxBCT2SjQqh5brI/DrddahKsGP77Fa/KtEFOq+rJAcoRLMiA==
+X-Received: by 2002:a17:906:cf9d:: with SMTP id um29mr4578912ejb.74.1601067370855;
+        Fri, 25 Sep 2020 13:56:10 -0700 (PDT)
+Received: from mail-wm1-f46.google.com (mail-wm1-f46.google.com. [209.85.128.46])
+        by smtp.gmail.com with ESMTPSA id a5sm2718670edb.9.2020.09.25.13.56.09
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 25 Sep 2020 13:56:10 -0700 (PDT)
+Received: by mail-wm1-f46.google.com with SMTP id e2so536596wme.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Sep 2020 13:56:09 -0700 (PDT)
+X-Received: by 2002:a1c:a5c8:: with SMTP id o191mr391963wme.127.1601067369520;
+ Fri, 25 Sep 2020 13:56:09 -0700 (PDT)
+MIME-Version: 1.0
+References: <1600968674-11559-1-git-send-email-dikshita@codeaurora.org> <1600968674-11559-3-git-send-email-dikshita@codeaurora.org>
+In-Reply-To: <1600968674-11559-3-git-send-email-dikshita@codeaurora.org>
+From:   Tomasz Figa <tfiga@chromium.org>
+Date:   Fri, 25 Sep 2020 22:55:55 +0200
+X-Gmail-Original-Message-ID: <CAAFQd5CTyjagd7grrCkret2WnvoLHQk83fg+1QPK+V1NbhKTvw@mail.gmail.com>
+Message-ID: <CAAFQd5CTyjagd7grrCkret2WnvoLHQk83fg+1QPK+V1NbhKTvw@mail.gmail.com>
+Subject: Re: [PATCH 2/2] venus: venc: fix handlig of S_SELECTION and G_SELECTION
+To:     Dikshita Agarwal <dikshita@codeaurora.org>,
+        Stanimir Varbanov <stanimir.varbanov@linaro.org>
+Cc:     Linux Media Mailing List <linux-media@vger.kernel.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Vikash Garodia <vgarodia@codeaurora.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, 18 Sep 2020 22:24:33 +0530, Srinivasa Rao Mandadapu wrote:
-> Update lpass-cpu.c to enable I2S BCLK and LRCLK together.
-> Remove BCLK enable in lpass_cpu_daiops_startup and
-> add in lpass_cpu_daiops_trigger API.
+Hi Dikshita, Stanimir,
 
-Applied to
+On Thu, Sep 24, 2020 at 7:31 PM Dikshita Agarwal
+<dikshita@codeaurora.org> wrote:
+>
+> From: Stanimir Varbanov <stanimir.varbanov@linaro.org>
+>
+> - return correct width and height for G_SELECTION
+> - if requested rectangle wxh doesn't match with capture port wxh
+>   adjust the rectangle to supported wxh.
+>
+> Signed-off-by: Dikshita Agarwal <dikshita@codeaurora.org>
+> ---
+>  drivers/media/platform/qcom/venus/venc.c | 20 ++++++++++++--------
+>  1 file changed, 12 insertions(+), 8 deletions(-)
+>
+> diff --git a/drivers/media/platform/qcom/venus/venc.c b/drivers/media/platform/qcom/venus/venc.c
+> index 7d2aaa8..a2cc12d 100644
+> --- a/drivers/media/platform/qcom/venus/venc.c
+> +++ b/drivers/media/platform/qcom/venus/venc.c
+> @@ -463,13 +463,13 @@ static int venc_g_fmt(struct file *file, void *fh, struct v4l2_format *f)
+>         switch (s->target) {
+>         case V4L2_SEL_TGT_CROP_DEFAULT:
+>         case V4L2_SEL_TGT_CROP_BOUNDS:
+> -               s->r.width = inst->width;
+> -               s->r.height = inst->height;
+> -               break;
+> -       case V4L2_SEL_TGT_CROP:
+>                 s->r.width = inst->out_width;
+>                 s->r.height = inst->out_height;
+>                 break;
+> +       case V4L2_SEL_TGT_CROP:
+> +               s->r.width = inst->width;
+> +               s->r.height = inst->height;
+> +               break;
+>         default:
+>                 return -EINVAL;
+>         }
+> @@ -490,10 +490,14 @@ static int venc_g_fmt(struct file *file, void *fh, struct v4l2_format *f)
+>
+>         switch (s->target) {
+>         case V4L2_SEL_TGT_CROP:
+> -               if (s->r.width != inst->out_width ||
+> -                   s->r.height != inst->out_height ||
+> -                   s->r.top != 0 || s->r.left != 0)
+> -                       return -EINVAL;
+> +               if (s->r.width != inst->width ||
+> +                   s->r.height != inst->height ||
+> +                   s->r.top != 0 || s->r.left != 0) {
+> +                       s->r.top = 0;
+> +                       s->r.left = 0;
+> +                       s->r.width = inst->width;
+> +                       s->r.height = inst->height;
 
-   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/sound.git for-next
+What's the point of exposing the selection API if no selection can
+actually be done?
 
-Thanks!
-
-[1/1] ASoC: qcom: lpass-cpu: Enable MI2S BCLK and LRCLK together
-      commit: 7e6799d8f87d7ab7ae55a229654d161b5bfae874
-
-All being well this means that it will be integrated into the linux-next
-tree (usually sometime in the next 24 hours) and sent to Linus during
-the next merge window (or sooner if it is a bug fix), however if
-problems are discovered then the patch may be dropped or reverted.
-
-You may get further e-mails resulting from automated or manual testing
-and review of the tree, please engage with people reporting problems and
-send followup patches addressing any issues that are reported if needed.
-
-If any updates are required or you are submitting further changes they
-should be sent as incremental updates against current git, existing
-patches will not be replaced.
-
-Please add any relevant lists and maintainers to the CCs when replying
-to this mail.
-
-Thanks,
-Mark
+Best regards,
+Tomasz
