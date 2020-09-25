@@ -2,117 +2,394 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C3F4F2782A9
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Sep 2020 10:23:31 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2E5C42782FC
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Sep 2020 10:40:22 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727395AbgIYIXb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 25 Sep 2020 04:23:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53726 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727067AbgIYIXa (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 25 Sep 2020 04:23:30 -0400
-Received: from mail-wm1-x343.google.com (mail-wm1-x343.google.com [IPv6:2a00:1450:4864:20::343])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 94B2AC0613D3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Sep 2020 01:23:30 -0700 (PDT)
-Received: by mail-wm1-x343.google.com with SMTP id y15so2296716wmi.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Sep 2020 01:23:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ffwll.ch; s=google;
-        h=date:from:to:cc:subject:message-id:mail-followup-to:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=/xceJ+nL8CAqEkUgZuOodpMwpUATKDkMiShfUA4n0is=;
-        b=IMoy3KPK/HSnt/jGJLKFcr63ejUioDK+hkFhAqQP7ySqv+9NovuKLi4xgoyx8pXGfa
-         IPZ061o5pjj1kntDniZySCXHOoeOLddNZxPzj6LRRW15BDvl6eh8gLOTYTwBzf7ziCbN
-         kWw1N1bh2re3A8BkK/fMcq5uEaZfyXj/LUp8c=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id
-         :mail-followup-to:references:mime-version:content-disposition
-         :in-reply-to;
-        bh=/xceJ+nL8CAqEkUgZuOodpMwpUATKDkMiShfUA4n0is=;
-        b=pLw2TCOlaqd6sOn2EBSjnhStIlMFC5l9xXhAcJ+YYRqThErx3Dd8gKO3gLdib/oQ9E
-         iFpTy1fN7of4PLHPfnmtEOXzVd9ZBS7wiz37KTjqlysd6QZ+fZfI33MOxPDwS6klnDsA
-         weddJomEZ7Z149n5x6cm/3VaAO4JIpvnu6h9MWVYykcTBpJMJFlQ5eJv8dmKqNsQB1cj
-         vVFlIIN2ob4MQUOxuyGtjCbEfEcKaWBQTvvFeGroxAI6EPa73Aqx3Og5epkETqVxWq6B
-         iC4w/qLV9OmFQXNejsqYF4SaVlsp13wblli6goVFuSGIqKdZBXGcamp7teq7abVQgnVh
-         nKfg==
-X-Gm-Message-State: AOAM533mQL4abNy+3nFS41D67Wl1xkPxevkY+NBSI3P0SdTykTMOhVAL
-        7j/mr2FPeLRWMtpWRvpJnpDbRg==
-X-Google-Smtp-Source: ABdhPJx/UOwLevgV8DQL2Dlb2vUO7KMkODvbhcZyU/EorN0L0j6u1I71NTHNWAU21XFJb2gYDUTCIg==
-X-Received: by 2002:a7b:c751:: with SMTP id w17mr1783626wmk.97.1601022209259;
-        Fri, 25 Sep 2020 01:23:29 -0700 (PDT)
-Received: from phenom.ffwll.local ([2a02:168:57f4:0:efd0:b9e5:5ae6:c2fa])
-        by smtp.gmail.com with ESMTPSA id q12sm1949166wrs.48.2020.09.25.01.23.28
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 25 Sep 2020 01:23:28 -0700 (PDT)
-Date:   Fri, 25 Sep 2020 10:23:26 +0200
-From:   Daniel Vetter <daniel@ffwll.ch>
-To:     Qais Yousef <qais.yousef@arm.com>
-Cc:     Rob Clark <robdclark@gmail.com>,
-        dri-devel <dri-devel@lists.freedesktop.org>,
-        Rob Clark <robdclark@chromium.org>,
-        Peter Zijlstra <peterz@infradead.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        open list <linux-kernel@vger.kernel.org>,
-        Tim Murray <timmurray@google.com>, Tejun Heo <tj@kernel.org>
-Subject: Re: [PATCH 0/3] drm: commit_work scheduling
-Message-ID: <20200925082326.GB438822@phenom.ffwll.local>
-Mail-Followup-To: Qais Yousef <qais.yousef@arm.com>,
-        Rob Clark <robdclark@gmail.com>,
-        dri-devel <dri-devel@lists.freedesktop.org>,
-        Rob Clark <robdclark@chromium.org>,
-        Peter Zijlstra <peterz@infradead.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        open list <linux-kernel@vger.kernel.org>,
-        Tim Murray <timmurray@google.com>, Tejun Heo <tj@kernel.org>
-References: <20200919193727.2093945-1-robdclark@gmail.com>
- <20200921092154.GJ438822@phenom.ffwll.local>
- <CAF6AEGuDRk9D_aqyb6R8N5VHx2rvbZDf4uTqF3gQTrmzno+qtw@mail.gmail.com>
- <CAKMK7uEqDD-oDAQKyA9DQbxkCgEjC5yyjvKR7d8T0Gj0SqEZ4A@mail.gmail.com>
- <CAF6AEGtYAn+W8HxP7SXtxPr5FsEB1hYGU91WrHCtwX89UmUR5w@mail.gmail.com>
- <20200923152545.GQ438822@phenom.ffwll.local>
- <CAF6AEGs9xDOoG3n4E_+6iDaiJXp_hqvSV1VKE=vpvG-twYPoew@mail.gmail.com>
- <20200924084950.GY438822@phenom.ffwll.local>
- <20200924161356.5kezxwiqwtbi3o2p@e107158-lin.cambridge.arm.com>
+        id S1727861AbgIYIkT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 25 Sep 2020 04:40:19 -0400
+Received: from mx2.suse.de ([195.135.220.15]:47742 "EHLO mx2.suse.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726990AbgIYIkT (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 25 Sep 2020 04:40:19 -0400
+X-Virus-Scanned: by amavisd-new at test-mx.suse.de
+Received: from relay2.suse.de (unknown [195.135.221.27])
+        by mx2.suse.de (Postfix) with ESMTP id 9E45AB080;
+        Fri, 25 Sep 2020 08:40:16 +0000 (UTC)
+Subject: Re: [PATCH v3 00/22] Convert all remaining drivers to GEM object
+ functions
+To:     =?UTF-8?Q?Christian_K=c3=b6nig?= <christian.koenig@amd.com>,
+        alexander.deucher@amd.com, airlied@linux.ie, daniel@ffwll.ch,
+        linux@armlinux.org.uk, maarten.lankhorst@linux.intel.com,
+        mripard@kernel.org, l.stach@pengutronix.de,
+        christian.gmeiner@gmail.com, inki.dae@samsung.com,
+        jy0922.shim@samsung.com, sw0312.kim@samsung.com,
+        kyungmin.park@samsung.com, kgene@kernel.org, krzk@kernel.org,
+        patrik.r.jakobsson@gmail.com, jani.nikula@linux.intel.com,
+        joonas.lahtinen@linux.intel.com, rodrigo.vivi@intel.com,
+        chunkuang.hu@kernel.org, p.zabel@pengutronix.de,
+        matthias.bgg@gmail.com, robdclark@gmail.com, sean@poorly.run,
+        bskeggs@redhat.com, tomi.valkeinen@ti.com, eric@anholt.net,
+        hjc@rock-chips.com, heiko@sntech.de, thierry.reding@gmail.com,
+        jonathanh@nvidia.com, rodrigosiqueiramelo@gmail.com,
+        hamohammed.sa@gmail.com, oleksandr_andrushchenko@epam.com,
+        hyun.kwon@xilinx.com, laurent.pinchart@ideasonboard.com,
+        michal.simek@xilinx.com, sumit.semwal@linaro.org,
+        evan.quan@amd.com, Hawking.Zhang@amd.com, tianci.yin@amd.com,
+        marek.olsak@amd.com, hdegoede@redhat.com,
+        andrey.grodzovsky@amd.com, Felix.Kuehling@amd.com,
+        xinhui.pan@amd.com, aaron.liu@amd.com, nirmoy.das@amd.com,
+        chris@chris-wilson.co.uk, matthew.auld@intel.com,
+        tvrtko.ursulin@linux.intel.com, andi.shyti@intel.com,
+        sam@ravnborg.org, miaoqinglang@huawei.com,
+        emil.velikov@collabora.com, laurentiu.palcu@oss.nxp.com,
+        shawnguo@kernel.org, s.hauer@pengutronix.de, kernel@pengutronix.de,
+        festevam@gmail.com, linux-imx@nxp.com
+Cc:     amd-gfx@lists.freedesktop.org, dri-devel@lists.freedesktop.org,
+        etnaviv@lists.freedesktop.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-samsung-soc@vger.kernel.org, intel-gfx@lists.freedesktop.org,
+        linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+        freedreno@lists.freedesktop.org, nouveau@lists.freedesktop.org,
+        linux-rockchip@lists.infradead.org, linux-tegra@vger.kernel.org,
+        xen-devel@lists.xenproject.org
+References: <20200923102159.24084-1-tzimmermann@suse.de>
+ <f6ee9aab-1568-1896-ef07-a4de6ceec989@amd.com>
+From:   Thomas Zimmermann <tzimmermann@suse.de>
+Message-ID: <6c6b429c-8f74-99f3-73de-920dad26197a@suse.de>
+Date:   Fri, 25 Sep 2020 10:40:10 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.12.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20200924161356.5kezxwiqwtbi3o2p@e107158-lin.cambridge.arm.com>
-X-Operating-System: Linux phenom 5.7.0-1-amd64 
+In-Reply-To: <f6ee9aab-1568-1896-ef07-a4de6ceec989@amd.com>
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature";
+ boundary="LabGFb9cZphJ6FpQUA9KWxOwS9aPh02zb"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Sep 24, 2020 at 05:15:00PM +0100, Qais Yousef wrote:
-> On 09/24/20 10:49, Daniel Vetter wrote:
-> 
-> [...]
-> 
-> > > > I also thought kernel threads can be distinguished from others, so
-> > > > userspace shouldn't be able to sneak in and get elevated by accident.
-> > > 
-> > > I guess maybe you could look at the parent?  I still would like to
-> > > think that we could come up with something a bit less shaking than
-> > > matching thread names by regexp..
-> > 
-> > ps marks up kernel threads with [], so there is a way. But I haven't
-> > looked at what it is exactly that tells kernel threads apart from others.
-> > 
-> > But aside from that sounds like "match right kernel thread with regex and
-> > set its scheduler class" is how this is currently done, if I'm
-> > understanding what Tejun and Peter said correctly.
-> > 
-> > Not pretty, but also *shrug* ...
-> 
-> Isn't there a real danger that a sneaky application names its threads to match
-> this regex and get a free promotion to RT without having the capability to do
-> so?
+This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
+--LabGFb9cZphJ6FpQUA9KWxOwS9aPh02zb
+Content-Type: multipart/mixed; boundary="YrgllsXxrG3yDVk9eYt3PnZ2tiJ3YeTQ7";
+ protected-headers="v1"
+From: Thomas Zimmermann <tzimmermann@suse.de>
+To: =?UTF-8?Q?Christian_K=c3=b6nig?= <christian.koenig@amd.com>,
+ alexander.deucher@amd.com, airlied@linux.ie, daniel@ffwll.ch,
+ linux@armlinux.org.uk, maarten.lankhorst@linux.intel.com,
+ mripard@kernel.org, l.stach@pengutronix.de, christian.gmeiner@gmail.com,
+ inki.dae@samsung.com, jy0922.shim@samsung.com, sw0312.kim@samsung.com,
+ kyungmin.park@samsung.com, kgene@kernel.org, krzk@kernel.org,
+ patrik.r.jakobsson@gmail.com, jani.nikula@linux.intel.com,
+ joonas.lahtinen@linux.intel.com, rodrigo.vivi@intel.com,
+ chunkuang.hu@kernel.org, p.zabel@pengutronix.de, matthias.bgg@gmail.com,
+ robdclark@gmail.com, sean@poorly.run, bskeggs@redhat.com,
+ tomi.valkeinen@ti.com, eric@anholt.net, hjc@rock-chips.com, heiko@sntech.de,
+ thierry.reding@gmail.com, jonathanh@nvidia.com,
+ rodrigosiqueiramelo@gmail.com, hamohammed.sa@gmail.com,
+ oleksandr_andrushchenko@epam.com, hyun.kwon@xilinx.com,
+ laurent.pinchart@ideasonboard.com, michal.simek@xilinx.com,
+ sumit.semwal@linaro.org, evan.quan@amd.com, Hawking.Zhang@amd.com,
+ tianci.yin@amd.com, marek.olsak@amd.com, hdegoede@redhat.com,
+ andrey.grodzovsky@amd.com, Felix.Kuehling@amd.com, xinhui.pan@amd.com,
+ aaron.liu@amd.com, nirmoy.das@amd.com, chris@chris-wilson.co.uk,
+ matthew.auld@intel.com, tvrtko.ursulin@linux.intel.com,
+ andi.shyti@intel.com, sam@ravnborg.org, miaoqinglang@huawei.com,
+ emil.velikov@collabora.com, laurentiu.palcu@oss.nxp.com,
+ shawnguo@kernel.org, s.hauer@pengutronix.de, kernel@pengutronix.de,
+ festevam@gmail.com, linux-imx@nxp.com
+Cc: amd-gfx@lists.freedesktop.org, dri-devel@lists.freedesktop.org,
+ etnaviv@lists.freedesktop.org, linux-arm-kernel@lists.infradead.org,
+ linux-samsung-soc@vger.kernel.org, intel-gfx@lists.freedesktop.org,
+ linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+ freedreno@lists.freedesktop.org, nouveau@lists.freedesktop.org,
+ linux-rockchip@lists.infradead.org, linux-tegra@vger.kernel.org,
+ xen-devel@lists.xenproject.org
+Message-ID: <6c6b429c-8f74-99f3-73de-920dad26197a@suse.de>
+Subject: Re: [PATCH v3 00/22] Convert all remaining drivers to GEM object
+ functions
+References: <20200923102159.24084-1-tzimmermann@suse.de>
+ <f6ee9aab-1568-1896-ef07-a4de6ceec989@amd.com>
+In-Reply-To: <f6ee9aab-1568-1896-ef07-a4de6ceec989@amd.com>
 
-A sneaky application can't fake being a kernel thread, at least that's
-what I thought. You need to check for that _and_ that the name matches.
--Daniel
--- 
-Daniel Vetter
-Software Engineer, Intel Corporation
-http://blog.ffwll.ch
+--YrgllsXxrG3yDVk9eYt3PnZ2tiJ3YeTQ7
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: quoted-printable
+
+Hi
+
+Am 23.09.20 um 16:33 schrieb Christian K=C3=B6nig:
+> Feel free to add an Acked-by: Christian K=C3=B6nig <christian.koenig@am=
+d.com>
+> to all patches which I haven't explicitly reviewed.
+
+Done, thanks.
+
+>=20
+> I would say we should just push this to drm-misc-next now.
+
+It's merged now.
+
+Best regards
+Thomas
+
+>=20
+> Thanks for the nice cleanup,
+> Christian.
+>=20
+> Am 23.09.20 um 12:21 schrieb Thomas Zimmermann:
+>> The GEM and PRIME related callbacks in struct drm_driver are
+>> deprecated in
+>> favor of GEM object functions in struct drm_gem_object_funcs. This
+>> patchset
+>> converts the remaining drivers to object functions and removes most of=
+
+>> the
+>> obsolete interfaces.
+>>
+>> Version 3 of this patchset mostly fixes drm_gem_prime_handle_to_fd and=
+
+>> updates i.MX's dcss driver. The driver was missing from earlier versio=
+ns
+>> and still needs review.
+>>
+>> Patches #1 to #6, #8 to #17 and #19 to #20 convert DRM drivers to GEM
+>> object
+>> functions, one by one. Each patch moves existing callbacks from struct=
+
+>> drm_driver to an instance of struct drm_gem_object_funcs, and sets the=
+se
+>> funcs when the GEM object is initialized. The expection is
+>> .gem_prime_mmap.
+>> There are different ways of how drivers implement the callback, and
+>> moving
+>> it to GEM object functions requires a closer review for each.
+>>
+>> Patch #18 fixes virtgpu to use GEM object functions where possible. Th=
+e
+>> driver recently introduced a function for one of the deprecated
+>> callbacks.
+>>
+>> Patches #7 and #20 convert i.MX's dcss and xlnx to CMA helper macros.
+>> There's
+>> no apparent reason why the drivers do the GEM setup on their's own.
+>> Using CMA
+>> helper macros adds GEM object functions implicitly.
+>>
+>> With most of the GEM and PRIME moved to GEM object functions, related
+>> code
+>> in struct drm_driver and in the DRM core/helpers is being removed by
+>> patch
+>> #22.
+>>
+>> Further testing is welcome. I tested the drivers for which I have HW
+>> available. These are gma500, i915, nouveau, radeon and vc4. The consol=
+e,
+>> Weston and Xorg apparently work with the patches applied.
+>>
+>> v3:
+>> =C2=A0=C2=A0=C2=A0=C2=A0* restore default call to drm_gem_prime_export=
+() in
+>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 drm_gem_prime_handle_to_fd()
+>> =C2=A0=C2=A0=C2=A0=C2=A0* return -ENOSYS if get_sg_table is not set
+>> =C2=A0=C2=A0=C2=A0=C2=A0* drop all checks for obj->funcs
+>> =C2=A0=C2=A0=C2=A0=C2=A0* clean up TODO list and documentation
+>> v2:
+>> =C2=A0=C2=A0=C2=A0=C2=A0* moved code in amdgpu and radeon
+>> =C2=A0=C2=A0=C2=A0=C2=A0* made several functions static in various dri=
+vers
+>> =C2=A0=C2=A0=C2=A0=C2=A0* updated TODO-list item
+>> =C2=A0=C2=A0=C2=A0=C2=A0* fix virtgpu
+>>
+>> Thomas Zimmermann (22):
+>> =C2=A0=C2=A0 drm/amdgpu: Introduce GEM object functions
+>> =C2=A0=C2=A0 drm/armada: Introduce GEM object functions
+>> =C2=A0=C2=A0 drm/etnaviv: Introduce GEM object functions
+>> =C2=A0=C2=A0 drm/exynos: Introduce GEM object functions
+>> =C2=A0=C2=A0 drm/gma500: Introduce GEM object functions
+>> =C2=A0=C2=A0 drm/i915: Introduce GEM object functions
+>> =C2=A0=C2=A0 drm/imx/dcss: Initialize DRM driver instance with CMA hel=
+per macro
+>> =C2=A0=C2=A0 drm/mediatek: Introduce GEM object functions
+>> =C2=A0=C2=A0 drm/msm: Introduce GEM object funcs
+>> =C2=A0=C2=A0 drm/nouveau: Introduce GEM object functions
+>> =C2=A0=C2=A0 drm/omapdrm: Introduce GEM object functions
+>> =C2=A0=C2=A0 drm/pl111: Introduce GEM object functions
+>> =C2=A0=C2=A0 drm/radeon: Introduce GEM object functions
+>> =C2=A0=C2=A0 drm/rockchip: Convert to drm_gem_object_funcs
+>> =C2=A0=C2=A0 drm/tegra: Introduce GEM object functions
+>> =C2=A0=C2=A0 drm/vc4: Introduce GEM object functions
+>> =C2=A0=C2=A0 drm/vgem: Introduce GEM object functions
+>> =C2=A0=C2=A0 drm/virtgpu: Set PRIME export function in struct drm_gem_=
+object_funcs
+>> =C2=A0=C2=A0 drm/vkms: Introduce GEM object functions
+>> =C2=A0=C2=A0 drm/xen: Introduce GEM object functions
+>> =C2=A0=C2=A0 drm/xlnx: Initialize DRM driver instance with CMA helper =
+macro
+>> =C2=A0=C2=A0 drm: Remove obsolete GEM and PRIME callbacks from struct =
+drm_driver
+>>
+>> =C2=A0 Documentation/gpu/drm-mm.rst=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 |=C2=A0=
+ 4 +-
+>> =C2=A0 Documentation/gpu/todo.rst=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+ |=C2=A0 9 +-
+>> =C2=A0 drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0 |=C2=A0 6 --
+>> =C2=A0 drivers/gpu/drm/amd/amdgpu/amdgpu_gem.c=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0 | 23 +++--
+>> =C2=A0 drivers/gpu/drm/amd/amdgpu/amdgpu_gem.h=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0 |=C2=A0 5 --
+>> =C2=A0 drivers/gpu/drm/armada/armada_drv.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 |=C2=A0 3 -
+>> =C2=A0 drivers/gpu/drm/armada/armada_gem.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 | 12 ++-
+>> =C2=A0 drivers/gpu/drm/armada/armada_gem.h=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 |=C2=A0 2 -
+>> =C2=A0 drivers/gpu/drm/drm_gem.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0 | 53 ++++--------
+>> =C2=A0 drivers/gpu/drm/drm_gem_cma_helper.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0 |=C2=A0 8 +-
+>> =C2=A0 drivers/gpu/drm/drm_prime.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 =
+| 14 +--
+>> =C2=A0 drivers/gpu/drm/etnaviv/etnaviv_drv.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0 | 13 ---
+>> =C2=A0 drivers/gpu/drm/etnaviv/etnaviv_drv.h=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0 |=C2=A0 1 -
+>> =C2=A0 drivers/gpu/drm/etnaviv/etnaviv_gem.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0 | 19 ++++-
+>> =C2=A0 drivers/gpu/drm/exynos/exynos_drm_drv.c=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0 | 10 ---
+>> =C2=A0 drivers/gpu/drm/exynos/exynos_drm_gem.c=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0 | 15 ++++
+>> =C2=A0 drivers/gpu/drm/gma500/framebuffer.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0 |=C2=A0 2 +
+>> =C2=A0 drivers/gpu/drm/gma500/gem.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 | 18 +=
+++-
+>> =C2=A0 drivers/gpu/drm/gma500/gem.h=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 |=C2=A0=
+ 3 +
+>> =C2=A0 drivers/gpu/drm/gma500/psb_drv.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 |=C2=A0 9 --
+>> =C2=A0 drivers/gpu/drm/gma500/psb_drv.h=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 |=C2=A0 2 -
+>> =C2=A0 drivers/gpu/drm/i915/gem/i915_gem_object.c=C2=A0=C2=A0=C2=A0 | =
+21 ++++-
+>> =C2=A0 drivers/gpu/drm/i915/gem/i915_gem_object.h=C2=A0=C2=A0=C2=A0 |=C2=
+=A0 3 -
+>> =C2=A0 drivers/gpu/drm/i915/i915_drv.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 |=C2=A0 4 -
+>> =C2=A0 .../gpu/drm/i915/selftests/mock_gem_device.c=C2=A0 |=C2=A0 3 -
+>> =C2=A0 drivers/gpu/drm/imx/dcss/dcss-kms.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 | 14 +--
+>> =C2=A0 drivers/gpu/drm/mediatek/mtk_drm_drv.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0 |=C2=A0 5 --
+>> =C2=A0 drivers/gpu/drm/mediatek/mtk_drm_gem.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0 | 11 +++
+>> =C2=A0 drivers/gpu/drm/msm/msm_drv.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 | 13 ---
+>> =C2=A0 drivers/gpu/drm/msm/msm_drv.h=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 |=C2=A0 1 -
+>> =C2=A0 drivers/gpu/drm/msm/msm_gem.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 | 19 ++++-
+>> =C2=A0 drivers/gpu/drm/nouveau/nouveau_drm.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0 |=C2=A0 9 --
+>> =C2=A0 drivers/gpu/drm/nouveau/nouveau_gem.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0 | 13 +++
+>> =C2=A0 drivers/gpu/drm/nouveau/nouveau_gem.h=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0 |=C2=A0 2 +
+>> =C2=A0 drivers/gpu/drm/nouveau/nouveau_prime.c=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0 |=C2=A0 2 +
+>> =C2=A0 drivers/gpu/drm/omapdrm/omap_drv.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 |=C2=A0 9 --
+>> =C2=A0 drivers/gpu/drm/omapdrm/omap_gem.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 | 18 +++-
+>> =C2=A0 drivers/gpu/drm/omapdrm/omap_gem.h=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 |=C2=A0 2 -
+>> =C2=A0 drivers/gpu/drm/pl111/pl111_drv.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 |=C2=A0 5 +-
+>> =C2=A0 drivers/gpu/drm/radeon/radeon_drv.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 | 23 +----
+>> =C2=A0 drivers/gpu/drm/radeon/radeon_gem.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 | 31 ++++++-
+>> =C2=A0 drivers/gpu/drm/rockchip/rockchip_drm_drv.c=C2=A0=C2=A0 |=C2=A0=
+ 5 --
+>> =C2=A0 drivers/gpu/drm/rockchip/rockchip_drm_gem.c=C2=A0=C2=A0 | 12 ++=
+-
+>> =C2=A0 drivers/gpu/drm/tegra/drm.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 =
+|=C2=A0 4 -
+>> =C2=A0 drivers/gpu/drm/tegra/gem.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 =
+|=C2=A0 8 ++
+>> =C2=A0 drivers/gpu/drm/vc4/vc4_bo.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 | 21 +=
++++-
+>> =C2=A0 drivers/gpu/drm/vc4/vc4_drv.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 | 12 ---
+>> =C2=A0 drivers/gpu/drm/vc4/vc4_drv.h=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 |=C2=A0 1 -
+>> =C2=A0 drivers/gpu/drm/vgem/vgem_drv.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 | 21 +++--
+>> =C2=A0 drivers/gpu/drm/virtio/virtgpu_drv.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0 |=C2=A0 1 -
+>> =C2=A0 drivers/gpu/drm/virtio/virtgpu_object.c=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0 |=C2=A0 1 +
+>> =C2=A0 drivers/gpu/drm/vkms/vkms_drv.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 |=C2=A0 8 --
+>> =C2=A0 drivers/gpu/drm/vkms/vkms_gem.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 | 13 +++
+>> =C2=A0 drivers/gpu/drm/xen/xen_drm_front.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 | 44 ++++------
+>> =C2=A0 drivers/gpu/drm/xen/xen_drm_front.h=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 |=C2=A0 2 +
+>> =C2=A0 drivers/gpu/drm/xen/xen_drm_front_gem.c=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0 | 15 ++++
+>> =C2=A0 drivers/gpu/drm/xlnx/zynqmp_dpsub.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 | 14 +--
+>> =C2=A0 include/drm/drm_drv.h=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0 | 85 +------------------
+>> =C2=A0 include/drm/drm_gem.h=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0 |=C2=A0 2 +-
+>> =C2=A0 59 files changed, 333 insertions(+), 375 deletions(-)
+>>
+>> --=20
+>> 2.28.0
+>>
+>=20
+
+--=20
+Thomas Zimmermann
+Graphics Driver Developer
+SUSE Software Solutions Germany GmbH
+Maxfeldstr. 5, 90409 N=C3=BCrnberg, Germany
+(HRB 36809, AG N=C3=BCrnberg)
+Gesch=C3=A4ftsf=C3=BChrer: Felix Imend=C3=B6rffer
+
+
+--YrgllsXxrG3yDVk9eYt3PnZ2tiJ3YeTQ7--
+
+--LabGFb9cZphJ6FpQUA9KWxOwS9aPh02zb
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQFIBAEBCAAyFiEEchf7rIzpz2NEoWjlaA3BHVMLeiMFAl9trOsUHHR6aW1tZXJt
+YW5uQHN1c2UuZGUACgkQaA3BHVMLeiOxhwgAkAYiN5cpH8HCfFm3pzUjLe2BtrJz
+k+Vt8Wd5qvXc3y7iQBBR9qx0E6z51ZNcxHhULFx+Wyw10/EVyYFJHNJO2440itG5
+nHcvl5zihIXi5kx82/2AhYI0rWUDgvkNFz4tiqTYfdyEFW2RWBYNb0cAhJPGpVQN
+7GRODf0jQdkZK3W79ZKSzjqq2lx3dlwviA0EYCWhe6yKDyUXC9/3oWiJlmf4Mlp5
+mHUlNVt+QVbdOxtYtGJ9nBC6iRxS2xUPfAVJPTPELlCphnxroZPrkNd1x+O+zMNv
+5giRN+hDTtrRwlH+XPkgqtpwt/LD2tMSFBAZscDhhifadDzYXOKCgjfQvg==
+=AWHl
+-----END PGP SIGNATURE-----
+
+--LabGFb9cZphJ6FpQUA9KWxOwS9aPh02zb--
