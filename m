@@ -2,201 +2,139 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 23BF2278DA7
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Sep 2020 18:08:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 404C2278F71
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Sep 2020 19:16:21 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729114AbgIYQIg convert rfc822-to-8bit (ORCPT
-        <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 25 Sep 2020 12:08:36 -0400
-Received: from coyote.holtmann.net ([212.227.132.17]:60154 "EHLO
-        mail.holtmann.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728443AbgIYQIg (ORCPT
+        id S1728466AbgIYRQU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 25 Sep 2020 13:16:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51610 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727290AbgIYRQU (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 25 Sep 2020 12:08:36 -0400
-Received: from [172.20.10.2] (dynamic-046-114-136-219.46.114.pool.telefonica.de [46.114.136.219])
-        by mail.holtmann.org (Postfix) with ESMTPSA id 1A972CECDD;
-        Fri, 25 Sep 2020 18:15:31 +0200 (CEST)
-Content-Type: text/plain;
-        charset=us-ascii
-Mime-Version: 1.0 (Mac OS X Mail 13.4 \(3608.120.23.2.1\))
-Subject: Re: [PATCH v3] Bluetooth: btusb: Add Qualcomm Bluetooth SoC WCN6855
- support
-From:   Marcel Holtmann <marcel@holtmann.org>
-In-Reply-To: <20200925090829.3088-1-rjliao@codeaurora.org>
-Date:   Fri, 25 Sep 2020 18:08:28 +0200
-Cc:     Johan Hedberg <johan.hedberg@gmail.com>,
-        open list <linux-kernel@vger.kernel.org>,
-        linux-bluetooth <linux-bluetooth@vger.kernel.org>,
-        linux-arm-msm@vger.kernel.org
-Content-Transfer-Encoding: 8BIT
-Message-Id: <8296D361-B28F-46CA-86E1-6F7FCE62D97F@holtmann.org>
-References: <20200914092744.17464-1-rjliao@codeaurora.org>
- <20200925090829.3088-1-rjliao@codeaurora.org>
-To:     Rocky Liao <rjliao@codeaurora.org>
-X-Mailer: Apple Mail (2.3608.120.23.2.1)
+        Fri, 25 Sep 2020 13:16:20 -0400
+Received: from mail-pf1-x442.google.com (mail-pf1-x442.google.com [IPv6:2607:f8b0:4864:20::442])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 23C43C0613CE
+        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Sep 2020 10:16:20 -0700 (PDT)
+Received: by mail-pf1-x442.google.com with SMTP id w7so3809763pfi.4
+        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Sep 2020 10:16:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=0isoKQexThfGyA/SiFQeIDNV9ZfZnsCVryK8Eef/oeU=;
+        b=TE+e2X4QcS/SKq6v578mn9aG4g494ViU0i4tel+fuwb/WZQMxx/1SvHlVz/Sh9vDIE
+         +LFmm24DmAJUjQAkO0yFtY1pr+/ddeAFkjxl7Vjz3zqwepZIy3xrMXjn8V8FUTZkvTZd
+         N6xuO3oDw9GfbY2HmoHk2eAAQSqTCAG2A1Lrqr1n50wRjJtmOV7vd7w698X15jDpndlj
+         kf2RXKc1Z0dzLYaZDB4OtfzspVMDhAf7KQD+CTYj5CoNH4wOBuV3JOMihcQVhLNGkOnT
+         xiO1UjgxqXJzC8fuzVFrR8lpqht5zi0ceXTjohyI4RDR6atiJusq8FmtHbC2uAAl3GdM
+         au6g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=0isoKQexThfGyA/SiFQeIDNV9ZfZnsCVryK8Eef/oeU=;
+        b=jsV8/dmfUjIJI6dKj8E3bJCKGM/dlO4uYhxbnn7uenGq7G7/sWF5InNU7m6/xThOln
+         PfH0AohxM+ImU4ybTF03azQFOf0my+HvlbLvkZgiyr3OXu8W9JpHe021lM4zuprYcEk4
+         tOQYJUNLYtzPk9Y/fOvsaJWkG6YDdAZzEYpAtHdydyDM2namSQsS79vYNJVOCs2e03DF
+         O9atKiLZDKDygMmt9VWNuZwhoaS+mi6iffaMwbPFB3SaDogq7ypN90YKrCziyjHTRmBO
+         QSX/uePMhyvSs0QAGaTsr1im5KjJ4bQTc2cr+MBxruVCX9D1RYDtNz8H95VzVbdZS+AP
+         2KLA==
+X-Gm-Message-State: AOAM532+kT/2OpyZEcZFeowUID3nl+0Vesyv/MR6jEOYB4CdELm78vT8
+        74Siz8nO0toMWqVWnfYQ21pW
+X-Google-Smtp-Source: ABdhPJz+2VDYqCnvYwybRjQv2+3TBafhRa4neGVFw6EbqMn2U+ZqSJ0ki6HWcr8L1/t9t5D8B+CNbA==
+X-Received: by 2002:aa7:9f4e:0:b029:142:2501:39f1 with SMTP id h14-20020aa79f4e0000b0290142250139f1mr356651pfr.64.1601054179498;
+        Fri, 25 Sep 2020 10:16:19 -0700 (PDT)
+Received: from localhost.localdomain ([103.59.133.81])
+        by smtp.googlemail.com with ESMTPSA id 25sm3171394pfj.35.2020.09.25.10.16.16
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 25 Sep 2020 10:16:18 -0700 (PDT)
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     gregkh@linuxfoundation.org
+Cc:     hemantk@codeaurora.org, jhugo@codeaurora.org,
+        bbhatt@codeaurora.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Subject: [PATCH] bus: mhi: core: debugfs: Use correct format specifiers for addresses
+Date:   Fri, 25 Sep 2020 22:46:08 +0530
+Message-Id: <20200925171608.30881-1-manivannan.sadhasivam@linaro.org>
+X-Mailer: git-send-email 2.17.1
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Rocky,
+For exposing the addresses of read/write pointers and doorbell register,
+let's use the correct format specifiers. This fixes the following issues
+generated using W=1 build in ARM32 and reported by Kbuild bot:
 
-> This patch add support for WCN6855 i.e. patch and nvm download
-> support.
+All warnings (new ones prefixed by >>):
 
-please always include the content of /sys/kernel/debug/usb/devices for this hardware.
+>> drivers/bus/mhi/core/debugfs.c:75:7: warning: format specifies type 'unsigned long long' but the argument has type 'dma_addr_t' (aka 'unsigned int') [-Wformat]
+                              mhi_event->db_cfg.db_val);
+                              ^~~~~~~~~~~~~~~~~~~~~~~~
+   drivers/bus/mhi/core/debugfs.c:123:7: warning: format specifies type 'unsigned long long' but the argument has type 'dma_addr_t' (aka 'unsigned int') [-Wformat]
+                              mhi_chan->db_cfg.db_val);
+                              ^~~~~~~~~~~~~~~~~~~~~~~
+   2 warnings generated.
 
-> 
-> Signed-off-by: Rocky Liao <rjliao@codeaurora.org>
-> ---
-> drivers/bluetooth/btusb.c | 66 +++++++++++++++++++++++++++++++--------
-> 1 file changed, 53 insertions(+), 13 deletions(-)
-> 
-> diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
-> index 9f294b941943..e888e4c02d69 100644
-> --- a/drivers/bluetooth/btusb.c
-> +++ b/drivers/bluetooth/btusb.c
-> @@ -59,6 +59,7 @@ static struct usb_driver btusb_driver;
-> #define BTUSB_MEDIATEK		0x200000
-> #define BTUSB_WIDEBAND_SPEECH	0x400000
-> #define BTUSB_VALID_LE_STATES   0x800000
-> +#define BTUSB_QCA_WCN6855	0x1000000
-> 
-> static const struct usb_device_id btusb_table[] = {
-> 	/* Generic Bluetooth USB device */
-> @@ -291,6 +292,10 @@ static const struct usb_device_id blacklist_table[] = {
-> 	{ USB_DEVICE(0x13d3, 0x3501), .driver_info = BTUSB_QCA_ROME |
-> 						     BTUSB_WIDEBAND_SPEECH },
-> 
-> +	/* QCA WCN6855 chipset */
-> +	{ USB_DEVICE(0x0cf3, 0xe600), .driver_info = BTUSB_QCA_WCN6855 |
-> +						     BTUSB_WIDEBAND_SPEECH },
-> +
-> 	/* Broadcom BCM2035 */
-> 	{ USB_DEVICE(0x0a5c, 0x2009), .driver_info = BTUSB_BCM92035 },
-> 	{ USB_DEVICE(0x0a5c, 0x200a), .driver_info = BTUSB_WRONG_SCO_MTU },
-> @@ -3409,6 +3414,27 @@ static int btusb_set_bdaddr_ath3012(struct hci_dev *hdev,
-> 	return 0;
-> }
-> 
-> +static int btusb_set_bdaddr_wcn6855(struct hci_dev *hdev,
-> +				const bdaddr_t *bdaddr)
-> +{
-> +	struct sk_buff *skb;
-> +	u8 buf[6];
-> +	long ret;
-> +
-> +	memcpy(buf, bdaddr, sizeof(bdaddr_t));
-> +
-> +	skb = __hci_cmd_sync_ev(hdev, 0xfc14, sizeof(buf), buf,
-> +				HCI_EV_CMD_COMPLETE, HCI_INIT_TIMEOUT);
-> +	if (IS_ERR(skb)) {
-> +		ret = PTR_ERR(skb);
-> +		bt_dev_err(hdev, "Change address command failed (%ld)", ret);
-> +		return ret;
-> +	}
-> +	kfree_skb(skb);
-> +
-> +	return 0;
-> +}
-> +
-> #define QCA_DFU_PACKET_LEN	4096
-> 
-> #define QCA_GET_TARGET_VERSION	0x09
-> @@ -3428,7 +3454,8 @@ struct qca_version {
-> } __packed;
-> 
-> struct qca_rampatch_version {
-> -	__le16	rom_version;
-> +	__le16	rom_version_high;
-> +	__le16  rom_version_low;
-> 	__le16	patch_version;
-> } __packed;
+drivers/bus/mhi/core/debugfs.c: In function ‘mhi_debugfs_events_show’:
+drivers/bus/mhi/core/debugfs.c:74:51: warning: cast from pointer to integer of different size [-Wpointer-to-int-cast]
+   seq_printf(m, " local rp: 0x%llx db: 0x%pad\n", (u64)ring->rp,
+                                                   ^
+drivers/bus/mhi/core/debugfs.c: In function ‘mhi_debugfs_channels_show’:
+drivers/bus/mhi/core/debugfs.c:122:7: warning: cast from pointer to integer of different size [-Wpointer-to-int-cast]
+       (u64)ring->rp, (u64)ring->wp,
+       ^
+drivers/bus/mhi/core/debugfs.c:122:22: warning: cast from pointer to integer of different size [-Wpointer-to-int-cast]
+       (u64)ring->rp, (u64)ring->wp,
+                      ^
+drivers/bus/mhi/core/debugfs.c:121:62: warning: format ‘%llx’ expects argument of type ‘long long unsigned int’, but argument 5 has type ‘dma_addr_t {aka unsigned int}’ [-Wformat=]
+   seq_printf(m, " local rp: 0x%llx local wp: 0x%llx db: 0x%llx\n",
+                                                           ~~~^
+                                                           %x
+drivers/bus/mhi/core/debugfs.c:123:7:
+       mhi_chan->db_cfg.db_val);
 
-How does this work. The struct now has an extra 16-bit in the middle. Is this backwards compatible?
+Reported-by: kernel test robot <lkp@intel.com>
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+---
 
-> 
-> @@ -3440,12 +3467,14 @@ struct qca_device_info {
-> };
-> 
-> static const struct qca_device_info qca_devices_table[] = {
-> -	{ 0x00000100, 20, 4, 10 }, /* Rome 1.0 */
-> -	{ 0x00000101, 20, 4, 10 }, /* Rome 1.1 */
-> -	{ 0x00000200, 28, 4, 18 }, /* Rome 2.0 */
-> -	{ 0x00000201, 28, 4, 18 }, /* Rome 2.1 */
-> -	{ 0x00000300, 28, 4, 18 }, /* Rome 3.0 */
-> -	{ 0x00000302, 28, 4, 18 }, /* Rome 3.2 */
-> +	{ 0x00000100, 20, 4, 8 }, /* Rome 1.0 */
-> +	{ 0x00000101, 20, 4, 8 }, /* Rome 1.1 */
+Greg: This fixes the issue seen while testing the char-misc/char-misc-testing
+branch.
 
-Align it with 8  }
+ drivers/bus/mhi/core/debugfs.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-> +	{ 0x00000200, 28, 4, 16 }, /* Rome 2.0 */
-> +	{ 0x00000201, 28, 4, 16 }, /* Rome 2.1 */
-> +	{ 0x00000300, 28, 4, 16 }, /* Rome 3.0 */
-> +	{ 0x00000302, 28, 4, 16 }, /* Rome 3.2 */
-> +	{ 0x00130100, 40, 4, 16 }, /* WCN6855 1.0 */
-> +	{ 0x00130200, 40, 4, 16 }  /* WCN6855 2.0 */
-
-And the last one should also be },
-
-> };
-> 
-> static int btusb_qca_send_vendor_req(struct usb_device *udev, u8 request,
-> @@ -3547,8 +3576,8 @@ static int btusb_setup_qca_load_rampatch(struct hci_dev *hdev,
-> {
-> 	struct qca_rampatch_version *rver;
-> 	const struct firmware *fw;
-> -	u32 ver_rom, ver_patch;
-> -	u16 rver_rom, rver_patch;
-> +	u32 ver_rom, ver_patch, rver_rom;
-> +	u16 rver_rom_low, rver_rom_high, rver_patch;
-> 	char fwname[64];
-> 	int err;
-> 
-> @@ -3567,9 +3596,16 @@ static int btusb_setup_qca_load_rampatch(struct hci_dev *hdev,
-> 	bt_dev_info(hdev, "using rampatch file: %s", fwname);
-> 
-> 	rver = (struct qca_rampatch_version *)(fw->data + info->ver_offset);
-> -	rver_rom = le16_to_cpu(rver->rom_version);
-> +	rver_rom_low = le16_to_cpu(rver->rom_version_low);
-> 	rver_patch = le16_to_cpu(rver->patch_version);
-> 
-> +	if (ver_rom & ~0xffffU) {
-> +		rver_rom_high = le16_to_cpu(rver->rom_version_high);
-> +		rver_rom = le32_to_cpu(rver_rom_high << 16 | rver_rom_low);
-> +	} else {
-> +		rver_rom = rver_rom_low;
-> +	}
-> +
-> 	bt_dev_info(hdev, "QCA: patch rome 0x%x build 0x%x, "
-> 		    "firmware rome 0x%x build 0x%x",
-> 		    rver_rom, rver_patch, ver_rom, ver_patch);
-> @@ -3643,9 +3679,6 @@ static int btusb_setup_qca(struct hci_dev *hdev)
-> 		return err;
-> 
-> 	ver_rom = le32_to_cpu(ver.rom_version);
-> -	/* Don't care about high ROM versions */
-> -	if (ver_rom & ~0xffffU)
-> -		return 0;
-> 
-> 	for (i = 0; i < ARRAY_SIZE(qca_devices_table); i++) {
-> 		if (ver_rom == qca_devices_table[i].rom_version)
-> @@ -4081,6 +4114,13 @@ static int btusb_probe(struct usb_interface *intf,
-> 		btusb_check_needs_reset_resume(intf);
-> 	}
-> 
-> +	if (id->driver_info & BTUSB_QCA_WCN6855) {
-> +		data->setup_on_usb = btusb_setup_qca;
-> +		hdev->set_bdaddr = btusb_set_bdaddr_wcn6855;
-> +		hdev->cmd_timeout = btusb_qca_cmd_timeout;
-> +		set_bit(HCI_QUIRK_SIMULTANEOUS_DISCOVERY, &hdev->quirks);
-> +	}
-> +
-> 	if (id->driver_info & BTUSB_AMP) {
-> 		/* AMP controllers do not support SCO packets */
-> 		data->isoc = NULL;
-
-Regards
-
-Marcel
+diff --git a/drivers/bus/mhi/core/debugfs.c b/drivers/bus/mhi/core/debugfs.c
+index 53d05a8e168d..2536ff92b76f 100644
+--- a/drivers/bus/mhi/core/debugfs.c
++++ b/drivers/bus/mhi/core/debugfs.c
+@@ -71,8 +71,8 @@ static int mhi_debugfs_events_show(struct seq_file *m, void *d)
+ 		seq_printf(m, " rp: 0x%llx wp: 0x%llx", er_ctxt->rp,
+ 			   er_ctxt->wp);
+ 
+-		seq_printf(m, " local rp: 0x%llx db: 0x%llx\n", (u64)ring->rp,
+-			   mhi_event->db_cfg.db_val);
++		seq_printf(m, " local rp: 0x%px db: 0x%pad\n", ring->rp,
++			   &mhi_event->db_cfg.db_val);
+ 	}
+ 
+ 	return 0;
+@@ -118,9 +118,9 @@ static int mhi_debugfs_channels_show(struct seq_file *m, void *d)
+ 		seq_printf(m, " base: 0x%llx len: 0x%llx wp: 0x%llx",
+ 			   chan_ctxt->rbase, chan_ctxt->rlen, chan_ctxt->wp);
+ 
+-		seq_printf(m, " local rp: 0x%llx local wp: 0x%llx db: 0x%llx\n",
+-			   (u64)ring->rp, (u64)ring->wp,
+-			   mhi_chan->db_cfg.db_val);
++		seq_printf(m, " local rp: 0x%px local wp: 0x%px db: 0x%pad\n",
++			   ring->rp, ring->wp,
++			   &mhi_chan->db_cfg.db_val);
+ 	}
+ 
+ 	return 0;
+-- 
+2.17.1
 
