@@ -2,144 +2,201 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 15E86278CFE
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Sep 2020 17:42:15 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 23BF2278DA7
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Sep 2020 18:08:37 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728802AbgIYPmO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 25 Sep 2020 11:42:14 -0400
-Received: from z5.mailgun.us ([104.130.96.5]:15619 "EHLO z5.mailgun.us"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1729073AbgIYPmO (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 25 Sep 2020 11:42:14 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1601048533; h=In-Reply-To: Content-Type: MIME-Version:
- References: Message-ID: Subject: Cc: To: From: Date: Sender;
- bh=l4blT2IOXNBfUGMd3o8Mqd//fADRTBg/Wb0aNRk+Vf0=; b=IRKd5tOOwwjQ7dhVBCtyHUuwYyYyDfyc5wfE0tTzP9VDmVK3Qt3B9Q7FH0NtfI1dikSL4ts5
- hTQLMOJOHzc9z1WCO195cUjmzAt6aJpYUdQPPBEcUaiZwxH/7qOUoOvJBXuMQiAoLZoSwY5S
- lwQQb6TdRVCB1/780MTN7GphBc8=
-X-Mailgun-Sending-Ip: 104.130.96.5
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n02.prod.us-west-2.postgun.com with SMTP id
- 5f6e0fc2d106659f828f92f6 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 25 Sep 2020 15:41:54
- GMT
-Sender: ilina=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id BC2CDC43382; Fri, 25 Sep 2020 15:41:54 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
-        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
-Received: from localhost (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: ilina)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id A3151C433C8;
-        Fri, 25 Sep 2020 15:41:53 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org A3151C433C8
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=ilina@codeaurora.org
-Date:   Fri, 25 Sep 2020 09:41:52 -0600
-From:   Lina Iyer <ilina@codeaurora.org>
-To:     "Rafael J. Wysocki" <rafael@kernel.org>
-Cc:     "Rafael J. Wysocki" <rjw@rjwysocki.net>,
-        Ulf Hansson <ulf.hansson@linaro.org>,
-        Linux PM <linux-pm@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>
-Subject: Re: [PATCH RFC] PM / Domains: enable domain idle state accounting
-Message-ID: <20200925154152.GA17911@codeaurora.org>
-References: <20200925024200.6429-1-ilina@codeaurora.org>
- <CAJZ5v0gLL8KxeLxYtQ0pVeYket5uXeTktL9MB3Uf7MW-MiD5rg@mail.gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Disposition: inline
-In-Reply-To: <CAJZ5v0gLL8KxeLxYtQ0pVeYket5uXeTktL9MB3Uf7MW-MiD5rg@mail.gmail.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+        id S1729114AbgIYQIg convert rfc822-to-8bit (ORCPT
+        <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 25 Sep 2020 12:08:36 -0400
+Received: from coyote.holtmann.net ([212.227.132.17]:60154 "EHLO
+        mail.holtmann.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728443AbgIYQIg (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 25 Sep 2020 12:08:36 -0400
+Received: from [172.20.10.2] (dynamic-046-114-136-219.46.114.pool.telefonica.de [46.114.136.219])
+        by mail.holtmann.org (Postfix) with ESMTPSA id 1A972CECDD;
+        Fri, 25 Sep 2020 18:15:31 +0200 (CEST)
+Content-Type: text/plain;
+        charset=us-ascii
+Mime-Version: 1.0 (Mac OS X Mail 13.4 \(3608.120.23.2.1\))
+Subject: Re: [PATCH v3] Bluetooth: btusb: Add Qualcomm Bluetooth SoC WCN6855
+ support
+From:   Marcel Holtmann <marcel@holtmann.org>
+In-Reply-To: <20200925090829.3088-1-rjliao@codeaurora.org>
+Date:   Fri, 25 Sep 2020 18:08:28 +0200
+Cc:     Johan Hedberg <johan.hedberg@gmail.com>,
+        open list <linux-kernel@vger.kernel.org>,
+        linux-bluetooth <linux-bluetooth@vger.kernel.org>,
+        linux-arm-msm@vger.kernel.org
+Content-Transfer-Encoding: 8BIT
+Message-Id: <8296D361-B28F-46CA-86E1-6F7FCE62D97F@holtmann.org>
+References: <20200914092744.17464-1-rjliao@codeaurora.org>
+ <20200925090829.3088-1-rjliao@codeaurora.org>
+To:     Rocky Liao <rjliao@codeaurora.org>
+X-Mailer: Apple Mail (2.3608.120.23.2.1)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Sep 25 2020 at 09:29 -0600, Rafael J. Wysocki wrote:
->On Fri, Sep 25, 2020 at 4:42 AM Lina Iyer <ilina@codeaurora.org> wrote:
->>
->> To enable better debug of PM domains, let's keep a track of the success
->> and failures in entering each domain idle state.
->>
->> This statistics is exported in debugfs when reading the idle_states
->> node, associated with each PM domain.
->>
->> Signed-off-by: Lina Iyer <ilina@codeaurora.org>
->>
->> ---
->> This patch depends-on: https://lkml.org/lkml/2020/9/24/465
->> ---
->>  drivers/base/power/domain.c | 7 +++++--
->>  include/linux/pm_domain.h   | 2 ++
->>  2 files changed, 7 insertions(+), 2 deletions(-)
->>
->> diff --git a/drivers/base/power/domain.c b/drivers/base/power/domain.c
->> index f001ac6326fb..ba3355f935da 100644
->> --- a/drivers/base/power/domain.c
->> +++ b/drivers/base/power/domain.c
->> @@ -564,6 +564,7 @@ static int genpd_power_off(struct generic_pm_domain *genpd, bool one_dev_on,
->>
->>         genpd->status = GENPD_STATE_OFF;
->>         genpd_update_accounting(genpd);
->> +       genpd->states[genpd->state_idx].usage++;
->>
->>         list_for_each_entry(link, &genpd->child_links, child_node) {
->>                 genpd_sd_counter_dec(link->parent);
->> @@ -574,6 +575,7 @@ static int genpd_power_off(struct generic_pm_domain *genpd, bool one_dev_on,
->>
->>         return 0;
->>  busy:
->> +       genpd->states[genpd->state_idx].failed++;
->
->What about consistently calling these "rejected" instead of "failed"?
->
-I wasn't sure, will change these too. Thanks Rafael.
+Hi Rocky,
 
---Lina
+> This patch add support for WCN6855 i.e. patch and nvm download
+> support.
 
->>         if (nr_calls)
->>                 __raw_notifier_call_chain(&genpd->power_notifiers,
->>                                           GENPD_STATE_ON, NULL,
->> @@ -3053,7 +3055,7 @@ static int idle_states_show(struct seq_file *s, void *data)
->>         if (ret)
->>                 return -ERESTARTSYS;
->>
->> -       seq_puts(s, "State          Time Spent(ms)\n");
->> +       seq_puts(s, "State          Time Spent(ms) Usage          Failed\n");
->>
->>         for (i = 0; i < genpd->state_count; i++) {
->>                 ktime_t delta = 0;
->> @@ -3065,7 +3067,8 @@ static int idle_states_show(struct seq_file *s, void *data)
->>
->>                 msecs = ktime_to_ms(
->>                         ktime_add(genpd->states[i].idle_time, delta));
->> -               seq_printf(s, "S%-13i %lld\n", i, msecs);
->> +               seq_printf(s, "S%-13i %-14lld %-14llu %llu\n", i, msecs,
->> +                             genpd->states[i].usage, genpd->states[i].failed);
->>         }
->>
->>         genpd_unlock(genpd);
->> diff --git a/include/linux/pm_domain.h b/include/linux/pm_domain.h
->> index 3b2b561ce846..c30994ec0cec 100644
->> --- a/include/linux/pm_domain.h
->> +++ b/include/linux/pm_domain.h
->> @@ -82,6 +82,8 @@ struct genpd_power_state {
->>         s64 power_off_latency_ns;
->>         s64 power_on_latency_ns;
->>         s64 residency_ns;
->> +       u64 usage;
->> +       u64 failed;
->>         struct fwnode_handle *fwnode;
->>         ktime_t idle_time;
->>         void *data;
->> --
->> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
->> a Linux Foundation Collaborative Project
->>
+please always include the content of /sys/kernel/debug/usb/devices for this hardware.
+
+> 
+> Signed-off-by: Rocky Liao <rjliao@codeaurora.org>
+> ---
+> drivers/bluetooth/btusb.c | 66 +++++++++++++++++++++++++++++++--------
+> 1 file changed, 53 insertions(+), 13 deletions(-)
+> 
+> diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
+> index 9f294b941943..e888e4c02d69 100644
+> --- a/drivers/bluetooth/btusb.c
+> +++ b/drivers/bluetooth/btusb.c
+> @@ -59,6 +59,7 @@ static struct usb_driver btusb_driver;
+> #define BTUSB_MEDIATEK		0x200000
+> #define BTUSB_WIDEBAND_SPEECH	0x400000
+> #define BTUSB_VALID_LE_STATES   0x800000
+> +#define BTUSB_QCA_WCN6855	0x1000000
+> 
+> static const struct usb_device_id btusb_table[] = {
+> 	/* Generic Bluetooth USB device */
+> @@ -291,6 +292,10 @@ static const struct usb_device_id blacklist_table[] = {
+> 	{ USB_DEVICE(0x13d3, 0x3501), .driver_info = BTUSB_QCA_ROME |
+> 						     BTUSB_WIDEBAND_SPEECH },
+> 
+> +	/* QCA WCN6855 chipset */
+> +	{ USB_DEVICE(0x0cf3, 0xe600), .driver_info = BTUSB_QCA_WCN6855 |
+> +						     BTUSB_WIDEBAND_SPEECH },
+> +
+> 	/* Broadcom BCM2035 */
+> 	{ USB_DEVICE(0x0a5c, 0x2009), .driver_info = BTUSB_BCM92035 },
+> 	{ USB_DEVICE(0x0a5c, 0x200a), .driver_info = BTUSB_WRONG_SCO_MTU },
+> @@ -3409,6 +3414,27 @@ static int btusb_set_bdaddr_ath3012(struct hci_dev *hdev,
+> 	return 0;
+> }
+> 
+> +static int btusb_set_bdaddr_wcn6855(struct hci_dev *hdev,
+> +				const bdaddr_t *bdaddr)
+> +{
+> +	struct sk_buff *skb;
+> +	u8 buf[6];
+> +	long ret;
+> +
+> +	memcpy(buf, bdaddr, sizeof(bdaddr_t));
+> +
+> +	skb = __hci_cmd_sync_ev(hdev, 0xfc14, sizeof(buf), buf,
+> +				HCI_EV_CMD_COMPLETE, HCI_INIT_TIMEOUT);
+> +	if (IS_ERR(skb)) {
+> +		ret = PTR_ERR(skb);
+> +		bt_dev_err(hdev, "Change address command failed (%ld)", ret);
+> +		return ret;
+> +	}
+> +	kfree_skb(skb);
+> +
+> +	return 0;
+> +}
+> +
+> #define QCA_DFU_PACKET_LEN	4096
+> 
+> #define QCA_GET_TARGET_VERSION	0x09
+> @@ -3428,7 +3454,8 @@ struct qca_version {
+> } __packed;
+> 
+> struct qca_rampatch_version {
+> -	__le16	rom_version;
+> +	__le16	rom_version_high;
+> +	__le16  rom_version_low;
+> 	__le16	patch_version;
+> } __packed;
+
+How does this work. The struct now has an extra 16-bit in the middle. Is this backwards compatible?
+
+> 
+> @@ -3440,12 +3467,14 @@ struct qca_device_info {
+> };
+> 
+> static const struct qca_device_info qca_devices_table[] = {
+> -	{ 0x00000100, 20, 4, 10 }, /* Rome 1.0 */
+> -	{ 0x00000101, 20, 4, 10 }, /* Rome 1.1 */
+> -	{ 0x00000200, 28, 4, 18 }, /* Rome 2.0 */
+> -	{ 0x00000201, 28, 4, 18 }, /* Rome 2.1 */
+> -	{ 0x00000300, 28, 4, 18 }, /* Rome 3.0 */
+> -	{ 0x00000302, 28, 4, 18 }, /* Rome 3.2 */
+> +	{ 0x00000100, 20, 4, 8 }, /* Rome 1.0 */
+> +	{ 0x00000101, 20, 4, 8 }, /* Rome 1.1 */
+
+Align it with 8  }
+
+> +	{ 0x00000200, 28, 4, 16 }, /* Rome 2.0 */
+> +	{ 0x00000201, 28, 4, 16 }, /* Rome 2.1 */
+> +	{ 0x00000300, 28, 4, 16 }, /* Rome 3.0 */
+> +	{ 0x00000302, 28, 4, 16 }, /* Rome 3.2 */
+> +	{ 0x00130100, 40, 4, 16 }, /* WCN6855 1.0 */
+> +	{ 0x00130200, 40, 4, 16 }  /* WCN6855 2.0 */
+
+And the last one should also be },
+
+> };
+> 
+> static int btusb_qca_send_vendor_req(struct usb_device *udev, u8 request,
+> @@ -3547,8 +3576,8 @@ static int btusb_setup_qca_load_rampatch(struct hci_dev *hdev,
+> {
+> 	struct qca_rampatch_version *rver;
+> 	const struct firmware *fw;
+> -	u32 ver_rom, ver_patch;
+> -	u16 rver_rom, rver_patch;
+> +	u32 ver_rom, ver_patch, rver_rom;
+> +	u16 rver_rom_low, rver_rom_high, rver_patch;
+> 	char fwname[64];
+> 	int err;
+> 
+> @@ -3567,9 +3596,16 @@ static int btusb_setup_qca_load_rampatch(struct hci_dev *hdev,
+> 	bt_dev_info(hdev, "using rampatch file: %s", fwname);
+> 
+> 	rver = (struct qca_rampatch_version *)(fw->data + info->ver_offset);
+> -	rver_rom = le16_to_cpu(rver->rom_version);
+> +	rver_rom_low = le16_to_cpu(rver->rom_version_low);
+> 	rver_patch = le16_to_cpu(rver->patch_version);
+> 
+> +	if (ver_rom & ~0xffffU) {
+> +		rver_rom_high = le16_to_cpu(rver->rom_version_high);
+> +		rver_rom = le32_to_cpu(rver_rom_high << 16 | rver_rom_low);
+> +	} else {
+> +		rver_rom = rver_rom_low;
+> +	}
+> +
+> 	bt_dev_info(hdev, "QCA: patch rome 0x%x build 0x%x, "
+> 		    "firmware rome 0x%x build 0x%x",
+> 		    rver_rom, rver_patch, ver_rom, ver_patch);
+> @@ -3643,9 +3679,6 @@ static int btusb_setup_qca(struct hci_dev *hdev)
+> 		return err;
+> 
+> 	ver_rom = le32_to_cpu(ver.rom_version);
+> -	/* Don't care about high ROM versions */
+> -	if (ver_rom & ~0xffffU)
+> -		return 0;
+> 
+> 	for (i = 0; i < ARRAY_SIZE(qca_devices_table); i++) {
+> 		if (ver_rom == qca_devices_table[i].rom_version)
+> @@ -4081,6 +4114,13 @@ static int btusb_probe(struct usb_interface *intf,
+> 		btusb_check_needs_reset_resume(intf);
+> 	}
+> 
+> +	if (id->driver_info & BTUSB_QCA_WCN6855) {
+> +		data->setup_on_usb = btusb_setup_qca;
+> +		hdev->set_bdaddr = btusb_set_bdaddr_wcn6855;
+> +		hdev->cmd_timeout = btusb_qca_cmd_timeout;
+> +		set_bit(HCI_QUIRK_SIMULTANEOUS_DISCOVERY, &hdev->quirks);
+> +	}
+> +
+> 	if (id->driver_info & BTUSB_AMP) {
+> 		/* AMP controllers do not support SCO packets */
+> 		data->isoc = NULL;
+
+Regards
+
+Marcel
+
