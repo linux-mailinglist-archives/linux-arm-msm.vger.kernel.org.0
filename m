@@ -2,61 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A4FAC279984
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 26 Sep 2020 15:08:35 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5EF0F279986
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 26 Sep 2020 15:10:15 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726305AbgIZNIf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 26 Sep 2020 09:08:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37768 "EHLO
+        id S1726956AbgIZNKO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 26 Sep 2020 09:10:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38024 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725208AbgIZNIe (ORCPT
+        with ESMTP id S1726183AbgIZNKO (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 26 Sep 2020 09:08:34 -0400
-Received: from mail-wm1-x344.google.com (mail-wm1-x344.google.com [IPv6:2a00:1450:4864:20::344])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 07DA4C0613CE;
-        Sat, 26 Sep 2020 06:08:34 -0700 (PDT)
-Received: by mail-wm1-x344.google.com with SMTP id q9so1962788wmj.2;
-        Sat, 26 Sep 2020 06:08:33 -0700 (PDT)
+        Sat, 26 Sep 2020 09:10:14 -0400
+Received: from mail-wm1-x342.google.com (mail-wm1-x342.google.com [IPv6:2a00:1450:4864:20::342])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AD32EC0613CE;
+        Sat, 26 Sep 2020 06:10:13 -0700 (PDT)
+Received: by mail-wm1-x342.google.com with SMTP id e17so1975340wme.0;
+        Sat, 26 Sep 2020 06:10:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=tzZ2JfpvpBsGOcIuGOlMCZ/EELydDVJ8D62VX9UkrHQ=;
-        b=bxQ65KhHTs0fKOrVyOBGTn/1v2WLWkpMpApTeVr9BljXTRe1+DIIiD4HBdTtEZv8uh
-         lR7QCMUOGJQPV2FYT9LoVSmzbIrXQ3GUsQHk+1c63mZ4vNpiMaS0F/3ZRpGegsJZkzt9
-         VCfrph8uqUG4Ihx1VAi86yv+62v+C9ncqlq+LQhIcTk+jn6rekveRjnKS1Ox7al16eVQ
-         TLXYEI3yMhzOrIDP6VBdBg2rtb3MTJdKoPO6bR55rLT981btrk4QHoESFMYjkVT5PmEW
-         Xor4y+2mPCtYAn2zu8agXCtsnbGrniVe2dCR9rMH80qqC9PYdOPfsgSULuxhR/J+2LrM
-         0zhw==
+        bh=bl53+IHBE7yXiOLq6WRfnfhUTBMnGEZtbf1LqSaqfOk=;
+        b=ZnSoyNQkiRiDnKis+7gq4gVhcbPSrj9eiOj1ylZaZfDdIWqPR245/ny46XRV7/5ZfJ
+         p3qv4N2DsenX+E4dHs3u9T8vWtuPhYewSXOYbotPBML7J9FUk4FCRsm2g9KOZwYrmXQT
+         gFyKNuxSr4/8LzoSMJsaaUPpIsiaVubGst9xA7l9AVaUIdQ4dVVYLxKdE7zLTWQfRwqv
+         wxwtwRsCutaJBQmkBKg27sZdkMR6rCwzaYRuR8drngEjQTDiUzZZrmVCLPU99QlrZmU2
+         tX7+Qx0HC2aTt5+P2oy35eBEvNyR853VOjsSIUzv0hPdKYMh2W0FiDPuCqHTFyfKV0W0
+         McvA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=tzZ2JfpvpBsGOcIuGOlMCZ/EELydDVJ8D62VX9UkrHQ=;
-        b=AlZ7AIucyiEovd66vODlaw4EoEP2FBwyUqozFeh2HdkmpG9he7irXUe68lkvOztQV9
-         BAWhKpYVLumY2k+fKdtHTXeiLuCUW3Y+RsI3hLELsUt0Eyqj36lADpHsZRdAb34upu1g
-         ZiuBKa6PM3Ua23rQdcevAB28vW6EK7vq8Isf6G/T0tATiWTrbbHrgHn2x0Kr+MuuRJV3
-         0wXwEUnQl/dW1HwUUZpjzPRYuzkVDYm4boGoIH+RNvb629q8hfbUZN4p5yrXIcloZ962
-         2GWMkGjcKtA2dEfI4q7gKQoI81r0033PEKjeldBDSw8GVjO6R/QuPdFulUj3hfJkn8k0
-         sZxA==
-X-Gm-Message-State: AOAM533RSpt7Egt5wfoPHQ0sqCAKdXyXz3+hCuatE/tHAMQ3La5UpVPC
-        XNDkeZdrqP8lays/IDdYRqw=
-X-Google-Smtp-Source: ABdhPJxYfvWcdwBph0D/j6Cf8fb4h0xkVO0Y1R5AZuNnRHCe3ja3guo0ULRA6ciufF13I6l3z8AzMA==
-X-Received: by 2002:a7b:c317:: with SMTP id k23mr2501259wmj.44.1601125712657;
-        Sat, 26 Sep 2020 06:08:32 -0700 (PDT)
+        bh=bl53+IHBE7yXiOLq6WRfnfhUTBMnGEZtbf1LqSaqfOk=;
+        b=Pv0fvJ7FzEj/41Yefmk9nH3zbRW/hXn3Ib1aKmS/CAg9S0+sW5qqy7/NiB8zc3Az5D
+         otX17tbEsXlKJmmMqiaEdCeC+Os+ZZErKiWCaYrXpza6iJ87VARIDiEtH1dJSbtFlvRi
+         fL8dwN+9qiG8S4mF3mhxqC9jwWkj7TDeq/hAXlU/GmktOyisr3H0WsXq871bshJigBp6
+         2zUyqvqkBtJ7Uwg//Yika7Ua8GuWRGmibChlkYW2FKaH/W0xtSgqoBA1Q2OmeQwk6yXl
+         lZwyc4KAUhNVjsd6MY9EzwWK2wwvXAIuA1Nj2/QQwNHZjKpd46rEQGZLmrHzyePdsRqI
+         ZjCA==
+X-Gm-Message-State: AOAM531G2odd85adCuaI0hvYTlb+fcQeawAEry9d4QqYzzW8hi92IgMg
+        FJ8ZHUpmC7bqx+eWeRtcm5I=
+X-Google-Smtp-Source: ABdhPJxktGhTd1wTlxJzhDwl+9RINT3g0L/tuSOd7zA+tzc7U7+yuOK85la/ZCWhUgEsWppDJ4RYvg==
+X-Received: by 2002:a1c:7308:: with SMTP id d8mr2585996wmb.55.1601125812329;
+        Sat, 26 Sep 2020 06:10:12 -0700 (PDT)
 Received: from IcarusMOD.eternityproject.eu ([2.237.20.237])
-        by smtp.gmail.com with ESMTPSA id m13sm6681687wrr.74.2020.09.26.06.08.31
+        by smtp.gmail.com with ESMTPSA id h17sm7196806wro.27.2020.09.26.06.10.11
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 26 Sep 2020 06:08:32 -0700 (PDT)
+        Sat, 26 Sep 2020 06:10:11 -0700 (PDT)
 From:   kholk11@gmail.com
 To:     agross@kernel.org
-Cc:     bjorn.andersson@linaro.org, robh+dt@kernel.org, kholk11@gmail.com,
-        marijns95@gmail.com, konradybcio@gmail.com,
+Cc:     bjorn.andersson@linaro.org, jic23@kernel.org, robh+dt@kernel.org,
+        kholk11@gmail.com, marijns95@gmail.com, konradybcio@gmail.com,
         martin.botka1@gmail.com, linux-arm-msm@vger.kernel.org,
         phone-devel@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH] soc: qcom: rpmpd: Add SDM660 power-domains
-Date:   Sat, 26 Sep 2020 15:08:28 +0200
-Message-Id: <20200926130828.14292-1-kholk11@gmail.com>
+Subject: [PATCH 1/2] iio: adc: qcom-spmi-vadc: Use right ratiometric range for 8998,660,845
+Date:   Sat, 26 Sep 2020 15:10:08 +0200
+Message-Id: <20200926131009.14483-1-kholk11@gmail.com>
 X-Mailer: git-send-email 2.28.0
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
@@ -64,103 +64,80 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Konrad Dybcio <konradybcio@gmail.com>
+From: AngeloGioacchino Del Regno <kholk11@gmail.com>
 
-Add the shared cx/mx and sensor sub-system's cx and mx
-power-domains found on SDM660.
+The ratiometric range for MSM8998, SDM630/636/660 and SDM845 is 1875mV
+instead of the standard 1800mV: address this by adding a new compatible
+"qcom,spmi-vadc-8998" and assigning the different range to the machines
+declaring this one.
 
-Signed-off-by: Konrad Dybcio <konradybcio@gmail.com>
 Signed-off-by: AngeloGioacchino Del Regno <kholk11@gmail.com>
 ---
- .../devicetree/bindings/power/qcom,rpmpd.yaml |  1 +
- drivers/soc/qcom/rpmpd.c                      | 33 +++++++++++++++++++
- include/dt-bindings/power/qcom-rpmpd.h        | 12 +++++++
- 3 files changed, 46 insertions(+)
+ drivers/iio/adc/qcom-spmi-vadc.c   | 10 +++++++++-
+ drivers/iio/adc/qcom-vadc-common.h |  1 +
+ 2 files changed, 10 insertions(+), 1 deletion(-)
 
-diff --git a/Documentation/devicetree/bindings/power/qcom,rpmpd.yaml b/Documentation/devicetree/bindings/power/qcom,rpmpd.yaml
-index 8058955fb3b9..45ec2439ff51 100644
---- a/Documentation/devicetree/bindings/power/qcom,rpmpd.yaml
-+++ b/Documentation/devicetree/bindings/power/qcom,rpmpd.yaml
-@@ -20,6 +20,7 @@ properties:
-       - qcom,msm8996-rpmpd
-       - qcom,msm8998-rpmpd
-       - qcom,qcs404-rpmpd
-+      - qcom,sdm660-rpmpd
-       - qcom,sc7180-rpmhpd
-       - qcom,sdm845-rpmhpd
-       - qcom,sm8150-rpmhpd
-diff --git a/drivers/soc/qcom/rpmpd.c b/drivers/soc/qcom/rpmpd.c
-index f2168e4259b2..d54a84dd83a8 100644
---- a/drivers/soc/qcom/rpmpd.c
-+++ b/drivers/soc/qcom/rpmpd.c
-@@ -220,11 +220,44 @@ static const struct rpmpd_desc qcs404_desc = {
- 	.max_state = RPM_SMD_LEVEL_BINNING,
- };
+diff --git a/drivers/iio/adc/qcom-spmi-vadc.c b/drivers/iio/adc/qcom-spmi-vadc.c
+index b0388f8a69f4..59a94ea7bf78 100644
+--- a/drivers/iio/adc/qcom-spmi-vadc.c
++++ b/drivers/iio/adc/qcom-spmi-vadc.c
+@@ -101,6 +101,7 @@ struct vadc_channel_prop {
+  * @dev: pointer to struct device.
+  * @base: base address for the ADC peripheral.
+  * @nchannels: number of VADC channels.
++ * @ratio_range: ratiometric range for ref points.
+  * @chan_props: array of VADC channel properties.
+  * @iio_chans: array of IIO channels specification.
+  * @are_ref_measured: are reference points measured.
+@@ -114,6 +115,7 @@ struct vadc_priv {
+ 	struct device		 *dev;
+ 	u16			 base;
+ 	unsigned int		 nchannels;
++	unsigned int		 ratio_range;
+ 	struct vadc_channel_prop *chan_props;
+ 	struct iio_chan_spec	 *iio_chans;
+ 	bool			 are_ref_measured;
+@@ -355,7 +357,7 @@ static int vadc_measure_ref_points(struct vadc_priv *vadc)
+ 	u16 read_1, read_2;
+ 	int ret;
  
-+/* sdm660 RPM Power domains */
-+DEFINE_RPMPD_PAIR(sdm660, vddcx, vddcx_ao, RWCX, LEVEL, 0);
-+DEFINE_RPMPD_VFL(sdm660, vddcx_vfl, RWCX, 0);
+-	vadc->graph[VADC_CALIB_RATIOMETRIC].dx = VADC_RATIOMETRIC_RANGE;
++	vadc->graph[VADC_CALIB_RATIOMETRIC].dx = vadc->ratio_range;
+ 	vadc->graph[VADC_CALIB_ABSOLUTE].dx = VADC_ABSOLUTE_RANGE_UV;
+ 
+ 	prop = vadc_get_channel(vadc, VADC_REF_1250MV);
+@@ -885,6 +887,11 @@ static int vadc_probe(struct platform_device *pdev)
+ 	if (ret)
+ 		return ret;
+ 
++	if (of_device_is_compatible(node, "qcom,spmi-vadc-8998"))
++		vadc->ratio_range = VADC_RATIOMETRIC_RANGE_8998;
++	else
++		vadc->ratio_range = VADC_RATIOMETRIC_RANGE;
 +
-+DEFINE_RPMPD_PAIR(sdm660, vddmx, vddmx_ao, RWMX, LEVEL, 0);
-+DEFINE_RPMPD_VFL(sdm660, vddmx_vfl, RWMX, 0);
-+
-+DEFINE_RPMPD_LEVEL(sdm660, vdd_ssccx, RWSC, 0);
-+DEFINE_RPMPD_VFL(sdm660, vdd_ssccx_vfl, RWSC, 0);
-+
-+DEFINE_RPMPD_LEVEL(sdm660, vdd_sscmx, RWSM, 0);
-+DEFINE_RPMPD_VFL(sdm660, vdd_sscmx_vfl, RWSM, 0);
-+
-+static struct rpmpd *sdm660_rpmpds[] = {
-+	[SDM660_VDDCX] =		&sdm660_vddcx,
-+	[SDM660_VDDCX_AO] =		&sdm660_vddcx_ao,
-+	[SDM660_VDDCX_VFL] =		&sdm660_vddcx_vfl,
-+	[SDM660_VDDMX] =		&sdm660_vddmx,
-+	[SDM660_VDDMX_AO] =		&sdm660_vddmx_ao,
-+	[SDM660_VDDMX_VFL] =		&sdm660_vddmx_vfl,
-+	[SDM660_SSCCX] =		&sdm660_vdd_ssccx,
-+	[SDM660_SSCCX_VFL] =		&sdm660_vdd_ssccx_vfl,
-+	[SDM660_SSCMX] =		&sdm660_vdd_sscmx,
-+	[SDM660_SSCMX_VFL] =		&sdm660_vdd_sscmx_vfl,
-+};
-+
-+static const struct rpmpd_desc sdm660_desc = {
-+	.rpmpds = sdm660_rpmpds,
-+	.num_pds = ARRAY_SIZE(sdm660_rpmpds),
-+	.max_state = RPM_SMD_LEVEL_TURBO,
-+};
-+
- static const struct of_device_id rpmpd_match_table[] = {
- 	{ .compatible = "qcom,msm8976-rpmpd", .data = &msm8976_desc },
- 	{ .compatible = "qcom,msm8996-rpmpd", .data = &msm8996_desc },
- 	{ .compatible = "qcom,msm8998-rpmpd", .data = &msm8998_desc },
- 	{ .compatible = "qcom,qcs404-rpmpd", .data = &qcs404_desc },
-+	{ .compatible = "qcom,sdm660-rpmpd", .data = &sdm660_desc },
+ 	irq_eoc = platform_get_irq(pdev, 0);
+ 	if (irq_eoc < 0) {
+ 		if (irq_eoc == -EPROBE_DEFER || irq_eoc == -EINVAL)
+@@ -918,6 +925,7 @@ static int vadc_probe(struct platform_device *pdev)
+ 
+ static const struct of_device_id vadc_match_table[] = {
+ 	{ .compatible = "qcom,spmi-vadc" },
++	{ .compatible = "qcom-spmi-vadc-8998" },
  	{ }
  };
- MODULE_DEVICE_TABLE(of, rpmpd_match_table);
-diff --git a/include/dt-bindings/power/qcom-rpmpd.h b/include/dt-bindings/power/qcom-rpmpd.h
-index 5e61eaf73bdd..2a39dc40483d 100644
---- a/include/dt-bindings/power/qcom-rpmpd.h
-+++ b/include/dt-bindings/power/qcom-rpmpd.h
-@@ -102,6 +102,18 @@
- #define QCS404_LPIMX		5
- #define QCS404_LPIMX_VFL	6
+ MODULE_DEVICE_TABLE(of, vadc_match_table);
+diff --git a/drivers/iio/adc/qcom-vadc-common.h b/drivers/iio/adc/qcom-vadc-common.h
+index 17b2fc4d8bf2..b10d5fd59034 100644
+--- a/drivers/iio/adc/qcom-vadc-common.h
++++ b/drivers/iio/adc/qcom-vadc-common.h
+@@ -16,6 +16,7 @@
  
-+/* SDM660 Power Domains */
-+#define SDM660_VDDCX		0
-+#define SDM660_VDDCX_AO		1
-+#define SDM660_VDDCX_VFL	2
-+#define SDM660_VDDMX		3
-+#define SDM660_VDDMX_AO		4
-+#define SDM660_VDDMX_VFL	5
-+#define SDM660_SSCCX		6
-+#define SDM660_SSCCX_VFL	7
-+#define SDM660_SSCMX		8
-+#define SDM660_SSCMX_VFL	9
-+
- /* RPM SMD Power Domain performance levels */
- #define RPM_SMD_LEVEL_RETENTION       16
- #define RPM_SMD_LEVEL_RETENTION_PLUS  32
+ #define VADC_ABSOLUTE_RANGE_UV			625000
+ #define VADC_RATIOMETRIC_RANGE			1800
++#define VADC_RATIOMETRIC_RANGE_8998		1875
+ 
+ #define VADC_DEF_PRESCALING			0 /* 1:1 */
+ #define VADC_DEF_DECIMATION			0 /* 512 */
 -- 
 2.28.0
 
