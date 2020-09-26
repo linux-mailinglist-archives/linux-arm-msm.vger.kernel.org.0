@@ -2,153 +2,301 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 2FADF279702
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 26 Sep 2020 06:51:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6A02E279712
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 26 Sep 2020 07:19:06 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730019AbgIZEvx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 26 Sep 2020 00:51:53 -0400
-Received: from z5.mailgun.us ([104.130.96.5]:61217 "EHLO z5.mailgun.us"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726305AbgIZEvx (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 26 Sep 2020 00:51:53 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1601095912; h=Content-Transfer-Encoding: MIME-Version:
- Message-Id: Date: Subject: Cc: To: From: Sender;
- bh=DTXwOW1hmbrLyDmXb2wq+4otAe5l4L0w+uetysGZBWs=; b=wT9LL8q9o8guxKVs/vGEfDg5mF9jnm1GXeQNbn8mQ7gsb10VoHZoUXyWU+fIeezdjThT4tWj
- LkiDqSWv5usdVwuPfzkG+Ie36V6g8eJbvZ9iRDQWiDbYS4Hp3Ei1N9pvN6VbcpqzuCJKJfOv
- IR3cUBpq9SYZgDuWBIeKBHHzfZ4=
-X-Mailgun-Sending-Ip: 104.130.96.5
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n04.prod.us-west-2.postgun.com with SMTP id
- 5f6ec8e6e064df29c647299d (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Sat, 26 Sep 2020 04:51:50
- GMT
-Sender: tanmay=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id CDA04C43385; Sat, 26 Sep 2020 04:51:50 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
-        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
-Received: from linuxdisplay-lab-04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: tanmay)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 5C708C433CA;
-        Sat, 26 Sep 2020 04:51:49 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 5C708C433CA
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=tanmay@codeaurora.org
-From:   Tanmay Shah <tanmay@codeaurora.org>
-To:     dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org
-Cc:     robdclark@gmail.com, swboyd@chromium.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        seanpaul@chromium.org, daniel@ffwll.ch, airlied@linux.ie,
-        aravindh@codeaurora.org, abhinavk@codeaurora.org,
-        khsieh@codeaurora.org, Tanmay Shah <tanmay@codeaurora.org>
-Subject: [PATCH] drm/msm/dp: DisplayPort PHY compliance tests fixup
-Date:   Fri, 25 Sep 2020 21:50:48 -0700
-Message-Id: <20200926045048.16175-1-tanmay@codeaurora.org>
-X-Mailer: git-send-email 2.27.0
+        id S1726210AbgIZFTF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 26 Sep 2020 01:19:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50444 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726149AbgIZFTF (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Sat, 26 Sep 2020 01:19:05 -0400
+Received: from mail-pg1-x541.google.com (mail-pg1-x541.google.com [IPv6:2607:f8b0:4864:20::541])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0B8F2C0613CE
+        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Sep 2020 22:19:05 -0700 (PDT)
+Received: by mail-pg1-x541.google.com with SMTP id g29so4217230pgl.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Sep 2020 22:19:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=QNRpA3fP8UlrvPBTi+wiQarnFN3OUO0spnXec+d9ZJo=;
+        b=IL/QV5hHVJZg7+e4BXxZekntcbwhlB7XLaKfqFjGKXDirs2Hnf82bRhVf/BOjaIKvL
+         1lmrwSGoCx0TKS6TZOM5C0aTRv4E5xrtO6iwiNodr8b7SUZeXINC8KMfmQYvoJiD1wRe
+         70TxkDE76pmp1o7//FrTcmPPieoS1kaf+6CFEJJtzX69DnOVXTi5/yrM64KY8b4GZHla
+         dPs+MCjzbgJa0eNHEojcHBOQPwt1tXl5k2mKcQtbjjf54KMzoNEKl8fP8LKB53DWUwLQ
+         IThGomtUDUIQITYOFGXQwLc++edi2gu5c1nfqOzWwcWTJujaMUl8u9H9/EtS1Y8gMrzm
+         ak/g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=QNRpA3fP8UlrvPBTi+wiQarnFN3OUO0spnXec+d9ZJo=;
+        b=g2INn9iavyR/BCqEiZzcEc33/Km3qXtJKacqg0/OJZ172VYQwuY0kMvXMzWkBsUVzk
+         3gMf4Fi29NUijAIDatcroLlbiaCzoNRVJpKR0PiQ3ivtHdP3OHQmsNihszVvrT3irSBA
+         Ik4YqQrU6MQvdLW3rXC9CQvLwS+FYzn6oyH0zVomw/9dVV/M0vlux6yyswPFZAThrGFo
+         1/w/0zzwV/2ambzVkE57SRQ36gPXNkhLyC/821QtT/4yR1p3zczKRdpKrT07uuvq1Ym1
+         XTlisOq886Npv7RzrG9FiYbB3REoZrRFAAk2IUmx52JSbJxaLU5VAK2wWj/bN/9F8/gt
+         r2vw==
+X-Gm-Message-State: AOAM532QBzliuBX4KxCsJnPyVHXiAGxWbosZVvIVnPLq68BM7GBzTbva
+        6JRpqob52r4lzsgR/hgUryM6AgwTFMLwaCw=
+X-Google-Smtp-Source: ABdhPJx596cZVLFe3K6Vo1gBP+Mf7rpRhYpFOHk94YAn1FgsPCrjRVFB28YqFAftckQfrQ8yo2ju2g==
+X-Received: by 2002:a63:3304:: with SMTP id z4mr1737432pgz.90.1601097544291;
+        Fri, 25 Sep 2020 22:19:04 -0700 (PDT)
+Received: from linux ([103.59.133.81])
+        by smtp.gmail.com with ESMTPSA id o4sm939309pfh.39.2020.09.25.22.19.01
+        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
+        Fri, 25 Sep 2020 22:19:03 -0700 (PDT)
+Date:   Sat, 26 Sep 2020 10:48:58 +0530
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     Loic Poulain <loic.poulain@linaro.org>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Hemant Kumar <hemantk@codeaurora.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>
+Subject: Re: [PATCH] bus: mhi: Add MHI PCI support
+Message-ID: <20200926051858.GA9302@linux>
+References: <1600868432-12438-1-git-send-email-loic.poulain@linaro.org>
+ <20200923151709.GC40811@yoga>
+ <CAMZdPi_yPNxgnX0bgFEL=Djg3FrjhRQ5Koq8BUoQoD=ZLLzSRA@mail.gmail.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAMZdPi_yPNxgnX0bgFEL=Djg3FrjhRQ5Koq8BUoQoD=ZLLzSRA@mail.gmail.com>
+User-Agent: Mutt/1.9.4 (2018-02-28)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Bandwidth code was being used as test link rate. Fix this by converting
-bandwidth code to test link rate
+On Wed, Sep 23, 2020 at 06:31:09PM +0200, Loic Poulain wrote:
+> Hi Bjorn,
+> 
+> On Wed, 23 Sep 2020 at 17:17, Bjorn Andersson
+> <bjorn.andersson@linaro.org> wrote:
+> >
+> > On Wed 23 Sep 08:40 CDT 2020, Loic Poulain wrote:
+> >
+> > > This is a generic MHI-over-PCI controller driver for MHI only devices
+> > > such as QCOM modems. For now it supports registering of Qualcomm SDX55
+> > > based PCIe modules. The MHI channels have been extracted from mhi
+> > > downstream driver.
+> > >
+> > > This driver is easily extendable to support other MHI PCI devices like
+> > > different modem hw or OEM superset.
+> > >
+> > > Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
+> > > ---
+> > [..]
+> > > diff --git a/drivers/bus/mhi/controllers/mhi_pci_common.c b/drivers/bus/mhi/controllers/mhi_pci_common.c
+> > > new file mode 100644
+> > > index 0000000..705b283
+> > > --- /dev/null
+> > > +++ b/drivers/bus/mhi/controllers/mhi_pci_common.c
+> >
+> > ath11k is also "PCI" and "MHI" but this isn't "common" code for it, so
+> > perhaps "mhi_pci_generic.c" or "mhi_pci_modem.c"?
+> 
+> Right, mhi_pci_modem looks good.
+> 
 
-Do not reset voltage and pre-emphasis level during IRQ HPD attention
-interrupt. Also fix pre-emphasis parsing during test link status process
+Please use "mhi_pci_generic". This driver is not specific to modems...
 
-Signed-off-by: Tanmay Shah <tanmay@codeaurora.org>
----
- drivers/gpu/drm/msm/dp/dp_ctrl.c    |  3 ---
- drivers/gpu/drm/msm/dp/dp_display.c |  1 +
- drivers/gpu/drm/msm/dp/dp_link.c    | 12 +++++++++++-
- drivers/gpu/drm/msm/dp/dp_link.h    |  1 +
- 4 files changed, 13 insertions(+), 4 deletions(-)
+Thanks,
+Mani
 
-diff --git a/drivers/gpu/drm/msm/dp/dp_ctrl.c b/drivers/gpu/drm/msm/dp/dp_ctrl.c
-index 2e3e1917351f..872b12689e31 100644
---- a/drivers/gpu/drm/msm/dp/dp_ctrl.c
-+++ b/drivers/gpu/drm/msm/dp/dp_ctrl.c
-@@ -1643,9 +1643,6 @@ int dp_ctrl_on_link(struct dp_ctrl *dp_ctrl)
- 	if (rc)
- 		return rc;
- 
--	ctrl->link->phy_params.p_level = 0;
--	ctrl->link->phy_params.v_level = 0;
--
- 	while (--link_train_max_retries &&
- 		!atomic_read(&ctrl->dp_ctrl.aborted)) {
- 		rc = dp_ctrl_reinitialize_mainlink(ctrl);
-diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
-index e175aa3fd3a9..ae9989ece73f 100644
---- a/drivers/gpu/drm/msm/dp/dp_display.c
-+++ b/drivers/gpu/drm/msm/dp/dp_display.c
-@@ -335,6 +335,7 @@ static int dp_display_process_hpd_high(struct dp_display_private *dp)
- 	dp->dp_display.max_pclk_khz = DP_MAX_PIXEL_CLK_KHZ;
- 	dp->dp_display.max_dp_lanes = dp->parser->max_dp_lanes;
- 
-+	dp_link_reset_phy_params_vx_px(dp->link);
- 	rc = dp_ctrl_on_link(dp->ctrl);
- 	if (rc) {
- 		DRM_ERROR("failed to complete DP link training\n");
-diff --git a/drivers/gpu/drm/msm/dp/dp_link.c b/drivers/gpu/drm/msm/dp/dp_link.c
-index c811da515fb3..49d7fad36fc4 100644
---- a/drivers/gpu/drm/msm/dp/dp_link.c
-+++ b/drivers/gpu/drm/msm/dp/dp_link.c
-@@ -869,6 +869,9 @@ static int dp_link_parse_vx_px(struct dp_link_private *link)
- 		drm_dp_get_adjust_request_voltage(link->link_status, 0);
- 	link->dp_link.phy_params.p_level =
- 		drm_dp_get_adjust_request_pre_emphasis(link->link_status, 0);
-+
-+	link->dp_link.phy_params.p_level >>= DP_TRAIN_PRE_EMPHASIS_SHIFT;
-+
- 	DRM_DEBUG_DP("Requested: v_level = 0x%x, p_level = 0x%x\n",
- 			link->dp_link.phy_params.v_level,
- 			link->dp_link.phy_params.p_level);
-@@ -911,7 +914,8 @@ static int dp_link_process_phy_test_pattern_request(
- 			link->request.test_lane_count);
- 
- 	link->dp_link.link_params.num_lanes = link->request.test_lane_count;
--	link->dp_link.link_params.rate = link->request.test_link_rate;
-+	link->dp_link.link_params.rate =
-+		drm_dp_bw_code_to_link_rate(link->request.test_link_rate);
- 
- 	ret = dp_link_parse_vx_px(link);
- 
-@@ -1156,6 +1160,12 @@ int dp_link_adjust_levels(struct dp_link *dp_link, u8 *link_status)
- 	return 0;
- }
- 
-+void dp_link_reset_phy_params_vx_px(struct dp_link *dp_link)
-+{
-+	dp_link->phy_params.v_level = 0;
-+	dp_link->phy_params.p_level = 0;
-+}
-+
- u32 dp_link_get_test_bits_depth(struct dp_link *dp_link, u32 bpp)
- {
- 	u32 tbd;
-diff --git a/drivers/gpu/drm/msm/dp/dp_link.h b/drivers/gpu/drm/msm/dp/dp_link.h
-index 49811b6221e5..9dd4dd926530 100644
---- a/drivers/gpu/drm/msm/dp/dp_link.h
-+++ b/drivers/gpu/drm/msm/dp/dp_link.h
-@@ -135,6 +135,7 @@ static inline u32 dp_link_bit_depth_to_bpc(u32 tbd)
- 	}
- }
- 
-+void dp_link_reset_phy_params_vx_px(struct dp_link *dp_link);
- u32 dp_link_get_test_bits_depth(struct dp_link *dp_link, u32 bpp);
- int dp_link_process_request(struct dp_link *dp_link);
- int dp_link_get_colorimetry_config(struct dp_link *dp_link);
--- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project
-
+> >
+> > > @@ -0,0 +1,339 @@
+> > > +// SPDX-License-Identifier: GPL-2.0-or-later
+> > > +/*
+> > > + * MHI PCI driver - MHI over PCI controller driver
+> > > + *
+> > > + * This module is a generic driver for registering pure MHI-over-PCI devices,
+> > > + * such as PCIe QCOM modems.
+> > > + *
+> > > + * Copyright (C) 2020 Linaro Ltd <loic.poulain@linaro.org>
+> > > + */
+> > > +
+> > > +#include <linux/device.h>
+> > > +#include <linux/mhi.h>
+> > > +#include <linux/module.h>
+> > > +#include <linux/pci.h>
+> > > +#include <linux/delay.h>
+> >
+> > Can you confirm that you need delay.h?
+> 
+> You're right, don't use any delay function in that version.
+> 
+> >
+> > > +
+> > > +#define MHI_PCI_BAR_NUM 0
+> > > +
+> > > +enum {
+> > > +     EV_RING_0,
+> > > +     EV_RING_1,
+> > > +     EV_RING_2,
+> > > +     EV_RING_3,
+> >
+> > Maybe you can just use the numbers 0-3 instead?
+> 
+> ack.
+> 
+> >
+> > > +};
+> > > +
+> > [..]
+> > > +static int mhi_pci_claim(struct mhi_controller *mhic)
+> > > +{
+> > > +     struct pci_dev *pdev = to_pci_dev(mhic->cntrl_dev);
+> > > +     int err;
+> > > +
+> > > +     err = pci_assign_resource(pdev, MHI_PCI_BAR_NUM);
+> > > +     if (err) {
+> > > +             dev_err(&pdev->dev, "failed to assign pci resource: %d\n", err);
+> >
+> > Afaict all code paths of pci_assign_resource() will log already.
+> >
+> 
+> ok, thanks.
+> 
+> > > +             return err;
+> > > +     }
+> > > +
+> > > +     err = pcim_enable_device(pdev);
+> > > +     if (err) {
+> > > +             dev_err(&pdev->dev, "failed to enable pci device: %d\n", err);
+> > > +             return err;
+> > > +     }
+> > > +
+> > > +     err = pcim_iomap_regions(pdev, 1 << MHI_PCI_BAR_NUM, pci_name(pdev));
+> > > +     if (err) {
+> > > +             dev_err(&pdev->dev, "failed to map pci region: %d\n", err);
+> > > +             return err;
+> > > +     }
+> > > +     mhic->regs = pcim_iomap_table(pdev)[MHI_PCI_BAR_NUM];
+> > > +
+> > > +     err = pci_set_dma_mask(pdev, DMA_BIT_MASK(32));
+> > > +     if (err) {
+> > > +             dev_err(&pdev->dev, "Cannot set proper DMA mask\n");
+> > > +             return err;
+> > > +     }
+> > > +
+> > > +     err = pci_set_consistent_dma_mask(pdev, DMA_BIT_MASK(32));
+> > > +     if (err) {
+> > > +             dev_err(&pdev->dev, "set consistent dma mask failed\n");
+> > > +             return err;
+> > > +     }
+> > > +
+> > > +     pci_set_master(pdev);
+> > > +
+> > > +     return 0;
+> > > +}
+> > [..]
+> > > +static int mhi_pci_probe(struct pci_dev *pdev, const struct pci_device_id *id)
+> > > +{
+> > > +     const struct mhi_pci_dev_info *info = (struct mhi_pci_dev_info *) id->driver_data;
+> > > +     const struct mhi_controller_config *mhic_config;
+> > > +     struct mhi_controller *mhic;
+> > > +     int err;
+> > > +
+> > > +     dev_info(&pdev->dev, "MHI PCI device found: %s\n", info->name);
+> > > +
+> > > +     mhic = devm_kzalloc(&pdev->dev, sizeof(*mhic), GFP_KERNEL);
+> > > +     if (!mhic) {
+> > > +             dev_err(&pdev->dev, "failed to allocate mhi controller\n");
+> >
+> > kzalloc() will log errors as well.
+> >
+> > > +             return -ENOMEM;
+> > > +     }
+> > > +
+> > > +     mhic_config = info->config;
+> > > +     mhic->cntrl_dev = &pdev->dev;
+> > > +     mhic->iova_start = 0;
+> > > +     mhic->iova_stop = 0xffffffff;
+> > > +     mhic->fw_image = NULL;
+> > > +     mhic->edl_image = NULL;
+> > > +
+> > > +     mhic->read_reg = mhi_pci_read_reg;
+> > > +     mhic->write_reg = mhi_pci_write_reg;
+> > > +     mhic->status_cb = mhi_pci_status_cb;
+> > > +     mhic->runtime_get = mhi_pci_runtime_get;
+> > > +     mhic->runtime_put = mhi_pci_runtime_put;
+> > > +
+> > > +     err = mhi_pci_claim(mhic);
+> > > +     if (err)
+> > > +             return err;
+> > > +
+> > > +     err = mhi_pci_get_irqs(mhic, mhic_config);
+> > > +     if (err)
+> > > +             return err;
+> > > +
+> > > +     pci_set_drvdata(pdev, mhic);
+> > > +
+> > > +     err = mhi_register_controller(mhic, mhic_config);
+> > > +     if (err) {
+> > > +             dev_err(&pdev->dev, "failed to register MHI controller\n");
+> >
+> > Afaict all errors that occurs if you pass valid data to this function
+> > will print an error message already...
+> >
+> > > +             pci_free_irq_vectors(pdev);
+> > > +             return err;
+> > > +     }
+> > > +
+> > > +     /* MHI bus does not power up the controller by default */
+> > > +     err = mhi_prepare_for_power_up(mhic);
+> > > +     if (err) {
+> > > +             dev_err(&pdev->dev, "failed to prepare MHI controller\n");
+> >
+> > mhi_unregister_controller()?
+> 
+> Indeed, thanks.
+> 
+> >
+> > > +             return err;
+> > > +     }
+> > > +
+> > > +     err = mhi_sync_power_up(mhic);
+> > > +     if (err) {
+> > > +             dev_err(&pdev->dev, "failed to power up MHI controller\n");
+> > > +             mhi_unprepare_after_power_down(mhic);
+> > > +             mhi_unregister_controller(mhic);
+> > > +             return err;
+> > > +     }
+> > > +
+> > > +     return 0;
+> > > +}
+> > > +
+> > > +static void mhi_pci_remove(struct pci_dev *pdev)
+> > > +{
+> > > +     struct mhi_controller *mhic = pci_get_drvdata(pdev);
+> > > +
+> > > +     mhi_power_down(mhic, true);
+> > > +     mhi_unprepare_after_power_down(mhic);
+> > > +     mhi_unregister_controller(mhic);
+> > > +}
+> > > +
+> > > +static struct pci_driver mhi_pci_driver = {
+> > > +     .name           = "mhi-pci",
+> > > +     .id_table       = mhi_pci_id_table,
+> > > +     .probe          = mhi_pci_probe,
+> > > +     .remove         = mhi_pci_remove
+> > > +};
+> > > +module_pci_driver(mhi_pci_driver);
+> > > +
+> > > +MODULE_AUTHOR("Loic Poulain <loic.poulain@linaro,org>");
+> > > +MODULE_DESCRIPTION("mhi-pci");
+> >
+> > Please expand this
+> 
+> will do.
+> 
+> >
+> > > +MODULE_LICENSE("GPL");
+> > > +MODULE_VERSION("1");
+> >
+> > And please drop the version, as this is likely not going to be updated
+> > consistently.
+> >
+> > Regards,
+> > Bjorn
