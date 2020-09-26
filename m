@@ -2,52 +2,52 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id CDC76279931
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 26 Sep 2020 14:56:15 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id F004D279936
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 26 Sep 2020 14:56:21 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729289AbgIZM4K (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 26 Sep 2020 08:56:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35772 "EHLO
+        id S1729557AbgIZM4U (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 26 Sep 2020 08:56:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35778 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726316AbgIZM4J (ORCPT
+        with ESMTP id S1729332AbgIZM4L (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 26 Sep 2020 08:56:09 -0400
+        Sat, 26 Sep 2020 08:56:11 -0400
 Received: from mail-wr1-x444.google.com (mail-wr1-x444.google.com [IPv6:2a00:1450:4864:20::444])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9D8F8C0613CE;
-        Sat, 26 Sep 2020 05:56:09 -0700 (PDT)
-Received: by mail-wr1-x444.google.com with SMTP id e16so6892728wrm.2;
-        Sat, 26 Sep 2020 05:56:09 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AA779C0613CE;
+        Sat, 26 Sep 2020 05:56:10 -0700 (PDT)
+Received: by mail-wr1-x444.google.com with SMTP id c18so6830250wrm.9;
+        Sat, 26 Sep 2020 05:56:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=iWbBh4wEsI+3oKMbFeIqVzya6+vka++Z1j+OucMUxWY=;
-        b=dUc9QEox4/Z1jVdI1Z61Jy1FMR1K6SYHTAE6aJwawQtULBWgsK4sJlbRIs3u922igH
-         8pccKNlWo5Ae/ZngxEU/B0dEOlvqWBE1wFdqgsbE7Lc4hG3NykHj7o/DAakb92C4rC9/
-         flghAapyAoXOAnKj2fQpj332AkGbehOS+va2lbY3oV+cLsDA+QURaOSSCq4z9p59bawp
-         d7D5YpUrDiefPUWmixDqhn8v4iPpF1HSys8plJbv/ju3DU/2QHBwkabEeOQRJCim1fwG
-         mMohvzMlnJev/LXoQ1QuYIyQoEvyk9+Poy4CkCy7CSufEH1lg5IHEWcwyWG1kernyOYK
-         dbEw==
+        bh=8uSfqxa/BOSJ683q8K6M24iSA6dxQW4lKoYvb7lVTZM=;
+        b=iMYbrgxLI2MrOK2pyZREh6RdWcqtL3eZaiExNtVRmMz/2bAN+WUS7IRpwNitcOqoru
+         blfa0ZEM8ILvSsZ56JhoIBi4u0TUIGkJBt3jVfxsCpOlwqq1V3lvAvYN2o99/WlaLfKP
+         Mnqme+d1ue62pfo7Jhj8mLiRRWY7r6/R67t/ahl09+vWPb1Qixx9O8QyNTEFbIr6P34v
+         VzezQrsq+T0k0aDVCGgfstYbLSWosy4+oOk5KyGuXPU5J0tF4RWLZpn+c6MSCs8Gkeog
+         nOFOML4ztzNGkszkmSvVyJFdkc3I7uQ8r6IgIwi6YU3032eg2wHcE6K4/tjy0Wj2QgEt
+         rw5Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=iWbBh4wEsI+3oKMbFeIqVzya6+vka++Z1j+OucMUxWY=;
-        b=jAgPgrLE0Rba7sGyS1AFrOg81/Qy+364EXsrKzjRHZSQFIyjH5cmeycUHqPRB3QI1y
-         cnehYBM8sox8PQK8hOD04a7nlss3XvTd5Xd2uL7IGaJWyhTolzhUpHTy9pc0A+2KSwvQ
-         WUl4jYlgxkXO+/T/iV9NERuXGBmBQKrhUaH77svkxqfG9ZqvI4eSX+Z9U9/hwgavNeV1
-         n7v93mmVHQ82nXOLqP7kphP7+9uyi95pmv1+x4drwNQmzWvFYC8sfYBSp2SzLxMAdKs2
-         lvbQ8gutjDmc4v/d7ZN10sNrbleI9FjgdgqjpgHloQ4d6FL+DzXvcQyXtW1NuHXc66nN
-         pGwg==
-X-Gm-Message-State: AOAM530YTK7f1jqQ3PKynb4YgGYhCd3vMSrRBd/Gnj+Ch/tPyVS1vVZB
-        eKyTf03Mlg6AXOc1U6E8yFiJ12c650GLdA==
-X-Google-Smtp-Source: ABdhPJwqv+JFFCPEOx0SDe5gJ9pdEbkFuio/iCJMbGKii72NeZF2ohRBb7+AtqGK0NlOfd2HjaIMww==
-X-Received: by 2002:adf:ef4a:: with SMTP id c10mr9055793wrp.13.1601124968265;
-        Sat, 26 Sep 2020 05:56:08 -0700 (PDT)
+        bh=8uSfqxa/BOSJ683q8K6M24iSA6dxQW4lKoYvb7lVTZM=;
+        b=djd5wXCgKZICf65ywzO+WOK+N7MqOUwqs0O0475I+vy/tzaZjCHFBTMD767o5aRUeB
+         W27/v/029TxZJWExcl84tWyDmjqqhnzVMe+at1vZa1KAnu6xDH1SD9PKZVU+Vp+l0zVx
+         ed1SB0xtGMhJU/I3C6cCMbmSNpP1ixjGIuTAXpAaFCBpcrPT9PGGVL+reYerIPht0Ojr
+         YkKH9ZnfiXIbQTUV2F0FmvDsDf1IT5GP7gQy5G8fIL1EZIC3h5Cl7r3H8fiSIItXgT+Y
+         bUVN181sAxa8NxMteriQXuQkh1G0JGEDVINY/ntkGV6372Xvw/mpQj3fF+lOoeEu6Gdq
+         deog==
+X-Gm-Message-State: AOAM533W3IFvqRmiZFuIBTQkRMn8nxEtfebwgbNwOXl8nnaNBT4rUdab
+        +xcRq/7TvxvJ0DVqbhFDECg=
+X-Google-Smtp-Source: ABdhPJwDp9eXBRmt6PfaE4aWU65vPotGj3HWlCgJB/arSQr1OvCnFpSgV04HOnI3aXwa2GfnZetP9A==
+X-Received: by 2002:a5d:6a47:: with SMTP id t7mr9214090wrw.75.1601124969266;
+        Sat, 26 Sep 2020 05:56:09 -0700 (PDT)
 Received: from IcarusMOD.eternityproject.eu ([2.237.20.237])
-        by smtp.gmail.com with ESMTPSA id h1sm6503024wrx.33.2020.09.26.05.56.07
+        by smtp.gmail.com with ESMTPSA id h1sm6503024wrx.33.2020.09.26.05.56.08
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 26 Sep 2020 05:56:07 -0700 (PDT)
+        Sat, 26 Sep 2020 05:56:08 -0700 (PDT)
 From:   kholk11@gmail.com
 To:     broonie@kernel.org
 Cc:     lgirdwood@gmail.com, agross@kernel.org, bjorn.andersson@linaro.org,
@@ -55,9 +55,9 @@ Cc:     lgirdwood@gmail.com, agross@kernel.org, bjorn.andersson@linaro.org,
         konradybcio@gmail.com, martin.botka1@gmail.com,
         linux-arm-msm@vger.kernel.org, phone-devel@vger.kernel.org,
         linux-kernel@vger.kernel.org
-Subject: [PATCH 1/7] regulator: core: Enlarge max OF property name length to 64 chars
-Date:   Sat, 26 Sep 2020 14:55:43 +0200
-Message-Id: <20200926125549.13191-2-kholk11@gmail.com>
+Subject: [PATCH 2/7] regulator: qcom_spmi: Add support for new regulator types
+Date:   Sat, 26 Sep 2020 14:55:44 +0200
+Message-Id: <20200926125549.13191-3-kholk11@gmail.com>
 X-Mailer: git-send-email 2.28.0
 In-Reply-To: <20200926125549.13191-1-kholk11@gmail.com>
 References: <20200926125549.13191-1-kholk11@gmail.com>
@@ -69,53 +69,106 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 From: AngeloGioacchino Del Regno <kholk11@gmail.com>
 
-Some regulator drivers may be defining very long names: this is the
-case with the qcom_smd and qcom_spmi regulators, where we need to
-parse the regulator parents from DT.
-
-For clarity, this is an example:
-{ "l13a", QCOM_SMD_RPM_LDOA, 13, &pm660_ht_lvpldo,
-  "vdd_l8_l9_l10_l11_l12_l13_l14" },
-pm660-regulators {
-	...
-	vdd_l8_l9_l10_l11_l12_l13_l14-supply = <&vreg_s4a_2p04>
-	...
-};
-Now, with a 32 characters limit, the function is trying to parse,
-exactly, "vdd_l8_l9_l10_l11_l12_l13_l14-s" (32 chars) instead of
-the right one, which is 37 chars long in this specific case.
-
-... And this is not only the case with PM660/PM660L, but also with
-PMA8084, PM8916, PM8950 and others that are not implemented yet.
-
-The length of 64 chars was chosen based on the longest parsed property
-name that I could find, which is in PM8916, and would be 53 characters
-long.
-At that point, rounding that to 64 looked like being the best idea.
+This commit adds the support for some regulator types that are
+missing in this driver, such as the ht nmos-ldo, ht-lv nmos-ldo
+and new gen n/pmos-ldo, all belonging to the FTSMPS426 register
+layout.
+This is done in preparation for adding support for the PM660 and
+PM660L PMICs.
 
 Signed-off-by: AngeloGioacchino Del Regno <kholk11@gmail.com>
 ---
- drivers/regulator/core.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/regulator/qcom_spmi-regulator.c | 56 +++++++++++++++++++++++++
+ 1 file changed, 56 insertions(+)
 
-diff --git a/drivers/regulator/core.c b/drivers/regulator/core.c
-index 7fed8cd134f8..d88bd846d866 100644
---- a/drivers/regulator/core.c
-+++ b/drivers/regulator/core.c
-@@ -409,11 +409,11 @@ static struct device_node *of_get_child_regulator(struct device_node *parent,
- static struct device_node *of_get_regulator(struct device *dev, const char *supply)
- {
- 	struct device_node *regnode = NULL;
--	char prop_name[32]; /* 32 is max size of property name */
-+	char prop_name[64]; /* 64 is max size of property name */
+diff --git a/drivers/regulator/qcom_spmi-regulator.c b/drivers/regulator/qcom_spmi-regulator.c
+index 05080483fe1b..0a507c7f4ae1 100644
+--- a/drivers/regulator/qcom_spmi-regulator.c
++++ b/drivers/regulator/qcom_spmi-regulator.c
+@@ -135,6 +135,18 @@ enum spmi_regulator_subtype {
+ 	SPMI_REGULATOR_SUBTYPE_LV_P600		= 0x2b,
+ 	SPMI_REGULATOR_SUBTYPE_LV_P1200		= 0x2c,
+ 	SPMI_REGULATOR_SUBTYPE_LV_P450		= 0x2d,
++	SPMI_REGULATOR_SUBTYPE_HT_N300_ST	= 0x30,
++	SPMI_REGULATOR_SUBTYPE_HT_N600_ST	= 0x31,
++	SPMI_REGULATOR_SUBTYPE_HT_N1200_ST	= 0x32,
++	SPMI_REGULATOR_SUBTYPE_HT_LVP150	= 0x3b,
++	SPMI_REGULATOR_SUBTYPE_HT_LVP300	= 0x3c,
++	SPMI_REGULATOR_SUBTYPE_L660_N300_ST	= 0x42,
++	SPMI_REGULATOR_SUBTYPE_L660_N600_ST	= 0x43,
++	SPMI_REGULATOR_SUBTYPE_L660_P50		= 0x46,
++	SPMI_REGULATOR_SUBTYPE_L660_P150	= 0x47,
++	SPMI_REGULATOR_SUBTYPE_L660_P600	= 0x49,
++	SPMI_REGULATOR_SUBTYPE_L660_LVP150	= 0x4d,
++	SPMI_REGULATOR_SUBTYPE_L660_LVP600	= 0x4f,
+ 	SPMI_REGULATOR_SUBTYPE_LV100		= 0x01,
+ 	SPMI_REGULATOR_SUBTYPE_LV300		= 0x02,
+ 	SPMI_REGULATOR_SUBTYPE_MV300		= 0x08,
+@@ -511,6 +523,22 @@ static struct spmi_voltage_range ult_pldo_ranges[] = {
+ 	SPMI_VOLTAGE_RANGE(0, 1750000, 1750000, 3337500, 3337500, 12500),
+ };
  
- 	dev_dbg(dev, "Looking up %s-supply from device tree\n", supply);
++static struct spmi_voltage_range pldo660_ranges[] = {
++	SPMI_VOLTAGE_RANGE(0, 1504000, 1504000, 3544000, 3544000, 8000),
++};
++
++static struct spmi_voltage_range nldo660_ranges[] = {
++	SPMI_VOLTAGE_RANGE(0,  320000,  320000, 1304000, 1304000, 8000),
++};
++
++static struct spmi_voltage_range ht_lvpldo_ranges[] = {
++	SPMI_VOLTAGE_RANGE(0, 1504000, 1504000, 2000000, 2000000, 8000),
++};
++
++static struct spmi_voltage_range ht_nldo_ranges[] = {
++	SPMI_VOLTAGE_RANGE(0,  312000,  312000, 1304000, 1304000, 8000),
++};
++
+ static struct spmi_voltage_range hfs430_ranges[] = {
+ 	SPMI_VOLTAGE_RANGE(0, 320000, 320000, 2040000, 2040000, 8000),
+ };
+@@ -530,6 +558,10 @@ static DEFINE_SPMI_SET_POINTS(ult_lo_smps);
+ static DEFINE_SPMI_SET_POINTS(ult_ho_smps);
+ static DEFINE_SPMI_SET_POINTS(ult_nldo);
+ static DEFINE_SPMI_SET_POINTS(ult_pldo);
++static DEFINE_SPMI_SET_POINTS(pldo660);
++static DEFINE_SPMI_SET_POINTS(nldo660);
++static DEFINE_SPMI_SET_POINTS(ht_lvpldo);
++static DEFINE_SPMI_SET_POINTS(ht_nldo);
+ static DEFINE_SPMI_SET_POINTS(hfs430);
  
--	snprintf(prop_name, 32, "%s-supply", supply);
-+	snprintf(prop_name, 64, "%s-supply", supply);
- 	regnode = of_parse_phandle(dev->of_node, prop_name, 0);
- 
- 	if (!regnode) {
+ static inline int spmi_vreg_read(struct spmi_regulator *vreg, u16 addr, u8 *buf,
+@@ -1443,6 +1475,30 @@ static const struct spmi_regulator_mapping supported_regulators[] = {
+ 	SPMI_VREG(LDO,   LV_P300,  0, INF, LDO,    ldo,    pldo,    10000),
+ 	SPMI_VREG(LDO,   LV_P600,  0, INF, LDO,    ldo,    pldo,    10000),
+ 	SPMI_VREG(LDO,   LV_P1200, 0, INF, LDO,    ldo,    pldo,    10000),
++	SPMI_VREG(LDO, HT_N300_ST,   0, INF, FTSMPS426, ftsmps426,
++							ht_nldo,   30000),
++	SPMI_VREG(LDO, HT_N600_ST,   0, INF, FTSMPS426, ftsmps426,
++							ht_nldo,   30000),
++	SPMI_VREG(LDO, HT_N1200_ST,  0, INF, FTSMPS426, ftsmps426,
++							ht_nldo,   30000),
++	SPMI_VREG(LDO, HT_LVP150,    0, INF, FTSMPS426, ftsmps426,
++							ht_lvpldo, 10000),
++	SPMI_VREG(LDO, HT_LVP300,    0, INF, FTSMPS426, ftsmps426,
++							ht_lvpldo, 10000),
++	SPMI_VREG(LDO, L660_N300_ST, 0, INF, FTSMPS426, ftsmps426,
++							nldo660,   10000),
++	SPMI_VREG(LDO, L660_N600_ST, 0, INF, FTSMPS426, ftsmps426,
++							nldo660,   10000),
++	SPMI_VREG(LDO, L660_P50,     0, INF, FTSMPS426, ftsmps426,
++							pldo660,   10000),
++	SPMI_VREG(LDO, L660_P150,    0, INF, FTSMPS426, ftsmps426,
++							pldo660,   10000),
++	SPMI_VREG(LDO, L660_P600,    0, INF, FTSMPS426, ftsmps426,
++							pldo660,   10000),
++	SPMI_VREG(LDO, L660_LVP150,  0, INF, FTSMPS426, ftsmps426,
++							ht_lvpldo, 10000),
++	SPMI_VREG(LDO, L660_LVP600,  0, INF, FTSMPS426, ftsmps426,
++							ht_lvpldo, 10000),
+ 	SPMI_VREG_VS(LV100,        0, INF),
+ 	SPMI_VREG_VS(LV300,        0, INF),
+ 	SPMI_VREG_VS(MV300,        0, INF),
 -- 
 2.28.0
 
