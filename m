@@ -2,160 +2,153 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 735032797B3
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 26 Sep 2020 10:01:05 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 60D962798ED
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 26 Sep 2020 14:46:21 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729047AbgIZIBE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 26 Sep 2020 04:01:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47012 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728736AbgIZIBE (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 26 Sep 2020 04:01:04 -0400
-Received: from mail-pg1-x542.google.com (mail-pg1-x542.google.com [IPv6:2607:f8b0:4864:20::542])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DB500C0613D3
-        for <linux-arm-msm@vger.kernel.org>; Sat, 26 Sep 2020 01:01:03 -0700 (PDT)
-Received: by mail-pg1-x542.google.com with SMTP id x16so3565207pgj.3
-        for <linux-arm-msm@vger.kernel.org>; Sat, 26 Sep 2020 01:01:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=vJChTDAqgxbCEtfKCoDdnX1gZMkc9QxQzwed3o7WSPQ=;
-        b=q2lp8J5mknEsRXWBdLHM1409u5X88gMALb45KpWaYaewZmPycHPn1UUdx3lUf0kGp/
-         h02TbTqUfi9hF2rZ5VDQu7dA7MCfdn1bfQDUzQnEGxiVrfiGRPL8n3AGINNyTtspAUmO
-         lN42c+RY0BwHBGU2d/mwk9RO4Xm+0zl0w2vInNzHXoRAyMf+J+j/mYt+Y7iZ9WpGH7NR
-         xQRyV9H84NhHjdbsiY9TxC5+qzBsXXqnvxwnFfVeutZ3upY52NjiNOM4iXiEt0HMNw4G
-         r0ztt1LISpi91T7VweWPmzQ1arXSAPA7QRYN7PFkmIdsTc/9/rynkUgt6N9E+KY0t/mo
-         tt0w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=vJChTDAqgxbCEtfKCoDdnX1gZMkc9QxQzwed3o7WSPQ=;
-        b=f+IUfG/sZvDfv9zq4CbGO/YL/9WPLvi4g7HaGasDodS9EdY7sQmh74aSkmGuFnQOGp
-         F1TMP+JolxM7KXI5UNAVWX2CTHp6MsXvGl3HUBqMiSk8HZSu0iXOyIix1FVzcUtxXSK7
-         aLCkQgHSWh1oH03TCcJSGEoNY2Q5HUWkMMR9lbdy++hizZgsznyvPTLm5o5RS9K0Td5b
-         /68dNWRbP5PnQaWCdZeHbajFfgBIYfgaZzRQj9hpumzYFOHtgytkB/tfsyDsuR5G3ZsM
-         jyt2x436eCrTWBVrdHjSEeGtxWeKrpeYJruC54t1DEy+G8ynntsR1waOlpLqECoQ86nY
-         HMeQ==
-X-Gm-Message-State: AOAM530zz8H9x0kCVVhZo7vtoFVK22zTp6IVCTUv0eg3kB5focTL/+rb
-        7RNexNUwgZ5xLGhA+OvaJg39
-X-Google-Smtp-Source: ABdhPJzzbyT78nsWZ5YMNRWjk6ytk46vvonNRFsKqCZsRT99Mr4CY+fMzttX6+OAN6uCXqurIhNKHw==
-X-Received: by 2002:a63:541a:: with SMTP id i26mr1981896pgb.265.1601107263171;
-        Sat, 26 Sep 2020 01:01:03 -0700 (PDT)
-Received: from linux ([103.59.133.81])
-        by smtp.gmail.com with ESMTPSA id s70sm4209723pgc.11.2020.09.26.01.01.00
-        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
-        Sat, 26 Sep 2020 01:01:02 -0700 (PDT)
-Date:   Sat, 26 Sep 2020 13:30:57 +0530
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     Loic Poulain <loic.poulain@linaro.org>
-Cc:     hemantk@codeaurora.org, davem@davemloft.net,
-        netdev@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        bjorn.andersson@linaro.org
-Subject: Re: [PATCH v2 1/2] bus: mhi: Remove auto-start option
-Message-ID: <20200926080057.GF9302@linux>
-References: <1600674184-3537-1-git-send-email-loic.poulain@linaro.org>
+        id S1728459AbgIZMqP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 26 Sep 2020 08:46:15 -0400
+Received: from mail.kernel.org ([198.145.29.99]:56738 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726316AbgIZMqP (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Sat, 26 Sep 2020 08:46:15 -0400
+Received: from localhost (83-86-74-64.cable.dynamic.v4.ziggo.nl [83.86.74.64])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id C91AA2080C;
+        Sat, 26 Sep 2020 12:46:13 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1601124374;
+        bh=/uf0nn49RIYSExIaDQdE4XnWSgwXtCxxeYnbdrIvSFM=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=xvawAvyfMyMK1UIA8SFafD3JpFuL0Uf9/Ot1gomMG4CiS0kL2Tyiv4ocyStJFt+oh
+         pCwWa2Z8wbcl+eEqkTaAny85MA4LTPMaOmi+83LEgT1lOBBIKwNMf732+FCVWrXEje
+         oIHr0NLtb8/hULxaJjNIrn5PlypFu5v+i2xiWITc=
+Date:   Sat, 26 Sep 2020 14:46:26 +0200
+From:   Greg KH <gregkh@linuxfoundation.org>
+To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc:     Jeffrey Hugo <jhugo@codeaurora.org>, hemantk@codeaurora.org,
+        bbhatt@codeaurora.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] bus: mhi: core: debugfs: Use correct format specifiers
+ for addresses
+Message-ID: <20200926124626.GB3321471@kroah.com>
+References: <20200925171608.30881-1-manivannan.sadhasivam@linaro.org>
+ <c63ae2c3-43ae-6a94-cf27-efb6cc038f83@codeaurora.org>
+ <20200926052742.GB9302@linux>
+ <20200926053914.GA631346@kroah.com>
+ <20200926071604.GC9302@linux>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <1600674184-3537-1-git-send-email-loic.poulain@linaro.org>
-User-Agent: Mutt/1.9.4 (2018-02-28)
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20200926071604.GC9302@linux>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Sep 21, 2020 at 09:43:03AM +0200, Loic Poulain wrote:
-> There is really no point having an auto-start for channels.
-> This is confusing for the device drivers, some have to enable the
-> channels, others don't have... and waste resources (e.g. pre allocated
-> buffers) that may never be used.
+On Sat, Sep 26, 2020 at 12:46:04PM +0530, Manivannan Sadhasivam wrote:
+> On Sat, Sep 26, 2020 at 07:39:14AM +0200, Greg KH wrote:
+> > On Sat, Sep 26, 2020 at 10:57:42AM +0530, Manivannan Sadhasivam wrote:
+> > > On Fri, Sep 25, 2020 at 12:01:54PM -0600, Jeffrey Hugo wrote:
+> > > > On 9/25/2020 11:16 AM, Manivannan Sadhasivam wrote:
+> > > > > For exposing the addresses of read/write pointers and doorbell register,
+> > > > > let's use the correct format specifiers. This fixes the following issues
+> > > > > generated using W=1 build in ARM32 and reported by Kbuild bot:
+> > > > > 
+> > > > > All warnings (new ones prefixed by >>):
+> > > > > 
+> > > > > > > drivers/bus/mhi/core/debugfs.c:75:7: warning: format specifies type 'unsigned long long' but the argument has type 'dma_addr_t' (aka 'unsigned int') [-Wformat]
+> > > > >                                mhi_event->db_cfg.db_val);
+> > > > >                                ^~~~~~~~~~~~~~~~~~~~~~~~
+> > > > >     drivers/bus/mhi/core/debugfs.c:123:7: warning: format specifies type 'unsigned long long' but the argument has type 'dma_addr_t' (aka 'unsigned int') [-Wformat]
+> > > > >                                mhi_chan->db_cfg.db_val);
+> > > > >                                ^~~~~~~~~~~~~~~~~~~~~~~
+> > > > >     2 warnings generated.
+> > > > > 
+> > > > > drivers/bus/mhi/core/debugfs.c: In function ‘mhi_debugfs_events_show’:
+> > > > > drivers/bus/mhi/core/debugfs.c:74:51: warning: cast from pointer to integer of different size [-Wpointer-to-int-cast]
+> > > > >     seq_printf(m, " local rp: 0x%llx db: 0x%pad\n", (u64)ring->rp,
+> > > > >                                                     ^
+> > > > > drivers/bus/mhi/core/debugfs.c: In function ‘mhi_debugfs_channels_show’:
+> > > > > drivers/bus/mhi/core/debugfs.c:122:7: warning: cast from pointer to integer of different size [-Wpointer-to-int-cast]
+> > > > >         (u64)ring->rp, (u64)ring->wp,
+> > > > >         ^
+> > > > > drivers/bus/mhi/core/debugfs.c:122:22: warning: cast from pointer to integer of different size [-Wpointer-to-int-cast]
+> > > > >         (u64)ring->rp, (u64)ring->wp,
+> > > > >                        ^
+> > > > > drivers/bus/mhi/core/debugfs.c:121:62: warning: format ‘%llx’ expects argument of type ‘long long unsigned int’, but argument 5 has type ‘dma_addr_t {aka unsigned int}’ [-Wformat=]
+> > > > >     seq_printf(m, " local rp: 0x%llx local wp: 0x%llx db: 0x%llx\n",
+> > > > >                                                             ~~~^
+> > > > >                                                             %x
+> > > > > drivers/bus/mhi/core/debugfs.c:123:7:
+> > > > >         mhi_chan->db_cfg.db_val);
+> > > > > 
+> > > > > Reported-by: kernel test robot <lkp@intel.com>
+> > > > > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> > > > > ---
+> > > > > 
+> > > > > Greg: This fixes the issue seen while testing the char-misc/char-misc-testing
+> > > > > branch.
+> > > > > 
+> > > > >   drivers/bus/mhi/core/debugfs.c | 10 +++++-----
+> > > > >   1 file changed, 5 insertions(+), 5 deletions(-)
+> > > > > 
+> > > > > diff --git a/drivers/bus/mhi/core/debugfs.c b/drivers/bus/mhi/core/debugfs.c
+> > > > > index 53d05a8e168d..2536ff92b76f 100644
+> > > > > --- a/drivers/bus/mhi/core/debugfs.c
+> > > > > +++ b/drivers/bus/mhi/core/debugfs.c
+> > > > > @@ -71,8 +71,8 @@ static int mhi_debugfs_events_show(struct seq_file *m, void *d)
+> > > > >   		seq_printf(m, " rp: 0x%llx wp: 0x%llx", er_ctxt->rp,
+> > > > >   			   er_ctxt->wp);
+> > > > > -		seq_printf(m, " local rp: 0x%llx db: 0x%llx\n", (u64)ring->rp,
+> > > > > -			   mhi_event->db_cfg.db_val);
+> > > > > +		seq_printf(m, " local rp: 0x%px db: 0x%pad\n", ring->rp,
+> > > > > +			   &mhi_event->db_cfg.db_val);
+> > > > >   	}
+> > > > >   	return 0;
+> > > > > @@ -118,9 +118,9 @@ static int mhi_debugfs_channels_show(struct seq_file *m, void *d)
+> > > > >   		seq_printf(m, " base: 0x%llx len: 0x%llx wp: 0x%llx",
+> > > > >   			   chan_ctxt->rbase, chan_ctxt->rlen, chan_ctxt->wp);
+> > > > > -		seq_printf(m, " local rp: 0x%llx local wp: 0x%llx db: 0x%llx\n",
+> > > > > -			   (u64)ring->rp, (u64)ring->wp,
+> > > > > -			   mhi_chan->db_cfg.db_val);
+> > > > > +		seq_printf(m, " local rp: 0x%px local wp: 0x%px db: 0x%pad\n",
+> > > > > +			   ring->rp, ring->wp,
+> > > > > +			   &mhi_chan->db_cfg.db_val);
+> > > > >   	}
+> > > > >   	return 0;
+> > > > > 
+> > > > 
+> > > > Documentation/printk-formats.txt seems to point out that %px is "insecure"
+> > > > and thus perhaps not preferred.  Are we assuming that debugfs is only
+> > > > accessible by root, and thus the %px usage here is effectively the same as
+> > > > %pK?
+> > > > 
+> > > 
+> > > No, this debugfs entry can be read by non-root users also.
+> > 
+> > How, the mount point of debugfs is restricted to root only :)
+> > 
 > 
-> This is really up to the MHI device(channel) driver to manage the state
-> of its channels.
+> Sigh... I just went with the file permission of 444 :/
 > 
-> Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
+> > > But the idea here
+> > > is to effectively show the addresses to everyone so I don't think we need to
+> > > hide it. The term "insecure" applies to kernel log where exposing the address
+> > > doesn't make much sense (except for few obvious reasons).
+> > 
+> > Why does normal users need to see a kernel address?  What can they do
+> > with this?  Why can't we use the "normal" hashed way of showing a kernel
+> > address instead?
+> > 
+> 
+> It was the original implementation and as you brushed my memory, only root can
+> mount and read the content, so why we should hide?
 
-Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Why shouldn't you?  It's good to have defense in depth, userspace should
+not care about a real kernel pointer value, right?  THat's why we have
+the hashed number instead, please use that.
 
-Thanks,
-Mani
+thanks,
 
-> ---
->  v2: split MHI and qrtr changes in dedicated commits
-> 
->  drivers/bus/mhi/core/init.c     | 9 ---------
->  drivers/bus/mhi/core/internal.h | 1 -
->  include/linux/mhi.h             | 2 --
->  3 files changed, 12 deletions(-)
-> 
-> diff --git a/drivers/bus/mhi/core/init.c b/drivers/bus/mhi/core/init.c
-> index dccc824..8798deb 100644
-> --- a/drivers/bus/mhi/core/init.c
-> +++ b/drivers/bus/mhi/core/init.c
-> @@ -721,7 +721,6 @@ static int parse_ch_cfg(struct mhi_controller *mhi_cntrl,
->  		mhi_chan->offload_ch = ch_cfg->offload_channel;
->  		mhi_chan->db_cfg.reset_req = ch_cfg->doorbell_mode_switch;
->  		mhi_chan->pre_alloc = ch_cfg->auto_queue;
-> -		mhi_chan->auto_start = ch_cfg->auto_start;
->  
->  		/*
->  		 * If MHI host allocates buffers, then the channel direction
-> @@ -1119,11 +1118,6 @@ static int mhi_driver_probe(struct device *dev)
->  			goto exit_probe;
->  
->  		ul_chan->xfer_cb = mhi_drv->ul_xfer_cb;
-> -		if (ul_chan->auto_start) {
-> -			ret = mhi_prepare_channel(mhi_cntrl, ul_chan);
-> -			if (ret)
-> -				goto exit_probe;
-> -		}
->  	}
->  
->  	ret = -EINVAL;
-> @@ -1157,9 +1151,6 @@ static int mhi_driver_probe(struct device *dev)
->  	if (ret)
->  		goto exit_probe;
->  
-> -	if (dl_chan && dl_chan->auto_start)
-> -		mhi_prepare_channel(mhi_cntrl, dl_chan);
-> -
->  	mhi_device_put(mhi_dev);
->  
->  	return ret;
-> diff --git a/drivers/bus/mhi/core/internal.h b/drivers/bus/mhi/core/internal.h
-> index 5a81a42..73b52a0 100644
-> --- a/drivers/bus/mhi/core/internal.h
-> +++ b/drivers/bus/mhi/core/internal.h
-> @@ -563,7 +563,6 @@ struct mhi_chan {
->  	bool configured;
->  	bool offload_ch;
->  	bool pre_alloc;
-> -	bool auto_start;
->  	bool wake_capable;
->  };
->  
-> diff --git a/include/linux/mhi.h b/include/linux/mhi.h
-> index 811e686..0d277c7 100644
-> --- a/include/linux/mhi.h
-> +++ b/include/linux/mhi.h
-> @@ -214,7 +214,6 @@ enum mhi_db_brst_mode {
->   * @offload_channel: The client manages the channel completely
->   * @doorbell_mode_switch: Channel switches to doorbell mode on M0 transition
->   * @auto_queue: Framework will automatically queue buffers for DL traffic
-> - * @auto_start: Automatically start (open) this channel
->   * @wake-capable: Channel capable of waking up the system
->   */
->  struct mhi_channel_config {
-> @@ -232,7 +231,6 @@ struct mhi_channel_config {
->  	bool offload_channel;
->  	bool doorbell_mode_switch;
->  	bool auto_queue;
-> -	bool auto_start;
->  	bool wake_capable;
->  };
->  
-> -- 
-> 2.7.4
-> 
+greg k-h
