@@ -2,93 +2,120 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 9D8DB279988
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 26 Sep 2020 15:10:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 810FF27998B
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 26 Sep 2020 15:12:04 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729040AbgIZNKP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 26 Sep 2020 09:10:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38026 "EHLO
+        id S1726316AbgIZNMD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 26 Sep 2020 09:12:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38304 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726183AbgIZNKP (ORCPT
+        with ESMTP id S1726183AbgIZNMC (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 26 Sep 2020 09:10:15 -0400
-Received: from mail-wr1-x441.google.com (mail-wr1-x441.google.com [IPv6:2a00:1450:4864:20::441])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B22E3C0613CE;
-        Sat, 26 Sep 2020 06:10:14 -0700 (PDT)
-Received: by mail-wr1-x441.google.com with SMTP id k10so3764354wru.6;
-        Sat, 26 Sep 2020 06:10:14 -0700 (PDT)
+        Sat, 26 Sep 2020 09:12:02 -0400
+Received: from mail-wm1-x342.google.com (mail-wm1-x342.google.com [IPv6:2a00:1450:4864:20::342])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9CBDCC0613CE;
+        Sat, 26 Sep 2020 06:12:02 -0700 (PDT)
+Received: by mail-wm1-x342.google.com with SMTP id x23so1960898wmi.3;
+        Sat, 26 Sep 2020 06:12:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=c8nPtqvHXCkUTvUezerS3EWetfGCD8LGrLlldVmFG+I=;
-        b=dwTxN0QG7iDi3lpz77IyBuW6t6ix5iibFgp1xivksLrbJPuLMbIPIfineKsqN+NBLR
-         Ngch4Ue8Yo17a4NsbSVe29rhLHc3kISWQyIRdgAfOwZmdccxB1jCrj+oqpu9oAvCl8Ok
-         a9qXVCqjhLrL+e1eXAfFlBOmcTIAUtcQq+hZc23xSj1JX00d3NmNqqJXpTNgIZWANAbt
-         GWfj8iDZkH9c6kC5qNHwLfaeuMaK6MLwDidEoCFEDkrgGc7VSZ3b6n8CAafWjFimdsh/
-         I+POYLvkjnvWuP+5D6O0rP8vwl5/EB4U0mVB79oZMdVPB7qBbpOuBjkWw5ZNgxY2cN7E
-         VDKA==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=gsjNITkh5YR5pGsbZMMxt3tvrXpmG8+mzhmnAdwt/Rc=;
+        b=YBlp0XGj/PUZ6Zdhkp/8uGqaxq1MxW+FG4MoKOf71zKOCnSgUgIaVvihCLaPvcc9Iv
+         58A2FiHOSTmOSEKo6UVLjC1JEWRIZOgSlV3sfUsjxgXwmY28LCAJpGdtpTDKuM9fm1d5
+         RV+0KocxsYt/LRGyI/rOExw5QDLGJwFosElU7IxSsKqk+JM4QLOTu8wKOV2ayGeEWwS6
+         n1J0npt1SZ2Lo386VgS5hsbrw2lUqiq3TzNYZaS7qJHEFXPe67NG9OAa8nFJQ9NLC0PT
+         Dxfcz30vd6TTKdUcB3x4EC4Ym1DqywrnyxL1cqQZDBd/pl6lbHT7BhJ/ARWtYfitthkT
+         F0Dg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=c8nPtqvHXCkUTvUezerS3EWetfGCD8LGrLlldVmFG+I=;
-        b=AplQCgCs6Kv2TCPGZFyllrA/f4wr4WGBBWPYxeCgxAw/MtrAVVVw3T3n0UDTit4jse
-         vgFflZTgA8BrOfrDwXyDVxkJHmjpOv2HS31qRUvnpFrFSs71x2EvqfcMoxxYO1aWzg6+
-         FbilIwajfiEVasCaProBcppPtDVgJAan0+cpc4JJpuCmJJTv6K1/+phGHN+fKE0EzL4I
-         6TICOQmYgi7rVr8lkeDgtsjEvDNZPz16KsPM2fH6W/qtrPknkpx62SsFxxcI3sAZ3m76
-         6N/bh91UtCCbnO31UluPwD/vcraNKj9ZsQai5i0SfBjUaQXU4MAKM1wawvGL81JnxJiH
-         6aeQ==
-X-Gm-Message-State: AOAM530SXaLAlBJ6D2G8TMToTg76TvF6q/VRBgSWG6wr0GgHqvYGFUkC
-        X6JQ483Z5N6Re815MDRrRl0=
-X-Google-Smtp-Source: ABdhPJwPcJmDokV6fvLVr//OpnBK5ejMVqpzVuaKzjqb5rq8xqDcP3l8hb5eUb76A+frswgKflpq9A==
-X-Received: by 2002:a5d:630a:: with SMTP id i10mr9256202wru.137.1601125813249;
-        Sat, 26 Sep 2020 06:10:13 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=gsjNITkh5YR5pGsbZMMxt3tvrXpmG8+mzhmnAdwt/Rc=;
+        b=mRz3jrCZNjdt5kSF3NQaT8j36WIY2CSMZ9NfhT9L5hIqM4InRhijI+GynUYK1qxiu+
+         YIjYnqOO5vexLT8mzLZR6aqVLxPyGTEiOv50CcbvYjLIsx1b/rdRv+0ZjbpKuGACbKKy
+         Yp+Ni17DOqRjgi+2orX9QEv9Z9B9R+kyVZKh8SxF+C186u+AlwjvyuWIQJJkrHiZHgS/
+         b8PkcvgsgTI04GxorIsc8WYBXPhb+TttT07uyf68h+iiIaAYxpIjPlKZeVvRv754ajtA
+         x8wEK2n1KYDtD1NEAAqq2GnRxfZaBNIpO+ETNxVKMqApJxb0tv8m+32JvFLIQT0Wws/K
+         WMTg==
+X-Gm-Message-State: AOAM532aJ8RgrQ0h1/9TAm/oOety/m1XsdQJ3TAHiEKcYZFSuRDlVlSO
+        V/fuchGcH+gGPIXTVzWhqtE=
+X-Google-Smtp-Source: ABdhPJz3GP1BYW6za+Y7HeAOCnWq61oyhJjnta17SILv/Dy5fVTt43tz5VRmFSlBsoZ+W5MfuaGj2g==
+X-Received: by 2002:a1c:dd87:: with SMTP id u129mr2575522wmg.172.1601125921224;
+        Sat, 26 Sep 2020 06:12:01 -0700 (PDT)
 Received: from IcarusMOD.eternityproject.eu ([2.237.20.237])
-        by smtp.gmail.com with ESMTPSA id h17sm7196806wro.27.2020.09.26.06.10.12
+        by smtp.gmail.com with ESMTPSA id j14sm6792031wrr.66.2020.09.26.06.12.00
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 26 Sep 2020 06:10:12 -0700 (PDT)
+        Sat, 26 Sep 2020 06:12:00 -0700 (PDT)
 From:   kholk11@gmail.com
 To:     agross@kernel.org
-Cc:     bjorn.andersson@linaro.org, jic23@kernel.org, robh+dt@kernel.org,
+Cc:     bjorn.andersson@linaro.org, kishon@ti.com, robh+dt@kernel.org,
         kholk11@gmail.com, marijns95@gmail.com, konradybcio@gmail.com,
-        martin.botka1@gmail.com, linux-arm-msm@vger.kernel.org,
-        phone-devel@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH 2/2] dt-bindings: qcom-spmi-vadc: Document qcom,spmi-vadc-8998 compatible
-Date:   Sat, 26 Sep 2020 15:10:09 +0200
-Message-Id: <20200926131009.14483-2-kholk11@gmail.com>
+        martin.botka1@gmail.com, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, phone-devel@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH] phy: qcom-qusb2: Add support for SDM630/660
+Date:   Sat, 26 Sep 2020 15:11:57 +0200
+Message-Id: <20200926131157.14633-1-kholk11@gmail.com>
 X-Mailer: git-send-email 2.28.0
-In-Reply-To: <20200926131009.14483-1-kholk11@gmail.com>
-References: <20200926131009.14483-1-kholk11@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: AngeloGioacchino Del Regno <kholk11@gmail.com>
+From: Konrad Dybcio <konradybcio@gmail.com>
 
-This compatible is used in the qcom-spmi-vadc driver to select a
-variation in the ratiometric range, valid for MSM8998-style VADCs,
-like MSM8998 itself, SDM630, SDM636, SDM660, SDM845 and others.
+QUSB on these SoCs actually uses *almost* the same
+configuration that msm8996 does, so we can reuse
+the phy_cfg from there with just a single change
+(se clock scheme).
 
+Signed-off-by: Konrad Dybcio <konradybcio@gmail.com>
 Signed-off-by: AngeloGioacchino Del Regno <kholk11@gmail.com>
 ---
- Documentation/devicetree/bindings/iio/adc/qcom,spmi-vadc.yaml | 1 +
- 1 file changed, 1 insertion(+)
+ Documentation/devicetree/bindings/phy/qcom,qusb2-phy.yaml | 1 +
+ drivers/phy/qualcomm/phy-qcom-qusb2.c                     | 7 ++++++-
+ 2 files changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/Documentation/devicetree/bindings/iio/adc/qcom,spmi-vadc.yaml b/Documentation/devicetree/bindings/iio/adc/qcom,spmi-vadc.yaml
-index 0ca992465a21..e9f0ebba5e2a 100644
---- a/Documentation/devicetree/bindings/iio/adc/qcom,spmi-vadc.yaml
-+++ b/Documentation/devicetree/bindings/iio/adc/qcom,spmi-vadc.yaml
-@@ -26,6 +26,7 @@ properties:
+diff --git a/Documentation/devicetree/bindings/phy/qcom,qusb2-phy.yaml b/Documentation/devicetree/bindings/phy/qcom,qusb2-phy.yaml
+index ccda92859eca..97dae24752b4 100644
+--- a/Documentation/devicetree/bindings/phy/qcom,qusb2-phy.yaml
++++ b/Documentation/devicetree/bindings/phy/qcom,qusb2-phy.yaml
+@@ -21,6 +21,7 @@ properties:
+               - qcom,ipq8074-qusb2-phy
+               - qcom,msm8996-qusb2-phy
+               - qcom,msm8998-qusb2-phy
++              - qcom,sdm660-qusb2-phy
        - items:
            - enum:
-               - qcom,spmi-vadc
-+              - qcom,spmi-vadc-8998
-               - qcom,spmi-adc5
-               - qcom,spmi-adc-rev2
-               - qcom,spmi-adc7
+               - qcom,sc7180-qusb2-phy
+diff --git a/drivers/phy/qualcomm/phy-qcom-qusb2.c b/drivers/phy/qualcomm/phy-qcom-qusb2.c
+index 557547dabfd5..a4d706b361b9 100644
+--- a/drivers/phy/qualcomm/phy-qcom-qusb2.c
++++ b/drivers/phy/qualcomm/phy-qcom-qusb2.c
+@@ -702,7 +702,8 @@ static int qusb2_phy_init(struct phy *phy)
+ 	usleep_range(150, 160);
+ 
+ 	/* Default is single-ended clock on msm8996 */
+-	qphy->has_se_clk_scheme = true;
++	if (!of_device_is_compatible(phy->dev.of_node, "qcom,sdm660-qusb2-phy"))
++		qphy->has_se_clk_scheme = true;
+ 	/*
+ 	 * read TCSR_PHY_CLK_SCHEME register to check if single-ended
+ 	 * clock scheme is selected. If yes, then disable differential
+@@ -818,6 +819,10 @@ static const struct of_device_id qusb2_phy_of_match_table[] = {
+ 	}, {
+ 		.compatible	= "qcom,msm8998-qusb2-phy",
+ 		.data		= &msm8998_phy_cfg,
++	}, {
++		.compatible	= "qcom,sdm660-qusb2-phy",
++		/* sdm630/660 use the same config as msm8996. */
++		.data		= &msm8996_phy_cfg,
+ 	}, {
+ 		/*
+ 		 * Deprecated. Only here to support legacy device
 -- 
 2.28.0
 
