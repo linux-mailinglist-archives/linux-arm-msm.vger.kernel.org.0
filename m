@@ -2,65 +2,63 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 50F24279904
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 26 Sep 2020 14:51:48 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4A4CE279908
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 26 Sep 2020 14:51:56 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729203AbgIZMvQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 26 Sep 2020 08:51:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34992 "EHLO
+        id S1727408AbgIZMvz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 26 Sep 2020 08:51:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35098 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729077AbgIZMvO (ORCPT
+        with ESMTP id S1726183AbgIZMvz (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 26 Sep 2020 08:51:14 -0400
-Received: from mail-wm1-x342.google.com (mail-wm1-x342.google.com [IPv6:2a00:1450:4864:20::342])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DEBABC0613D3;
-        Sat, 26 Sep 2020 05:51:13 -0700 (PDT)
-Received: by mail-wm1-x342.google.com with SMTP id e17so1945122wme.0;
-        Sat, 26 Sep 2020 05:51:13 -0700 (PDT)
+        Sat, 26 Sep 2020 08:51:55 -0400
+Received: from mail-wr1-x441.google.com (mail-wr1-x441.google.com [IPv6:2a00:1450:4864:20::441])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 500D4C0613CE;
+        Sat, 26 Sep 2020 05:51:55 -0700 (PDT)
+Received: by mail-wr1-x441.google.com with SMTP id o5so6797016wrn.13;
+        Sat, 26 Sep 2020 05:51:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=TIBlyOXWyk+Ey56dr3+VehdkarLEB826T2xtWdw9REU=;
-        b=XPvo0vho3CDq/nsVYa5VbFlGPKbtrNbyQcn4noi4jB1Apr3207j/sqcBQX4SqulbSA
-         jTz175fjQUg4XfqvWH4frjDduSc6mP4ECnZ9rrG28l5ROu4CaA5hj9qQuN7bsZ7fM2xz
-         +/rORRlmrhPv7lS+K73BtzeAR5x1Mtc2itBEMB/JdznowS27VR3hoiA8blrxKNF998HY
-         VSH0x8EpJAhHFwHVYMWBso87+KdJD/a9/o8Vh4wLRxsGx9TY5iSKjp42UDdy/JBfaclb
-         dwsIoxcmON12YD1v4/XzL4u3DDOfxImdPjN9vhzY51Ql8i6p2nEt8f2CRVptq/OnSBDt
-         bsIg==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=/qMNYE0eTMh5KJYROOdw24uWxCTrmW6gJQZgul1FUS4=;
+        b=Xzgm6wn4J/4NiC0PcNx8YtYeNMwbwXmxSLid0z2d+VUC+C06JsbAJyjzvy2PhtHPho
+         0dwgsF1gedNsTidLRJYBwjVdt8WBilvjeFyfluf5FI3OY7zja0xBhJhVCXTdzVldMroA
+         IqqUZk1NK5oI/tlf5F4AzkiQdnEtQ/Ol+yajZAqSQcC7FhSkLZIhzsyFcOzArkfqtL/5
+         e6EySKwVJ6UAq8nR/g3gxHW/W8LB1KYNA3tjowSrZb86RcOdCpKfPa1OqUzO33eR/Lwo
+         eBA3UefYyj7IivosPGHfV/koKrG2fDZuzBJLLVit2stJm7eceY9CJ1Bdk+/CaYwuyhEd
+         ZYGw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=TIBlyOXWyk+Ey56dr3+VehdkarLEB826T2xtWdw9REU=;
-        b=OJoXOowhJNr9PrTC8+QF5EseLqRitcekF4nzzzneY2tKmq3SMY9FGNzTPVddo5Uqd2
-         JYV6WlhPsxwkzOlMHMXBcBb1JfwKKuplxFK9usov/4/KitAGiK6T86e3MXbN3CipJDQs
-         D28iLCXmjycs/Lh9HJgSLpStJLhj6FqiBUcnTyWMoAqekcn7aCW1jicFQk9IW+8W+je2
-         +nU5fj9/SqfQyTRuNsuZPqmaX3HZ586SeXemWBiYtYCb2Qu9HnH70S5Z4R4DK7jekiWI
-         7ZXbc4KmZVSDLkb0dmVvvzXRJHo/x5iOW1SO1AzMlly0cMtaTD8MnE9vBu6sQDFWfpx7
-         JMDg==
-X-Gm-Message-State: AOAM533/dEdWolM759YgSNSYYnydo8OpWgodDhlKmyVrFFVJCV3MeVyF
-        7pzflQ9Tpp3YBHQOb48r2QY=
-X-Google-Smtp-Source: ABdhPJzQeIyVJUN4UcJrKKAzZo5+CHIFCKfcUbGRVMxlsKlI+ao1vUtF8R57TJbWkwLFMY1ECTKmjA==
-X-Received: by 2002:a1c:e484:: with SMTP id b126mr2472388wmh.44.1601124672405;
-        Sat, 26 Sep 2020 05:51:12 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=/qMNYE0eTMh5KJYROOdw24uWxCTrmW6gJQZgul1FUS4=;
+        b=iX8kxXFf6m888fA//M+vL+qJKg2lS97phIMG1zuhZqxvp/ze/hQxyCJsy2uZabNC4k
+         zZAG/Em8tGHaHkOZgXjEjT3/R5wla3rklOfzqj3Fr4p63zvwZGsf89JYXhrVXaWNqim8
+         ecLh9Hb2O25czxvyLtt3E0g+1Antyt76xLBw5rOL5KYld6hLYYXsN2vmiDUetghr0CcJ
+         OtDaSP+v+CyGRBSHTZv5gR252ImISIz2gv2V9qVCXknE3iWsQzz5LsbSPYtcLVyXs/iJ
+         l7RWJ03DHFjErHENprj06MwnFZgQhX8NrYcwUJ0nO0GYsWb/YawEkYBZWZDjRYXDmxBn
+         gmKA==
+X-Gm-Message-State: AOAM533NlQdJFqMFqlKzwtZf+uMGXNHw2sgK1Fx/rB4wnNKK3o8f9vek
+        EzlvK8h9geZGK+TEGAlU/pc=
+X-Google-Smtp-Source: ABdhPJykRj8XBuin0jimtNNCc6XvuRCYJBYE70paF0aDxhecfU/Oo4M7P/54UjKiEqXlKS+mazYOJQ==
+X-Received: by 2002:adf:f508:: with SMTP id q8mr8979753wro.233.1601124713966;
+        Sat, 26 Sep 2020 05:51:53 -0700 (PDT)
 Received: from IcarusMOD.eternityproject.eu ([2.237.20.237])
-        by smtp.gmail.com with ESMTPSA id z15sm6765225wrv.94.2020.09.26.05.51.11
+        by smtp.gmail.com with ESMTPSA id a10sm2520451wmj.38.2020.09.26.05.51.52
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 26 Sep 2020 05:51:12 -0700 (PDT)
+        Sat, 26 Sep 2020 05:51:53 -0700 (PDT)
 From:   kholk11@gmail.com
-To:     bjorn.andersson@linaro.org
-Cc:     robh+dt@kernel.org, agross@kernel.org, georgi.djakov@linaro.org,
-        kholk11@gmail.com, marijns95@gmail.com, konradybcio@gmail.com,
-        martin.botka1@gmail.com, linux-arm-msm@vger.kernel.org,
-        phone-devel@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH 2/2] dt-bindings: interconnect: Add bindings for Qualcomm SDM660 NoC
-Date:   Sat, 26 Sep 2020 14:51:01 +0200
-Message-Id: <20200926125101.12712-3-kholk11@gmail.com>
+To:     robdclark@gmail.com
+Cc:     sean@poorly.run, airlied@linux.ie, daniel@ffwll.ch,
+        jcrouse@codeaurora.org, konradybcio@gmail.com, kholk11@gmail.com,
+        marijns95@gmail.com, martin.botka1@gmail.com,
+        linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
+        phone-devel@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [PATCH 0/7] Add support for Adreno 508/509/512
+Date:   Sat, 26 Sep 2020 14:51:39 +0200
+Message-Id: <20200926125146.12859-1-kholk11@gmail.com>
 X-Mailer: git-send-email 2.28.0
-In-Reply-To: <20200926125101.12712-1-kholk11@gmail.com>
-References: <20200926125101.12712-1-kholk11@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
@@ -69,167 +67,45 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 From: AngeloGioacchino Del Regno <kholk11@gmail.com>
 
-Add the bindings for the Qualcomm SDM660-class NoC, valid for
-SDM630, SDM636, SDM660 and SDA variants.
+In this patch series, we are adding support for lower end Adreno 5
+series GPUs, such as A508, A509 and A512 that we have found in the
+Qualcomm SDM630, SDM636 and SDM660 SoCs.
 
-Signed-off-by: AngeloGioacchino Del Regno <kholk11@gmail.com>
----
- .../bindings/interconnect/qcom,sdm660.yaml    | 146 ++++++++++++++++++
- 1 file changed, 146 insertions(+)
- create mode 100644 Documentation/devicetree/bindings/interconnect/qcom,sdm660.yaml
+On a note, adding support for these three units, also adds 99% of
+the required "things" for another two GPUs, A505 and A506 but, even
+if adding them requires literally two lines of code, noone of us has
+got any SoC equipped with these ones hence we wouldn't be able to
+test. Even though there is basically no reason for them to not work
+correctly, kernel side, I chose to avoid adding the two "magic" lines.
 
-diff --git a/Documentation/devicetree/bindings/interconnect/qcom,sdm660.yaml b/Documentation/devicetree/bindings/interconnect/qcom,sdm660.yaml
-new file mode 100644
-index 000000000000..1d1d48ae8fc5
---- /dev/null
-+++ b/Documentation/devicetree/bindings/interconnect/qcom,sdm660.yaml
-@@ -0,0 +1,146 @@
-+# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
-+%YAML 1.2
-+---
-+$id: http://devicetree.org/schemas/interconnect/qcom,sdm660.yaml#
-+$schema: http://devicetree.org/meta-schemas/core.yaml#
-+
-+title: Qualcomm SDM660 Network-On-Chip interconnect
-+
-+maintainers:
-+  - Georgi Djakov <georgi.djakov@linaro.org>
-+
-+description: |
-+  The Qualcomm SDM660 interconnect providers support adjusting the
-+  bandwidth requirements between the various NoC fabrics.
-+
-+properties:
-+  reg:
-+    maxItems: 1
-+
-+  compatible:
-+    enum:
-+      - qcom,sdm660-a2noc
-+      - qcom,sdm660-bimc
-+      - qcom,sdm660-cnoc
-+      - qcom,sdm660-gnoc
-+      - qcom,sdm660-mnoc
-+      - qcom,sdm660-snoc
-+
-+  '#interconnect-cells':
-+    const: 1
-+
-+  clocks:
-+    minItems: 1
-+    maxItems: 3
-+
-+  clock-names:
-+    minItems: 1
-+    maxItems: 3
-+
-+required:
-+  - compatible
-+  - reg
-+  - '#interconnect-cells'
-+  - clock-names
-+  - clocks
-+
-+additionalProperties: false
-+
-+allOf:
-+  - if:
-+      properties:
-+        compatible:
-+          contains:
-+            enum:
-+              - qcom,sdm660-mnoc
-+    then:
-+      properties:
-+        clocks:
-+          items:
-+            - description: Bus Clock.
-+            - description: Bus A Clock.
-+            - description: CPU-NoC High-performance Bus Clock.
-+        clock-names:
-+          items:
-+            - const: bus
-+            - const: bus_a
-+            - const: iface
-+
-+  - if:
-+      properties:
-+        compatible:
-+          contains:
-+            enum:
-+              - qcom,sdm660-a2noc
-+              - qcom,sdm660-bimc
-+              - qcom,sdm660-cnoc
-+              - qcom,sdm660-gnoc
-+              - qcom,sdm660-snoc
-+    then:
-+      properties:
-+        clocks:
-+          items:
-+            - description: Bus Clock.
-+            - description: Bus A Clock.
-+        clock-names:
-+          items:
-+            - const: bus
-+            - const: bus_a
-+
-+examples:
-+  - |
-+      #include <dt-bindings/clock/qcom,rpmcc.h>
-+
-+      bimc: interconnect@1008000 {
-+              compatible = "qcom,sdm660-bimc";
-+              reg = <0x01008000 0x78000>;
-+              #interconnect-cells = <1>;
-+              clock-names = "bus", "bus_a";
-+              clocks = <&rpmcc RPM_SMD_BIMC_CLK>,
-+                       <&rpmcc RPM_SMD_BIMC_A_CLK>;
-+      };
-+
-+      cnoc: interconnect@1500000 {
-+              compatible = "qcom,sdm660-cnoc";
-+              reg = <0x01500000 0x10000>;
-+              #interconnect-cells = <1>;
-+              clock-names = "bus", "bus_a";
-+              clocks = <&rpmcc RPM_SMD_CNOC_CLK>,
-+                       <&rpmcc RPM_SMD_CNOC_A_CLK>;
-+      };
-+
-+      snoc: interconnect@1626000 {
-+              compatible = "qcom,sdm660-snoc";
-+              reg = <0x01626000 0x7090>;
-+              #interconnect-cells = <1>;
-+              clock-names = "bus", "bus_a";
-+              clocks = <&rpmcc RPM_SMD_SNOC_CLK>,
-+                       <&rpmcc RPM_SMD_SNOC_A_CLK>;
-+      };
-+
-+      a2noc: interconnect@1704000 {
-+              compatible = "qcom,sdm660-a2noc";
-+              reg = <0x01704000 0xc100>;
-+              #interconnect-cells = <1>;
-+              clock-names = "bus", "bus_a";
-+              clocks = <&rpmcc RPM_SMD_AGGR2_NOC_CLK>,
-+                       <&rpmcc RPM_SMD_AGGR2_NOC_A_CLK>;
-+      };
-+
-+      mnoc: interconnect@1745000 {
-+              compatible = "qcom,sdm660-mnoc";
-+              reg = <0x01745000 0xa010>;
-+              #interconnect-cells = <1>;
-+              clock-names = "bus", "bus_a", "iface";
-+              clocks = <&rpmcc RPM_SMD_MMSSNOC_AXI_CLK>,
-+                       <&rpmcc RPM_SMD_MMSSNOC_AXI_CLK_A>,
-+                       <&mmcc AHB_CLK_SRC>;
-+      };
-+
-+      gnoc: interconnect@17900000 {
-+              compatible = "qcom,sdm660-gnoc";
-+              reg = <0x17900000 0xe000>;
-+              #interconnect-cells = <1>;
-+              clock-names = "bus", "bus_a";
-+              clocks = <&xo_board>, <&xo_board>;
-+      };
+Anyway, this patchset also addresses some issues that we've found in
+the A5XX part of the Adreno driver, regarding a logic mistake in one
+of the VPC protect values and a forced overwrite of the register named
+A5XX_PC_DBG_ECO_CNTL, forcing the setting of vtxFifo and primFifo
+thresholds that was valid only for higher end GPUs.
+
+This patch series has been tested on the following devices:
+ - Sony Xperia XA2 Ultra (SDM630 Nile Discovery)
+ - Sony Xperia 10        (SDM630 Ganges Kirin)
+ - Sony Xperia 10 Plus   (SDM636 Ganges Mermaid)
+
+AngeloGioacchino Del Regno (4):
+  drm/msm/a5xx: Remove overwriting A5XX_PC_DBG_ECO_CNTL register
+  drm/msm/a5xx: Separate A5XX_PC_DBG_ECO_CNTL write from main branch
+  drm/msm/a5xx: Add support for Adreno 508, 509, 512 GPUs
+  drm/msm/a5xx: Reset VBIF before PC only on A510 and A530
+
+Konrad Dybcio (3):
+  drm/msm/a5xx: Fix VPC protect value in gpu_write()
+  drm/msm/a5xx: Disable flat shading optimization
+  drm/msm/a5xx: Disable UCHE global filter
+
+ drivers/gpu/drm/msm/adreno/a5xx_gpu.c      | 195 ++++++++++++++++++---
+ drivers/gpu/drm/msm/adreno/a5xx_power.c    |   4 +-
+ drivers/gpu/drm/msm/adreno/adreno_device.c |  60 +++++++
+ drivers/gpu/drm/msm/adreno/adreno_gpu.h    |  15 ++
+ 4 files changed, 247 insertions(+), 27 deletions(-)
+
 -- 
 2.28.0
 
