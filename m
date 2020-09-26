@@ -2,147 +2,143 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C2D0E279B2C
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 26 Sep 2020 19:08:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 639A7279B43
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 26 Sep 2020 19:18:44 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726239AbgIZRIk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 26 Sep 2020 13:08:40 -0400
-Received: from mout.kundenserver.de ([212.227.126.187]:58015 "EHLO
-        mout.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726183AbgIZRIk (ORCPT
+        id S1729955AbgIZRSn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 26 Sep 2020 13:18:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48192 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726309AbgIZRSn (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 26 Sep 2020 13:08:40 -0400
-X-Greylist: delayed 302 seconds by postgrey-1.27 at vger.kernel.org; Sat, 26 Sep 2020 13:08:39 EDT
-Received: from desktop ([188.192.134.246]) by mrelayeu.kundenserver.de
- (mreue010 [212.227.15.167]) with ESMTPSA (Nemesis) id
- 1MDhV1-1kBSUa3e2Z-00Ajk6; Sat, 26 Sep 2020 19:03:35 +0200
-From:   "Adrian Schmutzler" <mail@adrianschmutzler.de>
-To:     "'Bjorn Andersson'" <bjorn.andersson@linaro.org>
-Cc:     <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>
-References: <20200817223214.62179-1-freifunk@adrianschmutzler.de> <20200817223214.62179-2-freifunk@adrianschmutzler.de> <20200830173219.GA483@uller> <01aa01d68078$f7f57da0$e7e078e0$@adrianschmutzler.de> <20200901163125.GZ3715@yoga>
-In-Reply-To: <20200901163125.GZ3715@yoga>
-Subject: RE: [PATCH 2/2] arm64: dts: replace status value "ok" by "okay"
-Date:   Sat, 26 Sep 2020 19:03:35 +0200
-Message-ID: <011401d69426$f8e23250$eaa696f0$@adrianschmutzler.de>
-X-Mailer: Microsoft Outlook 15.0
+        Sat, 26 Sep 2020 13:18:43 -0400
+Received: from mail-wr1-x441.google.com (mail-wr1-x441.google.com [IPv6:2a00:1450:4864:20::441])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BA13AC0613CE;
+        Sat, 26 Sep 2020 10:18:42 -0700 (PDT)
+Received: by mail-wr1-x441.google.com with SMTP id s12so7260434wrw.11;
+        Sat, 26 Sep 2020 10:18:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=bl53+IHBE7yXiOLq6WRfnfhUTBMnGEZtbf1LqSaqfOk=;
+        b=MaueTk1yEtJ7GzSgrXw9tmwckv/94rigKyb+hYnwA4mrGQVzJNB5sjMe6y2xd4IBeT
+         3zkQ9HbFbDy2HsnjEzWPRD0Y0WO7UoGKjIxD+WFa4PQoTYvzULDT06j5a3uoJ3DXDEuB
+         kwBeb9FSSZOMVJb9QpJOm1IZ76qUyTUG04nCCPF74hjYkr7zD2KCdCnP9ID5ZmR8Nzmg
+         C7MsQtBPYqbYzatYImp4itw+59MOMc+2ezR9fnuhOMJ3/LKjf0riQt/EiAWmQToz5Wcb
+         rhdKstdxImdK1Ec5krm8r230l7kWzYOa0U20CsBBZOhjsabFERo9xzDUDPJXk0vj+k8p
+         muuA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=bl53+IHBE7yXiOLq6WRfnfhUTBMnGEZtbf1LqSaqfOk=;
+        b=GdxjOrt3qfc2NDShUkPm+FhikafObXAx2zB0+2hrT4kBCuBTuTvLLBHAbFkAKdB/Ku
+         IZGOitadgmm6+WNFAVaT+RKwzM/lx0X4l4wegbDB4gyY/e7/KxRFXjLc1pvSR5JArkMb
+         awTf/31Kr/WwJPfdxNzSryi/IjO+oxV1hLcmgAu6Ac/HkGCs0aJbbiqIO3jVcCCX1Dk0
+         S+4MnZn7fBM+V3YfbuZ3jFboztl6A2uv9QQDh4v5JDiragvx51WLWHRU9Kno2ol7L4WK
+         KA9rTIo0IITNo4X6n+AE1+RPMnYmgfXEDreQ5gczkca3K28s/USwexOzCIZicBMpAg6U
+         66lg==
+X-Gm-Message-State: AOAM531pXjsQZY//J/ZpDbxh4kk4Bpy7g/eE/zgeUanDyNxfN+ZI6jYN
+        6O9r2WZZrPBI/C45AtSFAyA=
+X-Google-Smtp-Source: ABdhPJyzlxbTOBiEV6UjiHZ8TzGIgyhnXIRMmB49mXLck6hVgqRUzmKf7TuHcYyH3cOFuQuh7oKS5Q==
+X-Received: by 2002:adf:f903:: with SMTP id b3mr10611592wrr.142.1601140721323;
+        Sat, 26 Sep 2020 10:18:41 -0700 (PDT)
+Received: from IcarusMOD.eternityproject.eu ([2.237.20.237])
+        by smtp.gmail.com with ESMTPSA id l4sm7427125wrc.14.2020.09.26.10.18.40
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 26 Sep 2020 10:18:40 -0700 (PDT)
+From:   kholk11@gmail.com
+To:     agross@kernel.org
+Cc:     bjorn.andersson@linaro.org, jic23@kernel.org, robh+dt@kernel.org,
+        kholk11@gmail.com, marijns95@gmail.com, konradybcio@gmail.com,
+        martin.botka1@gmail.com, linux-arm-msm@vger.kernel.org,
+        phone-devel@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-iio@vger.kernel.org
+Subject: [RESEND] [PATCH 1/2] iio: adc: qcom-spmi-vadc: Use right ratiometric range for 8998,660,845
+Date:   Sat, 26 Sep 2020 19:18:34 +0200
+Message-Id: <20200926171835.27154-1-kholk11@gmail.com>
+X-Mailer: git-send-email 2.28.0
 MIME-Version: 1.0
-Content-Language: de
-Thread-Index: AQHnXCQK1z9BLkrioJdbpuQ6n/GgNAGTdEWwAvEl5JMB1yUMggJ8KmZAqRLVlYA=
-Content-Type: multipart/signed;
-        boundary="=-=ijz50QGy50ECts=-=";
-        protocol="application/pgp-signature";
-        micalg=pgp-sha256
-X-Provags-ID: V03:K1:U+niNxAyMBiNo9/No7n9oK66MSpYkuETwawAtP5xL2zV2iEyiiW
- 7DYMMBilsFsIzzm/RczxVgl9L/bswepdISFdsTFDDekC2e57veD0Z9GFCyD54OYFb0gwZpQ
- VpYgnWFJj6ElYQxMiZFAqhV3shvGJCWU/yTrZZgm5UrKBR7Ptl9X0NE+4Fm2rn+9EXMmZ+6
- +o6Q+QrWX33Uul2aubi0w==
-X-Spam-Flag: NO
-X-UI-Out-Filterresults: notjunk:1;V03:K0:jeEm5dKMk4k=:bVu3BrRUdPODrhiTzDo20/
- CSMcEtxhCPRAUptZEyfYOYmuVe/YbWps3duG/4hEuKbBMKP7Egoyj7seLzdGASchtrVYs4t1f
- vBukWfTD4J+/PvSH/Op0TWuJ8nl9Lzx2S+e17MvXTWzGHLRZo3SgJqmo2in5hHQSezDsEZYi0
- BnjfLQbO+BGTadOwQc+mZb2uOA3B0bGE3xfql2c3YIt/xDUWP2Lp3IMn/0Z3JohCtgoRmy+Po
- 8D2NZs5sraCQi9vA1eaciwRVvROPeyKodwtbqxrHMWVpNd0GqUb6HJIzMOk3wZdGysupeBWti
- 1jJW5TRQjANCd8Y8MgX9f6vhaMU5seQQNgAajFEQ1bebBtwvO31sz547TQz3TYIkxXTpdXFuu
- Oa0SWmfPE29ihizxSxagRKCCOyPK8ykdXdGJTaff4izwObSwxK3pso2doDGlndN3Z650WN4js
- ESU2VQkoBt/rehxWHXHYxLkffvhTFZG0VyQ6PUxATB+k7ccXLCVHZ3q8PRYwseRRYllp8d7K5
- vOnhxsT8Pao2LQIzbfGm/VIT9niD5nlcUzaHZ90tvBro3lCJ9Z29HjyMsF1wbW6PKDpakoAhk
- ijpIbMqLQecpCzsaXDggXB1OVb/Yy7j5Usn0qsGvaWmz3cpb8S5Tsp+eUkXiVENvI2X/ca+A+
- h3pLNE5peRC7ftAUxu+HSvZD5+uufWcWDFZDBxV9Samnn5rtV6lFTZWjZ5+r+QW09YrVnz/6v
- CGqjsd36uFBUZUibzsViYCW8VZAxk8RpRV0L3E1H9/jKHxsK8Bnqsm7m75XFiays6AUdvZtH6
- WWU3wal1qt2YLrFJpXVllgeHmtNwYZX+SN+vkN62AEm7inRX87I/a0oZV8Cx5Op40cn6EMIzS
- gFt9MLkCGx5cgrw5FWcw==
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This is a multipart message in MIME format.
+From: AngeloGioacchino Del Regno <kholk11@gmail.com>
 
---=-=ijz50QGy50ECts=-=
-Content-Type: text/plain;
-	charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
+The ratiometric range for MSM8998, SDM630/636/660 and SDM845 is 1875mV
+instead of the standard 1800mV: address this by adding a new compatible
+"qcom,spmi-vadc-8998" and assigning the different range to the machines
+declaring this one.
 
-Hi,
+Signed-off-by: AngeloGioacchino Del Regno <kholk11@gmail.com>
+---
+ drivers/iio/adc/qcom-spmi-vadc.c   | 10 +++++++++-
+ drivers/iio/adc/qcom-vadc-common.h |  1 +
+ 2 files changed, 10 insertions(+), 1 deletion(-)
 
-> -----Original Message-----
-> From: Bjorn Andersson [mailto:bjorn.andersson@linaro.org]
-> Sent: Dienstag, 1. September 2020 18:31
-> To: Adrian Schmutzler <mail@adrianschmutzler.de>
-> Cc: linux-arm-msm@vger.kernel.org; devicetree@vger.kernel.org
-> Subject: Re: [PATCH 2/2] arm64: dts: replace status value "ok" by "okay"
->=20
-> On Tue 01 Sep 11:00 CDT 2020, Adrian Schmutzler wrote:
->=20
-> > > -----Original Message-----
-> > > From: Bjorn Andersson [mailto:bjorn.andersson@linaro.org]
-> > > Sent: Sonntag, 30. August 2020 19:32
-> > > To: Adrian Schmutzler <freifunk@adrianschmutzler.de>
-> > > Cc: linux-arm-msm@vger.kernel.org; devicetree@vger.kernel.org
-> > > Subject: Re: [PATCH 2/2] arm64: dts: replace status value "ok" by "ok=
-ay"
-> > >
-> > > On Mon 17 Aug 22:32 UTC 2020, Adrian Schmutzler wrote:
-> > >
-> > > > While the DT parser recognizes "ok" as a valid value for the "statu=
-s"
-> > > > property, it is actually mentioned nowhere. Use the proper value
-> > > > "okay" instead, as done in the majority of files already.
-> > > >
-> > > > Signed-off-by: Adrian Schmutzler <freifunk@adrianschmutzler.de>
-> > >
-> > > The content of this looks good Adrian.
-> > >
-> > > But you're lacking most maintainers among the recipients of these
-> > > patches and I would expect if applied in the current form we will
-> > > have merge issues as the patches travels towards Linus' tree.
-> > >
-> > > So please split it per vendor and ensure that the various
-> > > maintainers are copied (use ./scripts/get_maintainer.pl)
-> >
-> > Thanks for the instructions, I was used to a different submission behav=
-ior.
-> >
-> > I split stuff up (all of ARM64 and most of ARM changes) and submitted
-> > them separately via the recommended way.
-> >
->=20
-> Thank you,
-> Bjorn
-
-Thanks for merging the arm64/qcom patch.
-
-I'd be very happy if you could also pick the similar patch for ARM, as the =
-ipq8064 platform is actually the reason why I made this effort in the first=
- place:
-
-https://patchwork.kernel.org/patch/11745289/
-
-Best
-
-Adrian
-
---=-=ijz50QGy50ECts=-=
-Content-Type: application/pgp-signature;
-	name="openpgp-digital-signature.asc"
-Content-Transfer-Encoding: 7bit
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAEBCAAdFiEESgN6p2H3WoMOAf81oNyKO7qxAnAFAl9vdGYACgkQoNyKO7qx
-AnDsiQ/8DFNlYpRGGgNs36RuKZFzK07OuUw5qJVKd9FbfZLYv0EassjcTxNFmDqh
-S/Nk9oPAv+rWVlfSU0bPdApA14jbJ5iqWmGClWIjZ9iqpoYcpJ813HmTvqLBGkHE
-waFbv83KYG/tz7ta2Cit5po0R8K5X9olH/Dc5EmiiNwXxE4xrelEbLhJliOyez1S
-adu4rjmXl1rArm9GDpIRU43F9mJafVd66tQVgp27IZIo+7L8VC82IxIQTa3in3h2
-oEddFPegPthcSDdPwSs8id27+60Ny3usBPFuBwEGB6NS5IVRHX1se3pddk/Gcmxc
-DZnW+1u4qUyPZNAPhOHajw0uYR7/4e0O7ksRhxqGy4NsMG7s9R8WbcolEzMZWwNh
-ixWbZ8F+RNhLnqh3PYRPwUq4N50XLfwDAuI2SE+sN41hEG1Ipqx52/swqJ67iBfW
-kVK1UE4BGvnS7AjUhvmpZlIfs2456wmketUzx6Lhtpke8uBWqRcwO6uh47pDuLJq
-5dmeEW5/gPU70oC7Oa+A5wx9UYD+RZV3I2sO5VwKLO8T+Rcv2pzcwPhcKUvZ/PM+
-3J7he+ILyKOPlYbfFwmVt8LitkoqfogNlDfowwmI6kG3zdpG0oHUpl96SYyZoBdl
-3YBnSE7+n4I/ZlQVKnO9lmxELd42qPPXLaVc68lr4VoYrO+MwRI=
-=MhE3
------END PGP SIGNATURE-----
-
-
---=-=ijz50QGy50ECts=-=--
+diff --git a/drivers/iio/adc/qcom-spmi-vadc.c b/drivers/iio/adc/qcom-spmi-vadc.c
+index b0388f8a69f4..59a94ea7bf78 100644
+--- a/drivers/iio/adc/qcom-spmi-vadc.c
++++ b/drivers/iio/adc/qcom-spmi-vadc.c
+@@ -101,6 +101,7 @@ struct vadc_channel_prop {
+  * @dev: pointer to struct device.
+  * @base: base address for the ADC peripheral.
+  * @nchannels: number of VADC channels.
++ * @ratio_range: ratiometric range for ref points.
+  * @chan_props: array of VADC channel properties.
+  * @iio_chans: array of IIO channels specification.
+  * @are_ref_measured: are reference points measured.
+@@ -114,6 +115,7 @@ struct vadc_priv {
+ 	struct device		 *dev;
+ 	u16			 base;
+ 	unsigned int		 nchannels;
++	unsigned int		 ratio_range;
+ 	struct vadc_channel_prop *chan_props;
+ 	struct iio_chan_spec	 *iio_chans;
+ 	bool			 are_ref_measured;
+@@ -355,7 +357,7 @@ static int vadc_measure_ref_points(struct vadc_priv *vadc)
+ 	u16 read_1, read_2;
+ 	int ret;
+ 
+-	vadc->graph[VADC_CALIB_RATIOMETRIC].dx = VADC_RATIOMETRIC_RANGE;
++	vadc->graph[VADC_CALIB_RATIOMETRIC].dx = vadc->ratio_range;
+ 	vadc->graph[VADC_CALIB_ABSOLUTE].dx = VADC_ABSOLUTE_RANGE_UV;
+ 
+ 	prop = vadc_get_channel(vadc, VADC_REF_1250MV);
+@@ -885,6 +887,11 @@ static int vadc_probe(struct platform_device *pdev)
+ 	if (ret)
+ 		return ret;
+ 
++	if (of_device_is_compatible(node, "qcom,spmi-vadc-8998"))
++		vadc->ratio_range = VADC_RATIOMETRIC_RANGE_8998;
++	else
++		vadc->ratio_range = VADC_RATIOMETRIC_RANGE;
++
+ 	irq_eoc = platform_get_irq(pdev, 0);
+ 	if (irq_eoc < 0) {
+ 		if (irq_eoc == -EPROBE_DEFER || irq_eoc == -EINVAL)
+@@ -918,6 +925,7 @@ static int vadc_probe(struct platform_device *pdev)
+ 
+ static const struct of_device_id vadc_match_table[] = {
+ 	{ .compatible = "qcom,spmi-vadc" },
++	{ .compatible = "qcom-spmi-vadc-8998" },
+ 	{ }
+ };
+ MODULE_DEVICE_TABLE(of, vadc_match_table);
+diff --git a/drivers/iio/adc/qcom-vadc-common.h b/drivers/iio/adc/qcom-vadc-common.h
+index 17b2fc4d8bf2..b10d5fd59034 100644
+--- a/drivers/iio/adc/qcom-vadc-common.h
++++ b/drivers/iio/adc/qcom-vadc-common.h
+@@ -16,6 +16,7 @@
+ 
+ #define VADC_ABSOLUTE_RANGE_UV			625000
+ #define VADC_RATIOMETRIC_RANGE			1800
++#define VADC_RATIOMETRIC_RANGE_8998		1875
+ 
+ #define VADC_DEF_PRESCALING			0 /* 1:1 */
+ #define VADC_DEF_DECIMATION			0 /* 512 */
+-- 
+2.28.0
 
