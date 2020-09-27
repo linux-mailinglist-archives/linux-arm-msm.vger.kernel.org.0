@@ -2,167 +2,85 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 9DCDC27A07A
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 27 Sep 2020 12:26:51 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DD56F27A1D2
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 27 Sep 2020 18:20:26 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726291AbgI0K0v (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 27 Sep 2020 06:26:51 -0400
-Received: from mail.kernel.org ([198.145.29.99]:37474 "EHLO mail.kernel.org"
+        id S1726239AbgI0QUZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 27 Sep 2020 12:20:25 -0400
+Received: from m42-4.mailgun.net ([69.72.42.4]:10026 "EHLO m42-4.mailgun.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726255AbgI0K0u (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 27 Sep 2020 06:26:50 -0400
-Received: from localhost (83-86-74-64.cable.dynamic.v4.ziggo.nl [83.86.74.64])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        id S1726255AbgI0QUX (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Sun, 27 Sep 2020 12:20:23 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1601223622; h=Content-Transfer-Encoding: MIME-Version:
+ Message-Id: Date: Subject: Cc: To: From: Sender;
+ bh=NwY+9pyXoa+omO25i3/YebXXaYhAzcyQec10Z2afrhQ=; b=I30z4y/Tcl9xBgUpIJF/Jvv641NCPukTaKn+oWaYwtI5G11CRv81PFjdLMhVXtjGd8YrUNzl
+ GHwyxDHEdwqIYkwvnaMaSrSGYMUahSvjyfPzlRPStdUFkLK0F/mHuEQTo+0lSECiwS6vF74h
+ NjUdZnlKVu/orBS7/rYOZwy42YA=
+X-Mailgun-Sending-Ip: 69.72.42.4
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n02.prod.us-east-1.postgun.com with SMTP id
+ 5f70bbc49cd44bf51a66a567 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Sun, 27 Sep 2020 16:20:20
+ GMT
+Sender: saiprakash.ranjan=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id F0BFDC43395; Sun, 27 Sep 2020 16:20:19 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL
+        autolearn=no autolearn_force=no version=3.4.0
+Received: from blr-ubuntu-253.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 616CF23977;
-        Sun, 27 Sep 2020 10:26:49 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1601202410;
-        bh=YqGhQx8G5+UitARKcKcjI2npUE4fJplh2JdIlW1jk+k=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=fd2bj/IOPbQAoATPBQqgBO/L+V08ugfIQBlXCV917vTOgkVYPlZM+ng4aGZfzPuLS
-         TdQU3S0OwzXgB2eYyEu0VxcDi/CcDo3h5VUhNSBoH0nmzS0rhoc1awuP6mOGubltVH
-         QycKcwXfYCAnpG2e5R6AfVjDidPBFLOJDQ9eGkLE=
-Date:   Sun, 27 Sep 2020 12:26:59 +0200
-From:   Greg KH <gregkh@linuxfoundation.org>
-To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc:     hemantk@codeaurora.org, jhugo@codeaurora.org,
-        bbhatt@codeaurora.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 15/18] bus: mhi: core: Introduce sysfs entries for MHI
-Message-ID: <20200927102659.GC87283@kroah.com>
-References: <20200921160815.28071-1-manivannan.sadhasivam@linaro.org>
- <20200921160815.28071-17-manivannan.sadhasivam@linaro.org>
+        (Authenticated sender: saiprakash.ranjan)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id AC36DC433CB;
+        Sun, 27 Sep 2020 16:20:15 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org AC36DC433CB
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=saiprakash.ranjan@codeaurora.org
+From:   Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+To:     Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Suzuki K Poulose <suzuki.poulose@arm.com>,
+        Mike Leach <mike.leach@linaro.org>,
+        Leo Yan <leo.yan@linaro.org>
+Cc:     Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+        Peter Zijlstra <peterz@infradead.org>,
+        coresight@lists.linaro.org, Stephen Boyd <swboyd@chromium.org>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org, denik@google.com,
+        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+Subject: [PATCH 0/2] Coresight ETF NULL pointer dereference and ETM save/restore fixes
+Date:   Sun, 27 Sep 2020 21:50:02 +0530
+Message-Id: <cover.1601222348.git.saiprakash.ranjan@codeaurora.org>
+X-Mailer: git-send-email 2.27.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20200921160815.28071-17-manivannan.sadhasivam@linaro.org>
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Sep 21, 2020 at 09:38:12PM +0530, Manivannan Sadhasivam wrote:
-> From: Bhaumik Bhatt <bbhatt@codeaurora.org>
-> 
-> Introduce sysfs entries to enable userspace clients the ability to read
-> the serial number and the OEM PK Hash values obtained from BHI. OEMs
-> need to read these device-specific hardware information values through
-> userspace for factory testing purposes and cannot be exposed via degbufs
-> as it may remain disabled for performance reasons. Also, update the
-> documentation for ABI to include these entries.
-> 
-> Signed-off-by: Bhaumik Bhatt <bbhatt@codeaurora.org>
-> Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> ---
->  Documentation/ABI/stable/sysfs-bus-mhi | 21 ++++++++++
->  MAINTAINERS                            |  1 +
->  drivers/bus/mhi/core/init.c            | 53 ++++++++++++++++++++++++++
->  3 files changed, 75 insertions(+)
->  create mode 100644 Documentation/ABI/stable/sysfs-bus-mhi
-> 
-> diff --git a/Documentation/ABI/stable/sysfs-bus-mhi b/Documentation/ABI/stable/sysfs-bus-mhi
-> new file mode 100644
-> index 000000000000..ecfe7662f8d0
-> --- /dev/null
-> +++ b/Documentation/ABI/stable/sysfs-bus-mhi
-> @@ -0,0 +1,21 @@
-> +What:		/sys/bus/mhi/devices/.../serialnumber
-> +Date:		Sept 2020
-> +KernelVersion:	5.10
-> +Contact:	Bhaumik Bhatt <bbhatt@codeaurora.org>
-> +Description:	The file holds the serial number of the client device obtained
-> +		using a BHI (Boot Host Interface) register read after at least
-> +		one attempt to power up the device has been done. If read
-> +		without having the device power on at least once, the file will
-> +		read all 0's.
-> +Users:		Any userspace application or clients interested in device info.
-> +
-> +What:		/sys/bus/mhi/devices/.../oem_pk_hash
-> +Date:		Sept 2020
-> +KernelVersion:	5.10
-> +Contact:	Bhaumik Bhatt <bbhatt@codeaurora.org>
-> +Description:	The file holds the OEM PK Hash value of the endpoint device
-> +		obtained using a BHI (Boot Host Interface) register read after
-> +		at least one attempt to power up the device has been done. If
-> +		read without having the device power on at least once, the file
-> +		will read all 0's.
-> +Users:		Any userspace application or clients interested in device info.
-> diff --git a/MAINTAINERS b/MAINTAINERS
-> index deaafb617361..11e7be9b9163 100644
-> --- a/MAINTAINERS
-> +++ b/MAINTAINERS
-> @@ -11323,6 +11323,7 @@ M:	Hemant Kumar <hemantk@codeaurora.org>
->  L:	linux-arm-msm@vger.kernel.org
->  S:	Maintained
->  T:	git git://git.kernel.org/pub/scm/linux/kernel/git/mani/mhi.git
-> +F:	Documentation/ABI/stable/sysfs-bus-mhi
->  F:	Documentation/mhi/
->  F:	drivers/bus/mhi/
->  F:	include/linux/mhi.h
-> diff --git a/drivers/bus/mhi/core/init.c b/drivers/bus/mhi/core/init.c
-> index 61e5885a331a..1b4161eaf0d8 100644
-> --- a/drivers/bus/mhi/core/init.c
-> +++ b/drivers/bus/mhi/core/init.c
-> @@ -76,6 +76,56 @@ const char *to_mhi_pm_state_str(enum mhi_pm_state state)
->  	return mhi_pm_state_str[index];
->  }
->  
-> +static ssize_t serial_number_show(struct device *dev,
-> +				  struct device_attribute *attr,
-> +				  char *buf)
-> +{
-> +	struct mhi_device *mhi_dev = to_mhi_device(dev);
-> +	struct mhi_controller *mhi_cntrl = mhi_dev->mhi_cntrl;
-> +
-> +	return snprintf(buf, PAGE_SIZE, "Serial Number: %u\n",
-> +			mhi_cntrl->serial_number);
-> +}
-> +static DEVICE_ATTR_RO(serial_number);
-> +
-> +static ssize_t oem_pk_hash_show(struct device *dev,
-> +				struct device_attribute *attr,
-> +				char *buf)
-> +{
-> +	struct mhi_device *mhi_dev = to_mhi_device(dev);
-> +	struct mhi_controller *mhi_cntrl = mhi_dev->mhi_cntrl;
-> +	int i, cnt = 0;
-> +
-> +	for (i = 0; i < ARRAY_SIZE(mhi_cntrl->oem_pk_hash); i++)
-> +		cnt += snprintf(buf + cnt, PAGE_SIZE - cnt,
-> +				"OEMPKHASH[%d]: 0x%x\n", i,
-> +				mhi_cntrl->oem_pk_hash[i]);
-> +
-> +	return cnt;
-> +}
-> +static DEVICE_ATTR_RO(oem_pk_hash);
-> +
-> +static struct attribute *mhi_sysfs_attrs[] = {
-> +	&dev_attr_serial_number.attr,
-> +	&dev_attr_oem_pk_hash.attr,
-> +	NULL,
-> +};
-> +
-> +static const struct attribute_group mhi_sysfs_group = {
-> +	.attrs = mhi_sysfs_attrs,
-> +};
-> +
-> +static int mhi_create_sysfs(struct mhi_controller *mhi_cntrl)
-> +{
-> +	return sysfs_create_group(&mhi_cntrl->mhi_dev->dev.kobj,
-> +				  &mhi_sysfs_group);
+This 2 patch series provides fixes to ETF null pointer dereference crash
+and TRCVMIDCCTLR1 register save and restore fix.
 
-You should never have to call a sysfs_* function from a driver or bus
-code, that implies something is wrong :)
+Patch 1 is an RFC since I am not sure of the fix provided since it looks
+more like a band-aid than the actual fix.
 
-Just set the sysfs attributes to be the default groups for your
-bus/device/whatever-you-have-here and then the driver core will properly
-manage the creation and removal of these files, in a race-free manner.
+Sai Prakash Ranjan (2):
+  coresight: tmc-etf: Fix NULL pointer dereference in
+    tmc_enable_etf_sink_perf()
+  coresight: etm4x: Fix save and restore of TRCVMIDCCTLR1 register
 
-As it is, I think this is racy and will cause userspace confusion, but I
-haven't looked for sure, as you should use the api that guarantees it is
-safe...
+ drivers/hwtracing/coresight/coresight-etm4x-core.c | 4 ++--
+ drivers/hwtracing/coresight/coresight-tmc-etf.c    | 3 +++
+ 2 files changed, 5 insertions(+), 2 deletions(-)
 
-thanks,
 
-greg k-h
+base-commit: e209e73bee253afe969410150248f0c300c13d84
+-- 
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
+of Code Aurora Forum, hosted by The Linux Foundation
+
