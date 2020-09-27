@@ -2,62 +2,64 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C1AC1279DC1
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 27 Sep 2020 05:37:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 81211279DC4
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 27 Sep 2020 05:37:10 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730224AbgI0DhB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 26 Sep 2020 23:37:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57772 "EHLO
+        id S1730273AbgI0DhI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 26 Sep 2020 23:37:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57788 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729580AbgI0DhB (ORCPT
+        with ESMTP id S1730265AbgI0DhF (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 26 Sep 2020 23:37:01 -0400
-Received: from mail-pg1-x543.google.com (mail-pg1-x543.google.com [IPv6:2607:f8b0:4864:20::543])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D8D60C0613CE
-        for <linux-arm-msm@vger.kernel.org>; Sat, 26 Sep 2020 20:37:00 -0700 (PDT)
-Received: by mail-pg1-x543.google.com with SMTP id x16so4695382pgj.3
-        for <linux-arm-msm@vger.kernel.org>; Sat, 26 Sep 2020 20:37:00 -0700 (PDT)
+        Sat, 26 Sep 2020 23:37:05 -0400
+Received: from mail-pl1-x644.google.com (mail-pl1-x644.google.com [IPv6:2607:f8b0:4864:20::644])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7D794C0613CE
+        for <linux-arm-msm@vger.kernel.org>; Sat, 26 Sep 2020 20:37:05 -0700 (PDT)
+Received: by mail-pl1-x644.google.com with SMTP id e4so1491872pln.10
+        for <linux-arm-msm@vger.kernel.org>; Sat, 26 Sep 2020 20:37:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=RQaUnoAH1C1tw4/jDIjVLHYjHISZCikIVgp2rtLZhwI=;
-        b=YyZKNo6xzcr41ymQJx7mMCSbM2sehFkPgOet4qGlnngbvePG7kkBMB9dLwqD30IaH7
-         +oQraSZFM63Zc5yQT5oGbguKOx1m4JQrvjGN/R8Si7+HqKCrgFYvhpVRKGLOvSKVMvVt
-         gAIhP3b+sWQBgL3Ym42Vk2irm0wYR/61tKeboQbxMAb7JXodEHhttlBoLLl97BDd4ksr
-         27vhaVcajQHe2KyO8r4LpOirfy9U8P8pgXQzlqfN26UlLImEDQ0zSlbvB3d8rvFCQl5T
-         W2lQlse8386qWpkRyscPUSHgOfC9b6HVFYBdivjMyFCppZeZXM8bFhAnePYe+0P9wWuO
-         uTvg==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=WCUPmHYtcecToV38t2DlfIgpoympluaCI7mC24k2euU=;
+        b=hL5ttpELNTHIzHTM0NXc1KB+orhq+qOuVQMdmV/HBUP85y98fg7Hdfn+Lo/bzu1RNH
+         XWoJDDi2cKtnM0dCTYzENiIUiwJ3+z4nsLOrqNcTtlDWtoti4snZc3U/6EzF1vszsILm
+         ZRP5EuDdvCGj9POET21nl5sEudcoCCrbc6kRPXEqMjM/7wIjXrirk2AZv6ryHUI4NLqA
+         rZflNKVy6vhuQjEQ70ow/XxIotdleVYGkWDgtQ1vVlAd2NTqgbTRAWl490JY6Ze4BnLu
+         UIPo+Z0UsZgF1LOnA7sPyztsprdrORYiSayhkd5J2Ye6qwvG1gFCMz0NntyZ4siQUUAF
+         axLQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=RQaUnoAH1C1tw4/jDIjVLHYjHISZCikIVgp2rtLZhwI=;
-        b=WpFi9HeKGP6AFrNe5bE79mDHpvGep6gsmp86dr87+3q+p/A6ajBpGUd1CKl2gCNWtq
-         DdQW14ORXKSA8NS2QerVGPyUrBi6cUglB2nL6M0Ne4kj2qUO0nL3+rjuP1Mghr6+M135
-         2s18QuTzUi+Ov/i6t0yjqChpak8sBJ+N5YdQNjff3O9X7KCCt+BVlREIZQ/qTvEZDqja
-         zhlFxYZSuxLUqKBUboof/7MaQ9OAn5sJ+rJlOLiYN4+UGAdFof81TgMm7uWp1p5KkLO5
-         29AA/Ju7s1sgpn/+vd0DKysIoEyJSmAEsNi7EY+1knbqZbnQA57Miq9diuR09zd8doW5
-         XVKQ==
-X-Gm-Message-State: AOAM531kPCcdBT/Y7ELkbR5+i3VnNgju1/+UdMWmyrOZcY+Njwl2noa1
-        Yv/L/kxy3yo+/tRmpM5NJ402
-X-Google-Smtp-Source: ABdhPJwAmBj1HbUO+eiZYhoX+EmaV6ljDLkA4vaZDYE/Y0L07qGO89B2pLbeGAZG7VPR4PwJokcaqw==
-X-Received: by 2002:a63:3:: with SMTP id 3mr4454205pga.44.1601177820216;
-        Sat, 26 Sep 2020 20:37:00 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=WCUPmHYtcecToV38t2DlfIgpoympluaCI7mC24k2euU=;
+        b=ipm2+daTK/kC92WAHlFSQosRC1cdQIkoGk2r/m03KLfW7Gqa1WD/bo5HdktODxG/7L
+         sxniARvaqShKG96tX7aG0O3AMwHgEa+MoB6THRgllfgN4qhZONOK72jXFxG70TEZChcU
+         C4NVPJo/R9/UjydyUCPg9LHQHdOmVWaROCot4ZNiP4ygaTFIXBPgHy6h3GqENzRUfsQl
+         Tjun/bFkUGGwUFYiy+K3HN5Rx4w/kDF+WhjTLJoSw8Oi3C3A++MD0RG9rlC3RnthX1TX
+         jNxtoKgPbq6LLXLHiazuMGBUCX7OOt64hJx4Gq81ivuTKA6BMLzMAlUmIDuAFznrADue
+         dObw==
+X-Gm-Message-State: AOAM532CgS5qDN+2BiXWQHvj/mOUblxCPHZwWmyLYT4gIAt1TCtfgKB1
+        fRNmpire8dsCmsQvOrtBek7B
+X-Google-Smtp-Source: ABdhPJwWDGBZpsLbbF/gWY0cgCUr4ze7esNeitBNIYDCgOsRqkuPCkOkxKqCkOC8VJhGuocTpbym8Q==
+X-Received: by 2002:a17:90a:e291:: with SMTP id d17mr4033617pjz.156.1601177824025;
+        Sat, 26 Sep 2020 20:37:04 -0700 (PDT)
 Received: from Mani-XPS-13-9360.localdomain ([2409:4072:980:cb63:5c53:a3bf:dd6b:614d])
-        by smtp.gmail.com with ESMTPSA id gx5sm2821439pjb.57.2020.09.26.20.36.56
+        by smtp.gmail.com with ESMTPSA id gx5sm2821439pjb.57.2020.09.26.20.37.00
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 26 Sep 2020 20:36:59 -0700 (PDT)
+        Sat, 26 Sep 2020 20:37:03 -0700 (PDT)
 From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 To:     gregkh@linuxfoundation.org
 Cc:     hemantk@codeaurora.org, bbhatt@codeaurora.org,
         linux-arm-msm@vger.kernel.org, jhugo@codeaurora.org,
         linux-kernel@vger.kernel.org,
         Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Subject: [PATCH 0/5] MHI changes for v5.10 - Take two
-Date:   Sun, 27 Sep 2020 09:06:47 +0530
-Message-Id: <20200927033652.11789-1-manivannan.sadhasivam@linaro.org>
+Subject: [PATCH 1/5] bus: mhi: core: debugfs: Use correct format specifiers for addresses
+Date:   Sun, 27 Sep 2020 09:06:48 +0530
+Message-Id: <20200927033652.11789-2-manivannan.sadhasivam@linaro.org>
 X-Mailer: git-send-email 2.17.1
+In-Reply-To: <20200927033652.11789-1-manivannan.sadhasivam@linaro.org>
+References: <20200927033652.11789-1-manivannan.sadhasivam@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -65,45 +67,72 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Greg,
+For exposing the addresses of read/write pointers and doorbell register,
+let's use the correct format specifiers. This fixes the following issues
+generated using W=1 build in ARM32 and reported by Kbuild bot:
 
-This is the second set of MHI patches for v5.10. The summary is below:
+All warnings (new ones prefixed by >>):
 
-* Fixed the format specifier used in debugfs interface. The issue was
-  identified by building for ARM32 machine.
+>> drivers/bus/mhi/core/debugfs.c:75:7: warning: format specifies type 'unsigned long long' but the argument has type 'dma_addr_t' (aka 'unsigned int') [-Wformat]
+                              mhi_event->db_cfg.db_val);
+                              ^~~~~~~~~~~~~~~~~~~~~~~~
+   drivers/bus/mhi/core/debugfs.c:123:7: warning: format specifies type 'unsigned long long' but the argument has type 'dma_addr_t' (aka 'unsigned int') [-Wformat]
+                              mhi_chan->db_cfg.db_val);
+                              ^~~~~~~~~~~~~~~~~~~~~~~
+   2 warnings generated.
 
-NOTE: I've sent this patch separately for review.
+drivers/bus/mhi/core/debugfs.c: In function ‘mhi_debugfs_events_show’:
+drivers/bus/mhi/core/debugfs.c:74:51: warning: cast from pointer to integer of different size [-Wpointer-to-int-cast]
+   seq_printf(m, " local rp: 0x%llx db: 0x%pad\n", (u64)ring->rp,
+                                                   ^
+drivers/bus/mhi/core/debugfs.c: In function ‘mhi_debugfs_channels_show’:
+drivers/bus/mhi/core/debugfs.c:122:7: warning: cast from pointer to integer of different size [-Wpointer-to-int-cast]
+       (u64)ring->rp, (u64)ring->wp,
+       ^
+drivers/bus/mhi/core/debugfs.c:122:22: warning: cast from pointer to integer of different size [-Wpointer-to-int-cast]
+       (u64)ring->rp, (u64)ring->wp,
+                      ^
+drivers/bus/mhi/core/debugfs.c:121:62: warning: format ‘%llx’ expects argument of type ‘long long unsigned int’, but argument 5 has type ‘dma_addr_t {aka unsigned int}’ [-Wformat=]
+   seq_printf(m, " local rp: 0x%llx local wp: 0x%llx db: 0x%llx\n",
+                                                           ~~~^
+                                                           %x
+drivers/bus/mhi/core/debugfs.c:123:7:
+       mhi_chan->db_cfg.db_val);
 
-* Removed the auto-start option for MHI channels. This is done to avoid
-  receiving spurious uplink from MHI client device when the client driver
-  is not up. The corresponding qrtr change is also included with Dave's ACK.
+Reported-by: kernel test robot <lkp@intel.com>
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+---
+ drivers/bus/mhi/core/debugfs.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-* Moved MHI_MAX_MTU define out of internal header to global to use it in
-  client drivers.
-
-Please consider merging!
-
-Thanks,
-Mani
-
-Hemant Kumar (1):
-  bus: mhi: core: Move MHI_MAX_MTU to external header file
-
-Loic Poulain (3):
-  bus: mhi: debugfs: Print channel context read-pointer
-  bus: mhi: Remove auto-start option
-  net: qrtr: Start MHI channels during init
-
-Manivannan Sadhasivam (1):
-  bus: mhi: core: debugfs: Use correct format specifiers for addresses
-
- drivers/bus/mhi/core/debugfs.c  | 15 ++++++++-------
- drivers/bus/mhi/core/init.c     |  9 ---------
- drivers/bus/mhi/core/internal.h |  2 --
- include/linux/mhi.h             |  5 +++--
- net/qrtr/mhi.c                  |  5 +++++
- 5 files changed, 16 insertions(+), 20 deletions(-)
-
+diff --git a/drivers/bus/mhi/core/debugfs.c b/drivers/bus/mhi/core/debugfs.c
+index 53d05a8e168d..f50d73054db4 100644
+--- a/drivers/bus/mhi/core/debugfs.c
++++ b/drivers/bus/mhi/core/debugfs.c
+@@ -71,8 +71,8 @@ static int mhi_debugfs_events_show(struct seq_file *m, void *d)
+ 		seq_printf(m, " rp: 0x%llx wp: 0x%llx", er_ctxt->rp,
+ 			   er_ctxt->wp);
+ 
+-		seq_printf(m, " local rp: 0x%llx db: 0x%llx\n", (u64)ring->rp,
+-			   mhi_event->db_cfg.db_val);
++		seq_printf(m, " local rp: 0x%pK db: 0x%pad\n", ring->rp,
++			   &mhi_event->db_cfg.db_val);
+ 	}
+ 
+ 	return 0;
+@@ -118,9 +118,9 @@ static int mhi_debugfs_channels_show(struct seq_file *m, void *d)
+ 		seq_printf(m, " base: 0x%llx len: 0x%llx wp: 0x%llx",
+ 			   chan_ctxt->rbase, chan_ctxt->rlen, chan_ctxt->wp);
+ 
+-		seq_printf(m, " local rp: 0x%llx local wp: 0x%llx db: 0x%llx\n",
+-			   (u64)ring->rp, (u64)ring->wp,
+-			   mhi_chan->db_cfg.db_val);
++		seq_printf(m, " local rp: 0x%pK local wp: 0x%pK db: 0x%pad\n",
++			   ring->rp, ring->wp,
++			   &mhi_chan->db_cfg.db_val);
+ 	}
+ 
+ 	return 0;
 -- 
 2.17.1
 
