@@ -2,104 +2,141 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 18517279DA1
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 27 Sep 2020 05:02:31 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EC457279DA9
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 27 Sep 2020 05:12:57 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729272AbgI0DCa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 26 Sep 2020 23:02:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52490 "EHLO
+        id S1730224AbgI0DMy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 26 Sep 2020 23:12:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54066 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726840AbgI0DCa (ORCPT
+        with ESMTP id S1726478AbgI0DMw (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 26 Sep 2020 23:02:30 -0400
-Received: from mail-pf1-x442.google.com (mail-pf1-x442.google.com [IPv6:2607:f8b0:4864:20::442])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E9DBEC0613D3
-        for <linux-arm-msm@vger.kernel.org>; Sat, 26 Sep 2020 20:02:29 -0700 (PDT)
-Received: by mail-pf1-x442.google.com with SMTP id b124so6366376pfg.13
-        for <linux-arm-msm@vger.kernel.org>; Sat, 26 Sep 2020 20:02:29 -0700 (PDT)
+        Sat, 26 Sep 2020 23:12:52 -0400
+Received: from mail-pj1-x1041.google.com (mail-pj1-x1041.google.com [IPv6:2607:f8b0:4864:20::1041])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3396FC0613D3
+        for <linux-arm-msm@vger.kernel.org>; Sat, 26 Sep 2020 20:12:51 -0700 (PDT)
+Received: by mail-pj1-x1041.google.com with SMTP id jw11so1609923pjb.0
+        for <linux-arm-msm@vger.kernel.org>; Sat, 26 Sep 2020 20:12:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=1EfFdh0G6uDcT4tACCd+6qjaHkAc/Frt5l+G/B6yhuY=;
-        b=B1MNzsNNEZHh0MOTAJNnzQVDz6ZBB6r5AHOQ3cODNKm8LSxqrvE4Y+RQ+xKVruLczp
-         Y0dcgJ4wDOcueC9YRs3oh0v3U3H0IUZf92clmVH455QFaFs9inw1NkeXJlER8RjTGXWm
-         pn4c0XnmpIjAb1X+XtUsp0onJyUobN4Z7Eg+a21wSNEH26sGHti60d0i2+/lPgCo3XBa
-         jGGWIE4WDa4C1fGkFnI9talIlLMU5UCbhqTBCbsOHHmSQzt/Qaov8RO2lRzafM5x7L/D
-         dhUcJMWZh/8ka5IIhEXilJz2h6PJ4yGjklGpZltiTHX3JWnqhYN7+IDC4WmsTrLBfrGf
-         XtHQ==
+        bh=DcLFy45aJ1dojeOg6m9cm4hJQ4RA1hO34dYnxlEqMMs=;
+        b=Ay95vNzZnLgsxMMnV0+jDP93YfiAN/5MKSmPbbqbrXFV/BxUp/2bhcOLvVLk0vkbJw
+         D9IuA38+FlDMk2VM7FechUhOgt6MaEhB0v8LsEDvvXIlFnt9sDjo2QhzbjGC30fYy8KK
+         u4XzZQG2VyURy3xHbgCGCcwJBG5l+GWEhp2/D6urC4CsNVsE+Cn8sCNoQ6yqhdXBoj88
+         4pTJrl+RuzoHN68TjHnSlBaApNpZdslKTaiycWBWNSbMGam0Yx8DBQxshitD+uA/ij21
+         PnvtfeIjJ0flqUTNGLlOMJ75xgi14yZknsLoWknISBt7Ix0BMHIOQbMHHa67AtMfMnmL
+         c0dA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=1EfFdh0G6uDcT4tACCd+6qjaHkAc/Frt5l+G/B6yhuY=;
-        b=jkH3WRB9H45U3qxrOlw+1gLFypdpeGGKv1cvMFs7/PXAIYptJQsfL7gc/+TzH3/mzy
-         KHaHmn32tMftS6LoMMMNe9Cv3AHtMajQ5VANPC+Oh1qMKNHLp24cBeb7g6fmlyYWnPYC
-         WIfwSEIA8TRbydybM1OIBXRlEN98lXEEM7WZyPywEnL6lYdOtN5EwAJ535PNzMHHTPyv
-         WSVpPUr/H5mOpPP+O/wpem0ORoB25CM/NKGhwaNS8aMwWy2onfJyIjj+MiKdj73A/5Ub
-         7vcuaPH5ohJYCGUsU2cUo/HmgGu5VF1SlW8j9GmBexiPUVVyxsCCVLc6O/wkvPG+Cztt
-         O6/Q==
-X-Gm-Message-State: AOAM533dDhoq79XAvDqKQ1bWt0TeIJcFl8K+lkkvL8raTZ8DoYVLr7TF
-        aNL83HfqttDy83I/ztlQYBsL2ADz39WP
-X-Google-Smtp-Source: ABdhPJxtqSMQ+j1jAs0RWkmcSy4sb+BSLq9ImuMp7FEkpbKkHLwq99Y3/dZmaXeSOBFefalA5scHWg==
-X-Received: by 2002:a63:fa45:: with SMTP id g5mr4377691pgk.448.1601175749115;
-        Sat, 26 Sep 2020 20:02:29 -0700 (PDT)
+        bh=DcLFy45aJ1dojeOg6m9cm4hJQ4RA1hO34dYnxlEqMMs=;
+        b=LOUOUkFLAAHauZ0wOZkWMaYUjN3KxbZwFvIwpOf2ZxtX8LFjD9j9zAJHjc/1gSIMBw
+         hCH9QDhH/QiWYPI+YxZBaBP5GGOFHamkwkq5/aZU4ARX/Xru3Qr7pyAnwP//jQRrU4Hn
+         78pcMIpeYwYnePVDcZ8Pq2X0258qHnU0nscT/ealqQOzCxgMKMckOlB3lmdwj4FJcfy9
+         e4vmiwFqT2TbnfWOtoeI2gw6Md7nv6n19jyEpUmz2qx2BZB1cuF8/Vz5Fl2RGFd9mKw6
+         H9yYk2Ij8jjBdoeoMiYAZjXiUWV+lK3iKYbVvm1qAiBtVlAOSMlzmm6BHLcoaiPgwugo
+         2mpA==
+X-Gm-Message-State: AOAM531cctk0J9+Ds6ktf/+DztbxLmpev0hpU3QmVWUmfDEwId44K2c1
+        QUsYRKSyuP9dWA9aqOIXUuORK24ZTKZg
+X-Google-Smtp-Source: ABdhPJxPRsomfxnafyvL2kOp2w1ggyU8sHr5P2UYeo/aA6azjFVw8D9asNXNk1uNy2Lr+y4ym5OIGA==
+X-Received: by 2002:a17:90b:209:: with SMTP id fy9mr4018429pjb.189.1601176370604;
+        Sat, 26 Sep 2020 20:12:50 -0700 (PDT)
 Received: from Mani-XPS-13-9360 ([2409:4072:198:cd53:8f:5b5c:829a:cfde])
-        by smtp.gmail.com with ESMTPSA id x4sm6987133pfm.86.2020.09.26.20.02.25
+        by smtp.gmail.com with ESMTPSA id q190sm7065351pfc.176.2020.09.26.20.12.46
         (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
-        Sat, 26 Sep 2020 20:02:28 -0700 (PDT)
-Date:   Sun, 27 Sep 2020 08:32:22 +0530
+        Sat, 26 Sep 2020 20:12:49 -0700 (PDT)
+Date:   Sun, 27 Sep 2020 08:42:43 +0530
 From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     Loic Poulain <loic.poulain@linaro.org>
-Cc:     hemantk@codeaurora.org, davem@davemloft.net,
-        netdev@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        bjorn.andersson@linaro.org
-Subject: Re: [PATCH v2 2/2] net: qrtr: Start MHI channels during init
-Message-ID: <20200927030222.GC3213@Mani-XPS-13-9360>
-References: <1600674184-3537-1-git-send-email-loic.poulain@linaro.org>
- <1600674184-3537-2-git-send-email-loic.poulain@linaro.org>
+To:     Hemant Kumar <hemantk@codeaurora.org>
+Cc:     gregkh@linuxfoundation.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, jhugo@codeaurora.org,
+        bbhatt@codeaurora.org
+Subject: Re: [PATCH v6 1/4] bus: mhi: core: Add helper API to return number
+ of free TREs
+Message-ID: <20200927031243.GD3213@Mani-XPS-13-9360>
+References: <1600286167-4432-1-git-send-email-hemantk@codeaurora.org>
+ <1600286167-4432-2-git-send-email-hemantk@codeaurora.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <1600674184-3537-2-git-send-email-loic.poulain@linaro.org>
+In-Reply-To: <1600286167-4432-2-git-send-email-hemantk@codeaurora.org>
 User-Agent: Mutt/1.9.4 (2018-02-28)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Sep 21, 2020 at 09:43:04AM +0200, Loic Poulain wrote:
-> Start MHI device channels so that transfers can be performed.
-> The MHI stack does not auto-start channels anymore.
+On Wed, Sep 16, 2020 at 12:56:04PM -0700, Hemant Kumar wrote:
+> Introduce mhi_get_no_free_descriptors() API to return number
+> of TREs available to queue buffer. MHI clients can use this
+> API to know before hand if ring is full without calling queue
+> API.
 > 
-> Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
+> Signed-off-by: Hemant Kumar <hemantk@codeaurora.org>
+> ---
+>  drivers/bus/mhi/core/main.c | 12 ++++++++++++
+>  include/linux/mhi.h         |  9 +++++++++
+>  2 files changed, 21 insertions(+)
+> 
+> diff --git a/drivers/bus/mhi/core/main.c b/drivers/bus/mhi/core/main.c
+> index 2cff5dd..0599e7d 100644
+> --- a/drivers/bus/mhi/core/main.c
+> +++ b/drivers/bus/mhi/core/main.c
+> @@ -258,6 +258,18 @@ int mhi_destroy_device(struct device *dev, void *data)
+>  	return 0;
+>  }
+>  
+> +int mhi_get_no_free_descriptors(struct mhi_device *mhi_dev,
+> +				enum dma_data_direction dir)
+> +{
+> +	struct mhi_controller *mhi_cntrl = mhi_dev->mhi_cntrl;
+> +	struct mhi_chan *mhi_chan = (dir == DMA_TO_DEVICE) ?
+> +		mhi_dev->ul_chan : mhi_dev->dl_chan;
+> +	struct mhi_ring *tre_ring = &mhi_chan->tre_ring;
+> +
+> +	return get_nr_avail_ring_elements(mhi_cntrl, tre_ring);
 
-Applied to mhi-next!
+Hmm, so this is essentially a wrapper for get_nr_avail_ring_elements().
+Why can't you call this API directly?
+
+> +}
+> +EXPORT_SYMBOL_GPL(mhi_get_no_free_descriptors);
+> +
+>  void mhi_notify(struct mhi_device *mhi_dev, enum mhi_callback cb_reason)
+>  {
+>  	struct mhi_driver *mhi_drv;
+> diff --git a/include/linux/mhi.h b/include/linux/mhi.h
+> index a35d876..6565528 100644
+> --- a/include/linux/mhi.h
+> +++ b/include/linux/mhi.h
+> @@ -600,6 +600,15 @@ void mhi_set_mhi_state(struct mhi_controller *mhi_cntrl,
+>  void mhi_notify(struct mhi_device *mhi_dev, enum mhi_callback cb_reason);
+>  
+>  /**
+> + * mhi_get_no_free_descriptors - Get transfer ring length
+
+mhi_get_nr_free_descriptors?
+
+> + * Get # of TD available to queue buffers
+> + * @mhi_dev: Device associated with the channels
+> + * @dir: Direction of the channel
+> + */
+> +int mhi_get_no_free_descriptors(struct mhi_device *mhi_dev,
+> +				enum dma_data_direction dir);
+
+Align enum with start of "("
 
 Thanks,
 Mani
 
-> ---
->  v2: split MHI and qrtr changes in dedicated commits
-> 
->  net/qrtr/mhi.c | 5 +++++
->  1 file changed, 5 insertions(+)
-> 
-> diff --git a/net/qrtr/mhi.c b/net/qrtr/mhi.c
-> index ff0c414..7100f0b 100644
-> --- a/net/qrtr/mhi.c
-> +++ b/net/qrtr/mhi.c
-> @@ -76,6 +76,11 @@ static int qcom_mhi_qrtr_probe(struct mhi_device *mhi_dev,
->  	struct qrtr_mhi_dev *qdev;
->  	int rc;
->  
-> +	/* start channels */
-> +	rc = mhi_prepare_for_transfer(mhi_dev);
-> +	if (rc)
-> +		return rc;
 > +
->  	qdev = devm_kzalloc(&mhi_dev->dev, sizeof(*qdev), GFP_KERNEL);
->  	if (!qdev)
->  		return -ENOMEM;
+> +/**
+>   * mhi_prepare_for_power_up - Do pre-initialization before power up.
+>   *                            This is optional, call this before power up if
+>   *                            the controller does not want bus framework to
 > -- 
-> 2.7.4
+> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+> a Linux Foundation Collaborative Project
 > 
