@@ -2,110 +2,192 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E0CA727ACC2
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Sep 2020 13:32:50 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 893D427ACC9
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Sep 2020 13:33:06 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726667AbgI1Lcs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 28 Sep 2020 07:32:48 -0400
-Received: from mail.kernel.org ([198.145.29.99]:42752 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726629AbgI1Lcq (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 28 Sep 2020 07:32:46 -0400
-Received: from mail-ua1-f43.google.com (mail-ua1-f43.google.com [209.85.222.43])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 5DD7123899
-        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Sep 2020 11:32:45 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1601292765;
-        bh=xZudESZoNWrMKl+EPdcNAvEcHmI/YsJEVNHFPvHdvRw=;
-        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-        b=fV426os9TKYhIvZkBaY+TYvgHU6OJYQsGQk4Tpul2CZ51ZaWRTiWuf9w364bwBhsR
-         IRlU4mW7otJHIm8U5T4YViul/+q9/OqJW6QFuB+dSbHTpNwoe3p4S/mFEmGPbVYlX+
-         2UjkzTjLMvUPEj1WO6INrt3u6khip8A+xsxfpGpE=
-Received: by mail-ua1-f43.google.com with SMTP id v5so2053435uau.10
-        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Sep 2020 04:32:45 -0700 (PDT)
-X-Gm-Message-State: AOAM531nhUrc8zPRJ+0N8T5DP+ZHRlq/C1kS6Na7fso1xBs81NpRyKb4
-        uuJh3WcT/tB+XNdTegoGMnApRhbIZaLmQGjb/LGlHg==
-X-Google-Smtp-Source: ABdhPJwi7Kf1/TO4y4q7aWBNfNZi/GSTHY4iSAWGo4xUBrHZWc5IjjiWge++TaqlAxtqOzKiEm24pDFMZvhTRGzNq1g=
-X-Received: by 2002:ab0:35e9:: with SMTP id w9mr303137uau.48.1601292764466;
- Mon, 28 Sep 2020 04:32:44 -0700 (PDT)
+        id S1726658AbgI1Lcv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 28 Sep 2020 07:32:51 -0400
+Received: from mailout1.w1.samsung.com ([210.118.77.11]:50017 "EHLO
+        mailout1.w1.samsung.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726665AbgI1Lcu (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 28 Sep 2020 07:32:50 -0400
+Received: from eucas1p1.samsung.com (unknown [182.198.249.206])
+        by mailout1.w1.samsung.com (KnoxPortal) with ESMTP id 20200928113247euoutp0165442843ec5b2e6db84b1d31e38c84ed~470m3hndh2732627326euoutp01I
+        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Sep 2020 11:32:47 +0000 (GMT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout1.w1.samsung.com 20200928113247euoutp0165442843ec5b2e6db84b1d31e38c84ed~470m3hndh2732627326euoutp01I
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
+        s=mail20170921; t=1601292767;
+        bh=+uo/0vdDAtG25qGjp09xK2qh3VzfFRoNQyQxfRdW754=;
+        h=Subject:To:Cc:From:Date:In-Reply-To:References:From;
+        b=YpOdnes0Yjrqe/2nD9pUx4yDJsVEH06XpDI80qW/qBwE3rogv45G29fnEEVF+r6Ee
+         yoyhQHwQ+nPLYtnMvvSJ5ZP53xf/vJXJlkXfIogmz0iAwvbvVdYHGzlvSDwdQqjAn5
+         Z2XpcVUnqsiQu+/SqBz/eQq02REcXoh7I2FTCNF0=
+Received: from eusmges3new.samsung.com (unknown [203.254.199.245]) by
+        eucas1p2.samsung.com (KnoxPortal) with ESMTP id
+        20200928113246eucas1p202daf455573dc6614f1285c7fcca2757~470mZVS1T1751417514eucas1p2H;
+        Mon, 28 Sep 2020 11:32:46 +0000 (GMT)
+Received: from eucas1p1.samsung.com ( [182.198.249.206]) by
+        eusmges3new.samsung.com (EUCPMTA) with SMTP id BC.8B.06318.ED9C17F5; Mon, 28
+        Sep 2020 12:32:46 +0100 (BST)
+Received: from eusmtrp2.samsung.com (unknown [182.198.249.139]) by
+        eucas1p1.samsung.com (KnoxPortal) with ESMTPA id
+        20200928113246eucas1p12a4b178ec04da6d0b1448d42861bf78c~470l1yIz31119311193eucas1p1z;
+        Mon, 28 Sep 2020 11:32:46 +0000 (GMT)
+Received: from eusmgms1.samsung.com (unknown [182.198.249.179]) by
+        eusmtrp2.samsung.com (KnoxPortal) with ESMTP id
+        20200928113246eusmtrp21d25f691a89ecf6d64b491f43a9cda3d~470l0uE8e1717117171eusmtrp2g;
+        Mon, 28 Sep 2020 11:32:46 +0000 (GMT)
+X-AuditID: cbfec7f5-38bff700000018ae-ae-5f71c9de010c
+Received: from eusmtip2.samsung.com ( [203.254.199.222]) by
+        eusmgms1.samsung.com (EUCPMTA) with SMTP id FC.80.06314.ED9C17F5; Mon, 28
+        Sep 2020 12:32:46 +0100 (BST)
+Received: from [106.210.88.143] (unknown [106.210.88.143]) by
+        eusmtip2.samsung.com (KnoxPortal) with ESMTPA id
+        20200928113244eusmtip2fd0487d5ac28e35d0bf3f6adfb341026~470kVFgvX0454604546eusmtip2a;
+        Mon, 28 Sep 2020 11:32:44 +0000 (GMT)
+Subject: Re: [PATCH 05/18] ARM/dma-mapping: Switch to iommu_dma_ops
+To:     Robin Murphy <robin.murphy@arm.com>, hch@lst.de, joro@8bytes.org,
+        linux@armlinux.org.uk
+Cc:     will@kernel.org, inki.dae@samsung.com, sw0312.kim@samsung.com,
+        kyungmin.park@samsung.com, agross@kernel.org,
+        bjorn.andersson@linaro.org, thierry.reding@gmail.com,
+        jonathanh@nvidia.com, vdumpa@nvidia.com, digetx@gmail.com,
+        matthias.bgg@gmail.com, yong.wu@mediatek.com,
+        geert+renesas@glider.be, magnus.damm@gmail.com, t-kristo@ti.com,
+        s-anna@ti.com, laurent.pinchart@ideasonboard.com,
+        linux-arm-kernel@lists.infradead.org,
+        iommu@lists.linux-foundation.org,
+        linux-samsung-soc@vger.kernel.org, linux-tegra@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-mediatek@lists.infradead.org,
+        dri-devel@lists.freedesktop.org, linux-media@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+From:   Marek Szyprowski <m.szyprowski@samsung.com>
+Message-ID: <1d4c80ef-db03-3c31-a827-ab047fe9741f@samsung.com>
+Date:   Mon, 28 Sep 2020 13:32:44 +0200
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
+        Thunderbird/68.12.0
 MIME-Version: 1.0
-References: <20200814134123.14566-1-ansuelsmth@gmail.com>
-In-Reply-To: <20200814134123.14566-1-ansuelsmth@gmail.com>
-From:   Amit Kucheria <amitk@kernel.org>
-Date:   Mon, 28 Sep 2020 17:02:33 +0530
-X-Gmail-Original-Message-ID: <CAHLCerM666W9ijLu529NNPNz_NuyO0QPKws8spWrR4bWNo0A-A@mail.gmail.com>
-Message-ID: <CAHLCerM666W9ijLu529NNPNz_NuyO0QPKws8spWrR4bWNo0A-A@mail.gmail.com>
-Subject: Re: [RFC PATCH v6 0/8] Add support for ipq8064 tsens
-To:     Ansuel Smith <ansuelsmth@gmail.com>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Zhang Rui <rui.zhang@intel.com>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Linux PM list <linux-pm@vger.kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>, LKML <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <4b51f1685a7ff88b673bf013ca6c27501e52f9b4.1597931876.git.robin.murphy@arm.com>
+Content-Transfer-Encoding: 8bit
+Content-Language: en-US
+X-Brightmail-Tracker: H4sIAAAAAAAAA02SbUxTZxTHeXpv7700ltwWDCeiaJppwhKlyMyexIX5sg832RIXzT6ovFj0
+        Dhpo0RacMDc7IIYyRCgx4q0CaTAoRWUFVJAXaSYNLy0ohjHWrRtgCCBiIzph+NbebfLt9z/n
+        f/Kc/8nDEEoPtYbR6rN5g16TqaJk5M2eRc/mP3qPpahfvtiKPRP/kLi/6wmJ7f4JhB8+n6fw
+        JasF4av2exJs8ZWRuKZrOy4UbCQ2Wxtp7M5/TGNzeS2NHRMjUlze5abxcNtFCpc0tkjxcMF9
+        hCsHOyXYvCBQ2HmuA+E/7XMUzi+Mx91PJ6W4Y6lTiisrpilc+6iIwottVSQu7diLC73bsM/S
+        RO6I5ia7qyRcQ1UD4oZH7hNcuXsz1yr8TnPWogtSzlFvpjjvSDvF+X50Sbim2lNcxWgd4u78
+        aqK4wt4ukjtT8ITiSpvrEecavSX5UnFA9skRPlN7nDfEJhySpc+3fHzUE3HCfjnChGoUxYhh
+        gP0IvHe/KEYyRsleQTDgOisRxQKCvtlBqSieIXh6x/9OhAYnOhaWCLFRh2DQ5qZFMY/APXCP
+        DLjC2d0wdn2aCHAEmwRLt5eDJoJtl4LJ4guaKDYOiueKqQDL2QQYr/LSASbZjWAt7w/WV7PJ
+        0NM3TooeBfRemAxyKHsQZuouBZlg10NBi5UQORLGJqsl4qpnQ+Gnoe9F/gxsD81I5HCYcTXT
+        Iq+FN63VwdDAFiD4y3ONFkUJguH8yn8ntoPXs0QFTkawMXCjLVYs74TWcQctXjIMRucU4g5h
+        YLl5nhDLcig6rRTdm0BwXf//2e6hB0QZUgkrkgkr0ggr0gjv361BZD2K5HOMujTeGK/nv9li
+        1OiMOfq0LYezdA707pf3v3Y9v406l1OdiGWQapVc7TyWopRqjhtzdU4EDKGKkO9y9ycr5Uc0
+        uXm8ISvFkJPJG50oiiFVkfJ423SSkk3TZPMZPH+UN/zXlTCha0zoB/Wzb7UxsaZGx6mckyUl
+        f+u+GzuoS7gyNduUsng4ujbxWp52/jfZocSMzyv8cr9sVWvZ1AtbzKvkhqivQr5W1PmifDs/
+        aAjXx5V+ui5ssW99/b6hBPtdV8/u/esi92p/KfIvqF+GbNPcWo6e6syzhKSOxWjVvdnRwurG
+        9g2x+OfZPSrSmK6J+5AwGDVvAb76VTLhAwAA
+X-Brightmail-Tracker: H4sIAAAAAAAAA02Se0hTcRTH+e0+NqPRdU38Ib1YDSJodn20Y9Z6EVyIoAeBPdSGXdRyLne3
+        0giSKaHLxBmVbrbER5aLMs3evhYmOk3UECvTzAVZTo0ssBfpVuB/H875fjgc+EoI2QgVIklO
+        NfKGVG2Kgl5Auv+0Da0dak+LX/fs9yJ4MfqTBHfTBAnOL6MIXn6bpOGqvRDBTWerCAqHC0go
+        bYqGbFsZCbn2GjF0mcfFkGutEEPtaD8F1qYuMfQ9LqEhr6aegr6sHgRF3Y0iyJ220eC61IDg
+        ndNLgzk7HFqmPBQ0/GikoOjiGA0VH3JomHnsICG/YS9kD0bCcGEduWUZ52lxiLhbjluI6+vv
+        IThr11ruke2tmLPnFFNcbXUuzQ32P6W54fNtIq6u4ix3caAKcU9eZdJcdnsTyV3ImqC5/HvV
+        iGsbeCDaHXhQtdGgNxn5FUl6wbhJcYiFMBUbBaqwiCgVG66O3RAWqQjVbDzKpySf5A2hmiOq
+        pMl69YkX8nRnpTwTlQZaUIAEMxG4YfoHYUELJDKmEuGbX8y0f7EEt1/OpPy8GP/qt9D+kBfh
+        /OYpcm6xmNmOX98eI+ZYzsTi6SqnTyaYpxSu9Ib4hUGEz30f8Ak0w2KL1+ILSRkNfu8YFM8x
+        ySix3er2zYOYONyZ9/FfJhC3F3t8bgBzCH+qukr6D6zHjroRws/LcVa9/R8H49eea6ICJLPN
+        023zFNs8xTZPKUVkNZLzJkGXqBNYlaDVCabURFWCXleLZut1//lM3UPUe3efCzESpFgoXedK
+        i5dR2pNChs6FsIRQyKXbutxxMulRbcZp3qCPN5hSeMGFImefsxIhQQn62bKmGuPZSFYNUaw6
+        XB2+HhTB0hym5bCMSdQa+eM8f4I3/PdEkoCQTFROTiVpgsnN5s4jaM99W4nhnnJlREbajes7
+        xBr3KUZ5Xn979c6YvKDrFzpORX0OPfbmj6Sn+2wnnbDNMzK++ivV3FGz9P3Mw9itr4ralHxY
+        nKj8gMf0s2XXqpcFea1lVZN3hjZ4oydSSAZqpWYZFTOyP2Zh/ZWp9DOtvcronc2UghSStOwa
+        wiBo/wJinf+vdAMAAA==
+X-CMS-MailID: 20200928113246eucas1p12a4b178ec04da6d0b1448d42861bf78c
+X-Msg-Generator: CA
+Content-Type: text/plain; charset="utf-8"
+X-RootMTR: 20200820150917eucas1p258445fb7b4aa1da9fa605d63423aed01
+X-EPHeader: CA
+CMS-TYPE: 201P
+X-CMS-RootMailID: 20200820150917eucas1p258445fb7b4aa1da9fa605d63423aed01
+References: <cover.1597931875.git.robin.murphy@arm.com>
+        <CGME20200820150917eucas1p258445fb7b4aa1da9fa605d63423aed01@eucas1p2.samsung.com>
+        <4b51f1685a7ff88b673bf013ca6c27501e52f9b4.1597931876.git.robin.murphy@arm.com>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Ansuel,
+Hi Robin,
 
-Just a quick note to say that I'm not ignoring this, just on
-vacations. I'll be back to review this in a few days.
+On 20.08.2020 17:08, Robin Murphy wrote:
+> With the IOMMU ops now looking much the same shape as iommu_dma_ops,
+> switch them out in favour of the iommu-dma library, currently enhanced
+> with temporary workarounds that allow it to also sit underneath the
+> arch-specific API. With that in place, we can now start converting the
+> remaining IOMMU drivers and consumers to work with IOMMU API default
+> domains instead.
+>
+> Signed-off-by: Robin Murphy <robin.murphy@arm.com>
 
-Regards,
-Amit
+I've played a bit longer with this and found that reading the kernel 
+virtual address of the buffers allocated via dma_alloc_attrs() from 
+dma-iommu ops gives trashes from time to time. It took me a while to 
+debug this...
 
-On Fri, Aug 14, 2020 at 7:12 PM Ansuel Smith <ansuelsmth@gmail.com> wrote:
->
-> This patchset convert msm8960 to reg_filed, use int_common instead
-> of a custom function and fix wrong tsens get_temp function for msm8960.
-> Ipq8064 SoCs tsens driver is based on 8960 tsens driver. Ipq8064 needs
-> to be registered as a gcc child as the tsens regs on this platform are
-> shared with the controller.
-> This is based on work and code here
-> https://git.linaro.org/people/amit.kucheria/kernel.git/log/?h=wrk3/tsens-8960-breakage
->
-> v6:
-> * Fix spelling error (can't find the problem with variable misallignment)
-> * Rework big if-else
-> * Remove extra comments
-> * Add description about different interrupts
-> v5:
-> * Conver driver to use reg_fiedl
-> * Use init_common
-> * Drop custom set_trip and set_interrupt
-> * Use common set_trip and set_interrupt
-> * Fix bad get_temp function
-> * Add missing hardcoded slope
-> v4:
-> * Fix compilation error and warning reported by the bot
-> v3:
-> * Change driver to register as child instead of use phandle
-> v2:
-> * Fix dt-bindings problems
->
-> Ansuel Smith (8):
->   drivers: thermal: tsens: use get_temp for tsens_valid
->   drivers: thermal: tsens: Add VER_0 tsens version
->   drivers: thermal: tsens: Convert msm8960 to reg_field
->   drivers: thermal: tsens: Use init_common for msm8960
->   drivers: thermal: tsens: Fix wrong get_temp for msm8960
->   drivers: thermal: tsens: Change calib_backup name for msm8960
->   drivers: thermal: tsens: Add support for ipq8064-tsens
->   dt-bindings: thermal: tsens: Document ipq8064 bindings
->
->  .../bindings/thermal/qcom-tsens.yaml          |  50 ++++-
->  drivers/thermal/qcom/tsens-8960.c             | 172 +++++++++++-------
->  drivers/thermal/qcom/tsens.c                  | 130 +++++++++++--
->  drivers/thermal/qcom/tsens.h                  |   7 +-
->  4 files changed, 270 insertions(+), 89 deletions(-)
->
-> --
-> 2.27.0
->
+Your conversion misses adding arch_dma_prep_coherent() to arch/arm, so 
+the buffers are cleared by the mm allocator, but the caches are NOT 
+flushed for the newly allocated buffers.
+
+This fixes the issue:
+
+diff --git a/arch/arm/Kconfig b/arch/arm/Kconfig
+index fec3e59215b8..8b60bcc5b14f 100644
+--- a/arch/arm/Kconfig
++++ b/arch/arm/Kconfig
+@@ -2,6 +2,7 @@
+  config ARM
+         bool
+         default y
++       select ARCH_HAS_DMA_PREP_COHERENT
+         select ARCH_32BIT_OFF_T
+         select ARCH_HAS_BINFMT_FLAT
+         select ARCH_HAS_DEBUG_VIRTUAL if MMU
+diff --git a/arch/arm/mm/dma-mapping.c b/arch/arm/mm/dma-mapping.c
+index ff6c4962161a..6954681b73da 100644
+--- a/arch/arm/mm/dma-mapping.c
++++ b/arch/arm/mm/dma-mapping.c
+@@ -266,6 +266,20 @@ static void __dma_clear_buffer(struct page *page, 
+size_t size, int coherent_flag
+         }
+  }
+
++void arch_dma_prep_coherent(struct page *page, size_t size)
++{
++
++       if (PageHighMem(page)) {
++               phys_addr_t base = __pfn_to_phys(page_to_pfn(page));
++               phys_addr_t end = base + size;
++               outer_flush_range(base, end);
++       } else {
++               void *ptr = page_address(page);
++               dmac_flush_range(ptr, ptr + size);
++               outer_flush_range(__pa(ptr), __pa(ptr) + size);
++       }
++}
++
+  /*
+   * Allocate a DMA buffer for 'dev' of size 'size' using the
+   * specified gfp mask.  Note that 'size' must be page aligned.
+
+I also wonder if it would be better to use per-arch __dma_clear_buffer() 
+instead of setting __GFP_ZERO unconditionally in dma-iommu.c. This 
+should be faster on ARM with highmem...
+
+ > ...
+
+Best regards
+-- 
+Marek Szyprowski, PhD
+Samsung R&D Institute Poland
+
