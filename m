@@ -2,326 +2,363 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E4DC427B850
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Sep 2020 01:36:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8F0D727B88F
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Sep 2020 01:59:11 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726988AbgI1Xgg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 28 Sep 2020 19:36:36 -0400
-Received: from z5.mailgun.us ([104.130.96.5]:52075 "EHLO z5.mailgun.us"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726948AbgI1Xgg (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 28 Sep 2020 19:36:36 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1601336194; h=References: In-Reply-To: References:
- In-Reply-To: Message-Id: Date: Subject: Cc: To: From: Sender;
- bh=nxDPBbgplCnSOWnlqMgvvD6fp10YHS89qZYCye0em5o=; b=UMde0nqhGkdRFHF6zBbL7ObGpFaO4CHummoxDvkGACr8wIvHGQ59dx/BSMA/14t5HLDnnbWc
- HpqAtYQ8dInZFwBVLIeiX3GT07PQFOSDIWTNqZSfa0oXV9Ab/McC/jes8rOfnWtTa/VgCc5u
- 1Xhx6xyntUQLwnouD9v1Fikk5E4=
-X-Mailgun-Sending-Ip: 104.130.96.5
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n03.prod.us-west-2.postgun.com with SMTP id
- 5f727382809bd33014727e23 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 28 Sep 2020 23:36:34
- GMT
-Sender: cgoldswo=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 28399C433C8; Mon, 28 Sep 2020 23:36:34 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
-        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
-Received: from cgoldswo-linux.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: cgoldswo)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 3D4D5C433F1;
-        Mon, 28 Sep 2020 23:36:30 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 3D4D5C433F1
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=cgoldswo@codeaurora.org
-From:   Chris Goldsworthy <cgoldswo@codeaurora.org>
-To:     akpm@linux-foundation.org, linux-mm@kvack.org, minchan@kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        pratikp@codeaurora.org, pdaly@codeaurora.org,
-        sudaraja@codeaurora.org, iamjoonsoo.kim@lge.com, david@redhat.com,
-        vinmenon@codeaurora.org, minchan.kim@gmail.com
-Cc:     Chris Goldsworthy <cgoldswo@codeaurora.org>
-Subject: [PATCH v5] mm: cma: indefinitely retry allocations in cma_alloc
-Date:   Mon, 28 Sep 2020 16:36:22 -0700
-Message-Id: <8bb42e0f91cd8bf8d1c468273d94c3da2786fb9c.1601336054.git.cgoldswo@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <cover.1601336054.git.cgoldswo@codeaurora.org>
-References: <cover.1601336054.git.cgoldswo@codeaurora.org>
-In-Reply-To: <cover.1601336054.git.cgoldswo@codeaurora.org>
-References: <cover.1601336054.git.cgoldswo@codeaurora.org>
+        id S1727067AbgI1X7K (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 28 Sep 2020 19:59:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43594 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727058AbgI1X7K (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 28 Sep 2020 19:59:10 -0400
+Received: from mail-ej1-x642.google.com (mail-ej1-x642.google.com [IPv6:2a00:1450:4864:20::642])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D6814C0613D3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Sep 2020 16:59:09 -0700 (PDT)
+Received: by mail-ej1-x642.google.com with SMTP id q13so12299026ejo.9
+        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Sep 2020 16:59:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=9haHQ+9J/upCQ7uz6Ci9TYgCnmxgT+DGnIzlkBDvhfU=;
+        b=Et87xip7uXgGxELz2s4chKp1O2DOq2Oq5HmqHztbnqclPenjnBojkPKLleX/fnoyMR
+         CQOZS4mYoxbe2D+SK8Q8Q6CUN5OK7gEJLPWnhcVz4/Gw57KzpTDiRiOBuODbEphQKs68
+         REnJ2SBHr1+s0OwF8pq6LqJRGaS0RA1NJ65gFSL0+NYywz4hJvB9XA1eMq4U7qRnZkMJ
+         6JlhlxWAnHHNyalPMVjRGJUVUpN3mr/5Btie6mosQCkHLT72tvfAAqbA2XEnZXRhUyMl
+         1PTuB+T4cSkVG3YWkySbND2ytcfdxn2bom7lnINoSJyEfCZAcGZOJkSeeAviaT3ZlJ26
+         Rx+g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=9haHQ+9J/upCQ7uz6Ci9TYgCnmxgT+DGnIzlkBDvhfU=;
+        b=INveerd6Cpg/SWIFx8Xyp5Rmh7e48hIi/QNTIaKIPesr5RpuYiw4gGxfDvWziHmjGP
+         rUX9vnzH0MtIoe7F2n6w6Ip/vahokXHEeXQLSrg6hxTSXecVwOTVJ07ZOaCFnxgiMyOn
+         JHT0rgnClr0WPNPnwhFOHON2bd14aJskX8ZkAqoZBtjX7C3BBMMh2TeJaRdKqkuX+C2P
+         wZUq5VElmX2fSzYUwdefgOy8TTm3KBJzr9NMQUqUNwg6nrnOESpNAD4/Yf8q7kO7dU9o
+         d4FJ/Ebp50bXQqP2j2b7wlf2Wy6qPSlkA/6rmHtolJzzMc7YjJLpDo90Dmg6ZLT7rOh2
+         Pq2g==
+X-Gm-Message-State: AOAM532q6nJlmdNopNEzU2GAJYYo1EMeN1RBMsMsJafXL12f5l926olG
+        5dfX0A3wCN9ZTj1Fw0FiFDmu87twAW+TdWoepzQ=
+X-Google-Smtp-Source: ABdhPJw8jNUPXk20NxlVajJyDy7OtX2df7KDCeqQP0Vd/BAKQ4xONwUQQcwSSqWEE/rmRFqlabuzel9l8tKHeb25oBE=
+X-Received: by 2002:a17:906:f92:: with SMTP id q18mr1153690ejj.237.1601337547843;
+ Mon, 28 Sep 2020 16:59:07 -0700 (PDT)
+MIME-Version: 1.0
+References: <CAF6AEGvqjuzH=Po_9EzzFsp2Xq3tqJUTKfsA2g09XY7_+6Ypfw@mail.gmail.com>
+In-Reply-To: <CAF6AEGvqjuzH=Po_9EzzFsp2Xq3tqJUTKfsA2g09XY7_+6Ypfw@mail.gmail.com>
+From:   Dave Airlie <airlied@gmail.com>
+Date:   Tue, 29 Sep 2020 09:58:55 +1000
+Message-ID: <CAPM=9txR=wpG4xSmYPCXSWBsAX4nyJkom4xmMJMNAF0CxTqQOw@mail.gmail.com>
+Subject: Re: [pull] drm/msm: msm-next for 5.10
+To:     Rob Clark <robdclark@gmail.com>
+Cc:     dri-devel <dri-devel@lists.freedesktop.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        freedreno <freedreno@lists.freedesktop.org>,
+        Sean Paul <sean@poorly.run>,
+        Jordan Crouse <jcrouse@codeaurora.org>,
+        Abhinav Kumar <abhinavk@codeaurora.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-CMA allocations will fail if 'pinned' pages are in a CMA area, since we
-cannot migrate pinned pages. The _refcount of a struct page being greater
-than _mapcount for that page can cause pinning for anonymous pages.  This
-is because try_to_unmap(), which (1) is called in the CMA allocation path,
-and (2) decrements both _refcount and _mapcount for a page, will stop
-unmapping a page from VMAs once the _mapcount for a page reaches 0.  This
-implies that after try_to_unmap() has finished successfully for a page
-where _recount > _mapcount, that _refcount will be greater than 0.  Later
-in the CMA allocation path in migrate_page_move_mapping(), we will have one
-more reference count than intended for anonymous pages, meaning the
-allocation will fail for that page.
+Assuming I merged it right,
 
-If a process ends up causing _refcount > _mapcount for a page (by either
-incrementing _recount or decrementing _mapcount), such that the process is
-context switched out after modifying one refcount but before modifying the
-other, the page will be temporarily pinned.
+32-bit builds adds warning
+In file included from
+/home/airlied/devel/kernel/dim/src/include/linux/bitops.h:5,
+                 from
+/home/airlied/devel/kernel/dim/src/include/linux/kernel.h:12,
+                 from
+/home/airlied/devel/kernel/dim/src/include/linux/ascii85.h:11,
+                 from
+/home/airlied/devel/kernel/dim/src/drivers/gpu/drm/msm/adreno/adreno_gpu.c:=
+9:
+/home/airlied/devel/kernel/dim/src/drivers/gpu/drm/msm/adreno/adreno_gpu.c:
+In function =E2=80=98adreno_iommu_create_address_space=E2=80=99:
+/home/airlied/devel/kernel/dim/src/include/linux/bits.h:36:11:
+warning: right shift count is negative [-Wshift-count-negative]
+   (~UL(0) >> (BITS_PER_LONG - 1 - (h))))
+           ^~
+/home/airlied/devel/kernel/dim/src/include/linux/bits.h:38:31: note:
+in expansion of macro =E2=80=98__GENMASK=E2=80=99
+  (GENMASK_INPUT_CHECK(h, l) + __GENMASK(h, l))
+                               ^~~~~~~~~
+/home/airlied/devel/kernel/dim/src/drivers/gpu/drm/msm/adreno/adreno_gpu.c:=
+212:11:
+note: in expansion of macro =E2=80=98GENMASK=E2=80=99
+   start & GENMASK(48, 0), size);
+           ^~~~~~~
 
-One example of where _refcount can be greater than _mapcount is inside of
-zap_pte_range(), which is called for all the entries of a PMD when a
-process is exiting, to unmap the process's memory.  Inside of
-zap_pte_range(), after unammping a page with page_remove_rmap(), we have
-that _recount > _mapcount.  _refcount can only be decremented after a TLB
-flush is performed for the page - this doesn't occur until enough pages
-have been batched together for flushing.  The flush can either occur inside
-of zap_pte_range() (during the same invocation or a later one), or if there
-aren't enough pages collected by the time we unmap all of the pages in a
-process, the flush will occur in tlb_finish_mmu() in exit_mmap().  After
-the flush has occurred, tlb_batch_pages_flush() will decrement the
-references on the flushed pages.
+  CC [M]  drivers/gpu/drm/msm/dsi/pll/dsi_pll_7nm.o
+/home/airlied/devel/kernel/dim/src/drivers/gpu/drm/msm/dsi/pll/dsi_pll_7nm.=
+c:
+In function =E2=80=98msm_dsi_pll_7nm_init=E2=80=99:
+/home/airlied/devel/kernel/dim/src/drivers/gpu/drm/msm/dsi/pll/dsi_pll_7nm.=
+c:882:19:
+warning: conversion from =E2=80=98long long unsigned int=E2=80=99 to =E2=80=
+=98long unsigned
+int=E2=80=99 changes value from =E2=80=985000000000=E2=80=99 to =E2=80=9870=
+5032704=E2=80=99 [-Woverflow]
+   pll->max_rate =3D 5000000000UL;
+                   ^~~~~~~~~~~~
+  LD [M]  drivers/gpu/drm/msm/msm.o
 
-Another such example like the above is inside of copy_one_pte(), which is
-called during a fork. For PTEs for which pte_present(pte) == true,
-copy_one_pte() will increment the _refcount field followed by the
-_mapcount field of a page.
+Dave.
 
-So, inside of cma_alloc(), add the option of letting users pass in
-__GFP_NOFAIL to indicate that we should retry CMA allocations indefinitely,
-in the event that alloc_contig_range() returns -EBUSY after having scanned
-a whole CMA-region bitmap.
-
-Signed-off-by: Chris Goldsworthy <cgoldswo@codeaurora.org>
-Co-developed-by: Vinayak Menon <vinmenon@codeaurora.org>
-Signed-off-by: Vinayak Menon <vinmenon@codeaurora.org>
----
- arch/powerpc/kvm/book3s_hv_builtin.c       |  2 +-
- drivers/dma-buf/heaps/cma_heap.c           |  2 +-
- drivers/s390/char/vmcp.c                   |  2 +-
- drivers/staging/android/ion/ion_cma_heap.c |  2 +-
- include/linux/cma.h                        |  2 +-
- kernel/dma/contiguous.c                    |  4 +--
- mm/cma.c                                   | 39 +++++++++++++++++++++++++-----
- mm/cma_debug.c                             |  2 +-
- mm/hugetlb.c                               |  4 +--
- 9 files changed, 43 insertions(+), 16 deletions(-)
-
-diff --git a/arch/powerpc/kvm/book3s_hv_builtin.c b/arch/powerpc/kvm/book3s_hv_builtin.c
-index 073617c..21c3f6a 100644
---- a/arch/powerpc/kvm/book3s_hv_builtin.c
-+++ b/arch/powerpc/kvm/book3s_hv_builtin.c
-@@ -74,7 +74,7 @@ struct page *kvm_alloc_hpt_cma(unsigned long nr_pages)
- 	VM_BUG_ON(order_base_2(nr_pages) < KVM_CMA_CHUNK_ORDER - PAGE_SHIFT);
- 
- 	return cma_alloc(kvm_cma, nr_pages, order_base_2(HPT_ALIGN_PAGES),
--			 false);
-+			 0);
- }
- EXPORT_SYMBOL_GPL(kvm_alloc_hpt_cma);
- 
-diff --git a/drivers/dma-buf/heaps/cma_heap.c b/drivers/dma-buf/heaps/cma_heap.c
-index 626cf7f..7657359 100644
---- a/drivers/dma-buf/heaps/cma_heap.c
-+++ b/drivers/dma-buf/heaps/cma_heap.c
-@@ -66,7 +66,7 @@ static int cma_heap_allocate(struct dma_heap *heap,
- 	helper_buffer->heap = heap;
- 	helper_buffer->size = len;
- 
--	cma_pages = cma_alloc(cma_heap->cma, nr_pages, align, false);
-+	cma_pages = cma_alloc(cma_heap->cma, nr_pages, align, 0);
- 	if (!cma_pages)
- 		goto free_buf;
- 
-diff --git a/drivers/s390/char/vmcp.c b/drivers/s390/char/vmcp.c
-index 9e06628..11c4e3b 100644
---- a/drivers/s390/char/vmcp.c
-+++ b/drivers/s390/char/vmcp.c
-@@ -70,7 +70,7 @@ static void vmcp_response_alloc(struct vmcp_session *session)
- 	 * anymore the system won't work anyway.
- 	 */
- 	if (order > 2)
--		page = cma_alloc(vmcp_cma, nr_pages, 0, false);
-+		page = cma_alloc(vmcp_cma, nr_pages, 0, 0);
- 	if (page) {
- 		session->response = (char *)page_to_phys(page);
- 		session->cma_alloc = 1;
-diff --git a/drivers/staging/android/ion/ion_cma_heap.c b/drivers/staging/android/ion/ion_cma_heap.c
-index bf65e67..128d3a5 100644
---- a/drivers/staging/android/ion/ion_cma_heap.c
-+++ b/drivers/staging/android/ion/ion_cma_heap.c
-@@ -39,7 +39,7 @@ static int ion_cma_allocate(struct ion_heap *heap, struct ion_buffer *buffer,
- 	if (align > CONFIG_CMA_ALIGNMENT)
- 		align = CONFIG_CMA_ALIGNMENT;
- 
--	pages = cma_alloc(cma_heap->cma, nr_pages, align, false);
-+	pages = cma_alloc(cma_heap->cma, nr_pages, align, 0);
- 	if (!pages)
- 		return -ENOMEM;
- 
-diff --git a/include/linux/cma.h b/include/linux/cma.h
-index 6ff79fe..2bd8544 100644
---- a/include/linux/cma.h
-+++ b/include/linux/cma.h
-@@ -43,7 +43,7 @@ extern int cma_init_reserved_mem(phys_addr_t base, phys_addr_t size,
- 					const char *name,
- 					struct cma **res_cma);
- extern struct page *cma_alloc(struct cma *cma, size_t count, unsigned int align,
--			      bool no_warn);
-+			      gfp_t gfp_mask);
- extern bool cma_release(struct cma *cma, const struct page *pages, unsigned int count);
- 
- extern int cma_for_each_area(int (*it)(struct cma *cma, void *data), void *data);
-diff --git a/kernel/dma/contiguous.c b/kernel/dma/contiguous.c
-index cff7e60..55c62b2 100644
---- a/kernel/dma/contiguous.c
-+++ b/kernel/dma/contiguous.c
-@@ -196,7 +196,7 @@ struct page *dma_alloc_from_contiguous(struct device *dev, size_t count,
- 	if (align > CONFIG_CMA_ALIGNMENT)
- 		align = CONFIG_CMA_ALIGNMENT;
- 
--	return cma_alloc(dev_get_cma_area(dev), count, align, no_warn);
-+	return cma_alloc(dev_get_cma_area(dev), count, align, no_warn ? __GFP_NOWARN : 0);
- }
- 
- /**
-@@ -219,7 +219,7 @@ static struct page *cma_alloc_aligned(struct cma *cma, size_t size, gfp_t gfp)
- {
- 	unsigned int align = min(get_order(size), CONFIG_CMA_ALIGNMENT);
- 
--	return cma_alloc(cma, size >> PAGE_SHIFT, align, gfp & __GFP_NOWARN);
-+	return cma_alloc(cma, size >> PAGE_SHIFT, align, gfp);
- }
- 
- /**
-diff --git a/mm/cma.c b/mm/cma.c
-index 7f415d7..ea6464b 100644
---- a/mm/cma.c
-+++ b/mm/cma.c
-@@ -32,6 +32,8 @@
- #include <linux/highmem.h>
- #include <linux/io.h>
- #include <linux/kmemleak.h>
-+#include <linux/sched.h>
-+#include <linux/jiffies.h>
- #include <trace/events/cma.h>
- 
- #include "cma.h"
-@@ -403,13 +405,15 @@ static inline void cma_debug_show_areas(struct cma *cma) { }
-  * @cma:   Contiguous memory region for which the allocation is performed.
-  * @count: Requested number of pages.
-  * @align: Requested alignment of pages (in PAGE_SIZE order).
-- * @no_warn: Avoid printing message about failed allocation
-+ * @gfp_mask: If __GFP_NOWARN is passed, suppress messages about failed
-+ *	      allocations. If __GFP_NOFAIL is passed, try doing the CMA
-+ *	      allocation indefinitely until the allocation succeeds.
-  *
-  * This function allocates part of contiguous memory on specific
-  * contiguous memory area.
-  */
- struct page *cma_alloc(struct cma *cma, size_t count, unsigned int align,
--		       bool no_warn)
-+		       gfp_t gfp_mask)
- {
- 	unsigned long mask, offset;
- 	unsigned long pfn = -1;
-@@ -442,8 +446,31 @@ struct page *cma_alloc(struct cma *cma, size_t count, unsigned int align,
- 				bitmap_maxno, start, bitmap_count, mask,
- 				offset);
- 		if (bitmap_no >= bitmap_maxno) {
--			mutex_unlock(&cma->lock);
--			break;
-+			if (ret == -EBUSY && gfp_mask & __GFP_NOFAIL) {
-+				mutex_unlock(&cma->lock);
+On Mon, 28 Sep 2020 at 03:14, Rob Clark <robdclark@gmail.com> wrote:
+>
+> Hi Dave,
+>
+> A bit bigger this time around, with the addition of DP support
+> which has been baking for a while now.  Overall:
+>
+> * DSI support for sm8150/sm8250
+> * Support for per-process GPU pagetables (finally!) for a6xx.
+>   There are still some iommu/arm-smmu changes required to
+>   enable, without which it will fallback to the current single
+>   pgtable state.  The first part (ie. what doesn't depend on
+>   drm side patches) is queued up for v5.10[1].
+> * DisplayPort support.  Userspace DP compliance tool support
+>   is already merged in IGT[2]
+> * The usual assortment of smaller fixes/cleanups
+>
+>
+> [1] https://git.kernel.org/pub/scm/linux/kernel/git/will/linux.git/log/?h=
+=3Dfor-joerg/arm-smmu/updates
+> [2] https://gitlab.freedesktop.org/drm/igt-gpu-tools/-/commit/222051026b9=
+78ebbc0dc58db62d7a1f29728f95f
+>
+> The following changes since commit f6828e0c4045f03f9cf2df6c2a768102641183=
+f4:
+>
+>   drm/msm: Disable the RPTR shadow (2020-09-04 12:14:15 -0700)
+>
+> are available in the Git repository at:
+>
+>   https://gitlab.freedesktop.org/drm/msm.git tags/drm-msm-next-2020-09-27
+>
+> for you to fetch changes up to d1ea914925856d397b0b3241428f20b945e31434:
+>
+>   drm/msm/dp: fix incorrect function prototype of dp_debug_get()
+> (2020-09-25 20:31:06 -0700)
+>
+> ----------------------------------------------------------------
+> Abhinav Kumar (10):
+>       drm/msm/dp: store dp_display in the driver data
+>       drm/msm/dp: add audio support for Display Port on MSM
+>       drm/msm/dp: add hook_plugged_cb hdmi-codec op for MSM DP driver
+>       drm/msm/dp: signal the hotplug disconnect in the event handler
+>       drm/msm/dp: wait for audio notification before disabling clocks
+>       drm/msm/dp: add debugfs support to DP driver
+>       drm/msm/dp: move debugfs node to /sys/kernel/debug/dri/*/
+>       drm/msm/dp: add debugfs nodes for video pattern tests
+>       drm/msm/dp: remove mode hard-coding in case of DP CTS
+>       drm/msm/dp: fix incorrect function prototype of dp_debug_get()
+>
+> Akhil P Oommen (2):
+>       drm/msm: Fix premature purging of BO
+>       drm/msm: Leave inuse count intact on map failure
+>
+> Bernard Zhao (1):
+>       drm/msm/adreno: remove return value of function XX_print
+>
+> Chandan Uddaraju (3):
+>       drm: add constant N value in helper file
+>       drm/msm/dp: add displayPort driver support
+>       drm/msm/dp: add support for DP PLL driver
+>
+> Georgi Djakov (1):
+>       drm/msm: Remove depends on interconnect
+>
+> Jeykumar Sankaran (1):
+>       drm/msm/dpu: add display port support in DPU
+>
+> Jonathan Marek (3):
+>       drm/msm/dsi: remove unused clk_pre/clk_post in msm_dsi_dphy_timing
+>       drm/msm/dsi: add DSI config for sm8150 and sm8250
+>       drm/msm/dsi: add support for 7nm DSI PHY/PLL
+>
+> Jordan Crouse (10):
+>       drm/msm: Add a context pointer to the submitqueue
+>       drm/msm: Drop context arg to gpu->submit()
+>       drm/msm: Set the global virtual address range from the IOMMU domain
+>       drm/msm: Add support to create a local pagetable
+>       drm/msm: Add support for private address space instances
+>       drm/msm/a6xx: Add support for per-instance pagetables
+>       drm/msm: Allow a5xx to mark the RPTR shadow as privileged
+>       drm/msm: a6xx: Use WHERE_AM_I for eligible targets
+>       drm/msm: Get rid of the REG_ADRENO offsets
+>       drm/msm: Fix the a650 hw_apriv check
+>
+> Kalyan Thota (1):
+>       drm/msm/dpu: add support for clk and bw scaling for display
+>
+> Kuogee Hsieh (1):
+>       drm/msm/dp: Add DP compliance tests on Snapdragon Chipsets
+>
+> Luca Weiss (1):
+>       drm/msm/adreno: fix probe without iommu
+>
+> Luo Jiaxing (1):
+>       drm/msm/dpu: remove unused variables new_cnt and old_cnt in
+> dpu_encoder_phys_vid_vblank_irq()
+>
+> Qinglang Miao (1):
+>       drm/msm/dpu: Convert to DEFINE_SHOW_ATTRIBUTE
+>
+> Rob Clark (12):
+>       drm/msm: drop cache sync hack
+>       drm/msm/dpu: move vblank events to complete_commit()
+>       drm/msm/dpu: clean up some impossibilities
+>       drm/msm/gpu: Add GPU freq_change traces
+>       drm/msm: Convert shrinker msgs to tracepoints
+>       drm/msm/gpu: Add suspend/resume tracepoints
+>       drm/msm: Remove dangling submitqueue references
+>       drm/msm: Add private interface for adreno-smmu
+>       drm/msm/gpu: Add dev_to_gpu() helper
+>       drm/msm: Set adreno_smmu as gpu's drvdata
+>       drm/msm: Show process names in gem_describe
+>       drm/msm/dp: Fix crash if no DP device
+>
+> Robin Murphy (1):
+>       drm/msm: Drop local dma_parms
+>
+> Sai Prakash Ranjan (2):
+>       drm/msm/mdp4: Remove unused downstream bus scaling apis
+>       drm/msm/mdp5: Remove unused downstream bus scaling apis
+>
+> Stephen Boyd (4):
+>       drm/msm: Avoid div-by-zero in dpu_crtc_atomic_check()
+>       drm/msm: Drop debug print in _dpu_crtc_setup_lm_bounds()
+>       drm/msm/dp: Use qmp phy for DP PLL and PHY
+>       drm/msm/dp: Sleep properly in dp_hpd_handler kthread
+>
+> Tanmay Shah (1):
+>       drm/msm/dp: Add Display Port HPD feature
+>
+> Zhenzhong Duan (1):
+>       drm/msm/a6xx: fix a potential overflow issue
+>
+>  .../devicetree/bindings/display/msm/dsi.txt        |    6 +-
+>  drivers/gpu/drm/i915/display/intel_display.c       |    2 +-
+>  drivers/gpu/drm/msm/Kconfig                        |   19 +-
+>  drivers/gpu/drm/msm/Makefile                       |   18 +-
+>  drivers/gpu/drm/msm/adreno/a2xx_gpu.c              |   65 +-
+>  drivers/gpu/drm/msm/adreno/a3xx_gpu.c              |   77 +-
+>  drivers/gpu/drm/msm/adreno/a4xx_gpu.c              |   82 +-
+>  drivers/gpu/drm/msm/adreno/a5xx_debugfs.c          |   21 +-
+>  drivers/gpu/drm/msm/adreno/a5xx_gpu.c              |  120 +-
+>  drivers/gpu/drm/msm/adreno/a5xx_gpu.h              |   12 +
+>  drivers/gpu/drm/msm/adreno/a5xx_power.c            |    2 +-
+>  drivers/gpu/drm/msm/adreno/a5xx_preempt.c          |    5 +-
+>  drivers/gpu/drm/msm/adreno/a6xx_gmu.c              |    3 +
+>  drivers/gpu/drm/msm/adreno/a6xx_gpu.c              |  182 +-
+>  drivers/gpu/drm/msm/adreno/a6xx_gpu.h              |   10 +
+>  drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c        |    2 +-
+>  drivers/gpu/drm/msm/adreno/adreno_device.c         |   12 +-
+>  drivers/gpu/drm/msm/adreno/adreno_gpu.c            |  105 +-
+>  drivers/gpu/drm/msm/adreno/adreno_gpu.h            |   82 +-
+>  drivers/gpu/drm/msm/adreno/adreno_pm4.xml.h        |    1 +
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_core_irq.c       |   15 +-
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c      |  109 +-
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c           |  132 +-
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c        |   55 +-
+>  .../gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c   |   14 +-
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c     |    5 +-
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h     |    4 +
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c            |  145 +-
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h            |    4 +
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_mdss.c           |    9 +-
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c          |   84 +
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_plane.h          |    4 +
+>  drivers/gpu/drm/msm/disp/mdp4/mdp4_dtv_encoder.c   |   51 -
+>  drivers/gpu/drm/msm/disp/mdp4/mdp4_kms.h           |   13 -
+>  drivers/gpu/drm/msm/disp/mdp4/mdp4_lcdc_encoder.c  |   47 -
+>  drivers/gpu/drm/msm/disp/mdp5/mdp5_cmd_encoder.c   |   24 -
+>  drivers/gpu/drm/msm/disp/mdp5/mdp5_encoder.c       |   68 -
+>  drivers/gpu/drm/msm/dp/dp_audio.c                  |  638 +++++++
+>  drivers/gpu/drm/msm/dp/dp_audio.h                  |   72 +
+>  drivers/gpu/drm/msm/dp/dp_aux.c                    |  535 ++++++
+>  drivers/gpu/drm/msm/dp/dp_aux.h                    |   30 +
+>  drivers/gpu/drm/msm/dp/dp_catalog.c                | 1019 +++++++++++
+>  drivers/gpu/drm/msm/dp/dp_catalog.h                |  131 ++
+>  drivers/gpu/drm/msm/dp/dp_ctrl.c                   | 1869 ++++++++++++++=
+++++++
+>  drivers/gpu/drm/msm/dp/dp_ctrl.h                   |   36 +
+>  drivers/gpu/drm/msm/dp/dp_debug.c                  |  485 +++++
+>  drivers/gpu/drm/msm/dp/dp_debug.h                  |   74 +
+>  drivers/gpu/drm/msm/dp/dp_display.c                | 1463 ++++++++++++++=
 +
-+				if (fatal_signal_pending(current))
-+					break;
-+
-+				/*
-+				 * Page may be momentarily pinned by some other
-+				 * process which has been scheduled out, e.g.
-+				 * in exit path, during unmap call, or process
-+				 * fork and so cannot be freed there. Sleep
-+				 * for 100 ms and retry the allocation.
-+				 */
-+				start = 0;
-+				ret = -ENOMEM;
-+				schedule_timeout_killable(msecs_to_jiffies(100));
-+				continue;
-+			} else {
-+				/*
-+				 * ret == -ENOMEM - all bits in cma->bitmap are
-+				 * set, so we break accordingly.
-+				 */
-+				mutex_unlock(&cma->lock);
-+				break;
-+			}
- 		}
- 		bitmap_set(cma->bitmap, bitmap_no, bitmap_count);
- 		/*
-@@ -456,7 +483,7 @@ struct page *cma_alloc(struct cma *cma, size_t count, unsigned int align,
- 		pfn = cma->base_pfn + (bitmap_no << cma->order_per_bit);
- 		mutex_lock(&cma_mutex);
- 		ret = alloc_contig_range(pfn, pfn + count, MIGRATE_CMA,
--				     GFP_KERNEL | (no_warn ? __GFP_NOWARN : 0));
-+				     GFP_KERNEL | (gfp_mask & __GFP_NOWARN));
- 		mutex_unlock(&cma_mutex);
- 		if (ret == 0) {
- 			page = pfn_to_page(pfn);
-@@ -485,7 +512,7 @@ struct page *cma_alloc(struct cma *cma, size_t count, unsigned int align,
- 			page_kasan_tag_reset(page + i);
- 	}
- 
--	if (ret && !no_warn) {
-+	if (ret && !(gfp_mask & __GFP_NOWARN)) {
- 		pr_err("%s: alloc failed, req-size: %zu pages, ret: %d\n",
- 			__func__, count, ret);
- 		cma_debug_show_areas(cma);
-diff --git a/mm/cma_debug.c b/mm/cma_debug.c
-index d5bf8aa..76aea84 100644
---- a/mm/cma_debug.c
-+++ b/mm/cma_debug.c
-@@ -137,7 +137,7 @@ static int cma_alloc_mem(struct cma *cma, int count)
- 	if (!mem)
- 		return -ENOMEM;
- 
--	p = cma_alloc(cma, count, 0, false);
-+	p = cma_alloc(cma, count, 0, 0);
- 	if (!p) {
- 		kfree(mem);
- 		return -ENOMEM;
-diff --git a/mm/hugetlb.c b/mm/hugetlb.c
-index 67fc6383..97bdba9 100644
---- a/mm/hugetlb.c
-+++ b/mm/hugetlb.c
-@@ -1260,7 +1260,7 @@ static struct page *alloc_gigantic_page(struct hstate *h, gfp_t gfp_mask,
- 
- 		if (hugetlb_cma[nid]) {
- 			page = cma_alloc(hugetlb_cma[nid], nr_pages,
--					huge_page_order(h), true);
-+					huge_page_order(h), __GFP_NOWARN);
- 			if (page)
- 				return page;
- 		}
-@@ -1271,7 +1271,7 @@ static struct page *alloc_gigantic_page(struct hstate *h, gfp_t gfp_mask,
- 					continue;
- 
- 				page = cma_alloc(hugetlb_cma[node], nr_pages,
--						huge_page_order(h), true);
-+						huge_page_order(h), __GFP_NOWARN);
- 				if (page)
- 					return page;
- 			}
--- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project
-
+>  drivers/gpu/drm/msm/dp/dp_display.h                |   39 +
+>  drivers/gpu/drm/msm/dp/dp_drm.c                    |  164 ++
+>  drivers/gpu/drm/msm/dp/dp_drm.h                    |   18 +
+>  drivers/gpu/drm/msm/dp/dp_hpd.c                    |   69 +
+>  drivers/gpu/drm/msm/dp/dp_hpd.h                    |   80 +
+>  drivers/gpu/drm/msm/dp/dp_link.c                   | 1210 +++++++++++++
+>  drivers/gpu/drm/msm/dp/dp_link.h                   |  155 ++
+>  drivers/gpu/drm/msm/dp/dp_panel.c                  |  463 +++++
+>  drivers/gpu/drm/msm/dp/dp_panel.h                  |  100 ++
+>  drivers/gpu/drm/msm/dp/dp_parser.c                 |  293 +++
+>  drivers/gpu/drm/msm/dp/dp_parser.h                 |  136 ++
+>  drivers/gpu/drm/msm/dp/dp_power.c                  |  372 ++++
+>  drivers/gpu/drm/msm/dp/dp_power.h                  |  107 ++
+>  drivers/gpu/drm/msm/dp/dp_reg.h                    |  306 ++++
+>  drivers/gpu/drm/msm/dsi/dsi.h                      |    2 +
+>  drivers/gpu/drm/msm/dsi/dsi.xml.h                  |  423 +++++
+>  drivers/gpu/drm/msm/dsi/dsi_cfg.c                  |    5 +-
+>  drivers/gpu/drm/msm/dsi/dsi_cfg.h                  |    2 +
+>  drivers/gpu/drm/msm/dsi/phy/dsi_phy.c              |  102 ++
+>  drivers/gpu/drm/msm/dsi/phy/dsi_phy.h              |    6 +-
+>  drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c          |  255 +++
+>  drivers/gpu/drm/msm/dsi/pll/dsi_pll.c              |    4 +
+>  drivers/gpu/drm/msm/dsi/pll/dsi_pll.h              |   10 +
+>  drivers/gpu/drm/msm/dsi/pll/dsi_pll_7nm.c          |  904 ++++++++++
+>  drivers/gpu/drm/msm/msm_drv.c                      |   28 +-
+>  drivers/gpu/drm/msm/msm_drv.h                      |   97 +-
+>  drivers/gpu/drm/msm/msm_gem.c                      |   75 +-
+>  drivers/gpu/drm/msm/msm_gem.h                      |   10 +-
+>  drivers/gpu/drm/msm/msm_gem_shrinker.c             |    5 +-
+>  drivers/gpu/drm/msm/msm_gem_submit.c               |    8 +-
+>  drivers/gpu/drm/msm/msm_gem_vma.c                  |   14 +-
+>  drivers/gpu/drm/msm/msm_gpu.c                      |   56 +-
+>  drivers/gpu/drm/msm/msm_gpu.h                      |   22 +-
+>  drivers/gpu/drm/msm/msm_gpu_trace.h                |   83 +
+>  drivers/gpu/drm/msm/msm_gpummu.c                   |    2 +-
+>  drivers/gpu/drm/msm/msm_iommu.c                    |  206 ++-
+>  drivers/gpu/drm/msm/msm_mmu.h                      |   16 +-
+>  drivers/gpu/drm/msm/msm_ringbuffer.h               |    1 +
+>  drivers/gpu/drm/msm/msm_submitqueue.c              |    7 +-
+>  include/drm/drm_dp_helper.h                        |    1 +
+>  include/linux/adreno-smmu-priv.h                   |   36 +
+>  89 files changed, 13076 insertions(+), 777 deletions(-)
+>  create mode 100644 drivers/gpu/drm/msm/dp/dp_audio.c
+>  create mode 100644 drivers/gpu/drm/msm/dp/dp_audio.h
+>  create mode 100644 drivers/gpu/drm/msm/dp/dp_aux.c
+>  create mode 100644 drivers/gpu/drm/msm/dp/dp_aux.h
+>  create mode 100644 drivers/gpu/drm/msm/dp/dp_catalog.c
+>  create mode 100644 drivers/gpu/drm/msm/dp/dp_catalog.h
+>  create mode 100644 drivers/gpu/drm/msm/dp/dp_ctrl.c
+>  create mode 100644 drivers/gpu/drm/msm/dp/dp_ctrl.h
+>  create mode 100644 drivers/gpu/drm/msm/dp/dp_debug.c
+>  create mode 100644 drivers/gpu/drm/msm/dp/dp_debug.h
+>  create mode 100644 drivers/gpu/drm/msm/dp/dp_display.c
+>  create mode 100644 drivers/gpu/drm/msm/dp/dp_display.h
+>  create mode 100644 drivers/gpu/drm/msm/dp/dp_drm.c
+>  create mode 100644 drivers/gpu/drm/msm/dp/dp_drm.h
+>  create mode 100644 drivers/gpu/drm/msm/dp/dp_hpd.c
+>  create mode 100644 drivers/gpu/drm/msm/dp/dp_hpd.h
+>  create mode 100644 drivers/gpu/drm/msm/dp/dp_link.c
+>  create mode 100644 drivers/gpu/drm/msm/dp/dp_link.h
+>  create mode 100644 drivers/gpu/drm/msm/dp/dp_panel.c
+>  create mode 100644 drivers/gpu/drm/msm/dp/dp_panel.h
+>  create mode 100644 drivers/gpu/drm/msm/dp/dp_parser.c
+>  create mode 100644 drivers/gpu/drm/msm/dp/dp_parser.h
+>  create mode 100644 drivers/gpu/drm/msm/dp/dp_power.c
+>  create mode 100644 drivers/gpu/drm/msm/dp/dp_power.h
+>  create mode 100644 drivers/gpu/drm/msm/dp/dp_reg.h
+>  create mode 100644 drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c
+>  create mode 100644 drivers/gpu/drm/msm/dsi/pll/dsi_pll_7nm.c
+>  create mode 100644 include/linux/adreno-smmu-priv.h
