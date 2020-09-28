@@ -2,119 +2,99 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 24A9D27B644
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Sep 2020 22:29:14 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A911327B64F
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Sep 2020 22:31:20 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726565AbgI1U3N (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 28 Sep 2020 16:29:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39242 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726500AbgI1U3N (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 28 Sep 2020 16:29:13 -0400
-Received: from mail-wm1-x341.google.com (mail-wm1-x341.google.com [IPv6:2a00:1450:4864:20::341])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ED840C061755;
-        Mon, 28 Sep 2020 13:29:12 -0700 (PDT)
-Received: by mail-wm1-x341.google.com with SMTP id s13so2381688wmh.4;
-        Mon, 28 Sep 2020 13:29:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
-        bh=Q0lp3rLeok0/LIdGZMtUWTk4DBwvlYpBiYMCH4mTDmo=;
-        b=Fhf3QkDEZWbN0+nOjdtpyln7D1G4Eg0gOZ0V85gztOZtw3D4HokakiOvkEHSt2DMQ9
-         J4imFtjqxjsawJ/oK8B0CHI391+yBig73WrUDicb1lskeeQBw+AzTAvKZ3QM4G5hs8ks
-         PfD5Y7VpmAqKVcxEGGMJxSxyjwXIDcAkxfR1RixzNXhz5ksJkWGPAzILXJTIuK8ikvV6
-         Lm30bFHamzfANT8UXmgF1hAax5msCyr1et6izPYswrgqZt9loWONpYuiZBn1EtysnitB
-         6cR4cwNeXksQcZfqIsrHdAA5ZKpBVJgty5VnsbOhGggfMPg+7wNt50dapZtA6I0F6diC
-         fagQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to;
-        bh=Q0lp3rLeok0/LIdGZMtUWTk4DBwvlYpBiYMCH4mTDmo=;
-        b=K64YMXTIYNCAC885+wXeHll+0UrJ16ImneIyZtSHde3OzgzBTT9pglKAbkOSKoIJXj
-         G0m3mDVQNW1BsFt3NPwJxM9u1n3c58mJ8eUZKeJduTwrz/ZI4t3jD9iBO4+Ro/xeYeR3
-         +f77qsXmA8nFuNS3qrN+W6JDIMoHi5b6Xo5dao/6BqgXK3lt5YYo7LLtE/c1/+bYuvOh
-         z64nJ6n7T0DS/qm6tIs8wITSUUpT/x9otwm7fU+XVMepjm6wdDHlzhlMsdTdFBd84RWy
-         kVKRMMHh33SKctK4Hay6fbgPgePSjhYINC4JiH1HUJ5MX9nlkUqO5Sg/JrtMtHN5bYsb
-         CWXg==
-X-Gm-Message-State: AOAM530B/gPK7PTkIIAlWBYY2r2w15L+yaR+gFIsMxdnNGV3Lenk8Eds
-        0cUTvhfTUJIv72i3ZyQhhQHapw7rVlI1N3ohTI8=
-X-Google-Smtp-Source: ABdhPJyksvtNI+Mg0NDn1Hk0jA3e3slOwaUrbYwi4zR1ZbqKf/he+sN9D9+vk5PIDwTYGc5l0l2sKw9NOq2Iwl1J0xk=
-X-Received: by 2002:a1c:5988:: with SMTP id n130mr910267wmb.95.1601324951481;
- Mon, 28 Sep 2020 13:29:11 -0700 (PDT)
-MIME-Version: 1.0
-References: <20200926125146.12859-1-kholk11@gmail.com> <20200926125146.12859-6-kholk11@gmail.com>
- <20200928161546.GB29832@jcrouse1-lnx.qualcomm.com>
-In-Reply-To: <20200928161546.GB29832@jcrouse1-lnx.qualcomm.com>
-From:   AngeloGioacchino Del Regno <kholk11@gmail.com>
-Date:   Mon, 28 Sep 2020 22:29:00 +0200
-Message-ID: <CAK7fi1Z8uVRE+HRUSTz8bdDS5hYXaH8=D8KDUz+7mGs-H-TGpw@mail.gmail.com>
-Subject: Re: [PATCH 5/7] drm/msm/a5xx: Fix VPC protect value in gpu_write()
-To:     AngeloGioacchino Del Regno <kholk11@gmail.com>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Dave Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>, konradybcio@gmail.com,
-        marijns95@gmail.com, martin.botka1@gmail.com,
-        MSM <linux-arm-msm@vger.kernel.org>,
-        freedreno <freedreno@lists.freedesktop.org>,
-        phone-devel@vger.kernel.org, linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+        id S1726656AbgI1UbT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 28 Sep 2020 16:31:19 -0400
+Received: from z5.mailgun.us ([104.130.96.5]:11698 "EHLO z5.mailgun.us"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726811AbgI1UbR (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 28 Sep 2020 16:31:17 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1601325076; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=HvqRlccboJRskCbBGoZiwAwl9Is6Q+EApiZuGx+9fRk=; b=IzTonj8GyKgHGaRt4FcH0C3EyfbZnJS4379S1+eqCQo7fzWzWv1lLMXutlixdX7yVEoepvl4
+ uJq1bIjXMt5YK0NLsHia53hkluNWig9iLtlnCrJYonBbBNEZsuDftStn5yMCH+zAsmCLfmHu
+ 2u1Iz/Y4xtMBRZsqmAo9I37mnHU=
+X-Mailgun-Sending-Ip: 104.130.96.5
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n03.prod.us-east-1.postgun.com with SMTP id
+ 5f7247fdf38f205ebc529dfa (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 28 Sep 2020 20:30:53
+ GMT
+Sender: cgoldswo=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id F2239C433CB; Mon, 28 Sep 2020 20:30:52 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
+        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+Received: from cgoldswo-linux.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: cgoldswo)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 9E4C4C433CA;
+        Mon, 28 Sep 2020 20:30:51 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 9E4C4C433CA
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=cgoldswo@codeaurora.org
+From:   Chris Goldsworthy <cgoldswo@codeaurora.org>
+To:     akpm@linux-foundation.org, linux-mm@kvack.org, minchan@kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        pratikp@codeaurora.org, pdaly@codeaurora.org,
+        sudaraja@codeaurora.org, iamjoonsoo.kim@lge.com, david@redhat.com,
+        vinmenon@codeaurora.org, minchan.kim@gmail.com
+Cc:     Chris Goldsworthy <cgoldswo@codeaurora.org>
+Subject: [PATCH v4] mm: cma: indefinitely retry allocations in cma_alloc
+Date:   Mon, 28 Sep 2020 13:30:26 -0700
+Message-Id: <cover.1601324066.git.cgoldswo@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Il giorno lun 28 set 2020 alle ore 18:16 Jordan Crouse
-<jcrouse@codeaurora.org> ha scritto:
->
-> On Sat, Sep 26, 2020 at 02:51:44PM +0200, kholk11@gmail.com wrote:
-> > From: Konrad Dybcio <konradybcio@gmail.com>
-> >
-> > The upstream API for some reason uses logbase2 instead of
-> > just passing the argument as-is, whereas downstream CAF
-> > kernel does the latter.
-> >
-> > Hence, a mistake has been made when porting:
-> > 4 is the value that's supposed to be passed, but
-> > log2(4) = 2. Changing the value to 16 (= 2^4) fixes
-> > the issue.
->
-> FWIW I think downstream is wrong. Its a lot more intuitive to pass the number of
-> registers that should be protected than to force a human to do math.
->
-> Jordan
->
-Uhm, actually, it's upstream the one forcing to do math... :P
-In any case, downstream you have some calls with an explicit log2 and
-some others with the "real" number of registers.
+V1: Introduces a retry loop that attempts a CMA allocation a finite
+number of times before giving up:
+ 
+https://lkml.org/lkml/2020/8/5/1097
+https://lkml.org/lkml/2020/8/11/893
 
-Hardware magic register layouts, maybe.... :)))
+V2: Introduces an indefinite retry for CMA allocations.  David Hildenbrand
+raised a page pinning example which precludes doing this infite-retrying
+for all CMA users:
 
--- Angelo
+https://lkml.org/lkml/2020/9/17/984
 
-> > Signed-off-by: Konrad Dybcio <konradybcio@gmail.com>
-> > Signed-off-by: AngeloGioacchino Del Regno <kholk11@gmail.com>
-> > ---
-> >  drivers/gpu/drm/msm/adreno/a5xx_gpu.c | 2 +-
-> >  1 file changed, 1 insertion(+), 1 deletion(-)
-> >
-> > diff --git a/drivers/gpu/drm/msm/adreno/a5xx_gpu.c b/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
-> > index 00df5de3c8e3..b2670af638a3 100644
-> > --- a/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
-> > +++ b/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
-> > @@ -789,7 +789,7 @@ static int a5xx_hw_init(struct msm_gpu *gpu)
-> >
-> >       /* VPC */
-> >       gpu_write(gpu, REG_A5XX_CP_PROTECT(14), ADRENO_PROTECT_RW(0xE68, 8));
-> > -     gpu_write(gpu, REG_A5XX_CP_PROTECT(15), ADRENO_PROTECT_RW(0xE70, 4));
-> > +     gpu_write(gpu, REG_A5XX_CP_PROTECT(15), ADRENO_PROTECT_RW(0xE70, 16));
-> >
-> >       /* UCHE */
-> >       gpu_write(gpu, REG_A5XX_CP_PROTECT(16), ADRENO_PROTECT_RW(0xE80, 16));
-> > --
-> > 2.28.0
-> >
->
-> --
-> The Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum,
-> a Linux Foundation Collaborative Project
+V3: Re-introduce a GFP mask argument for cma_alloc(), that can take in
+__GFP_NOFAIL as an argument to indicate that a CMA allocation should be
+retried indefinitely. This lets callers of cma_alloc() decide if they want
+to perform indefinite retires. Also introduces a config option for
+controlling the duration of the sleep between retries:
+
+https://www.spinics.net/lists/linux-mm/msg228778.html
+
+V4: In response to comments by Minchan Kim, we make the sleep interruptable
+and remove a defconfig option controlling how long the sleep lasts for (it
+is now a fixed 100 ms).
+
+Chris Goldsworthy (1):
+  mm: cma: indefinitely retry allocations in cma_alloc
+
+ arch/powerpc/kvm/book3s_hv_builtin.c       |  2 +-
+ drivers/dma-buf/heaps/cma_heap.c           |  2 +-
+ drivers/s390/char/vmcp.c                   |  2 +-
+ drivers/staging/android/ion/ion_cma_heap.c |  2 +-
+ include/linux/cma.h                        |  2 +-
+ kernel/dma/contiguous.c                    |  4 ++--
+ mm/cma.c                                   | 36 +++++++++++++++++++++++++-----
+ mm/cma_debug.c                             |  2 +-
+ mm/hugetlb.c                               |  4 ++--
+ 9 files changed, 40 insertions(+), 16 deletions(-)
+
+-- 
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
+
