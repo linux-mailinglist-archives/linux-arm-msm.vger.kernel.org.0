@@ -2,124 +2,136 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 4DF1E27AC97
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Sep 2020 13:21:26 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5AC5E27ACA3
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Sep 2020 13:23:08 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726573AbgI1LVZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 28 Sep 2020 07:21:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39208 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726558AbgI1LVZ (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 28 Sep 2020 07:21:25 -0400
-Received: from mail-qt1-x844.google.com (mail-qt1-x844.google.com [IPv6:2607:f8b0:4864:20::844])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D0568C0613CE
-        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Sep 2020 04:21:24 -0700 (PDT)
-Received: by mail-qt1-x844.google.com with SMTP id b2so383730qtp.8
-        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Sep 2020 04:21:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=WGmrNVltU47hsQ2DtZURkPQvI82shboAR3TseDZfLzA=;
-        b=OvZnWePH2N/uSdOvV0Jyqo9hXNBCId8vIfJ1g+gMRcBHG6abkV0ZwOWtfNtLr377Dk
-         eqPhNMyXfkmbr6k/qi/zbaw0kw9SvCeCsxASbrBwpmlgVRkZoh8yQCvK4A3uSHUTBmuZ
-         JkjJzAT2KnACdZtyZpkMO82UD664w8MvmwS5QLAFHR0MnWan2yTkmPS9iLPCDKgCB+bi
-         nCpn1MvnWWIUqS9YWDN9EZ3Bruuu7f+pEupf/FeH3wasWsdvcZkoHLu+CFOQ2eC2MnKO
-         FDzsolUiLw2uN8iuaiYhzs1sUdF3qm8E/+Gom5VK1jxZqD/aZmVdfaV7WU6R5ryYQYz/
-         3jKA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=WGmrNVltU47hsQ2DtZURkPQvI82shboAR3TseDZfLzA=;
-        b=JxHWWAy6MyivY8rLwvM3aun742zrwV57V4MvCvnyLsfPTF2poT8G7B8Zowz2nAp2YP
-         97tP9Il5b20Lq3pw4k95VBru76k237qx4EzxHFgC3bQm43UqGcQwPKlPzj0oN7frIloo
-         pBkdb5Oh2O2YV4ZciD6K14mdel2XQ8IOMIyAXsMgubdIlSgGvRC1Nc+b7aKIElofzLnI
-         mntL4mtoLqGJf62Cup5PR0azHIvWyjWh7zHmwev7+FRRdm5yTwoyjrtu+9dCMR2kVly2
-         PHmfCViaxUaAUcU7muXIRZFO1otyL2pt/ghI3cjS1zxcOD7NOt5VyciVxXQYJ+UADv5i
-         bIIA==
-X-Gm-Message-State: AOAM530UwoQ+f4JcDr/zcK/ApIuKzHczKysRIzNH+8kk0OqmEFwSUryn
-        A/TXo/jFoUDtWy/qhScuWDhAuQ==
-X-Google-Smtp-Source: ABdhPJwm8fb7PhQK230zIRzA20KdHBipubUMcovAIRTBXu5FanE/gWWVy+/lvX1/magPx4cHrPCqiA==
-X-Received: by 2002:ac8:6d32:: with SMTP id r18mr998010qtu.246.1601292083949;
-        Mon, 28 Sep 2020 04:21:23 -0700 (PDT)
-Received: from [192.168.1.92] (pool-71-163-245-5.washdc.fios.verizon.net. [71.163.245.5])
-        by smtp.gmail.com with ESMTPSA id t10sm660841qkt.55.2020.09.28.04.21.19
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 28 Sep 2020 04:21:19 -0700 (PDT)
-Subject: Re: [PATCH RFC 1/8] dt-bindings: thermal: Introduce monitor-falling
- parameter to thermal trip point binding
-To:     Rob Herring <robh@kernel.org>
-Cc:     rui.zhang@intel.com, daniel.lezcano@linaro.org, agross@kernel.org,
-        bjorn.andersson@linaro.org, linux-pm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, lukasz.luba@arm.com,
-        amitk@kernel.org
-References: <20200917032226.820371-1-thara.gopinath@linaro.org>
- <20200917032226.820371-2-thara.gopinath@linaro.org>
- <20200923160328.GA833754@bogus>
-From:   Thara Gopinath <thara.gopinath@linaro.org>
-Message-ID: <2f923e40-8543-0827-f72f-d8c7df51e4b6@linaro.org>
-Date:   Mon, 28 Sep 2020 07:21:18 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.8.0
+        id S1726595AbgI1LXH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 28 Sep 2020 07:23:07 -0400
+Received: from m42-4.mailgun.net ([69.72.42.4]:18232 "EHLO m42-4.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726461AbgI1LXH (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 28 Sep 2020 07:23:07 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1601292186; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=us7P7ojJim1W+0abmFda2xNmj06J8S8jN+J76iJNAj8=;
+ b=q5Sbvl2eyDry6Plm+o5Hn/AJizxDYZMaK9UE1ILiutNaTMNQcFj2Y5+ZC2w3aSNEwpEdaA1w
+ NVEDbNNhF95D+L+0aX+A/IQ7D+n9oU/UXrWM9YyF5Vfei+r7vBZClgyL7HAbT2elD1aoEBDm
+ eu0tX4to5ZeKLbiwwYh/WimAHLY=
+X-Mailgun-Sending-Ip: 69.72.42.4
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n04.prod.us-east-1.postgun.com with SMTP id
+ 5f71c791356bcc21fb2dc1dd (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 28 Sep 2020 11:22:57
+ GMT
+Sender: saiprakash.ranjan=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 37F1FC433CB; Mon, 28 Sep 2020 11:22:57 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: saiprakash.ranjan)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 48196C433CA;
+        Mon, 28 Sep 2020 11:22:55 +0000 (UTC)
 MIME-Version: 1.0
-In-Reply-To: <20200923160328.GA833754@bogus>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
 Content-Transfer-Encoding: 7bit
+Date:   Mon, 28 Sep 2020 16:52:55 +0530
+From:   Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+To:     Suzuki K Poulose <suzuki.poulose@arm.com>
+Cc:     mathieu.poirier@linaro.org, mike.leach@linaro.org,
+        leo.yan@linaro.org, alexander.shishkin@linux.intel.com,
+        peterz@infradead.org, coresight@lists.linaro.org,
+        swboyd@chromium.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        denik@google.com
+Subject: Re: [PATCH 2/2] coresight: etm4x: Fix save and restore of
+ TRCVMIDCCTLR1 register
+In-Reply-To: <0e0bc2fd-0449-35bc-882a-3b942a55fda4@arm.com>
+References: <cover.1601222348.git.saiprakash.ranjan@codeaurora.org>
+ <19e06f26c1e4b0bf48d3971e2f1fb1af27da159a.1601222348.git.saiprakash.ranjan@codeaurora.org>
+ <0e0bc2fd-0449-35bc-882a-3b942a55fda4@arm.com>
+Message-ID: <388adccec089823fcd6d009892ad95a1@codeaurora.org>
+X-Sender: saiprakash.ranjan@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Rob,
-Thanks for the review.
+Hi Suzuki,
 
-On 9/23/20 12:03 PM, Rob Herring wrote:
-> On Wed, Sep 16, 2020 at 11:22:19PM -0400, Thara Gopinath wrote:
->> Introduce a new binding parameter to thermal trip point description
->> to indicate whether the temperature level specified by the trip point
->> is monitored for a rise or fall in temperature.
->>
->> Signed-off-by: Thara Gopinath <thara.gopinath@linaro.org>
+On 2020-09-28 16:35, Suzuki K Poulose wrote:
+> Hi Sai,
+> 
+> On 09/27/2020 05:20 PM, Sai Prakash Ranjan wrote:
+>> In commit f188b5e76aae ("coresight: etm4x: Save/restore state
+>> across CPU low power states"), mistakenly TRCVMIDCCTLR1 register
+>> value was saved in trcvmidcctlr0 state variable which is used to
+>> store TRCVMIDCCTLR0 register value in etm4x_cpu_save() and then
+>> same value is written back to both TRCVMIDCCTLR0 and TRCVMIDCCTLR1
+>> in etm4x_cpu_restore(). There is already a trcvmidcctlr1 state
+>> variable available for TRCVMIDCCTLR1, so use it.
+>> 
+>> Fixes: 8b44fdfef6a2 ("coresight: etm4x: Allow etm4x to be built as a 
+>> module")
+> 
+> Why is this commit in question ?
+
+My bad sorry, I thought there are two commits which touch this hunk of 
+code,
+but I see now that the module code just renamed the file, so this fixes 
+tag
+is not required.
+
+> 
+>> Fixes: f188b5e76aae ("coresight: etm4x: Save/restore state across CPU 
+>> low power states")
+> 
+> I believe this is the right fixes tag.
+> 
+
+Yes, I will resend with only this fixes tag.
+
+>> Signed-off-by: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
 >> ---
->>   .../devicetree/bindings/thermal/thermal-zones.yaml         | 7 +++++++
->>   1 file changed, 7 insertions(+)
->>
->> diff --git a/Documentation/devicetree/bindings/thermal/thermal-zones.yaml b/Documentation/devicetree/bindings/thermal/thermal-zones.yaml
->> index 3ec9cc87ec50..cc1332ad6c16 100644
->> --- a/Documentation/devicetree/bindings/thermal/thermal-zones.yaml
->> +++ b/Documentation/devicetree/bindings/thermal/thermal-zones.yaml
->> @@ -161,6 +161,13 @@ patternProperties:
->>                     The active trip type can be used to control other HW to
->>                     help in cooling e.g. fans can be sped up or slowed down
->>   
->> +              monitor-falling:
->> +                description: |
->> +                  boolean, If true, the trip point is being monitored for
->> +                  falling temperature. If false/absent/default, the trip
->> +                  point is being monitored for rising temperature.
->> +                type: boolean
+>>   drivers/hwtracing/coresight/coresight-etm4x-core.c | 4 ++--
+>>   1 file changed, 2 insertions(+), 2 deletions(-)
+>> 
+>> diff --git a/drivers/hwtracing/coresight/coresight-etm4x-core.c 
+>> b/drivers/hwtracing/coresight/coresight-etm4x-core.c
+>> index de76d57850bc..abd706b216ac 100644
+>> --- a/drivers/hwtracing/coresight/coresight-etm4x-core.c
+>> +++ b/drivers/hwtracing/coresight/coresight-etm4x-core.c
+>> @@ -1243,7 +1243,7 @@ static int etm4_cpu_save(struct etmv4_drvdata 
+>> *drvdata)
+>>   	state->trccidcctlr1 = readl(drvdata->base + TRCCIDCCTLR1);
+>>     	state->trcvmidcctlr0 = readl(drvdata->base + TRCVMIDCCTLR0);
+>> -	state->trcvmidcctlr0 = readl(drvdata->base + TRCVMIDCCTLR1);
+>> +	state->trcvmidcctlr1 = readl(drvdata->base + TRCVMIDCCTLR1);
+>>     	state->trcclaimset = readl(drvdata->base + TRCCLAIMCLR);
+>>   @@ -1353,7 +1353,7 @@ static void etm4_cpu_restore(struct 
+>> etmv4_drvdata *drvdata)
+>>   	writel_relaxed(state->trccidcctlr1, drvdata->base + TRCCIDCCTLR1);
+>>     	writel_relaxed(state->trcvmidcctlr0, drvdata->base + 
+>> TRCVMIDCCTLR0);
+>> -	writel_relaxed(state->trcvmidcctlr0, drvdata->base + TRCVMIDCCTLR1);
+>> +	writel_relaxed(state->trcvmidcctlr1, drvdata->base + TRCVMIDCCTLR1);
+>> 
 > 
-> What if you wanted to monitor for both?
+> Reviewed-by: Suzuki K Poulose <suzuki.poulose@arm.com>
 
-You usually don't want to. At really low temperature trip (5 degree C or 
-0 degree C) you care about starting to monitor when the temperature 
-falls below the trip. At high temp trip points, you care about starting 
-to monitor when the temperature rises above the trip point. The thermal 
-framework takes care of stopping the monitoring (dependent on type of 
-monitoring, hysteresis etc.)
-> 
->> +
->>               required:
->>                 - temperature
->>                 - hysteresis
->> -- 
->> 2.25.1
->>
+Thanks,
+Sai
 
 -- 
-Warm Regards
-Thara
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a 
+member
+of Code Aurora Forum, hosted by The Linux Foundation
