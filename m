@@ -2,32 +2,32 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 3048027AB3F
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Sep 2020 11:54:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9E44127AB43
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Sep 2020 11:54:24 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726658AbgI1JyH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 28 Sep 2020 05:54:07 -0400
-Received: from z5.mailgun.us ([104.130.96.5]:16249 "EHLO z5.mailgun.us"
+        id S1726720AbgI1JyP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 28 Sep 2020 05:54:15 -0400
+Received: from m42-4.mailgun.net ([69.72.42.4]:64706 "EHLO m42-4.mailgun.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726655AbgI1JyH (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 28 Sep 2020 05:54:07 -0400
+        id S1726656AbgI1JyN (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 28 Sep 2020 05:54:13 -0400
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1601286846; h=References: In-Reply-To: Message-Id: Date:
+ s=smtp; t=1601286853; h=References: In-Reply-To: Message-Id: Date:
  Subject: Cc: To: From: Sender;
- bh=lTpp6p4jIxGLT+264TxVTrGqHO646v4pl1NjRSaQbbU=; b=M+FfpU07dZAkP74cZGI8Byl8wXKXGoNDkqcOh67M/lsFktLGZ1dDmqAfX4T4ZeQBXmXYFV1Z
- hoXzkKpdPBSodokjXexRyTnvoKmYUgniS+oJCl/HIp3YxR8pQU6Q5dmtRzVfqdH6kOwEGIfW
- so8q3k9VPlEWWhoCz75Fw8/wqC0=
-X-Mailgun-Sending-Ip: 104.130.96.5
+ bh=0IGwxuW6Gsr5JtLe05vuXxpI+onW4OczS/NphW3AC/M=; b=J0nG/WN99bIA7wwSk+GvLPYkpNiOw56GRjTrJrZuPuVUWaDTs6mdw0NO80GNpL6b6kRbsqcq
+ CFTdX/uwzizp/ptTMlrtA9rKAMSO3/zA/sxUjVk8ZY//4eOJdUpnJAHWsdn/rTIkbA6i4uMO
+ Thp2Z8R8g7SdLrFFXaNI6yWn8WE=
+X-Mailgun-Sending-Ip: 69.72.42.4
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org
  (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n01.prod.us-east-1.postgun.com with SMTP id
- 5f71b2bea965393f18affbbd (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 28 Sep 2020 09:54:06
+ smtp-out-n03.prod.us-east-1.postgun.com with SMTP id
+ 5f71b2c599ecd993e17ecc4b (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 28 Sep 2020 09:54:13
  GMT
 Sender: srivasam=codeaurora.org@mg.codeaurora.org
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 8B357C433A0; Mon, 28 Sep 2020 09:54:05 +0000 (UTC)
+        id 4E143C433A1; Mon, 28 Sep 2020 09:54:11 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
@@ -37,9 +37,9 @@ Received: from hyd-lnxbld210.qualcomm.com (unknown [202.46.22.19])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
         (No client certificate requested)
         (Authenticated sender: srivasam)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 74315C433CA;
-        Mon, 28 Sep 2020 09:53:59 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 74315C433CA
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id F148BC433F1;
+        Mon, 28 Sep 2020 09:54:04 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org F148BC433F1
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=srivasam@codeaurora.org
 From:   Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
@@ -50,10 +50,10 @@ To:     agross@kernel.org, bjorn.andersson@linaro.org, lgirdwood@gmail.com,
         linux-arm-msm@vger.kernel.org, alsa-devel@alsa-project.org,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
 Cc:     V Sujith Kumar Reddy <vsujithk@codeaurora.org>,
-        Srinivasa Rao <srivasam@codeaurora.org>
-Subject: [PATCH v7 3/6] Asoc:qcom:lpass-cpu:Update dts property read API
-Date:   Mon, 28 Sep 2020 15:23:28 +0530
-Message-Id: <1601286811-25962-4-git-send-email-srivasam@codeaurora.org>
+        Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
+Subject: [PATCH v7 4/6] Asoc: qcom: lpass:Update lpaif_dmactl members order
+Date:   Mon, 28 Sep 2020 15:23:29 +0530
+Message-Id: <1601286811-25962-5-git-send-email-srivasam@codeaurora.org>
 X-Mailer: git-send-email 2.7.4
 In-Reply-To: <1601286811-25962-1-git-send-email-srivasam@codeaurora.org>
 References: <1601286811-25962-1-git-send-email-srivasam@codeaurora.org>
@@ -63,43 +63,75 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 From: V Sujith Kumar Reddy <vsujithk@codeaurora.org>
 
-Update dts property read API call with platform get property
-by name, as it make code more readable and avoid conflicts
-when array of properties to be used.
+Update the lpaif_dmactl struct members order to match
+HDMI reg map members sequence. Separate Interface reg map
+as it is used for I2S control but not for HDMI control,
+to make use of bulk API, which makes code more readable.
 
 Signed-off-by: V Sujith Kumar Reddy <vsujithk@codeaurora.org>
-Signed-off-by: Srinivasa Rao <srivasam@codeaurora.org>
+Signed-off-by: Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
 ---
- sound/soc/qcom/lpass-cpu.c      | 2 +-
- sound/soc/qcom/lpass-platform.c | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ sound/soc/qcom/lpass-platform.c | 8 ++++----
+ sound/soc/qcom/lpass.h          | 6 +++---
+ 2 files changed, 7 insertions(+), 7 deletions(-)
 
-diff --git a/sound/soc/qcom/lpass-cpu.c b/sound/soc/qcom/lpass-cpu.c
-index 0718a0f..12950d2 100644
---- a/sound/soc/qcom/lpass-cpu.c
-+++ b/sound/soc/qcom/lpass-cpu.c
-@@ -575,7 +575,7 @@ int asoc_qcom_lpass_cpu_platform_probe(struct platform_device *pdev)
- 
- 	of_lpass_cpu_parse_dai_data(dev, drvdata);
- 
--	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
-+	res = platform_get_resource_byname(pdev, IORESOURCE_MEM, "lpass-lpaif");
- 
- 	drvdata->lpaif = devm_ioremap_resource(dev, res);
- 	if (IS_ERR((void const __force *)drvdata->lpaif)) {
 diff --git a/sound/soc/qcom/lpass-platform.c b/sound/soc/qcom/lpass-platform.c
-index 7ac2629..e7cf4e5 100644
+index e7cf4e5..db0d959 100644
 --- a/sound/soc/qcom/lpass-platform.c
 +++ b/sound/soc/qcom/lpass-platform.c
-@@ -621,7 +621,7 @@ int asoc_qcom_lpass_platform_register(struct platform_device *pdev)
- 	struct lpass_variant *v = drvdata->variant;
- 	int ret;
+@@ -71,13 +71,13 @@ static int lpass_platform_alloc_dmactl_fields(struct device *dev,
+ 	rd_dmactl = drvdata->rd_dmactl;
+ 	wr_dmactl = drvdata->wr_dmactl;
  
--	drvdata->lpaif_irq = platform_get_irq(pdev, 0);
-+	drvdata->lpaif_irq = platform_get_irq_byname(pdev, "lpass-irq-lpaif");
- 	if (drvdata->lpaif_irq < 0)
- 		return -ENODEV;
+-	rval = devm_regmap_field_bulk_alloc(dev, map, &rd_dmactl->bursten,
+-					    &v->rdma_bursten, 6);
++	rval = devm_regmap_field_bulk_alloc(dev, map, &rd_dmactl->intf,
++					    &v->rdma_intf, 6);
+ 	if (rval)
+ 		return rval;
  
+-	return devm_regmap_field_bulk_alloc(dev, map, &wr_dmactl->bursten,
+-					    &v->wrdma_bursten, 6);
++	return devm_regmap_field_bulk_alloc(dev, map, &wr_dmactl->intf,
++					    &v->wrdma_intf, 6);
+ }
+ 
+ static int lpass_platform_pcmops_open(struct snd_soc_component *component,
+diff --git a/sound/soc/qcom/lpass.h b/sound/soc/qcom/lpass.h
+index 51c9991..7089d4c 100644
+--- a/sound/soc/qcom/lpass.h
++++ b/sound/soc/qcom/lpass.h
+@@ -31,9 +31,9 @@ struct lpaif_i2sctl {
+ 
+ 
+ struct lpaif_dmactl {
++	struct regmap_field *intf;
+ 	struct regmap_field *bursten;
+ 	struct regmap_field *wpscnt;
+-	struct regmap_field *intf;
+ 	struct regmap_field *fifowm;
+ 	struct regmap_field *enable;
+ 	struct regmap_field *dyncclk;
+@@ -110,17 +110,17 @@ struct lpass_variant {
+ 	struct reg_field bitwidth;
+ 
+ 	/* RD_DMA Register fields */
++	struct reg_field rdma_intf;
+ 	struct reg_field rdma_bursten;
+ 	struct reg_field rdma_wpscnt;
+-	struct reg_field rdma_intf;
+ 	struct reg_field rdma_fifowm;
+ 	struct reg_field rdma_enable;
+ 	struct reg_field rdma_dyncclk;
+ 
+ 	/* WR_DMA Register fields */
++	struct reg_field wrdma_intf;
+ 	struct reg_field wrdma_bursten;
+ 	struct reg_field wrdma_wpscnt;
+-	struct reg_field wrdma_intf;
+ 	struct reg_field wrdma_fifowm;
+ 	struct reg_field wrdma_enable;
+ 	struct reg_field wrdma_dyncclk;
 -- 
 Qualcomm India Private Limited, on behalf of Qualcomm Innovation Center, Inc.,
 is a member of Code Aurora Forum, a Linux Foundation Collaborative Project.
