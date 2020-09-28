@@ -2,79 +2,100 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B4FA727A728
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Sep 2020 07:58:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DDB3C27A7A8
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Sep 2020 08:38:03 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725294AbgI1F6o (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 28 Sep 2020 01:58:44 -0400
-Received: from mail.kernel.org ([198.145.29.99]:58398 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725290AbgI1F6o (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 28 Sep 2020 01:58:44 -0400
-Received: from localhost (unknown [122.179.43.1])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id E5FAA207E8;
-        Mon, 28 Sep 2020 05:58:42 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1601272723;
-        bh=IgjnKRfiNYyLJ7chUdt8lXcSYhAnrsMC3SPuMP5B9TM=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=KlUuDy3sxT6kNUHW8hBz7v/zD77hRI6flODdL6AwwHWLC5ipshFNlSs/FmoOjhYPd
-         pg6Gy9TDU2DNKF3C2+MIuX2o2jlq7yxaGKSoWxPryuV5coloomGIh4cIlwD8nf03uI
-         nuM3tKnuve9n09BMJvtw3BFJAFZcpa+M2MtQU1ZM=
-Date:   Mon, 28 Sep 2020 11:28:19 +0530
-From:   Vinod Koul <vkoul@kernel.org>
-To:     Stephen Boyd <swboyd@chromium.org>
-Cc:     Kishon Vijay Abraham I <kishon@ti.com>,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        Jeykumar Sankaran <jsanka@codeaurora.org>,
-        Chandan Uddaraju <chandanu@codeaurora.org>,
-        Vara Reddy <varar@codeaurora.org>,
-        Tanmay Shah <tanmay@codeaurora.org>,
+        id S1726461AbgI1GiB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 28 Sep 2020 02:38:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51664 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726420AbgI1GiB (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 28 Sep 2020 02:38:01 -0400
+Received: from mail-pg1-x541.google.com (mail-pg1-x541.google.com [IPv6:2607:f8b0:4864:20::541])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 64070C0613CE;
+        Sun, 27 Sep 2020 23:38:01 -0700 (PDT)
+Received: by mail-pg1-x541.google.com with SMTP id u24so10071pgi.1;
+        Sun, 27 Sep 2020 23:38:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=b0chtk5rr8XDTzC1Vz9PdERcVqFOmea/OCGt+6P6mjE=;
+        b=M/fOxg41yJtwIweGfkUXKS4DhCzSmqY2kkbgvMY2OTdmDMRgkr6K7VKGmkzPx9128L
+         5lhw4DYpVejne21gL5f3/OUDy279MdWqYeG0dEpng6IVhVk/t6YhS92dhsN17eHRwtB4
+         myxZmB3Bs0kkOOTBjK3sYS+9+K6BpKP6gKFvCKSrttYPhYqT6Uk3vpdbftTym7bMA1jM
+         lHTTa7lyZScNA1gLd76jTM4Rr4nNcIp6Z1i9Dr/ZMPZv1eJuijohynSMjEu5xLidIfrO
+         E8cQ+6vAof+HbiNW2q+7H6EK0/zh4ZK+DryCYccV6Vr/OvXX8frUC6l/EyChq3Ddy/+Y
+         xiGA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=b0chtk5rr8XDTzC1Vz9PdERcVqFOmea/OCGt+6P6mjE=;
+        b=AQRiqWRrHfLECg9QhSCq73Bt+opfjO83GWzQvpFCebgCETm+HZHF4JR9xpAl0qI8ha
+         BUhuuk0utk2WCjFNYQjYwnNTRv3pdAplR/XcyeoF9CBI3xc5HbLWPZkxQ75OHrYhFtT+
+         5scXrTphDI5TQG/T7vSkEIXJT39kTyFH9fqXzmqdc3P0HjnCCJBm05AKADWoWSIg1m0Q
+         sfRBX4ROH65dMxmt4ridEZDddZ9KTMb9jJqSg4YUsaOZ+tyeN76wYMIUqZKGugCPJ9DH
+         QlFAmhB5uvgtzNvhmVanAPtXZHeebYntGgPmCB6qYJT9TXqjm5s0axjZprtEr88ADuUp
+         JCPg==
+X-Gm-Message-State: AOAM533mw2o7Uv4FkmGirmPcNgDdCGndVJJD/R2l8hlnsioOw0pzUw+S
+        hWSYqiXxG0kgYeZuq9693ua+QhBN7QFYi4Ht
+X-Google-Smtp-Source: ABdhPJyj1jBgh+AJFzEXL5d8eOV13dyDzQzXUtModYjoFV8sYvwq0POiaz94Z4R+8E8xiDjHI1/+CQ==
+X-Received: by 2002:a63:4854:: with SMTP id x20mr138642pgk.220.1601275080603;
+        Sun, 27 Sep 2020 23:38:00 -0700 (PDT)
+Received: from localhost (114-34-18-97.HINET-IP.hinet.net. [114.34.18.97])
+        by smtp.gmail.com with ESMTPSA id g26sm192663pfr.105.2020.09.27.23.37.59
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 27 Sep 2020 23:37:59 -0700 (PDT)
+From:   Ajye Huang <ajye.huang@gmail.com>
+X-Google-Original-From: Ajye Huang <ajye_huang@compal.corp-partner.google.com>
+To:     linux-kernel@vger.kernel.org
+Cc:     Mark Brown <broonie@kernel.org>,
+        Rohit kumar <rohitkr@codeaurora.org>,
+        Banajit Goswami <bgoswami@codeaurora.org>,
+        Patrick Lai <plai@codeaurora.org>,
+        Srinivasa Rao Mandadapu <srivasam@codeaurora.org>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Manu Gautam <mgautam@codeaurora.org>,
-        Sandeep Maheswaram <sanm@codeaurora.org>,
-        Douglas Anderson <dianders@chromium.org>,
-        Sean Paul <seanpaul@chromium.org>,
-        Rob Clark <robdclark@chromium.org>,
-        Jonathan Marek <jonathan@marek.ca>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        devicetree@vger.kernel.org, Rob Herring <robh+dt@kernel.org>,
-        Stephen Boyd <sboyd@kernel.org>
-Subject: Re: [PATCH v4 00/10] Support qcom USB3+DP combo phy (or type-c phy)
-Message-ID: <20200928055819.GK2968@vkoul-mobl>
-References: <20200916231202.3637932-1-swboyd@chromium.org>
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Jaroslav Kysela <perex@perex.cz>, cychiang@chromium.org,
+        tzungbi@chromium.org, dianders@chromium.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        alsa-devel@alsa-project.org,
+        Ajye Huang <ajye_huang@compal.corp-partner.google.com>
+Subject: [PATCH v1 0/2] Modify documentation and machine driver for SC7180 sound card
+Date:   Mon, 28 Sep 2020 14:37:42 +0800
+Message-Id: <20200928063744.525700-1-ajye_huang@compal.corp-partner.google.com>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20200916231202.3637932-1-swboyd@chromium.org>
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 16-09-20, 16:11, Stephen Boyd wrote:
-> This patch series is based on v12 of the msm DP driver submission[1]
-> plus a compliance patch[2]. In the v5 patch series review I suggested
-> that the DP PHY and PLL be split out of the drm driver and moved to the
-> qmp phy driver. This patch series does that, but it is still marked as
-> an RFC because there are a couple more things to do, mostly updating the
-> DT binding and getting agreement on how to structure the code.
-> 
-> Eventually I believe the qmp phy driver will need to listen for type-c
-> notifiers or somehow know the type-c pinout being used so this driver
-> can program things slightly differently. Right now, I don't have any way
-> to test it though, so I've left it as future work. For some more
-> details, the DP phy and the USB3 phy share the same physical pins on the
-> SoC and those pins pretty much line up with a type-c pinout modulo some
-> CC pins for cable orientation detection logic that lives on the PMIC. So
-> the DP phy can use all four lanes or it can use two lanes and the USB3
-> phy can use two lanes. In the hardware designs that I have access to it
-> is always two lanes for USB3 and two lanes for DP going through what
-> looks like a type-c pinout so this just hard codes that configuration in
-> the driver.
+Note:
+- This patch depends on this patch series 
+ ASoC: qcom: dt-bindings: Add sc7180 machine bindings
+ https://patchwork.kernel.org/patch/11773221/
+ ASoC: qcom: sc7180: Add machine driver for sound card registration
+ https://patchwork.kernel.org/patch/11773223/
+- The patch is made by the collaboration of
+ Ajye Huang <ajye_huang@compal.corp-partner.google.com>
+ Cheng-Yi Chiang <cychiang@chromium.org>
 
-Applied 1 thru 8, thanks
+Thanks for the review!
+
+Ajye Huang (2):
+  ASoC: qcom: dt-bindings: Modify sc7180 machine bindings
+  ASoC: qcom: sc7180: Modify machine driver for 2mic
+
+ .../bindings/sound/qcom,sc7180.yaml           | 64 ++++++++++++++++++-
+ sound/soc/qcom/sc7180.c                       | 60 +++++++++++++++++
+ 2 files changed, 123 insertions(+), 1 deletion(-)
 
 -- 
-~Vinod
+2.25.1
+
