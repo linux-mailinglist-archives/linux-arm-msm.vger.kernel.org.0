@@ -2,101 +2,154 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 9750D27A600
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Sep 2020 05:48:59 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 32D7827A61F
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Sep 2020 06:10:32 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726558AbgI1Ds6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 27 Sep 2020 23:48:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54080 "EHLO
+        id S1726396AbgI1EKb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 28 Sep 2020 00:10:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57350 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726380AbgI1Ds6 (ORCPT
+        with ESMTP id S1725287AbgI1EKb (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 27 Sep 2020 23:48:58 -0400
-Received: from mail-pf1-x443.google.com (mail-pf1-x443.google.com [IPv6:2607:f8b0:4864:20::443])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 57EB4C0613CE
-        for <linux-arm-msm@vger.kernel.org>; Sun, 27 Sep 2020 20:48:58 -0700 (PDT)
-Received: by mail-pf1-x443.google.com with SMTP id z19so8095470pfn.8
-        for <linux-arm-msm@vger.kernel.org>; Sun, 27 Sep 2020 20:48:58 -0700 (PDT)
+        Mon, 28 Sep 2020 00:10:31 -0400
+Received: from mail-pj1-x102d.google.com (mail-pj1-x102d.google.com [IPv6:2607:f8b0:4864:20::102d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0C10CC0613CE
+        for <linux-arm-msm@vger.kernel.org>; Sun, 27 Sep 2020 21:10:31 -0700 (PDT)
+Received: by mail-pj1-x102d.google.com with SMTP id b17so2785350pji.1
+        for <linux-arm-msm@vger.kernel.org>; Sun, 27 Sep 2020 21:10:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=ZV6EaZka+YS38XpEGu1E1E1iX6vM8ZuAlooQUItDZRo=;
-        b=HBHUhXR7ZqoG2yX3ZC7TJhyejEavXYSPVxrPnZuRY80LuKNI2PY9obUsgEwi2Q1ovk
-         Y7C/NWUnVraBe58M+MdOEAwoK8jYUBfBqSZJQQxIYFduUnTcou/ArToAruPTnC8DGy25
-         0Uf90AC4JMtwPeevzzW108wYgG1mNvuwaHIab0O7xB/eo301XCLNrjHcp03GiVCQD4Gn
-         64rh6R+v1s3e9JIrwc+l8ggNy/5IxaiKNxlHIhVxBIfEj3pjN84C7xD/BhPOtaRZ4fbe
-         GzqRZEEHMqID2/SMolQi4sY64yfw5IblpVUjVNlRTYFABhPx7aZTDkut9m6dO5B7W2IW
-         lfTw==
+        h=from:to:cc:subject:date:message-id;
+        bh=OHdB/lQSZ51PriON1YnzhLSGGjk5yXlBwN7F9gXnLRk=;
+        b=eTjt/mfpH5f2ibLKAUl28AUwGSYqFAPi7JON1aflRzrzYfHYr3oUXd+LnqOBvOmQ4d
+         aSHV3gDOl4id8ASR47jc/kGGabiipe2oao3t+27FsxnQoCJ9aNVqcM9UxmSNlx6A3u4H
+         9V01syle6eOS3uBo1FbtStxptSJuCZtxet5tY6H6NZcWM02t3toRwMRPNDWKITOYpGk3
+         vnKCd7m3sHFPseU2hIgQvioWia7sb40QOW4Jf1VXD2DkyELg8nmaqB53biZluWhyepVF
+         s/41CgLhh9pSf6iOgxg19Zag0ThO6g5kR1qN+mRTY7NM5fc5hD8d7sostRutHwIQtXbs
+         ftuA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=ZV6EaZka+YS38XpEGu1E1E1iX6vM8ZuAlooQUItDZRo=;
-        b=JrRnwQtGPI7J0ygcSmhI/rODdvL0Opx3AYo5jxqwsS57PsW7ZTh+F82LFT0drbaeln
-         3erhuyOZNy2/UOP0VUy8HrYSEW7Vu0zSxVS3WS4F98GI7E7IIFHQR5ADRyN3rozGXoKb
-         Z5OghgUa80PWOSPS0chIk8KCB6HcWNHY9MYpBy2jD9+K3fzwVPRWAHWr+Cpu2QwXPR6j
-         fGj3cJRsTyBQP63iusKkaw1vwAbH7Q0LYBr95vq2zlCLaUKcJ8qCyY7la9fYYJtha/dS
-         rS/HSx0w2iuOQrejKgTkFR64uQbpahIP2fdprr9WIWGpx98nUmFXOOuXwukMC3VflKum
-         bT8g==
-X-Gm-Message-State: AOAM533ksjSZ3g7449w7jFLP35rrCwvcELjQlGxU2rj+4B0jm7fmeFZX
-        SsZVXyAcd2hT5Ob7cjxBvJJE
-X-Google-Smtp-Source: ABdhPJxr04SzUUBxi2QhB/l2mv24dNYBRg9YDRrGEkfxaPtcWX1bXsbxuYYxZ4T49N9w/YyraZvkpg==
-X-Received: by 2002:a17:902:8b81:b029:d2:42a6:ba2 with SMTP id ay1-20020a1709028b81b02900d242a60ba2mr9281844plb.24.1601264937888;
-        Sun, 27 Sep 2020 20:48:57 -0700 (PDT)
-Received: from Mani-XPS-13-9360 ([2409:4072:6003:40df:7c40:5a87:eb86:87b0])
-        by smtp.gmail.com with ESMTPSA id w192sm9597176pfd.156.2020.09.27.20.48.54
-        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
-        Sun, 27 Sep 2020 20:48:57 -0700 (PDT)
-Date:   Mon, 28 Sep 2020 09:18:52 +0530
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=OHdB/lQSZ51PriON1YnzhLSGGjk5yXlBwN7F9gXnLRk=;
+        b=NQg4rHmQtFLLcbSkjvOT/z3XJ8bWy3LnjqJ0Jyb/h97MV9xDBdUWsDEvDoeeTujqGA
+         2orqJYjqiNDa8GUOofxCY9ZoYQg1Feg6y9VNQroP7gg0ilL7k9whioS2OT6E9pq/8DGO
+         OQeooBIjcQY3NcmbuwuceLoCezrk8jJsr39XoQ/SAm7EKhd2c0xTsBoD2ol3u2YgvYu7
+         GzbtwxgohlLWQpryPOCP3/Yx6pJs2DhliynvpQRgdya1gfh3FjBvnkeArelPVi5re07s
+         w5z4cnBilKRmAqbNlMI094wiYXLLGBBPVgmRJyFVLSgSs9aJ6C/lshEp4+LXQP84FCPJ
+         75NQ==
+X-Gm-Message-State: AOAM532Pq70Wbf1s+nAeVZZKSBUNszK1Euf70W8jwJtrxqfF4yXwj8AA
+        ftzAHua90mgP0W+O+QodTLLX
+X-Google-Smtp-Source: ABdhPJzzIuqsDYeYYR2zSnPBXcbi35TE22v/zVexAdbo8tvy/P3qVRTqkCHXpekSuL9qWSRYjN+SDQ==
+X-Received: by 2002:a17:90a:f098:: with SMTP id cn24mr7716592pjb.158.1601266230371;
+        Sun, 27 Sep 2020 21:10:30 -0700 (PDT)
+Received: from Mani-XPS-13-9360.localdomain ([2409:4072:6003:40df:7c40:5a87:eb86:87b0])
+        by smtp.gmail.com with ESMTPSA id n21sm8306322pgl.7.2020.09.27.21.10.26
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 27 Sep 2020 21:10:29 -0700 (PDT)
 From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     Greg KH <gregkh@linuxfoundation.org>
+To:     gregkh@linuxfoundation.org
 Cc:     hemantk@codeaurora.org, bbhatt@codeaurora.org,
         linux-arm-msm@vger.kernel.org, jhugo@codeaurora.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 5/5] bus: mhi: core: Move MHI_MAX_MTU to external header
- file
-Message-ID: <20200928034852.GD3605@Mani-XPS-13-9360>
-References: <20200927033652.11789-1-manivannan.sadhasivam@linaro.org>
- <20200927033652.11789-6-manivannan.sadhasivam@linaro.org>
- <20200927101734.GA85724@kroah.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20200927101734.GA85724@kroah.com>
-User-Agent: Mutt/1.9.4 (2018-02-28)
+        linux-kernel@vger.kernel.org,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Subject: [PATCH v2 00/21] MHI changes for v5.10
+Date:   Mon, 28 Sep 2020 09:39:30 +0530
+Message-Id: <20200928040951.18207-1-manivannan.sadhasivam@linaro.org>
+X-Mailer: git-send-email 2.17.1
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sun, Sep 27, 2020 at 12:17:34PM +0200, Greg KH wrote:
-> On Sun, Sep 27, 2020 at 09:06:52AM +0530, Manivannan Sadhasivam wrote:
-> > From: Hemant Kumar <hemantk@codeaurora.org>
-> > 
-> > Currently this macro is defined in internal MHI header as
-> > a TRE length mask. Moving it to external header allows MHI
-> > client drivers to set this upper bound for the transmit
-> > buffer size.
-> > 
-> > Signed-off-by: Hemant Kumar <hemantk@codeaurora.org>
-> > Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> > ---
-> >  drivers/bus/mhi/core/internal.h | 1 -
-> >  include/linux/mhi.h             | 3 +++
-> >  2 files changed, 3 insertions(+), 1 deletion(-)
-> 
-> If no one is using this change, then please don't make it until someone
-> needs it.
-> 
-> So submit it when you have a user please.
-> 
+Hi Greg,
 
-Okay, will drop it.
+Here is the MHI series for v5.10 cycle. Most of the patches are cleanups
+in the MHI stack. Notable changes are below:
+
+* Saving the client device hardware information obtained through the BHI
+  protocol. This information will be exposed through sysfs to make use in
+  the userland applications.
+* Introduce sysfs entries to read the serial number and OEM PK hash values
+  of the client device obtained from BHI protocol. Relevant API documentation
+  is also added.
+* Introduce debugfs entries to show MHI states, events, channels, register
+  state etc... to aid debug.
+* Remove the channel name from MHI device name as the device is not specific
+  to channels. Used generic names instead!
+* Fix the warning reported by Kbuild bot by using append (+=) Kbuild rule
+  to the mhi/core Makefile.
+* Introduce APIs to allocate and free MHI controllers. This is done to make
+  sure that the allocated structs are initialized to NULL before passing to
+  the MHI core.
+* Remove the requirement to have a dedicated IRQ for each event ring.
+  The MHI controllers can now use a single IRQ for all event rings.
+* Remove the auto-start option for MHI channels. This is done to avoid
+  receiving spurious uplink from MHI client device when the client driver
+  is not up. The corresponding qrtr change is also included with Dave's ACK.
+
+Please consider merging!
 
 Thanks,
 Mani
 
-> thanks,
-> 
-> greg k-h
+Changes in v2:
+
+* Clubbed both series (take one and two) onto a single one
+* Used dev_groups to manage sysfs attributes
+* Merged the debugfs fix patch with the debugfs patch
+* Dropped MAX_MTU patch for now
+
+Bhaumik Bhatt (12):
+  bus: mhi: core: Remove double occurrence for mhi_ctrl_ev_task()
+    declaration
+  bus: mhi: core: Abort suspends due to outgoing pending packets
+  bus: mhi: core: Use helper API to trigger a non-blocking host resume
+  bus: mhi: core: Trigger host resume if suspended during
+    mhi_device_get()
+  bus: mhi: core: Use generic name field for an MHI device
+  bus: mhi: core: Introduce helper function to check device state
+  bus: mhi: core: Introduce counters to track MHI device state
+    transitions
+  bus: mhi: core: Read and save device hardware information from BHI
+  bus: mhi: core: Introduce APIs to allocate and free the MHI controller
+  bus: mhi: Fix entries based on Kconfig coding style
+  bus: mhi: core: Introduce debugfs entries for MHI
+  bus: mhi: core: Introduce sysfs entries for MHI
+
+Clark Williams (1):
+  bus: mhi: Remove include of rwlock_types.h
+
+Hemant Kumar (1):
+  bus: mhi: core: Add const qualifier to MHI config information
+
+Loic Poulain (5):
+  bus: mhi: core: Allow shared IRQ for event rings
+  bus: mhi: Remove unused nr_irqs_req variable
+  bus: mhi: debugfs: Print channel context read-pointer
+  bus: mhi: Remove auto-start option
+  net: qrtr: Start MHI channels during init
+
+Manivannan Sadhasivam (1):
+  bus: mhi: core: Fix the building of MHI module
+
+Randy Dunlap (1):
+  bus: mhi: fix doubled words and struct image_info kernel-doc
+
+ Documentation/ABI/stable/sysfs-bus-mhi |  21 ++
+ MAINTAINERS                            |   1 +
+ drivers/bus/mhi/Kconfig                |  20 +-
+ drivers/bus/mhi/core/Makefile          |   3 +-
+ drivers/bus/mhi/core/boot.c            |  17 +-
+ drivers/bus/mhi/core/debugfs.c         | 411 +++++++++++++++++++++++++
+ drivers/bus/mhi/core/init.c            |  96 ++++--
+ drivers/bus/mhi/core/internal.h        |  38 ++-
+ drivers/bus/mhi/core/main.c            |  27 +-
+ drivers/bus/mhi/core/pm.c              |  28 +-
+ include/linux/mhi.h                    |  53 +++-
+ net/qrtr/mhi.c                         |   5 +
+ 12 files changed, 644 insertions(+), 76 deletions(-)
+ create mode 100644 Documentation/ABI/stable/sysfs-bus-mhi
+ create mode 100644 drivers/bus/mhi/core/debugfs.c
+
+-- 
+2.17.1
+
