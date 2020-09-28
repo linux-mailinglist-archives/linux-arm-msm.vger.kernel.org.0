@@ -2,86 +2,103 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C6EC027B7C8
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Sep 2020 01:15:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D7A9727B851
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Sep 2020 01:36:41 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727362AbgI1XPh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 28 Sep 2020 19:15:37 -0400
-Received: from mail.kernel.org ([198.145.29.99]:60224 "EHLO mail.kernel.org"
+        id S1726985AbgI1Xgk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 28 Sep 2020 19:36:40 -0400
+Received: from z5.mailgun.us ([104.130.96.5]:46867 "EHLO z5.mailgun.us"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727251AbgI1XPb (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 28 Sep 2020 19:15:31 -0400
-Received: from willie-the-truck (236.31.169.217.in-addr.arpa [217.169.31.236])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        id S1726338AbgI1Xgi (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 28 Sep 2020 19:36:38 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1601336198; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=qm6e3gIk1HVjckjZWafdqcglqnXJMopOHykD9DbPjxU=; b=Aph4BUdNqNOq4BiVz1Ne9paAklkUkENFZbZkTVU0hoF/Qs/US5LaAWwmCw57fZ2JnSafmeBQ
+ TioMzDzo1XgByzRoC4GlksbTrvHwAe5VGRMyBn27/RLshCJyCNNpsHD/68nOLEjSDXbptpnz
+ ex7BwydY0Xy1vn6fcVOTjfqxKrE=
+X-Mailgun-Sending-Ip: 104.130.96.5
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n04.prod.us-east-1.postgun.com with SMTP id
+ 5f72738270602555f5423d0b (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 28 Sep 2020 23:36:34
+ GMT
+Sender: cgoldswo=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 72B02C43395; Mon, 28 Sep 2020 23:36:33 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
+        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+Received: from cgoldswo-linux.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 4447D23A58;
-        Mon, 28 Sep 2020 23:08:40 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1601334522;
-        bh=yx7Kl0l4LL/Tx5VWW4V3Yshm8iNUcgJJrDqsEi+/CI0=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=esDNOvaQBOKfLSsr97k+I5mnTJEnZaivBEIgHvM19pd79mkh8+Th6XPwP9Dg7Nu8F
-         n1JK1azkKbq5XAjhQvWuh8gZeIXNRzYUR0SLDbng3W2pSqMX5+frAs9Kre/PSATOTQ
-         1mB7qdIrAZLVKO/Jx9zpQxnEd4tPpiq3CWHfS3ps=
-Date:   Tue, 29 Sep 2020 00:08:35 +0100
-From:   Will Deacon <will@kernel.org>
-To:     kernel test robot <lkp@intel.com>
-Cc:     Yu Kuai <yukuai3@huawei.com>, robdclark@gmail.com, joro@8bytes.org,
-        kbuild-all@lists.01.org, clang-built-linux@googlegroups.com,
-        iommu@lists.linux-foundation.org, linux-arm-msm@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-        yi.zhang@huawei.com
-Subject: Re: [PATCH] iommu/qcom: add missing put_device() call in
- qcom_iommu_of_xlate()
-Message-ID: <20200928230835.GA12939@willie-the-truck>
-References: <20200918011357.909335-1-yukuai3@huawei.com>
- <202009220340.bJfsaeQn%lkp@intel.com>
- <20200921204556.GB3811@willie-the-truck>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20200921204556.GB3811@willie-the-truck>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+        (Authenticated sender: cgoldswo)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 06198C433C8;
+        Mon, 28 Sep 2020 23:36:26 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 06198C433C8
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=cgoldswo@codeaurora.org
+From:   Chris Goldsworthy <cgoldswo@codeaurora.org>
+To:     akpm@linux-foundation.org, linux-mm@kvack.org, minchan@kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        pratikp@codeaurora.org, pdaly@codeaurora.org,
+        sudaraja@codeaurora.org, iamjoonsoo.kim@lge.com, david@redhat.com,
+        vinmenon@codeaurora.org, minchan.kim@gmail.com
+Cc:     Chris Goldsworthy <cgoldswo@codeaurora.org>
+Subject: [PATCH v5] mm: cma: indefinitely retry allocations in cma_alloc 
+Date:   Mon, 28 Sep 2020 16:36:21 -0700
+Message-Id: <cover.1601336054.git.cgoldswo@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Sep 21, 2020 at 09:45:57PM +0100, Will Deacon wrote:
-> On Tue, Sep 22, 2020 at 03:13:53AM +0800, kernel test robot wrote:
-> > Thank you for the patch! Perhaps something to improve:
-> > 
-> > [auto build test WARNING on iommu/next]
-> > [also build test WARNING on linus/master v5.9-rc6 next-20200921]
-> > [cannot apply to robclark/msm-next]
-> > [If your patch is applied to the wrong git tree, kindly drop us a note.
-> > And when submitting patch, we suggest to use '--base' as documented in
-> > https://git-scm.com/docs/git-format-patch]
-> > 
-> > url:    https://github.com/0day-ci/linux/commits/Yu-Kuai/iommu-qcom-add-missing-put_device-call-in-qcom_iommu_of_xlate/20200918-091341
-> > base:   https://git.kernel.org/pub/scm/linux/kernel/git/joro/iommu.git next
-> > config: arm64-randconfig-r023-20200920 (attached as .config)
-> > compiler: clang version 12.0.0 (https://github.com/llvm/llvm-project 4e8c028158b56d9c2142a62464e8e0686bde3584)
-> > reproduce (this is a W=1 build):
-> >         wget https://raw.githubusercontent.com/intel/lkp-tests/master/sbin/make.cross -O ~/bin/make.cross
-> >         chmod +x ~/bin/make.cross
-> >         # install arm64 cross compiling tool for clang build
-> >         # apt-get install binutils-aarch64-linux-gnu
-> >         # save the attached .config to linux build tree
-> >         COMPILER_INSTALL_PATH=$HOME/0day COMPILER=clang make.cross ARCH=arm64 
-> > 
-> > If you fix the issue, kindly add following tag as appropriate
-> > Reported-by: kernel test robot <lkp@intel.com>
-> > 
-> > All warnings (new ones prefixed by >>):
-> > 
-> > >> drivers/iommu/arm/arm-smmu/qcom_iommu.c:601:4: warning: misleading indentation; statement is not part of the previous 'if' [-Wmisleading-indentation]
-> >                            return -EINVAL;
-> >                            ^
-> >    drivers/iommu/arm/arm-smmu/qcom_iommu.c:599:3: note: previous statement is here
-> >                    if (WARN_ON(qcom_iommu != dev_iommu_priv_get(dev)))
-> 
-> Oh, this looks like a nasty bug. Seems we're missing some braces.
+V1: Introduces a retry loop that attempts a CMA allocation a finite
+number of times before giving up:
+ 
+https://lkml.org/lkml/2020/8/5/1097
+https://lkml.org/lkml/2020/8/11/893
 
-Yu Kuai: please could you send a v2 of this?
+V2: Introduces an indefinite retry for CMA allocations.  David Hildenbrand
+raised a page pinning example which precludes doing this infite-retrying
+for all CMA users:
 
-Will
+https://lkml.org/lkml/2020/9/17/984
+
+V3: Re-introduce a GFP mask argument for cma_alloc(), that can take in
+__GFP_NOFAIL as an argument to indicate that a CMA allocation should be
+retried indefinitely. This lets callers of cma_alloc() decide if they want
+to perform indefinite retires. Also introduces a config option for
+controlling the duration of the sleep between retries:
+
+https://www.spinics.net/lists/linux-mm/msg228778.html
+
+V4: In response to comments by Minchan Kim, we make the sleep interruptable
+and remove a defconfig option controlling how long the sleep lasts for (it
+is now a fixed 100 ms):
+
+https://lkml.org/lkml/2020/9/28/1144
+
+V5: Add missing fatal_signal_pending() check
+
+Chris Goldsworthy (1):
+  mm: cma: indefinitely retry allocations in cma_alloc
+
+ arch/powerpc/kvm/book3s_hv_builtin.c       |  2 +-
+ drivers/dma-buf/heaps/cma_heap.c           |  2 +-
+ drivers/s390/char/vmcp.c                   |  2 +-
+ drivers/staging/android/ion/ion_cma_heap.c |  2 +-
+ include/linux/cma.h                        |  2 +-
+ kernel/dma/contiguous.c                    |  4 +--
+ mm/cma.c                                   | 39 +++++++++++++++++++++++++-----
+ mm/cma_debug.c                             |  2 +-
+ mm/hugetlb.c                               |  4 +--
+ 9 files changed, 43 insertions(+), 16 deletions(-)
+
+-- 
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
+
