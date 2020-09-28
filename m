@@ -2,60 +2,60 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A481427A62F
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Sep 2020 06:11:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 95B6F27A631
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Sep 2020 06:11:22 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726705AbgI1ELF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 28 Sep 2020 00:11:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57466 "EHLO
+        id S1726558AbgI1ELJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 28 Sep 2020 00:11:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57482 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726702AbgI1ELD (ORCPT
+        with ESMTP id S1726615AbgI1ELH (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 28 Sep 2020 00:11:03 -0400
-Received: from mail-pf1-x442.google.com (mail-pf1-x442.google.com [IPv6:2607:f8b0:4864:20::442])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3CE45C0613CF
-        for <linux-arm-msm@vger.kernel.org>; Sun, 27 Sep 2020 21:11:03 -0700 (PDT)
-Received: by mail-pf1-x442.google.com with SMTP id o20so8132224pfp.11
-        for <linux-arm-msm@vger.kernel.org>; Sun, 27 Sep 2020 21:11:03 -0700 (PDT)
+        Mon, 28 Sep 2020 00:11:07 -0400
+Received: from mail-pj1-x1044.google.com (mail-pj1-x1044.google.com [IPv6:2607:f8b0:4864:20::1044])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A8650C0613CF
+        for <linux-arm-msm@vger.kernel.org>; Sun, 27 Sep 2020 21:11:07 -0700 (PDT)
+Received: by mail-pj1-x1044.google.com with SMTP id a9so2822991pjg.1
+        for <linux-arm-msm@vger.kernel.org>; Sun, 27 Sep 2020 21:11:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=JMSzjnZoFPF6UWbIK88WIGtNwMDAVVwPEVBN0nLk6ZA=;
-        b=m+tEeKFm0efkXSSMp4n1PbZzLbUsxFZzLuYHss7vX5TFP1/24DQszkvbNvNpi9XeHm
-         oMo+94cNk1lPBpfaMlhbj1tUdwo28Tv4IUqa2Sgs7MENTrB0hAcRupdgDKrDKSkH/Lqq
-         qLx3Q//EkqABDc+M6qoBw3msFhpy/VLo96X5WGHSKxygRrvFzCHleYpV4ekxQ/FaIc+r
-         JlOIwt88P75Gn0OeodlPfAfBRt/D1pTggN3Ac3iXAzdvqQVMaCr/4E3fOzav8mTZC3nR
-         Kn95D4tynpTuA+iYfkyCF+97YXlQ+ETkFw29fId4USazidqv84Z+ETRNqgLUDhuCNZPi
-         1brg==
+        bh=Y1HDeSf7eMJfSl6ZK/D9lqct6zJN8sO0bd/DmJuThzk=;
+        b=GWmJumpQNYDpkW+si2fcpKk90e7hbuTjKyNSdHcpiMp7cEBlXKXGhvmL/JJrTTBPR4
+         8lQckHiKQ3Io3UHTz9Gp3aeigNONs/l+P7+3pXxwYSbWNFAvoepYa7ZnSytuZKo9e7AU
+         vz+l2KOOBr2hy0NE2PjXRaT1BydvQZGyo/klKGx0oL/ch6h6igLP7TtZg+XnnnFL/lkm
+         8ILMpZ7/3d6uKABUgk48/M5b4iGkEuPIKiq4r7gCxcJgGfrFyIL52QUKksYqt5Fp7u6I
+         rnhbxcxXgxwq+tZwQqyrGjjwCu+a/DY3Iy0IVoetyWtn97nOddAZWHlEAHKZMezpBWnU
+         KdsA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=JMSzjnZoFPF6UWbIK88WIGtNwMDAVVwPEVBN0nLk6ZA=;
-        b=XYga3QQzgaJE0DhXnqGtfmCAcCUJR7oasT4EkKN5pjObxO3toa53hkhcgHIzFEjxIh
-         9+iPjbRjcTjoBJJv7SL4D6rUZ5YZB3XWSKXhvbEH4/vgG2O+v0zApIsbj4v15PqsL2+C
-         EaeMZlJANeHIiAwwS379rEkSI09Qx+970kB0heTziyQ9G2wMdr2f93cQRe/WQR/kGrDo
-         ju02ofdluTCmUR4t19HpoTFbpfnr8LVgs6TlrQbaVxEAz2rVwRZwnJ2vzERUA/0MEEKX
-         6ezHYzdWn21uHuWn1QLpe7zz92cfGOUAwNVsOMImKHnQcJI/pgrWHnq21Ak6JpoZ0Vry
-         RIAA==
-X-Gm-Message-State: AOAM531xhTTo7KvbZgoq+AaLzXzCts1PMh04FDo9AyFo5Tam+TymXY6E
-        EhDdg1tTTWQtquLIbmBUcAU0
-X-Google-Smtp-Source: ABdhPJwwKqwrVPktFn60oMw4LFMpJij3yFG0pFb+NIUkdFoTAa7Db/LFR7YwhBxxZIAt6CDtoQoPJQ==
-X-Received: by 2002:a17:902:146:b029:d2:5615:5700 with SMTP id 64-20020a1709020146b02900d256155700mr9286113plb.84.1601266262719;
-        Sun, 27 Sep 2020 21:11:02 -0700 (PDT)
+        bh=Y1HDeSf7eMJfSl6ZK/D9lqct6zJN8sO0bd/DmJuThzk=;
+        b=BOPpWURKdx7F8CvrYcU4ZZaqWrCyAs/m7+FD8aXJjrQt+cBY+25NuxB9wcRdhz3tW4
+         jDHhjD4BHQ/yrhiJpDiGConxi8UUrXaAkDkg7iXn8LEYp6WkcGWrPw3HM8I7Q4d9rOXN
+         aeD+5Y+ibo2CKm0BL1VL9wbIdKs17A9brAXrSObDDuBAHaTUpXiNjQWkTpJmw8QBzXTV
+         3tS6YNMbRglZLuSuoIy+KEpWgFDcBiiAZDyjjkrZSd3/RsrLM27vRaeVxAYIiFTOZzsb
+         ASexdqFlcYgRGADgwQ22MEORVlZ5D9M6LSgQXHxqtMIx+9LphA3FujaGpiujpsgBd5zm
+         YEHw==
+X-Gm-Message-State: AOAM533d0VUlYoPSlvGzkDbbRfzRAyY7ui2leLj7BX6xaONA5syI7VN5
+        /w7Y23V8hQFXMyWo0yW69Zca
+X-Google-Smtp-Source: ABdhPJx3Uzp+u6iVp2aTZdDvgZro+BN+JLXttA1Njr02Hi37JBxDdySbXYKvdzb0x1fOkjcTRLC0RQ==
+X-Received: by 2002:a17:90a:c705:: with SMTP id o5mr7853978pjt.68.1601266266730;
+        Sun, 27 Sep 2020 21:11:06 -0700 (PDT)
 Received: from Mani-XPS-13-9360.localdomain ([2409:4072:6003:40df:7c40:5a87:eb86:87b0])
-        by smtp.gmail.com with ESMTPSA id n21sm8306322pgl.7.2020.09.27.21.10.59
+        by smtp.gmail.com with ESMTPSA id n21sm8306322pgl.7.2020.09.27.21.11.03
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 27 Sep 2020 21:11:02 -0700 (PDT)
+        Sun, 27 Sep 2020 21:11:06 -0700 (PDT)
 From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 To:     gregkh@linuxfoundation.org
 Cc:     hemantk@codeaurora.org, bbhatt@codeaurora.org,
         linux-arm-msm@vger.kernel.org, jhugo@codeaurora.org,
         linux-kernel@vger.kernel.org,
         Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Subject: [PATCH v2 08/21] bus: mhi: core: Introduce counters to track MHI device state transitions
-Date:   Mon, 28 Sep 2020 09:39:38 +0530
-Message-Id: <20200928040951.18207-9-manivannan.sadhasivam@linaro.org>
+Subject: [PATCH v2 09/21] bus: mhi: core: Read and save device hardware information from BHI
+Date:   Mon, 28 Sep 2020 09:39:39 +0530
+Message-Id: <20200928040951.18207-10-manivannan.sadhasivam@linaro.org>
 X-Mailer: git-send-email 2.17.1
 In-Reply-To: <20200928040951.18207-1-manivannan.sadhasivam@linaro.org>
 References: <20200928040951.18207-1-manivannan.sadhasivam@linaro.org>
@@ -65,68 +65,84 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 From: Bhaumik Bhatt <bbhatt@codeaurora.org>
 
-Use counters to track MHI device state transitions such as those
-to M0, M2, or M3 states. This can help in better debug, allowing
-the user to see the number of transitions to a certain MHI state
-when queried using debugfs entries or via other mechanisms.
+Device hardware specific information such as serial number and the OEM
+PK hash can be read using BHI and saved on host to identify the
+endpoint.
 
 Signed-off-by: Bhaumik Bhatt <bbhatt@codeaurora.org>
+Reviewed-by: Jeffrey Hugo <jhugo@codeaurora.org>
 Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 ---
- drivers/bus/mhi/core/pm.c | 4 ++++
- include/linux/mhi.h       | 2 ++
- 2 files changed, 6 insertions(+)
+ drivers/bus/mhi/core/boot.c | 17 ++++++++++++++++-
+ include/linux/mhi.h         |  6 ++++++
+ 2 files changed, 22 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/bus/mhi/core/pm.c b/drivers/bus/mhi/core/pm.c
-index 27bb471c8f4e..ce4d969818b4 100644
---- a/drivers/bus/mhi/core/pm.c
-+++ b/drivers/bus/mhi/core/pm.c
-@@ -256,6 +256,7 @@ int mhi_pm_m0_transition(struct mhi_controller *mhi_cntrl)
- 		dev_err(dev, "Unable to transition to M0 state\n");
- 		return -EIO;
+diff --git a/drivers/bus/mhi/core/boot.c b/drivers/bus/mhi/core/boot.c
+index 0b38014d040e..24422f5c3d80 100644
+--- a/drivers/bus/mhi/core/boot.c
++++ b/drivers/bus/mhi/core/boot.c
+@@ -392,13 +392,28 @@ void mhi_fw_load_handler(struct mhi_controller *mhi_cntrl)
+ 	void *buf;
+ 	dma_addr_t dma_addr;
+ 	size_t size;
+-	int ret;
++	int i, ret;
+ 
+ 	if (MHI_PM_IN_ERROR_STATE(mhi_cntrl->pm_state)) {
+ 		dev_err(dev, "Device MHI is not in valid state\n");
+ 		return;
  	}
-+	mhi_cntrl->M0++;
  
- 	/* Wake up the device */
- 	read_lock_bh(&mhi_cntrl->pm_lock);
-@@ -326,6 +327,8 @@ void mhi_pm_m1_transition(struct mhi_controller *mhi_cntrl)
- 		mhi_cntrl->dev_state = MHI_STATE_M2;
- 
- 		write_unlock_irq(&mhi_cntrl->pm_lock);
++	/* save hardware info from BHI */
++	ret = mhi_read_reg(mhi_cntrl, mhi_cntrl->bhi, BHI_SERIALNU,
++			   &mhi_cntrl->serial_number);
++	if (ret)
++		dev_err(dev, "Could not capture serial number via BHI\n");
 +
-+		mhi_cntrl->M2++;
- 		wake_up_all(&mhi_cntrl->state_event);
- 
- 		/* If there are any pending resources, exit M2 immediately */
-@@ -362,6 +365,7 @@ int mhi_pm_m3_transition(struct mhi_controller *mhi_cntrl)
- 		return -EIO;
- 	}
- 
-+	mhi_cntrl->M3++;
- 	wake_up_all(&mhi_cntrl->state_event);
- 
- 	return 0;
++	for (i = 0; i < ARRAY_SIZE(mhi_cntrl->oem_pk_hash); i++) {
++		ret = mhi_read_reg(mhi_cntrl, mhi_cntrl->bhi, BHI_OEMPKHASH(i),
++				   &mhi_cntrl->oem_pk_hash[i]);
++		if (ret) {
++			dev_err(dev, "Could not capture OEM PK HASH via BHI\n");
++			break;
++		}
++	}
++
+ 	/* If device is in pass through, do reset to ready state transition */
+ 	if (mhi_cntrl->ee == MHI_EE_PTHRU)
+ 		goto fw_load_ee_pthru;
 diff --git a/include/linux/mhi.h b/include/linux/mhi.h
-index bb337d163dda..c56b4447a4e9 100644
+index c56b4447a4e9..0c97f4bc5fae 100644
 --- a/include/linux/mhi.h
 +++ b/include/linux/mhi.h
-@@ -328,6 +328,7 @@ struct mhi_controller_config {
-  * @dev_state: MHI device state
-  * @dev_wake: Device wakeup count
-  * @pending_pkts: Pending packets for the controller
-+ * @M0, M2, M3: Counters to track number of device MHI state changes
-  * @transition_list: List of MHI state transitions
-  * @transition_lock: Lock for protecting MHI state transition list
-  * @wlock: Lock for protecting device wakeup
-@@ -407,6 +408,7 @@ struct mhi_controller {
- 	enum mhi_state dev_state;
- 	atomic_t dev_wake;
- 	atomic_t pending_pkts;
-+	u32 M0, M2, M3;
- 	struct list_head transition_list;
- 	spinlock_t transition_lock;
- 	spinlock_t wlock;
+@@ -16,6 +16,8 @@
+ #include <linux/wait.h>
+ #include <linux/workqueue.h>
+ 
++#define MHI_MAX_OEM_PK_HASH_SEGMENTS 16
++
+ struct mhi_chan;
+ struct mhi_event;
+ struct mhi_ctxt;
+@@ -316,6 +318,8 @@ struct mhi_controller_config {
+  * @device_number: MHI controller device number
+  * @major_version: MHI controller major revision number
+  * @minor_version: MHI controller minor revision number
++ * @serial_number: MHI controller serial number obtained from BHI
++ * @oem_pk_hash: MHI controller OEM PK Hash obtained from BHI
+  * @mhi_event: MHI event ring configurations table
+  * @mhi_cmd: MHI command ring configurations table
+  * @mhi_ctxt: MHI device context, shared memory between host and device
+@@ -394,6 +398,8 @@ struct mhi_controller {
+ 	u32 device_number;
+ 	u32 major_version;
+ 	u32 minor_version;
++	u32 serial_number;
++	u32 oem_pk_hash[MHI_MAX_OEM_PK_HASH_SEGMENTS];
+ 
+ 	struct mhi_event *mhi_event;
+ 	struct mhi_cmd *mhi_cmd;
 -- 
 2.17.1
 
