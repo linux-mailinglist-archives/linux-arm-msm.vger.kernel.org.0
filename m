@@ -2,106 +2,87 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 0B75E27ACEC
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Sep 2020 13:36:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 20FE727ACFD
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Sep 2020 13:37:43 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726709AbgI1LfN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 28 Sep 2020 07:35:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41328 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726465AbgI1LfN (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 28 Sep 2020 07:35:13 -0400
-Received: from mail-ej1-x630.google.com (mail-ej1-x630.google.com [IPv6:2a00:1450:4864:20::630])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5153AC061755;
-        Mon, 28 Sep 2020 04:35:13 -0700 (PDT)
-Received: by mail-ej1-x630.google.com with SMTP id gr14so8064007ejb.1;
-        Mon, 28 Sep 2020 04:35:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:references:in-reply-to:subject:date:message-id
-         :mime-version:content-transfer-encoding:content-language
-         :thread-index;
-        bh=H54mErN7yVeSyiSMCbQutLCzpzIzf9ZISuru6EqV53Y=;
-        b=MxSgjektmvs+k5buqD7e84mMn+BejuRg+/7pd4MeKluPbeiDLliOb9WH4axU8JFm30
-         dvvRlZAqWzxYu1WzhBI4drkdz2pN8Jja5+JLaZdZcY0VO/ez/EB5AtcxcgWc7oUC9QlB
-         YeKz0bVGViHSZ3I+msg6EZNLLgSzStzhy7oqZAzeo/pPkOSEOXE38SCbmwH7FfZevjJD
-         arRm0XJ5ae2zl6Nq/u7LrD6ibxoxuIklInN089XpQ9NNlHUeETNr2Ht4BxJPfmt312b7
-         jJOTnCF6grxFeUgLBBDMxSZqJtBVYpE4EiEjz0lHBZnn6uJjrBYrg3ox/Sm+ZqwB+geO
-         9tXA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:references:in-reply-to:subject:date
-         :message-id:mime-version:content-transfer-encoding:content-language
-         :thread-index;
-        bh=H54mErN7yVeSyiSMCbQutLCzpzIzf9ZISuru6EqV53Y=;
-        b=NGJFK1mExkyL0ClSnlTmX/HHEzVua/B0BF2ThiBP23X2uOgO2OJBzaUqcGc/OHqicE
-         uSxvT0k9IhdGqWWiUboVaFW8wwnzbNKlMKf1pFvV+BcTSzMpsPvk5vPnmI4y7uUQp4v1
-         idjZJAAS9GrPuPtNdz7ca4qzWfdgnVMQ2DZMjd+Sd8tMtozP5FT3wa/zGI8+yWyoOQ6+
-         4rA8gLsocgloiUGn0TZZn+lF3xPeNDsFL9Yabe8F04cAOTN0cpmJMsU8305BWH2/r1fk
-         7wnXMkBcs4eTEDczUQoe03Ft6nhzKbcTvMOnVtSgCTDbaFsvjCyTOkaj8rRbO7s015DI
-         TuUg==
-X-Gm-Message-State: AOAM531r3QiLl3JVvQXxycP555uPdyFihRP+k61hQdn7iX4kJrxWBxqH
-        v5JzdSL8G4mMFWJH4Cw0IhU=
-X-Google-Smtp-Source: ABdhPJyeH0MheGAETpC+2xQtn94x3NATOZ8jYqhUtyA8qgWtvvTv2aTMyzjRjpO3uWi1OSVUCG2kfQ==
-X-Received: by 2002:a17:906:594c:: with SMTP id g12mr1212711ejr.347.1601292911288;
-        Mon, 28 Sep 2020 04:35:11 -0700 (PDT)
-Received: from AnsuelXPS (93-39-149-95.ip76.fastwebnet.it. [93.39.149.95])
-        by smtp.gmail.com with ESMTPSA id y9sm893360ejw.96.2020.09.28.04.35.09
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 28 Sep 2020 04:35:10 -0700 (PDT)
-From:   <ansuelsmth@gmail.com>
-To:     "'Amit Kucheria'" <amitk@kernel.org>
-Cc:     "'Andy Gross'" <agross@kernel.org>,
-        "'Bjorn Andersson'" <bjorn.andersson@linaro.org>,
-        "'Zhang Rui'" <rui.zhang@intel.com>,
-        "'Daniel Lezcano'" <daniel.lezcano@linaro.org>,
-        "'Rob Herring'" <robh+dt@kernel.org>,
-        "'linux-arm-msm'" <linux-arm-msm@vger.kernel.org>,
-        "'Linux PM list'" <linux-pm@vger.kernel.org>,
-        "'open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS'" 
-        <devicetree@vger.kernel.org>,
-        "'LKML'" <linux-kernel@vger.kernel.org>
-References: <20200814134123.14566-1-ansuelsmth@gmail.com> <CAHLCerM666W9ijLu529NNPNz_NuyO0QPKws8spWrR4bWNo0A-A@mail.gmail.com>
-In-Reply-To: <CAHLCerM666W9ijLu529NNPNz_NuyO0QPKws8spWrR4bWNo0A-A@mail.gmail.com>
-Subject: RE: [RFC PATCH v6 0/8] Add support for ipq8064 tsens
-Date:   Mon, 28 Sep 2020 13:35:09 +0200
-Message-ID: <00b901d6958b$6c320ae0$449620a0$@gmail.com>
+        id S1726461AbgI1Lhj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 28 Sep 2020 07:37:39 -0400
+Received: from z5.mailgun.us ([104.130.96.5]:28431 "EHLO z5.mailgun.us"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726651AbgI1Lhj (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 28 Sep 2020 07:37:39 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1601293058; h=Content-Transfer-Encoding: MIME-Version:
+ Message-Id: Date: Subject: Cc: To: From: Sender;
+ bh=IFRBRVnPylz4ax0kAn3HE4EqTe1MomSFW49DaD0CJN0=; b=ahEwawY7VmyHtdueOf40bJhlipkhpjHKdN10UsFTXeG4PrXjoF/6PBkrMUnQiRqTnPEB9AJL
+ eDND8omxDM/XB3h6eclJcQSkyPoQNveJbcVN/AkyuSud2wPgSqnAkwjh2bm+Og+S448tnKrL
+ nuzE73C6F+0AV8IsAl12IrtcFe8=
+X-Mailgun-Sending-Ip: 104.130.96.5
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n07.prod.us-west-2.postgun.com with SMTP id
+ 5f71caf6c00ccaf028e90bf5 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 28 Sep 2020 11:37:26
+ GMT
+Sender: saiprakash.ranjan=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 348F5C43395; Mon, 28 Sep 2020 11:37:26 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL
+        autolearn=no autolearn_force=no version=3.4.0
+Received: from blr-ubuntu-253.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: saiprakash.ranjan)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 15252C433CA;
+        Mon, 28 Sep 2020 11:37:21 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 15252C433CA
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=saiprakash.ranjan@codeaurora.org
+From:   Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+To:     Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Suzuki K Poulose <suzuki.poulose@arm.com>,
+        Mike Leach <mike.leach@linaro.org>
+Cc:     coresight@lists.linaro.org, leo.yan@linaro.org,
+        alexander.shishkin@linux.intel.com, peterz@infradead.org,
+        Stephen Boyd <swboyd@chromium.org>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org,
+        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+Subject: [PATCHv2 0/2] Coresight ETF perf NULL pointer dereference and ETM save/restore fixes
+Date:   Mon, 28 Sep 2020 17:07:07 +0530
+Message-Id: <cover.1601292571.git.saiprakash.ranjan@codeaurora.org>
+X-Mailer: git-send-email 2.27.0
 MIME-Version: 1.0
-Content-Type: text/plain;
-        charset="utf-8"
-Content-Transfer-Encoding: 7bit
-X-Mailer: Microsoft Outlook 16.0
-Content-Language: it
-Thread-Index: AQKNSg84Txe44YHglS9ra7bUDGlM1AMS+IIEp/fqk8A=
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+This 2 patch series provides fixes to ETF null pointer dereference crash
+and TRCVMIDCCTLR1 register save and restore fix.
+
+Patch 1 is an RFC since I am not sure of the fix provided since it looks
+more like a band-aid than the actual fix.
+
+Changes in v2:
+ * Remove extra fixes tag (Suzuki)
+
+Sai Prakash Ranjan (2):
+  coresight: tmc-etf: Fix NULL pointer dereference in
+    tmc_enable_etf_sink_perf()
+  coresight: etm4x: Fix save and restore of TRCVMIDCCTLR1 register
+
+ drivers/hwtracing/coresight/coresight-etm4x-core.c | 4 ++--
+ drivers/hwtracing/coresight/coresight-tmc-etf.c    | 3 +++
+ 2 files changed, 5 insertions(+), 2 deletions(-)
 
 
-> -----Original Message-----
-> From: Amit Kucheria <amitk@kernel.org>
-> Sent: Monday, September 28, 2020 1:33 PM
-> To: Ansuel Smith <ansuelsmth@gmail.com>
-> Cc: Andy Gross <agross@kernel.org>; Bjorn Andersson
-> <bjorn.andersson@linaro.org>; Zhang Rui <rui.zhang@intel.com>; Daniel
-> Lezcano <daniel.lezcano@linaro.org>; Rob Herring <robh+dt@kernel.org>;
-> linux-arm-msm <linux-arm-msm@vger.kernel.org>; Linux PM list <linux-
-> pm@vger.kernel.org>; open list:OPEN FIRMWARE AND FLATTENED DEVICE
-> TREE BINDINGS <devicetree@vger.kernel.org>; LKML <linux-
-> kernel@vger.kernel.org>
-> Subject: Re: [RFC PATCH v6 0/8] Add support for ipq8064 tsens
-> 
-> Hi Ansuel,
-> 
-> Just a quick note to say that I'm not ignoring this, just on
-> vacations. I'll be back to review this in a few days.
-> 
-> Regards,
-> Amit
-> 
-
-Thx a lot. Was thinking of resending this but I will wait.
-
+base-commit: e209e73bee253afe969410150248f0c300c13d84
+-- 
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
+of Code Aurora Forum, hosted by The Linux Foundation
 
