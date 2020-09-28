@@ -2,93 +2,94 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B655727A6E1
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Sep 2020 07:19:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DA5DA27A6D6
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Sep 2020 07:17:54 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726420AbgI1FTE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 28 Sep 2020 01:19:04 -0400
-Received: from z5.mailgun.us ([104.130.96.5]:55044 "EHLO z5.mailgun.us"
+        id S1726597AbgI1FRy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 28 Sep 2020 01:17:54 -0400
+Received: from mail.kernel.org ([198.145.29.99]:45030 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726500AbgI1FTE (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 28 Sep 2020 01:19:04 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1601270343; h=References: In-Reply-To: Message-Id: Date:
- Subject: To: From: Sender;
- bh=RbNvZei99Np5hV3HwybKIT+MHMoFc7xSEA4tQ9NIEjI=; b=aB+kpIQVKrlwS+QUaprZ0IJd3kdC8Y81LelmlwRM6DBMNQzD9r0Ikyc+O4nF2eP6MMzmrlFV
- epz33XjqseTd1A9OBtmrjIF1aJLvICg/ZEhBVOtKOCthwaeuKWFWIgAOfzNA4OZAr1+fhp/5
- lZoj/vC4VFmYTpfSXcne3G8NEtM=
-X-Mailgun-Sending-Ip: 104.130.96.5
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n07.prod.us-west-2.postgun.com with SMTP id
- 5f7171de5fb64f6e378940a9 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 28 Sep 2020 05:17:18
- GMT
-Sender: varada=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 07148C43382; Mon, 28 Sep 2020 05:17:18 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
-        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
-Received: from varda-linux.qualcomm.com (blr-c-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.19.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        id S1726465AbgI1FRy (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 28 Sep 2020 01:17:54 -0400
+Received: from localhost (83-86-74-64.cable.dynamic.v4.ziggo.nl [83.86.74.64])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        (Authenticated sender: varada)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 62751C433C8;
-        Mon, 28 Sep 2020 05:17:09 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 62751C433C8
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=varada@codeaurora.org
-From:   Varadarajan Narayanan <varada@codeaurora.org>
-To:     agross@kernel.org, bjorn.andersson@linaro.org, robh+dt@kernel.org,
-        mturquette@baylibre.com, sboyd@kernel.org,
-        linus.walleij@linaro.org, catalin.marinas@arm.com, will@kernel.org,
-        p.zabel@pengutronix.de, varada@codeaurora.org,
-        nsekar@codeaurora.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-clk@vger.kernel.org, linux-gpio@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, sricharan@codeaurora.org
-Subject: [PATCH 7/7] arm64: defconfig: Enable IPQ5018 SoC base configs
-Date:   Mon, 28 Sep 2020 10:45:40 +0530
-Message-Id: <1601270140-4306-8-git-send-email-varada@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1601270140-4306-1-git-send-email-varada@codeaurora.org>
-References: <1601270140-4306-1-git-send-email-varada@codeaurora.org>
+        by mail.kernel.org (Postfix) with ESMTPSA id 2572521548;
+        Mon, 28 Sep 2020 05:17:52 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1601270273;
+        bh=dRyaItky7NDVsosujj6hxANM/My0xGr500c9g2v3K80=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=oILbqk42mgFiC/0wm+Hq8xqNtKTVeaNHNJVlq/yEsH5vTjhMAUIQqI/9VQahtvo+v
+         ZQiUNBezGR+zks7Tha4miUxcT84MSypgy/CgJ98lYqOGnKzJjrBNbNN8jwKz78NPY7
+         yGYEtpkqlY6gWDHQg+yTBHHqQ0RUqR+INn+RGTO4=
+Date:   Mon, 28 Sep 2020 07:17:48 +0200
+From:   Greg KH <gregkh@linuxfoundation.org>
+To:     Prasad Sodagudi <psodagud@codeaurora.org>
+Cc:     rostedt@goodmis.org, mingo@redhat.com, keescook@chromium.org,
+        saiprakash.ranjan@codeaurora.org,
+        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, anton@enomsg.org, arnd@arndb.de,
+        catalin.marinas@arm.com, ccross@android.com, jbaron@akamai.com,
+        jim.cromie@gmail.com, joe@perches.com, joel@joelfernandes.org
+Subject: Re: [PATCH] tracing: Add register read and write tracing support
+Message-ID: <20200928051748.GA767987@kroah.com>
+References: <1601253290-400618-1-git-send-email-psodagud@codeaurora.org>
+ <1601253290-400618-2-git-send-email-psodagud@codeaurora.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1601253290-400618-2-git-send-email-psodagud@codeaurora.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Enables clk & pinctrl related configs
+On Sun, Sep 27, 2020 at 05:34:50PM -0700, Prasad Sodagudi wrote:
+> Add register read/write operations tracing support.
+> ftrace events helps trace register read and write
+> location details of memory mapped IO registers. Also
+> add _no_log variants the writel_relaxed/readl_relaed
+> APIs to avoid excessive logging for certain register
+> operations.
+> 
+> Signed-off-by: Prasad Sodagudi <psodagud@codeaurora.org>
+> ---
+>  arch/arm64/include/asm/io.h    | 117 ++++++++++++++++++++++++++++++++++++++---
+>  include/linux/iorw.h           |  20 +++++++
+>  include/trace/events/rwio.h    |  51 ++++++++++++++++++
+>  kernel/trace/Kconfig           |  11 ++++
+>  kernel/trace/Makefile          |   1 +
+>  kernel/trace/trace_readwrite.c |  30 +++++++++++
+>  6 files changed, 222 insertions(+), 8 deletions(-)
+>  create mode 100644 include/linux/iorw.h
+>  create mode 100644 include/trace/events/rwio.h
+>  create mode 100644 kernel/trace/trace_readwrite.c
+> 
+> diff --git a/arch/arm64/include/asm/io.h b/arch/arm64/include/asm/io.h
+> index ff50dd7..db5acff 100644
+> --- a/arch/arm64/include/asm/io.h
+> +++ b/arch/arm64/include/asm/io.h
+> @@ -9,6 +9,7 @@
+>  #define __ASM_IO_H
+>  
+>  #include <linux/types.h>
+> +#include <linux/iorw.h>
+>  #include <linux/pgtable.h>
+>  
+>  #include <asm/byteorder.h>
+> @@ -24,24 +25,28 @@
+>  #define __raw_writeb __raw_writeb
+>  static inline void __raw_writeb(u8 val, volatile void __iomem *addr)
+>  {
+> +	log_write_io(addr);
+>  	asm volatile("strb %w0, [%1]" : : "rZ" (val), "r" (addr));
 
-Signed-off-by: Varadarajan Narayanan <varada@codeaurora.org>
----
- arch/arm64/configs/defconfig | 3 +++
- 1 file changed, 3 insertions(+)
+You are just logging the address, what about the data written or read?
+Why throw away half of the information here?
 
-diff --git a/arch/arm64/configs/defconfig b/arch/arm64/configs/defconfig
-index 6d04b95..ca25f79 100644
---- a/arch/arm64/configs/defconfig
-+++ b/arch/arm64/configs/defconfig
-@@ -473,6 +473,7 @@ CONFIG_PINCTRL_IMX8MQ=y
- CONFIG_PINCTRL_IMX8QXP=y
- CONFIG_PINCTRL_IMX8DXL=y
- CONFIG_PINCTRL_IPQ8074=y
-+CONFIG_PINCTRL_IPQ5018=y
- CONFIG_PINCTRL_IPQ6018=y
- CONFIG_PINCTRL_MSM8916=y
- CONFIG_PINCTRL_MSM8994=y
-@@ -851,6 +852,8 @@ CONFIG_QCOM_CLK_APCS_MSM8916=y
- CONFIG_QCOM_CLK_SMD_RPM=y
- CONFIG_QCOM_CLK_RPMH=y
- CONFIG_IPQ_GCC_8074=y
-+CONFIG_IPQ_GCC_5018=y
-+CONFIG_IPQ_APSS_5018=y
- CONFIG_IPQ_GCC_6018=y
- CONFIG_MSM_GCC_8916=y
- CONFIG_MSM_GCC_8994=y
--- 
-2.7.4
+Oh, and sending patches that break the build is generally not a good
+thing to do :)
 
+thanks,
+
+greg k-h
