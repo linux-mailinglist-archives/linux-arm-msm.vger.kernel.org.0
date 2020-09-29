@@ -2,114 +2,107 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 92C6027D68C
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Sep 2020 21:12:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5219827D6CE
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Sep 2020 21:24:20 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728584AbgI2TM5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 29 Sep 2020 15:12:57 -0400
-Received: from mail-ot1-f68.google.com ([209.85.210.68]:46410 "EHLO
+        id S1727879AbgI2TYS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 29 Sep 2020 15:24:18 -0400
+Received: from mail-ot1-f68.google.com ([209.85.210.68]:34529 "EHLO
         mail-ot1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728166AbgI2TM4 (ORCPT
+        with ESMTP id S1727700AbgI2TYS (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 29 Sep 2020 15:12:56 -0400
-Received: by mail-ot1-f68.google.com with SMTP id 95so5517115ota.13;
-        Tue, 29 Sep 2020 12:12:56 -0700 (PDT)
+        Tue, 29 Sep 2020 15:24:18 -0400
+Received: by mail-ot1-f68.google.com with SMTP id h17so5622749otr.1;
+        Tue, 29 Sep 2020 12:24:17 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=GgjKuyQJoERzQMpEMuhlPCE13zkCByWUan2/5brhiCU=;
-        b=ahYCxdjGh6vc+8vs84tn5CP4iJMl3GXT6gnodJscDP47jLs032Q9ElcLIwO+I8Jhak
-         1JY1JC3kdcZG64eg2bthagAuxpjsdb6QYBpIxR4P868Z/vFK2ZxK5PgB6bpHEqoRk2Tb
-         7cWTxXlB/WOX8ZzIVXiHmYRwhhrvlG0IETfeNQW89H5zfo/4OYdwvkDMn8UssEr7o19s
-         QEmuYyuofv6LxHb+jCQ7xkqZoTUR6KPJi5L/AtQVM3LDtvnalXmREI4IhvVWvWxTZdMo
-         4+jAcS9I9PDCZ0Xa0pJfAV3aVLwTCfI+E9dyx7Goc+rBdttVadDZBzj+1kkXxTV5/gO8
-         V2Rg==
-X-Gm-Message-State: AOAM530zWxyi8/Lze2Sz758r9T28hoBRgu5hdo/GgP1k8SNaXVNgYpyJ
-        1dY9fGZgu4KWyINDEIzjvw==
-X-Google-Smtp-Source: ABdhPJzWyMYcV45E2qABB4g0dlueAf1l8Bg8xQxbnk8POFF0QM48+jRHidYaB2vtazxWKOyqiyLcMg==
-X-Received: by 2002:a05:6830:ca:: with SMTP id x10mr3612103oto.344.1601406775723;
-        Tue, 29 Sep 2020 12:12:55 -0700 (PDT)
+        bh=a0+40Jxvg/Op2A57V+2jGqRGB7XXMO2z6egIsw8beuM=;
+        b=CeR4A4TgFY4pPDoYLz8HJgeXY0bhXLMWSy6d26KAjle0dvgy+2sl3q6LYPUZX1zaWz
+         IYoM/5U2pOIMOB5sxv5WiNbDRsTT0llKQhHZcE1K1P0ZxcCdP6X8d3KSnPTKcsLqNum9
+         z36HPjSVOOJzu5JN+MIPZqD1s7NYgtP8UNgd+p+mf8e28Y1tpJcEAo1wBbehyLwfYhwp
+         vkSxMMjuYg+Ws+WXlY+irxwm2w5AHPMX7I6wlo5gpd8zHOleXV3avO2TEy0RJFadSYRr
+         tU7CEBb7XYqsAoqn+74SRAne2mzroBdyCEUtpQSufBu4243Bbp5xhZJIqDhTrjIDPLt/
+         iB2g==
+X-Gm-Message-State: AOAM530qktzWsqLsqLQW2y2yZJGWmZJH8QDu2H6pD0WestfQJjx7cfR4
+        GyEH/MzsyXHlsYASdsxNiQ==
+X-Google-Smtp-Source: ABdhPJxaOeJE50B4sFS6YIDZqlKoQ1hYpkgfDJx0OsxUxBOz7cE/j4mvVhUi5dl8x1vZLyOVovRFig==
+X-Received: by 2002:a05:6830:1d96:: with SMTP id y22mr3783015oti.243.1601407457125;
+        Tue, 29 Sep 2020 12:24:17 -0700 (PDT)
 Received: from xps15 (24-155-109-49.dyn.grandenetworks.net. [24.155.109.49])
-        by smtp.gmail.com with ESMTPSA id k16sm1201190oij.56.2020.09.29.12.12.54
+        by smtp.gmail.com with ESMTPSA id q14sm1209970ota.41.2020.09.29.12.24.15
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 29 Sep 2020 12:12:55 -0700 (PDT)
-Received: (nullmailer pid 987780 invoked by uid 1000);
-        Tue, 29 Sep 2020 19:12:54 -0000
-Date:   Tue, 29 Sep 2020 14:12:54 -0500
+        Tue, 29 Sep 2020 12:24:16 -0700 (PDT)
+Received: (nullmailer pid 1007629 invoked by uid 1000);
+        Tue, 29 Sep 2020 19:24:15 -0000
+Date:   Tue, 29 Sep 2020 14:24:15 -0500
 From:   Rob Herring <robh@kernel.org>
-To:     kholk11@gmail.com
-Cc:     agross@kernel.org, bjorn.andersson@linaro.org, kishon@ti.com,
-        marijns95@gmail.com, konradybcio@gmail.com,
-        martin.botka1@gmail.com, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, phone-devel@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] phy: qcom-qusb2: Add support for SDM630/660
-Message-ID: <20200929191254.GA984478@bogus>
-References: <20200926131157.14633-1-kholk11@gmail.com>
+To:     Varadarajan Narayanan <varada@codeaurora.org>
+Cc:     agross@kernel.org, bjorn.andersson@linaro.org,
+        mturquette@baylibre.com, sboyd@kernel.org,
+        linus.walleij@linaro.org, catalin.marinas@arm.com, will@kernel.org,
+        p.zabel@pengutronix.de, nsekar@codeaurora.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org,
+        linux-gpio@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        sricharan@codeaurora.org
+Subject: Re: [PATCH 2/7] dt-bindings: arm64: ipq5018: Add binding
+ descriptions for clock and reset
+Message-ID: <20200929192415.GA1003457@bogus>
+References: <1601270140-4306-1-git-send-email-varada@codeaurora.org>
+ <1601270140-4306-3-git-send-email-varada@codeaurora.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20200926131157.14633-1-kholk11@gmail.com>
+In-Reply-To: <1601270140-4306-3-git-send-email-varada@codeaurora.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sat, Sep 26, 2020 at 03:11:57PM +0200, kholk11@gmail.com wrote:
-> From: Konrad Dybcio <konradybcio@gmail.com>
+On Mon, Sep 28, 2020 at 10:45:35AM +0530, Varadarajan Narayanan wrote:
+> This patch adds support for the global clock controller found on
+> the IPQ5018 based devices.
 > 
-> QUSB on these SoCs actually uses *almost* the same
-> configuration that msm8996 does, so we can reuse
-> the phy_cfg from there with just a single change
-> (se clock scheme).
-> 
-> Signed-off-by: Konrad Dybcio <konradybcio@gmail.com>
-> Signed-off-by: AngeloGioacchino Del Regno <kholk11@gmail.com>
+> Signed-off-by: Varadarajan Narayanan <varada@codeaurora.org>
 > ---
->  Documentation/devicetree/bindings/phy/qcom,qusb2-phy.yaml | 1 +
->  drivers/phy/qualcomm/phy-qcom-qusb2.c                     | 7 ++++++-
->  2 files changed, 7 insertions(+), 1 deletion(-)
+>  .../devicetree/bindings/clock/qcom,gcc.yaml        |   3 +
+>  include/dt-bindings/clock/qcom,gcc-ipq5018.h       | 183 +++++++++++++++++++++
+>  include/dt-bindings/reset/qcom,gcc-ipq5018.h       | 119 ++++++++++++++
+>  3 files changed, 305 insertions(+)
+>  create mode 100644 include/dt-bindings/clock/qcom,gcc-ipq5018.h
+>  create mode 100644 include/dt-bindings/reset/qcom,gcc-ipq5018.h
 > 
-> diff --git a/Documentation/devicetree/bindings/phy/qcom,qusb2-phy.yaml b/Documentation/devicetree/bindings/phy/qcom,qusb2-phy.yaml
-> index ccda92859eca..97dae24752b4 100644
-> --- a/Documentation/devicetree/bindings/phy/qcom,qusb2-phy.yaml
-> +++ b/Documentation/devicetree/bindings/phy/qcom,qusb2-phy.yaml
-> @@ -21,6 +21,7 @@ properties:
->                - qcom,ipq8074-qusb2-phy
->                - qcom,msm8996-qusb2-phy
->                - qcom,msm8998-qusb2-phy
-> +              - qcom,sdm660-qusb2-phy
->        - items:
->            - enum:
->                - qcom,sc7180-qusb2-phy
-> diff --git a/drivers/phy/qualcomm/phy-qcom-qusb2.c b/drivers/phy/qualcomm/phy-qcom-qusb2.c
-> index 557547dabfd5..a4d706b361b9 100644
-> --- a/drivers/phy/qualcomm/phy-qcom-qusb2.c
-> +++ b/drivers/phy/qualcomm/phy-qcom-qusb2.c
-> @@ -702,7 +702,8 @@ static int qusb2_phy_init(struct phy *phy)
->  	usleep_range(150, 160);
->  
->  	/* Default is single-ended clock on msm8996 */
-> -	qphy->has_se_clk_scheme = true;
-> +	if (!of_device_is_compatible(phy->dev.of_node, "qcom,sdm660-qusb2-phy"))
-> +		qphy->has_se_clk_scheme = true;
+> diff --git a/Documentation/devicetree/bindings/clock/qcom,gcc.yaml b/Documentation/devicetree/bindings/clock/qcom,gcc.yaml
+> index ee0467f..74d67fc 100644
+> --- a/Documentation/devicetree/bindings/clock/qcom,gcc.yaml
+> +++ b/Documentation/devicetree/bindings/clock/qcom,gcc.yaml
+> @@ -18,6 +18,8 @@ description: |
+>    - dt-bindings/clock/qcom,gcc-apq8084.h
+>    - dt-bindings/reset/qcom,gcc-apq8084.h
+>    - dt-bindings/clock/qcom,gcc-ipq4019.h
+> +  - dt-bindings/clock/qcom,gcc-ipq5018.h
+> +  - dt-bindings/reset/qcom,gcc-ipq5018.h
+>    - dt-bindings/clock/qcom,gcc-ipq6018.h
+>    - dt-bindings/reset/qcom,gcc-ipq6018.h
+>    - dt-bindings/clock/qcom,gcc-ipq806x.h (qcom,gcc-ipq8064)
+> @@ -39,6 +41,7 @@ properties:
+>      enum:
+>        - qcom,gcc-apq8084
+>        - qcom,gcc-ipq4019
+> +      - qcom,gcc-ipq5018
+>        - qcom,gcc-ipq6018
+>        - qcom,gcc-ipq8064
+>        - qcom,gcc-msm8660
+> diff --git a/include/dt-bindings/clock/qcom,gcc-ipq5018.h b/include/dt-bindings/clock/qcom,gcc-ipq5018.h
+> new file mode 100644
+> index 00000000..069165f
+> --- /dev/null
+> +++ b/include/dt-bindings/clock/qcom,gcc-ipq5018.h
+> @@ -0,0 +1,183 @@
+> +/* SPDX-License-Identifier: GPL-2.0+ */
 
-You should just pull this from the driver data.
+Only care about Linux and GPL OSs? And your employer is okay with GPL3 
+(and GPL4, ...)?
 
->  	/*
->  	 * read TCSR_PHY_CLK_SCHEME register to check if single-ended
->  	 * clock scheme is selected. If yes, then disable differential
-> @@ -818,6 +819,10 @@ static const struct of_device_id qusb2_phy_of_match_table[] = {
->  	}, {
->  		.compatible	= "qcom,msm8998-qusb2-phy",
->  		.data		= &msm8998_phy_cfg,
-> +	}, {
-> +		.compatible	= "qcom,sdm660-qusb2-phy",
-> +		/* sdm630/660 use the same config as msm8996. */
-> +		.data		= &msm8996_phy_cfg,
->  	}, {
->  		/*
->  		 * Deprecated. Only here to support legacy device
-> -- 
-> 2.28.0
-> 
+IOW, dual license please.
