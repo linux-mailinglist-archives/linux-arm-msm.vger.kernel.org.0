@@ -2,78 +2,134 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 65B5427CE43
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Sep 2020 14:56:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6A36A27CF04
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Sep 2020 15:23:32 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729398AbgI2M4a (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 29 Sep 2020 08:56:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50596 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728364AbgI2M40 (ORCPT
+        id S1729847AbgI2NXW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 29 Sep 2020 09:23:22 -0400
+Received: from hqnvemgate26.nvidia.com ([216.228.121.65]:13115 "EHLO
+        hqnvemgate26.nvidia.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727495AbgI2NXW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 29 Sep 2020 08:56:26 -0400
-Received: from mail-lj1-x241.google.com (mail-lj1-x241.google.com [IPv6:2a00:1450:4864:20::241])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7ADDFC0613D1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 29 Sep 2020 05:56:26 -0700 (PDT)
-Received: by mail-lj1-x241.google.com with SMTP id s205so3922429lja.7
-        for <linux-arm-msm@vger.kernel.org>; Tue, 29 Sep 2020 05:56:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=Xwc6QcG165YvYnxLOr7Ig+7m7J7xD/MU+AJCfEa21vs=;
-        b=npuAc3Z4q7b5/MOlpEyIxPMdkQkfGyy+xQQ4dKRXMIawUwLtwKv7YsAxgmdOIAcx0C
-         V7aSDMhMMWCBgV7R53k9yA7j2I5W4AZ46AfJrz6OhlVZCCHbGROw1rxqKG/q+MGxp7R3
-         5X7lZGeYG9wjg5iOKD+CMaqYx++eKtsyFZHwRyRyZhZ4EIdea/yrJ1hjkPWjyZUtYmJY
-         /NzZuMCq9nTM5lHSOqzpSy/RIJ1yS4Y5K4NWCVNT025G5Au7oZ/8P0ZWcpC9ubw5bPtE
-         28FyijSj6Hf143BqA8q5Bw42QsPFu2BOLKTYhIp9n/jDXmNoRO8UPQSEqhxWL/2qv/6C
-         BABA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=Xwc6QcG165YvYnxLOr7Ig+7m7J7xD/MU+AJCfEa21vs=;
-        b=OcW82BmLeHRsFJvxybXKcOjIa6gwc1qDodkGv1kSyQVyp46tPzhv6KtbVBnwFkSzCO
-         rr5mWV4v78uRttDAwy/CD4Mj9G6janqEqpBe9jjz/Y93SdaY72G68IqkidM/6VZL6zFc
-         Nmfa0Fz5Rap3kO0haKcnc3zHjWIrHTCXEzD28Oxb53pqstmSzUfsUlemSBV2zte3gj3I
-         +kHENMllFUMAl1+wtMXmlmroJ6a5SJZhIJRQrduqC7LVVhylziazbGRwaSo5dLSr0gmL
-         kbbC7q7Vvt0cmmX8dt0uTRYBFZGhwkBuP5RTnuWQmia0v1kpnZeJRpN7l1+5LzFZg0o9
-         fPuQ==
-X-Gm-Message-State: AOAM533HTNvt2Zct8Cpv2FD+JIzCkEpZWcI+eRwzwrT+FYwn5BzMolaM
-        WfxWVz3i7YnV5i45HTimdrGlw6nrTwAPVuadUuZb6g==
-X-Google-Smtp-Source: ABdhPJw/sTFqnnCnmjiBkxcM336wh5a1yrj9eBOkl+NOXdP0eHGyLO27lGNGZcAFlkObJIC+WXvMMWTvGT4NVR1kG14=
-X-Received: by 2002:a2e:a306:: with SMTP id l6mr1248375lje.286.1601384184843;
- Tue, 29 Sep 2020 05:56:24 -0700 (PDT)
-MIME-Version: 1.0
-References: <20200914091846.55204-1-dmitry.baryshkov@linaro.org>
-In-Reply-To: <20200914091846.55204-1-dmitry.baryshkov@linaro.org>
-From:   Linus Walleij <linus.walleij@linaro.org>
-Date:   Tue, 29 Sep 2020 14:56:14 +0200
-Message-ID: <CACRpkdb2WnQ40oZQZ3GN=ynhgZTmpJqT1yVuEJejOGQ7qe8pwA@mail.gmail.com>
-Subject: Re: [PATCH v3] pinctrl: qcom: sm8250: correct sdc2_clk
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
+        Tue, 29 Sep 2020 09:23:22 -0400
+Received: from hqmail.nvidia.com (Not Verified[216.228.121.13]) by hqnvemgate26.nvidia.com (using TLS: TLSv1.2, AES256-SHA)
+        id <B5f7335390005>; Tue, 29 Sep 2020 06:23:05 -0700
+Received: from [10.26.75.44] (10.124.1.5) by HQMAIL107.nvidia.com
+ (172.20.187.13) with Microsoft SMTP Server (TLS) id 15.0.1473.3; Tue, 29 Sep
+ 2020 13:22:59 +0000
+Subject: Re: [PATCH v2 0/5] PCI: dwc: improve msi handling
+To:     Jisheng Zhang <Jisheng.Zhang@synaptics.com>
+CC:     Kishon Vijay Abraham I <kishon@ti.com>,
+        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
+        Rob Herring <robh@kernel.org>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        Jingoo Han <jingoohan1@gmail.com>,
+        Kukjin Kim <kgene@kernel.org>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        Richard Zhu <hongxing.zhu@nxp.com>,
+        Lucas Stach <l.stach@pengutronix.de>,
+        Shawn Guo <shawnguo@kernel.org>,
+        Sascha Hauer <s.hauer@pengutronix.de>,
+        "Pengutronix Kernel Team" <kernel@pengutronix.de>,
+        Fabio Estevam <festevam@gmail.com>,
+        "NXP Linux Team" <linux-imx@nxp.com>,
+        Yue Wang <yue.wang@Amlogic.com>,
+        "Kevin Hilman" <khilman@baylibre.com>,
+        Neil Armstrong <narmstrong@baylibre.com>,
+        Jerome Brunet <jbrunet@baylibre.com>,
+        Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
+        Jesper Nilsson <jesper.nilsson@axis.com>,
+        Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
+        Xiaowei Song <songxiaowei@hisilicon.com>,
+        Binghui Wang <wangbinghui@hisilicon.com>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        MSM <linux-arm-msm@vger.kernel.org>,
-        "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
+        Stanimir Varbanov <svarbanov@mm-sol.com>,
+        Pratyush Anand <pratyush.anand@gmail.com>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
+        Masahiro Yamada <yamada.masahiro@socionext.com>,
+        <linux-omap@vger.kernel.org>, <linux-pci@vger.kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>,
+        <linux-kernel@vger.kernel.org>,
+        <linux-samsung-soc@vger.kernel.org>,
+        <linux-amlogic@lists.infradead.org>, <linux-arm-kernel@axis.com>,
+        <linux-arm-msm@vger.kernel.org>, <linux-tegra@vger.kernel.org>,
+        Vidya Sagar <vidyas@nvidia.com>
+References: <20200924190421.549cb8fc@xhacker.debian>
+ <de4d9294-4f6d-c7d1-efc7-c8ef6570bd64@nvidia.com>
+ <20200929184851.22682ff1@xhacker.debian>
+From:   Jon Hunter <jonathanh@nvidia.com>
+Message-ID: <8e06a370-a37a-5f33-b43b-2830adb31b3e@nvidia.com>
+Date:   Tue, 29 Sep 2020 14:22:57 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.10.0
+MIME-Version: 1.0
+In-Reply-To: <20200929184851.22682ff1@xhacker.debian>
+Content-Type: text/plain; charset="utf-8"
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.124.1.5]
+X-ClientProxiedBy: HQMAIL105.nvidia.com (172.20.187.12) To
+ HQMAIL107.nvidia.com (172.20.187.13)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nvidia.com; s=n1;
+        t=1601385785; bh=O1AmZKE8e7EeFMJXiJzyuvgvP7i5Nhyk8/759La3vkU=;
+        h=Subject:To:CC:References:From:Message-ID:Date:User-Agent:
+         MIME-Version:In-Reply-To:Content-Type:Content-Language:
+         Content-Transfer-Encoding:X-Originating-IP:X-ClientProxiedBy;
+        b=PEUGx/Oto2o82hJdlAk6/ts4WMeu88gqStSAIbht98Z/IG5S7VWh+vP98HENpPGWz
+         dvi4P4CwF9nHeRHsl9AzVkrvmXIBrwVTKKBrg57TUdTtX6rbg2iu/yl/npKamfzDfN
+         bde3+rbXPUm4osMwTFyxLBEvxx/+GgYRccoic8JmGxsvmJpOdJQ499JIrzTlkZbfGy
+         uatLuKB6XhZi8NLNwtLMbP08tRGBLxw/s1yS6UBfhIRviBPwMOohoewPUOkIiYkNbc
+         kQHmRyOIchEWyKHIRxQV7sPqqZB+NDjrJDEXtUGp+aaP6iFoCKud6BERbUL3KiIhZi
+         LjHupkiehvUcg==
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Sep 14, 2020 at 11:18 AM Dmitry Baryshkov
-<dmitry.baryshkov@linaro.org> wrote:
+Hi Jisheng,
 
-> Correct sdc2_clk pin definition (register offset is wrong, verified by
-> the msm-4.19 driver).
->
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> Fixes: 4e3ec9e407ad5058003309072b37111f7b8c900a
+On 29/09/2020 11:48, Jisheng Zhang wrote:
+> Hi Jon,
+> 
+> On Fri, 25 Sep 2020 09:53:45 +0100 Jon Hunter wrote:
+> 
+>>
+>> On 24/09/2020 12:05, Jisheng Zhang wrote:
+>>> Improve the msi code:
+>>> 1. Add proper error handling.
+>>> 2. Move dw_pcie_msi_init() from each users to designware host to solve
+>>> msi page leakage in resume path.  
+>>
+>> Apologies if this is slightly off topic, but I have been meaning to ask
+>> about MSIs and PCI. On Tegra194 which uses the DWC PCI driver, whenever we
+>> hotplug CPUs we see the following warnings ...
+>>
+>>  [      79.068351] WARNING KERN IRQ70: set affinity failed(-22).
+>>  [      79.068362] WARNING KERN IRQ71: set affinity failed(-22).
+>>
+> 
+> I tried to reproduce this issue on Synaptics SoC, but can't reproduce it.
+> Per my understanding of the code in kernel/irq/cpuhotplug.c, this warning
+> happened when we migrate irqs away from the offline cpu, this implicitly
+> implies that before this point the irq has bind to the offline cpu, but how
+> could this happen given current dw_pci_msi_set_affinity() implementation
+> always return -EINVAL
 
-Patch applied for fixes!
+By default the smp_affinity should be set so that all CPUs can be
+interrupted ...
 
-Thanks for sorting this out.
+$ cat /proc/irq/70/smp_affinity
+0xff
 
-Yours,
-Linus Walleij
+In my case there are 8 CPUs and so 0xff implies that the interrupt can
+be triggered on any of the 8 CPUs.
+
+Do you see the set_affinity callback being called for the DWC irqchip in
+migrate_one_irq()?
+
+Cheers
+Jon
+
+-- 
+nvpublic
