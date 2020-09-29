@@ -2,123 +2,112 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B7AEC27B8A5
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Sep 2020 02:12:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E7A5A27B8C9
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Sep 2020 02:18:16 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726930AbgI2AMC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 28 Sep 2020 20:12:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45560 "EHLO
+        id S1726930AbgI2ASQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 28 Sep 2020 20:18:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46546 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726379AbgI2AMC (ORCPT
+        with ESMTP id S1726379AbgI2ASP (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 28 Sep 2020 20:12:02 -0400
-Received: from mail-pg1-x542.google.com (mail-pg1-x542.google.com [IPv6:2607:f8b0:4864:20::542])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BF039C0613D3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Sep 2020 17:12:00 -0700 (PDT)
-Received: by mail-pg1-x542.google.com with SMTP id t14so2343075pgl.10
-        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Sep 2020 17:12:00 -0700 (PDT)
+        Mon, 28 Sep 2020 20:18:15 -0400
+Received: from mail-pf1-x441.google.com (mail-pf1-x441.google.com [IPv6:2607:f8b0:4864:20::441])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B65B9C061755;
+        Mon, 28 Sep 2020 17:18:15 -0700 (PDT)
+Received: by mail-pf1-x441.google.com with SMTP id d6so2776364pfn.9;
+        Mon, 28 Sep 2020 17:18:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:content-transfer-encoding:in-reply-to:references
-         :subject:from:cc:to:date:message-id:user-agent;
-        bh=oqWyH6KVz5GIgpx9XiQ64/ocouDLY41IiN7VadeGWLY=;
-        b=Hm7mijcf4yTe2S04g2+xRURW1lE1jbPN3E3nOMLrSEei6s4g6gKBOEdcu9tYXNqCPa
-         Wj+U5w2mOsd0BDZsyYLCChOLht0aFCuDGSnPiBYMMM/r4zsP03KjZYNNlN7uQ96zWTrP
-         jxYeTZ3biQA3MY34GNhI7u3zESWw7RpIq/030=
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=oy1aXlDPXrReF1gBpu82DpN2M0nTMmLTwJqtxAH2mCA=;
+        b=gSZGDzL313qgnP9EOczNvz/gNDSAfTjbal1eD50rvCr3AiMcjMnYFcl0d0P5zY7clH
+         wIWgqQtLsZ8WRVQ88FbJ64AbDkRyJSc0KgYIMTCZfRjHyQh7TCmOKFQ32elgcbIVZjZV
+         XMAwl9JduHCTFpRahOlb5LODeoyTEftVTmgFCvMBq7Haef6PdNSrm9+o80fII+WcxCAT
+         51Ftexs7DNsOieK+sQFcphWmgJMV5RYLsdxQG9ze3Qt9MItWm3Uu5sUwVQZ4M/5Ol8v2
+         5bQmab8sY/LaxAZuaGWyIzHzaL1v3Utg1U8wG/H58rD7ohWpWATgZpSpnMaIApmoaaMq
+         1boA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:content-transfer-encoding
-         :in-reply-to:references:subject:from:cc:to:date:message-id
-         :user-agent;
-        bh=oqWyH6KVz5GIgpx9XiQ64/ocouDLY41IiN7VadeGWLY=;
-        b=P8/wdIKFqtGQE7Zhx9KggrQ77zMvcR1DVYbh2zej8oOaWQtCFwEyyVsOxeEkE0CHjS
-         MjE4jCA8gIN26C0+X5PfqxRTDzROs3xYkfp+ilO4wf/EpaI+CAair0ZxugenkAotxhO0
-         WHjbqH1OX4TNzpFGeZOgz9kgLGPKzKCbBVxaokQzTanA+jSWrvYCOKhn3Xvym1RVqy2l
-         1Ro+BAC6PAo74zFfXt9AbRQao4aKymAkWTU2Pwk+ubnUQT919yY1oWIVAJlHQJT91KEv
-         elvWz8jUnLWVG9PA1KPUCwz4jj60Dw22pXb2omt7D7+Z0tdosy8wNNm0YHX50X0u92Ey
-         niTg==
-X-Gm-Message-State: AOAM533IAZmkYI02UhoTriUF8rQCEVZOBYNPhg8doYSYv0o6eONFLuVt
-        43PaJ4jOS/SvwBGEaFuKTLhqgA==
-X-Google-Smtp-Source: ABdhPJxVVfU0xg3mWqPJAhBF+FuRzxs4/X7TUAoQRVTfy3Sk1faTdz1q8IeeLCSnhuuFYPzSneX8cQ==
-X-Received: by 2002:a05:6a00:2283:b029:142:2501:35e0 with SMTP id f3-20020a056a002283b0290142250135e0mr1668976pfe.64.1601338320155;
-        Mon, 28 Sep 2020 17:12:00 -0700 (PDT)
-Received: from chromium.org ([2620:15c:202:1:3e52:82ff:fe6c:83ab])
-        by smtp.gmail.com with ESMTPSA id l5sm117304pjt.33.2020.09.28.17.11.59
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=oy1aXlDPXrReF1gBpu82DpN2M0nTMmLTwJqtxAH2mCA=;
+        b=OZMIi9jXwo+Q2+5DpTTFEthIMP9CCMafFang2cFqHmF00IqYsqO37pOP7cDlxeYeIX
+         EK8DnEenowiAUeaL652RkeueOZX0njZYrIAoUYr465HSwioGpzqdAIeWYwIpQlb9/Cjo
+         w3l8I0Ev74SNzk+TlprvFVZ7++ABejcKG516WmWjURA1bZkXQzqTSXmiNAsTRjXA6WPk
+         tY1PxfcEbdDLh6zO9aW9NUXFPqneUIu9HkAuFOP9D9NaxqxYJ1jEgCBvZunVMCgoR2U7
+         IxBP3Gf49k7BNEAMMDs3AqM5Cil0WrqgSvppjNT1CGrJsElH6nYOpJjEnrd6/CXo4hkU
+         4TGQ==
+X-Gm-Message-State: AOAM5316oHHwxf1Fldk/O/SUZNb9ghV2w9hVpqRajTRwvvkDU7Ag4i8A
+        sqZc4GVfubqT+YOsrmeDHGw=
+X-Google-Smtp-Source: ABdhPJx9B+EigXOvBOeQtwn7+Eryj+DGPRHycZtoFvJRN16DN8hlDsLfqlEYL5HT43IpE3C2I1JwsA==
+X-Received: by 2002:aa7:9e4e:0:b029:13c:1611:6589 with SMTP id z14-20020aa79e4e0000b029013c16116589mr1765820pfq.6.1601338695189;
+        Mon, 28 Sep 2020 17:18:15 -0700 (PDT)
+Received: from localhost (c-73-25-156-94.hsd1.or.comcast.net. [73.25.156.94])
+        by smtp.gmail.com with ESMTPSA id a74sm2939486pfa.16.2020.09.28.17.18.13
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 28 Sep 2020 17:11:59 -0700 (PDT)
-Content-Type: text/plain; charset="utf-8"
+        Mon, 28 Sep 2020 17:18:14 -0700 (PDT)
+From:   Rob Clark <robdclark@gmail.com>
+To:     dri-devel@lists.freedesktop.org
+Cc:     Rob Clark <robdclark@chromium.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Jordan Crouse <jcrouse@codeaurora.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Jonathan Marek <jonathan@marek.ca>,
+        Brian Masney <masneyb@onstation.org>,
+        linux-arm-msm@vger.kernel.org (open list:DRM DRIVER FOR MSM ADRENO GPU),
+        freedreno@lists.freedesktop.org (open list:DRM DRIVER FOR MSM ADRENO
+        GPU), linux-kernel@vger.kernel.org (open list)
+Subject: [PATCH] drm/msm: fix 32b build warns
+Date:   Mon, 28 Sep 2020 17:19:12 -0700
+Message-Id: <20200929001925.2916984-1-robdclark@gmail.com>
+X-Mailer: git-send-email 2.26.2
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <20200926203454.13643-1-khsieh@codeaurora.org>
-References: <20200926203454.13643-1-khsieh@codeaurora.org>
-Subject: Re: [PATCH v2] drm/msm/dp: return correct connection status after suspend
-From:   Stephen Boyd <swboyd@chromium.org>
-Cc:     tanmay@codeaurora.org, abhinavk@codeaurora.org,
-        aravindh@codeaurora.org, khsieh@codeaurora.org, airlied@linux.ie,
-        daniel@ffwll.ch, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        linux-kernel@vger.kernel.org
-To:     Kuogee Hsieh <khsieh@codeaurora.org>, robdclark@gmail.com,
-        sean@poorly.run
-Date:   Mon, 28 Sep 2020 17:11:58 -0700
-Message-ID: <160133831826.310579.7427870479947629849@swboyd.mtv.corp.google.com>
-User-Agent: alot/0.9.1
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Kuogee Hsieh (2020-09-26 13:34:54)
-> At dp_pm_resume, reinitialize both dp host controller and hpd block
+From: Rob Clark <robdclark@chromium.org>
 
-dp_pm_resume()
+Neither of these code-paths apply to older 32b devices, but it is rude
+to introduce warnings.
 
-> so that hpd connection can be detected at realtime by reading hpd state
-> status register. Also hpd plug interrupt can be generated accordingly.
+Signed-off-by: Rob Clark <robdclark@chromium.org>
+---
+ drivers/gpu/drm/msm/adreno/adreno_gpu.c   | 2 +-
+ drivers/gpu/drm/msm/dsi/pll/dsi_pll_7nm.c | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-Can you describe more here? The subject says "return correct connection
-status after suspend" so it seems that suspend connection status is
-broken. How is it broken? What can be done to see if it is broken? I
-think you can suspend, disconnect the DP cable, and then resume and see
-that the device is connected still?
+diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.c b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
+index fd8f491f2e48..458b5b26d3c2 100644
+--- a/drivers/gpu/drm/msm/adreno/adreno_gpu.c
++++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
+@@ -209,7 +209,7 @@ adreno_iommu_create_address_space(struct msm_gpu *gpu,
+ 	size = iommu->geometry.aperture_end - start + 1;
+ 
+ 	aspace = msm_gem_address_space_create(mmu, "gpu",
+-		start & GENMASK(48, 0), size);
++		start & GENMASK_ULL(48, 0), size);
+ 
+ 	if (IS_ERR(aspace) && !IS_ERR(mmu))
+ 		mmu->funcs->destroy(mmu);
+diff --git a/drivers/gpu/drm/msm/dsi/pll/dsi_pll_7nm.c b/drivers/gpu/drm/msm/dsi/pll/dsi_pll_7nm.c
+index 029cc8bf5a04..de0dfb815125 100644
+--- a/drivers/gpu/drm/msm/dsi/pll/dsi_pll_7nm.c
++++ b/drivers/gpu/drm/msm/dsi/pll/dsi_pll_7nm.c
+@@ -879,7 +879,7 @@ struct msm_dsi_pll *msm_dsi_pll_7nm_init(struct platform_device *pdev, int id)
+ 	pll->max_rate = 3500000000UL;
+ 	if (pll->type == MSM_DSI_PHY_7NM_V4_1) {
+ 		pll->min_rate = 600000000UL;
+-		pll->max_rate = 5000000000UL;
++		pll->max_rate = (unsigned long)5000000000ULL;
+ 		/* workaround for max rate overflowing on 32-bit builds: */
+ 		pll->max_rate = max(pll->max_rate, 0xffffffffUL);
+ 	}
+-- 
+2.26.2
 
-What does "hpd plug interrupt can be generated accordingly" mean? Is the
-interrupt not being generated?
-
->=20
-> Changes in v2:
-> -- use container_of to cast correct dp_display_private pointer
->    at both dp_pm_suspend and dp_pm_resume.
->=20
-> Signed-off-by: Kuogee Hsieh <khsieh@codeaurora.org>
-
-Any Fixes tag?
-
-> diff --git a/drivers/gpu/drm/msm/dp/dp_catalog.c b/drivers/gpu/drm/msm/dp=
-/dp_catalog.c
-> index b15b4ce4ba35..63c5ada34c21 100644
-> --- a/drivers/gpu/drm/msm/dp/dp_catalog.c
-> +++ b/drivers/gpu/drm/msm/dp/dp_catalog.c
-> @@ -572,6 +572,19 @@ void dp_catalog_ctrl_hpd_config(struct dp_catalog *d=
-p_catalog)
->         dp_write_aux(catalog, REG_DP_DP_HPD_CTRL, DP_DP_HPD_CTRL_HPD_EN);
->  }
-> =20
-> +u32 dp_catalog_hpd_get_state_status(struct dp_catalog *dp_catalog)
-> +{
-> +       struct dp_catalog_private *catalog =3D container_of(dp_catalog,
-> +                               struct dp_catalog_private, dp_catalog);
-> +       u32 status =3D 0;
-
-We don't need to assign to 0 to reassign immediately after.
-
-> +
-> +       status =3D dp_read_aux(catalog, REG_DP_DP_HPD_INT_STATUS);
-> +       status >>=3D DP_DP_HPD_STATE_STATUS_BITS_SHIFT;
-> +       status &=3D DP_DP_HPD_STATE_STATUS_BITS_MASK;
-> +
-> +       return status;
-> +}
-> +
->  u32 dp_catalog_hpd_get_intr_status(struct dp_catalog *dp_catalog)
->  {
->         struct dp_catalog_private *catalog =3D container_of(dp_catalog,
