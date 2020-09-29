@@ -2,141 +2,109 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 0585127CA32
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Sep 2020 14:19:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id ADE9F27CCBA
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Sep 2020 14:39:11 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730044AbgI2MRN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 29 Sep 2020 08:17:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44504 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1732118AbgI2MRA (ORCPT
+        id S1733241AbgI2MiQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 29 Sep 2020 08:38:16 -0400
+Received: from mail-ej1-f68.google.com ([209.85.218.68]:34773 "EHLO
+        mail-ej1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1733222AbgI2MiP (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 29 Sep 2020 08:17:00 -0400
-Received: from mail-ed1-x542.google.com (mail-ed1-x542.google.com [IPv6:2a00:1450:4864:20::542])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6F5F6C0613D0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 29 Sep 2020 05:16:59 -0700 (PDT)
-Received: by mail-ed1-x542.google.com with SMTP id w1so6107622edr.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 29 Sep 2020 05:16:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=WmQ4HXFZOiQNgwplnNphS1aF43ZxufpXoarc3usGdEM=;
-        b=qpKdWznEoF0VXNEXTayLjtsb2T+jAgRhbs/Zn/wYm6lpxIzMUgO8OS1OwVkbrPgcjq
-         C64VyNgFzie4RdTaGZ5U03PUJ2/kRUJTZ/OI2HJi+dC8TWHvKyHQwBxig86wTzJsQntR
-         OGaWIeqcGWN7uiIhW4KY9EIF1VzVVFgTOeQLtVADHY+PkGNt69YEYEI7rif8U42S02Rt
-         i86vmYCPL3srS5mRbmElsm3INvC4TsXuCxmrqsJ6mM7TCAkJmIx52uSTmUZOl9lgAdcK
-         dwKHaRWJMXJ1pnq6hKGzJWm+apPp/zaAmZI31iGgF55sAAHqOWYJWAysdSABbAdLTsaQ
-         ic5Q==
+        Tue, 29 Sep 2020 08:38:15 -0400
+Received: by mail-ej1-f68.google.com with SMTP id gr14so14825264ejb.1;
+        Tue, 29 Sep 2020 05:38:13 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=WmQ4HXFZOiQNgwplnNphS1aF43ZxufpXoarc3usGdEM=;
-        b=TLBtp8L2ix679qTM1eltdPXaI0UbXSMnQduQFGjwnp3hriauB726bcTIl3jQd7/WDF
-         eliwmsbXRT4fJY8GKT+A6SsQh598XyA+qvDtDm85pReHKJKB7YDeeqxXjkQvRzmAWN9o
-         Gh1hRGu0ji1CNK1j5B3OCpagOU4b+CTq5akj8R8qWopI3Aav/AIE3PrqRnjrLJDKaFPl
-         f7Ug5/b1p5zvpNm9ct2R/RDm0gHQ6gJmna+l7PVo3Mkotrn2VjtHX3z2hAYZWfQF5srH
-         Src3eiHjPXmzikPU+82h/LFWCoKTNQBq+iQcwd/U0LZy1ZuYF8qbMwuMmsdTDOBUEqwt
-         bkKA==
-X-Gm-Message-State: AOAM533L9IIHQBr/+kYu2ULnnIc5K0+tiMAoY7yCNY3FIuAxAc0NnNPH
-        4aNNlhwZzu4c3HvRjsxM8OXfkg==
-X-Google-Smtp-Source: ABdhPJzQa153E1Rkgt87UDJf1vE8rz6Hpi0RQZdQQDSXy+J5iH/wwvNOr9/UrScWq8FHFcEgYstltA==
-X-Received: by 2002:a05:6402:6c1:: with SMTP id n1mr2958666edy.215.1601381818107;
-        Tue, 29 Sep 2020 05:16:58 -0700 (PDT)
-Received: from [192.168.1.7] ([195.24.90.54])
-        by smtp.googlemail.com with ESMTPSA id r16sm5120171ejb.110.2020.09.29.05.16.56
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 29 Sep 2020 05:16:57 -0700 (PDT)
-Subject: Re: [RESEND v3 2/4] venus: core: vote for video-mem path
-To:     Mansur Alisha Shaik <mansur@codeaurora.org>,
-        linux-media@vger.kernel.org, stanimir.varbanov@linaro.org
-Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        vgarodia@codeaurora.org, swboyd@chromium.org
-References: <1601262496-27026-1-git-send-email-mansur@codeaurora.org>
- <1601262496-27026-3-git-send-email-mansur@codeaurora.org>
-From:   Stanimir Varbanov <stanimir.varbanov@linaro.org>
-Message-ID: <339d0c7e-a5ba-400d-e733-3ede8d20dc7f@linaro.org>
-Date:   Tue, 29 Sep 2020 15:16:55 +0300
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.10.0
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=8cBo88Rf0XB3Amo8WHaoA3mvFSPQ6LbFDMO+GstCOgU=;
+        b=Mj+tyuiiZTC+4Uydo/wKMVjw2kpPqgFowW9aufPtw6EVKHXP1T6g398Wsueuyr2o7E
+         1m2wPQR0R/HyDeroDS8x8G3ElyKPf1Pywtr7PqPD3hPmV61drXl/mv2tp/S6D/z8lVP9
+         M6oCYXFL5poOJz17K9ZOW080P0uFVJqcU3pqduVYCZifWqLlEOEeMFOyr+R8zVFX0Evf
+         UrmgH2n0xEg32P80swtoeULkg/tf+/LRVovB+d/B8NKOr6ICiSfl98De9kiK8j4v1LR/
+         fGEJV7irR+H/8wVojbqVcqyd9PpGkGWzy2rUIm2b4Zr5OMwx5Vw3U+LQOtEl81pMJO/T
+         EfXQ==
+X-Gm-Message-State: AOAM533kOsAosbq3QGYhB+AIpDvP2JLO9JWQwFg1D3l4kGuqwwCepGdK
+        KMNYumz5MaOcR/jz91e3P4w=
+X-Google-Smtp-Source: ABdhPJywdVpCr+WJQxL/CB+8FU0Ise/EiUvtP1NqlRdfdlKrgf438XWp3aGFvYREkH3IV2E+mX7okA==
+X-Received: by 2002:a17:906:b28d:: with SMTP id q13mr3590683ejz.378.1601383092996;
+        Tue, 29 Sep 2020 05:38:12 -0700 (PDT)
+Received: from kozik-lap ([194.230.155.194])
+        by smtp.googlemail.com with ESMTPSA id c5sm5704977edt.24.2020.09.29.05.38.09
+        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 29 Sep 2020 05:38:11 -0700 (PDT)
+Date:   Tue, 29 Sep 2020 14:38:08 +0200
+From:   Krzysztof Kozlowski <krzk@kernel.org>
+To:     Linus Walleij <linus.walleij@linaro.org>
+Cc:     Bartosz Golaszewski <bgolaszewski@baylibre.com>,
+        Rob Herring <robh+dt@kernel.org>, Ray Jui <rjui@broadcom.com>,
+        Scott Branden <sbranden@broadcom.com>,
+        bcm-kernel-feedback-list <bcm-kernel-feedback-list@broadcom.com>,
+        Shawn Guo <shawnguo@kernel.org>,
+        Sascha Hauer <s.hauer@pengutronix.de>,
+        Pengutronix Kernel Team <kernel@pengutronix.de>,
+        Fabio Estevam <festevam@gmail.com>,
+        NXP Linux Team <linux-imx@nxp.com>,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Palmer Dabbelt <palmer@dabbelt.com>,
+        Paul Walmsley <paul.walmsley@sifive.com>,
+        Masahiro Yamada <yamada.masahiro@socionext.com>,
+        Chris Packham <chris.packham@alliedtelesis.co.nz>,
+        Anson Huang <Anson.Huang@nxp.com>,
+        Sungbo Eo <mans0n@gorani.run>, Stefan Agner <stefan@agner.ch>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Magnus Damm <magnus.damm@gmail.com>,
+        Geert Uytterhoeven <geert+renesas@glider.be>,
+        Yash Shah <yash.shah@sifive.com>,
+        Paul Kocialkowski <paul.kocialkowski@bootlin.com>,
+        "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>,
+        Linux ARM <linux-arm-kernel@lists.infradead.org>,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+        linux-unisoc@lists.infradead.org,
+        MSM <linux-arm-msm@vger.kernel.org>,
+        linux-riscv@lists.infradead.org
+Subject: Re: [PATCH 0/8] gpio: add common dtschema
+Message-ID: <20200929123808.GA21809@kozik-lap>
+References: <20200916162250.16098-1-krzk@kernel.org>
+ <CACRpkdacWQKgCY1E=ONegPRE001UA-DmvRKB+Yz1maapYQ5rVQ@mail.gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <1601262496-27026-3-git-send-email-mansur@codeaurora.org>
 Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Disposition: inline
+In-Reply-To: <CACRpkdacWQKgCY1E=ONegPRE001UA-DmvRKB+Yz1maapYQ5rVQ@mail.gmail.com>
+User-Agent: Mutt/1.9.4 (2018-02-28)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Mansur,
-
-On 9/28/20 6:08 AM, Mansur Alisha Shaik wrote:
-> Currently video driver is voting for venus0-ebi path during buffer
-> processing with an average bandwidth of all the instances and
-> unvoting during session release.
+On Tue, Sep 29, 2020 at 01:56:42PM +0200, Linus Walleij wrote:
+> On Wed, Sep 16, 2020 at 6:23 PM Krzysztof Kozlowski <krzk@kernel.org> wrote:
 > 
-> While video streaming when we try to do XO-SD using the command
-> "echo mem > /sys/power/state command" , device is not entering
-> to suspend state and from interconnect summary seeing votes for venus0-ebi
+> > This is independent work of pca953x bindings:
+> > https://lore.kernel.org/lkml/20200916155715.21009-1-krzk@kernel.org/T/#u
+> >
+> > The DTS patches can be also applied independently.
 > 
-> Corrected this by voting for venus0-ebi path in venus_runtime_resume()
-> and unvote during venus_runtime_suspend().
+> I'm a big fan of this patch series and hope for a v2 soon
+> so I can apply them.
+
+I sent the dt-bindings part of it already to dtschema and it was
+applied.  It's missing the description of properties due to licensing
+but at least it brings the hog nodes validation.
+
 > 
-> Fixes: 7482a983d ("media: venus: redesign clocks and pm domains control")
+> If you do not foresee any conflicts in the DTS files I can
+> apply also these, else you can apply them in the i.MX DTS
+> tree (wherever that is) or I can provide an immutable
+> branch, whichever you like!
 
-In fact all changes in this series are related to interconnect. The
-interconnect calls are moved to venus_runtime_suspend/resume by commit
-[1], that's why I think the Fixes: tag for all patches in this series
-should be [1].
+Thanks! I resent already the DTS in separate patchset and most of them
+went in.
 
-[1] 07f8f22a33a9e ("media: venus: core: remove CNOC voting while device
-suspend")
+Best regards,
+Krzysztof
 
-> Signed-off-by: Mansur Alisha Shaik <mansur@codeaurora.org>
-> Reviewed-by: Stephen Boyd <swboyd@chromium.org>
-> ---
->  drivers/media/platform/qcom/venus/core.c | 17 ++++++++++++++++-
->  1 file changed, 16 insertions(+), 1 deletion(-)
-> 
-> diff --git a/drivers/media/platform/qcom/venus/core.c b/drivers/media/platform/qcom/venus/core.c
-> index 52a3886..fa363b8 100644
-> --- a/drivers/media/platform/qcom/venus/core.c
-> +++ b/drivers/media/platform/qcom/venus/core.c
-> @@ -363,7 +363,18 @@ static __maybe_unused int venus_runtime_suspend(struct device *dev)
->  
->  	ret = icc_set_bw(core->cpucfg_path, 0, 0);
->  	if (ret)
-> -		return ret;
-> +		goto err_cpucfg_path;
-> +
-> +	ret = icc_set_bw(core->video_path, 0, 0);
-> +	if (ret)
-> +		goto err_video_path;
-> +
-> +	return ret;
-> +
-> +err_video_path:
-> +	icc_set_bw(core->cpucfg_path, kbps_to_icc(1000), 0);
-> +err_cpucfg_path:
-> +	pm_ops->core_power(dev, POWER_ON);
->  
->  	return ret;
->  }
-> @@ -374,6 +385,10 @@ static __maybe_unused int venus_runtime_resume(struct device *dev)
->  	const struct venus_pm_ops *pm_ops = core->pm_ops;
->  	int ret;
->  
-> +	ret = icc_set_bw(core->video_path, 0, kbps_to_icc(1000));
-> +	if (ret)
-> +		return ret;
-> +
->  	ret = icc_set_bw(core->cpucfg_path, 0, kbps_to_icc(1000));
->  	if (ret)
->  		return ret;
-> 
-
--- 
-regards,
-Stan
