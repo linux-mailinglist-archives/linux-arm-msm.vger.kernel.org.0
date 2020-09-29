@@ -2,266 +2,130 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 1B1BF27BED5
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Sep 2020 10:06:32 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B7A7327BEFC
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Sep 2020 10:16:15 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727474AbgI2IGK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 29 Sep 2020 04:06:10 -0400
-Received: from fllv0016.ext.ti.com ([198.47.19.142]:52438 "EHLO
-        fllv0016.ext.ti.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725776AbgI2IGK (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 29 Sep 2020 04:06:10 -0400
-Received: from lelv0266.itg.ti.com ([10.180.67.225])
-        by fllv0016.ext.ti.com (8.15.2/8.15.2) with ESMTP id 08T8668B036512;
-        Tue, 29 Sep 2020 03:06:06 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ti.com;
-        s=ti-com-17Q1; t=1601366766;
-        bh=Zk6WGDzhpPM6sRSQ1cFhP30MQOAdaqW+rvAUokcbiH8=;
-        h=Subject:To:CC:References:From:Date:In-Reply-To;
-        b=mwdmVWOiXOKLHqFtvjW6Vf8ALeenzgKfXxMqCa9NuUrd8bYIHwFgoxYeRJkY9FZuT
-         eTNaCuE5GBa99AlfpoEffgEAq/rVpGzhg6ekcDICwieVPzui63yC7O1/shYBGDlPW9
-         ODDgXWoByWQ9DdebmF6UYtWl6VmA7OkDDCGjiTHk=
-Received: from DFLE113.ent.ti.com (dfle113.ent.ti.com [10.64.6.34])
-        by lelv0266.itg.ti.com (8.15.2/8.15.2) with ESMTPS id 08T86681120938
-        (version=TLSv1.2 cipher=AES256-GCM-SHA384 bits=256 verify=FAIL);
-        Tue, 29 Sep 2020 03:06:06 -0500
-Received: from DFLE109.ent.ti.com (10.64.6.30) by DFLE113.ent.ti.com
- (10.64.6.34) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.1979.3; Tue, 29
- Sep 2020 03:06:06 -0500
-Received: from fllv0039.itg.ti.com (10.64.41.19) by DFLE109.ent.ti.com
- (10.64.6.30) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.1979.3 via
- Frontend Transport; Tue, 29 Sep 2020 03:06:06 -0500
-Received: from [192.168.2.6] (ileax41-snat.itg.ti.com [10.172.224.153])
-        by fllv0039.itg.ti.com (8.15.2/8.15.2) with ESMTP id 08T864GY102128;
-        Tue, 29 Sep 2020 03:06:04 -0500
-Subject: Re: [PATCH v3 2/3] dmaengine: add peripheral configuration
-To:     Vinod Koul <vkoul@kernel.org>, <dmaengine@vger.kernel.org>
-CC:     Rob Herring <robh+dt@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-References: <20200923063410.3431917-1-vkoul@kernel.org>
- <20200923063410.3431917-3-vkoul@kernel.org>
-From:   Peter Ujfalusi <peter.ujfalusi@ti.com>
-X-Pep-Version: 2.0
-Message-ID: <29f95fff-c484-0131-d1fe-b06e3000fb9f@ti.com>
-Date:   Tue, 29 Sep 2020 11:06:18 +0300
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.12.0
+        id S1727717AbgI2IQA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 29 Sep 2020 04:16:00 -0400
+Received: from m42-4.mailgun.net ([69.72.42.4]:22425 "EHLO m42-4.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727484AbgI2IQA (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 29 Sep 2020 04:16:00 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1601367359; h=In-Reply-To: Content-Transfer-Encoding:
+ Content-Type: MIME-Version: References: Message-ID: Subject: Cc: To:
+ From: Date: Sender; bh=C9y1LdO+aWy0JAGGyfzZqhHPFniLyfb2PM4PGoHOs1Q=; b=oXag0gZVLoDrQgIODIYlL4Bd4aWplBQMb4wJMQUz27yQxijzACMXy6NOobz8d+0bqcohrgXk
+ AzwZ4BpXDc9V68tBeMRbmgeG5ZYC4M/N+/o9IhvIBPEFOi1WSkNiJZAgbn9to5gnFS9PcuJM
+ AABbscZvIT6PGXN0mrWoWftj4T8=
+X-Mailgun-Sending-Ip: 69.72.42.4
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n03.prod.us-east-1.postgun.com with SMTP id
+ 5f72ed3f1fdd3a1390fb68ab (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 29 Sep 2020 08:15:59
+ GMT
+Sender: varada=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id C9530C43387; Tue, 29 Sep 2020 08:15:58 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
+        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+Received: from codeaurora.org (blr-c-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.19.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: varada)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id C8B20C433FF;
+        Tue, 29 Sep 2020 08:15:52 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org C8B20C433FF
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=varada@codeaurora.org
+Date:   Tue, 29 Sep 2020 13:45:47 +0530
+From:   Varadarajan Narayanan <varada@codeaurora.org>
+To:     Rob Herring <robh@kernel.org>
+Cc:     mturquette@baylibre.com, linux-arm-kernel@lists.infradead.org,
+        devicetree@vger.kernel.org, linux-clk@vger.kernel.org,
+        robh+dt@kernel.org, nsekar@codeaurora.org,
+        linux-gpio@vger.kernel.org, p.zabel@pengutronix.de,
+        sboyd@kernel.org, linus.walleij@linaro.org,
+        sricharan@codeaurora.org, linux-kernel@vger.kernel.org,
+        catalin.marinas@arm.com, agross@kernel.org,
+        linux-arm-msm@vger.kernel.org, will@kernel.org,
+        bjorn.andersson@linaro.org
+Subject: Re: [PATCH 4/7] dt-bindings: pinctrl: qcom: Add ipq5018 pinctrl
+ bindings
+Message-ID: <20200929081547.GA11411@codeaurora.org>
+References: <1601270140-4306-1-git-send-email-varada@codeaurora.org>
+ <1601270140-4306-5-git-send-email-varada@codeaurora.org>
+ <20200928181018.GA3007757@bogus>
 MIME-Version: 1.0
-In-Reply-To: <20200923063410.3431917-3-vkoul@kernel.org>
-Content-Type: text/plain; charset="utf-8"
-Content-Language: en-US
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
-X-EXCLAIMER-MD-CONFIG: e1e8a2fd-e40a-4ac6-ac9b-f7e9cc9ee180
+In-Reply-To: <20200928181018.GA3007757@bogus>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Mon, Sep 28, 2020 at 01:10:18PM -0500, Rob Herring wrote:
+> On Mon, 28 Sep 2020 10:45:37 +0530, Varadarajan Narayanan wrote:
+> > Add device tree binding Documentation details for ipq5018
+> > pinctrl driver.
+> >
+> > Signed-off-by: Varadarajan Narayanan <varada@codeaurora.org>
+> > ---
+> >  .../bindings/pinctrl/qcom,ipq5018-pinctrl.yaml     | 143 +++++++++++++=
+++++++++
+> >  1 file changed, 143 insertions(+)
+> >  create mode 100644 Documentation/devicetree/bindings/pinctrl/qcom,ipq5=
+018-pinctrl.yaml
+> >
+>
+>
+> My bot found errors running 'make dt_binding_check' on your patch:
+>
+> /builds/robherring/linux-dt-review/Documentation/devicetree/bindings/pinc=
+trl/qcom,ipq5018-pinctrl.example.dt.yaml: pinctrl@1000000: serial3-pinmux:f=
+unction:0: 'blsp2_uart' is not one of ['atest_char', 'atest_char0', 'atest_=
+char1', 'atest_char2', 'atest_char3', 'audio_pdm0', 'audio_pdm1', 'audio_rx=
+bclk', 'audio_rxd', 'audio_rxfsync', 'audio_rxmclk', 'audio_txbclk', 'audio=
+_txd', 'audio_txfsync', 'audio_txmclk', 'blsp0_i2c', 'blsp0_spi', 'blsp0_ua=
+rt0', 'blsp0_uart1', 'blsp1_i2c0', 'blsp1_i2c1', 'blsp1_spi0', 'blsp1_spi1'=
+, 'blsp1_uart0', 'blsp1_uart1', 'blsp1_uart2', 'blsp2_i2c0', 'blsp2_i2c1', =
+'blsp2_spi', 'blsp2_spi0', 'blsp2_spi1', 'btss0', 'btss1', 'btss10', 'btss1=
+1', 'btss12', 'btss13', 'btss2', 'btss3', 'btss4', 'btss5', 'btss6', 'btss7=
+', 'btss8', 'btss9', 'burn0', 'burn1', 'cri_trng', 'cri_trng0', 'cri_trng1'=
+, 'cxc_clk', 'cxc_data', 'dbg_out', 'eud_gpio', 'gcc_plltest', 'gcc_tlmm', =
+'gpio', 'mac0', 'mac1', 'mdc', 'mdio', 'pcie0_clk', 'pcie0_wake', 'pcie1_cl=
+k', 'pcie1_wake', 'pll_test', 'prng_rosc', 'pwm0', 'pwm1', 'pwm2', 'pwm3', =
+'qdss_cti_trig_in_a0', 'qdss_cti_trig_in_a1', 'qdss_cti_trig_in_b0', 'qdss_=
+cti_trig_in_b1', 'qdss_cti_trig_out_a0', 'qdss_cti_trig_out_a1', 'qdss_cti_=
+trig_out_b0', 'qdss_cti_trig_out_b1', 'qdss_traceclk_a', 'qdss_traceclk_b',=
+ 'qdss_tracectl_a', 'qdss_tracectl_b', 'qdss_tracedata_a', 'qdss_tracedata_=
+b', 'qspi_clk', 'qspi_cs', 'qspi0', 'qspi1', 'qspi2', 'qspi3', 'reset_out',=
+ 'sdc1_clk', 'sdc1_cmd', 'sdc10', 'sdc11', 'sdc12', 'sdc13', 'wci0', 'wci1'=
+, 'wci2', 'wci3', 'wci4', 'wci5', 'wci6', 'wci7', 'wsa_swrm', 'wsi_clk3', '=
+wsi_data3', 'wsis_reset', 'xfem0', 'xfem1', 'xfem2', 'xfem3', 'xfem4', 'xfe=
+m5', 'xfem6', 'xfem7']
+> 	From schema: /builds/robherring/linux-dt-review/Documentation/devicetree=
+/bindings/pinctrl/qcom,ipq5018-pinctrl.yaml
+>
+>
+> See https://patchwork.ozlabs.org/patch/1372367
+>
+> If you already ran 'make dt_binding_check' and didn't see the above
+> error(s), then make sure dt-schema is up to date:
+>
+> pip3 install git+https://github.com/devicetree-org/dt-schema.git@master -=
+-upgrade
+>
+> Please check and re-submit.
 
+Ok, will check and post updated patches
 
-On 23/09/2020 9.34, Vinod Koul wrote:
-> Some complex dmaengine controllers have capability to program the
-> peripheral device, so pass on the peripheral configuration as part of
-> dma_slave_config
->=20
-> Signed-off-by: Vinod Koul <vkoul@kernel.org>
-> ---
->  include/linux/dmaengine.h | 91 +++++++++++++++++++++++++++++++++++++++=
-
->  1 file changed, 91 insertions(+)
->=20
-> diff --git a/include/linux/dmaengine.h b/include/linux/dmaengine.h
-> index 6fbd5c99e30c..bbc32271ad7f 100644
-> --- a/include/linux/dmaengine.h
-> +++ b/include/linux/dmaengine.h
-> @@ -380,6 +380,94 @@ enum dma_slave_buswidth {
->  	DMA_SLAVE_BUSWIDTH_64_BYTES =3D 64,
->  };
-> =20
-> +/**
-> + * enum spi_transfer_cmd - spi transfer commands
-> + */
-> +enum spi_transfer_cmd {
-> +	SPI_TX =3D 1,
-> +	SPI_RX,
-> +	SPI_DUPLEX,
-> +};
-> +
-> +/**
-> + * struct dmaengine_spi_config - spi config for peripheral
-> + *
-> + * @loopback_en: spi loopback enable when set
-> + * @clock_pol: clock polarity
-> + * @data_pol: data polarity
-
-*_pol_high ?
-
-> + * @pack_en: process tx/rx buffers as packed
-
-what does this mean?
-
-> + * @word_len: spi word length
-> + * @clk_div: source clock divider
-> + * @clk_src: serial clock
-
-we tend to use common clock framework for clock configuration?
-
-> + * @cmd: spi cmd
-> + * @cs: chip select toggle
-> + */
-> +struct dmaengine_spi_config {
-> +	u8 loopback_en;
-> +	u8 clock_pol;
-> +	u8 data_pol;
-> +	u8 pack_en;
-> +	u8 word_len;
-> +	u32 clk_div;
-> +	u32 clk_src;
-> +	u8 fragmentation;
-
-This is not documented and I can not really guess what it is.
-
-> +	enum spi_transfer_cmd cmd;
-> +	u8 cs;
-> +};
-> +
-> +enum i2c_op {
-> +	I2C_WRITE =3D 1,
-> +	I2C_READ,
-> +};
-> +
-> +/**
-> + * struct dmaengine_i2c_config - i2c config for peripheral
-> + *
-> + * @pack_enable: process tx/rx buffers as packed
-
-Is this the same thing as with the spi?
-
-> + * @cycle_count: clock cycles to be sent
-> + * @high_count: high period of clock
-> + * @low_count: low period of clock
-> + * @clk_div: source clock divider
-> + * @addr: i2c bus address
-> + * @stretch: stretch the clock at eot
-> + * @op: i2c cmd
-> + */
-> +struct dmaengine_i2c_config {
-> +	u8 pack_enable;
-> +	u8 cycle_count;
-> +	u8 high_count;
-> +	u8 low_count;
-> +	u16 clk_div;
-> +	u8 addr;
-> +	u8 stretch;
-> +	enum i2c_op op;
-> +	bool multi_msg;
-
-Not documented.
-Is it indicates multiple-byte read/write or multiple messages?
-
-> +};
-> +
-> +enum dmaengine_peripheral {
-> +	DMAENGINE_PERIPHERAL_SPI =3D 1,
-> +	DMAENGINE_PERIPHERAL_UART =3D 2,
-> +	DMAENGINE_PERIPHERAL_I2C =3D 3,
-> +	DMAENGINE_PERIPHERAL_LAST =3D DMAENGINE_PERIPHERAL_I2C,
-> +};
-> +
-> +/**
-> + * struct dmaengine_peripheral_config - peripheral configuration for
-> + * dmaengine peripherals
-> + *
-> + * @peripheral: type of peripheral to DMA to/from
-> + * @set_config: set peripheral config
-> + * @rx_len: receive length for buffer
-
-Why is it part of the peripheral config? You get the buffer via
-prep_slave_sg(). Or is this something else?
-
-The GPI driver uses the rx_len for DMA_MEM_TO_DEV (tx) setup.
-
-> + * @spi: peripheral config for spi
-> + * @i2c: peripheral config for i2c
-> + */
-> +struct dmaengine_peripheral_config {
-> +	enum dmaengine_peripheral peripheral;
-> +	u8 set_config;
-> +	u32 rx_len;
-> +	struct dmaengine_spi_config spi;
-> +	struct dmaengine_i2c_config i2c;
-
-I know that you want this to be as generic as much as it is possible,
-but do we really want to?
-GPIv2 will also handle I2S peripheral, other vendor's similar solution
-would require different sets of parameters unique to their IPs?
-
-How we are going to handle similar setups for DMA which is used for
-networking, SPI/I2C/I2S/NAND/display/capture, etc?
-
-Imho these settings are really part of the peripheral's domain and not
-the DMA. It is just a small detail that instead of direct register
-writes, your setup is using the DMA descriptors to write.
-It is similar to what I use as metadata (part of the descriptor belongs
-and owned by the client driver).
-
-I think it would be better to have:
-
-enum dmaengine_peripheral {
-	DMAENGINE_PERIPHERAL_GPI_SPI =3D 1,
-	DMAENGINE_PERIPHERAL_GPI_UART,
-	DMAENGINE_PERIPHERAL_GPI_I2C,
-	DMAENGINE_PERIPHERAL_XYZ_SPI,
-	DMAENGINE_PERIPHERAL_XYZ_AASRC,
-	DMAENGINE_PERIPHERAL_ABC_CAM,
-	...
-	DMAENGINE_PERIPHERAL_LAST,
-};
-
-enum dmaengine_peripheral peripheral_type;
-void *peripheral_config;
-
-
-and that's it. The set_config is specific to GPI.
-It can be debated where the structs should be defined, in the generic
-dmaengine.h or in include/linux/dma/ as controller specific
-(gpi_peripheral.h) or a generic one, like dmaengine_peripheral.h
-
-The SPI/I2C/UART client of yours would pass the GPI specific struct as
-in any case it has to know what is the DMA it is serviced by.
-
-> +};
->  /**
->   * struct dma_slave_config - dma slave channel runtime config
->   * @direction: whether the data shall go in or out on this slave
-> @@ -418,6 +506,8 @@ enum dma_slave_buswidth {
->   * @slave_id: Slave requester id. Only valid for slave channels. The d=
-ma
->   * slave peripheral will have unique id as dma requester which need to=
- be
->   * pass as slave config.
-> + * @peripheral: peripheral configuration for programming peripheral fo=
-r
-> + * dmaengine transfer
->   *
->   * This struct is passed in as configuration data to a DMA engine
->   * in order to set up a certain channel for DMA transport at runtime.
-> @@ -443,6 +533,7 @@ struct dma_slave_config {
->  	u32 dst_port_window_size;
->  	bool device_fc;
->  	unsigned int slave_id;
-> +	struct dmaengine_peripheral_config *peripheral;
->  };
-> =20
->  /**
->=20
-
-- P=C3=A9ter
-
-Texas Instruments Finland Oy, Porkkalankatu 22, 00180 Helsinki.
-Y-tunnus/Business ID: 0615521-4. Kotipaikka/Domicile: Helsinki
-
+--
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member o=
+f Code Aurora Forum, hosted by The Linux Foundation
