@@ -2,84 +2,107 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id ECE6927BA60
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Sep 2020 03:39:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2660C27BADF
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Sep 2020 04:36:24 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726064AbgI2Bjy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 28 Sep 2020 21:39:54 -0400
-Received: from szxga05-in.huawei.com ([45.249.212.191]:14697 "EHLO huawei.com"
-        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S1727210AbgI2Bjx (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 28 Sep 2020 21:39:53 -0400
-Received: from DGGEMS409-HUB.china.huawei.com (unknown [172.30.72.60])
-        by Forcepoint Email with ESMTP id 110F3634EDD56EEAA5B5;
-        Tue, 29 Sep 2020 09:39:51 +0800 (CST)
-Received: from huawei.com (10.175.127.227) by DGGEMS409-HUB.china.huawei.com
- (10.3.19.209) with Microsoft SMTP Server id 14.3.487.0; Tue, 29 Sep 2020
- 09:39:41 +0800
-From:   Yu Kuai <yukuai3@huawei.com>
-To:     <robdclark@gmail.com>, <will@kernel.org>, <joro@8bytes.org>
-CC:     <iommu@lists.linux-foundation.org>,
-        <linux-arm-msm@vger.kernel.org>,
-        <linux-arm-kernel@lists.infradead.org>,
-        <linux-kernel@vger.kernel.org>, <yukuai3@huawei.com>,
-        <yi.zhang@huawei.com>
-Subject: [PATCH V2] iommu/qcom: add missing put_device() call in qcom_iommu_of_xlate()
-Date:   Tue, 29 Sep 2020 09:40:37 +0800
-Message-ID: <20200929014037.2436663-1-yukuai3@huawei.com>
-X-Mailer: git-send-email 2.25.4
+        id S1727269AbgI2CgX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 28 Sep 2020 22:36:23 -0400
+Received: from m42-4.mailgun.net ([69.72.42.4]:15063 "EHLO m42-4.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727151AbgI2CgX (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 28 Sep 2020 22:36:23 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1601346982; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=xq3wf0X2ufcQl3gIMU5+oewCRuLye7B7HD/VCKzxjPM=;
+ b=qSapUk+OYQKyQnW2w5BqRNSCt1yjFRqZts5gvBgSFLM6fBwuth6ju2Ed3L7NWnRr0mMqTsdR
+ ggrdqAPzwPXgOWB8PLedb/srY+OAKynfXollR3LFxbv0hVsDabpmBtRID7q9NREwxGFgQAjE
+ Z9iMLnIvpH4GA7r7UkW9yejPz8A=
+X-Mailgun-Sending-Ip: 69.72.42.4
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n04.prod.us-east-1.postgun.com with SMTP id
+ 5f729d8abe59ebabf3085ada (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 29 Sep 2020 02:35:54
+ GMT
+Sender: nguyenb=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 8671BC43387; Tue, 29 Sep 2020 02:35:53 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: nguyenb)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id AD975C433C8;
+        Tue, 29 Sep 2020 02:35:52 +0000 (UTC)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7BIT
-Content-Type:   text/plain; charset=US-ASCII
-X-Originating-IP: [10.175.127.227]
-X-CFilter-Loop: Reflected
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Mon, 28 Sep 2020 19:35:52 -0700
+From:   nguyenb@codeaurora.org
+To:     cang@codeaurora.org, asutoshd@codeaurora.org,
+        martin.petersen@oracle.com, linux-scsi@vger.kernel.org
+Cc:     linux-arm-msm@vger.kernel.org,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        Avri Altman <avri.altman@wdc.com>,
+        "James E.J. Bottomley" <jejb@linux.ibm.com>,
+        Stanley Chu <stanley.chu@mediatek.com>,
+        Bean Huo <beanhuo@micron.com>,
+        Bart Van Assche <bvanassche@acm.org>,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v1 1/1] scsi: ufshcd: Properly set the device Icc Level
+In-Reply-To: <5c9d6f76303bbe5188bf839b2ea5e5bf530e7281.1598923023.git.nguyenb@codeaurora.org>
+References: <5c9d6f76303bbe5188bf839b2ea5e5bf530e7281.1598923023.git.nguyenb@codeaurora.org>
+Message-ID: <0edf03ca16e2ee6e4ed8e5ac72752a94@codeaurora.org>
+X-Sender: nguyenb@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-if of_find_device_by_node() succeed, qcom_iommu_of_xlate() doesn't have
-a corresponding put_device(). Thus add put_device() to fix the exception
-handling for this function implementation.
+On 2020-08-31 18:19, Bao D. Nguyen wrote:
+> UFS version 3.0 and later devices require Vcc and Vccq power supplies
+> with Vccq2 being optional. While earlier UFS version 2.0 and 2.1
+> devices, the Vcc and Vccq2 are required with Vccq being optional.
+> Check the required power supplies used by the device
+> and set the device's supported Icc level properly.
+> 
+> Signed-off-by: Can Guo <cang@codeaurora.org>
+> Signed-off-by: Asutosh Das <asutoshd@codeaurora.org>
+> Signed-off-by: Bao D. Nguyen <nguyenb@codeaurora.org>
+> ---
+>  drivers/scsi/ufs/ufshcd.c | 5 +++--
+>  1 file changed, 3 insertions(+), 2 deletions(-)
+> 
+> diff --git a/drivers/scsi/ufs/ufshcd.c b/drivers/scsi/ufs/ufshcd.c
+> index 06e2439..fdd1d3e 100644
+> --- a/drivers/scsi/ufs/ufshcd.c
+> +++ b/drivers/scsi/ufs/ufshcd.c
+> @@ -6845,8 +6845,9 @@ static u32
+> ufshcd_find_max_sup_active_icc_level(struct ufs_hba *hba,
+>  {
+>  	u32 icc_level = 0;
+> 
+> -	if (!hba->vreg_info.vcc || !hba->vreg_info.vccq ||
+> -						!hba->vreg_info.vccq2) {
+> +	if (!hba->vreg_info.vcc ||
+> +		(!hba->vreg_info.vccq && hba->dev_info.wspecversion >= 0x300) ||
+> +		(!hba->vreg_info.vccq2 && hba->dev_info.wspecversion < 0x300)) {
+>  		dev_err(hba->dev,
+>  			"%s: Regulator capability was not set, actvIccLevel=%d",
+>  							__func__, icc_level);
 
-Fixes: 0ae349a0f33fb ("iommu/qcom: Add qcom_iommu")
-Signed-off-by: Yu Kuai <yukuai3@huawei.com>
----
+Hello,
+Thank you for the comments on this change so far.
+It's been idle for some time, so I would like to ping and see if there 
+is any other comment.
 
-Changes in V2:
- - Fix wrong 'Fixes'
- - add missing '{}' after if
-
- drivers/iommu/arm/arm-smmu/qcom_iommu.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
-
-diff --git a/drivers/iommu/arm/arm-smmu/qcom_iommu.c b/drivers/iommu/arm/arm-smmu/qcom_iommu.c
-index 9535a6af7553..b30d6c966e2c 100644
---- a/drivers/iommu/arm/arm-smmu/qcom_iommu.c
-+++ b/drivers/iommu/arm/arm-smmu/qcom_iommu.c
-@@ -584,8 +584,10 @@ static int qcom_iommu_of_xlate(struct device *dev, struct of_phandle_args *args)
- 	 * index into qcom_iommu->ctxs:
- 	 */
- 	if (WARN_ON(asid < 1) ||
--	    WARN_ON(asid > qcom_iommu->num_ctxs))
-+	    WARN_ON(asid > qcom_iommu->num_ctxs)) {
-+		put_device(&iommu_pdev->dev);
- 		return -EINVAL;
-+	}
- 
- 	if (!dev_iommu_priv_get(dev)) {
- 		dev_iommu_priv_set(dev, qcom_iommu);
-@@ -594,8 +596,10 @@ static int qcom_iommu_of_xlate(struct device *dev, struct of_phandle_args *args)
- 		 * multiple different iommu devices.  Multiple context
- 		 * banks are ok, but multiple devices are not:
- 		 */
--		if (WARN_ON(qcom_iommu != dev_iommu_priv_get(dev)))
-+		if (WARN_ON(qcom_iommu != dev_iommu_priv_get(dev))) {
-+			put_device(&iommu_pdev->dev);
- 			return -EINVAL;
-+		}
- 	}
- 
- 	return iommu_fwspec_add_ids(dev, &asid, 1);
--- 
-2.25.4
+Regards,
+Bao
 
