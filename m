@@ -2,134 +2,127 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 6A36A27CF04
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Sep 2020 15:23:32 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D7EE827D0E4
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Sep 2020 16:16:42 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729847AbgI2NXW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 29 Sep 2020 09:23:22 -0400
-Received: from hqnvemgate26.nvidia.com ([216.228.121.65]:13115 "EHLO
-        hqnvemgate26.nvidia.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727495AbgI2NXW (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 29 Sep 2020 09:23:22 -0400
-Received: from hqmail.nvidia.com (Not Verified[216.228.121.13]) by hqnvemgate26.nvidia.com (using TLS: TLSv1.2, AES256-SHA)
-        id <B5f7335390005>; Tue, 29 Sep 2020 06:23:05 -0700
-Received: from [10.26.75.44] (10.124.1.5) by HQMAIL107.nvidia.com
- (172.20.187.13) with Microsoft SMTP Server (TLS) id 15.0.1473.3; Tue, 29 Sep
- 2020 13:22:59 +0000
-Subject: Re: [PATCH v2 0/5] PCI: dwc: improve msi handling
-To:     Jisheng Zhang <Jisheng.Zhang@synaptics.com>
-CC:     Kishon Vijay Abraham I <kishon@ti.com>,
-        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
-        Rob Herring <robh@kernel.org>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        Jingoo Han <jingoohan1@gmail.com>,
-        Kukjin Kim <kgene@kernel.org>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        Richard Zhu <hongxing.zhu@nxp.com>,
-        Lucas Stach <l.stach@pengutronix.de>,
-        Shawn Guo <shawnguo@kernel.org>,
-        Sascha Hauer <s.hauer@pengutronix.de>,
-        "Pengutronix Kernel Team" <kernel@pengutronix.de>,
-        Fabio Estevam <festevam@gmail.com>,
-        "NXP Linux Team" <linux-imx@nxp.com>,
-        Yue Wang <yue.wang@Amlogic.com>,
-        "Kevin Hilman" <khilman@baylibre.com>,
-        Neil Armstrong <narmstrong@baylibre.com>,
-        Jerome Brunet <jbrunet@baylibre.com>,
-        Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
-        Jesper Nilsson <jesper.nilsson@axis.com>,
-        Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
-        Xiaowei Song <songxiaowei@hisilicon.com>,
-        Binghui Wang <wangbinghui@hisilicon.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Stanimir Varbanov <svarbanov@mm-sol.com>,
-        Pratyush Anand <pratyush.anand@gmail.com>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
-        Masahiro Yamada <yamada.masahiro@socionext.com>,
-        <linux-omap@vger.kernel.org>, <linux-pci@vger.kernel.org>,
-        <linux-arm-kernel@lists.infradead.org>,
-        <linux-kernel@vger.kernel.org>,
-        <linux-samsung-soc@vger.kernel.org>,
-        <linux-amlogic@lists.infradead.org>, <linux-arm-kernel@axis.com>,
-        <linux-arm-msm@vger.kernel.org>, <linux-tegra@vger.kernel.org>,
-        Vidya Sagar <vidyas@nvidia.com>
-References: <20200924190421.549cb8fc@xhacker.debian>
- <de4d9294-4f6d-c7d1-efc7-c8ef6570bd64@nvidia.com>
- <20200929184851.22682ff1@xhacker.debian>
-From:   Jon Hunter <jonathanh@nvidia.com>
-Message-ID: <8e06a370-a37a-5f33-b43b-2830adb31b3e@nvidia.com>
-Date:   Tue, 29 Sep 2020 14:22:57 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.10.0
+        id S1731491AbgI2OQk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 29 Sep 2020 10:16:40 -0400
+Received: from z5.mailgun.us ([104.130.96.5]:30214 "EHLO z5.mailgun.us"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1730452AbgI2OQk (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 29 Sep 2020 10:16:40 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1601388999; h=Content-Transfer-Encoding: MIME-Version:
+ Message-Id: Date: Subject: Cc: To: From: Sender;
+ bh=9BrT1NAuiYToeL4DIOOkIGttrSg9fAERWIwrVULk+GY=; b=XPx5WUXwptcuQYSs5lYOS1KGFtyAeAsVuFXL7kcRtPO34YTX/OBqRKCTYUDSBSOmdBK/v9aY
+ PSftvdPFikFC6yrwQMici6TBCpjG4MjkwnaprhfW0cyX9bApIrXbOqKRCHWpx7jwywH2IWwz
+ VG9xDwSEoorAgpPd/dAr+6ssVus=
+X-Mailgun-Sending-Ip: 104.130.96.5
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n07.prod.us-west-2.postgun.com with SMTP id
+ 5f7341c60f8c6dd7d2291ffe (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 29 Sep 2020 14:16:38
+ GMT
+Sender: ilina=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 0D715C4344D; Tue, 29 Sep 2020 14:16:37 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
+        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+Received: from codeaurora.org (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: ilina)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 5C2ADC4344D;
+        Tue, 29 Sep 2020 14:16:35 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 5C2ADC4344D
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=ilina@codeaurora.org
+From:   Lina Iyer <ilina@codeaurora.org>
+To:     bjorn.andersson@linaro.org, agross@kernel.org
+Cc:     linux-arm-msm@vger.kernel.org, mkshah@codeaurora.org,
+        Lina Iyer <ilina@codeaurora.org>,
+        John Stultz <john.stultz@linaro.org>
+Subject: [PATCH v2] soc: qcom: cmd-db: allow loading as a module
+Date:   Tue, 29 Sep 2020 08:16:22 -0600
+Message-Id: <20200929141622.4833-1-ilina@codeaurora.org>
+X-Mailer: git-send-email 2.28.0
 MIME-Version: 1.0
-In-Reply-To: <20200929184851.22682ff1@xhacker.debian>
-Content-Type: text/plain; charset="utf-8"
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.124.1.5]
-X-ClientProxiedBy: HQMAIL105.nvidia.com (172.20.187.12) To
- HQMAIL107.nvidia.com (172.20.187.13)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nvidia.com; s=n1;
-        t=1601385785; bh=O1AmZKE8e7EeFMJXiJzyuvgvP7i5Nhyk8/759La3vkU=;
-        h=Subject:To:CC:References:From:Message-ID:Date:User-Agent:
-         MIME-Version:In-Reply-To:Content-Type:Content-Language:
-         Content-Transfer-Encoding:X-Originating-IP:X-ClientProxiedBy;
-        b=PEUGx/Oto2o82hJdlAk6/ts4WMeu88gqStSAIbht98Z/IG5S7VWh+vP98HENpPGWz
-         dvi4P4CwF9nHeRHsl9AzVkrvmXIBrwVTKKBrg57TUdTtX6rbg2iu/yl/npKamfzDfN
-         bde3+rbXPUm4osMwTFyxLBEvxx/+GgYRccoic8JmGxsvmJpOdJQ499JIrzTlkZbfGy
-         uatLuKB6XhZi8NLNwtLMbP08tRGBLxw/s1yS6UBfhIRviBPwMOohoewPUOkIiYkNbc
-         kQHmRyOIchEWyKHIRxQV7sPqqZB+NDjrJDEXtUGp+aaP6iFoCKud6BERbUL3KiIhZi
-         LjHupkiehvUcg==
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Jisheng,
+This patch enables Command DB driver to be loaded as a module. Command
+DB is inherent to RPMH interaction and as such would never be unloaded.
+Add supress_bind_attrs to make it a permanently loaded module.
 
-On 29/09/2020 11:48, Jisheng Zhang wrote:
-> Hi Jon,
-> 
-> On Fri, 25 Sep 2020 09:53:45 +0100 Jon Hunter wrote:
-> 
->>
->> On 24/09/2020 12:05, Jisheng Zhang wrote:
->>> Improve the msi code:
->>> 1. Add proper error handling.
->>> 2. Move dw_pcie_msi_init() from each users to designware host to solve
->>> msi page leakage in resume path.  
->>
->> Apologies if this is slightly off topic, but I have been meaning to ask
->> about MSIs and PCI. On Tegra194 which uses the DWC PCI driver, whenever we
->> hotplug CPUs we see the following warnings ...
->>
->>  [      79.068351] WARNING KERN IRQ70: set affinity failed(-22).
->>  [      79.068362] WARNING KERN IRQ71: set affinity failed(-22).
->>
-> 
-> I tried to reproduce this issue on Synaptics SoC, but can't reproduce it.
-> Per my understanding of the code in kernel/irq/cpuhotplug.c, this warning
-> happened when we migrate irqs away from the offline cpu, this implicitly
-> implies that before this point the irq has bind to the offline cpu, but how
-> could this happen given current dw_pci_msi_set_affinity() implementation
-> always return -EINVAL
+Reviewed-by: John Stultz <john.stultz@linaro.org>
+Tested-by: John Stultz <john.stultz@linaro.org>
+Signed-off-by: Lina Iyer <ilina@codeaurora.org>
+---
+Changes in v2:
+	- Add reviewed and tested tags provided in IRC chat
+---
+ drivers/soc/qcom/Kconfig  | 2 +-
+ drivers/soc/qcom/cmd-db.c | 8 +++++++-
+ 2 files changed, 8 insertions(+), 2 deletions(-)
 
-By default the smp_affinity should be set so that all CPUs can be
-interrupted ...
-
-$ cat /proc/irq/70/smp_affinity
-0xff
-
-In my case there are 8 CPUs and so 0xff implies that the interrupt can
-be triggered on any of the 8 CPUs.
-
-Do you see the set_affinity callback being called for the DWC irqchip in
-migrate_one_irq()?
-
-Cheers
-Jon
-
+diff --git a/drivers/soc/qcom/Kconfig b/drivers/soc/qcom/Kconfig
+index 3dc3e3d61ea3..e2b8427af84c 100644
+--- a/drivers/soc/qcom/Kconfig
++++ b/drivers/soc/qcom/Kconfig
+@@ -17,7 +17,7 @@ config QCOM_AOSS_QMP
+ 	  Subsystem (AOSS) using Qualcomm Messaging Protocol (QMP).
+ 
+ config QCOM_COMMAND_DB
+-	bool "Qualcomm Command DB"
++	tristate "Qualcomm Command DB"
+ 	depends on ARCH_QCOM || COMPILE_TEST
+ 	depends on OF_RESERVED_MEM
+ 	help
+diff --git a/drivers/soc/qcom/cmd-db.c b/drivers/soc/qcom/cmd-db.c
+index fc5610603b17..a26bd0639b70 100644
+--- a/drivers/soc/qcom/cmd-db.c
++++ b/drivers/soc/qcom/cmd-db.c
+@@ -1,8 +1,9 @@
+ /* SPDX-License-Identifier: GPL-2.0 */
+-/* Copyright (c) 2016-2018, The Linux Foundation. All rights reserved. */
++/* Copyright (c) 2016-2020, The Linux Foundation. All rights reserved. */
+ 
+ #include <linux/debugfs.h>
+ #include <linux/kernel.h>
++#include <linux/module.h>
+ #include <linux/of.h>
+ #include <linux/of_address.h>
+ #include <linux/of_reserved_mem.h>
+@@ -340,12 +341,14 @@ static const struct of_device_id cmd_db_match_table[] = {
+ 	{ .compatible = "qcom,cmd-db" },
+ 	{ }
+ };
++MODULE_DEVICE_TABLE(of, cmd_db_match_table);
+ 
+ static struct platform_driver cmd_db_dev_driver = {
+ 	.probe  = cmd_db_dev_probe,
+ 	.driver = {
+ 		   .name = "cmd-db",
+ 		   .of_match_table = cmd_db_match_table,
++		   .suppress_bind_attrs = true,
+ 	},
+ };
+ 
+@@ -354,3 +357,6 @@ static int __init cmd_db_device_init(void)
+ 	return platform_driver_register(&cmd_db_dev_driver);
+ }
+ arch_initcall(cmd_db_device_init);
++
++MODULE_DESCRIPTION("Qualcomm Technologies, Inc. Command DB Driver");
++MODULE_LICENSE("GPL v2");
 -- 
-nvpublic
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
+
