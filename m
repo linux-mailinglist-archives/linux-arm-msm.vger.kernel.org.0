@@ -2,50 +2,50 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 992D127D61D
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Sep 2020 20:50:18 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 03F0127D657
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Sep 2020 21:01:58 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728417AbgI2SuK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 29 Sep 2020 14:50:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49054 "EHLO
+        id S1728417AbgI2TBr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 29 Sep 2020 15:01:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50846 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727740AbgI2SuJ (ORCPT
+        with ESMTP id S1728172AbgI2TBr (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 29 Sep 2020 14:50:09 -0400
-Received: from mail-pf1-x442.google.com (mail-pf1-x442.google.com [IPv6:2607:f8b0:4864:20::442])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7F49BC061755
-        for <linux-arm-msm@vger.kernel.org>; Tue, 29 Sep 2020 11:50:08 -0700 (PDT)
-Received: by mail-pf1-x442.google.com with SMTP id x22so5454060pfo.12
-        for <linux-arm-msm@vger.kernel.org>; Tue, 29 Sep 2020 11:50:08 -0700 (PDT)
+        Tue, 29 Sep 2020 15:01:47 -0400
+Received: from mail-pj1-x1044.google.com (mail-pj1-x1044.google.com [IPv6:2607:f8b0:4864:20::1044])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2AC13C0613D0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 29 Sep 2020 12:01:47 -0700 (PDT)
+Received: by mail-pj1-x1044.google.com with SMTP id l18so35067pjz.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 29 Sep 2020 12:01:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=9VDUVULmJB3Y+7AbCQ1NSMUBMO5bledTUKUB0vzOkYo=;
-        b=kuV83tdDUF1UTiC7VoBpXo1vmr5O8uWz7mBNlpUHDdBUMvNtrQ+6JPx1XQQ854fngx
-         G8dvlgC3EDApK5ATqQTsmBz3t2rmn/4nunMmMraAG0HQBN0IwikK/XGkm9S3DydDEEgd
-         MVOyf0Wu/IFGEz3QUOJ6lDzGZ8hq7ji8KXH7E=
+        bh=7nARKy1YRpyTgSZxIUwrkU74pSG7aRsz7ayBIvLyxxw=;
+        b=K5Jq8aHp/pcgYY6/QdkXX9JB1LeqtGy1prh//v+zPwiUaXTQzBa2VCuXLyIaZ3nJeL
+         wW0cDksddcnfBWLBRQ5prkhoNZxxd0/Oy4PE35SdlJb/aqqbs454AE8WfY4X9NU1lMP2
+         c/fOAFbu8A+hI7P88st8YAXAvJ1cbSXMt5R9M=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=9VDUVULmJB3Y+7AbCQ1NSMUBMO5bledTUKUB0vzOkYo=;
-        b=gHqJhpUPNeoBT3CNmwQp8eb5Jy08UF5R3VkAtphejnDF7rN+Mvukf94b8jtGa9h6EI
-         6gxE0VNDAXHrzzos/M6NE8bF8lDt+btbXm9a8SrO1zGReC4od53CC41AMFalZh07upau
-         WHzWu9d2U/NnXB9hH6SQzWNTwn1C3HBgfvlrNZuWkzZWT7zpZErGfZx6/B/VkVZYYKi/
-         dn2rOGlhPQwq78iLqPu7ZbzUR+0k6Hx5EFCXnfa5Sxd6qwgCicQC2Zm+k5PLg8T6l4vE
-         LWIpdJaYkND1SlmHTu5uCSv8hobMmQ/npiEizNLaK4+O22znlsNvTvtlHMTfMwPevPVG
-         2vrw==
-X-Gm-Message-State: AOAM530U/d9obWzcTqI6NRjxZ39nK7ySh8Eh4LwuqbiN9n8bKI2eit3o
-        68yVaLj30vcjLburr/vRFh8wKA==
-X-Google-Smtp-Source: ABdhPJzO482Tx7l4tsHYQOhdq82ZvPIaRdCpG4EBkBUP86FWHuIICpGgwVYAbmCuaJdaBBX07MoEwg==
-X-Received: by 2002:a17:902:146:b029:d2:5615:5700 with SMTP id 64-20020a1709020146b02900d256155700mr5720462plb.84.1601405408033;
-        Tue, 29 Sep 2020 11:50:08 -0700 (PDT)
+        bh=7nARKy1YRpyTgSZxIUwrkU74pSG7aRsz7ayBIvLyxxw=;
+        b=Nf9eHqG2LqgA1qhOJYej3/H3WH3kM6QI4tMVNnLEQC+8oQP884DzvJ8+OxhbwDYkIB
+         cz+D82YlP6cIdlU1qljwgrPhTU22CqPmSt0v44uv8O+K3eDgMl/wUQKl/ZZZ2Pj863u1
+         heRKvi8Hd7ZGkYwB5HujbsxPEIs1zsnxokTMdkmFi0g1Wk0miWYMhLwdehM4h3j5GPPH
+         Hz9SUtlGwUSrKXci/plBIX73OPR/IWcDKvCQy2gWtNDTrwk5og7pK3X/h9toe9+4PzuI
+         0wn+5vEUxhjvRRdRJ0hJPRInSaV6XlIGGBAlwyv7cdTcHIUL+3hP+RCp0VdbLyzhA81M
+         Njmg==
+X-Gm-Message-State: AOAM533eCquGy7gQyAD6sx0IsL0KanEGH4vTF1Xovnlw/ffMcuI28oEd
+        FHE9reLuJueuB6mxaOOujb4/ww==
+X-Google-Smtp-Source: ABdhPJwB7K7TSZqFAymAj9u1ww16GuQvJSGxJcrJYqk3iQ+Nbhr/JctY+HTfM4yaTcGjCSTMeNnoqA==
+X-Received: by 2002:a17:90a:7bcf:: with SMTP id d15mr5083857pjl.230.1601406106614;
+        Tue, 29 Sep 2020 12:01:46 -0700 (PDT)
 Received: from localhost ([2620:15c:202:1:f693:9fff:fef4:e70a])
-        by smtp.gmail.com with ESMTPSA id 36sm5652997pgl.72.2020.09.29.11.50.07
+        by smtp.gmail.com with ESMTPSA id 64sm6245442pfz.204.2020.09.29.12.01.45
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 29 Sep 2020 11:50:07 -0700 (PDT)
-Date:   Tue, 29 Sep 2020 11:50:06 -0700
+        Tue, 29 Sep 2020 12:01:46 -0700 (PDT)
+Date:   Tue, 29 Sep 2020 12:01:44 -0700
 From:   Matthias Kaehlcke <mka@chromium.org>
 To:     Sandeep Maheswaram <sanm@codeaurora.org>
 Cc:     Andy Gross <agross@kernel.org>,
@@ -59,104 +59,186 @@ Cc:     Andy Gross <agross@kernel.org>,
         linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
         Manu Gautam <mgautam@codeaurora.org>
-Subject: Re: [PATCH v3 2/5] usb: dwc3: host: Add suspend_quirk for dwc3 host
-Message-ID: <20200929185006.GC1621304@google.com>
+Subject: Re: [PATCH v3 3/5] usb: dwc3: qcom: Configure wakeup interrupts and
+ set genpd active wakeup flag
+Message-ID: <20200929190144.GD1621304@google.com>
 References: <1601376452-31839-1-git-send-email-sanm@codeaurora.org>
- <1601376452-31839-3-git-send-email-sanm@codeaurora.org>
+ <1601376452-31839-4-git-send-email-sanm@codeaurora.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <1601376452-31839-3-git-send-email-sanm@codeaurora.org>
+In-Reply-To: <1601376452-31839-4-git-send-email-sanm@codeaurora.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Sep 29, 2020 at 04:17:29PM +0530, Sandeep Maheswaram wrote:
-> Adding suspend quirk function for dwc3 host which will be called
-> during xhci suspend.
-> Setting hs_phy_flags, ss_phy_flags and phy mode during host suspend.
+On Tue, Sep 29, 2020 at 04:17:30PM +0530, Sandeep Maheswaram wrote:
+> Configure interrupts based on hs_phy_flag to avoid triggering of
+> interrupts during system suspend and suspends successfully.
+> Set genpd active wakeup flag for usb gdsc if wakeup capable devices
+> are connected so that wake up happens without reenumeration.
 > 
 > Signed-off-by: Sandeep Maheswaram <sanm@codeaurora.org>
 > ---
->  drivers/usb/dwc3/host.c | 49 +++++++++++++++++++++++++++++++++++++++++++++++++
->  1 file changed, 49 insertions(+)
+>  drivers/usb/dwc3/dwc3-qcom.c | 74 +++++++++++++++++++++++++++++++++++---------
+>  1 file changed, 59 insertions(+), 15 deletions(-)
 > 
-> diff --git a/drivers/usb/dwc3/host.c b/drivers/usb/dwc3/host.c
-> index e195176..7f316fa 100644
-> --- a/drivers/usb/dwc3/host.c
-> +++ b/drivers/usb/dwc3/host.c
-> @@ -11,6 +11,13 @@
+> diff --git a/drivers/usb/dwc3/dwc3-qcom.c b/drivers/usb/dwc3/dwc3-qcom.c
+> index c703d55..b6f36bd 100644
+> --- a/drivers/usb/dwc3/dwc3-qcom.c
+> +++ b/drivers/usb/dwc3/dwc3-qcom.c
+> @@ -17,9 +17,11 @@
+>  #include <linux/of_platform.h>
 >  #include <linux/platform_device.h>
+>  #include <linux/phy/phy.h>
+> +#include <linux/pm_domain.h>
+>  #include <linux/usb/of.h>
+>  #include <linux/reset.h>
+>  #include <linux/iopoll.h>
+> +#include <linux/usb/hcd.h>
 >  
 >  #include "core.h"
-> +#include "../host/xhci.h"
-> +#include "../host/xhci-plat.h"
-> +int xhci_dwc3_suspend_quirk(struct usb_hcd *hcd);
-> +
-> +static const struct xhci_plat_priv xhci_plat_dwc3_xhci = {
-> +	.suspend_quirk = xhci_dwc3_suspend_quirk,
-> +};
 >  
->  static int dwc3_host_get_irq(struct dwc3 *dwc)
+> @@ -293,19 +295,33 @@ static void dwc3_qcom_interconnect_exit(struct dwc3_qcom *qcom)
+>  
+>  static void dwc3_qcom_disable_interrupts(struct dwc3_qcom *qcom)
 >  {
-> @@ -115,6 +122,13 @@ int dwc3_host_init(struct dwc3 *dwc)
->  		}
+> +	struct dwc3 *dwc = platform_get_drvdata(qcom->dwc3);
+> +
+>  	if (qcom->hs_phy_irq) {
+>  		disable_irq_wake(qcom->hs_phy_irq);
+>  		disable_irq_nosync(qcom->hs_phy_irq);
 >  	}
 >  
-> +	ret = platform_device_add_data(xhci, &xhci_plat_dwc3_xhci,
-> +			sizeof(struct xhci_plat_priv));
-> +	if (ret) {
-> +		dev_err(dwc->dev, "failed to add data to xHCI\n");
-> +		goto err;
-> +	}
-> +
->  	ret = platform_device_add(xhci);
->  	if (ret) {
->  		dev_err(dwc->dev, "failed to register xHCI device\n");
-> @@ -127,6 +141,41 @@ int dwc3_host_init(struct dwc3 *dwc)
->  	return ret;
->  }
->  
-> +static void dwc3_set_phy_speed_flags(struct usb_hcd *hcd)
-
-The main thing this function does is setting the PHY mode (see
-the phy_set_mode() calls), please rename it to dwc3_set_phy_mode()
-to reflect this.
-
-> +{
-> +
-> +	int i, num_ports;
-> +	u32 reg;
-> +	struct device *dev = hcd->self.controller;
-> +	struct dwc3 *dwc = dev_get_drvdata(dev->parent);
-> +	struct xhci_hcd	*xhci_hcd = hcd_to_xhci(hcd);
-> +
-> +	dwc->hs_phy_flags = 0;
-
-What about 'dwc->ss_phy_flags'?
-
-I suggested in another patch to use a local variable instead, so you
-probably have to initialize it anyway or the compiler will be unhappy ;-)
-
-> +
-> +	reg = readl(&xhci_hcd->cap_regs->hcs_params1);
-> +
-> +	num_ports = HCS_MAX_PORTS(reg);
-> +	for (i = 0; i < num_ports; i++) {
-> +		reg = readl(&xhci_hcd->op_regs->port_status_base + i * 0x04);
-> +		if (reg & PORT_PE) {
-> +			if (DEV_HIGHSPEED(reg) || DEV_FULLSPEED(reg))
-> +				dwc->hs_phy_flags |= PHY_MODE_USB_HOST_HS;
-> +			else if (DEV_LOWSPEED(reg))
-> +				dwc->hs_phy_flags |= PHY_MODE_USB_HOST_LS;
-
-nit: add empty line to visually separate HS from SS
-
-> +			if (DEV_SUPERSPEED(reg))
-> +				dwc->ss_phy_flags |= PHY_MODE_USB_HOST_SS;
+> -	if (qcom->dp_hs_phy_irq) {
+> -		disable_irq_wake(qcom->dp_hs_phy_irq);
+> -		disable_irq_nosync(qcom->dp_hs_phy_irq);
+> -	}
+> +	if (dwc->hs_phy_flags & PHY_MODE_USB_HOST_LS) {
+> +		if (qcom->dp_hs_phy_irq) {
+> +			disable_irq_wake(qcom->dp_hs_phy_irq);
+> +			disable_irq_nosync(qcom->dp_hs_phy_irq);
 > +		}
-> +	}
-> +	phy_set_mode(dwc->usb2_generic_phy, dwc->hs_phy_flags);
-> +	phy_set_mode(dwc->usb3_generic_phy, dwc->ss_phy_flags);
+> +	} else if (dwc->hs_phy_flags & PHY_MODE_USB_HOST_HS) {
+> +		if (qcom->dm_hs_phy_irq) {
+> +			disable_irq_wake(qcom->dm_hs_phy_irq);
+> +			disable_irq_nosync(qcom->dm_hs_phy_irq);
+> +		}
+> +	} else {
+> +		if (qcom->dp_hs_phy_irq) {
+> +			disable_irq_wake(qcom->dp_hs_phy_irq);
+> +			disable_irq_nosync(qcom->dp_hs_phy_irq);
+> +		}
+>  
+> -	if (qcom->dm_hs_phy_irq) {
+> -		disable_irq_wake(qcom->dm_hs_phy_irq);
+> -		disable_irq_nosync(qcom->dm_hs_phy_irq);
+> +		if (qcom->dm_hs_phy_irq) {
+> +			disable_irq_wake(qcom->dm_hs_phy_irq);
+> +			disable_irq_nosync(qcom->dm_hs_phy_irq);
+> +		}
 
-Check return values and return any errors?
+This function would benefit from a helper like this:
+
+static void dwc3_qcon_enable_wakeup_irq(int wake_irq)
+{
+	if (wake_irq) {
+		disable_irq_wake(wake_irq);
+		disable_irq_nosync(wake_irq);
+	}
+}
+
+>  	}
+>  
+>  	if (qcom->ss_phy_irq) {
+> @@ -316,19 +332,33 @@ static void dwc3_qcom_disable_interrupts(struct dwc3_qcom *qcom)
+>  
+>  static void dwc3_qcom_enable_interrupts(struct dwc3_qcom *qcom)
+>  {
+> +	struct dwc3 *dwc = platform_get_drvdata(qcom->dwc3);
+> +
+>  	if (qcom->hs_phy_irq) {
+>  		enable_irq(qcom->hs_phy_irq);
+>  		enable_irq_wake(qcom->hs_phy_irq);
+>  	}
+>  
+> -	if (qcom->dp_hs_phy_irq) {
+> -		enable_irq(qcom->dp_hs_phy_irq);
+> -		enable_irq_wake(qcom->dp_hs_phy_irq);
+> -	}
+> +	if (dwc->hs_phy_flags & PHY_MODE_USB_HOST_LS) {
+> +		if (qcom->dp_hs_phy_irq) {
+> +			enable_irq(qcom->dp_hs_phy_irq);
+> +			enable_irq_wake(qcom->dp_hs_phy_irq);
+> +		}
+> +	} else if (dwc->hs_phy_flags & PHY_MODE_USB_HOST_HS) {
+> +		if (qcom->dm_hs_phy_irq) {
+> +			enable_irq(qcom->dm_hs_phy_irq);
+> +			enable_irq_wake(qcom->dm_hs_phy_irq);
+> +		}
+> +	} else {
+> +		if (qcom->dp_hs_phy_irq) {
+> +			enable_irq(qcom->dp_hs_phy_irq);
+> +			enable_irq_wake(qcom->dp_hs_phy_irq);
+> +		}
+>  
+> -	if (qcom->dm_hs_phy_irq) {
+> -		enable_irq(qcom->dm_hs_phy_irq);
+> -		enable_irq_wake(qcom->dm_hs_phy_irq);
+> +		if (qcom->dm_hs_phy_irq) {
+> +			enable_irq(qcom->dm_hs_phy_irq);
+> +			enable_irq_wake(qcom->dm_hs_phy_irq);
+> +		}
+>  	}
+
+Same as for _disable(), a helper would make this function more
+digestable.
+
+>  	if (qcom->ss_phy_irq) {
+> @@ -341,6 +371,15 @@ static int dwc3_qcom_suspend(struct dwc3_qcom *qcom)
+>  {
+>  	u32 val;
+>  	int i, ret;
+> +	struct dwc3 *dwc = platform_get_drvdata(qcom->dwc3);
+> +	struct usb_hcd  *hcd;
+
+nit: remove extra blank
+
+> +	struct generic_pm_domain *genpd = pd_to_genpd(qcom->dev->pm_domain);
+> +
+> +	if (dwc->xhci) {
+> +		hcd = platform_get_drvdata(dwc->xhci);
+> +		if (usb_wakeup_enabled_descendants(hcd->self.root_hub))
+> +			genpd->flags |= GENPD_FLAG_ACTIVE_WAKEUP;
+> +	}
+
+Do this after the check for 'qcom->is_suspended' below
+
+>  
+>  	if (qcom->is_suspended)
+>  		return 0;
+> @@ -366,6 +405,11 @@ static int dwc3_qcom_resume(struct dwc3_qcom *qcom)
+>  {
+>  	int ret;
+>  	int i;
+> +	struct dwc3 *dwc = platform_get_drvdata(qcom->dwc3);
+> +	struct generic_pm_domain *genpd = pd_to_genpd(qcom->dev->pm_domain);
+> +
+> +	if (dwc->xhci)
+> +		genpd->flags &= ~GENPD_FLAG_ACTIVE_WAKEUP;
+
+ditto
+
+>  
+>  	if (!qcom->is_suspended)
+>  		return 0;
+> @@ -764,7 +808,7 @@ static int dwc3_qcom_probe(struct platform_device *pdev)
+>  	if (ret)
+>  		goto interconnect_exit;
+>  
+> -	device_init_wakeup(&pdev->dev, 1);
+> +	device_init_wakeup(&pdev->dev, of_property_read_bool(np, "wakeup-source"));
+>  	qcom->is_suspended = false;
+>  	pm_runtime_set_active(dev);
+>  	pm_runtime_enable(dev);
+> 
