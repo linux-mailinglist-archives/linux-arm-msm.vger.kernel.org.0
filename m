@@ -2,169 +2,135 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 8C4D927D589
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Sep 2020 20:13:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 019EC27D59B
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Sep 2020 20:17:50 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727787AbgI2SNB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 29 Sep 2020 14:13:01 -0400
-Received: from mail.kernel.org ([198.145.29.99]:47796 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725320AbgI2SNA (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 29 Sep 2020 14:13:00 -0400
-Received: from disco-boy.misterjones.org (disco-boy.misterjones.org [51.254.78.96])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 61130208B8;
-        Tue, 29 Sep 2020 18:12:59 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1601403179;
-        bh=KbbIptFu2by3ZEgiSoxO0ItV258aPMBQ8QGyKLlZVN4=;
-        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-        b=RJjs+GRAdQMy1SObha2G7D1UaBcQCAAyaTf8WgvCvreuOJYCdRhPfgljfewCRMqNa
-         fgTvFA+0dGumXNIblpNRfptGGEAht5GxmMN852H1TK4YPcCUSphboNBwtzPzAVnGzS
-         +GpbuSl9ZZMwew3iyJxm0lXQg8HDC9Hx7S1EK6Fw=
-Received: from disco-boy.misterjones.org ([51.254.78.96] helo=www.loen.fr)
-        by disco-boy.misterjones.org with esmtpsa (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
-        (Exim 4.92)
-        (envelope-from <maz@kernel.org>)
-        id 1kNK7V-00FxpD-8M; Tue, 29 Sep 2020 19:12:57 +0100
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8;
- format=flowed
-Content-Transfer-Encoding: 8bit
-Date:   Tue, 29 Sep 2020 19:12:57 +0100
-From:   Marc Zyngier <maz@kernel.org>
-To:     Jon Hunter <jonathanh@nvidia.com>
-Cc:     Jisheng Zhang <Jisheng.Zhang@synaptics.com>,
-        Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
-        Neil Armstrong <narmstrong@baylibre.com>,
-        linux-pci@vger.kernel.org,
-        Binghui Wang <wangbinghui@hisilicon.com>,
+        id S1727876AbgI2SRs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 29 Sep 2020 14:17:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44108 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727700AbgI2SRs (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 29 Sep 2020 14:17:48 -0400
+Received: from mail-pg1-x541.google.com (mail-pg1-x541.google.com [IPv6:2607:f8b0:4864:20::541])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8BB08C0613D2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 29 Sep 2020 11:17:48 -0700 (PDT)
+Received: by mail-pg1-x541.google.com with SMTP id s31so4517669pga.7
+        for <linux-arm-msm@vger.kernel.org>; Tue, 29 Sep 2020 11:17:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=ryJBLPTda+9/HnHPC1FJ42KvIGwTgN32I9Cgw34tfzQ=;
+        b=WAV7G0W9JyfR6qwCZmNQyryplAPsfDbC4m9rrojYBmfC2BvYm1k1P4m9evtOUzbEN0
+         pI6ci3BGuKmE8A63nJNRw/phJ1Cw9Xmp8s2eGWErGbkfiQBqmr7MruCrLxGWFzyFKgGd
+         x46BnZMASPXgPh0tWPbeZH+PbVhZgsDZGowVM=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=ryJBLPTda+9/HnHPC1FJ42KvIGwTgN32I9Cgw34tfzQ=;
+        b=T8CT2K/fw7w5XkBkZW/NFjQSFjgg4aTk3TqqKU41FVsxGV0BmGNdqIA/5wI21ul5pu
+         Kbs0wwdqWgy9yueQEP2nSLNhziKoY2snCs5pDbyEAn8/ZQrpcGdH/EcMk4baaazeHyX+
+         MrZtFUgO3oJ5eaDnMrmKMf+Y7qgKBlG1kpw1vyUYy2DO8peJLuVofICCakCMsOkTCdKe
+         xC5KjpBcF6fwe2oV9XIiPahWxHP4/1Dkt7ztvf1Evnf6nAepQQR8M0aeZ+XXeMFd4lhP
+         vBPvu+YdQoj/a4YLKDjOIQgsdKDnD3evfCXfgfFNtWC7Rrhohhmwhn4dFk50kiXvldEq
+         QU0Q==
+X-Gm-Message-State: AOAM531v2y1DGh0S49hrg+D6j9m3M9E2mcW6qL3Uut1wxD2YSR9Nxqg5
+        Xu9vNxjjUC9MWn+CTJ6W56Q+Lw==
+X-Google-Smtp-Source: ABdhPJyTHcKPGR42VRdz9E76O936nMlyAOhqoqKKzD+F50tcGFJS4la+9ZyvF6AEDlrdJAJTtlBVGA==
+X-Received: by 2002:a05:6a00:1702:b029:142:2501:34d7 with SMTP id h2-20020a056a001702b0290142250134d7mr5299071pfc.48.1601403467849;
+        Tue, 29 Sep 2020 11:17:47 -0700 (PDT)
+Received: from localhost ([2620:15c:202:1:f693:9fff:fef4:e70a])
+        by smtp.gmail.com with ESMTPSA id y3sm6535643pfb.18.2020.09.29.11.17.46
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 29 Sep 2020 11:17:47 -0700 (PDT)
+Date:   Tue, 29 Sep 2020 11:17:45 -0700
+From:   Matthias Kaehlcke <mka@chromium.org>
+To:     Sandeep Maheswaram <sanm@codeaurora.org>
+Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Masahiro Yamada <yamada.masahiro@socionext.com>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        linux-arm-kernel@axis.com, Vidya Sagar <vidyas@nvidia.com>,
-        Fabio Estevam <festevam@gmail.com>,
-        Jerome Brunet <jbrunet@baylibre.com>,
-        Rob Herring <robh@kernel.org>,
-        Jesper Nilsson <jesper.nilsson@axis.com>,
-        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
-        Kevin Hilman <khilman@baylibre.com>,
-        Pratyush Anand <pratyush.anand@gmail.com>,
-        linux-tegra@vger.kernel.org, Krzysztof Kozlowski <krzk@kernel.org>,
-        Kishon Vijay Abraham I <kishon@ti.com>,
-        Kukjin Kim <kgene@kernel.org>,
-        NXP Linux Team <linux-imx@nxp.com>,
-        Xiaowei Song <songxiaowei@hisilicon.com>,
-        Richard Zhu <hongxing.zhu@nxp.com>,
-        Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
-        linux-arm-msm@vger.kernel.org,
-        Sascha Hauer <s.hauer@pengutronix.de>,
-        Yue Wang <yue.wang@amlogic.com>,
-        linux-samsung-soc@vger.kernel.org,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        linux-amlogic@lists.infradead.org, linux-omap@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        Jingoo Han <jingoohan1@gmail.com>,
-        Andy Gross <agross@kernel.org>, linux-kernel@vger.kernel.org,
-        Stanimir Varbanov <svarbanov@mm-sol.com>,
-        Pengutronix Kernel Team <kernel@pengutronix.de>,
-        Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
-        Shawn Guo <shawnguo@kernel.org>,
-        Lucas Stach <l.stach@pengutronix.de>
-Subject: Re: [PATCH v2 0/5] PCI: dwc: improve msi handling
-In-Reply-To: <6ead62a5-6ad5-bde8-a5df-93c0f8029f65@nvidia.com>
-References: <20200924190421.549cb8fc@xhacker.debian>
- <de4d9294-4f6d-c7d1-efc7-c8ef6570bd64@nvidia.com>
- <20200929184851.22682ff1@xhacker.debian>
- <8e06a370-a37a-5f33-b43b-2830adb31b3e@nvidia.com>
- <d4a6eea3c5e33a3a4056885419df95a7@kernel.org>
- <6ead62a5-6ad5-bde8-a5df-93c0f8029f65@nvidia.com>
-User-Agent: Roundcube Webmail/1.4.8
-Message-ID: <5f4947b18bf381615a37aa81c2242477@kernel.org>
-X-Sender: maz@kernel.org
-X-SA-Exim-Connect-IP: 51.254.78.96
-X-SA-Exim-Rcpt-To: jonathanh@nvidia.com, Jisheng.Zhang@synaptics.com, hayashi.kunihiko@socionext.com, narmstrong@baylibre.com, linux-pci@vger.kernel.org, wangbinghui@hisilicon.com, bjorn.andersson@linaro.org, yamada.masahiro@socionext.com, thierry.reding@gmail.com, linux-arm-kernel@axis.com, vidyas@nvidia.com, festevam@gmail.com, jbrunet@baylibre.com, robh@kernel.org, jesper.nilsson@axis.com, lorenzo.pieralisi@arm.com, khilman@baylibre.com, pratyush.anand@gmail.com, linux-tegra@vger.kernel.org, krzk@kernel.org, kishon@ti.com, kgene@kernel.org, linux-imx@nxp.com, songxiaowei@hisilicon.com, hongxing.zhu@nxp.com, martin.blumenstingl@googlemail.com, linux-arm-msm@vger.kernel.org, s.hauer@pengutronix.de, yue.wang@amlogic.com, linux-samsung-soc@vger.kernel.org, bhelgaas@google.com, linux-amlogic@lists.infradead.org, linux-omap@vger.kernel.org, linux-arm-kernel@lists.infradead.org, jingoohan1@gmail.com, agross@kernel.org, linux-kernel@vger.kernel.org, svarbanov@mm-sol.com, kernel@pengutroni
- x.de, gustavo.pimentel@synopsys.com, shawnguo@kernel.org, l.stach@pengutronix.de
-X-SA-Exim-Mail-From: maz@kernel.org
-X-SA-Exim-Scanned: No (on disco-boy.misterjones.org); SAEximRunCond expanded to false
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        Felipe Balbi <balbi@kernel.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Doug Anderson <dianders@chromium.org>,
+        linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Manu Gautam <mgautam@codeaurora.org>
+Subject: Re: [PATCH v3 1/5] usb: dwc3: core: Host wake up support from system
+ suspend
+Message-ID: <20200929181745.GB1621304@google.com>
+References: <1601376452-31839-1-git-send-email-sanm@codeaurora.org>
+ <1601376452-31839-2-git-send-email-sanm@codeaurora.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <1601376452-31839-2-git-send-email-sanm@codeaurora.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2020-09-29 19:02, Jon Hunter wrote:
-> On 29/09/2020 18:25, Marc Zyngier wrote:
->> On 2020-09-29 14:22, Jon Hunter wrote:
->>> Hi Jisheng,
->>> 
->>> On 29/09/2020 11:48, Jisheng Zhang wrote:
->>>> Hi Jon,
->>>> 
->>>> On Fri, 25 Sep 2020 09:53:45 +0100 Jon Hunter wrote:
->>>> 
->>>>> 
->>>>> On 24/09/2020 12:05, Jisheng Zhang wrote:
->>>>>> Improve the msi code:
->>>>>> 1. Add proper error handling.
->>>>>> 2. Move dw_pcie_msi_init() from each users to designware host to 
->>>>>> solve
->>>>>> msi page leakage in resume path.
->>>>> 
->>>>> Apologies if this is slightly off topic, but I have been meaning to 
->>>>> ask
->>>>> about MSIs and PCI. On Tegra194 which uses the DWC PCI driver,
->>>>> whenever we
->>>>> hotplug CPUs we see the following warnings ...
->>>>> 
->>>>>  [      79.068351] WARNING KERN IRQ70: set affinity failed(-22).
->>>>>  [      79.068362] WARNING KERN IRQ71: set affinity failed(-22).
->>>>> 
->>>> 
->>>> I tried to reproduce this issue on Synaptics SoC, but can't 
->>>> reproduce
->>>> it.
->>>> Per my understanding of the code in kernel/irq/cpuhotplug.c, this
->>>> warning
->>>> happened when we migrate irqs away from the offline cpu, this 
->>>> implicitly
->>>> implies that before this point the irq has bind to the offline cpu,
->>>> but how
->>>> could this happen given current dw_pci_msi_set_affinity() 
->>>> implementation
->>>> always return -EINVAL
->>> 
->>> By default the smp_affinity should be set so that all CPUs can be
->>> interrupted ...
->>> 
->>> $ cat /proc/irq/70/smp_affinity
->>> 0xff
->>> 
->>> In my case there are 8 CPUs and so 0xff implies that the interrupt 
->>> can
->>> be triggered on any of the 8 CPUs.
->>> 
->>> Do you see the set_affinity callback being called for the DWC irqchip 
->>> in
->>> migrate_one_irq()?
->> 
->> The problem is common to all MSI implementations that end up muxing
->> all the end-point MSIs into a single interrupt. With these systems,
->> you cannot set the affinity of individual MSIs (they don't target a
->> CPU, they target another interrupt... braindead). Only the mux
->> interrupt can have its affinity changed.
->> 
->> So returning -EINVAL is the right thing to do.
+On Tue, Sep 29, 2020 at 04:17:28PM +0530, Sandeep Maheswaram wrote:
+> Avoiding phy powerdown in host mode so that it can be wake up by devices.
+> Added hs_phy_flags and ss_phy_flags to check connection status and
+> set phy mode and configure interrupts.
 > 
-> Right, so if that is the case, then surely there should be some way to
-> avoid these warnings because they are not relevant?
+> Signed-off-by: Sandeep Maheswaram <sanm@codeaurora.org>
+> ---
+>  drivers/usb/dwc3/core.c | 14 +++-----------
+>  drivers/usb/dwc3/core.h |  3 +++
+>  2 files changed, 6 insertions(+), 11 deletions(-)
+> 
+> diff --git a/drivers/usb/dwc3/core.c b/drivers/usb/dwc3/core.c
+> index 385262f..c32ed10 100644
+> --- a/drivers/usb/dwc3/core.c
+> +++ b/drivers/usb/dwc3/core.c
+> @@ -1663,10 +1663,6 @@ static int dwc3_suspend_common(struct dwc3 *dwc, pm_message_t msg)
+>  		dwc3_core_exit(dwc);
+>  		break;
+>  	case DWC3_GCTL_PRTCAP_HOST:
+> -		if (!PMSG_IS_AUTO(msg)) {
+> -			dwc3_core_exit(dwc);
+> -			break;
+> -		}
+>  
+>  		/* Let controller to suspend HSPHY before PHY driver suspends */
+>  		if (dwc->dis_u2_susphy_quirk ||
+> @@ -1724,13 +1720,9 @@ static int dwc3_resume_common(struct dwc3 *dwc, pm_message_t msg)
+>  		spin_unlock_irqrestore(&dwc->lock, flags);
+>  		break;
+>  	case DWC3_GCTL_PRTCAP_HOST:
+> -		if (!PMSG_IS_AUTO(msg)) {
+> -			ret = dwc3_core_init_for_resume(dwc);
+> -			if (ret)
+> -				return ret;
+> -			dwc3_set_prtcap(dwc, DWC3_GCTL_PRTCAP_HOST);
+> -			break;
+> -		}
+> +
+> +		dwc3_set_prtcap(dwc, DWC3_GCTL_PRTCAP_HOST);
+> +
+>  		/* Restore GUSB2PHYCFG bits that were modified in suspend */
+>  		reg = dwc3_readl(dwc->regs, DWC3_GUSB2PHYCFG(0));
+>  		if (dwc->dis_u2_susphy_quirk)
+> diff --git a/drivers/usb/dwc3/core.h b/drivers/usb/dwc3/core.h
+> index 83b6c87..cd385a8 100644
+> --- a/drivers/usb/dwc3/core.h
+> +++ b/drivers/usb/dwc3/core.h
+> @@ -1096,6 +1096,9 @@ struct dwc3 {
+>  
+>  	bool			phys_ready;
+>  
+> +	unsigned int            hs_phy_flags;
+> +	unsigned int            ss_phy_flags;
+> +
 
-I don't think there is a way to do this, because the core code
-doesn't (and cannot) know the exact interrupt topology.
+It doesn't seem ss_phy_flags is really needed, it is only used
+in dwc3_set_phy_speed_flags(), a local variable could be used
+instead.
 
-The only alternative would be to change the affinity of the mux
-interrupt when a MSI affinity changes, but that tends to break
-userspace (irqbalance, for example).
-
-         M.
--- 
-Jazz is not dead. It just smells funny...
+The 'flags' are passed as 'mode' to phy_set_mode(), I think it
+would be clearer to reflect that in the name, i.e. 'hs_phy_mode'
+instead of 'hs_phy_flags'.
