@@ -2,85 +2,71 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 0132A27D679
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Sep 2020 21:09:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C714927D680
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Sep 2020 21:10:48 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728657AbgI2TJP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 29 Sep 2020 15:09:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52038 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728640AbgI2TJN (ORCPT
+        id S1728281AbgI2TKo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 29 Sep 2020 15:10:44 -0400
+Received: from mail-oi1-f196.google.com ([209.85.167.196]:45623 "EHLO
+        mail-oi1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728166AbgI2TKo (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 29 Sep 2020 15:09:13 -0400
-Received: from mail-pf1-x441.google.com (mail-pf1-x441.google.com [IPv6:2607:f8b0:4864:20::441])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 66193C061755
-        for <linux-arm-msm@vger.kernel.org>; Tue, 29 Sep 2020 12:09:12 -0700 (PDT)
-Received: by mail-pf1-x441.google.com with SMTP id b124so5505778pfg.13
-        for <linux-arm-msm@vger.kernel.org>; Tue, 29 Sep 2020 12:09:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=Bgjd/B7KdoGPIMOIsXPxTUv6rCgIFOUt5UmLgFf58B0=;
-        b=dQ3pMRX6HmaArThDUQARb24+Xjkm3nNSp0LQnhrkH6Q8VE0a/qS2n9MzFLRfLNmvOA
-         UYkRtz/DV0vQeV88BnNct2Esl4yQ+YbNo9QCYNYX2j6ozt2VVH9Ecvs4926enaBsO7DU
-         XHL08Vy0QLO5NSbOVSjZXVQixxmTN4VELBTnU=
+        Tue, 29 Sep 2020 15:10:44 -0400
+Received: by mail-oi1-f196.google.com with SMTP id z26so6669404oih.12;
+        Tue, 29 Sep 2020 12:10:43 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=Bgjd/B7KdoGPIMOIsXPxTUv6rCgIFOUt5UmLgFf58B0=;
-        b=HyvCdmdaL+4coziMWLSH05Mz/aAc/VIkhgCGrGgNQnDdxw/RIeuHBhaYh/ewlm0jL6
-         zmO39RGvtSE1/vFMy+CuYbhKxhyiahK2AOqDJYuzMETi10kWgWRNU9cYK672GePZqOrL
-         oy3NUQLdXkyX81YlG91GYimzXMn3QMElixCpF5ctqlX1izA6tqz/hxE1GDrqSs5+e4lt
-         KFTHFI/3PVPwaoeRbF7mXZ4yNXR0pQtiRwdk08dvTciS2Hc0nh9CBjHFUXEGp8tv5j/H
-         RWTCHGkFdfv1p22UE57GXg+2aH4ZGZlUrPvp4tHsdu8a4BX5nJWMUehpaPbXePEe+HsD
-         gM8w==
-X-Gm-Message-State: AOAM532IS+0ASPiR2ej5ieSfZuIkDUUwueY+5L+p7RNsZgW+DhiRPBW8
-        92Mf0ymTHiwY5tcRNLIsm2aKeQ==
-X-Google-Smtp-Source: ABdhPJx3wUAAoTGCE0/p7O5ml66HnFt41zubIJc2k9Hv2XO3LVJyfT1FoSHimEJRWNPzejOkyZ/F1A==
-X-Received: by 2002:a62:92ce:0:b029:13b:88f6:3935 with SMTP id o197-20020a6292ce0000b029013b88f63935mr5110872pfd.2.1601406552006;
-        Tue, 29 Sep 2020 12:09:12 -0700 (PDT)
-Received: from localhost ([2620:15c:202:1:f693:9fff:fef4:e70a])
-        by smtp.gmail.com with ESMTPSA id n2sm5451462pja.41.2020.09.29.12.09.10
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 29 Sep 2020 12:09:11 -0700 (PDT)
-Date:   Tue, 29 Sep 2020 12:09:10 -0700
-From:   Matthias Kaehlcke <mka@chromium.org>
-To:     Sandeep Maheswaram <sanm@codeaurora.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Felipe Balbi <balbi@kernel.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Doug Anderson <dianders@chromium.org>,
-        linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Manu Gautam <mgautam@codeaurora.org>
-Subject: Re: [PATCH v3 5/5] arm64: dts: qcom: sc7180: Add wakeup-source
- property for USB controller node
-Message-ID: <20200929190910.GE1621304@google.com>
-References: <1601376452-31839-1-git-send-email-sanm@codeaurora.org>
- <1601376452-31839-6-git-send-email-sanm@codeaurora.org>
+        bh=P1/m9QiSdgyvfStAgxDXDni/v1l7JjRuH6ifGD4UeHc=;
+        b=LaBatGsoEP8zmPUICLctBZGWpXYHpFNsAT9mpr36bfedAJF79Na4Bhoq7a8FZIxK57
+         GffQzZTDQ7lwD1QYfJPHzunFwpEVOyoJbhgWfj3ivsBIhKcv1QqoxU6R8RkH2SKQXCFm
+         IL1aqYnCDeARiLsGu7VSqKe4mRON2P9t1egoFXbDjmd6n2WgyK0JvjXsOUK4GMDmNdjI
+         eqtk2zf5eqf0jB2fHsJ9hnEQWYZXab1K4V3Dq5Lw/3hwxzeihN3fCQxRxstOYvJVoU37
+         v4z9ObSU8ejZJJ4oqAAlEqCFJBRu6DU9x99WZtUr1yrjUwr/3sz20N3RxuPu1Df42Vt/
+         upzQ==
+X-Gm-Message-State: AOAM530PMj/kHBmk0rKHd2lrFf7Dbsjmcn+zVxyuX4GQxjX5udfeFAvd
+        TXrBi4sHHhj/hGi5RycKjQ==
+X-Google-Smtp-Source: ABdhPJz0K1uHXOBWLKt6w53u6b3plRVlmc4EKrzlCakv2bqgabB1h7AD2jsOtPmUue1WdEZ0fLAoPw==
+X-Received: by 2002:a05:6808:44:: with SMTP id v4mr3606541oic.45.1601406643543;
+        Tue, 29 Sep 2020 12:10:43 -0700 (PDT)
+Received: from xps15 (24-155-109-49.dyn.grandenetworks.net. [24.155.109.49])
+        by smtp.gmail.com with ESMTPSA id a75sm1191029oii.55.2020.09.29.12.10.42
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 29 Sep 2020 12:10:42 -0700 (PDT)
+Received: (nullmailer pid 984216 invoked by uid 1000);
+        Tue, 29 Sep 2020 19:10:42 -0000
+Date:   Tue, 29 Sep 2020 14:10:42 -0500
+From:   Rob Herring <robh@kernel.org>
+To:     kholk11@gmail.com
+Cc:     will@kernel.org, marijns95@gmail.com, martin.botka1@gmail.com,
+        konradybcio@gmail.com, devicetree@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org, phone-devel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, joro@8bytes.org,
+        robin.murphy@arm.com, bjorn.andersson@linaro.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 3/8] dt-bindings: arm-smmu: add binding for SMMUv2 on
+ Qualcomm SDM660
+Message-ID: <20200929191042.GA984165@bogus>
+References: <20200926130004.13528-1-kholk11@gmail.com>
+ <20200926130004.13528-4-kholk11@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <1601376452-31839-6-git-send-email-sanm@codeaurora.org>
+In-Reply-To: <20200926130004.13528-4-kholk11@gmail.com>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Sep 29, 2020 at 04:17:32PM +0530, Sandeep Maheswaram wrote:
-> Adding wakeup-source property for USB controller for SC7180 boards.
+On Sat, 26 Sep 2020 14:59:59 +0200, kholk11@gmail.com wrote:
+> From: AngeloGioacchino Del Regno <kholk11@gmail.com>
 > 
-> Signed-off-by: Sandeep Maheswaram <sanm@codeaurora.org>
+> Add the binding for the SMMUv2 found on Qualcomm SDM660.
+> 
+> Signed-off-by: AngeloGioacchino Del Regno <kholk11@gmail.com>
+> ---
+>  Documentation/devicetree/bindings/iommu/arm,smmu.yaml | 1 +
+>  1 file changed, 1 insertion(+)
+> 
 
-nit: it would be better to have two separate patches or at least mention
-in the subject that this change is for the IDP and trogdor, not SC7180 in
-general.
-
-Besides that:
-
-Reviewed-by: Matthias Kaehlcke <mka@chromium.org>
+Acked-by: Rob Herring <robh@kernel.org>
