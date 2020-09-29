@@ -2,60 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 1E85127D520
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Sep 2020 19:53:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9AFF527D526
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Sep 2020 19:54:01 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728353AbgI2Rxq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 29 Sep 2020 13:53:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40384 "EHLO
+        id S1728113AbgI2Rxy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 29 Sep 2020 13:53:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40394 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727863AbgI2Rxq (ORCPT
+        with ESMTP id S1728662AbgI2Rxt (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 29 Sep 2020 13:53:46 -0400
-Received: from mail-pj1-x1044.google.com (mail-pj1-x1044.google.com [IPv6:2607:f8b0:4864:20::1044])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 714E4C0613D4
-        for <linux-arm-msm@vger.kernel.org>; Tue, 29 Sep 2020 10:53:45 -0700 (PDT)
-Received: by mail-pj1-x1044.google.com with SMTP id q4so3062054pjh.5
-        for <linux-arm-msm@vger.kernel.org>; Tue, 29 Sep 2020 10:53:45 -0700 (PDT)
+        Tue, 29 Sep 2020 13:53:49 -0400
+Received: from mail-pf1-x443.google.com (mail-pf1-x443.google.com [IPv6:2607:f8b0:4864:20::443])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 81A8CC0613D0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 29 Sep 2020 10:53:49 -0700 (PDT)
+Received: by mail-pf1-x443.google.com with SMTP id q123so5332526pfb.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 29 Sep 2020 10:53:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=1xlErZ6+GH/dFW2F7UNH0x194BKPh+D1csCpYINewdA=;
-        b=DjFYWvjCzk4vJuMNUoELofbluXc+tJlTIqeWiZqFuG0qJzcghYmUALWB/W36svkgeD
-         4m9SXbLYe+PaYYGLaFFzilIfBFnm07t8NrKVljtHm1nVa4kJrRJ6kyRJv63dmnmILr46
-         arQVrozZdTkjgB3gm9Kuj1IviJ/LWhxRJuLSUj9X6gv/BeQhWd76qY2Yr0KS3/0ci+ub
-         Sq05T9J9ed3ZA966OOMBqPMNmXhWn2kJecBaJetVlxhFoNh1EP6ijafBSL51iOyQDhsF
-         6C95z28+5tg5H+X6hs2LD/GuUrieYh1ptqYpFg8cusW6KD1bmL9S3dINQ+h5m8A5Vqye
-         SElg==
+        bh=maouQTMrsxpLVka2tVtG0rlrDbgTOcw+DDAUcgByUy4=;
+        b=DBlFCS792aAzgH+YUwYyG64zLj2k7P2a9/rWGSqHCFFdPuF5zjQJitPgucRktCcOif
+         J6XBhlAKlusXgUvJMiMe5tT+Zr42S5N8wqv/9fL5Caxon8ra+EW8YTyrC/SSnz5OP5z4
+         0FlUaB2kBe7nziZMZKosh4/TLmwFwyUIwG90Q9QnrUBxHKaRCGt+ddjYVH5cJWD0bnSN
+         25rS9bIn91THpyIueoNDZHu5ZE7Myc+m1yVMPwjXv7RxqqNboopoE1F8rlbhAGVY2B0d
+         eH8DFkXwo7LanUFcdBqvs0V+UkVS2WXCWC3wf2d4Mh4Pg8DZeIOu6kQP5m5yIqvFNFMd
+         mCsQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=1xlErZ6+GH/dFW2F7UNH0x194BKPh+D1csCpYINewdA=;
-        b=QXaV9O91GPHqlolKWgfN77mzdsWt3QGd/Wuf+yGmCy4Ob8pblcI8sCMhZy8TPmzpIW
-         v1m0PCGEixpYzyPNe+Mn00AZnTM4+R+gVDkICUloYbcyKmS2dFyTUDXepvMXAdl+Io1n
-         hbTizy6SVU+TcFVUqkKbveSMmDZogqI3mVD8bu/xfqjToEEGEntqyD3FbrWuwOtC5TcG
-         02wzUEENLoIc64yBupmJiLcCIdL/OgWZ2aOTYMeprgGnFdxwXTrN5tjOod494x0x/dEK
-         TKXsz0SVz1vFKJTFLhK2hIxA3Re/pxkIbjezQK0nhLvlPpqsZbO4z/5hGrqW+tPMiRbr
-         2zIQ==
-X-Gm-Message-State: AOAM530CeNS8U8Hp5xqouyjvNJoaVx8to6wmsZGfPh5nHsM+BCeQvYNv
-        qGGnHYb/QfSWena7YLpvQPf/
-X-Google-Smtp-Source: ABdhPJwzl16pEcfLQjEvjYvCWYK6RsX8cE9zdfcNLujwvGydbR8HnZEUQHwZArxxAIP2SiEqUttKGw==
-X-Received: by 2002:a17:90a:1b62:: with SMTP id q89mr4995702pjq.74.1601402024910;
-        Tue, 29 Sep 2020 10:53:44 -0700 (PDT)
+        bh=maouQTMrsxpLVka2tVtG0rlrDbgTOcw+DDAUcgByUy4=;
+        b=eFYVMGW/e7vNqIq7ka73LtcRrK9h04TzYxhWGkz87Mq3HJdsmDSQAgv3D5ZDzdAFsg
+         w/V+IkyOkhezHyoS2xeppJxbFDPk+misjwMkSBGrScS7evCy+idEwBGWx2mRlU5ItQWC
+         amPpUe5hwKuMNTfNGkygExwwrVhfVuf4oMQt9WyUtEL0h6H9urK1NBC8u1oGrkcT8s7S
+         WTv9A9gEblsy+OA1SsC65hm0Ii7HHwD0BIxeRO0YNme7D0B0a4TAszhCKCqOdgTYu9aK
+         qe0oZ9MbBysDSeR4D+4V/puC4SZ9Kn3iVWc3vfZOW6CVi2O+Z9G4XWCa77Sr4CcGW2eu
+         5fVA==
+X-Gm-Message-State: AOAM533RBJAzXK2Iz/5RXeKuuIW2O90DeqYXcC9AKrMSjSESvxYMtsHH
+        Bv4d6DjFmtvOerjN+Tt5D4pc
+X-Google-Smtp-Source: ABdhPJwsPcrCsb5NI3bCKFLI703acgMqVlHrSNfzGVuqStm8g6hRHp/Fl6+Ulg+C/ABAgsA2FcdGFA==
+X-Received: by 2002:aa7:8051:0:b029:13e:d13d:a04e with SMTP id y17-20020aa780510000b029013ed13da04emr5027675pfm.20.1601402028950;
+        Tue, 29 Sep 2020 10:53:48 -0700 (PDT)
 Received: from Mani-XPS-13-9360.localdomain ([103.59.133.81])
-        by smtp.gmail.com with ESMTPSA id r188sm6271046pfc.67.2020.09.29.10.53.41
+        by smtp.gmail.com with ESMTPSA id r188sm6271046pfc.67.2020.09.29.10.53.45
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 29 Sep 2020 10:53:44 -0700 (PDT)
+        Tue, 29 Sep 2020 10:53:48 -0700 (PDT)
 From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 To:     gregkh@linuxfoundation.org
 Cc:     hemantk@codeaurora.org, bbhatt@codeaurora.org,
         linux-arm-msm@vger.kernel.org, jhugo@codeaurora.org,
         linux-kernel@vger.kernel.org,
+        Loic Poulain <loic.poulain@linaro.org>,
         Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Subject: [PATCH v3 18/19] bus: mhi: core: Fix the building of MHI module
-Date:   Tue, 29 Sep 2020 23:22:17 +0530
-Message-Id: <20200929175218.8178-19-manivannan.sadhasivam@linaro.org>
+Subject: [PATCH v3 19/19] bus: mhi: debugfs: Print channel context read-pointer
+Date:   Tue, 29 Sep 2020 23:22:18 +0530
+Message-Id: <20200929175218.8178-20-manivannan.sadhasivam@linaro.org>
 X-Mailer: git-send-email 2.17.1
 In-Reply-To: <20200929175218.8178-1-manivannan.sadhasivam@linaro.org>
 References: <20200929175218.8178-1-manivannan.sadhasivam@linaro.org>
@@ -63,32 +64,33 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The Kbuild rule to build MHI should use the append operator. This fixes
-the below warning reported by Kbuild test bot.
+From: Loic Poulain <loic.poulain@linaro.org>
 
-WARNING: modpost: missing MODULE_LICENSE() in
-drivers/bus/mhi/core/main.o
-WARNING: modpost: missing MODULE_LICENSE() in drivers/bus/mhi/core/pm.o
-WARNING: modpost: missing MODULE_LICENSE() in
-drivers/bus/mhi/core/boot.o
+This value was missing in the channel debugfs output.
 
-Fixes: 0cbf260820fa ("bus: mhi: core: Add support for registering MHI controllers")
-Reported-by: kernel test robot <lkp@intel.com>
+Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
+Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 ---
- drivers/bus/mhi/core/Makefile | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/bus/mhi/core/debugfs.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/bus/mhi/core/Makefile b/drivers/bus/mhi/core/Makefile
-index 12c57ab3724c..c3feb4130aa3 100644
---- a/drivers/bus/mhi/core/Makefile
-+++ b/drivers/bus/mhi/core/Makefile
-@@ -1,4 +1,4 @@
--obj-$(CONFIG_MHI_BUS) := mhi.o
-+obj-$(CONFIG_MHI_BUS) += mhi.o
+diff --git a/drivers/bus/mhi/core/debugfs.c b/drivers/bus/mhi/core/debugfs.c
+index f50d73054db4..3a48801e01f4 100644
+--- a/drivers/bus/mhi/core/debugfs.c
++++ b/drivers/bus/mhi/core/debugfs.c
+@@ -115,8 +115,9 @@ static int mhi_debugfs_channels_show(struct seq_file *m, void *d)
+ 		seq_printf(m, " type: 0x%x event ring: %u", chan_ctxt->chtype,
+ 			   chan_ctxt->erindex);
  
- mhi-y := init.o main.o pm.o boot.o
- mhi-$(CONFIG_MHI_BUS_DEBUG) += debugfs.o
+-		seq_printf(m, " base: 0x%llx len: 0x%llx wp: 0x%llx",
+-			   chan_ctxt->rbase, chan_ctxt->rlen, chan_ctxt->wp);
++		seq_printf(m, " base: 0x%llx len: 0x%llx rp: 0x%llx wp: 0x%llx",
++			   chan_ctxt->rbase, chan_ctxt->rlen, chan_ctxt->rp,
++			   chan_ctxt->wp);
+ 
+ 		seq_printf(m, " local rp: 0x%pK local wp: 0x%pK db: 0x%pad\n",
+ 			   ring->rp, ring->wp,
 -- 
 2.17.1
 
