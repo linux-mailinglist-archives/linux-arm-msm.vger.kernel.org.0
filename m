@@ -2,77 +2,84 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C409C27D92F
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Sep 2020 22:46:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 021AE27D961
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Sep 2020 22:58:19 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729277AbgI2Uqe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 29 Sep 2020 16:46:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38902 "EHLO
+        id S1729363AbgI2U6S (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 29 Sep 2020 16:58:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40722 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726643AbgI2Uqd (ORCPT
+        with ESMTP id S1729350AbgI2U6R (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 29 Sep 2020 16:46:33 -0400
-Received: from mail-lj1-x242.google.com (mail-lj1-x242.google.com [IPv6:2a00:1450:4864:20::242])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0F7FEC061755
-        for <linux-arm-msm@vger.kernel.org>; Tue, 29 Sep 2020 13:46:32 -0700 (PDT)
-Received: by mail-lj1-x242.google.com with SMTP id r24so5178994ljm.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 29 Sep 2020 13:46:31 -0700 (PDT)
+        Tue, 29 Sep 2020 16:58:17 -0400
+Received: from mail-pj1-x1043.google.com (mail-pj1-x1043.google.com [IPv6:2607:f8b0:4864:20::1043])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3D3FFC0613D1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 29 Sep 2020 13:58:17 -0700 (PDT)
+Received: by mail-pj1-x1043.google.com with SMTP id l18so268675pjz.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 29 Sep 2020 13:58:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=fkspQpmNiVmmG9fIU1fMVydquHJbbNsEZsryBbCLfrE=;
-        b=bmCjC64SFZygtEqfJV9BMYihM/Byad6KCfdsyPuyHeM6FZHeejohaGsa6k2ep3+LZU
-         MkefGeUc8ng5SwNsdfctPS7wUL6WaKfEb0Q75XxFMo0jDLxSW414IIVyjax4UpT2tV1q
-         iABDAMin/ZODe6nheVlEUQn/rhbg+SVkPtYyNTLg4KqEdpRKk4APhvtw/eFSKapxHrqV
-         464Vja9DbdW91hIVcJiYB9XzkkIeXGrYYxLCJJqFu80WQ7KTG4tK0qk60vYyFRrYXmkK
-         XmUXD8n178CpTG+xExXZfaSVoz2uOivG6XuYaZz12AWLD0/L+Y6/jSfYXc+pDmzJTDbm
-         OQ7g==
+        d=chromium.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=G3+N8jl4iLhxEDGW7b+2sUqmEtHRJsrmsOkpbsCci28=;
+        b=RyBeF2LoJWmFx7cRTA0dxIqnOk43j8IDnZQNiKh1SxagTLajEc0seLhggi5jGNwyW8
+         TQieKx9sVRWYYBlg9ZTWqVF9GjUMTSMzvBgAuB04mS5kOVDgLfLTVwkZgN1ci6I/0+g/
+         ljpiR2ljIgE9OyOcGZzzg1Z0cU5Im372vb1CY=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=fkspQpmNiVmmG9fIU1fMVydquHJbbNsEZsryBbCLfrE=;
-        b=KgHTnyY18M//bfqnz4rnS0h11k5sdhVuk9PA6hAJEK4hnMafxTK4zIC39vyitRSS8d
-         Tt78swOAP56WQ5gwHEjUdJc5LYeX5lYC1QHZGt1Epyj3lhtoOnjbE1X3fBIsqGEUnxs4
-         QGG+1pQBhAnwaY7KILktM+BAUQeIeB93vQadcfNDmWPXSeJ9BsRCce5JlroPxTX1zaWP
-         gmSrDXGVotSrfofTjQLvf0x9Tpo+a0cm0cm3lC1QRmfuFBRI7oahIHYpCAkxlOp3RJeN
-         8cEe7FZrPibF3s5/VMBGnOgARH3X/FMxHJqlT3Wteq+TjV1YkZggvhJOMwC7u9BMNrb9
-         E6qQ==
-X-Gm-Message-State: AOAM531pRPihriGq1vdCqVNUOAYPvoRlm9JTN10paFSC/vtPd8csoe3u
-        dlEF+Ry9dKT3qv0sY9lP6DXoe26Uh/Uye5WZrMQVBw==
-X-Google-Smtp-Source: ABdhPJxUJgqiLOqWRf7LB26N2c631Xvz0WhD9oJe1xzN7CkcU9q2BIxd0CqqZ8UEoASyqGWPLpS/pnHTDknK6oEVtRA=
-X-Received: by 2002:a05:651c:28c:: with SMTP id b12mr1825250ljo.293.1601412390471;
- Tue, 29 Sep 2020 13:46:30 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=G3+N8jl4iLhxEDGW7b+2sUqmEtHRJsrmsOkpbsCci28=;
+        b=bnLvqvXnUKp0xYU1k1pwwqWcLg1DCPJ+b2OK6lM9UH9FkvzY+A/Cgt37YvXEyrdGUJ
+         uO5vXYFt2QGU4kjQJZOLuswP7oNHhBmZE+lOu2a+EUv6QVmiw1Nw9amDfe5f3692+peC
+         KpnVvLFfnXU4bfjnAgCCuSugk/0j5wGswvSPmDOddQsejaUkbct0s+dG5d6nBKNEwr58
+         tLlAoYxiLHj0MR6wGN82wmlkfV1Wudj32E+IVJ2q7R6KrPwBlkN8uMAuqEX5KBHQNmdp
+         fxopX+sk1aMsO5sGoLFhr4b8s9K2cbx4qqyJiXaPRjVsmQYbw9IsGVox3LB0wsviI8fA
+         GrfA==
+X-Gm-Message-State: AOAM532hz2YhQHmtEIkxdHCinbjfxO+Ao43mzTCo3LSma8OFCq0cQFC/
+        FRpiWAgKsOo2zZYHo/JSojvgsw==
+X-Google-Smtp-Source: ABdhPJyE/U1qwuzZg0kpvNJ18xK9ziz4FHxSxLVdwTW8gnEeYDBH1AMEUSknlOcfpPoDDQV5l8dW5A==
+X-Received: by 2002:a17:90a:2d87:: with SMTP id p7mr3619978pjd.179.1601413096753;
+        Tue, 29 Sep 2020 13:58:16 -0700 (PDT)
+Received: from evgreen-glaptop.cheshire.ch ([2601:646:c780:1404:a2ce:c8ff:fec4:54a3])
+        by smtp.gmail.com with ESMTPSA id k7sm5488101pjs.9.2020.09.29.13.58.14
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Tue, 29 Sep 2020 13:58:16 -0700 (PDT)
+From:   Evan Green <evgreen@chromium.org>
+To:     Rob Herring <robh+dt@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Cc:     Douglas Anderson <dianders@chromium.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Evan Green <evgreen@chromium.org>,
+        Andy Gross <agross@kernel.org>, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [PATCH 0/3] nvmem: qfprom: Avoid untouchable regions
+Date:   Tue, 29 Sep 2020 13:58:04 -0700
+Message-Id: <20200929205807.2360405-1-evgreen@chromium.org>
+X-Mailer: git-send-email 2.26.2
 MIME-Version: 1.0
-References: <20200925234504.GA18813@agrajag.zerfleddert.de>
-In-Reply-To: <20200925234504.GA18813@agrajag.zerfleddert.de>
-From:   Linus Walleij <linus.walleij@linaro.org>
-Date:   Tue, 29 Sep 2020 22:46:19 +0200
-Message-ID: <CACRpkdYCw7hPZrfdJ4ETqNDGJm86x_mFd1smStGQAFGAKHroUQ@mail.gmail.com>
-Subject: Re: [PATCH] bus: qcom: ebi2: fix device node iterator leak
-To:     Tobias Jordan <kernel@cdqe.de>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     MSM <linux-arm-msm@vger.kernel.org>,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-        Andy Gross <agross@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sat, Sep 26, 2020 at 1:45 AM Tobias Jordan <kernel@cdqe.de> wrote:
+Certain fuses are protected by the XPU such that the AP cannot
+access them. Attempting to do so causes an SError. Introduce an
+SoC-specific compatible string, and then use that to determine
+which fuse regions to present as Read as Zero / Write Ignore.
 
-> In the for_each_available_child_of_node loop of qcom_ebi2_probe, add a
-> call to of_node_put to avoid leaking the iterator if we bail out.
->
-> Fixes: 335a12754808 ("bus: qcom: add EBI2 driver")
->
-> Signed-off-by: Tobias Jordan <kernel@cdqe.de>
 
-Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
+Evan Green (3):
+  dt-bindings: nvmem: Add qcom,sc7180-qfprom compatible string
+  arm64: dts: qcom: sc7180: Add soc-specific qfprom compat string
+  nvmem: qfprom: Don't touch certain fuses
 
-Bjorn can you apply this to the Qualcomm SoC tree?
+ .../bindings/nvmem/qcom,qfprom.yaml           |  4 +-
+ arch/arm64/boot/dts/qcom/sc7180.dtsi          |  2 +-
+ drivers/nvmem/qfprom.c                        | 55 +++++++++++++++++--
+ 3 files changed, 55 insertions(+), 6 deletions(-)
 
-Yours,
-Linus Walleij
+-- 
+2.26.2
+
