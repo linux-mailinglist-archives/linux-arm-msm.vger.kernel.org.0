@@ -2,194 +2,161 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 07ED027D5FC
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Sep 2020 20:44:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 992D127D61D
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Sep 2020 20:50:18 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728300AbgI2So1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 29 Sep 2020 14:44:27 -0400
-Received: from mail-oo1-f66.google.com ([209.85.161.66]:37982 "EHLO
-        mail-oo1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728166AbgI2So1 (ORCPT
+        id S1728417AbgI2SuK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 29 Sep 2020 14:50:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49054 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727740AbgI2SuJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 29 Sep 2020 14:44:27 -0400
-Received: by mail-oo1-f66.google.com with SMTP id r10so1542225oor.5;
-        Tue, 29 Sep 2020 11:44:26 -0700 (PDT)
+        Tue, 29 Sep 2020 14:50:09 -0400
+Received: from mail-pf1-x442.google.com (mail-pf1-x442.google.com [IPv6:2607:f8b0:4864:20::442])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7F49BC061755
+        for <linux-arm-msm@vger.kernel.org>; Tue, 29 Sep 2020 11:50:08 -0700 (PDT)
+Received: by mail-pf1-x442.google.com with SMTP id x22so5454060pfo.12
+        for <linux-arm-msm@vger.kernel.org>; Tue, 29 Sep 2020 11:50:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=9VDUVULmJB3Y+7AbCQ1NSMUBMO5bledTUKUB0vzOkYo=;
+        b=kuV83tdDUF1UTiC7VoBpXo1vmr5O8uWz7mBNlpUHDdBUMvNtrQ+6JPx1XQQ854fngx
+         G8dvlgC3EDApK5ATqQTsmBz3t2rmn/4nunMmMraAG0HQBN0IwikK/XGkm9S3DydDEEgd
+         MVOyf0Wu/IFGEz3QUOJ6lDzGZ8hq7ji8KXH7E=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=nY9+4lqo0MEowM9x/sIa8yC+J2rLn2r05J1zX+4+m4s=;
-        b=aQGDDNzbxJz6kJs4B5rEjz7c6L1ZXJJ/j6wLnid8JQpx6N5nkgsm+VMC/MFD/Dxuji
-         vcWM5bQNkZQL+yvswZ87m6dK2nPz9IXWBFKVao1xqpZ5Zs23kz9jO9ACzQHbag7BGjBA
-         kivhfTMxo2ugH3Tnqq6SXtj9ZoxenhxHHaATEv8EeIYCoEBKuEZfvXMi9CoBkKIXu5nY
-         bHv9FpLrRWPkT6A8wvLhmu6ueEWH658XAd7Unyr5wUsLM6kgCsTa09lIpS8YZ+pMS6ta
-         nFysqxc9M5+tsPU8ylVg4R8J9+yLx5OH/PyKMoinvgwmToMFmJmJ7iolqM9Y/24wqpAg
-         7g1Q==
-X-Gm-Message-State: AOAM5320QOcPIfVaMyyCf+XrarlA84PGCEzJ09TcCPGOn66ZbJZl6As9
-        VEcaZtXsIOecJZGAdYZ+FA==
-X-Google-Smtp-Source: ABdhPJxBmQ/k0EOFw/H4LYM2itNduFhHNo8ttvEQXf2Wi/Nv6QTqhg0BflBo9p1gchQuzxE/ckBrvg==
-X-Received: by 2002:a4a:d80a:: with SMTP id f10mr5709037oov.76.1601405065955;
-        Tue, 29 Sep 2020 11:44:25 -0700 (PDT)
-Received: from xps15 (24-155-109-49.dyn.grandenetworks.net. [24.155.109.49])
-        by smtp.gmail.com with ESMTPSA id f94sm1180147otb.29.2020.09.29.11.44.25
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 29 Sep 2020 11:44:25 -0700 (PDT)
-Received: (nullmailer pid 940845 invoked by uid 1000);
-        Tue, 29 Sep 2020 18:44:24 -0000
-Date:   Tue, 29 Sep 2020 13:44:24 -0500
-From:   Rob Herring <robh@kernel.org>
-To:     Vinod Koul <vkoul@kernel.org>
-Cc:     dmaengine@vger.kernel.org,
+        bh=9VDUVULmJB3Y+7AbCQ1NSMUBMO5bledTUKUB0vzOkYo=;
+        b=gHqJhpUPNeoBT3CNmwQp8eb5Jy08UF5R3VkAtphejnDF7rN+Mvukf94b8jtGa9h6EI
+         6gxE0VNDAXHrzzos/M6NE8bF8lDt+btbXm9a8SrO1zGReC4od53CC41AMFalZh07upau
+         WHzWu9d2U/NnXB9hH6SQzWNTwn1C3HBgfvlrNZuWkzZWT7zpZErGfZx6/B/VkVZYYKi/
+         dn2rOGlhPQwq78iLqPu7ZbzUR+0k6Hx5EFCXnfa5Sxd6qwgCicQC2Zm+k5PLg8T6l4vE
+         LWIpdJaYkND1SlmHTu5uCSv8hobMmQ/npiEizNLaK4+O22znlsNvTvtlHMTfMwPevPVG
+         2vrw==
+X-Gm-Message-State: AOAM530U/d9obWzcTqI6NRjxZ39nK7ySh8Eh4LwuqbiN9n8bKI2eit3o
+        68yVaLj30vcjLburr/vRFh8wKA==
+X-Google-Smtp-Source: ABdhPJzO482Tx7l4tsHYQOhdq82ZvPIaRdCpG4EBkBUP86FWHuIICpGgwVYAbmCuaJdaBBX07MoEwg==
+X-Received: by 2002:a17:902:146:b029:d2:5615:5700 with SMTP id 64-20020a1709020146b02900d256155700mr5720462plb.84.1601405408033;
+        Tue, 29 Sep 2020 11:50:08 -0700 (PDT)
+Received: from localhost ([2620:15c:202:1:f693:9fff:fef4:e70a])
+        by smtp.gmail.com with ESMTPSA id 36sm5652997pgl.72.2020.09.29.11.50.07
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 29 Sep 2020 11:50:07 -0700 (PDT)
+Date:   Tue, 29 Sep 2020 11:50:06 -0700
+From:   Matthias Kaehlcke <mka@chromium.org>
+To:     Sandeep Maheswaram <sanm@codeaurora.org>
+Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Peter Ujfalusi <peter.ujfalusi@ti.com>
-Subject: Re: [PATCH v3 1/3] dt-bindings: dmaengine: Document qcom,gpi dma
- binding
-Message-ID: <20200929184424.GA935309@bogus>
-References: <20200923063410.3431917-1-vkoul@kernel.org>
- <20200923063410.3431917-2-vkoul@kernel.org>
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        Felipe Balbi <balbi@kernel.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Doug Anderson <dianders@chromium.org>,
+        linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Manu Gautam <mgautam@codeaurora.org>
+Subject: Re: [PATCH v3 2/5] usb: dwc3: host: Add suspend_quirk for dwc3 host
+Message-ID: <20200929185006.GC1621304@google.com>
+References: <1601376452-31839-1-git-send-email-sanm@codeaurora.org>
+ <1601376452-31839-3-git-send-email-sanm@codeaurora.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20200923063410.3431917-2-vkoul@kernel.org>
+In-Reply-To: <1601376452-31839-3-git-send-email-sanm@codeaurora.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Sep 23, 2020 at 12:04:08PM +0530, Vinod Koul wrote:
-> Add devicetree binding documentation for GPI DMA controller
-> implemented on Qualcomm SoCs
+On Tue, Sep 29, 2020 at 04:17:29PM +0530, Sandeep Maheswaram wrote:
+> Adding suspend quirk function for dwc3 host which will be called
+> during xhci suspend.
+> Setting hs_phy_flags, ss_phy_flags and phy mode during host suspend.
 > 
-> Signed-off-by: Vinod Koul <vkoul@kernel.org>
+> Signed-off-by: Sandeep Maheswaram <sanm@codeaurora.org>
 > ---
->  .../devicetree/bindings/dma/qcom,gpi.yaml     | 86 +++++++++++++++++++
->  include/dt-bindings/dma/qcom-gpi.h            | 11 +++
->  2 files changed, 97 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/dma/qcom,gpi.yaml
->  create mode 100644 include/dt-bindings/dma/qcom-gpi.h
+>  drivers/usb/dwc3/host.c | 49 +++++++++++++++++++++++++++++++++++++++++++++++++
+>  1 file changed, 49 insertions(+)
 > 
-> diff --git a/Documentation/devicetree/bindings/dma/qcom,gpi.yaml b/Documentation/devicetree/bindings/dma/qcom,gpi.yaml
-> new file mode 100644
-> index 000000000000..82f404bc8745
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/dma/qcom,gpi.yaml
-> @@ -0,0 +1,86 @@
-> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/dma/qcom,gpi.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> diff --git a/drivers/usb/dwc3/host.c b/drivers/usb/dwc3/host.c
+> index e195176..7f316fa 100644
+> --- a/drivers/usb/dwc3/host.c
+> +++ b/drivers/usb/dwc3/host.c
+> @@ -11,6 +11,13 @@
+>  #include <linux/platform_device.h>
+>  
+>  #include "core.h"
+> +#include "../host/xhci.h"
+> +#include "../host/xhci-plat.h"
+> +int xhci_dwc3_suspend_quirk(struct usb_hcd *hcd);
 > +
-> +title: Qualcomm Technologies Inc GPI DMA controller
+> +static const struct xhci_plat_priv xhci_plat_dwc3_xhci = {
+> +	.suspend_quirk = xhci_dwc3_suspend_quirk,
+> +};
+>  
+>  static int dwc3_host_get_irq(struct dwc3 *dwc)
+>  {
+> @@ -115,6 +122,13 @@ int dwc3_host_init(struct dwc3 *dwc)
+>  		}
+>  	}
+>  
+> +	ret = platform_device_add_data(xhci, &xhci_plat_dwc3_xhci,
+> +			sizeof(struct xhci_plat_priv));
+> +	if (ret) {
+> +		dev_err(dwc->dev, "failed to add data to xHCI\n");
+> +		goto err;
+> +	}
 > +
-> +maintainers:
-> +  - Vinod Koul <vkoul@kernel.org>
-> +
-> +description: |
-> +  QCOM GPI DMA controller provides DMA capabilities for
-> +  peripheral buses such as I2C, UART, and SPI.
-> +
-> +allOf:
-> +  - $ref: "dma-controller.yaml#"
-> +
-> +properties:
-> +  compatible:
-> +    enum:
-> +      - qcom,gpi-dma
+>  	ret = platform_device_add(xhci);
+>  	if (ret) {
+>  		dev_err(dwc->dev, "failed to register xHCI device\n");
+> @@ -127,6 +141,41 @@ int dwc3_host_init(struct dwc3 *dwc)
+>  	return ret;
+>  }
+>  
+> +static void dwc3_set_phy_speed_flags(struct usb_hcd *hcd)
 
-Should be SoC specific.
+The main thing this function does is setting the PHY mode (see
+the phy_set_mode() calls), please rename it to dwc3_set_phy_mode()
+to reflect this.
 
+> +{
 > +
-> +  reg:
-> +    maxItems: 1
+> +	int i, num_ports;
+> +	u32 reg;
+> +	struct device *dev = hcd->self.controller;
+> +	struct dwc3 *dwc = dev_get_drvdata(dev->parent);
+> +	struct xhci_hcd	*xhci_hcd = hcd_to_xhci(hcd);
 > +
-> +  interrupts:
-> +    description:
-> +      Interrupt lines for each GPII instance
+> +	dwc->hs_phy_flags = 0;
 
-GPII or GPI?
+What about 'dwc->ss_phy_flags'?
 
-> +    maxItems: 13
-> +
-> +  "#dma-cells":
-> +    const: 3
-> +    description: >
-> +      DMA clients must use the format described in dma.txt, giving a phandle
-> +      to the DMA controller plus the following 3 integer cells:
-> +      - channel: if set to 0xffffffff, any available channel will be allocated
-> +        for the client. Otherwise, the exact channel specified will be used.
-> +      - seid: serial id of the client as defined in the SoC documentation.
-> +      - client: type of the client as defined in dt-bindings/dma/qcom-gpi.h
-> +
-> +  iommus:
-> +    maxItems: 1
-> +
-> +  dma-channels:
-> +    maxItems: 1
-
-Not an array. Is there a maximum number of channels or 2^32 is valid?
+I suggested in another patch to use a local variable instead, so you
+probably have to initialize it anyway or the compiler will be unhappy ;-)
 
 > +
-> +  dma-channel-mask:
-> +    maxItems: 1
+> +	reg = readl(&xhci_hcd->cap_regs->hcs_params1);
+> +
+> +	num_ports = HCS_MAX_PORTS(reg);
+> +	for (i = 0; i < num_ports; i++) {
+> +		reg = readl(&xhci_hcd->op_regs->port_status_base + i * 0x04);
+> +		if (reg & PORT_PE) {
+> +			if (DEV_HIGHSPEED(reg) || DEV_FULLSPEED(reg))
+> +				dwc->hs_phy_flags |= PHY_MODE_USB_HOST_HS;
+> +			else if (DEV_LOWSPEED(reg))
+> +				dwc->hs_phy_flags |= PHY_MODE_USB_HOST_LS;
 
-So up to 32 channels?
+nit: add empty line to visually separate HS from SS
 
-> +
-> +required:
-> +  - compatible
-> +  - reg
-> +  - interrupts
-> +  - "#dma-cells"
-> +  - iommus
-> +  - dma-channels
-> +  - dma-channel-mask
-> +
-> +examples:
-> +  - |
-> +    #include <dt-bindings/interrupt-controller/arm-gic.h>
-> +    #include <dt-bindings/dma/qcom-gpi.h>
-> +    gpi_dma0: dma-controller@800000 {
-> +        compatible = "qcom,gpi-dma";
-> +        #dma-cells = <3>;
-> +        reg = <0x00800000 0x60000>;
-> +        iommus = <&apps_smmu 0x0016 0x0>;
-> +        dma-channels = <13>;
-> +        dma-channel-mask = <0xfa>;
-> +        interrupts = <GIC_SPI 244 IRQ_TYPE_LEVEL_HIGH>,
-> +                     <GIC_SPI 245 IRQ_TYPE_LEVEL_HIGH>,
-> +                     <GIC_SPI 246 IRQ_TYPE_LEVEL_HIGH>,
-> +                     <GIC_SPI 247 IRQ_TYPE_LEVEL_HIGH>,
-> +                     <GIC_SPI 248 IRQ_TYPE_LEVEL_HIGH>,
-> +                     <GIC_SPI 249 IRQ_TYPE_LEVEL_HIGH>,
-> +                     <GIC_SPI 250 IRQ_TYPE_LEVEL_HIGH>,
-> +                     <GIC_SPI 251 IRQ_TYPE_LEVEL_HIGH>,
-> +                     <GIC_SPI 252 IRQ_TYPE_LEVEL_HIGH>,
-> +                     <GIC_SPI 253 IRQ_TYPE_LEVEL_HIGH>,
-> +                     <GIC_SPI 254 IRQ_TYPE_LEVEL_HIGH>,
-> +                     <GIC_SPI 255 IRQ_TYPE_LEVEL_HIGH>,
-> +                     <GIC_SPI 256 IRQ_TYPE_LEVEL_HIGH>;
-> +    };
-> +
-> +...
-> diff --git a/include/dt-bindings/dma/qcom-gpi.h b/include/dt-bindings/dma/qcom-gpi.h
-> new file mode 100644
-> index 000000000000..71f79eb7614c
-> --- /dev/null
-> +++ b/include/dt-bindings/dma/qcom-gpi.h
-> @@ -0,0 +1,11 @@
-> +/* SPDX-License-Identifier: GPL-2.0 */
-> +/* Copyright (c) 2020, Linaro Ltd.  */
-> +
-> +#ifndef __DT_BINDINGS_DMA_QCOM_GPI_H__
-> +#define __DT_BINDINGS_DMA_QCOM_GPI_H__
-> +
-> +#define QCOM_GPI_SPI		1
-> +#define QCOM_GPI_UART		2
-> +#define QCOM_GPI_I2C		3
-> +
-> +#endif /* __DT_BINDINGS_DMA_QCOM_GPI_H__ */
-> -- 
-> 2.26.2
-> 
+> +			if (DEV_SUPERSPEED(reg))
+> +				dwc->ss_phy_flags |= PHY_MODE_USB_HOST_SS;
+> +		}
+> +	}
+> +	phy_set_mode(dwc->usb2_generic_phy, dwc->hs_phy_flags);
+> +	phy_set_mode(dwc->usb3_generic_phy, dwc->ss_phy_flags);
+
+Check return values and return any errors?
