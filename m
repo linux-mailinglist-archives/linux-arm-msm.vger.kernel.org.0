@@ -2,60 +2,90 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 6744027C0FC
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Sep 2020 11:22:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7432927C2AD
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Sep 2020 12:48:36 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727790AbgI2JWf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 29 Sep 2020 05:22:35 -0400
-Received: from ns.iliad.fr ([212.27.33.1]:53170 "EHLO ns.iliad.fr"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727780AbgI2JWf (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 29 Sep 2020 05:22:35 -0400
-X-Greylist: delayed 554 seconds by postgrey-1.27 at vger.kernel.org; Tue, 29 Sep 2020 05:22:34 EDT
-Received: from ns.iliad.fr (localhost [127.0.0.1])
-        by ns.iliad.fr (Postfix) with ESMTP id C65262043B;
-        Tue, 29 Sep 2020 11:13:19 +0200 (CEST)
-Received: from [192.168.108.70] (freebox.vlq16.iliad.fr [213.36.7.13])
-        by ns.iliad.fr (Postfix) with ESMTP id B628C20035;
-        Tue, 29 Sep 2020 11:13:19 +0200 (CEST)
-Subject: Re: [PATCH v2 2/2] spmi: fix some coding style issues at the spmi
- core
-To:     Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
-        Stephen Boyd <sboyd@kernel.org>
-Cc:     John Stultz <john.stultz@linaro.org>,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        MSM <linux-arm-msm@vger.kernel.org>,
-        LKML <linux-kernel@vger.kernel.org>
-References: <cover.1601360391.git.mchehab+huawei@kernel.org>
- <fec878502147336cbf2cf86e476e9dd797cd7e6f.1601360391.git.mchehab+huawei@kernel.org>
-From:   Marc Gonzalez <marc.w.gonzalez@free.fr>
-Message-ID: <f60e9ada-490d-10f9-6221-9a7d9eb054ba@free.fr>
-Date:   Tue, 29 Sep 2020 11:13:19 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.10.0
-MIME-Version: 1.0
-In-Reply-To: <fec878502147336cbf2cf86e476e9dd797cd7e6f.1601360391.git.mchehab+huawei@kernel.org>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-X-Virus-Scanned: ClamAV using ClamSMTP ; ns.iliad.fr ; Tue Sep 29 11:13:19 2020 +0200 (CEST)
+        id S1728235AbgI2KsR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 29 Sep 2020 06:48:17 -0400
+Received: from alexa-out.qualcomm.com ([129.46.98.28]:59739 "EHLO
+        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728183AbgI2KsN (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 29 Sep 2020 06:48:13 -0400
+Received: from ironmsg07-lv.qualcomm.com (HELO ironmsg07-lv.qulacomm.com) ([10.47.202.151])
+  by alexa-out.qualcomm.com with ESMTP; 29 Sep 2020 03:48:13 -0700
+X-QCInternal: smtphost
+Received: from ironmsg02-blr.qualcomm.com ([10.86.208.131])
+  by ironmsg07-lv.qulacomm.com with ESMTP/TLS/AES256-SHA; 29 Sep 2020 03:48:11 -0700
+X-QCInternal: smtphost
+Received: from c-sanm-linux.qualcomm.com ([10.206.25.31])
+  by ironmsg02-blr.qualcomm.com with ESMTP; 29 Sep 2020 16:17:39 +0530
+Received: by c-sanm-linux.qualcomm.com (Postfix, from userid 2343233)
+        id BAB882D57; Tue, 29 Sep 2020 16:17:38 +0530 (IST)
+From:   Sandeep Maheswaram <sanm@codeaurora.org>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        Felipe Balbi <balbi@kernel.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Doug Anderson <dianders@chromium.org>,
+        Matthias Kaehlcke <mka@chromium.org>
+Cc:     linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Manu Gautam <mgautam@codeaurora.org>,
+        Sandeep Maheswaram <sanm@codeaurora.org>
+Subject: [PATCH v3 0/5] USB DWC3 host wake up support from system suspend
+Date:   Tue, 29 Sep 2020 16:17:27 +0530
+Message-Id: <1601376452-31839-1-git-send-email-sanm@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 29/09/2020 08:22, Mauro Carvalho Chehab wrote:
+Avoiding phy powerdown in host mode so that it can be wake up by devices.
+Set GENPD_FLAG_ACTIVE_WAKEUP flag to keep usb30_prim gdsc active
+when wakeup capable devices are connected to the host.
+Using PDC interrupts instead of GIC interrupst to support wakeup in
+xo shutdown case.
 
-> @@ -487,7 +489,7 @@ static void of_spmi_register_devices(struct spmi_controller *ctrl)
->  			continue;
->  
->  		sdev->dev.of_node = node;
-> -		sdev->usid = (u8) reg[0];
-> +		sdev->usid = (u8)reg[0];
+Changes in v3:
+Removed need_phy_for_wakeup flag and by default avoiding phy powerdown.
+Addressed Matthias comments and added entry for DEV_SUPERSPEED.
+Added suspend_quirk in dwc3 host and moved the dwc3_set_phy_speed_flags.
+Added wakeup-source dt entry and reading in dwc-qcom.c glue driver.
 
-typeof(sdev->usid) is u8.
+Changes in v2:
+Dropped the patch in clock to set GENPD_FLAG_ACTIVE_WAKEUP flag and 
+setting in usb dwc3 driver.
+Separated the core patch and glue driver patch.
+Made need_phy_for_wakeup flag part of dwc structure and 
+hs_phy_flags as unsgined int.
+Adrressed the comment on device_init_wakeup call.
+Corrected offset for reading portsc register.
+Added pacth to support wakeup in xo shutdown case.
 
-What is the point of this cast?
+Sandeep Maheswaram (5):
+  usb: dwc3: core: Host wake up support from system suspend
+  usb: dwc3: host: Add suspend_quirk for dwc3 host
+  usb: dwc3: qcom: Configure wakeup interrupts and set genpd active
+    wakeup flag
+  arm64: dts: qcom: sc7180: Use pdc interrupts for USB instead of GIC
+    interrupts
+  arm64: dts: qcom: sc7180: Add wakeup-source property for USB
+    controller node
 
-Does GCC warn that u32 is being truncated to u8?
+ arch/arm64/boot/dts/qcom/sc7180-idp.dts      |  1 +
+ arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi |  1 +
+ arch/arm64/boot/dts/qcom/sc7180.dtsi         |  8 +--
+ drivers/usb/dwc3/core.c                      | 14 ++----
+ drivers/usb/dwc3/core.h                      |  3 ++
+ drivers/usb/dwc3/dwc3-qcom.c                 | 74 ++++++++++++++++++++++------
+ drivers/usb/dwc3/host.c                      | 49 ++++++++++++++++++
+ 7 files changed, 120 insertions(+), 30 deletions(-)
 
-Regards.
+-- 
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
+of Code Aurora Forum, hosted by The Linux Foundation
+
