@@ -2,50 +2,50 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 03F0127D657
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Sep 2020 21:01:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0132A27D679
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Sep 2020 21:09:19 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728417AbgI2TBr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 29 Sep 2020 15:01:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50846 "EHLO
+        id S1728657AbgI2TJP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 29 Sep 2020 15:09:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52038 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728172AbgI2TBr (ORCPT
+        with ESMTP id S1728640AbgI2TJN (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 29 Sep 2020 15:01:47 -0400
-Received: from mail-pj1-x1044.google.com (mail-pj1-x1044.google.com [IPv6:2607:f8b0:4864:20::1044])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2AC13C0613D0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 29 Sep 2020 12:01:47 -0700 (PDT)
-Received: by mail-pj1-x1044.google.com with SMTP id l18so35067pjz.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 29 Sep 2020 12:01:47 -0700 (PDT)
+        Tue, 29 Sep 2020 15:09:13 -0400
+Received: from mail-pf1-x441.google.com (mail-pf1-x441.google.com [IPv6:2607:f8b0:4864:20::441])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 66193C061755
+        for <linux-arm-msm@vger.kernel.org>; Tue, 29 Sep 2020 12:09:12 -0700 (PDT)
+Received: by mail-pf1-x441.google.com with SMTP id b124so5505778pfg.13
+        for <linux-arm-msm@vger.kernel.org>; Tue, 29 Sep 2020 12:09:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=7nARKy1YRpyTgSZxIUwrkU74pSG7aRsz7ayBIvLyxxw=;
-        b=K5Jq8aHp/pcgYY6/QdkXX9JB1LeqtGy1prh//v+zPwiUaXTQzBa2VCuXLyIaZ3nJeL
-         wW0cDksddcnfBWLBRQ5prkhoNZxxd0/Oy4PE35SdlJb/aqqbs454AE8WfY4X9NU1lMP2
-         c/fOAFbu8A+hI7P88st8YAXAvJ1cbSXMt5R9M=
+        bh=Bgjd/B7KdoGPIMOIsXPxTUv6rCgIFOUt5UmLgFf58B0=;
+        b=dQ3pMRX6HmaArThDUQARb24+Xjkm3nNSp0LQnhrkH6Q8VE0a/qS2n9MzFLRfLNmvOA
+         UYkRtz/DV0vQeV88BnNct2Esl4yQ+YbNo9QCYNYX2j6ozt2VVH9Ecvs4926enaBsO7DU
+         XHL08Vy0QLO5NSbOVSjZXVQixxmTN4VELBTnU=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=7nARKy1YRpyTgSZxIUwrkU74pSG7aRsz7ayBIvLyxxw=;
-        b=Nf9eHqG2LqgA1qhOJYej3/H3WH3kM6QI4tMVNnLEQC+8oQP884DzvJ8+OxhbwDYkIB
-         cz+D82YlP6cIdlU1qljwgrPhTU22CqPmSt0v44uv8O+K3eDgMl/wUQKl/ZZZ2Pj863u1
-         heRKvi8Hd7ZGkYwB5HujbsxPEIs1zsnxokTMdkmFi0g1Wk0miWYMhLwdehM4h3j5GPPH
-         Hz9SUtlGwUSrKXci/plBIX73OPR/IWcDKvCQy2gWtNDTrwk5og7pK3X/h9toe9+4PzuI
-         0wn+5vEUxhjvRRdRJ0hJPRInSaV6XlIGGBAlwyv7cdTcHIUL+3hP+RCp0VdbLyzhA81M
-         Njmg==
-X-Gm-Message-State: AOAM533eCquGy7gQyAD6sx0IsL0KanEGH4vTF1Xovnlw/ffMcuI28oEd
-        FHE9reLuJueuB6mxaOOujb4/ww==
-X-Google-Smtp-Source: ABdhPJwB7K7TSZqFAymAj9u1ww16GuQvJSGxJcrJYqk3iQ+Nbhr/JctY+HTfM4yaTcGjCSTMeNnoqA==
-X-Received: by 2002:a17:90a:7bcf:: with SMTP id d15mr5083857pjl.230.1601406106614;
-        Tue, 29 Sep 2020 12:01:46 -0700 (PDT)
+        bh=Bgjd/B7KdoGPIMOIsXPxTUv6rCgIFOUt5UmLgFf58B0=;
+        b=HyvCdmdaL+4coziMWLSH05Mz/aAc/VIkhgCGrGgNQnDdxw/RIeuHBhaYh/ewlm0jL6
+         zmO39RGvtSE1/vFMy+CuYbhKxhyiahK2AOqDJYuzMETi10kWgWRNU9cYK672GePZqOrL
+         oy3NUQLdXkyX81YlG91GYimzXMn3QMElixCpF5ctqlX1izA6tqz/hxE1GDrqSs5+e4lt
+         KFTHFI/3PVPwaoeRbF7mXZ4yNXR0pQtiRwdk08dvTciS2Hc0nh9CBjHFUXEGp8tv5j/H
+         RWTCHGkFdfv1p22UE57GXg+2aH4ZGZlUrPvp4tHsdu8a4BX5nJWMUehpaPbXePEe+HsD
+         gM8w==
+X-Gm-Message-State: AOAM532IS+0ASPiR2ej5ieSfZuIkDUUwueY+5L+p7RNsZgW+DhiRPBW8
+        92Mf0ymTHiwY5tcRNLIsm2aKeQ==
+X-Google-Smtp-Source: ABdhPJx3wUAAoTGCE0/p7O5ml66HnFt41zubIJc2k9Hv2XO3LVJyfT1FoSHimEJRWNPzejOkyZ/F1A==
+X-Received: by 2002:a62:92ce:0:b029:13b:88f6:3935 with SMTP id o197-20020a6292ce0000b029013b88f63935mr5110872pfd.2.1601406552006;
+        Tue, 29 Sep 2020 12:09:12 -0700 (PDT)
 Received: from localhost ([2620:15c:202:1:f693:9fff:fef4:e70a])
-        by smtp.gmail.com with ESMTPSA id 64sm6245442pfz.204.2020.09.29.12.01.45
+        by smtp.gmail.com with ESMTPSA id n2sm5451462pja.41.2020.09.29.12.09.10
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 29 Sep 2020 12:01:46 -0700 (PDT)
-Date:   Tue, 29 Sep 2020 12:01:44 -0700
+        Tue, 29 Sep 2020 12:09:11 -0700 (PDT)
+Date:   Tue, 29 Sep 2020 12:09:10 -0700
 From:   Matthias Kaehlcke <mka@chromium.org>
 To:     Sandeep Maheswaram <sanm@codeaurora.org>
 Cc:     Andy Gross <agross@kernel.org>,
@@ -59,186 +59,28 @@ Cc:     Andy Gross <agross@kernel.org>,
         linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
         Manu Gautam <mgautam@codeaurora.org>
-Subject: Re: [PATCH v3 3/5] usb: dwc3: qcom: Configure wakeup interrupts and
- set genpd active wakeup flag
-Message-ID: <20200929190144.GD1621304@google.com>
+Subject: Re: [PATCH v3 5/5] arm64: dts: qcom: sc7180: Add wakeup-source
+ property for USB controller node
+Message-ID: <20200929190910.GE1621304@google.com>
 References: <1601376452-31839-1-git-send-email-sanm@codeaurora.org>
- <1601376452-31839-4-git-send-email-sanm@codeaurora.org>
+ <1601376452-31839-6-git-send-email-sanm@codeaurora.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <1601376452-31839-4-git-send-email-sanm@codeaurora.org>
+In-Reply-To: <1601376452-31839-6-git-send-email-sanm@codeaurora.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Sep 29, 2020 at 04:17:30PM +0530, Sandeep Maheswaram wrote:
-> Configure interrupts based on hs_phy_flag to avoid triggering of
-> interrupts during system suspend and suspends successfully.
-> Set genpd active wakeup flag for usb gdsc if wakeup capable devices
-> are connected so that wake up happens without reenumeration.
+On Tue, Sep 29, 2020 at 04:17:32PM +0530, Sandeep Maheswaram wrote:
+> Adding wakeup-source property for USB controller for SC7180 boards.
 > 
 > Signed-off-by: Sandeep Maheswaram <sanm@codeaurora.org>
-> ---
->  drivers/usb/dwc3/dwc3-qcom.c | 74 +++++++++++++++++++++++++++++++++++---------
->  1 file changed, 59 insertions(+), 15 deletions(-)
-> 
-> diff --git a/drivers/usb/dwc3/dwc3-qcom.c b/drivers/usb/dwc3/dwc3-qcom.c
-> index c703d55..b6f36bd 100644
-> --- a/drivers/usb/dwc3/dwc3-qcom.c
-> +++ b/drivers/usb/dwc3/dwc3-qcom.c
-> @@ -17,9 +17,11 @@
->  #include <linux/of_platform.h>
->  #include <linux/platform_device.h>
->  #include <linux/phy/phy.h>
-> +#include <linux/pm_domain.h>
->  #include <linux/usb/of.h>
->  #include <linux/reset.h>
->  #include <linux/iopoll.h>
-> +#include <linux/usb/hcd.h>
->  
->  #include "core.h"
->  
-> @@ -293,19 +295,33 @@ static void dwc3_qcom_interconnect_exit(struct dwc3_qcom *qcom)
->  
->  static void dwc3_qcom_disable_interrupts(struct dwc3_qcom *qcom)
->  {
-> +	struct dwc3 *dwc = platform_get_drvdata(qcom->dwc3);
-> +
->  	if (qcom->hs_phy_irq) {
->  		disable_irq_wake(qcom->hs_phy_irq);
->  		disable_irq_nosync(qcom->hs_phy_irq);
->  	}
->  
-> -	if (qcom->dp_hs_phy_irq) {
-> -		disable_irq_wake(qcom->dp_hs_phy_irq);
-> -		disable_irq_nosync(qcom->dp_hs_phy_irq);
-> -	}
-> +	if (dwc->hs_phy_flags & PHY_MODE_USB_HOST_LS) {
-> +		if (qcom->dp_hs_phy_irq) {
-> +			disable_irq_wake(qcom->dp_hs_phy_irq);
-> +			disable_irq_nosync(qcom->dp_hs_phy_irq);
-> +		}
-> +	} else if (dwc->hs_phy_flags & PHY_MODE_USB_HOST_HS) {
-> +		if (qcom->dm_hs_phy_irq) {
-> +			disable_irq_wake(qcom->dm_hs_phy_irq);
-> +			disable_irq_nosync(qcom->dm_hs_phy_irq);
-> +		}
-> +	} else {
-> +		if (qcom->dp_hs_phy_irq) {
-> +			disable_irq_wake(qcom->dp_hs_phy_irq);
-> +			disable_irq_nosync(qcom->dp_hs_phy_irq);
-> +		}
->  
-> -	if (qcom->dm_hs_phy_irq) {
-> -		disable_irq_wake(qcom->dm_hs_phy_irq);
-> -		disable_irq_nosync(qcom->dm_hs_phy_irq);
-> +		if (qcom->dm_hs_phy_irq) {
-> +			disable_irq_wake(qcom->dm_hs_phy_irq);
-> +			disable_irq_nosync(qcom->dm_hs_phy_irq);
-> +		}
 
-This function would benefit from a helper like this:
+nit: it would be better to have two separate patches or at least mention
+in the subject that this change is for the IDP and trogdor, not SC7180 in
+general.
 
-static void dwc3_qcon_enable_wakeup_irq(int wake_irq)
-{
-	if (wake_irq) {
-		disable_irq_wake(wake_irq);
-		disable_irq_nosync(wake_irq);
-	}
-}
+Besides that:
 
->  	}
->  
->  	if (qcom->ss_phy_irq) {
-> @@ -316,19 +332,33 @@ static void dwc3_qcom_disable_interrupts(struct dwc3_qcom *qcom)
->  
->  static void dwc3_qcom_enable_interrupts(struct dwc3_qcom *qcom)
->  {
-> +	struct dwc3 *dwc = platform_get_drvdata(qcom->dwc3);
-> +
->  	if (qcom->hs_phy_irq) {
->  		enable_irq(qcom->hs_phy_irq);
->  		enable_irq_wake(qcom->hs_phy_irq);
->  	}
->  
-> -	if (qcom->dp_hs_phy_irq) {
-> -		enable_irq(qcom->dp_hs_phy_irq);
-> -		enable_irq_wake(qcom->dp_hs_phy_irq);
-> -	}
-> +	if (dwc->hs_phy_flags & PHY_MODE_USB_HOST_LS) {
-> +		if (qcom->dp_hs_phy_irq) {
-> +			enable_irq(qcom->dp_hs_phy_irq);
-> +			enable_irq_wake(qcom->dp_hs_phy_irq);
-> +		}
-> +	} else if (dwc->hs_phy_flags & PHY_MODE_USB_HOST_HS) {
-> +		if (qcom->dm_hs_phy_irq) {
-> +			enable_irq(qcom->dm_hs_phy_irq);
-> +			enable_irq_wake(qcom->dm_hs_phy_irq);
-> +		}
-> +	} else {
-> +		if (qcom->dp_hs_phy_irq) {
-> +			enable_irq(qcom->dp_hs_phy_irq);
-> +			enable_irq_wake(qcom->dp_hs_phy_irq);
-> +		}
->  
-> -	if (qcom->dm_hs_phy_irq) {
-> -		enable_irq(qcom->dm_hs_phy_irq);
-> -		enable_irq_wake(qcom->dm_hs_phy_irq);
-> +		if (qcom->dm_hs_phy_irq) {
-> +			enable_irq(qcom->dm_hs_phy_irq);
-> +			enable_irq_wake(qcom->dm_hs_phy_irq);
-> +		}
->  	}
-
-Same as for _disable(), a helper would make this function more
-digestable.
-
->  	if (qcom->ss_phy_irq) {
-> @@ -341,6 +371,15 @@ static int dwc3_qcom_suspend(struct dwc3_qcom *qcom)
->  {
->  	u32 val;
->  	int i, ret;
-> +	struct dwc3 *dwc = platform_get_drvdata(qcom->dwc3);
-> +	struct usb_hcd  *hcd;
-
-nit: remove extra blank
-
-> +	struct generic_pm_domain *genpd = pd_to_genpd(qcom->dev->pm_domain);
-> +
-> +	if (dwc->xhci) {
-> +		hcd = platform_get_drvdata(dwc->xhci);
-> +		if (usb_wakeup_enabled_descendants(hcd->self.root_hub))
-> +			genpd->flags |= GENPD_FLAG_ACTIVE_WAKEUP;
-> +	}
-
-Do this after the check for 'qcom->is_suspended' below
-
->  
->  	if (qcom->is_suspended)
->  		return 0;
-> @@ -366,6 +405,11 @@ static int dwc3_qcom_resume(struct dwc3_qcom *qcom)
->  {
->  	int ret;
->  	int i;
-> +	struct dwc3 *dwc = platform_get_drvdata(qcom->dwc3);
-> +	struct generic_pm_domain *genpd = pd_to_genpd(qcom->dev->pm_domain);
-> +
-> +	if (dwc->xhci)
-> +		genpd->flags &= ~GENPD_FLAG_ACTIVE_WAKEUP;
-
-ditto
-
->  
->  	if (!qcom->is_suspended)
->  		return 0;
-> @@ -764,7 +808,7 @@ static int dwc3_qcom_probe(struct platform_device *pdev)
->  	if (ret)
->  		goto interconnect_exit;
->  
-> -	device_init_wakeup(&pdev->dev, 1);
-> +	device_init_wakeup(&pdev->dev, of_property_read_bool(np, "wakeup-source"));
->  	qcom->is_suspended = false;
->  	pm_runtime_set_active(dev);
->  	pm_runtime_enable(dev);
-> 
+Reviewed-by: Matthias Kaehlcke <mka@chromium.org>
