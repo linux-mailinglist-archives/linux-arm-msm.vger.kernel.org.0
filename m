@@ -2,159 +2,236 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 594F627BB5C
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Sep 2020 05:14:59 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EF6A327BBE0
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Sep 2020 06:24:03 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727453AbgI2DOy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 28 Sep 2020 23:14:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45366 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727151AbgI2DOy (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 28 Sep 2020 23:14:54 -0400
-Received: from mail-oi1-x242.google.com (mail-oi1-x242.google.com [IPv6:2607:f8b0:4864:20::242])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 04F0CC0613DD
-        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Sep 2020 20:14:50 -0700 (PDT)
-Received: by mail-oi1-x242.google.com with SMTP id i17so3821773oig.10
-        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Sep 2020 20:14:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=6z62kQcyzok8JJYDm/n7uK1BxyNMXGLc/05rJX4mEws=;
-        b=CjIyqhka4br2vvMIrLulyfun+L2Z1JvlCzjQijopbjVwBl3ScZ9vERkwpOhsu6mU2z
-         hzidC8ZUwOEayhU4/dIsxTJXK0hMTTMuuBwy6jYUIpjnru40cbRAFjxH/qKXtZ9/9zG1
-         sULWNMqrUTFnQtxU2knq7saZjCW5E2fkke8WqHt779fGSWQhgpxU0Vv6CtXIXs50/nNm
-         o9kKg5manfHmNIr79EtoALgfF8h3Wm1ZZ65qS3G3K8fA13WfY+sxZV4gyJJhxX3Q94bC
-         loKsLbly+XVYybCzu2MABiMNDf4serZ+NQIxw0B+r4z5b/l/bfJbSq74nrAhi+hylkZc
-         yBKA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=6z62kQcyzok8JJYDm/n7uK1BxyNMXGLc/05rJX4mEws=;
-        b=qlPxn7vGBL25dY4zly/Bi8BnvcidgphsqxELLsW61Qe9VMyQglc26Dm2BZyvdbnX3G
-         HOyx87dI1N9kKdYwsy0LvIHmAi4QPMLp5cUgIVNCaWx0yh3ELqOpDumktFqPMzUAqtWN
-         0yHsj1qRIaeuzRTwre1uRpbNnZhOOYaDsGZBiApGMtcs0Al2nWXb8777R0sbHq3DG/3f
-         ietbY5f2GMDFoaxUpi7XpOqVi+L4hmx7Gwirg3qWkEot5hVeHd99tMfF50i6VKQelppM
-         SX5KOuy8jl1g+lwSWyoGRULlgjIfy1QrOAetzlBZolxoOpFRzvSo1CKT7IYQfSD8TO9x
-         nwxA==
-X-Gm-Message-State: AOAM5336SHFB7BPrLWSBxDa3kOMSCJOp9vrTxdtni3ZfZAdreH8t3JPR
-        qzb3wV3SYm2bmG+iiLXV14THIA==
-X-Google-Smtp-Source: ABdhPJxiL3xDlPWiW5oOtTVMgQeysK4oZ95945+QxmBb7zRGHPPV6Q2VfN/OlV1tfYAH/l2OHWRJGQ==
-X-Received: by 2002:aca:ed03:: with SMTP id l3mr1232246oih.42.1601349289192;
-        Mon, 28 Sep 2020 20:14:49 -0700 (PDT)
-Received: from localhost.localdomain (99-135-181-32.lightspeed.austtx.sbcglobal.net. [99.135.181.32])
-        by smtp.gmail.com with ESMTPSA id 36sm729548otb.30.2020.09.28.20.14.48
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 28 Sep 2020 20:14:48 -0700 (PDT)
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Pavel Machek <pavel@ucw.cz>, Dan Murphy <dmurphy@ti.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        =?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= 
-        <u.kleine-koenig@pengutronix.de>, Lee Jones <lee.jones@linaro.org>,
-        Martin Botka <martin.botka1@gmail.com>,
-        linux-leds@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-pwm@vger.kernel.org
-Subject: [PATCH v4 4/4] arm64: dts: qcom: Add user LEDs on db820c
-Date:   Mon, 28 Sep 2020 20:15:44 -0700
-Message-Id: <20200929031544.1000204-5-bjorn.andersson@linaro.org>
-X-Mailer: git-send-email 2.28.0
-In-Reply-To: <20200929031544.1000204-1-bjorn.andersson@linaro.org>
-References: <20200929031544.1000204-1-bjorn.andersson@linaro.org>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+        id S1725355AbgI2EYC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 29 Sep 2020 00:24:02 -0400
+Received: from m42-4.mailgun.net ([69.72.42.4]:10130 "EHLO m42-4.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725497AbgI2EYC (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 29 Sep 2020 00:24:02 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1601353440; h=References: In-Reply-To: Message-Id: Date:
+ Subject: Cc: To: From: Sender;
+ bh=P8gYl8gLUGbwwjZC8LE+UOZ0BMCTQ1I9NDbu9UvISug=; b=mSgS8zWlFoRUeoMCDCleKajS/R0sP7WusQWjGPVWFRt42HP1zb6j+ytDidBAblFft8ZLJKRg
+ pv9L7oAr6YYJpa9Sqmm3m4R/otjRLcGNxC3y4XQILHNi4a+XOJxH5sDQ/B75BhF0qVEC+Vp/
+ Hv+ECHwkmK++eEKcCsSydwCh+VY=
+X-Mailgun-Sending-Ip: 69.72.42.4
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n02.prod.us-east-1.postgun.com with SMTP id
+ 5f72b6debe59ebabf3237ed6 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 29 Sep 2020 04:23:58
+ GMT
+Sender: rjliao=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 0D8ACC433F1; Tue, 29 Sep 2020 04:23:58 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
+        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+Received: from rocky-Inspiron-7590.qca.qualcomm.com (unknown [180.166.53.21])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: rjliao)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 8FAF7C433CA;
+        Tue, 29 Sep 2020 04:23:55 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 8FAF7C433CA
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=rjliao@codeaurora.org
+From:   Rocky Liao <rjliao@codeaurora.org>
+To:     marcel@holtmann.org, johan.hedberg@gmail.com
+Cc:     linux-kernel@vger.kernel.org, linux-bluetooth@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, Rocky Liao <rjliao@codeaurora.org>
+Subject: [PATCH v4] Bluetooth: btusb: Add Qualcomm Bluetooth SoC WCN6855 support
+Date:   Tue, 29 Sep 2020 12:23:51 +0800
+Message-Id: <20200929042351.2496-1-rjliao@codeaurora.org>
+X-Mailer: git-send-email 2.17.1
+In-Reply-To: <20200925090829.3088-1-rjliao@codeaurora.org>
+References: <20200925090829.3088-1-rjliao@codeaurora.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The db820c has 4 "user LEDs", all connected to the PMI8994. The first
-three are connected to the three current sinks provided by the TRILED
-and the fourth is connected to MPP2.
+This patch add support for WCN6855 i.e. patch and nvm download
+support.
 
-By utilizing the DTEST bus the MPP is fed the control signal from the
-fourth LPG block, providing a consistent interface to the user.
+T:  Bus=01 Lev=01 Prnt=01 Port=00 Cnt=01 Dev#=  2 Spd=12   MxCh= 0
+D:  Ver= 1.10 Cls=e0(wlcon) Sub=01 Prot=01 MxPS=64 #Cfgs=  1
+P:  Vendor=0cf3 ProdID=e600 Rev= 0.01
+C:* #Ifs= 2 Cfg#= 1 Atr=e0 MxPwr=100mA
+I:* If#= 0 Alt= 0 #EPs= 3 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=81(I) Atr=03(Int.) MxPS=  16 Ivl=1ms
+E:  Ad=82(I) Atr=02(Bulk) MxPS=  64 Ivl=0ms
+E:  Ad=02(O) Atr=02(Bulk) MxPS=  64 Ivl=0ms
+I:* If#= 1 Alt= 0 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=   0 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=   0 Ivl=1ms
+I:  If#= 1 Alt= 1 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=   9 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=   9 Ivl=1ms
+I:  If#= 1 Alt= 2 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  17 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  17 Ivl=1ms
+I:  If#= 1 Alt= 3 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  25 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  25 Ivl=1ms
+I:  If#= 1 Alt= 4 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  33 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  33 Ivl=1ms
+I:  If#= 1 Alt= 5 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  49 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  49 Ivl=1ms
+I:  If#= 1 Alt= 6 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  63 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  63 Ivl=1ms
+I:  If#= 1 Alt= 7 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  65 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  65 Ivl=1ms
 
-Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+Signed-off-by: Rocky Liao <rjliao@codeaurora.org>
 ---
+ drivers/bluetooth/btusb.c | 66 +++++++++++++++++++++++++++++++--------
+ 1 file changed, 53 insertions(+), 13 deletions(-)
 
-Changes since v3:
-- Updated labels
-
- arch/arm64/boot/dts/qcom/apq8096-db820c.dtsi | 49 ++++++++++++++++++++
- 1 file changed, 49 insertions(+)
-
-diff --git a/arch/arm64/boot/dts/qcom/apq8096-db820c.dtsi b/arch/arm64/boot/dts/qcom/apq8096-db820c.dtsi
-index defcbd15edf9..7e51677d256e 100644
---- a/arch/arm64/boot/dts/qcom/apq8096-db820c.dtsi
-+++ b/arch/arm64/boot/dts/qcom/apq8096-db820c.dtsi
-@@ -8,6 +8,7 @@
- #include "pmi8994.dtsi"
- #include <dt-bindings/input/input.h>
- #include <dt-bindings/gpio/gpio.h>
-+#include <dt-bindings/leds/common.h>
- #include <dt-bindings/pinctrl/qcom,pmic-gpio.h>
- #include <dt-bindings/sound/qcom,q6afe.h>
- #include <dt-bindings/sound/qcom,q6asm.h>
-@@ -682,6 +683,54 @@ pinconf {
- 	};
+diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
+index 9f294b941943..1005b6e8ff74 100644
+--- a/drivers/bluetooth/btusb.c
++++ b/drivers/bluetooth/btusb.c
+@@ -59,6 +59,7 @@ static struct usb_driver btusb_driver;
+ #define BTUSB_MEDIATEK		0x200000
+ #define BTUSB_WIDEBAND_SPEECH	0x400000
+ #define BTUSB_VALID_LE_STATES   0x800000
++#define BTUSB_QCA_WCN6855	0x1000000
+ 
+ static const struct usb_device_id btusb_table[] = {
+ 	/* Generic Bluetooth USB device */
+@@ -291,6 +292,10 @@ static const struct usb_device_id blacklist_table[] = {
+ 	{ USB_DEVICE(0x13d3, 0x3501), .driver_info = BTUSB_QCA_ROME |
+ 						     BTUSB_WIDEBAND_SPEECH },
+ 
++	/* QCA WCN6855 chipset */
++	{ USB_DEVICE(0x0cf3, 0xe600), .driver_info = BTUSB_QCA_WCN6855 |
++						     BTUSB_WIDEBAND_SPEECH },
++
+ 	/* Broadcom BCM2035 */
+ 	{ USB_DEVICE(0x0a5c, 0x2009), .driver_info = BTUSB_BCM92035 },
+ 	{ USB_DEVICE(0x0a5c, 0x200a), .driver_info = BTUSB_WRONG_SCO_MTU },
+@@ -3409,6 +3414,27 @@ static int btusb_set_bdaddr_ath3012(struct hci_dev *hdev,
+ 	return 0;
+ }
+ 
++static int btusb_set_bdaddr_wcn6855(struct hci_dev *hdev,
++				const bdaddr_t *bdaddr)
++{
++	struct sk_buff *skb;
++	u8 buf[6];
++	long ret;
++
++	memcpy(buf, bdaddr, sizeof(bdaddr_t));
++
++	skb = __hci_cmd_sync_ev(hdev, 0xfc14, sizeof(buf), buf,
++				HCI_EV_CMD_COMPLETE, HCI_INIT_TIMEOUT);
++	if (IS_ERR(skb)) {
++		ret = PTR_ERR(skb);
++		bt_dev_err(hdev, "Change address command failed (%ld)", ret);
++		return ret;
++	}
++	kfree_skb(skb);
++
++	return 0;
++}
++
+ #define QCA_DFU_PACKET_LEN	4096
+ 
+ #define QCA_GET_TARGET_VERSION	0x09
+@@ -3428,7 +3454,8 @@ struct qca_version {
+ } __packed;
+ 
+ struct qca_rampatch_version {
+-	__le16	rom_version;
++	__le16	rom_version_high;
++	__le16  rom_version_low;
+ 	__le16	patch_version;
+ } __packed;
+ 
+@@ -3440,12 +3467,14 @@ struct qca_device_info {
  };
  
-+&pmi8994_mpps {
-+	pmi8994_mpp2_userled4: mpp2-userled4 {
-+		pins = "mpp2";
-+		function = "sink";
+ static const struct qca_device_info qca_devices_table[] = {
+-	{ 0x00000100, 20, 4, 10 }, /* Rome 1.0 */
+-	{ 0x00000101, 20, 4, 10 }, /* Rome 1.1 */
+-	{ 0x00000200, 28, 4, 18 }, /* Rome 2.0 */
+-	{ 0x00000201, 28, 4, 18 }, /* Rome 2.1 */
+-	{ 0x00000300, 28, 4, 18 }, /* Rome 3.0 */
+-	{ 0x00000302, 28, 4, 18 }, /* Rome 3.2 */
++	{ 0x00000100, 20, 4,  8 }, /* Rome 1.0 */
++	{ 0x00000101, 20, 4,  8 }, /* Rome 1.1 */
++	{ 0x00000200, 28, 4, 16 }, /* Rome 2.0 */
++	{ 0x00000201, 28, 4, 16 }, /* Rome 2.1 */
++	{ 0x00000300, 28, 4, 16 }, /* Rome 3.0 */
++	{ 0x00000302, 28, 4, 16 }, /* Rome 3.2 */
++	{ 0x00130100, 40, 4, 16 }, /* WCN6855 1.0 */
++	{ 0x00130200, 40, 4, 16 }, /* WCN6855 2.0 */
+ };
+ 
+ static int btusb_qca_send_vendor_req(struct usb_device *udev, u8 request,
+@@ -3547,8 +3576,8 @@ static int btusb_setup_qca_load_rampatch(struct hci_dev *hdev,
+ {
+ 	struct qca_rampatch_version *rver;
+ 	const struct firmware *fw;
+-	u32 ver_rom, ver_patch;
+-	u16 rver_rom, rver_patch;
++	u32 ver_rom, ver_patch, rver_rom;
++	u16 rver_rom_low, rver_rom_high, rver_patch;
+ 	char fwname[64];
+ 	int err;
+ 
+@@ -3567,9 +3596,16 @@ static int btusb_setup_qca_load_rampatch(struct hci_dev *hdev,
+ 	bt_dev_info(hdev, "using rampatch file: %s", fwname);
+ 
+ 	rver = (struct qca_rampatch_version *)(fw->data + info->ver_offset);
+-	rver_rom = le16_to_cpu(rver->rom_version);
++	rver_rom_low = le16_to_cpu(rver->rom_version_low);
+ 	rver_patch = le16_to_cpu(rver->patch_version);
+ 
++	if (ver_rom & ~0xffffU) {
++		rver_rom_high = le16_to_cpu(rver->rom_version_high);
++		rver_rom = le32_to_cpu(rver_rom_high << 16 | rver_rom_low);
++	} else {
++		rver_rom = rver_rom_low;
++	}
 +
-+		output-low;
-+		qcom,dtest = <4>;
-+	};
-+};
+ 	bt_dev_info(hdev, "QCA: patch rome 0x%x build 0x%x, "
+ 		    "firmware rome 0x%x build 0x%x",
+ 		    rver_rom, rver_patch, ver_rom, ver_patch);
+@@ -3643,9 +3679,6 @@ static int btusb_setup_qca(struct hci_dev *hdev)
+ 		return err;
+ 
+ 	ver_rom = le32_to_cpu(ver.rom_version);
+-	/* Don't care about high ROM versions */
+-	if (ver_rom & ~0xffffU)
+-		return 0;
+ 
+ 	for (i = 0; i < ARRAY_SIZE(qca_devices_table); i++) {
+ 		if (ver_rom == qca_devices_table[i].rom_version)
+@@ -4081,6 +4114,13 @@ static int btusb_probe(struct usb_interface *intf,
+ 		btusb_check_needs_reset_resume(intf);
+ 	}
+ 
++	if (id->driver_info & BTUSB_QCA_WCN6855) {
++		data->setup_on_usb = btusb_setup_qca;
++		hdev->set_bdaddr = btusb_set_bdaddr_wcn6855;
++		hdev->cmd_timeout = btusb_qca_cmd_timeout;
++		set_bit(HCI_QUIRK_SIMULTANEOUS_DISCOVERY, &hdev->quirks);
++	}
 +
-+&pmi8994_lpg {
-+	qcom,power-source = <1>;
-+
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&pmi8994_mpp2_userled4>;
-+
-+	status = "okay";
-+
-+	#address-cells = <1>;
-+	#size-cells = <0>;
-+
-+	led@1 {
-+		reg = <1>;
-+		label = "green:user1";
-+
-+		linux,default-trigger = "heartbeat";
-+		default-state = "on";
-+	};
-+
-+	led@2 {
-+		reg = <2>;
-+		label = "green:user0";
-+		default-state = "on";
-+	};
-+
-+	led@3 {
-+		reg = <3>;
-+		label = "green:user2";
-+	};
-+
-+	led@4 {
-+		reg = <4>;
-+		label = "green:user3";
-+
-+		qcom,dtest = <4 1>;
-+	};
-+};
-+
- &pmi8994_spmi_regulators {
- 	vdd_gfx: s2@1700 {
- 		reg = <0x1700 0x100>;
+ 	if (id->driver_info & BTUSB_AMP) {
+ 		/* AMP controllers do not support SCO packets */
+ 		data->isoc = NULL;
 -- 
-2.28.0
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum, a Linux Foundation Collaborative Project
 
