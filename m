@@ -2,66 +2,74 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 137BF27D72C
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Sep 2020 21:46:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2A3CC27D7E2
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Sep 2020 22:18:18 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728709AbgI2Tqa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 29 Sep 2020 15:46:30 -0400
-Received: from mail.kernel.org ([198.145.29.99]:43474 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727700AbgI2Tqa (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 29 Sep 2020 15:46:30 -0400
-Received: from mail-ot1-f54.google.com (mail-ot1-f54.google.com [209.85.210.54])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id D6A9C2083B;
-        Tue, 29 Sep 2020 19:46:29 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1601408790;
-        bh=jjEzi8lg/fixZ8RSJmRBsh7VZs4uZ4cmuyV6enGSxv4=;
-        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-        b=Kpj8AilVQM5xcmwB1Vb5LrYlzGb2bJ3ug0FO3i3lKqqT6+bQVh7OTRej29MV5LnRV
-         psaTnlyAqXAIu8B02xUOFooNMugUfaHjJwE7dKKfCJFzGf7f6aln2133qYvfH/UIrW
-         uYKbeYC+vvdFVf3B0Na3rUddE8UxIy8jMDLBlGNk=
-Received: by mail-ot1-f54.google.com with SMTP id m13so5643364otl.9;
-        Tue, 29 Sep 2020 12:46:29 -0700 (PDT)
-X-Gm-Message-State: AOAM531UbWK847ffND11rL5wNQ6uTrCI7j5D3ljb4HBtlYZGHOJ3kfbR
-        xhnFSqO5QOQVNjY8Vr37ipcgNrptxpi/uTUXww==
-X-Google-Smtp-Source: ABdhPJwn8glarH4xnTwvOThxWuXdjV7eB4z3CGp5Z7Qqwtx9a47NmAh96i2eJuXIc3W9IlW8LNcb2k3TadFysAdRT+g=
-X-Received: by 2002:a9d:6b0d:: with SMTP id g13mr3933936otp.129.1601408789102;
- Tue, 29 Sep 2020 12:46:29 -0700 (PDT)
+        id S1728480AbgI2USL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 29 Sep 2020 16:18:11 -0400
+Received: from Galois.linutronix.de ([193.142.43.55]:48276 "EHLO
+        galois.linutronix.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728396AbgI2USL (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 29 Sep 2020 16:18:11 -0400
+From:   Thomas Gleixner <tglx@linutronix.de>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linutronix.de;
+        s=2020; t=1601410689;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         in-reply-to:in-reply-to:references:references;
+        bh=Pj/AnET6K2ikj6QYuS+2QSiV5RX6buJM7xQj08RtiL4=;
+        b=eBbWH0Hvtgziun5H3+8oJajDinjb97RPHGA+sr06/dpXffEcYW2CQB37ZG4hqMmqFsTJ78
+        xVa2/DzupJd5PkkKPHeIpISBG/UCmAfrdFkdRAUf/fDACAtqId/j2w3x2mDRgChBREmitG
+        JXybAF5NZoobS/mLJLej2Ha/8ZE5Xjlo2FSsdS+zlY3Oc0twCw/KDGNLdeOHal+nZXol3W
+        b7fu+OXS7KfcamW+ogOthJ2e8Qa+qF2X4CE5rvIQvbTlVhIYXb4nIEjaVw6d3wubALlrQR
+        oqqWNNa2fngQlsMsiY+TY1CIZ0vnMYSg0QBOqzbRQj94ShKjdKvfENB+jb51zQ==
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=linutronix.de;
+        s=2020e; t=1601410689;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         in-reply-to:in-reply-to:references:references;
+        bh=Pj/AnET6K2ikj6QYuS+2QSiV5RX6buJM7xQj08RtiL4=;
+        b=ZM7olWDrYZ03zI4j64JvJZYVqN5qowG2/msK44+4vSnXjch3U9qL72KmYt+vlOQvkA18+t
+        y2nYA8F/swV4hMAw==
+To:     Maulik Shah <mkshah@codeaurora.org>, bjorn.andersson@linaro.org,
+        maz@kernel.org, linus.walleij@linaro.org, swboyd@chromium.org,
+        evgreen@chromium.org, mka@chromium.org
+Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-gpio@vger.kernel.org, agross@kernel.org,
+        jason@lakedaemon.net, dianders@chromium.org, rnayak@codeaurora.org,
+        ilina@codeaurora.org, lsrao@codeaurora.org,
+        Maulik Shah <mkshah@codeaurora.org>
+Subject: Re: [PATCH v6 3/6] genirq/PM: Introduce IRQCHIP_ENABLE_WAKEUP_ON_SUSPEND flag
+In-Reply-To: <1601267524-20199-4-git-send-email-mkshah@codeaurora.org>
+References: <1601267524-20199-1-git-send-email-mkshah@codeaurora.org> <1601267524-20199-4-git-send-email-mkshah@codeaurora.org>
+Date:   Tue, 29 Sep 2020 22:18:08 +0200
+Message-ID: <87zh58ibgf.fsf@nanos.tec.linutronix.de>
 MIME-Version: 1.0
-References: <20200926131157.14633-1-kholk11@gmail.com> <20200929191254.GA984478@bogus>
- <CAMS8qEX_eB1pMLfqVCh5sHVaRevCYnpr+846LyZf9dH1-DQvzQ@mail.gmail.com>
-In-Reply-To: <CAMS8qEX_eB1pMLfqVCh5sHVaRevCYnpr+846LyZf9dH1-DQvzQ@mail.gmail.com>
-From:   Rob Herring <robh@kernel.org>
-Date:   Tue, 29 Sep 2020 14:46:17 -0500
-X-Gmail-Original-Message-ID: <CAL_JsqJF6gxtFMtQ7A3-rT7LSH07T8u=PdfVFAXtTDm4peiFEg@mail.gmail.com>
-Message-ID: <CAL_JsqJF6gxtFMtQ7A3-rT7LSH07T8u=PdfVFAXtTDm4peiFEg@mail.gmail.com>
-Subject: Re: [PATCH] phy: qcom-qusb2: Add support for SDM630/660
-To:     Konrad Dybcio <konradybcio@gmail.com>
-Cc:     AngeloGioacchino Del Regno <kholk11@gmail.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Kishon Vijay Abraham I <kishon@ti.com>,
-        marijns95@gmail.com, Martin Botka <martin.botka1@gmail.com>,
-        DTML <devicetree@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        phone-devel@vger.kernel.org,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Sep 29, 2020 at 2:25 PM Konrad Dybcio <konradybcio@gmail.com> wrote:
+On Mon, Sep 28 2020 at 10:02, Maulik Shah wrote:
+> An interrupt that is disabled/masked but set for wakeup still needs to
+> be able to wake up the system from sleep states like "suspend to RAM".
 >
-> >You should just pull this from the driver data.
+> This change introduces IRQCHIP_ENABLE_WAKEUP_ON_SUSPEND flag. If
+> irqchip
+
+s/This change introduces/Introduce/
+
+git grep 'This patch' Documentation/process/
+
+> have this flag set then irq PM will enable/unmask irqs that are marked
+> for wakeup but are in disabled state.
 >
-> I reused 8996's phy_cfg so as to change one line and not repeat dozens
-> for what's essentially the same thing, so I don't think it's the
-> better option..
+> On resume such irqs will be restored back to disabled state.
+>
+> Suggested-by: Thomas Gleixner <tglx@linutronix.de>
+> Signed-off-by: Maulik Shah <mkshah@codeaurora.org>
 
-Okay, save it for the next person when the if statement grows.
+I assume Marc will pick that lot up. So:
 
-Rob
+Reviewed-by: Thomas Gleixner <tglx@linutronix.de>
