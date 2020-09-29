@@ -2,109 +2,78 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id ADE9F27CCBA
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Sep 2020 14:39:11 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 65B5427CE43
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Sep 2020 14:56:36 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1733241AbgI2MiQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 29 Sep 2020 08:38:16 -0400
-Received: from mail-ej1-f68.google.com ([209.85.218.68]:34773 "EHLO
-        mail-ej1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1733222AbgI2MiP (ORCPT
+        id S1729398AbgI2M4a (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 29 Sep 2020 08:56:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50596 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728364AbgI2M40 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 29 Sep 2020 08:38:15 -0400
-Received: by mail-ej1-f68.google.com with SMTP id gr14so14825264ejb.1;
-        Tue, 29 Sep 2020 05:38:13 -0700 (PDT)
+        Tue, 29 Sep 2020 08:56:26 -0400
+Received: from mail-lj1-x241.google.com (mail-lj1-x241.google.com [IPv6:2a00:1450:4864:20::241])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7ADDFC0613D1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 29 Sep 2020 05:56:26 -0700 (PDT)
+Received: by mail-lj1-x241.google.com with SMTP id s205so3922429lja.7
+        for <linux-arm-msm@vger.kernel.org>; Tue, 29 Sep 2020 05:56:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=Xwc6QcG165YvYnxLOr7Ig+7m7J7xD/MU+AJCfEa21vs=;
+        b=npuAc3Z4q7b5/MOlpEyIxPMdkQkfGyy+xQQ4dKRXMIawUwLtwKv7YsAxgmdOIAcx0C
+         V7aSDMhMMWCBgV7R53k9yA7j2I5W4AZ46AfJrz6OhlVZCCHbGROw1rxqKG/q+MGxp7R3
+         5X7lZGeYG9wjg5iOKD+CMaqYx++eKtsyFZHwRyRyZhZ4EIdea/yrJ1hjkPWjyZUtYmJY
+         /NzZuMCq9nTM5lHSOqzpSy/RIJ1yS4Y5K4NWCVNT025G5Au7oZ/8P0ZWcpC9ubw5bPtE
+         28FyijSj6Hf143BqA8q5Bw42QsPFu2BOLKTYhIp9n/jDXmNoRO8UPQSEqhxWL/2qv/6C
+         BABA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=8cBo88Rf0XB3Amo8WHaoA3mvFSPQ6LbFDMO+GstCOgU=;
-        b=Mj+tyuiiZTC+4Uydo/wKMVjw2kpPqgFowW9aufPtw6EVKHXP1T6g398Wsueuyr2o7E
-         1m2wPQR0R/HyDeroDS8x8G3ElyKPf1Pywtr7PqPD3hPmV61drXl/mv2tp/S6D/z8lVP9
-         M6oCYXFL5poOJz17K9ZOW080P0uFVJqcU3pqduVYCZifWqLlEOEeMFOyr+R8zVFX0Evf
-         UrmgH2n0xEg32P80swtoeULkg/tf+/LRVovB+d/B8NKOr6ICiSfl98De9kiK8j4v1LR/
-         fGEJV7irR+H/8wVojbqVcqyd9PpGkGWzy2rUIm2b4Zr5OMwx5Vw3U+LQOtEl81pMJO/T
-         EfXQ==
-X-Gm-Message-State: AOAM533kOsAosbq3QGYhB+AIpDvP2JLO9JWQwFg1D3l4kGuqwwCepGdK
-        KMNYumz5MaOcR/jz91e3P4w=
-X-Google-Smtp-Source: ABdhPJywdVpCr+WJQxL/CB+8FU0Ise/EiUvtP1NqlRdfdlKrgf438XWp3aGFvYREkH3IV2E+mX7okA==
-X-Received: by 2002:a17:906:b28d:: with SMTP id q13mr3590683ejz.378.1601383092996;
-        Tue, 29 Sep 2020 05:38:12 -0700 (PDT)
-Received: from kozik-lap ([194.230.155.194])
-        by smtp.googlemail.com with ESMTPSA id c5sm5704977edt.24.2020.09.29.05.38.09
-        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 29 Sep 2020 05:38:11 -0700 (PDT)
-Date:   Tue, 29 Sep 2020 14:38:08 +0200
-From:   Krzysztof Kozlowski <krzk@kernel.org>
-To:     Linus Walleij <linus.walleij@linaro.org>
-Cc:     Bartosz Golaszewski <bgolaszewski@baylibre.com>,
-        Rob Herring <robh+dt@kernel.org>, Ray Jui <rjui@broadcom.com>,
-        Scott Branden <sbranden@broadcom.com>,
-        bcm-kernel-feedback-list <bcm-kernel-feedback-list@broadcom.com>,
-        Shawn Guo <shawnguo@kernel.org>,
-        Sascha Hauer <s.hauer@pengutronix.de>,
-        Pengutronix Kernel Team <kernel@pengutronix.de>,
-        Fabio Estevam <festevam@gmail.com>,
-        NXP Linux Team <linux-imx@nxp.com>,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Palmer Dabbelt <palmer@dabbelt.com>,
-        Paul Walmsley <paul.walmsley@sifive.com>,
-        Masahiro Yamada <yamada.masahiro@socionext.com>,
-        Chris Packham <chris.packham@alliedtelesis.co.nz>,
-        Anson Huang <Anson.Huang@nxp.com>,
-        Sungbo Eo <mans0n@gorani.run>, Stefan Agner <stefan@agner.ch>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Magnus Damm <magnus.damm@gmail.com>,
-        Geert Uytterhoeven <geert+renesas@glider.be>,
-        Yash Shah <yash.shah@sifive.com>,
-        Paul Kocialkowski <paul.kocialkowski@bootlin.com>,
-        "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>,
-        Linux ARM <linux-arm-kernel@lists.infradead.org>,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-        linux-unisoc@lists.infradead.org,
-        MSM <linux-arm-msm@vger.kernel.org>,
-        linux-riscv@lists.infradead.org
-Subject: Re: [PATCH 0/8] gpio: add common dtschema
-Message-ID: <20200929123808.GA21809@kozik-lap>
-References: <20200916162250.16098-1-krzk@kernel.org>
- <CACRpkdacWQKgCY1E=ONegPRE001UA-DmvRKB+Yz1maapYQ5rVQ@mail.gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=Xwc6QcG165YvYnxLOr7Ig+7m7J7xD/MU+AJCfEa21vs=;
+        b=OcW82BmLeHRsFJvxybXKcOjIa6gwc1qDodkGv1kSyQVyp46tPzhv6KtbVBnwFkSzCO
+         rr5mWV4v78uRttDAwy/CD4Mj9G6janqEqpBe9jjz/Y93SdaY72G68IqkidM/6VZL6zFc
+         Nmfa0Fz5Rap3kO0haKcnc3zHjWIrHTCXEzD28Oxb53pqstmSzUfsUlemSBV2zte3gj3I
+         +kHENMllFUMAl1+wtMXmlmroJ6a5SJZhIJRQrduqC7LVVhylziazbGRwaSo5dLSr0gmL
+         kbbC7q7Vvt0cmmX8dt0uTRYBFZGhwkBuP5RTnuWQmia0v1kpnZeJRpN7l1+5LzFZg0o9
+         fPuQ==
+X-Gm-Message-State: AOAM533HTNvt2Zct8Cpv2FD+JIzCkEpZWcI+eRwzwrT+FYwn5BzMolaM
+        WfxWVz3i7YnV5i45HTimdrGlw6nrTwAPVuadUuZb6g==
+X-Google-Smtp-Source: ABdhPJw/sTFqnnCnmjiBkxcM336wh5a1yrj9eBOkl+NOXdP0eHGyLO27lGNGZcAFlkObJIC+WXvMMWTvGT4NVR1kG14=
+X-Received: by 2002:a2e:a306:: with SMTP id l6mr1248375lje.286.1601384184843;
+ Tue, 29 Sep 2020 05:56:24 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CACRpkdacWQKgCY1E=ONegPRE001UA-DmvRKB+Yz1maapYQ5rVQ@mail.gmail.com>
-User-Agent: Mutt/1.9.4 (2018-02-28)
+References: <20200914091846.55204-1-dmitry.baryshkov@linaro.org>
+In-Reply-To: <20200914091846.55204-1-dmitry.baryshkov@linaro.org>
+From:   Linus Walleij <linus.walleij@linaro.org>
+Date:   Tue, 29 Sep 2020 14:56:14 +0200
+Message-ID: <CACRpkdb2WnQ40oZQZ3GN=ynhgZTmpJqT1yVuEJejOGQ7qe8pwA@mail.gmail.com>
+Subject: Re: [PATCH v3] pinctrl: qcom: sm8250: correct sdc2_clk
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        MSM <linux-arm-msm@vger.kernel.org>,
+        "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Sep 29, 2020 at 01:56:42PM +0200, Linus Walleij wrote:
-> On Wed, Sep 16, 2020 at 6:23 PM Krzysztof Kozlowski <krzk@kernel.org> wrote:
-> 
-> > This is independent work of pca953x bindings:
-> > https://lore.kernel.org/lkml/20200916155715.21009-1-krzk@kernel.org/T/#u
-> >
-> > The DTS patches can be also applied independently.
-> 
-> I'm a big fan of this patch series and hope for a v2 soon
-> so I can apply them.
+On Mon, Sep 14, 2020 at 11:18 AM Dmitry Baryshkov
+<dmitry.baryshkov@linaro.org> wrote:
 
-I sent the dt-bindings part of it already to dtschema and it was
-applied.  It's missing the description of properties due to licensing
-but at least it brings the hog nodes validation.
+> Correct sdc2_clk pin definition (register offset is wrong, verified by
+> the msm-4.19 driver).
+>
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> Fixes: 4e3ec9e407ad5058003309072b37111f7b8c900a
 
-> 
-> If you do not foresee any conflicts in the DTS files I can
-> apply also these, else you can apply them in the i.MX DTS
-> tree (wherever that is) or I can provide an immutable
-> branch, whichever you like!
+Patch applied for fixes!
 
-Thanks! I resent already the DTS in separate patchset and most of them
-went in.
+Thanks for sorting this out.
 
-Best regards,
-Krzysztof
-
+Yours,
+Linus Walleij
