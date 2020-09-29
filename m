@@ -2,98 +2,148 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 788F227BD0C
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Sep 2020 08:22:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6D3D927BECC
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Sep 2020 10:05:15 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726277AbgI2GW3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 29 Sep 2020 02:22:29 -0400
-Received: from mail.kernel.org ([198.145.29.99]:50190 "EHLO mail.kernel.org"
+        id S1726064AbgI2IFH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 29 Sep 2020 04:05:07 -0400
+Received: from m42-4.mailgun.net ([69.72.42.4]:17707 "EHLO m42-4.mailgun.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725306AbgI2GWT (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 29 Sep 2020 02:22:19 -0400
-Received: from mail.kernel.org (ip5f5ad5bc.dynamic.kabel-deutschland.de [95.90.213.188])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        id S1725774AbgI2IFH (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 29 Sep 2020 04:05:07 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1601366706; h=In-Reply-To: Content-Type: MIME-Version:
+ References: Message-ID: Subject: Cc: To: From: Date: Sender;
+ bh=r+8Y1/iTY5V2CVTSF4MuhfKKHmbWKG8EGomgri5/hVc=; b=O3DbuC2xKXPAB+i4l0uoimizHY13XvnB3NCGvJwleUuaAOkqhH6JVmISO32yNl2nqjjR5wBZ
+ Ji8jVUQv58kM260Y/azMXMc8+ZzKygyc2i6pSvdc/r3/H+056ZqmpVwlFX2uBzRI7b+1fzE2
+ SWIaCaE3vlvUx65nvApUW9CBEdE=
+X-Mailgun-Sending-Ip: 69.72.42.4
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n05.prod.us-east-1.postgun.com with SMTP id
+ 5f72ea9559892db41f51d012 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 29 Sep 2020 08:04:37
+ GMT
+Sender: varada=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 9616AC4339C; Tue, 29 Sep 2020 08:04:36 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL
+        autolearn=no autolearn_force=no version=3.4.0
+Received: from codeaurora.org (blr-c-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.19.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 4BE0F20BED;
-        Tue, 29 Sep 2020 06:22:18 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1601360538;
-        bh=uHJGfFfxEsHLO5eWd/AelHCZUHpBL7I1dn3ww937d/w=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=FYCTVBSzQ10VJNTKvqdLNA69TY4sw+WB+WgrCx4ZwhN5OOyjQVf9rPVRN7uWzaCTn
-         dZGwVqYRuhq/SrRZuzxwqsYPGBpYSMsD9tIb6R0kLl9Gs3DvZPhby3s4FBBi3HYs53
-         CrXleN1poYH3PpatCu/8YEVPI2osmvbxCSoFPExo=
-Received: from mchehab by mail.kernel.org with local (Exim 4.94)
-        (envelope-from <mchehab@kernel.org>)
-        id 1kN91j-000cE5-Lv; Tue, 29 Sep 2020 08:22:15 +0200
-From:   Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-To:     Stephen Boyd <sboyd@kernel.org>
-Cc:     linuxarm@huawei.com, mauro.chehab@huawei.com,
-        Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
-        "John Stultz" <john.stultz@linaro.org>,
-        "Manivannan Sadhasivam" <mani@kernel.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH v2 2/2] spmi: fix some coding style issues at the spmi core
-Date:   Tue, 29 Sep 2020 08:22:13 +0200
-Message-Id: <fec878502147336cbf2cf86e476e9dd797cd7e6f.1601360391.git.mchehab+huawei@kernel.org>
-X-Mailer: git-send-email 2.26.2
-In-Reply-To: <cover.1601360391.git.mchehab+huawei@kernel.org>
-References: <cover.1601360391.git.mchehab+huawei@kernel.org>
+        (Authenticated sender: varada)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 2D953C433CA;
+        Tue, 29 Sep 2020 08:04:30 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 2D953C433CA
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=varada@codeaurora.org
+Date:   Tue, 29 Sep 2020 13:34:26 +0530
+From:   Varadarajan Narayanan <varada@codeaurora.org>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     agross@kernel.org, robh+dt@kernel.org, mturquette@baylibre.com,
+        sboyd@kernel.org, linus.walleij@linaro.org,
+        catalin.marinas@arm.com, will@kernel.org, p.zabel@pengutronix.de,
+        nsekar@codeaurora.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-clk@vger.kernel.org, linux-gpio@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org, sricharan@codeaurora.org
+Subject: Re: [PATCH 5/7] pinctrl: qcom: Add IPQ5018 pinctrl driver
+Message-ID: <20200929080425.GA21805@codeaurora.org>
+References: <1601270140-4306-1-git-send-email-varada@codeaurora.org>
+ <1601270140-4306-6-git-send-email-varada@codeaurora.org>
+ <20200928184322.GB71055@builder.lan>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Sender: Mauro Carvalho Chehab <mchehab@kernel.org>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20200928184322.GB71055@builder.lan>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-While preparing to port the HiSilicon 6421v600 SPMI driver,
-I noticed some coding style issues at the SPMI core.
+On Mon, Sep 28, 2020 at 01:43:22PM -0500, Bjorn Andersson wrote:
+> On Mon 28 Sep 00:15 CDT 2020, Varadarajan Narayanan wrote:
+> > diff --git a/drivers/pinctrl/qcom/pinctrl-ipq5018.c b/drivers/pinctrl/qcom/pinctrl-ipq5018.c
+> [..]
+> > +static const struct msm_function ipq5018_functions[] = {
+> [..]
+> > +	FUNCTION(qspi_clk),
+> > +	FUNCTION(qspi_cs),
+> > +	FUNCTION(qspi0),
+> > +	FUNCTION(qspi1),
+> > +	FUNCTION(qspi2),
+> > +	FUNCTION(qspi3),
+>
+> Instead of having one function name per pin it typically leads to
+> cleaner DT if you group these under the same name (i.e. "qspi")
 
-Address them.
+Ok.
 
-Reviewed-by: Stephen Boyd <sboyd@kernel.org>
-Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
----
- drivers/spmi/spmi.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+> Same seems to apply to sdc, wci, xfem at least.
+>
+> > +	FUNCTION(reset_out),
+> > +	FUNCTION(sdc1_clk),
+> > +	FUNCTION(sdc1_cmd),
+> > +	FUNCTION(sdc10),
+> > +	FUNCTION(sdc11),
+> > +	FUNCTION(sdc12),
+> > +	FUNCTION(sdc13),
+> > +	FUNCTION(wci0),
+> > +	FUNCTION(wci1),
+> > +	FUNCTION(wci2),
+> > +	FUNCTION(wci3),
+> > +	FUNCTION(wci4),
+> > +	FUNCTION(wci5),
+> > +	FUNCTION(wci6),
+> > +	FUNCTION(wci7),
+> > +	FUNCTION(wsa_swrm),
+> > +	FUNCTION(wsi_clk3),
+> > +	FUNCTION(wsi_data3),
+> > +	FUNCTION(wsis_reset),
+> > +	FUNCTION(xfem0),
+> > +	FUNCTION(xfem1),
+> > +	FUNCTION(xfem2),
+> > +	FUNCTION(xfem3),
+> > +	FUNCTION(xfem4),
+> > +	FUNCTION(xfem5),
+> > +	FUNCTION(xfem6),
+> > +	FUNCTION(xfem7),
+> > +};
 
-diff --git a/drivers/spmi/spmi.c b/drivers/spmi/spmi.c
-index fd3ff6079b15..253340e10dab 100644
---- a/drivers/spmi/spmi.c
-+++ b/drivers/spmi/spmi.c
-@@ -23,6 +23,7 @@ static DEFINE_IDA(ctrl_ida);
- static void spmi_dev_release(struct device *dev)
- {
- 	struct spmi_device *sdev = to_spmi_device(dev);
-+
- 	kfree(sdev);
- }
- 
-@@ -33,6 +34,7 @@ static const struct device_type spmi_dev_type = {
- static void spmi_ctrl_release(struct device *dev)
- {
- 	struct spmi_controller *ctrl = to_spmi_controller(dev);
-+
- 	ida_simple_remove(&ctrl_ida, ctrl->nr);
- 	kfree(ctrl);
- }
-@@ -487,7 +489,7 @@ static void of_spmi_register_devices(struct spmi_controller *ctrl)
- 			continue;
- 
- 		sdev->dev.of_node = node;
--		sdev->usid = (u8) reg[0];
-+		sdev->usid = (u8)reg[0];
- 
- 		err = spmi_device_add(sdev);
- 		if (err) {
-@@ -531,6 +533,7 @@ EXPORT_SYMBOL_GPL(spmi_controller_add);
- static int spmi_ctrl_remove_device(struct device *dev, void *data)
- {
- 	struct spmi_device *spmidev = to_spmi_device(dev);
-+
- 	if (dev->type == &spmi_dev_type)
- 		spmi_device_remove(spmidev);
- 	return 0;
--- 
-2.26.2
+Ok.
 
+> > +static const struct msm_pingroup ipq5018_groups[] = {
+> > +	PINGROUP(0, atest_char0, _, qdss_cti_trig_out_a0, wci0, wci0, xfem0,
+>
+> What's up with wci0 being both function 4 and 5?
+
+Will check this.
+
+> > +		 _, _, _),
+> > +	PINGROUP(1, atest_char1, _, qdss_cti_trig_in_a0, wci1, wci1, xfem1,
+> > +		 _, _, _),
+>
+> Please don't like break these, better blow the line length limit in
+> favor or readability.
+>
+> > +	PINGROUP(2, atest_char2, _, qdss_cti_trig_out_a1, wci2, wci2, xfem2,
+> > +		 _, _, _),
+> > +	PINGROUP(3, atest_char3, _, qdss_cti_trig_in_a1, wci3, wci3, xfem3,
+> > +		 _, _, _),
+
+Ok.
+
+> Regards,
+> Bjorn
+
+Will post updated patches soon.
+
+Thanks
+Varada
+--
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum, hosted by The Linux Foundation
