@@ -2,235 +2,122 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 9C7A527D1BD
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Sep 2020 16:47:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1EB5927D1C3
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Sep 2020 16:48:07 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731159AbgI2OrU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 29 Sep 2020 10:47:20 -0400
-Received: from mail-oi1-f195.google.com ([209.85.167.195]:42728 "EHLO
+        id S1731120AbgI2OsF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 29 Sep 2020 10:48:05 -0400
+Received: from mail-oi1-f195.google.com ([209.85.167.195]:45090 "EHLO
         mail-oi1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728198AbgI2OrU (ORCPT
+        with ESMTP id S1727328AbgI2OsF (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 29 Sep 2020 10:47:20 -0400
-Received: by mail-oi1-f195.google.com with SMTP id x14so5706560oic.9;
-        Tue, 29 Sep 2020 07:47:18 -0700 (PDT)
+        Tue, 29 Sep 2020 10:48:05 -0400
+Received: by mail-oi1-f195.google.com with SMTP id z26so5706626oih.12;
+        Tue, 29 Sep 2020 07:48:04 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=W+jkK+PPaaP5z1YbhSNZVLbX0jLjwvJDt+lXO77GaZE=;
-        b=AEu/oEMeqFidsv+EunfUEPC7ZSmsVe4pEidQzyjoGttDZYHZHza0+c1eyXcOt0jlTa
-         4OBpxtjaCDPoWxlSbx083pPbkbqFCRVa/6+4beGKwMrFhseuPDCXBnpeibti7I5e3r3o
-         WSSz19C6qJYo0nhdkDkQdkFPZaRF4kyjYT9ooNjsQv0uRK803nqUwpgBbdwqxczT+aSI
-         omkoHU4el+QnZFlX8b7Sev+MDQAS135dh1n2oWcEiRs1eqJhML9M73+C/Q/2fIR3TN/R
-         5CtMXgiKD+/x+zDDNMpcSFiGHPzjN1w7AZLieS+zU1WSSHpNtJype/GCq0ao8hGgtA5r
-         rgWw==
-X-Gm-Message-State: AOAM533EfIX6fQX186PmYc7AbSVql7iKF69gNuQ7kNIj2ASWfDZkRUOW
-        MAFaVXLSIjEGZEbtLH8VYQ==
-X-Google-Smtp-Source: ABdhPJxTB0sQwV+hE3Pv+aOyjWqdRJQeV7R0c0cGhfEWtJCKxBi7I2TmJx3HvZFdwx9fXCqrdoH7Hg==
-X-Received: by 2002:aca:ec53:: with SMTP id k80mr2729308oih.92.1601390837759;
-        Tue, 29 Sep 2020 07:47:17 -0700 (PDT)
+        bh=5Ib58i3Mc+qXCwlRZiyxQ8Wo1PM76xeIoDQNLOw2eDU=;
+        b=s7Dzq3zah4/WE26QcG9feY7TxLATS6pskf4J5RIuv9wUEbHAFBxeqN66v1lZRxuDd5
+         9/2rxh45nQrIHlefi/9PtZa2s58kymGX1q7SQ0M3VylY9GA2ocSVF3WveCbfHQSarApY
+         UWFk2WWlo7kTeXESTFLlu0pAIdLaF5IC5MF6lc2yRiOYk5G2pEiFn2iYN/qb7kDeNwLr
+         /Tg36yU2a0VL28UDQPbevAXJhfAg01CZgBjaveQ9Ck9aeBCYhq5RWMtA9M+KndT83dZX
+         6zzZM9IdFQaUAHucBwwMRYPIPxMzbr7qj8P2iOGrYvxzcQpA/Dn8HxzFGb8qE4DE8EqX
+         IXPg==
+X-Gm-Message-State: AOAM533IHfRpgV7+hvok+yU8uFMARpKp1fTTHQmCReZKA18s37pwlC52
+        Ee5f9TsVk+RGOcV7/As0mw==
+X-Google-Smtp-Source: ABdhPJymV/FSHw0GdQywCDGO1aFF+Ijgni8vx/KH8HAnpEuWTTKdp/wVaqgKa7dz8ax8yF9EWFNMpQ==
+X-Received: by 2002:aca:d07:: with SMTP id 7mr2951234oin.52.1601390884238;
+        Tue, 29 Sep 2020 07:48:04 -0700 (PDT)
 Received: from xps15 (24-155-109-49.dyn.grandenetworks.net. [24.155.109.49])
-        by smtp.gmail.com with ESMTPSA id d17sm1023033oth.73.2020.09.29.07.47.16
+        by smtp.gmail.com with ESMTPSA id a22sm1029421oie.13.2020.09.29.07.48.03
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 29 Sep 2020 07:47:17 -0700 (PDT)
-Received: (nullmailer pid 565670 invoked by uid 1000);
-        Tue, 29 Sep 2020 14:47:16 -0000
-Date:   Tue, 29 Sep 2020 09:47:16 -0500
+        Tue, 29 Sep 2020 07:48:03 -0700 (PDT)
+Received: (nullmailer pid 567015 invoked by uid 1000);
+        Tue, 29 Sep 2020 14:48:02 -0000
+Date:   Tue, 29 Sep 2020 09:48:02 -0500
 From:   Rob Herring <robh@kernel.org>
-To:     kholk11@gmail.com
-Cc:     bjorn.andersson@linaro.org, agross@kernel.org,
-        georgi.djakov@linaro.org, marijns95@gmail.com,
-        konradybcio@gmail.com, martin.botka1@gmail.com,
-        linux-arm-msm@vger.kernel.org, phone-devel@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-pm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2 2/2] dt-bindings: interconnect: Add bindings for
- Qualcomm SDM660 NoC
-Message-ID: <20200929144716.GB557822@bogus>
-References: <20200928195853.40084-1-kholk11@gmail.com>
- <20200928195853.40084-3-kholk11@gmail.com>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Rob Herring <robh+dt@kernel.org>, Andy Gross <agross@kernel.org>,
+        Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
+        <u.kleine-koenig@pengutronix.de>, linux-kernel@vger.kernel.org,
+        Lee Jones <lee.jones@linaro.org>,
+        Martin Botka <martin.botka1@gmail.com>,
+        Pavel Machek <pavel@ucw.cz>, devicetree@vger.kernel.org,
+        Dan Murphy <dmurphy@ti.com>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        linux-leds@vger.kernel.org, linux-pwm@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH v4 1/4] dt-bindings: leds: Add Qualcomm Light Pulse
+ Generator binding
+Message-ID: <20200929144802.GA566563@bogus>
+References: <20200929031544.1000204-1-bjorn.andersson@linaro.org>
+ <20200929031544.1000204-2-bjorn.andersson@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20200928195853.40084-3-kholk11@gmail.com>
+In-Reply-To: <20200929031544.1000204-2-bjorn.andersson@linaro.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Sep 28, 2020 at 09:58:53PM +0200, kholk11@gmail.com wrote:
-> From: AngeloGioacchino Del Regno <kholk11@gmail.com>
+On Mon, 28 Sep 2020 20:15:41 -0700, Bjorn Andersson wrote:
+> This adds the binding document describing the three hardware blocks
+> related to the Light Pulse Generator found in a wide range of Qualcomm
+> PMICs.
 > 
-> Add the bindings for the Qualcomm SDM660-class NoC, valid for
-> SDM630, SDM636, SDM660 and SDA variants.
-> 
-> Signed-off-by: AngeloGioacchino Del Regno <kholk11@gmail.com>
+> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 > ---
->  .../bindings/interconnect/qcom,sdm660.yaml    | 147 ++++++++++++++++++
->  1 file changed, 147 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/interconnect/qcom,sdm660.yaml
 > 
-> diff --git a/Documentation/devicetree/bindings/interconnect/qcom,sdm660.yaml b/Documentation/devicetree/bindings/interconnect/qcom,sdm660.yaml
-> new file mode 100644
-> index 000000000000..440e9bc1382a
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/interconnect/qcom,sdm660.yaml
-> @@ -0,0 +1,147 @@
-> +# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/interconnect/qcom,sdm660.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> +
-> +title: Qualcomm SDM660 Network-On-Chip interconnect
-> +
-> +maintainers:
-> +  - Georgi Djakov <georgi.djakov@linaro.org>
-> +
-> +description: |
-> +  The Qualcomm SDM660 interconnect providers support adjusting the
-> +  bandwidth requirements between the various NoC fabrics.
-> +
-> +properties:
-> +  reg:
-> +    maxItems: 1
-> +
-> +  compatible:
-> +    enum:
-> +      - qcom,sdm660-a2noc
-> +      - qcom,sdm660-bimc
-> +      - qcom,sdm660-cnoc
-> +      - qcom,sdm660-gnoc
-> +      - qcom,sdm660-mnoc
-> +      - qcom,sdm660-snoc
-> +
-> +  '#interconnect-cells':
-> +    const: 1
-> +
-> +  clocks:
-> +    minItems: 1
-
-Looks like 2 is the min?
-
-> +    maxItems: 3
-> +
-> +  clock-names:
-> +    minItems: 1
-> +    maxItems: 3
-> +
-> +required:
-> +  - compatible
-> +  - reg
-> +  - '#interconnect-cells'
-> +  - clock-names
-> +  - clocks
-> +
-> +additionalProperties: false
-> +
-> +allOf:
-> +  - if:
-> +      properties:
-> +        compatible:
-> +          contains:
-> +            enum:
-> +              - qcom,sdm660-mnoc
-> +    then:
-> +      properties:
-> +        clocks:
-> +          items:
-> +            - description: Bus Clock.
-> +            - description: Bus A Clock.
-> +            - description: CPU-NoC High-performance Bus Clock.
-> +        clock-names:
-> +          items:
-> +            - const: bus
-> +            - const: bus_a
-> +            - const: iface
-
-Given both cases are the same except the 3rd clock, all this can be 
-moved to the main section. Then here you just need to restrict things 
-to 2 or 3 clocks.
-
-> +
-> +  - if:
-> +      properties:
-> +        compatible:
-> +          contains:
-> +            enum:
-> +              - qcom,sdm660-a2noc
-> +              - qcom,sdm660-bimc
-> +              - qcom,sdm660-cnoc
-> +              - qcom,sdm660-gnoc
-> +              - qcom,sdm660-snoc
-> +    then:
-> +      properties:
-> +        clocks:
-> +          items:
-> +            - description: Bus Clock.
-> +            - description: Bus A Clock.
-> +        clock-names:
-> +          items:
-> +            - const: bus
-> +            - const: bus_a
-> +
-> +examples:
-> +  - |
-> +      #include <dt-bindings/clock/qcom,rpmcc.h>
-> +      #include <dt-bindings/clock/qcom,mmcc-sdm660.h>
-> +
-> +      bimc: interconnect@1008000 {
-> +              compatible = "qcom,sdm660-bimc";
-> +              reg = <0x01008000 0x78000>;
-> +              #interconnect-cells = <1>;
-> +              clock-names = "bus", "bus_a";
-> +              clocks = <&rpmcc RPM_SMD_BIMC_CLK>,
-> +                       <&rpmcc RPM_SMD_BIMC_A_CLK>;
-> +      };
-> +
-> +      cnoc: interconnect@1500000 {
-> +              compatible = "qcom,sdm660-cnoc";
-> +              reg = <0x01500000 0x10000>;
-> +              #interconnect-cells = <1>;
-> +              clock-names = "bus", "bus_a";
-> +              clocks = <&rpmcc RPM_SMD_CNOC_CLK>,
-> +                       <&rpmcc RPM_SMD_CNOC_A_CLK>;
-> +      };
-> +
-> +      snoc: interconnect@1626000 {
-> +              compatible = "qcom,sdm660-snoc";
-> +              reg = <0x01626000 0x7090>;
-> +              #interconnect-cells = <1>;
-> +              clock-names = "bus", "bus_a";
-> +              clocks = <&rpmcc RPM_SMD_SNOC_CLK>,
-> +                       <&rpmcc RPM_SMD_SNOC_A_CLK>;
-> +      };
-> +
-> +      a2noc: interconnect@1704000 {
-> +              compatible = "qcom,sdm660-a2noc";
-> +              reg = <0x01704000 0xc100>;
-> +              #interconnect-cells = <1>;
-> +              clock-names = "bus", "bus_a";
-> +              clocks = <&rpmcc RPM_SMD_AGGR2_NOC_CLK>,
-> +                       <&rpmcc RPM_SMD_AGGR2_NOC_A_CLK>;
-> +      };
-> +
-> +      mnoc: interconnect@1745000 {
-> +              compatible = "qcom,sdm660-mnoc";
-> +              reg = <0x01745000 0xa010>;
-> +              #interconnect-cells = <1>;
-> +              clock-names = "bus", "bus_a", "iface";
-> +              clocks = <&rpmcc RPM_SMD_MMSSNOC_AXI_CLK>,
-> +                       <&rpmcc RPM_SMD_MMSSNOC_AXI_CLK_A>,
-> +                       <&mmcc AHB_CLK_SRC>;
-> +      };
-> +
-> +      gnoc: interconnect@17900000 {
-> +              compatible = "qcom,sdm660-gnoc";
-> +              reg = <0x17900000 0xe000>;
-> +              #interconnect-cells = <1>;
-> +              clock-names = "bus", "bus_a";
-> +              clocks = <&xo_board>, <&xo_board>;
-> +      };
-> -- 
-> 2.28.0
+> Changes since v3:
+> - Rewritten as YAML
+> - Adopt multicolor model
 > 
+>  .../bindings/leds/leds-qcom-lpg.yaml          | 170 ++++++++++++++++++
+>  1 file changed, 170 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/leds/leds-qcom-lpg.yaml
+> 
+
+
+My bot found errors running 'make dt_binding_check' on your patch:
+
+Traceback (most recent call last):
+  File "/usr/local/bin/dt-extract-example", line 45, in <module>
+    binding = yaml.load(open(args.yamlfile, encoding='utf-8').read())
+  File "/usr/local/lib/python3.8/dist-packages/ruamel/yaml/main.py", line 343, in load
+    return constructor.get_single_data()
+  File "/usr/local/lib/python3.8/dist-packages/ruamel/yaml/constructor.py", line 111, in get_single_data
+    node = self.composer.get_single_node()
+  File "_ruamel_yaml.pyx", line 706, in _ruamel_yaml.CParser.get_single_node
+  File "_ruamel_yaml.pyx", line 724, in _ruamel_yaml.CParser._compose_document
+  File "_ruamel_yaml.pyx", line 775, in _ruamel_yaml.CParser._compose_node
+  File "_ruamel_yaml.pyx", line 889, in _ruamel_yaml.CParser._compose_mapping_node
+  File "_ruamel_yaml.pyx", line 773, in _ruamel_yaml.CParser._compose_node
+  File "_ruamel_yaml.pyx", line 852, in _ruamel_yaml.CParser._compose_sequence_node
+  File "_ruamel_yaml.pyx", line 904, in _ruamel_yaml.CParser._parse_next_event
+ruamel.yaml.scanner.ScannerError: while scanning a block scalar
+  in "<unicode string>", line 131, column 5
+found a tab character where an indentation space is expected
+  in "<unicode string>", line 144, column 1
+make[1]: *** [Documentation/devicetree/bindings/Makefile:18: Documentation/devicetree/bindings/leds/leds-qcom-lpg.example.dts] Error 1
+make[1]: *** Deleting file 'Documentation/devicetree/bindings/leds/leds-qcom-lpg.example.dts'
+make[1]: *** Waiting for unfinished jobs....
+./Documentation/devicetree/bindings/leds/leds-qcom-lpg.yaml:  while scanning a block scalar
+  in "<unicode string>", line 131, column 5
+found a tab character where an indentation space is expected
+  in "<unicode string>", line 144, column 1
+/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/leds/leds-qcom-lpg.yaml: ignoring, error parsing file
+warning: no schema found in file: ./Documentation/devicetree/bindings/leds/leds-qcom-lpg.yaml
+make: *** [Makefile:1366: dt_binding_check] Error 2
+
+
+See https://patchwork.ozlabs.org/patch/1372990
+
+If you already ran 'make dt_binding_check' and didn't see the above
+error(s), then make sure dt-schema is up to date:
+
+pip3 install git+https://github.com/devicetree-org/dt-schema.git@master --upgrade
+
+Please check and re-submit.
+
