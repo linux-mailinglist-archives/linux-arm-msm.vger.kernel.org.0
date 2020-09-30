@@ -2,93 +2,93 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id AAFEE27E36C
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Sep 2020 10:15:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B141127E376
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Sep 2020 10:17:09 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728480AbgI3IPp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 30 Sep 2020 04:15:45 -0400
-Received: from m42-4.mailgun.net ([69.72.42.4]:42670 "EHLO m42-4.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728430AbgI3IPm (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 30 Sep 2020 04:15:42 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1601453741; h=References: In-Reply-To: References:
- In-Reply-To: Message-Id: Date: Subject: Cc: To: From: Sender;
- bh=N3XLsnLsoWMhDr+Ofmek2gL/NSFD+dt99yk0CTYcLhY=; b=MDuLYIVwIe/S31GWhXAGu553kRkAu2QtdHcgX2raafL9Qi0Npi416niuzoObv4ekaN/ZL0Cl
- 7XVXbKvuCwLR2f0JS40D6NfT7lzgqMK3y4J/RRgQowOn4UAzm/CgZ8NvoFqGCnRwGWzoysJw
- pgK0oN9GhAi5UQSmn8OGQjUcR6Y=
-X-Mailgun-Sending-Ip: 69.72.42.4
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n06.prod.us-east-1.postgun.com with SMTP id
- 5f743e7eaada82eaa4f87f61 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 30 Sep 2020 08:14:54
- GMT
-Sender: schowdhu=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id B6C61C433FE; Wed, 30 Sep 2020 08:14:53 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
-        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
-Received: from blr-ubuntu-525.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: schowdhu)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 0E59FC433CA;
-        Wed, 30 Sep 2020 08:14:49 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 0E59FC433CA
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=schowdhu@codeaurora.org
-From:   Souradeep Chowdhury <schowdhu@codeaurora.org>
-To:     devicetree@vger.kernel.org, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Rajendra Nayak <rnayak@codeaurora.org>,
-        Souradeep Chowdhury <schowdhu@codeaurora.org>
-Subject: [PATCH V1 3/3] arm64: dts: qcom: sm8150: Add LLC support for sm8150
-Date:   Wed, 30 Sep 2020 13:44:14 +0530
-Message-Id: <8f0e818485941076d62a8dc9f711b0fb868ba080.1601452132.git.schowdhu@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <cover.1601452132.git.schowdhu@codeaurora.org>
-References: <cover.1601452132.git.schowdhu@codeaurora.org>
-In-Reply-To: <cover.1601452132.git.schowdhu@codeaurora.org>
-References: <cover.1601452132.git.schowdhu@codeaurora.org>
+        id S1728638AbgI3IRI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 30 Sep 2020 04:17:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60270 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728622AbgI3IRI (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 30 Sep 2020 04:17:08 -0400
+Received: from mail-pj1-x102c.google.com (mail-pj1-x102c.google.com [IPv6:2607:f8b0:4864:20::102c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 32789C0613D1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 30 Sep 2020 01:17:08 -0700 (PDT)
+Received: by mail-pj1-x102c.google.com with SMTP id l18so487296pjz.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 30 Sep 2020 01:17:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id;
+        bh=/cvEEeM/Z0ruOyi2iZix2HZSBL+TU1UmTGUs1ZgCyb0=;
+        b=JCEThkzLTx4ooLRLiBbmFPfIsWDAfs5Lm6Wr+sO7vDFbjgeA7+dvgsGcDvbmukrfj1
+         VML8KgePgNcp+0EhJeDpNdZsmigMk6O5ZLFgYxlcTRTDDthNCCBRB9goQ9kJmIQb0xKj
+         4VgPMljdHIDfcSeYeuhJdQx79LnjTuqu6+HFjWeq+3krfjgrZhy1uwMXDICa1Co4ZjlS
+         Xe+Vn3jLjqRsKfHtlLaM01AhqMEtHqHsI0phr9hELf6C25SEEds6Ank5DqKwtMKi8JFu
+         ioZClvoh3+xcoT0nS2FVcwpYfAX0zM0yDeuULhfDLjo8hln5dHhL9y6hX5bVCTHKkKtP
+         K+JQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=/cvEEeM/Z0ruOyi2iZix2HZSBL+TU1UmTGUs1ZgCyb0=;
+        b=Su4daJFW/xwgXyr+oqwTpaEwWk9gT6FiVnU2sJyyXXuiICqTZItFM9TBbXvTtYi028
+         lZFhIzyoWlgUOoEzbw+TSxsWlkKxCMM/da4Trnee0OhBaAd3TGrkp0F5wld2dYxvacDU
+         oGHCclGwx4USHYwHMQyAgFVoqBJThdKVZBZ8CJOgd9vrNfuaPJ3BIUOnDB+QEgL18DZU
+         nXqHJrHel3neeMqX5HdANcZP+Gg85frldu6TnpcyZKH04VkDBmcqxOd188BJzM91titm
+         QIbtyW0OQ2cCRowRgO2kIp2Irn0XCM5QnUfWBDm9qhWI8tzAhPFQTw2Ji0BA+PA7HbA1
+         M4+w==
+X-Gm-Message-State: AOAM531lSAIIs+P0f6IMlL0MsiPvCG69UbEwtXgvLC5ybBBuzq/DVf9W
+        okgGEVfyKOQOy8HOIk6ybQy+fw==
+X-Google-Smtp-Source: ABdhPJw6zqfzW5NM53QibTPT4D+nBqiYb2YZ7SPWAWrKED2U+JVnR9RY/gc0qz2xe57Gx3sileGsCQ==
+X-Received: by 2002:a17:902:768a:b029:d2:ac2f:8945 with SMTP id m10-20020a170902768ab02900d2ac2f8945mr1261857pll.61.1601453827631;
+        Wed, 30 Sep 2020 01:17:07 -0700 (PDT)
+Received: from localhost.localdomain (li519-153.members.linode.com. [66.175.222.153])
+        by smtp.gmail.com with ESMTPSA id q15sm1385345pje.29.2020.09.30.01.17.03
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 30 Sep 2020 01:17:07 -0700 (PDT)
+From:   Jun Nie <jun.nie@linaro.org>
+To:     devicetree@vger.kernel.org, georgi.djakov@linaro.org,
+        bjorn.andersson@linaro.org, agross@kernel.org,
+        linux-pm@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, robh@kernel.org
+Cc:     shawn.guo@linaro.org, Jun Nie <jun.nie@linaro.org>
+Subject: [PATCH 0/5] Consolidate RPM interconnect and support to MSM8939
+Date:   Wed, 30 Sep 2020 16:16:40 +0800
+Message-Id: <20200930081645.3434-1-jun.nie@linaro.org>
+X-Mailer: git-send-email 2.17.1
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add LLCC system cache controller entry for sm8150 to support sm8150
-for LLCC.
+This patch set split shared RPM based interconnect operation code and add
+support to MSM8939 interconnect.
 
-Signed-off-by: Souradeep Chowdhury <schowdhu@codeaurora.org>
----
- arch/arm64/boot/dts/qcom/sm8150.dtsi | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+Jun Nie (5):
+  interconnect: qcom: Consolidate interconnect RPM support
+  interconnect: qcom: qcs404: use shared code
+  dt-bindings: interconnect: single yaml file for RPM interconnect
+    drivers
+  dt-bindings: interconnect: Add Qualcomm MSM8939 DT bindings
+  interconnect: qcom: Add MSM8939 interconnect provider driver
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8150.dtsi b/arch/arm64/boot/dts/qcom/sm8150.dtsi
-index f0a872e02686..71037a1bb217 100644
---- a/arch/arm64/boot/dts/qcom/sm8150.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8150.dtsi
-@@ -490,7 +490,14 @@
- 			qcom,bcm-voters = <&apps_bcm_voter>;
- 		};
- 
--		ufs_mem_hc: ufshc@1d84000 {
-+	        system-cache-controller@9200000 {
-+                        compatible = "qcom,sm8150-llcc";
-+                        reg = <0 0x09200000 0 0x200000>, <0 0x09600000 0 0x50000>;
-+                        reg-names = "llcc_base", "llcc_broadcast_base";
-+                        interrupts = <GIC_SPI 582 IRQ_TYPE_LEVEL_HIGH>;
-+                 };
-+
-+        	ufs_mem_hc: ufshc@1d84000 {
- 			compatible = "qcom,sm8150-ufshc", "qcom,ufshc",
- 				     "jedec,ufs-2.0";
- 			reg = <0 0x01d84000 0 0x2500>;
+ .../bindings/interconnect/qcom,qcs404.yaml    |  77 ----
+ .../{qcom,msm8916.yaml => qcom,rpm.yaml}      |  28 +-
+ drivers/interconnect/qcom/Kconfig             |   9 +
+ drivers/interconnect/qcom/Makefile            |   5 +-
+ drivers/interconnect/qcom/icc-rpm.c           | 194 ++++++++++
+ drivers/interconnect/qcom/icc-rpm.h           |  73 ++++
+ drivers/interconnect/qcom/msm8916.c           | 241 +-----------
+ drivers/interconnect/qcom/msm8939.c           | 355 ++++++++++++++++++
+ drivers/interconnect/qcom/qcs404.c            | 242 +-----------
+ .../dt-bindings/interconnect/qcom,msm8939.h   | 105 ++++++
+ 10 files changed, 776 insertions(+), 553 deletions(-)
+ delete mode 100644 Documentation/devicetree/bindings/interconnect/qcom,qcs404.yaml
+ rename Documentation/devicetree/bindings/interconnect/{qcom,msm8916.yaml => qcom,rpm.yaml} (72%)
+ create mode 100644 drivers/interconnect/qcom/icc-rpm.c
+ create mode 100644 drivers/interconnect/qcom/icc-rpm.h
+ create mode 100644 drivers/interconnect/qcom/msm8939.c
+ create mode 100644 include/dt-bindings/interconnect/qcom,msm8939.h
+
 -- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
-of Code Aurora Forum, hosted by The Linux Foundation
+2.17.1
 
