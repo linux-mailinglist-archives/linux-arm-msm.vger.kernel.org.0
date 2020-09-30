@@ -2,58 +2,58 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D7FDF27E10B
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Sep 2020 08:26:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CFF1027E10D
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Sep 2020 08:26:46 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725554AbgI3G0n (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 30 Sep 2020 02:26:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43298 "EHLO
+        id S1727894AbgI3G0q (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 30 Sep 2020 02:26:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43314 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728081AbgI3G0n (ORCPT
+        with ESMTP id S1728061AbgI3G0q (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 30 Sep 2020 02:26:43 -0400
-Received: from mail-pl1-x62d.google.com (mail-pl1-x62d.google.com [IPv6:2607:f8b0:4864:20::62d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 20BB7C061755
-        for <linux-arm-msm@vger.kernel.org>; Tue, 29 Sep 2020 23:26:43 -0700 (PDT)
-Received: by mail-pl1-x62d.google.com with SMTP id s19so385345plp.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 29 Sep 2020 23:26:43 -0700 (PDT)
+        Wed, 30 Sep 2020 02:26:46 -0400
+Received: from mail-pj1-x1044.google.com (mail-pj1-x1044.google.com [IPv6:2607:f8b0:4864:20::1044])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 17D25C0613D0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 29 Sep 2020 23:26:46 -0700 (PDT)
+Received: by mail-pj1-x1044.google.com with SMTP id md22so439351pjb.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 29 Sep 2020 23:26:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=mgYJJXMxx+kcf4ZUk0gqNRlrVT2JY/xh1hHfRqfpR6c=;
-        b=iV9wRNOyNqLQTpCmly2y0p5KAla4essxwJFuzVjXokwsylwuKarknbAh34ukHphfOY
-         D61kyLdAmE06aqn4Bj1dLlXxOSw/HOHe8UdSuypzadrznPtgrW1kDGNlc2YZzfsTWO8c
-         3D5nmsrqtLGxG4budOtuiqwZW9y5WEQm0sF+x0wuxpn4mQki1ZRXA1du5N74JmchQfRB
-         7A+pN6cBEI5luSOYB0mEA+VZCF/BOdSUAekw26fh6v6GC09UDPWOU9HOtSr7TQCFtCBx
-         BVwm15FyByvbG/14gS611hbbG9Rpdz0FuK/1+aS4KX51j/c7buFIYGu7Gvz5BBZwwth5
-         YsFw==
+        bh=5Z9iD5dbjUlbuGrYIcWwsmUnfsJn43RhdMJSmu8N4W0=;
+        b=UiFRtbu3eLT7FS5Hy7ERPceMg5/UTDo2+19HFhdidUKEItEXkBniPFFBR7tvWT6avC
+         drfjqSVPD1pDg/0pSyD5ifxdMxr+9/33Z3Fyg3QU6Wj62EfkNx0Lmzxag12EhW7NK990
+         V0+0e9z+GqgcsFZj1+fonoCGeLUlDou63hthch91R8pmxvuy68VsJCniUkLsJrBJ4Sko
+         VYFuQ4dOU8ExVX5rTRHgYNBFSk7ksAFohhsZ1DWcRdjsyLN0EJZMf1BFerVWA1Ji66Uh
+         0S9fAtD+1VE9CSiXawEi8839+UYdKs/nVa1j3RFjmNLvXBetf9M8smyj4YnrDivqbyVA
+         Jh1Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=mgYJJXMxx+kcf4ZUk0gqNRlrVT2JY/xh1hHfRqfpR6c=;
-        b=N04WLtbp8QIxYobqrmbGnJB7WDbrZRSTmsbKrinq67mMjTaE7d1urIhusTdIyhdzT3
-         nSsniCJBW8T+XpKCY3WeuvO26fdta6VcwBKq/E5a/zn+QYs8P1yk1VoLtcLydR54Cdmv
-         Jcpue/IAi0/KkvPhQZTKZzsUbTs6I1OJXVI3hl29/n7a7s1eT+eq10cEvfwicZ0NtEXb
-         p+KF6Vx4uGoP3jhZtbLAkCsl2akaxp/KVMCvq45LUq2cUZo/nbfRH3jioJFc/+t5KsnF
-         GK5nHrKKkkDtFnoERIVj9/s+EKO8O8w23h0j6lohustMnU4vfq33xBIwa+2NR8Dw6NLQ
-         jCqA==
-X-Gm-Message-State: AOAM531aFRmuMzdIPOpsSkzgTpAFQpwkggKic5LR/1bsD/XR2E1hc1Av
-        sv1j4IEojl7XgxMPkjE+aAxgAHasexDThgTe
-X-Google-Smtp-Source: ABdhPJwnOj3kFy4/iMi9jsDq8fZlirpwCYqqynpn+DSeeIvV6IdzYX9kphWeqn9Y4MtaumgKFHgrDA==
-X-Received: by 2002:a17:902:be0f:b029:d2:83e9:5d6b with SMTP id r15-20020a170902be0fb02900d283e95d6bmr1161775pls.75.1601447202685;
-        Tue, 29 Sep 2020 23:26:42 -0700 (PDT)
+        bh=5Z9iD5dbjUlbuGrYIcWwsmUnfsJn43RhdMJSmu8N4W0=;
+        b=jLbPbAu4kOivTjH7ep9moLSJhHz7fPOCpql7i8wpln2N5FBZVVSS8y+1duE3w5Gt9t
+         knfG7GRIFKrRyyDqzjEfs46s1+g6XmJpwl4Y+pra3Z4KacrS8JjM+lbRw30fMbz4rR5G
+         c61IHqVlFf6Ijr0hepabTHfiX1pgAiJm75Tz+5plzWoTuLKLm0OLVBNYcTHujSyGw/Fv
+         eTEc32XRojS96ig3Ndt/M4+64Eejslk+2rO+l8CJ/dwhMrJKMYFe/K9aHO0Ok4DKWXMx
+         XN9zYL4mD8RTUzRyRJptPegabJPfIz8oQR/eorGzKKgA2+sM/TXpGXbAQ4qBowv+MvmA
+         +4Pg==
+X-Gm-Message-State: AOAM533cLWg2+116JCA0HT91P+dLcNGwaAkYWg62F66Zm+Dh0SRAHcjL
+        y833YcGFQTby/TbDvd1//VWBAA==
+X-Google-Smtp-Source: ABdhPJwLOIRB0uYUWFychq/TdPRKyIeOqOuAHqynnk+lG197pAQSDO9uxpwRsVeHjQLNNJSFXiiVXA==
+X-Received: by 2002:a17:902:ed53:b029:d2:8046:f57c with SMTP id y19-20020a170902ed53b02900d28046f57cmr1320188plb.55.1601447205668;
+        Tue, 29 Sep 2020 23:26:45 -0700 (PDT)
 Received: from localhost.localdomain (li519-153.members.linode.com. [66.175.222.153])
-        by smtp.gmail.com with ESMTPSA id t5sm772462pgs.74.2020.09.29.23.26.40
+        by smtp.gmail.com with ESMTPSA id t5sm772462pgs.74.2020.09.29.23.26.43
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 29 Sep 2020 23:26:42 -0700 (PDT)
+        Tue, 29 Sep 2020 23:26:45 -0700 (PDT)
 From:   Jun Nie <jun.nie@linaro.org>
 To:     nks@flawful.org, linux-pm@vger.kernel.org,
         linux-arm-msm@vger.kernel.org
 Cc:     shawn.guo@linaro.org, Jun Nie <jun.nie@linaro.org>
-Subject: [PATCH 1/3] cpufreq: qcom: Add support for msm8939
-Date:   Wed, 30 Sep 2020 14:26:01 +0800
-Message-Id: <20200930062603.29009-2-jun.nie@linaro.org>
+Subject: [PATCH 2/3] dt-bindings: power: avs: CPR: Add corner adjust properties
+Date:   Wed, 30 Sep 2020 14:26:02 +0800
+Message-Id: <20200930062603.29009-3-jun.nie@linaro.org>
 X-Mailer: git-send-email 2.17.1
 In-Reply-To: <20200930062603.29009-1-jun.nie@linaro.org>
 References: <20200930062603.29009-1-jun.nie@linaro.org>
@@ -61,40 +61,69 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add qcom-cpufreq-nvmem support for msm8939.
-Also add msm8939 to cpufreq-dt-platdev blacklist to avoid
-conflict.
+Add corner adjust properties for both corner and virtual corner.
 
 Signed-off-by: Jun Nie <jun.nie@linaro.org>
 ---
- drivers/cpufreq/cpufreq-dt-platdev.c | 1 +
- drivers/cpufreq/qcom-cpufreq-nvmem.c | 1 +
- 2 files changed, 2 insertions(+)
+ .../bindings/power/avs/qcom,cpr.txt           | 38 ++++++++++++++++++-
+ 1 file changed, 37 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/cpufreq/cpufreq-dt-platdev.c b/drivers/cpufreq/cpufreq-dt-platdev.c
-index 7d01df7bfa6c..b6eeb8ef9c11 100644
---- a/drivers/cpufreq/cpufreq-dt-platdev.c
-+++ b/drivers/cpufreq/cpufreq-dt-platdev.c
-@@ -130,6 +130,7 @@ static const struct of_device_id blacklist[] __initconst = {
- 	{ .compatible = "nvidia,tegra210", },
+diff --git a/Documentation/devicetree/bindings/power/avs/qcom,cpr.txt b/Documentation/devicetree/bindings/power/avs/qcom,cpr.txt
+index ab0d5ebbad4e..4f4108730dc3 100644
+--- a/Documentation/devicetree/bindings/power/avs/qcom,cpr.txt
++++ b/Documentation/devicetree/bindings/power/avs/qcom,cpr.txt
+@@ -10,7 +10,9 @@ and meet silicon characteristic requirements.
+ - compatible:
+ 	Usage: required
+ 	Value type: <string>
+-	Definition: should be "qcom,qcs404-cpr", "qcom,cpr" for qcs404
++	  enum:
++             - qcom,qcs404-cpr
++             - qcom,msm8939-cpr
  
- 	{ .compatible = "qcom,apq8096", },
-+	{ .compatible = "qcom,msm8939", },
- 	{ .compatible = "qcom,msm8996", },
- 	{ .compatible = "qcom,qcs404", },
- 	{ .compatible = "qcom,sc7180", },
-diff --git a/drivers/cpufreq/qcom-cpufreq-nvmem.c b/drivers/cpufreq/qcom-cpufreq-nvmem.c
-index d06b37822c3d..d88060330497 100644
---- a/drivers/cpufreq/qcom-cpufreq-nvmem.c
-+++ b/drivers/cpufreq/qcom-cpufreq-nvmem.c
-@@ -458,6 +458,7 @@ static const struct of_device_id qcom_cpufreq_match_list[] __initconst = {
- 	{ .compatible = "qcom,apq8096", .data = &match_data_kryo },
- 	{ .compatible = "qcom,msm8996", .data = &match_data_kryo },
- 	{ .compatible = "qcom,qcs404", .data = &match_data_qcs404 },
-+	{ .compatible = "qcom,msm8939", .data = &match_data_qcs404 },
- 	{ .compatible = "qcom,ipq8064", .data = &match_data_krait },
- 	{ .compatible = "qcom,apq8064", .data = &match_data_krait },
- 	{ .compatible = "qcom,msm8974", .data = &match_data_krait },
+ - reg:
+ 	Usage: required
+@@ -70,6 +72,40 @@ and meet silicon characteristic requirements.
+ 		    "cpr_quotient2", "cpr_quotient3", "cpr_ring_osc1",
+ 		    "cpr_ring_osc2", "cpr_ring_osc3", "cpr_fuse_revision"
+ 		    for qcs404.
++		    should be: "cpr_speedbin" "cpr_init_voltage1",
++		    "cpr_init_voltage2", "cpr_init_voltage3", "cpr_quotient1",
++		    "cpr_quotient2", "cpr_quotient3", "cpr_ring_osc1",
++		    "cpr_ring_osc2", "cpr_ring_osc3", "cpr_fuse_revision"
++		    "cpr_fuse_revision_high", "cpr_pvs_version" and
++		    "cpr_pvs_version_high" for msm8939.
++
++
++- fuse-version-map:
++	Usage: optional
++	Value type: <prop-encoded-array>
++	Definition: fuse map table to search for entry index that for below
++		properties lookup table. Based on SoC's speedbin, pvs_version
++		and cpr revision.
++
++- init-voltage-adjustment:
++	Usage: optional
++	Value type: <prop-encoded-array>
++	Definition: Adjustment to initial voltage that read from fuse.
++
++- quotient-adjustment:
++	Usage: optional
++	Value type: <prop-encoded-array>
++	Definition: Adjustment to quotient that read from fuse.
++
++ - virtual-corner-quotient-adjustment:
++	Usage: optional
++	Value type: <prop-encoded-array>
++	Definition: Adjustment to virtual corners' quotient.
++
++ - voltage-floor-override:
++	Usage: optional
++	Value type: <prop-encoded-array>
++	Definition: Value to override virtual corners' floor voltage.
+ 
+ Example:
+ 
 -- 
 2.17.1
 
