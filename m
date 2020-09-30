@@ -2,156 +2,102 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 6E74327E096
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Sep 2020 07:46:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3515227E0D4
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Sep 2020 08:05:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725320AbgI3Fqu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 30 Sep 2020 01:46:50 -0400
-Received: from fllv0016.ext.ti.com ([198.47.19.142]:38628 "EHLO
-        fllv0016.ext.ti.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725306AbgI3Fqu (ORCPT
+        id S1725771AbgI3GFp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 30 Sep 2020 02:05:45 -0400
+Received: from alexa-out.qualcomm.com ([129.46.98.28]:4091 "EHLO
+        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725306AbgI3GFp (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 30 Sep 2020 01:46:50 -0400
-Received: from fllv0034.itg.ti.com ([10.64.40.246])
-        by fllv0016.ext.ti.com (8.15.2/8.15.2) with ESMTP id 08U5kldp121649;
-        Wed, 30 Sep 2020 00:46:47 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ti.com;
-        s=ti-com-17Q1; t=1601444807;
-        bh=IcGXwcmno1GcBhj0sPJ2RIbIjTWcrrKuQT9aId1ObFU=;
-        h=Subject:From:To:CC:References:Date:In-Reply-To;
-        b=SMtFQgid/ACN2r2E6N9nXv45AdHeDw6Vzts/AsWt3j1DwBMmskpNtdPaGGIum2CCl
-         /SruN+o0/yy97tiTQ16PZFZ51ROV6VycRgECT97f5XMrp2lyZSvY/Yt4BLuLmvedDt
-         llBFlIhf3Xq/H0NtTBZAzZIIdU/lxob9tKZ2E/lE=
-Received: from DLEE104.ent.ti.com (dlee104.ent.ti.com [157.170.170.34])
-        by fllv0034.itg.ti.com (8.15.2/8.15.2) with ESMTPS id 08U5klFl036470
-        (version=TLSv1.2 cipher=AES256-GCM-SHA384 bits=256 verify=FAIL);
-        Wed, 30 Sep 2020 00:46:47 -0500
-Received: from DLEE112.ent.ti.com (157.170.170.23) by DLEE104.ent.ti.com
- (157.170.170.34) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.1979.3; Wed, 30
- Sep 2020 00:46:47 -0500
-Received: from lelv0327.itg.ti.com (10.180.67.183) by DLEE112.ent.ti.com
- (157.170.170.23) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.1979.3 via
- Frontend Transport; Wed, 30 Sep 2020 00:46:47 -0500
-Received: from [192.168.2.6] (ileax41-snat.itg.ti.com [10.172.224.153])
-        by lelv0327.itg.ti.com (8.15.2/8.15.2) with ESMTP id 08U5kjjQ047716;
-        Wed, 30 Sep 2020 00:46:45 -0500
-Subject: Re: [PATCH v3 2/3] dmaengine: add peripheral configuration
-From:   Peter Ujfalusi <peter.ujfalusi@ti.com>
-To:     Vinod Koul <vkoul@kernel.org>, <dmaengine@vger.kernel.org>
-CC:     Rob Herring <robh+dt@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-References: <20200923063410.3431917-1-vkoul@kernel.org>
- <20200923063410.3431917-3-vkoul@kernel.org>
- <29f95fff-c484-0131-d1fe-b06e3000fb9f@ti.com>
-X-Pep-Version: 2.0
-Message-ID: <aaa3f7df-3625-1b65-aeaa-33dc43566c99@ti.com>
-Date:   Wed, 30 Sep 2020 08:47:01 +0300
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.12.0
-MIME-Version: 1.0
-In-Reply-To: <29f95fff-c484-0131-d1fe-b06e3000fb9f@ti.com>
-Content-Type: text/plain; charset="utf-8"
-Content-Language: en-US
-Content-Transfer-Encoding: quoted-printable
-X-EXCLAIMER-MD-CONFIG: e1e8a2fd-e40a-4ac6-ac9b-f7e9cc9ee180
+        Wed, 30 Sep 2020 02:05:45 -0400
+Received: from ironmsg08-lv.qualcomm.com ([10.47.202.152])
+  by alexa-out.qualcomm.com with ESMTP; 29 Sep 2020 23:05:44 -0700
+X-QCInternal: smtphost
+Received: from ironmsg01-blr.qualcomm.com ([10.86.208.130])
+  by ironmsg08-lv.qualcomm.com with ESMTP/TLS/AES256-SHA; 29 Sep 2020 23:05:42 -0700
+X-QCInternal: smtphost
+Received: from parashar-linux.qualcomm.com ([10.206.13.63])
+  by ironmsg01-blr.qualcomm.com with ESMTP; 30 Sep 2020 11:35:29 +0530
+Received: by parashar-linux.qualcomm.com (Postfix, from userid 2363307)
+        id 03CE1213D0; Wed, 30 Sep 2020 11:35:27 +0530 (IST)
+From:   Paras Sharma <parashar@codeaurora.org>
+To:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc:     Jiri Slaby <jslaby@suse.com>, linux-arm-msm@vger.kernel.org,
+        linux-serial@vger.kernel.org, linux-kernel@vger.kernel.org,
+        akashast@codeaurora.org, Paras Sharma <parashar@codeaurora.org>
+Subject: [PATCH V6] serial: qcom_geni_serial: To correct QUP Version detection logic
+Date:   Wed, 30 Sep 2020 11:35:26 +0530
+Message-Id: <1601445926-23673-1-git-send-email-parashar@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Vinod,
+For QUP IP versions 2.5 and above the oversampling rate is
+halved from 32 to 16.
 
-On 29/09/2020 11.06, Peter Ujfalusi wrote:
->=20
-> I know that you want this to be as generic as much as it is possible,
-> but do we really want to?
-> GPIv2 will also handle I2S peripheral, other vendor's similar solution
-> would require different sets of parameters unique to their IPs?
->=20
-> How we are going to handle similar setups for DMA which is used for
-> networking, SPI/I2C/I2S/NAND/display/capture, etc?
->=20
-> Imho these settings are really part of the peripheral's domain and not
-> the DMA. It is just a small detail that instead of direct register
-> writes, your setup is using the DMA descriptors to write.
-> It is similar to what I use as metadata (part of the descriptor belongs=
+Commit ce734600545f ("tty: serial: qcom_geni_serial: Update
+the oversampling rate") is pushed to handle this scenario.
+But the existing logic is failing to classify QUP Version 3.0
+into the correct group ( 2.5 and above).
 
-> and owned by the client driver).
->=20
-> I think it would be better to have:
->=20
-> enum dmaengine_peripheral {
-> 	DMAENGINE_PERIPHERAL_GPI_SPI =3D 1,
-> 	DMAENGINE_PERIPHERAL_GPI_UART,
-> 	DMAENGINE_PERIPHERAL_GPI_I2C,
-> 	DMAENGINE_PERIPHERAL_XYZ_SPI,
-> 	DMAENGINE_PERIPHERAL_XYZ_AASRC,
-> 	DMAENGINE_PERIPHERAL_ABC_CAM,
-> 	...
-> 	DMAENGINE_PERIPHERAL_LAST,
-> };
->=20
-> enum dmaengine_peripheral peripheral_type;
-> void *peripheral_config;
+As result Serial Engine clocks are not configured properly for
+baud rate and garbage data is sampled to FIFOs from the line.
 
-TI have an AASRC (Audio Asynchronous Sample Rate Converted) in j721e and
-to configure the DMA side (AASRC_PDMA) we need special configuration
-parameters passed from the AASRC driver to the DMA channel.
-This peripheral config extension would be perfect for it, but the
-parameters I would need is not generic in any ways.
+So, fix the logic to detect QUP with versions 2.5 and above.
 
-The other thing which might need to be considered is to have src/dst
-pair of this. When we do DMA_DEV_TO_DEV, it would help to figure out
-which side we should apply which config (if you have the same type of
-device on both ends with different config?).
+Fixes: ce734600545f ("tty: serial: qcom_geni_serial: Update the oversampling rate")
+Signed-off-by: Paras Sharma <parashar@codeaurora.org>
+---
+Changes in V6:
+Removed newline unneeded change
 
+Changes in V5:
+Moved QUP_SE_VERSION_2_5 to common header file qcom-geni-se.h
 
-> and that's it. The set_config is specific to GPI.
-> It can be debated where the structs should be defined, in the generic
-> dmaengine.h or in include/linux/dma/ as controller specific
-> (gpi_peripheral.h) or a generic one, like dmaengine_peripheral.h
->=20
-> The SPI/I2C/UART client of yours would pass the GPI specific struct as
-> in any case it has to know what is the DMA it is serviced by.
->=20
->> +};
->>  /**
->>   * struct dma_slave_config - dma slave channel runtime config
->>   * @direction: whether the data shall go in or out on this slave
->> @@ -418,6 +506,8 @@ enum dma_slave_buswidth {
->>   * @slave_id: Slave requester id. Only valid for slave channels. The =
-dma
->>   * slave peripheral will have unique id as dma requester which need t=
-o be
->>   * pass as slave config.
->> + * @peripheral: peripheral configuration for programming peripheral f=
-or
->> + * dmaengine transfer
->>   *
->>   * This struct is passed in as configuration data to a DMA engine
->>   * in order to set up a certain channel for DMA transport at runtime.=
+Changes in V4:
+Created a new #define QUP_SE_VERSION_2_5 for Qup serial engine having version 2.5
 
->> @@ -443,6 +533,7 @@ struct dma_slave_config {
->>  	u32 dst_port_window_size;
->>  	bool device_fc;
->>  	unsigned int slave_id;
->> +	struct dmaengine_peripheral_config *peripheral;
->>  };
->> =20
->>  /**
->>
->=20
-> - P=C3=A9ter
->=20
-> Texas Instruments Finland Oy, Porkkalankatu 22, 00180 Helsinki.
-> Y-tunnus/Business ID: 0615521-4. Kotipaikka/Domicile: Helsinki
->=20
+Changes in V3:
+Replaced the condition for detecting Qup version(2.5 or greater) with value 0x20050000
 
-- P=C3=A9ter
+Changes in V2:
+Changed subject line and logic for checking Qup version
 
-Texas Instruments Finland Oy, Porkkalankatu 22, 00180 Helsinki.
-Y-tunnus/Business ID: 0615521-4. Kotipaikka/Domicile: Helsinki
+ drivers/tty/serial/qcom_geni_serial.c | 2 +-
+ include/linux/qcom-geni-se.h          | 3 +++
+ 2 files changed, 4 insertions(+), 1 deletion(-)
+
+diff --git a/drivers/tty/serial/qcom_geni_serial.c b/drivers/tty/serial/qcom_geni_serial.c
+index f0b1b47..464ffc9 100644
+--- a/drivers/tty/serial/qcom_geni_serial.c
++++ b/drivers/tty/serial/qcom_geni_serial.c
+@@ -1000,7 +1000,7 @@ static void qcom_geni_serial_set_termios(struct uart_port *uport,
+ 	sampling_rate = UART_OVERSAMPLING;
+ 	/* Sampling rate is halved for IP versions >= 2.5 */
+ 	ver = geni_se_get_qup_hw_version(&port->se);
+-	if (GENI_SE_VERSION_MAJOR(ver) >= 2 && GENI_SE_VERSION_MINOR(ver) >= 5)
++	if (ver >= QUP_SE_VERSION_2_5)
+ 		sampling_rate /= 2;
+ 
+ 	clk_rate = get_clk_div_rate(baud, sampling_rate, &clk_div);
+diff --git a/include/linux/qcom-geni-se.h b/include/linux/qcom-geni-se.h
+index 8f385fb..1c31f26 100644
+--- a/include/linux/qcom-geni-se.h
++++ b/include/linux/qcom-geni-se.h
+@@ -248,6 +248,9 @@ struct geni_se {
+ #define GENI_SE_VERSION_MINOR(ver) ((ver & HW_VER_MINOR_MASK) >> HW_VER_MINOR_SHFT)
+ #define GENI_SE_VERSION_STEP(ver) (ver & HW_VER_STEP_MASK)
+ 
++/* QUP SE VERSION value for major number 2 and minor number 5 */
++#define QUP_SE_VERSION_2_5                  0x20050000
++
+ /*
+  * Define bandwidth thresholds that cause the underlying Core 2X interconnect
+  * clock to run at the named frequency. These baseline values are recommended
+-- 
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member 
+of Code Aurora Forum, hosted by The Linux Foundation
 
