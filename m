@@ -2,481 +2,245 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 35B3327E389
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Sep 2020 10:17:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C4CA527E39F
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Sep 2020 10:25:01 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728821AbgI3IRh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 30 Sep 2020 04:17:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60380 "EHLO
+        id S1725823AbgI3IZA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 30 Sep 2020 04:25:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33278 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725892AbgI3IRf (ORCPT
+        with ESMTP id S1725776AbgI3IZA (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 30 Sep 2020 04:17:35 -0400
-Received: from mail-pl1-x641.google.com (mail-pl1-x641.google.com [IPv6:2607:f8b0:4864:20::641])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EADF8C0613D1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 30 Sep 2020 01:17:34 -0700 (PDT)
-Received: by mail-pl1-x641.google.com with SMTP id bb1so565548plb.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 30 Sep 2020 01:17:34 -0700 (PDT)
+        Wed, 30 Sep 2020 04:25:00 -0400
+Received: from mail-pl1-x642.google.com (mail-pl1-x642.google.com [IPv6:2607:f8b0:4864:20::642])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 57863C0613D0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 30 Sep 2020 01:25:00 -0700 (PDT)
+Received: by mail-pl1-x642.google.com with SMTP id o8so576330pll.4
+        for <linux-arm-msm@vger.kernel.org>; Wed, 30 Sep 2020 01:25:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=MALAjuXt6HOCnYACoUt74CEsIA/hmtOueviVZCUmg9g=;
-        b=wfXLRBDlixwoCv1k5bQ+eczzlQqM6pEpQgXMRFhcKkldTj2sdpAiZUsidq/9lxE2rP
-         pk896MZiKy/UuJwtKJOHGJRDl9zTKNWEcLl4igOi+8kaJi3YT6OHB1Zh9hmfGsJoEe7V
-         +be8JlHWSSh9bGX5dPLW2/WruicDJBH0gandL2WZPZwEXGEN0LYpYc/HOm+i+QuS/Yn3
-         Hz5JEtMMn8my9XKOjLyKgY9hXc52mCT+OcMcTaZjYC3sPEKOa5fQPufxyTHBtnwm2Ki2
-         ZttaaAqs6UelDfJBN6gU2u5NBPXpSxQSJxhhPceQAI+5ZrsJ7GuDSaTSqG8VXTW9zDjn
-         LAlw==
+        d=chromium.org; s=google;
+        h=mime-version:content-transfer-encoding:in-reply-to:references
+         :subject:from:cc:to:date:message-id:user-agent;
+        bh=Ih3Pf7dIckvl94DJrioHSJL6mLp1o8KK854dwJlM+Rs=;
+        b=Em/QYk4SOtwtQfC93qj80aLMdohAEkXpKPQMNnnimYd6cibrUc0PP6c6gTiXNuwndZ
+         F91fPBs2LSDnssoHox5OuIFhJo9o5hf4fVOqt/CfCbUfcgQIlc5rN8nOipdZGlVJGYJp
+         aAXZhUHLRrdirwWia/mxcXUmKrjoli8f5LzZY=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=MALAjuXt6HOCnYACoUt74CEsIA/hmtOueviVZCUmg9g=;
-        b=qNw9HoOmha2Z4POmOGENBD62GlkK3uLa2M4gUlYKWMvpfd6fkytQFvpVPMPf3gB7Kb
-         /3YHF4wsTxeOAAJuxK6gUqb6zf3/RHlZvKL+ARQXm0l58cEQNjfIC1p2VodjVjoktV7H
-         sspFbyJZMELgfv85ShOivLyNPSznMSqwpap2BsJiRwpVsOIENwfzJGKNxh1P9RT1f5Zq
-         nqVk7f6Q7X5mnH9Xe9vdZbwJTW5dyqcupNwwhpFzcpvkbbIdSVvdwAA6D4VYYgWb9Arx
-         4NE7EUaQvWB73uyMojPg0gJEgDBul95adanmLmq0Qg5LalcRsyJfOc503AHG7cQ4RvcT
-         zcEw==
-X-Gm-Message-State: AOAM530QF7WPYSXRrmwkk9g+fDUmGieL2RDOLhqoycHy9po3FllM+CF6
-        TMpMMNZnYCACN6+SkLWTN535vw==
-X-Google-Smtp-Source: ABdhPJyfdL0Qh7slVVqB2hwAlrs00eNEhPT8SxNB5X3DTKbjN9cW7LecwlsFIMy05zYd06j9u1xs+w==
-X-Received: by 2002:a17:902:ff07:b029:d1:e5fa:aa1d with SMTP id f7-20020a170902ff07b02900d1e5faaa1dmr1601444plj.84.1601453854374;
-        Wed, 30 Sep 2020 01:17:34 -0700 (PDT)
-Received: from localhost.localdomain (li519-153.members.linode.com. [66.175.222.153])
-        by smtp.gmail.com with ESMTPSA id q15sm1385345pje.29.2020.09.30.01.17.28
+        h=x-gm-message-state:mime-version:content-transfer-encoding
+         :in-reply-to:references:subject:from:cc:to:date:message-id
+         :user-agent;
+        bh=Ih3Pf7dIckvl94DJrioHSJL6mLp1o8KK854dwJlM+Rs=;
+        b=qiSu8XXPM4GDOzIOB1zwaRCyg0jnfkIopV08kSrhIGkhNme0RPsshcTq3rp/Iqtlq0
+         eBPK5hA1Aww0FWLcajinjlB8fN8kaku/MiGt/5tGwPHTdpxvV4zu9hObl9EdHN4arvQO
+         NYuTQHDtx/2HUhUjO/Gd4OW6AMY3LoTx/UCDc3eunOJqNC7mKQIcQsQLQ4galDfZuXwU
+         StpjNcLwsX4YDqCrNffD5mwyubJGXJZPr6T2QATg07iYPzxIeBpSzZBivZ1kEpg92uwY
+         aZ2zg2b505xxzZCdBoGogGObx4EiOHJgJs6INsDEBbwtVpgcOT3TuGDDRsSXwOFwnDMN
+         fD2w==
+X-Gm-Message-State: AOAM533YxIZkqPfCasrXXm5mwyfVz64brziW0MLcA9y4OprnsRqMvA/G
+        O3lPArVnmqkQiVo83r2G0aaQ/g==
+X-Google-Smtp-Source: ABdhPJwIjYUNfZxO9sE2E4scR1kFmz0HCtyEz7PYrdueptBYstuv8MxM5HVdr6ppqtp8M8tTYAFMLg==
+X-Received: by 2002:a17:90b:384c:: with SMTP id nl12mr1418467pjb.205.1601454299646;
+        Wed, 30 Sep 2020 01:24:59 -0700 (PDT)
+Received: from chromium.org ([2620:15c:202:1:3e52:82ff:fe6c:83ab])
+        by smtp.gmail.com with ESMTPSA id e207sm1483922pfh.171.2020.09.30.01.24.58
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 30 Sep 2020 01:17:33 -0700 (PDT)
-From:   Jun Nie <jun.nie@linaro.org>
-To:     devicetree@vger.kernel.org, georgi.djakov@linaro.org,
-        bjorn.andersson@linaro.org, agross@kernel.org,
-        linux-pm@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, robh@kernel.org
-Cc:     shawn.guo@linaro.org, Jun Nie <jun.nie@linaro.org>
-Subject: [PATCH 5/5] interconnect: qcom: Add MSM8939 interconnect provider driver
-Date:   Wed, 30 Sep 2020 16:16:45 +0800
-Message-Id: <20200930081645.3434-6-jun.nie@linaro.org>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20200930081645.3434-1-jun.nie@linaro.org>
-References: <20200930081645.3434-1-jun.nie@linaro.org>
+        Wed, 30 Sep 2020 01:24:58 -0700 (PDT)
+Content-Type: text/plain; charset="utf-8"
+MIME-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <20200929171026.30551-1-khsieh@codeaurora.org>
+References: <20200929171026.30551-1-khsieh@codeaurora.org>
+Subject: Re: [PATCH] drm/msm/dp: add voltage corners voting support base on dp link rate
+From:   Stephen Boyd <swboyd@chromium.org>
+Cc:     tanmay@codeaurora.org, abhinavk@codeaurora.org,
+        aravindh@codeaurora.org, khsieh@codeaurora.org, airlied@linux.ie,
+        daniel@ffwll.ch, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        linux-kernel@vger.kernel.org, rnayak@codeaurora.org
+To:     Kuogee Hsieh <khsieh@codeaurora.org>, robdclark@gmail.com,
+        sean@poorly.run
+Date:   Wed, 30 Sep 2020 01:24:57 -0700
+Message-ID: <160145429763.310579.786737478429183087@swboyd.mtv.corp.google.com>
+User-Agent: alot/0.9.1
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add driver for the Qualcomm interconnect buses found in MSM8939 based
-platforms. The topology consists of four NoCs that are controlled by
-a remote processor that collects the aggregated bandwidth for each
-master-slave pairs.
+Quoting Kuogee Hsieh (2020-09-29 10:10:26)
+> Set link rate by using OPP set rate api so that CX level will be set
+> accordingly base on the link rate.
 
-Signed-off-by: Jun Nie <jun.nie@linaro.org>
----
- drivers/interconnect/qcom/Kconfig   |   9 +
- drivers/interconnect/qcom/Makefile  |   2 +
- drivers/interconnect/qcom/msm8939.c | 355 ++++++++++++++++++++++++++++
- 3 files changed, 366 insertions(+)
- create mode 100644 drivers/interconnect/qcom/msm8939.c
+s/base/based/
 
-diff --git a/drivers/interconnect/qcom/Kconfig b/drivers/interconnect/qcom/Kconfig
-index 25486de5a38d..6395404bfe3f 100644
---- a/drivers/interconnect/qcom/Kconfig
-+++ b/drivers/interconnect/qcom/Kconfig
-@@ -17,6 +17,15 @@ config INTERCONNECT_QCOM_MSM8916
- 	  This is a driver for the Qualcomm Network-on-Chip on msm8916-based
- 	  platforms.
- 
-+config INTERCONNECT_QCOM_MSM8939
-+	tristate "Qualcomm MSM8939 interconnect driver"
-+	depends on INTERCONNECT_QCOM
-+	depends on QCOM_SMD_RPM
-+	select INTERCONNECT_QCOM_SMD_RPM
-+	help
-+	  This is a driver for the Qualcomm Network-on-Chip on msm8939-based
-+	  platforms.
-+
- config INTERCONNECT_QCOM_MSM8974
- 	tristate "Qualcomm MSM8974 interconnect driver"
- 	depends on INTERCONNECT_QCOM
-diff --git a/drivers/interconnect/qcom/Makefile b/drivers/interconnect/qcom/Makefile
-index f5e803489de0..84b75022f0d8 100644
---- a/drivers/interconnect/qcom/Makefile
-+++ b/drivers/interconnect/qcom/Makefile
-@@ -2,6 +2,7 @@
- 
- icc-bcm-voter-objs			:= bcm-voter.o
- qnoc-msm8916-objs			:= msm8916.o
-+qnoc-msm8939-objs			:= msm8939.o
- qnoc-msm8974-objs			:= msm8974.o
- icc-osm-l3-objs				:= osm-l3.o
- qnoc-qcs404-objs			:= qcs404.o
-@@ -13,6 +14,7 @@ icc-smd-rpm-objs			:= smd-rpm.o icc-rpm.o
- 
- obj-$(CONFIG_INTERCONNECT_QCOM_BCM_VOTER) += icc-bcm-voter.o
- obj-$(CONFIG_INTERCONNECT_QCOM_MSM8916) += qnoc-msm8916.o
-+obj-$(CONFIG_INTERCONNECT_QCOM_MSM8939) += qnoc-msm8939.o
- obj-$(CONFIG_INTERCONNECT_QCOM_MSM8974) += qnoc-msm8974.o
- obj-$(CONFIG_INTERCONNECT_QCOM_OSM_L3) += icc-osm-l3.o
- obj-$(CONFIG_INTERCONNECT_QCOM_QCS404) += qnoc-qcs404.o
-diff --git a/drivers/interconnect/qcom/msm8939.c b/drivers/interconnect/qcom/msm8939.c
-new file mode 100644
-index 000000000000..dfbec30ed149
---- /dev/null
-+++ b/drivers/interconnect/qcom/msm8939.c
-@@ -0,0 +1,355 @@
-+// SPDX-License-Identifier: GPL-2.0
-+/*
-+ * Copyright (C) 2020 Linaro Ltd
-+ * Author: Jun Nie <jun.nie@linaro.org>
-+ * With reference of msm8916 interconnect driver of Georgi Djakov.
-+ */
-+
-+#include <linux/clk.h>
-+#include <linux/device.h>
-+#include <linux/interconnect-provider.h>
-+#include <linux/io.h>
-+#include <linux/module.h>
-+#include <linux/platform_device.h>
-+#include <linux/of_device.h>
-+
-+#include <dt-bindings/interconnect/qcom,msm8939.h>
-+
-+#include "smd-rpm.h"
-+#include "icc-rpm.h"
-+
-+enum {
-+	MSM8939_BIMC_SNOC_MAS = 1,
-+	MSM8939_BIMC_SNOC_SLV,
-+	MSM8939_MASTER_AMPSS_M0,
-+	MSM8939_MASTER_LPASS,
-+	MSM8939_MASTER_BLSP_1,
-+	MSM8939_MASTER_DEHR,
-+	MSM8939_MASTER_GRAPHICS_3D,
-+	MSM8939_MASTER_JPEG,
-+	MSM8939_MASTER_MDP_PORT0,
-+	MSM8939_MASTER_MDP_PORT1,
-+	MSM8939_MASTER_CPP,
-+	MSM8939_MASTER_CRYPTO_CORE0,
-+	MSM8939_MASTER_SDCC_1,
-+	MSM8939_MASTER_SDCC_2,
-+	MSM8939_MASTER_QDSS_BAM,
-+	MSM8939_MASTER_QDSS_ETR,
-+	MSM8939_MASTER_SNOC_CFG,
-+	MSM8939_MASTER_SPDM,
-+	MSM8939_MASTER_TCU0,
-+	MSM8939_MASTER_USB_HS1,
-+	MSM8939_MASTER_USB_HS2,
-+	MSM8939_MASTER_VFE,
-+	MSM8939_MASTER_VIDEO_P0,
-+	MSM8939_SNOC_MM_INT_0,
-+	MSM8939_SNOC_MM_INT_1,
-+	MSM8939_SNOC_MM_INT_2,
-+	MSM8939_PNOC_INT_0,
-+	MSM8939_PNOC_INT_1,
-+	MSM8939_PNOC_MAS_0,
-+	MSM8939_PNOC_MAS_1,
-+	MSM8939_PNOC_SLV_0,
-+	MSM8939_PNOC_SLV_1,
-+	MSM8939_PNOC_SLV_2,
-+	MSM8939_PNOC_SLV_3,
-+	MSM8939_PNOC_SLV_4,
-+	MSM8939_PNOC_SLV_8,
-+	MSM8939_PNOC_SLV_9,
-+	MSM8939_PNOC_SNOC_MAS,
-+	MSM8939_PNOC_SNOC_SLV,
-+	MSM8939_SNOC_QDSS_INT,
-+	MSM8939_SLAVE_AMPSS_L2,
-+	MSM8939_SLAVE_APSS,
-+	MSM8939_SLAVE_LPASS,
-+	MSM8939_SLAVE_BIMC_CFG,
-+	MSM8939_SLAVE_BLSP_1,
-+	MSM8939_SLAVE_BOOT_ROM,
-+	MSM8939_SLAVE_CAMERA_CFG,
-+	MSM8939_SLAVE_CATS_128,
-+	MSM8939_SLAVE_OCMEM_64,
-+	MSM8939_SLAVE_CLK_CTL,
-+	MSM8939_SLAVE_CRYPTO_0_CFG,
-+	MSM8939_SLAVE_DEHR_CFG,
-+	MSM8939_SLAVE_DISPLAY_CFG,
-+	MSM8939_SLAVE_EBI_CH0,
-+	MSM8939_SLAVE_GRAPHICS_3D_CFG,
-+	MSM8939_SLAVE_IMEM_CFG,
-+	MSM8939_SLAVE_IMEM,
-+	MSM8939_SLAVE_MPM,
-+	MSM8939_SLAVE_MSG_RAM,
-+	MSM8939_SLAVE_MSS,
-+	MSM8939_SLAVE_PDM,
-+	MSM8939_SLAVE_PMIC_ARB,
-+	MSM8939_SLAVE_PNOC_CFG,
-+	MSM8939_SLAVE_PRNG,
-+	MSM8939_SLAVE_QDSS_CFG,
-+	MSM8939_SLAVE_QDSS_STM,
-+	MSM8939_SLAVE_RBCPR_CFG,
-+	MSM8939_SLAVE_SDCC_1,
-+	MSM8939_SLAVE_SDCC_2,
-+	MSM8939_SLAVE_SECURITY,
-+	MSM8939_SLAVE_SNOC_CFG,
-+	MSM8939_SLAVE_SPDM,
-+	MSM8939_SLAVE_SRVC_SNOC,
-+	MSM8939_SLAVE_TCSR,
-+	MSM8939_SLAVE_TLMM,
-+	MSM8939_SLAVE_USB_HS1,
-+	MSM8939_SLAVE_USB_HS2,
-+	MSM8939_SLAVE_VENUS_CFG,
-+	MSM8939_SNOC_BIMC_0_MAS,
-+	MSM8939_SNOC_BIMC_0_SLV,
-+	MSM8939_SNOC_BIMC_1_MAS,
-+	MSM8939_SNOC_BIMC_1_SLV,
-+	MSM8939_SNOC_BIMC_2_MAS,
-+	MSM8939_SNOC_BIMC_2_SLV,
-+	MSM8939_SNOC_INT_0,
-+	MSM8939_SNOC_INT_1,
-+	MSM8939_SNOC_INT_BIMC,
-+	MSM8939_SNOC_PNOC_MAS,
-+	MSM8939_SNOC_PNOC_SLV,
-+};
-+
-+static const struct clk_bulk_data msm8939_bus_clocks[] = {
-+	{ .id = "bus" },
-+	{ .id = "bus_a" },
-+};
-+
-+DEFINE_QNODE(bimc_snoc_mas, MSM8939_BIMC_SNOC_MAS, 8, -1, -1, MSM8939_BIMC_SNOC_SLV);
-+DEFINE_QNODE(bimc_snoc_slv, MSM8939_BIMC_SNOC_SLV, 16, -1, 2, MSM8939_SNOC_INT_0, MSM8939_SNOC_INT_1);
-+DEFINE_QNODE(mas_apss, MSM8939_MASTER_AMPSS_M0, 16, -1, -1, MSM8939_SLAVE_EBI_CH0, MSM8939_BIMC_SNOC_MAS, MSM8939_SLAVE_AMPSS_L2);
-+DEFINE_QNODE(mas_audio, MSM8939_MASTER_LPASS, 4, -1, -1, MSM8939_PNOC_MAS_0);
-+DEFINE_QNODE(mas_blsp_1, MSM8939_MASTER_BLSP_1, 4, -1, -1, MSM8939_PNOC_MAS_1);
-+DEFINE_QNODE(mas_dehr, MSM8939_MASTER_DEHR, 4, -1, -1, MSM8939_PNOC_MAS_0);
-+DEFINE_QNODE(mas_gfx, MSM8939_MASTER_GRAPHICS_3D, 16, -1, -1, MSM8939_SLAVE_EBI_CH0, MSM8939_BIMC_SNOC_MAS, MSM8939_SLAVE_AMPSS_L2);
-+DEFINE_QNODE(mas_jpeg, MSM8939_MASTER_JPEG, 16, -1, -1, MSM8939_SNOC_MM_INT_0, MSM8939_SNOC_MM_INT_2);
-+DEFINE_QNODE(mas_mdp0, MSM8939_MASTER_MDP_PORT0, 16, -1, -1, MSM8939_SNOC_MM_INT_1, MSM8939_SNOC_MM_INT_2);
-+DEFINE_QNODE(mas_mdp1, MSM8939_MASTER_MDP_PORT1, 16, -1, -1, MSM8939_SNOC_MM_INT_0, MSM8939_SNOC_MM_INT_2);
-+DEFINE_QNODE(mas_cpp, MSM8939_MASTER_CPP, 16, -1, -1, MSM8939_SNOC_MM_INT_0, MSM8939_SNOC_MM_INT_2);
-+DEFINE_QNODE(mas_pcnoc_crypto_0, MSM8939_MASTER_CRYPTO_CORE0, 8, -1, -1, MSM8939_PNOC_INT_1);
-+DEFINE_QNODE(mas_pcnoc_sdcc_1, MSM8939_MASTER_SDCC_1, 8, -1, -1, MSM8939_PNOC_INT_1);
-+DEFINE_QNODE(mas_pcnoc_sdcc_2, MSM8939_MASTER_SDCC_2, 8, -1, -1, MSM8939_PNOC_INT_1);
-+DEFINE_QNODE(mas_qdss_bam, MSM8939_MASTER_QDSS_BAM, 8, -1, -1, MSM8939_SNOC_QDSS_INT);
-+DEFINE_QNODE(mas_qdss_etr, MSM8939_MASTER_QDSS_ETR, 8, -1, -1, MSM8939_SNOC_QDSS_INT);
-+DEFINE_QNODE(mas_snoc_cfg, MSM8939_MASTER_SNOC_CFG, 4, 20, -1, MSM8939_SLAVE_SRVC_SNOC);
-+DEFINE_QNODE(mas_spdm, MSM8939_MASTER_SPDM, 4, -1, -1, MSM8939_PNOC_MAS_0);
-+DEFINE_QNODE(mas_tcu0, MSM8939_MASTER_TCU0, 16, -1, -1, MSM8939_SLAVE_EBI_CH0, MSM8939_BIMC_SNOC_MAS, MSM8939_SLAVE_AMPSS_L2);
-+DEFINE_QNODE(mas_usb_hs1, MSM8939_MASTER_USB_HS1, 4, -1, -1, MSM8939_PNOC_MAS_1);
-+DEFINE_QNODE(mas_usb_hs2, MSM8939_MASTER_USB_HS2, 4, -1, -1, MSM8939_PNOC_MAS_1);
-+DEFINE_QNODE(mas_vfe, MSM8939_MASTER_VFE, 16, -1, -1, MSM8939_SNOC_MM_INT_1, MSM8939_SNOC_MM_INT_2);
-+DEFINE_QNODE(mas_video, MSM8939_MASTER_VIDEO_P0, 16, -1, -1, MSM8939_SNOC_MM_INT_0, MSM8939_SNOC_MM_INT_2);
-+DEFINE_QNODE(mm_int_0, MSM8939_SNOC_MM_INT_0, 16, -1, -1, MSM8939_SNOC_BIMC_2_MAS);
-+DEFINE_QNODE(mm_int_1, MSM8939_SNOC_MM_INT_1, 16, -1, -1, MSM8939_SNOC_BIMC_1_MAS);
-+DEFINE_QNODE(mm_int_2, MSM8939_SNOC_MM_INT_2, 16, -1, -1, MSM8939_SNOC_INT_0);
-+DEFINE_QNODE(pcnoc_int_0, MSM8939_PNOC_INT_0, 8, -1, -1, MSM8939_PNOC_SNOC_MAS, MSM8939_PNOC_SLV_0, MSM8939_PNOC_SLV_1, MSM8939_PNOC_SLV_2, MSM8939_PNOC_SLV_3, MSM8939_PNOC_SLV_4, MSM8939_PNOC_SLV_8, MSM8939_PNOC_SLV_9);
-+DEFINE_QNODE(pcnoc_int_1, MSM8939_PNOC_INT_1, 8, -1, -1, MSM8939_PNOC_SNOC_MAS);
-+DEFINE_QNODE(pcnoc_m_0, MSM8939_PNOC_MAS_0, 8, -1, -1, MSM8939_PNOC_INT_0);
-+DEFINE_QNODE(pcnoc_m_1, MSM8939_PNOC_MAS_1, 8, -1, -1, MSM8939_PNOC_SNOC_MAS);
-+DEFINE_QNODE(pcnoc_s_0, MSM8939_PNOC_SLV_0, 4, -1, -1, MSM8939_SLAVE_CLK_CTL, MSM8939_SLAVE_TLMM, MSM8939_SLAVE_TCSR, MSM8939_SLAVE_SECURITY, MSM8939_SLAVE_MSS);
-+DEFINE_QNODE(pcnoc_s_1, MSM8939_PNOC_SLV_1, 4, -1, -1, MSM8939_SLAVE_IMEM_CFG, MSM8939_SLAVE_CRYPTO_0_CFG, MSM8939_SLAVE_MSG_RAM, MSM8939_SLAVE_PDM, MSM8939_SLAVE_PRNG);
-+DEFINE_QNODE(pcnoc_s_2, MSM8939_PNOC_SLV_2, 4, -1, -1, MSM8939_SLAVE_SPDM, MSM8939_SLAVE_BOOT_ROM, MSM8939_SLAVE_BIMC_CFG, MSM8939_SLAVE_PNOC_CFG, MSM8939_SLAVE_PMIC_ARB);
-+DEFINE_QNODE(pcnoc_s_3, MSM8939_PNOC_SLV_3, 4, -1, -1, MSM8939_SLAVE_MPM, MSM8939_SLAVE_SNOC_CFG, MSM8939_SLAVE_RBCPR_CFG, MSM8939_SLAVE_QDSS_CFG, MSM8939_SLAVE_DEHR_CFG);
-+DEFINE_QNODE(pcnoc_s_4, MSM8939_PNOC_SLV_4, 4, -1, -1, MSM8939_SLAVE_VENUS_CFG, MSM8939_SLAVE_CAMERA_CFG, MSM8939_SLAVE_DISPLAY_CFG);
-+DEFINE_QNODE(pcnoc_s_8, MSM8939_PNOC_SLV_8, 4, -1, -1, MSM8939_SLAVE_USB_HS1, MSM8939_SLAVE_SDCC_1, MSM8939_SLAVE_BLSP_1);
-+DEFINE_QNODE(pcnoc_s_9, MSM8939_PNOC_SLV_9, 4, -1, -1, MSM8939_SLAVE_SDCC_2, MSM8939_SLAVE_LPASS, MSM8939_SLAVE_USB_HS2);
-+DEFINE_QNODE(pcnoc_snoc_mas, MSM8939_PNOC_SNOC_MAS, 8, 29, -1, MSM8939_PNOC_SNOC_SLV);
-+DEFINE_QNODE(pcnoc_snoc_slv, MSM8939_PNOC_SNOC_SLV, 8, -1, 45, MSM8939_SNOC_INT_0, MSM8939_SNOC_INT_BIMC, MSM8939_SNOC_INT_1);
-+DEFINE_QNODE(qdss_int, MSM8939_SNOC_QDSS_INT, 8, -1, -1, MSM8939_SNOC_INT_0, MSM8939_SNOC_INT_BIMC);
-+DEFINE_QNODE(slv_apps_l2, MSM8939_SLAVE_AMPSS_L2, 16, -1, -1, 0);
-+DEFINE_QNODE(slv_apss, MSM8939_SLAVE_APSS, 4, -1, 20, 0);
-+DEFINE_QNODE(slv_audio, MSM8939_SLAVE_LPASS, 4, -1, -1, 0);
-+DEFINE_QNODE(slv_bimc_cfg, MSM8939_SLAVE_BIMC_CFG, 4, -1, -1, 0);
-+DEFINE_QNODE(slv_blsp_1, MSM8939_SLAVE_BLSP_1, 4, -1, -1, 0);
-+DEFINE_QNODE(slv_boot_rom, MSM8939_SLAVE_BOOT_ROM, 4, -1, -1, 0);
-+DEFINE_QNODE(slv_camera_cfg, MSM8939_SLAVE_CAMERA_CFG, 4, -1, -1, 0);
-+DEFINE_QNODE(slv_cats_0, MSM8939_SLAVE_CATS_128, 16, -1, 106, 0);
-+DEFINE_QNODE(slv_cats_1, MSM8939_SLAVE_OCMEM_64, 8, -1, 107, 0);
-+DEFINE_QNODE(slv_clk_ctl, MSM8939_SLAVE_CLK_CTL, 4, -1, -1, 0);
-+DEFINE_QNODE(slv_crypto_0_cfg, MSM8939_SLAVE_CRYPTO_0_CFG, 4, -1, -1, 0);
-+DEFINE_QNODE(slv_dehr_cfg, MSM8939_SLAVE_DEHR_CFG, 4, -1, -1, 0);
-+DEFINE_QNODE(slv_display_cfg, MSM8939_SLAVE_DISPLAY_CFG, 4, -1, -1, 0);
-+DEFINE_QNODE(slv_ebi_ch0, MSM8939_SLAVE_EBI_CH0, 16, -1, 0, 0);
-+DEFINE_QNODE(slv_gfx_cfg, MSM8939_SLAVE_GRAPHICS_3D_CFG, 4, -1, -1, 0);
-+DEFINE_QNODE(slv_imem_cfg, MSM8939_SLAVE_IMEM_CFG, 4, -1, -1, 0);
-+DEFINE_QNODE(slv_imem, MSM8939_SLAVE_IMEM, 8, -1, 26, 0);
-+DEFINE_QNODE(slv_mpm, MSM8939_SLAVE_MPM, 4, -1, -1, 0);
-+DEFINE_QNODE(slv_msg_ram, MSM8939_SLAVE_MSG_RAM, 4, -1, -1, 0);
-+DEFINE_QNODE(slv_mss, MSM8939_SLAVE_MSS, 4, -1, -1, 0);
-+DEFINE_QNODE(slv_pdm, MSM8939_SLAVE_PDM, 4, -1, -1, 0);
-+DEFINE_QNODE(slv_pmic_arb, MSM8939_SLAVE_PMIC_ARB, 4, -1, -1, 0);
-+DEFINE_QNODE(slv_pcnoc_cfg, MSM8939_SLAVE_PNOC_CFG, 4, -1, -1, 0);
-+DEFINE_QNODE(slv_prng, MSM8939_SLAVE_PRNG, 4, -1, -1, 0);
-+DEFINE_QNODE(slv_qdss_cfg, MSM8939_SLAVE_QDSS_CFG, 4, -1, -1, 0);
-+DEFINE_QNODE(slv_qdss_stm, MSM8939_SLAVE_QDSS_STM, 4, -1, 30, 0);
-+DEFINE_QNODE(slv_rbcpr_cfg, MSM8939_SLAVE_RBCPR_CFG, 4, -1, -1, 0);
-+DEFINE_QNODE(slv_sdcc_1, MSM8939_SLAVE_SDCC_1, 4, -1, -1, 0);
-+DEFINE_QNODE(slv_sdcc_2, MSM8939_SLAVE_SDCC_2, 4, -1, -1, 0);
-+DEFINE_QNODE(slv_security, MSM8939_SLAVE_SECURITY, 4, -1, -1, 0);
-+DEFINE_QNODE(slv_snoc_cfg, MSM8939_SLAVE_SNOC_CFG, 4, -1, -1, 0);
-+DEFINE_QNODE(slv_spdm, MSM8939_SLAVE_SPDM, 4, -1, -1, 0);
-+DEFINE_QNODE(slv_srvc_snoc, MSM8939_SLAVE_SRVC_SNOC, 8, -1, 29, 0);
-+DEFINE_QNODE(slv_tcsr, MSM8939_SLAVE_TCSR, 4, -1, -1, 0);
-+DEFINE_QNODE(slv_tlmm, MSM8939_SLAVE_TLMM, 4, -1, -1, 0);
-+DEFINE_QNODE(slv_usb_hs1, MSM8939_SLAVE_USB_HS1, 4, -1, -1, 0);
-+DEFINE_QNODE(slv_usb_hs2, MSM8939_SLAVE_USB_HS2, 4, -1, -1, 0);
-+DEFINE_QNODE(slv_venus_cfg, MSM8939_SLAVE_VENUS_CFG, 4, -1, -1, 0);
-+DEFINE_QNODE(snoc_bimc_0_mas, MSM8939_SNOC_BIMC_0_MAS, 16, 3, -1, MSM8939_SNOC_BIMC_0_SLV);
-+DEFINE_QNODE(snoc_bimc_0_slv, MSM8939_SNOC_BIMC_0_SLV, 16, -1, 24, MSM8939_SLAVE_EBI_CH0);
-+DEFINE_QNODE(snoc_bimc_1_mas, MSM8939_SNOC_BIMC_1_MAS, 16, 76, -1, MSM8939_SNOC_BIMC_1_SLV);
-+DEFINE_QNODE(snoc_bimc_1_slv, MSM8939_SNOC_BIMC_1_SLV, 16, -1, 104, MSM8939_SLAVE_EBI_CH0);
-+DEFINE_QNODE(snoc_bimc_2_mas, MSM8939_SNOC_BIMC_2_MAS, 16, -1, -1, MSM8939_SNOC_BIMC_2_SLV);
-+DEFINE_QNODE(snoc_bimc_2_slv, MSM8939_SNOC_BIMC_2_SLV, 16, -1, -1, MSM8939_SLAVE_EBI_CH0);
-+DEFINE_QNODE(snoc_int_0, MSM8939_SNOC_INT_0, 8, 99, 130, MSM8939_SLAVE_QDSS_STM, MSM8939_SLAVE_IMEM, MSM8939_SNOC_PNOC_MAS);
-+DEFINE_QNODE(snoc_int_1, MSM8939_SNOC_INT_1, 8, 100, 131, MSM8939_SLAVE_APSS, MSM8939_SLAVE_CATS_128, MSM8939_SLAVE_OCMEM_64);
-+DEFINE_QNODE(snoc_int_bimc, MSM8939_SNOC_INT_BIMC, 8, 101, 132, MSM8939_SNOC_BIMC_1_MAS);
-+DEFINE_QNODE(snoc_pcnoc_mas, MSM8939_SNOC_PNOC_MAS, 8, -1, -1, MSM8939_SNOC_PNOC_SLV);
-+DEFINE_QNODE(snoc_pcnoc_slv, MSM8939_SNOC_PNOC_SLV, 8, -1, -1, MSM8939_PNOC_INT_0);
-+
-+static struct qcom_icc_node *msm8939_snoc_nodes[] = {
-+	[BIMC_SNOC_SLV] = &bimc_snoc_slv,
-+	[MASTER_QDSS_BAM] = &mas_qdss_bam,
-+	[MASTER_QDSS_ETR] = &mas_qdss_etr,
-+	[MASTER_SNOC_CFG] = &mas_snoc_cfg,
-+	[PCNOC_SNOC_SLV] = &pcnoc_snoc_slv,
-+	[SLAVE_APSS] = &slv_apss,
-+	[SLAVE_CATS_128] = &slv_cats_0,
-+	[SLAVE_OCMEM_64] = &slv_cats_1,
-+	[SLAVE_IMEM] = &slv_imem,
-+	[SLAVE_QDSS_STM] = &slv_qdss_stm,
-+	[SLAVE_SRVC_SNOC] = &slv_srvc_snoc,
-+	[SNOC_BIMC_0_MAS] = &snoc_bimc_0_mas,
-+	[SNOC_BIMC_1_MAS] = &snoc_bimc_1_mas,
-+	[SNOC_BIMC_2_MAS] = &snoc_bimc_2_mas,
-+	[SNOC_INT_0] = &snoc_int_0,
-+	[SNOC_INT_1] = &snoc_int_1,
-+	[SNOC_INT_BIMC] = &snoc_int_bimc,
-+	[SNOC_PCNOC_MAS] = &snoc_pcnoc_mas,
-+	[SNOC_QDSS_INT] = &qdss_int,
-+};
-+
-+static struct qcom_icc_desc msm8939_snoc = {
-+	.nodes = msm8939_snoc_nodes,
-+	.num_nodes = ARRAY_SIZE(msm8939_snoc_nodes),
-+};
-+
-+static struct qcom_icc_node *msm8939_snoc_mm_nodes[] = {
-+	[MASTER_VIDEO_P0] = &mas_video,
-+	[MASTER_JPEG] = &mas_jpeg,
-+	[MASTER_VFE] = &mas_vfe,
-+	[MASTER_MDP_PORT0] = &mas_mdp0,
-+	[MASTER_MDP_PORT1] = &mas_mdp1,
-+	[MASTER_CPP] = &mas_cpp,
-+	[SNOC_MM_INT_0] = &mm_int_0,
-+	[SNOC_MM_INT_1] = &mm_int_1,
-+	[SNOC_MM_INT_2] = &mm_int_2,
-+};
-+
-+static struct qcom_icc_desc msm8939_snoc_mm = {
-+	.nodes = msm8939_snoc_mm_nodes,
-+	.num_nodes = ARRAY_SIZE(msm8939_snoc_mm_nodes),
-+};
-+
-+static struct qcom_icc_node *msm8939_bimc_nodes[] = {
-+	[BIMC_SNOC_MAS] = &bimc_snoc_mas,
-+	[MASTER_AMPSS_M0] = &mas_apss,
-+	[MASTER_GRAPHICS_3D] = &mas_gfx,
-+	[MASTER_TCU0] = &mas_tcu0,
-+	[SLAVE_AMPSS_L2] = &slv_apps_l2,
-+	[SLAVE_EBI_CH0] = &slv_ebi_ch0,
-+	[SNOC_BIMC_0_SLV] = &snoc_bimc_0_slv,
-+	[SNOC_BIMC_1_SLV] = &snoc_bimc_1_slv,
-+	[SNOC_BIMC_2_SLV] = &snoc_bimc_2_slv,
-+};
-+
-+static struct qcom_icc_desc msm8939_bimc = {
-+	.nodes = msm8939_bimc_nodes,
-+	.num_nodes = ARRAY_SIZE(msm8939_bimc_nodes),
-+};
-+
-+static struct qcom_icc_node *msm8939_pcnoc_nodes[] = {
-+	[MASTER_BLSP_1] = &mas_blsp_1,
-+	[MASTER_DEHR] = &mas_dehr,
-+	[MASTER_LPASS] = &mas_audio,
-+	[MASTER_CRYPTO_CORE0] = &mas_pcnoc_crypto_0,
-+	[MASTER_SDCC_1] = &mas_pcnoc_sdcc_1,
-+	[MASTER_SDCC_2] = &mas_pcnoc_sdcc_2,
-+	[MASTER_SPDM] = &mas_spdm,
-+	[MASTER_USB_HS1] = &mas_usb_hs1,
-+	[MASTER_USB_HS2] = &mas_usb_hs2,
-+	[PCNOC_INT_0] = &pcnoc_int_0,
-+	[PCNOC_INT_1] = &pcnoc_int_1,
-+	[PCNOC_MAS_0] = &pcnoc_m_0,
-+	[PCNOC_MAS_1] = &pcnoc_m_1,
-+	[PCNOC_SLV_0] = &pcnoc_s_0,
-+	[PCNOC_SLV_1] = &pcnoc_s_1,
-+	[PCNOC_SLV_2] = &pcnoc_s_2,
-+	[PCNOC_SLV_3] = &pcnoc_s_3,
-+	[PCNOC_SLV_4] = &pcnoc_s_4,
-+	[PCNOC_SLV_8] = &pcnoc_s_8,
-+	[PCNOC_SLV_9] = &pcnoc_s_9,
-+	[PCNOC_SNOC_MAS] = &pcnoc_snoc_mas,
-+	[SLAVE_BIMC_CFG] = &slv_bimc_cfg,
-+	[SLAVE_BLSP_1] = &slv_blsp_1,
-+	[SLAVE_BOOT_ROM] = &slv_boot_rom,
-+	[SLAVE_CAMERA_CFG] = &slv_camera_cfg,
-+	[SLAVE_CLK_CTL] = &slv_clk_ctl,
-+	[SLAVE_CRYPTO_0_CFG] = &slv_crypto_0_cfg,
-+	[SLAVE_DEHR_CFG] = &slv_dehr_cfg,
-+	[SLAVE_DISPLAY_CFG] = &slv_display_cfg,
-+	[SLAVE_GRAPHICS_3D_CFG] = &slv_gfx_cfg,
-+	[SLAVE_IMEM_CFG] = &slv_imem_cfg,
-+	[SLAVE_LPASS] = &slv_audio,
-+	[SLAVE_MPM] = &slv_mpm,
-+	[SLAVE_MSG_RAM] = &slv_msg_ram,
-+	[SLAVE_MSS] = &slv_mss,
-+	[SLAVE_PDM] = &slv_pdm,
-+	[SLAVE_PMIC_ARB] = &slv_pmic_arb,
-+	[SLAVE_PCNOC_CFG] = &slv_pcnoc_cfg,
-+	[SLAVE_PRNG] = &slv_prng,
-+	[SLAVE_QDSS_CFG] = &slv_qdss_cfg,
-+	[SLAVE_RBCPR_CFG] = &slv_rbcpr_cfg,
-+	[SLAVE_SDCC_1] = &slv_sdcc_1,
-+	[SLAVE_SDCC_2] = &slv_sdcc_2,
-+	[SLAVE_SECURITY] = &slv_security,
-+	[SLAVE_SNOC_CFG] = &slv_snoc_cfg,
-+	[SLAVE_SPDM] = &slv_spdm,
-+	[SLAVE_TCSR] = &slv_tcsr,
-+	[SLAVE_TLMM] = &slv_tlmm,
-+	[SLAVE_USB_HS1] = &slv_usb_hs1,
-+	[SLAVE_USB_HS2] = &slv_usb_hs2,
-+	[SLAVE_VENUS_CFG] = &slv_venus_cfg,
-+	[SNOC_PCNOC_SLV] = &snoc_pcnoc_slv,
-+};
-+
-+static struct qcom_icc_desc msm8939_pcnoc = {
-+	.nodes = msm8939_pcnoc_nodes,
-+	.num_nodes = ARRAY_SIZE(msm8939_pcnoc_nodes),
-+};
-+
-+static int msm8939_qnoc_probe(struct platform_device *pdev)
-+{
-+	return qnoc_probe(pdev, sizeof(msm8939_bus_clocks),
-+			  ARRAY_SIZE(msm8939_bus_clocks), msm8939_bus_clocks);
-+}
-+
-+static const struct of_device_id msm8939_noc_of_match[] = {
-+	{ .compatible = "qcom,msm8939-bimc", .data = &msm8939_bimc },
-+	{ .compatible = "qcom,msm8939-pcnoc", .data = &msm8939_pcnoc },
-+	{ .compatible = "qcom,msm8939-snoc", .data = &msm8939_snoc },
-+	{ .compatible = "qcom,msm8939-snoc-mm", .data = &msm8939_snoc_mm },
-+	{ }
-+};
-+MODULE_DEVICE_TABLE(of, msm8939_noc_of_match);
-+
-+static struct platform_driver msm8939_noc_driver = {
-+	.probe = msm8939_qnoc_probe,
-+	.remove = qnoc_remove,
-+	.driver = {
-+		.name = "qnoc-msm8939",
-+		.of_match_table = msm8939_noc_of_match,
-+	},
-+};
-+module_platform_driver(msm8939_noc_driver);
-+MODULE_AUTHOR("Jun Nie <jun.nie@linaro.org>");
-+MODULE_DESCRIPTION("Qualcomm MSM8939 NoC driver");
-+MODULE_LICENSE("GPL v2");
--- 
-2.17.1
+>=20
+> Signed-off-by: Kuogee Hsieh <khsieh@codeaurora.org>
+> ---
+> diff --git a/drivers/gpu/drm/msm/dp/dp_ctrl.c b/drivers/gpu/drm/msm/dp/dp=
+_ctrl.c
+> index 2e3e1917351f..e1595d829e04 100644
+> --- a/drivers/gpu/drm/msm/dp/dp_ctrl.c
+> +++ b/drivers/gpu/drm/msm/dp/dp_ctrl.c
+> @@ -1849,6 +1853,21 @@ struct dp_ctrl *dp_ctrl_get(struct device *dev, st=
+ruct dp_link *link,
+>                 return ERR_PTR(-ENOMEM);
+>         }
+> =20
+> +       ctrl->opp_table =3D dev_pm_opp_set_clkname(dev, "ctrl_link");
+> +
+> +       if (IS_ERR(ctrl->opp_table)) {
+> +               dev_err(dev, "invalid DP OPP table in device tree\n");
+> +               ctrl->opp_table =3D NULL;
+> +       } else {
+> +               /* OPP table is optional */
+> +               ret =3D dev_pm_opp_of_add_table(dev);
+> +               if (ret && ret !=3D -ENODEV) {
+> +                       dev_err(dev, "add DP OPP table\n");
 
+This is debug noise right?
+
+> +                       dev_pm_opp_put_clkname(ctrl->opp_table);
+> +                       ctrl->opp_table =3D NULL;
+> +               }
+> +       }
+> +
+>         init_completion(&ctrl->idle_comp);
+>         init_completion(&ctrl->video_comp);
+> =20
+> @@ -1864,6 +1883,18 @@ struct dp_ctrl *dp_ctrl_get(struct device *dev, st=
+ruct dp_link *link,
+>         return &ctrl->dp_ctrl;
+>  }
+> =20
+> -void dp_ctrl_put(struct dp_ctrl *dp_ctrl)
+> +void dp_ctrl_put(struct device *dev, struct dp_ctrl *dp_ctrl)
+>  {
+> +       struct dp_ctrl_private *ctrl;
+> +
+> +       if (!dp_ctrl)
+
+Can this happen?
+
+> +               return;
+> +
+> +       ctrl =3D container_of(dp_ctrl, struct dp_ctrl_private, dp_ctrl);
+> +
+> +       if (ctrl->opp_table !=3D NULL) {
+
+This is usually written as
+
+	if (ctrl->opp_table)
+
+> +               dev_pm_opp_of_remove_table(dev);
+> +               dev_pm_opp_put_clkname(ctrl->opp_table);
+> +               ctrl->opp_table =3D NULL;
+> +       }
+>  }
+> diff --git a/drivers/gpu/drm/msm/dp/dp_ctrl.h b/drivers/gpu/drm/msm/dp/dp=
+_ctrl.h
+> index f60ba93c8678..19b412a93e02 100644
+> --- a/drivers/gpu/drm/msm/dp/dp_ctrl.h
+> +++ b/drivers/gpu/drm/msm/dp/dp_ctrl.h
+> @@ -31,6 +31,6 @@ struct dp_ctrl *dp_ctrl_get(struct device *dev, struct =
+dp_link *link,
+>                         struct dp_panel *panel, struct drm_dp_aux *aux,
+>                         struct dp_power *power, struct dp_catalog *catalo=
+g,
+>                         struct dp_parser *parser);
+> -void dp_ctrl_put(struct dp_ctrl *dp_ctrl);
+> +void dp_ctrl_put(struct device *dev, struct dp_ctrl *dp_ctrl);
+
+Is 'dev' not inside 'dp_ctrl'?
+
+> =20
+>  #endif /* _DP_CTRL_H_ */
+> diff --git a/drivers/gpu/drm/msm/dp/dp_power.c b/drivers/gpu/drm/msm/dp/d=
+p_power.c
+> index 17c1fc6a2d44..3d75bf09e38f 100644
+> --- a/drivers/gpu/drm/msm/dp/dp_power.c
+> +++ b/drivers/gpu/drm/msm/dp/dp_power.c
+> @@ -8,12 +8,14 @@
+>  #include <linux/clk.h>
+>  #include <linux/clk-provider.h>
+>  #include <linux/regulator/consumer.h>
+> +#include <linux/pm_opp.h>
+>  #include "dp_power.h"
+>  #include "msm_drv.h"
+> =20
+>  struct dp_power_private {
+>         struct dp_parser *parser;
+>         struct platform_device *pdev;
+> +       struct device *dev;
+>         struct clk *link_clk_src;
+>         struct clk *pixel_provider;
+>         struct clk *link_provider;
+> @@ -148,18 +150,49 @@ static int dp_power_clk_deinit(struct dp_power_priv=
+ate *power)
+>         return 0;
+>  }
+> =20
+> +static int dp_power_clk_set_link_rate(struct dp_power_private *power,
+> +                       struct dss_clk *clk_arry, int num_clk, int enable)
+> +{
+> +       u32 rate;
+> +       int i, rc =3D 0;
+> +
+> +       for (i =3D 0; i < num_clk; i++) {
+> +               if (clk_arry[i].clk) {
+> +                       if (clk_arry[i].type =3D=3D DSS_CLK_PCLK) {
+> +                               if (enable)
+> +                                       rate =3D clk_arry[i].rate;
+> +                               else
+> +                                       rate =3D 0;
+> +
+> +                               rc =3D dev_pm_opp_set_rate(power->dev, ra=
+te);
+
+Why do we keep going if rc is non-zero?
+
+> +                       }
+> +
+> +               }
+> +       }
+> +       return rc;
+> +}
+> +
+>  static int dp_power_clk_set_rate(struct dp_power_private *power,
+>                 enum dp_pm_type module, bool enable)
+>  {
+>         int rc =3D 0;
+>         struct dss_module_power *mp =3D &power->parser->mp[module];
+> =20
+> -       if (enable) {
+> -               rc =3D msm_dss_clk_set_rate(mp->clk_config, mp->num_clk);
+> +       if (module =3D=3D DP_CTRL_PM) {
+> +               rc =3D dp_power_clk_set_link_rate(power, mp->clk_config, =
+mp->num_clk, enable);
+>                 if (rc) {
+> -                       DRM_ERROR("failed to set clks rate.\n");
+> +                       DRM_ERROR("failed to set link clks rate.\n");
+>                         return rc;
+>                 }
+> +       } else {
+> +
+> +               if (enable) {
+> +                       rc =3D msm_dss_clk_set_rate(mp->clk_config, mp->n=
+um_clk);
+> +                       if (rc) {
+> +                               DRM_ERROR("failed to set clks rate.\n");
+
+Not sure we need the period on these error messages.
+
+> +                               return rc;
+> +                       }
+> +               }
+>         }
+> =20
+>         rc =3D msm_dss_enable_clk(mp->clk_config, mp->num_clk, enable);
+>=20
+> base-commit: 3c0f462da069af12211901ddf26f7e16e6951d9b
+> prerequisite-patch-id: a109eaf08147f50149ad661a58122b6745a52445
+
+Can you rebase this on Rob's msm-next tree
+(https://gitlab.freedesktop.org/drm/msm.git) and test? It doesn't apply
+for me because I have the dp phy patch from there.
