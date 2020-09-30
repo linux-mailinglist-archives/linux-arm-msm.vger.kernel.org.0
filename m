@@ -2,60 +2,58 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 636E027E52D
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Sep 2020 11:31:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5F5CD27E556
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Sep 2020 11:39:53 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728169AbgI3Jbw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 30 Sep 2020 05:31:52 -0400
-Received: from foss.arm.com ([217.140.110.172]:60818 "EHLO foss.arm.com"
+        id S1728851AbgI3Jjt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 30 Sep 2020 05:39:49 -0400
+Received: from vps5.brixit.nl ([192.81.221.234]:49554 "EHLO vps5.brixit.nl"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725776AbgI3Jbw (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 30 Sep 2020 05:31:52 -0400
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id E493AD6E;
-        Wed, 30 Sep 2020 02:31:51 -0700 (PDT)
-Received: from bogus (unknown [10.57.47.250])
-        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id E8B1D3F70D;
-        Wed, 30 Sep 2020 02:31:46 -0700 (PDT)
-Date:   Wed, 30 Sep 2020 10:29:54 +0100
-From:   Sudeep Holla <sudeep.holla@arm.com>
-To:     Ansuel Smith <ansuelsmth@gmail.com>
-Cc:     Rob Herring <robh+dt@kernel.org>, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        MyungJoo Ham <myungjoo.ham@samsung.com>,
-        Kyungmin Park <kyungmin.park@samsung.com>,
-        Sudeep Holla <sudeep.holla@arm.com>,
-        Chanwoo Choi <cw00.choi@samsung.com>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org
-Subject: Re: [PATCH v2 1/2] devfreq: qcom: Add L2 Krait Cache devfreq scaling
- driver
-Message-ID: <20200930092954.GA7125@bogus>
-References: <20200929162926.139-1-ansuelsmth@gmail.com>
+        id S1725779AbgI3Jjt (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 30 Sep 2020 05:39:49 -0400
+X-Greylist: delayed 528 seconds by postgrey-1.27 at vger.kernel.org; Wed, 30 Sep 2020 05:39:47 EDT
+Received: from [192.168.20.102] (unknown [77.239.252.99])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        by vps5.brixit.nl (Postfix) with ESMTPSA id 6B64060733;
+        Wed, 30 Sep 2020 09:30:55 +0000 (UTC)
+Subject: Re: [PATCH] phy: qcom-qusb2: Add support for SDM630/660
+To:     kholk11@gmail.com, agross@kernel.org
+Cc:     bjorn.andersson@linaro.org, kishon@ti.com, robh+dt@kernel.org,
+        marijns95@gmail.com, konradybcio@gmail.com,
+        martin.botka1@gmail.com, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, phone-devel@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20200926131157.14633-1-kholk11@gmail.com>
+From:   Alexey Minekhanov <alexeymin@postmarketos.org>
+Message-ID: <fdb90253-a9ff-518c-5138-1a20fc03facd@postmarketos.org>
+Date:   Wed, 30 Sep 2020 12:31:36 +0300
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.12.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20200929162926.139-1-ansuelsmth@gmail.com>
-User-Agent: Mutt/1.9.4 (2018-02-28)
+In-Reply-To: <20200926131157.14633-1-kholk11@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Sep 29, 2020 at 06:29:24PM +0200, Ansuel Smith wrote:
-> Qcom L2 Krait CPUs use the generic cpufreq-dt driver and doesn't actually
-> scale the Cache frequency when the CPU frequency is changed. This
-> devfreq driver register with the cpu notifier and scale the Cache
-> based on the max Freq across all core as the CPU cache is shared across
-> all of them. If provided this also scale the voltage of the regulator
-> attached to the CPU cache. The scaling logic is based on the CPU freq
-> and the 3 scaling interval are set by the device dts.
+Tested on Xiaomi Redmi Note 7 (lavender), SDM660
+
+Tested-by: Alexey Minnekhanov <alexeymin@postmarketos.org>
+
+On 9/26/20 4:11 PM, kholk11@gmail.com wrote:
+> From: Konrad Dybcio <konradybcio@gmail.com>
 >
-
-I have raised this concern before. I am worried this kind of independent
-CPU and cache frequency controls make way for clkscrew kind of attacks.
-Why can't the clocks be made parent/child or secondary and automatically
-updated when CPU clocks are changed.
-
--- 
-Regards,
-Sudeep
+> QUSB on these SoCs actually uses *almost* the same
+> configuration that msm8996 does, so we can reuse
+> the phy_cfg from there with just a single change
+> (se clock scheme).
+>
+> Signed-off-by: Konrad Dybcio <konradybcio@gmail.com>
+> Signed-off-by: AngeloGioacchino Del Regno <kholk11@gmail.com>
+> ---
+>  Documentation/devicetree/bindings/phy/qcom,qusb2-phy.yaml | 1 +
+>  drivers/phy/qualcomm/phy-qcom-qusb2.c                     | 7 ++++++-
+>  2 files changed, 7 insertions(+), 1 deletion(-)
