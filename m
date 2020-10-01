@@ -2,65 +2,113 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id DB04D27FE1B
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Oct 2020 13:08:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 48D0727FE2F
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Oct 2020 13:15:05 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731647AbgJALI5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 1 Oct 2020 07:08:57 -0400
-Received: from mo4-p01-ob.smtp.rzone.de ([85.215.255.52]:22554 "EHLO
-        mo4-p01-ob.smtp.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731134AbgJALI5 (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 1 Oct 2020 07:08:57 -0400
-X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVOQ/OcYgojyw4j34+u26zEodhPgRDZ8j/IcvFBg=="
-X-RZG-CLASS-ID: mo00
-Received: from gerhold.net
-        by smtp.strato.de (RZmta 47.1.9 DYNA|AUTH)
-        with ESMTPSA id z04ddcw91B2u63q
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
-        (Client did not present a certificate);
-        Thu, 1 Oct 2020 13:02:56 +0200 (CEST)
-Date:   Thu, 1 Oct 2020 13:02:49 +0200
-From:   Stephan Gerhold <stephan@gerhold.net>
-To:     Jun Nie <jun.nie@linaro.org>
-Cc:     bjorn.andersson@linaro.org, agross@kernel.org,
-        linux-pm@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        robh@kernel.org, shawn.guo@linaro.org
-Subject: Re: [PATCH v3 0/2] Add MSM8939 RPM power domains
-Message-ID: <20201001110249.GA1592@gerhold.net>
-References: <20200930100145.9457-1-jun.nie@linaro.org>
+        id S1731902AbgJALPA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 1 Oct 2020 07:15:00 -0400
+Received: from mail.kernel.org ([198.145.29.99]:43252 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726992AbgJALPA (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 1 Oct 2020 07:15:00 -0400
+Received: from localhost (unknown [122.167.37.56])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id 8DCD72087D;
+        Thu,  1 Oct 2020 11:14:58 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1601550899;
+        bh=cxQnqQEDntZ0aFpinDWrTCtr5C68zBwmYfLs04V0NQ0=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=1QmK0tqBrnzWdIfBjfeBwjFFwSWLDU31/OzJYfN/8MDFjcSmf7CNJHaHtYVmggGNx
+         FRL+PrW8PPZrD3WrYbEKebFarwzn/o+IvnnYvo913WWC5FrQEXa4Giq2FDs6IHANr2
+         tj1lirpAhlfroTcv6n5pGac9O3a7fUl0Ze0ifJcE=
+Date:   Thu, 1 Oct 2020 16:44:54 +0530
+From:   Vinod Koul <vkoul@kernel.org>
+To:     Rob Herring <robh@kernel.org>
+Cc:     dmaengine@vger.kernel.org,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Peter Ujfalusi <peter.ujfalusi@ti.com>
+Subject: Re: [PATCH v3 1/3] dt-bindings: dmaengine: Document qcom,gpi dma
+ binding
+Message-ID: <20201001111454.GW2968@vkoul-mobl>
+References: <20200923063410.3431917-1-vkoul@kernel.org>
+ <20200923063410.3431917-2-vkoul@kernel.org>
+ <20200929184424.GA935309@bogus>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20200930100145.9457-1-jun.nie@linaro.org>
+In-Reply-To: <20200929184424.GA935309@bogus>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Sep 30, 2020 at 06:01:43PM +0800, Jun Nie wrote:
-> Add MSM8939 RPM power domains and associated document. This is based on
-> Stephan's patch set to reuse max state definition:
-> https://lore.kernel.org/linux-arm-msm/20200916104135.25085-1-stephan@gerhold.net/
-> 
-> Changes vs v2:
->  - fix max power domain state value.
->  - trim code layout.
-> 
-> Jun Nie (2):
->   dt-bindings: power: rpmpd: Add MSM8939 RPM power domains
->   soc: qcom: rpmpd: Add MSM8939 power-domains
-> 
->  .../devicetree/bindings/power/qcom,rpmpd.yaml |  1 +
->  drivers/soc/qcom/rpmpd.c                      | 27 +++++++++++++++++++
->  include/dt-bindings/power/qcom-rpmpd.h        | 10 +++++++
->  3 files changed, 38 insertions(+)
-> 
-> -- 
-> 2.17.1
-> 
+Hi Rob,
 
-Thanks for making the changes! I don't know much about MSM8939 but from
-what I know this looks good to me. FWIW, for both patches:
+On 29-09-20, 13:44, Rob Herring wrote:
 
-Reviewed-by: Stephan Gerhold <stephan@gerhold.net>
+> > +description: |
+> > +  QCOM GPI DMA controller provides DMA capabilities for
+> > +  peripheral buses such as I2C, UART, and SPI.
+> > +
+> > +allOf:
+> > +  - $ref: "dma-controller.yaml#"
+> > +
+> > +properties:
+> > +  compatible:
+> > +    enum:
+> > +      - qcom,gpi-dma
+> 
+> Should be SoC specific.
+
+Okay, will add
+
+> > +
+> > +  reg:
+> > +    maxItems: 1
+> > +
+> > +  interrupts:
+> > +    description:
+> > +      Interrupt lines for each GPII instance
+> 
+> GPII or GPI?
+
+Hw uses GPII as "GPI Instance" :) so will update this
+
+> > +    maxItems: 13
+> > +
+> > +  "#dma-cells":
+> > +    const: 3
+> > +    description: >
+> > +      DMA clients must use the format described in dma.txt, giving a phandle
+> > +      to the DMA controller plus the following 3 integer cells:
+> > +      - channel: if set to 0xffffffff, any available channel will be allocated
+> > +        for the client. Otherwise, the exact channel specified will be used.
+> > +      - seid: serial id of the client as defined in the SoC documentation.
+> > +      - client: type of the client as defined in dt-bindings/dma/qcom-gpi.h
+> > +
+> > +  iommus:
+> > +    maxItems: 1
+> > +
+> > +  dma-channels:
+> > +    maxItems: 1
+> 
+> Not an array. Is there a maximum number of channels or 2^32 is valid?
+
+I have not seen any max limit put, but we can be assured that it will
+not go to 2^32, we can put a reasonable limit ..
+
+Will add maximum :)
+
+> > +
+> > +  dma-channel-mask:
+> > +    maxItems: 1
+> 
+> So up to 32 channels?
+
+yep!
+
+-- 
+~Vinod
