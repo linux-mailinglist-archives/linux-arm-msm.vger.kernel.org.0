@@ -2,116 +2,235 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 10402280B44
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Oct 2020 01:17:14 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 69ED0280B58
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Oct 2020 01:29:24 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1733222AbgJAXRM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 1 Oct 2020 19:17:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54842 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1733131AbgJAXRJ (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 1 Oct 2020 19:17:09 -0400
-Received: from mail-wr1-x444.google.com (mail-wr1-x444.google.com [IPv6:2a00:1450:4864:20::444])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DDEAEC0613E4
-        for <linux-arm-msm@vger.kernel.org>; Thu,  1 Oct 2020 16:17:06 -0700 (PDT)
-Received: by mail-wr1-x444.google.com with SMTP id e16so535774wrm.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 01 Oct 2020 16:17:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=lsAtKdbbGwCFSZvYEK9LUdJCmMnTxvc7zkOvFkI0M00=;
-        b=lxdO82HCa9E2YycZTS2qqXAS5Yo7m1LuRhU1iYTtrP5Nj++fBqSsSDiYZ45GPj4Dxt
-         EJA0LQGIC2ufGci443gnZKEPY8iJ1Eu2V14sD3w0nhs2h5INIG5JqEWOsRBAXhxzREtm
-         CvzjX+Zdgar8Rs7Q1ck7I0FflIkRQTw6gEaRhlwvvIONK8FjbSdWaImTCBzUW/C5MtId
-         Cf7xqqyZB8aCT1kqlChy9Md18tOSTvheayZ0HAPXj0pXwLkX4NE3++loguZsouvAa5F8
-         Nasj54K54vpUyNYBPmR88ghkA1PBrbCRZqbrBcCO8k8sxT96Ky1rLxx5op5RP00Rqsnm
-         Qd3Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=lsAtKdbbGwCFSZvYEK9LUdJCmMnTxvc7zkOvFkI0M00=;
-        b=GALuBggiydlOla6Veibtf1FSoWbQkv0YyaAg+8vqzERoqkB1sn2AZxb0bLcfd9YYbg
-         Ugl07hp60dOX8Z1AxXmZRV6gCBONlDUgdGqm9Ze+lzL6ZQPK2t/VYjv1+l4PA4dFWVbW
-         3gnA3Xy4Sv9nslkPoG/gIP8nYrYZLOpMAz9pL8zPCKRVaL0JtFyvdNSTZ6TxfK6VukLP
-         hnXMQadqgjWBogfuket9+uE33+x9Dp37skgqe+HEktbjzLCklDUezcwBqJ0rmOEqdMr5
-         T6nM/clHya4oYeSwo1MXPQysYM0onzw6xJmI2znvtFaUVy7XQSeMlZlmTUrLfJ8BuImF
-         OlQQ==
-X-Gm-Message-State: AOAM531C+RPmRosa1rrANODpfaPS0psyloFkGxD2RuVfwb5+yj4vKlaM
-        m5HqtkJU8gmu/zN5jLp6NTgwhA==
-X-Google-Smtp-Source: ABdhPJyce3UDx0zfoKvLMrvqG+BBLnRweOGD6TtIsyQPWDZyrmk5GImxMgnDwomAHbx/YW73FO0xzA==
-X-Received: by 2002:adf:de11:: with SMTP id b17mr11356928wrm.82.1601594224596;
-        Thu, 01 Oct 2020 16:17:04 -0700 (PDT)
-Received: from [192.168.1.7] ([195.24.90.54])
-        by smtp.googlemail.com with ESMTPSA id v2sm2271598wme.19.2020.10.01.16.17.02
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 01 Oct 2020 16:17:03 -0700 (PDT)
-Subject: Re: [PATCH v6 0/5] DVFS support for Venus
-To:     Doug Anderson <dianders@chromium.org>
-Cc:     Rajendra Nayak <rnayak@codeaurora.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Linux Media Mailing List <linux-media@vger.kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>, LKML <linux-kernel@vger.kernel.org>,
-        Matthias Kaehlcke <mka@chromium.org>
-References: <1598970026-7199-1-git-send-email-rnayak@codeaurora.org>
- <34ed34bd-90fd-0e84-6020-c487d612ad2f@codeaurora.org>
- <aec87de2-500d-763c-df01-c0daec56b1e2@linaro.org>
- <CAD=FV=U=OCQpVL6VOVd4B6rW7HFC5S-wGauMAsOdvzwjLzKLuw@mail.gmail.com>
-From:   Stanimir Varbanov <stanimir.varbanov@linaro.org>
-Message-ID: <5c9ce5fe-f903-e1bf-8a6e-3714a023ee4f@linaro.org>
-Date:   Fri, 2 Oct 2020 02:17:01 +0300
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.10.0
+        id S1733002AbgJAX3X (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 1 Oct 2020 19:29:23 -0400
+Received: from z5.mailgun.us ([104.130.96.5]:61707 "EHLO z5.mailgun.us"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727780AbgJAX3X (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 1 Oct 2020 19:29:23 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1601594961; h=In-Reply-To: Content-Type: MIME-Version:
+ References: Message-ID: Subject: Cc: To: From: Date: Sender;
+ bh=RoYeAXC95qI8GRNbmM3wnw4s4VTlEJU6bEldDzPYqsU=; b=K/npwgLSFi348FtEkEX2iv89M5vaqHAW4lRN+GpYQ55x8R2gRAwZGPe1SJ2D+iZqaYMuLJpa
+ ZmYK4tOalc8vewdDhT4bgmzijhcrdsA8j20JsbZuMtCQMYYda3EyG+qe+rqXFg9eGlMPzZdr
+ X2DiJQeezjdm4X3ZWWdB5DG4SYw=
+X-Mailgun-Sending-Ip: 104.130.96.5
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n07.prod.us-west-2.postgun.com with SMTP id
+ 5f7666488246bdcb55d0be35 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 01 Oct 2020 23:29:12
+ GMT
+Sender: jcrouse=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 4831FC43395; Thu,  1 Oct 2020 23:29:12 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
+        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+Received: from jcrouse1-lnx.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: jcrouse)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 3382CC433CA;
+        Thu,  1 Oct 2020 23:29:10 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 3382CC433CA
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=jcrouse@codeaurora.org
+Date:   Thu, 1 Oct 2020 17:29:07 -0600
+From:   Jordan Crouse <jcrouse@codeaurora.org>
+To:     Jonathan Marek <jonathan@marek.ca>
+Cc:     freedreno@lists.freedesktop.org, David Airlie <airlied@linux.ie>,
+        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
+        <linux-arm-msm@vger.kernel.org>,
+        open list <linux-kernel@vger.kernel.org>,
+        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
+        <dri-devel@lists.freedesktop.org>, Rob Clark <robdclark@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>, Sean Paul <sean@poorly.run>
+Subject: Re: [Freedreno] [PATCH 2/3] drm/msm: add DRM_MSM_GEM_SYNC_CACHE for
+ non-coherent cache maintenance
+Message-ID: <20201001232907.GG29832@jcrouse1-lnx.qualcomm.com>
+Mail-Followup-To: Jonathan Marek <jonathan@marek.ca>,
+        freedreno@lists.freedesktop.org, David Airlie <airlied@linux.ie>,
+        "open list:DRM DRIVER FOR MSM ADRENO GPU" <linux-arm-msm@vger.kernel.org>,
+        open list <linux-kernel@vger.kernel.org>,
+        "open list:DRM DRIVER FOR MSM ADRENO GPU" <dri-devel@lists.freedesktop.org>,
+        Rob Clark <robdclark@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
+        Sean Paul <sean@poorly.run>
+References: <20201001002709.21361-1-jonathan@marek.ca>
+ <20201001002709.21361-3-jonathan@marek.ca>
 MIME-Version: 1.0
-In-Reply-To: <CAD=FV=U=OCQpVL6VOVd4B6rW7HFC5S-wGauMAsOdvzwjLzKLuw@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20201001002709.21361-3-jonathan@marek.ca>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+On Wed, Sep 30, 2020 at 08:27:05PM -0400, Jonathan Marek wrote:
+> This makes it possible to use the non-coherent cached MSM_BO_CACHED mode,
+> which otherwise doesn't provide any method for cleaning/invalidating the
+> cache to sync with the device.
+> 
+> Signed-off-by: Jonathan Marek <jonathan@marek.ca>
+> ---
+>  drivers/gpu/drm/msm/msm_drv.c | 21 +++++++++++++++++++++
+>  drivers/gpu/drm/msm/msm_drv.h |  2 ++
+>  drivers/gpu/drm/msm/msm_gem.c | 15 +++++++++++++++
+>  include/uapi/drm/msm_drm.h    | 20 ++++++++++++++++++++
+>  4 files changed, 58 insertions(+)
+> 
+> diff --git a/drivers/gpu/drm/msm/msm_drv.c b/drivers/gpu/drm/msm/msm_drv.c
+> index 9716210495fc..305db1db1064 100644
+> --- a/drivers/gpu/drm/msm/msm_drv.c
+> +++ b/drivers/gpu/drm/msm/msm_drv.c
+> @@ -964,6 +964,26 @@ static int msm_ioctl_submitqueue_close(struct drm_device *dev, void *data,
+>  	return msm_submitqueue_remove(file->driver_priv, id);
+>  }
+>  
+> +static int msm_ioctl_gem_sync_cache(struct drm_device *dev, void *data,
+> +		struct drm_file *file)
+> +{
+> +	struct drm_msm_gem_sync_cache *args = data;
+> +	struct drm_gem_object *obj;
+> +
+> +	if (args->flags & ~MSM_GEM_SYNC_CACHE_FLAGS)
+> +		return -EINVAL;
+> +
+> +	obj = drm_gem_object_lookup(file, args->handle);
+> +	if (!obj)
+> +		return -ENOENT;
+> +
+> +	msm_gem_sync_cache(obj, args->flags, args->offset, args->end);
+> +
+> +	drm_gem_object_put(obj);
+> +
+> +	return 0;
+> +}
+> +
+>  static const struct drm_ioctl_desc msm_ioctls[] = {
+>  	DRM_IOCTL_DEF_DRV(MSM_GET_PARAM,    msm_ioctl_get_param,    DRM_RENDER_ALLOW),
+>  	DRM_IOCTL_DEF_DRV(MSM_GEM_NEW,      msm_ioctl_gem_new,      DRM_RENDER_ALLOW),
+> @@ -976,6 +996,7 @@ static const struct drm_ioctl_desc msm_ioctls[] = {
+>  	DRM_IOCTL_DEF_DRV(MSM_SUBMITQUEUE_NEW,   msm_ioctl_submitqueue_new,   DRM_RENDER_ALLOW),
+>  	DRM_IOCTL_DEF_DRV(MSM_SUBMITQUEUE_CLOSE, msm_ioctl_submitqueue_close, DRM_RENDER_ALLOW),
+>  	DRM_IOCTL_DEF_DRV(MSM_SUBMITQUEUE_QUERY, msm_ioctl_submitqueue_query, DRM_RENDER_ALLOW),
+> +	DRM_IOCTL_DEF_DRV(MSM_GEM_SYNC_CACHE,    msm_ioctl_gem_sync_cache,    DRM_RENDER_ALLOW),
+>  };
+>  
+>  static const struct vm_operations_struct vm_ops = {
+> diff --git a/drivers/gpu/drm/msm/msm_drv.h b/drivers/gpu/drm/msm/msm_drv.h
+> index 6384844b1696..5e932dae453f 100644
+> --- a/drivers/gpu/drm/msm/msm_drv.h
+> +++ b/drivers/gpu/drm/msm/msm_drv.h
+> @@ -314,6 +314,8 @@ void msm_gem_move_to_active(struct drm_gem_object *obj,
+>  void msm_gem_move_to_inactive(struct drm_gem_object *obj);
+>  int msm_gem_cpu_prep(struct drm_gem_object *obj, uint32_t op, ktime_t *timeout);
+>  int msm_gem_cpu_fini(struct drm_gem_object *obj);
+> +void msm_gem_sync_cache(struct drm_gem_object *obj, uint32_t flags,
+> +		size_t range_start, size_t range_end);
+>  void msm_gem_free_object(struct drm_gem_object *obj);
+>  int msm_gem_new_handle(struct drm_device *dev, struct drm_file *file,
+>  		uint32_t size, uint32_t flags, uint32_t *handle, char *name);
+> diff --git a/drivers/gpu/drm/msm/msm_gem.c b/drivers/gpu/drm/msm/msm_gem.c
+> index ad9a627493ae..93da88b3fc50 100644
+> --- a/drivers/gpu/drm/msm/msm_gem.c
+> +++ b/drivers/gpu/drm/msm/msm_gem.c
+> @@ -8,6 +8,7 @@
+>  #include <linux/shmem_fs.h>
+>  #include <linux/dma-buf.h>
+>  #include <linux/pfn_t.h>
+> +#include <linux/dma-noncoherent.h>
+>  
+>  #include <drm/drm_prime.h>
+>  
+> @@ -808,6 +809,20 @@ int msm_gem_cpu_fini(struct drm_gem_object *obj)
+>  	return 0;
+>  }
+>  
+> +void msm_gem_sync_cache(struct drm_gem_object *obj, uint32_t flags,
+> +		size_t range_start, size_t range_end)
+> +{
+> +	struct msm_gem_object *msm_obj = to_msm_bo(obj);
+> +
+> +	/* TODO: sync only the required range, and don't invalidate on clean */
+> +
+> +	if (flags & MSM_GEM_SYNC_CACHE_CLEAN)
 
-On 10/1/20 11:40 PM, Doug Anderson wrote:
-> Hi,
-> 
-> On Wed, Sep 16, 2020 at 12:26 AM Stanimir Varbanov
-> <stanimir.varbanov@linaro.org> wrote:
->>
->> Hi,
->>
->> On 9/16/20 8:33 AM, Rajendra Nayak wrote:
->>>
->>> On 9/1/2020 7:50 PM, Rajendra Nayak wrote:
->>>> Rob, can you pick PATCH 1 since its already reviewed by you.
->>>> Stan, Patch 2 and 3 will need to be picked by you and they both have
->>>> your ACKs
->>>
->>> Rob/Stan, any plans to get the patches merged for 5.10?
->>
->> 2/5 and 3/5 are queued up for v5.10 through media tree.
-> 
-> Normally I'd expect device tree bindings (patch #1) to go through the
-> same tree as the driver changes.  Does the media tree work
-> differently?  If you're expecting Rob Herring to land the device tree
-> binding change, is he aware?
+Curious why you would rename these - I feel like the to_device / to_cpu model is
+pretty well baked into our thought process. I know from personal experience that
+I have to stop and think to remember which direction is which.
 
-I sent pull request to Mauro with 1/5 included.
-Thanks for spotting.
+Jordan
 
+> +		sync_for_device(msm_obj);
+> +
+> +	if (flags & MSM_GEM_SYNC_CACHE_INVALIDATE)
+> +		sync_for_cpu(msm_obj);
+> +}
+> +
+>  #ifdef CONFIG_DEBUG_FS
+>  static void describe_fence(struct dma_fence *fence, const char *type,
+>  		struct seq_file *m)
+> diff --git a/include/uapi/drm/msm_drm.h b/include/uapi/drm/msm_drm.h
+> index 474497e8743a..1dfafa71fc94 100644
+> --- a/include/uapi/drm/msm_drm.h
+> +++ b/include/uapi/drm/msm_drm.h
+> @@ -319,6 +319,24 @@ struct drm_msm_submitqueue_query {
+>  	__u32 pad;
+>  };
+>  
+> +/*
+> + * Host cache maintenance (relevant for MSM_BO_CACHED)
+> + * driver may both clean/invalidate (flush) for clean
+> + */
+> +
+> +#define MSM_GEM_SYNC_CACHE_CLEAN	0x1
+> +#define MSM_GEM_SYNC_CACHE_INVALIDATE	0x2
+> +
+> +#define MSM_GEM_SYNC_CACHE_FLAGS	(MSM_GEM_SYNC_CACHE_CLEAN | \
+> +					 MSM_GEM_SYNC_CACHE_INVALIDATE)
+> +
+> +struct drm_msm_gem_sync_cache {
+> +	__u32 handle;
+> +	__u32 flags;
+> +	__u64 offset;
+> +	__u64 end;      /* offset + size */
+> +};
+> +
+>  #define DRM_MSM_GET_PARAM              0x00
+>  /* placeholder:
+>  #define DRM_MSM_SET_PARAM              0x01
+> @@ -336,6 +354,7 @@ struct drm_msm_submitqueue_query {
+>  #define DRM_MSM_SUBMITQUEUE_NEW        0x0A
+>  #define DRM_MSM_SUBMITQUEUE_CLOSE      0x0B
+>  #define DRM_MSM_SUBMITQUEUE_QUERY      0x0C
+> +#define DRM_MSM_GEM_SYNC_CACHE         0x0D
+>  
+>  #define DRM_IOCTL_MSM_GET_PARAM        DRM_IOWR(DRM_COMMAND_BASE + DRM_MSM_GET_PARAM, struct drm_msm_param)
+>  #define DRM_IOCTL_MSM_GEM_NEW          DRM_IOWR(DRM_COMMAND_BASE + DRM_MSM_GEM_NEW, struct drm_msm_gem_new)
+> @@ -348,6 +367,7 @@ struct drm_msm_submitqueue_query {
+>  #define DRM_IOCTL_MSM_SUBMITQUEUE_NEW    DRM_IOWR(DRM_COMMAND_BASE + DRM_MSM_SUBMITQUEUE_NEW, struct drm_msm_submitqueue)
+>  #define DRM_IOCTL_MSM_SUBMITQUEUE_CLOSE  DRM_IOW (DRM_COMMAND_BASE + DRM_MSM_SUBMITQUEUE_CLOSE, __u32)
+>  #define DRM_IOCTL_MSM_SUBMITQUEUE_QUERY  DRM_IOW (DRM_COMMAND_BASE + DRM_MSM_SUBMITQUEUE_QUERY, struct drm_msm_submitqueue_query)
+> +#define DRM_IOCTL_MSM_GEM_SYNC_CACHE     DRM_IOW (DRM_COMMAND_BASE + DRM_MSM_GEM_SYNC_CACHE, struct drm_msm_gem_sync_cache)
+>  
+>  #if defined(__cplusplus)
+>  }
+> -- 
+> 2.26.1
 > 
-> 
-> -Doug
-> 
+> _______________________________________________
+> Freedreno mailing list
+> Freedreno@lists.freedesktop.org
+> https://lists.freedesktop.org/mailman/listinfo/freedreno
 
 -- 
-regards,
-Stan
+The Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum,
+a Linux Foundation Collaborative Project
