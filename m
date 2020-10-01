@@ -2,175 +2,168 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 68A7C28024F
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Oct 2020 17:15:35 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 24BBC28025F
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Oct 2020 17:17:54 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732517AbgJAPPe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 1 Oct 2020 11:15:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36808 "EHLO
+        id S1732361AbgJAPRx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 1 Oct 2020 11:17:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37162 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1732516AbgJAPPe (ORCPT
+        with ESMTP id S1732342AbgJAPRw (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 1 Oct 2020 11:15:34 -0400
-Received: from mail-wr1-x444.google.com (mail-wr1-x444.google.com [IPv6:2a00:1450:4864:20::444])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E260DC0613D0;
-        Thu,  1 Oct 2020 08:15:33 -0700 (PDT)
-Received: by mail-wr1-x444.google.com with SMTP id z1so6245746wrt.3;
-        Thu, 01 Oct 2020 08:15:33 -0700 (PDT)
+        Thu, 1 Oct 2020 11:17:52 -0400
+Received: from mail-ed1-x544.google.com (mail-ed1-x544.google.com [IPv6:2a00:1450:4864:20::544])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 82C15C0613D0
+        for <linux-arm-msm@vger.kernel.org>; Thu,  1 Oct 2020 08:17:52 -0700 (PDT)
+Received: by mail-ed1-x544.google.com with SMTP id w1so6065880edr.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 01 Oct 2020 08:17:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
+        d=chromium.org; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=gFqMSXRyF1iFqQYaqJo0t2YUPbcbonItseg5lySXlwM=;
-        b=V8eg7RMvckEBsaqConW1z9bjgeOispARRh/82t+ZYVVyOReT2nuye+OdicBp6ywmeI
-         IuRMhFhuV7ZgjTEURdaz5umfvWUNAY1nMfr6zx5OZMjpVlJhHxvGmdokO2HuyRbXxuQJ
-         qIozBYVLPqQMa+DgaCYplr+J6fcStKbCKcBo6oGyJkIrKw4r/JMUKszH1/XXyix/dWAf
-         vBFL2nemYdd66SQ8tQ3lSj5prsKehmE7NdFHf4L3pqc9aqOL80jMmSkVuLg0olEU4yFU
-         jJ5PUf4cNXsFbCOJyMPZJsH7hUvF7gagYgB7FWmUG2i87wHFgI0Zeu1z47fmCfi897jL
-         xzKA==
+        bh=+CuSbWcGM2/Qd+9ER9Dz6b9GN8ltVla+ip6oPSoq7yA=;
+        b=asQXqF6EWzCUzXqxbcDXbt9m4zzm/5boX5W4/LzPP5T4J4uRzRwdxLLZF7aIP/yGd2
+         qnD7xHSuOVI3mb9vo2B8rB15ug0PX7qCe2rL5ruqcWJaBF70TH4dJgLINsnLwqRsL94I
+         im/ruZ1vDoa0IdAY+BwQ4F8IMdQUCpXt8Jjd8=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=gFqMSXRyF1iFqQYaqJo0t2YUPbcbonItseg5lySXlwM=;
-        b=g45LOG0dKvdce0J9WrGtmhQpHVquP5HjMjELO3mk1jwc8hodvvXzlcXPlD4+TMnLqx
-         qbRB34TKPParqBLOA1RyoNLegS78SV0/xULMaspwylRvHQhmTcxamWnp20dVPBBwjgYC
-         qFpHioIQxEoFnZQIdVOQ/viB6ioz8CbahPS6gsOTQV31IC8BWr1mVEkcxqYdTZeKnhiE
-         5YS/sRcRK2TK8ZhGsun3IUsLFGoAA0cI1QVLuU+w0Y2EqSr4SogAQLh+1D8fPc/N3YwF
-         b22z1HBQU/xZUloldudPkpZkS1VBwBhLY5dfP9rHAXRhZf9zauxEhH6CH0VkJdsx0ffB
-         fspw==
-X-Gm-Message-State: AOAM530AsMp74pKaMfyHCpiXHaO6pge3HBywg8fJmbcB/eXGnodJwrCn
-        FxisKvAUGA6MYBJ3LuQtLQcgK2jIElxl1cYWvYk=
-X-Google-Smtp-Source: ABdhPJzX2p/R3dcfAHBykAEhigq1NpWdcGaRN/d5VJDPB60SrUL2IzFTMGqpFXcvL7KnXnjjR0JYBOaFbberj8nS+ng=
-X-Received: by 2002:a5d:640d:: with SMTP id z13mr9262620wru.28.1601565332442;
- Thu, 01 Oct 2020 08:15:32 -0700 (PDT)
+        bh=+CuSbWcGM2/Qd+9ER9Dz6b9GN8ltVla+ip6oPSoq7yA=;
+        b=tNz71xH8X6xz52awLUnkHAUBr4T9UC0c/UnbjtI9zu0K5bDwY+5j9lYoPHwidE7npN
+         oQwwyquhpdTos27otmpmX83ZJ44oZCG/aorWBWmrjTd6ClJ4zPJTw2A2NADkd/gq0Hkv
+         dUfzZJdpR5m9IkSLZlkTKa4AVscnOhgiP9nKLmhW/cZ7j3fX73DMwg4tAoxP6l+Lk4Jw
+         hnb0DHX2Edx06ape5EHaLJc51E1dQSXD/upuD8lrByvD5WSu544fSh49nv+dUv+vnKir
+         OGERAfWMrLW4a5l2y3KWdoaD6twsNxnihzEMVPvH8cdf76nfY3yPIY45B8g3GOnoKT4x
+         SprA==
+X-Gm-Message-State: AOAM532GPMiLfja6hduHs+jxcXmLX1rjkyKoA9aQ/6kggYUy/cUaFEp5
+        DrdXkapWIUGIoPwkzBZHlVzkEWmeYFFVQw==
+X-Google-Smtp-Source: ABdhPJwQU/S8NgbptBzJVn1UvZNLTrk9p0309Tr9nX/s8cUlqj7P58QPSso/cAhTYaMzh9PDoIu8uw==
+X-Received: by 2002:aa7:c054:: with SMTP id k20mr8818270edo.224.1601565470983;
+        Thu, 01 Oct 2020 08:17:50 -0700 (PDT)
+Received: from mail-wr1-f51.google.com (mail-wr1-f51.google.com. [209.85.221.51])
+        by smtp.gmail.com with ESMTPSA id g20sm681335ejz.88.2020.10.01.08.17.49
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 01 Oct 2020 08:17:49 -0700 (PDT)
+Received: by mail-wr1-f51.google.com with SMTP id s12so6245936wrw.11
+        for <linux-arm-msm@vger.kernel.org>; Thu, 01 Oct 2020 08:17:49 -0700 (PDT)
+X-Received: by 2002:a5d:6552:: with SMTP id z18mr9352555wrv.32.1601565468929;
+ Thu, 01 Oct 2020 08:17:48 -0700 (PDT)
 MIME-Version: 1.0
-References: <20200930211723.3028059-1-robdclark@gmail.com> <CAKMK7uHHPWE3h7ssG-dpb3czwbP5VtZYztMA=CpvQ4HV4LQTXA@mail.gmail.com>
-In-Reply-To: <CAKMK7uHHPWE3h7ssG-dpb3czwbP5VtZYztMA=CpvQ4HV4LQTXA@mail.gmail.com>
-From:   Rob Clark <robdclark@gmail.com>
-Date:   Thu, 1 Oct 2020 08:15:20 -0700
-Message-ID: <CAF6AEGszF60dWn37m63wujjtuObqkz2ZqEN3LHaPhCkKa1cdmA@mail.gmail.com>
-Subject: Re: [PATCH v2 0/3] drm: commit_work scheduling
-To:     Daniel Vetter <daniel@ffwll.ch>
-Cc:     dri-devel <dri-devel@lists.freedesktop.org>,
+References: <1600968674-11559-1-git-send-email-dikshita@codeaurora.org>
+ <1600968674-11559-3-git-send-email-dikshita@codeaurora.org>
+ <CAAFQd5CTyjagd7grrCkret2WnvoLHQk83fg+1QPK+V1NbhKTvw@mail.gmail.com> <b977eb27-9646-1c73-5acb-c3a74460e426@linaro.org>
+In-Reply-To: <b977eb27-9646-1c73-5acb-c3a74460e426@linaro.org>
+From:   Tomasz Figa <tfiga@chromium.org>
+Date:   Thu, 1 Oct 2020 17:17:27 +0200
+X-Gmail-Original-Message-ID: <CAAFQd5BdeG44SmT4xhrarsmgnFc-1LCdoFwz=XXYsLdHcMyz-Q@mail.gmail.com>
+Message-ID: <CAAFQd5BdeG44SmT4xhrarsmgnFc-1LCdoFwz=XXYsLdHcMyz-Q@mail.gmail.com>
+Subject: Re: [PATCH 2/2] venus: venc: fix handlig of S_SELECTION and G_SELECTION
+To:     Stanimir Varbanov <stanimir.varbanov@linaro.org>
+Cc:     Dikshita Agarwal <dikshita@codeaurora.org>,
+        Linux Media Mailing List <linux-media@vger.kernel.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
         linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Tejun Heo <tj@kernel.org>, Tim Murray <timmurray@google.com>,
-        Qais Yousef <qais.yousef@arm.com>,
-        Rob Clark <robdclark@chromium.org>,
-        open list <linux-kernel@vger.kernel.org>
+        Vikash Garodia <vgarodia@codeaurora.org>
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Oct 1, 2020 at 12:25 AM Daniel Vetter <daniel@ffwll.ch> wrote:
+On Thu, Oct 1, 2020 at 3:32 AM Stanimir Varbanov
+<stanimir.varbanov@linaro.org> wrote:
 >
-> On Wed, Sep 30, 2020 at 11:16 PM Rob Clark <robdclark@gmail.com> wrote:
-> >
-> > From: Rob Clark <robdclark@chromium.org>
-> >
-> > The android userspace treats the display pipeline as a realtime problem.
-> > And arguably, if your goal is to not miss frame deadlines (ie. vblank),
-> > it is.  (See https://lwn.net/Articles/809545/ for the best explaination
-> > that I found.)
-> >
-> > But this presents a problem with using workqueues for non-blocking
-> > atomic commit_work(), because the SCHED_FIFO userspace thread(s) can
-> > preempt the worker.  Which is not really the outcome you want.. once
-> > the required fences are scheduled, you want to push the atomic commit
-> > down to hw ASAP.
-> >
-> > But the decision of whether commit_work should be RT or not really
-> > depends on what userspace is doing.  For a pure CFS userspace display
-> > pipeline, commit_work() should remain SCHED_NORMAL.
-> >
-> > To handle this, convert non-blocking commit_work() to use per-CRTC
-> > kthread workers, instead of system_unbound_wq.  Per-CRTC workers are
-> > used to avoid serializing commits when userspace is using a per-CRTC
-> > update loop.  And the last patch exposes the task id to userspace as
-> > a CRTC property, so that userspace can adjust the priority and sched
-> > policy to fit it's needs.
-> >
-> >
-> > v2: Drop client cap and in-kernel setting of priority/policy in
-> >     favor of exposing the kworker tid to userspace so that user-
-> >     space can set priority/policy.
+> Hi Tomasz,
 >
-> Yeah I think this looks more reasonable. Still a bit irky interface,
-> so I'd like to get some kworker/rt ack on this. Other opens:
-> - needs userspace, the usual drill
-
-fwiw, right now the userspace is "modetest + chrt".. *probably* the
-userspace will become a standalone helper or daemon, mostly because
-the chrome gpu-process sandbox does not allow setting SCHED_FIFO.  I'm
-still entertaining the possibility of switching between rt and cfs
-depending on what is in the foreground (ie. only do rt for android
-apps).
-
-> - we need this also for vblank workers, otherwise this wont work for
-> drivers needing those because of another priority inversion.
-
-I have a thought on that, see below..
-
-> - we probably want some indication of whether this actually does
-> something useful, not all drivers use atomic commit helpers. Not sure
-> how to do that.
-
-I'm leaning towards converting the other drivers over to use the
-per-crtc kwork, and then dropping the 'commit_work` from atomic state.
-I can add a patch to that, but figured I could postpone that churn
-until there is some by-in on this whole idea.
-
-> - not sure whether the vfunc is an awesome idea, I'd frankly just
-> open-code this inline. We have similar special cases already for e.g.
-> dpms (and in multiple places), this isn't the worst.
-
-I could introduce a "PID" property type.  This would be useful if we
-wanted to also expose the vblank workers.
-
-> - still feeling we could at least change the default to highpriority niceness.
-
-AFAIU this would still be preempted by something that is SCHED_FIFO.
-Also, with cfs/SCHED_NORMAL, you can still be preempted by lower
-priority things that haven't had a chance to run for a while.
-
-> - there's still the problem that commit works can overlap, and a
-> single worker can't do that anymore. So rolling that out for everyone
-> as-is feels a bit risky.
-
-That is why it is per-CRTC..  I'm not sure there is a need to overlap
-work for a single CRTC?
-
-We could OFC make this a driver knob, and keep the old 'commit_work'
-option, but that doesn't really feel like the right direction
-
-BR,
--R
-
-> Cheers, Daniel
+> On 9/25/20 11:55 PM, Tomasz Figa wrote:
+> > Hi Dikshita, Stanimir,
+> >
+> > On Thu, Sep 24, 2020 at 7:31 PM Dikshita Agarwal
+> > <dikshita@codeaurora.org> wrote:
+> >>
+> >> From: Stanimir Varbanov <stanimir.varbanov@linaro.org>
+> >>
+> >> - return correct width and height for G_SELECTION
+> >> - if requested rectangle wxh doesn't match with capture port wxh
+> >>   adjust the rectangle to supported wxh.
+> >>
+> >> Signed-off-by: Dikshita Agarwal <dikshita@codeaurora.org>
+> >> ---
+> >>  drivers/media/platform/qcom/venus/venc.c | 20 ++++++++++++--------
+> >>  1 file changed, 12 insertions(+), 8 deletions(-)
+> >>
+> >> diff --git a/drivers/media/platform/qcom/venus/venc.c b/drivers/media/platform/qcom/venus/venc.c
+> >> index 7d2aaa8..a2cc12d 100644
+> >> --- a/drivers/media/platform/qcom/venus/venc.c
+> >> +++ b/drivers/media/platform/qcom/venus/venc.c
+> >> @@ -463,13 +463,13 @@ static int venc_g_fmt(struct file *file, void *fh, struct v4l2_format *f)
+> >>         switch (s->target) {
+> >>         case V4L2_SEL_TGT_CROP_DEFAULT:
+> >>         case V4L2_SEL_TGT_CROP_BOUNDS:
+> >> -               s->r.width = inst->width;
+> >> -               s->r.height = inst->height;
+> >> -               break;
+> >> -       case V4L2_SEL_TGT_CROP:
+> >>                 s->r.width = inst->out_width;
+> >>                 s->r.height = inst->out_height;
+> >>                 break;
+> >> +       case V4L2_SEL_TGT_CROP:
+> >> +               s->r.width = inst->width;
+> >> +               s->r.height = inst->height;
+> >> +               break;
+> >>         default:
+> >>                 return -EINVAL;
+> >>         }inter
+> >> @@ -490,10 +490,14 @@ static int venc_g_fmt(struct file *file, void *fh, struct v4l2_format *f)
+> >>
+> >>         switch (s->target) {
+> >>         case V4L2_SEL_TGT_CROP:
+> >> -               if (s->r.width != inst->out_width ||
+> >> -                   s->r.height != inst->out_height ||
+> >> -                   s->r.top != 0 || s->r.left != 0)
+> >> -                       return -EINVAL;
+> >> +               if (s->r.width != inst->width ||
+> >> +                   s->r.height != inst->height ||
+> >> +                   s->r.top != 0 || s->r.left != 0) {
+> >> +                       s->r.top = 0;
+> >> +                       s->r.left = 0;
+> >> +                       s->r.width = inst->width;
+> >> +                       s->r.height = inst->height;
+> >
+> > What's the point of exposing the selection API if no selection can
+> > actually be done?
 >
-> >
-> > Rob Clark (3):
-> >   drm/crtc: Introduce per-crtc kworker
-> >   drm/atomic: Use kthread worker for nonblocking commits
-> >   drm: Expose CRTC's kworker task id
-> >
-> >  drivers/gpu/drm/drm_atomic_helper.c | 13 ++++++++----
-> >  drivers/gpu/drm/drm_crtc.c          | 14 +++++++++++++
-> >  drivers/gpu/drm/drm_mode_config.c   | 14 +++++++++++++
-> >  drivers/gpu/drm/drm_mode_object.c   |  4 ++++
-> >  include/drm/drm_atomic.h            | 31 +++++++++++++++++++++++++++++
-> >  include/drm/drm_crtc.h              |  8 ++++++++
-> >  include/drm/drm_mode_config.h       |  9 +++++++++
-> >  include/drm/drm_property.h          |  9 +++++++++
-> >  8 files changed, 98 insertions(+), 4 deletions(-)
-> >
-> > --
-> > 2.26.2
-> >
+> If someone can guarantee that dropping of s_selection will not break
+> userspace applications I'm fine with removing it.
+
+Indeed the specification could be made more clear about this. The
+visible rectangle configuration is described as optional, so I'd
+consider the capability to be optional as well.
+
+Of course it doesn't change the fact that something that is optional
+in the API may be mandatory for some specific integrations, like
+Chrome OS or Android.
+
 >
->
-> --
-> Daniel Vetter
-> Software Engineer, Intel Corporation
-> http://blog.ffwll.ch
+> I implemented g/s_selection with the idea to add crop functionality
+> later because with current firmware interface it needs more work.
+
+I suggested one thing internally, but not sure if it was understood correctly:
+
+Most of the encoders only support partial cropping, with the rectangle
+limited to top = 0 and left = 0, in other words, only setting the
+visible width and height. This can be easily implemented on most of
+the hardware, even those that don't have dedicated cropping
+capability, by configuring the hardware as follows:
+
+stride = CAPTURE format width (or bytesperline)
+width = CROP width
+height = CROP height
+
+I believe Android requires the hardware to support stride and AFAIK
+this hardware is also commonly used on Android, so perhaps it's
+possible to achieve the above without any firmware changes?
+
+Best regards,
+Tomasz
