@@ -2,169 +2,175 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 4DAA227FE9C
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Oct 2020 13:46:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 68A7C28024F
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Oct 2020 17:15:35 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731936AbgJALqc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 1 Oct 2020 07:46:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32854 "EHLO
+        id S1732517AbgJAPPe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 1 Oct 2020 11:15:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36808 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731767AbgJALqc (ORCPT
+        with ESMTP id S1732516AbgJAPPe (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 1 Oct 2020 07:46:32 -0400
-Received: from mail-pf1-x442.google.com (mail-pf1-x442.google.com [IPv6:2607:f8b0:4864:20::442])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2E9B3C0613E2
-        for <linux-arm-msm@vger.kernel.org>; Thu,  1 Oct 2020 04:46:32 -0700 (PDT)
-Received: by mail-pf1-x442.google.com with SMTP id d6so4226666pfn.9
-        for <linux-arm-msm@vger.kernel.org>; Thu, 01 Oct 2020 04:46:32 -0700 (PDT)
+        Thu, 1 Oct 2020 11:15:34 -0400
+Received: from mail-wr1-x444.google.com (mail-wr1-x444.google.com [IPv6:2a00:1450:4864:20::444])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E260DC0613D0;
+        Thu,  1 Oct 2020 08:15:33 -0700 (PDT)
+Received: by mail-wr1-x444.google.com with SMTP id z1so6245746wrt.3;
+        Thu, 01 Oct 2020 08:15:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=Rnni/Cv+bQVQlSIzLD2ItMQfmr811sjupc4SJVMgYT4=;
-        b=h4x2dSm9xB03i9BrBBYUdglp+hnHS11/GMAKzhfsa22ngeWuyIxprjf0s1nq1YK1sq
-         mpX/C4RrV/9tP0GGcbSzEaYzOUkcF1pw28cPnY/barzhlWV8geU0q2Qm6Nim+sCc/al+
-         u8Ox3O01ikON0e/V/h3e3v2ddeNmwER1h7hyBJ8w1byF2/QCzF2OrKcRvGfwRiuHh0ed
-         TainMiIQyOqqLgBYsi8TGXVEW8BDWwW3HVyiP+slhyUUEmcENgou+n+P/KRwohJZWSd1
-         j6dv63o5mNLwbUAlNmIGHhP+tAAv4tFNVfZ25O6oJY3hfpoC3wclxTVt8VbdAvyQC7Sw
-         Zztw==
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=gFqMSXRyF1iFqQYaqJo0t2YUPbcbonItseg5lySXlwM=;
+        b=V8eg7RMvckEBsaqConW1z9bjgeOispARRh/82t+ZYVVyOReT2nuye+OdicBp6ywmeI
+         IuRMhFhuV7ZgjTEURdaz5umfvWUNAY1nMfr6zx5OZMjpVlJhHxvGmdokO2HuyRbXxuQJ
+         qIozBYVLPqQMa+DgaCYplr+J6fcStKbCKcBo6oGyJkIrKw4r/JMUKszH1/XXyix/dWAf
+         vBFL2nemYdd66SQ8tQ3lSj5prsKehmE7NdFHf4L3pqc9aqOL80jMmSkVuLg0olEU4yFU
+         jJ5PUf4cNXsFbCOJyMPZJsH7hUvF7gagYgB7FWmUG2i87wHFgI0Zeu1z47fmCfi897jL
+         xzKA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=Rnni/Cv+bQVQlSIzLD2ItMQfmr811sjupc4SJVMgYT4=;
-        b=qBHz8xHSPVWHZ4L7qfB1nwBk0Y93cuehNbupVBtmbPwwKaF8oHXVFTW7asPqaToNJA
-         e9lAJwZBnx9oDApapRiWaU27cuYeqH/zuRRiFIbgafbdHLufCgY1avczltXi/x8nrNEc
-         DklbYfaHrLt9W0+7McdBrQIa5jW2SXZL80ZYiQu3sc5SaytDj9yc2Zk0UJpQLe279J62
-         cXal8bf/a4sEseMHWr7CWa07B732EoVy6hj+0376zM8LeuiY+cNO4WtuEt+DdCPMX1EN
-         4DnL31ZtEsKzPN/OIe0Ayg/J1Rbr1VX3tLAZzMe43EITcR6tBqGUrgWzO7vZTd7/q90w
-         B2SA==
-X-Gm-Message-State: AOAM532roYIQ/REXMOWU5432LfHXW2e0Pd+YL92DKgzblNFKsjwOu/nS
-        JjRrTitqibC00yohDmymkTan
-X-Google-Smtp-Source: ABdhPJxguKQqngkdRbxl7frvbumBZvaSZQE16mQOYdDDvdzboLLPSRdsN3CxrUX97jXWhSgIzmsUPA==
-X-Received: by 2002:a17:902:c394:b029:d2:4ca:2e22 with SMTP id g20-20020a170902c394b02900d204ca2e22mr7074768plg.77.1601552791161;
-        Thu, 01 Oct 2020 04:46:31 -0700 (PDT)
-Received: from Mani-XPS-13-9360 ([2409:4072:188:5adb:1423:88c1:4321:a364])
-        by smtp.gmail.com with ESMTPSA id v8sm5865855pgg.58.2020.10.01.04.46.23
-        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 01 Oct 2020 04:46:30 -0700 (PDT)
-Date:   Thu, 1 Oct 2020 17:16:20 +0530
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     Stanimir Varbanov <svarbanov@mm-sol.com>
-Cc:     agross@kernel.org, bjorn.andersson@linaro.org, kishon@ti.com,
-        vkoul@kernel.org, robh@kernel.org, bhelgaas@google.com,
-        lorenzo.pieralisi@arm.com, linux-arm-msm@vger.kernel.org,
-        linux-pci@vger.kernel.org, linux-kernel@vger.kernel.org,
-        mgautam@codeaurora.org, devicetree@vger.kernel.org,
-        Marc Gonzalez <marc.w.gonzalez@free.fr>
-Subject: Re: [PATCH v2 5/5] PCI: qcom: Add support for configuring BDF to SID
- mapping for SM8250
-Message-ID: <20201001114619.GC3203@Mani-XPS-13-9360>
-References: <20200930150925.31921-1-manivannan.sadhasivam@linaro.org>
- <20200930150925.31921-6-manivannan.sadhasivam@linaro.org>
- <507b3d50-6792-60b7-1ccd-f7b3031c20ac@mm-sol.com>
- <20201001055736.GB3203@Mani-XPS-13-9360>
- <e63b3ed4-d822-45dc-de60-23385fb45468@mm-sol.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=gFqMSXRyF1iFqQYaqJo0t2YUPbcbonItseg5lySXlwM=;
+        b=g45LOG0dKvdce0J9WrGtmhQpHVquP5HjMjELO3mk1jwc8hodvvXzlcXPlD4+TMnLqx
+         qbRB34TKPParqBLOA1RyoNLegS78SV0/xULMaspwylRvHQhmTcxamWnp20dVPBBwjgYC
+         qFpHioIQxEoFnZQIdVOQ/viB6ioz8CbahPS6gsOTQV31IC8BWr1mVEkcxqYdTZeKnhiE
+         5YS/sRcRK2TK8ZhGsun3IUsLFGoAA0cI1QVLuU+w0Y2EqSr4SogAQLh+1D8fPc/N3YwF
+         b22z1HBQU/xZUloldudPkpZkS1VBwBhLY5dfP9rHAXRhZf9zauxEhH6CH0VkJdsx0ffB
+         fspw==
+X-Gm-Message-State: AOAM530AsMp74pKaMfyHCpiXHaO6pge3HBywg8fJmbcB/eXGnodJwrCn
+        FxisKvAUGA6MYBJ3LuQtLQcgK2jIElxl1cYWvYk=
+X-Google-Smtp-Source: ABdhPJzX2p/R3dcfAHBykAEhigq1NpWdcGaRN/d5VJDPB60SrUL2IzFTMGqpFXcvL7KnXnjjR0JYBOaFbberj8nS+ng=
+X-Received: by 2002:a5d:640d:: with SMTP id z13mr9262620wru.28.1601565332442;
+ Thu, 01 Oct 2020 08:15:32 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <e63b3ed4-d822-45dc-de60-23385fb45468@mm-sol.com>
-User-Agent: Mutt/1.9.4 (2018-02-28)
+References: <20200930211723.3028059-1-robdclark@gmail.com> <CAKMK7uHHPWE3h7ssG-dpb3czwbP5VtZYztMA=CpvQ4HV4LQTXA@mail.gmail.com>
+In-Reply-To: <CAKMK7uHHPWE3h7ssG-dpb3czwbP5VtZYztMA=CpvQ4HV4LQTXA@mail.gmail.com>
+From:   Rob Clark <robdclark@gmail.com>
+Date:   Thu, 1 Oct 2020 08:15:20 -0700
+Message-ID: <CAF6AEGszF60dWn37m63wujjtuObqkz2ZqEN3LHaPhCkKa1cdmA@mail.gmail.com>
+Subject: Re: [PATCH v2 0/3] drm: commit_work scheduling
+To:     Daniel Vetter <daniel@ffwll.ch>
+Cc:     dri-devel <dri-devel@lists.freedesktop.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Tejun Heo <tj@kernel.org>, Tim Murray <timmurray@google.com>,
+        Qais Yousef <qais.yousef@arm.com>,
+        Rob Clark <robdclark@chromium.org>,
+        open list <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Stan,
+On Thu, Oct 1, 2020 at 12:25 AM Daniel Vetter <daniel@ffwll.ch> wrote:
+>
+> On Wed, Sep 30, 2020 at 11:16 PM Rob Clark <robdclark@gmail.com> wrote:
+> >
+> > From: Rob Clark <robdclark@chromium.org>
+> >
+> > The android userspace treats the display pipeline as a realtime problem.
+> > And arguably, if your goal is to not miss frame deadlines (ie. vblank),
+> > it is.  (See https://lwn.net/Articles/809545/ for the best explaination
+> > that I found.)
+> >
+> > But this presents a problem with using workqueues for non-blocking
+> > atomic commit_work(), because the SCHED_FIFO userspace thread(s) can
+> > preempt the worker.  Which is not really the outcome you want.. once
+> > the required fences are scheduled, you want to push the atomic commit
+> > down to hw ASAP.
+> >
+> > But the decision of whether commit_work should be RT or not really
+> > depends on what userspace is doing.  For a pure CFS userspace display
+> > pipeline, commit_work() should remain SCHED_NORMAL.
+> >
+> > To handle this, convert non-blocking commit_work() to use per-CRTC
+> > kthread workers, instead of system_unbound_wq.  Per-CRTC workers are
+> > used to avoid serializing commits when userspace is using a per-CRTC
+> > update loop.  And the last patch exposes the task id to userspace as
+> > a CRTC property, so that userspace can adjust the priority and sched
+> > policy to fit it's needs.
+> >
+> >
+> > v2: Drop client cap and in-kernel setting of priority/policy in
+> >     favor of exposing the kworker tid to userspace so that user-
+> >     space can set priority/policy.
+>
+> Yeah I think this looks more reasonable. Still a bit irky interface,
+> so I'd like to get some kworker/rt ack on this. Other opens:
+> - needs userspace, the usual drill
 
-On Thu, Oct 01, 2020 at 01:57:59PM +0300, Stanimir Varbanov wrote:
-> Hi Mani,
-> 
-> On 10/1/20 8:57 AM, Manivannan Sadhasivam wrote:
-> > Hi Stan,
-> > 
-> > On Thu, Oct 01, 2020 at 12:46:46AM +0300, Stanimir Varbanov wrote:
-> >> Hi Mani,
-> >>
-> >> On 9/30/20 6:09 PM, Manivannan Sadhasivam wrote:
-> >>> For SM8250, we need to write the BDF to SID mapping in PCIe controller
-> >>> register space for proper working. This is accomplished by extracting
-> >>> the BDF and SID values from "iommu-map" property in DT and writing those
-> >>> in the register address calculated from the hash value of BDF. In case
-> >>> of collisions, the index of the next entry will also be written.
-> >>
-> >> This describes what the patch is doing. But why? Is that done in the
-> >> other DWC low-level drivers or this is qcom specialty?
-> >>
-> > 
-> > AFAIK, only some NXP SoCs deal with similar kind of mapping but right now
-> > this is a Qcom only stuff.
-> > 
-> >>>
-> >>> For the sake of it, let's introduce a "config_sid" callback and do it
-> >>> conditionally for SM8250.
-> >>>
-> >>> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> >>> ---
-> >>>  drivers/pci/controller/dwc/Kconfig     |   1 +
-> >>>  drivers/pci/controller/dwc/pcie-qcom.c | 138 +++++++++++++++++++++++++
-> >>>  2 files changed, 139 insertions(+)
-> 
-> <snip>
-> 
-> >>>  
-> >>> +static int qcom_pcie_get_iommu_map(struct qcom_pcie *pcie)
-> >>> +{
-> >>> +	/* iommu map structure */
-> >>> +	struct {
-> >>> +		u32 bdf;
-> >>> +		u32 phandle;
-> >>> +		u32 smmu_sid;
-> >>> +		u32 smmu_sid_len;
-> >>> +	} *map;
-> >>> +	struct device *dev = pcie->pci->dev;
-> >>> +	int i, size = 0;
-> >>> +	u32 smmu_sid_base;
-> >>> +
-> >>> +	of_get_property(dev->of_node, "iommu-map", &size);
-> >>> +	if (!size)
-> >>> +		return 0;
-> >>> +
-> >>> +	map = kzalloc(size, GFP_KERNEL);
-> >>> +	if (!map)
-> >>> +		return -ENOMEM;
-> >>> +
-> >>> +	of_property_read_u32_array(dev->of_node,
-> >>> +		"iommu-map", (u32 *)map, size / sizeof(u32));
-> >>
-> >> iommu-map is a standard DT property why we have to parse it manually?
-> >>
-> > 
-> > So right now we don't have a way to pass this information from DT. And there
-> > is no IOMMU API to parse the fields also. We need to extract this information
-> > to program the hash tables (BDF, SID) as the mapping between BDF and SID is not
-> > 1:1 in SM8250.
-> 
-> We used iommu-map for msm8998 see this commit:
-> 
-> b84dfd175c09888751f501e471fdca346f582e06
-> ("arm64: dts: qcom: msm8998: Add PCIe PHY and RC nodes")
-> 
+fwiw, right now the userspace is "modetest + chrt".. *probably* the
+userspace will become a standalone helper or daemon, mostly because
+the chrome gpu-process sandbox does not allow setting SCHED_FIFO.  I'm
+still entertaining the possibility of switching between rt and cfs
+depending on what is in the foreground (ie. only do rt for android
+apps).
 
-The iommu-map property will be present in most of the SoCs as needed for the
-SMMU translation of DMA transfers. But in the case of SM8250, we need to map the
-BDF (Bus Device Function) identifier (aka RID) to the SMMU Stream ID (SID)
-in the PCIe controller, and we get that information from existing iommu-map
-property.
+> - we need this also for vblank workers, otherwise this wont work for
+> drivers needing those because of another priority inversion.
 
-Thanks,
-Mani
+I have a thought on that, see below..
 
-> I also Cc-ed Marc if he knows something more.
-> 
-> > 
-> > Perhaps I can add this information in commit message.
-> 
-> 
-> -- 
-> regards,
-> Stan
+> - we probably want some indication of whether this actually does
+> something useful, not all drivers use atomic commit helpers. Not sure
+> how to do that.
+
+I'm leaning towards converting the other drivers over to use the
+per-crtc kwork, and then dropping the 'commit_work` from atomic state.
+I can add a patch to that, but figured I could postpone that churn
+until there is some by-in on this whole idea.
+
+> - not sure whether the vfunc is an awesome idea, I'd frankly just
+> open-code this inline. We have similar special cases already for e.g.
+> dpms (and in multiple places), this isn't the worst.
+
+I could introduce a "PID" property type.  This would be useful if we
+wanted to also expose the vblank workers.
+
+> - still feeling we could at least change the default to highpriority niceness.
+
+AFAIU this would still be preempted by something that is SCHED_FIFO.
+Also, with cfs/SCHED_NORMAL, you can still be preempted by lower
+priority things that haven't had a chance to run for a while.
+
+> - there's still the problem that commit works can overlap, and a
+> single worker can't do that anymore. So rolling that out for everyone
+> as-is feels a bit risky.
+
+That is why it is per-CRTC..  I'm not sure there is a need to overlap
+work for a single CRTC?
+
+We could OFC make this a driver knob, and keep the old 'commit_work'
+option, but that doesn't really feel like the right direction
+
+BR,
+-R
+
+> Cheers, Daniel
+>
+> >
+> > Rob Clark (3):
+> >   drm/crtc: Introduce per-crtc kworker
+> >   drm/atomic: Use kthread worker for nonblocking commits
+> >   drm: Expose CRTC's kworker task id
+> >
+> >  drivers/gpu/drm/drm_atomic_helper.c | 13 ++++++++----
+> >  drivers/gpu/drm/drm_crtc.c          | 14 +++++++++++++
+> >  drivers/gpu/drm/drm_mode_config.c   | 14 +++++++++++++
+> >  drivers/gpu/drm/drm_mode_object.c   |  4 ++++
+> >  include/drm/drm_atomic.h            | 31 +++++++++++++++++++++++++++++
+> >  include/drm/drm_crtc.h              |  8 ++++++++
+> >  include/drm/drm_mode_config.h       |  9 +++++++++
+> >  include/drm/drm_property.h          |  9 +++++++++
+> >  8 files changed, 98 insertions(+), 4 deletions(-)
+> >
+> > --
+> > 2.26.2
+> >
+>
+>
+> --
+> Daniel Vetter
+> Software Engineer, Intel Corporation
+> http://blog.ffwll.ch
