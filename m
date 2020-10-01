@@ -2,100 +2,98 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 9C5A528088C
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Oct 2020 22:40:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 826DE280954
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Oct 2020 23:19:02 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726855AbgJAUk3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 1 Oct 2020 16:40:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58728 "EHLO
+        id S1727017AbgJAVTB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 1 Oct 2020 17:19:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36480 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726515AbgJAUk3 (ORCPT
+        with ESMTP id S1726581AbgJAVTB (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 1 Oct 2020 16:40:29 -0400
-Received: from mail-vk1-xa44.google.com (mail-vk1-xa44.google.com [IPv6:2607:f8b0:4864:20::a44])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 63FCFC0613D0
-        for <linux-arm-msm@vger.kernel.org>; Thu,  1 Oct 2020 13:40:29 -0700 (PDT)
-Received: by mail-vk1-xa44.google.com with SMTP id n193so29548vkf.12
-        for <linux-arm-msm@vger.kernel.org>; Thu, 01 Oct 2020 13:40:29 -0700 (PDT)
+        Thu, 1 Oct 2020 17:19:01 -0400
+Received: from mail-pf1-x443.google.com (mail-pf1-x443.google.com [IPv6:2607:f8b0:4864:20::443])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B11B3C0613D0
+        for <linux-arm-msm@vger.kernel.org>; Thu,  1 Oct 2020 14:19:00 -0700 (PDT)
+Received: by mail-pf1-x443.google.com with SMTP id d6so5838254pfn.9
+        for <linux-arm-msm@vger.kernel.org>; Thu, 01 Oct 2020 14:19:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=CpqtefYRObu1FEKmxeMO9SEOBqtBM7OcMS8gCbom+4g=;
-        b=NuSBvqifaloJ9Izw7NJIfbEVsg1AENReTiyPJpqc7CgU+rYJLsh7SsQhSQQY0DRaiE
-         iP/X+xTTtJU9vw13M9iQt0cSV2eolmnDwf6GbmJvcUZwJjVl9z4D5w9VwINIZBAgW1hv
-         kWY+FH9GyKNDnbpqe/r7USGJ2XJtaVyQXKVfE=
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=o6gfDXEJLeAYyj9Q6Zq3Q1hxYl7JjjLOkCkFFqFw28U=;
+        b=aX/si9tOkchkaGMk3LdngnIu1GASm/NLGr+AK+wKhh78asvuqlfSXJGdK5V89uPO7I
+         E2gb+pj2CprllK7XDzYwU5ECAEARZno2bMoUScyskTDVI0FESNfaVGfkrVCc+pb+UjJK
+         +rr6GkoyuXusXuBxnUl6IBv8UWOJIFHafnURI=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=CpqtefYRObu1FEKmxeMO9SEOBqtBM7OcMS8gCbom+4g=;
-        b=mA5bY/svOBUnHBHtWnkRdHwYwpt2UzZi/DFCojw13wC7TtHRepbhMm7t6AvU2AuMXl
-         zuy4AWZW4ob6mBq0mH0n3YDpQbEB0UnIBcWz0tBXmNooXD9AJeOdTYI4fSDv7EGFX3ff
-         pjdWNWxjbwVnIBxpR6ck+zhGMfHAxttFUzzjM7tslore+sAXYvErfBHMy4D4vNdk1VA1
-         qbooMf0RZev4LvCXaMYIHd2Ry7bFtamzguMnG6mayOYZXViqrU0Allt8XECSS0nS9oru
-         H6HkUq/btRNYuVAMDxgAmW/xj0AXFcegzA50E78yxsXBGCY3hv2Wgfn7uAT9yllJwucG
-         b1lg==
-X-Gm-Message-State: AOAM533aS4tUAYq/vpXvSdh8gfLaEcpDpXMngwG6qgKQgOIIb7T4B9fw
-        5EgvY6LDIWgqqeb7diQrYSUBKVK8t/UDEg==
-X-Google-Smtp-Source: ABdhPJzCI7hldxKpX+Lnw8CQEkQKHQ7V54U65Km2YF9JCER0GkD1cGiV0xhkKyRfb1H6b/xOo+42UA==
-X-Received: by 2002:a1f:3417:: with SMTP id b23mr6646843vka.6.1601584828321;
-        Thu, 01 Oct 2020 13:40:28 -0700 (PDT)
-Received: from mail-vs1-f45.google.com (mail-vs1-f45.google.com. [209.85.217.45])
-        by smtp.gmail.com with ESMTPSA id y72sm927899vky.19.2020.10.01.13.40.26
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 01 Oct 2020 13:40:26 -0700 (PDT)
-Received: by mail-vs1-f45.google.com with SMTP id g11so31984vsp.13
-        for <linux-arm-msm@vger.kernel.org>; Thu, 01 Oct 2020 13:40:26 -0700 (PDT)
-X-Received: by 2002:a67:8bc2:: with SMTP id n185mr7285582vsd.49.1601584825983;
- Thu, 01 Oct 2020 13:40:25 -0700 (PDT)
-MIME-Version: 1.0
-References: <1598970026-7199-1-git-send-email-rnayak@codeaurora.org>
- <34ed34bd-90fd-0e84-6020-c487d612ad2f@codeaurora.org> <aec87de2-500d-763c-df01-c0daec56b1e2@linaro.org>
-In-Reply-To: <aec87de2-500d-763c-df01-c0daec56b1e2@linaro.org>
-From:   Doug Anderson <dianders@chromium.org>
-Date:   Thu, 1 Oct 2020 13:40:13 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=U=OCQpVL6VOVd4B6rW7HFC5S-wGauMAsOdvzwjLzKLuw@mail.gmail.com>
-Message-ID: <CAD=FV=U=OCQpVL6VOVd4B6rW7HFC5S-wGauMAsOdvzwjLzKLuw@mail.gmail.com>
-Subject: Re: [PATCH v6 0/5] DVFS support for Venus
-To:     Stanimir Varbanov <stanimir.varbanov@linaro.org>
-Cc:     Rajendra Nayak <rnayak@codeaurora.org>,
-        Rob Herring <robh+dt@kernel.org>,
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=o6gfDXEJLeAYyj9Q6Zq3Q1hxYl7JjjLOkCkFFqFw28U=;
+        b=GEfOi9+ZybYX5rtOXBJ0LvRKyDi7AyIMLdDyMcQ/cf5y7/Z8c/qQGW5dkDOJSE9I4y
+         wvk+VcBQIBfA3ZaYEQPj7kOiuWCTaX0nJqMTqsfmT0af4I147Ir9g1giWIhivSg5aHIB
+         bH1hv9xVfhp7A0onGvrh3c7dKa41Tcwe87P5bD8ToHDVgB5THXM5in69kBucLzAQULS8
+         Kveiqs1/dPBNUXFgD10/+nqn03zN0NjNcfw/GWJr7dyulGTtB3w1DahqLlg0z5SRgjff
+         byofyedbNMI2uetXzgLpj+69GtIMo+evvX/MbTyluGI/1mhwQ/B0xMSm+VqwgI4lvXfv
+         OHPA==
+X-Gm-Message-State: AOAM531KYZBdhzm7iokEq8Pd+tdtpLfVkapDeoPNOoVUdynfKgyx8x8l
+        /6LqmZiKTlJZTr5aLx7wPR1nkw==
+X-Google-Smtp-Source: ABdhPJwZF0ZAWF2PfTHClWpYeuET6GaWsOLh7BAKXN8nDHEimGl2jek4GooFykamHhkjawIgEYQLDA==
+X-Received: by 2002:aa7:9059:0:b029:151:d725:e230 with SMTP id n25-20020aa790590000b0290151d725e230mr8854719pfo.77.1601587140205;
+        Thu, 01 Oct 2020 14:19:00 -0700 (PDT)
+Received: from tictac2.mtv.corp.google.com ([2620:15c:202:1:42b0:34ff:fe3d:58e6])
+        by smtp.gmail.com with ESMTPSA id q5sm7268990pfn.172.2020.10.01.14.18.59
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 01 Oct 2020 14:18:59 -0700 (PDT)
+From:   Douglas Anderson <dianders@chromium.org>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Douglas Anderson <dianders@chromium.org>,
         Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Linux Media Mailing List <linux-media@vger.kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>, LKML <linux-kernel@vger.kernel.org>,
-        Matthias Kaehlcke <mka@chromium.org>
-Content-Type: text/plain; charset="UTF-8"
+        Georgi Djakov <georgi.djakov@linaro.org>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Sibi Sankar <sibis@codeaurora.org>, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [PATCH] arm64: dts: qcom: sc7180: Fix one forgotten interconnect reference
+Date:   Thu,  1 Oct 2020 14:18:55 -0700
+Message-Id: <20201001141838.1.I08054d1d976eed64ffa1b0e21d568e0dc6040b54@changeid>
+X-Mailer: git-send-email 2.28.0.709.gb0816b6eb0-goog
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+In commit e23b1220a246 ("arm64: dts: qcom: sc7180: Increase the number
+of interconnect cells") we missed increasing the cells on one
+interconnect.  That's no bueno.  Fix it.
 
-On Wed, Sep 16, 2020 at 12:26 AM Stanimir Varbanov
-<stanimir.varbanov@linaro.org> wrote:
->
-> Hi,
->
-> On 9/16/20 8:33 AM, Rajendra Nayak wrote:
-> >
-> > On 9/1/2020 7:50 PM, Rajendra Nayak wrote:
-> >> Rob, can you pick PATCH 1 since its already reviewed by you.
-> >> Stan, Patch 2 and 3 will need to be picked by you and they both have
-> >> your ACKs
-> >
-> > Rob/Stan, any plans to get the patches merged for 5.10?
->
-> 2/5 and 3/5 are queued up for v5.10 through media tree.
+NOTE: it appears that things aren't totally broken without this fix,
+but clearly something isn't going to be working right.  If nothing
+else, without this fix I see this in the logs:
 
-Normally I'd expect device tree bindings (patch #1) to go through the
-same tree as the driver changes.  Does the media tree work
-differently?  If you're expecting Rob Herring to land the device tree
-binding change, is he aware?
+  OF: /soc@0/mdss@ae00000: could not get #interconnect-cells for /soc@0/interrupt-controller@17a00000
 
+Fixes: e23b1220a246 ("arm64: dts: qcom: sc7180: Increase the number of interconnect cells")
+Signed-off-by: Douglas Anderson <dianders@chromium.org>
+---
 
--Doug
+ arch/arm64/boot/dts/qcom/sc7180.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi b/arch/arm64/boot/dts/qcom/sc7180.dtsi
+index 6678f1e8e395..a02776ce77a1 100644
+--- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
+@@ -2811,7 +2811,7 @@ mdss: mdss@ae00000 {
+ 			interrupt-controller;
+ 			#interrupt-cells = <1>;
+ 
+-			interconnects = <&mmss_noc MASTER_MDP0 &mc_virt SLAVE_EBI1>;
++			interconnects = <&mmss_noc MASTER_MDP0 0 &mc_virt SLAVE_EBI1 0>;
+ 			interconnect-names = "mdp0-mem";
+ 
+ 			iommus = <&apps_smmu 0x800 0x2>;
+-- 
+2.28.0.709.gb0816b6eb0-goog
+
