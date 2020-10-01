@@ -2,98 +2,81 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 826DE280954
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Oct 2020 23:19:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C37AF280A79
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Oct 2020 00:48:17 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727017AbgJAVTB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 1 Oct 2020 17:19:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36480 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726581AbgJAVTB (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 1 Oct 2020 17:19:01 -0400
-Received: from mail-pf1-x443.google.com (mail-pf1-x443.google.com [IPv6:2607:f8b0:4864:20::443])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B11B3C0613D0
-        for <linux-arm-msm@vger.kernel.org>; Thu,  1 Oct 2020 14:19:00 -0700 (PDT)
-Received: by mail-pf1-x443.google.com with SMTP id d6so5838254pfn.9
-        for <linux-arm-msm@vger.kernel.org>; Thu, 01 Oct 2020 14:19:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=o6gfDXEJLeAYyj9Q6Zq3Q1hxYl7JjjLOkCkFFqFw28U=;
-        b=aX/si9tOkchkaGMk3LdngnIu1GASm/NLGr+AK+wKhh78asvuqlfSXJGdK5V89uPO7I
-         E2gb+pj2CprllK7XDzYwU5ECAEARZno2bMoUScyskTDVI0FESNfaVGfkrVCc+pb+UjJK
-         +rr6GkoyuXusXuBxnUl6IBv8UWOJIFHafnURI=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=o6gfDXEJLeAYyj9Q6Zq3Q1hxYl7JjjLOkCkFFqFw28U=;
-        b=GEfOi9+ZybYX5rtOXBJ0LvRKyDi7AyIMLdDyMcQ/cf5y7/Z8c/qQGW5dkDOJSE9I4y
-         wvk+VcBQIBfA3ZaYEQPj7kOiuWCTaX0nJqMTqsfmT0af4I147Ir9g1giWIhivSg5aHIB
-         bH1hv9xVfhp7A0onGvrh3c7dKa41Tcwe87P5bD8ToHDVgB5THXM5in69kBucLzAQULS8
-         Kveiqs1/dPBNUXFgD10/+nqn03zN0NjNcfw/GWJr7dyulGTtB3w1DahqLlg0z5SRgjff
-         byofyedbNMI2uetXzgLpj+69GtIMo+evvX/MbTyluGI/1mhwQ/B0xMSm+VqwgI4lvXfv
-         OHPA==
-X-Gm-Message-State: AOAM531KYZBdhzm7iokEq8Pd+tdtpLfVkapDeoPNOoVUdynfKgyx8x8l
-        /6LqmZiKTlJZTr5aLx7wPR1nkw==
-X-Google-Smtp-Source: ABdhPJwZF0ZAWF2PfTHClWpYeuET6GaWsOLh7BAKXN8nDHEimGl2jek4GooFykamHhkjawIgEYQLDA==
-X-Received: by 2002:aa7:9059:0:b029:151:d725:e230 with SMTP id n25-20020aa790590000b0290151d725e230mr8854719pfo.77.1601587140205;
-        Thu, 01 Oct 2020 14:19:00 -0700 (PDT)
-Received: from tictac2.mtv.corp.google.com ([2620:15c:202:1:42b0:34ff:fe3d:58e6])
-        by smtp.gmail.com with ESMTPSA id q5sm7268990pfn.172.2020.10.01.14.18.59
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 01 Oct 2020 14:18:59 -0700 (PDT)
-From:   Douglas Anderson <dianders@chromium.org>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Douglas Anderson <dianders@chromium.org>,
-        Andy Gross <agross@kernel.org>,
-        Georgi Djakov <georgi.djakov@linaro.org>,
-        Matthias Kaehlcke <mka@chromium.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Sibi Sankar <sibis@codeaurora.org>, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH] arm64: dts: qcom: sc7180: Fix one forgotten interconnect reference
-Date:   Thu,  1 Oct 2020 14:18:55 -0700
-Message-Id: <20201001141838.1.I08054d1d976eed64ffa1b0e21d568e0dc6040b54@changeid>
-X-Mailer: git-send-email 2.28.0.709.gb0816b6eb0-goog
+        id S1733297AbgJAWsQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 1 Oct 2020 18:48:16 -0400
+Received: from mail.kernel.org ([198.145.29.99]:55838 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726741AbgJAWsQ (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 1 Oct 2020 18:48:16 -0400
+Received: from localhost (fw-tnat.cambridge.arm.com [217.140.96.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id 80D1F2074B;
+        Thu,  1 Oct 2020 22:48:15 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1601592496;
+        bh=7nhZm4Z57rJlixmBtfhqpW/9+gIJ5bjUhbfuvWxZj3E=;
+        h=Date:From:To:Cc:In-Reply-To:References:Subject:From;
+        b=AdRFLXuu8QFIO6i8U8Rmhf2bMPqqVuOwob2NMhQQf4nbhVUTm6JtZqsuDyq3z7UPQ
+         DAx79W7Ko3TAV1Ri8CiR+kR1eVe79o8EUbi6OPjh9F+nCLZdPhCvc8s21Ewm4NUqPT
+         zJJW3ppT1A/bKFGyJxTftCosN9VOPlCf6IoLH7+s=
+Date:   Thu, 01 Oct 2020 23:47:16 +0100
+From:   Mark Brown <broonie@kernel.org>
+To:     Rikard Falkeborn <rikard.falkeborn@gmail.com>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        linux-arm-msm@vger.kernel.org, Andy Gross <agross@kernel.org>,
+        Sumit Semwal <sumit.semwal@linaro.org>,
+        Nisha Kumari <nishakumari@codeaurora.org>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        linux-kernel@vger.kernel.org
+In-Reply-To: <20200930162602.18583-1-rikard.falkeborn@gmail.com>
+References: <20200930162602.18583-1-rikard.falkeborn@gmail.com>
+Subject: Re: [PATCH] regulator: qcom: labibb: Constify static structs
+Message-Id: <160159243691.44970.9154350525275171802.b4-ty@kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-In commit e23b1220a246 ("arm64: dts: qcom: sc7180: Increase the number
-of interconnect cells") we missed increasing the cells on one
-interconnect.  That's no bueno.  Fix it.
+On Wed, 30 Sep 2020 18:26:02 +0200, Rikard Falkeborn wrote:
+> The only usage of qcom_labibb_ops is to assign it to the ops field in
+> the regulator_desc struct, which is a const pointer. The only usage of
+> pmi8998_lab_desc and pmi8998_ibb_desc is to assign their address to the
+> desc field in the labibb_regulator_data struct which can be made const,
+> since it is only copied into the desc field in the
+> labbibb_regulator_data struct. This struct is modified, but that's a
+> copy of the static one. Make them const to allow the compiler to put
+> them in read-only memory.
 
-NOTE: it appears that things aren't totally broken without this fix,
-but clearly something isn't going to be working right.  If nothing
-else, without this fix I see this in the logs:
+Applied to
 
-  OF: /soc@0/mdss@ae00000: could not get #interconnect-cells for /soc@0/interrupt-controller@17a00000
+   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/regulator.git for-next
 
-Fixes: e23b1220a246 ("arm64: dts: qcom: sc7180: Increase the number of interconnect cells")
-Signed-off-by: Douglas Anderson <dianders@chromium.org>
----
+Thanks!
 
- arch/arm64/boot/dts/qcom/sc7180.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+[1/1] regulator: qcom: labibb: Constify static structs
+      commit: e6f5ff17ca96456deceef94cf2577012a9df737f
 
-diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-index 6678f1e8e395..a02776ce77a1 100644
---- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-@@ -2811,7 +2811,7 @@ mdss: mdss@ae00000 {
- 			interrupt-controller;
- 			#interrupt-cells = <1>;
- 
--			interconnects = <&mmss_noc MASTER_MDP0 &mc_virt SLAVE_EBI1>;
-+			interconnects = <&mmss_noc MASTER_MDP0 0 &mc_virt SLAVE_EBI1 0>;
- 			interconnect-names = "mdp0-mem";
- 
- 			iommus = <&apps_smmu 0x800 0x2>;
--- 
-2.28.0.709.gb0816b6eb0-goog
+All being well this means that it will be integrated into the linux-next
+tree (usually sometime in the next 24 hours) and sent to Linus during
+the next merge window (or sooner if it is a bug fix), however if
+problems are discovered then the patch may be dropped or reverted.
 
+You may get further e-mails resulting from automated or manual testing
+and review of the tree, please engage with people reporting problems and
+send followup patches addressing any issues that are reported if needed.
+
+If any updates are required or you are submitting further changes they
+should be sent as incremental updates against current git, existing
+patches will not be replaced.
+
+Please add any relevant lists and maintainers to the CCs when replying
+to this mail.
+
+Thanks,
+Mark
