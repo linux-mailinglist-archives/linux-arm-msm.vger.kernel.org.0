@@ -2,69 +2,100 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 3BDF1280737
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Oct 2020 20:51:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9C5A528088C
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Oct 2020 22:40:30 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730142AbgJASvM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 1 Oct 2020 14:51:12 -0400
-Received: from mail.kernel.org ([198.145.29.99]:39168 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1729047AbgJASvM (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 1 Oct 2020 14:51:12 -0400
-Received: from kernel.org (unknown [104.132.0.74])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 9583320882;
-        Thu,  1 Oct 2020 18:51:11 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1601578271;
-        bh=v1fQHu7qwliGOnNWTNConojv/IvzPORHTszjE+Q+PFc=;
-        h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
-        b=jzlBRf1DaUTx1mvCpoM2/Ko4zqz3+e6ns6IoPib/SPuU68Rz3JrV1KEJo9eKokXeS
-         9DbbNPFJxJmBQZcV4qm+DpNAXWCaWmxltzY3i0PZttVidWlyoPQ2FLgu6fAdYycvvs
-         ASxm6tQ20C/jLHYQewgXf1t2IRuxG+Ng04QKXH6w=
-Content-Type: text/plain; charset="utf-8"
+        id S1726855AbgJAUk3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 1 Oct 2020 16:40:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58728 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726515AbgJAUk3 (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 1 Oct 2020 16:40:29 -0400
+Received: from mail-vk1-xa44.google.com (mail-vk1-xa44.google.com [IPv6:2607:f8b0:4864:20::a44])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 63FCFC0613D0
+        for <linux-arm-msm@vger.kernel.org>; Thu,  1 Oct 2020 13:40:29 -0700 (PDT)
+Received: by mail-vk1-xa44.google.com with SMTP id n193so29548vkf.12
+        for <linux-arm-msm@vger.kernel.org>; Thu, 01 Oct 2020 13:40:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=CpqtefYRObu1FEKmxeMO9SEOBqtBM7OcMS8gCbom+4g=;
+        b=NuSBvqifaloJ9Izw7NJIfbEVsg1AENReTiyPJpqc7CgU+rYJLsh7SsQhSQQY0DRaiE
+         iP/X+xTTtJU9vw13M9iQt0cSV2eolmnDwf6GbmJvcUZwJjVl9z4D5w9VwINIZBAgW1hv
+         kWY+FH9GyKNDnbpqe/r7USGJ2XJtaVyQXKVfE=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=CpqtefYRObu1FEKmxeMO9SEOBqtBM7OcMS8gCbom+4g=;
+        b=mA5bY/svOBUnHBHtWnkRdHwYwpt2UzZi/DFCojw13wC7TtHRepbhMm7t6AvU2AuMXl
+         zuy4AWZW4ob6mBq0mH0n3YDpQbEB0UnIBcWz0tBXmNooXD9AJeOdTYI4fSDv7EGFX3ff
+         pjdWNWxjbwVnIBxpR6ck+zhGMfHAxttFUzzjM7tslore+sAXYvErfBHMy4D4vNdk1VA1
+         qbooMf0RZev4LvCXaMYIHd2Ry7bFtamzguMnG6mayOYZXViqrU0Allt8XECSS0nS9oru
+         H6HkUq/btRNYuVAMDxgAmW/xj0AXFcegzA50E78yxsXBGCY3hv2Wgfn7uAT9yllJwucG
+         b1lg==
+X-Gm-Message-State: AOAM533aS4tUAYq/vpXvSdh8gfLaEcpDpXMngwG6qgKQgOIIb7T4B9fw
+        5EgvY6LDIWgqqeb7diQrYSUBKVK8t/UDEg==
+X-Google-Smtp-Source: ABdhPJzCI7hldxKpX+Lnw8CQEkQKHQ7V54U65Km2YF9JCER0GkD1cGiV0xhkKyRfb1H6b/xOo+42UA==
+X-Received: by 2002:a1f:3417:: with SMTP id b23mr6646843vka.6.1601584828321;
+        Thu, 01 Oct 2020 13:40:28 -0700 (PDT)
+Received: from mail-vs1-f45.google.com (mail-vs1-f45.google.com. [209.85.217.45])
+        by smtp.gmail.com with ESMTPSA id y72sm927899vky.19.2020.10.01.13.40.26
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 01 Oct 2020 13:40:26 -0700 (PDT)
+Received: by mail-vs1-f45.google.com with SMTP id g11so31984vsp.13
+        for <linux-arm-msm@vger.kernel.org>; Thu, 01 Oct 2020 13:40:26 -0700 (PDT)
+X-Received: by 2002:a67:8bc2:: with SMTP id n185mr7285582vsd.49.1601584825983;
+ Thu, 01 Oct 2020 13:40:25 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <20201001174326.GT6715@sirena.org.uk>
-References: <1600812258-17722-1-git-send-email-collinsd@codeaurora.org> <160151084091.310579.3876905878885019200@swboyd.mtv.corp.google.com> <20201001174326.GT6715@sirena.org.uk>
-Subject: Re: [RESEND PATCH] spmi: prefix spmi bus device names with "spmi"
-From:   Stephen Boyd <sboyd@kernel.org>
-Cc:     David Collins <collinsd@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-To:     Mark Brown <broonie@kernel.org>
-Date:   Thu, 01 Oct 2020 11:51:10 -0700
-Message-ID: <160157827040.310579.12112194764912078296@swboyd.mtv.corp.google.com>
-User-Agent: alot/0.9.1
+References: <1598970026-7199-1-git-send-email-rnayak@codeaurora.org>
+ <34ed34bd-90fd-0e84-6020-c487d612ad2f@codeaurora.org> <aec87de2-500d-763c-df01-c0daec56b1e2@linaro.org>
+In-Reply-To: <aec87de2-500d-763c-df01-c0daec56b1e2@linaro.org>
+From:   Doug Anderson <dianders@chromium.org>
+Date:   Thu, 1 Oct 2020 13:40:13 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=U=OCQpVL6VOVd4B6rW7HFC5S-wGauMAsOdvzwjLzKLuw@mail.gmail.com>
+Message-ID: <CAD=FV=U=OCQpVL6VOVd4B6rW7HFC5S-wGauMAsOdvzwjLzKLuw@mail.gmail.com>
+Subject: Re: [PATCH v6 0/5] DVFS support for Venus
+To:     Stanimir Varbanov <stanimir.varbanov@linaro.org>
+Cc:     Rajendra Nayak <rnayak@codeaurora.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Linux Media Mailing List <linux-media@vger.kernel.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>, LKML <linux-kernel@vger.kernel.org>,
+        Matthias Kaehlcke <mka@chromium.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Mark Brown (2020-10-01 10:43:26)
-> On Wed, Sep 30, 2020 at 05:07:20PM -0700, Stephen Boyd wrote:
-> > Quoting David Collins (2020-09-22 15:04:18)
->=20
-> > > This helps to disambiguate SPMI device regmaps from I2C ones
-> > > at /sys/kernel/debug/regmap since I2C devices use a very
-> > > similar naming scheme: 0-0000.
->=20
-> > Can regmap debugfs prepend the bus name on the node made in debugfs?
-> > Does it do that already?
->=20
-> It doesn't do that.  I have to say that given the use of dev_name() in
-> logging it does feel like it'd be useful to have distinct names for
-> grepping if we're running into collisions, IIRC the reason I went with
-> dev_name() was that it's a commonly used human readable handle for
-> diagnostic infrastrucuture so it makes it easier to follow things around.
+Hi,
 
-To me the dev_name() usage seems fine. Maybe David has some real reason
-to change this though?
+On Wed, Sep 16, 2020 at 12:26 AM Stanimir Varbanov
+<stanimir.varbanov@linaro.org> wrote:
+>
+> Hi,
+>
+> On 9/16/20 8:33 AM, Rajendra Nayak wrote:
+> >
+> > On 9/1/2020 7:50 PM, Rajendra Nayak wrote:
+> >> Rob, can you pick PATCH 1 since its already reviewed by you.
+> >> Stan, Patch 2 and 3 will need to be picked by you and they both have
+> >> your ACKs
+> >
+> > Rob/Stan, any plans to get the patches merged for 5.10?
+>
+> 2/5 and 3/5 are queued up for v5.10 through media tree.
 
-In general I don't think userspace cares what the SPMI device name is,
-i.e. the device name isn't used for dev nodes because SPMI doesn't
-support ioctls or read/write APIs on the bus. That could be a nice
-feature addition though, to support something like i2c-dev.
+Normally I'd expect device tree bindings (patch #1) to go through the
+same tree as the driver changes.  Does the media tree work
+differently?  If you're expecting Rob Herring to land the device tree
+binding change, is he aware?
 
-Changing it so that regmap debugfs is less likely to collide looks
-weird. It doesn't actually collide anyway, so it seems like we're adding
-spmi prefix to make it easier to find in debugfs?
+
+-Doug
