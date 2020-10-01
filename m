@@ -2,32 +2,32 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 69ED0280B58
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Oct 2020 01:29:24 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 64E7C280B67
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Oct 2020 01:48:06 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1733002AbgJAX3X (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 1 Oct 2020 19:29:23 -0400
-Received: from z5.mailgun.us ([104.130.96.5]:61707 "EHLO z5.mailgun.us"
+        id S1733085AbgJAXsF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 1 Oct 2020 19:48:05 -0400
+Received: from m42-4.mailgun.net ([69.72.42.4]:39694 "EHLO m42-4.mailgun.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727780AbgJAX3X (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 1 Oct 2020 19:29:23 -0400
+        id S1727780AbgJAXsF (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 1 Oct 2020 19:48:05 -0400
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1601594961; h=In-Reply-To: Content-Type: MIME-Version:
+ s=smtp; t=1601596083; h=In-Reply-To: Content-Type: MIME-Version:
  References: Message-ID: Subject: Cc: To: From: Date: Sender;
- bh=RoYeAXC95qI8GRNbmM3wnw4s4VTlEJU6bEldDzPYqsU=; b=K/npwgLSFi348FtEkEX2iv89M5vaqHAW4lRN+GpYQ55x8R2gRAwZGPe1SJ2D+iZqaYMuLJpa
- ZmYK4tOalc8vewdDhT4bgmzijhcrdsA8j20JsbZuMtCQMYYda3EyG+qe+rqXFg9eGlMPzZdr
- X2DiJQeezjdm4X3ZWWdB5DG4SYw=
-X-Mailgun-Sending-Ip: 104.130.96.5
+ bh=6GE3EtQgnkmIsP2dtiobgWeVOTWXks2cDd33yl18lEk=; b=GKxzncNefuAdVJS/C80ockXe8yHzeUInz/txwoKAs7jgiujREXz3AeH1HqTaOMqMy0X3NqSr
+ qvwTLBaLNUU/qsY5AaI/1zq0TnoPXKezFBETJqrQpoZEisF4PxKZiJUJoH/05EL6bgykkEbd
+ t8Zgnjif5U/R+QnEPxKHB/qLoY0=
+X-Mailgun-Sending-Ip: 69.72.42.4
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org
  (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n07.prod.us-west-2.postgun.com with SMTP id
- 5f7666488246bdcb55d0be35 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 01 Oct 2020 23:29:12
+ smtp-out-n02.prod.us-west-2.postgun.com with SMTP id
+ 5f766ab3ebd6fbc87991470c (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 01 Oct 2020 23:48:03
  GMT
 Sender: jcrouse=codeaurora.org@mg.codeaurora.org
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 4831FC43395; Thu,  1 Oct 2020 23:29:12 +0000 (UTC)
+        id 44D1FC433FE; Thu,  1 Oct 2020 23:48:03 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
@@ -37,199 +37,144 @@ Received: from jcrouse1-lnx.qualcomm.com (i-global254.qualcomm.com [199.106.103.
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
         (Authenticated sender: jcrouse)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 3382CC433CA;
-        Thu,  1 Oct 2020 23:29:10 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 3382CC433CA
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 408C0C433C8;
+        Thu,  1 Oct 2020 23:48:01 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 408C0C433C8
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=jcrouse@codeaurora.org
-Date:   Thu, 1 Oct 2020 17:29:07 -0600
+Date:   Thu, 1 Oct 2020 17:47:58 -0600
 From:   Jordan Crouse <jcrouse@codeaurora.org>
 To:     Jonathan Marek <jonathan@marek.ca>
-Cc:     freedreno@lists.freedesktop.org, David Airlie <airlied@linux.ie>,
+Cc:     freedreno@lists.freedesktop.org, Rob Clark <robdclark@gmail.com>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Shawn Guo <shawn.guo@linaro.org>,
+        AngeloGioacchino Del Regno <kholk11@gmail.com>,
+        Sharat Masetty <smasetty@codeaurora.org>,
         "open list:DRM DRIVER FOR MSM ADRENO GPU" 
         <linux-arm-msm@vger.kernel.org>,
-        open list <linux-kernel@vger.kernel.org>,
         "open list:DRM DRIVER FOR MSM ADRENO GPU" 
-        <dri-devel@lists.freedesktop.org>, Rob Clark <robdclark@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>, Sean Paul <sean@poorly.run>
-Subject: Re: [Freedreno] [PATCH 2/3] drm/msm: add DRM_MSM_GEM_SYNC_CACHE for
- non-coherent cache maintenance
-Message-ID: <20201001232907.GG29832@jcrouse1-lnx.qualcomm.com>
+        <dri-devel@lists.freedesktop.org>,
+        open list <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH 1/3] drm/msm: add MSM_BO_CACHED_COHERENT
+Message-ID: <20201001234758.GH29832@jcrouse1-lnx.qualcomm.com>
 Mail-Followup-To: Jonathan Marek <jonathan@marek.ca>,
-        freedreno@lists.freedesktop.org, David Airlie <airlied@linux.ie>,
+        freedreno@lists.freedesktop.org, Rob Clark <robdclark@gmail.com>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>, Shawn Guo <shawn.guo@linaro.org>,
+        AngeloGioacchino Del Regno <kholk11@gmail.com>,
+        Sharat Masetty <smasetty@codeaurora.org>,
         "open list:DRM DRIVER FOR MSM ADRENO GPU" <linux-arm-msm@vger.kernel.org>,
-        open list <linux-kernel@vger.kernel.org>,
         "open list:DRM DRIVER FOR MSM ADRENO GPU" <dri-devel@lists.freedesktop.org>,
-        Rob Clark <robdclark@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
-        Sean Paul <sean@poorly.run>
+        open list <linux-kernel@vger.kernel.org>
 References: <20201001002709.21361-1-jonathan@marek.ca>
- <20201001002709.21361-3-jonathan@marek.ca>
+ <20201001002709.21361-2-jonathan@marek.ca>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20201001002709.21361-3-jonathan@marek.ca>
+In-Reply-To: <20201001002709.21361-2-jonathan@marek.ca>
 User-Agent: Mutt/1.5.24 (2015-08-30)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Sep 30, 2020 at 08:27:05PM -0400, Jonathan Marek wrote:
-> This makes it possible to use the non-coherent cached MSM_BO_CACHED mode,
-> which otherwise doesn't provide any method for cleaning/invalidating the
-> cache to sync with the device.
-> 
+On Wed, Sep 30, 2020 at 08:27:04PM -0400, Jonathan Marek wrote:
+> Add a new cache mode for creating coherent host-cached BOs.
+
+Reviewed-by: Jordan Crouse <jcrouse@codeaurora.org>
+
 > Signed-off-by: Jonathan Marek <jonathan@marek.ca>
 > ---
->  drivers/gpu/drm/msm/msm_drv.c | 21 +++++++++++++++++++++
->  drivers/gpu/drm/msm/msm_drv.h |  2 ++
->  drivers/gpu/drm/msm/msm_gem.c | 15 +++++++++++++++
->  include/uapi/drm/msm_drm.h    | 20 ++++++++++++++++++++
->  4 files changed, 58 insertions(+)
+>  drivers/gpu/drm/msm/adreno/adreno_device.c | 1 +
+>  drivers/gpu/drm/msm/msm_drv.h              | 1 +
+>  drivers/gpu/drm/msm/msm_gem.c              | 8 ++++++++
+>  include/uapi/drm/msm_drm.h                 | 5 ++---
+>  4 files changed, 12 insertions(+), 3 deletions(-)
 > 
-> diff --git a/drivers/gpu/drm/msm/msm_drv.c b/drivers/gpu/drm/msm/msm_drv.c
-> index 9716210495fc..305db1db1064 100644
-> --- a/drivers/gpu/drm/msm/msm_drv.c
-> +++ b/drivers/gpu/drm/msm/msm_drv.c
-> @@ -964,6 +964,26 @@ static int msm_ioctl_submitqueue_close(struct drm_device *dev, void *data,
->  	return msm_submitqueue_remove(file->driver_priv, id);
->  }
+> diff --git a/drivers/gpu/drm/msm/adreno/adreno_device.c b/drivers/gpu/drm/msm/adreno/adreno_device.c
+> index 9eeb46bf2a5d..2aa707546254 100644
+> --- a/drivers/gpu/drm/msm/adreno/adreno_device.c
+> +++ b/drivers/gpu/drm/msm/adreno/adreno_device.c
+> @@ -410,6 +410,7 @@ static int adreno_bind(struct device *dev, struct device *master, void *data)
+>  		config.rev.minor, config.rev.patchid);
 >  
-> +static int msm_ioctl_gem_sync_cache(struct drm_device *dev, void *data,
-> +		struct drm_file *file)
-> +{
-> +	struct drm_msm_gem_sync_cache *args = data;
-> +	struct drm_gem_object *obj;
-> +
-> +	if (args->flags & ~MSM_GEM_SYNC_CACHE_FLAGS)
-> +		return -EINVAL;
-> +
-> +	obj = drm_gem_object_lookup(file, args->handle);
-> +	if (!obj)
-> +		return -ENOENT;
-> +
-> +	msm_gem_sync_cache(obj, args->flags, args->offset, args->end);
-> +
-> +	drm_gem_object_put(obj);
-> +
-> +	return 0;
-> +}
-> +
->  static const struct drm_ioctl_desc msm_ioctls[] = {
->  	DRM_IOCTL_DEF_DRV(MSM_GET_PARAM,    msm_ioctl_get_param,    DRM_RENDER_ALLOW),
->  	DRM_IOCTL_DEF_DRV(MSM_GEM_NEW,      msm_ioctl_gem_new,      DRM_RENDER_ALLOW),
-> @@ -976,6 +996,7 @@ static const struct drm_ioctl_desc msm_ioctls[] = {
->  	DRM_IOCTL_DEF_DRV(MSM_SUBMITQUEUE_NEW,   msm_ioctl_submitqueue_new,   DRM_RENDER_ALLOW),
->  	DRM_IOCTL_DEF_DRV(MSM_SUBMITQUEUE_CLOSE, msm_ioctl_submitqueue_close, DRM_RENDER_ALLOW),
->  	DRM_IOCTL_DEF_DRV(MSM_SUBMITQUEUE_QUERY, msm_ioctl_submitqueue_query, DRM_RENDER_ALLOW),
-> +	DRM_IOCTL_DEF_DRV(MSM_GEM_SYNC_CACHE,    msm_ioctl_gem_sync_cache,    DRM_RENDER_ALLOW),
->  };
+>  	priv->is_a2xx = config.rev.core == 2;
+> +	priv->has_cached_coherent = config.rev.core >= 6;
 >  
->  static const struct vm_operations_struct vm_ops = {
+>  	gpu = info->init(drm);
+>  	if (IS_ERR(gpu)) {
 > diff --git a/drivers/gpu/drm/msm/msm_drv.h b/drivers/gpu/drm/msm/msm_drv.h
-> index 6384844b1696..5e932dae453f 100644
+> index 2c3225bc1794..6384844b1696 100644
 > --- a/drivers/gpu/drm/msm/msm_drv.h
 > +++ b/drivers/gpu/drm/msm/msm_drv.h
-> @@ -314,6 +314,8 @@ void msm_gem_move_to_active(struct drm_gem_object *obj,
->  void msm_gem_move_to_inactive(struct drm_gem_object *obj);
->  int msm_gem_cpu_prep(struct drm_gem_object *obj, uint32_t op, ktime_t *timeout);
->  int msm_gem_cpu_fini(struct drm_gem_object *obj);
-> +void msm_gem_sync_cache(struct drm_gem_object *obj, uint32_t flags,
-> +		size_t range_start, size_t range_end);
->  void msm_gem_free_object(struct drm_gem_object *obj);
->  int msm_gem_new_handle(struct drm_device *dev, struct drm_file *file,
->  		uint32_t size, uint32_t flags, uint32_t *handle, char *name);
+> @@ -167,6 +167,7 @@ struct msm_drm_private {
+>  	struct msm_file_private *lastctx;
+>  	/* gpu is only set on open(), but we need this info earlier */
+>  	bool is_a2xx;
+> +	bool has_cached_coherent;
+>  
+>  	struct drm_fb_helper *fbdev;
+>  
 > diff --git a/drivers/gpu/drm/msm/msm_gem.c b/drivers/gpu/drm/msm/msm_gem.c
-> index ad9a627493ae..93da88b3fc50 100644
+> index b2f49152b4d4..ad9a627493ae 100644
 > --- a/drivers/gpu/drm/msm/msm_gem.c
 > +++ b/drivers/gpu/drm/msm/msm_gem.c
-> @@ -8,6 +8,7 @@
->  #include <linux/shmem_fs.h>
->  #include <linux/dma-buf.h>
->  #include <linux/pfn_t.h>
-> +#include <linux/dma-noncoherent.h>
+> @@ -431,6 +431,9 @@ static int msm_gem_pin_iova(struct drm_gem_object *obj,
+>  	if (msm_obj->flags & MSM_BO_MAP_PRIV)
+>  		prot |= IOMMU_PRIV;
 >  
->  #include <drm/drm_prime.h>
+> +	if (msm_obj->flags & MSM_BO_CACHED_COHERENT)
+> +		prot |= IOMMU_CACHE;
+> +
+>  	WARN_ON(!mutex_is_locked(&msm_obj->lock));
 >  
-> @@ -808,6 +809,20 @@ int msm_gem_cpu_fini(struct drm_gem_object *obj)
->  	return 0;
->  }
+>  	if (WARN_ON(msm_obj->madv != MSM_MADV_WILLNEED))
+> @@ -998,6 +1001,7 @@ static int msm_gem_new_impl(struct drm_device *dev,
+>  		uint32_t size, uint32_t flags,
+>  		struct drm_gem_object **obj)
+>  {
+> +	struct msm_drm_private *priv = dev->dev_private;
+>  	struct msm_gem_object *msm_obj;
 >  
-> +void msm_gem_sync_cache(struct drm_gem_object *obj, uint32_t flags,
-> +		size_t range_start, size_t range_end)
-> +{
-> +	struct msm_gem_object *msm_obj = to_msm_bo(obj);
-> +
-> +	/* TODO: sync only the required range, and don't invalidate on clean */
-> +
-> +	if (flags & MSM_GEM_SYNC_CACHE_CLEAN)
+>  	switch (flags & MSM_BO_CACHE_MASK) {
+> @@ -1005,6 +1009,10 @@ static int msm_gem_new_impl(struct drm_device *dev,
+>  	case MSM_BO_CACHED:
+>  	case MSM_BO_WC:
+>  		break;
+> +	case MSM_BO_CACHED_COHERENT:
+> +		if (priv->has_cached_coherent)
+> +			break;
+> +		/* fallthrough */
 
-Curious why you would rename these - I feel like the to_device / to_cpu model is
-pretty well baked into our thought process. I know from personal experience that
-I have to stop and think to remember which direction is which.
+It confused me that this kind of implicitly fell into the else clause in
+msm_gem_mmap_obj, but I'm on board. This is a good solution since it only allows
+I/O coherence with caching.
 
-Jordan
-
-> +		sync_for_device(msm_obj);
-> +
-> +	if (flags & MSM_GEM_SYNC_CACHE_INVALIDATE)
-> +		sync_for_cpu(msm_obj);
-> +}
-> +
->  #ifdef CONFIG_DEBUG_FS
->  static void describe_fence(struct dma_fence *fence, const char *type,
->  		struct seq_file *m)
+>  	default:
+>  		DRM_DEV_ERROR(dev->dev, "invalid cache flag: %x\n",
+>  				(flags & MSM_BO_CACHE_MASK));
 > diff --git a/include/uapi/drm/msm_drm.h b/include/uapi/drm/msm_drm.h
-> index 474497e8743a..1dfafa71fc94 100644
+> index a6c1f3eb2623..474497e8743a 100644
 > --- a/include/uapi/drm/msm_drm.h
 > +++ b/include/uapi/drm/msm_drm.h
-> @@ -319,6 +319,24 @@ struct drm_msm_submitqueue_query {
->  	__u32 pad;
->  };
+> @@ -94,12 +94,11 @@ struct drm_msm_param {
+>  #define MSM_BO_CACHED        0x00010000
+>  #define MSM_BO_WC            0x00020000
+>  #define MSM_BO_UNCACHED      0x00040000
+> +#define MSM_BO_CACHED_COHERENT 0x080000
 >  
-> +/*
-> + * Host cache maintenance (relevant for MSM_BO_CACHED)
-> + * driver may both clean/invalidate (flush) for clean
-> + */
-> +
-> +#define MSM_GEM_SYNC_CACHE_CLEAN	0x1
-> +#define MSM_GEM_SYNC_CACHE_INVALIDATE	0x2
-> +
-> +#define MSM_GEM_SYNC_CACHE_FLAGS	(MSM_GEM_SYNC_CACHE_CLEAN | \
-> +					 MSM_GEM_SYNC_CACHE_INVALIDATE)
-> +
-> +struct drm_msm_gem_sync_cache {
-> +	__u32 handle;
-> +	__u32 flags;
-> +	__u64 offset;
-> +	__u64 end;      /* offset + size */
-> +};
-> +
->  #define DRM_MSM_GET_PARAM              0x00
->  /* placeholder:
->  #define DRM_MSM_SET_PARAM              0x01
-> @@ -336,6 +354,7 @@ struct drm_msm_submitqueue_query {
->  #define DRM_MSM_SUBMITQUEUE_NEW        0x0A
->  #define DRM_MSM_SUBMITQUEUE_CLOSE      0x0B
->  #define DRM_MSM_SUBMITQUEUE_QUERY      0x0C
-> +#define DRM_MSM_GEM_SYNC_CACHE         0x0D
+>  #define MSM_BO_FLAGS         (MSM_BO_SCANOUT | \
+>                                MSM_BO_GPU_READONLY | \
+> -                              MSM_BO_CACHED | \
+> -                              MSM_BO_WC | \
+> -                              MSM_BO_UNCACHED)
+> +                              MSM_BO_CACHE_MASK)
 >  
->  #define DRM_IOCTL_MSM_GET_PARAM        DRM_IOWR(DRM_COMMAND_BASE + DRM_MSM_GET_PARAM, struct drm_msm_param)
->  #define DRM_IOCTL_MSM_GEM_NEW          DRM_IOWR(DRM_COMMAND_BASE + DRM_MSM_GEM_NEW, struct drm_msm_gem_new)
-> @@ -348,6 +367,7 @@ struct drm_msm_submitqueue_query {
->  #define DRM_IOCTL_MSM_SUBMITQUEUE_NEW    DRM_IOWR(DRM_COMMAND_BASE + DRM_MSM_SUBMITQUEUE_NEW, struct drm_msm_submitqueue)
->  #define DRM_IOCTL_MSM_SUBMITQUEUE_CLOSE  DRM_IOW (DRM_COMMAND_BASE + DRM_MSM_SUBMITQUEUE_CLOSE, __u32)
->  #define DRM_IOCTL_MSM_SUBMITQUEUE_QUERY  DRM_IOW (DRM_COMMAND_BASE + DRM_MSM_SUBMITQUEUE_QUERY, struct drm_msm_submitqueue_query)
-> +#define DRM_IOCTL_MSM_GEM_SYNC_CACHE     DRM_IOW (DRM_COMMAND_BASE + DRM_MSM_GEM_SYNC_CACHE, struct drm_msm_gem_sync_cache)
->  
->  #if defined(__cplusplus)
->  }
+>  struct drm_msm_gem_new {
+>  	__u64 size;           /* in */
 > -- 
 > 2.26.1
 > 
-> _______________________________________________
-> Freedreno mailing list
-> Freedreno@lists.freedesktop.org
-> https://lists.freedesktop.org/mailman/listinfo/freedreno
 
 -- 
 The Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum,
