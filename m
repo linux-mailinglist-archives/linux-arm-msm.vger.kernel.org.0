@@ -2,86 +2,79 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 17D132803E6
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Oct 2020 18:25:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BEAF3280475
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Oct 2020 19:02:38 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732360AbgJAQZz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 1 Oct 2020 12:25:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47684 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1732119AbgJAQZz (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 1 Oct 2020 12:25:55 -0400
-Received: from mail-oi1-x242.google.com (mail-oi1-x242.google.com [IPv6:2607:f8b0:4864:20::242])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 059BBC0613E5
-        for <linux-arm-msm@vger.kernel.org>; Thu,  1 Oct 2020 09:25:55 -0700 (PDT)
-Received: by mail-oi1-x242.google.com with SMTP id m128so84315oig.7
-        for <linux-arm-msm@vger.kernel.org>; Thu, 01 Oct 2020 09:25:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=2CSu/IScOCsPGM9c3D/eJ8Lgkh9FWTnZ0m8wgNmrDis=;
-        b=Tzu3fz8JfB/jQSuQ4t9QSXrokC1//Gsu6pBqeSbFsF8tuI95mVDMacS2NQKhT86u31
-         DHdVld2B0mgDAi/QPGpAL1QIahr/T135xg9YogX+xPThn3SwAIjC+jT4wtAa6hRFJvQ/
-         ICPtno+uXU5AXJ/R7rD+neX3/UNBU9kFA3xyXXk9USZlxHEovWYBzIVRf7T1chvSTQKW
-         72Eka+lUb8YIb2dOQpSrP5QRq+sYJPMR433ViLcZdEgtRUewcZx9H00+tgjGm5rKviiM
-         F2pepolJfiV0j1SDnzWEoUEEuVPqkUP5uPQwAJD1SNezTry+V9Jz0J8ty7eoXi8Hbt0A
-         bCUA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=2CSu/IScOCsPGM9c3D/eJ8Lgkh9FWTnZ0m8wgNmrDis=;
-        b=kMlKmS8tVE7JvkUQi4k/UgL5/w+Fb4NtBdS2gq2OCGowaq+tnikqB/5J6TcDuEJEMf
-         M2JIS52xVbDLN+ngEgVR8tlhmOvq7io8vZznPjrwZPfSPqsL1ceXG9ZiuvoXNCZJx6wx
-         iN/W0GZR5lCqS1NIvHmQny7VuwW39j9hCkjWLIdtrOKRNmOCnFUS3WqT6iE0eUskUEJI
-         zvfpE5D0jrICRSG32TKi09qawGbCFB0y5y9UYqNuxXA2enbKCm+0ZoC4WJ4zAOqqOw2E
-         hemIw9NIJCBPPNvicNY4OFEsFxwkZmntzgaRePnw2YirnAjXHtjtjV8RsscUzLbJsnTt
-         Fj/Q==
-X-Gm-Message-State: AOAM532gsTAOEn42sAnr2f+wZ1pSCplATnglmOkgI/Z22vv5U3UZv3fq
-        2IleLiJxNyRa4/jtcubk4/bqdCs31cEk8w==
-X-Google-Smtp-Source: ABdhPJw+OAhkscZL4XJ+4yh17jZ20OcTK/+TigpL8uj7SnyX70PQGeUcLahBNiIX9VhdiOw+aJV5qw==
-X-Received: by 2002:aca:f417:: with SMTP id s23mr480974oih.168.1601569554231;
-        Thu, 01 Oct 2020 09:25:54 -0700 (PDT)
-Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id f26sm1303860otq.50.2020.10.01.09.25.52
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 01 Oct 2020 09:25:52 -0700 (PDT)
-Date:   Thu, 1 Oct 2020 11:21:11 -0500
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Konrad Dybcio <konradybcio@gmail.com>
-Cc:     Andy Gross <agross@kernel.org>, Pavel Machek <pavel@ucw.cz>,
-        Dan Murphy <dmurphy@ti.com>, Rob Herring <robh+dt@kernel.org>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Uwe Kleine-K?nig <u.kleine-koenig@pengutronix.de>,
-        Lee Jones <lee.jones@linaro.org>,
-        Martin Botka <martin.botka1@gmail.com>,
-        linux-leds@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-pwm@vger.kernel.org
-Subject: Re: [PATCH v4 3/4] arm64: dts: qcom: msm8996: Add mpp and lpg blocks
-Message-ID: <20201001162111.GA114373@builder.lan>
-References: <20200929031544.1000204-1-bjorn.andersson@linaro.org>
- <20200929031544.1000204-4-bjorn.andersson@linaro.org>
- <424f7b71-fb7e-fb45-c449-987ec3578290@gmail.com>
+        id S1732609AbgJARCW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 1 Oct 2020 13:02:22 -0400
+Received: from mail.kernel.org ([198.145.29.99]:35674 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1732360AbgJARCR (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 1 Oct 2020 13:02:17 -0400
+Received: from localhost (fw-tnat.cambridge.arm.com [217.140.96.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id 1D57A208B6;
+        Thu,  1 Oct 2020 17:02:15 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1601571736;
+        bh=sgTI1pReU0OH6N+t9LIFaXFWSw9Gg4El0/cro75I080=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=tleQxA9Usy8EMlbjjfcLgW1O5nEP666Fx0SDN5uWndimLCercOPoQ0lMjbsyLow4P
+         Smg2YxuBRvFvcFyqm3VJN8B0dMIJjMaDKcnRI4QAb32mRLC7QXwzYByg6oNGBe4GAZ
+         kwZhSdohSm1E5gCYck+018Oj/4mgdXiqlF/PMSAc=
+Date:   Thu, 1 Oct 2020 18:01:17 +0100
+From:   Mark Brown <broonie@kernel.org>
+To:     kholk11@gmail.com
+Cc:     lgirdwood@gmail.com, agross@kernel.org, bjorn.andersson@linaro.org,
+        robh+dt@kernel.org, marijns95@gmail.com, konradybcio@gmail.com,
+        martin.botka1@gmail.com, linux-arm-msm@vger.kernel.org,
+        phone-devel@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 0/5] Support for PM660/PM660L SPMI and SMD regulators
+Message-ID: <20201001170117.GR6715@sirena.org.uk>
+References: <20200926125549.13191-1-kholk11@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="tuFXEhzhBeitrIAu"
 Content-Disposition: inline
-In-Reply-To: <424f7b71-fb7e-fb45-c449-987ec3578290@gmail.com>
+In-Reply-To: <20200926125549.13191-1-kholk11@gmail.com>
+X-Cookie: Stay away from flying saucers today.
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu 01 Oct 10:22 CDT 2020, Konrad Dybcio wrote:
 
-> Hi, 
-> 
-> Just a nitpick: the title says "qcom: msm8996", whereas the file being changed is pm(i)8994.dtsi. This also applies to most msm8992/94 platforms, as the PMIC was used there too.
-> 
+--tuFXEhzhBeitrIAu
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-Thanks for pointing that out, replacing msm8996 with pm[i]8994 would
-make more sense.
+On Sat, Sep 26, 2020 at 02:55:42PM +0200, kholk11@gmail.com wrote:
 
-Regards,
-Bjorn
+> AngeloGioacchino Del Regno (7):
+>   regulator: core: Enlarge max OF property name length to 64 chars
+>   regulator: qcom_spmi: Add support for new regulator types
+>   regulator: qcom_spmi: Add PM660/PM660L regulators
+>   regulator: dt-bindings: Document the PM660/660L SPMI PMIC entries
+>   regulator: qcom_smd: Add PM660/PM660L regulator support
+>   mfd: qcom-spmi-pmic: Add support for PM660/PM660L
+>   regulator: dt-bindings: Document the PM660/PM660L PMICs entries
+
+This said patch 0/5 but there are 7 patches here...
+
+--tuFXEhzhBeitrIAu
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAl92C1wACgkQJNaLcl1U
+h9Apowf+M8mQLNlk5C94v/lobmqDbp7yeHjIkO29sX/+IA/8l3WhZdODZBZympxf
+4MX9afgFpZBbdIhbd+010VVDItDmhoFKMf7pAR8x/ZiGropxJxejerfNnDNUGLeB
+gTc2lMBvuaJjJ5uzFiKDhQl+1jBAwhfN64/mVbZREPXleJck4OXEuwCDpO2lMzM8
+wYCczlhHpRsqdDWvmIXGs0430LJrlnxMcV1B1Tp2KKH4Wl40qkqtv4a9xw2WriWl
+GU7XDUFGRazpyOY1zrZC7XiwFx4VwD1ECupoq8DzF+wwR9XYfBeFhteHb2hhKIlK
+3TQOhIHxtwr7ZmM9915GK388ZkhucA==
+=AhOy
+-----END PGP SIGNATURE-----
+
+--tuFXEhzhBeitrIAu--
