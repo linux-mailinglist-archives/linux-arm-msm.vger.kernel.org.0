@@ -2,140 +2,166 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 2CD9D2810EC
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Oct 2020 13:05:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 402B828112E
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Oct 2020 13:28:00 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2387748AbgJBLF4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 2 Oct 2020 07:05:56 -0400
-Received: from mga02.intel.com ([134.134.136.20]:46925 "EHLO mga02.intel.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725920AbgJBLFu (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 2 Oct 2020 07:05:50 -0400
-IronPort-SDR: vSJx8f92fhTWlIEHqmLC9+6yks/cWVFVY7GkSxACCAfV1o5yEREUAwHvDYhde+KLHjkoHJ6bvN
- /e9GFbeQh1tw==
-X-IronPort-AV: E=McAfee;i="6000,8403,9761"; a="150597608"
-X-IronPort-AV: E=Sophos;i="5.77,327,1596524400"; 
-   d="scan'208";a="150597608"
-X-Amp-Result: SKIPPED(no attachment in message)
-X-Amp-File-Uploaded: False
-Received: from orsmga006.jf.intel.com ([10.7.209.51])
-  by orsmga101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 02 Oct 2020 04:05:50 -0700
-IronPort-SDR: QxNZ2X+JL+y0DoAQRWUbBFRyiidnIV2PWCnd36xj8LCNCcIwk1QTSzujYdAY3hmkdypBK6bMIa
- e+bKX4WRG1gg==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.77,327,1596524400"; 
-   d="scan'208";a="313473301"
-Received: from stinkbox.fi.intel.com (HELO stinkbox) ([10.237.72.174])
-  by orsmga006.jf.intel.com with SMTP; 02 Oct 2020 04:05:43 -0700
-Received: by stinkbox (sSMTP sendmail emulation); Fri, 02 Oct 2020 14:05:44 +0300
-Date:   Fri, 2 Oct 2020 14:05:44 +0300
-From:   Ville =?iso-8859-1?Q?Syrj=E4l=E4?= <ville.syrjala@linux.intel.com>
-To:     Daniel Vetter <daniel@ffwll.ch>
-Cc:     Rob Clark <robdclark@gmail.com>,
-        Rob Clark <robdclark@chromium.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        open list <linux-kernel@vger.kernel.org>,
-        Tim Murray <timmurray@google.com>,
-        dri-devel <dri-devel@lists.freedesktop.org>,
-        Tejun Heo <tj@kernel.org>, Qais Yousef <qais.yousef@arm.com>
-Subject: Re: [PATCH v2 0/3] drm: commit_work scheduling
-Message-ID: <20201002110544.GB6112@intel.com>
-References: <20200930211723.3028059-1-robdclark@gmail.com>
- <CAKMK7uHHPWE3h7ssG-dpb3czwbP5VtZYztMA=CpvQ4HV4LQTXA@mail.gmail.com>
- <CAF6AEGszF60dWn37m63wujjtuObqkz2ZqEN3LHaPhCkKa1cdmA@mail.gmail.com>
- <CAKMK7uEd853irzdBMCcaNEMAeOZKVFcFpgNtcYrgQkmHxdT3-w@mail.gmail.com>
- <20201002105256.GA6112@intel.com>
+        id S1726090AbgJBL17 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 2 Oct 2020 07:27:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54812 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725964AbgJBL17 (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 2 Oct 2020 07:27:59 -0400
+Received: from mail-wm1-x342.google.com (mail-wm1-x342.google.com [IPv6:2a00:1450:4864:20::342])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 45DDFC0613E2
+        for <linux-arm-msm@vger.kernel.org>; Fri,  2 Oct 2020 04:27:59 -0700 (PDT)
+Received: by mail-wm1-x342.google.com with SMTP id y15so1381394wmi.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 02 Oct 2020 04:27:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=nZaxcsHwMmqRPsyL6ppaPkTXtNppFwnVLVfBNIDn8RA=;
+        b=LpZo9hsKVHJ/d3LgWdx2dR41bi0OJrzJHno8HKljIBBcT05uCIqKgnRUpcXxOKr9VT
+         ICFFsTreZQX+y6q/d8z0ATkO2MGzW6QgUL4StOUpo6yBckf7mB8MhvZY4elJw9jwSG+i
+         f6/hePK8HjwEDDLfAJqV9YSXPsLeYiFGvFGJGGn1aZA0v9zqS24LP00zrA/tlsFFz0Wt
+         2ECtUR98SSQFGoOzn5hSyzZ8ZMRUSu5u+U6KW2GhD7R+GrT5x7vJJWihJ7dpJ2XYfH+4
+         HAqYIAq4MkV6LNg4/xFfucK5VrSMj7GJO9e10hJWXghygWCam9ykYGd47q6CVC41Pcka
+         pJSQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=nZaxcsHwMmqRPsyL6ppaPkTXtNppFwnVLVfBNIDn8RA=;
+        b=Tw7CQoMeQAWYxkACdC3sIZ3wpQ+M9Fc5bxD4bA9MhuoFU8alZ88K2xR5Lz2+KBCTPj
+         IZl/zLQ7rF5Y1cWFgH799xCL5B6ZP8s+fPGQwu0IIpF1n+dmCAzkNxmlhhFMm0cWLE6T
+         d0GKS5DUj6xUnrfA+07aYqqhiqlEstGXaKgjfViBq/yU+LSLQPugvaN0ilmM6irQq/IE
+         tIgR7AKR5Un1rr+CZgbYQcSlg1I2FoUVx6Sb0xeT5AJO+vrEyoB9dtOkbk9KMU7Svk/F
+         KXCYB2b3nK7EExZ8cOI2bqW4m7VYN1BUnyyEs4WXW9fU+W4v6GK/PnIp1dRyxjTwMeek
+         ZpmQ==
+X-Gm-Message-State: AOAM530Tow2I5hMUU3kQtoi5oK6eLmJzD5n8hOy/VVkn2cKFZo0g45oa
+        pmWGPZIxgrEipemcUKTYZ0uSbw==
+X-Google-Smtp-Source: ABdhPJwzF6SLRHc3X27XrYXf2pJ/zyKCxeMIfZkKvKSF7aEcnbg1geeQMMFSeNwWSBugDYWKmZiGjw==
+X-Received: by 2002:a7b:cb8c:: with SMTP id m12mr2497325wmi.12.1601638077797;
+        Fri, 02 Oct 2020 04:27:57 -0700 (PDT)
+Received: from [192.168.1.7] ([195.24.90.54])
+        by smtp.googlemail.com with ESMTPSA id k4sm1522245wrx.51.2020.10.02.04.27.55
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 02 Oct 2020 04:27:57 -0700 (PDT)
+Subject: Re: [PATCH] media: venus: core: Drop local dma_parms
+To:     Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
+        Robin Murphy <robin.murphy@arm.com>
+Cc:     mchehab@kernel.org, linux-media@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-arm-msm-owner@vger.kernel.org
+References: <e5384b296a0af099dc502572752df149127b7947.1599167568.git.robin.murphy@arm.com>
+ <cdd56444b0d7faf9358370f821a10846@codeaurora.org>
+From:   Stanimir Varbanov <stanimir.varbanov@linaro.org>
+Message-ID: <a2f96ef5-1e67-7bc7-39e1-448b2196aef1@linaro.org>
+Date:   Fri, 2 Oct 2020 14:27:54 +0300
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.10.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
+In-Reply-To: <cdd56444b0d7faf9358370f821a10846@codeaurora.org>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20201002105256.GA6112@intel.com>
-X-Patchwork-Hint: comment
-User-Agent: Mutt/1.10.1 (2018-07-13)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Oct 02, 2020 at 01:52:56PM +0300, Ville Syrj�l� wrote:
-> On Thu, Oct 01, 2020 at 05:25:55PM +0200, Daniel Vetter wrote:
-> > On Thu, Oct 1, 2020 at 5:15 PM Rob Clark <robdclark@gmail.com> wrote:
-> > >
-> > > On Thu, Oct 1, 2020 at 12:25 AM Daniel Vetter <daniel@ffwll.ch> wrote:
-> > > >
-> > > > On Wed, Sep 30, 2020 at 11:16 PM Rob Clark <robdclark@gmail.com> wrote:
-> > > > >
-> > > > > From: Rob Clark <robdclark@chromium.org>
-> > > > >
-> > > > > The android userspace treats the display pipeline as a realtime problem.
-> > > > > And arguably, if your goal is to not miss frame deadlines (ie. vblank),
-> > > > > it is.  (See https://lwn.net/Articles/809545/ for the best explaination
-> > > > > that I found.)
-> > > > >
-> > > > > But this presents a problem with using workqueues for non-blocking
-> > > > > atomic commit_work(), because the SCHED_FIFO userspace thread(s) can
-> > > > > preempt the worker.  Which is not really the outcome you want.. once
-> > > > > the required fences are scheduled, you want to push the atomic commit
-> > > > > down to hw ASAP.
-> > > > >
-> > > > > But the decision of whether commit_work should be RT or not really
-> > > > > depends on what userspace is doing.  For a pure CFS userspace display
-> > > > > pipeline, commit_work() should remain SCHED_NORMAL.
-> > > > >
-> > > > > To handle this, convert non-blocking commit_work() to use per-CRTC
-> > > > > kthread workers, instead of system_unbound_wq.  Per-CRTC workers are
-> > > > > used to avoid serializing commits when userspace is using a per-CRTC
-> > > > > update loop.  And the last patch exposes the task id to userspace as
-> > > > > a CRTC property, so that userspace can adjust the priority and sched
-> > > > > policy to fit it's needs.
-> > > > >
-> > > > >
-> > > > > v2: Drop client cap and in-kernel setting of priority/policy in
-> > > > >     favor of exposing the kworker tid to userspace so that user-
-> > > > >     space can set priority/policy.
-> > > >
-> > > > Yeah I think this looks more reasonable. Still a bit irky interface,
-> > > > so I'd like to get some kworker/rt ack on this. Other opens:
-> > > > - needs userspace, the usual drill
-> > >
-> > > fwiw, right now the userspace is "modetest + chrt".. *probably* the
-> > > userspace will become a standalone helper or daemon, mostly because
-> > > the chrome gpu-process sandbox does not allow setting SCHED_FIFO.  I'm
-> > > still entertaining the possibility of switching between rt and cfs
-> > > depending on what is in the foreground (ie. only do rt for android
-> > > apps).
-> > >
-> > > > - we need this also for vblank workers, otherwise this wont work for
-> > > > drivers needing those because of another priority inversion.
-> > >
-> > > I have a thought on that, see below..
-> > 
-> > Hm, not seeing anything about vblank worker below?
-> > 
-> > > > - we probably want some indication of whether this actually does
-> > > > something useful, not all drivers use atomic commit helpers. Not sure
-> > > > how to do that.
-> > >
-> > > I'm leaning towards converting the other drivers over to use the
-> > > per-crtc kwork, and then dropping the 'commit_work` from atomic state.
-> > > I can add a patch to that, but figured I could postpone that churn
-> > > until there is some by-in on this whole idea.
-> > 
-> > i915 has its own commit code, it's not even using the current commit
-> > helpers (nor the commit_work). Not sure how much other fun there is.
+
+
+On 10/2/20 11:06 AM, Sai Prakash Ranjan wrote:
+> Hi Robin,
 > 
-> I don't think we want per-crtc threads for this in i915. Seems
-> to me easier to guarantee atomicity across multiple crtcs if
-> we just commit them from the same thread.
+> On 2020-09-04 02:44, Robin Murphy wrote:
+>> Since commit 9495b7e92f71 ("driver core: platform: Initialize dma_parms
+>> for platform devices"), struct platform_device already provides a
+>> dma_parms structure, so we can save allocating another one.
+>>
+>> Also the DMA segment size is simply a size, not a bitmask.
+>>
+>> Signed-off-by: Robin Murphy <robin.murphy@arm.com>
+>> ---
+>>  drivers/media/platform/qcom/venus/core.c | 8 +-------
+>>  1 file changed, 1 insertion(+), 7 deletions(-)
+>>
+>> diff --git a/drivers/media/platform/qcom/venus/core.c
+>> b/drivers/media/platform/qcom/venus/core.c
+>> index 203c6538044f..2fa9275d75ff 100644
+>> --- a/drivers/media/platform/qcom/venus/core.c
+>> +++ b/drivers/media/platform/qcom/venus/core.c
+>> @@ -226,13 +226,7 @@ static int venus_probe(struct platform_device *pdev)
+>>      if (ret)
+>>          return ret;
+>>
+>> -    if (!dev->dma_parms) {
+>> -        dev->dma_parms = devm_kzalloc(dev, sizeof(*dev->dma_parms),
+>> -                          GFP_KERNEL);
+>> -        if (!dev->dma_parms)
+>> -            return -ENOMEM;
+>> -    }
+>> -    dma_set_max_seg_size(dev, DMA_BIT_MASK(32));
+>> +    dma_set_max_seg_size(dev, UINT_MAX);
+>>
+>>      INIT_LIST_HEAD(&core->instances);
+>>      mutex_init(&core->lock);
+> 
+> This reintroduced dma api debug warning which the original commit was
+> addressing or rather thought it addressed.
+> 
+>  DMA-API: qcom-venus aa00000.video-codec: mapping sg segment longer than
+> device claims to support [len=4194304] [max=65536]
+>  WARNING: CPU: 3 PID: 5365 at kernel/dma/debug.c:1225
+> debug_dma_map_sg+0x1ac/0x2c8
+>  <...>
+>  pstate: 60400009 (nZCv daif +PAN -UAO)
+>  pc : debug_dma_map_sg+0x1ac/0x2c8
+>  lr : debug_dma_map_sg+0x1ac/0x2c8
+>  sp : ffffff8016517850
+>  x29: ffffff8016517860 x28: 0000000000010000
+>  x27: 00000000ffffffff x26: ffffff80da45eb00
+>  x25: ffffffd03c465000 x24: ffffffd03b3c1000
+>  x23: ffffff803e262d80 x22: ffffff80d9a0d010
+>  x21: 0000000000000001 x20: 0000000000000001
+>  x19: 0000000000000001 x18: 00000000ffff0a10
+>  x17: ffffffd03b84a000 x16: 0000000000000037
+>  x15: ffffffd03a950610 x14: 0000000000000001
+>  x13: 0000000000000000 x12: 00000000a3b31442
+>  x11: 0000000000000000 x10: dfffffd000000001
+>  x9 : f544368f90c5ee00 x8 : f544368f90c5ee00
+>  x7 : ffffffd03af5d570 x6 : 0000000000000000
+>  x5 : 0000000000000080 x4 : 0000000000000001
+>  x3 : ffffffd03a9174b0 x2 : 0000000000000001
+>  x1 : 0000000000000008 x0 : 000000000000007a
+>  Call trace:
+>   debug_dma_map_sg+0x1ac/0x2c8
+>   vb2_dma_sg_alloc+0x274/0x2f4 [videobuf2_dma_sg]
+>   __vb2_queue_alloc+0x14c/0x3b0 [videobuf2_common]
+>   vb2_core_reqbufs+0x234/0x374 [videobuf2_common]
+>   vb2_reqbufs+0x4c/0x64 [videobuf2_v4l2]
+>   v4l2_m2m_reqbufs+0x50/0x84 [v4l2_mem2mem]
+>   v4l2_m2m_ioctl_reqbufs+0x2c/0x38 [v4l2_mem2mem]
+>   v4l_reqbufs+0x4c/0x5c
+>   __video_do_ioctl+0x2cc/0x3e0
+>   video_usercopy+0x3b0/0x910
+>   video_ioctl2+0x38/0x48
+>   v4l2_ioctl+0x6c/0x80
+>   do_video_ioctl+0xb54/0x2708
+>   v4l2_compat_ioctl32+0x5c/0xcc
+>   __se_compat_sys_ioctl+0x100/0x2064
+>   __arm64_compat_sys_ioctl+0x20/0x2c
+>   el0_svc_common+0xa8/0x178
+>   el0_svc_compat_handler+0x2c/0x40
+>   el0_svc_compat+0x8/0x10
+> 
+> Thanks,
+> Sai
+> 
 
-Oh, and we may have to commit things in a very specific order
-to guarantee the hw doesn't fall over, so yeah definitely per-crtc
-thread is a no go.
-
-I don't even understand the serialization argument. If the commits
-are truly independent then why isn't the unbound wq enough to avoid
-the serialization? It should just spin up a new thread for each commit
-no?
+Do you have the mentioned above commit when you see this warning ?
 
 -- 
-Ville Syrj�l�
-Intel
+regards,
+Stan
