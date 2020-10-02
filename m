@@ -2,111 +2,419 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 02624280BBF
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Oct 2020 02:45:07 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 38609280C19
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Oct 2020 03:47:14 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2387485AbgJBApF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 1 Oct 2020 20:45:05 -0400
-Received: from z5.mailgun.us ([104.130.96.5]:27821 "EHLO z5.mailgun.us"
+        id S2387485AbgJBBrN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 1 Oct 2020 21:47:13 -0400
+Received: from m42-4.mailgun.net ([69.72.42.4]:31554 "EHLO m42-4.mailgun.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1733275AbgJBApF (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 1 Oct 2020 20:45:05 -0400
+        id S1727780AbgJBBrN (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 1 Oct 2020 21:47:13 -0400
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1601599505; h=Content-Transfer-Encoding: Content-Type:
- In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
- Subject: Sender; bh=tIPTDeHw77fjXshMc7iSNtvBryZjsLxbooevavI8i74=; b=Z4oLddha5FtOlrqqrzz1+c+zotImxvN6dUck4/7vQJJiYmkbImG7FylW6D/qFac1IBXV5+/Y
- adGFZkxzbKy7YLuQqTdJyjJ9DRiG5yCqzBCDRFvO2mHnJ+78yX+D0KBsFS+t+Lzn0xsvEKJ6
- denEzzltj4lrX/JIjugSWtOMQYE=
-X-Mailgun-Sending-Ip: 104.130.96.5
+ s=smtp; t=1601603231; h=Content-Transfer-Encoding: MIME-Version:
+ Message-Id: Date: Subject: Cc: To: From: Sender;
+ bh=VlLVsjAaypSBUTBXNbvMUJcNoFogPIprQZ2479gn5yc=; b=FqXLakpNuZuBCAmxdU5HNTE8nJQwNL1aV1F9J2BnXkHccxaf8Cv4X7MIBxewX62mKaj2jdiQ
+ 2+htYFe7uPG61OFU7SbC7EdsxHFMrISCqYBwmS4dxHhj9kOdo/peaPccvuyw+2U1AvYTUYxv
+ ejItOiFfoXFLVr+YkGjIan7M82U=
+X-Mailgun-Sending-Ip: 69.72.42.4
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org
  (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n03.prod.us-east-1.postgun.com with SMTP id
- 5f767811726b122f31eae16e (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 02 Oct 2020 00:45:05
+ smtp-out-n07.prod.us-east-1.postgun.com with SMTP id
+ 5f76869f80da0872b7bad57b (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 02 Oct 2020 01:47:11
  GMT
-Sender: collinsd=codeaurora.org@mg.codeaurora.org
+Sender: abhinavk=codeaurora.org@mg.codeaurora.org
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 50022C433CA; Fri,  2 Oct 2020 00:45:04 +0000 (UTC)
+        id 5F09AC433F1; Fri,  2 Oct 2020 01:47:10 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.2 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        NICE_REPLY_A,SPF_FAIL autolearn=no autolearn_force=no version=3.4.0
-Received: from [10.46.160.165] (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
+        T_FILL_THIS_FORM_SHORT,URIBL_BLOCKED autolearn=no autolearn_force=no
+        version=3.4.0
+Received: from abhinavk-linux.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
         (No client certificate requested)
-        (Authenticated sender: collinsd)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id AA208C433C8;
-        Fri,  2 Oct 2020 00:45:03 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org AA208C433C8
+        (Authenticated sender: abhinavk)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 468AEC433CA;
+        Fri,  2 Oct 2020 01:47:08 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 468AEC433CA
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=collinsd@codeaurora.org
-Subject: Re: [RESEND PATCH] spmi: prefix spmi bus device names with "spmi"
-To:     Stephen Boyd <sboyd@kernel.org>, Mark Brown <broonie@kernel.org>
-Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <1600812258-17722-1-git-send-email-collinsd@codeaurora.org>
- <160151084091.310579.3876905878885019200@swboyd.mtv.corp.google.com>
- <20201001174326.GT6715@sirena.org.uk>
- <160157827040.310579.12112194764912078296@swboyd.mtv.corp.google.com>
-From:   David Collins <collinsd@codeaurora.org>
-Message-ID: <7c45b147-f1d2-4b32-9e51-71c5d2cb576f@codeaurora.org>
-Date:   Thu, 1 Oct 2020 17:45:00 -0700
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.10.0
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=abhinavk@codeaurora.org
+From:   Abhinav Kumar <abhinavk@codeaurora.org>
+To:     dri-devel@lists.freedesktop.org
+Cc:     Abhinav Kumar <abhinavk@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
+        robdclark@gmail.com, seanpaul@chromium.org, swboyd@chromium.org,
+        nganji@codeaurora.org, aravindh@codeaurora.org,
+        tanmay@codeaurora.org, khsieh@codeaurora.org, daniel@ffwll.ch
+Subject: [RFC PATCH] drm: add support for taking drm atomic state snapshot
+Date:   Thu,  1 Oct 2020 18:47:00 -0700
+Message-Id: <20201002014700.32085-1-abhinavk@codeaurora.org>
+X-Mailer: git-send-email 2.23.0
 MIME-Version: 1.0
-In-Reply-To: <160157827040.310579.12112194764912078296@swboyd.mtv.corp.google.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 10/1/20 11:51 AM, Stephen Boyd wrote:
-> Quoting Mark Brown (2020-10-01 10:43:26)
->> On Wed, Sep 30, 2020 at 05:07:20PM -0700, Stephen Boyd wrote:
->>> Quoting David Collins (2020-09-22 15:04:18)
->>
->>>> This helps to disambiguate SPMI device regmaps from I2C ones
->>>> at /sys/kernel/debug/regmap since I2C devices use a very
->>>> similar naming scheme: 0-0000.
->>
->>> Can regmap debugfs prepend the bus name on the node made in debugfs?
->>> Does it do that already?
->>
->> It doesn't do that.  I have to say that given the use of dev_name() in
->> logging it does feel like it'd be useful to have distinct names for
->> grepping if we're running into collisions, IIRC the reason I went with
->> dev_name() was that it's a commonly used human readable handle for
->> diagnostic infrastrucuture so it makes it easier to follow things around.
-> 
-> To me the dev_name() usage seems fine. Maybe David has some real reason
-> to change this though?
-> 
-> In general I don't think userspace cares what the SPMI device name is,
-> i.e. the device name isn't used for dev nodes because SPMI doesn't
-> support ioctls or read/write APIs on the bus. That could be a nice
-> feature addition though, to support something like i2c-dev.
-> 
-> Changing it so that regmap debugfs is less likely to collide looks
-> weird. It doesn't actually collide anyway, so it seems like we're adding
-> spmi prefix to make it easier to find in debugfs?
+Add support to capture the drm atomic state snapshot which
+can then be wired up with the devcoredump of the relevant display
+errors to give useful information to debug the issues.
 
-Yes, that is correct.  There isn't a collision since I2C uses 0-0000 and
-SPMI uses 0-00 naming scheme.  However, those names are very similar and
-it is hard for a user to tell which is which inside
-/sys/kernel/debug/regmap without a deep understanding of the I2C and SPMI
-code.
+Since the devcoredump is read by usermode and it is allowed
+upto 5 minutes to read the coredump, capturing the snapshot that
+time will not result in an accurate result.
 
-The SPMI regmap debugfs files are used extensively for testing and debug
-purposes internally at Qualcomm and by our customers.  It would be helpful
-if the more verbose naming scheme were accepted upstream to avoid
-confusion and broken test scripts.
+Rather we should capture the snapshot right after the error
+happened. Hence add support for capturing this snapshot by
+re-using the drm_atomic_helper_duplicate_state() API to support
+a non-context version.
 
-Thanks,
-David
+Also add nolock versions of the drm_atomic_get_***_state() APIs
+which can be used to get snapshot of the drm atomic state of
+display drivers.
 
+Signed-off-by: Abhinav Kumar <abhinavk@codeaurora.org>
+---
+ drivers/gpu/drm/drm_atomic.c        | 154 ++++++++++++++++++----------
+ drivers/gpu/drm/drm_atomic_helper.c |  28 ++++-
+ include/drm/drm_atomic.h            |  10 ++
+ include/drm/drm_atomic_helper.h     |   2 +
+ 4 files changed, 136 insertions(+), 58 deletions(-)
+
+diff --git a/drivers/gpu/drm/drm_atomic.c b/drivers/gpu/drm/drm_atomic.c
+index 9ccfbf213d72..4e805157100b 100644
+--- a/drivers/gpu/drm/drm_atomic.c
++++ b/drivers/gpu/drm/drm_atomic.c
+@@ -272,37 +272,23 @@ void __drm_atomic_state_free(struct kref *ref)
+ }
+ EXPORT_SYMBOL(__drm_atomic_state_free);
+ 
+-/**
+- * drm_atomic_get_crtc_state - get CRTC state
+- * @state: global atomic state object
+- * @crtc: CRTC to get state object for
+- *
+- * This function returns the CRTC state for the given CRTC, allocating it if
+- * needed. It will also grab the relevant CRTC lock to make sure that the state
+- * is consistent.
+- *
+- * Returns:
+- *
+- * Either the allocated state or the error code encoded into the pointer. When
+- * the error is EDEADLK then the w/w mutex code has detected a deadlock and the
+- * entire atomic sequence must be restarted. All other errors are fatal.
+- */
+-struct drm_crtc_state *
+-drm_atomic_get_crtc_state(struct drm_atomic_state *state,
+-			  struct drm_crtc *crtc)
++static struct drm_crtc_state *
++__drm_atomic_get_crtc_state(struct drm_atomic_state *state,
++		struct drm_crtc *crtc, bool take_lock)
+ {
+ 	int ret, index = drm_crtc_index(crtc);
+ 	struct drm_crtc_state *crtc_state;
+ 
+-	WARN_ON(!state->acquire_ctx);
+-
+ 	crtc_state = drm_atomic_get_existing_crtc_state(state, crtc);
+ 	if (crtc_state)
+ 		return crtc_state;
+ 
+-	ret = drm_modeset_lock(&crtc->mutex, state->acquire_ctx);
+-	if (ret)
+-		return ERR_PTR(ret);
++	if (take_lock) {
++		WARN_ON(!state->acquire_ctx);
++		ret = drm_modeset_lock(&crtc->mutex, state->acquire_ctx);
++		if (ret)
++			return ERR_PTR(ret);
++	}
+ 
+ 	crtc_state = crtc->funcs->atomic_duplicate_state(crtc);
+ 	if (!crtc_state)
+@@ -319,8 +305,37 @@ drm_atomic_get_crtc_state(struct drm_atomic_state *state,
+ 
+ 	return crtc_state;
+ }
++
++/**
++ * drm_atomic_get_crtc_state - get CRTC state
++ * @state: global atomic state object
++ * @crtc: CRTC to get state object for
++ *
++ * This function returns the CRTC state for the given CRTC, allocating it if
++ * needed. It will also grab the relevant CRTC lock to make sure that the state
++ * is consistent.
++ *
++ * Returns:
++ *
++ * Either the allocated state or the error code encoded into the pointer. When
++ * the error is EDEADLK then the w/w mutex code has detected a deadlock and the
++ * entire atomic sequence must be restarted. All other errors are fatal.
++ */
++struct drm_crtc_state *
++drm_atomic_get_crtc_state(struct drm_atomic_state *state,
++		struct drm_crtc *crtc)
++{
++	return __drm_atomic_get_crtc_state(state, crtc, true);
++}
+ EXPORT_SYMBOL(drm_atomic_get_crtc_state);
+ 
++struct drm_crtc_state *
++drm_atomic_get_crtc_state_nl(struct drm_atomic_state *state,
++		struct drm_crtc *crtc)
++{
++	return __drm_atomic_get_crtc_state(state, crtc, false);
++}
++
+ static int drm_atomic_crtc_check(const struct drm_crtc_state *old_crtc_state,
+ 				 const struct drm_crtc_state *new_crtc_state)
+ {
+@@ -445,30 +460,13 @@ static int drm_atomic_connector_check(struct drm_connector *connector,
+ 	return 0;
+ }
+ 
+-/**
+- * drm_atomic_get_plane_state - get plane state
+- * @state: global atomic state object
+- * @plane: plane to get state object for
+- *
+- * This function returns the plane state for the given plane, allocating it if
+- * needed. It will also grab the relevant plane lock to make sure that the state
+- * is consistent.
+- *
+- * Returns:
+- *
+- * Either the allocated state or the error code encoded into the pointer. When
+- * the error is EDEADLK then the w/w mutex code has detected a deadlock and the
+- * entire atomic sequence must be restarted. All other errors are fatal.
+- */
+-struct drm_plane_state *
+-drm_atomic_get_plane_state(struct drm_atomic_state *state,
+-			  struct drm_plane *plane)
++static struct drm_plane_state *
++__drm_atomic_get_plane_state(struct drm_atomic_state *state,
++		struct drm_plane *plane, bool take_lock)
+ {
+ 	int ret, index = drm_plane_index(plane);
+ 	struct drm_plane_state *plane_state;
+ 
+-	WARN_ON(!state->acquire_ctx);
+-
+ 	/* the legacy pointers should never be set */
+ 	WARN_ON(plane->fb);
+ 	WARN_ON(plane->old_fb);
+@@ -478,9 +476,12 @@ drm_atomic_get_plane_state(struct drm_atomic_state *state,
+ 	if (plane_state)
+ 		return plane_state;
+ 
+-	ret = drm_modeset_lock(&plane->mutex, state->acquire_ctx);
+-	if (ret)
+-		return ERR_PTR(ret);
++	if (take_lock) {
++		WARN_ON(!state->acquire_ctx);
++		ret = drm_modeset_lock(&plane->mutex, state->acquire_ctx);
++		if (ret)
++			return ERR_PTR(ret);
++	}
+ 
+ 	plane_state = plane->funcs->atomic_duplicate_state(plane);
+ 	if (!plane_state)
+@@ -506,8 +507,37 @@ drm_atomic_get_plane_state(struct drm_atomic_state *state,
+ 
+ 	return plane_state;
+ }
++
++/**
++ * drm_atomic_get_plane_state - get plane state
++ * @state: global atomic state object
++ * @plane: plane to get state object for
++ *
++ * This function returns the plane state for the given plane, allocating it if
++ * needed. It will also grab the relevant plane lock to make sure that the state
++ * is consistent.
++ *
++ * Returns:
++ *
++ * Either the allocated state or the error code encoded into the pointer. When
++ * the error is EDEADLK then the w/w mutex code has detected a deadlock and the
++ * entire atomic sequence must be restarted. All other errors are fatal.
++ */
++struct drm_plane_state *
++drm_atomic_get_plane_state(struct drm_atomic_state *state,
++		struct drm_plane *plane)
++{
++	return __drm_atomic_get_plane_state(state, plane, true);
++}
+ EXPORT_SYMBOL(drm_atomic_get_plane_state);
+ 
++struct drm_plane_state *
++drm_atomic_get_plane_state_nl(struct drm_atomic_state *state,
++		struct drm_plane *plane)
++{
++	return __drm_atomic_get_plane_state(state, plane, false);
++}
++
+ static bool
+ plane_switching_crtc(const struct drm_plane_state *old_plane_state,
+ 		     const struct drm_plane_state *new_plane_state)
+@@ -939,19 +969,21 @@ EXPORT_SYMBOL(drm_atomic_get_new_connector_for_encoder);
+  * the error is EDEADLK then the w/w mutex code has detected a deadlock and the
+  * entire atomic sequence must be restarted. All other errors are fatal.
+  */
+-struct drm_connector_state *
+-drm_atomic_get_connector_state(struct drm_atomic_state *state,
+-			  struct drm_connector *connector)
++static struct drm_connector_state *
++__drm_atomic_get_connector_state(struct drm_atomic_state *state,
++struct drm_connector *connector, bool take_lock)
+ {
+ 	int ret, index;
+ 	struct drm_mode_config *config = &connector->dev->mode_config;
+ 	struct drm_connector_state *connector_state;
+ 
+-	WARN_ON(!state->acquire_ctx);
+-
+-	ret = drm_modeset_lock(&config->connection_mutex, state->acquire_ctx);
+-	if (ret)
+-		return ERR_PTR(ret);
++	if (take_lock) {
++		WARN_ON(!state->acquire_ctx);
++		ret = drm_modeset_lock(&config->connection_mutex,
++				state->acquire_ctx);
++		if (ret)
++			return ERR_PTR(ret);
++	}
+ 
+ 	index = drm_connector_index(connector);
+ 
+@@ -999,8 +1031,22 @@ drm_atomic_get_connector_state(struct drm_atomic_state *state,
+ 
+ 	return connector_state;
+ }
++
++struct drm_connector_state *
++drm_atomic_get_connector_state(struct drm_atomic_state *state,
++struct drm_connector *connector)
++{
++	return __drm_atomic_get_connector_state(state, connector, true);
++}
+ EXPORT_SYMBOL(drm_atomic_get_connector_state);
+ 
++struct drm_connector_state *
++drm_atomic_get_connector_state_nl(struct drm_atomic_state *state,
++		struct drm_connector *connector)
++{
++	return __drm_atomic_get_connector_state(state, connector, false);
++}
++
+ static void drm_atomic_connector_print_state(struct drm_printer *p,
+ 		const struct drm_connector_state *state)
+ {
+diff --git a/drivers/gpu/drm/drm_atomic_helper.c b/drivers/gpu/drm/drm_atomic_helper.c
+index ea1926b5bb80..229dc41aedb9 100644
+--- a/drivers/gpu/drm/drm_atomic_helper.c
++++ b/drivers/gpu/drm/drm_atomic_helper.c
+@@ -3140,13 +3140,18 @@ drm_atomic_helper_duplicate_state(struct drm_device *dev,
+ 	if (!state)
+ 		return ERR_PTR(-ENOMEM);
+ 
+-	state->acquire_ctx = ctx;
++	if (ctx)
++		state->acquire_ctx = ctx;
+ 	state->duplicated = true;
+ 
+ 	drm_for_each_crtc(crtc, dev) {
+ 		struct drm_crtc_state *crtc_state;
+ 
+-		crtc_state = drm_atomic_get_crtc_state(state, crtc);
++		if (ctx)
++			crtc_state = drm_atomic_get_crtc_state(state, crtc);
++		else
++			crtc_state = drm_atomic_get_crtc_state_nl(state,
++					crtc);
+ 		if (IS_ERR(crtc_state)) {
+ 			err = PTR_ERR(crtc_state);
+ 			goto free;
+@@ -3156,7 +3161,11 @@ drm_atomic_helper_duplicate_state(struct drm_device *dev,
+ 	drm_for_each_plane(plane, dev) {
+ 		struct drm_plane_state *plane_state;
+ 
+-		plane_state = drm_atomic_get_plane_state(state, plane);
++		if (ctx)
++			plane_state = drm_atomic_get_plane_state(state, plane);
++		else
++			plane_state = drm_atomic_get_plane_state_nl(state,
++					plane);
+ 		if (IS_ERR(plane_state)) {
+ 			err = PTR_ERR(plane_state);
+ 			goto free;
+@@ -3167,7 +3176,12 @@ drm_atomic_helper_duplicate_state(struct drm_device *dev,
+ 	drm_for_each_connector_iter(conn, &conn_iter) {
+ 		struct drm_connector_state *conn_state;
+ 
+-		conn_state = drm_atomic_get_connector_state(state, conn);
++		if (ctx)
++			conn_state = drm_atomic_get_connector_state(state,
++					conn);
++		else
++			conn_state = drm_atomic_get_connector_state_nl(state,
++					conn);
+ 		if (IS_ERR(conn_state)) {
+ 			err = PTR_ERR(conn_state);
+ 			drm_connector_list_iter_end(&conn_iter);
+@@ -3189,6 +3203,12 @@ drm_atomic_helper_duplicate_state(struct drm_device *dev,
+ }
+ EXPORT_SYMBOL(drm_atomic_helper_duplicate_state);
+ 
++struct drm_atomic_state *
++drm_atomic_helper_snapshot_state(struct drm_device *dev)
++{
++	return drm_atomic_helper_duplicate_state(dev, NULL);
++}
++
+ /**
+  * drm_atomic_helper_suspend - subsystem-level suspend helper
+  * @dev: DRM device
+diff --git a/include/drm/drm_atomic.h b/include/drm/drm_atomic.h
+index 1dc8af7671b7..85e43489e33d 100644
+--- a/include/drm/drm_atomic.h
++++ b/include/drm/drm_atomic.h
+@@ -452,6 +452,16 @@ struct drm_connector_state * __must_check
+ drm_atomic_get_connector_state(struct drm_atomic_state *state,
+ 			       struct drm_connector *connector);
+ 
++struct drm_crtc_state *
++drm_atomic_get_crtc_state_nl(struct drm_atomic_state *state,
++			  struct drm_crtc *crtc);
++struct drm_plane_state *
++drm_atomic_get_plane_state_nl(struct drm_atomic_state *state,
++			   struct drm_plane *plane);
++struct drm_connector_state *
++drm_atomic_get_connector_state_nl(struct drm_atomic_state *state,
++			       struct drm_connector *connector);
++
+ void drm_atomic_private_obj_init(struct drm_device *dev,
+ 				 struct drm_private_obj *obj,
+ 				 struct drm_private_state *state,
+diff --git a/include/drm/drm_atomic_helper.h b/include/drm/drm_atomic_helper.h
+index b268180c97eb..e6be47ba4834 100644
+--- a/include/drm/drm_atomic_helper.h
++++ b/include/drm/drm_atomic_helper.h
+@@ -126,6 +126,8 @@ void drm_atomic_helper_shutdown(struct drm_device *dev);
+ struct drm_atomic_state *
+ drm_atomic_helper_duplicate_state(struct drm_device *dev,
+ 				  struct drm_modeset_acquire_ctx *ctx);
++struct drm_atomic_state *
++drm_atomic_helper_snapshot_state(struct drm_device *dev);
+ struct drm_atomic_state *drm_atomic_helper_suspend(struct drm_device *dev);
+ int drm_atomic_helper_commit_duplicated_state(struct drm_atomic_state *state,
+ 					      struct drm_modeset_acquire_ctx *ctx);
 -- 
 The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
 a Linux Foundation Collaborative Project
+
