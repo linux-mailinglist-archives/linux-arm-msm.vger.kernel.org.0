@@ -2,180 +2,111 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 64E7C280B67
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Oct 2020 01:48:06 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 02624280BBF
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Oct 2020 02:45:07 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1733085AbgJAXsF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 1 Oct 2020 19:48:05 -0400
-Received: from m42-4.mailgun.net ([69.72.42.4]:39694 "EHLO m42-4.mailgun.net"
+        id S2387485AbgJBApF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 1 Oct 2020 20:45:05 -0400
+Received: from z5.mailgun.us ([104.130.96.5]:27821 "EHLO z5.mailgun.us"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727780AbgJAXsF (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 1 Oct 2020 19:48:05 -0400
+        id S1733275AbgJBApF (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 1 Oct 2020 20:45:05 -0400
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1601596083; h=In-Reply-To: Content-Type: MIME-Version:
- References: Message-ID: Subject: Cc: To: From: Date: Sender;
- bh=6GE3EtQgnkmIsP2dtiobgWeVOTWXks2cDd33yl18lEk=; b=GKxzncNefuAdVJS/C80ockXe8yHzeUInz/txwoKAs7jgiujREXz3AeH1HqTaOMqMy0X3NqSr
- qvwTLBaLNUU/qsY5AaI/1zq0TnoPXKezFBETJqrQpoZEisF4PxKZiJUJoH/05EL6bgykkEbd
- t8Zgnjif5U/R+QnEPxKHB/qLoY0=
-X-Mailgun-Sending-Ip: 69.72.42.4
+ s=smtp; t=1601599505; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
+ Subject: Sender; bh=tIPTDeHw77fjXshMc7iSNtvBryZjsLxbooevavI8i74=; b=Z4oLddha5FtOlrqqrzz1+c+zotImxvN6dUck4/7vQJJiYmkbImG7FylW6D/qFac1IBXV5+/Y
+ adGFZkxzbKy7YLuQqTdJyjJ9DRiG5yCqzBCDRFvO2mHnJ+78yX+D0KBsFS+t+Lzn0xsvEKJ6
+ denEzzltj4lrX/JIjugSWtOMQYE=
+X-Mailgun-Sending-Ip: 104.130.96.5
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org
  (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n02.prod.us-west-2.postgun.com with SMTP id
- 5f766ab3ebd6fbc87991470c (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 01 Oct 2020 23:48:03
+ smtp-out-n03.prod.us-east-1.postgun.com with SMTP id
+ 5f767811726b122f31eae16e (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 02 Oct 2020 00:45:05
  GMT
-Sender: jcrouse=codeaurora.org@mg.codeaurora.org
+Sender: collinsd=codeaurora.org@mg.codeaurora.org
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 44D1FC433FE; Thu,  1 Oct 2020 23:48:03 +0000 (UTC)
+        id 50022C433CA; Fri,  2 Oct 2020 00:45:04 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
-        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
-Received: from jcrouse1-lnx.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+X-Spam-Status: No, score=-3.2 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        NICE_REPLY_A,SPF_FAIL autolearn=no autolearn_force=no version=3.4.0
+Received: from [10.46.160.165] (i-global254.qualcomm.com [199.106.103.254])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        (Authenticated sender: jcrouse)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 408C0C433C8;
-        Thu,  1 Oct 2020 23:48:01 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 408C0C433C8
+        (Authenticated sender: collinsd)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id AA208C433C8;
+        Fri,  2 Oct 2020 00:45:03 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org AA208C433C8
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=jcrouse@codeaurora.org
-Date:   Thu, 1 Oct 2020 17:47:58 -0600
-From:   Jordan Crouse <jcrouse@codeaurora.org>
-To:     Jonathan Marek <jonathan@marek.ca>
-Cc:     freedreno@lists.freedesktop.org, Rob Clark <robdclark@gmail.com>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Shawn Guo <shawn.guo@linaro.org>,
-        AngeloGioacchino Del Regno <kholk11@gmail.com>,
-        Sharat Masetty <smasetty@codeaurora.org>,
-        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
-        <linux-arm-msm@vger.kernel.org>,
-        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
-        <dri-devel@lists.freedesktop.org>,
-        open list <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH 1/3] drm/msm: add MSM_BO_CACHED_COHERENT
-Message-ID: <20201001234758.GH29832@jcrouse1-lnx.qualcomm.com>
-Mail-Followup-To: Jonathan Marek <jonathan@marek.ca>,
-        freedreno@lists.freedesktop.org, Rob Clark <robdclark@gmail.com>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>, Shawn Guo <shawn.guo@linaro.org>,
-        AngeloGioacchino Del Regno <kholk11@gmail.com>,
-        Sharat Masetty <smasetty@codeaurora.org>,
-        "open list:DRM DRIVER FOR MSM ADRENO GPU" <linux-arm-msm@vger.kernel.org>,
-        "open list:DRM DRIVER FOR MSM ADRENO GPU" <dri-devel@lists.freedesktop.org>,
-        open list <linux-kernel@vger.kernel.org>
-References: <20201001002709.21361-1-jonathan@marek.ca>
- <20201001002709.21361-2-jonathan@marek.ca>
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=collinsd@codeaurora.org
+Subject: Re: [RESEND PATCH] spmi: prefix spmi bus device names with "spmi"
+To:     Stephen Boyd <sboyd@kernel.org>, Mark Brown <broonie@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <1600812258-17722-1-git-send-email-collinsd@codeaurora.org>
+ <160151084091.310579.3876905878885019200@swboyd.mtv.corp.google.com>
+ <20201001174326.GT6715@sirena.org.uk>
+ <160157827040.310579.12112194764912078296@swboyd.mtv.corp.google.com>
+From:   David Collins <collinsd@codeaurora.org>
+Message-ID: <7c45b147-f1d2-4b32-9e51-71c5d2cb576f@codeaurora.org>
+Date:   Thu, 1 Oct 2020 17:45:00 -0700
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.10.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20201001002709.21361-2-jonathan@marek.ca>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+In-Reply-To: <160157827040.310579.12112194764912078296@swboyd.mtv.corp.google.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Sep 30, 2020 at 08:27:04PM -0400, Jonathan Marek wrote:
-> Add a new cache mode for creating coherent host-cached BOs.
-
-Reviewed-by: Jordan Crouse <jcrouse@codeaurora.org>
-
-> Signed-off-by: Jonathan Marek <jonathan@marek.ca>
-> ---
->  drivers/gpu/drm/msm/adreno/adreno_device.c | 1 +
->  drivers/gpu/drm/msm/msm_drv.h              | 1 +
->  drivers/gpu/drm/msm/msm_gem.c              | 8 ++++++++
->  include/uapi/drm/msm_drm.h                 | 5 ++---
->  4 files changed, 12 insertions(+), 3 deletions(-)
+On 10/1/20 11:51 AM, Stephen Boyd wrote:
+> Quoting Mark Brown (2020-10-01 10:43:26)
+>> On Wed, Sep 30, 2020 at 05:07:20PM -0700, Stephen Boyd wrote:
+>>> Quoting David Collins (2020-09-22 15:04:18)
+>>
+>>>> This helps to disambiguate SPMI device regmaps from I2C ones
+>>>> at /sys/kernel/debug/regmap since I2C devices use a very
+>>>> similar naming scheme: 0-0000.
+>>
+>>> Can regmap debugfs prepend the bus name on the node made in debugfs?
+>>> Does it do that already?
+>>
+>> It doesn't do that.  I have to say that given the use of dev_name() in
+>> logging it does feel like it'd be useful to have distinct names for
+>> grepping if we're running into collisions, IIRC the reason I went with
+>> dev_name() was that it's a commonly used human readable handle for
+>> diagnostic infrastrucuture so it makes it easier to follow things around.
 > 
-> diff --git a/drivers/gpu/drm/msm/adreno/adreno_device.c b/drivers/gpu/drm/msm/adreno/adreno_device.c
-> index 9eeb46bf2a5d..2aa707546254 100644
-> --- a/drivers/gpu/drm/msm/adreno/adreno_device.c
-> +++ b/drivers/gpu/drm/msm/adreno/adreno_device.c
-> @@ -410,6 +410,7 @@ static int adreno_bind(struct device *dev, struct device *master, void *data)
->  		config.rev.minor, config.rev.patchid);
->  
->  	priv->is_a2xx = config.rev.core == 2;
-> +	priv->has_cached_coherent = config.rev.core >= 6;
->  
->  	gpu = info->init(drm);
->  	if (IS_ERR(gpu)) {
-> diff --git a/drivers/gpu/drm/msm/msm_drv.h b/drivers/gpu/drm/msm/msm_drv.h
-> index 2c3225bc1794..6384844b1696 100644
-> --- a/drivers/gpu/drm/msm/msm_drv.h
-> +++ b/drivers/gpu/drm/msm/msm_drv.h
-> @@ -167,6 +167,7 @@ struct msm_drm_private {
->  	struct msm_file_private *lastctx;
->  	/* gpu is only set on open(), but we need this info earlier */
->  	bool is_a2xx;
-> +	bool has_cached_coherent;
->  
->  	struct drm_fb_helper *fbdev;
->  
-> diff --git a/drivers/gpu/drm/msm/msm_gem.c b/drivers/gpu/drm/msm/msm_gem.c
-> index b2f49152b4d4..ad9a627493ae 100644
-> --- a/drivers/gpu/drm/msm/msm_gem.c
-> +++ b/drivers/gpu/drm/msm/msm_gem.c
-> @@ -431,6 +431,9 @@ static int msm_gem_pin_iova(struct drm_gem_object *obj,
->  	if (msm_obj->flags & MSM_BO_MAP_PRIV)
->  		prot |= IOMMU_PRIV;
->  
-> +	if (msm_obj->flags & MSM_BO_CACHED_COHERENT)
-> +		prot |= IOMMU_CACHE;
-> +
->  	WARN_ON(!mutex_is_locked(&msm_obj->lock));
->  
->  	if (WARN_ON(msm_obj->madv != MSM_MADV_WILLNEED))
-> @@ -998,6 +1001,7 @@ static int msm_gem_new_impl(struct drm_device *dev,
->  		uint32_t size, uint32_t flags,
->  		struct drm_gem_object **obj)
->  {
-> +	struct msm_drm_private *priv = dev->dev_private;
->  	struct msm_gem_object *msm_obj;
->  
->  	switch (flags & MSM_BO_CACHE_MASK) {
-> @@ -1005,6 +1009,10 @@ static int msm_gem_new_impl(struct drm_device *dev,
->  	case MSM_BO_CACHED:
->  	case MSM_BO_WC:
->  		break;
-> +	case MSM_BO_CACHED_COHERENT:
-> +		if (priv->has_cached_coherent)
-> +			break;
-> +		/* fallthrough */
-
-It confused me that this kind of implicitly fell into the else clause in
-msm_gem_mmap_obj, but I'm on board. This is a good solution since it only allows
-I/O coherence with caching.
-
->  	default:
->  		DRM_DEV_ERROR(dev->dev, "invalid cache flag: %x\n",
->  				(flags & MSM_BO_CACHE_MASK));
-> diff --git a/include/uapi/drm/msm_drm.h b/include/uapi/drm/msm_drm.h
-> index a6c1f3eb2623..474497e8743a 100644
-> --- a/include/uapi/drm/msm_drm.h
-> +++ b/include/uapi/drm/msm_drm.h
-> @@ -94,12 +94,11 @@ struct drm_msm_param {
->  #define MSM_BO_CACHED        0x00010000
->  #define MSM_BO_WC            0x00020000
->  #define MSM_BO_UNCACHED      0x00040000
-> +#define MSM_BO_CACHED_COHERENT 0x080000
->  
->  #define MSM_BO_FLAGS         (MSM_BO_SCANOUT | \
->                                MSM_BO_GPU_READONLY | \
-> -                              MSM_BO_CACHED | \
-> -                              MSM_BO_WC | \
-> -                              MSM_BO_UNCACHED)
-> +                              MSM_BO_CACHE_MASK)
->  
->  struct drm_msm_gem_new {
->  	__u64 size;           /* in */
-> -- 
-> 2.26.1
+> To me the dev_name() usage seems fine. Maybe David has some real reason
+> to change this though?
 > 
+> In general I don't think userspace cares what the SPMI device name is,
+> i.e. the device name isn't used for dev nodes because SPMI doesn't
+> support ioctls or read/write APIs on the bus. That could be a nice
+> feature addition though, to support something like i2c-dev.
+> 
+> Changing it so that regmap debugfs is less likely to collide looks
+> weird. It doesn't actually collide anyway, so it seems like we're adding
+> spmi prefix to make it easier to find in debugfs?
+
+Yes, that is correct.  There isn't a collision since I2C uses 0-0000 and
+SPMI uses 0-00 naming scheme.  However, those names are very similar and
+it is hard for a user to tell which is which inside
+/sys/kernel/debug/regmap without a deep understanding of the I2C and SPMI
+code.
+
+The SPMI regmap debugfs files are used extensively for testing and debug
+purposes internally at Qualcomm and by our customers.  It would be helpful
+if the more verbose naming scheme were accepted upstream to avoid
+confusion and broken test scripts.
+
+Thanks,
+David
 
 -- 
-The Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum,
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
 a Linux Foundation Collaborative Project
