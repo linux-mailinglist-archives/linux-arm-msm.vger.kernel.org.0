@@ -2,80 +2,69 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id ADBEE281D94
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Oct 2020 23:22:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 91595281DBD
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Oct 2020 23:39:38 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725730AbgJBVWv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 2 Oct 2020 17:22:51 -0400
-Received: from mail.kernel.org ([198.145.29.99]:40064 "EHLO mail.kernel.org"
+        id S1725497AbgJBVjh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 2 Oct 2020 17:39:37 -0400
+Received: from mail.kernel.org ([198.145.29.99]:49796 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725283AbgJBVWv (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 2 Oct 2020 17:22:51 -0400
+        id S1725379AbgJBVjh (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 2 Oct 2020 17:39:37 -0400
 Received: from kernel.org (unknown [104.132.0.74])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 25F5E206C9;
-        Fri,  2 Oct 2020 21:22:51 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id ECEDE206DC;
+        Fri,  2 Oct 2020 21:39:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1601673771;
-        bh=IcJ1rDHM6bTzhYMuUHElpqWyvlYFI8mYvdUFY0t0uIs=;
+        s=default; t=1601674777;
+        bh=EigpOxJQN1NRYUgWkdPC3dt6d4DG7VwzcQ8x6TXs15k=;
         h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
-        b=tZB1WbZU/mRsNNYv0inJMdzOlH8xoKix9QXeRsLdfxgYB1SrkwAmXNIr0tu81CbV1
-         v3QUDM+KIjNUS8dw+YN33845j5qSoCfJzgpwcuvWuy46pGltSghfuXA6edBjN8SLiV
-         gezex88GG1362ccXx6rL/LIqfTMuP5bHtk3z/ybA=
+        b=j4XNicKRslHPHRJomOZpo4tfYRPsNgkvNENfihlL0okeY+8olvMkrycqqhGDtWqnx
+         6Yo9s2kFvY8Iz8Miuvb2l51iScLReRb8OGM95aozkkIy81UpQR7FrPKNunB7a+naoP
+         zs6wLQCBhunewdyIGVWULGQ6J77qGYbl9lwWj1Z8=
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <d9f8255a6996596e4fb9dc6404da160d7a4af77f.1601333246.git.gurus@codeaurora.org>
-References: <cover.1601333246.git.gurus@codeaurora.org> <d9f8255a6996596e4fb9dc6404da160d7a4af77f.1601333246.git.gurus@codeaurora.org>
-Subject: Re: [RESEND PATCH v1 1/2] bindings: pm8941-misc: Add support for VBUS detection
+In-Reply-To: <20201002180430.GG5527@sirena.org.uk>
+References: <1600812258-17722-1-git-send-email-collinsd@codeaurora.org> <160151084091.310579.3876905878885019200@swboyd.mtv.corp.google.com> <20201001174326.GT6715@sirena.org.uk> <160157827040.310579.12112194764912078296@swboyd.mtv.corp.google.com> <7c45b147-f1d2-4b32-9e51-71c5d2cb576f@codeaurora.org> <20201002160324.GE5527@sirena.org.uk> <160166091282.310579.8553391053258607173@swboyd.mtv.corp.google.com> <20201002180430.GG5527@sirena.org.uk>
+Subject: Re: [RESEND PATCH] spmi: prefix spmi bus device names with "spmi"
 From:   Stephen Boyd <sboyd@kernel.org>
-Cc:     Subbaraman Narayanamurthy <subbaram@codeaurora.org>,
-        David Collins <collinsd@codeaurora.org>,
-        linux-kernel@vger.kernel.org,
-        Anirudh Ghayal <aghayal@codeaurora.org>,
-        Guru Das Srinagesh <gurus@codeaurora.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Guru Das Srinagesh <gurus@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org
-Date:   Fri, 02 Oct 2020 14:22:49 -0700
-Message-ID: <160167376992.310579.1594629547444861122@swboyd.mtv.corp.google.com>
+Cc:     David Collins <collinsd@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+To:     Mark Brown <broonie@kernel.org>
+Date:   Fri, 02 Oct 2020 14:39:35 -0700
+Message-ID: <160167477566.310579.12040108464021349450@swboyd.mtv.corp.google.com>
 User-Agent: alot/0.9.1
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Guru Das Srinagesh (2020-09-28 15:49:08)
-> From: Anirudh Ghayal <aghayal@codeaurora.org>
+Quoting Mark Brown (2020-10-02 11:04:30)
+> On Fri, Oct 02, 2020 at 10:48:32AM -0700, Stephen Boyd wrote:
+> > Quoting Mark Brown (2020-10-02 09:03:24)
 >=20
-> VBUS can be detected via a dedicated PMIC pin. Enable compatible string
-> that adds support for reporting the VBUS status.
+> > > ...and doing this in the dev_name() should help other diagnostic users
+> > > (like dev_printk() for example).
 >=20
-> Signed-off-by: Anirudh Ghayal <aghayal@codeaurora.org>
-> Signed-off-by: Guru Das Srinagesh <gurus@codeaurora.org>
-> ---
->  Documentation/devicetree/bindings/extcon/qcom,pm8941-misc.txt | 2 +-
+> > Don't thinks like dev_printk() prefix the bus name? See
+> > dev_driver_string()? So I agree that having the bus name is useful, but
+> > confused why there are testing scripts and things on top of regmap
+> > debugfs
+>=20
+> Not that I've ever noticed, eg on the console.
 
-Can this be converted to YAML?
+I see things like this on my console:
 
->  1 file changed, 1 insertion(+), 1 deletion(-)
->=20
-> diff --git a/Documentation/devicetree/bindings/extcon/qcom,pm8941-misc.tx=
-t b/Documentation/devicetree/bindings/extcon/qcom,pm8941-misc.txt
-> index 35383adb..91a49af 100644
-> --- a/Documentation/devicetree/bindings/extcon/qcom,pm8941-misc.txt
-> +++ b/Documentation/devicetree/bindings/extcon/qcom,pm8941-misc.txt
-> @@ -8,7 +8,7 @@ PROPERTIES
->  - compatible:
->      Usage: required
->      Value type: <string>
-> -    Definition: Should contain "qcom,pm8941-misc";
-> +    Definition: Should contain "qcom,pm8941-misc" or "qcom,pmd-vbus-det";
-> =20
->  - reg:
->      Usage: required
-> --=20
-> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-> a Linux Foundation Collaborative Project
->
+[    1.684617] spmi spmi-0: PMIC arbiter version v5 (0x50000000)
+
+and 'spmi' is the bus name I'm thinking about. But I think that's
+because there isn't a driver attached. Nothing prints for the 0-00
+device by default, so I enabled the debug print for it and I see
+
+[    1.693280] pmic-spmi 0-00: 28: unknown v2.0
+
+Anyway, the device name was written to follow i2c as far as I can tell.
+
+If scripts, i.e. computers, have a hard time figuring out the name of
+the device then fix the script?
