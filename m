@@ -2,85 +2,152 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 3BE60280E40
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Oct 2020 09:53:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 18AEC280E82
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Oct 2020 10:07:03 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726010AbgJBHx1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 2 Oct 2020 03:53:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50134 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725968AbgJBHx0 (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 2 Oct 2020 03:53:26 -0400
-Received: from casper.infradead.org (casper.infradead.org [IPv6:2001:8b0:10b:1236::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 55D35C0613D0;
-        Fri,  2 Oct 2020 00:53:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-        d=infradead.org; s=casper.20170209; h=In-Reply-To:Content-Type:MIME-Version:
-        References:Message-ID:Subject:Cc:To:From:Date:Sender:Reply-To:
-        Content-Transfer-Encoding:Content-ID:Content-Description;
-        bh=XW2oAnf1nP/NaPgcm7Rs78JJ4Tv+nx++28EAZGgca0o=; b=vZsuh1A0vOzF5XcYtf6FYQay+e
-        cua8JGWDRiTZa/D8624BynsoLOs/bvqatzl4naq0J369e214Oaf5sH0wx/Nb3X2SK0jqCztZ0hCD/
-        5RW6GA0cIxijQz3ZOnMPv3Jv4hoQSn8roOZS7utCiy9Sut8vnv/cxwN5lPyrRvTXoD5x+fNMPqSAL
-        pFZ+xDE8Bi/RehqwInBhmbRzYKcFau4Xw+n6DgE6p9NUFgDgqqAKEhFLhodx+5f1x8OfK87uoxf1i
-        XE215FY5GXBqsAK9mtaCcz3DrRngE/sA0niWrYcGOfjl+C+7RXeGRh2TbmXsIQb8FNMU+wIkpXStT
-        T75cYj0Q==;
-Received: from hch by casper.infradead.org with local (Exim 4.92.3 #3 (Red Hat Linux))
-        id 1kOFsX-0002Vm-DQ; Fri, 02 Oct 2020 07:53:21 +0000
-Date:   Fri, 2 Oct 2020 08:53:21 +0100
-From:   Christoph Hellwig <hch@infradead.org>
-To:     Jonathan Marek <jonathan@marek.ca>
-Cc:     freedreno@lists.freedesktop.org, Rob Clark <robdclark@gmail.com>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
-        <linux-arm-msm@vger.kernel.org>,
-        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
-        <dri-devel@lists.freedesktop.org>,
-        open list <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH 2/3] drm/msm: add DRM_MSM_GEM_SYNC_CACHE for non-coherent
- cache maintenance
-Message-ID: <20201002075321.GA7547@infradead.org>
-References: <20201001002709.21361-1-jonathan@marek.ca>
- <20201001002709.21361-3-jonathan@marek.ca>
+        id S1726398AbgJBIHC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 2 Oct 2020 04:07:02 -0400
+Received: from m42-4.mailgun.net ([69.72.42.4]:45630 "EHLO m42-4.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725993AbgJBIHC (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 2 Oct 2020 04:07:02 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1601626021; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=DpzPdf9SuGFakeKDAP+tZzUbDX47U9mv46HDpRpFsVQ=;
+ b=oul1fWgcvlmrWBD+DdHaYNmXbQGHZI/kq41nnMyDbmcUP/xi5ZZl5zYcRVxlUak/ICXFQHfD
+ dR0Rx3qDhp0n3aGux6G1Y7bAwgJCh3B9A6mm7golbNR69z6234JzS864xPI1sP6FDB9h6p/G
+ vp+4FqN+fYN2N5zNM8eUU4C7Plw=
+X-Mailgun-Sending-Ip: 69.72.42.4
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n01.prod.us-east-1.postgun.com with SMTP id
+ 5f76df83e89f7b4c7851d2c3 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 02 Oct 2020 08:06:27
+ GMT
+Sender: saiprakash.ranjan=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id E318CC433FF; Fri,  2 Oct 2020 08:06:26 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: saiprakash.ranjan)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 1B4F1C433CA;
+        Fri,  2 Oct 2020 08:06:26 +0000 (UTC)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20201001002709.21361-3-jonathan@marek.ca>
-X-SRS-Rewrite: SMTP reverse-path rewritten from <hch@infradead.org> by casper.infradead.org. See http://www.infradead.org/rpr.html
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Fri, 02 Oct 2020 13:36:26 +0530
+From:   Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+To:     Robin Murphy <robin.murphy@arm.com>
+Cc:     stanimir.varbanov@linaro.org, mchehab@kernel.org,
+        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-arm-msm-owner@vger.kernel.org
+Subject: Re: [PATCH] media: venus: core: Drop local dma_parms
+In-Reply-To: <e5384b296a0af099dc502572752df149127b7947.1599167568.git.robin.murphy@arm.com>
+References: <e5384b296a0af099dc502572752df149127b7947.1599167568.git.robin.murphy@arm.com>
+Message-ID: <cdd56444b0d7faf9358370f821a10846@codeaurora.org>
+X-Sender: saiprakash.ranjan@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-> @@ -8,6 +8,7 @@
->  #include <linux/shmem_fs.h>
->  #include <linux/dma-buf.h>
->  #include <linux/pfn_t.h>
-> +#include <linux/dma-noncoherent.h>
+Hi Robin,
 
-NAK, dma-noncoherent.h is not for driver use.  And will in fact go
-away in 5.10.
+On 2020-09-04 02:44, Robin Murphy wrote:
+> Since commit 9495b7e92f71 ("driver core: platform: Initialize dma_parms
+> for platform devices"), struct platform_device already provides a
+> dma_parms structure, so we can save allocating another one.
+> 
+> Also the DMA segment size is simply a size, not a bitmask.
+> 
+> Signed-off-by: Robin Murphy <robin.murphy@arm.com>
+> ---
+>  drivers/media/platform/qcom/venus/core.c | 8 +-------
+>  1 file changed, 1 insertion(+), 7 deletions(-)
+> 
+> diff --git a/drivers/media/platform/qcom/venus/core.c
+> b/drivers/media/platform/qcom/venus/core.c
+> index 203c6538044f..2fa9275d75ff 100644
+> --- a/drivers/media/platform/qcom/venus/core.c
+> +++ b/drivers/media/platform/qcom/venus/core.c
+> @@ -226,13 +226,7 @@ static int venus_probe(struct platform_device 
+> *pdev)
+>  	if (ret)
+>  		return ret;
+> 
+> -	if (!dev->dma_parms) {
+> -		dev->dma_parms = devm_kzalloc(dev, sizeof(*dev->dma_parms),
+> -					      GFP_KERNEL);
+> -		if (!dev->dma_parms)
+> -			return -ENOMEM;
+> -	}
+> -	dma_set_max_seg_size(dev, DMA_BIT_MASK(32));
+> +	dma_set_max_seg_size(dev, UINT_MAX);
+> 
+>  	INIT_LIST_HEAD(&core->instances);
+>  	mutex_init(&core->lock);
 
->  
->  #include <drm/drm_prime.h>
->  
-> @@ -808,6 +809,20 @@ int msm_gem_cpu_fini(struct drm_gem_object *obj)
->  	return 0;
->  }
->  
-> +void msm_gem_sync_cache(struct drm_gem_object *obj, uint32_t flags,
-> +		size_t range_start, size_t range_end)
-> +{
-> +	struct msm_gem_object *msm_obj = to_msm_bo(obj);
-> +
-> +	/* TODO: sync only the required range, and don't invalidate on clean */
-> +
-> +	if (flags & MSM_GEM_SYNC_CACHE_CLEAN)
-> +		sync_for_device(msm_obj);
-> +
-> +	if (flags & MSM_GEM_SYNC_CACHE_INVALIDATE)
-> +		sync_for_cpu(msm_obj);
+This reintroduced dma api debug warning which the original commit was
+addressing or rather thought it addressed.
 
-And make to these ones as well.  They are complete abuses of the DMA
-API, and while we had to live with that for now to not cause regressions
-they absoutely must not be exposed in a userspace ABI like this.
+  DMA-API: qcom-venus aa00000.video-codec: mapping sg segment longer than 
+device claims to support [len=4194304] [max=65536]
+  WARNING: CPU: 3 PID: 5365 at kernel/dma/debug.c:1225 
+debug_dma_map_sg+0x1ac/0x2c8
+  <...>
+  pstate: 60400009 (nZCv daif +PAN -UAO)
+  pc : debug_dma_map_sg+0x1ac/0x2c8
+  lr : debug_dma_map_sg+0x1ac/0x2c8
+  sp : ffffff8016517850
+  x29: ffffff8016517860 x28: 0000000000010000
+  x27: 00000000ffffffff x26: ffffff80da45eb00
+  x25: ffffffd03c465000 x24: ffffffd03b3c1000
+  x23: ffffff803e262d80 x22: ffffff80d9a0d010
+  x21: 0000000000000001 x20: 0000000000000001
+  x19: 0000000000000001 x18: 00000000ffff0a10
+  x17: ffffffd03b84a000 x16: 0000000000000037
+  x15: ffffffd03a950610 x14: 0000000000000001
+  x13: 0000000000000000 x12: 00000000a3b31442
+  x11: 0000000000000000 x10: dfffffd000000001
+  x9 : f544368f90c5ee00 x8 : f544368f90c5ee00
+  x7 : ffffffd03af5d570 x6 : 0000000000000000
+  x5 : 0000000000000080 x4 : 0000000000000001
+  x3 : ffffffd03a9174b0 x2 : 0000000000000001
+  x1 : 0000000000000008 x0 : 000000000000007a
+  Call trace:
+   debug_dma_map_sg+0x1ac/0x2c8
+   vb2_dma_sg_alloc+0x274/0x2f4 [videobuf2_dma_sg]
+   __vb2_queue_alloc+0x14c/0x3b0 [videobuf2_common]
+   vb2_core_reqbufs+0x234/0x374 [videobuf2_common]
+   vb2_reqbufs+0x4c/0x64 [videobuf2_v4l2]
+   v4l2_m2m_reqbufs+0x50/0x84 [v4l2_mem2mem]
+   v4l2_m2m_ioctl_reqbufs+0x2c/0x38 [v4l2_mem2mem]
+   v4l_reqbufs+0x4c/0x5c
+   __video_do_ioctl+0x2cc/0x3e0
+   video_usercopy+0x3b0/0x910
+   video_ioctl2+0x38/0x48
+   v4l2_ioctl+0x6c/0x80
+   do_video_ioctl+0xb54/0x2708
+   v4l2_compat_ioctl32+0x5c/0xcc
+   __se_compat_sys_ioctl+0x100/0x2064
+   __arm64_compat_sys_ioctl+0x20/0x2c
+   el0_svc_common+0xa8/0x178
+   el0_svc_compat_handler+0x2c/0x40
+   el0_svc_compat+0x8/0x10
+
+Thanks,
+Sai
+
+-- 
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a 
+member
+of Code Aurora Forum, hosted by The Linux Foundation
