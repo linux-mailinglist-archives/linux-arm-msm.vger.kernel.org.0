@@ -2,135 +2,478 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 140992817A7
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Oct 2020 18:18:34 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 60B96281912
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Oct 2020 19:21:39 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388039AbgJBQS3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 2 Oct 2020 12:18:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43132 "EHLO
+        id S2387929AbgJBRVj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 2 Oct 2020 13:21:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53118 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2387957AbgJBQSY (ORCPT
+        with ESMTP id S1726813AbgJBRVi (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 2 Oct 2020 12:18:24 -0400
-Received: from mail-wm1-x342.google.com (mail-wm1-x342.google.com [IPv6:2a00:1450:4864:20::342])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D668AC0613E2
-        for <linux-arm-msm@vger.kernel.org>; Fri,  2 Oct 2020 09:18:23 -0700 (PDT)
-Received: by mail-wm1-x342.google.com with SMTP id s13so2217420wmh.4
-        for <linux-arm-msm@vger.kernel.org>; Fri, 02 Oct 2020 09:18:23 -0700 (PDT)
+        Fri, 2 Oct 2020 13:21:38 -0400
+Received: from mail-wr1-x442.google.com (mail-wr1-x442.google.com [IPv6:2a00:1450:4864:20::442])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 20AFCC0613D0
+        for <linux-arm-msm@vger.kernel.org>; Fri,  2 Oct 2020 10:21:38 -0700 (PDT)
+Received: by mail-wr1-x442.google.com with SMTP id x14so2613891wrl.12
+        for <linux-arm-msm@vger.kernel.org>; Fri, 02 Oct 2020 10:21:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=subject:to:cc:references:from:autocrypt:message-id:date
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=3FjrWORHL6C+v7fMa3YJ9mfj4USIePuw2hsMTnCmv2E=;
-        b=Gg7IouTIP67wOSgm9xiDaMoFtgD0SiZgGyhLk9XlyiC0Xks1oDIaTVJjF5bAcdcQpG
-         tXz8YFeFCI8FVgO947edVG/DKlajmrp2RxyRxAmdrgl1hRN5VLRah4lB7QxYyA7R6BQz
-         A2+FSl3RCXsue6yN9JGbnNpbg5dPuPOkQafsd8wzr5roGWogXzp12R/9YPhfk298eT44
-         xSAWY9jIq8yOJ5vORvvd+bUiUAfX2P3PN2k1+O339M6jmPOy0tXErMhE0Pe4Vw6rVlgq
-         xsLltnRWPwRryu34cfK36aIGtxJs93WzZuQhST0IZRVl4eXTgoYT1YGmcQVcIdr1M0Tb
-         Go9w==
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=XittJBCxm8DAhH82ttVpYp0IHqbf7cmSbKh+WEBzqy0=;
+        b=AaET0wOkbH7+dsS4VhrhXlxICQayyextChLxAU4EMcBOr2ANOBvPcovLRkdMoXTTla
+         Uo1fVayT7klbIMdcwfovPPxMVDpnZg/PC5IOoK4YU1+hbAokH4bFR3eTJKd91b1L4hrY
+         ILfGG//gWZ5xQDee7jbqWjl5/6Y2oi4V4vMC0l9kWsd5caL71s7y+LdKhwZhJF3Kjx7T
+         jAybe6YyHsX5cB5WbbJqTPwZv4C9ZBs2CrOr6rSrwap4f/GhaEYp1nrwXzSrccDzY2eg
+         nJdOMkszat9/XP16jM/SCXo/2KX6CUdG4j9NOo8U9+qsM02K+cV6V3zZXTDO/OVRh2rE
+         c83w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:autocrypt
-         :message-id:date:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=3FjrWORHL6C+v7fMa3YJ9mfj4USIePuw2hsMTnCmv2E=;
-        b=oX2DJWk7iGkWuTFvqdJFGAYGEKpE5D7AgDDIU65biG7b4kGCsZk+qnBlIp+k9y6Zad
-         LWd5x9qtruagHp22P+68bp3YWpsOqYsDD7EJdWbx+w+AXxvAImXgr1j/WaNbzMVZzmgK
-         LiUObEJRs6+ZKSvDv0wg8SYWUYJKz7opiTQfc9stZhlcjSVkwLI1iQSYPqRkS1kVC3tQ
-         BYpGrhMx+FuaHMEEAZ3yMeRTfjYwjrw/pUmhje4KUiHQv296oq5NtfAc6NVA70dwTn+C
-         HniHgtKw6VaSGd4NgZOwqgYk85Pl/rqMMBUqWLJASpYsGXTBl0rX4cogDBAKcW9srV5M
-         HEIg==
-X-Gm-Message-State: AOAM5320pbtsJhXMJMKp3yWpFzLgjR1Mpfso1hjDBw7RThddTngWw/MN
-        jnOKrFIj6BKA3wzKsgSlUT8wuA==
-X-Google-Smtp-Source: ABdhPJxMql+lFAHwwuS456ZEPJ9XRYjfMnjvZn9Kyof5utaqh+mddZMT/GBDYgapWFi1y6Z7wj1enA==
-X-Received: by 2002:a1c:9c8c:: with SMTP id f134mr3713260wme.27.1601655502352;
-        Fri, 02 Oct 2020 09:18:22 -0700 (PDT)
-Received: from [10.44.66.8] ([212.45.67.2])
-        by smtp.googlemail.com with ESMTPSA id j206sm2310851wmj.5.2020.10.02.09.18.21
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 02 Oct 2020 09:18:21 -0700 (PDT)
-Subject: Re: [PATCH] arm64: dts: qcom: sc7180: Fix one forgotten interconnect
- reference
-To:     Douglas Anderson <dianders@chromium.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Matthias Kaehlcke <mka@chromium.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Sibi Sankar <sibis@codeaurora.org>, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20201001141838.1.I08054d1d976eed64ffa1b0e21d568e0dc6040b54@changeid>
-From:   Georgi Djakov <georgi.djakov@linaro.org>
-Autocrypt: addr=georgi.djakov@linaro.org; prefer-encrypt=mutual; keydata=
- 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
- KEmKjLDvB0pePJkdTw==
-Message-ID: <63aa154c-d56d-2510-9042-a6634ffffc7b@linaro.org>
-Date:   Fri, 2 Oct 2020 19:18:20 +0300
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=XittJBCxm8DAhH82ttVpYp0IHqbf7cmSbKh+WEBzqy0=;
+        b=Edi3hKMIWDFC9lJPCMOTlG6epHTUGPsG6BJcm1lZB//74wsjJfPke22Dv4OU9f0K6B
+         ZuYQPBu1B6l1LqPJaU0RYYecAlf7Xsp03LnOGNpKIb747ZYxsDAtm4BCPAY+ybFylbK5
+         qTqFG3IncmnAz5Jqb5Ya5cys0qsjkTUNRtBM+KtPLoUF/+jkeB2YIP997K66SqCxS62R
+         lZ4kvWAQf8GpuLzt6uPCDZEIeyszSoxzrbH/ly2zZ+ST2xKf5dDp4lSQ7Mp1+RVSQELP
+         PQPnzfzFJUyiBUOMTZqYf4ZvoNGux2cKQIS33UIhgvqIbTW0l6ljNRUDIgvUK/73/Xcc
+         4oTA==
+X-Gm-Message-State: AOAM5326Zxz+5mKny826UWnLBEQMF3w6y5EBJs+j+wHY3p0bwnHV2QRI
+        ijWvCCBEzgL3pfSMDKbbREwZPITYAa0/YtxNIakByAnLEZ6Vog==
+X-Google-Smtp-Source: ABdhPJzP7uuIfaGFEYm9yk/wNQCHnkTvOeCl6mIE2YDwAWjGVZzTj54sLlbBKr+vzykeqC14NJCzjCQDE1sWFhQReFw=
+X-Received: by 2002:a5d:640d:: with SMTP id z13mr4100251wru.28.1601659296502;
+ Fri, 02 Oct 2020 10:21:36 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <20201001141838.1.I08054d1d976eed64ffa1b0e21d568e0dc6040b54@changeid>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+References: <20201002014700.32085-1-abhinavk@codeaurora.org> <CAKMK7uHVSrATW=y2=UXHqRek97yvTiXHfDbRex25mRN36y1hSA@mail.gmail.com>
+In-Reply-To: <CAKMK7uHVSrATW=y2=UXHqRek97yvTiXHfDbRex25mRN36y1hSA@mail.gmail.com>
+From:   Rob Clark <robdclark@gmail.com>
+Date:   Fri, 2 Oct 2020 10:22:42 -0700
+Message-ID: <CAF6AEGupO7OyeUC8FqZpRmfw+=JXkk8jRzHF79DX+p5PnPyMtQ@mail.gmail.com>
+Subject: Re: [RFC PATCH] drm: add support for taking drm atomic state snapshot
+To:     Daniel Vetter <daniel@ffwll.ch>
+Cc:     Abhinav Kumar <abhinavk@codeaurora.org>,
+        dri-devel <dri-devel@lists.freedesktop.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        freedreno <freedreno@lists.freedesktop.org>,
+        Sean Paul <seanpaul@chromium.org>,
+        Stephen Boyd <swboyd@chromium.org>, nganji@codeaurora.org,
+        aravindh@codeaurora.org, Tanmay Shah <tanmay@codeaurora.org>,
+        khsieh@codeaurora.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Thanks for the patch!
+On Fri, Oct 2, 2020 at 12:36 AM Daniel Vetter <daniel@ffwll.ch> wrote:
+>
+> On Fri, Oct 2, 2020 at 3:47 AM Abhinav Kumar <abhinavk@codeaurora.org> wrote:
+> >
+> > Add support to capture the drm atomic state snapshot which
+> > can then be wired up with the devcoredump of the relevant display
+> > errors to give useful information to debug the issues.
+> >
+> > Since the devcoredump is read by usermode and it is allowed
+> > upto 5 minutes to read the coredump, capturing the snapshot that
+> > time will not result in an accurate result.
+> >
+> > Rather we should capture the snapshot right after the error
+> > happened. Hence add support for capturing this snapshot by
+> > re-using the drm_atomic_helper_duplicate_state() API to support
+> > a non-context version.
+> >
+> > Also add nolock versions of the drm_atomic_get_***_state() APIs
+> > which can be used to get snapshot of the drm atomic state of
+> > display drivers.
+> >
+> > Signed-off-by: Abhinav Kumar <abhinavk@codeaurora.org>
+>
+> I guess this needs an example driver to show how this is used.
 
-On 10/2/20 00:18, Douglas Anderson wrote:
-> In commit e23b1220a246 ("arm64: dts: qcom: sc7180: Increase the number
-> of interconnect cells") we missed increasing the cells on one
-> interconnect.  That's no bueno.  Fix it.
-> 
-> NOTE: it appears that things aren't totally broken without this fix,
-> but clearly something isn't going to be working right.  If nothing
-> else, without this fix I see this in the logs:
-> 
->   OF: /soc@0/mdss@ae00000: could not get #interconnect-cells for /soc@0/interrupt-controller@17a00000
-> 
-> Fixes: e23b1220a246 ("arm64: dts: qcom: sc7180: Increase the number of interconnect cells")
-> Signed-off-by: Douglas Anderson <dianders@chromium.org>
+fwiw, I suggested to Abhinav to send this early as an RFC, while he
+finishes the rest of the driver part, just to get feedback on the
+approach.
 
-Reviewed-by: Georgi Djakov <georgi.djakov@linaro.org>
+The other option is to dump the state to a string buffer, and save
+that until userspace reads out the devcoredump.  This approach seems
+less awkward, and lets us re-use drm_coredump_printer.
+
+> Another idea in this space is from Sean to implement a crash recorder
+> of all the drm debug information. Which iirc already includes atomic
+> state in some cases, but maybe not. The idea there was that userspace
+> would dump that recording when something unexpected happens, since
+> very often the kernel has no idea when something bad has happened, but
+> the userspace compositor is a bit more in the loop on such things. I
+> think ideally we have something that all fits together.
+
+We actually already have Sean's drm_trace stuff in CrOS kernel, and use it.
+
+But at least in our case, the hw has error reporting (ie. things like
+underflow irq's).. we want to use this to trigger dumping the current
+state, plus a bunch of error related registers.  The crash recorder
+plays a role in this, but errors reported from the hw are the trigger,
+and devcoredump is the mechanism.
+
+> The much bigger issue I'm seeing here is not taking locks. Ime that
+> just crashes the kernel harder, and makes debugging harder. Somewhat
+> ok for developer stuff in some cases, but devcoredump is more a
+> production thing afaiui, so really doesn't sound like a good idea to
+> me.
+
+I suppose *holding* the locks is a bigger issue than acquiring the
+locks.. although it does mean it is not something we can do directly
+from an irq context.  Perhaps the driver part could be structured to
+read hw state immediately, and then schedule work to snapshot the
+atomic state.
 
 BR,
-Georgi
+-R
+
+> -Daniel
+>
+> > ---
+> >  drivers/gpu/drm/drm_atomic.c        | 154 ++++++++++++++++++----------
+> >  drivers/gpu/drm/drm_atomic_helper.c |  28 ++++-
+> >  include/drm/drm_atomic.h            |  10 ++
+> >  include/drm/drm_atomic_helper.h     |   2 +
+> >  4 files changed, 136 insertions(+), 58 deletions(-)
+> >
+> > diff --git a/drivers/gpu/drm/drm_atomic.c b/drivers/gpu/drm/drm_atomic.c
+> > index 9ccfbf213d72..4e805157100b 100644
+> > --- a/drivers/gpu/drm/drm_atomic.c
+> > +++ b/drivers/gpu/drm/drm_atomic.c
+> > @@ -272,37 +272,23 @@ void __drm_atomic_state_free(struct kref *ref)
+> >  }
+> >  EXPORT_SYMBOL(__drm_atomic_state_free);
+> >
+> > -/**
+> > - * drm_atomic_get_crtc_state - get CRTC state
+> > - * @state: global atomic state object
+> > - * @crtc: CRTC to get state object for
+> > - *
+> > - * This function returns the CRTC state for the given CRTC, allocating it if
+> > - * needed. It will also grab the relevant CRTC lock to make sure that the state
+> > - * is consistent.
+> > - *
+> > - * Returns:
+> > - *
+> > - * Either the allocated state or the error code encoded into the pointer. When
+> > - * the error is EDEADLK then the w/w mutex code has detected a deadlock and the
+> > - * entire atomic sequence must be restarted. All other errors are fatal.
+> > - */
+> > -struct drm_crtc_state *
+> > -drm_atomic_get_crtc_state(struct drm_atomic_state *state,
+> > -                         struct drm_crtc *crtc)
+> > +static struct drm_crtc_state *
+> > +__drm_atomic_get_crtc_state(struct drm_atomic_state *state,
+> > +               struct drm_crtc *crtc, bool take_lock)
+> >  {
+> >         int ret, index = drm_crtc_index(crtc);
+> >         struct drm_crtc_state *crtc_state;
+> >
+> > -       WARN_ON(!state->acquire_ctx);
+> > -
+> >         crtc_state = drm_atomic_get_existing_crtc_state(state, crtc);
+> >         if (crtc_state)
+> >                 return crtc_state;
+> >
+> > -       ret = drm_modeset_lock(&crtc->mutex, state->acquire_ctx);
+> > -       if (ret)
+> > -               return ERR_PTR(ret);
+> > +       if (take_lock) {
+> > +               WARN_ON(!state->acquire_ctx);
+> > +               ret = drm_modeset_lock(&crtc->mutex, state->acquire_ctx);
+> > +               if (ret)
+> > +                       return ERR_PTR(ret);
+> > +       }
+> >
+> >         crtc_state = crtc->funcs->atomic_duplicate_state(crtc);
+> >         if (!crtc_state)
+> > @@ -319,8 +305,37 @@ drm_atomic_get_crtc_state(struct drm_atomic_state *state,
+> >
+> >         return crtc_state;
+> >  }
+> > +
+> > +/**
+> > + * drm_atomic_get_crtc_state - get CRTC state
+> > + * @state: global atomic state object
+> > + * @crtc: CRTC to get state object for
+> > + *
+> > + * This function returns the CRTC state for the given CRTC, allocating it if
+> > + * needed. It will also grab the relevant CRTC lock to make sure that the state
+> > + * is consistent.
+> > + *
+> > + * Returns:
+> > + *
+> > + * Either the allocated state or the error code encoded into the pointer. When
+> > + * the error is EDEADLK then the w/w mutex code has detected a deadlock and the
+> > + * entire atomic sequence must be restarted. All other errors are fatal.
+> > + */
+> > +struct drm_crtc_state *
+> > +drm_atomic_get_crtc_state(struct drm_atomic_state *state,
+> > +               struct drm_crtc *crtc)
+> > +{
+> > +       return __drm_atomic_get_crtc_state(state, crtc, true);
+> > +}
+> >  EXPORT_SYMBOL(drm_atomic_get_crtc_state);
+> >
+> > +struct drm_crtc_state *
+> > +drm_atomic_get_crtc_state_nl(struct drm_atomic_state *state,
+> > +               struct drm_crtc *crtc)
+> > +{
+> > +       return __drm_atomic_get_crtc_state(state, crtc, false);
+> > +}
+> > +
+> >  static int drm_atomic_crtc_check(const struct drm_crtc_state *old_crtc_state,
+> >                                  const struct drm_crtc_state *new_crtc_state)
+> >  {
+> > @@ -445,30 +460,13 @@ static int drm_atomic_connector_check(struct drm_connector *connector,
+> >         return 0;
+> >  }
+> >
+> > -/**
+> > - * drm_atomic_get_plane_state - get plane state
+> > - * @state: global atomic state object
+> > - * @plane: plane to get state object for
+> > - *
+> > - * This function returns the plane state for the given plane, allocating it if
+> > - * needed. It will also grab the relevant plane lock to make sure that the state
+> > - * is consistent.
+> > - *
+> > - * Returns:
+> > - *
+> > - * Either the allocated state or the error code encoded into the pointer. When
+> > - * the error is EDEADLK then the w/w mutex code has detected a deadlock and the
+> > - * entire atomic sequence must be restarted. All other errors are fatal.
+> > - */
+> > -struct drm_plane_state *
+> > -drm_atomic_get_plane_state(struct drm_atomic_state *state,
+> > -                         struct drm_plane *plane)
+> > +static struct drm_plane_state *
+> > +__drm_atomic_get_plane_state(struct drm_atomic_state *state,
+> > +               struct drm_plane *plane, bool take_lock)
+> >  {
+> >         int ret, index = drm_plane_index(plane);
+> >         struct drm_plane_state *plane_state;
+> >
+> > -       WARN_ON(!state->acquire_ctx);
+> > -
+> >         /* the legacy pointers should never be set */
+> >         WARN_ON(plane->fb);
+> >         WARN_ON(plane->old_fb);
+> > @@ -478,9 +476,12 @@ drm_atomic_get_plane_state(struct drm_atomic_state *state,
+> >         if (plane_state)
+> >                 return plane_state;
+> >
+> > -       ret = drm_modeset_lock(&plane->mutex, state->acquire_ctx);
+> > -       if (ret)
+> > -               return ERR_PTR(ret);
+> > +       if (take_lock) {
+> > +               WARN_ON(!state->acquire_ctx);
+> > +               ret = drm_modeset_lock(&plane->mutex, state->acquire_ctx);
+> > +               if (ret)
+> > +                       return ERR_PTR(ret);
+> > +       }
+> >
+> >         plane_state = plane->funcs->atomic_duplicate_state(plane);
+> >         if (!plane_state)
+> > @@ -506,8 +507,37 @@ drm_atomic_get_plane_state(struct drm_atomic_state *state,
+> >
+> >         return plane_state;
+> >  }
+> > +
+> > +/**
+> > + * drm_atomic_get_plane_state - get plane state
+> > + * @state: global atomic state object
+> > + * @plane: plane to get state object for
+> > + *
+> > + * This function returns the plane state for the given plane, allocating it if
+> > + * needed. It will also grab the relevant plane lock to make sure that the state
+> > + * is consistent.
+> > + *
+> > + * Returns:
+> > + *
+> > + * Either the allocated state or the error code encoded into the pointer. When
+> > + * the error is EDEADLK then the w/w mutex code has detected a deadlock and the
+> > + * entire atomic sequence must be restarted. All other errors are fatal.
+> > + */
+> > +struct drm_plane_state *
+> > +drm_atomic_get_plane_state(struct drm_atomic_state *state,
+> > +               struct drm_plane *plane)
+> > +{
+> > +       return __drm_atomic_get_plane_state(state, plane, true);
+> > +}
+> >  EXPORT_SYMBOL(drm_atomic_get_plane_state);
+> >
+> > +struct drm_plane_state *
+> > +drm_atomic_get_plane_state_nl(struct drm_atomic_state *state,
+> > +               struct drm_plane *plane)
+> > +{
+> > +       return __drm_atomic_get_plane_state(state, plane, false);
+> > +}
+> > +
+> >  static bool
+> >  plane_switching_crtc(const struct drm_plane_state *old_plane_state,
+> >                      const struct drm_plane_state *new_plane_state)
+> > @@ -939,19 +969,21 @@ EXPORT_SYMBOL(drm_atomic_get_new_connector_for_encoder);
+> >   * the error is EDEADLK then the w/w mutex code has detected a deadlock and the
+> >   * entire atomic sequence must be restarted. All other errors are fatal.
+> >   */
+> > -struct drm_connector_state *
+> > -drm_atomic_get_connector_state(struct drm_atomic_state *state,
+> > -                         struct drm_connector *connector)
+> > +static struct drm_connector_state *
+> > +__drm_atomic_get_connector_state(struct drm_atomic_state *state,
+> > +struct drm_connector *connector, bool take_lock)
+> >  {
+> >         int ret, index;
+> >         struct drm_mode_config *config = &connector->dev->mode_config;
+> >         struct drm_connector_state *connector_state;
+> >
+> > -       WARN_ON(!state->acquire_ctx);
+> > -
+> > -       ret = drm_modeset_lock(&config->connection_mutex, state->acquire_ctx);
+> > -       if (ret)
+> > -               return ERR_PTR(ret);
+> > +       if (take_lock) {
+> > +               WARN_ON(!state->acquire_ctx);
+> > +               ret = drm_modeset_lock(&config->connection_mutex,
+> > +                               state->acquire_ctx);
+> > +               if (ret)
+> > +                       return ERR_PTR(ret);
+> > +       }
+> >
+> >         index = drm_connector_index(connector);
+> >
+> > @@ -999,8 +1031,22 @@ drm_atomic_get_connector_state(struct drm_atomic_state *state,
+> >
+> >         return connector_state;
+> >  }
+> > +
+> > +struct drm_connector_state *
+> > +drm_atomic_get_connector_state(struct drm_atomic_state *state,
+> > +struct drm_connector *connector)
+> > +{
+> > +       return __drm_atomic_get_connector_state(state, connector, true);
+> > +}
+> >  EXPORT_SYMBOL(drm_atomic_get_connector_state);
+> >
+> > +struct drm_connector_state *
+> > +drm_atomic_get_connector_state_nl(struct drm_atomic_state *state,
+> > +               struct drm_connector *connector)
+> > +{
+> > +       return __drm_atomic_get_connector_state(state, connector, false);
+> > +}
+> > +
+> >  static void drm_atomic_connector_print_state(struct drm_printer *p,
+> >                 const struct drm_connector_state *state)
+> >  {
+> > diff --git a/drivers/gpu/drm/drm_atomic_helper.c b/drivers/gpu/drm/drm_atomic_helper.c
+> > index ea1926b5bb80..229dc41aedb9 100644
+> > --- a/drivers/gpu/drm/drm_atomic_helper.c
+> > +++ b/drivers/gpu/drm/drm_atomic_helper.c
+> > @@ -3140,13 +3140,18 @@ drm_atomic_helper_duplicate_state(struct drm_device *dev,
+> >         if (!state)
+> >                 return ERR_PTR(-ENOMEM);
+> >
+> > -       state->acquire_ctx = ctx;
+> > +       if (ctx)
+> > +               state->acquire_ctx = ctx;
+> >         state->duplicated = true;
+> >
+> >         drm_for_each_crtc(crtc, dev) {
+> >                 struct drm_crtc_state *crtc_state;
+> >
+> > -               crtc_state = drm_atomic_get_crtc_state(state, crtc);
+> > +               if (ctx)
+> > +                       crtc_state = drm_atomic_get_crtc_state(state, crtc);
+> > +               else
+> > +                       crtc_state = drm_atomic_get_crtc_state_nl(state,
+> > +                                       crtc);
+> >                 if (IS_ERR(crtc_state)) {
+> >                         err = PTR_ERR(crtc_state);
+> >                         goto free;
+> > @@ -3156,7 +3161,11 @@ drm_atomic_helper_duplicate_state(struct drm_device *dev,
+> >         drm_for_each_plane(plane, dev) {
+> >                 struct drm_plane_state *plane_state;
+> >
+> > -               plane_state = drm_atomic_get_plane_state(state, plane);
+> > +               if (ctx)
+> > +                       plane_state = drm_atomic_get_plane_state(state, plane);
+> > +               else
+> > +                       plane_state = drm_atomic_get_plane_state_nl(state,
+> > +                                       plane);
+> >                 if (IS_ERR(plane_state)) {
+> >                         err = PTR_ERR(plane_state);
+> >                         goto free;
+> > @@ -3167,7 +3176,12 @@ drm_atomic_helper_duplicate_state(struct drm_device *dev,
+> >         drm_for_each_connector_iter(conn, &conn_iter) {
+> >                 struct drm_connector_state *conn_state;
+> >
+> > -               conn_state = drm_atomic_get_connector_state(state, conn);
+> > +               if (ctx)
+> > +                       conn_state = drm_atomic_get_connector_state(state,
+> > +                                       conn);
+> > +               else
+> > +                       conn_state = drm_atomic_get_connector_state_nl(state,
+> > +                                       conn);
+> >                 if (IS_ERR(conn_state)) {
+> >                         err = PTR_ERR(conn_state);
+> >                         drm_connector_list_iter_end(&conn_iter);
+> > @@ -3189,6 +3203,12 @@ drm_atomic_helper_duplicate_state(struct drm_device *dev,
+> >  }
+> >  EXPORT_SYMBOL(drm_atomic_helper_duplicate_state);
+> >
+> > +struct drm_atomic_state *
+> > +drm_atomic_helper_snapshot_state(struct drm_device *dev)
+> > +{
+> > +       return drm_atomic_helper_duplicate_state(dev, NULL);
+> > +}
+> > +
+> >  /**
+> >   * drm_atomic_helper_suspend - subsystem-level suspend helper
+> >   * @dev: DRM device
+> > diff --git a/include/drm/drm_atomic.h b/include/drm/drm_atomic.h
+> > index 1dc8af7671b7..85e43489e33d 100644
+> > --- a/include/drm/drm_atomic.h
+> > +++ b/include/drm/drm_atomic.h
+> > @@ -452,6 +452,16 @@ struct drm_connector_state * __must_check
+> >  drm_atomic_get_connector_state(struct drm_atomic_state *state,
+> >                                struct drm_connector *connector);
+> >
+> > +struct drm_crtc_state *
+> > +drm_atomic_get_crtc_state_nl(struct drm_atomic_state *state,
+> > +                         struct drm_crtc *crtc);
+> > +struct drm_plane_state *
+> > +drm_atomic_get_plane_state_nl(struct drm_atomic_state *state,
+> > +                          struct drm_plane *plane);
+> > +struct drm_connector_state *
+> > +drm_atomic_get_connector_state_nl(struct drm_atomic_state *state,
+> > +                              struct drm_connector *connector);
+> > +
+> >  void drm_atomic_private_obj_init(struct drm_device *dev,
+> >                                  struct drm_private_obj *obj,
+> >                                  struct drm_private_state *state,
+> > diff --git a/include/drm/drm_atomic_helper.h b/include/drm/drm_atomic_helper.h
+> > index b268180c97eb..e6be47ba4834 100644
+> > --- a/include/drm/drm_atomic_helper.h
+> > +++ b/include/drm/drm_atomic_helper.h
+> > @@ -126,6 +126,8 @@ void drm_atomic_helper_shutdown(struct drm_device *dev);
+> >  struct drm_atomic_state *
+> >  drm_atomic_helper_duplicate_state(struct drm_device *dev,
+> >                                   struct drm_modeset_acquire_ctx *ctx);
+> > +struct drm_atomic_state *
+> > +drm_atomic_helper_snapshot_state(struct drm_device *dev);
+> >  struct drm_atomic_state *drm_atomic_helper_suspend(struct drm_device *dev);
+> >  int drm_atomic_helper_commit_duplicated_state(struct drm_atomic_state *state,
+> >                                               struct drm_modeset_acquire_ctx *ctx);
+> > --
+> > The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+> > a Linux Foundation Collaborative Project
+> >
+>
+>
+> --
+> Daniel Vetter
+> Software Engineer, Intel Corporation
+> http://blog.ffwll.ch
