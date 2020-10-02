@@ -2,152 +2,178 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 18AEC280E82
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Oct 2020 10:07:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AE7E0280F35
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Oct 2020 10:48:44 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726398AbgJBIHC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 2 Oct 2020 04:07:02 -0400
-Received: from m42-4.mailgun.net ([69.72.42.4]:45630 "EHLO m42-4.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725993AbgJBIHC (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 2 Oct 2020 04:07:02 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1601626021; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=DpzPdf9SuGFakeKDAP+tZzUbDX47U9mv46HDpRpFsVQ=;
- b=oul1fWgcvlmrWBD+DdHaYNmXbQGHZI/kq41nnMyDbmcUP/xi5ZZl5zYcRVxlUak/ICXFQHfD
- dR0Rx3qDhp0n3aGux6G1Y7bAwgJCh3B9A6mm7golbNR69z6234JzS864xPI1sP6FDB9h6p/G
- vp+4FqN+fYN2N5zNM8eUU4C7Plw=
-X-Mailgun-Sending-Ip: 69.72.42.4
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n01.prod.us-east-1.postgun.com with SMTP id
- 5f76df83e89f7b4c7851d2c3 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 02 Oct 2020 08:06:27
- GMT
-Sender: saiprakash.ranjan=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id E318CC433FF; Fri,  2 Oct 2020 08:06:26 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: saiprakash.ranjan)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 1B4F1C433CA;
-        Fri,  2 Oct 2020 08:06:26 +0000 (UTC)
+        id S1726029AbgJBIsn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 2 Oct 2020 04:48:43 -0400
+Received: from fllv0016.ext.ti.com ([198.47.19.142]:48260 "EHLO
+        fllv0016.ext.ti.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725993AbgJBIsn (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 2 Oct 2020 04:48:43 -0400
+Received: from lelv0266.itg.ti.com ([10.180.67.225])
+        by fllv0016.ext.ti.com (8.15.2/8.15.2) with ESMTP id 0928meiZ060590;
+        Fri, 2 Oct 2020 03:48:40 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ti.com;
+        s=ti-com-17Q1; t=1601628520;
+        bh=KxIx2Q8BMe/BobBif6MsMuzIp5+oXC2YcE/NTHkf08I=;
+        h=From:Subject:To:CC:References:Date:In-Reply-To;
+        b=U+xQbIMyUgrRoMVxee4SCSno9XMO5dABhiIjPusxZ4ky9+l/dr/Sq122nX6MjVDpB
+         nJku4NJoapMnhmUY3R2fBXibJJ7VRiz5IoXUe1p+BZB1Y3Ftxv0VZPQI7O5sig9gcZ
+         rK2pWAAFnpPN4ogns1PmJBj+qFJYKZTpR6TUrjkg=
+Received: from DFLE113.ent.ti.com (dfle113.ent.ti.com [10.64.6.34])
+        by lelv0266.itg.ti.com (8.15.2/8.15.2) with ESMTPS id 0928me96009602
+        (version=TLSv1.2 cipher=AES256-GCM-SHA384 bits=256 verify=FAIL);
+        Fri, 2 Oct 2020 03:48:40 -0500
+Received: from DFLE100.ent.ti.com (10.64.6.21) by DFLE113.ent.ti.com
+ (10.64.6.34) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.1979.3; Fri, 2 Oct
+ 2020 03:48:39 -0500
+Received: from fllv0040.itg.ti.com (10.64.41.20) by DFLE100.ent.ti.com
+ (10.64.6.21) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.1979.3 via
+ Frontend Transport; Fri, 2 Oct 2020 03:48:39 -0500
+Received: from [192.168.2.6] (ileax41-snat.itg.ti.com [10.172.224.153])
+        by fllv0040.itg.ti.com (8.15.2/8.15.2) with ESMTP id 0928mbcW099978;
+        Fri, 2 Oct 2020 03:48:38 -0500
+From:   Peter Ujfalusi <peter.ujfalusi@ti.com>
+Subject: Re: [PATCH v3 2/3] dmaengine: add peripheral configuration
+To:     Vinod Koul <vkoul@kernel.org>
+CC:     <dmaengine@vger.kernel.org>, Rob Herring <robh+dt@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+References: <20200923063410.3431917-1-vkoul@kernel.org>
+ <20200923063410.3431917-3-vkoul@kernel.org>
+ <29f95fff-c484-0131-d1fe-b06e3000fb9f@ti.com>
+ <20201001112307.GX2968@vkoul-mobl>
+X-Pep-Version: 2.0
+Message-ID: <f063ae03-41da-480a-19ba-d061e140e4d2@ti.com>
+Date:   Fri, 2 Oct 2020 11:48:55 +0300
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.12.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Fri, 02 Oct 2020 13:36:26 +0530
-From:   Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-To:     Robin Murphy <robin.murphy@arm.com>
-Cc:     stanimir.varbanov@linaro.org, mchehab@kernel.org,
-        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-arm-msm-owner@vger.kernel.org
-Subject: Re: [PATCH] media: venus: core: Drop local dma_parms
-In-Reply-To: <e5384b296a0af099dc502572752df149127b7947.1599167568.git.robin.murphy@arm.com>
-References: <e5384b296a0af099dc502572752df149127b7947.1599167568.git.robin.murphy@arm.com>
-Message-ID: <cdd56444b0d7faf9358370f821a10846@codeaurora.org>
-X-Sender: saiprakash.ranjan@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+In-Reply-To: <20201001112307.GX2968@vkoul-mobl>
+Content-Type: text/plain; charset="utf-8"
+Content-Language: en-US
+Content-Transfer-Encoding: quoted-printable
+X-EXCLAIMER-MD-CONFIG: e1e8a2fd-e40a-4ac6-ac9b-f7e9cc9ee180
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Robin,
+Hi Vinod,
 
-On 2020-09-04 02:44, Robin Murphy wrote:
-> Since commit 9495b7e92f71 ("driver core: platform: Initialize dma_parms
-> for platform devices"), struct platform_device already provides a
-> dma_parms structure, so we can save allocating another one.
-> 
-> Also the DMA segment size is simply a size, not a bitmask.
-> 
-> Signed-off-by: Robin Murphy <robin.murphy@arm.com>
-> ---
->  drivers/media/platform/qcom/venus/core.c | 8 +-------
->  1 file changed, 1 insertion(+), 7 deletions(-)
-> 
-> diff --git a/drivers/media/platform/qcom/venus/core.c
-> b/drivers/media/platform/qcom/venus/core.c
-> index 203c6538044f..2fa9275d75ff 100644
-> --- a/drivers/media/platform/qcom/venus/core.c
-> +++ b/drivers/media/platform/qcom/venus/core.c
-> @@ -226,13 +226,7 @@ static int venus_probe(struct platform_device 
-> *pdev)
->  	if (ret)
->  		return ret;
-> 
-> -	if (!dev->dma_parms) {
-> -		dev->dma_parms = devm_kzalloc(dev, sizeof(*dev->dma_parms),
-> -					      GFP_KERNEL);
-> -		if (!dev->dma_parms)
-> -			return -ENOMEM;
-> -	}
-> -	dma_set_max_seg_size(dev, DMA_BIT_MASK(32));
-> +	dma_set_max_seg_size(dev, UINT_MAX);
-> 
->  	INIT_LIST_HEAD(&core->instances);
->  	mutex_init(&core->lock);
+On 01/10/2020 14.23, Vinod Koul wrote:
+> Hi Peter,
+>=20
+> On 29-09-20, 11:06, Peter Ujfalusi wrote:
+>=20
+>>> + * @spi: peripheral config for spi
+>>> + * @i2c: peripheral config for i2c
+>>> + */
+>>> +struct dmaengine_peripheral_config {
+>>> +	enum dmaengine_peripheral peripheral;
+>>> +	u8 set_config;
+>>> +	u32 rx_len;
+>>> +	struct dmaengine_spi_config spi;
+>>> +	struct dmaengine_i2c_config i2c;
+>>
+>> I know that you want this to be as generic as much as it is possible,
+>> but do we really want to?
+>=20
+> That is really a good question ;-)
+>=20
+>> GPIv2 will also handle I2S peripheral, other vendor's similar solution=
 
-This reintroduced dma api debug warning which the original commit was
-addressing or rather thought it addressed.
+>=20
+> Not I2S, but yes but additional peripherals is always a question
 
-  DMA-API: qcom-venus aa00000.video-codec: mapping sg segment longer than 
-device claims to support [len=4194304] [max=65536]
-  WARNING: CPU: 3 PID: 5365 at kernel/dma/debug.c:1225 
-debug_dma_map_sg+0x1ac/0x2c8
-  <...>
-  pstate: 60400009 (nZCv daif +PAN -UAO)
-  pc : debug_dma_map_sg+0x1ac/0x2c8
-  lr : debug_dma_map_sg+0x1ac/0x2c8
-  sp : ffffff8016517850
-  x29: ffffff8016517860 x28: 0000000000010000
-  x27: 00000000ffffffff x26: ffffff80da45eb00
-  x25: ffffffd03c465000 x24: ffffffd03b3c1000
-  x23: ffffff803e262d80 x22: ffffff80d9a0d010
-  x21: 0000000000000001 x20: 0000000000000001
-  x19: 0000000000000001 x18: 00000000ffff0a10
-  x17: ffffffd03b84a000 x16: 0000000000000037
-  x15: ffffffd03a950610 x14: 0000000000000001
-  x13: 0000000000000000 x12: 00000000a3b31442
-  x11: 0000000000000000 x10: dfffffd000000001
-  x9 : f544368f90c5ee00 x8 : f544368f90c5ee00
-  x7 : ffffffd03af5d570 x6 : 0000000000000000
-  x5 : 0000000000000080 x4 : 0000000000000001
-  x3 : ffffffd03a9174b0 x2 : 0000000000000001
-  x1 : 0000000000000008 x0 : 000000000000007a
-  Call trace:
-   debug_dma_map_sg+0x1ac/0x2c8
-   vb2_dma_sg_alloc+0x274/0x2f4 [videobuf2_dma_sg]
-   __vb2_queue_alloc+0x14c/0x3b0 [videobuf2_common]
-   vb2_core_reqbufs+0x234/0x374 [videobuf2_common]
-   vb2_reqbufs+0x4c/0x64 [videobuf2_v4l2]
-   v4l2_m2m_reqbufs+0x50/0x84 [v4l2_mem2mem]
-   v4l2_m2m_ioctl_reqbufs+0x2c/0x38 [v4l2_mem2mem]
-   v4l_reqbufs+0x4c/0x5c
-   __video_do_ioctl+0x2cc/0x3e0
-   video_usercopy+0x3b0/0x910
-   video_ioctl2+0x38/0x48
-   v4l2_ioctl+0x6c/0x80
-   do_video_ioctl+0xb54/0x2708
-   v4l2_compat_ioctl32+0x5c/0xcc
-   __se_compat_sys_ioctl+0x100/0x2064
-   __arm64_compat_sys_ioctl+0x20/0x2c
-   el0_svc_common+0xa8/0x178
-   el0_svc_compat_handler+0x2c/0x40
-   el0_svc_compat+0x8/0x10
+Never underestimate the 'creativity'.
 
-Thanks,
-Sai
+>> would require different sets of parameters unique to their IPs?
+>>
+>> How we are going to handle similar setups for DMA which is used for
+>> networking, SPI/I2C/I2S/NAND/display/capture, etc?
+>>
+>> Imho these settings are really part of the peripheral's domain and not=
 
--- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a 
-member
-of Code Aurora Forum, hosted by The Linux Foundation
+>> the DMA. It is just a small detail that instead of direct register
+>> writes, your setup is using the DMA descriptors to write.
+>> It is similar to what I use as metadata (part of the descriptor belong=
+s
+>> and owned by the client driver).
+>>
+>> I think it would be better to have:
+>>
+>> enum dmaengine_peripheral {
+>> 	DMAENGINE_PERIPHERAL_GPI_SPI =3D 1,
+>> 	DMAENGINE_PERIPHERAL_GPI_UART,
+>> 	DMAENGINE_PERIPHERAL_GPI_I2C,
+>> 	DMAENGINE_PERIPHERAL_XYZ_SPI,
+>> 	DMAENGINE_PERIPHERAL_XYZ_AASRC,
+>> 	DMAENGINE_PERIPHERAL_ABC_CAM,
+>> 	...
+>> 	DMAENGINE_PERIPHERAL_LAST,
+>> };
+>>
+>> enum dmaengine_peripheral peripheral_type;
+>> void *peripheral_config;
+>>
+>>
+>> and that's it. The set_config is specific to GPI.
+>> It can be debated where the structs should be defined, in the generic
+>> dmaengine.h or in include/linux/dma/ as controller specific
+>> (gpi_peripheral.h) or a generic one, like dmaengine_peripheral.h
+>>
+>> The SPI/I2C/UART client of yours would pass the GPI specific struct as=
+
+>> in any case it has to know what is the DMA it is serviced by.
+>=20
+> If we want to take that approach, I can actually move the whole logic o=
+f
+> creating the specific TREs from DMA to clients and they pass on TRE
+> values and driver adds to ring after appending DMA TREs
+
+The drawback is that you are tying the driver to a specific DMA with
+directly giving the TREs. If the TRE (or other method) is used by a
+newer device you need to work on both sides.
+
+> Question is how should this interface look like? reuse metadata or add =
+a
+> new API which sets the txn specific data (void pointer and size) to the=
+
+> txn..=20
+
+It depends which is best for the use case.
+I see the metadata useful when you need to send different
+metadata/configuration with each transfer.
+It can be also useful when you need it seldom, but for your use case and
+setup the dma_slave_config extended with
+
+enum dmaengine_peripheral peripheral_type;
+void *peripheral_config;
+
+would be a bit more explicit.
+
+I would then deal with the peripheral config in this way:
+when the DMA driver's device_config is called, I would take the
+parameters and set a flag that the config needs to be processed as it
+has changed.
+In the next prep_slave_sg() then I would prepare the TREs with the
+config and clear the flag that the next transfer does not need the
+configuration anymore.
+
+In this way each dmaengine_slave_config() will trigger at the next
+prep_slave_sg time configuration update for the peripheral to be
+included in the TREs.
+The set_config would be internal to the DMA driver, clients just need to
+update the configuration when they need to and everything is taken care o=
+f.
+
+- P=C3=A9ter
+
+Texas Instruments Finland Oy, Porkkalankatu 22, 00180 Helsinki.
+Y-tunnus/Business ID: 0615521-4. Kotipaikka/Domicile: Helsinki
+
