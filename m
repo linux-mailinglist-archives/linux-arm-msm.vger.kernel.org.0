@@ -2,170 +2,119 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B162028130D
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Oct 2020 14:45:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 26199281319
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Oct 2020 14:48:12 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2387856AbgJBMpS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 2 Oct 2020 08:45:18 -0400
-Received: from z5.mailgun.us ([104.130.96.5]:20555 "EHLO z5.mailgun.us"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2387749AbgJBMpS (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 2 Oct 2020 08:45:18 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1601642717; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=I19MrBZza/dhzGSKq3st78E/ckbe6xcu+N31AWHsDiU=;
- b=sOqo1AofFf3Txw04F1vQyNNRJMpPfKRztpmNFsN4WV2TrgpL+pRe+C38kHsLkiK+/owBBAI/
- E3PnJ5tgjAWXnCQh3qI+lIY6Yw1uE8yLvvtqR3YQ0xno5hhuRezUCD9Ym9ZZb3xdND4kzOwl
- XDiw2vgzcmxS2ptdq6b8OCHAIO0=
-X-Mailgun-Sending-Ip: 104.130.96.5
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n07.prod.us-east-1.postgun.com with SMTP id
- 5f7720d17df1a00ff8815444 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 02 Oct 2020 12:45:05
- GMT
-Sender: saiprakash.ranjan=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 1D704C433F1; Fri,  2 Oct 2020 12:45:05 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: saiprakash.ranjan)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 15096C433CA;
-        Fri,  2 Oct 2020 12:45:03 +0000 (UTC)
+        id S2387814AbgJBMsK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 2 Oct 2020 08:48:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38888 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726029AbgJBMsK (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 2 Oct 2020 08:48:10 -0400
+Received: from mail-qk1-x743.google.com (mail-qk1-x743.google.com [IPv6:2607:f8b0:4864:20::743])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5A4DEC0613E2
+        for <linux-arm-msm@vger.kernel.org>; Fri,  2 Oct 2020 05:48:10 -0700 (PDT)
+Received: by mail-qk1-x743.google.com with SMTP id o5so1113600qke.12
+        for <linux-arm-msm@vger.kernel.org>; Fri, 02 Oct 2020 05:48:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=marek-ca.20150623.gappssmtp.com; s=20150623;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=qqs8ifS6kGN7LaOJsBRoUbMeD52hvAgPJsDQbcB16Ww=;
+        b=teN6lt9dYbTfeK4iHJe5EwHYYiMp8qbujal8f2CalekS8vb2pw+hAbarMaC3Dyy9/g
+         ZfIA6rxZ9+yK1ffdf1KM9aXD59XN5OfD6qRSiLddDtflDi4Ns2xS4ysacecYmjOd7o/Y
+         yxEz9yyXAVHbarO0UEK5GcYkbh6LYgtCsMFINrC1goIVzmQcfcXJ0TdsTCOQ04mn42DW
+         /AlRtZTPtEqGBYUA1DQfKR//S00/OvShWyJNcVZIzaLAcz9/Wc+28PbrogAtHRSlGAAI
+         sQsJAebzVERb8ad8PnaY3cuZPZc9FzzPw7D1bDFLlaueXV9yx3ZzezN5CqLgQgId8xb4
+         aB8w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=qqs8ifS6kGN7LaOJsBRoUbMeD52hvAgPJsDQbcB16Ww=;
+        b=tWpJAPbmpxLEozW+QCdvf3ESyPHGYMWiuzkr7BWx4PjFh0Rs/8l+bSdDn84VKq1FMX
+         ZrBjwUXDu/g03F/a7vIS+olK6UQPUaljyLiOx81UyliEbdNV5/TzJHn+QHOYMAldzmHy
+         jZvv3HYPi8Kb+VKldwlToTsC4n6h71dpq5O/CLq2zEzcVR5VNmv3YwbFWe9+zOiYEPHS
+         gE4ir2VLBzR2iDPzzWlfCHtPKlKRXcUSaIRQ5AFiub2eR1ruZuHmyocYi1hcYu0e3o3X
+         oNS0LtCSkNJXwfGoY4kG/NobmM9kYTAH363SdP2f1SzYpdANcmuPmcFUj3gKchuVR/bV
+         yjLg==
+X-Gm-Message-State: AOAM532Lfwi9p1VWCODYpP7LUnzgJ9vYJUqYWR+MaKPaJ0Kb4kMfPKUV
+        wc4eXycDyTEIhgCJBT7mTEZR5CIYu0WyxPCJ
+X-Google-Smtp-Source: ABdhPJyQ2dJDmsq+UUaIzuzIq5vMU2J1btgFAxj6GOPoha5mgRKT6bHemLD/hK/dXSldsS3NSojT2A==
+X-Received: by 2002:a05:620a:13f9:: with SMTP id h25mr1764964qkl.283.1601642888962;
+        Fri, 02 Oct 2020 05:48:08 -0700 (PDT)
+Received: from [192.168.0.189] ([147.253.86.153])
+        by smtp.gmail.com with ESMTPSA id j25sm921577qtr.83.2020.10.02.05.48.07
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 02 Oct 2020 05:48:08 -0700 (PDT)
+Subject: Re: [PATCH 2/3] drm/msm: add DRM_MSM_GEM_SYNC_CACHE for non-coherent
+ cache maintenance
+To:     Christoph Hellwig <hch@infradead.org>
+Cc:     freedreno@lists.freedesktop.org, Rob Clark <robdclark@gmail.com>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
+        <linux-arm-msm@vger.kernel.org>,
+        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
+        <dri-devel@lists.freedesktop.org>,
+        open list <linux-kernel@vger.kernel.org>
+References: <20201001002709.21361-1-jonathan@marek.ca>
+ <20201001002709.21361-3-jonathan@marek.ca>
+ <20201002075321.GA7547@infradead.org>
+From:   Jonathan Marek <jonathan@marek.ca>
+Message-ID: <b22fb797-67b0-a912-1d23-2b47c9a9e674@marek.ca>
+Date:   Fri, 2 Oct 2020 08:46:35 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.2.2
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8;
- format=flowed
-Content-Transfer-Encoding: 8bit
-Date:   Fri, 02 Oct 2020 18:15:03 +0530
-From:   Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-To:     Stanimir Varbanov <stanimir.varbanov@linaro.org>,
-        Stephen Boyd <swboyd@chromium.org>
-Cc:     Robin Murphy <robin.murphy@arm.com>, mchehab@kernel.org,
-        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-arm-msm-owner@vger.kernel.org
-Subject: Re: [PATCH] media: venus: core: Drop local dma_parms
-In-Reply-To: <a2f96ef5-1e67-7bc7-39e1-448b2196aef1@linaro.org>
-References: <e5384b296a0af099dc502572752df149127b7947.1599167568.git.robin.murphy@arm.com>
- <cdd56444b0d7faf9358370f821a10846@codeaurora.org>
- <a2f96ef5-1e67-7bc7-39e1-448b2196aef1@linaro.org>
-Message-ID: <7dacfcb3d8cb7e99e348f00ee15f917a@codeaurora.org>
-X-Sender: saiprakash.ranjan@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+In-Reply-To: <20201002075321.GA7547@infradead.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2020-10-02 16:57, Stanimir Varbanov wrote:
-> On 10/2/20 11:06 AM, Sai Prakash Ranjan wrote:
->> Hi Robin,
->> 
->> On 2020-09-04 02:44, Robin Murphy wrote:
->>> Since commit 9495b7e92f71 ("driver core: platform: Initialize 
->>> dma_parms
->>> for platform devices"), struct platform_device already provides a
->>> dma_parms structure, so we can save allocating another one.
->>> 
->>> Also the DMA segment size is simply a size, not a bitmask.
->>> 
->>> Signed-off-by: Robin Murphy <robin.murphy@arm.com>
->>> ---
->>>  drivers/media/platform/qcom/venus/core.c | 8 +-------
->>>  1 file changed, 1 insertion(+), 7 deletions(-)
->>> 
->>> diff --git a/drivers/media/platform/qcom/venus/core.c
->>> b/drivers/media/platform/qcom/venus/core.c
->>> index 203c6538044f..2fa9275d75ff 100644
->>> --- a/drivers/media/platform/qcom/venus/core.c
->>> +++ b/drivers/media/platform/qcom/venus/core.c
->>> @@ -226,13 +226,7 @@ static int venus_probe(struct platform_device 
->>> *pdev)
->>>      if (ret)
->>>          return ret;
->>> 
->>> -    if (!dev->dma_parms) {
->>> -        dev->dma_parms = devm_kzalloc(dev, sizeof(*dev->dma_parms),
->>> -                          GFP_KERNEL);
->>> -        if (!dev->dma_parms)
->>> -            return -ENOMEM;
->>> -    }
->>> -    dma_set_max_seg_size(dev, DMA_BIT_MASK(32));
->>> +    dma_set_max_seg_size(dev, UINT_MAX);
->>> 
->>>      INIT_LIST_HEAD(&core->instances);
->>>      mutex_init(&core->lock);
->> 
->> This reintroduced dma api debug warning which the original commit was
->> addressing or rather thought it addressed.
->> 
->>  DMA-API: qcom-venus aa00000.video-codec: mapping sg segment longer 
->> than
->> device claims to support [len=4194304] [max=65536]
->>  WARNING: CPU: 3 PID: 5365 at kernel/dma/debug.c:1225
->> debug_dma_map_sg+0x1ac/0x2c8
->>  <...>
->>  pstate: 60400009 (nZCv daif +PAN -UAO)
->>  pc : debug_dma_map_sg+0x1ac/0x2c8
->>  lr : debug_dma_map_sg+0x1ac/0x2c8
->>  sp : ffffff8016517850
->>  x29: ffffff8016517860 x28: 0000000000010000
->>  x27: 00000000ffffffff x26: ffffff80da45eb00
->>  x25: ffffffd03c465000 x24: ffffffd03b3c1000
->>  x23: ffffff803e262d80 x22: ffffff80d9a0d010
->>  x21: 0000000000000001 x20: 0000000000000001
->>  x19: 0000000000000001 x18: 00000000ffff0a10
->>  x17: ffffffd03b84a000 x16: 0000000000000037
->>  x15: ffffffd03a950610 x14: 0000000000000001
->>  x13: 0000000000000000 x12: 00000000a3b31442
->>  x11: 0000000000000000 x10: dfffffd000000001
->>  x9 : f544368f90c5ee00 x8 : f544368f90c5ee00
->>  x7 : ffffffd03af5d570 x6 : 0000000000000000
->>  x5 : 0000000000000080 x4 : 0000000000000001
->>  x3 : ffffffd03a9174b0 x2 : 0000000000000001
->>  x1 : 0000000000000008 x0 : 000000000000007a
->>  Call trace:
->>   debug_dma_map_sg+0x1ac/0x2c8
->>   vb2_dma_sg_alloc+0x274/0x2f4 [videobuf2_dma_sg]
->>   __vb2_queue_alloc+0x14c/0x3b0 [videobuf2_common]
->>   vb2_core_reqbufs+0x234/0x374 [videobuf2_common]
->>   vb2_reqbufs+0x4c/0x64 [videobuf2_v4l2]
->>   v4l2_m2m_reqbufs+0x50/0x84 [v4l2_mem2mem]
->>   v4l2_m2m_ioctl_reqbufs+0x2c/0x38 [v4l2_mem2mem]
->>   v4l_reqbufs+0x4c/0x5c
->>   __video_do_ioctl+0x2cc/0x3e0
->>   video_usercopy+0x3b0/0x910
->>   video_ioctl2+0x38/0x48
->>   v4l2_ioctl+0x6c/0x80
->>   do_video_ioctl+0xb54/0x2708
->>   v4l2_compat_ioctl32+0x5c/0xcc
->>   __se_compat_sys_ioctl+0x100/0x2064
->>   __arm64_compat_sys_ioctl+0x20/0x2c
->>   el0_svc_common+0xa8/0x178
->>   el0_svc_compat_handler+0x2c/0x40
->>   el0_svc_compat+0x8/0x10
->> 
->> Thanks,
->> Sai
->> 
+On 10/2/20 3:53 AM, Christoph Hellwig wrote:
+>> @@ -8,6 +8,7 @@
+>>   #include <linux/shmem_fs.h>
+>>   #include <linux/dma-buf.h>
+>>   #include <linux/pfn_t.h>
+>> +#include <linux/dma-noncoherent.h>
 > 
-> Do you have the mentioned above commit when you see this warning ?
+> NAK, dma-noncoherent.h is not for driver use.  And will in fact go
+> away in 5.10.
+> 
 
-+Stephen reported this, this was recently backported to 5.4 kernel
-where playing youtube with dma api debug enabled would throw this
-warning and I am almost 100% certain this is the commit which caused
-the warning to appear again.
+Not actually used, so can be removed.
 
-Thanks,
-Sai
+>>   
+>>   #include <drm/drm_prime.h>
+>>   
+>> @@ -808,6 +809,20 @@ int msm_gem_cpu_fini(struct drm_gem_object *obj)
+>>   	return 0;
+>>   }
+>>   
+>> +void msm_gem_sync_cache(struct drm_gem_object *obj, uint32_t flags,
+>> +		size_t range_start, size_t range_end)
+>> +{
+>> +	struct msm_gem_object *msm_obj = to_msm_bo(obj);
+>> +
+>> +	/* TODO: sync only the required range, and don't invalidate on clean */
+>> +
+>> +	if (flags & MSM_GEM_SYNC_CACHE_CLEAN)
+>> +		sync_for_device(msm_obj);
+>> +
+>> +	if (flags & MSM_GEM_SYNC_CACHE_INVALIDATE)
+>> +		sync_for_cpu(msm_obj);
+> 
+> And make to these ones as well.  They are complete abuses of the DMA
+> API, and while we had to live with that for now to not cause regressions
+> they absoutely must not be exposed in a userspace ABI like this.
+> 
 
--- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a 
-member
-of Code Aurora Forum, hosted by The Linux Foundation
+How do you propose that cached non-coherent memory be implemented? It is 
+a useful feature for userspace.
+
