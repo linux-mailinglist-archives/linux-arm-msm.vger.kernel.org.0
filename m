@@ -2,66 +2,112 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 898A52823BB
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  3 Oct 2020 12:58:46 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E0BD82823D6
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  3 Oct 2020 13:36:30 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725783AbgJCK6q (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 3 Oct 2020 06:58:46 -0400
-Received: from mail.kernel.org ([198.145.29.99]:45610 "EHLO mail.kernel.org"
+        id S1725770AbgJCLg3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 3 Oct 2020 07:36:29 -0400
+Received: from m42-4.mailgun.net ([69.72.42.4]:47598 "EHLO m42-4.mailgun.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725765AbgJCK6p (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 3 Oct 2020 06:58:45 -0400
-Received: from localhost (83-86-74-64.cable.dynamic.v4.ziggo.nl [83.86.74.64])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        id S1725772AbgJCLg3 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Sat, 3 Oct 2020 07:36:29 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1601724988; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
+ Subject: Sender; bh=+b3m7jKQ1O6fiYm/hL5ZFgqJTiOppqki6YMsfwFKW/s=; b=THEFkMtO4WYJ7Xvq7h/3amJxcItmhP/Zsy45LnUU02wj7bUoJLdevKdFgf3CaX7kouAxaTZ8
+ UBOaQpQyBFTWfay9koBBVwwQQ4vbvRqrw3NzVCl/+Kc+Lf27RSNJtsZsjPA16g8XhAhwXAZV
+ hQZJknCW8g3/O7kY3BvyIHHObvA=
+X-Mailgun-Sending-Ip: 69.72.42.4
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n07.prod.us-east-1.postgun.com with SMTP id
+ 5f78622ed63768e57b3be320 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Sat, 03 Oct 2020 11:36:14
+ GMT
+Sender: srivasam=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id C15E5C4339C; Sat,  3 Oct 2020 11:36:13 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-3.2 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        NICE_REPLY_A,SPF_FAIL autolearn=no autolearn_force=no version=3.4.0
+Received: from [10.131.172.121] (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 25745206CA;
-        Sat,  3 Oct 2020 10:58:45 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1601722725;
-        bh=uFVhoBussJDdpm1+WgGs2qiAeM+JfCpjaUV85968YSU=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=X/4V0Posa8zRrMR7Xoq1Ojy3liMEtL5fjFjbnXeH2t7h2ZsY8mnMua05++Dk/5n3l
-         YaBD900kDc55pmi2oqTOPLk3Anf1ae8lhbphmUJTFo3ULArhjo/0QG84c8+8h4TMlB
-         fHhng6xfFpXhOSXIbcl+mntcNvpSbUEXeuwCGwUo=
-Date:   Sat, 3 Oct 2020 12:56:53 +0200
-From:   Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To:     Stephen Boyd <sboyd@kernel.org>
-Cc:     Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
-        linuxarm@huawei.com, mauro.chehab@huawei.com,
-        John Stultz <john.stultz@linaro.org>,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2 0/2] Some small cleanup/fixes for SPMI driver
-Message-ID: <20201003105653.GA117381@kroah.com>
-References: <cover.1601360391.git.mchehab+huawei@kernel.org>
- <160167373743.310579.11803841154320142421@swboyd.mtv.corp.google.com>
+        (Authenticated sender: srivasam)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id DC457C433CB;
+        Sat,  3 Oct 2020 11:36:08 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org DC457C433CB
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=srivasam@codeaurora.org
+Subject: Re: [PATCH v8 5/7] ASoC: qcom: Add support for lpass hdmi driver
+To:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        agross@kernel.org, bjorn.andersson@linaro.org, lgirdwood@gmail.com,
+        broonie@kernel.org, robh+dt@kernel.org, plai@codeaurora.org,
+        bgoswami@codeaurora.org, perex@perex.cz, tiwai@suse.com,
+        rohitkr@codeaurora.org, linux-arm-msm@vger.kernel.org,
+        alsa-devel@alsa-project.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Cc:     V Sujith Kumar Reddy <vsujithk@codeaurora.org>
+References: <1601447977-18115-1-git-send-email-srivasam@codeaurora.org>
+ <1601447977-18115-6-git-send-email-srivasam@codeaurora.org>
+ <c94cf74d-03f6-999e-012f-5d9ef2316d61@linaro.org>
+From:   Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
+Organization: Qualcomm India Private Limited
+Message-ID: <925e2586-39dd-b1d9-174a-bda3367ab668@codeaurora.org>
+Date:   Sat, 3 Oct 2020 17:06:06 +0530
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.3.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <160167373743.310579.11803841154320142421@swboyd.mtv.corp.google.com>
+In-Reply-To: <c94cf74d-03f6-999e-012f-5d9ef2316d61@linaro.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Content-Language: en-US
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Oct 02, 2020 at 02:22:17PM -0700, Stephen Boyd wrote:
-> Quoting Mauro Carvalho Chehab (2020-09-28 23:22:11)
-> > Hi Stephen,
-> > 
-> > While double-checking against yesterday's linux-next, I noticed
-> > that those two patches weren't merge yet. 
-> > 
-> > As you replied to both with your Reviewed-by:, are you expecting
-> > them to be merged via someone's tree, or are you intending
-> > to merge them via your tree?
-> 
-> Per the maintainers file I am a reviewer not a maintainer of SPMI.
-> Usually Greg applies patches here. I can collect patches and send them
-> on up if that helps.
+Thanks for bringing up this point Srinivas!!!
 
-Who is the maintainer?  Having a "reviewer only" is confusing to
-everyone involved, as you might have someone who can review patches, but
-no one to actually merge them anywhere?
+On 9/30/2020 8:57 PM, Srinivas Kandagatla wrote:
+>
+>
+> On 30/09/2020 07:39, Srinivasa Rao Mandadapu wrote:
+>> +}
+>> +
+>> +static bool lpass_hdmi_regmap_volatile(struct device *dev, unsigned 
+>> int reg)
+>> +{
+>> +    return true;
+>> +}
+>
+> I did ask this question in multiple reviews, but never got an answer!
+> Are all the dp/hdmi port register range really volatile!?
 
-Not a good situation :(
+Sorry for incomplete response in last review comment reply.
+With making only specific DMA registers and interrupts registers true, 
+aplay was stuck.
 
-greg k-h
+Now we identified issue causing register and made it volatile.
+With that change it seems working fine. After doing all the tests we 
+will share v9 series patch.
+
+>
+>
+>
+> --srini
+>> +
+>> +struct regmap_config lpass_hdmi_regmap_config = {
+>> +    .reg_bits = 32,
+>> +    .reg_stride = 4,
+>> +    .val_bits = 32,
+>> +    .writeable_reg = lpass_hdmi_regmap_writeable,
+>> +    .readable_reg = lpass_hdmi_regmap_readable,
+>> +    .volatile_reg = lpass_hdmi_regmap_volatile,
+
+-- 
+Qualcomm India Private Limited, on behalf of Qualcomm Innovation Center, Inc.,
+is a member of Code Aurora Forum, a Linux Foundation Collaborative Project.
+
