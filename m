@@ -2,129 +2,262 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 925D628253D
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  3 Oct 2020 17:56:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4AB6D2825D0
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  3 Oct 2020 20:22:16 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725798AbgJCP42 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 3 Oct 2020 11:56:28 -0400
-Received: from m42-4.mailgun.net ([69.72.42.4]:49451 "EHLO m42-4.mailgun.net"
+        id S1725816AbgJCSWP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 3 Oct 2020 14:22:15 -0400
+Received: from m42-4.mailgun.net ([69.72.42.4]:44947 "EHLO m42-4.mailgun.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725788AbgJCP42 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 3 Oct 2020 11:56:28 -0400
+        id S1725811AbgJCSWO (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Sat, 3 Oct 2020 14:22:14 -0400
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1601740587; h=Content-Transfer-Encoding: MIME-Version:
- Message-Id: Date: Subject: Cc: To: From: Sender;
- bh=sOzZ7QQveQy/hthcA+sfTSNINPiRH3EjweaG2282X3w=; b=BSTiR8bdUaK3X3erPsbEhJz3r9ocK2hkOH1niSUr+mw95iMbtyPHfHCDDRG43Z8fCf9XF/tK
- PE0fx4M1WDSCLPI25k+ZE+S3+iysqUI4svp6oeNc23RW6CKi+94qaL34gPpEnmOMoE8r/UHz
- VbwVm1DqdSX9bJ9i8CaEe4i5bt0=
+ s=smtp; t=1601749333; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=z7E62nRv/bMHkkyglVWth0jbZsLTybTXAcHLb86fpFc=;
+ b=WihI3enIKffCy0JSN7GaPvd0Eb6mwioITleBNFh1kCG9aSnHyDQc+MM/8U1fQ9vQeg6s4Fdv
+ 1wfCY+scemzs5cXESJosTW0B7meSX1QUpfyV/OyeEHMvluzgqVFzVtPg3ImzsNOH9WLv8pQL
+ BMLPHCDQD3PuZs2xlnS2gFAxRWA=
 X-Mailgun-Sending-Ip: 69.72.42.4
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org
  (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n07.prod.us-east-1.postgun.com with SMTP id
- 5f789f2a3711fec7b147f166 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Sat, 03 Oct 2020 15:56:26
+ smtp-out-n03.prod.us-west-2.postgun.com with SMTP id
+ 5f78c148ad37af35ec4a8d0c (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Sat, 03 Oct 2020 18:22:00
  GMT
-Sender: ilina=codeaurora.org@mg.codeaurora.org
+Sender: khsieh=codeaurora.org@mg.codeaurora.org
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 31ACFC433FE; Sat,  3 Oct 2020 15:56:26 +0000 (UTC)
+        id 856E5C433CB; Sat,  3 Oct 2020 18:22:00 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
-        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
-Received: from codeaurora.org (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
         (No client certificate requested)
-        (Authenticated sender: ilina)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id D87DDC433F1;
-        Sat,  3 Oct 2020 15:56:24 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org D87DDC433F1
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=ilina@codeaurora.org
-From:   Lina Iyer <ilina@codeaurora.org>
-To:     rjw@rjwysocki.net, ulf.hansson@linaro.org, linux-pm@vger.kernel.org
-Cc:     linux-arm-msm@vger.kernel.org, Lina Iyer <ilina@codeaurora.org>
-Subject: [PATCH v2] PM / Domains: enable domain idle state accounting
-Date:   Sat,  3 Oct 2020 09:56:18 -0600
-Message-Id: <20201003155618.11997-1-ilina@codeaurora.org>
-X-Mailer: git-send-email 2.28.0
+        (Authenticated sender: khsieh)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 4CD9DC433C8;
+        Sat,  3 Oct 2020 18:21:59 +0000 (UTC)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Sat, 03 Oct 2020 11:21:59 -0700
+From:   khsieh@codeaurora.org
+To:     Rajendra Nayak <rnayak@codeaurora.org>
+Cc:     Stephen Boyd <swboyd@chromium.org>, robdclark@gmail.com,
+        sean@poorly.run, tanmay@codeaurora.org, abhinavk@codeaurora.org,
+        aravindh@codeaurora.org, airlied@linux.ie, daniel@ffwll.ch,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] drm/msm/dp: add voltage corners voting support base on dp
+ link rate
+In-Reply-To: <01467014-1190-6e1b-8120-472719861a5e@codeaurora.org>
+References: <20200929171026.30551-1-khsieh@codeaurora.org>
+ <160145429763.310579.786737478429183087@swboyd.mtv.corp.google.com>
+ <01467014-1190-6e1b-8120-472719861a5e@codeaurora.org>
+Message-ID: <f2b0ff7ce6e87be7fd0e5671dade011f@codeaurora.org>
+X-Sender: khsieh@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-To enable better debug of PM domains, let's keep a track of the success
-and rejections in entering each domain idle state.
+On 2020-09-30 09:24, Rajendra Nayak wrote:
+> On 9/30/2020 1:54 PM, Stephen Boyd wrote:
+>> Quoting Kuogee Hsieh (2020-09-29 10:10:26)
+>>> Set link rate by using OPP set rate api so that CX level will be set
+>>> accordingly base on the link rate.
+>> 
+>> s/base/based/
+>> 
+>>> 
+>>> Signed-off-by: Kuogee Hsieh <khsieh@codeaurora.org>
+>>> ---
+>>> diff --git a/drivers/gpu/drm/msm/dp/dp_ctrl.c 
+>>> b/drivers/gpu/drm/msm/dp/dp_ctrl.c
+>>> index 2e3e1917351f..e1595d829e04 100644
+>>> --- a/drivers/gpu/drm/msm/dp/dp_ctrl.c
+>>> +++ b/drivers/gpu/drm/msm/dp/dp_ctrl.c
+>>> @@ -1849,6 +1853,21 @@ struct dp_ctrl *dp_ctrl_get(struct device 
+>>> *dev, struct dp_link *link,
+>>>                  return ERR_PTR(-ENOMEM);
+>>>          }
+>>>   +       ctrl->opp_table = dev_pm_opp_set_clkname(dev, "ctrl_link");
+> 
+> I see that downstream has multiple DP clocks which end up voting on
+> CX, we don't have a
+> way of associating multiple OPP tables with a device upstream, so
+> whats usually done is
+> (assuming all the clocks get scaled in lock step, which I assume is
+> the case here) we pick
+> the clock with the 'highest' CX requirement and associate that with
+> the OPP table.
+> I haven't looked but I am hoping thats how we have decided to
+> associate "ctrl_link" clock
+> here?
+> 
+yes, only ctrl_link use dev_pm_opp_set_rate() to set rate.
 
-This statistics is exported in debugfs when reading the idle_states
-node, associated with each PM domain.
-
-Signed-off-by: Lina Iyer <ilina@codeaurora.org>
----
-Changes in v2:
-	- Renamed 'failed' to 'rejected'
-
-This patch depends-on: https://lkml.org/lkml/2020/9/24/465
----
- drivers/base/power/domain.c | 7 +++++--
- include/linux/pm_domain.h   | 2 ++
- 2 files changed, 7 insertions(+), 2 deletions(-)
-
-diff --git a/drivers/base/power/domain.c b/drivers/base/power/domain.c
-index f001ac6326fb..dbe89454f594 100644
---- a/drivers/base/power/domain.c
-+++ b/drivers/base/power/domain.c
-@@ -564,6 +564,7 @@ static int genpd_power_off(struct generic_pm_domain *genpd, bool one_dev_on,
- 
- 	genpd->status = GENPD_STATE_OFF;
- 	genpd_update_accounting(genpd);
-+	genpd->states[genpd->state_idx].usage++;
- 
- 	list_for_each_entry(link, &genpd->child_links, child_node) {
- 		genpd_sd_counter_dec(link->parent);
-@@ -574,6 +575,7 @@ static int genpd_power_off(struct generic_pm_domain *genpd, bool one_dev_on,
- 
- 	return 0;
- busy:
-+	genpd->states[genpd->state_idx].rejected++;
- 	if (nr_calls)
- 		__raw_notifier_call_chain(&genpd->power_notifiers,
- 					  GENPD_STATE_ON, NULL,
-@@ -3053,7 +3055,7 @@ static int idle_states_show(struct seq_file *s, void *data)
- 	if (ret)
- 		return -ERESTARTSYS;
- 
--	seq_puts(s, "State          Time Spent(ms)\n");
-+	seq_puts(s, "State          Time Spent(ms) Usage          Rejected\n");
- 
- 	for (i = 0; i < genpd->state_count; i++) {
- 		ktime_t delta = 0;
-@@ -3065,7 +3067,8 @@ static int idle_states_show(struct seq_file *s, void *data)
- 
- 		msecs = ktime_to_ms(
- 			ktime_add(genpd->states[i].idle_time, delta));
--		seq_printf(s, "S%-13i %lld\n", i, msecs);
-+		seq_printf(s, "S%-13i %-14lld %-14llu %llu\n", i, msecs,
-+			      genpd->states[i].usage, genpd->states[i].rejected);
- 	}
- 
- 	genpd_unlock(genpd);
-diff --git a/include/linux/pm_domain.h b/include/linux/pm_domain.h
-index 3b2b561ce846..239647f2d27f 100644
---- a/include/linux/pm_domain.h
-+++ b/include/linux/pm_domain.h
-@@ -82,6 +82,8 @@ struct genpd_power_state {
- 	s64 power_off_latency_ns;
- 	s64 power_on_latency_ns;
- 	s64 residency_ns;
-+	u64 usage;
-+	u64 rejected;
- 	struct fwnode_handle *fwnode;
- 	ktime_t idle_time;
- 	void *data;
--- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project
-
+>>> +
+>>> +       if (IS_ERR(ctrl->opp_table)) {
+>>> +               dev_err(dev, "invalid DP OPP table in device 
+>>> tree\n");
+>>> +               ctrl->opp_table = NULL;
+>>> +       } else {
+>>> +               /* OPP table is optional */
+>>> +               ret = dev_pm_opp_of_add_table(dev);
+>>> +               if (ret && ret != -ENODEV) {
+>>> +                       dev_err(dev, "add DP OPP table\n");
+>> 
+>> This is debug noise right?
+>> 
+>>> +                       dev_pm_opp_put_clkname(ctrl->opp_table);
+>>> +                       ctrl->opp_table = NULL;
+>>> +               }
+>>> +       }
+>>> +
+>>>          init_completion(&ctrl->idle_comp);
+>>>          init_completion(&ctrl->video_comp);
+>>>   @@ -1864,6 +1883,18 @@ struct dp_ctrl *dp_ctrl_get(struct device 
+>>> *dev, struct dp_link *link,
+>>>          return &ctrl->dp_ctrl;
+>>>   }
+>>>   -void dp_ctrl_put(struct dp_ctrl *dp_ctrl)
+>>> +void dp_ctrl_put(struct device *dev, struct dp_ctrl *dp_ctrl)
+>>>   {
+>>> +       struct dp_ctrl_private *ctrl;
+>>> +
+>>> +       if (!dp_ctrl)
+>> 
+>> Can this happen?
+>> 
+>>> +               return;
+>>> +
+>>> +       ctrl = container_of(dp_ctrl, struct dp_ctrl_private, 
+>>> dp_ctrl);
+>>> +
+>>> +       if (ctrl->opp_table != NULL) {
+>> 
+>> This is usually written as
+>> 
+>> 	if (ctrl->opp_table)
+>> 
+>>> +               dev_pm_opp_of_remove_table(dev);
+>>> +               dev_pm_opp_put_clkname(ctrl->opp_table);
+>>> +               ctrl->opp_table = NULL;
+>>> +       }
+>>>   }
+>>> diff --git a/drivers/gpu/drm/msm/dp/dp_ctrl.h 
+>>> b/drivers/gpu/drm/msm/dp/dp_ctrl.h
+>>> index f60ba93c8678..19b412a93e02 100644
+>>> --- a/drivers/gpu/drm/msm/dp/dp_ctrl.h
+>>> +++ b/drivers/gpu/drm/msm/dp/dp_ctrl.h
+>>> @@ -31,6 +31,6 @@ struct dp_ctrl *dp_ctrl_get(struct device *dev, 
+>>> struct dp_link *link,
+>>>                          struct dp_panel *panel, struct drm_dp_aux 
+>>> *aux,
+>>>                          struct dp_power *power, struct dp_catalog 
+>>> *catalog,
+>>>                          struct dp_parser *parser);
+>>> -void dp_ctrl_put(struct dp_ctrl *dp_ctrl);
+>>> +void dp_ctrl_put(struct device *dev, struct dp_ctrl *dp_ctrl);
+>> 
+>> Is 'dev' not inside 'dp_ctrl'?
+>> 
+>>>     #endif /* _DP_CTRL_H_ */
+>>> diff --git a/drivers/gpu/drm/msm/dp/dp_power.c 
+>>> b/drivers/gpu/drm/msm/dp/dp_power.c
+>>> index 17c1fc6a2d44..3d75bf09e38f 100644
+>>> --- a/drivers/gpu/drm/msm/dp/dp_power.c
+>>> +++ b/drivers/gpu/drm/msm/dp/dp_power.c
+>>> @@ -8,12 +8,14 @@
+>>>   #include <linux/clk.h>
+>>>   #include <linux/clk-provider.h>
+>>>   #include <linux/regulator/consumer.h>
+>>> +#include <linux/pm_opp.h>
+>>>   #include "dp_power.h"
+>>>   #include "msm_drv.h"
+>>>     struct dp_power_private {
+>>>          struct dp_parser *parser;
+>>>          struct platform_device *pdev;
+>>> +       struct device *dev;
+>>>          struct clk *link_clk_src;
+>>>          struct clk *pixel_provider;
+>>>          struct clk *link_provider;
+>>> @@ -148,18 +150,49 @@ static int dp_power_clk_deinit(struct 
+>>> dp_power_private *power)
+>>>          return 0;
+>>>   }
+>>>   +static int dp_power_clk_set_link_rate(struct dp_power_private 
+>>> *power,
+>>> +                       struct dss_clk *clk_arry, int num_clk, int 
+>>> enable)
+>>> +{
+>>> +       u32 rate;
+>>> +       int i, rc = 0;
+>>> +
+>>> +       for (i = 0; i < num_clk; i++) {
+>>> +               if (clk_arry[i].clk) {
+>>> +                       if (clk_arry[i].type == DSS_CLK_PCLK) {
+>>> +                               if (enable)
+>>> +                                       rate = clk_arry[i].rate;
+>>> +                               else
+>>> +                                       rate = 0;
+>>> +
+>>> +                               rc = dev_pm_opp_set_rate(power->dev, 
+>>> rate);
+>> 
+>> Why do we keep going if rc is non-zero?
+>> 
+>>> +                       }
+>>> +
+>>> +               }
+>>> +       }
+>>> +       return rc;
+>>> +}
+>>> +
+>>>   static int dp_power_clk_set_rate(struct dp_power_private *power,
+>>>                  enum dp_pm_type module, bool enable)
+>>>   {
+>>>          int rc = 0;
+>>>          struct dss_module_power *mp = &power->parser->mp[module];
+>>>   -       if (enable) {
+>>> -               rc = msm_dss_clk_set_rate(mp->clk_config, 
+>>> mp->num_clk);
+>>> +       if (module == DP_CTRL_PM) {
+>>> +               rc = dp_power_clk_set_link_rate(power, 
+>>> mp->clk_config, mp->num_clk, enable);
+>>>                  if (rc) {
+>>> -                       DRM_ERROR("failed to set clks rate.\n");
+>>> +                       DRM_ERROR("failed to set link clks rate.\n");
+>>>                          return rc;
+>>>                  }
+>>> +       } else {
+>>> +
+>>> +               if (enable) {
+>>> +                       rc = msm_dss_clk_set_rate(mp->clk_config, 
+>>> mp->num_clk);
+>>> +                       if (rc) {
+>>> +                               DRM_ERROR("failed to set clks 
+>>> rate.\n");
+>> 
+>> Not sure we need the period on these error messages.
+>> 
+>>> +                               return rc;
+>>> +                       }
+>>> +               }
+>>>          }
+>>>            rc = msm_dss_enable_clk(mp->clk_config, mp->num_clk, 
+>>> enable);
+>>> 
+>>> base-commit: 3c0f462da069af12211901ddf26f7e16e6951d9b
+>>> prerequisite-patch-id: a109eaf08147f50149ad661a58122b6745a52445
+>> 
+>> Can you rebase this on Rob's msm-next tree
+>> (https://gitlab.freedesktop.org/drm/msm.git) and test? It doesn't 
+>> apply
+>> for me because I have the dp phy patch from there.
+>> 
