@@ -2,32 +2,32 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 186A0282050
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  3 Oct 2020 04:06:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 22F4A28204E
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  3 Oct 2020 04:06:26 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725681AbgJCCGZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 2 Oct 2020 22:06:25 -0400
-Received: from z5.mailgun.us ([104.130.96.5]:35316 "EHLO z5.mailgun.us"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725833AbgJCCGW (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        id S1725847AbgJCCGW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
         Fri, 2 Oct 2020 22:06:22 -0400
+Received: from z5.mailgun.us ([104.130.96.5]:41852 "EHLO z5.mailgun.us"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725835AbgJCCGV (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 2 Oct 2020 22:06:21 -0400
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
  s=smtp; t=1601690781; h=References: In-Reply-To: Message-Id: Date:
  Subject: Cc: To: From: Sender;
- bh=ObqWOTpheK3mm0bfxZD76ibrbEOYwcqvFAOyd+uof3c=; b=rk5AYAfcCo0vqzRIK35erV4tdA0vsKiUBe47ZwAUZZ3NUZzswKW1/McbwN+crPG4qUs2Cuyu
- 9O2ruEqLal4pCnxyfTKWuf2aLCgDTnU2H4A1mGLwGvbcNkJ1SOyb7YeP17GeyzsLEaXZshqz
- JV94l80sX4YNG0HCQbSKhG0QGMk=
+ bh=Yy1YShYoIqM2gl9uWMg2YQQbSpcTlCitlQYEwQYlOoE=; b=PRj45dJKqFRyC6n74VFxplbc/eLioUJidaQ0jcTVF6U5ilLK0BQaclApFhGfcL2b3dIqFCUf
+ /Hs6p0tDMM+hRlNuXtZxRphp2mxggz9/WlXDbBp4TAfzZtg1BvkOPbGJMSzHjRnLBGJcnza7
+ OdT14ZKd3eTxprWP+SoCp40gie8=
 X-Mailgun-Sending-Ip: 104.130.96.5
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org
  (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n07.prod.us-east-1.postgun.com with SMTP id
- 5f77dc9c3711fec7b1cd7680 (version=TLS1.2,
+ smtp-out-n01.prod.us-east-1.postgun.com with SMTP id
+ 5f77dc9c588858a304055a88 (version=TLS1.2,
  cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Sat, 03 Oct 2020 02:06:20
  GMT
 Sender: sidgup=codeaurora.org@mg.codeaurora.org
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id C3895C433F1; Sat,  3 Oct 2020 02:06:19 +0000 (UTC)
+        id 8FD09C4339C; Sat,  3 Oct 2020 02:06:19 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
@@ -37,9 +37,9 @@ Received: from sidgup-linux.qualcomm.com (i-global254.qualcomm.com [199.106.103.
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
         (No client certificate requested)
         (Authenticated sender: sidgup)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 631FFC433CA;
-        Sat,  3 Oct 2020 02:06:17 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 631FFC433CA
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 513AAC433CB;
+        Sat,  3 Oct 2020 02:06:18 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 513AAC433CB
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=sidgup@codeaurora.org
 From:   Siddharth Gupta <sidgup@codeaurora.org>
@@ -49,10 +49,10 @@ Cc:     Siddharth Gupta <sidgup@codeaurora.org>,
         linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
         linux-arm-kernel@lists.infradead.org, tsoni@codeaurora.org,
         psodagud@codeaurora.org, rishabhb@codeaurora.org,
-        linux-doc@vger.kernel.org, Gurbir Arora <gurbaror@codeaurora.org>
-Subject: [PATCH v6 3/4] remoteproc: qcom: Add capability to collect minidumps
-Date:   Fri,  2 Oct 2020 19:05:56 -0700
-Message-Id: <1601690757-25726-4-git-send-email-sidgup@codeaurora.org>
+        linux-doc@vger.kernel.org
+Subject: [PATCH v6 4/4] remoteproc: qcom: Add minidump id for sm8150 modem
+Date:   Fri,  2 Oct 2020 19:05:57 -0700
+Message-Id: <1601690757-25726-5-git-send-email-sidgup@codeaurora.org>
 X-Mailer: git-send-email 2.7.4
 In-Reply-To: <1601690757-25726-1-git-send-email-sidgup@codeaurora.org>
 References: <1601690757-25726-1-git-send-email-sidgup@codeaurora.org>
@@ -60,248 +60,27 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This patch adds support for collecting minidump in the event of remoteproc
-crash. Parse the minidump table based on remoteproc's unique minidump-id,
-read all memory regions from the remoteproc's minidump table entry and
-expose the memory to userspace. The remoteproc platform driver can choose
-to collect a full/mini dump by specifying the coredump op.
+Add minidump id for modem in sm8150 chipset so that the regions to be
+included in the coredump generated upon a crash is based on the minidump
+tables in SMEM instead of those in the ELF header.
 
-Co-developed-by: Rishabh Bhatnagar <rishabhb@codeaurora.org>
-Signed-off-by: Rishabh Bhatnagar <rishabhb@codeaurora.org>
-Co-developed-by: Gurbir Arora <gurbaror@codeaurora.org>
-Signed-off-by: Gurbir Arora <gurbaror@codeaurora.org>
 Signed-off-by: Siddharth Gupta <sidgup@codeaurora.org>
 ---
- drivers/remoteproc/qcom_minidump.h |  64 +++++++++++++++++++++++
- drivers/remoteproc/qcom_q6v5_pas.c | 104 ++++++++++++++++++++++++++++++++++++-
- 2 files changed, 166 insertions(+), 2 deletions(-)
- create mode 100644 drivers/remoteproc/qcom_minidump.h
+ drivers/remoteproc/qcom_q6v5_pas.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/remoteproc/qcom_minidump.h b/drivers/remoteproc/qcom_minidump.h
-new file mode 100644
-index 0000000..5857d06
---- /dev/null
-+++ b/drivers/remoteproc/qcom_minidump.h
-@@ -0,0 +1,64 @@
-+/* SPDX-License-Identifier: GPL-2.0-only */
-+/*
-+ * Copyright (c) 2020, The Linux Foundation. All rights reserved.
-+ */
-+
-+#ifndef __QCOM_MINIDUMP_H
-+#define __QCOM_MINIDUMP_H
-+
-+#define MAX_NUM_OF_SS           10
-+#define MAX_REGION_NAME_LENGTH  16
-+#define SBL_MINIDUMP_SMEM_ID	602
-+#define MD_REGION_VALID		('V' << 24 | 'A' << 16 | 'L' << 8 | 'I' << 0)
-+#define MD_SS_ENCR_DONE		('D' << 24 | 'O' << 16 | 'N' << 8 | 'E' << 0)
-+#define MD_SS_ENABLED		('E' << 24 | 'N' << 16 | 'B' << 8 | 'L' << 0)
-+
-+/**
-+ * struct minidump_region - Minidump region
-+ * @name		: Name of the region to be dumped
-+ * @seq_num:		: Use to differentiate regions with same name.
-+ * @valid		: This entry to be dumped (if set to 1)
-+ * @address		: Physical address of region to be dumped
-+ * @size		: Size of the region
-+ */
-+struct minidump_region {
-+	char	name[MAX_REGION_NAME_LENGTH];
-+	__le32	seq_num;
-+	__le32	valid;
-+	__le64	address;
-+	__le64	size;
-+};
-+
-+/**
-+ * struct minidump_subsystem_toc: Subsystem's SMEM Table of content
-+ * @status : Subsystem toc init status
-+ * @enabled : if set to 1, this region would be copied during coredump
-+ * @encryption_status: Encryption status for this subsystem
-+ * @encryption_required : Decides to encrypt the subsystem regions or not
-+ * @ss_region_count : Number of regions added in this subsystem toc
-+ * @md_ss_smem_regions_baseptr : regions base pointer of the subsystem
-+ */
-+struct minidump_subsystem_toc {
-+	__le32	status;
-+	__le32	enabled;
-+	__le32	encryption_status;
-+	__le32	encryption_required;
-+	__le32	ss_region_count;
-+	__le64	md_ss_smem_regions_baseptr;
-+};
-+
-+/**
-+ * struct minidump_global_toc: Global Table of Content
-+ * @md_toc_init : Global Minidump init status
-+ * @md_revision : Minidump revision
-+ * @md_enable_status : Minidump enable status
-+ * @md_ss_toc : Array of subsystems toc
-+ */
-+struct minidump_global_toc {
-+	__le32				status;
-+	__le32				md_revision;
-+	__le32				enabled;
-+	struct minidump_subsystem_toc	md_ss_toc[MAX_NUM_OF_SS];
-+};
-+
-+#endif
 diff --git a/drivers/remoteproc/qcom_q6v5_pas.c b/drivers/remoteproc/qcom_q6v5_pas.c
-index 3837f23..349f725 100644
+index 349f725..23f4532 100644
 --- a/drivers/remoteproc/qcom_q6v5_pas.c
 +++ b/drivers/remoteproc/qcom_q6v5_pas.c
-@@ -28,11 +28,13 @@
- #include "qcom_pil_info.h"
- #include "qcom_q6v5.h"
- #include "remoteproc_internal.h"
-+#include "qcom_minidump.h"
- 
- struct adsp_data {
- 	int crash_reason_smem;
- 	const char *firmware_name;
- 	int pas_id;
-+	unsigned int minidump_id;
- 	bool has_aggre2_clk;
- 	bool auto_boot;
- 
-@@ -63,6 +65,7 @@ struct qcom_adsp {
- 	int proxy_pd_count;
- 
- 	int pas_id;
-+	unsigned int minidump_id;
- 	int crash_reason_smem;
- 	bool has_aggre2_clk;
- 	const char *info_name;
-@@ -116,6 +119,88 @@ static void adsp_pds_disable(struct qcom_adsp *adsp, struct device **pds,
- 	}
- }
- 
-+static void adsp_minidump_cleanup(struct rproc *rproc)
-+{
-+	struct rproc_dump_segment *entry, *tmp;
-+
-+	list_for_each_entry_safe(entry, tmp, &rproc->dump_segments, node) {
-+		list_del(&entry->node);
-+		kfree(entry->priv);
-+		kfree(entry);
-+	}
-+}
-+
-+static void adsp_add_minidump_segments(struct rproc *rproc,
-+				       struct minidump_subsystem_toc *minidump_ss)
-+{
-+	struct minidump_region __iomem *ptr;
-+	struct minidump_region region;
-+	int seg_cnt, i;
-+	dma_addr_t da;
-+	size_t size;
-+	char *name;
-+
-+	if (!list_empty(&rproc->dump_segments)) {
-+		dev_err(&rproc->dev, "dump segment list already populated\n");
-+		return;
-+	}
-+
-+	seg_cnt = le32_to_cpu(minidump_ss->ss_region_count);
-+	ptr = ioremap((unsigned long)le64_to_cpu(minidump_ss->md_ss_smem_regions_baseptr),
-+		      seg_cnt * sizeof(struct minidump_region));
-+
-+	if (!ptr)
-+		return;
-+
-+	for (i = 0; i < seg_cnt; i++) {
-+		memcpy_fromio(&region, ptr + i, sizeof(region));
-+		if (region.valid == MD_REGION_VALID) {
-+			name = kmalloc(MAX_REGION_NAME_LENGTH, GFP_KERNEL);
-+			strlcpy(name, region.name, MAX_REGION_NAME_LENGTH);
-+			da = le64_to_cpu(region.address);
-+			size = le32_to_cpu(region.size);
-+			rproc_coredump_add_custom_segment(rproc, da, size, NULL, name);
-+		}
-+	}
-+
-+	iounmap(ptr);
-+}
-+
-+static void adsp_dump(struct rproc *rproc)
-+{
-+	struct qcom_adsp *adsp = rproc->priv;
-+	struct minidump_subsystem_toc *minidump_ss;
-+	struct minidump_global_toc *minidump_toc;
-+
-+	/* Get Global minidump ToC*/
-+	minidump_toc = qcom_smem_get(QCOM_SMEM_HOST_ANY, SBL_MINIDUMP_SMEM_ID, NULL);
-+
-+	/* check if global table pointer exists and init is set */
-+	if (IS_ERR(minidump_toc) || !minidump_toc->status) {
-+		dev_err(&rproc->dev, "SMEM is not initialized.\n");
-+		return;
-+	}
-+
-+	/* Get subsystem table of contents using the minidump id */
-+	minidump_ss = &minidump_toc->md_ss_toc[adsp->minidump_id];
-+
-+	/**
-+	 * Collect minidump if SS ToC is valid and segment table
-+	 * is initialized in memory and encryption status is set.
-+	 */
-+	if (minidump_ss->md_ss_smem_regions_baseptr == 0 ||
-+	    le32_to_cpu(minidump_ss->status) != 1 ||
-+	    le32_to_cpu(minidump_ss->enabled) != MD_SS_ENABLED ||
-+	    le32_to_cpu(minidump_ss->encryption_status) != MD_SS_ENCR_DONE) {
-+		dev_err(&rproc->dev, "Minidump not ready!! Aborting\n");
-+		return;
-+	}
-+
-+	adsp_add_minidump_segments(rproc, minidump_ss);
-+	rproc_minidump(rproc);
-+	adsp_minidump_cleanup(rproc);
-+}
-+
- static int adsp_load(struct rproc *rproc, const struct firmware *fw)
- {
- 	struct qcom_adsp *adsp = (struct qcom_adsp *)rproc->priv;
-@@ -258,6 +343,15 @@ static const struct rproc_ops adsp_ops = {
- 	.panic = adsp_panic,
- };
- 
-+static const struct rproc_ops adsp_minidump_ops = {
-+	.start = adsp_start,
-+	.stop = adsp_stop,
-+	.da_to_va = adsp_da_to_va,
-+	.load = adsp_load,
-+	.panic = adsp_panic,
-+	.coredump = adsp_dump,
-+};
-+
- static int adsp_init_clock(struct qcom_adsp *adsp)
- {
- 	int ret;
-@@ -398,8 +492,13 @@ static int adsp_probe(struct platform_device *pdev)
- 	if (ret < 0 && ret != -EINVAL)
- 		return ret;
- 
--	rproc = rproc_alloc(&pdev->dev, pdev->name, &adsp_ops,
--			    fw_name, sizeof(*adsp));
-+	if (desc->minidump_id)
-+		rproc = rproc_alloc(&pdev->dev, pdev->name, &adsp_minidump_ops, fw_name,
-+				    sizeof(*adsp));
-+	else
-+		rproc = rproc_alloc(&pdev->dev, pdev->name, &adsp_ops, fw_name,
-+				    sizeof(*adsp));
-+
- 	if (!rproc) {
- 		dev_err(&pdev->dev, "unable to allocate remoteproc\n");
- 		return -ENOMEM;
-@@ -411,6 +510,7 @@ static int adsp_probe(struct platform_device *pdev)
- 	adsp = (struct qcom_adsp *)rproc->priv;
- 	adsp->dev = &pdev->dev;
- 	adsp->rproc = rproc;
-+	adsp->minidump_id = desc->minidump_id;
- 	adsp->pas_id = desc->pas_id;
- 	adsp->has_aggre2_clk = desc->has_aggre2_clk;
- 	adsp->info_name = desc->sysmon_name;
+@@ -707,6 +707,7 @@ static const struct adsp_data mpss_resource_init = {
+ 	.crash_reason_smem = 421,
+ 	.firmware_name = "modem.mdt",
+ 	.pas_id = 4,
++	.minidump_id = 3,
+ 	.has_aggre2_clk = false,
+ 	.auto_boot = false,
+ 	.active_pd_names = (char*[]){
 -- 
 Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
 a Linux Foundation Collaborative Project
