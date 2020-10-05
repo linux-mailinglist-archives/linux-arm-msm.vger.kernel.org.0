@@ -2,52 +2,52 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id EB6282838ED
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Oct 2020 17:04:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 838EB2838C5
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Oct 2020 17:03:30 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726748AbgJEPD3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        id S1726768AbgJEPD3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
         Mon, 5 Oct 2020 11:03:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44686 "EHLO
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44698 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726637AbgJEPDZ (ORCPT
+        with ESMTP id S1726743AbgJEPD2 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 5 Oct 2020 11:03:25 -0400
-Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 61A8EC0613CE;
-        Mon,  5 Oct 2020 08:03:25 -0700 (PDT)
-Received: by mail-wr1-x432.google.com with SMTP id t9so1329994wrq.11;
-        Mon, 05 Oct 2020 08:03:25 -0700 (PDT)
+        Mon, 5 Oct 2020 11:03:28 -0400
+Received: from mail-wr1-x443.google.com (mail-wr1-x443.google.com [IPv6:2a00:1450:4864:20::443])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 50C8AC0613A8;
+        Mon,  5 Oct 2020 08:03:28 -0700 (PDT)
+Received: by mail-wr1-x443.google.com with SMTP id m6so10006287wrn.0;
+        Mon, 05 Oct 2020 08:03:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=1RG5O/blRX088Gf+ChfJZxqZON6Zi0SmLcrgY0NHzZU=;
-        b=eE5U32q4J8OCVWaOdW3/PJpFoCfS6AAVQm9eTgbi93rZR5nbVgvY6jg3wLTVSVzqA9
-         lDWl3Mfctfen6dcJAFhpEfB+vyb7XKf/EbbuNTvGn+OFCxUJ/Pe13Q7Wwzq0LT8Mv2eb
-         J4NfeYRKR0zn184450Y/uR5sl+HIipqAcK8ZL1j1YIX+ywVpiZ7uXpJQQrfVnDKdUMpZ
-         58Dzomy4ER6t4+mB9laQoLcmoKk/WlIImrPWZnCa3GpVrpnpsjLb7obowoR1fAPU7l+J
-         m5QIYvPibFXgbybuUtpJQJHY+2lu1oFsUyy+JukLW/rNG21ixCx81bgXO1XTvqhUJhir
-         55tw==
+        bh=tlH8tFGN06glbZKMWD61GjMvPfq2+LXNjuTVVLpB//g=;
+        b=s9SJz8A70o7kQXfyEHA2+fqpr1v0t6DJkIOB3/DT7NoCYKzxu7ONMJyLAqIW6u7Qro
+         XVpKabWOskzSu3rq8yxAHkWWIMMqE3v0qOC2NOcIm0mUejN+4TEiHSYhPQ2lboJ8PFCF
+         Lf5CUP3vnJs/Ejeh59V59qmDhBHKn4K3QNxGxBiPNDW6uqd1aeoUvRiAu3M7CCmdTCRA
+         yAWGm1aczWV/3JsGDsgVwYRYFYxgufXjoNwPmqk5IRduUNZ+d+pRSnVSXNzDvL6ETjFz
+         ZIZmTW+kPFNPHbj4cNWdyY/T7l6gmuco1xIpVxqA3jMmNxO3IVB8eMzZeN9gnKJ5mbiw
+         U1QA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=1RG5O/blRX088Gf+ChfJZxqZON6Zi0SmLcrgY0NHzZU=;
-        b=hZNuPJYiJPWz/vlbvBFoUS7KyTveN1grbnkOqbIMD5HO2NaRN94EJ7YESV6IascsEW
-         KLkXECNJ3F0AnMaZ6ASzx3Lu+UlKHAMJrmEz/ESp1uUgKc6j8B7CM7lr1KJlBZmMYO0N
-         wFqpSe3h+NpTIsLv9mN/bAp2V0eUwogANSVIDl5z5lfJvAAJAcmT02kZcdm6bWsNM+ZB
-         Uoa+bB9XsKaqNxP1bwxFepjNeSinRxymc6ClVVKo4zufeM8HqQRpFbAFQLVAdNNHF0Gu
-         W29ZBkwASGiXBqOUvdfsSFNNv5XBAsgM1tmuLToYkp0FPPKgmZ0TXs1tbmCT8uTXnD9B
-         tI0Q==
-X-Gm-Message-State: AOAM533zrAwokYKgwd6LGgOf0wodCCSUTY7mJ7neMatL2oOxrNLw2P0/
-        FaF5B5uHjqqOXfpWYsYHuBg=
-X-Google-Smtp-Source: ABdhPJytBOxbYlIVvXxNG0jVtNFycKep6mZQv1jCqxUnOC4v0KiopSbE4QroV2dV4BeZxqPSX/WQFg==
-X-Received: by 2002:adf:f4c6:: with SMTP id h6mr12104118wrp.310.1601910204126;
-        Mon, 05 Oct 2020 08:03:24 -0700 (PDT)
+        bh=tlH8tFGN06glbZKMWD61GjMvPfq2+LXNjuTVVLpB//g=;
+        b=WqZw+1uUYZ5la8fH9VffB/DXJZr59ROXUN9lzvoUzx4Iba5uey+J+tL8mRH3J7LEv+
+         qpsntlEemL2cqU9ZaOZ9uUJaY0tzVocTOsEteKV+hyLd4OfA6FE3uAa6dM4FJ0N1BoAx
+         eI1p9FkS+BmTeFX45AMmy0fsDOEasoxYojlwq808WcG+7lByRA4KCnf+WNJE8UxysFvc
+         7GmpnHzoap/XlK+oT1UtX3F0+1utcl57qmT6vx3P/0/npGOSwiWdzRkrNUp65jH6j+qz
+         /b9SJ4Iq+ltmGmRGg6/2QHeMoTFaJGdXTXkFMFGCxf84RqlR0LU3ORo4S3bYks6I99/0
+         Dz8A==
+X-Gm-Message-State: AOAM531gXtKlUb8bGdVcYlbptHNGA7FVjOOKA8Fs6sMvz6Bd2Taqpff8
+        hyHYzQ2ZMLI8elxL7beJmvg=
+X-Google-Smtp-Source: ABdhPJwKU8vlzAt0OEbt2AoXNmvxhtk218aJRlJH7VFsGPITYJGlL3qz2XiXRITp9PEuMq2rEHAsgg==
+X-Received: by 2002:a5d:40cd:: with SMTP id b13mr18280179wrq.297.1601910206921;
+        Mon, 05 Oct 2020 08:03:26 -0700 (PDT)
 Received: from localhost.localdomain (abab191.neoplus.adsl.tpnet.pl. [83.6.165.191])
-        by smtp.googlemail.com with ESMTPSA id c132sm4662wmf.25.2020.10.05.08.03.22
+        by smtp.googlemail.com with ESMTPSA id c132sm4662wmf.25.2020.10.05.08.03.25
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 05 Oct 2020 08:03:23 -0700 (PDT)
+        Mon, 05 Oct 2020 08:03:26 -0700 (PDT)
 From:   Konrad Dybcio <konradybcio@gmail.com>
 To:     konradybcio@gmail.com
 Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
@@ -56,9 +56,9 @@ Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
         Rob Herring <robh+dt@kernel.org>,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org
-Subject: [PATCH 01/11] arm64: dts: qcom: pm8994: Add VADC node
-Date:   Mon,  5 Oct 2020 17:03:01 +0200
-Message-Id: <20201005150313.149754-2-konradybcio@gmail.com>
+Subject: [PATCH 02/11] arm64: dts: qcom: pm8994: Add temperature alarm node
+Date:   Mon,  5 Oct 2020 17:03:02 +0200
+Message-Id: <20201005150313.149754-3-konradybcio@gmail.com>
 X-Mailer: git-send-email 2.28.0
 In-Reply-To: <20201005150313.149754-1-konradybcio@gmail.com>
 References: <20201005150313.149754-1-konradybcio@gmail.com>
@@ -68,68 +68,31 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add VADC note and some of its channels to allow
-for voltage/temperature reading.
-
 Signed-off-by: Konrad Dybcio <konradybcio@gmail.com>
 ---
- arch/arm64/boot/dts/qcom/pm8994.dtsi | 36 +++++++++++++++++++++++++++-
- 1 file changed, 35 insertions(+), 1 deletion(-)
+ arch/arm64/boot/dts/qcom/pm8994.dtsi | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
 diff --git a/arch/arm64/boot/dts/qcom/pm8994.dtsi b/arch/arm64/boot/dts/qcom/pm8994.dtsi
-index 7e4f777746cb..ea2a3d53f859 100644
+index ea2a3d53f859..7825208b0d8b 100644
 --- a/arch/arm64/boot/dts/qcom/pm8994.dtsi
 +++ b/arch/arm64/boot/dts/qcom/pm8994.dtsi
-@@ -1,7 +1,8 @@
- // SPDX-License-Identifier: GPL-2.0
-+#include <dt-bindings/iio/qcom,spmi-vadc.h>
-+#include <dt-bindings/input/linux-event-codes.h>
- #include <dt-bindings/interrupt-controller/irq.h>
- #include <dt-bindings/spmi/spmi.h>
--#include <dt-bindings/input/linux-event-codes.h>
- 
- &spmi_bus {
- 
-@@ -35,6 +36,39 @@ pwrkey {
+@@ -36,6 +36,15 @@ pwrkey {
  
  		};
  
-+		pm8994_vadc: adc@3100 {
-+			compatible = "qcom,spmi-vadc";
-+			reg = <0x3100>;
-+			interrupts = <0x0 0x31 0x0 IRQ_TYPE_EDGE_RISING>;
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			#io-channel-cells = <1>;
-+
-+			adc-chan@7 {
-+				reg = <VADC_VSYS>;
-+				qcom,pre-scaling = <1 3>;
-+				label = "vph_pwr";
-+			};
-+			adc-chan@8 {
-+				reg = <VADC_DIE_TEMP>;
-+				label = "die_temp";
-+			};
-+			adc-chan@9 {
-+				reg = <VADC_REF_625MV>;
-+				label = "ref_625mv";
-+			};
-+			adc-chan@a {
-+				reg = <VADC_REF_1250MV>;
-+				label = "ref_1250mv";
-+			};
-+			adc-chan@e {
-+				reg = <VADC_GND_REF>;
-+			};
-+			adc-chan@f {
-+				reg = <VADC_VDD_VADC>;
-+			};
++		pm8994_temp: temp-alarm@2400 {
++			compatible = "qcom,spmi-temp-alarm";
++			reg = <0x2400>;
++			interrupts = <0x0 0x24 0x0 IRQ_TYPE_EDGE_RISING>;
++			io-channels = <&pm8994_vadc VADC_DIE_TEMP>;
++			io-channel-names = "thermal";
++			#thermal-sensor-cells = <0>;
 +		};
 +
- 		pm8994_gpios: gpios@c000 {
- 			compatible = "qcom,pm8994-gpio";
- 			reg = <0xc000>;
+ 		pm8994_vadc: adc@3100 {
+ 			compatible = "qcom,spmi-vadc";
+ 			reg = <0x3100>;
 -- 
 2.28.0
 
