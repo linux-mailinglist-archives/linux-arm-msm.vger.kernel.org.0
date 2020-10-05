@@ -2,84 +2,111 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E0028283204
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Oct 2020 10:29:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0AD062832DB
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Oct 2020 11:13:15 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725960AbgJEI3U (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 5 Oct 2020 04:29:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40088 "EHLO
+        id S1726053AbgJEJNF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 5 Oct 2020 05:13:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46840 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725880AbgJEI3U (ORCPT
+        with ESMTP id S1725934AbgJEJNE (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 5 Oct 2020 04:29:20 -0400
-Received: from casper.infradead.org (casper.infradead.org [IPv6:2001:8b0:10b:1236::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8E145C0613CE;
-        Mon,  5 Oct 2020 01:29:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-        d=infradead.org; s=casper.20170209; h=In-Reply-To:Content-Type:MIME-Version:
-        References:Message-ID:Subject:Cc:To:From:Date:Sender:Reply-To:
-        Content-Transfer-Encoding:Content-ID:Content-Description;
-        bh=kqzUKtK8GOb7bW4H3n/BFL1qICkSEHQYXjLgPEjS2CE=; b=Glk+6xlfldc5C47KvhK2HtCy16
-        5q1YyA1feL1tcE7Hzba/dTGO/FxmAE2DI74IF+5jWJiiOO59aBZnRDlV8g2D9Y1FO2655hlVoQw5b
-        3GWKGKcU1hQ4yqZqVolk105sJMA7jG5Fdi4BlYPhG0Kr3jv/YiyWiew4liHZYYCmLZunB1ODmTkQF
-        IOK8DIAj9Pm4aePKRQdja4x/zTMTQjpl/3A5dva1fvbte/Aq8HFsnf3FTcSkp15MwLhCYSABHhomg
-        r7fZkCLM89YznfPZ18GTqcE0XfvGjyoNVeQXzrX3oY6JROSZ6DYKlPxTAJzThg6XXVp3SuiT4Omre
-        MlopKnsA==;
-Received: from hch by casper.infradead.org with local (Exim 4.92.3 #3 (Red Hat Linux))
-        id 1kPLru-0008Kj-3d; Mon, 05 Oct 2020 08:29:14 +0000
-Date:   Mon, 5 Oct 2020 09:29:14 +0100
-From:   Christoph Hellwig <hch@infradead.org>
-To:     Jonathan Marek <jonathan@marek.ca>
-Cc:     Christoph Hellwig <hch@infradead.org>,
-        freedreno@lists.freedesktop.org, Rob Clark <robdclark@gmail.com>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
-        <linux-arm-msm@vger.kernel.org>,
-        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
-        <dri-devel@lists.freedesktop.org>,
-        open list <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH 2/3] drm/msm: add DRM_MSM_GEM_SYNC_CACHE for non-coherent
- cache maintenance
-Message-ID: <20201005082914.GA31702@infradead.org>
-References: <20201001002709.21361-1-jonathan@marek.ca>
- <20201001002709.21361-3-jonathan@marek.ca>
- <20201002075321.GA7547@infradead.org>
- <b22fb797-67b0-a912-1d23-2b47c9a9e674@marek.ca>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <b22fb797-67b0-a912-1d23-2b47c9a9e674@marek.ca>
-X-SRS-Rewrite: SMTP reverse-path rewritten from <hch@infradead.org> by casper.infradead.org. See http://www.infradead.org/rpr.html
+        Mon, 5 Oct 2020 05:13:04 -0400
+Received: from mail-pg1-x544.google.com (mail-pg1-x544.google.com [IPv6:2607:f8b0:4864:20::544])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B4BD8C0613CE
+        for <linux-arm-msm@vger.kernel.org>; Mon,  5 Oct 2020 02:13:04 -0700 (PDT)
+Received: by mail-pg1-x544.google.com with SMTP id m34so5603732pgl.9
+        for <linux-arm-msm@vger.kernel.org>; Mon, 05 Oct 2020 02:13:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id;
+        bh=ogtuZFvmTG1HNJ4mpeUW7o3oDnuWDjMGFWxAfAyP1zo=;
+        b=pXBuoTsPuRad3vIUhnovelwcdfQU07Dv8Z+Qy++jDhwhdR0Emie8AuwmaT7EjATyD5
+         LWJXWDJX4zrMY4bLBJicioD/na0mCDYuq2dpjz78gJTkkhbAnc0A/SVV0NzAk4fqDYcQ
+         IYDhyezYAoB09Vfd5DndUUTKk+Oq4RxVgefyh+Xt3yYV5l8DzssfHTFxlg/8Ads2xP0d
+         PmUwHzb9HLUSGWdfcXu3hEhFqWRPHxTcgvkj69O9mERUIjTKu/ntyJjo5YyncEcHfMa8
+         T+t+XDrm5I3Rr72jXjfdcF/VGNw6ZH4eVTCOWu/sy14AoLNStskyKOGtqeqaT7HJc2eS
+         O31w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=ogtuZFvmTG1HNJ4mpeUW7o3oDnuWDjMGFWxAfAyP1zo=;
+        b=S586oh7hGLIzqycMhcKREI1OvvEK49KjYKDwpvMoroWO7UuEcrvaM5QMBS/VfGKkmf
+         1f83XulZDMceyBasiOlC5jiYOCIYYveHP6ANpFNnu2Vcqr3T3QKrIkN0RapUQyiDx5x0
+         R731toPtDw4zBhr/PyzW0L0maYLqDvHOwV+bjvpDY5XEVqYfcVMPIvHUOsfKFyFC1FSY
+         f1vEKlnoFkE2unAfclGxyadICBkQy+D9g1nH8RLd+h0xMoesIhhe/VhAb8CLF0TrOlZY
+         xG26vFgAcW4LYfkxm+ffJz/E6koWZHuJNU7cnedaKGlAdERa4oK+EegGMO0eIp8NskS/
+         29+g==
+X-Gm-Message-State: AOAM533cnaxn/8utCovq5CbieOOspZmOBEleXyOEr8+3Dut+PAAS8q5i
+        /CEHPl6kBxWHhl6zwA9t/Zkp
+X-Google-Smtp-Source: ABdhPJxgjUAEMEy8du3ikSCR/tZO6938wCs3TDv/a9TCwUvzczACrPF5VLwM6m/cCdU0KV26Uh//bA==
+X-Received: by 2002:a63:c40a:: with SMTP id h10mr9314528pgd.210.1601889182847;
+        Mon, 05 Oct 2020 02:13:02 -0700 (PDT)
+Received: from localhost.localdomain ([103.59.133.81])
+        by smtp.googlemail.com with ESMTPSA id c7sm11255028pfj.84.2020.10.05.02.12.58
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 05 Oct 2020 02:13:02 -0700 (PDT)
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     agross@kernel.org, bjorn.andersson@linaro.org, kishon@ti.com,
+        vkoul@kernel.org, robh@kernel.org
+Cc:     svarbanov@mm-sol.com, bhelgaas@google.com,
+        lorenzo.pieralisi@arm.com, linux-arm-msm@vger.kernel.org,
+        linux-pci@vger.kernel.org, linux-kernel@vger.kernel.org,
+        mgautam@codeaurora.org, devicetree@vger.kernel.org,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Subject: [PATCH v3 0/5] Add PCIe support for SM8250 SoC
+Date:   Mon,  5 Oct 2020 14:42:31 +0530
+Message-Id: <20201005091236.31770-1-manivannan.sadhasivam@linaro.org>
+X-Mailer: git-send-email 2.17.1
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Oct 02, 2020 at 08:46:35AM -0400, Jonathan Marek wrote:
-> > > +void msm_gem_sync_cache(struct drm_gem_object *obj, uint32_t flags,
-> > > +		size_t range_start, size_t range_end)
-> > > +{
-> > > +	struct msm_gem_object *msm_obj = to_msm_bo(obj);
-> > > +
-> > > +	/* TODO: sync only the required range, and don't invalidate on clean */
-> > > +
-> > > +	if (flags & MSM_GEM_SYNC_CACHE_CLEAN)
-> > > +		sync_for_device(msm_obj);
-> > > +
-> > > +	if (flags & MSM_GEM_SYNC_CACHE_INVALIDATE)
-> > > +		sync_for_cpu(msm_obj);
-> > 
-> > And make to these ones as well.  They are complete abuses of the DMA
-> > API, and while we had to live with that for now to not cause regressions
-> > they absoutely must not be exposed in a userspace ABI like this.
-> > 
-> 
-> How do you propose that cached non-coherent memory be implemented? It is a
-> useful feature for userspace.
+Hello,
 
-If the driver is using the DMA API you need to use dma_alloc_noncoherent
-and friends as of 5.10 (see the iommu list for the discussion).
+This series adds PCIe support for Qualcomm SM8250 SoC with relevant PHYs.
+There are 3 PCIe instances on this SoC each with different PHYs. The PCIe
+controller and PHYs are mostly comaptible with the ones found on SDM845
+SoC, hence the old drivers are modified to add the support.
 
-If you use the raw IOMMU API (which I think the msm drm driver does) you
-need to work with the maintainers to implement a cache synchronization
-API that is not tied to the DMA API.
+This series has been tested on RB5 board with QCA6390 chipset connected
+onboard.
+
+NOTE: This series functionally depends on the following patch:
+https://lore.kernel.org/linux-arm-kernel/1599814203-14441-3-git-send-email-hayashi.kunihiko@socionext.com/
+
+I've dropped a similar patch in v2.
+
+Thanks,
+Mani
+
+Changes in v3:
+
+* Rebased on top of phy/next
+* Renamed ops_sm8250 to ops_1_9_0 to maintain uniformity
+
+Changes in v2:
+
+* Fixed the PHY and PCIe bindings
+* Introduced secondary table in PHY driver to abstract out the common configs.
+* Used a more generic way of configuring BDF to SID mapping
+* Dropped ATU change in favor of a patch spotted by Rob
+
+Manivannan Sadhasivam (5):
+  dt-bindings: phy: qcom,qmp: Add SM8250 PCIe PHY bindings
+  phy: qcom-qmp: Add SM8250 PCIe QMP PHYs
+  dt-bindings: pci: qcom: Document PCIe bindings for SM8250 SoC
+  PCI: qcom: Add SM8250 SoC support
+  PCI: qcom: Add support for configuring BDF to SID mapping for SM8250
+
+ .../devicetree/bindings/pci/qcom,pcie.txt     |   6 +-
+ .../devicetree/bindings/phy/qcom,qmp-phy.yaml |   6 +
+ drivers/pci/controller/dwc/Kconfig            |   1 +
+ drivers/pci/controller/dwc/pcie-qcom.c        | 149 ++++++++++
+ drivers/phy/qualcomm/phy-qcom-qmp.c           | 281 +++++++++++++++++-
+ drivers/phy/qualcomm/phy-qcom-qmp.h           |  18 ++
+ 6 files changed, 455 insertions(+), 6 deletions(-)
+
+-- 
+2.17.1
+
