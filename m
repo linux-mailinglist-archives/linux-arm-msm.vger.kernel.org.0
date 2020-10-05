@@ -2,241 +2,124 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 33C48283706
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Oct 2020 15:56:08 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E89FF283732
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Oct 2020 16:02:11 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725911AbgJEN4H (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 5 Oct 2020 09:56:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34232 "EHLO
+        id S1726410AbgJEOCK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 5 Oct 2020 10:02:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35186 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725903AbgJEN4H (ORCPT
+        with ESMTP id S1726018AbgJEOCK (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 5 Oct 2020 09:56:07 -0400
-Received: from mail-wr1-x441.google.com (mail-wr1-x441.google.com [IPv6:2a00:1450:4864:20::441])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 02353C0613A7
-        for <linux-arm-msm@vger.kernel.org>; Mon,  5 Oct 2020 06:56:07 -0700 (PDT)
-Received: by mail-wr1-x441.google.com with SMTP id z1so9683367wrt.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 05 Oct 2020 06:56:06 -0700 (PDT)
+        Mon, 5 Oct 2020 10:02:10 -0400
+Received: from mail-wm1-x344.google.com (mail-wm1-x344.google.com [IPv6:2a00:1450:4864:20::344])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 42407C0613CE
+        for <linux-arm-msm@vger.kernel.org>; Mon,  5 Oct 2020 07:02:10 -0700 (PDT)
+Received: by mail-wm1-x344.google.com with SMTP id k18so8920730wmj.5
+        for <linux-arm-msm@vger.kernel.org>; Mon, 05 Oct 2020 07:02:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ffwll.ch; s=google;
         h=date:from:to:cc:subject:message-id:mail-followup-to:references
          :mime-version:content-disposition:in-reply-to;
-        bh=Dg9PMrWuju7CtSiTsFc5fMoRQvaza8NEwASqcsZO++M=;
-        b=ly235/F88b9oFpiEVFMmSUjOC8USMQzMETnsmzx76Lvm8v00ci586LoMHUb+nsH97E
-         XFjKbLAbmz69pMf/mIhZb09OGmZRSkIgnHlmbtffx4wGcbRHihc5mIz0aNxtcFGPPvkl
-         Jndgm5PXC7Ua44LHVYAGe3JhL6wccQYFwljhI=
+        bh=Kw0jH99mH65cgbBf0cAKvt7u45o+bI69PtoRz7plT9I=;
+        b=LKbavLR8ZdTnQm7tlmWwgndIQwhen8v8O8x1psZ+HIE2wmAD24D+bXj5NwsJAvyS/R
+         MQkiaMJ/+ob1zWMVtrd+sEWT6BKvZocdCnxbzPsmOqi3r39+dbuF1VEaGtZJZGoHTneV
+         0F4uvulqQGo0uTF43vmMZxaBExbJ8UbT6Sb9k=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id
          :mail-followup-to:references:mime-version:content-disposition
          :in-reply-to;
-        bh=Dg9PMrWuju7CtSiTsFc5fMoRQvaza8NEwASqcsZO++M=;
-        b=S8V70FPZc2ejgo5oR5739U8fbN6bHJgtDkrsEgPsuVpOmGG/x7Xnxb55IuvHwnAavX
-         ThM9PX35W2h+pn/jktKP3PHsTw5mJeFwJPn9vrzv2I/TZqKYv7QsRb5GCOrC92w0FR6x
-         CPBoU32HM9d2WpWiKpeFZ5g4ltRy1fM0n9rN5yE0Wf0BSmhbAFTTIPnYbx/hlGBoAW6V
-         XqOsvxgLCw+p+XU5T5vke2Td4GPzG2JqzWIEKCNMmsNELRuOC+ue0xV4rveLikWQCtyG
-         5TkgxotehCY1HyER+yXpJrqIQFOLXsSomDRgjHbjf79DrWB2OPpt7+HBRSDLq6WC/AJ3
-         2cuQ==
-X-Gm-Message-State: AOAM531puwAcmHjuBvR0urB9rRt62P5uzyiWltw261dQe6Adh0U6mZaS
-        SLEoiZysolTwGvwj934HGz7O9g==
-X-Google-Smtp-Source: ABdhPJwBjaQ/CDTdmzx2apJHF7WUmsHUVX+VJjGiGvqwPns7tfENfSADqpvErsjRzw1fJJVl2N6g3w==
-X-Received: by 2002:a5d:554c:: with SMTP id g12mr17893218wrw.294.1601906165661;
-        Mon, 05 Oct 2020 06:56:05 -0700 (PDT)
+        bh=Kw0jH99mH65cgbBf0cAKvt7u45o+bI69PtoRz7plT9I=;
+        b=p5Lghy03kyE2KYoMXrT52Yft9ENYwdBPfpq46uUjwyC8HSqQS1Ydhw2c7hWeL5LDuu
+         5jefqVFFPrvsgumAICkp3aqQ1ipsarLv7iFJJ9osvB8ZLfHylWwlVlGN5akYmU7cNNZW
+         1DcdLGw4ReXi1vLFASmT/zGwTWRZB2FweBSifaOJ5HxymJ5ArmIfh9iBTLQFKasgx14c
+         VlcMTqJLSWKNpSyt4RyIK5goij37frc/pShMP7bjvmkYa9NNKHOyGYDA14OcDo0K48Kh
+         cUYwf04VDvHyM7WgOOFl6Xqr/L5ugXJIZoCKvG6r+MdwI6H79nqTu3oTRrSucr5YZXG9
+         on1g==
+X-Gm-Message-State: AOAM532XBgE74bAqdM0QISy78v1BO1t9CaGuD1KSy2Ck4N3V1nt2J0ka
+        xYbkz2mF9UDJsk63VFitPOkp1g==
+X-Google-Smtp-Source: ABdhPJxaKvPpL0rwdLNrB+ck47hYngpJ9D4J1RqIbGrDU+BZnsh9AH/S/PSgGf1teantMnWe2hZn8w==
+X-Received: by 2002:a1c:2905:: with SMTP id p5mr17734071wmp.187.1601906526822;
+        Mon, 05 Oct 2020 07:02:06 -0700 (PDT)
 Received: from phenom.ffwll.local ([2a02:168:57f4:0:efd0:b9e5:5ae6:c2fa])
-        by smtp.gmail.com with ESMTPSA id 1sm31585wre.61.2020.10.05.06.56.04
+        by smtp.gmail.com with ESMTPSA id t15sm78967wrp.20.2020.10.05.07.02.04
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 05 Oct 2020 06:56:04 -0700 (PDT)
-Date:   Mon, 5 Oct 2020 15:56:02 +0200
+        Mon, 05 Oct 2020 07:02:05 -0700 (PDT)
+Date:   Mon, 5 Oct 2020 16:02:03 +0200
 From:   Daniel Vetter <daniel@ffwll.ch>
-To:     Rob Clark <robdclark@gmail.com>
-Cc:     dri-devel@lists.freedesktop.org,
+To:     Hillf Danton <hdanton@sina.com>
+Cc:     Rob Clark <robdclark@gmail.com>, dri-devel@lists.freedesktop.org,
         Rob Clark <robdclark@chromium.org>,
         Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
-        <linux-arm-msm@vger.kernel.org>,
-        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
-        <freedreno@lists.freedesktop.org>,
-        open list <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH 07/14] drm/msm: Refcount submits
-Message-ID: <20201005135602.GR438822@phenom.ffwll.local>
-Mail-Followup-To: Rob Clark <robdclark@gmail.com>,
-        dri-devel@lists.freedesktop.org, Rob Clark <robdclark@chromium.org>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
-        "open list:DRM DRIVER FOR MSM ADRENO GPU" <linux-arm-msm@vger.kernel.org>,
-        "open list:DRM DRIVER FOR MSM ADRENO GPU" <freedreno@lists.freedesktop.org>,
-        open list <linux-kernel@vger.kernel.org>
+        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 13/14] drm/msm: Drop struct_mutex in shrinker path
+Message-ID: <20201005140203.GS438822@phenom.ffwll.local>
+Mail-Followup-To: Hillf Danton <hdanton@sina.com>,
+        Rob Clark <robdclark@gmail.com>, dri-devel@lists.freedesktop.org,
+        Rob Clark <robdclark@chromium.org>, Sean Paul <sean@poorly.run>,
+        David Airlie <airlied@linux.ie>, linux-arm-msm@vger.kernel.org,
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
 References: <20201004192152.3298573-1-robdclark@gmail.com>
- <20201004192152.3298573-8-robdclark@gmail.com>
+ <20201005092419.15608-1-hdanton@sina.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20201004192152.3298573-8-robdclark@gmail.com>
+In-Reply-To: <20201005092419.15608-1-hdanton@sina.com>
 X-Operating-System: Linux phenom 5.7.0-1-amd64 
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sun, Oct 04, 2020 at 12:21:39PM -0700, Rob Clark wrote:
-> From: Rob Clark <robdclark@chromium.org>
+On Mon, Oct 05, 2020 at 05:24:19PM +0800, Hillf Danton wrote:
 > 
-> Before we remove dev->struct_mutex from the retire path, we have to deal
-> with the situation of a submit retiring before the submit ioctl returns.
+> On Sun,  4 Oct 2020 12:21:45
+> > From: Rob Clark <robdclark@chromium.org>
+> > 
+> > Now that the inactive_list is protected by mm_lock, and everything
+> > else on per-obj basis is protected by obj->lock, we no longer depend
+> > on struct_mutex.
+> > 
+> > Signed-off-by: Rob Clark <robdclark@chromium.org>
+> > ---
+> >  drivers/gpu/drm/msm/msm_gem.c          |  1 -
+> >  drivers/gpu/drm/msm/msm_gem_shrinker.c | 54 --------------------------
+> >  2 files changed, 55 deletions(-)
+> > 
+> [...]
 > 
-> To deal with this, ring->submits will hold a reference to the submit,
-> which is dropped when the submit is retired.  And the submit ioctl path
-> holds it's own ref, which it drops when it is done with the submit.
+> > @@ -71,13 +33,8 @@ msm_gem_shrinker_scan(struct shrinker *shrinker, struct shrink_control *sc)
+> >  {
+> >  	struct msm_drm_private *priv =
+> >  		container_of(shrinker, struct msm_drm_private, shrinker);
+> > -	struct drm_device *dev = priv->dev;
+> >  	struct msm_gem_object *msm_obj;
+> >  	unsigned long freed = 0;
+> > -	bool unlock;
+> > -
+> > -	if (!msm_gem_shrinker_lock(dev, &unlock))
+> > -		return SHRINK_STOP;
+> >  
+> >  	mutex_lock(&priv->mm_lock);
 > 
-> Also, add to submit list *after* getting/pinning bo's, to prevent badness
-> in case the completed fence is corrupted, and retire_worker mistakenly
-> believes the submit is done too early.
-> 
-> Signed-off-by: Rob Clark <robdclark@chromium.org>
+> Better if the change in behavior is documented that SHRINK_STOP will
+> no longer be needed.
 
-Why not embed the dma_fence instead of pointer and use that refcount? i915
-does that, and imo kinda makes sense instead of more refcounted things.
-But might not make sense for msm.
+btw I read through this and noticed you have your own obj lock, plus
+mutex_lock_nested. I strongly recommend to just cut over to dma_resv_lock
+for all object lock needs (soc drivers have been terrible with this
+unfortuntaly), and in the shrinker just use dma_resv_trylock instead of
+trying to play clever games outsmarting lockdep.
+
+I recently wrote an entire blog length rant on why I think
+mutex_lock_nested is too dangerous to be useful:
+
+https://blog.ffwll.ch/2020/08/lockdep-false-positives.html
+
+Not anything about this here, just general comment. The problem extends to
+shmem helpers and all that also having their own locks for everything.
 -Daniel
-
-> ---
->  drivers/gpu/drm/msm/msm_drv.h        |  1 -
->  drivers/gpu/drm/msm/msm_gem.h        | 13 +++++++++++++
->  drivers/gpu/drm/msm/msm_gem_submit.c | 12 ++++++------
->  drivers/gpu/drm/msm/msm_gpu.c        | 21 ++++++++++++++++-----
->  4 files changed, 35 insertions(+), 12 deletions(-)
-> 
-> diff --git a/drivers/gpu/drm/msm/msm_drv.h b/drivers/gpu/drm/msm/msm_drv.h
-> index 50978e5db376..535f9e718e2d 100644
-> --- a/drivers/gpu/drm/msm/msm_drv.h
-> +++ b/drivers/gpu/drm/msm/msm_drv.h
-> @@ -277,7 +277,6 @@ void msm_unregister_mmu(struct drm_device *dev, struct msm_mmu *mmu);
->  
->  bool msm_use_mmu(struct drm_device *dev);
->  
-> -void msm_gem_submit_free(struct msm_gem_submit *submit);
->  int msm_ioctl_gem_submit(struct drm_device *dev, void *data,
->  		struct drm_file *file);
->  
-> diff --git a/drivers/gpu/drm/msm/msm_gem.h b/drivers/gpu/drm/msm/msm_gem.h
-> index a1bf741b9b89..e05b1530aca6 100644
-> --- a/drivers/gpu/drm/msm/msm_gem.h
-> +++ b/drivers/gpu/drm/msm/msm_gem.h
-> @@ -136,6 +136,7 @@ void msm_gem_free_work(struct work_struct *work);
->   * lasts for the duration of the submit-ioctl.
->   */
->  struct msm_gem_submit {
-> +	struct kref ref;
->  	struct drm_device *dev;
->  	struct msm_gpu *gpu;
->  	struct msm_gem_address_space *aspace;
-> @@ -169,6 +170,18 @@ struct msm_gem_submit {
->  	} bos[];
->  };
->  
-> +void __msm_gem_submit_destroy(struct kref *kref);
-> +
-> +static inline void msm_gem_submit_get(struct msm_gem_submit *submit)
-> +{
-> +	kref_get(&submit->ref);
-> +}
-> +
-> +static inline void msm_gem_submit_put(struct msm_gem_submit *submit)
-> +{
-> +	kref_put(&submit->ref, __msm_gem_submit_destroy);
-> +}
-> +
->  /* helper to determine of a buffer in submit should be dumped, used for both
->   * devcoredump and debugfs cmdstream dumping:
->   */
-> diff --git a/drivers/gpu/drm/msm/msm_gem_submit.c b/drivers/gpu/drm/msm/msm_gem_submit.c
-> index e1d1f005b3d4..7d653bdc92dc 100644
-> --- a/drivers/gpu/drm/msm/msm_gem_submit.c
-> +++ b/drivers/gpu/drm/msm/msm_gem_submit.c
-> @@ -42,6 +42,7 @@ static struct msm_gem_submit *submit_create(struct drm_device *dev,
->  	if (!submit)
->  		return NULL;
->  
-> +	kref_init(&submit->ref);
->  	submit->dev = dev;
->  	submit->aspace = queue->ctx->aspace;
->  	submit->gpu = gpu;
-> @@ -60,12 +61,12 @@ static struct msm_gem_submit *submit_create(struct drm_device *dev,
->  	return submit;
->  }
->  
-> -void msm_gem_submit_free(struct msm_gem_submit *submit)
-> +void __msm_gem_submit_destroy(struct kref *kref)
->  {
-> +	struct msm_gem_submit *submit =
-> +			container_of(kref, struct msm_gem_submit, ref);
-> +
->  	dma_fence_put(submit->fence);
-> -	spin_lock(&submit->ring->submit_lock);
-> -	list_del(&submit->node);
-> -	spin_unlock(&submit->ring->submit_lock);
->  	put_pid(submit->pid);
->  	msm_submitqueue_put(submit->queue);
->  
-> @@ -805,8 +806,7 @@ int msm_ioctl_gem_submit(struct drm_device *dev, void *data,
->  	submit_cleanup(submit);
->  	if (has_ww_ticket)
->  		ww_acquire_fini(&submit->ticket);
-> -	if (ret)
-> -		msm_gem_submit_free(submit);
-> +	msm_gem_submit_put(submit);
->  out_unlock:
->  	if (ret && (out_fence_fd >= 0))
->  		put_unused_fd(out_fence_fd);
-> diff --git a/drivers/gpu/drm/msm/msm_gpu.c b/drivers/gpu/drm/msm/msm_gpu.c
-> index 8d1e254f964a..fd3fc6f36ab1 100644
-> --- a/drivers/gpu/drm/msm/msm_gpu.c
-> +++ b/drivers/gpu/drm/msm/msm_gpu.c
-> @@ -712,7 +712,12 @@ static void retire_submit(struct msm_gpu *gpu, struct msm_ringbuffer *ring,
->  
->  	pm_runtime_mark_last_busy(&gpu->pdev->dev);
->  	pm_runtime_put_autosuspend(&gpu->pdev->dev);
-> -	msm_gem_submit_free(submit);
-> +
-> +	spin_lock(&ring->submit_lock);
-> +	list_del(&submit->node);
-> +	spin_unlock(&ring->submit_lock);
-> +
-> +	msm_gem_submit_put(submit);
->  }
->  
->  static void retire_submits(struct msm_gpu *gpu)
-> @@ -786,10 +791,6 @@ void msm_gpu_submit(struct msm_gpu *gpu, struct msm_gem_submit *submit)
->  
->  	submit->seqno = ++ring->seqno;
->  
-> -	spin_lock(&ring->submit_lock);
-> -	list_add_tail(&submit->node, &ring->submits);
-> -	spin_unlock(&ring->submit_lock);
-> -
->  	msm_rd_dump_submit(priv->rd, submit, NULL);
->  
->  	update_sw_cntrs(gpu);
-> @@ -816,6 +817,16 @@ void msm_gpu_submit(struct msm_gpu *gpu, struct msm_gem_submit *submit)
->  		msm_gem_active_get(drm_obj, gpu);
->  	}
->  
-> +	/*
-> +	 * ring->submits holds a ref to the submit, to deal with the case
-> +	 * that a submit completes before msm_ioctl_gem_submit() returns.
-> +	 */
-> +	msm_gem_submit_get(submit);
-> +
-> +	spin_lock(&ring->submit_lock);
-> +	list_add_tail(&submit->node, &ring->submits);
-> +	spin_unlock(&ring->submit_lock);
-> +
->  	gpu->funcs->submit(gpu, submit);
->  	priv->lastctx = submit->queue->ctx;
->  
-> -- 
-> 2.26.2
-> 
-
 -- 
 Daniel Vetter
 Software Engineer, Intel Corporation
