@@ -2,132 +2,93 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id BFEDA283CC9
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Oct 2020 18:49:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 73A52283D9E
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Oct 2020 19:39:47 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727221AbgJEQtv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 5 Oct 2020 12:49:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33084 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726772AbgJEQtv (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 5 Oct 2020 12:49:51 -0400
-Received: from mail-wr1-x443.google.com (mail-wr1-x443.google.com [IPv6:2a00:1450:4864:20::443])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0EF96C0613CE;
-        Mon,  5 Oct 2020 09:49:51 -0700 (PDT)
-Received: by mail-wr1-x443.google.com with SMTP id h7so6758572wre.4;
-        Mon, 05 Oct 2020 09:49:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=Cmy513aiCAKF5upvIJrZZZX0KF0VJYYwzL6n+RYf11I=;
-        b=hr1n1nmFEEAdc+6X9eVIA7H6F4OuL0MJx7a0AXWZNvly8e9U9Bv3F3yI4GcfxAuWa0
-         UkVOm2+8LGlyBofMkEifpRTcmKH5ESdbbeeTNdvJpoUEjWFASW3o5endWzeqz3Tz110C
-         DWdYmVIKTkQLGMETSNrsFm9s1vp73pgjDyr+SPplVrJTrLoXF1pMv9jJD2mVLxkeOU39
-         0i89EAGMWh8YrEK10YO4D2kV2kthuq1keUtJLukivFIs2kVrSXZrW1ZWU+va3mU+Wpdh
-         IPl0VnfcjMrF8Q6bowVw/Za5dLBbscDV4JCOZ9lJSVrnSih4AD+6Ho1VdqwITThcqMSn
-         C4qw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=Cmy513aiCAKF5upvIJrZZZX0KF0VJYYwzL6n+RYf11I=;
-        b=PH8ArViOxTppevnSXaBqcbSqPzOp66IR2QPwP6bmw8Z95RtGkG3fIq6Uau3I+w2gES
-         e6PvW0ek7fugil+3G8coZLgvSXe4W2RmgNhAsW9iVye+/7mYqjT8FBFLe0D8V7g8/j/t
-         HKUHPn9s0bIkXnOFnHs20axT7NcwA8U6W9um6dVVN9zxBFJd+aXtozwMgrYViX8Hpylw
-         yttUXE254IYH3ULJCsrirAQYJc7BGPyMpW2mVgbd6NuTH6SBam+8bPCiIhY7HfxPw010
-         VkES2QTgVw8ceJ5k2lLo/+poJmY5iJhGRJMxZgnBHj3YJEjKCf19uc2GFAO3ioJxVBho
-         VKlA==
-X-Gm-Message-State: AOAM532Kz7K2P9k4G3gRDariY+UAGsvoL/GV/1ekVPNPqHrv4yeSyuGZ
-        UskcdD32MXwLVsyeGG6l5Z9RUYfyABl2EmA0HfQgMsO304ww0w==
-X-Google-Smtp-Source: ABdhPJzTfFXUedYJkqNhnmDc2V1Hm1A4czYej5pOfm13kmGDdChZ59bZUbBhEi7CGyWZfe2PEzwOqMAIZZj0XsghJWo=
-X-Received: by 2002:a5d:4bcf:: with SMTP id l15mr348661wrt.132.1601916589672;
- Mon, 05 Oct 2020 09:49:49 -0700 (PDT)
+        id S1729156AbgJERjL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 5 Oct 2020 13:39:11 -0400
+Received: from m42-4.mailgun.net ([69.72.42.4]:21262 "EHLO m42-4.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726600AbgJERjL (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 5 Oct 2020 13:39:11 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1601919550; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
+ Subject: Sender; bh=eRf9jW9jS41DO7Op1A/0+/28Gl8ale7y2hjxzaxyung=; b=YeqHbdiEKxgYiAFP4Q+5mL0OEG063gFpC1m1c9qfNxdggxqPqRpNE81GWb0zvPTti4rPOuUa
+ 6Ms3x2uq3d/dZ/FvI3vLWeHqlZHE8u0ZTnrp+p1N7IwKUAFLvTuoYSeL25lzWue+EzOWicna
+ WrBnb/W5wiqvb6Zyo79tbk0FccI=
+X-Mailgun-Sending-Ip: 69.72.42.4
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n04.prod.us-east-1.postgun.com with SMTP id
+ 5f7b5a19bfed2afaa6152002 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 05 Oct 2020 17:38:33
+ GMT
+Sender: gkohli=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id C79A3C433CA; Mon,  5 Oct 2020 17:38:32 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        NICE_REPLY_A,SPF_FAIL,URIBL_BLOCKED autolearn=no autolearn_force=no
+        version=3.4.0
+Received: from [192.168.1.4] (unknown [122.183.41.151])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: gkohli)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 48C08C4344A;
+        Mon,  5 Oct 2020 17:38:30 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 48C08C4344A
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=gkohli@codeaurora.org
+Subject: Re: [PATCH v1] trace: Fix race in trace_open and buffer resize call
+To:     Steven Rostedt <rostedt@goodmis.org>
+Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        stable@vger.kernel.org
+References: <1600955705-27382-1-git-send-email-gkohli@codeaurora.org>
+ <71b8fe4c-7be2-fe51-cd84-890320c98cda@codeaurora.org>
+ <20201005102515.07859ddf@gandalf.local.home>
+ <20201005102745.2e49bc42@gandalf.local.home>
+ <6ebba9b9-0add-0313-3982-01031d946f44@codeaurora.org>
+ <20201005123204.46a1cfc4@gandalf.local.home>
+From:   Gaurav Kohli <gkohli@codeaurora.org>
+Message-ID: <a9c0c7fc-c5ca-c4b8-b91c-3bce64f0eab4@codeaurora.org>
+Date:   Mon, 5 Oct 2020 23:08:27 +0530
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
+ Thunderbird/68.12.1
 MIME-Version: 1.0
-References: <20201004192152.3298573-1-robdclark@gmail.com> <20201005092419.15608-1-hdanton@sina.com>
- <20201005140203.GS438822@phenom.ffwll.local>
-In-Reply-To: <20201005140203.GS438822@phenom.ffwll.local>
-From:   Rob Clark <robdclark@gmail.com>
-Date:   Mon, 5 Oct 2020 09:49:37 -0700
-Message-ID: <CAF6AEGveqvvv9MfBMAr34y9664fPouGjwPrK=v9OLVXv4dHzxg@mail.gmail.com>
-Subject: Re: [PATCH 13/14] drm/msm: Drop struct_mutex in shrinker path
-To:     Hillf Danton <hdanton@sina.com>, Rob Clark <robdclark@gmail.com>,
-        dri-devel <dri-devel@lists.freedesktop.org>,
-        Rob Clark <robdclark@chromium.org>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        freedreno <freedreno@lists.freedesktop.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
-Cc:     Daniel Vetter <daniel@ffwll.ch>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <20201005123204.46a1cfc4@gandalf.local.home>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Oct 5, 2020 at 7:02 AM Daniel Vetter <daniel@ffwll.ch> wrote:
->
-> On Mon, Oct 05, 2020 at 05:24:19PM +0800, Hillf Danton wrote:
-> >
-> > On Sun,  4 Oct 2020 12:21:45
-> > > From: Rob Clark <robdclark@chromium.org>
-> > >
-> > > Now that the inactive_list is protected by mm_lock, and everything
-> > > else on per-obj basis is protected by obj->lock, we no longer depend
-> > > on struct_mutex.
-> > >
-> > > Signed-off-by: Rob Clark <robdclark@chromium.org>
-> > > ---
-> > >  drivers/gpu/drm/msm/msm_gem.c          |  1 -
-> > >  drivers/gpu/drm/msm/msm_gem_shrinker.c | 54 --------------------------
-> > >  2 files changed, 55 deletions(-)
-> > >
-> > [...]
-> >
-> > > @@ -71,13 +33,8 @@ msm_gem_shrinker_scan(struct shrinker *shrinker, struct shrink_control *sc)
-> > >  {
-> > >     struct msm_drm_private *priv =
-> > >             container_of(shrinker, struct msm_drm_private, shrinker);
-> > > -   struct drm_device *dev = priv->dev;
-> > >     struct msm_gem_object *msm_obj;
-> > >     unsigned long freed = 0;
-> > > -   bool unlock;
-> > > -
-> > > -   if (!msm_gem_shrinker_lock(dev, &unlock))
-> > > -           return SHRINK_STOP;
-> > >
-> > >     mutex_lock(&priv->mm_lock);
-> >
-> > Better if the change in behavior is documented that SHRINK_STOP will
-> > no longer be needed.
->
-> btw I read through this and noticed you have your own obj lock, plus
-> mutex_lock_nested. I strongly recommend to just cut over to dma_resv_lock
-> for all object lock needs (soc drivers have been terrible with this
-> unfortuntaly), and in the shrinker just use dma_resv_trylock instead of
-> trying to play clever games outsmarting lockdep.
->
-> I recently wrote an entire blog length rant on why I think
-> mutex_lock_nested is too dangerous to be useful:
->
-> https://blog.ffwll.ch/2020/08/lockdep-false-positives.html
->
-> Not anything about this here, just general comment. The problem extends to
-> shmem helpers and all that also having their own locks for everything.
 
-the shrinker lock class has existed for a while.. and is based on the
-idea that anything in the get-pages/vmap path cannot happen on a
-WONTNEED bo.. although perhaps there should be a few more 'if
-(WARN_ON(obj->madv != WILLNEED)) return -EBUSY'..
 
-replacing obj->lock with dma_resv lock, might be a nice cleanup.. but
-I think it will be a bit churny..
+On 10/5/2020 10:02 PM, Steven Rostedt wrote:
+> On Mon, 5 Oct 2020 21:59:02 +0530
+> Gaurav Kohli <gkohli@codeaurora.org> wrote:
+> 
+>> Hi Steven,
+>>
+>> I am using normal git send-email(never saw problem with this), Not sure
+>> what is wrong. In my older mail i have kept you in to and rest in cc.
+>>
+>> Let me try to resent it.
+> 
+> The Cc is working (I got it in my LKML box), but I don't see any connection
+> in my server. Note, the rostedt@goodmis.org is a server at my home.
+> 
+> -- Steve
+> 
 
-BR,
--R
-
-> -Daniel
-> --
-> Daniel Vetter
-> Software Engineer, Intel Corporation
-> http://blog.ffwll.ch
+Thanks for update, i will verify my account settings and will send my 
+patch tomorrow.
+-- 
+Qualcomm India Private Limited, on behalf of Qualcomm Innovation Center,
+Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project.
