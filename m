@@ -2,205 +2,137 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A9D06283DF1
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Oct 2020 20:03:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 00BEC283E1F
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Oct 2020 20:19:31 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727069AbgJESCs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 5 Oct 2020 14:02:48 -0400
-Received: from z5.mailgun.us ([104.130.96.5]:52271 "EHLO z5.mailgun.us"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725940AbgJESCs (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 5 Oct 2020 14:02:48 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1601920967; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=ld9Fueldp78QECrk1tT6tf3UhOcfsqkKomFN6EN3Tjg=;
- b=sSFkkwAzlVA07ZHKrmvxhrLTJPRQJ7fzMyb1qfTfP0zA3qNPyWCp7vV/md3otfMoKZntrd5L
- uB+OsNU4pkNG8Ik49HYg0fmVId0/JlBerwqIq6BrQzsUwJr9hKPHkjc4M5YdkHiRxjPkxtO8
- F9S2/L8pQVVoFlWW1vEC7q3QlR4=
-X-Mailgun-Sending-Ip: 104.130.96.5
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n07.prod.us-east-1.postgun.com with SMTP id
- 5f7b5fa3aad2c3cd1c8412ab (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 05 Oct 2020 18:02:11
- GMT
-Sender: khsieh=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 28E93C433F1; Mon,  5 Oct 2020 18:02:11 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: khsieh)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 47ACAC433C8;
-        Mon,  5 Oct 2020 18:02:10 +0000 (UTC)
+        id S1727274AbgJESTE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 5 Oct 2020 14:19:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46904 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725982AbgJESTE (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 5 Oct 2020 14:19:04 -0400
+Received: from mail-ot1-x343.google.com (mail-ot1-x343.google.com [IPv6:2607:f8b0:4864:20::343])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 674B9C0613CE
+        for <linux-arm-msm@vger.kernel.org>; Mon,  5 Oct 2020 11:19:04 -0700 (PDT)
+Received: by mail-ot1-x343.google.com with SMTP id f37so6020270otf.12
+        for <linux-arm-msm@vger.kernel.org>; Mon, 05 Oct 2020 11:19:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ffwll.ch; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=In0H1HeRaahBqHRJG3WYCn/jPrfcT39VxygZWdrKz0U=;
+        b=G9VnZHdzNM4pErmtEpJ1P06DEL/kfTfrDzrcMiS0K+PneP38wM4nkksUdHu+NCcAnW
+         PVRbECL0+y0gPnfU9bYGb1SRyEpPt5657CnVeVTSzpK2xDkX7uaij8f6nYicopqm7U4/
+         ZJe/HUFY5gn3zR59Rrrr6FYo2oi5CTo7poOTk=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=In0H1HeRaahBqHRJG3WYCn/jPrfcT39VxygZWdrKz0U=;
+        b=SNE1fzchwFddZL1OM6tWANEe2aEyeWli5GfYyacSj7vzRzbPHYYiBwlR0SDiI7S7DZ
+         ejpQx0qYQ+LvriapkoIVUlVsZzlveqZIYQ+AqaRf5BJqHu6U9+s9zp76NB5pHWt+zYLF
+         Xk6kHcbx9oRVly26uZmPV8JaNRS+CIGDe7ay6oy9PFQ21PNeUGBp48WrhrU0BOi6AHVn
+         IuUcF8Uw9S65bslimmaHVBcUFBNM7p5UyjVXe4dVbCZ4bCOYEdlz0A/Jsy3SOZUT3aEk
+         LPw5wTTeQ4XFseElH0bEl+f27Hwg5uz7uV5Y6xLOYoGFMLjMVbiKsHwEd8oryutrAiwO
+         o/Vw==
+X-Gm-Message-State: AOAM530H40i7TTVGKvxvWYkconpHPPLJ6GmrNkTeoOX6vPTCUZMwK9Bd
+        yS004Kd7eNiitoIkzjlCsoZFTi+fhKuoruq+zXZgGy3HM5Dv3g==
+X-Google-Smtp-Source: ABdhPJwb2udB+ti8/BSw9azKpCYNapb5vn8dmsFNQ+jSRevONoZR7A89yIg5NYGsYY62/1FIqsrs3xTq/GQw/OTXO8g=
+X-Received: by 2002:a05:6830:1e56:: with SMTP id e22mr364384otj.303.1601921943802;
+ Mon, 05 Oct 2020 11:19:03 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Mon, 05 Oct 2020 11:02:10 -0700
-From:   khsieh@codeaurora.org
-To:     Stephen Boyd <swboyd@chromium.org>
-Cc:     robdclark@gmail.com, sean@poorly.run, tanmay@codeaurora.org,
-        abhinavk@codeaurora.org, aravindh@codeaurora.org, airlied@linux.ie,
-        daniel@ffwll.ch, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] drm/msm/dp: fixes wrong connection state caused by
- failure of link train
-In-Reply-To: <160169114309.310579.5033839844955785761@swboyd.mtv.corp.google.com>
-References: <20201002220919.17245-1-khsieh@codeaurora.org>
- <160169114309.310579.5033839844955785761@swboyd.mtv.corp.google.com>
-Message-ID: <0de13a805820e4d73b8f906682386845@codeaurora.org>
-X-Sender: khsieh@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+References: <20201004192152.3298573-1-robdclark@gmail.com> <20201005092419.15608-1-hdanton@sina.com>
+ <20201005140203.GS438822@phenom.ffwll.local> <CAF6AEGveqvvv9MfBMAr34y9664fPouGjwPrK=v9OLVXv4dHzxg@mail.gmail.com>
+In-Reply-To: <CAF6AEGveqvvv9MfBMAr34y9664fPouGjwPrK=v9OLVXv4dHzxg@mail.gmail.com>
+From:   Daniel Vetter <daniel@ffwll.ch>
+Date:   Mon, 5 Oct 2020 20:18:52 +0200
+Message-ID: <CAKMK7uHH2imD+8pG-bN8kXcOjvkcta88LXFC2Yb8hw25-cLBeQ@mail.gmail.com>
+Subject: Re: [PATCH 13/14] drm/msm: Drop struct_mutex in shrinker path
+To:     Rob Clark <robdclark@gmail.com>
+Cc:     Hillf Danton <hdanton@sina.com>,
+        dri-devel <dri-devel@lists.freedesktop.org>,
+        Rob Clark <robdclark@chromium.org>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        freedreno <freedreno@lists.freedesktop.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2020-10-02 19:12, Stephen Boyd wrote:
-> Quoting Kuogee Hsieh (2020-10-02 15:09:19)
->> Connection state is set incorrectly happen at either failure of link 
->> train
->> or cable plugged in while suspended. This patch fixes these problems.
->> This patch also replace ST_SUSPEND_PENDING with ST_DISPLAY_OFF.
->> 
->> Signed-off-by: Kuogee Hsieh <khsieh@codeaurora.org>
-> 
-> Any Fixes: tag?
-> 
->> ---
->>  drivers/gpu/drm/msm/dp/dp_display.c | 52 
->> ++++++++++++++---------------
->>  drivers/gpu/drm/msm/dp/dp_panel.c   |  5 +++
->>  2 files changed, 31 insertions(+), 26 deletions(-)
->> 
->> diff --git a/drivers/gpu/drm/msm/dp/dp_display.c 
->> b/drivers/gpu/drm/msm/dp/dp_display.c
->> index 431dff9de797..898c6cc1643a 100644
->> --- a/drivers/gpu/drm/msm/dp/dp_display.c
->> +++ b/drivers/gpu/drm/msm/dp/dp_display.c
->> @@ -340,8 +340,6 @@ static int dp_display_process_hpd_high(struct 
->> dp_display_private *dp)
->>         }
->> 
->>         dp_add_event(dp, EV_USER_NOTIFICATION, true, 0);
->> -
->> -
->>  end:
->>         return rc;
->>  }
-> 
-> Not sure we need this hunk
-> 
->> @@ -1186,19 +1180,19 @@ static int dp_pm_resume(struct device *dev)
->> 
->>         dp = container_of(dp_display, struct dp_display_private, 
->> dp_display);
->> 
->> +       /* start from dis connection state */
-> 
-> disconnection? Or disconnected state?
-> 
->> +       atomic_set(&dp->hpd_state, ST_DISCONNECTED);
->> +
->>         dp_display_host_init(dp);
->> 
->>         dp_catalog_ctrl_hpd_config(dp->catalog);
->> 
->>         status = dp_catalog_hpd_get_state_status(dp->catalog);
->> 
->> -       if (status) {
->> +       if (status)
->>                 dp->dp_display.is_connected = true;
->> -       } else {
->> +       else
->>                 dp->dp_display.is_connected = false;
->> -               /* make sure next resume host_init be called */
->> -               dp->core_initialized = false;
->> -       }
->> 
->>         return 0;
->>  }
->> @@ -1214,6 +1208,9 @@ static int dp_pm_suspend(struct device *dev)
->>         if (dp_display->power_on == true)
->>                 dp_display_disable(dp, 0);
->> 
->> +       /* host_init will be called at pm_resume */
->> +       dp->core_initialized = false;
->> +
->>         atomic_set(&dp->hpd_state, ST_SUSPENDED);
->> 
->>         return 0;
->> @@ -1343,6 +1340,9 @@ int msm_dp_display_enable(struct msm_dp *dp, 
->> struct drm_encoder *encoder)
->> 
->>         mutex_lock(&dp_display->event_mutex);
->> 
->> +       /* delete sentinel checking */
-> 
-> Stop sentinel checking?
-> 
->> +       dp_del_event(dp_display, EV_CONNECT_PENDING_TIMEOUT);
->> +
->>         rc = dp_display_set_mode(dp, &dp_display->dp_mode);
->>         if (rc) {
->>                 DRM_ERROR("Failed to perform a mode set, rc=%d\n", 
->> rc);
->> @@ -1368,9 +1368,8 @@ int msm_dp_display_enable(struct msm_dp *dp, 
->> struct drm_encoder *encoder)
->>                 dp_display_unprepare(dp);
->>         }
->> 
->> -       dp_del_event(dp_display, EV_CONNECT_PENDING_TIMEOUT);
->> -
->> -       if (state == ST_SUSPEND_PENDING)
->> +       /* manual kick off plug event to train link */
->> +       if (state == ST_DISPLAY_OFF)
->>                 dp_add_event(dp_display, EV_IRQ_HPD_INT, 0, 0);
->> 
->>         /* completed connection */
->> @@ -1402,20 +1401,21 @@ int msm_dp_display_disable(struct msm_dp *dp, 
->> struct drm_encoder *encoder)
->> 
->>         mutex_lock(&dp_display->event_mutex);
->> 
->> +       /* delete sentinel checking */
-> 
-> Stop sentinel checking?
-> 
->> +       dp_del_event(dp_display, EV_DISCONNECT_PENDING_TIMEOUT);
->> +
->>         dp_display_disable(dp_display, 0);
->> 
->>         rc = dp_display_unprepare(dp);
->>         if (rc)
->>                 DRM_ERROR("DP display unprepare failed, rc=%d\n", rc);
->> 
->> -       dp_del_event(dp_display, EV_DISCONNECT_PENDING_TIMEOUT);
->> -
->>         state =  atomic_read(&dp_display->hpd_state);
->>         if (state == ST_DISCONNECT_PENDING) {
-> 
-> I don't understand the atomic nature of this hpd_state variable. Why is
-> it an atomic variable? Is taking a spinlock bad? What is to prevent the
-> atomic read here to not be interrupted and then this if condition check
-> be invalid because the variable has been updated somewhere else?
-hpd_state variable updated by multiple threads. however it was protected 
-by mutex.
-in theory, it should also work as u32. since it was declared as atomic 
-from beginning
-and it does not cause any negative effects, can we keep it as it is?
+On Mon, Oct 5, 2020 at 6:49 PM Rob Clark <robdclark@gmail.com> wrote:
+>
+> On Mon, Oct 5, 2020 at 7:02 AM Daniel Vetter <daniel@ffwll.ch> wrote:
+> >
+> > On Mon, Oct 05, 2020 at 05:24:19PM +0800, Hillf Danton wrote:
+> > >
+> > > On Sun,  4 Oct 2020 12:21:45
+> > > > From: Rob Clark <robdclark@chromium.org>
+> > > >
+> > > > Now that the inactive_list is protected by mm_lock, and everything
+> > > > else on per-obj basis is protected by obj->lock, we no longer depend
+> > > > on struct_mutex.
+> > > >
+> > > > Signed-off-by: Rob Clark <robdclark@chromium.org>
+> > > > ---
+> > > >  drivers/gpu/drm/msm/msm_gem.c          |  1 -
+> > > >  drivers/gpu/drm/msm/msm_gem_shrinker.c | 54 --------------------------
+> > > >  2 files changed, 55 deletions(-)
+> > > >
+> > > [...]
+> > >
+> > > > @@ -71,13 +33,8 @@ msm_gem_shrinker_scan(struct shrinker *shrinker, struct shrink_control *sc)
+> > > >  {
+> > > >     struct msm_drm_private *priv =
+> > > >             container_of(shrinker, struct msm_drm_private, shrinker);
+> > > > -   struct drm_device *dev = priv->dev;
+> > > >     struct msm_gem_object *msm_obj;
+> > > >     unsigned long freed = 0;
+> > > > -   bool unlock;
+> > > > -
+> > > > -   if (!msm_gem_shrinker_lock(dev, &unlock))
+> > > > -           return SHRINK_STOP;
+> > > >
+> > > >     mutex_lock(&priv->mm_lock);
+> > >
+> > > Better if the change in behavior is documented that SHRINK_STOP will
+> > > no longer be needed.
+> >
+> > btw I read through this and noticed you have your own obj lock, plus
+> > mutex_lock_nested. I strongly recommend to just cut over to dma_resv_lock
+> > for all object lock needs (soc drivers have been terrible with this
+> > unfortuntaly), and in the shrinker just use dma_resv_trylock instead of
+> > trying to play clever games outsmarting lockdep.
+> >
+> > I recently wrote an entire blog length rant on why I think
+> > mutex_lock_nested is too dangerous to be useful:
+> >
+> > https://blog.ffwll.ch/2020/08/lockdep-false-positives.html
+> >
+> > Not anything about this here, just general comment. The problem extends to
+> > shmem helpers and all that also having their own locks for everything.
+>
+> the shrinker lock class has existed for a while.. and is based on the
+> idea that anything in the get-pages/vmap path cannot happen on a
+> WONTNEED bo.. although perhaps there should be a few more 'if
+> (WARN_ON(obj->madv != WILLNEED)) return -EBUSY'..
 
->>                 /* completed disconnection */
->>                 atomic_set(&dp_display->hpd_state, ST_DISCONNECTED);
->>         } else {
->> -               atomic_set(&dp_display->hpd_state, 
->> ST_SUSPEND_PENDING);
->> +               atomic_set(&dp_display->hpd_state, ST_DISPLAY_OFF);
+Yeah it works, but it's the kind of really clever stuff that
+eventually bites again. For pretty much no benefit, if the lock is
+held then you can assume someone else is using the object and you
+won't be able to shrink it anyway. So trylock is enough.
+
+> replacing obj->lock with dma_resv lock, might be a nice cleanup.. but
+> I think it will be a bit churny..
+
+Oh fully agreed, I tried to push the helpers a bit in that direction
+for shmem/cma and gave up. Just something I think we should have in
+mind. And in case your gpu ever becomes discrete ... yes the churn is
+terrible :-/
+-Daniel
+-- 
+Daniel Vetter
+Software Engineer, Intel Corporation
+http://blog.ffwll.ch
