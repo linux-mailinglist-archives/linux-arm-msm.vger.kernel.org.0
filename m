@@ -2,212 +2,110 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 8A13328376E
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Oct 2020 16:15:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8C3B3283770
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Oct 2020 16:15:56 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726335AbgJEOPW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 5 Oct 2020 10:15:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37206 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725903AbgJEOPV (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 5 Oct 2020 10:15:21 -0400
-Received: from mail-wr1-x443.google.com (mail-wr1-x443.google.com [IPv6:2a00:1450:4864:20::443])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8F968C0613CE
-        for <linux-arm-msm@vger.kernel.org>; Mon,  5 Oct 2020 07:15:19 -0700 (PDT)
-Received: by mail-wr1-x443.google.com with SMTP id k10so9765301wru.6
-        for <linux-arm-msm@vger.kernel.org>; Mon, 05 Oct 2020 07:15:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ffwll.ch; s=google;
-        h=date:from:to:cc:subject:message-id:mail-followup-to:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=ay+jguy7+ZagQFNHjl5GTP/H4mWDtPa/uMEIRbiAg44=;
-        b=TUfuW3LEj4Jbt06xzl/C9DDE2dczlfGBnmMDqwKliD9z+kW6GeTjLeuOD3FG8BUifv
-         bFbgSKBcOb6jdeyddahIGGTVZfrQmeLt2kzz9tPPMCTu2SyQjX9s93bfO024IIE2cy8X
-         +z+7ue/M+q8mWk0tzVlk68kbXKO2UWOr/Hago=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id
-         :mail-followup-to:references:mime-version:content-disposition
-         :content-transfer-encoding:in-reply-to;
-        bh=ay+jguy7+ZagQFNHjl5GTP/H4mWDtPa/uMEIRbiAg44=;
-        b=ber6pOjdIYaQFYO+J2e/OtkEB4Ea5hh23cH3k2vI2xA+stDrYTqGeT4ryVoZsDjWkX
-         AA2MQwCk9iUHKI/WThEbcfF5+O3iKH0/mDTM29gFt/RLNyOp5iWb6ZDnIwUIZb8oW7Yh
-         VnOAO8v2oqcwWQK7mYfs/SJV6NoZVAM7RNHYNS7uadwV5xuJwLlxtL1OQWP4xNA8R/AX
-         ZUSTEwsLCdQ3i9Qd6wvFWUYGEusLcxuu0pJ4VPbeQi8Ihta/GDs8mr0Glz69kTWzgVFd
-         YbSsT69KeSCXkMDx75OYNHRUwyRCQ2/RySDa0ZRw08rqCtHiKPhgRkCm6ab/yJV5ZrxA
-         cAcg==
-X-Gm-Message-State: AOAM530T0Dfh5XXI/KZkYx4q141aEaeLdsibmBIeCtAx5nb+/SRInTNR
-        Fh7/0QHe/JaAyt3RtGFScPDXvg==
-X-Google-Smtp-Source: ABdhPJxmD1fDmEssDSGpgHi4KujkFHaEw8jJimiPz4B2ht0xsrsZblg4qEEFvc3rY2cNmbwL/R79Wg==
-X-Received: by 2002:adf:e304:: with SMTP id b4mr17324797wrj.141.1601907318047;
-        Mon, 05 Oct 2020 07:15:18 -0700 (PDT)
-Received: from phenom.ffwll.local ([2a02:168:57f4:0:efd0:b9e5:5ae6:c2fa])
-        by smtp.gmail.com with ESMTPSA id q18sm84677wre.78.2020.10.05.07.15.16
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 05 Oct 2020 07:15:17 -0700 (PDT)
-Date:   Mon, 5 Oct 2020 16:15:15 +0200
-From:   Daniel Vetter <daniel@ffwll.ch>
-To:     Ville =?iso-8859-1?Q?Syrj=E4l=E4?= <ville.syrjala@linux.intel.com>
-Cc:     Rob Clark <robdclark@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
+        id S1725911AbgJEOP4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 5 Oct 2020 10:15:56 -0400
+Received: from m42-4.mailgun.net ([69.72.42.4]:43318 "EHLO m42-4.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725903AbgJEOPz (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 5 Oct 2020 10:15:55 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1601907355; h=In-Reply-To: Content-Type: MIME-Version:
+ References: Message-ID: Subject: Cc: To: From: Date: Sender;
+ bh=7+9sy5387KDfKiSHXKJcAV2tR//pM2tEdkjRQAzZ5Yw=; b=l9uyFsRDhtFIy1U/vYUQYXz1m32hzKTREbeUeXBkJrzzRO68V0ep3dw5sGidW6YlDgvvt9dl
+ BBSFgcDnmtTWRxjR0VcmFz2fj21bPgQV+kj7o1faSJ/PFLbIiQeMX0w7s5wC5ThEG9eJeAKM
+ Dyzr1c6ydsb25GBKdwDFVPy1/Fw=
+X-Mailgun-Sending-Ip: 69.72.42.4
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n02.prod.us-east-1.postgun.com with SMTP id
+ 5f7b2a9752f4fccef09d8336 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 05 Oct 2020 14:15:51
+ GMT
+Sender: jcrouse=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 5C753C433CA; Mon,  5 Oct 2020 14:15:50 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
+        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+Received: from jcrouse1-lnx.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: jcrouse)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id C62D0C433C8;
+        Mon,  5 Oct 2020 14:15:47 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org C62D0C433C8
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=jcrouse@codeaurora.org
+Date:   Mon, 5 Oct 2020 08:15:44 -0600
+From:   Jordan Crouse <jcrouse@codeaurora.org>
+To:     Rob Clark <robdclark@gmail.com>
+Cc:     dri-devel@lists.freedesktop.org,
         Rob Clark <robdclark@chromium.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
+        <freedreno@lists.freedesktop.org>, David Airlie <airlied@linux.ie>,
+        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
+        <linux-arm-msm@vger.kernel.org>,
         open list <linux-kernel@vger.kernel.org>,
-        Tim Murray <timmurray@google.com>,
-        dri-devel <dri-devel@lists.freedesktop.org>,
-        Tejun Heo <tj@kernel.org>, Qais Yousef <qais.yousef@arm.com>
-Subject: Re: [PATCH v2 0/3] drm: commit_work scheduling
-Message-ID: <20201005141515.GV438822@phenom.ffwll.local>
-Mail-Followup-To: Ville =?iso-8859-1?Q?Syrj=E4l=E4?= <ville.syrjala@linux.intel.com>,
-        Rob Clark <robdclark@gmail.com>, Rob Clark <robdclark@chromium.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Daniel Vetter <daniel@ffwll.ch>, Sean Paul <sean@poorly.run>
+Subject: Re: [Freedreno] [PATCH 02/14] drm/msm: Drop chatty trace
+Message-ID: <20201005141543.GA4204@jcrouse1-lnx.qualcomm.com>
+Mail-Followup-To: Rob Clark <robdclark@gmail.com>,
+        dri-devel@lists.freedesktop.org, Rob Clark <robdclark@chromium.org>,
+        "open list:DRM DRIVER FOR MSM ADRENO GPU" <freedreno@lists.freedesktop.org>,
+        David Airlie <airlied@linux.ie>,
+        "open list:DRM DRIVER FOR MSM ADRENO GPU" <linux-arm-msm@vger.kernel.org>,
         open list <linux-kernel@vger.kernel.org>,
-        Tim Murray <timmurray@google.com>,
-        dri-devel <dri-devel@lists.freedesktop.org>,
-        Tejun Heo <tj@kernel.org>, Qais Yousef <qais.yousef@arm.com>
-References: <20200930211723.3028059-1-robdclark@gmail.com>
- <CAKMK7uHHPWE3h7ssG-dpb3czwbP5VtZYztMA=CpvQ4HV4LQTXA@mail.gmail.com>
- <CAF6AEGszF60dWn37m63wujjtuObqkz2ZqEN3LHaPhCkKa1cdmA@mail.gmail.com>
- <CAKMK7uEd853irzdBMCcaNEMAeOZKVFcFpgNtcYrgQkmHxdT3-w@mail.gmail.com>
- <20201002105256.GA6112@intel.com>
- <20201002110544.GB6112@intel.com>
- <CAF6AEGv+UnZJoBj_ELRVr4sQeMs52vAgyw2g+wtabLPBrYDKvw@mail.gmail.com>
- <20201005121524.GI6112@intel.com>
+        Daniel Vetter <daniel@ffwll.ch>, Sean Paul <sean@poorly.run>
+References: <20201004192152.3298573-1-robdclark@gmail.com>
+ <20201004192152.3298573-3-robdclark@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20201005121524.GI6112@intel.com>
-X-Operating-System: Linux phenom 5.7.0-1-amd64 
+In-Reply-To: <20201004192152.3298573-3-robdclark@gmail.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Oct 05, 2020 at 03:15:24PM +0300, Ville Syrjälä wrote:
-> On Fri, Oct 02, 2020 at 10:55:52AM -0700, Rob Clark wrote:
-> > On Fri, Oct 2, 2020 at 4:05 AM Ville Syrjälä
-> > <ville.syrjala@linux.intel.com> wrote:
-> > >
-> > > On Fri, Oct 02, 2020 at 01:52:56PM +0300, Ville Syrjälä wrote:
-> > > > On Thu, Oct 01, 2020 at 05:25:55PM +0200, Daniel Vetter wrote:
-> > > > > On Thu, Oct 1, 2020 at 5:15 PM Rob Clark <robdclark@gmail.com> wrote:
-> > > > > >
-> > > > > > On Thu, Oct 1, 2020 at 12:25 AM Daniel Vetter <daniel@ffwll.ch> wrote:
-> > > > > > >
-> > > > > > > On Wed, Sep 30, 2020 at 11:16 PM Rob Clark <robdclark@gmail.com> wrote:
-> > > > > > > >
-> > > > > > > > From: Rob Clark <robdclark@chromium.org>
-> > > > > > > >
-> > > > > > > > The android userspace treats the display pipeline as a realtime problem.
-> > > > > > > > And arguably, if your goal is to not miss frame deadlines (ie. vblank),
-> > > > > > > > it is.  (See https://lwn.net/Articles/809545/ for the best explaination
-> > > > > > > > that I found.)
-> > > > > > > >
-> > > > > > > > But this presents a problem with using workqueues for non-blocking
-> > > > > > > > atomic commit_work(), because the SCHED_FIFO userspace thread(s) can
-> > > > > > > > preempt the worker.  Which is not really the outcome you want.. once
-> > > > > > > > the required fences are scheduled, you want to push the atomic commit
-> > > > > > > > down to hw ASAP.
-> > > > > > > >
-> > > > > > > > But the decision of whether commit_work should be RT or not really
-> > > > > > > > depends on what userspace is doing.  For a pure CFS userspace display
-> > > > > > > > pipeline, commit_work() should remain SCHED_NORMAL.
-> > > > > > > >
-> > > > > > > > To handle this, convert non-blocking commit_work() to use per-CRTC
-> > > > > > > > kthread workers, instead of system_unbound_wq.  Per-CRTC workers are
-> > > > > > > > used to avoid serializing commits when userspace is using a per-CRTC
-> > > > > > > > update loop.  And the last patch exposes the task id to userspace as
-> > > > > > > > a CRTC property, so that userspace can adjust the priority and sched
-> > > > > > > > policy to fit it's needs.
-> > > > > > > >
-> > > > > > > >
-> > > > > > > > v2: Drop client cap and in-kernel setting of priority/policy in
-> > > > > > > >     favor of exposing the kworker tid to userspace so that user-
-> > > > > > > >     space can set priority/policy.
-> > > > > > >
-> > > > > > > Yeah I think this looks more reasonable. Still a bit irky interface,
-> > > > > > > so I'd like to get some kworker/rt ack on this. Other opens:
-> > > > > > > - needs userspace, the usual drill
-> > > > > >
-> > > > > > fwiw, right now the userspace is "modetest + chrt".. *probably* the
-> > > > > > userspace will become a standalone helper or daemon, mostly because
-> > > > > > the chrome gpu-process sandbox does not allow setting SCHED_FIFO.  I'm
-> > > > > > still entertaining the possibility of switching between rt and cfs
-> > > > > > depending on what is in the foreground (ie. only do rt for android
-> > > > > > apps).
-> > > > > >
-> > > > > > > - we need this also for vblank workers, otherwise this wont work for
-> > > > > > > drivers needing those because of another priority inversion.
-> > > > > >
-> > > > > > I have a thought on that, see below..
-> > > > >
-> > > > > Hm, not seeing anything about vblank worker below?
-> > > > >
-> > > > > > > - we probably want some indication of whether this actually does
-> > > > > > > something useful, not all drivers use atomic commit helpers. Not sure
-> > > > > > > how to do that.
-> > > > > >
-> > > > > > I'm leaning towards converting the other drivers over to use the
-> > > > > > per-crtc kwork, and then dropping the 'commit_work` from atomic state.
-> > > > > > I can add a patch to that, but figured I could postpone that churn
-> > > > > > until there is some by-in on this whole idea.
-> > > > >
-> > > > > i915 has its own commit code, it's not even using the current commit
-> > > > > helpers (nor the commit_work). Not sure how much other fun there is.
-> > > >
-> > > > I don't think we want per-crtc threads for this in i915. Seems
-> > > > to me easier to guarantee atomicity across multiple crtcs if
-> > > > we just commit them from the same thread.
-> > >
-> > > Oh, and we may have to commit things in a very specific order
-> > > to guarantee the hw doesn't fall over, so yeah definitely per-crtc
-> > > thread is a no go.
-> > 
-> > If I'm understanding the i915 code, this is only the case for modeset
-> > commits?  I suppose we could achieve the same result by just deciding
-> > to pick the kthread of the first CRTC for modeset commits.  I'm not
-> > really so much concerned about parallelism for modeset.
+On Sun, Oct 04, 2020 at 12:21:34PM -0700, Rob Clark wrote:
+> From: Rob Clark <robdclark@chromium.org>
 > 
-> I'm not entirely happy about the random differences between modesets
-> and other commits. Ideally we wouldn't need any.
-> 
-> Anyways, even if we ignore modesets we still have the issue with
-> atomicity guarantees across multiple crtcs. So I think we still
-> don't want per-crtc threads, rather it should be thread for each 
-> commit.
-> 
-> Well, if the crtcs aren't running in lockstep then maybe we could
-> shove them off to separate threads, but that'll just complicate things
-> needlessly I think since we'd need yet another way to iterate
-> the crtcs in each thread. With the thread-per-commit apporach we
-> can just use the normal atomic iterators.
-> 
-> > 
-> > > I don't even understand the serialization argument. If the commits
-> > > are truly independent then why isn't the unbound wq enough to avoid
-> > > the serialization? It should just spin up a new thread for each commit
-> > > no?
-> > 
-> > The problem with wq is prioritization and SCHED_FIFO userspace
-> > components stomping on the feet of commit_work. That is the entire
-> > motivation of this series in the first place, so no we cannot use
-> > unbound wq.
-> 
-> This is a bit dejavu of the vblank worker discussion, where I actually
-> did want a per-crtc RT kthread but people weren't convinced they
-> actually help. The difference is that for vblank workers we actually
-> tried to get some numbers, here I've not seen any.
+> It is somewhat redundant with the gpu tracepoints, and anyways not too
+> useful to justify spamming the log when debug traces are enabled.
 
-The problem here is priority inversion, not latency: Android runs
-surface-flinger as SCHED_FIFO, so when surfaceflinger does something it
-can preempt the kernel's commit work, and we miss a frame. Apparently
-otherwise the soft-rt of just having a normal worker (with maybe elevated
-niceness) seems nice enough.
+Reviewed-by: Jordan Crouse <jcrouse@codeaurora.org>
 
-Aside: I just double-checked, and vblank work has a per-crtc kthread.
--Daniel
+> Signed-off-by: Rob Clark <robdclark@chromium.org>
+> ---
+>  drivers/gpu/drm/msm/msm_gpu.c | 1 -
+>  1 file changed, 1 deletion(-)
+> 
+> diff --git a/drivers/gpu/drm/msm/msm_gpu.c b/drivers/gpu/drm/msm/msm_gpu.c
+> index 55d16489d0f3..31fce3ac0cdc 100644
+> --- a/drivers/gpu/drm/msm/msm_gpu.c
+> +++ b/drivers/gpu/drm/msm/msm_gpu.c
+> @@ -535,7 +535,6 @@ static void recover_worker(struct work_struct *work)
+>  
+>  static void hangcheck_timer_reset(struct msm_gpu *gpu)
+>  {
+> -	DBG("%s", gpu->name);
+>  	mod_timer(&gpu->hangcheck_timer,
+>  			round_jiffies_up(jiffies + DRM_MSM_HANGCHECK_JIFFIES));
+>  }
+> -- 
+> 2.26.2
+> 
+> _______________________________________________
+> Freedreno mailing list
+> Freedreno@lists.freedesktop.org
+> https://lists.freedesktop.org/mailman/listinfo/freedreno
+
 -- 
-Daniel Vetter
-Software Engineer, Intel Corporation
-http://blog.ffwll.ch
+The Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum,
+a Linux Foundation Collaborative Project
