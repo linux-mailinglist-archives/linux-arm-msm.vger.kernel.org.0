@@ -2,137 +2,89 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A305E283042
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Oct 2020 08:00:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 015AC28305D
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Oct 2020 08:26:41 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725857AbgJEGAe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 5 Oct 2020 02:00:34 -0400
-Received: from m42-4.mailgun.net ([69.72.42.4]:48527 "EHLO m42-4.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725880AbgJEGAe (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 5 Oct 2020 02:00:34 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1601877633; h=References: In-Reply-To: Message-Id: Date:
- Subject: Cc: To: From: Sender;
- bh=vrdM/2wrNsHdYoObDsxyGdJFCClcRDod+TrwzKiL3Wc=; b=ITfYxu6vFjcm1BXP99DDSePq0AUWyKKyj4Owp7rmp02V4TRTwxSk6hrRknpvD3aqkgvE7fMs
- vXZmFT6MkbEfnMmpRiyv5HbxUXodIEMAgRIGSajcAolceFdmJ9a2rD5roPwlrMp3xWw/xdpi
- Vb/otmB6bY6i5q3IalT4jriqzz0=
-X-Mailgun-Sending-Ip: 69.72.42.4
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n06.prod.us-west-2.postgun.com with SMTP id
- 5f7ab678a03b63d6733cd80c (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 05 Oct 2020 06:00:24
- GMT
-Sender: mkshah=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id C74B4C433CA; Mon,  5 Oct 2020 06:00:24 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
-        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
-Received: from mkshah-linux.qualcomm.com (unknown [202.46.22.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: mkshah)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id EB40BC433CA;
-        Mon,  5 Oct 2020 06:00:19 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org EB40BC433CA
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=mkshah@codeaurora.org
-From:   Maulik Shah <mkshah@codeaurora.org>
-To:     agross@kernel.org, bjorn.andersson@linaro.org
-Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        ulf.hansson@linaro.org, swboyd@chromium.org, dianders@chromium.org,
-        rnayak@codeaurora.org, ilina@codeaurora.org, lsrao@codeaurora.org,
-        John Stultz <john.stultz@linaro.org>,
-        Todd Kjos <tkjos@google.com>,
-        Saravana Kannan <saravanak@google.com>,
-        Maulik Shah <mkshah@codeaurora.org>
-Subject: [RESEND v2 2/2] soc: qcom: rpmh: Allow RPMH driver to be loaded as a module
-Date:   Mon,  5 Oct 2020 11:29:56 +0530
-Message-Id: <1601877596-32676-3-git-send-email-mkshah@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1601877596-32676-1-git-send-email-mkshah@codeaurora.org>
-References: <1601877596-32676-1-git-send-email-mkshah@codeaurora.org>
+        id S1725880AbgJEG0h (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 5 Oct 2020 02:26:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49348 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725860AbgJEG0g (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 5 Oct 2020 02:26:36 -0400
+Received: from mail-pj1-x1041.google.com (mail-pj1-x1041.google.com [IPv6:2607:f8b0:4864:20::1041])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A4E44C0613A6
+        for <linux-arm-msm@vger.kernel.org>; Sun,  4 Oct 2020 23:26:36 -0700 (PDT)
+Received: by mail-pj1-x1041.google.com with SMTP id u3so4913743pjr.3
+        for <linux-arm-msm@vger.kernel.org>; Sun, 04 Oct 2020 23:26:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=SKaQ5+8uUmRtIWBKZSxd+2jDGXEKN5QdEKsAPMYJkgg=;
+        b=hVUBIPjnHGOWjGUi1oUG2maCLkvuCE7pMNCmJn6gkaIVPZ8LdYKidM635ZHKQeHwr+
+         l2knVD95lg4NSfyju+W6598JCldz5UwtjNiq5Jw8H8LWwbCeS4VjYFXgNY9WYCMElFUg
+         2atFKK1Z5tvYk+DhYbjVwhkBzLDgUhCcKGzBzX8j4fumt3o5pOmUeq9QqIeXEm7BnOnZ
+         a+C2Am6JbEg4Ha9fo3qOa+KC6LPN927a6o67oRVjFKDbmc9/uYW0fgX+Cks4uxcGs2HW
+         NWZrgF1TEebG01jSrJh4i4AjHHuHT+bSBFJDRKzAlvEWgDfpYYZ6UGBMMucpf0+sffjM
+         zsXw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=SKaQ5+8uUmRtIWBKZSxd+2jDGXEKN5QdEKsAPMYJkgg=;
+        b=i1Miy0UJIshbbwmuIKd0b5+EfAO4AXpDY8zX8p4gI+TfK6Nhi7X4F26hHmdnPycb+4
+         gWEp5qnELY1WqmiesUNQkiaVsPUh8Q7I+FOBpogL+l6r1i4crZAnIgQcx7GlsE53sAd5
+         4s2ZDrKgHfN8aYjrmgUJgWvI8ZBojZ1egZ4w6Yl70PWWl2xMmsNcJXVN1/KSz7yOWpER
+         Z4KsD2HxnLBqbf/fHNm+igScrkQ0es4pihoz0ugjyszVMD7Zpv0Rm/w489kV1vXUITHN
+         FY8HWoFVX4SArdkrvu/eG+OBCg0tBoVkdC24OVTFIsOTUX36ach7ioZvbyVyzdQKNqaZ
+         RCwg==
+X-Gm-Message-State: AOAM530obzOQJ33+63Qsdc7E+ovwsfCdMp5lX2+r2awCSjTdyYqQfgoe
+        ZlyPCCQvnqDbi7D7Chz5CNGOYA==
+X-Google-Smtp-Source: ABdhPJzMX/4YpxutBiiXM2fWXSSduuaC0HQCvEVYpnrcJsYem70ESjGjA5g+ApA82zM/o6oW1zh/YQ==
+X-Received: by 2002:a17:90a:e282:: with SMTP id d2mr104042pjz.159.1601879196092;
+        Sun, 04 Oct 2020 23:26:36 -0700 (PDT)
+Received: from localhost ([122.181.54.133])
+        by smtp.gmail.com with ESMTPSA id j6sm10860110pfi.129.2020.10.04.23.26.34
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Sun, 04 Oct 2020 23:26:35 -0700 (PDT)
+Date:   Mon, 5 Oct 2020 11:56:33 +0530
+From:   Viresh Kumar <viresh.kumar@linaro.org>
+To:     rnayak@codeaurora.org, Rob Clark <robdclark@gmail.com>,
+        Sean Paul <sean@poorly.run>
+Cc:     linux-pm@vger.kernel.org,
+        Vincent Guittot <vincent.guittot@linaro.org>,
+        Rafael Wysocki <rjw@rjwysocki.net>,
+        Stephen Boyd <sboyd@kernel.org>, Nishanth Menon <nm@ti.com>,
+        Douglas Anderson <dianders@chromium.org>,
+        Naresh Kamboju <naresh.kamboju@linaro.org>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH V2 3/8] drm/msm: Unconditionally call
+ dev_pm_opp_of_remove_table()
+Message-ID: <20201005062633.ejpehkpeuwksrx3e@vireshk-i7>
+References: <cover.1598594714.git.viresh.kumar@linaro.org>
+ <6e4110032f8711e8bb0acbeccfe66dec3b09d5c1.1598594714.git.viresh.kumar@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <6e4110032f8711e8bb0acbeccfe66dec3b09d5c1.1598594714.git.viresh.kumar@linaro.org>
+User-Agent: NeoMutt/20180716-391-311a52
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: John Stultz <john.stultz@linaro.org>
+On 28-08-20, 11:37, Viresh Kumar wrote:
+> dev_pm_opp_of_remove_table() doesn't report any errors when it fails to
+> find the OPP table with error -ENODEV (i.e. OPP table not present for
+> the device). And we can call dev_pm_opp_of_remove_table()
+> unconditionally here.
+> 
+> While at it, also create a label to put clkname.
+> 
+> Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
 
-This patch allow the rpmh driver to be loaded as a permenent
-module. Meaning it can be loaded from a module, but then cannot
-be unloaded.
+Can someone please apply this and the other drm patch (2/8) ?
 
-Ideally, it would include a remove hook and related logic, but
-the rpmh driver is fairly core to the system, so once its loaded
-with almost anything else to get the system to go, the dependencies
-are not likely to ever also be removed.
-
-So making it a permanent module at least improves things slightly
-over requiring it to be a built in driver.
-
-Cc: Todd Kjos <tkjos@google.com>
-Cc: Saravana Kannan <saravanak@google.com>
-Cc: Andy Gross <agross@kernel.org>
-Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc: Rajendra Nayak <rnayak@codeaurora.org>
-Cc: linux-arm-msm@vger.kernel.org
-Signed-off-by: John Stultz <john.stultz@linaro.org>
-Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-[mkshah: Fix typos in commit message, send after removing _rcuidle trace]
-Signed-off-by: Maulik Shah <mkshah@codeaurora.org>
-Reviewed-by: Stephen Boyd <swboyd@chromium.org>
-Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
----
- drivers/soc/qcom/Kconfig    | 2 +-
- drivers/soc/qcom/rpmh-rsc.c | 5 +++++
- 2 files changed, 6 insertions(+), 1 deletion(-)
-
-diff --git a/drivers/soc/qcom/Kconfig b/drivers/soc/qcom/Kconfig
-index 3dc3e3d..892bdc7 100644
---- a/drivers/soc/qcom/Kconfig
-+++ b/drivers/soc/qcom/Kconfig
-@@ -92,7 +92,7 @@ config QCOM_RMTFS_MEM
- 	  Say y here if you intend to boot the modem remoteproc.
- 
- config QCOM_RPMH
--	bool "Qualcomm RPM-Hardened (RPMH) Communication"
-+	tristate "Qualcomm RPM-Hardened (RPMH) Communication"
- 	depends on ARCH_QCOM || COMPILE_TEST
- 	help
- 	  Support for communication with the hardened-RPM blocks in
-diff --git a/drivers/soc/qcom/rpmh-rsc.c b/drivers/soc/qcom/rpmh-rsc.c
-index 35a7a50..37969dc 100644
---- a/drivers/soc/qcom/rpmh-rsc.c
-+++ b/drivers/soc/qcom/rpmh-rsc.c
-@@ -13,6 +13,7 @@
- #include <linux/iopoll.h>
- #include <linux/kernel.h>
- #include <linux/list.h>
-+#include <linux/module.h>
- #include <linux/of.h>
- #include <linux/of_irq.h>
- #include <linux/of_platform.h>
-@@ -1018,6 +1019,7 @@ static const struct of_device_id rpmh_drv_match[] = {
- 	{ .compatible = "qcom,rpmh-rsc", },
- 	{ }
- };
-+MODULE_DEVICE_TABLE(of, rpmh_drv_match);
- 
- static struct platform_driver rpmh_driver = {
- 	.probe = rpmh_rsc_probe,
-@@ -1033,3 +1035,6 @@ static int __init rpmh_driver_init(void)
- 	return platform_driver_register(&rpmh_driver);
- }
- arch_initcall(rpmh_driver_init);
-+
-+MODULE_DESCRIPTION("Qualcomm Technologies, Inc. RPMh Driver");
-+MODULE_LICENSE("GPL v2");
 -- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
-of Code Aurora Forum, hosted by The Linux Foundation
-
+viresh
