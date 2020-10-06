@@ -2,138 +2,455 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 6C945284C6C
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Oct 2020 15:21:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 603B6284E45
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Oct 2020 16:49:00 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725906AbgJFNVJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 6 Oct 2020 09:21:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53388 "EHLO
+        id S1725946AbgJFOs7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 6 Oct 2020 10:48:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38618 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725891AbgJFNVJ (ORCPT
+        with ESMTP id S1725906AbgJFOs7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 6 Oct 2020 09:21:09 -0400
-Received: from mail-qk1-x741.google.com (mail-qk1-x741.google.com [IPv6:2607:f8b0:4864:20::741])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EE7D9C061755
-        for <linux-arm-msm@vger.kernel.org>; Tue,  6 Oct 2020 06:21:08 -0700 (PDT)
-Received: by mail-qk1-x741.google.com with SMTP id s7so10641440qkh.11
-        for <linux-arm-msm@vger.kernel.org>; Tue, 06 Oct 2020 06:21:08 -0700 (PDT)
+        Tue, 6 Oct 2020 10:48:59 -0400
+Received: from mail-wr1-x442.google.com (mail-wr1-x442.google.com [IPv6:2a00:1450:4864:20::442])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E437CC061755
+        for <linux-arm-msm@vger.kernel.org>; Tue,  6 Oct 2020 07:48:58 -0700 (PDT)
+Received: by mail-wr1-x442.google.com with SMTP id n18so5997117wrs.5
+        for <linux-arm-msm@vger.kernel.org>; Tue, 06 Oct 2020 07:48:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=marek-ca.20150623.gappssmtp.com; s=20150623;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=YRYuE1oST5rCsSRo3ftJBgKrW6I4XszeRlUEeyGTNfA=;
-        b=BFD//pwAX/64KPt0LEII7XnZhATo+5u4Ci1QUGZnXAvcyoZpf216nBIukB8S0lNR+o
-         /SBnsKFNycdO4FaqhrrvOl8q9yUCUD0kMtxCFrm+T3BuOtGJqNoq/vuatu/yUwFaui3W
-         wG/q9rVWqGvQF3DH1sF8weJvvvE2/FsOJioQK368BV9SL2poAmn8GeN+if4sevucB6tf
-         8BV+2/e4V/R+9zg6ETBTYxp+Q6woapII4/lMg/2r2Ql9+NA7asVIWxgARtsMmyYoMq2K
-         YKB5J7l4MgFdsyryEbJBhC2DmC2IwuvI3od1/Cu2zgJfsaaVHr58x1zSeFV0fZQiWrdf
-         Hg/Q==
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id;
+        bh=s0K6qb9jNtHXiZ/2vi68GTpemoaDCW6pSBsSioutAe0=;
+        b=FUtuTr5W8r/4zCCMZjHFAMyLsbPwb0QuV4VIuf5GFenHO+rwZZys2fwqTvlbRKoATA
+         gulR0Z8e0jnEHUsu+BG8xhdyghkoEEMMNwmKeUoR10lYqPV5XWuQtqMfjkglMkawrbTc
+         r+F0QARzm7YCyNa6Ka++B++mzArnl8PUnrccbBsfXwBO7vYKw/X8jNP5dlQyQuzP6vM6
+         4H6wWClgc93QHCbEyo+sEllJv4BvpfrfzkzwwdMVab7OTLtO7uK1gDKliBn8aTMg+vG0
+         k1nL0Tg07M1pvU8qw+GYvXtiY3ETSZRDbSvSGYHK8om2TzqfIA5226np/Ls2dITvBtMM
+         0+cA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=YRYuE1oST5rCsSRo3ftJBgKrW6I4XszeRlUEeyGTNfA=;
-        b=eVdvmSZxhmMN8K/Ec4xlNN69YV4TctykbicCKG5EhzKCFhVH/NnAn9e7KqNlf3HMZO
-         wuLzAlJCQXGjLP3mJZzH7PZF++g2hToieCGnmi7ZIELy51ceNJU1JO7OSzqy3xKIGWOH
-         4pylbncXhPrhyV6FQRx79OT3jNeaSpTHyaB071BV6ZzuPoNtDRYzQBHuBa7g56nnShnL
-         JSenXJYEecJNq7iP9tw/1P8el4wN4QKtZK2Moih2RTp7fjGeqr9I9JuNpLn/88eFkDBf
-         KcFeRrSYtcM/IKyR7URP+KdDrE0kb2nq63cR4IG/6xhxqLGZ7msycxbDxhZHmZcuwyqI
-         MigQ==
-X-Gm-Message-State: AOAM531IfP0fG1XGs3VSAejJvRFP4T0qER0fAFVpnmVjVmPxiBPBSW+T
-        GRR78huVIvft3CGaPpO0P0VtbQ==
-X-Google-Smtp-Source: ABdhPJw4Z7YWS8t/L1IK8utu6wKe+vRmf2v1MdzI4qau8wJptX2TFHJ6aQoGZURrxgM6eCoWFpwqPw==
-X-Received: by 2002:a05:620a:1287:: with SMTP id w7mr2490783qki.335.1601990468080;
-        Tue, 06 Oct 2020 06:21:08 -0700 (PDT)
-Received: from [192.168.0.189] ([147.253.86.153])
-        by smtp.gmail.com with ESMTPSA id 192sm2477887qkm.110.2020.10.06.06.21.06
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 06 Oct 2020 06:21:07 -0700 (PDT)
-Subject: Re: [PATCH 2/3] drm/msm: add DRM_MSM_GEM_SYNC_CACHE for non-coherent
- cache maintenance
-To:     Christoph Hellwig <hch@infradead.org>
-Cc:     freedreno@lists.freedesktop.org, Rob Clark <robdclark@gmail.com>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
-        <linux-arm-msm@vger.kernel.org>,
-        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
-        <dri-devel@lists.freedesktop.org>,
-        open list <linux-kernel@vger.kernel.org>,
-        iommu@lists.linux-foundation.org, Joerg Roedel <joro@8bytes.org>,
-        Robin Murphy <robin.murphy@arm.com>
-References: <20201001002709.21361-1-jonathan@marek.ca>
- <20201001002709.21361-3-jonathan@marek.ca>
- <20201002075321.GA7547@infradead.org>
- <b22fb797-67b0-a912-1d23-2b47c9a9e674@marek.ca>
- <20201005082914.GA31702@infradead.org>
- <3e0b91be-e4a4-4ea5-7d58-6e71b8d51932@marek.ca>
- <20201006072306.GA12834@infradead.org>
-From:   Jonathan Marek <jonathan@marek.ca>
-Message-ID: <148a1660-f0fc-7163-2240-6b94725342b5@marek.ca>
-Date:   Tue, 6 Oct 2020 09:19:32 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.2.2
-MIME-Version: 1.0
-In-Reply-To: <20201006072306.GA12834@infradead.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=s0K6qb9jNtHXiZ/2vi68GTpemoaDCW6pSBsSioutAe0=;
+        b=sqJgrjcAI55Qw4AaGM3K15v0SlVXA0D1QKETDaiu0SY8iECSyl7msWqpqGD3ycjf+T
+         v7eaHehA+Pd5Auv5ITopteSTGW316GaG5LbVo2wgDZZWXhr7vm6/FnNUEVoUEoY7Zp2k
+         yGAwnGAhO2j9EEYCmow5ljku7fT9CkiTFxYm2yYUZDfgFUQjbxGakP7yg0N3dxOdXxFB
+         t8m8H+LPP2nuOGMhLmXktLb20NzG/nb9ONX+0X/DceVTBnC/l6bdZzwIWPxJPFuiLUXQ
+         QFc91J0nOwSJgn1hxaFbW58A5rnctqiIrwyXE5Ahz9mEcuNm+U5KiSJBKgMBgIMckI+f
+         /w+g==
+X-Gm-Message-State: AOAM531aScRPMB7VuSxU723LEItBKCm2roNI7dwNjrmE/bNHzGRqyc6e
+        kIPq/PaZOaKttIpTIJNoEwZZ72tU1zKPmg==
+X-Google-Smtp-Source: ABdhPJzSHU94ygKUmAWBQj9si8TrkXz3kdKYVuuKkxrG70LJNAB2rpEsoi5pvSYqoMIYzPSCuKTpjg==
+X-Received: by 2002:a5d:654d:: with SMTP id z13mr5510320wrv.6.1601995736580;
+        Tue, 06 Oct 2020 07:48:56 -0700 (PDT)
+Received: from localhost.localdomain ([88.122.66.28])
+        by smtp.gmail.com with ESMTPSA id v17sm4456679wrc.23.2020.10.06.07.48.54
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 06 Oct 2020 07:48:55 -0700 (PDT)
+From:   Loic Poulain <loic.poulain@linaro.org>
+To:     manivannan.sadhasivam@linaro.org, hemantk@codeaurora.org
+Cc:     linux-arm-msm@vger.kernel.org, bjorn.andersson@linaro.org,
+        jhugo@codeaurora.org, Loic Poulain <loic.poulain@linaro.org>
+Subject: [PATCH v3] bus: mhi: Add MHI PCI support for WWAN modems
+Date:   Tue,  6 Oct 2020 16:54:50 +0200
+Message-Id: <1601996090-7426-1-git-send-email-loic.poulain@linaro.org>
+X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 10/6/20 3:23 AM, Christoph Hellwig wrote:
-> On Mon, Oct 05, 2020 at 10:35:43AM -0400, Jonathan Marek wrote:
->> The cache synchronization doesn't have anything to do with IOMMU (for
->> example: cache synchronization would be useful in cases where drm/msm
->> doesn't use IOMMU).
-> 
-> It has to do with doing DMA.  And we have two frameworks for doing DMA:
-> either the DMA API which is for general driver use, and which as part of
-> the design includes cache maintainance hidden behind the concept of
-> ownership transfers.  And we have the much more bare bones IOMMU API.
-> 
-> If people want to use the "raw" IOMMU API with not cache coherent
-> devices we'll need a cache maintainance API that goes along with it.
-> It could either be formally part of the IOMMU API or be separate.
-> 
->> What is needed is to call arch_sync_dma_for_{cpu,device} (which is what I
->> went with initially, but then decided to re-use drm/msm's
->> sync_for_{cpu,device}). But you are also saying those functions aren't for
->> driver use, and I doubt IOMMU maintainers will want to add wrappers for
->> these functions just to satisfy this "not for driver use" requirement.
-> 
-> arch_sync_dma_for_{cpu,device} are low-level helpers (and not very
-> great ones at that).  The definitively should not be used by drivers.
-> They would be very useful buildblocks for a IOMMU cache maintainance
-> API.
-> 
-> Of course the best outcome would be if we could find a way for the MSM
-> drm driver to just use DMA API and not deal with the lower level
-> abstractions.  Do you remember why the driver went for use of the IOMMU
-> API?
-> 
+This is a generic MHI-over-PCI controller driver for MHI only devices
+such as QCOM modems. For now it supports registering of Qualcomm SDX55
+based PCIe modules. The MHI channels have been extracted from mhi
+downstream driver.
 
-One example why drm/msm can't use DMA API is multiple page table support 
-(that is landing in 5.10), which is something that definitely couldn't 
-work with DMA API.
+This driver is for MHI-only devices which have all functionnalities
+exposed through MHI channels and accessed by the corresponding MHI
+device drivers (no out-of-band communication).
 
-Another one is being able to choose the address for mappings, which 
-AFAIK DMA API can't do (somewhat related to this: qcom hardware often 
-has ranges of allowed addresses, which the dma_mask mechanism fails to 
-represent, what I see is drivers using dma_mask as a "maximum address", 
-and since addresses are allocated from the top it generally works)
+Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
+---
+ v2: - remove useless delay.h include
+     - remove over-logging on error
+     - remove controller subdir
+     - rename to mhi_pci_modem.c
+     - Fix mhi_pci_probe exit path on error
+     - expand module description
+     - drop module version
+ v3: - Rename to mhi_pci_generic
+     - Add hardware accelerated IP channel (IPA)
+     - Added fw/edl names for sdx55m
+ 
+ drivers/bus/mhi/Kconfig           |   9 ++
+ drivers/bus/mhi/Makefile          |   3 +
+ drivers/bus/mhi/mhi_pci_generic.c | 332 ++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 344 insertions(+)
+ create mode 100644 drivers/bus/mhi/mhi_pci_generic.c
 
-But let us imagine drm/msm switches to using DMA API. a2xx GPUs have 
-their own very basic MMU (implemented by msm_gpummu.c), that will need 
-to implement dma_map_ops, which will have to call 
-arch_sync_dma_for_{cpu,device}. So drm/msm still needs to call 
-arch_sync_dma_for_{cpu,device} in that scenario.
-
-
-
-
-
-
+diff --git a/drivers/bus/mhi/Kconfig b/drivers/bus/mhi/Kconfig
+index e841c10..daa8528 100644
+--- a/drivers/bus/mhi/Kconfig
++++ b/drivers/bus/mhi/Kconfig
+@@ -20,3 +20,12 @@ config MHI_BUS_DEBUG
+ 	  Enable debugfs support for use with the MHI transport. Allows
+ 	  reading and/or modifying some values within the MHI controller
+ 	  for debug and test purposes.
++
++config MHI_BUS_PCI_GENERIC
++	tristate "MHI PCI controller driver"
++	depends on MHI_BUS
++	depends on PCI
++	help
++	  This driver provides Modem Host Interface (MHI) PCI controller driver
++	  for devices such as Qualcomm SDX55 based PCIe modems.
++
+diff --git a/drivers/bus/mhi/Makefile b/drivers/bus/mhi/Makefile
+index 19e6443..d1a4ef3 100644
+--- a/drivers/bus/mhi/Makefile
++++ b/drivers/bus/mhi/Makefile
+@@ -1,2 +1,5 @@
+ # core layer
+ obj-y += core/
++
++obj-$(CONFIG_MHI_BUS_PCI_GENERIC) := mhi_pci_generic.o
++
+diff --git a/drivers/bus/mhi/mhi_pci_generic.c b/drivers/bus/mhi/mhi_pci_generic.c
+new file mode 100644
+index 0000000..03fcf76
+--- /dev/null
++++ b/drivers/bus/mhi/mhi_pci_generic.c
+@@ -0,0 +1,332 @@
++// SPDX-License-Identifier: GPL-2.0-or-later
++/*
++ * MHI PCI driver - MHI over PCI controller driver
++ *
++ * This module is a generic driver for registering MHI-over-PCI devices,
++ * such as PCIe QCOM modems.
++ *
++ * Copyright (C) 2020 Linaro Ltd <loic.poulain@linaro.org>
++ */
++
++#include <linux/device.h>
++#include <linux/mhi.h>
++#include <linux/module.h>
++#include <linux/pci.h>
++
++#define MHI_PCI_BAR_NUM 0
++
++struct mhi_pci_dev_info {
++	const struct mhi_controller_config *config;
++	const char *name;
++	const char *fw;
++	const char *edl;
++};
++
++#define MHI_CHANNEL_CONFIG_TX(cnum, cname, elems, event)	\
++	{							\
++		.num = cnum,					\
++		.name = cname,					\
++		.num_elements = elems,				\
++		.event_ring = event,				\
++		.dir = DMA_TO_DEVICE,				\
++		.ee_mask = BIT(MHI_EE_AMSS),			\
++		.pollcfg = 0,					\
++		.doorbell = MHI_DB_BRST_DISABLE,		\
++		.lpm_notify = false,				\
++		.offload_channel = false,			\
++		.doorbell_mode_switch = false,			\
++	}							\
++
++#define MHI_CHANNEL_CONFIG_RX(cnum, cname, elems, event)	\
++	{							\
++		.num = cnum,					\
++		.name = cname,					\
++		.num_elements = elems,				\
++		.event_ring = event,				\
++		.dir = DMA_FROM_DEVICE,				\
++		.ee_mask = BIT(MHI_EE_AMSS),			\
++		.pollcfg = 0,					\
++		.doorbell = MHI_DB_BRST_DISABLE,		\
++		.lpm_notify = false,				\
++		.offload_channel = false,			\
++		.doorbell_mode_switch = false,			\
++	}
++
++#define MHI_EVENT_CONFIG_CTRL(enum)		\
++	{					\
++		.num_elements = 64,		\
++		.irq_moderation_ms = 5,		\
++		.irq = enum,			\
++		.priority = 1,			\
++		.mode = MHI_DB_BRST_DISABLE,	\
++		.data_type = MHI_ER_CTRL,	\
++		.hardware_event = false,	\
++		.client_managed = false,	\
++		.offload_channel = false,	\
++	}
++
++#define MHI_EVENT_CONFIG_DATA(enum)		\
++	{					\
++		.num_elements = 64,		\
++		.irq_moderation_ms = 5,		\
++		.irq = enum,			\
++		.priority = 1,			\
++		.mode = MHI_DB_BRST_DISABLE,	\
++		.data_type = MHI_ER_DATA,	\
++		.hardware_event = false,	\
++		.client_managed = false,	\
++		.offload_channel = false,	\
++	}
++
++#define MHI_EVENT_CONFIG_HW_DATA(enum, cnum)	\
++	{					\
++		.num_elements = 64,		\
++		.irq_moderation_ms = 5,		\
++		.irq = enum,			\
++		.priority = 1,			\
++		.mode = MHI_DB_BRST_ENABLE,	\
++		.data_type = MHI_ER_DATA,	\
++		.hardware_event = true,		\
++		.client_managed = false,	\
++		.offload_channel = false,	\
++		.channel = cnum,		\
++	}
++
++static const struct mhi_channel_config modem_qcom_v1_mhi_channels[] = {
++	MHI_CHANNEL_CONFIG_TX(12, "MBIM", 4, 0),
++	MHI_CHANNEL_CONFIG_RX(13, "MBIM", 4, 0),
++	MHI_CHANNEL_CONFIG_TX(14, "QMI", 4, 0),
++	MHI_CHANNEL_CONFIG_RX(15, "QMI", 4, 0),
++	MHI_CHANNEL_CONFIG_TX(20, "IPCR", 4, 0),
++	MHI_CHANNEL_CONFIG_RX(21, "IPCR", 4, 0),
++	MHI_CHANNEL_CONFIG_TX(100, "IP_HW0", 64, 1),
++	MHI_CHANNEL_CONFIG_RX(101, "IP_HW0", 64, 2),
++};
++
++static const struct mhi_event_config modem_qcom_v1_mhi_events[] = {
++	/* first ring is control+data ring */
++	MHI_EVENT_CONFIG_CTRL(0),
++	/* Hardware channels request dedicated hardware event rings */
++	MHI_EVENT_CONFIG_HW_DATA(1, 100),
++	MHI_EVENT_CONFIG_HW_DATA(2, 101)
++};
++
++static const struct mhi_controller_config modem_qcom_v1_mhi_config = {
++	.max_channels = 128,
++	.timeout_ms = 5000,
++	.num_channels = ARRAY_SIZE(modem_qcom_v1_mhi_channels),
++	.ch_cfg = modem_qcom_v1_mhi_channels,
++	.num_events = ARRAY_SIZE(modem_qcom_v1_mhi_events),
++	.event_cfg = modem_qcom_v1_mhi_events,
++};
++
++static const struct mhi_pci_dev_info mhi_qcom_sdx55_info = {
++	.name = "qcom-sdx55m",
++	.fw = "qcom/sdx55m/sbl1.mbn",
++	.edl = "qcom/sdx55m/edl.mbn",
++	.config = &modem_qcom_v1_mhi_config
++};
++
++static const struct pci_device_id mhi_pci_id_table[] = {
++	{ PCI_DEVICE(PCI_VENDOR_ID_QCOM, 0x0306),
++		.driver_data = (kernel_ulong_t) &mhi_qcom_sdx55_info },
++	{  }
++};
++MODULE_DEVICE_TABLE(pci, mhi_pci_id_table);
++
++static int mhi_pci_read_reg(struct mhi_controller *mhic, void __iomem *addr,
++			    u32 *out)
++{
++	*out = readl(addr);
++	return 0;
++}
++
++static void mhi_pci_write_reg(struct mhi_controller *mhic, void __iomem *addr,
++			      u32 val)
++{
++	writel(val, addr);
++}
++
++static void mhi_pci_status_cb(struct mhi_controller *mhi_cntrl,
++			      enum mhi_callback cb)
++{
++	return;
++}
++
++static int mhi_pci_claim(struct mhi_controller *mhic)
++{
++	struct pci_dev *pdev = to_pci_dev(mhic->cntrl_dev);
++	int err;
++
++	err = pci_assign_resource(pdev, MHI_PCI_BAR_NUM);
++	if (err)
++		return err;
++
++	err = pcim_enable_device(pdev);
++	if (err) {
++		dev_err(&pdev->dev, "failed to enable pci device: %d\n", err);
++		return err;
++	}
++
++	err = pcim_iomap_regions(pdev, 1 << MHI_PCI_BAR_NUM, pci_name(pdev));
++	if (err) {
++		dev_err(&pdev->dev, "failed to map pci region: %d\n", err);
++		return err;
++	}
++	mhic->regs = pcim_iomap_table(pdev)[MHI_PCI_BAR_NUM];
++
++	err = pci_set_dma_mask(pdev, DMA_BIT_MASK(32));
++	if (err) {
++		dev_err(&pdev->dev, "Cannot set proper DMA mask\n");
++		return err;
++	}
++
++	err = pci_set_consistent_dma_mask(pdev, DMA_BIT_MASK(32));
++	if (err) {
++		dev_err(&pdev->dev, "set consistent dma mask failed\n");
++		return err;
++	}
++
++	pci_set_master(pdev);
++
++	return 0;
++}
++
++static int mhi_pci_get_irqs(struct mhi_controller *mhic,
++			    const struct mhi_controller_config *mhic_config)
++{
++	struct pci_dev *pdev = to_pci_dev(mhic->cntrl_dev);
++	int num_vectors, i;
++	int *irq;
++
++	/*
++	 * Alloc one MSI vector per event ring, ideally...
++	 * No explicit pci_free_irq_vectors required, done by pcim_release
++	 */
++	num_vectors = pci_alloc_irq_vectors(pdev, 1, mhic_config->num_events,
++					    PCI_IRQ_MSI);
++	if (num_vectors < 0) {
++		dev_err(&pdev->dev, "Error allocating MSI vectors %d\n",
++			num_vectors);
++		return num_vectors;
++	}
++
++	if (num_vectors < mhic_config->num_events) {
++		dev_warn(&pdev->dev, "Not enough MSI vectors (%d/%d)\n",
++			 num_vectors, mhic_config->num_events);
++		/* use shared IRQ */
++	}
++
++	irq = devm_kcalloc(&pdev->dev, mhic_config->num_events, sizeof(int),
++			   GFP_KERNEL);
++	if (!irq)
++		return -ENOMEM;
++
++	for (i = 0; i < mhic_config->num_events; i++) {
++		int vector = i >= num_vectors ? (num_vectors - 1) : i;
++
++		irq[i] = pci_irq_vector(pdev, vector);
++	}
++
++	mhic->irq = irq;
++	mhic->nr_irqs = mhic_config->num_events;
++
++	return 0;
++}
++
++static int mhi_pci_runtime_get(struct mhi_controller *mhi_cntrl)
++{
++	/* no PM for now */
++	return 0;
++}
++
++static void mhi_pci_runtime_put(struct mhi_controller *mhi_cntrl)
++{
++	/* no PM for now */
++	return;
++}
++
++static int mhi_pci_probe(struct pci_dev *pdev, const struct pci_device_id *id)
++{
++	const struct mhi_pci_dev_info *info = (struct mhi_pci_dev_info *) id->driver_data;
++	const struct mhi_controller_config *mhic_config;
++	struct mhi_controller *mhic;
++	int err;
++
++	dev_info(&pdev->dev, "MHI PCI device found: %s\n", info->name);
++
++	mhic = devm_kzalloc(&pdev->dev, sizeof(*mhic), GFP_KERNEL);
++	if (!mhic)
++		return -ENOMEM;
++
++	mhic_config = info->config;
++	mhic->cntrl_dev = &pdev->dev;
++	mhic->iova_start = 0;
++	mhic->iova_stop = 0xffffffff;
++	mhic->fw_image = info->fw;
++	mhic->edl_image = info->edl;
++
++	mhic->read_reg = mhi_pci_read_reg;
++	mhic->write_reg = mhi_pci_write_reg;
++	mhic->status_cb = mhi_pci_status_cb;
++	mhic->runtime_get = mhi_pci_runtime_get;
++	mhic->runtime_put = mhi_pci_runtime_put;
++
++	err = mhi_pci_claim(mhic);
++	if (err)
++		return err;
++
++	err = mhi_pci_get_irqs(mhic, mhic_config);
++	if (err)
++		return err;
++
++	pci_set_drvdata(pdev, mhic);
++
++	err = mhi_register_controller(mhic, mhic_config);
++	if (err)
++		return err;
++
++	/* MHI bus does not power up the controller by default */
++	err = mhi_prepare_for_power_up(mhic);
++	if (err) {
++		dev_err(&pdev->dev, "failed to prepare MHI controller\n");
++		goto err_unregister;
++	}
++
++	err = mhi_sync_power_up(mhic);
++	if (err) {
++		dev_err(&pdev->dev, "failed to power up MHI controller\n");
++		goto err_unprepare;
++	}
++
++	return 0;
++
++err_unprepare:
++	mhi_unprepare_after_power_down(mhic);
++
++err_unregister:
++	mhi_unregister_controller(mhic);
++
++	return err;
++}
++
++static void mhi_pci_remove(struct pci_dev *pdev)
++{
++	struct mhi_controller *mhic = pci_get_drvdata(pdev);
++
++	mhi_power_down(mhic, false);
++	mhi_unprepare_after_power_down(mhic);
++	mhi_unregister_controller(mhic);
++}
++
++static struct pci_driver mhi_pci_driver = {
++	.name		= "mhi-pci-generic",
++	.id_table	= mhi_pci_id_table,
++	.probe		= mhi_pci_probe,
++	.remove		= mhi_pci_remove
++};
++module_pci_driver(mhi_pci_driver);
++
++MODULE_AUTHOR("Loic Poulain <loic.poulain@linaro,org>");
++MODULE_DESCRIPTION("Modem Host Interface (MHI) PCI controller driver");
++MODULE_LICENSE("GPL");
+-- 
+2.7.4
 
