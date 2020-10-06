@@ -2,138 +2,302 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 4B2CF284834
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Oct 2020 10:15:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2B8442848FA
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Oct 2020 11:09:07 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725943AbgJFIPL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 6 Oct 2020 04:15:11 -0400
-Received: from ns.iliad.fr ([212.27.33.1]:58140 "EHLO ns.iliad.fr"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725939AbgJFIPL (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 6 Oct 2020 04:15:11 -0400
-Received: from ns.iliad.fr (localhost [127.0.0.1])
-        by ns.iliad.fr (Postfix) with ESMTP id CAC98205AE;
-        Tue,  6 Oct 2020 10:15:08 +0200 (CEST)
-Received: from [192.168.108.70] (freebox.vlq16.iliad.fr [213.36.7.13])
-        by ns.iliad.fr (Postfix) with ESMTP id B0FDF20590;
-        Tue,  6 Oct 2020 10:15:08 +0200 (CEST)
-Subject: Re: [PATCH v2 5/5] PCI: qcom: Add support for configuring BDF to SID
- mapping for SM8250
-To:     Stanimir Varbanov <svarbanov@mm-sol.com>,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        Robin Murphy <robin.murphy@arm.com>
-Cc:     agross@kernel.org, bjorn.andersson@linaro.org, kishon@ti.com,
-        vkoul@kernel.org, robh@kernel.org, bhelgaas@google.com,
-        lorenzo.pieralisi@arm.com, linux-arm-msm@vger.kernel.org,
-        linux-pci@vger.kernel.org, mgautam@codeaurora.org
-References: <20200930150925.31921-1-manivannan.sadhasivam@linaro.org>
- <20200930150925.31921-6-manivannan.sadhasivam@linaro.org>
- <507b3d50-6792-60b7-1ccd-f7b3031c20ac@mm-sol.com>
- <20201001055736.GB3203@Mani-XPS-13-9360>
- <e63b3ed4-d822-45dc-de60-23385fb45468@mm-sol.com>
-From:   Marc Gonzalez <marc.w.gonzalez@free.fr>
-Message-ID: <1dd23bad-3bea-fb55-e1fb-05ea3497dfd3@free.fr>
-Date:   Tue, 6 Oct 2020 10:15:08 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.10.0
+        id S1725942AbgJFJJG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 6 Oct 2020 05:09:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42742 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725912AbgJFJJG (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 6 Oct 2020 05:09:06 -0400
+Received: from mail-wr1-x442.google.com (mail-wr1-x442.google.com [IPv6:2a00:1450:4864:20::442])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 28818C061755
+        for <linux-arm-msm@vger.kernel.org>; Tue,  6 Oct 2020 02:09:04 -0700 (PDT)
+Received: by mail-wr1-x442.google.com with SMTP id j2so12559856wrx.7
+        for <linux-arm-msm@vger.kernel.org>; Tue, 06 Oct 2020 02:09:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ffwll.ch; s=google;
+        h=date:from:to:cc:subject:message-id:mail-followup-to:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=QT4sff31JFxMAWV47tsow6IkRjEC9gwI2+WJTBC/iXU=;
+        b=RxzqBtgfi4VNzqUwmnMjLczASgvxj0ZLZ6HeBQYPANTVsMxh8bzbIkhgoJtzqh7Frp
+         3lf0hkXfgZ9wWzgz7uoqM15AAZXKGIdVgQnwMRv2VoiHD9szsXW/4dKOmXZD5pqaMdSm
+         zTr/42vtFeT9vpGckN2NDpPW6fwr2urFUp0Ss=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id
+         :mail-followup-to:references:mime-version:content-disposition
+         :in-reply-to;
+        bh=QT4sff31JFxMAWV47tsow6IkRjEC9gwI2+WJTBC/iXU=;
+        b=JxFpileGQP/bAP9CX5iG+8BbaXcvqkgaYCTfmRE6k5GUE39r2f2N2s9+cb7jjMzSvR
+         rOUeCd/IrI/YVF7/q4emx1O+3ktBnQt4nYIfsObPAC+cb1Q1bEoUJNh1Y31FRZpGHwMS
+         qCCeqqwqbyHa7vFaG39oE2gItY9UkaFJq03StL9aCNBFkoZlH769BRGrW/TP7E35l7yn
+         I2aaVcz+O49Ljgbonb0+FJCkOPQoG1+ilq3K+yBPa6/cXZ4Di9jzDhj0ANCQZ2NdhIkV
+         WPBTk8uGszsf3/DsU8Si7AKXF1h82yh1KOMM6BXONTTf+9slzNKbmt8rK612K54+dxij
+         qSzA==
+X-Gm-Message-State: AOAM5301en2n/TPxw6wQGiya3LZxBU3sGCU68xwfEfpILyWz6AHA1qAw
+        eKZiDgz60yPlc/ettWnjOV7tdw==
+X-Google-Smtp-Source: ABdhPJzE2U8EydJQd2Px1Cp1VdkD+utuSVnFMnmpFQp2SOvwCJ1IfGbebwpsVnsSKbHGvG+RwViKKA==
+X-Received: by 2002:adf:cc8c:: with SMTP id p12mr3962523wrj.92.1601975342547;
+        Tue, 06 Oct 2020 02:09:02 -0700 (PDT)
+Received: from phenom.ffwll.local ([2a02:168:57f4:0:efd0:b9e5:5ae6:c2fa])
+        by smtp.gmail.com with ESMTPSA id z15sm2362146wrq.24.2020.10.06.02.09.01
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 06 Oct 2020 02:09:01 -0700 (PDT)
+Date:   Tue, 6 Oct 2020 11:08:59 +0200
+From:   Daniel Vetter <daniel@ffwll.ch>
+To:     Rob Clark <robdclark@gmail.com>
+Cc:     Qais Yousef <qais.yousef@arm.com>,
+        dri-devel <dri-devel@lists.freedesktop.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Tejun Heo <tj@kernel.org>, Tim Murray <timmurray@google.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Rob Clark <robdclark@chromium.org>,
+        open list <linux-kernel@vger.kernel.org>,
+        Steven Rostedt <rostedt@goodmis.org>,
+        "Peter Zijlstra (Intel)" <peterz@infradead.org>
+Subject: Re: [PATCH v2 0/3] drm: commit_work scheduling
+Message-ID: <20201006090859.GW438822@phenom.ffwll.local>
+Mail-Followup-To: Rob Clark <robdclark@gmail.com>,
+        Qais Yousef <qais.yousef@arm.com>,
+        dri-devel <dri-devel@lists.freedesktop.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Tejun Heo <tj@kernel.org>, Tim Murray <timmurray@google.com>,
+        Rob Clark <robdclark@chromium.org>,
+        open list <linux-kernel@vger.kernel.org>,
+        Steven Rostedt <rostedt@goodmis.org>,
+        "Peter Zijlstra (Intel)" <peterz@infradead.org>
+References: <20200930211723.3028059-1-robdclark@gmail.com>
+ <20201002110105.e56qrvzoqfioi4hs@e107158-lin.cambridge.arm.com>
+ <CAF6AEGvWMvZuy7CcGhzUSbwGtEkrNkzWHu_BN1cbdBJdZtvevA@mail.gmail.com>
+ <20201005150024.mchfdtd62rlkuh4s@e107158-lin.cambridge.arm.com>
+ <CAF6AEGs7NmCPyLdg+gg5jTTe-wgi2myRQ80tum6odv6tLLQ0DQ@mail.gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <e63b3ed4-d822-45dc-de60-23385fb45468@mm-sol.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-X-Virus-Scanned: ClamAV using ClamSMTP ; ns.iliad.fr ; Tue Oct  6 10:15:08 2020 +0200 (CEST)
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAF6AEGs7NmCPyLdg+gg5jTTe-wgi2myRQ80tum6odv6tLLQ0DQ@mail.gmail.com>
+X-Operating-System: Linux phenom 5.7.0-1-amd64 
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 01/10/2020 12:57, Stanimir Varbanov wrote:
-
-> On 10/1/20 8:57 AM, Manivannan Sadhasivam wrote:
->
->> On Thu, Oct 01, 2020 at 12:46:46AM +0300, Stanimir Varbanov wrote:
->>
->>> On 9/30/20 6:09 PM, Manivannan Sadhasivam wrote:
->>>
->>>> For SM8250, we need to write the BDF to SID mapping in PCIe controller
->>>> register space for proper working. This is accomplished by extracting
->>>> the BDF and SID values from "iommu-map" property in DT and writing those
->>>> in the register address calculated from the hash value of BDF. In case
->>>> of collisions, the index of the next entry will also be written.
->>>
->>> This describes what the patch is doing. But why? Is that done in the
->>> other DWC low-level drivers or this is qcom specialty?
->>
->> AFAIK, only some NXP SoCs deal with similar kind of mapping but right now
->> this is a Qcom only stuff.
->>
->>>> For the sake of it, let's introduce a "config_sid" callback and do it
->>>> conditionally for SM8250.
->>>>
->>>> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
->>>> ---
->>>>  drivers/pci/controller/dwc/Kconfig     |   1 +
->>>>  drivers/pci/controller/dwc/pcie-qcom.c | 138 +++++++++++++++++++++++++
->>>>  2 files changed, 139 insertions(+)
+On Mon, Oct 05, 2020 at 04:24:38PM -0700, Rob Clark wrote:
+> On Mon, Oct 5, 2020 at 8:00 AM Qais Yousef <qais.yousef@arm.com> wrote:
+> >
+> > +CC Steve and Peter - they might be interested.
+> >
+> > On 10/02/20 11:07, Rob Clark wrote:
+> > > On Fri, Oct 2, 2020 at 4:01 AM Qais Yousef <qais.yousef@arm.com> wrote:
+> > > >
+> > > > On 09/30/20 14:17, Rob Clark wrote:
+> > > > > From: Rob Clark <robdclark@chromium.org>
+> > > > >
+> > > > > The android userspace treats the display pipeline as a realtime problem.
+> > > > > And arguably, if your goal is to not miss frame deadlines (ie. vblank),
+> > > > > it is.  (See https://lwn.net/Articles/809545/ for the best explaination
+> > > > > that I found.)
+> > > > >
+> > > > > But this presents a problem with using workqueues for non-blocking
+> > > > > atomic commit_work(), because the SCHED_FIFO userspace thread(s) can
+> > > > > preempt the worker.  Which is not really the outcome you want.. once
+> > > > > the required fences are scheduled, you want to push the atomic commit
+> > > > > down to hw ASAP.
+> > > >
+> > > > For me thees 2 properties
+> > > >
+> > > >         1. Run ASAP
+> > > >         2. Finish the work un-interrupted
+> > > >
+> > > > Scream the workers need to be SCHED_FIFO by default. CFS can't give you these
+> > > > guarantees.
+> > >
+> > > fwiw, commit_work does sleep/block for some time until fences are
+> > > signalled, but then once that happens we want it to run ASAP,
+> > > preempting lower priority SCHED_FIFO.
+> > >
+> > > >
+> > > > IMO using sched_set_fifo() for these workers is the right thing.
+> > > >
+> > >
+> > > Possibly, but we still have limited prioritization options (ie. not
+> > > enough) to set these from the kernel.  Giving userspace the control,
+> > > so it can pick sensible priorities for commit_work and vblank_work,
+> > > which fits in with the priorities of the other userspace threads seems
+> > > like the sensible thing.
+> >
+> > The problem is that the kernel can run on all types of systems. It's impossible
+> > to pick one value that fits all. Userspace must manage these priorities, and
+> > you can still export the TID to help with that.
+> >
+> > But why do you need several priorities in your pipeline? I would have thought
+> > it should execute each stage sequentially and all tasks running at the same RT
+> > priority is fine.
 > 
-> <snip>
+> On the kernel side, vblank work should complete during the vblank
+> period, making it a harder real time requirement.  So the thinking is
+> this should be a higher priority.
 > 
->>>>  
->>>> +static int qcom_pcie_get_iommu_map(struct qcom_pcie *pcie)
->>>> +{
->>>> +	/* iommu map structure */
->>>> +	struct {
->>>> +		u32 bdf;
->>>> +		u32 phandle;
->>>> +		u32 smmu_sid;
->>>> +		u32 smmu_sid_len;
->>>> +	} *map;
->>>> +	struct device *dev = pcie->pci->dev;
->>>> +	int i, size = 0;
->>>> +	u32 smmu_sid_base;
->>>> +
->>>> +	of_get_property(dev->of_node, "iommu-map", &size);
->>>> +	if (!size)
->>>> +		return 0;
->>>> +
->>>> +	map = kzalloc(size, GFP_KERNEL);
->>>> +	if (!map)
->>>> +		return -ENOMEM;
->>>> +
->>>> +	of_property_read_u32_array(dev->of_node,
->>>> +		"iommu-map", (u32 *)map, size / sizeof(u32));
->>>
->>> iommu-map is a standard DT property why we have to parse it manually?
->>>
->>
->> So right now we don't have a way to pass this information from DT. And there
->> is no IOMMU API to parse the fields also. We need to extract this information
->> to program the hash tables (BDF, SID) as the mapping between BDF and SID is not
->> 1:1 in SM8250.
+> But you are right, if you aren't overcommitted it probably doesn't matter.
+
+vblank work needs to preempt commit work.
+
+Right now we don't have any driver requiring this, but if we e.g. roll out
+the gamma table update for i915, then this _has_ to happen in the vblank
+period.
+
+Whereas the commit work can happen in there, but it can also be delayed a
+bit (until the vblank worker has finished) we will not miss any additional
+deadline due to that.
+
+So that's why we have 2 levels. I'm not even sure you can model that with
+SCHED_DEADLINE, since essentially we need a few usec of cpu time very
+vblank (16ms normally), but thos few usec _must_ be scheduled within a
+very specific time slot or we're toast. And that vblank period is only
+1-2ms usually.
+
+> > On SMP priorities matter once you've overcomitted the systems. You need to have
+> > more RT tasks running than CPUs for priorities to matter. It seems you have
+> > a high count of RT tasks in your system?
+> >
+> > I did some profiles on Android and found that being overcomitted is hard. But
+> > that was a while ago.
+> >
+> > >
+> > > > >
+> > > > > But the decision of whether commit_work should be RT or not really
+> > > > > depends on what userspace is doing.  For a pure CFS userspace display
+> > > > > pipeline, commit_work() should remain SCHED_NORMAL.
+> > > >
+> > > > I'm not sure I agree with this. I think it's better to characterize tasks based
+> > > > on their properties/requirements rather than what the rest of the userspace is
+> > > > using.
+> > >
+> > > I mean, the issue is that userspace is already using a few different
+> > > rt priority levels for different SF threads.  We want commit_work to
+> >
+> > Why are they at different priorities? Different priority levels means that some
+> > of them have more urgent deadlines to meet and it's okay to steal execution
+> > time from lower priority tasks. Is this the case?
 > 
-> We used iommu-map for msm8998 see this commit:
+> tbh, I'm not fully aware of the background.  It looks like most of the
+> SF threads run at priority=2 (100-2==98), and the main one runs at
+> priority=1
 > 
-> b84dfd175c09888751f501e471fdca346f582e06
-> ("arm64: dts: qcom: msm8998: Add PCIe PHY and RC nodes")
+> > RT planning and partitioning is not easy task for sure. You might want to
+> > consider using affinities too to get stronger guarantees for some tasks and
+> > prevent cross-talking.
 > 
-> I also Cc-ed Marc if he knows something more.
+> There is some cgroup stuff that is pinning SF and some other stuff to
+> the small cores, fwiw.. I think the reasoning is that they shouldn't
+> be doing anything heavy enough to need the big cores.
+> 
+> > > run ASAP once fences are signalled, and vblank_work to run at a
+> > > slightly higher priority still.  But the correct choice for priorities
+> > > here depends on what userspace is using, it all needs to fit together
+> > > properly.
+> >
+> > By userspace here I think you mean none display pipeline related RT tasks that
+> > you need to coexit with and could still disrupt your pipeline?
+> 
+> I mean, commit_work should be higher priority than the other (display
+> related) RT tasks.  But the kernel doesn't know what those priorities
+> are.
+> 
+> > Using RT on Gerneral Purpose System is hard for sure. One of the major
+> > challenge is that there's no admin that has full view of the system to do
+> > proper RT planning.
+> >
+> > We need proper RT balancer daemon that helps partitioning the system for
+> > multiple RT apps on these systems..
+> >
+> > >
+> > > >
+> > > > I do appreciate that maybe some of these tasks have varying requirements during
+> > > > their life time. e.g: they have RT property during specific critical section
+> > > > but otherwise are CFS tasks. I think the UI thread in Android behaves like
+> > > > that.
+> > > >
+> > > > It's worth IMO trying that approach I pointed out earlier to see if making RT
+> > > > try to pick an idle CPU rather than preempt CFS helps. Not sure if it'd be
+> > > > accepted but IMHO it's a better direction to consider and discuss.
+> > >
+> > > The problem I was seeing was actually the opposite..  commit_work
+> > > becomes runnable (fences signalled) but doesn't get a chance to run
+> > > because a SCHED_FIFO SF thread is running.  (Maybe I misunderstood and
+> > > you're approach would help this case too?)
+> >
+> > Ah okay. Sorry I got it the wrong way around for some reason. I thought this
+> > task is preempting other CFS-based pipelined tasks.
+> >
+> > So your system seems to be overcomitted. Is SF short for SufraceFlinger? Under
+> > what scenarios do you have many SurfaceFlinger tasks? On Android I remember
+> > seeing they have priority of 1 or 2.
+> 
+> yeah, SF==SurfaceFlinger, and yeah, 1 and 2..
+> 
+> > sched_set_fifo() will use priority 50. If you set all your pipeline tasks
+> > to this priority, what happens?
+> 
+> I think this would work.. drm/msm doesn't use vblank work, so I
+> wouldn't really have problems with commit_work preempting vblank_work.
+> But I think the best option (and to handle the case if android changes
+> the RT priorties around in the future) is to let userspace set the
+> priorities.
+> 
+> > >
+> > > > Or maybe you can wrap userspace pipeline critical section lock such that any
+> > > > task holding it will automatically be promoted to SCHED_FIFO and then demoted
+> > > > to CFS once it releases it.
+> > >
+> > > The SCHED_DEADLINE + token passing approach that the lwn article
+> > > mentioned sounds interesting, if that eventually becomes possible.
+> > > But doesn't really help today..
+> >
+> > We were present in the room with Alessio when he gave that talk :-)
+> >
+> > You might have seen Valentin's talk in LPC where he's trying to get
+> > proxy-execution into shape. Which is a pre-requisite to enable using of
+> > SCHED_DEADLINE for these scenarios. IIRC it should allow all dependent tasks to
+> > run from the context of the deadline task during the display pipeline critical
+> > section.
+> >
+> > By the way, do you have issues with SoftIrqs delaying your RT tasks execution
+> > time?
+> 
+> I don't *think* so, but I'm not 100% sure if they are showing up in
+> traces.  So far it seems like SF stomping on commit_work.  (There is
+> the added complication that there are some chrome gpu-process tasks in
+> between SF and the display, including CrGpuMain (which really doesn't
+> want to be SCHED_FIFO when executing gl commands on behalf of
+> something unrelated to the compositor.. the deadline approach, IIUC,
+> might be the better option eventually for this?)
 
-My memory is hazy.
+deadline has the upshot that it compose much better than SCHED_FIFO:
+Everyone just drops their deadline requirements onto the scheduler,
+scheduler makes sure it's all obeyed (or rejects your request).
 
-I remember an odd quirk in the downstream kernel:
+The trouble is we'd need to know how long a commit takes, worst case, on a
+given platform. And for that you need to measure stuff, and we kinda can't
+spend a few minutes at boot-up going through the combinatorial maze of
+atomic commits to make sure we have it all.
 
-[v1,1/3] PCI: qcom: Setup PCIE20_PARF_BDF_TRANSLATE_N
-http://patchwork.ozlabs.org/project/linux-pci/patch/958ae127-3aa2-6824-c875-e3012644ed3d@free.fr/
+So I think in practice letting userspace set the right rt priority/mode is
+the only way to go here :-/
+-Daniel
 
-Manivannan, are you trying to deal with PCIE20_PARF_BDF_TRANSLATE_N
-or some equivalent register?
+> 
+> BR,
+> -R
+> 
+> >
+> > Thanks
+> >
+> > --
+> > Qais Yousef
 
-+Robin, he's the one who helped me figure this stuff out (iommu-map).
-It was in reply to patch 2:
-http://patchwork.ozlabs.org/project/linux-pci/patch/82ab78ee-4a38-4eee-f064-272b6f964f17@free.fr/
-
-In the end, I dropped patch 1 because... everything seemed to work
-without it (?!) (Makes one wonder what it actually does. But qcom
-refused to provide any register documentation, which is idiotic
-because this is DW IP, and they are open-source friendly, IIUC.)
-
-Regards.
+-- 
+Daniel Vetter
+Software Engineer, Intel Corporation
+http://blog.ffwll.ch
