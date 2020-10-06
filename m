@@ -2,99 +2,145 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A0A2B284542
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Oct 2020 07:24:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B8ED12845FF
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Oct 2020 08:27:09 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726789AbgJFFY1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 6 Oct 2020 01:24:27 -0400
-Received: from z5.mailgun.us ([104.130.96.5]:44207 "EHLO z5.mailgun.us"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725922AbgJFFY1 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 6 Oct 2020 01:24:27 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1601961867; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=kHO2bfQETfzdq28D0JTRwYR2ZB+6JRiat6qJABfcoJ4=;
- b=mvpD+pjSdeeLu/ztppzjz4dWpm4HMDR2w96Q40o9mbKwAdn0Luy3J8wozPDqTeRvWRN3n+hf
- FblBIzF6ZhUZkOlwzvyqRzmia1RZZVx98JUJh71l8aJGaSx+GAvaB6OstGbRDSeztDEVQTKj
- HM2+wF8V8mBE/xVmexoDQMkcuwU=
-X-Mailgun-Sending-Ip: 104.130.96.5
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n01.prod.us-east-1.postgun.com with SMTP id
- 5f7bff6c0764f13b0062e2ef (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 06 Oct 2020 05:23:56
- GMT
-Sender: saiprakash.ranjan=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id CB391C433FF; Tue,  6 Oct 2020 05:23:55 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: saiprakash.ranjan)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 552F1C433CA;
-        Tue,  6 Oct 2020 05:23:55 +0000 (UTC)
+        id S1726822AbgJFG1E (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 6 Oct 2020 02:27:04 -0400
+Received: from hqnvemgate26.nvidia.com ([216.228.121.65]:8461 "EHLO
+        hqnvemgate26.nvidia.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725962AbgJFG1E (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 6 Oct 2020 02:27:04 -0400
+Received: from hqmail.nvidia.com (Not Verified[216.228.121.13]) by hqnvemgate26.nvidia.com (using TLS: TLSv1.2, AES256-SHA)
+        id <B5f7c0e290000>; Mon, 05 Oct 2020 23:26:49 -0700
+Received: from [10.25.78.32] (172.20.13.39) by HQMAIL107.nvidia.com
+ (172.20.187.13) with Microsoft SMTP Server (TLS) id 15.0.1473.3; Tue, 6 Oct
+ 2020 06:26:39 +0000
+Subject: Re: [PATCH v2 0/5] PCI: dwc: improve msi handling
+To:     Jisheng Zhang <Jisheng.Zhang@synaptics.com>,
+        Kishon Vijay Abraham I <kishon@ti.com>,
+        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
+        Rob Herring <robh@kernel.org>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        Jingoo Han <jingoohan1@gmail.com>,
+        Kukjin Kim <kgene@kernel.org>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        Richard Zhu <hongxing.zhu@nxp.com>,
+        Lucas Stach <l.stach@pengutronix.de>,
+        Shawn Guo <shawnguo@kernel.org>,
+        Sascha Hauer <s.hauer@pengutronix.de>,
+        Pengutronix Kernel Team <kernel@pengutronix.de>,
+        Fabio Estevam <festevam@gmail.com>,
+        NXP Linux Team <linux-imx@nxp.com>,
+        "Yue Wang" <yue.wang@Amlogic.com>,
+        Kevin Hilman <khilman@baylibre.com>,
+        "Neil Armstrong" <narmstrong@baylibre.com>,
+        Jerome Brunet <jbrunet@baylibre.com>,
+        Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
+        Jesper Nilsson <jesper.nilsson@axis.com>,
+        Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
+        Xiaowei Song <songxiaowei@hisilicon.com>,
+        Binghui Wang <wangbinghui@hisilicon.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Stanimir Varbanov <svarbanov@mm-sol.com>,
+        Pratyush Anand <pratyush.anand@gmail.com>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Jonathan Hunter <jonathanh@nvidia.com>,
+        "Kunihiko Hayashi" <hayashi.kunihiko@socionext.com>,
+        Masahiro Yamada <yamada.masahiro@socionext.com>
+CC:     "linux-omap@vger.kernel.org" <linux-omap@vger.kernel.org>,
+        "linux-pci@vger.kernel.org" <linux-pci@vger.kernel.org>,
+        "linux-arm-kernel@lists.infradead.org" 
+        <linux-arm-kernel@lists.infradead.org>,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+        "linux-samsung-soc@vger.kernel.org" 
+        <linux-samsung-soc@vger.kernel.org>,
+        "linux-amlogic@lists.infradead.org" 
+        <linux-amlogic@lists.infradead.org>,
+        "linux-arm-kernel@axis.com" <linux-arm-kernel@axis.com>,
+        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
+        "linux-tegra@vger.kernel.org" <linux-tegra@vger.kernel.org>
+References: <20200924190421.549cb8fc@xhacker.debian>
+From:   Vidya Sagar <vidyas@nvidia.com>
+Message-ID: <b977d9b4-cc98-e817-0d51-8f2c6ba1445d@nvidia.com>
+Date:   Tue, 6 Oct 2020 11:56:34 +0530
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.2.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
+In-Reply-To: <20200924190421.549cb8fc@xhacker.debian>
+Content-Type: text/plain; charset="utf-8"; format=flowed
+Content-Language: en-US
 Content-Transfer-Encoding: 7bit
-Date:   Tue, 06 Oct 2020 10:53:55 +0530
-From:   Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-To:     Stephen Boyd <swboyd@chromium.org>
-Cc:     Stanimir Varbanov <stanimir.varbanov@linaro.org>,
-        Robin Murphy <robin.murphy@arm.com>, mchehab@kernel.org,
-        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-arm-msm-owner@vger.kernel.org
-Subject: Re: [PATCH] media: venus: core: Drop local dma_parms
-In-Reply-To: <160194617664.310579.9927356526425343212@swboyd.mtv.corp.google.com>
-References: <e5384b296a0af099dc502572752df149127b7947.1599167568.git.robin.murphy@arm.com>
- <cdd56444b0d7faf9358370f821a10846@codeaurora.org>
- <a2f96ef5-1e67-7bc7-39e1-448b2196aef1@linaro.org>
- <7dacfcb3d8cb7e99e348f00ee15f917a@codeaurora.org>
- <160194617664.310579.9927356526425343212@swboyd.mtv.corp.google.com>
-Message-ID: <91296fbd4feea193ccefa5e511af57f1@codeaurora.org>
-X-Sender: saiprakash.ranjan@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+X-Originating-IP: [172.20.13.39]
+X-ClientProxiedBy: HQMAIL107.nvidia.com (172.20.187.13) To
+ HQMAIL107.nvidia.com (172.20.187.13)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nvidia.com; s=n1;
+        t=1601965609; bh=+klW06t1SRSkGS8ctt+a82sY0wQKshniw25tq0QSLaQ=;
+        h=Subject:To:CC:References:From:Message-ID:Date:User-Agent:
+         MIME-Version:In-Reply-To:Content-Type:Content-Language:
+         Content-Transfer-Encoding:X-Originating-IP:X-ClientProxiedBy;
+        b=AK0csA0Ad2YZWQjDqG6mpJBocxrJivGMWN4Ul4Khquqsz4sXDbayWAKH2+5u2Z3hb
+         Dwnnnmie9OTCA1ZI5fcvM10RVW6SwfJHdZN6r1gyuhgUp4wspP3HQiKKeaPJRlt6TS
+         ftqc47lNt61dYxJBT6XlkXDgwQYBcnZRalTTLs1O2CA9N1xHXNIzMp/9BCFgF/3j4d
+         FR/UwmF0Mrck4tf7j34h+cbH01kRo3EmTivl9RItdCJTzy1Ka9lt1SfGAsf/zUW7Wi
+         aU56gk+7gz9xzR1PbXKZ3xMUxaPWpmb7fA52h1f/jWv9XAwAZ3SE3V+Y+LHJj7Q+fE
+         l3eYB+DIUVnkA==
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2020-10-06 06:32, Stephen Boyd wrote:
-> Quoting Sai Prakash Ranjan (2020-10-02 05:45:03)
->> On 2020-10-02 16:57, Stanimir Varbanov wrote:
->> > On 10/2/20 11:06 AM, Sai Prakash Ranjan wrote:
->> >> On 2020-09-04 02:44, Robin Murphy wrote:
->> >>> Since commit 9495b7e92f71 ("driver core: platform: Initialize
->> >>> dma_parms
->> >>> for platform devices"), struct platform_device already provides a
->> >>> dma_parms structure, so we can save allocating another one.
->> >>
->> >
->> > Do you have the mentioned above commit when you see this warning ?
->> 
->> +Stephen reported this, this was recently backported to 5.4 kernel
->> where playing youtube with dma api debug enabled would throw this
->> warning and I am almost 100% certain this is the commit which caused
->> the warning to appear again.
->> 
-> 
-> We don't have commit 9495b7e92f71 though so I guess we need that one
-> if we take this patch.
-
-Oh so Stan was referring to that commit, oops my bad. I thought
-he was referring to this patch. So I suppose everything is good
-if we backport both patches.
+Hi,
+I would like to verify this series along with the other series "PCI: 
+dwc: fix two MSI issues" on Tegra194. I tried to apply these series on 
+both linux-next and Lorenzo's pci/dwc branches but there seem to be non 
+trivial conflicts. Could you please tell me which branch I can use and 
+apply these series cleanly?
+FWIW, I acknowledge that the existing code does leak MSI target page 
+every time system goes through suspend-resume sequence on Tegra194.
 
 Thanks,
-Sai
+Vidya Sagar
 
--- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a 
-member
-of Code Aurora Forum, hosted by The Linux Foundation
+On 9/24/2020 4:35 PM, Jisheng Zhang wrote:
+> External email: Use caution opening links or attachments
+> 
+> 
+> Improve the msi code:
+> 1. Add proper error handling.
+> 2. Move dw_pcie_msi_init() from each users to designware host to solve
+> msi page leakage in resume path.
+> 
+> Since v1:
+>    - add proper error handling patches.
+>    - solve the msi page leakage by moving dw_pcie_msi_init() from each
+>      users to designware host
+> 
+> 
+> Jisheng Zhang (5):
+>    PCI: dwc: Call dma_unmap_page() before freeing the msi page
+>    PCI: dwc: Check alloc_page() return value
+>    PCI: dwc: Rename dw_pcie_free_msi to dw_pcie_msi_deinit
+>    PCI: dwc: Skip PCIE_MSI_INTR0* programming if MSI is disabled
+>    PCI: dwc: Move dw_pcie_msi_init() from each users to designware host
+> 
+>   drivers/pci/controller/dwc/pci-dra7xx.c       |  1 +
+>   drivers/pci/controller/dwc/pci-exynos.c       |  2 -
+>   drivers/pci/controller/dwc/pci-imx6.c         |  3 --
+>   drivers/pci/controller/dwc/pci-meson.c        |  8 ----
+>   drivers/pci/controller/dwc/pcie-artpec6.c     | 10 -----
+>   .../pci/controller/dwc/pcie-designware-host.c | 43 +++++++++++++------
+>   .../pci/controller/dwc/pcie-designware-plat.c |  3 --
+>   drivers/pci/controller/dwc/pcie-designware.h  |  9 +++-
+>   drivers/pci/controller/dwc/pcie-histb.c       |  3 --
+>   drivers/pci/controller/dwc/pcie-kirin.c       |  3 --
+>   drivers/pci/controller/dwc/pcie-qcom.c        |  3 --
+>   drivers/pci/controller/dwc/pcie-spear13xx.c   |  1 -
+>   drivers/pci/controller/dwc/pcie-tegra194.c    |  2 -
+>   drivers/pci/controller/dwc/pcie-uniphier.c    |  9 +---
+>   14 files changed, 38 insertions(+), 62 deletions(-)
+> 
+> --
+> 2.28.0
+> 
