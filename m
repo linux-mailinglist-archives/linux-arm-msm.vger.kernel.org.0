@@ -2,91 +2,185 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 0C2E5284A4E
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Oct 2020 12:29:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AE53E284A89
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Oct 2020 12:59:27 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725943AbgJFK3L (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 6 Oct 2020 06:29:11 -0400
-Received: from mail.kernel.org ([198.145.29.99]:60760 "EHLO mail.kernel.org"
+        id S1725906AbgJFK7K (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 6 Oct 2020 06:59:10 -0400
+Received: from foss.arm.com ([217.140.110.172]:44582 "EHLO foss.arm.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725891AbgJFK3K (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 6 Oct 2020 06:29:10 -0400
-Received: from disco-boy.misterjones.org (disco-boy.misterjones.org [51.254.78.96])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id CA15C20757;
-        Tue,  6 Oct 2020 10:29:09 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1601980150;
-        bh=cBWCt+A2bRIWJ+VhgHRDaDIaurfO5bRRNnXpUH907KU=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=ojjSyzvEVSo/f69Ig7Ba0XozHpeJ2Q/EH6QfO7Z21WjRmQm/WQr+alLVFDmw0e8NE
-         JsOR/KobyvviaS+YCc4yX4u/dWd9QiX/jfAMPR1xSkmOzviX3+OiY1yYiyLWEKLHqX
-         8kJx49CZgmWOSONR6+V02O0tHq3LwhOe/B9E3NvE=
-Received: from 78.163-31-62.static.virginmediabusiness.co.uk ([62.31.163.78] helo=hot-poop.lan)
-        by disco-boy.misterjones.org with esmtpsa (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
-        (Exim 4.92)
-        (envelope-from <maz@kernel.org>)
-        id 1kPkDT-0002fR-No; Tue, 06 Oct 2020 11:29:07 +0100
-From:   Marc Zyngier <maz@kernel.org>
-To:     linus.walleij@linaro.org, evgreen@chromium.org, mka@chromium.org,
-        Maulik Shah <mkshah@codeaurora.org>, swboyd@chromium.org,
-        bjorn.andersson@linaro.org
-Cc:     ilina@codeaurora.org, linux-kernel@vger.kernel.org,
-        jason@lakedaemon.net, lsrao@codeaurora.org, tglx@linutronix.de,
-        rnayak@codeaurora.org, linux-gpio@vger.kernel.org,
-        agross@kernel.org, dianders@chromium.org,
-        linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH v6 0/6] irqchip: qcom: pdc: Introduce irq_set_wake call
-Date:   Tue,  6 Oct 2020 11:29:03 +0100
-Message-Id: <160198012786.3008417.11128455090479728901.b4-ty@kernel.org>
-X-Mailer: git-send-email 2.28.0
-In-Reply-To: <1601267524-20199-1-git-send-email-mkshah@codeaurora.org>
-References: <1601267524-20199-1-git-send-email-mkshah@codeaurora.org>
+        id S1725891AbgJFK7K (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 6 Oct 2020 06:59:10 -0400
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 74ECC1435;
+        Tue,  6 Oct 2020 03:59:25 -0700 (PDT)
+Received: from e107158-lin.cambridge.arm.com (e107158-lin.cambridge.arm.com [10.1.195.21])
+        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 21C013F66B;
+        Tue,  6 Oct 2020 03:59:24 -0700 (PDT)
+Date:   Tue, 6 Oct 2020 11:59:21 +0100
+From:   Qais Yousef <qais.yousef@arm.com>
+To:     Rob Clark <robdclark@gmail.com>
+Cc:     dri-devel <dri-devel@lists.freedesktop.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Tejun Heo <tj@kernel.org>, Tim Murray <timmurray@google.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Rob Clark <robdclark@chromium.org>,
+        open list <linux-kernel@vger.kernel.org>,
+        Steven Rostedt <rostedt@goodmis.org>,
+        "Peter Zijlstra (Intel)" <peterz@infradead.org>
+Subject: Re: [PATCH v2 0/3] drm: commit_work scheduling
+Message-ID: <20201006105918.v3xspb6xasjyy5ky@e107158-lin.cambridge.arm.com>
+References: <20200930211723.3028059-1-robdclark@gmail.com>
+ <20201002110105.e56qrvzoqfioi4hs@e107158-lin.cambridge.arm.com>
+ <CAF6AEGvWMvZuy7CcGhzUSbwGtEkrNkzWHu_BN1cbdBJdZtvevA@mail.gmail.com>
+ <20201005150024.mchfdtd62rlkuh4s@e107158-lin.cambridge.arm.com>
+ <CAF6AEGs7NmCPyLdg+gg5jTTe-wgi2myRQ80tum6odv6tLLQ0DQ@mail.gmail.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-SA-Exim-Connect-IP: 62.31.163.78
-X-SA-Exim-Rcpt-To: linus.walleij@linaro.org, evgreen@chromium.org, mka@chromium.org, mkshah@codeaurora.org, swboyd@chromium.org, bjorn.andersson@linaro.org, ilina@codeaurora.org, linux-kernel@vger.kernel.org, jason@lakedaemon.net, lsrao@codeaurora.org, tglx@linutronix.de, rnayak@codeaurora.org, linux-gpio@vger.kernel.org, agross@kernel.org, dianders@chromium.org, linux-arm-msm@vger.kernel.org
-X-SA-Exim-Mail-From: maz@kernel.org
-X-SA-Exim-Scanned: No (on disco-boy.misterjones.org); SAEximRunCond expanded to false
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CAF6AEGs7NmCPyLdg+gg5jTTe-wgi2myRQ80tum6odv6tLLQ0DQ@mail.gmail.com>
+User-Agent: NeoMutt/20171215
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, 28 Sep 2020 10:01:58 +0530, Maulik Shah wrote:
-> Changes in v6:
-> - Update commit message more descriptive in v5 patch 1
-> - Symmetrically enable/disable wakeirqs during suspend/resume in v5 patch 3
-> - Include Acked-by and Reviewed-by tags from v5 series
+On 10/05/20 16:24, Rob Clark wrote:
+
+[...]
+
+> > RT planning and partitioning is not easy task for sure. You might want to
+> > consider using affinities too to get stronger guarantees for some tasks and
+> > prevent cross-talking.
 > 
-> Changes in v5:
-> - Update commit subject in v4 patch 1
-> - Add more details to commit message in v4 patch 2
-> - Add change to enable wake irqs during suspend using new flag in irqchip
-> - Use this in PDC and qcom pinctrl driver to enable wakeirqs on suspend
-> - Make for loop more readable and add more details in commit in v4 patch 7
+> There is some cgroup stuff that is pinning SF and some other stuff to
+> the small cores, fwiw.. I think the reasoning is that they shouldn't
+> be doing anything heavy enough to need the big cores.
+
+Ah, so you're on big.LITTLE type of system. I have done some work which enables
+biasing RT tasks towards big cores and control the default boost value if you
+have util_clamp and schedutil enabled. You can use util_clamp in general to
+help with DVFS related response time delays.
+
+I haven't done any work to try our best to pick a small core first but fallback
+to big if there's no other alternative.
+
+It'd be interesting to know how often you end up on a big core if you remove
+the affinity. The RT scheduler picks the first cpu in the lowest priority mask.
+So it should have this bias towards picking smaller cores first if they're
+in the lower priority mask (ie: not running higher priority RT tasks).
+
+So unless you absolutely don't want any RT tasks on a big cores, it'd be worth
+removing this affinity and check the percentage of time you spend on little
+cores. This should help with your worst case scenario as you make more cpus
+available.
+
+> > > run ASAP once fences are signalled, and vblank_work to run at a
+> > > slightly higher priority still.  But the correct choice for priorities
+> > > here depends on what userspace is using, it all needs to fit together
+> > > properly.
+> >
+> > By userspace here I think you mean none display pipeline related RT tasks that
+> > you need to coexit with and could still disrupt your pipeline?
 > 
-> [...]
+> I mean, commit_work should be higher priority than the other (display
+> related) RT tasks.  But the kernel doesn't know what those priorities
+> are.
 
-Applied to irq/irqchip-next, thanks!
+So if you set commit_work to sched_set_fifo(), it'd be at a reasonably high
+priority (50) by default. Which means you just need to manage your SF
+priorities without having to change commit_work priority itself?
 
-[1/6] pinctrl: qcom: Set IRQCHIP_SET_TYPE_MASKED and IRQCHIP_MASK_ON_SUSPEND flags
-      commit: c5f72aeb659eb2f809b9531d759651514d42aa3a
-[2/6] pinctrl: qcom: Use return value from irq_set_wake() call
-      commit: f41aaca593377a4fe3984459fd4539481263b4cd
-[3/6] genirq/PM: Introduce IRQCHIP_ENABLE_WAKEUP_ON_SUSPEND flag
-      commit: 90428a8eb4947f9c7c905a178f3520dc7e2ee6d2
-[4/6] pinctrl: qcom: Set IRQCHIP_ENABLE_WAKEUP_ON_SUSPEND flag
-      commit: dd87bd09822c294a3c7c4daf11f11a9f81222f80
-[5/6] irqchip/qcom-pdc: Set IRQCHIP_ENABLE_WAKEUP_ON_SUSPEND flag
-      commit: 299d7890792e75065b906f83fcb0ca92e5c8c072
-[6/6] irqchip/qcom-pdc: Reset PDC interrupts during init
-      commit: d7bc63fa20b8a3b0d0645bed1887848c65c01529
+> 
+> > Using RT on Gerneral Purpose System is hard for sure. One of the major
+> > challenge is that there's no admin that has full view of the system to do
+> > proper RT planning.
+> >
+> > We need proper RT balancer daemon that helps partitioning the system for
+> > multiple RT apps on these systems..
+> >
+> > >
+> > > >
+> > > > I do appreciate that maybe some of these tasks have varying requirements during
+> > > > their life time. e.g: they have RT property during specific critical section
+> > > > but otherwise are CFS tasks. I think the UI thread in Android behaves like
+> > > > that.
+> > > >
+> > > > It's worth IMO trying that approach I pointed out earlier to see if making RT
+> > > > try to pick an idle CPU rather than preempt CFS helps. Not sure if it'd be
+> > > > accepted but IMHO it's a better direction to consider and discuss.
+> > >
+> > > The problem I was seeing was actually the opposite..  commit_work
+> > > becomes runnable (fences signalled) but doesn't get a chance to run
+> > > because a SCHED_FIFO SF thread is running.  (Maybe I misunderstood and
+> > > you're approach would help this case too?)
+> >
+> > Ah okay. Sorry I got it the wrong way around for some reason. I thought this
+> > task is preempting other CFS-based pipelined tasks.
+> >
+> > So your system seems to be overcomitted. Is SF short for SufraceFlinger? Under
+> > what scenarios do you have many SurfaceFlinger tasks? On Android I remember
+> > seeing they have priority of 1 or 2.
+> 
+> yeah, SF==SurfaceFlinger, and yeah, 1 and 2..
+> 
+> > sched_set_fifo() will use priority 50. If you set all your pipeline tasks
+> > to this priority, what happens?
+> 
+> I think this would work.. drm/msm doesn't use vblank work, so I
+> wouldn't really have problems with commit_work preempting vblank_work.
+> But I think the best option (and to handle the case if android changes
+> the RT priorties around in the future) is to let userspace set the
+> priorities.
 
-Cheers,
+I don't really mind. But it seems better for me if we know that two kernel
+threads need to have a specific relative priorities to each others then to
+handle this in the kernel properly. Userspace will only need then to worry
+about managing its *own* priorities relative to that.
 
-	M.
--- 
-Without deviation from the norm, progress is not possible.
+Just seen Peter suggesting in another email to use SCHED_DEADLINE for vblank
+work. Which I think achieves the above if commit_work uses sched_set_fifo().
 
+> 
+> > >
+> > > > Or maybe you can wrap userspace pipeline critical section lock such that any
+> > > > task holding it will automatically be promoted to SCHED_FIFO and then demoted
+> > > > to CFS once it releases it.
+> > >
+> > > The SCHED_DEADLINE + token passing approach that the lwn article
+> > > mentioned sounds interesting, if that eventually becomes possible.
+> > > But doesn't really help today..
+> >
+> > We were present in the room with Alessio when he gave that talk :-)
+> >
+> > You might have seen Valentin's talk in LPC where he's trying to get
+> > proxy-execution into shape. Which is a pre-requisite to enable using of
+> > SCHED_DEADLINE for these scenarios. IIRC it should allow all dependent tasks to
+> > run from the context of the deadline task during the display pipeline critical
+> > section.
+> >
+> > By the way, do you have issues with SoftIrqs delaying your RT tasks execution
+> > time?
+> 
+> I don't *think* so, but I'm not 100% sure if they are showing up in
 
+If you ever get a chance to run a high network throughput test, it might help
+to see if softirqs are affecting you. I know Android has issues with this under
+some circumstances.
+
+> traces.  So far it seems like SF stomping on commit_work.  (There is
+> the added complication that there are some chrome gpu-process tasks in
+> between SF and the display, including CrGpuMain (which really doesn't
+> want to be SCHED_FIFO when executing gl commands on behalf of
+> something unrelated to the compositor.. the deadline approach, IIUC,
+> might be the better option eventually for this?)
+
+If you meant sched_deadline + token approach, then yeah I think it'd be better.
+But as you said, we can't do this yet :/
+
+But as Peter pointed out, this doesn't mean you can't use SCHED_DEADLINE at all
+if it does make sense.
+
+Thanks
+
+--
+Qais Yousef
