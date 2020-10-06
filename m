@@ -2,192 +2,156 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id CFDE7284F6E
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Oct 2020 18:05:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 44EB9285024
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Oct 2020 18:47:04 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726164AbgJFQFb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 6 Oct 2020 12:05:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50426 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726131AbgJFQFa (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 6 Oct 2020 12:05:30 -0400
-Received: from mail-lj1-x244.google.com (mail-lj1-x244.google.com [IPv6:2a00:1450:4864:20::244])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2884CC0613D1
-        for <linux-arm-msm@vger.kernel.org>; Tue,  6 Oct 2020 09:05:30 -0700 (PDT)
-Received: by mail-lj1-x244.google.com with SMTP id i2so383718ljg.4
-        for <linux-arm-msm@vger.kernel.org>; Tue, 06 Oct 2020 09:05:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=OwoCSmfxLGjvt1o0N+0EiCnK4lbyycGM//QYdUZDGlU=;
-        b=oTF8UsYmfg+TFpK0V8akH8qv2XJgpNyqWeUQHdVUXkNtf132IjWE4EF5DiVDrzjuKC
-         ha5LTVMufN2CjeKbR816/JtDpe6AQ6z66HjBxvLrQxYONwiJypn2wlIG6dTxI50APNk5
-         0rqmDQEcmwTWZyYDrJRFNKSFX9dZHt5xXxwNEN+QmJH7GgdzGStfeGMIpEuanZNwINGb
-         e+3GMnQoyLbFn70Wg3zpnIOVPbrcxJr1NjzjqJVFakMNwRJGRhTruq6R/VSqg+FAViJ1
-         opKd4lFS63d6n5FrmRvd9a6GDlwAeyvdxbXZb/8QrHLa/4nqRBVnNL7urnUg0h/Gc0DD
-         nLCQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=OwoCSmfxLGjvt1o0N+0EiCnK4lbyycGM//QYdUZDGlU=;
-        b=GQC5EJxa7F/BivTC3gcBUaGOG9k0hi92WCAii/dxembcfJZOm63ugHk2gGBul/6jFS
-         3X91nXP5jkGLR72hazlREjxtsoTcXZHzG96fe2LdpXG2f4sLKBWZ8DMYdnH4DA0isP+9
-         +PZS1hi3uPwbvEIWQO9NL6XCD8BG4TxSQ4UENq9pteGFsLZC90drsaglR4VUFaB85q4N
-         DSC9rSNbpUO9v4or9Gp7TqeAnOlb7s53rp4nM+CJhfMJ6umLXelYdLPd7Kjjlkjj/7TM
-         ftWi5422Idq+y3L7LGAWPjPNEtv9VP71ENlN4KvG675hrQZ6JRDSgE580G2/XhDJO+Pd
-         G3WA==
-X-Gm-Message-State: AOAM533JwJ6dG86OX3NHNAS5yyv/ZGK21r3x53PbAw9vUj/ql2v80VFp
-        38ppbi/pGDKl+6rroiJwNna89zKuhNp9Uad4
-X-Google-Smtp-Source: ABdhPJyK6GFnxxaPzlRZzyqp1dUcsyX1BZVo9YC5jkTtBCuubAbjnNvASa8/UOvQO+5ydWM8eAcE4A==
-X-Received: by 2002:a05:651c:10cc:: with SMTP id l12mr1934994ljn.351.1602000328219;
-        Tue, 06 Oct 2020 09:05:28 -0700 (PDT)
-Received: from localhost.localdomain (h-98-128-180-91.NA.cust.bahnhof.se. [98.128.180.91])
-        by smtp.gmail.com with ESMTPSA id c16sm640925lfc.304.2020.10.06.09.05.26
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 06 Oct 2020 09:05:27 -0700 (PDT)
-From:   Ulf Hansson <ulf.hansson@linaro.org>
-To:     "Rafael J . Wysocki" <rjw@rjwysocki.net>,
-        Nishanth Menon <nm@ti.com>, linux-pm@vger.kernel.org
-Cc:     Aaro Koskinen <aaro.koskinen@iki.fi>,
-        Tony Lindgren <tony@atomide.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Niklas Cassel <nks@flawful.org>,
-        Heiko Stuebner <heiko@sntech.de>,
-        Ulf Hansson <ulf.hansson@linaro.org>,
-        Kevin Hilman <khilman@kernel.org>,
-        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org
-Subject: [PATCH 1/4] power: avs: qcom-cpr: Move the driver to the qcom specific drivers
-Date:   Tue,  6 Oct 2020 18:05:13 +0200
-Message-Id: <20201006160516.319830-2-ulf.hansson@linaro.org>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20201006160516.319830-1-ulf.hansson@linaro.org>
-References: <20201006160516.319830-1-ulf.hansson@linaro.org>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+        id S1725970AbgJFQrD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 6 Oct 2020 12:47:03 -0400
+Received: from z5.mailgun.us ([104.130.96.5]:37708 "EHLO z5.mailgun.us"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725769AbgJFQrD (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 6 Oct 2020 12:47:03 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1602002822; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=s4iKWaLpOC+X+JKNpHvDXG7sSzTkTqzFgDACDzo1ImM=; b=UFaNs37iiOyuhwRCOJawruF1uAOCGMN5May0c8TUdJEUMTHhGKDDED3bTCvZNtxejkjYnK7V
+ 1g51VoCkF5GRgetRtUWIRrP/xc/JKFskUGaFYaZ324IzoW/zvQuGELzS5Xv0tLWT+eHvRJET
+ J8DfYYbHxAuSznxpJY4N2+Yhd9o=
+X-Mailgun-Sending-Ip: 104.130.96.5
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n03.prod.us-east-1.postgun.com with SMTP id
+ 5f7c9f863711fec7b160d96b (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 06 Oct 2020 16:47:02
+ GMT
+Sender: srivasam=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id BD8BCC433F1; Tue,  6 Oct 2020 16:47:01 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
+        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+Received: from hyd-lnxbld210.qualcomm.com (unknown [202.46.22.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: srivasam)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id BCE8AC433CA;
+        Tue,  6 Oct 2020 16:46:57 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org BCE8AC433CA
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=srivasam@codeaurora.org
+From:   Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
+To:     agross@kernel.org, bjorn.andersson@linaro.org, robh+dt@kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, rohitkr@codeaurora.org,
+        srinivas.kandagatla@linaro.org
+Cc:     Ajit Pandey <ajitp@codeaurora.org>,
+        V Sujith Kumar Reddy <vsujithk@codeaurora.org>,
+        Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
+Subject: [PATCH v2] arm64: dts: qcom: sc7180-trogdor: Add lpass dai link for I2S driver
+Date:   Tue,  6 Oct 2020 22:16:43 +0530
+Message-Id: <1602002803-29971-1-git-send-email-srivasam@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The avs drivers are all SoC specific drivers that doesn't share any code.
-Instead they are located in a directory, mostly to keep similar
-functionality together. From a maintenance point of view, it makes better
-sense to collect SoC specific drivers like these, into the SoC specific
-directories.
+From: Ajit Pandey <ajitp@codeaurora.org>
 
-Therefore, let's move the qcom-cpr driver to the qcom directory.
+Add dai link for supporting lpass I2S driver, which is used
+for audio capture and playback.
+Add lpass-cpu node with  pin controls and i2s primary
+and secondary dai-links
 
-Cc: Niklas Cassel <nks@flawful.org>
-Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc: Andy Gross <agross@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Signed-off-by: Ajit Pandey <ajitp@codeaurora.org>
+Signed-off-by: V Sujith Kumar Reddy <vsujithk@codeaurora.org>
+Signed-off-by: Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
 ---
- MAINTAINERS                                      |  2 +-
- drivers/power/avs/Kconfig                        | 16 ----------------
- drivers/power/avs/Makefile                       |  1 -
- drivers/soc/qcom/Kconfig                         | 16 ++++++++++++++++
- drivers/soc/qcom/Makefile                        |  1 +
- drivers/{power/avs/qcom-cpr.c => soc/qcom/cpr.c} |  0
- 6 files changed, 18 insertions(+), 18 deletions(-)
- rename drivers/{power/avs/qcom-cpr.c => soc/qcom/cpr.c} (100%)
+Changes since v1:
+   -- Alias name added for sound dai link node
+   
+ arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi | 59 ++++++++++++++++++++++++++++
+ 1 file changed, 59 insertions(+)
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 4f1a56f6efaa..f51dd1944fe6 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -14337,7 +14337,7 @@ L:	linux-pm@vger.kernel.org
- L:	linux-arm-msm@vger.kernel.org
- S:	Maintained
- F:	Documentation/devicetree/bindings/power/avs/qcom,cpr.txt
--F:	drivers/power/avs/qcom-cpr.c
-+F:	drivers/soc/qcom/cpr.c
- 
- QUALCOMM CPUFREQ DRIVER MSM8996/APQ8096
- M:	Ilia Lin <ilia.lin@kernel.org>
-diff --git a/drivers/power/avs/Kconfig b/drivers/power/avs/Kconfig
-index cdb4237bfd02..089b6244b716 100644
---- a/drivers/power/avs/Kconfig
-+++ b/drivers/power/avs/Kconfig
-@@ -12,22 +12,6 @@ menuconfig POWER_AVS
- 
- 	  Say Y here to enable Adaptive Voltage Scaling class support.
- 
--config QCOM_CPR
--	tristate "QCOM Core Power Reduction (CPR) support"
--	depends on POWER_AVS && HAS_IOMEM
--	select PM_OPP
--	select REGMAP
--	help
--	  Say Y here to enable support for the CPR hardware found on Qualcomm
--	  SoCs like QCS404.
--
--	  This driver populates CPU OPPs tables and makes adjustments to the
--	  tables based on feedback from the CPR hardware. If you want to do
--	  CPUfrequency scaling say Y here.
--
--	  To compile this driver as a module, choose M here: the module will
--	  be called qcom-cpr
--
- config ROCKCHIP_IODOMAIN
- 	tristate "Rockchip IO domain support"
- 	depends on POWER_AVS && ARCH_ROCKCHIP && OF
-diff --git a/drivers/power/avs/Makefile b/drivers/power/avs/Makefile
-index 9007d05853e2..a1b8cd453f19 100644
---- a/drivers/power/avs/Makefile
-+++ b/drivers/power/avs/Makefile
-@@ -1,4 +1,3 @@
- # SPDX-License-Identifier: GPL-2.0-only
- obj-$(CONFIG_POWER_AVS_OMAP)		+= smartreflex.o
--obj-$(CONFIG_QCOM_CPR)			+= qcom-cpr.o
- obj-$(CONFIG_ROCKCHIP_IODOMAIN)		+= rockchip-io-domain.o
-diff --git a/drivers/soc/qcom/Kconfig b/drivers/soc/qcom/Kconfig
-index 3dc3e3d61ea3..6a3b69b43ad5 100644
---- a/drivers/soc/qcom/Kconfig
-+++ b/drivers/soc/qcom/Kconfig
-@@ -26,6 +26,22 @@ config QCOM_COMMAND_DB
- 	  resource on a RPM-hardened platform must use this database to get
- 	  SoC specific identifier and information for the shared resources.
- 
-+config QCOM_CPR
-+	tristate "QCOM Core Power Reduction (CPR) support"
-+	depends on ARCH_QCOM && HAS_IOMEM
-+	select PM_OPP
-+	select REGMAP
-+	help
-+	  Say Y here to enable support for the CPR hardware found on Qualcomm
-+	  SoCs like QCS404.
+diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
+index bf87558..e5863ad 100644
+--- a/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
+@@ -220,6 +220,44 @@
+ 			max-brightness = <1023>;
+ 		};
+ 	};
 +
-+	  This driver populates CPU OPPs tables and makes adjustments to the
-+	  tables based on feedback from the CPR hardware. If you want to do
-+	  CPUfrequency scaling say Y here.
++	sound: sound {
++		compatible = "qcom,sc7180-sndcard";
++		model = "sc7180-snd-card";
 +
-+	  To compile this driver as a module, choose M here: the module will
-+	  be called qcom-cpr
++		audio-routing =
++			"Headphone Jack", "HPOL",
++			"Headphone Jack", "HPOR";
 +
- config QCOM_GENI_SE
- 	tristate "QCOM GENI Serial Engine Driver"
- 	depends on ARCH_QCOM || COMPILE_TEST
-diff --git a/drivers/soc/qcom/Makefile b/drivers/soc/qcom/Makefile
-index 93392d9dc7f7..ad675a6593d0 100644
---- a/drivers/soc/qcom/Makefile
-+++ b/drivers/soc/qcom/Makefile
-@@ -3,6 +3,7 @@ CFLAGS_rpmh-rsc.o := -I$(src)
- obj-$(CONFIG_QCOM_AOSS_QMP) +=	qcom_aoss.o
- obj-$(CONFIG_QCOM_GENI_SE) +=	qcom-geni-se.o
- obj-$(CONFIG_QCOM_COMMAND_DB) += cmd-db.o
-+obj-$(CONFIG_QCOM_CPR)		+= cpr.o
- obj-$(CONFIG_QCOM_GSBI)	+=	qcom_gsbi.o
- obj-$(CONFIG_QCOM_MDT_LOADER)	+= mdt_loader.o
- obj-$(CONFIG_QCOM_OCMEM)	+= ocmem.o
-diff --git a/drivers/power/avs/qcom-cpr.c b/drivers/soc/qcom/cpr.c
-similarity index 100%
-rename from drivers/power/avs/qcom-cpr.c
-rename to drivers/soc/qcom/cpr.c
++		audio-jack = <&alc5682>;
++
++		#address-cells = <1>;
++		#size-cells = <0>;
++
++		dai-link@0 {
++			link-name = "MultiMedia0";
++			reg = <0>;
++			cpu {
++				sound-dai = <&lpass_cpu 0>;
++			};
++
++			codec {
++				sound-dai = <&alc5682 0>;
++			};
++		};
++
++		dai-link@1 {
++			link-name = "MultiMedia1";
++			reg = <1>;
++			cpu {
++				sound-dai = <&lpass_cpu 1>;
++			};
++
++			codec {
++				sound-dai = <&max98357a>;
++			};
++		};
++	};
+ };
+ 
+ &qfprom {
+@@ -725,6 +763,27 @@ hp_i2c: &i2c9 {
+ 	modem-init;
+ };
+ 
++&lpass_cpu {
++	status = "okay";
++
++	pinctrl-names = "default";
++	pinctrl-0 = <&sec_mi2s_active &pri_mi2s_active &pri_mi2s_mclk_active>;
++
++	#address-cells = <1>;
++	#size-cells = <0>;
++
++	mi2s-primary@0 {
++		reg = <MI2S_PRIMARY>;
++		qcom,playback-sd-lines = <1>;
++		qcom,capture-sd-lines = <0>;
++	};
++
++	mi2s-secondary@1 {
++		reg = <MI2S_SECONDARY>;
++		qcom,playback-sd-lines = <0>;
++	};
++};
++
+ &mdp {
+ 	status = "okay";
+ };
 -- 
-2.25.1
+Qualcomm India Private Limited, on behalf of Qualcomm Innovation Center, Inc.,
+is a member of Code Aurora Forum, a Linux Foundation Collaborative Project.
 
