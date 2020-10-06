@@ -2,224 +2,911 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 9A4672852DD
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Oct 2020 22:04:55 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B83B4285320
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Oct 2020 22:30:26 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726073AbgJFUEy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 6 Oct 2020 16:04:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59138 "EHLO
+        id S1727271AbgJFUaZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 6 Oct 2020 16:30:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34802 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725962AbgJFUEy (ORCPT
+        with ESMTP id S1727270AbgJFUaW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 6 Oct 2020 16:04:54 -0400
+        Tue, 6 Oct 2020 16:30:22 -0400
 Received: from mail-wr1-x442.google.com (mail-wr1-x442.google.com [IPv6:2a00:1450:4864:20::442])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0EF2DC061755;
-        Tue,  6 Oct 2020 13:04:54 -0700 (PDT)
-Received: by mail-wr1-x442.google.com with SMTP id g12so9414983wrp.10;
-        Tue, 06 Oct 2020 13:04:53 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C6CCFC0613D2
+        for <linux-arm-msm@vger.kernel.org>; Tue,  6 Oct 2020 13:30:19 -0700 (PDT)
+Received: by mail-wr1-x442.google.com with SMTP id w5so14914667wrp.8
+        for <linux-arm-msm@vger.kernel.org>; Tue, 06 Oct 2020 13:30:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=tRQODXhkyMhqAiuDJZNlm3kG1yqPZ4LhCnBerXa8fy0=;
-        b=td8u0u1o74xCYga/sRU1+8vHTRNjSWwKN2PLZ90aKdgGqbCJ1hrq6btcIWp7yow+Xc
-         CeIAgoVj0nFYVeb1EXO9pHuZQuJhr1uf2+DkNODPw3btErnMMOkJNGPoq38y1Fcvdfli
-         JHzAP33DLHlyGK65pmfkbgXg8o+USgzJShbel+je1NsEcmgGGm6yA41xq1d1jeB1X5E/
-         Jq0kurRhzNpBdRmly3pB1AqsvukzGZgaXU+Ql8w7B19vNmHGNHBdSSng6V/ukARoGoBP
-         TsKiK9nRKjh8NYd1RIfhgyzieuo6uVwrVNnBUlNNGnQvLhyL15WYeUCHpKf2JjGh7f5s
-         1ZUA==
+        d=linaro.org; s=google;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=sYJaEd40Z1wEnm9ypyhfHmoWEtZh4r95yN2b7V9pI6I=;
+        b=SfJmQJyFn4jpJz/b812o7/JGLpuWVPoHpZkxd+zey8n3hWZQemgWtVD38mIZ0xvtA1
+         u5jQcToWrflNkEebuMZhu8THFMtBd12/kbhbCVg9o7GEeoUgsdt2d9jbQTG8W74ycTal
+         sdYP2bjoMqeVsgfyObiMWxjMOjJZqZ/8QWSf5UDf8Dx3FvD1HtR/niOopCZlNBBvhlJ1
+         ABatLP6DoIX0wIsT9Ya02xfrwj0MlxMdN+WoSSUThbN5vf0x8u408LQodR2srMlHiy49
+         n1DOeYgk8W7dFOchGcDBcejLZRC3kX3vwJpGBvr7YxJnMBwNXyuNdDtejtvAf1768NZa
+         l7NQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=tRQODXhkyMhqAiuDJZNlm3kG1yqPZ4LhCnBerXa8fy0=;
-        b=RRng9c7fJrPjLLCbs+WSh9wQjBWmXNFC+hdxpy1WZ8ucD27gZxvT91m3Vf/a13tVdH
-         ONW32Tcb9jFPhoqSNOF5K03brrSC6srY9xXe3KEgSeCwqBGf3gOi0NlAZRV9WbyS83Bg
-         f71lOZIydSIAbIhikQmAImu1RCzjuNZ+JaF9PqQyTt9Un0iAGH4zENzcu2HZB+bKwWhw
-         49wGCA04XV2K9bjWqFAA8vaz8T48N/F3thznivq7b6RiRIMFmDTONjeSo26MioRu2y0q
-         c8aO5vvtV7Rs6XJOsDbGS8ytQCURCyncgqzvLjXz4o8LrA0acPKOekAbHGZnesvdG4Ci
-         O7cQ==
-X-Gm-Message-State: AOAM533y7Oun6iFiRMyfIOhAhlDbDS9BNqTTHcIsNsXEpNZ5O/GnLMV2
-        JD7gJ/9W/4kO1vAqeUskGQ+5N4eWqs8l7FcCP7k=
-X-Google-Smtp-Source: ABdhPJz6PyYjI7Gkv9sBVYYCB7DNANoIBBXN/TCg8JGdbEBBV9HtFkEtzpKF789VkS2hz0b5+WA85x+C1C1okZzorps=
-X-Received: by 2002:a5d:4987:: with SMTP id r7mr6412093wrq.327.1602014692564;
- Tue, 06 Oct 2020 13:04:52 -0700 (PDT)
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=sYJaEd40Z1wEnm9ypyhfHmoWEtZh4r95yN2b7V9pI6I=;
+        b=ffqpgu2VBCbjTNQsp+PxjtpHmAbnKrYWZ33P6cblvsB8oKWK2h3iBrkAd5kPB/CCrX
+         8Ycx/TVTXde6N1JrE9LrzzX+BjFYQDzoLjHkpm/LY8hagyBx/z3pBFUXGevD2o6YNDWW
+         lpdQlLDZvE5odMiq8nqKgbxyTULsqC4+iELUhhpypcH8b/NwJKfjwspyBCRylFsEYx4Y
+         OqW3zG1IqqdXYdFzFUC1pIAILkQYczmHKYZaL7l19IflfYS2FkKkZnFGxAhFLLh0ifRG
+         umTybKlCYcSPKTuCr1QmLowu6MKKzDsb9L5BriYj4Gu423AfETAtajepxpHWYyWsjuAf
+         IH3g==
+X-Gm-Message-State: AOAM531TJ3wnkFcPRWMskc5tuzcpE3CA4jNS1+GdEKp3JaX3sHNarIUk
+        hdmLi4KV58oBR3YEh87qInJLjw==
+X-Google-Smtp-Source: ABdhPJxIAOxyG4GoVypYcjQ13O+IrEXhzOJ64Zjx264zr4NHaStRVToXtPxuqLftO+pXT1yivgtKIA==
+X-Received: by 2002:adf:ec06:: with SMTP id x6mr6764614wrn.404.1602016218265;
+        Tue, 06 Oct 2020 13:30:18 -0700 (PDT)
+Received: from [192.168.86.34] (cpc86377-aztw32-2-0-cust226.18-1.cable.virginm.net. [92.233.226.227])
+        by smtp.googlemail.com with ESMTPSA id x64sm5616292wmg.33.2020.10.06.13.30.16
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 06 Oct 2020 13:30:17 -0700 (PDT)
+Subject: Re: [PATCH v10 5/7] ASoC: qcom: Add support for lpass hdmi driver
+To:     Srinivasa Rao Mandadapu <srivasam@codeaurora.org>,
+        agross@kernel.org, bjorn.andersson@linaro.org, lgirdwood@gmail.com,
+        broonie@kernel.org, robh+dt@kernel.org, plai@codeaurora.org,
+        bgoswami@codeaurora.org, perex@perex.cz, tiwai@suse.com,
+        rohitkr@codeaurora.org, linux-arm-msm@vger.kernel.org,
+        alsa-devel@alsa-project.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Cc:     V Sujith Kumar Reddy <vsujithk@codeaurora.org>
+References: <1601873310-1894-1-git-send-email-srivasam@codeaurora.org>
+ <1601873310-1894-6-git-send-email-srivasam@codeaurora.org>
+From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Message-ID: <5a6a282b-91e7-7bba-c86b-ec0ca54e3b4b@linaro.org>
+Date:   Tue, 6 Oct 2020 21:30:16 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.8.0
 MIME-Version: 1.0
-References: <20200930211723.3028059-1-robdclark@gmail.com> <20201002110105.e56qrvzoqfioi4hs@e107158-lin.cambridge.arm.com>
- <CAF6AEGvWMvZuy7CcGhzUSbwGtEkrNkzWHu_BN1cbdBJdZtvevA@mail.gmail.com>
- <20201005150024.mchfdtd62rlkuh4s@e107158-lin.cambridge.arm.com>
- <CAF6AEGs7NmCPyLdg+gg5jTTe-wgi2myRQ80tum6odv6tLLQ0DQ@mail.gmail.com> <20201006105918.v3xspb6xasjyy5ky@e107158-lin.cambridge.arm.com>
-In-Reply-To: <20201006105918.v3xspb6xasjyy5ky@e107158-lin.cambridge.arm.com>
-From:   Rob Clark <robdclark@gmail.com>
-Date:   Tue, 6 Oct 2020 13:04:40 -0700
-Message-ID: <CAF6AEGu_V_EGcPQ+F_Z73cMCAcFPoM-GuiGWUPr+=6GD4Om=zg@mail.gmail.com>
-Subject: Re: [PATCH v2 0/3] drm: commit_work scheduling
-To:     Qais Yousef <qais.yousef@arm.com>
-Cc:     dri-devel <dri-devel@lists.freedesktop.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Tejun Heo <tj@kernel.org>, Tim Murray <timmurray@google.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Rob Clark <robdclark@chromium.org>,
-        open list <linux-kernel@vger.kernel.org>,
-        Steven Rostedt <rostedt@goodmis.org>,
-        "Peter Zijlstra (Intel)" <peterz@infradead.org>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <1601873310-1894-6-git-send-email-srivasam@codeaurora.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Oct 6, 2020 at 3:59 AM Qais Yousef <qais.yousef@arm.com> wrote:
->
-> On 10/05/20 16:24, Rob Clark wrote:
->
-> [...]
->
-> > > RT planning and partitioning is not easy task for sure. You might want to
-> > > consider using affinities too to get stronger guarantees for some tasks and
-> > > prevent cross-talking.
-> >
-> > There is some cgroup stuff that is pinning SF and some other stuff to
-> > the small cores, fwiw.. I think the reasoning is that they shouldn't
-> > be doing anything heavy enough to need the big cores.
->
-> Ah, so you're on big.LITTLE type of system. I have done some work which enables
-> biasing RT tasks towards big cores and control the default boost value if you
-> have util_clamp and schedutil enabled. You can use util_clamp in general to
-> help with DVFS related response time delays.
->
-> I haven't done any work to try our best to pick a small core first but fallback
-> to big if there's no other alternative.
->
-> It'd be interesting to know how often you end up on a big core if you remove
-> the affinity. The RT scheduler picks the first cpu in the lowest priority mask.
-> So it should have this bias towards picking smaller cores first if they're
-> in the lower priority mask (ie: not running higher priority RT tasks).
+On 05/10/2020 05:48, Srinivasa Rao Mandadapu wrote:
+> From: V Sujith Kumar Reddy <vsujithk@codeaurora.org>
+> 
+> Upadate lpass cpu and platform driver to support audio over dp.
+> Also add lpass-hdmi.c and lpass-hdmi.h.
+> 
+> Signed-off-by: V Sujith Kumar Reddy <vsujithk@codeaurora.org>
+> Signed-off-by: Srinivasa Rao <srivasam@codeaurora.org>
+> ---
+>   sound/soc/qcom/Kconfig           |   5 +
+>   sound/soc/qcom/Makefile          |   2 +
+>   sound/soc/qcom/lpass-apq8016.c   |   4 +-
+>   sound/soc/qcom/lpass-cpu.c       |  51 ++++-
+>   sound/soc/qcom/lpass-hdmi.c      | 468 +++++++++++++++++++++++++++++++++++++++
+>   sound/soc/qcom/lpass-hdmi.h      | 106 +++++++++
+>   sound/soc/qcom/lpass-ipq806x.c   |   4 +-
+>   sound/soc/qcom/lpass-lpaif-reg.h |  52 ++++-
+>   sound/soc/qcom/lpass-platform.c  | 391 ++++++++++++++++++++++++++------
+>   sound/soc/qcom/lpass.h           | 113 +++++++++-
+>   10 files changed, 1097 insertions(+), 99 deletions(-)
+>   create mode 100644 sound/soc/qcom/lpass-hdmi.c
+>   create mode 100644 sound/soc/qcom/lpass-hdmi.h
+> 
+...
 
-fwiw, the issue I'm looking at is actually at the opposite end of the
-spectrum, less demanding apps that let cpus throttle down to low
-OPPs.. which stretches out the time taken at each step in the path
-towards screen (which seems to improve the odds that we hit priority
-inversion scenarios with SCHED_FIFO things stomping on important CFS
-things)
+> diff --git a/sound/soc/qcom/lpass-hdmi.c b/sound/soc/qcom/lpass-hdmi.c
+> new file mode 100644
+> index 0000000..ee737f0
+> --- /dev/null
+> +++ b/sound/soc/qcom/lpass-hdmi.c
+> @@ -0,0 +1,468 @@
+> +// SPDX-License-Identifier: GPL-2.0-only
+> +/*
+> + * Copyright (c) 2020 The Linux Foundation. All rights reserved.
+> + *
+> + * lpass-hdmi.c -- ALSA SoC HDMI-CPU DAI driver for QTi LPASS HDMI
+> + */
+> +
+> +
+> +#include <linux/kernel.h>
+> +#include <linux/module.h>
+> +#include <sound/pcm_params.h>
+> +#include <linux/regmap.h>
+> +#include <sound/soc.h>
+> +#include <sound/soc-dai.h>
+> +#include <dt-bindings/sound/sc7180-lpass.h>
+> +#include "lpass-lpaif-reg.h"
+> +#include "lpass.h"
+> +
 
-There is a *big* difference in # of cpu cycles per frame between
-highest and lowest OPP..
+[
+> +#define QCOM_REGMAP_FIELD_ALLOC(d, m, f, mf)    \
+> +	do { \
+> +		mf = devm_regmap_field_alloc(d, m, f);     \
+> +		if (IS_ERR(mf))                \
+> +			return -EINVAL;         \
+> +	} while (0)
+> +
+> +
+]
+should go into lpass.h
 
-BR,
--R
+[
+> +int lpass_hdmi_init_bitfields(struct device *dev, struct regmap *map)
+> +{
+> +	struct lpass_data *drvdata = dev_get_drvdata(dev);
+> +	struct lpass_variant *v = drvdata->variant;
+> +	unsigned int i;
+> +	struct lpass_hdmi_tx_ctl *tx_ctl;
+> +	struct regmap_field *legacy_en;
+> +	struct lpass_vbit_ctrl *vbit_ctl;
+> +	struct regmap_field *tx_parity;
+> +	struct lpass_dp_metadata_ctl *meta_ctl;
+> +	struct lpass_sstream_ctl *sstream_ctl;
+> +	struct regmap_field *ch_msb;
+> +	struct regmap_field *ch_lsb;
+> +	struct lpass_hdmitx_dmactl *tx_dmactl;
+> +	int rval;
+> +
+> +	tx_ctl = devm_kzalloc(dev, sizeof(*tx_ctl), GFP_KERNEL);
+> +	if (!tx_ctl)
+> +		return -ENOMEM;
+> +
+> +	QCOM_REGMAP_FIELD_ALLOC(dev, map, v->soft_reset, tx_ctl->soft_reset);
+> +	QCOM_REGMAP_FIELD_ALLOC(dev, map, v->force_reset, tx_ctl->force_reset);
+> +	drvdata->tx_ctl = tx_ctl;
+> +
+> +	QCOM_REGMAP_FIELD_ALLOC(dev, map, v->legacy_en, legacy_en);
+> +	drvdata->hdmitx_legacy_en = legacy_en;
+> +
+> +	vbit_ctl = devm_kzalloc(dev, sizeof(*vbit_ctl), GFP_KERNEL);
+> +	if (!vbit_ctl)
+> +		return -ENOMEM;
+> +
+> +	QCOM_REGMAP_FIELD_ALLOC(dev, map, v->replace_vbit, vbit_ctl->replace_vbit);
+> +	QCOM_REGMAP_FIELD_ALLOC(dev, map, v->vbit_stream, vbit_ctl->vbit_stream);
+> +	drvdata->vbit_ctl = vbit_ctl;
+> +
+> +
+> +	QCOM_REGMAP_FIELD_ALLOC(dev, map, v->calc_en, tx_parity);
+> +	drvdata->hdmitx_parity_calc_en = tx_parity;
+> +
+> +	meta_ctl = devm_kzalloc(dev, sizeof(*meta_ctl), GFP_KERNEL);
+> +	if (!meta_ctl)
+> +		return -ENOMEM;
+> +
+> +	rval = devm_regmap_field_bulk_alloc(dev, map, &meta_ctl->mute, &v->mute, 7);
+> +	if (rval)
+> +		return rval;
+> +	drvdata->meta_ctl = meta_ctl;
+> +
+> +	sstream_ctl = devm_kzalloc(dev, sizeof(*sstream_ctl), GFP_KERNEL);
+> +	if (!sstream_ctl)
+> +		return -ENOMEM;
+> +
+> +	rval = devm_regmap_field_bulk_alloc(dev, map, &sstream_ctl->sstream_en, &v->sstream_en, 9);
+> +	if (rval)
+> +		return rval;
+> +
+> +	drvdata->sstream_ctl = sstream_ctl;
+> +
+> +	for (i = 0; i < LPASS_MAX_HDMI_DMA_CHANNELS; i++) {
+> +		QCOM_REGMAP_FIELD_ALLOC(dev, map, v->msb_bits, ch_msb);
+> +		drvdata->hdmitx_ch_msb[i] = ch_msb;
+> +
+> +		QCOM_REGMAP_FIELD_ALLOC(dev, map, v->lsb_bits, ch_lsb);
+> +		drvdata->hdmitx_ch_lsb[i] = ch_lsb;
+> +
+> +		tx_dmactl = devm_kzalloc(dev, sizeof(*tx_dmactl), GFP_KERNEL);
+> +		if (!tx_dmactl)
+> +			return -ENOMEM;
+> +
+> +		QCOM_REGMAP_FIELD_ALLOC(dev, map, v->use_hw_chs, tx_dmactl->use_hw_chs);
+> +		QCOM_REGMAP_FIELD_ALLOC(dev, map, v->use_hw_usr, tx_dmactl->use_hw_usr);
+> +		QCOM_REGMAP_FIELD_ALLOC(dev, map, v->hw_chs_sel, tx_dmactl->hw_chs_sel);
+> +		QCOM_REGMAP_FIELD_ALLOC(dev, map, v->hw_usr_sel, tx_dmactl->hw_usr_sel);
+> +		drvdata->hdmi_tx_dmactl[i] = tx_dmactl;
+> +	}
+> +	return 0;
+> +}
 
-> So unless you absolutely don't want any RT tasks on a big cores, it'd be worth
-> removing this affinity and check the percentage of time you spend on little
-> cores. This should help with your worst case scenario as you make more cpus
-> available.
->
-> > > > run ASAP once fences are signalled, and vblank_work to run at a
-> > > > slightly higher priority still.  But the correct choice for priorities
-> > > > here depends on what userspace is using, it all needs to fit together
-> > > > properly.
-> > >
-> > > By userspace here I think you mean none display pipeline related RT tasks that
-> > > you need to coexit with and could still disrupt your pipeline?
-> >
-> > I mean, commit_work should be higher priority than the other (display
-> > related) RT tasks.  But the kernel doesn't know what those priorities
-> > are.
->
-> So if you set commit_work to sched_set_fifo(), it'd be at a reasonably high
-> priority (50) by default. Which means you just need to manage your SF
-> priorities without having to change commit_work priority itself?
->
-> >
-> > > Using RT on Gerneral Purpose System is hard for sure. One of the major
-> > > challenge is that there's no admin that has full view of the system to do
-> > > proper RT planning.
-> > >
-> > > We need proper RT balancer daemon that helps partitioning the system for
-> > > multiple RT apps on these systems..
-> > >
-> > > >
-> > > > >
-> > > > > I do appreciate that maybe some of these tasks have varying requirements during
-> > > > > their life time. e.g: they have RT property during specific critical section
-> > > > > but otherwise are CFS tasks. I think the UI thread in Android behaves like
-> > > > > that.
-> > > > >
-> > > > > It's worth IMO trying that approach I pointed out earlier to see if making RT
-> > > > > try to pick an idle CPU rather than preempt CFS helps. Not sure if it'd be
-> > > > > accepted but IMHO it's a better direction to consider and discuss.
-> > > >
-> > > > The problem I was seeing was actually the opposite..  commit_work
-> > > > becomes runnable (fences signalled) but doesn't get a chance to run
-> > > > because a SCHED_FIFO SF thread is running.  (Maybe I misunderstood and
-> > > > you're approach would help this case too?)
-> > >
-> > > Ah okay. Sorry I got it the wrong way around for some reason. I thought this
-> > > task is preempting other CFS-based pipelined tasks.
-> > >
-> > > So your system seems to be overcomitted. Is SF short for SufraceFlinger? Under
-> > > what scenarios do you have many SurfaceFlinger tasks? On Android I remember
-> > > seeing they have priority of 1 or 2.
-> >
-> > yeah, SF==SurfaceFlinger, and yeah, 1 and 2..
-> >
-> > > sched_set_fifo() will use priority 50. If you set all your pipeline tasks
-> > > to this priority, what happens?
-> >
-> > I think this would work.. drm/msm doesn't use vblank work, so I
-> > wouldn't really have problems with commit_work preempting vblank_work.
-> > But I think the best option (and to handle the case if android changes
-> > the RT priorties around in the future) is to let userspace set the
-> > priorities.
->
-> I don't really mind. But it seems better for me if we know that two kernel
-> threads need to have a specific relative priorities to each others then to
-> handle this in the kernel properly. Userspace will only need then to worry
-> about managing its *own* priorities relative to that.
->
-> Just seen Peter suggesting in another email to use SCHED_DEADLINE for vblank
-> work. Which I think achieves the above if commit_work uses sched_set_fifo().
->
-> >
-> > > >
-> > > > > Or maybe you can wrap userspace pipeline critical section lock such that any
-> > > > > task holding it will automatically be promoted to SCHED_FIFO and then demoted
-> > > > > to CFS once it releases it.
-> > > >
-> > > > The SCHED_DEADLINE + token passing approach that the lwn article
-> > > > mentioned sounds interesting, if that eventually becomes possible.
-> > > > But doesn't really help today..
-> > >
-> > > We were present in the room with Alessio when he gave that talk :-)
-> > >
-> > > You might have seen Valentin's talk in LPC where he's trying to get
-> > > proxy-execution into shape. Which is a pre-requisite to enable using of
-> > > SCHED_DEADLINE for these scenarios. IIRC it should allow all dependent tasks to
-> > > run from the context of the deadline task during the display pipeline critical
-> > > section.
-> > >
-> > > By the way, do you have issues with SoftIrqs delaying your RT tasks execution
-> > > time?
-> >
-> > I don't *think* so, but I'm not 100% sure if they are showing up in
->
-> If you ever get a chance to run a high network throughput test, it might help
-> to see if softirqs are affecting you. I know Android has issues with this under
-> some circumstances.
->
-> > traces.  So far it seems like SF stomping on commit_work.  (There is
-> > the added complication that there are some chrome gpu-process tasks in
-> > between SF and the display, including CrGpuMain (which really doesn't
-> > want to be SCHED_FIFO when executing gl commands on behalf of
-> > something unrelated to the compositor.. the deadline approach, IIUC,
-> > might be the better option eventually for this?)
->
-> If you meant sched_deadline + token approach, then yeah I think it'd be better.
-> But as you said, we can't do this yet :/
->
-> But as Peter pointed out, this doesn't mean you can't use SCHED_DEADLINE at all
-> if it does make sense.
->
-> Thanks
->
-> --
-> Qais Yousef
+]
+This should go into lpass-cpu.c
+
+
+> +EXPORT_SYMBOL(lpass_hdmi_init_bitfields);
+
+> +
+> +static int lpass_hdmi_daiops_hw_params(struct snd_pcm_substream *substream,
+> +		struct snd_pcm_hw_params *params, struct snd_soc_dai *dai)
+> +{
+> +	struct lpass_data *drvdata = snd_soc_dai_get_drvdata(dai);
+> +	snd_pcm_format_t format = params_format(params);
+> +	unsigned int rate = params_rate(params);
+> +	unsigned int channels = params_channels(params);
+> +	unsigned int ret;
+> +	unsigned int bitwidth;
+> +	unsigned int word_length;
+> +	unsigned int ch_sts_buf0;
+> +	unsigned int ch_sts_buf1;
+> +	unsigned int data_format;
+> +	unsigned int sampling_freq;
+> +	unsigned int ch = 0;
+> +	struct lpass_dp_metadata_ctl *meta_ctl = drvdata->meta_ctl;
+> +	struct lpass_sstream_ctl *sstream_ctl = drvdata->sstream_ctl;
+> +
+> +	bitwidth = snd_pcm_format_width(format);
+> +	if (bitwidth < 0) {
+> +		dev_err(dai->dev, "%s invalid bit width given : %d\n",
+> +					__func__, bitwidth);
+> +		return bitwidth;
+> +	}
+> +
+> +	switch (bitwidth) {
+> +	case 16:
+> +		word_length = LPASS_DP_AUDIO_BITWIDTH16;
+> +		break;
+> +	case 24:
+> +		word_length = LPASS_DP_AUDIO_BITWIDTH24;
+> +		break;
+> +	default:
+> +		dev_err(dai->dev, "%s invalid bit width given : %d\n",
+> +					__func__, bitwidth);
+> +		return -EINVAL;
+> +	}
+> +
+> +	switch (rate) {
+> +	case 32000:
+> +		sampling_freq = LPASS_SAMPLING_FREQ32;
+> +		break;
+> +	case 44100:
+> +		sampling_freq = LPASS_SAMPLING_FREQ44;
+> +		break;
+> +	case 48000:
+> +		sampling_freq = LPASS_SAMPLING_FREQ48;
+> +		break;
+> +	default:
+> +		dev_err(dai->dev, "%s invalid bit width given : %d\n",
+> +					__func__, bitwidth);
+> +		return -EINVAL;
+> +	}
+> +	data_format = LPASS_DATA_FORMAT_LINEAR;
+> +	ch_sts_buf0 = (((data_format << LPASS_DATA_FORMAT_SHIFT) & LPASS_DATA_FORMAT_MASK)
+> +				| ((sampling_freq << LPASS_FREQ_BIT_SHIFT) & LPASS_FREQ_BIT_MASK));
+> +	ch_sts_buf1 = (word_length) & LPASS_WORDLENGTH_MASK;
+> +
+> +	ret = regmap_field_write(drvdata->tx_ctl->soft_reset, LPASS_TX_CTL_RESET);
+> +	if (ret)
+> +		return ret;
+> +
+> +	ret = regmap_field_write(drvdata->tx_ctl->soft_reset, LPASS_TX_CTL_CLEAR);
+> +	if (ret)
+> +		return ret;
+> +
+> +	ret = regmap_field_write(drvdata->hdmitx_legacy_en, LPASS_HDMITX_LEGACY_DISABLE);
+> +	if (ret)
+> +		return ret;
+> +
+> +	ret = regmap_field_write(drvdata->hdmitx_parity_calc_en, HDMITX_PARITY_CALC_EN);
+> +	if (ret)
+> +		return ret;
+> +
+> +	ret = regmap_field_write(drvdata->vbit_ctl->replace_vbit, REPLACE_VBIT);
+> +	if (ret)
+> +		return ret;
+> +
+> +	ret = regmap_field_write(drvdata->vbit_ctl->vbit_stream, LINEAR_PCM_DATA);
+> +	if (ret)
+> +		return ret;
+> +
+> +	ret = regmap_field_write(drvdata->hdmitx_ch_msb[0], ch_sts_buf1);
+> +	if (ret)
+> +		return ret;
+> +
+> +	ret = regmap_field_write(drvdata->hdmitx_ch_lsb[0], ch_sts_buf0);
+> +	if (ret)
+> +		return ret;
+> +
+> +	ret = regmap_field_write(drvdata->hdmi_tx_dmactl[0]->use_hw_chs, HW_MODE);
+> +	if (ret)
+> +		return ret;
+> +
+> +	ret = regmap_field_write(drvdata->hdmi_tx_dmactl[0]->hw_chs_sel, SW_MODE);
+> +	if (ret)
+> +		return ret;
+> +
+> +	ret = regmap_field_write(drvdata->hdmi_tx_dmactl[0]->use_hw_usr, HW_MODE);
+> +	if (ret)
+> +		return ret;
+> +
+> +	ret = regmap_field_write(drvdata->hdmi_tx_dmactl[0]->hw_usr_sel, SW_MODE);
+> +	if (ret)
+> +		return ret;
+> +
+> +	ret = regmap_field_write(meta_ctl->mute, LPASS_MUTE_ENABLE);
+> +	if (ret)
+> +		return ret;
+> +
+> +	ret = regmap_field_write(meta_ctl->as_sdp_cc, channels - 1);
+> +	if (ret)
+> +		return ret;
+> +
+> +	ret = regmap_field_write(meta_ctl->as_sdp_ct, LPASS_META_DEFAULT_VAL);
+> +	if (ret)
+> +		return ret;
+> +
+> +	ret = regmap_field_write(meta_ctl->aif_db4, LPASS_META_DEFAULT_VAL);
+> +	if (ret)
+> +		return ret;
+> +
+> +	ret = regmap_field_write(meta_ctl->frequency, sampling_freq);
+> +	if (ret)
+> +		return ret;
+> +
+> +	ret = regmap_field_write(meta_ctl->mst_index, LPASS_META_DEFAULT_VAL);
+> +	if (ret)
+> +		return ret;
+> +
+> +	ret = regmap_field_write(meta_ctl->dptx_index, LPASS_META_DEFAULT_VAL);
+> +	if (ret)
+> +		return ret;
+> +
+> +	ret = regmap_field_write(sstream_ctl->sstream_en, LPASS_SSTREAM_DISABLE);
+> +	if (ret)
+> +		return ret;
+> +
+> +	ret = regmap_field_write(sstream_ctl->dma_sel, ch);
+> +	if (ret)
+> +		return ret;
+> +
+> +	ret = regmap_field_write(sstream_ctl->auto_bbit_en, LPASS_SSTREAM_DEFAULT_ENABLE);
+> +	if (ret)
+> +		return ret;
+> +
+> +	ret = regmap_field_write(sstream_ctl->layout, LPASS_SSTREAM_DEFAULT_DISABLE);
+> +	if (ret)
+> +		return ret;
+> +
+> +	ret = regmap_field_write(sstream_ctl->layout_sp, LPASS_LAYOUT_SP_DEFAULT);
+> +	if (ret)
+> +		return ret;
+> +
+> +	ret = regmap_field_write(sstream_ctl->dp_audio, LPASS_SSTREAM_DEFAULT_ENABLE);
+> +	if (ret)
+> +		return ret;
+> +
+> +	ret = regmap_field_write(sstream_ctl->set_sp_on_en, LPASS_SSTREAM_DEFAULT_ENABLE);
+> +	if (ret)
+> +		return ret;
+> +
+> +	ret = regmap_field_write(sstream_ctl->dp_sp_b_hw_en, LPASS_SSTREAM_DEFAULT_ENABLE);
+> +	if (ret)
+> +		return ret;
+> +
+> +	ret = regmap_field_write(sstream_ctl->dp_staffing_en, LPASS_SSTREAM_DEFAULT_ENABLE);
+> +	if (ret)
+> +		return ret;
+> +
+> +	return ret;
+> +}
+> +
+> +static int lpass_hdmi_daiops_prepare(struct snd_pcm_substream *substream,
+> +		struct snd_soc_dai *dai)
+> +{
+> +	int ret;
+> +	struct lpass_data *drvdata = snd_soc_dai_get_drvdata(dai);
+> +
+> +	ret = regmap_field_write(drvdata->sstream_ctl->sstream_en, LPASS_SSTREAM_ENABLE);
+> +	if (ret)
+> +		return ret;
+> +
+> +	ret = regmap_field_write(drvdata->meta_ctl->mute, LPASS_MUTE_DISABLE);
+> +	if (ret)
+> +		return ret;
+> +
+> +	return ret;
+> +}
+> +
+> +static int lpass_hdmi_daiops_trigger(struct snd_pcm_substream *substream,
+> +		int cmd, struct snd_soc_dai *dai)
+> +{
+> +	struct lpass_data *drvdata = snd_soc_dai_get_drvdata(dai);
+> +	struct lpass_dp_metadata_ctl *meta_ctl = drvdata->meta_ctl;
+> +	struct lpass_sstream_ctl *sstream_ctl = drvdata->sstream_ctl;
+> +	int ret = -EINVAL;
+> +
+> +	switch (cmd) {
+> +	case SNDRV_PCM_TRIGGER_START:
+> +	case SNDRV_PCM_TRIGGER_RESUME:
+> +	case SNDRV_PCM_TRIGGER_PAUSE_RELEASE:
+> +		ret = regmap_field_write(sstream_ctl->sstream_en, LPASS_SSTREAM_ENABLE);
+> +		if (ret)
+> +			return ret;
+> +
+> +		ret = regmap_field_write(meta_ctl->mute, LPASS_MUTE_DISABLE);
+> +		if (ret)
+> +			return ret;
+> +
+> +		break;
+> +	case SNDRV_PCM_TRIGGER_STOP:
+> +	case SNDRV_PCM_TRIGGER_SUSPEND:
+> +	case SNDRV_PCM_TRIGGER_PAUSE_PUSH:
+> +		ret = regmap_field_write(sstream_ctl->sstream_en, LPASS_SSTREAM_DISABLE);
+> +		if (ret)
+> +			return ret;
+> +
+> +		ret = regmap_field_write(meta_ctl->mute, LPASS_MUTE_ENABLE);
+> +		if (ret)
+> +			return ret;
+> +
+> +		ret = regmap_field_write(sstream_ctl->dp_audio, 0);
+> +		if (ret)
+> +			return ret;
+> +
+> +		break;
+> +	}
+> +	return ret;
+> +}
+> +
+> +const struct snd_soc_dai_ops asoc_qcom_lpass_hdmi_dai_ops = {
+> +	.hw_params	= lpass_hdmi_daiops_hw_params,
+> +	.prepare	= lpass_hdmi_daiops_prepare,
+> +	.trigger	= lpass_hdmi_daiops_trigger,
+> +};
+> +EXPORT_SYMBOL_GPL(asoc_qcom_lpass_hdmi_dai_ops);
+> +
+
+[
+
+> +static bool lpass_hdmi_regmap_writeable(struct device *dev, unsigned int reg)
+> +{
+> +	struct lpass_data *drvdata = dev_get_drvdata(dev);
+> +	struct lpass_variant *v = drvdata->variant;
+> +	int i;
+> +
+> +	if (reg == LPASS_HDMI_TX_CTL_ADDR(v))
+> +		return true;
+> +	if (reg == LPASS_HDMI_TX_LEGACY_ADDR(v))
+> +		return true;
+> +	if (reg == LPASS_HDMI_TX_VBIT_CTL_ADDR(v))
+> +		return true;
+> +	if (reg == LPASS_HDMI_TX_PARITY_ADDR(v))
+> +		return true;
+> +	if (reg == LPASS_HDMI_TX_DP_ADDR(v))
+> +		return true;
+> +	if (reg == LPASS_HDMI_TX_SSTREAM_ADDR(v))
+> +		return true;
+> +	if (reg == LPASS_HDMITX_APP_IRQEN_REG(v))
+> +		return true;
+> +	if (reg == LPASS_HDMITX_APP_IRQCLEAR_REG(v))
+> +		return true;
+> +
+> +	for (i = 0; i < v->hdmi_rdma_channels; i++) {
+> +		if (reg == LPASS_HDMI_TX_CH_LSB_ADDR(v, i))
+> +			return true;
+> +		if (reg == LPASS_HDMI_TX_CH_MSB_ADDR(v, i))
+> +			return true;
+> +		if (reg == LPASS_HDMI_TX_DMA_ADDR(v, i))
+> +			return true;
+> +	}
+> +
+> +	for (i = 0; i < v->rdma_channels; ++i) {
+> +		if (reg == LPAIF_HDMI_RDMACTL_REG(v, i))
+> +			return true;
+> +		if (reg == LPAIF_HDMI_RDMABASE_REG(v, i))
+> +			return true;
+> +		if (reg == LPAIF_HDMI_RDMABUFF_REG(v, i))
+> +			return true;
+> +		if (reg == LPAIF_HDMI_RDMAPER_REG(v, i))
+> +			return true;
+> +	}
+> +	return false;
+> +}
+> +
+> +static bool lpass_hdmi_regmap_readable(struct device *dev, unsigned int reg)
+> +{
+> +	struct lpass_data *drvdata = dev_get_drvdata(dev);
+> +	struct lpass_variant *v = drvdata->variant;
+> +	int i;
+> +
+> +	if (reg == LPASS_HDMI_TX_CTL_ADDR(v))
+> +		return true;
+> +	if (reg == LPASS_HDMI_TX_LEGACY_ADDR(v))
+> +		return true;
+> +	if (reg == LPASS_HDMI_TX_VBIT_CTL_ADDR(v))
+> +		return true;
+> +
+> +	for (i = 0; i < v->hdmi_rdma_channels; i++) {
+> +		if (reg == LPASS_HDMI_TX_CH_LSB_ADDR(v, i))
+> +			return true;
+> +		if (reg == LPASS_HDMI_TX_CH_MSB_ADDR(v, i))
+> +			return true;
+> +		if (reg == LPASS_HDMI_TX_DMA_ADDR(v, i))
+> +			return true;
+> +	}
+> +
+> +	if (reg == LPASS_HDMI_TX_PARITY_ADDR(v))
+> +		return true;
+> +	if (reg == LPASS_HDMI_TX_DP_ADDR(v))
+> +		return true;
+> +	if (reg == LPASS_HDMI_TX_SSTREAM_ADDR(v))
+> +		return true;
+> +	if (reg == LPASS_HDMITX_APP_IRQEN_REG(v))
+> +		return true;
+> +	if (reg == LPASS_HDMITX_APP_IRQSTAT_REG(v))
+> +		return true;
+> +
+> +	for (i = 0; i < v->rdma_channels; ++i) {
+> +		if (reg == LPAIF_HDMI_RDMACTL_REG(v, i))
+> +			return true;
+> +		if (reg == LPAIF_HDMI_RDMABASE_REG(v, i))
+> +			return true;
+> +		if (reg == LPAIF_HDMI_RDMABUFF_REG(v, i))
+> +			return true;
+> +		if (reg == LPAIF_HDMI_RDMAPER_REG(v, i))
+> +			return true;
+> +		if (reg == LPAIF_HDMI_RDMACURR_REG(v, i))
+> +			return true;
+> +	}
+> +
+> +	return false;
+> +}
+> +
+> +static bool lpass_hdmi_regmap_volatile(struct device *dev, unsigned int reg)
+> +{
+> +	struct lpass_data *drvdata = dev_get_drvdata(dev);
+> +	struct lpass_variant *v = drvdata->variant;
+> +	int i;
+> +
+> +	if (reg == LPASS_HDMITX_APP_IRQSTAT_REG(v))
+> +		return true;
+> +	if (reg == LPASS_HDMI_TX_LEGACY_ADDR(v))
+> +		return true;
+> +
+> +	for (i = 0; i < v->rdma_channels; ++i) {
+> +		if (reg == LPAIF_HDMI_RDMACURR_REG(v, i))
+> +			return true;
+> +	}
+> +	return false;
+> +}
+> +
+> +struct regmap_config lpass_hdmi_regmap_config = {
+> +	.reg_bits = 32,
+> +	.reg_stride = 4,
+> +	.val_bits = 32,
+> +	.writeable_reg = lpass_hdmi_regmap_writeable,
+> +	.readable_reg = lpass_hdmi_regmap_readable,
+> +	.volatile_reg = lpass_hdmi_regmap_volatile,
+> +	.cache_type = REGCACHE_FLAT,
+> +};
+
+]
+This should go into lpass-cpu.c
+
+look below for the reasons!
+
+
+> +EXPORT_SYMBOL(lpass_hdmi_regmap_config);
+> +
+> +MODULE_DESCRIPTION("QTi LPASS HDMI Driver");
+> +MODULE_LICENSE("GPL v2");
+> diff --git a/sound/soc/qcom/lpass-hdmi.h b/sound/soc/qcom/lpass-hdmi.h
+> new file mode 100644
+> index 0000000..93f0057
+> --- /dev/null
+> +++ b/sound/soc/qcom/lpass-hdmi.h
+> @@ -0,0 +1,106 @@
+> +/* SPDX-License-Identifier: GPL-2.0-only */
+> +/*
+> + * Copyright (c) 2020 The Linux Foundation. All rights reserved.
+> + *
+> + * lpass_hdmi.h - Definitions for the QTi LPASS HDMI
+> + */
+> +
+> +#ifndef __LPASS_HDMI_H__
+> +#define __LPASS_HDMI_H__
+> +
+> +#include <linux/regmap.h>
+> +
+> +#define LPASS_HDMITX_LEGACY_DISABLE		0x0
+> +#define LPASS_HDMITX_LEGACY_ENABLE		0x1
+> +#define LPASS_DP_AUDIO_BITWIDTH16		0x0
+> +#define LPASS_DP_AUDIO_BITWIDTH24		0xb
+> +#define LPASS_DATA_FORMAT_SHIFT			0x1
+> +#define LPASS_FREQ_BIT_SHIFT			24
+> +#define LPASS_DATA_FORMAT_LINEAR		0x0
+> +#define LPASS_DATA_FORMAT_NON_LINEAR	0x1
+> +#define LPASS_SAMPLING_FREQ32			0x3
+> +#define LPASS_SAMPLING_FREQ44			0x0
+> +#define LPASS_SAMPLING_FREQ48			0x2
+> +#define LPASS_TX_CTL_RESET				0x1
+> +#define LPASS_TX_CTL_CLEAR				0x0
+> +#define LPASS_SSTREAM_ENABLE			1
+> +#define LPASS_SSTREAM_DISABLE			0
+> +#define LPASS_LAYOUT_SP_DEFAULT			0xf
+> +#define LPASS_SSTREAM_DEFAULT_ENABLE	1
+> +#define LPASS_SSTREAM_DEFAULT_DISABLE	0
+> +#define LPASS_MUTE_ENABLE				1
+> +#define LPASS_MUTE_DISABLE				0
+> +#define LPASS_META_DEFAULT_VAL			0
+> +#define HW_MODE							1
+> +#define SW_MODE							0
+> +#define LEGACY_LPASS_LPAIF				1
+> +#define LEGACY_LPASS_HDMI				0
+> +#define REPLACE_VBIT					0x1
+> +#define LINEAR_PCM_DATA					0x0
+> +#define NON_LINEAR_PCM_DATA				0x1
+> +#define HDMITX_PARITY_CALC_EN			0x1
+> +#define HDMITX_PARITY_CALC_DIS			0x0
+> +#define LPASS_DATA_FORMAT_MASK			GENMASK(1, 1)
+> +#define LPASS_WORDLENGTH_MASK			GENMASK(3, 0)
+> +#define LPASS_FREQ_BIT_MASK				GENMASK(27, 24)
+> +
+> +#define LPASS_HDMI_TX_CTL_ADDR(v)		(v->hdmi_tx_ctl_addr)
+> +#define LPASS_HDMI_TX_LEGACY_ADDR(v)	(v->hdmi_legacy_addr)
+> +#define LPASS_HDMI_TX_VBIT_CTL_ADDR(v)	(v->hdmi_vbit_addr)
+> +#define LPASS_HDMI_TX_PARITY_ADDR(v)	(v->hdmi_parity_addr)
+> +#define LPASS_HDMI_TX_DP_ADDR(v)		(v->hdmi_DP_addr)
+> +#define LPASS_HDMI_TX_SSTREAM_ADDR(v)	(v->hdmi_sstream_addr)
+> +
+> +#define LPASS_HDMI_TX_CH_LSB_ADDR(v, port) \
+> +		(v->hdmi_ch_lsb_addr + v->ch_stride * (port))
+> +#define LPASS_HDMI_TX_CH_MSB_ADDR(v, port) \
+> +		(v->hdmi_ch_msb_addr + v->ch_stride * (port))
+> +#define LPASS_HDMI_TX_DMA_ADDR(v, port) \
+> +		(v->hdmi_dmactl_addr + v->hdmi_dma_stride * (port))
+> +
+> +struct lpass_sstream_ctl {
+> +	struct regmap_field *sstream_en;
+> +	struct regmap_field *dma_sel;
+> +	struct regmap_field *auto_bbit_en;
+> +	struct regmap_field *layout;
+> +	struct regmap_field *layout_sp;
+> +	struct regmap_field *set_sp_on_en;
+> +	struct regmap_field *dp_audio;
+> +	struct regmap_field *dp_staffing_en;
+> +	struct regmap_field *dp_sp_b_hw_en;
+> +};
+> +
+> +struct lpass_dp_metadata_ctl {
+> +	struct regmap_field *mute;
+> +	struct regmap_field *as_sdp_cc;
+> +	struct regmap_field *as_sdp_ct;
+> +	struct regmap_field *aif_db4;
+> +	struct regmap_field *frequency;
+> +	struct regmap_field *mst_index;
+> +	struct regmap_field *dptx_index;
+> +};
+> +
+> +struct lpass_hdmi_tx_ctl {
+> +	struct regmap_field *soft_reset;
+> +	struct regmap_field *force_reset;
+> +};
+> +
+> +struct lpass_hdmitx_dmactl {
+> +	struct regmap_field *use_hw_chs;
+> +	struct regmap_field *use_hw_usr;
+> +	struct regmap_field *hw_chs_sel;Please
+> +	struct regmap_field *hw_usr_sel;
+> +};
+> +
+> +struct lpass_vbit_ctrl {
+> +		struct regmap_field *replace_vbit;
+> +		struct regmap_field *vbit_stream;
+> +};
+> +
+> +extern int lpass_hdmi_init_bitfields(struct device *dev, struct regmap *map);
+> +extern struct regmap_config lpass_hdmi_regmap_config;
+I have already commented about this in my previous reviews, This is not 
+really going to work on other platforms that do not have HDMI configs 
+enabled.
+You will get "undefined reference" compile error when build for apq8016 
+or other platforms.
+
+Move these to lpass-cpu.c as that is the only user for these two!
+
+Also try to address comments before sending new versions, I see no point 
+in repeating same comments over multiple versions!
+
+> +extern const struct snd_soc_dai_ops asoc_qcom_lpass_hdmi_dai_ops;
+> +
+> +
+> +
+> +#endif /* __LPASS_HDMI_H__ */
+> diff --git a/sound/soc/qcom/lpass-ipq806x.c b/sound/soc/qcom/lpass-ipq806x.c
+> index 72f09b3..832a916 100644
+> --- a/sound/soc/qcom/lpass-ipq806x.c
+> +++ b/sound/soc/qcom/lpass-ipq806x.c
+> @@ -96,7 +96,7 @@ static int ipq806x_lpass_exit(struct platform_device *pdev)
+>   	return 0;
+>   }
+>   
+> -static int ipq806x_lpass_alloc_dma_channel(struct lpass_data *drvdata, int dir)
+> +static int ipq806x_lpass_alloc_dma_channel(struct lpass_data *drvdata, int dir, unsigned int dai_id)
+>   {
+>   	if (dir == SNDRV_PCM_STREAM_PLAYBACK)
+>   		return IPQ806X_LPAIF_RDMA_CHAN_MI2S;
+> @@ -104,7 +104,7 @@ static int ipq806x_lpass_alloc_dma_channel(struct lpass_data *drvdata, int dir)
+>   		return -EINVAL;
+>   }
+>   
+> -static int ipq806x_lpass_free_dma_channel(struct lpass_data *drvdata, int chan)
+> +static int ipq806x_lpass_free_dma_channel(struct lpass_data *drvdata, int chan, unsigned int dai_id)
+>   {
+>   	return 0;
+>   }
+> diff --git a/sound/soc/qcom/lpass-platform.c b/sound/soc/qcom/lpass-platform.c
+> index db0d959..a5ab5f1 100644
+> --- a/sound/soc/qcom/lpass-platform.c
+> +++ b/sound/soc/qcom/lpass-platform.c
+> @@ -80,6 +80,23 @@ static int lpass_platform_alloc_dmactl_fields(struct device *dev,
+>   					    &v->wrdma_intf, 6);
+>   }
+>   
+
+...
+
+
+> @@ -232,16 +296,24 @@ static int lpass_platform_pcmops_hw_params(struct snd_soc_component *component,
+>   			regval = LPAIF_DMACTL_WPSCNT_ONE;
+>   			break;
+>   		case 2:
+> -			regval = LPAIF_DMACTL_WPSCNT_TWO;
+> +			regval = (dai_id == LPASS_DP_RX ?
+> +			LPAIF_DMACTL_WPSCNT_ONE :
+> +			LPAIF_DMACTL_WPSCNT_TWO);
+>   			break;
+>   		case 4:
+> -			regval = LPAIF_DMACTL_WPSCNT_FOUR;
+> +			regval = (dai_id == LPASS_DP_RX ?
+> +			LPAIF_DMACTL_WPSCNT_TWO :
+> +			LPAIF_DMACTL_WPSCNT_FOUR);
+>   			break;
+>   		case 6:
+> -			regval = LPAIF_DMACTL_WPSCNT_SIX;
+> +			regval = (dai_id == LPASS_DP_RX ?
+> +			LPAIF_DMACTL_WPSCNT_THREE :
+> +			LPAIF_DMACTL_WPSCNT_SIX);
+>   			break;
+>   		case 8:
+> -			regval = LPAIF_DMACTL_WPSCNT_EIGHT;
+> +			regval = (dai_id == LPASS_DP_RX ?
+> +			LPAIF_DMACTL_WPSCNT_FOUR :
+> +			LPAIF_DMACTL_WPSCNT_EIGHT);
+>   			break;
+>   		default:
+>   			dev_err(soc_runtime->dev,
+> @@ -251,7 +323,8 @@ static int lpass_platform_pcmops_hw_params(struct snd_soc_component *component,
+>   		}
+>   		break;
+>   	default:
+> -		dev_err(soc_runtime->dev, "invalid PCM config given: bw=%d, ch=%u\n",
+> +		dev_err(soc_runtime->dev,
+> +			"invalid PCM config given: bw=%d,ch=%u\n",
+
+unnecessary change!
+
+
+>   			bitwidth, channels);
+>   		return -EINVAL;
+>   	}
+...
+
+> +static irqreturn_t lpass_platform_hdmiif_irq(int irq, void *data)
+> +{
+> +	struct lpass_data *drvdata = data;
+> +	struct lpass_variant *v = drvdata->variant;
+> +	unsigned int irqs;
+> +	int rv, chan;
+> +
+> +	rv = regmap_read(drvdata->hdmiif_map,
+> +			LPASS_HDMITX_APP_IRQSTAT_REG(v), &irqs);
+> +	if (rv) {
+> +		pr_err("error reading from irqstat reg: %d\n", rv);
+> +		return IRQ_NONE;
+> +	}
+> +
+> +	/* Handle per channel interrupts */
+> +	for (chan = 0; chan < LPASS_MAX_HDMI_DMA_CHANNELS; chan++) {
+> +		if (irqs & (LPAIF_IRQ_ALL(chan) | LPAIF_IRQ_HDMI_REQ_ON_PRELOAD(chan) |
+> +				LPAIF_IRQ_HDMI_METADONE |
+> +				LPAIF_IRQ_HDMI_SDEEP_AUD_DIS(chan))
+> +			&& drvdata->hdmi_substream[chan]) {
+> +			rv = lpass_dma_interrupt_handler(
+> +						drvdata->hdmi_substream[chan],
+> +						drvdata, chan, irqs);
+> +			if (rv != IRQ_HANDLED)
+> +				return rv;
+> +		}
+> +	}
+> +
+> +	return IRQ_HANDLED;
+> +}
+> +
+> +
+
+2 lines not required!
+
+>   static int lpass_platform_pcm_new(struct snd_soc_component *component,
+>   				  struct snd_soc_pcm_runtime *soc_runtime)
+>   {
+> @@ -649,6 +880,32 @@ int asoc_qcom_lpass_platform_register(struct platform_device *pdev)
+>   		return ret;
+>   	}
+>   
+> +	if (drvdata->hdmi_port_enable) {
+> +		drvdata->hdmiif_irq = platform_get_irq_byname(pdev, "lpass-irq-hdmi");
+> +		if (drvdata->hdmiif_irq < 0)
+> +			return -ENODEV;
+> +
+> +		ret = devm_request_irq(&pdev->dev, drvdata->hdmiif_irq,
+> +				lpass_platform_hdmiif_irq, 0, "lpass-irq-hdmi", drvdata);
+> +		if (ret) {
+> +			dev_err(&pdev->dev, "irq hdmi request failed: %d\n", ret);
+> +			return ret;
+> +		}
+> +		ret = regmap_write(drvdata->hdmiif_map,
+> +				LPASS_HDMITX_APP_IRQEN_REG(v), 0);
+> +		if (ret) {
+> +			dev_err(&pdev->dev, "error writing to hdmi irqen reg: %d\n", ret);
+> +			return ret;
+> +		}
+> +
+> +		ret = lpass_platform_alloc_hdmidmactl_fields(&pdev->dev,
+> +							 drvdata->hdmiif_map);
+> +		if (ret) {
+> +			dev_err(&pdev->dev,
+> +				"error initializing hdmidmactl fields: %d\n", ret);
+> +			return ret;
+> +		}
+> +	}
+>   	return devm_snd_soc_register_component(&pdev->dev,
+>   			&lpass_component_driver, NULL, 0);
+>   }
+> diff --git a/sound/soc/qcom/lpass.h b/sound/soc/qcom/lpass.h
+> index 7089d4c..2bbb0b9 100644
+> --- a/sound/soc/qcom/lpass.h
+> +++ b/sound/soc/qcom/lpass.h
+> @@ -1,6 +1,6 @@
+>   /* SPDX-License-Identifier: GPL-2.0-only */
+>   /*
+> - * Copyright (c) 2010-2011,2013-2015 The Linux Foundation. All rights reserved.
+> + * Copyright (c) 2010-2011,2013-2015,2020 The Linux Foundation. All rights reserved.
+>    *
+>    * lpass.h - Definitions for the QTi LPASS
+>    */
+> @@ -12,10 +12,15 @@
+>   #include <linux/compiler.h>
+>   #include <linux/platform_device.h>
+>   #include <linux/regmap.h>
+> +#include <dt-bindings/sound/sc7180-lpass.h>
+> +#include "lpass-hdmi.h"
+>   
+>   #define LPASS_AHBIX_CLOCK_FREQUENCY		131072000
+>   #define LPASS_MAX_MI2S_PORTS			(8)
+>   #define LPASS_MAX_DMA_CHANNELS			(8)
+> +#define LPASS_MAX_HDMI_DMA_CHANNELS		(4)
+> +
+> +
+no need for two empty lines here!
+
+>   
+>   struct lpaif_i2sctl {
+>   	struct regmap_field *loopback;
+> @@ -37,6 +42,9 @@ struct lpaif_dmactl {
+>   	struct regmap_field *fifowm;
+>   	struct regmap_field *enable;
+>   	struct regmap_field *dyncclk;
+> +	struct regmap_field *burst8;
+> +	struct regmap_field *burst16;
+> +	struct regmap_field *dynburst;
+>   };
+>   
+
+thanks,
+srini
