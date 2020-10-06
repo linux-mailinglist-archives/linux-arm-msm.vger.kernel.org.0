@@ -2,207 +2,470 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 3B5D328496F
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Oct 2020 11:36:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D6C7F2849A9
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Oct 2020 11:50:59 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726133AbgJFJgC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 6 Oct 2020 05:36:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46954 "EHLO
+        id S1726078AbgJFJu5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 6 Oct 2020 05:50:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49290 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725939AbgJFJgC (ORCPT
+        with ESMTP id S1726068AbgJFJu5 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 6 Oct 2020 05:36:02 -0400
-Received: from mail-wm1-x344.google.com (mail-wm1-x344.google.com [IPv6:2a00:1450:4864:20::344])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3D571C061755
-        for <linux-arm-msm@vger.kernel.org>; Tue,  6 Oct 2020 02:36:02 -0700 (PDT)
-Received: by mail-wm1-x344.google.com with SMTP id z22so1829267wmi.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 06 Oct 2020 02:36:02 -0700 (PDT)
+        Tue, 6 Oct 2020 05:50:57 -0400
+Received: from mail-pl1-x641.google.com (mail-pl1-x641.google.com [IPv6:2607:f8b0:4864:20::641])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 35A3EC0613D3
+        for <linux-arm-msm@vger.kernel.org>; Tue,  6 Oct 2020 02:50:57 -0700 (PDT)
+Received: by mail-pl1-x641.google.com with SMTP id d23so959194pll.7
+        for <linux-arm-msm@vger.kernel.org>; Tue, 06 Oct 2020 02:50:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ffwll.ch; s=google;
-        h=date:from:to:cc:subject:message-id:mail-followup-to:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=jfHRjgUc3yWmaMNP8V6npRHveQSEaYznJy9xDxqdq5Y=;
-        b=V4AlHabOmn6H1w4iRNEGS0B70b8dv2DIEZuurCYdgOgzzKGxgOH6LDi0oU30jzagKc
-         nRxT2MEZyLjf9RvcqMiFjcPOZKT5cchMQIVnFpIyJjAAlzwzNA+seFw9c0nwVP6J/wG+
-         dE4STfKprpfEiAUbFdH0mQqVPGuDeexiySSD4=
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id;
+        bh=mycjQb93JeYpVYCRmqAervRMhPA70rTAQD2ylQgQobQ=;
+        b=DH5cXDdLsP5zV5SH9Edi6Wjky4+cSm892NocSCE6yVfQTGSHN+Hh2vpyV0E9V7c8u0
+         068xGZbUHbiEmpQgjwru7RF8jXgc65PktOfNJ2HYF9y7gXr+aCrk2DI8VyxaqK0JhqF9
+         HA6hOict0YsCwTk8SwBh9Lj74QbYj6rngx3Fj0NjYICFW2TJ3WwK/zjLJU1x3/Pb38U3
+         KBm/knfgz1RW++FrQ3Wi54HA5Iq3Wo8uVXZ+Hsj7gmYJRZz/cvzJYDBzrbxUj6WMspF9
+         CAqRtPBUKxVXiW9Ehq7kJEqzluwO8GRcrI+Yttgr3iCz1G3MhfaWdZYone+c8G9hAs5g
+         taSA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id
-         :mail-followup-to:references:mime-version:content-disposition
-         :in-reply-to;
-        bh=jfHRjgUc3yWmaMNP8V6npRHveQSEaYznJy9xDxqdq5Y=;
-        b=MYpVNsRuhiyeRufz9ywS7FIKqgNVlxpFjC0gMO36XdQpFVuVN5htO/Z7G3eyfHQIyA
-         0mLUg/Rz1CthWyq9ala9Z2XtinSjLH5+PB2c6PKmatunXhDJz+lXOLhMLYMri1000CpA
-         N2DhxR3FKw5hBekHZEolw6PPQMRwctoWKz/4iplfPP/3B6iNTxX8pcz/FV/X4czDaXsK
-         u/YGY67vNrcCmUOfHbNu46bLlhNNR4k3YLy1gpXiP5A9QHT6seEnrAeHEg8fkavetgra
-         xc2PtYE/KNMp6MGjUcHwQro0uShPUd/2UNo7BIm/fFkQt8XmCOhSAob5ZBvy0H06BIda
-         CP4A==
-X-Gm-Message-State: AOAM531nV8CdrdA/YKlnwXY35Gc+FVzM+iYYBSD7CHXFQfVWtAEpE8Mh
-        szmcU2OQjvs6gGRYChiHPQOyIw==
-X-Google-Smtp-Source: ABdhPJzEaJYL1QdJ5uR4JBld7BCAOyXdwCbFSfIsfUiUeAGtF+t3pE5ORpDjMh0kMl0i7jqARrQBkA==
-X-Received: by 2002:a7b:c95a:: with SMTP id i26mr4006324wml.25.1601976960896;
-        Tue, 06 Oct 2020 02:36:00 -0700 (PDT)
-Received: from phenom.ffwll.local ([2a02:168:57f4:0:efd0:b9e5:5ae6:c2fa])
-        by smtp.gmail.com with ESMTPSA id k15sm3880199wrv.90.2020.10.06.02.35.59
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=mycjQb93JeYpVYCRmqAervRMhPA70rTAQD2ylQgQobQ=;
+        b=ktRzKhUYCiGwr5UwG6xhuewChXm/hS9hX8ThRmOIfEuRqLR8sKuMNYKJAJ47v7Ggxr
+         x8sPaCNCnDZvNsfQH60X1M9qw04qzo0XnG+Q5aulbu2Aq/+W12ooaraqkWR3dSmvDxNE
+         f63dYNz2tJb6fY6aVEb/+c3/kUtmOSIl6jZ6UNIGH5m/pwnisI9oNKE6IK8MFn2UdWep
+         qb9oTIM0uXqqaxXt7hhvpvnEHXGCHZTAmPtUydJNPmjX0kTEEmucYeHo+St0upGPJsor
+         06Sl1M4DkWTadFMpfX3U2I4lDhsPHzASFcJxoQVXFta07OCqCNHUy3a7ADccDHMHNAsS
+         rvZw==
+X-Gm-Message-State: AOAM533VCcqyOSWPmkl5aiUkzIR1AdT3xf7unS/QT47M6TDMr1J1mu9X
+        90xWBXf4fR1GA8CxEg7TvbrK
+X-Google-Smtp-Source: ABdhPJyDgiy7IGlwkfN5RgDJvsMp5VpBk/wuDaejJivnre1JvscceD3vX4ijlMiU0qpmoSbtS+53dg==
+X-Received: by 2002:a17:902:9b83:b029:d2:439c:3b7d with SMTP id y3-20020a1709029b83b02900d2439c3b7dmr2438063plp.39.1601977856354;
+        Tue, 06 Oct 2020 02:50:56 -0700 (PDT)
+Received: from Mani-XPS-13-9360.localdomain ([2409:4072:6e9d:8f58:948:749c:4eeb:26a])
+        by smtp.gmail.com with ESMTPSA id e19sm2979783pfl.135.2020.10.06.02.50.51
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 06 Oct 2020 02:36:00 -0700 (PDT)
-Date:   Tue, 6 Oct 2020 11:35:58 +0200
-From:   Daniel Vetter <daniel@ffwll.ch>
-To:     Rob Clark <robdclark@gmail.com>
-Cc:     Hillf Danton <hdanton@sina.com>,
-        Rob Clark <robdclark@chromium.org>,
-        freedreno <freedreno@lists.freedesktop.org>,
-        David Airlie <airlied@linux.ie>,
-        arm-msm <linux-arm-msm@vger.kernel.org>,
-        "Kristian H . Kristensen" <hoegsberg@gmail.com>,
-        LKML <linux-kernel@vger.kernel.org>,
-        dri-devel <dri-devel@lists.freedesktop.org>,
-        Sean Paul <sean@poorly.run>
-Subject: Re: [PATCH 13/14] drm/msm: Drop struct_mutex in shrinker path
-Message-ID: <20201006093558.GZ438822@phenom.ffwll.local>
-Mail-Followup-To: Rob Clark <robdclark@gmail.com>,
-        Hillf Danton <hdanton@sina.com>, Rob Clark <robdclark@chromium.org>,
-        freedreno <freedreno@lists.freedesktop.org>,
-        David Airlie <airlied@linux.ie>,
-        arm-msm <linux-arm-msm@vger.kernel.org>,
-        "Kristian H . Kristensen" <hoegsberg@gmail.com>,
-        LKML <linux-kernel@vger.kernel.org>,
-        dri-devel <dri-devel@lists.freedesktop.org>,
-        Sean Paul <sean@poorly.run>
-References: <20201004192152.3298573-1-robdclark@gmail.com>
- <20201005092419.15608-1-hdanton@sina.com>
- <20201005140203.GS438822@phenom.ffwll.local>
- <CAOeoa-cqyb8NZJnJdY+A2H680+C4H0WzXhp-uYj8Fg093BqAnw@mail.gmail.com>
- <20201006004416.15040-1-hdanton@sina.com>
- <CAF6AEGvyEYFa-RLrxqgXjxhiLgc-rB+dbscboROPHGPxoC-RMw@mail.gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAF6AEGvyEYFa-RLrxqgXjxhiLgc-rB+dbscboROPHGPxoC-RMw@mail.gmail.com>
-X-Operating-System: Linux phenom 5.7.0-1-amd64 
+        Tue, 06 Oct 2020 02:50:55 -0700 (PDT)
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     rjw@rjwysocki.net, viresh.kumar@linaro.org, robh+dt@kernel.org
+Cc:     linux-pm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, bjorn.andersson@linaro.org,
+        linux-arm-msm@vger.kernel.org,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Subject: [PATCH] dt-bindings: cpufreq: cpufreq-qcom-hw: Convert to YAML bindings
+Date:   Tue,  6 Oct 2020 15:20:47 +0530
+Message-Id: <20201006095047.30242-1-manivannan.sadhasivam@linaro.org>
+X-Mailer: git-send-email 2.17.1
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Oct 05, 2020 at 08:40:12PM -0700, Rob Clark wrote:
-> On Mon, Oct 5, 2020 at 5:44 PM Hillf Danton <hdanton@sina.com> wrote:
-> >
-> >
-> > On Mon, 5 Oct 2020 18:17:01 Kristian H. Kristensen wrote:
-> > > On Mon, Oct 5, 2020 at 4:02 PM Daniel Vetter <daniel@ffwll.ch> wrote:
-> > > >
-> > > > On Mon, Oct 05, 2020 at 05:24:19PM +0800, Hillf Danton wrote:
-> > > > >
-> > > > > On Sun,  4 Oct 2020 12:21:45
-> > > > > > From: Rob Clark <robdclark@chromium.org>
-> > > > > >
-> > > > > > Now that the inactive_list is protected by mm_lock, and everything
-> > > > > > else on per-obj basis is protected by obj->lock, we no longer depend
-> > > > > > on struct_mutex.
-> > > > > >
-> > > > > > Signed-off-by: Rob Clark <robdclark@chromium.org>
-> > > > > > ---
-> > > > > >  drivers/gpu/drm/msm/msm_gem.c          |  1 -
-> > > > > >  drivers/gpu/drm/msm/msm_gem_shrinker.c | 54 --------------------------
-> > > > > >  2 files changed, 55 deletions(-)
-> > > > > >
-> > > > > [...]
-> > > > >
-> > > > > > @@ -71,13 +33,8 @@ msm_gem_shrinker_scan(struct shrinker *shrinker, struct shrink_control *sc)
-> > > > > >  {
-> > > > > >     struct msm_drm_private *priv =
-> > > > > >             container_of(shrinker, struct msm_drm_private, shrinker);
-> > > > > > -   struct drm_device *dev = priv->dev;
-> > > > > >     struct msm_gem_object *msm_obj;
-> > > > > >     unsigned long freed = 0;
-> > > > > > -   bool unlock;
-> > > > > > -
-> > > > > > -   if (!msm_gem_shrinker_lock(dev, &unlock))
-> > > > > > -           return SHRINK_STOP;
-> > > > > >
-> > > > > >     mutex_lock(&priv->mm_lock);
-> > > > >
-> > > > > Better if the change in behavior is documented that SHRINK_STOP will
-> > > > > no longer be needed.
-> > > >
-> > > > btw I read through this and noticed you have your own obj lock, plus
-> > > > mutex_lock_nested. I strongly recommend to just cut over to dma_resv_lock
-> > > > for all object lock needs (soc drivers have been terrible with this
-> > > > unfortuntaly), and in the shrinker just use dma_resv_trylock instead of
-> > > > trying to play clever games outsmarting lockdep.
-> >
-> > The trylock makes page reclaimers turn to their next target e.g. inode
-> > cache instead of waiting for the mutex to be released. It makes sense
-> > for instance in scenarios of mild memory pressure.
-> 
-> is there some behind-the-scenes signalling for this, or is this just
-> down to what the shrinker callbacks return?  Generally when we get
-> into shrinking, there are a big set of purgable bo's to consider, so
-> the shrinker callback return wouldn't be considering just one
-> potentially lock contended bo (buffer object).  Ie failing one
-> trylock, we just move on to the next.
-> 
-> fwiw, what I've seen on the userspace bo cache vs shrinker (anything
-> that is shrinker potential is in userspace bo cache and
-> MADV(WONTNEED)) is that in steady state I see a very strong recycling
-> of bo's (which avoids allocating and mmap'ing or mapping to gpu a new
-> buffer object), so it is definitely a win in mmap/realloc bandwidth..
-> in steady state there is a lot of free and realloc of same-sized
-> buffers from frame to frame.
-> 
-> But in transient situations like moving to new game level when there
-> is a heavy memory pressure and lots of freeing old
-> buffers/textures/etc and then allocating new ones, I see shrinker
-> kicking in hard (in android situations, not so much so with
-> traditional linux userspace)
+Convert Qualcomm cpufreq devicetree binding to YAML.
 
-Yeah per-buffer trylock is fine. Trylock on the mm_lock (or anything else
-device-global, like struct_mutex and msm_gem_shrinker_lock) I think isn't
-fine, since if you're unlucky you're hogging a ton of memory and that's
-the only freeable resource in the system. Going to other shrinkers won't
-help when it's the gpu shrinker that has all the freeable memory.
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+---
+ .../bindings/cpufreq/cpufreq-qcom-hw.txt      | 172 --------------
+ .../bindings/cpufreq/cpufreq-qcom-hw.yaml     | 212 ++++++++++++++++++
+ 2 files changed, 212 insertions(+), 172 deletions(-)
+ delete mode 100644 Documentation/devicetree/bindings/cpufreq/cpufreq-qcom-hw.txt
+ create mode 100644 Documentation/devicetree/bindings/cpufreq/cpufreq-qcom-hw.yaml
 
-Also other shrinkers (inode and all these) also do lots of per-object
-trylocking. I think there's a canonical threshold of shrinker rounds where
-you're supposed to try harder (if possible), but that doesn't apply to
-dma_resv_lock.
--Daniel
-
-> 
-> BR,
-> -R
-> 
-> >
-> > > >
-> > > > I recently wrote an entire blog length rant on why I think
-> > > > mutex_lock_nested is too dangerous to be useful:
-> > > >
-> > > > https://blog.ffwll.ch/2020/08/lockdep-false-positives.html
-> > > >
-> > > > Not anything about this here, just general comment. The problem extends to
-> > > > shmem helpers and all that also having their own locks for everything.
-> > >
-> > > This is definitely a tangible improvement though - very happy to see
-> > > msm_gem_shrinker_lock() go.
-> > >
-> > > Reviewed-by: Kristian H. Kristensen <hoegsberg@google.com>
-> > >
-> > > > -Daniel
-> > > > --
-> > > > Daniel Vetter
-> > > > Software Engineer, Intel Corporation
-> > > > http://blog.ffwll.ch
-> > > > _______________________________________________
-> > > > dri-devel mailing list
-> > > > dri-devel@lists.freedesktop.org
-> > > > https://lists.freedesktop.org/mailman/listinfo/dri-devel
-> >
-> _______________________________________________
-> dri-devel mailing list
-> dri-devel@lists.freedesktop.org
-> https://lists.freedesktop.org/mailman/listinfo/dri-devel
-
+diff --git a/Documentation/devicetree/bindings/cpufreq/cpufreq-qcom-hw.txt b/Documentation/devicetree/bindings/cpufreq/cpufreq-qcom-hw.txt
+deleted file mode 100644
+index 9299028ee712..000000000000
+--- a/Documentation/devicetree/bindings/cpufreq/cpufreq-qcom-hw.txt
++++ /dev/null
+@@ -1,172 +0,0 @@
+-Qualcomm Technologies, Inc. CPUFREQ Bindings
+-
+-CPUFREQ HW is a hardware engine used by some Qualcomm Technologies, Inc. (QTI)
+-SoCs to manage frequency in hardware. It is capable of controlling frequency
+-for multiple clusters.
+-
+-Properties:
+-- compatible
+-	Usage:		required
+-	Value type:	<string>
+-	Definition:	must be "qcom,cpufreq-hw" or "qcom,cpufreq-epss".
+-
+-- clocks
+-	Usage:		required
+-	Value type:	<phandle> From common clock binding.
+-	Definition:	clock handle for XO clock and GPLL0 clock.
+-
+-- clock-names
+-	Usage:		required
+-	Value type:	<string> From common clock binding.
+-	Definition:	must be "xo", "alternate".
+-
+-- reg
+-	Usage:		required
+-	Value type:	<prop-encoded-array>
+-	Definition:	Addresses and sizes for the memory of the HW bases in
+-			each frequency domain.
+-- reg-names
+-	Usage:		Optional
+-	Value type:	<string>
+-	Definition:	Frequency domain name i.e.
+-			"freq-domain0", "freq-domain1".
+-
+-- #freq-domain-cells:
+-	Usage:		required.
+-	Definition:	Number of cells in a freqency domain specifier.
+-
+-* Property qcom,freq-domain
+-Devices supporting freq-domain must set their "qcom,freq-domain" property with
+-phandle to a cpufreq_hw followed by the Domain ID(0/1) in the CPU DT node.
+-
+-
+-Example:
+-
+-Example 1: Dual-cluster, Quad-core per cluster. CPUs within a cluster switch
+-DCVS state together.
+-
+-/ {
+-	cpus {
+-		#address-cells = <2>;
+-		#size-cells = <0>;
+-
+-		CPU0: cpu@0 {
+-			device_type = "cpu";
+-			compatible = "qcom,kryo385";
+-			reg = <0x0 0x0>;
+-			enable-method = "psci";
+-			next-level-cache = <&L2_0>;
+-			qcom,freq-domain = <&cpufreq_hw 0>;
+-			L2_0: l2-cache {
+-				compatible = "cache";
+-				next-level-cache = <&L3_0>;
+-				L3_0: l3-cache {
+-				      compatible = "cache";
+-				};
+-			};
+-		};
+-
+-		CPU1: cpu@100 {
+-			device_type = "cpu";
+-			compatible = "qcom,kryo385";
+-			reg = <0x0 0x100>;
+-			enable-method = "psci";
+-			next-level-cache = <&L2_100>;
+-			qcom,freq-domain = <&cpufreq_hw 0>;
+-			L2_100: l2-cache {
+-				compatible = "cache";
+-				next-level-cache = <&L3_0>;
+-			};
+-		};
+-
+-		CPU2: cpu@200 {
+-			device_type = "cpu";
+-			compatible = "qcom,kryo385";
+-			reg = <0x0 0x200>;
+-			enable-method = "psci";
+-			next-level-cache = <&L2_200>;
+-			qcom,freq-domain = <&cpufreq_hw 0>;
+-			L2_200: l2-cache {
+-				compatible = "cache";
+-				next-level-cache = <&L3_0>;
+-			};
+-		};
+-
+-		CPU3: cpu@300 {
+-			device_type = "cpu";
+-			compatible = "qcom,kryo385";
+-			reg = <0x0 0x300>;
+-			enable-method = "psci";
+-			next-level-cache = <&L2_300>;
+-			qcom,freq-domain = <&cpufreq_hw 0>;
+-			L2_300: l2-cache {
+-				compatible = "cache";
+-				next-level-cache = <&L3_0>;
+-			};
+-		};
+-
+-		CPU4: cpu@400 {
+-			device_type = "cpu";
+-			compatible = "qcom,kryo385";
+-			reg = <0x0 0x400>;
+-			enable-method = "psci";
+-			next-level-cache = <&L2_400>;
+-			qcom,freq-domain = <&cpufreq_hw 1>;
+-			L2_400: l2-cache {
+-				compatible = "cache";
+-				next-level-cache = <&L3_0>;
+-			};
+-		};
+-
+-		CPU5: cpu@500 {
+-			device_type = "cpu";
+-			compatible = "qcom,kryo385";
+-			reg = <0x0 0x500>;
+-			enable-method = "psci";
+-			next-level-cache = <&L2_500>;
+-			qcom,freq-domain = <&cpufreq_hw 1>;
+-			L2_500: l2-cache {
+-				compatible = "cache";
+-				next-level-cache = <&L3_0>;
+-			};
+-		};
+-
+-		CPU6: cpu@600 {
+-			device_type = "cpu";
+-			compatible = "qcom,kryo385";
+-			reg = <0x0 0x600>;
+-			enable-method = "psci";
+-			next-level-cache = <&L2_600>;
+-			qcom,freq-domain = <&cpufreq_hw 1>;
+-			L2_600: l2-cache {
+-				compatible = "cache";
+-				next-level-cache = <&L3_0>;
+-			};
+-		};
+-
+-		CPU7: cpu@700 {
+-			device_type = "cpu";
+-			compatible = "qcom,kryo385";
+-			reg = <0x0 0x700>;
+-			enable-method = "psci";
+-			next-level-cache = <&L2_700>;
+-			qcom,freq-domain = <&cpufreq_hw 1>;
+-			L2_700: l2-cache {
+-				compatible = "cache";
+-				next-level-cache = <&L3_0>;
+-			};
+-		};
+-	};
+-
+- soc {
+-	cpufreq_hw: cpufreq@17d43000 {
+-		compatible = "qcom,cpufreq-hw";
+-		reg = <0x17d43000 0x1400>, <0x17d45800 0x1400>;
+-		reg-names = "freq-domain0", "freq-domain1";
+-
+-		clocks = <&rpmhcc RPMH_CXO_CLK>, <&gcc GPLL0>;
+-		clock-names = "xo", "alternate";
+-
+-		#freq-domain-cells = <1>;
+-	};
+-}
+diff --git a/Documentation/devicetree/bindings/cpufreq/cpufreq-qcom-hw.yaml b/Documentation/devicetree/bindings/cpufreq/cpufreq-qcom-hw.yaml
+new file mode 100644
+index 000000000000..a11c69a29b5d
+--- /dev/null
++++ b/Documentation/devicetree/bindings/cpufreq/cpufreq-qcom-hw.yaml
+@@ -0,0 +1,212 @@
++# SPDX-License-Identifier: GPL-2.0-only OR BSD-2-Clause
++%YAML 1.2
++---
++$id: http://devicetree.org/schemas/cpufreq/cpufreq-qcom-hw.yaml#
++$schema: http://devicetree.org/meta-schemas/core.yaml#
++
++title: Qualcomm Technologies, Inc. CPUFREQ
++
++maintainers:
++  - Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
++
++description: |
++
++  CPUFREQ HW is a hardware engine used by some Qualcomm Technologies, Inc. (QTI)
++  SoCs to manage frequency in hardware. It is capable of controlling frequency
++  for multiple clusters.
++
++properties:
++  compatible:
++    oneOf:
++      - description: v1 of CPUFREQ HW
++        items:
++          - const: qcom,cpufreq-hw
++
++      - description: v2 of CPUFREQ HW (EPSS)
++        items:
++          - enum:
++              - qcom,sm8250-cpufreq-epss
++          - const: qcom,cpufreq-epss
++
++  reg:
++    minItems: 2
++    maxItems: 3
++    items:
++      - description: Frequency domain 0 register region
++      - description: Frequency domain 1 register region
++      - description: Frequency domain 2 register region
++
++  reg-names:
++    minItems: 2
++    maxItems: 3
++    items:
++      - const: freq-domain0
++      - const: freq-domain1
++      - const: freq-domain2
++
++  clocks:
++    items:
++      - description: XO Clock
++      - description: GPLL0 Clock
++
++  clock-names:
++    items:
++      - const: xo
++      - const: alternate
++
++  '#freq-domain-cells':
++    const: 1
++
++  qcom,freq-domain:
++    $ref: /schemas/types.yaml#/definitions/phandle-array
++    maxItems: 1
++    description:
++      Devices supporting freq-domain must set their "qcom,freq-domain"
++      property with phandle to a cpufreq_hw followed by the Domain ID(0/1)
++      in the CPU DT node.
++
++required:
++  - compatible
++  - reg
++  - reg-names
++  - clocks
++  - clock-names
++  - '#freq-domain-cells'
++
++additionalProperties: false
++
++examples:
++  - |
++    #include <dt-bindings/clock/qcom,gcc-sdm845.h>
++    #include <dt-bindings/clock/qcom,rpmh.h>
++
++    // Example 1: Dual-cluster, Quad-core per cluster. CPUs within a cluster
++    // switch DCVS state together.
++    cpus {
++      #address-cells = <2>;
++      #size-cells = <0>;
++
++      CPU0: cpu@0 {
++        device_type = "cpu";
++        compatible = "qcom,kryo385";
++        reg = <0x0 0x0>;
++        enable-method = "psci";
++        next-level-cache = <&L2_0>;
++        qcom,freq-domain = <&cpufreq_hw 0>;
++        L2_0: l2-cache {
++          compatible = "cache";
++          next-level-cache = <&L3_0>;
++          L3_0: l3-cache {
++            compatible = "cache";
++          };
++        };
++      };
++
++      CPU1: cpu@100 {
++        device_type = "cpu";
++        compatible = "qcom,kryo385";
++        reg = <0x0 0x100>;
++        enable-method = "psci";
++        next-level-cache = <&L2_100>;
++        qcom,freq-domain = <&cpufreq_hw 0>;
++        L2_100: l2-cache {
++          compatible = "cache";
++          next-level-cache = <&L3_0>;
++        };
++      };
++
++      CPU2: cpu@200 {
++        device_type = "cpu";
++        compatible = "qcom,kryo385";
++        reg = <0x0 0x200>;
++        enable-method = "psci";
++        next-level-cache = <&L2_200>;
++        qcom,freq-domain = <&cpufreq_hw 0>;
++        L2_200: l2-cache {
++          compatible = "cache";
++          next-level-cache = <&L3_0>;
++        };
++      };
++
++      CPU3: cpu@300 {
++        device_type = "cpu";
++        compatible = "qcom,kryo385";
++        reg = <0x0 0x300>;
++        enable-method = "psci";
++        next-level-cache = <&L2_300>;
++        qcom,freq-domain = <&cpufreq_hw 0>;
++        L2_300: l2-cache {
++          compatible = "cache";
++          next-level-cache = <&L3_0>;
++        };
++      };
++
++      CPU4: cpu@400 {
++        device_type = "cpu";
++        compatible = "qcom,kryo385";
++        reg = <0x0 0x400>;
++        enable-method = "psci";
++        next-level-cache = <&L2_400>;
++        qcom,freq-domain = <&cpufreq_hw 1>;
++        L2_400: l2-cache {
++          compatible = "cache";
++          next-level-cache = <&L3_0>;
++        };
++      };
++
++      CPU5: cpu@500 {
++        device_type = "cpu";
++        compatible = "qcom,kryo385";
++        reg = <0x0 0x500>;
++        enable-method = "psci";
++        next-level-cache = <&L2_500>;
++        qcom,freq-domain = <&cpufreq_hw 1>;
++        L2_500: l2-cache {
++          compatible = "cache";
++          next-level-cache = <&L3_0>;
++        };
++      };
++
++      CPU6: cpu@600 {
++        device_type = "cpu";
++        compatible = "qcom,kryo385";
++        reg = <0x0 0x600>;
++        enable-method = "psci";
++        next-level-cache = <&L2_600>;
++        qcom,freq-domain = <&cpufreq_hw 1>;
++        L2_600: l2-cache {
++          compatible = "cache";
++          next-level-cache = <&L3_0>;
++        };
++      };
++
++      CPU7: cpu@700 {
++        device_type = "cpu";
++        compatible = "qcom,kryo385";
++        reg = <0x0 0x700>;
++        enable-method = "psci";
++        next-level-cache = <&L2_700>;
++        qcom,freq-domain = <&cpufreq_hw 1>;
++        L2_700: l2-cache {
++          compatible = "cache";
++          next-level-cache = <&L3_0>;
++        };
++      };
++    };
++
++    soc {
++      #address-cells = <1>;
++      #size-cells = <1>;
++
++      cpufreq@17d43000 {
++        compatible = "qcom,cpufreq-hw";
++        reg = <0x17d43000 0x1400>, <0x17d45800 0x1400>;
++        reg-names = "freq-domain0", "freq-domain1";
++
++        clocks = <&rpmhcc RPMH_CXO_CLK>, <&gcc GPLL0>;
++        clock-names = "xo", "alternate";
++
++        #freq-domain-cells = <1>;
++      };
++    };
++...
 -- 
-Daniel Vetter
-Software Engineer, Intel Corporation
-http://blog.ffwll.ch
+2.17.1
+
