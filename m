@@ -2,211 +2,192 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 3F8A9284EC0
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Oct 2020 17:20:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CFDE7284F6E
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Oct 2020 18:05:39 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726105AbgJFPUf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 6 Oct 2020 11:20:35 -0400
-Received: from z5.mailgun.us ([104.130.96.5]:32911 "EHLO z5.mailgun.us"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725902AbgJFPUf (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 6 Oct 2020 11:20:35 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1601997634; h=Message-Id: Date: Subject: Cc: To: From:
- Sender; bh=VZtluZ0uMsNr7qvIzd32PfxEWPgcdsHHlyK7tcvavwo=; b=kgE9/imP06eGZ9UM/gQPS/rjd9ESWxlxF1EzFZYneOLplpCamYiLamMhST02I3CKmSXrjkoB
- vHliYm4Msv4APbGwxdYuZfsIB2/4U0/q0cC9j9FJgs1BMlHVTwKLFb9f7ZBmGhpQ9LCgR/cE
- qOCG8KLlcglI6nd1vZBvZny49e4=
-X-Mailgun-Sending-Ip: 104.130.96.5
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n02.prod.us-east-1.postgun.com with SMTP id
- 5f7c8b413711fec7b1f359a8 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 06 Oct 2020 15:20:33
- GMT
-Sender: bgodavar=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 0706EC433F1; Tue,  6 Oct 2020 15:20:33 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
-        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
-Received: from bgodavar-linux.qualcomm.com (unknown [202.46.22.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: bgodavar)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id C0344C433C8;
-        Tue,  6 Oct 2020 15:20:28 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org C0344C433C8
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=bgodavar@codeaurora.org
-From:   Balakrishna Godavarthi <bgodavar@codeaurora.org>
-To:     marcel@holtmann.org, johan.hedberg@gmail.com
-Cc:     mka@chromium.org, linux-kernel@vger.kernel.org,
-        linux-bluetooth@vger.kernel.org, hemantg@codeaurora.org,
-        linux-arm-msm@vger.kernel.org, gubbaven@codeaurora.org,
-        abhishekpandit@chromium.org, rjliao@codeaurora.org,
-        Balakrishna Godavarthi <bgodavar@codeaurora.org>
-Subject: [PATCH v1] Bluetooth: hci_qca: Wait for timeout during suspend
-Date:   Tue,  6 Oct 2020 20:50:21 +0530
-Message-Id: <1601997621-12056-1-git-send-email-bgodavar@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
+        id S1726164AbgJFQFb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 6 Oct 2020 12:05:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50426 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726131AbgJFQFa (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 6 Oct 2020 12:05:30 -0400
+Received: from mail-lj1-x244.google.com (mail-lj1-x244.google.com [IPv6:2a00:1450:4864:20::244])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2884CC0613D1
+        for <linux-arm-msm@vger.kernel.org>; Tue,  6 Oct 2020 09:05:30 -0700 (PDT)
+Received: by mail-lj1-x244.google.com with SMTP id i2so383718ljg.4
+        for <linux-arm-msm@vger.kernel.org>; Tue, 06 Oct 2020 09:05:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=OwoCSmfxLGjvt1o0N+0EiCnK4lbyycGM//QYdUZDGlU=;
+        b=oTF8UsYmfg+TFpK0V8akH8qv2XJgpNyqWeUQHdVUXkNtf132IjWE4EF5DiVDrzjuKC
+         ha5LTVMufN2CjeKbR816/JtDpe6AQ6z66HjBxvLrQxYONwiJypn2wlIG6dTxI50APNk5
+         0rqmDQEcmwTWZyYDrJRFNKSFX9dZHt5xXxwNEN+QmJH7GgdzGStfeGMIpEuanZNwINGb
+         e+3GMnQoyLbFn70Wg3zpnIOVPbrcxJr1NjzjqJVFakMNwRJGRhTruq6R/VSqg+FAViJ1
+         opKd4lFS63d6n5FrmRvd9a6GDlwAeyvdxbXZb/8QrHLa/4nqRBVnNL7urnUg0h/Gc0DD
+         nLCQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=OwoCSmfxLGjvt1o0N+0EiCnK4lbyycGM//QYdUZDGlU=;
+        b=GQC5EJxa7F/BivTC3gcBUaGOG9k0hi92WCAii/dxembcfJZOm63ugHk2gGBul/6jFS
+         3X91nXP5jkGLR72hazlREjxtsoTcXZHzG96fe2LdpXG2f4sLKBWZ8DMYdnH4DA0isP+9
+         +PZS1hi3uPwbvEIWQO9NL6XCD8BG4TxSQ4UENq9pteGFsLZC90drsaglR4VUFaB85q4N
+         DSC9rSNbpUO9v4or9Gp7TqeAnOlb7s53rp4nM+CJhfMJ6umLXelYdLPd7Kjjlkjj/7TM
+         ftWi5422Idq+y3L7LGAWPjPNEtv9VP71ENlN4KvG675hrQZ6JRDSgE580G2/XhDJO+Pd
+         G3WA==
+X-Gm-Message-State: AOAM533JwJ6dG86OX3NHNAS5yyv/ZGK21r3x53PbAw9vUj/ql2v80VFp
+        38ppbi/pGDKl+6rroiJwNna89zKuhNp9Uad4
+X-Google-Smtp-Source: ABdhPJyK6GFnxxaPzlRZzyqp1dUcsyX1BZVo9YC5jkTtBCuubAbjnNvASa8/UOvQO+5ydWM8eAcE4A==
+X-Received: by 2002:a05:651c:10cc:: with SMTP id l12mr1934994ljn.351.1602000328219;
+        Tue, 06 Oct 2020 09:05:28 -0700 (PDT)
+Received: from localhost.localdomain (h-98-128-180-91.NA.cust.bahnhof.se. [98.128.180.91])
+        by smtp.gmail.com with ESMTPSA id c16sm640925lfc.304.2020.10.06.09.05.26
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 06 Oct 2020 09:05:27 -0700 (PDT)
+From:   Ulf Hansson <ulf.hansson@linaro.org>
+To:     "Rafael J . Wysocki" <rjw@rjwysocki.net>,
+        Nishanth Menon <nm@ti.com>, linux-pm@vger.kernel.org
+Cc:     Aaro Koskinen <aaro.koskinen@iki.fi>,
+        Tony Lindgren <tony@atomide.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Niklas Cassel <nks@flawful.org>,
+        Heiko Stuebner <heiko@sntech.de>,
+        Ulf Hansson <ulf.hansson@linaro.org>,
+        Kevin Hilman <khilman@kernel.org>,
+        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org
+Subject: [PATCH 1/4] power: avs: qcom-cpr: Move the driver to the qcom specific drivers
+Date:   Tue,  6 Oct 2020 18:05:13 +0200
+Message-Id: <20201006160516.319830-2-ulf.hansson@linaro.org>
+X-Mailer: git-send-email 2.25.1
+In-Reply-To: <20201006160516.319830-1-ulf.hansson@linaro.org>
+References: <20201006160516.319830-1-ulf.hansson@linaro.org>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Venkata Lakshmi Narayana Gubba <gubbaven@codeaurora.org>
+The avs drivers are all SoC specific drivers that doesn't share any code.
+Instead they are located in a directory, mostly to keep similar
+functionality together. From a maintenance point of view, it makes better
+sense to collect SoC specific drivers like these, into the SoC specific
+directories.
 
-Currently qca_suspend() is relied on IBS mechanism. During
-FW download and memory dump collections, IBS will be disabled.
-In those cases, driver will allow suspend and still uses the
-serdev port, which results to errors. Now added a wait timeout
-if suspend is triggered during FW download and memory collections.
+Therefore, let's move the qcom-cpr driver to the qcom directory.
 
-Signed-off-by: Venkata Lakshmi Narayana Gubba <gubbaven@codeaurora.org>
-Signed-off-by: Balakrishna Godavarthi <bgodavar@codeaurora.org>
+Cc: Niklas Cassel <nks@flawful.org>
+Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc: Andy Gross <agross@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 ---
- drivers/bluetooth/hci_qca.c | 48 ++++++++++++++++++++++++++++++++++++---------
- 1 file changed, 39 insertions(+), 9 deletions(-)
+ MAINTAINERS                                      |  2 +-
+ drivers/power/avs/Kconfig                        | 16 ----------------
+ drivers/power/avs/Makefile                       |  1 -
+ drivers/soc/qcom/Kconfig                         | 16 ++++++++++++++++
+ drivers/soc/qcom/Makefile                        |  1 +
+ drivers/{power/avs/qcom-cpr.c => soc/qcom/cpr.c} |  0
+ 6 files changed, 18 insertions(+), 18 deletions(-)
+ rename drivers/{power/avs/qcom-cpr.c => soc/qcom/cpr.c} (100%)
 
-diff --git a/drivers/bluetooth/hci_qca.c b/drivers/bluetooth/hci_qca.c
-index 3d13002..652a84c 100644
---- a/drivers/bluetooth/hci_qca.c
-+++ b/drivers/bluetooth/hci_qca.c
-@@ -50,6 +50,8 @@
- #define IBS_HOST_TX_IDLE_TIMEOUT_MS	2000
- #define CMD_TRANS_TIMEOUT_MS		100
- #define MEMDUMP_TIMEOUT_MS		8000
-+#define IBS_DISABLE_SSR_TIMEOUT_MS	(MEMDUMP_TIMEOUT_MS + 1000)
-+#define FW_DOWNLOAD_TIMEOUT_MS		3000
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 4f1a56f6efaa..f51dd1944fe6 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -14337,7 +14337,7 @@ L:	linux-pm@vger.kernel.org
+ L:	linux-arm-msm@vger.kernel.org
+ S:	Maintained
+ F:	Documentation/devicetree/bindings/power/avs/qcom,cpr.txt
+-F:	drivers/power/avs/qcom-cpr.c
++F:	drivers/soc/qcom/cpr.c
  
- /* susclk rate */
- #define SUSCLK_RATE_32KHZ	32768
-@@ -68,12 +70,13 @@
- #define QCA_MEMDUMP_BYTE		0xFB
+ QUALCOMM CPUFREQ DRIVER MSM8996/APQ8096
+ M:	Ilia Lin <ilia.lin@kernel.org>
+diff --git a/drivers/power/avs/Kconfig b/drivers/power/avs/Kconfig
+index cdb4237bfd02..089b6244b716 100644
+--- a/drivers/power/avs/Kconfig
++++ b/drivers/power/avs/Kconfig
+@@ -12,22 +12,6 @@ menuconfig POWER_AVS
  
- enum qca_flags {
--	QCA_IBS_ENABLED,
-+	QCA_IBS_DISABLED,
- 	QCA_DROP_VENDOR_EVENT,
- 	QCA_SUSPENDING,
- 	QCA_MEMDUMP_COLLECTION,
- 	QCA_HW_ERROR_EVENT,
--	QCA_SSR_TRIGGERED
-+	QCA_SSR_TRIGGERED,
-+	QCA_BT_OFF
- };
+ 	  Say Y here to enable Adaptive Voltage Scaling class support.
  
- enum qca_capabilities {
-@@ -871,7 +874,7 @@ static int qca_enqueue(struct hci_uart *hu, struct sk_buff *skb)
- 	 * Out-Of-Band(GPIOs control) sleep is selected.
- 	 * Don't wake the device up when suspending.
- 	 */
--	if (!test_bit(QCA_IBS_ENABLED, &qca->flags) ||
-+	if (test_bit(QCA_IBS_DISABLED, &qca->flags) ||
- 	    test_bit(QCA_SUSPENDING, &qca->flags)) {
- 		skb_queue_tail(&qca->txq, skb);
- 		spin_unlock_irqrestore(&qca->hci_ibs_lock, flags);
-@@ -1016,7 +1019,7 @@ static void qca_controller_memdump(struct work_struct *work)
- 			 * the controller to send the dump is 8 seconds. let us
- 			 * start timer to handle this asynchronous activity.
- 			 */
--			clear_bit(QCA_IBS_ENABLED, &qca->flags);
-+			set_bit(QCA_IBS_DISABLED, &qca->flags);
- 			set_bit(QCA_MEMDUMP_COLLECTION, &qca->flags);
- 			dump = (void *) skb->data;
- 			dump_size = __le32_to_cpu(dump->dump_size);
-@@ -1620,6 +1623,7 @@ static int qca_power_on(struct hci_dev *hdev)
- 	struct hci_uart *hu = hci_get_drvdata(hdev);
- 	enum qca_btsoc_type soc_type = qca_soc_type(hu);
- 	struct qca_serdev *qcadev;
-+	struct qca_data *qca = hu->priv;
- 	int ret = 0;
+-config QCOM_CPR
+-	tristate "QCOM Core Power Reduction (CPR) support"
+-	depends on POWER_AVS && HAS_IOMEM
+-	select PM_OPP
+-	select REGMAP
+-	help
+-	  Say Y here to enable support for the CPR hardware found on Qualcomm
+-	  SoCs like QCS404.
+-
+-	  This driver populates CPU OPPs tables and makes adjustments to the
+-	  tables based on feedback from the CPR hardware. If you want to do
+-	  CPUfrequency scaling say Y here.
+-
+-	  To compile this driver as a module, choose M here: the module will
+-	  be called qcom-cpr
+-
+ config ROCKCHIP_IODOMAIN
+ 	tristate "Rockchip IO domain support"
+ 	depends on POWER_AVS && ARCH_ROCKCHIP && OF
+diff --git a/drivers/power/avs/Makefile b/drivers/power/avs/Makefile
+index 9007d05853e2..a1b8cd453f19 100644
+--- a/drivers/power/avs/Makefile
++++ b/drivers/power/avs/Makefile
+@@ -1,4 +1,3 @@
+ # SPDX-License-Identifier: GPL-2.0-only
+ obj-$(CONFIG_POWER_AVS_OMAP)		+= smartreflex.o
+-obj-$(CONFIG_QCOM_CPR)			+= qcom-cpr.o
+ obj-$(CONFIG_ROCKCHIP_IODOMAIN)		+= rockchip-io-domain.o
+diff --git a/drivers/soc/qcom/Kconfig b/drivers/soc/qcom/Kconfig
+index 3dc3e3d61ea3..6a3b69b43ad5 100644
+--- a/drivers/soc/qcom/Kconfig
++++ b/drivers/soc/qcom/Kconfig
+@@ -26,6 +26,22 @@ config QCOM_COMMAND_DB
+ 	  resource on a RPM-hardened platform must use this database to get
+ 	  SoC specific identifier and information for the shared resources.
  
- 	/* Non-serdev device usually is powered by external power
-@@ -1639,6 +1643,7 @@ static int qca_power_on(struct hci_dev *hdev)
- 		}
- 	}
- 
-+	clear_bit(QCA_BT_OFF, &qca->flags);
- 	return ret;
- }
- 
-@@ -1658,7 +1663,7 @@ static int qca_setup(struct hci_uart *hu)
- 		return ret;
- 
- 	/* Patch downloading has to be done without IBS mode */
--	clear_bit(QCA_IBS_ENABLED, &qca->flags);
-+	set_bit(QCA_IBS_DISABLED, &qca->flags);
- 
- 	/* Enable controller to do both LE scan and BR/EDR inquiry
- 	 * simultaneously.
-@@ -1707,7 +1712,7 @@ static int qca_setup(struct hci_uart *hu)
- 	ret = qca_uart_setup(hdev, qca_baudrate, soc_type, soc_ver,
- 			firmware_name);
- 	if (!ret) {
--		set_bit(QCA_IBS_ENABLED, &qca->flags);
-+		clear_bit(QCA_IBS_DISABLED, &qca->flags);
- 		qca_debugfs_init(hdev);
- 		hu->hdev->hw_error = qca_hw_error;
- 		hu->hdev->cmd_timeout = qca_cmd_timeout;
-@@ -1813,7 +1818,7 @@ static void qca_power_shutdown(struct hci_uart *hu)
- 	 * data in skb's.
- 	 */
- 	spin_lock_irqsave(&qca->hci_ibs_lock, flags);
--	clear_bit(QCA_IBS_ENABLED, &qca->flags);
-+	set_bit(QCA_IBS_DISABLED, &qca->flags);
- 	qca_flush(hu);
- 	spin_unlock_irqrestore(&qca->hci_ibs_lock, flags);
- 
-@@ -1833,6 +1838,8 @@ static void qca_power_shutdown(struct hci_uart *hu)
- 	} else if (qcadev->bt_en) {
- 		gpiod_set_value_cansleep(qcadev->bt_en, 0);
- 	}
++config QCOM_CPR
++	tristate "QCOM Core Power Reduction (CPR) support"
++	depends on ARCH_QCOM && HAS_IOMEM
++	select PM_OPP
++	select REGMAP
++	help
++	  Say Y here to enable support for the CPR hardware found on Qualcomm
++	  SoCs like QCS404.
 +
-+	set_bit(QCA_BT_OFF, &qca->flags);
- }
- 
- static int qca_power_off(struct hci_dev *hdev)
-@@ -2082,11 +2089,34 @@ static int __maybe_unused qca_suspend(struct device *dev)
- 	bool tx_pending = false;
- 	int ret = 0;
- 	u8 cmd;
-+	u32 wait_timeout = 0;
- 
- 	set_bit(QCA_SUSPENDING, &qca->flags);
- 
--	/* Device is downloading patch or doesn't support in-band sleep. */
--	if (!test_bit(QCA_IBS_ENABLED, &qca->flags))
-+	if (test_bit(QCA_BT_OFF, &qca->flags))
-+		return 0;
++	  This driver populates CPU OPPs tables and makes adjustments to the
++	  tables based on feedback from the CPR hardware. If you want to do
++	  CPUfrequency scaling say Y here.
 +
-+	if (test_bit(QCA_IBS_DISABLED, &qca->flags)) {
-+		wait_timeout = test_bit(QCA_SSR_TRIGGERED, &qca->flags) ?
-+					IBS_DISABLE_SSR_TIMEOUT_MS :
-+					FW_DOWNLOAD_TIMEOUT_MS;
++	  To compile this driver as a module, choose M here: the module will
++	  be called qcom-cpr
 +
-+		/* QCA_IBS_DISABLED flag is set to true, During FW download
-+		 * and during memory dump collection. It is reset to false,
-+		 * After FW download complete and after memory dump collections.
-+		 */
-+		wait_on_bit_timeout(&qca->flags, QCA_IBS_DISABLED,
-+			    TASK_UNINTERRUPTIBLE, msecs_to_jiffies(wait_timeout));
-+
-+		if (test_bit(QCA_IBS_DISABLED, &qca->flags)) {
-+			bt_dev_err(hu->hdev, "SSR or FW download time out");
-+			ret = -ETIMEDOUT;
-+			goto error;
-+		}
-+	}
-+
-+	/* After memory dump collection, Controller is powered off.*/
-+	if (test_bit(QCA_BT_OFF, &qca->flags))
- 		return 0;
- 
- 	cancel_work_sync(&qca->ws_awake_device);
+ config QCOM_GENI_SE
+ 	tristate "QCOM GENI Serial Engine Driver"
+ 	depends on ARCH_QCOM || COMPILE_TEST
+diff --git a/drivers/soc/qcom/Makefile b/drivers/soc/qcom/Makefile
+index 93392d9dc7f7..ad675a6593d0 100644
+--- a/drivers/soc/qcom/Makefile
++++ b/drivers/soc/qcom/Makefile
+@@ -3,6 +3,7 @@ CFLAGS_rpmh-rsc.o := -I$(src)
+ obj-$(CONFIG_QCOM_AOSS_QMP) +=	qcom_aoss.o
+ obj-$(CONFIG_QCOM_GENI_SE) +=	qcom-geni-se.o
+ obj-$(CONFIG_QCOM_COMMAND_DB) += cmd-db.o
++obj-$(CONFIG_QCOM_CPR)		+= cpr.o
+ obj-$(CONFIG_QCOM_GSBI)	+=	qcom_gsbi.o
+ obj-$(CONFIG_QCOM_MDT_LOADER)	+= mdt_loader.o
+ obj-$(CONFIG_QCOM_OCMEM)	+= ocmem.o
+diff --git a/drivers/power/avs/qcom-cpr.c b/drivers/soc/qcom/cpr.c
+similarity index 100%
+rename from drivers/power/avs/qcom-cpr.c
+rename to drivers/soc/qcom/cpr.c
 -- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project
+2.25.1
 
