@@ -2,185 +2,138 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id AE53E284A89
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Oct 2020 12:59:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6C945284C6C
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Oct 2020 15:21:10 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725906AbgJFK7K (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 6 Oct 2020 06:59:10 -0400
-Received: from foss.arm.com ([217.140.110.172]:44582 "EHLO foss.arm.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725891AbgJFK7K (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 6 Oct 2020 06:59:10 -0400
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 74ECC1435;
-        Tue,  6 Oct 2020 03:59:25 -0700 (PDT)
-Received: from e107158-lin.cambridge.arm.com (e107158-lin.cambridge.arm.com [10.1.195.21])
-        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 21C013F66B;
-        Tue,  6 Oct 2020 03:59:24 -0700 (PDT)
-Date:   Tue, 6 Oct 2020 11:59:21 +0100
-From:   Qais Yousef <qais.yousef@arm.com>
-To:     Rob Clark <robdclark@gmail.com>
-Cc:     dri-devel <dri-devel@lists.freedesktop.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Tejun Heo <tj@kernel.org>, Tim Murray <timmurray@google.com>,
+        id S1725906AbgJFNVJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 6 Oct 2020 09:21:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53388 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725891AbgJFNVJ (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 6 Oct 2020 09:21:09 -0400
+Received: from mail-qk1-x741.google.com (mail-qk1-x741.google.com [IPv6:2607:f8b0:4864:20::741])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EE7D9C061755
+        for <linux-arm-msm@vger.kernel.org>; Tue,  6 Oct 2020 06:21:08 -0700 (PDT)
+Received: by mail-qk1-x741.google.com with SMTP id s7so10641440qkh.11
+        for <linux-arm-msm@vger.kernel.org>; Tue, 06 Oct 2020 06:21:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=marek-ca.20150623.gappssmtp.com; s=20150623;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=YRYuE1oST5rCsSRo3ftJBgKrW6I4XszeRlUEeyGTNfA=;
+        b=BFD//pwAX/64KPt0LEII7XnZhATo+5u4Ci1QUGZnXAvcyoZpf216nBIukB8S0lNR+o
+         /SBnsKFNycdO4FaqhrrvOl8q9yUCUD0kMtxCFrm+T3BuOtGJqNoq/vuatu/yUwFaui3W
+         wG/q9rVWqGvQF3DH1sF8weJvvvE2/FsOJioQK368BV9SL2poAmn8GeN+if4sevucB6tf
+         8BV+2/e4V/R+9zg6ETBTYxp+Q6woapII4/lMg/2r2Ql9+NA7asVIWxgARtsMmyYoMq2K
+         YKB5J7l4MgFdsyryEbJBhC2DmC2IwuvI3od1/Cu2zgJfsaaVHr58x1zSeFV0fZQiWrdf
+         Hg/Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=YRYuE1oST5rCsSRo3ftJBgKrW6I4XszeRlUEeyGTNfA=;
+        b=eVdvmSZxhmMN8K/Ec4xlNN69YV4TctykbicCKG5EhzKCFhVH/NnAn9e7KqNlf3HMZO
+         wuLzAlJCQXGjLP3mJZzH7PZF++g2hToieCGnmi7ZIELy51ceNJU1JO7OSzqy3xKIGWOH
+         4pylbncXhPrhyV6FQRx79OT3jNeaSpTHyaB071BV6ZzuPoNtDRYzQBHuBa7g56nnShnL
+         JSenXJYEecJNq7iP9tw/1P8el4wN4QKtZK2Moih2RTp7fjGeqr9I9JuNpLn/88eFkDBf
+         KcFeRrSYtcM/IKyR7URP+KdDrE0kb2nq63cR4IG/6xhxqLGZ7msycxbDxhZHmZcuwyqI
+         MigQ==
+X-Gm-Message-State: AOAM531IfP0fG1XGs3VSAejJvRFP4T0qER0fAFVpnmVjVmPxiBPBSW+T
+        GRR78huVIvft3CGaPpO0P0VtbQ==
+X-Google-Smtp-Source: ABdhPJw4Z7YWS8t/L1IK8utu6wKe+vRmf2v1MdzI4qau8wJptX2TFHJ6aQoGZURrxgM6eCoWFpwqPw==
+X-Received: by 2002:a05:620a:1287:: with SMTP id w7mr2490783qki.335.1601990468080;
+        Tue, 06 Oct 2020 06:21:08 -0700 (PDT)
+Received: from [192.168.0.189] ([147.253.86.153])
+        by smtp.gmail.com with ESMTPSA id 192sm2477887qkm.110.2020.10.06.06.21.06
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 06 Oct 2020 06:21:07 -0700 (PDT)
+Subject: Re: [PATCH 2/3] drm/msm: add DRM_MSM_GEM_SYNC_CACHE for non-coherent
+ cache maintenance
+To:     Christoph Hellwig <hch@infradead.org>
+Cc:     freedreno@lists.freedesktop.org, Rob Clark <robdclark@gmail.com>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
         Daniel Vetter <daniel@ffwll.ch>,
-        Rob Clark <robdclark@chromium.org>,
+        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
+        <linux-arm-msm@vger.kernel.org>,
+        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
+        <dri-devel@lists.freedesktop.org>,
         open list <linux-kernel@vger.kernel.org>,
-        Steven Rostedt <rostedt@goodmis.org>,
-        "Peter Zijlstra (Intel)" <peterz@infradead.org>
-Subject: Re: [PATCH v2 0/3] drm: commit_work scheduling
-Message-ID: <20201006105918.v3xspb6xasjyy5ky@e107158-lin.cambridge.arm.com>
-References: <20200930211723.3028059-1-robdclark@gmail.com>
- <20201002110105.e56qrvzoqfioi4hs@e107158-lin.cambridge.arm.com>
- <CAF6AEGvWMvZuy7CcGhzUSbwGtEkrNkzWHu_BN1cbdBJdZtvevA@mail.gmail.com>
- <20201005150024.mchfdtd62rlkuh4s@e107158-lin.cambridge.arm.com>
- <CAF6AEGs7NmCPyLdg+gg5jTTe-wgi2myRQ80tum6odv6tLLQ0DQ@mail.gmail.com>
+        iommu@lists.linux-foundation.org, Joerg Roedel <joro@8bytes.org>,
+        Robin Murphy <robin.murphy@arm.com>
+References: <20201001002709.21361-1-jonathan@marek.ca>
+ <20201001002709.21361-3-jonathan@marek.ca>
+ <20201002075321.GA7547@infradead.org>
+ <b22fb797-67b0-a912-1d23-2b47c9a9e674@marek.ca>
+ <20201005082914.GA31702@infradead.org>
+ <3e0b91be-e4a4-4ea5-7d58-6e71b8d51932@marek.ca>
+ <20201006072306.GA12834@infradead.org>
+From:   Jonathan Marek <jonathan@marek.ca>
+Message-ID: <148a1660-f0fc-7163-2240-6b94725342b5@marek.ca>
+Date:   Tue, 6 Oct 2020 09:19:32 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.2.2
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CAF6AEGs7NmCPyLdg+gg5jTTe-wgi2myRQ80tum6odv6tLLQ0DQ@mail.gmail.com>
-User-Agent: NeoMutt/20171215
+In-Reply-To: <20201006072306.GA12834@infradead.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 10/05/20 16:24, Rob Clark wrote:
-
-[...]
-
-> > RT planning and partitioning is not easy task for sure. You might want to
-> > consider using affinities too to get stronger guarantees for some tasks and
-> > prevent cross-talking.
+On 10/6/20 3:23 AM, Christoph Hellwig wrote:
+> On Mon, Oct 05, 2020 at 10:35:43AM -0400, Jonathan Marek wrote:
+>> The cache synchronization doesn't have anything to do with IOMMU (for
+>> example: cache synchronization would be useful in cases where drm/msm
+>> doesn't use IOMMU).
 > 
-> There is some cgroup stuff that is pinning SF and some other stuff to
-> the small cores, fwiw.. I think the reasoning is that they shouldn't
-> be doing anything heavy enough to need the big cores.
-
-Ah, so you're on big.LITTLE type of system. I have done some work which enables
-biasing RT tasks towards big cores and control the default boost value if you
-have util_clamp and schedutil enabled. You can use util_clamp in general to
-help with DVFS related response time delays.
-
-I haven't done any work to try our best to pick a small core first but fallback
-to big if there's no other alternative.
-
-It'd be interesting to know how often you end up on a big core if you remove
-the affinity. The RT scheduler picks the first cpu in the lowest priority mask.
-So it should have this bias towards picking smaller cores first if they're
-in the lower priority mask (ie: not running higher priority RT tasks).
-
-So unless you absolutely don't want any RT tasks on a big cores, it'd be worth
-removing this affinity and check the percentage of time you spend on little
-cores. This should help with your worst case scenario as you make more cpus
-available.
-
-> > > run ASAP once fences are signalled, and vblank_work to run at a
-> > > slightly higher priority still.  But the correct choice for priorities
-> > > here depends on what userspace is using, it all needs to fit together
-> > > properly.
-> >
-> > By userspace here I think you mean none display pipeline related RT tasks that
-> > you need to coexit with and could still disrupt your pipeline?
+> It has to do with doing DMA.  And we have two frameworks for doing DMA:
+> either the DMA API which is for general driver use, and which as part of
+> the design includes cache maintainance hidden behind the concept of
+> ownership transfers.  And we have the much more bare bones IOMMU API.
 > 
-> I mean, commit_work should be higher priority than the other (display
-> related) RT tasks.  But the kernel doesn't know what those priorities
-> are.
-
-So if you set commit_work to sched_set_fifo(), it'd be at a reasonably high
-priority (50) by default. Which means you just need to manage your SF
-priorities without having to change commit_work priority itself?
-
+> If people want to use the "raw" IOMMU API with not cache coherent
+> devices we'll need a cache maintainance API that goes along with it.
+> It could either be formally part of the IOMMU API or be separate.
 > 
-> > Using RT on Gerneral Purpose System is hard for sure. One of the major
-> > challenge is that there's no admin that has full view of the system to do
-> > proper RT planning.
-> >
-> > We need proper RT balancer daemon that helps partitioning the system for
-> > multiple RT apps on these systems..
-> >
-> > >
-> > > >
-> > > > I do appreciate that maybe some of these tasks have varying requirements during
-> > > > their life time. e.g: they have RT property during specific critical section
-> > > > but otherwise are CFS tasks. I think the UI thread in Android behaves like
-> > > > that.
-> > > >
-> > > > It's worth IMO trying that approach I pointed out earlier to see if making RT
-> > > > try to pick an idle CPU rather than preempt CFS helps. Not sure if it'd be
-> > > > accepted but IMHO it's a better direction to consider and discuss.
-> > >
-> > > The problem I was seeing was actually the opposite..  commit_work
-> > > becomes runnable (fences signalled) but doesn't get a chance to run
-> > > because a SCHED_FIFO SF thread is running.  (Maybe I misunderstood and
-> > > you're approach would help this case too?)
-> >
-> > Ah okay. Sorry I got it the wrong way around for some reason. I thought this
-> > task is preempting other CFS-based pipelined tasks.
-> >
-> > So your system seems to be overcomitted. Is SF short for SufraceFlinger? Under
-> > what scenarios do you have many SurfaceFlinger tasks? On Android I remember
-> > seeing they have priority of 1 or 2.
+>> What is needed is to call arch_sync_dma_for_{cpu,device} (which is what I
+>> went with initially, but then decided to re-use drm/msm's
+>> sync_for_{cpu,device}). But you are also saying those functions aren't for
+>> driver use, and I doubt IOMMU maintainers will want to add wrappers for
+>> these functions just to satisfy this "not for driver use" requirement.
 > 
-> yeah, SF==SurfaceFlinger, and yeah, 1 and 2..
+> arch_sync_dma_for_{cpu,device} are low-level helpers (and not very
+> great ones at that).  The definitively should not be used by drivers.
+> They would be very useful buildblocks for a IOMMU cache maintainance
+> API.
 > 
-> > sched_set_fifo() will use priority 50. If you set all your pipeline tasks
-> > to this priority, what happens?
+> Of course the best outcome would be if we could find a way for the MSM
+> drm driver to just use DMA API and not deal with the lower level
+> abstractions.  Do you remember why the driver went for use of the IOMMU
+> API?
 > 
-> I think this would work.. drm/msm doesn't use vblank work, so I
-> wouldn't really have problems with commit_work preempting vblank_work.
-> But I think the best option (and to handle the case if android changes
-> the RT priorties around in the future) is to let userspace set the
-> priorities.
 
-I don't really mind. But it seems better for me if we know that two kernel
-threads need to have a specific relative priorities to each others then to
-handle this in the kernel properly. Userspace will only need then to worry
-about managing its *own* priorities relative to that.
+One example why drm/msm can't use DMA API is multiple page table support 
+(that is landing in 5.10), which is something that definitely couldn't 
+work with DMA API.
 
-Just seen Peter suggesting in another email to use SCHED_DEADLINE for vblank
-work. Which I think achieves the above if commit_work uses sched_set_fifo().
+Another one is being able to choose the address for mappings, which 
+AFAIK DMA API can't do (somewhat related to this: qcom hardware often 
+has ranges of allowed addresses, which the dma_mask mechanism fails to 
+represent, what I see is drivers using dma_mask as a "maximum address", 
+and since addresses are allocated from the top it generally works)
 
-> 
-> > >
-> > > > Or maybe you can wrap userspace pipeline critical section lock such that any
-> > > > task holding it will automatically be promoted to SCHED_FIFO and then demoted
-> > > > to CFS once it releases it.
-> > >
-> > > The SCHED_DEADLINE + token passing approach that the lwn article
-> > > mentioned sounds interesting, if that eventually becomes possible.
-> > > But doesn't really help today..
-> >
-> > We were present in the room with Alessio when he gave that talk :-)
-> >
-> > You might have seen Valentin's talk in LPC where he's trying to get
-> > proxy-execution into shape. Which is a pre-requisite to enable using of
-> > SCHED_DEADLINE for these scenarios. IIRC it should allow all dependent tasks to
-> > run from the context of the deadline task during the display pipeline critical
-> > section.
-> >
-> > By the way, do you have issues with SoftIrqs delaying your RT tasks execution
-> > time?
-> 
-> I don't *think* so, but I'm not 100% sure if they are showing up in
+But let us imagine drm/msm switches to using DMA API. a2xx GPUs have 
+their own very basic MMU (implemented by msm_gpummu.c), that will need 
+to implement dma_map_ops, which will have to call 
+arch_sync_dma_for_{cpu,device}. So drm/msm still needs to call 
+arch_sync_dma_for_{cpu,device} in that scenario.
 
-If you ever get a chance to run a high network throughput test, it might help
-to see if softirqs are affecting you. I know Android has issues with this under
-some circumstances.
 
-> traces.  So far it seems like SF stomping on commit_work.  (There is
-> the added complication that there are some chrome gpu-process tasks in
-> between SF and the display, including CrGpuMain (which really doesn't
-> want to be SCHED_FIFO when executing gl commands on behalf of
-> something unrelated to the compositor.. the deadline approach, IIUC,
-> might be the better option eventually for this?)
 
-If you meant sched_deadline + token approach, then yeah I think it'd be better.
-But as you said, we can't do this yet :/
 
-But as Peter pointed out, this doesn't mean you can't use SCHED_DEADLINE at all
-if it does make sense.
 
-Thanks
 
---
-Qais Yousef
+
