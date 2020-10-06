@@ -2,145 +2,147 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B8ED12845FF
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Oct 2020 08:27:09 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 175FC284618
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Oct 2020 08:33:35 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726822AbgJFG1E (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 6 Oct 2020 02:27:04 -0400
-Received: from hqnvemgate26.nvidia.com ([216.228.121.65]:8461 "EHLO
-        hqnvemgate26.nvidia.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725962AbgJFG1E (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 6 Oct 2020 02:27:04 -0400
-Received: from hqmail.nvidia.com (Not Verified[216.228.121.13]) by hqnvemgate26.nvidia.com (using TLS: TLSv1.2, AES256-SHA)
-        id <B5f7c0e290000>; Mon, 05 Oct 2020 23:26:49 -0700
-Received: from [10.25.78.32] (172.20.13.39) by HQMAIL107.nvidia.com
- (172.20.187.13) with Microsoft SMTP Server (TLS) id 15.0.1473.3; Tue, 6 Oct
- 2020 06:26:39 +0000
-Subject: Re: [PATCH v2 0/5] PCI: dwc: improve msi handling
-To:     Jisheng Zhang <Jisheng.Zhang@synaptics.com>,
-        Kishon Vijay Abraham I <kishon@ti.com>,
-        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
-        Rob Herring <robh@kernel.org>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        Jingoo Han <jingoohan1@gmail.com>,
-        Kukjin Kim <kgene@kernel.org>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        Richard Zhu <hongxing.zhu@nxp.com>,
-        Lucas Stach <l.stach@pengutronix.de>,
-        Shawn Guo <shawnguo@kernel.org>,
-        Sascha Hauer <s.hauer@pengutronix.de>,
-        Pengutronix Kernel Team <kernel@pengutronix.de>,
-        Fabio Estevam <festevam@gmail.com>,
-        NXP Linux Team <linux-imx@nxp.com>,
-        "Yue Wang" <yue.wang@Amlogic.com>,
-        Kevin Hilman <khilman@baylibre.com>,
-        "Neil Armstrong" <narmstrong@baylibre.com>,
-        Jerome Brunet <jbrunet@baylibre.com>,
-        Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
-        Jesper Nilsson <jesper.nilsson@axis.com>,
-        Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
-        Xiaowei Song <songxiaowei@hisilicon.com>,
-        Binghui Wang <wangbinghui@hisilicon.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Stanimir Varbanov <svarbanov@mm-sol.com>,
-        Pratyush Anand <pratyush.anand@gmail.com>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Jonathan Hunter <jonathanh@nvidia.com>,
-        "Kunihiko Hayashi" <hayashi.kunihiko@socionext.com>,
-        Masahiro Yamada <yamada.masahiro@socionext.com>
-CC:     "linux-omap@vger.kernel.org" <linux-omap@vger.kernel.org>,
-        "linux-pci@vger.kernel.org" <linux-pci@vger.kernel.org>,
-        "linux-arm-kernel@lists.infradead.org" 
-        <linux-arm-kernel@lists.infradead.org>,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-        "linux-samsung-soc@vger.kernel.org" 
-        <linux-samsung-soc@vger.kernel.org>,
-        "linux-amlogic@lists.infradead.org" 
-        <linux-amlogic@lists.infradead.org>,
-        "linux-arm-kernel@axis.com" <linux-arm-kernel@axis.com>,
-        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
-        "linux-tegra@vger.kernel.org" <linux-tegra@vger.kernel.org>
-References: <20200924190421.549cb8fc@xhacker.debian>
-From:   Vidya Sagar <vidyas@nvidia.com>
-Message-ID: <b977d9b4-cc98-e817-0d51-8f2c6ba1445d@nvidia.com>
-Date:   Tue, 6 Oct 2020 11:56:34 +0530
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.2.1
-MIME-Version: 1.0
-In-Reply-To: <20200924190421.549cb8fc@xhacker.debian>
-Content-Type: text/plain; charset="utf-8"; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [172.20.13.39]
-X-ClientProxiedBy: HQMAIL107.nvidia.com (172.20.187.13) To
- HQMAIL107.nvidia.com (172.20.187.13)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nvidia.com; s=n1;
-        t=1601965609; bh=+klW06t1SRSkGS8ctt+a82sY0wQKshniw25tq0QSLaQ=;
-        h=Subject:To:CC:References:From:Message-ID:Date:User-Agent:
-         MIME-Version:In-Reply-To:Content-Type:Content-Language:
-         Content-Transfer-Encoding:X-Originating-IP:X-ClientProxiedBy;
-        b=AK0csA0Ad2YZWQjDqG6mpJBocxrJivGMWN4Ul4Khquqsz4sXDbayWAKH2+5u2Z3hb
-         Dwnnnmie9OTCA1ZI5fcvM10RVW6SwfJHdZN6r1gyuhgUp4wspP3HQiKKeaPJRlt6TS
-         ftqc47lNt61dYxJBT6XlkXDgwQYBcnZRalTTLs1O2CA9N1xHXNIzMp/9BCFgF/3j4d
-         FR/UwmF0Mrck4tf7j34h+cbH01kRo3EmTivl9RItdCJTzy1Ka9lt1SfGAsf/zUW7Wi
-         aU56gk+7gz9xzR1PbXKZ3xMUxaPWpmb7fA52h1f/jWv9XAwAZ3SE3V+Y+LHJj7Q+fE
-         l3eYB+DIUVnkA==
+        id S1726022AbgJFGde (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 6 Oct 2020 02:33:34 -0400
+Received: from z5.mailgun.us ([104.130.96.5]:21776 "EHLO z5.mailgun.us"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727074AbgJFGde (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 6 Oct 2020 02:33:34 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1601966013; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=5xFc9x9ZvdtmXRnb3aRKi6VRwlLNCRyrivsJzoEtGM8=; b=BI6VXQ1Jchzc9gXXSotgT4jv/IRWs8woPJ6hJWJLC5OXDuIDkJLtEuPTxSmhkHGky90zoOwn
+ B92PrpL7E2rG9dM8SiBHA0geASpi7NVG3V9u3erRFnA7NnRtQiD+INfXcC17+6BwaZEdyAJm
+ 7TP7b3n1eePrawMQnS7IbBKhMuc=
+X-Mailgun-Sending-Ip: 104.130.96.5
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n03.prod.us-east-1.postgun.com with SMTP id
+ 5f7c0fb4bfed2afaa651fcc5 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 06 Oct 2020 06:33:24
+ GMT
+Sender: bgodavar=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 429F9C433FE; Tue,  6 Oct 2020 06:33:23 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
+        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+Received: from bgodavar-linux.qualcomm.com (unknown [202.46.22.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: bgodavar)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 3F6F8C433CA;
+        Tue,  6 Oct 2020 06:33:19 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 3F6F8C433CA
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=bgodavar@codeaurora.org
+From:   Balakrishna Godavarthi <bgodavar@codeaurora.org>
+To:     marcel@holtmann.org, johan.hedberg@gmail.com
+Cc:     mka@chromium.org, linux-kernel@vger.kernel.org,
+        linux-bluetooth@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        gubbaven@codeaurora.org, hemantg@codeaurora.org,
+        abhishekpandit@chromium.org, rjliao@codeaurora.org,
+        Balakrishna Godavarthi <bgodavar@codeaurora.org>
+Subject: [PATCH v1] Bluetooth: hci_qca: Enhance retry logic in qca_setup
+Date:   Tue,  6 Oct 2020 11:59:27 +0530
+Message-Id: <1601965767-18796-1-git-send-email-bgodavar@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
-I would like to verify this series along with the other series "PCI: 
-dwc: fix two MSI issues" on Tegra194. I tried to apply these series on 
-both linux-next and Lorenzo's pci/dwc branches but there seem to be non 
-trivial conflicts. Could you please tell me which branch I can use and 
-apply these series cleanly?
-FWIW, I acknowledge that the existing code does leak MSI target page 
-every time system goes through suspend-resume sequence on Tegra194.
+Currently driver only retries to download FW if FW downloading
+is failed. Sometimes observed command timeout for version request
+command, if this happen on some platforms during boot time, then
+a reboot is needed to turn ON BT. Instead to avoid a reboot, now
+extended retry logic for version request command too.
 
-Thanks,
-Vidya Sagar
+Signed-off-by: Balakrishna Godavarthi <bgodavar@codeaurora.org>
+---
+ drivers/bluetooth/hci_qca.c | 34 ++++++++++++++++++----------------
+ 1 file changed, 18 insertions(+), 16 deletions(-)
 
-On 9/24/2020 4:35 PM, Jisheng Zhang wrote:
-> External email: Use caution opening links or attachments
-> 
-> 
-> Improve the msi code:
-> 1. Add proper error handling.
-> 2. Move dw_pcie_msi_init() from each users to designware host to solve
-> msi page leakage in resume path.
-> 
-> Since v1:
->    - add proper error handling patches.
->    - solve the msi page leakage by moving dw_pcie_msi_init() from each
->      users to designware host
-> 
-> 
-> Jisheng Zhang (5):
->    PCI: dwc: Call dma_unmap_page() before freeing the msi page
->    PCI: dwc: Check alloc_page() return value
->    PCI: dwc: Rename dw_pcie_free_msi to dw_pcie_msi_deinit
->    PCI: dwc: Skip PCIE_MSI_INTR0* programming if MSI is disabled
->    PCI: dwc: Move dw_pcie_msi_init() from each users to designware host
-> 
->   drivers/pci/controller/dwc/pci-dra7xx.c       |  1 +
->   drivers/pci/controller/dwc/pci-exynos.c       |  2 -
->   drivers/pci/controller/dwc/pci-imx6.c         |  3 --
->   drivers/pci/controller/dwc/pci-meson.c        |  8 ----
->   drivers/pci/controller/dwc/pcie-artpec6.c     | 10 -----
->   .../pci/controller/dwc/pcie-designware-host.c | 43 +++++++++++++------
->   .../pci/controller/dwc/pcie-designware-plat.c |  3 --
->   drivers/pci/controller/dwc/pcie-designware.h  |  9 +++-
->   drivers/pci/controller/dwc/pcie-histb.c       |  3 --
->   drivers/pci/controller/dwc/pcie-kirin.c       |  3 --
->   drivers/pci/controller/dwc/pcie-qcom.c        |  3 --
->   drivers/pci/controller/dwc/pcie-spear13xx.c   |  1 -
->   drivers/pci/controller/dwc/pcie-tegra194.c    |  2 -
->   drivers/pci/controller/dwc/pcie-uniphier.c    |  9 +---
->   14 files changed, 38 insertions(+), 62 deletions(-)
-> 
-> --
-> 2.28.0
-> 
+diff --git a/drivers/bluetooth/hci_qca.c b/drivers/bluetooth/hci_qca.c
+index 2d3f1f1..1c9a2d46 100644
+--- a/drivers/bluetooth/hci_qca.c
++++ b/drivers/bluetooth/hci_qca.c
+@@ -1672,7 +1672,7 @@ static int qca_setup(struct hci_uart *hu)
+ retry:
+ 	ret = qca_power_on(hdev);
+ 	if (ret)
+-		return ret;
++		goto out;
+ 
+ 	clear_bit(QCA_SSR_TRIGGERED, &qca->flags);
+ 
+@@ -1681,7 +1681,7 @@ static int qca_setup(struct hci_uart *hu)
+ 
+ 		ret = qca_read_soc_version(hdev, &soc_ver, soc_type);
+ 		if (ret)
+-			return ret;
++			goto out;
+ 	} else {
+ 		qca_set_speed(hu, QCA_INIT_SPEED);
+ 	}
+@@ -1691,7 +1691,7 @@ static int qca_setup(struct hci_uart *hu)
+ 	if (speed) {
+ 		ret = qca_set_speed(hu, QCA_OPER_SPEED);
+ 		if (ret)
+-			return ret;
++			goto out;
+ 
+ 		qca_baudrate = qca_get_baudrate_value(speed);
+ 	}
+@@ -1700,7 +1700,7 @@ static int qca_setup(struct hci_uart *hu)
+ 		/* Get QCA version information */
+ 		ret = qca_read_soc_version(hdev, &soc_ver, soc_type);
+ 		if (ret)
+-			return ret;
++			goto out;
+ 	}
+ 
+ 	bt_dev_info(hdev, "QCA controller version 0x%08x", soc_ver);
+@@ -1721,20 +1721,22 @@ static int qca_setup(struct hci_uart *hu)
+ 		 * patch/nvm-config is found, so run with original fw/config.
+ 		 */
+ 		ret = 0;
+-	} else {
+-		if (retries < MAX_INIT_RETRIES) {
+-			qca_power_shutdown(hu);
+-			if (hu->serdev) {
+-				serdev_device_close(hu->serdev);
+-				ret = serdev_device_open(hu->serdev);
+-				if (ret) {
+-					bt_dev_err(hdev, "failed to open port");
+-					return ret;
+-				}
++	}
++
++out:
++	if (ret && retries < MAX_INIT_RETRIES) {
++		bt_dev_warn(hdev, "Retry BT power ON:%d", retries);
++		qca_power_shutdown(hu);
++		if (hu->serdev) {
++			serdev_device_close(hu->serdev);
++			ret = serdev_device_open(hu->serdev);
++			if (ret) {
++				bt_dev_err(hdev, "failed to open port");
++				return ret;
+ 			}
+-			retries++;
+-			goto retry;
+ 		}
++		retries++;
++		goto retry;
+ 	}
+ 
+ 	/* Setup bdaddr */
+-- 
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
+
