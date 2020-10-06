@@ -2,134 +2,91 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 47420284A30
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Oct 2020 12:13:11 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0C2E5284A4E
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Oct 2020 12:29:12 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726060AbgJFKNK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 6 Oct 2020 06:13:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52688 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726075AbgJFKNK (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 6 Oct 2020 06:13:10 -0400
-Received: from mail-pf1-x444.google.com (mail-pf1-x444.google.com [IPv6:2607:f8b0:4864:20::444])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6CEA1C0613D1
-        for <linux-arm-msm@vger.kernel.org>; Tue,  6 Oct 2020 03:13:08 -0700 (PDT)
-Received: by mail-pf1-x444.google.com with SMTP id b26so5394933pff.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 06 Oct 2020 03:13:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=6uw1N7UWF96sWJaY9vam9SXfMcttrbkshU5+DLAI3Dg=;
-        b=PzvKOpxNm1skQxTigFsNiauFBTeC+iAJr6SDZhRsu8xn7EHf2IWIhQP7lU0DRtm4Qz
-         A+tMDBaQ6jdcxOcNTa3KdZX/IzjEC3SqCLn/dH8gc+h0r/FQXoshQCYhdJTkHXhsWocy
-         dRDTWXOcr3/hZNwndTFWpGIQzHJp+Ff3ztqBjURWte/nOxA3fmFo57nXhLnyFrSk3WGD
-         6hqmPiQXTbJxYkwEuzw8ZrmxkODGf41MPoXPrAZd+SpH+aqfF5fnx2c7AXnrh1nFPGaU
-         KQJrbJ3d8TWqlK1bClPtUHLnnoId0NAbiaIYb71HgM7lxMlGeVot55ibM+apW7D6FVjR
-         4QuQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=6uw1N7UWF96sWJaY9vam9SXfMcttrbkshU5+DLAI3Dg=;
-        b=QPFMQUcx0q9beT6WvGVnUoocI2CK0DVIoNaxUWHQOL+1JITnh9x0IsKD7NWyp9dbRo
-         FzMibgq0+o9eP7Vdu+R3vyvXaqvH733c3JvrUndF7At4t+PBHAXSv8omlggrk2jTC/m8
-         sQPmWobSnPXGXpBm+Iif6/FdW+KIs2wT+FsAMRUptJdM7kzRoMUhenZxLPwXm2m4gzVL
-         FLITBQkjDvWPZjkzhd7bwSX68hqbsTthCdhcCnB8iZUKr/KMObVD0IFf5MAE8jhQvgsr
-         ll+GNRkD7pDBgvRLNhmh+LwoBL+/ClqHl1fnZ8j+es+YAznfP5439Apo+F0jNCnlylNb
-         syBQ==
-X-Gm-Message-State: AOAM532nCLAazTSW87tRNlVmEpI0Elvt2ZstVBLFdlQoN3g5VmgLx8T+
-        GVsxjFJRE1pHoeRXLtlHA6uK
-X-Google-Smtp-Source: ABdhPJyFgKf3woKusGWc1qj6JOvJKKyzlPudg/T+w4L8YsNTdJnOvuvZRY0xPcgFu4nA1LIsvLM9Tg==
-X-Received: by 2002:a63:1647:: with SMTP id 7mr3365364pgw.446.1601979187779;
-        Tue, 06 Oct 2020 03:13:07 -0700 (PDT)
-Received: from Mani-XPS-13-9360 ([2409:4072:6e9d:8f58:948:749c:4eeb:26a])
-        by smtp.gmail.com with ESMTPSA id ep4sm2293143pjb.39.2020.10.06.03.13.02
-        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 06 Oct 2020 03:13:07 -0700 (PDT)
-Date:   Tue, 6 Oct 2020 15:42:59 +0530
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     Marc Gonzalez <marc.w.gonzalez@free.fr>
-Cc:     Stanimir Varbanov <svarbanov@mm-sol.com>,
-        Robin Murphy <robin.murphy@arm.com>, agross@kernel.org,
-        bjorn.andersson@linaro.org, kishon@ti.com, vkoul@kernel.org,
-        robh@kernel.org, bhelgaas@google.com, lorenzo.pieralisi@arm.com,
-        linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
-        mgautam@codeaurora.org
-Subject: Re: [PATCH v2 5/5] PCI: qcom: Add support for configuring BDF to SID
- mapping for SM8250
-Message-ID: <20201006101259.GA31305@Mani-XPS-13-9360>
-References: <20200930150925.31921-1-manivannan.sadhasivam@linaro.org>
- <20200930150925.31921-6-manivannan.sadhasivam@linaro.org>
- <507b3d50-6792-60b7-1ccd-f7b3031c20ac@mm-sol.com>
- <20201001055736.GB3203@Mani-XPS-13-9360>
- <e63b3ed4-d822-45dc-de60-23385fb45468@mm-sol.com>
- <1dd23bad-3bea-fb55-e1fb-05ea3497dfd3@free.fr>
+        id S1725943AbgJFK3L (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 6 Oct 2020 06:29:11 -0400
+Received: from mail.kernel.org ([198.145.29.99]:60760 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725891AbgJFK3K (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 6 Oct 2020 06:29:10 -0400
+Received: from disco-boy.misterjones.org (disco-boy.misterjones.org [51.254.78.96])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id CA15C20757;
+        Tue,  6 Oct 2020 10:29:09 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1601980150;
+        bh=cBWCt+A2bRIWJ+VhgHRDaDIaurfO5bRRNnXpUH907KU=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+        b=ojjSyzvEVSo/f69Ig7Ba0XozHpeJ2Q/EH6QfO7Z21WjRmQm/WQr+alLVFDmw0e8NE
+         JsOR/KobyvviaS+YCc4yX4u/dWd9QiX/jfAMPR1xSkmOzviX3+OiY1yYiyLWEKLHqX
+         8kJx49CZgmWOSONR6+V02O0tHq3LwhOe/B9E3NvE=
+Received: from 78.163-31-62.static.virginmediabusiness.co.uk ([62.31.163.78] helo=hot-poop.lan)
+        by disco-boy.misterjones.org with esmtpsa (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
+        (Exim 4.92)
+        (envelope-from <maz@kernel.org>)
+        id 1kPkDT-0002fR-No; Tue, 06 Oct 2020 11:29:07 +0100
+From:   Marc Zyngier <maz@kernel.org>
+To:     linus.walleij@linaro.org, evgreen@chromium.org, mka@chromium.org,
+        Maulik Shah <mkshah@codeaurora.org>, swboyd@chromium.org,
+        bjorn.andersson@linaro.org
+Cc:     ilina@codeaurora.org, linux-kernel@vger.kernel.org,
+        jason@lakedaemon.net, lsrao@codeaurora.org, tglx@linutronix.de,
+        rnayak@codeaurora.org, linux-gpio@vger.kernel.org,
+        agross@kernel.org, dianders@chromium.org,
+        linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH v6 0/6] irqchip: qcom: pdc: Introduce irq_set_wake call
+Date:   Tue,  6 Oct 2020 11:29:03 +0100
+Message-Id: <160198012786.3008417.11128455090479728901.b4-ty@kernel.org>
+X-Mailer: git-send-email 2.28.0
+In-Reply-To: <1601267524-20199-1-git-send-email-mkshah@codeaurora.org>
+References: <1601267524-20199-1-git-send-email-mkshah@codeaurora.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1dd23bad-3bea-fb55-e1fb-05ea3497dfd3@free.fr>
-User-Agent: Mutt/1.9.4 (2018-02-28)
+Content-Transfer-Encoding: 8bit
+X-SA-Exim-Connect-IP: 62.31.163.78
+X-SA-Exim-Rcpt-To: linus.walleij@linaro.org, evgreen@chromium.org, mka@chromium.org, mkshah@codeaurora.org, swboyd@chromium.org, bjorn.andersson@linaro.org, ilina@codeaurora.org, linux-kernel@vger.kernel.org, jason@lakedaemon.net, lsrao@codeaurora.org, tglx@linutronix.de, rnayak@codeaurora.org, linux-gpio@vger.kernel.org, agross@kernel.org, dianders@chromium.org, linux-arm-msm@vger.kernel.org
+X-SA-Exim-Mail-From: maz@kernel.org
+X-SA-Exim-Scanned: No (on disco-boy.misterjones.org); SAEximRunCond expanded to false
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
-
-On Tue, Oct 06, 2020 at 10:15:08AM +0200, Marc Gonzalez wrote:
-> On 01/10/2020 12:57, Stanimir Varbanov wrote:
+On Mon, 28 Sep 2020 10:01:58 +0530, Maulik Shah wrote:
+> Changes in v6:
+> - Update commit message more descriptive in v5 patch 1
+> - Symmetrically enable/disable wakeirqs during suspend/resume in v5 patch 3
+> - Include Acked-by and Reviewed-by tags from v5 series
 > 
-> > On 10/1/20 8:57 AM, Manivannan Sadhasivam wrote:
-> >
-> >> On Thu, Oct 01, 2020 at 12:46:46AM +0300, Stanimir Varbanov wrote:
-> >>
-
-[...]
-
-> >>> iommu-map is a standard DT property why we have to parse it manually?
-> >>>
-> >>
-> >> So right now we don't have a way to pass this information from DT. And there
-> >> is no IOMMU API to parse the fields also. We need to extract this information
-> >> to program the hash tables (BDF, SID) as the mapping between BDF and SID is not
-> >> 1:1 in SM8250.
-> > 
-> > We used iommu-map for msm8998 see this commit:
-> > 
-> > b84dfd175c09888751f501e471fdca346f582e06
-> > ("arm64: dts: qcom: msm8998: Add PCIe PHY and RC nodes")
-> > 
-> > I also Cc-ed Marc if he knows something more.
+> Changes in v5:
+> - Update commit subject in v4 patch 1
+> - Add more details to commit message in v4 patch 2
+> - Add change to enable wake irqs during suspend using new flag in irqchip
+> - Use this in PDC and qcom pinctrl driver to enable wakeirqs on suspend
+> - Make for loop more readable and add more details in commit in v4 patch 7
 > 
-> My memory is hazy.
-> 
-> I remember an odd quirk in the downstream kernel:
-> 
-> [v1,1/3] PCI: qcom: Setup PCIE20_PARF_BDF_TRANSLATE_N
-> http://patchwork.ozlabs.org/project/linux-pci/patch/958ae127-3aa2-6824-c875-e3012644ed3d@free.fr/
-> 
-> Manivannan, are you trying to deal with PCIE20_PARF_BDF_TRANSLATE_N
-> or some equivalent register?
-> 
+> [...]
 
-I'm dealing with PCIE20_PARF_BDF_TO_SID_TABLE_N but I'm not sure how it
-relates to PCIE20_PARF_BDF_TRANSLATE_N.
+Applied to irq/irqchip-next, thanks!
 
-> +Robin, he's the one who helped me figure this stuff out (iommu-map).
-> It was in reply to patch 2:
-> http://patchwork.ozlabs.org/project/linux-pci/patch/82ab78ee-4a38-4eee-f064-272b6f964f17@free.fr/
-> 
-> In the end, I dropped patch 1 because... everything seemed to work
-> without it (?!) (Makes one wonder what it actually does. But qcom
-> refused to provide any register documentation, which is idiotic
-> because this is DW IP, and they are open-source friendly, IIUC.)
-> 
+[1/6] pinctrl: qcom: Set IRQCHIP_SET_TYPE_MASKED and IRQCHIP_MASK_ON_SUSPEND flags
+      commit: c5f72aeb659eb2f809b9531d759651514d42aa3a
+[2/6] pinctrl: qcom: Use return value from irq_set_wake() call
+      commit: f41aaca593377a4fe3984459fd4539481263b4cd
+[3/6] genirq/PM: Introduce IRQCHIP_ENABLE_WAKEUP_ON_SUSPEND flag
+      commit: 90428a8eb4947f9c7c905a178f3520dc7e2ee6d2
+[4/6] pinctrl: qcom: Set IRQCHIP_ENABLE_WAKEUP_ON_SUSPEND flag
+      commit: dd87bd09822c294a3c7c4daf11f11a9f81222f80
+[5/6] irqchip/qcom-pdc: Set IRQCHIP_ENABLE_WAKEUP_ON_SUSPEND flag
+      commit: 299d7890792e75065b906f83fcb0ca92e5c8c072
+[6/6] irqchip/qcom-pdc: Reset PDC interrupts during init
+      commit: d7bc63fa20b8a3b0d0645bed1887848c65c01529
 
-Without this patch, PCIe will work on SM8250 but during successive reboots
-I started seeing issues which gets fixed by this patch.
+Cheers,
 
-Thanks,
-Mani
+	M.
+-- 
+Without deviation from the norm, progress is not possible.
 
-> Regards.
+
