@@ -2,33 +2,33 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 45C15286859
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Oct 2020 21:33:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D642028689F
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Oct 2020 21:53:23 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728270AbgJGTdV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 7 Oct 2020 15:33:21 -0400
-Received: from m42-4.mailgun.net ([69.72.42.4]:27855 "EHLO m42-4.mailgun.net"
+        id S1728475AbgJGTxS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 7 Oct 2020 15:53:18 -0400
+Received: from m42-4.mailgun.net ([69.72.42.4]:42000 "EHLO m42-4.mailgun.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726129AbgJGTdV (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 7 Oct 2020 15:33:21 -0400
+        id S1726348AbgJGTxS (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 7 Oct 2020 15:53:18 -0400
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1602099199; h=Message-ID: References: In-Reply-To: Subject:
+ s=smtp; t=1602100397; h=Message-ID: References: In-Reply-To: Subject:
  Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=fRcWPobA2wPZBFDePlMJ/eyWKggBDekfCZ/qz5wXYKc=;
- b=NWT3Pu0hg14CjJIAU9lgfpdii9SrrGdxhE314LYRN4ESbR2emLdIssdBH06fW2eKd53Yzmfw
- V27g6wmyg7FX34FcfcMJvom8NLua6f1PDet0h1s68L7xIGWV2Gu00RgmgL/itlJ5s5yhjx1y
- rnMK/2qEzEAr6oAhg8LUK6pSty4=
+ MIME-Version: Sender; bh=y/Hs4nN28QIPh7k57IFR93DTFtO3KcbPd/P4OgQym4s=;
+ b=MiV4aB37vAEFnuWmA+BtxenghxTOj/ERzjU6qnvuVj+8SJf01DW+iR+qNQXOnJSHP1FIVJLs
+ AOcPLMOxbtZA4D/9QOfwAwEAmyC3oSV4GRO0msGuveFJLkAukIIupeEbwNe+lGYTmXEnQjCr
+ 0Juf3QKLIq2A+2jXb65wzIiXl1E=
 X-Mailgun-Sending-Ip: 69.72.42.4
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org
  (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n03.prod.us-east-1.postgun.com with SMTP id
- 5f7e17ffbfed2afaa6d13e94 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 07 Oct 2020 19:33:19
+ smtp-out-n06.prod.us-east-1.postgun.com with SMTP id
+ 5f7e1cadd63768e57be386cf (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 07 Oct 2020 19:53:17
  GMT
 Sender: vgarodia=codeaurora.org@mg.codeaurora.org
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id D65B5C433F1; Wed,  7 Oct 2020 19:33:18 +0000 (UTC)
+        id 322DFC433F1; Wed,  7 Oct 2020 19:53:16 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
@@ -38,148 +38,129 @@ Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
         (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
         (No client certificate requested)
         (Authenticated sender: vgarodia)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id B04A9C433CA;
-        Wed,  7 Oct 2020 19:33:13 +0000 (UTC)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 73E20C433C8;
+        Wed,  7 Oct 2020 19:53:15 +0000 (UTC)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII;
  format=flowed
 Content-Transfer-Encoding: 7bit
-Date:   Thu, 08 Oct 2020 01:03:13 +0530
+Date:   Thu, 08 Oct 2020 01:23:15 +0530
 From:   vgarodia@codeaurora.org
-To:     Tomasz Figa <tfiga@chromium.org>
-Cc:     Stanimir Varbanov <stanimir.varbanov@linaro.org>,
-        Dikshita Agarwal <dikshita@codeaurora.org>,
-        Linux Media Mailing List <linux-media@vger.kernel.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>
-Subject: Re: [PATCH 2/2] venus: venc: fix handlig of S_SELECTION and
- G_SELECTION
-In-Reply-To: <CAAFQd5BdeG44SmT4xhrarsmgnFc-1LCdoFwz=XXYsLdHcMyz-Q@mail.gmail.com>
-References: <1600968674-11559-1-git-send-email-dikshita@codeaurora.org>
- <1600968674-11559-3-git-send-email-dikshita@codeaurora.org>
- <CAAFQd5CTyjagd7grrCkret2WnvoLHQk83fg+1QPK+V1NbhKTvw@mail.gmail.com>
- <b977eb27-9646-1c73-5acb-c3a74460e426@linaro.org>
- <CAAFQd5BdeG44SmT4xhrarsmgnFc-1LCdoFwz=XXYsLdHcMyz-Q@mail.gmail.com>
-Message-ID: <89783dd42e698593d30dc0f37b52cf73@codeaurora.org>
+To:     Stanimir Varbanov <stanimir.varbanov@linaro.org>
+Cc:     linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Alexandre Courbot <acourbot@chromium.org>,
+        Mansur Alisha Shaik <mansur@codeaurora.org>
+Subject: Re: [PATCH 2/3] venus: vdec: Make decoder return LAST flag for
+ sufficient event
+In-Reply-To: <20200928164431.21884-3-stanimir.varbanov@linaro.org>
+References: <20200928164431.21884-1-stanimir.varbanov@linaro.org>
+ <20200928164431.21884-3-stanimir.varbanov@linaro.org>
+Message-ID: <5a823acc60d4c5cace1d2562adc548ff@codeaurora.org>
 X-Sender: vgarodia@codeaurora.org
 User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Tomasz,
+Hi Stan,
 
-On 2020-10-01 20:47, Tomasz Figa wrote:
-> On Thu, Oct 1, 2020 at 3:32 AM Stanimir Varbanov
-> <stanimir.varbanov@linaro.org> wrote:
->> 
->> Hi Tomasz,
->> 
->> On 9/25/20 11:55 PM, Tomasz Figa wrote:
->> > Hi Dikshita, Stanimir,
->> >
->> > On Thu, Sep 24, 2020 at 7:31 PM Dikshita Agarwal
->> > <dikshita@codeaurora.org> wrote:
->> >>
->> >> From: Stanimir Varbanov <stanimir.varbanov@linaro.org>
->> >>
->> >> - return correct width and height for G_SELECTION
->> >> - if requested rectangle wxh doesn't match with capture port wxh
->> >>   adjust the rectangle to supported wxh.
->> >>
->> >> Signed-off-by: Dikshita Agarwal <dikshita@codeaurora.org>
->> >> ---
->> >>  drivers/media/platform/qcom/venus/venc.c | 20 ++++++++++++--------
->> >>  1 file changed, 12 insertions(+), 8 deletions(-)
->> >>
->> >> diff --git a/drivers/media/platform/qcom/venus/venc.c b/drivers/media/platform/qcom/venus/venc.c
->> >> index 7d2aaa8..a2cc12d 100644
->> >> --- a/drivers/media/platform/qcom/venus/venc.c
->> >> +++ b/drivers/media/platform/qcom/venus/venc.c
->> >> @@ -463,13 +463,13 @@ static int venc_g_fmt(struct file *file, void *fh, struct v4l2_format *f)
->> >>         switch (s->target) {
->> >>         case V4L2_SEL_TGT_CROP_DEFAULT:
->> >>         case V4L2_SEL_TGT_CROP_BOUNDS:
->> >> -               s->r.width = inst->width;
->> >> -               s->r.height = inst->height;
->> >> -               break;
->> >> -       case V4L2_SEL_TGT_CROP:
->> >>                 s->r.width = inst->out_width;
->> >>                 s->r.height = inst->out_height;
->> >>                 break;
->> >> +       case V4L2_SEL_TGT_CROP:
->> >> +               s->r.width = inst->width;
->> >> +               s->r.height = inst->height;
->> >> +               break;
->> >>         default:
->> >>                 return -EINVAL;
->> >>         }inter
->> >> @@ -490,10 +490,14 @@ static int venc_g_fmt(struct file *file, void *fh, struct v4l2_format *f)
->> >>
->> >>         switch (s->target) {
->> >>         case V4L2_SEL_TGT_CROP:
->> >> -               if (s->r.width != inst->out_width ||
->> >> -                   s->r.height != inst->out_height ||
->> >> -                   s->r.top != 0 || s->r.left != 0)
->> >> -                       return -EINVAL;
->> >> +               if (s->r.width != inst->width ||
->> >> +                   s->r.height != inst->height ||
->> >> +                   s->r.top != 0 || s->r.left != 0) {
->> >> +                       s->r.top = 0;
->> >> +                       s->r.left = 0;
->> >> +                       s->r.width = inst->width;
->> >> +                       s->r.height = inst->height;
->> >
->> > What's the point of exposing the selection API if no selection can
->> > actually be done?
->> 
->> If someone can guarantee that dropping of s_selection will not break
->> userspace applications I'm fine with removing it.
-> 
-> Indeed the specification could be made more clear about this. The
-> visible rectangle configuration is described as optional, so I'd
-> consider the capability to be optional as well.
-> 
-> Of course it doesn't change the fact that something that is optional
-> in the API may be mandatory for some specific integrations, like
-> Chrome OS or Android.
-> 
->> 
->> I implemented g/s_selection with the idea to add crop functionality
->> later because with current firmware interface it needs more work.
-> 
-> I suggested one thing internally, but not sure if it was understood 
-> correctly:
-> 
-> Most of the encoders only support partial cropping, with the rectangle
-> limited to top = 0 and left = 0, in other words, only setting the
-> visible width and height. This can be easily implemented on most of
-> the hardware, even those that don't have dedicated cropping
-> capability, by configuring the hardware as follows:
-> 
-> stride = CAPTURE format width (or bytesperline)
-> width = CROP width
-> height = CROP height
+On 2020-09-28 22:14, Stanimir Varbanov wrote:
+> This makes the decoder to behaives equally for sufficient and
+behaves
 
-Assuming the bitstream height and width would be configured with capture 
-plane
-setting (s_fmt), configuring the crop as height/width would indicate to 
-venus
-hardware as scaling. To distinguish scaling with crop, firmware needs to 
-be
-configured separately indicating crop rectangle.
+> insufficient events. After this change the LAST buffer flag will be set
+> when the new resolution (in dynamic-resolution-change state) is smaller
+> then the old bitstream resolution.
+> 
+> Signed-off-by: Stanimir Varbanov <stanimir.varbanov@linaro.org>
+> ---
+>  drivers/media/platform/qcom/venus/vdec.c | 41 ++++++++++++++++--------
+>  1 file changed, 27 insertions(+), 14 deletions(-)
+> 
+> diff --git a/drivers/media/platform/qcom/venus/vdec.c
+> b/drivers/media/platform/qcom/venus/vdec.c
+> index c11bdf3ca21b..c006401255dc 100644
+> --- a/drivers/media/platform/qcom/venus/vdec.c
+> +++ b/drivers/media/platform/qcom/venus/vdec.c
+> @@ -634,6 +634,7 @@ static int vdec_output_conf(struct venus_inst 
+> *inst)
+>  {
+>  	struct venus_core *core = inst->core;
+>  	struct hfi_enable en = { .enable = 1 };
+> +	struct hfi_buffer_requirements bufreq;
+>  	u32 width = inst->out_width;
+>  	u32 height = inst->out_height;
+>  	u32 out_fmt, out2_fmt;
+> @@ -709,6 +710,22 @@ static int vdec_output_conf(struct venus_inst 
+> *inst)
+>  	}
+> 
+>  	if (IS_V3(core) || IS_V4(core)) {
+> +		ret = venus_helper_get_bufreq(inst, HFI_BUFFER_OUTPUT, &bufreq);
+> +		if (ret)
+> +			return ret;
+> +
+> +		if (bufreq.size > inst->output_buf_size)
+> +			return -EINVAL;
+> +
+> +		if (inst->dpb_fmt) {
+> +			ret = venus_helper_get_bufreq(inst, HFI_BUFFER_OUTPUT2, &bufreq);
+> +			if (ret)
+> +				return ret;
+> +
+> +			if (bufreq.size > inst->output2_buf_size)
+> +				return -EINVAL;
+> +		}
+> +
+>  		if (inst->output2_buf_size) {
+>  			ret = venus_helper_set_bufsize(inst,
+>  						       inst->output2_buf_size,
+> @@ -1327,19 +1344,15 @@ static void vdec_event_change(struct venus_inst 
+> *inst,
+>  	dev_dbg(dev, VDBGM "event %s sufficient resources (%ux%u)\n",
+>  		sufficient ? "" : "not", ev_data->width, ev_data->height);
+> 
+> -	if (sufficient) {
+> -		hfi_session_continue(inst);
+> -	} else {
+> -		switch (inst->codec_state) {
+> -		case VENUS_DEC_STATE_INIT:
+> -			inst->codec_state = VENUS_DEC_STATE_CAPTURE_SETUP;
+> -			break;
+> -		case VENUS_DEC_STATE_DECODING:
+> -			inst->codec_state = VENUS_DEC_STATE_DRC;
+> -			break;
+> -		default:
+> -			break;
+> -		}
+> +	switch (inst->codec_state) {
+> +	case VENUS_DEC_STATE_INIT:
+> +		inst->codec_state = VENUS_DEC_STATE_CAPTURE_SETUP;
+> +		break;
+> +	case VENUS_DEC_STATE_DECODING:
+> +		inst->codec_state = VENUS_DEC_STATE_DRC;
 
-> I believe Android requires the hardware to support stride and AFAIK
-> this hardware is also commonly used on Android, so perhaps it's
-> possible to achieve the above without any firmware changes?
+Video firmware would raise reconfig event to driver even for cases like
+interlace detection, color space change in the bitstream. If not with 
+this patch,
+we can optimize by sending reconfig event only for resolution and 
+bitdepth update,
+in a followup patch.
 
-Yes, the hardware is used and also supported in android. The interface 
-to configure
-crop rectangle to firmware is via extradata. This extradata info is 
-passed from v4l2
-clients via a separate plane in v4l2 buffer. The extradata payload is 
-passed to
-firmware as is and the firmware parses it to know if crop, roi, etc.
-
-> Best regards,
-> Tomasz
+> +		break;
+> +	default:
+> +		break;
+>  	}
+> 
+>  	/*
+> @@ -1348,7 +1361,7 @@ static void vdec_event_change(struct venus_inst 
+> *inst,
+>  	 * itself doesn't mark the last decoder output buffer with HFI EOS 
+> flag.
+>  	 */
+> 
+> -	if (!sufficient && inst->codec_state == VENUS_DEC_STATE_DRC) {
+> +	if (inst->codec_state == VENUS_DEC_STATE_DRC) {
+>  		struct vb2_v4l2_buffer *last;
+>  		int ret;
