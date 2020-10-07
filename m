@@ -2,75 +2,118 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 10A1528589A
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Oct 2020 08:25:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0619A285C01
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Oct 2020 11:46:32 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726168AbgJGGZ0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 7 Oct 2020 02:25:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41540 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725970AbgJGGZZ (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 7 Oct 2020 02:25:25 -0400
-Received: from casper.infradead.org (casper.infradead.org [IPv6:2001:8b0:10b:1236::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AEB8CC061755;
-        Tue,  6 Oct 2020 23:25:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-        d=infradead.org; s=casper.20170209; h=In-Reply-To:Content-Type:MIME-Version:
-        References:Message-ID:Subject:Cc:To:From:Date:Sender:Reply-To:
-        Content-Transfer-Encoding:Content-ID:Content-Description;
-        bh=hGY4fKBH3lXrbLnK7loOw4AUvRukRocZITr25lF2ycI=; b=PNf5g8627c2NOMQqhvL0eUPUY9
-        pG18AoTA0MELpyOL/b9ay/ykTBDatHDGS3jlfCwIic9g3kmcO8E6ny88Ao5zGscnjagnX/WHNFZM5
-        eZ2NTCUXNprEyCfiCQ/EGzyj6MxRlkn48EyhjY9cX/mqtGmGzUcF/05YoWWqOT3az/7lCzZyLl22/
-        JnPVX/l/zI1jAPk8897xZBq8Pfmxbi5IX6xg+uZiAsB6ckYTKIB56aoRVnPqszsGMjoVPJQUTNCy1
-        9FlS3lHhBHqvrySZFyfKyRFMIWGkyvr72addRKiyZPfjxgqJLXANCq04HlVz81s002Ig6I9P5Ekbx
-        glO7NLFQ==;
-Received: from hch by casper.infradead.org with local (Exim 4.92.3 #3 (Red Hat Linux))
-        id 1kQ2t5-0006Rp-Uy; Wed, 07 Oct 2020 06:25:19 +0000
-Date:   Wed, 7 Oct 2020 07:25:19 +0100
-From:   Christoph Hellwig <hch@infradead.org>
-To:     Jonathan Marek <jonathan@marek.ca>
-Cc:     Christoph Hellwig <hch@infradead.org>,
-        freedreno@lists.freedesktop.org, Rob Clark <robdclark@gmail.com>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
-        <linux-arm-msm@vger.kernel.org>,
-        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
-        <dri-devel@lists.freedesktop.org>,
-        open list <linux-kernel@vger.kernel.org>,
-        iommu@lists.linux-foundation.org, Joerg Roedel <joro@8bytes.org>,
-        Robin Murphy <robin.murphy@arm.com>
-Subject: Re: [PATCH 2/3] drm/msm: add DRM_MSM_GEM_SYNC_CACHE for non-coherent
- cache maintenance
-Message-ID: <20201007062519.GA23519@infradead.org>
-References: <20201001002709.21361-1-jonathan@marek.ca>
- <20201001002709.21361-3-jonathan@marek.ca>
- <20201002075321.GA7547@infradead.org>
- <b22fb797-67b0-a912-1d23-2b47c9a9e674@marek.ca>
- <20201005082914.GA31702@infradead.org>
- <3e0b91be-e4a4-4ea5-7d58-6e71b8d51932@marek.ca>
- <20201006072306.GA12834@infradead.org>
- <148a1660-f0fc-7163-2240-6b94725342b5@marek.ca>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <148a1660-f0fc-7163-2240-6b94725342b5@marek.ca>
-X-SRS-Rewrite: SMTP reverse-path rewritten from <hch@infradead.org> by casper.infradead.org. See http://www.infradead.org/rpr.html
+        id S1726989AbgJGJqa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 7 Oct 2020 05:46:30 -0400
+Received: from mail.z3ntu.xyz ([128.199.32.197]:60252 "EHLO mail.z3ntu.xyz"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726411AbgJGJqa (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 7 Oct 2020 05:46:30 -0400
+X-Greylist: delayed 314 seconds by postgrey-1.27 at vger.kernel.org; Wed, 07 Oct 2020 05:46:28 EDT
+Received: by mail.z3ntu.xyz (Postfix, from userid 182)
+        id 8B5E3C7196; Wed,  7 Oct 2020 09:41:13 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=z3ntu.xyz; s=z3ntu;
+        t=1602063673; bh=G58nxDXR85aKAm9KZdsGVsJleTDCbz79NyrWb3uEyXY=;
+        h=Cc:Subject:From:To:Date:In-Reply-To;
+        b=nssfBIoByvP+3EH8HJuENhBQuGQTosfme+khCz5ttbYEyLd78Tns6n+r4cV4JfDxm
+         wy0lUjTBOkxGZizXrUTo/HZyCgQ6vgOmYd2Dl8Csxx1xkVPJIfCjkc6d4BIqDcVZ0I
+         2vy3Z8F7bZoZVY6eeB0nYQ9yX5E59hiF4rGCiHXc=
+X-Spam-Checker-Version: SpamAssassin 3.4.4 (2020-01-24) on arch-vps
+X-Spam-Level: 
+X-Spam-Status: No, score=0.9 required=5.0 tests=ALL_TRUSTED,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FROM_SUSPICIOUS_NTLD,
+        PDS_OTHER_BAD_TLD,URIBL_BLOCKED autolearn=no autolearn_force=no
+        version=3.4.4
+Received: from localhost (arch-vps [128.199.32.197])
+        by mail.z3ntu.xyz (Postfix) with ESMTPSA id 56ED9C4CF4;
+        Wed,  7 Oct 2020 09:41:10 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=z3ntu.xyz; s=z3ntu;
+        t=1602063670; bh=G58nxDXR85aKAm9KZdsGVsJleTDCbz79NyrWb3uEyXY=;
+        h=Cc:Subject:From:To:Date:In-Reply-To;
+        b=KKS8sIN1+vS6ETBIO+nKA9RcB493ngK2y7IMwGZaazCBBxwrViO4xq7AtWUo/aYjo
+         cXV6RfG7Ouk0NCyObeT5ynmMRocAhiuz4TEmukpj+X4BMAbFGCEy0Gmo9iIrzIYpRX
+         eOTbzPqkkEVD23ITtVw0Llo5t2J9nm+UyQez7qtQ=
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Cc:     <linux-leds@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-pwm@vger.kernel.org>
+Subject: Re: [PATCH v4 2/4] leds: Add driver for Qualcomm LPG
+From:   "Luca Weiss" <luca@z3ntu.xyz>
+To:     "Bjorn Andersson" <bjorn.andersson@linaro.org>,
+        "Pavel Machek" <pavel@ucw.cz>, "Dan Murphy" <dmurphy@ti.com>,
+        "Rob Herring" <robh+dt@kernel.org>,
+        "Andy Gross" <agross@kernel.org>,
+        "Thierry Reding" <thierry.reding@gmail.com>,
+        =?utf-8?q?Uwe_Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
+        "Lee Jones" <lee.jones@linaro.org>,
+        "Martin Botka" <martin.botka1@gmail.com>
+Date:   Wed, 07 Oct 2020 09:40:45 +0000
+Message-Id: <C66K5YFY5LGN.1S3H72H0QQQAI@arch-vps>
+In-Reply-To: <20200929031544.1000204-3-bjorn.andersson@linaro.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Oct 06, 2020 at 09:19:32AM -0400, Jonathan Marek wrote:
-> One example why drm/msm can't use DMA API is multiple page table support
-> (that is landing in 5.10), which is something that definitely couldn't work
-> with DMA API.
-> 
-> Another one is being able to choose the address for mappings, which AFAIK
-> DMA API can't do (somewhat related to this: qcom hardware often has ranges
-> of allowed addresses, which the dma_mask mechanism fails to represent, what
-> I see is drivers using dma_mask as a "maximum address", and since addresses
-> are allocated from the top it generally works)
+Hi Bjorn,
 
-That sounds like a good enough rason to use the IOMMU API.  I just
-wanted to make sure this really makes sense.
+On Mon Sep 28, 2020 at 8:15 PM, Bjorn Andersson wrote:
+> The Light Pulse Generator (LPG) is a PWM-block found in a wide range of
+> PMICs from Qualcomm. It can operate on fixed parameters or based on a
+> lookup-table, altering the duty cycle over time - which provides the
+> means for e.g. hardware assisted transitions of LED brightness.
+>
+> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> ---
+>
+> Changes since v3:
+> - Adopt multicolor model
+> - Simplified hw_pattern implementation
+>
+> drivers/leds/Kconfig | 9 +
+> drivers/leds/Makefile | 1 +
+> drivers/leds/leds-qcom-lpg.c | 1213 ++++++++++++++++++++++++++++++++++
+> 3 files changed, 1223 insertions(+)
+> create mode 100644 drivers/leds/leds-qcom-lpg.c
+
+<snip>
+
+> +static int lpg_pwm_request(struct pwm_chip *chip, struct pwm_device
+> *pwm)
+> +{
+> + struct lpg *lpg =3D container_of(chip, struct lpg, pwm);
+> + struct lpg_channel *chan =3D &lpg->channels[pwm->hwpwm];
+> +
+> + return chan->in_use ? -EBUSY : 0;
+> +}
+> +
+> +static int lpg_pwm_apply(struct pwm_chip *chip, struct pwm_device *pwm,
+> + const struct pwm_state *state)
+> +{
+> + struct lpg *lpg =3D container_of(chip, struct lpg, pwm);
+> + struct lpg_channel *chan =3D &lpg->channels[pwm->hwpwm];
+> +
+> + lpg_calc_freq(chan, state->period / NSEC_PER_USEC);
+> + lpg_calc_duty(chan, state->duty_cycle / NSEC_PER_USEC);
+
+As written on IRC this has to be wrapped div_u64() to compile on arm32;
+should also fix the buildbot failure.
+
+> + chan->enabled =3D state->enabled;
+> +
+> + lpg_apply(chan);
+> +
+> + triled_set(lpg, chan->triled_mask, chan->enabled);
+> +
+> + return 0;
+> +}
+
+Other than that, this works great on msm8974-fairphone-fp2 (pm8941)
+with reg 7 (red), 6 (green) & 5 (blue). Thanks for updating this
+patchset!
+
+Regards
+Luca
