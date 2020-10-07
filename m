@@ -2,115 +2,156 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 078DF285521
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Oct 2020 02:10:15 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D1500285685
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Oct 2020 03:58:29 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725947AbgJGAKN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 6 Oct 2020 20:10:13 -0400
-Received: from a27-61.smtp-out.us-west-2.amazonses.com ([54.240.27.61]:40760
-        "EHLO a27-61.smtp-out.us-west-2.amazonses.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1725925AbgJGAKN (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 6 Oct 2020 20:10:13 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
-        s=2nz3jy4edhd5smbjctxaus57ph3tmkzv; d=squareup.com; t=1602029412;
-        h=From:To:Cc:Subject:Date:Message-Id:Reply-To;
-        bh=muKSLnvOgIDXZ5YdsvIDagaTt5Oh30c5xCs5kUab1yk=;
-        b=IH1GMGASAWCWWpWUsmP2uMEmfwkH+ymrtKJMlPnEhZL8a/ONiiMAx4so8jc8XEPY
-        ckrDwpj9VvSONR2MUfC0NJQ7VRuRqxd7lwX9VAqbkJjQRb0tTvAbDtBDS69fvRAg1S+
-        jNf5Kl1xrKWMkCMVopp0tN/Bzo213dTLeXlf/L6c=
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
-        s=hsbnp7p3ensaochzwyq5wwmceodymuwv; d=amazonses.com; t=1602029412;
-        h=From:To:Cc:Subject:Date:Message-Id:Reply-To:Feedback-ID;
-        bh=muKSLnvOgIDXZ5YdsvIDagaTt5Oh30c5xCs5kUab1yk=;
-        b=iwVoXV2+EJVtY5/Z81dvaXDwmhB0ZfX1GhpwYDmj63SVhP3f4elF27iz4CG/XKXy
-        s8pN/Fhi+vljQTLLu1i2Fl0pZL3ce5qo7i3kqTKyWcTDGUNMplg3q0vy7XAyrz/nmza
-        /J60oSJnKk0ULImbMtdyyQLO5hjquiuv9tyoVdyU=
-From:   benl-kernelpatches@squareup.com
-To:     robdclark@gmail.com, sean@poorly.run
-Cc:     Benjamin Li <benl@squareup.com>, David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        AngeloGioacchino Del Regno <kholk11@gmail.com>,
-        Harigovindan P <harigovi@codeaurora.org>,
-        Konrad Dybcio <konradybcio@gmail.com>,
-        zhengbin <zhengbin13@huawei.com>, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        linux-kernel@vger.kernel.org
-Subject: [PATCH] drm/msm/dsi: save PLL registers across first PHY reset
-Date:   Wed, 7 Oct 2020 00:10:12 +0000
-Message-ID: <010101750064e17e-3db0087e-fc37-494d-aac9-2c2b9b0a7c5b-000000@us-west-2.amazonses.com>
-X-Mailer: git-send-email 2.17.1
-Reply-To: benl@squareup.com
-X-SES-Outgoing: 2020.10.07-54.240.27.61
-Feedback-ID: 1.us-west-2.z+Qxlzaf/1x39VmnWQZn7Gs4WPNjZe3NO2QR/Gz0OyM=:AmazonSES
+        id S1726770AbgJGB62 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 6 Oct 2020 21:58:28 -0400
+Received: from m42-4.mailgun.net ([69.72.42.4]:30965 "EHLO m42-4.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726604AbgJGB62 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 6 Oct 2020 21:58:28 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1602035907; h=In-Reply-To: Content-Type: MIME-Version:
+ References: Message-ID: Subject: Cc: To: From: Date: Sender;
+ bh=+o7MGsKHeGQlXkai/cG9FMjYngfTEsCZ2bNT3OvLsrk=; b=HhgczNI9156JEzXGI0A3l9JcpoSdbGHhUHLzwoiK46epgk262PY+pZdRXWbnklTX51IG8nT6
+ 0oavNoKoWvhXG9mQnM+7AUUm/8An8fjCjw49J0PkBO3G7Xubi5QYllAmWwOn5p1Zz8SeRBje
+ RMC9Igmp3ajN8wOVicrbKOhnawc=
+X-Mailgun-Sending-Ip: 69.72.42.4
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n04.prod.us-east-1.postgun.com with SMTP id
+ 5f7d20c23711fec7b1aa16a4 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 07 Oct 2020 01:58:26
+ GMT
+Sender: ilina=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 348B1C433CA; Wed,  7 Oct 2020 01:58:26 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
+        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+Received: from localhost (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: ilina)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 21A9DC433CA;
+        Wed,  7 Oct 2020 01:58:24 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 21A9DC433CA
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=ilina@codeaurora.org
+Date:   Tue, 6 Oct 2020 19:58:24 -0600
+From:   Lina Iyer <ilina@codeaurora.org>
+To:     "Rafael J. Wysocki" <rafael@kernel.org>
+Cc:     "Rafael J. Wysocki" <rjw@rjwysocki.net>,
+        Ulf Hansson <ulf.hansson@linaro.org>,
+        Linux PM <linux-pm@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>
+Subject: Re: [PATCH v2] PM / Domains: enable domain idle state accounting
+Message-ID: <20201007015824.GB17917@codeaurora.org>
+References: <20201003155618.11997-1-ilina@codeaurora.org>
+ <CAJZ5v0jMzN5nHCpTnJuUoFbrqYhrciRp04quUTAnt0sSU4q+aw@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Disposition: inline
+In-Reply-To: <CAJZ5v0jMzN5nHCpTnJuUoFbrqYhrciRp04quUTAnt0sSU4q+aw@mail.gmail.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Benjamin Li <benl@squareup.com>
+On Mon, Oct 05 2020 at 07:27 -0600, Rafael J. Wysocki wrote:
+>On Sat, Oct 3, 2020 at 5:56 PM Lina Iyer <ilina@codeaurora.org> wrote:
+>>
+>> To enable better debug of PM domains, let's keep a track of the success
+>> and rejections in entering each domain idle state.
+>>
+>> This statistics is exported in debugfs when reading the idle_states
+>> node, associated with each PM domain.
+>>
+>> Signed-off-by: Lina Iyer <ilina@codeaurora.org>
+>> ---
+>> Changes in v2:
+>>         - Renamed 'failed' to 'rejected'
+>>
+>> This patch depends-on: https://lkml.org/lkml/2020/9/24/465
+>> ---
+>>  drivers/base/power/domain.c | 7 +++++--
+>>  include/linux/pm_domain.h   | 2 ++
+>>  2 files changed, 7 insertions(+), 2 deletions(-)
+>>
+>> diff --git a/drivers/base/power/domain.c b/drivers/base/power/domain.c
+>> index f001ac6326fb..dbe89454f594 100644
+>> --- a/drivers/base/power/domain.c
+>> +++ b/drivers/base/power/domain.c
+>> @@ -564,6 +564,7 @@ static int genpd_power_off(struct generic_pm_domain *genpd, bool one_dev_on,
+>>
+>>         genpd->status = GENPD_STATE_OFF;
+>>         genpd_update_accounting(genpd);
+>> +       genpd->states[genpd->state_idx].usage++;
+>
+>Why not to do this in genpd_update_accounting()?
+>
+That function is clubbed with debugfs and does heavy tracking using
+timers. This accounting is fairly basic and still quite useful for
+debugging.
 
-Take advantage of previously-added support for persisting PLL
-registers across DSI PHY disable/enable cycles (see 328e1a6
-'drm/msm/dsi: Save/Restore PLL status across PHY reset') to
-support persisting across the very first DSI PHY enable at
-boot.
+>>
+>>         list_for_each_entry(link, &genpd->child_links, child_node) {
+>>                 genpd_sd_counter_dec(link->parent);
+>> @@ -574,6 +575,7 @@ static int genpd_power_off(struct generic_pm_domain *genpd, bool one_dev_on,
+>>
+>>         return 0;
+>>  busy:
+>> +       genpd->states[genpd->state_idx].rejected++;
+>>         if (nr_calls)
+>>                 __raw_notifier_call_chain(&genpd->power_notifiers,
+>>                                           GENPD_STATE_ON, NULL,
+>
+>This doesn't apply to the current code, please rebase.
+>
+I believe it applies cleanly on top of
+https://lkml.org/lkml/2020/9/24/465, which I believe you are applied to
+your tree. Let me rebase and re-post. Sorry about that.
 
-The bootloader may have left the PLL registers in a non-default
-state. For example, for dsi_pll_28nm.c on 8x16/8x39, the byte
-clock mux's power-on reset configuration is to bypass DIV1, but
-depending on bandwidth requirements[1] the bootloader may have
-set the DIV1 path.
+Thanks,
+Lina
 
-When the byte clock mux is registered with the generic clock
-framework at probe time, the framework reads & caches the value
-of the mux bit field (the initial clock parent). After PHY enable,
-when clk_set_rate is called on the byte clock, the framework
-assumes there is no need to reparent, and doesn't re-write the
-mux bit field. But PHY enable resets PLL registers, so the mux
-bit field actually silently reverted to the DIV1 bypass path.
-This causes the byte clock to be off by a factor of e.g. 2 for
-our tested WXGA panel.
-
-The above issue manifests as the display not working and a
-constant stream of FIFO/LP0 contention errors.
-
-[1] The specific requirement for triggering the DIV1 path (and
-thus this issue) on 28nm is a panel with pixel clock <116.7MHz
-(one-third the minimum VCO setting). FHD/1080p (~145MHz) is fine,
-WXGA/1280x800 (~75MHz) is not.
-
-Signed-off-by: Benjamin Li <benl@squareup.com>
----
- drivers/gpu/drm/msm/dsi/phy/dsi_phy.c | 16 ++++++++++++++++
- 1 file changed, 16 insertions(+)
-
-diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c b/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c
-index 009f5b843dd1..139b4a5aaf86 100644
---- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c
-+++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c
-@@ -621,6 +621,22 @@ static int dsi_phy_driver_probe(struct platform_device *pdev)
- 		phy->pll = NULL;
- 	}
- 
-+	/*
-+	 * As explained in msm_dsi_phy_enable, resetting the DSI PHY (as done
-+	 * in dsi_mgr_phy_enable) silently changes its PLL registers to power-on
-+	 * defaults, but the generic clock framework manages and caches several
-+	 * of the PLL registers. It initializes these caches at registration
-+	 * time via register read.
-+	 *
-+	 * As a result, we need to save DSI PLL registers once at probe in order
-+	 * for the first call to msm_dsi_phy_enable to successfully bring PLL
-+	 * registers back in line with what the generic clock framework expects.
-+	 *
-+	 * Subsequent PLL restores during msm_dsi_phy_enable will always be
-+	 * paired with PLL saves in msm_dsi_phy_disable.
-+	 */
-+	msm_dsi_pll_save_state(phy->pll);
-+
- 	dsi_phy_disable_resource(phy);
- 
- 	platform_set_drvdata(pdev, phy);
--- 
-2.17.1
-
+>> @@ -3053,7 +3055,7 @@ static int idle_states_show(struct seq_file *s, void *data)
+>>         if (ret)
+>>                 return -ERESTARTSYS;
+>>
+>> -       seq_puts(s, "State          Time Spent(ms)\n");
+>> +       seq_puts(s, "State          Time Spent(ms) Usage          Rejected\n");
+>>
+>>         for (i = 0; i < genpd->state_count; i++) {
+>>                 ktime_t delta = 0;
+>> @@ -3065,7 +3067,8 @@ static int idle_states_show(struct seq_file *s, void *data)
+>>
+>>                 msecs = ktime_to_ms(
+>>                         ktime_add(genpd->states[i].idle_time, delta));
+>> -               seq_printf(s, "S%-13i %lld\n", i, msecs);
+>> +               seq_printf(s, "S%-13i %-14lld %-14llu %llu\n", i, msecs,
+>> +                             genpd->states[i].usage, genpd->states[i].rejected);
+>>         }
+>>
+>>         genpd_unlock(genpd);
+>> diff --git a/include/linux/pm_domain.h b/include/linux/pm_domain.h
+>> index 3b2b561ce846..239647f2d27f 100644
+>> --- a/include/linux/pm_domain.h
+>> +++ b/include/linux/pm_domain.h
+>> @@ -82,6 +82,8 @@ struct genpd_power_state {
+>>         s64 power_off_latency_ns;
+>>         s64 power_on_latency_ns;
+>>         s64 residency_ns;
+>> +       u64 usage;
+>> +       u64 rejected;
+>>         struct fwnode_handle *fwnode;
+>>         ktime_t idle_time;
+>>         void *data;
+>> --
+>> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+>> a Linux Foundation Collaborative Project
+>>
