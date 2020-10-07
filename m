@@ -2,114 +2,107 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 485D6285C97
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Oct 2020 12:11:56 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C6BC6285D02
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Oct 2020 12:36:58 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727870AbgJGKLz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 7 Oct 2020 06:11:55 -0400
-Received: from m42-4.mailgun.net ([69.72.42.4]:58842 "EHLO m42-4.mailgun.net"
+        id S1728058AbgJGKg6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 7 Oct 2020 06:36:58 -0400
+Received: from foss.arm.com ([217.140.110.172]:41600 "EHLO foss.arm.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727014AbgJGKLz (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 7 Oct 2020 06:11:55 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1602065515; h=Content-Transfer-Encoding: Content-Type:
- In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
- Subject: Sender; bh=ioiudp9XALfKdIVzKVk4P9/mHsW/D6jALV6wDdyxdnQ=; b=AQ1qM4rDC4RwzjkziA1sG5up/91u45VYQzZ6A1ZcjEmuIm48O6kGYj5eX1KxhPV9xSRtaAy/
- LCIEYs7h7X6y0OIPfAuK5R0UIKlf4ungoAG7wDQSk4dFbuUtV+ceq31Kkkpx/K1lCgm+ly8a
- ig+8G4QynVFKFnjMOAmheYeEnvs=
-X-Mailgun-Sending-Ip: 69.72.42.4
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n02.prod.us-west-2.postgun.com with SMTP id
- 5f7d9466319d4e9cb51b6a1e (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 07 Oct 2020 10:11:50
- GMT
-Sender: jprakash=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 0E2F8C433FF; Wed,  7 Oct 2020 10:11:50 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        NICE_REPLY_A,SPF_FAIL autolearn=no autolearn_force=no version=3.4.0
-Received: from [192.168.1.100] (unknown [157.46.213.197])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: jprakash)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id B4A43C433CB;
-        Wed,  7 Oct 2020 10:11:43 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org B4A43C433CB
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=jprakash@codeaurora.org
-Subject: Re: [PATCH v6 07/10] thermal: qcom: add support for adc-tm5 PMIC
- thermal monitor
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Zhang Rui <rui.zhang@intel.com>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>,
-        Amit Kucheria <amitk@kernel.org>,
-        Jonathan Cameron <jic23@kernel.org>,
-        Hartmut Knaack <knaack.h@gmx.de>,
-        Lars-Peter Clausen <lars@metafoo.de>,
-        Peter Meerwald-Stadler <pmeerw@pmeerw.net>
-Cc:     linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-iio@vger.kernel.org,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        Jishnu Prakash <jprakash@qti.qualcomm.com>
-References: <20200930100203.1988374-1-dmitry.baryshkov@linaro.org>
- <20200930100203.1988374-8-dmitry.baryshkov@linaro.org>
-From:   Jishnu Prakash <jprakash@codeaurora.org>
-Message-ID: <073bec11-cd9e-7c3b-ae89-50486d36337a@codeaurora.org>
-Date:   Wed, 7 Oct 2020 15:41:40 +0530
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
- Thunderbird/68.12.0
+        id S1727773AbgJGKg6 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 7 Oct 2020 06:36:58 -0400
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 6D14D11B3;
+        Wed,  7 Oct 2020 03:36:57 -0700 (PDT)
+Received: from e107158-lin.cambridge.arm.com (e107158-lin.cambridge.arm.com [10.1.195.21])
+        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 1AEF33F71F;
+        Wed,  7 Oct 2020 03:36:56 -0700 (PDT)
+Date:   Wed, 7 Oct 2020 11:36:53 +0100
+From:   Qais Yousef <qais.yousef@arm.com>
+To:     Rob Clark <robdclark@gmail.com>
+Cc:     dri-devel <dri-devel@lists.freedesktop.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Tejun Heo <tj@kernel.org>, Tim Murray <timmurray@google.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Rob Clark <robdclark@chromium.org>,
+        open list <linux-kernel@vger.kernel.org>,
+        Steven Rostedt <rostedt@goodmis.org>,
+        "Peter Zijlstra (Intel)" <peterz@infradead.org>
+Subject: Re: [PATCH v2 0/3] drm: commit_work scheduling
+Message-ID: <20201007103653.qjohhta7douhlb22@e107158-lin.cambridge.arm.com>
+References: <20200930211723.3028059-1-robdclark@gmail.com>
+ <20201002110105.e56qrvzoqfioi4hs@e107158-lin.cambridge.arm.com>
+ <CAF6AEGvWMvZuy7CcGhzUSbwGtEkrNkzWHu_BN1cbdBJdZtvevA@mail.gmail.com>
+ <20201005150024.mchfdtd62rlkuh4s@e107158-lin.cambridge.arm.com>
+ <CAF6AEGs7NmCPyLdg+gg5jTTe-wgi2myRQ80tum6odv6tLLQ0DQ@mail.gmail.com>
+ <20201006105918.v3xspb6xasjyy5ky@e107158-lin.cambridge.arm.com>
+ <CAF6AEGu_V_EGcPQ+F_Z73cMCAcFPoM-GuiGWUPr+=6GD4Om=zg@mail.gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <20200930100203.1988374-8-dmitry.baryshkov@linaro.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CAF6AEGu_V_EGcPQ+F_Z73cMCAcFPoM-GuiGWUPr+=6GD4Om=zg@mail.gmail.com>
+User-Agent: NeoMutt/20171215
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Dmitry,
+On 10/06/20 13:04, Rob Clark wrote:
+> On Tue, Oct 6, 2020 at 3:59 AM Qais Yousef <qais.yousef@arm.com> wrote:
+> >
+> > On 10/05/20 16:24, Rob Clark wrote:
+> >
+> > [...]
+> >
+> > > > RT planning and partitioning is not easy task for sure. You might want to
+> > > > consider using affinities too to get stronger guarantees for some tasks and
+> > > > prevent cross-talking.
+> > >
+> > > There is some cgroup stuff that is pinning SF and some other stuff to
+> > > the small cores, fwiw.. I think the reasoning is that they shouldn't
+> > > be doing anything heavy enough to need the big cores.
+> >
+> > Ah, so you're on big.LITTLE type of system. I have done some work which enables
+> > biasing RT tasks towards big cores and control the default boost value if you
+> > have util_clamp and schedutil enabled. You can use util_clamp in general to
+> > help with DVFS related response time delays.
+> >
+> > I haven't done any work to try our best to pick a small core first but fallback
+> > to big if there's no other alternative.
+> >
+> > It'd be interesting to know how often you end up on a big core if you remove
+> > the affinity. The RT scheduler picks the first cpu in the lowest priority mask.
+> > So it should have this bias towards picking smaller cores first if they're
+> > in the lower priority mask (ie: not running higher priority RT tasks).
+> 
+> fwiw, the issue I'm looking at is actually at the opposite end of the
+> spectrum, less demanding apps that let cpus throttle down to low
+> OPPs.. which stretches out the time taken at each step in the path
+> towards screen (which seems to improve the odds that we hit priority
+> inversion scenarios with SCHED_FIFO things stomping on important CFS
+> things)
 
-diff --git a/drivers/thermal/qcom/qcom-spmi-adc-tm5.c 
-b/drivers/thermal/qcom/qcom-spmi-adc-tm5.c
-> new file mode 100644
-> index 000000000000..22d5414a3c5e
-> --- /dev/null
-> +++ b/drivers/thermal/qcom/qcom-spmi-adc-tm5.c
-> @@ -0,0 +1,621 @@
-> +// SPDX-License-Identifier: GPL-2.0-only
-> +/*
-> + * Copyright (c) 2012-2020, The Linux Foundation. All rights reserved.
-> + * Copyright (c) 2020 Linaro Limited
-> + */
-> +
-> +#include <linux/iio/consumer.h>
-> +#include <linux/interrupt.h>
-> +#include <linux/module.h>
-> +#include <linux/of.h>
-> +#include <linux/of_device.h>
-> +#include <linux/platform_device.h>
-> +#include <linux/regmap.h>
-> +#include <linux/thermal.h>
-> +
-> +#include "../../iio/adc/qcom-vadc-common.h"
-> +
+So you do have the problem of RT task preempting an important CFS task.
 
-When I was testing the patches on SC7180, I found that I had to add this 
-line for fixing a compilation error for the FIELD_PREP macro:
+> 
+> There is a *big* difference in # of cpu cycles per frame between
+> highest and lowest OPP..
 
-#include <linux/bitfield.h>
+To combat DVFS related delays, you can use util clamp.
 
-Can you please check and confirm if its needed for compilation here?
+Hopefully this article helps explain it if you didn't come across it before
 
-Thanks,
+	https://lwn.net/Articles/762043/
 
-Jishnu
+You can use sched_setattr() to set SCHED_FLAG_UTIL_CLAMP_MIN for a task. This
+will guarantee everytime this task is running it'll appear it has at least
+this utilization value, so schedutil governor (which must be used for this to
+work) will pick up the right performance point (OPP).
 
+The scheduler will try its best to make sure that the task will run on a core
+that meets the minimum requested performance point (hinted by setting
+uclamp_min).
+
+Thanks
+
+--
+Qais Yousef
