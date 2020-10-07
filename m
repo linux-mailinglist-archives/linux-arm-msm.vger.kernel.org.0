@@ -2,79 +2,75 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 60DA82863CB
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Oct 2020 18:24:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E1BB72863FE
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Oct 2020 18:30:15 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727307AbgJGQYG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 7 Oct 2020 12:24:06 -0400
-Received: from sonic306-2.consmr.mail.bf2.yahoo.com ([74.6.132.41]:45764 "EHLO
-        sonic306-2.consmr.mail.bf2.yahoo.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1727422AbgJGQYE (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 7 Oct 2020 12:24:04 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s2048; t=1602087842; bh=PxMwWzXvs+dqOoH0/FHvFmQpYH2JguaCUHYAVLLmaiw=; h=Date:From:Reply-To:Subject:References:From:Subject; b=eiQQQuX/rrX6ZT9/VRDEmAoRMkZXXCn6genpAmf164q1fe7kzwgBfiEbjDYZRSjDvLljqQotAWdAumCOdex/jPpXW3QjxwBVjGGDA8gpmYVY8qEewYDxJDLosv28CQHlPzlcchtrCXgRFhUREoZuJaXQncoiETAQ2Pn3OGYAFp8hXe2vkCsj9hAc7zhUf7OsqodtaEk0oEgeO0Gi+ZN+361hzZncSxyto7LnL2RdGyfyKVgL3BP+04teN4WUqbDOo0px0JkO02yaEQsjAGDM23I47kZ3pu31FMd8FA/3nDpGYSR49a7hwsOAECteb6924pu6Mn6RoLkVlPJofQ+ufg==
-X-YMail-OSG: feUT5fcVM1m0XnIR9bcE27UXJ4pCR9Pr2V4Ie69qDymM.Er0hLPI8IkfFraGwy6
- 0PwjrcxWldQ9kuQOXZM0T1mUz_gsmBqvOCHBvkfd3J66H11XZXK5_r1knDi6LMpR8C3SiPyq5iD7
- tUk_Msr_qMIUnD4orO0n_o9PWYaVxob6exox9E_b1KGkpOMfO96KlMbcaIuAvqXD3ZA3vUfgCqNZ
- 6DwTEXsiV4usLXRfE.p6ZbvCCRHcsK1rtXJHSiinCrWHbN8sJwN7O6VU1rEmkJ_tfDQllwVhTnJm
- l1n5VoF5YMDfT2hN.GlYkITJd4lUgHAPufybo.8bURoTdjRYjlEjddd5ng.YoQ0Rh0mTCHPtoypw
- gO3oCNpIXMMsqxbidSa182JtsTUrd._WgIVWduQaiAMf_0ITGsEDCz7Ecy8lsadHMt_PNaIOpKHA
- _lZJnlk.zTF6_SJX3rFF9uKEU.7mgiw7ctDd27W634YubQ1sLA6mgSvLVGWDbSl7JhpS4McnTRrm
- 8wsdyDmRDgpp9BVMMYI0VnT.pM3U7giJjOVkbXVIH9yGGiP6MqpszP.5znSC_fFwBTKFn0ZIgm9E
- uhXeRHvdXSv6ve61rqMrohth998WocPAmhg9VcmZe.jjQOSX_cDaoYThUJcQO6Kgo1tNOZXcjs21
- Kgs.FmG5dFQ1xUG6UuKTRBzLDX4MYsrqN6sFtJrcwsyl1MVTyv.RkRZsOCoR.qr8hdfiuZa_7Nsw
- S.K8nzay2UnN_uVMRR4GDpyidTY6bMtntLjweVPIMkvMsgyziTUGKgWSYtPlnyLZY3E2J4H6SswC
- 1TxskJsMxApaEuoHbajd.9u6wAWPesYZRakD0iVQG4Z6Kx4IcOlQLTmMla49biKQndKj4ctBWOTt
- 1Isi1TxGFgUPRs4NThgQ6qcdELCJ5KyyU9u9FjRHERP5a4kB76LpwuI55aojJPHk4RsSnSzTrnXR
- wg4BcWzA9XY6Wad9Viy4OEXzfjZf8trhF7XvcWdN8G5ucrlundnNX6fi9gtJrqHP21acnNR718xx
- cW1R8qGIlgc5.4HdEtPb1RuYQ4dm4PLZRPnDbGCyB9CZCL_6ABqvwhBZXurL.yKhGpScu24_DijZ
- kYNLRzpXK8IoF3FJYpVP0mZAABzptNmNhUZDv.URF73k4aW1rICtChVJztbry9I_JN93mC3IGnqZ
- 6FmL8z6IlWbAPCZ2YNBAX0xsmIWLaV1EDzn7nXHjSoBP0Fx2mmUwrMC9Zrq6MbVk.f6EIkcI5vdq
- PUbx4c0k1.ZajDye8Km3LQtpz7IDPuzcAqTDWamXp_q8zsky6ZCffV0vJfCR78CTANfxE58u8hro
- XxUkFBuzta92kjdgDPE8VnPm9Z38AjfhyEWSQsqXdH5ZYmkiQrcC3_ktVaYovf8SbMHdv27Gb1K9
- PzZPkdRdlx0g09pmNBWRYkETElMq_OXcu4.f9PQ8G
-Received: from sonic.gate.mail.ne1.yahoo.com by sonic306.consmr.mail.bf2.yahoo.com with HTTP; Wed, 7 Oct 2020 16:24:02 +0000
-Date:   Wed, 7 Oct 2020 16:23:57 +0000 (UTC)
-From:   Marilyn Robert <fredodinga22@gmail.com>
-Reply-To: marilyobert@gmail.com
-Message-ID: <1873493109.151916.1602087837662@mail.yahoo.com>
-Subject: =?UTF-8?B?0J3QsNGY0LzQuNC70LAg0LrQsNGYINCz0L7RgdC/0L7QtNCw0YDQvtGC?=
+        id S1726605AbgJGQaP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 7 Oct 2020 12:30:15 -0400
+Received: from foss.arm.com ([217.140.110.172]:46648 "EHLO foss.arm.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726348AbgJGQaP (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 7 Oct 2020 12:30:15 -0400
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 63A661FB;
+        Wed,  7 Oct 2020 09:30:14 -0700 (PDT)
+Received: from e107158-lin.cambridge.arm.com (e107158-lin.cambridge.arm.com [10.1.195.21])
+        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 094943F66B;
+        Wed,  7 Oct 2020 09:30:12 -0700 (PDT)
+Date:   Wed, 7 Oct 2020 17:30:10 +0100
+From:   Qais Yousef <qais.yousef@arm.com>
+To:     Rob Clark <robdclark@gmail.com>
+Cc:     dri-devel <dri-devel@lists.freedesktop.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Tejun Heo <tj@kernel.org>, Tim Murray <timmurray@google.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Rob Clark <robdclark@chromium.org>,
+        open list <linux-kernel@vger.kernel.org>,
+        Steven Rostedt <rostedt@goodmis.org>,
+        "Peter Zijlstra (Intel)" <peterz@infradead.org>
+Subject: Re: [PATCH v2 0/3] drm: commit_work scheduling
+Message-ID: <20201007163010.bfgst6xfvkn2lzrk@e107158-lin.cambridge.arm.com>
+References: <20200930211723.3028059-1-robdclark@gmail.com>
+ <20201002110105.e56qrvzoqfioi4hs@e107158-lin.cambridge.arm.com>
+ <CAF6AEGvWMvZuy7CcGhzUSbwGtEkrNkzWHu_BN1cbdBJdZtvevA@mail.gmail.com>
+ <20201005150024.mchfdtd62rlkuh4s@e107158-lin.cambridge.arm.com>
+ <CAF6AEGs7NmCPyLdg+gg5jTTe-wgi2myRQ80tum6odv6tLLQ0DQ@mail.gmail.com>
+ <20201006105918.v3xspb6xasjyy5ky@e107158-lin.cambridge.arm.com>
+ <CAF6AEGu_V_EGcPQ+F_Z73cMCAcFPoM-GuiGWUPr+=6GD4Om=zg@mail.gmail.com>
+ <20201007103653.qjohhta7douhlb22@e107158-lin.cambridge.arm.com>
+ <CAF6AEGsA_enFOUkV4Rw=Sxyjf=_oFLjwbz-Y4jTO=TUraOCzVQ@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: base64
-References: <1873493109.151916.1602087837662.ref@mail.yahoo.com>
-X-Mailer: WebService/1.1.16795 YMailNodin Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.125 Safari/537.36
-To:     unlisted-recipients:; (no To-header on input)
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CAF6AEGsA_enFOUkV4Rw=Sxyjf=_oFLjwbz-Y4jTO=TUraOCzVQ@mail.gmail.com>
+User-Agent: NeoMutt/20171215
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-DQoNCtCd0LDRmNC80LjQu9CwINC60LDRmCDQs9C+0YHQv9C+0LTQsNGA0L7Rgg0KDQrQiNCw0YEg
-0YHRg9C8IDY4LdCz0L7QtNC40YjQvdCwINC20LXQvdCwLCDQutC+0ZjQsCDRgdGC0YDQsNC00LAg
-0L7QtCDQv9GA0L7QtNC+0LvQttC10L0g0LrQsNGA0YbQuNC90L7QvCDQvdCwINC00L7RmNC60LAs
-INC+0LQg0YHQuNGC0LUg0LzQtdC00LjRhtC40L3RgdC60Lgg0LjQvdC00LjQutCw0YbQuNC4LCDQ
-vNC+0ZjQsNGC0LAg0YHQvtGB0YLQvtGY0LHQsCDQvdCw0LLQuNGB0YLQuNC90LAg0YHQtSDQstC7
-0L7RiNC4INC4INC+0YfQuNCz0LvQtdC00L3QviDQtSDQtNC10LrQsCDQvNC+0LbQtdCx0Lgg0L3Q
-tdC80LAg0LTQsCDQttC40LLQtdCw0Lwg0L/QvtCy0LXRnNC1INC+0LQg0YjQtdGB0YIg0LzQtdGB
-0LXRhtC4INC60LDQutC+INGA0LXQt9GD0LvRgtCw0YIg0L3QsCDQsdGA0LfQuNC+0YIg0YDQsNGB
-0YIg0Lgg0LHQvtC70LrQsNGC0LAg0YjRgtC+INGB0LUg0ZjQsNCy0YPQstCwINC60LDRmCDQvdC1
-0LAuINCc0L7RmNC+0YIg0YHQvtC/0YDRg9CzINC/0L7Rh9C40L3QsCDQvdC10LrQvtC70LrRgyDQ
-s9C+0LTQuNC90Lgg0L3QsNC90LDQt9Cw0LQg0Lgg0L3QsNGI0LjRgtC1INC00L7Qu9Cz0Lgg0LPQ
-vtC00LjQvdC4INCx0YDQsNC6INC90LUg0LHQtdCwINCx0LvQsNCz0L7RgdC70L7QstC10L3QuCDR
-gdC+INC90LjRgtGDINC10LTQvdC+INC00LXRgtC1LCDQv9C+INC90LXQs9C+0LLQsNGC0LAg0YHQ
-vNGA0YIg0LPQviDQvdCw0YHQu9C10LTQuNCyINGG0LXQu9C+0YLQviDQvdC10LPQvtCy0L4g0LHQ
-vtCz0LDRgtGB0YLQstC+Lg0KDQrQlNC+0LDRk9Cw0Lwg0LrQsNGYINCy0LDRgSDQvtGC0LrQsNC6
-0L4g0YHQtSDQv9C+0LzQvtC70LjQsiDQt9CwINGC0L7QsCwg0L/QvtC00LPQvtGC0LLQtdC9INGB
-0YPQvCDQtNCwINC00L7QvdC40YDQsNC8INGB0YPQvNCwINC+0LQgMiwgMzAwLCAwMDAg0LXQstGA
-0LAg0LfQsCDQv9C+0LzQvtGIINC90LAg0YHQuNGA0L7QvNCw0YjQvdC40YLQtSwg0YHQuNGA0L7Q
-vNCw0YjQvdC40YLQtSDQuCDQv9C+0LzQsNC70LrRgyDQv9GA0LjQstC40LvQtdCz0LjRgNCw0L3Q
-uNGC0LUg0LzQtdGT0YMg0LLQsNGI0LjRgtC1INGB0L7QsdGA0LDQvdC40ZjQsCAvINC+0L/RiNGC
-0LXRgdGC0LLQvi4g0JfQsNCx0LXQu9C10LbQtdGC0LUg0LTQtdC60LAg0L7QstC+0Zgg0YTQvtC9
-0LQg0LUg0LTQtdC/0L7QvdC40YDQsNC9INCy0L4g0LHQsNC90LrQsCDQutCw0LTQtSDRiNGC0L4g
-0YDQsNCx0L7RgtC10YjQtSDQvNC+0ZjQvtGCINGB0L7Qv9GA0YPQsy4gQXBwcmVjaWF0ZdC1INGG
-0LXQvdCw0Lwg0LDQutC+INC+0LHRgNC90LXRgtC1INCy0L3QuNC80LDQvdC40LUg0L3QsCDQvNC+
-0LXRgtC+INCx0LDRgNCw0ZrQtSDQt9CwINC/0YDQvtC/0LDQs9C40YDQsNGa0LUg0L3QsCDQvNCw
-0YHQsNC20LDRgtCwINC90LAg0LrRgNCw0LvRgdGC0LLQvtGC0L4sINGc0LUg0LLQuCDQtNCw0LTQ
-sNC8INC/0L7QstC10ZzQtSDQtNC10YLQsNC70Lgg0LfQsCDRgtC+0LAg0LrQsNC60L4g0LTQsCDQ
-v9C+0YHRgtCw0L/QuNGC0LUuDQoNCtCR0LvQsNCz0L7QtNCw0YDQsNC8DQrQky3Rk9CwINCc0LXR
-gNC40LvQuNC9INCg0L7QsdC10YDRgg==
+On 10/07/20 08:57, Rob Clark wrote:
+> Yeah, I think we will end up making some use of uclamp.. there is
+> someone else working on that angle
+> 
+> But without it, this is a case that exposes legit prioritization
+> problems with commit_work which we should fix ;-)
+
+I wasn't suggesting this as an alternative to fixing the other problem. But it
+seemed you had a different problem here that I thought I could help with :-)
+
+I did give my opinion about how to handle that priority issue. If the 2 threads
+are kernel threads and by design they need relative priorities IMO the kernel
+need to be taught to set this relative priority. It seemed the vblank worker
+could run as SCHED_DEADLINE. If this works, then the priority problem for
+commit_work disappears as SCHED_DEADLINE will preempt RT. If commit_work uses
+sched_set_fifo(), its priority will be 50, hence your SF threads can no longer
+preempt it. And you can manage the SF threads to be any value you want relative
+to 50 anyway without having to manage commit_work itself.
+
+I'm not sure if you have problems with RT tasks preempting important CFS
+tasks. My brain registered two conflicting statements.
+
+Thanks
+
+--
+Qais Yousef
