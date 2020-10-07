@@ -2,86 +2,184 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A35AC286637
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Oct 2020 19:49:51 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 45C15286859
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Oct 2020 21:33:28 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728726AbgJGRtt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 7 Oct 2020 13:49:49 -0400
-Received: from mail-03.mail-europe.com ([91.134.188.129]:53906 "EHLO
-        mail-03.mail-europe.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728489AbgJGRtr (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 7 Oct 2020 13:49:47 -0400
-Date:   Wed, 07 Oct 2020 17:49:35 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=connolly.tech;
-        s=protonmail; t=1602092984;
-        bh=UHVeS8mhguivBrMvSGJLXZGFXdxxnZc9zuVyS2Pzp9c=;
-        h=Date:To:From:Cc:Reply-To:Subject:In-Reply-To:References:From;
-        b=S4/v6pJnxWmm6b3o4OVMT95uMMMMa8BVP32cXqU+9/WOwb+kWV2GhV68W1+Uh1nW2
-         g6eVEBDXWBfNfDCB7LfsLtoa0BIc4GbsitKaEwlQoQQRrL5VpT/j7Lter2ctiqbMpK
-         LrjzS5pG1UVk73nHCoZIME8q86Q6RDGaYiuGQSFE=
-To:     linux-arm-msm@vger.kernel.org, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Akash Asthana <akashast@codeaurora.org>,
-        Mukesh Savaliya <msavaliy@codeaurora.org>
-From:   Caleb Connolly <caleb@connolly.tech>
-Cc:     ~postmarketos/upstreaming@lists.sr.ht,
-        Caleb Connolly <caleb@connolly.tech>,
-        linux-i2c@vger.kernel.org, linux-kernel@vger.kernel.org
-Reply-To: Caleb Connolly <caleb@connolly.tech>
-Subject: [PATCH 5/5] i2c: geni: sdm845: dont perform DMA for the oneplus6
-Message-ID: <20201007174736.292968-6-caleb@connolly.tech>
-In-Reply-To: <20201007174736.292968-1-caleb@connolly.tech>
-References: <20201007174736.292968-1-caleb@connolly.tech>
+        id S1728270AbgJGTdV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 7 Oct 2020 15:33:21 -0400
+Received: from m42-4.mailgun.net ([69.72.42.4]:27855 "EHLO m42-4.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726129AbgJGTdV (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 7 Oct 2020 15:33:21 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1602099199; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=fRcWPobA2wPZBFDePlMJ/eyWKggBDekfCZ/qz5wXYKc=;
+ b=NWT3Pu0hg14CjJIAU9lgfpdii9SrrGdxhE314LYRN4ESbR2emLdIssdBH06fW2eKd53Yzmfw
+ V27g6wmyg7FX34FcfcMJvom8NLua6f1PDet0h1s68L7xIGWV2Gu00RgmgL/itlJ5s5yhjx1y
+ rnMK/2qEzEAr6oAhg8LUK6pSty4=
+X-Mailgun-Sending-Ip: 69.72.42.4
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n03.prod.us-east-1.postgun.com with SMTP id
+ 5f7e17ffbfed2afaa6d13e94 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 07 Oct 2020 19:33:19
+ GMT
+Sender: vgarodia=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id D65B5C433F1; Wed,  7 Oct 2020 19:33:18 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: vgarodia)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id B04A9C433CA;
+        Wed,  7 Oct 2020 19:33:13 +0000 (UTC)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=-1.2 required=10.0 tests=ALL_TRUSTED,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF shortcircuit=no
-        autolearn=disabled version=3.4.4
-X-Spam-Checker-Version: SpamAssassin 3.4.4 (2020-01-24) on
-        mailout.protonmail.ch
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Thu, 08 Oct 2020 01:03:13 +0530
+From:   vgarodia@codeaurora.org
+To:     Tomasz Figa <tfiga@chromium.org>
+Cc:     Stanimir Varbanov <stanimir.varbanov@linaro.org>,
+        Dikshita Agarwal <dikshita@codeaurora.org>,
+        Linux Media Mailing List <linux-media@vger.kernel.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>
+Subject: Re: [PATCH 2/2] venus: venc: fix handlig of S_SELECTION and
+ G_SELECTION
+In-Reply-To: <CAAFQd5BdeG44SmT4xhrarsmgnFc-1LCdoFwz=XXYsLdHcMyz-Q@mail.gmail.com>
+References: <1600968674-11559-1-git-send-email-dikshita@codeaurora.org>
+ <1600968674-11559-3-git-send-email-dikshita@codeaurora.org>
+ <CAAFQd5CTyjagd7grrCkret2WnvoLHQk83fg+1QPK+V1NbhKTvw@mail.gmail.com>
+ <b977eb27-9646-1c73-5acb-c3a74460e426@linaro.org>
+ <CAAFQd5BdeG44SmT4xhrarsmgnFc-1LCdoFwz=XXYsLdHcMyz-Q@mail.gmail.com>
+Message-ID: <89783dd42e698593d30dc0f37b52cf73@codeaurora.org>
+X-Sender: vgarodia@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The OnePlus 6/T has the same issues as the c630 causing a crash when DMA
-is used for i2c, so disable it.
+Hi Tomasz,
 
-https://patchwork.kernel.org/patch/11133827/
-Signed-off-by: Caleb Connolly <caleb@connolly.tech>
----
- drivers/i2c/busses/i2c-qcom-geni.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+On 2020-10-01 20:47, Tomasz Figa wrote:
+> On Thu, Oct 1, 2020 at 3:32 AM Stanimir Varbanov
+> <stanimir.varbanov@linaro.org> wrote:
+>> 
+>> Hi Tomasz,
+>> 
+>> On 9/25/20 11:55 PM, Tomasz Figa wrote:
+>> > Hi Dikshita, Stanimir,
+>> >
+>> > On Thu, Sep 24, 2020 at 7:31 PM Dikshita Agarwal
+>> > <dikshita@codeaurora.org> wrote:
+>> >>
+>> >> From: Stanimir Varbanov <stanimir.varbanov@linaro.org>
+>> >>
+>> >> - return correct width and height for G_SELECTION
+>> >> - if requested rectangle wxh doesn't match with capture port wxh
+>> >>   adjust the rectangle to supported wxh.
+>> >>
+>> >> Signed-off-by: Dikshita Agarwal <dikshita@codeaurora.org>
+>> >> ---
+>> >>  drivers/media/platform/qcom/venus/venc.c | 20 ++++++++++++--------
+>> >>  1 file changed, 12 insertions(+), 8 deletions(-)
+>> >>
+>> >> diff --git a/drivers/media/platform/qcom/venus/venc.c b/drivers/media/platform/qcom/venus/venc.c
+>> >> index 7d2aaa8..a2cc12d 100644
+>> >> --- a/drivers/media/platform/qcom/venus/venc.c
+>> >> +++ b/drivers/media/platform/qcom/venus/venc.c
+>> >> @@ -463,13 +463,13 @@ static int venc_g_fmt(struct file *file, void *fh, struct v4l2_format *f)
+>> >>         switch (s->target) {
+>> >>         case V4L2_SEL_TGT_CROP_DEFAULT:
+>> >>         case V4L2_SEL_TGT_CROP_BOUNDS:
+>> >> -               s->r.width = inst->width;
+>> >> -               s->r.height = inst->height;
+>> >> -               break;
+>> >> -       case V4L2_SEL_TGT_CROP:
+>> >>                 s->r.width = inst->out_width;
+>> >>                 s->r.height = inst->out_height;
+>> >>                 break;
+>> >> +       case V4L2_SEL_TGT_CROP:
+>> >> +               s->r.width = inst->width;
+>> >> +               s->r.height = inst->height;
+>> >> +               break;
+>> >>         default:
+>> >>                 return -EINVAL;
+>> >>         }inter
+>> >> @@ -490,10 +490,14 @@ static int venc_g_fmt(struct file *file, void *fh, struct v4l2_format *f)
+>> >>
+>> >>         switch (s->target) {
+>> >>         case V4L2_SEL_TGT_CROP:
+>> >> -               if (s->r.width != inst->out_width ||
+>> >> -                   s->r.height != inst->out_height ||
+>> >> -                   s->r.top != 0 || s->r.left != 0)
+>> >> -                       return -EINVAL;
+>> >> +               if (s->r.width != inst->width ||
+>> >> +                   s->r.height != inst->height ||
+>> >> +                   s->r.top != 0 || s->r.left != 0) {
+>> >> +                       s->r.top = 0;
+>> >> +                       s->r.left = 0;
+>> >> +                       s->r.width = inst->width;
+>> >> +                       s->r.height = inst->height;
+>> >
+>> > What's the point of exposing the selection API if no selection can
+>> > actually be done?
+>> 
+>> If someone can guarantee that dropping of s_selection will not break
+>> userspace applications I'm fine with removing it.
+> 
+> Indeed the specification could be made more clear about this. The
+> visible rectangle configuration is described as optional, so I'd
+> consider the capability to be optional as well.
+> 
+> Of course it doesn't change the fact that something that is optional
+> in the API may be mandatory for some specific integrations, like
+> Chrome OS or Android.
+> 
+>> 
+>> I implemented g/s_selection with the idea to add crop functionality
+>> later because with current firmware interface it needs more work.
+> 
+> I suggested one thing internally, but not sure if it was understood 
+> correctly:
+> 
+> Most of the encoders only support partial cropping, with the rectangle
+> limited to top = 0 and left = 0, in other words, only setting the
+> visible width and height. This can be easily implemented on most of
+> the hardware, even those that don't have dedicated cropping
+> capability, by configuring the hardware as follows:
+> 
+> stride = CAPTURE format width (or bytesperline)
+> width = CROP width
+> height = CROP height
 
-diff --git a/drivers/i2c/busses/i2c-qcom-geni.c b/drivers/i2c/busses/i2c-qc=
-om-geni.c
-index dead5db3315a..50a0674a6553 100644
---- a/drivers/i2c/busses/i2c-qcom-geni.c
-+++ b/drivers/i2c/busses/i2c-qcom-geni.c
-@@ -358,7 +358,8 @@ static int geni_i2c_rx_one_msg(struct geni_i2c_dev *gi2=
-c, struct i2c_msg *msg,
- =09struct geni_se *se =3D &gi2c->se;
- =09size_t len =3D msg->len;
-=20
--=09if (!of_machine_is_compatible("lenovo,yoga-c630"))
-+=09if (!of_machine_is_compatible("lenovo,yoga-c630") &&
-+=09    !of_machine_is_compatible("oneplus,oneplus6"))
- =09=09dma_buf =3D i2c_get_dma_safe_msg_buf(msg, 32);
-=20
- =09if (dma_buf)
-@@ -400,7 +401,8 @@ static int geni_i2c_tx_one_msg(struct geni_i2c_dev *gi2=
-c, struct i2c_msg *msg,
- =09struct geni_se *se =3D &gi2c->se;
- =09size_t len =3D msg->len;
-=20
--=09if (!of_machine_is_compatible("lenovo,yoga-c630"))
-+=09if (!of_machine_is_compatible("lenovo,yoga-c630") &&
-+=09    !of_machine_is_compatible("oneplus,oneplus6"))
- =09=09dma_buf =3D i2c_get_dma_safe_msg_buf(msg, 32);
-=20
- =09if (dma_buf)
---=20
-2.28.0
+Assuming the bitstream height and width would be configured with capture 
+plane
+setting (s_fmt), configuring the crop as height/width would indicate to 
+venus
+hardware as scaling. To distinguish scaling with crop, firmware needs to 
+be
+configured separately indicating crop rectangle.
 
+> I believe Android requires the hardware to support stride and AFAIK
+> this hardware is also commonly used on Android, so perhaps it's
+> possible to achieve the above without any firmware changes?
 
+Yes, the hardware is used and also supported in android. The interface 
+to configure
+crop rectangle to firmware is via extradata. This extradata info is 
+passed from v4l2
+clients via a separate plane in v4l2 buffer. The extradata payload is 
+passed to
+firmware as is and the firmware parses it to know if crop, roi, etc.
+
+> Best regards,
+> Tomasz
