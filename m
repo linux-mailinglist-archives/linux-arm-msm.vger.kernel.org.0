@@ -2,156 +2,100 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D1500285685
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Oct 2020 03:58:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 752CC285704
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Oct 2020 05:22:52 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726770AbgJGB62 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 6 Oct 2020 21:58:28 -0400
-Received: from m42-4.mailgun.net ([69.72.42.4]:30965 "EHLO m42-4.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726604AbgJGB62 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 6 Oct 2020 21:58:28 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1602035907; h=In-Reply-To: Content-Type: MIME-Version:
- References: Message-ID: Subject: Cc: To: From: Date: Sender;
- bh=+o7MGsKHeGQlXkai/cG9FMjYngfTEsCZ2bNT3OvLsrk=; b=HhgczNI9156JEzXGI0A3l9JcpoSdbGHhUHLzwoiK46epgk262PY+pZdRXWbnklTX51IG8nT6
- 0oavNoKoWvhXG9mQnM+7AUUm/8An8fjCjw49J0PkBO3G7Xubi5QYllAmWwOn5p1Zz8SeRBje
- RMC9Igmp3ajN8wOVicrbKOhnawc=
-X-Mailgun-Sending-Ip: 69.72.42.4
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n04.prod.us-east-1.postgun.com with SMTP id
- 5f7d20c23711fec7b1aa16a4 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 07 Oct 2020 01:58:26
- GMT
-Sender: ilina=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 348B1C433CA; Wed,  7 Oct 2020 01:58:26 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
-        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
-Received: from localhost (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: ilina)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 21A9DC433CA;
-        Wed,  7 Oct 2020 01:58:24 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 21A9DC433CA
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=ilina@codeaurora.org
-Date:   Tue, 6 Oct 2020 19:58:24 -0600
-From:   Lina Iyer <ilina@codeaurora.org>
-To:     "Rafael J. Wysocki" <rafael@kernel.org>
-Cc:     "Rafael J. Wysocki" <rjw@rjwysocki.net>,
-        Ulf Hansson <ulf.hansson@linaro.org>,
-        Linux PM <linux-pm@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>
-Subject: Re: [PATCH v2] PM / Domains: enable domain idle state accounting
-Message-ID: <20201007015824.GB17917@codeaurora.org>
-References: <20201003155618.11997-1-ilina@codeaurora.org>
- <CAJZ5v0jMzN5nHCpTnJuUoFbrqYhrciRp04quUTAnt0sSU4q+aw@mail.gmail.com>
+        id S1726697AbgJGDWv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 6 Oct 2020 23:22:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41870 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725981AbgJGDWv (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 6 Oct 2020 23:22:51 -0400
+Received: from mail-ed1-x544.google.com (mail-ed1-x544.google.com [IPv6:2a00:1450:4864:20::544])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CB419C061755
+        for <linux-arm-msm@vger.kernel.org>; Tue,  6 Oct 2020 20:22:50 -0700 (PDT)
+Received: by mail-ed1-x544.google.com with SMTP id i5so619491edr.5
+        for <linux-arm-msm@vger.kernel.org>; Tue, 06 Oct 2020 20:22:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=Lourg1RYIIWpvMWQr+TUObCD9Gx3TD2WZUKJRUks9KE=;
+        b=nZqm6qcF6HRSUYLFCRGKoZd6aWjgvq9JFf5HgoJ3L0oAqgW3NjSoU/ig4FvYTuZDUl
+         NMBh6WHT/l6//dFKfgbtTbFgX3tBF0z14S2VO7ygvCJgWeHKy1iyZytrc/qyF8hyh2Cw
+         EiCUdGhgwObuQVT6J5bNQ3YoKa2n9gxZ6OXLeKFRviIl7VA819vnw94TBnKh+w4ymeve
+         A1QoxpwAuw6awYa1el8ezXjUJCLhAy7W16wom9+wt2W4rvEbGeJUI6piUrbcua9eANma
+         p0ldgj3w6vTq8ef+EtISgXHmJT043hxqZVkgisHbkHGcvsas2m+S+9eamVLwGN10jl70
+         tzCw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=Lourg1RYIIWpvMWQr+TUObCD9Gx3TD2WZUKJRUks9KE=;
+        b=sgX1pSl0YO52cIBSqnUrEs5OjnGDg71A5yRxq4+WFlfWb+EMJ6Er7MSnWV9XtPy72i
+         2OdSBhTWrPrx24YuZUdVZWzLub29+mBLu8JNb4hzgxp1d/m0KgN79bMoaeOzRZy/OZLN
+         EkOU5NZeQ6mfxr6DMz+cDQilOXkcYD9bmPu6hQ6h++CHsKO6J8ZNkiiAsMOcgxNqN/cK
+         KIPW2/FbwmNnhJV/uZlhWfLugkczGP2NNaxcsbvS7DnZOU8t+STWP0h6w+Yqac3PYNaz
+         LLrwBfQQpic76s3e96IPp5ee+qA3AjmGUIeX5UdDn87gfJrCZgNNnRB4DcMNQ1tZHkZF
+         GrrQ==
+X-Gm-Message-State: AOAM533T5VihKm9XWIjK5FfrX4Knq+TErgvvIBy7aM5qB7SnPUsY/8cv
+        q80mCU/UpzCsXCg0u+Uny+7WczQ0OVWzZ8Nb8uR08Q==
+X-Google-Smtp-Source: ABdhPJyO337FEc7TztOCAntc9Y9EOuRv/DLIXBpzL05wvOzTAu1FuBmcfBNGr0GWpgVS72M81efTsD1h+Asz11So/3U=
+X-Received: by 2002:a50:8e43:: with SMTP id 3mr1414659edx.178.1602040969392;
+ Tue, 06 Oct 2020 20:22:49 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Disposition: inline
-In-Reply-To: <CAJZ5v0jMzN5nHCpTnJuUoFbrqYhrciRp04quUTAnt0sSU4q+aw@mail.gmail.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+References: <20200930062603.29009-4-jun.nie@linaro.org> <202010010818.bTfsOYy0-lkp@intel.com>
+In-Reply-To: <202010010818.bTfsOYy0-lkp@intel.com>
+From:   Jun Nie <jun.nie@linaro.org>
+Date:   Wed, 7 Oct 2020 11:22:38 +0800
+Message-ID: <CABymUCPW-xKj37FghscTv2xc6fSxGwwbFCVF6kUjgG3iuj2F4A@mail.gmail.com>
+Subject: Re: [PATCH 3/3] power: avs: qcom-cpr: add support to msm8939
+To:     kernel test robot <lkp@intel.com>
+Cc:     Niklas Cassel <nks@flawful.org>, linux-pm@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, kbuild-all@lists.01.org,
+        Shawn Guo <shawn.guo@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Oct 05 2020 at 07:27 -0600, Rafael J. Wysocki wrote:
->On Sat, Oct 3, 2020 at 5:56 PM Lina Iyer <ilina@codeaurora.org> wrote:
->>
->> To enable better debug of PM domains, let's keep a track of the success
->> and rejections in entering each domain idle state.
->>
->> This statistics is exported in debugfs when reading the idle_states
->> node, associated with each PM domain.
->>
->> Signed-off-by: Lina Iyer <ilina@codeaurora.org>
->> ---
->> Changes in v2:
->>         - Renamed 'failed' to 'rejected'
->>
->> This patch depends-on: https://lkml.org/lkml/2020/9/24/465
->> ---
->>  drivers/base/power/domain.c | 7 +++++--
->>  include/linux/pm_domain.h   | 2 ++
->>  2 files changed, 7 insertions(+), 2 deletions(-)
->>
->> diff --git a/drivers/base/power/domain.c b/drivers/base/power/domain.c
->> index f001ac6326fb..dbe89454f594 100644
->> --- a/drivers/base/power/domain.c
->> +++ b/drivers/base/power/domain.c
->> @@ -564,6 +564,7 @@ static int genpd_power_off(struct generic_pm_domain *genpd, bool one_dev_on,
->>
->>         genpd->status = GENPD_STATE_OFF;
->>         genpd_update_accounting(genpd);
->> +       genpd->states[genpd->state_idx].usage++;
+kernel test robot <lkp@intel.com> =E4=BA=8E2020=E5=B9=B410=E6=9C=881=E6=97=
+=A5=E5=91=A8=E5=9B=9B =E4=B8=8A=E5=8D=889:00=E5=86=99=E9=81=93=EF=BC=9A
 >
->Why not to do this in genpd_update_accounting()?
+> Hi Jun,
 >
-That function is clubbed with debugfs and does heavy tracking using
-timers. This accounting is fairly basic and still quite useful for
-debugging.
+> I love your patch! Perhaps something to improve:
+>
+> [auto build test WARNING on pm/linux-next]
+> [also build test WARNING on robh/for-next linus/master v5.9-rc7 next-2020=
+0930]
+> [cannot apply to battery/master]
+> [If your patch is applied to the wrong git tree, kindly drop us a note.
+> And when submitting patch, we suggest to use '--base' as documented in
+> https://git-scm.com/docs/git-format-patch]
+>
+> url:    https://github.com/0day-ci/linux/commits/Jun-Nie/Support-CPR-on-m=
+sm8939/20200930-142825
+> base:   https://git.kernel.org/pub/scm/linux/kernel/git/rafael/linux-pm.g=
+it linux-next
+> config: x86_64-randconfig-m031-20200930 (attached as .config)
+> compiler: gcc-9 (Debian 9.3.0-15) 9.3.0
+>
+> If you fix the issue, kindly add following tag as appropriate
+> Reported-by: kernel test robot <lkp@intel.com>
+>
+> smatch warnings:
+> drivers/power/avs/qcom-cpr.c:1957 cpr_fuse_match_tuple() warn: always tru=
+e condition '(drv->cpr_fuse_map_match !=3D (-1)) =3D> (0-u16max !=3D (-1))'
+>
+> vim +1957 drivers/power/avs/qcom-cpr.c
+>
+Rob,
 
->>
->>         list_for_each_entry(link, &genpd->child_links, child_node) {
->>                 genpd_sd_counter_dec(link->parent);
->> @@ -574,6 +575,7 @@ static int genpd_power_off(struct generic_pm_domain *genpd, bool one_dev_on,
->>
->>         return 0;
->>  busy:
->> +       genpd->states[genpd->state_idx].rejected++;
->>         if (nr_calls)
->>                 __raw_notifier_call_chain(&genpd->power_notifiers,
->>                                           GENPD_STATE_ON, NULL,
->
->This doesn't apply to the current code, please rebase.
->
-I believe it applies cleanly on top of
-https://lkml.org/lkml/2020/9/24/465, which I believe you are applied to
-your tree. Let me rebase and re-post. Sorry about that.
+Thanks for your precious comments! I will fix these issue soon after holida=
+y.
 
-Thanks,
-Lina
-
->> @@ -3053,7 +3055,7 @@ static int idle_states_show(struct seq_file *s, void *data)
->>         if (ret)
->>                 return -ERESTARTSYS;
->>
->> -       seq_puts(s, "State          Time Spent(ms)\n");
->> +       seq_puts(s, "State          Time Spent(ms) Usage          Rejected\n");
->>
->>         for (i = 0; i < genpd->state_count; i++) {
->>                 ktime_t delta = 0;
->> @@ -3065,7 +3067,8 @@ static int idle_states_show(struct seq_file *s, void *data)
->>
->>                 msecs = ktime_to_ms(
->>                         ktime_add(genpd->states[i].idle_time, delta));
->> -               seq_printf(s, "S%-13i %lld\n", i, msecs);
->> +               seq_printf(s, "S%-13i %-14lld %-14llu %llu\n", i, msecs,
->> +                             genpd->states[i].usage, genpd->states[i].rejected);
->>         }
->>
->>         genpd_unlock(genpd);
->> diff --git a/include/linux/pm_domain.h b/include/linux/pm_domain.h
->> index 3b2b561ce846..239647f2d27f 100644
->> --- a/include/linux/pm_domain.h
->> +++ b/include/linux/pm_domain.h
->> @@ -82,6 +82,8 @@ struct genpd_power_state {
->>         s64 power_off_latency_ns;
->>         s64 power_on_latency_ns;
->>         s64 residency_ns;
->> +       u64 usage;
->> +       u64 rejected;
->>         struct fwnode_handle *fwnode;
->>         ktime_t idle_time;
->>         void *data;
->> --
->> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
->> a Linux Foundation Collaborative Project
->>
+Regards,
+Jun
