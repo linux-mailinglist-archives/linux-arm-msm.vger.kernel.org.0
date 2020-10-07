@@ -2,44 +2,44 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 36BBF285FA7
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Oct 2020 15:01:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C8F5C285FAE
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Oct 2020 15:01:55 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728360AbgJGNBB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 7 Oct 2020 09:01:01 -0400
+        id S1728410AbgJGNBt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 7 Oct 2020 09:01:49 -0400
 Received: from m42-4.mailgun.net ([69.72.42.4]:33796 "EHLO m42-4.mailgun.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728283AbgJGNBB (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 7 Oct 2020 09:01:01 -0400
+        id S1728371AbgJGNBp (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 7 Oct 2020 09:01:45 -0400
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1602075659; h=Content-Transfer-Encoding: MIME-Version:
- Message-Id: Date: Subject: Cc: To: From: Sender;
- bh=Ampq9i94Z2y+v4ESFzjpNequ3NQaL38eIA6M3XkpyyU=; b=SLBNnzxkXeqyN8qgx5RWmtt2q4t14MXIJRNpzCRXdw/FvUaGHxRmp2wgMn7FERcWb4jKE2OK
- Q9Qadd/RCpFLAB/tfk6RACQ3HJ3rWGrv0df7ssQtcOiXhy/UZi7ANAMiO7bLYVkgQ+X+dt6t
- mp/oGkj+UB5YypU+KiQuyqpMaWg=
+ s=smtp; t=1602075704; h=Content-Transfer-Encoding: MIME-Version:
+ References: In-Reply-To: Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=HpgsscQbebx9HRlcaJX6TpB1LNqWwewo2gh7CojEl1U=; b=BrX2+xU2ei21kSZUP/JrGmW8JuCAPlZn7c8MbOv+Oifwcb6Hw1WoYM33zebqYGiQ8lAufBeM
+ Glcw5y+7ySBxP+1HkF6K/e5UV0xsG7JxtHhuEHKZv04+FXh7qIduKZ+fIxWS2P6SwfSmmsv0
+ hgEVY5TJbofar3BH0bV8hI36Gbs=
 X-Mailgun-Sending-Ip: 69.72.42.4
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org
  (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n07.prod.us-west-2.postgun.com with SMTP id
- 5f7dbbf9d6d00c7a9e29a098 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 07 Oct 2020 13:00:41
+ smtp-out-n05.prod.us-east-1.postgun.com with SMTP id
+ 5f7dbbff22a1856a121104cc (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 07 Oct 2020 13:00:47
  GMT
 Sender: saiprakash.ranjan=codeaurora.org@mg.codeaurora.org
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id A5801C433FF; Wed,  7 Oct 2020 13:00:41 +0000 (UTC)
+        id AE99FC43382; Wed,  7 Oct 2020 13:00:46 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL
-        autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
+        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from blr-ubuntu-253.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
         (No client certificate requested)
         (Authenticated sender: saiprakash.ranjan)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 105FAC433CB;
-        Wed,  7 Oct 2020 13:00:36 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 105FAC433CB
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 42714C43382;
+        Wed,  7 Oct 2020 13:00:42 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 42714C43382
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=saiprakash.ranjan@codeaurora.org
 From:   Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
@@ -51,10 +51,12 @@ Cc:     coresight@lists.linaro.org, Stephen Boyd <swboyd@chromium.org>,
         linux-arm-kernel@lists.infradead.org, denik@google.com,
         leo.yan@linaro.org, peterz@infradead.org,
         Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-Subject: [PATCH 0/2] coresight: etf/etb: NULL Pointer dereference crash fixes 
-Date:   Wed,  7 Oct 2020 18:30:23 +0530
-Message-Id: <cover.1602074787.git.saiprakash.ranjan@codeaurora.org>
+Subject: [PATCH 1/2] coresight: tmc-etf: Fix NULL ptr dereference in tmc_enable_etf_sink_perf()
+Date:   Wed,  7 Oct 2020 18:30:24 +0530
+Message-Id: <d7a2dd53d88360b12e5a14933cb931198760dd63.1602074787.git.saiprakash.ranjan@codeaurora.org>
 X-Mailer: git-send-email 2.27.0
+In-Reply-To: <cover.1602074787.git.saiprakash.ranjan@codeaurora.org>
+References: <cover.1602074787.git.saiprakash.ranjan@codeaurora.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
@@ -77,10 +79,10 @@ in the case of ETR in tmc_enable_etr_sink_perf(), but since we
 cache the PID in alloc_buffer() callback and it is done as part
 of etm_setup_aux() when allocating buffer for ETR sink, we never
 dereference this NULL pointer and we are safe. So lets do the
-same thing with ETF and ETB and cache the PID to which the
-cs_buffer belongs in alloc_buffer() callback for ETF and ETB as
-done for ETR. This will also remove the unnecessary function calls
-(task_pid_nr()) in tmc_enable_etr_sink_perf() and etb_enable_perf().
+same thing with ETF and cache the PID to which the cs_buffer
+belongs in tmc_alloc_etf_buffer() as done for ETR. This will
+also remove the unnecessary function calls(task_pid_nr()) since
+we are caching the PID.
 
 Easily reproducible running below:
 
@@ -114,19 +116,62 @@ Call trace:
  schedule_tail+0x20/0xec
  ret_from_fork+0x4/0x18
 
-Sai Prakash Ranjan (2):
-  coresight: tmc-etf: Fix NULL ptr dereference in
-    tmc_enable_etf_sink_perf()
-  coresight: etb10: Fix possible NULL ptr dereference in
-    etb_enable_perf()
-
- drivers/hwtracing/coresight/coresight-etb10.c   | 4 +++-
+Fixes: 880af782c6e8 ("coresight: tmc-etf: Add support for CPU-wide trace scenarios")
+Signed-off-by: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+---
  drivers/hwtracing/coresight/coresight-priv.h    | 2 ++
  drivers/hwtracing/coresight/coresight-tmc-etf.c | 4 +++-
- 3 files changed, 8 insertions(+), 2 deletions(-)
+ 2 files changed, 5 insertions(+), 1 deletion(-)
 
-
-base-commit: 3477326277451000bc667dfcc4fd0774c039184c
+diff --git a/drivers/hwtracing/coresight/coresight-priv.h b/drivers/hwtracing/coresight/coresight-priv.h
+index 65a29293b6cb..f5f654ea2994 100644
+--- a/drivers/hwtracing/coresight/coresight-priv.h
++++ b/drivers/hwtracing/coresight/coresight-priv.h
+@@ -87,6 +87,7 @@ enum cs_mode {
+  * struct cs_buffer - keep track of a recording session' specifics
+  * @cur:	index of the current buffer
+  * @nr_pages:	max number of pages granted to us
++ * @pid:	PID this cs_buffer belongs to
+  * @offset:	offset within the current buffer
+  * @data_size:	how much we collected in this run
+  * @snapshot:	is this run in snapshot mode
+@@ -95,6 +96,7 @@ enum cs_mode {
+ struct cs_buffers {
+ 	unsigned int		cur;
+ 	unsigned int		nr_pages;
++	pid_t			pid;
+ 	unsigned long		offset;
+ 	local_t			data_size;
+ 	bool			snapshot;
+diff --git a/drivers/hwtracing/coresight/coresight-tmc-etf.c b/drivers/hwtracing/coresight/coresight-tmc-etf.c
+index 44402d413ebb..989d965f3d90 100644
+--- a/drivers/hwtracing/coresight/coresight-tmc-etf.c
++++ b/drivers/hwtracing/coresight/coresight-tmc-etf.c
+@@ -227,6 +227,7 @@ static int tmc_enable_etf_sink_perf(struct coresight_device *csdev, void *data)
+ 	unsigned long flags;
+ 	struct tmc_drvdata *drvdata = dev_get_drvdata(csdev->dev.parent);
+ 	struct perf_output_handle *handle = data;
++	struct cs_buffers *buf = etm_perf_sink_config(handle);
+ 
+ 	spin_lock_irqsave(&drvdata->spinlock, flags);
+ 	do {
+@@ -243,7 +244,7 @@ static int tmc_enable_etf_sink_perf(struct coresight_device *csdev, void *data)
+ 		}
+ 
+ 		/* Get a handle on the pid of the process to monitor */
+-		pid = task_pid_nr(handle->event->owner);
++		pid = buf->pid;
+ 
+ 		if (drvdata->pid != -1 && drvdata->pid != pid) {
+ 			ret = -EBUSY;
+@@ -399,6 +400,7 @@ static void *tmc_alloc_etf_buffer(struct coresight_device *csdev,
+ 	if (!buf)
+ 		return NULL;
+ 
++	buf->pid = task_pid_nr(event->owner);
+ 	buf->snapshot = overwrite;
+ 	buf->nr_pages = nr_pages;
+ 	buf->data_pages = pages;
 -- 
 QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
 of Code Aurora Forum, hosted by The Linux Foundation
