@@ -2,117 +2,118 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 5BF0F285FAD
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Oct 2020 15:01:55 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0D621286083
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Oct 2020 15:54:45 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728379AbgJGNBs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 7 Oct 2020 09:01:48 -0400
-Received: from m42-4.mailgun.net ([69.72.42.4]:33203 "EHLO m42-4.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728389AbgJGNBq (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 7 Oct 2020 09:01:46 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1602075704; h=Content-Transfer-Encoding: MIME-Version:
- References: In-Reply-To: Message-Id: Date: Subject: Cc: To: From:
- Sender; bh=Oitjr6RTBPSwSENGaXIlTXQ4GN1Na0sA7aPMNSZoDOc=; b=tAuV7TPGAwtvc7kB9+Ei62xMabhKdfqRc0p8uWYb1N4HZiZP6NFp6vCJ9I0BP1i9HYqjDHlE
- qaq0f1x5Wx5QJ6ogxAN+qyL+/WOqy6JHUILNqzvad3uLhFfR23TuhVfK/PI8b0bze8uX1JnM
- /Zw8JHWOxdLpo8OYqIUvwuUliy0=
-X-Mailgun-Sending-Ip: 69.72.42.4
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n02.prod.us-west-2.postgun.com with SMTP id
- 5f7dbc03f9168450eafbd532 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 07 Oct 2020 13:00:51
- GMT
-Sender: saiprakash.ranjan=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 447D8C433CB; Wed,  7 Oct 2020 13:00:51 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
-        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
-Received: from blr-ubuntu-253.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: saiprakash.ranjan)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id E3E5EC433CB;
-        Wed,  7 Oct 2020 13:00:46 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org E3E5EC433CB
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=saiprakash.ranjan@codeaurora.org
-From:   Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-To:     Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Suzuki K Poulose <suzuki.poulose@arm.com>,
-        Mike Leach <mike.leach@linaro.org>
-Cc:     coresight@lists.linaro.org, Stephen Boyd <swboyd@chromium.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, denik@google.com,
-        leo.yan@linaro.org, peterz@infradead.org,
-        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-Subject: [PATCH 2/2] coresight: etb10: Fix possible NULL ptr dereference in etb_enable_perf()
-Date:   Wed,  7 Oct 2020 18:30:25 +0530
-Message-Id: <6f10c09e130ff241c728c40840f7aa67fdc1b737.1602074787.git.saiprakash.ranjan@codeaurora.org>
-X-Mailer: git-send-email 2.27.0
-In-Reply-To: <cover.1602074787.git.saiprakash.ranjan@codeaurora.org>
-References: <cover.1602074787.git.saiprakash.ranjan@codeaurora.org>
+        id S1728538AbgJGNyn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 7 Oct 2020 09:54:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54442 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728525AbgJGNyn (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 7 Oct 2020 09:54:43 -0400
+Received: from mail-lj1-x22d.google.com (mail-lj1-x22d.google.com [IPv6:2a00:1450:4864:20::22d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9E6BBC0613D2
+        for <linux-arm-msm@vger.kernel.org>; Wed,  7 Oct 2020 06:54:42 -0700 (PDT)
+Received: by mail-lj1-x22d.google.com with SMTP id l13so2045909ljg.10
+        for <linux-arm-msm@vger.kernel.org>; Wed, 07 Oct 2020 06:54:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=j+sjGwUCForYLKcLQq9DGEuXXrYuATWmMTrF6KufZso=;
+        b=zHpHfN/gdFircP82dZh7ocH215p3xA1ys4m/d8VtbITetrkStl0nu7OZZ9VtyhCIDp
+         IWU34Vzk6P+qY6ieDAzDkfx1EiItwl1dJ8/Npynl4lVHm0+hodjkceHrXFRvrdTAK2Cn
+         TRg3lQ+p3jgdnomRHPlG12QSKAb6/4oyrLQ1NTSYJ8Ul3cVp/KjBcQIeV1UVS5hjNSzV
+         5KNaS4DHzG5kZJnK5/9kx6YOxjTtkmdiDfakzX6/U2vEa21aydkeApMWgl0SzKJB4SX5
+         PnHAPsC0a0FA/elk8WJA1KFKHZM/Z1KYNLi7SU6tK89V1jbkWN66l912OuSmEsEbClST
+         ZTKw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=j+sjGwUCForYLKcLQq9DGEuXXrYuATWmMTrF6KufZso=;
+        b=QSZMFNfDe5vLRsa1BPBupbS5Cho/ApVsRYFZymwFPhljNNC9KWuZpdZxeFiNv2HjDm
+         AK3HCT9PYCVA4kwwXBZfFa8xlyEFvPkTHo6W/NfPK4zXLI3nG0omsGYaSrY3hwOVtbKQ
+         gZ/P/f/9Y+wH4NaJN907HcfLMtesH5BnvzMOy3rTP697RotaYSmITMDC+s65zWp4xPNJ
+         40lu5kiL2/g/NX6bTTBVmYDQwFLrey3rAt+6EEG2Yb6cqeE195QGbS7Z+BDbBvCj9Iox
+         +0k7MjYPvUvqCmbylnCGRgJcRNbecM7NsIif7a3kmkPjwhsvhHXjGE/ske5cZKPsrgo6
+         TkLA==
+X-Gm-Message-State: AOAM5307fK5IuuMIoRWXq5bOhRr/BcMHjnsgyVyyFOaVU3QXrn3EONS5
+        2kszNsL9Jy/AdN0UbNK43tIMAQ==
+X-Google-Smtp-Source: ABdhPJwXLM09QvKLnzuBfTs6JeUwCWArC7p4uIey9ak6b53wNQI6Ak3hk/TGs7MJIr3/9JQogznutQ==
+X-Received: by 2002:a05:651c:543:: with SMTP id q3mr1241175ljp.6.1602078880968;
+        Wed, 07 Oct 2020 06:54:40 -0700 (PDT)
+Received: from localhost.localdomain ([188.162.65.250])
+        by smtp.gmail.com with ESMTPSA id n3sm339768lfq.274.2020.10.07.06.54.38
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 07 Oct 2020 06:54:40 -0700 (PDT)
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Zhang Rui <rui.zhang@intel.com>,
+        Daniel Lezcano <daniel.lezcano@linaro.org>,
+        Amit Kucheria <amitk@kernel.org>,
+        Jonathan Cameron <jic23@kernel.org>,
+        Hartmut Knaack <knaack.h@gmx.de>,
+        Lars-Peter Clausen <lars@metafoo.de>,
+        Peter Meerwald-Stadler <pmeerw@pmeerw.net>
+Cc:     linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-iio@vger.kernel.org,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        Jishnu Prakash <jprakash@qti.qualcomm.com>
+Subject: [PATCH v7 00/10] qcom: pm8150: add support for thermal monitoring
+Date:   Wed,  7 Oct 2020 16:54:23 +0300
+Message-Id: <20201007135433.1041979-1-dmitry.baryshkov@linaro.org>
+X-Mailer: git-send-email 2.28.0
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-There was a report of NULL pointer dereference in ETF enable
-path for perf CS mode with PID monitoring. It is almost 100%
-reproducible when the process to monitor is something very
-active such as chrome and with ETF as the sink, not ETR.
+This patch serie adds support for thermal monitoring block on Qualcomm's
+PMIC5 chips. PM8150{,b,l} and sm8250-mtp board device trees are extended
+to support thermal zones provided by this thermal monitoring block.
+Unlike the rest of PMIC thermal senses, these thermal zones describe
+particular thermistors, which differ between from board to board.
 
-But code path shows that ETB has a similar path as ETF, so
-there could be possible NULL pointer dereference crash in
-ETB as well. Currently in a bid to find the pid, the owner
-is dereferenced via task_pid_nr() call in etb_enable_perf()
-and with owner being NULL, we can get a NULL pointer
-dereference, so have a similar fix as ETF where we cache PID
-in alloc_buffer() callback which is called as the part of
-etm_setup_aux().
+Changes since v6:
+ - Added include <linux/bitfield.h> as noted by Jishnu Prakash.
 
-Fixes: 75d7dbd38824 ("coresight: etb10: Add support for CPU-wide trace scenarios")
-Signed-off-by: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
----
- drivers/hwtracing/coresight/coresight-etb10.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+Changes since v5:
+ - Reworked DT bindings:
+   * Removed qcom,adc-channel, instead it is parsed from io-channels
+   * Renamed qcom,hw-settle-time to include -us suffix
+ - Re-added monitor enabling which got lost during refactored. Noted by
+   Jishnu Prakash.
+ - Use threaded IRQ handler as susggested by Jishnu.
 
-diff --git a/drivers/hwtracing/coresight/coresight-etb10.c b/drivers/hwtracing/coresight/coresight-etb10.c
-index 248cc82c838e..1b320ab581ca 100644
---- a/drivers/hwtracing/coresight/coresight-etb10.c
-+++ b/drivers/hwtracing/coresight/coresight-etb10.c
-@@ -176,6 +176,7 @@ static int etb_enable_perf(struct coresight_device *csdev, void *data)
- 	unsigned long flags;
- 	struct etb_drvdata *drvdata = dev_get_drvdata(csdev->dev.parent);
- 	struct perf_output_handle *handle = data;
-+	struct cs_buffers *buf = etm_perf_sink_config(handle);
- 
- 	spin_lock_irqsave(&drvdata->spinlock, flags);
- 
-@@ -186,7 +187,7 @@ static int etb_enable_perf(struct coresight_device *csdev, void *data)
- 	}
- 
- 	/* Get a handle on the pid of the process to monitor */
--	pid = task_pid_nr(handle->event->owner);
-+	pid = buf->pid;
- 
- 	if (drvdata->pid != -1 && drvdata->pid != pid) {
- 		ret = -EBUSY;
-@@ -383,6 +384,7 @@ static void *etb_alloc_buffer(struct coresight_device *csdev,
- 	if (!buf)
- 		return NULL;
- 
-+	buf->pid = task_pid_nr(event->owner);
- 	buf->snapshot = overwrite;
- 	buf->nr_pages = nr_pages;
- 	buf->data_pages = pages;
--- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
-of Code Aurora Forum, hosted by The Linux Foundation
+Changes since v4:
+ - Added kernel-doc comments to ADC-TM structures
+ - Used several sizeof(buf) instead of hand-conding register size
+
+Changes since v3:
+ - Fix DT description to spell "thermal monitoring" instead of just TM
+ - Fix warnings in DT example
+ - Add EXPORT_SYMBOL_GPL(of_iio_channel_get_by_name)
+ - Fixed whitespace chanes in qcom-vadc-common.c
+ - Removed error message if IIO chanel get returns -EPROBE_DEFER
+
+Changes since v2:
+ - IIO: export of_iio_channel_get_by_name() function
+ - dt-bindings: move individual io-channels to each thermal monitoring
+   channel rather than listing them all in device node
+ - added fallback defaults to of_device_get_match_data calls in
+   qcom-spmi-adc5 and qcom-spmi-adc-tm5 drivers
+ - minor typo fixes
+
+Changes since v1:
+ - Introduce fixp_linear_interpolate() by Craig Tatlor
+ - Lots of syntax/whitespace changes
+ - Cleaned up register definitions per Jonathan's suggestion
+ - Implemented most of the suggestions from Bjorn's and Jonathan's
+   review
+
 
