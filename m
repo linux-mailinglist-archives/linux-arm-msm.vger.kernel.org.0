@@ -2,99 +2,141 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 0E0262868CE
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Oct 2020 22:04:11 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3E2882869DF
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Oct 2020 23:10:16 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727988AbgJGUEA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 7 Oct 2020 16:04:00 -0400
-Received: from m42-4.mailgun.net ([69.72.42.4]:20478 "EHLO m42-4.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727632AbgJGUEA (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 7 Oct 2020 16:04:00 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1602101040; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=StpMkHqz702M9TNRAosRWVwfnSKbRhnK2lan3cAXz80=;
- b=As2OcA30ROyrYUbR66ysn/vvgHxMMHP/hvlwGcRSwE+axTIXZcvipW+yTYlpkV8xdza69d4T
- +M++wFGdJmNbENxU2WXV+N+XgWN92DBtE06ouhO5909EPUBl6N4dWxHgr6FcVTqLSehh+7gX
- UP/JeVYE753SAby1C7Sik05czc8=
-X-Mailgun-Sending-Ip: 69.72.42.4
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n01.prod.us-east-1.postgun.com with SMTP id
- 5f7e1f2fd63768e57be82e60 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 07 Oct 2020 20:03:59
- GMT
-Sender: vgarodia=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id D365FC433C8; Wed,  7 Oct 2020 20:03:58 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: vgarodia)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 0DF09C433CA;
-        Wed,  7 Oct 2020 20:03:56 +0000 (UTC)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Thu, 08 Oct 2020 01:33:56 +0530
-From:   vgarodia@codeaurora.org
-To:     Stanimir Varbanov <stanimir.varbanov@linaro.org>
-Cc:     linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Alexandre Courbot <acourbot@chromium.org>,
-        Mansur Alisha Shaik <mansur@codeaurora.org>
-Subject: Re: [PATCH 0/3] Venus dynamic resolution change fixes
-In-Reply-To: <20200928164431.21884-1-stanimir.varbanov@linaro.org>
-References: <20200928164431.21884-1-stanimir.varbanov@linaro.org>
-Message-ID: <cd91071c76f8f2151fdcd70a16c19edf@codeaurora.org>
-X-Sender: vgarodia@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+        id S1728428AbgJGVJp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 7 Oct 2020 17:09:45 -0400
+Received: from alexa-out-sd-02.qualcomm.com ([199.106.114.39]:33890 "EHLO
+        alexa-out-sd-02.qualcomm.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1728594AbgJGVJp (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 7 Oct 2020 17:09:45 -0400
+Received: from unknown (HELO ironmsg03-sd.qualcomm.com) ([10.53.140.143])
+  by alexa-out-sd-02.qualcomm.com with ESMTP; 07 Oct 2020 14:09:43 -0700
+X-QCInternal: smtphost
+Received: from gurus-linux.qualcomm.com ([10.46.162.81])
+  by ironmsg03-sd.qualcomm.com with ESMTP; 07 Oct 2020 14:09:43 -0700
+Received: by gurus-linux.qualcomm.com (Postfix, from userid 383780)
+        id 033FD1962; Wed,  7 Oct 2020 14:09:42 -0700 (PDT)
+From:   Guru Das Srinagesh <gurus@codeaurora.org>
+To:     Mark Brown <broonie@kernel.org>, Lee Jones <lee.jones@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Joe Perches <joe@perches.com>,
+        Subbaraman Narayanamurthy <subbaram@codeaurora.org>,
+        David Collins <collinsd@codeaurora.org>,
+        Anirudh Ghayal <aghayal@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Guru Das Srinagesh <gurus@codeaurora.org>
+Subject: [RFC PATCH v1 0/3] Add support for Qualcomm MFD PMIC register layout
+Date:   Wed,  7 Oct 2020 14:09:38 -0700
+Message-Id: <cover.1602099524.git.gurus@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Stan,
+This is a follow-up as promised [1] to the earlier attempts [2] [3] to upstream
+the driver that has been hitherto used to handle IRQs for Qualcomm's PMICs that
+have multiple on-board peripherals when they are interfaced over the I2C
+interface.
 
-On 2020-09-28 22:14, Stanimir Varbanov wrote:
-> Hi all,
-> 
-> Those three patches are needed to fix setting of LAST buffer flag 
-> during
-> dynamic-resolution-change state.
-> 
-> The first patch in this series fix the LAST buffer flag setting, the 
-> second
-> unify the driver behavior no matter the event from firmware is 
-> sufficient or
-> insufficient resources and the third one is moving the locking from 
-> buf_queue
-> helper function to encoder and decoder buf_queue vb2 ops.
-> 
-> Comments are welcome!
-> 
-> Stanimir Varbanov (3):
->   venus: vdec: Fix non reliable setting of LAST flag
->   venus: vdec: Make decoder return LAST flag for sufficient event
->   venus: helpers: Lock outside of buffer queue helper
-> 
->  drivers/media/platform/qcom/venus/core.h    |  5 +-
->  drivers/media/platform/qcom/venus/helpers.c | 15 ++--
->  drivers/media/platform/qcom/venus/vdec.c    | 92 +++++++++++++--------
->  drivers/media/platform/qcom/venus/venc.c    | 11 ++-
->  4 files changed, 76 insertions(+), 47 deletions(-)
+This series is a rewrite of that driver while making use of the regmap-irq
+framework, which needs some modifications to handle the register layout of
+Qualcomm's PMICs. This is an RFC because I would like to get feedback on my
+general approach before submitting as a patch per se.
 
-I have made some comments which are more towards optimizing the reconfig 
-event
-handling in the driver. I would leave that up to you to either update in 
-this series
-or take it separately. Either way, i am good with this series.
+Upon inspection of the regmap-irq framework, it was observed that the
+downstream driver was essentially replicating the framework's IRQ handling
+logic (such as adding an IRQ domain, and the interrupt handler thread that
+reads sub-irqs from a main status register). It was also observed that the
+framework could not be used as-is because:
+- Qualcomm's PMIC peripheral register layout does not follow a fixed
+  irq_reg_stride, and
+- The "IRQ TYPE" configuration register takes one bit per interrupt, which when
+  set configures that interrupt as Edge triggered, and when cleared sets it to
+  Level triggered.
+- There are two IRQ configuration registers in addition to "IRQ TYPE" that
+  further configure the IRQ type as triggered by rising-edge/level high or
+  alternatively, falling-edge/level low that have no support in the regmap-irq
+  framework currently.
 
-Reviewed-by: Vikash Garodia <vgarodia@codeaurora.org>
+This patch series has been tested on an internal platform using PM8008 as a
+test MFD PMIC chip. PM8008 is a PMIC that contains 7 LDOs, 2 GPIOs, temperature
+monitoring, and can be interfaced over I2C.
+
+Both the framework modifications as well as the chip driver
+have been submitted here for review. Some details about the specific
+differences between the framework and QCOM PMICs' register layout are provided
+below using PM8008 as an example.
+
+[PM8008 peripheral register layout]
+
+Of all the peripherals in PM8008, only a few need IRQ support. They are laid
+out at the following base addresses (only four are added at the moment for
+simplicity):
+
+	0x0900, 0x2400, 0xC000, 0xC100
+
+Each peripheral is allocated a uniform size of 0x100 bytes and its IRQs are
+configured through a set of registers that are located at fixed offsets from
+the above base addresses, uniformly:
+
+	Register name	       Addr	regmap-irq equivalent	Comment
+	-----------------------------------------------------------------------
+	INT_RT_STS_OFFSET      0x10	(no equivalent)		See #1 below
+	INT_SET_TYPE_OFFSET    0x11	type_base 		See #2 below
+	INT_POL_HIGH_OFFSET    0x12	(no equivalent)		See #3 below
+	INT_POL_LOW_OFFSET     0x13	(no equivalent)		See #3 below
+	INT_LATCHED_CLR_OFFSET 0x14	ack_base
+	INT_EN_SET_OFFSET      0x15	unmask_base		See #4 below
+	INT_EN_CLR_OFFSET      0x16	mask_base		See #4 below
+	INT_LATCHED_STS_OFFSET 0x18	status_base
+
+Comments (all registers are one bit per interrupt):
+1. INT_RT_STS_OFFSET is not used by the regmap-irq, so it may be ignored.
+2. INT_SET_TYPE_OFFSET: 1 for edge trigger, 0 for level trigger.
+3. Support needs to be added for writing to INT_POL_HIGH_OFFSET and
+   INT_POL_LOW_OFFSET correctly in the framework. Set to 1 or 0 to enable or
+   disable rising-edge/level high or falling-edge/level low.
+4. Even though INT_EN_SET_OFFSET and INT_EN_CLR_OFFSET map to unmask_base and
+   mask_base in the regmap-irq framework conceptually, they are swapped in the
+   chip driver because `unmask_offset` in the framework expects unmask_base to
+   be larger than mask_base numerically. This has to be kept in mind while
+   reviewing the "mfd: Add PM8008 driver" patch below.
+
+[Summary of framework changes]
+
+The main thrust of the changes is to introduce an array of peripheral offset
+values, which are to be added to the *_base addresses in order to arrive at the
+correct register addresses per peripheral. In order to get at the first
+peripheral's addresses, the first element of this array must be zero.
+
+Since there are two new registers (INT_POL_HIGH_OFFSET and INT_POL_LOW_OFFSET),
+add support for storing the per-peripheral values and also writing to them.
+These will be used only if peripheral offsets are specified.
+
+[1] https://lore.kernel.org/lkml/20200519185757.GA13992@codeaurora.org/
+[2] https://lore.kernel.org/lkml/cover.1588037638.git.gurus@codeaurora.org/
+[3] https://lore.kernel.org/lkml/cover.1588115326.git.gurus@codeaurora.org/
+
+Guru Das Srinagesh (3):
+  regmap-irq: Add support for peripheral offsets
+  dt-bindings: mfd: Add QCOM PM8008 MFD bindings
+  mfd: Add PM8008 driver
+
+ .../bindings/mfd/qcom,pm8008-irqchip.yaml          | 103 +++++++++++
+ drivers/base/regmap/regmap-irq.c                   | 191 ++++++++++++++++----
+ drivers/mfd/Kconfig                                |  14 ++
+ drivers/mfd/Makefile                               |   1 +
+ drivers/mfd/qcom-pm8008.c                          | 197 +++++++++++++++++++++
+ include/linux/regmap.h                             |   6 +
+ 6 files changed, 478 insertions(+), 34 deletions(-)
+ create mode 100644 Documentation/devicetree/bindings/mfd/qcom,pm8008-irqchip.yaml
+ create mode 100644 drivers/mfd/qcom-pm8008.c
+
+-- 
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
+
