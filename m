@@ -2,119 +2,95 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 170F528722C
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Oct 2020 12:03:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D5A3B287270
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Oct 2020 12:21:54 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729132AbgJHKD5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 8 Oct 2020 06:03:57 -0400
-Received: from mail.kernel.org ([198.145.29.99]:46954 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725849AbgJHKD5 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 8 Oct 2020 06:03:57 -0400
-Received: from localhost (p54b33b8c.dip0.t-ipconnect.de [84.179.59.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 00FF92083B;
-        Thu,  8 Oct 2020 10:03:55 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1602151436;
-        bh=cdx3nCLpwJjLLgckZ3J66TCOhumn8exh5A11TediQhs=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=G5K2Fi1n0Kl0+dUovATek37ODj2KnR0h2c2fFi4WVm6rVQrDubjKbxI6hZBNAzJp8
-         fVCIP+vT2ACSJ43Y7C2YKuXDluDrz1XM3q4HbhN9a7V6mfez3Bt6EzsgddxjAyvVCC
-         G01kWYXwaaU1nMlcuMUZ2dnzKgzv/c0FHx04+nnU=
-Date:   Thu, 8 Oct 2020 12:03:52 +0200
-From:   Wolfram Sang <wsa@kernel.org>
-To:     Caleb Connolly <caleb@connolly.tech>
-Cc:     linux-arm-msm@vger.kernel.org, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Akash Asthana <akashast@codeaurora.org>,
-        Mukesh Savaliya <msavaliy@codeaurora.org>,
-        ~postmarketos/upstreaming@lists.sr.ht, linux-i2c@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 5/5] i2c: geni: sdm845: dont perform DMA for the oneplus6
-Message-ID: <20201008100352.GF76290@ninjato>
-References: <20201007174736.292968-1-caleb@connolly.tech>
- <20201007174736.292968-6-caleb@connolly.tech>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="jkO+KyKz7TfD21mV"
-Content-Disposition: inline
-In-Reply-To: <20201007174736.292968-6-caleb@connolly.tech>
+        id S1729409AbgJHKVx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 8 Oct 2020 06:21:53 -0400
+Received: from alexa-out.qualcomm.com ([129.46.98.28]:21776 "EHLO
+        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729325AbgJHKVx (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 8 Oct 2020 06:21:53 -0400
+Received: from ironmsg-lv-alpha.qualcomm.com ([10.47.202.13])
+  by alexa-out.qualcomm.com with ESMTP; 08 Oct 2020 03:21:52 -0700
+X-QCInternal: smtphost
+Received: from ironmsg01-blr.qualcomm.com ([10.86.208.130])
+  by ironmsg-lv-alpha.qualcomm.com with ESMTP/TLS/AES256-SHA; 08 Oct 2020 03:21:50 -0700
+X-QCInternal: smtphost
+Received: from dikshita-linux.qualcomm.com ([10.204.65.237])
+  by ironmsg01-blr.qualcomm.com with ESMTP; 08 Oct 2020 15:51:32 +0530
+Received: by dikshita-linux.qualcomm.com (Postfix, from userid 347544)
+        id 6372350C1; Thu,  8 Oct 2020 15:51:31 +0530 (IST)
+From:   Dikshita Agarwal <dikshita@codeaurora.org>
+To:     linux-media@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+Cc:     mchehab@kernel.org, hverkuil-cisco@xs4all.nl,
+        ezequiel@collabora.com, stanimir.varbanov@linaro.org,
+        vgarodia@codeaurora.org, majja@codeaurora.org,
+        Dikshita Agarwal <dikshita@codeaurora.org>
+Subject: [PATCH] media: v4l2-ctrl: Add base layer priority id control.
+Date:   Thu,  8 Oct 2020 15:51:20 +0530
+Message-Id: <1602152480-3930-1-git-send-email-dikshita@codeaurora.org>
+X-Mailer: git-send-email 1.9.1
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+This control indicates the priority id to be applied
+to base layer.
 
---jkO+KyKz7TfD21mV
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Signed-off-by: Dikshita Agarwal <dikshita@codeaurora.org>
+---
+ Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst | 9 +++++++++
+ drivers/media/v4l2-core/v4l2-ctrls.c                      | 1 +
+ include/uapi/linux/v4l2-controls.h                        | 1 +
+ 3 files changed, 11 insertions(+)
 
-On Wed, Oct 07, 2020 at 05:49:35PM +0000, Caleb Connolly wrote:
-> The OnePlus 6/T has the same issues as the c630 causing a crash when DMA
-> is used for i2c, so disable it.
->=20
-> https://patchwork.kernel.org/patch/11133827/
-> Signed-off-by: Caleb Connolly <caleb@connolly.tech>
+diff --git a/Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst b/Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst
+index 690b066..264fb83 100644
+--- a/Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst
++++ b/Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst
+@@ -1251,6 +1251,15 @@ enum v4l2_mpeg_video_h264_entropy_mode -
+     Force a key frame for the next queued buffer. Applicable to
+     encoders. This is a general, codec-agnostic keyframe control.
+ 
++``V4L2_CID_MPEG_VIDEO_BASELAYER_PRIORITYID (integer)``
++	Specifies a priority identifier for the NAL unit,
++	which will be applied to base layer.
++	By default this value is set to 0 for base layer.
++	And the next layer will have priority ID assigned as 1,2,3 and so on.
++	Video encode can't decide the priority id to be applied to a layer
++	so this has to come from client.
++	Valid Range: from 0 to 63
++
+ .. _v4l2-mpeg-video-h264-cpb-size:
+ 
+ ``V4L2_CID_MPEG_VIDEO_H264_CPB_SIZE (integer)``
+diff --git a/drivers/media/v4l2-core/v4l2-ctrls.c b/drivers/media/v4l2-core/v4l2-ctrls.c
+index 9296294..ec78510 100644
+--- a/drivers/media/v4l2-core/v4l2-ctrls.c
++++ b/drivers/media/v4l2-core/v4l2-ctrls.c
+@@ -958,6 +958,7 @@ const char *v4l2_ctrl_get_name(u32 id)
+ 	case V4L2_CID_MPEG_VIDEO_MV_V_SEARCH_RANGE:		return "Vertical MV Search Range";
+ 	case V4L2_CID_MPEG_VIDEO_REPEAT_SEQ_HEADER:		return "Repeat Sequence Header";
+ 	case V4L2_CID_MPEG_VIDEO_FORCE_KEY_FRAME:		return "Force Key Frame";
++	case V4L2_CID_MPEG_VIDEO_BASELAYER_PRIORITYID:		return "Base Layer Priority ID"
+ 	case V4L2_CID_MPEG_VIDEO_MPEG2_SLICE_PARAMS:		return "MPEG-2 Slice Parameters";
+ 	case V4L2_CID_MPEG_VIDEO_MPEG2_QUANTIZATION:		return "MPEG-2 Quantization Matrices";
+ 	case V4L2_CID_MPEG_VIDEO_FWHT_PARAMS:			return "FWHT Stateless Parameters";
+diff --git a/include/uapi/linux/v4l2-controls.h b/include/uapi/linux/v4l2-controls.h
+index b869b54..9ed3e39 100644
+--- a/include/uapi/linux/v4l2-controls.h
++++ b/include/uapi/linux/v4l2-controls.h
+@@ -415,6 +415,7 @@ enum v4l2_mpeg_video_multi_slice_mode {
+ #define V4L2_CID_MPEG_VIDEO_MV_H_SEARCH_RANGE		(V4L2_CID_MPEG_BASE+227)
+ #define V4L2_CID_MPEG_VIDEO_MV_V_SEARCH_RANGE		(V4L2_CID_MPEG_BASE+228)
+ #define V4L2_CID_MPEG_VIDEO_FORCE_KEY_FRAME		(V4L2_CID_MPEG_BASE+229)
++#define V4L2_CID_MPEG_VIDEO_BASELAYER_PRIORITYID	(V4L2_CID_MPEG_BASE+230)
+ 
+ /* CIDs for the MPEG-2 Part 2 (H.262) codec */
+ #define V4L2_CID_MPEG_VIDEO_MPEG2_LEVEL			(V4L2_CID_MPEG_BASE+270)
+-- 
+1.9.1
 
-May I ask for a quick review here, so we can get this into 5.9 if
-qcom-geni maintainers agree this is good to go?
-
-> ---
->  drivers/i2c/busses/i2c-qcom-geni.c | 6 ++++--
->  1 file changed, 4 insertions(+), 2 deletions(-)
->=20
-> diff --git a/drivers/i2c/busses/i2c-qcom-geni.c b/drivers/i2c/busses/i2c-=
-qcom-geni.c
-> index dead5db3315a..50a0674a6553 100644
-> --- a/drivers/i2c/busses/i2c-qcom-geni.c
-> +++ b/drivers/i2c/busses/i2c-qcom-geni.c
-> @@ -358,7 +358,8 @@ static int geni_i2c_rx_one_msg(struct geni_i2c_dev *g=
-i2c, struct i2c_msg *msg,
->  	struct geni_se *se =3D &gi2c->se;
->  	size_t len =3D msg->len;
-> =20
-> -	if (!of_machine_is_compatible("lenovo,yoga-c630"))
-> +	if (!of_machine_is_compatible("lenovo,yoga-c630") &&
-> +	    !of_machine_is_compatible("oneplus,oneplus6"))
->  		dma_buf =3D i2c_get_dma_safe_msg_buf(msg, 32);
-> =20
->  	if (dma_buf)
-> @@ -400,7 +401,8 @@ static int geni_i2c_tx_one_msg(struct geni_i2c_dev *g=
-i2c, struct i2c_msg *msg,
->  	struct geni_se *se =3D &gi2c->se;
->  	size_t len =3D msg->len;
-> =20
-> -	if (!of_machine_is_compatible("lenovo,yoga-c630"))
-> +	if (!of_machine_is_compatible("lenovo,yoga-c630") &&
-> +	    !of_machine_is_compatible("oneplus,oneplus6"))
->  		dma_buf =3D i2c_get_dma_safe_msg_buf(msg, 32);
-> =20
->  	if (dma_buf)
-> --=20
-> 2.28.0
->=20
->=20
-
---jkO+KyKz7TfD21mV
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEEOZGx6rniZ1Gk92RdFA3kzBSgKbYFAl9+5AgACgkQFA3kzBSg
-KbY62xAAinAZbtUf2a8QgpWfrTKmq+EJ5myL9+QoHclmuiErksuj61QUTbV57rpf
-yu2KCO95QUl+NKcVO+dgyR/kp4vzOnNzmF17a6EP2Iowi3k9WB4/x8riPjeMvQU7
-+bvcMQCrVp9fU4RYjHkMAbmQaJ8z6BciN/uliZCQ0WM1U+gCOh6UmFhuAr1p7HHF
-wvbHv90Sus2xwKPP21cDr3aEzu6eYEcUS3D3jXL9wgpvwp0VvQiYel8zoTgnVfmW
-gjKG+e3CkY3wBsga+vF4rIUBK5RzuqDzwPB+2qgCU02ZTyYOlB0LVoOpk5ntuYEw
-6AP1m0hluyUGhZXN59s4o16iyzQk/ZTQcTAg0/irocvzOCXiKQFp6WjjExRG1KfL
-0ybOfumn7TmXUEF5j5m/b4N2SjGY0PioibeQ3n2wGDJ7bTD7638l4bfza7NTw7uY
-ufFFgPxQA5ojnx33x5vC1HCFcnVmF3kXzH+UIHXnOp2qHEr2gIT18HwOX4WMM+he
-nFpsrnHgTs+qkAkOjxe1p47NTtHn+T51YA0VuquAhpVaD7j3nxa2JgJL5kMP4W2K
-hWXgqOrWP2kkur83cMUZ3K754RFDpk3OcFjg+np0qEg9ujAgYB8Flu+7BGfxr3hc
-OaGRPdvS/ana/bksc+deR1hBhmyjrxBbFKbBj86mL9xRkw8BESM=
-=wLDT
------END PGP SIGNATURE-----
-
---jkO+KyKz7TfD21mV--
