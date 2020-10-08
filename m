@@ -2,95 +2,99 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D5A3B287270
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Oct 2020 12:21:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1A9482872BA
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Oct 2020 12:46:23 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729409AbgJHKVx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 8 Oct 2020 06:21:53 -0400
-Received: from alexa-out.qualcomm.com ([129.46.98.28]:21776 "EHLO
-        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729325AbgJHKVx (ORCPT
+        id S1729560AbgJHKqO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 8 Oct 2020 06:46:14 -0400
+Received: from mail-40134.protonmail.ch ([185.70.40.134]:61503 "EHLO
+        mail-40134.protonmail.ch" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726760AbgJHKqL (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 8 Oct 2020 06:21:53 -0400
-Received: from ironmsg-lv-alpha.qualcomm.com ([10.47.202.13])
-  by alexa-out.qualcomm.com with ESMTP; 08 Oct 2020 03:21:52 -0700
-X-QCInternal: smtphost
-Received: from ironmsg01-blr.qualcomm.com ([10.86.208.130])
-  by ironmsg-lv-alpha.qualcomm.com with ESMTP/TLS/AES256-SHA; 08 Oct 2020 03:21:50 -0700
-X-QCInternal: smtphost
-Received: from dikshita-linux.qualcomm.com ([10.204.65.237])
-  by ironmsg01-blr.qualcomm.com with ESMTP; 08 Oct 2020 15:51:32 +0530
-Received: by dikshita-linux.qualcomm.com (Postfix, from userid 347544)
-        id 6372350C1; Thu,  8 Oct 2020 15:51:31 +0530 (IST)
-From:   Dikshita Agarwal <dikshita@codeaurora.org>
-To:     linux-media@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-Cc:     mchehab@kernel.org, hverkuil-cisco@xs4all.nl,
-        ezequiel@collabora.com, stanimir.varbanov@linaro.org,
-        vgarodia@codeaurora.org, majja@codeaurora.org,
-        Dikshita Agarwal <dikshita@codeaurora.org>
-Subject: [PATCH] media: v4l2-ctrl: Add base layer priority id control.
-Date:   Thu,  8 Oct 2020 15:51:20 +0530
-Message-Id: <1602152480-3930-1-git-send-email-dikshita@codeaurora.org>
-X-Mailer: git-send-email 1.9.1
+        Thu, 8 Oct 2020 06:46:11 -0400
+X-Greylist: delayed 5141 seconds by postgrey-1.27 at vger.kernel.org; Thu, 08 Oct 2020 06:46:10 EDT
+Date:   Thu, 08 Oct 2020 10:46:05 +0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=connolly.tech;
+        s=protonmail; t=1602153968;
+        bh=4NpRlPMJu+nTJ3BKK9VVYitJouPdmM13RaANueWkDgQ=;
+        h=Date:To:From:Cc:Reply-To:Subject:In-Reply-To:References:From;
+        b=M/b+CvGihVDhlxXveZ6bFw8LtfVyCrMfp5EQWimoFjBHy9QeS0/AVh9n4yQYnqkQr
+         kWaMjO9Xjlg3TnUtt+onWkCCp/wbn1PzQnRqMGSR+CZg0+8sezo6Z5tdRifOilEg4m
+         KAPVi5jBX6OFFiQg4M7GHSLU51+Nmk5/L7UJiQeQ=
+To:     Wolfram Sang <wsa@kernel.org>
+From:   Caleb Connolly <caleb@connolly.tech>
+Cc:     linux-arm-msm@vger.kernel.org, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Akash Asthana <akashast@codeaurora.org>,
+        Mukesh Savaliya <msavaliy@codeaurora.org>,
+        ~postmarketos/upstreaming@lists.sr.ht, linux-i2c@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Reply-To: Caleb Connolly <caleb@connolly.tech>
+Subject: Re: Re: [PATCH 5/5] i2c: geni: sdm845: dont perform DMA for the oneplus6
+Message-ID: <27ffa058-c800-4ce7-4db5-8896ad136abf@connolly.tech>
+In-Reply-To: <20201008100352.GF76290@ninjato>
+References: <20201007174736.292968-1-caleb@connolly.tech> <20201007174736.292968-6-caleb@connolly.tech> <20201008100352.GF76290@ninjato>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-1.2 required=10.0 tests=ALL_TRUSTED,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF shortcircuit=no
+        autolearn=disabled version=3.4.4
+X-Spam-Checker-Version: SpamAssassin 3.4.4 (2020-01-24) on
+        mailout.protonmail.ch
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This control indicates the priority id to be applied
-to base layer.
+On 2020-10-08 11:03, Wolfram Sang wrote:
+> On Wed, Oct 07, 2020 at 05:49:35PM +0000, Caleb Connolly wrote:
+>> The OnePlus 6/T has the same issues as the c630 causing a crash when DMA
+>> is used for i2c, so disable it.
+>>
+>> https://patchwork.kernel.org/patch/11133827/
+>> Signed-off-by: Caleb Connolly <caleb@connolly.tech>
+> May I ask for a quick review here, so we can get this into 5.9 if
+> qcom-geni maintainers agree this is good to go?
 
-Signed-off-by: Dikshita Agarwal <dikshita@codeaurora.org>
----
- Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst | 9 +++++++++
- drivers/media/v4l2-core/v4l2-ctrls.c                      | 1 +
- include/uapi/linux/v4l2-controls.h                        | 1 +
- 3 files changed, 11 insertions(+)
+Sorry it wasn't mentioned in my first message, this patch depends on the=20
+rest in the series found here:=20
+https://lore.kernel.org/linux-arm-msm/20201007174736.292968-1-caleb@connoll=
+y.tech/#r
 
-diff --git a/Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst b/Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst
-index 690b066..264fb83 100644
---- a/Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst
-+++ b/Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst
-@@ -1251,6 +1251,15 @@ enum v4l2_mpeg_video_h264_entropy_mode -
-     Force a key frame for the next queued buffer. Applicable to
-     encoders. This is a general, codec-agnostic keyframe control.
- 
-+``V4L2_CID_MPEG_VIDEO_BASELAYER_PRIORITYID (integer)``
-+	Specifies a priority identifier for the NAL unit,
-+	which will be applied to base layer.
-+	By default this value is set to 0 for base layer.
-+	And the next layer will have priority ID assigned as 1,2,3 and so on.
-+	Video encode can't decide the priority id to be applied to a layer
-+	so this has to come from client.
-+	Valid Range: from 0 to 63
-+
- .. _v4l2-mpeg-video-h264-cpb-size:
- 
- ``V4L2_CID_MPEG_VIDEO_H264_CPB_SIZE (integer)``
-diff --git a/drivers/media/v4l2-core/v4l2-ctrls.c b/drivers/media/v4l2-core/v4l2-ctrls.c
-index 9296294..ec78510 100644
---- a/drivers/media/v4l2-core/v4l2-ctrls.c
-+++ b/drivers/media/v4l2-core/v4l2-ctrls.c
-@@ -958,6 +958,7 @@ const char *v4l2_ctrl_get_name(u32 id)
- 	case V4L2_CID_MPEG_VIDEO_MV_V_SEARCH_RANGE:		return "Vertical MV Search Range";
- 	case V4L2_CID_MPEG_VIDEO_REPEAT_SEQ_HEADER:		return "Repeat Sequence Header";
- 	case V4L2_CID_MPEG_VIDEO_FORCE_KEY_FRAME:		return "Force Key Frame";
-+	case V4L2_CID_MPEG_VIDEO_BASELAYER_PRIORITYID:		return "Base Layer Priority ID"
- 	case V4L2_CID_MPEG_VIDEO_MPEG2_SLICE_PARAMS:		return "MPEG-2 Slice Parameters";
- 	case V4L2_CID_MPEG_VIDEO_MPEG2_QUANTIZATION:		return "MPEG-2 Quantization Matrices";
- 	case V4L2_CID_MPEG_VIDEO_FWHT_PARAMS:			return "FWHT Stateless Parameters";
-diff --git a/include/uapi/linux/v4l2-controls.h b/include/uapi/linux/v4l2-controls.h
-index b869b54..9ed3e39 100644
---- a/include/uapi/linux/v4l2-controls.h
-+++ b/include/uapi/linux/v4l2-controls.h
-@@ -415,6 +415,7 @@ enum v4l2_mpeg_video_multi_slice_mode {
- #define V4L2_CID_MPEG_VIDEO_MV_H_SEARCH_RANGE		(V4L2_CID_MPEG_BASE+227)
- #define V4L2_CID_MPEG_VIDEO_MV_V_SEARCH_RANGE		(V4L2_CID_MPEG_BASE+228)
- #define V4L2_CID_MPEG_VIDEO_FORCE_KEY_FRAME		(V4L2_CID_MPEG_BASE+229)
-+#define V4L2_CID_MPEG_VIDEO_BASELAYER_PRIORITYID	(V4L2_CID_MPEG_BASE+230)
- 
- /* CIDs for the MPEG-2 Part 2 (H.262) codec */
- #define V4L2_CID_MPEG_VIDEO_MPEG2_LEVEL			(V4L2_CID_MPEG_BASE+270)
--- 
-1.9.1
+>> ---
+>>   drivers/i2c/busses/i2c-qcom-geni.c | 6 ++++--
+>>   1 file changed, 4 insertions(+), 2 deletions(-)
+>>
+>> diff --git a/drivers/i2c/busses/i2c-qcom-geni.c b/drivers/i2c/busses/i2c=
+-qcom-geni.c
+>> index dead5db3315a..50a0674a6553 100644
+>> --- a/drivers/i2c/busses/i2c-qcom-geni.c
+>> +++ b/drivers/i2c/busses/i2c-qcom-geni.c
+>> @@ -358,7 +358,8 @@ static int geni_i2c_rx_one_msg(struct geni_i2c_dev *=
+gi2c, struct i2c_msg *msg,
+>>   =09struct geni_se *se =3D &gi2c->se;
+>>   =09size_t len =3D msg->len;
+>>  =20
+>> -=09if (!of_machine_is_compatible("lenovo,yoga-c630"))
+>> +=09if (!of_machine_is_compatible("lenovo,yoga-c630") &&
+>> +=09    !of_machine_is_compatible("oneplus,oneplus6"))
+>>   =09=09dma_buf =3D i2c_get_dma_safe_msg_buf(msg, 32);
+>>  =20
+>>   =09if (dma_buf)
+>> @@ -400,7 +401,8 @@ static int geni_i2c_tx_one_msg(struct geni_i2c_dev *=
+gi2c, struct i2c_msg *msg,
+>>   =09struct geni_se *se =3D &gi2c->se;
+>>   =09size_t len =3D msg->len;
+>>  =20
+>> -=09if (!of_machine_is_compatible("lenovo,yoga-c630"))
+>> +=09if (!of_machine_is_compatible("lenovo,yoga-c630") &&
+>> +=09    !of_machine_is_compatible("oneplus,oneplus6"))
+>>   =09=09dma_buf =3D i2c_get_dma_safe_msg_buf(msg, 32);
+>>  =20
+>>   =09if (dma_buf)
+>> --=20
+>> 2.28.0
+>>
+>>
+
 
