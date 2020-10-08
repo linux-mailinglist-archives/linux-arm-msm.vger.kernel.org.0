@@ -2,68 +2,111 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id DCA41287BDC
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Oct 2020 20:44:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 64706287D5E
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Oct 2020 22:45:43 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729307AbgJHSoJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 8 Oct 2020 14:44:09 -0400
-Received: from mail-ot1-f65.google.com ([209.85.210.65]:34086 "EHLO
-        mail-ot1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729235AbgJHSoJ (ORCPT
+        id S1730616AbgJHUp3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 8 Oct 2020 16:45:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58562 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728848AbgJHUp0 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 8 Oct 2020 14:44:09 -0400
-Received: by mail-ot1-f65.google.com with SMTP id d28so6550742ote.1;
-        Thu, 08 Oct 2020 11:44:07 -0700 (PDT)
+        Thu, 8 Oct 2020 16:45:26 -0400
+Received: from mail-wm1-x341.google.com (mail-wm1-x341.google.com [IPv6:2a00:1450:4864:20::341])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2687AC0613D2;
+        Thu,  8 Oct 2020 13:45:24 -0700 (PDT)
+Received: by mail-wm1-x341.google.com with SMTP id z22so7553378wmi.0;
+        Thu, 08 Oct 2020 13:45:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=hlJS54LS1QeMz9CXsMLIWQSJKthUuahxWTnjdupvZw8=;
+        b=Y/D49zWH50fLTwowZ62kkutY8OxokW5uA6tbVKMO713V0yNnGGONc7AA1u638bC0s4
+         KTT9ceEdsiFWvyUU5OFSfKsmb7J10R2wU8EXTmKXR9NaaJeCVYYqyurGgaFqpB7o/tDh
+         Oz4mRzh1eAARN4joHEojuYhmx81sk5yoif4x2Bsbycj3iKuqQnWwsrG8Jf6kwBbfc/Aw
+         0gz3vcwaxCHEEyuwGxwKvR+9wgpCetGf0Lidyc6ZV/RlV99xV0ek1VRiyNDMDZbodLJD
+         KLFmGT0yjhjx/36Lc72iDMBYwjRQXqdrA/6HTb0+VmpVFCmtTNFTFMmE9OfPR9fwDPXa
+         GRzA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=Dfq2sGqijPhMmZV4xu4BQATJrQhJ6uOb1d7bXXraUjo=;
-        b=cieOfm61XvvGWBST5EDyVY9TRIgTvoHss1Y6qYk7BzJjx7ncR2+EAxaRbMLg2Nnk/E
-         QVI9ZJeTyIGCz1f+TLCy6ipuk63fDk5PCPy/6A7QX5XpSq9lvrc9JnmpETjKoB2QbhE9
-         mVAgF1MeDIvKdkOAEYqMUyUVSytbN/6cX7IDCf/Knk7OrMq7N0Dh7NkZR3+xdHDtBGLI
-         ts5c7y4PpncRhaQ6JAtNYK6Z6xDf7N6fOtadXZHVcSC6BHHDr8NU37lvsM6zluVgMAGT
-         IXiIZtCo1dsD2WaFKeXOITei87nG9xKeMXBF68bsv0zfNSD5mhvVPXrRS/lJAgssG0qn
-         eSBw==
-X-Gm-Message-State: AOAM530u1kj4X4t6ZfgfIPk1CImbAFfMPBFCVNwAnpQ8j4F3/lB+uTbu
-        UUfwji9ALjpxG+BCevtcRA==
-X-Google-Smtp-Source: ABdhPJxaGQ2Eo3bxP5Cbv7Q+1bIjeuwRxe0qRPralUDX4xFmi2l8TJd0Fq5sJDzXHBDqa9loEzDtJQ==
-X-Received: by 2002:a9d:1e86:: with SMTP id n6mr6255632otn.94.1602182646825;
-        Thu, 08 Oct 2020 11:44:06 -0700 (PDT)
-Received: from xps15 (24-155-109-49.dyn.grandenetworks.net. [24.155.109.49])
-        by smtp.gmail.com with ESMTPSA id l1sm6071854ooe.20.2020.10.08.11.44.05
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=hlJS54LS1QeMz9CXsMLIWQSJKthUuahxWTnjdupvZw8=;
+        b=HmQVDVjx6J/wqIyl8n5Pv35SHzMknoFTe7pTSPwjS0VBcjVTO2jx1VHzcihMWRbIID
+         23weXrCUZqX3vfseXBqLx5f4IGzCEW/h9Jfdar/wTJdJ4orKW7TYhVryrtfbCmDfNS9y
+         8ab7NxSB1JUJv1gaSXv3j5JfpskoAPjSO0CZ98TcLmH60tjdINRkODOlvS8qdA0EOmpj
+         UQo61f96KrvEVMAvmJtJ7WCjSQcPzhICXvBg/+v/nJU3T/P2EEK8zQH0VD4/nGOT6Qjq
+         dCnsapVKYozIQKWpKlP3B+n7yugL0pqsWt9jq3u5Nf9OB36IaAPghrGy0ztjMOsYsdW6
+         Rntw==
+X-Gm-Message-State: AOAM530v8tNwwEtgEiR/nVCD4K9R3tSaXvHKuH2NPzsZ09XZSzmscFX+
+        uvV4ChpaMO501X2NpRSKO9M=
+X-Google-Smtp-Source: ABdhPJza7b1khwnjBmQP+L5sWLHROePRe7riFfCVoxP/UexYqgksh2pbERzzPt7d0zXz//IDCf0sdQ==
+X-Received: by 2002:a1c:6457:: with SMTP id y84mr10320458wmb.36.1602189921783;
+        Thu, 08 Oct 2020 13:45:21 -0700 (PDT)
+Received: from IcarusMOD.eternityproject.eu ([2.237.20.237])
+        by smtp.gmail.com with ESMTPSA id o14sm8640103wmc.36.2020.10.08.13.45.20
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 08 Oct 2020 11:44:05 -0700 (PDT)
-Received: (nullmailer pid 2425046 invoked by uid 1000);
-        Thu, 08 Oct 2020 18:44:04 -0000
-Date:   Thu, 8 Oct 2020 13:44:04 -0500
-From:   Rob Herring <robh@kernel.org>
-To:     Naoki Hayama <naoki.hayama@lineo.co.jp>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        linux-kernel@vger.kernel.org, Andy Gross <agross@kernel.org>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-gpio@vger.kernel.org
-Subject: Re: [PATCH 2/6] dt-bindings: pinctrl: qcom: Fix typo abitrary
-Message-ID: <20201008184404.GA2424974@bogus>
-References: <7d1856e2-84c7-ab19-863d-2d500569d58c@lineo.co.jp>
+        Thu, 08 Oct 2020 13:45:21 -0700 (PDT)
+From:   kholk11@gmail.com
+To:     bjorn.andersson@linaro.org
+Cc:     robh+dt@kernel.org, agross@kernel.org, georgi.djakov@linaro.org,
+        kholk11@gmail.com, marijns95@gmail.com, konradybcio@gmail.com,
+        martin.botka1@gmail.com, linux-arm-msm@vger.kernel.org,
+        phone-devel@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [PATCH v3 0/2] Add SDM630/636/660 interconnect driver
+Date:   Thu,  8 Oct 2020 22:45:13 +0200
+Message-Id: <20201008204515.695210-1-kholk11@gmail.com>
+X-Mailer: git-send-email 2.28.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <7d1856e2-84c7-ab19-863d-2d500569d58c@lineo.co.jp>
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 08 Oct 2020 17:47:35 +0900, Naoki Hayama wrote:
-> Fix comment typo.
-> s/abitrary/arbitrary/
-> 
-> Signed-off-by: Naoki Hayama <naoki.hayama@lineo.co.jp>
-> ---
->  .../devicetree/bindings/pinctrl/qcom,ipq4019-pinctrl.txt        | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
-> 
+From: AngeloGioacchino Del Regno <kholk11@gmail.com>
 
-Applied, thanks!
+This patch series adds the SDM660 interconnect provider driver in
+order to stop some timeouts and achieve some decent performance by
+avoiding to be NoC limited.
+It's also providing some power consumption improvement, but I have
+only measured that as less heat, which is quite important when
+working on thermally constrained devices like smartphones.
+
+Please note that this driver's yaml binding is referring to a MMCC
+clock, so this series does depend on the SDM660 MMCC driver that I
+have sent separately.
+The multimedia clock is required only for the Multimedia NoC (mnoc).
+
+This patch series has been tested against the following devices:
+ - Sony Xperia XA2 Ultra (SDM630 Nile Discovery)
+ - Sony Xperia 10        (SDM630 Ganges Kirin)
+ - Sony Xperia 10 Plus   (SDM636 Ganges Mermaid)
+
+Changes in v2:
+ - Added missing qcom,mmcc-sdm660.h dt-binding include in the
+   interconnect/qcom,sdm660.yaml binding, as pointed out by
+   Rob Herring
+
+Changes in v3:
+ - Moved the dt-bindings/interconnect/qcom,sdm660.h header
+   to dt-bindings commit.
+
+AngeloGioacchino Del Regno (2):
+  dt-bindings: interconnect: Add bindings for Qualcomm SDM660 NoC
+  interconnect: qcom: Add SDM660 interconnect provider driver
+
+ .../bindings/interconnect/qcom,sdm660.yaml    | 147 +++
+ drivers/interconnect/qcom/Kconfig             |   9 +
+ drivers/interconnect/qcom/Makefile            |   2 +
+ drivers/interconnect/qcom/sdm660.c            | 919 ++++++++++++++++++
+ .../dt-bindings/interconnect/qcom,sdm660.h    | 116 +++
+ 5 files changed, 1193 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/interconnect/qcom,sdm660.yaml
+ create mode 100644 drivers/interconnect/qcom/sdm660.c
+ create mode 100644 include/dt-bindings/interconnect/qcom,sdm660.h
+
+-- 
+2.28.0
+
