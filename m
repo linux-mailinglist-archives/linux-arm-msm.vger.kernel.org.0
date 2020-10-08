@@ -2,35 +2,35 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 238FA287442
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Oct 2020 14:33:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 727E1287440
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Oct 2020 14:32:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729997AbgJHMcs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 8 Oct 2020 08:32:48 -0400
-Received: from alexa-out.qualcomm.com ([129.46.98.28]:34698 "EHLO
+        id S1729987AbgJHMcr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 8 Oct 2020 08:32:47 -0400
+Received: from alexa-out.qualcomm.com ([129.46.98.28]:56625 "EHLO
         alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729885AbgJHMcr (ORCPT
+        with ESMTP id S1729906AbgJHMcr (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
         Thu, 8 Oct 2020 08:32:47 -0400
 Received: from ironmsg-lv-alpha.qualcomm.com ([10.47.202.13])
-  by alexa-out.qualcomm.com with ESMTP; 08 Oct 2020 05:32:46 -0700
+  by alexa-out.qualcomm.com with ESMTP; 08 Oct 2020 05:32:47 -0700
 X-QCInternal: smtphost
 Received: from ironmsg02-blr.qualcomm.com ([10.86.208.131])
-  by ironmsg-lv-alpha.qualcomm.com with ESMTP/TLS/AES256-SHA; 08 Oct 2020 05:32:44 -0700
+  by ironmsg-lv-alpha.qualcomm.com with ESMTP/TLS/AES256-SHA; 08 Oct 2020 05:32:45 -0700
 X-QCInternal: smtphost
 Received: from gokulsri-linux.qualcomm.com ([10.201.2.207])
   by ironmsg02-blr.qualcomm.com with ESMTP; 08 Oct 2020 18:02:25 +0530
 Received: by gokulsri-linux.qualcomm.com (Postfix, from userid 432570)
-        id 9AC5121C0A; Thu,  8 Oct 2020 18:02:24 +0530 (IST)
+        id AB1F821C0B; Thu,  8 Oct 2020 18:02:24 +0530 (IST)
 From:   Gokul Sriram Palanisamy <gokulsri@codeaurora.org>
 To:     sboyd@kernel.org, agross@kernel.org, bjorn.andersson@linaro.org,
         manivannan.sadhasivam@linaro.org, devicetree@vger.kernel.org,
         linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
         robh+dt@kernel.org
 Cc:     sricharan@codeaurora.org, gokulsri@codeaurora.org
-Subject: [PATCH v3 2/3] arm64: dts: Add board support for HK10
-Date:   Thu,  8 Oct 2020 18:02:23 +0530
-Message-Id: <1602160344-19586-3-git-send-email-gokulsri@codeaurora.org>
+Subject: [PATCH v3 3/3] arm64: dts: Enabled MHI device over PCIe
+Date:   Thu,  8 Oct 2020 18:02:24 +0530
+Message-Id: <1602160344-19586-4-git-send-email-gokulsri@codeaurora.org>
 X-Mailer: git-send-email 2.7.4
 In-Reply-To: <1602160344-19586-1-git-send-email-gokulsri@codeaurora.org>
 References: <1602160344-19586-1-git-send-email-gokulsri@codeaurora.org>
@@ -38,152 +38,84 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add initial support for IPQ8074 SoC based HK10-C1
-and HK10-C2 evaluation boards.
+Enabled MHI device support over PCIe and added memory
+reservation required for MHI enabled QCN9000 PCIe card.
 
 Signed-off-by: Gokul Sriram Palanisamy <gokulsri@codeaurora.org>
 ---
- arch/arm64/boot/dts/qcom/Makefile            |  2 +
- arch/arm64/boot/dts/qcom/ipq8074-hk10-c1.dts | 11 ++++
- arch/arm64/boot/dts/qcom/ipq8074-hk10-c2.dts | 14 +++++
- arch/arm64/boot/dts/qcom/ipq8074-hk10.dtsi   | 76 ++++++++++++++++++++++++++++
- 4 files changed, 103 insertions(+)
- create mode 100644 arch/arm64/boot/dts/qcom/ipq8074-hk10-c1.dts
- create mode 100644 arch/arm64/boot/dts/qcom/ipq8074-hk10-c2.dts
- create mode 100644 arch/arm64/boot/dts/qcom/ipq8074-hk10.dtsi
+ arch/arm64/boot/dts/qcom/ipq8074-hk10.dtsi | 47 ++++++++++++++++++++++++++++++
+ 1 file changed, 47 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
-index d8f1466..7e628fe 100644
---- a/arch/arm64/boot/dts/qcom/Makefile
-+++ b/arch/arm64/boot/dts/qcom/Makefile
-@@ -4,6 +4,8 @@ dtb-$(CONFIG_ARCH_QCOM)	+= apq8096-db820c.dtb
- dtb-$(CONFIG_ARCH_QCOM) += apq8096-ifc6640.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= ipq6018-cp01-c1.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= ipq8074-hk01.dtb
-+dtb-$(CONFIG_ARCH_QCOM)	+= ipq8074-hk10-c1.dtb
-+dtb-$(CONFIG_ARCH_QCOM)	+= ipq8074-hk10-c2.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= msm8916-mtp.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= msm8916-longcheer-l8150.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= msm8916-samsung-a3u-eur.dtb
-diff --git a/arch/arm64/boot/dts/qcom/ipq8074-hk10-c1.dts b/arch/arm64/boot/dts/qcom/ipq8074-hk10-c1.dts
-new file mode 100644
-index 0000000..2bfcf42
---- /dev/null
-+++ b/arch/arm64/boot/dts/qcom/ipq8074-hk10-c1.dts
-@@ -0,0 +1,11 @@
-+// SPDX-License-Identifier: GPL-2.0-only
-+/* Copyright (c) 2020 The Linux Foundation. All rights reserved.
-+ */
-+/dts-v1/;
-+
-+#include "ipq8074-hk10.dtsi"
-+
-+/ {
-+	model = "Qualcomm Technologies, Inc. IPQ8074/AP-HK10-C1";
-+	compatible = "qcom,ipq8074-hk10-c1", "qcom,ipq8074";
-+};
-diff --git a/arch/arm64/boot/dts/qcom/ipq8074-hk10-c2.dts b/arch/arm64/boot/dts/qcom/ipq8074-hk10-c2.dts
-new file mode 100644
-index 0000000..1897e96
---- /dev/null
-+++ b/arch/arm64/boot/dts/qcom/ipq8074-hk10-c2.dts
-@@ -0,0 +1,14 @@
-+// SPDX-License-Identifier: GPL-2.0-only
-+/dts-v1/;
-+/* Copyright (c) 2020 The Linux Foundation. All rights reserved.
-+ */
-+#include "ipq8074-hk10.dtsi"
-+
-+/ {
-+	model = "Qualcomm Technologies, Inc. IPQ8074/AP-HK10-C2";
-+	compatible = "qcom,ipq8074-hk10-c2", "qcom,ipq8074";
-+};
-+
-+&q6v5_wcss {
-+	status = "disabled";
-+};
 diff --git a/arch/arm64/boot/dts/qcom/ipq8074-hk10.dtsi b/arch/arm64/boot/dts/qcom/ipq8074-hk10.dtsi
-new file mode 100644
-index 0000000..0827055
---- /dev/null
+index 0827055..e5c1ec0 100644
+--- a/arch/arm64/boot/dts/qcom/ipq8074-hk10.dtsi
 +++ b/arch/arm64/boot/dts/qcom/ipq8074-hk10.dtsi
-@@ -0,0 +1,76 @@
-+// SPDX-License-Identifier: GPL-2.0-only
-+/*
-+ * Copyright (c) 2020, The Linux Foundation. All rights reserved.
-+ */
-+/dts-v1/;
+@@ -24,6 +24,22 @@
+ 		device_type = "memory";
+ 		reg = <0x0 0x40000000 0x0 0x20000000>;
+ 	};
 +
-+#include "ipq8074.dtsi"
++	reserved-memory {
++		#address-cells = <2>;
++		#size-cells = <2>;
++		ranges;
 +
-+/ {
-+	#address-cells = <0x2>;
-+	#size-cells = <0x2>;
++		qcn9000_pcie0: memory@50f00000 {
++			no-map;
++			reg = <0x0 0x50f00000 0x0 0x03700000>;
++		};
 +
-+	interrupt-parent = <&intc>;
-+
-+	aliases {
-+		serial0 = &blsp1_uart5;
++		qcn9000_pcie1: memory@54600000 {
++			no-map;
++			reg = <0x0 0x54600000 0x0 0x03700000>;
++		};
 +	};
+ };
+ 
+ &blsp1_spi1 {
+@@ -45,11 +61,42 @@
+ &pcie0 {
+ 	status = "ok";
+ 	perst-gpio = <&tlmm 58 0x1>;
 +
-+	chosen {
-+		stdout-path = "serial0";
++	pcie0_rp: pcie0_rp {
++		reg = <0 0 0 0 0>;
++
++		status = "ok";
++		mhi_0: qcom,mhi@0 {
++			reg = <0 0 0 0 0 >;
++
++			qrtr_instance_id = <0x20>;
++			base-addr = <0x50f00000>;
++			m3-dump-addr = <0x53c00000>;
++			etr-addr = <0x53d00000>;
++			qcom,caldb-addr = <0x53e00000>;
++		};
 +	};
+ };
+ 
+ &pcie1 {
+ 	status = "ok";
+ 	perst-gpio = <&tlmm 61 0x1>;
 +
-+	memory {
-+		device_type = "memory";
-+		reg = <0x0 0x40000000 0x0 0x20000000>;
++	pcie1_rp: pcie1_rp {
++		reg = <0 0 0 0 0>;
++
++		status = "ok";
++		mhi_1: qcom,mhi@1 {
++			reg = <0 0 0 0 0 >;
++
++			qrtr_instance_id = <0x21>;
++			base-addr = <0x54600000>;
++			m3-dump-addr = <0x57300000>;
++			etr-addr = <0x57400000>;
++			qcom,caldb-addr = <0x57500000>;
++			};
++		};
 +	};
-+};
-+
-+&blsp1_spi1 {
-+	status = "ok";
-+
-+	m25p80@0 {
-+		#address-cells = <1>;
-+		#size-cells = <1>;
-+		compatible = "jedec,spi-nor";
-+		reg = <0>;
-+		spi-max-frequency = <50000000>;
-+	};
-+};
-+
-+&blsp1_uart5 {
-+	status = "ok";
-+};
-+
-+&pcie0 {
-+	status = "ok";
-+	perst-gpio = <&tlmm 58 0x1>;
-+};
-+
-+&pcie1 {
-+	status = "ok";
-+	perst-gpio = <&tlmm 61 0x1>;
-+};
-+
-+&qmp_pcie_phy0 {
-+	status = "ok";
-+};
-+
-+&qmp_pcie_phy1 {
-+	status = "ok";
-+};
-+
-+&qpic_bam {
-+	status = "ok";
-+};
-+
-+&qpic_nand {
-+	status = "ok";
-+
-+	nand@0 {
-+		reg = <0>;
-+		nand-ecc-strength = <4>;
-+		nand-ecc-step-size = <512>;
-+		nand-bus-width = <8>;
-+	};
-+};
+ };
+ 
+ &qmp_pcie_phy0 {
 -- 
 2.7.4
 
