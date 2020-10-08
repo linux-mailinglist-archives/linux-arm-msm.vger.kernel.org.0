@@ -2,245 +2,176 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 5E93B286DFD
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Oct 2020 07:19:14 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A9546286E1D
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Oct 2020 07:33:23 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728383AbgJHFSF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 8 Oct 2020 01:18:05 -0400
-Received: from m42-4.mailgun.net ([69.72.42.4]:54063 "EHLO m42-4.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728333AbgJHFSF (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 8 Oct 2020 01:18:05 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1602134283; h=References: In-Reply-To: Message-Id: Date:
- Subject: Cc: To: From: Sender;
- bh=fEiNiE7WcOtOuwWFNUUBWC5/RBsAGoYkHCbf1P9TbYE=; b=FbHRM0Nuxmi2mnMwMJmafnXnM/uD72xgJRj+UJ8wEan9qalrLGCvip3KhfYZH0KGPOAXP+J7
- N+U0REHxPUTLBputv3xe35JQfMGSE4OtAa08fRGkPOz4z4J5rM2aw+dd6DD7wQpKDEVA21xn
- EAMHUvrrfJVw26420U4UIsIl73E=
-X-Mailgun-Sending-Ip: 69.72.42.4
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n01.prod.us-west-2.postgun.com with SMTP id
- 5f7ea10ba03b63d6735f08b2 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 08 Oct 2020 05:18:03
- GMT
-Sender: srivasam=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id E18A6C4344C; Thu,  8 Oct 2020 05:18:02 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
-        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
-Received: from hyd-lnxbld210.qualcomm.com (unknown [202.46.22.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: srivasam)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 96ECCC433FE;
-        Thu,  8 Oct 2020 05:17:55 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 96ECCC433FE
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=srivasam@codeaurora.org
-From:   Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
-To:     agross@kernel.org, bjorn.andersson@linaro.org, lgirdwood@gmail.com,
-        broonie@kernel.org, robh+dt@kernel.org, plai@codeaurora.org,
-        bgoswami@codeaurora.org, perex@perex.cz, tiwai@suse.com,
-        srinivas.kandagatla@linaro.org, rohitkr@codeaurora.org,
-        linux-arm-msm@vger.kernel.org, alsa-devel@alsa-project.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Cc:     V Sujith Kumar Reddy <vsujithk@codeaurora.org>,
-        Srinivasa Rao <srivasam@codeaurora.org>
-Subject: [PATCH v11 7/7] ASoC: qcom: sc7180: Add support for audio over DP
-Date:   Thu,  8 Oct 2020 10:47:03 +0530
-Message-Id: <1602134223-2562-8-git-send-email-srivasam@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1602134223-2562-1-git-send-email-srivasam@codeaurora.org>
-References: <1602134223-2562-1-git-send-email-srivasam@codeaurora.org>
+        id S1726245AbgJHFdW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 8 Oct 2020 01:33:22 -0400
+Received: from hqnvemgate25.nvidia.com ([216.228.121.64]:12999 "EHLO
+        hqnvemgate25.nvidia.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726148AbgJHFdW (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 8 Oct 2020 01:33:22 -0400
+Received: from hqmail.nvidia.com (Not Verified[216.228.121.13]) by hqnvemgate25.nvidia.com (using TLS: TLSv1.2, AES256-SHA)
+        id <B5f7ea4670000>; Wed, 07 Oct 2020 22:32:23 -0700
+Received: from [10.25.74.27] (172.20.13.39) by HQMAIL107.nvidia.com
+ (172.20.187.13) with Microsoft SMTP Server (TLS) id 15.0.1473.3; Thu, 8 Oct
+ 2020 05:32:58 +0000
+Subject: Re: [PATCH v2 0/5] PCI: dwc: improve msi handling
+To:     Jisheng Zhang <Jisheng.Zhang@synaptics.com>
+CC:     Kishon Vijay Abraham I <kishon@ti.com>,
+        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
+        Rob Herring <robh@kernel.org>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        Jingoo Han <jingoohan1@gmail.com>,
+        Kukjin Kim <kgene@kernel.org>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        Richard Zhu <hongxing.zhu@nxp.com>,
+        Lucas Stach <l.stach@pengutronix.de>,
+        Shawn Guo <shawnguo@kernel.org>,
+        Sascha Hauer <s.hauer@pengutronix.de>,
+        "Pengutronix Kernel Team" <kernel@pengutronix.de>,
+        Fabio Estevam <festevam@gmail.com>,
+        "NXP Linux Team" <linux-imx@nxp.com>,
+        Yue Wang <yue.wang@Amlogic.com>,
+        "Kevin Hilman" <khilman@baylibre.com>,
+        Neil Armstrong <narmstrong@baylibre.com>,
+        Jerome Brunet <jbrunet@baylibre.com>,
+        Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
+        Jesper Nilsson <jesper.nilsson@axis.com>,
+        Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
+        Xiaowei Song <songxiaowei@hisilicon.com>,
+        Binghui Wang <wangbinghui@hisilicon.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Stanimir Varbanov <svarbanov@mm-sol.com>,
+        Pratyush Anand <pratyush.anand@gmail.com>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Jonathan Hunter <jonathanh@nvidia.com>,
+        "Kunihiko Hayashi" <hayashi.kunihiko@socionext.com>,
+        Masahiro Yamada <yamada.masahiro@socionext.com>,
+        "linux-omap@vger.kernel.org" <linux-omap@vger.kernel.org>,
+        "linux-pci@vger.kernel.org" <linux-pci@vger.kernel.org>,
+        "linux-arm-kernel@lists.infradead.org" 
+        <linux-arm-kernel@lists.infradead.org>,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+        "linux-samsung-soc@vger.kernel.org" 
+        <linux-samsung-soc@vger.kernel.org>,
+        "linux-amlogic@lists.infradead.org" 
+        <linux-amlogic@lists.infradead.org>,
+        "linux-arm-kernel@axis.com" <linux-arm-kernel@axis.com>,
+        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
+        "linux-tegra@vger.kernel.org" <linux-tegra@vger.kernel.org>
+References: <20200924190421.549cb8fc@xhacker.debian>
+ <b977d9b4-cc98-e817-0d51-8f2c6ba1445d@nvidia.com>
+ <20201006143647.3f989340@xhacker.debian>
+From:   Vidya Sagar <vidyas@nvidia.com>
+Message-ID: <435c8cf8-8f4a-c491-4aca-3ec5b7abe49a@nvidia.com>
+Date:   Thu, 8 Oct 2020 11:02:54 +0530
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.2.1
+MIME-Version: 1.0
+In-Reply-To: <20201006143647.3f989340@xhacker.debian>
+Content-Type: text/plain; charset="utf-8"; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [172.20.13.39]
+X-ClientProxiedBy: HQMAIL107.nvidia.com (172.20.187.13) To
+ HQMAIL107.nvidia.com (172.20.187.13)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nvidia.com; s=n1;
+        t=1602135143; bh=J4CEG7z41t4fftMpaxkaa5Era9zth5z8jjZg7k+ZCts=;
+        h=Subject:To:CC:References:From:Message-ID:Date:User-Agent:
+         MIME-Version:In-Reply-To:Content-Type:Content-Language:
+         Content-Transfer-Encoding:X-Originating-IP:X-ClientProxiedBy;
+        b=gGiVTnDKnvH3IW3q8erfoIHhPlDmnbH2thdoY4rptWoPCwmwQxfo0RIcd6vK7za+a
+         qgXLjiuv+uk3BJx5tDpmSQbDqUWKoQT3pRifw4gmZgEkA3RCj+BkqAEyGD6U4bOMRW
+         7YyxCLCtjO6qbXeESHYlP9z93kG3O82AA69UQ3ntIr7k056NtyNn++sDetOOUG9on9
+         TLtrQofmOFFUqspaxJYSK34woIeLsROw+yztJ5/3W8Z0lg/zdHFQ7f3LuLDNI6K7bW
+         8eHbfb3P1ff5T55KfN3H8s00wH7Fd2T5ZOlcWCQii/0bU80nfxDTNlQkTNzGgPp5vF
+         Rmin14uLeUy0A==
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: V Sujith Kumar Reddy <vsujithk@codeaurora.org>
 
-Add support for audio playback over DP in lpass
-sc7180 platform driver. Update lpass_variant
-structure for hdmi data configuaration.
 
-Signed-off-by: V Sujith Kumar Reddy <vsujithk@codeaurora.org>
-Signed-off-by: Srinivasa Rao <srivasam@codeaurora.org>
----
- sound/soc/qcom/lpass-sc7180.c | 116 +++++++++++++++++++++++++++++++++++++-----
- 1 file changed, 102 insertions(+), 14 deletions(-)
+On 10/6/2020 12:06 PM, Jisheng Zhang wrote:
+> External email: Use caution opening links or attachments
+> 
+> 
+> On Tue, 6 Oct 2020 11:56:34 +0530 Vidya Sagar wrote:
+> 
+>>
+>>
+>> Hi,
+> 
+> Hi,
+> 
+>> I would like to verify this series along with the other series "PCI:
+>> dwc: fix two MSI issues" on Tegra194. I tried to apply these series on
+>> both linux-next and Lorenzo's pci/dwc branches but there seem to be non
+>> trivial conflicts. Could you please tell me which branch I can use and
+>> apply these series cleanly?
+> 
+> This is a fix, so I thought the series would be picked up in v5.9, so the
+> series is patched against v5.9-rcN
+> 
+> could you please try v5 https://lkml.org/lkml/2020/9/29/2511 on v5.9-rc7?
+I tried this series on top of v5.9-rc7 and it worked as expected on 
+Tegra194 platform. Also, I couldn't cleanly apply the other series 'PCI: 
+dwc: fix two MSI issues' on top. Could you please rebase them?
 
-diff --git a/sound/soc/qcom/lpass-sc7180.c b/sound/soc/qcom/lpass-sc7180.c
-index a8a3d8f..c6292f9e 100644
---- a/sound/soc/qcom/lpass-sc7180.c
-+++ b/sound/soc/qcom/lpass-sc7180.c
-@@ -60,38 +60,65 @@ static struct snd_soc_dai_driver sc7180_lpass_cpu_dai_driver[] = {
- 		.probe	= &asoc_qcom_lpass_cpu_dai_probe,
- 		.ops    = &asoc_qcom_lpass_cpu_dai_ops,
- 	},
-+	[LPASS_DP_RX] = {
-+		.id = LPASS_DP_RX,
-+		.name = "Hdmi",
-+		.playback = {
-+			.stream_name = "Hdmi Playback",
-+			.formats	= SNDRV_PCM_FMTBIT_S24,
-+			.rates = SNDRV_PCM_RATE_48000,
-+			.rate_min	= 48000,
-+			.rate_max	= 48000,
-+			.channels_min	= 2,
-+			.channels_max	= 2,
-+		},
-+		.ops    = &asoc_qcom_lpass_hdmi_dai_ops,
-+	},
- };
- 
- static int sc7180_lpass_alloc_dma_channel(struct lpass_data *drvdata,
--					   int direction)
-+					   int direction, unsigned int dai_id)
- {
- 	struct lpass_variant *v = drvdata->variant;
- 	int chan = 0;
- 
--	if (direction == SNDRV_PCM_STREAM_PLAYBACK) {
--		chan = find_first_zero_bit(&drvdata->dma_ch_bit_map,
--					v->rdma_channels);
-+	if (dai_id == LPASS_DP_RX) {
-+		if (direction == SNDRV_PCM_STREAM_PLAYBACK) {
-+			chan = find_first_zero_bit(&drvdata->hdmi_dma_ch_bit_map,
-+						v->hdmi_rdma_channels);
-+
-+			if (chan >= v->hdmi_rdma_channels)
-+				return -EBUSY;
-+		}
-+		set_bit(chan, &drvdata->hdmi_dma_ch_bit_map);
-+	} else {
-+		if (direction == SNDRV_PCM_STREAM_PLAYBACK) {
-+			chan = find_first_zero_bit(&drvdata->dma_ch_bit_map,
-+						v->rdma_channels);
- 
- 		if (chan >= v->rdma_channels)
- 			return -EBUSY;
--	} else {
--		chan = find_next_zero_bit(&drvdata->dma_ch_bit_map,
-+		} else {
-+			chan = find_next_zero_bit(&drvdata->dma_ch_bit_map,
- 					v->wrdma_channel_start +
- 					v->wrdma_channels,
- 					v->wrdma_channel_start);
- 
--		if (chan >=  v->wrdma_channel_start + v->wrdma_channels)
--			return -EBUSY;
--	}
--
--	set_bit(chan, &drvdata->dma_ch_bit_map);
-+			if (chan >=  v->wrdma_channel_start + v->wrdma_channels)
-+				return -EBUSY;
-+		}
- 
-+		set_bit(chan, &drvdata->dma_ch_bit_map);
-+	}
- 	return chan;
- }
- 
--static int sc7180_lpass_free_dma_channel(struct lpass_data *drvdata, int chan)
-+static int sc7180_lpass_free_dma_channel(struct lpass_data *drvdata, int chan, unsigned int dai_id)
- {
--	clear_bit(chan, &drvdata->dma_ch_bit_map);
-+	if (dai_id == LPASS_DP_RX)
-+		clear_bit(chan, &drvdata->hdmi_dma_ch_bit_map);
-+	else
-+		clear_bit(chan, &drvdata->dma_ch_bit_map);
- 
- 	return 0;
- }
-@@ -144,6 +171,9 @@ static struct lpass_variant sc7180_data = {
- 	.rdma_reg_base		= 0xC000,
- 	.rdma_reg_stride	= 0x1000,
- 	.rdma_channels		= 5,
-+	.hdmi_rdma_reg_base		= 0x64000,
-+	.hdmi_rdma_reg_stride	= 0x1000,
-+	.hdmi_rdma_channels		= 4,
- 	.dmactl_audif_start	= 1,
- 	.wrdma_reg_base		= 0x18000,
- 	.wrdma_reg_stride	= 0x1000,
-@@ -163,7 +193,7 @@ static struct lpass_variant sc7180_data = {
- 	.rdma_dyncclk		= REG_FIELD_ID(0xC000, 21, 21, 5, 0x1000),
- 	.rdma_bursten		= REG_FIELD_ID(0xC000, 20, 20, 5, 0x1000),
- 	.rdma_wpscnt		= REG_FIELD_ID(0xC000, 16, 19, 5, 0x1000),
--	.rdma_intf		= REG_FIELD_ID(0xC000, 12, 15, 5, 0x1000),
-+	.rdma_intf			= REG_FIELD_ID(0xC000, 12, 15, 5, 0x1000),
- 	.rdma_fifowm		= REG_FIELD_ID(0xC000, 1, 5, 5, 0x1000),
- 	.rdma_enable		= REG_FIELD_ID(0xC000, 0, 0, 5, 0x1000),
- 
-@@ -174,6 +204,64 @@ static struct lpass_variant sc7180_data = {
- 	.wrdma_fifowm		= REG_FIELD_ID(0x18000, 1, 5, 4, 0x1000),
- 	.wrdma_enable		= REG_FIELD_ID(0x18000, 0, 0, 4, 0x1000),
- 
-+	.hdmi_tx_ctl_addr	= 0x1000,
-+	.hdmi_legacy_addr	= 0x1008,
-+	.hdmi_vbit_addr		= 0x610c0,
-+	.hdmi_ch_lsb_addr	= 0x61048,
-+	.hdmi_ch_msb_addr	= 0x6104c,
-+	.ch_stride		= 0x8,
-+	.hdmi_parity_addr	= 0x61034,
-+	.hdmi_dmactl_addr	= 0x61038,
-+	.hdmi_dma_stride	= 0x4,
-+	.hdmi_DP_addr		= 0x610c8,
-+	.hdmi_sstream_addr	= 0x6101c,
-+	.hdmi_irq_reg_base		= 0x63000,
-+	.hdmi_irq_ports		= 1,
-+
-+	.hdmi_rdma_dyncclk		= REG_FIELD_ID(0x64000, 14, 14, 4, 0x1000),
-+	.hdmi_rdma_bursten		= REG_FIELD_ID(0x64000, 13, 13, 4, 0x1000),
-+	.hdmi_rdma_burst8		= REG_FIELD_ID(0x64000, 15, 15, 4, 0x1000),
-+	.hdmi_rdma_burst16		= REG_FIELD_ID(0x64000, 16, 16, 4, 0x1000),
-+	.hdmi_rdma_dynburst		= REG_FIELD_ID(0x64000, 18, 18, 4, 0x1000),
-+	.hdmi_rdma_wpscnt		= REG_FIELD_ID(0x64000, 10, 12, 4, 0x1000),
-+	.hdmi_rdma_fifowm		= REG_FIELD_ID(0x64000, 1, 5, 4, 0x1000),
-+	.hdmi_rdma_enable		= REG_FIELD_ID(0x64000, 0, 0, 4, 0x1000),
-+
-+	.sstream_en		= REG_FIELD(0x6101c, 0, 0),
-+	.dma_sel			= REG_FIELD(0x6101c, 1, 2),
-+	.auto_bbit_en	= REG_FIELD(0x6101c, 3, 3),
-+	.layout			= REG_FIELD(0x6101c, 4, 4),
-+	.layout_sp		= REG_FIELD(0x6101c, 5, 8),
-+	.set_sp_on_en	= REG_FIELD(0x6101c, 10, 10),
-+	.dp_audio		= REG_FIELD(0x6101c, 11, 11),
-+	.dp_staffing_en	= REG_FIELD(0x6101c, 12, 12),
-+	.dp_sp_b_hw_en	= REG_FIELD(0x6101c, 13, 13),
-+
-+	.mute			= REG_FIELD(0x610c8, 0, 0),
-+	.as_sdp_cc		= REG_FIELD(0x610c8, 1, 3),
-+	.as_sdp_ct		= REG_FIELD(0x610c8, 4, 7),
-+	.aif_db4			= REG_FIELD(0x610c8, 8, 15),
-+	.frequency		= REG_FIELD(0x610c8, 16, 21),
-+	.mst_index		= REG_FIELD(0x610c8, 28, 29),
-+	.dptx_index		= REG_FIELD(0x610c8, 30, 31),
-+
-+	.soft_reset		= REG_FIELD(0x1000, 31, 31),
-+	.force_reset	= REG_FIELD(0x1000, 30, 30),
-+
-+	.use_hw_chs		= REG_FIELD(0x61038, 0, 0),
-+	.use_hw_usr		= REG_FIELD(0x61038, 1, 1),
-+	.hw_chs_sel		= REG_FIELD(0x61038, 2, 4),
-+	.hw_usr_sel		= REG_FIELD(0x61038, 5, 6),
-+
-+	.replace_vbit	= REG_FIELD(0x610c0, 0, 0),
-+	.vbit_stream	= REG_FIELD(0x610c0, 1, 1),
-+
-+	.legacy_en		=  REG_FIELD(0x1008, 0, 0),
-+	.calc_en		=  REG_FIELD(0x61034, 0, 0),
-+	.lsb_bits		=  REG_FIELD(0x61048, 0, 31),
-+	.msb_bits		=  REG_FIELD(0x6104c, 0, 31),
-+
-+
- 	.clk_name		= (const char*[]) {
- 				   "pcnoc-sway-clk",
- 				   "audio-core",
--- 
-Qualcomm India Private Limited, on behalf of Qualcomm Innovation Center, Inc.,
-is a member of Code Aurora Forum, a Linux Foundation Collaborative Project.
-
+Thanks,
+Vidya Sagar
+> 
+> 
+> Thanks
+> 
+>> FWIW, I acknowledge that the existing code does leak MSI target page
+>> every time system goes through suspend-resume sequence on Tegra194.
+>>
+>> Thanks,
+>> Vidya Sagar
+>>
+>> On 9/24/2020 4:35 PM, Jisheng Zhang wrote:
+>>> External email: Use caution opening links or attachments
+>>>
+>>>
+>>> Improve the msi code:
+>>> 1. Add proper error handling.
+>>> 2. Move dw_pcie_msi_init() from each users to designware host to solve
+>>> msi page leakage in resume path.
+>>>
+>>> Since v1:
+>>>     - add proper error handling patches.
+>>>     - solve the msi page leakage by moving dw_pcie_msi_init() from each
+>>>       users to designware host
+>>>
+>>>
+>>> Jisheng Zhang (5):
+>>>     PCI: dwc: Call dma_unmap_page() before freeing the msi page
+>>>     PCI: dwc: Check alloc_page() return value
+>>>     PCI: dwc: Rename dw_pcie_free_msi to dw_pcie_msi_deinit
+>>>     PCI: dwc: Skip PCIE_MSI_INTR0* programming if MSI is disabled
+>>>     PCI: dwc: Move dw_pcie_msi_init() from each users to designware host
+>>>
+>>>    drivers/pci/controller/dwc/pci-dra7xx.c       |  1 +
+>>>    drivers/pci/controller/dwc/pci-exynos.c       |  2 -
+>>>    drivers/pci/controller/dwc/pci-imx6.c         |  3 --
+>>>    drivers/pci/controller/dwc/pci-meson.c        |  8 ----
+>>>    drivers/pci/controller/dwc/pcie-artpec6.c     | 10 -----
+>>>    .../pci/controller/dwc/pcie-designware-host.c | 43 +++++++++++++------
+>>>    .../pci/controller/dwc/pcie-designware-plat.c |  3 --
+>>>    drivers/pci/controller/dwc/pcie-designware.h  |  9 +++-
+>>>    drivers/pci/controller/dwc/pcie-histb.c       |  3 --
+>>>    drivers/pci/controller/dwc/pcie-kirin.c       |  3 --
+>>>    drivers/pci/controller/dwc/pcie-qcom.c        |  3 --
+>>>    drivers/pci/controller/dwc/pcie-spear13xx.c   |  1 -
+>>>    drivers/pci/controller/dwc/pcie-tegra194.c    |  2 -
+>>>    drivers/pci/controller/dwc/pcie-uniphier.c    |  9 +---
+>>>    14 files changed, 38 insertions(+), 62 deletions(-)
+>>>
+>>> --
+>>> 2.28.0
+>>>
+> 
