@@ -2,67 +2,80 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C5BC22870A4
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Oct 2020 10:28:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 79B0E287110
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Oct 2020 10:58:04 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725982AbgJHI2B (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 8 Oct 2020 04:28:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57380 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725907AbgJHI2B (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 8 Oct 2020 04:28:01 -0400
-Received: from theia.8bytes.org (8bytes.org [IPv6:2a01:238:4383:600:38bc:a715:4b6d:a889])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5C00BC061755;
-        Thu,  8 Oct 2020 01:28:01 -0700 (PDT)
-Received: by theia.8bytes.org (Postfix, from userid 1000)
-        id 5FA562FB; Thu,  8 Oct 2020 10:27:59 +0200 (CEST)
-Date:   Thu, 8 Oct 2020 10:27:57 +0200
-From:   Joerg Roedel <joro@8bytes.org>
-To:     Christoph Hellwig <hch@infradead.org>
-Cc:     Jonathan Marek <jonathan@marek.ca>,
-        freedreno@lists.freedesktop.org, Rob Clark <robdclark@gmail.com>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
-        <linux-arm-msm@vger.kernel.org>,
-        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
-        <dri-devel@lists.freedesktop.org>,
-        open list <linux-kernel@vger.kernel.org>,
-        iommu@lists.linux-foundation.org,
-        Robin Murphy <robin.murphy@arm.com>
-Subject: Re: [PATCH 2/3] drm/msm: add DRM_MSM_GEM_SYNC_CACHE for non-coherent
- cache maintenance
-Message-ID: <20201008082757.GB3107@8bytes.org>
-References: <20201001002709.21361-1-jonathan@marek.ca>
- <20201001002709.21361-3-jonathan@marek.ca>
- <20201002075321.GA7547@infradead.org>
- <b22fb797-67b0-a912-1d23-2b47c9a9e674@marek.ca>
- <20201005082914.GA31702@infradead.org>
- <3e0b91be-e4a4-4ea5-7d58-6e71b8d51932@marek.ca>
- <20201006072306.GA12834@infradead.org>
+        id S1729019AbgJHI5v (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 8 Oct 2020 04:57:51 -0400
+Received: from ns.lineo.co.jp ([203.141.200.203]:38818 "EHLO mail.lineo.co.jp"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726304AbgJHI5e (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 8 Oct 2020 04:57:34 -0400
+Received: from [172.31.78.0] (unknown [203.141.200.204])
+        by mail.lineo.co.jp (Postfix) with ESMTPSA id 9872580214FF9;
+        Thu,  8 Oct 2020 17:47:21 +0900 (JST)
+From:   Naoki Hayama <naoki.hayama@lineo.co.jp>
+Subject: [PATCH 0/6] spelling: Fix typo related to "arbitrary"
+To:     linux-kernel@vger.kernel.org
+Cc:     Andrew Morton <akpm@linux-foundation.org>,
+        Colin Ian King <colin.king@canonical.com>,
+        Andy Whitcroft <apw@canonical.com>,
+        Joe Perches <joe@perches.com>,
+        Samuel Chessman <chessman@tux.org>,
+        "David S. Miller" <davem@davemloft.net>,
+        Jakub Kicinski <kuba@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Jaroslav Kysela <perex@perex.cz>,
+        Takashi Iwai <tiwai@suse.com>,
+        Lucas Stach <l.stach@pengutronix.de>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>, netdev@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
+        devicetree@vger.kernel.org, alsa-devel@alsa-project.org,
+        etnaviv@lists.freedesktop.org, dri-devel@lists.freedesktop.org,
+        Naoki Hayama <naoki.hayama@lineo.co.jp>
+Message-ID: <4dea2b7e-31b9-a231-7fa2-9ee7ffd37686@lineo.co.jp>
+Date:   Thu, 8 Oct 2020 17:47:21 +0900
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.10.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20201006072306.GA12834@infradead.org>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Oct 06, 2020 at 08:23:06AM +0100, Christoph Hellwig wrote:
-> If people want to use the "raw" IOMMU API with not cache coherent
-> devices we'll need a cache maintainance API that goes along with it.
-> It could either be formally part of the IOMMU API or be separate.
+I found some typos related to "arbitrary".
 
-The IOMMU-API does not care about the caching effects of DMA, is manages
-IO address spaces for devices. I also don't know how this would be going
-to be implemented, the IOMMU-API does not have the concept of handles
-for mapped ranges and does not care about CPU virtual addresses (which
-are needed for cache flushes) of the memory it maps into IO page-tables.
+s/abitrary/arbitrary/
+s/arbitary/arbitrary/
 
-So I think a cache management API should be separate from the IOMMU-API.
+This series fixes them.
 
-Regards,
+These typos have been reported in the past in other codes, but
+correction 'abitrary||arbitrary' wasn't added to scripts/spelling.txt.
+Therefore, PATCH #6 adds it to spelling.txt.
 
-	Joerg
+
+Naoki Hayama (6):
+  net: tlan: Fix typo abitrary
+  dt-bindings: pinctrl: qcom: Fix typo abitrary
+  dt-bindings: pinctrl: sirf: Fix typo abitrary
+  ALSA: hdspm: Fix typo arbitary
+  drm/etnaviv: Fix typo arbitary
+  scripts/spelling.txt: Add arbitrary correction
+
+ Documentation/devicetree/bindings/pinctrl/pinctrl-atlas7.txt    | 2 +-
+ .../devicetree/bindings/pinctrl/qcom,ipq4019-pinctrl.txt        | 2 +-
+ drivers/gpu/drm/etnaviv/etnaviv_gpu.c                           | 2 +-
+ drivers/net/ethernet/ti/tlan.c                                  | 2 +-
+ scripts/spelling.txt                                            | 1 +
+ sound/pci/rme9652/hdspm.c                                       | 2 +-
+ 6 files changed, 6 insertions(+), 5 deletions(-)
+
+-- 
+2.17.1
