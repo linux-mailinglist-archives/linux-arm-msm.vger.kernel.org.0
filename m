@@ -2,165 +2,158 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 79D72287ED7
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Oct 2020 00:53:15 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 037E4287F4E
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Oct 2020 01:59:57 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730742AbgJHWxC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 8 Oct 2020 18:53:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50000 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728926AbgJHWxB (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 8 Oct 2020 18:53:01 -0400
-Received: from mail-pf1-x442.google.com (mail-pf1-x442.google.com [IPv6:2607:f8b0:4864:20::442])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 460A9C0613D7
-        for <linux-arm-msm@vger.kernel.org>; Thu,  8 Oct 2020 15:53:00 -0700 (PDT)
-Received: by mail-pf1-x442.google.com with SMTP id x13so2590496pfa.9
-        for <linux-arm-msm@vger.kernel.org>; Thu, 08 Oct 2020 15:53:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=FdNMvCcCuXxLzDiJt9iUvAf1kgxpbOr+QNX/PxUy1tE=;
-        b=kfDYdrEQA9wxhwwPN/a1Z5Twoej4LkSHIZvb+H9j4sp9IuIJwGp5iEW4blw9K2RV/j
-         Bwtj60HKV0AIbAxewc3zi+h91ETQYJ1nDFkk84xmX91ctjnUWWoMwa0eaXycgXwHUUVV
-         rtJgRSVFfuCzzDbiubtcNb08nvQ37edG/Ytd8=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=FdNMvCcCuXxLzDiJt9iUvAf1kgxpbOr+QNX/PxUy1tE=;
-        b=jW4t6dYnHv8HCNfrWJ1NAusfhyupWEN3JwQSyiza97mQaKzP3VZmTaHuwAzta4Nq/L
-         Z9RmY1wYhp9orEkBcfu+lMuAX5hqFNZ0UTywtOJXlU6j3fNm3YiaxKWP0M1eVaw+0SPH
-         1rb41xaTGoLtogI2sgVa3mthYuq5Y2cvhnmIdH93+2yrcMIgg+3lvC5psPDzQIB7VAIT
-         DSt1YSeQmu8QWytfWhdqGZsVOI96gmgMTynXN/tEYwCHCyU89VlUzq6v8sF8UgeTcllf
-         sGYBk52Q3HL9XTrfbAASzRi+xWqyfiBZF59xm29+kge2juc4kuLbqjhjBqgZlZJAHjDC
-         VfGg==
-X-Gm-Message-State: AOAM530JyC3Y4kb2RU17tS6/c+Ewpr+7oTF4U6uG83LrKqwxauDb0ked
-        DRZaEDFf37dzlrbA7/zdPznmHg==
-X-Google-Smtp-Source: ABdhPJzxLnz9aGRe7hNPvU+jJmdoGuEFrvjbpkIdAczY887yTc+wW3p+JHN1itUed4y072dHEwgIuw==
-X-Received: by 2002:a62:7cd4:0:b029:152:b3e8:c59f with SMTP id x203-20020a627cd40000b0290152b3e8c59fmr9288919pfc.2.1602197579826;
-        Thu, 08 Oct 2020 15:52:59 -0700 (PDT)
-Received: from tictac2.mtv.corp.google.com ([2620:15c:202:1:42b0:34ff:fe3d:58e6])
-        by smtp.gmail.com with ESMTPSA id jx17sm8386369pjb.10.2020.10.08.15.52.58
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 08 Oct 2020 15:52:59 -0700 (PDT)
-From:   Douglas Anderson <dianders@chromium.org>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Wolfram Sang <wsa@kernel.org>,
-        Akash Asthana <akashast@codeaurora.org>
-Cc:     linux-arm-msm@vger.kernel.org, Stephen Boyd <swboyd@chromium.org>,
-        linux-i2c@vger.kernel.org,
-        Douglas Anderson <dianders@chromium.org>,
-        Andy Gross <agross@kernel.org>, linux-kernel@vger.kernel.org
-Subject: [PATCH 3/3] soc: qcom: geni: Optimize select fifo/dma mode
-Date:   Thu,  8 Oct 2020 15:52:35 -0700
-Message-Id: <20201008155154.3.I646736d3969dc47de8daceb379c6ba85993de9f4@changeid>
-X-Mailer: git-send-email 2.28.0.1011.ga647a8990f-goog
-In-Reply-To: <20201008225235.2035820-1-dianders@chromium.org>
-References: <20201008225235.2035820-1-dianders@chromium.org>
+        id S1729689AbgJHX7y (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 8 Oct 2020 19:59:54 -0400
+Received: from z5.mailgun.us ([104.130.96.5]:57238 "EHLO z5.mailgun.us"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1729398AbgJHX7y (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 8 Oct 2020 19:59:54 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1602201593; h=Content-Transfer-Encoding: MIME-Version:
+ Message-Id: Date: Subject: Cc: To: From: Sender;
+ bh=iMZsobu4errj1Xerzmr09tWrD5DMJzqIEKBDLcR17/I=; b=Lzn9gSVRemlpuCNHPXTtoxZAvspeRCKdKxJ716HRKOtA8VFps+vxtUPP44NuyxTCh2IHlqf6
+ +71JoHkKMf462BVFEd9zOB+knJORSgXRZU8xlDBFYvdyZL+RoQY2sNMGed9IDrV2G+Kcxgxp
+ TCrhpXL8HV840tFPSQcas27iFqw=
+X-Mailgun-Sending-Ip: 104.130.96.5
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n07.prod.us-west-2.postgun.com with SMTP id
+ 5f7fa7edd6d00c7a9e28beb7 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 08 Oct 2020 23:59:40
+ GMT
+Sender: wcheng=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id E421FC433B2; Thu,  8 Oct 2020 23:59:39 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL
+        autolearn=no autolearn_force=no version=3.4.0
+Received: from wcheng-linux.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: wcheng)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 4FE3CC433FE;
+        Thu,  8 Oct 2020 23:59:38 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 4FE3CC433FE
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=wcheng@codeaurora.org
+From:   Wesley Cheng <wcheng@codeaurora.org>
+To:     sboyd@kernel.org, heikki.krogerus@linux.intel.com,
+        agross@kernel.org, robh+dt@kernel.org, gregkh@linuxfoundation.org,
+        bjorn.andersson@linaro.org
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org,
+        jackp@codeaurora.org, sergei.shtylyov@gmail.com,
+        Wesley Cheng <wcheng@codeaurora.org>
+Subject: [PATCH v10 0/4] Introduce PMIC based USB type C detection
+Date:   Thu,  8 Oct 2020 16:59:30 -0700
+Message-Id: <20201008235934.8931-1-wcheng@codeaurora.org>
+X-Mailer: git-send-email 2.27.0
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The functions geni_se_select_fifo_mode() and
-geni_se_select_fifo_mode() are a little funny.  They read/write a
-bunch of memory mapped registers even if they don't change or aren't
-relevant for the current protocol.  Let's make them a little more
-sane.
+Changes in v10:
+ - Modified the type c dt-binding to remove the DRD switch node outside of the
+   connector, as it is more of a SW entity, whereas the USB connector model
+   focuses more on how the connector pins are connected in the HW design.  The
+   binding now matches what is specified in the usb-connector binding.
+ - Change the fwnode to search for the remote endpoint referencing the usb role
+   switch device in qcom-pmic-typec
+ - Rename typec node from "typec" to "usb-typec"
 
-NOTE: there is no evidence at all that this makes any performance
-difference and it fixes no bugs.  However, it seems (to me) like it
-makes the functions a little easier to understand.  Decreasing the
-amount of times we read/write memory mapped registers is also nice,
-even if we are using "relaxed" variants.
+Changes in v9:
+ - Fixed dt-binding to reference usb-connector from the 'connector' node,
+   removed properties that didn't have further constraints (than specified in
+   usb-connector.yaml), and make 'reg' a required property.
+ - Moved vbus_reg get call into probe(), and will fail if the regulator is not
+   available.
+ - Removed some references from qcom_pmic_typec, as they were not needed after
+   probe().
+ - Moved interrupt registration until after all used variables were initialized.
 
-Signed-off-by: Douglas Anderson <dianders@chromium.org>
----
+Changes in v8:
+ - Simplified some property definitions, and corrected the
+   connector reference in the dt binding.
 
- drivers/soc/qcom/qcom-geni-se.c | 44 ++++++++++++++++++---------------
- 1 file changed, 24 insertions(+), 20 deletions(-)
+Changes in v7:
+ - Fixups in qcom-pmic-typec.c to remove uncesscary includes, printk formatting,
+   and revising some logic operations. 
 
-diff --git a/drivers/soc/qcom/qcom-geni-se.c b/drivers/soc/qcom/qcom-geni-se.c
-index 751a49f6534f..746854745b15 100644
---- a/drivers/soc/qcom/qcom-geni-se.c
-+++ b/drivers/soc/qcom/qcom-geni-se.c
-@@ -266,49 +266,53 @@ EXPORT_SYMBOL(geni_se_init);
- static void geni_se_select_fifo_mode(struct geni_se *se)
- {
- 	u32 proto = geni_se_read_proto(se);
--	u32 val;
-+	u32 val, val_old;
+Changes in v6:
+ - Removed qcom_usb_vbus-regulator.c and qcom,usb-vbus-regulator.yaml from the
+   series as they have been merged on regulator.git
+ - Added separate references to the usb-connector.yaml in qcom,pmic-typec.yaml
+   instead of referencing the entire schema.
+
+Changes in v5:
+ - Fix dt_binding_check warning/error in qcom,pmic-typec.yaml
+
+Changes in v4:
+ - Modified qcom,pmic-typec binding to include the SS mux and the DRD remote
+   endpoint nodes underneath port@1, which is assigned to the SSUSB path
+   according to usb-connector
+ - Added usb-connector reference to the typec dt-binding
+ - Added tags to the usb type c and vbus nodes
+ - Removed "qcom" tags from type c and vbus nodes
+ - Modified Kconfig module name, and removed module alias from the typec driver
  
- 	geni_se_irq_clear(se);
+Changes in v3:
+ - Fix driver reference to match driver name in Kconfig for
+   qcom_usb_vbus-regulator.c
+ - Utilize regulator bitmap helpers for enable, disable and is enabled calls in
+   qcom_usb_vbus-regulator.c
+ - Use of_get_regulator_init_data() to initialize regulator init data, and to
+   set constraints in qcom_usb_vbus-regulator.c
+ - Remove the need for a local device structure in the vbus regulator driver
  
--	val = readl_relaxed(se->base + SE_GENI_M_IRQ_EN);
- 	if (proto != GENI_SE_UART) {
-+		val_old = val = readl_relaxed(se->base + SE_GENI_M_IRQ_EN);
- 		val |= M_CMD_DONE_EN | M_TX_FIFO_WATERMARK_EN;
- 		val |= M_RX_FIFO_WATERMARK_EN | M_RX_FIFO_LAST_EN;
--	}
--	writel_relaxed(val, se->base + SE_GENI_M_IRQ_EN);
-+		if (val != val_old)
-+			writel_relaxed(val, se->base + SE_GENI_M_IRQ_EN);
- 
--	val = readl_relaxed(se->base + SE_GENI_S_IRQ_EN);
--	if (proto != GENI_SE_UART)
--		val |= S_CMD_DONE_EN;
--	writel_relaxed(val, se->base + SE_GENI_S_IRQ_EN);
-+		val = readl_relaxed(se->base + SE_GENI_S_IRQ_EN);
-+		if (!(val & S_CMD_DONE_EN))
-+			writel_relaxed(val | S_CMD_DONE_EN,
-+				       se->base + SE_GENI_S_IRQ_EN);
-+	}
- 
- 	val = readl_relaxed(se->base + SE_GENI_DMA_MODE_EN);
--	val &= ~GENI_DMA_MODE_EN;
--	writel_relaxed(val, se->base + SE_GENI_DMA_MODE_EN);
-+	if (val & GENI_DMA_MODE_EN)
-+		writel_relaxed(val & ~GENI_DMA_MODE_EN,
-+			       se->base + SE_GENI_DMA_MODE_EN);
- }
- 
- static void geni_se_select_dma_mode(struct geni_se *se)
- {
- 	u32 proto = geni_se_read_proto(se);
--	u32 val;
-+	u32 val, val_old;
- 
- 	geni_se_irq_clear(se);
- 
--	val = readl_relaxed(se->base + SE_GENI_M_IRQ_EN);
- 	if (proto != GENI_SE_UART) {
-+		val_old = val = readl_relaxed(se->base + SE_GENI_M_IRQ_EN);
- 		val &= ~(M_CMD_DONE_EN | M_TX_FIFO_WATERMARK_EN);
- 		val &= ~(M_RX_FIFO_WATERMARK_EN | M_RX_FIFO_LAST_EN);
--	}
--	writel_relaxed(val, se->base + SE_GENI_M_IRQ_EN);
-+		if (val != val_old)
-+			writel_relaxed(val, se->base + SE_GENI_M_IRQ_EN);
- 
--	val = readl_relaxed(se->base + SE_GENI_S_IRQ_EN);
--	if (proto != GENI_SE_UART)
--		val &= ~S_CMD_DONE_EN;
--	writel_relaxed(val, se->base + SE_GENI_S_IRQ_EN);
-+		val = readl_relaxed(se->base + SE_GENI_S_IRQ_EN);
-+		if (val & S_CMD_DONE_EN)
-+			writel_relaxed(val & ~S_CMD_DONE_EN,
-+				       se->base + SE_GENI_S_IRQ_EN);
-+	}
- 
- 	val = readl_relaxed(se->base + SE_GENI_DMA_MODE_EN);
--	val |= GENI_DMA_MODE_EN;
--	writel_relaxed(val, se->base + SE_GENI_DMA_MODE_EN);
-+	if (!(val & GENI_DMA_MODE_EN))
-+		writel_relaxed(val | GENI_DMA_MODE_EN,
-+			       se->base + SE_GENI_DMA_MODE_EN);
- }
- 
- /**
+Changes in v2:
+ - Use devm_kzalloc() in qcom_pmic_typec_probe()
+ - Add checks to make sure return value of typec_find_port_power_role() is
+   valid
+ - Added a VBUS output regulator driver, which will be used by the PMIC USB
+   type c driver to enable/disable the source
+ - Added logic to control vbus source from the PMIC type c driver when
+   UFP/DFP is detected
+ - Added dt-binding for this new regulator driver
+ - Fixed Kconfig typec notation to match others
+ - Leave type C block disabled until enabled by a platform DTS
+
+Add the required drivers for implementing type C orientation and role
+detection using the Qualcomm PMIC.  Currently, PMICs such as the PM8150B
+have an integrated type C block, which can be utilized for this.  This
+series adds the dt-binding, PMIC type C driver, and DTS nodes.
+
+The PMIC type C driver will register itself as a type C port w/ a
+registered type C switch for orientation, and will fetch a USB role switch
+handle for the role notifications.  It will also have the ability to enable
+the VBUS output to any connected devices based on if the device is behaving
+as a UFP or DFP.
+
+Wesley Cheng (4):
+  usb: typec: Add QCOM PMIC typec detection driver
+  dt-bindings: usb: Add Qualcomm PMIC type C controller dt-binding
+  arm64: boot: dts: qcom: pm8150b: Add node for USB type C block
+  arm64: boot: dts: qcom: pm8150b: Add DTS node for PMIC VBUS booster
+
+ .../bindings/usb/qcom,pmic-typec.yaml         | 115 ++++++++
+ arch/arm64/boot/dts/qcom/pm8150b.dtsi         |  13 +
+ arch/arm64/boot/dts/qcom/sm8150-mtp.dts       |   4 +
+ drivers/usb/typec/Kconfig                     |  12 +
+ drivers/usb/typec/Makefile                    |   1 +
+ drivers/usb/typec/qcom-pmic-typec.c           | 262 ++++++++++++++++++
+ 6 files changed, 407 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/usb/qcom,pmic-typec.yaml
+ create mode 100644 drivers/usb/typec/qcom-pmic-typec.c
+
 -- 
-2.28.0.1011.ga647a8990f-goog
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
 
