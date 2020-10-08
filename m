@@ -2,32 +2,32 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E73FB286E05
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Oct 2020 07:19:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5E93B286DFD
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Oct 2020 07:19:14 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728489AbgJHFSS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 8 Oct 2020 01:18:18 -0400
-Received: from m42-4.mailgun.net ([69.72.42.4]:41846 "EHLO m42-4.mailgun.net"
+        id S1728383AbgJHFSF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 8 Oct 2020 01:18:05 -0400
+Received: from m42-4.mailgun.net ([69.72.42.4]:54063 "EHLO m42-4.mailgun.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728516AbgJHFSP (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 8 Oct 2020 01:18:15 -0400
+        id S1728333AbgJHFSF (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 8 Oct 2020 01:18:05 -0400
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1602134295; h=References: In-Reply-To: Message-Id: Date:
+ s=smtp; t=1602134283; h=References: In-Reply-To: Message-Id: Date:
  Subject: Cc: To: From: Sender;
- bh=BmGbxM/rQmgQFBEkLvQNCtbkIB+DElAyYmbt6LOXnSw=; b=wf3W6DUTPbo6NOElL3jKfXyaCD73fGSoRCe514WPdVS/wqznRbEVA013mpYKRAgSAJB5R67G
- +xcMMMYPIdmzR40SEeLgrtML1j15JANWIpSZ5WjaVNjpPhSQZQ55Uk1XzF9J62G6NZ/9XuZ5
- z7Epbp61pb+DcHLp3osqosRpq58=
+ bh=fEiNiE7WcOtOuwWFNUUBWC5/RBsAGoYkHCbf1P9TbYE=; b=FbHRM0Nuxmi2mnMwMJmafnXnM/uD72xgJRj+UJ8wEan9qalrLGCvip3KhfYZH0KGPOAXP+J7
+ N+U0REHxPUTLBputv3xe35JQfMGSE4OtAa08fRGkPOz4z4J5rM2aw+dd6DD7wQpKDEVA21xn
+ EAMHUvrrfJVw26420U4UIsIl73E=
 X-Mailgun-Sending-Ip: 69.72.42.4
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org
  (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n07.prod.us-west-2.postgun.com with SMTP id
- 5f7ea10583370fa1c1767256 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 08 Oct 2020 05:17:57
+ smtp-out-n01.prod.us-west-2.postgun.com with SMTP id
+ 5f7ea10ba03b63d6735f08b2 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 08 Oct 2020 05:18:03
  GMT
 Sender: srivasam=codeaurora.org@mg.codeaurora.org
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 440E9C43443; Thu,  8 Oct 2020 05:17:56 +0000 (UTC)
+        id E18A6C4344C; Thu,  8 Oct 2020 05:18:02 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
@@ -37,9 +37,9 @@ Received: from hyd-lnxbld210.qualcomm.com (unknown [202.46.22.19])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
         (No client certificate requested)
         (Authenticated sender: srivasam)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id E44C1C433AF;
-        Thu,  8 Oct 2020 05:17:49 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org E44C1C433AF
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 96ECCC433FE;
+        Thu,  8 Oct 2020 05:17:55 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 96ECCC433FE
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=srivasam@codeaurora.org
 From:   Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
@@ -50,10 +50,10 @@ To:     agross@kernel.org, bjorn.andersson@linaro.org, lgirdwood@gmail.com,
         linux-arm-msm@vger.kernel.org, alsa-devel@alsa-project.org,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
 Cc:     V Sujith Kumar Reddy <vsujithk@codeaurora.org>,
-        Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
-Subject: [PATCH v11 6/7] Asoc: qcom: lpass-platform : Increase buffer size
-Date:   Thu,  8 Oct 2020 10:47:02 +0530
-Message-Id: <1602134223-2562-7-git-send-email-srivasam@codeaurora.org>
+        Srinivasa Rao <srivasam@codeaurora.org>
+Subject: [PATCH v11 7/7] ASoC: qcom: sc7180: Add support for audio over DP
+Date:   Thu,  8 Oct 2020 10:47:03 +0530
+Message-Id: <1602134223-2562-8-git-send-email-srivasam@codeaurora.org>
 X-Mailer: git-send-email 2.7.4
 In-Reply-To: <1602134223-2562-1-git-send-email-srivasam@codeaurora.org>
 References: <1602134223-2562-1-git-send-email-srivasam@codeaurora.org>
@@ -63,27 +63,183 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 From: V Sujith Kumar Reddy <vsujithk@codeaurora.org>
 
-Increase buffer size to support audio over DP.
+Add support for audio playback over DP in lpass
+sc7180 platform driver. Update lpass_variant
+structure for hdmi data configuaration.
 
 Signed-off-by: V Sujith Kumar Reddy <vsujithk@codeaurora.org>
-Signed-off-by: Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
+Signed-off-by: Srinivasa Rao <srivasam@codeaurora.org>
 ---
- sound/soc/qcom/lpass-platform.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/soc/qcom/lpass-sc7180.c | 116 +++++++++++++++++++++++++++++++++++++-----
+ 1 file changed, 102 insertions(+), 14 deletions(-)
 
-diff --git a/sound/soc/qcom/lpass-platform.c b/sound/soc/qcom/lpass-platform.c
-index 49abbb2..36d1512 100644
---- a/sound/soc/qcom/lpass-platform.c
-+++ b/sound/soc/qcom/lpass-platform.c
-@@ -23,7 +23,7 @@ struct lpass_pcm_data {
- 	int i2s_port;
+diff --git a/sound/soc/qcom/lpass-sc7180.c b/sound/soc/qcom/lpass-sc7180.c
+index a8a3d8f..c6292f9e 100644
+--- a/sound/soc/qcom/lpass-sc7180.c
++++ b/sound/soc/qcom/lpass-sc7180.c
+@@ -60,38 +60,65 @@ static struct snd_soc_dai_driver sc7180_lpass_cpu_dai_driver[] = {
+ 		.probe	= &asoc_qcom_lpass_cpu_dai_probe,
+ 		.ops    = &asoc_qcom_lpass_cpu_dai_ops,
+ 	},
++	[LPASS_DP_RX] = {
++		.id = LPASS_DP_RX,
++		.name = "Hdmi",
++		.playback = {
++			.stream_name = "Hdmi Playback",
++			.formats	= SNDRV_PCM_FMTBIT_S24,
++			.rates = SNDRV_PCM_RATE_48000,
++			.rate_min	= 48000,
++			.rate_max	= 48000,
++			.channels_min	= 2,
++			.channels_max	= 2,
++		},
++		.ops    = &asoc_qcom_lpass_hdmi_dai_ops,
++	},
  };
  
--#define LPASS_PLATFORM_BUFFER_SIZE	(16 * 1024)
-+#define LPASS_PLATFORM_BUFFER_SIZE	(24 *  2 * 1024)
- #define LPASS_PLATFORM_PERIODS		2
+ static int sc7180_lpass_alloc_dma_channel(struct lpass_data *drvdata,
+-					   int direction)
++					   int direction, unsigned int dai_id)
+ {
+ 	struct lpass_variant *v = drvdata->variant;
+ 	int chan = 0;
  
- static const struct snd_pcm_hardware lpass_platform_pcm_hardware = {
+-	if (direction == SNDRV_PCM_STREAM_PLAYBACK) {
+-		chan = find_first_zero_bit(&drvdata->dma_ch_bit_map,
+-					v->rdma_channels);
++	if (dai_id == LPASS_DP_RX) {
++		if (direction == SNDRV_PCM_STREAM_PLAYBACK) {
++			chan = find_first_zero_bit(&drvdata->hdmi_dma_ch_bit_map,
++						v->hdmi_rdma_channels);
++
++			if (chan >= v->hdmi_rdma_channels)
++				return -EBUSY;
++		}
++		set_bit(chan, &drvdata->hdmi_dma_ch_bit_map);
++	} else {
++		if (direction == SNDRV_PCM_STREAM_PLAYBACK) {
++			chan = find_first_zero_bit(&drvdata->dma_ch_bit_map,
++						v->rdma_channels);
+ 
+ 		if (chan >= v->rdma_channels)
+ 			return -EBUSY;
+-	} else {
+-		chan = find_next_zero_bit(&drvdata->dma_ch_bit_map,
++		} else {
++			chan = find_next_zero_bit(&drvdata->dma_ch_bit_map,
+ 					v->wrdma_channel_start +
+ 					v->wrdma_channels,
+ 					v->wrdma_channel_start);
+ 
+-		if (chan >=  v->wrdma_channel_start + v->wrdma_channels)
+-			return -EBUSY;
+-	}
+-
+-	set_bit(chan, &drvdata->dma_ch_bit_map);
++			if (chan >=  v->wrdma_channel_start + v->wrdma_channels)
++				return -EBUSY;
++		}
+ 
++		set_bit(chan, &drvdata->dma_ch_bit_map);
++	}
+ 	return chan;
+ }
+ 
+-static int sc7180_lpass_free_dma_channel(struct lpass_data *drvdata, int chan)
++static int sc7180_lpass_free_dma_channel(struct lpass_data *drvdata, int chan, unsigned int dai_id)
+ {
+-	clear_bit(chan, &drvdata->dma_ch_bit_map);
++	if (dai_id == LPASS_DP_RX)
++		clear_bit(chan, &drvdata->hdmi_dma_ch_bit_map);
++	else
++		clear_bit(chan, &drvdata->dma_ch_bit_map);
+ 
+ 	return 0;
+ }
+@@ -144,6 +171,9 @@ static struct lpass_variant sc7180_data = {
+ 	.rdma_reg_base		= 0xC000,
+ 	.rdma_reg_stride	= 0x1000,
+ 	.rdma_channels		= 5,
++	.hdmi_rdma_reg_base		= 0x64000,
++	.hdmi_rdma_reg_stride	= 0x1000,
++	.hdmi_rdma_channels		= 4,
+ 	.dmactl_audif_start	= 1,
+ 	.wrdma_reg_base		= 0x18000,
+ 	.wrdma_reg_stride	= 0x1000,
+@@ -163,7 +193,7 @@ static struct lpass_variant sc7180_data = {
+ 	.rdma_dyncclk		= REG_FIELD_ID(0xC000, 21, 21, 5, 0x1000),
+ 	.rdma_bursten		= REG_FIELD_ID(0xC000, 20, 20, 5, 0x1000),
+ 	.rdma_wpscnt		= REG_FIELD_ID(0xC000, 16, 19, 5, 0x1000),
+-	.rdma_intf		= REG_FIELD_ID(0xC000, 12, 15, 5, 0x1000),
++	.rdma_intf			= REG_FIELD_ID(0xC000, 12, 15, 5, 0x1000),
+ 	.rdma_fifowm		= REG_FIELD_ID(0xC000, 1, 5, 5, 0x1000),
+ 	.rdma_enable		= REG_FIELD_ID(0xC000, 0, 0, 5, 0x1000),
+ 
+@@ -174,6 +204,64 @@ static struct lpass_variant sc7180_data = {
+ 	.wrdma_fifowm		= REG_FIELD_ID(0x18000, 1, 5, 4, 0x1000),
+ 	.wrdma_enable		= REG_FIELD_ID(0x18000, 0, 0, 4, 0x1000),
+ 
++	.hdmi_tx_ctl_addr	= 0x1000,
++	.hdmi_legacy_addr	= 0x1008,
++	.hdmi_vbit_addr		= 0x610c0,
++	.hdmi_ch_lsb_addr	= 0x61048,
++	.hdmi_ch_msb_addr	= 0x6104c,
++	.ch_stride		= 0x8,
++	.hdmi_parity_addr	= 0x61034,
++	.hdmi_dmactl_addr	= 0x61038,
++	.hdmi_dma_stride	= 0x4,
++	.hdmi_DP_addr		= 0x610c8,
++	.hdmi_sstream_addr	= 0x6101c,
++	.hdmi_irq_reg_base		= 0x63000,
++	.hdmi_irq_ports		= 1,
++
++	.hdmi_rdma_dyncclk		= REG_FIELD_ID(0x64000, 14, 14, 4, 0x1000),
++	.hdmi_rdma_bursten		= REG_FIELD_ID(0x64000, 13, 13, 4, 0x1000),
++	.hdmi_rdma_burst8		= REG_FIELD_ID(0x64000, 15, 15, 4, 0x1000),
++	.hdmi_rdma_burst16		= REG_FIELD_ID(0x64000, 16, 16, 4, 0x1000),
++	.hdmi_rdma_dynburst		= REG_FIELD_ID(0x64000, 18, 18, 4, 0x1000),
++	.hdmi_rdma_wpscnt		= REG_FIELD_ID(0x64000, 10, 12, 4, 0x1000),
++	.hdmi_rdma_fifowm		= REG_FIELD_ID(0x64000, 1, 5, 4, 0x1000),
++	.hdmi_rdma_enable		= REG_FIELD_ID(0x64000, 0, 0, 4, 0x1000),
++
++	.sstream_en		= REG_FIELD(0x6101c, 0, 0),
++	.dma_sel			= REG_FIELD(0x6101c, 1, 2),
++	.auto_bbit_en	= REG_FIELD(0x6101c, 3, 3),
++	.layout			= REG_FIELD(0x6101c, 4, 4),
++	.layout_sp		= REG_FIELD(0x6101c, 5, 8),
++	.set_sp_on_en	= REG_FIELD(0x6101c, 10, 10),
++	.dp_audio		= REG_FIELD(0x6101c, 11, 11),
++	.dp_staffing_en	= REG_FIELD(0x6101c, 12, 12),
++	.dp_sp_b_hw_en	= REG_FIELD(0x6101c, 13, 13),
++
++	.mute			= REG_FIELD(0x610c8, 0, 0),
++	.as_sdp_cc		= REG_FIELD(0x610c8, 1, 3),
++	.as_sdp_ct		= REG_FIELD(0x610c8, 4, 7),
++	.aif_db4			= REG_FIELD(0x610c8, 8, 15),
++	.frequency		= REG_FIELD(0x610c8, 16, 21),
++	.mst_index		= REG_FIELD(0x610c8, 28, 29),
++	.dptx_index		= REG_FIELD(0x610c8, 30, 31),
++
++	.soft_reset		= REG_FIELD(0x1000, 31, 31),
++	.force_reset	= REG_FIELD(0x1000, 30, 30),
++
++	.use_hw_chs		= REG_FIELD(0x61038, 0, 0),
++	.use_hw_usr		= REG_FIELD(0x61038, 1, 1),
++	.hw_chs_sel		= REG_FIELD(0x61038, 2, 4),
++	.hw_usr_sel		= REG_FIELD(0x61038, 5, 6),
++
++	.replace_vbit	= REG_FIELD(0x610c0, 0, 0),
++	.vbit_stream	= REG_FIELD(0x610c0, 1, 1),
++
++	.legacy_en		=  REG_FIELD(0x1008, 0, 0),
++	.calc_en		=  REG_FIELD(0x61034, 0, 0),
++	.lsb_bits		=  REG_FIELD(0x61048, 0, 31),
++	.msb_bits		=  REG_FIELD(0x6104c, 0, 31),
++
++
+ 	.clk_name		= (const char*[]) {
+ 				   "pcnoc-sway-clk",
+ 				   "audio-core",
 -- 
 Qualcomm India Private Limited, on behalf of Qualcomm Innovation Center, Inc.,
 is a member of Code Aurora Forum, a Linux Foundation Collaborative Project.
