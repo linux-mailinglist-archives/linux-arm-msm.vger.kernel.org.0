@@ -2,130 +2,169 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 6D87D287AA9
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Oct 2020 19:10:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8BECB287B0A
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Oct 2020 19:34:05 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731699AbgJHRKj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 8 Oct 2020 13:10:39 -0400
-Received: from m42-4.mailgun.net ([69.72.42.4]:61465 "EHLO m42-4.mailgun.net"
+        id S1729179AbgJHReB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 8 Oct 2020 13:34:01 -0400
+Received: from m42-4.mailgun.net ([69.72.42.4]:41282 "EHLO m42-4.mailgun.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1730739AbgJHRKj (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 8 Oct 2020 13:10:39 -0400
+        id S1731239AbgJHRd5 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 8 Oct 2020 13:33:57 -0400
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1602177038; h=References: In-Reply-To: Message-Id: Date:
- Subject: Cc: To: From: Sender;
- bh=9aB8m3PtLALsHZHGuJlM0jAKRYmY6Nf4PLLTvAvsVVI=; b=DOpMEQtVKM3PoMrzz/MSWrI3two2PzJCRVERSjKxP54HyDCkYcMN45JKYZamEJ3OrSJNw0AN
- edy/jKwifMMTWMOwqlqyhslKkev8A8Q0X4+XrO0Fp36CWiCZh2eaU+Rhk/T44CZndxT1ETwW
- DZWFwRAB7Tw/ji+mOUSQ1yAiSgQ=
+ s=smtp; t=1602178436; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=g41gw1keqpIWi6VHsKLyBux61Knjs9TSn2qndwM+vvM=;
+ b=fP2ec6dcHETSLhG4xbYL2cP+zWlyvuyiskD4W7uM7GhsxFFqBXpiMzSDPQro1yraXm3XeyQU
+ SSedOeh9hxN2oMmn7659sIo83xLfgx/RtJXQIcwrl+ejjRE1tLR4VCht4fL7d6ORCVgVJCGP
+ an0gVwDwvr3o/Kjmi/Ay4nGwqtA=
 X-Mailgun-Sending-Ip: 69.72.42.4
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org
  (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n05.prod.us-east-1.postgun.com with SMTP id
- 5f7f47c14f8cc67c31d9dd7a (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 08 Oct 2020 17:09:21
+ smtp-out-n03.prod.us-east-1.postgun.com with SMTP id
+ 5f7f4d78588858a30445e8b1 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 08 Oct 2020 17:33:44
  GMT
-Sender: akhilpo=codeaurora.org@mg.codeaurora.org
+Sender: gokulsri=codeaurora.org@mg.codeaurora.org
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 0B16AC433F1; Thu,  8 Oct 2020 17:09:21 +0000 (UTC)
+        id B17A0C433F1; Thu,  8 Oct 2020 17:33:43 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
-        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
-Received: from akhilpo-linux.qualcomm.com (unknown [202.46.22.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
         (No client certificate requested)
-        (Authenticated sender: akhilpo)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id DB477C433FE;
-        Thu,  8 Oct 2020 17:09:17 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org DB477C433FE
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=akhilpo@codeaurora.org
-From:   Akhil P Oommen <akhilpo@codeaurora.org>
-To:     freedreno@lists.freedesktop.org, robh@kernel.org,
-        robdclark@gmail.com
-Cc:     dri-devel@freedesktop.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, jcrouse@codeaurora.org,
-        mka@chromium.org
-Subject: [PATCH 2/2] drm/msm: Add support for GPU cooling
-Date:   Thu,  8 Oct 2020 22:39:07 +0530
-Message-Id: <1602176947-17385-2-git-send-email-akhilpo@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1602176947-17385-1-git-send-email-akhilpo@codeaurora.org>
-References: <1602176947-17385-1-git-send-email-akhilpo@codeaurora.org>
+        (Authenticated sender: gokulsri)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 5E0BAC433CB;
+        Thu,  8 Oct 2020 17:33:42 +0000 (UTC)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Thu, 08 Oct 2020 23:03:42 +0530
+From:   gokulsri@codeaurora.org
+To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc:     sboyd@kernel.org, agross@kernel.org, bjorn.andersson@linaro.org,
+        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, robh+dt@kernel.org,
+        sricharan@codeaurora.org
+Subject: Re: [PATCH v3 3/3] arm64: dts: Enabled MHI device over PCIe
+In-Reply-To: <20201008131115.GA23649@linux>
+References: <1602160344-19586-1-git-send-email-gokulsri@codeaurora.org>
+ <1602160344-19586-4-git-send-email-gokulsri@codeaurora.org>
+ <20201008131115.GA23649@linux>
+Message-ID: <7dd959fd2d9375d5529cf52e93aafda3@codeaurora.org>
+X-Sender: gokulsri@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Register GPU as a devfreq cooling device so that it can be passively
-cooled by the thermal framework.
+On 2020-10-08 18:41, Manivannan Sadhasivam wrote:
+> Hi,
+> 
+> On Thu, Oct 08, 2020 at 06:02:24PM +0530, Gokul Sriram Palanisamy 
+> wrote:
+>> Enabled MHI device support over PCIe and added memory
+>> reservation required for MHI enabled QCN9000 PCIe card.
+>> 
+>> Signed-off-by: Gokul Sriram Palanisamy <gokulsri@codeaurora.org>
+>> ---
+>>  arch/arm64/boot/dts/qcom/ipq8074-hk10.dtsi | 47 
+>> ++++++++++++++++++++++++++++++
+>>  1 file changed, 47 insertions(+)
+>> 
+>> diff --git a/arch/arm64/boot/dts/qcom/ipq8074-hk10.dtsi 
+>> b/arch/arm64/boot/dts/qcom/ipq8074-hk10.dtsi
+>> index 0827055..e5c1ec0 100644
+>> --- a/arch/arm64/boot/dts/qcom/ipq8074-hk10.dtsi
+>> +++ b/arch/arm64/boot/dts/qcom/ipq8074-hk10.dtsi
+>> @@ -24,6 +24,22 @@
+>>  		device_type = "memory";
+>>  		reg = <0x0 0x40000000 0x0 0x20000000>;
+>>  	};
+>> +
+>> +	reserved-memory {
+>> +		#address-cells = <2>;
+>> +		#size-cells = <2>;
+>> +		ranges;
+>> +
+>> +		qcn9000_pcie0: memory@50f00000 {
+>> +			no-map;
+>> +			reg = <0x0 0x50f00000 0x0 0x03700000>;
+>> +		};
+>> +
+>> +		qcn9000_pcie1: memory@54600000 {
+>> +			no-map;
+>> +			reg = <0x0 0x54600000 0x0 0x03700000>;
+>> +		};
+>> +	};
+>>  };
+>> 
+>>  &blsp1_spi1 {
+>> @@ -45,11 +61,42 @@
+>>  &pcie0 {
+>>  	status = "ok";
+>>  	perst-gpio = <&tlmm 58 0x1>;
+>> +
+>> +	pcie0_rp: pcie0_rp {
+>> +		reg = <0 0 0 0 0>;
+>> +
+>> +		status = "ok";
+>> +		mhi_0: qcom,mhi@0 {
+> 
+> MHI doesn't support devicetree as of now so how is this supposed to 
+> work?
+> Have you tested this series with mainline?
+> 
+> Thanks,
+> Mani
+> 
 
-Signed-off-by: Akhil P Oommen <akhilpo@codeaurora.org>
----
- drivers/gpu/drm/msm/msm_gpu.c | 13 ++++++++++++-
- drivers/gpu/drm/msm/msm_gpu.h |  2 ++
- 2 files changed, 14 insertions(+), 1 deletion(-)
+  Hi Mani,
+  This node entries will be consumed by ath11k driver and is not supposed 
+to be consumed by mhi driver.
+  And yes, it is tested on Mainline.
 
-diff --git a/drivers/gpu/drm/msm/msm_gpu.c b/drivers/gpu/drm/msm/msm_gpu.c
-index 55d1648..93ffd66 100644
---- a/drivers/gpu/drm/msm/msm_gpu.c
-+++ b/drivers/gpu/drm/msm/msm_gpu.c
-@@ -14,6 +14,7 @@
- #include <generated/utsrelease.h>
- #include <linux/string_helpers.h>
- #include <linux/devfreq.h>
-+#include <linux/devfreq_cooling.h>
- #include <linux/devcoredump.h>
- #include <linux/sched/task.h>
- 
-@@ -107,9 +108,18 @@ static void msm_devfreq_init(struct msm_gpu *gpu)
- 	if (IS_ERR(gpu->devfreq.devfreq)) {
- 		DRM_DEV_ERROR(&gpu->pdev->dev, "Couldn't initialize GPU devfreq\n");
- 		gpu->devfreq.devfreq = NULL;
-+		return;
- 	}
- 
- 	devfreq_suspend_device(gpu->devfreq.devfreq);
-+
-+	gpu->cooling = of_devfreq_cooling_register(gpu->pdev->dev.of_node,
-+			gpu->devfreq.devfreq);
-+	if (IS_ERR(gpu->cooling)) {
-+		DRM_DEV_ERROR(&gpu->pdev->dev,
-+				"Couldn't register GPU cooling device\n");
-+		gpu->cooling = NULL;
-+	}
- }
- 
- static int enable_pwrrail(struct msm_gpu *gpu)
-@@ -926,7 +936,6 @@ int msm_gpu_init(struct drm_device *drm, struct platform_device *pdev,
- 
- 	msm_devfreq_init(gpu);
- 
--
- 	gpu->aspace = gpu->funcs->create_address_space(gpu, pdev);
- 
- 	if (gpu->aspace == NULL)
-@@ -1005,4 +1014,6 @@ void msm_gpu_cleanup(struct msm_gpu *gpu)
- 		gpu->aspace->mmu->funcs->detach(gpu->aspace->mmu);
- 		msm_gem_address_space_put(gpu->aspace);
- 	}
-+
-+	devfreq_cooling_unregister(gpu->cooling);
- }
-diff --git a/drivers/gpu/drm/msm/msm_gpu.h b/drivers/gpu/drm/msm/msm_gpu.h
-index 6c9e1fd..9a8f20d 100644
---- a/drivers/gpu/drm/msm/msm_gpu.h
-+++ b/drivers/gpu/drm/msm/msm_gpu.h
-@@ -147,6 +147,8 @@ struct msm_gpu {
- 	struct msm_gpu_state *crashstate;
- 	/* True if the hardware supports expanded apriv (a650 and newer) */
- 	bool hw_apriv;
-+
-+	struct thermal_cooling_device *cooling;
- };
- 
- static inline struct msm_gpu *dev_to_gpu(struct device *dev)
--- 
-2.7.4
+  Regards,
+  Gokul
 
+>> +			reg = <0 0 0 0 0 >;
+>> +
+>> +			qrtr_instance_id = <0x20>;
+>> +			base-addr = <0x50f00000>;
+>> +			m3-dump-addr = <0x53c00000>;
+>> +			etr-addr = <0x53d00000>;
+>> +			qcom,caldb-addr = <0x53e00000>;
+>> +		};
+>> +	};
+>>  };
+>> 
+>>  &pcie1 {
+>>  	status = "ok";
+>>  	perst-gpio = <&tlmm 61 0x1>;
+>> +
+>> +	pcie1_rp: pcie1_rp {
+>> +		reg = <0 0 0 0 0>;
+>> +
+>> +		status = "ok";
+>> +		mhi_1: qcom,mhi@1 {
+>> +			reg = <0 0 0 0 0 >;
+>> +
+>> +			qrtr_instance_id = <0x21>;
+>> +			base-addr = <0x54600000>;
+>> +			m3-dump-addr = <0x57300000>;
+>> +			etr-addr = <0x57400000>;
+>> +			qcom,caldb-addr = <0x57500000>;
+>> +			};
+>> +		};
+>> +	};
+>>  };
+>> 
+>>  &qmp_pcie_phy0 {
+>> --
+>> 2.7.4
+>> 
