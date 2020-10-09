@@ -2,185 +2,123 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C249C288FE7
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Oct 2020 19:19:35 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5BF1228913B
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Oct 2020 20:37:23 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729274AbgJIRTJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 9 Oct 2020 13:19:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51636 "EHLO
+        id S1732724AbgJIShP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 9 Oct 2020 14:37:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35472 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1733199AbgJIRSp (ORCPT
+        with ESMTP id S1730130AbgJISgm (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 9 Oct 2020 13:18:45 -0400
-Received: from mail-pf1-x443.google.com (mail-pf1-x443.google.com [IPv6:2607:f8b0:4864:20::443])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 41364C0613D5
-        for <linux-arm-msm@vger.kernel.org>; Fri,  9 Oct 2020 10:18:44 -0700 (PDT)
-Received: by mail-pf1-x443.google.com with SMTP id k8so7421087pfk.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 09 Oct 2020 10:18:44 -0700 (PDT)
+        Fri, 9 Oct 2020 14:36:42 -0400
+Received: from mail-pl1-x644.google.com (mail-pl1-x644.google.com [IPv6:2607:f8b0:4864:20::644])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 63246C0613D5
+        for <linux-arm-msm@vger.kernel.org>; Fri,  9 Oct 2020 11:36:42 -0700 (PDT)
+Received: by mail-pl1-x644.google.com with SMTP id b19so4870185pld.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 09 Oct 2020 11:36:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
+        d=chromium.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=B4B018iOmjRH9U0rvM1vFiDpxuXZ4GGFJ5yW0icLesU=;
-        b=Z+PyMdjop/y0grk6bPHJ8CAMnCM4Tt93ry91JJcxoebdgHD1Wymz3kEJVG51D69o3N
-         HOFVNYvb+Af1eG1264psM7M4Ek8otq4UTq5H0Lx2nlcVyxyizBKIJHAxn+7Qcwq/UKY4
-         xyv4+ASbYkSmZdPU82EY7y0F+ZbN7/DxW9JwNhSfgKqv2HcyJAn1eZAPe2nQZv5ePKr2
-         MukU9PifHa5I4bh8romqH4ibD7T3MJcMJO7deTpVAiqe6w3K+3RWLrIkQPx/6gogVUSZ
-         lvf8XSMtC314b1Ti9BHFcKFuZIbgFlBnYqXKOAB/uANdyu3MuM8sUwMovy1PZZ+rL0jF
-         5WjQ==
+         :content-disposition:in-reply-to;
+        bh=RXaGCdzadhTSxJ90I/Q7ZO/dbk1lXiLeLP1YwXiDqbc=;
+        b=i2SNn6sNaeePDINrDzF4Un/NDOxiB/WDjhMRR7QYro6nFfGDoYlgKzGa8iPs4M7m8b
+         l/EdsCwFS7iNoU+1E5p429Nek58Q2uxCYySkwzwFS13mkgGopfmG7U/C3eZyPcnNVc4f
+         QzdpUiLdxijdg8o32oY/xuVkpM01gyTBN0X5U=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=B4B018iOmjRH9U0rvM1vFiDpxuXZ4GGFJ5yW0icLesU=;
-        b=mbyEzDiPqqZ5gMiMHtY7XI1mXSDDuJ93NsZaODJ//01vK7wQImLc7PWZfP9Yjq7Hxj
-         XqNjN+833p4YMdAWaO4hoOvpGbiWfJcCDgL3TgYkIjhx/YolgEt/XdR8aGcIDsn7g4PF
-         xklxbMbI3W/FKbIG0b1RnP7toYRFCYxW5ULfk8afECYOlQ1ec72rlxCXm+rGkeA6J1X/
-         hWG8Y3tHXy9HQeQjHIDLB8jEDZCHWeVU6PSoRYX4qLKJVGjhVijnWBOPeXClSJvYpyV+
-         37tXPeW37wKYg6+dhDA7dGAnM5voeWIE5NK8apPB9mD/gyYq7/nsj3quc5NqPk4TMf6l
-         DWNA==
-X-Gm-Message-State: AOAM530f0BHKlCLHQEhxYLd+rj8SvzmRpJeUv0jX01WU4+NQmypta/Hg
-        qHfMcIpmhmGPQrUfzu4kxLDI
-X-Google-Smtp-Source: ABdhPJyu5EYDyHQIUD6xjEISHgd+x5o3UdYP+DaESPHfmb1s666xvBKwTKr3rMm1PRvusC7drvImQQ==
-X-Received: by 2002:aa7:87d9:0:b029:155:6486:ac68 with SMTP id i25-20020aa787d90000b02901556486ac68mr7703654pfo.30.1602263923447;
-        Fri, 09 Oct 2020 10:18:43 -0700 (PDT)
-Received: from Mani-XPS-13-9360 ([2409:4072:6292:5a21:d5ff:f3e8:fcf2:ccc7])
-        by smtp.gmail.com with ESMTPSA id h31sm11268405pgh.71.2020.10.09.10.18.24
-        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 09 Oct 2020 10:18:42 -0700 (PDT)
-Date:   Fri, 9 Oct 2020 22:48:04 +0530
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     Bhaumik Bhatt <bbhatt@codeaurora.org>
-Cc:     linux-arm-msm@vger.kernel.org, hemantk@codeaurora.org,
-        jhugo@codeaurora.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v1 10/10] bus: mhi: core: Mark device inactive soon after
- host issues a shutdown
-Message-ID: <20201009171804.GK4810@Mani-XPS-13-9360>
-References: <1600480955-16827-1-git-send-email-bbhatt@codeaurora.org>
- <1600480955-16827-11-git-send-email-bbhatt@codeaurora.org>
+         :mime-version:content-disposition:in-reply-to;
+        bh=RXaGCdzadhTSxJ90I/Q7ZO/dbk1lXiLeLP1YwXiDqbc=;
+        b=tZsAlbRwuapGa4WhKR8gR8dN67pSeaeRYo7xgHkA56w4NK78vn2sqfKBmmS0I+GzK0
+         +45S43mkcRWISDqcA+OIbaVnHCdOUNBboANPdByX3x3CSHVugzmO8ayz4TLhELsecO5U
+         EzPdt7BRiHnpCkQp7OJf3vJ74U1R27q/z2HToRJBObkhWNKUr9eYcL2mLi3EteaXY++x
+         Ux9t0XE4UmTWPzjIuMPkh0fPf1xkFWZQhKc/8gXuh4mm9mjJJJtSUiqQNmjvXkS7eqmY
+         XhkRv/gGAWzUdPD/PbEeoDSrN2VbR2zwy+e6wfU81/EsuZ90enzsBXg5uK3RLMNk5UwH
+         sG9g==
+X-Gm-Message-State: AOAM532iRVQXf0jR12XiD1xkHFFPNBXiKMDaCCLf0MRA/U80JHoRMF4q
+        bzR5WBRCSPqnW8+nOcp6Kj6vFQ==
+X-Google-Smtp-Source: ABdhPJwDW/lNdv+r3y/iNReVvFRv6ckaeyTfiWYvv2Vr4ysFwwuvuddVKMCxbkvFjq8v7CAlF3fLxQ==
+X-Received: by 2002:a17:902:7687:b029:d2:8d1f:1079 with SMTP id m7-20020a1709027687b02900d28d1f1079mr13523250pll.2.1602268601939;
+        Fri, 09 Oct 2020 11:36:41 -0700 (PDT)
+Received: from localhost ([2620:15c:202:1:f693:9fff:fef4:e70a])
+        by smtp.gmail.com with ESMTPSA id bj17sm12423393pjb.15.2020.10.09.11.36.40
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 09 Oct 2020 11:36:41 -0700 (PDT)
+Date:   Fri, 9 Oct 2020 11:36:40 -0700
+From:   mka@chromium.org
+To:     Akhil P Oommen <akhilpo@codeaurora.org>
+Cc:     freedreno@lists.freedesktop.org, robh@kernel.org,
+        robdclark@gmail.com, linux-arm-msm@vger.kernel.org,
+        dri-devel@freedesktop.org, linux-kernel@vger.kernel.org
+Subject: Re: [2/2] drm/msm: Add support for GPU cooling
+Message-ID: <20201009183640.GB1292413@google.com>
+References: <1602176947-17385-2-git-send-email-akhilpo@codeaurora.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <1600480955-16827-11-git-send-email-bbhatt@codeaurora.org>
-User-Agent: Mutt/1.9.4 (2018-02-28)
+In-Reply-To: <1602176947-17385-2-git-send-email-akhilpo@codeaurora.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Sep 18, 2020 at 07:02:35PM -0700, Bhaumik Bhatt wrote:
-> Clients on the host may see the device in an active state for a short
+Hi Akhil,
 
-Clients? Are you referring client drivers or controllers? Please don't mix
-the conventions.
-
-> period of time after the host detects a device error or power down.
-> Prevent any further host activity which could lead to race conditions
-> or multiple callbacks to the controller or any timeouts seen by
-> clients attempting to push data as they must be notified of the host
-> intent sooner rather than later. This also allows the host and device
-> states to be in sync with one another and prevents unnecessary host
-> operations.
+On Thu, Oct 08, 2020 at 10:39:07PM +0530, Akhil P Oommen wrote:
+> Register GPU as a devfreq cooling device so that it can be passively
+> cooled by the thermal framework.
 > 
-
-How the change of dev_state is visible to the so called "client"?
-
-> Signed-off-by: Bhaumik Bhatt <bbhatt@codeaurora.org>
+> Signed-off-by: Akhil P Oommen <akhilpo@codeaurora.org>
 > ---
->  drivers/bus/mhi/core/main.c |  4 ++++
->  drivers/bus/mhi/core/pm.c   | 31 +++++++++++++++++++------------
->  2 files changed, 23 insertions(+), 12 deletions(-)
+>  drivers/gpu/drm/msm/msm_gpu.c | 13 ++++++++++++-
+>  drivers/gpu/drm/msm/msm_gpu.h |  2 ++
+>  2 files changed, 14 insertions(+), 1 deletion(-)
 > 
-> diff --git a/drivers/bus/mhi/core/main.c b/drivers/bus/mhi/core/main.c
-> index 1c8e332..5ec89e9 100644
-> --- a/drivers/bus/mhi/core/main.c
-> +++ b/drivers/bus/mhi/core/main.c
-> @@ -400,6 +400,10 @@ irqreturn_t mhi_intvec_threaded_handler(int irq_number, void *priv)
+> diff --git a/drivers/gpu/drm/msm/msm_gpu.c b/drivers/gpu/drm/msm/msm_gpu.c
+> index 55d1648..93ffd66 100644
+> --- a/drivers/gpu/drm/msm/msm_gpu.c
+> +++ b/drivers/gpu/drm/msm/msm_gpu.c
+> @@ -14,6 +14,7 @@
+>  #include <generated/utsrelease.h>
+>  #include <linux/string_helpers.h>
+>  #include <linux/devfreq.h>
+> +#include <linux/devfreq_cooling.h>
+>  #include <linux/devcoredump.h>
+>  #include <linux/sched/task.h>
 >  
->  	 /* If device supports RDDM don't bother processing SYS error */
->  	if (mhi_cntrl->rddm_image) {
-> +		/* host may be performing a device power down already */
-> +		if (!mhi_is_active(mhi_cntrl))
-> +			goto exit_intvec;
+> @@ -107,9 +108,18 @@ static void msm_devfreq_init(struct msm_gpu *gpu)
+>  	if (IS_ERR(gpu->devfreq.devfreq)) {
+>  		DRM_DEV_ERROR(&gpu->pdev->dev, "Couldn't initialize GPU devfreq\n");
+>  		gpu->devfreq.devfreq = NULL;
+> +		return;
+>  	}
+>  
+>  	devfreq_suspend_device(gpu->devfreq.devfreq);
 > +
-
-Does this change belong to this patch?
-
-Thanks,
-Mani
-
->  		if (mhi_cntrl->ee == MHI_EE_RDDM && mhi_cntrl->ee != ee) {
->  			/* prevent clients from queueing any more packets */
->  			write_lock_irq(&mhi_cntrl->pm_lock);
-> diff --git a/drivers/bus/mhi/core/pm.c b/drivers/bus/mhi/core/pm.c
-> index 16c04ab..4e2cb41 100644
-> --- a/drivers/bus/mhi/core/pm.c
-> +++ b/drivers/bus/mhi/core/pm.c
-> @@ -469,15 +469,10 @@ static void mhi_pm_disable_transition(struct mhi_controller *mhi_cntrl,
->  	write_lock_irq(&mhi_cntrl->pm_lock);
->  	prev_state = mhi_cntrl->pm_state;
->  	cur_state = mhi_tryset_pm_state(mhi_cntrl, transition_state);
-> -	if (cur_state == transition_state) {
-> -		mhi_cntrl->ee = MHI_EE_DISABLE_TRANSITION;
-> +	if (cur_state == MHI_PM_SYS_ERR_PROCESS)
->  		mhi_cntrl->dev_state = MHI_STATE_RESET;
-> -	}
->  	write_unlock_irq(&mhi_cntrl->pm_lock);
+> +	gpu->cooling = of_devfreq_cooling_register(gpu->pdev->dev.of_node,
+> +			gpu->devfreq.devfreq);
+> +	if (IS_ERR(gpu->cooling)) {
+> +		DRM_DEV_ERROR(&gpu->pdev->dev,
+> +				"Couldn't register GPU cooling device\n");
+> +		gpu->cooling = NULL;
+> +	}
+>  }
 >  
-> -	/* Wake up threads waiting for state transition */
-> -	wake_up_all(&mhi_cntrl->state_event);
+>  static int enable_pwrrail(struct msm_gpu *gpu)
+> @@ -926,7 +936,6 @@ int msm_gpu_init(struct drm_device *drm, struct platform_device *pdev,
+>  
+>  	msm_devfreq_init(gpu);
+>  
 > -
->  	if (cur_state != transition_state) {
->  		dev_err(dev, "Failed to transition to state: %s from: %s\n",
->  			to_mhi_pm_state_str(transition_state),
-> @@ -486,6 +481,11 @@ static void mhi_pm_disable_transition(struct mhi_controller *mhi_cntrl,
->  		return;
+>  	gpu->aspace = gpu->funcs->create_address_space(gpu, pdev);
+>  
+>  	if (gpu->aspace == NULL)
+> @@ -1005,4 +1014,6 @@ void msm_gpu_cleanup(struct msm_gpu *gpu)
+>  		gpu->aspace->mmu->funcs->detach(gpu->aspace->mmu);
+>  		msm_gem_address_space_put(gpu->aspace);
 >  	}
->  
-> +	mhi_cntrl->ee = MHI_EE_DISABLE_TRANSITION;
 > +
-> +	/* Wake up threads waiting for state transition */
-> +	wake_up_all(&mhi_cntrl->state_event);
-> +
->  	/* Trigger MHI RESET so that the device will not access host memory */
->  	if (MHI_REG_ACCESS_VALID(prev_state)) {
->  		u32 in_reset = -1;
-> @@ -1051,22 +1051,29 @@ void mhi_power_down(struct mhi_controller *mhi_cntrl, bool graceful)
->  	enum dev_st_transition next_state = DEV_ST_TRANSITION_DISABLE;
->  	struct device *dev = &mhi_cntrl->mhi_dev->dev;
->  
-> +	mutex_lock(&mhi_cntrl->pm_mutex);
-> +	write_lock_irq(&mhi_cntrl->pm_lock);
-> +
->  	/* If it's not a graceful shutdown, force MHI to linkdown state */
->  	if (!graceful) {
-> -		mutex_lock(&mhi_cntrl->pm_mutex);
-> -		write_lock_irq(&mhi_cntrl->pm_lock);
->  		cur_state = mhi_tryset_pm_state(mhi_cntrl,
->  						MHI_PM_LD_ERR_FATAL_DETECT);
-> -		write_unlock_irq(&mhi_cntrl->pm_lock);
-> -		mutex_unlock(&mhi_cntrl->pm_mutex);
-> -		if (cur_state != MHI_PM_LD_ERR_FATAL_DETECT)
-> +		if (cur_state != MHI_PM_LD_ERR_FATAL_DETECT) {
->  			dev_dbg(dev, "Failed to move to state: %s from: %s\n",
->  				to_mhi_pm_state_str(MHI_PM_LD_ERR_FATAL_DETECT),
->  				to_mhi_pm_state_str(mhi_cntrl->pm_state));
-> -		else
-> +		} else {
->  			next_state = DEV_ST_TRANSITION_FATAL;
-> +			wake_up_all(&mhi_cntrl->state_event);
-> +		}
->  	}
->  
-> +	/* mark device inactive to avoid any further host processing */
-> +	mhi_cntrl->dev_state = MHI_STATE_RESET;
-> +
-> +	write_unlock_irq(&mhi_cntrl->pm_lock);
-> +	mutex_unlock(&mhi_cntrl->pm_mutex);
-> +
->  	mhi_queue_state_transition(mhi_cntrl, next_state);
->  
->  	/* Wait for shutdown to complete */
-> -- 
-> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-> a Linux Foundation Collaborative Project
-> 
+> +	devfreq_cooling_unregister(gpu->cooling);
+
+Resources should be released in reverse order, otherwise the cooling device
+could use resources that have already been freed.
