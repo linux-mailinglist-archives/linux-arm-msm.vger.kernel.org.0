@@ -2,123 +2,55 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 5BF1228913B
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Oct 2020 20:37:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 04D362891E5
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Oct 2020 21:42:13 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732724AbgJIShP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 9 Oct 2020 14:37:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35472 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730130AbgJISgm (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 9 Oct 2020 14:36:42 -0400
-Received: from mail-pl1-x644.google.com (mail-pl1-x644.google.com [IPv6:2607:f8b0:4864:20::644])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 63246C0613D5
-        for <linux-arm-msm@vger.kernel.org>; Fri,  9 Oct 2020 11:36:42 -0700 (PDT)
-Received: by mail-pl1-x644.google.com with SMTP id b19so4870185pld.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 09 Oct 2020 11:36:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=RXaGCdzadhTSxJ90I/Q7ZO/dbk1lXiLeLP1YwXiDqbc=;
-        b=i2SNn6sNaeePDINrDzF4Un/NDOxiB/WDjhMRR7QYro6nFfGDoYlgKzGa8iPs4M7m8b
-         l/EdsCwFS7iNoU+1E5p429Nek58Q2uxCYySkwzwFS13mkgGopfmG7U/C3eZyPcnNVc4f
-         QzdpUiLdxijdg8o32oY/xuVkpM01gyTBN0X5U=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=RXaGCdzadhTSxJ90I/Q7ZO/dbk1lXiLeLP1YwXiDqbc=;
-        b=tZsAlbRwuapGa4WhKR8gR8dN67pSeaeRYo7xgHkA56w4NK78vn2sqfKBmmS0I+GzK0
-         +45S43mkcRWISDqcA+OIbaVnHCdOUNBboANPdByX3x3CSHVugzmO8ayz4TLhELsecO5U
-         EzPdt7BRiHnpCkQp7OJf3vJ74U1R27q/z2HToRJBObkhWNKUr9eYcL2mLi3EteaXY++x
-         Ux9t0XE4UmTWPzjIuMPkh0fPf1xkFWZQhKc/8gXuh4mm9mjJJJtSUiqQNmjvXkS7eqmY
-         XhkRv/gGAWzUdPD/PbEeoDSrN2VbR2zwy+e6wfU81/EsuZ90enzsBXg5uK3RLMNk5UwH
-         sG9g==
-X-Gm-Message-State: AOAM532iRVQXf0jR12XiD1xkHFFPNBXiKMDaCCLf0MRA/U80JHoRMF4q
-        bzR5WBRCSPqnW8+nOcp6Kj6vFQ==
-X-Google-Smtp-Source: ABdhPJwDW/lNdv+r3y/iNReVvFRv6ckaeyTfiWYvv2Vr4ysFwwuvuddVKMCxbkvFjq8v7CAlF3fLxQ==
-X-Received: by 2002:a17:902:7687:b029:d2:8d1f:1079 with SMTP id m7-20020a1709027687b02900d28d1f1079mr13523250pll.2.1602268601939;
-        Fri, 09 Oct 2020 11:36:41 -0700 (PDT)
-Received: from localhost ([2620:15c:202:1:f693:9fff:fef4:e70a])
-        by smtp.gmail.com with ESMTPSA id bj17sm12423393pjb.15.2020.10.09.11.36.40
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 09 Oct 2020 11:36:41 -0700 (PDT)
-Date:   Fri, 9 Oct 2020 11:36:40 -0700
-From:   mka@chromium.org
-To:     Akhil P Oommen <akhilpo@codeaurora.org>
-Cc:     freedreno@lists.freedesktop.org, robh@kernel.org,
-        robdclark@gmail.com, linux-arm-msm@vger.kernel.org,
-        dri-devel@freedesktop.org, linux-kernel@vger.kernel.org
-Subject: Re: [2/2] drm/msm: Add support for GPU cooling
-Message-ID: <20201009183640.GB1292413@google.com>
-References: <1602176947-17385-2-git-send-email-akhilpo@codeaurora.org>
+        id S2390737AbgJITmM convert rfc822-to-8bit (ORCPT
+        <rfc822;lists+linux-arm-msm@lfdr.de>); Fri, 9 Oct 2020 15:42:12 -0400
+Received: from mail.csu.ru ([195.54.14.68]:43677 "HELO mail.csu.ru"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1730513AbgJITmK (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 9 Oct 2020 15:42:10 -0400
+X-Greylist: delayed 694 seconds by postgrey-1.27 at vger.kernel.org; Fri, 09 Oct 2020 15:42:00 EDT
+Received: from webmail.csu.ru (webmail.csu.ru [195.54.14.80])
+        (Authenticated sender: gmu)
+        by mail.csu.ru (Postfix) with ESMTPA id 734AD146B9E;
+        Sat, 10 Oct 2020 00:29:01 +0500 (+05)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mail.csu.ru 734AD146B9E
+Received: from 156.146.59.22
+        (SquirrelMail authenticated user gmu)
+        by webmail.csu.ru with HTTP;
+        Sat, 10 Oct 2020 00:29:04 +0500
+Message-ID: <76eac6ed4d08063ecac746e2d90c44a4.squirrel@webmail.csu.ru>
+Date:   Sat, 10 Oct 2020 00:29:04 +0500
+Subject: Vorschlag
+From:   "Yi Huiman" <info@bsu.de>
+Reply-To: info@huiman.cf
+User-Agent: SquirrelMail/1.4.22
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <1602176947-17385-2-git-send-email-akhilpo@codeaurora.org>
+Content-Type: text/plain;charset=iso-8859-1
+X-Priority: 3 (Normal)
+Importance: Normal
+X-KLMS-Rule-ID: 1
+X-KLMS-Message-Action: clean
+X-KLMS-AntiSpam-Lua-Profiles: 159051 [Oct 09 2020]
+X-KLMS-AntiSpam-Version: 5.9.11.0
+X-KLMS-AntiSpam-Envelope-From: info@bsu.de
+X-KLMS-AntiSpam-Auth: dmarc=none header.from=bsu.de;spf=none smtp.mailfrom=bsu.de;dkim=none
+X-KLMS-AntiSpam-Rate: 70
+X-KLMS-AntiSpam-Status: not_detected
+X-KLMS-AntiSpam-Method: none
+X-KLMS-AntiSpam-Info: LuaCore: 381 381 faef97d3f9d8f5dd6a9feadc50ba5b34b9486c58, {rep_avail}, {Tracking_content_type, plain}, {Prob_reply_not_match_from}, {Prob_to_header_missing}, {Prob_Reply_to_without_To}, {Tracking_susp_macro_from_formal}, d41d8cd98f00b204e9800998ecf8427e.com:7.1.1;huiman.cf:7.1.1;webmail.csu.ru:7.1.1;195.54.14.80:7.1.2;127.0.0.199:7.1.2;bsu.de:7.1.1, ApMailHostAddress: 195.54.14.80
+X-MS-Exchange-Organization-SCL: -1
+X-KLMS-AntiSpam-Interceptor-Info: scan successful
+X-KLMS-AntiPhishing: Clean, bases: 2020/10/09 16:54:00
+X-KLMS-AntiVirus: Kaspersky Security for Linux Mail Server, version 8.0.3.30, bases: 2020/10/09 00:29:00 #15463494
+X-KLMS-AntiVirus-Status: Clean, skipped
+Content-Transfer-Encoding: 8BIT
+To:     unlisted-recipients:; (no To-header on input)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Akhil,
+ich habe ein Geschäft Vorschlag für dich.
 
-On Thu, Oct 08, 2020 at 10:39:07PM +0530, Akhil P Oommen wrote:
-> Register GPU as a devfreq cooling device so that it can be passively
-> cooled by the thermal framework.
-> 
-> Signed-off-by: Akhil P Oommen <akhilpo@codeaurora.org>
-> ---
->  drivers/gpu/drm/msm/msm_gpu.c | 13 ++++++++++++-
->  drivers/gpu/drm/msm/msm_gpu.h |  2 ++
->  2 files changed, 14 insertions(+), 1 deletion(-)
-> 
-> diff --git a/drivers/gpu/drm/msm/msm_gpu.c b/drivers/gpu/drm/msm/msm_gpu.c
-> index 55d1648..93ffd66 100644
-> --- a/drivers/gpu/drm/msm/msm_gpu.c
-> +++ b/drivers/gpu/drm/msm/msm_gpu.c
-> @@ -14,6 +14,7 @@
->  #include <generated/utsrelease.h>
->  #include <linux/string_helpers.h>
->  #include <linux/devfreq.h>
-> +#include <linux/devfreq_cooling.h>
->  #include <linux/devcoredump.h>
->  #include <linux/sched/task.h>
->  
-> @@ -107,9 +108,18 @@ static void msm_devfreq_init(struct msm_gpu *gpu)
->  	if (IS_ERR(gpu->devfreq.devfreq)) {
->  		DRM_DEV_ERROR(&gpu->pdev->dev, "Couldn't initialize GPU devfreq\n");
->  		gpu->devfreq.devfreq = NULL;
-> +		return;
->  	}
->  
->  	devfreq_suspend_device(gpu->devfreq.devfreq);
-> +
-> +	gpu->cooling = of_devfreq_cooling_register(gpu->pdev->dev.of_node,
-> +			gpu->devfreq.devfreq);
-> +	if (IS_ERR(gpu->cooling)) {
-> +		DRM_DEV_ERROR(&gpu->pdev->dev,
-> +				"Couldn't register GPU cooling device\n");
-> +		gpu->cooling = NULL;
-> +	}
->  }
->  
->  static int enable_pwrrail(struct msm_gpu *gpu)
-> @@ -926,7 +936,6 @@ int msm_gpu_init(struct drm_device *drm, struct platform_device *pdev,
->  
->  	msm_devfreq_init(gpu);
->  
-> -
->  	gpu->aspace = gpu->funcs->create_address_space(gpu, pdev);
->  
->  	if (gpu->aspace == NULL)
-> @@ -1005,4 +1014,6 @@ void msm_gpu_cleanup(struct msm_gpu *gpu)
->  		gpu->aspace->mmu->funcs->detach(gpu->aspace->mmu);
->  		msm_gem_address_space_put(gpu->aspace);
->  	}
-> +
-> +	devfreq_cooling_unregister(gpu->cooling);
-
-Resources should be released in reverse order, otherwise the cooling device
-could use resources that have already been freed.
