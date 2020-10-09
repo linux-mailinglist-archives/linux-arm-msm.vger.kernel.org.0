@@ -2,148 +2,108 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id F1692288EF1
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Oct 2020 18:32:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 55129288F18
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Oct 2020 18:42:53 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2389701AbgJIQck (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 9 Oct 2020 12:32:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44484 "EHLO
+        id S2389610AbgJIQmw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 9 Oct 2020 12:42:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46042 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2388719AbgJIQcj (ORCPT
+        with ESMTP id S2388719AbgJIQmw (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 9 Oct 2020 12:32:39 -0400
-Received: from mail-pl1-x643.google.com (mail-pl1-x643.google.com [IPv6:2607:f8b0:4864:20::643])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CF178C0613D2
-        for <linux-arm-msm@vger.kernel.org>; Fri,  9 Oct 2020 09:32:39 -0700 (PDT)
-Received: by mail-pl1-x643.google.com with SMTP id y1so1171875plp.6
-        for <linux-arm-msm@vger.kernel.org>; Fri, 09 Oct 2020 09:32:39 -0700 (PDT)
+        Fri, 9 Oct 2020 12:42:52 -0400
+Received: from mail-pg1-x541.google.com (mail-pg1-x541.google.com [IPv6:2607:f8b0:4864:20::541])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EE223C0613D2
+        for <linux-arm-msm@vger.kernel.org>; Fri,  9 Oct 2020 09:42:51 -0700 (PDT)
+Received: by mail-pg1-x541.google.com with SMTP id g9so7614223pgh.8
+        for <linux-arm-msm@vger.kernel.org>; Fri, 09 Oct 2020 09:42:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=mOTcy3+NA6WMt5XJNmj5tg+j6bcKEmODuGu9umfiTHs=;
-        b=ksVkMwzvlP+IFARBE9t7y6xsrsrnd5cktvydnD1bDp7vEbHpw8tYNjp43xSW1/lKTL
-         XFjQL7aZI6owEpa0TIyR9peHB5RguhWECJfs7dN51FBRPL+8+dBPdeGtKjHDRkiu0mc3
-         3/yl7TP3rbuxokoz3gFdLUVYhihnFht7utQGUSes1xRJCDcOI1ErMvwiuKY6QJdGivzT
-         ZGQHGyB7hFzNm4zsrH0MAgnZpJi+xbllfBQG0rdnDrr2w7cosamVfT7Jxc60QWt9RJdH
-         rBukeat6C2BWcfNyQ0C1f8eJBUU3OCEzuS0GJyiA3M2D8oejOMP7VowuYRdkRjBjp5Wk
-         EtSw==
+        bh=yhRF4Bf0Fxw8uBmUilMjScUgjc5ToacEwGW5jec2Co0=;
+        b=E3Lv+fddMEZ8IA3+gHF2Qkff/JeWnRJiKJciN62IaAcoIJYnS7ZdzfGJeu0MraFDsn
+         xbk6CDyxVVSm/XzwUnrCM8HelV47RdveluFynfnkzklgyOWCTH9rFcCTKYcZOSxwcsT+
+         athO2itK4OSekxnku90VmCgBt51SXZoAbWvfGgOE4W6EqgH/ntb/0c/BPIBjioatOP0K
+         YXB6XdOQFgw37fHSmKE+ggNq9UhxDnlkEEpcGAmhaM+DnLIAyaI2xNz/+O0YE1F1aemx
+         P7ixk0f8dmkbgDf1dOp/tkLP4YBk/WzOGbHlPxGCAQBIlXgoeHKfsywlLHEn69mMc7nN
+         40xA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=mOTcy3+NA6WMt5XJNmj5tg+j6bcKEmODuGu9umfiTHs=;
-        b=TMGMx8FLdZ8ZSZv1Cvb+NfPZchMjer6ryQ1Q/PcwJ41F+/tXJv3HPj7hiVDsQZ/fvV
-         FnYJctxNAh/RhOztJAwnSdzDd5xHVZpkYFLIGBuNnH/qPMO7jzwqeb3cQhkgtM7wj+Q/
-         +8OorAHrS2zxjAVCB2/zlH31prMLDcgzlAicG4BzNCcIxvQnrHKrnoRruyWLXzHc7PxB
-         PWJ8RZvmXgNsxRII5tFqHC7ZVkqjUInAUR0M+iW3itRsq2HtKnYyyxkIHFp5MeIuuey0
-         Q7v3p1eaarbo1AUSh6lABJ+uGCvRjjegjnWJ9rQE/PX3ZBrLs3r5Wc+QRsz9zOd7Oarn
-         BpRw==
-X-Gm-Message-State: AOAM533nw4vUtBvuhzu82AUFCWuxQBSZf3xWH0NvC6q4I22Otjkk1AlR
-        IY8tUY3dKWhIgZFThff+edSP
-X-Google-Smtp-Source: ABdhPJykBh/o5E6yOVSdXZxLCcevQfXuIXwwvittlh8cm+/jOLYkFeF3Z7di9fDHVnZkQW+ELZtdWQ==
-X-Received: by 2002:a17:902:a40e:b029:d3:c6fa:2650 with SMTP id p14-20020a170902a40eb02900d3c6fa2650mr12617454plq.29.1602261159147;
-        Fri, 09 Oct 2020 09:32:39 -0700 (PDT)
+        bh=yhRF4Bf0Fxw8uBmUilMjScUgjc5ToacEwGW5jec2Co0=;
+        b=fUvk1l03cjknzgGHchvgUKyGBzeR6BDAe+kYV9RcnjrPwIa8z+Zyhoyl9Jr/+uzQbf
+         lKm1qofaYweNrNpbPvwXi94VWEzrvdIPdQjVaaOkFpMr6gSAd7ZiSQyrhWi8dgAqKK4/
+         e+BUY5n638v8uOyLuKGEKg2iarK303s3WP9osLT/8iOEW7Eo1o986DYV1qY45mMBJFFl
+         iT3/XcFpR1vH2Bv+iYQg64bsktErizAphWhD65cDjyMjmYUwuO8G1YoaEofc2hCBPsI1
+         GutHfiNJU4yMKbYzeKW9b5P0/fR00jF5MNlceLJOcsEJJg8rGNKJlbN3PnfRSTnxEK3L
+         LWzA==
+X-Gm-Message-State: AOAM533nqDvTHXrAt9Tn90v2fCJdrvQFFhIWI1IwF+CXjtVIpGp7Q4RF
+        O/srxXy+mha23PvDtazrR6vn
+X-Google-Smtp-Source: ABdhPJwI1/Z0b9digdvNs3D5Sn+3/hVStc5r71EndANo8iNe9eCHZKVzD0IjBfCON+crmTfzxlDFQQ==
+X-Received: by 2002:a62:78d5:0:b029:154:ebc0:c92c with SMTP id t204-20020a6278d50000b0290154ebc0c92cmr13464865pfc.24.1602261771314;
+        Fri, 09 Oct 2020 09:42:51 -0700 (PDT)
 Received: from Mani-XPS-13-9360 ([2409:4072:6292:5a21:d5ff:f3e8:fcf2:ccc7])
-        by smtp.gmail.com with ESMTPSA id q8sm6231603pfg.118.2020.10.09.09.32.34
+        by smtp.gmail.com with ESMTPSA id t13sm11616763pfc.1.2020.10.09.09.42.45
         (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 09 Oct 2020 09:32:38 -0700 (PDT)
-Date:   Fri, 9 Oct 2020 22:02:31 +0530
+        Fri, 09 Oct 2020 09:42:50 -0700 (PDT)
+Date:   Fri, 9 Oct 2020 22:12:35 +0530
 From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 To:     Bhaumik Bhatt <bbhatt@codeaurora.org>
 Cc:     linux-arm-msm@vger.kernel.org, hemantk@codeaurora.org,
         jhugo@codeaurora.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v1 07/10] bus: mhi: core: Move to SYS_ERROR regardless of
- RDDM capability
-Message-ID: <20201009163231.GH4810@Mani-XPS-13-9360>
+Subject: Re: [PATCH v1 08/10] bus: mhi: core: Move to an error state on any
+ firmware load failure
+Message-ID: <20201009164235.GI4810@Mani-XPS-13-9360>
 References: <1600480955-16827-1-git-send-email-bbhatt@codeaurora.org>
- <1600480955-16827-8-git-send-email-bbhatt@codeaurora.org>
+ <1600480955-16827-9-git-send-email-bbhatt@codeaurora.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <1600480955-16827-8-git-send-email-bbhatt@codeaurora.org>
+In-Reply-To: <1600480955-16827-9-git-send-email-bbhatt@codeaurora.org>
 User-Agent: Mutt/1.9.4 (2018-02-28)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Sep 18, 2020 at 07:02:32PM -0700, Bhaumik Bhatt wrote:
-> In some cases, the entry of device to RDDM execution environment
-> can occur after a significant amount of time has elapsed after the
-> SYS_ERROR state change event has arrived. This can result in scenarios
-> where users of the MHI bus are unaware of the error state of the
-
-Who are all the users of MHI bus? Client drivers?
-
-> device. Hence, moving the MHI bus to a SYS_ERROR detected state will
-> prevent further client activity and wait for the RDDM entry.
+On Fri, Sep 18, 2020 at 07:02:33PM -0700, Bhaumik Bhatt wrote:
+> Move MHI to a firmware download error state for a failure to find
+> the firmware files or to load SBL or EBL image using BHI/BHIe. This
+> helps detect an error state sooner and shortens the wait for a
+> synchronous power up timeout.
 > 
 > Signed-off-by: Bhaumik Bhatt <bbhatt@codeaurora.org>
 > ---
->  drivers/bus/mhi/core/main.c | 24 ++++++++++++++++--------
->  1 file changed, 16 insertions(+), 8 deletions(-)
+>  drivers/bus/mhi/core/boot.c | 43 +++++++++++++++++++++++++------------------
+>  1 file changed, 25 insertions(+), 18 deletions(-)
 > 
-> diff --git a/drivers/bus/mhi/core/main.c b/drivers/bus/mhi/core/main.c
-> index 2cff5dd..1c8e332 100644
-> --- a/drivers/bus/mhi/core/main.c
-> +++ b/drivers/bus/mhi/core/main.c
-> @@ -376,6 +376,7 @@ irqreturn_t mhi_intvec_threaded_handler(int irq_number, void *priv)
->  	enum mhi_state state = MHI_STATE_MAX;
->  	enum mhi_pm_state pm_state = 0;
->  	enum mhi_ee_type ee = 0;
-> +	bool handle_rddm = false;
->  
->  	write_lock_irq(&mhi_cntrl->pm_lock);
->  	if (!MHI_REG_ACCESS_VALID(mhi_cntrl->pm_state)) {
-> @@ -400,6 +401,17 @@ irqreturn_t mhi_intvec_threaded_handler(int irq_number, void *priv)
->  	 /* If device supports RDDM don't bother processing SYS error */
->  	if (mhi_cntrl->rddm_image) {
->  		if (mhi_cntrl->ee == MHI_EE_RDDM && mhi_cntrl->ee != ee) {
-> +			/* prevent clients from queueing any more packets */
-> +			write_lock_irq(&mhi_cntrl->pm_lock);
-> +			pm_state = mhi_tryset_pm_state(mhi_cntrl,
-> +						       MHI_PM_SYS_ERR_DETECT);
+> diff --git a/drivers/bus/mhi/core/boot.c b/drivers/bus/mhi/core/boot.c
+> index 92b8dd3..fcc71f2 100644
+> --- a/drivers/bus/mhi/core/boot.c
+> +++ b/drivers/bus/mhi/core/boot.c
 
-The condition above already moves MHI to MHI_PM_SYS_ERR_DETECT if the state
-is MHI_STATE_SYS_ERR. Why are you doing it here again?
+[...]
+
+> -error_read:
+> +error_ready_state:
+>  	mhi_free_bhie_table(mhi_cntrl, mhi_cntrl->fbc_image);
+>  	mhi_cntrl->fbc_image = NULL;
+>  
+> -error_alloc_fw_table:
+> -	release_firmware(firmware);
+> +error_fw_load:
+> +	write_lock_irq(&mhi_cntrl->pm_lock);
+> +	mhi_cntrl->pm_state = MHI_PM_FW_DL_ERR;
+> +	wake_up_all(&mhi_cntrl->state_event);
+
+Do you really need pm_lock for this?
 
 Thanks,
 Mani
 
-> +			if (pm_state == MHI_PM_SYS_ERR_DETECT)
-> +				handle_rddm = true;
-> +			write_unlock_irq(&mhi_cntrl->pm_lock);
-> +		}
-> +
-> +		if (handle_rddm) {
-> +			dev_err(dev, "RDDM event occurred!\n");
->  			mhi_cntrl->status_cb(mhi_cntrl, MHI_CB_EE_RDDM);
->  			wake_up_all(&mhi_cntrl->state_event);
->  		}
-> @@ -733,19 +745,15 @@ int mhi_process_ctrl_ev_ring(struct mhi_controller *mhi_cntrl,
->  				break;
->  			case MHI_STATE_SYS_ERR:
->  			{
-> -				enum mhi_pm_state new_state;
-> -
-> -				/* skip SYS_ERROR handling if RDDM supported */
-> -				if (mhi_cntrl->ee == MHI_EE_RDDM ||
-> -				    mhi_cntrl->rddm_image)
-> -					break;
-> +				enum mhi_pm_state state = MHI_PM_STATE_MAX;
->  
->  				dev_dbg(dev, "System error detected\n");
->  				write_lock_irq(&mhi_cntrl->pm_lock);
-> -				new_state = mhi_tryset_pm_state(mhi_cntrl,
-> +				if (mhi_cntrl->ee != MHI_EE_RDDM)
-> +					state = mhi_tryset_pm_state(mhi_cntrl,
->  							MHI_PM_SYS_ERR_DETECT);
->  				write_unlock_irq(&mhi_cntrl->pm_lock);
-> -				if (new_state == MHI_PM_SYS_ERR_DETECT)
-> +				if (state == MHI_PM_SYS_ERR_DETECT)
->  					mhi_pm_sys_err_handler(mhi_cntrl);
->  				break;
->  			}
+> +	write_unlock_irq(&mhi_cntrl->pm_lock);
+>  }
 > -- 
 > The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
 > a Linux Foundation Collaborative Project
