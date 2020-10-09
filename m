@@ -2,457 +2,289 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 47974288D02
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Oct 2020 17:45:07 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id F0296288D62
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Oct 2020 17:54:32 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2389135AbgJIPpA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 9 Oct 2020 11:45:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36846 "EHLO
+        id S2388882AbgJIPyH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 9 Oct 2020 11:54:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38342 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2388696AbgJIPpA (ORCPT
+        with ESMTP id S2389451AbgJIPyF (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 9 Oct 2020 11:45:00 -0400
-Received: from mail-wm1-x343.google.com (mail-wm1-x343.google.com [IPv6:2a00:1450:4864:20::343])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AF729C0613D2
-        for <linux-arm-msm@vger.kernel.org>; Fri,  9 Oct 2020 08:44:58 -0700 (PDT)
-Received: by mail-wm1-x343.google.com with SMTP id 13so10295461wmf.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 09 Oct 2020 08:44:58 -0700 (PDT)
+        Fri, 9 Oct 2020 11:54:05 -0400
+Received: from mail-wr1-x444.google.com (mail-wr1-x444.google.com [IPv6:2a00:1450:4864:20::444])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3C239C0613D6
+        for <linux-arm-msm@vger.kernel.org>; Fri,  9 Oct 2020 08:54:03 -0700 (PDT)
+Received: by mail-wr1-x444.google.com with SMTP id h7so10847385wre.4
+        for <linux-arm-msm@vger.kernel.org>; Fri, 09 Oct 2020 08:54:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id;
-        bh=BuH0gNY3oVkwXkvD3wGv06XTgYoZtIzVUj+jVRDteJ4=;
-        b=tT6jdy9jKzKlEsOPTPkuPR4B/fcsjH0271eos5/53mPwPhSebF6hGOeI7MNx3D/MOZ
-         Gr4gScghMgAt+hjZMVa0tabAvTrshGAE8GKHtIOomxY1NEdNkknHjXZ9VJUwK93bz2Q3
-         q3yEHPxGFRkhJKrRorKrx8hZOG6f0OZtLBLIA5R6/uo246oQc0XPlbVbxigqpg5LGin3
-         JeGwKy8v0FUR0TImaK0pMqtc3ga0eykpQpD7KE03Fwsc+t9jkL8uY4ZsKiLQmlROFiFp
-         JBUkn9S2pw96YefLD//XagHtI7BKP9vhdo/51sBATAhs4fYc8w02IAjXvbKvCcXMs9ip
-         MLxA==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=IBi4lxui7TDsG7YkgR/fVfv+URw4Aj0tmdV38qvVz/E=;
+        b=e0f0kljXH+VIO43qzIn4/DOZPYK4AE9jmDafKyqr8IzhDDIPPOVN0SERgiX+V01+GQ
+         SdrL8Ct4vWVHMAeTXpwzwFXo/EYSgXAk1Y3Z044egIgJ7dQvaI0s8w3m61TtrfkuzDz+
+         HphVJObAx7yRtfYP6La7QIsNuHR7EvPBhJEuhtQ7k4Zgniaxcejue/1FaUboctSb9ntp
+         uq9QD/oUzEgiiBZwtbOObpJ7GuyrqatcaQ4u02ccrdSmFmXCOeraZ/qcMfPHvIzXiXlZ
+         VjAiMe2jim2yvl2VNHWfnt/zF4O1/UEaasBU90/Pk0R+f2jUOk3QkT/Pef7wbvkm3dRN
+         vqHA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=BuH0gNY3oVkwXkvD3wGv06XTgYoZtIzVUj+jVRDteJ4=;
-        b=jLFL4GTMdaXz+HuyYID/JmPmjDKu+hB8+2AZ6X2DrVFqydnWjEKKziHQWUvgIOG6cy
-         GRRc3zxCW/Uxhs4vgOUEEz8+ASOzB4mKHv+RbUX0TWBlbniMLNPjbfu9VIry3YqG6+7W
-         NVvm0/0D9nmM4MrYl1Miatls/EWo7MyOSgJK36WkWn3BN2xlSvSgNOhN76rmLSd5tSQ9
-         NzIuHa3qIsqEmgVVpw2e50qzsMC6nPUYpLYHfH6xEh2+bf+/HQnLUDcoHX1h43qY8Lrv
-         0LnHCzgQnximhxhGwCjAQfuuAGDIDhSJaMX44g213P7emmNCPNiow7oWZrYRHWAQYDII
-         WAgA==
-X-Gm-Message-State: AOAM533XZn4EAIUy6VZp70Os53mKbuAHdIZXfhqmpXcBLtl05xK4pBOz
-        AgKRpePpbzyQE4qDz+l/RhcFWk24/NeVVw==
-X-Google-Smtp-Source: ABdhPJw3av8swXDNfueIj1HryXqsES86u8HwqBbAViXSUkczwr8q3+j8j0pF8thL+ruspXEJvG+xJw==
-X-Received: by 2002:a7b:c01a:: with SMTP id c26mr13806489wmb.35.1602258297188;
-        Fri, 09 Oct 2020 08:44:57 -0700 (PDT)
-Received: from localhost.localdomain ([88.122.66.28])
-        by smtp.gmail.com with ESMTPSA id g14sm12629976wrx.22.2020.10.09.08.44.55
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 09 Oct 2020 08:44:56 -0700 (PDT)
-From:   Loic Poulain <loic.poulain@linaro.org>
-To:     manivannan.sadhasivam@linaro.org, hemantk@codeaurora.org
-Cc:     linux-arm-msm@vger.kernel.org, bjorn.andersson@linaro.org,
-        jhugo@codeaurora.org, Loic Poulain <loic.poulain@linaro.org>
-Subject: [PATCH v4] bus: mhi: Add MHI PCI support for WWAN modems
-Date:   Fri,  9 Oct 2020 17:51:04 +0200
-Message-Id: <1602258664-9980-1-git-send-email-loic.poulain@linaro.org>
-X-Mailer: git-send-email 2.7.4
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=IBi4lxui7TDsG7YkgR/fVfv+URw4Aj0tmdV38qvVz/E=;
+        b=SOPAGsfhUqgbmiCsOGRNPiAUORjIC+dyycmWJERbzuE6Sj+TQriCasbu31Dv4GDc8K
+         m3ZaAmWJ7HmPv4mmV7w+bzMGINmLYF9Yel4C4JrLRwTwdMXVg+q4mon25Y0IeyYWbHsm
+         p9EgSMLPzgxDr0q35glCJCOx6osjww1dsJk1jBm34764xOXt4P3m8YGx55+Vz4e4t8Ro
+         s2hAIsyN94dAnD2OW2YqoavHuG0OLMzx2a8TZga7pwrBL5ShmCcucqrTNi09kzlbwUl6
+         yPuIwAavOYDX/WzGP/ATFJa6luImzrgaLwGkyIiDWAuLUawdohDT+ICy6gQqXTrL08FU
+         984g==
+X-Gm-Message-State: AOAM532H3KnLpSlDDOQsjU/gxAZxWeE46lI/9/CJ6vVTCRwkwzCHF9dd
+        K/p7EpszNeE5Sy9B1fCZpDA5qA==
+X-Google-Smtp-Source: ABdhPJznLIeDsBYPD0LtRjcDWWRKQRompc/4gOVUUB8nPjMxU+g57p+kQCXdRtkHJxN0e6u4biSJxA==
+X-Received: by 2002:a5d:4c85:: with SMTP id z5mr1615729wrs.9.1602258841669;
+        Fri, 09 Oct 2020 08:54:01 -0700 (PDT)
+Received: from [192.168.1.5] ([195.24.90.54])
+        by smtp.googlemail.com with ESMTPSA id c130sm12434524wma.17.2020.10.09.08.54.00
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 09 Oct 2020 08:54:01 -0700 (PDT)
+Subject: Re: [PATCH 1/3] venus: vdec: Fix non reliable setting of LAST flag
+To:     Alexandre Courbot <acourbot@chromium.org>,
+        Stanimir Varbanov <stanimir.varbanov@linaro.org>
+Cc:     Linux Media Mailing List <linux-media@vger.kernel.org>,
+        linux-arm-msm@vger.kernel.org, LKML <linux-kernel@vger.kernel.org>,
+        Vikash Garodia <vgarodia@codeaurora.org>,
+        Mansur Alisha Shaik <mansur@codeaurora.org>
+References: <20200928164431.21884-1-stanimir.varbanov@linaro.org>
+ <20200928164431.21884-2-stanimir.varbanov@linaro.org>
+ <CAPBb6MVFeGcDMWopXA5PNPVHTsgZ5r8L_-zE0TUwm5wFswVdmw@mail.gmail.com>
+From:   Stanimir Varbanov <stanimir.varbanov@linaro.org>
+Message-ID: <e29a925e-475e-b39d-66bc-855444344b67@linaro.org>
+Date:   Fri, 9 Oct 2020 18:53:58 +0300
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.10.0
+MIME-Version: 1.0
+In-Reply-To: <CAPBb6MVFeGcDMWopXA5PNPVHTsgZ5r8L_-zE0TUwm5wFswVdmw@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This is a generic MHI-over-PCI controller driver for MHI only devices
-such as QCOM modems. For now it supports registering of Qualcomm SDX55
-based PCIe modules. The MHI channels have been extracted from mhi
-downstream driver.
+Hi Alex,
 
-This driver is for MHI-only devices which have all functionnalities
-exposed through MHI channels and accessed by the corresponding MHI
-device drivers (no out-of-band communication).
+Thanks for the comments!
 
-Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
----
- v2: - remove useless delay.h include
-     - remove over-logging on error
-     - remove controller subdir
-     - rename to mhi_pci_modem.c
-     - Fix mhi_pci_probe exit path on error
-     - expand module description
-     - drop module version
- v3: - Rename to mhi_pci_generic
-     - Add hardware accelerated IP channel (IPA)
-     - Added fw/edl names for sdx55m
- v4: - Rename MHI channel macros to UL/DL
-     - Reserve MSI 0 as dedicated BHI vector
-     - Increase IP_HW0 elements to 128 (max)  
+On 10/9/20 3:56 PM, Alexandre Courbot wrote:
+> On Tue, Sep 29, 2020 at 1:44 AM Stanimir Varbanov
+> <stanimir.varbanov@linaro.org> wrote:
+>>
+>> In real use of dynamic-resolution-change it is observed that the
+>> LAST buffer flag (which marks the last decoded buffer with the
+>> resolution before the resolution-change event) is not reliably set.
+>>
+>> Fix this by set the LAST buffer flag on next queued capture buffer
+>> after the resolution-change event.
+>>
+>> Signed-off-by: Stanimir Varbanov <stanimir.varbanov@linaro.org>
+>> ---
+>>  drivers/media/platform/qcom/venus/core.h    |  5 +-
+>>  drivers/media/platform/qcom/venus/helpers.c |  6 +++
+>>  drivers/media/platform/qcom/venus/vdec.c    | 52 ++++++++++++---------
+>>  3 files changed, 38 insertions(+), 25 deletions(-)
+>>
+>> diff --git a/drivers/media/platform/qcom/venus/core.h b/drivers/media/platform/qcom/venus/core.h
+>> index 7b79a33dc9d6..e30eeaf0ada9 100644
+>> --- a/drivers/media/platform/qcom/venus/core.h
+>> +++ b/drivers/media/platform/qcom/venus/core.h
+>> @@ -274,7 +274,6 @@ enum venus_dec_state {
+>>         VENUS_DEC_STATE_DRAIN           = 5,
+>>         VENUS_DEC_STATE_DECODING        = 6,
+>>         VENUS_DEC_STATE_DRC             = 7,
+>> -       VENUS_DEC_STATE_DRC_FLUSH_DONE  = 8,
+>>  };
+>>
+>>  struct venus_ts_metadata {
+>> @@ -339,7 +338,7 @@ struct venus_ts_metadata {
+>>   * @priv:      a private for HFI operations callbacks
+>>   * @session_type:      the type of the session (decoder or encoder)
+>>   * @hprop:     a union used as a holder by get property
+>> - * @last_buf:  last capture buffer for dynamic-resoluton-change
+>> + * @next_buf_last: a flag to mark next queued capture buffer as last
+>>   */
+>>  struct venus_inst {
+>>         struct list_head list;
+>> @@ -401,7 +400,7 @@ struct venus_inst {
+>>         union hfi_get_property hprop;
+>>         unsigned int core_acquired: 1;
+>>         unsigned int bit_depth;
+>> -       struct vb2_buffer *last_buf;
+>> +       bool next_buf_last;
+>>  };
+>>
+>>  #define IS_V1(core)    ((core)->res->hfi_version == HFI_VERSION_1XX)
+>> diff --git a/drivers/media/platform/qcom/venus/helpers.c b/drivers/media/platform/qcom/venus/helpers.c
+>> index 50439eb1ffea..5ca3920237c5 100644
+>> --- a/drivers/media/platform/qcom/venus/helpers.c
+>> +++ b/drivers/media/platform/qcom/venus/helpers.c
+>> @@ -1347,6 +1347,12 @@ void venus_helper_vb2_buf_queue(struct vb2_buffer *vb)
+>>
+>>         v4l2_m2m_buf_queue(m2m_ctx, vbuf);
+>>
+>> +       /* Skip processing queued capture buffers after LAST flag */
+>> +       if (inst->session_type == VIDC_SESSION_TYPE_DEC &&
+>> +           V4L2_TYPE_IS_CAPTURE(vb->vb2_queue->type) &&
+>> +           inst->codec_state == VENUS_DEC_STATE_DRC)
+>> +               goto unlock;
+>> +
+>>         cache_payload(inst, vb);
+>>
+>>         if (inst->session_type == VIDC_SESSION_TYPE_ENC &&
+>> diff --git a/drivers/media/platform/qcom/venus/vdec.c b/drivers/media/platform/qcom/venus/vdec.c
+>> index ea13170a6a2c..c11bdf3ca21b 100644
+>> --- a/drivers/media/platform/qcom/venus/vdec.c
+>> +++ b/drivers/media/platform/qcom/venus/vdec.c
+>> @@ -914,10 +914,6 @@ static int vdec_start_capture(struct venus_inst *inst)
+>>                 return 0;
+>>
+>>  reconfigure:
+>> -       ret = hfi_session_flush(inst, HFI_FLUSH_OUTPUT, true);
+>> -       if (ret)
+>> -               return ret;
+>> -
+>>         ret = vdec_output_conf(inst);
+>>         if (ret)
+>>                 return ret;
+>> @@ -954,6 +950,7 @@ static int vdec_start_capture(struct venus_inst *inst)
+>>         inst->streamon_cap = 1;
+>>         inst->sequence_cap = 0;
+>>         inst->reconfig = false;
+>> +       inst->next_buf_last = false;
+>>
+>>         return 0;
+>>
+>> @@ -985,6 +982,7 @@ static int vdec_start_output(struct venus_inst *inst)
+>>         venus_helper_init_instance(inst);
+>>         inst->sequence_out = 0;
+>>         inst->reconfig = false;
+>> +       inst->next_buf_last = false;
+>>
+>>         ret = vdec_set_properties(inst);
+>>         if (ret)
+>> @@ -1078,9 +1076,7 @@ static int vdec_stop_capture(struct venus_inst *inst)
+>>                 inst->codec_state = VENUS_DEC_STATE_STOPPED;
+>>                 break;
+>>         case VENUS_DEC_STATE_DRC:
+>> -               WARN_ON(1);
+>> -               fallthrough;
+>> -       case VENUS_DEC_STATE_DRC_FLUSH_DONE:
+>> +               ret = hfi_session_flush(inst, HFI_FLUSH_OUTPUT, true);
+>>                 inst->codec_state = VENUS_DEC_STATE_CAPTURE_SETUP;
+>>                 venus_helper_free_dpb_bufs(inst);
+>>                 break;
+>> @@ -1204,9 +1200,28 @@ static void vdec_buf_cleanup(struct vb2_buffer *vb)
+>>  static void vdec_vb2_buf_queue(struct vb2_buffer *vb)
+>>  {
+>>         struct venus_inst *inst = vb2_get_drv_priv(vb->vb2_queue);
+>> +       struct vb2_v4l2_buffer *vbuf = to_vb2_v4l2_buffer(vb);
+>> +       static const struct v4l2_event eos = { .type = V4L2_EVENT_EOS };
+>>
+>>         vdec_pm_get_put(inst);
+>>
+>> +       mutex_lock(&inst->lock);
+>> +
+>> +       if (inst->next_buf_last && V4L2_TYPE_IS_CAPTURE(vb->vb2_queue->type) &&
+>> +           inst->codec_state == VENUS_DEC_STATE_DRC) {
+>> +               vbuf->flags |= V4L2_BUF_FLAG_LAST;
+>> +               vbuf->sequence = inst->sequence_cap++;
+>> +               vbuf->field = V4L2_FIELD_NONE;
+>> +               vb2_set_plane_payload(vb, 0, 0);
+>> +               v4l2_m2m_buf_done(vbuf, VB2_BUF_STATE_DONE);
+>> +               v4l2_event_queue_fh(&inst->fh, &eos);
+>> +               inst->next_buf_last = false;
+>> +               mutex_unlock(&inst->lock);
+>> +               return;
+>> +       }
+>> +
+>> +       mutex_unlock(&inst->lock);
+>> +
+>>         venus_helper_vb2_buf_queue(vb);
+>>  }
+>>
+>> @@ -1250,13 +1265,6 @@ static void vdec_buf_done(struct venus_inst *inst, unsigned int buf_type,
+>>                 vb->timestamp = timestamp_us * NSEC_PER_USEC;
+>>                 vbuf->sequence = inst->sequence_cap++;
+>>
+>> -               if (inst->last_buf == vb) {
+>> -                       inst->last_buf = NULL;
+>> -                       vbuf->flags |= V4L2_BUF_FLAG_LAST;
+>> -                       vb2_set_plane_payload(vb, 0, 0);
+>> -                       vb->timestamp = 0;
+>> -               }
+>> -
+>>                 if (vbuf->flags & V4L2_BUF_FLAG_LAST) {
+>>                         const struct v4l2_event ev = { .type = V4L2_EVENT_EOS };
+>>
+>> @@ -1344,13 +1352,14 @@ static void vdec_event_change(struct venus_inst *inst,
+>>                 struct vb2_v4l2_buffer *last;
+>>                 int ret;
+>>
+>> -               last = v4l2_m2m_last_dst_buf(inst->m2m_ctx);
+>> -               if (last)
+>> -                       inst->last_buf = &last->vb2_buf;
+>> +               inst->next_buf_last = true;
+>>
+>> -               ret = hfi_session_flush(inst, HFI_FLUSH_OUTPUT, false);
+>> -               if (ret)
+>> -                       dev_dbg(dev, VDBGH "flush output error %d\n", ret);
+>> +               last = v4l2_m2m_last_dst_buf(inst->m2m_ctx);
+>> +               if (last) {
+>> +                       ret = hfi_session_flush(inst, HFI_FLUSH_OUTPUT, false);
+>> +                       if (ret)
+>> +                               dev_dbg(dev, VDBGH "flush output error %d\n", ret);
+>> +               }
+> 
+> Do we still need to call hfi_session_flush() here? It will be called
+> in vdec_stop_capture() anyway, and for some reason we are only calling
+> it if there is a CAPTURE buffer available (which is not guaranteed).
 
- drivers/bus/mhi/Kconfig           |   9 ++
- drivers/bus/mhi/Makefile          |   3 +
- drivers/bus/mhi/mhi_pci_generic.c | 331 ++++++++++++++++++++++++++++++++++++++
- 3 files changed, 343 insertions(+)
- create mode 100644 drivers/bus/mhi/mhi_pci_generic.c
+Yes, we need session flush.
 
-diff --git a/drivers/bus/mhi/Kconfig b/drivers/bus/mhi/Kconfig
-index e841c10..daa8528 100644
---- a/drivers/bus/mhi/Kconfig
-+++ b/drivers/bus/mhi/Kconfig
-@@ -20,3 +20,12 @@ config MHI_BUS_DEBUG
- 	  Enable debugfs support for use with the MHI transport. Allows
- 	  reading and/or modifying some values within the MHI controller
- 	  for debug and test purposes.
-+
-+config MHI_BUS_PCI_GENERIC
-+	tristate "MHI PCI controller driver"
-+	depends on MHI_BUS
-+	depends on PCI
-+	help
-+	  This driver provides Modem Host Interface (MHI) PCI controller driver
-+	  for devices such as Qualcomm SDX55 based PCIe modems.
-+
-diff --git a/drivers/bus/mhi/Makefile b/drivers/bus/mhi/Makefile
-index 19e6443..d1a4ef3 100644
---- a/drivers/bus/mhi/Makefile
-+++ b/drivers/bus/mhi/Makefile
-@@ -1,2 +1,5 @@
- # core layer
- obj-y += core/
-+
-+obj-$(CONFIG_MHI_BUS_PCI_GENERIC) := mhi_pci_generic.o
-+
-diff --git a/drivers/bus/mhi/mhi_pci_generic.c b/drivers/bus/mhi/mhi_pci_generic.c
-new file mode 100644
-index 0000000..145df1f
---- /dev/null
-+++ b/drivers/bus/mhi/mhi_pci_generic.c
-@@ -0,0 +1,331 @@
-+// SPDX-License-Identifier: GPL-2.0-or-later
-+/*
-+ * MHI PCI driver - MHI over PCI controller driver
-+ *
-+ * This module is a generic driver for registering MHI-over-PCI devices,
-+ * such as PCIe QCOM modems.
-+ *
-+ * Copyright (C) 2020 Linaro Ltd <loic.poulain@linaro.org>
-+ */
-+
-+#include <linux/device.h>
-+#include <linux/mhi.h>
-+#include <linux/module.h>
-+#include <linux/pci.h>
-+
-+#define MHI_PCI_BAR_NUM 0
-+
-+struct mhi_pci_dev_info {
-+	const struct mhi_controller_config *config;
-+	const char *name;
-+	const char *fw;
-+	const char *edl;
-+};
-+
-+#define MHI_CHANNEL_CONFIG_UL(cnum, cname, elems, event)	\
-+	{							\
-+		.num = cnum,					\
-+		.name = cname,					\
-+		.num_elements = elems,				\
-+		.event_ring = event,				\
-+		.dir = DMA_TO_DEVICE,				\
-+		.ee_mask = BIT(MHI_EE_AMSS),			\
-+		.pollcfg = 0,					\
-+		.doorbell = MHI_DB_BRST_DISABLE,		\
-+		.lpm_notify = false,				\
-+		.offload_channel = false,			\
-+		.doorbell_mode_switch = false,			\
-+	}							\
-+
-+#define MHI_CHANNEL_CONFIG_DL(cnum, cname, elems, event)	\
-+	{							\
-+		.num = cnum,					\
-+		.name = cname,					\
-+		.num_elements = elems,				\
-+		.event_ring = event,				\
-+		.dir = DMA_FROM_DEVICE,				\
-+		.ee_mask = BIT(MHI_EE_AMSS),			\
-+		.pollcfg = 0,					\
-+		.doorbell = MHI_DB_BRST_DISABLE,		\
-+		.lpm_notify = false,				\
-+		.offload_channel = false,			\
-+		.doorbell_mode_switch = false,			\
-+	}
-+
-+#define MHI_EVENT_CONFIG_CTRL(enum)		\
-+	{					\
-+		.num_elements = 64,		\
-+		.irq_moderation_ms = 0,		\
-+		.irq = (enum) + 1,		\
-+		.priority = 1,			\
-+		.mode = MHI_DB_BRST_DISABLE,	\
-+		.data_type = MHI_ER_CTRL,	\
-+		.hardware_event = false,	\
-+		.client_managed = false,	\
-+		.offload_channel = false,	\
-+	}
-+
-+#define MHI_EVENT_CONFIG_DATA(enum)		\
-+	{					\
-+		.num_elements = 128,		\
-+		.irq_moderation_ms = 5,		\
-+		.irq = (enum) + 1,		\
-+		.priority = 1,			\
-+		.mode = MHI_DB_BRST_DISABLE,	\
-+		.data_type = MHI_ER_DATA,	\
-+		.hardware_event = false,	\
-+		.client_managed = false,	\
-+		.offload_channel = false,	\
-+	}
-+
-+#define MHI_EVENT_CONFIG_HW_DATA(enum, cnum)	\
-+	{					\
-+		.num_elements = 128,		\
-+		.irq_moderation_ms = 5,		\
-+		.irq = (enum) + 1,		\
-+		.priority = 1,			\
-+		.mode = MHI_DB_BRST_DISABLE,	\
-+		.data_type = MHI_ER_DATA,	\
-+		.hardware_event = true,		\
-+		.client_managed = false,	\
-+		.offload_channel = false,	\
-+		.channel = cnum,		\
-+	}
-+
-+static const struct mhi_channel_config modem_qcom_v1_mhi_channels[] = {
-+	MHI_CHANNEL_CONFIG_UL(12, "MBIM", 4, 0),
-+	MHI_CHANNEL_CONFIG_DL(13, "MBIM", 4, 0),
-+	MHI_CHANNEL_CONFIG_UL(14, "QMI", 4, 0),
-+	MHI_CHANNEL_CONFIG_DL(15, "QMI", 4, 0),
-+	MHI_CHANNEL_CONFIG_UL(20, "IPCR", 8, 0),
-+	MHI_CHANNEL_CONFIG_DL(21, "IPCR", 8, 0),
-+	MHI_CHANNEL_CONFIG_UL(100, "IP_HW0", 128, 1),
-+	MHI_CHANNEL_CONFIG_DL(101, "IP_HW0", 128, 2),
-+};
-+
-+static const struct mhi_event_config modem_qcom_v1_mhi_events[] = {
-+	/* first ring is control+data ring */
-+	MHI_EVENT_CONFIG_CTRL(0),
-+	/* Hardware channels request dedicated hardware event rings */
-+	MHI_EVENT_CONFIG_HW_DATA(1, 100),
-+	MHI_EVENT_CONFIG_HW_DATA(2, 101)
-+};
-+
-+static const struct mhi_controller_config modem_qcom_v1_mhi_config = {
-+	.max_channels = 128,
-+	.timeout_ms = 5000,
-+	.num_channels = ARRAY_SIZE(modem_qcom_v1_mhi_channels),
-+	.ch_cfg = modem_qcom_v1_mhi_channels,
-+	.num_events = ARRAY_SIZE(modem_qcom_v1_mhi_events),
-+	.event_cfg = modem_qcom_v1_mhi_events,
-+};
-+
-+static const struct mhi_pci_dev_info mhi_qcom_sdx55_info = {
-+	.name = "qcom-sdx55m",
-+	.fw = "qcom/sdx55m/sbl1.mbn",
-+	.edl = "qcom/sdx55m/edl.mbn",
-+	.config = &modem_qcom_v1_mhi_config
-+};
-+
-+static const struct pci_device_id mhi_pci_id_table[] = {
-+	{ PCI_DEVICE(PCI_VENDOR_ID_QCOM, 0x0306),
-+		.driver_data = (kernel_ulong_t) &mhi_qcom_sdx55_info },
-+	{  }
-+};
-+MODULE_DEVICE_TABLE(pci, mhi_pci_id_table);
-+
-+static int mhi_pci_read_reg(struct mhi_controller *mhic, void __iomem *addr,
-+			    u32 *out)
-+{
-+	*out = readl(addr);
-+	return 0;
-+}
-+
-+static void mhi_pci_write_reg(struct mhi_controller *mhic, void __iomem *addr,
-+			      u32 val)
-+{
-+	writel(val, addr);
-+}
-+
-+static void mhi_pci_status_cb(struct mhi_controller *mhi_cntrl,
-+			      enum mhi_callback cb)
-+{
-+	return;
-+}
-+
-+static int mhi_pci_claim(struct mhi_controller *mhic)
-+{
-+	struct pci_dev *pdev = to_pci_dev(mhic->cntrl_dev);
-+	int err;
-+
-+	err = pci_assign_resource(pdev, MHI_PCI_BAR_NUM);
-+	if (err)
-+		return err;
-+
-+	err = pcim_enable_device(pdev);
-+	if (err) {
-+		dev_err(&pdev->dev, "failed to enable pci device: %d\n", err);
-+		return err;
-+	}
-+
-+	err = pcim_iomap_regions(pdev, 1 << MHI_PCI_BAR_NUM, pci_name(pdev));
-+	if (err) {
-+		dev_err(&pdev->dev, "failed to map pci region: %d\n", err);
-+		return err;
-+	}
-+	mhic->regs = pcim_iomap_table(pdev)[MHI_PCI_BAR_NUM];
-+
-+	err = pci_set_dma_mask(pdev, DMA_BIT_MASK(32));
-+	if (err) {
-+		dev_err(&pdev->dev, "Cannot set proper DMA mask\n");
-+		return err;
-+	}
-+
-+	err = pci_set_consistent_dma_mask(pdev, DMA_BIT_MASK(32));
-+	if (err) {
-+		dev_err(&pdev->dev, "set consistent dma mask failed\n");
-+		return err;
-+	}
-+
-+	pci_set_master(pdev);
-+
-+	return 0;
-+}
-+
-+static int mhi_pci_get_irqs(struct mhi_controller *mhic,
-+			    const struct mhi_controller_config *mhic_config)
-+{
-+	struct pci_dev *pdev = to_pci_dev(mhic->cntrl_dev);
-+	int nr_vectors, i;
-+	int *irq;
-+
-+	/*
-+	 * Alloc one MSI vector for BHI + one vector per event ring, ideally...
-+	 * No explicit pci_free_irq_vectors required, done by pcim_release.
-+	 */
-+	mhic->nr_irqs = 1 + mhic_config->num_events;
-+
-+	nr_vectors = pci_alloc_irq_vectors(pdev, 1, mhic->nr_irqs, PCI_IRQ_MSI);
-+	if (nr_vectors < 0) {
-+		dev_err(&pdev->dev, "Error allocating MSI vectors %d\n",
-+			nr_vectors);
-+		return nr_vectors;
-+	}
-+
-+	if (nr_vectors < mhic->nr_irqs) {
-+		dev_warn(&pdev->dev, "Not enough MSI vectors (%d/%d)\n",
-+			 nr_vectors, mhic_config->num_events);
-+		/* continue... use shared IRQ */
-+	}
-+
-+	irq = devm_kcalloc(&pdev->dev, mhic->nr_irqs, sizeof(int), GFP_KERNEL);
-+	if (!irq)
-+		return -ENOMEM;
-+
-+	for (i = 0; i < mhic->nr_irqs; i++) {
-+		int vector = i >= nr_vectors ? (nr_vectors - 1) : i;
-+
-+		irq[i] = pci_irq_vector(pdev, vector);
-+	}
-+
-+	mhic->irq = irq;
-+
-+	return 0;
-+}
-+
-+static int mhi_pci_runtime_get(struct mhi_controller *mhi_cntrl)
-+{
-+	/* no PM for now */
-+	return 0;
-+}
-+
-+static void mhi_pci_runtime_put(struct mhi_controller *mhi_cntrl)
-+{
-+	/* no PM for now */
-+	return;
-+}
-+
-+static int mhi_pci_probe(struct pci_dev *pdev, const struct pci_device_id *id)
-+{
-+	const struct mhi_pci_dev_info *info = (struct mhi_pci_dev_info *) id->driver_data;
-+	const struct mhi_controller_config *mhic_config;
-+	struct mhi_controller *mhic;
-+	int err;
-+
-+	dev_info(&pdev->dev, "MHI PCI device found: %s\n", info->name);
-+
-+	mhic = devm_kzalloc(&pdev->dev, sizeof(*mhic), GFP_KERNEL);
-+	if (!mhic)
-+		return -ENOMEM;
-+
-+	mhic_config = info->config;
-+	mhic->cntrl_dev = &pdev->dev;
-+	mhic->iova_start = 0;
-+	mhic->iova_stop = 0xffffffff;
-+	mhic->fw_image = info->fw;
-+	mhic->edl_image = info->edl;
-+
-+	mhic->read_reg = mhi_pci_read_reg;
-+	mhic->write_reg = mhi_pci_write_reg;
-+	mhic->status_cb = mhi_pci_status_cb;
-+	mhic->runtime_get = mhi_pci_runtime_get;
-+	mhic->runtime_put = mhi_pci_runtime_put;
-+
-+	err = mhi_pci_claim(mhic);
-+	if (err)
-+		return err;
-+
-+	err = mhi_pci_get_irqs(mhic, mhic_config);
-+	if (err)
-+		return err;
-+
-+	pci_set_drvdata(pdev, mhic);
-+
-+	err = mhi_register_controller(mhic, mhic_config);
-+	if (err)
-+		return err;
-+
-+	/* MHI bus does not power up the controller by default */
-+	err = mhi_prepare_for_power_up(mhic);
-+	if (err) {
-+		dev_err(&pdev->dev, "failed to prepare MHI controller\n");
-+		goto err_unregister;
-+	}
-+
-+	err = mhi_sync_power_up(mhic);
-+	if (err) {
-+		dev_err(&pdev->dev, "failed to power up MHI controller\n");
-+		goto err_unprepare;
-+	}
-+
-+	return 0;
-+
-+err_unprepare:
-+	mhi_unprepare_after_power_down(mhic);
-+
-+err_unregister:
-+	mhi_unregister_controller(mhic);
-+
-+	return err;
-+}
-+
-+static void mhi_pci_remove(struct pci_dev *pdev)
-+{
-+	struct mhi_controller *mhic = pci_get_drvdata(pdev);
-+
-+	mhi_power_down(mhic, false);
-+	mhi_unprepare_after_power_down(mhic);
-+	mhi_unregister_controller(mhic);
-+}
-+
-+static struct pci_driver mhi_pci_driver = {
-+	.name		= "mhi-pci-generic",
-+	.id_table	= mhi_pci_id_table,
-+	.probe		= mhi_pci_probe,
-+	.remove		= mhi_pci_remove
-+};
-+module_pci_driver(mhi_pci_driver);
-+
-+MODULE_AUTHOR("Loic Poulain <loic.poulain@linaro,org>");
-+MODULE_DESCRIPTION("Modem Host Interface (MHI) PCI controller driver");
-+MODULE_LICENSE("GPL");
+This handles a corner case when the dequeued capture buffers are queued
+immediately (without any processing from client) to the driver, in this
+scenario the client doesn't own any buffer to enqueue to the driver and
+the driver doesn't have a chance to return LAST flag.
+
+> 
+> I suspect that we can call it unconditionally, and maybe remove the
+> call to hfi_session_flush() in vdec_stop_capture() when the state is
+> VENUS_DEC_STATE_DRC. That way flushing will be performed earlier and
+> in one place only.
+
+I think that makes sense, I kept (infact moved to stop_capture) just to
+be sure that the firmware doesn't hold any capture buffers before we
+resume decoding with new resolution.
+
+> 
+>>         }
+>>
+>>         inst->reconfig = true;
+>> @@ -1395,8 +1404,7 @@ static void vdec_event_notify(struct venus_inst *inst, u32 event,
+>>
+>>  static void vdec_flush_done(struct venus_inst *inst)
+>>  {
+>> -       if (inst->codec_state == VENUS_DEC_STATE_DRC)
+>> -               inst->codec_state = VENUS_DEC_STATE_DRC_FLUSH_DONE;
+>> +       dev_dbg(inst->core->dev_dec, VDBGH "flush done\n");
+>>  }
+>>
+>>  static const struct hfi_inst_ops vdec_hfi_ops = {
+>> --
+>> 2.17.1
+>>
+
 -- 
-2.7.4
-
+regards,
+Stan
