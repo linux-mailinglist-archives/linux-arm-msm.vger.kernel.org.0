@@ -2,136 +2,294 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 0E8EB288C2B
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Oct 2020 17:05:31 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 64BDB288C5B
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Oct 2020 17:15:18 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2389191AbgJIPFZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 9 Oct 2020 11:05:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58924 "EHLO
+        id S2388745AbgJIPPR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 9 Oct 2020 11:15:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60494 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2388819AbgJIPFZ (ORCPT
+        with ESMTP id S2388887AbgJIPPQ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 9 Oct 2020 11:05:25 -0400
-Received: from mail-vs1-xe44.google.com (mail-vs1-xe44.google.com [IPv6:2607:f8b0:4864:20::e44])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A9B49C0613D2
-        for <linux-arm-msm@vger.kernel.org>; Fri,  9 Oct 2020 08:05:24 -0700 (PDT)
-Received: by mail-vs1-xe44.google.com with SMTP id r1so4104883vsi.12
-        for <linux-arm-msm@vger.kernel.org>; Fri, 09 Oct 2020 08:05:24 -0700 (PDT)
+        Fri, 9 Oct 2020 11:15:16 -0400
+Received: from mail-lj1-x243.google.com (mail-lj1-x243.google.com [IPv6:2a00:1450:4864:20::243])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7DAA3C0613D5
+        for <linux-arm-msm@vger.kernel.org>; Fri,  9 Oct 2020 08:15:16 -0700 (PDT)
+Received: by mail-lj1-x243.google.com with SMTP id 133so9981527ljj.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 09 Oct 2020 08:15:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=M5jmyRhySind9c0afwtQ0KGtByGsUKvjJEoZbk8E1rg=;
-        b=Joaf6MfmCGF25mUhtUk8dw/KXhE9rOyy9cTfuhkZlrJrF5/AOOW+PGSTxiaz7deqDa
-         J7icjzTVlWIo0zqGLDB6KJhXPIsrcv6jdY7k1u/VGev5bdPaZJN//YsjneEDCJWWCTCY
-         KCh7oNHZcnOKkCwkzJEVqtmjUFyaavX+BdV8c=
+        d=linaro.org; s=google;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=E6Nd8bFLpZfzhnJqMtPJPONxQyfB4cH/rdHKzqew4oo=;
+        b=Qc/JMWf/ffAVqqTQcI9JG4TLUusWr4+kaYKzlWwyTDeUgS1j7voTIwEya6AAJzKkol
+         faszaKpvwTwYMpoWr7PvAuqEVkrcOaLdwCa5Tio52Iv+xaVEkA13ERUSzISHWEgYMoRV
+         +U1Lbz3GTYcKT2y466elZ15AG/H25fvV0Txp5RYLd3XvpwCxfUq9n/1y6uwF9Is2lEmE
+         VqmRzDBVzXqskzg90Rt8TxLq9oiAWhQvvDZlkOMYX3wkoXcB6MRzFN2xKR9r2QPYuNdO
+         d6WJ0xXYuicfxNruqVEMs37/qJRqVoy1OTUGKJSAjgNb1aYV1yhj7wex1NgN+Xk7JxlM
+         dNgQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=M5jmyRhySind9c0afwtQ0KGtByGsUKvjJEoZbk8E1rg=;
-        b=Qjp+5gj/Hs1xHJqjg4UXRsWuWruwqB2/SqB4iuMlPxHhBl/jwQnoLmE0h6DZ8HoHtw
-         2EuuCDA5Gd6L+4Ub4YBoMjhbTXtcstIdLtcjPAQF/Cn6uOMS5zC1WSeE9h0gCQG67e+L
-         jY+ZWwbo50OlBgF1C8VZtm4gspeMbfII1NuxJ1sOs5aA+AWf1yBf7f0fW7O7SDtvm65p
-         cymclpZh5cQCLfQBgaD/xgJ7wtzEOnrxkpvprUthGzu7TC4fxrI9mbxb7wxqbAIIG95C
-         qp/bXTWMx8okzCkN+XL+yFJ4lENxL4HWztcE8DFvJRnjBtKhQYpGNIYvK7ASQDwkvocH
-         fUwA==
-X-Gm-Message-State: AOAM533bPRzqy9i1JyS9eaENIlB96wL6cxEQ+yoZtKMUps1rk1LQSEmE
-        5SSkovoyjZtSLtjxbjfsVQ/RiiyJgnHh7g==
-X-Google-Smtp-Source: ABdhPJxFiG2yip5x9ya6K8geBJXSckEAbm/ruHYSov7Dj9e2hQCt6bcEI4l20fvydPqEfubNNJ0jsQ==
-X-Received: by 2002:a67:efd8:: with SMTP id s24mr7713844vsp.54.1602255923150;
-        Fri, 09 Oct 2020 08:05:23 -0700 (PDT)
-Received: from mail-vs1-f49.google.com (mail-vs1-f49.google.com. [209.85.217.49])
-        by smtp.gmail.com with ESMTPSA id q64sm981597vkb.30.2020.10.09.08.05.22
-        for <linux-arm-msm@vger.kernel.org>
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=E6Nd8bFLpZfzhnJqMtPJPONxQyfB4cH/rdHKzqew4oo=;
+        b=Ej0UL5CbZgm1TBgvupocIxjVzV//8weHL+m6T5C9sKiD9u0URpF2WIjR+2oIPURstZ
+         a4S6Bm+8giaA1xf4JDQx0uV3g5D+DXv6HsZPfwS/zvilwcbFYvHZSeXbKq/Zq67m2R55
+         K6PwnxuaNVhIgpvJ6+HIWyowVLc2W/ZSGYmEjdpfYcSdSoi7AlKGqCk2KcsNgrIO1jTG
+         Kiinhu9t/NpFiZU8F+8L3ReIXCoiYpjk0TWP0vFnnsCiq8SXtiHELxsO+hOyTgiJ46Yc
+         4UoEYYGZ8GWGlqznTeTGF/Mby1iZk6sMSldn0zXjUnRawz/hyE24/wXhf6iCi56UA62I
+         BqQw==
+X-Gm-Message-State: AOAM5322wWbYaeo4spvPKUpSyT0b50Z8H9/MrCVpVvMK/ZG0zJBLw271
+        nKlj42QTkgGEgSMLqY6HZxiDLA==
+X-Google-Smtp-Source: ABdhPJyMApbqWWYKrRxdaZeohuRpwHPicgxI00Hs2697xZEQeG8le9Oh2C+OAPB+UP3mMy0RKFGWhg==
+X-Received: by 2002:a2e:9d94:: with SMTP id c20mr5363714ljj.445.1602256513326;
+        Fri, 09 Oct 2020 08:15:13 -0700 (PDT)
+Received: from [192.168.1.211] ([188.162.65.231])
+        by smtp.gmail.com with ESMTPSA id t17sm743958lff.147.2020.10.09.08.15.11
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 09 Oct 2020 08:05:22 -0700 (PDT)
-Received: by mail-vs1-f49.google.com with SMTP id v23so2555797vsp.6
-        for <linux-arm-msm@vger.kernel.org>; Fri, 09 Oct 2020 08:05:22 -0700 (PDT)
-X-Received: by 2002:a67:bc0d:: with SMTP id t13mr8045062vsn.4.1602255921448;
- Fri, 09 Oct 2020 08:05:21 -0700 (PDT)
+        Fri, 09 Oct 2020 08:15:12 -0700 (PDT)
+Subject: Re: [PATCH v7 07/10] thermal: qcom: add support for adc-tm5 PMIC
+ thermal monitor
+To:     Daniel Lezcano <daniel.lezcano@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Zhang Rui <rui.zhang@intel.com>,
+        Amit Kucheria <amitk@kernel.org>,
+        Jonathan Cameron <jic23@kernel.org>,
+        Hartmut Knaack <knaack.h@gmx.de>,
+        Lars-Peter Clausen <lars@metafoo.de>,
+        Peter Meerwald-Stadler <pmeerw@pmeerw.net>
+Cc:     linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-iio@vger.kernel.org,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        Jishnu Prakash <jprakash@qti.qualcomm.com>
+References: <20201007135433.1041979-1-dmitry.baryshkov@linaro.org>
+ <20201007135433.1041979-8-dmitry.baryshkov@linaro.org>
+ <3d6bd019-1516-5307-ef49-b6279fbfbe82@linaro.org>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Message-ID: <642645af-19f1-7ac1-a10a-7f943c757c7f@linaro.org>
+Date:   Fri, 9 Oct 2020 18:15:11 +0300
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.2.2
 MIME-Version: 1.0
-References: <1602176947-17385-1-git-send-email-akhilpo@codeaurora.org>
-In-Reply-To: <1602176947-17385-1-git-send-email-akhilpo@codeaurora.org>
-From:   Doug Anderson <dianders@chromium.org>
-Date:   Fri, 9 Oct 2020 08:05:10 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=WjWv040TyBaqU8ZAuxGi-YpJ2tsVcUbOV4Htv=_-n8fA@mail.gmail.com>
-Message-ID: <CAD=FV=WjWv040TyBaqU8ZAuxGi-YpJ2tsVcUbOV4Htv=_-n8fA@mail.gmail.com>
-Subject: Re: [PATCH 1/2] arm64: dts: qcom: sc7180: Add gpu cooling support
-To:     Akhil P Oommen <akhilpo@codeaurora.org>
-Cc:     freedreno <freedreno@lists.freedesktop.org>,
-        Rob Herring <robh@kernel.org>, Rob Clark <robdclark@gmail.com>,
-        dri-devel@freedesktop.org,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        LKML <linux-kernel@vger.kernel.org>,
-        Jordan Crouse <jcrouse@codeaurora.org>,
-        Matthias Kaehlcke <mka@chromium.org>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <3d6bd019-1516-5307-ef49-b6279fbfbe82@linaro.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+On 08/10/2020 19:22, Daniel Lezcano wrote:
+> On 07/10/2020 15:54, Dmitry Baryshkov wrote:
+>> Add support for Thermal Monitoring part of PMIC5. This part is closely
+>> coupled with ADC, using it's channels directly. ADC-TM support
+>> generating interrupts on ADC value crossing low or high voltage bounds,
+>> which is used to support thermal trip points.
+>>
+>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+>> ---
+>>   drivers/iio/adc/qcom-vadc-common.c       |  62 +++
+>>   drivers/iio/adc/qcom-vadc-common.h       |   3 +
+>>   drivers/thermal/qcom/Kconfig             |  11 +
+>>   drivers/thermal/qcom/Makefile            |   1 +
+>>   drivers/thermal/qcom/qcom-spmi-adc-tm5.c | 622 +++++++++++++++++++++++
+>>   5 files changed, 699 insertions(+)
+>>   create mode 100644 drivers/thermal/qcom/qcom-spmi-adc-tm5.c
+>>
+>> diff --git a/drivers/iio/adc/qcom-vadc-common.c b/drivers/iio/adc/qcom-vadc-common.c
+>> index 40d77b3af1bb..e58e393b8713 100644
+>> --- a/drivers/iio/adc/qcom-vadc-common.c
+>> +++ b/drivers/iio/adc/qcom-vadc-common.c
+>> @@ -377,6 +377,42 @@ static int qcom_vadc_map_voltage_temp(const struct vadc_map_pt *pts,
+>>   	return 0;
+>>   }
+>>   
+>> +static s32 qcom_vadc_map_temp_voltage(const struct vadc_map_pt *pts,
+>> +				      u32 tablesize, int input)
+>> +{
+>> +	bool descending = 1;
+>> +	u32 i = 0;
+>> +
+> 
+> The code seems like a bit
 
-On Thu, Oct 8, 2020 at 10:10 AM Akhil P Oommen <akhilpo@codeaurora.org> wrote:
->
-> Add cooling-cells property and the cooling maps for the gpu tzones
-> to support GPU cooling.
->
-> Signed-off-by: Akhil P Oommen <akhilpo@codeaurora.org>
-> ---
->  arch/arm64/boot/dts/qcom/sc7180.dtsi | 29 ++++++++++++++++++++++-------
->  1 file changed, 22 insertions(+), 7 deletions(-)
->
-> diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-> index d46b383..40d6a28 100644
-> --- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-> @@ -2,7 +2,7 @@
->  /*
->   * SC7180 SoC device tree source
->   *
-> - * Copyright (c) 2019, The Linux Foundation. All rights reserved.
-> + * Copyright (c) 2019-20, The Linux Foundation. All rights reserved.
->   */
->
->  #include <dt-bindings/clock/qcom,dispcc-sc7180.h>
-> @@ -1885,6 +1885,7 @@
->                         iommus = <&adreno_smmu 0>;
->                         operating-points-v2 = <&gpu_opp_table>;
->                         qcom,gmu = <&gmu>;
-> +                       #cooling-cells = <2>;
+Could you please clarify, what do you mean?
 
-Presumably we should add this to the devicetree bindings, too?
+> 
+>> +	/* Check if table is descending or ascending */
+>> +	if (tablesize > 1) {
+>> +		if (pts[0].y < pts[1].y)
+>> +			descending = 0;
+>> +	}
+>> +
+>> +	while (i < tablesize) {
+>> +		if (descending && pts[i].y < input) {
+>> +			/* table entry is less than measured*/
+>> +			 /* value and table is descending, stop */
+>> +			break;
+>> +		} else if ((!descending) && pts[i].y > input) {
+>> +			/* table entry is greater than measured*/
+>> +			/*value and table is ascending, stop */
+>> +			break;
+>> +		}
+>> +		i++;
+>> +	}
+>> +
+>> +	if (i == 0)
+>> +		return pts[0].x;
+>> +	if (i == tablesize)
+>> +		return pts[tablesize - 1].x;
+>> +
+>> +	/* result is between search_index and search_index-1 */
+>> +	/* interpolate linearly */
+>> +	return fixp_linear_interpolate(pts[i - 1].y, pts[i - 1].x,
+>> +			pts[i].y, pts[i].x, input);
+>> +}
+>> +
+>>   static void qcom_vadc_scale_calib(const struct vadc_linear_graph *calib_graph,
+>>   				  u16 adc_code,
+>>   				  bool absolute,
+
+[....]
+
+>> diff --git a/drivers/thermal/qcom/qcom-spmi-adc-tm5.c b/drivers/thermal/qcom/qcom-spmi-adc-tm5.c
+>> new file mode 100644
+>> index 000000000000..c09a50f59053
+>> --- /dev/null
+>> +++ b/drivers/thermal/qcom/qcom-spmi-adc-tm5.c
+>> @@ -0,0 +1,622 @@
+>> +// SPDX-License-Identifier: GPL-2.0-only
+>> +/*
+>> + * Copyright (c) 2012-2020, The Linux Foundation. All rights reserved.
+>> + * Copyright (c) 2020 Linaro Limited
+>> + */
+> 
+> If it is possible, please give a description of this sensor, the
+> different register mapping, etc ... So it will be easier to review and
+> debug in the future.
+
+In which form? I don't often see such descriptions in the code.
+
+> 
+> 
+>> +#include <linux/bitfield.h>
+>> +#include <linux/iio/consumer.h>
+>> +#include <linux/interrupt.h>
+>> +#include <linux/module.h>
+>> +#include <linux/of.h>
+>> +#include <linux/of_device.h>
+>> +#include <linux/platform_device.h>
+>> +#include <linux/regmap.h>
+>> +#include <linux/thermal.h>
+>> +
+>> +#include "../../iio/adc/qcom-vadc-common.h"
+> 
+> Do not use this form of inclusion.
+
+Fixed.
 
 
->                         interconnects = <&gem_noc MASTER_GFX3D &mc_virt SLAVE_EBI1>;
->                         interconnect-names = "gfx-mem";
-> @@ -3825,16 +3826,16 @@
->                 };
->
->                 gpuss0-thermal {
-> -                       polling-delay-passive = <0>;
-> +                       polling-delay-passive = <100>;
+[...]
 
-Why did you make this change?  I'm pretty sure that we _don't_ want
-this since we're using interrupts for the thermal sensor.  See commit
-22337b91022d ("arm64: dts: qcom: sc7180: Changed polling mode in
-Thermal-zones node").
+> 
+>> +	if (ret) {
+>> +		dev_err(chip->dev, "read status low failed with %d\n", ret);
+>> +		return IRQ_HANDLED;
+>> +	}
+> 
+> Can you identify the reasons those reads can fail? If it is not supposed
+> to happen it is fine but otherwise we don't want to be flooded with
+> error messages on the console.
+
+Changed to use unlikely(ret) as way to show that this is not supposed to 
+happen.
 
 
->                         polling-delay = <0>;
->
->                         thermal-sensors = <&tsens0 13>;
->
->                         trips {
->                                 gpuss0_alert0: trip-point0 {
-> -                                       temperature = <90000>;
-> +                                       temperature = <95000>;
->                                         hysteresis = <2000>;
-> -                                       type = "hot";
-> +                                       type = "passive";
+>> +		lower_set = (status_low & BIT(ch)) &&
+>> +			(ctl & ADC_TM5_M_MEAS_EN) &&
+>> +			(ctl & ADC_TM5_M_LOW_THR_INT_EN);
+>> +
+>> +		upper_set = (status_high & BIT(ch)) &&
+>> +			(ctl & ADC_TM5_M_MEAS_EN) &&
+>> +			(ctl & ADC_TM5_M_HIGH_THR_INT_EN);
+> 
+> Is the check (ctl & ADC_TM5_M_[HIGH|LOW]_THR_INT_EN) necessary if
+> status_high or status_low is true ?
+> 
+> Isn't possible to simplify that with:
+> 
+> eg.
+> 
+> 		if (!(ctl & ADC_TM5_M_MEAS_EN)
+> 			continue;
+> 
+> 		if (!(status_high & BIT(ch)) && !(status_low & BIT(ch))
+> 			continue;
+> 
+> 		thermal_zone_device_update(chip->channels[i].tzd,
+> 					THERMAL_EVENT_UNSPECIFIED);
+> 
+> ??
 
-Matthias probably knows better, but I wonder if we should be making
-two passive trip levels like we do with CPU.  IIRC this is important
-if someone wants to be able to use this with IPA.
+I'd prefer to leave the check as is, having no information if status bit 
+can be updated without actually triggering IRQ.
+
+I've moved ADC_TM5_MEAS_EN check upwards to simplify this.
+
+>> +static int adc_tm5_configure(struct adc_tm5_channel *channel, int low_temp, int high_temp)
+>> +{
+>> +	struct adc_tm5_chip *chip = channel->chip;
+>> +	u8 buf[8];
+>> +	u16 reg = ADC_TM5_M_ADC_CH_SEL_CTL(channel->channel);
+>> +	int ret = 0;
+>> +
+>> +	ret = adc_tm5_read(chip, reg, buf, sizeof(buf));
+>> +	if (ret) {
+>> +		dev_err(chip->dev, "block read failed with %d\n", ret);
+>> +		return ret;
+>> +	}
+>> +
+>> +	/* Update ADC channel select */
+>> +	buf[0] = channel->adc_channel;
+>> +
+>> +	/* Warm temperature corresponds to low voltage threshold */
+>> +	if (high_temp != INT_MAX) {
+>> +		u16 adc_code = qcom_adc_tm5_temp_volt_scale(channel->prescale,
+>> +				chip->data->full_scale_code_volt, high_temp);
+>> +
+>> +		buf[1] = adc_code & 0xff;
+>> +		buf[2] = adc_code >> 8;
+>> +		buf[7] |= ADC_TM5_M_LOW_THR_INT_EN;
+>> +	} else {
+>> +		buf[7] &= ~ADC_TM5_M_LOW_THR_INT_EN;
+>> +	}
+>> +
+>> +	/* Cool temperature corresponds to high voltage threshold */
+>> +	if (low_temp != -INT_MAX) {
+> 
+> Is it really -INT_MAX ? or INT_MIN
+> 
+> -2147483647 vs -2147483648 ?
+
+It is really -INT_MAX, see thermal_zone_set_trips().
+
+[...]
+
+>> +
+>> +	for (i = 0; i < chip->nchannels; i++) {
+>> +		if (chip->channels[i].channel >= channels_available) {
+>> +			dev_err(chip->dev, "Invalid channel %d\n", chip->channels[i].channel);
+>> +			return -EINVAL;
+>> +		}
+> 
+> Is it a sanity check to make sure the hardware and the DT are compatible ?
+
+Yes.
+
+
+-- 
+With best wishes
+Dmitry
