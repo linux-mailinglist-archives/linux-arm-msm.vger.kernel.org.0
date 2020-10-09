@@ -2,111 +2,138 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 89DAC288F1E
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Oct 2020 18:45:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B1D38288F43
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Oct 2020 18:57:11 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2389855AbgJIQo7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 9 Oct 2020 12:44:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46368 "EHLO
+        id S2389907AbgJIQ5I (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 9 Oct 2020 12:57:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48238 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2388745AbgJIQo4 (ORCPT
+        with ESMTP id S2389898AbgJIQ5I (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 9 Oct 2020 12:44:56 -0400
-Received: from mail-pf1-x442.google.com (mail-pf1-x442.google.com [IPv6:2607:f8b0:4864:20::442])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 81C72C0613D5
-        for <linux-arm-msm@vger.kernel.org>; Fri,  9 Oct 2020 09:44:54 -0700 (PDT)
-Received: by mail-pf1-x442.google.com with SMTP id e10so7344282pfj.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 09 Oct 2020 09:44:54 -0700 (PDT)
+        Fri, 9 Oct 2020 12:57:08 -0400
+Received: from mail-pl1-x644.google.com (mail-pl1-x644.google.com [IPv6:2607:f8b0:4864:20::644])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EFCBBC0613D5
+        for <linux-arm-msm@vger.kernel.org>; Fri,  9 Oct 2020 09:57:07 -0700 (PDT)
+Received: by mail-pl1-x644.google.com with SMTP id m15so4731555pls.8
+        for <linux-arm-msm@vger.kernel.org>; Fri, 09 Oct 2020 09:57:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
+        d=chromium.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=cWs84SqTxwa8ama3NQBlgQfKzF7xkpWKH/ORsqiAAHY=;
-        b=sBWxx2zxyXVDDqj7LQLC91NP4WZl2IijlnU1VqBHhEjONCt/4nRxelQ1SQKqfKfC4C
-         SbNgzoUZMhd6kDzmFUk0FmaJPEcxF5BKg3A7JwRp0ImKTICk/5wqJCA+8ApTFJxXApIJ
-         tHcxrL4RZT0/mVh4T6zIIBp4DyzH47aRcw7kriY37FvEziXScgPcnzvJCBAzKVbkYzZh
-         UW82OrJ01LFM9U5e5Cu0A3z96WxEC6ElBI5T7Gq5CTIuOwonfD+o1sjv733jewFrP2MN
-         dPCTFEeAvwPPxLyKfGYMtnT0DmTNW4f5NJUt4t8lq1sRoe/oseOc+6RJOK6PF6XU6T2y
-         f7gw==
+         :content-disposition:in-reply-to;
+        bh=f0yCCPBqY4qUb9wGcJ1HYTDZ/2njY0BqjbSXTuo3NEs=;
+        b=c+JTbiYOfr6d/Q9KtvL8QV3qo4AeNQnrPFkw1q1W3KPrMzuYn513Pr6f37djB/0GBO
+         XTzecWXNTPSHigt5LUZ/XMoUMlSUGAFMXq8jzHiX3xUxzMMXq7FsOcXxwRF2biuOO8cE
+         pI9lSDSidVfR392HG5GEskfqr6JyHruMz2yX0=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=cWs84SqTxwa8ama3NQBlgQfKzF7xkpWKH/ORsqiAAHY=;
-        b=IQ/l0egI/W+eYzhQzFru/KxGwH+VgzLrEOSVyYk8WvEsMDc7B87uomefBnBS1wMg+/
-         F+DVCes4agEK5NtQ/4Qgt4Mv76SSjeU60kC0yt39+nVwTKv4WhT7v46msutDBCP6C5Wt
-         BvjTiRLbAjc81i1n+0ICMZUSLx2q4NzfO6+KXgEySo8h2ItBI1wO91x9G9pAqhRvPaok
-         qqjOwrH96LxCrY/TyoajuDOYkMq230skCT7CtKWnyvrDFbtxWzFvlwqZrbpuxRLahji0
-         ZA7REZfeDW4I3ZtK2joQWp7HaYz+tAa4vH/Z7b7TvtG7rvQAxtES9DRY8jybcYf6zmUC
-         zGCA==
-X-Gm-Message-State: AOAM5321kq0p+yTz/s/HEQ2DEKGAGCW/NI6QtRxZbCZu+OyxT+AQQcqW
-        kNmCP8sXewrRb9J9tokMIIcRFJmoktEb
-X-Google-Smtp-Source: ABdhPJztuoTLhqk/VCU2llwb2528WLSTViLzuMxU+lq9dIW2o4A7mCnwb/KC1X1moSIrnKipELTC1A==
-X-Received: by 2002:a62:1d57:0:b029:152:47a7:e04b with SMTP id d84-20020a621d570000b029015247a7e04bmr13233945pfd.48.1602261893875;
-        Fri, 09 Oct 2020 09:44:53 -0700 (PDT)
-Received: from Mani-XPS-13-9360 ([2409:4072:6292:5a21:d5ff:f3e8:fcf2:ccc7])
-        by smtp.gmail.com with ESMTPSA id z21sm11602246pfr.43.2020.10.09.09.44.48
-        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 09 Oct 2020 09:44:53 -0700 (PDT)
-Date:   Fri, 9 Oct 2020 22:14:45 +0530
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     Bhaumik Bhatt <bbhatt@codeaurora.org>
-Cc:     linux-arm-msm@vger.kernel.org, hemantk@codeaurora.org,
-        jhugo@codeaurora.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v1 09/10] bus: mhi: core: Move to an error state on
- mission mode failure
-Message-ID: <20201009164445.GJ4810@Mani-XPS-13-9360>
-References: <1600480955-16827-1-git-send-email-bbhatt@codeaurora.org>
- <1600480955-16827-10-git-send-email-bbhatt@codeaurora.org>
+         :mime-version:content-disposition:in-reply-to;
+        bh=f0yCCPBqY4qUb9wGcJ1HYTDZ/2njY0BqjbSXTuo3NEs=;
+        b=KNJndvMyGyl6MbUX5mvDy1d5uAeZHEbsJ4TLTaVaZYdoH42fzdyTTi0LnxTgJl68i7
+         2dWjMJ0nkQsSS4yjxvtOx/fXg5ndOeIV5c3YnuxQ1+b4J5yh4No/1m5ZBO4pBgu2iUr6
+         2e0/NaPTsy8ap7M8R2YaFeip2nOUmFIka30x7gr6xlf1r87Ymicz+p/ExCPeYVNTq/l2
+         sDUEOwizquQFFYl233nTOBDNmz/OLRVXUMjAWWp8nXWf+08155kBBMsE+PvI4ra065z8
+         JoJ03xM8w1HmI3dCik8nXwdo2s6I54wXuRetWpNDWwVpzsiO6D5F3vtUdYat4os1GRDz
+         vvDg==
+X-Gm-Message-State: AOAM533t9wVSRwSu3hjyik+6HKxLO3+CkFHTGZU8NU/Icm7sawVCC/5n
+        HxSV2cdX5itxlLTu7wBwVEu1Ag==
+X-Google-Smtp-Source: ABdhPJzZt2IYb63TKHYDfYcwjS4BY/Gbv5TlJ4agbMRc6lmmwNUyboVRsfpjnVMoUuc9Ytn2lmUfww==
+X-Received: by 2002:a17:902:7fcd:b029:d3:f037:d9dc with SMTP id t13-20020a1709027fcdb02900d3f037d9dcmr12644867plb.79.1602262627441;
+        Fri, 09 Oct 2020 09:57:07 -0700 (PDT)
+Received: from localhost ([2620:15c:202:1:f693:9fff:fef4:e70a])
+        by smtp.gmail.com with ESMTPSA id 8sm11516688pfj.44.2020.10.09.09.57.06
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 09 Oct 2020 09:57:06 -0700 (PDT)
+Date:   Fri, 9 Oct 2020 09:57:05 -0700
+From:   Matthias Kaehlcke <mka@chromium.org>
+To:     Doug Anderson <dianders@chromium.org>
+Cc:     Akhil P Oommen <akhilpo@codeaurora.org>,
+        freedreno <freedreno@lists.freedesktop.org>,
+        Rob Herring <robh@kernel.org>, Rob Clark <robdclark@gmail.com>,
+        dri-devel@freedesktop.org,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        LKML <linux-kernel@vger.kernel.org>,
+        Jordan Crouse <jcrouse@codeaurora.org>
+Subject: Re: [PATCH 1/2] arm64: dts: qcom: sc7180: Add gpu cooling support
+Message-ID: <20201009165705.GA1292413@google.com>
+References: <1602176947-17385-1-git-send-email-akhilpo@codeaurora.org>
+ <CAD=FV=WjWv040TyBaqU8ZAuxGi-YpJ2tsVcUbOV4Htv=_-n8fA@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <1600480955-16827-10-git-send-email-bbhatt@codeaurora.org>
-User-Agent: Mutt/1.9.4 (2018-02-28)
+In-Reply-To: <CAD=FV=WjWv040TyBaqU8ZAuxGi-YpJ2tsVcUbOV4Htv=_-n8fA@mail.gmail.com>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Sep 18, 2020 at 07:02:34PM -0700, Bhaumik Bhatt wrote:
-> If the host receives a mission mode event and by the time it can get
-> to processing it, the register accesses fail implying a connectivity
-> error, MHI should move to an error state. This helps avoid longer wait
-> times from a synchronous power up perspective and accurately reflects
-> the MHI execution environment and power management states.
+On Fri, Oct 09, 2020 at 08:05:10AM -0700, Doug Anderson wrote:
+> Hi,
 > 
-> Signed-off-by: Bhaumik Bhatt <bbhatt@codeaurora.org>
-
-Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-
-Thanks,
-Mani
-
-> ---
->  drivers/bus/mhi/core/pm.c | 8 ++++++--
->  1 file changed, 6 insertions(+), 2 deletions(-)
+> On Thu, Oct 8, 2020 at 10:10 AM Akhil P Oommen <akhilpo@codeaurora.org> wrote:
+> >
+> > Add cooling-cells property and the cooling maps for the gpu tzones
+> > to support GPU cooling.
+> >
+> > Signed-off-by: Akhil P Oommen <akhilpo@codeaurora.org>
+> > ---
+> >  arch/arm64/boot/dts/qcom/sc7180.dtsi | 29 ++++++++++++++++++++++-------
+> >  1 file changed, 22 insertions(+), 7 deletions(-)
+> >
+> > diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi b/arch/arm64/boot/dts/qcom/sc7180.dtsi
+> > index d46b383..40d6a28 100644
+> > --- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
+> > +++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
+> > @@ -2,7 +2,7 @@
+> >  /*
+> >   * SC7180 SoC device tree source
+> >   *
+> > - * Copyright (c) 2019, The Linux Foundation. All rights reserved.
+> > + * Copyright (c) 2019-20, The Linux Foundation. All rights reserved.
+> >   */
+> >
+> >  #include <dt-bindings/clock/qcom,dispcc-sc7180.h>
+> > @@ -1885,6 +1885,7 @@
+> >                         iommus = <&adreno_smmu 0>;
+> >                         operating-points-v2 = <&gpu_opp_table>;
+> >                         qcom,gmu = <&gmu>;
+> > +                       #cooling-cells = <2>;
 > 
-> diff --git a/drivers/bus/mhi/core/pm.c b/drivers/bus/mhi/core/pm.c
-> index bce1f62..16c04ab 100644
-> --- a/drivers/bus/mhi/core/pm.c
-> +++ b/drivers/bus/mhi/core/pm.c
-> @@ -384,10 +384,14 @@ static int mhi_pm_mission_mode_transition(struct mhi_controller *mhi_cntrl)
->  	write_lock_irq(&mhi_cntrl->pm_lock);
->  	if (MHI_REG_ACCESS_VALID(mhi_cntrl->pm_state))
->  		mhi_cntrl->ee = mhi_get_exec_env(mhi_cntrl);
-> -	write_unlock_irq(&mhi_cntrl->pm_lock);
->  
-> -	if (!MHI_IN_MISSION_MODE(mhi_cntrl->ee))
-> +	if (!MHI_IN_MISSION_MODE(mhi_cntrl->ee)) {
-> +		mhi_cntrl->pm_state = MHI_PM_LD_ERR_FATAL_DETECT;
-> +		write_unlock_irq(&mhi_cntrl->pm_lock);
-> +		wake_up_all(&mhi_cntrl->state_event);
->  		return -EIO;
-> +	}
-> +	write_unlock_irq(&mhi_cntrl->pm_lock);
->  
->  	wake_up_all(&mhi_cntrl->state_event);
->  
-> -- 
-> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-> a Linux Foundation Collaborative Project
+> Presumably we should add this to the devicetree bindings, too?
 > 
+> 
+> >                         interconnects = <&gem_noc MASTER_GFX3D &mc_virt SLAVE_EBI1>;
+> >                         interconnect-names = "gfx-mem";
+> > @@ -3825,16 +3826,16 @@
+> >                 };
+> >
+> >                 gpuss0-thermal {
+> > -                       polling-delay-passive = <0>;
+> > +                       polling-delay-passive = <100>;
+> 
+> Why did you make this change?  I'm pretty sure that we _don't_ want
+> this since we're using interrupts for the thermal sensor.  See commit
+> 22337b91022d ("arm64: dts: qcom: sc7180: Changed polling mode in
+> Thermal-zones node").
+
+I was going to ask the same, this shouldn't be needed.
+
+> >                         polling-delay = <0>;
+> >
+> >                         thermal-sensors = <&tsens0 13>;
+> >
+> >                         trips {
+> >                                 gpuss0_alert0: trip-point0 {
+> > -                                       temperature = <90000>;
+> > +                                       temperature = <95000>;
+> >                                         hysteresis = <2000>;
+> > -                                       type = "hot";
+> > +                                       type = "passive";
+> 
+> Matthias probably knows better, but I wonder if we should be making
+> two passive trip levels like we do with CPU.  IIRC this is important
+> if someone wants to be able to use this with IPA.
+
+Yes, please introduce a second trip point and make both of them
+'passive'.
+
