@@ -2,112 +2,72 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id BFFCC288305
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Oct 2020 08:53:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9463F288508
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Oct 2020 10:17:31 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725922AbgJIGx4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 9 Oct 2020 02:53:56 -0400
-Received: from m42-4.mailgun.net ([69.72.42.4]:56774 "EHLO m42-4.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1729045AbgJIGxz (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 9 Oct 2020 02:53:55 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1602226434; h=Content-Transfer-Encoding: Content-Type:
- In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
- Subject: Sender; bh=YDkhWM48cAkdMOYBmNFvGoMUdH8DwI8lrMxm58+8ZjQ=; b=jVB485LRL2y90tS/Prun6yyeQ49Om0i2lodXiTLL1xBrw5jfYAJmL6rVRP+3hx+l98nfOabX
- OpwhGsuHrl+yoYkJDz6dwN825/5M3UdFPmUzcVfCmKDfCIKO66QN3KoSX7xbRrW8v8bIxiD7
- Z1GZlS6jEAs8vqKjjWBreT8Om7M=
-X-Mailgun-Sending-Ip: 69.72.42.4
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n02.prod.us-west-2.postgun.com with SMTP id
- 5f80090157b88ccb567e4b5f (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 09 Oct 2020 06:53:53
- GMT
-Sender: msavaliy=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 7F66EC433C9; Fri,  9 Oct 2020 06:53:53 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-3.1 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        NICE_REPLY_A,SPF_FAIL,URIBL_BLOCKED autolearn=no autolearn_force=no
-        version=3.4.0
-Received: from [192.168.43.8] (unknown [106.213.185.102])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: msavaliy)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id B2D7BC433CB;
-        Fri,  9 Oct 2020 06:53:44 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org B2D7BC433CB
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=msavaliy@codeaurora.org
-Subject: Re: [PATCH 5/5] i2c: geni: sdm845: dont perform DMA for the oneplus6
-To:     Wolfram Sang <wsa@kernel.org>, Caleb Connolly <caleb@connolly.tech>
-Cc:     linux-arm-msm@vger.kernel.org, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Akash Asthana <akashast@codeaurora.org>,
-        ~postmarketos/upstreaming@lists.sr.ht, linux-i2c@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20201007174736.292968-1-caleb@connolly.tech>
- <20201007174736.292968-6-caleb@connolly.tech>
- <20201008100352.GF76290@ninjato>
-From:   "Mukesh, Savaliya" <msavaliy@codeaurora.org>
-Message-ID: <5243ff4c-f08a-d9ff-ab1d-cadfa84171b8@codeaurora.org>
-Date:   Fri, 9 Oct 2020 12:23:41 +0530
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
- Thunderbird/68.12.0
-MIME-Version: 1.0
-In-Reply-To: <20201008100352.GF76290@ninjato>
-Content-Type: text/plain; charset=windows-1252; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
+        id S1732644AbgJIIR2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 9 Oct 2020 04:17:28 -0400
+Received: from alexa-out.qualcomm.com ([129.46.98.28]:63362 "EHLO
+        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1732490AbgJIIR1 (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 9 Oct 2020 04:17:27 -0400
+Received: from ironmsg-lv-alpha.qualcomm.com ([10.47.202.13])
+  by alexa-out.qualcomm.com with ESMTP; 09 Oct 2020 01:17:27 -0700
+X-QCInternal: smtphost
+Received: from ironmsg02-blr.qualcomm.com ([10.86.208.131])
+  by ironmsg-lv-alpha.qualcomm.com with ESMTP/TLS/AES256-SHA; 09 Oct 2020 01:17:25 -0700
+X-QCInternal: smtphost
+Received: from gokulsri-linux.qualcomm.com ([10.201.2.207])
+  by ironmsg02-blr.qualcomm.com with ESMTP; 09 Oct 2020 13:47:06 +0530
+Received: by gokulsri-linux.qualcomm.com (Postfix, from userid 432570)
+        id E227B21C10; Fri,  9 Oct 2020 13:47:04 +0530 (IST)
+From:   Gokul Sriram Palanisamy <gokulsri@codeaurora.org>
+To:     sboyd@kernel.org, agross@kernel.org, bjorn.andersson@linaro.org,
+        manivannan.sadhasivam@linaro.org, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        robh+dt@kernel.org
+Cc:     sricharan@codeaurora.org, gokulsri@codeaurora.org
+Subject: [PATCH v4 0/3] Add board support for HK10 board variants
+Date:   Fri,  9 Oct 2020 13:47:01 +0530
+Message-Id: <1602231424-22288-1-git-send-email-gokulsri@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Added support for HK10-C1 and HK10-C2 board variants based on IPQ8074 SoC.
+Both these variants support dual QCN9000 PCIe cards that uses MHI communication
+protocol over PCIe. In addition, HK10-C1 support on-chip radio.
+Both these variants slightly differ in clock configuation for ethernet.
 
-On 10/8/2020 3:33 PM, Wolfram Sang wrote:
-> On Wed, Oct 07, 2020 at 05:49:35PM +0000, Caleb Connolly wrote:
->> The OnePlus 6/T has the same issues as the c630 causing a crash when DMA
->> is used for i2c, so disable it.
->>
->> https://patchwork.kernel.org/patch/11133827/
->> Signed-off-by: Caleb Connolly <caleb@connolly.tech>
-Reviewed-by: Mukesh Kumar Savaliya <msavaliy@codeaurora.org>
-> May I ask for a quick review here, so we can get this into 5.9 if
-> qcom-geni maintainers agree this is good to go?
->
->> ---
->>   drivers/i2c/busses/i2c-qcom-geni.c | 6 ++++--
->>   1 file changed, 4 insertions(+), 2 deletions(-)
->>
->> diff --git a/drivers/i2c/busses/i2c-qcom-geni.c b/drivers/i2c/busses/i2c-qcom-geni.c
->> index dead5db3315a..50a0674a6553 100644
->> --- a/drivers/i2c/busses/i2c-qcom-geni.c
->> +++ b/drivers/i2c/busses/i2c-qcom-geni.c
->> @@ -358,7 +358,8 @@ static int geni_i2c_rx_one_msg(struct geni_i2c_dev *gi2c, struct i2c_msg *msg,
->>   	struct geni_se *se = &gi2c->se;
->>   	size_t len = msg->len;
->>   
->> -	if (!of_machine_is_compatible("lenovo,yoga-c630"))
->> +	if (!of_machine_is_compatible("lenovo,yoga-c630") &&
->> +	    !of_machine_is_compatible("oneplus,oneplus6"))
->>   		dma_buf = i2c_get_dma_safe_msg_buf(msg, 32);
->>   
->>   	if (dma_buf)
->> @@ -400,7 +401,8 @@ static int geni_i2c_tx_one_msg(struct geni_i2c_dev *gi2c, struct i2c_msg *msg,
->>   	struct geni_se *se = &gi2c->se;
->>   	size_t len = msg->len;
->>   
->> -	if (!of_machine_is_compatible("lenovo,yoga-c630"))
->> +	if (!of_machine_is_compatible("lenovo,yoga-c630") &&
->> +	    !of_machine_is_compatible("oneplus,oneplus6"))
->>   		dma_buf = i2c_get_dma_safe_msg_buf(msg, 32);
->>   
->>   	if (dma_buf)
->> -- 
->> 2.28.0
->>
->>
+This series depends on below series:
+[V2,0/7] Add PCIe support for IPQ8074
+[v7,0/9] remoteproc: qcom: q6v5-wcss: Add support for secure pil
+
+changes since v3:
+ - Addressed build failure reported by test robot
+   in patch 3
+
+changes since v2:
+ - In patch 3, Moved pcie0_rp and pcie1_rp nodes and
+   removed unused members and subnodes
+
+Gokul Sriram Palanisamy (3):
+  dt-bindings: qcom: Add ipq8074 bindings
+  arm64: dts: Add board support for HK10
+  arm64: dts: Enabled MHI device over PCIe
+
+ Documentation/devicetree/bindings/arm/qcom.yaml |   4 +
+ arch/arm64/boot/dts/qcom/Makefile               |   2 +
+ arch/arm64/boot/dts/qcom/ipq8074-hk10-c1.dts    |  11 +++
+ arch/arm64/boot/dts/qcom/ipq8074-hk10-c2.dts    |  14 +++
+ arch/arm64/boot/dts/qcom/ipq8074-hk10.dtsi      | 122 ++++++++++++++++++++++++
+ 5 files changed, 153 insertions(+)
+ create mode 100644 arch/arm64/boot/dts/qcom/ipq8074-hk10-c1.dts
+ create mode 100644 arch/arm64/boot/dts/qcom/ipq8074-hk10-c2.dts
+ create mode 100644 arch/arm64/boot/dts/qcom/ipq8074-hk10.dtsi
+
+-- 
+2.7.4
+
