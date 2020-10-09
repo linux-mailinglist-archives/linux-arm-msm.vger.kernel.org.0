@@ -2,32 +2,32 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 1CD87288542
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Oct 2020 10:29:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D7A20288539
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Oct 2020 10:29:10 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732819AbgJII3T (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 9 Oct 2020 04:29:19 -0400
-Received: from z5.mailgun.us ([104.130.96.5]:64698 "EHLO z5.mailgun.us"
+        id S1732721AbgJII3I (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 9 Oct 2020 04:29:08 -0400
+Received: from z5.mailgun.us ([104.130.96.5]:46382 "EHLO z5.mailgun.us"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1732712AbgJII3T (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 9 Oct 2020 04:29:19 -0400
+        id S1732824AbgJII3H (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 9 Oct 2020 04:29:07 -0400
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1602232158; h=Content-Transfer-Encoding: MIME-Version:
+ s=smtp; t=1602232147; h=Content-Transfer-Encoding: MIME-Version:
  References: In-Reply-To: Message-Id: Date: Subject: Cc: To: From:
- Sender; bh=3OGkE5T/mqe2LhK7mSuuihEmVBB2lO/Hejwh/04yGvY=; b=K5ta/say+x3C+N1l5bCELF3Kcbo7Ata6Mx0LUFx1/SLlSwFJ+yEdqWugCrdlpZL9uIimAQ0a
- X659wRE6emaWQtYuSVUccKIirU7xn0tJ8iWSlYZUVymHB27xGDEvPDxlHtcYdHrFuKppbrIq
- ykCJeATmjPcC+axIFQ1kAqqfOjc=
+ Sender; bh=g13fmLH5MWoCaZ2CBH1tKm0KPDV4tSk0QYM43fNfZuY=; b=TaQT5vOiUPTRdeDPCQlNdhXyToBNmq0mMhwnZp/wWTKQRfrSdUCoL4+9Ar5+CZMtZrg7F7SM
+ eh2uZ0qDqHwb1o8Dmb+UyZqCpp8iuiIVLawjrNxTlH/xzGitqrfavZr5FuO2TMU+AmkEQQTG
+ 115JgntTv8uX6KVrzTlXP/rbrDQ=
 X-Mailgun-Sending-Ip: 104.130.96.5
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org
  (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n03.prod.us-east-1.postgun.com with SMTP id
- 5f801f41aad2c3cd1c58215b (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 09 Oct 2020 08:28:49
+ smtp-out-n04.prod.us-east-1.postgun.com with SMTP id
+ 5f801f42588858a3048e69d7 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 09 Oct 2020 08:28:50
  GMT
 Sender: wcheng=codeaurora.org@mg.codeaurora.org
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id DFD62C43385; Fri,  9 Oct 2020 08:28:48 +0000 (UTC)
+        id 8C88EC433AD; Fri,  9 Oct 2020 08:28:49 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
@@ -37,9 +37,9 @@ Received: from wcheng-linux.qualcomm.com (i-global254.qualcomm.com [199.106.103.
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
         (No client certificate requested)
         (Authenticated sender: wcheng)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 8F1D1C43382;
-        Fri,  9 Oct 2020 08:28:47 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 8F1D1C43382
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 70BC0C433A0;
+        Fri,  9 Oct 2020 08:28:48 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 70BC0C433A0
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=wcheng@codeaurora.org
 From:   Wesley Cheng <wcheng@codeaurora.org>
@@ -49,9 +49,9 @@ To:     vkoul@kernel.org, agross@kernel.org, bjorn.andersson@linaro.org,
 Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org,
         jackp@codeaurora.org, Wesley Cheng <wcheng@codeaurora.org>
-Subject: [PATCH v2 1/4] arm64: boot: dts: qcom: sm8150: Add nodes for PMIC based typec detection
-Date:   Fri,  9 Oct 2020 01:28:40 -0700
-Message-Id: <20201009082843.28503-2-wcheng@codeaurora.org>
+Subject: [PATCH v2 2/4] phy: qcom-qmp: Register as a typec switch for orientation detection
+Date:   Fri,  9 Oct 2020 01:28:41 -0700
+Message-Id: <20201009082843.28503-3-wcheng@codeaurora.org>
 X-Mailer: git-send-email 2.27.0
 In-Reply-To: <20201009082843.28503-1-wcheng@codeaurora.org>
 References: <20201009082843.28503-1-wcheng@codeaurora.org>
@@ -61,78 +61,190 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Introduce required child nodes to enable the PMIC based USB type C driver.
-This consits of connector and endpoint nodes to drivers, which manage the
-type C mux and the USB role switch.
+The lane select switch for USB typec orientation is within the USB QMP PHY.
+the current device.  It could be connected through an endpoint, to an
+independent device handling the typec detection, ie the QCOM SPMI typec
+driver.
 
 Signed-off-by: Wesley Cheng <wcheng@codeaurora.org>
 ---
- arch/arm64/boot/dts/qcom/sm8150-mtp.dts | 40 ++++++++++++++++++++++++-
- 1 file changed, 39 insertions(+), 1 deletion(-)
+ drivers/phy/qualcomm/Kconfig        | 11 +++++
+ drivers/phy/qualcomm/phy-qcom-qmp.c | 70 +++++++++++++++++++++++++++--
+ 2 files changed, 78 insertions(+), 3 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8150-mtp.dts b/arch/arm64/boot/dts/qcom/sm8150-mtp.dts
-index ba3b5b802954..06ad01dde080 100644
---- a/arch/arm64/boot/dts/qcom/sm8150-mtp.dts
-+++ b/arch/arm64/boot/dts/qcom/sm8150-mtp.dts
-@@ -413,6 +413,31 @@ &pm8150b_vbus {
- 	status = "okay";
- };
+diff --git a/drivers/phy/qualcomm/Kconfig b/drivers/phy/qualcomm/Kconfig
+index 928db510b86c..43f46a1b3db1 100644
+--- a/drivers/phy/qualcomm/Kconfig
++++ b/drivers/phy/qualcomm/Kconfig
+@@ -48,6 +48,17 @@ config PHY_QCOM_QMP
+ 	  Enable this to support the QMP PHY transceiver that is used
+ 	  with controllers such as PCIe, UFS, and USB on Qualcomm chips.
  
-+&pm8150b_typec {
-+	status = "okay";
-+	connector {
-+		compatible = "usb-c-connector";
-+		power-role = "dual";
-+		data-role = "dual";
-+		ports {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			port@1 {
-+				reg = <1>;
-+				usb3_data_ss: endpoint@0 {
-+					remote-endpoint = <&qmp_ss_mux>;
-+				};
-+			};
-+		};
-+	};
++if PHY_QCOM_QMP
++config PHY_QCOM_QMP_TYPEC
++	bool "Enable QCOM QMP PHY Type C Switch Support"
++	depends on PHY_QCOM_QMP=y && TYPEC=y || PHY_QCOM_QMP=m && TYPEC
++	help
++	  Register a type C switch from the QMP PHY driver for type C
++	  orientation support.  This has dependencies with if the type C kernel
++	  configuration is enabled or not.  This support will not be present if
++	  USB type C is disabled.
++endif
 +
-+	port {
-+		usb3_role: endpoint {
-+			remote-endpoint = <&dwc3_drd_switch>;
-+		};
-+	};
-+};
+ config PHY_QCOM_QUSB2
+ 	tristate "Qualcomm QUSB2 PHY Driver"
+ 	depends on OF && (ARCH_QCOM || COMPILE_TEST)
+diff --git a/drivers/phy/qualcomm/phy-qcom-qmp.c b/drivers/phy/qualcomm/phy-qcom-qmp.c
+index 562053ce9455..29d8a3570328 100644
+--- a/drivers/phy/qualcomm/phy-qcom-qmp.c
++++ b/drivers/phy/qualcomm/phy-qcom-qmp.c
+@@ -19,6 +19,7 @@
+ #include <linux/regulator/consumer.h>
+ #include <linux/reset.h>
+ #include <linux/slab.h>
++#include <linux/usb/typec_mux.h>
+ 
+ #include <dt-bindings/phy/phy.h>
+ 
+@@ -66,6 +67,9 @@
+ /* QPHY_V3_PCS_MISC_CLAMP_ENABLE register bits */
+ #define CLAMP_EN				BIT(0) /* enables i/o clamp_n */
+ 
++#define SW_PORTSELECT_VAL			BIT(0)
++#define SW_PORTSELECT_MUX			BIT(1)
 +
- &usb_1_hsphy {
- 	status = "okay";
- 	vdda-pll-supply = <&vdd_usb_hs_core>;
-@@ -424,12 +449,25 @@ &usb_1_qmpphy {
- 	status = "okay";
- 	vdda-phy-supply = <&vreg_l3c_1p2>;
- 	vdda-pll-supply = <&vdda_usb_ss_dp_core_1>;
-+	orientation-switch;
-+	port {
-+		qmp_ss_mux: endpoint@0 {
-+			remote-endpoint = <&usb3_data_ss>;
-+		};
-+	};
+ #define PHY_INIT_COMPLETE_TIMEOUT		10000
+ #define POWER_DOWN_DELAY_US_MIN			10
+ #define POWER_DOWN_DELAY_US_MAX			11
+@@ -1845,6 +1849,8 @@ struct qmp_phy {
+  * @phy_initialized: indicate if PHY has been initialized
+  * @mode: current PHY mode
+  * @ufs_reset: optional UFS PHY reset handle
++ * @sw: typec switch for receiving orientation changes
++ * @orientation: carries current CC orientation
+  */
+ struct qcom_qmp {
+ 	struct device *dev;
+@@ -1864,6 +1870,8 @@ struct qcom_qmp {
+ 	enum phy_mode mode;
+ 
+ 	struct reset_control *ufs_reset;
++	struct typec_switch *sw;
++	enum typec_orientation orientation;
  };
  
- &usb_1 {
- 	status = "okay";
-+	usb-role-switch;
-+	port {
-+		dwc3_drd_switch: endpoint@0 {
-+			remote-endpoint = <&usb3_role>;
-+		};
-+	};
+ static inline void qphy_setbits(void __iomem *base, u32 offset, u32 val)
+@@ -2485,6 +2493,7 @@ static int qcom_qmp_phy_com_init(struct qmp_phy *qphy)
+ 	void __iomem *pcs = qphy->pcs;
+ 	void __iomem *dp_com = qmp->dp_com;
+ 	int ret, i;
++	unsigned int val;
+ 
+ 	mutex_lock(&qmp->phy_mutex);
+ 	if (qmp->init_count++) {
+@@ -2534,6 +2543,13 @@ static int qcom_qmp_phy_com_init(struct qmp_phy *qphy)
+ 		qphy_setbits(dp_com, QPHY_V3_DP_COM_PHY_MODE_CTRL,
+ 			     USB3_MODE | DP_MODE);
+ 
++		if (cfg->is_dual_lane_phy) {
++			val = SW_PORTSELECT_MUX;
++			if (qmp->orientation == TYPEC_ORIENTATION_REVERSE)
++				val |= SW_PORTSELECT_VAL;
++			qphy_setbits(dp_com, QPHY_V3_DP_COM_TYPEC_CTRL, val);
++		}
++
+ 		/* bring both QMP USB and QMP DP PHYs PCS block out of reset */
+ 		qphy_clrbits(dp_com, QPHY_V3_DP_COM_RESET_OVRD_CTRL,
+ 			     SW_DPPHY_RESET_MUX | SW_DPPHY_RESET |
+@@ -2559,7 +2575,7 @@ static int qcom_qmp_phy_com_init(struct qmp_phy *qphy)
+ 
+ 	if (cfg->has_phy_com_ctrl) {
+ 		void __iomem *status;
+-		unsigned int mask, val;
++		unsigned int mask;
+ 
+ 		qphy_clrbits(serdes, cfg->regs[QPHY_COM_SW_RESET], SW_RESET);
+ 		qphy_setbits(serdes, cfg->regs[QPHY_COM_START_CONTROL],
+@@ -3242,6 +3258,47 @@ static const struct dev_pm_ops qcom_qmp_phy_pm_ops = {
+ 			   qcom_qmp_phy_runtime_resume, NULL)
  };
  
- &usb_1_dwc3 {
--	dr_mode = "peripheral";
-+	dr_mode = "otg";
-+	usb-role-switch;
- };
++#if IS_ENABLED(CONFIG_PHY_QCOM_QMP_TYPEC)
++static int qcom_qmp_phy_typec_switch_set(struct typec_switch *sw,
++					 enum typec_orientation orientation)
++{
++	struct qcom_qmp *qmp = typec_switch_get_drvdata(sw);
++	struct qmp_phy *qphy = qmp->phys[0];
++
++	qmp->orientation = orientation;
++	if (qmp->phy_initialized) {
++		qcom_qmp_phy_disable(qphy->phy);
++		qcom_qmp_phy_enable(qphy->phy);
++	}
++
++	return 0;
++}
++
++static int qcom_qmp_phy_typec_switch_register(struct qcom_qmp *qmp)
++{
++	struct typec_switch_desc sw_desc;
++	struct device *dev = qmp->dev;
++
++	if (qmp->cfg->is_dual_lane_phy) {
++		sw_desc.drvdata = qmp;
++		sw_desc.fwnode = dev->fwnode;
++		sw_desc.set = qcom_qmp_phy_typec_switch_set;
++		qmp->sw = typec_switch_register(dev, &sw_desc);
++		if (IS_ERR(qmp->sw)) {
++			dev_err(dev, "Error registering typec switch: %ld\n",
++				PTR_ERR(qmp->sw));
++		}
++	}
++
++	return 0;
++}
++#else
++static int qcom_qmp_phy_typec_switch_register(struct qcom_qmp *qmp)
++{
++	return 0;
++}
++#endif
++
+ static int qcom_qmp_phy_probe(struct platform_device *pdev)
+ {
+ 	struct qcom_qmp *qmp;
+@@ -3250,7 +3307,7 @@ static int qcom_qmp_phy_probe(struct platform_device *pdev)
+ 	struct device_node *child;
+ 	struct phy_provider *phy_provider;
+ 	void __iomem *base;
+-	int num, id;
++	int num = 0, id;
+ 	int ret;
+ 
+ 	qmp = devm_kzalloc(dev, sizeof(*qmp), GFP_KERNEL);
+@@ -3302,7 +3359,11 @@ static int qcom_qmp_phy_probe(struct platform_device *pdev)
+ 		return ret;
+ 	}
+ 
+-	num = of_get_available_child_count(dev->of_node);
++	qcom_qmp_phy_typec_switch_register(qmp);
++	for_each_available_child_of_node(dev->of_node, child) {
++		if (!strncmp("lanes", child->name, 5))
++			num++;
++	}
+ 	/* do we have a rogue child node ? */
+ 	if (num > qmp->cfg->nlanes)
+ 		return -EINVAL;
+@@ -3322,6 +3383,9 @@ static int qcom_qmp_phy_probe(struct platform_device *pdev)
+ 
+ 	for_each_available_child_of_node(dev->of_node, child) {
+ 		/* Create per-lane phy */
++		if (strncmp("lanes", child->name, 5))
++			continue;
++
+ 		ret = qcom_qmp_phy_create(dev, child, id);
+ 		if (ret) {
+ 			dev_err(dev, "failed to create lane%d phy, %d\n",
 -- 
 The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
 a Linux Foundation Collaborative Project
