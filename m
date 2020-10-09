@@ -2,138 +2,185 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B1D38288F43
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Oct 2020 18:57:11 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C249C288FE7
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Oct 2020 19:19:35 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2389907AbgJIQ5I (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 9 Oct 2020 12:57:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48238 "EHLO
+        id S1729274AbgJIRTJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 9 Oct 2020 13:19:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51636 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2389898AbgJIQ5I (ORCPT
+        with ESMTP id S1733199AbgJIRSp (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 9 Oct 2020 12:57:08 -0400
-Received: from mail-pl1-x644.google.com (mail-pl1-x644.google.com [IPv6:2607:f8b0:4864:20::644])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EFCBBC0613D5
-        for <linux-arm-msm@vger.kernel.org>; Fri,  9 Oct 2020 09:57:07 -0700 (PDT)
-Received: by mail-pl1-x644.google.com with SMTP id m15so4731555pls.8
-        for <linux-arm-msm@vger.kernel.org>; Fri, 09 Oct 2020 09:57:07 -0700 (PDT)
+        Fri, 9 Oct 2020 13:18:45 -0400
+Received: from mail-pf1-x443.google.com (mail-pf1-x443.google.com [IPv6:2607:f8b0:4864:20::443])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 41364C0613D5
+        for <linux-arm-msm@vger.kernel.org>; Fri,  9 Oct 2020 10:18:44 -0700 (PDT)
+Received: by mail-pf1-x443.google.com with SMTP id k8so7421087pfk.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 09 Oct 2020 10:18:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
+        d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=f0yCCPBqY4qUb9wGcJ1HYTDZ/2njY0BqjbSXTuo3NEs=;
-        b=c+JTbiYOfr6d/Q9KtvL8QV3qo4AeNQnrPFkw1q1W3KPrMzuYn513Pr6f37djB/0GBO
-         XTzecWXNTPSHigt5LUZ/XMoUMlSUGAFMXq8jzHiX3xUxzMMXq7FsOcXxwRF2biuOO8cE
-         pI9lSDSidVfR392HG5GEskfqr6JyHruMz2yX0=
+         :content-disposition:in-reply-to:user-agent;
+        bh=B4B018iOmjRH9U0rvM1vFiDpxuXZ4GGFJ5yW0icLesU=;
+        b=Z+PyMdjop/y0grk6bPHJ8CAMnCM4Tt93ry91JJcxoebdgHD1Wymz3kEJVG51D69o3N
+         HOFVNYvb+Af1eG1264psM7M4Ek8otq4UTq5H0Lx2nlcVyxyizBKIJHAxn+7Qcwq/UKY4
+         xyv4+ASbYkSmZdPU82EY7y0F+ZbN7/DxW9JwNhSfgKqv2HcyJAn1eZAPe2nQZv5ePKr2
+         MukU9PifHa5I4bh8romqH4ibD7T3MJcMJO7deTpVAiqe6w3K+3RWLrIkQPx/6gogVUSZ
+         lvf8XSMtC314b1Ti9BHFcKFuZIbgFlBnYqXKOAB/uANdyu3MuM8sUwMovy1PZZ+rL0jF
+         5WjQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=f0yCCPBqY4qUb9wGcJ1HYTDZ/2njY0BqjbSXTuo3NEs=;
-        b=KNJndvMyGyl6MbUX5mvDy1d5uAeZHEbsJ4TLTaVaZYdoH42fzdyTTi0LnxTgJl68i7
-         2dWjMJ0nkQsSS4yjxvtOx/fXg5ndOeIV5c3YnuxQ1+b4J5yh4No/1m5ZBO4pBgu2iUr6
-         2e0/NaPTsy8ap7M8R2YaFeip2nOUmFIka30x7gr6xlf1r87Ymicz+p/ExCPeYVNTq/l2
-         sDUEOwizquQFFYl233nTOBDNmz/OLRVXUMjAWWp8nXWf+08155kBBMsE+PvI4ra065z8
-         JoJ03xM8w1HmI3dCik8nXwdo2s6I54wXuRetWpNDWwVpzsiO6D5F3vtUdYat4os1GRDz
-         vvDg==
-X-Gm-Message-State: AOAM533t9wVSRwSu3hjyik+6HKxLO3+CkFHTGZU8NU/Icm7sawVCC/5n
-        HxSV2cdX5itxlLTu7wBwVEu1Ag==
-X-Google-Smtp-Source: ABdhPJzZt2IYb63TKHYDfYcwjS4BY/Gbv5TlJ4agbMRc6lmmwNUyboVRsfpjnVMoUuc9Ytn2lmUfww==
-X-Received: by 2002:a17:902:7fcd:b029:d3:f037:d9dc with SMTP id t13-20020a1709027fcdb02900d3f037d9dcmr12644867plb.79.1602262627441;
-        Fri, 09 Oct 2020 09:57:07 -0700 (PDT)
-Received: from localhost ([2620:15c:202:1:f693:9fff:fef4:e70a])
-        by smtp.gmail.com with ESMTPSA id 8sm11516688pfj.44.2020.10.09.09.57.06
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 09 Oct 2020 09:57:06 -0700 (PDT)
-Date:   Fri, 9 Oct 2020 09:57:05 -0700
-From:   Matthias Kaehlcke <mka@chromium.org>
-To:     Doug Anderson <dianders@chromium.org>
-Cc:     Akhil P Oommen <akhilpo@codeaurora.org>,
-        freedreno <freedreno@lists.freedesktop.org>,
-        Rob Herring <robh@kernel.org>, Rob Clark <robdclark@gmail.com>,
-        dri-devel@freedesktop.org,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        LKML <linux-kernel@vger.kernel.org>,
-        Jordan Crouse <jcrouse@codeaurora.org>
-Subject: Re: [PATCH 1/2] arm64: dts: qcom: sc7180: Add gpu cooling support
-Message-ID: <20201009165705.GA1292413@google.com>
-References: <1602176947-17385-1-git-send-email-akhilpo@codeaurora.org>
- <CAD=FV=WjWv040TyBaqU8ZAuxGi-YpJ2tsVcUbOV4Htv=_-n8fA@mail.gmail.com>
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=B4B018iOmjRH9U0rvM1vFiDpxuXZ4GGFJ5yW0icLesU=;
+        b=mbyEzDiPqqZ5gMiMHtY7XI1mXSDDuJ93NsZaODJ//01vK7wQImLc7PWZfP9Yjq7Hxj
+         XqNjN+833p4YMdAWaO4hoOvpGbiWfJcCDgL3TgYkIjhx/YolgEt/XdR8aGcIDsn7g4PF
+         xklxbMbI3W/FKbIG0b1RnP7toYRFCYxW5ULfk8afECYOlQ1ec72rlxCXm+rGkeA6J1X/
+         hWG8Y3tHXy9HQeQjHIDLB8jEDZCHWeVU6PSoRYX4qLKJVGjhVijnWBOPeXClSJvYpyV+
+         37tXPeW37wKYg6+dhDA7dGAnM5voeWIE5NK8apPB9mD/gyYq7/nsj3quc5NqPk4TMf6l
+         DWNA==
+X-Gm-Message-State: AOAM530f0BHKlCLHQEhxYLd+rj8SvzmRpJeUv0jX01WU4+NQmypta/Hg
+        qHfMcIpmhmGPQrUfzu4kxLDI
+X-Google-Smtp-Source: ABdhPJyu5EYDyHQIUD6xjEISHgd+x5o3UdYP+DaESPHfmb1s666xvBKwTKr3rMm1PRvusC7drvImQQ==
+X-Received: by 2002:aa7:87d9:0:b029:155:6486:ac68 with SMTP id i25-20020aa787d90000b02901556486ac68mr7703654pfo.30.1602263923447;
+        Fri, 09 Oct 2020 10:18:43 -0700 (PDT)
+Received: from Mani-XPS-13-9360 ([2409:4072:6292:5a21:d5ff:f3e8:fcf2:ccc7])
+        by smtp.gmail.com with ESMTPSA id h31sm11268405pgh.71.2020.10.09.10.18.24
+        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
+        Fri, 09 Oct 2020 10:18:42 -0700 (PDT)
+Date:   Fri, 9 Oct 2020 22:48:04 +0530
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     Bhaumik Bhatt <bbhatt@codeaurora.org>
+Cc:     linux-arm-msm@vger.kernel.org, hemantk@codeaurora.org,
+        jhugo@codeaurora.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v1 10/10] bus: mhi: core: Mark device inactive soon after
+ host issues a shutdown
+Message-ID: <20201009171804.GK4810@Mani-XPS-13-9360>
+References: <1600480955-16827-1-git-send-email-bbhatt@codeaurora.org>
+ <1600480955-16827-11-git-send-email-bbhatt@codeaurora.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <CAD=FV=WjWv040TyBaqU8ZAuxGi-YpJ2tsVcUbOV4Htv=_-n8fA@mail.gmail.com>
+In-Reply-To: <1600480955-16827-11-git-send-email-bbhatt@codeaurora.org>
+User-Agent: Mutt/1.9.4 (2018-02-28)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Oct 09, 2020 at 08:05:10AM -0700, Doug Anderson wrote:
-> Hi,
-> 
-> On Thu, Oct 8, 2020 at 10:10 AM Akhil P Oommen <akhilpo@codeaurora.org> wrote:
-> >
-> > Add cooling-cells property and the cooling maps for the gpu tzones
-> > to support GPU cooling.
-> >
-> > Signed-off-by: Akhil P Oommen <akhilpo@codeaurora.org>
-> > ---
-> >  arch/arm64/boot/dts/qcom/sc7180.dtsi | 29 ++++++++++++++++++++++-------
-> >  1 file changed, 22 insertions(+), 7 deletions(-)
-> >
-> > diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-> > index d46b383..40d6a28 100644
-> > --- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
-> > +++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-> > @@ -2,7 +2,7 @@
-> >  /*
-> >   * SC7180 SoC device tree source
-> >   *
-> > - * Copyright (c) 2019, The Linux Foundation. All rights reserved.
-> > + * Copyright (c) 2019-20, The Linux Foundation. All rights reserved.
-> >   */
-> >
-> >  #include <dt-bindings/clock/qcom,dispcc-sc7180.h>
-> > @@ -1885,6 +1885,7 @@
-> >                         iommus = <&adreno_smmu 0>;
-> >                         operating-points-v2 = <&gpu_opp_table>;
-> >                         qcom,gmu = <&gmu>;
-> > +                       #cooling-cells = <2>;
-> 
-> Presumably we should add this to the devicetree bindings, too?
-> 
-> 
-> >                         interconnects = <&gem_noc MASTER_GFX3D &mc_virt SLAVE_EBI1>;
-> >                         interconnect-names = "gfx-mem";
-> > @@ -3825,16 +3826,16 @@
-> >                 };
-> >
-> >                 gpuss0-thermal {
-> > -                       polling-delay-passive = <0>;
-> > +                       polling-delay-passive = <100>;
-> 
-> Why did you make this change?  I'm pretty sure that we _don't_ want
-> this since we're using interrupts for the thermal sensor.  See commit
-> 22337b91022d ("arm64: dts: qcom: sc7180: Changed polling mode in
-> Thermal-zones node").
+On Fri, Sep 18, 2020 at 07:02:35PM -0700, Bhaumik Bhatt wrote:
+> Clients on the host may see the device in an active state for a short
 
-I was going to ask the same, this shouldn't be needed.
+Clients? Are you referring client drivers or controllers? Please don't mix
+the conventions.
 
-> >                         polling-delay = <0>;
-> >
-> >                         thermal-sensors = <&tsens0 13>;
-> >
-> >                         trips {
-> >                                 gpuss0_alert0: trip-point0 {
-> > -                                       temperature = <90000>;
-> > +                                       temperature = <95000>;
-> >                                         hysteresis = <2000>;
-> > -                                       type = "hot";
-> > +                                       type = "passive";
+> period of time after the host detects a device error or power down.
+> Prevent any further host activity which could lead to race conditions
+> or multiple callbacks to the controller or any timeouts seen by
+> clients attempting to push data as they must be notified of the host
+> intent sooner rather than later. This also allows the host and device
+> states to be in sync with one another and prevents unnecessary host
+> operations.
 > 
-> Matthias probably knows better, but I wonder if we should be making
-> two passive trip levels like we do with CPU.  IIRC this is important
-> if someone wants to be able to use this with IPA.
 
-Yes, please introduce a second trip point and make both of them
-'passive'.
+How the change of dev_state is visible to the so called "client"?
 
+> Signed-off-by: Bhaumik Bhatt <bbhatt@codeaurora.org>
+> ---
+>  drivers/bus/mhi/core/main.c |  4 ++++
+>  drivers/bus/mhi/core/pm.c   | 31 +++++++++++++++++++------------
+>  2 files changed, 23 insertions(+), 12 deletions(-)
+> 
+> diff --git a/drivers/bus/mhi/core/main.c b/drivers/bus/mhi/core/main.c
+> index 1c8e332..5ec89e9 100644
+> --- a/drivers/bus/mhi/core/main.c
+> +++ b/drivers/bus/mhi/core/main.c
+> @@ -400,6 +400,10 @@ irqreturn_t mhi_intvec_threaded_handler(int irq_number, void *priv)
+>  
+>  	 /* If device supports RDDM don't bother processing SYS error */
+>  	if (mhi_cntrl->rddm_image) {
+> +		/* host may be performing a device power down already */
+> +		if (!mhi_is_active(mhi_cntrl))
+> +			goto exit_intvec;
+> +
+
+Does this change belong to this patch?
+
+Thanks,
+Mani
+
+>  		if (mhi_cntrl->ee == MHI_EE_RDDM && mhi_cntrl->ee != ee) {
+>  			/* prevent clients from queueing any more packets */
+>  			write_lock_irq(&mhi_cntrl->pm_lock);
+> diff --git a/drivers/bus/mhi/core/pm.c b/drivers/bus/mhi/core/pm.c
+> index 16c04ab..4e2cb41 100644
+> --- a/drivers/bus/mhi/core/pm.c
+> +++ b/drivers/bus/mhi/core/pm.c
+> @@ -469,15 +469,10 @@ static void mhi_pm_disable_transition(struct mhi_controller *mhi_cntrl,
+>  	write_lock_irq(&mhi_cntrl->pm_lock);
+>  	prev_state = mhi_cntrl->pm_state;
+>  	cur_state = mhi_tryset_pm_state(mhi_cntrl, transition_state);
+> -	if (cur_state == transition_state) {
+> -		mhi_cntrl->ee = MHI_EE_DISABLE_TRANSITION;
+> +	if (cur_state == MHI_PM_SYS_ERR_PROCESS)
+>  		mhi_cntrl->dev_state = MHI_STATE_RESET;
+> -	}
+>  	write_unlock_irq(&mhi_cntrl->pm_lock);
+>  
+> -	/* Wake up threads waiting for state transition */
+> -	wake_up_all(&mhi_cntrl->state_event);
+> -
+>  	if (cur_state != transition_state) {
+>  		dev_err(dev, "Failed to transition to state: %s from: %s\n",
+>  			to_mhi_pm_state_str(transition_state),
+> @@ -486,6 +481,11 @@ static void mhi_pm_disable_transition(struct mhi_controller *mhi_cntrl,
+>  		return;
+>  	}
+>  
+> +	mhi_cntrl->ee = MHI_EE_DISABLE_TRANSITION;
+> +
+> +	/* Wake up threads waiting for state transition */
+> +	wake_up_all(&mhi_cntrl->state_event);
+> +
+>  	/* Trigger MHI RESET so that the device will not access host memory */
+>  	if (MHI_REG_ACCESS_VALID(prev_state)) {
+>  		u32 in_reset = -1;
+> @@ -1051,22 +1051,29 @@ void mhi_power_down(struct mhi_controller *mhi_cntrl, bool graceful)
+>  	enum dev_st_transition next_state = DEV_ST_TRANSITION_DISABLE;
+>  	struct device *dev = &mhi_cntrl->mhi_dev->dev;
+>  
+> +	mutex_lock(&mhi_cntrl->pm_mutex);
+> +	write_lock_irq(&mhi_cntrl->pm_lock);
+> +
+>  	/* If it's not a graceful shutdown, force MHI to linkdown state */
+>  	if (!graceful) {
+> -		mutex_lock(&mhi_cntrl->pm_mutex);
+> -		write_lock_irq(&mhi_cntrl->pm_lock);
+>  		cur_state = mhi_tryset_pm_state(mhi_cntrl,
+>  						MHI_PM_LD_ERR_FATAL_DETECT);
+> -		write_unlock_irq(&mhi_cntrl->pm_lock);
+> -		mutex_unlock(&mhi_cntrl->pm_mutex);
+> -		if (cur_state != MHI_PM_LD_ERR_FATAL_DETECT)
+> +		if (cur_state != MHI_PM_LD_ERR_FATAL_DETECT) {
+>  			dev_dbg(dev, "Failed to move to state: %s from: %s\n",
+>  				to_mhi_pm_state_str(MHI_PM_LD_ERR_FATAL_DETECT),
+>  				to_mhi_pm_state_str(mhi_cntrl->pm_state));
+> -		else
+> +		} else {
+>  			next_state = DEV_ST_TRANSITION_FATAL;
+> +			wake_up_all(&mhi_cntrl->state_event);
+> +		}
+>  	}
+>  
+> +	/* mark device inactive to avoid any further host processing */
+> +	mhi_cntrl->dev_state = MHI_STATE_RESET;
+> +
+> +	write_unlock_irq(&mhi_cntrl->pm_lock);
+> +	mutex_unlock(&mhi_cntrl->pm_mutex);
+> +
+>  	mhi_queue_state_transition(mhi_cntrl, next_state);
+>  
+>  	/* Wait for shutdown to complete */
+> -- 
+> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+> a Linux Foundation Collaborative Project
+> 
