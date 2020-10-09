@@ -2,114 +2,75 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 82BD0288A44
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Oct 2020 16:05:48 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 39BEE288B70
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Oct 2020 16:33:57 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731368AbgJIOFr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 9 Oct 2020 10:05:47 -0400
-Received: from mail-oi1-f193.google.com ([209.85.167.193]:43914 "EHLO
-        mail-oi1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727737AbgJIOFq (ORCPT
+        id S2388872AbgJIObl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 9 Oct 2020 10:31:41 -0400
+Received: from mail-oi1-f195.google.com ([209.85.167.195]:37527 "EHLO
+        mail-oi1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2388908AbgJIObX (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 9 Oct 2020 10:05:46 -0400
-Received: by mail-oi1-f193.google.com with SMTP id l85so10268804oih.10;
-        Fri, 09 Oct 2020 07:05:46 -0700 (PDT)
+        Fri, 9 Oct 2020 10:31:23 -0400
+Received: by mail-oi1-f195.google.com with SMTP id t77so10410677oie.4;
+        Fri, 09 Oct 2020 07:31:22 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=dyalSiZn45S4a+6jujOvfnO/RK2cFb+Vq+tH54TVFEA=;
-        b=OrrYY7vVISeonzwsacIdzEOQf56DjKpWlQv5EDS2le38irl6yLKGAeXfccHncH6diD
-         fukfEdV4iCn3dgih9FYU2cjMq7qROqLlfOGYtKO1ihLk97GRKf+bdAntcpQYMxQGKb4N
-         MA6w0/LEyG2SltYQcqeTUQzs/ebIjhY/Qe7KAKX7oEe12vB6rwQrtWWeJS6GSteAlJfG
-         joWAvvYo7lBNTVQmQ4L0sXN1YYPqHW3gz9lxYrYHJKIXxPJ8hFbRk1PVTkV14Sa7wDhN
-         8Os7Qv7oF/AhQCXjwtu2L2x7ReZ7H9LJdjebkJ1CzErZy5/KRX1J2MblVN+2nVZ4rG5d
-         wn9w==
-X-Gm-Message-State: AOAM530/+UByLI9iK7zBAcRG+h//h7lcADU1RoHvQ2+o0ByBgUBbD6jd
-        RVNX/FU8BCOyDG0MLsR8CHfepBHDdTx0
-X-Google-Smtp-Source: ABdhPJxsTciM9UAO+e8EG/rRkxLowDeJJ0mpmhUvP/1Yu/QRYdwZcSle050QqMWzNTlwohesQKoIlg==
-X-Received: by 2002:aca:a810:: with SMTP id r16mr2673248oie.114.1602252345680;
-        Fri, 09 Oct 2020 07:05:45 -0700 (PDT)
+        bh=fSY177QCDHA506ltAJfX+pyNUH3460/blci6wiOpURg=;
+        b=Dz3C4A04lOAU2/DC7VW/OvzSNx9wH8P11EnW33vywHUiY1EGjN3G6AuwrNOn2DOBgJ
+         cgYclT0jTClNTOmCEmNBKWR8A+p1URBZ7Ir/cNpwGutO8FjonOk0oUMtdnS6hg5TV/te
+         X0d6G2oPvhp0CBve3bd4LdW0CZOValsvsWjHKBWY7FaDFicqqF+MFMb52Ov6CFEw4G70
+         xumNSpUwU/dcVj6Ohpp55kExGjRyEdFWbDSMhm8JIQhB1VOe+TbLVzpVFVf8uBp+f3aF
+         JhzqpBb/CxrLSMEyVe2yxe3TzVV+09b33QlAmRLFDDomH1EgwULjHP6fZBNuFReSdfpK
+         kKzw==
+X-Gm-Message-State: AOAM533bXiYLJC90T4RsQs7RRpvriDhRYi/mGzUsgTHreDoVqM2okjfa
+        K/weLJpM4esNPhi9+1ceEoM6G2IlHGL+
+X-Google-Smtp-Source: ABdhPJxyqYEZTKZUYGot+5w2hJJtIfWrX5UV1nuE4AmB8RyXv8PbfdnyYX0HugcKNhLpSLyxvRMYCA==
+X-Received: by 2002:aca:4188:: with SMTP id o130mr2424926oia.167.1602253880742;
+        Fri, 09 Oct 2020 07:31:20 -0700 (PDT)
 Received: from xps15 (24-155-109-49.dyn.grandenetworks.net. [24.155.109.49])
-        by smtp.gmail.com with ESMTPSA id r188sm44078oia.13.2020.10.09.07.05.44
+        by smtp.gmail.com with ESMTPSA id y23sm8328527ooj.34.2020.10.09.07.31.19
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 09 Oct 2020 07:05:44 -0700 (PDT)
-Received: (nullmailer pid 4076255 invoked by uid 1000);
-        Fri, 09 Oct 2020 14:05:44 -0000
-Date:   Fri, 9 Oct 2020 09:05:44 -0500
+        Fri, 09 Oct 2020 07:31:20 -0700 (PDT)
+Received: (nullmailer pid 4109836 invoked by uid 1000);
+        Fri, 09 Oct 2020 14:31:19 -0000
+Date:   Fri, 9 Oct 2020 09:31:19 -0500
 From:   Rob Herring <robh@kernel.org>
-To:     Caleb Connolly <caleb@connolly.tech>
-Cc:     linux-arm-msm@vger.kernel.org,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Sam Ravnborg <sam@ravnborg.org>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        ~postmarketos/upstreaming@lists.sr.ht,
-        dri-devel@lists.freedesktop.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 2/5] dt-bindings: panel: add documentation for oneplus6
- panel
-Message-ID: <20201009140544.GB4071736@bogus>
-References: <20201007174736.292968-1-caleb@connolly.tech>
- <20201007174736.292968-3-caleb@connolly.tech>
+To:     kholk11@gmail.com
+Cc:     martin.botka1@gmail.com, linux-pm@vger.kernel.org,
+        phone-devel@vger.kernel.org, georgi.djakov@linaro.org,
+        konradybcio@gmail.com, agross@kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, bjorn.andersson@linaro.org,
+        marijns95@gmail.com, robh+dt@kernel.org
+Subject: Re: [PATCH v3 1/2] dt-bindings: interconnect: Add bindings for
+ Qualcomm SDM660 NoC
+Message-ID: <20201009143119.GA4109583@bogus>
+References: <20201008204515.695210-1-kholk11@gmail.com>
+ <20201008204515.695210-2-kholk11@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20201007174736.292968-3-caleb@connolly.tech>
+In-Reply-To: <20201008204515.695210-2-kholk11@gmail.com>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Oct 07, 2020 at 05:49:14PM +0000, Caleb Connolly wrote:
-> Document the OnePlus 6/T common panel driver, example from
-> arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi
+On Thu, 08 Oct 2020 22:45:14 +0200, kholk11@gmail.com wrote:
+> From: AngeloGioacchino Del Regno <kholk11@gmail.com>
 > 
-> Signed-off-by: Caleb Connolly <caleb@connolly.tech>
+> Add the bindings for the Qualcomm SDM660-class NoC, valid for
+> SDM630, SDM636, SDM660 and SDA variants.
+> 
+> Signed-off-by: AngeloGioacchino Del Regno <kholk11@gmail.com>
 > ---
->  .../display/panel/panel-oneplus6.yaml         | 73 +++++++++++++++++++
->  1 file changed, 73 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/display/panel/panel-oneplus6.yaml
+>  .../bindings/interconnect/qcom,sdm660.yaml    | 147 ++++++++++++++++++
+>  .../dt-bindings/interconnect/qcom,sdm660.h    | 116 ++++++++++++++
+>  2 files changed, 263 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/interconnect/qcom,sdm660.yaml
+>  create mode 100644 include/dt-bindings/interconnect/qcom,sdm660.h
 > 
-> diff --git a/Documentation/devicetree/bindings/display/panel/panel-oneplus6.yaml b/Documentation/devicetree/bindings/display/panel/panel-oneplus6.yaml
-> new file mode 100644
-> index 000000000000..23ba369cc2f5
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/display/panel/panel-oneplus6.yaml
-> @@ -0,0 +1,73 @@
-> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/display/panel/panel-oneplus6.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> +
-> +title: OnePlus 6/T panel driver
-> +
-> +description: |
-> +  The OnePlus 6 panel driver encompasses the display panels found in the
-> +  OnePlus 6 and 6T devices, the panels have almost identical behaviour and
-> +  are not used by any other devices.
-> +
-> +maintainers:
-> +  - Caleb Connolly <caleb@connolly.tech>
-> +
-> +allOf:
-> +  - $ref: panel-common.yaml#
-> +
-> +properties:
-> +  compatible:
-> +    enum:
-> +      - samsung,sofef00
-> +      - samsung,s6e3fc2x01
-> +
-> +  reg: true
-> +  reset-gpios: true
-> +  port: true
-> +
-> +  vddio-supply:
-> +    description: VDDIO regulator
 
-A panel with a single supply can use panel-simple-dsi.yaml.
-
-'reset-gpios' was missing, but has been added recently.
-
-Rob
+Reviewed-by: Rob Herring <robh@kernel.org>
