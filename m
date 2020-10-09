@@ -2,104 +2,88 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 97C8E288DB6
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Oct 2020 18:05:09 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 66116288DC4
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Oct 2020 18:08:09 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388882AbgJIQFH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 9 Oct 2020 12:05:07 -0400
-Received: from z5.mailgun.us ([104.130.96.5]:54769 "EHLO z5.mailgun.us"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2389380AbgJIQFF (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 9 Oct 2020 12:05:05 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1602259504; h=Content-Transfer-Encoding: Content-Type:
- In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
- Subject: Sender; bh=CRr4mmuobyXTTLIv8mSddWm/kl/HZjTgem40TcX5IZM=; b=ETe82+G91chr1poswIFStsaHoeJ87F7h4cufEewahLqrGEqhrNvNbbLPDtFHwSjEX9OOwJ+2
- kkTbo4lzJUP+hOpxw3MLSmFEw/tR3k+hUkcFt8+f0vZy/eret3dd1FROnOKivpnMpmKnkP2H
- IGkj2ocah4VsFWlYEoqefRQDXxo=
-X-Mailgun-Sending-Ip: 104.130.96.5
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n01.prod.us-east-1.postgun.com with SMTP id
- 5f8089f53711fec7b1fc36e8 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 09 Oct 2020 16:04:05
- GMT
-Sender: jhugo=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id D0A66C43382; Fri,  9 Oct 2020 16:04:04 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-3.1 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        NICE_REPLY_A,SPF_FAIL,URIBL_BLOCKED autolearn=no autolearn_force=no
-        version=3.4.0
-Received: from [10.226.59.216] (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: jhugo)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id C3E89C433C9;
-        Fri,  9 Oct 2020 16:04:03 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org C3E89C433C9
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=jhugo@codeaurora.org
-Subject: Re: [PATCH v1 04/10] bus: mhi: core: Use the IRQF_ONESHOT flag for
- the BHI interrupt line
-To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        Bhaumik Bhatt <bbhatt@codeaurora.org>
-Cc:     linux-arm-msm@vger.kernel.org, hemantk@codeaurora.org,
-        linux-kernel@vger.kernel.org
-References: <1600480955-16827-1-git-send-email-bbhatt@codeaurora.org>
- <1600480955-16827-5-git-send-email-bbhatt@codeaurora.org>
- <20201009155706.GE4810@Mani-XPS-13-9360>
-From:   Jeffrey Hugo <jhugo@codeaurora.org>
-Message-ID: <26de08b5-b477-c5b9-fdca-eb80bcf98561@codeaurora.org>
-Date:   Fri, 9 Oct 2020 10:04:02 -0600
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.2.2
+        id S2389382AbgJIQII (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 9 Oct 2020 12:08:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40586 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2389278AbgJIQIH (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 9 Oct 2020 12:08:07 -0400
+Received: from mail-lj1-x244.google.com (mail-lj1-x244.google.com [IPv6:2a00:1450:4864:20::244])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1FAD1C0613D5
+        for <linux-arm-msm@vger.kernel.org>; Fri,  9 Oct 2020 09:08:07 -0700 (PDT)
+Received: by mail-lj1-x244.google.com with SMTP id a23so9336137ljp.5
+        for <linux-arm-msm@vger.kernel.org>; Fri, 09 Oct 2020 09:08:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=4ZcCjxOSOpKZkXBVNu3kbvFlOdpYb4SLFZlWCNm3nvs=;
+        b=kId7MjgANOiI/+Ylv6Eml6mUz2V6UYpbbarNiIwU/UDg4WF/38W60P5M41wGBYulPN
+         h4U+CSvlkNQ/Tt9+LJWNrrglFYBsabT3y6nHC5C6mWvNSNhOlo1Aqm8vsN0RN/gHlFR6
+         yZOtGiJgvv5bJgkGP4tL/+Ss3MXE/9Ye/Yii2elzkRa5TgFjoblhIZU9pcNKXeXta8rH
+         J3o7OBD12f+xyvg5gNooMK3ZvAHW+DWehQt983JT4zie6kAKc2CzhHSbFtx8SyBZq5TR
+         zchrOYh+PkejeHYep3CLwBi/L39Zbp28sZ413MXMDogUKQ3SH94SSXIu3CP+4WdwgzLJ
+         EIJQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=4ZcCjxOSOpKZkXBVNu3kbvFlOdpYb4SLFZlWCNm3nvs=;
+        b=B6Ar9v9iatSb7K1stcdyimpN8xmTGLWTaqu3pqMbTDri4EnPOI1VwTjQBIgvboNuLC
+         tSAMdp2nkqwK9PAJAWmiJ1tXJwr8a0rHZz1SkerJ3cPJSyyBvIRGAJ07Ev5KWDoExG3w
+         Yk6j3BCDOdji7th9JKmH40Q0h/yQIXLKghU9LJFsRCPZmUwz0cOLmyrn+HLTCb5npWfM
+         grXZ7kqQWZ31zPv1chqG0NCP3lPoNqwgdYiVEjG+tqmUmS0BQCqv+UgcSt+TGpnClFEH
+         tZpvFUs6B+2ys/dDRFobDRY+TepYqKAQ8UNvnCcA5Yi6sdY20+3eJLFNnIZQUd8NCgII
+         hAyQ==
+X-Gm-Message-State: AOAM531rMSjeGLX9qPDTspbGVm1oN7UvCXz+Un6kaAPnlM2ZQLRetJCi
+        QcGScHBBpp6WtqP+Dph37ADKd162x90Q+vscI55t1w==
+X-Google-Smtp-Source: ABdhPJwFSo8884+HnefvGr5GaVc7mN7PXC03bxgHqIJryOslbYdT9kfJA9VLDlJsm2yN/L2vO5Fcn6GXV0aalX+i164=
+X-Received: by 2002:a05:651c:203:: with SMTP id y3mr5202695ljn.457.1602259685527;
+ Fri, 09 Oct 2020 09:08:05 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <20201009155706.GE4810@Mani-XPS-13-9360>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+References: <20200928063744.525700-1-ajye_huang@compal.corp-partner.google.com>
+ <20200928063744.525700-2-ajye_huang@compal.corp-partner.google.com> <20201009135231.GA6655@sirena.org.uk>
+In-Reply-To: <20201009135231.GA6655@sirena.org.uk>
+From:   Ajye Huang <ajye_huang@compal.corp-partner.google.com>
+Date:   Sat, 10 Oct 2020 00:07:54 +0800
+Message-ID: <CALprXBZAFCOpWP2186RaP++613qnjPY3D3NbXEN5CToYsLNsRw@mail.gmail.com>
+Subject: Re: [PATCH v1 1/2] ASoC: qcom: dt-bindings: Modify sc7180 machine bindings
+To:     Mark Brown <broonie@kernel.org>
+Cc:     Ajye Huang <ajye.huang@gmail.com>, linux-kernel@vger.kernel.org,
+        dianders@chromium.org, devicetree@vger.kernel.org,
+        alsa-devel@alsa-project.org,
+        Banajit Goswami <bgoswami@codeaurora.org>,
+        Srinivasa Rao Mandadapu <srivasam@codeaurora.org>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        linux-arm-msm@vger.kernel.org, Patrick Lai <plai@codeaurora.org>,
+        Andy Gross <agross@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rohit kumar <rohitkr@codeaurora.org>, tzungbi@chromium.org,
+        linux-arm-kernel@lists.infradead.org,
+        Cheng-yi Chiang <cychiang@chromium.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 10/9/2020 9:57 AM, Manivannan Sadhasivam wrote:
-> On Fri, Sep 18, 2020 at 07:02:29PM -0700, Bhaumik Bhatt wrote:
->> Remove the IRQF_SHARED flag as it is not needed for the BHI interrupt
->> and replace it with IRQF_ONESHOT so that host can be sure that the
->> next BHI hard interrupt is triggered only when the threaded interrupt
->> handler has returned. This is to avoid any race conditions we may run
->> into if BHI interrupts fire one after another.
->>
->> Signed-off-by: Bhaumik Bhatt <bbhatt@codeaurora.org>
->> ---
->>   drivers/bus/mhi/core/init.c | 2 +-
->>   1 file changed, 1 insertion(+), 1 deletion(-)
->>
->> diff --git a/drivers/bus/mhi/core/init.c b/drivers/bus/mhi/core/init.c
->> index ca32563..9ae4c19 100644
->> --- a/drivers/bus/mhi/core/init.c
->> +++ b/drivers/bus/mhi/core/init.c
->> @@ -167,7 +167,7 @@ int mhi_init_irq_setup(struct mhi_controller *mhi_cntrl)
->>   	/* Setup BHI_INTVEC IRQ */
->>   	ret = request_threaded_irq(mhi_cntrl->irq[0], mhi_intvec_handler,
->>   				   mhi_intvec_threaded_handler,
->> -				   IRQF_SHARED | IRQF_NO_SUSPEND,
->> +				   IRQF_ONESHOT | IRQF_NO_SUSPEND,
-> 
-> Jeff, I believe you're the one requested for shared irq during initial push.
-> Are you okay with this?
+On Fri, Oct 9, 2020 at 9:52 PM Mark Brown <broonie@kernel.org> wrote:
+>
+> On Mon, Sep 28, 2020 at 02:37:43PM +0800, Ajye Huang wrote:
+> > Add compatible "qcom,sc7180-sndcard-rt5682-m98357-2mic"
+> > for 2mic case.
+>
+> This doesn't apply against current code, please check and resend.
 
-Nope  :)
+Hi, Mark
 
-AIC100 has a single interrupt for BHI/MHI activity, so this needs to be 
-shared.
+Thank you for your reply,
+This patch depends on  Cheng-Yi's patch series
+https://patchwork.kernel.org/patch/11773221/.
 
-
--- 
-Jeffrey Hugo
-Qualcomm Technologies, Inc. is a member of the
-Code Aurora Forum, a Linux Foundation Collaborative Project.
+  If I misunderstand what you mean, please correct me,
+Thank you,
