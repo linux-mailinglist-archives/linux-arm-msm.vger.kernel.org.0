@@ -2,55 +2,116 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 04D362891E5
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Oct 2020 21:42:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B56212899B6
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Oct 2020 22:26:15 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2390737AbgJITmM convert rfc822-to-8bit (ORCPT
-        <rfc822;lists+linux-arm-msm@lfdr.de>); Fri, 9 Oct 2020 15:42:12 -0400
-Received: from mail.csu.ru ([195.54.14.68]:43677 "HELO mail.csu.ru"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1730513AbgJITmK (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 9 Oct 2020 15:42:10 -0400
-X-Greylist: delayed 694 seconds by postgrey-1.27 at vger.kernel.org; Fri, 09 Oct 2020 15:42:00 EDT
-Received: from webmail.csu.ru (webmail.csu.ru [195.54.14.80])
-        (Authenticated sender: gmu)
-        by mail.csu.ru (Postfix) with ESMTPA id 734AD146B9E;
-        Sat, 10 Oct 2020 00:29:01 +0500 (+05)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mail.csu.ru 734AD146B9E
-Received: from 156.146.59.22
-        (SquirrelMail authenticated user gmu)
-        by webmail.csu.ru with HTTP;
-        Sat, 10 Oct 2020 00:29:04 +0500
-Message-ID: <76eac6ed4d08063ecac746e2d90c44a4.squirrel@webmail.csu.ru>
-Date:   Sat, 10 Oct 2020 00:29:04 +0500
-Subject: Vorschlag
-From:   "Yi Huiman" <info@bsu.de>
-Reply-To: info@huiman.cf
-User-Agent: SquirrelMail/1.4.22
+        id S2387868AbgJIU0O (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 9 Oct 2020 16:26:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52616 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1733021AbgJIU0O (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 9 Oct 2020 16:26:14 -0400
+Received: from mail-wm1-x342.google.com (mail-wm1-x342.google.com [IPv6:2a00:1450:4864:20::342])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 11B5CC0613D5
+        for <linux-arm-msm@vger.kernel.org>; Fri,  9 Oct 2020 13:26:14 -0700 (PDT)
+Received: by mail-wm1-x342.google.com with SMTP id f21so11003964wml.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 09 Oct 2020 13:26:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=hYOxM4PpYJSaeSQ+XPte6Uj4UYHx5vN6QsY6Km7XsLk=;
+        b=RhJIbuoP0KsitKkPaGbKDgqu5hJPfYFOTaLkPbYjK4Sh9AMdupXbOieF5DC/LSC+Fh
+         PnpHiXAV6qQPFJh1JlDek34BgT7HL3X+3llmpDbcpU7vRTgUw+NakNNiPraWbzWzsDH4
+         PpTAQ1jUhfnNmc5QPsjXX8WzSImUXGhknHL9A6neKdsTuoKt7XQMa1E+gPPN6qn3NxXu
+         /18edD8SPPKQSPU4BXSqtUeeW+V7sWPt7eJwQ0jIocsSsSb0TgUW55PpUpcDiPJjDw5t
+         0WiHSMi9DXp0WnUz26uRvrSgl3ZTHp6n8ZCBZirvWLsDRUMYdMZc/hwYmhhgCjs1S+eb
+         fu8A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=hYOxM4PpYJSaeSQ+XPte6Uj4UYHx5vN6QsY6Km7XsLk=;
+        b=jwgdmT1QFYzL8mrhQjE7N78kfkNN7Zm7nH3IzX1FdRO3HKIkdEuM3xlH34bQXekL5Z
+         I94QguK7spJ8/lHGv+d6ImKSntwwCZlIgwleAkFObBuuYQ2+A39vBNU1oEYm2C33g3IK
+         fIrxHT9ZYh/7HS24cGVt9CYyJOxu3RDK6nNWJ8et37mcI8aSulHNfgvwReUGvEMudmQh
+         VHjoJfhGIVVu31pAwTgmvwsdMNwXV8FcNIqprHSiCaCRIygcdgzD3Hdf9vZ/LrO5ISYw
+         2mGN5uPtdgFdQw/hwgtobd9RInpcLavrTjxCDWfegvQwhF+8YdhTms9Rh6CyeLuBZ7Sg
+         sX9A==
+X-Gm-Message-State: AOAM5330VAf5gyXajbeoMpWQHS5tW1OaBgDD85Nx5aNhofHioAh6/KXB
+        XJmXDLAriQVcPWXDmWtSP2mF/EN5aYShww==
+X-Google-Smtp-Source: ABdhPJxbnsENi0PeWaWCNMl2NYvOrAm2/8Yiih0OdRteX/qKpRSYO0H97neU1SW2E6bfQUVjrc/QFw==
+X-Received: by 2002:a7b:ce97:: with SMTP id q23mr15507627wmj.19.1602275171470;
+        Fri, 09 Oct 2020 13:26:11 -0700 (PDT)
+Received: from ?IPv6:2a01:e34:ed2f:f020:9c49:1413:45db:f86a? ([2a01:e34:ed2f:f020:9c49:1413:45db:f86a])
+        by smtp.googlemail.com with ESMTPSA id f14sm14536712wrt.53.2020.10.09.13.26.10
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 09 Oct 2020 13:26:10 -0700 (PDT)
+Subject: Re: [PATCH] cpuidle: governor: export cpuidle governor functions
+To:     "Rafael J. Wysocki" <rafael@kernel.org>,
+        Lina Iyer <ilina@codeaurora.org>
+Cc:     "Rafael J. Wysocki" <rjw@rjwysocki.net>,
+        Linux PM <linux-pm@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>
+References: <010101746fc98add-45e77496-d2d6-4bc1-a1ce-0692599a9a7a-000000@us-west-2.amazonses.com>
+ <CAJZ5v0hJJxxb+J5UtyZe2S_Tn7ARoGvjwDjw4dq601VJrriH9g@mail.gmail.com>
+ <20200922161215.GD30658@codeaurora.org>
+ <CAJZ5v0ipDRkPe6N9B6RzvHyCBobz8B9EoBfPh4DANrL_e86+Ww@mail.gmail.com>
+From:   Daniel Lezcano <daniel.lezcano@linaro.org>
+Message-ID: <bd62ffea-9736-f8f7-6a48-13e81f802aea@linaro.org>
+Date:   Fri, 9 Oct 2020 22:26:10 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.10.0
 MIME-Version: 1.0
-Content-Type: text/plain;charset=iso-8859-1
-X-Priority: 3 (Normal)
-Importance: Normal
-X-KLMS-Rule-ID: 1
-X-KLMS-Message-Action: clean
-X-KLMS-AntiSpam-Lua-Profiles: 159051 [Oct 09 2020]
-X-KLMS-AntiSpam-Version: 5.9.11.0
-X-KLMS-AntiSpam-Envelope-From: info@bsu.de
-X-KLMS-AntiSpam-Auth: dmarc=none header.from=bsu.de;spf=none smtp.mailfrom=bsu.de;dkim=none
-X-KLMS-AntiSpam-Rate: 70
-X-KLMS-AntiSpam-Status: not_detected
-X-KLMS-AntiSpam-Method: none
-X-KLMS-AntiSpam-Info: LuaCore: 381 381 faef97d3f9d8f5dd6a9feadc50ba5b34b9486c58, {rep_avail}, {Tracking_content_type, plain}, {Prob_reply_not_match_from}, {Prob_to_header_missing}, {Prob_Reply_to_without_To}, {Tracking_susp_macro_from_formal}, d41d8cd98f00b204e9800998ecf8427e.com:7.1.1;huiman.cf:7.1.1;webmail.csu.ru:7.1.1;195.54.14.80:7.1.2;127.0.0.199:7.1.2;bsu.de:7.1.1, ApMailHostAddress: 195.54.14.80
-X-MS-Exchange-Organization-SCL: -1
-X-KLMS-AntiSpam-Interceptor-Info: scan successful
-X-KLMS-AntiPhishing: Clean, bases: 2020/10/09 16:54:00
-X-KLMS-AntiVirus: Kaspersky Security for Linux Mail Server, version 8.0.3.30, bases: 2020/10/09 00:29:00 #15463494
-X-KLMS-AntiVirus-Status: Clean, skipped
-Content-Transfer-Encoding: 8BIT
-To:     unlisted-recipients:; (no To-header on input)
+In-Reply-To: <CAJZ5v0ipDRkPe6N9B6RzvHyCBobz8B9EoBfPh4DANrL_e86+Ww@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-ich habe ein Geschäft Vorschlag für dich.
 
+Hi Rafael,
+
+On 22/09/2020 19:27, Rafael J. Wysocki wrote:
+> Hi Lina,
+> 
+> On Tue, Sep 22, 2020 at 6:12 PM Lina Iyer <ilina@codeaurora.org> wrote:
+>>
+>> Hi Rafael,
+>>
+>> On Tue, Sep 22 2020 at 10:00 -0600, Rafael J. Wysocki wrote:
+>>> Sorry for the delay.
+>>>
+>>> On Wed, Sep 9, 2020 at 12:15 AM Lina Iyer <ilina@codeaurora.org> wrote:
+>>>>
+>>>> Commit 83788c0caed3 ("cpuidle: remove unused exports") removed
+>>>> capability of registering cpuidle governors, which was unused at that
+>>>> time. By exporting the symbol, let's allow platform specific modules to
+>>>> register cpuidle governors and use cpuidle_governor_latency_req() to get
+>>>> the QoS for the CPU.
+>>>
+>>> Which platform-specific modules may want to do that and why?
+>>>
+>> We are planning a custom cpuidle governor for QCOM SoCs. With Android,
+>> the idea is to make them loadable modules so they can be in a separate
+>> partition.
+> 
+> Well, the $subject patch is not applicable without a mainline user
+> requiring this, so it needs to be posted along with that user.
+
+Putting apart the custom cpuidle governor mentioned above, would it make
+sense to convert the governors into modules ? It is pointless to have
+all of them compiled in, especially with distros doing make
+allmodconfig, no?
+
+
+-- 
+<http://www.linaro.org/> Linaro.org â”‚ Open source software for ARM SoCs
+
+Follow Linaro:  <http://www.facebook.com/pages/Linaro> Facebook |
+<http://twitter.com/#!/linaroorg> Twitter |
+<http://www.linaro.org/linaro-blog/> Blog
