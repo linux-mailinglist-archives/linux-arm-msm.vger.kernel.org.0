@@ -2,116 +2,165 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B56212899B6
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Oct 2020 22:26:15 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 506D22899B9
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Oct 2020 22:27:06 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2387868AbgJIU0O (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 9 Oct 2020 16:26:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52616 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1733021AbgJIU0O (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 9 Oct 2020 16:26:14 -0400
-Received: from mail-wm1-x342.google.com (mail-wm1-x342.google.com [IPv6:2a00:1450:4864:20::342])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 11B5CC0613D5
-        for <linux-arm-msm@vger.kernel.org>; Fri,  9 Oct 2020 13:26:14 -0700 (PDT)
-Received: by mail-wm1-x342.google.com with SMTP id f21so11003964wml.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 09 Oct 2020 13:26:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=hYOxM4PpYJSaeSQ+XPte6Uj4UYHx5vN6QsY6Km7XsLk=;
-        b=RhJIbuoP0KsitKkPaGbKDgqu5hJPfYFOTaLkPbYjK4Sh9AMdupXbOieF5DC/LSC+Fh
-         PnpHiXAV6qQPFJh1JlDek34BgT7HL3X+3llmpDbcpU7vRTgUw+NakNNiPraWbzWzsDH4
-         PpTAQ1jUhfnNmc5QPsjXX8WzSImUXGhknHL9A6neKdsTuoKt7XQMa1E+gPPN6qn3NxXu
-         /18edD8SPPKQSPU4BXSqtUeeW+V7sWPt7eJwQ0jIocsSsSb0TgUW55PpUpcDiPJjDw5t
-         0WiHSMi9DXp0WnUz26uRvrSgl3ZTHp6n8ZCBZirvWLsDRUMYdMZc/hwYmhhgCjs1S+eb
-         fu8A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=hYOxM4PpYJSaeSQ+XPte6Uj4UYHx5vN6QsY6Km7XsLk=;
-        b=jwgdmT1QFYzL8mrhQjE7N78kfkNN7Zm7nH3IzX1FdRO3HKIkdEuM3xlH34bQXekL5Z
-         I94QguK7spJ8/lHGv+d6ImKSntwwCZlIgwleAkFObBuuYQ2+A39vBNU1oEYm2C33g3IK
-         fIrxHT9ZYh/7HS24cGVt9CYyJOxu3RDK6nNWJ8et37mcI8aSulHNfgvwReUGvEMudmQh
-         VHjoJfhGIVVu31pAwTgmvwsdMNwXV8FcNIqprHSiCaCRIygcdgzD3Hdf9vZ/LrO5ISYw
-         2mGN5uPtdgFdQw/hwgtobd9RInpcLavrTjxCDWfegvQwhF+8YdhTms9Rh6CyeLuBZ7Sg
-         sX9A==
-X-Gm-Message-State: AOAM5330VAf5gyXajbeoMpWQHS5tW1OaBgDD85Nx5aNhofHioAh6/KXB
-        XJmXDLAriQVcPWXDmWtSP2mF/EN5aYShww==
-X-Google-Smtp-Source: ABdhPJxbnsENi0PeWaWCNMl2NYvOrAm2/8Yiih0OdRteX/qKpRSYO0H97neU1SW2E6bfQUVjrc/QFw==
-X-Received: by 2002:a7b:ce97:: with SMTP id q23mr15507627wmj.19.1602275171470;
-        Fri, 09 Oct 2020 13:26:11 -0700 (PDT)
-Received: from ?IPv6:2a01:e34:ed2f:f020:9c49:1413:45db:f86a? ([2a01:e34:ed2f:f020:9c49:1413:45db:f86a])
-        by smtp.googlemail.com with ESMTPSA id f14sm14536712wrt.53.2020.10.09.13.26.10
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 09 Oct 2020 13:26:10 -0700 (PDT)
-Subject: Re: [PATCH] cpuidle: governor: export cpuidle governor functions
-To:     "Rafael J. Wysocki" <rafael@kernel.org>,
-        Lina Iyer <ilina@codeaurora.org>
-Cc:     "Rafael J. Wysocki" <rjw@rjwysocki.net>,
-        Linux PM <linux-pm@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>
-References: <010101746fc98add-45e77496-d2d6-4bc1-a1ce-0692599a9a7a-000000@us-west-2.amazonses.com>
- <CAJZ5v0hJJxxb+J5UtyZe2S_Tn7ARoGvjwDjw4dq601VJrriH9g@mail.gmail.com>
- <20200922161215.GD30658@codeaurora.org>
- <CAJZ5v0ipDRkPe6N9B6RzvHyCBobz8B9EoBfPh4DANrL_e86+Ww@mail.gmail.com>
-From:   Daniel Lezcano <daniel.lezcano@linaro.org>
-Message-ID: <bd62ffea-9736-f8f7-6a48-13e81f802aea@linaro.org>
-Date:   Fri, 9 Oct 2020 22:26:10 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.10.0
+        id S1732934AbgJIU1F (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 9 Oct 2020 16:27:05 -0400
+Received: from m42-4.mailgun.net ([69.72.42.4]:46495 "EHLO m42-4.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726427AbgJIU1F (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 9 Oct 2020 16:27:05 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1602275224; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=52lzXpIM5c5WEUGQw7Y5zF9EbTe3/SJ1ngiJwmEncaE=;
+ b=fiCx33sui98U45zptAq6OkVG72I8eSWfEiu1HNL2u5ixNomNyDI6qJVDEruUeWwLACZXinNl
+ JA47d0MYA+dV8pNYBcj0jyS713dfnXmI03JZ1bOUIF9gjtCiqo63EpoqEuuX4lExlIPa1/6H
+ 8RY/gTrtsPA0wTYNj7TvWIxv6ZQ=
+X-Mailgun-Sending-Ip: 69.72.42.4
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n06.prod.us-west-2.postgun.com with SMTP id
+ 5f80c794a03b63d6738f9986 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 09 Oct 2020 20:27:00
+ GMT
+Sender: cgoldswo=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id BE9A5C433FE; Fri,  9 Oct 2020 20:27:00 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: cgoldswo)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 8D6C2C433F1;
+        Fri,  9 Oct 2020 20:26:59 +0000 (UTC)
 MIME-Version: 1.0
-In-Reply-To: <CAJZ5v0ipDRkPe6N9B6RzvHyCBobz8B9EoBfPh4DANrL_e86+Ww@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Fri, 09 Oct 2020 13:26:59 -0700
+From:   Chris Goldsworthy <cgoldswo@codeaurora.org>
+To:     Christoph Hellwig <hch@infradead.org>
+Cc:     akpm@linux-foundation.org, linux-mm@kvack.org, minchan@kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        pratikp@codeaurora.org, pdaly@codeaurora.org,
+        sudaraja@codeaurora.org, iamjoonsoo.kim@lge.com, david@redhat.com,
+        vinmenon@codeaurora.org, minchan.kim@gmail.com
+Subject: Re: [PATCH v4] mm: cma: indefinitely retry allocations in cma_alloc
+In-Reply-To: <20200929055937.GA5332@infradead.org>
+References: <cover.1601324066.git.cgoldswo@codeaurora.org>
+ <afd4f52cc767115bacaeea935e1d7b6e5e7c24e8.1601324066.git.cgoldswo@codeaurora.org>
+ <20200929055937.GA5332@infradead.org>
+Message-ID: <3cdd6c30c062cf11eb1a7e3c47ff111e@codeaurora.org>
+X-Sender: cgoldswo@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-Hi Rafael,
-
-On 22/09/2020 19:27, Rafael J. Wysocki wrote:
-> Hi Lina,
+On 2020-09-28 22:59, Christoph Hellwig wrote:
+> On Mon, Sep 28, 2020 at 01:30:27PM -0700, Chris Goldsworthy wrote:
+>> CMA allocations will fail if 'pinned' pages are in a CMA area, since 
+>> we
+>> cannot migrate pinned pages. The _refcount of a struct page being 
+>> greater
+>> than _mapcount for that page can cause pinning for anonymous pages.  
+>> This
+>> is because try_to_unmap(), which (1) is called in the CMA allocation 
+>> path,
+>> and (2) decrements both _refcount and _mapcount for a page, will stop
+>> unmapping a page from VMAs once the _mapcount for a page reaches 0.  
+>> This
+>> implies that after try_to_unmap() has finished successfully for a page
+>> where _recount > _mapcount, that _refcount will be greater than 0.  
+>> Later
+>> in the CMA allocation path in migrate_page_move_mapping(), we will 
+>> have one
+>> more reference count than intended for anonymous pages, meaning the
+>> allocation will fail for that page.
+>> 
+>> If a process ends up causing _refcount > _mapcount for a page (by 
+>> either
+>> incrementing _recount or decrementing _mapcount), such that the 
+>> process is
+>> context switched out after modifying one refcount but before modifying 
+>> the
+>> other, the page will be temporarily pinned.
+>> 
+>> One example of where _refcount can be greater than _mapcount is inside 
+>> of
+>> zap_pte_range(), which is called for all the entries of a PMD when a
+>> process is exiting, to unmap the process's memory.  Inside of
+>> zap_pte_range(), after unammping a page with page_remove_rmap(), we 
+>> have
+>> that _recount > _mapcount.  _refcount can only be decremented after a 
+>> TLB
+>> flush is performed for the page - this doesn't occur until enough 
+>> pages
+>> have been batched together for flushing.  The flush can either occur 
+>> inside
+>> of zap_pte_range() (during the same invocation or a later one), or if 
+>> there
+>> aren't enough pages collected by the time we unmap all of the pages in 
+>> a
+>> process, the flush will occur in tlb_finish_mmu() in exit_mmap().  
+>> After
+>> the flush has occurred, tlb_batch_pages_flush() will decrement the
+>> references on the flushed pages.
+>> 
+>> Another such example like the above is inside of copy_one_pte(), which 
+>> is
+>> called during a fork. For PTEs for which pte_present(pte) == true,
+>> copy_one_pte() will increment the _refcount field followed by the
+>> _mapcount field of a page.
+>> 
+>> So, inside of cma_alloc(), add the option of letting users pass in
+>> __GFP_NOFAIL to indicate that we should retry CMA allocations 
+>> indefinitely,
+>> in the event that alloc_contig_range() returns -EBUSY after having 
+>> scanned
+>> a whole CMA-region bitmap.
 > 
-> On Tue, Sep 22, 2020 at 6:12 PM Lina Iyer <ilina@codeaurora.org> wrote:
->>
->> Hi Rafael,
->>
->> On Tue, Sep 22 2020 at 10:00 -0600, Rafael J. Wysocki wrote:
->>> Sorry for the delay.
->>>
->>> On Wed, Sep 9, 2020 at 12:15 AM Lina Iyer <ilina@codeaurora.org> wrote:
->>>>
->>>> Commit 83788c0caed3 ("cpuidle: remove unused exports") removed
->>>> capability of registering cpuidle governors, which was unused at that
->>>> time. By exporting the symbol, let's allow platform specific modules to
->>>> register cpuidle governors and use cpuidle_governor_latency_req() to get
->>>> the QoS for the CPU.
->>>
->>> Which platform-specific modules may want to do that and why?
->>>
->> We are planning a custom cpuidle governor for QCOM SoCs. With Android,
->> the idea is to make them loadable modules so they can be in a separate
->> partition.
+> And who is going to use this?  AS-is this just seems to add code that
+> isn't actually used and thus actually tested.  (In addition to beeing
+> a relly bad idea as discussed before)
+
+Hi Christoph,
+
+That had slipped my mind - what we would have submitted would have been 
+a modified /drivers/dma-heap/heaps/cma_heap.c, which would have created 
+a "linux,cma-nofail" heap, that when allocated from, passes GFP_NOFAIL 
+to cma_alloc().  But, since this retry approach (finite and infinite) 
+has effectively been nacked, I've gone back to the drawing board to find 
+either (1) a lock based approach to solving this (as posed by Andrew 
+Morton here: https://lkml.org/lkml/2020/8/21/1490), or (2) using 
+preempt_disable() calls.
+
+Thanks,
+
+Chris.
+
+>> --- a/kernel/dma/contiguous.c
+>> +++ b/kernel/dma/contiguous.c
+>> @@ -196,7 +196,7 @@ struct page *dma_alloc_from_contiguous(struct 
+>> device *dev, size_t count,
+>>  	if (align > CONFIG_CMA_ALIGNMENT)
+>>  		align = CONFIG_CMA_ALIGNMENT;
+>> 
+>> -	return cma_alloc(dev_get_cma_area(dev), count, align, no_warn);
+>> +	return cma_alloc(dev_get_cma_area(dev), count, align, no_warn ? 
+>> __GFP_NOWARN : 0);
 > 
-> Well, the $subject patch is not applicable without a mainline user
-> requiring this, so it needs to be posted along with that user.
-
-Putting apart the custom cpuidle governor mentioned above, would it make
-sense to convert the governors into modules ? It is pointless to have
-all of them compiled in, especially with distros doing make
-allmodconfig, no?
-
+> Also don't add pointlessly overlong lines.
 
 -- 
-<http://www.linaro.org/> Linaro.org │ Open source software for ARM SoCs
-
-Follow Linaro:  <http://www.facebook.com/pages/Linaro> Facebook |
-<http://twitter.com/#!/linaroorg> Twitter |
-<http://www.linaro.org/linaro-blog/> Blog
+The Qualcomm Innovation Center, Inc.
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora 
+Forum,
+a Linux Foundation Collaborative Project
