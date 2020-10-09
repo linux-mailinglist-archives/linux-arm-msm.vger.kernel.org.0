@@ -2,94 +2,88 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id EA7932885B7
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Oct 2020 11:01:08 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 03D522886EE
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Oct 2020 12:30:26 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732962AbgJIJBI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 9 Oct 2020 05:01:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59030 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1732712AbgJIJBH (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 9 Oct 2020 05:01:07 -0400
-Received: from mail-wr1-x443.google.com (mail-wr1-x443.google.com [IPv6:2a00:1450:4864:20::443])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 325FEC0613D2
-        for <linux-arm-msm@vger.kernel.org>; Fri,  9 Oct 2020 02:01:07 -0700 (PDT)
-Received: by mail-wr1-x443.google.com with SMTP id e17so9408988wru.12
-        for <linux-arm-msm@vger.kernel.org>; Fri, 09 Oct 2020 02:01:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id;
-        bh=KefA9eQVo3x8din0ZKTkjJSx7ogD6q7GazZdwrZYdKA=;
-        b=jVODD7VBje7BoH7ZqA4LrleCsnL0si4tgrv/RjUNfHiT263psLoL6H8I48CnnVZ3K3
-         NvZNSMCMf9hxD/L9N1/6plnpgDQY3Kp46ypXBOqBrcomdUMuTDuFrIYkTbChSNk9f2bl
-         sXlA0O+1asXDDnf5O4RmjwjMSMyNfVYynpSciaJPvWhZbojlV8Tn9haE9yTXrjeO8R76
-         pdweYdYujBKVgVuJJOj81l6Qs9cZUQVivtimZQSUaVP/ZSnYNH1J1tV2QpEWlZozwOM1
-         vew9l0CwzAEVTa9cLhiSq9QDPN27v7ioaaBIboblZ2bRzjl+qXhn5Mm95zbPHUYRsc1e
-         SNvw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=KefA9eQVo3x8din0ZKTkjJSx7ogD6q7GazZdwrZYdKA=;
-        b=IRqhT3bHvTPfM0Re9U/836NBHboJKmO/xt7juO+bcFfUV0NtgJEZCcFxP3o8D+pOH/
-         +tk7O2ZRuE22ZFfWZOAdAvucpoFne10f5kCRek0LCVpcypepXlaNwzG1+E8Pzeg8zB3O
-         WR4lkj/h1e5LBg7p0chXTG59sN7Jx4g631n15cM9gnQnAkGd8bRrQ4ATToA6XY+xtb0m
-         lmyBN1uHhLg3ZagirBghQ6bRugcaf/nc4v/+FtOby+jDlPGVy6nSaPfnsc0AeK4Os2zV
-         orob4diKlpn61mzyxmbii0/+EDmZ0CEd977R64HmPzKNBcHheg95U2xvAg0sMXTd9U5h
-         wjBQ==
-X-Gm-Message-State: AOAM531JA2XWCKBbe3VWPkwJ7LZyeVTMQB/ehDNCxqvG7yYZE52U9wtC
-        4Xu6ZqTTLej6qnVkMDD77PURS7AjCZljtQ==
-X-Google-Smtp-Source: ABdhPJwxh2R0owY8hh9VH/0K/t7J1X4uPnHaM2KghhXOfKRt6HWK6udYStQ6c+qoxgJd9mMdJUXChA==
-X-Received: by 2002:adf:8562:: with SMTP id 89mr13508373wrh.214.1602234065797;
-        Fri, 09 Oct 2020 02:01:05 -0700 (PDT)
-Received: from localhost.localdomain ([88.122.66.28])
-        by smtp.gmail.com with ESMTPSA id r68sm5464205wmr.37.2020.10.09.02.01.05
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 09 Oct 2020 02:01:05 -0700 (PDT)
-From:   Loic Poulain <loic.poulain@linaro.org>
-To:     manivannan.sadhasivam@linaro.org, hemantk@codeaurora.org
-Cc:     linux-arm-msm@vger.kernel.org,
-        Loic Poulain <loic.poulain@linaro.org>
-Subject: [PATCH] bus: mhi: Fix channel close issue on driver remove
-Date:   Fri,  9 Oct 2020 11:07:14 +0200
-Message-Id: <1602234434-924-1-git-send-email-loic.poulain@linaro.org>
-X-Mailer: git-send-email 2.7.4
+        id S2387662AbgJIKaY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 9 Oct 2020 06:30:24 -0400
+Received: from mail.kernel.org ([198.145.29.99]:49354 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S2387661AbgJIKaY (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 9 Oct 2020 06:30:24 -0400
+Received: from localhost (unknown [122.182.251.219])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id 0C5192226B;
+        Fri,  9 Oct 2020 10:30:22 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1602239423;
+        bh=2S5cTsiaGUTnL4qYAUGa56y6UyS/LmE34JmfxGcQ1cI=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=ws/Iqsc0keJOJ4dffz7XEfkOTlv2bWVqrWRRcbvydc1+adsdkeKel5MAWcBuDqoTx
+         ecTxhwGKjS8SDcsrTDq4zg4i3Fjly892qD7bo2q/1+/DPxpaR9Sw9zqzhQOPe24puQ
+         B0xH1diT7tVjHj27BpXRKGNqjvfy2Ih+vVr0urW8=
+Date:   Fri, 9 Oct 2020 16:00:19 +0530
+From:   Vinod Koul <vkoul@kernel.org>
+To:     Peter Ujfalusi <peter.ujfalusi@ti.com>
+Cc:     dmaengine@vger.kernel.org, Rob Herring <robh+dt@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v4 2/3] dmaengine: add peripheral configuration
+Message-ID: <20201009103019.GD2968@vkoul-mobl>
+References: <20201008123151.764238-1-vkoul@kernel.org>
+ <20201008123151.764238-3-vkoul@kernel.org>
+ <e2c0323b-4f41-1926-5930-c63624fe1dd1@ti.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <e2c0323b-4f41-1926-5930-c63624fe1dd1@ti.com>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Some MHI device drivers need to stop the channels in their driver
-remove callback (e.g. module unloading), but the unprepare function
-is aborted because MHI core moved the channels to suspended state
-prior calling driver remove callback. This prevents the driver to
-send a proper MHI RESET CHAN command to the device. Device is then
-unaware of the stopped state of these channels.
+Hi Peter,
 
-This causes issue when driver tries to start the channels again (e.g.
-module is reloaded), since device considers channels as already
-started (inconsistent state).
+On 09-10-20, 12:04, Peter Ujfalusi wrote:
+> On 08/10/2020 15.31, Vinod Koul wrote:
+> > Some complex dmaengine controllers have capability to program the
+> > peripheral device, so pass on the peripheral configuration as part of
+> > dma_slave_config
+> >
+> > Signed-off-by: Vinod Koul <vkoul@kernel.org>
+> > ---
+> >  include/linux/dmaengine.h | 5 +++++
+> >  1 file changed, 5 insertions(+)
+> > 
+> > diff --git a/include/linux/dmaengine.h b/include/linux/dmaengine.h
+> > index 6fbd5c99e30c..a15dc2960f6d 100644
+> > --- a/include/linux/dmaengine.h
+> > +++ b/include/linux/dmaengine.h
+> > @@ -418,6 +418,9 @@ enum dma_slave_buswidth {
+> >   * @slave_id: Slave requester id. Only valid for slave channels. The dma
+> >   * slave peripheral will have unique id as dma requester which need to be
+> >   * pass as slave config.
+> > + * @peripheral_config: peripheral configuration for programming peripheral
+> > + * for dmaengine transfer
+> > + * @peripheral_size: peripheral configuration buffer size
+> >   *
+> >   * This struct is passed in as configuration data to a DMA engine
+> >   * in order to set up a certain channel for DMA transport at runtime.
+> > @@ -443,6 +446,8 @@ struct dma_slave_config {
+> >  	u32 dst_port_window_size;
+> >  	bool device_fc;
+> >  	unsigned int slave_id;
+> > +	void *peripheral_config;
+> > +	size_t peripheral_size;
+> 
+> Do you foresee a need of src/dst pair of these?
+> If we do DEV_TO_DEV with different type of peripherals it is going to
+> cause issues.
 
-Fix this by allowing channel reset when channel is suspended.
+Not really as the channel already has direction and this is per channel.
+If for any any reason subsequent txn is for different direction, I would
+expect that parameters are set again before prep_ calls
 
-Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
----
- drivers/bus/mhi/core/main.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
-
-diff --git a/drivers/bus/mhi/core/main.c b/drivers/bus/mhi/core/main.c
-index d20967a..a588eac 100644
---- a/drivers/bus/mhi/core/main.c
-+++ b/drivers/bus/mhi/core/main.c
-@@ -1232,7 +1232,8 @@ static void __mhi_unprepare_channel(struct mhi_controller *mhi_cntrl,
- 	/* no more processing events for this channel */
- 	mutex_lock(&mhi_chan->mutex);
- 	write_lock_irq(&mhi_chan->lock);
--	if (mhi_chan->ch_state != MHI_CH_STATE_ENABLED) {
-+	if (mhi_chan->ch_state != MHI_CH_STATE_ENABLED &&
-+	    mhi_chan->ch_state != MHI_CH_STATE_SUSPENDED) {
- 		write_unlock_irq(&mhi_chan->lock);
- 		mutex_unlock(&mhi_chan->mutex);
- 		return;
 -- 
-2.7.4
-
+~Vinod
