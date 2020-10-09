@@ -2,294 +2,162 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 64BDB288C5B
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Oct 2020 17:15:18 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6D592288C79
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Oct 2020 17:23:24 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388745AbgJIPPR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 9 Oct 2020 11:15:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60494 "EHLO
+        id S2388736AbgJIPXX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 9 Oct 2020 11:23:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33506 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2388887AbgJIPPQ (ORCPT
+        with ESMTP id S2388727AbgJIPXX (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 9 Oct 2020 11:15:16 -0400
-Received: from mail-lj1-x243.google.com (mail-lj1-x243.google.com [IPv6:2a00:1450:4864:20::243])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7DAA3C0613D5
-        for <linux-arm-msm@vger.kernel.org>; Fri,  9 Oct 2020 08:15:16 -0700 (PDT)
-Received: by mail-lj1-x243.google.com with SMTP id 133so9981527ljj.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 09 Oct 2020 08:15:16 -0700 (PDT)
+        Fri, 9 Oct 2020 11:23:23 -0400
+Received: from mail-pg1-x544.google.com (mail-pg1-x544.google.com [IPv6:2607:f8b0:4864:20::544])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0E0D8C0613D5
+        for <linux-arm-msm@vger.kernel.org>; Fri,  9 Oct 2020 08:23:23 -0700 (PDT)
+Received: by mail-pg1-x544.google.com with SMTP id 7so7415358pgm.11
+        for <linux-arm-msm@vger.kernel.org>; Fri, 09 Oct 2020 08:23:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=E6Nd8bFLpZfzhnJqMtPJPONxQyfB4cH/rdHKzqew4oo=;
-        b=Qc/JMWf/ffAVqqTQcI9JG4TLUusWr4+kaYKzlWwyTDeUgS1j7voTIwEya6AAJzKkol
-         faszaKpvwTwYMpoWr7PvAuqEVkrcOaLdwCa5Tio52Iv+xaVEkA13ERUSzISHWEgYMoRV
-         +U1Lbz3GTYcKT2y466elZ15AG/H25fvV0Txp5RYLd3XvpwCxfUq9n/1y6uwF9Is2lEmE
-         VqmRzDBVzXqskzg90Rt8TxLq9oiAWhQvvDZlkOMYX3wkoXcB6MRzFN2xKR9r2QPYuNdO
-         d6WJ0xXYuicfxNruqVEMs37/qJRqVoy1OTUGKJSAjgNb1aYV1yhj7wex1NgN+Xk7JxlM
-         dNgQ==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=f03xLBfpCjhpQ8+06VWnlGPHAwyo32pFe58xdhERybU=;
+        b=tASVNQ4GLB7cQtH7STDA0zX+iVq+lacXg4nSsNq9uEozGd2a5y6gnJSYYO4Qyx55sa
+         KyUIi6CUvUmwKtZEFZNSih6DkaWxv3eqEtc9bcgE7yKfeK5Ot8inKHP2mYnKdkijQegy
+         61e2syuq+5Iqq6fuQBkgi/+QXS6QZuZErvOSEVrA6oaYFy8/TmUlwq4NPxT+XzVYrzPV
+         INYRpk9g+RS1k4F5tjaJvc4QrXxFIPzZ5NuB3R0nSV7snTwysJhtUtAiAAs+UPlUjmf0
+         3SfANa+Wyp/wS0N+Lt1Ssq0oTR2mJJUidgVwP26SywvpmqbT8MsftOb+1FjdBMsyfPWd
+         dfZA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=E6Nd8bFLpZfzhnJqMtPJPONxQyfB4cH/rdHKzqew4oo=;
-        b=Ej0UL5CbZgm1TBgvupocIxjVzV//8weHL+m6T5C9sKiD9u0URpF2WIjR+2oIPURstZ
-         a4S6Bm+8giaA1xf4JDQx0uV3g5D+DXv6HsZPfwS/zvilwcbFYvHZSeXbKq/Zq67m2R55
-         K6PwnxuaNVhIgpvJ6+HIWyowVLc2W/ZSGYmEjdpfYcSdSoi7AlKGqCk2KcsNgrIO1jTG
-         Kiinhu9t/NpFiZU8F+8L3ReIXCoiYpjk0TWP0vFnnsCiq8SXtiHELxsO+hOyTgiJ46Yc
-         4UoEYYGZ8GWGlqznTeTGF/Mby1iZk6sMSldn0zXjUnRawz/hyE24/wXhf6iCi56UA62I
-         BqQw==
-X-Gm-Message-State: AOAM5322wWbYaeo4spvPKUpSyT0b50Z8H9/MrCVpVvMK/ZG0zJBLw271
-        nKlj42QTkgGEgSMLqY6HZxiDLA==
-X-Google-Smtp-Source: ABdhPJyMApbqWWYKrRxdaZeohuRpwHPicgxI00Hs2697xZEQeG8le9Oh2C+OAPB+UP3mMy0RKFGWhg==
-X-Received: by 2002:a2e:9d94:: with SMTP id c20mr5363714ljj.445.1602256513326;
-        Fri, 09 Oct 2020 08:15:13 -0700 (PDT)
-Received: from [192.168.1.211] ([188.162.65.231])
-        by smtp.gmail.com with ESMTPSA id t17sm743958lff.147.2020.10.09.08.15.11
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 09 Oct 2020 08:15:12 -0700 (PDT)
-Subject: Re: [PATCH v7 07/10] thermal: qcom: add support for adc-tm5 PMIC
- thermal monitor
-To:     Daniel Lezcano <daniel.lezcano@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Zhang Rui <rui.zhang@intel.com>,
-        Amit Kucheria <amitk@kernel.org>,
-        Jonathan Cameron <jic23@kernel.org>,
-        Hartmut Knaack <knaack.h@gmx.de>,
-        Lars-Peter Clausen <lars@metafoo.de>,
-        Peter Meerwald-Stadler <pmeerw@pmeerw.net>
-Cc:     linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-iio@vger.kernel.org,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        Jishnu Prakash <jprakash@qti.qualcomm.com>
-References: <20201007135433.1041979-1-dmitry.baryshkov@linaro.org>
- <20201007135433.1041979-8-dmitry.baryshkov@linaro.org>
- <3d6bd019-1516-5307-ef49-b6279fbfbe82@linaro.org>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Message-ID: <642645af-19f1-7ac1-a10a-7f943c757c7f@linaro.org>
-Date:   Fri, 9 Oct 2020 18:15:11 +0300
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.2.2
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=f03xLBfpCjhpQ8+06VWnlGPHAwyo32pFe58xdhERybU=;
+        b=FgL7Y3SOhrzbFcX2QDbYb32zN/DHgi/a4sJRfxmu9syl3en20B/YJKwXC4rnslgYpx
+         qyYg1DAUGrPjtfrfJKM/2JQB3UpREphuLi04om1J9RDpQS0DrysR+R20kQyMSVI9HjHx
+         Tx1njyAQ5+rCBFLYc0+6Y8pXD002MKyTNVsVuHbCsBZZKr9ACbibO4J+AcCnKz24B5Po
+         /sxz8t+9wq/qiZcXLtO+tF3My6tM+EhIMMb+GZqz3jeC6HI5l2pWCeeNqT5M1zJLEkiw
+         5UMziRGIduUyzquzgFBPpC5qWg7PwS0swYeIuJ/UhuOoAmbwAx1NaGkEfYulQqcEkOYo
+         /paw==
+X-Gm-Message-State: AOAM5300AETvKgBlZGTmQXjwliDGmhwnCIh2KQljA9Q1ClyjuTHggkxm
+        WPgpHQ8enR8one1m/1y0N64m
+X-Google-Smtp-Source: ABdhPJzUJDjFzUfAnbseHKTwWub7TRcGAYctQvJGBOGUbM6VG7myWd3msQt8fxqaExH52L2zY+CW7g==
+X-Received: by 2002:a62:bd0e:0:b029:142:2501:35e7 with SMTP id a14-20020a62bd0e0000b0290142250135e7mr12374530pff.71.1602257002180;
+        Fri, 09 Oct 2020 08:23:22 -0700 (PDT)
+Received: from Mani-XPS-13-9360 ([2409:4072:6292:5a21:d5ff:f3e8:fcf2:ccc7])
+        by smtp.gmail.com with ESMTPSA id u22sm10840866pgi.85.2020.10.09.08.23.16
+        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
+        Fri, 09 Oct 2020 08:23:21 -0700 (PDT)
+Date:   Fri, 9 Oct 2020 20:53:14 +0530
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     Bhaumik Bhatt <bbhatt@codeaurora.org>
+Cc:     linux-arm-msm@vger.kernel.org, hemantk@codeaurora.org,
+        jhugo@codeaurora.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v1 01/10] bus: mhi: core: Use appropriate names for
+ firmware load functions
+Message-ID: <20201009152314.GB4810@Mani-XPS-13-9360>
+References: <1600480955-16827-1-git-send-email-bbhatt@codeaurora.org>
+ <1600480955-16827-2-git-send-email-bbhatt@codeaurora.org>
 MIME-Version: 1.0
-In-Reply-To: <3d6bd019-1516-5307-ef49-b6279fbfbe82@linaro.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1600480955-16827-2-git-send-email-bbhatt@codeaurora.org>
+User-Agent: Mutt/1.9.4 (2018-02-28)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 08/10/2020 19:22, Daniel Lezcano wrote:
-> On 07/10/2020 15:54, Dmitry Baryshkov wrote:
->> Add support for Thermal Monitoring part of PMIC5. This part is closely
->> coupled with ADC, using it's channels directly. ADC-TM support
->> generating interrupts on ADC value crossing low or high voltage bounds,
->> which is used to support thermal trip points.
->>
->> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
->> ---
->>   drivers/iio/adc/qcom-vadc-common.c       |  62 +++
->>   drivers/iio/adc/qcom-vadc-common.h       |   3 +
->>   drivers/thermal/qcom/Kconfig             |  11 +
->>   drivers/thermal/qcom/Makefile            |   1 +
->>   drivers/thermal/qcom/qcom-spmi-adc-tm5.c | 622 +++++++++++++++++++++++
->>   5 files changed, 699 insertions(+)
->>   create mode 100644 drivers/thermal/qcom/qcom-spmi-adc-tm5.c
->>
->> diff --git a/drivers/iio/adc/qcom-vadc-common.c b/drivers/iio/adc/qcom-vadc-common.c
->> index 40d77b3af1bb..e58e393b8713 100644
->> --- a/drivers/iio/adc/qcom-vadc-common.c
->> +++ b/drivers/iio/adc/qcom-vadc-common.c
->> @@ -377,6 +377,42 @@ static int qcom_vadc_map_voltage_temp(const struct vadc_map_pt *pts,
->>   	return 0;
->>   }
->>   
->> +static s32 qcom_vadc_map_temp_voltage(const struct vadc_map_pt *pts,
->> +				      u32 tablesize, int input)
->> +{
->> +	bool descending = 1;
->> +	u32 i = 0;
->> +
+On Fri, Sep 18, 2020 at 07:02:26PM -0700, Bhaumik Bhatt wrote:
+> mhi_fw_load_sbl() function is currently used to transfer SBL or EDL
+> images over BHI (Boot Host Interface). Same goes with mhi_fw_load_amss()
+> which uses BHIe. However, the contents of these functions do not
+> indicate support for a specific set of images. Since these can be used
+> for any image download over BHI or BHIe, rename them based on the
+> protocol used.
 > 
-> The code seems like a bit
-
-Could you please clarify, what do you mean?
-
+> Signed-off-by: Bhaumik Bhatt <bbhatt@codeaurora.org>
+> ---
+>  drivers/bus/mhi/core/boot.c | 16 ++++++++--------
+>  1 file changed, 8 insertions(+), 8 deletions(-)
 > 
->> +	/* Check if table is descending or ascending */
->> +	if (tablesize > 1) {
->> +		if (pts[0].y < pts[1].y)
->> +			descending = 0;
->> +	}
->> +
->> +	while (i < tablesize) {
->> +		if (descending && pts[i].y < input) {
->> +			/* table entry is less than measured*/
->> +			 /* value and table is descending, stop */
->> +			break;
->> +		} else if ((!descending) && pts[i].y > input) {
->> +			/* table entry is greater than measured*/
->> +			/*value and table is ascending, stop */
->> +			break;
->> +		}
->> +		i++;
->> +	}
->> +
->> +	if (i == 0)
->> +		return pts[0].x;
->> +	if (i == tablesize)
->> +		return pts[tablesize - 1].x;
->> +
->> +	/* result is between search_index and search_index-1 */
->> +	/* interpolate linearly */
->> +	return fixp_linear_interpolate(pts[i - 1].y, pts[i - 1].x,
->> +			pts[i].y, pts[i].x, input);
->> +}
->> +
->>   static void qcom_vadc_scale_calib(const struct vadc_linear_graph *calib_graph,
->>   				  u16 adc_code,
->>   				  bool absolute,
+> diff --git a/drivers/bus/mhi/core/boot.c b/drivers/bus/mhi/core/boot.c
+> index 24422f5..92b8dd3 100644
+> --- a/drivers/bus/mhi/core/boot.c
+> +++ b/drivers/bus/mhi/core/boot.c
+> @@ -171,7 +171,7 @@ int mhi_download_rddm_img(struct mhi_controller *mhi_cntrl, bool in_panic)
+>  }
+>  EXPORT_SYMBOL_GPL(mhi_download_rddm_img);
+>  
+> -static int mhi_fw_load_amss(struct mhi_controller *mhi_cntrl,
+> +static int mhi_fw_load_bhie(struct mhi_controller *mhi_cntrl,
+>  			    const struct mhi_buf *mhi_buf)
+>  {
+>  	void __iomem *base = mhi_cntrl->bhie;
+> @@ -187,7 +187,7 @@ static int mhi_fw_load_amss(struct mhi_controller *mhi_cntrl,
+>  	}
+>  
+>  	sequence_id = MHI_RANDOM_U32_NONZERO(BHIE_TXVECSTATUS_SEQNUM_BMSK);
+> -	dev_dbg(dev, "Starting AMSS download via BHIe. Sequence ID:%u\n",
+> +	dev_dbg(dev, "Starting image download via BHIe. Sequence ID:%u\n",
+>  		sequence_id);
+>  	mhi_write_reg(mhi_cntrl, base, BHIE_TXVECADDR_HIGH_OFFS,
+>  		      upper_32_bits(mhi_buf->dma_addr));
+> @@ -218,7 +218,7 @@ static int mhi_fw_load_amss(struct mhi_controller *mhi_cntrl,
+>  	return (!ret) ? -ETIMEDOUT : 0;
+>  }
+>  
+> -static int mhi_fw_load_sbl(struct mhi_controller *mhi_cntrl,
+> +static int mhi_fw_load_bhi(struct mhi_controller *mhi_cntrl,
+>  			   dma_addr_t dma_addr,
+>  			   size_t size)
+>  {
+> @@ -245,7 +245,7 @@ static int mhi_fw_load_sbl(struct mhi_controller *mhi_cntrl,
+>  	}
+>  
+>  	session_id = MHI_RANDOM_U32_NONZERO(BHI_TXDB_SEQNUM_BMSK);
+> -	dev_dbg(dev, "Starting SBL download via BHI. Session ID:%u\n",
+> +	dev_dbg(dev, "Starting image download via BHI. Session ID:%u\n",
+>  		session_id);
+>  	mhi_write_reg(mhi_cntrl, base, BHI_STATUS, 0);
+>  	mhi_write_reg(mhi_cntrl, base, BHI_IMGADDR_HIGH,
+> @@ -446,9 +446,9 @@ void mhi_fw_load_handler(struct mhi_controller *mhi_cntrl)
+>  		return;
+>  	}
+>  
+> -	/* Download SBL image */
+> +	/* Download SBL or EDL image using BHI */
 
-[....]
+You are mentioning "image" in the debug print but "SBL/EDL" here and below.
+Please use "image" for consistency.
 
->> diff --git a/drivers/thermal/qcom/qcom-spmi-adc-tm5.c b/drivers/thermal/qcom/qcom-spmi-adc-tm5.c
->> new file mode 100644
->> index 000000000000..c09a50f59053
->> --- /dev/null
->> +++ b/drivers/thermal/qcom/qcom-spmi-adc-tm5.c
->> @@ -0,0 +1,622 @@
->> +// SPDX-License-Identifier: GPL-2.0-only
->> +/*
->> + * Copyright (c) 2012-2020, The Linux Foundation. All rights reserved.
->> + * Copyright (c) 2020 Linaro Limited
->> + */
+Thanks,
+Mani
+
+>  	memcpy(buf, firmware->data, size);
+> -	ret = mhi_fw_load_sbl(mhi_cntrl, dma_addr, size);
+> +	ret = mhi_fw_load_bhi(mhi_cntrl, dma_addr, size);
+>  	mhi_free_coherent(mhi_cntrl, size, buf, dma_addr);
+>  
+>  	if (!mhi_cntrl->fbc_download || ret || mhi_cntrl->ee == MHI_EE_EDL)
+> @@ -456,7 +456,7 @@ void mhi_fw_load_handler(struct mhi_controller *mhi_cntrl)
+>  
+>  	/* Error or in EDL mode, we're done */
+>  	if (ret) {
+> -		dev_err(dev, "MHI did not load SBL, ret:%d\n", ret);
+> +		dev_err(dev, "MHI did not load SBL/EDL image, ret:%d\n", ret);
+>  		return;
+>  	}
+>  
+> @@ -506,7 +506,7 @@ void mhi_fw_load_handler(struct mhi_controller *mhi_cntrl)
+>  
+>  	/* Start full firmware image download */
+>  	image_info = mhi_cntrl->fbc_image;
+> -	ret = mhi_fw_load_amss(mhi_cntrl,
+> +	ret = mhi_fw_load_bhie(mhi_cntrl,
+>  			       /* Vector table is the last entry */
+>  			       &image_info->mhi_buf[image_info->entries - 1]);
+>  	if (ret)
+> -- 
+> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+> a Linux Foundation Collaborative Project
 > 
-> If it is possible, please give a description of this sensor, the
-> different register mapping, etc ... So it will be easier to review and
-> debug in the future.
-
-In which form? I don't often see such descriptions in the code.
-
-> 
-> 
->> +#include <linux/bitfield.h>
->> +#include <linux/iio/consumer.h>
->> +#include <linux/interrupt.h>
->> +#include <linux/module.h>
->> +#include <linux/of.h>
->> +#include <linux/of_device.h>
->> +#include <linux/platform_device.h>
->> +#include <linux/regmap.h>
->> +#include <linux/thermal.h>
->> +
->> +#include "../../iio/adc/qcom-vadc-common.h"
-> 
-> Do not use this form of inclusion.
-
-Fixed.
-
-
-[...]
-
-> 
->> +	if (ret) {
->> +		dev_err(chip->dev, "read status low failed with %d\n", ret);
->> +		return IRQ_HANDLED;
->> +	}
-> 
-> Can you identify the reasons those reads can fail? If it is not supposed
-> to happen it is fine but otherwise we don't want to be flooded with
-> error messages on the console.
-
-Changed to use unlikely(ret) as way to show that this is not supposed to 
-happen.
-
-
->> +		lower_set = (status_low & BIT(ch)) &&
->> +			(ctl & ADC_TM5_M_MEAS_EN) &&
->> +			(ctl & ADC_TM5_M_LOW_THR_INT_EN);
->> +
->> +		upper_set = (status_high & BIT(ch)) &&
->> +			(ctl & ADC_TM5_M_MEAS_EN) &&
->> +			(ctl & ADC_TM5_M_HIGH_THR_INT_EN);
-> 
-> Is the check (ctl & ADC_TM5_M_[HIGH|LOW]_THR_INT_EN) necessary if
-> status_high or status_low is true ?
-> 
-> Isn't possible to simplify that with:
-> 
-> eg.
-> 
-> 		if (!(ctl & ADC_TM5_M_MEAS_EN)
-> 			continue;
-> 
-> 		if (!(status_high & BIT(ch)) && !(status_low & BIT(ch))
-> 			continue;
-> 
-> 		thermal_zone_device_update(chip->channels[i].tzd,
-> 					THERMAL_EVENT_UNSPECIFIED);
-> 
-> ??
-
-I'd prefer to leave the check as is, having no information if status bit 
-can be updated without actually triggering IRQ.
-
-I've moved ADC_TM5_MEAS_EN check upwards to simplify this.
-
->> +static int adc_tm5_configure(struct adc_tm5_channel *channel, int low_temp, int high_temp)
->> +{
->> +	struct adc_tm5_chip *chip = channel->chip;
->> +	u8 buf[8];
->> +	u16 reg = ADC_TM5_M_ADC_CH_SEL_CTL(channel->channel);
->> +	int ret = 0;
->> +
->> +	ret = adc_tm5_read(chip, reg, buf, sizeof(buf));
->> +	if (ret) {
->> +		dev_err(chip->dev, "block read failed with %d\n", ret);
->> +		return ret;
->> +	}
->> +
->> +	/* Update ADC channel select */
->> +	buf[0] = channel->adc_channel;
->> +
->> +	/* Warm temperature corresponds to low voltage threshold */
->> +	if (high_temp != INT_MAX) {
->> +		u16 adc_code = qcom_adc_tm5_temp_volt_scale(channel->prescale,
->> +				chip->data->full_scale_code_volt, high_temp);
->> +
->> +		buf[1] = adc_code & 0xff;
->> +		buf[2] = adc_code >> 8;
->> +		buf[7] |= ADC_TM5_M_LOW_THR_INT_EN;
->> +	} else {
->> +		buf[7] &= ~ADC_TM5_M_LOW_THR_INT_EN;
->> +	}
->> +
->> +	/* Cool temperature corresponds to high voltage threshold */
->> +	if (low_temp != -INT_MAX) {
-> 
-> Is it really -INT_MAX ? or INT_MIN
-> 
-> -2147483647 vs -2147483648 ?
-
-It is really -INT_MAX, see thermal_zone_set_trips().
-
-[...]
-
->> +
->> +	for (i = 0; i < chip->nchannels; i++) {
->> +		if (chip->channels[i].channel >= channels_available) {
->> +			dev_err(chip->dev, "Invalid channel %d\n", chip->channels[i].channel);
->> +			return -EINVAL;
->> +		}
-> 
-> Is it a sanity check to make sure the hardware and the DT are compatible ?
-
-Yes.
-
-
--- 
-With best wishes
-Dmitry
