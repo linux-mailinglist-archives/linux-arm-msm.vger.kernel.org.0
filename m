@@ -2,61 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 2BE0928891F
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Oct 2020 14:45:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 034B8288968
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Oct 2020 14:57:04 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732098AbgJIMpo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 9 Oct 2020 08:45:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37312 "EHLO
+        id S1732923AbgJIM5C (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 9 Oct 2020 08:57:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39102 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729045AbgJIMpn (ORCPT
+        with ESMTP id S1732737AbgJIM5C (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 9 Oct 2020 08:45:43 -0400
-Received: from mail-oi1-x242.google.com (mail-oi1-x242.google.com [IPv6:2607:f8b0:4864:20::242])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5B902C0613D2
-        for <linux-arm-msm@vger.kernel.org>; Fri,  9 Oct 2020 05:45:42 -0700 (PDT)
-Received: by mail-oi1-x242.google.com with SMTP id u17so10086756oie.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 09 Oct 2020 05:45:42 -0700 (PDT)
+        Fri, 9 Oct 2020 08:57:02 -0400
+Received: from mail-ot1-x343.google.com (mail-ot1-x343.google.com [IPv6:2607:f8b0:4864:20::343])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7E978C0613D2
+        for <linux-arm-msm@vger.kernel.org>; Fri,  9 Oct 2020 05:57:02 -0700 (PDT)
+Received: by mail-ot1-x343.google.com with SMTP id t15so8938187otk.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 09 Oct 2020 05:57:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=R6eMuYXKQBt8ZcD3TVM9l7/XPveGAmfJeT8PkVlMs9k=;
-        b=T0Vu1G/Ug2wRJI0vRjA5g0OvhN2VRMMML12ko89+m0vbUSpLlg5KfV49Ph9urGJKCd
-         c69qKYqhH0IWar44sqdiakV75IeEQIvgl+S9z6trLyIukc/KgwDcr6LChy55JCsAeLtF
-         mbTtzjwq4dnzqXQSMgyhctpsWK4v0bt4zKZPM=
+        bh=Z+2UjvYQEk6KM0AsuDZuOv+FGWV2KQ+KdyDRwReGjM4=;
+        b=Tl8tAm9w5P9TK5QA4yY7Zk6i4bB/OBpkHel+TKMpNNmU+A1VpPpFpuz1C8crWi98+7
+         Z0GNF06CV6eAtWET8brSORBZhLkgV3H7M1rR792YhlpNhW9CUjCS3dYK5+lLG/EvrbXj
+         yE462SjjECA0jKJc6x5bniKEf4i9YNxDzspHw=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=R6eMuYXKQBt8ZcD3TVM9l7/XPveGAmfJeT8PkVlMs9k=;
-        b=HTqMtPbsOIUGaL3UsfCG515FwOfY1emeuFcMtnYoSqly9gbBhV9UK8tCfgtgZ7KkG4
-         Dj1Uv99mYAu4NBjgQrAckfaAnI3WGa8tPSfcZdEdsa064arUrY88fKSrXEeq/JBC3RP9
-         rb1De0tXgJDWVzVWTAkU9BqacHVS3U7NoI5Up4Ntd/h3tFYe1gQ3Q3fey1DZ/iZoVT0X
-         tvJA/OqqVm+Lx6EKYpRb/n3Ol5x/+SRZYbMzyFZ0OqzWZGEuEJBFTgoZbK9lUJJk2jDI
-         U6jyBEDWmfKNFUIDw6CzQrLKCdaVaR0QC6oCRmskYtZ2YoA6oSroy+Q/ttIL/IvO+LqE
-         8b4g==
-X-Gm-Message-State: AOAM530lx31KDHuqNS6Vgm1nf31oo2PG8Kgzh79+HGku2dfX8SiHJ69Y
-        gQwI2OGk3OQ1seoquSaAv/J25ZYpNv55bdGg
-X-Google-Smtp-Source: ABdhPJwqV6sGFooOFEBcwBqnzv0DFTqfK/T7eZtUNk9PQsL9zNm8XlVLhlz45e7KJaiUPbvaMuXJXA==
-X-Received: by 2002:aca:b156:: with SMTP id a83mr608081oif.51.1602247541308;
-        Fri, 09 Oct 2020 05:45:41 -0700 (PDT)
-Received: from mail-ot1-f50.google.com (mail-ot1-f50.google.com. [209.85.210.50])
-        by smtp.gmail.com with ESMTPSA id t5sm6061845otl.22.2020.10.09.05.45.40
+        bh=Z+2UjvYQEk6KM0AsuDZuOv+FGWV2KQ+KdyDRwReGjM4=;
+        b=Rd+iWTEmCjVp6mERWGfJ2HyM/S7fG69/EEaXemGVzEAs8EqjQbqwFAIH9VkfvZn73j
+         cGJ++bVdZQ4GvQXi7WEphic30jnaLMeBECcYxV6Dfl4VaPJZr4M3n1m9yLSyCLv5/TxF
+         2ZSdP7NfCNhZYbeYq82qr3Hn8V8Q6K5dpl9R61i1jddNFlil0+d+n/MGKLoeTpVI0Sj3
+         ClVejz0OFd59Gv35bTMDskypik5C5yPOEQcISXIMHHewASMCRWJH/K8HrpUgKY1mAsja
+         tJoCTfry8fMbrNGINJIn+UA8W9K+vrIAlftOX0iVZzxi1TAnu8tYumqhJ7xvuy2bAc7k
+         L8lg==
+X-Gm-Message-State: AOAM531iruAlpUz1sXDftWL6zO/LMhQVckpMQVk/5JibZ5pV2ChGqZUT
+        2d2XQLvYtCUmWAQoS7MWp8fKtpr91BHmwoTj
+X-Google-Smtp-Source: ABdhPJwtzjmqz3WCaR4c4l24bDIx2UntiqWTaeovR7ouU+dFfNRKpeRR7OP7uNUjHmbUpU8+hZ8Bhw==
+X-Received: by 2002:a05:6830:1c3c:: with SMTP id f28mr9227970ote.188.1602248221496;
+        Fri, 09 Oct 2020 05:57:01 -0700 (PDT)
+Received: from mail-ot1-f41.google.com (mail-ot1-f41.google.com. [209.85.210.41])
+        by smtp.gmail.com with ESMTPSA id h4sm7730747oot.45.2020.10.09.05.57.00
         for <linux-arm-msm@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 09 Oct 2020 05:45:40 -0700 (PDT)
-Received: by mail-ot1-f50.google.com with SMTP id 60so8868763otw.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 09 Oct 2020 05:45:40 -0700 (PDT)
-X-Received: by 2002:a9d:6445:: with SMTP id m5mr8454412otl.36.1602247539630;
- Fri, 09 Oct 2020 05:45:39 -0700 (PDT)
+        Fri, 09 Oct 2020 05:57:00 -0700 (PDT)
+Received: by mail-ot1-f41.google.com with SMTP id l4so8874203ota.7
+        for <linux-arm-msm@vger.kernel.org>; Fri, 09 Oct 2020 05:57:00 -0700 (PDT)
+X-Received: by 2002:a9d:6445:: with SMTP id m5mr8484954otl.36.1602248219891;
+ Fri, 09 Oct 2020 05:56:59 -0700 (PDT)
 MIME-Version: 1.0
 References: <20200928164431.21884-1-stanimir.varbanov@linaro.org> <20200928164431.21884-2-stanimir.varbanov@linaro.org>
 In-Reply-To: <20200928164431.21884-2-stanimir.varbanov@linaro.org>
 From:   Alexandre Courbot <acourbot@chromium.org>
-Date:   Fri, 9 Oct 2020 21:45:27 +0900
-X-Gmail-Original-Message-ID: <CAPBb6MUMFnzd6zZE4C4T+bX5p=3iKPZp+S_hrTLECvHTHYXrtQ@mail.gmail.com>
-Message-ID: <CAPBb6MUMFnzd6zZE4C4T+bX5p=3iKPZp+S_hrTLECvHTHYXrtQ@mail.gmail.com>
+Date:   Fri, 9 Oct 2020 21:56:47 +0900
+X-Gmail-Original-Message-ID: <CAPBb6MVFeGcDMWopXA5PNPVHTsgZ5r8L_-zE0TUwm5wFswVdmw@mail.gmail.com>
+Message-ID: <CAPBb6MVFeGcDMWopXA5PNPVHTsgZ5r8L_-zE0TUwm5wFswVdmw@mail.gmail.com>
 Subject: Re: [PATCH 1/3] venus: vdec: Fix non reliable setting of LAST flag
 To:     Stanimir Varbanov <stanimir.varbanov@linaro.org>
 Cc:     Linux Media Mailing List <linux-media@vger.kernel.org>,
@@ -152,15 +152,6 @@ On Tue, Sep 29, 2020 at 1:44 AM Stanimir Varbanov
 >         inst->sequence_cap = 0;
 >         inst->reconfig = false;
 > +       inst->next_buf_last = false;
-
-Is this needed? Whether a resolution change occurs should only be
-dependent on what the OUTPUT queue receives, so even if the CAPTURE
-queue is stopped and resumed for some reason, pending resolution
-change events and their associated LAST buffer should still be
-emitted. With this statement we are taking the risk of sending a
-change resolution event without a corresponding LAST buffer (so the
-following LAST buffer might be misinterpreted).
-
 >
 >         return 0;
 >
@@ -169,10 +160,6 @@ following LAST buffer might be misinterpreted).
 >         inst->sequence_out = 0;
 >         inst->reconfig = false;
 > +       inst->next_buf_last = false;
-
-This one I understand better - if the client seeks, it should probably
-check for pending events before resuming.
-
 >
 >         ret = vdec_set_properties(inst);
 >         if (ret)
@@ -206,26 +193,6 @@ check for pending events before resuming.
 > +               vb2_set_plane_payload(vb, 0, 0);
 > +               v4l2_m2m_buf_done(vbuf, VB2_BUF_STATE_DONE);
 > +               v4l2_event_queue_fh(&inst->fh, &eos);
-
-I don't think publishing an EOS event here is correct. As the spec says:
-
-"
-... Last of the buffers will have the V4L2_BUF_FLAG_LAST flag set. To
-determine the sequence to follow, the client must check if there is
-any pending event and:
-
-* if a V4L2_EVENT_SOURCE_CHANGE event with changes set to
-V4L2_EVENT_SRC_CH_RESOLUTION is pending, the Dynamic Resolution Change
-sequence needs to be followed,
-* if a V4L2_EVENT_EOS event is pending, the End of Stream sequence
-needs to be followed.
-"
-
-With this we will have *both* resolution change and EOS events pending
-when the client checks the event queue after receiving the LAST
-buffer.
-
-
 > +               inst->next_buf_last = false;
 > +               mutex_unlock(&inst->lock);
 > +               return;
@@ -268,6 +235,16 @@ buffer.
 > +                       if (ret)
 > +                               dev_dbg(dev, VDBGH "flush output error %d\n", ret);
 > +               }
+
+Do we still need to call hfi_session_flush() here? It will be called
+in vdec_stop_capture() anyway, and for some reason we are only calling
+it if there is a CAPTURE buffer available (which is not guaranteed).
+
+I suspect that we can call it unconditionally, and maybe remove the
+call to hfi_session_flush() in vdec_stop_capture() when the state is
+VENUS_DEC_STATE_DRC. That way flushing will be performed earlier and
+in one place only.
+
 >         }
 >
 >         inst->reconfig = true;
