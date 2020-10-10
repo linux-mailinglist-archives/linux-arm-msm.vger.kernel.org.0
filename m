@@ -2,108 +2,101 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id DAADA28A46B
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 11 Oct 2020 01:37:55 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DDE4E28A483
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 11 Oct 2020 01:45:20 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726429AbgJJXhz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 10 Oct 2020 19:37:55 -0400
-Received: from mail.baikalelectronics.com ([87.245.175.226]:57928 "EHLO
-        mail.baikalelectronics.ru" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725855AbgJJXhz (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 10 Oct 2020 19:37:55 -0400
-X-Greylist: delayed 1799 seconds by postgrey-1.27 at vger.kernel.org; Sat, 10 Oct 2020 19:37:53 EDT
-Received: from localhost (unknown [127.0.0.1])
-        by mail.baikalelectronics.ru (Postfix) with ESMTP id DC6488002547;
-        Sat, 10 Oct 2020 22:41:37 +0000 (UTC)
-X-Virus-Scanned: amavisd-new at baikalelectronics.ru
-Received: from mail.baikalelectronics.ru ([127.0.0.1])
-        by localhost (mail.baikalelectronics.ru [127.0.0.1]) (amavisd-new, port 10024)
-        with ESMTP id 4maO7b5Sdc2M; Sun, 11 Oct 2020 01:41:37 +0300 (MSK)
-From:   Serge Semin <Sergey.Semin@baikalelectronics.ru>
-To:     Mathias Nyman <mathias.nyman@intel.com>,
-        Felipe Balbi <balbi@kernel.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Manu Gautam <mgautam@codeaurora.org>
-CC:     Serge Semin <Sergey.Semin@baikalelectronics.ru>,
-        Serge Semin <fancer.lancer@gmail.com>,
-        Alexey Malahov <Alexey.Malahov@baikalelectronics.ru>,
-        Pavel Parkhomenko <Pavel.Parkhomenko@baikalelectronics.ru>,
-        Roger Quadros <rogerq@ti.com>,
-        Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
-        Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
-        Neil Armstrong <narmstrong@baylibre.com>,
-        Kevin Hilman <khilman@baylibre.com>,
-        <linux-usb@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>
-Subject: [PATCH 18/18] dt-bindings: usb: qcom,dwc3: Validate DWC3 sub-node
-Date:   Sun, 11 Oct 2020 01:41:21 +0300
-Message-ID: <20201010224121.12672-19-Sergey.Semin@baikalelectronics.ru>
-In-Reply-To: <20201010224121.12672-1-Sergey.Semin@baikalelectronics.ru>
-References: <20201010224121.12672-1-Sergey.Semin@baikalelectronics.ru>
+        id S2387399AbgJJXpT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 10 Oct 2020 19:45:19 -0400
+Received: from z5.mailgun.us ([104.130.96.5]:34650 "EHLO z5.mailgun.us"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S2387568AbgJJXpS (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Sat, 10 Oct 2020 19:45:18 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1602373518; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
+ Subject: Sender; bh=+sjzZxdSz1OxaSjQtFwsicElknUm3wlBG4uyjUVXudw=; b=WkFLdINm/oGrPiIOTR9GSmtKRcvvEmOSDfkTF9ESSpnbXS+MmAVynel+3kcz7NmPhGvEAr5Z
+ SbP86hwP1FjfNGNYWq/U8s1HnKb/J6DPkeu/sWRtlmx2yqt4qNyu4y3lsQmwf2jyi0KwtP+f
+ vjs6MpUMhMyTr51UGh05Lb0o+YQ=
+X-Mailgun-Sending-Ip: 104.130.96.5
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n04.prod.us-west-2.postgun.com with SMTP id
+ 5f824783856d9308b5e16c82 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Sat, 10 Oct 2020 23:45:07
+ GMT
+Sender: mgautam=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id A2DC9C433FF; Sat, 10 Oct 2020 23:45:07 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-3.1 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        NICE_REPLY_A,SPF_FAIL,URIBL_BLOCKED autolearn=no autolearn_force=no
+        version=3.4.0
+Received: from [192.168.1.8] (unknown [223.230.69.105])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: mgautam)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 230EAC433C9;
+        Sat, 10 Oct 2020 23:45:04 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 230EAC433C9
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=mgautam@codeaurora.org
+Subject: Re: [PATCH v1 05/10] bus: mhi: core: Disable IRQs when powering down
+To:     Bhaumik Bhatt <bbhatt@codeaurora.org>,
+        manivannan.sadhasivam@linaro.org
+Cc:     linux-arm-msm@vger.kernel.org, hemantk@codeaurora.org,
+        jhugo@codeaurora.org, linux-kernel@vger.kernel.org
+References: <1600480955-16827-1-git-send-email-bbhatt@codeaurora.org>
+ <1600480955-16827-6-git-send-email-bbhatt@codeaurora.org>
+From:   Manu Gautam <mgautam@codeaurora.org>
+Message-ID: <2c77a164-db22-16c8-ebce-21a028fc1ed6@codeaurora.org>
+Date:   Sun, 11 Oct 2020 05:15:00 +0530
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
+ Thunderbird/68.11.0
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7BIT
-Content-Type:   text/plain; charset=US-ASCII
-X-ClientProxiedBy: MAIL.baikal.int (192.168.51.25) To mail (192.168.51.25)
+In-Reply-To: <1600480955-16827-6-git-send-email-bbhatt@codeaurora.org>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Qualcomm msm8996/sc7180/sdm845 DWC3 compatible DT nodes are supposed to
-have a DWC USB3 compatible sub-node to describe a fully functioning USB
-interface. Let's use the available DWC USB3 DT schema to validate
-the Qualcomm DWC3 sub-nodes.
+Hi
 
-Note since the generic DWC USB3 DT node is supposed to be named as
-generic USB HCD ("^usb(@.*)?") we have to accordingly extend the sub-nodes
-naming space and fix the DT node example.
+On 9/19/2020 7:32 AM, Bhaumik Bhatt wrote:
+> While powering down, the device may or may not acknowledge the MHI
+> RESET issued by host for graceful shutdown scenario which can lead
+> to a rogue device sending an interrupt after the clean-up has been
+> done. This can result in a tasklet being scheduled after it has
+> been killed and access already freed memory causing a NULL pointer
+> exception. Avoid this corner case by disabling the interrupts as a
+> part of host clean up.
+>
+> Signed-off-by: Bhaumik Bhatt <bbhatt@codeaurora.org>
+> ---
+>  drivers/bus/mhi/core/pm.c | 1 +
+>  1 file changed, 1 insertion(+)
+>
+> diff --git a/drivers/bus/mhi/core/pm.c b/drivers/bus/mhi/core/pm.c
+> index 1862960..3462d82 100644
+> --- a/drivers/bus/mhi/core/pm.c
+> +++ b/drivers/bus/mhi/core/pm.c
+> @@ -517,6 +517,7 @@ static void mhi_pm_disable_transition(struct mhi_controller *mhi_cntrl,
+>  	for (i = 0; i < mhi_cntrl->total_ev_rings; i++, mhi_event++) {
+>  		if (mhi_event->offload_ev)
+>  			continue;
+> +		disable_irq(mhi_cntrl->irq[mhi_event->irq]);
+>  		tasklet_kill(&mhi_event->task);
+>  	}
+>  
 
-Signed-off-by: Serge Semin <Sergey.Semin@baikalelectronics.ru>
+What about sys_err handling? IRQ may be left disabled?
 
----
 
-Alas there are many Qualcomm DTS files, which have got the Qualcomm DWC3
-node defined with sub-nodes named as "^dwc3@.*". Since the generic DWC USB3
-DT schema will be automatically selected for them and the naming doesn't
-comply with the USB HCD DT schema, the dtbs_check procedure will fail.
-I don't really know what is a most suitable way to fix that. It's either
-to alter all the Qualcomm DTS files, or extend the USB HCD schema to
-accept the "dwc3@.*" nodes, or redesign the usb-hcd.yaml schema. What do
-you think?
----
- Documentation/devicetree/bindings/usb/qcom,dwc3.yaml | 9 +++------
- 1 file changed, 3 insertions(+), 6 deletions(-)
-
-diff --git a/Documentation/devicetree/bindings/usb/qcom,dwc3.yaml b/Documentation/devicetree/bindings/usb/qcom,dwc3.yaml
-index dac10848dd7f..b3737f0e4dc1 100644
---- a/Documentation/devicetree/bindings/usb/qcom,dwc3.yaml
-+++ b/Documentation/devicetree/bindings/usb/qcom,dwc3.yaml
-@@ -103,11 +103,8 @@ properties:
- # Required child node:
- 
- patternProperties:
--  "^dwc3@[0-9a-f]+$":
--    type: object
--    description:
--      A child node must exist to represent the core DWC3 IP block
--      The content of the node is defined in dwc3.txt.
-+  "^(usb|dwc3)@[0-9a-f]+$":
-+    $ref: snps,dwc3.yaml#
- 
- required:
-   - compatible
-@@ -160,7 +157,7 @@ examples:
- 
-             resets = <&gcc GCC_USB30_PRIM_BCR>;
- 
--            dwc3@a600000 {
-+            usb@a600000 {
-                 compatible = "snps,dwc3";
-                 reg = <0 0x0a600000 0 0xcd00>;
-                 interrupts = <GIC_SPI 133 IRQ_TYPE_LEVEL_HIGH>;
 -- 
-2.27.0
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
 
