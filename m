@@ -2,89 +2,185 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 4C153289CD1
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 10 Oct 2020 02:54:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 041B4289D26
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 10 Oct 2020 03:41:43 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729107AbgJJAxF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 9 Oct 2020 20:53:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35042 "EHLO
+        id S1729315AbgJJBlT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 9 Oct 2020 21:41:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41456 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729125AbgJJAj4 (ORCPT
+        with ESMTP id S1729230AbgJJBVu (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 9 Oct 2020 20:39:56 -0400
-Received: from mail-pf1-x443.google.com (mail-pf1-x443.google.com [IPv6:2607:f8b0:4864:20::443])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D0E0BC0613D8
-        for <linux-arm-msm@vger.kernel.org>; Fri,  9 Oct 2020 17:39:54 -0700 (PDT)
-Received: by mail-pf1-x443.google.com with SMTP id q123so8269168pfb.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 09 Oct 2020 17:39:54 -0700 (PDT)
+        Fri, 9 Oct 2020 21:21:50 -0400
+Received: from mail-wr1-x443.google.com (mail-wr1-x443.google.com [IPv6:2a00:1450:4864:20::443])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4786CC0613D0
+        for <linux-arm-msm@vger.kernel.org>; Fri,  9 Oct 2020 18:21:49 -0700 (PDT)
+Received: by mail-wr1-x443.google.com with SMTP id n15so12051670wrq.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 09 Oct 2020 18:21:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:content-transfer-encoding:in-reply-to:references
-         :subject:from:cc:to:date:message-id:user-agent;
-        bh=F5/qH043zEuGeatUEpHVuXqbPsOkFkmiSQ+O0T+kgNI=;
-        b=OY0/mr8FkN7fSU5zYf/x9oHuQmQYqIF3NZteXcH28gcYzCSf5+MT4y49z8aUjOjqBv
-         lha3BSSjRHKCiX9eo/5oSgg3mzkB27HCrpXBOvuU8f2fnOZ/YBvY6fZmuOjh//FvW6kL
-         O7ol4CBYBbsd7yhoCo0gpIi6aDg3ajTAUIbi4=
+        d=linaro.org; s=google;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=GSxc1jcPdxMOM8wAWKwJKOGpmdRepetQKmt3O6AeipA=;
+        b=mKuDlT604UbMuCqS+hNfKjKSKMHuQxzY3K9qNkugnGk4ZKW2aphVyZV8uxxAfXxP3b
+         2kNHc1hXPDolGukJCaU4bV04+a5jPoNeeYnSZGgUNDOY6yF3nyXywOWHIuejoc82U59T
+         D+uu1hcrdUqu7VO/WCQhSDJY/ZKZV6PWHpaGFu1h90gbXicikRQ7KiBXhVDmkfmks/9j
+         Vfm7pVzPR/0irxHCGYVHSWxyHv+IsOoEqfZbEerbUlz68X+ec+2IgG0A+rkPY46owBor
+         0Ef1lAul5ZHy9+Ptpki2HJfBdrQdJ9eu1g9kwVheFjB59OqJEZcg1m2UiGRQuOm6oajP
+         0VkQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:content-transfer-encoding
-         :in-reply-to:references:subject:from:cc:to:date:message-id
-         :user-agent;
-        bh=F5/qH043zEuGeatUEpHVuXqbPsOkFkmiSQ+O0T+kgNI=;
-        b=pazTUMz41gmmyDwhSTg1MOKdu6nsfHqcutRTRtc3fU7VTlqVBKik8esi49nqRb+J9h
-         y62uxzMNaDemYJp0JGmg8TStvxFiCY3ljXAUybB6003SmbUBzQ75DBIkl08W39CFvklF
-         YASkEr5FVdXFiHv581HCdE1sqLsgEC268zQmO6HGVLih73yHogAQ23HOZIy1MNzBfxLs
-         4DqZe0Y4CxQsBdvfTmpABNZESfRNmkOWwSmHkz7fdgNlqYH0M9ln8JirjlTVKU976B70
-         +xedQ4IksEcwpjyOSxhztLG0oIcYVQ0YKoYZUNL8yjOeHjS3YayY/OHIXz93OIV3Bzfp
-         THFw==
-X-Gm-Message-State: AOAM530Cd7vTC0JERQGq0y5rLXl7ieQbZPI2GOSDguskwVzSg+bqiuMT
-        5PyjKq1b2+KMFsnOaR0NOel0TaKOgHFjIQ==
-X-Google-Smtp-Source: ABdhPJzE8O8QFPi4at6QU9iWZO8FPHQ/o/AIuLT2fpJQ9Opv/aO707p4HOAAU7mEUsaVWB5etuwZ6g==
-X-Received: by 2002:aa7:9009:0:b029:154:f822:27c9 with SMTP id m9-20020aa790090000b0290154f82227c9mr14645151pfo.48.1602290394214;
-        Fri, 09 Oct 2020 17:39:54 -0700 (PDT)
-Received: from chromium.org ([2620:15c:202:201:3e52:82ff:fe6c:83ab])
-        by smtp.gmail.com with ESMTPSA id m4sm11572541pgv.87.2020.10.09.17.39.53
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 09 Oct 2020 17:39:53 -0700 (PDT)
-Content-Type: text/plain; charset="utf-8"
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=GSxc1jcPdxMOM8wAWKwJKOGpmdRepetQKmt3O6AeipA=;
+        b=iG+fNVapdHFXBBRwOt7s4T0Pv9xZGTYwtOkpF9SS+ylITcy4Ip6muQccWigM8rBZ2g
+         BefOJLGp/CpT7cTeRUOcrwAksHAsyVxnPOFuX03jmZP6UhPbNTMxDtzudoAL1ISFGlS3
+         Yq4/nPFXkm74QPE369ZcNvlZmiIqD62M80aaM0eihdiuuAPZVn2h5OyoEisRrB9lqVYA
+         GDUfTqmGXxvf89iW7N6Pp0s71h+GVCZDkGApk+UOilREivQLCmUWgSOtqLokJqZt3Mb2
+         4zfbLnFqce/5OtRNOPtmdPm54GwcXcO1//yiow0w0WVgZyWqVEZ4TnGECdpa81EGDC04
+         kxlw==
+X-Gm-Message-State: AOAM532CS9JsYcJzRyu7Wlmc2s6vBgcE0jrq8PJ/t3cbRZEV/1FAf3z/
+        T/B/Ts+xXcktxqQJpPGBhSlVgw==
+X-Google-Smtp-Source: ABdhPJzKUuP7Im7jPjqJdjWDyjufCL/3BlFPgeVI0oXPC4lGXlLZmTlDH3V/D4lDFAnLzVCB7Ir4wQ==
+X-Received: by 2002:adf:f7ca:: with SMTP id a10mr17430725wrq.321.1602292907690;
+        Fri, 09 Oct 2020 18:21:47 -0700 (PDT)
+Received: from [192.168.1.8] ([195.24.90.54])
+        by smtp.googlemail.com with ESMTPSA id d23sm13717633wmb.6.2020.10.09.18.21.46
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 09 Oct 2020 18:21:47 -0700 (PDT)
+Subject: Re: [PATCH 2/3] venus: vdec: Make decoder return LAST flag for
+ sufficient event
+To:     vgarodia@codeaurora.org,
+        Stanimir Varbanov <stanimir.varbanov@linaro.org>
+Cc:     linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Alexandre Courbot <acourbot@chromium.org>,
+        Mansur Alisha Shaik <mansur@codeaurora.org>
+References: <20200928164431.21884-1-stanimir.varbanov@linaro.org>
+ <20200928164431.21884-3-stanimir.varbanov@linaro.org>
+ <5a823acc60d4c5cace1d2562adc548ff@codeaurora.org>
+From:   Stanimir Varbanov <stanimir.varbanov@linaro.org>
+Message-ID: <5af74a17-6a93-5ac2-533e-8fca5c8d2faf@linaro.org>
+Date:   Sat, 10 Oct 2020 04:21:45 +0300
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.10.0
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <20201008155154.2.I7b22281453b8a18ab16ef2bfd4c641fb1cc6a92c@changeid>
-References: <20201008225235.2035820-1-dianders@chromium.org> <20201008155154.2.I7b22281453b8a18ab16ef2bfd4c641fb1cc6a92c@changeid>
-Subject: Re: [PATCH 2/3] Revert "i2c: i2c-qcom-geni: Fix DMA transfer race"
-From:   Stephen Boyd <swboyd@chromium.org>
-Cc:     linux-arm-msm@vger.kernel.org, linux-i2c@vger.kernel.org,
-        Douglas Anderson <dianders@chromium.org>,
-        Andy Gross <agross@kernel.org>,
-        Mukesh Savaliya <msavaliy@codeaurora.org>,
-        linux-kernel@vger.kernel.org
-To:     Akash Asthana <akashast@codeaurora.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Douglas Anderson <dianders@chromium.org>,
-        Wolfram Sang <wsa@kernel.org>
-Date:   Fri, 09 Oct 2020 17:39:52 -0700
-Message-ID: <160229039221.310579.11648298092136196056@swboyd.mtv.corp.google.com>
-User-Agent: alot/0.9.1
+In-Reply-To: <5a823acc60d4c5cace1d2562adc548ff@codeaurora.org>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Douglas Anderson (2020-10-08 15:52:34)
-> This reverts commit 02b9aec59243c6240fc42884acc958602146ddf6.
->=20
-> As talked about in the patch ("soc: qcom: geni: More properly switch
-> to DMA mode"), swapping the order of geni_se_setup_m_cmd() and
-> geni_se_xx_dma_prep() can sometimes cause corrupted transfers.  Thus
-> we traded one problem for another.  Now that we've debugged the
-> problem further and fixed the geni helper functions to more disable
-> FIFO interrupts when we move to DMA mode we can revert it and end up
-> with (hopefully) zero problems!
->=20
-> To be explicit, the patch ("soc: qcom: geni: More properly switch
-> to DMA mode") is a prerequisite for this one.
->=20
-> Fixes: 02b9aec59243 ("i2c: i2c-qcom-geni: Fix DMA transfer race")
-> Signed-off-by: Douglas Anderson <dianders@chromium.org>
-> ---
+Hi Vikash,
 
-Reviewed-by: Stephen Boyd <swboyd@chromium.org>
+On 10/7/20 10:53 PM, vgarodia@codeaurora.org wrote:
+> Hi Stan,
+> 
+> On 2020-09-28 22:14, Stanimir Varbanov wrote:
+>> This makes the decoder to behaives equally for sufficient and
+> behaves
+> 
+>> insufficient events. After this change the LAST buffer flag will be set
+>> when the new resolution (in dynamic-resolution-change state) is smaller
+>> then the old bitstream resolution.
+>>
+>> Signed-off-by: Stanimir Varbanov <stanimir.varbanov@linaro.org>
+>> ---
+>>  drivers/media/platform/qcom/venus/vdec.c | 41 ++++++++++++++++--------
+>>  1 file changed, 27 insertions(+), 14 deletions(-)
+>>
+>> diff --git a/drivers/media/platform/qcom/venus/vdec.c
+>> b/drivers/media/platform/qcom/venus/vdec.c
+>> index c11bdf3ca21b..c006401255dc 100644
+>> --- a/drivers/media/platform/qcom/venus/vdec.c
+>> +++ b/drivers/media/platform/qcom/venus/vdec.c
+>> @@ -634,6 +634,7 @@ static int vdec_output_conf(struct venus_inst *inst)
+>>  {
+>>      struct venus_core *core = inst->core;
+>>      struct hfi_enable en = { .enable = 1 };
+>> +    struct hfi_buffer_requirements bufreq;
+>>      u32 width = inst->out_width;
+>>      u32 height = inst->out_height;
+>>      u32 out_fmt, out2_fmt;
+>> @@ -709,6 +710,22 @@ static int vdec_output_conf(struct venus_inst *inst)
+>>      }
+>>
+>>      if (IS_V3(core) || IS_V4(core)) {
+>> +        ret = venus_helper_get_bufreq(inst, HFI_BUFFER_OUTPUT, &bufreq);
+>> +        if (ret)
+>> +            return ret;
+>> +
+>> +        if (bufreq.size > inst->output_buf_size)
+>> +            return -EINVAL;
+>> +
+>> +        if (inst->dpb_fmt) {
+>> +            ret = venus_helper_get_bufreq(inst, HFI_BUFFER_OUTPUT2,
+>> &bufreq);
+>> +            if (ret)
+>> +                return ret;
+>> +
+>> +            if (bufreq.size > inst->output2_buf_size)
+>> +                return -EINVAL;
+>> +        }
+>> +
+>>          if (inst->output2_buf_size) {
+>>              ret = venus_helper_set_bufsize(inst,
+>>                                 inst->output2_buf_size,
+>> @@ -1327,19 +1344,15 @@ static void vdec_event_change(struct
+>> venus_inst *inst,
+>>      dev_dbg(dev, VDBGM "event %s sufficient resources (%ux%u)\n",
+>>          sufficient ? "" : "not", ev_data->width, ev_data->height);
+>>
+>> -    if (sufficient) {
+>> -        hfi_session_continue(inst);
+>> -    } else {
+>> -        switch (inst->codec_state) {
+>> -        case VENUS_DEC_STATE_INIT:
+>> -            inst->codec_state = VENUS_DEC_STATE_CAPTURE_SETUP;
+>> -            break;
+>> -        case VENUS_DEC_STATE_DECODING:
+>> -            inst->codec_state = VENUS_DEC_STATE_DRC;
+>> -            break;
+>> -        default:
+>> -            break;
+>> -        }
+>> +    switch (inst->codec_state) {
+>> +    case VENUS_DEC_STATE_INIT:
+>> +        inst->codec_state = VENUS_DEC_STATE_CAPTURE_SETUP;
+>> +        break;
+>> +    case VENUS_DEC_STATE_DECODING:
+>> +        inst->codec_state = VENUS_DEC_STATE_DRC;
+> 
+> Video firmware would raise reconfig event to driver even for cases like
+> interlace detection, color space change in the bitstream. If not with
+> this patch,
+> we can optimize by sending reconfig event only for resolution and
+> bitdepth update,
+> in a followup patch.
+
+Good point. Sure, I can do that in this series as separate patch.
+
+> 
+>> +        break;
+>> +    default:
+>> +        break;
+>>      }
+>>
+>>      /*
+>> @@ -1348,7 +1361,7 @@ static void vdec_event_change(struct venus_inst
+>> *inst,
+>>       * itself doesn't mark the last decoder output buffer with HFI
+>> EOS flag.
+>>       */
+>>
+>> -    if (!sufficient && inst->codec_state == VENUS_DEC_STATE_DRC) {
+>> +    if (inst->codec_state == VENUS_DEC_STATE_DRC) {
+>>          struct vb2_v4l2_buffer *last;
+>>          int ret;
+
+-- 
+regards,
+Stan
