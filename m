@@ -2,185 +2,82 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 041B4289D26
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 10 Oct 2020 03:41:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 39CC4289E20
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 10 Oct 2020 06:05:08 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729315AbgJJBlT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 9 Oct 2020 21:41:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41456 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729230AbgJJBVu (ORCPT
+        id S1726541AbgJJEEe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 10 Oct 2020 00:04:34 -0400
+Received: from mail-m17613.qiye.163.com ([59.111.176.13]:33584 "EHLO
+        mail-m17613.qiye.163.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730883AbgJJDgG (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 9 Oct 2020 21:21:50 -0400
-Received: from mail-wr1-x443.google.com (mail-wr1-x443.google.com [IPv6:2a00:1450:4864:20::443])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4786CC0613D0
-        for <linux-arm-msm@vger.kernel.org>; Fri,  9 Oct 2020 18:21:49 -0700 (PDT)
-Received: by mail-wr1-x443.google.com with SMTP id n15so12051670wrq.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 09 Oct 2020 18:21:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=GSxc1jcPdxMOM8wAWKwJKOGpmdRepetQKmt3O6AeipA=;
-        b=mKuDlT604UbMuCqS+hNfKjKSKMHuQxzY3K9qNkugnGk4ZKW2aphVyZV8uxxAfXxP3b
-         2kNHc1hXPDolGukJCaU4bV04+a5jPoNeeYnSZGgUNDOY6yF3nyXywOWHIuejoc82U59T
-         D+uu1hcrdUqu7VO/WCQhSDJY/ZKZV6PWHpaGFu1h90gbXicikRQ7KiBXhVDmkfmks/9j
-         Vfm7pVzPR/0irxHCGYVHSWxyHv+IsOoEqfZbEerbUlz68X+ec+2IgG0A+rkPY46owBor
-         0Ef1lAul5ZHy9+Ptpki2HJfBdrQdJ9eu1g9kwVheFjB59OqJEZcg1m2UiGRQuOm6oajP
-         0VkQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=GSxc1jcPdxMOM8wAWKwJKOGpmdRepetQKmt3O6AeipA=;
-        b=iG+fNVapdHFXBBRwOt7s4T0Pv9xZGTYwtOkpF9SS+ylITcy4Ip6muQccWigM8rBZ2g
-         BefOJLGp/CpT7cTeRUOcrwAksHAsyVxnPOFuX03jmZP6UhPbNTMxDtzudoAL1ISFGlS3
-         Yq4/nPFXkm74QPE369ZcNvlZmiIqD62M80aaM0eihdiuuAPZVn2h5OyoEisRrB9lqVYA
-         GDUfTqmGXxvf89iW7N6Pp0s71h+GVCZDkGApk+UOilREivQLCmUWgSOtqLokJqZt3Mb2
-         4zfbLnFqce/5OtRNOPtmdPm54GwcXcO1//yiow0w0WVgZyWqVEZ4TnGECdpa81EGDC04
-         kxlw==
-X-Gm-Message-State: AOAM532CS9JsYcJzRyu7Wlmc2s6vBgcE0jrq8PJ/t3cbRZEV/1FAf3z/
-        T/B/Ts+xXcktxqQJpPGBhSlVgw==
-X-Google-Smtp-Source: ABdhPJzKUuP7Im7jPjqJdjWDyjufCL/3BlFPgeVI0oXPC4lGXlLZmTlDH3V/D4lDFAnLzVCB7Ir4wQ==
-X-Received: by 2002:adf:f7ca:: with SMTP id a10mr17430725wrq.321.1602292907690;
-        Fri, 09 Oct 2020 18:21:47 -0700 (PDT)
-Received: from [192.168.1.8] ([195.24.90.54])
-        by smtp.googlemail.com with ESMTPSA id d23sm13717633wmb.6.2020.10.09.18.21.46
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 09 Oct 2020 18:21:47 -0700 (PDT)
-Subject: Re: [PATCH 2/3] venus: vdec: Make decoder return LAST flag for
- sufficient event
-To:     vgarodia@codeaurora.org,
-        Stanimir Varbanov <stanimir.varbanov@linaro.org>
-Cc:     linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Alexandre Courbot <acourbot@chromium.org>,
-        Mansur Alisha Shaik <mansur@codeaurora.org>
-References: <20200928164431.21884-1-stanimir.varbanov@linaro.org>
- <20200928164431.21884-3-stanimir.varbanov@linaro.org>
- <5a823acc60d4c5cace1d2562adc548ff@codeaurora.org>
-From:   Stanimir Varbanov <stanimir.varbanov@linaro.org>
-Message-ID: <5af74a17-6a93-5ac2-533e-8fca5c8d2faf@linaro.org>
-Date:   Sat, 10 Oct 2020 04:21:45 +0300
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.10.0
+        Fri, 9 Oct 2020 23:36:06 -0400
+X-Greylist: delayed 339 seconds by postgrey-1.27 at vger.kernel.org; Fri, 09 Oct 2020 23:36:05 EDT
+Received: from ubuntu.localdomain (unknown [157.0.31.124])
+        by mail-m17613.qiye.163.com (Hmail) with ESMTPA id A04B4482738;
+        Sat, 10 Oct 2020 11:29:05 +0800 (CST)
+From:   Bernard Zhao <bernard@vivo.com>
+To:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Bernard Zhao <bernard@vivo.com>, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        linux-kernel@vger.kernel.org
+Cc:     opensource.kernel@vivo.com
+Subject: [PATCH] drm/msm/disp: add error value record in for circle`s error index
+Date:   Fri,  9 Oct 2020 20:28:56 -0700
+Message-Id: <20201010032858.4441-1-bernard@vivo.com>
+X-Mailer: git-send-email 2.28.0
 MIME-Version: 1.0
-In-Reply-To: <5a823acc60d4c5cace1d2562adc548ff@codeaurora.org>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
 Content-Transfer-Encoding: 8bit
+X-HM-Spam-Status: e1kfGhgUHx5ZQUtXWQgYFAkeWUFZS1VLWVdZKFlBSE83V1ktWUFJV1kPCR
+        oVCBIfWUFZHxpOT0sfHx0dGUlDVkpNS0lIS0tOT05DTUpVEwETFhoSFyQUDg9ZV1kWGg8SFR0UWU
+        FZT0tIVUpKS0hKQ1VLWQY+
+X-HM-Sender-Digest: e1kMHhlZQR0aFwgeV1kSHx4VD1lBWUc6OFE6DQw*Nz8eS0NDDhwNPUg2
+        L08KCxFVSlVKTUtJSEtLTk9NSEtOVTMWGhIXVRkeCRUaCR87DRINFFUYFBZFWVdZEgtZQVlKTkxV
+        S1VISlVKSU9ZV1kIAVlBSU1ISDcG
+X-HM-Tid: 0a75108e0b2d93bakuwsa04b4482738
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Vikash,
+In function dpu_core_irq_enable & dpu_core_irq_disable, when
+some index enable or disable failed, return value will be
+covered by next success index. Upper call function will not
+catch this error, this maybe does not meet the expectation.
+This change is to make the code a bit more readable.
 
-On 10/7/20 10:53 PM, vgarodia@codeaurora.org wrote:
-> Hi Stan,
-> 
-> On 2020-09-28 22:14, Stanimir Varbanov wrote:
->> This makes the decoder to behaives equally for sufficient and
-> behaves
-> 
->> insufficient events. After this change the LAST buffer flag will be set
->> when the new resolution (in dynamic-resolution-change state) is smaller
->> then the old bitstream resolution.
->>
->> Signed-off-by: Stanimir Varbanov <stanimir.varbanov@linaro.org>
->> ---
->>  drivers/media/platform/qcom/venus/vdec.c | 41 ++++++++++++++++--------
->>  1 file changed, 27 insertions(+), 14 deletions(-)
->>
->> diff --git a/drivers/media/platform/qcom/venus/vdec.c
->> b/drivers/media/platform/qcom/venus/vdec.c
->> index c11bdf3ca21b..c006401255dc 100644
->> --- a/drivers/media/platform/qcom/venus/vdec.c
->> +++ b/drivers/media/platform/qcom/venus/vdec.c
->> @@ -634,6 +634,7 @@ static int vdec_output_conf(struct venus_inst *inst)
->>  {
->>      struct venus_core *core = inst->core;
->>      struct hfi_enable en = { .enable = 1 };
->> +    struct hfi_buffer_requirements bufreq;
->>      u32 width = inst->out_width;
->>      u32 height = inst->out_height;
->>      u32 out_fmt, out2_fmt;
->> @@ -709,6 +710,22 @@ static int vdec_output_conf(struct venus_inst *inst)
->>      }
->>
->>      if (IS_V3(core) || IS_V4(core)) {
->> +        ret = venus_helper_get_bufreq(inst, HFI_BUFFER_OUTPUT, &bufreq);
->> +        if (ret)
->> +            return ret;
->> +
->> +        if (bufreq.size > inst->output_buf_size)
->> +            return -EINVAL;
->> +
->> +        if (inst->dpb_fmt) {
->> +            ret = venus_helper_get_bufreq(inst, HFI_BUFFER_OUTPUT2,
->> &bufreq);
->> +            if (ret)
->> +                return ret;
->> +
->> +            if (bufreq.size > inst->output2_buf_size)
->> +                return -EINVAL;
->> +        }
->> +
->>          if (inst->output2_buf_size) {
->>              ret = venus_helper_set_bufsize(inst,
->>                                 inst->output2_buf_size,
->> @@ -1327,19 +1344,15 @@ static void vdec_event_change(struct
->> venus_inst *inst,
->>      dev_dbg(dev, VDBGM "event %s sufficient resources (%ux%u)\n",
->>          sufficient ? "" : "not", ev_data->width, ev_data->height);
->>
->> -    if (sufficient) {
->> -        hfi_session_continue(inst);
->> -    } else {
->> -        switch (inst->codec_state) {
->> -        case VENUS_DEC_STATE_INIT:
->> -            inst->codec_state = VENUS_DEC_STATE_CAPTURE_SETUP;
->> -            break;
->> -        case VENUS_DEC_STATE_DECODING:
->> -            inst->codec_state = VENUS_DEC_STATE_DRC;
->> -            break;
->> -        default:
->> -            break;
->> -        }
->> +    switch (inst->codec_state) {
->> +    case VENUS_DEC_STATE_INIT:
->> +        inst->codec_state = VENUS_DEC_STATE_CAPTURE_SETUP;
->> +        break;
->> +    case VENUS_DEC_STATE_DECODING:
->> +        inst->codec_state = VENUS_DEC_STATE_DRC;
-> 
-> Video firmware would raise reconfig event to driver even for cases like
-> interlace detection, color space change in the bitstream. If not with
-> this patch,
-> we can optimize by sending reconfig event only for resolution and
-> bitdepth update,
-> in a followup patch.
+Signed-off-by: Bernard Zhao <bernard@vivo.com>
+---
+ drivers/gpu/drm/msm/disp/dpu1/dpu_core_irq.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-Good point. Sure, I can do that in this series as separate patch.
-
-> 
->> +        break;
->> +    default:
->> +        break;
->>      }
->>
->>      /*
->> @@ -1348,7 +1361,7 @@ static void vdec_event_change(struct venus_inst
->> *inst,
->>       * itself doesn't mark the last decoder output buffer with HFI
->> EOS flag.
->>       */
->>
->> -    if (!sufficient && inst->codec_state == VENUS_DEC_STATE_DRC) {
->> +    if (inst->codec_state == VENUS_DEC_STATE_DRC) {
->>          struct vb2_v4l2_buffer *last;
->>          int ret;
-
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_core_irq.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_core_irq.c
+index f1bc6a1af7a7..e6da0469b743 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_core_irq.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_core_irq.c
+@@ -123,8 +123,8 @@ int dpu_core_irq_enable(struct dpu_kms *dpu_kms, int *irq_idxs, u32 irq_count)
+ 		DRM_ERROR("irq_idx=%d enable_count=%d\n", irq_idxs[0], counts);
+ 
+ 	for (i = 0; (i < irq_count) && !ret; i++)
+-		ret = _dpu_core_irq_enable(dpu_kms, irq_idxs[i]);
+-
++		if (_dpu_core_irq_enable(dpu_kms, irq_idxs[i]) != 0)
++			ret = -EINVAL;
+ 	return ret;
+ }
+ 
+@@ -178,8 +178,8 @@ int dpu_core_irq_disable(struct dpu_kms *dpu_kms, int *irq_idxs, u32 irq_count)
+ 		DRM_ERROR("irq_idx=%d enable_count=%d\n", irq_idxs[0], counts);
+ 
+ 	for (i = 0; (i < irq_count) && !ret; i++)
+-		ret = _dpu_core_irq_disable(dpu_kms, irq_idxs[i]);
+-
++		if (_dpu_core_irq_disable(dpu_kms, irq_idxs[i]) != 0)
++			ret = -EINVAL;
+ 	return ret;
+ }
+ 
 -- 
-regards,
-Stan
+2.28.0
+
