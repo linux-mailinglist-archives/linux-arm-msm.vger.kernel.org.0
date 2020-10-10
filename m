@@ -2,26 +2,26 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 21BFD289E86
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 10 Oct 2020 07:32:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D9FA7289E91
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 10 Oct 2020 07:37:51 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730468AbgJJFcW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 10 Oct 2020 01:32:22 -0400
-Received: from alexa-out.qualcomm.com ([129.46.98.28]:18434 "EHLO
+        id S1730440AbgJJFcS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 10 Oct 2020 01:32:18 -0400
+Received: from alexa-out.qualcomm.com ([129.46.98.28]:52496 "EHLO
         alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730349AbgJJFcN (ORCPT
+        with ESMTP id S1726471AbgJJFcN (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
         Sat, 10 Oct 2020 01:32:13 -0400
 Received: from ironmsg07-lv.qualcomm.com (HELO ironmsg07-lv.qulacomm.com) ([10.47.202.151])
-  by alexa-out.qualcomm.com with ESMTP; 09 Oct 2020 22:32:08 -0700
+  by alexa-out.qualcomm.com with ESMTP; 09 Oct 2020 22:32:07 -0700
 X-QCInternal: smtphost
 Received: from ironmsg02-blr.qualcomm.com ([10.86.208.131])
-  by ironmsg07-lv.qulacomm.com with ESMTP/TLS/AES256-SHA; 09 Oct 2020 22:32:06 -0700
+  by ironmsg07-lv.qulacomm.com with ESMTP/TLS/AES256-SHA; 09 Oct 2020 22:32:05 -0700
 X-QCInternal: smtphost
 Received: from mdalam-linux.qualcomm.com ([10.201.2.71])
   by ironmsg02-blr.qualcomm.com with ESMTP; 10 Oct 2020 11:01:44 +0530
 Received: by mdalam-linux.qualcomm.com (Postfix, from userid 466583)
-        id B9926217BA; Sat, 10 Oct 2020 11:01:42 +0530 (IST)
+        id CCD51219FF; Sat, 10 Oct 2020 11:01:42 +0530 (IST)
 From:   Md Sadre Alam <mdalam@codeaurora.org>
 To:     agross@kernel.org, bjorn.andersson@linaro.org,
         miquel.raynal@bootlin.com, richard@nod.at, vigneshr@ti.com,
@@ -29,40 +29,38 @@ To:     agross@kernel.org, bjorn.andersson@linaro.org,
         linux-mtd@lists.infradead.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org
 Cc:     mdalam@codeaurora.org, sricharan@codeaurora.org
-Subject: [PATCH 0/5] mtd: rawnand: qcom: Add support for QSPI nand
-Date:   Sat, 10 Oct 2020 11:01:37 +0530
-Message-Id: <1602307902-16761-1-git-send-email-mdalam@codeaurora.org>
+Subject: [PATCH 1/5] dt-bindings: qcom_nandc: IPQ5018 QPIC NAND documentation
+Date:   Sat, 10 Oct 2020 11:01:38 +0530
+Message-Id: <1602307902-16761-2-git-send-email-mdalam@codeaurora.org>
 X-Mailer: git-send-email 2.7.4
+In-Reply-To: <1602307902-16761-1-git-send-email-mdalam@codeaurora.org>
+References: <1602307902-16761-1-git-send-email-mdalam@codeaurora.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-QPIC 2.0 supports Serial NAND support in addition to all features and
-commands in QPIC 1.0 for parallel NAND. Parallel and Serial NAND cannot
-operate simultaneously. QSPI nand devices will connect to QPIC IO_MACRO
-block of QPIC controller. There is a separate IO_MACRO clock for IO_MACRO
-block. Default IO_MACRO block divide the input clock by 4. so if IO_MACRO
-input clock is 320MHz then on bus it will be 80MHz, so QSPI nand device
-should also support this frequency.
+Qualcom IPQ5018 SoC uses QPIC NAND controller version 2.1.1
+which uses BAM DMA Engine and QSPI serial nand interface.
 
-QPIC provides 4 data pins to QSPI nand. In standard SPI mode (x1 mode) data
-transfer will occur on only 2 pins one pin for Serial data in and one for
-serial data out. In QUAD SPI mode (x4 mode) data transfer will occur at all
-the four data lines. QPIC controller supports command for x1 mode and x4 mode.
+Signed-off-by: Md Sadre Alam <mdalam@codeaurora.org>
+---
+ Documentation/devicetree/bindings/mtd/qcom_nandc.txt | 3 +++
+ 1 file changed, 3 insertions(+)
 
-Md Sadre Alam (5):
-  dt-bindings: qcom_nandc: IPQ5018 QPIC NAND documentation
-  mtd: rawnand: qcom: Add initial support for qspi nand
-  mtd: rawnand: qcom: Read QPIC version
-  mtd: rawnand: qcom: Enable support for erase,read & write for serial
-    nand.
-  mtd: rawnand: qcom: Add support for serial training.
-
- .../devicetree/bindings/mtd/qcom_nandc.txt         |   3 +
- drivers/mtd/nand/raw/nand_ids.c                    |  13 +
- drivers/mtd/nand/raw/qcom_nandc.c                  | 502 ++++++++++++++++++++-
- 3 files changed, 494 insertions(+), 24 deletions(-)
-
+diff --git a/Documentation/devicetree/bindings/mtd/qcom_nandc.txt b/Documentation/devicetree/bindings/mtd/qcom_nandc.txt
+index 5c2fba4..0bfa316 100644
+--- a/Documentation/devicetree/bindings/mtd/qcom_nandc.txt
++++ b/Documentation/devicetree/bindings/mtd/qcom_nandc.txt
+@@ -8,6 +8,9 @@ Required properties:
+                             IPQ4019 SoC and it uses BAM DMA
+     * "qcom,ipq8074-nand" - for QPIC NAND controller v1.5.0 being used in
+                             IPQ8074 SoC and it uses BAM DMA
++    * "qcom,ipq5018-nand" - for QPIC NAND controller v2.1.1 being used in
++                            IPQ5018 SoC and it uses BAM DMA and QSPI serial
++                            nand interface.
+ 
+ - reg:			MMIO address range
+ - clocks:		must contain core clock and always on clock
 -- 
 2.7.4
 
