@@ -2,189 +2,101 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 5535428C01E
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Oct 2020 20:57:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3802128C18F
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Oct 2020 21:40:38 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730746AbgJLS5k (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 12 Oct 2020 14:57:40 -0400
-Received: from mail-ot1-f67.google.com ([209.85.210.67]:35964 "EHLO
-        mail-ot1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727115AbgJLS5k (ORCPT
+        id S1729253AbgJLTkh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 12 Oct 2020 15:40:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58794 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727198AbgJLTkg (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 12 Oct 2020 14:57:40 -0400
-Received: by mail-ot1-f67.google.com with SMTP id 32so3598551otm.3;
-        Mon, 12 Oct 2020 11:57:39 -0700 (PDT)
+        Mon, 12 Oct 2020 15:40:36 -0400
+Received: from mail-wm1-x342.google.com (mail-wm1-x342.google.com [IPv6:2a00:1450:4864:20::342])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 918EDC0613D0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 12 Oct 2020 12:40:36 -0700 (PDT)
+Received: by mail-wm1-x342.google.com with SMTP id e23so11189841wme.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 12 Oct 2020 12:40:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=+EfUv/T2E3FnntdBC8S4jr9sPsz796Fi5uP55L4BrAM=;
+        b=Wypqo2E4gKtll0xj4IRPBM30Ax0Kr+xLg7R7En85zXkibEo6bp5CrdFuEFuzFnTi2A
+         EF/v6A6s3qMl56QhqfWx6boN1mJ8XM2IldqC53V0bJTNCuypA7N4CpeOjZidcy0QtSea
+         Fg9javKOdd5G+581vabzl31nb1PJEH1cGMeyghoop9Wrp6OdaHA30T83JaKULsZHk7th
+         j3A8BUpmfJy++rstbLygt3iMePhowH2YDk/LGRkmNiikFWVaeS44BJr/ffqa2sxU/sW6
+         aap5swmqwZ95gd1QEvzb6CL2G6w1AXAAhKXJOp5JOIqvYMLhBDglEyXm5aGyb0wRpWR/
+         p9lw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=ddIV4HQN24CafNYgtjScHKXn58YYBc4ENbBdZztl7Po=;
-        b=hW7NKjPA9XmDVlbiDZ1SzZSr2fz9arPeXwoM6C4WyojbDOlmGpgEnA9bH+EOF2CZl6
-         1rOP+iwS24Wz6dH22xVMUXMi+06Qzwzg3LL1YXv6hf5nLc9nuXTSO2QhO/A3tG/Wl+kK
-         qVOjp2W03a1DJTWfRv58rYuj6iDXMICFyEPZigqFCVVoZpYmmQB7eb8/DB0P/eLAhBrx
-         OSDMbGqMAkoIXaTu+LEBCzkY4aq5gOSG9mGeEvG4VaNzaAHwPDTghPTHp1NpO5DLivl2
-         KKGZ7rflgmGEay4FjBYZ+6v8nafGaLbqlw8itWDqQCKj3mEwmIVIr3+gzwGp8j6N6v6F
-         FxHQ==
-X-Gm-Message-State: AOAM532LzNDepTE0LNhwz8YUoHqXm50RSD6bb5hbLOr2O8d5EwkgcMKE
-        H9RxgiFMKF48/kztPruufe/aPS5RBbFO
-X-Google-Smtp-Source: ABdhPJw4IVll4ULsuJ5LXi+mVD/6wjOwgXKHePUC517QdcqQleAXdmNv1FWoCkkbRyTDphEGrvoV1g==
-X-Received: by 2002:a05:6830:1e19:: with SMTP id s25mr18618580otr.294.1602529058807;
-        Mon, 12 Oct 2020 11:57:38 -0700 (PDT)
-Received: from xps15 (24-155-109-49.dyn.grandenetworks.net. [24.155.109.49])
-        by smtp.gmail.com with ESMTPSA id 81sm9006727oti.79.2020.10.12.11.57.37
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 12 Oct 2020 11:57:38 -0700 (PDT)
-Received: (nullmailer pid 1908487 invoked by uid 1000);
-        Mon, 12 Oct 2020 18:57:37 -0000
-Date:   Mon, 12 Oct 2020 13:57:37 -0500
-From:   Rob Herring <robh@kernel.org>
-To:     Vinod Koul <vkoul@kernel.org>
-Cc:     dmaengine@vger.kernel.org,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Peter Ujfalusi <peter.ujfalusi@ti.com>
-Subject: Re: [PATCH v4 1/3] dt-bindings: dmaengine: Document qcom,gpi dma
- binding
-Message-ID: <20201012185737.GA1905980@bogus>
-References: <20201008123151.764238-1-vkoul@kernel.org>
- <20201008123151.764238-2-vkoul@kernel.org>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=+EfUv/T2E3FnntdBC8S4jr9sPsz796Fi5uP55L4BrAM=;
+        b=tHtH4IIwdSAziaHhraw0NFiMCCOSRaF4qNiamcNV/bQHfkI9bJH5ePo+Td+PfahGWS
+         qcUDYATGZGOTqChZyS2XYF02G9YItVn85tzzYUb8AJRkVPZpXOCuvndslUH7WgwztnkH
+         DQkByMWY8c2l5N3zqEsyIksqbZZNqxgsQSb8B6MNGCZFcoBNBV+anpnBS+qor3gjIzjT
+         QWWr7Oj/wjD74ZFBImFtUTt1H5RLMCDRyiJ/adXXJttEEzOvWHG2l6VL3JyOBP6IsBsU
+         TKvcJeiZE9M4rJ+T3kYGNOehYSRJzW67hyeXaIbge8A60NofMm/9Cq7gd7F9yoqBdAfd
+         Hc4w==
+X-Gm-Message-State: AOAM530E+1KmoVc04LJsYc8SmdLJe89bNZvPmkabfDiWeSBHZYGEEEOq
+        WSislMkclnR8niQANtPLyVNsNA==
+X-Google-Smtp-Source: ABdhPJwLeNcHMRSjmQ9MjHiT9XaiXa3Bt4emzJpT6lzHtPr7+Ii858iRpiy7q9HYHX8uvo178Ljx2w==
+X-Received: by 2002:a1c:1dc3:: with SMTP id d186mr11622031wmd.182.1602531635141;
+        Mon, 12 Oct 2020 12:40:35 -0700 (PDT)
+Received: from localhost.localdomain ([212.45.67.2])
+        by smtp.googlemail.com with ESMTPSA id f63sm24500203wme.38.2020.10.12.12.40.33
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 12 Oct 2020 12:40:34 -0700 (PDT)
+From:   Georgi Djakov <georgi.djakov@linaro.org>
+To:     linux-pm@vger.kernel.org
+Cc:     mdtipton@codeaurora.org, okukatla@codeaurora.org,
+        sibis@codeaurora.org, bjorn.andersson@linaro.org,
+        amit.pundir@linaro.org, georgi.djakov@linaro.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [PATCH] interconnect: qcom: sdm845: Enable keepalive for the MM1 BCM
+Date:   Mon, 12 Oct 2020 22:40:34 +0300
+Message-Id: <20201012194034.26944-1-georgi.djakov@linaro.org>
+X-Mailer: git-send-email 2.28.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20201008123151.764238-2-vkoul@kernel.org>
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Oct 08, 2020 at 06:01:49PM +0530, Vinod Koul wrote:
-> Add devicetree binding documentation for GPI DMA controller
-> implemented on Qualcomm SoCs
-> 
-> Signed-off-by: Vinod Koul <vkoul@kernel.org>
-> ---
->  .../devicetree/bindings/dma/qcom,gpi.yaml     | 86 +++++++++++++++++++
->  include/dt-bindings/dma/qcom-gpi.h            | 11 +++
->  2 files changed, 97 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/dma/qcom,gpi.yaml
->  create mode 100644 include/dt-bindings/dma/qcom-gpi.h
-> 
-> diff --git a/Documentation/devicetree/bindings/dma/qcom,gpi.yaml b/Documentation/devicetree/bindings/dma/qcom,gpi.yaml
-> new file mode 100644
-> index 000000000000..4470c1b2fd6c
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/dma/qcom,gpi.yaml
-> @@ -0,0 +1,86 @@
-> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/dma/qcom,gpi.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> +
-> +title: Qualcomm Technologies Inc GPI DMA controller
-> +
-> +maintainers:
-> +  - Vinod Koul <vkoul@kernel.org>
-> +
-> +description: |
-> +  QCOM GPI DMA controller provides DMA capabilities for
-> +  peripheral buses such as I2C, UART, and SPI.
-> +
-> +allOf:
-> +  - $ref: "dma-controller.yaml#"
-> +
-> +properties:
-> +  compatible:
-> +    enum:
-> +      - qcom,sdm845-gpi-dma
-> +
-> +  reg:
-> +    maxItems: 1
-> +
-> +  interrupts:
-> +    description:
-> +      Interrupt lines for each GPI instance
-> +    maxItems: 13
-> +
-> +  "#dma-cells":
-> +    const: 3
-> +    description: >
-> +      DMA clients must use the format described in dma.txt, giving a phandle
-> +      to the DMA controller plus the following 3 integer cells:
-> +      - channel: if set to 0xffffffff, any available channel will be allocated
-> +        for the client. Otherwise, the exact channel specified will be used.
-> +      - seid: serial id of the client as defined in the SoC documentation.
-> +      - client: type of the client as defined in dt-bindings/dma/qcom-gpi.h
-> +
-> +  iommus:
-> +    maxItems: 1
-> +
-> +  dma-channels:
-> +    maximum: 31
-> +
-> +  dma-channel-mask:
-> +    maxItems: 1
-> +
-> +required:
-> +  - compatible
-> +  - reg
-> +  - interrupts
-> +  - "#dma-cells"
-> +  - iommus
-> +  - dma-channels
-> +  - dma-channel-mask
+After enabling interconect scaling for display on the db845c board,
+in certain configurations the board hangs, while the following errors
+are observed on the console:
 
-additionalProperties: false
+  Error sending AMC RPMH requests (-110)
+  qcom_rpmh TCS Busy, retrying RPMH message send: addr=0x50000
+  qcom_rpmh TCS Busy, retrying RPMH message send: addr=0x50000
+  qcom_rpmh TCS Busy, retrying RPMH message send: addr=0x50000
+  ...
 
-With that,
+In this specific case, the above is related to one of the sequencers
+being stuck, while client drivers are returning from probe and trying
+to disable the currently unused clock and interconnect resources.
+Generally we want to keep the multimedia NoC enabled like the rest of
+the NoCs, so let's set the keepalive flag on it too.
 
-Reviewed-by: Rob Herring <robh@kernel.org>
+Fixes: aae57773fbe0 ("interconnect: qcom: sdm845: Split qnodes into their respective NoCs")
+Reported-by: Amit Pundir <amit.pundir@linaro.org>
+Signed-off-by: Georgi Djakov <georgi.djakov@linaro.org>
+---
+ drivers/interconnect/qcom/sdm845.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-> +
-> +examples:
-> +  - |
-> +    #include <dt-bindings/interrupt-controller/arm-gic.h>
-> +    #include <dt-bindings/dma/qcom-gpi.h>
-> +    gpi_dma0: dma-controller@800000 {
-> +        compatible = "qcom,gpi-dma";
-> +        #dma-cells = <3>;
-> +        reg = <0x00800000 0x60000>;
-> +        iommus = <&apps_smmu 0x0016 0x0>;
-> +        dma-channels = <13>;
-> +        dma-channel-mask = <0xfa>;
-> +        interrupts = <GIC_SPI 244 IRQ_TYPE_LEVEL_HIGH>,
-> +                     <GIC_SPI 245 IRQ_TYPE_LEVEL_HIGH>,
-> +                     <GIC_SPI 246 IRQ_TYPE_LEVEL_HIGH>,
-> +                     <GIC_SPI 247 IRQ_TYPE_LEVEL_HIGH>,
-> +                     <GIC_SPI 248 IRQ_TYPE_LEVEL_HIGH>,
-> +                     <GIC_SPI 249 IRQ_TYPE_LEVEL_HIGH>,
-> +                     <GIC_SPI 250 IRQ_TYPE_LEVEL_HIGH>,
-> +                     <GIC_SPI 251 IRQ_TYPE_LEVEL_HIGH>,
-> +                     <GIC_SPI 252 IRQ_TYPE_LEVEL_HIGH>,
-> +                     <GIC_SPI 253 IRQ_TYPE_LEVEL_HIGH>,
-> +                     <GIC_SPI 254 IRQ_TYPE_LEVEL_HIGH>,
-> +                     <GIC_SPI 255 IRQ_TYPE_LEVEL_HIGH>,
-> +                     <GIC_SPI 256 IRQ_TYPE_LEVEL_HIGH>;
-> +    };
-> +
-> +...
-> diff --git a/include/dt-bindings/dma/qcom-gpi.h b/include/dt-bindings/dma/qcom-gpi.h
-> new file mode 100644
-> index 000000000000..71f79eb7614c
-> --- /dev/null
-> +++ b/include/dt-bindings/dma/qcom-gpi.h
-> @@ -0,0 +1,11 @@
-> +/* SPDX-License-Identifier: GPL-2.0 */
-> +/* Copyright (c) 2020, Linaro Ltd.  */
-> +
-> +#ifndef __DT_BINDINGS_DMA_QCOM_GPI_H__
-> +#define __DT_BINDINGS_DMA_QCOM_GPI_H__
-> +
-> +#define QCOM_GPI_SPI		1
-> +#define QCOM_GPI_UART		2
-> +#define QCOM_GPI_I2C		3
-> +
-> +#endif /* __DT_BINDINGS_DMA_QCOM_GPI_H__ */
-> -- 
-> 2.26.2
-> 
+diff --git a/drivers/interconnect/qcom/sdm845.c b/drivers/interconnect/qcom/sdm845.c
+index 47556dc12ec0..5304aea3b058 100644
+--- a/drivers/interconnect/qcom/sdm845.c
++++ b/drivers/interconnect/qcom/sdm845.c
+@@ -151,7 +151,7 @@ DEFINE_QBCM(bcm_mc0, "MC0", true, &ebi);
+ DEFINE_QBCM(bcm_sh0, "SH0", true, &qns_llcc);
+ DEFINE_QBCM(bcm_mm0, "MM0", false, &qns_mem_noc_hf);
+ DEFINE_QBCM(bcm_sh1, "SH1", false, &qns_apps_io);
+-DEFINE_QBCM(bcm_mm1, "MM1", false, &qxm_camnoc_hf0_uncomp, &qxm_camnoc_hf1_uncomp, &qxm_camnoc_sf_uncomp, &qxm_camnoc_hf0, &qxm_camnoc_hf1, &qxm_mdp0, &qxm_mdp1);
++DEFINE_QBCM(bcm_mm1, "MM1", true, &qxm_camnoc_hf0_uncomp, &qxm_camnoc_hf1_uncomp, &qxm_camnoc_sf_uncomp, &qxm_camnoc_hf0, &qxm_camnoc_hf1, &qxm_mdp0, &qxm_mdp1);
+ DEFINE_QBCM(bcm_sh2, "SH2", false, &qns_memnoc_snoc);
+ DEFINE_QBCM(bcm_mm2, "MM2", false, &qns2_mem_noc);
+ DEFINE_QBCM(bcm_sh3, "SH3", false, &acm_tcu);
