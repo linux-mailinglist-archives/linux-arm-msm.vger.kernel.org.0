@@ -2,311 +2,467 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id EA84628BCA2
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Oct 2020 17:44:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6E51128BCEE
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Oct 2020 17:50:25 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2390046AbgJLPoD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 12 Oct 2020 11:44:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50306 "EHLO
+        id S2389092AbgJLPuY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 12 Oct 2020 11:50:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51278 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2389450AbgJLPoD (ORCPT
+        with ESMTP id S2390046AbgJLPuY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 12 Oct 2020 11:44:03 -0400
-Received: from mail-wr1-x444.google.com (mail-wr1-x444.google.com [IPv6:2a00:1450:4864:20::444])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 01421C0613D0;
-        Mon, 12 Oct 2020 08:44:02 -0700 (PDT)
-Received: by mail-wr1-x444.google.com with SMTP id e17so19690702wru.12;
-        Mon, 12 Oct 2020 08:44:01 -0700 (PDT)
+        Mon, 12 Oct 2020 11:50:24 -0400
+Received: from mail-pl1-x644.google.com (mail-pl1-x644.google.com [IPv6:2607:f8b0:4864:20::644])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B78D9C0613D2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 12 Oct 2020 08:50:23 -0700 (PDT)
+Received: by mail-pl1-x644.google.com with SMTP id c6so8810358plr.9
+        for <linux-arm-msm@vger.kernel.org>; Mon, 12 Oct 2020 08:50:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=jpV9pPePgk7X+17Ptd5YnDDPUtnS3BPR3dFjanZcVHw=;
-        b=kwZkAJi5O/qwHyIeGelXBkBVOJ1qO/DeNq4oth0PNlv9qiEQbgscM65e4h1rdp1At+
-         Z72vBS3lBCqDXBKNNrPlMaaiYtgcrwEBP9WhGBxyZz38cHewewW4boOoc7DokCahwMoU
-         /Pd5+QyBECiFkmXE89PNgaXXlhCRuJi/yJntQLJKZa0WALkHjC9IBJTwBXEvKZhigBtr
-         78gkvhvW7fK6kO089RMK1sFVIfUXIt9HNhuGNUQ2hsJY+UBY6fU5vSoRvWTarJCBGWp2
-         BBJKZz8+3Oh70iAZGIsuEP/ix0T8bnmRsjk6JZcNzwW27HnBOv8/jTilgqK2LkXQYmJW
-         Nrfw==
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id;
+        bh=wuYbqkZldMprqDVc6V4728IDdCCQwRsXIVBaruFwAn8=;
+        b=DCfs0+8sD7Lmfaf0JIm8p6L6hnLRaaWl1ZA6qK6fp4hHKMOkYVYDPrGmCgvkWpCukW
+         e8rZdRNOIqQJxAqEAMNsyNcuq/uEMtPgx3/NZr16x6G98pHOZWJn+hVurb22wZxOgdLo
+         Z9JTVEElOgcph5zm6HPRs4hFbD71FeIvCiQZ6FSSBR0yRegS0lhyhHMsOMoVUI9WcLuS
+         eF6MjFdWnqBwfzwnHABgGGhZL8ulK6wQYYHhtG3UJViQw++xpCVPkPqm6Zk1n+pZ6V9o
+         VOdOhMTy/AXrDjnpzf9AjobYKMLJBlq09Qq/WZZnocNLKtwYdkUuXDuEuHFkpMh5ToNV
+         71UA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=jpV9pPePgk7X+17Ptd5YnDDPUtnS3BPR3dFjanZcVHw=;
-        b=tvH1exqOjOR7yah8C0hkrSnMMG2lX3wPwuViPYst0+pxbXGGVAprrsId+BcO+7oHc5
-         Un1wuR2B/fShcuObDuxhTfPw9YOLTEhIV6unt4TRuLoz4o0W8rimOQ1WkXpIBRFtN9cU
-         sK+AgTkx+hAfpWJY5LBCKS+AUT7VSLaTMDqMyFYxG4d1i3DW8uaGD0DX1bv/BOL4r99a
-         T1BKVqWGX5HudiCWBEHGayTQ2QU9xedYtL78Wm3yx7I4xF++KDDafd0Vdt5PmqDH3H91
-         FrSS/EvuwCtSswRlPpN9Fvf37hLA9ndjY2a4OhwKyJnsispSRqwFr9TNtiDj/Qvn9GFC
-         J7lA==
-X-Gm-Message-State: AOAM533CCSv8/wEv1tYYIOfKr3+FcFy8T0PFzu3uNKAGN7FDj7rFg/xM
-        dzdUqpscBrMeUwQMpOE0qpWjgPTx1rNKlaWA69w=
-X-Google-Smtp-Source: ABdhPJyionoeMpYNaiXnTUJ3t9ssxi9sEDZgb3IVpJuATSKzDT7okIrcktQfADuqjSVkJyX/b9emfXf29+7UB8nt92g=
-X-Received: by 2002:adf:bc0f:: with SMTP id s15mr30983567wrg.83.1602517440479;
- Mon, 12 Oct 2020 08:44:00 -0700 (PDT)
-MIME-Version: 1.0
-References: <20201012020958.229288-1-robdclark@gmail.com> <20201012020958.229288-8-robdclark@gmail.com>
- <20201012143555.GA438822@phenom.ffwll.local>
-In-Reply-To: <20201012143555.GA438822@phenom.ffwll.local>
-From:   Rob Clark <robdclark@gmail.com>
-Date:   Mon, 12 Oct 2020 08:43:49 -0700
-Message-ID: <CAF6AEGstGtBswUUiyHxT2cCm8NwZekDnMzD0J_pQH37GwS=LiA@mail.gmail.com>
-Subject: Re: [PATCH v2 07/22] drm/msm: Do rpm get sooner in the submit path
-To:     Rob Clark <robdclark@gmail.com>,
-        dri-devel <dri-devel@lists.freedesktop.org>,
-        Rob Clark <robdclark@chromium.org>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
-        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
-        <linux-arm-msm@vger.kernel.org>,
-        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
-        <freedreno@lists.freedesktop.org>,
-        open list <linux-kernel@vger.kernel.org>
-Cc:     Daniel Vetter <daniel@ffwll.ch>, "Menon, Nishanth" <nm@ti.com>,
-        Viresh Kumar <viresh.kumar@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=wuYbqkZldMprqDVc6V4728IDdCCQwRsXIVBaruFwAn8=;
+        b=bhhpfKKadXCJ95cR5EGns0+mAexdTJa0mC5lx7NRumvPbG/nrvDQougMEKDDF5cm2f
+         rfP5jzbMQg16a6Q5sI0yEOKFwp4clc6TJ8/UdrY9CMAzySD1PvxMfS/XmSVYrFJlt1BY
+         Mz5MKTynFC7dFssHatIbOwIhEdUtfh4TzuuQjCHFDVrIapG9WK4XAerPQ6sQ9cmoB+x1
+         0HUcSxnYvz2wRT53xBI2fJxRpooH5Q1LabTCMzWZo13SHcrjwrO3RSurgSJTTbxMX8Tc
+         fz2UK9oeSJxEFDCV6/Sm4JOWyN1PzfleGWT7tYAeO584Y9YmG8s9s+UxH3RvQb+R8IlT
+         6teA==
+X-Gm-Message-State: AOAM532CoZEj5m65U2VfVrV7hdSMzyX1r4BFbFBdKaqkka9ULH9mz2tZ
+        I6yzmFGyEBt6TioJIB3cA9UZ
+X-Google-Smtp-Source: ABdhPJxbD7OWHdf6YDqGZfGlLaxZ8yTbzM1wxz3end6xgyV7GJvRLibAHcTsjBxUaHGsCfS9m0iAyw==
+X-Received: by 2002:a17:902:9042:b029:d3:b363:4ce7 with SMTP id w2-20020a1709029042b02900d3b3634ce7mr24156218plz.61.1602517822899;
+        Mon, 12 Oct 2020 08:50:22 -0700 (PDT)
+Received: from localhost.localdomain ([103.59.133.81])
+        by smtp.gmail.com with ESMTPSA id j1sm19351989pfj.202.2020.10.12.08.50.18
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 12 Oct 2020 08:50:21 -0700 (PDT)
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     rjw@rjwysocki.net, viresh.kumar@linaro.org, robh+dt@kernel.org
+Cc:     linux-pm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, bjorn.andersson@linaro.org,
+        linux-arm-msm@vger.kernel.org,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Subject: [PATCH v2] dt-bindings: cpufreq: cpufreq-qcom-hw: Convert to YAML bindings
+Date:   Mon, 12 Oct 2020 21:20:12 +0530
+Message-Id: <20201012155012.28938-1-manivannan.sadhasivam@linaro.org>
+X-Mailer: git-send-email 2.17.1
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Oct 12, 2020 at 7:35 AM Daniel Vetter <daniel@ffwll.ch> wrote:
->
-> On Sun, Oct 11, 2020 at 07:09:34PM -0700, Rob Clark wrote:
-> > From: Rob Clark <robdclark@chromium.org>
-> >
-> > Unfortunately, due to an dev_pm_opp locking interaction with
-> > mm->mmap_sem, we need to do pm get before aquiring obj locks,
-> > otherwise we can have anger lockdep with the chain:
->
-> tbh this sounds like a bug in that subsystem, since it means we cannot use
-> said subsystem in mmap handlers either.
->
-> So if you have some remapping unit or need to wake up your gpu to blt the
-> buffer into system memory first, we're toast. That doesn't sound right. So
-> maybe Cc: pm folks and figure out how to fix this long term properly? Imo
-> not a good reason to hold up this patch set, since unwrangling mmap_sem
-> tends to be work ...
+Convert Qualcomm cpufreq devicetree binding to YAML.
 
-+ a couple of PM folks
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+---
 
-Looks like it has been this way for quite some time, so I guess the
-overlap between things using dev_pm_opp and mmap is low..
+Changes in v2:
 
-fwiw, example splat so folks can see the locking interaction I am
-talking about.. I suspect the pm_opp interaction with mm->mmap_sem is
-from the debugfs calls while opp_table_lock is held?
+* Removed qcom,freq-domain property which doesn't belong to this binding
 
-[   15.627855] ======================================================
-[   15.634202] WARNING: possible circular locking dependency detected
-[   15.640550] 5.4.70 #41 Not tainted
-[   15.644050] ------------------------------------------------------
-[   15.650397] chrome/1805 is trying to acquire lock:
-[   15.655314] ffffffed90720738 (opp_table_lock){+.+.}, at:
-_find_opp_table+0x34/0x74
-[   15.663092]
-[   15.663092] but task is already holding lock:
-[   15.669082] ffffff80ff3911a8 (reservation_ww_class_mutex){+.+.},
-at: submit_lock_objects+0x70/0x1ec
-[   15.678369]
-[   15.678369] which lock already depends on the new lock.
-[   15.678369]
-[   15.686764]
-[   15.686764] the existing dependency chain (in reverse order) is:
-[   15.694438]
-[   15.694438] -> #3 (reservation_ww_class_mutex){+.+.}:
-[   15.701146]        __mutex_lock_common+0xec/0xc0c
-[   15.705978]        ww_mutex_lock_interruptible+0x5c/0xc4
-[   15.711432]        msm_gem_fault+0x2c/0x124
-[   15.715731]        __do_fault+0x40/0x16c
-[   15.719766]        handle_mm_fault+0x7cc/0xd98
-[   15.724337]        do_page_fault+0x230/0x3b4
-[   15.728721]        do_translation_fault+0x5c/0x78
-[   15.733558]        do_mem_abort+0x4c/0xb4
-[   15.737680]        el0_da+0x1c/0x20
-[   15.741266]
-[   15.741266] -> #2 (&mm->mmap_sem){++++}:
-[   15.746809]        __might_fault+0x70/0x98
-[   15.751022]        compat_filldir+0xf8/0x48c
-[   15.755412]        dcache_readdir+0x70/0x1dc
-[   15.759808]        iterate_dir+0xd4/0x180
-[   15.763931]        __arm64_compat_sys_getdents+0xa0/0x19c
-[   15.769476]        el0_svc_common+0xa8/0x178
-[   15.773861]        el0_svc_compat_handler+0x2c/0x40
-[   15.778868]        el0_svc_compat+0x8/0x10
-[   15.783075]
-[   15.783075] -> #1 (&sb->s_type->i_mutex_key#3){++++}:
-[   15.789788]        down_write+0x54/0x16c
-[   15.793826]        debugfs_remove_recursive+0x50/0x158
-[   15.799108]        opp_debug_unregister+0x34/0x114
-[   15.804028]        dev_pm_opp_put_opp_table+0xd0/0x14c
-[   15.809308]        dev_pm_opp_put_clkname+0x3c/0x50
-[   15.814318]        msm_dsi_host_destroy+0xb0/0xcc
-[   15.819149]        dsi_destroy+0x40/0x58
-[   15.823184]        dsi_bind+0x90/0x170
-[   15.827041]        component_bind_all+0xf0/0x208
-[   15.831787]        msm_drm_init+0x188/0x60c
-[   15.836084]        msm_drm_bind+0x24/0x30
-[   15.840205]        try_to_bring_up_master+0x15c/0x1a4
-[   15.845396]        __component_add+0x98/0x14c
-[   15.849878]        component_add+0x28/0x34
-[   15.854086]        dp_display_probe+0x324/0x370
-[   15.858744]        platform_drv_probe+0x90/0xb0
-[   15.863400]        really_probe+0x134/0x2ec
-[   15.867699]        driver_probe_device+0x64/0xfc
-[   15.872443]        __device_attach_driver+0x8c/0xa4
-[   15.877459]        bus_for_each_drv+0x90/0xd8
-[   15.881939]        __device_attach+0xc0/0x148
-[   15.886420]        device_initial_probe+0x20/0x2c
-[   15.891254]        bus_probe_device+0x34/0x94
-[   15.895726]        deferred_probe_work_func+0x78/0xb4
-[   15.900914]        process_one_work+0x30c/0x5d0
-[   15.905573]        worker_thread+0x240/0x3f0
-[   15.909959]        kthread+0x144/0x154
-[   15.913809]        ret_from_fork+0x10/0x18
-[   15.918016]
-[   15.918016] -> #0 (opp_table_lock){+.+.}:
-[   15.923660]        __lock_acquire+0xee4/0x2450
-[   15.928230]        lock_acquire+0x1cc/0x210
-[   15.932527]        __mutex_lock_common+0xec/0xc0c
-[   15.937359]        mutex_lock_nested+0x40/0x50
-[   15.941928]        _find_opp_table+0x34/0x74
-[   15.946312]        dev_pm_opp_find_freq_exact+0x2c/0xdc
-[   15.951680]        a6xx_gmu_resume+0xc8/0xecc
-[   15.952812] fscrypt: AES-256-CTS-CBC using implementation "cts-cbc-aes-ce"
-[   15.956161]        a6xx_pm_resume+0x148/0x200
-[   15.956166]        adreno_resume+0x28/0x34
-[   15.956171]        pm_generic_runtime_resume+0x34/0x48
-[   15.956174]        __rpm_callback+0x70/0x10c
-[   15.956176]        rpm_callback+0x34/0x8c
-[   15.956179]        rpm_resume+0x414/0x550
-[   15.956182]        __pm_runtime_resume+0x7c/0xa0
-[   15.956185]        msm_gpu_submit+0x60/0x1c0
-[   15.956190]        msm_ioctl_gem_submit+0xadc/0xb60
-[   16.003961]        drm_ioctl_kernel+0x9c/0x118
-[   16.008532]        drm_ioctl+0x27c/0x408
-[   16.012562]        drm_compat_ioctl+0xcc/0xdc
-[   16.017038]        __se_compat_sys_ioctl+0x100/0x206c
-[   16.022224]        __arm64_compat_sys_ioctl+0x20/0x2c
-[   16.027412]        el0_svc_common+0xa8/0x178
-[   16.031800]        el0_svc_compat_handler+0x2c/0x40
-[   16.036810]        el0_svc_compat+0x8/0x10
-[   16.041021]
-[   16.041021] other info that might help us debug this:
-[   16.041021]
-[   16.049235] Chain exists of:
-[   16.049235]   opp_table_lock --> &mm->mmap_sem --> reservation_ww_class_mutex
-[   16.049235]
-[   16.061014]  Possible unsafe locking scenario:
-[   16.061014]
-[   16.067091]        CPU0                    CPU1
-[   16.071750]        ----                    ----
-[   16.076399]   lock(reservation_ww_class_mutex);
-[   16.081059]                                lock(&mm->mmap_sem);
-[   16.087134]                                lock(reservation_ww_class_mutex);
-[   16.094369]   lock(opp_table_lock);
-[   16.097961]
-[   16.097961]  *** DEADLOCK ***
-[   16.097961]
-[   16.104038] 3 locks held by chrome/1805:
-[   16.108068]  #0: ffffff80fb20c0d8 (&dev->struct_mutex){+.+.}, at:
-msm_ioctl_gem_submit+0x264/0xb60
-[   16.117264]  #1: ffffff80dd712c70
-(reservation_ww_class_acquire){+.+.}, at:
-msm_ioctl_gem_submit+0x8e8/0xb60
-[   16.127357]  #2: ffffff80ff3911a8
-(reservation_ww_class_mutex){+.+.}, at: submit_lock_objects+0x70/0x1ec
-[   16.137089]
-[   16.137089] stack backtrace:
-[   16.141567] CPU: 4 PID: 1805 Comm: chrome Not tainted 5.4.70 #41
-[   16.147733] Hardware name: Google Lazor (rev1+) with LTE (DT)
-[   16.153632] Call trace:
-[   16.156154]  dump_backtrace+0x0/0x158
-[   16.159924]  show_stack+0x20/0x2c
-[   16.163340]  dump_stack+0xc8/0x160
-[   16.166840]  print_circular_bug+0x2c4/0x2c8
-[   16.171144]  check_noncircular+0x1a8/0x1b0
-[   16.175351]  __lock_acquire+0xee4/0x2450
-[   16.179382]  lock_acquire+0x1cc/0x210
-[   16.183146]  __mutex_lock_common+0xec/0xc0c
-[   16.187450]  mutex_lock_nested+0x40/0x50
-[   16.191481]  _find_opp_table+0x34/0x74
-[   16.195344]  dev_pm_opp_find_freq_exact+0x2c/0xdc
-[   16.200178]  a6xx_gmu_resume+0xc8/0xecc
-[   16.204120]  a6xx_pm_resume+0x148/0x200
-[   16.208064]  adreno_resume+0x28/0x34
-[   16.211743]  pm_generic_runtime_resume+0x34/0x48
-[   16.216488]  __rpm_callback+0x70/0x10c
-[   16.220342]  rpm_callback+0x34/0x8c
-[   16.223933]  rpm_resume+0x414/0x550
-[   16.227524]  __pm_runtime_resume+0x7c/0xa0
-[   16.231731]  msm_gpu_submit+0x60/0x1c0
-[   16.235586]  msm_ioctl_gem_submit+0xadc/0xb60
-[   16.240066]  drm_ioctl_kernel+0x9c/0x118
-[   16.244097]  drm_ioctl+0x27c/0x408
-[   16.247602]  drm_compat_ioctl+0xcc/0xdc
-[   16.251546]  __se_compat_sys_ioctl+0x100/0x206c
-[   16.256204]  __arm64_compat_sys_ioctl+0x20/0x2c
-[   16.260861]  el0_svc_common+0xa8/0x178
-[   16.264716]  el0_svc_compat_handler+0x2c/0x40
-[   16.269196]  el0_svc_compat+0x8/0x10
+ .../bindings/cpufreq/cpufreq-qcom-hw.txt      | 172 ---------------
+ .../bindings/cpufreq/cpufreq-qcom-hw.yaml     | 204 ++++++++++++++++++
+ 2 files changed, 204 insertions(+), 172 deletions(-)
+ delete mode 100644 Documentation/devicetree/bindings/cpufreq/cpufreq-qcom-hw.txt
+ create mode 100644 Documentation/devicetree/bindings/cpufreq/cpufreq-qcom-hw.yaml
 
-BR,
--R
+diff --git a/Documentation/devicetree/bindings/cpufreq/cpufreq-qcom-hw.txt b/Documentation/devicetree/bindings/cpufreq/cpufreq-qcom-hw.txt
+deleted file mode 100644
+index 9299028ee712..000000000000
+--- a/Documentation/devicetree/bindings/cpufreq/cpufreq-qcom-hw.txt
++++ /dev/null
+@@ -1,172 +0,0 @@
+-Qualcomm Technologies, Inc. CPUFREQ Bindings
+-
+-CPUFREQ HW is a hardware engine used by some Qualcomm Technologies, Inc. (QTI)
+-SoCs to manage frequency in hardware. It is capable of controlling frequency
+-for multiple clusters.
+-
+-Properties:
+-- compatible
+-	Usage:		required
+-	Value type:	<string>
+-	Definition:	must be "qcom,cpufreq-hw" or "qcom,cpufreq-epss".
+-
+-- clocks
+-	Usage:		required
+-	Value type:	<phandle> From common clock binding.
+-	Definition:	clock handle for XO clock and GPLL0 clock.
+-
+-- clock-names
+-	Usage:		required
+-	Value type:	<string> From common clock binding.
+-	Definition:	must be "xo", "alternate".
+-
+-- reg
+-	Usage:		required
+-	Value type:	<prop-encoded-array>
+-	Definition:	Addresses and sizes for the memory of the HW bases in
+-			each frequency domain.
+-- reg-names
+-	Usage:		Optional
+-	Value type:	<string>
+-	Definition:	Frequency domain name i.e.
+-			"freq-domain0", "freq-domain1".
+-
+-- #freq-domain-cells:
+-	Usage:		required.
+-	Definition:	Number of cells in a freqency domain specifier.
+-
+-* Property qcom,freq-domain
+-Devices supporting freq-domain must set their "qcom,freq-domain" property with
+-phandle to a cpufreq_hw followed by the Domain ID(0/1) in the CPU DT node.
+-
+-
+-Example:
+-
+-Example 1: Dual-cluster, Quad-core per cluster. CPUs within a cluster switch
+-DCVS state together.
+-
+-/ {
+-	cpus {
+-		#address-cells = <2>;
+-		#size-cells = <0>;
+-
+-		CPU0: cpu@0 {
+-			device_type = "cpu";
+-			compatible = "qcom,kryo385";
+-			reg = <0x0 0x0>;
+-			enable-method = "psci";
+-			next-level-cache = <&L2_0>;
+-			qcom,freq-domain = <&cpufreq_hw 0>;
+-			L2_0: l2-cache {
+-				compatible = "cache";
+-				next-level-cache = <&L3_0>;
+-				L3_0: l3-cache {
+-				      compatible = "cache";
+-				};
+-			};
+-		};
+-
+-		CPU1: cpu@100 {
+-			device_type = "cpu";
+-			compatible = "qcom,kryo385";
+-			reg = <0x0 0x100>;
+-			enable-method = "psci";
+-			next-level-cache = <&L2_100>;
+-			qcom,freq-domain = <&cpufreq_hw 0>;
+-			L2_100: l2-cache {
+-				compatible = "cache";
+-				next-level-cache = <&L3_0>;
+-			};
+-		};
+-
+-		CPU2: cpu@200 {
+-			device_type = "cpu";
+-			compatible = "qcom,kryo385";
+-			reg = <0x0 0x200>;
+-			enable-method = "psci";
+-			next-level-cache = <&L2_200>;
+-			qcom,freq-domain = <&cpufreq_hw 0>;
+-			L2_200: l2-cache {
+-				compatible = "cache";
+-				next-level-cache = <&L3_0>;
+-			};
+-		};
+-
+-		CPU3: cpu@300 {
+-			device_type = "cpu";
+-			compatible = "qcom,kryo385";
+-			reg = <0x0 0x300>;
+-			enable-method = "psci";
+-			next-level-cache = <&L2_300>;
+-			qcom,freq-domain = <&cpufreq_hw 0>;
+-			L2_300: l2-cache {
+-				compatible = "cache";
+-				next-level-cache = <&L3_0>;
+-			};
+-		};
+-
+-		CPU4: cpu@400 {
+-			device_type = "cpu";
+-			compatible = "qcom,kryo385";
+-			reg = <0x0 0x400>;
+-			enable-method = "psci";
+-			next-level-cache = <&L2_400>;
+-			qcom,freq-domain = <&cpufreq_hw 1>;
+-			L2_400: l2-cache {
+-				compatible = "cache";
+-				next-level-cache = <&L3_0>;
+-			};
+-		};
+-
+-		CPU5: cpu@500 {
+-			device_type = "cpu";
+-			compatible = "qcom,kryo385";
+-			reg = <0x0 0x500>;
+-			enable-method = "psci";
+-			next-level-cache = <&L2_500>;
+-			qcom,freq-domain = <&cpufreq_hw 1>;
+-			L2_500: l2-cache {
+-				compatible = "cache";
+-				next-level-cache = <&L3_0>;
+-			};
+-		};
+-
+-		CPU6: cpu@600 {
+-			device_type = "cpu";
+-			compatible = "qcom,kryo385";
+-			reg = <0x0 0x600>;
+-			enable-method = "psci";
+-			next-level-cache = <&L2_600>;
+-			qcom,freq-domain = <&cpufreq_hw 1>;
+-			L2_600: l2-cache {
+-				compatible = "cache";
+-				next-level-cache = <&L3_0>;
+-			};
+-		};
+-
+-		CPU7: cpu@700 {
+-			device_type = "cpu";
+-			compatible = "qcom,kryo385";
+-			reg = <0x0 0x700>;
+-			enable-method = "psci";
+-			next-level-cache = <&L2_700>;
+-			qcom,freq-domain = <&cpufreq_hw 1>;
+-			L2_700: l2-cache {
+-				compatible = "cache";
+-				next-level-cache = <&L3_0>;
+-			};
+-		};
+-	};
+-
+- soc {
+-	cpufreq_hw: cpufreq@17d43000 {
+-		compatible = "qcom,cpufreq-hw";
+-		reg = <0x17d43000 0x1400>, <0x17d45800 0x1400>;
+-		reg-names = "freq-domain0", "freq-domain1";
+-
+-		clocks = <&rpmhcc RPMH_CXO_CLK>, <&gcc GPLL0>;
+-		clock-names = "xo", "alternate";
+-
+-		#freq-domain-cells = <1>;
+-	};
+-}
+diff --git a/Documentation/devicetree/bindings/cpufreq/cpufreq-qcom-hw.yaml b/Documentation/devicetree/bindings/cpufreq/cpufreq-qcom-hw.yaml
+new file mode 100644
+index 000000000000..bc81b6203e27
+--- /dev/null
++++ b/Documentation/devicetree/bindings/cpufreq/cpufreq-qcom-hw.yaml
+@@ -0,0 +1,204 @@
++# SPDX-License-Identifier: GPL-2.0-only OR BSD-2-Clause
++%YAML 1.2
++---
++$id: http://devicetree.org/schemas/cpufreq/cpufreq-qcom-hw.yaml#
++$schema: http://devicetree.org/meta-schemas/core.yaml#
++
++title: Qualcomm Technologies, Inc. CPUFREQ
++
++maintainers:
++  - Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
++
++description: |
++
++  CPUFREQ HW is a hardware engine used by some Qualcomm Technologies, Inc. (QTI)
++  SoCs to manage frequency in hardware. It is capable of controlling frequency
++  for multiple clusters.
++
++properties:
++  compatible:
++    oneOf:
++      - description: v1 of CPUFREQ HW
++        items:
++          - const: qcom,cpufreq-hw
++
++      - description: v2 of CPUFREQ HW (EPSS)
++        items:
++          - enum:
++              - qcom,sm8250-cpufreq-epss
++          - const: qcom,cpufreq-epss
++
++  reg:
++    minItems: 2
++    maxItems: 3
++    items:
++      - description: Frequency domain 0 register region
++      - description: Frequency domain 1 register region
++      - description: Frequency domain 2 register region
++
++  reg-names:
++    minItems: 2
++    maxItems: 3
++    items:
++      - const: freq-domain0
++      - const: freq-domain1
++      - const: freq-domain2
++
++  clocks:
++    items:
++      - description: XO Clock
++      - description: GPLL0 Clock
++
++  clock-names:
++    items:
++      - const: xo
++      - const: alternate
++
++  '#freq-domain-cells':
++    const: 1
++
++required:
++  - compatible
++  - reg
++  - reg-names
++  - clocks
++  - clock-names
++  - '#freq-domain-cells'
++
++additionalProperties: false
++
++examples:
++  - |
++    #include <dt-bindings/clock/qcom,gcc-sdm845.h>
++    #include <dt-bindings/clock/qcom,rpmh.h>
++
++    // Example 1: Dual-cluster, Quad-core per cluster. CPUs within a cluster
++    // switch DCVS state together.
++    cpus {
++      #address-cells = <2>;
++      #size-cells = <0>;
++
++      CPU0: cpu@0 {
++        device_type = "cpu";
++        compatible = "qcom,kryo385";
++        reg = <0x0 0x0>;
++        enable-method = "psci";
++        next-level-cache = <&L2_0>;
++        qcom,freq-domain = <&cpufreq_hw 0>;
++        L2_0: l2-cache {
++          compatible = "cache";
++          next-level-cache = <&L3_0>;
++          L3_0: l3-cache {
++            compatible = "cache";
++          };
++        };
++      };
++
++      CPU1: cpu@100 {
++        device_type = "cpu";
++        compatible = "qcom,kryo385";
++        reg = <0x0 0x100>;
++        enable-method = "psci";
++        next-level-cache = <&L2_100>;
++        qcom,freq-domain = <&cpufreq_hw 0>;
++        L2_100: l2-cache {
++          compatible = "cache";
++          next-level-cache = <&L3_0>;
++        };
++      };
++
++      CPU2: cpu@200 {
++        device_type = "cpu";
++        compatible = "qcom,kryo385";
++        reg = <0x0 0x200>;
++        enable-method = "psci";
++        next-level-cache = <&L2_200>;
++        qcom,freq-domain = <&cpufreq_hw 0>;
++        L2_200: l2-cache {
++          compatible = "cache";
++          next-level-cache = <&L3_0>;
++        };
++      };
++
++      CPU3: cpu@300 {
++        device_type = "cpu";
++        compatible = "qcom,kryo385";
++        reg = <0x0 0x300>;
++        enable-method = "psci";
++        next-level-cache = <&L2_300>;
++        qcom,freq-domain = <&cpufreq_hw 0>;
++        L2_300: l2-cache {
++          compatible = "cache";
++          next-level-cache = <&L3_0>;
++        };
++      };
++
++      CPU4: cpu@400 {
++        device_type = "cpu";
++        compatible = "qcom,kryo385";
++        reg = <0x0 0x400>;
++        enable-method = "psci";
++        next-level-cache = <&L2_400>;
++        qcom,freq-domain = <&cpufreq_hw 1>;
++        L2_400: l2-cache {
++          compatible = "cache";
++          next-level-cache = <&L3_0>;
++        };
++      };
++
++      CPU5: cpu@500 {
++        device_type = "cpu";
++        compatible = "qcom,kryo385";
++        reg = <0x0 0x500>;
++        enable-method = "psci";
++        next-level-cache = <&L2_500>;
++        qcom,freq-domain = <&cpufreq_hw 1>;
++        L2_500: l2-cache {
++          compatible = "cache";
++          next-level-cache = <&L3_0>;
++        };
++      };
++
++      CPU6: cpu@600 {
++        device_type = "cpu";
++        compatible = "qcom,kryo385";
++        reg = <0x0 0x600>;
++        enable-method = "psci";
++        next-level-cache = <&L2_600>;
++        qcom,freq-domain = <&cpufreq_hw 1>;
++        L2_600: l2-cache {
++          compatible = "cache";
++          next-level-cache = <&L3_0>;
++        };
++      };
++
++      CPU7: cpu@700 {
++        device_type = "cpu";
++        compatible = "qcom,kryo385";
++        reg = <0x0 0x700>;
++        enable-method = "psci";
++        next-level-cache = <&L2_700>;
++        qcom,freq-domain = <&cpufreq_hw 1>;
++        L2_700: l2-cache {
++          compatible = "cache";
++          next-level-cache = <&L3_0>;
++        };
++      };
++    };
++
++    soc {
++      #address-cells = <1>;
++      #size-cells = <1>;
++
++      cpufreq@17d43000 {
++        compatible = "qcom,cpufreq-hw";
++        reg = <0x17d43000 0x1400>, <0x17d45800 0x1400>;
++        reg-names = "freq-domain0", "freq-domain1";
++
++        clocks = <&rpmhcc RPMH_CXO_CLK>, <&gcc GPLL0>;
++        clock-names = "xo", "alternate";
++
++        #freq-domain-cells = <1>;
++      };
++    };
++...
+-- 
+2.17.1
 
-> -Daniel
->
-> >
-> >   opp_table_lock --> &mm->mmap_sem --> reservation_ww_class_mutex
-> >
-> > For an explicit fencing userspace, the impact should be minimal
-> > as we do all the fence waits before this point.  It could result
-> > in some needless resumes in error cases, etc.
-> >
-> > Signed-off-by: Rob Clark <robdclark@chromium.org>
-> > ---
-> >  drivers/gpu/drm/msm/msm_gem_submit.c | 15 +++++++++++++--
-> >  1 file changed, 13 insertions(+), 2 deletions(-)
-> >
-> > diff --git a/drivers/gpu/drm/msm/msm_gem_submit.c b/drivers/gpu/drm/msm/msm_gem_submit.c
-> > index 002130d826aa..a9422d043bfe 100644
-> > --- a/drivers/gpu/drm/msm/msm_gem_submit.c
-> > +++ b/drivers/gpu/drm/msm/msm_gem_submit.c
-> > @@ -744,11 +744,20 @@ int msm_ioctl_gem_submit(struct drm_device *dev, void *data,
-> >
-> >       ret = submit_lookup_objects(submit, args, file);
-> >       if (ret)
-> > -             goto out;
-> > +             goto out_pre_pm;
-> >
-> >       ret = submit_lookup_cmds(submit, args, file);
-> >       if (ret)
-> > -             goto out;
-> > +             goto out_pre_pm;
-> > +
-> > +     /*
-> > +      * Thanks to dev_pm_opp opp_table_lock interactions with mm->mmap_sem
-> > +      * in the resume path, we need to to rpm get before we lock objs.
-> > +      * Which unfortunately might involve powering up the GPU sooner than
-> > +      * is necessary.  But at least in the explicit fencing case, we will
-> > +      * have already done all the fence waiting.
-> > +      */
-> > +     pm_runtime_get_sync(&gpu->pdev->dev);
-> >
-> >       /* copy_*_user while holding a ww ticket upsets lockdep */
-> >       ww_acquire_init(&submit->ticket, &reservation_ww_class);
-> > @@ -825,6 +834,8 @@ int msm_ioctl_gem_submit(struct drm_device *dev, void *data,
-> >
-> >
-> >  out:
-> > +     pm_runtime_put(&gpu->pdev->dev);
-> > +out_pre_pm:
-> >       submit_cleanup(submit);
-> >       if (has_ww_ticket)
-> >               ww_acquire_fini(&submit->ticket);
-> > --
-> > 2.26.2
-> >
->
-> --
-> Daniel Vetter
-> Software Engineer, Intel Corporation
-> http://blog.ffwll.ch
