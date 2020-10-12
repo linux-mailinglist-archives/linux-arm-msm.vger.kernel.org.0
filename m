@@ -2,131 +2,189 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C13A328BF20
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Oct 2020 19:40:42 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5535428C01E
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Oct 2020 20:57:41 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2390759AbgJLRki (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 12 Oct 2020 13:40:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40080 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2390724AbgJLRki (ORCPT
+        id S1730746AbgJLS5k (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 12 Oct 2020 14:57:40 -0400
+Received: from mail-ot1-f67.google.com ([209.85.210.67]:35964 "EHLO
+        mail-ot1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727115AbgJLS5k (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 12 Oct 2020 13:40:38 -0400
-Received: from mail-pf1-x442.google.com (mail-pf1-x442.google.com [IPv6:2607:f8b0:4864:20::442])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C198EC0613D1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 12 Oct 2020 10:40:38 -0700 (PDT)
-Received: by mail-pf1-x442.google.com with SMTP id b26so14171457pff.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 12 Oct 2020 10:40:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=KPCBQGJFn0SxOT5QAxB8SIDlgbbUMf897x10D8eAgl4=;
-        b=FvsoGzfEMAk7KCFRI3bHDorDFAvOk6IoDRmR44X64G369voHZ2IeqDSdfjZildjfP0
-         RZZWKR2sJelEXoAwAsaPQaX6yTj4panBgXDHYIZbKV3H/3GIY/RypYvGctGRov0L0ehN
-         BNuf+At3a39634/FaSGSTwgyMcM0EF42V5ZMc=
+        Mon, 12 Oct 2020 14:57:40 -0400
+Received: by mail-ot1-f67.google.com with SMTP id 32so3598551otm.3;
+        Mon, 12 Oct 2020 11:57:39 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=KPCBQGJFn0SxOT5QAxB8SIDlgbbUMf897x10D8eAgl4=;
-        b=Ya1+rxFJtWzPPtmmYgHKLTgbJok4G14LXgRnNrZP7gziBvqpr9/r1UsLziqiAbvhru
-         QH6faP5watBDZS//bwCzPpjW9ircmEIYJ+IZVkyuWbkZmki+W0V5DR9hb9AR91nARRIj
-         xIjh4tuB2dkGqxbXltuYXbt0reZe4bIixwRTBBfNN6ZIGPnZn2wjeTv27X4yiJXMleFJ
-         AEp9lePcNIJDw2x0E/MS+FSbaoGieT2TctnSizBFbrF7OzkvKpQAGmenFqDgh3Opw+tu
-         XfPt7C/U1fBuhUxIbjVjWEr6U6mHOP87wyYJKBkTLwIOfJqKYTpokfsepFhjznFoF8hW
-         L0/w==
-X-Gm-Message-State: AOAM533wUNQMW1VdinT1wTNiRo3lgPWpV7CCu4neCHpGpsWV5Rvmwzs9
-        wJ9eXZ3CWZv6jcN2CuuHqUME8g==
-X-Google-Smtp-Source: ABdhPJx4n2kFy/ocJYOXijLTETMFaYerFoXQf6WoDsch6QEnFEuDBxSgbzWWb9ZwlRnPsbgGotlw/A==
-X-Received: by 2002:a17:90a:5881:: with SMTP id j1mr11925578pji.56.1602524438208;
-        Mon, 12 Oct 2020 10:40:38 -0700 (PDT)
-Received: from localhost ([2620:15c:202:1:f693:9fff:fef4:e70a])
-        by smtp.gmail.com with ESMTPSA id w74sm6240640pff.200.2020.10.12.10.40.36
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 12 Oct 2020 10:40:37 -0700 (PDT)
-Date:   Mon, 12 Oct 2020 10:40:35 -0700
-From:   mka@chromium.org
-To:     Akhil P Oommen <akhilpo@codeaurora.org>
-Cc:     freedreno@lists.freedesktop.org, robh@kernel.org,
-        robdclark@gmail.com, linux-arm-msm@vger.kernel.org,
-        dri-devel@freedesktop.org, linux-kernel@vger.kernel.org
-Subject: Re: [2/2] drm/msm: Add support for GPU cooling
-Message-ID: <20201012174035.GA44627@google.com>
-References: <1602176947-17385-2-git-send-email-akhilpo@codeaurora.org>
- <20201009183640.GB1292413@google.com>
- <cab2105e-7a8c-988f-dcc1-056692a94e8b@codeaurora.org>
+        bh=ddIV4HQN24CafNYgtjScHKXn58YYBc4ENbBdZztl7Po=;
+        b=hW7NKjPA9XmDVlbiDZ1SzZSr2fz9arPeXwoM6C4WyojbDOlmGpgEnA9bH+EOF2CZl6
+         1rOP+iwS24Wz6dH22xVMUXMi+06Qzwzg3LL1YXv6hf5nLc9nuXTSO2QhO/A3tG/Wl+kK
+         qVOjp2W03a1DJTWfRv58rYuj6iDXMICFyEPZigqFCVVoZpYmmQB7eb8/DB0P/eLAhBrx
+         OSDMbGqMAkoIXaTu+LEBCzkY4aq5gOSG9mGeEvG4VaNzaAHwPDTghPTHp1NpO5DLivl2
+         KKGZ7rflgmGEay4FjBYZ+6v8nafGaLbqlw8itWDqQCKj3mEwmIVIr3+gzwGp8j6N6v6F
+         FxHQ==
+X-Gm-Message-State: AOAM532LzNDepTE0LNhwz8YUoHqXm50RSD6bb5hbLOr2O8d5EwkgcMKE
+        H9RxgiFMKF48/kztPruufe/aPS5RBbFO
+X-Google-Smtp-Source: ABdhPJw4IVll4ULsuJ5LXi+mVD/6wjOwgXKHePUC517QdcqQleAXdmNv1FWoCkkbRyTDphEGrvoV1g==
+X-Received: by 2002:a05:6830:1e19:: with SMTP id s25mr18618580otr.294.1602529058807;
+        Mon, 12 Oct 2020 11:57:38 -0700 (PDT)
+Received: from xps15 (24-155-109-49.dyn.grandenetworks.net. [24.155.109.49])
+        by smtp.gmail.com with ESMTPSA id 81sm9006727oti.79.2020.10.12.11.57.37
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 12 Oct 2020 11:57:38 -0700 (PDT)
+Received: (nullmailer pid 1908487 invoked by uid 1000);
+        Mon, 12 Oct 2020 18:57:37 -0000
+Date:   Mon, 12 Oct 2020 13:57:37 -0500
+From:   Rob Herring <robh@kernel.org>
+To:     Vinod Koul <vkoul@kernel.org>
+Cc:     dmaengine@vger.kernel.org,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Peter Ujfalusi <peter.ujfalusi@ti.com>
+Subject: Re: [PATCH v4 1/3] dt-bindings: dmaengine: Document qcom,gpi dma
+ binding
+Message-ID: <20201012185737.GA1905980@bogus>
+References: <20201008123151.764238-1-vkoul@kernel.org>
+ <20201008123151.764238-2-vkoul@kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <cab2105e-7a8c-988f-dcc1-056692a94e8b@codeaurora.org>
+In-Reply-To: <20201008123151.764238-2-vkoul@kernel.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Oct 12, 2020 at 07:03:51PM +0530, Akhil P Oommen wrote:
-> On 10/10/2020 12:06 AM, mka@chromium.org wrote:
-> > Hi Akhil,
-> > 
-> > On Thu, Oct 08, 2020 at 10:39:07PM +0530, Akhil P Oommen wrote:
-> > > Register GPU as a devfreq cooling device so that it can be passively
-> > > cooled by the thermal framework.
-> > > 
-> > > Signed-off-by: Akhil P Oommen <akhilpo@codeaurora.org>
-> > > ---
-> > >   drivers/gpu/drm/msm/msm_gpu.c | 13 ++++++++++++-
-> > >   drivers/gpu/drm/msm/msm_gpu.h |  2 ++
-> > >   2 files changed, 14 insertions(+), 1 deletion(-)
-> > > 
-> > > diff --git a/drivers/gpu/drm/msm/msm_gpu.c b/drivers/gpu/drm/msm/msm_gpu.c
-> > > index 55d1648..93ffd66 100644
-> > > --- a/drivers/gpu/drm/msm/msm_gpu.c
-> > > +++ b/drivers/gpu/drm/msm/msm_gpu.c
-> > > @@ -14,6 +14,7 @@
-> > >   #include <generated/utsrelease.h>
-> > >   #include <linux/string_helpers.h>
-> > >   #include <linux/devfreq.h>
-> > > +#include <linux/devfreq_cooling.h>
-> > >   #include <linux/devcoredump.h>
-> > >   #include <linux/sched/task.h>
-> > > @@ -107,9 +108,18 @@ static void msm_devfreq_init(struct msm_gpu *gpu)
-> > >   	if (IS_ERR(gpu->devfreq.devfreq)) {
-> > >   		DRM_DEV_ERROR(&gpu->pdev->dev, "Couldn't initialize GPU devfreq\n");
-> > >   		gpu->devfreq.devfreq = NULL;
-> > > +		return;
-> > >   	}
-> > >   	devfreq_suspend_device(gpu->devfreq.devfreq);
-> > > +
-> > > +	gpu->cooling = of_devfreq_cooling_register(gpu->pdev->dev.of_node,
-> > > +			gpu->devfreq.devfreq);
-> > > +	if (IS_ERR(gpu->cooling)) {
-> > > +		DRM_DEV_ERROR(&gpu->pdev->dev,
-> > > +				"Couldn't register GPU cooling device\n");
-> > > +		gpu->cooling = NULL;
-> > > +	}
-> > >   }
-> > >   static int enable_pwrrail(struct msm_gpu *gpu)
-> > > @@ -926,7 +936,6 @@ int msm_gpu_init(struct drm_device *drm, struct platform_device *pdev,
-> > >   	msm_devfreq_init(gpu);
-> > > -
-> > >   	gpu->aspace = gpu->funcs->create_address_space(gpu, pdev);
-> > >   	if (gpu->aspace == NULL)
-> > > @@ -1005,4 +1014,6 @@ void msm_gpu_cleanup(struct msm_gpu *gpu)
-> > >   		gpu->aspace->mmu->funcs->detach(gpu->aspace->mmu);
-> > >   		msm_gem_address_space_put(gpu->aspace);
-> > >   	}
-> > > +
-> > > +	devfreq_cooling_unregister(gpu->cooling);
-> > 
-> > Resources should be released in reverse order, otherwise the cooling device
-> > could use resources that have already been freed.
-> > Why do you think this is not the correct order? If you are thinking
-> about devfreq struct, it is managed device resource.
+On Thu, Oct 08, 2020 at 06:01:49PM +0530, Vinod Koul wrote:
+> Add devicetree binding documentation for GPI DMA controller
+> implemented on Qualcomm SoCs
+> 
+> Signed-off-by: Vinod Koul <vkoul@kernel.org>
+> ---
+>  .../devicetree/bindings/dma/qcom,gpi.yaml     | 86 +++++++++++++++++++
+>  include/dt-bindings/dma/qcom-gpi.h            | 11 +++
+>  2 files changed, 97 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/dma/qcom,gpi.yaml
+>  create mode 100644 include/dt-bindings/dma/qcom-gpi.h
+> 
+> diff --git a/Documentation/devicetree/bindings/dma/qcom,gpi.yaml b/Documentation/devicetree/bindings/dma/qcom,gpi.yaml
+> new file mode 100644
+> index 000000000000..4470c1b2fd6c
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/dma/qcom,gpi.yaml
+> @@ -0,0 +1,86 @@
+> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/dma/qcom,gpi.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: Qualcomm Technologies Inc GPI DMA controller
+> +
+> +maintainers:
+> +  - Vinod Koul <vkoul@kernel.org>
+> +
+> +description: |
+> +  QCOM GPI DMA controller provides DMA capabilities for
+> +  peripheral buses such as I2C, UART, and SPI.
+> +
+> +allOf:
+> +  - $ref: "dma-controller.yaml#"
+> +
+> +properties:
+> +  compatible:
+> +    enum:
+> +      - qcom,sdm845-gpi-dma
+> +
+> +  reg:
+> +    maxItems: 1
+> +
+> +  interrupts:
+> +    description:
+> +      Interrupt lines for each GPI instance
+> +    maxItems: 13
+> +
+> +  "#dma-cells":
+> +    const: 3
+> +    description: >
+> +      DMA clients must use the format described in dma.txt, giving a phandle
+> +      to the DMA controller plus the following 3 integer cells:
+> +      - channel: if set to 0xffffffff, any available channel will be allocated
+> +        for the client. Otherwise, the exact channel specified will be used.
+> +      - seid: serial id of the client as defined in the SoC documentation.
+> +      - client: type of the client as defined in dt-bindings/dma/qcom-gpi.h
+> +
+> +  iommus:
+> +    maxItems: 1
+> +
+> +  dma-channels:
+> +    maximum: 31
+> +
+> +  dma-channel-mask:
+> +    maxItems: 1
+> +
+> +required:
+> +  - compatible
+> +  - reg
+> +  - interrupts
+> +  - "#dma-cells"
+> +  - iommus
+> +  - dma-channels
+> +  - dma-channel-mask
 
-I did not check specifically if changing the frequency really uses any of the
-resources that are released previously, In any case it's not a good idea to
-allow other parts of the kernel to use a half initialized/torn down device.
-Even if it isn't a problem today someone could change the driver to use any
-of these resources (or add a new one) in a frequency change, without even
-thinking about the cooling device, just (rightfully) asuming that things are
-set up and torn down in a sane order.
+additionalProperties: false
+
+With that,
+
+Reviewed-by: Rob Herring <robh@kernel.org>
+
+> +
+> +examples:
+> +  - |
+> +    #include <dt-bindings/interrupt-controller/arm-gic.h>
+> +    #include <dt-bindings/dma/qcom-gpi.h>
+> +    gpi_dma0: dma-controller@800000 {
+> +        compatible = "qcom,gpi-dma";
+> +        #dma-cells = <3>;
+> +        reg = <0x00800000 0x60000>;
+> +        iommus = <&apps_smmu 0x0016 0x0>;
+> +        dma-channels = <13>;
+> +        dma-channel-mask = <0xfa>;
+> +        interrupts = <GIC_SPI 244 IRQ_TYPE_LEVEL_HIGH>,
+> +                     <GIC_SPI 245 IRQ_TYPE_LEVEL_HIGH>,
+> +                     <GIC_SPI 246 IRQ_TYPE_LEVEL_HIGH>,
+> +                     <GIC_SPI 247 IRQ_TYPE_LEVEL_HIGH>,
+> +                     <GIC_SPI 248 IRQ_TYPE_LEVEL_HIGH>,
+> +                     <GIC_SPI 249 IRQ_TYPE_LEVEL_HIGH>,
+> +                     <GIC_SPI 250 IRQ_TYPE_LEVEL_HIGH>,
+> +                     <GIC_SPI 251 IRQ_TYPE_LEVEL_HIGH>,
+> +                     <GIC_SPI 252 IRQ_TYPE_LEVEL_HIGH>,
+> +                     <GIC_SPI 253 IRQ_TYPE_LEVEL_HIGH>,
+> +                     <GIC_SPI 254 IRQ_TYPE_LEVEL_HIGH>,
+> +                     <GIC_SPI 255 IRQ_TYPE_LEVEL_HIGH>,
+> +                     <GIC_SPI 256 IRQ_TYPE_LEVEL_HIGH>;
+> +    };
+> +
+> +...
+> diff --git a/include/dt-bindings/dma/qcom-gpi.h b/include/dt-bindings/dma/qcom-gpi.h
+> new file mode 100644
+> index 000000000000..71f79eb7614c
+> --- /dev/null
+> +++ b/include/dt-bindings/dma/qcom-gpi.h
+> @@ -0,0 +1,11 @@
+> +/* SPDX-License-Identifier: GPL-2.0 */
+> +/* Copyright (c) 2020, Linaro Ltd.  */
+> +
+> +#ifndef __DT_BINDINGS_DMA_QCOM_GPI_H__
+> +#define __DT_BINDINGS_DMA_QCOM_GPI_H__
+> +
+> +#define QCOM_GPI_SPI		1
+> +#define QCOM_GPI_UART		2
+> +#define QCOM_GPI_I2C		3
+> +
+> +#endif /* __DT_BINDINGS_DMA_QCOM_GPI_H__ */
+> -- 
+> 2.26.2
+> 
