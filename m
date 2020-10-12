@@ -2,144 +2,116 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 225F128AF14
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Oct 2020 09:31:59 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 378B528AFAB
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Oct 2020 10:09:56 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727395AbgJLHb6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 12 Oct 2020 03:31:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58834 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727132AbgJLHb5 (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 12 Oct 2020 03:31:57 -0400
-Received: from mail-ed1-x544.google.com (mail-ed1-x544.google.com [IPv6:2a00:1450:4864:20::544])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 32898C0613D0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 12 Oct 2020 00:31:56 -0700 (PDT)
-Received: by mail-ed1-x544.google.com with SMTP id l16so15856932eds.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 12 Oct 2020 00:31:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=CzDxLaDLFJzWcap/ARMkfpBesRsQ6cFDLsAfzEHhwNg=;
-        b=b0UFofGey9MHN4SSKeWJne/jISh0kZ4rKs08Umat1GtUhptcnknv3VsZFMe74YDxK8
-         +JFbEMLjSb3QLuIDhnLOtzA8nFoFEAtB07cpzErKshtf7030J2/yyB2L8QDfIJM6IFMG
-         wOgjFRhEoC0PoIJ1v5e52Av5WQBBAKNAChPIDSvM3CHvCIEEA1uWvjmJ9cXZJvrc70R2
-         DbQR1JXv2jr8nGlgyMO1cZ1JtR6tayglpD8EwubGrKVXQgUgRCvptXMtyhJBm+3VbHFc
-         qPo/L0Y73MO+zXoSQ+VKiA4TKFVoReqFKJE9CBqM6095iH22+gT3A2xMNboe/ZQxGfxl
-         uF3w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=CzDxLaDLFJzWcap/ARMkfpBesRsQ6cFDLsAfzEHhwNg=;
-        b=SOchri5aLv0xCS1ojcx18K/45kpNlvpspwAH/4Yn24t2qd/cfJtOY7doiAnww3WSbK
-         rE8T8Sg9UM+lsOrZEM2Pp8iMpoJksp6QIaQJQLrs3x3+lqKKL+r39qdvtJc+FpYZmG/L
-         6a/Au+AKF4pSCGF/Xe08osIAECGgLK4TiiJM9pN7S0g07E1eACNhw1GkCvVvPu2g90eI
-         s9xXsNbKUJGWTYuc3qJwcnH/kIZrdYYzjizo0a/0PYwLT0JUfDyTcda8f05rC9izpfP/
-         oG1dywa/a06i0XIs9ny70dArTvb7ywtiJsiaZkQITcQgtacfIYbUtgQllJskXvDWJ0Y/
-         wBJQ==
-X-Gm-Message-State: AOAM5306p6Qcz+thKMH0gR2HciiwAm5cTROKZTKfUY7yYuqIa2GOdDDM
-        gGPB6/it7QyNHPb1xfR60U9wlA==
-X-Google-Smtp-Source: ABdhPJxaZ45/LGCB6zLJp30ygGXXJGsXRsI9tcD8xqo9itEMOS9n1yfi201ECa1UI9OmrMS8rBHpBg==
-X-Received: by 2002:aa7:dcc7:: with SMTP id w7mr12914876edu.80.1602487914471;
-        Mon, 12 Oct 2020 00:31:54 -0700 (PDT)
-Received: from yoga ([194.182.8.81])
-        by smtp.gmail.com with ESMTPSA id n22sm10021525eji.106.2020.10.12.00.31.53
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 12 Oct 2020 00:31:53 -0700 (PDT)
-Date:   Mon, 12 Oct 2020 09:31:52 +0200
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Will Deacon <will@kernel.org>
-Cc:     Robin Murphy <robin.murphy@arm.com>,
-        Joerg Roedel <joro@8bytes.org>,
-        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
-        Jordan Crouse <jcrouse@codeaurora.org>,
-        Rob Clark <robdclark@chromium.org>,
-        Sibi Sankar <sibis@codeaurora.org>,
-        linux-arm-kernel@lists.infradead.org,
-        iommu@lists.linux-foundation.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH v3 6/8] iommu/arm-smmu: Add impl hook for inherit boot
- mappings
-Message-ID: <20201012073152.GA2998@yoga>
-References: <20200904155513.282067-1-bjorn.andersson@linaro.org>
- <20200904155513.282067-7-bjorn.andersson@linaro.org>
- <0bfcc8f7-d054-616b-834b-319461b1ecb9@arm.com>
- <20200913032559.GT3715@yoga>
- <20200921210814.GE3811@willie-the-truck>
+        id S1728751AbgJLIJz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 12 Oct 2020 04:09:55 -0400
+Received: from z5.mailgun.us ([104.130.96.5]:28078 "EHLO z5.mailgun.us"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1728702AbgJLIJy (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 12 Oct 2020 04:09:54 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1602490194; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
+ Subject: Sender; bh=5YXnNsXE0oYDUilxaLIpOVbD5idrWDQORor7EfH/zAk=; b=aEn3Tx/S2/qnF21U0Oha0+h74m+X7UAGpykxhHYC24DDnYGPdP4fHRl1yji/xy6FwHGPRaKU
+ hrQ2MrKEy0f6/bgysEInSYf6pDvvSpi3M/vNrDdn+rD8xTo6E5tH60jH6Td5YIgjs5/gScLo
+ o6eBy6rNwMd+h889wsxL/2hJR4k=
+X-Mailgun-Sending-Ip: 104.130.96.5
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n02.prod.us-west-2.postgun.com with SMTP id
+ 5f840f51319d4e9cb50af478 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 12 Oct 2020 08:09:53
+ GMT
+Sender: akashast=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id D88A1C433F1; Mon, 12 Oct 2020 08:09:53 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        NICE_REPLY_A,SPF_FAIL,URIBL_BLOCKED autolearn=no autolearn_force=no
+        version=3.4.0
+Received: from [192.168.43.98] (unknown [47.9.68.210])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: akashast)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 7A391C433CB;
+        Mon, 12 Oct 2020 08:09:48 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 7A391C433CB
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=akashast@codeaurora.org
+Subject: Re: [PATCH 1/3] soc: qcom: geni: More properly switch to DMA mode
+To:     Douglas Anderson <dianders@chromium.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Wolfram Sang <wsa@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org, Stephen Boyd <swboyd@chromium.org>,
+        linux-i2c@vger.kernel.org, Andy Gross <agross@kernel.org>,
+        Girish Mahadevan <girishm@codeaurora.org>,
+        Karthikeyan Ramasubramanian <kramasub@codeaurora.org>,
+        Mukesh Kumar Savaliya <msavaliy@codeaurora.org>,
+        linux-kernel@vger.kernel.org
+References: <20201008225235.2035820-1-dianders@chromium.org>
+ <20201008155154.1.Ifdb1b69fa3367b81118e16e9e4e63299980ca798@changeid>
+From:   Akash Asthana <akashast@codeaurora.org>
+Message-ID: <698e9616-cca9-e01d-391e-ad0439c08e04@codeaurora.org>
+Date:   Mon, 12 Oct 2020 13:39:36 +0530
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
+ Thunderbird/68.12.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20200921210814.GE3811@willie-the-truck>
+In-Reply-To: <20201008155154.1.Ifdb1b69fa3367b81118e16e9e4e63299980ca798@changeid>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon 21 Sep 23:08 CEST 2020, Will Deacon wrote:
 
-> On Sat, Sep 12, 2020 at 10:25:59PM -0500, Bjorn Andersson wrote:
-> > On Fri 11 Sep 12:13 CDT 2020, Robin Murphy wrote:
-> > > On 2020-09-04 16:55, Bjorn Andersson wrote:
-> > > > Add a new operation to allow platform implementations to inherit any
-> > > > stream mappings from the boot loader.
-> > > 
-> > > Is there a reason we need an explicit step for this? The aim of the
-> > > cfg_probe hook is that the SMMU software state should all be set up by then,
-> > > and you can mess about with it however you like before arm_smmu_reset()
-> > > actually commits anything to hardware. I would have thought you could
-> > > permanently steal a context bank, configure it as your bypass hole, read out
-> > > the previous SME configuration and tweak smmu->smrs and smmu->s2crs
-> > > appropriately all together "invisibly" at that point.
-> > 
-> > I did this because as of 6a79a5a3842b ("iommu/arm-smmu: Call
-> > configuration impl hook before consuming features") we no longer have
-> > setup pgsize_bitmap as we hit cfg_probe, which means that I need to
-> > replicate this logic to set up the iommu_domain.
-> > 
-> > If I avoid setting up an iommu_domain for the identity context, as you
-> > request in patch 8, this shouldn't be needed anymore.
-> > 
-> > > If that can't work, I'm very curious as to what I've overlooked.
-> > > 
-> > 
-> > I believe that will work, I will rework the patches and try it out.
-> 
-> Did you get a chance to rework this?
-> 
+On 10/9/2020 4:22 AM, Douglas Anderson wrote:
+> On geni-i2c transfers using DMA, it was seen that if you program the
+> command (I2C_READ) before calling geni_se_rx_dma_prep() that it could
+> cause interrupts to fire.  If we get unlucky, these interrupts can
+> just keep firing (and not be handled) blocking further progress and
+> hanging the system.
+>
+> In commit 02b9aec59243 ("i2c: i2c-qcom-geni: Fix DMA transfer race")
+> we avoided that by making sure we didn't program the command until
+> after geni_se_rx_dma_prep() was called.  While that avoided the
+> problems, it also turns out to be invalid.  At least in the TX case we
+> started seeing sporadic corrupted transfers.  This is easily seen by
+> adding an msleep() between the DMA prep and the writing of the
+> command, which makes the problem worse.  That means we need to revert
+> that commit and find another way to fix the bogus IRQs.
+>
+> Specifically, after reverting commit 02b9aec59243 ("i2c:
+> i2c-qcom-geni: Fix DMA transfer race"), I put some traces in.  I found
+> that the when the interrupts were firing like crazy:
+> - "m_stat" had bits for M_RX_IRQ_EN, M_RX_FIFO_WATERMARK_EN set.
+> - "dma" was set.
+>
+> Further debugging showed that I could make the problem happen more
+> reliably by adding an "msleep(1)" any time after geni_se_setup_m_cmd()
+> ran up until geni_se_rx_dma_prep() programmed the length.
+>
+> A rather simple fix is to change geni_se_select_dma_mode() so it's a
+> true inverse of geni_se_select_fifo_mode() and disables all the FIFO
+> related interrupts.  Now the problematic interrupts can't fire and we
+> can program things in the correct order without worrying.
+>
+> As part of this, let's also change the writel_relaxed() in the prepare
+> function to a writel() so that our DMA is guaranteed to be prepared
+> now that we can't rely on geni_se_setup_m_cmd()'s writel().
+>
+> NOTE: the only current user of GENI_SE_DMA in mainline is i2c.
+>
+> Fixes: 37692de5d523 ("i2c: i2c-qcom-geni: Add bus driver for the Qualcomm GENI I2C controller")
+> Fixes: 02b9aec59243 ("i2c: i2c-qcom-geni: Fix DMA transfer race")
+> Signed-off-by: Douglas Anderson <dianders@chromium.org>
+Reviewed-by: Akash Asthana <akashast@codeaurora.org>
 
-Finally got a chance to dig through this properly.
+-- 
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,\na Linux Foundation Collaborative Project
 
-Initial results where positive and with an implementation of cfg_probe
-in qcom_smmu_impl I'm able to probe the arm-smmu driver just fine - and
-display (e.g. efifb) stays alive.
-
-Unfortunately as the display driver (drivers/gpu/drm/msm) is about to
-probe a new iommu domain is created, which due to its match against
-qcom_smmu_client_of_match[] becomes of type IOMMU_DOMAIN_IDENTITY.
-This results in a S2CR of BYPASS type, which the firmware intercepts and
-turns the stream into a type FAULT.
-
-So while the cfg_probe looks very reasonable we're still in need of a
-mechanism to use the fake identity context for the iommu domain
-associated with the display controller.
-
-
-The workings of the display driver is that it gets the iommu domain
-setup for byass and then after that creates a translation context for
-this same stream where it maps the framebuffer.
-
-For testing purposes I made def_domain_type always return 0 in the qcom
-impl and the result is that we get a few page faults while probing the
-display driver, but these are handled somewhat gracefully and the
-initialization did proceed and the system comes up nicely (but in the
-case that the display driver would probe defer this leads to an storm of
-faults as the screen continues to be refreshed).
-
-TL;DR I think we still need to have a way to get the arm-smmu driver to
-allow the qcom implementation to configure identity domains to use
-translation - but we can make the setup of the identity context a detail
-of the qcom driver.
-
-Regards,
-Bjorn
