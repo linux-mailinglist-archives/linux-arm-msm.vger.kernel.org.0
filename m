@@ -2,126 +2,126 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 2C3A028B11D
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Oct 2020 11:08:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 826DC28B458
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Oct 2020 14:04:59 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729153AbgJLJH7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 12 Oct 2020 05:07:59 -0400
-Received: from z5.mailgun.us ([104.130.96.5]:20297 "EHLO z5.mailgun.us"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726428AbgJLJH6 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 12 Oct 2020 05:07:58 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1602493678; h=Content-Transfer-Encoding: Content-Type:
- In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
- Subject: Sender; bh=HXcfH8bow9YsdJB21VFaGzkbIhBQ3UPg17GtDKnIiwg=; b=orCXintT8LRtgP4BvmKOORzLOmbzXqc+Gg+whcknNZHiRc6XtvPICqO0M0W5i8cM09BBDnqS
- SRA8D33eFjemWW4xRDCyd6J2VkOfBPwVS4jePf3+udCJZoAdjozIRgrRi2Bez7TyReLZkl3Q
- DKRqykjVmYcOHZX44tQw1KfZVVk=
-X-Mailgun-Sending-Ip: 104.130.96.5
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n07.prod.us-east-1.postgun.com with SMTP id
- 5f841c5cd63768e57b36dde2 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 12 Oct 2020 09:05:32
- GMT
-Sender: akashast=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 61857C433CB; Mon, 12 Oct 2020 09:05:31 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        NICE_REPLY_A,SPF_FAIL autolearn=no autolearn_force=no version=3.4.0
-Received: from [192.168.43.98] (unknown [47.9.68.210])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: akashast)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id AF35AC433C9;
-        Mon, 12 Oct 2020 09:05:26 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org AF35AC433C9
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=akashast@codeaurora.org
-Subject: Re: [PATCH 1/3] soc: qcom: geni: More properly switch to DMA mode
-To:     Stephen Boyd <swboyd@chromium.org>,
+        id S2388370AbgJLMEw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 12 Oct 2020 08:04:52 -0400
+Received: from fllv0016.ext.ti.com ([198.47.19.142]:45466 "EHLO
+        fllv0016.ext.ti.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2388209AbgJLMEt (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 12 Oct 2020 08:04:49 -0400
+Received: from fllv0035.itg.ti.com ([10.64.41.0])
+        by fllv0016.ext.ti.com (8.15.2/8.15.2) with ESMTP id 09CC4liq100601;
+        Mon, 12 Oct 2020 07:04:47 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ti.com;
+        s=ti-com-17Q1; t=1602504287;
+        bh=SblS3eNJU3ed7uUT1OdEfRWLSXZf81u3pH3jCxFggXc=;
+        h=Subject:To:CC:References:From:Date:In-Reply-To;
+        b=dR/DEABbPKrPo3d3Xn8A1K+1Hd75Br80o1FmIzBhSlg/Mz4sgmKynZa5plyc4vyQy
+         Y3QTg1St9Zzgvj/zI/wuCM2gPgIICLbo9wFzbi9hhqV3tCyBLg7qgdCDUfWeYrbAZe
+         vSmqP34DX48M5oG9uuI1whLQm0NkDBqQLBaFh4OI=
+Received: from DFLE109.ent.ti.com (dfle109.ent.ti.com [10.64.6.30])
+        by fllv0035.itg.ti.com (8.15.2/8.15.2) with ESMTPS id 09CC4lmX067886
+        (version=TLSv1.2 cipher=AES256-GCM-SHA384 bits=256 verify=FAIL);
+        Mon, 12 Oct 2020 07:04:47 -0500
+Received: from DFLE112.ent.ti.com (10.64.6.33) by DFLE109.ent.ti.com
+ (10.64.6.30) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.1979.3; Mon, 12
+ Oct 2020 07:04:46 -0500
+Received: from fllv0040.itg.ti.com (10.64.41.20) by DFLE112.ent.ti.com
+ (10.64.6.33) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.1979.3 via
+ Frontend Transport; Mon, 12 Oct 2020 07:04:47 -0500
+Received: from [192.168.2.6] (ileax41-snat.itg.ti.com [10.172.224.153])
+        by fllv0040.itg.ti.com (8.15.2/8.15.2) with ESMTP id 09CC4igL126083;
+        Mon, 12 Oct 2020 07:04:45 -0500
+Subject: Re: [PATCH v4 2/3] dmaengine: add peripheral configuration
+To:     Vinod Koul <vkoul@kernel.org>
+CC:     <dmaengine@vger.kernel.org>, Rob Herring <robh+dt@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Douglas Anderson <dianders@chromium.org>,
-        Wolfram Sang <wsa@kernel.org>
-Cc:     linux-arm-msm@vger.kernel.org, linux-i2c@vger.kernel.org,
-        Andy Gross <agross@kernel.org>,
-        Girish Mahadevan <girishm@codeaurora.org>,
-        Karthikeyan Ramasubramanian <kramasub@codeaurora.org>,
-        Mukesh Kumar Savaliya <msavaliy@codeaurora.org>,
-        linux-kernel@vger.kernel.org
-References: <20201008225235.2035820-1-dianders@chromium.org>
- <20201008155154.1.Ifdb1b69fa3367b81118e16e9e4e63299980ca798@changeid>
- <160229038385.310579.7502548054994849649@swboyd.mtv.corp.google.com>
-From:   Akash Asthana <akashast@codeaurora.org>
-Message-ID: <2ccc26a0-5d54-e06c-5a73-7eb353c393d2@codeaurora.org>
-Date:   Mon, 12 Oct 2020 14:35:23 +0530
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
- Thunderbird/68.12.1
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+References: <20201008123151.764238-1-vkoul@kernel.org>
+ <20201008123151.764238-3-vkoul@kernel.org>
+ <e2c0323b-4f41-1926-5930-c63624fe1dd1@ti.com>
+ <20201009103019.GD2968@vkoul-mobl>
+ <a44af464-7d13-1254-54dd-f7783ccfaa0f@ti.com>
+ <20201009111515.GF2968@vkoul-mobl>
+ <13fdee71-5060-83fc-d69d-8ec73f82fac4@ti.com>
+ <20201012060916.GI2968@vkoul-mobl>
+From:   Peter Ujfalusi <peter.ujfalusi@ti.com>
+Message-ID: <6ddaa8c1-0703-4910-f5a8-2e30bddd2642@ti.com>
+Date:   Mon, 12 Oct 2020 15:05:09 +0300
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.3.2
 MIME-Version: 1.0
-In-Reply-To: <160229038385.310579.7502548054994849649@swboyd.mtv.corp.google.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <20201012060916.GI2968@vkoul-mobl>
+Content-Type: text/plain; charset="utf-8"
 Content-Language: en-US
+Content-Transfer-Encoding: 8bit
+X-EXCLAIMER-MD-CONFIG: e1e8a2fd-e40a-4ac6-ac9b-f7e9cc9ee180
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Stephen,
 
 
->>   
->>   static void geni_se_select_dma_mode(struct geni_se *se)
->>   {
->> +       u32 proto = geni_se_read_proto(se);
->>          u32 val;
->>   
->>          geni_se_irq_clear(se);
->>   
->> +       val = readl_relaxed(se->base + SE_GENI_M_IRQ_EN);
->> +       if (proto != GENI_SE_UART) {
-> Not a problem with this patch but it would be great if there was a
-> comment here (and probably in geni_se_select_fifo_mode() too) indicating
-> why GENI_SE_UART is special. Is it because GENI_SE_UART doesn't use the
-> main sequencer? I think that is the reason, but I forgot and reading
-> this code doesn't tell me that.
->
-> Splitting the driver in this way where the logic is in the geni wrapper
-> and in the engine driver leads to this confusion.
+On 12/10/2020 9.09, Vinod Koul wrote:
+> On 09-10-20, 14:29, Peter Ujfalusi wrote:
+>>
+>>
+>> On 09/10/2020 14.15, Vinod Koul wrote:
+>>>>> If for any any reason subsequent txn is for different direction, I would
+>>>>> expect that parameters are set again before prep_ calls
+>>>>
+>>>> But in DEV_TO_DEV?
+>>>
+>>> Do we support that :D
+>>>
+>>>> If we have two peripherals, both needs config:
+>>>> p1_config and p2_config
+>>>>
+>>>> What and how would one use the single peripheral_config?
+>>>
+>>> Since the config is implementation specific, I do not think it limits.
+>>> You may create
+>>>
+>>> struct peter_config {
+>>>         struct p1_config;
+>>>         struct p2_config;
+>>> };
+>>
+>> The use case is:
+>> MEM -DMA-> P1 -DMA-> P2
+>> or
+>> P2 -DMA-> P1 -DMA-> MEM
+>> or
+>> MEM -DMA-> P2
+>> or
+>> P2 -DMA-> MEM
+>> or
+>> MEM -DMA-> P1 -DMA-> MEM
+>>
+>> How would the DMA guess what it should do? How would the independent P1
+>> and P2 would know how to set up the config?
+> 
+> As I said, we do not support DEV_TO_DEV yet :)
+> 
+> Question is how would p1<-->p2 look, will p1 initiate a DMA txn or p2..?
+> who will configure these..
 
-GENI_SE_UART uses main sequencer for TX and secondary for RX transfers 
-because it is asynchronous in nature.
+That's a good question, I have not really thought about that.
+If we have MEM in the picture, then it is a bit cleaner, but I would guess.
 
-That's why  RX related bits (M_RX_FIFO_WATERMARK_EN | 
-M_RX_FIFO_LAST_EN)  are not enable in main sequencer for UART.
+> Do you have a real world example in horizon...
 
-(M_CMD_DONE_EN | M_TX_FIFO_WATERMARK_EN) bits are controlled from UART 
-driver, it's gets enabled and disabled multiple times from start_tx 
-,stop_tx respectively.
+In j721e we have AASRC module which needs special PDMA configuration to
+match with it's setup, AASRC can be chained with McASP, which in turn
+have different type of PDMA.
 
+- Péter
 
-Regards,
-
-Akash
-
->
->> +               val &= ~(M_CMD_DONE_EN | M_TX_FIFO_WATERMARK_EN);
->> +               val &= ~(M_RX_FIFO_WATERMARK_EN | M_RX_FIFO_LAST_EN);
->> +       }
->> +       writel_relaxed(val, se->base + SE_GENI_M_IRQ_EN);
->> +
->> +       val = readl_relaxed(se->base + SE_GENI_S_IRQ_EN);
->> +       if (proto != GENI_SE_UART)
->> +               val &= ~S_CMD_DONE_EN;
->> +       writel_relaxed(val, se->base + SE_GENI_S_IRQ_EN);
->> +
->>          val = readl_relaxed(se->base + SE_GENI_DMA_MODE_EN);
->>          val |= GENI_DMA_MODE_EN;
->>          writel_relaxed(val, se->base + SE_GENI_DMA_MODE_EN);
-
--- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,\na Linux Foundation Collaborative Project
-
+Texas Instruments Finland Oy, Porkkalankatu 22, 00180 Helsinki.
+Y-tunnus/Business ID: 0615521-4. Kotipaikka/Domicile: Helsinki
