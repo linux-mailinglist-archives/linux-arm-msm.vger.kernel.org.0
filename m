@@ -2,64 +2,65 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 2FBE928ABF6
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Oct 2020 04:10:18 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B716E28ABF5
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Oct 2020 04:10:17 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729736AbgJLCJf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 11 Oct 2020 22:09:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37124 "EHLO
+        id S1729746AbgJLCJg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 11 Oct 2020 22:09:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37126 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727218AbgJLCJL (ORCPT
+        with ESMTP id S1726963AbgJLCJL (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
         Sun, 11 Oct 2020 22:09:11 -0400
-Received: from mail-pf1-x443.google.com (mail-pf1-x443.google.com [IPv6:2607:f8b0:4864:20::443])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 77CD6C0613D7;
-        Sun, 11 Oct 2020 19:09:07 -0700 (PDT)
-Received: by mail-pf1-x443.google.com with SMTP id y14so12115853pfp.13;
-        Sun, 11 Oct 2020 19:09:07 -0700 (PDT)
+Received: from mail-pg1-x543.google.com (mail-pg1-x543.google.com [IPv6:2607:f8b0:4864:20::543])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B2369C0613D8;
+        Sun, 11 Oct 2020 19:09:09 -0700 (PDT)
+Received: by mail-pg1-x543.google.com with SMTP id l18so3729220pgg.0;
+        Sun, 11 Oct 2020 19:09:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=lsQ9N+apQGOcHYXFGYjFIayjQSXunpwI7ZmJDjhbJNE=;
-        b=JUgmYERxIKERmHzyVxJYNyCIKZCW4l6H9/iNSMbxyEj6wSVpDicXKDpGflFnL2TBaf
-         cqLULbhM01JjAPrqcvuuxRpCs1qwPO/0FL+1lgWwcUAn39pXTOolxgBnccrv7mB+ttaq
-         84tG+Hkx+WnjvDC+UHIvltYeG2zWffdK7lJ3CvDMGyFY9SKFXkcJ7vCoKxazGWoR5D8L
-         KnzM7uSX8nnH22mrySu0Zf2aKaujqsnmCw9yimWnGESy3wwvQuYi8xJA40PqI1G4SNoB
-         gVPbpHg+LyGsPA+rIQ5IrXrkvYcq1elmkbRst1dV6bWWeaiACWBfes2YF3AJp1daR8Fr
-         3CiA==
+        bh=kMl9yrbj49Q3BQxacHHpJSzD9mDjKljs1vKng3vrmmU=;
+        b=Wr8RnpP+DKiQ8rLbmnjHRsXOyQyFSWALLo/UAqujFApoQq4ZZVPQgRcBkSxxFcKhNm
+         vwxMociFcdb2pNKFj8flGOIyQko9+2Em6A9t6d6w08OT2qVfMah9wsHM/qijOW4FvcUh
+         MUq5QVi/P7WSXilooCfbrhBLynMHMt46noLDfWtoPAWIXnKv92yLEuYtETwvaLIDBJJr
+         1KZdoLNT6YtXGEOhAZmjn82+CSq0pQv701YqhdxqVHJ2mN0YBvlpt94F9LC/KUdbNKDf
+         1UaRBV8w0tXDp+gFmsSCOCidbsmxG7SBPzhA50c3d1PWzsQ2Yteif+h1pXVBbvkVdNN7
+         2s3g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=lsQ9N+apQGOcHYXFGYjFIayjQSXunpwI7ZmJDjhbJNE=;
-        b=CaKUxuI7jHyGcGBR0xruyPjaR82jSo1nN/r4VnhrFqwoSs1X3hnRM/oygsrKw1FMIS
-         XWINgxZqrVUQJQOzhEzmBRxnzhDskzJOmFNVF8zeMSr4WeU0GldX1LThX6ku4wM/zNBD
-         4CGoLPKO6G4rsLa+NLzj6Tj8P+Q5JfOmJMguH6SwIpIkU2ueumHHskR/MSQZpDIUuXL4
-         HC7E/7EG96r8/UAz87QASPYXxmg0rRWBeS2E6hDzJvki6lw9Q8XnZKTuOygkOa3zfip9
-         KVQoNvNKvwt2FOLoMDz1dDUsuH2ghUfcU6lWk2HwPnhwobYIdT909cgH9wJuOwGIyM8k
-         mhHg==
-X-Gm-Message-State: AOAM533VgtZ3qojJxdAkEUYl0zTeN5OJgZL3ymHzYSBfuzyTo3hJKd0i
-        6g8kv1u/u96+T6M7WTek8sc=
-X-Google-Smtp-Source: ABdhPJzWL0w2g4Ew/5WKB5u0zWmvJb22AOeLQlFsz2hwOWA3PxPUbRr1+f7sEMnI2Tb4VxTDFsJJkA==
-X-Received: by 2002:a17:90a:46c2:: with SMTP id x2mr17574218pjg.60.1602468546995;
-        Sun, 11 Oct 2020 19:09:06 -0700 (PDT)
+        bh=kMl9yrbj49Q3BQxacHHpJSzD9mDjKljs1vKng3vrmmU=;
+        b=kmCVE1BVuU+EU2yr1OoLAH6tVXIVPrnAatx2lKl7wcROW3G1PXKhiyYHT8uHbgdR1y
+         9MpDi5o2oj/BbOQ4PnzVi2Qp8X+INUU2ReBRtHe/d1WQO4XTchm1b4pnSFZhF2t1eByv
+         MYorwjL40XxtIwhPViEUTxNFl++P9sGY46aNJnRJH4tbtJTefc9luQKSJQqMrzvQFBm4
+         aEL7JX/MDizprVg5pODQxDJq6/t50PBD3gQsyMBgIpYcpx0fWpY3gb/j6wSAIPqyLs9G
+         35EAITusy5rVF4uznwmE8ps4xIDu8+5xvJRuWGDKD6dLxCLsg62WrpVAzLTvufGXb0ig
+         7UaQ==
+X-Gm-Message-State: AOAM532zkiAqA9NCyHriYkGkfEvnALAJZeRPyFRAvnlwDdCpxF0Mlgz3
+        Z2QUZ3Hu0tM6cDgQsXs1FTA=
+X-Google-Smtp-Source: ABdhPJxyxbNBiotDIT/cDYvF6QqCUgr2LglsXzEClcUjc7Oi/NU+STJLnUbvz8pmg0pP8j9pAoijLw==
+X-Received: by 2002:aa7:8588:0:b029:152:a38c:fbba with SMTP id w8-20020aa785880000b0290152a38cfbbamr22020945pfn.0.1602468549247;
+        Sun, 11 Oct 2020 19:09:09 -0700 (PDT)
 Received: from localhost (c-73-25-156-94.hsd1.or.comcast.net. [73.25.156.94])
-        by smtp.gmail.com with ESMTPSA id j25sm17648278pfn.212.2020.10.11.19.09.05
+        by smtp.gmail.com with ESMTPSA id kv19sm21560346pjb.22.2020.10.11.19.09.07
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 11 Oct 2020 19:09:06 -0700 (PDT)
+        Sun, 11 Oct 2020 19:09:08 -0700 (PDT)
 From:   Rob Clark <robdclark@gmail.com>
 To:     dri-devel@lists.freedesktop.org
 Cc:     Daniel Vetter <daniel@ffwll.ch>,
         Rob Clark <robdclark@chromium.org>,
+        Jordan Crouse <jcrouse@codeaurora.org>,
         Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
         David Airlie <airlied@linux.ie>,
         linux-arm-msm@vger.kernel.org (open list:DRM DRIVER FOR MSM ADRENO GPU),
         freedreno@lists.freedesktop.org (open list:DRM DRIVER FOR MSM ADRENO
         GPU), linux-kernel@vger.kernel.org (open list)
-Subject: [PATCH v2 09/22] drm/msm: Use correct drm_gem_object_put() in fail case
-Date:   Sun, 11 Oct 2020 19:09:36 -0700
-Message-Id: <20201012020958.229288-10-robdclark@gmail.com>
+Subject: [PATCH v2 10/22] drm/msm: Drop chatty trace
+Date:   Sun, 11 Oct 2020 19:09:37 -0700
+Message-Id: <20201012020958.229288-11-robdclark@gmail.com>
 X-Mailer: git-send-email 2.26.2
 In-Reply-To: <20201012020958.229288-1-robdclark@gmail.com>
 References: <20201012020958.229288-1-robdclark@gmail.com>
@@ -71,30 +72,27 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 From: Rob Clark <robdclark@chromium.org>
 
-We only want to use the _unlocked() variant in the unlocked case.
+It is somewhat redundant with the gpu tracepoints, and anyways not too
+useful to justify spamming the log when debug traces are enabled.
 
 Signed-off-by: Rob Clark <robdclark@chromium.org>
+Reviewed-by: Jordan Crouse <jcrouse@codeaurora.org>
 ---
- drivers/gpu/drm/msm/msm_gem.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/msm/msm_gpu.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/msm/msm_gem.c b/drivers/gpu/drm/msm/msm_gem.c
-index 210bf5c9c2dd..833e3d3c6e8c 100644
---- a/drivers/gpu/drm/msm/msm_gem.c
-+++ b/drivers/gpu/drm/msm/msm_gem.c
-@@ -1120,7 +1120,11 @@ static struct drm_gem_object *_msm_gem_new(struct drm_device *dev,
- 	return obj;
+diff --git a/drivers/gpu/drm/msm/msm_gpu.c b/drivers/gpu/drm/msm/msm_gpu.c
+index dbd9020713e5..677b11c5a151 100644
+--- a/drivers/gpu/drm/msm/msm_gpu.c
++++ b/drivers/gpu/drm/msm/msm_gpu.c
+@@ -535,7 +535,6 @@ static void recover_worker(struct work_struct *work)
  
- fail:
--	drm_gem_object_put(obj);
-+	if (struct_mutex_locked) {
-+		drm_gem_object_put_locked(obj);
-+	} else {
-+		drm_gem_object_put(obj);
-+	}
- 	return ERR_PTR(ret);
+ static void hangcheck_timer_reset(struct msm_gpu *gpu)
+ {
+-	DBG("%s", gpu->name);
+ 	mod_timer(&gpu->hangcheck_timer,
+ 			round_jiffies_up(jiffies + DRM_MSM_HANGCHECK_JIFFIES));
  }
- 
 -- 
 2.26.2
 
