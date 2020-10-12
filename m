@@ -2,110 +2,52 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 5D4F028B854
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Oct 2020 15:52:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 55DCC28B8E7
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Oct 2020 15:57:41 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2390073AbgJLNv0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 12 Oct 2020 09:51:26 -0400
-Received: from mail.kernel.org ([198.145.29.99]:58574 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2389956AbgJLNua (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 12 Oct 2020 09:50:30 -0400
-Received: from localhost (fw-tnat.cambridge.arm.com [217.140.96.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 543F620678;
-        Mon, 12 Oct 2020 13:50:29 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1602510629;
-        bh=gclqk7PlHJkH2Ivqw36sMpSSFpCR5Atw2BLhMIFSeZ8=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=uBfz4p4Rs+2yLXkEje0vEUczBBX9Wa8UI1+elcZfPtciYMbvFTkbSNNMrr+FrPv9E
-         lyTKL+hZtelhR2hYYQyRxGz5GNnfPqnWLnGrV47YD66zUGy5e/zug9eW1IFmqQGzLQ
-         rp+iMF+8MOkSI+8AIteEQJn6DaMl0iRaM4yayxHM=
-Date:   Mon, 12 Oct 2020 14:50:25 +0100
-From:   Mark Brown <broonie@kernel.org>
-To:     Ajye Huang <ajye_huang@compal.corp-partner.google.com>
-Cc:     Ajye Huang <ajye.huang@gmail.com>, linux-kernel@vger.kernel.org,
-        dianders@chromium.org, devicetree@vger.kernel.org,
-        alsa-devel@alsa-project.org,
-        Banajit Goswami <bgoswami@codeaurora.org>,
-        Srinivasa Rao Mandadapu <srivasam@codeaurora.org>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        linux-arm-msm@vger.kernel.org, Patrick Lai <plai@codeaurora.org>,
-        Andy Gross <agross@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rohit kumar <rohitkr@codeaurora.org>, tzungbi@chromium.org,
-        linux-arm-kernel@lists.infradead.org,
-        Cheng-yi Chiang <cychiang@chromium.org>
-Subject: Re: [PATCH v1 1/2] ASoC: qcom: dt-bindings: Modify sc7180 machine
- bindings
-Message-ID: <20201012135025.GF4332@sirena.org.uk>
-References: <20200928063744.525700-1-ajye_huang@compal.corp-partner.google.com>
- <20200928063744.525700-2-ajye_huang@compal.corp-partner.google.com>
- <20201009135231.GA6655@sirena.org.uk>
- <CALprXBZAFCOpWP2186RaP++613qnjPY3D3NbXEN5CToYsLNsRw@mail.gmail.com>
+        id S2390576AbgJLNz4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 12 Oct 2020 09:55:56 -0400
+Received: from smtp2207-205.mail.aliyun.com ([121.197.207.205]:59457 "EHLO
+        smtp2207-205.mail.aliyun.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S2390520AbgJLNzo (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 12 Oct 2020 09:55:44 -0400
+X-Alimail-AntiSpam: AC=CONTINUE;BC=0.3466635|-1;CH=green;DM=|CONTINUE|false|;DS=CONTINUE|ham_news_journal|0.0583757-0.0215271-0.920097;FP=0|0|0|0|0|-1|-1|-1;HT=ay29a033018047213;MF=frank@allwinnertech.com;NM=1;PH=DS;RN=20;RT=20;SR=0;TI=SMTPD_---.IiEO.rd_1602510932;
+Received: from allwinnertech.com(mailfrom:frank@allwinnertech.com fp:SMTPD_---.IiEO.rd_1602510932)
+          by smtp.aliyun-inc.com(10.147.41.137);
+          Mon, 12 Oct 2020 21:55:38 +0800
+From:   Frank Lee <frank@allwinnertech.com>
+To:     robdclark@gmail.com, sean@poorly.run, airlied@linux.ie,
+        daniel@ffwll.ch, vireshk@kernel.org, nm@ti.com, sboyd@kernel.org,
+        rjw@rjwysocki.net, jcrouse@codeaurora.org, eric@anholt.net,
+        tiny.windzz@gmail.com, kholk11@gmail.com,
+        emil.velikov@collabora.com, gustavoars@kernel.org
+Cc:     linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+        linux-pm@vger.kernel.org, Frank Lee <frank@allwinnertech.com>
+Subject: [PATCH 0/3] Introduce devm_pm_opp_set_* API
+Date:   Mon, 12 Oct 2020 21:55:14 +0800
+Message-Id: <20201012135517.19468-1-frank@allwinnertech.com>
+X-Mailer: git-send-email 2.28.0
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="m1UC1K4AOz1Ywdkx"
-Content-Disposition: inline
-In-Reply-To: <CALprXBZAFCOpWP2186RaP++613qnjPY3D3NbXEN5CToYsLNsRw@mail.gmail.com>
-X-Cookie: Fremen add life to spice!
-User-Agent: Mutt/1.10.1 (2018-07-13)
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Hi, this patchset introduce devm_pm_opp_set_prop_name() and
+devm_pm_opp_set_supported_hw().
 
---m1UC1K4AOz1Ywdkx
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+Yangtao Li (3):
+  opp: Add devres wrapper for dev_pm_opp_set_supported_hw
+  opp: Add devres wrapper for dev_pm_opp_set_prop_name
+  drm/msm: Convert to devm_pm_opp_set_supported_hw
 
-On Sat, Oct 10, 2020 at 12:07:54AM +0800, Ajye Huang wrote:
-> On Fri, Oct 9, 2020 at 9:52 PM Mark Brown <broonie@kernel.org> wrote:
-> > On Mon, Sep 28, 2020 at 02:37:43PM +0800, Ajye Huang wrote:
+ drivers/gpu/drm/msm/adreno/a5xx_gpu.c |  2 +-
+ drivers/opp/core.c                    | 80 +++++++++++++++++++++++++++
+ include/linux/pm_opp.h                | 14 +++++
+ 3 files changed, 95 insertions(+), 1 deletion(-)
 
-> > > Add compatible "qcom,sc7180-sndcard-rt5682-m98357-2mic"
-> > > for 2mic case.
+-- 
+2.28.0
 
-> > This doesn't apply against current code, please check and resend.
-
-> Thank you for your reply,
-> This patch depends on  Cheng-Yi's patch series
-> https://patchwork.kernel.org/patch/11773221/.
-
-That's "ASoC: qcom: dt-bindings: Add sc7180 machine bindings" for those
-playing at home.
-
->   If I misunderstand what you mean, please correct me,
-
-A version of some SC7180 patches was applied.  However it does seem like
-that didn't include any machine driver bindings so it must've been a
-different, similar looking series which is presumably waiting for a new
-version - please resend based on that new version (ideally these patches
-could be picked up as part of that series).
-
-Please include human readable descriptions of things like commits and
-issues being discussed in e-mail in your mails, this makes them much
-easier for humans to read especially when they have no internet access.
-I do frequently catch up on my mail on flights or while otherwise
-travelling so this is even more pressing for me than just being about
-making things a bit easier to read.
-
---m1UC1K4AOz1Ywdkx
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAl+EXyAACgkQJNaLcl1U
-h9BwIAf/XpfQPd1lFO2YwlgTjpFOBaziPt4AR62h8rbInkhceFG213nkLrJwxqwB
-zd86aM3WLbMco1ub9Cb45c8Ki+XG3JkKzu42jAe57UI7PKDSEUbMPX9ij9syI0rp
-Av2maAjFLvsayqXLMKoPAEeukBfNGxFys7bGRRPVFCFH2Ji9o2JmrRQ3nUOTmxNW
-kZBtjAkb2L7b9gMZj2p+pnwuU/Sx9DWyaE5pIu02YsjxXCp1NSWRCYnoZ/WPmvMh
-la5s2RnQJ7d5etnRM/iKDUmNrJX6bptGu7aFpwIM7ErjhIc2nT8SbtH79lU63t9w
-eGhLoubWxF3WrO9uxYZ9ecN0h4ufwg==
-=78nE
------END PGP SIGNATURE-----
-
---m1UC1K4AOz1Ywdkx--
