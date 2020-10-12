@@ -2,52 +2,52 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 28D4728ABD7
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Oct 2020 04:10:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AEA5428ABD6
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Oct 2020 04:10:03 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726959AbgJLCJM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        id S1727626AbgJLCJM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
         Sun, 11 Oct 2020 22:09:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37094 "EHLO
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37122 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727389AbgJLCJC (ORCPT
+        with ESMTP id S1727050AbgJLCJL (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 11 Oct 2020 22:09:02 -0400
-Received: from mail-pg1-x543.google.com (mail-pg1-x543.google.com [IPv6:2607:f8b0:4864:20::543])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BCF47C0613D5;
-        Sun, 11 Oct 2020 19:09:02 -0700 (PDT)
-Received: by mail-pg1-x543.google.com with SMTP id r10so12804928pgb.10;
-        Sun, 11 Oct 2020 19:09:02 -0700 (PDT)
+        Sun, 11 Oct 2020 22:09:11 -0400
+Received: from mail-pg1-x542.google.com (mail-pg1-x542.google.com [IPv6:2607:f8b0:4864:20::542])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 35F07C0613D6;
+        Sun, 11 Oct 2020 19:09:05 -0700 (PDT)
+Received: by mail-pg1-x542.google.com with SMTP id h6so12822066pgk.4;
+        Sun, 11 Oct 2020 19:09:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=t6k0W0LUpGL7/GToLy9vCWhiEXYilH3isH63u8Yx9dc=;
-        b=cYOdqk6JAEyJPNarImCdXuJLSaTP5hF3m1LbjGxMAKM4MFzOh/QWL4z8r0onTZixmv
-         yYkmmpQDdFX0OwxHTLU8XHVitUgxmHbY+VgNmfTHJh0WSrMa/xANqnLQuTOcWIInbzDw
-         UfcxFAepPMoCFtwEzdSyf2Ye3iKQUTWpwtNijBFPh0bmxE62Swxqg7NXW9H1c2cIZ+gs
-         5q7uX9NGAwR5FW5q/lEs1s+TzByAGZcWfIF+LWklwrapace46kSUKaz+J1Ups9zY5HXt
-         mcdofmZpHFDCXRkEXSYV8gza5oxh222MiaZcqqSrb1mB18AGlDIOYvKvOJ8DhpnrTJbT
-         KycQ==
+        bh=eTjQ89IuXOz109TMRi5cWNXEovWk2LGV0dqyy4UoVe4=;
+        b=Wv9cKwpCli62Q4QI5TYRHb6fmfORY/h7oOs2N8NEq5yfdwT2V2AI1gzS87gzk5D2Ln
+         c3UW9P4LiW0C/L3Qoakm/9gz29zl0BLJfdiSyeOMUEQrjSwqtOo3MV+vlgvw9M/C6rds
+         EsbSVhbkx9NoaVurJmovYGejeOqOZm4Uj2eFrGJNV50E2QdOoSesBHNXE1s1bGml+8wc
+         Xv6+Zq1QI5aAxod5p7CISnG/PxCZaD6telUrYsnITfA1l4EFNlGgdMLMqx7ofySVmChF
+         pMBgXh8MLLU61ovVLU91PL+rQrWB5jaWdwxh9Kt3HILnNniPZ1eCXdfBIPaAwavAsQaT
+         jTCA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=t6k0W0LUpGL7/GToLy9vCWhiEXYilH3isH63u8Yx9dc=;
-        b=ichaJuk0Krvr60T+0jhTzclCmzpb3W4H/uCEieL7jYBp/Eh2OJggi0WSNqGO+YOCfG
-         EmYHg1aftuIiOTK0I9iHIBEM3t3scAQFx3NWdkyf4cSGQUvPcDgCpgBHqRSK3yoprQHU
-         5ppdBoDjFNg84aivk5aI1CpPXWQoL2vGilYZ/pZVla4sb7cYd46rL7Z+5CvaLyTIe/jl
-         ahc10Gqhpvq4MOCE6JxY7jvcCuBfmQwyMTgoHsvbt5bc+zfrQyP2i2dQLmHxQouBGoD4
-         XPbzr9Y2K8cv1Q17CK5c1Lh0sqVKZJh/QY9j6uhvvt1M7UsS3VQnJoeaSKvfjE3cStcr
-         cd8g==
-X-Gm-Message-State: AOAM533usB2knY6ZtpQt5FzfpLCf8iUqvuUTnI9gN+dXOByjUl5gn3JY
-        Gyt1aO4pA34pW/IbXp/VWLE=
-X-Google-Smtp-Source: ABdhPJxO6HzuIjY5oyjtW2Q9UuwL21khrzejoxEMJIqlzoRA6aoWAf2AHjFZUW1waNpmmy9hyrFHAA==
-X-Received: by 2002:a17:90a:17ad:: with SMTP id q42mr17790795pja.36.1602468542200;
-        Sun, 11 Oct 2020 19:09:02 -0700 (PDT)
+        bh=eTjQ89IuXOz109TMRi5cWNXEovWk2LGV0dqyy4UoVe4=;
+        b=RjKJu0oqlSCLipieROj4aaVCSQ3FNwkYDxKdNdZuHG/mCKM5oyqS1Hui/zzgc+IyT6
+         CD2+WCh06Sb7X25tNvaE4JzESCtEYY4czxBfEoUZaxd21aoVRHUEjVWvjxuGwv+CRfe0
+         mBGAHQWZm0KjFw0t5XfbaN98B86e+KRxZJoMgnG0mpMIB+M6MwyeayY3lzLJiWtm9XDs
+         9Gmah/+RCd7uo25bG4Kya8/pMqMJ3KUWJ22V2fxLWb8+6K8pVaiaPeNwy+8Opp6qh0Qt
+         qcQSkMC6iq05LkZhpu/T5hxLaIUIu1tlcSOIOLzGqGtcaysRkrz09QpJGvz68x2VMs/D
+         YRVA==
+X-Gm-Message-State: AOAM531q3NeE32pcUN1B6jWobt4ZY+oBBqxIm2J9lMVos8R3/f885hVy
+        1+z30mKzW+5LAutD5evvFFw=
+X-Google-Smtp-Source: ABdhPJw507oY7r38qpLpkm1my+hNtuyXGzBuHetbSpVZufP0ikC6GPn4Asn7U13jpu02xkFihu9c+w==
+X-Received: by 2002:a63:c20f:: with SMTP id b15mr11512847pgd.8.1602468544681;
+        Sun, 11 Oct 2020 19:09:04 -0700 (PDT)
 Received: from localhost (c-73-25-156-94.hsd1.or.comcast.net. [73.25.156.94])
-        by smtp.gmail.com with ESMTPSA id g4sm17835780pgg.75.2020.10.11.19.09.00
+        by smtp.gmail.com with ESMTPSA id q13sm6047990pfg.3.2020.10.11.19.09.03
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 11 Oct 2020 19:09:01 -0700 (PDT)
+        Sun, 11 Oct 2020 19:09:03 -0700 (PDT)
 From:   Rob Clark <robdclark@gmail.com>
 To:     dri-devel@lists.freedesktop.org
 Cc:     Daniel Vetter <daniel@ffwll.ch>,
@@ -57,9 +57,9 @@ Cc:     Daniel Vetter <daniel@ffwll.ch>,
         linux-arm-msm@vger.kernel.org (open list:DRM DRIVER FOR MSM ADRENO GPU),
         freedreno@lists.freedesktop.org (open list:DRM DRIVER FOR MSM ADRENO
         GPU), linux-kernel@vger.kernel.org (open list)
-Subject: [PATCH v2 07/22] drm/msm: Do rpm get sooner in the submit path
-Date:   Sun, 11 Oct 2020 19:09:34 -0700
-Message-Id: <20201012020958.229288-8-robdclark@gmail.com>
+Subject: [PATCH v2 08/22] drm/msm/gem: Switch over to obj->resv for locking
+Date:   Sun, 11 Oct 2020 19:09:35 -0700
+Message-Id: <20201012020958.229288-9-robdclark@gmail.com>
 X-Mailer: git-send-email 2.26.2
 In-Reply-To: <20201012020958.229288-1-robdclark@gmail.com>
 References: <20201012020958.229288-1-robdclark@gmail.com>
@@ -71,57 +71,127 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 From: Rob Clark <robdclark@chromium.org>
 
-Unfortunately, due to an dev_pm_opp locking interaction with
-mm->mmap_sem, we need to do pm get before aquiring obj locks,
-otherwise we can have anger lockdep with the chain:
-
-  opp_table_lock --> &mm->mmap_sem --> reservation_ww_class_mutex
-
-For an explicit fencing userspace, the impact should be minimal
-as we do all the fence waits before this point.  It could result
-in some needless resumes in error cases, etc.
-
 Signed-off-by: Rob Clark <robdclark@chromium.org>
 ---
- drivers/gpu/drm/msm/msm_gem_submit.c | 15 +++++++++++++--
- 1 file changed, 13 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/msm/msm_gem.c        |  4 +---
+ drivers/gpu/drm/msm/msm_gem.h        | 16 +++++-----------
+ drivers/gpu/drm/msm/msm_gem_submit.c |  4 ++--
+ drivers/gpu/drm/msm/msm_gpu.c        |  2 +-
+ 4 files changed, 9 insertions(+), 17 deletions(-)
 
+diff --git a/drivers/gpu/drm/msm/msm_gem.c b/drivers/gpu/drm/msm/msm_gem.c
+index ff8ca257bdc6..210bf5c9c2dd 100644
+--- a/drivers/gpu/drm/msm/msm_gem.c
++++ b/drivers/gpu/drm/msm/msm_gem.c
+@@ -955,9 +955,9 @@ static void free_object(struct msm_gem_object *msm_obj)
+ 		put_pages(obj);
+ 	}
+ 
++	msm_gem_unlock(obj);
+ 	drm_gem_object_release(obj);
+ 
+-	msm_gem_unlock(obj);
+ 	kfree(msm_obj);
+ }
+ 
+@@ -1029,8 +1029,6 @@ static int msm_gem_new_impl(struct drm_device *dev,
+ 	if (!msm_obj)
+ 		return -ENOMEM;
+ 
+-	mutex_init(&msm_obj->lock);
+-
+ 	msm_obj->flags = flags;
+ 	msm_obj->madv = MSM_MADV_WILLNEED;
+ 
+diff --git a/drivers/gpu/drm/msm/msm_gem.h b/drivers/gpu/drm/msm/msm_gem.h
+index 744889436a98..ec01f35ce57b 100644
+--- a/drivers/gpu/drm/msm/msm_gem.h
++++ b/drivers/gpu/drm/msm/msm_gem.h
+@@ -85,7 +85,6 @@ struct msm_gem_object {
+ 	 * an IOMMU.  Also used for stolen/splashscreen buffer.
+ 	 */
+ 	struct drm_mm_node *vram_node;
+-	struct mutex lock; /* Protects resources associated with bo */
+ 
+ 	char name[32]; /* Identifier to print for the debugfs files */
+ 
+@@ -156,36 +155,31 @@ void msm_gem_describe_objects(struct list_head *list, struct seq_file *m);
+ static inline void
+ msm_gem_lock(struct drm_gem_object *obj)
+ {
+-	struct msm_gem_object *msm_obj = to_msm_bo(obj);
+-	mutex_lock(&msm_obj->lock);
++	dma_resv_lock(obj->resv, NULL);
+ }
+ 
+ static inline bool __must_check
+ msm_gem_trylock(struct drm_gem_object *obj)
+ {
+-	struct msm_gem_object *msm_obj = to_msm_bo(obj);
+-	return mutex_trylock_recursive(&msm_obj->lock) == MUTEX_TRYLOCK_SUCCESS;
++	return dma_resv_trylock(obj->resv);
+ }
+ 
+ static inline int
+ msm_gem_lock_interruptible(struct drm_gem_object *obj)
+ {
+-	struct msm_gem_object *msm_obj = to_msm_bo(obj);
+-	return mutex_lock_interruptible(&msm_obj->lock);
++	return dma_resv_lock_interruptible(obj->resv, NULL);
+ }
+ 
+ static inline void
+ msm_gem_unlock(struct drm_gem_object *obj)
+ {
+-	struct msm_gem_object *msm_obj = to_msm_bo(obj);
+-	mutex_unlock(&msm_obj->lock);
++	dma_resv_unlock(obj->resv);
+ }
+ 
+ static inline bool
+ msm_gem_is_locked(struct drm_gem_object *obj)
+ {
+-	struct msm_gem_object *msm_obj = to_msm_bo(obj);
+-	return mutex_is_locked(&msm_obj->lock);
++	return dma_resv_is_locked(obj->resv);
+ }
+ 
+ static inline bool is_active(struct msm_gem_object *msm_obj)
 diff --git a/drivers/gpu/drm/msm/msm_gem_submit.c b/drivers/gpu/drm/msm/msm_gem_submit.c
-index 002130d826aa..a9422d043bfe 100644
+index a9422d043bfe..35b7d9d06850 100644
 --- a/drivers/gpu/drm/msm/msm_gem_submit.c
 +++ b/drivers/gpu/drm/msm/msm_gem_submit.c
-@@ -744,11 +744,20 @@ int msm_ioctl_gem_submit(struct drm_device *dev, void *data,
+@@ -215,7 +215,7 @@ static void submit_unlock_unpin_bo(struct msm_gem_submit *submit,
+ 	struct msm_gem_object *msm_obj = submit->bos[i].obj;
  
- 	ret = submit_lookup_objects(submit, args, file);
- 	if (ret)
--		goto out;
-+		goto out_pre_pm;
+ 	if (submit->bos[i].flags & BO_PINNED)
+-		msm_gem_unpin_iova(&msm_obj->base, submit->aspace);
++		msm_gem_unpin_iova_locked(&msm_obj->base, submit->aspace);
  
- 	ret = submit_lookup_cmds(submit, args, file);
- 	if (ret)
--		goto out;
-+		goto out_pre_pm;
-+
-+	/*
-+	 * Thanks to dev_pm_opp opp_table_lock interactions with mm->mmap_sem
-+	 * in the resume path, we need to to rpm get before we lock objs.
-+	 * Which unfortunately might involve powering up the GPU sooner than
-+	 * is necessary.  But at least in the explicit fencing case, we will
-+	 * have already done all the fence waiting.
-+	 */
-+	pm_runtime_get_sync(&gpu->pdev->dev);
+ 	if (submit->bos[i].flags & BO_LOCKED)
+ 		dma_resv_unlock(msm_obj->base.resv);
+@@ -318,7 +318,7 @@ static int submit_pin_objects(struct msm_gem_submit *submit)
+ 		uint64_t iova;
  
- 	/* copy_*_user while holding a ww ticket upsets lockdep */
- 	ww_acquire_init(&submit->ticket, &reservation_ww_class);
-@@ -825,6 +834,8 @@ int msm_ioctl_gem_submit(struct drm_device *dev, void *data,
+ 		/* if locking succeeded, pin bo: */
+-		ret = msm_gem_get_and_pin_iova(&msm_obj->base,
++		ret = msm_gem_get_and_pin_iova_locked(&msm_obj->base,
+ 				submit->aspace, &iova);
  
+ 		if (ret)
+diff --git a/drivers/gpu/drm/msm/msm_gpu.c b/drivers/gpu/drm/msm/msm_gpu.c
+index 55d16489d0f3..dbd9020713e5 100644
+--- a/drivers/gpu/drm/msm/msm_gpu.c
++++ b/drivers/gpu/drm/msm/msm_gpu.c
+@@ -784,7 +784,7 @@ void msm_gpu_submit(struct msm_gpu *gpu, struct msm_gem_submit *submit)
  
- out:
-+	pm_runtime_put(&gpu->pdev->dev);
-+out_pre_pm:
- 	submit_cleanup(submit);
- 	if (has_ww_ticket)
- 		ww_acquire_fini(&submit->ticket);
+ 		/* submit takes a reference to the bo and iova until retired: */
+ 		drm_gem_object_get(&msm_obj->base);
+-		msm_gem_get_and_pin_iova(&msm_obj->base, submit->aspace, &iova);
++		msm_gem_get_and_pin_iova_locked(&msm_obj->base, submit->aspace, &iova);
+ 
+ 		if (submit->bos[i].flags & MSM_SUBMIT_BO_WRITE)
+ 			dma_resv_add_excl_fence(drm_obj->resv, submit->fence);
 -- 
 2.26.2
 
