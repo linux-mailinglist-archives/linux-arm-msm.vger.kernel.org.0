@@ -2,78 +2,89 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 6E4FD28CF5D
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Oct 2020 15:42:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4CEF728CF6A
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Oct 2020 15:46:02 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728811AbgJMNmm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 13 Oct 2020 09:42:42 -0400
-Received: from foss.arm.com ([217.140.110.172]:60138 "EHLO foss.arm.com"
+        id S2387783AbgJMNp7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 13 Oct 2020 09:45:59 -0400
+Received: from m42-4.mailgun.net ([69.72.42.4]:11529 "EHLO m42-4.mailgun.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728784AbgJMNmm (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 13 Oct 2020 09:42:42 -0400
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id A164830E;
-        Tue, 13 Oct 2020 06:42:41 -0700 (PDT)
-Received: from [10.57.48.76] (unknown [10.57.48.76])
-        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id A63CD3F719;
-        Tue, 13 Oct 2020 06:42:39 -0700 (PDT)
-Subject: Re: [PATCH 2/3] drm/msm: add DRM_MSM_GEM_SYNC_CACHE for non-coherent
- cache maintenance
-To:     Christoph Hellwig <hch@infradead.org>,
-        Jonathan Marek <jonathan@marek.ca>
-Cc:     freedreno@lists.freedesktop.org, Rob Clark <robdclark@gmail.com>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
-        <linux-arm-msm@vger.kernel.org>,
-        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
-        <dri-devel@lists.freedesktop.org>,
-        open list <linux-kernel@vger.kernel.org>,
-        iommu@lists.linux-foundation.org, Joerg Roedel <joro@8bytes.org>
-References: <20201001002709.21361-1-jonathan@marek.ca>
- <20201001002709.21361-3-jonathan@marek.ca>
- <20201002075321.GA7547@infradead.org>
- <b22fb797-67b0-a912-1d23-2b47c9a9e674@marek.ca>
- <20201005082914.GA31702@infradead.org>
- <3e0b91be-e4a4-4ea5-7d58-6e71b8d51932@marek.ca>
- <20201006072306.GA12834@infradead.org>
- <148a1660-f0fc-7163-2240-6b94725342b5@marek.ca>
- <20201007062519.GA23519@infradead.org>
-From:   Robin Murphy <robin.murphy@arm.com>
-Message-ID: <c3baadae-8e20-86a6-44f5-4571a8d3035e@arm.com>
-Date:   Tue, 13 Oct 2020 14:42:38 +0100
-User-Agent: Mozilla/5.0 (Windows NT 10.0; rv:78.0) Gecko/20100101
- Thunderbird/78.3.2
-MIME-Version: 1.0
-In-Reply-To: <20201007062519.GA23519@infradead.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-GB
-Content-Transfer-Encoding: 7bit
+        id S2387791AbgJMNp6 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 13 Oct 2020 09:45:58 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1602596758; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=zuP68KS+m7yiu7lWb1w/0cX8d1l6eBr2he/ZnT7A7RY=; b=GnySq6pN234jl2VnQouin/aw3RjVdQam/UrkZ1e0cAzOXbTlMZhkUrSp0UpNghvFdPQT/XsE
+ ROke6HX064e0G91v84sJYX4us4UsApFPxCHMi6ZTzavFDJJ3X6PvWXy9vF6js6xm4nmr1qHk
+ LaCVht5ojUiopnSWQNXAdTozTHk=
+X-Mailgun-Sending-Ip: 69.72.42.4
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n04.prod.us-east-1.postgun.com with SMTP id
+ 5f85af94ef891f1ee2f122bb (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 13 Oct 2020 13:45:56
+ GMT
+Sender: srivasam=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 62260C43382; Tue, 13 Oct 2020 13:45:55 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
+        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+Received: from hyd-lnxbld210.qualcomm.com (unknown [202.46.22.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: srivasam)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id E2A98C433CB;
+        Tue, 13 Oct 2020 13:45:49 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org E2A98C433CB
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=srivasam@codeaurora.org
+From:   Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
+To:     agross@kernel.org, bjorn.andersson@linaro.org, lgirdwood@gmail.com,
+        broonie@kernel.org, robh+dt@kernel.org, plai@codeaurora.org,
+        bgoswami@codeaurora.org, perex@perex.cz, tiwai@suse.com,
+        srinivas.kandagatla@linaro.org, rohitkr@codeaurora.org,
+        linux-arm-msm@vger.kernel.org, alsa-devel@alsa-project.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Cc:     V Sujith Kumar Reddy <vsujithk@codeaurora.org>,
+        Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
+Subject: [PATCH] Asoc: qcom: lpass-cpu: Fix dp audio failure on monitors
+Date:   Tue, 13 Oct 2020 19:15:28 +0530
+Message-Id: <1602596728-11783-1-git-send-email-srivasam@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2020-10-07 07:25, Christoph Hellwig wrote:
-> On Tue, Oct 06, 2020 at 09:19:32AM -0400, Jonathan Marek wrote:
->> One example why drm/msm can't use DMA API is multiple page table support
->> (that is landing in 5.10), which is something that definitely couldn't work
->> with DMA API.
->>
->> Another one is being able to choose the address for mappings, which AFAIK
->> DMA API can't do (somewhat related to this: qcom hardware often has ranges
->> of allowed addresses, which the dma_mask mechanism fails to represent, what
->> I see is drivers using dma_mask as a "maximum address", and since addresses
->> are allocated from the top it generally works)
-> 
-> That sounds like a good enough rason to use the IOMMU API.  I just
-> wanted to make sure this really makes sense.
+From: V Sujith Kumar Reddy <vsujithk@codeaurora.org>
 
-I still think this situation would be best handled with a variant of 
-dma_ops_bypass that also guarantees to bypass SWIOTLB, and can be set 
-automatically when attaching to an unmanaged IOMMU domain. That way the 
-device driver can make DMA API calls in the appropriate places that do 
-the right thing either way, and only needs logic to decide whether to 
-use the returned DMA addresses directly or ignore them if it knows 
-they're overridden by its own IOMMU mapping.
+Make LPASS_HDMI_TX_PARITY_ADDR reg as volatile to fix
+dp audio failure with external monitors.
+This patch is upgrade to below patch series.
+https://lore.kernel.org/patchwork/project/lkml/list/?series=466460
 
-Robin.
+Signed-off-by: V Sujith Kumar Reddy <vsujithk@codeaurora.org>
+Signed-off-by: Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
+---
+ sound/soc/qcom/lpass-cpu.c | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/sound/soc/qcom/lpass-cpu.c b/sound/soc/qcom/lpass-cpu.c
+index ba2aca3..78de888 100644
+--- a/sound/soc/qcom/lpass-cpu.c
++++ b/sound/soc/qcom/lpass-cpu.c
+@@ -660,6 +660,8 @@ static bool lpass_hdmi_regmap_volatile(struct device *dev, unsigned int reg)
+ 		return true;
+ 	if (reg == LPASS_HDMI_TX_LEGACY_ADDR(v))
+ 		return true;
++	if (reg == LPASS_HDMI_TX_PARITY_ADDR(v))
++		return true;
+ 
+ 	for (i = 0; i < v->rdma_channels; ++i) {
+ 		if (reg == LPAIF_HDMI_RDMACURR_REG(v, i))
+-- 
+Qualcomm India Private Limited, on behalf of Qualcomm Innovation Center, Inc.,
+is a member of Code Aurora Forum, a Linux Foundation Collaborative Project.
+
