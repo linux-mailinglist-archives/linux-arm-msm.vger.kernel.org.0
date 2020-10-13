@@ -2,122 +2,74 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id CF14628D23D
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Oct 2020 18:28:56 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1C0B128D252
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Oct 2020 18:35:18 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726871AbgJMQ2z (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 13 Oct 2020 12:28:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54600 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726120AbgJMQ2y (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 13 Oct 2020 12:28:54 -0400
-Received: from mail-qk1-x744.google.com (mail-qk1-x744.google.com [IPv6:2607:f8b0:4864:20::744])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 71C2DC0613D0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Oct 2020 09:28:54 -0700 (PDT)
-Received: by mail-qk1-x744.google.com with SMTP id 140so342718qko.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Oct 2020 09:28:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=o9Hoq7to5XCI/uJ6Zu640TqCyme9iokY/Q0eHTZtcfE=;
-        b=eGijH9UjwpDPWbsso/7C8OhlURtyBQ/eyD4ifTt7mGs5AaQNDP6gh6royvq4unpYnY
-         O1qziBe3AgEI9XkgiAaKqXTD4ZJ/4ZZpbw/tIkSb2vodppTwzLgeh1La+N1Zvq8f3kh5
-         XcdpJinvL4q2EPnzN6s5HIxC1izEMDdI6aYVc=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=o9Hoq7to5XCI/uJ6Zu640TqCyme9iokY/Q0eHTZtcfE=;
-        b=eshV75kANmRCpjzEPJ6i7J/ORW5HYShMmmzb1ZD3PzZFDQn9YFsZ9v21NvEMroW23Z
-         WOyEH+fjI/qwcOxYFNfJuAXiwXzF9tFgIwo2IRjBxMT2Bwng6ww4vjtLTXArl4mx99Dv
-         D87bZzUVF3taTHPwBSBFo3dmT9Q9xdeRxdf4293oR75WFdbwprzZDzHQrn9qpV1n3Pqr
-         mKmwg37UAPVXL0iPenKRO9ib2WkOTMv+8iRnr9f82alF6c11tbb/COpsOR/XQItI/XgH
-         l815sOxlNLwnt/9ZipqRvuRcgOZs5n3IY/qMqfVi8GMqR4mPZzC0J0v/xeAAfv6mbE4i
-         AHvw==
-X-Gm-Message-State: AOAM530n6gKjyXasT3/f0p/UcqNuE1DcGRAzwQpaOoA86Z6xhCwvq73s
-        gCCU33tEOyHZr6UJRv1JqkXRz2XcSV5OQA==
-X-Google-Smtp-Source: ABdhPJzFiB96SDrriK1mRqhDWt37SP2x0ldSgTsO5k/vhMkgLjhZ7INJ/hgmqIxR49hV40Oud9w2mA==
-X-Received: by 2002:a37:2753:: with SMTP id n80mr569837qkn.353.1602606532645;
-        Tue, 13 Oct 2020 09:28:52 -0700 (PDT)
-Received: from mail-yb1-f172.google.com (mail-yb1-f172.google.com. [209.85.219.172])
-        by smtp.gmail.com with ESMTPSA id t3sm147822qtq.24.2020.10.13.09.28.50
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 13 Oct 2020 09:28:50 -0700 (PDT)
-Received: by mail-yb1-f172.google.com with SMTP id a4so127159ybq.13
-        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Oct 2020 09:28:50 -0700 (PDT)
-X-Received: by 2002:a25:d412:: with SMTP id m18mr998932ybf.253.1602606529921;
- Tue, 13 Oct 2020 09:28:49 -0700 (PDT)
+        id S1726120AbgJMQfQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 13 Oct 2020 12:35:16 -0400
+Received: from foss.arm.com ([217.140.110.172]:34138 "EHLO foss.arm.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727320AbgJMQfQ (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 13 Oct 2020 12:35:16 -0400
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id D92E931B;
+        Tue, 13 Oct 2020 09:35:15 -0700 (PDT)
+Received: from [10.57.50.28] (unknown [10.57.50.28])
+        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 7B9FA3F66B;
+        Tue, 13 Oct 2020 09:35:13 -0700 (PDT)
+Subject: Re: [PATCH 1/2] coresight: tmc-etf: Fix NULL ptr dereference in
+ tmc_enable_etf_sink_perf()
+To:     saiprakash.ranjan@codeaurora.org, mathieu.poirier@linaro.org,
+        mike.leach@linaro.org
+Cc:     coresight@lists.linaro.org, swboyd@chromium.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org, denik@google.com,
+        leo.yan@linaro.org, peterz@infradead.org
+References: <cover.1602074787.git.saiprakash.ranjan@codeaurora.org>
+ <d7a2dd53d88360b12e5a14933cb931198760dd63.1602074787.git.saiprakash.ranjan@codeaurora.org>
+From:   Suzuki K Poulose <suzuki.poulose@arm.com>
+Message-ID: <5bbb2d35-3e56-56d7-4722-bf34c5efa2fb@arm.com>
+Date:   Tue, 13 Oct 2020 17:35:11 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.7.0
 MIME-Version: 1.0
-References: <20201013080103.410133-1-amstan@chromium.org> <20201013010056.v2.3.Ie4d84af5a85e8dcb8f575845518fa39f324a827d@changeid>
-In-Reply-To: <20201013010056.v2.3.Ie4d84af5a85e8dcb8f575845518fa39f324a827d@changeid>
-From:   Doug Anderson <dianders@chromium.org>
-Date:   Tue, 13 Oct 2020 09:28:38 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=W4fv_AdS7G2FFe2Kan3YYJ4D0MVJD90aJMrgCja5N4vg@mail.gmail.com>
-Message-ID: <CAD=FV=W4fv_AdS7G2FFe2Kan3YYJ4D0MVJD90aJMrgCja5N4vg@mail.gmail.com>
-Subject: Re: [PATCH v2 3/3] arm64: dts: qcom: trogdor: Add brightness-levels
-To:     Alexandru Stan <amstan@chromium.org>
-Cc:     Thierry Reding <thierry.reding@gmail.com>,
-        =?UTF-8?Q?Uwe_Kleine=2DK=C3=B6nig?= 
-        <u.kleine-koenig@pengutronix.de>, Lee Jones <lee.jones@linaro.org>,
-        Daniel Thompson <daniel.thompson@linaro.org>,
-        Jingoo Han <jingoohan1@gmail.com>,
-        Bartlomiej Zolnierkiewicz <b.zolnierkie@samsung.com>,
-        Heiko Stuebner <heiko@sntech.de>,
-        Rob Herring <robh+dt@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Enric Balletbo i Serra <enric.balletbo@collabora.com>,
-        Matthias Kaehlcke <mka@chromium.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        LKML <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <d7a2dd53d88360b12e5a14933cb931198760dd63.1602074787.git.saiprakash.ranjan@codeaurora.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+On 10/07/2020 02:00 PM, Sai Prakash Ranjan wrote:
+> There was a report of NULL pointer dereference in ETF enable
+> path for perf CS mode with PID monitoring. It is almost 100%
+> reproducible when the process to monitor is something very
+> active such as chrome and with ETF as the sink and not ETR.
+> Currently in a bid to find the pid, the owner is dereferenced
+> via task_pid_nr() call in tmc_enable_etf_sink_perf() and with
+> owner being NULL, we get a NULL pointer dereference.
+> 
+> Looking at the ETR and other places in the kernel, ETF and the
+> ETB are the only places trying to dereference the task(owner)
+> in tmc_enable_etf_sink_perf() which is also called from the
+> sched_in path as in the call trace. Owner(task) is NULL even
+> in the case of ETR in tmc_enable_etr_sink_perf(), but since we
+> cache the PID in alloc_buffer() callback and it is done as part
+> of etm_setup_aux() when allocating buffer for ETR sink, we never
+> dereference this NULL pointer and we are safe. So lets do the
 
-On Tue, Oct 13, 2020 at 1:01 AM Alexandru Stan <amstan@chromium.org> wrote:
->
-> Now that we have better interpolation for the backlight
-> ("backlight: pwm_bl: Fix interpolation"), we can now add the curve to
-> the trogdor boards, being careful to crop the low end.
+The patch is necessary to fix some of the issues. But I feel it is
+not complete. Why is it safe earlier and not later ? I believe we are
+simply reducing the chances of hitting the issue, by doing this earlier than
+later. I would say we better fix all instances to make sure that the
+event->owner is valid. (e.g, I can see that the for kernel events
+event->owner == -1 ?)
 
-Just to make it clear, the patch this depends on hasn't landed yet.
-Presumably it will land in the v5.10 timeframe?  That means that
-without extra coordination this patch can target v5.11.
+struct task_struct *tsk = READ_ONCE(event->owner);
 
+if (!tsk || is_kernel_event(event))
+    /* skip ? */
 
-> Signed-off-by: Alexandru Stan <amstan@chromium.org>
-> ---
->
->  arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi | 9 +++++++++
->  1 file changed, 9 insertions(+)
->
-> diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
-> index bf875589d364..ccdabc6c4994 100644
-> --- a/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
-> @@ -179,6 +179,15 @@ pp3300_fp_tp: pp3300-fp-tp-regulator {
->         backlight: backlight {
->                 compatible = "pwm-backlight";
->
-> +               /* The panels don't seem to like anything below ~ 5% */
-> +               brightness-levels = <
-> +                       196 256 324 400 484 576 676 784 900 1024 1156 1296
-> +                       1444 1600 1764 1936 2116 2304 2500 2704 2916 3136
-> +                       3364 3600 3844 4096
-> +               >;
-> +               num-interpolated-steps = <64>;
-> +               default-brightness-level = <951>;
+Suzuki
 
-I haven't done lots of digging here, but this matches what Alexandru
-and Matthias agreed upon for the downstream tree and seems sane.
-Thus:
-
-Reviewed-by: Douglas Anderson <dianders@chromium.org>
