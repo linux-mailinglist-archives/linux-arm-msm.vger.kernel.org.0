@@ -2,129 +2,181 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 6C2C728D28B
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Oct 2020 18:48:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 010F228D2CD
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Oct 2020 19:05:32 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728296AbgJMQr7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 13 Oct 2020 12:47:59 -0400
-Received: from foss.arm.com ([217.140.110.172]:34274 "EHLO foss.arm.com"
+        id S1728624AbgJMRFb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 13 Oct 2020 13:05:31 -0400
+Received: from m42-4.mailgun.net ([69.72.42.4]:28085 "EHLO m42-4.mailgun.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727696AbgJMQr7 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 13 Oct 2020 12:47:59 -0400
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 87E2331B;
-        Tue, 13 Oct 2020 09:47:58 -0700 (PDT)
-Received: from [10.57.48.76] (unknown [10.57.48.76])
-        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id D0E823F719;
-        Tue, 13 Oct 2020 09:47:56 -0700 (PDT)
-Subject: Re: [PATCH v3 6/8] iommu/arm-smmu: Add impl hook for inherit boot
- mappings
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Will Deacon <will@kernel.org>
-Cc:     Joerg Roedel <joro@8bytes.org>,
-        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
-        Jordan Crouse <jcrouse@codeaurora.org>,
-        Rob Clark <robdclark@chromium.org>,
-        Sibi Sankar <sibis@codeaurora.org>,
-        linux-arm-kernel@lists.infradead.org,
-        iommu@lists.linux-foundation.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-References: <20200904155513.282067-1-bjorn.andersson@linaro.org>
- <20200904155513.282067-7-bjorn.andersson@linaro.org>
- <0bfcc8f7-d054-616b-834b-319461b1ecb9@arm.com> <20200913032559.GT3715@yoga>
- <20200921210814.GE3811@willie-the-truck> <20201012073152.GA2998@yoga>
-From:   Robin Murphy <robin.murphy@arm.com>
-Message-ID: <40b24ccc-8dc4-8bbe-3a85-68a6b62b448d@arm.com>
-Date:   Tue, 13 Oct 2020 17:47:55 +0100
-User-Agent: Mozilla/5.0 (Windows NT 10.0; rv:78.0) Gecko/20100101
+        id S1726727AbgJMRFa (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 13 Oct 2020 13:05:30 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1602608729; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
+ Subject: Sender; bh=YTaebKKbSFfDkBLgSmtyi+26Uv70n9SE6Qp6TyuX3HI=; b=SyjHYkhwk30b5nRPXC/ZEBYhjS6yc+w2I2dPi559qxcbBm5KMkMLu7jb1poRhow4PfCQQx4H
+ wisiIsDHTwkd/9wfaClekh9rBndjw9BAkXl2T+AJZNfSCUnIKGUsDWsdnRb31YohsxwfHo/z
+ W8pWqZMPchHzdNQhDmx9zEnGpbQ=
+X-Mailgun-Sending-Ip: 69.72.42.4
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n06.prod.us-east-1.postgun.com with SMTP id
+ 5f85de044f8cc67c310a915c (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 13 Oct 2020 17:04:04
+ GMT
+Sender: tdas=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id E0A13C43382; Tue, 13 Oct 2020 17:04:03 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        NICE_REPLY_A,SPF_FAIL autolearn=no autolearn_force=no version=3.4.0
+Received: from [192.168.0.104] (unknown [49.204.182.228])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: tdas)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 65688C433CB;
+        Tue, 13 Oct 2020 17:03:57 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 65688C433CB
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=tdas@codeaurora.org
+Subject: Re: [PATCH v1 1/3] clk: qcom: clk-alpha-pll: Add support for
+ controlling Agera PLLs
+To:     Stephen Boyd <sboyd@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>
+Cc:     David Brown <david.brown@linaro.org>,
+        Rajendra Nayak <rnayak@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, linux-soc@vger.kernel.org,
+        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Andy Gross <agross@kernel.org>, devicetree@vger.kernel.org,
+        robh@kernel.org, robh+dt@kernel.org
+References: <1599584848-15530-1-git-send-email-tdas@codeaurora.org>
+ <1599584848-15530-2-git-send-email-tdas@codeaurora.org>
+ <160012882627.4188128.11464299361688037948@swboyd.mtv.corp.google.com>
+From:   Taniya Das <tdas@codeaurora.org>
+Message-ID: <a88817ea-6fd2-9225-41e4-b6b9dff2fb13@codeaurora.org>
+Date:   Tue, 13 Oct 2020 22:33:54 +0530
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
  Thunderbird/78.3.2
 MIME-Version: 1.0
-In-Reply-To: <20201012073152.GA2998@yoga>
+In-Reply-To: <160012882627.4188128.11464299361688037948@swboyd.mtv.corp.google.com>
 Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-GB
+Content-Language: en-US
 Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2020-10-12 08:31, Bjorn Andersson wrote:
-> On Mon 21 Sep 23:08 CEST 2020, Will Deacon wrote:
-> 
->> On Sat, Sep 12, 2020 at 10:25:59PM -0500, Bjorn Andersson wrote:
->>> On Fri 11 Sep 12:13 CDT 2020, Robin Murphy wrote:
->>>> On 2020-09-04 16:55, Bjorn Andersson wrote:
->>>>> Add a new operation to allow platform implementations to inherit any
->>>>> stream mappings from the boot loader.
->>>>
->>>> Is there a reason we need an explicit step for this? The aim of the
->>>> cfg_probe hook is that the SMMU software state should all be set up by then,
->>>> and you can mess about with it however you like before arm_smmu_reset()
->>>> actually commits anything to hardware. I would have thought you could
->>>> permanently steal a context bank, configure it as your bypass hole, read out
->>>> the previous SME configuration and tweak smmu->smrs and smmu->s2crs
->>>> appropriately all together "invisibly" at that point.
->>>
->>> I did this because as of 6a79a5a3842b ("iommu/arm-smmu: Call
->>> configuration impl hook before consuming features") we no longer have
->>> setup pgsize_bitmap as we hit cfg_probe, which means that I need to
->>> replicate this logic to set up the iommu_domain.
->>>
->>> If I avoid setting up an iommu_domain for the identity context, as you
->>> request in patch 8, this shouldn't be needed anymore.
->>>
->>>> If that can't work, I'm very curious as to what I've overlooked.
->>>>
->>>
->>> I believe that will work, I will rework the patches and try it out.
->>
->> Did you get a chance to rework this?
->>
-> 
-> Finally got a chance to dig through this properly.
-> 
-> Initial results where positive and with an implementation of cfg_probe
-> in qcom_smmu_impl I'm able to probe the arm-smmu driver just fine - and
-> display (e.g. efifb) stays alive.
-> 
-> Unfortunately as the display driver (drivers/gpu/drm/msm) is about to
-> probe a new iommu domain is created, which due to its match against
-> qcom_smmu_client_of_match[] becomes of type IOMMU_DOMAIN_IDENTITY.
-> This results in a S2CR of BYPASS type, which the firmware intercepts and
-> turns the stream into a type FAULT.
-> 
-> So while the cfg_probe looks very reasonable we're still in need of a
-> mechanism to use the fake identity context for the iommu domain
-> associated with the display controller.
+Thanks for the review Stephen.
 
-Yes, we'll still need some kind of hook somewhere to make identity 
-domains work at all - my point about cfg_probe was to keep the 
-reservation and configuration of the special identity context, plus the 
-handling of the initial SME state, simple and entirely internal to the 
-impl. In terms of where said hook should be, TBH it might actually work 
-out pretty clean to simply hook GR0 register accesses so you can rewrite 
-between S2CR bypass entries and translation entries targeting your 
-reserved context on-the-fly. Failing that, something to massage "type" 
-and "cbndx" in arm_smmu_domain_add_master() would be the next best 
-option, I think.
+On 9/15/2020 5:43 AM, Stephen Boyd wrote:
+> Quoting Taniya Das (2020-09-08 10:07:26)
+>> diff --git a/drivers/clk/qcom/clk-alpha-pll.c b/drivers/clk/qcom/clk-alpha-pll.c
+>> index 26139ef..fb27fcf 100644
+>> --- a/drivers/clk/qcom/clk-alpha-pll.c
+>> +++ b/drivers/clk/qcom/clk-alpha-pll.c
+>> @@ -1561,3 +1571,75 @@ const struct clk_ops clk_alpha_pll_postdiv_lucid_ops = {
+>>          .set_rate = clk_alpha_pll_postdiv_fabia_set_rate,
+>>   };
+>>   EXPORT_SYMBOL_GPL(clk_alpha_pll_postdiv_lucid_ops);
+>> +
+>> +void clk_agera_pll_configure(struct clk_alpha_pll *pll, struct regmap *regmap,
+>> +                       const struct alpha_pll_config *config)
+>> +{
+>> +       if (config->l)
+>> +               regmap_write(regmap, PLL_L_VAL(pll), config->l);
+>> +
+>> +       if (config->alpha)
+>> +               regmap_write(regmap, PLL_ALPHA_VAL(pll), config->alpha);
+>> +
+>> +       if (config->user_ctl_val)
+>> +               regmap_write(regmap, PLL_USER_CTL(pll), config->user_ctl_val);
+>> +
+>> +       if (config->config_ctl_val)
+>> +               regmap_write(regmap, PLL_CONFIG_CTL(pll),
+>> +                                               config->config_ctl_val);
+>> +
+>> +       if (config->config_ctl_hi_val)
+>> +               regmap_write(regmap, PLL_CONFIG_CTL_U(pll),
+>> +                                               config->config_ctl_hi_val);
+>> +
+>> +       if (config->test_ctl_val)
+>> +               regmap_write(regmap, PLL_TEST_CTL(pll),
+>> +                                               config->test_ctl_val);
+>> +
+>> +       if (config->test_ctl_hi_val)
+>> +               regmap_write(regmap,  PLL_TEST_CTL_U(pll),
+>> +                                               config->test_ctl_hi_val);
+>> +}
+>> +EXPORT_SYMBOL_GPL(clk_agera_pll_configure);
+>> +
+>> +static int alpha_pll_agera_set_rate(struct clk_hw *hw, unsigned long rate,
+> 
+> Why not clk_alpha_pll prefix? We should prefix the other PLL functions
+> in here with clk_alpha_ like trion and fabia
+> 
 
-Robin.
+Yes, I will update this in the next patch.
 
-> The workings of the display driver is that it gets the iommu domain
-> setup for byass and then after that creates a translation context for
-> this same stream where it maps the framebuffer.
+>> +                                                       unsigned long prate)
+>> +{
+>> +       struct clk_alpha_pll *pll = to_clk_alpha_pll(hw);
+>> +       u32 l, alpha_width = pll_alpha_width(pll);
+>> +       unsigned long rrate;
+>> +       u64 a;
+>> +
+>> +       rrate = alpha_pll_round_rate(rate, prate, &l, &a, alpha_width);
+>> +
+>> +       /*
+>> +        * Due to limited number of bits for fractional rate programming, the
+>> +        * rounded up rate could be marginally higher than the requested rate.
+>> +        */
+>> +       if (rrate > (rate + PLL_RATE_MARGIN) || rrate < rate) {
+>> +               pr_err("Call set rate on the PLL with rounded rates!\n");
+>> +               return -EINVAL;
+>> +       }
 > 
-> For testing purposes I made def_domain_type always return 0 in the qcom
-> impl and the result is that we get a few page faults while probing the
-> display driver, but these are handled somewhat gracefully and the
-> initialization did proceed and the system comes up nicely (but in the
-> case that the display driver would probe defer this leads to an storm of
-> faults as the screen continues to be refreshed).
+> See commit f78f29079327 ("clk: qcom: alpha-pll: Make error prints more
+> informative") where I tried to make this better. Can you extract this
+> check into a function that helps us understand the error better?
 > 
-> TL;DR I think we still need to have a way to get the arm-smmu driver to
-> allow the qcom implementation to configure identity domains to use
-> translation - but we can make the setup of the identity context a detail
-> of the qcom driver.
+
+Updated to follow the same.
+
+>> +
+>> +       /* change L_VAL without having to go through the power on sequence */
+>> +       regmap_write(pll->clkr.regmap, PLL_L_VAL(pll), l);
+>> +       regmap_write(pll->clkr.regmap, PLL_ALPHA_VAL(pll), a);
+>> +
+>> +       /* Ensure that the write above goes through before proceeding. */
+>> +       mb();
 > 
-> Regards,
-> Bjorn
+> regmap has an mb() in it. Remove this?
 > 
+
+Yes, will remove it.
+
+>> +
+>> +       if (clk_hw_is_enabled(hw))
+>> +               return wait_for_pll_enable_lock(pll);
+>> +
+>> +       return 0;
+>> +}
+>> +
+>> +const struct clk_ops clk_alpha_pll_agera_ops = {
+>> +       .enable = clk_alpha_pll_enable,
+>> +       .disable = clk_alpha_pll_disable,
+>> +       .is_enabled = clk_alpha_pll_is_enabled,
+>> +       .recalc_rate = alpha_pll_fabia_recalc_rate,
+>> +       .round_rate = clk_alpha_pll_round_rate,
+>> +       .set_rate = alpha_pll_agera_set_rate,
+>> +};
+>> +EXPORT_SYMBOL_GPL(clk_alpha_pll_agera_ops);
+
+-- 
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
+of Code Aurora Forum, hosted by The Linux Foundation.
+
+--
