@@ -2,124 +2,96 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 0473828C587
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Oct 2020 02:06:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B368128C709
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Oct 2020 04:13:02 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725970AbgJMAGT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 12 Oct 2020 20:06:19 -0400
-Received: from m42-4.mailgun.net ([69.72.42.4]:17034 "EHLO m42-4.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726097AbgJMAGT (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 12 Oct 2020 20:06:19 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1602547578; h=Message-ID: References: In-Reply-To: Reply-To:
- Subject: Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=ML0+jaoZ1OBNN29iovgFRYOPaLsbkufdiGw3b6HBh/s=;
- b=nliwOQTs2QJlZkYUe4zuEHLvcaRYeZEfGrM99Oxb19iGplH/pWBsOLA9aJiZREf2kNKkDPzV
- v0rYdLC78qqb4SQ+m61BiTjwTJx8tD95WAXr1begBJK7Q9sdIdopGUAIWq+ZWp6xvECaU74L
- S4Ic157fnQUCm76OBMjDRzcduQs=
-X-Mailgun-Sending-Ip: 69.72.42.4
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n07.prod.us-east-1.postgun.com with SMTP id
- 5f84eeeeef891f1ee2966797 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 13 Oct 2020 00:03:58
- GMT
-Sender: bbhatt=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 6EF74C433FE; Tue, 13 Oct 2020 00:03:57 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: bbhatt)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id BCB88C433CB;
-        Tue, 13 Oct 2020 00:03:56 +0000 (UTC)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Mon, 12 Oct 2020 17:03:56 -0700
-From:   Bhaumik Bhatt <bbhatt@codeaurora.org>
-To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        mgautam@codeaurora.org
-Cc:     linux-arm-msm@vger.kernel.org, hemantk@codeaurora.org,
-        jhugo@codeaurora.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v1 05/10] bus: mhi: core: Disable IRQs when powering down
-Organization: Qualcomm Innovation Center, Inc.
-Reply-To: bbhatt@codeaurora.org
-Mail-Reply-To: bbhatt@codeaurora.org
-In-Reply-To: <20201009160216.GF4810@Mani-XPS-13-9360>
-References: <1600480955-16827-1-git-send-email-bbhatt@codeaurora.org>
- <1600480955-16827-6-git-send-email-bbhatt@codeaurora.org>
- <20201009160216.GF4810@Mani-XPS-13-9360>
-Message-ID: <8b49f421f81ff850e58d14795376337b@codeaurora.org>
-X-Sender: bbhatt@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+        id S1728564AbgJMCNB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 12 Oct 2020 22:13:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35080 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726168AbgJMCNB (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 12 Oct 2020 22:13:01 -0400
+Received: from mail-pf1-x444.google.com (mail-pf1-x444.google.com [IPv6:2607:f8b0:4864:20::444])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5CFD7C0613D0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 12 Oct 2020 19:13:01 -0700 (PDT)
+Received: by mail-pf1-x444.google.com with SMTP id n14so15629199pff.6
+        for <linux-arm-msm@vger.kernel.org>; Mon, 12 Oct 2020 19:13:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id;
+        bh=EVFofZm/KKugvT26BUHQlCq/DzVw9jPsM+MG4z5PIao=;
+        b=gzN6p6EqNPIxhrpp6eIRsy8uVkY+8z5cNtT6QuS48Oy0hz8hoB2pI1FsAIiRbAmVgC
+         nNGBoRG4MgINxKWhtJvc7yVPQWkrVeQAJPnkxDkJ53reUjJDV16nKCWsUYy30PkwJAKR
+         ZZ7O5hJSoGb4zMsphPvnLFn8MAcnET4wFHCO8pkLAn7fv38lB01Ofi2osqKFml71hXGZ
+         Kwn6/SruL+YoxBJpNypOs9F+hzOyozOYG7Qlmn3mWquSV4bTdERww1IY+G6EDJyrS4qo
+         DC+tX7Yi4En00QirpM2sCNtt1U3Vtc6FmQawYe1s25gfz6hYuRlKeGimiLxjD4ToWrmx
+         OoKw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=EVFofZm/KKugvT26BUHQlCq/DzVw9jPsM+MG4z5PIao=;
+        b=qdCjqNcLxKiIj0VSpAzifEXHYJw18+3BGLdxuosDdvxGtVhnJwqHWOOQPUETm8NwPv
+         TonxegRJHO9TY6TtMtR7QxSrKJNnNAvtiewYfpaDmCdGlIqop9fIAoKbiPSBO2xBMM7Q
+         TQvjyW/1l7/VzjJ4CuaVCJ/kp+dmj5zmznOXu+e+V9/SqT/j+MRskJT3q/O0lJiLPcbo
+         /MGR6gfuwo0flS6O629EPrpLAuAqaVcvxOEbPG3jaKUIKct2xk1THOAdU87+XiSwVY+9
+         48Rw2hqnlY9CydW5w+VSEk3vyjB/lomyMufCDXe369k3m74fL5frFN+pjK0BYE0N3EQB
+         e73g==
+X-Gm-Message-State: AOAM5318YffN9L4h547nCu2Fj2thkTylK/enI1f2bDjYAynpARdGKQuw
+        JAlMxl61OjaPIqhIrh3r+iynvQ==
+X-Google-Smtp-Source: ABdhPJzOQXaNUKDmS2Jh3v51MTDPM5cpVtkr0wG2HSKgFdxM99feg3PaAa+ftjOgCorShzjkLkE5jg==
+X-Received: by 2002:a17:90a:46c2:: with SMTP id x2mr23268518pjg.60.1602555180701;
+        Mon, 12 Oct 2020 19:13:00 -0700 (PDT)
+Received: from localhost.localdomain (80.251.214.228.16clouds.com. [80.251.214.228])
+        by smtp.gmail.com with ESMTPSA id m34sm20637530pgl.94.2020.10.12.19.12.57
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 12 Oct 2020 19:12:59 -0700 (PDT)
+From:   Shawn Guo <shawn.guo@linaro.org>
+To:     Jassi Brar <jassisinghbrar@gmail.com>,
+        Andy Gross <agross@kernel.org>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Konrad Dybcio <konradybcio@gmail.com>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Shawn Guo <shawn.guo@linaro.org>
+Subject: [PATCH] mailbox: qcom-apcs-ipc: use PLATFORM_DEVID_AUTO to register device
+Date:   Tue, 13 Oct 2020 10:12:41 +0800
+Message-Id: <20201013021241.5656-1-shawn.guo@linaro.org>
+X-Mailer: git-send-email 2.17.1
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2020-10-09 09:02, Manivannan Sadhasivam wrote:
-> On Fri, Sep 18, 2020 at 07:02:30PM -0700, Bhaumik Bhatt wrote:
->> While powering down, the device may or may not acknowledge the MHI
->> RESET issued by host for graceful shutdown scenario which can lead
->> to a rogue device sending an interrupt after the clean-up has been
->> done. This can result in a tasklet being scheduled after it has
->> been killed and access already freed memory causing a NULL pointer
->> exception. Avoid this corner case by disabling the interrupts as a
->> part of host clean up.
->> 
->> Signed-off-by: Bhaumik Bhatt <bbhatt@codeaurora.org>
->> ---
->>  drivers/bus/mhi/core/pm.c | 1 +
->>  1 file changed, 1 insertion(+)
->> 
->> diff --git a/drivers/bus/mhi/core/pm.c b/drivers/bus/mhi/core/pm.c
->> index 1862960..3462d82 100644
->> --- a/drivers/bus/mhi/core/pm.c
->> +++ b/drivers/bus/mhi/core/pm.c
->> @@ -517,6 +517,7 @@ static void mhi_pm_disable_transition(struct 
->> mhi_controller *mhi_cntrl,
->>  	for (i = 0; i < mhi_cntrl->total_ev_rings; i++, mhi_event++) {
->>  		if (mhi_event->offload_ev)
->>  			continue;
->> +		disable_irq(mhi_cntrl->irq[mhi_event->irq]);
-> 
-> No need to disable irq[0]?
-> 
-> Thanks,
-> Mani
-> 
->>  		tasklet_kill(&mhi_event->task);
->>  	}
->> 
->> --
->> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora 
->> Forum,
->> a Linux Foundation Collaborative Project
->> 
+On MSM8916, only one qcom-apcs-msm8916-clk device is needed, as there is
+only one APCS clock.  However, on MSM8939 three APCS clocks need to be
+registered for cluster0 (little cores), cluster1 (big cores) and CCI
+(Cache Coherent Interconnect).  That said, we will need to register 3
+qcom-apcs-msm8916-clk devices.  Let's use PLATFORM_DEVID_AUTO rather
+than PLATFORM_DEVID_NONE for platform_device_register_data() call.
+Otherwise, the second APCS clock registration will fail due to duplicate
+device name.
 
-This patch would disable the IRQ line and if IRQ lines are shared 
-between BHI
-and MHI, we would not see handling of BHI related work happen.
+[    0.519657] sysfs: cannot create duplicate filename '/bus/platform/devices/qcom-apcs-msm8916-clk'
+...
+[    0.661158] qcom_apcs_ipc b111000.mailbox: failed to register APCS clk
 
-Discussed this with Hemant and and as I am dropping the previous patch, 
-will update
-this one to make it free_irq() instead which removes the IRQ handler and 
-does not
-disable the interrupt line.
+Signed-off-by: Shawn Guo <shawn.guo@linaro.org>
+---
+ drivers/mailbox/qcom-apcs-ipc-mailbox.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-The function mhi_deinit_free_irq() will not be called from 
-mhi_power_down() and
-instead, only a free for the main IRQ handler will be called.
-
+diff --git a/drivers/mailbox/qcom-apcs-ipc-mailbox.c b/drivers/mailbox/qcom-apcs-ipc-mailbox.c
+index 077e5c6a9ef7..3d100a004760 100644
+--- a/drivers/mailbox/qcom-apcs-ipc-mailbox.c
++++ b/drivers/mailbox/qcom-apcs-ipc-mailbox.c
+@@ -128,7 +128,7 @@ static int qcom_apcs_ipc_probe(struct platform_device *pdev)
+ 	if (apcs_data->clk_name) {
+ 		apcs->clk = platform_device_register_data(&pdev->dev,
+ 							  apcs_data->clk_name,
+-							  PLATFORM_DEVID_NONE,
++							  PLATFORM_DEVID_AUTO,
+ 							  NULL, 0);
+ 		if (IS_ERR(apcs->clk))
+ 			dev_err(&pdev->dev, "failed to register APCS clk\n");
 -- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora 
-Forum,
-a Linux Foundation Collaborative Project
+2.17.1
+
