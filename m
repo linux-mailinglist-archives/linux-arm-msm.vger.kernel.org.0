@@ -2,231 +2,156 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 94E5C28D3C2
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Oct 2020 20:40:26 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E8E8D28D458
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Oct 2020 21:22:14 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388188AbgJMSkW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 13 Oct 2020 14:40:22 -0400
-Received: from z5.mailgun.us ([104.130.96.5]:62185 "EHLO z5.mailgun.us"
+        id S1727310AbgJMTWO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 13 Oct 2020 15:22:14 -0400
+Received: from z5.mailgun.us ([104.130.96.5]:42258 "EHLO z5.mailgun.us"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2388132AbgJMSkW (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 13 Oct 2020 14:40:22 -0400
+        id S1726279AbgJMTWN (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 13 Oct 2020 15:22:13 -0400
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1602614420; h=Message-ID: References: In-Reply-To: Reply-To:
- Subject: Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=xeKvoKJav1RdumqBJg8HzynQcOdE4LvpfpeXKfaS0WA=;
- b=Ik10TIa0sa5gVcGDwR8XZGx3TyNReuAVp0cxmgpgWH81FVkX0ntP71K8T6EHLOLmVf8LTfYO
- /sVhiEcwCZsjKP/BlcQ+vAEwayhllI3y4AxEsHAlF8O2HxFwkGWtLlotsA9URErmzPbwnGCV
- wnRh3xDP3BGVX2yPk9aVA3/kOeY=
+ s=smtp; t=1602616932; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
+ Subject: Sender; bh=BLvUKsHh2gcPJXFOm+KsCsgg7j5b0BHxJ3Yy/jJ5lq4=; b=hZ1YkocoVJ9uxuJKfmcQoedur3La7dU5pe6SrvU0D6ye+fAc96nMMJpRtgQ7pmJE65Dp8HA9
+ ThbllpSaHztjcqBTCHdH9c5VSW+w+BMWcI6cIctFTsfqPCbDowi2k0SRs7SrqGNvA2JaKBe4
+ epil9eyXYYieqZoORp5r3OhR4U4=
 X-Mailgun-Sending-Ip: 104.130.96.5
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org
  (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n06.prod.us-east-1.postgun.com with SMTP id
- 5f85f48c3711fec7b1bfb92d (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 13 Oct 2020 18:40:12
+ smtp-out-n04.prod.us-east-1.postgun.com with SMTP id
+ 5f85fe5a4f8cc67c31708b13 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 13 Oct 2020 19:22:02
  GMT
-Sender: bbhatt=codeaurora.org@mg.codeaurora.org
+Sender: akhilpo=codeaurora.org@mg.codeaurora.org
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 86FB5C433FE; Tue, 13 Oct 2020 18:40:11 +0000 (UTC)
+        id C5105C433C9; Tue, 13 Oct 2020 19:22:01 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
 X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        NICE_REPLY_A,SPF_FAIL,URIBL_BLOCKED autolearn=no autolearn_force=no
+        version=3.4.0
+Received: from [192.168.1.9] (unknown [117.210.180.193])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        (Authenticated sender: bbhatt)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id F22CBC433CB;
-        Tue, 13 Oct 2020 18:40:10 +0000 (UTC)
+        (Authenticated sender: akhilpo)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id ACF5CC433F1;
+        Tue, 13 Oct 2020 19:21:58 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org ACF5CC433F1
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=akhilpo@codeaurora.org
+Subject: Re: [2/2] drm/msm: Add support for GPU cooling
+To:     mka@chromium.org
+Cc:     linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
+        linux-kernel@vger.kernel.org, dri-devel@freedesktop.org
+References: <1602176947-17385-2-git-send-email-akhilpo@codeaurora.org>
+ <20201009183640.GB1292413@google.com>
+ <cab2105e-7a8c-988f-dcc1-056692a94e8b@codeaurora.org>
+ <20201012174035.GA44627@google.com>
+ <80ded484-a058-70fc-be9d-045be2933563@codeaurora.org>
+ <20201013174038.GA424420@google.com>
+From:   Akhil P Oommen <akhilpo@codeaurora.org>
+Message-ID: <ae3ca3c7-fb80-e9fc-a76b-2add8969a178@codeaurora.org>
+Date:   Wed, 14 Oct 2020 00:51:55 +0530
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.3.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
+In-Reply-To: <20201013174038.GA424420@google.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
 Content-Transfer-Encoding: 7bit
-Date:   Tue, 13 Oct 2020 11:40:10 -0700
-From:   Bhaumik Bhatt <bbhatt@codeaurora.org>
-To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        mgautam@codeaurora.org
-Cc:     linux-arm-msm@vger.kernel.org, hemantk@codeaurora.org,
-        jhugo@codeaurora.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v1 06/10] bus: mhi: core: Improve shutdown handling after
- link down detection
-Organization: Qualcomm Innovation Center, Inc.
-Reply-To: bbhatt@codeaurora.org
-Mail-Reply-To: bbhatt@codeaurora.org
-In-Reply-To: <20201009161950.GG4810@Mani-XPS-13-9360>
-References: <1600480955-16827-1-git-send-email-bbhatt@codeaurora.org>
- <1600480955-16827-7-git-send-email-bbhatt@codeaurora.org>
- <20201009161950.GG4810@Mani-XPS-13-9360>
-Message-ID: <3793225dd0932d0b2a9bb5b3df293fce@codeaurora.org>
-X-Sender: bbhatt@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2020-10-09 09:19, Manivannan Sadhasivam wrote:
-> On Fri, Sep 18, 2020 at 07:02:31PM -0700, Bhaumik Bhatt wrote:
->> If MHI were to attempt a device shutdown following an assumption
+On 10/13/2020 11:10 PM, mka@chromium.org wrote:
+> On Tue, Oct 13, 2020 at 07:23:34PM +0530, Akhil P Oommen wrote:
+>> On 10/12/2020 11:10 PM, mka@chromium.org wrote:
+>>> On Mon, Oct 12, 2020 at 07:03:51PM +0530, Akhil P Oommen wrote:
+>>>> On 10/10/2020 12:06 AM, mka@chromium.org wrote:
+>>>>> Hi Akhil,
+>>>>>
+>>>>> On Thu, Oct 08, 2020 at 10:39:07PM +0530, Akhil P Oommen wrote:
+>>>>>> Register GPU as a devfreq cooling device so that it can be passively
+>>>>>> cooled by the thermal framework.
+>>>>>>
+>>>>>> Signed-off-by: Akhil P Oommen <akhilpo@codeaurora.org>
+>>>>>> ---
+>>>>>>     drivers/gpu/drm/msm/msm_gpu.c | 13 ++++++++++++-
+>>>>>>     drivers/gpu/drm/msm/msm_gpu.h |  2 ++
+>>>>>>     2 files changed, 14 insertions(+), 1 deletion(-)
+>>>>>>
+>>>>>> diff --git a/drivers/gpu/drm/msm/msm_gpu.c b/drivers/gpu/drm/msm/msm_gpu.c
+>>>>>> index 55d1648..93ffd66 100644
+>>>>>> --- a/drivers/gpu/drm/msm/msm_gpu.c
+>>>>>> +++ b/drivers/gpu/drm/msm/msm_gpu.c
+>>>>>> @@ -14,6 +14,7 @@
+>>>>>>     #include <generated/utsrelease.h>
+>>>>>>     #include <linux/string_helpers.h>
+>>>>>>     #include <linux/devfreq.h>
+>>>>>> +#include <linux/devfreq_cooling.h>
+>>>>>>     #include <linux/devcoredump.h>
+>>>>>>     #include <linux/sched/task.h>
+>>>>>> @@ -107,9 +108,18 @@ static void msm_devfreq_init(struct msm_gpu *gpu)
+>>>>>>     	if (IS_ERR(gpu->devfreq.devfreq)) {
+>>>>>>     		DRM_DEV_ERROR(&gpu->pdev->dev, "Couldn't initialize GPU devfreq\n");
+>>>>>>     		gpu->devfreq.devfreq = NULL;
+>>>>>> +		return;
+>>>>>>     	}
+>>>>>>     	devfreq_suspend_device(gpu->devfreq.devfreq);
+>>>>>> +
+>>>>>> +	gpu->cooling = of_devfreq_cooling_register(gpu->pdev->dev.of_node,
+>>>>>> +			gpu->devfreq.devfreq);
+>>>>>> +	if (IS_ERR(gpu->cooling)) {
+>>>>>> +		DRM_DEV_ERROR(&gpu->pdev->dev,
+>>>>>> +				"Couldn't register GPU cooling device\n");
+>>>>>> +		gpu->cooling = NULL;
+>>>>>> +	}
+>>>>>>     }
+>>>>>>     static int enable_pwrrail(struct msm_gpu *gpu)
+>>>>>> @@ -926,7 +936,6 @@ int msm_gpu_init(struct drm_device *drm, struct platform_device *pdev,
+>>>>>>     	msm_devfreq_init(gpu);
+>>>>>> -
+>> Will remove this unintended change.
+>>>>>>     	gpu->aspace = gpu->funcs->create_address_space(gpu, pdev);
+>>>>>>     	if (gpu->aspace == NULL)
+>>>>>> @@ -1005,4 +1014,6 @@ void msm_gpu_cleanup(struct msm_gpu *gpu)
+>>>>>>     		gpu->aspace->mmu->funcs->detach(gpu->aspace->mmu);
+>>>>>>     		msm_gem_address_space_put(gpu->aspace);
+>>>>>>     	}
+>>>>>> +
+>>>>>> +	devfreq_cooling_unregister(gpu->cooling);
+>>>>>
+>>>>> Resources should be released in reverse order, otherwise the cooling device
+>>>>> could use resources that have already been freed.
+>>>>> Why do you think this is not the correct order? If you are thinking
+>>>> about devfreq struct, it is managed device resource.
+>>>
+>>> I did not check specifically if changing the frequency really uses any of the
+>>> resources that are released previously, In any case it's not a good idea to
+>>> allow other parts of the kernel to use a half initialized/torn down device.
+>>> Even if it isn't a problem today someone could change the driver to use any
+>>> of these resources (or add a new one) in a frequency change, without even
+>>> thinking about the cooling device, just (rightfully) asuming that things are
+>>> set up and torn down in a sane order.
+>> 'sane order' relative to what specifically here? Should we worry about freq
+>> change at this point because we have already disabled gpu runtime pm and
+>> devfreq?
 > 
-> MHI host? And is this really an assumption or it is definite that the
-> link is inaccessible. Please clarify!
+> GPU runtime PM and the devfreq being disabled is not evident from the context
+> of the function. You are probably right that it's not a problem in practice,
+> but why give reason for doubts in the first place if this could be avoided
+> by following a common practice?
+> _______________________________________________
+> dri-devel mailing list
+> dri-devel@lists.freedesktop.org
+> https://lists.freedesktop.org/mailman/listinfo/dri-devel
 > 
-Will update it to MHI host.
+Other option I see is to create a managed device resource (devm) version 
+of the devfreq_cooling_register API and use that. Is that what you are 
+trying to suggest?
 
-I say assumption because we act based on the "graceful" flag passed by
-the MHI controller driver. Link may be accessible but the controller has
-instructed MHI not to do any further accesses. They may decide to set 
-the
-flag as "false" if they see any read/access issues, an actual link down
-interrupt from the bus driver or a sideband GPIO signal declaring that a
-software assert occurred on the device.
-
-MHI host sees that power down attempt as ungraceful and assumes that the
-controller has decided that it's either a link down or a fatal error.
-
-Once an "ungraceful" power down attempt is made, MHI host moves to the
-LD_ERR_FATAL_DETECT pm_state and without this patch, it moved from an
-LD_ERR_FATAL_DETECT to SHUTDOWN_PROCESS state, where SHUTDOWN_PROCESS
-is defined as a register accessible state by the MHI_REG_ACCESS_VALID()
-macro.
-
-If someone were to do a call that needed a register access from their
-.remove() callback, for example, we could see a bus error.
-
-Moves from MHI_PM_M3 to SHUTDOWN_PROCESS and LD_ERR_FATAL_DETECT to
-SHUTDOWN_PROCESS are not allowed by use of this patch.
-
-I'll add better wording and explanation.
-
->> that the device is inaccessible, the host currently moves to a state
->> where device register accesses are allowed when they should not be.
->> This would end up allowing accesses to the device register space when
->> the link is inaccessible and can result in bus errors observed on the
->> host. Improve shutdown handling to prevent these outcomes and do not
->> move the MHI PM state to a register accessible state after device is
->> assumed to be inaccessible.
->> 
-> 
-> Apparently you are introducing a new device transition state but your
-> commit description doesn't state that :/
-> 
-> Thanks,
-> Mani
-> 
-Sure. I will add that.
-
->> Signed-off-by: Bhaumik Bhatt <bbhatt@codeaurora.org>
->> ---
->>  drivers/bus/mhi/core/init.c     |  1 +
->>  drivers/bus/mhi/core/internal.h |  1 +
->>  drivers/bus/mhi/core/pm.c       | 18 +++++++++++++-----
->>  3 files changed, 15 insertions(+), 5 deletions(-)
->> 
->> diff --git a/drivers/bus/mhi/core/init.c b/drivers/bus/mhi/core/init.c
->> index 9ae4c19..fa33dde 100644
->> --- a/drivers/bus/mhi/core/init.c
->> +++ b/drivers/bus/mhi/core/init.c
->> @@ -37,6 +37,7 @@ const char * const 
->> dev_state_tran_str[DEV_ST_TRANSITION_MAX] = {
->>  	[DEV_ST_TRANSITION_MISSION_MODE] = "MISSION_MODE",
->>  	[DEV_ST_TRANSITION_SYS_ERR] = "SYS_ERR",
->>  	[DEV_ST_TRANSITION_DISABLE] = "DISABLE",
->> +	[DEV_ST_TRANSITION_FATAL] = "FATAL SHUTDOWN",
->>  };
->> 
->>  const char * const mhi_state_str[MHI_STATE_MAX] = {
->> diff --git a/drivers/bus/mhi/core/internal.h 
->> b/drivers/bus/mhi/core/internal.h
->> index 7989269..f3b9e5a 100644
->> --- a/drivers/bus/mhi/core/internal.h
->> +++ b/drivers/bus/mhi/core/internal.h
->> @@ -388,6 +388,7 @@ enum dev_st_transition {
->>  	DEV_ST_TRANSITION_MISSION_MODE,
->>  	DEV_ST_TRANSITION_SYS_ERR,
->>  	DEV_ST_TRANSITION_DISABLE,
->> +	DEV_ST_TRANSITION_FATAL,
->>  	DEV_ST_TRANSITION_MAX,
->>  };
->> 
->> diff --git a/drivers/bus/mhi/core/pm.c b/drivers/bus/mhi/core/pm.c
->> index 3462d82..bce1f62 100644
->> --- a/drivers/bus/mhi/core/pm.c
->> +++ b/drivers/bus/mhi/core/pm.c
->> @@ -37,9 +37,10 @@
->>   *     M0 -> FW_DL_ERR
->>   *     M0 -> M3_ENTER -> M3 -> M3_EXIT --> M0
->>   * L1: SYS_ERR_DETECT -> SYS_ERR_PROCESS --> POR
->> - * L2: SHUTDOWN_PROCESS -> DISABLE
->> + * L2: SHUTDOWN_PROCESS -> LD_ERR_FATAL_DETECT
->> + *     SHUTDOWN_PROCESS -> DISABLE
->>   * L3: LD_ERR_FATAL_DETECT <--> LD_ERR_FATAL_DETECT
->> - *     LD_ERR_FATAL_DETECT -> SHUTDOWN_PROCESS
->> + *     LD_ERR_FATAL_DETECT -> DISABLE
->>   */
->>  static struct mhi_pm_transitions const dev_state_transitions[] = {
->>  	/* L0 States */
->> @@ -72,7 +73,7 @@ static struct mhi_pm_transitions const 
->> dev_state_transitions[] = {
->>  	{
->>  		MHI_PM_M3,
->>  		MHI_PM_M3_EXIT | MHI_PM_SYS_ERR_DETECT |
->> -		MHI_PM_SHUTDOWN_PROCESS | MHI_PM_LD_ERR_FATAL_DETECT
->> +		MHI_PM_LD_ERR_FATAL_DETECT
->>  	},
->>  	{
->>  		MHI_PM_M3_EXIT,
->> @@ -103,7 +104,7 @@ static struct mhi_pm_transitions const 
->> dev_state_transitions[] = {
->>  	/* L3 States */
->>  	{
->>  		MHI_PM_LD_ERR_FATAL_DETECT,
->> -		MHI_PM_LD_ERR_FATAL_DETECT | MHI_PM_SHUTDOWN_PROCESS
->> +		MHI_PM_LD_ERR_FATAL_DETECT | MHI_PM_DISABLE
->>  	},
->>  };
->> 
->> @@ -670,6 +671,10 @@ void mhi_pm_st_worker(struct work_struct *work)
->>  			mhi_pm_disable_transition
->>  				(mhi_cntrl, MHI_PM_SHUTDOWN_PROCESS);
->>  			break;
->> +		case DEV_ST_TRANSITION_FATAL:
->> +			mhi_pm_disable_transition
->> +				(mhi_cntrl, MHI_PM_LD_ERR_FATAL_DETECT);
->> +			break;
->>  		default:
->>  			break;
->>  		}
->> @@ -1039,6 +1044,7 @@ EXPORT_SYMBOL_GPL(mhi_async_power_up);
->>  void mhi_power_down(struct mhi_controller *mhi_cntrl, bool graceful)
->>  {
->>  	enum mhi_pm_state cur_state;
->> +	enum dev_st_transition next_state = DEV_ST_TRANSITION_DISABLE;
->>  	struct device *dev = &mhi_cntrl->mhi_dev->dev;
->> 
->>  	/* If it's not a graceful shutdown, force MHI to linkdown state */
->> @@ -1053,9 +1059,11 @@ void mhi_power_down(struct mhi_controller 
->> *mhi_cntrl, bool graceful)
->>  			dev_dbg(dev, "Failed to move to state: %s from: %s\n",
->>  				to_mhi_pm_state_str(MHI_PM_LD_ERR_FATAL_DETECT),
->>  				to_mhi_pm_state_str(mhi_cntrl->pm_state));
->> +		else
->> +			next_state = DEV_ST_TRANSITION_FATAL;
->>  	}
->> 
->> -	mhi_queue_state_transition(mhi_cntrl, DEV_ST_TRANSITION_DISABLE);
->> +	mhi_queue_state_transition(mhi_cntrl, next_state);
->> 
->>  	/* Wait for shutdown to complete */
->>  	flush_work(&mhi_cntrl->st_worker);
->> --
->> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora 
->> Forum,
->> a Linux Foundation Collaborative Project
->> 
-
--- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora 
-Forum,
-a Linux Foundation Collaborative Project
+-Akhil.
