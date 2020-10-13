@@ -2,251 +2,135 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 2090628CAF2
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Oct 2020 11:26:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7C5B928CBDA
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Oct 2020 12:36:39 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2391315AbgJMJ00 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 13 Oct 2020 05:26:26 -0400
-Received: from m42-4.mailgun.net ([69.72.42.4]:30434 "EHLO m42-4.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1729391AbgJMJ0Z (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 13 Oct 2020 05:26:25 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1602581183; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=gZrUMhsQkmM0D6oopXDxQ+BEeflOr1RBQxf5m9kaaDI=;
- b=NJtPxXEa5qvCom53Qh63F09HKWiso0nhotBSorDqXtUPxGdTX/NDDt65bdCjCj0UIl+KOhdk
- IZyj5v+YwiRY+ZDqqlTP0jjuiPV++/HBQK+EDmKgTNuYAGG/I5DjieSI2wCo+PdwFUXB7jk6
- EGPjqeZUjJeDNeY3Hqpc7Hs10cM=
-X-Mailgun-Sending-Ip: 69.72.42.4
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n07.prod.us-west-2.postgun.com with SMTP id
- 5f8572bff9168450ea6e1e83 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 13 Oct 2020 09:26:23
- GMT
-Sender: vgarodia=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 07AEDC433FE; Tue, 13 Oct 2020 09:26:23 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: vgarodia)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id A3804C433CB;
-        Tue, 13 Oct 2020 09:26:21 +0000 (UTC)
+        id S1730339AbgJMKgi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 13 Oct 2020 06:36:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56550 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726959AbgJMKgh (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 13 Oct 2020 06:36:37 -0400
+Received: from mail-wm1-x329.google.com (mail-wm1-x329.google.com [IPv6:2a00:1450:4864:20::329])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 819E5C0613D0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Oct 2020 03:36:37 -0700 (PDT)
+Received: by mail-wm1-x329.google.com with SMTP id 13so20438211wmf.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Oct 2020 03:36:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=CiWCv3BMnudQFt/Kh0EA1mCHFgkrHwPIFYjOeIiiAgM=;
+        b=rrHdIIkHJ4RWluKR74GDVBCXZ3fHa+2GckpSDJAnPQr3LIihHVRnyUP0B3Pyy3ZhiX
+         8rSJA7CHd4bBwm+paLicw3yVKCUd7p47cqxTVZOMI8KQTToQQIRbcEkKYaCAJv5rCfEc
+         1bgA/vc4KEWcOYZ4uNSULZ7vzptJAjV8I6Yt5FQdZdfVDCfUWFaaYLymlxMbvCLnuB5g
+         k4Q1OxKAiRD5UMQFq/jNfia58Icqaqxjn9Zw637CxWxICuvMpdldIxOsG31VbTFTfcjx
+         fcwjAwQt64YG5s9nbZkfQG7kDKS53uzrSfQJevNyaAgzQJP/OvC7fnfI1m0PztItBYpx
+         0bKw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=CiWCv3BMnudQFt/Kh0EA1mCHFgkrHwPIFYjOeIiiAgM=;
+        b=ImN7xLzs91GXdbm0VHFg1cc/kvS360AgYVUKaVRC2J2Qr75gcD+xIRhe5Q78eMNdpo
+         5umvp2Bsy+cBqlaM+moNdXSKc3s6xHY6H3STDl/uW9m7xMTR2L//2O/Soq2Tbt6dVSa+
+         CYrtv+T+S8/Bzlzv+foB36uCreKCMRFvhhwerxvyYM9/wdGj9Z+/eyH8mNji/7B/KZjw
+         S9rYIYe/1ik5hUv3N0DcmPtytNYOGRH0QyUYtHGo5m89hncw0qEO2/0wS1Dib5g0T2xU
+         OnjgUg2dWt0mkDTMb9dq4qygS7wha7hD/JIJeFmKvr185t9BT+4z3WyNcikuKbL5Sqlw
+         FyzQ==
+X-Gm-Message-State: AOAM530qjf4nRVhuCCR0X/Zfe6j48Hq/CBZ/a0aPG6bvhAwbIAQSJuwe
+        I1l1yiUWCAUFTvj0qn0MwhsfyA==
+X-Google-Smtp-Source: ABdhPJxiYcDKpnTqq5SWY21dPvFP7GNAu3f5Em/slUL6EOVBNEG9+t+pGtCNV4M0EgkRnYKNBcGB0w==
+X-Received: by 2002:a1c:1905:: with SMTP id 5mr15466149wmz.32.1602585396171;
+        Tue, 13 Oct 2020 03:36:36 -0700 (PDT)
+Received: from [192.168.86.34] (cpc86377-aztw32-2-0-cust226.18-1.cable.virginm.net. [92.233.226.227])
+        by smtp.googlemail.com with ESMTPSA id t6sm31809439wre.30.2020.10.13.03.36.34
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 13 Oct 2020 03:36:35 -0700 (PDT)
+Subject: Re: [PATCH v11 2/3] ASoC: qcom: dt-bindings: Add sc7180 machine
+ bindings
+To:     Cheng-Yi Chiang <cychiang@chromium.org>,
+        linux-kernel@vger.kernel.org
+Cc:     Mark Brown <broonie@kernel.org>, Taniya Das <tdas@codeaurora.org>,
+        Rohit kumar <rohitkr@codeaurora.org>,
+        Banajit Goswami <bgoswami@codeaurora.org>,
+        Patrick Lai <plai@codeaurora.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Jaroslav Kysela <perex@perex.cz>,
+        Takashi Iwai <tiwai@suse.com>,
+        Stephan Gerhold <stephan@gerhold.net>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        Heiko Stuebner <heiko@sntech.de>,
+        Srinivasa Rao <srivasam@codeaurora.org>, dianders@chromium.org,
+        dgreid@chromium.org, tzungbi@chromium.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        alsa-devel@alsa-project.org, linux-mediatek@lists.infradead.org,
+        linux-rockchip@lists.infradead.org
+References: <20200914080619.4178587-1-cychiang@chromium.org>
+ <20200914080619.4178587-3-cychiang@chromium.org>
+From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Message-ID: <7bdc0d63-27b1-f99e-c5f8-65f880733d16@linaro.org>
+Date:   Tue, 13 Oct 2020 11:36:33 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.8.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
+In-Reply-To: <20200914080619.4178587-3-cychiang@chromium.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
 Content-Transfer-Encoding: 7bit
-Date:   Tue, 13 Oct 2020 14:56:21 +0530
-From:   vgarodia@codeaurora.org
-To:     Tomasz Figa <tfiga@chromium.org>
-Cc:     Stanimir Varbanov <stanimir.varbanov@linaro.org>,
-        Dikshita Agarwal <dikshita@codeaurora.org>,
-        Linux Media Mailing List <linux-media@vger.kernel.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>
-Subject: Re: [PATCH 2/2] venus: venc: fix handlig of S_SELECTION and
- G_SELECTION
-In-Reply-To: <CAAFQd5B8_=ikPoX9s8s8mqibBMGiOkQTio+Os+OfJncFcZm_5w@mail.gmail.com>
-References: <1600968674-11559-1-git-send-email-dikshita@codeaurora.org>
- <1600968674-11559-3-git-send-email-dikshita@codeaurora.org>
- <CAAFQd5CTyjagd7grrCkret2WnvoLHQk83fg+1QPK+V1NbhKTvw@mail.gmail.com>
- <b977eb27-9646-1c73-5acb-c3a74460e426@linaro.org>
- <CAAFQd5BdeG44SmT4xhrarsmgnFc-1LCdoFwz=XXYsLdHcMyz-Q@mail.gmail.com>
- <89783dd42e698593d30dc0f37b52cf73@codeaurora.org>
- <CAAFQd5B8_=ikPoX9s8s8mqibBMGiOkQTio+Os+OfJncFcZm_5w@mail.gmail.com>
-Message-ID: <9a107a2a4a167c2b36aa4fa6cb0f97ef@codeaurora.org>
-X-Sender: vgarodia@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Hi Cheng,
 
-On 2020-10-08 19:51, Tomasz Figa wrote:
-> On Wed, Oct 7, 2020 at 9:33 PM <vgarodia@codeaurora.org> wrote:
->> 
->> Hi Tomasz,
->> 
->> On 2020-10-01 20:47, Tomasz Figa wrote:
->> > On Thu, Oct 1, 2020 at 3:32 AM Stanimir Varbanov
->> > <stanimir.varbanov@linaro.org> wrote:
->> >>
->> >> Hi Tomasz,
->> >>
->> >> On 9/25/20 11:55 PM, Tomasz Figa wrote:
->> >> > Hi Dikshita, Stanimir,
->> >> >
->> >> > On Thu, Sep 24, 2020 at 7:31 PM Dikshita Agarwal
->> >> > <dikshita@codeaurora.org> wrote:
->> >> >>
->> >> >> From: Stanimir Varbanov <stanimir.varbanov@linaro.org>
->> >> >>
->> >> >> - return correct width and height for G_SELECTION
->> >> >> - if requested rectangle wxh doesn't match with capture port wxh
->> >> >>   adjust the rectangle to supported wxh.
->> >> >>
->> >> >> Signed-off-by: Dikshita Agarwal <dikshita@codeaurora.org>
->> >> >> ---
->> >> >>  drivers/media/platform/qcom/venus/venc.c | 20 ++++++++++++--------
->> >> >>  1 file changed, 12 insertions(+), 8 deletions(-)
->> >> >>
->> >> >> diff --git a/drivers/media/platform/qcom/venus/venc.c b/drivers/media/platform/qcom/venus/venc.c
->> >> >> index 7d2aaa8..a2cc12d 100644
->> >> >> --- a/drivers/media/platform/qcom/venus/venc.c
->> >> >> +++ b/drivers/media/platform/qcom/venus/venc.c
->> >> >> @@ -463,13 +463,13 @@ static int venc_g_fmt(struct file *file, void *fh, struct v4l2_format *f)
->> >> >>         switch (s->target) {
->> >> >>         case V4L2_SEL_TGT_CROP_DEFAULT:
->> >> >>         case V4L2_SEL_TGT_CROP_BOUNDS:
->> >> >> -               s->r.width = inst->width;
->> >> >> -               s->r.height = inst->height;
->> >> >> -               break;
->> >> >> -       case V4L2_SEL_TGT_CROP:
->> >> >>                 s->r.width = inst->out_width;
->> >> >>                 s->r.height = inst->out_height;
->> >> >>                 break;
->> >> >> +       case V4L2_SEL_TGT_CROP:
->> >> >> +               s->r.width = inst->width;
->> >> >> +               s->r.height = inst->height;
->> >> >> +               break;
->> >> >>         default:
->> >> >>                 return -EINVAL;
->> >> >>         }inter
->> >> >> @@ -490,10 +490,14 @@ static int venc_g_fmt(struct file *file, void *fh, struct v4l2_format *f)
->> >> >>
->> >> >>         switch (s->target) {
->> >> >>         case V4L2_SEL_TGT_CROP:
->> >> >> -               if (s->r.width != inst->out_width ||
->> >> >> -                   s->r.height != inst->out_height ||
->> >> >> -                   s->r.top != 0 || s->r.left != 0)
->> >> >> -                       return -EINVAL;
->> >> >> +               if (s->r.width != inst->width ||
->> >> >> +                   s->r.height != inst->height ||
->> >> >> +                   s->r.top != 0 || s->r.left != 0) {
->> >> >> +                       s->r.top = 0;
->> >> >> +                       s->r.left = 0;
->> >> >> +                       s->r.width = inst->width;
->> >> >> +                       s->r.height = inst->height;
->> >> >
->> >> > What's the point of exposing the selection API if no selection can
->> >> > actually be done?
->> >>
->> >> If someone can guarantee that dropping of s_selection will not break
->> >> userspace applications I'm fine with removing it.
->> >
->> > Indeed the specification could be made more clear about this. The
->> > visible rectangle configuration is described as optional, so I'd
->> > consider the capability to be optional as well.
->> >
->> > Of course it doesn't change the fact that something that is optional
->> > in the API may be mandatory for some specific integrations, like
->> > Chrome OS or Android.
->> >
->> >>
->> >> I implemented g/s_selection with the idea to add crop functionality
->> >> later because with current firmware interface it needs more work.
->> >
->> > I suggested one thing internally, but not sure if it was understood
->> > correctly:
->> >
->> > Most of the encoders only support partial cropping, with the rectangle
->> > limited to top = 0 and left = 0, in other words, only setting the
->> > visible width and height. This can be easily implemented on most of
->> > the hardware, even those that don't have dedicated cropping
->> > capability, by configuring the hardware as follows:
->> >
->> > stride = CAPTURE format width (or bytesperline)
->> > width = CROP width
->> > height = CROP height
->> 
->> Assuming the bitstream height and width would be configured with 
->> capture
->> plane
->> setting (s_fmt), configuring the crop as height/width would indicate 
->> to
->> venus
->> hardware as scaling. To distinguish scaling with crop, firmware needs 
->> to
->> be
->> configured separately indicating crop rectangle.
-> 
-> The V4L2 encoder API does _not_ configure the bitstream width and
-> height currently. Scaling is not defined in the API at the moment. As
-> per the spec [1], the CAPTURE width and height fields are
-> ignored/read-only.
-> 
-> [1]
-> https://www.kernel.org/doc/html/latest/userspace-api/media/v4l/dev-encoder.html#initialization
-> 
-> Currently there are following parameters configured by the V4L2 API:
-> 
-> OUTPUT format width: the number of pixels per line of the input
-> buffer, including any padding pixels, i.e. stride in pixels,
-> OUTPUT format height: the total number of lines of the input buffer.
-> including or not, any padding lines (for NV12 non-M format any padding
-> lines must be included, as plane offsets are calculated based on
-> this),
-> CROP left, width: horizontal position of valid pixel data in the
-> buffer; left is typically 0 and width can be less than OUTPUT format
-> width,
-> CROP top, height: vertical position of valid pixel data in the buffer:
-> top is typically 0 and height can be less than OUTPUT format height,
+Sorry for such late review w.r.t compatibles,
 
-I was trying to find if there is any way we can configure the encoder 
-with
-actual YUV size and the required CROP rectangle. Incase the S_FMT on 
-CAPTURE
-plane is ignored, will we ever be able to encode a bitstream with a 
-desired
-crop parameters different than YUV WxH, for ex. the bitstream WxH could 
-be
-320x192, whereas the CROP in SPS would suggest it to 320x180.
-In my ex. the YUV is 320x192.
+On 14/09/2020 09:06, Cheng-Yi Chiang wrote:
+> +---
+> +$id:http://devicetree.org/schemas/sound/qcom,sc7180.yaml#
+> +$schema:http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: Qualcomm Technologies Inc. SC7180 ASoC sound card driver
+> +
+> +maintainers:
+> +  - Rohit kumar<rohitkr@codeaurora.org>
+> +  - Cheng-Yi Chiang<cychiang@chromium.org>
+> +
+> +description:
+> +  This binding describes the SC7180 sound card which uses LPASS for audio.
+> +
+> +properties:
+> +  compatible:
+> +    const: qcom,sc7180-sndcard-rt5682-m98357-1mic
 
->> 
->> > I believe Android requires the hardware to support stride and AFAIK
->> > this hardware is also commonly used on Android, so perhaps it's
->> > possible to achieve the above without any firmware changes?
->> 
->> Yes, the hardware is used and also supported in android. The interface
->> to configure
->> crop rectangle to firmware is via extradata. This extradata info is
->> passed from v4l2
->> clients via a separate plane in v4l2 buffer. The extradata payload is
->> passed to
->> firmware as is and the firmware parses it to know if crop, roi, etc.
-> 
-> Okay, so do I get it correctly that without extradata, the firmware
-> can only handle the case where width == stride?
+This information can come from the dai link description itself, why 
+should compatible string have this information?
 
-Firmware can support for case when width different than stride, without 
-any
-additional interface requirement. Only when crop is different than YUV 
-dimension,
-it would need the additional interface.
-Please confirm if the dimensions from S_SELECTION CROP could be set to 
-firmware
-as bitstream dimensions.
+Can't we have better compatible string with actual board name or use the 
+same compatible name as used by other boards?
 
-> If so, it sounds like this extradata should be generated by the driver
-> internally based on the selection CROP rectangle. In fact, the driver
-> already seems to have a definition of struct hfi_extradata_input_crop
-> [2]. So perhaps it wouldn't require much effort to implement the crop
-> properly?
-IIRC, Stan has done some experiments around the same. Would let him 
-share his
-observations for this request.
+Can you give us some details on the advantages of doing this way?
 
-> [2]
-> https://elixir.bootlin.com/linux/v5.9-rc8/source/drivers/media/platform/qcom/venus/hfi_helper.h#L817
-> 
-> Best regards,
-> Tomasz
+Or am I missing something?
+
+AFAIU, you should add proper board name / model name to the compatible 
+string rather than describe how its connected. Connection is already 
+part of dai link definition.
+
+On the other hand model property can include variant information.
+This can also be used to set card long name which will help in UCM2.
+
+The reason I had to bring this up is because the use-space (ucm in this 
+case) will not be in a position to differentiate between different board 
+variants to select correct mixer controls, so its going to be a pain!
+
+
+Thanks,
+srini
