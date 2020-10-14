@@ -2,100 +2,146 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B7D3328DA93
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Oct 2020 09:38:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9241528DAA9
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Oct 2020 09:50:42 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728372AbgJNHih (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 14 Oct 2020 03:38:37 -0400
-Received: from mout.kundenserver.de ([217.72.192.73]:42293 "EHLO
-        mout.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727731AbgJNHih (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 14 Oct 2020 03:38:37 -0400
-Received: from mail-qt1-f181.google.com ([209.85.160.181]) by
- mrelayeu.kundenserver.de (mreue106 [212.227.15.145]) with ESMTPSA (Nemesis)
- id 1M4Ja3-1kSsTy0Wtl-000I06; Wed, 14 Oct 2020 09:38:35 +0200
-Received: by mail-qt1-f181.google.com with SMTP id q26so1670257qtb.5;
-        Wed, 14 Oct 2020 00:38:34 -0700 (PDT)
-X-Gm-Message-State: AOAM532b/m+tW/2OY/xlWLiJMNalNt+bWlJiKrvZ5S1ZrGmFe3q7LuX5
-        LE86W+TSlUyW/ILM1fLhCdp0myuMHsuycwI6m0U=
-X-Google-Smtp-Source: ABdhPJwjyqIWrdxjuToCcPKQ4Ok9IiPdkBThdZ93fTCE8qQlBXLLbjnIKJxr1TI7zS716oYktyaEvunRagv7aQiCUpo=
-X-Received: by 2002:ac8:4808:: with SMTP id g8mr3478648qtq.18.1602661113831;
- Wed, 14 Oct 2020 00:38:33 -0700 (PDT)
+        id S1727557AbgJNHul (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 14 Oct 2020 03:50:41 -0400
+Received: from z5.mailgun.us ([104.130.96.5]:32810 "EHLO z5.mailgun.us"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726348AbgJNHul (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 14 Oct 2020 03:50:41 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1602661840; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=ZDa3vOpmEZ8eDLlwS42JxZqhi1NArG+4awI4WGrgrN8=;
+ b=cc2OJ5xZBdaxBv37XS6SNo+Wx3gdSswmGFOltdB1p8JimlIMJmudd61DJkOQXmjBaEybhd1/
+ nZIfR3mYckEfkNqQ5+hLFxGa1L4U+4Upqu/5sdMOwzJpnriCrRpp7p81qmSrSStGXcX1qaIJ
+ L82O69t9RTVUVmpKVoLovMAY11k=
+X-Mailgun-Sending-Ip: 104.130.96.5
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n06.prod.us-east-1.postgun.com with SMTP id
+ 5f86adaf4f8cc67c31830658 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 14 Oct 2020 07:50:07
+ GMT
+Sender: saiprakash.ranjan=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 88BE7C433FF; Wed, 14 Oct 2020 07:50:06 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: saiprakash.ranjan)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 7E0A6C433C9;
+        Wed, 14 Oct 2020 07:50:05 +0000 (UTC)
 MIME-Version: 1.0
-References: <20201013060623.1711-1-thunder.leizhen@huawei.com>
- <20201013060623.1711-2-thunder.leizhen@huawei.com> <fa40441b-6ae1-6018-3da6-424d0252c1ba@gmail.com>
-In-Reply-To: <fa40441b-6ae1-6018-3da6-424d0252c1ba@gmail.com>
-From:   Arnd Bergmann <arnd@arndb.de>
-Date:   Wed, 14 Oct 2020 09:38:18 +0200
-X-Gmail-Original-Message-ID: <CAK8P3a3MtCDpbCgNEnLf1QcE+1O0oGZtob2KY7G-77oA95bLJQ@mail.gmail.com>
-Message-ID: <CAK8P3a3MtCDpbCgNEnLf1QcE+1O0oGZtob2KY7G-77oA95bLJQ@mail.gmail.com>
-Subject: Re: [PATCH 1/2] arm64: dts: broadcom: remove an unused property dma-ranges
-To:     Florian Fainelli <f.fainelli@gmail.com>
-Cc:     Zhen Lei <thunder.leizhen@huawei.com>,
-        Rob Herring <robh+dt@kernel.org>, Ray Jui <rjui@broadcom.com>,
-        Scott Branden <sbranden@broadcom.com>,
-        bcm-kernel-feedback-list <bcm-kernel-feedback-list@broadcom.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        devicetree <devicetree@vger.kernel.org>,
-        linux-arm-kernel <linux-arm-kernel@lists.infradead.org>,
-        linux-kernel <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-X-Provags-ID: V03:K1:Jf1KNQ25SJqWboWIRMiPQ4MGu6/jPkDNhlKqcLifghuW3yXSSmi
- nKqyZqhahUf9n8W9vP6Q2CzxcgAWgijA7qfxm4RvlmnfovGbos0SMDo7dd6QEOD+4tueAb/
- wjjwOMEh+B9w7je8oll61Ac//X2C7Vj2+SCq8QsgNktpznLjjmJc4pG2P2wZljh+QSUZ+LD
- Rqn0aqee/G8eOS76GSh2g==
-X-Spam-Flag: NO
-X-UI-Out-Filterresults: notjunk:1;V03:K0:WFnra6oy8zY=:OdDRQ8iAlxmID1m1BFkCWy
- niOe8ROoZME5jSXPPs/cP9DfzO0fsNbaUnGipxGyco1YgSwK+nWVm2VCT+qsnmHW/Zu2pCySO
- DpWaLFHQK+3rmYdCKxqNn8YeHHrgfqKCbJshGU+wWXGPmWZMVZ6SPqAEFwBD6kj08FO9+dajs
- OdasJcEB/zjr1sJ2hT6b6G8flS9fsIjR8SSDpz7j3sfjFpmjHbo42WZgr+EkOAeS/PqnGnVhc
- ZJFLuQmH/sapewpGiYjIeVb0IMMcrn7FUSsaECfUp53en2j7tx23YKMUWV35lxRPL1ICRnpb7
- 7v9PUxJ0ITOYt4ctts0IH2i6qA3Wl6WKsiNpzwkd3U5sfA3Y4Q9RbeNLdabt6ecA/7zKPa6GK
- dJGLy3mCKWq1aE/+N+vGKOmY+geVrqCHCd3ep9PG9daP8x/KVfw/y7jWRl1Z3TK/OPKDkcu4I
- 6hAgSs3I+j4l4xGi+Kyyq434SOSHF8SsvrZOUVm8000R1Am8ZIrVhh7NfejnXgag0cdOpIctg
- GnKrpbtoX7tkpAmZIpMcZ5DswAo5MjTNGu5XrOXbDR5/nRBfRaq4Mtb+f/IsymW4WJ57lWTxn
- OV2FYg+LqMpLBeya7uxeHn2JyNySyhzWwwQvQGyEK8Ssp+htXp7DxkOOxRoI1g6ERYjHCRIaO
- 275nXECDojHtMeBNF45fHAFCIJA1YG8SgaGp6fPxvu/f76UNbTf0Z+BHCLsGKj8VxqTq/GhTK
- T66QCGtHAYUgk5KYoC9t4ye261emYCqQ111jvcAUvR4JGBlKRJVRWGVRbIwz/mHJJHcqFxl9W
- +ABOrv3kepsB0MwxZFGf2Jz+s7pq36RdlB+xLgmbIhanGPA0PGEEAjkE4KacXs38OMQR/a+c+
- cQBNFJCmJHoG4cqiK/obPEAjsNI854JiTuK1j48ek=
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Wed, 14 Oct 2020 13:20:05 +0530
+From:   Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+To:     Suzuki K Poulose <suzuki.poulose@arm.com>
+Cc:     mathieu.poirier@linaro.org, mike.leach@linaro.org,
+        coresight@lists.linaro.org, swboyd@chromium.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org, denik@google.com,
+        leo.yan@linaro.org, peterz@infradead.org
+Subject: Re: [PATCH 1/2] coresight: tmc-etf: Fix NULL ptr dereference in
+ tmc_enable_etf_sink_perf()
+In-Reply-To: <5bbb2d35-3e56-56d7-4722-bf34c5efa2fb@arm.com>
+References: <cover.1602074787.git.saiprakash.ranjan@codeaurora.org>
+ <d7a2dd53d88360b12e5a14933cb931198760dd63.1602074787.git.saiprakash.ranjan@codeaurora.org>
+ <5bbb2d35-3e56-56d7-4722-bf34c5efa2fb@arm.com>
+Message-ID: <7ef182f5ca9ff473c7a643ae3b7a7e75@codeaurora.org>
+X-Sender: saiprakash.ranjan@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Oct 14, 2020 at 5:15 AM Florian Fainelli <f.fainelli@gmail.com> wrote:
-> On 10/12/2020 11:06 PM, Zhen Lei wrote:
-> > stingray-usb.dtsi is finally included by three dts files:
-> > bcm958802a802x.dts, bcm958742k.dts and bcm958742t.dts. I searched all
-> > these three entire expanded dts files, and each of them contains only one
-> > dma-ranges. No conversion range is specified, so it cannot work properly.
-> > I think this property "dma-ranges" is added by mistake, just remove it.
-> > Otherwise, the following error will be reported when any YAML detection
-> > is performed on arm64.
-> >
-> > arch/arm64/boot/dts/broadcom/stingray/stingray-usb.dtsi:7.3-14: Warning \
-> > (dma_ranges_format): /usb:dma-ranges: empty "dma-ranges" property but \
-> > its #address-cells (1) differs from / (2)
-> > arch/arm64/boot/dts/broadcom/stingray/stingray-usb.dtsi:7.3-14: Warning \
-> > (dma_ranges_format): /usb:dma-ranges: empty "dma-ranges" property but \
-> > its #size-cells (1) differs from / (2)
-> >
-> > Signed-off-by: Zhen Lei <thunder.leizhen@huawei.com>
->
-> This looks fine to me, Scott, Ray do you want to Ack this patch before I
-> take it?
+Hi Suzuki,
 
-Does it mean that there are no devices on this bus that can do DMA?
+On 2020-10-13 22:05, Suzuki K Poulose wrote:
+> On 10/07/2020 02:00 PM, Sai Prakash Ranjan wrote:
+>> There was a report of NULL pointer dereference in ETF enable
+>> path for perf CS mode with PID monitoring. It is almost 100%
+>> reproducible when the process to monitor is something very
+>> active such as chrome and with ETF as the sink and not ETR.
+>> Currently in a bid to find the pid, the owner is dereferenced
+>> via task_pid_nr() call in tmc_enable_etf_sink_perf() and with
+>> owner being NULL, we get a NULL pointer dereference.
+>> 
+>> Looking at the ETR and other places in the kernel, ETF and the
+>> ETB are the only places trying to dereference the task(owner)
+>> in tmc_enable_etf_sink_perf() which is also called from the
+>> sched_in path as in the call trace. Owner(task) is NULL even
+>> in the case of ETR in tmc_enable_etr_sink_perf(), but since we
+>> cache the PID in alloc_buffer() callback and it is done as part
+>> of etm_setup_aux() when allocating buffer for ETR sink, we never
+>> dereference this NULL pointer and we are safe. So lets do the
+> 
+> The patch is necessary to fix some of the issues. But I feel it is
+> not complete. Why is it safe earlier and not later ? I believe we are
+> simply reducing the chances of hitting the issue, by doing this earlier 
+> than
+> later.
 
-Usually there should be a dma-ranges property to identify that DMA
-is possible and what the limits are, though we have failed to enforce
-that.
+I did stress it for a long time with this patch and did not face
+any issues but I guess it doesn't hurt to have the check as you
+suggested.
 
-Also note that the #address-cells=<1> means that any device under
-this bus is assumed to only support 32-bit addressing, and DMA will
-have to go through a slow swiotlb in the absence of an IOMMU.
+> I would say we better fix all instances to make sure that the
+> event->owner is valid. (e.g, I can see that the for kernel events
+> event->owner == -1 ?)
+> 
+> struct task_struct *tsk = READ_ONCE(event->owner);
+> 
+> if (!tsk || is_kernel_event(event))
+>    /* skip ? */
+> 
 
-      Arnd
+So to confirm my understanding, I will add the above checks on top
+of this patch for ETR, ETB and ETF something like below?
+
+diff --git a/drivers/hwtracing/coresight/coresight-tmc-etf.c 
+b/drivers/hwtracing/coresight/coresight-tmc-etf.c
+index 989d965f3d90..86ff0dda0444 100644
+--- a/drivers/hwtracing/coresight/coresight-tmc-etf.c
++++ b/drivers/hwtracing/coresight/coresight-tmc-etf.c
+@@ -392,6 +392,10 @@ static void *tmc_alloc_etf_buffer(struct 
+coresight_device *csdev,
+  {
+         int node;
+         struct cs_buffers *buf;
++       struct task_struct *task = READ_ONCE(event->owner);
++
++       if (!task || is_kernel_event(event))
++               return NULL;
+
+         node = (event->cpu == -1) ? NUMA_NO_NODE : 
+cpu_to_node(event->cpu);
+
+@@ -400,7 +404,7 @@ static void *tmc_alloc_etf_buffer(struct 
+coresight_device *csdev,
+         if (!buf)
+                 return NULL;
+
+-       buf->pid = task_pid_nr(event->owner);
++       buf->pid = task_pid_nr(task);
+         buf->snapshot = overwrite;
+         buf->nr_pages = nr_pages;
+         buf->data_pages = pages;
+
+
+Thanks,
+Sai
+-- 
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a 
+member
+of Code Aurora Forum, hosted by The Linux Foundation
