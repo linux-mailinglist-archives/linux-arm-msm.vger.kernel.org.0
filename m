@@ -2,91 +2,110 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 0390428DC95
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Oct 2020 11:17:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 23E4128DDC5
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Oct 2020 11:36:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728382AbgJNJRK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 14 Oct 2020 05:17:10 -0400
-Received: from m42-4.mailgun.net ([69.72.42.4]:22055 "EHLO m42-4.mailgun.net"
+        id S1727278AbgJNJgs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 14 Oct 2020 05:36:48 -0400
+Received: from m42-4.mailgun.net ([69.72.42.4]:27528 "EHLO m42-4.mailgun.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725899AbgJNJRK (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 14 Oct 2020 05:17:10 -0400
+        id S1725960AbgJNJgs (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 14 Oct 2020 05:36:48 -0400
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1602667030; h=Content-Transfer-Encoding: Content-Type:
- In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
- Subject: Sender; bh=wlKCgSDPNjIWu6V9NAf13pQ5o5l1qmNNLLlSVijYfUI=; b=wbgLxeftnQx7O/mA4Z3sbMifmrxeDfn6ZVjJ+Q4llViDCBk+pLWk8wrwpPbGwKjqONA1Su3E
- cYb9Ws1GPMOsaTDb4EVM3prlBk7PSQlOAZirsrDrK54TE+DLYUZkdSh5u7Tz6y58QKUkbVho
- f4mq3tjpu2aw7FiI/dlGWGDfxEo=
+ s=smtp; t=1602668207; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=FTOEQCtqGMGUz2rk9/7VbauWsNvXRMhYgIKm7qBcvx8=;
+ b=rAgvuHcXGKJYkhynlr3vH2LDSM/xbu024Tq+sgkqa+aAzMjhs7sZs60tIZ18+GEBQLi+TdTD
+ kuQCBaljluG20lZ4O4e04GU2EFtHnhse6JcARyaVer1xgW8RbIEs62rBf4rHFQnQ2CJ830fr
+ n2jH7f5Ab/dp2c/UjiYNziaVkd8=
 X-Mailgun-Sending-Ip: 69.72.42.4
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org
  (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n05.prod.us-west-2.postgun.com with SMTP id
- 5f86c216319d4e9cb57a93af (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 14 Oct 2020 09:17:10
+ smtp-out-n05.prod.us-east-1.postgun.com with SMTP id
+ 5f86c69e3711fec7b15360b1 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 14 Oct 2020 09:36:30
  GMT
-Sender: akashast=codeaurora.org@mg.codeaurora.org
+Sender: saiprakash.ranjan=codeaurora.org@mg.codeaurora.org
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id E2C00C433C9; Wed, 14 Oct 2020 09:17:09 +0000 (UTC)
+        id CBEC4C4339C; Wed, 14 Oct 2020 09:36:29 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        NICE_REPLY_A,SPF_FAIL,URIBL_BLOCKED autolearn=no autolearn_force=no
-        version=3.4.0
-Received: from [192.168.1.100] (unknown [47.8.241.85])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
         (No client certificate requested)
-        (Authenticated sender: akashast)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 663C1C433C9;
-        Wed, 14 Oct 2020 09:17:04 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 663C1C433C9
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=akashast@codeaurora.org
-Subject: Re: [PATCH v2 3/3] soc: qcom: geni: Optimize/comment select fifo/dma
- mode
-To:     Douglas Anderson <dianders@chromium.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Wolfram Sang <wsa@kernel.org>
-Cc:     linux-i2c@vger.kernel.org,
-        Roja Rani Yarubandi <rojay@codeaurora.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        linux-arm-msm@vger.kernel.org, Andy Gross <agross@kernel.org>,
-        linux-kernel@vger.kernel.org
-References: <20201013212531.428538-1-dianders@chromium.org>
- <20201013142448.v2.3.I646736d3969dc47de8daceb379c6ba85993de9f4@changeid>
-From:   Akash Asthana <akashast@codeaurora.org>
-Message-ID: <4aa43d91-b470-afae-bb1c-3955136fb969@codeaurora.org>
-Date:   Wed, 14 Oct 2020 14:47:02 +0530
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
- Thunderbird/68.12.1
+        (Authenticated sender: saiprakash.ranjan)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 03487C433F1;
+        Wed, 14 Oct 2020 09:36:28 +0000 (UTC)
 MIME-Version: 1.0
-In-Reply-To: <20201013142448.v2.3.I646736d3969dc47de8daceb379c6ba85993de9f4@changeid>
-Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
 Content-Transfer-Encoding: 7bit
-Content-Language: en-US
+Date:   Wed, 14 Oct 2020 15:06:28 +0530
+From:   Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+To:     Suzuki K Poulose <suzuki.poulose@arm.com>
+Cc:     mathieu.poirier@linaro.org, mike.leach@linaro.org,
+        coresight@lists.linaro.org, swboyd@chromium.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org, denik@google.com,
+        leo.yan@linaro.org, peterz@infradead.org
+Subject: Re: [PATCH 1/2] coresight: tmc-etf: Fix NULL ptr dereference in
+ tmc_enable_etf_sink_perf()
+In-Reply-To: <5bbb2d35-3e56-56d7-4722-bf34c5efa2fb@arm.com>
+References: <cover.1602074787.git.saiprakash.ranjan@codeaurora.org>
+ <d7a2dd53d88360b12e5a14933cb931198760dd63.1602074787.git.saiprakash.ranjan@codeaurora.org>
+ <5bbb2d35-3e56-56d7-4722-bf34c5efa2fb@arm.com>
+Message-ID: <9fa4fcc25dac17b343d151a9d089b48c@codeaurora.org>
+X-Sender: saiprakash.ranjan@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On 2020-10-13 22:05, Suzuki K Poulose wrote:
+> On 10/07/2020 02:00 PM, Sai Prakash Ranjan wrote:
+>> There was a report of NULL pointer dereference in ETF enable
+>> path for perf CS mode with PID monitoring. It is almost 100%
+>> reproducible when the process to monitor is something very
+>> active such as chrome and with ETF as the sink and not ETR.
+>> Currently in a bid to find the pid, the owner is dereferenced
+>> via task_pid_nr() call in tmc_enable_etf_sink_perf() and with
+>> owner being NULL, we get a NULL pointer dereference.
+>> 
+>> Looking at the ETR and other places in the kernel, ETF and the
+>> ETB are the only places trying to dereference the task(owner)
+>> in tmc_enable_etf_sink_perf() which is also called from the
+>> sched_in path as in the call trace. Owner(task) is NULL even
+>> in the case of ETR in tmc_enable_etr_sink_perf(), but since we
+>> cache the PID in alloc_buffer() callback and it is done as part
+>> of etm_setup_aux() when allocating buffer for ETR sink, we never
+>> dereference this NULL pointer and we are safe. So lets do the
+> 
+> The patch is necessary to fix some of the issues. But I feel it is
+> not complete. Why is it safe earlier and not later ? I believe we are
+> simply reducing the chances of hitting the issue, by doing this earlier 
+> than
+> later. I would say we better fix all instances to make sure that the
+> event->owner is valid. (e.g, I can see that the for kernel events
+> event->owner == -1 ?)
+> 
+> struct task_struct *tsk = READ_ONCE(event->owner);
+> 
+> if (!tsk || is_kernel_event(event))
+>    /* skip ? */
+> 
 
-On 10/14/2020 2:55 AM, Douglas Anderson wrote:
-> The functions geni_se_select_fifo_mode() and
-> geni_se_select_fifo_mode() are a little funny.  They read/write a
-> bunch of memory mapped registers even if they don't change or aren't
-> relevant for the current protocol.  Let's make them a little more
-> sane.  We'll also add a comment explaining why we don't do some of the
-> operations for UART.
->
-> NOTE: there is no evidence at all that this makes any performance
-> difference and it fixes no bugs.  However, it seems (to me) like it
-> makes the functions a little easier to understand.  Decreasing the
-> amount of times we read/write memory mapped registers is also nice,
-> even if we are using "relaxed" variants.
->
-> Signed-off-by: Douglas Anderson <dianders@chromium.org>
-Reviewed-by: Akash Asthana <akashast@codeaurora.org>
+Looking at it some more, is_kernel_event() is not exposed
+outside events core and probably for good reason. Why do
+we need to check for this and not just tsk?
 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,\na Linux Foundation Collaborative Project
+Thanks,
+Sai
 
+-- 
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a 
+member
+of Code Aurora Forum, hosted by The Linux Foundation
