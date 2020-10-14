@@ -2,140 +2,128 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B76FE28E3C8
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Oct 2020 17:58:48 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0F52E28E3CF
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Oct 2020 18:00:08 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729983AbgJNP6r (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 14 Oct 2020 11:58:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45292 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729116AbgJNP6r (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 14 Oct 2020 11:58:47 -0400
-Received: from mail-pf1-x444.google.com (mail-pf1-x444.google.com [IPv6:2607:f8b0:4864:20::444])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3B3BBC0613D2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Oct 2020 08:58:47 -0700 (PDT)
-Received: by mail-pf1-x444.google.com with SMTP id y14so24280pfp.13
-        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Oct 2020 08:58:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=MKPVqt9nZ28XkBuHkl7IfJCFNBXzL2D6MJ4L8d/0r2o=;
-        b=Dblwm5sLURfAjRk5ukv6aLUllKii/VCuBuaa147EWeGPGCmv4wLW08wD4ummGjXFp4
-         TpXPGzb+RaxFW3U5ZnoaRz9ZOr8CiQ+wf6/IO74QDgYQPqTnCFfopSmpFlds4Ab9hzPI
-         Xbqsc+WVtgwGdZG7T0iIGsssoNAncFBuz/5sA=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=MKPVqt9nZ28XkBuHkl7IfJCFNBXzL2D6MJ4L8d/0r2o=;
-        b=VL9j/DUz1BRwWDQvzc501+XsEbSut1Vp4blhy/1AMxDueGmcqHMainwV9B6WWRY1sG
-         MDzZmjYxr1Qhb0nd3hUJqhNCmuO4/gD951e0Cvp4iy599w9U8Fcj/mRNYqc1ftXXDHj2
-         M4A1qpx2xVDTw1F4hzFqFvNak3Dj8IPOSl+/jw5tdrDGCOLFlthQ8iXzzFDVUEXjT5Jx
-         YSY5b9Y06rSdHb3d4jeer2vzYkN09Xts2cE3Vxws02tQSHc/cK7ccsQ6UtfXNCd0e5st
-         yRkd+plsKDlJSH4ZNqzq5X+2Vn3ytrQ17dzQyPKYa/ycEwXR4n2kQ+lK+P6A7A9XfGUM
-         o7pA==
-X-Gm-Message-State: AOAM532qjbbId88bIAt/QUWrpVkvfrrssOoMpjzUJ0IU3Acdyy7HxPp8
-        M0DjrqUVl6qQCm6/jp0ClqbQ7A==
-X-Google-Smtp-Source: ABdhPJy8UzEFh/715lGO+bb/nVA3OaPMlDG3AT9U0V3cqUwJicweiz5qB4RiWSAkQTF/jwsY81Aq4A==
-X-Received: by 2002:aa7:9af1:0:b029:152:6101:ad17 with SMTP id y17-20020aa79af10000b02901526101ad17mr2228pfp.25.1602691126765;
-        Wed, 14 Oct 2020 08:58:46 -0700 (PDT)
-Received: from tictac2.mtv.corp.google.com ([2620:15c:202:1:42b0:34ff:fe3d:58e6])
-        by smtp.gmail.com with ESMTPSA id h2sm80251pjv.4.2020.10.14.08.58.45
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 14 Oct 2020 08:58:46 -0700 (PDT)
-From:   Douglas Anderson <dianders@chromium.org>
-To:     Stephen Boyd <sboyd@kernel.org>
-Cc:     David Brown <david.brown@linaro.org>,
-        Rajendra Nayak <rnayak@codeaurora.org>,
-        linux-soc@vger.kernel.org, Taniya Das <tdas@codeaurora.org>,
-        Douglas Anderson <dianders@chromium.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: [PATCH v2] clk: qcom: lpasscc: Re-configure the PLL in case lost
-Date:   Wed, 14 Oct 2020 08:58:24 -0700
-Message-Id: <20201014085758.v2.1.Id0cc5d859e2422082a29a7909658932c857f5a81@changeid>
-X-Mailer: git-send-email 2.28.0.1011.ga647a8990f-goog
+        id S1727670AbgJNQAB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 14 Oct 2020 12:00:01 -0400
+Received: from z5.mailgun.us ([104.130.96.5]:20164 "EHLO z5.mailgun.us"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726496AbgJNQAB (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 14 Oct 2020 12:00:01 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1602691200; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=/WzKeTICSrDP4+lS0iIdtalkTU8mPAd7+F46GS5omvY=;
+ b=rGBdRuMIivozRN7IG656/q2ISZoVfpSHi7LZ13MLIoTzVnc5IBSx+d6plxX1D3aWXHqA42OK
+ qQhNvgzPX84ToNetZ5bjn3OnNZ9qGsGf5TgWriTEeg9UhlyTA6OKdoY6XG+uGbn63ePmhAtm
+ 6XpqAHAtpSeFDc6KRhCIcLMNUJE=
+X-Mailgun-Sending-Ip: 104.130.96.5
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n06.prod.us-west-2.postgun.com with SMTP id
+ 5f872052f9168450eaef0027 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 14 Oct 2020 15:59:14
+ GMT
+Sender: saiprakash.ranjan=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 3A763C43387; Wed, 14 Oct 2020 15:59:14 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: saiprakash.ranjan)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 6CAD6C433F1;
+        Wed, 14 Oct 2020 15:59:13 +0000 (UTC)
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8;
+ format=flowed
 Content-Transfer-Encoding: 8bit
+Date:   Wed, 14 Oct 2020 21:29:13 +0530
+From:   Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+To:     Suzuki K Poulose <suzuki.poulose@arm.com>
+Cc:     mathieu.poirier@linaro.org, mike.leach@linaro.org,
+        coresight@lists.linaro.org, swboyd@chromium.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org, denik@google.com,
+        leo.yan@linaro.org, peterz@infradead.org
+Subject: Re: [PATCH 1/2] coresight: tmc-etf: Fix NULL ptr dereference in
+ tmc_enable_etf_sink_perf()
+In-Reply-To: <707b7860-0daa-d3e3-1f0f-17e1b05feae2@arm.com>
+References: <cover.1602074787.git.saiprakash.ranjan@codeaurora.org>
+ <d7a2dd53d88360b12e5a14933cb931198760dd63.1602074787.git.saiprakash.ranjan@codeaurora.org>
+ <5bbb2d35-3e56-56d7-4722-bf34c5efa2fb@arm.com>
+ <9fa4fcc25dac17b343d151a9d089b48c@codeaurora.org>
+ <707b7860-0daa-d3e3-1f0f-17e1b05feae2@arm.com>
+Message-ID: <5ad6acdc69c1c2e1e17f5c701a09b7e1@codeaurora.org>
+X-Sender: saiprakash.ranjan@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Taniya Das <tdas@codeaurora.org>
+On 2020-10-14 18:46, Suzuki K Poulose wrote:
+> On 10/14/2020 10:36 AM, Sai Prakash Ranjan wrote:
+>> On 2020-10-13 22:05, Suzuki K Poulose wrote:
+>>> On 10/07/2020 02:00 PM, Sai Prakash Ranjan wrote:
+>>>> There was a report of NULL pointer dereference in ETF enable
+>>>> path for perf CS mode with PID monitoring. It is almost 100%
+>>>> reproducible when the process to monitor is something very
+>>>> active such as chrome and with ETF as the sink and not ETR.
+>>>> Currently in a bid to find the pid, the owner is dereferenced
+>>>> via task_pid_nr() call in tmc_enable_etf_sink_perf() and with
+>>>> owner being NULL, we get a NULL pointer dereference.
+>>>> 
+>>>> Looking at the ETR and other places in the kernel, ETF and the
+>>>> ETB are the only places trying to dereference the task(owner)
+>>>> in tmc_enable_etf_sink_perf() which is also called from the
+>>>> sched_in path as in the call trace. Owner(task) is NULL even
+>>>> in the case of ETR in tmc_enable_etr_sink_perf(), but since we
+>>>> cache the PID in alloc_buffer() callback and it is done as part
+>>>> of etm_setup_aux() when allocating buffer for ETR sink, we never
+>>>> dereference this NULL pointer and we are safe. So lets do the
+>>> 
+>>> The patch is necessary to fix some of the issues. But I feel it is
+>>> not complete. Why is it safe earlier and not later ? I believe we are
+>>> simply reducing the chances of hitting the issue, by doing this 
+>>> earlier than
+>>> later. I would say we better fix all instances to make sure that the
+>>> event->owner is valid. (e.g, I can see that the for kernel events
+>>> event->owner == -1 ?)
+>>> 
+>>> struct task_struct *tsk = READ_ONCE(event->owner);
+>>> 
+>>> if (!tsk || is_kernel_event(event))
+>>>    /* skip ? */
+>>> 
+>> 
+>> Looking at it some more, is_kernel_event() is not exposed
+>> outside events core and probably for good reason. Why do
+>> we need to check for this and not just tsk?
+> 
+> Because the event->owner could be :
+> 
+>  = NULL
+>  = -1UL  // kernel event
+>  = valid.
+> 
 
-In the case where the PLL configuration is lost, then the pm runtime
-resume will reconfigure before usage.
+Yes I understood that part, but here we were trying to
+fix the NULL pointer dereference right and hence the
+question as to why we need to check for kernel events?
+I am no expert in perf but I don't see anywhere in the
+kernel checking for is_kernel_event(), so I am a bit
+skeptical if exporting that is actually right or not.
 
-Fixes: edab812d802d ("clk: qcom: lpass: Add support for LPASS clock controller for SC7180")
-Signed-off-by: Taniya Das <tdas@codeaurora.org>
-Signed-off-by: Douglas Anderson <dianders@chromium.org>
----
-I took the liberty of fixing my own nits that I had with Taniya's
-patch, AKA:
+Thanks,
+Sai
 
-https://lore.kernel.org/r/1602614008-2421-2-git-send-email-tdas@codeaurora.org
-
-Changes in v2:
-- Don't needlessly have a 2nd copy of dev_pm_ops and jam it in.
-- Check the return value of pm_clk_resume()
-- l_val should be unsigned int.
-
- drivers/clk/qcom/lpasscorecc-sc7180.c | 23 ++++++++++++++++++++++-
- 1 file changed, 22 insertions(+), 1 deletion(-)
-
-diff --git a/drivers/clk/qcom/lpasscorecc-sc7180.c b/drivers/clk/qcom/lpasscorecc-sc7180.c
-index 228d08f5d26f..ee23eb5b9bf2 100644
---- a/drivers/clk/qcom/lpasscorecc-sc7180.c
-+++ b/drivers/clk/qcom/lpasscorecc-sc7180.c
-@@ -356,6 +356,25 @@ static const struct qcom_cc_desc lpass_audio_hm_sc7180_desc = {
- 	.num_gdscs = ARRAY_SIZE(lpass_audio_hm_sc7180_gdscs),
- };
- 
-+static int lpass_core_cc_pm_clk_resume(struct device *dev)
-+{
-+	struct regmap *regmap = dev_get_drvdata(dev);
-+	unsigned int l_val;
-+	int ret;
-+
-+	ret = pm_clk_resume(dev);
-+	if (ret)
-+		return ret;
-+
-+	/* Read PLL_L_VAL */
-+	regmap_read(regmap, 0x1004, &l_val);
-+	if (!l_val)
-+		clk_fabia_pll_configure(&lpass_lpaaudio_dig_pll, regmap,
-+				&lpass_lpaaudio_dig_pll_config);
-+
-+	return 0;
-+}
-+
- static int lpass_core_cc_sc7180_probe(struct platform_device *pdev)
- {
- 	const struct qcom_cc_desc *desc;
-@@ -373,6 +392,8 @@ static int lpass_core_cc_sc7180_probe(struct platform_device *pdev)
- 	if (IS_ERR(regmap))
- 		return PTR_ERR(regmap);
- 
-+	dev_set_drvdata(&pdev->dev, regmap);
-+
- 	/*
- 	 * Keep the CLK always-ON
- 	 * LPASS_AUDIO_CORE_SYSNOC_SWAY_CORE_CLK
-@@ -449,7 +470,7 @@ static int lpass_core_sc7180_probe(struct platform_device *pdev)
- }
- 
- static const struct dev_pm_ops lpass_core_cc_pm_ops = {
--	SET_RUNTIME_PM_OPS(pm_clk_suspend, pm_clk_resume, NULL)
-+	SET_RUNTIME_PM_OPS(pm_clk_suspend, lpass_core_cc_pm_clk_resume, NULL)
- };
- 
- static struct platform_driver lpass_core_cc_sc7180_driver = {
 -- 
-2.28.0.1011.ga647a8990f-goog
-
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a 
+member
+of Code Aurora Forum, hosted by The Linux Foundation
