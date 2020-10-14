@@ -2,110 +2,126 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 23E4128DDC5
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Oct 2020 11:36:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EC62828DDC8
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Oct 2020 11:37:04 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727278AbgJNJgs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 14 Oct 2020 05:36:48 -0400
-Received: from m42-4.mailgun.net ([69.72.42.4]:27528 "EHLO m42-4.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725960AbgJNJgs (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 14 Oct 2020 05:36:48 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1602668207; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=FTOEQCtqGMGUz2rk9/7VbauWsNvXRMhYgIKm7qBcvx8=;
- b=rAgvuHcXGKJYkhynlr3vH2LDSM/xbu024Tq+sgkqa+aAzMjhs7sZs60tIZ18+GEBQLi+TdTD
- kuQCBaljluG20lZ4O4e04GU2EFtHnhse6JcARyaVer1xgW8RbIEs62rBf4rHFQnQ2CJ830fr
- n2jH7f5Ab/dp2c/UjiYNziaVkd8=
-X-Mailgun-Sending-Ip: 69.72.42.4
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n05.prod.us-east-1.postgun.com with SMTP id
- 5f86c69e3711fec7b15360b1 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 14 Oct 2020 09:36:30
- GMT
-Sender: saiprakash.ranjan=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id CBEC4C4339C; Wed, 14 Oct 2020 09:36:29 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: saiprakash.ranjan)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 03487C433F1;
-        Wed, 14 Oct 2020 09:36:28 +0000 (UTC)
+        id S1728029AbgJNJgx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 14 Oct 2020 05:36:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42670 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727872AbgJNJgx (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 14 Oct 2020 05:36:53 -0400
+Received: from mail-lj1-x243.google.com (mail-lj1-x243.google.com [IPv6:2a00:1450:4864:20::243])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0FEF9C0613D2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Oct 2020 02:36:53 -0700 (PDT)
+Received: by mail-lj1-x243.google.com with SMTP id m20so2471952ljj.5
+        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Oct 2020 02:36:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=AgJUpeJL7pNpYrMzhgRxfluJZLPcBG484GqTiiuhBbs=;
+        b=Gf/ZthvmpRme7OiTG3JFCoHy07Vnp33A2qrAVTlrlCgmYyMiQvGIGIqaxewRN2k46z
+         6y/vQTQOabTEzacIP1ypJcjQvya/xsXJZTsRuTDc2WR9VxGUcnM9uWtLgTLRbYiEDnwB
+         URTnPechdzySVPPUCcmAf5PYm08d2iBPaHrPuLY7TVrWnz7S8J+QaTzG8I56jW99O2UJ
+         MBrZo9pf30mz3zL1yMtGo1mrYfiEgkKcjin4IZV84D+m+ZQw5PVC4TU1FR7hJmC1oYFp
+         r3oSIUqQQWL7XrIbJNw2rlOy+GOdQIaZqz7Km/bEBaDfmMvh1+2nyyrxO/BnC8xbpMY2
+         ALaw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=AgJUpeJL7pNpYrMzhgRxfluJZLPcBG484GqTiiuhBbs=;
+        b=EgWwHz0QVJW46FXnEGe5IfVeu4teKgAdMPVu8c0tLaqSNh5NxrbDK7yibY16C2qGO8
+         OSpiGrhgNbMDl6IO/NuUBJe/SO7GEcPtUjsdzEdQHTxLTf7cfLYIFk6cduXJ3RSp3+DM
+         rnUfn3RGslf8MuecnF9VaQrakEn6eB4MMub0rBM1UA5KA4pBaWG8kFu+AWIeISlTJ6lY
+         QzLlYkQIHNu5z8IpCJ21qCO99DxS1b+AB+l7n6twfJUC3LiFH8DS/SbJWgjuVP35+l1h
+         SeA+Sye8k9hjNVAuwO9v7thqq1HvDAZqXOi1dxUMU+WOX6/UFTdZeCB/XSQVJcbkkgGl
+         J/jg==
+X-Gm-Message-State: AOAM533T49/pzmHDmsOX5SD7B4lBBUDJalDYiCd4j7+l74rirKfkGmQJ
+        kIJxky3CPKBmqYDRFCNlmOdGGA==
+X-Google-Smtp-Source: ABdhPJyAOSZov4CPoN126NEQlg6nopJIQBCnBPiTBrs3IFmZ2rfOMBqft4aRHDurkybx81iwENOjvA==
+X-Received: by 2002:a2e:a58a:: with SMTP id m10mr1557154ljp.316.1602668211358;
+        Wed, 14 Oct 2020 02:36:51 -0700 (PDT)
+Received: from [192.168.1.211] ([94.25.229.2])
+        by smtp.gmail.com with ESMTPSA id z22sm943901lfd.23.2020.10.14.02.36.49
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 14 Oct 2020 02:36:50 -0700 (PDT)
+Subject: Re: [PATCH v1 1/3] dt-bindings: clock: qcom,dispcc: document power
+ domain bindings
+To:     Stephen Boyd <sboyd@kernel.org>, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Jonathan Marek <jonathan@marek.ca>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Rob Herring <robh+dt@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        devicetree@vger.kernel.org, linux-clk@vger.kernel.org,
+        Rob Herring <robh@kernel.org>
+References: <20201005225914.315852-1-dmitry.baryshkov@linaro.org>
+ <20201005225914.315852-2-dmitry.baryshkov@linaro.org>
+ <160263639992.310579.2985110685040776427@swboyd.mtv.corp.google.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Message-ID: <36c5d7dc-7b31-69d1-6862-4432ee22a2c4@linaro.org>
+Date:   Wed, 14 Oct 2020 12:36:50 +0300
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.2.2
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
+In-Reply-To: <160263639992.310579.2985110685040776427@swboyd.mtv.corp.google.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
 Content-Transfer-Encoding: 7bit
-Date:   Wed, 14 Oct 2020 15:06:28 +0530
-From:   Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-To:     Suzuki K Poulose <suzuki.poulose@arm.com>
-Cc:     mathieu.poirier@linaro.org, mike.leach@linaro.org,
-        coresight@lists.linaro.org, swboyd@chromium.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, denik@google.com,
-        leo.yan@linaro.org, peterz@infradead.org
-Subject: Re: [PATCH 1/2] coresight: tmc-etf: Fix NULL ptr dereference in
- tmc_enable_etf_sink_perf()
-In-Reply-To: <5bbb2d35-3e56-56d7-4722-bf34c5efa2fb@arm.com>
-References: <cover.1602074787.git.saiprakash.ranjan@codeaurora.org>
- <d7a2dd53d88360b12e5a14933cb931198760dd63.1602074787.git.saiprakash.ranjan@codeaurora.org>
- <5bbb2d35-3e56-56d7-4722-bf34c5efa2fb@arm.com>
-Message-ID: <9fa4fcc25dac17b343d151a9d089b48c@codeaurora.org>
-X-Sender: saiprakash.ranjan@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2020-10-13 22:05, Suzuki K Poulose wrote:
-> On 10/07/2020 02:00 PM, Sai Prakash Ranjan wrote:
->> There was a report of NULL pointer dereference in ETF enable
->> path for perf CS mode with PID monitoring. It is almost 100%
->> reproducible when the process to monitor is something very
->> active such as chrome and with ETF as the sink and not ETR.
->> Currently in a bid to find the pid, the owner is dereferenced
->> via task_pid_nr() call in tmc_enable_etf_sink_perf() and with
->> owner being NULL, we get a NULL pointer dereference.
->> 
->> Looking at the ETR and other places in the kernel, ETF and the
->> ETB are the only places trying to dereference the task(owner)
->> in tmc_enable_etf_sink_perf() which is also called from the
->> sched_in path as in the call trace. Owner(task) is NULL even
->> in the case of ETR in tmc_enable_etr_sink_perf(), but since we
->> cache the PID in alloc_buffer() callback and it is done as part
->> of etm_setup_aux() when allocating buffer for ETR sink, we never
->> dereference this NULL pointer and we are safe. So lets do the
+On 14/10/2020 03:46, Stephen Boyd wrote:
+> Quoting Dmitry Baryshkov (2020-10-05 15:59:12)
+>> SM8250 requires special power domain for accessing MMDS_GDSC registers.
 > 
-> The patch is necessary to fix some of the issues. But I feel it is
-> not complete. Why is it safe earlier and not later ? I believe we are
-> simply reducing the chances of hitting the issue, by doing this earlier 
-> than
-> later. I would say we better fix all instances to make sure that the
-> event->owner is valid. (e.g, I can see that the for kernel events
-> event->owner == -1 ?)
+> Heh, not sure it's special.
 > 
-> struct task_struct *tsk = READ_ONCE(event->owner);
+>> Add bindings for the MMCX power domain.
+>>
+>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+>> Reviewed-by: Rob Herring <robh@kernel.org>
+>> ---
+>>   .../bindings/clock/qcom,sdm845-dispcc.yaml    | 28 +++++++++++++++++++
+>>   1 file changed, 28 insertions(+)
+>>
+>> diff --git a/Documentation/devicetree/bindings/clock/qcom,sdm845-dispcc.yaml b/Documentation/devicetree/bindings/clock/qcom,sdm845-dispcc.yaml
+>> index 4a3be733d042..ff0db55470ac 100644
+>> --- a/Documentation/devicetree/bindings/clock/qcom,sdm845-dispcc.yaml
+>> +++ b/Documentation/devicetree/bindings/clock/qcom,sdm845-dispcc.yaml
+>> @@ -97,5 +108,22 @@ examples:
+>>         #clock-cells = <1>;
+>>         #reset-cells = <1>;
+>>         #power-domain-cells = <1>;
+>> +      /* this is a part of sm8250 setup the power domain example */
+>> +      power-domains = <&rpmhpd SDM845_CX>;
+>> +      power-domain-names = "mmcx";
+>> +      required-opps = <&rpmhpd_opp_low_svs>;
+>> +    };
+>> +    rpmhpd: power-controller {
 > 
-> if (!tsk || is_kernel_event(event))
->    /* skip ? */
-> 
+> Do we need this node in the example? I think it isn't required but I
+> guess it's OK.
 
-Looking at it some more, is_kernel_event() is not exposed
-outside events core and probably for good reason. Why do
-we need to check for this and not just tsk?
+It is to be able to resolve "power-domains" and "required-opps" 
+properties values.
 
-Thanks,
-Sai
+>> +      compatible = "qcom,sdm845-rpmhpd";
+>> +      #power-domain-cells = <1>;
+>> +      operating-points-v2 = <&rpmhpd_opp_table>;
+>> +
+>> +      rpmhpd_opp_table: opp-table {
+>> +        compatible = "operating-points-v2";
+>> +
+>> +        rpmhpd_opp_low_svs: opp3 {
+
 
 -- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a 
-member
-of Code Aurora Forum, hosted by The Linux Foundation
+With best wishes
+Dmitry
