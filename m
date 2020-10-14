@@ -2,241 +2,95 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 737BB28D70F
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Oct 2020 01:36:07 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0168C28DCC5
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Oct 2020 11:20:07 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729690AbgJMXgG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 13 Oct 2020 19:36:06 -0400
-Received: from z5.mailgun.us ([104.130.96.5]:59113 "EHLO z5.mailgun.us"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728214AbgJMXgG (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 13 Oct 2020 19:36:06 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1602632165; h=Content-Transfer-Encoding: MIME-Version:
- Message-Id: Date: Subject: Cc: To: From: Sender;
- bh=F3wUV8sxcb68wXz6pIw3+7SfF9kUhLTJbbvVbjtfHDI=; b=Xpkng216OTWsF1eBquBh2LqE/4B8L9VHZ1bOtjp0sNgrdlK9HEXufqAK8a59g39XduAuXvbf
- ktvB19Ar6NQtBlLj+RBcCeYaGQ9e8Pa9xo1iNPePF7T71AJqVBm+htmKHpfDYfCgQaSVJ4fI
- fEPe7bKBzAUhKo5yCWbyiXPg3aU=
-X-Mailgun-Sending-Ip: 104.130.96.5
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n05.prod.us-east-1.postgun.com with SMTP id
- 5f8639e552f4fccef020488f (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 13 Oct 2020 23:36:05
- GMT
-Sender: khsieh=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id A759CC433CB; Tue, 13 Oct 2020 23:36:04 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
-        T_FILL_THIS_FORM_SHORT,URIBL_BLOCKED autolearn=no autolearn_force=no
-        version=3.4.0
-Received: from khsieh-linux1.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: khsieh)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 92A06C433C9;
-        Tue, 13 Oct 2020 23:36:03 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 92A06C433C9
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=khsieh@codeaurora.org
-From:   Kuogee Hsieh <khsieh@codeaurora.org>
-To:     robdclark@gmail.com, sean@poorly.run, swboyd@chromium.org
+        id S1730693AbgJNJUD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 14 Oct 2020 05:20:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39966 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730634AbgJNJUA (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 14 Oct 2020 05:20:00 -0400
+Received: from mail-pj1-x1043.google.com (mail-pj1-x1043.google.com [IPv6:2607:f8b0:4864:20::1043])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2A9CBC02524A
+        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Oct 2020 17:36:55 -0700 (PDT)
+Received: by mail-pj1-x1043.google.com with SMTP id h4so556818pjk.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Oct 2020 17:36:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=mime-version:content-transfer-encoding:in-reply-to:references
+         :subject:from:cc:to:date:message-id:user-agent;
+        bh=9imkWvMot1MzH+ehLJwgyaxPJxuOFrOphid59RBNFTo=;
+        b=HmED74OGfPJeiSnehPVeZnQq0lW4FvMWAIKlf6FYb2rHCFz01nDI709PwTOJWBOj/0
+         MqXvSM8QPTAfDM0pB4JgvphWDxwGWuejZM0o8302Eeidj20nyPmXqdAJwiviFChpfl/v
+         s9g+sRDQ98tTWvQF3cB4/9eQhNX2CD4UTJsuY=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:content-transfer-encoding
+         :in-reply-to:references:subject:from:cc:to:date:message-id
+         :user-agent;
+        bh=9imkWvMot1MzH+ehLJwgyaxPJxuOFrOphid59RBNFTo=;
+        b=L1/66vLZVs9tA8z8TZcO3a5HLIk0kVuA/zi9wFY+C7QYvIOQMLMidixHY1mm4PkbH8
+         uvWCkSXZVgAtOWV3exGWjmv0dv7K6yrsMT6nuuznW6txKwKrD7Tc2pXKd/kKXYak/Mj2
+         RRd4Y94sFHQtIjRsHuJZHldfu7J4MiID7WrgDCt6AvTQCdCclGe05wux6Lha2dHKrdvD
+         LtQnCAoJrVu4lGHpC6RV86N6SOz2uwG8eb3iTCoiAo0lm6Kfjsdv3KcASmbrMgLFTgRT
+         keu/TAz0eFKXasIxrVUqOllgXoEBSeXaQNUHTixN5JkQc+6NFZ40bVXDbIRAa3G5NrRM
+         BKTA==
+X-Gm-Message-State: AOAM530ON78RnvdRiUmHkqwj8D7orInTvNU6QXaQ4Xu899rmdjdu/aep
+        B/bxNlS8sy9BBgfiAfa3p51M8zZR7iNmeA==
+X-Google-Smtp-Source: ABdhPJz//cpuLR3q6+8Xtvz7MFQA92okbEa8Sfnd9VzfzsJ3RYQ0rokXMZ0mF0DjfGRDqJuhhbjOPA==
+X-Received: by 2002:a17:902:708a:b029:d4:cf7c:6c59 with SMTP id z10-20020a170902708ab02900d4cf7c6c59mr2262370plk.52.1602635814708;
+        Tue, 13 Oct 2020 17:36:54 -0700 (PDT)
+Received: from chromium.org ([2620:15c:202:201:3e52:82ff:fe6c:83ab])
+        by smtp.gmail.com with ESMTPSA id w10sm455476pjy.13.2020.10.13.17.36.53
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 13 Oct 2020 17:36:54 -0700 (PDT)
+Content-Type: text/plain; charset="utf-8"
+MIME-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <20201013233522.5222-1-khsieh@codeaurora.org>
+References: <20201013233522.5222-1-khsieh@codeaurora.org>
+Subject: Re: [PATCH v4] drm/msm/dp: return correct connection status after suspend
+From:   Stephen Boyd <swboyd@chromium.org>
 Cc:     tanmay@codeaurora.org, abhinavk@codeaurora.org,
         aravindh@codeaurora.org, khsieh@codeaurora.org, airlied@linux.ie,
         daniel@ffwll.ch, linux-arm-msm@vger.kernel.org,
         dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
         linux-kernel@vger.kernel.org
-Subject: [PATCH v3] drm/msm/dp: fixes wrong connection state caused by failure of link train
-Date:   Tue, 13 Oct 2020 16:35:44 -0700
-Message-Id: <20201013233544.5324-1-khsieh@codeaurora.org>
-X-Mailer: git-send-email 2.27.0
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+To:     Kuogee Hsieh <khsieh@codeaurora.org>, robdclark@gmail.com,
+        sean@poorly.run
+Date:   Tue, 13 Oct 2020 17:36:52 -0700
+Message-ID: <160263581242.310579.522359444728182805@swboyd.mtv.corp.google.com>
+User-Agent: alot/0.9.1
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Connection state is not set correctly happen when either failure of link
-train due to cable unplugged in the middle of aux channel reading or
-cable plugged in while in suspended state. This patch fixes these problems.
-This patch also replace ST_SUSPEND_PENDING with ST_DISPLAY_OFF.
+Quoting Kuogee Hsieh (2020-10-13 16:35:22)
+> During suspend, dp host controller and hpd block are disabled due to
+> both ahb and aux clock are disabled. Therefore hpd plug/unplug interrupts
+> will not be generated. At dp_pm_resume(), reinitialize both dp host
+> controller and hpd block so that hpd plug/unplug interrupts will be
+> generated and handled by driver so that hpd connection state is updated
+> correctly. This patch will fix link training flaky issues.
+>=20
+> Changes in v2:
+> -- use container_of to cast correct dp_display_private pointer
+>    at both dp_pm_suspend() and dp_pm_resume().
+>=20
+> Changes in v3:
+> -- replace hpd_state atomic_t  with u32
+>=20
+> Changes in v4
+> -- call dp_display_host_deinit() at dp_pm_suspend()
+> -- call dp_display_host_init() at msm_dp_display_enable()
+> -- fix phy->init_count unbalance which causes link training failed
+>=20
+> Signed-off-by: Kuogee Hsieh <khsieh@codeaurora.org>
+> ---
 
-Changes in V2:
--- Add more information to commit message.
+Can we add some sort of Fixes tag? Maybe the beginning of this DP driver
+support?
 
-Changes in V3:
--- change base
-
-Signed-off-by: Kuogee Hsieh <khsieh@codeaurora.org>
----
- drivers/gpu/drm/msm/dp/dp_display.c | 40 ++++++++++++++---------------
- drivers/gpu/drm/msm/dp/dp_panel.c   |  5 ++++
- 2 files changed, 24 insertions(+), 21 deletions(-)
-
-diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
-index d9164ff6515d..c0665a0a4c78 100644
---- a/drivers/gpu/drm/msm/dp/dp_display.c
-+++ b/drivers/gpu/drm/msm/dp/dp_display.c
-@@ -45,7 +45,7 @@ enum {
- 	ST_CONNECT_PENDING,
- 	ST_CONNECTED,
- 	ST_DISCONNECT_PENDING,
--	ST_SUSPEND_PENDING,
-+	ST_DISPLAY_OFF,
- 	ST_SUSPENDED,
- };
- 
-@@ -503,7 +503,7 @@ static int dp_hpd_plug_handle(struct dp_display_private *dp, u32 data)
- 	mutex_lock(&dp->event_mutex);
- 
- 	state =  dp->hpd_state;
--	if (state == ST_SUSPEND_PENDING) {
-+	if (state == ST_DISPLAY_OFF || state == ST_SUSPENDED) {
- 		mutex_unlock(&dp->event_mutex);
- 		return 0;
- 	}
-@@ -525,14 +525,14 @@ static int dp_hpd_plug_handle(struct dp_display_private *dp, u32 data)
- 	hpd->hpd_high = 1;
- 
- 	ret = dp_display_usbpd_configure_cb(&dp->pdev->dev);
--	if (ret) {	/* failed */
-+	if (ret) {	/* link train failed */
- 		hpd->hpd_high = 0;
- 		dp->hpd_state = ST_DISCONNECTED;
-+	} else {
-+		/* start sentinel checking in case of missing uevent */
-+		dp_add_event(dp, EV_CONNECT_PENDING_TIMEOUT, 0, tout);
- 	}
- 
--	/* start sanity checking */
--	dp_add_event(dp, EV_CONNECT_PENDING_TIMEOUT, 0, tout);
--
- 	mutex_unlock(&dp->event_mutex);
- 
- 	/* uevent will complete connection part */
-@@ -577,11 +577,6 @@ static int dp_hpd_unplug_handle(struct dp_display_private *dp, u32 data)
- 	mutex_lock(&dp->event_mutex);
- 
- 	state = dp->hpd_state;
--	if (state == ST_SUSPEND_PENDING) {
--		mutex_unlock(&dp->event_mutex);
--		return 0;
--	}
--
- 	if (state == ST_DISCONNECT_PENDING || state == ST_DISCONNECTED) {
- 		mutex_unlock(&dp->event_mutex);
- 		return 0;
-@@ -608,7 +603,7 @@ static int dp_hpd_unplug_handle(struct dp_display_private *dp, u32 data)
- 	 */
- 	dp_display_usbpd_disconnect_cb(&dp->pdev->dev);
- 
--	/* start sanity checking */
-+	/* start sentinel checking in case of missing uevent */
- 	dp_add_event(dp, EV_DISCONNECT_PENDING_TIMEOUT, 0, DP_TIMEOUT_5_SECOND);
- 
- 	/* signal the disconnect event early to ensure proper teardown */
-@@ -648,7 +643,7 @@ static int dp_irq_hpd_handle(struct dp_display_private *dp, u32 data)
- 
- 	/* irq_hpd can happen at either connected or disconnected state */
- 	state =  dp->hpd_state;
--	if (state == ST_SUSPEND_PENDING) {
-+	if (state == ST_DISPLAY_OFF) {
- 		mutex_unlock(&dp->event_mutex);
- 		return 0;
- 	}
-@@ -1073,7 +1068,7 @@ static irqreturn_t dp_display_irq_handler(int irq, void *dev_id)
- 		}
- 
- 		if (hpd_isr_status & DP_DP_IRQ_HPD_INT_MASK) {
--			/* delete connect pending event first */
-+			/* stop sentinel connect pending checking */
- 			dp_del_event(dp, EV_CONNECT_PENDING_TIMEOUT);
- 			dp_add_event(dp, EV_IRQ_HPD_INT, 0, 0);
- 		}
-@@ -1204,13 +1199,10 @@ static int dp_pm_resume(struct device *dev)
- 
- 	status = dp_catalog_hpd_get_state_status(dp->catalog);
- 
--	if (status) {
-+	if (status)
- 		dp->dp_display.is_connected = true;
--	} else {
-+	else
- 		dp->dp_display.is_connected = false;
--		/* make sure next resume host_init be called */
--		dp->core_initialized = false;
--	}
- 
- 	mutex_unlock(&dp->event_mutex);
- 
-@@ -1232,6 +1224,9 @@ static int dp_pm_suspend(struct device *dev)
- 
- 	dp->hpd_state = ST_SUSPENDED;
- 
-+	/* host_init will be called at pm_resume */
-+	dp->core_initialized = false;
-+
- 	mutex_unlock(&dp->event_mutex);
- 
- 	return 0;
-@@ -1361,6 +1356,7 @@ int msm_dp_display_enable(struct msm_dp *dp, struct drm_encoder *encoder)
- 
- 	mutex_lock(&dp_display->event_mutex);
- 
-+	/* stop sentinel checking */
- 	dp_del_event(dp_display, EV_CONNECT_PENDING_TIMEOUT);
- 
- 	rc = dp_display_set_mode(dp, &dp_display->dp_mode);
-@@ -1391,7 +1387,8 @@ int msm_dp_display_enable(struct msm_dp *dp, struct drm_encoder *encoder)
- 		dp_display_unprepare(dp);
- 	}
- 
--	if (state == ST_SUSPEND_PENDING)
-+	/* manual kick off plug event to train link */
-+	if (state == ST_DISPLAY_OFF)
- 		dp_add_event(dp_display, EV_IRQ_HPD_INT, 0, 0);
- 
- 	/* completed connection */
-@@ -1423,6 +1420,7 @@ int msm_dp_display_disable(struct msm_dp *dp, struct drm_encoder *encoder)
- 
- 	mutex_lock(&dp_display->event_mutex);
- 
-+	/* stop sentinel checking */
- 	dp_del_event(dp_display, EV_DISCONNECT_PENDING_TIMEOUT);
- 
- 	dp_display_disable(dp_display, 0);
-@@ -1436,7 +1434,7 @@ int msm_dp_display_disable(struct msm_dp *dp, struct drm_encoder *encoder)
- 		/* completed disconnection */
- 		dp_display->hpd_state = ST_DISCONNECTED;
- 	} else {
--		dp_display->hpd_state = ST_SUSPEND_PENDING;
-+		dp_display->hpd_state = ST_DISPLAY_OFF;
- 	}
- 
- 	mutex_unlock(&dp_display->event_mutex);
-diff --git a/drivers/gpu/drm/msm/dp/dp_panel.c b/drivers/gpu/drm/msm/dp/dp_panel.c
-index 18cec4fc5e0b..1b7a20dc2d8e 100644
---- a/drivers/gpu/drm/msm/dp/dp_panel.c
-+++ b/drivers/gpu/drm/msm/dp/dp_panel.c
-@@ -196,6 +196,11 @@ int dp_panel_read_sink_caps(struct dp_panel *dp_panel,
- 					      &panel->aux->ddc);
- 	if (!dp_panel->edid) {
- 		DRM_ERROR("panel edid read failed\n");
-+		/* check edid read fail is due to unplug */
-+		if (!dp_catalog_hpd_get_state_status(panel->catalog)) {
-+			rc = -ETIMEDOUT;
-+			goto end;
-+		}
- 
- 		/* fail safe edid */
- 		mutex_lock(&connector->dev->mode_config.mutex);
-
-base-commit: aa2d34d0676cd6ee3327023405e5afdc5cc0b91d
--- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project
-
+Tested-by: Stephen Boyd <swboyd@chromium.org>
