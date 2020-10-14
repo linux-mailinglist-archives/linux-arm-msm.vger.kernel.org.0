@@ -2,130 +2,194 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 9EB9A28E682
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Oct 2020 20:35:42 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2254B28E686
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Oct 2020 20:37:17 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2389008AbgJNSfe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 14 Oct 2020 14:35:34 -0400
-Received: from mail.kernel.org ([198.145.29.99]:56664 "EHLO mail.kernel.org"
+        id S1730054AbgJNShQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 14 Oct 2020 14:37:16 -0400
+Received: from m42-4.mailgun.net ([69.72.42.4]:57107 "EHLO m42-4.mailgun.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2388112AbgJNSfa (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 14 Oct 2020 14:35:30 -0400
-Received: from mail-ua1-f41.google.com (mail-ua1-f41.google.com [209.85.222.41])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        id S1727897AbgJNShP (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 14 Oct 2020 14:37:15 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1602700634; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=IEIPMirYLglQtMG3ZhrXuMt9kWgfaS7lKvwY28y7CVA=;
+ b=OPXUynk1mc5mSN05btliiY6pKNa/cTuR8QadfOlHI5RPld+3qSK88ZByD0e6npRp1IKy48gX
+ PlUz3dCcXwR+ojLv+JZziUGTUY36PNdAdEziUo/PBPuKl6yuLLs5kXrVM/eHAhZohvP0AAxc
+ m6saqSAYELZgxvhbX4yK4Jvv/Vo=
+X-Mailgun-Sending-Ip: 69.72.42.4
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n05.prod.us-east-1.postgun.com with SMTP id
+ 5f87454f4f8cc67c311a0e53 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 14 Oct 2020 18:37:03
+ GMT
+Sender: manafm=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 6643AC433FE; Wed, 14 Oct 2020 18:37:02 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 322C122267;
-        Wed, 14 Oct 2020 18:35:29 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1602700529;
-        bh=Pda5e4mTtOE+ZlY6hUmRRRDO7I+9vJoYWhBous9Gcls=;
-        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-        b=Pofh7UmO7iRQ6dIxMcM+BkYBtJ7jUuuDxYvnx45uCg3oTKCzplu1qgt32rENNlGE+
-         6CbsGFGyyKtjPzOfwqXjDpOqeJ9TKaHnrisubMIcT108UpGEmLQHnQg3MzptTLo85b
-         09GIwDh7G3BzSCkAOxH94vxwT2RuWvy6ESdGDHkk=
-Received: by mail-ua1-f41.google.com with SMTP id x11so67387uav.1;
-        Wed, 14 Oct 2020 11:35:29 -0700 (PDT)
-X-Gm-Message-State: AOAM5339it8HidodmOJsfvSdSSyUjlEzrGhA1RS5MKiJtH7XFyV/0TVE
-        CJOoiiX0vI++kId91FjpAg/bjYOjwwz6wCxHiA==
-X-Google-Smtp-Source: ABdhPJxmywHYTJ4dMOU2YaRv5iUSZXhICQXEppzBvIlKDcu6yZMwhcqON/hhJlbOheAOzFbJbkRhHRpm3BOL3wbOkQ8=
-X-Received: by 2002:a9d:5e14:: with SMTP id d20mr18868oti.107.1602700527584;
- Wed, 14 Oct 2020 11:35:27 -0700 (PDT)
+        (Authenticated sender: manafm)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 45ACEC433CB;
+        Wed, 14 Oct 2020 18:37:01 +0000 (UTC)
 MIME-Version: 1.0
-References: <20201014101402.18271-1-Sergey.Semin@baikalelectronics.ru>
- <20201014101402.18271-21-Sergey.Semin@baikalelectronics.ru>
- <878sc8lx0e.fsf@kernel.org> <20201014143720.yny3jco5pkb7dr4b@mobilestation>
-In-Reply-To: <20201014143720.yny3jco5pkb7dr4b@mobilestation>
-From:   Rob Herring <robh+dt@kernel.org>
-Date:   Wed, 14 Oct 2020 13:35:16 -0500
-X-Gmail-Original-Message-ID: <CAL_JsqKNuYS1ojJMCx1whLgynz+cTZ-Hvxn5pEFJc_PUgA1hsg@mail.gmail.com>
-Message-ID: <CAL_JsqKNuYS1ojJMCx1whLgynz+cTZ-Hvxn5pEFJc_PUgA1hsg@mail.gmail.com>
-Subject: Re: [PATCH 20/20] arch: dts: Fix DWC USB3 DT nodes name
-To:     Serge Semin <Sergey.Semin@baikalelectronics.ru>
-Cc:     Felipe Balbi <balbi@kernel.org>,
-        Serge Semin <fancer.lancer@gmail.com>,
-        Mathias Nyman <mathias.nyman@intel.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Jason Cooper <jason@lakedaemon.net>,
-        Andrew Lunn <andrew@lunn.ch>,
-        Gregory Clement <gregory.clement@bootlin.com>,
-        Sebastian Hesselbarth <sebastian.hesselbarth@gmail.com>,
-        Kukjin Kim <kgene@kernel.org>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        Santosh Shilimkar <ssantosh@kernel.org>,
-        Shawn Guo <shawnguo@kernel.org>, Li Yang <leoyang.li@nxp.com>,
-        =?UTF-8?Q?Beno=C3=AEt_Cousson?= <bcousson@baylibre.com>,
-        Tony Lindgren <tony@atomide.com>,
-        Patrice Chotard <patrice.chotard@st.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        Chen-Yu Tsai <wens@csie.org>, Wei Xu <xuwei5@hisilicon.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Alexey Malahov <Alexey.Malahov@baikalelectronics.ru>,
-        Pavel Parkhomenko <Pavel.Parkhomenko@baikalelectronics.ru>,
-        Manu Gautam <mgautam@codeaurora.org>,
-        Roger Quadros <rogerq@ti.com>,
-        Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
-        Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
-        Neil Armstrong <narmstrong@baylibre.com>,
-        Kevin Hilman <khilman@baylibre.com>,
-        linux-arm-kernel <linux-arm-kernel@lists.infradead.org>,
-        arcml <linux-snps-arc@lists.infradead.org>,
-        "open list:MIPS" <linux-mips@vger.kernel.org>,
-        linuxppc-dev <linuxppc-dev@lists.ozlabs.org>,
-        Linux USB List <linux-usb@vger.kernel.org>,
-        devicetree@vger.kernel.org,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-        linux-samsung-soc <linux-samsung-soc@vger.kernel.org>,
-        linux-omap <linux-omap@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Thu, 15 Oct 2020 00:07:01 +0530
+From:   manafm@codeaurora.org
+To:     Akhil P Oommen <akhilpo@codeaurora.org>
+Cc:     Matthias Kaehlcke <mka@chromium.org>,
+        Doug Anderson <dianders@chromium.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        LKML <linux-kernel@vger.kernel.org>, dri-devel@freedesktop.org,
+        freedreno <freedreno@lists.freedesktop.org>
+Subject: Re: [PATCH 1/2] arm64: dts: qcom: sc7180: Add gpu cooling support
+In-Reply-To: <fc490021-b046-68c5-7ceb-9c63d3ff5650@codeaurora.org>
+References: <1602176947-17385-1-git-send-email-akhilpo@codeaurora.org>
+ <CAD=FV=WjWv040TyBaqU8ZAuxGi-YpJ2tsVcUbOV4Htv=_-n8fA@mail.gmail.com>
+ <20201009165705.GA1292413@google.com>
+ <fc490021-b046-68c5-7ceb-9c63d3ff5650@codeaurora.org>
+Message-ID: <a4be2cf9e51e4f40aae3f9a56989a42f@codeaurora.org>
+X-Sender: manafm@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Oct 14, 2020 at 9:37 AM Serge Semin
-<Sergey.Semin@baikalelectronics.ru> wrote:
->
-> On Wed, Oct 14, 2020 at 05:09:37PM +0300, Felipe Balbi wrote:
-> >
-> > Hi Serge,
-> >
-> > Serge Semin <Sergey.Semin@baikalelectronics.ru> writes:
-> > > In accordance with the DWC USB3 bindings the corresponding node name is
-> > > suppose to comply with Generic USB HCD DT schema, which requires the USB
-> >
->
-> > DWC3 is not a simple HDC, though.
->
-> Yeah, strictly speaking it is equipped with a lot of vendor-specific stuff,
-> which are tuned by the DWC USB3 driver in the kernel. But after that the
-> controller is registered as xhci-hcd device so it's serviced by the xHCI driver,
-> which then registers the HCD device so the corresponding DT node is supposed
-> to be compatible with the next bindings: usb/usb-hcd.yaml, usb/usb-xhci.yaml
-> and usb/snps,dwc3,yaml. I've created the later one so to validate the denoted
-> compatibility.
->
-> >
-> > > nodes to have the name acceptable by the regexp: "^usb(@.*)?" . But a lot
-> > > of the DWC USB3-compatible nodes defined in the ARM/ARM64 DTS files have
-> > > name as "^dwc3@.*" or "^usb[1-3]@.*" or even "^dwusb@.*", which will cause
-> > > the dtbs_check procedure failure. Let's fix the nodes naming to be
-> > > compatible with the DWC USB3 DT schema to make dtbs_check happy.
-> > >
-> > > Note we don't change the DWC USB3-compatible nodes names of
-> > > arch/arm64/boot/dts/apm/{apm-storm.dtsi,apm-shadowcat.dtsi} since the
-> > > in-source comment says that the nodes name need to be preserved as
-> > > "^dwusb@.*" for some backward compatibility.
-> >
->
-> > interesting, compatibility with what? Some debugfs files, perhaps? :-)
->
-> Don't really know.) In my experience the worst type of such compatibility is
-> connected with some bootloader magic, which may add/remove/modify properties
-> to nodes with pre-defined names.
+On 2020-10-14 18:59, Akhil P Oommen wrote:
+> On 10/9/2020 10:27 PM, Matthias Kaehlcke wrote:
+>> On Fri, Oct 09, 2020 at 08:05:10AM -0700, Doug Anderson wrote:
+>>> Hi,
+>>> 
+>>> On Thu, Oct 8, 2020 at 10:10 AM Akhil P Oommen 
+>>> <akhilpo@codeaurora.org> wrote:
+>>>> 
+>>>> Add cooling-cells property and the cooling maps for the gpu tzones
+>>>> to support GPU cooling.
+>>>> 
+>>>> Signed-off-by: Akhil P Oommen <akhilpo@codeaurora.org>
+>>>> ---
+>>>>   arch/arm64/boot/dts/qcom/sc7180.dtsi | 29 
+>>>> ++++++++++++++++++++++-------
+>>>>   1 file changed, 22 insertions(+), 7 deletions(-)
+>>>> 
+>>>> diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi 
+>>>> b/arch/arm64/boot/dts/qcom/sc7180.dtsi
+>>>> index d46b383..40d6a28 100644
+>>>> --- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
+>>>> +++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
+>>>> @@ -2,7 +2,7 @@
+>>>>   /*
+>>>>    * SC7180 SoC device tree source
+>>>>    *
+>>>> - * Copyright (c) 2019, The Linux Foundation. All rights reserved.
+>>>> + * Copyright (c) 2019-20, The Linux Foundation. All rights 
+>>>> reserved.
+>>>>    */
+>>>> 
+>>>>   #include <dt-bindings/clock/qcom,dispcc-sc7180.h>
+>>>> @@ -1885,6 +1885,7 @@
+>>>>                          iommus = <&adreno_smmu 0>;
+>>>>                          operating-points-v2 = <&gpu_opp_table>;
+>>>>                          qcom,gmu = <&gmu>;
+>>>> +                       #cooling-cells = <2>;
+>>> 
+>>> Presumably we should add this to the devicetree bindings, too?
+> Yes, thanks for catching this. Will update in the next patch.
+> 
+>>> 
+>>> 
+>>>>                          interconnects = <&gem_noc MASTER_GFX3D 
+>>>> &mc_virt SLAVE_EBI1>;
+>>>>                          interconnect-names = "gfx-mem";
+>>>> @@ -3825,16 +3826,16 @@
+>>>>                  };
+>>>> 
+>>>>                  gpuss0-thermal {
+>>>> -                       polling-delay-passive = <0>;
+>>>> +                       polling-delay-passive = <100>;
+>>> 
+>>> Why did you make this change?  I'm pretty sure that we _don't_ want
+>>> this since we're using interrupts for the thermal sensor.  See commit
+>>> 22337b91022d ("arm64: dts: qcom: sc7180: Changed polling mode in
+>>> Thermal-zones node").
+>> 
+>> I was going to ask the same, this shouldn't be needed.
+As per our understanding unlike "polling-delay",  this delay property is 
+intended to activate polling thread on post trip threshold violation and 
+  it is irrespective of sensor is capable for trip interrupt or not.
+This polling is more of governor related. Below are the few references 
+from Documentation/code which tells polling-delay-passive is needed for 
+IPA for better IPA performance.
 
-I seriously doubt anyone is using the APM machines with DT (even ACPI
-is somewhat doubtful). I say change them. Or remove the dts files and
-see what happens. Either way it can always be reverted.
+As per Power allocator documentations
 
-Rob
+1. 
+https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/tree/Documentation/driver-api/thermal/power_allocator.rst?h=v5.4.71#n264
+
+"The power allocator governor's PID controller works best if there is a
+periodic tick.  If you have a driver that calls
+`thermal_zone_device_update()` (or anything that ends up calling the
+governor's `throttle()` function) repetitively, the governor response
+won't be very good.  Note that this is not particular to this
+governor, step-wise will also misbehave if you call its throttle()
+faster than the normal thermal framework tick (due to interrupts for
+example) as it will overreact"
+
+2. In Power allocator code, when  switch_on/control trip temp violation, 
+it is enabling passive counter to activate passive polling @ 
+https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/tree/drivers/thermal/power_allocator.c?h=v5.4.71#n634
+
+3. while calculating derivative term, it is using passive_delay @
+  
+https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/tree/drivers/thermal/power_allocator.c?h=v5.4.71#n243
+
+4. Sensor interrupt will work if temperature is fluctuating between 
+trip_temp and hysteresis. But say a case where we are not enabling 
+polling-delay-passive. In this case if  current temperature > 
+control_temp trip(2nd passive trip) and
+  temperature trend is still raising, then sensor high trip will be 
+disabled (OR configured for critical trip threshold). No more trip 
+interrupt from sensor until it reaches critical trip or falls below 
+control_temp hysteresis.
+  How  the governor re-evaluate its next mitigation without passive 
+polling thread  here ?
+
+I think the same is required for CPU thermal zone as well.
+>> 
+>>>>                          polling-delay = <0>;
+>>>> 
+>>>>                          thermal-sensors = <&tsens0 13>;
+>>>> 
+>>>>                          trips {
+>>>>                                  gpuss0_alert0: trip-point0 {
+>>>> -                                       temperature = <90000>;
+>>>> +                                       temperature = <95000>;
+>>>>                                          hysteresis = <2000>;
+>>>> -                                       type = "hot";
+>>>> +                                       type = "passive";
+>>> 
+>>> Matthias probably knows better, but I wonder if we should be making
+>>> two passive trip levels like we do with CPU.  IIRC this is important
+>>> if someone wants to be able to use this with IPA.
+>> 
+>> Yes, please introduce a second trip point and make both of them
+>> 'passive'.
+>> 
+>> _______________________________________________
+>> dri-devel mailing list
+>> dri-devel@lists.freedesktop.org
+>> https://lists.freedesktop.org/mailman/listinfo/dri-devel
+>> 
+> Adding Manaf here.
+> 
+> -Akhil.
