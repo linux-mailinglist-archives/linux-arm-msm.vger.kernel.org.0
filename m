@@ -2,170 +2,93 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 8043628DD65
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Oct 2020 11:26:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B2A3828D7D4
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Oct 2020 03:10:25 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728797AbgJNJYP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 14 Oct 2020 05:24:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39936 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731050AbgJNJU5 (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 14 Oct 2020 05:20:57 -0400
-Received: from mail-pf1-x443.google.com (mail-pf1-x443.google.com [IPv6:2607:f8b0:4864:20::443])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3C1A5C0A88A8
-        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Oct 2020 18:09:34 -0700 (PDT)
-Received: by mail-pf1-x443.google.com with SMTP id k8so976012pfk.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Oct 2020 18:09:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=9cE95zlPZsaKlXQNDZXYurcJdISmy8f/niOuyr/FKyg=;
-        b=KXNX/y4LRCP8H6b2wmZx5z4YDWt5lN1teIf4OdNO8UaNZNun4W0t8NUt5DcHYoYO3t
-         6+1+2qGFuZyYhq5qRrDGRrT7lpNBJi2Tn5rOsH6Gqck/KZYiv0CX9qSISRHuFU9uK3DP
-         kUhvKkwc30JsaxgTXOOqCzA1oGA4n0Bu6vzpk=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=9cE95zlPZsaKlXQNDZXYurcJdISmy8f/niOuyr/FKyg=;
-        b=cH8V7ELY9SVB5e+ZNuxsk8hm1brjlIYC/Mixjx5yJJkEPwi1fFhzKxXdHEGbUMQlUj
-         i2c5NdFfv7h28IpelJsgaqmRAYxMedYFqLJ/TzFuBviZPny2lO/oOH3gjI/m8A0Sco67
-         6Kz7v2cWXcqeKDTNfcCewderGCn12P/LAVgi2DSgwUAvXMsiI9YOZKtznepTLqQS0kic
-         fqaSFPEu/zw9dhPNb1jrWC175WeS51DL2NaXWkCf1baZdXVMz1UgvjftSVtJw1oYcq2q
-         cRFAm/JLBMqwcTYq3dtDaSzebH4GT7Z3311MlIAOKyHHwXEp61uQ0Kvgf821+wySSZOh
-         RnMA==
-X-Gm-Message-State: AOAM5306jQSMr01KfHcW24bJN98rYjwCp3CoUfJx6MDRk/ZaLQ0l1CXs
-        zw2GAg9/fgCPrAfueZA4LOeiiw==
-X-Google-Smtp-Source: ABdhPJwsN1RpUizGjqjRP1QS1UdkTWH3aernthupnXlHlvZ9H/ZfUDdui6dOjwurwybPLRUx43YySQ==
-X-Received: by 2002:aa7:9884:0:b029:156:5806:b47f with SMTP id r4-20020aa798840000b02901565806b47fmr2232761pfl.4.1602637773656;
-        Tue, 13 Oct 2020 18:09:33 -0700 (PDT)
-Received: from localhost ([2620:15c:202:1:f693:9fff:fef4:e70a])
-        by smtp.gmail.com with ESMTPSA id q8sm955717pfg.118.2020.10.13.18.09.32
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 13 Oct 2020 18:09:33 -0700 (PDT)
-Date:   Tue, 13 Oct 2020 18:09:31 -0700
-From:   mka@chromium.org
-To:     Akhil P Oommen <akhilpo@codeaurora.org>
-Cc:     linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
-        linux-kernel@vger.kernel.org, dri-devel@freedesktop.org
-Subject: Re: [2/2] drm/msm: Add support for GPU cooling
-Message-ID: <20201014010931.GB424420@google.com>
-References: <1602176947-17385-2-git-send-email-akhilpo@codeaurora.org>
- <20201009183640.GB1292413@google.com>
- <cab2105e-7a8c-988f-dcc1-056692a94e8b@codeaurora.org>
- <20201012174035.GA44627@google.com>
- <80ded484-a058-70fc-be9d-045be2933563@codeaurora.org>
- <20201013174038.GA424420@google.com>
- <ae3ca3c7-fb80-e9fc-a76b-2add8969a178@codeaurora.org>
+        id S1730783AbgJNBKZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 13 Oct 2020 21:10:25 -0400
+Received: from m42-4.mailgun.net ([69.72.42.4]:49547 "EHLO m42-4.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727331AbgJNBKY (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 13 Oct 2020 21:10:24 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1602637823; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
+ Subject: Sender; bh=jjLKhfAQlUtz5Rcyx45kgleXOq80qXSbQQgEXyBeLjw=; b=UKtghfmludn5HMiHPRA4fm39C9jR0wMQqx5tW97hQ80ChYqli7gePh6yo0BI4lantHen0OIH
+ 6S9cUSblM6ftnePgnCEnrqlmRSLPGXxWqSk7Cvq0WCS7uFtgMavWMX3QTKjdyshfzS+qCJc+
+ BKTaLRNAonH5z3OCYyZQ//ApzXM=
+X-Mailgun-Sending-Ip: 69.72.42.4
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n03.prod.us-west-2.postgun.com with SMTP id
+ 5f864ffff9168450ea7bb1e2 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 14 Oct 2020 01:10:23
+ GMT
+Sender: mdtipton=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 62423C433F1; Wed, 14 Oct 2020 01:10:23 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        NICE_REPLY_A,SPF_FAIL,URIBL_BLOCKED autolearn=no autolearn_force=no
+        version=3.4.0
+Received: from [192.168.1.159] (ip70-179-20-127.sd.sd.cox.net [70.179.20.127])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: mdtipton)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 0B607C433CB;
+        Wed, 14 Oct 2020 01:10:21 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 0B607C433CB
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=mdtipton@codeaurora.org
+Subject: Re: [PATCH] interconnect: qcom: sdm845: Enable keepalive for the MM1
+ BCM
+To:     Georgi Djakov <georgi.djakov@linaro.org>, linux-pm@vger.kernel.org
+Cc:     okukatla@codeaurora.org, sibis@codeaurora.org,
+        bjorn.andersson@linaro.org, amit.pundir@linaro.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20201012194034.26944-1-georgi.djakov@linaro.org>
+From:   Mike Tipton <mdtipton@codeaurora.org>
+Message-ID: <56dc5ac7-2bed-4dbb-b7fc-c0308a2a454a@codeaurora.org>
+Date:   Tue, 13 Oct 2020 18:10:21 -0700
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.3.2
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <ae3ca3c7-fb80-e9fc-a76b-2add8969a178@codeaurora.org>
+In-Reply-To: <20201012194034.26944-1-georgi.djakov@linaro.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Oct 14, 2020 at 12:51:55AM +0530, Akhil P Oommen wrote:
-> On 10/13/2020 11:10 PM, mka@chromium.org wrote:
-> > On Tue, Oct 13, 2020 at 07:23:34PM +0530, Akhil P Oommen wrote:
-> > > On 10/12/2020 11:10 PM, mka@chromium.org wrote:
-> > > > On Mon, Oct 12, 2020 at 07:03:51PM +0530, Akhil P Oommen wrote:
-> > > > > On 10/10/2020 12:06 AM, mka@chromium.org wrote:
-> > > > > > Hi Akhil,
-> > > > > > 
-> > > > > > On Thu, Oct 08, 2020 at 10:39:07PM +0530, Akhil P Oommen wrote:
-> > > > > > > Register GPU as a devfreq cooling device so that it can be passively
-> > > > > > > cooled by the thermal framework.
-> > > > > > > 
-> > > > > > > Signed-off-by: Akhil P Oommen <akhilpo@codeaurora.org>
-> > > > > > > ---
-> > > > > > >     drivers/gpu/drm/msm/msm_gpu.c | 13 ++++++++++++-
-> > > > > > >     drivers/gpu/drm/msm/msm_gpu.h |  2 ++
-> > > > > > >     2 files changed, 14 insertions(+), 1 deletion(-)
-> > > > > > > 
-> > > > > > > diff --git a/drivers/gpu/drm/msm/msm_gpu.c b/drivers/gpu/drm/msm/msm_gpu.c
-> > > > > > > index 55d1648..93ffd66 100644
-> > > > > > > --- a/drivers/gpu/drm/msm/msm_gpu.c
-> > > > > > > +++ b/drivers/gpu/drm/msm/msm_gpu.c
-> > > > > > > @@ -14,6 +14,7 @@
-> > > > > > >     #include <generated/utsrelease.h>
-> > > > > > >     #include <linux/string_helpers.h>
-> > > > > > >     #include <linux/devfreq.h>
-> > > > > > > +#include <linux/devfreq_cooling.h>
-> > > > > > >     #include <linux/devcoredump.h>
-> > > > > > >     #include <linux/sched/task.h>
-> > > > > > > @@ -107,9 +108,18 @@ static void msm_devfreq_init(struct msm_gpu *gpu)
-> > > > > > >     	if (IS_ERR(gpu->devfreq.devfreq)) {
-> > > > > > >     		DRM_DEV_ERROR(&gpu->pdev->dev, "Couldn't initialize GPU devfreq\n");
-> > > > > > >     		gpu->devfreq.devfreq = NULL;
-> > > > > > > +		return;
-> > > > > > >     	}
-> > > > > > >     	devfreq_suspend_device(gpu->devfreq.devfreq);
-> > > > > > > +
-> > > > > > > +	gpu->cooling = of_devfreq_cooling_register(gpu->pdev->dev.of_node,
-> > > > > > > +			gpu->devfreq.devfreq);
-> > > > > > > +	if (IS_ERR(gpu->cooling)) {
-> > > > > > > +		DRM_DEV_ERROR(&gpu->pdev->dev,
-> > > > > > > +				"Couldn't register GPU cooling device\n");
-> > > > > > > +		gpu->cooling = NULL;
-> > > > > > > +	}
-> > > > > > >     }
-> > > > > > >     static int enable_pwrrail(struct msm_gpu *gpu)
-> > > > > > > @@ -926,7 +936,6 @@ int msm_gpu_init(struct drm_device *drm, struct platform_device *pdev,
-> > > > > > >     	msm_devfreq_init(gpu);
-> > > > > > > -
-> > > Will remove this unintended change.
-> > > > > > >     	gpu->aspace = gpu->funcs->create_address_space(gpu, pdev);
-> > > > > > >     	if (gpu->aspace == NULL)
-> > > > > > > @@ -1005,4 +1014,6 @@ void msm_gpu_cleanup(struct msm_gpu *gpu)
-> > > > > > >     		gpu->aspace->mmu->funcs->detach(gpu->aspace->mmu);
-> > > > > > >     		msm_gem_address_space_put(gpu->aspace);
-> > > > > > >     	}
-> > > > > > > +
-> > > > > > > +	devfreq_cooling_unregister(gpu->cooling);
-> > > > > > 
-> > > > > > Resources should be released in reverse order, otherwise the cooling device
-> > > > > > could use resources that have already been freed.
-> > > > > > Why do you think this is not the correct order? If you are thinking
-> > > > > about devfreq struct, it is managed device resource.
-> > > > 
-> > > > I did not check specifically if changing the frequency really uses any of the
-> > > > resources that are released previously, In any case it's not a good idea to
-> > > > allow other parts of the kernel to use a half initialized/torn down device.
-> > > > Even if it isn't a problem today someone could change the driver to use any
-> > > > of these resources (or add a new one) in a frequency change, without even
-> > > > thinking about the cooling device, just (rightfully) asuming that things are
-> > > > set up and torn down in a sane order.
-> > > 'sane order' relative to what specifically here? Should we worry about freq
-> > > change at this point because we have already disabled gpu runtime pm and
-> > > devfreq?
-> > 
-> > GPU runtime PM and the devfreq being disabled is not evident from the context
-> > of the function. You are probably right that it's not a problem in practice,
-> > but why give reason for doubts in the first place if this could be avoided
-> > by following a common practice?
-> > _______________________________________________
-> > dri-devel mailing list
-> > dri-devel@lists.freedesktop.org
-> > https://lists.freedesktop.org/mailman/listinfo/dri-devel
-> > 
-> Other option I see is to create a managed device resource (devm) version of
-> the devfreq_cooling_register API and use that. Is that what you are trying
-> to suggest?
+On 10/12/2020 12:40 PM, Georgi Djakov wrote:
+> After enabling interconect scaling for display on the db845c board,
+s/interconect/interconnect/
 
-No, I was not thinking about a devm version, just manual reverse removal.
+> in certain configurations the board hangs, while the following errors
+> are observed on the console:
+> 
+>    Error sending AMC RPMH requests (-110)
+>    qcom_rpmh TCS Busy, retrying RPMH message send: addr=0x50000
+>    qcom_rpmh TCS Busy, retrying RPMH message send: addr=0x50000
+>    qcom_rpmh TCS Busy, retrying RPMH message send: addr=0x50000
+>    ...
+> 
+> In this specific case, the above is related to one of the sequencers
+> being stuck, while client drivers are returning from probe and trying
+> to disable the currently unused clock and interconnect resources.
+> Generally we want to keep the multimedia NoC enabled like the rest of
+> the NoCs, so let's set the keepalive flag on it too.
+> 
+> Fixes: aae57773fbe0 ("interconnect: qcom: sdm845: Split qnodes into their respective NoCs")
+> Reported-by: Amit Pundir <amit.pundir@linaro.org>
+> Signed-off-by: Georgi Djakov <georgi.djakov@linaro.org>
+> ---
+>   drivers/interconnect/qcom/sdm845.c | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
+> 
 
-Actually you can even argue the you are using the right order, I saw the
-ring buffer and the address space are actually initialized after
-msm_devfreq_init(). That strikes me a bit odd, I guess the
-devfreq_suspend_device() in msm_devfreq_init() is supposed to prevent the
-devfreq from being active, however that is potentially racy, it could become
-active right after being created. I would have expected the devfreq to be
-created when everything else is ready, but I don't know this driver well,
-nor am I a devfreq expert, maybe there is a good reason for it ...
-
-In summary, the order you are using is consistent with the what the driver
-currently does, which might not be entirely correct, but that is beyond the
-scope of this patch.
+Reviewed-by: Mike Tipton <mdtipton@codeaurora.org>
