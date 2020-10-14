@@ -2,129 +2,87 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C45C928E856
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Oct 2020 23:23:14 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7E9D928E861
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Oct 2020 23:26:40 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730270AbgJNVXK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 14 Oct 2020 17:23:10 -0400
-Received: from mail.baikalelectronics.com ([87.245.175.226]:50576 "EHLO
-        mail.baikalelectronics.ru" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727403AbgJNVXK (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 14 Oct 2020 17:23:10 -0400
-Received: from localhost (unknown [127.0.0.1])
-        by mail.baikalelectronics.ru (Postfix) with ESMTP id 12B99803073C;
-        Wed, 14 Oct 2020 21:23:06 +0000 (UTC)
-X-Virus-Scanned: amavisd-new at baikalelectronics.ru
-Received: from mail.baikalelectronics.ru ([127.0.0.1])
-        by localhost (mail.baikalelectronics.ru [127.0.0.1]) (amavisd-new, port 10024)
-        with ESMTP id inYRWRerfTBc; Thu, 15 Oct 2020 00:23:05 +0300 (MSK)
-Date:   Thu, 15 Oct 2020 00:22:59 +0300
-From:   Serge Semin <Sergey.Semin@baikalelectronics.ru>
-To:     Rob Herring <robh+dt@kernel.org>
-CC:     Serge Semin <fancer.lancer@gmail.com>,
-        Felipe Balbi <balbi@kernel.org>,
-        Mathias Nyman <mathias.nyman@intel.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Jason Cooper <jason@lakedaemon.net>,
-        Andrew Lunn <andrew@lunn.ch>,
-        Gregory Clement <gregory.clement@bootlin.com>,
-        Sebastian Hesselbarth <sebastian.hesselbarth@gmail.com>,
-        Kukjin Kim <kgene@kernel.org>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        Santosh Shilimkar <ssantosh@kernel.org>,
-        Shawn Guo <shawnguo@kernel.org>, Li Yang <leoyang.li@nxp.com>,
-        =?utf-8?Q?Beno=C3=AEt?= Cousson <bcousson@baylibre.com>,
-        Tony Lindgren <tony@atomide.com>,
-        Patrice Chotard <patrice.chotard@st.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        Chen-Yu Tsai <wens@csie.org>, Wei Xu <xuwei5@hisilicon.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Alexey Malahov <Alexey.Malahov@baikalelectronics.ru>,
-        Pavel Parkhomenko <Pavel.Parkhomenko@baikalelectronics.ru>,
-        Manu Gautam <mgautam@codeaurora.org>,
-        Roger Quadros <rogerq@ti.com>,
-        Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
-        Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
-        Neil Armstrong <narmstrong@baylibre.com>,
-        Kevin Hilman <khilman@baylibre.com>,
-        linux-arm-kernel <linux-arm-kernel@lists.infradead.org>,
-        arcml <linux-snps-arc@lists.infradead.org>,
-        "open list:MIPS" <linux-mips@vger.kernel.org>,
-        linuxppc-dev <linuxppc-dev@lists.ozlabs.org>,
-        Linux USB List <linux-usb@vger.kernel.org>,
-        <devicetree@vger.kernel.org>,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-        linux-samsung-soc <linux-samsung-soc@vger.kernel.org>,
-        linux-omap <linux-omap@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>
-Subject: Re: [PATCH 20/20] arch: dts: Fix DWC USB3 DT nodes name
-Message-ID: <20201014212259.ltckcgz2yrola7za@mobilestation>
-References: <20201014101402.18271-1-Sergey.Semin@baikalelectronics.ru>
- <20201014101402.18271-21-Sergey.Semin@baikalelectronics.ru>
- <878sc8lx0e.fsf@kernel.org>
- <20201014143720.yny3jco5pkb7dr4b@mobilestation>
- <CAL_JsqKNuYS1ojJMCx1whLgynz+cTZ-Hvxn5pEFJc_PUgA1hsg@mail.gmail.com>
+        id S1730821AbgJNV0j (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 14 Oct 2020 17:26:39 -0400
+Received: from mail.kernel.org ([198.145.29.99]:37462 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726484AbgJNV0j (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 14 Oct 2020 17:26:39 -0400
+Received: from kernel.org (unknown [104.132.1.79])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id 0CF6521D7F;
+        Wed, 14 Oct 2020 21:26:38 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1602710798;
+        bh=GbtiM9kXEbfKdFsmdbk27Xgl0DWs7DjCX4AXAshrDPo=;
+        h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
+        b=Zx3uMa4aEAXw2Om53YhUvdfxhYsDtX/Y1PoydAjg5r3qqS/03zQAM8DQWD5f1U2KW
+         IM/yZX0qOrjgJTHK2IO44WJL3UtOwbSqMqfpV/mWhEN5lO3fHSOf2e8x/zOxm2kKVE
+         XH2ulQbVeCglQxPNeDtjlJ1PdWTI6HKZTdxFZklY=
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <CAL_JsqKNuYS1ojJMCx1whLgynz+cTZ-Hvxn5pEFJc_PUgA1hsg@mail.gmail.com>
-X-ClientProxiedBy: MAIL.baikal.int (192.168.51.25) To mail (192.168.51.25)
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <20201003105653.GA117381@kroah.com>
+References: <cover.1601360391.git.mchehab+huawei@kernel.org> <160167373743.310579.11803841154320142421@swboyd.mtv.corp.google.com> <20201003105653.GA117381@kroah.com>
+Subject: Re: [PATCH v2 0/2] Some small cleanup/fixes for SPMI driver
+From:   Stephen Boyd <sboyd@kernel.org>
+Cc:     Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
+        linuxarm@huawei.com, mauro.chehab@huawei.com,
+        John Stultz <john.stultz@linaro.org>,
+        Manivannan Sadhasivam <mani@kernel.org>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+To:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Date:   Wed, 14 Oct 2020 14:26:36 -0700
+Message-ID: <160271079652.884498.2384315265584338952@swboyd.mtv.corp.google.com>
+User-Agent: alot/0.9.1
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Oct 14, 2020 at 01:35:16PM -0500, Rob Herring wrote:
-> On Wed, Oct 14, 2020 at 9:37 AM Serge Semin
-> <Sergey.Semin@baikalelectronics.ru> wrote:
-> >
-> > On Wed, Oct 14, 2020 at 05:09:37PM +0300, Felipe Balbi wrote:
-> > >
-> > > Hi Serge,
-> > >
-> > > Serge Semin <Sergey.Semin@baikalelectronics.ru> writes:
-> > > > In accordance with the DWC USB3 bindings the corresponding node name is
-> > > > suppose to comply with Generic USB HCD DT schema, which requires the USB
-> > >
-> >
-> > > DWC3 is not a simple HDC, though.
-> >
-> > Yeah, strictly speaking it is equipped with a lot of vendor-specific stuff,
-> > which are tuned by the DWC USB3 driver in the kernel. But after that the
-> > controller is registered as xhci-hcd device so it's serviced by the xHCI driver,
-> > which then registers the HCD device so the corresponding DT node is supposed
-> > to be compatible with the next bindings: usb/usb-hcd.yaml, usb/usb-xhci.yaml
-> > and usb/snps,dwc3,yaml. I've created the later one so to validate the denoted
-> > compatibility.
-> >
-> > >
-> > > > nodes to have the name acceptable by the regexp: "^usb(@.*)?" . But a lot
-> > > > of the DWC USB3-compatible nodes defined in the ARM/ARM64 DTS files have
-> > > > name as "^dwc3@.*" or "^usb[1-3]@.*" or even "^dwusb@.*", which will cause
-> > > > the dtbs_check procedure failure. Let's fix the nodes naming to be
-> > > > compatible with the DWC USB3 DT schema to make dtbs_check happy.
-> > > >
-> > > > Note we don't change the DWC USB3-compatible nodes names of
-> > > > arch/arm64/boot/dts/apm/{apm-storm.dtsi,apm-shadowcat.dtsi} since the
-> > > > in-source comment says that the nodes name need to be preserved as
-> > > > "^dwusb@.*" for some backward compatibility.
-> > >
-> >
-> > > interesting, compatibility with what? Some debugfs files, perhaps? :-)
-> >
-> > Don't really know.) In my experience the worst type of such compatibility is
-> > connected with some bootloader magic, which may add/remove/modify properties
-> > to nodes with pre-defined names.
-> 
+Quoting Greg Kroah-Hartman (2020-10-03 03:56:53)
+> On Fri, Oct 02, 2020 at 02:22:17PM -0700, Stephen Boyd wrote:
+> > Quoting Mauro Carvalho Chehab (2020-09-28 23:22:11)
+> > > Hi Stephen,
+> > >=20
+> > > While double-checking against yesterday's linux-next, I noticed
+> > > that those two patches weren't merge yet.=20
+> > >=20
+> > > As you replied to both with your Reviewed-by:, are you expecting
+> > > them to be merged via someone's tree, or are you intending
+> > > to merge them via your tree?
+> >=20
+> > Per the maintainers file I am a reviewer not a maintainer of SPMI.
+> > Usually Greg applies patches here. I can collect patches and send them
+> > on up if that helps.
+>=20
+> Who is the maintainer?  Having a "reviewer only" is confusing to
+> everyone involved, as you might have someone who can review patches, but
+> no one to actually merge them anywhere?
+>=20
+> Not a good situation :(
+>=20
 
-> I seriously doubt anyone is using the APM machines with DT (even ACPI
-> is somewhat doubtful). I say change them. Or remove the dts files and
-> see what happens. Either way it can always be reverted.
+Ok. I can spin up an SPMI tree on kernel.org and make this change to the
+MAINTAINERS file (plus whatever tree path I can make). Do you want me to
+send you patches in email form as a pull request? I imagine the patch
+load will be fairly low.
 
-Ok. I'll change them in v3.
-
--Sergey
-
-> 
-> Rob
+----8<-----
+diff --git a/MAINTAINERS b/MAINTAINERS
+index deaafb617361..3e09630455d4 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -16338,7 +16338,7 @@ F:	Documentation/networking/device_drivers/ethernet=
+/toshiba/spider_net.rst
+ F:	drivers/net/ethernet/toshiba/spider_net*
+=20
+ SPMI SUBSYSTEM
+-R:	Stephen Boyd <sboyd@kernel.org>
++M:	Stephen Boyd <sboyd@kernel.org>
+ L:	linux-arm-msm@vger.kernel.org
+ F:	Documentation/devicetree/bindings/spmi/
+ F:	drivers/spmi/
