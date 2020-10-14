@@ -2,102 +2,102 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D5DDC28DD80
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Oct 2020 11:26:31 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 50F5A28D91E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Oct 2020 06:19:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729900AbgJNJYw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 14 Oct 2020 05:24:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39970 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730348AbgJNJUB (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 14 Oct 2020 05:20:01 -0400
-Received: from mail-pl1-x641.google.com (mail-pl1-x641.google.com [IPv6:2607:f8b0:4864:20::641])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2428AC041E4B;
-        Tue, 13 Oct 2020 20:12:41 -0700 (PDT)
-Received: by mail-pl1-x641.google.com with SMTP id c6so1020382plr.9;
-        Tue, 13 Oct 2020 20:12:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:references:from:message-id:date:user-agent:mime-version
-         :in-reply-to:content-language:content-transfer-encoding;
-        bh=4nvU+eV7iYHUQLYFDTIcrlgtcxo5Rsjbojd3ypYNoPc=;
-        b=DdZu7BsapmAZuOuDViqs55Nc9qtjJ2aWfxqiyJL9Qyg+FOF8K9STZE6BjZ7gneB7ZE
-         M3qPOGWilyBKx8dB22q23yMTr6VDYdCUvBzq1AEjuV8QXFNcwjVV1anbCz+3bqEwuOGU
-         97n4ZY+n4pZccC6DcMypv2rE6doDcWuM1OZ7REzaDnIo32sAS6ntW52CgD0SwO1Cpb4E
-         MmhsU49DLH3nonz7/EuKIo1NKhAWzvTfxyBwS4DmukTHvoH9fgRNFYHfPunA7ZlhwPsr
-         LZbg0/NL8cU+6m3LZstLFnG8rAFbmoOh3SSbe3Qb8fpVZ99+7IPnIeMMF9s3iIXHTPwj
-         FfxA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=4nvU+eV7iYHUQLYFDTIcrlgtcxo5Rsjbojd3ypYNoPc=;
-        b=C0jOjX3GEGpxbjLCatej7sip11MaqiiaydrzmyjqQal6IDUTvzZnkEKyBwIwByBUcB
-         IjIO8TgXQLnuphSshH/yPxC6zBJXdaA9xYTR5is3J9AKlRgw9gOl75/o4jkXlDYhJVCa
-         3/e0o2w8WJq0FqLdcZYd5Rx5/k6SV5cRu+xRv6wK/ZeW/MIi509qCdY1L1395Jr9Hb/8
-         l4aazsQC3g/4tYjFmoqU5RZW9teNCBTz20/Qp5wXg5Kffh7tLWj78F6epEJpzJJvFQa/
-         hevA1Y94fSRM3jLK5HR9YktbjMpL7PzAjQi4/kPNbwG+ys94mZGnNXJSQ3wBIizcalLa
-         ZUcw==
-X-Gm-Message-State: AOAM531AgZf5IdDdV5zgm9SuMQzQkrYa5+QjAs/KUm1XYexofM0gQJ15
-        KkvR3L1LivPoC5E086eMDkHOTE+/Gwo=
-X-Google-Smtp-Source: ABdhPJy2Day9JQ/9urHVr7LLwG6P90nqn2XGhFFTNI5IO6XI6iAkYSGFa/o4ogW3rGWET9Abny5AZw==
-X-Received: by 2002:a17:902:342:b029:d5:ab9e:19ce with SMTP id 60-20020a1709020342b02900d5ab9e19cemr2435383pld.48.1602645160113;
-        Tue, 13 Oct 2020 20:12:40 -0700 (PDT)
-Received: from [10.230.29.112] ([192.19.223.252])
-        by smtp.gmail.com with ESMTPSA id k68sm1241671pga.36.2020.10.13.20.12.38
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 13 Oct 2020 20:12:39 -0700 (PDT)
-Subject: Re: [PATCH 1/2] arm64: dts: broadcom: remove an unused property
- dma-ranges
-To:     Zhen Lei <thunder.leizhen@huawei.com>,
-        Rob Herring <robh+dt@kernel.org>, Ray Jui <rjui@broadcom.com>,
-        Scott Branden <sbranden@broadcom.com>,
-        bcm-kernel-feedback-list <bcm-kernel-feedback-list@broadcom.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        devicetree <devicetree@vger.kernel.org>,
-        linux-arm-kernel <linux-arm-kernel@lists.infradead.org>,
-        linux-kernel <linux-kernel@vger.kernel.org>
-References: <20201013060623.1711-1-thunder.leizhen@huawei.com>
- <20201013060623.1711-2-thunder.leizhen@huawei.com>
-From:   Florian Fainelli <f.fainelli@gmail.com>
-Message-ID: <fa40441b-6ae1-6018-3da6-424d0252c1ba@gmail.com>
-Date:   Tue, 13 Oct 2020 20:12:37 -0700
+        id S1729869AbgJNETs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 14 Oct 2020 00:19:48 -0400
+Received: from m42-4.mailgun.net ([69.72.42.4]:57310 "EHLO m42-4.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726037AbgJNETs (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 14 Oct 2020 00:19:48 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1602649187; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
+ Subject: Sender; bh=HOggyxgAIuw5vh136a7l4IRaEFhhlZ9M1Zj7qRah5nQ=; b=OCQRk2XG9xyBNa9K+EJia7KeshW32qzL/w7WHyqOzhislml02b1XjMwhl0XJg3FvVl+5ket8
+ jRPPIfm47gqcbloR1TpoplLzdNPoF0jqvSTJ+8/8K7oKgJPnWF5Teh1Jr8Iy4r5zXrx/JUgB
+ w6WUt23sBTunIkQj2Ag8byy8BXg=
+X-Mailgun-Sending-Ip: 69.72.42.4
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n05.prod.us-east-1.postgun.com with SMTP id
+ 5f867c62d63768e57b69e9dd (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 14 Oct 2020 04:19:46
+ GMT
+Sender: srivasam=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 9A3E3C43385; Wed, 14 Oct 2020 04:19:45 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        NICE_REPLY_A,SPF_FAIL,URIBL_BLOCKED autolearn=no autolearn_force=no
+        version=3.4.0
+Received: from [192.168.29.24] (unknown [49.37.131.201])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: srivasam)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 50618C433CB;
+        Wed, 14 Oct 2020 04:19:39 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 50618C433CB
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=srivasam@codeaurora.org
+Subject: Re: [PATCH 1/2] Asoc: qcom: lpass-cpu: Fix clock disable failure
+To:     Mark Brown <broonie@kernel.org>
+Cc:     agross@kernel.org, bjorn.andersson@linaro.org, lgirdwood@gmail.com,
+        robh+dt@kernel.org, plai@codeaurora.org, bgoswami@codeaurora.org,
+        perex@perex.cz, tiwai@suse.com, srinivas.kandagatla@linaro.org,
+        rohitkr@codeaurora.org, linux-arm-msm@vger.kernel.org,
+        alsa-devel@alsa-project.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        V Sujith Kumar Reddy <vsujithk@codeaurora.org>
+References: <1602596386-9886-1-git-send-email-srivasam@codeaurora.org>
+ <20201013151505.GA7913@sirena.org.uk>
+From:   Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
+Organization: Qualcomm India Private Limited.
+Message-ID: <49ac01c8-d270-5e9b-360b-87909e550360@codeaurora.org>
+Date:   Wed, 14 Oct 2020 09:49:38 +0530
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Firefox/78.0 Thunderbird/78.3.2
+ Thunderbird/78.3.2
 MIME-Version: 1.0
-In-Reply-To: <20201013060623.1711-2-thunder.leizhen@huawei.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
+In-Reply-To: <20201013151505.GA7913@sirena.org.uk>
+Content-Type: text/plain; charset=windows-1252; format=flowed
+Content-Transfer-Encoding: 8bit
 Content-Language: en-US
-Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Thanks  Mark Brown for your time !!!
 
+On 10/13/2020 8:45 PM, Mark Brown wrote:
+> On Tue, Oct 13, 2020 at 07:09:46PM +0530, Srinivasa Rao Mandadapu wrote:
+>> From: V Sujith Kumar Reddy <vsujithk@codeaurora.org>
+>>
+>> Disable MI2S bit clock from PAUSE/STOP/SUSPEND usecase
+>> instead of shutdown time. Acheive this by invoking
+>> clk_disable_unprepare API from cpu daiops shutdown to
+>> cpu daiops trigger.
+> I'm missing patch 2 here?
+No.. It's a single patch. By mistake I sent with wrong header.
+>
+>> This Fix is update to the below patch.
+>> https://lore.kernel.org/patchwork/patch/1308101/
+> Fixes should be specified using tags like this:
+>
+>    Fixes: commit 30fb9454ab23 ("selftests/vm: hmm-tests: remove the libhugetlbfs dependency")
+>
+> in the changelog.
+Thanks for your guidance. I will take care of it next time.
+>
+> Please submit patches using subject lines reflecting the style for the
+> subsystem, this makes it easier for people to identify relevant patches.
+> Look at what existing commits in the area you're changing are doing and
+> make sure your subject lines visually resemble what they're doing.
+> There's no need to resubmit to fix this alone.
 
-On 10/12/2020 11:06 PM, Zhen Lei wrote:
-> stingray-usb.dtsi is finally included by three dts files:
-> bcm958802a802x.dts, bcm958742k.dts and bcm958742t.dts. I searched all
-> these three entire expanded dts files, and each of them contains only one
-> dma-ranges. No conversion range is specified, so it cannot work properly.
-> I think this property "dma-ranges" is added by mistake, just remove it.
-> Otherwise, the following error will be reported when any YAML detection
-> is performed on arm64.
-> 
-> arch/arm64/boot/dts/broadcom/stingray/stingray-usb.dtsi:7.3-14: Warning \
-> (dma_ranges_format): /usb:dma-ranges: empty "dma-ranges" property but \
-> its #address-cells (1) differs from / (2)
-> arch/arm64/boot/dts/broadcom/stingray/stingray-usb.dtsi:7.3-14: Warning \
-> (dma_ranges_format): /usb:dma-ranges: empty "dma-ranges" property but \
-> its #size-cells (1) differs from / (2)
-> 
-> Signed-off-by: Zhen Lei <thunder.leizhen@huawei.com>
-
-This looks fine to me, Scott, Ray do you want to Ack this patch before I 
-take it?
 -- 
-Florian
+Qualcomm India Private Limited, on behalf of Qualcomm Innovation Center, Inc.,
+is a member of Code Aurora Forum, a Linux Foundation Collaborative Project.
+
