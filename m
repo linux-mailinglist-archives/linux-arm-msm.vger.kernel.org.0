@@ -2,33 +2,33 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id DCFC328D82D
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Oct 2020 03:59:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4D2C928D835
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Oct 2020 04:07:46 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728405AbgJNB7O (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 13 Oct 2020 21:59:14 -0400
-Received: from mail.kernel.org ([198.145.29.99]:55400 "EHLO mail.kernel.org"
+        id S1728645AbgJNCHg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 13 Oct 2020 22:07:36 -0400
+Received: from mail.kernel.org ([198.145.29.99]:56338 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725874AbgJNB7N (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 13 Oct 2020 21:59:13 -0400
+        id S1725874AbgJNCHg (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 13 Oct 2020 22:07:36 -0400
 Received: from kernel.org (unknown [104.132.1.79])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id BAA8F221FC;
-        Wed, 14 Oct 2020 01:59:12 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id BD53521775;
+        Wed, 14 Oct 2020 02:07:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1602640752;
-        bh=wCc5SuWifTRvzQyLqk95QDnpolBC2xo+OhEuwe/klj0=;
+        s=default; t=1602641255;
+        bh=KPvdf+a85L4OCPBIobRJspIbIReT/sQiwTlh0oeAdGY=;
         h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
-        b=1Y9BzN6quC7xAAKEBeTamqujt4BIsNY97lbcDYxmGt4Ca+LEXvONVPPJ6mh+S3ieb
-         ILpqfzBZVSffvEVuh1mzssunmpcgo4YC3165hY49R9U9q1MJgNP8EVP4MUYllUMyM6
-         sVXPZ8IoccBqY43IXguri5ilGi1NFtR1QwoHpWwo=
+        b=gHYN0Dqpkk/2BtPmEkiteW1czHK1Urxz4WDRT2RFU+oxQaICXUgwcoVeg7WQVNWlJ
+         1PMaWP+6TBqT2cJkyHdC8YFJwu1Rtx2Ph9Sr01hEYN668he6PYSH0b6bQWqzf/ONG9
+         dspd7EBdKoN18Mqkd5Y3JOx7+FZRMFzR6/fbhJFU=
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <1602609110-11504-4-git-send-email-tdas@codeaurora.org>
-References: <1602609110-11504-1-git-send-email-tdas@codeaurora.org> <1602609110-11504-4-git-send-email-tdas@codeaurora.org>
-Subject: Re: [PATCH v2 3/3] clk: qcom: camcc: Add camera clock controller driver for SC7180
+In-Reply-To: <1602609110-11504-2-git-send-email-tdas@codeaurora.org>
+References: <1602609110-11504-1-git-send-email-tdas@codeaurora.org> <1602609110-11504-2-git-send-email-tdas@codeaurora.org>
+Subject: Re: [PATCH v2 1/3] clk: qcom: clk-alpha-pll: Add support for controlling Agera PLLs
 From:   Stephen Boyd <sboyd@kernel.org>
 Cc:     David Brown <david.brown@linaro.org>,
         Rajendra Nayak <rnayak@codeaurora.org>,
@@ -39,119 +39,110 @@ Cc:     David Brown <david.brown@linaro.org>,
         Taniya Das <tdas@codeaurora.org>
 To:     Michael Turquette <mturquette@baylibre.com>,
         Taniya Das <tdas@codeaurora.org>
-Date:   Tue, 13 Oct 2020 18:59:11 -0700
-Message-ID: <160264075146.310579.8765964662995263828@swboyd.mtv.corp.google.com>
+Date:   Tue, 13 Oct 2020 19:07:34 -0700
+Message-ID: <160264125446.310579.18150875025884105137@swboyd.mtv.corp.google.com>
 User-Agent: alot/0.9.1
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Taniya Das (2020-10-13 10:11:50)
-> diff --git a/drivers/clk/qcom/camcc-sc7180.c b/drivers/clk/qcom/camcc-sc7=
-180.c
-> new file mode 100644
-> index 0000000..e954d21
-> --- /dev/null
-> +++ b/drivers/clk/qcom/camcc-sc7180.c
-> @@ -0,0 +1,1737 @@
-[...]
+Quoting Taniya Das (2020-10-13 10:11:48)
+> diff --git a/drivers/clk/qcom/clk-alpha-pll.c b/drivers/clk/qcom/clk-alph=
+a-pll.c
+> index 26139ef..17e1fc0 100644
+> --- a/drivers/clk/qcom/clk-alpha-pll.c
+> +++ b/drivers/clk/qcom/clk-alpha-pll.c
+> @@ -1561,3 +1571,73 @@ const struct clk_ops clk_alpha_pll_postdiv_lucid_o=
+ps =3D {
+>         .set_rate =3D clk_alpha_pll_postdiv_fabia_set_rate,
+>  };
+>  EXPORT_SYMBOL_GPL(clk_alpha_pll_postdiv_lucid_ops);
 > +
-> +enum {
-> +       P_BI_TCXO,
-> +       P_CAM_CC_PLL0_OUT_EVEN,
-> +       P_CAM_CC_PLL1_OUT_EVEN,
-> +       P_CAM_CC_PLL2_OUT_AUX,
-> +       P_CAM_CC_PLL2_OUT_EARLY,
-> +       P_CAM_CC_PLL3_OUT_MAIN,
-> +       P_CORE_BI_PLL_TEST_SE,
-> +};
-> +
-> +static struct pll_vco agera_vco[] =3D {
-
-Can this be const?
-
-> +       { 600000000, 3300000000, 0 },
-> +};
-> +
-> +static struct pll_vco fabia_vco[] =3D {
-
-Can this be const?
-
-> +       { 249600000, 2000000000, 0 },
-> +};
-> +
-[...]
-> +
-> +static int cam_cc_sc7180_probe(struct platform_device *pdev)
+> +void clk_agera_pll_configure(struct clk_alpha_pll *pll, struct regmap *r=
+egmap,
+> +                       const struct alpha_pll_config *config)
 > +{
-> +       struct regmap *regmap;
-> +       int ret;
+> +       if (config->l)
+> +               regmap_write(regmap, PLL_L_VAL(pll), config->l);
+
+Maybe make a helper function for this too. That way we can't mix up the
+if condition with the value in the write.
+
+	clk_alpha_pll_write_config(regmap, PLL_L_VAL(pll), config->l);
+
+static void clk_alpha_pll_write_config(struct regmap *regmap,
+				       unsigned int reg,
+				       unsigned int val) {
+	if (val)
+		regmap_write(regmap, reg, val);
+}
+
+and how are we so lucky that zero isn't a value that we may need to
+write?
+
 > +
-> +       pm_runtime_enable(&pdev->dev);
-> +       ret =3D pm_clk_create(&pdev->dev);
-> +       if (ret)
-> +               return ret;
+> +       if (config->alpha)
+> +               regmap_write(regmap, PLL_ALPHA_VAL(pll), config->alpha);
 > +
-> +       ret =3D pm_clk_add(&pdev->dev, "xo");
-> +       if (ret < 0) {
-> +               dev_err(&pdev->dev, "Failed to acquire XO clock\n");
-> +               goto disable_pm_runtime;
-> +       }
+> +       if (config->user_ctl_val)
+> +               regmap_write(regmap, PLL_USER_CTL(pll), config->user_ctl_=
+val);
 > +
-> +       ret =3D pm_clk_add(&pdev->dev, "iface");
-> +       if (ret < 0) {
-> +               dev_err(&pdev->dev, "Failed to acquire iface clock\n");
-> +               goto disable_pm_runtime;
-> +       }
+> +       if (config->config_ctl_val)
+> +               regmap_write(regmap, PLL_CONFIG_CTL(pll),
+> +                                               config->config_ctl_val);
 > +
-> +       ret =3D pm_clk_runtime_resume(&pdev->dev);
-> +       if (ret) {
-> +               dev_err(&pdev->dev, "pm runtime resume failed\n");
-> +               goto destroy_pm_clk;
-> +       }
-> +
-> +       regmap =3D qcom_cc_map(pdev, &cam_cc_sc7180_desc);
-> +       if (IS_ERR(regmap)) {
-> +               ret =3D PTR_ERR(regmap);
-> +               goto destroy_pm_clk;
-> +       }
-> +
-> +       clk_fabia_pll_configure(&cam_cc_pll0, regmap, &cam_cc_pll0_config=
-);
-> +       clk_fabia_pll_configure(&cam_cc_pll1, regmap, &cam_cc_pll1_config=
-);
-> +       clk_agera_pll_configure(&cam_cc_pll2, regmap, &cam_cc_pll2_config=
-);
-> +       clk_fabia_pll_configure(&cam_cc_pll3, regmap, &cam_cc_pll3_config=
+> +       if (config->config_ctl_hi_val)
+> +               regmap_write(regmap, PLL_CONFIG_CTL_U(pll),
+> +                                               config->config_ctl_hi_val=
 );
 > +
-> +       ret =3D qcom_cc_really_probe(pdev, &cam_cc_sc7180_desc, regmap);
-> +       if (ret) {
-> +               dev_err(&pdev->dev, "Failed to register CAM CC clocks\n");
-> +               goto suspend_pm_runtime;
-
-ret is non-zero here
-
-> +       }
+> +       if (config->test_ctl_val)
+> +               regmap_write(regmap, PLL_TEST_CTL(pll),
+> +                                               config->test_ctl_val);
 > +
-> +suspend_pm_runtime:
-> +       ret =3D pm_clk_runtime_suspend(&pdev->dev);
+> +       if (config->test_ctl_hi_val)
+> +               regmap_write(regmap,  PLL_TEST_CTL_U(pll),
+> +                                               config->test_ctl_hi_val);
+> +}
+> +EXPORT_SYMBOL_GPL(clk_agera_pll_configure);
+> +
+> +static int clk_alpha_pll_agera_set_rate(struct clk_hw *hw, unsigned long=
+ rate,
+> +                                                       unsigned long pra=
+te)
+> +{
+> +       struct clk_alpha_pll *pll =3D to_clk_alpha_pll(hw);
+> +       u32 l, alpha_width =3D pll_alpha_width(pll);
+> +       unsigned long rrate, max =3D rate + PLL_RATE_MARGIN;
+> +       u64 a;
+> +
+> +       rrate =3D alpha_pll_round_rate(rate, prate, &l, &a, alpha_width);
+> +
+> +       /*
+> +        * Due to limited number of bits for fractional rate programming,=
+ the
+> +        * rounded up rate could be marginally higher than the requested =
+rate.
+> +        */
+> +       if (rrate > (rate + PLL_RATE_MARGIN) || rrate < rate) {
+> +               pr_err("%s: Rounded rate %lu not within range [%lu, %lu)\=
+n",
+> +                      clk_hw_get_name(hw), rrate, rate, max);
+> +               return -EINVAL;
+> +       }
 
-But then it is overwritten here.
+Can this be extracted into a helper function?
 
-> +       if (ret)
-> +               dev_err(&pdev->dev, "pm runtime suspend failed\n");
+> +
+> +       /* change L_VAL without having to go through the power on sequenc=
+e */
+> +       regmap_write(pll->clkr.regmap, PLL_L_VAL(pll), l);
+> +       regmap_write(pll->clkr.regmap, PLL_ALPHA_VAL(pll), a);
+> +
+> +       if (clk_hw_is_enabled(hw))
+> +               return wait_for_pll_enable_lock(pll);
 > +
 > +       return 0;
-
-And we return 0 when there was a failure to probe the clks?
-
-> +
-> +destroy_pm_clk:
-> +       pm_clk_destroy(&pdev->dev);
-> +
-> +disable_pm_runtime:
-> +       pm_runtime_disable(&pdev->dev);
-> +
-> +       return ret;
 > +}
+> +
