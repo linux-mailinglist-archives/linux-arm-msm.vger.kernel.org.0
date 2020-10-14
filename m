@@ -2,254 +2,192 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 72A6F28E520
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Oct 2020 19:12:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7C14C28E52E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Oct 2020 19:16:54 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727152AbgJNRMm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 14 Oct 2020 13:12:42 -0400
-Received: from m42-4.mailgun.net ([69.72.42.4]:58926 "EHLO m42-4.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726786AbgJNRMm (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 14 Oct 2020 13:12:42 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1602695561; h=Content-Transfer-Encoding: MIME-Version:
- Message-Id: Date: Subject: Cc: To: From: Sender;
- bh=OuCre6+aS5WFYiwtz7N3qvO2ZE+HL6JDE7p8LkMtjN8=; b=v8wlDLO7eSdjaauPOmlzO15QWaj9wMpKRJSucn4IzDWLXn9Q1kR2mrp8W2okBFEGFY1F7rWb
- vUSRVqPsIiRSjQ/n6niNZLijK0Bu/Z6NXMFhW6oNAljp6zaY3sc4G3SOXNASJ1+fTSjzbzX3
- r80YZozpiqWYqyMPxlB7TcjK88o=
-X-Mailgun-Sending-Ip: 69.72.42.4
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n02.prod.us-east-1.postgun.com with SMTP id
- 5f873143aad2c3cd1c415967 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 14 Oct 2020 17:11:31
- GMT
-Sender: khsieh=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 1C833C43385; Wed, 14 Oct 2020 17:11:31 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
-        T_FILL_THIS_FORM_SHORT,URIBL_BLOCKED autolearn=no autolearn_force=no
-        version=3.4.0
-Received: from khsieh-linux1.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: khsieh)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 1B82DC433C9;
-        Wed, 14 Oct 2020 17:11:28 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 1B82DC433C9
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=khsieh@codeaurora.org
-From:   Kuogee Hsieh <khsieh@codeaurora.org>
-To:     robdclark@gmail.com, sean@poorly.run, swboyd@chromium.org
-Cc:     tanmay@codeaurora.org, abhinavk@codeaurora.org,
-        aravindh@codeaurora.org, khsieh@codeaurora.org, airlied@linux.ie,
-        daniel@ffwll.ch, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        linux-kernel@vger.kernel.org
-Subject: [PATCH v4] drm/msm/dp: fixes wrong connection state caused by failure of link train
-Date:   Wed, 14 Oct 2020 10:11:23 -0700
-Message-Id: <20201014171123.30167-1-khsieh@codeaurora.org>
-X-Mailer: git-send-email 2.27.0
+        id S1727162AbgJNRQx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 14 Oct 2020 13:16:53 -0400
+Received: from mail.baikalelectronics.com ([87.245.175.226]:49434 "EHLO
+        mail.baikalelectronics.ru" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726942AbgJNRQx (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 14 Oct 2020 13:16:53 -0400
+Received: from localhost (unknown [127.0.0.1])
+        by mail.baikalelectronics.ru (Postfix) with ESMTP id BDEBF803073C;
+        Wed, 14 Oct 2020 17:16:46 +0000 (UTC)
+X-Virus-Scanned: amavisd-new at baikalelectronics.ru
+Received: from mail.baikalelectronics.ru ([127.0.0.1])
+        by localhost (mail.baikalelectronics.ru [127.0.0.1]) (amavisd-new, port 10024)
+        with ESMTP id Ys7tOGr55fWZ; Wed, 14 Oct 2020 20:16:46 +0300 (MSK)
+Date:   Wed, 14 Oct 2020 20:16:40 +0300
+From:   Serge Semin <Sergey.Semin@baikalelectronics.ru>
+To:     Krzysztof Kozlowski <krzk@kernel.org>
+CC:     Serge Semin <fancer.lancer@gmail.com>,
+        Mathias Nyman <mathias.nyman@intel.com>,
+        Felipe Balbi <balbi@kernel.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Jason Cooper <jason@lakedaemon.net>,
+        Andrew Lunn <andrew@lunn.ch>,
+        Gregory Clement <gregory.clement@bootlin.com>,
+        Sebastian Hesselbarth <sebastian.hesselbarth@gmail.com>,
+        Kukjin Kim <kgene@kernel.org>,
+        Santosh Shilimkar <ssantosh@kernel.org>,
+        Shawn Guo <shawnguo@kernel.org>, Li Yang <leoyang.li@nxp.com>,
+        =?utf-8?Q?Beno=C3=AEt?= Cousson <bcousson@baylibre.com>,
+        Tony Lindgren <tony@atomide.com>,
+        Patrice Chotard <patrice.chotard@st.com>,
+        Maxime Ripard <mripard@kernel.org>,
+        Chen-Yu Tsai <wens@csie.org>, Wei Xu <xuwei5@hisilicon.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Alexey Malahov <Alexey.Malahov@baikalelectronics.ru>,
+        Pavel Parkhomenko <Pavel.Parkhomenko@baikalelectronics.ru>,
+        Manu Gautam <mgautam@codeaurora.org>,
+        Roger Quadros <rogerq@ti.com>,
+        Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
+        Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
+        Neil Armstrong <narmstrong@baylibre.com>,
+        Kevin Hilman <khilman@baylibre.com>,
+        <linux-arm-kernel@lists.infradead.org>,
+        <linux-snps-arc@lists.infradead.org>, <linux-mips@vger.kernel.org>,
+        <linuxppc-dev@lists.ozlabs.org>, <linux-usb@vger.kernel.org>,
+        <devicetree@vger.kernel.org>,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+        "linux-samsung-soc@vger.kernel.org" 
+        <linux-samsung-soc@vger.kernel.org>, <linux-omap@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>
+Subject: Re: [PATCH 20/20] arch: dts: Fix DWC USB3 DT nodes name
+Message-ID: <20201014171640.bup52mgaz4jvhtsy@mobilestation>
+References: <20201014101402.18271-1-Sergey.Semin@baikalelectronics.ru>
+ <20201014101402.18271-21-Sergey.Semin@baikalelectronics.ru>
+ <CAJKOXPeErocR5-3xCDqBR3-k3w_2EQ_768d71n229cbzeo4TtQ@mail.gmail.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <CAJKOXPeErocR5-3xCDqBR3-k3w_2EQ_768d71n229cbzeo4TtQ@mail.gmail.com>
+X-ClientProxiedBy: MAIL.baikal.int (192.168.51.25) To mail (192.168.51.25)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Connection state is not set correctly happen when either failure of link
-train due to cable unplugged in the middle of aux channel reading or
-cable plugged in while in suspended state. This patch fixes these problems.
-This patch also replace ST_SUSPEND_PENDING with ST_DISPLAY_OFF.
+On Wed, Oct 14, 2020 at 12:33:25PM +0200, Krzysztof Kozlowski wrote:
+> On Wed, 14 Oct 2020 at 12:23, Serge Semin
+> <Sergey.Semin@baikalelectronics.ru> wrote:
+> >
+> > In accordance with the DWC USB3 bindings the corresponding node name is
+> > suppose to comply with Generic USB HCD DT schema, which requires the USB
+> > nodes to have the name acceptable by the regexp: "^usb(@.*)?" . But a lot
+> > of the DWC USB3-compatible nodes defined in the ARM/ARM64 DTS files have
+> > name as "^dwc3@.*" or "^usb[1-3]@.*" or even "^dwusb@.*", which will cause
+> > the dtbs_check procedure failure. Let's fix the nodes naming to be
+> > compatible with the DWC USB3 DT schema to make dtbs_check happy.
+> >
+> > Note we don't change the DWC USB3-compatible nodes names of
+> > arch/arm64/boot/dts/apm/{apm-storm.dtsi,apm-shadowcat.dtsi} since the
+> > in-source comment says that the nodes name need to be preserved as
+> > "^dwusb@.*" for some backward compatibility.
+> >
+> > Signed-off-by: Serge Semin <Sergey.Semin@baikalelectronics.ru>
+> >
+> > ---
+> >
+> > Please, test the patch out to make sure it doesn't brake the dependent DTS
+> > files. I did only a manual grepping of the possible nodes dependencies.
+> 
 
-Changes in V2:
--- Add more information to commit message.
+> 1. It is you who should compare the decompiled DTS, not us. For example:
+> $ for i in dts-old/*/*dtb dts-old/*/*/*dtb; do echo $i; crosc64
+> scripts/dtc/dtx_diff ${i} dts-new/${i#dts-old/} ; done
+> 
+> $ for i in dts-old/*/*dtb dts-old/*/*/*dtb; do echo $i; crosc64
+> fdtdump ${i} > ${i}.fdt ; crosc64 fdtdump dts-new/${i#dts-old/} >
+> dts-new/${i#dts-old/}.fdt ; diff -ubB ${i}.fdt
+> dts-new/${i#dts-old/}.fdt ; done
 
-Changes in V3:
--- change base
+So basically you suggest first to compile the old and new dts files, then to
+de-compile them, then diff old and new fdt's, and visually compare the results.
+Personally it isn't that much better than what I did, since each old and new
+dtbs will for sure differ due to the node names change suggested in this patch.
+So it will lead to the visual debugging too, which isn't that effective. But
+your approach is still more demonstrative to make sure that I didn't loose any
+nodes redefinition, since in the occasion the old and new de-compiled nodes will
+differ not only by the node names but with an additional old named node.
 
-Changes in V4:
--- add Fixes tag
+So to speak thanks for suggesting it. I'll try it to validate the proposed
+changes.
 
-Fixes: 22688d4067f6 (drm/msm/dp: return correct connection status after suspend)
-Signed-off-by: Kuogee Hsieh <khsieh@codeaurora.org>
----
- drivers/gpu/drm/msm/dp/dp_display.c | 42 ++++++++++++++---------------
- drivers/gpu/drm/msm/dp/dp_panel.c   |  5 ++++
- 2 files changed, 25 insertions(+), 22 deletions(-)
+Two questions:
+1) Any advise of a good inliner/command to compile all dtbs at once? Of course I
+can get all the updated dtsi'es, then find out all the dts'es which include
+them, then directly use dtc to compile the found dts'es... On the other hand I
+can just compile all dts'es, then compare old and new ones. The diff of the
+non-modified dtb'es will be just empty...
+2) What crosc64 is?
 
-diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
-index cb92d0c61a2f..c0665a0a4c78 100644
---- a/drivers/gpu/drm/msm/dp/dp_display.c
-+++ b/drivers/gpu/drm/msm/dp/dp_display.c
-@@ -45,7 +45,7 @@ enum {
- 	ST_CONNECT_PENDING,
- 	ST_CONNECTED,
- 	ST_DISCONNECT_PENDING,
--	ST_SUSPEND_PENDING,
-+	ST_DISPLAY_OFF,
- 	ST_SUSPENDED,
- };
- 
-@@ -503,7 +503,7 @@ static int dp_hpd_plug_handle(struct dp_display_private *dp, u32 data)
- 	mutex_lock(&dp->event_mutex);
- 
- 	state =  dp->hpd_state;
--	if (state == ST_SUSPEND_PENDING) {
-+	if (state == ST_DISPLAY_OFF || state == ST_SUSPENDED) {
- 		mutex_unlock(&dp->event_mutex);
- 		return 0;
- 	}
-@@ -525,14 +525,14 @@ static int dp_hpd_plug_handle(struct dp_display_private *dp, u32 data)
- 	hpd->hpd_high = 1;
- 
- 	ret = dp_display_usbpd_configure_cb(&dp->pdev->dev);
--	if (ret) {	/* failed */
-+	if (ret) {	/* link train failed */
- 		hpd->hpd_high = 0;
- 		dp->hpd_state = ST_DISCONNECTED;
-+	} else {
-+		/* start sentinel checking in case of missing uevent */
-+		dp_add_event(dp, EV_CONNECT_PENDING_TIMEOUT, 0, tout);
- 	}
- 
--	/* start sanity checking */
--	dp_add_event(dp, EV_CONNECT_PENDING_TIMEOUT, 0, tout);
--
- 	mutex_unlock(&dp->event_mutex);
- 
- 	/* uevent will complete connection part */
-@@ -577,11 +577,6 @@ static int dp_hpd_unplug_handle(struct dp_display_private *dp, u32 data)
- 	mutex_lock(&dp->event_mutex);
- 
- 	state = dp->hpd_state;
--	if (state == ST_SUSPEND_PENDING) {
--		mutex_unlock(&dp->event_mutex);
--		return 0;
--	}
--
- 	if (state == ST_DISCONNECT_PENDING || state == ST_DISCONNECTED) {
- 		mutex_unlock(&dp->event_mutex);
- 		return 0;
-@@ -608,7 +603,7 @@ static int dp_hpd_unplug_handle(struct dp_display_private *dp, u32 data)
- 	 */
- 	dp_display_usbpd_disconnect_cb(&dp->pdev->dev);
- 
--	/* start sanity checking */
-+	/* start sentinel checking in case of missing uevent */
- 	dp_add_event(dp, EV_DISCONNECT_PENDING_TIMEOUT, 0, DP_TIMEOUT_5_SECOND);
- 
- 	/* signal the disconnect event early to ensure proper teardown */
-@@ -648,7 +643,7 @@ static int dp_irq_hpd_handle(struct dp_display_private *dp, u32 data)
- 
- 	/* irq_hpd can happen at either connected or disconnected state */
- 	state =  dp->hpd_state;
--	if (state == ST_SUSPEND_PENDING) {
-+	if (state == ST_DISPLAY_OFF) {
- 		mutex_unlock(&dp->event_mutex);
- 		return 0;
- 	}
-@@ -1073,7 +1068,7 @@ static irqreturn_t dp_display_irq_handler(int irq, void *dev_id)
- 		}
- 
- 		if (hpd_isr_status & DP_DP_IRQ_HPD_INT_MASK) {
--			/* delete connect pending event first */
-+			/* stop sentinel connect pending checking */
- 			dp_del_event(dp, EV_CONNECT_PENDING_TIMEOUT);
- 			dp_add_event(dp, EV_IRQ_HPD_INT, 0, 0);
- 		}
-@@ -1204,13 +1199,10 @@ static int dp_pm_resume(struct device *dev)
- 
- 	status = dp_catalog_hpd_get_state_status(dp->catalog);
- 
--	if (status) {
-+	if (status)
- 		dp->dp_display.is_connected = true;
--	} else {
-+	else
- 		dp->dp_display.is_connected = false;
--		/* make sure next resume host_init be called */
--		dp->core_initialized = false;
--	}
- 
- 	mutex_unlock(&dp->event_mutex);
- 
-@@ -1232,6 +1224,9 @@ static int dp_pm_suspend(struct device *dev)
- 
- 	dp->hpd_state = ST_SUSPENDED;
- 
-+	/* host_init will be called at pm_resume */
-+	dp->core_initialized = false;
-+
- 	mutex_unlock(&dp->event_mutex);
- 
- 	return 0;
-@@ -1361,6 +1356,7 @@ int msm_dp_display_enable(struct msm_dp *dp, struct drm_encoder *encoder)
- 
- 	mutex_lock(&dp_display->event_mutex);
- 
-+	/* stop sentinel checking */
- 	dp_del_event(dp_display, EV_CONNECT_PENDING_TIMEOUT);
- 
- 	rc = dp_display_set_mode(dp, &dp_display->dp_mode);
-@@ -1379,7 +1375,7 @@ int msm_dp_display_enable(struct msm_dp *dp, struct drm_encoder *encoder)
- 
- 	state =  dp_display->hpd_state;
- 
--	if (state == ST_SUSPEND_PENDING)
-+	if (state == ST_DISPLAY_OFF)
- 		dp_display_host_init(dp_display);
- 
- 	dp_display_enable(dp_display, 0);
-@@ -1391,7 +1387,8 @@ int msm_dp_display_enable(struct msm_dp *dp, struct drm_encoder *encoder)
- 		dp_display_unprepare(dp);
- 	}
- 
--	if (state == ST_SUSPEND_PENDING)
-+	/* manual kick off plug event to train link */
-+	if (state == ST_DISPLAY_OFF)
- 		dp_add_event(dp_display, EV_IRQ_HPD_INT, 0, 0);
- 
- 	/* completed connection */
-@@ -1423,6 +1420,7 @@ int msm_dp_display_disable(struct msm_dp *dp, struct drm_encoder *encoder)
- 
- 	mutex_lock(&dp_display->event_mutex);
- 
-+	/* stop sentinel checking */
- 	dp_del_event(dp_display, EV_DISCONNECT_PENDING_TIMEOUT);
- 
- 	dp_display_disable(dp_display, 0);
-@@ -1436,7 +1434,7 @@ int msm_dp_display_disable(struct msm_dp *dp, struct drm_encoder *encoder)
- 		/* completed disconnection */
- 		dp_display->hpd_state = ST_DISCONNECTED;
- 	} else {
--		dp_display->hpd_state = ST_SUSPEND_PENDING;
-+		dp_display->hpd_state = ST_DISPLAY_OFF;
- 	}
- 
- 	mutex_unlock(&dp_display->event_mutex);
-diff --git a/drivers/gpu/drm/msm/dp/dp_panel.c b/drivers/gpu/drm/msm/dp/dp_panel.c
-index 18cec4fc5e0b..1b7a20dc2d8e 100644
---- a/drivers/gpu/drm/msm/dp/dp_panel.c
-+++ b/drivers/gpu/drm/msm/dp/dp_panel.c
-@@ -196,6 +196,11 @@ int dp_panel_read_sink_caps(struct dp_panel *dp_panel,
- 					      &panel->aux->ddc);
- 	if (!dp_panel->edid) {
- 		DRM_ERROR("panel edid read failed\n");
-+		/* check edid read fail is due to unplug */
-+		if (!dp_catalog_hpd_get_state_status(panel->catalog)) {
-+			rc = -ETIMEDOUT;
-+			goto end;
-+		}
- 
- 		/* fail safe edid */
- 		mutex_lock(&connector->dev->mode_config.mutex);
+> 
+> 2. Split it per arm architectures (and proper subject prefix - not
+> "arch") and subarchitectures so maintainers can pick it up.
 
-base-commit: 22688d4067f675ee180a0ecd36d844d4a6530298
--- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project
+Why? The changes are simple and can be formatted as a single patch. I've seen
+tons of patches submitted like that, accepted and then merged. What you suggest
+is just much more work, which I don't see quite required.
 
+> 
+> 3. The subject title could be more accurate - there is no fix here
+> because there was no errors in the first place. Requirement of DWC
+> node names comes recently, so it is more alignment with dtschema.
+> Otherwise automatic-pickup-stable-bot might want to pick up... and it
+> should not go to stable.
+
+Actually it is a fix, because the USB DT nodes should have been named with "usb"
+prefix in the first place. Legacy DWC USB3 bindings didn't define the nodes
+naming, but implied to be "usb"-prefixed by the USB HCD schema. The Qualcomm
+DWC3 schema should have defined the sub-nodes as "dwc3@"-prefixed, which was
+wrong in the first place.
+
+Regarding automatic-pickup-stable-bot if it exists I don't think it scans all the
+emails, but most likely the stable@vger.kernel.org list only or the emails
+having the "Fixes:" tag. If I am wrong please give me a link to the bot sources
+or refer to a doc where I can read about the way it works, to take it into
+account in future commits. Just to note I submitted patches which did some fixes,
+had the word "fix" in the subject but weren't selected to be backported to the
+stable kernel.
+
+Anyway I don't really care that much about the subject text using the word "fix"
+or some else. So if you suggest some better alternative, I'd be glad to consider
+it.
+
+-Sergey
+
+> 
+> Best regards,
+> Krzysztof
+> 
+> >  arch/arm/boot/dts/armada-375.dtsi              | 2 +-
+> >  arch/arm/boot/dts/exynos5250.dtsi              | 2 +-
+> >  arch/arm/boot/dts/exynos54xx.dtsi              | 4 ++--
+> >  arch/arm/boot/dts/keystone-k2e.dtsi            | 4 ++--
+> >  arch/arm/boot/dts/keystone.dtsi                | 2 +-
+> >  arch/arm/boot/dts/ls1021a.dtsi                 | 2 +-
+> >  arch/arm/boot/dts/omap5-l4.dtsi                | 2 +-
+> >  arch/arm/boot/dts/stih407-family.dtsi          | 2 +-
+> >  arch/arm64/boot/dts/allwinner/sun50i-h6.dtsi   | 2 +-
+> >  arch/arm64/boot/dts/exynos/exynos5433.dtsi     | 4 ++--
+> >  arch/arm64/boot/dts/exynos/exynos7.dtsi        | 2 +-
+> >  arch/arm64/boot/dts/freescale/fsl-ls1012a.dtsi | 4 ++--
+> >  arch/arm64/boot/dts/freescale/fsl-ls1043a.dtsi | 6 +++---
+> >  arch/arm64/boot/dts/freescale/fsl-ls1088a.dtsi | 4 ++--
+> >  arch/arm64/boot/dts/freescale/fsl-ls208xa.dtsi | 4 ++--
+> >  arch/arm64/boot/dts/hisilicon/hi3660.dtsi      | 2 +-
+> >  arch/arm64/boot/dts/qcom/apq8096-db820c.dtsi   | 4 ++--
+> >  arch/arm64/boot/dts/qcom/ipq8074.dtsi          | 4 ++--
+> >  arch/arm64/boot/dts/qcom/msm8996.dtsi          | 4 ++--
+> >  arch/arm64/boot/dts/qcom/msm8998.dtsi          | 2 +-
+> >  arch/arm64/boot/dts/qcom/qcs404-evb.dtsi       | 2 +-
+> >  arch/arm64/boot/dts/qcom/qcs404.dtsi           | 4 ++--
+> >  arch/arm64/boot/dts/qcom/sc7180.dtsi           | 2 +-
+> >  arch/arm64/boot/dts/qcom/sdm845.dtsi           | 4 ++--
+> >  arch/arm64/boot/dts/qcom/sm8150.dtsi           | 2 +-
+> >  25 files changed, 38 insertions(+), 38 deletions(-)
+> >
