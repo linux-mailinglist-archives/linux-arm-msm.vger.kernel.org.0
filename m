@@ -2,141 +2,134 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 7F19828EA89
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Oct 2020 03:55:16 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4F46C28EAB2
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Oct 2020 04:04:53 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732457AbgJOBzK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 14 Oct 2020 21:55:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53094 "EHLO
+        id S1728957AbgJOCEt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 14 Oct 2020 22:04:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54724 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1732432AbgJOByj (ORCPT
+        with ESMTP id S1727145AbgJOCEi (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 14 Oct 2020 21:54:39 -0400
-Received: from mail-ot1-x343.google.com (mail-ot1-x343.google.com [IPv6:2607:f8b0:4864:20::343])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 985F5C0613BF
-        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Oct 2020 15:19:24 -0700 (PDT)
-Received: by mail-ot1-x343.google.com with SMTP id f37so1116973otf.12
-        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Oct 2020 15:19:24 -0700 (PDT)
+        Wed, 14 Oct 2020 22:04:38 -0400
+Received: from mail-vs1-xe41.google.com (mail-vs1-xe41.google.com [IPv6:2607:f8b0:4864:20::e41])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2232DC05BD0B
+        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Oct 2020 15:29:13 -0700 (PDT)
+Received: by mail-vs1-xe41.google.com with SMTP id d19so348945vso.10
+        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Oct 2020 15:29:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=RRjGeO/tlzjrZ9J3RrPGuGS/1yOeW5L71HWGM1q9PqM=;
-        b=mv4K9pQTVn31rCM+RtELHJJEN9cJcDk1Vd6rueXFN+ur+DaBM9Qq6TK1m1WezBf4hr
-         MQc4sM/fZNpoQKwJNk0jefV/29a2Gbpvzk8lFhkPydaWTLr63a2DTl1r3yhg6YPa/3X7
-         GMmiNAEf3/5wkoQNpNIufrrELvJm1hzUZ4d5PU3Jto2lwEFOoxAzKXsFath4PAacm8Rk
-         ZlO1sQURY4EWIvlOqPlPAW3Y0R6KtQ9uEyAF0kwX1a/HsEDfF9f3sScPa4odkSIEPkkR
-         oQt72Sd4vg9XkFEeqhqZrGx1AchS1N4vkcJYy7b4nnFinyY/IYoOdPvA8MVmt/JKcj4Z
-         llKg==
+        d=chromium.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=FFNmhfthsf5pFmuohFdBe/J1wSqD3GGj/IpnA7g1A30=;
+        b=ElM2+r+wNX9S0QX15/URuzFWDAgrQuroEb/3vWVNqelEtF3zeNVJX5JYXXEHfLzm8b
+         1+VO0qGMtKHyuKoYmWKxcRcr38VNqOCXnxuvQ49A318FaWwdq5hv+zGSlBBIen0PvDjH
+         1UKWTabxwoO4qh6CK3L1+Mxnl9lwc5CuqFAvs=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=RRjGeO/tlzjrZ9J3RrPGuGS/1yOeW5L71HWGM1q9PqM=;
-        b=hT5SWCOYBhuZg89Oq1w1ci1beSPwbAYExzfLcoQa6X8Y6muNCuIeSbZbVXBbJNzOPO
-         LdIuAd9xkBzvyDj6M7+UGDT1CeSjfSdv0MPhmF3nKLyMazgnRHi24jKvrQhtQlg7Mtcv
-         C5BhseBytfpJ6WOH0RajIVTYdwYvpa2MEXOEWhX6KlNV5SKuBX6UG2Dlyyr7VsWH4AeC
-         EAbKhIDAzByJD44t6J8A+Am+qXy78AaE6tqTh0cjKOtKfwCfEngt/kqt+pN4OsHG9RUJ
-         kxz8TAKzPDusb54VdOK4TZKk8Ib8zvNJDjhAxsvJQklTyr9hztkA1FVrbK+4nQ/aoLdS
-         QYvQ==
-X-Gm-Message-State: AOAM532RQ2Vj/bJDsJBgvzarx9KdrFlS8uJSMe94fb/YdVuYIFmCV+pG
-        UW0gfA/RsWVbpFQpJVW5HkFQWA==
-X-Google-Smtp-Source: ABdhPJxDI9ig5Teru80krEOu8rMTShtx9klUW2MoC+kc1i2hN5KpLmX7EJYBnDsiZFyWnkmRIXuaHQ==
-X-Received: by 2002:a9d:6a55:: with SMTP id h21mr607071otn.297.1602713963840;
-        Wed, 14 Oct 2020 15:19:23 -0700 (PDT)
-Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id q81sm337035oia.46.2020.10.14.15.19.22
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 14 Oct 2020 15:19:23 -0700 (PDT)
-Date:   Wed, 14 Oct 2020 17:14:40 -0500
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     kholk11@gmail.com
-Cc:     will@kernel.org, robin.murphy@arm.com, joro@8bytes.org,
-        linux-arm-kernel@lists.infradead.org, devicetree@vger.kernel.org,
-        marijns95@gmail.com, konradybcio@gmail.com,
-        martin.botka1@gmail.com, linux-arm-msm@vger.kernel.org,
-        phone-devel@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 8/8] iommu/arm-smmu-qcom: Add stream_mapping_reset detail
- to QCOM SMMUv2
-Message-ID: <20201014221440.GA299663@builder.lan>
-References: <20200926130004.13528-1-kholk11@gmail.com>
- <20200926130004.13528-9-kholk11@gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=FFNmhfthsf5pFmuohFdBe/J1wSqD3GGj/IpnA7g1A30=;
+        b=e5hlMz+oNbtkcjhkq35YbYbtij0+fo2U9r/MBz7mt3KfLLiFfEyB3/6DowV09FcaUb
+         Cl3I5Qb3FOQFzXDbNrtcIWRZTThsCU0GNWAI6TISa1uSsBcadPAtu/y2LtOFEEqCC959
+         6bDUfIT2qwUhMwoWItMajGk27ImLTYoE5cSH83EqYqkIu2vZNfWhSuMgH2/HFV51gfeP
+         tKzDm0EBiZD9qSlh9L/3l2dcOlpH5OVML400/F4ujUp5eo+RmppU3Np16vAjkFG1Gh2E
+         tHaiUF7rFhdesR+nVKpnFrvQ+HaINBrGK7c8f834OkAsuC+DWGnqUaNN6nSAExAF3+6L
+         tfFw==
+X-Gm-Message-State: AOAM531c9KzZux40rV2tAaiR1n5xsn1oLQsWnciPHpggkW2YLNED4w9V
+        PGUy6zGJY3u20kTliq+Ft0iZ4IkZDiVTog==
+X-Google-Smtp-Source: ABdhPJxTC1dLarVlyfkm3YBxlJY+tDJYvs9JZF9aQdl4cJLBi0UpiOfbU/ZZrYczSuFjBZPCl35/7Q==
+X-Received: by 2002:a05:6102:52c:: with SMTP id m12mr1066052vsa.40.1602714551847;
+        Wed, 14 Oct 2020 15:29:11 -0700 (PDT)
+Received: from mail-ua1-f45.google.com (mail-ua1-f45.google.com. [209.85.222.45])
+        by smtp.gmail.com with ESMTPSA id a124sm108050vsd.18.2020.10.14.15.29.10
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 14 Oct 2020 15:29:10 -0700 (PDT)
+Received: by mail-ua1-f45.google.com with SMTP id k12so106563uad.11
+        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Oct 2020 15:29:10 -0700 (PDT)
+X-Received: by 2002:a9f:31ce:: with SMTP id w14mr725901uad.104.1602714550250;
+ Wed, 14 Oct 2020 15:29:10 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20200926130004.13528-9-kholk11@gmail.com>
+References: <20201014140507.v3.1.I4567b5e7e17bbb15ef063d447cb83fd43746cb18@changeid>
+ <20201014140507.v3.2.I75c409497d4dea9daefa53ec5f93824081c4ecbe@changeid> <160271345117.884498.6375969749730135625@swboyd.mtv.corp.google.com>
+In-Reply-To: <160271345117.884498.6375969749730135625@swboyd.mtv.corp.google.com>
+From:   Doug Anderson <dianders@chromium.org>
+Date:   Wed, 14 Oct 2020 15:28:58 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=UipL42FLRARc4V34bqEukaB=WQzAdr2Si2RUjPaAmE4g@mail.gmail.com>
+Message-ID: <CAD=FV=UipL42FLRARc4V34bqEukaB=WQzAdr2Si2RUjPaAmE4g@mail.gmail.com>
+Subject: Re: [PATCH v3 2/3] clk: qcom: lpass-sc7180: Disentangle the two clock devices
+To:     Stephen Boyd <sboyd@kernel.org>
+Cc:     Taniya Das <tdas@codeaurora.org>,
+        "open list:ARM/QUALCOMM SUPPORT" <linux-soc@vger.kernel.org>,
+        David Brown <david.brown@linaro.org>,
+        Rajendra Nayak <rnayak@codeaurora.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        linux-clk <linux-clk@vger.kernel.org>,
+        LKML <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sat 26 Sep 08:00 CDT 2020, kholk11@gmail.com wrote:
+Hi,
 
-> From: AngeloGioacchino Del Regno <kholk11@gmail.com>
-> 
-> On some Qualcomm SoCs with certain hypervisor configurations,
-> some context banks are hyp-protected and cannot be disabled,
-> nor the relative S2CRs can be set as bypass, or a hyp-fault
-> will be triggered and the system will hang.
-> 
-> This is seen on at least Qualcomm SDM630, SDM636 and SDM660.
-> 
-> Signed-off-by: AngeloGioacchino Del Regno <kholk11@gmail.com>
-> ---
->  drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c | 13 +++++++++++++
->  1 file changed, 13 insertions(+)
-> 
-> diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-> index b18e70bddf29..364908cc2adf 100644
-> --- a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-> +++ b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-> @@ -85,6 +85,18 @@ static int qcom_smmuv2_cfg_probe(struct arm_smmu_device *smmu)
->  	return 0;
->  }
->  
-> +static void qcom_smmuv2_stream_mapping_reset(struct arm_smmu_device *smmu)
-> +{
-> +	/*
-> +	 * Broken firmware quirk:
-> +	 * On some Qualcomm SoCs with certain hypervisor configurations,
-> +	 * some context banks are hyp-protected and cannot be disabled,
+On Wed, Oct 14, 2020 at 3:10 PM Stephen Boyd <sboyd@kernel.org> wrote:
+>
+> Quoting Douglas Anderson (2020-10-14 14:05:22)
+> > diff --git a/drivers/clk/qcom/lpasscorecc-sc7180.c b/drivers/clk/qcom/lpasscorecc-sc7180.c
+> > index abcf36006926..48d370e2108e 100644
+> > --- a/drivers/clk/qcom/lpasscorecc-sc7180.c
+> > +++ b/drivers/clk/qcom/lpasscorecc-sc7180.c
+> > @@ -356,12 +356,48 @@ static const struct qcom_cc_desc lpass_audio_hm_sc7180_desc = {
+> >         .num_gdscs = ARRAY_SIZE(lpass_audio_hm_sc7180_gdscs),
+> >  };
+> >
+> > +static void lpass_pm_runtime_disable(void *data)
+> > +{
+> > +       pm_runtime_disable(data);
+> > +}
+> > +
+> > +static void lapss_pm_clk_destroy(void *data)
+> > +{
+> > +       pm_clk_destroy(data);
+> > +}
+>
+> Why are these helpers added again? And do we even need them? Can't we
+> just pass pm_runtime_disable or pm_clk_destroy to the
+> devm_add_action_or_reset() second parameter?
 
-Wouldn't you run into the same problem when init_domain_context() later
-comes along and "accidentally" pick one of these context banks?
+Unfortunately, we can't due to the C specification.  Take a look at
+all the other users of devm_add_action_or_reset() and they all have
+pretty much the same stupid thing.  This is a pretty great grep, for
+instance:
 
-Do we have any way of knowing which banks this is, so we can mark them
-as busy?
+git grep devm_add_action_or_reset.*clk_disable_unprepare
 
-> +	 * nor the relative S2CRs can be set as bypass, or a hyp-fault
+I did a quick Google search and the top hit was a stack overflow that
+explained it:
 
-On platforms such as SDM845, SM8150, SM8250 etc, writing S2CR of type
-BYPASS is trapped by the hypervisor and FAULT is actually written to the
-hardware - resulting in a system reset when the associated hardware
-tries to perform a memory access.
+https://stackoverflow.com/questions/559581/casting-a-function-pointer-to-another-type
 
+The net-net is that the answer there says:
 
-Is it the actual S2CR write that causes the problem you're seeing or the
-fact that it happens to be that you shoot down the display stream as
-soon as you touch these registers?
+> Hence, since a void* is not compatible with a struct my_struct*, a
+> function pointer of type void (*)(void*) is not compatible with a
+> function pointer of type void (*)(struct my_struct*), so this
+> casting of function pointers is technically undefined behavior.
 
-Regards,
-Bjorn
+I suppose I could try to add devm variants of these functions
+somewhere more general if you think it's a good idea, though there it
+seems like there's not a huge need since these two greps are zero:
 
-> +	 * will be triggered and the system will hang.
-> +	 */
-> +	return;
-> +}
-> +
->  static void qcom_smmuv2_test_smr_masks(struct arm_smmu_device *smmu)
->  {
->  	/*
-> @@ -99,6 +111,7 @@ static void qcom_smmuv2_test_smr_masks(struct arm_smmu_device *smmu)
->  
->  static const struct arm_smmu_impl qcom_smmuv2_impl = {
->  	.cfg_probe = qcom_smmuv2_cfg_probe,
-> +	.stream_mapping_reset = qcom_smmuv2_stream_mapping_reset,
->  	.test_smr_masks = qcom_smmuv2_test_smr_masks,
->  };
->  
-> -- 
-> 2.28.0
-> 
+git grep devm_add_action_or_reset.*runtime_disable
+git grep devm_add_action_or_reset.*pm_clk_destroy
+
+...actually, do we even need the runtime_disable in the error path?
+When the dev goes away does it matter if you left pm_runtime enabled
+on it?
+
+-Doug
