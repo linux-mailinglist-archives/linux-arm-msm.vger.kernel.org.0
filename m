@@ -2,164 +2,97 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 777F728E376
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Oct 2020 17:44:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CCF5D28E385
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Oct 2020 17:46:53 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728285AbgJNPoC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 14 Oct 2020 11:44:02 -0400
-Received: from foss.arm.com ([217.140.110.172]:51940 "EHLO foss.arm.com"
+        id S1726112AbgJNPqx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 14 Oct 2020 11:46:53 -0400
+Received: from z5.mailgun.us ([104.130.96.5]:46266 "EHLO z5.mailgun.us"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726954AbgJNPoC (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 14 Oct 2020 11:44:02 -0400
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 2AF31D6E;
-        Wed, 14 Oct 2020 08:44:01 -0700 (PDT)
-Received: from [10.57.48.76] (unknown [10.57.48.76])
-        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 4D4633F71F;
-        Wed, 14 Oct 2020 08:43:59 -0700 (PDT)
-Subject: Re: [PATCH 2/8] iommu/arm-smmu-qcom: Add QC SMMUv2 VA Size quirk for
- SDM660
-To:     kholk11@gmail.com, will@kernel.org
-Cc:     joro@8bytes.org, bjorn.andersson@linaro.org,
-        linux-arm-kernel@lists.infradead.org, devicetree@vger.kernel.org,
-        marijns95@gmail.com, konradybcio@gmail.com,
-        martin.botka1@gmail.com, linux-arm-msm@vger.kernel.org,
-        phone-devel@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20200926130004.13528-1-kholk11@gmail.com>
- <20200926130004.13528-3-kholk11@gmail.com>
-From:   Robin Murphy <robin.murphy@arm.com>
-Message-ID: <466419ba-99e5-8ad6-ed0a-76e5afd44e7b@arm.com>
-Date:   Wed, 14 Oct 2020 16:43:57 +0100
-User-Agent: Mozilla/5.0 (Windows NT 10.0; rv:78.0) Gecko/20100101
- Thunderbird/78.3.2
-MIME-Version: 1.0
-In-Reply-To: <20200926130004.13528-3-kholk11@gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-GB
-Content-Transfer-Encoding: 7bit
+        id S1726954AbgJNPqw (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 14 Oct 2020 11:46:52 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1602690412; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=GdAJsxlfjQDS2Suiw8hdgs3pLDF9j25++frwrCPkCvg=; b=K1P+JAEVcfErXe4gy061LFhv4OgUfUqfiHFR6HB5RdtSJREpw273F68cbYncqmBur3IoAVZg
+ 4pgiQhfW0IYrQ90NHM1eli/LgwBYMYNajAr4sASMNQtu/BYGyNUbbtQrVs8r7JTdLbHkOjEd
+ ZREXhR5H9QT+Wwxqlm7pWWvIpHU=
+X-Mailgun-Sending-Ip: 104.130.96.5
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n04.prod.us-east-1.postgun.com with SMTP id
+ 5f871d630764f13b002c8c38 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 14 Oct 2020 15:46:43
+ GMT
+Sender: kathirav=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id A9225C433FF; Wed, 14 Oct 2020 15:46:42 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
+        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+Received: from kathirav-linux.qualcomm.com (blr-c-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.19.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: kathirav)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 03AF0C433C9;
+        Wed, 14 Oct 2020 15:46:38 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 03AF0C433C9
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=kathirav@codeaurora.org
+From:   Kathiravan T <kathirav@codeaurora.org>
+To:     agross@kernel.org, bjorn.andersson@linaro.org, robh+dt@kernel.org,
+        sivaprak@codeaurora.org, sricharan@codeaurora.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Cc:     stable@vger.kernel.org, Kathiravan T <kathirav@codeaurora.org>
+Subject: [PATCH] arm64: dts: ipq6018: update the reserved-memory node
+Date:   Wed, 14 Oct 2020 21:16:17 +0530
+Message-Id: <1602690377-21304-1-git-send-email-kathirav@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2020-09-26 13:59, kholk11@gmail.com wrote:
-> From: AngeloGioacchino Del Regno <kholk11@gmail.com>
-> 
-> Some IOMMUs are getting set-up for Shared Virtual Address, but:
-> 1. They are secured by the Hypervisor, so any configuration
->     change will generate a hyp-fault and crash the system
-> 2. This 39-bits Virtual Address size deviates from the ARM
->     System MMU Architecture specification for SMMUv2, hence
+Memory region reserved for the TZ is changed long back. Let's
+update the same to align with the corret region. Its size also
+increased to 4MB from 2MB.
 
-This is a little confusing, since it reads like the 39-bit VA 
-configuration is itself non-architectural, which it obviously isn't.
+Along with that, bump the Q6 region size to 85MB.
 
->     it is non-standard. In this case, the only way to keep the
->     IOMMU as the firmware did configure it, is to hardcode a
->     maximum VA size of 39 bits (because of point 1).
+Fixes: 1e8277854b49 ("arm64: dts: Add ipq6018 SoC and CP01 board support")
+Signed-off-by: Kathiravan T <kathirav@codeaurora.org>
+---
+ arch/arm64/boot/dts/qcom/ipq6018.dtsi | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-The *only* way to preserve an existing configuration is to make a 
-hard-coded assumption about what it probably is? Really? Not, say, 
-actually reading back the currently-configured value? :/
+diff --git a/arch/arm64/boot/dts/qcom/ipq6018.dtsi b/arch/arm64/boot/dts/qcom/ipq6018.dtsi
+index 1aa8d8579463..ee7acddcbdfa 100644
+--- a/arch/arm64/boot/dts/qcom/ipq6018.dtsi
++++ b/arch/arm64/boot/dts/qcom/ipq6018.dtsi
+@@ -98,8 +98,8 @@ reserved-memory {
+ 		#size-cells = <2>;
+ 		ranges;
+ 
+-		tz: tz@48500000 {
+-			reg = <0x0 0x48500000 0x0 0x00200000>;
++		tz: memory@4a600000 {
++			reg = <0x0 0x4a600000 0x0 0x00400000>;
+ 			no-map;
+ 		};
+ 
+@@ -109,7 +109,7 @@ smem_region: memory@4aa00000 {
+ 		};
+ 
+ 		q6_region: memory@4ab00000 {
+-			reg = <0x0 0x4ab00000 0x0 0x02800000>;
++			reg = <0x0 0x4ab00000 0x0 0x05500000>;
+ 			no-map;
+ 		};
+ 	};
 
-> This gives the need to add implementation details bits for
-> at least some of the SoCs having this kind of configuration,
-> which are at least SDM630, SDM636 and SDM660.
-> 
-> These implementation details will be enabled on finding the
-> qcom,sdm660-smmu-v2 compatible.
-> 
-> Signed-off-by: AngeloGioacchino Del Regno <kholk11@gmail.com>
-> ---
->   drivers/iommu/arm/arm-smmu/arm-smmu-impl.c |  3 ++-
->   drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c | 31 +++++++++++++++++++++-
->   2 files changed, 32 insertions(+), 2 deletions(-)
-> 
-> diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu-impl.c b/drivers/iommu/arm/arm-smmu/arm-smmu-impl.c
-> index f4ff124a1967..9d753f8af2cc 100644
-> --- a/drivers/iommu/arm/arm-smmu/arm-smmu-impl.c
-> +++ b/drivers/iommu/arm/arm-smmu/arm-smmu-impl.c
-> @@ -216,7 +216,8 @@ struct arm_smmu_device *arm_smmu_impl_init(struct arm_smmu_device *smmu)
->   	if (of_device_is_compatible(np, "nvidia,tegra194-smmu"))
->   		return nvidia_smmu_impl_init(smmu);
->   
-> -	if (of_device_is_compatible(np, "qcom,sdm845-smmu-500") ||
-> +	if (of_device_is_compatible(np, "qcom,sdm660-smmu-v2") ||
-> +	    of_device_is_compatible(np, "qcom,sdm845-smmu-500") ||
->   	    of_device_is_compatible(np, "qcom,sc7180-smmu-500") ||
->   	    of_device_is_compatible(np, "qcom,sm8150-smmu-500") ||
->   	    of_device_is_compatible(np, "qcom,sm8250-smmu-500"))
-> diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-> index 7859fd0db22a..f5bbfe86ef30 100644
-> --- a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-> +++ b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-> @@ -65,8 +65,33 @@ static const struct arm_smmu_impl qcom_smmu500_impl = {
->   	.reset = qcom_smmu500_reset,
->   };
->   
-> +static int qcom_smmuv2_cfg_probe(struct arm_smmu_device *smmu)
-> +{
-> +	/*
-> +	 * Some IOMMUs are getting set-up for Shared Virtual Address, but:
-> +	 * 1. They are secured by the Hypervisor, so any configuration
-> +	 *    change will generate a hyp-fault and crash the system
-> +	 * 2. This 39-bits Virtual Address size deviates from the ARM
-> +	 *    System MMU Architecture specification for SMMUv2, hence
-> +	 *    it is non-standard. In this case, the only way to keep the
-> +	 *    IOMMU as the firmware did configure it, is to hardcode a
-> +	 *    maximum VA size of 39 bits (because of point 1).
-> +	 */
+base-commit: bbf5c979011a099af5dc76498918ed7df445635b
+-- 
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum, hosted by The Linux Foundation
 
-What's the actual UBS value reported? If it's 40 then arguably the main 
-driver could be cleverer and use 39 bits for stage 1 domains anyway to 
-save a level of pagetable. However...
-
-I'm concerned that "any configuration change" and "maximum" don't appear 
-to add up. What if we decided we want to use short-descriptor format (or 
-just pick a 32-bit VA size for other reasons)? That's happily less than 
-39 bits, but would still represent a change *from* 39 bits, so would it 
-also kill the system? IIRC Jordan's split pagetable support will end up 
-configuring contexts with TxSZ based on va_bits / 2, so now 38 bits - is 
-that going to work?
-
-If you need to impose specific restrictions on context bank format, just 
-bodging va_bits isn't going to cut it. You'd need to adjust the domain 
-and pagetable configuration directly in ->init_context() in very much 
-the same way as the split pagetable support itself does.
-
-That said, I still hold the opinion that if you can't reprogram the 
-context banks then this is qcom-iommu territory, not arm-smmu.
-
-Robin.
-
-> +	if (smmu->va_size > 39UL)
-> +		dev_notice(smmu->dev,
-> +			   "\tenabling workaround for QCOM SMMUv2 VA size\n");
-> +	smmu->va_size = min(smmu->va_size, 39UL);
-> +
-> +	return 0;
-> +}
-> +
-> +static const struct arm_smmu_impl qcom_smmuv2_impl = {
-> +	.cfg_probe = qcom_smmuv2_cfg_probe,
-> +};
-> +
->   struct arm_smmu_device *qcom_smmu_impl_init(struct arm_smmu_device *smmu)
->   {
-> +	const struct device_node *np = smmu->dev->of_node;
->   	struct qcom_smmu *qsmmu;
->   
->   	qsmmu = devm_kzalloc(smmu->dev, sizeof(*qsmmu), GFP_KERNEL);
-> @@ -75,7 +100,11 @@ struct arm_smmu_device *qcom_smmu_impl_init(struct arm_smmu_device *smmu)
->   
->   	qsmmu->smmu = *smmu;
->   
-> -	qsmmu->smmu.impl = &qcom_smmu500_impl;
-> +	if (of_device_is_compatible(np, "qcom,sdm660-smmu-v2")) {
-> +		qsmmu->smmu.impl = &qcom_smmuv2_impl;
-> +	} else {
-> +		qsmmu->smmu.impl = &qcom_smmu500_impl;
-> +	}
->   	devm_kfree(smmu->dev, smmu);
->   
->   	return &qsmmu->smmu;
-> 
