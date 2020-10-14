@@ -2,120 +2,126 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 59AC928E1D7
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Oct 2020 16:02:48 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 03B9728E1EB
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Oct 2020 16:10:06 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731485AbgJNOCl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 14 Oct 2020 10:02:41 -0400
-Received: from mout.kundenserver.de ([212.227.126.187]:57313 "EHLO
-        mout.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730583AbgJNOCl (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 14 Oct 2020 10:02:41 -0400
-Received: from mail-qv1-f54.google.com ([209.85.219.54]) by
- mrelayeu.kundenserver.de (mreue012 [212.227.15.129]) with ESMTPSA (Nemesis)
- id 1M59am-1kRatn1vPQ-0019re; Wed, 14 Oct 2020 16:02:39 +0200
-Received: by mail-qv1-f54.google.com with SMTP id ev17so1545202qvb.3;
-        Wed, 14 Oct 2020 07:02:39 -0700 (PDT)
-X-Gm-Message-State: AOAM531oX9u0yrRqrvygvSJ07XifikFxAkE2U/s/r3zne/72NcG6/GFf
-        qZbpBFg1ECZYqZ4WL2nFwpI8NaI6lJZaclB+Icg=
-X-Google-Smtp-Source: ABdhPJwgfI56FrNLiz4CpSplDkSHoEZ4Zvt+zTgBjQFaC37WzSoizPQNv2FK+09dOqqroEW1nEyt+Y67obGqrjFMkVY=
-X-Received: by 2002:a0c:9b9e:: with SMTP id o30mr5218986qve.16.1602684158004;
- Wed, 14 Oct 2020 07:02:38 -0700 (PDT)
-MIME-Version: 1.0
-References: <20201013060623.1711-1-thunder.leizhen@huawei.com>
- <20201013060623.1711-2-thunder.leizhen@huawei.com> <fa40441b-6ae1-6018-3da6-424d0252c1ba@gmail.com>
- <CAK8P3a3MtCDpbCgNEnLf1QcE+1O0oGZtob2KY7G-77oA95bLJQ@mail.gmail.com> <b25dd804-c691-b987-9f6a-de043aa45755@huawei.com>
-In-Reply-To: <b25dd804-c691-b987-9f6a-de043aa45755@huawei.com>
-From:   Arnd Bergmann <arnd@arndb.de>
-Date:   Wed, 14 Oct 2020 16:02:21 +0200
-X-Gmail-Original-Message-ID: <CAK8P3a24XPt55MuCnRPkH0QRVgmAbttghDnLkd5TQ-s6fi=GHg@mail.gmail.com>
-Message-ID: <CAK8P3a24XPt55MuCnRPkH0QRVgmAbttghDnLkd5TQ-s6fi=GHg@mail.gmail.com>
-Subject: Re: [PATCH 1/2] arm64: dts: broadcom: remove an unused property dma-ranges
-To:     "Leizhen (ThunderTown)" <thunder.leizhen@huawei.com>
-Cc:     Florian Fainelli <f.fainelli@gmail.com>,
-        Rob Herring <robh+dt@kernel.org>, Ray Jui <rjui@broadcom.com>,
-        Scott Branden <sbranden@broadcom.com>,
-        bcm-kernel-feedback-list <bcm-kernel-feedback-list@broadcom.com>,
+        id S1730842AbgJNOJ7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 14 Oct 2020 10:09:59 -0400
+Received: from mail.kernel.org ([198.145.29.99]:36338 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727674AbgJNOJ7 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 14 Oct 2020 10:09:59 -0400
+Received: from saruman (88-113-213-94.elisa-laajakaista.fi [88.113.213.94])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id 2B74722201;
+        Wed, 14 Oct 2020 14:09:48 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1602684598;
+        bh=nXHNrmeiegcAFrQHpZXClaxYDTMwa1rlJ2izCsCrXN8=;
+        h=From:To:Cc:Subject:In-Reply-To:References:Date:From;
+        b=YKV/QHc62ApKcYfobKVgr7H4uuaIl0Ym5KPsO03PueFYTPIdAa9yS3LR0EwZ8HOwE
+         TcL6jF+RwT4ABH1kDb5oHOxvnawJXJUclIoLNBHrYdepJyQT5rQ5R11/OPvOyIAMKq
+         7ODxxrUbh0gZi9Rm21ebmCKNc4FTGHkE4lsI7GBs=
+From:   Felipe Balbi <balbi@kernel.org>
+To:     Serge Semin <Sergey.Semin@baikalelectronics.ru>,
+        Mathias Nyman <mathias.nyman@intel.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Jason Cooper <jason@lakedaemon.net>,
+        Andrew Lunn <andrew@lunn.ch>,
+        Gregory Clement <gregory.clement@bootlin.com>,
+        Sebastian Hesselbarth <sebastian.hesselbarth@gmail.com>,
+        Kukjin Kim <kgene@kernel.org>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        Santosh Shilimkar <ssantosh@kernel.org>,
+        Shawn Guo <shawnguo@kernel.org>, Li Yang <leoyang.li@nxp.com>,
+        =?utf-8?Q?Beno=C3=AEt?= Cousson <bcousson@baylibre.com>,
+        Tony Lindgren <tony@atomide.com>,
+        Patrice Chotard <patrice.chotard@st.com>,
+        Maxime Ripard <mripard@kernel.org>,
+        Chen-Yu Tsai <wens@csie.org>, Wei Xu <xuwei5@hisilicon.com>,
         Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        devicetree <devicetree@vger.kernel.org>,
-        linux-arm-kernel <linux-arm-kernel@lists.infradead.org>,
-        linux-kernel <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-X-Provags-ID: V03:K1:yMjNHsWJyLt7APjhALcVLrZhskf/oJ5Oax0jR4w6+N9hCiIMucA
- c4HWvp1aBR8pMI4NEFkU+wiottlK8JdC9ve6uhg01BNoraKDspiQl0y8xZUsIZBAR+qPkXO
- P2JV5L+7ne43So6/PWKfZP9iWWVGDNuWXji0bQfKJ6AQcpR5xyq5ngJfFmAiKr5hcG/M9B7
- 6WyZVwQJH0sJVij76saUw==
-X-Spam-Flag: NO
-X-UI-Out-Filterresults: notjunk:1;V03:K0:J13trCvz2KM=:EzBrB1GiOkqBi6ILWaTVOk
- Z1GvMuwPupXH9REyUQAPwOh7y9vmF/jEZbGGfLqQbQOvinJgzZuXGzYiGSmiZv4JbWeQwpE8T
- 2YZD9leS6PY8tMcMVR2Z0oQjmfV5XKbgMIBTIiQFHdhH8E5xVgdguEjePJYA7LhRhLxNnHtx2
- wt1LV+UYK4QlzEpqhGumQfvneROUw29l084RzEF/W2xsJSJMmbU/EXEGCs1XDAqFhykuy9VSB
- Q+KUte7Ikl1n6Hu5J9I6qqOdruNUvyOP+ALfWzzHO2mJeB0W3Qaa1LAUrPUkyVletbp0tBhdG
- 2F5DR92wy+26ykwF7QasW3pw8BE7fulxlEgeho+YP02fWOpKK50gCL/0I+XEyij0FFELJUB15
- ck9qD2ta4PIJRu4b5bRC0n9D94Pr4ancyoEsfvh4uOg2WcuHBOvyZ2dDVWf0NVyVOH0vr5Vl2
- +Y/Cq1fWYuAIKXANVxcPi8biyE6kydHdxmIxFNA8fQgVPgZxyrft4KVJAbNJO3+8sdJ0oFTc9
- lpIwwvoFnHCoI/iTPjY++XNmGcodac1Y6toaGR0dnktDyRpDMUDbxK55gdihKoqIg==
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Serge Semin <Sergey.Semin@baikalelectronics.ru>,
+        Serge Semin <fancer.lancer@gmail.com>,
+        Alexey Malahov <Alexey.Malahov@baikalelectronics.ru>,
+        Pavel Parkhomenko <Pavel.Parkhomenko@baikalelectronics.ru>,
+        Manu Gautam <mgautam@codeaurora.org>,
+        Roger Quadros <rogerq@ti.com>,
+        Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
+        Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
+        Neil Armstrong <narmstrong@baylibre.com>,
+        Kevin Hilman <khilman@baylibre.com>,
+        linux-arm-kernel@lists.infradead.org,
+        linux-snps-arc@lists.infradead.org, linux-mips@vger.kernel.org,
+        linuxppc-dev@lists.ozlabs.org, linux-usb@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-samsung-soc@vger.kernel.org, linux-omap@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH 20/20] arch: dts: Fix DWC USB3 DT nodes name
+In-Reply-To: <20201014101402.18271-21-Sergey.Semin@baikalelectronics.ru>
+References: <20201014101402.18271-1-Sergey.Semin@baikalelectronics.ru>
+ <20201014101402.18271-21-Sergey.Semin@baikalelectronics.ru>
+Date:   Wed, 14 Oct 2020 17:09:37 +0300
+Message-ID: <878sc8lx0e.fsf@kernel.org>
+MIME-Version: 1.0
+Content-Type: multipart/signed; boundary="=-=-=";
+        micalg=pgp-sha256; protocol="application/pgp-signature"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Oct 14, 2020 at 3:36 PM Leizhen (ThunderTown)
-<thunder.leizhen@huawei.com> wrote:
-> On 2020/10/14 15:38, Arnd Bergmann wrote:
-> > On Wed, Oct 14, 2020 at 5:15 AM Florian Fainelli <f.fainelli@gmail.com> wrote:
-> >> On 10/12/2020 11:06 PM, Zhen Lei wrote:
-> >>> stingray-usb.dtsi is finally included by three dts files:
-> >>> bcm958802a802x.dts, bcm958742k.dts and bcm958742t.dts. I searched all
-> >>> these three entire expanded dts files, and each of them contains only one
-> >>> dma-ranges. No conversion range is specified, so it cannot work properly.
-> >>> I think this property "dma-ranges" is added by mistake, just remove it.
-> >>> Otherwise, the following error will be reported when any YAML detection
-> >>> is performed on arm64.
-> >>>
-> >>> arch/arm64/boot/dts/broadcom/stingray/stingray-usb.dtsi:7.3-14: Warning \
-> >>> (dma_ranges_format): /usb:dma-ranges: empty "dma-ranges" property but \
-> >>> its #address-cells (1) differs from / (2)
-> >>> arch/arm64/boot/dts/broadcom/stingray/stingray-usb.dtsi:7.3-14: Warning \
-> >>> (dma_ranges_format): /usb:dma-ranges: empty "dma-ranges" property but \
-> >>> its #size-cells (1) differs from / (2)
-> >>>
-> >>> Signed-off-by: Zhen Lei <thunder.leizhen@huawei.com>
-> >>
-> >> This looks fine to me, Scott, Ray do you want to Ack this patch before I
-> >> take it?
-> >
-> > Does it mean that there are no devices on this bus that can do DMA?
-> >
-> > Usually there should be a dma-ranges property to identify that DMA
-> > is possible and what the limits are, though we have failed to enforce
-> > that.
+--=-=-=
+Content-Type: text/plain
+Content-Transfer-Encoding: quoted-printable
+
+
+Hi Serge,
+
+Serge Semin <Sergey.Semin@baikalelectronics.ru> writes:
+> In accordance with the DWC USB3 bindings the corresponding node name is
+> suppose to comply with Generic USB HCD DT schema, which requires the USB
+
+DWC3 is not a simple HDC, though.
+
+> nodes to have the name acceptable by the regexp: "^usb(@.*)?" . But a lot
+> of the DWC USB3-compatible nodes defined in the ARM/ARM64 DTS files have
+> name as "^dwc3@.*" or "^usb[1-3]@.*" or even "^dwusb@.*", which will cause
+> the dtbs_check procedure failure. Let's fix the nodes naming to be
+> compatible with the DWC USB3 DT schema to make dtbs_check happy.
 >
-> Documentation/devicetree/bindings/iommu/iommu.txt +79
-> When an "iommus" property is specified in a device tree node, the IOMMU will
-> be used for address translation. If a "dma-ranges" property exists in the
-> device's parent node it will be ignored. An exception to this rule is if the
-> referenced IOMMU is disabled, in which case the "dma-ranges" property of the
-> parent shall take effect.
->
-> The dma-ranges is only required by IOMMU disabled case. And should exist in
-> the parent node of IOMMU device. But this deleted dma-ranges is under the usb
-> bus node.
+> Note we don't change the DWC USB3-compatible nodes names of
+> arch/arm64/boot/dts/apm/{apm-storm.dtsi,apm-shadowcat.dtsi} since the
+> in-source comment says that the nodes name need to be preserved as
+> "^dwusb@.*" for some backward compatibility.
 
-The USB hosts here don't use an IOMMU though, right?
+interesting, compatibility with what? Some debugfs files, perhaps? :-)
 
-> > Also note that the #address-cells=<1> means that any device under
-> > this bus is assumed to only support 32-bit addressing, and DMA will
-> > have to go through a slow swiotlb in the absence of an IOMMU.
->
-> The dma_alloc_coherent() will allocate memory with GFP_DMA32 flag and
-> try the 0-4G first. The reserved swiotlb buffer memory is used only
-> when the allocation failed.
+In any case, I don't have any problems with this, so I'll let other
+folks comment.
 
-The swiotlb is primarily about the streaming mappings with dma_map_*(),
-which has to copy all data sent to the device. dma_alloc_coherent()
-is a rare operation and less impacted by DMA limitations.
+=2D-=20
+balbi
 
-      Arnd
+--=-=-=
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQJFBAEBCAAvFiEElLzh7wn96CXwjh2IzL64meEamQYFAl+HBqERHGJhbGJpQGtl
+cm5lbC5vcmcACgkQzL64meEamQZk7w//f7M1cvtdCrKz6Ex3lntgWpy1b1/3CtTd
+mvDjI3ih9c0Lb8I32xXaiI6KCbZ4eNrTj44yQGYTqyCX3MTK3XhtDsifpFsScl3V
+HNZ5Aeru3C07GbrJgOm7anOpkrtOe8D5prOys0uLczDpjlK2nhg58Sy41jGaoqjH
+X4AW8yiKWmvPhuqqX/vzqhYettYoS2B6bNL21uXqyfcmXubL2+WOBKoXeYrZUfd+
+1xuyAt/jucQh8nhY5050kmbWKt7l5R3eUxe8be064Vi3n6CgDELde8+i+t3ULBkn
+GzjZjv9cTjZXcd3qpLXLamKnCGSmM5ckc5O5sRKQHaBmtHuCW7SbH4/6iTJBv+n/
+0WlVCedKu6N5OM3Q/+kfu33BDFfG2Dl6uK6vrt97G3jbx/IeddwccIGU9DmFfI8J
+5Yv7hMCi9vPLxVNPCi/26FxsL7PmziOjofwUfuvP5ot8EKs90frsJCsE//ADssca
+n+st1b+uqmK8qEtUigv9cC6h0DlrpzGTMyOwx4QBo4BN6YEICxzXq9wI/UOoZopx
+tOoqi5JpD/2MpJ2qQhNLlsJ6voBSI4pMSGAV18RpSchZ5WhvL+IvFUU1gFsq7fek
+MtrO6wBURV7ypfo9V7dWpM2trYsJQIWZs7x5nR8vnejZ/YspsdOcipU3QlKW+Eez
+Pu/hVbbAotY=
+=wmBj
+-----END PGP SIGNATURE-----
+--=-=-=--
