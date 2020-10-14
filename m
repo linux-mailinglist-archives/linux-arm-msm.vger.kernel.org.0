@@ -2,52 +2,117 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 3CA9C28D7FF
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Oct 2020 03:30:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 829A728D807
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Oct 2020 03:37:14 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730956AbgJNBaw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 13 Oct 2020 21:30:52 -0400
-Received: from mail.kernel.org ([198.145.29.99]:43124 "EHLO mail.kernel.org"
+        id S1731027AbgJNBhM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 13 Oct 2020 21:37:12 -0400
+Received: from m42-4.mailgun.net ([69.72.42.4]:46491 "EHLO m42-4.mailgun.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727526AbgJNBaw (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 13 Oct 2020 21:30:52 -0400
-Received: from kernel.org (unknown [104.132.1.79])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        id S1727526AbgJNBhL (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 13 Oct 2020 21:37:11 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1602639431; h=Message-ID: References: In-Reply-To: Reply-To:
+ Subject: Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=zZR8VSgMqBaFL9C1zIJLtQgD3Gs14v/MrR9tD4SppCA=;
+ b=mhrOKIm0hwEUm4AY67Nfy4IhK6mTKQ37TEcXvVLKlMF+2JdU9DPFoz+/8ae52S35cEchCh+y
+ YxzKGUlQ7jd49kTAVRsXo17G5g5JhXrY+mZFoO+87RgPikaqcLz3QQPJwswBravR0W0uT09O
+ dhD86C9kEfo9dRQIZZT7iMLzWCc=
+X-Mailgun-Sending-Ip: 69.72.42.4
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n05.prod.us-east-1.postgun.com with SMTP id
+ 5f865646ef891f1ee2b4772a (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 14 Oct 2020 01:37:10
+ GMT
+Sender: bbhatt=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 0296CC433FF; Wed, 14 Oct 2020 01:37:10 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 3185E21D7B;
-        Wed, 14 Oct 2020 01:30:52 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1602639052;
-        bh=oOG+JR723p9ICnlNfy4OmnQH4GXF1lchlYRg7/w2eyI=;
-        h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
-        b=v3CmduKVHJNYnnzNWCqHa/L5oWZqg6Wty8O87oZw/gNwHu5HMhkyZIJwRETxXWMOq
-         8/2Dc10ssDj5IqhgJaR8GMfCYKcNwhnrR93NojvXxAGI9QtMvGRQ7ckLBVzg55tLVb
-         mOu63B3ny0VIX7LVfcNsgaZzYvDkz1fDuqv7c2to=
-Content-Type: text/plain; charset="utf-8"
+        (Authenticated sender: bbhatt)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 697FDC433C9;
+        Wed, 14 Oct 2020 01:37:09 +0000 (UTC)
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <20200927190653.13876-3-jonathan@marek.ca>
-References: <20200927190653.13876-1-jonathan@marek.ca> <20200927190653.13876-3-jonathan@marek.ca>
-Subject: Re: [PATCH v4 2/2] clk: qcom: Add display clock controller driver for SM8150 and SM8250
-From:   Stephen Boyd <sboyd@kernel.org>
-Cc:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org
-To:     Jonathan Marek <jonathan@marek.ca>, linux-arm-msm@vger.kernel.org
-Date:   Tue, 13 Oct 2020 18:30:51 -0700
-Message-ID: <160263905104.310579.4493346832420624229@swboyd.mtv.corp.google.com>
-User-Agent: alot/0.9.1
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Tue, 13 Oct 2020 18:37:09 -0700
+From:   Bhaumik Bhatt <bbhatt@codeaurora.org>
+To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, hemantk@codeaurora.org,
+        jhugo@codeaurora.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v1 08/10] bus: mhi: core: Move to an error state on any
+ firmware load failure
+Organization: Qualcomm Innovation Center, Inc.
+Reply-To: bbhatt@codeaurora.org
+Mail-Reply-To: bbhatt@codeaurora.org
+In-Reply-To: <20201009164235.GI4810@Mani-XPS-13-9360>
+References: <1600480955-16827-1-git-send-email-bbhatt@codeaurora.org>
+ <1600480955-16827-9-git-send-email-bbhatt@codeaurora.org>
+ <20201009164235.GI4810@Mani-XPS-13-9360>
+Message-ID: <690515d16d21eec14b527982630968e3@codeaurora.org>
+X-Sender: bbhatt@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Jonathan Marek (2020-09-27 12:06:51)
-> Add support for the display clock controller found on SM8150 and SM8250.
->=20
-> Signed-off-by: Jonathan Marek <jonathan@marek.ca>
-> Tested-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org> (SM8250)
-> ---
+On 2020-10-09 09:42, Manivannan Sadhasivam wrote:
+> On Fri, Sep 18, 2020 at 07:02:33PM -0700, Bhaumik Bhatt wrote:
+>> Move MHI to a firmware download error state for a failure to find
+>> the firmware files or to load SBL or EBL image using BHI/BHIe. This
+>> helps detect an error state sooner and shortens the wait for a
+>> synchronous power up timeout.
+>> 
+>> Signed-off-by: Bhaumik Bhatt <bbhatt@codeaurora.org>
+>> ---
+>>  drivers/bus/mhi/core/boot.c | 43 
+>> +++++++++++++++++++++++++------------------
+>>  1 file changed, 25 insertions(+), 18 deletions(-)
+>> 
+>> diff --git a/drivers/bus/mhi/core/boot.c b/drivers/bus/mhi/core/boot.c
+>> index 92b8dd3..fcc71f2 100644
+>> --- a/drivers/bus/mhi/core/boot.c
+>> +++ b/drivers/bus/mhi/core/boot.c
+> 
+> [...]
+> 
+>> -error_read:
+>> +error_ready_state:
+>>  	mhi_free_bhie_table(mhi_cntrl, mhi_cntrl->fbc_image);
+>>  	mhi_cntrl->fbc_image = NULL;
+>> 
+>> -error_alloc_fw_table:
+>> -	release_firmware(firmware);
+>> +error_fw_load:
+>> +	write_lock_irq(&mhi_cntrl->pm_lock);
+>> +	mhi_cntrl->pm_state = MHI_PM_FW_DL_ERR;
+>> +	wake_up_all(&mhi_cntrl->state_event);
+> 
+> Do you really need pm_lock for this?
+> 
+> Thanks,
+> Mani
+> 
+Not really, the underlying usage does not matter if this lock is used or
+not. We just want to error out so removing it.
+>> +	write_unlock_irq(&mhi_cntrl->pm_lock);
+>>  }
+>> --
+>> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora 
+>> Forum,
+>> a Linux Foundation Collaborative Project
+>> 
 
-Applied to clk-next
+-- 
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora 
+Forum,
+a Linux Foundation Collaborative Project
