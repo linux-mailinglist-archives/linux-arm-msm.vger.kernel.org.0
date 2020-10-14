@@ -2,266 +2,151 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 0058728DEE6
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Oct 2020 12:29:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4778328DEF4
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Oct 2020 12:33:43 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727463AbgJNK3Q (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 14 Oct 2020 06:29:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50760 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726307AbgJNK3Q (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 14 Oct 2020 06:29:16 -0400
-Received: from mail-vk1-xa41.google.com (mail-vk1-xa41.google.com [IPv6:2607:f8b0:4864:20::a41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6C163C061755
-        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Oct 2020 03:29:16 -0700 (PDT)
-Received: by mail-vk1-xa41.google.com with SMTP id n189so633851vkb.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Oct 2020 03:29:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=vZc7p/yXjlwtejIPKasIqbk8w2QB7cXxoT31xaRagPc=;
-        b=WiWnekbHqYAFpOeJjX16VjNDbFx4mXLUavnJlWkkh9U7svzHGNkF5GkekQwyjw3uuY
-         cRtRL2ACLNW1pkxAV7g+p99UaA+wETPYztQKN/iVubUpQ51ObjGKPPPXHxi2LUSXErhS
-         q8/UybS/N8coPVyL4XSHtFv6IBSEt2wwdrmWI2fPDGKP6NSfYpJHVjwtVAVEM3m7YWuS
-         XRC3igevIQwdp0Ylu/SZUtoRj6t3wZrfTHLV6Btadq/WUXJDAY9NQjHi2w+kK9Xyj6B7
-         6Pj0608nCF44CVz75GNOVJyb/q0PaQ6EfScoQuFUwP5l4Omyk/hKQuukxefTlSO00dPm
-         QkUQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=vZc7p/yXjlwtejIPKasIqbk8w2QB7cXxoT31xaRagPc=;
-        b=mvd8mcjQVkIgBnYGFnOaz+/06NdaMIbFz3WEUzXGRNftsSmE2+tgpgbGXSG0YXhMLc
-         v4MKTjmmlrVgf/7TIT6rSmfkfGtCj+pav76aLNagVbpafK3cLq1yw5bsHAnwoqlMenrW
-         6L9yKhd4FIXacrSIjZN5Z+2ukSJz0y+HL+Bpq23naHf2Ztw7aNZt1M++XpsBjwbJRW8L
-         QZycjaxPtSa/c8zfjKo949VaQ2tpevMcd3UN2KnrfhNfOZa0mG9NBHIZX1Ei9o4r46Eq
-         xe2OAwAvLt5OwVPndSiy9tzUyAu+tthSqtrOMi2YAx21o121HiAABsMnVfH58xVOSgnf
-         n4bg==
-X-Gm-Message-State: AOAM533x3SivEvovkyNPQcuhYvZ3p5q7UEZGlreNwtaR/0APW7YgjOQu
-        YHQfbA/XYuDg2uoeXMXjiLpSd9zTCh09Qi9phJqJPNQU8UE3ovj4
-X-Google-Smtp-Source: ABdhPJzv/N8FSDA85gSwEwSzYDkzUEXJNj6ioS7yOz/JkaGudw/ixLGpXJIokmvdKjpTO50l0o7NhE+fOgaTmXd+898=
-X-Received: by 2002:a1f:1c2:: with SMTP id 185mr2615824vkb.15.1602671355474;
- Wed, 14 Oct 2020 03:29:15 -0700 (PDT)
+        id S1728397AbgJNKdl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 14 Oct 2020 06:33:41 -0400
+Received: from mail.kernel.org ([198.145.29.99]:43762 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727381AbgJNKdl (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 14 Oct 2020 06:33:41 -0400
+Received: from mail-ej1-f45.google.com (mail-ej1-f45.google.com [209.85.218.45])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id 9666120878;
+        Wed, 14 Oct 2020 10:33:39 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1602671619;
+        bh=YTNSXcW0k5VpGDP+ALIpIyuW3iLRTmD54rqCQ1oyiyA=;
+        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+        b=sBHnz1yyxbvpzxpccOns8mp5Of03gj29/RNRo3g82Ev+clfKBrk3KB5XrR8yt+GLl
+         pmdEOB8h3WOAsY4KGNHM6cEFI07KwBf89dw+Gj6iqzCXZZziXMohhgdikBTZ5zGwnn
+         ltFgloehCf+cN94VB8NVLy20CDewVMaT7n7srMMg=
+Received: by mail-ej1-f45.google.com with SMTP id p5so1298911ejj.2;
+        Wed, 14 Oct 2020 03:33:39 -0700 (PDT)
+X-Gm-Message-State: AOAM532KgEJ3XGCmU0xda99mxHtSh9lVBBIHW/Ul6I67ftqQ/f3WdKhW
+        YIcsf1kxnY5J9Tuqh6EyMMIdczSlsoucu0rJis0=
+X-Google-Smtp-Source: ABdhPJxZBjfPkS/DAl69mvwOwG4fxUYT0dQEW6rrgGKRXDR2yPgf5o4BRFNdNiVveb84vPHaKXSGoZA2E31iHMoZKKE=
+X-Received: by 2002:a17:906:1a11:: with SMTP id i17mr4430823ejf.381.1602671617348;
+ Wed, 14 Oct 2020 03:33:37 -0700 (PDT)
 MIME-Version: 1.0
-References: <20201012223400.23609-1-ilina@codeaurora.org> <20201012223400.23609-2-ilina@codeaurora.org>
-In-Reply-To: <20201012223400.23609-2-ilina@codeaurora.org>
-From:   Ulf Hansson <ulf.hansson@linaro.org>
-Date:   Wed, 14 Oct 2020 12:28:39 +0200
-Message-ID: <CAPDyKFo0KrxQ8W0pawEca0_Ae0gs3OSBzHN2KY85YMnQp3ek8Q@mail.gmail.com>
-Subject: Re: [PATCH 1/2] PM / runtime: register device's next wakeup
-To:     Lina Iyer <ilina@codeaurora.org>
-Cc:     "Rafael J. Wysocki" <rjw@rjwysocki.net>,
-        Linux PM <linux-pm@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>
+References: <20201014101402.18271-1-Sergey.Semin@baikalelectronics.ru> <20201014101402.18271-21-Sergey.Semin@baikalelectronics.ru>
+In-Reply-To: <20201014101402.18271-21-Sergey.Semin@baikalelectronics.ru>
+From:   Krzysztof Kozlowski <krzk@kernel.org>
+Date:   Wed, 14 Oct 2020 12:33:25 +0200
+X-Gmail-Original-Message-ID: <CAJKOXPeErocR5-3xCDqBR3-k3w_2EQ_768d71n229cbzeo4TtQ@mail.gmail.com>
+Message-ID: <CAJKOXPeErocR5-3xCDqBR3-k3w_2EQ_768d71n229cbzeo4TtQ@mail.gmail.com>
+Subject: Re: [PATCH 20/20] arch: dts: Fix DWC USB3 DT nodes name
+To:     Serge Semin <Sergey.Semin@baikalelectronics.ru>
+Cc:     Mathias Nyman <mathias.nyman@intel.com>,
+        Felipe Balbi <balbi@kernel.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Jason Cooper <jason@lakedaemon.net>,
+        Andrew Lunn <andrew@lunn.ch>,
+        Gregory Clement <gregory.clement@bootlin.com>,
+        Sebastian Hesselbarth <sebastian.hesselbarth@gmail.com>,
+        Kukjin Kim <kgene@kernel.org>,
+        Santosh Shilimkar <ssantosh@kernel.org>,
+        Shawn Guo <shawnguo@kernel.org>, Li Yang <leoyang.li@nxp.com>,
+        =?UTF-8?Q?Beno=C3=AEt_Cousson?= <bcousson@baylibre.com>,
+        Tony Lindgren <tony@atomide.com>,
+        Patrice Chotard <patrice.chotard@st.com>,
+        Maxime Ripard <mripard@kernel.org>,
+        Chen-Yu Tsai <wens@csie.org>, Wei Xu <xuwei5@hisilicon.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Serge Semin <fancer.lancer@gmail.com>,
+        Alexey Malahov <Alexey.Malahov@baikalelectronics.ru>,
+        Pavel Parkhomenko <Pavel.Parkhomenko@baikalelectronics.ru>,
+        Manu Gautam <mgautam@codeaurora.org>,
+        Roger Quadros <rogerq@ti.com>,
+        Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
+        Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
+        Neil Armstrong <narmstrong@baylibre.com>,
+        Kevin Hilman <khilman@baylibre.com>,
+        linux-arm-kernel@lists.infradead.org,
+        linux-snps-arc@lists.infradead.org, linux-mips@vger.kernel.org,
+        linuxppc-dev@lists.ozlabs.org, linux-usb@vger.kernel.org,
+        devicetree@vger.kernel.org,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+        "linux-samsung-soc@vger.kernel.org" 
+        <linux-samsung-soc@vger.kernel.org>, linux-omap@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, 13 Oct 2020 at 00:34, Lina Iyer <ilina@codeaurora.org> wrote:
+On Wed, 14 Oct 2020 at 12:23, Serge Semin
+<Sergey.Semin@baikalelectronics.ru> wrote:
 >
-> Some devices have a predictable interrupt pattern while executing a
-> particular usecase. An example would be the VSYNC interrupt on devices
-> associated with displays. A 60 Hz display could cause a periodic
-> interrupt every 16 ms. A PM domain that holds such a device could power
-> off and on at similar intervals.
+> In accordance with the DWC USB3 bindings the corresponding node name is
+> suppose to comply with Generic USB HCD DT schema, which requires the USB
+> nodes to have the name acceptable by the regexp: "^usb(@.*)?" . But a lot
+> of the DWC USB3-compatible nodes defined in the ARM/ARM64 DTS files have
+> name as "^dwc3@.*" or "^usb[1-3]@.*" or even "^dwusb@.*", which will cause
+> the dtbs_check procedure failure. Let's fix the nodes naming to be
+> compatible with the DWC USB3 DT schema to make dtbs_check happy.
 >
-> Entering a domain idle state saves power, only if the domain remains in
-> the idle state for the amount of time greater than or equal to the
-> residency of the idle state. Knowing the next wakeup event of the device
-> will help the PM domain governor make better idle state decisions.
+> Note we don't change the DWC USB3-compatible nodes names of
+> arch/arm64/boot/dts/apm/{apm-storm.dtsi,apm-shadowcat.dtsi} since the
+> in-source comment says that the nodes name need to be preserved as
+> "^dwusb@.*" for some backward compatibility.
 >
-> Let's add the pm_runtime_set_next_wake() API for the device and document
-> the usage of the API.
+> Signed-off-by: Serge Semin <Sergey.Semin@baikalelectronics.ru>
 >
-> Signed-off-by: Lina Iyer <ilina@codeaurora.org>
 > ---
->  Documentation/power/runtime_pm.rst | 21 ++++++++++++++++++++
->  drivers/base/power/runtime.c       | 31 ++++++++++++++++++++++++++++++
->  include/linux/pm.h                 |  2 ++
->  include/linux/pm_runtime.h         |  1 +
->  4 files changed, 55 insertions(+)
 >
-> diff --git a/Documentation/power/runtime_pm.rst b/Documentation/power/runtime_pm.rst
-> index 0553008b6279..90a5ac481ad4 100644
-> --- a/Documentation/power/runtime_pm.rst
-> +++ b/Documentation/power/runtime_pm.rst
-> @@ -515,6 +515,14 @@ drivers/base/power/runtime.c and include/linux/pm_runtime.h:
->        power.use_autosuspend isn't set, otherwise returns the expiration time
->        in jiffies
+> Please, test the patch out to make sure it doesn't brake the dependent DTS
+> files. I did only a manual grepping of the possible nodes dependencies.
+
+1. It is you who should compare the decompiled DTS, not us. For example:
+$ for i in dts-old/*/*dtb dts-old/*/*/*dtb; do echo $i; crosc64
+scripts/dtc/dtx_diff ${i} dts-new/${i#dts-old/} ; done
+
+$ for i in dts-old/*/*dtb dts-old/*/*/*dtb; do echo $i; crosc64
+fdtdump ${i} > ${i}.fdt ; crosc64 fdtdump dts-new/${i#dts-old/} >
+dts-new/${i#dts-old/}.fdt ; diff -ubB ${i}.fdt
+dts-new/${i#dts-old/}.fdt ; done
+
+2. Split it per arm architectures (and proper subject prefix - not
+"arch") and subarchitectures so maintainers can pick it up.
+
+3. The subject title could be more accurate - there is no fix here
+because there was no errors in the first place. Requirement of DWC
+node names comes recently, so it is more alignment with dtschema.
+Otherwise automatic-pickup-stable-bot might want to pick up... and it
+should not go to stable.
+
+Best regards,
+Krzysztof
+
+>  arch/arm/boot/dts/armada-375.dtsi              | 2 +-
+>  arch/arm/boot/dts/exynos5250.dtsi              | 2 +-
+>  arch/arm/boot/dts/exynos54xx.dtsi              | 4 ++--
+>  arch/arm/boot/dts/keystone-k2e.dtsi            | 4 ++--
+>  arch/arm/boot/dts/keystone.dtsi                | 2 +-
+>  arch/arm/boot/dts/ls1021a.dtsi                 | 2 +-
+>  arch/arm/boot/dts/omap5-l4.dtsi                | 2 +-
+>  arch/arm/boot/dts/stih407-family.dtsi          | 2 +-
+>  arch/arm64/boot/dts/allwinner/sun50i-h6.dtsi   | 2 +-
+>  arch/arm64/boot/dts/exynos/exynos5433.dtsi     | 4 ++--
+>  arch/arm64/boot/dts/exynos/exynos7.dtsi        | 2 +-
+>  arch/arm64/boot/dts/freescale/fsl-ls1012a.dtsi | 4 ++--
+>  arch/arm64/boot/dts/freescale/fsl-ls1043a.dtsi | 6 +++---
+>  arch/arm64/boot/dts/freescale/fsl-ls1088a.dtsi | 4 ++--
+>  arch/arm64/boot/dts/freescale/fsl-ls208xa.dtsi | 4 ++--
+>  arch/arm64/boot/dts/hisilicon/hi3660.dtsi      | 2 +-
+>  arch/arm64/boot/dts/qcom/apq8096-db820c.dtsi   | 4 ++--
+>  arch/arm64/boot/dts/qcom/ipq8074.dtsi          | 4 ++--
+>  arch/arm64/boot/dts/qcom/msm8996.dtsi          | 4 ++--
+>  arch/arm64/boot/dts/qcom/msm8998.dtsi          | 2 +-
+>  arch/arm64/boot/dts/qcom/qcs404-evb.dtsi       | 2 +-
+>  arch/arm64/boot/dts/qcom/qcs404.dtsi           | 4 ++--
+>  arch/arm64/boot/dts/qcom/sc7180.dtsi           | 2 +-
+>  arch/arm64/boot/dts/qcom/sdm845.dtsi           | 4 ++--
+>  arch/arm64/boot/dts/qcom/sm8150.dtsi           | 2 +-
+>  25 files changed, 38 insertions(+), 38 deletions(-)
 >
-> +  `int pm_runtime_set_next_event(struct device *dev, ktime_t next);`
-
-Rather than specifying the next event, could it make sense to specify
-the delta instead? I guess it depends on the behaviour of the
-driver/client that calls this API...
-
-> +    - notify runtime PM of the next event on the device. Devices that are
-
-I would prefer to change from "notify" to "inform", just to make it
-clear that this isn't a notification mechanism we are talking about.
-
-> +      sensitive to their domain idle enter/exit latencies may provide this
-> +      information for use by the PM domain governor. The governor may determine
-> +      if it worthwhile to enter a domain idle state. If the residency of the
-> +      domain idle state is not met, the domain would waste more power entering
-> +      and exiting the said idle state.
-> +
->  It is safe to execute the following helper functions from interrupt context:
->
->  - pm_request_idle()
-> @@ -545,6 +553,7 @@ functions may also be used in interrupt context:
->  - pm_runtime_put_sync()
->  - pm_runtime_put_sync_suspend()
->  - pm_runtime_put_sync_autosuspend()
-> +- pm_runtime_set_next_event()
->
->  5. Runtime PM Initialization, Device Probing and Removal
->  ========================================================
-> @@ -639,6 +648,18 @@ suspend routine).  It may be necessary to resume the device and suspend it again
->  in order to do so.  The same is true if the driver uses different power levels
->  or other settings for runtime suspend and system sleep.
->
-> +When a device enters idle at runtime, it may trigger the runtime PM up the
-> +hierarchy. Devices that have an predictable interrupt pattern, may help
-> +influence a better idle state determination of its parent. For example, a
-> +display device could get a VSYNC interrupt every 16ms. A PM domain containing
-> +the device, could also be entering and exiting idle due to runtime PM
-
-/containing the device/that has the device attached to it
-
-> +coordination. If the domain were also entering runtime idle, we would know when
-> +the domain would be waken up as a result of the display device waking up. Using
-> +the device's next_event, the PM domain governor can make a better choice of the
-> +idle state for the domain, knowing it would be be woken up by the device in the
-> +near future. This is specially useful when the device is sensitive to its PM
-> +domain's idle state enter and exit latencies.
-
-The above sounds a little hand wavy, can you try to be a little more exact?
-
-Perhaps, rather than just saying "sensitive to it's PM domain's idle
-state..", how about explaining that by using the "next event" the
-governor is able to select a more optimal domain idle state, thus we
-should avoid wasting energy and better conform to QoS latency
-constraints.
-
-> +
->  During system resume, the simplest approach is to bring all devices back to full
->  power, even if they had been suspended before the system suspend began.  There
->  are several reasons for this, including:
-> diff --git a/drivers/base/power/runtime.c b/drivers/base/power/runtime.c
-> index 8143210a5c54..53c2b3d962bc 100644
-> --- a/drivers/base/power/runtime.c
-> +++ b/drivers/base/power/runtime.c
-> @@ -122,6 +122,33 @@ u64 pm_runtime_suspended_time(struct device *dev)
->  }
->  EXPORT_SYMBOL_GPL(pm_runtime_suspended_time);
->
-> +/**
-> + * pm_runtime_set_next_wakeup_event - Notify PM framework of an impending event.
-> + * @dev: Device to handle
-> + * @next: impending interrupt/wakeup for the device
-
-At what typical points do you expect this function to be called?
-
-> + */
-> +int pm_runtime_set_next_event(struct device *dev, ktime_t next)
-> +{
-> +       unsigned long flags;
-> +       int ret = -EINVAL;
-> +
-> +       /*
-> +        * Note the next pending wakeup of a device,
-> +        * if the device does not have runtime PM enabled.
-> +        */
-
-/s/Note/Store
-
-Do you really need to check if runtime PM is enabled? Does it matter?
-
-> +       spin_lock_irqsave(&dev->power.lock, flags);
-> +       if (!dev->power.disable_depth) {
-> +               if (ktime_before(ktime_get(), next)) {
-> +                       dev->power.next_event = next;
-> +                       ret = 0;
-> +               }
-> +       }
-> +       spin_unlock_irqrestore(&dev->power.lock, flags);
-> +
-> +       return ret;
-> +}
-> +EXPORT_SYMBOL_GPL(pm_runtime_set_next_event);
-> +
->  /**
->   * pm_runtime_deactivate_timer - Deactivate given device's suspend timer.
->   * @dev: Device to handle.
-> @@ -1380,6 +1407,9 @@ void __pm_runtime_disable(struct device *dev, bool check_resume)
->         /* Update time accounting before disabling PM-runtime. */
->         update_pm_runtime_accounting(dev);
->
-> +       /* Reset the next wakeup for the device */
-> +       dev->power.next_event = KTIME_MAX;
-> +
-
-I am not sure I get the purpose of this, can you elaborate?
-
-I am thinking that the genpd governor doesn't allow to power off of
-the PM domain, unless all devices that are attached to it are runtime
-PM enabled and runtime PM suspended (see pm_runtime_suspended). That
-said, it looks like the above isn't needed? No?
-
-Perhaps it's better to use pm_runtime_enable() as the point of
-resetting the dev->power.next_event?
-
->         if (!dev->power.disable_depth++)
->                 __pm_runtime_barrier(dev);
->
-> @@ -1609,6 +1639,7 @@ void pm_runtime_init(struct device *dev)
->         dev->power.deferred_resume = false;
->         INIT_WORK(&dev->power.work, pm_runtime_work);
->
-> +       dev->power.next_event = KTIME_MAX;
->         dev->power.timer_expires = 0;
->         hrtimer_init(&dev->power.suspend_timer, CLOCK_MONOTONIC, HRTIMER_MODE_ABS);
->         dev->power.suspend_timer.function = pm_suspend_timer_fn;
-> diff --git a/include/linux/pm.h b/include/linux/pm.h
-> index a30a4b54df52..9051658674a4 100644
-> --- a/include/linux/pm.h
-> +++ b/include/linux/pm.h
-> @@ -8,6 +8,7 @@
->  #ifndef _LINUX_PM_H
->  #define _LINUX_PM_H
->
-> +#include <linux/ktime.h>
->  #include <linux/list.h>
->  #include <linux/workqueue.h>
->  #include <linux/spinlock.h>
-> @@ -616,6 +617,7 @@ struct dev_pm_info {
->         u64                     active_time;
->         u64                     suspended_time;
->         u64                     accounting_timestamp;
-> +       ktime_t                 next_event;
->  #endif
->         struct pm_subsys_data   *subsys_data;  /* Owned by the subsystem. */
->         void (*set_latency_tolerance)(struct device *, s32);
-> diff --git a/include/linux/pm_runtime.h b/include/linux/pm_runtime.h
-> index 6245caa18034..af6d35178335 100644
-> --- a/include/linux/pm_runtime.h
-> +++ b/include/linux/pm_runtime.h
-> @@ -59,6 +59,7 @@ extern void pm_runtime_get_suppliers(struct device *dev);
->  extern void pm_runtime_put_suppliers(struct device *dev);
->  extern void pm_runtime_new_link(struct device *dev);
->  extern void pm_runtime_drop_link(struct device *dev);
-> +extern int pm_runtime_set_next_event(struct device *dev, ktime_t next);
->
->  /**
->   * pm_runtime_get_if_in_use - Conditionally bump up runtime PM usage counter.
-> --
-> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-> a Linux Foundation Collaborative Project
->
-
-Kind regards
-Uffe
