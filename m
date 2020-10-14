@@ -2,135 +2,246 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 2271228DFD7
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Oct 2020 13:33:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 73B3D28E0E2
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Oct 2020 14:58:48 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730723AbgJNLdT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 14 Oct 2020 07:33:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60652 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730715AbgJNLdS (ORCPT
+        id S1726484AbgJNM6r (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 14 Oct 2020 08:58:47 -0400
+Received: from alexa-out.qualcomm.com ([129.46.98.28]:15486 "EHLO
+        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730495AbgJNM6r (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 14 Oct 2020 07:33:18 -0400
-Received: from mail-wr1-x441.google.com (mail-wr1-x441.google.com [IPv6:2a00:1450:4864:20::441])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 49E9FC0613D2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Oct 2020 04:33:17 -0700 (PDT)
-Received: by mail-wr1-x441.google.com with SMTP id e17so3343231wru.12
-        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Oct 2020 04:33:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=7E5unWXYfNjo3l9dfHagbIRdGz1IhdYHa4SUGlhtAf8=;
-        b=LqGO70uj/qqLaMgv80tbPKa3iqi6XkbEpPuaCz+gSsLQsuTRzjuy8uZDrZt+k3TFmc
-         8mVVA2vzI1qf5wmpfqMyk6iD+wJdhwAlaaLvgQpDoeyDUMynxG4LCwQ3GP0wWpzM9lGj
-         BDrTFWgfB40tq8cGZkYIwTzfvIttD6sj7KTP7u+it5awUVq/MhrSw1srFz1ZuxecD01m
-         XvjfI0ybKXuGBz/C7jyGYdQxHAY3RCV4hpayKMVtZI9JoQSpX+VMICc3DVLlVDXxTD/+
-         8blDf3zs5wjwHN7UB09peOYrrRZleAkgPPMLsUfulqH6dapFW1DRvAvzD1fMBxewLJ0h
-         zuSw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=7E5unWXYfNjo3l9dfHagbIRdGz1IhdYHa4SUGlhtAf8=;
-        b=PEGFTKfd3MMLuZuHszQIp7GQWe3/KgrLgG3BaX9yhyDc6Acwlr9Qzm55zI6KhPzGpo
-         kN0KYcOz+HHrGqB2kmZcGCAvzOfdSwEIUYnrvZ5SaqEHGIVdfX6GUV1a1F9bFtt2PPVa
-         fWKdPMYUdqNsRs21rw13Vx1sNpg5nSnMPDKu7AOTIv7ssCi6KPDxjsBqXp6CenHK4grt
-         FuGzOhgIfkF23sotXo3juIvncfXnjaoqWmit8fxWu7lovHGGML5zClmqz9GEgiiUnB7V
-         Kf+o7D9vajI8mfqOFeM5x1xk3VbobKqflIsJCC2XNuQsD9dismAICN55F7TZu8nKShpd
-         O8kg==
-X-Gm-Message-State: AOAM5338tyioxErg4WGqOx0dkggT3j/036V1a4yq/uMOJF/wzsycFNdG
-        TyRssyZJKmaldSE37l37mYjnPw==
-X-Google-Smtp-Source: ABdhPJxap4UjlENdISn1XJARr/Xddy9QWqP8k//IXOEm7gCulIFQjOE8Opa11rlzTd0t5RSJfMGZeg==
-X-Received: by 2002:adf:ed45:: with SMTP id u5mr4827892wro.48.1602675195831;
-        Wed, 14 Oct 2020 04:33:15 -0700 (PDT)
-Received: from holly.lan (cpc141216-aztw34-2-0-cust174.18-1.cable.virginm.net. [80.7.220.175])
-        by smtp.gmail.com with ESMTPSA id r1sm4873375wro.18.2020.10.14.04.33.14
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 14 Oct 2020 04:33:14 -0700 (PDT)
-Date:   Wed, 14 Oct 2020 12:33:13 +0100
-From:   Daniel Thompson <daniel.thompson@linaro.org>
-To:     Doug Anderson <dianders@chromium.org>
-Cc:     Alexandru Stan <amstan@chromium.org>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= 
-        <u.kleine-koenig@pengutronix.de>, Lee Jones <lee.jones@linaro.org>,
-        Jingoo Han <jingoohan1@gmail.com>,
-        Bartlomiej Zolnierkiewicz <b.zolnierkie@samsung.com>,
-        Heiko Stuebner <heiko@sntech.de>,
-        Rob Herring <robh+dt@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Enric Balletbo i Serra <enric.balletbo@collabora.com>,
-        Matthias Kaehlcke <mka@chromium.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        LKML <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH v2 3/3] arm64: dts: qcom: trogdor: Add brightness-levels
-Message-ID: <20201014113313.y5uzugw5lpcbo46p@holly.lan>
-References: <20201013080103.410133-1-amstan@chromium.org>
- <20201013010056.v2.3.Ie4d84af5a85e8dcb8f575845518fa39f324a827d@changeid>
- <CAD=FV=W4fv_AdS7G2FFe2Kan3YYJ4D0MVJD90aJMrgCja5N4vg@mail.gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAD=FV=W4fv_AdS7G2FFe2Kan3YYJ4D0MVJD90aJMrgCja5N4vg@mail.gmail.com>
+        Wed, 14 Oct 2020 08:58:47 -0400
+Received: from ironmsg09-lv.qualcomm.com ([10.47.202.153])
+  by alexa-out.qualcomm.com with ESMTP; 14 Oct 2020 05:58:43 -0700
+X-QCInternal: smtphost
+Received: from ironmsg01-blr.qualcomm.com ([10.86.208.130])
+  by ironmsg09-lv.qualcomm.com with ESMTP/TLS/AES256-SHA; 14 Oct 2020 05:58:41 -0700
+X-QCInternal: smtphost
+Received: from mkrishn-linux.qualcomm.com ([10.204.66.35])
+  by ironmsg01-blr.qualcomm.com with ESMTP; 14 Oct 2020 18:28:21 +0530
+Received: by mkrishn-linux.qualcomm.com (Postfix, from userid 438394)
+        id 5D0242141F; Wed, 14 Oct 2020 18:28:20 +0530 (IST)
+From:   Krishna Manikandan <mkrishn@codeaurora.org>
+To:     dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org
+Cc:     Krishna Manikandan <mkrishn@codeaurora.org>,
+        linux-kernel@vger.kernel.org, robdclark@gmail.com,
+        seanpaul@chromium.org, hoegsberg@chromium.org,
+        kalyan_t@codeaurora.org, dianders@chromium.org
+Subject: [v1] drm/msm: Fix race condition in msm driver with async layer updates
+Date:   Wed, 14 Oct 2020 18:28:16 +0530
+Message-Id: <1602680296-8965-1-git-send-email-mkrishn@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Oct 13, 2020 at 09:28:38AM -0700, Doug Anderson wrote:
-> Hi,
-> 
-> On Tue, Oct 13, 2020 at 1:01 AM Alexandru Stan <amstan@chromium.org> wrote:
-> >
-> > Now that we have better interpolation for the backlight
-> > ("backlight: pwm_bl: Fix interpolation"), we can now add the curve to
-> > the trogdor boards, being careful to crop the low end.
-> 
-> Just to make it clear, the patch this depends on hasn't landed yet.
-> Presumably it will land in the v5.10 timeframe?  That means that
-> without extra coordination this patch can target v5.11.
+When there are back to back commits with async cursor update,
+there is a case where second commit can program the DPU hw
+blocks while first didn't complete flushing config to HW.
 
-You're talking about patch 1 from this set? Despite the title I view
-the patch as changing policy (albeit one that does also fix some annoying
-quantization errors at the same time) so it's not necessarily a
-candidate for merging outside the merge window (I've not checked with
-Lee but I think it likely the shutter is already down for features).
+Synchronize the compositions such that second commit waits
+until first commit flushes the composition.
 
-Moreover I'm not clear why there a dependency here that would stop the
-changes landing in different trees.
+This change also introduces per crtc commit lock, such that
+commits on different crtcs are not blocked by each other.
 
+Signed-off-by: Krishna Manikandan <mkrishn@codeaurora.org>
+---
+ drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c |  1 +
+ drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.h |  1 +
+ drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c  | 26 ++++++++++++++++++++++++
+ drivers/gpu/drm/msm/msm_atomic.c         | 35 ++++++++++++++++++++++----------
+ drivers/gpu/drm/msm/msm_kms.h            |  5 +++++
+ 5 files changed, 57 insertions(+), 11 deletions(-)
 
-Daniel.
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
+index c2729f7..9024719 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
+@@ -1383,6 +1383,7 @@ struct drm_crtc *dpu_crtc_init(struct drm_device *dev, struct drm_plane *plane,
+ 
+ 	/* initialize event handling */
+ 	spin_lock_init(&dpu_crtc->event_lock);
++	mutex_init(&dpu_crtc->commit_lock);
+ 
+ 	DPU_DEBUG("%s: successfully initialized crtc\n", dpu_crtc->name);
+ 	return crtc;
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.h
+index cec3474..1eeb73d 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.h
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.h
+@@ -169,6 +169,7 @@ struct dpu_crtc {
+ 
+ 	/* for handling internal event thread */
+ 	spinlock_t event_lock;
++	struct mutex commit_lock;
+ 
+ 	struct dpu_core_perf_params cur_perf;
+ 
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+index c0a4d4e..f99ae7a 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+@@ -445,6 +445,30 @@ static void dpu_kms_wait_flush(struct msm_kms *kms, unsigned crtc_mask)
+ 		dpu_kms_wait_for_commit_done(kms, crtc);
+ }
+ 
++static void dpu_kms_commit_lock(struct msm_kms *kms, unsigned int crtc_mask)
++{
++	struct dpu_kms *dpu_kms = to_dpu_kms(kms);
++	struct drm_crtc *crtc;
++	struct dpu_crtc *dpu_crtc;
++
++	for_each_crtc_mask(dpu_kms->dev, crtc, crtc_mask) {
++		dpu_crtc = to_dpu_crtc(crtc);
++		mutex_lock(&dpu_crtc->commit_lock);
++	}
++}
++
++static void dpu_kms_commit_unlock(struct msm_kms *kms, unsigned int crtc_mask)
++{
++	struct dpu_kms *dpu_kms = to_dpu_kms(kms);
++	struct drm_crtc *crtc;
++	struct dpu_crtc *dpu_crtc;
++
++	for_each_crtc_mask(dpu_kms->dev, crtc, crtc_mask) {
++		dpu_crtc = to_dpu_crtc(crtc);
++		mutex_unlock(&dpu_crtc->commit_lock);
++	}
++}
++
+ static int _dpu_kms_initialize_dsi(struct drm_device *dev,
+ 				    struct msm_drm_private *priv,
+ 				    struct dpu_kms *dpu_kms)
+@@ -738,6 +762,8 @@ static const struct msm_kms_funcs kms_funcs = {
+ #ifdef CONFIG_DEBUG_FS
+ 	.debugfs_init    = dpu_kms_debugfs_init,
+ #endif
++	.commit_lock     = dpu_kms_commit_lock,
++	.commit_unlock   = dpu_kms_commit_unlock,
+ };
+ 
+ static void _dpu_kms_mmu_destroy(struct dpu_kms *dpu_kms)
+diff --git a/drivers/gpu/drm/msm/msm_atomic.c b/drivers/gpu/drm/msm/msm_atomic.c
+index 561bfa4..d33253f 100644
+--- a/drivers/gpu/drm/msm/msm_atomic.c
++++ b/drivers/gpu/drm/msm/msm_atomic.c
+@@ -55,16 +55,32 @@ static void vblank_put(struct msm_kms *kms, unsigned crtc_mask)
+ 	}
+ }
+ 
++static void msm_commit_lock(struct msm_kms *kms, unsigned int crtc_mask)
++{
++	if (kms->funcs->commit_lock)
++		kms->funcs->commit_lock(kms, crtc_mask);
++	else
++		mutex_lock(&kms->commit_lock);
++}
++
++static void msm_commit_unlock(struct msm_kms *kms, unsigned int crtc_mask)
++{
++	if (kms->funcs->commit_unlock)
++		kms->funcs->commit_unlock(kms, crtc_mask);
++	else
++		mutex_unlock(&kms->commit_lock);
++}
++
+ static void msm_atomic_async_commit(struct msm_kms *kms, int crtc_idx)
+ {
+ 	unsigned crtc_mask = BIT(crtc_idx);
+ 
+ 	trace_msm_atomic_async_commit_start(crtc_mask);
+ 
+-	mutex_lock(&kms->commit_lock);
++	msm_commit_lock(kms, crtc_mask);
+ 
+ 	if (!(kms->pending_crtc_mask & crtc_mask)) {
+-		mutex_unlock(&kms->commit_lock);
++		msm_commit_unlock(kms, crtc_mask);
+ 		goto out;
+ 	}
+ 
+@@ -79,7 +95,6 @@ static void msm_atomic_async_commit(struct msm_kms *kms, int crtc_idx)
+ 	 */
+ 	trace_msm_atomic_flush_commit(crtc_mask);
+ 	kms->funcs->flush_commit(kms, crtc_mask);
+-	mutex_unlock(&kms->commit_lock);
+ 
+ 	/*
+ 	 * Wait for flush to complete:
+@@ -90,9 +105,8 @@ static void msm_atomic_async_commit(struct msm_kms *kms, int crtc_idx)
+ 
+ 	vblank_put(kms, crtc_mask);
+ 
+-	mutex_lock(&kms->commit_lock);
+ 	kms->funcs->complete_commit(kms, crtc_mask);
+-	mutex_unlock(&kms->commit_lock);
++	msm_commit_unlock(kms, crtc_mask);
+ 	kms->funcs->disable_commit(kms);
+ 
+ out:
+@@ -189,12 +203,11 @@ void msm_atomic_commit_tail(struct drm_atomic_state *state)
+ 	 * Ensure any previous (potentially async) commit has
+ 	 * completed:
+ 	 */
++	msm_commit_lock(kms, crtc_mask);
+ 	trace_msm_atomic_wait_flush_start(crtc_mask);
+ 	kms->funcs->wait_flush(kms, crtc_mask);
+ 	trace_msm_atomic_wait_flush_finish(crtc_mask);
+ 
+-	mutex_lock(&kms->commit_lock);
+-
+ 	/*
+ 	 * Now that there is no in-progress flush, prepare the
+ 	 * current update:
+@@ -232,7 +245,7 @@ void msm_atomic_commit_tail(struct drm_atomic_state *state)
+ 		}
+ 
+ 		kms->funcs->disable_commit(kms);
+-		mutex_unlock(&kms->commit_lock);
++		msm_commit_unlock(kms, crtc_mask);
+ 
+ 		/*
+ 		 * At this point, from drm core's perspective, we
+@@ -260,7 +273,7 @@ void msm_atomic_commit_tail(struct drm_atomic_state *state)
+ 	 */
+ 	trace_msm_atomic_flush_commit(crtc_mask);
+ 	kms->funcs->flush_commit(kms, crtc_mask);
+-	mutex_unlock(&kms->commit_lock);
++	msm_commit_unlock(kms, crtc_mask);
+ 
+ 	/*
+ 	 * Wait for flush to complete:
+@@ -271,9 +284,9 @@ void msm_atomic_commit_tail(struct drm_atomic_state *state)
+ 
+ 	vblank_put(kms, crtc_mask);
+ 
+-	mutex_lock(&kms->commit_lock);
++	msm_commit_lock(kms, crtc_mask);
+ 	kms->funcs->complete_commit(kms, crtc_mask);
+-	mutex_unlock(&kms->commit_lock);
++	msm_commit_unlock(kms, crtc_mask);
+ 	kms->funcs->disable_commit(kms);
+ 
+ 	drm_atomic_helper_commit_hw_done(state);
+diff --git a/drivers/gpu/drm/msm/msm_kms.h b/drivers/gpu/drm/msm/msm_kms.h
+index 1cbef6b..f02e73e 100644
+--- a/drivers/gpu/drm/msm/msm_kms.h
++++ b/drivers/gpu/drm/msm/msm_kms.h
+@@ -126,6 +126,11 @@ struct msm_kms_funcs {
+ 	/* debugfs: */
+ 	int (*debugfs_init)(struct msm_kms *kms, struct drm_minor *minor);
+ #endif
++	/* commit lock for crtc */
++	void (*commit_lock)(struct msm_kms *kms, unsigned int crtc_mask);
++
++	/* commit unlock for crtc */
++	void (*commit_unlock)(struct msm_kms *kms, unsigned int crtc_mask);
+ };
+ 
+ struct msm_kms;
+-- 
+2.7.4
 
-
-> > Signed-off-by: Alexandru Stan <amstan@chromium.org>
-> > ---
-> >
-> >  arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi | 9 +++++++++
-> >  1 file changed, 9 insertions(+)
-> >
-> > diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
-> > index bf875589d364..ccdabc6c4994 100644
-> > --- a/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
-> > +++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
-> > @@ -179,6 +179,15 @@ pp3300_fp_tp: pp3300-fp-tp-regulator {
-> >         backlight: backlight {
-> >                 compatible = "pwm-backlight";
-> >
-> > +               /* The panels don't seem to like anything below ~ 5% */
-> > +               brightness-levels = <
-> > +                       196 256 324 400 484 576 676 784 900 1024 1156 1296
-> > +                       1444 1600 1764 1936 2116 2304 2500 2704 2916 3136
-> > +                       3364 3600 3844 4096
-> > +               >;
-> > +               num-interpolated-steps = <64>;
-> > +               default-brightness-level = <951>;
-> 
-> I haven't done lots of digging here, but this matches what Alexandru
-> and Matthias agreed upon for the downstream tree and seems sane.
-> Thus:
-> 
-> Reviewed-by: Douglas Anderson <dianders@chromium.org>
