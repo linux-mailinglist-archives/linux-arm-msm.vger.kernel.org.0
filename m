@@ -2,151 +2,135 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 4778328DEF4
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Oct 2020 12:33:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2271228DFD7
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Oct 2020 13:33:21 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728397AbgJNKdl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 14 Oct 2020 06:33:41 -0400
-Received: from mail.kernel.org ([198.145.29.99]:43762 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727381AbgJNKdl (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 14 Oct 2020 06:33:41 -0400
-Received: from mail-ej1-f45.google.com (mail-ej1-f45.google.com [209.85.218.45])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 9666120878;
-        Wed, 14 Oct 2020 10:33:39 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1602671619;
-        bh=YTNSXcW0k5VpGDP+ALIpIyuW3iLRTmD54rqCQ1oyiyA=;
-        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-        b=sBHnz1yyxbvpzxpccOns8mp5Of03gj29/RNRo3g82Ev+clfKBrk3KB5XrR8yt+GLl
-         pmdEOB8h3WOAsY4KGNHM6cEFI07KwBf89dw+Gj6iqzCXZZziXMohhgdikBTZ5zGwnn
-         ltFgloehCf+cN94VB8NVLy20CDewVMaT7n7srMMg=
-Received: by mail-ej1-f45.google.com with SMTP id p5so1298911ejj.2;
-        Wed, 14 Oct 2020 03:33:39 -0700 (PDT)
-X-Gm-Message-State: AOAM532KgEJ3XGCmU0xda99mxHtSh9lVBBIHW/Ul6I67ftqQ/f3WdKhW
-        YIcsf1kxnY5J9Tuqh6EyMMIdczSlsoucu0rJis0=
-X-Google-Smtp-Source: ABdhPJxZBjfPkS/DAl69mvwOwG4fxUYT0dQEW6rrgGKRXDR2yPgf5o4BRFNdNiVveb84vPHaKXSGoZA2E31iHMoZKKE=
-X-Received: by 2002:a17:906:1a11:: with SMTP id i17mr4430823ejf.381.1602671617348;
- Wed, 14 Oct 2020 03:33:37 -0700 (PDT)
-MIME-Version: 1.0
-References: <20201014101402.18271-1-Sergey.Semin@baikalelectronics.ru> <20201014101402.18271-21-Sergey.Semin@baikalelectronics.ru>
-In-Reply-To: <20201014101402.18271-21-Sergey.Semin@baikalelectronics.ru>
-From:   Krzysztof Kozlowski <krzk@kernel.org>
-Date:   Wed, 14 Oct 2020 12:33:25 +0200
-X-Gmail-Original-Message-ID: <CAJKOXPeErocR5-3xCDqBR3-k3w_2EQ_768d71n229cbzeo4TtQ@mail.gmail.com>
-Message-ID: <CAJKOXPeErocR5-3xCDqBR3-k3w_2EQ_768d71n229cbzeo4TtQ@mail.gmail.com>
-Subject: Re: [PATCH 20/20] arch: dts: Fix DWC USB3 DT nodes name
-To:     Serge Semin <Sergey.Semin@baikalelectronics.ru>
-Cc:     Mathias Nyman <mathias.nyman@intel.com>,
-        Felipe Balbi <balbi@kernel.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        id S1730723AbgJNLdT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 14 Oct 2020 07:33:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60652 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730715AbgJNLdS (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 14 Oct 2020 07:33:18 -0400
+Received: from mail-wr1-x441.google.com (mail-wr1-x441.google.com [IPv6:2a00:1450:4864:20::441])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 49E9FC0613D2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Oct 2020 04:33:17 -0700 (PDT)
+Received: by mail-wr1-x441.google.com with SMTP id e17so3343231wru.12
+        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Oct 2020 04:33:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=7E5unWXYfNjo3l9dfHagbIRdGz1IhdYHa4SUGlhtAf8=;
+        b=LqGO70uj/qqLaMgv80tbPKa3iqi6XkbEpPuaCz+gSsLQsuTRzjuy8uZDrZt+k3TFmc
+         8mVVA2vzI1qf5wmpfqMyk6iD+wJdhwAlaaLvgQpDoeyDUMynxG4LCwQ3GP0wWpzM9lGj
+         BDrTFWgfB40tq8cGZkYIwTzfvIttD6sj7KTP7u+it5awUVq/MhrSw1srFz1ZuxecD01m
+         XvjfI0ybKXuGBz/C7jyGYdQxHAY3RCV4hpayKMVtZI9JoQSpX+VMICc3DVLlVDXxTD/+
+         8blDf3zs5wjwHN7UB09peOYrrRZleAkgPPMLsUfulqH6dapFW1DRvAvzD1fMBxewLJ0h
+         zuSw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=7E5unWXYfNjo3l9dfHagbIRdGz1IhdYHa4SUGlhtAf8=;
+        b=PEGFTKfd3MMLuZuHszQIp7GQWe3/KgrLgG3BaX9yhyDc6Acwlr9Qzm55zI6KhPzGpo
+         kN0KYcOz+HHrGqB2kmZcGCAvzOfdSwEIUYnrvZ5SaqEHGIVdfX6GUV1a1F9bFtt2PPVa
+         fWKdPMYUdqNsRs21rw13Vx1sNpg5nSnMPDKu7AOTIv7ssCi6KPDxjsBqXp6CenHK4grt
+         FuGzOhgIfkF23sotXo3juIvncfXnjaoqWmit8fxWu7lovHGGML5zClmqz9GEgiiUnB7V
+         Kf+o7D9vajI8mfqOFeM5x1xk3VbobKqflIsJCC2XNuQsD9dismAICN55F7TZu8nKShpd
+         O8kg==
+X-Gm-Message-State: AOAM5338tyioxErg4WGqOx0dkggT3j/036V1a4yq/uMOJF/wzsycFNdG
+        TyRssyZJKmaldSE37l37mYjnPw==
+X-Google-Smtp-Source: ABdhPJxap4UjlENdISn1XJARr/Xddy9QWqP8k//IXOEm7gCulIFQjOE8Opa11rlzTd0t5RSJfMGZeg==
+X-Received: by 2002:adf:ed45:: with SMTP id u5mr4827892wro.48.1602675195831;
+        Wed, 14 Oct 2020 04:33:15 -0700 (PDT)
+Received: from holly.lan (cpc141216-aztw34-2-0-cust174.18-1.cable.virginm.net. [80.7.220.175])
+        by smtp.gmail.com with ESMTPSA id r1sm4873375wro.18.2020.10.14.04.33.14
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 14 Oct 2020 04:33:14 -0700 (PDT)
+Date:   Wed, 14 Oct 2020 12:33:13 +0100
+From:   Daniel Thompson <daniel.thompson@linaro.org>
+To:     Doug Anderson <dianders@chromium.org>
+Cc:     Alexandru Stan <amstan@chromium.org>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= 
+        <u.kleine-koenig@pengutronix.de>, Lee Jones <lee.jones@linaro.org>,
+        Jingoo Han <jingoohan1@gmail.com>,
+        Bartlomiej Zolnierkiewicz <b.zolnierkie@samsung.com>,
+        Heiko Stuebner <heiko@sntech.de>,
         Rob Herring <robh+dt@kernel.org>,
-        Jason Cooper <jason@lakedaemon.net>,
-        Andrew Lunn <andrew@lunn.ch>,
-        Gregory Clement <gregory.clement@bootlin.com>,
-        Sebastian Hesselbarth <sebastian.hesselbarth@gmail.com>,
-        Kukjin Kim <kgene@kernel.org>,
-        Santosh Shilimkar <ssantosh@kernel.org>,
-        Shawn Guo <shawnguo@kernel.org>, Li Yang <leoyang.li@nxp.com>,
-        =?UTF-8?Q?Beno=C3=AEt_Cousson?= <bcousson@baylibre.com>,
-        Tony Lindgren <tony@atomide.com>,
-        Patrice Chotard <patrice.chotard@st.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        Chen-Yu Tsai <wens@csie.org>, Wei Xu <xuwei5@hisilicon.com>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Serge Semin <fancer.lancer@gmail.com>,
-        Alexey Malahov <Alexey.Malahov@baikalelectronics.ru>,
-        Pavel Parkhomenko <Pavel.Parkhomenko@baikalelectronics.ru>,
-        Manu Gautam <mgautam@codeaurora.org>,
-        Roger Quadros <rogerq@ti.com>,
-        Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
-        Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
-        Neil Armstrong <narmstrong@baylibre.com>,
-        Kevin Hilman <khilman@baylibre.com>,
-        linux-arm-kernel@lists.infradead.org,
-        linux-snps-arc@lists.infradead.org, linux-mips@vger.kernel.org,
-        linuxppc-dev@lists.ozlabs.org, linux-usb@vger.kernel.org,
-        devicetree@vger.kernel.org,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-        "linux-samsung-soc@vger.kernel.org" 
-        <linux-samsung-soc@vger.kernel.org>, linux-omap@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+        Enric Balletbo i Serra <enric.balletbo@collabora.com>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        LKML <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH v2 3/3] arm64: dts: qcom: trogdor: Add brightness-levels
+Message-ID: <20201014113313.y5uzugw5lpcbo46p@holly.lan>
+References: <20201013080103.410133-1-amstan@chromium.org>
+ <20201013010056.v2.3.Ie4d84af5a85e8dcb8f575845518fa39f324a827d@changeid>
+ <CAD=FV=W4fv_AdS7G2FFe2Kan3YYJ4D0MVJD90aJMrgCja5N4vg@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAD=FV=W4fv_AdS7G2FFe2Kan3YYJ4D0MVJD90aJMrgCja5N4vg@mail.gmail.com>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, 14 Oct 2020 at 12:23, Serge Semin
-<Sergey.Semin@baikalelectronics.ru> wrote:
->
-> In accordance with the DWC USB3 bindings the corresponding node name is
-> suppose to comply with Generic USB HCD DT schema, which requires the USB
-> nodes to have the name acceptable by the regexp: "^usb(@.*)?" . But a lot
-> of the DWC USB3-compatible nodes defined in the ARM/ARM64 DTS files have
-> name as "^dwc3@.*" or "^usb[1-3]@.*" or even "^dwusb@.*", which will cause
-> the dtbs_check procedure failure. Let's fix the nodes naming to be
-> compatible with the DWC USB3 DT schema to make dtbs_check happy.
->
-> Note we don't change the DWC USB3-compatible nodes names of
-> arch/arm64/boot/dts/apm/{apm-storm.dtsi,apm-shadowcat.dtsi} since the
-> in-source comment says that the nodes name need to be preserved as
-> "^dwusb@.*" for some backward compatibility.
->
-> Signed-off-by: Serge Semin <Sergey.Semin@baikalelectronics.ru>
->
-> ---
->
-> Please, test the patch out to make sure it doesn't brake the dependent DTS
-> files. I did only a manual grepping of the possible nodes dependencies.
+On Tue, Oct 13, 2020 at 09:28:38AM -0700, Doug Anderson wrote:
+> Hi,
+> 
+> On Tue, Oct 13, 2020 at 1:01 AM Alexandru Stan <amstan@chromium.org> wrote:
+> >
+> > Now that we have better interpolation for the backlight
+> > ("backlight: pwm_bl: Fix interpolation"), we can now add the curve to
+> > the trogdor boards, being careful to crop the low end.
+> 
+> Just to make it clear, the patch this depends on hasn't landed yet.
+> Presumably it will land in the v5.10 timeframe?  That means that
+> without extra coordination this patch can target v5.11.
 
-1. It is you who should compare the decompiled DTS, not us. For example:
-$ for i in dts-old/*/*dtb dts-old/*/*/*dtb; do echo $i; crosc64
-scripts/dtc/dtx_diff ${i} dts-new/${i#dts-old/} ; done
+You're talking about patch 1 from this set? Despite the title I view
+the patch as changing policy (albeit one that does also fix some annoying
+quantization errors at the same time) so it's not necessarily a
+candidate for merging outside the merge window (I've not checked with
+Lee but I think it likely the shutter is already down for features).
 
-$ for i in dts-old/*/*dtb dts-old/*/*/*dtb; do echo $i; crosc64
-fdtdump ${i} > ${i}.fdt ; crosc64 fdtdump dts-new/${i#dts-old/} >
-dts-new/${i#dts-old/}.fdt ; diff -ubB ${i}.fdt
-dts-new/${i#dts-old/}.fdt ; done
+Moreover I'm not clear why there a dependency here that would stop the
+changes landing in different trees.
 
-2. Split it per arm architectures (and proper subject prefix - not
-"arch") and subarchitectures so maintainers can pick it up.
 
-3. The subject title could be more accurate - there is no fix here
-because there was no errors in the first place. Requirement of DWC
-node names comes recently, so it is more alignment with dtschema.
-Otherwise automatic-pickup-stable-bot might want to pick up... and it
-should not go to stable.
+Daniel.
 
-Best regards,
-Krzysztof
 
->  arch/arm/boot/dts/armada-375.dtsi              | 2 +-
->  arch/arm/boot/dts/exynos5250.dtsi              | 2 +-
->  arch/arm/boot/dts/exynos54xx.dtsi              | 4 ++--
->  arch/arm/boot/dts/keystone-k2e.dtsi            | 4 ++--
->  arch/arm/boot/dts/keystone.dtsi                | 2 +-
->  arch/arm/boot/dts/ls1021a.dtsi                 | 2 +-
->  arch/arm/boot/dts/omap5-l4.dtsi                | 2 +-
->  arch/arm/boot/dts/stih407-family.dtsi          | 2 +-
->  arch/arm64/boot/dts/allwinner/sun50i-h6.dtsi   | 2 +-
->  arch/arm64/boot/dts/exynos/exynos5433.dtsi     | 4 ++--
->  arch/arm64/boot/dts/exynos/exynos7.dtsi        | 2 +-
->  arch/arm64/boot/dts/freescale/fsl-ls1012a.dtsi | 4 ++--
->  arch/arm64/boot/dts/freescale/fsl-ls1043a.dtsi | 6 +++---
->  arch/arm64/boot/dts/freescale/fsl-ls1088a.dtsi | 4 ++--
->  arch/arm64/boot/dts/freescale/fsl-ls208xa.dtsi | 4 ++--
->  arch/arm64/boot/dts/hisilicon/hi3660.dtsi      | 2 +-
->  arch/arm64/boot/dts/qcom/apq8096-db820c.dtsi   | 4 ++--
->  arch/arm64/boot/dts/qcom/ipq8074.dtsi          | 4 ++--
->  arch/arm64/boot/dts/qcom/msm8996.dtsi          | 4 ++--
->  arch/arm64/boot/dts/qcom/msm8998.dtsi          | 2 +-
->  arch/arm64/boot/dts/qcom/qcs404-evb.dtsi       | 2 +-
->  arch/arm64/boot/dts/qcom/qcs404.dtsi           | 4 ++--
->  arch/arm64/boot/dts/qcom/sc7180.dtsi           | 2 +-
->  arch/arm64/boot/dts/qcom/sdm845.dtsi           | 4 ++--
->  arch/arm64/boot/dts/qcom/sm8150.dtsi           | 2 +-
->  25 files changed, 38 insertions(+), 38 deletions(-)
->
+> > Signed-off-by: Alexandru Stan <amstan@chromium.org>
+> > ---
+> >
+> >  arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi | 9 +++++++++
+> >  1 file changed, 9 insertions(+)
+> >
+> > diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
+> > index bf875589d364..ccdabc6c4994 100644
+> > --- a/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
+> > +++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
+> > @@ -179,6 +179,15 @@ pp3300_fp_tp: pp3300-fp-tp-regulator {
+> >         backlight: backlight {
+> >                 compatible = "pwm-backlight";
+> >
+> > +               /* The panels don't seem to like anything below ~ 5% */
+> > +               brightness-levels = <
+> > +                       196 256 324 400 484 576 676 784 900 1024 1156 1296
+> > +                       1444 1600 1764 1936 2116 2304 2500 2704 2916 3136
+> > +                       3364 3600 3844 4096
+> > +               >;
+> > +               num-interpolated-steps = <64>;
+> > +               default-brightness-level = <951>;
+> 
+> I haven't done lots of digging here, but this matches what Alexandru
+> and Matthias agreed upon for the downstream tree and seems sane.
+> Thus:
+> 
+> Reviewed-by: Douglas Anderson <dianders@chromium.org>
