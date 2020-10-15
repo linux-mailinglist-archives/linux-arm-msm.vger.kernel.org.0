@@ -2,172 +2,130 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 8147128EFFE
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Oct 2020 12:20:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9D47C28F09B
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Oct 2020 13:03:03 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728368AbgJOKUT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 15 Oct 2020 06:20:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46726 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728010AbgJOKUT (ORCPT
+        id S1730272AbgJOLC6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 15 Oct 2020 07:02:58 -0400
+Received: from alexa-out.qualcomm.com ([129.46.98.28]:19296 "EHLO
+        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728513AbgJOLC6 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 15 Oct 2020 06:20:19 -0400
-Received: from mail-vk1-xa41.google.com (mail-vk1-xa41.google.com [IPv6:2607:f8b0:4864:20::a41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CAC17C0613D2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 15 Oct 2020 03:20:18 -0700 (PDT)
-Received: by mail-vk1-xa41.google.com with SMTP id y10so488442vkl.5
-        for <linux-arm-msm@vger.kernel.org>; Thu, 15 Oct 2020 03:20:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=eizBoQQKVpNO5IDneAKG8iIJq6JQrygg2otwS/bKlv8=;
-        b=OQvcO3zpAjbzKw0Rnyvu/gQRts8P6THqF3lg62XaP6I/q4POFY71HYz1n4dpKhf5TV
-         mF7vj/b0UMrD3jY9vts+2HRxlnAnDPTKM5Cqm7DjZ+tpUxdSQ9/Tx004CprkUYxyfL8U
-         BgfxfSAaN4NQFBFSrpYkrGIRmT2xl6kT7HMxszbti8IAvqMRa2U4C1eCVtGBNb2UwEjz
-         xOPXoM6eFjtkST50rJaR7BgcwdFg5jWSdwNWZ6O+wxN2F8RgwGZYXZ+ZO1TWlWexLShN
-         OrwxGynm7LrWUZ9XG5bHz3s0TKZyYwPyJauxmlJnT9Gud7+qwWwDUSuXY+ecIqiEK+P5
-         3obg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=eizBoQQKVpNO5IDneAKG8iIJq6JQrygg2otwS/bKlv8=;
-        b=TO/FcqCkjYg09pRN4vw655l//6BKK5tfCrWi5gV5I++WxKtR+B3VM1kjPibS2Ufui6
-         SjxRdZWczQKQQUagHkaj73BLSO55zkQrzm2tApYlPJcD7Qv2L3jaX7tdBW3yJdl88D0R
-         +vmhcj6Wc3yoQxsRA06iio85M1AreoIQnu9lrf4g9JuZWT2TJhKqqn3PA3EVoV7fMcNX
-         aAK5EEu/vGb3xF4LC71LK78Xf1PpJFjM5QS8nCHQ7UYeNchbAoC2UdZ8U6yGwKpo75Tc
-         98we++JATUEZLNZhnV/K8xcNTaO4tcomE7CXmAvobanyyvoTHE8NV8TJ3Fx9Ln1lXvDM
-         y9Hg==
-X-Gm-Message-State: AOAM532/N3y+WLh5uqBqEVZijY7YdFEKkMjxOkufgD0aEGDSZRKQMcHR
-        8xKj4IR41j9KQBVV7s7wjcv5J8XAez9S1TRulunz9Q==
-X-Google-Smtp-Source: ABdhPJwa4UE+W/NtcGqBaolZiQE1kZsFmYEerbF0AKnlp5/09M8WePaYTt+iFnkDUHww9m/V8zskwO7481+CBeftdJY=
-X-Received: by 2002:ac5:c1ca:: with SMTP id g10mr2105330vkk.6.1602757217834;
- Thu, 15 Oct 2020 03:20:17 -0700 (PDT)
-MIME-Version: 1.0
-References: <20201012223400.23609-1-ilina@codeaurora.org> <20201012223400.23609-2-ilina@codeaurora.org>
- <CAPDyKFo0KrxQ8W0pawEca0_Ae0gs3OSBzHN2KY85YMnQp3ek8Q@mail.gmail.com> <20201014163120.GJ2908@codeaurora.org>
-In-Reply-To: <20201014163120.GJ2908@codeaurora.org>
-From:   Ulf Hansson <ulf.hansson@linaro.org>
-Date:   Thu, 15 Oct 2020 12:19:41 +0200
-Message-ID: <CAPDyKFrND192Khga6CEvFBxJjZ+rzM6wAUkyh5LOQvtXLM0osg@mail.gmail.com>
-Subject: Re: [PATCH 1/2] PM / runtime: register device's next wakeup
-To:     Lina Iyer <ilina@codeaurora.org>
-Cc:     "Rafael J. Wysocki" <rjw@rjwysocki.net>,
-        Linux PM <linux-pm@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+        Thu, 15 Oct 2020 07:02:58 -0400
+Received: from ironmsg-lv-alpha.qualcomm.com ([10.47.202.13])
+  by alexa-out.qualcomm.com with ESMTP; 15 Oct 2020 04:02:55 -0700
+X-QCInternal: smtphost
+Received: from ironmsg01-blr.qualcomm.com ([10.86.208.130])
+  by ironmsg-lv-alpha.qualcomm.com with ESMTP/TLS/AES256-SHA; 15 Oct 2020 04:02:54 -0700
+X-QCInternal: smtphost
+Received: from dikshita-linux.qualcomm.com ([10.204.65.237])
+  by ironmsg01-blr.qualcomm.com with ESMTP; 15 Oct 2020 16:32:35 +0530
+Received: by dikshita-linux.qualcomm.com (Postfix, from userid 347544)
+        id 59352522C; Thu, 15 Oct 2020 16:32:34 +0530 (IST)
+From:   Dikshita Agarwal <dikshita@codeaurora.org>
+To:     linux-media@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+Cc:     mchehab@kernel.org, hverkuil-cisco@xs4all.nl,
+        ezequiel@collabora.com, stanimir.varbanov@linaro.org,
+        vgarodia@codeaurora.org, majja@codeaurora.org,
+        Dikshita Agarwal <dikshita@codeaurora.org>
+Subject: [PATCH v3] media: v4l2-ctrl: add control for long term reference.
+Date:   Thu, 15 Oct 2020 16:31:56 +0530
+Message-Id: <1602759716-7584-1-git-send-email-dikshita@codeaurora.org>
+X-Mailer: git-send-email 1.9.1
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Lina,
+LTR (Long Term Reference) frames are the frames that are encoded
+sometime in the past and stored in the DPB buffer list to be used
+as reference to encode future frames.
+This change adds controls to enable this feature.
 
-[...]
+Signed-off-by: Dikshita Agarwal <dikshita@codeaurora.org>
+---
+ .../userspace-api/media/v4l/ext-ctrls-codec.rst    | 25 ++++++++++++++++++++++
+ drivers/media/v4l2-core/v4l2-ctrls.c               | 12 +++++++++++
+ include/uapi/linux/v4l2-controls.h                 |  3 +++
+ 3 files changed, 40 insertions(+)
 
-> >>  5. Runtime PM Initialization, Device Probing and Removal
-> >>  ========================================================
-> >> @@ -639,6 +648,18 @@ suspend routine).  It may be necessary to resume the device and suspend it again
-> >>  in order to do so.  The same is true if the driver uses different power levels
-> >>  or other settings for runtime suspend and system sleep.
-> >>
-> >> +When a device enters idle at runtime, it may trigger the runtime PM up the
-> >> +hierarchy. Devices that have an predictable interrupt pattern, may help
-> >> +influence a better idle state determination of its parent. For example, a
-> >> +display device could get a VSYNC interrupt every 16ms. A PM domain containing
-> >> +the device, could also be entering and exiting idle due to runtime PM
-> >
-> >/containing the device/that has the device attached to it
-> >
-> >> +coordination. If the domain were also entering runtime idle, we would know when
-> >> +the domain would be waken up as a result of the display device waking up. Using
-> >> +the device's next_event, the PM domain governor can make a better choice of the
-> >> +idle state for the domain, knowing it would be be woken up by the device in the
-> >> +near future. This is specially useful when the device is sensitive to its PM
-> >> +domain's idle state enter and exit latencies.
-> >
-> >The above sounds a little hand wavy, can you try to be a little more exact?
-> >
-> I can try and rephrase this. But what I think I should be saying is that
-> if the domain has multiple devices and if some devices are sensitive to
-> the exit latency of the domain idle, then knowing the next wakeup would
-> help the governor make better domain idle state decision.
->
-> >Perhaps, rather than just saying "sensitive to it's PM domain's idle
-> >state..", how about explaining that by using the "next event" the
-> >governor is able to select a more optimal domain idle state, thus we
-> >should avoid wasting energy and better conform to QoS latency
-> >constraints.
-> >
-> QoS is not what we are trying to conform to. We are trying to provide
-> residency information to the domain to help it make better choice. Just
-> like we use the CPU's next wakeup in the cluster domain governor.
+diff --git a/Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst b/Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst
+index ce728c75..6e9240a 100644
+--- a/Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst
++++ b/Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst
+@@ -4382,3 +4382,28 @@ enum v4l2_mpeg_video_hevc_size_of_length_field -
+       - Selecting this value specifies that HEVC slices are expected
+         to be prefixed by Annex B start codes. According to :ref:`hevc`
+         valid start codes can be 3-bytes 0x000001 or 4-bytes 0x00000001.
++
++``V4L2_CID_MPEG_VIDEO_LTR_COUNT (integer)``
++       Specifies the number of LTR frames encoder needs to generate or keep.
++       This control is used to query or configure the number of LTR frames.
++       If LTR Count is more than max supported LTR count by driver,
++       it will be rejected.
++       This is applicable to H264 and HEVC encoder and can be applied using
++       request api.
++
++``V4L2_CID_MPEG_VIDEO_FRAME_LTR_INDEX (integer)``
++       This control is used to mark current frame as LTR frame.
++       this provides a LTR index that ranges from 0 to LTR count-1 and
++       then the particular frame will be marked with that LTR index.
++       This is applicable to H264 and HEVC encoder and can be applied using
++       request api.
++
++``V4L2_CID_MPEG_VIDEO_USE_LTR_FRAME (bitmask)``
++       Specifies the LTR frame(s) to be used for encoding the current frame.
++       This provides a bitmask which consists of bits [0, 15]. A total of N
++       LSB bits of this field are valid, where N is the maximum number of
++       LTRs supported. All the other bits are invalid and should be rejected.
++       The LSB corresponds to the LTR index 0. Bit N-1 from the LSB corresponds
++       to the LTR index max LTR count-1.
++       This is applicable to H264 and HEVC encoder and can be applied using
++       request api.
+diff --git a/drivers/media/v4l2-core/v4l2-ctrls.c b/drivers/media/v4l2-core/v4l2-ctrls.c
+index bd7f330..046198f 100644
+--- a/drivers/media/v4l2-core/v4l2-ctrls.c
++++ b/drivers/media/v4l2-core/v4l2-ctrls.c
+@@ -949,6 +949,9 @@ const char *v4l2_ctrl_get_name(u32 id)
+ 	case V4L2_CID_MPEG_VIDEO_MV_V_SEARCH_RANGE:		return "Vertical MV Search Range";
+ 	case V4L2_CID_MPEG_VIDEO_REPEAT_SEQ_HEADER:		return "Repeat Sequence Header";
+ 	case V4L2_CID_MPEG_VIDEO_FORCE_KEY_FRAME:		return "Force Key Frame";
++	case V4L2_CID_MPEG_VIDEO_LTR_COUNT:			return "LTR Count";
++	case V4L2_CID_MPEG_VIDEO_FRAME_LTR_INDEX:		return "Mark LTR frame index";
++	case V4L2_CID_MPEG_VIDEO_USE_LTR_FRAME:			return "Use LTR Frame";
+ 	case V4L2_CID_MPEG_VIDEO_MPEG2_SLICE_PARAMS:		return "MPEG-2 Slice Parameters";
+ 	case V4L2_CID_MPEG_VIDEO_MPEG2_QUANTIZATION:		return "MPEG-2 Quantization Matrices";
+ 	case V4L2_CID_MPEG_VIDEO_FWHT_PARAMS:			return "FWHT Stateless Parameters";
+@@ -1258,6 +1261,15 @@ void v4l2_ctrl_fill(u32 id, const char **name, enum v4l2_ctrl_type *type,
+ 	case V4L2_CID_MPEG_VIDEO_MV_V_SEARCH_RANGE:
+ 		*type = V4L2_CTRL_TYPE_INTEGER;
+ 		break;
++	case V4L2_CID_MPEG_VIDEO_LTR_COUNT:
++	case V4L2_CID_MPEG_VIDEO_FRAME_LTR_INDEX:
++		*type = V4L2_CTRL_TYPE_INTEGER;
++		*flags |= V4L2_CTRL_FLAG_EXECUTE_ON_WRITE;
++		break;
++	case V4L2_CID_MPEG_VIDEO_USE_LTR_FRAME:
++		*type = V4L2_CTRL_TYPE_BITMASK;
++		*flags |= V4L2_CTRL_FLAG_EXECUTE_ON_WRITE;
++		break;
+ 	case V4L2_CID_MPEG_VIDEO_FORCE_KEY_FRAME:
+ 	case V4L2_CID_PAN_RESET:
+ 	case V4L2_CID_TILT_RESET:
+diff --git a/include/uapi/linux/v4l2-controls.h b/include/uapi/linux/v4l2-controls.h
+index a184c49..3801372 100644
+--- a/include/uapi/linux/v4l2-controls.h
++++ b/include/uapi/linux/v4l2-controls.h
+@@ -415,6 +415,9 @@ enum v4l2_mpeg_video_multi_slice_mode {
+ #define V4L2_CID_MPEG_VIDEO_MV_H_SEARCH_RANGE		(V4L2_CID_MPEG_BASE+227)
+ #define V4L2_CID_MPEG_VIDEO_MV_V_SEARCH_RANGE		(V4L2_CID_MPEG_BASE+228)
+ #define V4L2_CID_MPEG_VIDEO_FORCE_KEY_FRAME		(V4L2_CID_MPEG_BASE+229)
++#define V4L2_CID_MPEG_VIDEO_LTR_COUNT                  (V4L2_CID_MPEG_BASE+230)
++#define V4L2_CID_MPEG_VIDEO_FRAME_LTR_INDEX            (V4L2_CID_MPEG_BASE+231)
++#define V4L2_CID_MPEG_VIDEO_USE_LTR_FRAME              (V4L2_CID_MPEG_BASE+232)
+ 
+ /* CIDs for the MPEG-2 Part 2 (H.262) codec */
+ #define V4L2_CID_MPEG_VIDEO_MPEG2_LEVEL			(V4L2_CID_MPEG_BASE+270)
+-- 
+1.9.1
 
-Yep, that makes perfect sense to me as well. Then, please try to
-clarify this in the above text.
-
-> >> +
-> >>  During system resume, the simplest approach is to bring all devices back to full
-> >>  power, even if they had been suspended before the system suspend began.  There
-> >>  are several reasons for this, including:
-> >> diff --git a/drivers/base/power/runtime.c b/drivers/base/power/runtime.c
-> >> index 8143210a5c54..53c2b3d962bc 100644
-> >> --- a/drivers/base/power/runtime.c
-> >> +++ b/drivers/base/power/runtime.c
-> >> @@ -122,6 +122,33 @@ u64 pm_runtime_suspended_time(struct device *dev)
-> >>  }
-> >>  EXPORT_SYMBOL_GPL(pm_runtime_suspended_time);
-> >>
-> >> +/**
-> >> + * pm_runtime_set_next_wakeup_event - Notify PM framework of an impending event.
-> >> + * @dev: Device to handle
-> >> + * @next: impending interrupt/wakeup for the device
-> >
-> >At what typical points do you expect this function to be called?
-> >
-> Most likely from at the start of the usecase and periodically when the
-> interrupt/work is being handled. I would think this change to a
-> different periodicity when the usecase parameters changes.
-
-Alright, thanks for explaining.
-
->
-> >> + */
-> >> +int pm_runtime_set_next_event(struct device *dev, ktime_t next)
-> >> +{
-> >> +       unsigned long flags;
-> >> +       int ret = -EINVAL;
-> >> +
-> >> +       /*
-> >> +        * Note the next pending wakeup of a device,
-> >> +        * if the device does not have runtime PM enabled.
-> >> +        */
-> >
-> >/s/Note/Store
-> >
-> >Do you really need to check if runtime PM is enabled? Does it matter?
-> >
-> Hmm.. This has no meaning without runtime PM. Any reason why we don't
-> need the check? I am okay to removing the check.
-
-In principle, I want to avoid unnecessary code, thus I am in favor of
-dropping the check. Not a big deal though.
-
->
-> >> +       spin_lock_irqsave(&dev->power.lock, flags);
-> >> +       if (!dev->power.disable_depth) {
-> >> +               if (ktime_before(ktime_get(), next)) {
-> >> +                       dev->power.next_event = next;
-> >> +                       ret = 0;
-> >> +               }
-> >> +       }
-> >> +       spin_unlock_irqrestore(&dev->power.lock, flags);
-> >> +
-> >> +       return ret;
-> >> +}
-> >> +EXPORT_SYMBOL_GPL(pm_runtime_set_next_event);
-
-[...]
-
-Kind regards
-Uffe
