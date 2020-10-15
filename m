@@ -2,115 +2,217 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 6F24F28F924
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Oct 2020 21:03:47 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CD29C28F92E
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Oct 2020 21:08:26 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2391439AbgJOTDq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 15 Oct 2020 15:03:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43386 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2391438AbgJOTDp (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 15 Oct 2020 15:03:45 -0400
-Received: from mail-lj1-x242.google.com (mail-lj1-x242.google.com [IPv6:2a00:1450:4864:20::242])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 37DDCC0613D2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 15 Oct 2020 12:03:44 -0700 (PDT)
-Received: by mail-lj1-x242.google.com with SMTP id y16so4301160ljk.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 15 Oct 2020 12:03:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=vhaZDdXwG9Htyy9xDjuNDYv8IjQyEGy8Xq6PwirKnX0=;
-        b=EUNB8eg9424Pz3MhNKldl/Gb7ORKJB2IZF7A8HYSeXEkaXV1kyQYBUtA4NmwOfV2GJ
-         C793nDdbvoFHUoSrofe6zkCe07kKkCOAXemj0ShENkt5VkAfIj1xJleAwSi1+QzlKBCN
-         /VfsFU8ZZhlHu0gGnebxXcfAxvRMIWFL71Bo8nPSeFEWxzsd4jis1WuRXCRGIlLcwyxY
-         HO8QoSjxBXYUVoWGmMhV77xRQF6q/m/Mw0U8xgItOHrDTMjcu4HFFcbN9KawKqv6VTqC
-         ynuSUsoXiNMlzCO5Ds8xnCmY25YSDikVX1MU3aqHfkZu18+5A7wScX48zL6Nm92x6RJb
-         ObIw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=vhaZDdXwG9Htyy9xDjuNDYv8IjQyEGy8Xq6PwirKnX0=;
-        b=AdHSpeDPJFQ3ozYv/68Tz723DLfC+NyitpN2t6kpd8KDsxA5RLCR+ueOdBZch3n0Ig
-         GRHiBhNXY8ot9ndvUWGAaisZuArn+PsaQ4owdCf3yfrQv52AzkIytZZllVxiDSfYh8CK
-         nQ33OvwRtL5Av1e0eS8Rc7VZS4JJU3FydnO17eQUgP9lxJt/c1dbs9pJciOvfINmnpEp
-         yLq23iw9B8upBhGwDoVjM2mJbLPUhL/BP8DLTOhR2MktCcKYzuipNCkNGgXTB/8rX/c2
-         m2PQi43DGwUQ08+npq+NwVVWMbmBGLaZbEVBpFtRtG1UEvCXg5tFWT9jfVEnBAvew1NR
-         DvCg==
-X-Gm-Message-State: AOAM531Vo9v/4k1h7n5bUjI4Kdj+kqQXpvaYndyx5bDBLITUtQUsuWpo
-        3qyY0eJkaXoRMhULMnPXKf570g==
-X-Google-Smtp-Source: ABdhPJzOf/yetyToCB83zvZHrgJDHli/yZIfn5ryh53Ru5VXPFtzWszJqI2El1p0VvHgPBFP3Tt3XA==
-X-Received: by 2002:a2e:9242:: with SMTP id v2mr62953ljg.115.1602788622679;
-        Thu, 15 Oct 2020 12:03:42 -0700 (PDT)
-Received: from eriador.lan ([94.25.229.2])
-        by smtp.gmail.com with ESMTPSA id 71sm1309781lfm.78.2020.10.15.12.03.40
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 15 Oct 2020 12:03:42 -0700 (PDT)
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Jonathan Marek <jonathan@marek.ca>
-Cc:     Stephen Boyd <sboyd@kernel.org>,
-        Jeffrey Hugo <jeffrey.l.hugo@gmail.com>,
-        Harigovindan P <harigovi@codeaurora.org>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org
-Subject: [PATCH 4/4] drm/msm/dsi_phy_10nm: implement PHY disabling
-Date:   Thu, 15 Oct 2020 22:03:32 +0300
-Message-Id: <20201015190332.1182588-4-dmitry.baryshkov@linaro.org>
-X-Mailer: git-send-email 2.28.0
-In-Reply-To: <20201015190332.1182588-1-dmitry.baryshkov@linaro.org>
-References: <20201015190332.1182588-1-dmitry.baryshkov@linaro.org>
+        id S1726987AbgJOTIZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 15 Oct 2020 15:08:25 -0400
+Received: from m42-4.mailgun.net ([69.72.42.4]:50240 "EHLO m42-4.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726772AbgJOTIZ (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 15 Oct 2020 15:08:25 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1602788903; h=Message-ID: References: In-Reply-To: Reply-To:
+ Subject: Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=b6Pasve4XP6sMo9crSbf6oUkQuOjz2OP+9sxMp1Ny80=;
+ b=BzfuQDKHp9k9UNHxupv0L4ASspaYBHa62kijVZXqwzSOVXmE2feV4b2UGizKzMWNcT2R28Fd
+ HbqlEfoI+WcoqUoFkLkjnQKm5doWZKIZI3isB87UHSTfwE9fYG0/WZHlU2eM8Abojf3BtWxh
+ 4GsVuRLNeMUYqZxEgyeUV7yxvkU=
+X-Mailgun-Sending-Ip: 69.72.42.4
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n02.prod.us-west-2.postgun.com with SMTP id
+ 5f889df542f9861fb1d8477c (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 15 Oct 2020 19:07:33
+ GMT
+Sender: bbhatt=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 9C289C433C9; Thu, 15 Oct 2020 19:07:33 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: bbhatt)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id A5113C433CB;
+        Thu, 15 Oct 2020 19:07:32 +0000 (UTC)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Thu, 15 Oct 2020 12:07:32 -0700
+From:   Bhaumik Bhatt <bbhatt@codeaurora.org>
+To:     Loic Poulain <loic.poulain@linaro.org>,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc:     Hemant Kumar <hemantk@codeaurora.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>
+Subject: Re: [PATCH] bus: mhi: Fix channel close issue on driver remove
+Organization: Qualcomm Innovation Center, Inc.
+Reply-To: bbhatt@codeaurora.org
+Mail-Reply-To: bbhatt@codeaurora.org
+In-Reply-To: <fe76e2fe8f7b7d3201c3e2b6b8018f88@codeaurora.org>
+References: <1602234434-924-1-git-send-email-loic.poulain@linaro.org>
+ <a86c540450437bad818b0baab4e620bc@codeaurora.org>
+ <CAMZdPi9891HAFoiUUQPhsM2FHyoR=bLCPaodJLxjyb05i6sSRA@mail.gmail.com>
+ <fe76e2fe8f7b7d3201c3e2b6b8018f88@codeaurora.org>
+Message-ID: <4208b6b835fab74ebb696324306f3853@codeaurora.org>
+X-Sender: bbhatt@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Implement phy_disable() callback to disable DSI PHY lanes and blocks
-when phy is not used.
+On 2020-10-15 10:47, Bhaumik Bhatt wrote:
+> On 2020-10-09 23:06, Loic Poulain wrote:
+>> HI Bhaumik,
+>> 
+>> On Sat, 10 Oct 2020 at 02:23, <bbhatt@codeaurora.org> wrote:
+>>> 
+>>> On 2020-10-09 02:07, Loic Poulain wrote:
+>>> > Some MHI device drivers need to stop the channels in their driver
+>>> > remove callback (e.g. module unloading), but the unprepare function
+>>> > is aborted because MHI core moved the channels to suspended state
+>>> > prior calling driver remove callback. This prevents the driver to
+>>> > send a proper MHI RESET CHAN command to the device. Device is then
+>>> > unaware of the stopped state of these channels.
+>>> >
+>>> > This causes issue when driver tries to start the channels again (e.g.
+>>> > module is reloaded), since device considers channels as already
+>>> > started (inconsistent state).
+>>> >
+>>> > Fix this by allowing channel reset when channel is suspended.
+>>> >
+>>> > Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
+>>> > ---
+>>> >  drivers/bus/mhi/core/main.c | 3 ++-
+>>> >  1 file changed, 2 insertions(+), 1 deletion(-)
+>>> >
+>>> > diff --git a/drivers/bus/mhi/core/main.c b/drivers/bus/mhi/core/main.c
+>>> > index d20967a..a588eac 100644
+>>> > --- a/drivers/bus/mhi/core/main.c
+>>> > +++ b/drivers/bus/mhi/core/main.c
+>>> > @@ -1232,7 +1232,8 @@ static void __mhi_unprepare_channel(struct
+>>> > mhi_controller *mhi_cntrl,
+>>> >       /* no more processing events for this channel */
+>>> >       mutex_lock(&mhi_chan->mutex);
+>>> >       write_lock_irq(&mhi_chan->lock);
+>>> > -     if (mhi_chan->ch_state != MHI_CH_STATE_ENABLED) {
+>>> > +     if (mhi_chan->ch_state != MHI_CH_STATE_ENABLED &&
+>>> > +         mhi_chan->ch_state != MHI_CH_STATE_SUSPENDED) {
+>>> >               write_unlock_irq(&mhi_chan->lock);
+>>> >               mutex_unlock(&mhi_chan->mutex);
+>>> >               return;
+>>> Hi Loic,
+>>> 
+>>> There should not be any reason for drivers to do an "unprepare" and 
+>>> send
+>>> a reset channel
+>>> command during remove, as the channel context gets cleaned up after 
+>>> the
+>>> remove callback
+>>> returns.
+>> 
+>> Well, a good practice is to have a balanced interface, and everything 
+>> we do in
+>> probe() should be undoable in remove(). Here we start the channel in 
+>> probe()
+>> and explicitly stop them in remove(), So I think doing unprepare in
+>> remove should
+>> work anyway, even if the MHI stack does some cleanup on its own.
+>> 
+> I agree. You are allowed to call "unprepare" but MHI core driver 
+> decides what to
+> do with it. I can explain below why we do nothing if the channel is 
+> suspended.
+>>> 
+>>> 
+>>> We do not want to allow moving from MHI_CH_STATE_SUSPENDED to
+>>> MHI_CH_STATE_DISABLED state
+>>> because if a remove is called, channel context being cleaned up 
+>>> implies
+>>> a reset.
+>> 
+>> AFAIK today, no reset command is sent on remove.
+>> 
+> Yes. That's correct and it can be a problem for modules like yours 
+> because the
+> device never gets notified so it remains unable to clean up its local 
+> info
+> whereas host has moved on already.
+> 
+> Your change must go in to ensure that this clean up happens on device 
+> but there
+> need to be additional changes to make sure that we do not end up 
+> sending any
+> command if unnecessary.
+> 
+> These are the ways we could have a .remove call:
+> 1. An explicit module unload such as yours
+> 2. After a device crash or SYS_ERROR
+> 3. After a host crash or host initiated shutdown where an explicit MHI 
+> RESET is
+> sent due to the host processor powering off MHI.
+> 
+> In cases #2 and #3, we cannot send individual channel reset commands 
+> because
+> MHI on device is already in a RESET state.
+> In #2, device will be dead, so we don't expect to receive any command 
+> responses.
+> In #3, the master switch MHI RESET command lets the device know not to 
+> attempt
+> any DDR accesses so no channel traffic will be there.
+> 
+> Both these cases allow us to clean up the channel context for 
+> individual
+> channels such as yours without the need to send an individual channel 
+> reset.
+> 
+> But in case #1, with your patch in place, if we allow channel reset to 
+> be sent,
+> we will also send this command and wait for a response in cases #2 and 
+> #3.
+> Hence, we need knowledge of MHI_PM_IN_ERROR_STATE() present in the 
+> "unprepare"
+> function or any check that allows us to skip sending a command. My 
+> upcoming set
+> of patches adds that along with other features.
+> 
+> If required, I can push these checks as a separate change to unblock 
+> this.
+>>> 
+>>> Also, I have a bunch of channel state machine related patches coming 
+>>> up
+>>> soon which solve
+>>> this issue and more. We are also introducing some missing features 
+>>> with
+>>> that.
+>>> 
+>>> It would be nice if you can review/comment on those as it overhauls 
+>>> the
+>>> state machine.
+>> 
+>> Sure, feel free to submit.
+>> 
+>> Regards,
+>> Loic
+> 
+> Thanks,
+> Bhaumik
+Hi Loic,
 
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Fixes: ff73ff194060 ("drm/msm/dsi: Populate the 10nm PHY funcs")
----
- drivers/gpu/drm/msm/dsi/phy/dsi_phy_10nm.c | 22 ++++++++++++++++++++++
- 1 file changed, 22 insertions(+)
+Your patch can go in, I see we do have MHI_PM_IN_ERROR_STATE() check in 
+the
+"unprepare" function.
 
-diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_10nm.c b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_10nm.c
-index 47403d4f2d28..d1b92d4dc197 100644
---- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_10nm.c
-+++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_10nm.c
-@@ -192,6 +192,28 @@ static int dsi_10nm_phy_enable(struct msm_dsi_phy *phy, int src_pll_id,
- 
- static void dsi_10nm_phy_disable(struct msm_dsi_phy *phy)
- {
-+	void __iomem *base = phy->base;
-+	u32 data;
-+
-+	DBG("");
-+
-+	if (dsi_phy_hw_v3_0_is_pll_on(phy))
-+		pr_warn("Turning OFF PHY while PLL is on\n");
-+
-+	dsi_phy_hw_v3_0_config_lpcdrx(phy, false);
-+	data = dsi_phy_read(base + REG_DSI_10nm_PHY_CMN_CTRL_0);
-+
-+	/* disable all lanes */
-+	data &= ~0x1F;
-+	dsi_phy_write(base + REG_DSI_10nm_PHY_CMN_CTRL_0, data);
-+	dsi_phy_write(base + REG_DSI_10nm_PHY_CMN_LANE_CTRL0, 0);
-+
-+	/* Turn off all PHY blocks */
-+	dsi_phy_write(base + REG_DSI_10nm_PHY_CMN_CTRL_0, 0x00);
-+	/* make sure phy is turned off */
-+	wmb();
-+
-+	DBG("DSI%d PHY disabled", phy->id);
- }
- 
- static int dsi_10nm_phy_init(struct msm_dsi_phy *phy)
+My patches will refactor and account for your change as well along with 
+others.
+
+Feel free to have it picked up. Moved Mani to "to" for this.
 -- 
-2.28.0
-
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora 
+Forum,
+a Linux Foundation Collaborative Project
