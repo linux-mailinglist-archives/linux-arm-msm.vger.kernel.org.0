@@ -2,126 +2,172 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 72DE628EFF5
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Oct 2020 12:16:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8147128EFFE
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Oct 2020 12:20:20 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2389134AbgJOKPy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 15 Oct 2020 06:15:54 -0400
-Received: from mail.kernel.org ([198.145.29.99]:60946 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2389099AbgJOKPx (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 15 Oct 2020 06:15:53 -0400
-Received: from saruman (88-113-213-94.elisa-laajakaista.fi [88.113.213.94])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 2533920BED;
-        Thu, 15 Oct 2020 10:15:43 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1602756952;
-        bh=Z6L85tl0hUzxc/Wf2yAWwRbRBy0g42YVSMNsAOso/ic=;
-        h=From:To:Cc:Subject:In-Reply-To:References:Date:From;
-        b=WCURctuRAO7apKBpnigKSW4w0RrSEIpplBnDIjs+ve/o+8+46MlY5TmxYzakNSnGt
-         wshd18tKRcbQS+ist8JlaxoOpSixojILJcBphDceJNvzEVJ7nc77SPULh7DZu7zIN5
-         MdYW0FZqoioit4bvm377ZfhSD1iKvlH90Ra8372k=
-From:   Felipe Balbi <balbi@kernel.org>
-To:     Serge Semin <Sergey.Semin@baikalelectronics.ru>
-Cc:     Serge Semin <fancer.lancer@gmail.com>,
-        Mathias Nyman <mathias.nyman@intel.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Jason Cooper <jason@lakedaemon.net>,
-        Andrew Lunn <andrew@lunn.ch>,
-        Gregory Clement <gregory.clement@bootlin.com>,
-        Sebastian Hesselbarth <sebastian.hesselbarth@gmail.com>,
-        Kukjin Kim <kgene@kernel.org>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        Santosh Shilimkar <ssantosh@kernel.org>,
-        Shawn Guo <shawnguo@kernel.org>, Li Yang <leoyang.li@nxp.com>,
-        =?utf-8?Q?Beno=C3=AEt?= Cousson <bcousson@baylibre.com>,
-        Tony Lindgren <tony@atomide.com>,
-        Patrice Chotard <patrice.chotard@st.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        Chen-Yu Tsai <wens@csie.org>, Wei Xu <xuwei5@hisilicon.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Alexey Malahov <Alexey.Malahov@baikalelectronics.ru>,
-        Pavel Parkhomenko <Pavel.Parkhomenko@baikalelectronics.ru>,
-        Manu Gautam <mgautam@codeaurora.org>,
-        Roger Quadros <rogerq@ti.com>,
-        Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
-        Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
-        Neil Armstrong <narmstrong@baylibre.com>,
-        Kevin Hilman <khilman@baylibre.com>,
-        linux-arm-kernel@lists.infradead.org,
-        linux-snps-arc@lists.infradead.org, linux-mips@vger.kernel.org,
-        linuxppc-dev@lists.ozlabs.org, linux-usb@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-samsung-soc@vger.kernel.org, linux-omap@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH 20/20] arch: dts: Fix DWC USB3 DT nodes name
-In-Reply-To: <20201014143720.yny3jco5pkb7dr4b@mobilestation>
-References: <20201014101402.18271-1-Sergey.Semin@baikalelectronics.ru>
- <20201014101402.18271-21-Sergey.Semin@baikalelectronics.ru>
- <878sc8lx0e.fsf@kernel.org>
- <20201014143720.yny3jco5pkb7dr4b@mobilestation>
-Date:   Thu, 15 Oct 2020 13:15:37 +0300
-Message-ID: <875z7blrqu.fsf@kernel.org>
+        id S1728368AbgJOKUT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 15 Oct 2020 06:20:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46726 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728010AbgJOKUT (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 15 Oct 2020 06:20:19 -0400
+Received: from mail-vk1-xa41.google.com (mail-vk1-xa41.google.com [IPv6:2607:f8b0:4864:20::a41])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CAC17C0613D2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 15 Oct 2020 03:20:18 -0700 (PDT)
+Received: by mail-vk1-xa41.google.com with SMTP id y10so488442vkl.5
+        for <linux-arm-msm@vger.kernel.org>; Thu, 15 Oct 2020 03:20:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=eizBoQQKVpNO5IDneAKG8iIJq6JQrygg2otwS/bKlv8=;
+        b=OQvcO3zpAjbzKw0Rnyvu/gQRts8P6THqF3lg62XaP6I/q4POFY71HYz1n4dpKhf5TV
+         mF7vj/b0UMrD3jY9vts+2HRxlnAnDPTKM5Cqm7DjZ+tpUxdSQ9/Tx004CprkUYxyfL8U
+         BgfxfSAaN4NQFBFSrpYkrGIRmT2xl6kT7HMxszbti8IAvqMRa2U4C1eCVtGBNb2UwEjz
+         xOPXoM6eFjtkST50rJaR7BgcwdFg5jWSdwNWZ6O+wxN2F8RgwGZYXZ+ZO1TWlWexLShN
+         OrwxGynm7LrWUZ9XG5bHz3s0TKZyYwPyJauxmlJnT9Gud7+qwWwDUSuXY+ecIqiEK+P5
+         3obg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=eizBoQQKVpNO5IDneAKG8iIJq6JQrygg2otwS/bKlv8=;
+        b=TO/FcqCkjYg09pRN4vw655l//6BKK5tfCrWi5gV5I++WxKtR+B3VM1kjPibS2Ufui6
+         SjxRdZWczQKQQUagHkaj73BLSO55zkQrzm2tApYlPJcD7Qv2L3jaX7tdBW3yJdl88D0R
+         +vmhcj6Wc3yoQxsRA06iio85M1AreoIQnu9lrf4g9JuZWT2TJhKqqn3PA3EVoV7fMcNX
+         aAK5EEu/vGb3xF4LC71LK78Xf1PpJFjM5QS8nCHQ7UYeNchbAoC2UdZ8U6yGwKpo75Tc
+         98we++JATUEZLNZhnV/K8xcNTaO4tcomE7CXmAvobanyyvoTHE8NV8TJ3Fx9Ln1lXvDM
+         y9Hg==
+X-Gm-Message-State: AOAM532/N3y+WLh5uqBqEVZijY7YdFEKkMjxOkufgD0aEGDSZRKQMcHR
+        8xKj4IR41j9KQBVV7s7wjcv5J8XAez9S1TRulunz9Q==
+X-Google-Smtp-Source: ABdhPJwa4UE+W/NtcGqBaolZiQE1kZsFmYEerbF0AKnlp5/09M8WePaYTt+iFnkDUHww9m/V8zskwO7481+CBeftdJY=
+X-Received: by 2002:ac5:c1ca:: with SMTP id g10mr2105330vkk.6.1602757217834;
+ Thu, 15 Oct 2020 03:20:17 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/signed; boundary="=-=-=";
-        micalg=pgp-sha256; protocol="application/pgp-signature"
+References: <20201012223400.23609-1-ilina@codeaurora.org> <20201012223400.23609-2-ilina@codeaurora.org>
+ <CAPDyKFo0KrxQ8W0pawEca0_Ae0gs3OSBzHN2KY85YMnQp3ek8Q@mail.gmail.com> <20201014163120.GJ2908@codeaurora.org>
+In-Reply-To: <20201014163120.GJ2908@codeaurora.org>
+From:   Ulf Hansson <ulf.hansson@linaro.org>
+Date:   Thu, 15 Oct 2020 12:19:41 +0200
+Message-ID: <CAPDyKFrND192Khga6CEvFBxJjZ+rzM6wAUkyh5LOQvtXLM0osg@mail.gmail.com>
+Subject: Re: [PATCH 1/2] PM / runtime: register device's next wakeup
+To:     Lina Iyer <ilina@codeaurora.org>
+Cc:     "Rafael J. Wysocki" <rjw@rjwysocki.net>,
+        Linux PM <linux-pm@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
---=-=-=
-Content-Type: text/plain
-Content-Transfer-Encoding: quoted-printable
+Hi Lina,
 
-Serge Semin <Sergey.Semin@baikalelectronics.ru> writes:
+[...]
 
-> On Wed, Oct 14, 2020 at 05:09:37PM +0300, Felipe Balbi wrote:
->>=20
->> Hi Serge,
->>=20
->> Serge Semin <Sergey.Semin@baikalelectronics.ru> writes:
->> > In accordance with the DWC USB3 bindings the corresponding node name is
->> > suppose to comply with Generic USB HCD DT schema, which requires the U=
-SB
->>=20
+> >>  5. Runtime PM Initialization, Device Probing and Removal
+> >>  ========================================================
+> >> @@ -639,6 +648,18 @@ suspend routine).  It may be necessary to resume the device and suspend it again
+> >>  in order to do so.  The same is true if the driver uses different power levels
+> >>  or other settings for runtime suspend and system sleep.
+> >>
+> >> +When a device enters idle at runtime, it may trigger the runtime PM up the
+> >> +hierarchy. Devices that have an predictable interrupt pattern, may help
+> >> +influence a better idle state determination of its parent. For example, a
+> >> +display device could get a VSYNC interrupt every 16ms. A PM domain containing
+> >> +the device, could also be entering and exiting idle due to runtime PM
+> >
+> >/containing the device/that has the device attached to it
+> >
+> >> +coordination. If the domain were also entering runtime idle, we would know when
+> >> +the domain would be waken up as a result of the display device waking up. Using
+> >> +the device's next_event, the PM domain governor can make a better choice of the
+> >> +idle state for the domain, knowing it would be be woken up by the device in the
+> >> +near future. This is specially useful when the device is sensitive to its PM
+> >> +domain's idle state enter and exit latencies.
+> >
+> >The above sounds a little hand wavy, can you try to be a little more exact?
+> >
+> I can try and rephrase this. But what I think I should be saying is that
+> if the domain has multiple devices and if some devices are sensitive to
+> the exit latency of the domain idle, then knowing the next wakeup would
+> help the governor make better domain idle state decision.
 >
->> DWC3 is not a simple HDC, though.
+> >Perhaps, rather than just saying "sensitive to it's PM domain's idle
+> >state..", how about explaining that by using the "next event" the
+> >governor is able to select a more optimal domain idle state, thus we
+> >should avoid wasting energy and better conform to QoS latency
+> >constraints.
+> >
+> QoS is not what we are trying to conform to. We are trying to provide
+> residency information to the domain to help it make better choice. Just
+> like we use the CPU's next wakeup in the cluster domain governor.
+
+Yep, that makes perfect sense to me as well. Then, please try to
+clarify this in the above text.
+
+> >> +
+> >>  During system resume, the simplest approach is to bring all devices back to full
+> >>  power, even if they had been suspended before the system suspend began.  There
+> >>  are several reasons for this, including:
+> >> diff --git a/drivers/base/power/runtime.c b/drivers/base/power/runtime.c
+> >> index 8143210a5c54..53c2b3d962bc 100644
+> >> --- a/drivers/base/power/runtime.c
+> >> +++ b/drivers/base/power/runtime.c
+> >> @@ -122,6 +122,33 @@ u64 pm_runtime_suspended_time(struct device *dev)
+> >>  }
+> >>  EXPORT_SYMBOL_GPL(pm_runtime_suspended_time);
+> >>
+> >> +/**
+> >> + * pm_runtime_set_next_wakeup_event - Notify PM framework of an impending event.
+> >> + * @dev: Device to handle
+> >> + * @next: impending interrupt/wakeup for the device
+> >
+> >At what typical points do you expect this function to be called?
+> >
+> Most likely from at the start of the usecase and periodically when the
+> interrupt/work is being handled. I would think this change to a
+> different periodicity when the usecase parameters changes.
+
+Alright, thanks for explaining.
+
 >
-> Yeah, strictly speaking it is equipped with a lot of vendor-specific stuf=
-f,
-> which are tuned by the DWC USB3 driver in the kernel. But after that the
-> controller is registered as xhci-hcd device so it's serviced by the xHCI =
-driver,
+> >> + */
+> >> +int pm_runtime_set_next_event(struct device *dev, ktime_t next)
+> >> +{
+> >> +       unsigned long flags;
+> >> +       int ret = -EINVAL;
+> >> +
+> >> +       /*
+> >> +        * Note the next pending wakeup of a device,
+> >> +        * if the device does not have runtime PM enabled.
+> >> +        */
+> >
+> >/s/Note/Store
+> >
+> >Do you really need to check if runtime PM is enabled? Does it matter?
+> >
+> Hmm.. This has no meaning without runtime PM. Any reason why we don't
+> need the check? I am okay to removing the check.
 
-in Dual-role or host-only builds, that's correct. We can also have
-peripheral-only builds (both SW or HW versions) which means xhci isn't
-even in the picture.
+In principle, I want to avoid unnecessary code, thus I am in favor of
+dropping the check. Not a big deal though.
 
-=2D-=20
-balbi
+>
+> >> +       spin_lock_irqsave(&dev->power.lock, flags);
+> >> +       if (!dev->power.disable_depth) {
+> >> +               if (ktime_before(ktime_get(), next)) {
+> >> +                       dev->power.next_event = next;
+> >> +                       ret = 0;
+> >> +               }
+> >> +       }
+> >> +       spin_unlock_irqrestore(&dev->power.lock, flags);
+> >> +
+> >> +       return ret;
+> >> +}
+> >> +EXPORT_SYMBOL_GPL(pm_runtime_set_next_event);
 
---=-=-=
-Content-Type: application/pgp-signature; name="signature.asc"
+[...]
 
------BEGIN PGP SIGNATURE-----
-
-iQJFBAEBCAAvFiEElLzh7wn96CXwjh2IzL64meEamQYFAl+IIUoRHGJhbGJpQGtl
-cm5lbC5vcmcACgkQzL64meEamQZO3Q//SiuQrPc8kbjk55HntU2Nq2ql7KHubHOj
-ZhrcegAbPbzA0vqIIasxjkXAC8Abbz3Bn59kDuu0ohRtTG1sKXMrN1aqkIo1tTh+
-zkF7t+k5cdunzJ19jb0lohFu/eDK0JPuXRoByJfUhbxIZfWbacO7bG8TkClU7zhL
-denO6pfQG1nOetdAaHZV9imMuTKJOrnl+bcHx5tNcV9sH02sC6OVXBn4dN5ZnABf
-/FdDd671tZMcz43t7jm1vNk7yxgZPSqQ6myBeXQ45ZL2mn9i0gyi4eEWy29vLwu9
-kVUhb9nrliaBsf/X/+oh05qRACLg/noIcuSpXMtu8tmR2DIcwDijYG8XOsBaDLEj
-ZYSJju7/JQ2XUmrS2s/xWtjcqQN0ZxVsJx0Vy4JZNRQ404qs2cqjDeUFdclP+fdJ
-90W74TKzXS1/t52pQyG84LSM648I/7PhUWara2RV9jds7XPgFuFCwWTxEKkyQCSW
-ayPWVASHrKX0Kzp77GW2UUILCIo+luyMMd7V/BraTI6L+PMBL6+etB/O72UUXdb9
-E2hQyJojMpg7BZ6dnpLcvbtHetLtW1hLisTOfD3NbPUyJzPJAgLt8D77SN5ncTUy
-nC8/57GA0Bs2uzYEB6TlPV4i7c9tLT3MJrlVE/p4uziQ7R/b34xbHDX3xNcspk9Q
-vO7uMM8lF9I=
-=XrV0
------END PGP SIGNATURE-----
---=-=-=--
+Kind regards
+Uffe
