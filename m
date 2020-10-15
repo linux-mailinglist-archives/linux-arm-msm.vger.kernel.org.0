@@ -2,143 +2,139 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 2A20528F652
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Oct 2020 18:03:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2485E28F67B
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Oct 2020 18:13:03 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2389391AbgJOQDB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 15 Oct 2020 12:03:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43528 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2389309AbgJOQDB (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 15 Oct 2020 12:03:01 -0400
-Received: from mail-pl1-x643.google.com (mail-pl1-x643.google.com [IPv6:2607:f8b0:4864:20::643])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 165BAC061755
-        for <linux-arm-msm@vger.kernel.org>; Thu, 15 Oct 2020 09:03:01 -0700 (PDT)
-Received: by mail-pl1-x643.google.com with SMTP id w11so1845027pll.8
-        for <linux-arm-msm@vger.kernel.org>; Thu, 15 Oct 2020 09:03:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=Iv2OYAnv0SA23u+SDCrJEFVeIFrM8td2tmeExloIU5M=;
-        b=WMP4y67p7K2jBWI8kiEW/1mYKERGeEA8o4azow+B1ckeg5kmfX0f0KUshy0CIDEzvZ
-         ECOITkGCaMHeGCe1f8GRrsbhbRh7kEUWzQYYS2HfyontUnA8rPrUcVddem9BHoofetTR
-         JDACBNsZUzKEhdFB28TxjiHCL4s0UfHm2lJi/2zD3rYVujTQVpmh8txHyXUM3L/J6ATh
-         ZttJ68BfA/++TMOSM5r6ruoOqSiIF4DgLbuOQjfg1SF1mO87JGQJP2mjPJV57v0bKpoS
-         tjeejwK48/Ix3bnLBLsGi04q6grhk850aFoW1h1bIOvdChjissWnNXgzk7Wdq4CpnzHZ
-         hMWQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=Iv2OYAnv0SA23u+SDCrJEFVeIFrM8td2tmeExloIU5M=;
-        b=Dn3YpZZDMXgOZsbFx89uF+xOlniiK61OJ2yjoWxJNIgUyQOkbGCxKggPAkUoVdL2VL
-         P3JHDamG408033/TM2+DvWsZfv8jvDkVD/3aeH9+RTjc6CSmtQACQmOjHbIWipgJDivV
-         eWpJbITXxbWTii7onNBICZXTVUDGDtzsJn3OmmgOXjrAq6MIcglTPuZUC8wlrk7OMNGy
-         WKkovnjjjMpcwmHsH1rKhz4GlfVHuL1bHS4GSY5hNotm27IobpnoctnQxDNDmeBtJaD4
-         xZpCjWpMveC10Gx9G+hHvRYlYr+IG+jYzdK4f3xjj/Vk488W/ggqG0cNzMXl+EOVKJyn
-         QLpg==
-X-Gm-Message-State: AOAM531GKqFNk38/dw8UDa9/yTfB6Jll874ccpjTVeGuNmfnbYq80Fw5
-        Xw04Zj0W8YEgg5rkg7K97T5W7Q==
-X-Google-Smtp-Source: ABdhPJwfIKbf4iP20eUHbQ17ExMMt9lJlaF7boqyuBwhO2o5YDtjBcdTQ4yl+RKs1Dq25HBcaUH+wQ==
-X-Received: by 2002:a17:90a:1702:: with SMTP id z2mr5026194pjd.88.1602777780374;
-        Thu, 15 Oct 2020 09:03:00 -0700 (PDT)
-Received: from xps15 (S0106002369de4dac.cg.shawcable.net. [68.147.8.254])
-        by smtp.gmail.com with ESMTPSA id s186sm3920831pfc.171.2020.10.15.09.02.59
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 15 Oct 2020 09:02:59 -0700 (PDT)
-Date:   Thu, 15 Oct 2020 10:02:57 -0600
-From:   Mathieu Poirier <mathieu.poirier@linaro.org>
-To:     Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-Cc:     Suzuki K Poulose <suzuki.poulose@arm.com>,
-        Mike Leach <mike.leach@linaro.org>, coresight@lists.linaro.org,
-        Stephen Boyd <swboyd@chromium.org>,
-        Denis Nikitin <denik@chromium.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org
-Subject: Re: [PATCH] coresight: etm4x: Add config to exclude kernel mode
- tracing
-Message-ID: <20201015160257.GA1450102@xps15>
-References: <20201015124522.1876-1-saiprakash.ranjan@codeaurora.org>
+        id S2389301AbgJOQM7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 15 Oct 2020 12:12:59 -0400
+Received: from mail.kernel.org ([198.145.29.99]:48910 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S2388461AbgJOQM7 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 15 Oct 2020 12:12:59 -0400
+Received: from localhost (fw-tnat.cambridge.arm.com [217.140.96.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id E68D421D7F;
+        Thu, 15 Oct 2020 16:12:57 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1602778378;
+        bh=wYeGNA65xooghznt1NdP+AJ2P2uDRvjHr3QQlhRQdJE=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=zv64p4zBHeZ3PPxAhPoimJW4wUmg5nR1YqruXK6ydTfrKj6gxgDs/npmBfiBUDRPJ
+         nsmJobGaaDVM4rUT1Y/GTiitd3qgAuMtyxsJFK1Q7wbh8egz6TfyLLrxay9FmUCqOf
+         RgqjlfejcNXGsg3/jrusuIfun2/skkP3Alzhz6xA=
+Date:   Thu, 15 Oct 2020 17:12:51 +0100
+From:   Mark Brown <broonie@kernel.org>
+To:     Cheng-yi Chiang <cychiang@chromium.org>
+Cc:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        linux-kernel <linux-kernel@vger.kernel.org>,
+        Taniya Das <tdas@codeaurora.org>,
+        Rohit kumar <rohitkr@codeaurora.org>,
+        Banajit Goswami <bgoswami@codeaurora.org>,
+        Patrick Lai <plai@codeaurora.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Jaroslav Kysela <perex@perex.cz>,
+        Takashi Iwai <tiwai@suse.com>,
+        Stephan Gerhold <stephan@gerhold.net>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        Heiko Stuebner <heiko@sntech.de>,
+        Srinivasa Rao <srivasam@codeaurora.org>,
+        Doug Anderson <dianders@chromium.org>,
+        Dylan Reid <dgreid@chromium.org>,
+        Tzung-Bi Shih <tzungbi@chromium.org>,
+        Linux ARM <linux-arm-kernel@lists.infradead.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>,
+        "moderated list:SOUND - SOC LAYER / DYNAMIC AUDIO POWER MANAGEM..." 
+        <alsa-devel@alsa-project.org>,
+        "moderated list:ARM/Mediatek SoC support" 
+        <linux-mediatek@lists.infradead.org>,
+        "open list:ARM/Rockchip SoC..." <linux-rockchip@lists.infradead.org>
+Subject: Re: [PATCH v11 2/3] ASoC: qcom: dt-bindings: Add sc7180 machine
+ bindings
+Message-ID: <20201015161251.GF4390@sirena.org.uk>
+References: <20200914080619.4178587-1-cychiang@chromium.org>
+ <20200914080619.4178587-3-cychiang@chromium.org>
+ <7bdc0d63-27b1-f99e-c5f8-65f880733d16@linaro.org>
+ <CAFv8NwLkvxX2avoLY+4NY5gBv0dQ863hFFiqy7iQOJxH4WenmQ@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="Pgaa2uWPnPrfixyx"
 Content-Disposition: inline
-In-Reply-To: <20201015124522.1876-1-saiprakash.ranjan@codeaurora.org>
+In-Reply-To: <CAFv8NwLkvxX2avoLY+4NY5gBv0dQ863hFFiqy7iQOJxH4WenmQ@mail.gmail.com>
+X-Cookie: Neutrinos have bad breadth.
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Oct 15, 2020 at 06:15:22PM +0530, Sai Prakash Ranjan wrote:
-> On production systems with ETMs enabled, it is preferred to
-> exclude kernel mode(NS EL1) tracing for security concerns and
-> support only userspace(NS EL0) tracing. So provide an option
-> via kconfig to exclude kernel mode tracing if it is required.
-> This config is disabled by default and would not affect the
-> current configuration which has both kernel and userspace
-> tracing enabled by default.
->
 
-One requires root access (or be part of a special trace group) to be able to use
-the cs_etm PMU.  With this kind of elevated access restricting tracing at EL1
-provides little in terms of security.
+--Pgaa2uWPnPrfixyx
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-Thanks,
-Mathieu
- 
-> Signed-off-by: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-> ---
->  drivers/hwtracing/coresight/Kconfig                | 9 +++++++++
->  drivers/hwtracing/coresight/coresight-etm4x-core.c | 6 +++++-
->  2 files changed, 14 insertions(+), 1 deletion(-)
-> 
-> diff --git a/drivers/hwtracing/coresight/Kconfig b/drivers/hwtracing/coresight/Kconfig
-> index c1198245461d..52435de8824c 100644
-> --- a/drivers/hwtracing/coresight/Kconfig
-> +++ b/drivers/hwtracing/coresight/Kconfig
-> @@ -110,6 +110,15 @@ config CORESIGHT_SOURCE_ETM4X
->  	  To compile this driver as a module, choose M here: the
->  	  module will be called coresight-etm4x.
->  
-> +config CORESIGHT_ETM4X_EXCL_KERN
-> +	bool "Coresight ETM 4.x exclude kernel mode tracing"
-> +	depends on CORESIGHT_SOURCE_ETM4X
-> +	help
-> +	  This will exclude kernel mode(NS EL1) tracing if enabled. This option
-> +	  will be useful to provide more flexible options on production systems
-> +	  where only userspace(NS EL0) tracing might be preferred for security
-> +	  reasons.
-> +
->  config CORESIGHT_STM
->  	tristate "CoreSight System Trace Macrocell driver"
->  	depends on (ARM && !(CPU_32v3 || CPU_32v4 || CPU_32v4T)) || ARM64
-> diff --git a/drivers/hwtracing/coresight/coresight-etm4x-core.c b/drivers/hwtracing/coresight/coresight-etm4x-core.c
-> index abd706b216ac..7e5669e5cd1f 100644
-> --- a/drivers/hwtracing/coresight/coresight-etm4x-core.c
-> +++ b/drivers/hwtracing/coresight/coresight-etm4x-core.c
-> @@ -832,6 +832,9 @@ static u64 etm4_get_ns_access_type(struct etmv4_config *config)
->  {
->  	u64 access_type = 0;
->  
-> +	if (IS_ENABLED(CONFIG_CORESIGHT_ETM4X_EXCL_KERN))
-> +		config->mode |= ETM_MODE_EXCL_KERN;
-> +
->  	/*
->  	 * EXLEVEL_NS, bits[15:12]
->  	 * The Exception levels are:
-> @@ -849,7 +852,8 @@ static u64 etm4_get_ns_access_type(struct etmv4_config *config)
->  		access_type = ETM_EXLEVEL_NS_HYP;
->  	}
->  
-> -	if (config->mode & ETM_MODE_EXCL_USER)
-> +	if (config->mode & ETM_MODE_EXCL_USER &&
-> +	    !IS_ENABLED(CONFIG_CORESIGHT_ETM4X_EXCL_KERN))
->  		access_type |= ETM_EXLEVEL_NS_APP;
->  
->  	return access_type;
-> 
-> base-commit: 3477326277451000bc667dfcc4fd0774c039184c
-> -- 
-> QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
-> of Code Aurora Forum, hosted by The Linux Foundation
-> 
+On Thu, Oct 15, 2020 at 03:59:26PM +0800, Cheng-yi Chiang wrote:
+> On Tue, Oct 13, 2020 at 6:36 PM Srinivas Kandagatla
+
+> > > +properties:
+> > > +  compatible:
+> > > +    const: qcom,sc7180-sndcard-rt5682-m98357-1mic
+
+> > This information can come from the dai link description itself, why
+> > should compatible string have this information?
+
+> I think dailink description is not enough to specify everything
+> machine driver needs to know.
+> E.g. there is a variation where there are front mic and rear mic. We
+> need to tell the machine driver about it so
+> it can create proper widget, route, and controls.
+
+That sounds like something that could be better described with
+properties (including for example the existing bindings used for setting
+up things like analogue outputs and DAPM routes)?
+
+> The codec combination also matters. There will be a variation where
+> rt5682 is replaced with adau7002 for dmic.
+> Although machine driver can derive some information by looking at dailink,
+> I think specifying it explicitly in the compatible string is easier to
+> tell what machine driver should do, e.g.
+> setting PLL related to rt5682 or not.
+
+These feel more like things that fit with compatible, though please take
+a look at Morimoto-san's (CCed) work on generic sound cards for more
+complex devices:
+
+   https://lore.kernel.org/alsa-devel/87imbeybq5.wl-kuninori.morimoto.gx@renesas.com/
+
+This is not yet implemented but it'd be good to make sure that the
+Qualcomm systems can be handled too in future.
+
+> You can see widget, route, controls are used according to the configuration.
+> The alternative approach is to check whether "dmic-gpio" property
+> exists to decide adding these stuff or not.
+> But it makes the intent less easier to understand.
+
+OTOH if you have lots of compatibles then it can get hard to work out
+exactly which one corresponds to a given board.
+
+--Pgaa2uWPnPrfixyx
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAl+IdQIACgkQJNaLcl1U
+h9Cs0gf/aR5zd1VPFM/nOmIp2Or27oiqOMSopuxWeT8ZLdCC0srj7gRTUI8522lz
+izypzvOW3riGLBh7X3uPWB5LyKHA80pa0yhNrAdJLBzmW0V5OlJ5Wt9VBz4V+qyq
+oIfmqS/jhFQ4pPGdKQDPhV2NPLK7NT40qcSmCuqrCPR49XcqvTUt7PmETCp1LuqC
+p5vUj1AqXOHLBRbmy6yc7svns2YEGkH3bxd5MED59nadECZl8QmCVWW+VHERFMnf
+r5J8EW8FiPMaE6WRwmzf7KdPDHmfFJrRbCGjq9SiwS1qGre7qUdXm0lGagA3YUIq
+KhE0K1VXxuMUGRohRmQ/sE555zuDBw==
+=ZOAb
+-----END PGP SIGNATURE-----
+
+--Pgaa2uWPnPrfixyx--
