@@ -2,87 +2,107 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 3DB1928F8DB
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Oct 2020 20:48:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 452F028F91E
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Oct 2020 21:03:44 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728729AbgJOSsB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 15 Oct 2020 14:48:01 -0400
-Received: from z5.mailgun.us ([104.130.96.5]:49145 "EHLO z5.mailgun.us"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726037AbgJOSsB (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 15 Oct 2020 14:48:01 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1602787680; h=Message-Id: Date: Subject: Cc: To: From:
- Sender; bh=B8lOXAcm+/ugLwAWCtJF7DzjnDIgFnngZ2Vc5EQ5emA=; b=BAPF6Y4Wzt5QW/fJQQGKA20Wxy+6IaqXLiybax6n/IlCqqw5k1CmZEVbvfdvlKB35uprhFR3
- tcDBzdAIBf++j5Zpwed8HAlhPCtSHXlOyhd7hMypXE7pB401gkGlMKwiC39dyQOrocXOtLRA
- pemZ2yaB9dw+kSx8AOiqFoZzIEA=
-X-Mailgun-Sending-Ip: 104.130.96.5
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n06.prod.us-east-1.postgun.com with SMTP id
- 5f8899603711fec7b105cf66 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 15 Oct 2020 18:48:00
- GMT
-Sender: bbhatt=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 531D0C43382; Thu, 15 Oct 2020 18:47:59 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
-        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
-Received: from malabar-linux.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: bbhatt)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 62367C433C9;
-        Thu, 15 Oct 2020 18:47:58 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 62367C433C9
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=bbhatt@codeaurora.org
-From:   Bhaumik Bhatt <bbhatt@codeaurora.org>
-To:     manivannan.sadhasivam@linaro.org
-Cc:     linux-arm-msm@vger.kernel.org, hemantk@codeaurora.org,
-        jhugo@codeaurora.org, linux-kernel@vger.kernel.org,
-        skhan@linuxfoundation.org, Bhaumik Bhatt <bbhatt@codeaurora.org>
-Subject: [PATCH] bus: mhi: core: Remove double locking from mhi_driver_remove()
-Date:   Thu, 15 Oct 2020 11:47:51 -0700
-Message-Id: <1602787671-9497-1-git-send-email-bbhatt@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
+        id S2391437AbgJOTDj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 15 Oct 2020 15:03:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43362 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2391436AbgJOTDj (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 15 Oct 2020 15:03:39 -0400
+Received: from mail-lf1-x143.google.com (mail-lf1-x143.google.com [IPv6:2a00:1450:4864:20::143])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D8085C061755
+        for <linux-arm-msm@vger.kernel.org>; Thu, 15 Oct 2020 12:03:37 -0700 (PDT)
+Received: by mail-lf1-x143.google.com with SMTP id 184so4827140lfd.6
+        for <linux-arm-msm@vger.kernel.org>; Thu, 15 Oct 2020 12:03:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=7YS0cP3DNPcvbNXRWVhMLK0IxI1d+qLuJ8TulIiLDZ0=;
+        b=R6AIOc5WJ33f0BpBRKWYPfmzPqDTmiRJK6HbByTEodetAfGJmFjYidA1TNiqjvR4Fi
+         +z1TNNeyEyau6GtusqefeTQnKj5EcAJpmjSyGJsRm4kY0+nEU/tuqZaM645x9d52EkfJ
+         XlL9lbev6DTnB4JsfiHTcsinc3sEuY5IWeieKnPKFav7EuFVVDRflL68jIvC95bn0frl
+         ORFaopwANTwpTD6Yiy8F9m+79timzuVAvJkC66NNbUskf8Zvx8F7rJhZzbzksEu1tGPC
+         TnNB5kTXKRU103n6pq7CvDUmOa/QkY1XLAknl7zyYtDYikwQOcsZTXxzyVWNSIv/3QC6
+         4zzw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=7YS0cP3DNPcvbNXRWVhMLK0IxI1d+qLuJ8TulIiLDZ0=;
+        b=YiIJ5HSUErfbmRU2fgBsgMzZ6o9AH0SxwJ2vy8os+p9rwBPqDVeZc19el1ZOlWwuhG
+         C5qFMdOrZ0JJCch0zDsnS3dGe6E7pCIQVTnHp0k5vWlWm3kIlCSTVZiJOz+Hac3/shHx
+         CGIjzZlXzOsIkfPOgO12Fwucom26Jp6/dAzjVPzKEk9dDZyoySZl86fkueDiBOyRxcOy
+         UO29FXxO4U5kw4zKvt7Wu06x3G1/DHPUrPzYKRbgNTxYcp7zNyDxQ6L9ms1wme9pSbwe
+         W6v7donxTygXGmWAs9K6qQ8VqavNzdzt7PAr+Ea6qE72mKl6ZIyOR/4muSyXNrTKc7bg
+         cTNQ==
+X-Gm-Message-State: AOAM530Ze+Z7x51U3prNZP+IbsWZVDQsOebZwQyTjGevk4JpfrZX2fK2
+        pc998b5dsM6FLR3mepQsUgfN1Q==
+X-Google-Smtp-Source: ABdhPJyrLs7S6IIec/2X2Mr3xlDlbDJAbGZIbUGS6+Evt+QFdDtmpf67+WxUOYXCG2lMLvxRifri5g==
+X-Received: by 2002:a19:c3d6:: with SMTP id t205mr21117lff.84.1602788616297;
+        Thu, 15 Oct 2020 12:03:36 -0700 (PDT)
+Received: from eriador.lan ([94.25.229.2])
+        by smtp.gmail.com with ESMTPSA id 71sm1309781lfm.78.2020.10.15.12.03.34
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 15 Oct 2020 12:03:35 -0700 (PDT)
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Jonathan Marek <jonathan@marek.ca>
+Cc:     Stephen Boyd <sboyd@kernel.org>,
+        Jeffrey Hugo <jeffrey.l.hugo@gmail.com>,
+        Harigovindan P <harigovi@codeaurora.org>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org
+Subject: [PATCH 1/4] drm/msm/dsi_pll_7nm: restore VCO rate during restore_state
+Date:   Thu, 15 Oct 2020 22:03:29 +0300
+Message-Id: <20201015190332.1182588-1-dmitry.baryshkov@linaro.org>
+X-Mailer: git-send-email 2.28.0
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-There is double acquisition of the pm_lock from mhi_driver_remove()
-function. Remove the read_lock_bh/read_unlock_bh calls for pm_lock
-taken during a call to mhi_device_put() as the lock is acquired
-within the function already. This will help avoid a potential
-kernel panic.
+PHY disable/enable resets PLL registers to default values. Thus in
+addition to restoring several registers we also need to restore VCO rate
+settings.
 
-Fixes: 189ff97cca53 ("bus: mhi: core: Add support for data transfer")
-Reported-by: Shuah Khan <skhan@linuxfoundation.org>
-Signed-off-by: Bhaumik Bhatt <bbhatt@codeaurora.org>
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Fixes: 1ef7c99d145c ("drm/msm/dsi: add support for 7nm DSI PHY/PLL")
 ---
- drivers/bus/mhi/core/init.c | 2 --
- 1 file changed, 2 deletions(-)
+ drivers/gpu/drm/msm/dsi/pll/dsi_pll_7nm.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/drivers/bus/mhi/core/init.c b/drivers/bus/mhi/core/init.c
-index 0ffdebd..0a09f82 100644
---- a/drivers/bus/mhi/core/init.c
-+++ b/drivers/bus/mhi/core/init.c
-@@ -1276,10 +1276,8 @@ static int mhi_driver_remove(struct device *dev)
- 		mutex_unlock(&mhi_chan->mutex);
- 	}
+diff --git a/drivers/gpu/drm/msm/dsi/pll/dsi_pll_7nm.c b/drivers/gpu/drm/msm/dsi/pll/dsi_pll_7nm.c
+index de0dfb815125..93bf142e4a4e 100644
+--- a/drivers/gpu/drm/msm/dsi/pll/dsi_pll_7nm.c
++++ b/drivers/gpu/drm/msm/dsi/pll/dsi_pll_7nm.c
+@@ -585,6 +585,7 @@ static int dsi_pll_7nm_restore_state(struct msm_dsi_pll *pll)
+ 	struct pll_7nm_cached_state *cached = &pll_7nm->cached_state;
+ 	void __iomem *phy_base = pll_7nm->phy_cmn_mmio;
+ 	u32 val;
++	int ret;
  
--	read_lock_bh(&mhi_cntrl->pm_lock);
- 	while (mhi_dev->dev_wake)
- 		mhi_device_put(mhi_dev);
--	read_unlock_bh(&mhi_cntrl->pm_lock);
+ 	val = pll_read(pll_7nm->mmio + REG_DSI_7nm_PHY_PLL_PLL_OUTDIV_RATE);
+ 	val &= ~0x3;
+@@ -599,6 +600,13 @@ static int dsi_pll_7nm_restore_state(struct msm_dsi_pll *pll)
+ 	val |= cached->pll_mux;
+ 	pll_write(phy_base + REG_DSI_7nm_PHY_CMN_CLK_CFG1, val);
+ 
++	ret = dsi_pll_7nm_vco_set_rate(&pll->clk_hw, pll_7nm->vco_current_rate, pll_7nm->vco_ref_clk_rate);
++	if (ret) {
++		DRM_DEV_ERROR(&pll_7nm->pdev->dev,
++			"restore vco rate failed. ret=%d\n", ret);
++		return ret;
++	}
++
+ 	DBG("DSI PLL%d", pll_7nm->id);
  
  	return 0;
- }
 -- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project
+2.28.0
 
