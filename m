@@ -2,92 +2,126 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 23A8728F0A5
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Oct 2020 13:05:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 70DA928F29A
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Oct 2020 14:45:48 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727472AbgJOLFv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 15 Oct 2020 07:05:51 -0400
-Received: from alexa-out.qualcomm.com ([129.46.98.28]:55499 "EHLO
-        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726144AbgJOLFv (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 15 Oct 2020 07:05:51 -0400
-Received: from ironmsg-lv-alpha.qualcomm.com ([10.47.202.13])
-  by alexa-out.qualcomm.com with ESMTP; 15 Oct 2020 04:05:50 -0700
-X-QCInternal: smtphost
-Received: from ironmsg01-blr.qualcomm.com ([10.86.208.130])
-  by ironmsg-lv-alpha.qualcomm.com with ESMTP/TLS/AES256-SHA; 15 Oct 2020 04:05:49 -0700
-X-QCInternal: smtphost
-Received: from dikshita-linux.qualcomm.com ([10.204.65.237])
-  by ironmsg01-blr.qualcomm.com with ESMTP; 15 Oct 2020 16:35:46 +0530
-Received: by dikshita-linux.qualcomm.com (Postfix, from userid 347544)
-        id 7A8B6522C; Thu, 15 Oct 2020 16:35:45 +0530 (IST)
-From:   Dikshita Agarwal <dikshita@codeaurora.org>
-To:     linux-media@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-Cc:     mchehab@kernel.org, hverkuil-cisco@xs4all.nl,
-        ezequiel@collabora.com, stanimir.varbanov@linaro.org,
-        vgarodia@codeaurora.org, majja@codeaurora.org,
-        Dikshita Agarwal <dikshita@codeaurora.org>
-Subject: [PATCH v2] media: v4l2-ctrl: Add base layer priority id control.
-Date:   Thu, 15 Oct 2020 16:35:35 +0530
-Message-Id: <1602759935-12965-1-git-send-email-dikshita@codeaurora.org>
-X-Mailer: git-send-email 1.9.1
+        id S1728107AbgJOMpl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 15 Oct 2020 08:45:41 -0400
+Received: from m42-4.mailgun.net ([69.72.42.4]:16460 "EHLO m42-4.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727785AbgJOMpl (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 15 Oct 2020 08:45:41 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1602765940; h=Content-Transfer-Encoding: MIME-Version:
+ Message-Id: Date: Subject: Cc: To: From: Sender;
+ bh=tUBuuOkOpn8dlBCi3UTRT7w8MbxjgT0dLTMorbW/WKw=; b=nhHpg3LSppvTn1mnowGlHfWmum1X3cd1ATgYfOeSRSQ1h0epb9yLm3Fq8TJdOityX8Quh/c4
+ 03xtgFNen2Ug17xh3NbMVfCfGpcSyYCJWdBYCwtjnZUuJ2HgonAWQaOi7+lN0JXxA+o5hQAZ
+ WCvgzbEsFUiNVzMWDQnLKdjYrow=
+X-Mailgun-Sending-Ip: 69.72.42.4
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n04.prod.us-west-2.postgun.com with SMTP id
+ 5f88447406d81bc48d36fb6c (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 15 Oct 2020 12:45:40
+ GMT
+Sender: saiprakash.ranjan=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 398E5C43391; Thu, 15 Oct 2020 12:45:40 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
+        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+Received: from blr-ubuntu-253.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: saiprakash.ranjan)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 3C7A6C433FE;
+        Thu, 15 Oct 2020 12:45:35 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 3C7A6C433FE
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=saiprakash.ranjan@codeaurora.org
+From:   Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+To:     Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Suzuki K Poulose <suzuki.poulose@arm.com>,
+        Mike Leach <mike.leach@linaro.org>
+Cc:     coresight@lists.linaro.org, Stephen Boyd <swboyd@chromium.org>,
+        Denis Nikitin <denik@chromium.org>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org,
+        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+Subject: [PATCH] coresight: etm4x: Add config to exclude kernel mode tracing
+Date:   Thu, 15 Oct 2020 18:15:22 +0530
+Message-Id: <20201015124522.1876-1-saiprakash.ranjan@codeaurora.org>
+X-Mailer: git-send-email 2.27.0
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This control indicates the priority id to be applied
-to base layer.
+On production systems with ETMs enabled, it is preferred to
+exclude kernel mode(NS EL1) tracing for security concerns and
+support only userspace(NS EL0) tracing. So provide an option
+via kconfig to exclude kernel mode tracing if it is required.
+This config is disabled by default and would not affect the
+current configuration which has both kernel and userspace
+tracing enabled by default.
 
-Signed-off-by: Dikshita Agarwal <dikshita@codeaurora.org>
+Signed-off-by: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
 ---
- Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst | 9 +++++++++
- drivers/media/v4l2-core/v4l2-ctrls.c                      | 1 +
- include/uapi/linux/v4l2-controls.h                        | 1 +
- 3 files changed, 11 insertions(+)
+ drivers/hwtracing/coresight/Kconfig                | 9 +++++++++
+ drivers/hwtracing/coresight/coresight-etm4x-core.c | 6 +++++-
+ 2 files changed, 14 insertions(+), 1 deletion(-)
 
-diff --git a/Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst b/Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst
-index 6e9240a..aac1ea3 100644
---- a/Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst
-+++ b/Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst
-@@ -4407,3 +4407,12 @@ enum v4l2_mpeg_video_hevc_size_of_length_field -
-        to the LTR index max LTR count-1.
-        This is applicable to H264 and HEVC encoder and can be applied using
-        request api.
-+
-+``V4L2_CID_MPEG_VIDEO_BASELAYER_PRIORITYID (integer)``
-+       Specifies a priority identifier for the NAL unit,
-+       which will be applied to base layer.
-+       By default this value is set to 0 for base layer.
-+       And the next layer will have priority ID assigned as 1,2,3 and so on.
-+       Video encode can't decide the priority id to be applied to a layer
-+       so this has to come from client.
-+       Valid Range: from 0 to 63
-diff --git a/drivers/media/v4l2-core/v4l2-ctrls.c b/drivers/media/v4l2-core/v4l2-ctrls.c
-index 046198f..c973058 100644
---- a/drivers/media/v4l2-core/v4l2-ctrls.c
-+++ b/drivers/media/v4l2-core/v4l2-ctrls.c
-@@ -952,6 +952,7 @@ const char *v4l2_ctrl_get_name(u32 id)
- 	case V4L2_CID_MPEG_VIDEO_LTR_COUNT:			return "LTR Count";
- 	case V4L2_CID_MPEG_VIDEO_FRAME_LTR_INDEX:		return "Mark LTR frame index";
- 	case V4L2_CID_MPEG_VIDEO_USE_LTR_FRAME:			return "Use LTR Frame";
-+	case V4L2_CID_MPEG_VIDEO_BASELAYER_PRIORITYID:		return "Base Layer Priority ID";
- 	case V4L2_CID_MPEG_VIDEO_MPEG2_SLICE_PARAMS:		return "MPEG-2 Slice Parameters";
- 	case V4L2_CID_MPEG_VIDEO_MPEG2_QUANTIZATION:		return "MPEG-2 Quantization Matrices";
- 	case V4L2_CID_MPEG_VIDEO_FWHT_PARAMS:			return "FWHT Stateless Parameters";
-diff --git a/include/uapi/linux/v4l2-controls.h b/include/uapi/linux/v4l2-controls.h
-index 3801372..433e119 100644
---- a/include/uapi/linux/v4l2-controls.h
-+++ b/include/uapi/linux/v4l2-controls.h
-@@ -418,6 +418,7 @@ enum v4l2_mpeg_video_multi_slice_mode {
- #define V4L2_CID_MPEG_VIDEO_LTR_COUNT                  (V4L2_CID_MPEG_BASE+230)
- #define V4L2_CID_MPEG_VIDEO_FRAME_LTR_INDEX            (V4L2_CID_MPEG_BASE+231)
- #define V4L2_CID_MPEG_VIDEO_USE_LTR_FRAME              (V4L2_CID_MPEG_BASE+232)
-+#define V4L2_CID_MPEG_VIDEO_BASELAYER_PRIORITYID       (V4L2_CID_MPEG_BASE+233)
+diff --git a/drivers/hwtracing/coresight/Kconfig b/drivers/hwtracing/coresight/Kconfig
+index c1198245461d..52435de8824c 100644
+--- a/drivers/hwtracing/coresight/Kconfig
++++ b/drivers/hwtracing/coresight/Kconfig
+@@ -110,6 +110,15 @@ config CORESIGHT_SOURCE_ETM4X
+ 	  To compile this driver as a module, choose M here: the
+ 	  module will be called coresight-etm4x.
  
- /* CIDs for the MPEG-2 Part 2 (H.262) codec */
- #define V4L2_CID_MPEG_VIDEO_MPEG2_LEVEL			(V4L2_CID_MPEG_BASE+270)
++config CORESIGHT_ETM4X_EXCL_KERN
++	bool "Coresight ETM 4.x exclude kernel mode tracing"
++	depends on CORESIGHT_SOURCE_ETM4X
++	help
++	  This will exclude kernel mode(NS EL1) tracing if enabled. This option
++	  will be useful to provide more flexible options on production systems
++	  where only userspace(NS EL0) tracing might be preferred for security
++	  reasons.
++
+ config CORESIGHT_STM
+ 	tristate "CoreSight System Trace Macrocell driver"
+ 	depends on (ARM && !(CPU_32v3 || CPU_32v4 || CPU_32v4T)) || ARM64
+diff --git a/drivers/hwtracing/coresight/coresight-etm4x-core.c b/drivers/hwtracing/coresight/coresight-etm4x-core.c
+index abd706b216ac..7e5669e5cd1f 100644
+--- a/drivers/hwtracing/coresight/coresight-etm4x-core.c
++++ b/drivers/hwtracing/coresight/coresight-etm4x-core.c
+@@ -832,6 +832,9 @@ static u64 etm4_get_ns_access_type(struct etmv4_config *config)
+ {
+ 	u64 access_type = 0;
+ 
++	if (IS_ENABLED(CONFIG_CORESIGHT_ETM4X_EXCL_KERN))
++		config->mode |= ETM_MODE_EXCL_KERN;
++
+ 	/*
+ 	 * EXLEVEL_NS, bits[15:12]
+ 	 * The Exception levels are:
+@@ -849,7 +852,8 @@ static u64 etm4_get_ns_access_type(struct etmv4_config *config)
+ 		access_type = ETM_EXLEVEL_NS_HYP;
+ 	}
+ 
+-	if (config->mode & ETM_MODE_EXCL_USER)
++	if (config->mode & ETM_MODE_EXCL_USER &&
++	    !IS_ENABLED(CONFIG_CORESIGHT_ETM4X_EXCL_KERN))
+ 		access_type |= ETM_EXLEVEL_NS_APP;
+ 
+ 	return access_type;
+
+base-commit: 3477326277451000bc667dfcc4fd0774c039184c
 -- 
-1.9.1
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
+of Code Aurora Forum, hosted by The Linux Foundation
 
