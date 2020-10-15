@@ -2,432 +2,217 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B08BA28EE1C
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Oct 2020 10:02:59 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8730428EE62
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Oct 2020 10:22:52 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729076AbgJOIC6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 15 Oct 2020 04:02:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53670 "EHLO
+        id S1730200AbgJOIWw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 15 Oct 2020 04:22:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56762 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728922AbgJOIC4 (ORCPT
+        with ESMTP id S1730190AbgJOIWv (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 15 Oct 2020 04:02:56 -0400
-Received: from mail-il1-x142.google.com (mail-il1-x142.google.com [IPv6:2607:f8b0:4864:20::142])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 38EBBC0613D2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 15 Oct 2020 01:02:55 -0700 (PDT)
-Received: by mail-il1-x142.google.com with SMTP id p9so3123634ilr.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 15 Oct 2020 01:02:55 -0700 (PDT)
+        Thu, 15 Oct 2020 04:22:51 -0400
+Received: from mail-ot1-x341.google.com (mail-ot1-x341.google.com [IPv6:2607:f8b0:4864:20::341])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5665DC061755
+        for <linux-arm-msm@vger.kernel.org>; Thu, 15 Oct 2020 01:22:51 -0700 (PDT)
+Received: by mail-ot1-x341.google.com with SMTP id m11so2117741otk.13
+        for <linux-arm-msm@vger.kernel.org>; Thu, 15 Oct 2020 01:22:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
+        d=ffwll.ch; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=gZkPDdOZ+/PHHoRXByL22mp7TsmoK+Z9hzkI9KeExZ8=;
-        b=FTBllGwgNw3kQRmlLZgs/2BOKnMQGfAIx+UNT1wC0KiYeTdLUP7Gp/MSiqYmmIlrXt
-         F29exhRCjf2aIzsRqmhqsDK8Rw8cD3WPuu3++SQ9g3muFeaQmBKmw2tpuom6an2GOV1J
-         u7o08U6Kxgdo+PezhH/ki1K0yijoobi0DWG/M=
+        bh=RbfF8nokdxqbUPmfp9WHmzX//GvXPuhhpFjfx5IA4wQ=;
+        b=T9t6g+yo9ymX56V38aolG1A/9KAXyZikIasm30R3Ko9pDE6EYmLbKUHzK5HXSbKBO5
+         qbeM9yPK6Oz+xJGZMEgWEmIggYkYMU2WT+lQRC32PoOW9lfmZBB0rJTUStrIGRbZDE7u
+         0WYfEqGYRzSUsx63jezpHV/KBj26eNgLxMvbQ=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=gZkPDdOZ+/PHHoRXByL22mp7TsmoK+Z9hzkI9KeExZ8=;
-        b=kG8YmZycGv6eBPuSzYwcKV3od8ebiTI8Pf9xgaQSJaU8ZARIEeMjV2YkSZixM6AKdQ
-         4es+gv67LDncMkgpVyDmY/VdZF8wjxmiM7rIIIRSxs5LE7b7MDT14705WmxxORoK7con
-         KQOevaAVzMj89umLQcYMUi1N2jQfgCGOjGqpazyBnC7oPEVwdUGHVNBHPzK0ugiSN0N4
-         n2m/pnOIydMgy3QMUKenXOG8jSa5vimw+IonSmLXYpe2VBea7GKxaZ8YQg+K6orBIyj4
-         B18QxQNRd1IPeTnEfEVz6ZBV5WDeb9oIzEvBmWGDYNcuDSvRn8PuTtOPp/uceBs1AqwA
-         1B7g==
-X-Gm-Message-State: AOAM530SYmvEInEKKgd8XAfDK5j5A0xLuesqYc4j1ohgZjlO3XDO+eHr
-        EICUzvM738Xhzs5BWjaaVYpc+4XZhWS2Utiv1ptYUA==
-X-Google-Smtp-Source: ABdhPJwLi+vUt11E1QEh/Ud5dwCt/tU3zy90525mD52qYml0DWnbTDHGXPOCX35Qn/hr2pKMEeO82LJ3m1Hrig2CWVw=
-X-Received: by 2002:a92:740c:: with SMTP id p12mr826066ilc.277.1602748974209;
- Thu, 15 Oct 2020 01:02:54 -0700 (PDT)
+        bh=RbfF8nokdxqbUPmfp9WHmzX//GvXPuhhpFjfx5IA4wQ=;
+        b=FXXjmhCjbuNa6G8XQ5CAbzclnYFfCzdEkd6N2V/FzxZqB+cAP1sQDRfmhaB1BkiTNA
+         JB5A3WvxlW1RES5YeSE0stX51O0TgCp0dpIqXG2hCUBa8nm/KUu0f5DsYYEXLePPs8dF
+         RLpEKOGzSvlwRR+NdAcgdf1cxa0sZvUv44yFeSK1J00JaX1rdk+EtuDCdxL36CsKqLwE
+         nHz5WVlU+YgXJuSvTJx11JQsWeY/3eNzsP5Tk9W7rCu4mM113X3Amb6D4w8EFXeM3mUI
+         bUwLGWZAq9bYcZQ5z7o5D/GUwu6MFzPs29kOBC3j4ULovJKTVJWi1QsJ/dC3UCZ1Kaub
+         d7qw==
+X-Gm-Message-State: AOAM532ooX3krvDWzg04P8zeb4vd+0evdaW1jslQMdNMDt1pq+vvnzIz
+        sIfhoMqlenU1oSs5cDvASnPNqSAjux28s/rQCny29A==
+X-Google-Smtp-Source: ABdhPJxXDNGfotqx0v5QajM2+CxwSI2ZMgsiK/moGuNgteF9MFJDikzgLrlsfcADZyubWdUn1wBehOQaLWfNouKU5kI=
+X-Received: by 2002:a05:6830:8b:: with SMTP id a11mr1814721oto.303.1602750170682;
+ Thu, 15 Oct 2020 01:22:50 -0700 (PDT)
 MIME-Version: 1.0
-References: <20200914080619.4178587-1-cychiang@chromium.org>
- <20200914080619.4178587-4-cychiang@chromium.org> <CAFv8NwJFxZEk8j-40-AAkAF++CZoq=RGvgAsoYxFz_URJO0sUw@mail.gmail.com>
-In-Reply-To: <CAFv8NwJFxZEk8j-40-AAkAF++CZoq=RGvgAsoYxFz_URJO0sUw@mail.gmail.com>
-From:   Cheng-yi Chiang <cychiang@chromium.org>
-Date:   Thu, 15 Oct 2020 16:02:28 +0800
-Message-ID: <CAFv8NwJ7FyLCyO1zA6GtFSHgV=15tO=1LE7Wufx=9KE9Ad3wDQ@mail.gmail.com>
-Subject: Re: [PATCH v11 3/3] ASoC: qcom: sc7180: Add machine driver for sound
- card registration
-To:     linux-kernel <linux-kernel@vger.kernel.org>
-Cc:     Mark Brown <broonie@kernel.org>, Taniya Das <tdas@codeaurora.org>,
-        Rohit kumar <rohitkr@codeaurora.org>,
-        Banajit Goswami <bgoswami@codeaurora.org>,
-        Patrick Lai <plai@codeaurora.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Jaroslav Kysela <perex@perex.cz>,
-        Takashi Iwai <tiwai@suse.com>,
-        Srini Kandagatla <srinivas.kandagatla@linaro.org>,
-        Stephan Gerhold <stephan@gerhold.net>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        Heiko Stuebner <heiko@sntech.de>,
-        Srinivasa Rao <srivasam@codeaurora.org>,
-        Doug Anderson <dianders@chromium.org>,
-        Dylan Reid <dgreid@chromium.org>,
-        Tzung-Bi Shih <tzungbi@chromium.org>,
-        Linux ARM <linux-arm-kernel@lists.infradead.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>,
-        "moderated list:SOUND - SOC LAYER / DYNAMIC AUDIO POWER MANAGEM..." 
-        <alsa-devel@alsa-project.org>,
-        "moderated list:ARM/Mediatek SoC support" 
-        <linux-mediatek@lists.infradead.org>,
-        "open list:ARM/Rockchip SoC..." <linux-rockchip@lists.infradead.org>,
-        Ajit Pandey <ajitp@codeaurora.org>
+References: <20201012020958.229288-1-robdclark@gmail.com> <20201012020958.229288-23-robdclark@gmail.com>
+ <20201012144018.GB438822@phenom.ffwll.local> <CAF6AEGuZ0QOCbJDTF=FsHsbJ9J5rqLLPJexk_EvX+SxPGFZLDQ@mail.gmail.com>
+ <20201013110826.GD438822@phenom.ffwll.local> <CAF6AEGvYJS38JjFzJOA3w9W0W_G47DJYw2bi4GsC1qgo3dAZ0A@mail.gmail.com>
+In-Reply-To: <CAF6AEGvYJS38JjFzJOA3w9W0W_G47DJYw2bi4GsC1qgo3dAZ0A@mail.gmail.com>
+From:   Daniel Vetter <daniel@ffwll.ch>
+Date:   Thu, 15 Oct 2020 10:22:39 +0200
+Message-ID: <CAKMK7uGJ1+Vr-RCHX6=sMwTcOqMNySiHS2fNo8mke4Vraw4rvQ@mail.gmail.com>
+Subject: Re: [Freedreno] [PATCH v2 22/22] drm/msm: Don't implicit-sync if only
+ a single ring
+To:     Rob Clark <robdclark@gmail.com>
+Cc:     dri-devel <dri-devel@lists.freedesktop.org>,
+        Rob Clark <robdclark@chromium.org>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
+        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
+        <linux-arm-msm@vger.kernel.org>,
+        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
+        <freedreno@lists.freedesktop.org>,
+        open list <linux-kernel@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Oct 13, 2020 at 11:50 AM Cheng-yi Chiang <cychiang@chromium.org> wrote:
+On Tue, Oct 13, 2020 at 6:15 PM Rob Clark <robdclark@gmail.com> wrote:
 >
-> On Mon, Sep 14, 2020 at 4:06 PM Cheng-Yi Chiang <cychiang@chromium.org> wrote:
+> On Tue, Oct 13, 2020 at 4:08 AM Daniel Vetter <daniel@ffwll.ch> wrote:
 > >
-> > From: Ajit Pandey <ajitp@codeaurora.org>
+> > On Mon, Oct 12, 2020 at 08:07:38AM -0700, Rob Clark wrote:
+> > > On Mon, Oct 12, 2020 at 7:40 AM Daniel Vetter <daniel@ffwll.ch> wrote:
+> > > >
+> > > > On Sun, Oct 11, 2020 at 07:09:49PM -0700, Rob Clark wrote:
+> > > > > From: Rob Clark <robdclark@chromium.org>
+> > > > >
+> > > > > Any cross-device sync use-cases *must* use explicit sync.  And if there
+> > > > > is only a single ring (no-preemption), everything is FIFO order and
+> > > > > there is no need to implicit-sync.
+> > > > >
+> > > > > Mesa should probably just always use MSM_SUBMIT_NO_IMPLICIT, as behavior
+> > > > > is undefined when fences are not used to synchronize buffer usage across
+> > > > > contexts (which is the only case where multiple different priority rings
+> > > > > could come into play).
+> > > >
+> > > > Uh does this mean msm is broken on dri2/3 and wayland? Or I'm I just
+> > > > confused by your commit message?
+> > >
+> > > No, I don't think so.  If there is only a single priority level
+> > > ringbuffer (ie. no preemption to higher priority ring) then everything
+> > > is inherently FIFO order.
 > >
-> > Add new driver to register sound card on sc7180 trogdor board and
-> > do the required configuration for lpass cpu dai and external codecs
-> > connected over MI2S interfaces.
-> >
-> > Signed-off-by: Ajit Pandey <ajitp@codeaurora.org>
-> > Signed-off-by: Cheng-Yi Chiang <cychiang@chromium.org>
-> > ---
-> >  sound/soc/qcom/Kconfig  |  12 ++
-> >  sound/soc/qcom/Makefile |   2 +
-> >  sound/soc/qcom/sc7180.c | 266 ++++++++++++++++++++++++++++++++++++++++
-> >  3 files changed, 280 insertions(+)
-> >  create mode 100644 sound/soc/qcom/sc7180.c
-> >
-> > diff --git a/sound/soc/qcom/Kconfig b/sound/soc/qcom/Kconfig
-> > index a607ace8b089..0459185ee243 100644
-> > --- a/sound/soc/qcom/Kconfig
-> > +++ b/sound/soc/qcom/Kconfig
-> > @@ -116,4 +116,16 @@ config SND_SOC_SDM845
-> >           SDM845 SoC-based systems.
-> >           Say Y if you want to use audio device on this SoCs.
-> >
-> > +config SND_SOC_SC7180
-> > +       tristate "SoC Machine driver for SC7180 boards"
-> > +       depends on I2C
-> > +       select SND_SOC_QCOM_COMMON
-> > +       select SND_SOC_LPASS_SC7180
-> > +       select SND_SOC_MAX98357A
-> > +       select SND_SOC_RT5682_I2C
-> > +       help
-> > +         To add support for audio on Qualcomm Technologies Inc.
-> > +         SC7180 SoC-based systems.
-> > +         Say Y if you want to use audio device on this SoCs.
-> > +
-> >  endif #SND_SOC_QCOM
-> > diff --git a/sound/soc/qcom/Makefile b/sound/soc/qcom/Makefile
-> > index 7972c9479ab0..0cdcbf367ef1 100644
-> > --- a/sound/soc/qcom/Makefile
-> > +++ b/sound/soc/qcom/Makefile
-> > @@ -17,12 +17,14 @@ snd-soc-storm-objs := storm.o
-> >  snd-soc-apq8016-sbc-objs := apq8016_sbc.o
-> >  snd-soc-apq8096-objs := apq8096.o
-> >  snd-soc-sdm845-objs := sdm845.o
-> > +snd-soc-sc7180-objs := sc7180.o
-> >  snd-soc-qcom-common-objs := common.o
-> >
-> >  obj-$(CONFIG_SND_SOC_STORM) += snd-soc-storm.o
-> >  obj-$(CONFIG_SND_SOC_APQ8016_SBC) += snd-soc-apq8016-sbc.o
-> >  obj-$(CONFIG_SND_SOC_MSM8996) += snd-soc-apq8096.o
-> >  obj-$(CONFIG_SND_SOC_SDM845) += snd-soc-sdm845.o
-> > +obj-$(CONFIG_SND_SOC_SC7180) += snd-soc-sc7180.o
-> >  obj-$(CONFIG_SND_SOC_QCOM_COMMON) += snd-soc-qcom-common.o
-> >
-> >  #DSP lib
-> > diff --git a/sound/soc/qcom/sc7180.c b/sound/soc/qcom/sc7180.c
-> > new file mode 100644
-> > index 000000000000..0e90448523b0
-> > --- /dev/null
-> > +++ b/sound/soc/qcom/sc7180.c
-> > @@ -0,0 +1,266 @@
-> > +// SPDX-License-Identifier: GPL-2.0-only
-> > +//
-> > +// Copyright (c) 2020, The Linux Foundation. All rights reserved.
-> > +//
-> > +// sc7180.c -- ALSA SoC Machine driver for SC7180
-> > +
-> > +#include <dt-bindings/sound/sc7180-lpass.h>
-> > +#include <linux/module.h>
-> > +#include <linux/of_device.h>
-> > +#include <linux/platform_device.h>
-> > +#include <sound/core.h>
-> > +#include <sound/jack.h>
-> > +#include <sound/pcm.h>
-> > +#include <sound/soc.h>
-> > +#include <uapi/linux/input-event-codes.h>
-> > +
-> > +#include "../codecs/rt5682.h"
-> > +#include "common.h"
-> > +#include "lpass.h"
-> > +
-> > +#define DEFAULT_MCLK_RATE              19200000
-> > +#define RT5682_PLL1_FREQ (48000 * 512)
-> > +
-> > +// This will be defined in include/dt-bindings/sound/sc7180-lpass.h
-> > +#define LPASS_DP_RX 2
-> > +
-> > +struct sc7180_snd_data {
-> > +       struct snd_soc_card card;
-> > +       u32 pri_mi2s_clk_count;
-> > +       struct snd_soc_jack hs_jack;
-> > +       struct snd_soc_jack hdmi_jack;
-> > +};
-> > +
-> > +static void sc7180_jack_free(struct snd_jack *jack)
-> > +{
-> > +       struct snd_soc_component *component = jack->private_data;
-> > +
-> > +       snd_soc_component_set_jack(component, NULL, NULL);
-> > +}
-> > +
-> > +static int sc7180_headset_init(struct snd_soc_pcm_runtime *rtd)
-> > +{
-> > +       struct snd_soc_card *card = rtd->card;
-> > +       struct sc7180_snd_data *pdata = snd_soc_card_get_drvdata(card);
-> > +       struct snd_soc_dai *codec_dai = asoc_rtd_to_codec(rtd, 0);
-> > +       struct snd_soc_component *component = codec_dai->component;
-> > +       struct snd_jack *jack;
-> > +       int rval;
-> > +
-> > +       rval = snd_soc_card_jack_new(
-> > +                       card, "Headset Jack",
-> > +                       SND_JACK_HEADSET |
-> > +                       SND_JACK_HEADPHONE |
-> > +                       SND_JACK_BTN_0 | SND_JACK_BTN_1 |
-> > +                       SND_JACK_BTN_2 | SND_JACK_BTN_3,
-> > +                       &pdata->hs_jack, NULL, 0);
-> > +
-> > +       if (rval < 0) {
-> > +               dev_err(card->dev, "Unable to add Headset Jack\n");
-> > +               return rval;
-> > +       }
-> > +
-> > +       jack = pdata->hs_jack.jack;
-> > +
-> > +       snd_jack_set_key(jack, SND_JACK_BTN_0, KEY_PLAYPAUSE);
-> > +       snd_jack_set_key(jack, SND_JACK_BTN_1, KEY_VOICECOMMAND);
-> > +       snd_jack_set_key(jack, SND_JACK_BTN_2, KEY_VOLUMEUP);
-> > +       snd_jack_set_key(jack, SND_JACK_BTN_3, KEY_VOLUMEDOWN);
-> > +
-> > +       jack->private_data = component;
-> > +       jack->private_free = sc7180_jack_free;
-> > +
-> > +       return snd_soc_component_set_jack(component, &pdata->hs_jack, NULL);
-> > +}
-> > +
-> > +static int sc7180_hdmi_init(struct snd_soc_pcm_runtime *rtd)
-> > +{
-> > +       struct snd_soc_card *card = rtd->card;
-> > +       struct sc7180_snd_data *pdata = snd_soc_card_get_drvdata(card);
-> > +       struct snd_soc_dai *codec_dai = asoc_rtd_to_codec(rtd, 0);
-> > +       struct snd_soc_component *component = codec_dai->component;
-> > +       struct snd_jack *jack;
-> > +       int rval;
-> > +
-> > +       rval = snd_soc_card_jack_new(
-> > +                       card, "HDMI Jack",
-> > +                       SND_JACK_LINEOUT,
-> > +                       &pdata->hdmi_jack, NULL, 0);
-> > +
-> > +       if (rval < 0) {
-> > +               dev_err(card->dev, "Unable to add HDMI Jack\n");
-> > +               return rval;
-> > +       }
-> > +
-> > +       jack = pdata->hdmi_jack.jack;
-> > +       jack->private_data = component;
-> > +       jack->private_free = sc7180_jack_free;
-> > +
-> > +       return snd_soc_component_set_jack(component, &pdata->hdmi_jack, NULL);
-> > +}
-> > +
-> > +static int sc7180_init(struct snd_soc_pcm_runtime *rtd)
-> > +{
-> > +       struct snd_soc_dai *cpu_dai = asoc_rtd_to_cpu(rtd, 0);
-> > +
-> > +       switch (cpu_dai->id) {
-> > +       case MI2S_PRIMARY:
-> > +               return sc7180_headset_init(rtd);
-> > +       case MI2S_SECONDARY:
-> > +               return 0;
-> > +       case LPASS_DP_RX:
-> > +               return sc7180_hdmi_init(rtd);
-> > +       default:
-> > +               dev_err(rtd->dev, "%s: invalid dai id 0x%x\n", __func__,
-> > +                       cpu_dai->id);
-> > +               return -EINVAL;
-> > +       }
-> > +       return 0;
-> > +}
-> > +
-> > +static int sc7180_snd_startup(struct snd_pcm_substream *substream)
-> > +{
-> > +       struct snd_soc_pcm_runtime *rtd = substream->private_data;
-> > +       struct snd_soc_card *card = rtd->card;
-> > +       struct sc7180_snd_data *data = snd_soc_card_get_drvdata(card);
-> > +       struct snd_soc_dai *cpu_dai = asoc_rtd_to_cpu(rtd, 0);
-> > +       struct snd_soc_dai *codec_dai = asoc_rtd_to_codec(rtd, 0);
-> > +       int ret;
-> > +
-> > +       switch (cpu_dai->id) {
-> > +       case MI2S_PRIMARY:
-> > +               if (++data->pri_mi2s_clk_count == 1) {
-> > +                       snd_soc_dai_set_sysclk(cpu_dai,
-> > +                                              LPASS_MCLK0,
-> > +                                              DEFAULT_MCLK_RATE,
-> > +                                              SNDRV_PCM_STREAM_PLAYBACK);
-> > +               }
-> > +
-> > +               snd_soc_dai_set_fmt(codec_dai,
-> > +                                   SND_SOC_DAIFMT_CBS_CFS |
-> > +                                   SND_SOC_DAIFMT_NB_NF |
-> > +                                   SND_SOC_DAIFMT_I2S);
-> > +
-> > +               /* Configure PLL1 for codec */
-> > +               ret = snd_soc_dai_set_pll(codec_dai, 0, RT5682_PLL1_S_MCLK,
-> > +                                         DEFAULT_MCLK_RATE, RT5682_PLL1_FREQ);
-> > +               if (ret) {
-> > +                       dev_err(rtd->dev, "can't set codec pll: %d\n", ret);
-> > +                       return ret;
-> > +               }
-> > +
-> > +               /* Configure sysclk for codec */
-> > +               ret = snd_soc_dai_set_sysclk(codec_dai, RT5682_SCLK_S_PLL1,
-> > +                                            RT5682_PLL1_FREQ,
-> > +                                            SND_SOC_CLOCK_IN);
-> > +               if (ret)
-> > +                       dev_err(rtd->dev, "snd_soc_dai_set_sysclk err = %d\n",
-> > +                               ret);
-> > +
-> > +               break;
-> > +       case MI2S_SECONDARY:
-> > +               break;
-> > +       case LPASS_DP_RX:
-> > +               break;
-> > +       default:
-> > +               dev_err(rtd->dev, "%s: invalid dai id 0x%x\n", __func__,
-> > +                       cpu_dai->id);
-> > +               return -EINVAL;
-> > +       }
-> > +       return 0;
-> > +}
-> > +
-> > +static void sc7180_snd_shutdown(struct snd_pcm_substream *substream)
-> > +{
-> > +       struct snd_soc_pcm_runtime *rtd = substream->private_data;
-> > +       struct snd_soc_card *card = rtd->card;
-> > +       struct sc7180_snd_data *data = snd_soc_card_get_drvdata(card);
-> > +       struct snd_soc_dai *cpu_dai = asoc_rtd_to_cpu(rtd, 0);
-> > +
-> > +       switch (cpu_dai->id) {
-> > +       case MI2S_PRIMARY:
-> > +               if (--data->pri_mi2s_clk_count == 0) {
-> > +                       snd_soc_dai_set_sysclk(cpu_dai,
-> > +                                              LPASS_MCLK0,
-> > +                                              0,
-> > +                                              SNDRV_PCM_STREAM_PLAYBACK);
-> > +               }
-> > +               break;
-> > +       case MI2S_SECONDARY:
-> > +               break;
-> > +       case LPASS_DP_RX:
-> > +               break;
-> > +       default:
-> > +               dev_err(rtd->dev, "%s: invalid dai id 0x%x\n", __func__,
-> > +                       cpu_dai->id);
-> > +               break;
-> > +       }
-> > +}
-> > +
-> > +static const struct snd_soc_ops sc7180_ops = {
-> > +       .startup = sc7180_snd_startup,
-> > +       .shutdown = sc7180_snd_shutdown,
-> > +};
-> > +
-> > +static const struct snd_soc_dapm_widget sc7180_snd_widgets[] = {
-> > +       SND_SOC_DAPM_HP("Headphone Jack", NULL),
-> > +       SND_SOC_DAPM_MIC("Headset Mic", NULL),
-> > +};
-> > +
-> > +static void sc7180_add_ops(struct snd_soc_card *card)
-> > +{
-> > +       struct snd_soc_dai_link *link;
-> > +       int i;
-> > +
-> > +       for_each_card_prelinks(card, i, link) {
-> > +               link->ops = &sc7180_ops;
-> > +               link->init = sc7180_init;
-> > +       }
-> > +}
-> > +
-> > +static int sc7180_snd_platform_probe(struct platform_device *pdev)
-> > +{
-> > +       struct snd_soc_card *card;
-> > +       struct sc7180_snd_data *data;
-> > +       struct device *dev = &pdev->dev;
-> > +       int ret;
-> > +
-> > +       /* Allocate the private data */
-> > +       data = devm_kzalloc(dev, sizeof(*data), GFP_KERNEL);
-> > +       if (!data)
-> > +               return -ENOMEM;
-> > +
-> > +       card = &data->card;
-> > +       snd_soc_card_set_drvdata(card, data);
-> > +
-> > +       card->owner = THIS_MODULE,
-> > +       card->dev = dev;
-> > +       card->dapm_widgets = sc7180_snd_widgets;
-> > +       card->num_dapm_widgets = ARRAY_SIZE(sc7180_snd_widgets);
-> > +
-> > +       ret = qcom_snd_parse_of(card);
-> > +       if (ret)
-> > +               return ret;
-> > +
-> > +       sc7180_add_ops(card);
-> > +
-> > +       return devm_snd_soc_register_card(dev, card);
-> > +}
-> > +
-> > +static const struct of_device_id sc7180_snd_device_id[]  = {
-> > +       { .compatible = "qcom,sc7180-sndcard-rt5682-m98357-1mic" },
-> > +       {},
-> > +};
-> > +MODULE_DEVICE_TABLE(of, sc7180_snd_device_id);
-> > +
-> > +static struct platform_driver sc7180_snd_driver = {
-> > +       .probe = sc7180_snd_platform_probe,
-> > +       .driver = {
-> > +               .name = "msm-snd-sc7180",
-> > +               .of_match_table = sc7180_snd_device_id,
-> > +       },
-> > +};
-> > +module_platform_driver(sc7180_snd_driver);
-> > +
-> > +MODULE_DESCRIPTION("sc7180 ASoC Machine Driver");
-> > +MODULE_LICENSE("GPL v2");
-> > --
-> > 2.28.0.618.gf4bc123cb7-goog
-> >
+> > Well eventually you get a scheduler I guess/hope :-)
 >
-> Hi Srini and Stephan,
-> May I get your Reviewed-By for this patch ?
-> There are some patches on the machine driver for different
-> configurations pending on this one so I would hope to get this one
-> merged first.
->
-> Thanks a lot for reviewing it!
+> we do have one currently for some gens, but not others.. hence the
+> check for # of rings.  (Ie. there is a ring per priority level, if
+> only one ring, that means no preemption/scheduler)
 
-Thanks Srini for the suggestion in the review of compatible strings.
-In the next version (v12), I will modify accordingly to use model
-property rather than compatible string to specify board configuration.
-Thanks!
+Even without preempt a scheduler is somewhat useful, if you have a
+very spammy client. Of course it assumes that everyone submits
+reasonably short workloads, otherwise nothing you can do.
+
+> > > For cases where we are sharing buffers with something external to drm,
+> > > explicit sync will be used.  And we don't implicit sync with display,
+> > > otherwise x11 (frontbuffer rendering) would not work
+> >
+> > Uh now I'm even more confused. The implicit sync fences in dma_resv are
+> > kinda for everyone. That's also why dma_resv with the common locking
+> > approach is a useful idea.
+> >
+> > So display should definitely support implicit sync, and iirc msm does have
+> > the helper hooked up.
+>
+> yup
+>
+> > Wrt other subsystems, I guess passing dma_fence around somehow doesn't fit
+> > into v4l (the patches never landed), so v4l doesn't do any kind of sync
+> > right now. But this could be fixed. Not sure what else is going on.
+> >
+> > So I guess I still have no idea why you put that into the commit message.
+> >
+> > btw for what you're trying to do yourself, the way to do this is to
+> > allocate a fence timeline for your engine, compare fences, and no-op them
+> > all out if their own the same timeline.
+>
+> we do that already (with a fence timeline per-ring, in the case of
+> gens which support multiple rings / preemption).. this patch just
+> short-circuits that in the case where we already knows the fences will
+> of the same timeline
+
+Ok so I think it's all good, no misunderstanding, but the commit
+message. I think if you delete the first sentence that cross-device
+sync must use explicit fences then it all makes sense and is
+consistent. Or clarify it that this is cross-engine sync with explicit
+internal synchronization, to differentiate it against cross-device
+sync (as seen by userspace, like different drm_device instances) and
+explicit dma_fence synchronization controlled by userspace.
+-Daniel
+
+> BR,
+> -R
+>
+> > -Daniel
+> >
+> > >
+> > > BR,
+> > > -R
+> > >
+> > > > Since for these protocols we do expect implicit sync accross processes to
+> > > > work. Even across devices (and nvidia have actually provided quite a bunch
+> > > > of patches to make this work in i915 - ttm based drivers get this right,
+> > > > plus dumb scanout drivers using the right helpers also get this all
+> > > > right).
+> > > > -Daniel
+> > > >
+> > > > >
+> > > > > Signed-off-by: Rob Clark <robdclark@chromium.org>
+> > > > > ---
+> > > > >  drivers/gpu/drm/msm/msm_gem_submit.c | 7 ++++---
+> > > > >  1 file changed, 4 insertions(+), 3 deletions(-)
+> > > > >
+> > > > > diff --git a/drivers/gpu/drm/msm/msm_gem_submit.c b/drivers/gpu/drm/msm/msm_gem_submit.c
+> > > > > index 3151a0ca8904..c69803ea53c8 100644
+> > > > > --- a/drivers/gpu/drm/msm/msm_gem_submit.c
+> > > > > +++ b/drivers/gpu/drm/msm/msm_gem_submit.c
+> > > > > @@ -277,7 +277,7 @@ static int submit_lock_objects(struct msm_gem_submit *submit)
+> > > > >       return ret;
+> > > > >  }
+> > > > >
+> > > > > -static int submit_fence_sync(struct msm_gem_submit *submit, bool no_implicit)
+> > > > > +static int submit_fence_sync(struct msm_gem_submit *submit, bool implicit_sync)
+> > > > >  {
+> > > > >       int i, ret = 0;
+> > > > >
+> > > > > @@ -297,7 +297,7 @@ static int submit_fence_sync(struct msm_gem_submit *submit, bool no_implicit)
+> > > > >                               return ret;
+> > > > >               }
+> > > > >
+> > > > > -             if (no_implicit)
+> > > > > +             if (!implicit_sync)
+> > > > >                       continue;
+> > > > >
+> > > > >               ret = msm_gem_sync_object(&msm_obj->base, submit->ring->fctx,
+> > > > > @@ -768,7 +768,8 @@ int msm_ioctl_gem_submit(struct drm_device *dev, void *data,
+> > > > >       if (ret)
+> > > > >               goto out;
+> > > > >
+> > > > > -     ret = submit_fence_sync(submit, !!(args->flags & MSM_SUBMIT_NO_IMPLICIT));
+> > > > > +     ret = submit_fence_sync(submit, (gpu->nr_rings > 1) &&
+> > > > > +                     !(args->flags & MSM_SUBMIT_NO_IMPLICIT));
+> > > > >       if (ret)
+> > > > >               goto out;
+> > > > >
+> > > > > --
+> > > > > 2.26.2
+> > > > >
+> > > >
+> > > > --
+> > > > Daniel Vetter
+> > > > Software Engineer, Intel Corporation
+> > > > http://blog.ffwll.ch
+> >
+> > --
+> > Daniel Vetter
+> > Software Engineer, Intel Corporation
+> > http://blog.ffwll.ch
+> > _______________________________________________
+> > Freedreno mailing list
+> > Freedreno@lists.freedesktop.org
+> > https://lists.freedesktop.org/mailman/listinfo/freedreno
+
+
+
+-- 
+Daniel Vetter
+Software Engineer, Intel Corporation
+http://blog.ffwll.ch
