@@ -2,37 +2,44 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A0BBF2903F1
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Oct 2020 13:21:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7A7FF290431
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Oct 2020 13:38:53 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2394785AbgJPLVU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 16 Oct 2020 07:21:20 -0400
-Received: from foss.arm.com ([217.140.110.172]:34886 "EHLO foss.arm.com"
+        id S2406361AbgJPLiw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 16 Oct 2020 07:38:52 -0400
+Received: from foss.arm.com ([217.140.110.172]:35278 "EHLO foss.arm.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2394660AbgJPLVT (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 16 Oct 2020 07:21:19 -0400
+        id S2404884AbgJPLiw (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 16 Oct 2020 07:38:52 -0400
 Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 0B38ED6E;
-        Fri, 16 Oct 2020 04:21:19 -0700 (PDT)
+        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id BEBBDD6E;
+        Fri, 16 Oct 2020 04:38:51 -0700 (PDT)
 Received: from [10.57.50.28] (unknown [10.57.50.28])
-        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 1EFC43F719;
-        Fri, 16 Oct 2020 04:21:16 -0700 (PDT)
-Subject: Re: [PATCH] coresight: etm4x: Skip setting LPOVERRIDE bit for
- qcom,skip-power-up
-To:     Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
+        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 972553F719;
+        Fri, 16 Oct 2020 04:38:49 -0700 (PDT)
+Subject: Re: [PATCH] coresight: etm4x: Add config to exclude kernel mode
+ tracing
+To:     Leo Yan <leo.yan@linaro.org>,
+        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+Cc:     Denis Nikitin <denik@chromium.org>,
         Mathieu Poirier <mathieu.poirier@linaro.org>,
+        linux-arm-msm@vger.kernel.org, coresight@lists.linaro.org,
+        linux-kernel@vger.kernel.org, Stephen Boyd <swboyd@chromium.org>,
+        linux-arm-kernel@lists.infradead.org,
         Mike Leach <mike.leach@linaro.org>
-Cc:     coresight@lists.linaro.org, Stephen Boyd <swboyd@chromium.org>,
-        denik@chromium.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org
-References: <20201016101025.26505-1-saiprakash.ranjan@codeaurora.org>
+References: <20201015124522.1876-1-saiprakash.ranjan@codeaurora.org>
+ <20201015160257.GA1450102@xps15>
+ <CADDJ8CXS8gGuXL45vR6xiHwJhZNcUJPvHMVYSGR6LDETRPJFiQ@mail.gmail.com>
+ <20201016072401.GC4646@leoy-ThinkPad-X240s>
+ <f73ba98c345161f1835458182e6a0002@codeaurora.org>
+ <20201016092450.GG4646@leoy-ThinkPad-X240s>
 From:   Suzuki Poulose <suzuki.poulose@arm.com>
-Message-ID: <5c4f6f5d-b07d-0816-331f-7c7463fa99b3@arm.com>
-Date:   Fri, 16 Oct 2020 12:21:15 +0100
+Message-ID: <f6ee4156-664c-7bff-8e35-5cd1acdbaa84@arm.com>
+Date:   Fri, 16 Oct 2020 12:38:47 +0100
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
  Thunderbird/78.3.1
 MIME-Version: 1.0
-In-Reply-To: <20201016101025.26505-1-saiprakash.ranjan@codeaurora.org>
+In-Reply-To: <20201016092450.GG4646@leoy-ThinkPad-X240s>
 Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-GB
 Content-Transfer-Encoding: 7bit
@@ -40,40 +47,52 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Sai,
-
-On 10/16/20 11:10 AM, Sai Prakash Ranjan wrote:
-> There is a bug on the systems supporting to skip power up
-> (qcom,skip-power-up) where setting LPOVERRIDE bit(low-power
-> state override behaviour) will result in CPU hangs/lockups
-> even on the implementations which supports it. So skip
-> setting the LPOVERRIDE bit for such platforms.
+On 10/16/20 10:24 AM, Leo Yan wrote:
+> Hi Sai,
 > 
-> Fixes: 02510a5aa78d ("coresight: etm4x: Add support to skip trace unit power up")
-> Signed-off-by: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+> On Fri, Oct 16, 2020 at 02:10:47PM +0530, Sai Prakash Ranjan wrote:
+>> Hi Leo,
+>>
+>> On 2020-10-16 12:54, Leo Yan wrote:
+>>> On Thu, Oct 15, 2020 at 11:40:05PM -0700, Denis Nikitin wrote:
+>>>> Hi Mathieu,
+>>>>
+>>>> I think one of the use cases could be VMs.
+>>>> Is there isolation between EL1 guest kernels which we can control
+>>>> from perf
+>>>> in a system wide mode?
+>>>
+>>> Sorry for suddenly jumping in.
+>>>
+>>> For KVM, I think we need to implement mechanism for saving/restoring
+>>> CoreSight context for every guest OS, the CPU PMUs has implemented
+>>> related features [1].
+>>>
+>>> Thanks,
+>>> Leo
+>>>
+>>> [1]
+>>> https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/arch/arm64/kvm/pmu.c
+>>>
 
-The fix is fine by me. Btw, is there a hardware Erratum assigned for
-this ? It would be good to have the Erratum documented somewhere,
-preferrably ( Documentation/arm64/silicon-errata.rst )
+Its not as easy as the CPU PMU for virtualizing the ETMs (with memory
+mapped access only), i.e supporting ETMs from VMs.
+We could definitely stop/resume on guest entry/exit, to support 
+attr.exclude_guest.
 
-> ---
->   drivers/hwtracing/coresight/coresight-etm4x-core.c | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
+>>
+>> What happens to the sysfs mode of tracing? For that we would still
+>> need a config right to exclude kernel mode tracing completely.
 > 
-> diff --git a/drivers/hwtracing/coresight/coresight-etm4x-core.c b/drivers/hwtracing/coresight/coresight-etm4x-core.c
-> index abd706b216ac..6096d7abf80d 100644
-> --- a/drivers/hwtracing/coresight/coresight-etm4x-core.c
-> +++ b/drivers/hwtracing/coresight/coresight-etm4x-core.c
-> @@ -779,7 +779,7 @@ static void etm4_init_arch_data(void *info)
->   	 * LPOVERRIDE, bit[23] implementation supports
->   	 * low-power state override
->   	 */
-> -	if (BMVAL(etmidr5, 23, 23))
-> +	if (BMVAL(etmidr5, 23, 23) && (!drvdata->skip_power_up))
->   		drvdata->lpoverride = true;
->   	else
->   		drvdata->lpoverride = false;
-> 
-> base-commit: 3477326277451000bc667dfcc4fd0774c039184c
-> 
+> IIUC, sysfs mode and perf mode both can apply the same approach, the
+> guest OS runs a thread context for the host, so when a guest OS is
+> switched in or out, the hypervisor can save/restore the context for
+> the guest OS; thus every guest OS will have its dedicated context and
+> trace data ideally.
 
+I don't think Guest Context is something we can support as mentioned
+above, at least for systems without sysreg access for ETMs (and 
+virtualizing ETRs is a different story !)
+
+Cheers
+Suzuki
