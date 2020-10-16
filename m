@@ -2,192 +2,95 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B6538290C7D
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Oct 2020 21:58:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AE66C290CCE
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Oct 2020 22:44:21 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2391385AbgJPT6B (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 16 Oct 2020 15:58:01 -0400
-Received: from m42-4.mailgun.net ([69.72.42.4]:21465 "EHLO m42-4.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2390785AbgJPT54 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 16 Oct 2020 15:57:56 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1602878274; h=Content-Transfer-Encoding: Content-Type:
- In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
- Subject: Sender; bh=YNFKO4kn2tIA269ZV/Ckq/TsS5zSHfh9jxfzWSxby98=; b=sIVVRuL82ZkrdKCNMCHT2l05GDsD0QQSiMT+vn8d324OfGNq8YQ5sFmuOeQbg6PK6LuCBi2y
- 5RrqS/diEHzuw1FjjMF2lOl5QGP9VNedB2LwbhadLZC/SycFmXJSrWIJoZ6HlCLpn5jwvkw3
- 0Wla/B1HJJH2gWGkuCVn06bI9u8=
-X-Mailgun-Sending-Ip: 69.72.42.4
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n04.prod.us-east-1.postgun.com with SMTP id
- 5f89fb410764f13b0097c28b (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 16 Oct 2020 19:57:53
- GMT
-Sender: jhugo=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 0F870C433C9; Fri, 16 Oct 2020 19:57:53 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-3.2 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        NICE_REPLY_A,SPF_FAIL,URIBL_BLOCKED autolearn=no autolearn_force=no
-        version=3.4.0
-Received: from [10.226.59.216] (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: jhugo)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id C20DAC433FE;
-        Fri, 16 Oct 2020 19:57:51 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org C20DAC433FE
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=jhugo@codeaurora.org
-Subject: Re: [PATCH RFC] bus: mhi: core: Enable unique QRTR node ID support
-To:     Gokul Sriram Palanisamy <gokulsri@codeaurora.org>,
-        manivannan.sadhasivam@linaro.org, hemantk@codeaurora.org
-Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        sricharan@codeaurora.org
-References: <1602875069-12514-1-git-send-email-gokulsri@codeaurora.org>
- <1602875069-12514-2-git-send-email-gokulsri@codeaurora.org>
-From:   Jeffrey Hugo <jhugo@codeaurora.org>
-Message-ID: <ef188540-932e-9da6-7af1-a970024930ff@codeaurora.org>
-Date:   Fri, 16 Oct 2020 13:57:51 -0600
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.2.2
+        id S2407214AbgJPUoU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 16 Oct 2020 16:44:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55970 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2407010AbgJPUoU (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 16 Oct 2020 16:44:20 -0400
+Received: from mail-wm1-x342.google.com (mail-wm1-x342.google.com [IPv6:2a00:1450:4864:20::342])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DA256C061755
+        for <linux-arm-msm@vger.kernel.org>; Fri, 16 Oct 2020 13:44:19 -0700 (PDT)
+Received: by mail-wm1-x342.google.com with SMTP id b127so4354170wmb.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 16 Oct 2020 13:44:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=sartura-hr.20150623.gappssmtp.com; s=20150623;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=HlRPIPSe8n0r9rFqN/1/sYjGO15Mdrv0XIRdWHzEMU8=;
+        b=P6VWidqEDHWECL3IKF2xDpDIrmCUVhz0kYhTqd7nHArveC+1LFTZp4bkeJ17baqBtU
+         yZZDaQI6OoO1jK45U20jfJDUaVrBx7VXdBxwdStCU/Azjgs0IpjR590ndxE1RAFZlwnh
+         IVdp2yfwrlc8k4S1e5V3JikMrvvFIIALylklMRaFgeUmo7fKSA04zDLnrZ4PIIXTjQLv
+         bwOcGTxu6XT/7IFT8Xz1IOhesPbIWyIVT0MKdgDlDoKTKPq+deGEEJHCuouHjs9yhcki
+         gP0/CfRZIt1DhVJRNHpj3VUesEv0twjQW20n/GX7eMOGxUZgemYoQGoXtXf2c6bIwCjq
+         SClg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=HlRPIPSe8n0r9rFqN/1/sYjGO15Mdrv0XIRdWHzEMU8=;
+        b=Pa+Jv9SAJIiLGItOkI8kiP/c3fIiTBQJXZAEagPuUpXJhxX36T9TmwaU05Gr7Viv6H
+         fPVTnE/+ZCwnabIZWqyEM0m2ndsO3zc2vOx4D5OJyUlf9llMx9+1kkTvBRKI1O8GTUL1
+         Yzf3fAykVJWmslGbfQn3JkVnUK17qPG7GshlPRG45vsNRuT8fKOLpFtm2T4YoPHY0xlr
+         mxKwQkoip/kDXbnEDtwG5F2eA5qfS5l6MSIboknjK7IrXVWm/mA69GikC00UCWcISTX2
+         rH5jT92NncA3eGzdaBd8KWfCZ+ddFhVb5Pk76mv/V/VAbPckc5+3FGWINEAIuGkvlw6V
+         +m2w==
+X-Gm-Message-State: AOAM532LXvc2f7oZAlg7eqUPpAF1Pqs8Re7m+hF0kkAiE2nb72s4EieI
+        s92yXbtlLIAO3eDyhECaPChQGA==
+X-Google-Smtp-Source: ABdhPJw4dhX6D6+pgt3svPHoFXgsxuCHqytkpuo0aQaWlc4p0a+0l6nxzrqXprqFlKKOF44ApgmrQQ==
+X-Received: by 2002:a1c:449:: with SMTP id 70mr5408513wme.40.1602881056352;
+        Fri, 16 Oct 2020 13:44:16 -0700 (PDT)
+Received: from localhost.localdomain (dh207-98-181.xnet.hr. [88.207.98.181])
+        by smtp.googlemail.com with ESMTPSA id y7sm4206623wmg.40.2020.10.16.13.44.15
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 16 Oct 2020 13:44:15 -0700 (PDT)
+From:   Robert Marko <robert.marko@sartura.hr>
+To:     agross@kernel.org, lgirdwood@gmail.com,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Mark Brown <broonie@kernel.org>, robh+dt@kernel.org
+Cc:     Robert Marko <robert.marko@sartura.hr>,
+        Luka Perkov <luka.perkov@sartura.hr>
+Subject: [PATCH] MAINTAINERS: Add entry for Qualcomm IPQ4019 VQMMC regulator
+Date:   Fri, 16 Oct 2020 22:44:04 +0200
+Message-Id: <20201016204404.2405707-1-robert.marko@sartura.hr>
+X-Mailer: git-send-email 2.28.0
 MIME-Version: 1.0
-In-Reply-To: <1602875069-12514-2-git-send-email-gokulsri@codeaurora.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 10/16/2020 1:04 PM, Gokul Sriram Palanisamy wrote:
-> On multi-mhi platforms, host WiFi driver and
-> QMI test driver needs to differntiate between
-> QMI packets received from multiple mhi devices.
-> 
-> With QCN9000 PCI cards, once SBL gets loaded, we
-> utilize ERRDBG2 register to write a unique value
-> per mhi device from device-tree that the device
-> utilizes to set a unique QRTR node ID and
-> instance ID for the QMI service. This helps QRTR
-> stack in differenting the packets in a multi-mhi
-> environment and can route them accordingly.
-> 
-> sample:
-> root@OpenWrt:/# qrtr-lookup
->    Service Version Instance Node  Port
->         69       1       40   40     2 ATH10k WLAN firmware service
->         15       1        0   40     1 Test service
->         69       1       39   39     2 ATH10k WLAN firmware service
->         15       1        0   39     1 Test service
-> 
-> Here on column 4, 39 and 40 are the node IDs that
-> is unique per mhi device.
-> 
-> Signed-off-by: Gokul Sriram Palanisamy <gokulsri@codeaurora.org>
-> ---
->   .../devicetree/bindings/mhi/qcom,mhi.yaml          | 36 ++++++++++++++++++++++
->   drivers/bus/mhi/core/boot.c                        | 14 +++++++++
->   2 files changed, 50 insertions(+)
->   create mode 100644 Documentation/devicetree/bindings/mhi/qcom,mhi.yaml
-> 
-> diff --git a/Documentation/devicetree/bindings/mhi/qcom,mhi.yaml b/Documentation/devicetree/bindings/mhi/qcom,mhi.yaml
-> new file mode 100644
-> index 0000000..f763e9f
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/mhi/qcom,mhi.yaml
-> @@ -0,0 +1,36 @@
-> +# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
-> +
-> +%YAML 1.2
-> +---
-> +$id: "http://devicetree.org/schemas/pci/qcom,pcie.yaml#"
-> +$schema: "http://devicetree.org/meta-schemas/core.yaml#"
-> +
-> +title: Qualcomm Modem Host Interface
-> +
-> +maintainers:
-> +  - Gokul Sriram Palanisamy <gokulsri@codeaurora.org>
-> +
-> +properties:
-> +  qrtr-instance-id:
-> +    const: 32
-> +
-> +required:
-> +  - reg
-> +  - qrtr-instance-id
-> +
-> +examples:
-> +  - |
-> +    pcie: pci@10000000 {
-> +        compatible = "qcom,pcie-qcs404";
-> +        status = "ok";
-> +        perst-gpio = <&tlmm 58 0x1>;
-> +
-> +        pcie0_rp: pcie0_rp {
-> +            reg = <0 0 0 0 0>;
-> +            status = "ok";
-> +            mhi_0: qcom,mhi@0 {
-> +                reg = <0 0 0 0 0 >;
-> +                qrtr_instance_id = <0x20>;
-> +            };
-> +        };
-> +    };
+Add maintainers entry for the Qualcomm IPQ4019 VQMMC regulator driver.
 
-So, its impossible for me to have multiple QCN9000 PCI devices on say an 
-x86 host, since x86 doesn't support DT?
+Signed-off-by: Robert Marko <robert.marko@sartura.hr>
+Cc: Luka Perkov <luka.perkov@sartura.hr>
+---
+ MAINTAINERS | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-Also, I have to know ahead of time, when I'm writing the DT, how many of 
-these devices I'm going to have in a system, and if I decide to add N 
-more at a later time, I'm back at square 1?
-
-> diff --git a/drivers/bus/mhi/core/boot.c b/drivers/bus/mhi/core/boot.c
-> index 0b38014..7406f28 100644
-> --- a/drivers/bus/mhi/core/boot.c
-> +++ b/drivers/bus/mhi/core/boot.c
-> @@ -18,6 +18,9 @@
->   #include <linux/wait.h>
->   #include "internal.h"
->   
-> +#define QRTR_INSTANCE_MASK	0x0000FFFF
-> +#define QRTR_INSTANCE_SHIFT	0
-
-I fail to understand why IPC Router specific stuff is being clobbered 
-into MHI.
-
-> +
->   /* Setup RDDM vector table for RDDM transfer and program RXVEC */
->   void mhi_rddm_prepare(struct mhi_controller *mhi_cntrl,
->   		      struct image_info *img_info)
-> @@ -445,6 +448,17 @@ void mhi_fw_load_handler(struct mhi_controller *mhi_cntrl)
->   		return;
->   	}
->   
-> +	if (!ret && mhi_cntrl->cntrl_dev->of_node) {
-> +		ret = of_property_read_u32(mhi_cntrl->cntrl_dev->of_node,
-> +					   "qrtr-instance-id", &instance);
-> +		if (!ret) {
-> +			instance &= QRTR_INSTANCE_MASK;
-> +			mhi_write_reg_field(mhi_cntrl, mhi_cntrl->bhi,
-> +					    BHI_ERRDBG2, QRTR_INSTANCE_MASK,
-> +					    QRTR_INSTANCE_SHIFT, instance);
-
-
-This violates the BHI spec which states that this register is read only 
-from the host perspective.  You cannot write to it.
-
-
-Overall, I get why you are attempting to do this, but solution proposed 
-in this RFC is pretty bad.  I'm thinking it would be better to have the 
-QCN9000 "generate" its node id based on the assigned PCI bus address 
-(SBDF)  The current Router maintainers should probably weigh in to 
-ensure that won't cause conflicts in the node id space.
-
+diff --git a/MAINTAINERS b/MAINTAINERS
+index bc05bea8dda0..064908d7b39c 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -14419,6 +14419,14 @@ S:	Maintained
+ F:	Documentation/devicetree/bindings/phy/qcom-usb-ipq4019-phy.yaml
+ F:	drivers/phy/qualcomm/phy-qcom-ipq4019-usb.c
+ 
++QUALCOMM IPQ4019 VQMMC REGULATOR DRIVER
++M:	Robert Marko <robert.marko@sartura.hr>
++M:	Luka Perkov <luka.perkov@sartura.hr>
++L:	linux-arm-msm@vger.kernel.org
++S:	Maintained
++F:	Documentation/devicetree/bindings/regulator/vqmmc-ipq4019-regulator.yaml
++F:	drivers/regulator/vqmmc-ipq4019-regulator.c
++
+ QUALCOMM RMNET DRIVER
+ M:	Subash Abhinov Kasiviswanathan <subashab@codeaurora.org>
+ M:	Sean Tranchetti <stranche@codeaurora.org>
 -- 
-Jeffrey Hugo
-Qualcomm Technologies, Inc. is a member of the
-Code Aurora Forum, a Linux Foundation Collaborative Project.
+2.28.0
+
