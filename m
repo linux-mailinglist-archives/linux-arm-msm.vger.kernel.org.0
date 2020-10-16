@@ -2,107 +2,86 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 8BA512909B8
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Oct 2020 18:31:05 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 046112909BA
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Oct 2020 18:32:40 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2410819AbgJPQbD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 16 Oct 2020 12:31:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45098 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2410817AbgJPQbD (ORCPT
+        id S2410169AbgJPQch (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 16 Oct 2020 12:32:37 -0400
+Received: from mail-ot1-f67.google.com ([209.85.210.67]:46148 "EHLO
+        mail-ot1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2406083AbgJPQch (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 16 Oct 2020 12:31:03 -0400
-Received: from mail-pg1-x541.google.com (mail-pg1-x541.google.com [IPv6:2607:f8b0:4864:20::541])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 423B3C061755
-        for <linux-arm-msm@vger.kernel.org>; Fri, 16 Oct 2020 09:31:04 -0700 (PDT)
-Received: by mail-pg1-x541.google.com with SMTP id o7so1757384pgv.6
-        for <linux-arm-msm@vger.kernel.org>; Fri, 16 Oct 2020 09:31:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=ngWRzHXgFHPy5i53Ui/ywmmjGuNtNloCNac1FIdeRAQ=;
-        b=B37qAKhlAWHbfyc7bJHH4NB7PG7hWjfgg2r7HF8pl2x9mcbe0N3kd9ohbS/Yr53sJB
-         XN4TqAOuJwRx10ZUi6sVqKGyBbR81Pb5GBHR3rZCqE0ppUKKK2cjKFhnWO2UEMeRFRNs
-         VakhFnf+GkAlFEHBzqofhpavg1HVPLvU46OuzXHCXQMm28d++AtiQbgAN4CgXKzPhe0e
-         yLGTMiLeXVtDjSPXgO7QSB3pLstp8MV5PmcjUX2MZAajSefUcPFCAddWe8HlSApXbpRq
-         +Q3NaL4W4MjC8GvN3lambFerIYVOFfKe0Dk0s7SnSOPu/DLEjOxyoaZUhodWPtI43aHX
-         +dXw==
+        Fri, 16 Oct 2020 12:32:37 -0400
+Received: by mail-ot1-f67.google.com with SMTP id m11so2898261otk.13;
+        Fri, 16 Oct 2020 09:32:38 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=ngWRzHXgFHPy5i53Ui/ywmmjGuNtNloCNac1FIdeRAQ=;
-        b=aHk9p6wZtNlRa8GkbFgm7+xYdOOZPxneEyOjtjXatlEIq+Cf41NJg3yX5aslfnkR6G
-         jCv01pXFvbZuw7A53hlVafJ8NYH1+v3XCczERZbzGUxwpdTlTPa+fiTRElE/hjGmludH
-         fpD9hXEoqEdj5pgoEKlomEYCu4gHwaBsA3WEXUV7H5ddrFz7EtGTV5jXY7zBBxL9rtfF
-         WtmNpjcBSJ77pthJsnY/uzVUD0ApGpRQWNUdfjQii4L/eXS+rN2Ahhq3jccdbqmIVDKe
-         TrzyyVYsVKQy123dbxyGIlBrGhcpnomtXxoEfCRksvMeO6U/qfEj4wsS9sErxwDaXjW/
-         T3zA==
-X-Gm-Message-State: AOAM533YlHPHqb4gdC6GgO4ded4NM5NTWrvYwhfiVak/w06JCmbFVvVw
-        fWUvcRP4XSCjXeKEnIjV4tjEmg==
-X-Google-Smtp-Source: ABdhPJx8hiTqCuwIz4lbKvJ5Fw1msi/JR77+ht9hPaB0QMoE48DBqyO1UyUGdczGEQelTvD+mdH4tQ==
-X-Received: by 2002:a63:140e:: with SMTP id u14mr3644528pgl.91.1602865863679;
-        Fri, 16 Oct 2020 09:31:03 -0700 (PDT)
-Received: from xps15 (S0106002369de4dac.cg.shawcable.net. [68.147.8.254])
-        by smtp.gmail.com with ESMTPSA id 131sm3314753pfy.5.2020.10.16.09.31.02
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 16 Oct 2020 09:31:03 -0700 (PDT)
-Date:   Fri, 16 Oct 2020 10:31:01 -0600
-From:   Mathieu Poirier <mathieu.poirier@linaro.org>
-To:     Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-Cc:     Suzuki K Poulose <suzuki.poulose@arm.com>,
-        Mike Leach <mike.leach@linaro.org>, coresight@lists.linaro.org,
-        Stephen Boyd <swboyd@chromium.org>, denik@chromium.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org
-Subject: Re: [PATCH] coresight: etm4x: Skip setting LPOVERRIDE bit for
- qcom,skip-power-up
-Message-ID: <20201016163101.GA3885@xps15>
-References: <20201016101025.26505-1-saiprakash.ranjan@codeaurora.org>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=a9XQDRvlQghLmc7cloRKPO4ZwvIGydiKXT9gnOHFNaU=;
+        b=WpBaxjDRCU8o403mEhKdmmAQHFfNUp6gOMEEYoWrITUOmgoWKoHl8q555UoLdmkmsA
+         0eaYgZGxG3Qo4GezZIy6106GrRVILzEMkaSv6nG3txXFPDk0P2kxygkzWnp2FBrqmoZJ
+         CQ7l6FC9G7kCR7uRorzaf8/UdknUWuMcL5PglIpqbBrFzn4xopA36mMyyaaWss3uXjah
+         kTtFeGrz6XkFjVf+pwgxswtUaHjoxQ8uLK9rKybHCjlHlapRA+QcB+hY7wiQPuIcfKYw
+         CIy3Ub9u6UbHl2YGRXg79T4ieKCRbzWqjnswr9YkxfgUZPrX4LJWDsj0qPlnLE2zcYwz
+         EPZw==
+X-Gm-Message-State: AOAM532sL1BjxTbsCVRVmWSm8vkFHfp00oVPnR2mBtju00vn5OCWPkF+
+        SVEF9a3+0gzhMz3OdfS5o07lainVCIV7fIHUj9vCFXjj
+X-Google-Smtp-Source: ABdhPJyVa5xvQit4XVpGpV8fPylPi0PVhm+fR31NyyyS2G5P3wW52qGDipYpAdNnBfEZjL62o5+1ezlKqpXSCFEmjzU=
+X-Received: by 2002:a9d:734f:: with SMTP id l15mr3414504otk.260.1602865957805;
+ Fri, 16 Oct 2020 09:32:37 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20201016101025.26505-1-saiprakash.ranjan@codeaurora.org>
+References: <20201015204722.18764-1-ilina@codeaurora.org> <CAJZ5v0ifjHRomAxEKTW5z+VEZLGeM5MN-NcRxUUgrFQvtB0seQ@mail.gmail.com>
+ <20201016160724.GB16756@codeaurora.org> <CAJZ5v0gBb91rFHne26zLrMPOKcHTmcDERBRLiPAuVJo+H6BAzA@mail.gmail.com>
+ <20201016162119.GC16756@codeaurora.org>
+In-Reply-To: <20201016162119.GC16756@codeaurora.org>
+From:   "Rafael J. Wysocki" <rafael@kernel.org>
+Date:   Fri, 16 Oct 2020 18:32:26 +0200
+Message-ID: <CAJZ5v0ib0ou3+VK4G_Vo2h2po5zzw6R2yoU2Gk2e7K+XpCpEiQ@mail.gmail.com>
+Subject: Re: [PATCH v3] PM / Domains: enable domain idle state accounting
+To:     Lina Iyer <ilina@codeaurora.org>
+Cc:     "Rafael J. Wysocki" <rafael@kernel.org>,
+        "Rafael J. Wysocki" <rjw@rjwysocki.net>,
+        Ulf Hansson <ulf.hansson@linaro.org>,
+        Linux PM <linux-pm@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Oct 16, 2020 at 03:40:25PM +0530, Sai Prakash Ranjan wrote:
-> There is a bug on the systems supporting to skip power up
-> (qcom,skip-power-up) where setting LPOVERRIDE bit(low-power
-> state override behaviour) will result in CPU hangs/lockups
-> even on the implementations which supports it. So skip
-> setting the LPOVERRIDE bit for such platforms.
-> 
-> Fixes: 02510a5aa78d ("coresight: etm4x: Add support to skip trace unit power up")
-> Signed-off-by: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-> ---
->  drivers/hwtracing/coresight/coresight-etm4x-core.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/drivers/hwtracing/coresight/coresight-etm4x-core.c b/drivers/hwtracing/coresight/coresight-etm4x-core.c
-> index abd706b216ac..6096d7abf80d 100644
-> --- a/drivers/hwtracing/coresight/coresight-etm4x-core.c
-> +++ b/drivers/hwtracing/coresight/coresight-etm4x-core.c
-> @@ -779,7 +779,7 @@ static void etm4_init_arch_data(void *info)
->  	 * LPOVERRIDE, bit[23] implementation supports
->  	 * low-power state override
->  	 */
-> -	if (BMVAL(etmidr5, 23, 23))
-> +	if (BMVAL(etmidr5, 23, 23) && (!drvdata->skip_power_up))
->  		drvdata->lpoverride = true;
->  	else
->  		drvdata->lpoverride = false;
+On Fri, Oct 16, 2020 at 6:21 PM Lina Iyer <ilina@codeaurora.org> wrote:
 >
+> On Fri, Oct 16 2020 at 10:13 -0600, Rafael J. Wysocki wrote:
+> >On Fri, Oct 16, 2020 at 6:07 PM Lina Iyer <ilina@codeaurora.org> wrote:
+> >>
+> >> On Fri, Oct 16 2020 at 09:55 -0600, Rafael J. Wysocki wrote:
+> >> >On Thu, Oct 15, 2020 at 10:47 PM Lina Iyer <ilina@codeaurora.org> wrote:
+> >> >>
+> >> >> To enable better debug of PM domains, let's keep a track of the success
+> >> >> and rejections in entering each domain idle state.
+> >> >>
+> >> >> This statistics is exported in debugfs when reading the idle_states
+> >> >> node, associated with each PM domain.
+> >> >>
+> >> >> Signed-off-by: Lina Iyer <ilina@codeaurora.org>
+> >> >> ---
+> >> >> Changes in v3:
+> >> >>         - Rebased on top of mainline
+> >> >
+> >> >I still needed to rebase it to apply it to my tree, so please double
+> >> >check the result in the bleeding-edge branch.
+> >> >
+> >> Okay, will rebase on that branch and post shortly.
+> >
+> >No need, it's been applied already, just please check the result in
+> >bleeding-edge.
+> >
+> I think I may have the wrong bleeding-edge branch. Is it not
+> https://git.kernel.org/pub/scm/linux/kernel/git/rafael/linux-pm.git/log/?h=bleeding-edge
+>
+> Apologize for the confusion.
 
-I have applied your patch.
+Yes, it is now. :-)
 
-Thanks,
-Mathieu
- 
-> base-commit: 3477326277451000bc667dfcc4fd0774c039184c
-> -- 
-> QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
-> of Code Aurora Forum, hosted by The Linux Foundation
-> 
+It was not pushed out before, sorry.
