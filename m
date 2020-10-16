@@ -2,201 +2,174 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 1AFB5290B34
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Oct 2020 20:16:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 19BE8290B73
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Oct 2020 20:39:09 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2391390AbgJPSQr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 16 Oct 2020 14:16:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33158 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2391493AbgJPSQr (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 16 Oct 2020 14:16:47 -0400
-Received: from mail-ot1-x342.google.com (mail-ot1-x342.google.com [IPv6:2607:f8b0:4864:20::342])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4BE43C0613D4
-        for <linux-arm-msm@vger.kernel.org>; Fri, 16 Oct 2020 11:16:47 -0700 (PDT)
-Received: by mail-ot1-x342.google.com with SMTP id 65so3239938otu.9
-        for <linux-arm-msm@vger.kernel.org>; Fri, 16 Oct 2020 11:16:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=lXUFwXy4CvWitPRBtcqz4P6w54dAmXcel3/G3PMWxJk=;
-        b=W5g+DZ0Y+oLih8JHD8yavPz/uC0IhD0zJoUh59V8GVOd6SaaZhHBMLTt5ePflQ91pd
-         /1kUpypg2gwGTndoH0SOMQ4qGBOfD1mSG1DMPuGMWpbezFoZsdHnDTHT/Upbey6/L7Kz
-         3GbgLp8aWQrW9HWuXCtjyFqQLxE89a5b7wnqwGUQYZLS+4Jh5eLuKFL8LKEBgTyCo33S
-         U3YHhKl8uN7kEOqUvYujVmRpHlbqNeh6F5yC2ElknhcZQYLtsmAaIwLgKodysE0Y41X3
-         0qolVLm8P4JKYAIGBsu92Ii6hNPuaG9/tQM1oo7Wn8aGOXh9DQEX2sR00NElZLhkt2Nv
-         BY7w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=lXUFwXy4CvWitPRBtcqz4P6w54dAmXcel3/G3PMWxJk=;
-        b=suc8w0P4Q6IqS0Si0RKSddALslKz9Tm1d+MoBjPYKvlsO1e2f939unzAchcMGfGVkn
-         pdhvxNrQx1K1MfOIHQBHFb+tUfHciLY+/Ju9RrzqOVT1xrII74YVDBhU5KLjw1p0gEA/
-         RRWiFd9ryvB6nLpX1nS1l0gjNDaEmNAcmLIboApEz6ZbXUjYu0RllPNUU7EF3M8btog4
-         Wt2N3uSpvF1DBm6qQsST8BVoSGsNds+9YVkS/TMi8/l5K25Cx3siunKEm+8CeJEAcmGG
-         oobhlkJgOD+RNIXKgVJAhL3bzVN9lbhCOH2NxMkBZ6MEMzUFPljuzof1Y9h7UrAfteV5
-         ZowA==
-X-Gm-Message-State: AOAM530oTku3cUIfxHyMcabL5wy2keUe/E4tXgnneATn5QnPQn7LOq8L
-        uoZ43fSIOr+SItKvSXCEFg4BvA==
-X-Google-Smtp-Source: ABdhPJxMlYFEmvPd/oJ+AQMXJK2Q7X41clGIcOfyf7fGkqn3XjCTTzI8bIyIQwbfPa70i7PTr009ZA==
-X-Received: by 2002:a9d:7315:: with SMTP id e21mr3387087otk.372.1602872206412;
-        Fri, 16 Oct 2020 11:16:46 -0700 (PDT)
-Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id e30sm1173034otf.49.2020.10.16.11.16.45
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 16 Oct 2020 11:16:45 -0700 (PDT)
-Date:   Fri, 16 Oct 2020 13:11:35 -0500
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Ulf Hansson <ulf.hansson@linaro.org>
-Cc:     "Rafael J . Wysocki" <rjw@rjwysocki.net>,
-        Nishanth Menon <nm@ti.com>, linux-pm@vger.kernel.org,
-        Aaro Koskinen <aaro.koskinen@iki.fi>,
-        Tony Lindgren <tony@atomide.com>,
-        Andy Gross <agross@kernel.org>,
-        Niklas Cassel <nks@flawful.org>,
-        Heiko Stuebner <heiko@sntech.de>,
-        Kevin Hilman <khilman@kernel.org>,
-        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH 1/4] power: avs: qcom-cpr: Move the driver to the qcom
- specific drivers
-Message-ID: <20201016181135.GB6705@builder.lan>
-References: <20201006160516.319830-1-ulf.hansson@linaro.org>
- <20201006160516.319830-2-ulf.hansson@linaro.org>
+        id S2392388AbgJPSjH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 16 Oct 2020 14:39:07 -0400
+Received: from m42-4.mailgun.net ([69.72.42.4]:36218 "EHLO m42-4.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S2392385AbgJPSjH (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 16 Oct 2020 14:39:07 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1602873546; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
+ Subject: Sender; bh=tghyBVUWLI7t5xbuuIwx+4+eBlmCinuuCN57kJKXtLE=; b=lDczr6lj/Jc5ev7JUOPnTZ95WzOVKs2/38d+S6a0YdufM+9k6cHVw5QDCFdl9/KKhFgNFgrA
+ UK0LRlhB52oSl5DJ7H21VU2CjNdZdkAO49MUe7X+4pPDYG+OU3AkgvmkSJ33E7cVNjLKHtoI
+ USJkxRmXOUZnX4VuRBR6nPJMvrc=
+X-Mailgun-Sending-Ip: 69.72.42.4
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n06.prod.us-east-1.postgun.com with SMTP id
+ 5f89e8c94f8cc67c319bc9f6 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 16 Oct 2020 18:39:05
+ GMT
+Sender: tdas=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id EA502C433F1; Fri, 16 Oct 2020 18:39:04 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-3.2 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        NICE_REPLY_A,SPF_FAIL autolearn=no autolearn_force=no version=3.4.0
+Received: from [192.168.0.105] (unknown [49.204.183.234])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: tdas)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 34E4FC433CB;
+        Fri, 16 Oct 2020 18:39:00 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 34E4FC433CB
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=tdas@codeaurora.org
+Subject: Re: [PATCH v2 1/3] clk: qcom: clk-alpha-pll: Add support for
+ controlling Agera PLLs
+To:     Stephen Boyd <sboyd@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>
+Cc:     David Brown <david.brown@linaro.org>,
+        Rajendra Nayak <rnayak@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, linux-soc@vger.kernel.org,
+        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Andy Gross <agross@kernel.org>, devicetree@vger.kernel.org,
+        robh@kernel.org, robh+dt@kernel.org
+References: <1602609110-11504-1-git-send-email-tdas@codeaurora.org>
+ <1602609110-11504-2-git-send-email-tdas@codeaurora.org>
+ <160264125446.310579.18150875025884105137@swboyd.mtv.corp.google.com>
+From:   Taniya Das <tdas@codeaurora.org>
+Message-ID: <1d969460-92c7-ce9a-d727-2c0a31c5d3c5@codeaurora.org>
+Date:   Sat, 17 Oct 2020 00:08:58 +0530
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.3.2
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20201006160516.319830-2-ulf.hansson@linaro.org>
+In-Reply-To: <160264125446.310579.18150875025884105137@swboyd.mtv.corp.google.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue 06 Oct 11:05 CDT 2020, Ulf Hansson wrote:
+Thanks Stephen for the review comments.
 
-> The avs drivers are all SoC specific drivers that doesn't share any code.
-> Instead they are located in a directory, mostly to keep similar
-> functionality together. From a maintenance point of view, it makes better
-> sense to collect SoC specific drivers like these, into the SoC specific
-> directories.
+On 10/14/2020 7:37 AM, Stephen Boyd wrote:
+> Quoting Taniya Das (2020-10-13 10:11:48)
+>> diff --git a/drivers/clk/qcom/clk-alpha-pll.c b/drivers/clk/qcom/clk-alpha-pll.c
+>> index 26139ef..17e1fc0 100644
+>> --- a/drivers/clk/qcom/clk-alpha-pll.c
+>> +++ b/drivers/clk/qcom/clk-alpha-pll.c
+>> @@ -1561,3 +1571,73 @@ const struct clk_ops clk_alpha_pll_postdiv_lucid_ops = {
+>>          .set_rate = clk_alpha_pll_postdiv_fabia_set_rate,
+>>   };
+>>   EXPORT_SYMBOL_GPL(clk_alpha_pll_postdiv_lucid_ops);
+>> +
+>> +void clk_agera_pll_configure(struct clk_alpha_pll *pll, struct regmap *regmap,
+>> +                       const struct alpha_pll_config *config)
+>> +{
+>> +       if (config->l)
+>> +               regmap_write(regmap, PLL_L_VAL(pll), config->l);
 > 
-> Therefore, let's move the qcom-cpr driver to the qcom directory.
+> Maybe make a helper function for this too. That way we can't mix up the
+> if condition with the value in the write.
 > 
-> Cc: Niklas Cassel <nks@flawful.org>
-> Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
-> Cc: Andy Gross <agross@kernel.org>
-> Cc: linux-arm-msm@vger.kernel.org
-> Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 
-Acked-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+Sure, I will add a helper function.
 
-Regards,
-Bjorn
+> 	clk_alpha_pll_write_config(regmap, PLL_L_VAL(pll), config->l);
+> 
+> static void clk_alpha_pll_write_config(struct regmap *regmap,
+> 				       unsigned int reg,
+> 				       unsigned int val) {
+> 	if (val)
+> 		regmap_write(regmap, reg, val);
+> }
+> 
+> and how are we so lucky that zero isn't a value that we may need to
+> write?
+> 
+>> +
+>> +       if (config->alpha)
+>> +               regmap_write(regmap, PLL_ALPHA_VAL(pll), config->alpha);
+>> +
+>> +       if (config->user_ctl_val)
+>> +               regmap_write(regmap, PLL_USER_CTL(pll), config->user_ctl_val);
+>> +
+>> +       if (config->config_ctl_val)
+>> +               regmap_write(regmap, PLL_CONFIG_CTL(pll),
+>> +                                               config->config_ctl_val);
+>> +
+>> +       if (config->config_ctl_hi_val)
+>> +               regmap_write(regmap, PLL_CONFIG_CTL_U(pll),
+>> +                                               config->config_ctl_hi_val);
+>> +
+>> +       if (config->test_ctl_val)
+>> +               regmap_write(regmap, PLL_TEST_CTL(pll),
+>> +                                               config->test_ctl_val);
+>> +
+>> +       if (config->test_ctl_hi_val)
+>> +               regmap_write(regmap,  PLL_TEST_CTL_U(pll),
+>> +                                               config->test_ctl_hi_val);
+>> +}
+>> +EXPORT_SYMBOL_GPL(clk_agera_pll_configure);
+>> +
+>> +static int clk_alpha_pll_agera_set_rate(struct clk_hw *hw, unsigned long rate,
+>> +                                                       unsigned long prate)
+>> +{
+>> +       struct clk_alpha_pll *pll = to_clk_alpha_pll(hw);
+>> +       u32 l, alpha_width = pll_alpha_width(pll);
+>> +       unsigned long rrate, max = rate + PLL_RATE_MARGIN;
+>> +       u64 a;
+>> +
+>> +       rrate = alpha_pll_round_rate(rate, prate, &l, &a, alpha_width);
+>> +
+>> +       /*
+>> +        * Due to limited number of bits for fractional rate programming, the
+>> +        * rounded up rate could be marginally higher than the requested rate.
+>> +        */
+>> +       if (rrate > (rate + PLL_RATE_MARGIN) || rrate < rate) {
+>> +               pr_err("%s: Rounded rate %lu not within range [%lu, %lu)\n",
+>> +                      clk_hw_get_name(hw), rrate, rate, max);
+>> +               return -EINVAL;
+>> +       }
+> 
+> Can this be extracted into a helper function?
+> 
 
-> ---
->  MAINTAINERS                                      |  2 +-
->  drivers/power/avs/Kconfig                        | 16 ----------------
->  drivers/power/avs/Makefile                       |  1 -
->  drivers/soc/qcom/Kconfig                         | 16 ++++++++++++++++
->  drivers/soc/qcom/Makefile                        |  1 +
->  drivers/{power/avs/qcom-cpr.c => soc/qcom/cpr.c} |  0
->  6 files changed, 18 insertions(+), 18 deletions(-)
->  rename drivers/{power/avs/qcom-cpr.c => soc/qcom/cpr.c} (100%)
-> 
-> diff --git a/MAINTAINERS b/MAINTAINERS
-> index 4f1a56f6efaa..f51dd1944fe6 100644
-> --- a/MAINTAINERS
-> +++ b/MAINTAINERS
-> @@ -14337,7 +14337,7 @@ L:	linux-pm@vger.kernel.org
->  L:	linux-arm-msm@vger.kernel.org
->  S:	Maintained
->  F:	Documentation/devicetree/bindings/power/avs/qcom,cpr.txt
-> -F:	drivers/power/avs/qcom-cpr.c
-> +F:	drivers/soc/qcom/cpr.c
->  
->  QUALCOMM CPUFREQ DRIVER MSM8996/APQ8096
->  M:	Ilia Lin <ilia.lin@kernel.org>
-> diff --git a/drivers/power/avs/Kconfig b/drivers/power/avs/Kconfig
-> index cdb4237bfd02..089b6244b716 100644
-> --- a/drivers/power/avs/Kconfig
-> +++ b/drivers/power/avs/Kconfig
-> @@ -12,22 +12,6 @@ menuconfig POWER_AVS
->  
->  	  Say Y here to enable Adaptive Voltage Scaling class support.
->  
-> -config QCOM_CPR
-> -	tristate "QCOM Core Power Reduction (CPR) support"
-> -	depends on POWER_AVS && HAS_IOMEM
-> -	select PM_OPP
-> -	select REGMAP
-> -	help
-> -	  Say Y here to enable support for the CPR hardware found on Qualcomm
-> -	  SoCs like QCS404.
-> -
-> -	  This driver populates CPU OPPs tables and makes adjustments to the
-> -	  tables based on feedback from the CPR hardware. If you want to do
-> -	  CPUfrequency scaling say Y here.
-> -
-> -	  To compile this driver as a module, choose M here: the module will
-> -	  be called qcom-cpr
-> -
->  config ROCKCHIP_IODOMAIN
->  	tristate "Rockchip IO domain support"
->  	depends on POWER_AVS && ARCH_ROCKCHIP && OF
-> diff --git a/drivers/power/avs/Makefile b/drivers/power/avs/Makefile
-> index 9007d05853e2..a1b8cd453f19 100644
-> --- a/drivers/power/avs/Makefile
-> +++ b/drivers/power/avs/Makefile
-> @@ -1,4 +1,3 @@
->  # SPDX-License-Identifier: GPL-2.0-only
->  obj-$(CONFIG_POWER_AVS_OMAP)		+= smartreflex.o
-> -obj-$(CONFIG_QCOM_CPR)			+= qcom-cpr.o
->  obj-$(CONFIG_ROCKCHIP_IODOMAIN)		+= rockchip-io-domain.o
-> diff --git a/drivers/soc/qcom/Kconfig b/drivers/soc/qcom/Kconfig
-> index 3dc3e3d61ea3..6a3b69b43ad5 100644
-> --- a/drivers/soc/qcom/Kconfig
-> +++ b/drivers/soc/qcom/Kconfig
-> @@ -26,6 +26,22 @@ config QCOM_COMMAND_DB
->  	  resource on a RPM-hardened platform must use this database to get
->  	  SoC specific identifier and information for the shared resources.
->  
-> +config QCOM_CPR
-> +	tristate "QCOM Core Power Reduction (CPR) support"
-> +	depends on ARCH_QCOM && HAS_IOMEM
-> +	select PM_OPP
-> +	select REGMAP
-> +	help
-> +	  Say Y here to enable support for the CPR hardware found on Qualcomm
-> +	  SoCs like QCS404.
-> +
-> +	  This driver populates CPU OPPs tables and makes adjustments to the
-> +	  tables based on feedback from the CPR hardware. If you want to do
-> +	  CPUfrequency scaling say Y here.
-> +
-> +	  To compile this driver as a module, choose M here: the module will
-> +	  be called qcom-cpr
-> +
->  config QCOM_GENI_SE
->  	tristate "QCOM GENI Serial Engine Driver"
->  	depends on ARCH_QCOM || COMPILE_TEST
-> diff --git a/drivers/soc/qcom/Makefile b/drivers/soc/qcom/Makefile
-> index 93392d9dc7f7..ad675a6593d0 100644
-> --- a/drivers/soc/qcom/Makefile
-> +++ b/drivers/soc/qcom/Makefile
-> @@ -3,6 +3,7 @@ CFLAGS_rpmh-rsc.o := -I$(src)
->  obj-$(CONFIG_QCOM_AOSS_QMP) +=	qcom_aoss.o
->  obj-$(CONFIG_QCOM_GENI_SE) +=	qcom-geni-se.o
->  obj-$(CONFIG_QCOM_COMMAND_DB) += cmd-db.o
-> +obj-$(CONFIG_QCOM_CPR)		+= cpr.o
->  obj-$(CONFIG_QCOM_GSBI)	+=	qcom_gsbi.o
->  obj-$(CONFIG_QCOM_MDT_LOADER)	+= mdt_loader.o
->  obj-$(CONFIG_QCOM_OCMEM)	+= ocmem.o
-> diff --git a/drivers/power/avs/qcom-cpr.c b/drivers/soc/qcom/cpr.c
-> similarity index 100%
-> rename from drivers/power/avs/qcom-cpr.c
-> rename to drivers/soc/qcom/cpr.c
-> -- 
-> 2.25.1
-> 
+Yes, I will add this too.
+
+>> +
+>> +       /* change L_VAL without having to go through the power on sequence */
+>> +       regmap_write(pll->clkr.regmap, PLL_L_VAL(pll), l);
+>> +       regmap_write(pll->clkr.regmap, PLL_ALPHA_VAL(pll), a);
+>> +
+>> +       if (clk_hw_is_enabled(hw))
+>> +               return wait_for_pll_enable_lock(pll);
+>> +
+>> +       return 0;
+>> +}
+>> +
+
+-- 
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
+of Code Aurora Forum, hosted by The Linux Foundation.
+
+--
