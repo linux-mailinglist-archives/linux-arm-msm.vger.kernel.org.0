@@ -2,193 +2,106 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id F36942906D5
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Oct 2020 16:11:15 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1EFBE2906EB
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Oct 2020 16:13:20 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2408595AbgJPOLM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 16 Oct 2020 10:11:12 -0400
-Received: from alexa-out.qualcomm.com ([129.46.98.28]:56738 "EHLO
-        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2408593AbgJPOLL (ORCPT
+        id S2408663AbgJPOM7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 16 Oct 2020 10:12:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51772 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2408656AbgJPOM5 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 16 Oct 2020 10:11:11 -0400
-Received: from ironmsg08-lv.qualcomm.com ([10.47.202.152])
-  by alexa-out.qualcomm.com with ESMTP; 16 Oct 2020 07:11:09 -0700
-X-QCInternal: smtphost
-Received: from ironmsg02-blr.qualcomm.com ([10.86.208.131])
-  by ironmsg08-lv.qualcomm.com with ESMTP/TLS/AES256-SHA; 16 Oct 2020 07:11:07 -0700
-X-QCInternal: smtphost
-Received: from mkrishn-linux.qualcomm.com ([10.204.66.35])
-  by ironmsg02-blr.qualcomm.com with ESMTP; 16 Oct 2020 19:40:47 +0530
-Received: by mkrishn-linux.qualcomm.com (Postfix, from userid 438394)
-        id F2461213ED; Fri, 16 Oct 2020 19:40:45 +0530 (IST)
-From:   Krishna Manikandan <mkrishn@codeaurora.org>
-To:     dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org
-Cc:     Krishna Manikandan <mkrishn@codeaurora.org>,
-        linux-kernel@vger.kernel.org, robdclark@gmail.com,
-        seanpaul@chromium.org, hoegsberg@chromium.org,
-        kalyan_t@codeaurora.org, dianders@chromium.org
-Subject: [v3] drm/msm: Fix race condition in msm driver with async layer updates
-Date:   Fri, 16 Oct 2020 19:40:43 +0530
-Message-Id: <1602857443-27317-1-git-send-email-mkrishn@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
+        Fri, 16 Oct 2020 10:12:57 -0400
+Received: from mail-wr1-x442.google.com (mail-wr1-x442.google.com [IPv6:2a00:1450:4864:20::442])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9599DC0613D4
+        for <linux-arm-msm@vger.kernel.org>; Fri, 16 Oct 2020 07:12:55 -0700 (PDT)
+Received: by mail-wr1-x442.google.com with SMTP id i1so3133132wro.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 16 Oct 2020 07:12:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=/5OWg3ftk4N++cGTvtidW1nQcYwkBYUJIWAKoaAJoUU=;
+        b=JB0ZR3FoUlW/JFBSJAimzbR9cTGbrAYD/+9uf2EoIqoJ/hRqQ1n3E8EfhHxfs8m3WL
+         ycOGcMyutOnOYV8TG+udGFQep5jMCWMcsrw1tEeWiQX7ztGyvW/Fab3ECYyjEFerBa0O
+         LP3CA5ItQsVYelucyJ7V4BneROyrhjIp2J6HokXuPtEw815t2I9TRxQZF6wkPzEfea87
+         l6oNJGfs5EIRZBnDXu5Eim/z8rtxCP0SeQy4nU0qNPEZpDbTWlX1b6CTlDUDyttdjff/
+         lkAl84CxVKuYFid5XUFVuVw8v0S8w1/yZjPvdcgEonFYC4K6nstJPdMfwkC1kJVm61+Q
+         GmxQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=/5OWg3ftk4N++cGTvtidW1nQcYwkBYUJIWAKoaAJoUU=;
+        b=S4Lr22uaKeEf1mkURnT5GQ/6gEeb/dGYqDup/EkBxgODiaNxwpresoV3Nt7LkenJKw
+         7FEUYluT4khNos7ZmT6Hi2EmTkJT1gBPs9UHrE4y+A6LS6tOEDjPwwmYZNXmMKQmuAkX
+         QAI+sZIigaISskGIcUxvtaEFpAWHWZyfWeZwgH49VpxLC8Pgqdjck8Y+aj3jzXk+68kA
+         21WD4D5WwobDRFS+mFmDTZgfabFQ2i77FPdaxK/WwkR7G5IpQzTWvOie16CqOCOT3MKH
+         qiWSjHLAL/QF1eGMFUT6zKZlr9tEc99QeSNtHtj9rdHTuYyjPP25/vbG/QghSNR9cs+m
+         OHDg==
+X-Gm-Message-State: AOAM533fUAYo2B5cVaqPdK7bolcI6WvwsSMHe8ZJjuYz9qDui/U5BAQW
+        p2ntvzo0Q1ckvqeO9lHtzil4AA==
+X-Google-Smtp-Source: ABdhPJw+syrWSIvIbwdzERHBMz7PuK0C0aRY/cQbmq/KeUEvG0vIAO0FlZzAWNzvuHTOUVhIHXJFEQ==
+X-Received: by 2002:a5d:5090:: with SMTP id a16mr4005862wrt.281.1602857574137;
+        Fri, 16 Oct 2020 07:12:54 -0700 (PDT)
+Received: from srini-hackbox.lan (cpc86377-aztw32-2-0-cust226.18-1.cable.virginm.net. [92.233.226.227])
+        by smtp.gmail.com with ESMTPSA id p9sm2982284wma.12.2020.10.16.07.12.52
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 16 Oct 2020 07:12:53 -0700 (PDT)
+From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+To:     sboyd@kernel.org, linux-clk@vger.kernel.org,
+        devicetree@vger.kernel.org
+Cc:     bjorn.andersson@linaro.org, mturquette@baylibre.com,
+        robh+dt@kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Subject: [PATCH v3 0/4] clk: qcom : add sm8250 LPASS GFM drivers
+Date:   Fri, 16 Oct 2020 15:12:37 +0100
+Message-Id: <20201016141241.5839-1-srinivas.kandagatla@linaro.org>
+X-Mailer: git-send-email 2.21.0
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-When there are back to back commits with async cursor update,
-there is a case where second commit can program the DPU hw
-blocks while first didn't complete flushing config to HW.
+This patchset adds support for GFM Muxes found in LPASS
+(Low Power Audio SubSystem) IP in Audio Clock Controller
+and Always ON clock controller.
 
-Synchronize the compositions such that second commit waits
-until first commit flushes the composition.
+Clocks derived from these muxes are consumed by LPASS Digital Codec.
+Currently the driver for Audio and Always ON clock controller only
+supports GFM Muxes, however it should be easy to add more clock
+support when required
 
-This change also introduces per crtc commit lock, such that
-commits on different crtcs are not blocked by each other.
+Changes since v2:
+- updated Kconfig text and help as suggested by Stephen
+- removed unnecessary header file include
+- use fw_name instead of name for parents
+- use devm_platform_ioremap_resource
 
-Changes in v2:
-	- Use an array of mutexes in kms to handle commit
-	  lock per crtc. (Rob Clark)
+verified dt_binding_check to pass on linux master,
 
-Changes in v3:
-	- Add wrapper functions to handle lock and unlock of
-	  commit_lock for each crtc. (Rob Clark)
+Srinivas Kandagatla (4):
+  dt-bindings: clock: Add support for LPASS Audio Clock Controller
+  dt-bindings: clock: Add support for LPASS Always ON Controller
+  clk: qcom: Add support to LPASS AUDIO_CC Glitch Free Mux clocks
+  clk: qcom: Add support to LPASS AON_CC Glitch Free Mux clocks
 
-Signed-off-by: Krishna Manikandan <mkrishn@codeaurora.org>
----
- drivers/gpu/drm/msm/msm_atomic.c | 37 ++++++++++++++++++++++++-------------
- drivers/gpu/drm/msm/msm_kms.h    |  6 ++++--
- 2 files changed, 28 insertions(+), 15 deletions(-)
+ .../bindings/clock/qcom,aoncc-sm8250.yaml     |  58 ++++
+ .../bindings/clock/qcom,audiocc-sm8250.yaml   |  58 ++++
+ drivers/clk/qcom/Kconfig                      |   6 +
+ drivers/clk/qcom/Makefile                     |   1 +
+ drivers/clk/qcom/lpass-gfm-sm8250.c           | 320 ++++++++++++++++++
+ .../clock/qcom,sm8250-lpass-aoncc.h           |  11 +
+ .../clock/qcom,sm8250-lpass-audiocc.h         |  13 +
+ 7 files changed, 467 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/clock/qcom,aoncc-sm8250.yaml
+ create mode 100644 Documentation/devicetree/bindings/clock/qcom,audiocc-sm8250.yaml
+ create mode 100644 drivers/clk/qcom/lpass-gfm-sm8250.c
+ create mode 100644 include/dt-bindings/clock/qcom,sm8250-lpass-aoncc.h
+ create mode 100644 include/dt-bindings/clock/qcom,sm8250-lpass-audiocc.h
 
-diff --git a/drivers/gpu/drm/msm/msm_atomic.c b/drivers/gpu/drm/msm/msm_atomic.c
-index 561bfa4..575e9af 100644
---- a/drivers/gpu/drm/msm/msm_atomic.c
-+++ b/drivers/gpu/drm/msm/msm_atomic.c
-@@ -55,16 +55,32 @@ static void vblank_put(struct msm_kms *kms, unsigned crtc_mask)
- 	}
- }
- 
-+static void lock_crtcs(struct msm_kms *kms, unsigned int crtc_mask)
-+{
-+	struct drm_crtc *crtc;
-+
-+	for_each_crtc_mask(kms->dev, crtc, crtc_mask)
-+		mutex_lock(&kms->commit_lock[drm_crtc_index(crtc)]);
-+}
-+
-+static void unlock_crtcs(struct msm_kms *kms, unsigned int crtc_mask)
-+{
-+	struct drm_crtc *crtc;
-+
-+	for_each_crtc_mask(kms->dev, crtc, crtc_mask)
-+		mutex_unlock(&kms->commit_lock[drm_crtc_index(crtc)]);
-+}
-+
- static void msm_atomic_async_commit(struct msm_kms *kms, int crtc_idx)
- {
- 	unsigned crtc_mask = BIT(crtc_idx);
- 
- 	trace_msm_atomic_async_commit_start(crtc_mask);
- 
--	mutex_lock(&kms->commit_lock);
-+	lock_crtcs(kms, crtc_mask);
- 
- 	if (!(kms->pending_crtc_mask & crtc_mask)) {
--		mutex_unlock(&kms->commit_lock);
-+		unlock_crtcs(kms, crtc_mask);
- 		goto out;
- 	}
- 
-@@ -79,7 +95,6 @@ static void msm_atomic_async_commit(struct msm_kms *kms, int crtc_idx)
- 	 */
- 	trace_msm_atomic_flush_commit(crtc_mask);
- 	kms->funcs->flush_commit(kms, crtc_mask);
--	mutex_unlock(&kms->commit_lock);
- 
- 	/*
- 	 * Wait for flush to complete:
-@@ -90,9 +105,8 @@ static void msm_atomic_async_commit(struct msm_kms *kms, int crtc_idx)
- 
- 	vblank_put(kms, crtc_mask);
- 
--	mutex_lock(&kms->commit_lock);
- 	kms->funcs->complete_commit(kms, crtc_mask);
--	mutex_unlock(&kms->commit_lock);
-+	unlock_crtcs(kms, crtc_mask);
- 	kms->funcs->disable_commit(kms);
- 
- out:
-@@ -189,12 +203,11 @@ void msm_atomic_commit_tail(struct drm_atomic_state *state)
- 	 * Ensure any previous (potentially async) commit has
- 	 * completed:
- 	 */
-+	lock_crtcs(kms, crtc_mask);
- 	trace_msm_atomic_wait_flush_start(crtc_mask);
- 	kms->funcs->wait_flush(kms, crtc_mask);
- 	trace_msm_atomic_wait_flush_finish(crtc_mask);
- 
--	mutex_lock(&kms->commit_lock);
--
- 	/*
- 	 * Now that there is no in-progress flush, prepare the
- 	 * current update:
-@@ -232,8 +245,7 @@ void msm_atomic_commit_tail(struct drm_atomic_state *state)
- 		}
- 
- 		kms->funcs->disable_commit(kms);
--		mutex_unlock(&kms->commit_lock);
--
-+		unlock_crtcs(kms, crtc_mask);
- 		/*
- 		 * At this point, from drm core's perspective, we
- 		 * are done with the atomic update, so we can just
-@@ -260,8 +272,7 @@ void msm_atomic_commit_tail(struct drm_atomic_state *state)
- 	 */
- 	trace_msm_atomic_flush_commit(crtc_mask);
- 	kms->funcs->flush_commit(kms, crtc_mask);
--	mutex_unlock(&kms->commit_lock);
--
-+	unlock_crtcs(kms, crtc_mask);
- 	/*
- 	 * Wait for flush to complete:
- 	 */
-@@ -271,9 +282,9 @@ void msm_atomic_commit_tail(struct drm_atomic_state *state)
- 
- 	vblank_put(kms, crtc_mask);
- 
--	mutex_lock(&kms->commit_lock);
-+	lock_crtcs(kms, crtc_mask);
- 	kms->funcs->complete_commit(kms, crtc_mask);
--	mutex_unlock(&kms->commit_lock);
-+	unlock_crtcs(kms, crtc_mask);
- 	kms->funcs->disable_commit(kms);
- 
- 	drm_atomic_helper_commit_hw_done(state);
-diff --git a/drivers/gpu/drm/msm/msm_kms.h b/drivers/gpu/drm/msm/msm_kms.h
-index 1cbef6b..2049847 100644
---- a/drivers/gpu/drm/msm/msm_kms.h
-+++ b/drivers/gpu/drm/msm/msm_kms.h
-@@ -155,7 +155,7 @@ struct msm_kms {
- 	 * For async commit, where ->flush_commit() and later happens
- 	 * from the crtc's pending_timer close to end of the frame:
- 	 */
--	struct mutex commit_lock;
-+	struct mutex commit_lock[MAX_CRTCS];
- 	unsigned pending_crtc_mask;
- 	struct msm_pending_timer pending_timers[MAX_CRTCS];
- };
-@@ -165,7 +165,9 @@ static inline void msm_kms_init(struct msm_kms *kms,
- {
- 	unsigned i;
- 
--	mutex_init(&kms->commit_lock);
-+	for (i = 0; i < ARRAY_SIZE(kms->commit_lock); i++)
-+		mutex_init(&kms->commit_lock[i]);
-+
- 	kms->funcs = funcs;
- 
- 	for (i = 0; i < ARRAY_SIZE(kms->pending_timers); i++)
 -- 
-2.7.4
+2.21.0
 
