@@ -2,68 +2,68 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 0A9A6290694
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Oct 2020 15:48:35 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5FF492906AF
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Oct 2020 15:58:01 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2408316AbgJPNsd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 16 Oct 2020 09:48:33 -0400
-Received: from m42-4.mailgun.net ([69.72.42.4]:41489 "EHLO m42-4.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2408125AbgJPNsb (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 16 Oct 2020 09:48:31 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1602856109; h=Content-Transfer-Encoding: Content-Type:
- In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
- Subject: Sender; bh=PWxCOSXg+R1xNtUK7BbBA+FBtzALbnyXn/iAEMYjb7I=; b=Kpq5g74WADm0Msc7mdoVyV0PGqTPwX7KVR2h48xboM+5xFVl21d4y0+CtM3jaXTDXjhkd5+/
- VL0omiHp4uC9d+Tpy+2S2fhLw2gyrS+6g1paeOkLFFiOLh4KnnULOnPlbkkUesvp+soH2T2/
- uVpsKrBZWXHm30I1u4UqtneP/xU=
-X-Mailgun-Sending-Ip: 69.72.42.4
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n06.prod.us-east-1.postgun.com with SMTP id
- 5f89a4540764f13b008019f4 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 16 Oct 2020 13:47:00
- GMT
-Sender: akhilpo=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id D69D5C433FE; Fri, 16 Oct 2020 13:46:59 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-3.2 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        NICE_REPLY_A,SPF_FAIL,URIBL_BLOCKED autolearn=no autolearn_force=no
-        version=3.4.0
-Received: from [192.168.1.9] (unknown [117.217.236.139])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: akhilpo)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 9100CC433C9;
-        Fri, 16 Oct 2020 13:46:55 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 9100CC433C9
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=akhilpo@codeaurora.org
-Subject: Re: [PATCH 1/2] arm64: dts: qcom: sc7180: Add gpu cooling support
-To:     Matthias Kaehlcke <mka@chromium.org>, manafm@codeaurora.org
-Cc:     Doug Anderson <dianders@chromium.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Amit Kucheria <amitk@kernel.org>,
-        LKML <linux-kernel@vger.kernel.org>,
-        Rajeshwari <rkambl@codeaurora.org>, dri-devel@freedesktop.org,
-        freedreno <freedreno@lists.freedesktop.org>
-References: <1602176947-17385-1-git-send-email-akhilpo@codeaurora.org>
- <CAD=FV=WjWv040TyBaqU8ZAuxGi-YpJ2tsVcUbOV4Htv=_-n8fA@mail.gmail.com>
- <20201009165705.GA1292413@google.com>
- <fc490021-b046-68c5-7ceb-9c63d3ff5650@codeaurora.org>
- <a4be2cf9e51e4f40aae3f9a56989a42f@codeaurora.org>
- <20201015221920.GA1657396@google.com>
-From:   Akhil P Oommen <akhilpo@codeaurora.org>
-Message-ID: <4a068a17-220d-f94e-e8a2-c62d61763922@codeaurora.org>
-Date:   Fri, 16 Oct 2020 19:16:52 +0530
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.3.1
+        id S2408358AbgJPN57 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 16 Oct 2020 09:57:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49436 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2395556AbgJPN56 (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 16 Oct 2020 09:57:58 -0400
+Received: from mail-wr1-x444.google.com (mail-wr1-x444.google.com [IPv6:2a00:1450:4864:20::444])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 46A93C061755
+        for <linux-arm-msm@vger.kernel.org>; Fri, 16 Oct 2020 06:57:57 -0700 (PDT)
+Received: by mail-wr1-x444.google.com with SMTP id i1so3075263wro.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 16 Oct 2020 06:57:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=D+Oj1pj0xy3pRTG2tbwccw/BvWEVT+/elwc8Xpf2+ms=;
+        b=DDXq+5dREgrKBdNS5zYxq9+ypSTjRgAp/ciRqn8b3/yWoQO2NQcZ3qiGzZihicFwzh
+         OSKVorGcQ+Nw+fctsSOaK5KbLncywVTX6ZuiK7mYSElwllKamCMVemviNWnqq1mbVdtB
+         zerN5dGDQTbe+ce2xHxE+2CB/JjMsaM/DyltB/GU9ugfzCxsKo75b1wnRifLtiv4w11p
+         eAw2D0DRUadQ5veCRDIBh+upOxC6bBZG+rOz9YQOl6LAbreGYEdBfQm34Pe68SJzxNxv
+         uoDOxmBUXzdEq3n9iM5hslW6fmLNP2BhjDJ3CjLd/ZbibEyBz/Nz/KVVV+rEm13xevMp
+         6q+g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=D+Oj1pj0xy3pRTG2tbwccw/BvWEVT+/elwc8Xpf2+ms=;
+        b=F9E2c8MrmxkAAcNw+/QdR/UJo/dyuQMEWBwN0GWsToVBwXJCSomjPw5mk+K/aG0Yel
+         ftBinh5YHE5Aey0izBcg+Ruv/go9dTijBXMzORgxFsxK9w2tlbJ+a8NuaQqhm/I5z6wr
+         ckUTVKOh9a/OTrNYny81CFpj8O2LcewUbImLU6YYTc4gLRoXhCHdaPgcvTZmOo/44+f2
+         fZnUPhXuRtmKLbLjhAbDMDY0zrFzsbjJ07zIpCKYJno28d0SDq+WNfrJEWQMv3sGpNny
+         RSAypN6ED6zzA/5OSAcXNNVGva9yMcjPxGKjX4Kr+du7NWLeS1iOVA110EgQDd99XdgP
+         iI2A==
+X-Gm-Message-State: AOAM530HqHvZ6no1phm/qIt34VVq0Ronn/5Fm0C2DNa0NfnM9SO3CdYJ
+        mnOZvY1tBevuogU0Cd6K+3Ry2Q==
+X-Google-Smtp-Source: ABdhPJzQWk0tbOyCNjqeSDXRj8WMg9EHO3/jd1ZjGhTEY6ctOFAVVz4uMWlvIssusgBkeMNP4rmQsw==
+X-Received: by 2002:a5d:498a:: with SMTP id r10mr4220816wrq.106.1602856675984;
+        Fri, 16 Oct 2020 06:57:55 -0700 (PDT)
+Received: from [192.168.86.34] (cpc86377-aztw32-2-0-cust226.18-1.cable.virginm.net. [92.233.226.227])
+        by smtp.googlemail.com with ESMTPSA id u15sm2791368wml.21.2020.10.16.06.57.54
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 16 Oct 2020 06:57:55 -0700 (PDT)
+Subject: Re: [PATCH v2 0/4] clk: qcom : add sm8250 LPASS GFM drivers
+To:     Stephen Boyd <sboyd@kernel.org>, devicetree@vger.kernel.org,
+        linux-clk@vger.kernel.org
+Cc:     bjorn.andersson@linaro.org, mturquette@baylibre.com,
+        robh+dt@kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20200925103115.15191-1-srinivas.kandagatla@linaro.org>
+ <160263991247.310579.116180302037536226@swboyd.mtv.corp.google.com>
+From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Message-ID: <19d0f252-924c-eece-0788-a24d9c7b9645@linaro.org>
+Date:   Fri, 16 Oct 2020 14:57:54 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.8.0
 MIME-Version: 1.0
-In-Reply-To: <20201015221920.GA1657396@google.com>
+In-Reply-To: <160263991247.310579.116180302037536226@swboyd.mtv.corp.google.com>
 Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-US
 Content-Transfer-Encoding: 7bit
@@ -71,167 +71,28 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 10/16/2020 3:49 AM, Matthias Kaehlcke wrote:
-> Hi,
-> 
-> On Thu, Oct 15, 2020 at 12:07:01AM +0530, manafm@codeaurora.org wrote:
->> On 2020-10-14 18:59, Akhil P Oommen wrote:
->>> On 10/9/2020 10:27 PM, Matthias Kaehlcke wrote:
->>>> On Fri, Oct 09, 2020 at 08:05:10AM -0700, Doug Anderson wrote:
->>>>> Hi,
->>>>>
->>>>> On Thu, Oct 8, 2020 at 10:10 AM Akhil P Oommen
->>>>> <akhilpo@codeaurora.org> wrote:
->>>>>>
->>>>>> Add cooling-cells property and the cooling maps for the gpu tzones
->>>>>> to support GPU cooling.
->>>>>>
->>>>>> Signed-off-by: Akhil P Oommen <akhilpo@codeaurora.org>
->>>>>> ---
->>>>>>    arch/arm64/boot/dts/qcom/sc7180.dtsi | 29
->>>>>> ++++++++++++++++++++++-------
->>>>>>    1 file changed, 22 insertions(+), 7 deletions(-)
->>>>>>
->>>>>> diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi
->>>>>> b/arch/arm64/boot/dts/qcom/sc7180.dtsi
->>>>>> index d46b383..40d6a28 100644
->>>>>> --- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
->>>>>> +++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
->>>>>> @@ -2,7 +2,7 @@
->>>>>>    /*
->>>>>>     * SC7180 SoC device tree source
->>>>>>     *
->>>>>> - * Copyright (c) 2019, The Linux Foundation. All rights reserved.
->>>>>> + * Copyright (c) 2019-20, The Linux Foundation. All rights
->>>>>> reserved.
->>>>>>     */
->>>>>>
->>>>>>    #include <dt-bindings/clock/qcom,dispcc-sc7180.h>
->>>>>> @@ -1885,6 +1885,7 @@
->>>>>>                           iommus = <&adreno_smmu 0>;
->>>>>>                           operating-points-v2 = <&gpu_opp_table>;
->>>>>>                           qcom,gmu = <&gmu>;
->>>>>> +                       #cooling-cells = <2>;
->>>>>
->>>>> Presumably we should add this to the devicetree bindings, too?
->>> Yes, thanks for catching this. Will update in the next patch.
->>>
->>>>>
->>>>>
->>>>>>                           interconnects = <&gem_noc
->>>>>> MASTER_GFX3D &mc_virt SLAVE_EBI1>;
->>>>>>                           interconnect-names = "gfx-mem";
->>>>>> @@ -3825,16 +3826,16 @@
->>>>>>                   };
->>>>>>
->>>>>>                   gpuss0-thermal {
->>>>>> -                       polling-delay-passive = <0>;
->>>>>> +                       polling-delay-passive = <100>;
->>>>>
->>>>> Why did you make this change?  I'm pretty sure that we _don't_ want
->>>>> this since we're using interrupts for the thermal sensor.  See commit
->>>>> 22337b91022d ("arm64: dts: qcom: sc7180: Changed polling mode in
->>>>> Thermal-zones node").
->>>>
->>>> I was going to ask the same, this shouldn't be needed.
->> As per our understanding unlike "polling-delay",  this delay property is
->> intended to activate polling thread on post trip threshold violation and  it
->> is irrespective of sensor is capable for trip interrupt or not.
->> This polling is more of governor related. Below are the few references from
->> Documentation/code which tells polling-delay-passive is needed for IPA for
->> better IPA performance.
->>
->> As per Power allocator documentations
->>
->> 1. https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/tree/Documentation/driver-api/thermal/power_allocator.rst?h=v5.4.71#n264
->>
->> "The power allocator governor's PID controller works best if there is a
->> periodic tick.  If you have a driver that calls
->> `thermal_zone_device_update()` (or anything that ends up calling the
->> governor's `throttle()` function) repetitively, the governor response
->> won't be very good.  Note that this is not particular to this
->> governor, step-wise will also misbehave if you call its throttle()
->> faster than the normal thermal framework tick (due to interrupts for
->> example) as it will overreact"
->>
->> 2. In Power allocator code, when  switch_on/control trip temp violation, it
->> is enabling passive counter to activate passive polling @ https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/tree/drivers/thermal/power_allocator.c?h=v5.4.71#n634
->>
->> 3. while calculating derivative term, it is using passive_delay @
->> https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/tree/drivers/thermal/power_allocator.c?h=v5.4.71#n243
->>
->> 4. Sensor interrupt will work if temperature is fluctuating between
->> trip_temp and hysteresis. But say a case where we are not enabling
->> polling-delay-passive. In this case if  current temperature > control_temp
->> trip(2nd passive trip) and
->>   temperature trend is still raising, then sensor high trip will be disabled
->> (OR configured for critical trip threshold). No more trip interrupt from
->> sensor until it reaches critical trip or falls below control_temp
->> hysteresis.
->>   How  the governor re-evaluate its next mitigation without passive polling
->> thread  here ?
->>
->> I think the same is required for CPU thermal zone as well.
-> 
-> Thanks for the explication and pointers!
-> 
-> I ran some tests to re-confirm. For that I lowered the trip point temperatures
-> of CPU6 to 60/70, to make it easier to trigger throttling without necessarily
-> affecting the other CPUs. Further I enabled tracing for the events 'thermal_temperature',
-> 'thermal_zone_trip' and 'thermal_power_allocator'. With that I ran a CPU
-> intensive task on CPU6.
-> 
-> Without polling-delay the trace log looks like this:
-> 
->    irq/40-c263000.-157   [000] ....    48.035986: thermal_temperature: thermal_zone=cpu6-thermal id=6 temp_prev=57800 temp=60000
->    irq/40-c263000.-157   [000] ....    48.036029: thermal_power_allocator_pid: thermal_zone_id=6 err=10000 err_integral=0 p=2402 i=0 d=0 output=1776
->    irq/40-c263000.-157   [000] ....    48.036036: thermal_power_allocator: thermal_zone_id=6 req_power={{0x96}} total_req_power=150 granted_power={{0x6f0}} total_granted_power=1776 power_range=1776 max_allocatable_power=1776 current_temperature=60000 delta_temperature=10000
->    irq/40-c263000.-157   [000] ....    52.480888: thermal_temperature: thermal_zone=cpu6-thermal id=6 temp_prev=60000 temp=70000
->    irq/40-c263000.-157   [000] ....    52.480925: thermal_power_allocator_pid: thermal_zone_id=6 err=0 err_integral=0 p=0 i=0 d=0 output=1202
->    irq/40-c263000.-157   [000] ....    52.480931: thermal_power_allocator: thermal_zone_id=6 req_power={{0x45e}} total_req_power=1118 granted_power={{0x4b2}} total_granted_power=1202 power_range=1202 max_allocatable_power=1776 current_temperature=70000 delta_temperature=0
-> 
-> i.e. power_allocator only acts on the sensor interrupts at the trip points
-> 
-> It looks different with a non-zero value for 'polling-delay-passive':
-> 
->    irq/40-c263000.-156   [000] ....   104.501777: thermal_power_allocator: thermal_zone_id=6 req_power={{0x331}} total_req_power=817 granted_power={{0x591}} total_granted_power=1425 power_range=1425 max_allocatable_power=1776 current_temperature=67800 delta_temperature=2200
->    irq/40-c263000.-156   [000] ....   104.523073: thermal_temperature: thermal_zone=cpu6-thermal id=6 temp_prev=67800 temp=70000
->    irq/40-c263000.-156   [000] ....   104.523121: thermal_power_allocator_pid: thermal_zone_id=6 err=0 err_integral=-31200 p=0 i=-305 d=0 output=897
->    irq/40-c263000.-156   [000] ....   104.523148: thermal_power_allocator: thermal_zone_id=6 req_power={{0x406}} total_req_power=1030 granted_power={{0x381}} total_granted_power=897 power_range=897 max_allocatable_power=1776 current_temperature=70000 delta_temperature=0
->    irq/40-c263000.-156   [000] ....   104.608566: thermal_temperature: thermal_zone=cpu6-thermal id=6 temp_prev=70000 temp=67800
->    irq/40-c263000.-156   [000] ....   104.608612: thermal_power_allocator_pid: thermal_zone_id=6 err=2200 err_integral=-31200 p=528 i=-305 d=0 output=1425
->    irq/40-c263000.-156   [000] ....   104.608642: thermal_power_allocator: thermal_zone_id=6 req_power={{0x331}} total_req_power=817 granted_power={{0x591}} total_granted_power=1425 power_range=1425 max_allocatable_power=1776 current_temperature=67800 delta_temperature=2200
->    irq/40-c263000.-156   [000] ....   104.630863: thermal_temperature: thermal_zone=cpu6-thermal id=6 temp_prev=67800 temp=70000
->    irq/40-c263000.-156   [000] ....   104.630907: thermal_power_allocator_pid: thermal_zone_id=6 err=0 err_integral=-31200 p=0 i=-305 d=0 output=897
->    irq/40-c263000.-156   [000] ....   104.630932: thermal_power_allocator: thermal_zone_id=6 req_power={{0x3f4}} total_req_power=1012 granted_power={{0x381}} total_granted_power=897 power_range=897 max_allocatable_power=1776 current_temperature=70000 delta_temperature=0
->    irq/40-c263000.-156   [000] ....   104.687495: thermal_temperature: thermal_zone=cpu6-thermal id=6 temp_prev=70000 temp=67800
->    irq/40-c263000.-156   [000] ....   104.687541: thermal_power_allocator_pid: thermal_zone_id=6 err=2200 err_integral=-31200 p=528 i=-305 d=0 output=1425
->    irq/40-c263000.-156   [000] ....   104.687567: thermal_power_allocator: thermal_zone_id=6 req_power={{0x338}} total_req_power=824 granted_power={{0x591}} total_granted_power=1425 power_range=1425 max_allocatable_power=1776 current_temperature=67800 delta_temperature=2200
->    irq/40-c263000.-156   [000] ....   104.711664: thermal_temperature: thermal_zone=cpu6-thermal id=6 temp_prev=67800 temp=70000
-> 
-> So it seems indeed the 'polling-delay-passive' is needed for better reactivity,
-> and it should also be re-added to the other thermal zones.
-> 
-> On a different note I first tried something similar on the GPU, the trip points
-> triggered, however there was no reaction from power_allocator, the reason is
-> that there is no power information for the GPU (num power actors = 0). It seems
-> it doesn' make sense to use IPA as long as there is no energy model (even if it
-> worked by using the lowest frequency as 'estimated power' throttling would
-> likely be overly aggressive). Since the trip point configuration for IPA and
-> 'step_wise' (and probably others) is somewhat incompatible (IPA aims for a
-> temperature around the 2nd trip point, 'step_wise' interprets the first trip
-> point as limit) I think it makes sense to continue with a single trip point
-> for now.
-> 
-> Thanks
-> 
-> Matthias
-> _______________________________________________
-> dri-devel mailing list
-> dri-devel@lists.freedesktop.org
-> https://lists.freedesktop.org/mailman/listinfo/dri-devel
-> 
-Looks like we have consensus here. I will spin another patchset.
-Manaf will share a separate patch to fix the CPU tzones.
+thanks Stephen,
 
--Akhil.
+On 14/10/2020 02:45, Stephen Boyd wrote:
+>> Changes since v1:
+>>   -removed unnecessary Kconfig dependencies
+>>   - cleaned up header includes.
+>>   - moved to using pm_clk
+>>   - Moved to right place in Makefile
+>>   - moved to use module_platform_driver instead of builtin_platform_driver
+>>   - add null check for of_device_get_match_data
+>>
+>> verified dt_binding_check to pass on linux nexthttps://paste.ubuntu.com/p/6nVzjRwvsW/
+> Rob's bot complained again. Can you run with
+
+Yes, I think the bot is probably checking against linus master branch.
+Now the dependent patches are merged in master.
+dt_binding_check passes, I will send v3 with the suggested changes!
+
+
+--srini
+
+> 
+>    make DT_SCHEMA_FILES=<path to schema file.yaml> dt_binding_check
+> 
+> and make sure the schema is up to date?
