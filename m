@@ -2,97 +2,99 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 7A7FF290431
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Oct 2020 13:38:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id F165729044B
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Oct 2020 13:47:37 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2406361AbgJPLiw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 16 Oct 2020 07:38:52 -0400
-Received: from foss.arm.com ([217.140.110.172]:35278 "EHLO foss.arm.com"
+        id S2406889AbgJPLrh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 16 Oct 2020 07:47:37 -0400
+Received: from z5.mailgun.us ([104.130.96.5]:19092 "EHLO z5.mailgun.us"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2404884AbgJPLiw (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 16 Oct 2020 07:38:52 -0400
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id BEBBDD6E;
-        Fri, 16 Oct 2020 04:38:51 -0700 (PDT)
-Received: from [10.57.50.28] (unknown [10.57.50.28])
-        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 972553F719;
-        Fri, 16 Oct 2020 04:38:49 -0700 (PDT)
-Subject: Re: [PATCH] coresight: etm4x: Add config to exclude kernel mode
- tracing
-To:     Leo Yan <leo.yan@linaro.org>,
-        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-Cc:     Denis Nikitin <denik@chromium.org>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        linux-arm-msm@vger.kernel.org, coresight@lists.linaro.org,
-        linux-kernel@vger.kernel.org, Stephen Boyd <swboyd@chromium.org>,
-        linux-arm-kernel@lists.infradead.org,
-        Mike Leach <mike.leach@linaro.org>
-References: <20201015124522.1876-1-saiprakash.ranjan@codeaurora.org>
- <20201015160257.GA1450102@xps15>
- <CADDJ8CXS8gGuXL45vR6xiHwJhZNcUJPvHMVYSGR6LDETRPJFiQ@mail.gmail.com>
- <20201016072401.GC4646@leoy-ThinkPad-X240s>
- <f73ba98c345161f1835458182e6a0002@codeaurora.org>
- <20201016092450.GG4646@leoy-ThinkPad-X240s>
-From:   Suzuki Poulose <suzuki.poulose@arm.com>
-Message-ID: <f6ee4156-664c-7bff-8e35-5cd1acdbaa84@arm.com>
-Date:   Fri, 16 Oct 2020 12:38:47 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.3.1
+        id S2394387AbgJPLre (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 16 Oct 2020 07:47:34 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1602848853; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=MMWbCx9d3yLwEKVcPZsuF+0hO2zdqzXyO4N7tPF4yGk=;
+ b=twa8yl43Rp1QXZXAnPOhNdkwKzkno/W0m6hh30599LtAtlrG6dRSxFfgnXy3Qi7PTH5a2Y5h
+ uIMRrCKHeYYdwskgMKQJa7qTCAxUXLBtmQvGTuIWkp260NTe32lVohPvTIk446w8jqKPOrcg
+ bElmesKsMQJ/MKJBZy/CHRUXzaU=
+X-Mailgun-Sending-Ip: 104.130.96.5
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n02.prod.us-east-1.postgun.com with SMTP id
+ 5f89883fbfed2afaa68c0aa2 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 16 Oct 2020 11:47:11
+ GMT
+Sender: saiprakash.ranjan=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 7F6C1C433CB; Fri, 16 Oct 2020 11:47:10 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: saiprakash.ranjan)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id CCC45C433F1;
+        Fri, 16 Oct 2020 11:47:09 +0000 (UTC)
 MIME-Version: 1.0
-In-Reply-To: <20201016092450.GG4646@leoy-ThinkPad-X240s>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-GB
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
 Content-Transfer-Encoding: 7bit
+Date:   Fri, 16 Oct 2020 17:17:09 +0530
+From:   Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+To:     Suzuki Poulose <suzuki.poulose@arm.com>
+Cc:     Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Mike Leach <mike.leach@linaro.org>, coresight@lists.linaro.org,
+        Stephen Boyd <swboyd@chromium.org>, denik@chromium.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org
+Subject: Re: [PATCH] coresight: etm4x: Skip setting LPOVERRIDE bit for
+ qcom,skip-power-up
+In-Reply-To: <5c4f6f5d-b07d-0816-331f-7c7463fa99b3@arm.com>
+References: <20201016101025.26505-1-saiprakash.ranjan@codeaurora.org>
+ <5c4f6f5d-b07d-0816-331f-7c7463fa99b3@arm.com>
+Message-ID: <41bbcd43c2b016b6d785c3750622e9fe@codeaurora.org>
+X-Sender: saiprakash.ranjan@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 10/16/20 10:24 AM, Leo Yan wrote:
+Hi Suzuki,
+
+On 2020-10-16 16:51, Suzuki Poulose wrote:
 > Hi Sai,
 > 
-> On Fri, Oct 16, 2020 at 02:10:47PM +0530, Sai Prakash Ranjan wrote:
->> Hi Leo,
->>
->> On 2020-10-16 12:54, Leo Yan wrote:
->>> On Thu, Oct 15, 2020 at 11:40:05PM -0700, Denis Nikitin wrote:
->>>> Hi Mathieu,
->>>>
->>>> I think one of the use cases could be VMs.
->>>> Is there isolation between EL1 guest kernels which we can control
->>>> from perf
->>>> in a system wide mode?
->>>
->>> Sorry for suddenly jumping in.
->>>
->>> For KVM, I think we need to implement mechanism for saving/restoring
->>> CoreSight context for every guest OS, the CPU PMUs has implemented
->>> related features [1].
->>>
->>> Thanks,
->>> Leo
->>>
->>> [1]
->>> https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/arch/arm64/kvm/pmu.c
->>>
-
-Its not as easy as the CPU PMU for virtualizing the ETMs (with memory
-mapped access only), i.e supporting ETMs from VMs.
-We could definitely stop/resume on guest entry/exit, to support 
-attr.exclude_guest.
-
->>
->> What happens to the sysfs mode of tracing? For that we would still
->> need a config right to exclude kernel mode tracing completely.
+> On 10/16/20 11:10 AM, Sai Prakash Ranjan wrote:
+>> There is a bug on the systems supporting to skip power up
+>> (qcom,skip-power-up) where setting LPOVERRIDE bit(low-power
+>> state override behaviour) will result in CPU hangs/lockups
+>> even on the implementations which supports it. So skip
+>> setting the LPOVERRIDE bit for such platforms.
+>> 
+>> Fixes: 02510a5aa78d ("coresight: etm4x: Add support to skip trace unit 
+>> power up")
+>> Signed-off-by: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
 > 
-> IIUC, sysfs mode and perf mode both can apply the same approach, the
-> guest OS runs a thread context for the host, so when a guest OS is
-> switched in or out, the hypervisor can save/restore the context for
-> the guest OS; thus every guest OS will have its dedicated context and
-> trace data ideally.
+> The fix is fine by me. Btw, is there a hardware Erratum assigned for
+> this ? It would be good to have the Erratum documented somewhere,
+> preferrably ( Documentation/arm64/silicon-errata.rst )
+> 
 
-I don't think Guest Context is something we can support as mentioned
-above, at least for systems without sysreg access for ETMs (and 
-virtualizing ETRs is a different story !)
+No, afaik we don't have any erratum assigned to this bug.
+It was already present in downstream kernel and since we
+support these targets with the previous HW bug
+(qcom,skip-power-up) now in upstream, we would need this
+fix in upstream kernel as well.
 
-Cheers
-Suzuki
+Thanks,
+Sai
+
+-- 
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a 
+member
+of Code Aurora Forum, hosted by The Linux Foundation
