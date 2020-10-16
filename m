@@ -2,103 +2,152 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C0ADE29000D
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Oct 2020 10:40:50 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 21B56290012
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Oct 2020 10:41:33 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2394682AbgJPIkt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 16 Oct 2020 04:40:49 -0400
-Received: from m42-4.mailgun.net ([69.72.42.4]:25212 "EHLO m42-4.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2394680AbgJPIkt (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 16 Oct 2020 04:40:49 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1602837648; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=ustTZbEcMftmhOslkOBYdaqAQIg6oVuX//5E6Jl/XX0=;
- b=n9oHo5Py32FjgxQ4hPi1z6qlhlHB3fZICZRsWgD9vlmXtbWYdY8yDpUYrqWdzQf/GZ4Z6K/A
- /2WxOgpIs/fdzOs76IlhIABopiDLmwt8tKuLBuaGcU7xeLYXZQZIi1N5uOAM1SUrEVRHb+L2
- gEfCgVRSxydzjvEaloNqzhDEQZ4=
-X-Mailgun-Sending-Ip: 69.72.42.4
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n03.prod.us-west-2.postgun.com with SMTP id
- 5f895c9057b88ccb561d24be (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 16 Oct 2020 08:40:48
- GMT
-Sender: saiprakash.ranjan=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 6E2EDC433CB; Fri, 16 Oct 2020 08:40:48 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: saiprakash.ranjan)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id D9BD3C433F1;
-        Fri, 16 Oct 2020 08:40:47 +0000 (UTC)
+        id S2394718AbgJPIlc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 16 Oct 2020 04:41:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56630 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2394725AbgJPIlb (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 16 Oct 2020 04:41:31 -0400
+Received: from mail-wr1-x443.google.com (mail-wr1-x443.google.com [IPv6:2a00:1450:4864:20::443])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 653F2C0613D3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 16 Oct 2020 01:41:29 -0700 (PDT)
+Received: by mail-wr1-x443.google.com with SMTP id s9so1765605wro.8
+        for <linux-arm-msm@vger.kernel.org>; Fri, 16 Oct 2020 01:41:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=subject:to:cc:references:from:autocrypt:message-id:date
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=uQtk+JkWwMEwATgr+OhTpaNDc3LvbNZB+56/tR3CRGc=;
+        b=g6aDk1qZRqu1sSIfLksRLGEGveUEmd6U/VdaytxMoY0CorU/S7i/BkT8/apGW/zW1N
+         lgcFmP1nvE9rPx++8e7QLcq5x527D2uDlPLHc1wsExoqv5wNOW1luL0pNdjw+RzMzzQd
+         M/1xkXnkJNZfYRq9tvIRKJkdg0JWL/MY3NOCO6ssEC4V8aThV6KznIHCGQLDpm4UqX7u
+         x6C9swI0ag55gIGoOkSmN9haSiyPkeZgPMjJqhHSYZrRnKv5k0J6WcLcH+wdQBdZoEeu
+         z6ywXa+E0CwLcugppe7h6mG4iLaIQ5Ry05Jb1O9RpHN75B+p5Ej2a9v0P++Nwrf+13lY
+         znRA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:autocrypt
+         :message-id:date:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=uQtk+JkWwMEwATgr+OhTpaNDc3LvbNZB+56/tR3CRGc=;
+        b=ZfAgqaiG7dEMx+J6OdLTQJq4mBs3IWbcUr7Qdq8nAO+nrsebNcyXILs2sPTBXr016O
+         QqKqib1r1/vi20AXj2x5lalwZuwirEpfX24gUY1te5bAxcCy5P3sT21zHdai4OMMpknX
+         m1Q8S1BKWxR2+EKmzH35FV0lXIDZT37kOzcxHqFDUzSkNMw1OXoTgyqULfpx8skuT1GZ
+         3mfw2YU8cIyP8XSrcO4PTPrLJ9VLhdn8kHpvAzGdmikk6Qa9R2YqntMkyPElWDIYyhCN
+         A0I4sj4k8PxobZ4yPOgl/LEU6+B3ATfqF8SZBs820dapPk8LGDLbWJBlMGSMGJA8cluC
+         EK1Q==
+X-Gm-Message-State: AOAM531m3viquwEcEJy/0pfaStU0bUm5BhYFWZo3U7Syokpv+V1E198R
+        7o0D17LmTi5j2kL1hADM6hNL6g==
+X-Google-Smtp-Source: ABdhPJz9m3JGp984AVtKeGBkdjCiktIcI1tKy4izElWyZLcVxTVch5Uw/IS4XIpF8j0oVFqEOw92Mg==
+X-Received: by 2002:adf:dd46:: with SMTP id u6mr2609097wrm.295.1602837688010;
+        Fri, 16 Oct 2020 01:41:28 -0700 (PDT)
+Received: from [10.44.66.8] ([212.45.67.2])
+        by smtp.googlemail.com with ESMTPSA id j7sm2577408wrn.81.2020.10.16.01.41.26
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 16 Oct 2020 01:41:27 -0700 (PDT)
+Subject: Re: [PATCH v3 1/2] dt-bindings: interconnect: Add bindings for
+ Qualcomm SDM660 NoC
+To:     kholk11@gmail.com, bjorn.andersson@linaro.org
+Cc:     robh+dt@kernel.org, agross@kernel.org, marijns95@gmail.com,
+        konradybcio@gmail.com, martin.botka1@gmail.com,
+        linux-arm-msm@vger.kernel.org, phone-devel@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-pm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20201008204515.695210-1-kholk11@gmail.com>
+ <20201008204515.695210-2-kholk11@gmail.com>
+From:   Georgi Djakov <georgi.djakov@linaro.org>
+Autocrypt: addr=georgi.djakov@linaro.org; prefer-encrypt=mutual; keydata=
+ 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
+ KEmKjLDvB0pePJkdTw==
+Message-ID: <51622859-3c60-9547-7253-8df5cf5ccd0d@linaro.org>
+Date:   Fri, 16 Oct 2020 11:41:24 +0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
+In-Reply-To: <20201008204515.695210-2-kholk11@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
 Content-Transfer-Encoding: 7bit
-Date:   Fri, 16 Oct 2020 14:10:47 +0530
-From:   Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-To:     Leo Yan <leo.yan@linaro.org>
-Cc:     Denis Nikitin <denik@chromium.org>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        linux-arm-msm@vger.kernel.org, coresight@lists.linaro.org,
-        linux-kernel@vger.kernel.org, Stephen Boyd <swboyd@chromium.org>,
-        linux-arm-kernel@lists.infradead.org,
-        Mike Leach <mike.leach@linaro.org>,
-        Suzuki K Poulose <suzuki.poulose@arm.com>
-Subject: Re: [PATCH] coresight: etm4x: Add config to exclude kernel mode
- tracing
-In-Reply-To: <20201016072401.GC4646@leoy-ThinkPad-X240s>
-References: <20201015124522.1876-1-saiprakash.ranjan@codeaurora.org>
- <20201015160257.GA1450102@xps15>
- <CADDJ8CXS8gGuXL45vR6xiHwJhZNcUJPvHMVYSGR6LDETRPJFiQ@mail.gmail.com>
- <20201016072401.GC4646@leoy-ThinkPad-X240s>
-Message-ID: <f73ba98c345161f1835458182e6a0002@codeaurora.org>
-X-Sender: saiprakash.ranjan@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Leo,
+Hi,
 
-On 2020-10-16 12:54, Leo Yan wrote:
-> On Thu, Oct 15, 2020 at 11:40:05PM -0700, Denis Nikitin wrote:
->> Hi Mathieu,
->> 
->> I think one of the use cases could be VMs.
->> Is there isolation between EL1 guest kernels which we can control from 
->> perf
->> in a system wide mode?
+On 10/8/20 23:45, kholk11@gmail.com wrote:
+> From: AngeloGioacchino Del Regno <kholk11@gmail.com>
 > 
-> Sorry for suddenly jumping in.
+> Add the bindings for the Qualcomm SDM660-class NoC, valid for
+> SDM630, SDM636, SDM660 and SDA variants.
 > 
-> For KVM, I think we need to implement mechanism for saving/restoring
-> CoreSight context for every guest OS, the CPU PMUs has implemented
-> related features [1].
+> Signed-off-by: AngeloGioacchino Del Regno <kholk11@gmail.com>
+> ---
+>  .../bindings/interconnect/qcom,sdm660.yaml    | 147 ++++++++++++++++++
+>  .../dt-bindings/interconnect/qcom,sdm660.h    | 116 ++++++++++++++
+>  2 files changed, 263 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/interconnect/qcom,sdm660.yaml
+>  create mode 100644 include/dt-bindings/interconnect/qcom,sdm660.h
 > 
-> Thanks,
-> Leo
-> 
-> [1]
-> https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/arch/arm64/kvm/pmu.c
-> 
+> diff --git a/Documentation/devicetree/bindings/interconnect/qcom,sdm660.yaml b/Documentation/devicetree/bindings/interconnect/qcom,sdm660.yaml
+> new file mode 100644
+> index 000000000000..440e9bc1382a
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/interconnect/qcom,sdm660.yaml
+> @@ -0,0 +1,147 @@
+> +# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/interconnect/qcom,sdm660.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: Qualcomm SDM660 Network-On-Chip interconnect
+> +
+> +maintainers:
+> +  - Georgi Djakov <georgi.djakov@linaro.org>
 
-What happens to the sysfs mode of tracing? For that we would still
-need a config right to exclude kernel mode tracing completely.
+Why me? This should be you.
 
 Thanks,
-Sai
-
--- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a 
-member
-of Code Aurora Forum, hosted by The Linux Foundation
+Georgi
