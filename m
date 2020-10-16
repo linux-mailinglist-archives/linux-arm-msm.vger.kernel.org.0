@@ -2,99 +2,105 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id F165729044B
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Oct 2020 13:47:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A07BC290617
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Oct 2020 15:14:32 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2406889AbgJPLrh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 16 Oct 2020 07:47:37 -0400
-Received: from z5.mailgun.us ([104.130.96.5]:19092 "EHLO z5.mailgun.us"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2394387AbgJPLre (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 16 Oct 2020 07:47:34 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1602848853; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=MMWbCx9d3yLwEKVcPZsuF+0hO2zdqzXyO4N7tPF4yGk=;
- b=twa8yl43Rp1QXZXAnPOhNdkwKzkno/W0m6hh30599LtAtlrG6dRSxFfgnXy3Qi7PTH5a2Y5h
- uIMRrCKHeYYdwskgMKQJa7qTCAxUXLBtmQvGTuIWkp260NTe32lVohPvTIk446w8jqKPOrcg
- bElmesKsMQJ/MKJBZy/CHRUXzaU=
-X-Mailgun-Sending-Ip: 104.130.96.5
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n02.prod.us-east-1.postgun.com with SMTP id
- 5f89883fbfed2afaa68c0aa2 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 16 Oct 2020 11:47:11
- GMT
-Sender: saiprakash.ranjan=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 7F6C1C433CB; Fri, 16 Oct 2020 11:47:10 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: saiprakash.ranjan)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id CCC45C433F1;
-        Fri, 16 Oct 2020 11:47:09 +0000 (UTC)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Fri, 16 Oct 2020 17:17:09 +0530
-From:   Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+        id S2407000AbgJPNOV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 16 Oct 2020 09:14:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42626 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2404484AbgJPNOP (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 16 Oct 2020 09:14:15 -0400
+Received: from mail-pf1-x444.google.com (mail-pf1-x444.google.com [IPv6:2607:f8b0:4864:20::444])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7A8E9C061755
+        for <linux-arm-msm@vger.kernel.org>; Fri, 16 Oct 2020 06:14:13 -0700 (PDT)
+Received: by mail-pf1-x444.google.com with SMTP id b26so1497482pff.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 16 Oct 2020 06:14:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=2v//XZb9addO+YnQGTuZ1rtYAQE5PbqfnjEF9yMyDoc=;
+        b=CpB0A1qLkDsgmfvKFlr7UWapLdP1M00owIA2ts+xR/6P+6yK9aTnPfr/6RsH0lcJ+l
+         rX5wPDmXPApN0QW7GUw/tRwsktOJgkS2wcU59h0u8CN8GJnM/Jtowgu1lUiN63H8RIKc
+         wx3+f+RTXRcFKXiqmhSmnjdxEoPbQN1uj5++a3/5ThnGYl42h1HmtPI3AcKCgMbUrAjb
+         vIIfwN2kfj2evVmwQ/OaNQDq4nl+TmJaTRNxpwtggZR8txOeD9QdwZhx2n1ZlKVL4k2R
+         Gx3S4zpiFqE7TM9VVfbXNrvpt3gpBIWZeiJmmYFzZstDxfviyixPE2I7Gn+DXEbmaFli
+         3tcg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=2v//XZb9addO+YnQGTuZ1rtYAQE5PbqfnjEF9yMyDoc=;
+        b=dqh09z+rpoadNFIlZAnM3rfH+JfRQYaIcqrzbqxfDXsCh6ajCRhmFMQXVc0vnd75RN
+         FKtSTEhMuRQO2jX1hFov+DNcqBk5ncLHe3e8g2XHc0elzHsfOsrX+ftnm65VCfaqia6c
+         ffY6oqmmQ9mVhdk9aENQHJYmAHsLJAH7AucR/TAdmftuBhlZhaLx9LGr7M7+Z+Ew5zVs
+         it9SZrS9BI3KZUbGEnl+URSJiMsV5TFHhACG4BK6PteM6x8wKiRaO4vSwaQBboAmYd1N
+         4gsdNTRZghOquBCmdzcPrdQHNSufq1RmI4Upm7UHKt+WQ/I9ohXdJl/3HXxSVDd7exFb
+         NZqQ==
+X-Gm-Message-State: AOAM531fiHz3YXwMw0N5OM0S2/IvilnKIwva6prPXnrnKpQ7ksLRfsbO
+        lVv/rHmFlUdn2P6yU1zzFCP5lw==
+X-Google-Smtp-Source: ABdhPJwpBt1lWaerL/zTVz8TqRFSN2H2X1ZaeEtayOXScEJOTVGGH1v+RUnnCnoUuu2gcA9u1B5ljg==
+X-Received: by 2002:a63:1865:: with SMTP id 37mr3186358pgy.322.1602854052978;
+        Fri, 16 Oct 2020 06:14:12 -0700 (PDT)
+Received: from leoy-ThinkPad-X240s ([64.120.119.108])
+        by smtp.gmail.com with ESMTPSA id e5sm3587979pjd.0.2020.10.16.06.14.09
+        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
+        Fri, 16 Oct 2020 06:14:12 -0700 (PDT)
+Date:   Fri, 16 Oct 2020 21:14:07 +0800
+From:   Leo Yan <leo.yan@linaro.org>
 To:     Suzuki Poulose <suzuki.poulose@arm.com>
-Cc:     Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Mike Leach <mike.leach@linaro.org>, coresight@lists.linaro.org,
-        Stephen Boyd <swboyd@chromium.org>, denik@chromium.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org
-Subject: Re: [PATCH] coresight: etm4x: Skip setting LPOVERRIDE bit for
- qcom,skip-power-up
-In-Reply-To: <5c4f6f5d-b07d-0816-331f-7c7463fa99b3@arm.com>
-References: <20201016101025.26505-1-saiprakash.ranjan@codeaurora.org>
- <5c4f6f5d-b07d-0816-331f-7c7463fa99b3@arm.com>
-Message-ID: <41bbcd43c2b016b6d785c3750622e9fe@codeaurora.org>
-X-Sender: saiprakash.ranjan@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+Cc:     Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
+        Denis Nikitin <denik@chromium.org>,
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
+        linux-arm-msm@vger.kernel.org, coresight@lists.linaro.org,
+        linux-kernel@vger.kernel.org, Stephen Boyd <swboyd@chromium.org>,
+        linux-arm-kernel@lists.infradead.org,
+        Mike Leach <mike.leach@linaro.org>
+Subject: Re: [PATCH] coresight: etm4x: Add config to exclude kernel mode
+ tracing
+Message-ID: <20201016131407.GA31839@leoy-ThinkPad-X240s>
+References: <20201015124522.1876-1-saiprakash.ranjan@codeaurora.org>
+ <20201015160257.GA1450102@xps15>
+ <CADDJ8CXS8gGuXL45vR6xiHwJhZNcUJPvHMVYSGR6LDETRPJFiQ@mail.gmail.com>
+ <20201016072401.GC4646@leoy-ThinkPad-X240s>
+ <f73ba98c345161f1835458182e6a0002@codeaurora.org>
+ <20201016092450.GG4646@leoy-ThinkPad-X240s>
+ <f6ee4156-664c-7bff-8e35-5cd1acdbaa84@arm.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <f6ee4156-664c-7bff-8e35-5cd1acdbaa84@arm.com>
+User-Agent: Mutt/1.9.4 (2018-02-28)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Suzuki,
+On Fri, Oct 16, 2020 at 12:38:47PM +0100, Suzuki Kuruppassery Poulose wrote:
 
-On 2020-10-16 16:51, Suzuki Poulose wrote:
-> Hi Sai,
-> 
-> On 10/16/20 11:10 AM, Sai Prakash Ranjan wrote:
->> There is a bug on the systems supporting to skip power up
->> (qcom,skip-power-up) where setting LPOVERRIDE bit(low-power
->> state override behaviour) will result in CPU hangs/lockups
->> even on the implementations which supports it. So skip
->> setting the LPOVERRIDE bit for such platforms.
->> 
->> Fixes: 02510a5aa78d ("coresight: etm4x: Add support to skip trace unit 
->> power up")
->> Signed-off-by: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-> 
-> The fix is fine by me. Btw, is there a hardware Erratum assigned for
-> this ? It would be good to have the Erratum documented somewhere,
-> preferrably ( Documentation/arm64/silicon-errata.rst )
-> 
+[...]
 
-No, afaik we don't have any erratum assigned to this bug.
-It was already present in downstream kernel and since we
-support these targets with the previous HW bug
-(qcom,skip-power-up) now in upstream, we would need this
-fix in upstream kernel as well.
+> > > What happens to the sysfs mode of tracing? For that we would still
+> > > need a config right to exclude kernel mode tracing completely.
+> > 
+> > IIUC, sysfs mode and perf mode both can apply the same approach, the
+> > guest OS runs a thread context for the host, so when a guest OS is
+> > switched in or out, the hypervisor can save/restore the context for
+> > the guest OS; thus every guest OS will have its dedicated context and
+> > trace data ideally.
+> 
+> I don't think Guest Context is something we can support as mentioned
+> above, at least for systems without sysreg access for ETMs (and virtualizing
+> ETRs is a different story !)
+
+Thanks for sharing thoughts, Suzuki.
+
+I missed the device virtulisation.  Here should virtualize all devices
+(includes CoreSight ETM/funnel/ETR/ETF)?  Or only need to virtualize
+ETRs?
+
+Obviously, this is a difficult task :)
 
 Thanks,
-Sai
-
--- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a 
-member
-of Code Aurora Forum, hosted by The Linux Foundation
+Leo
