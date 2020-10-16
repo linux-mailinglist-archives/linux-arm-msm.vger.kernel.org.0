@@ -2,95 +2,133 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 3A17C290CD1
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Oct 2020 22:46:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 87860290DF2
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 17 Oct 2020 01:00:06 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2407996AbgJPUqS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 16 Oct 2020 16:46:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56282 "EHLO
+        id S2392578AbgJPXAF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 16 Oct 2020 19:00:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48788 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2407820AbgJPUqS (ORCPT
+        with ESMTP id S2392676AbgJPXAE (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 16 Oct 2020 16:46:18 -0400
-Received: from mail-wr1-x443.google.com (mail-wr1-x443.google.com [IPv6:2a00:1450:4864:20::443])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3F9A7C061755
-        for <linux-arm-msm@vger.kernel.org>; Fri, 16 Oct 2020 13:46:18 -0700 (PDT)
-Received: by mail-wr1-x443.google.com with SMTP id x7so4502581wrl.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 16 Oct 2020 13:46:18 -0700 (PDT)
+        Fri, 16 Oct 2020 19:00:04 -0400
+Received: from mail-vs1-xe42.google.com (mail-vs1-xe42.google.com [IPv6:2607:f8b0:4864:20::e42])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A9638C0613D3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 16 Oct 2020 16:00:04 -0700 (PDT)
+Received: by mail-vs1-xe42.google.com with SMTP id d4so2302624vsk.13
+        for <linux-arm-msm@vger.kernel.org>; Fri, 16 Oct 2020 16:00:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=sartura-hr.20150623.gappssmtp.com; s=20150623;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=z34pjZEl/yAj35BmeMPeQ2AuzmLDkr4JaiqOt/ocOb0=;
-        b=umGeLcj4PeucC6Uf/5Tp5/oxosbRT2cAL8LwYyMK7PC10/QkTWvNiOcD9zxdFYXYjF
-         lMZc31X6dH9HqmOiO7Yqx0H7Iu2F32wfIRiRQNEGhfDhJTgoEPbeYwaS0go5VQWFuTQa
-         fHHCUJkJ4Xj2x4Iwag48IxwTxiPPe4G5xT5QUy9KNfb3acQsEaZ3KDss+IwTacYSFc+C
-         RKXH9M6tAChIWYXw4VJ7WOB08uXWOjd7fbgoSypAdoKzYUDx59f7uXtTbgam+kvN38R7
-         KoV9gnJpp2nELz3qwI1rXL4lJPAQIOD62dpkDVibocadOgc5FQtM2wHPJ/15Xpc+nIG7
-         1p4Q==
+        d=chromium.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=AjcM6pBNdKL5o3d8ve/lkVCACu/O1tgEtN+tYkGh2yw=;
+        b=iF2R2/ssQkxddNhdSCY+SR/DdKPcWpybr1BBzv5dtATOOyzSE7UXidT0JbEl0kgLTN
+         9HQvFn1ytlZv9w/aiPira8m5XEYEhtp5HOX3td36VJAxr9r7X1fnw3HovXXKPyuqUBOT
+         D/tQqwRJSO/ekXyd05zmA3xql9+eG0tRcqHqc=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=z34pjZEl/yAj35BmeMPeQ2AuzmLDkr4JaiqOt/ocOb0=;
-        b=UB/cfCKEkX8SQbA+AxSibtckGAUPcRNLM7uHPRAkSwwd0EcuGUEpsNgxq9EXoXNTzw
-         28XWzou4BXt6I+01Rzx/VoAG5YBome/hwK3ipX3IZ57PkKAT1mfBr7AkjfmS2GhwLNQg
-         8dEf/Vi3Rmgw4VNY8mhPaQxehtksUuDvjb+/8axZqrya8MGKKlJ1FYusbvN8sb58nuih
-         2R+y9kOvjE1a0qHG2K+WOCYX2VF98MDHKcIxml3yZz55VnTti6NBYn3nZjxsyU2SHjhP
-         IXYhIxHY/pm6C1h8u3cPD70KfGgT2KieJSmL+kgWU5+PQnCmWS3nfAQSP4ElJdc8xVIa
-         P4fQ==
-X-Gm-Message-State: AOAM53177iEHrYWxhfHq4FMD583EqBywUT9L4FedRfpaa31/NAd84uWY
-        UQXTSHvUPskxdr1OnYXffKJq5A==
-X-Google-Smtp-Source: ABdhPJz36RkEVJGo8Lo+uuUMuw1zpTfpRfIeXeo6wreRRLSULo2sCHXOz8UUwuJxT9Iqbo+vH5Cj+w==
-X-Received: by 2002:adf:fe48:: with SMTP id m8mr5978231wrs.127.1602881176869;
-        Fri, 16 Oct 2020 13:46:16 -0700 (PDT)
-Received: from localhost.localdomain (dh207-98-181.xnet.hr. [88.207.98.181])
-        by smtp.googlemail.com with ESMTPSA id z5sm5143609wrw.37.2020.10.16.13.46.15
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 16 Oct 2020 13:46:16 -0700 (PDT)
-From:   Robert Marko <robert.marko@sartura.hr>
-To:     agross@kernel.org, bjorn.andersson@linaro.org, kishon@ti.com,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        robh+dt@kernel.org, mark.rutland@arm.com, vkoul@kernel.org
-Cc:     Robert Marko <robert.marko@sartura.hr>,
-        Luka Perkov <luka.perkov@sartura.hr>
-Subject: [PATCH] MAINTAINERS: Add entry for Qualcomm IPQ4019 USB PHY
-Date:   Fri, 16 Oct 2020 22:46:10 +0200
-Message-Id: <20201016204610.2406075-1-robert.marko@sartura.hr>
-X-Mailer: git-send-email 2.28.0
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=AjcM6pBNdKL5o3d8ve/lkVCACu/O1tgEtN+tYkGh2yw=;
+        b=VOhuxU6rk/O9oVvxiV/Nfz4tCvjc98VlOVKOs7cDhrsIaWeCMK3dRHDgNQRH6G80yw
+         toyVxAr/V5K0ayNrRWhyadl32LB9CpxuNPlNnLK3M3LUK4lAdSi8e/352bcuF9gFAb0M
+         w4dzCjhTDtQpYwXDgujR+qkAHDrdVxcAO4GUP7t865yQEtWIFwmkhY9GDLcI8XJDv07J
+         HC8UXE+6huU4JLaHHiex42yr907RIhjiyJWmJopNRUz3qcuPKMfGScX1pIzFUtzEubwo
+         U8qz9R95a5In6F9x56//EceIN461S0+Wv4jgZsbkLQ3w2LH3nGfyc0Rsg5jU9pdnb8Q9
+         OxlQ==
+X-Gm-Message-State: AOAM533C3gNEpMSVr5uEogPMlJ4W/k4MBojR74JpfLwQREllLzlWu945
+        ajqMwu/uPHmNk7V3d46amg7yFT3bN3294Q==
+X-Google-Smtp-Source: ABdhPJzpO6rykEBWvN1UhbCWTF3hxR8wp3EmJDW9Mehtxv2Ngxm7/VOW9u1ScoSI/Z4p6p5bQcUlRQ==
+X-Received: by 2002:a67:2c4c:: with SMTP id s73mr3902403vss.53.1602889203283;
+        Fri, 16 Oct 2020 16:00:03 -0700 (PDT)
+Received: from mail-vk1-f176.google.com (mail-vk1-f176.google.com. [209.85.221.176])
+        by smtp.gmail.com with ESMTPSA id x16sm504968uao.1.2020.10.16.16.00.02
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 16 Oct 2020 16:00:02 -0700 (PDT)
+Received: by mail-vk1-f176.google.com with SMTP id r78so1003209vke.11
+        for <linux-arm-msm@vger.kernel.org>; Fri, 16 Oct 2020 16:00:02 -0700 (PDT)
+X-Received: by 2002:a1f:eb02:: with SMTP id j2mr3877230vkh.21.1602889201868;
+ Fri, 16 Oct 2020 16:00:01 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <1602783939-7177-1-git-send-email-sibis@codeaurora.org>
+In-Reply-To: <1602783939-7177-1-git-send-email-sibis@codeaurora.org>
+From:   Doug Anderson <dianders@chromium.org>
+Date:   Fri, 16 Oct 2020 15:59:50 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=XFgS-d8L5Q3SEXYYtBszmjdMbBLRWRTHX7rQ5i6Hb=4g@mail.gmail.com>
+Message-ID: <CAD=FV=XFgS-d8L5Q3SEXYYtBszmjdMbBLRWRTHX7rQ5i6Hb=4g@mail.gmail.com>
+Subject: Re: [PATCH 1/2] arm64: dts: qcom: sc7180-lite: Tweak DDR/L3 scaling
+ on SC7180-lite
+To:     Sibi Sankar <sibis@codeaurora.org>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        Andy Gross <agross@kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>, LKML <linux-kernel@vger.kernel.org>,
+        Evan Green <evgreen@chromium.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Stephen Boyd <swboyd@chromium.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add maintainers entry for the Qualcomm IPQ4019 USB PHY driver.
+Hi,
 
-Signed-off-by: Robert Marko <robert.marko@sartura.hr>
-Cc: Luka Perkov <luka.perkov@sartura.hr>
----
- MAINTAINERS | 8 ++++++++
- 1 file changed, 8 insertions(+)
+On Thu, Oct 15, 2020 at 10:53 AM Sibi Sankar <sibis@codeaurora.org> wrote:
+>
+> Tweak the DDR/L3 bandwidth votes on the lite variant of the SC7180 SoC
+> since the gold cores only support frequencies upto 2.1 GHz.
+>
+> Signed-off-by: Sibi Sankar <sibis@codeaurora.org>
+> ---
+>  arch/arm64/boot/dts/qcom/sc7180-lite.dtsi | 14 ++++++++++++++
+>  1 file changed, 14 insertions(+)
+>  create mode 100644 arch/arm64/boot/dts/qcom/sc7180-lite.dtsi
+>
+> diff --git a/arch/arm64/boot/dts/qcom/sc7180-lite.dtsi b/arch/arm64/boot/dts/qcom/sc7180-lite.dtsi
+> new file mode 100644
+> index 000000000000..cff50275cfe1
+> --- /dev/null
+> +++ b/arch/arm64/boot/dts/qcom/sc7180-lite.dtsi
+> @@ -0,0 +1,14 @@
+> +// SPDX-License-Identifier: BSD-3-Clause
+> +/*
+> + * SC7180 lite device tree source
+> + *
+> + * Copyright (c) 2020, The Linux Foundation. All rights reserved.
+> + */
+> +
+> +&cpu6_opp11 {
+> +       opp-peak-kBps = <8532000 22425600>;
+> +};
+> +
+> +&cpu6_opp12 {
+> +       opp-peak-kBps = <8532000 23347200>;
+> +};
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 867157311dc8..bc05bea8dda0 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -14411,6 +14411,14 @@ F:	Documentation/devicetree/bindings/mailbox/qcom-ipcc.yaml
- F:	drivers/mailbox/qcom-ipcc.c
- F:	include/dt-bindings/mailbox/qcom-ipcc.h
- 
-+QUALCOMM IPQ4019 USB PHY DRIVER
-+M:	Robert Marko <robert.marko@sartura.hr>
-+M:	Luka Perkov <luka.perkov@sartura.hr>
-+L:	linux-arm-msm@vger.kernel.org
-+S:	Maintained
-+F:	Documentation/devicetree/bindings/phy/qcom-usb-ipq4019-phy.yaml
-+F:	drivers/phy/qualcomm/phy-qcom-ipq4019-usb.c
-+
- QUALCOMM RMNET DRIVER
- M:	Subash Abhinov Kasiviswanathan <subashab@codeaurora.org>
- M:	Sean Tranchetti <stranche@codeaurora.org>
--- 
-2.28.0
+I guess this is OK, but something about it smells just a little
+strange...  I guess:
 
+a) There's suddenly a big jump from opp10 to opp11.  You don't use
+7216000 at all anymore.
+
+b) The fact that we need to do this at all feels like a sign that
+somehow this wasn't designed quite right.
+
+Just brainstorming a bit: If the higher memory rate wasn't useful for
+OPP11/12 on the non-lite version of the chip, why are they useful for
+that OPP on the lite version?  I guess you're just trying to eek out
+the last little bits of performance once the cpufreq is maxed out?  It
+almost feels like a better way to do this (though it wouldn't be
+monotonically increasing anymore so it wouldn't actually work) would
+be to have a few "OPP" points at the top where the cpufreq stops
+increasing and all you do is increase the memory frequency.
+
+c) In theory we're supposed to be able to probe whether we're on the
+normal, lite, or pro version, right?  Anyway we could tweak this in
+code so we don't have to know to include the right dtsi file?
+
+
+-Doug
