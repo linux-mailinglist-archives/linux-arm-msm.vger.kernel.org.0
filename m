@@ -2,123 +2,164 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E58342902C8
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Oct 2020 12:30:50 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E949C2903D4
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Oct 2020 13:11:54 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2395295AbgJPKat (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 16 Oct 2020 06:30:49 -0400
-Received: from m42-4.mailgun.net ([69.72.42.4]:24587 "EHLO m42-4.mailgun.net"
+        id S2394611AbgJPLLy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 16 Oct 2020 07:11:54 -0400
+Received: from foss.arm.com ([217.140.110.172]:34678 "EHLO foss.arm.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2395285AbgJPKas (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 16 Oct 2020 06:30:48 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1602844247; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=MBBTz+wbATBpIcOHVoqb2HLcX9i5i5/HpFr5H1lz7UY=;
- b=ZynXNCMsxqq6J7M8zHHNFObXUdjvX7MGXV9KnZwXJ5NevORKTV8G7gFhtKLQi38qn75mcPaX
- WL6FaewAhdgU1lK2sBi7Vupok3ChrYNSE8NpVsg+C4U6le4gOmGtbmDiGJ2j3/nlLbp1NSSK
- aFY60KeKCmSWJQjwK6MKSMATN/A=
-X-Mailgun-Sending-Ip: 69.72.42.4
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n01.prod.us-west-2.postgun.com with SMTP id
- 5f89765706d81bc48d016214 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 16 Oct 2020 10:30:47
- GMT
-Sender: saiprakash.ranjan=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 60C47C43382; Fri, 16 Oct 2020 10:30:47 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: saiprakash.ranjan)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id C25CFC433CB;
-        Fri, 16 Oct 2020 10:30:46 +0000 (UTC)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Fri, 16 Oct 2020 16:00:46 +0530
-From:   Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-To:     Leo Yan <leo.yan@linaro.org>
-Cc:     Denis Nikitin <denik@chromium.org>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Suzuki K Poulose <suzuki.poulose@arm.com>,
-        linux-arm-msm@vger.kernel.org, coresight@lists.linaro.org,
-        linux-kernel@vger.kernel.org, Stephen Boyd <swboyd@chromium.org>,
-        linux-arm-kernel@lists.infradead.org,
-        Mike Leach <mike.leach@linaro.org>
+        id S2391033AbgJPLLy (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 16 Oct 2020 07:11:54 -0400
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 12107D6E;
+        Fri, 16 Oct 2020 04:11:53 -0700 (PDT)
+Received: from [10.57.50.28] (unknown [10.57.50.28])
+        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 0E7A43F719;
+        Fri, 16 Oct 2020 04:11:50 -0700 (PDT)
 Subject: Re: [PATCH] coresight: etm4x: Add config to exclude kernel mode
  tracing
-In-Reply-To: <20201016092450.GG4646@leoy-ThinkPad-X240s>
+To:     Denis Nikitin <denik@chromium.org>,
+        Mathieu Poirier <mathieu.poirier@linaro.org>
+Cc:     Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
+        Mike Leach <mike.leach@linaro.org>, coresight@lists.linaro.org,
+        Stephen Boyd <swboyd@chromium.org>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org
 References: <20201015124522.1876-1-saiprakash.ranjan@codeaurora.org>
  <20201015160257.GA1450102@xps15>
  <CADDJ8CXS8gGuXL45vR6xiHwJhZNcUJPvHMVYSGR6LDETRPJFiQ@mail.gmail.com>
- <20201016072401.GC4646@leoy-ThinkPad-X240s>
- <f73ba98c345161f1835458182e6a0002@codeaurora.org>
- <20201016092450.GG4646@leoy-ThinkPad-X240s>
-Message-ID: <f4fff311015e45214e07606fcf33e8e4@codeaurora.org>
-X-Sender: saiprakash.ranjan@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+From:   Suzuki Poulose <suzuki.poulose@arm.com>
+Message-ID: <fcfd6a92-de94-e318-5715-23b97fb9724e@arm.com>
+Date:   Fri, 16 Oct 2020 12:11:40 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.3.1
+MIME-Version: 1.0
+In-Reply-To: <CADDJ8CXS8gGuXL45vR6xiHwJhZNcUJPvHMVYSGR6LDETRPJFiQ@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-GB
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Leo,
-
-On 2020-10-16 14:54, Leo Yan wrote:
-> Hi Sai,
+On 10/16/20 7:40 AM, Denis Nikitin wrote:
+> Hi Mathieu,
 > 
-> On Fri, Oct 16, 2020 at 02:10:47PM +0530, Sai Prakash Ranjan wrote:
->> Hi Leo,
->> 
->> On 2020-10-16 12:54, Leo Yan wrote:
->> > On Thu, Oct 15, 2020 at 11:40:05PM -0700, Denis Nikitin wrote:
->> > > Hi Mathieu,
->> > >
->> > > I think one of the use cases could be VMs.
->> > > Is there isolation between EL1 guest kernels which we can control
->> > > from perf
->> > > in a system wide mode?
->> >
->> > Sorry for suddenly jumping in.
->> >
->> > For KVM, I think we need to implement mechanism for saving/restoring
->> > CoreSight context for every guest OS, the CPU PMUs has implemented
->> > related features [1].
->> >
->> > Thanks,
->> > Leo
->> >
->> > [1]
->> > https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/arch/arm64/kvm/pmu.c
->> >
->> 
->> What happens to the sysfs mode of tracing? For that we would still
->> need a config right to exclude kernel mode tracing completely.
+> I think one of the use cases could be VMs.
+> Is there isolation between EL1 guest kernels which we can control from 
+> perf in a system wide mode?
+
+The proposed solution doesn't solve this for VMs anyway. It only
+excludes EL1 *OR* EL2, depending on the host kernel's running  EL.
+We cannot support Virtual ETM access for VMs with memory mapped
+accesses.
+
+Unforutnately, trace filtering is the solution for preventing tracing
+for EL1 guest/kernel (available from v8.4 Self Hosted extensions). Other
+option is to add support for "exclude_guest" support for CoreSight for perf.
+But again this can't be controlled by sysfs. And it can't be enforced 
+for perf, if not specified. Again it all goes back to the root
+permission hammer lock which Mathieu pointed out.
+
+
+With the v8.4 Self hosted trace extensions, Guest and Host both could
+control individually if they can be traced (both EL0 and EL1/2).
+
+Suzuki
+
 > 
-> IIUC, sysfs mode and perf mode both can apply the same approach, the
-> guest OS runs a thread context for the host, so when a guest OS is
-> switched in or out, the hypervisor can save/restore the context for
-> the guest OS; thus every guest OS will have its dedicated context and
-> trace data ideally.
+> Thanks,
+> Denis
+> 
+> On Thu, Oct 15, 2020 at 9:03 AM Mathieu Poirier 
+> <mathieu.poirier@linaro.org <mailto:mathieu.poirier@linaro.org>> wrote:
+> 
+>     On Thu, Oct 15, 2020 at 06:15:22PM +0530, Sai Prakash Ranjan wrote:
+>      > On production systems with ETMs enabled, it is preferred to
+>      > exclude kernel mode(NS EL1) tracing for security concerns and
+>      > support only userspace(NS EL0) tracing. So provide an option
+>      > via kconfig to exclude kernel mode tracing if it is required.
+>      > This config is disabled by default and would not affect the
+>      > current configuration which has both kernel and userspace
+>      > tracing enabled by default.
+>      >
+> 
+>     One requires root access (or be part of a special trace group) to be
+>     able to use
+>     the cs_etm PMU.  With this kind of elevated access restricting
+>     tracing at EL1
+>     provides little in terms of security.
+> 
+>     Thanks,
+>     Mathieu
+> 
+>      > Signed-off-by: Sai Prakash Ranjan
+>     <saiprakash.ranjan@codeaurora.org
+>     <mailto:saiprakash.ranjan@codeaurora.org>>
+>      > ---
+>      >  drivers/hwtracing/coresight/Kconfig                | 9 +++++++++
+>      >  drivers/hwtracing/coresight/coresight-etm4x-core.c | 6 +++++-
+>      >  2 files changed, 14 insertions(+), 1 deletion(-)
+>      >
+>      > diff --git a/drivers/hwtracing/coresight/Kconfig
+>     b/drivers/hwtracing/coresight/Kconfig
+>      > index c1198245461d..52435de8824c 100644
+>      > --- a/drivers/hwtracing/coresight/Kconfig
+>      > +++ b/drivers/hwtracing/coresight/Kconfig
+>      > @@ -110,6 +110,15 @@ config CORESIGHT_SOURCE_ETM4X
+>      >         To compile this driver as a module, choose M here: the
+>      >         module will be called coresight-etm4x.
+>      >
+>      > +config CORESIGHT_ETM4X_EXCL_KERN
+>      > +     bool "Coresight ETM 4.x exclude kernel mode tracing"
+>      > +     depends on CORESIGHT_SOURCE_ETM4X
+>      > +     help
+>      > +       This will exclude kernel mode(NS EL1) tracing if enabled.
+>     This option
+>      > +       will be useful to provide more flexible options on
+>     production systems
+>      > +       where only userspace(NS EL0) tracing might be preferred
+>     for security
+>      > +       reasons.
+>      > +
+>      >  config CORESIGHT_STM
+>      >       tristate "CoreSight System Trace Macrocell driver"
+>      >       depends on (ARM && !(CPU_32v3 || CPU_32v4 || CPU_32v4T)) ||
+>     ARM64
+>      > diff --git a/drivers/hwtracing/coresight/coresight-etm4x-core.c
+>     b/drivers/hwtracing/coresight/coresight-etm4x-core.c
+>      > index abd706b216ac..7e5669e5cd1f 100644
+>      > --- a/drivers/hwtracing/coresight/coresight-etm4x-core.c
+>      > +++ b/drivers/hwtracing/coresight/coresight-etm4x-core.c
+>      > @@ -832,6 +832,9 @@ static u64 etm4_get_ns_access_type(struct
+>     etmv4_config *config)
+>      >  {
+>      >       u64 access_type = 0;
+>      >
+>      > +     if (IS_ENABLED(CONFIG_CORESIGHT_ETM4X_EXCL_KERN))
+>      > +             config->mode |= ETM_MODE_EXCL_KERN;
+>      > +
+>      >       /*
+>      >        * EXLEVEL_NS, bits[15:12]
+>      >        * The Exception levels are:
+>      > @@ -849,7 +852,8 @@ static u64 etm4_get_ns_access_type(struct
+>     etmv4_config *config)
+>      >               access_type = ETM_EXLEVEL_NS_HYP;
+>      >       }
+>      >
+>      > -     if (config->mode & ETM_MODE_EXCL_USER)
+>      > +     if (config->mode & ETM_MODE_EXCL_USER &&
+>      > +         !IS_ENABLED(CONFIG_CORESIGHT_ETM4X_EXCL_KERN))
+>      >               access_type |= ETM_EXLEVEL_NS_APP;
+>      >
+>      >       return access_type;
+>      >
+>      > base-commit: 3477326277451000bc667dfcc4fd0774c039184c
+>      > --
+>      > QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is
+>     a member
+>      > of Code Aurora Forum, hosted by The Linux Foundation
+>      >
 > 
 
-Thanks for the explanation, so for this usecase then we would have to
-implement something as you suggested, not sure how hard would that be
-looking at my KVM knowledge(which at the moment is almost nil) when
-compared to a kconfig ;)
-
-Thanks,
-Sai
-
--- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a 
-member
-of Code Aurora Forum, hosted by The Linux Foundation
