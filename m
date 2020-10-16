@@ -2,189 +2,103 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id F3208290B7E
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Oct 2020 20:40:56 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3AA6E290B8A
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Oct 2020 20:44:05 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2392565AbgJPSkz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 16 Oct 2020 14:40:55 -0400
-Received: from m42-4.mailgun.net ([69.72.42.4]:16183 "EHLO m42-4.mailgun.net"
+        id S2392760AbgJPSoE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 16 Oct 2020 14:44:04 -0400
+Received: from m42-4.mailgun.net ([69.72.42.4]:29542 "EHLO m42-4.mailgun.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2392566AbgJPSkx (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 16 Oct 2020 14:40:53 -0400
+        id S2392773AbgJPSoE (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 16 Oct 2020 14:44:04 -0400
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1602873653; h=Content-Transfer-Encoding: Content-Type:
- In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
- Subject: Sender; bh=c2o5YCIQjDVjgBCRa4wpxtljkpoQ6dNVLnRmNfQugqI=; b=ILFhcXPvhQPr5LhM/DjH3TYPPGMIzl2rQz8RzuWygh3zB0YE5H2R7kUlEYc/jrdJ9ra981XN
- wcEg9LdQWQpljlysmBwPUN/ktUXQsE0geFhh/rtIHA52xRYhN+LjxTAbs4SwLpzurPDH2WjB
- jGG8VQzImpkGz0uZ3rm12A+wurs=
+ s=smtp; t=1602873843; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=12+N9Ofs4vDd/K1DaE9mgI4Xg6xM+6FDR7mLAtVA9WQ=; b=wK0OiEju/7IFnoIOsnEdFfExbBYv+gY0nz9RFRtLSDnJw3Qg5OQ6nH+eCpnM0G9kKaTVnZNN
+ hpKmveS/+YVgD41K6M2jTVx4j45WvehN8cXt6M/e50FQ271BfqEBcoGkTT8v3Pcu8h2n7nMk
+ rGIrmFt1m9fBKlzSzu9akS1jA9I=
 X-Mailgun-Sending-Ip: 69.72.42.4
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org
  (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n03.prod.us-east-1.postgun.com with SMTP id
- 5f89e9340764f13b00627de1 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 16 Oct 2020 18:40:52
+ smtp-out-n04.prod.us-west-2.postgun.com with SMTP id
+ 5f89e9e542f9861fb11fe82d (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 16 Oct 2020 18:43:49
  GMT
 Sender: tdas=codeaurora.org@mg.codeaurora.org
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 6B7A3C433F1; Fri, 16 Oct 2020 18:40:51 +0000 (UTC)
+        id DF6B6C433FE; Fri, 16 Oct 2020 18:43:48 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.2 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        NICE_REPLY_A,SPF_FAIL autolearn=no autolearn_force=no version=3.4.0
-Received: from [192.168.0.105] (unknown [49.204.183.234])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
+        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+Received: from tdas-linux.qualcomm.com (unknown [202.46.22.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
         (No client certificate requested)
         (Authenticated sender: tdas)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id AF45CC433C9;
-        Fri, 16 Oct 2020 18:40:47 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org AF45CC433C9
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 02D33C433CB;
+        Fri, 16 Oct 2020 18:43:43 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 02D33C433CB
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=tdas@codeaurora.org
-Subject: Re: [PATCH v2 3/3] clk: qcom: camcc: Add camera clock controller
- driver for SC7180
+From:   Taniya Das <tdas@codeaurora.org>
 To:     Stephen Boyd <sboyd@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>
+        =?UTF-8?q?Michael=20Turquette=20=C2=A0?= <mturquette@baylibre.com>
 Cc:     David Brown <david.brown@linaro.org>,
         Rajendra Nayak <rnayak@codeaurora.org>,
         linux-arm-msm@vger.kernel.org, linux-soc@vger.kernel.org,
         linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
         Andy Gross <agross@kernel.org>, devicetree@vger.kernel.org,
-        robh@kernel.org, robh+dt@kernel.org
-References: <1602609110-11504-1-git-send-email-tdas@codeaurora.org>
- <1602609110-11504-4-git-send-email-tdas@codeaurora.org>
- <160264075146.310579.8765964662995263828@swboyd.mtv.corp.google.com>
-From:   Taniya Das <tdas@codeaurora.org>
-Message-ID: <9c9c374c-3c4f-f2d4-93e6-751176e8d493@codeaurora.org>
-Date:   Sat, 17 Oct 2020 00:10:45 +0530
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.3.2
-MIME-Version: 1.0
-In-Reply-To: <160264075146.310579.8765964662995263828@swboyd.mtv.corp.google.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+        robh@kernel.org, robh+dt@kernel.org,
+        Taniya Das <tdas@codeaurora.org>
+Subject: [PATCH v3 0/4] Add Camera clock controller driver for SC7180
+Date:   Sat, 17 Oct 2020 00:13:31 +0530
+Message-Id: <1602873815-1677-1-git-send-email-tdas@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Thanks for your review Stephen.
+[v3]
+ * Introduce helper functions to be used across pll configure and pll rate
+   margins.
+ * Update the Agera PLL configure/set rate to use the new helper functions.
+ * Update documentation binding to update the header inclusion.
+ * Update the vco table to 'const'.
+ * Fix the failure path of probe.
 
-On 10/14/2020 7:29 AM, Stephen Boyd wrote:
-> Quoting Taniya Das (2020-10-13 10:11:50)
->> diff --git a/drivers/clk/qcom/camcc-sc7180.c b/drivers/clk/qcom/camcc-sc7180.c
->> new file mode 100644
->> index 0000000..e954d21
->> --- /dev/null
->> +++ b/drivers/clk/qcom/camcc-sc7180.c
->> @@ -0,0 +1,1737 @@
-> [...]
->> +
->> +enum {
->> +       P_BI_TCXO,
->> +       P_CAM_CC_PLL0_OUT_EVEN,
->> +       P_CAM_CC_PLL1_OUT_EVEN,
->> +       P_CAM_CC_PLL2_OUT_AUX,
->> +       P_CAM_CC_PLL2_OUT_EARLY,
->> +       P_CAM_CC_PLL3_OUT_MAIN,
->> +       P_CORE_BI_PLL_TEST_SE,
->> +};
->> +
->> +static struct pll_vco agera_vco[] = {
-> 
-> Can this be const?
-> 
->> +       { 600000000, 3300000000, 0 },
->> +};
->> +
->> +static struct pll_vco fabia_vco[] = {
-> 
-> Can this be const?
-> 
->> +       { 249600000, 2000000000, 0 },
->> +};
->> +
-> [...]
+[v2]
+ * Update PLL set rate function : clk_alpha_pll_agera_set_rate
+ * Remove mb()
 
-Will take care of the above in the next patch.
+[v1]
+ * Add support for Agera PLL which is used in the camera clock controller.
 
->> +
->> +static int cam_cc_sc7180_probe(struct platform_device *pdev)
->> +{
->> +       struct regmap *regmap;
->> +       int ret;
->> +
->> +       pm_runtime_enable(&pdev->dev);
->> +       ret = pm_clk_create(&pdev->dev);
->> +       if (ret)
->> +               return ret;
->> +
->> +       ret = pm_clk_add(&pdev->dev, "xo");
->> +       if (ret < 0) {
->> +               dev_err(&pdev->dev, "Failed to acquire XO clock\n");
->> +               goto disable_pm_runtime;
->> +       }
->> +
->> +       ret = pm_clk_add(&pdev->dev, "iface");
->> +       if (ret < 0) {
->> +               dev_err(&pdev->dev, "Failed to acquire iface clock\n");
->> +               goto disable_pm_runtime;
->> +       }
->> +
->> +       ret = pm_clk_runtime_resume(&pdev->dev);
->> +       if (ret) {
->> +               dev_err(&pdev->dev, "pm runtime resume failed\n");
->> +               goto destroy_pm_clk;
->> +       }
->> +
->> +       regmap = qcom_cc_map(pdev, &cam_cc_sc7180_desc);
->> +       if (IS_ERR(regmap)) {
->> +               ret = PTR_ERR(regmap);
->> +               goto destroy_pm_clk;
->> +       }
->> +
->> +       clk_fabia_pll_configure(&cam_cc_pll0, regmap, &cam_cc_pll0_config);
->> +       clk_fabia_pll_configure(&cam_cc_pll1, regmap, &cam_cc_pll1_config);
->> +       clk_agera_pll_configure(&cam_cc_pll2, regmap, &cam_cc_pll2_config);
->> +       clk_fabia_pll_configure(&cam_cc_pll3, regmap, &cam_cc_pll3_config);
->> +
->> +       ret = qcom_cc_really_probe(pdev, &cam_cc_sc7180_desc, regmap);
->> +       if (ret) {
->> +               dev_err(&pdev->dev, "Failed to register CAM CC clocks\n");
->> +               goto suspend_pm_runtime;
-> 
-> ret is non-zero here
-> 
->> +       }
->> +
->> +suspend_pm_runtime:
->> +       ret = pm_clk_runtime_suspend(&pdev->dev);
-> 
-> But then it is overwritten here.
-> 
->> +       if (ret)
->> +               dev_err(&pdev->dev, "pm runtime suspend failed\n");
->> +
->> +       return 0;
-> 
-> And we return 0 when there was a failure to probe the clks?
-> 
+ * Add driver support for camera clock controller for SC7180 and also
+   update device tree bindings for the various clocks supported in the
+   clock controller.
 
-I will clean the error path in the next patch.
 
->> +
->> +destroy_pm_clk:
->> +       pm_clk_destroy(&pdev->dev);
->> +
->> +disable_pm_runtime:
->> +       pm_runtime_disable(&pdev->dev);
->> +
->> +       return ret;
->> +}
+Taniya Das (4):
+  clk: qcom: clk-alpha-pll: Add support for helper functions
+  clk: qcom: clk-alpha-pll: Add support for controlling Agera PLLs
+  dt-bindings: clock: Add YAML schemas for the QCOM Camera clock
+    bindings.
+  clk: qcom: camcc: Add camera clock controller driver for SC7180
 
--- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
-of Code Aurora Forum, hosted by The Linux Foundation.
+ .../bindings/clock/qcom,sc7180-camcc.yaml          |   73 +
+ drivers/clk/qcom/Kconfig                           |    9 +
+ drivers/clk/qcom/Makefile                          |    1 +
+ drivers/clk/qcom/camcc-sc7180.c                    | 1736 ++++++++++++++++++++
+ drivers/clk/qcom/clk-alpha-pll.c                   |  217 ++-
+ drivers/clk/qcom/clk-alpha-pll.h                   |    4 +
+ include/dt-bindings/clock/qcom,camcc-sc7180.h      |  121 ++
+ 7 files changed, 2072 insertions(+), 89 deletions(-)
+ create mode 100644 Documentation/devicetree/bindings/clock/qcom,sc7180-camcc.yaml
+ create mode 100644 drivers/clk/qcom/camcc-sc7180.c
+ create mode 100644 include/dt-bindings/clock/qcom,camcc-sc7180.h
 
 --
+Qualcomm INDIA, on behalf of Qualcomm Innovation Center, Inc.is a member
+of the Code Aurora Forum, hosted by the  Linux Foundation.
+
