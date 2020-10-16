@@ -2,49 +2,48 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 97C71290B76
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Oct 2020 20:39:56 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id F3208290B7E
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Oct 2020 20:40:56 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2392484AbgJPSj4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 16 Oct 2020 14:39:56 -0400
-Received: from z5.mailgun.us ([104.130.96.5]:60048 "EHLO z5.mailgun.us"
+        id S2392565AbgJPSkz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 16 Oct 2020 14:40:55 -0400
+Received: from m42-4.mailgun.net ([69.72.42.4]:16183 "EHLO m42-4.mailgun.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2392477AbgJPSjz (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 16 Oct 2020 14:39:55 -0400
+        id S2392566AbgJPSkx (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 16 Oct 2020 14:40:53 -0400
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1602873595; h=Content-Transfer-Encoding: Content-Type:
+ s=smtp; t=1602873653; h=Content-Transfer-Encoding: Content-Type:
  In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
- Subject: Sender; bh=9Gid72wEadRImxYnSiws1qhuRttmymzLuEgieie0FVk=; b=u0iIp+mwdQolepd9L7aaDfbIBpmfQuiGhFsYdVIAV8W2MicgmBBlQBFUXWmeUgfhENd8XK+s
- fU9rgujkkaKMQTXLCcOG1Ou86Vb/a+hTazjsPLCZubpwbpKsmMNJJRk7Ie0veEjimC3m8lcq
- wvAaAiIpYi8Ffp7cLk+X4+pZr6s=
-X-Mailgun-Sending-Ip: 104.130.96.5
+ Subject: Sender; bh=c2o5YCIQjDVjgBCRa4wpxtljkpoQ6dNVLnRmNfQugqI=; b=ILFhcXPvhQPr5LhM/DjH3TYPPGMIzl2rQz8RzuWygh3zB0YE5H2R7kUlEYc/jrdJ9ra981XN
+ wcEg9LdQWQpljlysmBwPUN/ktUXQsE0geFhh/rtIHA52xRYhN+LjxTAbs4SwLpzurPDH2WjB
+ jGG8VQzImpkGz0uZ3rm12A+wurs=
+X-Mailgun-Sending-Ip: 69.72.42.4
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org
  (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n06.prod.us-west-2.postgun.com with SMTP id
- 5f89e8fba03b63d673b947db (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 16 Oct 2020 18:39:55
+ smtp-out-n03.prod.us-east-1.postgun.com with SMTP id
+ 5f89e9340764f13b00627de1 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 16 Oct 2020 18:40:52
  GMT
 Sender: tdas=codeaurora.org@mg.codeaurora.org
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 25342C433FE; Fri, 16 Oct 2020 18:39:55 +0000 (UTC)
+        id 6B7A3C433F1; Fri, 16 Oct 2020 18:40:51 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
 X-Spam-Status: No, score=-3.2 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        NICE_REPLY_A,SPF_FAIL,URIBL_BLOCKED autolearn=no autolearn_force=no
-        version=3.4.0
+        NICE_REPLY_A,SPF_FAIL autolearn=no autolearn_force=no version=3.4.0
 Received: from [192.168.0.105] (unknown [49.204.183.234])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
         (Authenticated sender: tdas)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 0BE4FC433C9;
-        Fri, 16 Oct 2020 18:39:50 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 0BE4FC433C9
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id AF45CC433C9;
+        Fri, 16 Oct 2020 18:40:47 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org AF45CC433C9
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=tdas@codeaurora.org
-Subject: Re: [PATCH v2 2/3] dt-bindings: clock: Add YAML schemas for the QCOM
- Camera clock bindings.
+Subject: Re: [PATCH v2 3/3] clk: qcom: camcc: Add camera clock controller
+ driver for SC7180
 To:     Stephen Boyd <sboyd@kernel.org>,
         Michael Turquette <mturquette@baylibre.com>
 Cc:     David Brown <david.brown@linaro.org>,
@@ -54,15 +53,15 @@ Cc:     David Brown <david.brown@linaro.org>,
         Andy Gross <agross@kernel.org>, devicetree@vger.kernel.org,
         robh@kernel.org, robh+dt@kernel.org
 References: <1602609110-11504-1-git-send-email-tdas@codeaurora.org>
- <1602609110-11504-3-git-send-email-tdas@codeaurora.org>
- <160264138707.310579.18410759318207954658@swboyd.mtv.corp.google.com>
+ <1602609110-11504-4-git-send-email-tdas@codeaurora.org>
+ <160264075146.310579.8765964662995263828@swboyd.mtv.corp.google.com>
 From:   Taniya Das <tdas@codeaurora.org>
-Message-ID: <73c47703-b6cf-5ab7-949b-45231f883d1c@codeaurora.org>
-Date:   Sat, 17 Oct 2020 00:09:48 +0530
+Message-ID: <9c9c374c-3c4f-f2d4-93e6-751176e8d493@codeaurora.org>
+Date:   Sat, 17 Oct 2020 00:10:45 +0530
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
  Thunderbird/78.3.2
 MIME-Version: 1.0
-In-Reply-To: <160264138707.310579.18410759318207954658@swboyd.mtv.corp.google.com>
+In-Reply-To: <160264075146.310579.8765964662995263828@swboyd.mtv.corp.google.com>
 Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-US
 Content-Transfer-Encoding: 7bit
@@ -72,52 +71,117 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 Thanks for your review Stephen.
 
-On 10/14/2020 7:39 AM, Stephen Boyd wrote:
-> Quoting Taniya Das (2020-10-13 10:11:49)
->> diff --git a/Documentation/devicetree/bindings/clock/qcom,sc7180-camcc.yaml b/Documentation/devicetree/bindings/clock/qcom,sc7180-camcc.yaml
+On 10/14/2020 7:29 AM, Stephen Boyd wrote:
+> Quoting Taniya Das (2020-10-13 10:11:50)
+>> diff --git a/drivers/clk/qcom/camcc-sc7180.c b/drivers/clk/qcom/camcc-sc7180.c
 >> new file mode 100644
->> index 0000000..07bd38e
+>> index 0000000..e954d21
 >> --- /dev/null
->> +++ b/Documentation/devicetree/bindings/clock/qcom,sc7180-camcc.yaml
->> @@ -0,0 +1,73 @@
->> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
->> +%YAML 1.2
->> +---
->> +$id: http://devicetree.org/schemas/clock/qcom,sc7180-camcc.yaml#
->> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+>> +++ b/drivers/clk/qcom/camcc-sc7180.c
+>> @@ -0,0 +1,1737 @@
+> [...]
 >> +
->> +title: Qualcomm Camera Clock & Reset Controller Binding for SC7180
+>> +enum {
+>> +       P_BI_TCXO,
+>> +       P_CAM_CC_PLL0_OUT_EVEN,
+>> +       P_CAM_CC_PLL1_OUT_EVEN,
+>> +       P_CAM_CC_PLL2_OUT_AUX,
+>> +       P_CAM_CC_PLL2_OUT_EARLY,
+>> +       P_CAM_CC_PLL3_OUT_MAIN,
+>> +       P_CORE_BI_PLL_TEST_SE,
+>> +};
 >> +
->> +maintainers:
->> +  - Taniya Das <tdas@codeaurora.org>
->> +
->> +description: |
->> +  Qualcomm camera clock control module which supports the clocks, resets and
->> +  power domains on SC7180.
->> +
->> +  See also:
->> +  - dt-bindings/clock/qcom,camcc-sc7180.h.
+>> +static struct pll_vco agera_vco[] = {
 > 
-> Maybe just
+> Can this be const?
 > 
->       - dt-bindings/clock/qcom,camcc-sc7180.h
+>> +       { 600000000, 3300000000, 0 },
+>> +};
+>> +
+>> +static struct pll_vco fabia_vco[] = {
 > 
-> so that us copy/pasters don't have to delete anything.
+> Can this be const?
+> 
+>> +       { 249600000, 2000000000, 0 },
+>> +};
+>> +
+> [...]
+
+Will take care of the above in the next patch.
+
+>> +
+>> +static int cam_cc_sc7180_probe(struct platform_device *pdev)
+>> +{
+>> +       struct regmap *regmap;
+>> +       int ret;
+>> +
+>> +       pm_runtime_enable(&pdev->dev);
+>> +       ret = pm_clk_create(&pdev->dev);
+>> +       if (ret)
+>> +               return ret;
+>> +
+>> +       ret = pm_clk_add(&pdev->dev, "xo");
+>> +       if (ret < 0) {
+>> +               dev_err(&pdev->dev, "Failed to acquire XO clock\n");
+>> +               goto disable_pm_runtime;
+>> +       }
+>> +
+>> +       ret = pm_clk_add(&pdev->dev, "iface");
+>> +       if (ret < 0) {
+>> +               dev_err(&pdev->dev, "Failed to acquire iface clock\n");
+>> +               goto disable_pm_runtime;
+>> +       }
+>> +
+>> +       ret = pm_clk_runtime_resume(&pdev->dev);
+>> +       if (ret) {
+>> +               dev_err(&pdev->dev, "pm runtime resume failed\n");
+>> +               goto destroy_pm_clk;
+>> +       }
+>> +
+>> +       regmap = qcom_cc_map(pdev, &cam_cc_sc7180_desc);
+>> +       if (IS_ERR(regmap)) {
+>> +               ret = PTR_ERR(regmap);
+>> +               goto destroy_pm_clk;
+>> +       }
+>> +
+>> +       clk_fabia_pll_configure(&cam_cc_pll0, regmap, &cam_cc_pll0_config);
+>> +       clk_fabia_pll_configure(&cam_cc_pll1, regmap, &cam_cc_pll1_config);
+>> +       clk_agera_pll_configure(&cam_cc_pll2, regmap, &cam_cc_pll2_config);
+>> +       clk_fabia_pll_configure(&cam_cc_pll3, regmap, &cam_cc_pll3_config);
+>> +
+>> +       ret = qcom_cc_really_probe(pdev, &cam_cc_sc7180_desc, regmap);
+>> +       if (ret) {
+>> +               dev_err(&pdev->dev, "Failed to register CAM CC clocks\n");
+>> +               goto suspend_pm_runtime;
+> 
+> ret is non-zero here
+> 
+>> +       }
+>> +
+>> +suspend_pm_runtime:
+>> +       ret = pm_clk_runtime_suspend(&pdev->dev);
+> 
+> But then it is overwritten here.
+> 
+>> +       if (ret)
+>> +               dev_err(&pdev->dev, "pm runtime suspend failed\n");
+>> +
+>> +       return 0;
+> 
+> And we return 0 when there was a failure to probe the clks?
 > 
 
-Will be fixed in the next patch.
+I will clean the error path in the next patch.
 
 >> +
->> +properties:
->> +  compatible:
->> +    const: qcom,sc7180-camcc
+>> +destroy_pm_clk:
+>> +       pm_clk_destroy(&pdev->dev);
 >> +
->> +  clocks:
->> +    items:
->> +      - description: Board XO source
->> +      - description: Camera_ahb clock from GCC
->> +      - description: Camera XO clock from GCC
+>> +disable_pm_runtime:
+>> +       pm_runtime_disable(&pdev->dev);
 >> +
+>> +       return ret;
+>> +}
 
 -- 
 QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
