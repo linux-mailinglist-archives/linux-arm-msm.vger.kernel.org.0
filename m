@@ -2,90 +2,170 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 3805C28FF08
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Oct 2020 09:24:08 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2316128FF7F
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Oct 2020 09:53:25 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2404540AbgJPHYH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 16 Oct 2020 03:24:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44658 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2404529AbgJPHYH (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 16 Oct 2020 03:24:07 -0400
-Received: from mail-pf1-x444.google.com (mail-pf1-x444.google.com [IPv6:2607:f8b0:4864:20::444])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 14CF7C0613CF
-        for <linux-arm-msm@vger.kernel.org>; Fri, 16 Oct 2020 00:24:07 -0700 (PDT)
-Received: by mail-pf1-x444.google.com with SMTP id 10so968225pfp.5
-        for <linux-arm-msm@vger.kernel.org>; Fri, 16 Oct 2020 00:24:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=6rJmZWsTC3tZunlzMkeAL6DveINrC2rCniEtmBwJZXY=;
-        b=QJSTV0vmxfvJQ+ezN1zSW/4ZDFdXSn2/+t4oCXg78Y1zZrCuNGLvyPvs9iYf5Qvx/i
-         XMcFDmFUdD72lSwDB+vrYJlCQ1+m2nqMPTMJtWGnSmHs4kmyOqARDhMCz3LZ7kj0ceyH
-         61aR5GkEGi8OxyNjWNiGLyrooObfSzr4GflwEZfLibA1wtZSb/muQx7Ps6I50NdiDTzp
-         aUCWio+mlTbSbDIZdjOTg7Qzf6N8CrYvhxJDkn34SvbIAO1CKnlDyCb8dHLwECrp0to7
-         Iibo76lGBXZyYe9WQMixuMZo6TqOAqA3+EOlzrPzrcCIEEPmhjUUUS2A9iHctYSmMD7o
-         k6tQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=6rJmZWsTC3tZunlzMkeAL6DveINrC2rCniEtmBwJZXY=;
-        b=lOnp6bMCUqM3rhckTuaRBORL3GWbelcBBEnNVsuMqkUAzP6j/8U+YB/uke6O2wtssr
-         iDY+pi3YPoMex5avKzBuU9K7WUrOo8zMXRWLXZBAwRP5p2hLbGwnesuSJm4OXOVJgwMf
-         toMen3qHJlIW8qRBKfnnexsWi1/Rjuab6oZ/9wuNiGzz1jiBbdNyCRov2rM3DrwXkuCh
-         T0h4A3popNIXJ8IB7M3pBOBEmGhuqOmW6KM9cel06WX1jrLXVUM5uMo7RWbddQjKviim
-         IBWc6RwpBw8k6ZQXeIiNjliE4KBHdS1mqdNOEqt8dGmENiVTI8nZvhH0gdg8AlCRxIJ3
-         ep4g==
-X-Gm-Message-State: AOAM532xsApW1DhbdMBiJ/sWQwImF1iTNALMe7D4jb1Zeikqp+KQjjE5
-        fzaP33x/vOhUeSH2l7+MHQLq+w==
-X-Google-Smtp-Source: ABdhPJwUWPGICoFq9SFicWYImHXUPoyuhFpWAGUJwIWPJ+ED/XYFz6/H/JF/bR5CuhfixOWgV5UDqw==
-X-Received: by 2002:a62:37c4:0:b029:155:ebd8:304c with SMTP id e187-20020a6237c40000b0290155ebd8304cmr2585815pfa.73.1602833046302;
-        Fri, 16 Oct 2020 00:24:06 -0700 (PDT)
-Received: from leoy-ThinkPad-X240s ([64.120.119.108])
-        by smtp.gmail.com with ESMTPSA id c15sm1586586pgg.77.2020.10.16.00.24.03
-        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 16 Oct 2020 00:24:05 -0700 (PDT)
-Date:   Fri, 16 Oct 2020 15:24:01 +0800
-From:   Leo Yan <leo.yan@linaro.org>
-To:     Denis Nikitin <denik@chromium.org>
-Cc:     Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org, coresight@lists.linaro.org,
-        linux-kernel@vger.kernel.org, Stephen Boyd <swboyd@chromium.org>,
-        linux-arm-kernel@lists.infradead.org,
-        Mike Leach <mike.leach@linaro.org>
-Subject: Re: [PATCH] coresight: etm4x: Add config to exclude kernel mode
- tracing
-Message-ID: <20201016072401.GC4646@leoy-ThinkPad-X240s>
-References: <20201015124522.1876-1-saiprakash.ranjan@codeaurora.org>
- <20201015160257.GA1450102@xps15>
- <CADDJ8CXS8gGuXL45vR6xiHwJhZNcUJPvHMVYSGR6LDETRPJFiQ@mail.gmail.com>
+        id S2404869AbgJPHxX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 16 Oct 2020 03:53:23 -0400
+Received: from szxga05-in.huawei.com ([45.249.212.191]:15228 "EHLO huawei.com"
+        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+        id S2404867AbgJPHxX (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 16 Oct 2020 03:53:23 -0400
+Received: from DGGEMS403-HUB.china.huawei.com (unknown [172.30.72.58])
+        by Forcepoint Email with ESMTP id F2A0DE3BEB72781C2BA9;
+        Fri, 16 Oct 2020 15:53:20 +0800 (CST)
+Received: from [127.0.0.1] (10.174.177.134) by DGGEMS403-HUB.china.huawei.com
+ (10.3.19.203) with Microsoft SMTP Server id 14.3.487.0; Fri, 16 Oct 2020
+ 15:53:17 +0800
+Subject: Re: [PATCH 1/2] arm64: dts: broadcom: remove an unused property
+ dma-ranges
+From:   "Leizhen (ThunderTown)" <thunder.leizhen@huawei.com>
+To:     Arnd Bergmann <arnd@arndb.de>
+CC:     devicetree <devicetree@vger.kernel.org>,
+        Florian Fainelli <f.fainelli@gmail.com>,
+        Scott Branden <sbranden@broadcom.com>,
+        Ray Jui <rjui@broadcom.com>,
+        linux-kernel <linux-kernel@vger.kernel.org>,
+        "Bjorn Andersson" <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        bcm-kernel-feedback-list <bcm-kernel-feedback-list@broadcom.com>,
+        Andy Gross <agross@kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        linux-arm-kernel <linux-arm-kernel@lists.infradead.org>
+References: <20201013060623.1711-1-thunder.leizhen@huawei.com>
+ <20201013060623.1711-2-thunder.leizhen@huawei.com>
+ <fa40441b-6ae1-6018-3da6-424d0252c1ba@gmail.com>
+ <CAK8P3a3MtCDpbCgNEnLf1QcE+1O0oGZtob2KY7G-77oA95bLJQ@mail.gmail.com>
+ <b25dd804-c691-b987-9f6a-de043aa45755@huawei.com>
+ <CAK8P3a24XPt55MuCnRPkH0QRVgmAbttghDnLkd5TQ-s6fi=GHg@mail.gmail.com>
+ <989f3efa-4fd0-8061-266c-56de03ce9029@huawei.com>
+Message-ID: <1b50ccfd-e402-d81a-31d8-56aab86dfc03@huawei.com>
+Date:   Fri, 16 Oct 2020 15:53:16 +0800
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.7.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CADDJ8CXS8gGuXL45vR6xiHwJhZNcUJPvHMVYSGR6LDETRPJFiQ@mail.gmail.com>
-User-Agent: Mutt/1.9.4 (2018-02-28)
+In-Reply-To: <989f3efa-4fd0-8061-266c-56de03ce9029@huawei.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.174.177.134]
+X-CFilter-Loop: Reflected
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Oct 15, 2020 at 11:40:05PM -0700, Denis Nikitin wrote:
-> Hi Mathieu,
+
+
+On 2020/10/16 15:06, Leizhen (ThunderTown) wrote:
 > 
-> I think one of the use cases could be VMs.
-> Is there isolation between EL1 guest kernels which we can control from perf
-> in a system wide mode?
+> 
+> On 2020/10/14 22:02, Arnd Bergmann wrote:
+>> On Wed, Oct 14, 2020 at 3:36 PM Leizhen (ThunderTown)
+>> <thunder.leizhen@huawei.com> wrote:
+>>> On 2020/10/14 15:38, Arnd Bergmann wrote:
+>>>> On Wed, Oct 14, 2020 at 5:15 AM Florian Fainelli <f.fainelli@gmail.com> wrote:
+>>>>> On 10/12/2020 11:06 PM, Zhen Lei wrote:
+>>>>>> stingray-usb.dtsi is finally included by three dts files:
+>>>>>> bcm958802a802x.dts, bcm958742k.dts and bcm958742t.dts. I searched all
+>>>>>> these three entire expanded dts files, and each of them contains only one
+>>>>>> dma-ranges. No conversion range is specified, so it cannot work properly.
+>>>>>> I think this property "dma-ranges" is added by mistake, just remove it.
+>>>>>> Otherwise, the following error will be reported when any YAML detection
+>>>>>> is performed on arm64.
+>>>>>>
+>>>>>> arch/arm64/boot/dts/broadcom/stingray/stingray-usb.dtsi:7.3-14: Warning \
+>>>>>> (dma_ranges_format): /usb:dma-ranges: empty "dma-ranges" property but \
+>>>>>> its #address-cells (1) differs from / (2)
+>>>>>> arch/arm64/boot/dts/broadcom/stingray/stingray-usb.dtsi:7.3-14: Warning \
+>>>>>> (dma_ranges_format): /usb:dma-ranges: empty "dma-ranges" property but \
+>>>>>> its #size-cells (1) differs from / (2)
+>>>>>>
+>>>>>> Signed-off-by: Zhen Lei <thunder.leizhen@huawei.com>
+>>>>>
+>>>>> This looks fine to me, Scott, Ray do you want to Ack this patch before I
+>>>>> take it?
+>>>>
+>>>> Does it mean that there are no devices on this bus that can do DMA?
+>>>>
+>>>> Usually there should be a dma-ranges property to identify that DMA
+>>>> is possible and what the limits are, though we have failed to enforce
+>>>> that.
+>>>
+>>> Documentation/devicetree/bindings/iommu/iommu.txt +79
+>>> When an "iommus" property is specified in a device tree node, the IOMMU will
+>>> be used for address translation. If a "dma-ranges" property exists in the
+>>> device's parent node it will be ignored. An exception to this rule is if the
+>>> referenced IOMMU is disabled, in which case the "dma-ranges" property of the
+>>> parent shall take effect.
+>>>
+>>> The dma-ranges is only required by IOMMU disabled case. And should exist in
+>>> the parent node of IOMMU device. But this deleted dma-ranges is under the usb
+>>> bus node.
+>>
+>> The USB hosts here don't use an IOMMU though, right?
+> 
+> Generally, USB devices are accessed through the IOMMU. However, even in this
+> case, dma-ranges is not necessarily required. There are many examples of this
+> in arch/arm64/boot/dts/. For example: arch/arm64/boot/dts/arm/juno.dt.yaml.
+> 
+> Not sure, but maybe I found the answer.
+> 
+> vi drivers/of/address.c +457
+> 457                                               Thus we treat the absence of
+> 458          * "ranges" as equivalent to an empty "ranges" property which means
+> 459          * a 1:1 translation at that level.
+> 
+> 466          * This quirk also applies for 'dma-ranges' which frequently exist in
+> 467          * child nodes without 'dma-ranges' in the parent nodes. --RobH
+> 
+> 475         if (ranges == NULL || rlen == 0) {
+> 476                 offset = of_read_number(addr, na);
+> 477                 memset(addr, 0, pna * 4);
+> 478                 pr_debug("empty ranges; 1:1 translation\n");
+> 479                 goto finish;
+> 480         }
+> 
+> By the way: At first, I thought that these errors was detected by YAML. Now,
+> I found that it was generated by "make dtbs". That's why it was reported by
+> any YAML. Thus, the need to fix these errors is even more urgent.
+> 
+> 
+>>
+>>>> Also note that the #address-cells=<1> means that any device under
+>>>> this bus is assumed to only support 32-bit addressing, and DMA will
 
-Sorry for suddenly jumping in.
+Hi, Arnd:
+  I known what you mean now. I will rewrite the patch. Thanks.
 
-For KVM, I think we need to implement mechanism for saving/restoring
-CoreSight context for every guest OS, the CPU PMUs has implemented
-related features [1].
+>>>> have to go through a slow swiotlb in the absence of an IOMMU.
+>>>
+>>> The dma_alloc_coherent() will allocate memory with GFP_DMA32 flag and
+>>> try the 0-4G first. The reserved swiotlb buffer memory is used only
+>>> when the allocation failed.
+>>
+>> The swiotlb is primarily about the streaming mappings with dma_map_*(),
+>> which has to copy all data sent to the device. dma_alloc_coherent()
+>> is a rare operation and less impacted by DMA limitations.
+> 
+> OK, I got it.
+> 
+>>
+>>       Arnd
+>>
+>> _______________________________________________
+>> linux-arm-kernel mailing list
+>> linux-arm-kernel@lists.infradead.org
+>> http://lists.infradead.org/mailman/listinfo/linux-arm-kernel
+>>
+>> .
+>>
+> 
+> 
+> _______________________________________________
+> linux-arm-kernel mailing list
+> linux-arm-kernel@lists.infradead.org
+> http://lists.infradead.org/mailman/listinfo/linux-arm-kernel
+> 
+> .
+> 
 
-Thanks,
-Leo
-
-[1] https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/arch/arm64/kvm/pmu.c
