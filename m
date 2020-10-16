@@ -2,229 +2,128 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 90E82290805
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Oct 2020 17:13:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E648B2908FB
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Oct 2020 17:56:02 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2409823AbgJPPNh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 16 Oct 2020 11:13:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32936 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2409810AbgJPPNg (ORCPT
+        id S2408904AbgJPPzy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 16 Oct 2020 11:55:54 -0400
+Received: from mail-oi1-f194.google.com ([209.85.167.194]:42919 "EHLO
+        mail-oi1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2410484AbgJPPzu (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 16 Oct 2020 11:13:36 -0400
-Received: from mail-wm1-x341.google.com (mail-wm1-x341.google.com [IPv6:2a00:1450:4864:20::341])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5401AC061755;
-        Fri, 16 Oct 2020 08:13:36 -0700 (PDT)
-Received: by mail-wm1-x341.google.com with SMTP id e2so3355324wme.1;
-        Fri, 16 Oct 2020 08:13:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=4caXpkclqb0kte1ui2rZGOT3gO9tw5QkWF6WaM5340U=;
-        b=bw0C7RL0+fhKMO0EAe8XGEcHwb8wyybaCpfl8P7sGnfdkZI9j4tysI6uZ0YoR29/ha
-         YOX4aILlakJ066q+xevlet5l+Z+N9q/nV7+KQ/NKKo3PoqCwvkqKc4MR4ryRAmfVyqTJ
-         uz9QwYlBWj2ZUFkyZ/iB50AZoKJOmHEFk3aQyW2Q+ljkXeftI1rA7efNHa+FZThIiT4K
-         wnmZSuOqxrB01w27tBcLSH/JQmZ6evhSO/vqsZliSKtLWCHF4Bm+V6PvS55UoVIl4rIy
-         DKgs589sQo9GoZg5GOugVRSrxKtqGwZuZqZxIpdhnOn/1/ZjONqYyoPkPZqi0JtPd9tA
-         H/bg==
+        Fri, 16 Oct 2020 11:55:50 -0400
+Received: by mail-oi1-f194.google.com with SMTP id 16so2924033oix.9;
+        Fri, 16 Oct 2020 08:55:50 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=4caXpkclqb0kte1ui2rZGOT3gO9tw5QkWF6WaM5340U=;
-        b=URbglXgCr8xtVv0EEkKQ0fcCFjJHrE24DHS/T3tmMgzSK6jhpfEH1K4+KvUlmynPC6
-         WlV7eG3ZxdDaiA0+Ail4WK41i2OliIHKpd5P1zpNZQh01pbgnZCX7g+U/78QBhHWZaHV
-         PW3exzLKDJgcGxdOuw7NojZyyMDGBECKAbfYGtEm29Ki5lWu1Y7n+Ss42TQ6MTY2p11G
-         Wibe0Xf1+aR555EIfMQNrNt0QbAu8gUgCbPuOUg49+/sJEHOrbrrcuV1n2IOInt592r4
-         uD8CRJu9RJU3WfMEFG5iyhlFYMe2FtzdZ7Xorv3jLwIQwvxYeXnofJ7kgRF/6frt/lR8
-         tF3w==
-X-Gm-Message-State: AOAM5315qmZa+Nx4ZGrLD0ZPM38bRZBjAat2Qh2diZJ9f46x5OpOjXiV
-        FHZNwVwhHI83Vz0+8dZsBRrP39eptYnsKe6MzYDIQPxKUWs=
-X-Google-Smtp-Source: ABdhPJzr3VYyUdzLIDtBlIsdA+pEKl3QsosK5nMd+7onCOzT6+6p6L4hMZjIv11pJzsNcjZWS7NXyiKQkqyJvnToGuo=
-X-Received: by 2002:a05:600c:2241:: with SMTP id a1mr4437272wmm.49.1602861212981;
- Fri, 16 Oct 2020 08:13:32 -0700 (PDT)
+        bh=J6wHl916ulOPF6+J0BN3BXb1roDxF5lOuXP9shO1p6o=;
+        b=JscggOXWYmqgK+ONiddjJJkY4mC+4z4062D+LDgex91iqtbMYY5+a6dLh44vL10mII
+         9JU1QU9Iu/MpbILboFuwBP5veap1LzlI+X/ArxyMl6d3PHmYV7q4+9TmttdLk4jZktVh
+         V17euQrgiDQ8KwjGeKokuqCDn3uLxYKpJZPHqbhi0sSpslpXnqVXlt+N1wnuX7Bms8Tf
+         QOxn4w6sUjJbvzpjKz/9A3nNbWeQpjsfB2jjgz5NCeFLaYawQSaY8qdH+2QtLinOL3E3
+         y4u+nRKinzaaKDK8yJ7LuAR8Q6CpCA8Sv2H1/xgrLU9frw7JbfhlRCTq0ujmajHEuoiR
+         h71g==
+X-Gm-Message-State: AOAM532V+FagnHoRiErN2LWncdXCLRluPoFHfTD0KVDb76wBHhgUdilK
+        il0HIjgF8zN86npQ3UzffmCPGoWama/qMWBUyyE=
+X-Google-Smtp-Source: ABdhPJzYUVGFnp6fh23adMJ8rT4QzdNgAk2AO+/nkLvkVD/kq0WcCG3+QdYXwqewomLFxo2XV0SDl0TtxkAC94gonro=
+X-Received: by 2002:aca:5256:: with SMTP id g83mr2993351oib.71.1602863749798;
+ Fri, 16 Oct 2020 08:55:49 -0700 (PDT)
 MIME-Version: 1.0
-References: <1602857443-27317-1-git-send-email-mkrishn@codeaurora.org>
-In-Reply-To: <1602857443-27317-1-git-send-email-mkrishn@codeaurora.org>
-From:   Rob Clark <robdclark@gmail.com>
-Date:   Fri, 16 Oct 2020 08:13:18 -0700
-Message-ID: <CAF6AEGuc967Ooq+YJSej5nmyD9pqAYkN83odieOJ=4fRsdwdeA@mail.gmail.com>
-Subject: Re: [v3] drm/msm: Fix race condition in msm driver with async layer updates
-To:     Krishna Manikandan <mkrishn@codeaurora.org>
-Cc:     dri-devel <dri-devel@lists.freedesktop.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        freedreno <freedreno@lists.freedesktop.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        Sean Paul <seanpaul@chromium.org>,
-        "Kristian H. Kristensen" <hoegsberg@chromium.org>,
-        Kalyan Thota <kalyan_t@codeaurora.org>,
-        Douglas Anderson <dianders@chromium.org>
+References: <20201015204722.18764-1-ilina@codeaurora.org>
+In-Reply-To: <20201015204722.18764-1-ilina@codeaurora.org>
+From:   "Rafael J. Wysocki" <rafael@kernel.org>
+Date:   Fri, 16 Oct 2020 17:55:38 +0200
+Message-ID: <CAJZ5v0ifjHRomAxEKTW5z+VEZLGeM5MN-NcRxUUgrFQvtB0seQ@mail.gmail.com>
+Subject: Re: [PATCH v3] PM / Domains: enable domain idle state accounting
+To:     Lina Iyer <ilina@codeaurora.org>
+Cc:     "Rafael J. Wysocki" <rjw@rjwysocki.net>,
+        Ulf Hansson <ulf.hansson@linaro.org>,
+        Linux PM <linux-pm@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Oct 16, 2020 at 7:11 AM Krishna Manikandan
-<mkrishn@codeaurora.org> wrote:
+On Thu, Oct 15, 2020 at 10:47 PM Lina Iyer <ilina@codeaurora.org> wrote:
 >
-> When there are back to back commits with async cursor update,
-> there is a case where second commit can program the DPU hw
-> blocks while first didn't complete flushing config to HW.
+> To enable better debug of PM domains, let's keep a track of the success
+> and rejections in entering each domain idle state.
 >
-> Synchronize the compositions such that second commit waits
-> until first commit flushes the composition.
+> This statistics is exported in debugfs when reading the idle_states
+> node, associated with each PM domain.
 >
-> This change also introduces per crtc commit lock, such that
-> commits on different crtcs are not blocked by each other.
->
-> Changes in v2:
->         - Use an array of mutexes in kms to handle commit
->           lock per crtc. (Rob Clark)
->
+> Signed-off-by: Lina Iyer <ilina@codeaurora.org>
+> ---
 > Changes in v3:
->         - Add wrapper functions to handle lock and unlock of
->           commit_lock for each crtc. (Rob Clark)
->
-> Signed-off-by: Krishna Manikandan <mkrishn@codeaurora.org>
+>         - Rebased on top of mainline
 
-Reviewed-by: Rob Clark <robdclark@gmail.com>
+I still needed to rebase it to apply it to my tree, so please double
+check the result in the bleeding-edge branch.
+
+Thanks!
 
 > ---
->  drivers/gpu/drm/msm/msm_atomic.c | 37 ++++++++++++++++++++++++-------------
->  drivers/gpu/drm/msm/msm_kms.h    |  6 ++++--
->  2 files changed, 28 insertions(+), 15 deletions(-)
+>  drivers/base/power/domain.c | 10 +++++++---
+>  include/linux/pm_domain.h   |  2 ++
+>  2 files changed, 9 insertions(+), 3 deletions(-)
 >
-> diff --git a/drivers/gpu/drm/msm/msm_atomic.c b/drivers/gpu/drm/msm/msm_atomic.c
-> index 561bfa4..575e9af 100644
-> --- a/drivers/gpu/drm/msm/msm_atomic.c
-> +++ b/drivers/gpu/drm/msm/msm_atomic.c
-> @@ -55,16 +55,32 @@ static void vblank_put(struct msm_kms *kms, unsigned crtc_mask)
->         }
->  }
->
-> +static void lock_crtcs(struct msm_kms *kms, unsigned int crtc_mask)
-> +{
-> +       struct drm_crtc *crtc;
-> +
-> +       for_each_crtc_mask(kms->dev, crtc, crtc_mask)
-> +               mutex_lock(&kms->commit_lock[drm_crtc_index(crtc)]);
-> +}
-> +
-> +static void unlock_crtcs(struct msm_kms *kms, unsigned int crtc_mask)
-> +{
-> +       struct drm_crtc *crtc;
-> +
-> +       for_each_crtc_mask(kms->dev, crtc, crtc_mask)
-> +               mutex_unlock(&kms->commit_lock[drm_crtc_index(crtc)]);
-> +}
-> +
->  static void msm_atomic_async_commit(struct msm_kms *kms, int crtc_idx)
->  {
->         unsigned crtc_mask = BIT(crtc_idx);
->
->         trace_msm_atomic_async_commit_start(crtc_mask);
->
-> -       mutex_lock(&kms->commit_lock);
-> +       lock_crtcs(kms, crtc_mask);
->
->         if (!(kms->pending_crtc_mask & crtc_mask)) {
-> -               mutex_unlock(&kms->commit_lock);
-> +               unlock_crtcs(kms, crtc_mask);
->                 goto out;
+> diff --git a/drivers/base/power/domain.c b/drivers/base/power/domain.c
+> index 2cb5e04cf86c..20ecc1a7113c 100644
+> --- a/drivers/base/power/domain.c
+> +++ b/drivers/base/power/domain.c
+> @@ -559,12 +559,15 @@ static int genpd_power_off(struct generic_pm_domain *genpd, bool one_dev_on,
+>                  * happen very often).
+>                  */
+>                 ret = _genpd_power_off(genpd, true);
+> -               if (ret)
+> +               if (ret) {
+> +                       genpd->states[genpd->state_idx].rejected++;
+>                         return ret;
+> +               }
 >         }
 >
-> @@ -79,7 +95,6 @@ static void msm_atomic_async_commit(struct msm_kms *kms, int crtc_idx)
->          */
->         trace_msm_atomic_flush_commit(crtc_mask);
->         kms->funcs->flush_commit(kms, crtc_mask);
-> -       mutex_unlock(&kms->commit_lock);
+>         genpd->status = GPD_STATE_POWER_OFF;
+>         genpd_update_accounting(genpd);
+> +       genpd->states[genpd->state_idx].usage++;
 >
->         /*
->          * Wait for flush to complete:
-> @@ -90,9 +105,8 @@ static void msm_atomic_async_commit(struct msm_kms *kms, int crtc_idx)
+>         list_for_each_entry(link, &genpd->child_links, child_node) {
+>                 genpd_sd_counter_dec(link->parent);
+> @@ -2932,7 +2935,7 @@ static int idle_states_show(struct seq_file *s, void *data)
+>         if (ret)
+>                 return -ERESTARTSYS;
 >
->         vblank_put(kms, crtc_mask);
+> -       seq_puts(s, "State          Time Spent(ms)\n");
+> +       seq_puts(s, "State          Time Spent(ms) Usage          Rejected\n");
 >
-> -       mutex_lock(&kms->commit_lock);
->         kms->funcs->complete_commit(kms, crtc_mask);
-> -       mutex_unlock(&kms->commit_lock);
-> +       unlock_crtcs(kms, crtc_mask);
->         kms->funcs->disable_commit(kms);
+>         for (i = 0; i < genpd->state_count; i++) {
+>                 ktime_t delta = 0;
+> @@ -2944,7 +2947,8 @@ static int idle_states_show(struct seq_file *s, void *data)
 >
->  out:
-> @@ -189,12 +203,11 @@ void msm_atomic_commit_tail(struct drm_atomic_state *state)
->          * Ensure any previous (potentially async) commit has
->          * completed:
->          */
-> +       lock_crtcs(kms, crtc_mask);
->         trace_msm_atomic_wait_flush_start(crtc_mask);
->         kms->funcs->wait_flush(kms, crtc_mask);
->         trace_msm_atomic_wait_flush_finish(crtc_mask);
+>                 msecs = ktime_to_ms(
+>                         ktime_add(genpd->states[i].idle_time, delta));
+> -               seq_printf(s, "S%-13i %lld\n", i, msecs);
+> +               seq_printf(s, "S%-13i %-14lld %-14llu %llu\n", i, msecs,
+> +                             genpd->states[i].usage, genpd->states[i].rejected);
+>         }
 >
-> -       mutex_lock(&kms->commit_lock);
-> -
->         /*
->          * Now that there is no in-progress flush, prepare the
->          * current update:
-> @@ -232,8 +245,7 @@ void msm_atomic_commit_tail(struct drm_atomic_state *state)
->                 }
->
->                 kms->funcs->disable_commit(kms);
-> -               mutex_unlock(&kms->commit_lock);
-> -
-> +               unlock_crtcs(kms, crtc_mask);
->                 /*
->                  * At this point, from drm core's perspective, we
->                  * are done with the atomic update, so we can just
-> @@ -260,8 +272,7 @@ void msm_atomic_commit_tail(struct drm_atomic_state *state)
->          */
->         trace_msm_atomic_flush_commit(crtc_mask);
->         kms->funcs->flush_commit(kms, crtc_mask);
-> -       mutex_unlock(&kms->commit_lock);
-> -
-> +       unlock_crtcs(kms, crtc_mask);
->         /*
->          * Wait for flush to complete:
->          */
-> @@ -271,9 +282,9 @@ void msm_atomic_commit_tail(struct drm_atomic_state *state)
->
->         vblank_put(kms, crtc_mask);
->
-> -       mutex_lock(&kms->commit_lock);
-> +       lock_crtcs(kms, crtc_mask);
->         kms->funcs->complete_commit(kms, crtc_mask);
-> -       mutex_unlock(&kms->commit_lock);
-> +       unlock_crtcs(kms, crtc_mask);
->         kms->funcs->disable_commit(kms);
->
->         drm_atomic_helper_commit_hw_done(state);
-> diff --git a/drivers/gpu/drm/msm/msm_kms.h b/drivers/gpu/drm/msm/msm_kms.h
-> index 1cbef6b..2049847 100644
-> --- a/drivers/gpu/drm/msm/msm_kms.h
-> +++ b/drivers/gpu/drm/msm/msm_kms.h
-> @@ -155,7 +155,7 @@ struct msm_kms {
->          * For async commit, where ->flush_commit() and later happens
->          * from the crtc's pending_timer close to end of the frame:
->          */
-> -       struct mutex commit_lock;
-> +       struct mutex commit_lock[MAX_CRTCS];
->         unsigned pending_crtc_mask;
->         struct msm_pending_timer pending_timers[MAX_CRTCS];
->  };
-> @@ -165,7 +165,9 @@ static inline void msm_kms_init(struct msm_kms *kms,
->  {
->         unsigned i;
->
-> -       mutex_init(&kms->commit_lock);
-> +       for (i = 0; i < ARRAY_SIZE(kms->commit_lock); i++)
-> +               mutex_init(&kms->commit_lock[i]);
-> +
->         kms->funcs = funcs;
->
->         for (i = 0; i < ARRAY_SIZE(kms->pending_timers); i++)
+>         genpd_unlock(genpd);
+> diff --git a/include/linux/pm_domain.h b/include/linux/pm_domain.h
+> index ee11502a575b..1d9a8de6b7ac 100644
+> --- a/include/linux/pm_domain.h
+> +++ b/include/linux/pm_domain.h
+> @@ -82,6 +82,8 @@ struct genpd_power_state {
+>         s64 power_off_latency_ns;
+>         s64 power_on_latency_ns;
+>         s64 residency_ns;
+> +       u64 usage;
+> +       u64 rejected;
+>         struct fwnode_handle *fwnode;
+>         ktime_t idle_time;
+>         void *data;
 > --
-> 2.7.4
+> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+> a Linux Foundation Collaborative Project
 >
