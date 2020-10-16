@@ -2,78 +2,65 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 347EA28FCA3
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Oct 2020 05:16:31 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D62F929051F
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Oct 2020 14:37:26 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2393985AbgJPDQa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 15 Oct 2020 23:16:30 -0400
-Received: from mail.kernel.org ([198.145.29.99]:49596 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2393984AbgJPDQ3 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 15 Oct 2020 23:16:29 -0400
-Received: from kernel.org (unknown [104.132.1.79])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 3ED4020789;
-        Fri, 16 Oct 2020 03:16:29 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1602818189;
-        bh=GMH4QcLtf0P/Uy5xCC4w1mdakSGZ2iTT2OAbD7rN9e0=;
-        h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
-        b=yc5/+rUuZqYdtk9InqD6V17aMM4o7IH3iFieECnB/44Fvl1vDPn0M6lbEGkvTDZXu
-         MonH3wlavWI3Mua/tC0E1EG7kHzm6J/S343oFyWr//scyqicW9s3z7hnpjWu4+TJns
-         eWC5j+1sFo+RWch76cRkf+UHyIvg4z0cNlLq7FRM=
-Content-Type: text/plain; charset="utf-8"
+        id S2407578AbgJPMhZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 16 Oct 2020 08:37:25 -0400
+Received: from cpanel.giganet.cl ([190.96.78.139]:39766 "EHLO
+        cpanel.giganet.cl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2407562AbgJPMhY (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 16 Oct 2020 08:37:24 -0400
+X-Greylist: delayed 20782 seconds by postgrey-1.27 at vger.kernel.org; Fri, 16 Oct 2020 08:37:10 EDT
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=dplgrout.cl
+        ; s=default; h=Content-Transfer-Encoding:Content-Type:Message-ID:Reply-To:
+        Subject:To:From:Date:MIME-Version:Sender:Cc:Content-ID:Content-Description:
+        Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:
+        In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
+        List-Post:List-Owner:List-Archive;
+        bh=TrgUs68YRs3neP+PfrvGhLoeMXh3YzKv5z9oCWPJ0m4=; b=m/ABHCVvyLYD2QkkwOjuWUgGFG
+        i9BJXsIic9wHOFEzjhXFPbcsR2XTWptcrmKLSqDrJOV7hGJM6za5nSEFhd4CC/+eaHHsgS48/E2jM
+        qvMpEeazlOlIrwSs4xM+Zdf/REorOK5GVU6ZAJUjCzQuCMv9dTVBPKuexZxj1Qoi2hPLiQ576Ik0L
+        XzwzerIXphINfmlVQ0r0UMIuChB1Vcn201QVmD2skB/Nh9D/yp0E95Av9ZMQq7ln6H0uEUnu/2/5Y
+        /CHuMEs39xrrgaYDtG7jTh3PfukIIcCJEs3b52/mZokA1w+tDL1dp0MaV2Z+qYj+Bzs13o0ru0vv/
+        Mq733mMw==;
+Received: from [::1] (port=55048 helo=cpanel.giganet.cl)
+        by cpanel.giganet.cl with esmtpa (Exim 4.93)
+        (envelope-from <info@controlypotencia.com>)
+        id 1kTJ7f-0009vt-N3; Fri, 16 Oct 2020 03:21:51 -0300
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <20201014171259.v4.3.Id0cc5d859e2422082a29a7909658932c857f5a81@changeid>
-References: <20201014171259.v4.1.I4567b5e7e17bbb15ef063d447cb83fd43746cb18@changeid> <20201014171259.v4.3.Id0cc5d859e2422082a29a7909658932c857f5a81@changeid>
-Subject: Re: [PATCH v4 3/3] clk: qcom: lpasscc-sc7180: Re-configure the PLL in case lost
-From:   Stephen Boyd <sboyd@kernel.org>
-Cc:     David Brown <david.brown@linaro.org>, linux-soc@vger.kernel.org,
-        Rajendra Nayak <rnayak@codeaurora.org>,
-        Douglas Anderson <dianders@chromium.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-To:     Douglas Anderson <dianders@chromium.org>,
-        Taniya Das <tdas@codeaurora.org>
-Date:   Thu, 15 Oct 2020 20:16:27 -0700
-Message-ID: <160281818774.884498.11509417433655580732@swboyd.mtv.corp.google.com>
-User-Agent: alot/0.9.1
+Date:   Fri, 16 Oct 2020 03:21:50 -0300
+From:   Ying Chongan <info@controlypotencia.com>
+To:     undisclosed-recipients:;
+Subject: Investment opportunity
+Reply-To: yingchongan@zohomail.com
+User-Agent: Roundcube Webmail/1.4.8
+Message-ID: <e70e5a6e462f92c7f06eea146a612430@controlypotencia.com>
+X-Sender: info@controlypotencia.com
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - cpanel.giganet.cl
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - controlypotencia.com
+X-Get-Message-Sender-Via: cpanel.giganet.cl: authenticated_id: mariapaz.lopez@dplgrout.cl
+X-Authenticated-Sender: cpanel.giganet.cl: mariapaz.lopez@dplgrout.cl
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Douglas Anderson (2020-10-14 17:13:29)
-> From: Taniya Das <tdas@codeaurora.org>
->=20
-> In the case where the PLL configuration is lost, then the pm runtime
-> resume will reconfigure before usage.
+Greetings,
 
-Taniya, this commit needs a lot more describing than one sentence. I see
-that the PLL's L value is reset at boot, but only once. That seems to be
-because the bootloader I have doesn't set bit 11 for the RETAIN_FF bit
-on the lpass_core_hm_gdsc. Once the gdsc is turned off the first time,
-the PLL settings are lost and the L val is reset to 0. That makes sense
-because RETAIN_FF isn't set. This also means the other register writes
-during probe are lost during the first suspend of the lpass core clk
-controller. Then when the GDSC is turned on the next time for this clk
-controller  being runtime resumed we will set the retain bit and then
-configure the PLL again. BTW, I see that runtime PM is called for this
-clk controller for all the clk operations. Maybe there should be some
-auto suspend timeout so that we're not toggling the gdsc constantly?
+This email is for an opportunity to invest in any lucrative business in 
+your country.
 
-I hacked up the GDSC code to set the bit at gdsc registration time and
-it seems to fix the problem I'm seeing (i.e. that the PLL is stuck,
-which should also be in the commit text here). When I try to set the bit
-in the bootloader though my kernel won't boot. I guess something is
-hanging the system if I enable the retain bit in the GDSC?
+We offer a quick loan at low interest rate, if you are interested, 
+please reply to yingchongan@gmail.com for more details.
 
->=20
-> Fixes: edab812d802d ("clk: qcom: lpass: Add support for LPASS clock contr=
-oller for SC7180")
-> Signed-off-by: Taniya Das <tdas@codeaurora.org>
-> Signed-off-by: Douglas Anderson <dianders@chromium.org>
+Sincerely: Ying Chongan
