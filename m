@@ -2,32 +2,32 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 36AA7290B88
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Oct 2020 20:44:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 570B9290B8D
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Oct 2020 20:44:24 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2392778AbgJPSoC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 16 Oct 2020 14:44:02 -0400
-Received: from z5.mailgun.us ([104.130.96.5]:40009 "EHLO z5.mailgun.us"
+        id S2392793AbgJPSoX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 16 Oct 2020 14:44:23 -0400
+Received: from m42-4.mailgun.net ([69.72.42.4]:60314 "EHLO m42-4.mailgun.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2392573AbgJPSn7 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 16 Oct 2020 14:43:59 -0400
+        id S2392790AbgJPSoX (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 16 Oct 2020 14:44:23 -0400
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1602873837; h=References: In-Reply-To: Message-Id: Date:
+ s=smtp; t=1602873863; h=References: In-Reply-To: Message-Id: Date:
  Subject: Cc: To: From: Sender;
- bh=DdEmyAt6OG47ZNCJBFAd5fFPBhGLg2K9By2LfTmzU3w=; b=PFKctBBD+mErcISGUqJPCO/1nNJf7/6hXsgZXkrsjX0OaDAreikiwed0td0KLovbriY+9Ccr
- rxQW64O+j5/8FW4aceS3T+Qe3mBCoQ6MhPIlaFv0z1focHh7ve70rbjl2c2jKMSvWto2uPs9
- MInPPwgAvYX/Ds+bdi+/uT6jMQE=
-X-Mailgun-Sending-Ip: 104.130.96.5
+ bh=niEGTYIwVAvjgqGuLsBvF7Gu0Q9DIBYw5+xqUoc1hQg=; b=K2Dv6oVm8g/4Wh68ya3oZ3Ea3J00SoV+ZgASUpEEAIjOPCjCNFRwKzohARr/FkldZ44GdEh1
+ Nlxpd9NL2a8CL26xdOk7b0RLkOkFTvbHfKA0T5lxwXYqIIJKqpm91qczR1KSkHq9VmE77UUB
+ 0AVuesq0+tjsxB4P31uyTDfdMR8=
+X-Mailgun-Sending-Ip: 69.72.42.4
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org
  (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n01.prod.us-west-2.postgun.com with SMTP id
- 5f89e9ec06d81bc48d6eca67 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 16 Oct 2020 18:43:56
+ smtp-out-n03.prod.us-east-1.postgun.com with SMTP id
+ 5f89e9f2d63768e57bb4d132 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 16 Oct 2020 18:44:02
  GMT
 Sender: tdas=codeaurora.org@mg.codeaurora.org
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 1CEDFC433FE; Fri, 16 Oct 2020 18:43:56 +0000 (UTC)
+        id 81AFFC43382; Fri, 16 Oct 2020 18:44:01 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
@@ -37,9 +37,9 @@ Received: from tdas-linux.qualcomm.com (unknown [202.46.22.19])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
         (No client certificate requested)
         (Authenticated sender: tdas)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 06226C433C9;
-        Fri, 16 Oct 2020 18:43:50 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 06226C433C9
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id A64AFC433C9;
+        Fri, 16 Oct 2020 18:43:56 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org A64AFC433C9
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=tdas@codeaurora.org
 From:   Taniya Das <tdas@codeaurora.org>
@@ -52,9 +52,9 @@ Cc:     David Brown <david.brown@linaro.org>,
         Andy Gross <agross@kernel.org>, devicetree@vger.kernel.org,
         robh@kernel.org, robh+dt@kernel.org,
         Taniya Das <tdas@codeaurora.org>
-Subject: [PATCH v3 1/4] clk: qcom: clk-alpha-pll: Add support for helper functions
-Date:   Sat, 17 Oct 2020 00:13:32 +0530
-Message-Id: <1602873815-1677-2-git-send-email-tdas@codeaurora.org>
+Subject: [PATCH v3 2/4] clk: qcom: clk-alpha-pll: Add support for controlling Agera PLLs
+Date:   Sat, 17 Oct 2020 00:13:33 +0530
+Message-Id: <1602873815-1677-3-git-send-email-tdas@codeaurora.org>
 X-Mailer: git-send-email 2.7.4
 In-Reply-To: <1602873815-1677-1-git-send-email-tdas@codeaurora.org>
 References: <1602873815-1677-1-git-send-email-tdas@codeaurora.org>
@@ -62,230 +62,120 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Introduce clk_alpha_pll_write_config and alpha_pll_check_rate_margin
-helper functions to be across PLL configure functions and PLL set rate
-functions.
+Add programming sequence support for managing the Agera PLLs.
 
 Signed-off-by: Taniya Das <tdas@codeaurora.org>
 ---
- drivers/clk/qcom/clk-alpha-pll.c | 155 +++++++++++++++++----------------------
- 1 file changed, 66 insertions(+), 89 deletions(-)
+ drivers/clk/qcom/clk-alpha-pll.c | 62 ++++++++++++++++++++++++++++++++++++++++
+ drivers/clk/qcom/clk-alpha-pll.h |  4 +++
+ 2 files changed, 66 insertions(+)
 
 diff --git a/drivers/clk/qcom/clk-alpha-pll.c b/drivers/clk/qcom/clk-alpha-pll.c
-index 5644311..f3b8b54 100644
+index f3b8b54..21c357c 100644
 --- a/drivers/clk/qcom/clk-alpha-pll.c
 +++ b/drivers/clk/qcom/clk-alpha-pll.c
-@@ -207,6 +207,13 @@ static int wait_for_pll(struct clk_alpha_pll *pll, u32 mask, bool inverse,
- #define wait_for_pll_update_ack_clear(pll) \
- 	wait_for_pll(pll, ALPHA_PLL_ACK_LATCH, 1, "update_ack_clear")
+@@ -116,6 +116,16 @@ const u8 clk_alpha_pll_regs[][PLL_OFF_MAX_REGS] = {
+ 		[PLL_OFF_OPMODE] = 0x38,
+ 		[PLL_OFF_ALPHA_VAL] = 0x40,
+ 	},
++	[CLK_ALPHA_PLL_TYPE_AGERA] =  {
++		[PLL_OFF_L_VAL] = 0x04,
++		[PLL_OFF_ALPHA_VAL] = 0x08,
++		[PLL_OFF_USER_CTL] = 0x0c,
++		[PLL_OFF_CONFIG_CTL] = 0x10,
++		[PLL_OFF_CONFIG_CTL_U] = 0x14,
++		[PLL_OFF_TEST_CTL] = 0x18,
++		[PLL_OFF_TEST_CTL_U] = 0x1c,
++		[PLL_OFF_STATUS] = 0x2c,
++	},
+ };
+ EXPORT_SYMBOL_GPL(clk_alpha_pll_regs);
 
-+static void clk_alpha_pll_write_config(struct regmap *regmap, unsigned int reg,
-+					unsigned int val)
-+{
-+	if (val)
-+		regmap_write(regmap, reg, val);
-+}
+@@ -1538,3 +1548,55 @@ const struct clk_ops clk_alpha_pll_postdiv_lucid_ops = {
+ 	.set_rate = clk_alpha_pll_postdiv_fabia_set_rate,
+ };
+ EXPORT_SYMBOL_GPL(clk_alpha_pll_postdiv_lucid_ops);
 +
- void clk_alpha_pll_configure(struct clk_alpha_pll *pll, struct regmap *regmap,
- 			     const struct alpha_pll_config *config)
- {
-@@ -1004,33 +1011,19 @@ void clk_fabia_pll_configure(struct clk_alpha_pll *pll, struct regmap *regmap,
- {
- 	u32 val, mask;
-
--	if (config->l)
--		regmap_write(regmap, PLL_L_VAL(pll), config->l);
--
--	if (config->alpha)
--		regmap_write(regmap, PLL_FRAC(pll), config->alpha);
--
--	if (config->config_ctl_val)
--		regmap_write(regmap, PLL_CONFIG_CTL(pll),
++void clk_agera_pll_configure(struct clk_alpha_pll *pll, struct regmap *regmap,
++			const struct alpha_pll_config *config)
++{
 +	clk_alpha_pll_write_config(regmap, PLL_L_VAL(pll), config->l);
-+	clk_alpha_pll_write_config(regmap, PLL_FRAC(pll), config->alpha);
-+	clk_alpha_pll_write_config(regmap, PLL_CONFIG_CTL(pll),
- 						config->config_ctl_val);
--
--	if (config->config_ctl_hi_val)
--		regmap_write(regmap, PLL_CONFIG_CTL_U(pll),
-+	clk_alpha_pll_write_config(regmap, PLL_CONFIG_CTL_U(pll),
- 						config->config_ctl_hi_val);
--
--	if (config->user_ctl_val)
--		regmap_write(regmap, PLL_USER_CTL(pll), config->user_ctl_val);
--
--	if (config->user_ctl_hi_val)
--		regmap_write(regmap, PLL_USER_CTL_U(pll),
++	clk_alpha_pll_write_config(regmap, PLL_ALPHA_VAL(pll), config->alpha);
 +	clk_alpha_pll_write_config(regmap, PLL_USER_CTL(pll),
-+						config->user_ctl_val);
-+	clk_alpha_pll_write_config(regmap, PLL_USER_CTL_U(pll),
- 						config->user_ctl_hi_val);
--
--	if (config->test_ctl_val)
--		regmap_write(regmap, PLL_TEST_CTL(pll),
++							config->user_ctl_val);
++	clk_alpha_pll_write_config(regmap, PLL_CONFIG_CTL(pll),
++						config->config_ctl_val);
++	clk_alpha_pll_write_config(regmap, PLL_CONFIG_CTL_U(pll),
++						config->config_ctl_hi_val);
 +	clk_alpha_pll_write_config(regmap, PLL_TEST_CTL(pll),
- 						config->test_ctl_val);
--
--	if (config->test_ctl_hi_val)
--		regmap_write(regmap, PLL_TEST_CTL_U(pll),
-+	clk_alpha_pll_write_config(regmap, PLL_TEST_CTL_U(pll),
- 						config->test_ctl_hi_val);
-
- 	if (config->post_div_mask) {
-@@ -1145,25 +1138,38 @@ static unsigned long alpha_pll_fabia_recalc_rate(struct clk_hw *hw,
- 	return alpha_pll_calc_rate(parent_rate, l, frac, alpha_width);
- }
-
-+/*
-+ * Due to limited number of bits for fractional rate programming, the
-+ * rounded up rate could be marginally higher than the requested rate.
-+ */
-+static int alpha_pll_check_rate_margin(struct clk_hw *hw,
-+			unsigned long rrate, unsigned long rate)
-+{
-+	unsigned long rate_margin = rate + PLL_RATE_MARGIN;
++						config->test_ctl_val);
++	clk_alpha_pll_write_config(regmap,  PLL_TEST_CTL_U(pll),
++						config->test_ctl_hi_val);
++}
++EXPORT_SYMBOL_GPL(clk_agera_pll_configure);
 +
-+	if (rrate > rate_margin || rrate < rate) {
-+		pr_err("%s: Rounded rate %lu not within range [%lu, %lu)\n",
-+		       clk_hw_get_name(hw), rrate, rate, rate_margin);
-+		return -EINVAL;
-+	}
++static int clk_alpha_pll_agera_set_rate(struct clk_hw *hw, unsigned long rate,
++							unsigned long prate)
++{
++	struct clk_alpha_pll *pll = to_clk_alpha_pll(hw);
++	u32 l, alpha_width = pll_alpha_width(pll);
++	int ret;
++	unsigned long rrate;
++	u64 a;
++
++	rrate = alpha_pll_round_rate(rate, prate, &l, &a, alpha_width);
++	ret = alpha_pll_check_rate_margin(hw, rrate, rate);
++	if (ret < 0)
++		return ret;
++
++	/* change L_VAL without having to go through the power on sequence */
++	regmap_write(pll->clkr.regmap, PLL_L_VAL(pll), l);
++	regmap_write(pll->clkr.regmap, PLL_ALPHA_VAL(pll), a);
++
++	if (clk_hw_is_enabled(hw))
++		return wait_for_pll_enable_lock(pll);
 +
 +	return 0;
 +}
 +
- static int alpha_pll_fabia_set_rate(struct clk_hw *hw, unsigned long rate,
- 						unsigned long prate)
- {
- 	struct clk_alpha_pll *pll = to_clk_alpha_pll(hw);
- 	u32 l, alpha_width = pll_alpha_width(pll);
-+	unsigned long rrate;
-+	int ret;
- 	u64 a;
--	unsigned long rrate, max = rate + PLL_RATE_MARGIN;
++const struct clk_ops clk_alpha_pll_agera_ops = {
++	.enable = clk_alpha_pll_enable,
++	.disable = clk_alpha_pll_disable,
++	.is_enabled = clk_alpha_pll_is_enabled,
++	.recalc_rate = alpha_pll_fabia_recalc_rate,
++	.round_rate = clk_alpha_pll_round_rate,
++	.set_rate = clk_alpha_pll_agera_set_rate,
++};
++EXPORT_SYMBOL_GPL(clk_alpha_pll_agera_ops);
+diff --git a/drivers/clk/qcom/clk-alpha-pll.h b/drivers/clk/qcom/clk-alpha-pll.h
+index d3201b8..0ea30d2 100644
+--- a/drivers/clk/qcom/clk-alpha-pll.h
++++ b/drivers/clk/qcom/clk-alpha-pll.h
+@@ -15,6 +15,7 @@ enum {
+ 	CLK_ALPHA_PLL_TYPE_FABIA,
+ 	CLK_ALPHA_PLL_TYPE_TRION,
+ 	CLK_ALPHA_PLL_TYPE_LUCID = CLK_ALPHA_PLL_TYPE_TRION,
++	CLK_ALPHA_PLL_TYPE_AGERA,
+ 	CLK_ALPHA_PLL_TYPE_MAX,
+ };
 
- 	rrate = alpha_pll_round_rate(rate, prate, &l, &a, alpha_width);
+@@ -141,6 +142,7 @@ extern const struct clk_ops clk_alpha_pll_postdiv_trion_ops;
+ extern const struct clk_ops clk_alpha_pll_lucid_ops;
+ #define clk_alpha_pll_fixed_lucid_ops clk_alpha_pll_fixed_trion_ops
+ extern const struct clk_ops clk_alpha_pll_postdiv_lucid_ops;
++extern const struct clk_ops clk_alpha_pll_agera_ops;
 
--	/*
--	 * Due to limited number of bits for fractional rate programming, the
--	 * rounded up rate could be marginally higher than the requested rate.
--	 */
--	if (rrate > (rate + PLL_RATE_MARGIN) || rrate < rate) {
--		pr_err("%s: Rounded rate %lu not within range [%lu, %lu)\n",
--		       clk_hw_get_name(hw), rrate, rate, max);
--		return -EINVAL;
--	}
-+	ret = alpha_pll_check_rate_margin(hw, rrate, rate);
-+	if (ret < 0)
-+		return ret;
-
- 	regmap_write(pll->clkr.regmap, PLL_L_VAL(pll), l);
- 	regmap_write(pll->clkr.regmap, PLL_FRAC(pll), a);
-@@ -1206,12 +1212,10 @@ static int alpha_pll_fabia_prepare(struct clk_hw *hw)
-
- 	rrate = alpha_pll_round_rate(cal_freq, clk_hw_get_rate(parent_hw),
- 					&cal_l, &a, alpha_width);
--	/*
--	 * Due to a limited number of bits for fractional rate programming, the
--	 * rounded up rate could be marginally higher than the requested rate.
--	 */
--	if (rrate > (cal_freq + PLL_RATE_MARGIN) || rrate < cal_freq)
--		return -EINVAL;
-+
-+	ret = alpha_pll_check_rate_margin(hw, rrate, cal_freq);
-+	if (ret < 0)
-+		return ret;
-
- 	/* Setup PLL for calibration frequency */
- 	regmap_write(pll->clkr.regmap, PLL_ALPHA_VAL(pll), cal_l);
-@@ -1388,49 +1392,27 @@ EXPORT_SYMBOL_GPL(clk_alpha_pll_postdiv_fabia_ops);
+ void clk_alpha_pll_configure(struct clk_alpha_pll *pll, struct regmap *regmap,
+ 			     const struct alpha_pll_config *config);
+@@ -148,6 +150,8 @@ void clk_fabia_pll_configure(struct clk_alpha_pll *pll, struct regmap *regmap,
+ 				const struct alpha_pll_config *config);
  void clk_trion_pll_configure(struct clk_alpha_pll *pll, struct regmap *regmap,
- 			     const struct alpha_pll_config *config)
- {
--	if (config->l)
--		regmap_write(regmap, PLL_L_VAL(pll), config->l);
--
-+	clk_alpha_pll_write_config(regmap, PLL_L_VAL(pll), config->l);
- 	regmap_write(regmap, PLL_CAL_L_VAL(pll), TRION_PLL_CAL_VAL);
--
--	if (config->alpha)
--		regmap_write(regmap, PLL_ALPHA_VAL(pll), config->alpha);
--
--	if (config->config_ctl_val)
--		regmap_write(regmap, PLL_CONFIG_CTL(pll),
--			     config->config_ctl_val);
--
--	if (config->config_ctl_hi_val)
--		regmap_write(regmap, PLL_CONFIG_CTL_U(pll),
--			     config->config_ctl_hi_val);
--
--	if (config->config_ctl_hi1_val)
--		regmap_write(regmap, PLL_CONFIG_CTL_U1(pll),
--			     config->config_ctl_hi1_val);
--
--	if (config->user_ctl_val)
--		regmap_write(regmap, PLL_USER_CTL(pll),
--			     config->user_ctl_val);
--
--	if (config->user_ctl_hi_val)
--		regmap_write(regmap, PLL_USER_CTL_U(pll),
--			     config->user_ctl_hi_val);
--
--	if (config->user_ctl_hi1_val)
--		regmap_write(regmap, PLL_USER_CTL_U1(pll),
--			     config->user_ctl_hi1_val);
--
--	if (config->test_ctl_val)
--		regmap_write(regmap, PLL_TEST_CTL(pll),
--			     config->test_ctl_val);
--
--	if (config->test_ctl_hi_val)
--		regmap_write(regmap, PLL_TEST_CTL_U(pll),
--			     config->test_ctl_hi_val);
--
--	if (config->test_ctl_hi1_val)
--		regmap_write(regmap, PLL_TEST_CTL_U1(pll),
--			     config->test_ctl_hi1_val);
-+	clk_alpha_pll_write_config(regmap, PLL_ALPHA_VAL(pll), config->alpha);
-+	clk_alpha_pll_write_config(regmap, PLL_CONFIG_CTL(pll),
-+				     config->config_ctl_val);
-+	clk_alpha_pll_write_config(regmap, PLL_CONFIG_CTL_U(pll),
-+				     config->config_ctl_hi_val);
-+	clk_alpha_pll_write_config(regmap, PLL_CONFIG_CTL_U1(pll),
-+				     config->config_ctl_hi1_val);
-+	clk_alpha_pll_write_config(regmap, PLL_USER_CTL(pll),
-+					config->user_ctl_val);
-+	clk_alpha_pll_write_config(regmap, PLL_USER_CTL_U(pll),
-+					config->user_ctl_hi_val);
-+	clk_alpha_pll_write_config(regmap, PLL_USER_CTL_U1(pll),
-+					config->user_ctl_hi1_val);
-+	clk_alpha_pll_write_config(regmap, PLL_TEST_CTL(pll),
-+					config->test_ctl_val);
-+	clk_alpha_pll_write_config(regmap, PLL_TEST_CTL_U(pll),
-+					config->test_ctl_hi_val);
-+	clk_alpha_pll_write_config(regmap, PLL_TEST_CTL_U1(pll),
-+					config->test_ctl_hi1_val);
+ 			     const struct alpha_pll_config *config);
++void clk_agera_pll_configure(struct clk_alpha_pll *pll, struct regmap *regmap,
++				const struct alpha_pll_config *config);
+ #define clk_lucid_pll_configure(pll, regmap, config) \
+ 	clk_trion_pll_configure(pll, regmap, config)
 
- 	regmap_update_bits(regmap, PLL_MODE(pll), PLL_UPDATE_BYPASS,
- 			   PLL_UPDATE_BYPASS);
-@@ -1490,14 +1472,9 @@ static int alpha_pll_trion_set_rate(struct clk_hw *hw, unsigned long rate,
-
- 	rrate = alpha_pll_round_rate(rate, prate, &l, &a, alpha_width);
-
--	/*
--	 * Due to a limited number of bits for fractional rate programming, the
--	 * rounded up rate could be marginally higher than the requested rate.
--	 */
--	if (rrate > (rate + PLL_RATE_MARGIN) || rrate < rate) {
--		pr_err("Call set rate on the PLL with rounded rates!\n");
--		return -EINVAL;
--	}
-+	ret = alpha_pll_check_rate_margin(hw, rrate, rate);
-+	if (ret < 0)
-+		return ret;
-
- 	regmap_write(pll->clkr.regmap, PLL_L_VAL(pll), l);
- 	regmap_write(pll->clkr.regmap, PLL_ALPHA_VAL(pll), a);
 --
 Qualcomm INDIA, on behalf of Qualcomm Innovation Center, Inc.is a member
 of the Code Aurora Forum, hosted by the  Linux Foundation.
