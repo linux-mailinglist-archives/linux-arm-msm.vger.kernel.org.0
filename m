@@ -2,114 +2,92 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 796B12901CD
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Oct 2020 11:26:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CB101290298
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Oct 2020 12:11:29 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2394621AbgJPJY6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 16 Oct 2020 05:24:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35276 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2394577AbgJPJY5 (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 16 Oct 2020 05:24:57 -0400
-Received: from mail-pf1-x443.google.com (mail-pf1-x443.google.com [IPv6:2607:f8b0:4864:20::443])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ECD3EC061755
-        for <linux-arm-msm@vger.kernel.org>; Fri, 16 Oct 2020 02:24:57 -0700 (PDT)
-Received: by mail-pf1-x443.google.com with SMTP id b26so1157556pff.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 16 Oct 2020 02:24:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=zUCInfHS0mVdMXYgMLxUEzU7i2cHgkPuhsJxyPPWk3M=;
-        b=wzdkmbDGJ8WM/c871lKIy/n2CWoGNITb8anKX9mwnSiMvz4uZA3Eu4AlN7gjQ1L0/P
-         9xB4UOcUzt3iOXH3WVOZqVwNAz51/iSPqkhq4E9J6b968A1qYiWYmyXmItQttTZ2yyhf
-         +9hCgHyO8tBxL1Mh9+x09CrWzs0+uARAs4r39zxxJwNOxxG1/YsSLzSGLm+C+2a1a3IE
-         1kePFELYRzPMeuIEpVyF63dTjnGLxjfy/fzESSrHxRRi031uQv4mPfLSGAhhSjXGmjCN
-         I+8zBDS8uCiwhLwOJ5cWoybMM0aZjOKgb2WZqL+ChN4gB8ysRXt1r05YyT/mAkmdA43w
-         VRQg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=zUCInfHS0mVdMXYgMLxUEzU7i2cHgkPuhsJxyPPWk3M=;
-        b=AKgIYV7xnwT5P8o0TW0OeDN60qR5mF1Wmtqsg3XqdclqU2pG38hgnEcrUQIMt6KuML
-         rjJL4BxiLV5nhdzJpLC1cxF53CXy+izskqcxubxj2aJJFbwWhKCkNXbzWv+UEDqsKJRw
-         FmU9KOfLcPrJfB9ADpEGh+woefPOKKdvb3aa8tdIY+Phpl8gsgACQa/FSRarvEUwMSLR
-         7+QLrgvzzEdRAoTxi12kHPXEJjLOH8SgexZ1luPsDQbOXLgh5MjcxBEZE7qLQkKM0cql
-         de0rMsrcRHozrR1ZGK9CBNRjGoj3VKBw1WPCEw+o+nCbBjAVHG+mvOrZLdNeU8mq/K0e
-         WGtg==
-X-Gm-Message-State: AOAM5315B26+9rGBm9C/KGkr+bPMnTvvo2St5hej9lNKFmxhM6SaZIVn
-        UqUjLpyYgfPlV26ca2QCyRz9ETRtN8WEATf0
-X-Google-Smtp-Source: ABdhPJx9/QEdjE8/prY2e//ZI1Z6zzyHO7GWBJr4pvSy3DfYUsGiiAcutarYbBieWsmbOwEtb3g4iA==
-X-Received: by 2002:a63:a51a:: with SMTP id n26mr2270647pgf.1.1602840297362;
-        Fri, 16 Oct 2020 02:24:57 -0700 (PDT)
-Received: from leoy-ThinkPad-X240s ([64.120.119.108])
-        by smtp.gmail.com with ESMTPSA id o15sm2447398pfp.91.2020.10.16.02.24.53
-        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 16 Oct 2020 02:24:55 -0700 (PDT)
-Date:   Fri, 16 Oct 2020 17:24:50 +0800
-From:   Leo Yan <leo.yan@linaro.org>
-To:     Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-Cc:     Denis Nikitin <denik@chromium.org>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        linux-arm-msm@vger.kernel.org, coresight@lists.linaro.org,
-        linux-kernel@vger.kernel.org, Stephen Boyd <swboyd@chromium.org>,
-        linux-arm-kernel@lists.infradead.org,
-        Mike Leach <mike.leach@linaro.org>,
-        Suzuki K Poulose <suzuki.poulose@arm.com>
-Subject: Re: [PATCH] coresight: etm4x: Add config to exclude kernel mode
- tracing
-Message-ID: <20201016092450.GG4646@leoy-ThinkPad-X240s>
-References: <20201015124522.1876-1-saiprakash.ranjan@codeaurora.org>
- <20201015160257.GA1450102@xps15>
- <CADDJ8CXS8gGuXL45vR6xiHwJhZNcUJPvHMVYSGR6LDETRPJFiQ@mail.gmail.com>
- <20201016072401.GC4646@leoy-ThinkPad-X240s>
- <f73ba98c345161f1835458182e6a0002@codeaurora.org>
+        id S2395275AbgJPKL2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 16 Oct 2020 06:11:28 -0400
+Received: from m42-4.mailgun.net ([69.72.42.4]:29106 "EHLO m42-4.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S2395273AbgJPKL2 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 16 Oct 2020 06:11:28 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1602843087; h=Content-Transfer-Encoding: MIME-Version:
+ Message-Id: Date: Subject: Cc: To: From: Sender;
+ bh=gzPRw3CFiSVVQK51VCZmIGv7u20AkX6SlLmvSNm3nk0=; b=gziGfUx+ukpDjqUh7HESRjrekaZHi3X5asaChx33pSeWhqBO3CoXSp5lmxkbU9O9cEYngwb5
+ m/4Uo0De2IxWEzg4xmfxhy748CYxz/VxQ5HbxHAJivMv/Hatk6UiAa6UVtZHcQXnC4X9+gwD
+ tRLKMAVj1SvavwcDrt4MzklLVGo=
+X-Mailgun-Sending-Ip: 69.72.42.4
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n05.prod.us-west-2.postgun.com with SMTP id
+ 5f89719e57b88ccb563f64ff (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 16 Oct 2020 10:10:38
+ GMT
+Sender: saiprakash.ranjan=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 2E14EC43387; Fri, 16 Oct 2020 10:10:38 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
+        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+Received: from blr-ubuntu-253.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: saiprakash.ranjan)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 63965C433F1;
+        Fri, 16 Oct 2020 10:10:34 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 63965C433F1
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=saiprakash.ranjan@codeaurora.org
+From:   Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+To:     Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Suzuki K Poulose <suzuki.poulose@arm.com>,
+        Mike Leach <mike.leach@linaro.org>
+Cc:     coresight@lists.linaro.org, Stephen Boyd <swboyd@chromium.org>,
+        denik@chromium.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+Subject: [PATCH] coresight: etm4x: Skip setting LPOVERRIDE bit for qcom,skip-power-up
+Date:   Fri, 16 Oct 2020 15:40:25 +0530
+Message-Id: <20201016101025.26505-1-saiprakash.ranjan@codeaurora.org>
+X-Mailer: git-send-email 2.27.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <f73ba98c345161f1835458182e6a0002@codeaurora.org>
-User-Agent: Mutt/1.9.4 (2018-02-28)
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Sai,
+There is a bug on the systems supporting to skip power up
+(qcom,skip-power-up) where setting LPOVERRIDE bit(low-power
+state override behaviour) will result in CPU hangs/lockups
+even on the implementations which supports it. So skip
+setting the LPOVERRIDE bit for such platforms.
 
-On Fri, Oct 16, 2020 at 02:10:47PM +0530, Sai Prakash Ranjan wrote:
-> Hi Leo,
-> 
-> On 2020-10-16 12:54, Leo Yan wrote:
-> > On Thu, Oct 15, 2020 at 11:40:05PM -0700, Denis Nikitin wrote:
-> > > Hi Mathieu,
-> > > 
-> > > I think one of the use cases could be VMs.
-> > > Is there isolation between EL1 guest kernels which we can control
-> > > from perf
-> > > in a system wide mode?
-> > 
-> > Sorry for suddenly jumping in.
-> > 
-> > For KVM, I think we need to implement mechanism for saving/restoring
-> > CoreSight context for every guest OS, the CPU PMUs has implemented
-> > related features [1].
-> > 
-> > Thanks,
-> > Leo
-> > 
-> > [1]
-> > https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/arch/arm64/kvm/pmu.c
-> > 
-> 
-> What happens to the sysfs mode of tracing? For that we would still
-> need a config right to exclude kernel mode tracing completely.
+Fixes: 02510a5aa78d ("coresight: etm4x: Add support to skip trace unit power up")
+Signed-off-by: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+---
+ drivers/hwtracing/coresight/coresight-etm4x-core.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-IIUC, sysfs mode and perf mode both can apply the same approach, the
-guest OS runs a thread context for the host, so when a guest OS is
-switched in or out, the hypervisor can save/restore the context for
-the guest OS; thus every guest OS will have its dedicated context and
-trace data ideally.
+diff --git a/drivers/hwtracing/coresight/coresight-etm4x-core.c b/drivers/hwtracing/coresight/coresight-etm4x-core.c
+index abd706b216ac..6096d7abf80d 100644
+--- a/drivers/hwtracing/coresight/coresight-etm4x-core.c
++++ b/drivers/hwtracing/coresight/coresight-etm4x-core.c
+@@ -779,7 +779,7 @@ static void etm4_init_arch_data(void *info)
+ 	 * LPOVERRIDE, bit[23] implementation supports
+ 	 * low-power state override
+ 	 */
+-	if (BMVAL(etmidr5, 23, 23))
++	if (BMVAL(etmidr5, 23, 23) && (!drvdata->skip_power_up))
+ 		drvdata->lpoverride = true;
+ 	else
+ 		drvdata->lpoverride = false;
 
-Thanks,
-Leo
+base-commit: 3477326277451000bc667dfcc4fd0774c039184c
+-- 
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
+of Code Aurora Forum, hosted by The Linux Foundation
+
