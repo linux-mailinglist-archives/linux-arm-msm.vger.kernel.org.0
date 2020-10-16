@@ -2,523 +2,120 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 28A79290A0D
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Oct 2020 18:56:34 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C2B68290A7C
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Oct 2020 19:19:06 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2410931AbgJPQ4d (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 16 Oct 2020 12:56:33 -0400
-Received: from m42-4.mailgun.net ([69.72.42.4]:12473 "EHLO m42-4.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2410921AbgJPQ4d (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 16 Oct 2020 12:56:33 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1602867390; h=Message-ID: References: In-Reply-To: Reply-To:
- Subject: Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=MaPbxOh28xscr2K79SfmyHb/DMpQFYNcFi14eVapoj8=;
- b=oXQ5nl/CrbTmgcctE1we6TtQI91ae9OK/B/faeTKX802nQggoc0OH20ageLEY0i8Xzts/7+2
- dU8fJ6+DMCr6KAGPOIp108cO9/QjUlzKTOtZgsfIrKZZILQ6t2niZiRlyLQ+lqoVFYQ6nJDB
- gHPj5L9cElmVcogPraozZ+w3HIM=
-X-Mailgun-Sending-Ip: 69.72.42.4
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n03.prod.us-west-2.postgun.com with SMTP id
- 5f89d08b42f9861fb1c398bb (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 16 Oct 2020 16:55:39
- GMT
-Sender: bbhatt=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id AF340C433FF; Fri, 16 Oct 2020 16:55:39 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: bbhatt)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 6E1D9C433F1;
-        Fri, 16 Oct 2020 16:55:38 +0000 (UTC)
+        id S2390228AbgJPRSy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 16 Oct 2020 13:18:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52454 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2390476AbgJPRSt (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 16 Oct 2020 13:18:49 -0400
+Received: from mail-ot1-x342.google.com (mail-ot1-x342.google.com [IPv6:2607:f8b0:4864:20::342])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F24C2C0613D3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 16 Oct 2020 10:18:48 -0700 (PDT)
+Received: by mail-ot1-x342.google.com with SMTP id n61so3050969ota.10
+        for <linux-arm-msm@vger.kernel.org>; Fri, 16 Oct 2020 10:18:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=mYW+PwysYhYMS+2uJ+6opFI9if/3+0MrY9QzZA2zMkA=;
+        b=SRT+T1RjlIijuy4sKekVlrNmDJMb02bqeETTgju/KIQ7MZC6qLiRhVUXYD5BEJ9hrC
+         jP9yaOUa/uREUccbW652cUyXgsBiy6liRc26ovoqBPxNvMdt0109ZnI3p3nl5Brwb9+8
+         LWSuTiEMXwcLdpeb1Te8kj3Fi+8P2Q3hyWSO7JtoZk3P8xgkJBMnahlnUHCw2Df7Qscm
+         S8x5O9ltgzd69ggWEID+l+2iOIr71aYk7spYZOWlfAYyTMgsfiX2YbMYGVLM96uAXJ/u
+         ntIH78uER8sypJ6/ZslRypKe996lwVNrmWfuEgQezgSNyCFJFuR2ks7FrHOU93rdc5Gr
+         9Xzg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=mYW+PwysYhYMS+2uJ+6opFI9if/3+0MrY9QzZA2zMkA=;
+        b=gOE6c6hdYkSpack+9yN53i0jTzq0zrXZXkIwAl4x8n9ykXZLv6Mz/Vhqss7m77t6vf
+         ga++aU2ne+Xcp6eHQtPuJnL04IGaTGZka75xaBG2E6GWveQ185IyT/ski/ERbUV/uoS0
+         M5vuTCEXl8Fo9Z3pOIgHYX4Gk0oFnnVqrxRS/UMEQmRh1UUCo2Ey05gMbEXdq/FIdDBZ
+         zxrYK0A537oCgSedzv58HmePczNA+CaznXVfxo7/CDwVT7Wn6hyLg0PEz3mYQfvE1MTL
+         akOJzPbD4TAgI16I3G5Fo9wzllJIudvH+7gxP854Up0/lkcFTaECaU09XrNXqscAPURS
+         Lrng==
+X-Gm-Message-State: AOAM533Dp//pNRQtKmka5Gv8RIdMo3nhstanPdAZ1g2EfKD6xamEuPRJ
+        G028dPfQ0mBXfy6pn83pyzo+j3AHkax0LA==
+X-Google-Smtp-Source: ABdhPJxBcu6t+ucNkpCAM+tjRv5gmJP66u9MCor/elLGt0c7cX9lSmy5tRNMLlFd4b473MuB4kmlkw==
+X-Received: by 2002:a9d:3787:: with SMTP id x7mr3362323otb.165.1602868728287;
+        Fri, 16 Oct 2020 10:18:48 -0700 (PDT)
+Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
+        by smtp.gmail.com with ESMTPSA id i5sm1252465ooo.32.2020.10.16.10.18.47
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 16 Oct 2020 10:18:47 -0700 (PDT)
+Date:   Fri, 16 Oct 2020 12:13:37 -0500
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Evan Green <evgreen@chromium.org>
+Cc:     Markus Elfring <elfring@users.sourceforge.net>,
+        Andy Gross <agross@kernel.org>, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [RESEND PATCH] soc: qcom: smp2p: Safely acquire spinlock without
+ IRQs
+Message-ID: <20201016171337.GA241575@builder.lan>
+References: <20200929133040.RESEND.1.Ideabf6dcdfc577cf39ce3d95b0e4aa1ac8b38f0c@changeid>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Fri, 16 Oct 2020 09:55:38 -0700
-From:   Bhaumik Bhatt <bbhatt@codeaurora.org>
-To:     Loic Poulain <loic.poulain@linaro.org>
-Cc:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        Hemant Kumar <hemantk@codeaurora.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Jeffrey Hugo <jhugo@codeaurora.org>
-Subject: Re: [PATCH v3] bus: mhi: Add MHI PCI support for WWAN modems
-Organization: Qualcomm Innovation Center, Inc.
-Reply-To: bbhatt@codeaurora.org
-Mail-Reply-To: bbhatt@codeaurora.org
-In-Reply-To: <CAMZdPi_tsYa0vJTJZ8j6K6TRYtu8ARjX+QzUwscGkkkzqf-WHA@mail.gmail.com>
-References: <1601996090-7426-1-git-send-email-loic.poulain@linaro.org>
- <66374239b339e050951bf8283b7edfda@codeaurora.org>
- <CAMZdPi_tsYa0vJTJZ8j6K6TRYtu8ARjX+QzUwscGkkkzqf-WHA@mail.gmail.com>
-Message-ID: <d47d8f2bcabce178d0dea3eaa389f2e8@codeaurora.org>
-X-Sender: bbhatt@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20200929133040.RESEND.1.Ideabf6dcdfc577cf39ce3d95b0e4aa1ac8b38f0c@changeid>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2020-10-16 00:53, Loic Poulain wrote:
-> Hi Bhaumik,
-> 
-> On Fri, 16 Oct 2020 at 01:00, Bhaumik Bhatt <bbhatt@codeaurora.org> 
-> wrote:
->> 
->> On 2020-10-06 07:54, Loic Poulain wrote:
->> > This is a generic MHI-over-PCI controller driver for MHI only devices
->> > such as QCOM modems. For now it supports registering of Qualcomm SDX55
->> For now, it supports registration of...
->> > based PCIe modules. The MHI channels have been extracted from mhi
->> MHI (in all caps) or just use "the" instead
->> > downstream driver.
->> >
->> > This driver is for MHI-only devices which have all functionnalities
->> functionalities
->> > exposed through MHI channels and accessed by the corresponding MHI
->> > device drivers (no out-of-band communication).
->> >
->> > Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
->> > ---
->> >  v2: - remove useless delay.h include
->> >      - remove over-logging on error
->> >      - remove controller subdir
->> >      - rename to mhi_pci_modem.c
->> >      - Fix mhi_pci_probe exit path on error
->> >      - expand module description
->> >      - drop module version
->> >  v3: - Rename to mhi_pci_generic
->> >      - Add hardware accelerated IP channel (IPA)
->> >      - Added fw/edl names for sdx55m
->> >
->> >  drivers/bus/mhi/Kconfig           |   9 ++
->> >  drivers/bus/mhi/Makefile          |   3 +
->> >  drivers/bus/mhi/mhi_pci_generic.c | 332
->> > ++++++++++++++++++++++++++++++++++++++
->> >  3 files changed, 344 insertions(+)
->> >  create mode 100644 drivers/bus/mhi/mhi_pci_generic.c
->> >
->> > diff --git a/drivers/bus/mhi/Kconfig b/drivers/bus/mhi/Kconfig
->> > index e841c10..daa8528 100644
->> > --- a/drivers/bus/mhi/Kconfig
->> > +++ b/drivers/bus/mhi/Kconfig
->> > @@ -20,3 +20,12 @@ config MHI_BUS_DEBUG
->> >         Enable debugfs support for use with the MHI transport. Allows
->> >         reading and/or modifying some values within the MHI controller
->> >         for debug and test purposes.
->> > +
->> > +config MHI_BUS_PCI_GENERIC
->> > +     tristate "MHI PCI controller driver"
->> > +     depends on MHI_BUS
->> > +     depends on PCI
->> > +     help
->> > +       This driver provides Modem Host Interface (MHI) PCI controller
->> > driver
->> > +       for devices such as Qualcomm SDX55 based PCIe modems.
->> > +
->> > diff --git a/drivers/bus/mhi/Makefile b/drivers/bus/mhi/Makefile
->> > index 19e6443..d1a4ef3 100644
->> > --- a/drivers/bus/mhi/Makefile
->> > +++ b/drivers/bus/mhi/Makefile
->> > @@ -1,2 +1,5 @@
->> >  # core layer
->> >  obj-y += core/
->> > +
->> > +obj-$(CONFIG_MHI_BUS_PCI_GENERIC) := mhi_pci_generic.o
->> > +
->> > diff --git a/drivers/bus/mhi/mhi_pci_generic.c
->> > b/drivers/bus/mhi/mhi_pci_generic.c
->> > new file mode 100644
->> > index 0000000..03fcf76
->> > --- /dev/null
->> > +++ b/drivers/bus/mhi/mhi_pci_generic.c
->> > @@ -0,0 +1,332 @@
->> > +// SPDX-License-Identifier: GPL-2.0-or-later
->> > +/*
->> > + * MHI PCI driver - MHI over PCI controller driver
->> > + *
->> > + * This module is a generic driver for registering MHI-over-PCI
->> > devices,
->> > + * such as PCIe QCOM modems.
->> > + *
->> > + * Copyright (C) 2020 Linaro Ltd <loic.poulain@linaro.org>
->> > + */
->> > +
->> > +#include <linux/device.h>
->> > +#include <linux/mhi.h>
->> > +#include <linux/module.h>
->> > +#include <linux/pci.h>
->> > +
->> > +#define MHI_PCI_BAR_NUM 0
->> > +
->> > +struct mhi_pci_dev_info {
->> > +     const struct mhi_controller_config *config;
->> > +     const char *name;
->> > +     const char *fw;
->> > +     const char *edl;
->> > +};
->> > +
->> > +#define MHI_CHANNEL_CONFIG_TX(cnum, cname, elems, event)     \
->> > +     {                                                       \
->> > +             .num = cnum,                                    \
->> > +             .name = cname,                                  \
->> > +             .num_elements = elems,                          \
->> > +             .event_ring = event,                            \
->> > +             .dir = DMA_TO_DEVICE,                           \
->> > +             .ee_mask = BIT(MHI_EE_AMSS),                    \
->> > +             .pollcfg = 0,                                   \
->> > +             .doorbell = MHI_DB_BRST_DISABLE,                \
->> > +             .lpm_notify = false,                            \
->> > +             .offload_channel = false,                       \
->> > +             .doorbell_mode_switch = false,                  \
->> > +     }                                                       \
->> > +
->> > +#define MHI_CHANNEL_CONFIG_RX(cnum, cname, elems, event)     \
->> > +     {                                                       \
->> > +             .num = cnum,                                    \
->> > +             .name = cname,                                  \
->> > +             .num_elements = elems,                          \
->> > +             .event_ring = event,                            \
->> > +             .dir = DMA_FROM_DEVICE,                         \
->> > +             .ee_mask = BIT(MHI_EE_AMSS),                    \
->> > +             .pollcfg = 0,                                   \
->> > +             .doorbell = MHI_DB_BRST_DISABLE,                \
->> > +             .lpm_notify = false,                            \
->> > +             .offload_channel = false,                       \
->> > +             .doorbell_mode_switch = false,                  \
->> > +     }
->> > +
->> > +#define MHI_EVENT_CONFIG_CTRL(enum)          \
->> > +     {                                       \
->> > +             .num_elements = 64,             \
->> > +             .irq_moderation_ms = 5,         \
->> > +             .irq = enum,                    \
->> > +             .priority = 1,                  \
->> > +             .mode = MHI_DB_BRST_DISABLE,    \
->> > +             .data_type = MHI_ER_CTRL,       \
->> > +             .hardware_event = false,        \
->> > +             .client_managed = false,        \
->> > +             .offload_channel = false,       \
->> > +     }
->> > +
->> > +#define MHI_EVENT_CONFIG_DATA(enum)          \
->> > +     {                                       \
->> > +             .num_elements = 64,             \
->> > +             .irq_moderation_ms = 5,         \
->> > +             .irq = enum,                    \
->> > +             .priority = 1,                  \
->> > +             .mode = MHI_DB_BRST_DISABLE,    \
->> > +             .data_type = MHI_ER_DATA,       \
->> > +             .hardware_event = false,        \
->> > +             .client_managed = false,        \
->> > +             .offload_channel = false,       \
->> > +     }
->> > +
->> > +#define MHI_EVENT_CONFIG_HW_DATA(enum, cnum) \
->> > +     {                                       \
->> > +             .num_elements = 64,             \
->> > +             .irq_moderation_ms = 5,         \
->> > +             .irq = enum,                    \
->> > +             .priority = 1,                  \
->> > +             .mode = MHI_DB_BRST_ENABLE,     \
->> > +             .data_type = MHI_ER_DATA,       \
->> > +             .hardware_event = true,         \
->> > +             .client_managed = false,        \
->> > +             .offload_channel = false,       \
->> > +             .channel = cnum,                \
->> > +     }
->> > +
->> > +static const struct mhi_channel_config modem_qcom_v1_mhi_channels[] =
->> > {
->> > +     MHI_CHANNEL_CONFIG_TX(12, "MBIM", 4, 0),
->> > +     MHI_CHANNEL_CONFIG_RX(13, "MBIM", 4, 0),
->> > +     MHI_CHANNEL_CONFIG_TX(14, "QMI", 4, 0),
->> > +     MHI_CHANNEL_CONFIG_RX(15, "QMI", 4, 0),
->> > +     MHI_CHANNEL_CONFIG_TX(20, "IPCR", 4, 0),
->> > +     MHI_CHANNEL_CONFIG_RX(21, "IPCR", 4, 0),
->> > +     MHI_CHANNEL_CONFIG_TX(100, "IP_HW0", 64, 1),
->> > +     MHI_CHANNEL_CONFIG_RX(101, "IP_HW0", 64, 2),
->> > +};
->> > +
->> > +static const struct mhi_event_config modem_qcom_v1_mhi_events[] = {
->> > +     /* first ring is control+data ring */
->> > +     MHI_EVENT_CONFIG_CTRL(0),
->> > +     /* Hardware channels request dedicated hardware event rings */
->> > +     MHI_EVENT_CONFIG_HW_DATA(1, 100),
->> > +     MHI_EVENT_CONFIG_HW_DATA(2, 101)
->> > +};
->> > +
->> > +static const struct mhi_controller_config modem_qcom_v1_mhi_config = {
->> > +     .max_channels = 128,
->> > +     .timeout_ms = 5000,
->> > +     .num_channels = ARRAY_SIZE(modem_qcom_v1_mhi_channels),
->> > +     .ch_cfg = modem_qcom_v1_mhi_channels,
->> > +     .num_events = ARRAY_SIZE(modem_qcom_v1_mhi_events),
->> > +     .event_cfg = modem_qcom_v1_mhi_events,
->> > +};
->> > +
->> > +static const struct mhi_pci_dev_info mhi_qcom_sdx55_info = {
->> > +     .name = "qcom-sdx55m",
->> > +     .fw = "qcom/sdx55m/sbl1.mbn",
->> > +     .edl = "qcom/sdx55m/edl.mbn",
->> > +     .config = &modem_qcom_v1_mhi_config
->> > +};
->> > +
->> > +static const struct pci_device_id mhi_pci_id_table[] = {
->> > +     { PCI_DEVICE(PCI_VENDOR_ID_QCOM, 0x0306),
->> > +             .driver_data = (kernel_ulong_t) &mhi_qcom_sdx55_info },
->> > +     {  }
->> > +};
->> > +MODULE_DEVICE_TABLE(pci, mhi_pci_id_table);
->> > +
->> > +static int mhi_pci_read_reg(struct mhi_controller *mhic, void __iomem
->> > *addr,
->> > +                         u32 *out)
->> > +{
->> > +     *out = readl(addr);
->> > +     return 0;
->> > +}
->> > +
->> > +static void mhi_pci_write_reg(struct mhi_controller *mhic, void
->> > __iomem *addr,
->> > +                           u32 val)
->> > +{
->> > +     writel(val, addr);
->> > +}
->> > +
->> > +static void mhi_pci_status_cb(struct mhi_controller *mhi_cntrl,
->> > +                           enum mhi_callback cb)
->> > +{
->> > +     return;
->> > +}
->> > +
->> > +static int mhi_pci_claim(struct mhi_controller *mhic)
->> > +{
->> > +     struct pci_dev *pdev = to_pci_dev(mhic->cntrl_dev);
->> > +     int err;
->> > +
->> > +     err = pci_assign_resource(pdev, MHI_PCI_BAR_NUM);
->> Can MHI_PCI_BAR_NUM be a parameter to this function instead of
->> hardcoding it to 0?
-> 
-> Sure, but I thought BAR-0 was 'specified' as the base address for any
-> MHI based device. Can you comment on that?
-> 
-Yes that is true. I checked the spec to confirm that it is on BAR-0.
-However, it would be nice to make it configurable now and pass it down
-as a parameter just in case things were to change in the future. Not a 
-big
-change either way.
->> > +     if (err)
->> > +             return err;
->> > +
->> > +     err = pcim_enable_device(pdev);
->> > +     if (err) {
->> > +             dev_err(&pdev->dev, "failed to enable pci device: %d\n", err);
->> > +             return err;
->> > +     }
->> > +
->> > +     err = pcim_iomap_regions(pdev, 1 << MHI_PCI_BAR_NUM, pci_name(pdev));
->> > +     if (err) {
->> > +             dev_err(&pdev->dev, "failed to map pci region: %d\n", err);
->> > +             return err;
->> > +     }
->> > +     mhic->regs = pcim_iomap_table(pdev)[MHI_PCI_BAR_NUM];
->> > +
->> > +     err = pci_set_dma_mask(pdev, DMA_BIT_MASK(32));
->> Some controllers may need a 64 bit mask. Can that be added as a
->> parameter to this
->> function?
-> 
-> Yes, good point, I'm going to add that as a per-controller parameter.
-> 
->> > +     if (err) {
->> > +             dev_err(&pdev->dev, "Cannot set proper DMA mask\n");
->> > +             return err;
->> > +     }
->> > +
->> > +     err = pci_set_consistent_dma_mask(pdev, DMA_BIT_MASK(32));
->> > +     if (err) {
->> > +             dev_err(&pdev->dev, "set consistent dma mask failed\n");
->> > +             return err;
->> > +     }
->> > +
->> > +     pci_set_master(pdev);
->> > +
->> > +     return 0;
->> > +}
->> > +
->> > +static int mhi_pci_get_irqs(struct mhi_controller *mhic,
->> > +                         const struct mhi_controller_config *mhic_config)
->> > +{
->> > +     struct pci_dev *pdev = to_pci_dev(mhic->cntrl_dev);
->> > +     int num_vectors, i;
->> > +     int *irq;
->> > +
->> > +     /*
->> > +      * Alloc one MSI vector per event ring, ideally...
->> > +      * No explicit pci_free_irq_vectors required, done by pcim_release
->> > +      */
->> > +     num_vectors = pci_alloc_irq_vectors(pdev, 1, mhic_config->num_events,
->> > +                                         PCI_IRQ_MSI);
->> > +     if (num_vectors < 0) {
->> > +             dev_err(&pdev->dev, "Error allocating MSI vectors %d\n",
->> > +                     num_vectors);
->> > +             return num_vectors;
->> > +     }
->> > +
->> > +     if (num_vectors < mhic_config->num_events) {
->> > +             dev_warn(&pdev->dev, "Not enough MSI vectors (%d/%d)\n",
->> > +                      num_vectors, mhic_config->num_events);
->> > +             /* use shared IRQ */
->> > +     }
->> > +
->> > +     irq = devm_kcalloc(&pdev->dev, mhic_config->num_events, sizeof(int),
->> > +                        GFP_KERNEL);
->> > +     if (!irq)
->> > +             return -ENOMEM;
->> > +
->> > +     for (i = 0; i < mhic_config->num_events; i++) {
->> > +             int vector = i >= num_vectors ? (num_vectors - 1) : i;
->> > +
->> > +             irq[i] = pci_irq_vector(pdev, vector);
->> > +     }
->> > +
->> > +     mhic->irq = irq;
->> > +     mhic->nr_irqs = mhic_config->num_events;
->> > +
->> > +     return 0;
->> > +}
->> > +
->> > +static int mhi_pci_runtime_get(struct mhi_controller *mhi_cntrl)
->> > +{
->> > +     /* no PM for now */
->> > +     return 0;
->> > +}
->> > +
->> > +static void mhi_pci_runtime_put(struct mhi_controller *mhi_cntrl)
->> > +{
->> > +     /* no PM for now */
->> > +     return;
->> > +}
->> > +
->> > +static int mhi_pci_probe(struct pci_dev *pdev, const struct
->> > pci_device_id *id)
->> > +{
->> > +     const struct mhi_pci_dev_info *info = (struct mhi_pci_dev_info *)
->> > id->driver_data;
->> > +     const struct mhi_controller_config *mhic_config;
->> > +     struct mhi_controller *mhic;
->> > +     int err;
->> > +
->> > +     dev_info(&pdev->dev, "MHI PCI device found: %s\n", info->name);
->> Can DMA_BIT_MASK and MHI_PCI_BAR_NUM be made present in 
->> mhi_pci_dev_info
->> for
->> different clients and passed down to the mhi_pci_claim() function to
->> make it
->> more configurable/extensible for different root ports and memory
->> requirements?
-> 
-> Sure.
-> 
-> 
->> > +
->> > +     mhic = devm_kzalloc(&pdev->dev, sizeof(*mhic), GFP_KERNEL);
->> > +     if (!mhic)
->> > +             return -ENOMEM;
->> > +
->> > +     mhic_config = info->config;
->> > +     mhic->cntrl_dev = &pdev->dev;
->> > +     mhic->iova_start = 0;
->> > +     mhic->iova_stop = 0xffffffff;
-Do you think the iova start/stop can also be part of info?
-If any device can support 64-bit addressing, we could use that here.
->> > +     mhic->fw_image = info->fw;
->> > +     mhic->edl_image = info->edl;
->> > +
->> > +     mhic->read_reg = mhi_pci_read_reg;
->> > +     mhic->write_reg = mhi_pci_write_reg;
->> > +     mhic->status_cb = mhi_pci_status_cb;
->> > +     mhic->runtime_get = mhi_pci_runtime_get;
->> > +     mhic->runtime_put = mhi_pci_runtime_put;
->> > +
->> > +     err = mhi_pci_claim(mhic);
->> > +     if (err)
->> > +             return err;
->> > +
->> > +     err = mhi_pci_get_irqs(mhic, mhic_config);
->> > +     if (err)
->> > +             return err;
->> > +
->> > +     pci_set_drvdata(pdev, mhic);
->> > +
->> > +     err = mhi_register_controller(mhic, mhic_config);
->> > +     if (err)
->> > +             return err;
->> > +
->> > +     /* MHI bus does not power up the controller by default */
->> > +     err = mhi_prepare_for_power_up(mhic);
->> > +     if (err) {
->> > +             dev_err(&pdev->dev, "failed to prepare MHI controller\n");
->> > +             goto err_unregister;
->> > +     }
->> > +
->> > +     err = mhi_sync_power_up(mhic);
->> > +     if (err) {
->> > +             dev_err(&pdev->dev, "failed to power up MHI controller\n");
->> > +             goto err_unprepare;
->> > +     }
->> > +
->> > +     return 0;
->> > +
->> > +err_unprepare:
->> > +     mhi_unprepare_after_power_down(mhic);
->> > +
->> > +err_unregister:
->> > +     mhi_unregister_controller(mhic);
->> > +
->> > +     return err;
->> > +}
->> > +
->> > +static void mhi_pci_remove(struct pci_dev *pdev)
->> > +{
->> > +     struct mhi_controller *mhic = pci_get_drvdata(pdev);
->> > +
->> > +     mhi_power_down(mhic, false);
->> > +     mhi_unprepare_after_power_down(mhic);
->> > +     mhi_unregister_controller(mhic);
->> > +}
->> > +
->> > +static struct pci_driver mhi_pci_driver = {
->> > +     .name           = "mhi-pci-generic",
->> > +     .id_table       = mhi_pci_id_table,
->> > +     .probe          = mhi_pci_probe,
->> > +     .remove         = mhi_pci_remove
->> > +};
->> > +module_pci_driver(mhi_pci_driver);
->> > +
->> > +MODULE_AUTHOR("Loic Poulain <loic.poulain@linaro,org>");
->> > +MODULE_DESCRIPTION("Modem Host Interface (MHI) PCI controller
->> > driver");
->> > +MODULE_LICENSE("GPL");
->> 
->> Thanks,
->> Bhaumik
->> --
->> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora
->> Forum,
->> a Linux Foundation Collaborative Project
+On Tue 29 Sep 15:30 CDT 2020, Evan Green wrote:
 
--- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora 
-Forum,
-a Linux Foundation Collaborative Project
+> smp2p_update_bits() should disable interrupts when it acquires its
+> spinlock. This is important because without the _irqsave, a priority
+> inversion can occur.
+> 
+> This function is called both with interrupts enabled in
+> qcom_q6v5_request_stop(), and with interrupts disabled in
+> ipa_smp2p_panic_notifier(). IRQ handling of spinlocks should be
+> consistent to avoid the panic notifier deadlocking because it's
+> sitting on the thread that's already got the lock via _request_stop().
+> 
+> Found via lockdep.
+> 
+> Fixes: 50e99641413e7 ("soc: qcom: smp2p: Qualcomm Shared Memory Point to Point")
+> Signed-off-by: Evan Green <evgreen@chromium.org>
+
+Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+
+Regards,
+Bjorn
+
+> ---
+> 
+>  drivers/soc/qcom/smp2p.c | 5 +++--
+>  1 file changed, 3 insertions(+), 2 deletions(-)
+> 
+> diff --git a/drivers/soc/qcom/smp2p.c b/drivers/soc/qcom/smp2p.c
+> index 07183d731d747..a9709aae54abb 100644
+> --- a/drivers/soc/qcom/smp2p.c
+> +++ b/drivers/soc/qcom/smp2p.c
+> @@ -318,15 +318,16 @@ static int qcom_smp2p_inbound_entry(struct qcom_smp2p *smp2p,
+>  static int smp2p_update_bits(void *data, u32 mask, u32 value)
+>  {
+>  	struct smp2p_entry *entry = data;
+> +	unsigned long flags;
+>  	u32 orig;
+>  	u32 val;
+>  
+> -	spin_lock(&entry->lock);
+> +	spin_lock_irqsave(&entry->lock, flags);
+>  	val = orig = readl(entry->value);
+>  	val &= ~mask;
+>  	val |= value;
+>  	writel(val, entry->value);
+> -	spin_unlock(&entry->lock);
+> +	spin_unlock_irqrestore(&entry->lock, flags);
+>  
+>  	if (val != orig)
+>  		qcom_smp2p_kick(entry->smp2p);
+> -- 
+> 2.26.2
+> 
