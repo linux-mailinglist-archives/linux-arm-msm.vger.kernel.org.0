@@ -2,124 +2,127 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 520D4290F8F
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 17 Oct 2020 07:44:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 16015290FC2
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 17 Oct 2020 08:00:41 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2436663AbgJQFom (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 17 Oct 2020 01:44:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54628 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2436664AbgJQFom (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 17 Oct 2020 01:44:42 -0400
-Received: from mail-vs1-xe43.google.com (mail-vs1-xe43.google.com [IPv6:2607:f8b0:4864:20::e43])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 516D0C05BD0E
-        for <linux-arm-msm@vger.kernel.org>; Fri, 16 Oct 2020 20:18:11 -0700 (PDT)
-Received: by mail-vs1-xe43.google.com with SMTP id w25so2538003vsk.9
-        for <linux-arm-msm@vger.kernel.org>; Fri, 16 Oct 2020 20:18:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=/TxBUtRgRfSf5LfXE1zKtWYHRGk919Ux3oNSTIYgEGs=;
-        b=UIFnMl2RjTfIV6Wv5IFGj9N52TXiacuMUz3YdYfaa7I5eoLrxRR2GahaLIr3PdbL/8
-         PA1ouC9IiDjqOmhPnIaxfeW1e6KBZi8mO5UNukW7FQHAh3Kzol/qfta0rjukazUM2jXL
-         mTy8vWmNI44o4wcoJ/rpFxYFNCq2zrHArBiz8=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=/TxBUtRgRfSf5LfXE1zKtWYHRGk919Ux3oNSTIYgEGs=;
-        b=F9u7xFe3zsARMcViuijv+lsUsgYt6nQ+m2oV9bXGsN5e3oq4SWflkwuHhHMAHOH4tv
-         THuRvnOwJ/JC4eduOaE4wZoIrWfJopbokxjpZUNFL2lpwMhxNUE/hiKzhnELV5sD8Fik
-         JtiVa5YptCNt8c1Sa2K2IlWGuhG2Ctw7u32OYKAYMArecbnKkWRmy9Up+q87WKgVTvzU
-         qiBd/ZhZigykX/tVPEraz+vpEQ4x3JyuS9EuyqJUSrakTo5N7sB/5ORgNbI3mS+PB29y
-         6rOpM3rkmXFxAMINfRZZ8kyT1Rxsvelg1jtmf5XKEcYWENVEqnXwvo8JGyrB+3YHpaib
-         zf0Q==
-X-Gm-Message-State: AOAM5319pq8Bg1iIxvbbpq+BzPNkrsZnn/sP/QQVWz4TetwT6YZ0DLoL
-        3oZa6Ky4PjT4Mfk4I8zcGRrqSW9sGOmbXQ==
-X-Google-Smtp-Source: ABdhPJyDgM7odafpDdBiv/EStyqF6baWXzwcq8Lf1WPK5UBBTRushdVHTr3EBOEY+CRqMElGsd2CxQ==
-X-Received: by 2002:a67:31c4:: with SMTP id x187mr4293070vsx.31.1602904689754;
-        Fri, 16 Oct 2020 20:18:09 -0700 (PDT)
-Received: from mail-vs1-f45.google.com (mail-vs1-f45.google.com. [209.85.217.45])
-        by smtp.gmail.com with ESMTPSA id b18sm611140vsr.19.2020.10.16.20.18.08
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 16 Oct 2020 20:18:08 -0700 (PDT)
-Received: by mail-vs1-f45.google.com with SMTP id l6so2554864vsr.7
-        for <linux-arm-msm@vger.kernel.org>; Fri, 16 Oct 2020 20:18:08 -0700 (PDT)
-X-Received: by 2002:a67:ec9a:: with SMTP id h26mr4216646vsp.34.1602904687735;
- Fri, 16 Oct 2020 20:18:07 -0700 (PDT)
-MIME-Version: 1.0
-References: <20201014171259.v4.1.I4567b5e7e17bbb15ef063d447cb83fd43746cb18@changeid>
- <20201014171259.v4.3.Id0cc5d859e2422082a29a7909658932c857f5a81@changeid>
- <160281818774.884498.11509417433655580732@swboyd.mtv.corp.google.com> <160290009516.884498.11234055455838582432@swboyd.mtv.corp.google.com>
-In-Reply-To: <160290009516.884498.11234055455838582432@swboyd.mtv.corp.google.com>
-From:   Doug Anderson <dianders@chromium.org>
-Date:   Fri, 16 Oct 2020 20:17:56 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=WAVoZ59p51HxBwBNXsXcirRbUAjeGuZ4T9G-O7Tvzqfw@mail.gmail.com>
-Message-ID: <CAD=FV=WAVoZ59p51HxBwBNXsXcirRbUAjeGuZ4T9G-O7Tvzqfw@mail.gmail.com>
-Subject: Re: [PATCH v4 3/3] clk: qcom: lpasscc-sc7180: Re-configure the PLL in
- case lost
-To:     Stephen Boyd <sboyd@kernel.org>
-Cc:     Taniya Das <tdas@codeaurora.org>,
-        David Brown <david.brown@linaro.org>,
-        "open list:ARM/QUALCOMM SUPPORT" <linux-soc@vger.kernel.org>,
-        Rajendra Nayak <rnayak@codeaurora.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        linux-clk <linux-clk@vger.kernel.org>,
-        LKML <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+        id S2436803AbgJQGAi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 17 Oct 2020 02:00:38 -0400
+Received: from z5.mailgun.us ([104.130.96.5]:18931 "EHLO z5.mailgun.us"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S2436865AbgJQGAh (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Sat, 17 Oct 2020 02:00:37 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1602914437; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=HT/R9yUZLHwn3pMf/0k5BOEAUmeENiqSjIZIsp0nOeY=; b=GMnsOa3JwYcLSIxDCBFHBaHGTLsoHKSDzMAviZI5TbJdkdWuWi5b9j4RBx5rFSWZUqkE40oF
+ zWe9yifKWyNWv9SKoPZ4MBp+HH/tRlX+irv9pb/xW9H/JqtztNNA/WNXPIPdUTyjPcLw3eJU
+ +Em/pe7cMl/HWjwhTUHyoi5vSUk=
+X-Mailgun-Sending-Ip: 104.130.96.5
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n01.prod.us-west-2.postgun.com with SMTP id
+ 5f8a6d4b42f9861fb11c9d8d (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Sat, 17 Oct 2020 04:04:27
+ GMT
+Sender: hemantk=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 07F76C433CB; Sat, 17 Oct 2020 04:04:27 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL
+        autolearn=no autolearn_force=no version=3.4.0
+Received: from codeaurora.org (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: hemantk)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id F0B50C433C9;
+        Sat, 17 Oct 2020 04:04:25 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org F0B50C433C9
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=hemantk@codeaurora.org
+From:   Hemant Kumar <hemantk@codeaurora.org>
+To:     manivannan.sadhasivam@linaro.org, gregkh@linuxfoundation.org
+Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        jhugo@codeaurora.org, bbhatt@codeaurora.org,
+        loic.poulain@linaro.org, Hemant Kumar <hemantk@codeaurora.org>
+Subject: [PATCH v7 0/4] userspace MHI client interface driver
+Date:   Fri, 16 Oct 2020 21:04:13 -0700
+Message-Id: <1602907457-13680-1-git-send-email-hemantk@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+This patch series adds support for UCI driver. UCI driver enables userspace
+clients to communicate to external MHI devices like modem and WLAN. UCI driver
+probe creates standard character device file nodes for userspace clients to
+perform open, read, write, poll and release file operations. These file
+operations call MHI core layer APIs to perform data transfer using MHI bus
+to communicate with MHI device. Patch is tested using arm64 based platform.
 
-On Fri, Oct 16, 2020 at 7:01 PM Stephen Boyd <sboyd@kernel.org> wrote:
->
-> Quoting Stephen Boyd (2020-10-15 20:16:27)
-> > Quoting Douglas Anderson (2020-10-14 17:13:29)
-> > > From: Taniya Das <tdas@codeaurora.org>
-> > >
-> > > In the case where the PLL configuration is lost, then the pm runtime
-> > > resume will reconfigure before usage.
-> >
-> > Taniya, this commit needs a lot more describing than one sentence. I see
-> > that the PLL's L value is reset at boot, but only once. That seems to be
-> > because the bootloader I have doesn't set bit 11 for the RETAIN_FF bit
-> > on the lpass_core_hm_gdsc. Once the gdsc is turned off the first time,
-> > the PLL settings are lost and the L val is reset to 0. That makes sense
-> > because RETAIN_FF isn't set. This also means the other register writes
-> > during probe are lost during the first suspend of the lpass core clk
-> > controller. Then when the GDSC is turned on the next time for this clk
-> > controller  being runtime resumed we will set the retain bit and then
-> > configure the PLL again. BTW, I see that runtime PM is called for this
-> > clk controller for all the clk operations. Maybe there should be some
-> > auto suspend timeout so that we're not toggling the gdsc constantly?
-> >
-> > I hacked up the GDSC code to set the bit at gdsc registration time and
-> > it seems to fix the problem I'm seeing (i.e. that the PLL is stuck,
-> > which should also be in the commit text here). When I try to set the bit
-> > in the bootloader though my kernel won't boot. I guess something is
-> > hanging the system if I enable the retain bit in the GDSC?
-> >
->
-> After hacking on this for some time it looks like we can apply this
-> patch instead and things are good. The first two patches in this series
-> look mostly good to me minus some nitpicks so please resend.
+V7:
+- Decoupled uci device and uci channel objects. uci device is
+  associated with device file node. uci channel is associated
+  with MHI channels. uci device refers to uci channel to perform
+  MHI channel operations for device file operations like read()
+  and write(). uci device increments its reference count for
+  every open(). uci device calls mhi_uci_dev_start_chan() to start
+  the MHI channel. uci channel object is tracking number of times
+  MHI channel is referred. This allows to keep the MHI channel in
+  start state until last release() is called. After that uci channel
+  reference count goes to 0 and uci channel clean up is performed
+  which stops the MHI channel. After the last call to release() if
+  driver is removed uci reference count becomes 0 and uci object is
+  cleaned up.
+- Use separate uci channel read and write lock to fine grain locking
+  between reader and writer.
+- Use uci device lock to synchronize open, release and driver remove.
+- Optimize for downlink only or uplink only UCI device.
 
-By this you mean the two newlines you mentioned on
-<https://crrev.com/c/2473610>, right?  I think all the rest of your
-comments were on patch #3 (this patch) which I think we're dropping.
+V6:
+- Moved uci.c to mhi directory.
+- Updated Kconfig to add module information.
+- Updated Makefile to rename uci object file name as mhi_uci
+- Removed kref for open count
 
-I'm happy to repost a v5 of just patches #1 and #2 with the newlines
-fixed next week, or I'm happy if you want to fix them when applying as
-you alluded to on the Chrome OS gerrit.  Just let me know.  I just
-want to make sure I'm not missing some other nits before I post the
-v5.  ;-)
+V5:
+- Removed mhi_uci_drv structure.
+- Used idr instead of creating global list of uci devices.
+- Used kref instead of local ref counting for uci device and
+  open count.
+- Removed unlikely macro.
 
--Doug
+V4:
+- Fix locking to protect proper struct members.
+- Updated documentation describing uci client driver use cases.
+- Fixed uci ref counting in mhi_uci_open for error case.
+- Addressed style related review comments.
+
+V3: Added documentation for MHI UCI driver.
+
+V2: Added mutex lock to prevent multiple readers to access same
+mhi buffer which can result into use after free.
+
+Hemant Kumar (4):
+  bus: mhi: core: Add helper API to return number of free TREs
+  bus: mhi: core: Move MHI_MAX_MTU to external header file
+  docs: Add documentation for userspace client interface
+  bus: mhi: Add userspace client interface driver
+
+ Documentation/mhi/index.rst     |   1 +
+ Documentation/mhi/uci.rst       |  39 +++
+ drivers/bus/mhi/Kconfig         |  13 +
+ drivers/bus/mhi/Makefile        |   4 +
+ drivers/bus/mhi/core/internal.h |   1 -
+ drivers/bus/mhi/core/main.c     |  12 +
+ drivers/bus/mhi/uci.c           | 661 ++++++++++++++++++++++++++++++++++++++++
+ include/linux/mhi.h             |  12 +
+ 8 files changed, 742 insertions(+), 1 deletion(-)
+ create mode 100644 Documentation/mhi/uci.rst
+ create mode 100644 drivers/bus/mhi/uci.c
+
+-- 
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
+
