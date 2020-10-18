@@ -2,113 +2,122 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 535F8291764
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 18 Oct 2020 14:33:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C72D129176F
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 18 Oct 2020 14:52:44 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726219AbgJRMdi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 18 Oct 2020 08:33:38 -0400
-Received: from mail-40134.protonmail.ch ([185.70.40.134]:42680 "EHLO
-        mail-40134.protonmail.ch" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726159AbgJRMdi (ORCPT
+        id S1726628AbgJRMwn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 18 Oct 2020 08:52:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57956 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725776AbgJRMwm (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 18 Oct 2020 08:33:38 -0400
-Date:   Sun, 18 Oct 2020 12:33:31 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=connolly.tech;
-        s=protonmail; t=1603024416;
-        bh=GCCxJzqOnfsVI/hX933byDTiphe1ufjEW2PregmWSLo=;
-        h=Date:To:From:Cc:Reply-To:Subject:In-Reply-To:References:From;
-        b=f+hV804e70VkKoIWRn7lDMgkeqT2qE8ENc6nW6FtprsQ95OUyJzlP0nWidHtODY3t
-         2rzpoWw8FEbph1STSYBYkit71a3mtR/Xze3Z7XyeILvONxAqoJBCNyeUaSfRCUz070
-         KmqilvG2Lhych3aFR83Oq7sZeDM//DxKss96mhgQ=
-To:     Rob Herring <robh@kernel.org>
-From:   Caleb Connolly <caleb@connolly.tech>
-Cc:     linux-arm-msm@vger.kernel.org,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Sam Ravnborg <sam@ravnborg.org>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        ~postmarketos/upstreaming@lists.sr.ht,
-        dri-devel@lists.freedesktop.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Reply-To: Caleb Connolly <caleb@connolly.tech>
-Subject: Re: [PATCH 2/5] dt-bindings: panel: add documentation for oneplus6 panel
-Message-ID: <3b3f9ede-89ef-26c7-3ade-bf498ea483b8@connolly.tech>
-In-Reply-To: <20201009140544.GB4071736@bogus>
-References: <20201007174736.292968-1-caleb@connolly.tech> <20201007174736.292968-3-caleb@connolly.tech> <20201009140544.GB4071736@bogus>
+        Sun, 18 Oct 2020 08:52:42 -0400
+Received: from mail-wr1-x441.google.com (mail-wr1-x441.google.com [IPv6:2a00:1450:4864:20::441])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6F970C061755;
+        Sun, 18 Oct 2020 05:52:42 -0700 (PDT)
+Received: by mail-wr1-x441.google.com with SMTP id n18so8396990wrs.5;
+        Sun, 18 Oct 2020 05:52:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=T/hDz/LE1jLmX/Z0po7n7HZyOjMfrENvnItV9zxg6TQ=;
+        b=vbrjL3yMUFf87yU5V/QgWwdXP7ot4mbkpNia9XPXUhHwLVaYGLz6zydMozDktAtCD7
+         uyi6qtcv/PCQfMbeE0RufV8uoKJRi/oSLHoxy4UIqd4XJSYq2voU1/m7BM1qQFFJ1y5s
+         BVebH3SERxwj0Tj4lhONgCQhUEYAwmaVWb/p81gxt21gReh3Fs3p5Cm/Nk24DkXJgocP
+         4ppRy9Q1RVDNj134UXWnSN0hDx7QM6CjNkN5oVHtn2kZ81dqXnhKLc+2XeRzg3ViFBfD
+         +rrClPRKcPIH+uCmDaopjEjBF2IaaJEke0yLys0eQ427eqn7t6+hpkL3MdJNyr6AnLrQ
+         3B1w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=T/hDz/LE1jLmX/Z0po7n7HZyOjMfrENvnItV9zxg6TQ=;
+        b=hJs3WeWVzc/lGHLQnbALxe6S8HXzRo7WzVADAvErrd3/cHAVJXY0zlXkcc6fuGJZNd
+         h64y6P1W75AX3BrQ9fGgS0QxdCW99SOu5Lvv8Tkw71vcuTkm/voij17ix2wqxwG8PW/n
+         Xs8QjgVm/MNt3KyAKdB4tXVJ1QlTx2BanATGV72yeBD5LMRfvh1Cv9iKXRcPGTbxJYq0
+         YDUMiadppJHGzrEpyAfjQ9KtnaIM4n5apD6H1Wol4QqGdj35aD3Er84eUiLd4woRMcW2
+         PphgV9DG3ZGtLrSpIxnD85gbwhbxHUBObsC47alPOG6BvdYRar7oyP/gGFcDF1tJs22g
+         7M7A==
+X-Gm-Message-State: AOAM531LpX14Jj+0vSQDVtj2D6Ipc56g8w9zjV5xXI9/aeRoxbTADJSn
+        ytB2esSTzE7hXoQQhoyI+Iw=
+X-Google-Smtp-Source: ABdhPJw8RiADdfZF+1kTP16XsXSqydaKxM+H9npeMri+Y3OkJA1pYRYJYBv54k7zgaJLOyo1KLSWlg==
+X-Received: by 2002:a5d:684d:: with SMTP id o13mr15467083wrw.302.1603025560974;
+        Sun, 18 Oct 2020 05:52:40 -0700 (PDT)
+Received: from IcarusMOD.eternityproject.eu ([2.237.20.237])
+        by smtp.gmail.com with ESMTPSA id u2sm11940158wme.1.2020.10.18.05.52.39
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 18 Oct 2020 05:52:40 -0700 (PDT)
+From:   kholk11@gmail.com
+To:     todor.too@gmail.com
+Cc:     agross@kernel.org, bjorn.andersson@linaro.org, mchehab@kernel.org,
+        robh+dt@kernel.org, marijns95@gmail.com, konradybcio@gmail.com,
+        martin.botka1@gmail.com, linux-arm-msm@vger.kernel.org,
+        linux-media@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        AngeloGioacchino Del Regno <kholk11@gmail.com>
+Subject: [PATCH 0/6] Add support for SDM630/660 Camera Subsystem
+Date:   Sun, 18 Oct 2020 14:52:31 +0200
+Message-Id: <20201018125237.16717-1-kholk11@gmail.com>
+X-Mailer: git-send-email 2.28.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=-1.2 required=10.0 tests=ALL_TRUSTED,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF shortcircuit=no
-        autolearn=disabled version=3.4.4
-X-Spam-Checker-Version: SpamAssassin 3.4.4 (2020-01-24) on
-        mailout.protonmail.ch
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2020-10-09 15:05, Rob Herring wrote:
-> On Wed, Oct 07, 2020 at 05:49:14PM +0000, Caleb Connolly wrote:
->> Document the OnePlus 6/T common panel driver, example from
->> arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi
->>
->> Signed-off-by: Caleb Connolly <caleb@connolly.tech>
->> ---
->>   .../display/panel/panel-oneplus6.yaml         | 73 +++++++++++++++++++
->>   1 file changed, 73 insertions(+)
->>   create mode 100644 Documentation/devicetree/bindings/display/panel/pan=
-el-oneplus6.yaml
->>
->> diff --git a/Documentation/devicetree/bindings/display/panel/panel-onepl=
-us6.yaml b/Documentation/devicetree/bindings/display/panel/panel-oneplus6.y=
-aml
->> new file mode 100644
->> index 000000000000..23ba369cc2f5
->> --- /dev/null
->> +++ b/Documentation/devicetree/bindings/display/panel/panel-oneplus6.yam=
-l
->> @@ -0,0 +1,73 @@
->> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
->> +%YAML 1.2
->> +---
->> +$id: http://devicetree.org/schemas/display/panel/panel-oneplus6.yaml#
->> +$schema: http://devicetree.org/meta-schemas/core.yaml#
->> +
->> +title: OnePlus 6/T panel driver
->> +
->> +description: |
->> +  The OnePlus 6 panel driver encompasses the display panels found in th=
-e
->> +  OnePlus 6 and 6T devices, the panels have almost identical behaviour =
-and
->> +  are not used by any other devices.
->> +
->> +maintainers:
->> +  - Caleb Connolly <caleb@connolly.tech>
->> +
->> +allOf:
->> +  - $ref: panel-common.yaml#
->> +
->> +properties:
->> +  compatible:
->> +    enum:
->> +      - samsung,sofef00
->> +      - samsung,s6e3fc2x01
->> +
->> +  reg: true
->> +  reset-gpios: true
->> +  port: true
->> +
->> +  vddio-supply:
->> +    description: VDDIO regulator
-> A panel with a single supply can use panel-simple-dsi.yaml.
->
-> 'reset-gpios' was missing, but has been added recently.
->
-> Rob
+From: AngeloGioacchino Del Regno <kholk11@gmail.com>
 
-Thanks, I'll move docs into panel-simple-dsi.yaml
+This patch series implements support for the entire camera subsystem
+found in SDM630/636/660 and SDA variants, including CSIPHY 3-Phase,
+CSID v5.0, ISPIF 3.0 (though it didn't need any adaptation) and
+VFE 4.8.
 
-Caleb
+One small note about VFE4.8, even if I wrote it in the commit that
+adds support for it: I know, the VFE support here is split in
+multiple files having the name of the actual VFE version that it is
+targeting... but it didn't feel right to commonize the VFE 4.7 file
+and make another one only for VFE4.8, when it's just about something
+like 3 small differences.
+That VFE 4.8 seems to be just a minor revision of VFE 4.7.
 
+While at it, also fix a small issue when using two VFEs: only one
+of them was being resetted (always VFE0) so, after the first usage
+of VFE1, in case we leave it in a bad state, it would not properly
+start again. Now... it's fine :)))
+
+P.S.: SDM630/660's camss seems to be *very* similar to MSM8998, so
+      likely 90% of this series should be reusable on that one, too!
+
+Tested on:
+ - Sony Xperia XA2 (IMX300 on CSI0/PHY0/VFE0, IMX219 on CSI2,PHY2,VFE1)
+   * VFE0/1 RDI only, as the VIDEO one does not work with SRGGB Bayer
+     formats yet. As far as I can see, that color format hasn't been
+     implemented yet in the video interface.
+
+AngeloGioacchino Del Regno (6):
+  media: camss: csiphy-3ph: Add support for SDM630/660
+  media: camss: ispif: Correctly reset based on the VFE ID
+  media: camss: vfe: Add support for VFE 4.8
+  media: camss: Add support for SDM630/636/660 camera subsystem
+  media: dt-bindings: media: qcom,camss: Add bindings for SDM660 camss
+  media: camss: csiphy: Set rate on csiX_phy clock on SDM630/660
+
+ .../devicetree/bindings/media/qcom,camss.txt  |   7 +
+ .../media/platform/qcom/camss/camss-csid.c    |   9 +-
+ .../qcom/camss/camss-csiphy-3ph-1-0.c         |   7 +-
+ .../media/platform/qcom/camss/camss-csiphy.c  |  25 ++-
+ .../media/platform/qcom/camss/camss-csiphy.h  |   1 +
+ .../media/platform/qcom/camss/camss-ispif.c   | 100 ++++++---
+ .../media/platform/qcom/camss/camss-ispif.h   |   2 +-
+ .../media/platform/qcom/camss/camss-vfe-4-7.c | 129 ++++++++++-
+ drivers/media/platform/qcom/camss/camss-vfe.c |  19 +-
+ drivers/media/platform/qcom/camss/camss-vfe.h |   1 +
+ .../media/platform/qcom/camss/camss-video.c   |   3 +-
+ drivers/media/platform/qcom/camss/camss.c     | 206 +++++++++++++++++-
+ drivers/media/platform/qcom/camss/camss.h     |   1 +
+ 13 files changed, 448 insertions(+), 62 deletions(-)
+
+-- 
+2.28.0
 
