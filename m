@@ -2,202 +2,161 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 525AF292D76
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Oct 2020 20:23:06 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 706BF292DB0
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Oct 2020 20:43:36 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730723AbgJSSWt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 19 Oct 2020 14:22:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50226 "EHLO
+        id S1730906AbgJSSn1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 19 Oct 2020 14:43:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53408 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730654AbgJSSWs (ORCPT
+        with ESMTP id S1730710AbgJSSn0 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 19 Oct 2020 14:22:48 -0400
-Received: from mail-oi1-x242.google.com (mail-oi1-x242.google.com [IPv6:2607:f8b0:4864:20::242])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B6BD0C0613CE
-        for <linux-arm-msm@vger.kernel.org>; Mon, 19 Oct 2020 11:22:48 -0700 (PDT)
-Received: by mail-oi1-x242.google.com with SMTP id l85so931468oih.10
-        for <linux-arm-msm@vger.kernel.org>; Mon, 19 Oct 2020 11:22:48 -0700 (PDT)
+        Mon, 19 Oct 2020 14:43:26 -0400
+Received: from mail-io1-xd41.google.com (mail-io1-xd41.google.com [IPv6:2607:f8b0:4864:20::d41])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6E890C0613D1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 19 Oct 2020 11:43:25 -0700 (PDT)
+Received: by mail-io1-xd41.google.com with SMTP id k6so940769ior.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 19 Oct 2020 11:43:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=3LEDkBR8wJEGqVwvG1n0vRZnt/gLCojl7HrdvEA23Ug=;
-        b=YrXdztVk2xUzJpFj9keaplNRccfTfjsSp/1YpeMFBVOGa098MtUAjHt61JjJfsvx/w
-         7EKLabdjT74UjcZyARJs/+dEFCBrXaKQUCXVdXINEZn74DjZFX9xZpHprPKxlyFl4v7q
-         1IXwJueTvIPnVUUy5jqry7hlVBoPJstOWFATwNXXfQfByZWagKZZAej5cizJzQP0llFM
-         cVHzvgqxTsGL3FeHLVjhsIybaxWtM6L8hPG5pnNywmmUeiEieclplkHhmKrxZGxFkFnh
-         obpbsliy1aQ0//16iq5tEFV3B3LLNNHnDcGgNnXATsxulFTVxLPxNIkr7OJSSHCcd6uS
-         UJog==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=XS0b41HJUJUqgJ5lkLHS/Jz0mUrtabIGSzld1xEhiLY=;
+        b=ir9bJ0Xz8Qh7mhbng1X4z3mYPFaJwefOpeicuAqbfOrUlnrKft0l4Y+orq5vragl/i
+         g0cIy90g/N9UBPEVsyrSPed6Pb9dhgG88ex4yUpPLuko5abT3E/Q0MmcS9WDO9xoitbM
+         KVbI//mNp5qBrEPTf+4pDS2i1lAf/nm08NGo0b1MrcnUXVk/wwnbTbkpHUJVm9kXfW//
+         M+w7+oBcgI/w7+cxteVTEfuHYo3M/nGcXw3/jNiIeQG6CAwK/rJdNoi+CCCBtHkegfp/
+         pvKLJsGqDQ2qGltmC25UQbObpMlP1nxjziF4yqc2bA8M/YnUZlNffjB5/PZIUhhL1Fk5
+         Uvng==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=3LEDkBR8wJEGqVwvG1n0vRZnt/gLCojl7HrdvEA23Ug=;
-        b=cbqR1aufDGFGQ5reaX2MDFpHjUalya5Dcx3ivzAtmzdPe8+eN1qIO5r0Q/JVOk2Y0/
-         asdaikPOCpMzN2eCCfBj6A/MQB+iWa6AcmWDMdLaz8Vr/psEiKqTAjhw6vmbYdY3TT4w
-         eDY2div9WYVd8oggeHJ9Q5NXmcyHnwqVKWmuBAsGAAXIGJ93+5CqxsBOVB+BvT0pG4Ql
-         V2ky2pa5CKayk7zHqRFZ5aH1D6V+a8+NgcYztom6RxNa9AKIo4Qtlp6uNV0fnh7cSeLp
-         AhOLZ1RmGihWzVv0BDYWeaEQW2ZoHxk7bobuUxKN02wkpJGGh4AuPRHoNJobgXhiMjSK
-         GNlw==
-X-Gm-Message-State: AOAM531oWO6N7JYA1c+qczyOhIHm/Q1jXL/u2eTkFQcnzaUCXJ3wl7/m
-        bHatQPxX2MWjT6UN5GSz6vJa1w==
-X-Google-Smtp-Source: ABdhPJz2Xt6yCi4zpBwEAH7Rya8QNBfEhDx9AF+q00be7ONZJMUUj3jtzUAoihEPhpft+Di3dh/oKQ==
-X-Received: by 2002:aca:b5c6:: with SMTP id e189mr495877oif.47.1603131768050;
-        Mon, 19 Oct 2020 11:22:48 -0700 (PDT)
-Received: from localhost.localdomain (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id o8sm175296oog.47.2020.10.19.11.22.47
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 19 Oct 2020 11:22:47 -0700 (PDT)
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Will Deacon <will@kernel.org>, Robin Murphy <robin.murphy@arm.com>,
-        Joerg Roedel <joro@8bytes.org>,
-        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
-        Jordan Crouse <jcrouse@codeaurora.org>,
-        Thierry Reding <treding@nvidia.com>,
-        Rob Clark <robdclark@chromium.org>
-Cc:     linux-arm-kernel@lists.infradead.org,
-        iommu@lists.linux-foundation.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-Subject: [PATCH v5 3/3] iommu/arm-smmu-qcom: Implement S2CR quirk
-Date:   Mon, 19 Oct 2020 11:23:23 -0700
-Message-Id: <20201019182323.3162386-4-bjorn.andersson@linaro.org>
-X-Mailer: git-send-email 2.28.0
-In-Reply-To: <20201019182323.3162386-1-bjorn.andersson@linaro.org>
-References: <20201019182323.3162386-1-bjorn.andersson@linaro.org>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=XS0b41HJUJUqgJ5lkLHS/Jz0mUrtabIGSzld1xEhiLY=;
+        b=FF7H9aVpsmaJ5mnmWgOXiIUB7QthUHhLPwF2u4HgcNOpPHiewAgpW26TKDz3kdC/8A
+         +ElHRQ267qMihbqdhsQ92MFBpysA6TD04JtkJhn87Y78sPLBEuMTFZfmQX0aLzUvaFpY
+         Q2/03NVu3q0wOJlUdL5WPkrepTALd+lQbDntWhBLiZQqaqAzlCv9h97lE8C5XT+KiFL5
+         RWpwE3TlXYq5JuUbdffnER9R6skfE5afWqx7ZD4nSWL6PbvE2BF+BDxxQCKpbuuV+KrE
+         IwjqqkPfKeb8yTQBCv4yKtLd9Tq46zm4iR3oS+XJm0dRHWZQAM9knOVJffRyY8+0H3GY
+         g8fg==
+X-Gm-Message-State: AOAM532cbxMK75n6OgnUrLgJqrNF9PqKCfii7P5ihAApIzaMVznoCteq
+        7Tmxn0c/jtYg5KzICJLouqMaWGlh+Xw7XgFsBx88kA==
+X-Google-Smtp-Source: ABdhPJxJAhL3IVfX23GRdC+ITCUP/phL4EJ1fYf/dYu5u9+SppORNH4yVRdNUGLOsnSubsAxikaKvN6MUW8UjZo5oW4=
+X-Received: by 2002:a05:6638:d49:: with SMTP id d9mr1165361jak.85.1603133004559;
+ Mon, 19 Oct 2020 11:43:24 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20200917032226.820371-1-thara.gopinath@linaro.org>
+In-Reply-To: <20200917032226.820371-1-thara.gopinath@linaro.org>
+From:   Thara Gopinath <thara.gopinath@linaro.org>
+Date:   Mon, 19 Oct 2020 14:42:48 -0400
+Message-ID: <CALD-y_wQeuUq=0+_TGWYwOAcM4zdmGbtCMYZ+Oa587HtzHHqVQ@mail.gmail.com>
+Subject: Re: [PATCH RFC 0/8] Introduce warming in thermal framework
+To:     Zhang Rui <rui.zhang@intel.com>,
+        Daniel Lezcano <daniel.lezcano@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Linux PM list <linux-pm@vger.kernel.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>,
+        linux-kernel <linux-kernel@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        lukasz.luba@arm.com, amitk@kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The firmware found in some Qualcomm platforms intercepts writes to S2CR
-in order to replace bypass type streams with fault; and ignore S2CR
-updates of type fault.
+On Wed, 16 Sep 2020 at 23:22, Thara Gopinath <thara.gopinath@linaro.org> wrote:
+>
+> Thermal framework today supports monitoring for rising temperatures and
+> subsequently initiating cooling action in case of a thermal trip point
+> being crossed. There are scenarios where a SoC need warming mitigating
+> action to be activated if the temperature falls below a cetain permissible
+> limit.  Since warming action can be considered mirror opposite of cooling
+> action, most of the thermal framework can be re-used to achieve this. The
+> key assumption in this patch series is that a device can act either as a
+> warming device or a cooling device and not as both.
+>
+> In order to support warming three extensions are needed in the thermal
+> framework.
+>
+> 1. Indication that a trip point is being monitored for falling temperature
+> and not rising temperature. We discussed two different ways to achieve this
+> during LPC. First option is to introduce a new trip type to indicate that a
+> trip is a cold trip(THERMAL_TRIP_COLD). The second option is to introduce a
+> new property for trip point that will indicate whether a trip point is
+> being monitored for rising temperature or falling temperature. The patch
+> series(patches 1-4) chooses the second approach since it allows trip points
+> of any type to be monitored for rising or falling temperature.Also this was
+> the preferred approach when discussed during LPC. The approach that
+> introduces a new cold trip type was posted on the list earlier as a RFC and
+> can be found at [1].
+>
+> 2. Extend the exisitng governors to handle monitoring of falling
+> temperature. The patch series(patches 5 & 6) extends the step wise governor
+> to monitor the falling temperature.Other governors return doing nothing if
+> the trip point they are being called for is being monitored for falling
+> temperature. The governors' mitigate function is called "throttle" in the
+> thermal framework and with this patch series it is a misnomer as the
+> function is called for both throttling and warming up. Ideally
+> "throttle" should be renamed to "mitigate" to improve readability of code.
+> The renaming is not part of this series.
+>
+> 3. Finally, the cooling device framework itself can be reused for a warming
+> device. As stated before a device can act either as a warming device or a
+> cooling device and not as both.  With this the cooling state in the
+> framework can be considered as mitigating state with 0 as the state with no
+> thermal mitigation and higher the number higher the thermal mitigation.
+> Again what affects the code readability and comprehension is the term
+> "cooling" which is a misnomer here. Ideally the term "cooling" should be
+> renamed to "mitigating" and hence thermal_cooling_device will become
+> thermal_mitgating_device. The renaming is not part of the patch series as
+> even though the renaming is a simple search-replace, it will change a lot
+> of files.  The patch series(patches 7 & 8) instead introduces a minimal set
+> of _warming_device_ apis to register and unregister warming devices which
+> internally is identical to the _cooling_device_ counterpart.
 
-Detect this behavior and implement a custom write_s2cr function in order
-to trick the firmware into supporting bypass streams by the means of
-configuring the stream for translation using a reserved and disabled
-context bank.
+Gentle ping for review..
 
-Also circumvent the problem of configuring faulting streams by
-configuring the stream as bypass.
+>
+> 1. https://lkml.org/lkml/2020/7/10/639
+>
+> Thara Gopinath (8):
+>   dt-bindings: thermal: Introduce monitor-falling parameter to thermal
+>     trip point binding
+>   thermal: Introduce new property monitor_type for trip point.
+>   thermal: thermal_of: Extend thermal dt driver to support
+>     bi-directional monitoring of a thermal trip point.
+>   thermal:core:Add genetlink notifications for monitoring falling
+>     temperature
+>   thermal: gov_step_wise: Extend thermal step-wise governor to monitor
+>     falling temperature.
+>   thermal: Modify thermal governors to do nothing for trip points being
+>     monitored for falling temperature
+>   thermal:core: Add is_warming_dev and supporting warming device api's
+>     to the cooling dev framework.
+>   soc:qcom:qcom_aoss: Change cooling_device_register to
+>     warming_device_register
+>
+>  .../bindings/thermal/thermal-zones.yaml       |   7 ++
+>  drivers/soc/qcom/qcom_aoss.c                  |   6 +-
+>  drivers/thermal/gov_bang_bang.c               |  12 ++
+>  drivers/thermal/gov_fair_share.c              |  12 ++
+>  drivers/thermal/gov_power_allocator.c         |  12 ++
+>  drivers/thermal/gov_step_wise.c               |  62 +++++++---
+>  drivers/thermal/thermal_core.c                | 113 +++++++++++++++---
+>  drivers/thermal/thermal_core.h                |   2 +
+>  drivers/thermal/thermal_of.c                  |  22 ++++
+>  include/linux/thermal.h                       |   9 ++
+>  include/uapi/linux/thermal.h                  |   5 +
+>  11 files changed, 226 insertions(+), 36 deletions(-)
+>
+> --
+> 2.25.1
+>
 
-Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
----
 
-Changes since v4:
-- Made the bypass_cbndx an integer...
-- Separated out the "quirk enabled or not" into a bool, rather than reusing
-  (the valid) context bank 0 to represent this.
-- Dropped the unused EXIDS handling.
-
- drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c | 67 ++++++++++++++++++++++
- 1 file changed, 67 insertions(+)
-
-diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-index 48627fcf6bed..66ba4870659f 100644
---- a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-+++ b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-@@ -10,8 +10,15 @@
- 
- struct qcom_smmu {
- 	struct arm_smmu_device smmu;
-+	bool bypass_quirk;
-+	u8 bypass_cbndx;
- };
- 
-+static struct qcom_smmu *to_qcom_smmu(struct arm_smmu_device *smmu)
-+{
-+	return container_of(smmu, struct qcom_smmu, smmu);
-+}
-+
- static const struct of_device_id qcom_smmu_client_of_match[] __maybe_unused = {
- 	{ .compatible = "qcom,adreno" },
- 	{ .compatible = "qcom,mdp4" },
-@@ -25,9 +32,33 @@ static const struct of_device_id qcom_smmu_client_of_match[] __maybe_unused = {
- 
- static int qcom_smmu_cfg_probe(struct arm_smmu_device *smmu)
- {
-+	unsigned int last_s2cr = ARM_SMMU_GR0_S2CR(smmu->num_mapping_groups - 1);
-+	struct qcom_smmu *qsmmu = to_qcom_smmu(smmu);
-+	u32 reg;
- 	u32 smr;
- 	int i;
- 
-+	/*
-+	 * With some firmware versions writes to S2CR of type FAULT are
-+	 * ignored, and writing BYPASS will end up written as FAULT in the
-+	 * register. Perform a write to S2CR to detect if this is the case and
-+	 * if so reserve a context bank to emulate bypass streams.
-+	 */
-+	reg = FIELD_PREP(ARM_SMMU_S2CR_TYPE, S2CR_TYPE_BYPASS) |
-+	      FIELD_PREP(ARM_SMMU_S2CR_CBNDX, 0xff) |
-+	      FIELD_PREP(ARM_SMMU_S2CR_PRIVCFG, S2CR_PRIVCFG_DEFAULT);
-+	arm_smmu_gr0_write(smmu, last_s2cr, reg);
-+	reg = arm_smmu_gr0_read(smmu, last_s2cr);
-+	if (FIELD_GET(ARM_SMMU_S2CR_TYPE, reg) != S2CR_TYPE_BYPASS) {
-+		qsmmu->bypass_quirk = true;
-+		qsmmu->bypass_cbndx = smmu->num_context_banks - 1;
-+
-+		set_bit(qsmmu->bypass_cbndx, smmu->context_map);
-+
-+		reg = FIELD_PREP(ARM_SMMU_CBAR_TYPE, CBAR_TYPE_S1_TRANS_S2_BYPASS);
-+		arm_smmu_gr1_write(smmu, ARM_SMMU_GR1_CBAR(qsmmu->bypass_cbndx), reg);
-+	}
-+
- 	for (i = 0; i < smmu->num_mapping_groups; i++) {
- 		smr = arm_smmu_gr0_read(smmu, ARM_SMMU_GR0_SMR(i));
- 
-@@ -45,6 +76,41 @@ static int qcom_smmu_cfg_probe(struct arm_smmu_device *smmu)
- 	return 0;
- }
- 
-+static void qcom_smmu_write_s2cr(struct arm_smmu_device *smmu, int idx)
-+{
-+	struct arm_smmu_s2cr *s2cr = smmu->s2crs + idx;
-+	struct qcom_smmu *qsmmu = to_qcom_smmu(smmu);
-+	u32 cbndx = s2cr->cbndx;
-+	u32 type = s2cr->type;
-+	u32 reg;
-+
-+	if (qsmmu->bypass_quirk) {
-+		if (type == S2CR_TYPE_BYPASS) {
-+			/*
-+			 * Firmware with quirky S2CR handling will substitute
-+			 * BYPASS writes with FAULT, so point the stream to the
-+			 * reserved context bank and ask for translation on the
-+			 * stream
-+			 */
-+			type = S2CR_TYPE_TRANS;
-+			cbndx = qsmmu->bypass_cbndx;
-+		} else if (type == S2CR_TYPE_FAULT) {
-+			/*
-+			 * Firmware with quirky S2CR handling will ignore FAULT
-+			 * writes, so trick it to write FAULT by asking for a
-+			 * BYPASS.
-+			 */
-+			type = S2CR_TYPE_BYPASS;
-+			cbndx = 0xff;
-+		}
-+	}
-+
-+	reg = FIELD_PREP(ARM_SMMU_S2CR_TYPE, type) |
-+	      FIELD_PREP(ARM_SMMU_S2CR_CBNDX, cbndx) |
-+	      FIELD_PREP(ARM_SMMU_S2CR_PRIVCFG, s2cr->privcfg);
-+	arm_smmu_gr0_write(smmu, ARM_SMMU_GR0_S2CR(idx), reg);
-+}
-+
- static int qcom_smmu_def_domain_type(struct device *dev)
- {
- 	const struct of_device_id *match =
-@@ -86,6 +152,7 @@ static const struct arm_smmu_impl qcom_smmu_impl = {
- 	.cfg_probe = qcom_smmu_cfg_probe,
- 	.def_domain_type = qcom_smmu_def_domain_type,
- 	.reset = qcom_smmu500_reset,
-+	.write_s2cr = qcom_smmu_write_s2cr,
- };
- 
- struct arm_smmu_device *qcom_smmu_impl_init(struct arm_smmu_device *smmu)
 -- 
-2.28.0
-
+Warm Regards
+Thara
