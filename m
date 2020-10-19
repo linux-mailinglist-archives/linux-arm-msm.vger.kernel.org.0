@@ -2,232 +2,173 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 682352929E2
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Oct 2020 16:59:32 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3744F292A8E
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Oct 2020 17:37:07 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729223AbgJSO73 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 19 Oct 2020 10:59:29 -0400
-Received: from m42-4.mailgun.net ([69.72.42.4]:54336 "EHLO m42-4.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1729544AbgJSO73 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 19 Oct 2020 10:59:29 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1603119567; h=In-Reply-To: Content-Type: MIME-Version:
- References: Message-ID: Subject: Cc: To: From: Date: Sender;
- bh=I/SKOMpzOnnwt8n9VF8We3fcphMOzmAuFiM8CKtC4dU=; b=rBKoOYRAfrn1S2IgeXt3EQ4YJnrxl6GJ6Wo74OxtK/5OWeBrcntqKLIXbGAE49QrV7LTd9wj
- yUQ+TOx/djSMm9WcWcxDOWemkrpKqGeNWf0T2OayEQljZLATfTfAKeR2mu5udjDtC4T8AVSE
- 8U5/qHx4NuBhNlxuB08fjsu4920=
-X-Mailgun-Sending-Ip: 69.72.42.4
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n04.prod.us-west-2.postgun.com with SMTP id
- 5f8da9cf856d9308b534b4a0 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 19 Oct 2020 14:59:27
- GMT
-Sender: jcrouse=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 45A17C43382; Mon, 19 Oct 2020 14:59:27 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
-        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
-Received: from jcrouse1-lnx.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: jcrouse)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id A67A0C433F1;
-        Mon, 19 Oct 2020 14:59:25 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org A67A0C433F1
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=jcrouse@codeaurora.org
-Date:   Mon, 19 Oct 2020 08:59:22 -0600
-From:   Jordan Crouse <jcrouse@codeaurora.org>
-To:     Akhil P Oommen <akhilpo@codeaurora.org>
-Cc:     freedreno@lists.freedesktop.org, dri-devel@freedesktop.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        mka@chromium.org, robdclark@gmail.com, dianders@chromium.org
-Subject: Re: [PATCH 2/2] drm/msm: Fix duplicate gpu node in icc summary
-Message-ID: <20201019145922.GB31882@jcrouse1-lnx.qualcomm.com>
-Mail-Followup-To: Akhil P Oommen <akhilpo@codeaurora.org>,
-        freedreno@lists.freedesktop.org, dri-devel@freedesktop.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        mka@chromium.org, robdclark@gmail.com, dianders@chromium.org
-References: <1603113558-23330-1-git-send-email-akhilpo@codeaurora.org>
- <1603113558-23330-2-git-send-email-akhilpo@codeaurora.org>
+        id S1730090AbgJSPhG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 19 Oct 2020 11:37:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52322 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730059AbgJSPhF (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 19 Oct 2020 11:37:05 -0400
+Received: from mail-ot1-x343.google.com (mail-ot1-x343.google.com [IPv6:2607:f8b0:4864:20::343])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C2BB1C0613CE
+        for <linux-arm-msm@vger.kernel.org>; Mon, 19 Oct 2020 08:37:05 -0700 (PDT)
+Received: by mail-ot1-x343.google.com with SMTP id t15so33919otk.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 19 Oct 2020 08:37:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=ZuObq9whWGDMmuO49RORrwrhqdb/dKbIiBCbbe3MZ+8=;
+        b=C6WGncCyg42oqfIwbZX16QroJD8lscb0ArhpyKgf4GkpPaB4D7iGfaU9Bzj0g6qSis
+         0372FjoZBSTHj262jqlLl96tMRrEQlDhd2XZt52kuE8stnuNjDOnmewwjwBBcOHHu+Gy
+         0Q8lHEIs6Te5T37TFUENmQIe6g9VQHWikMFvW0WU2M/i5mk5JwTme3rLDmv9kr611/Ry
+         lPruuQAiILKYVUYEs06XzhPcbaQCdS70pbv4o2s4uqjv+zjseP3FhCkf3c4r0mxiv063
+         wam1WtZWQLuxojz+ymhE1L3ftMqDYk7NBmwRXcQMfEA/J0Cwtjc7XlzQYw2dUupN2J4t
+         H0Yg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=ZuObq9whWGDMmuO49RORrwrhqdb/dKbIiBCbbe3MZ+8=;
+        b=YfRvxeocMrNv8SjSSjMGf2AjuOWB6+FEUWbwBcg2Sml9mxrF5FhrQL9F+MGdR/Up22
+         w9l4lXW5O9ofn3eDF0vqomVN1+WB0AaN5uybRE+EqILo0fZr1NywVclPKP24rG0PtC5i
+         eQKewFedS7IKreGN7Qcd9bawtKCJEmdRnRGG4R7p045U3A1n8IWFm16qS1mfshy2uT4A
+         7dSOTt7GE+qwmrkUXxXVgaQpEGrf8Jy1aJedq2y3WbpWVOOVdZGcMu4AcmZGNZ5EqDY4
+         3JWHFguuzC0x7PW05e9kL72MA/K3TKksboAw+mICsQtiXo7FPpuTVnfWMwVcx+hoL/AN
+         IPmQ==
+X-Gm-Message-State: AOAM531Csa51O+MQ2PW4dgRFQhRDxDKItDd7NhsN98mzIIixA3gzEX0L
+        qMoqxI4QRUm1rxZit+xH0ZrDGg==
+X-Google-Smtp-Source: ABdhPJxyQj0BxuHZkdFy97PqND3qA9PIazxUOwIJ6MKfl9YWhfxFCeAHoSjERQkg821O8disXAds2w==
+X-Received: by 2002:a9d:6c8a:: with SMTP id c10mr384950otr.293.1603121825018;
+        Mon, 19 Oct 2020 08:37:05 -0700 (PDT)
+Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
+        by smtp.gmail.com with ESMTPSA id p21sm3497994oto.21.2020.10.19.08.37.03
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 19 Oct 2020 08:37:04 -0700 (PDT)
+Date:   Mon, 19 Oct 2020 10:31:59 -0500
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Robin Murphy <robin.murphy@arm.com>
+Cc:     Will Deacon <will@kernel.org>, Joerg Roedel <joro@8bytes.org>,
+        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
+        Jordan Crouse <jcrouse@codeaurora.org>,
+        Thierry Reding <treding@nvidia.com>,
+        Rob Clark <robdclark@chromium.org>,
+        linux-arm-kernel@lists.infradead.org,
+        iommu@lists.linux-foundation.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH v4 2/3] iommu/arm-smmu-qcom: Read back stream mappings
+Message-ID: <20201019153159.GC6705@builder.lan>
+References: <20201017043907.2656013-1-bjorn.andersson@linaro.org>
+ <20201017043907.2656013-3-bjorn.andersson@linaro.org>
+ <5eeecd0e-e3f3-f805-12d5-633284a29074@arm.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <1603113558-23330-2-git-send-email-akhilpo@codeaurora.org>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+In-Reply-To: <5eeecd0e-e3f3-f805-12d5-633284a29074@arm.com>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Oct 19, 2020 at 06:49:18PM +0530, Akhil P Oommen wrote:
-> On targets with a6xx gpu, there is a duplicate gpu icc node listed in
-> the interconnect summary. On these targets, calling
+On Mon 19 Oct 09:03 CDT 2020, Robin Murphy wrote:
 
-This first sentence is confusing to me. I think the following few sentences do
-a better job of explaining what you are trying to do.
-
-> dev_pm_opp_of_add_table() api initializes the icc nodes for gpu indirectly.
-> So we should avoid using of_icc_get() api in the common probe path. To fix
-> this, we can move of_icc_get() to target specific code where it is
-> required.
-
-> Signed-off-by: Akhil P Oommen <akhilpo@codeaurora.org>
-> ---
->  drivers/gpu/drm/msm/adreno/a3xx_gpu.c   | 21 +++++++++++++++++++--
->  drivers/gpu/drm/msm/adreno/a4xx_gpu.c   | 20 ++++++++++++++++++--
->  drivers/gpu/drm/msm/adreno/adreno_gpu.c | 29 +----------------------------
->  3 files changed, 38 insertions(+), 32 deletions(-)
+> On 2020-10-17 05:39, Bjorn Andersson wrote:
+> > The Qualcomm boot loader configures stream mapping for the peripherals
+> > that it accesses and in particular it sets up the stream mapping for the
+> > display controller to be allowed to scan out a splash screen or EFI
+> > framebuffer.
+> > 
+> > Read back the stream mappings during initialization and make the
+> > arm-smmu driver maintain the streams in bypass mode.
+> > 
+> > Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> > ---
+> > 
+> > Changes since v3:
+> > - Extracted from different patch in v3.
+> > - Now configures the stream as BYPASS, rather than translate, which should work
+> >    for platforms with working S2CR handling as well.
+> > 
+> >   drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c | 24 ++++++++++++++++++++++
+> >   1 file changed, 24 insertions(+)
+> > 
+> > diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
+> > index be4318044f96..0089048342dd 100644
+> > --- a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
+> > +++ b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
+> > @@ -23,6 +23,29 @@ static const struct of_device_id qcom_smmu_client_of_match[] __maybe_unused = {
+> >   	{ }
+> >   };
+> > +static int qcom_smmu_cfg_probe(struct arm_smmu_device *smmu)
+> > +{
+> > +	u32 smr;
+> > +	int i;
+> > +
+> > +	for (i = 0; i < smmu->num_mapping_groups; i++) {
+> > +		smr = arm_smmu_gr0_read(smmu, ARM_SMMU_GR0_SMR(i));
+> > +
+> > +		if (FIELD_GET(ARM_SMMU_SMR_VALID, smr)) {
+> > +			smmu->smrs[i].id = FIELD_GET(ARM_SMMU_SMR_ID, smr);
+> > +			smmu->smrs[i].mask = FIELD_GET(ARM_SMMU_SMR_MASK, smr);
+> > +			smmu->smrs[i].valid = true;
+> > +
+> > +			smmu->s2crs[i].type = S2CR_TYPE_BYPASS;
+> > +			smmu->s2crs[i].privcfg = S2CR_PRIVCFG_DEFAULT;
+> > +			smmu->s2crs[i].cbndx = 0xff;
+> > +			smmu->s2crs[i].count++;
 > 
-> diff --git a/drivers/gpu/drm/msm/adreno/a3xx_gpu.c b/drivers/gpu/drm/msm/adreno/a3xx_gpu.c
-> index f29c77d..93da668 100644
-> --- a/drivers/gpu/drm/msm/adreno/a3xx_gpu.c
-> +++ b/drivers/gpu/drm/msm/adreno/a3xx_gpu.c
-> @@ -519,6 +519,8 @@ struct msm_gpu *a3xx_gpu_init(struct drm_device *dev)
->  	struct msm_gpu *gpu;
->  	struct msm_drm_private *priv = dev->dev_private;
->  	struct platform_device *pdev = priv->gpu_pdev;
-> +	struct icc_path *ocmem_icc_path;
-> +	struct icc_path *icc_path;
->  	int ret;
->  
->  	if (!pdev) {
-> @@ -566,13 +568,28 @@ struct msm_gpu *a3xx_gpu_init(struct drm_device *dev)
->  		goto fail;
->  	}
->  
-> +	icc_path = devm_of_icc_get(&pdev->dev, "gfx-mem");
-> +	ret = IS_ERR(icc_path);
-> +	if (ret)
-> +		goto fail;
-> +
-> +	ocmem_icc_path = devm_of_icc_get(&pdev->dev, "ocmem");
-> +	ret = IS_ERR(ocmem_icc_path);
-> +	if (ret) {
-> +		/* allow -ENODATA, ocmem icc is optional */
-> +		if (ret != -ENODATA)
-> +			goto fail;
-> +		ocmem_icc_path = NULL;
-> +	}
-> +
-> +
->  	/*
->  	 * Set the ICC path to maximum speed for now by multiplying the fastest
->  	 * frequency by the bus width (8). We'll want to scale this later on to
->  	 * improve battery life.
->  	 */
-> -	icc_set_bw(gpu->icc_path, 0, Bps_to_icc(gpu->fast_rate) * 8);
-> -	icc_set_bw(gpu->ocmem_icc_path, 0, Bps_to_icc(gpu->fast_rate) * 8);
-> +	icc_set_bw(icc_path, 0, Bps_to_icc(gpu->fast_rate) * 8);
-> +	icc_set_bw(ocmem_icc_path, 0, Bps_to_icc(gpu->fast_rate) * 8);
-
-This seems reasonable but I hope we can get somebody to sign off on a real a3xx
-part.
-
->  
->  	return gpu;
->  
-> diff --git a/drivers/gpu/drm/msm/adreno/a4xx_gpu.c b/drivers/gpu/drm/msm/adreno/a4xx_gpu.c
-> index 2b93b33..c0be3a0 100644
-> --- a/drivers/gpu/drm/msm/adreno/a4xx_gpu.c
-> +++ b/drivers/gpu/drm/msm/adreno/a4xx_gpu.c
-> @@ -648,6 +648,8 @@ struct msm_gpu *a4xx_gpu_init(struct drm_device *dev)
->  	struct msm_gpu *gpu;
->  	struct msm_drm_private *priv = dev->dev_private;
->  	struct platform_device *pdev = priv->gpu_pdev;
-> +	struct icc_path *ocmem_icc_path;
-> +	struct icc_path *icc_path;
->  	int ret;
->  
->  	if (!pdev) {
-> @@ -694,13 +696,27 @@ struct msm_gpu *a4xx_gpu_init(struct drm_device *dev)
->  		goto fail;
->  	}
->  
-> +	icc_path = devm_of_icc_get(&pdev->dev, "gfx-mem");
-> +	ret = IS_ERR(icc_path);
-> +	if (ret)
-> +		goto fail;
-> +
-> +	ocmem_icc_path = devm_of_icc_get(&pdev->dev, "ocmem");
-> +	ret = IS_ERR(ocmem_icc_path);
-> +	if (ret) {
-> +		/* allow -ENODATA, ocmem icc is optional */
-> +		if (ret != -ENODATA)
-> +			goto fail;
-> +		ocmem_icc_path = NULL;
-> +	}
-> +
->  	/*
->  	 * Set the ICC path to maximum speed for now by multiplying the fastest
->  	 * frequency by the bus width (8). We'll want to scale this later on to
->  	 * improve battery life.
->  	 */
-> -	icc_set_bw(gpu->icc_path, 0, Bps_to_icc(gpu->fast_rate) * 8);
-> -	icc_set_bw(gpu->ocmem_icc_path, 0, Bps_to_icc(gpu->fast_rate) * 8);
-> +	icc_set_bw(icc_path, 0, Bps_to_icc(gpu->fast_rate) * 8);
-> +	icc_set_bw(ocmem_icc_path, 0, Bps_to_icc(gpu->fast_rate) * 8);
-
-Less confident we can find any 4xx fans to test this, but if a3xx works then so
-should this (in theory).
-
->  	return gpu;
->  
-> diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.c b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
-> index fd8f491..6e3b820 100644
-> --- a/drivers/gpu/drm/msm/adreno/adreno_gpu.c
-> +++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
-> @@ -920,35 +920,8 @@ int adreno_gpu_init(struct drm_device *drm, struct platform_device *pdev,
->  
->  	ret = msm_gpu_init(drm, pdev, &adreno_gpu->base, &funcs->base,
->  			adreno_gpu->info->name, &adreno_gpu_config);
-> -	if (ret)
-> -		return ret;
-> -
-> -	/*
-> -	 * The legacy case, before "interconnect-names", only has a
-> -	 * single interconnect path which is equivalent to "gfx-mem"
-> -	 */
-> -	if (!of_find_property(dev->of_node, "interconnect-names", NULL)) {
-> -		gpu->icc_path = of_icc_get(dev, NULL);
-> -	} else {
-> -		gpu->icc_path = of_icc_get(dev, "gfx-mem");
-> -		gpu->ocmem_icc_path = of_icc_get(dev, "ocmem");
-> -	}
->  
-> -	if (IS_ERR(gpu->icc_path)) {
-> -		ret = PTR_ERR(gpu->icc_path);
-> -		gpu->icc_path = NULL;
-> -		return ret;
-> -	}
-> -
-> -	if (IS_ERR(gpu->ocmem_icc_path)) {
-> -		ret = PTR_ERR(gpu->ocmem_icc_path);
-> -		gpu->ocmem_icc_path = NULL;
-> -		/* allow -ENODATA, ocmem icc is optional */
-> -		if (ret != -ENODATA)
-> -			return ret;
-> -	}
-> -
-> -	return 0;
-> +	return ret;
-
-This could go even further:
-
-return msm_gpu_init(...);
-
->  }
->  
->  void adreno_gpu_cleanup(struct adreno_gpu *adreno_gpu)
-> -- 
-> 2.7.4
+> FWIW I don't think you actually need to adjust the count here - the SMR
+> being valid should already prevent the whole SME from being reassigned until
+> the display probes, at which point it should "take over" the SMR based on
+> matching values and claim the "initial" refcount. After that you're back
+> into the standard flow. It might be a little unintuitive to have something
+> in a valid but "unused" state, but arguably it's entirely accurate in terms
+> of the software abstraction here.
+> 
+> Otherwise, you end up making boot-time SMRs - so potentially all SMRs after
+> a kexec - effectively immutable, since even after Linux has taken control of
+> the whole system such that they *could* be reassigned safely, there's still
+> this undroppable refcount hanging around preventing it.
 > 
 
--- 
-The Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum,
-a Linux Foundation Collaborative Project
+I did increment the count here to make sure the stream mapping do
+survive a probe deferral of the display controller (which is rather
+common when you have some bridge chip hanging off it).
+
+But after digging through the code further I've convinced myself that
+the sme won't be freed while the device is pending probe deferral.
+
+So I will drop this.
+
+> That said, for a mobile SoC use-case if you have enough SMRs for all your
+> stream IDs and don't have any kind of device hotplug, that restriction
+> shouldn't make much difference in practice, so I'm not too concerned either
+> way. Otherwise this is as nice and tidy as I'd hoped :)
+
+I agree, I'm quite happy with where we are now!
+
+Thanks,
+Bjorn
+
+> 
+> Robin.
+> 
+> > +		}
+> > +	}
+> > +
+> > +	return 0;
+> > +}
+> > +
+> >   static int qcom_smmu_def_domain_type(struct device *dev)
+> >   {
+> >   	const struct of_device_id *match =
+> > @@ -61,6 +84,7 @@ static int qcom_smmu500_reset(struct arm_smmu_device *smmu)
+> >   }
+> >   static const struct arm_smmu_impl qcom_smmu_impl = {
+> > +	.cfg_probe = qcom_smmu_cfg_probe,
+> >   	.def_domain_type = qcom_smmu_def_domain_type,
+> >   	.reset = qcom_smmu500_reset,
+> >   };
+> > 
