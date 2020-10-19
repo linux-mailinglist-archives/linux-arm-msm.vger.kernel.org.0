@@ -2,194 +2,110 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C65E9292950
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Oct 2020 16:29:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 640CC2929BD
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Oct 2020 16:49:31 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728859AbgJSO3Q (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 19 Oct 2020 10:29:16 -0400
-Received: from alexa-out.qualcomm.com ([129.46.98.28]:60139 "EHLO
-        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728311AbgJSO3Q (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 19 Oct 2020 10:29:16 -0400
-Received: from ironmsg09-lv.qualcomm.com ([10.47.202.153])
-  by alexa-out.qualcomm.com with ESMTP; 19 Oct 2020 07:29:16 -0700
-X-QCInternal: smtphost
-Received: from ironmsg02-blr.qualcomm.com ([10.86.208.131])
-  by ironmsg09-lv.qualcomm.com with ESMTP/TLS/AES256-SHA; 19 Oct 2020 07:29:14 -0700
-X-QCInternal: smtphost
-Received: from dikshita-linux.qualcomm.com ([10.204.65.237])
-  by ironmsg02-blr.qualcomm.com with ESMTP; 19 Oct 2020 19:59:00 +0530
-Received: by dikshita-linux.qualcomm.com (Postfix, from userid 347544)
-        id 5492F52E7; Mon, 19 Oct 2020 19:58:59 +0530 (IST)
-From:   Dikshita Agarwal <dikshita@codeaurora.org>
-To:     linux-media@vger.kernel.org, stanimir.varbanov@linaro.org
-Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        vgarodia@codeaurora.org, Dikshita Agarwal <dikshita@codeaurora.org>
-Subject: [PATCH] venus: venc: add handling for VIDIOC_ENCODER_CMD
-Date:   Mon, 19 Oct 2020 19:58:57 +0530
-Message-Id: <1603117737-16965-1-git-send-email-dikshita@codeaurora.org>
-X-Mailer: git-send-email 1.9.1
+        id S1729546AbgJSOt3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 19 Oct 2020 10:49:29 -0400
+Received: from m42-4.mailgun.net ([69.72.42.4]:33813 "EHLO m42-4.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1729657AbgJSOt2 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 19 Oct 2020 10:49:28 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1603118968; h=In-Reply-To: Content-Type: MIME-Version:
+ References: Message-ID: Subject: Cc: To: From: Date: Sender;
+ bh=SdjfHLMdpVTBMrEL+U0iqbpL1vfRm8mz6fh4D3U3ygg=; b=HHJoWn6wNcJ+lfnSbfxIgO9sa0TZL7+6EGpUYro/1o/9f5W++FjsTV4KXQi4afzsBga+RClf
+ dROq+7WOH1WSdm14qSmSqPNZzDjQmNpQNeQ0bZinKAek2m31u1pkMCvr551AuGYT4lwDrXws
+ 8BxT8Oe4NsBvLiJoynJBUmZlNSo=
+X-Mailgun-Sending-Ip: 69.72.42.4
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n06.prod.us-west-2.postgun.com with SMTP id
+ 5f8da772a03b63d6738ee115 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 19 Oct 2020 14:49:22
+ GMT
+Sender: jcrouse=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id C4B1BC43382; Mon, 19 Oct 2020 14:49:22 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
+        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+Received: from jcrouse1-lnx.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: jcrouse)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 62E40C433CB;
+        Mon, 19 Oct 2020 14:49:20 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 62E40C433CB
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=jcrouse@codeaurora.org
+Date:   Mon, 19 Oct 2020 08:49:17 -0600
+From:   Jordan Crouse <jcrouse@codeaurora.org>
+To:     Tian Tao <tiantao6@hisilicon.com>
+Cc:     robdclark@gmail.com, sean@poorly.run, airlied@linux.ie,
+        daniel@ffwll.ch, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [Freedreno] [PATCH] drm/msm: Remove redundant null check
+Message-ID: <20201019144917.GA31882@jcrouse1-lnx.qualcomm.com>
+Mail-Followup-To: Tian Tao <tiantao6@hisilicon.com>, robdclark@gmail.com,
+        sean@poorly.run, airlied@linux.ie, daniel@ffwll.ch,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
+References: <1603087462-37505-1-git-send-email-tiantao6@hisilicon.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1603087462-37505-1-git-send-email-tiantao6@hisilicon.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add handling for below commands in encoder:
-1. V4L2_ENC_CMD_STOP
-2. V4L2_ENC_CMD_START
+On Mon, Oct 19, 2020 at 02:04:22PM +0800, Tian Tao wrote:
+> clk_prepare_enable() and clk_disable_unprepare() will check
+> NULL clock parameter, so It is not necessary to add additional checks.
 
-Signed-off-by: Dikshita Agarwal <dikshita@codeaurora.org>
----
- drivers/media/platform/qcom/venus/core.h |  9 +++++
- drivers/media/platform/qcom/venus/venc.c | 64 +++++++++++++++++++++++++++++++-
- 2 files changed, 72 insertions(+), 1 deletion(-)
+Reviewed-by: Jordan Crouse <jcrouse@codeaurora.org>
 
-diff --git a/drivers/media/platform/qcom/venus/core.h b/drivers/media/platform/qcom/venus/core.h
-index e30eeaf..5c46936 100644
---- a/drivers/media/platform/qcom/venus/core.h
-+++ b/drivers/media/platform/qcom/venus/core.h
-@@ -276,6 +276,14 @@ enum venus_dec_state {
- 	VENUS_DEC_STATE_DRC		= 7,
- };
- 
-+enum venus_enc_state {
-+	VENUS_ENC_STATE_DEINIT		= 0,
-+	VENUS_ENC_STATE_INIT		= 1,
-+	VENUS_ENC_STATE_ENCODING	= 2,
-+	VENUS_ENC_STATE_STOPPED		= 3,
-+	VENUS_ENC_STATE_DRAIN		= 4,
-+};
-+
- struct venus_ts_metadata {
- 	bool used;
- 	u64 ts_ns;
-@@ -367,6 +375,7 @@ struct venus_inst {
- 	u8 quantization;
- 	u8 xfer_func;
- 	enum venus_dec_state codec_state;
-+	enum venus_enc_state enc_state;
- 	wait_queue_head_t reconf_wait;
- 	unsigned int subscriptions;
- 	int buf_count;
-diff --git a/drivers/media/platform/qcom/venus/venc.c b/drivers/media/platform/qcom/venus/venc.c
-index f7fb6e3..c6143b0 100644
---- a/drivers/media/platform/qcom/venus/venc.c
-+++ b/drivers/media/platform/qcom/venus/venc.c
-@@ -498,6 +498,46 @@ static int venc_enum_frameintervals(struct file *file, void *fh,
- 	return 0;
- }
- 
-+static int
-+venc_encoder_cmd(struct file *file, void *fh, struct v4l2_encoder_cmd *cmd)
-+{
-+	struct venus_inst *inst = to_inst(file);
-+	struct hfi_frame_data fdata = {0};
-+	int ret = 0;
-+
-+	ret = v4l2_m2m_ioctl_try_encoder_cmd(file, fh, cmd);
-+	if (ret)
-+		return ret;
-+
-+	mutex_lock(&inst->lock);
-+
-+	if (cmd->cmd == V4L2_ENC_CMD_STOP &&
-+	    inst->enc_state == VENUS_ENC_STATE_ENCODING) {
-+		/*
-+		 * Implement V4L2_ENC_CMD_STOP by enqueue an empty buffer on
-+		 * encoder input to signal EOS.
-+		 */
-+		if (!(inst->streamon_out && inst->streamon_cap))
-+			goto unlock;
-+
-+		fdata.buffer_type = HFI_BUFFER_INPUT;
-+		fdata.flags |= HFI_BUFFERFLAG_EOS;
-+		fdata.device_addr = 0xdeadb000;
-+
-+		ret = hfi_session_process_buf(inst, &fdata);
-+
-+		inst->enc_state = VENUS_ENC_STATE_DRAIN;
-+	} else if (cmd->cmd == V4L2_ENC_CMD_START &&
-+		inst->enc_state == VENUS_ENC_STATE_STOPPED) {
-+		vb2_clear_last_buffer_dequeued(&inst->fh.m2m_ctx->cap_q_ctx.q);
-+		inst->enc_state = VENUS_ENC_STATE_ENCODING;
-+	}
-+
-+unlock:
-+	mutex_unlock(&inst->lock);
-+	return ret;
-+}
-+
- static const struct v4l2_ioctl_ops venc_ioctl_ops = {
- 	.vidioc_querycap = venc_querycap,
- 	.vidioc_enum_fmt_vid_cap = venc_enum_fmt,
-@@ -525,6 +565,7 @@ static int venc_enum_frameintervals(struct file *file, void *fh,
- 	.vidioc_enum_frameintervals = venc_enum_frameintervals,
- 	.vidioc_subscribe_event = v4l2_ctrl_subscribe_event,
- 	.vidioc_unsubscribe_event = v4l2_event_unsubscribe,
-+	.vidioc_encoder_cmd = venc_encoder_cmd,
- };
- 
- static int venc_set_properties(struct venus_inst *inst)
-@@ -884,6 +925,8 @@ static int venc_start_streaming(struct vb2_queue *q, unsigned int count)
- 	if (ret)
- 		goto deinit_sess;
- 
-+	inst->enc_state = VENUS_ENC_STATE_ENCODING;
-+
- 	mutex_unlock(&inst->lock);
- 
- 	return 0;
-@@ -903,8 +946,19 @@ static int venc_start_streaming(struct vb2_queue *q, unsigned int count)
- static void venc_vb2_buf_queue(struct vb2_buffer *vb)
- {
- 	struct venus_inst *inst = vb2_get_drv_priv(vb->vb2_queue);
-+	struct vb2_v4l2_buffer *vbuf = to_vb2_v4l2_buffer(vb);
- 
- 	mutex_lock(&inst->lock);
-+
-+	if (inst->enc_state == VENUS_ENC_STATE_STOPPED) {
-+		vbuf->sequence = inst->sequence_cap++;
-+		vbuf->field = V4L2_FIELD_NONE;
-+		vb2_set_plane_payload(vb, 0, 0);
-+		v4l2_m2m_buf_done(vbuf, VB2_BUF_STATE_DONE);
-+		mutex_unlock(&inst->lock);
-+		return;
-+	}
-+
- 	venus_helper_vb2_buf_queue(vb);
- 	mutex_unlock(&inst->lock);
- }
-@@ -943,6 +997,11 @@ static void venc_buf_done(struct venus_inst *inst, unsigned int buf_type,
- 		vb->planes[0].data_offset = data_offset;
- 		vb->timestamp = timestamp_us * NSEC_PER_USEC;
- 		vbuf->sequence = inst->sequence_cap++;
-+
-+		if ((vbuf->flags & V4L2_BUF_FLAG_LAST) &&
-+		    inst->enc_state == VENUS_ENC_STATE_DRAIN) {
-+			inst->enc_state = VENUS_ENC_STATE_STOPPED;
-+		}
- 	} else {
- 		vbuf->sequence = inst->sequence_out++;
- 	}
-@@ -1041,6 +1100,9 @@ static int venc_open(struct file *file)
- 	inst->clk_data.core_id = VIDC_CORE_ID_DEFAULT;
- 	inst->core_acquired = false;
- 
-+	if (inst->enc_state == VENUS_ENC_STATE_DEINIT)
-+		inst->enc_state = VENUS_ENC_STATE_INIT;
-+
- 	venus_helper_init_instance(inst);
- 
- 	ret = pm_runtime_get_sync(core->dev_enc);
-@@ -1105,7 +1167,7 @@ static int venc_close(struct file *file)
- 	mutex_destroy(&inst->lock);
- 	v4l2_fh_del(&inst->fh);
- 	v4l2_fh_exit(&inst->fh);
--
-+	inst->enc_state = VENUS_ENC_STATE_DEINIT;
- 	pm_runtime_put_sync(inst->core->dev_enc);
- 
- 	kfree(inst);
+> Signed-off-by: Tian Tao <tiantao6@hisilicon.com>
+> ---
+>  drivers/gpu/drm/msm/msm_gpu.c | 7 ++-----
+>  1 file changed, 2 insertions(+), 5 deletions(-)
+> 
+> diff --git a/drivers/gpu/drm/msm/msm_gpu.c b/drivers/gpu/drm/msm/msm_gpu.c
+> index 57ddc94..25bc654 100644
+> --- a/drivers/gpu/drm/msm/msm_gpu.c
+> +++ b/drivers/gpu/drm/msm/msm_gpu.c
+> @@ -175,15 +175,12 @@ static int disable_clk(struct msm_gpu *gpu)
+>  
+>  static int enable_axi(struct msm_gpu *gpu)
+>  {
+> -	if (gpu->ebi1_clk)
+> -		clk_prepare_enable(gpu->ebi1_clk);
+> -	return 0;
+> +	return clk_prepare_enable(gpu->ebi1_clk);
+>  }
+>  
+>  static int disable_axi(struct msm_gpu *gpu)
+>  {
+> -	if (gpu->ebi1_clk)
+> -		clk_disable_unprepare(gpu->ebi1_clk);
+> +	clk_disable_unprepare(gpu->ebi1_clk);
+>  	return 0;
+>  }
+>  
+> -- 
+> 2.7.4
+> 
+> _______________________________________________
+> Freedreno mailing list
+> Freedreno@lists.freedesktop.org
+> https://lists.freedesktop.org/mailman/listinfo/freedreno
+
 -- 
-1.9.1
-
+The Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum,
+a Linux Foundation Collaborative Project
