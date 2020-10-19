@@ -2,68 +2,106 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 69A4C29306C
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Oct 2020 23:23:26 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D23E22930A3
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Oct 2020 23:37:59 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732880AbgJSVXZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 19 Oct 2020 17:23:25 -0400
-Received: from mail-ot1-f65.google.com ([209.85.210.65]:44399 "EHLO
-        mail-ot1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726431AbgJSVXZ (ORCPT
+        id S1733258AbgJSVh6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 19 Oct 2020 17:37:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52514 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729382AbgJSVh6 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 19 Oct 2020 17:23:25 -0400
-Received: by mail-ot1-f65.google.com with SMTP id e20so1148065otj.11;
-        Mon, 19 Oct 2020 14:23:23 -0700 (PDT)
+        Mon, 19 Oct 2020 17:37:58 -0400
+Received: from mail-ua1-x930.google.com (mail-ua1-x930.google.com [IPv6:2607:f8b0:4864:20::930])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 10CF7C0613CE
+        for <linux-arm-msm@vger.kernel.org>; Mon, 19 Oct 2020 14:37:58 -0700 (PDT)
+Received: by mail-ua1-x930.google.com with SMTP id r9so320813uat.12
+        for <linux-arm-msm@vger.kernel.org>; Mon, 19 Oct 2020 14:37:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=yBOWxB2321K0nviHMosmjzEKA9rYfYXfMrodT0hpf7A=;
+        b=DSvw3cb/VokO0aHUeNw3leP/1Ajp6UPkFWHOZmkt7PkJmlaOQq75XG0CmzehL7Ir3b
+         3fnO9XoEQ/d5zVW+ucrBTZDBw0H6yoBqF08Lvheyk2VrUgvCWYj1EN+u0CUiP0rZ7NK7
+         UJu1zuQy/Vixd+KRWgq3tnhuRv/QA1LAa5YFw=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=0dU5/9mAkqLpmCuExt9yVKc4c7IiOnGr081wApHauuY=;
-        b=VRdNfgPt6iMvE/zzruNtdjS1MBpTZQfqhTxOYzPXf2m43Rk08wYqFwGKH/bVQg+q/Z
-         4JzzErqAc24IIuI1JmovqbZHz8cmwkd2BInCg3KLt3UdRin6ohpUMynDGoRZKlbU93ug
-         jiB6q9ry4D9oMstL7QksTINxHLQD/9qd6M1OkmADva4hfbWPJIzYWeDL0I5EQafgjQVS
-         fP521391IZEUCwzeMsbanqFRQmdVmuuTzZv/CkOVLBPRH7Pe0iNi8IT0IVFAYqvgExI5
-         Y3y7L+MPpdUPXLBQ5oaj6A/PNNgffmHFCuPTt0OniVnID6QXatRsLFS2pfWsf6jA7YaI
-         QGzA==
-X-Gm-Message-State: AOAM530kpj9McigBlQyk8/gTpzvMCHFyImRG7WrzaFc57DpevOuvaWB2
-        24MVPnmVAEg//31zVT8/78XS3xpzLg==
-X-Google-Smtp-Source: ABdhPJxYl1vReA8dUaqNDNYPJWIfCXfUMV3QZUzoWpmgQYzc2efPZF05Pf7n+kTrhuiYQwjD7hCwQQ==
-X-Received: by 2002:a05:6830:144c:: with SMTP id w12mr1379789otp.197.1603142603468;
-        Mon, 19 Oct 2020 14:23:23 -0700 (PDT)
-Received: from xps15 (24-155-109-49.dyn.grandenetworks.net. [24.155.109.49])
-        by smtp.gmail.com with ESMTPSA id u26sm277048oic.12.2020.10.19.14.23.22
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 19 Oct 2020 14:23:22 -0700 (PDT)
-Received: (nullmailer pid 3625482 invoked by uid 1000);
-        Mon, 19 Oct 2020 21:23:21 -0000
-Date:   Mon, 19 Oct 2020 16:23:21 -0500
-From:   Rob Herring <robh@kernel.org>
-To:     Rajendra Nayak <rnayak@codeaurora.org>
-Cc:     linux-kernel@vger.kernel.org, robh+dt@kernel.org,
-        linux-gpio@vger.kernel.org, devicetree@vger.kernel.org,
-        agross@kernel.org, linus.walleij@linaro.org,
-        bjorn.andersson@linaro.org, linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH 1/2] dt-bindings: pinctrl: qcom: Add sc7280 pinctrl
- bindings
-Message-ID: <20201019212321.GA3625429@bogus>
-References: <1602831532-24818-1-git-send-email-rnayak@codeaurora.org>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=yBOWxB2321K0nviHMosmjzEKA9rYfYXfMrodT0hpf7A=;
+        b=jCirKyqiHSasnpUyc1HF6xgoHeKONry7s/jBjpoTlsIxgVUy+r5TdTGkwe6YCwMXfR
+         mN4/hDBydXR4+Q+hOtl3zAgDaGLP76bp5pLQejqPGcePqLd0B0YL2OIA0t9uS2t4W5GS
+         M6PlFn/4pQXQqdza/Ay7MsARzMtJvytn5Yr/raIE2nRhxcvCi/W9w4L89neX2tMawjSn
+         rrZvk2KMmWQ4xGOR1X7yMyYjBm1M6fN2G+zD4AIonyATr01xsyRrm4bzNMlyj3NzrncN
+         2EWu7HFZJ/l2OiMT+X58eDxkzOV6btbTsPLxWk6CzPSVg9Y/TWG3GwWdYS2CFapYjRBO
+         UgoQ==
+X-Gm-Message-State: AOAM533kfolBu2ZwsaXhfKb1MSpVgFlMl4uacMO8NxNRXne+Ld8hKsp3
+        hSdXQDyIK9BUJhvAvQIYXpa3UlotpwoSCF5FYUm2Bg==
+X-Google-Smtp-Source: ABdhPJxOSKFLv6FUdXvwo9Kzlug/3CyRyn12FMtJvyIOznMU9zUml0fNKS/R9+hCxpT/QIBkONVN6WCtnRSRfNkvGrg=
+X-Received: by 2002:ab0:907:: with SMTP id w7mr967440uag.100.1603143476645;
+ Mon, 19 Oct 2020 14:37:56 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1602831532-24818-1-git-send-email-rnayak@codeaurora.org>
+References: <b74ea9cb201bb98691ecbfb3893d2a49@codeaurora.org>
+In-Reply-To: <b74ea9cb201bb98691ecbfb3893d2a49@codeaurora.org>
+From:   Abhishek Pandit-Subedi <abhishekpandit@chromium.org>
+Date:   Mon, 19 Oct 2020 14:37:44 -0700
+Message-ID: <CANFp7mXMfvHrAcaJhY7q2oZk3MtqOMxLGOEpNc-hnzVSyA+LZA@mail.gmail.com>
+Subject: Re: Update WCN3991 FW file
+To:     asitshah@codeaurora.org
+Cc:     linux-firmware@kernel.org, jwboyer@kernel.org,
+        Matthias Kaehlcke <mka@chromium.org>,
+        LKML <linux-kernel@vger.kernel.org>,
+        Bluez mailing list <linux-bluetooth@vger.kernel.org>,
+        linux-arm-msm@vger.kernel.org, Hemantg <hemantg@codeaurora.org>,
+        Venkata Lakshmi Narayana Gubba <gubbaven@codeaurora.org>,
+        Balakrishna Godavarthi <bgodavar@codeaurora.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, 16 Oct 2020 12:28:51 +0530, Rajendra Nayak wrote:
-> Add device tree binding Documentation details for Qualcomm SC7280
-> TLMM block.
-> 
-> Signed-off-by: Rajendra Nayak <rnayak@codeaurora.org>
-> ---
->  .../bindings/pinctrl/qcom,sc7280-pinctrl.yaml      | 170 +++++++++++++++++++++
->  1 file changed, 170 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/pinctrl/qcom,sc7280-pinctrl.yaml
-> 
+Nack.
 
-Reviewed-by: Rob Herring <robh@kernel.org>
+This resulted in a boot loop on ChromeOS. It looks like only
+'crbtfw32.tlv' was changed and not 'crnv32.bin'.
+
+Abhishek
+
+On Sat, Oct 17, 2020 at 8:33 AM <asitshah@codeaurora.org> wrote:
+>
+>
+> Hi Team,
+>
+> Please include updated firmware bin for WCN3991.
+>
+> Snapshot of pull request is as below, let me know if anything is
+> missing.
+>
+> >>>>>
+>
+> The following changes since commit
+> 58d41d0facca2478d3e45f6321224361519aee96:
+>
+>    ice: Add comms package file for Intel E800 series driver (2020-10-05
+> 08:09:03 -0400)
+>
+> are available in the git repository at:
+>
+>    https://github.com/shahasit/bt-linux-firmware/tree/master
+>
+> for you to fetch changes up to 8877322c1254f327f47c86ec02c46013b68b9a47:
+>
+>    QCA : Updated firmware file for WCN3991 (2020-10-17 20:53:36 +0530)
+>
+> ----------------------------------------------------------------
+> Asit Shah (1):
+>        QCA : Updated firmware file for WCN3991
+>
+>   qca/crbtfw32.tlv | Bin 126300 -> 126832 bytes
+>   1 file changed, 0 insertions(+), 0 deletions(-)
+>
+> <<<<<<
+>
+> Regards,
+> Asit
