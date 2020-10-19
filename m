@@ -2,106 +2,59 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D23E22930A3
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Oct 2020 23:37:59 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DBCB1293158
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Oct 2020 00:38:45 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1733258AbgJSVh6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 19 Oct 2020 17:37:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52514 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729382AbgJSVh6 (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 19 Oct 2020 17:37:58 -0400
-Received: from mail-ua1-x930.google.com (mail-ua1-x930.google.com [IPv6:2607:f8b0:4864:20::930])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 10CF7C0613CE
-        for <linux-arm-msm@vger.kernel.org>; Mon, 19 Oct 2020 14:37:58 -0700 (PDT)
-Received: by mail-ua1-x930.google.com with SMTP id r9so320813uat.12
-        for <linux-arm-msm@vger.kernel.org>; Mon, 19 Oct 2020 14:37:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=yBOWxB2321K0nviHMosmjzEKA9rYfYXfMrodT0hpf7A=;
-        b=DSvw3cb/VokO0aHUeNw3leP/1Ajp6UPkFWHOZmkt7PkJmlaOQq75XG0CmzehL7Ir3b
-         3fnO9XoEQ/d5zVW+ucrBTZDBw0H6yoBqF08Lvheyk2VrUgvCWYj1EN+u0CUiP0rZ7NK7
-         UJu1zuQy/Vixd+KRWgq3tnhuRv/QA1LAa5YFw=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=yBOWxB2321K0nviHMosmjzEKA9rYfYXfMrodT0hpf7A=;
-        b=jCirKyqiHSasnpUyc1HF6xgoHeKONry7s/jBjpoTlsIxgVUy+r5TdTGkwe6YCwMXfR
-         mN4/hDBydXR4+Q+hOtl3zAgDaGLP76bp5pLQejqPGcePqLd0B0YL2OIA0t9uS2t4W5GS
-         M6PlFn/4pQXQqdza/Ay7MsARzMtJvytn5Yr/raIE2nRhxcvCi/W9w4L89neX2tMawjSn
-         rrZvk2KMmWQ4xGOR1X7yMyYjBm1M6fN2G+zD4AIonyATr01xsyRrm4bzNMlyj3NzrncN
-         2EWu7HFZJ/l2OiMT+X58eDxkzOV6btbTsPLxWk6CzPSVg9Y/TWG3GwWdYS2CFapYjRBO
-         UgoQ==
-X-Gm-Message-State: AOAM533kfolBu2ZwsaXhfKb1MSpVgFlMl4uacMO8NxNRXne+Ld8hKsp3
-        hSdXQDyIK9BUJhvAvQIYXpa3UlotpwoSCF5FYUm2Bg==
-X-Google-Smtp-Source: ABdhPJxOSKFLv6FUdXvwo9Kzlug/3CyRyn12FMtJvyIOznMU9zUml0fNKS/R9+hCxpT/QIBkONVN6WCtnRSRfNkvGrg=
-X-Received: by 2002:ab0:907:: with SMTP id w7mr967440uag.100.1603143476645;
- Mon, 19 Oct 2020 14:37:56 -0700 (PDT)
+        id S2388252AbgJSWim (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 19 Oct 2020 18:38:42 -0400
+Received: from mail.kernel.org ([198.145.29.99]:41996 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S2388245AbgJSWim (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 19 Oct 2020 18:38:42 -0400
+Received: from kernel.org (unknown [104.132.1.79])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id 1677A222EA;
+        Mon, 19 Oct 2020 22:38:41 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1603147122;
+        bh=8W/h5XEBWGQWtqsEZjw4lr98DMheeA7pOXZm//R6+tw=;
+        h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
+        b=O5PgNIbcntSL3cPa/SbkQneWQkCNiYnuyux7NJFY+9T2Sgm7j/u0GgqnLy/GoDR1h
+         Qc56wI7V+ZxkaUa5s6VoC4E9WNebcLpeM5UX0oIR9Vx3orvObgx/0JwwZMfKIEndJU
+         66VsjjSXYRYYdIezoXBNEBD9P4GTA+WcPdFEsBi4=
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-References: <b74ea9cb201bb98691ecbfb3893d2a49@codeaurora.org>
-In-Reply-To: <b74ea9cb201bb98691ecbfb3893d2a49@codeaurora.org>
-From:   Abhishek Pandit-Subedi <abhishekpandit@chromium.org>
-Date:   Mon, 19 Oct 2020 14:37:44 -0700
-Message-ID: <CANFp7mXMfvHrAcaJhY7q2oZk3MtqOMxLGOEpNc-hnzVSyA+LZA@mail.gmail.com>
-Subject: Re: Update WCN3991 FW file
-To:     asitshah@codeaurora.org
-Cc:     linux-firmware@kernel.org, jwboyer@kernel.org,
-        Matthias Kaehlcke <mka@chromium.org>,
-        LKML <linux-kernel@vger.kernel.org>,
-        Bluez mailing list <linux-bluetooth@vger.kernel.org>,
-        linux-arm-msm@vger.kernel.org, Hemantg <hemantg@codeaurora.org>,
-        Venkata Lakshmi Narayana Gubba <gubbaven@codeaurora.org>,
-        Balakrishna Godavarthi <bgodavar@codeaurora.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <CAD=FV=WAVoZ59p51HxBwBNXsXcirRbUAjeGuZ4T9G-O7Tvzqfw@mail.gmail.com>
+References: <20201014171259.v4.1.I4567b5e7e17bbb15ef063d447cb83fd43746cb18@changeid> <20201014171259.v4.3.Id0cc5d859e2422082a29a7909658932c857f5a81@changeid> <160281818774.884498.11509417433655580732@swboyd.mtv.corp.google.com> <160290009516.884498.11234055455838582432@swboyd.mtv.corp.google.com> <CAD=FV=WAVoZ59p51HxBwBNXsXcirRbUAjeGuZ4T9G-O7Tvzqfw@mail.gmail.com>
+Subject: Re: [PATCH v4 3/3] clk: qcom: lpasscc-sc7180: Re-configure the PLL in case lost
+From:   Stephen Boyd <sboyd@kernel.org>
+Cc:     Taniya Das <tdas@codeaurora.org>,
+        David Brown <david.brown@linaro.org>, open list:
+        ARM/QUALCOMM SUPPORT <linux-soc@vger.kernel.org>,
+        Rajendra Nayak <rnayak@codeaurora.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        linux-clk <linux-clk@vger.kernel.org>,
+        LKML <linux-kernel@vger.kernel.org>, ;
+Illegal-Object: Syntax error in Cc: address found on vger.kernel.org:
+        Cc:     ;
+                        ^-missing semicolon to end mail group, extraneous tokens in mailbox, missing end of mailbox
+To:     Doug Anderson <dianders@chromium.org>
+Date:   Mon, 19 Oct 2020 15:38:38 -0700
+Message-ID: <160314711876.884498.2451675615619114259@swboyd.mtv.corp.google.com>
+User-Agent: alot/0.9.1
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Nack.
+Quoting Doug Anderson (2020-10-16 20:17:56)
+>=20
+> I'm happy to repost a v5 of just patches #1 and #2 with the newlines
+> fixed next week, or I'm happy if you want to fix them when applying as
+> you alluded to on the Chrome OS gerrit.=20
 
-This resulted in a boot loop on ChromeOS. It looks like only
-'crbtfw32.tlv' was changed and not 'crnv32.bin'.
-
-Abhishek
-
-On Sat, Oct 17, 2020 at 8:33 AM <asitshah@codeaurora.org> wrote:
->
->
-> Hi Team,
->
-> Please include updated firmware bin for WCN3991.
->
-> Snapshot of pull request is as below, let me know if anything is
-> missing.
->
-> >>>>>
->
-> The following changes since commit
-> 58d41d0facca2478d3e45f6321224361519aee96:
->
->    ice: Add comms package file for Intel E800 series driver (2020-10-05
-> 08:09:03 -0400)
->
-> are available in the git repository at:
->
->    https://github.com/shahasit/bt-linux-firmware/tree/master
->
-> for you to fetch changes up to 8877322c1254f327f47c86ec02c46013b68b9a47:
->
->    QCA : Updated firmware file for WCN3991 (2020-10-17 20:53:36 +0530)
->
-> ----------------------------------------------------------------
-> Asit Shah (1):
->        QCA : Updated firmware file for WCN3991
->
->   qca/crbtfw32.tlv | Bin 126300 -> 126832 bytes
->   1 file changed, 0 insertions(+), 0 deletions(-)
->
-> <<<<<<
->
-> Regards,
-> Asit
+Please resend. Thanks!
