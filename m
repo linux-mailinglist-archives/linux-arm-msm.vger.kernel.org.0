@@ -2,242 +2,247 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A2FFA292C25
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Oct 2020 19:03:14 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 804E4292D64
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Oct 2020 20:17:33 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731033AbgJSRDJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 19 Oct 2020 13:03:09 -0400
-Received: from z5.mailgun.us ([104.130.96.5]:64547 "EHLO z5.mailgun.us"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1730960AbgJSRCy (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 19 Oct 2020 13:02:54 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1603126973; h=In-Reply-To: Content-Type: MIME-Version:
- References: Message-ID: Subject: Cc: To: From: Date: Sender;
- bh=8WVUccvsuGqobC7sizXcfJibyZstlxraIcj+nPeINOg=; b=hob5AjyY5IuIVTyAtl/pP9GxLhpW7KUN7TdA4De+MrnZ7EeCxMUQ9PF8wG+PVF/IL3it41x3
- LmR3/+ZLPm2KCnuWa2jAP7Bj7O3VsIcAb8uFr2D7rzGU1riP36KCqu6WE8eN0pxCs1duj4pS
- 3CIpBA4RUWDrg2vv9PWUNy48qfc=
-X-Mailgun-Sending-Ip: 104.130.96.5
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n07.prod.us-west-2.postgun.com with SMTP id
- 5f8dc699ad37af35ec760af3 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 19 Oct 2020 17:02:17
- GMT
-Sender: ilina=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id C4ABDC433F1; Mon, 19 Oct 2020 17:02:17 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
-        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
-Received: from localhost (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: ilina)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 57B66C433CB;
-        Mon, 19 Oct 2020 17:02:16 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 57B66C433CB
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=ilina@codeaurora.org
-Date:   Mon, 19 Oct 2020 11:02:15 -0600
-From:   Lina Iyer <ilina@codeaurora.org>
-To:     "Rafael J. Wysocki" <rafael@kernel.org>
-Cc:     Ulf Hansson <ulf.hansson@linaro.org>,
-        "Rafael J. Wysocki" <rjw@rjwysocki.net>,
-        Linux PM <linux-pm@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>
-Subject: Re: [PATCH v3 1/2] PM / runtime: inform runtime PM of a device's
- next wakeup
-Message-ID: <20201019170215.GE16756@codeaurora.org>
-References: <20201015193807.17423-1-ilina@codeaurora.org>
- <20201015193807.17423-2-ilina@codeaurora.org>
- <CAJZ5v0h4DewkbQnF84kO5bv7YYRu-7f67DhSTz-+aAy=c=32xQ@mail.gmail.com>
- <CAPDyKFow-QDSgPAhtJ5jMEyo0vitKstn_UChu3dbCcaj8XxBFA@mail.gmail.com>
- <CAJZ5v0gbXwhaMkFd1MdYPE2APTxQqd8Kv-MMhGTU6eQdJuAZnw@mail.gmail.com>
+        id S1730704AbgJSSRc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 19 Oct 2020 14:17:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49422 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729511AbgJSSRc (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 19 Oct 2020 14:17:32 -0400
+Received: from mail-oi1-x244.google.com (mail-oi1-x244.google.com [IPv6:2607:f8b0:4864:20::244])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 27A3EC0613D0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 19 Oct 2020 11:17:32 -0700 (PDT)
+Received: by mail-oi1-x244.google.com with SMTP id n3so970368oie.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 19 Oct 2020 11:17:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=PUhF/Y8fJRxDAUTtVD74uXPnQ6bp15gB5LvqejPsEYk=;
+        b=tQWkgOnKFoE/tsLPS/+mx0Rv5YwG4VrF9R/VFYb4hk0R+P4f4OYRcm/q9NeF2Q/nYz
+         GVqdkMowphDYBPQzUSP+BHaFeIjZpllBNUucjqi824P7xSyukCwhCWO8ePIgJiFbGIjy
+         H+JZYpiuz3+Vsw2sicqqOSeG09piEx2uLnz7MxeN1mcUC8IrbTE+98OsRKzx7hri87kX
+         50jir0yYZhGM4ruHm2nHSsJtWPZhsswfbD9B4UwY58uosVdWlbdSAcvFvhBtQF742iwN
+         FCk/TgeDQVKpQc9S7gBBpk6Plw5/IOFY5SXH+xlK1S6yHiS7KZSKc3xddmmiut/VMZzF
+         54LA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=PUhF/Y8fJRxDAUTtVD74uXPnQ6bp15gB5LvqejPsEYk=;
+        b=M+HxkgewSOk4MFW7vx2+/6FHaMt6UmUXF7CyCMFH2kSAm/p6azxwV9g+HctRzHVjb8
+         XUS9XQ6AAxJ9vOoIEsObNI3EhvDdylF55fRsNDe/TB163BbpIujim54QdDjVX61CFsCL
+         TY0811ct2IjHT8ncNjt6oRoDEGOW9aeOAECGQsThZchBGLSxvyX6ajHuO4uQUCtwpB0c
+         bo9SUs0Fq4nhJ6W4HCtJVcaSlug67/2OsQWOproEmaRYSba9fd4e1YsvSoHbZs4uS9sX
+         VHsY9q6Xy3tZkuE3ednXpRTR6/qN7g+DZTEGewT/8eiON7mJMSEWj85ziFipBIiP0JKh
+         HxuQ==
+X-Gm-Message-State: AOAM531Aj33URtHwAWBe4zSj/fxb7EHMGV3+ZWVj1C9dJ1i1/u1Ruv6Y
+        mfeeqGhRX1fEZSmeN4NufIJ60Q==
+X-Google-Smtp-Source: ABdhPJwwT4K/76imObseOAnYDDRF/tVHXZ2wCDRryB7patrAzVsmPMObhzfWATz7+o2Ry3NkvbR18A==
+X-Received: by 2002:aca:4911:: with SMTP id w17mr467264oia.80.1603131451377;
+        Mon, 19 Oct 2020 11:17:31 -0700 (PDT)
+Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
+        by smtp.gmail.com with ESMTPSA id m29sm108588otj.38.2020.10.19.11.17.30
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 19 Oct 2020 11:17:30 -0700 (PDT)
+Date:   Mon, 19 Oct 2020 13:12:25 -0500
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Robin Murphy <robin.murphy@arm.com>
+Cc:     Will Deacon <will@kernel.org>, Joerg Roedel <joro@8bytes.org>,
+        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
+        Jordan Crouse <jcrouse@codeaurora.org>,
+        Thierry Reding <treding@nvidia.com>,
+        Rob Clark <robdclark@chromium.org>,
+        linux-arm-msm@vger.kernel.org, iommu@lists.linux-foundation.org,
+        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org
+Subject: Re: [PATCH v4 3/3] iommu/arm-smmu-qcom: Implement S2CR quirk
+Message-ID: <20201019181225.GD6705@builder.lan>
+References: <20201017043907.2656013-1-bjorn.andersson@linaro.org>
+ <20201017043907.2656013-4-bjorn.andersson@linaro.org>
+ <cf940a0e-03ec-ceb8-1c8b-533f541f64ba@arm.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <CAJZ5v0gbXwhaMkFd1MdYPE2APTxQqd8Kv-MMhGTU6eQdJuAZnw@mail.gmail.com>
+In-Reply-To: <cf940a0e-03ec-ceb8-1c8b-533f541f64ba@arm.com>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Oct 19 2020 at 04:21 -0600, Rafael J. Wysocki wrote:
->On Mon, Oct 19, 2020 at 12:01 PM Ulf Hansson <ulf.hansson@linaro.org> wrote:
->>
->> On Fri, 16 Oct 2020 at 18:55, Rafael J. Wysocki <rafael@kernel.org> wrote:
->> >
->> > On Thu, Oct 15, 2020 at 9:38 PM Lina Iyer <ilina@codeaurora.org> wrote:
->> > >
->> > > Some devices may have a predictable interrupt pattern while executing
->> > > usecases. An example would be the VSYNC interrupt associated with
->> > > display devices. A 60 Hz display could cause a interrupt every 16 ms. If
->> > > the device were in a PM domain, the domain would need to be powered up
->> > > for device to resume and handle the interrupt.
->> > >
->> > > Entering a domain idle state saves power, only if the residency of the
->> > > idle state is met. Without knowing the idle duration of the domain, the
->> > > governor would just choose the deepest idle state that matches the QoS
->> > > requirements. The domain might be powered off just as the device is
->> > > expecting to wake up. If devices could inform runtime PM of their next
->> > > event, the parent PM domain's idle duration can be determined.
->> > >
->> > > So let's add the pm_runtime_set_next_wake() API for the device to notify
->> > > runtime PM of the impending wakeup and document it's usage.
->> > >
->> > > Signed-off-by: Lina Iyer <ilina@codeaurora.org>
->> > > ---
->> > > Changes in v2:
->> > >         - Update documentation
->> > >         - Remove runtime PM enabled check
->> > >         - Update commit text
->> > > ---
->> > >  Documentation/power/runtime_pm.rst | 17 +++++++++++++++++
->> > >  drivers/base/power/runtime.c       | 24 ++++++++++++++++++++++++
->> > >  include/linux/pm.h                 |  2 ++
->> > >  include/linux/pm_runtime.h         |  1 +
->> > >  4 files changed, 44 insertions(+)
->> > >
->> > > diff --git a/Documentation/power/runtime_pm.rst b/Documentation/power/runtime_pm.rst
->> > > index 0553008b6279..f6aaef15a511 100644
->> > > --- a/Documentation/power/runtime_pm.rst
->> > > +++ b/Documentation/power/runtime_pm.rst
->> > > @@ -515,6 +515,12 @@ drivers/base/power/runtime.c and include/linux/pm_runtime.h:
->> > >        power.use_autosuspend isn't set, otherwise returns the expiration time
->> > >        in jiffies
->> > >
->> > > +  `int pm_runtime_set_next_event(struct device *dev, ktime_t next);`
->> > > +    - inform runtime PM of the next event on the device. Devices that are
->> > > +      sensitive to their domain idle enter/exit latencies may provide this
->> > > +      information for use by the PM domain governor. The domain governor would
->> > > +      use this information to calculate it's sleep length.
->> > > +
->> > >  It is safe to execute the following helper functions from interrupt context:
->> > >
->> > >  - pm_request_idle()
->> > > @@ -545,6 +551,7 @@ functions may also be used in interrupt context:
->> > >  - pm_runtime_put_sync()
->> > >  - pm_runtime_put_sync_suspend()
->> > >  - pm_runtime_put_sync_autosuspend()
->> > > +- pm_runtime_set_next_event()
->> > >
->> > >  5. Runtime PM Initialization, Device Probing and Removal
->> > >  ========================================================
->> > > @@ -639,6 +646,16 @@ suspend routine).  It may be necessary to resume the device and suspend it again
->> > >  in order to do so.  The same is true if the driver uses different power levels
->> > >  or other settings for runtime suspend and system sleep.
->> > >
->> > > +When a device enters idle at runtime, it may trigger the runtime PM up the
->> > > +hierarchy and if device has a predictable interrupt pattern, we can even do a
->> > > +better job at determining the parent's idle state. For example, a display
->> > > +device gets a VSYNC interrupt every 16 ms when running at 60 Hz. When it's PM
->> > > +domain is powering down and happens to be at the boundary of the VSYNC
->> > > +interrupt, it may not be efficient to power off the domain. Knowing the next
->> > > +wake up (when available) for devices in the domain we can determine the idle
->> > > +duration of the domain. By comparing idle duration with the residencies of the
->> > > +domain idle states, we can be efficient in both power and performance.
->> > > +
->> > >  During system resume, the simplest approach is to bring all devices back to full
->> > >  power, even if they had been suspended before the system suspend began.  There
->> > >  are several reasons for this, including:
->> > > diff --git a/drivers/base/power/runtime.c b/drivers/base/power/runtime.c
->> > > index 8143210a5c54..5d2ebacfd35e 100644
->> > > --- a/drivers/base/power/runtime.c
->> > > +++ b/drivers/base/power/runtime.c
->> > > @@ -122,6 +122,27 @@ u64 pm_runtime_suspended_time(struct device *dev)
->> > >  }
->> > >  EXPORT_SYMBOL_GPL(pm_runtime_suspended_time);
->> > >
->> > > +/**
->> > > + * pm_runtime_set_next_wakeup_event - Notify PM framework of an impending event.
->> > > + * @dev: Device to handle
->> > > + * @next: impending interrupt/wakeup for the device
->> > > + */
->> > > +int pm_runtime_set_next_event(struct device *dev, ktime_t next)
->> > > +{
->> > > +       unsigned long flags;
->> > > +       int ret = -EINVAL;
->> > > +
->> > > +       spin_lock_irqsave(&dev->power.lock, flags);
->> > > +       if (ktime_before(ktime_get(), next)) {
->> > > +               dev->power.next_event = next;
->> > > +               ret = 0;
->> > > +       }
->> > > +       spin_unlock_irqrestore(&dev->power.lock, flags);
->> > > +
->> > > +       return ret;
->> > > +}
->> > > +EXPORT_SYMBOL_GPL(pm_runtime_set_next_event);
->> > > +
->> > >  /**
->> > >   * pm_runtime_deactivate_timer - Deactivate given device's suspend timer.
->> > >   * @dev: Device to handle.
->> > > @@ -1415,6 +1436,9 @@ void pm_runtime_enable(struct device *dev)
->> > >              "Enabling runtime PM for inactive device (%s) with active children\n",
->> > >              dev_name(dev));
->> > >
->> > > +       /* Reset the next wakeup for the device */
->> > > +       dev->power.next_event = KTIME_MAX;
->> > > +
->> > >         spin_unlock_irqrestore(&dev->power.lock, flags);
->> > >  }
->> > >  EXPORT_SYMBOL_GPL(pm_runtime_enable);
->> > > diff --git a/include/linux/pm.h b/include/linux/pm.h
->> > > index a30a4b54df52..9051658674a4 100644
->> > > --- a/include/linux/pm.h
->> > > +++ b/include/linux/pm.h
->> > > @@ -8,6 +8,7 @@
->> > >  #ifndef _LINUX_PM_H
->> > >  #define _LINUX_PM_H
->> > >
->> > > +#include <linux/ktime.h>
->> > >  #include <linux/list.h>
->> > >  #include <linux/workqueue.h>
->> > >  #include <linux/spinlock.h>
->> > > @@ -616,6 +617,7 @@ struct dev_pm_info {
->> > >         u64                     active_time;
->> > >         u64                     suspended_time;
->> > >         u64                     accounting_timestamp;
->> > > +       ktime_t                 next_event;
->> >
->> > While there are some cosmetic changes to be made, this particular bit
->> > is fundamentally questionable IMV, because next_event (which BTW would
->> > better be called next_wakeup IMO) is not used by PM-runtime.
->> >
->> > The only user of it will be genpd AFAICS, so I don't quite see a
->> > reason to inflict this extra memory cost on everybody, even if they
->> > don't care about genpd and may not even compile it in.
->>
->> That's a good point!
->>
->> May I suggest that the new data is put into the "struct
->> generic_pm_domain_data" instead, which means it will be allocated when
->> a device is attached to a genpd.
->
->Yes, something like that.
->
->> Moreover, we should probably rename the API (and move the
->> implementation of it accordingly) from pm_runtime_set_next_event() to
->> dev_pm_genpd_set_next_wakeup().
->
->Right.
->
-Thanks, both of you for the suggestions. I will send an update soon.
+On Mon 19 Oct 09:04 CDT 2020, Robin Murphy wrote:
 
---Lina
+> On 2020-10-17 05:39, Bjorn Andersson wrote:
+> > The firmware found in some Qualcomm platforms intercepts writes to S2CR
+> > in order to replace bypass type streams with fault; and ignore S2CR
+> > updates of type fault.
+> > 
+> > Detect this behavior and implement a custom write_s2cr function in order
+> > to trick the firmware into supporting bypass streams by the means of
+> > configuring the stream for translation using a reserved and disabled
+> > context bank.
+> > 
+> > Also circumvent the problem of configuring faulting streams by
+> > configuring the stream as bypass.
+> > 
+> > Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> > ---
+> > 
+> > Changes since v3:
+> > - Move the reservation of the "identity context bank" to the Qualcomm specific
+> >    implementation.
+> > - Implement the S2CR quirk with the newly introduced write_s2cr callback.
+> > 
+> >   drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c | 68 ++++++++++++++++++++++
+> >   1 file changed, 68 insertions(+)
+> > 
+> > diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
+> > index 0089048342dd..c0f42d6a6e01 100644
+> > --- a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
+> > +++ b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
+> > @@ -10,8 +10,14 @@
+> >   struct qcom_smmu {
+> >   	struct arm_smmu_device smmu;
+> > +	bool bypass_cbndx;
+> 
+> Nit: variables named "*ndx" usually hold an actual index value. If it's just
+> a flag then maybe name it something like "use_bypass_context"?
+> 
+> >   };
+> > +static struct qcom_smmu *to_qcom_smmu(struct arm_smmu_device *smmu)
+> > +{
+> > +	return container_of(smmu, struct qcom_smmu, smmu);
+> > +}
+> > +
+> >   static const struct of_device_id qcom_smmu_client_of_match[] __maybe_unused = {
+> >   	{ .compatible = "qcom,adreno" },
+> >   	{ .compatible = "qcom,mdp4" },
+> > @@ -25,9 +31,32 @@ static const struct of_device_id qcom_smmu_client_of_match[] __maybe_unused = {
+> >   static int qcom_smmu_cfg_probe(struct arm_smmu_device *smmu)
+> >   {
+> > +	unsigned int last_s2cr = ARM_SMMU_GR0_S2CR(smmu->num_mapping_groups - 1);
+> > +	struct qcom_smmu *qsmmu = to_qcom_smmu(smmu);
+> > +	u32 reg;
+> >   	u32 smr;
+> >   	int i;
+> > +	/*
+> > +	 * With some firmware versions writes to S2CR of type FAULT are
+> > +	 * ignored, and writing BYPASS will end up written as FAULT in the
+> > +	 * register. Perform a write to S2CR to detect if this is the case and
+> > +	 * if so reserve a context bank to emulate bypass streams.
+> > +	 */
+> > +	reg = FIELD_PREP(ARM_SMMU_S2CR_TYPE, S2CR_TYPE_BYPASS) |
+> > +	      FIELD_PREP(ARM_SMMU_S2CR_CBNDX, 0xff) |
+> > +	      FIELD_PREP(ARM_SMMU_S2CR_PRIVCFG, S2CR_PRIVCFG_DEFAULT);
+> > +	arm_smmu_gr0_write(smmu, last_s2cr, reg);
+> > +	reg = arm_smmu_gr0_read(smmu, last_s2cr);
+> > +	if (FIELD_GET(ARM_SMMU_S2CR_TYPE, reg) != S2CR_TYPE_BYPASS) {
+> > +		qsmmu->bypass_cbndx = smmu->num_context_banks - 1;
+> 
+> Oh, so maybe the name is in fact OK but the type is wrong :/
+> 
+> I guess this does happens to work out, but for the wrong reason...
+> 
 
->> Unless we believe the interface could
->> be useful for other PM domain types (ACPI ?), then we could consider
->> adding a ->set_next_wakeup() callback to the struct dev_pm_domain and
->> implement the interface through a common
->> dev_pm_domain_set_next_wakeup() API.
->
->Maybe.
->
->That would depend on who the other user would be and I wouldn't worry
->about that upfront.
->
->Cheers!
+Odd, but "it works on my machine"... Sorry about that.
+
+> > +
+> > +		set_bit(qsmmu->bypass_cbndx, smmu->context_map);
+> > +
+> > +		reg = FIELD_PREP(ARM_SMMU_CBAR_TYPE, CBAR_TYPE_S1_TRANS_S2_BYPASS);
+> > +		arm_smmu_gr1_write(smmu, ARM_SMMU_GR1_CBAR(qsmmu->bypass_cbndx), reg);
+> > +	}
+> > +
+> >   	for (i = 0; i < smmu->num_mapping_groups; i++) {
+> >   		smr = arm_smmu_gr0_read(smmu, ARM_SMMU_GR0_SMR(i));
+> > @@ -46,6 +75,44 @@ static int qcom_smmu_cfg_probe(struct arm_smmu_device *smmu)
+> >   	return 0;
+> >   }
+> > +static void qcom_smmu_write_s2cr(struct arm_smmu_device *smmu, int idx)
+> > +{
+> > +	struct arm_smmu_s2cr *s2cr = smmu->s2crs + idx;
+> > +	struct qcom_smmu *qsmmu = to_qcom_smmu(smmu);
+> > +	u32 cbndx = s2cr->cbndx;
+> > +	u32 type = s2cr->type;
+> > +	u32 reg;
+> > +
+> > +	if (qsmmu->bypass_cbndx) {
+> 
+> Note that if we are talking indices here then 0 would be perfectly valid in
+> general. This works out OK in practice given that we're always reserving the
+> last implemented context above, and if we ever *did* only have one such that
+> index 0 is the last then we're going to have a bad time either way, but it's
+> not necessarily the most obvious.
+> 
+
+Right. In the event that we have a SMMU instance with a single context
+bank hitting this quirk would probably be bad regardless, as the
+cfg_probe would have just stolen the only available context bank for
+bypass purposes :)
+
+But I've updated this to keep track of the need for bypass separate from
+the index. We don't have a lot of SMMU controllers, so it's not a big
+waste.
+
+> > +		if (type == S2CR_TYPE_BYPASS) {
+> > +			/*
+> > +			 * Firmware with quirky S2CR handling will substitute
+> > +			 * BYPASS writes with FAULT, so point the stream to the
+> > +			 * reserved context bank and ask for translation on the
+> > +			 * stream
+> > +			 */
+> > +			type = S2CR_TYPE_TRANS;
+> > +			cbndx = qsmmu->bypass_cbndx;
+> > +		} else if (type == S2CR_TYPE_FAULT) {
+> > +			/*
+> > +			 * Firmware with quirky S2CR handling will ignore FAULT
+> > +			 * writes, so trick it to write FAULT by asking for a
+> > +			 * BYPASS.
+> > +			 */
+> > +			type = S2CR_TYPE_BYPASS;
+> 
+> Ha, that's brilliant :)
+> 
+> > +			cbndx = 0xff;
+> > +		}
+> > +	}
+> > +
+> > +	reg = FIELD_PREP(ARM_SMMU_S2CR_TYPE, type) |
+> > +	      FIELD_PREP(ARM_SMMU_S2CR_CBNDX, cbndx) |
+> > +	      FIELD_PREP(ARM_SMMU_S2CR_PRIVCFG, s2cr->privcfg);
+> > +
+> > +	if (smmu->features & ARM_SMMU_FEAT_EXIDS && smmu->smrs && smmu->smrs[idx].valid)
+> > +		reg |= ARM_SMMU_S2CR_EXIDVALID;
+> 
+> Does any of your hardware actually have EXIDS implemented? No big deal if
+> you only want this here "just in case", I'm just curious as I was under then
+> impression that it was essentially a ThunderX special.
+> 
+
+I tested a couple of platforms and I don't think we do. Dropping it
+makes the code slightly better to read, so let's do that.
+
+> Other than sorting out bypass_cbndx one way or the other, overall this is
+> now looking about as nice as it ever could - thanks for persevering!
+> 
+
+Thank you,
+Bjorn
+
+> Robin.
+> 
+> > +	arm_smmu_gr0_write(smmu, ARM_SMMU_GR0_S2CR(idx), reg);
+> > +}
+> > +
+> >   static int qcom_smmu_def_domain_type(struct device *dev)
+> >   {
+> >   	const struct of_device_id *match =
+> > @@ -87,6 +154,7 @@ static const struct arm_smmu_impl qcom_smmu_impl = {
+> >   	.cfg_probe = qcom_smmu_cfg_probe,
+> >   	.def_domain_type = qcom_smmu_def_domain_type,
+> >   	.reset = qcom_smmu500_reset,
+> > +	.write_s2cr = qcom_smmu_write_s2cr,
+> >   };
+> >   struct arm_smmu_device *qcom_smmu_impl_init(struct arm_smmu_device *smmu)
+> > 
