@@ -2,52 +2,52 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 16CEF292FEA
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Oct 2020 22:46:26 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DE07C292FF7
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Oct 2020 22:46:41 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730295AbgJSUqS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 19 Oct 2020 16:46:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44482 "EHLO
+        id S1731111AbgJSUqi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 19 Oct 2020 16:46:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44488 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730036AbgJSUqR (ORCPT
+        with ESMTP id S1730323AbgJSUqT (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 19 Oct 2020 16:46:17 -0400
-Received: from mail-pl1-x643.google.com (mail-pl1-x643.google.com [IPv6:2607:f8b0:4864:20::643])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8432CC0613CE;
-        Mon, 19 Oct 2020 13:46:17 -0700 (PDT)
-Received: by mail-pl1-x643.google.com with SMTP id d23so419566pll.7;
-        Mon, 19 Oct 2020 13:46:17 -0700 (PDT)
+        Mon, 19 Oct 2020 16:46:19 -0400
+Received: from mail-pj1-x1041.google.com (mail-pj1-x1041.google.com [IPv6:2607:f8b0:4864:20::1041])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9E6C1C0613CE;
+        Mon, 19 Oct 2020 13:46:19 -0700 (PDT)
+Received: by mail-pj1-x1041.google.com with SMTP id p21so436588pju.0;
+        Mon, 19 Oct 2020 13:46:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=H6+sBeRhptapBUb8S8VOKmxlxCqweD+FvkkgvD/zDmU=;
-        b=gsfijITFoKDCthWkpijN4xeAaLrn564jSmYZFjpeBoiq47kQM7s0bwWLNhfoZyDGgk
-         BQSUmpckTpA9dkkYZXQIiXMpa01LnEQepytwc0LLJDM9eVFVMcYidiWz4PFMYOyk/Br7
-         UiPY7Wlb79+QE1Zyib9KIENCI3Xnn5AHM1g4+yfgtEfS9hJNb/9K/UcNyp2RmGhyP+s/
-         zR/uAcZ5fHOsFiplUH3WLp1c1cB/i2xpT/W4FO/euSmQUEsSbD0fF1uhabV4Yr7qWL1W
-         iZzVR5TMrTF3DANC+MyE0ZMqoJL22HVzb/yIkDI74glAXpQ94o0ZnENAn2ZRyLASV/8w
-         XUqQ==
+        bh=aTCwqlrE+xKt7if15fCxKqrxxhA3FtRVNMOwP5PT4Lc=;
+        b=lQiRyf31C0/Ej7UYaPakIGicBUJ7uesIyGJzUO/UuqSwfUqD+kzkG3k5R18XcweAPP
+         Hk293Zif+bAz301ecdq7UnNqxvrZpLtyCyHS8c+SjcYvkyWksOOPfeNOW/gvOmLQEDt7
+         JjaDTx1kOEMhELU/4paQt2qqhrbzS3/z+hfmOlOtDHcbXLYwkFbNlXI+mZh6N6XyelMY
+         kgfN+WsQO2UDUuqhK7ZNJcT+4CSRvHkAKZrpiWUU2GsGqpzUn5/PBLo5LR56QKOTYVn3
+         UTp/nbDHsroWMPEvkfjgRMPGUUWjEhdSAqUtpnai0t8Hg84NRfFqM+gNcAfBwnySFz0k
+         agug==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=H6+sBeRhptapBUb8S8VOKmxlxCqweD+FvkkgvD/zDmU=;
-        b=UDiYyXXTb5QCpHJlEWVtbn6bs5P9y/9XBrvFl2TJcpYcyLkIDQuQkAQuiRg6iz0QgL
-         EZeT2UNc23eSXjtmzwqSb7vf4Ha3bfRJTHsO4zEHbMCYHbd5TKCt9qbtqY/R1yu3gcSc
-         td1bdTek2hg9dgtIUYP807XJdiI6M2puUBk0Orqe1t/46ElDpPboGQbszn3uoKEz+yiV
-         Hx/te86FKYJRlIEFECwMqTC+ub9UHOxfO9dHMKK+HWzZXXmVmowJLyhJg7xWBScCN7g3
-         iFJrkSC7+hUl3eNwVJtQhoy72nlkOzVIxfz4eRoorOvwJ8vIijjaQZm/5TpDUM9ih/Ke
-         gNIA==
-X-Gm-Message-State: AOAM531gq//KLgM2EGAPYyQ098KV8BDsCGmeVO98lTzmS+2WB/SWhWQU
-        sVx4MruO14bEpYKABFEv8yg=
-X-Google-Smtp-Source: ABdhPJx+azay6jZ0FALaNW1mfwsshSz1cP+yEKa0SIK5foZIwDG66VXP4R70dUW6zO59EYMv3auEAQ==
-X-Received: by 2002:a17:902:d896:b029:d2:288e:bafc with SMTP id b22-20020a170902d896b02900d2288ebafcmr1737571plz.43.1603140377045;
-        Mon, 19 Oct 2020 13:46:17 -0700 (PDT)
+        bh=aTCwqlrE+xKt7if15fCxKqrxxhA3FtRVNMOwP5PT4Lc=;
+        b=oCg2LMEmrFPLXWaL6/mHyx3qP4Du0dT7eu5t1a5j8FeflgMLRDWKKeqF+YiX0rrQl3
+         cAGtYqS2LFjfp8DFakwkrl1RGfMe0qu+1HU8aS0qSiWF576DVnVULHSv6Y0hovjfOGMK
+         eJoxHJxS2wRPepxuFP1+fPWec4cixb8PkTCGKqYr8V5oJTWR+mWC4Ljl5Dt/bRW0+jQ7
+         7SNAKwEiEzIDjzUgjC6e1kbM5mz2DBwWaVjmUOaU+5LCHZy4XQtaO9l21M67alw7GXnz
+         wiOq1fV/jXStZfttck5qE2SKFLThDbbGV/Shy8uv3XGBUI5E94D55CFWoL5AB0GihCx1
+         tfIg==
+X-Gm-Message-State: AOAM531mbeMR2MuDO/JKy2z7z0B7+Z0Isz9QwTgqMEK9yhtCLzdTH9cS
+        aVQOH40WWlQK77o4eUMDBr4=
+X-Google-Smtp-Source: ABdhPJxb4qDhDnNtxb5u5Z2RNuHoLk18uRth47UdbZOLmGEZpHUKqV0Vi9ia7S0WasQJzfJxy/zSTw==
+X-Received: by 2002:a17:90a:65cc:: with SMTP id i12mr1182680pjs.193.1603140379143;
+        Mon, 19 Oct 2020 13:46:19 -0700 (PDT)
 Received: from localhost (c-73-25-156-94.hsd1.or.comcast.net. [73.25.156.94])
-        by smtp.gmail.com with ESMTPSA id m22sm591316pfk.214.2020.10.19.13.46.15
+        by smtp.gmail.com with ESMTPSA id w5sm433422pgf.61.2020.10.19.13.46.17
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 19 Oct 2020 13:46:16 -0700 (PDT)
+        Mon, 19 Oct 2020 13:46:18 -0700 (PDT)
 From:   Rob Clark <robdclark@gmail.com>
 To:     dri-devel@lists.freedesktop.org
 Cc:     Daniel Vetter <daniel@ffwll.ch>,
@@ -57,9 +57,9 @@ Cc:     Daniel Vetter <daniel@ffwll.ch>,
         linux-arm-msm@vger.kernel.org (open list:DRM DRIVER FOR MSM ADRENO GPU),
         freedreno@lists.freedesktop.org (open list:DRM DRIVER FOR MSM ADRENO
         GPU), linux-kernel@vger.kernel.org (open list)
-Subject: [PATCH v3 20/23] drm/msm: Remove msm_gem_free_work
-Date:   Mon, 19 Oct 2020 13:46:21 -0700
-Message-Id: <20201019204636.139997-21-robdclark@gmail.com>
+Subject: [PATCH v3 21/23] drm/msm: Drop struct_mutex in madvise path
+Date:   Mon, 19 Oct 2020 13:46:22 -0700
+Message-Id: <20201019204636.139997-22-robdclark@gmail.com>
 X-Mailer: git-send-email 2.26.2
 In-Reply-To: <20201019204636.139997-1-robdclark@gmail.com>
 References: <20201019204636.139997-1-robdclark@gmail.com>
@@ -71,111 +71,96 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 From: Rob Clark <robdclark@chromium.org>
 
-Now that we don't need struct_mutex in the free path, we can get rid of
-the asynchronous free altogether.
+The obj->lock is sufficient for what we need.
+
+This *does* have the implication that userspace can try to shoot
+themselves in the foot by racing madvise(DONTNEED) with submit.  But
+the result will be about the same if they did madvise(DONTNEED) before
+the submit ioctl, ie. they might not get want they want if they race
+with shrinker.  But iova fault handling is robust enough, and userspace
+is only shooting it's own foot.
 
 Signed-off-by: Rob Clark <robdclark@chromium.org>
 ---
- drivers/gpu/drm/msm/msm_drv.c |  3 ---
- drivers/gpu/drm/msm/msm_drv.h |  5 -----
- drivers/gpu/drm/msm/msm_gem.c | 27 ---------------------------
- drivers/gpu/drm/msm/msm_gem.h |  1 -
- 4 files changed, 36 deletions(-)
+ drivers/gpu/drm/msm/msm_drv.c | 11 ++---------
+ drivers/gpu/drm/msm/msm_gem.c |  4 +---
+ drivers/gpu/drm/msm/msm_gem.h |  2 --
+ 3 files changed, 3 insertions(+), 14 deletions(-)
 
 diff --git a/drivers/gpu/drm/msm/msm_drv.c b/drivers/gpu/drm/msm/msm_drv.c
-index 15c41786d018..ebcd8e827363 100644
+index ebcd8e827363..4d808769e6ed 100644
 --- a/drivers/gpu/drm/msm/msm_drv.c
 +++ b/drivers/gpu/drm/msm/msm_drv.c
-@@ -465,9 +465,6 @@ static int msm_drm_init(struct device *dev, struct drm_driver *drv)
+@@ -939,14 +939,9 @@ static int msm_ioctl_gem_madvise(struct drm_device *dev, void *data,
+ 		return -EINVAL;
+ 	}
  
- 	priv->wq = alloc_ordered_workqueue("msm", 0);
- 
--	INIT_WORK(&priv->free_work, msm_gem_free_work);
--	init_llist_head(&priv->free_list);
+-	ret = mutex_lock_interruptible(&dev->struct_mutex);
+-	if (ret)
+-		return ret;
 -
- 	INIT_LIST_HEAD(&priv->inactive_list);
- 	mutex_init(&priv->mm_lock);
+ 	obj = drm_gem_object_lookup(file, args->handle);
+ 	if (!obj) {
+-		ret = -ENOENT;
+-		goto unlock;
++		return -ENOENT;
+ 	}
  
-diff --git a/drivers/gpu/drm/msm/msm_drv.h b/drivers/gpu/drm/msm/msm_drv.h
-index 7e6fb4af4964..5308e636a90c 100644
---- a/drivers/gpu/drm/msm/msm_drv.h
-+++ b/drivers/gpu/drm/msm/msm_drv.h
-@@ -188,10 +188,6 @@ struct msm_drm_private {
- 	struct list_head inactive_list;
- 	struct mutex mm_lock;
+ 	ret = msm_gem_madvise(obj, args->madv);
+@@ -955,10 +950,8 @@ static int msm_ioctl_gem_madvise(struct drm_device *dev, void *data,
+ 		ret = 0;
+ 	}
  
--	/* worker for delayed free of objects: */
--	struct work_struct free_work;
--	struct llist_head free_list;
--
- 	struct workqueue_struct *wq;
+-	drm_gem_object_put_locked(obj);
++	drm_gem_object_put(obj);
  
- 	unsigned int num_planes;
-@@ -291,7 +287,6 @@ struct drm_gem_object *msm_gem_prime_import_sg_table(struct drm_device *dev,
- 		struct dma_buf_attachment *attach, struct sg_table *sg);
- int msm_gem_prime_pin(struct drm_gem_object *obj);
- void msm_gem_prime_unpin(struct drm_gem_object *obj);
--void msm_gem_free_work(struct work_struct *work);
- 
- int msm_framebuffer_prepare(struct drm_framebuffer *fb,
- 		struct msm_gem_address_space *aspace);
-diff --git a/drivers/gpu/drm/msm/msm_gem.c b/drivers/gpu/drm/msm/msm_gem.c
-index af1abddca78e..827c7397ed12 100644
---- a/drivers/gpu/drm/msm/msm_gem.c
-+++ b/drivers/gpu/drm/msm/msm_gem.c
-@@ -939,16 +939,6 @@ void msm_gem_free_object(struct drm_gem_object *obj)
- 	struct drm_device *dev = obj->dev;
- 	struct msm_drm_private *priv = dev->dev_private;
- 
--	if (llist_add(&msm_obj->freed, &priv->free_list))
--		queue_work(priv->wq, &priv->free_work);
--}
--
--static void free_object(struct msm_gem_object *msm_obj)
--{
--	struct drm_gem_object *obj = &msm_obj->base;
--	struct drm_device *dev = obj->dev;
--	struct msm_drm_private *priv = dev->dev_private;
--
- 	/* object should not be on active list: */
- 	WARN_ON(is_active(msm_obj));
- 
-@@ -981,23 +971,6 @@ static void free_object(struct msm_gem_object *msm_obj)
- 	kfree(msm_obj);
+-unlock:
+-	mutex_unlock(&dev->struct_mutex);
+ 	return ret;
  }
  
--void msm_gem_free_work(struct work_struct *work)
--{
--	struct msm_drm_private *priv =
--		container_of(work, struct msm_drm_private, free_work);
--	struct llist_node *freed;
--	struct msm_gem_object *msm_obj, *next;
+diff --git a/drivers/gpu/drm/msm/msm_gem.c b/drivers/gpu/drm/msm/msm_gem.c
+index 827c7397ed12..c39ba9030001 100644
+--- a/drivers/gpu/drm/msm/msm_gem.c
++++ b/drivers/gpu/drm/msm/msm_gem.c
+@@ -673,8 +673,6 @@ int msm_gem_madvise(struct drm_gem_object *obj, unsigned madv)
+ 
+ 	msm_gem_lock(obj);
+ 
+-	WARN_ON(!mutex_is_locked(&obj->dev->struct_mutex));
 -
--	while ((freed = llist_del_all(&priv->free_list))) {
--		llist_for_each_entry_safe(msm_obj, next,
--					  freed, freed)
--			free_object(msm_obj);
--
--		if (need_resched())
--			break;
--	}
--}
--
- /* convenience method to construct a GEM buffer object, and userspace handle */
- int msm_gem_new_handle(struct drm_device *dev, struct drm_file *file,
- 		uint32_t size, uint32_t flags, uint32_t *handle,
+ 	if (msm_obj->madv != __MSM_MADV_PURGED)
+ 		msm_obj->madv = madv;
+ 
+@@ -691,7 +689,6 @@ void msm_gem_purge(struct drm_gem_object *obj)
+ 	struct msm_gem_object *msm_obj = to_msm_bo(obj);
+ 
+ 	WARN_ON(!mutex_is_locked(&dev->struct_mutex));
+-	WARN_ON(!msm_gem_is_locked(obj));
+ 	WARN_ON(!is_purgeable(msm_obj));
+ 	WARN_ON(obj->import_attach);
+ 
+@@ -771,6 +768,7 @@ void msm_gem_active_get(struct drm_gem_object *obj, struct msm_gpu *gpu)
+ 	struct msm_drm_private *priv = obj->dev->dev_private;
+ 
+ 	might_sleep();
++	WARN_ON(!msm_gem_is_locked(obj));
+ 	WARN_ON(msm_obj->madv != MSM_MADV_WILLNEED);
+ 
+ 	if (!atomic_fetch_inc(&msm_obj->active_count)) {
 diff --git a/drivers/gpu/drm/msm/msm_gem.h b/drivers/gpu/drm/msm/msm_gem.h
-index f4e73c6f07bf..ffa2130ee97d 100644
+index ffa2130ee97d..d79e7019cc88 100644
 --- a/drivers/gpu/drm/msm/msm_gem.h
 +++ b/drivers/gpu/drm/msm/msm_gem.h
-@@ -204,7 +204,6 @@ static inline bool is_vunmapable(struct msm_gem_object *msm_obj)
+@@ -190,8 +190,6 @@ static inline bool is_active(struct msm_gem_object *msm_obj)
  
- void msm_gem_purge(struct drm_gem_object *obj);
- void msm_gem_vunmap(struct drm_gem_object *obj);
--void msm_gem_free_work(struct work_struct *work);
- 
- /* Created per submit-ioctl, to track bo's and cmdstream bufs, etc,
-  * associated with the cmdstream submission for synchronization (and
+ static inline bool is_purgeable(struct msm_gem_object *msm_obj)
+ {
+-	WARN_ON(!msm_gem_is_locked(&msm_obj->base));
+-	WARN_ON(!mutex_is_locked(&msm_obj->base.dev->struct_mutex));
+ 	return (msm_obj->madv == MSM_MADV_DONTNEED) && msm_obj->sgt &&
+ 			!msm_obj->base.dma_buf && !msm_obj->base.import_attach;
+ }
 -- 
 2.26.2
 
