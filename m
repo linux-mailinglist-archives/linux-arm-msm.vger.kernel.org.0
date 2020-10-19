@@ -2,82 +2,68 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 99EBE2921A2
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Oct 2020 06:19:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2A986292252
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Oct 2020 08:03:47 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727122AbgJSETT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 19 Oct 2020 00:19:19 -0400
-Received: from alexa-out.qualcomm.com ([129.46.98.28]:54575 "EHLO
-        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725800AbgJSETS (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 19 Oct 2020 00:19:18 -0400
-Received: from ironmsg09-lv.qualcomm.com ([10.47.202.153])
-  by alexa-out.qualcomm.com with ESMTP; 18 Oct 2020 21:19:18 -0700
-X-QCInternal: smtphost
-Received: from ironmsg01-blr.qualcomm.com ([10.86.208.130])
-  by ironmsg09-lv.qualcomm.com with ESMTP/TLS/AES256-SHA; 18 Oct 2020 21:19:17 -0700
-X-QCInternal: smtphost
-Received: from c-mansur-linux.qualcomm.com ([10.204.90.208])
-  by ironmsg01-blr.qualcomm.com with ESMTP; 19 Oct 2020 09:49:08 +0530
-Received: by c-mansur-linux.qualcomm.com (Postfix, from userid 461723)
-        id E8FD121E1F; Mon, 19 Oct 2020 09:49:06 +0530 (IST)
-From:   Mansur Alisha Shaik <mansur@codeaurora.org>
-To:     linux-media@vger.kernel.org, stanimir.varbanov@linaro.org
-Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        vgarodia@codeaurora.org, swboyd@chromium.org,
-        Mansur Alisha Shaik <mansur@codeaurora.org>
-Subject: [PATCH v4 4/4] venus: put dummy vote on video-mem path after last session release
-Date:   Mon, 19 Oct 2020 09:48:14 +0530
-Message-Id: <1603081094-17223-5-git-send-email-mansur@codeaurora.org>
+        id S1726487AbgJSGDq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 19 Oct 2020 02:03:46 -0400
+Received: from szxga07-in.huawei.com ([45.249.212.35]:47814 "EHLO huawei.com"
+        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+        id S1725306AbgJSGDp (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 19 Oct 2020 02:03:45 -0400
+Received: from DGGEMS405-HUB.china.huawei.com (unknown [172.30.72.58])
+        by Forcepoint Email with ESMTP id 7427091F64E8CB318596;
+        Mon, 19 Oct 2020 14:03:41 +0800 (CST)
+Received: from localhost.localdomain (10.69.192.56) by
+ DGGEMS405-HUB.china.huawei.com (10.3.19.205) with Microsoft SMTP Server id
+ 14.3.487.0; Mon, 19 Oct 2020 14:03:37 +0800
+From:   Tian Tao <tiantao6@hisilicon.com>
+To:     <robdclark@gmail.com>, <sean@poorly.run>, <airlied@linux.ie>,
+        <daniel@ffwll.ch>, <linux-arm-msm@vger.kernel.org>,
+        <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>
+Subject: [PATCH] drm/msm: Remove redundant null check
+Date:   Mon, 19 Oct 2020 14:04:22 +0800
+Message-ID: <1603087462-37505-1-git-send-email-tiantao6@hisilicon.com>
 X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1603081094-17223-1-git-send-email-mansur@codeaurora.org>
-References: <1603081094-17223-1-git-send-email-mansur@codeaurora.org>
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Originating-IP: [10.69.192.56]
+X-CFilter-Loop: Reflected
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-As per current implementation, video driver is unvoting "videom-mem" path
-for last video session during vdec_session_release().
-While video playback when we try to suspend device, we see video clock
-warnings since votes are already removed during vdec_session_release().
+clk_prepare_enable() and clk_disable_unprepare() will check
+NULL clock parameter, so It is not necessary to add additional checks.
 
-corrected this by putting dummy vote on "video-mem" after last video
-session release and unvoting it during suspend.
-
-Fixes: 07f8f22a33a9e ("media: venus: core: remove CNOC voting while device
-suspend")
-Signed-off-by: Mansur Alisha Shaik <mansur@codeaurora.org>
-Reviewed-by: Stephen Boyd <swboyd@chromium.org>
+Signed-off-by: Tian Tao <tiantao6@hisilicon.com>
 ---
-Changes in v4:
-- As per Stanimir's comments, corrected fixes tag
+ drivers/gpu/drm/msm/msm_gpu.c | 7 ++-----
+ 1 file changed, 2 insertions(+), 5 deletions(-)
 
- drivers/media/platform/qcom/venus/pm_helpers.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
-
-diff --git a/drivers/media/platform/qcom/venus/pm_helpers.c b/drivers/media/platform/qcom/venus/pm_helpers.c
-index 57877ea..0ebba8e 100644
---- a/drivers/media/platform/qcom/venus/pm_helpers.c
-+++ b/drivers/media/platform/qcom/venus/pm_helpers.c
-@@ -212,6 +212,16 @@ static int load_scale_bw(struct venus_core *core)
- 	}
- 	mutex_unlock(&core->lock);
+diff --git a/drivers/gpu/drm/msm/msm_gpu.c b/drivers/gpu/drm/msm/msm_gpu.c
+index 57ddc94..25bc654 100644
+--- a/drivers/gpu/drm/msm/msm_gpu.c
++++ b/drivers/gpu/drm/msm/msm_gpu.c
+@@ -175,15 +175,12 @@ static int disable_clk(struct msm_gpu *gpu)
  
-+	/*
-+	 * keep minimum bandwidth vote for "video-mem" path,
-+	 * so that clks can be disabled during vdec_session_release().
-+	 * Actual bandwidth drop will be done during device supend
-+	 * so that device can power down without any warnings.
-+	 */
-+
-+	if (!total_avg && !total_peak)
-+		total_avg = kbps_to_icc(1000);
-+
- 	dev_dbg(core->dev, VDBGL "total: avg_bw: %u, peak_bw: %u\n",
- 		total_avg, total_peak);
+ static int enable_axi(struct msm_gpu *gpu)
+ {
+-	if (gpu->ebi1_clk)
+-		clk_prepare_enable(gpu->ebi1_clk);
+-	return 0;
++	return clk_prepare_enable(gpu->ebi1_clk);
+ }
+ 
+ static int disable_axi(struct msm_gpu *gpu)
+ {
+-	if (gpu->ebi1_clk)
+-		clk_disable_unprepare(gpu->ebi1_clk);
++	clk_disable_unprepare(gpu->ebi1_clk);
+ 	return 0;
+ }
  
 -- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member 
-of Code Aurora Forum, hosted by The Linux Foundation
+2.7.4
 
