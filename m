@@ -2,200 +2,234 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 7703B293D6C
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Oct 2020 15:37:35 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 27284293DF2
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Oct 2020 15:57:24 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2407495AbgJTNhf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 20 Oct 2020 09:37:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60112 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2407474AbgJTNhe (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 20 Oct 2020 09:37:34 -0400
-Received: from mail-wr1-x441.google.com (mail-wr1-x441.google.com [IPv6:2a00:1450:4864:20::441])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3AEDFC061755
-        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Oct 2020 06:37:34 -0700 (PDT)
-Received: by mail-wr1-x441.google.com with SMTP id h7so2182959wre.4
-        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Oct 2020 06:37:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=Dd/4tB1jhfJBU76uhWYvJK/M1Y4WZsbkyJFSG8k8QQo=;
-        b=TPK9GUXwppf2mM1kCN3ve/x60CKUztqZ+989Nh8aqFSLGa+l7mbzE/LqA70BHIvGZz
-         9t62mD+eV+mTcXERLQfsqGiscvH12E6jUFihaaN9G4Q/H5OP5vn/D7cAcdZLOAKnGAP4
-         3CcOZMOSIaLcag5ahYLat4UtdM8iVyx44UW/o=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=Dd/4tB1jhfJBU76uhWYvJK/M1Y4WZsbkyJFSG8k8QQo=;
-        b=TgH0JLHhywvc5w7dYCSBDK7sqNkoIykYz6tIBpup6Q/dU9lAoH8rFGKtD6Wj8g3a1o
-         wgXqT5SHCNZYjBaZ9X3ETEsJISIrmnYZ4xHUdmNWqar4Z9KarjUztGPauBUAJDOJrNl5
-         WW8OEqaVDz9uTREeEtaxEhipkpCTFqHY+iEMUBoKjVhDiNzCg/0bRHum/V2RG45tpMKI
-         D41scPsP9ZFBfOFDW5XPwtk+fVFsZLaavuErH7QP2AjvX3dj0NBRaZDSiRhBtdp0rWzK
-         lU+OKDKkQxRkKRQE31YsCt+Z5qB/AixONRkANwMjZPNEs3Cn2tR+KIUENPj/k3bfgcDF
-         MGzw==
-X-Gm-Message-State: AOAM531xn6DqqMNu4vEbFgn1krpeM7DZsqE1OkUvVuHQZFL6THxKnMot
-        E6j2RIu62UKi3zYMNqJ1TYwp1/x09qNOIYOuQRZxQA==
-X-Google-Smtp-Source: ABdhPJxbiebIvIYWJ8VjSbDQyhf4y6aT7O3DnC5CYOzHre4Bqv+imNt5qgF8Ub9UZZ8/En/AxSVEIthwU9StfwKT0vc=
-X-Received: by 2002:adf:cc82:: with SMTP id p2mr3646265wrj.177.1603201052544;
- Tue, 20 Oct 2020 06:37:32 -0700 (PDT)
+        id S2407715AbgJTN5X (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 20 Oct 2020 09:57:23 -0400
+Received: from m42-4.mailgun.net ([69.72.42.4]:28164 "EHLO m42-4.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S2407702AbgJTN5X (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 20 Oct 2020 09:57:23 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1603202241; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: From: References: To:
+ Subject: Sender; bh=sFsR7M8X8a+NGk5pENhxehQ5yW7VE3tjrETpgs/Etbg=; b=FdMjJnhp9pW47qQA+fjbEVDYy3RxWAr5GD4eTUlxR4zbOQv5ov4FjPn4cYVWi85dV63CH3ln
+ i1yoUmK4WiCmVqs37wYZQ7mSPZgPysGeK8bQQitnWNBtvV8MazI2eIFr4gKJQ3dB4S8+uev+
+ PiSKdWnUQFL7pnDn3k3PKv+/cqs=
+X-Mailgun-Sending-Ip: 69.72.42.4
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n04.prod.us-west-2.postgun.com with SMTP id
+ 5f8eecc057b88ccb5660c99e (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 20 Oct 2020 13:57:20
+ GMT
+Sender: akhilpo=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id C645FC43382; Tue, 20 Oct 2020 13:57:20 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        NICE_REPLY_A,SPF_FAIL,URIBL_BLOCKED autolearn=no autolearn_force=no
+        version=3.4.0
+Received: from [192.168.1.9] (unknown [117.210.179.63])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: akhilpo)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 84A3AC433CB;
+        Tue, 20 Oct 2020 13:57:17 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 84A3AC433CB
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=akhilpo@codeaurora.org
+Subject: Re: [PATCH 2/2] drm/msm: Fix duplicate gpu node in icc summary
+To:     freedreno@lists.freedesktop.org, dri-devel@freedesktop.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        mka@chromium.org, robdclark@gmail.com, dianders@chromium.org
+References: <1603113558-23330-1-git-send-email-akhilpo@codeaurora.org>
+ <1603113558-23330-2-git-send-email-akhilpo@codeaurora.org>
+ <20201019145922.GB31882@jcrouse1-lnx.qualcomm.com>
+From:   Akhil P Oommen <akhilpo@codeaurora.org>
+Message-ID: <e9e72bd7-0048-6e9f-8ca0-f5163c1b05f5@codeaurora.org>
+Date:   Tue, 20 Oct 2020 19:27:14 +0530
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.3.2
 MIME-Version: 1.0
-References: <20200914080619.4178587-1-cychiang@chromium.org>
- <20200914080619.4178587-3-cychiang@chromium.org> <7bdc0d63-27b1-f99e-c5f8-65f880733d16@linaro.org>
- <CAFv8NwLkvxX2avoLY+4NY5gBv0dQ863hFFiqy7iQOJxH4WenmQ@mail.gmail.com> <20201015161251.GF4390@sirena.org.uk>
-In-Reply-To: <20201015161251.GF4390@sirena.org.uk>
-From:   Cheng-yi Chiang <cychiang@chromium.org>
-Date:   Tue, 20 Oct 2020 21:37:05 +0800
-Message-ID: <CAFv8NwL1xX=yPGFqQL_mOzAnPTfH0Z0J6ibG1+D32W46Nx0KYQ@mail.gmail.com>
-Subject: Re: [PATCH v11 2/3] ASoC: qcom: dt-bindings: Add sc7180 machine bindings
-To:     Mark Brown <broonie@kernel.org>
-Cc:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        linux-kernel <linux-kernel@vger.kernel.org>,
-        Taniya Das <tdas@codeaurora.org>,
-        Rohit kumar <rohitkr@codeaurora.org>,
-        Banajit Goswami <bgoswami@codeaurora.org>,
-        Patrick Lai <plai@codeaurora.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Jaroslav Kysela <perex@perex.cz>,
-        Takashi Iwai <tiwai@suse.com>,
-        Stephan Gerhold <stephan@gerhold.net>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        Heiko Stuebner <heiko@sntech.de>,
-        Srinivasa Rao <srivasam@codeaurora.org>,
-        Doug Anderson <dianders@chromium.org>,
-        Dylan Reid <dgreid@chromium.org>,
-        Tzung-Bi Shih <tzungbi@chromium.org>,
-        Linux ARM <linux-arm-kernel@lists.infradead.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>,
-        "moderated list:SOUND - SOC LAYER / DYNAMIC AUDIO POWER MANAGEM..." 
-        <alsa-devel@alsa-project.org>,
-        "moderated list:ARM/Mediatek SoC support" 
-        <linux-mediatek@lists.infradead.org>,
-        "open list:ARM/Rockchip SoC..." <linux-rockchip@lists.infradead.org>,
-        Ajye Huang <ajye_huang@compal.corp-partner.google.com>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <20201019145922.GB31882@jcrouse1-lnx.qualcomm.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Oct 16, 2020 at 12:13 AM Mark Brown <broonie@kernel.org> wrote:
->
-> On Thu, Oct 15, 2020 at 03:59:26PM +0800, Cheng-yi Chiang wrote:
-> > On Tue, Oct 13, 2020 at 6:36 PM Srinivas Kandagatla
->
-> > > > +properties:
-> > > > +  compatible:
-> > > > +    const: qcom,sc7180-sndcard-rt5682-m98357-1mic
->
-> > > This information can come from the dai link description itself, why
-> > > should compatible string have this information?
->
-> > I think dailink description is not enough to specify everything
-> > machine driver needs to know.
-> > E.g. there is a variation where there are front mic and rear mic. We
-> > need to tell the machine driver about it so
-> > it can create proper widget, route, and controls.
->
-> That sounds like something that could be better described with
-> properties (including for example the existing bindings used for setting
-> up things like analogue outputs and DAPM routes)?
->
+On 10/19/2020 8:29 PM, Jordan Crouse wrote:
+> On Mon, Oct 19, 2020 at 06:49:18PM +0530, Akhil P Oommen wrote:
+>> On targets with a6xx gpu, there is a duplicate gpu icc node listed in
+>> the interconnect summary. On these targets, calling
+> 
+> This first sentence is confusing to me. I think the following few sentences do
+> a better job of explaining what you are trying to do.
+I can just remove that line.
+> 
+>> dev_pm_opp_of_add_table() api initializes the icc nodes for gpu indirectly.
+>> So we should avoid using of_icc_get() api in the common probe path. To fix
+>> this, we can move of_icc_get() to target specific code where it is
+>> required.
+> 
+>> Signed-off-by: Akhil P Oommen <akhilpo@codeaurora.org>
+>> ---
+>>   drivers/gpu/drm/msm/adreno/a3xx_gpu.c   | 21 +++++++++++++++++++--
+>>   drivers/gpu/drm/msm/adreno/a4xx_gpu.c   | 20 ++++++++++++++++++--
+>>   drivers/gpu/drm/msm/adreno/adreno_gpu.c | 29 +----------------------------
+>>   3 files changed, 38 insertions(+), 32 deletions(-)
+>>
+>> diff --git a/drivers/gpu/drm/msm/adreno/a3xx_gpu.c b/drivers/gpu/drm/msm/adreno/a3xx_gpu.c
+>> index f29c77d..93da668 100644
+>> --- a/drivers/gpu/drm/msm/adreno/a3xx_gpu.c
+>> +++ b/drivers/gpu/drm/msm/adreno/a3xx_gpu.c
+>> @@ -519,6 +519,8 @@ struct msm_gpu *a3xx_gpu_init(struct drm_device *dev)
+>>   	struct msm_gpu *gpu;
+>>   	struct msm_drm_private *priv = dev->dev_private;
+>>   	struct platform_device *pdev = priv->gpu_pdev;
+>> +	struct icc_path *ocmem_icc_path;
+>> +	struct icc_path *icc_path;
+>>   	int ret;
+>>   
+>>   	if (!pdev) {
+>> @@ -566,13 +568,28 @@ struct msm_gpu *a3xx_gpu_init(struct drm_device *dev)
+>>   		goto fail;
+>>   	}
+>>   
+>> +	icc_path = devm_of_icc_get(&pdev->dev, "gfx-mem");
+>> +	ret = IS_ERR(icc_path);
+>> +	if (ret)
+>> +		goto fail;
+>> +
+>> +	ocmem_icc_path = devm_of_icc_get(&pdev->dev, "ocmem");
+>> +	ret = IS_ERR(ocmem_icc_path);
+>> +	if (ret) {
+>> +		/* allow -ENODATA, ocmem icc is optional */
+>> +		if (ret != -ENODATA)
+>> +			goto fail;
+>> +		ocmem_icc_path = NULL;
+>> +	}
+>> +
+>> +
+>>   	/*
+>>   	 * Set the ICC path to maximum speed for now by multiplying the fastest
+>>   	 * frequency by the bus width (8). We'll want to scale this later on to
+>>   	 * improve battery life.
+>>   	 */
+>> -	icc_set_bw(gpu->icc_path, 0, Bps_to_icc(gpu->fast_rate) * 8);
+>> -	icc_set_bw(gpu->ocmem_icc_path, 0, Bps_to_icc(gpu->fast_rate) * 8);
+>> +	icc_set_bw(icc_path, 0, Bps_to_icc(gpu->fast_rate) * 8);
+>> +	icc_set_bw(ocmem_icc_path, 0, Bps_to_icc(gpu->fast_rate) * 8);
+> 
+> This seems reasonable but I hope we can get somebody to sign off on a real a3xx
+> part.
+> 
+>>   
+>>   	return gpu;
+>>   
+>> diff --git a/drivers/gpu/drm/msm/adreno/a4xx_gpu.c b/drivers/gpu/drm/msm/adreno/a4xx_gpu.c
+>> index 2b93b33..c0be3a0 100644
+>> --- a/drivers/gpu/drm/msm/adreno/a4xx_gpu.c
+>> +++ b/drivers/gpu/drm/msm/adreno/a4xx_gpu.c
+>> @@ -648,6 +648,8 @@ struct msm_gpu *a4xx_gpu_init(struct drm_device *dev)
+>>   	struct msm_gpu *gpu;
+>>   	struct msm_drm_private *priv = dev->dev_private;
+>>   	struct platform_device *pdev = priv->gpu_pdev;
+>> +	struct icc_path *ocmem_icc_path;
+>> +	struct icc_path *icc_path;
+>>   	int ret;
+>>   
+>>   	if (!pdev) {
+>> @@ -694,13 +696,27 @@ struct msm_gpu *a4xx_gpu_init(struct drm_device *dev)
+>>   		goto fail;
+>>   	}
+>>   
+>> +	icc_path = devm_of_icc_get(&pdev->dev, "gfx-mem");
+>> +	ret = IS_ERR(icc_path);
+>> +	if (ret)
+>> +		goto fail;
+>> +
+>> +	ocmem_icc_path = devm_of_icc_get(&pdev->dev, "ocmem");
+>> +	ret = IS_ERR(ocmem_icc_path);
+>> +	if (ret) {
+>> +		/* allow -ENODATA, ocmem icc is optional */
+>> +		if (ret != -ENODATA)
+>> +			goto fail;
+>> +		ocmem_icc_path = NULL;
+>> +	}
+>> +
+>>   	/*
+>>   	 * Set the ICC path to maximum speed for now by multiplying the fastest
+>>   	 * frequency by the bus width (8). We'll want to scale this later on to
+>>   	 * improve battery life.
+>>   	 */
+>> -	icc_set_bw(gpu->icc_path, 0, Bps_to_icc(gpu->fast_rate) * 8);
+>> -	icc_set_bw(gpu->ocmem_icc_path, 0, Bps_to_icc(gpu->fast_rate) * 8);
+>> +	icc_set_bw(icc_path, 0, Bps_to_icc(gpu->fast_rate) * 8);
+>> +	icc_set_bw(ocmem_icc_path, 0, Bps_to_icc(gpu->fast_rate) * 8);
+> 
+> Less confident we can find any 4xx fans to test this, but if a3xx works then so
+> should this (in theory).
+> 
+>>   	return gpu;
+>>   
+>> diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.c b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
+>> index fd8f491..6e3b820 100644
+>> --- a/drivers/gpu/drm/msm/adreno/adreno_gpu.c
+>> +++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
+>> @@ -920,35 +920,8 @@ int adreno_gpu_init(struct drm_device *drm, struct platform_device *pdev,
+>>   
+>>   	ret = msm_gpu_init(drm, pdev, &adreno_gpu->base, &funcs->base,
+>>   			adreno_gpu->info->name, &adreno_gpu_config);
+>> -	if (ret)
+>> -		return ret;
+>> -
+>> -	/*
+>> -	 * The legacy case, before "interconnect-names", only has a
+>> -	 * single interconnect path which is equivalent to "gfx-mem"
+>> -	 */
+>> -	if (!of_find_property(dev->of_node, "interconnect-names", NULL)) {
+>> -		gpu->icc_path = of_icc_get(dev, NULL);
+>> -	} else {
+>> -		gpu->icc_path = of_icc_get(dev, "gfx-mem");
+>> -		gpu->ocmem_icc_path = of_icc_get(dev, "ocmem");
+>> -	}
+>>   
+>> -	if (IS_ERR(gpu->icc_path)) {
+>> -		ret = PTR_ERR(gpu->icc_path);
+>> -		gpu->icc_path = NULL;
+>> -		return ret;
+>> -	}
+>> -
+>> -	if (IS_ERR(gpu->ocmem_icc_path)) {
+>> -		ret = PTR_ERR(gpu->ocmem_icc_path);
+>> -		gpu->ocmem_icc_path = NULL;
+>> -		/* allow -ENODATA, ocmem icc is optional */
+>> -		if (ret != -ENODATA)
+>> -			return ret;
+>> -	}
+>> -
+>> -	return 0;
+>> +	return ret;
+> 
+> This could go even further:
+> 
+> return msm_gpu_init(...);
+> 
+Yep, we can do that. Thanks for the feedback.
 
-Hi Mark, thank you for the comments.
+--Akhil
+>>   }
+>>   
+>>   void adreno_gpu_cleanup(struct adreno_gpu *adreno_gpu)
+>> -- 
+>> 2.7.4
+>>
+> 
 
-May I know your suggestion on Ajye's patch "ASoC: qcom: sc7180: Modify
-machine driver for 2mic" ?
-
-https://lore.kernel.org/r/20200928063744.525700-3-ajye_huang@compal.corp-partner.google.com
-
-I think adding code in the machine driver makes the intent straightforward.
-If we want the machine driver to be fully configurable,
-we can always add more code to handle properties like gpio, route,
-widget (mux, text selection) passed in from the device tree.
-But I feel that we don't need a machine driver to be that configurable
-from the device tree.
-I think having the logic scattered in various dtsi files and relying
-on manual inspection to understand the usage would be less
-maintainable than only exposing needed property like gpio.
-Especially in the complicated case where we need to create a mux
-widget with callback toggling the gpio like this:
-
-+static const char * const dmic_mux_text[] = {
-+       "Front Mic",
-+       "Rear Mic",
-+};
-+
-+static SOC_ENUM_SINGLE_DECL(sc7180_dmic_enum,
-+                           SND_SOC_NOPM, 0, dmic_mux_text);
-+
-+static const struct snd_kcontrol_new sc7180_dmic_mux_control =
-+       SOC_DAPM_ENUM_EXT("DMIC Select Mux", sc7180_dmic_enum,
-+                         dmic_get, dmic_set);
-+
-+SND_SOC_DAPM_MUX("Dmic Mux", SND_SOC_NOPM, 0, 0, &sc7180_dmic_mux_control),
-
-Passing all the logic along with the callback of dmic_get, dmic_set
-from the device tree would be too hard to maintain.
-
-> > The codec combination also matters. There will be a variation where
-> > rt5682 is replaced with adau7002 for dmic.
-> > Although machine driver can derive some information by looking at dailink,
-> > I think specifying it explicitly in the compatible string is easier to
-> > tell what machine driver should do, e.g.
-> > setting PLL related to rt5682 or not.
->
-> These feel more like things that fit with compatible, though please take
-> a look at Morimoto-san's (CCed) work on generic sound cards for more
-> complex devices:
->
->    https://lore.kernel.org/alsa-devel/87imbeybq5.wl-kuninori.morimoto.gx@renesas.com/
->
-> This is not yet implemented but it'd be good to make sure that the
-> Qualcomm systems can be handled too in future.
-
-Yes, that should work to describe the dailink we are using.
-But a more tricky issue is how to do calls like setting PLL in dai startup ops.
-
-                /* Configure PLL1 for codec */
-                ret = snd_soc_dai_set_pll(codec_dai, 0, RT5682_PLL1_S_MCLK,
-                                          DEFAULT_MCLK_RATE, RT5682_PLL1_FREQ);
-
-I think that asking a generic machine driver to do configuration like
-this with only a limited interface of device property
-might be too much of an ask for the machine driver.
-
->
-> > You can see widget, route, controls are used according to the configuration.
-> > The alternative approach is to check whether "dmic-gpio" property
-> > exists to decide adding these stuff or not.
-> > But it makes the intent less easier to understand.
->
-> OTOH if you have lots of compatibles then it can get hard to work out
-> exactly which one corresponds to a given board.
-
-Totally agree. Glad we have only three variations up to now.
-
-Would you mind if I simplify the compatible string like Srinivas
-suggested, and send a v12?
-
-As for other two kinds of variations that I am aware of:
-
-1. front mic / rear mic
-2. replace alc5682 with adau7002
-
-We can set different board names and different compatible strings to
-achieve such variation.
-So that it would make sense to describe configuration in compatible
-strings like you suggested, and also provides UCM a way to distinguish
-different boards.
-What do you think ?
-
-Thanks!
