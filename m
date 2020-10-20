@@ -2,229 +2,84 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 05D4F293268
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Oct 2020 02:42:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 12F332933CA
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Oct 2020 06:10:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2389523AbgJTAmb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 19 Oct 2020 20:42:31 -0400
-Received: from alexa-out-sd-01.qualcomm.com ([199.106.114.38]:39859 "EHLO
-        alexa-out-sd-01.qualcomm.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S2389495AbgJTAm2 (ORCPT
+        id S1730459AbgJTEKr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 20 Oct 2020 00:10:47 -0400
+Received: from mailgw01.mediatek.com ([210.61.82.183]:52500 "EHLO
+        mailgw01.mediatek.com" rhost-flags-OK-FAIL-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1728339AbgJTEKr (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 19 Oct 2020 20:42:28 -0400
-Received: from unknown (HELO ironmsg01-sd.qualcomm.com) ([10.53.140.141])
-  by alexa-out-sd-01.qualcomm.com with ESMTP; 19 Oct 2020 17:42:26 -0700
-X-QCInternal: smtphost
-Received: from gurus-linux.qualcomm.com ([10.46.162.81])
-  by ironmsg01-sd.qualcomm.com with ESMTP; 19 Oct 2020 17:42:25 -0700
-Received: by gurus-linux.qualcomm.com (Postfix, from userid 383780)
-        id 002D9196E; Mon, 19 Oct 2020 17:42:25 -0700 (PDT)
-From:   Guru Das Srinagesh <gurus@codeaurora.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        linux-arm-msm@vger.kernel.org, Stephen Boyd <sboyd@kernel.org>
-Cc:     Subbaraman Narayanamurthy <subbaram@codeaurora.org>,
-        David Collins <collinsd@codeaurora.org>,
-        linux-kernel@vger.kernel.org,
-        Anirudh Ghayal <aghayal@codeaurora.org>,
-        Kavya Nunna <knunna@codeaurora.org>,
-        Guru Das Srinagesh <gurus@codeaurora.org>
-Subject: [PATCH v2 2/2] extcon: qcom-spmi: Add support for VBUS detection
-Date:   Mon, 19 Oct 2020 17:42:25 -0700
-Message-Id: <be397c0bad2ff981890e7585aff7d10d9c005d07.1603154265.git.gurus@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <cover.1603154265.git.gurus@codeaurora.org>
-References: <cover.1603154265.git.gurus@codeaurora.org>
-In-Reply-To: <cover.1603154265.git.gurus@codeaurora.org>
-References: <cover.1603154265.git.gurus@codeaurora.org>
+        Tue, 20 Oct 2020 00:10:47 -0400
+X-UUID: 3e2d6fcab1294f4da06361514eed91eb-20201020
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=mediatek.com; s=dk;
+        h=Content-Transfer-Encoding:MIME-Version:Content-Type:References:In-Reply-To:Date:CC:To:From:Subject:Message-ID; bh=zp5jLGm63aQhYRoDx4NhNAPU064r5IJUGVEyCltzIJE=;
+        b=kBvbM70DagvRjbW3mi7d0FSxDlN41jckXJgaVjydMg/NC46nnZNb9WLl3zsddtr9APmd9TsLj1puwWXnkCOwCRwodsYpcgpFg7DiqgVM18Xw+3TVp8eMl644PKOxyjXLV+RjlipXHvv9BlA9FREJqujStiC9R3PoivXB8bFeoFs=;
+X-UUID: 3e2d6fcab1294f4da06361514eed91eb-20201020
+Received: from mtkcas06.mediatek.inc [(172.21.101.30)] by mailgw01.mediatek.com
+        (envelope-from <hsin-hsiung.wang@mediatek.com>)
+        (Cellopoint E-mail Firewall v4.1.14 Build 0819 with TLSv1.2 ECDHE-RSA-AES256-SHA384 256/256)
+        with ESMTP id 1822166561; Tue, 20 Oct 2020 12:00:22 +0800
+Received: from mtkcas07.mediatek.inc (172.21.101.84) by
+ mtkmbs07n1.mediatek.inc (172.21.101.16) with Microsoft SMTP Server (TLS) id
+ 15.0.1497.2; Tue, 20 Oct 2020 12:00:20 +0800
+Received: from [172.21.77.4] (172.21.77.4) by mtkcas07.mediatek.inc
+ (172.21.101.73) with Microsoft SMTP Server id 15.0.1497.2 via Frontend
+ Transport; Tue, 20 Oct 2020 12:00:21 +0800
+Message-ID: <1603166421.26597.1.camel@mtksdaap41>
+Subject: Re: [PATCH v4 1/2] dt-bindings: spmi: document binding for the
+ Mediatek SPMI controller
+From:   Hsin-Hsiung Wang <hsin-hsiung.wang@mediatek.com>
+To:     Rob Herring <robh@kernel.org>
+CC:     <linux-kernel@vger.kernel.org>, <srv_heupstream@mediatek.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>,
+        <linux-mediatek@lists.infradead.org>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        <devicetree@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>
+Date:   Tue, 20 Oct 2020 12:00:21 +0800
+In-Reply-To: <20201019195207.GA3499610@bogus>
+References: <1602864634-23489-1-git-send-email-hsin-hsiung.wang@mediatek.com>
+         <1602864634-23489-2-git-send-email-hsin-hsiung.wang@mediatek.com>
+         <20201019195207.GA3499610@bogus>
+Content-Type: text/plain; charset="UTF-8"
+X-Mailer: Evolution 3.10.4-0ubuntu2 
+MIME-Version: 1.0
+X-MTK:  N
+Content-Transfer-Encoding: base64
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Anirudh Ghayal <aghayal@codeaurora.org>
-
-VBUS can be detected via a dedicated PMIC pin. Add support
-for reporting the VBUS status.
-
-Signed-off-by: Anirudh Ghayal <aghayal@codeaurora.org>
-Signed-off-by: Kavya Nunna <knunna@codeaurora.org>
-Signed-off-by: Guru Das Srinagesh <gurus@codeaurora.org>
----
- drivers/extcon/extcon-qcom-spmi-misc.c | 100 ++++++++++++++++++++++++++-------
- 1 file changed, 81 insertions(+), 19 deletions(-)
-
-diff --git a/drivers/extcon/extcon-qcom-spmi-misc.c b/drivers/extcon/extcon-qcom-spmi-misc.c
-index 6b836ae..6bd6746 100644
---- a/drivers/extcon/extcon-qcom-spmi-misc.c
-+++ b/drivers/extcon/extcon-qcom-spmi-misc.c
-@@ -1,7 +1,7 @@
- // SPDX-License-Identifier: GPL-2.0-only
- /**
-  * extcon-qcom-spmi-misc.c - Qualcomm USB extcon driver to support USB ID
-- *				detection based on extcon-usb-gpio.c.
-+ *			and VBUS detection based on extcon-usb-gpio.c.
-  *
-  * Copyright (C) 2016 Linaro, Ltd.
-  * Stephen Boyd <stephen.boyd@linaro.org>
-@@ -21,30 +21,56 @@
- 
- struct qcom_usb_extcon_info {
- 	struct extcon_dev *edev;
--	int irq;
-+	int id_irq;
-+	int vbus_irq;
- 	struct delayed_work wq_detcable;
- 	unsigned long debounce_jiffies;
- };
- 
- static const unsigned int qcom_usb_extcon_cable[] = {
-+	EXTCON_USB,
- 	EXTCON_USB_HOST,
- 	EXTCON_NONE,
- };
- 
- static void qcom_usb_extcon_detect_cable(struct work_struct *work)
- {
--	bool id;
-+	bool state = false;
- 	int ret;
-+	union extcon_property_value val;
- 	struct qcom_usb_extcon_info *info = container_of(to_delayed_work(work),
- 						    struct qcom_usb_extcon_info,
- 						    wq_detcable);
- 
--	/* check ID and update cable state */
--	ret = irq_get_irqchip_state(info->irq, IRQCHIP_STATE_LINE_LEVEL, &id);
--	if (ret)
--		return;
-+	if (info->id_irq > 0) {
-+		/* check ID and update cable state */
-+		ret = irq_get_irqchip_state(info->id_irq,
-+				IRQCHIP_STATE_LINE_LEVEL, &state);
-+		if (ret)
-+			return;
-+
-+		if (!state) {
-+			val.intval = true;
-+			extcon_set_property(info->edev, EXTCON_USB_HOST,
-+						EXTCON_PROP_USB_SS, val);
-+		}
-+		extcon_set_state_sync(info->edev, EXTCON_USB_HOST, !state);
-+	}
- 
--	extcon_set_state_sync(info->edev, EXTCON_USB_HOST, !id);
-+	if (info->vbus_irq > 0) {
-+		/* check VBUS and update cable state */
-+		ret = irq_get_irqchip_state(info->vbus_irq,
-+				IRQCHIP_STATE_LINE_LEVEL, &state);
-+		if (ret)
-+			return;
-+
-+		if (state) {
-+			val.intval = true;
-+			extcon_set_property(info->edev, EXTCON_USB,
-+						EXTCON_PROP_USB_SS, val);
-+		}
-+		extcon_set_state_sync(info->edev, EXTCON_USB, state);
-+	}
- }
- 
- static irqreturn_t qcom_usb_irq_handler(int irq, void *dev_id)
-@@ -79,21 +105,48 @@ static int qcom_usb_extcon_probe(struct platform_device *pdev)
- 		return ret;
- 	}
- 
-+	ret = extcon_set_property_capability(info->edev,
-+			EXTCON_USB, EXTCON_PROP_USB_SS);
-+	ret |= extcon_set_property_capability(info->edev,
-+			EXTCON_USB_HOST, EXTCON_PROP_USB_SS);
-+	if (ret) {
-+		dev_err(dev, "failed to register extcon props rc=%d\n",
-+						ret);
-+		return ret;
-+	}
-+
- 	info->debounce_jiffies = msecs_to_jiffies(USB_ID_DEBOUNCE_MS);
- 	INIT_DELAYED_WORK(&info->wq_detcable, qcom_usb_extcon_detect_cable);
- 
--	info->irq = platform_get_irq_byname(pdev, "usb_id");
--	if (info->irq < 0)
--		return info->irq;
-+	info->id_irq = platform_get_irq_byname(pdev, "usb_id");
-+	if (info->id_irq > 0) {
-+		ret = devm_request_threaded_irq(dev, info->id_irq, NULL,
-+					qcom_usb_irq_handler,
-+					IRQF_TRIGGER_RISING |
-+					IRQF_TRIGGER_FALLING | IRQF_ONESHOT,
-+					pdev->name, info);
-+		if (ret < 0) {
-+			dev_err(dev, "failed to request handler for ID IRQ\n");
-+			return ret;
-+		}
-+	}
- 
--	ret = devm_request_threaded_irq(dev, info->irq, NULL,
-+	info->vbus_irq = platform_get_irq_byname(pdev, "usb_vbus");
-+	if (info->vbus_irq > 0) {
-+		ret = devm_request_threaded_irq(dev, info->vbus_irq, NULL,
- 					qcom_usb_irq_handler,
- 					IRQF_TRIGGER_RISING |
- 					IRQF_TRIGGER_FALLING | IRQF_ONESHOT,
- 					pdev->name, info);
--	if (ret < 0) {
--		dev_err(dev, "failed to request handler for ID IRQ\n");
--		return ret;
-+		if (ret < 0) {
-+			dev_err(dev, "failed to request handler for VBUS IRQ\n");
-+			return ret;
-+		}
-+	}
-+
-+	if (info->id_irq < 0 && info->vbus_irq < 0) {
-+		dev_err(dev, "ID and VBUS IRQ not found\n");
-+		return -EINVAL;
- 	}
- 
- 	platform_set_drvdata(pdev, info);
-@@ -120,8 +173,12 @@ static int qcom_usb_extcon_suspend(struct device *dev)
- 	struct qcom_usb_extcon_info *info = dev_get_drvdata(dev);
- 	int ret = 0;
- 
--	if (device_may_wakeup(dev))
--		ret = enable_irq_wake(info->irq);
-+	if (device_may_wakeup(dev)) {
-+		if (info->id_irq > 0)
-+			ret = enable_irq_wake(info->id_irq);
-+		if (info->vbus_irq > 0)
-+			ret = enable_irq_wake(info->vbus_irq);
-+	}
- 
- 	return ret;
- }
-@@ -131,8 +188,12 @@ static int qcom_usb_extcon_resume(struct device *dev)
- 	struct qcom_usb_extcon_info *info = dev_get_drvdata(dev);
- 	int ret = 0;
- 
--	if (device_may_wakeup(dev))
--		ret = disable_irq_wake(info->irq);
-+	if (device_may_wakeup(dev)) {
-+		if (info->id_irq > 0)
-+			ret = disable_irq_wake(info->id_irq);
-+		if (info->vbus_irq > 0)
-+			ret = disable_irq_wake(info->vbus_irq);
-+	}
- 
- 	return ret;
- }
-@@ -143,6 +204,7 @@ static SIMPLE_DEV_PM_OPS(qcom_usb_extcon_pm_ops,
- 
- static const struct of_device_id qcom_usb_extcon_dt_match[] = {
- 	{ .compatible = "qcom,pm8941-misc", },
-+	{ .compatible = "qcom,pmd-vbus-det", },
- 	{ }
- };
- MODULE_DEVICE_TABLE(of, qcom_usb_extcon_dt_match);
--- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project
+SGksDQoNCk9uIE1vbiwgMjAyMC0xMC0xOSBhdCAxNDo1MiAtMDUwMCwgUm9iIEhlcnJpbmcgd3Jv
+dGU6DQo+IE9uIFNhdCwgMTcgT2N0IDIwMjAgMDA6MTA6MzMgKzA4MDAsIEhzaW4tSHNpdW5nIFdh
+bmcgd3JvdGU6DQo+ID4gVGhpcyBhZGRzIGRvY3VtZW50YXRpb24gZm9yIHRoZSBTUE1JIGNvbnRy
+b2xsZXIgZm91bmQgb24gTWVkaWF0ZWsgU29Dcy4NCj4gPiANCj4gPiBTaWduZWQtb2ZmLWJ5OiBI
+c2luLUhzaXVuZyBXYW5nIDxoc2luLWhzaXVuZy53YW5nQG1lZGlhdGVrLmNvbT4NCj4gPiAtLS0N
+Cj4gPiAgLi4uL2JpbmRpbmdzL3NwbWkvbXRrLHNwbWktbXRrLXBtaWYueWFtbCAgICAgIHwgNzAg
+KysrKysrKysrKysrKysrKysrKw0KPiA+ICAxIGZpbGUgY2hhbmdlZCwgNzAgaW5zZXJ0aW9ucygr
+KQ0KPiA+ICBjcmVhdGUgbW9kZSAxMDA2NDQgRG9jdW1lbnRhdGlvbi9kZXZpY2V0cmVlL2JpbmRp
+bmdzL3NwbWkvbXRrLHNwbWktbXRrLXBtaWYueWFtbA0KPiA+IA0KPiANCj4gDQo+IE15IGJvdCBm
+b3VuZCBlcnJvcnMgcnVubmluZyAnbWFrZSBkdF9iaW5kaW5nX2NoZWNrJyBvbiB5b3VyIHBhdGNo
+Og0KPiANCj4gRG9jdW1lbnRhdGlvbi9kZXZpY2V0cmVlL2JpbmRpbmdzL3NwbWkvbXRrLHNwbWkt
+bXRrLXBtaWYuZXhhbXBsZS5kdHM6MTk6MTg6IGZhdGFsIGVycm9yOiBkdC1iaW5kaW5ncy9jbG9j
+ay9tdDgxOTItY2xrLmg6IE5vIHN1Y2ggZmlsZSBvciBkaXJlY3RvcnkNCj4gICAgMTkgfCAgICAg
+ICAgICNpbmNsdWRlIDxkdC1iaW5kaW5ncy9jbG9jay9tdDgxOTItY2xrLmg+DQo+ICAgICAgIHwg
+ICAgICAgICAgICAgICAgICBefn5+fn5+fn5+fn5+fn5+fn5+fn5+fn5+fn5+fn5+fg0KPiBjb21w
+aWxhdGlvbiB0ZXJtaW5hdGVkLg0KPiBtYWtlWzFdOiAqKiogW3NjcmlwdHMvTWFrZWZpbGUubGli
+OjM0MjogRG9jdW1lbnRhdGlvbi9kZXZpY2V0cmVlL2JpbmRpbmdzL3NwbWkvbXRrLHNwbWktbXRr
+LXBtaWYuZXhhbXBsZS5kdC55YW1sXSBFcnJvciAxDQo+IG1ha2VbMV06ICoqKiBXYWl0aW5nIGZv
+ciB1bmZpbmlzaGVkIGpvYnMuLi4uDQo+IG1ha2U6ICoqKiBbTWFrZWZpbGU6MTM2NjogZHRfYmlu
+ZGluZ19jaGVja10gRXJyb3IgMg0KPiANCj4gDQo+IFNlZSBodHRwczovL3BhdGNod29yay5vemxh
+YnMub3JnL3BhdGNoLzEzODM0NDENCj4gDQo+IElmIHlvdSBhbHJlYWR5IHJhbiAnbWFrZSBkdF9i
+aW5kaW5nX2NoZWNrJyBhbmQgZGlkbid0IHNlZSB0aGUgYWJvdmUNCj4gZXJyb3IocyksIHRoZW4g
+bWFrZSBzdXJlIGR0LXNjaGVtYSBpcyB1cCB0byBkYXRlOg0KPiANCj4gcGlwMyBpbnN0YWxsIGdp
+dCtodHRwczovL2dpdGh1Yi5jb20vZGV2aWNldHJlZS1vcmcvZHQtc2NoZW1hLmdpdEBtYXN0ZXIg
+LS11cGdyYWRlDQo+IA0KPiBQbGVhc2UgY2hlY2sgYW5kIHJlLXN1Ym1pdC4NCj4gDQoNClNvcnJ5
+LCBJIGRvbid0IGFkZCB0aGUgbmVjZXNzYXJ5IHNlcmllc1sxXSBpbnRvIHRoZSBjb21taXQgbWVz
+c2FnZS4NCkkgd2lsbCB1cGRhdGUgaXQgaW4gdGhlIG5leHQgcGF0Y2gsIHRoYW5rcyBmb3IgdGhl
+IHJldmlldy4NCg0KWzFdDQpodHRwczovL3BhdGNod29yay5rZXJuZWwub3JnL3Byb2plY3QvbGlu
+dXgtbWVkaWF0ZWsvbGlzdC8/c2VyaWVzPTM0MjU5Mw0K
 
