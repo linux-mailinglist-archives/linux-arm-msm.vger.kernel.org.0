@@ -2,319 +2,319 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 698A829379A
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Oct 2020 11:07:34 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1ED2D2937C0
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Oct 2020 11:14:48 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2390698AbgJTJHd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 20 Oct 2020 05:07:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46460 "EHLO
+        id S2392615AbgJTJOq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 20 Oct 2020 05:14:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47602 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2390385AbgJTJHc (ORCPT
+        with ESMTP id S1729432AbgJTJOq (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 20 Oct 2020 05:07:32 -0400
-Received: from mail-pg1-x544.google.com (mail-pg1-x544.google.com [IPv6:2607:f8b0:4864:20::544])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D1F36C061755
-        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Oct 2020 02:07:32 -0700 (PDT)
-Received: by mail-pg1-x544.google.com with SMTP id s22so688969pga.9
-        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Oct 2020 02:07:32 -0700 (PDT)
+        Tue, 20 Oct 2020 05:14:46 -0400
+Received: from mail-pl1-x643.google.com (mail-pl1-x643.google.com [IPv6:2607:f8b0:4864:20::643])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5E7F5C0613D1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Oct 2020 02:14:46 -0700 (PDT)
+Received: by mail-pl1-x643.google.com with SMTP id r10so709229plx.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Oct 2020 02:14:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=C+lXu8huo3GM/+zHeAPPhY4A4nrjQeddBfBXz8wgpYw=;
-        b=vpnE2D56Bp9ToqiKgEF4SR/yjTeNtEcbw4Md5FZN7JGxVlMJNFctFzwoN1t9ZhNuxR
-         JOiWYH4NtXEx6T5v3TWxK+afNiljExnYpQrP9y+WeX/WTv0YUCOPuDGg21eEW7Hi+syQ
-         8bYna5o+mtM8kkWfyfmjA/HX91ztH1xOjX2UdTfKt9Vs5fFL8EoSSCqYxGE/1RsBXIhD
-         CnC2hGP+KdTfovqQNH4t6r5MHKPDvGC53uSQhz3AkvBtwgRQ7zOcprIraDXr9FRg2674
-         X85v5i3UmIhn/LSU2Q9bavElRAHy0Mt2EkiKuV8SBnFqOZFKXZc+/a8kv/YK8XuJZeiY
-         IApw==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=GgUTm7wJH0+BRi8dDrO/9JHL4EFO+jAdr22a/R5dUE4=;
+        b=eMtxHibWARRLqoeW4sCOa4QI9fV0tMk9huMSb4iZpL7QmvStdAiADhOCqPLKdjLYN9
+         0+dCfmlFFHela6luwDNMF/Tv6a/d+cjSdRTO13hSNiJ4oLu4/YT0xIM3+wQpvpxEE82X
+         M7kPWKXpaVeflEQhOiSq+BWx9up3X76B+okSsx1etsLl8F9F7MYSiyBBHf1Y3uNzMQJL
+         drp4qsvCfMTtpMIxL3BEfGjx/3ZMJKbPNYnsSttD95PBTdWblDkI0MHPy46N3eWsXgh8
+         rhiaBY1KBskWfyRQiXWDkkSvAG7lwXFWZLqWVR/T0/PfDF3jVlGFyU0nQSoQkZLmBoV4
+         6ZPA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=C+lXu8huo3GM/+zHeAPPhY4A4nrjQeddBfBXz8wgpYw=;
-        b=ZzRMI5jdefOhBnQMfaABWapSdOO3Q6YC5xH+ejHn9w0C8q+loUbaiU/kbb3areFelq
-         MPLjokl0AeGssrxN1rjuIrwzCTfaYZ3QHbnT+zM7PLASrNttpBipcOWGX4JFqrLlsOSS
-         /OMDiuIJ4J5yscYQ5C98sqjyLFLPa4CbVthQj80d4Ozqc1yiFW6Dkbq8RPlhnfFbpKdX
-         mmK1o1KWa3e7jNQtwGwNTG5Atk8Op8g1bEmE8FDfS9Im5AfQ7HQ63im40pMsIAPpBhwN
-         NctqZ+QNSajt/GuhiIcJdQMQFnJKS9jUPFqtaKoXPZUbhkmkhIYPQ3/3B9OsAVs9XR9b
-         CCtA==
-X-Gm-Message-State: AOAM5312aPup9rVVYM+EqvYoLNQxoTQpTsVC7LoKOKLz0MF5ZctUDAAF
-        b+/KzgkTu+jtIy72mwyonkpR15elg6OoQQ==
-X-Google-Smtp-Source: ABdhPJwfOAGHPoop8aAQY48Li/WV46JU/mutltv8U8uyGSW/+kHjlyfNLsHfL8dR+PpnrN8I2W9Fwg==
-X-Received: by 2002:a62:6202:0:b029:15c:dac8:866 with SMTP id w2-20020a6262020000b029015cdac80866mr1732194pfb.72.1603184852250;
-        Tue, 20 Oct 2020 02:07:32 -0700 (PDT)
-Received: from localhost ([122.181.54.133])
-        by smtp.gmail.com with ESMTPSA id w10sm1254300pjy.13.2020.10.20.02.07.30
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 20 Oct 2020 02:07:30 -0700 (PDT)
-Date:   Tue, 20 Oct 2020 14:37:29 +0530
-From:   Viresh Kumar <viresh.kumar@linaro.org>
-To:     Rob Clark <robdclark@gmail.com>
-Cc:     dri-devel <dri-devel@lists.freedesktop.org>,
-        Rob Clark <robdclark@chromium.org>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
-        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
-        <linux-arm-msm@vger.kernel.org>,
-        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
-        <freedreno@lists.freedesktop.org>,
-        open list <linux-kernel@vger.kernel.org>,
-        Daniel Vetter <daniel@ffwll.ch>, "Menon, Nishanth" <nm@ti.com>
-Subject: Re: [PATCH v2 07/22] drm/msm: Do rpm get sooner in the submit path
-Message-ID: <20201020090729.qgqish5kqamhvatj@vireshk-i7>
-References: <20201012020958.229288-1-robdclark@gmail.com>
- <20201012020958.229288-8-robdclark@gmail.com>
- <20201012143555.GA438822@phenom.ffwll.local>
- <CAF6AEGstGtBswUUiyHxT2cCm8NwZekDnMzD0J_pQH37GwS=LiA@mail.gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=GgUTm7wJH0+BRi8dDrO/9JHL4EFO+jAdr22a/R5dUE4=;
+        b=H23WySIMUrIgQcGMjfB78eOhxA/lGeamLBTadWLSdYbcSTcWovAy9dt5VEpBvL8iGs
+         6erZrpZvgFgqUu+WFKhvHRSmR9ljb8K6bOfv29sMfuygU/q7MaEdQj9smVHdGEJxFvlL
+         8mKSHIH22Sx2wh2oFavMTO57wNBNQdJR2XKarqdODR+FHZtpnI3OzEoBe2uKI0GJkY5I
+         1Sey4VwsQKgPYHfZDX8Y47GieiZNMftBTJM8J4tTIUGGf2YiXuD+OiP4ee8d0TLyt6G0
+         cuLuhFmwqRjiqK0HFmX7jHqaqwaPI0/wRwuj9+FA6QqIAJzpaK5GCUORaIBf5YnRUy+R
+         0kWQ==
+X-Gm-Message-State: AOAM530KybjgZBG9/aTUxMrRTDaqFLBk6DJUbMC4KA94/Cuz/YdX2rDb
+        OvnVDb1a/maJltfZ4apUVllk0LOL4EXDfrw0tRO5Tw==
+X-Google-Smtp-Source: ABdhPJw35ny+DmJ64Kw4jWL/AzIFdAaUCgdu6gfPtMx7VHnN5OGS4XD7HvYfKSSjQd3rybheCX+98kTo9aEJoO8q5to=
+X-Received: by 2002:a17:90a:160f:: with SMTP id n15mr1940273pja.75.1603185285795;
+ Tue, 20 Oct 2020 02:14:45 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAF6AEGstGtBswUUiyHxT2cCm8NwZekDnMzD0J_pQH37GwS=LiA@mail.gmail.com>
-User-Agent: NeoMutt/20180716-391-311a52
+References: <20201018125237.16717-1-kholk11@gmail.com> <20201018125237.16717-4-kholk11@gmail.com>
+In-Reply-To: <20201018125237.16717-4-kholk11@gmail.com>
+From:   Robert Foss <robert.foss@linaro.org>
+Date:   Tue, 20 Oct 2020 11:14:34 +0200
+Message-ID: <CAG3jFysZbg_2XBjPryY1DN0xqu6VLzed6tLmoVeJ3NTb7dA22w@mail.gmail.com>
+Subject: Re: [PATCH 3/6] media: camss: vfe: Add support for VFE 4.8
+To:     kholk11@gmail.com
+Cc:     Todor Tomov <todor.too@gmail.com>, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>, marijns95@gmail.com,
+        konradybcio@gmail.com, martin.botka1@gmail.com,
+        linux-arm-msm@vger.kernel.org,
+        linux-media <linux-media@vger.kernel.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>,
+        linux-kernel <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 12-10-20, 08:43, Rob Clark wrote:
-> On Mon, Oct 12, 2020 at 7:35 AM Daniel Vetter <daniel@ffwll.ch> wrote:
-> >
-> > On Sun, Oct 11, 2020 at 07:09:34PM -0700, Rob Clark wrote:
-> > > From: Rob Clark <robdclark@chromium.org>
-> > >
-> > > Unfortunately, due to an dev_pm_opp locking interaction with
-> > > mm->mmap_sem, we need to do pm get before aquiring obj locks,
-> > > otherwise we can have anger lockdep with the chain:
-> >
-> > tbh this sounds like a bug in that subsystem, since it means we cannot use
-> > said subsystem in mmap handlers either.
-> >
-> > So if you have some remapping unit or need to wake up your gpu to blt the
-> > buffer into system memory first, we're toast. That doesn't sound right. So
-> > maybe Cc: pm folks and figure out how to fix this long term properly? Imo
-> > not a good reason to hold up this patch set, since unwrangling mmap_sem
-> > tends to be work ...
-> 
-> + a couple of PM folks
-> 
-> Looks like it has been this way for quite some time, so I guess the
-> overlap between things using dev_pm_opp and mmap is low..
-> 
-> fwiw, example splat so folks can see the locking interaction I am
-> talking about.. I suspect the pm_opp interaction with mm->mmap_sem is
-> from the debugfs calls while opp_table_lock is held?
+Hey Angelo,
 
-I am not very sure about why this circular locking dependency is
-happening here and how exactly can we fix it. The OPP core works under
-the opp_table_lock, from within which it creates/remove the debugfs
-stuff as well.
+The VFE abstraction layers are something I've been looking at too, and
+there's no neat solution that both eliminates code duplication,
+separates revisions into individual files, and still avoids creating
+even more abstraction layers. So while combining vfe47 and vfe48 looks
+and feels a bit cluttered, I think it is a necessary evil.
 
-> [   15.627855] ======================================================
-> [   15.634202] WARNING: possible circular locking dependency detected
-> [   15.640550] 5.4.70 #41 Not tainted
-> [   15.644050] ------------------------------------------------------
-> [   15.650397] chrome/1805 is trying to acquire lock:
-> [   15.655314] ffffffed90720738 (opp_table_lock){+.+.}, at:
-> _find_opp_table+0x34/0x74
-> [   15.663092]
-> [   15.663092] but task is already holding lock:
-> [   15.669082] ffffff80ff3911a8 (reservation_ww_class_mutex){+.+.},
-> at: submit_lock_objects+0x70/0x1ec
-> [   15.678369]
-> [   15.678369] which lock already depends on the new lock.
-> [   15.678369]
-> [   15.686764]
-> [   15.686764] the existing dependency chain (in reverse order) is:
-> [   15.694438]
-> [   15.694438] -> #3 (reservation_ww_class_mutex){+.+.}:
-> [   15.701146]        __mutex_lock_common+0xec/0xc0c
-> [   15.705978]        ww_mutex_lock_interruptible+0x5c/0xc4
-> [   15.711432]        msm_gem_fault+0x2c/0x124
-> [   15.715731]        __do_fault+0x40/0x16c
-> [   15.719766]        handle_mm_fault+0x7cc/0xd98
-> [   15.724337]        do_page_fault+0x230/0x3b4
-> [   15.728721]        do_translation_fault+0x5c/0x78
-> [   15.733558]        do_mem_abort+0x4c/0xb4
-> [   15.737680]        el0_da+0x1c/0x20
-> [   15.741266]
-> [   15.741266] -> #2 (&mm->mmap_sem){++++}:
-> [   15.746809]        __might_fault+0x70/0x98
-> [   15.751022]        compat_filldir+0xf8/0x48c
-> [   15.755412]        dcache_readdir+0x70/0x1dc
-> [   15.759808]        iterate_dir+0xd4/0x180
-> [   15.763931]        __arm64_compat_sys_getdents+0xa0/0x19c
-> [   15.769476]        el0_svc_common+0xa8/0x178
-> [   15.773861]        el0_svc_compat_handler+0x2c/0x40
-> [   15.778868]        el0_svc_compat+0x8/0x10
-> [   15.783075]
-> [   15.783075] -> #1 (&sb->s_type->i_mutex_key#3){++++}:
-> [   15.789788]        down_write+0x54/0x16c
-> [   15.793826]        debugfs_remove_recursive+0x50/0x158
-> [   15.799108]        opp_debug_unregister+0x34/0x114
-> [   15.804028]        dev_pm_opp_put_opp_table+0xd0/0x14c
-> [   15.809308]        dev_pm_opp_put_clkname+0x3c/0x50
-> [   15.814318]        msm_dsi_host_destroy+0xb0/0xcc
-> [   15.819149]        dsi_destroy+0x40/0x58
-> [   15.823184]        dsi_bind+0x90/0x170
-> [   15.827041]        component_bind_all+0xf0/0x208
-> [   15.831787]        msm_drm_init+0x188/0x60c
-> [   15.836084]        msm_drm_bind+0x24/0x30
-> [   15.840205]        try_to_bring_up_master+0x15c/0x1a4
-> [   15.845396]        __component_add+0x98/0x14c
-> [   15.849878]        component_add+0x28/0x34
-> [   15.854086]        dp_display_probe+0x324/0x370
-> [   15.858744]        platform_drv_probe+0x90/0xb0
-> [   15.863400]        really_probe+0x134/0x2ec
-> [   15.867699]        driver_probe_device+0x64/0xfc
-> [   15.872443]        __device_attach_driver+0x8c/0xa4
-> [   15.877459]        bus_for_each_drv+0x90/0xd8
-> [   15.881939]        __device_attach+0xc0/0x148
-> [   15.886420]        device_initial_probe+0x20/0x2c
-> [   15.891254]        bus_probe_device+0x34/0x94
-> [   15.895726]        deferred_probe_work_func+0x78/0xb4
-> [   15.900914]        process_one_work+0x30c/0x5d0
-> [   15.905573]        worker_thread+0x240/0x3f0
-> [   15.909959]        kthread+0x144/0x154
-> [   15.913809]        ret_from_fork+0x10/0x18
-> [   15.918016]
-> [   15.918016] -> #0 (opp_table_lock){+.+.}:
-> [   15.923660]        __lock_acquire+0xee4/0x2450
-> [   15.928230]        lock_acquire+0x1cc/0x210
-> [   15.932527]        __mutex_lock_common+0xec/0xc0c
-> [   15.937359]        mutex_lock_nested+0x40/0x50
-> [   15.941928]        _find_opp_table+0x34/0x74
-> [   15.946312]        dev_pm_opp_find_freq_exact+0x2c/0xdc
-> [   15.951680]        a6xx_gmu_resume+0xc8/0xecc
-> [   15.952812] fscrypt: AES-256-CTS-CBC using implementation "cts-cbc-aes-ce"
-> [   15.956161]        a6xx_pm_resume+0x148/0x200
-> [   15.956166]        adreno_resume+0x28/0x34
-> [   15.956171]        pm_generic_runtime_resume+0x34/0x48
-> [   15.956174]        __rpm_callback+0x70/0x10c
-> [   15.956176]        rpm_callback+0x34/0x8c
-> [   15.956179]        rpm_resume+0x414/0x550
-> [   15.956182]        __pm_runtime_resume+0x7c/0xa0
-> [   15.956185]        msm_gpu_submit+0x60/0x1c0
-> [   15.956190]        msm_ioctl_gem_submit+0xadc/0xb60
-> [   16.003961]        drm_ioctl_kernel+0x9c/0x118
-> [   16.008532]        drm_ioctl+0x27c/0x408
-> [   16.012562]        drm_compat_ioctl+0xcc/0xdc
-> [   16.017038]        __se_compat_sys_ioctl+0x100/0x206c
-> [   16.022224]        __arm64_compat_sys_ioctl+0x20/0x2c
-> [   16.027412]        el0_svc_common+0xa8/0x178
-> [   16.031800]        el0_svc_compat_handler+0x2c/0x40
-> [   16.036810]        el0_svc_compat+0x8/0x10
-> [   16.041021]
-> [   16.041021] other info that might help us debug this:
-> [   16.041021]
-> [   16.049235] Chain exists of:
-> [   16.049235]   opp_table_lock --> &mm->mmap_sem --> reservation_ww_class_mutex
-> [   16.049235]
-> [   16.061014]  Possible unsafe locking scenario:
-> [   16.061014]
-> [   16.067091]        CPU0                    CPU1
-> [   16.071750]        ----                    ----
-> [   16.076399]   lock(reservation_ww_class_mutex);
-> [   16.081059]                                lock(&mm->mmap_sem);
-> [   16.087134]                                lock(reservation_ww_class_mutex);
-> [   16.094369]   lock(opp_table_lock);
-> [   16.097961]
-> [   16.097961]  *** DEADLOCK ***
-> [   16.097961]
-> [   16.104038] 3 locks held by chrome/1805:
-> [   16.108068]  #0: ffffff80fb20c0d8 (&dev->struct_mutex){+.+.}, at:
-> msm_ioctl_gem_submit+0x264/0xb60
-> [   16.117264]  #1: ffffff80dd712c70
-> (reservation_ww_class_acquire){+.+.}, at:
-> msm_ioctl_gem_submit+0x8e8/0xb60
-> [   16.127357]  #2: ffffff80ff3911a8
-> (reservation_ww_class_mutex){+.+.}, at: submit_lock_objects+0x70/0x1ec
-> [   16.137089]
-> [   16.137089] stack backtrace:
-> [   16.141567] CPU: 4 PID: 1805 Comm: chrome Not tainted 5.4.70 #41
-> [   16.147733] Hardware name: Google Lazor (rev1+) with LTE (DT)
-> [   16.153632] Call trace:
-> [   16.156154]  dump_backtrace+0x0/0x158
-> [   16.159924]  show_stack+0x20/0x2c
-> [   16.163340]  dump_stack+0xc8/0x160
-> [   16.166840]  print_circular_bug+0x2c4/0x2c8
-> [   16.171144]  check_noncircular+0x1a8/0x1b0
-> [   16.175351]  __lock_acquire+0xee4/0x2450
-> [   16.179382]  lock_acquire+0x1cc/0x210
-> [   16.183146]  __mutex_lock_common+0xec/0xc0c
-> [   16.187450]  mutex_lock_nested+0x40/0x50
-> [   16.191481]  _find_opp_table+0x34/0x74
-> [   16.195344]  dev_pm_opp_find_freq_exact+0x2c/0xdc
-> [   16.200178]  a6xx_gmu_resume+0xc8/0xecc
-> [   16.204120]  a6xx_pm_resume+0x148/0x200
-> [   16.208064]  adreno_resume+0x28/0x34
-> [   16.211743]  pm_generic_runtime_resume+0x34/0x48
-> [   16.216488]  __rpm_callback+0x70/0x10c
-> [   16.220342]  rpm_callback+0x34/0x8c
-> [   16.223933]  rpm_resume+0x414/0x550
-> [   16.227524]  __pm_runtime_resume+0x7c/0xa0
-> [   16.231731]  msm_gpu_submit+0x60/0x1c0
-> [   16.235586]  msm_ioctl_gem_submit+0xadc/0xb60
-> [   16.240066]  drm_ioctl_kernel+0x9c/0x118
-> [   16.244097]  drm_ioctl+0x27c/0x408
-> [   16.247602]  drm_compat_ioctl+0xcc/0xdc
-> [   16.251546]  __se_compat_sys_ioctl+0x100/0x206c
-> [   16.256204]  __arm64_compat_sys_ioctl+0x20/0x2c
-> [   16.260861]  el0_svc_common+0xa8/0x178
-> [   16.264716]  el0_svc_compat_handler+0x2c/0x40
-> [   16.269196]  el0_svc_compat+0x8/0x10
-> 
-> BR,
-> -R
-> 
-> > -Daniel
-> >
-> > >
-> > >   opp_table_lock --> &mm->mmap_sem --> reservation_ww_class_mutex
-> > >
-> > > For an explicit fencing userspace, the impact should be minimal
-> > > as we do all the fence waits before this point.  It could result
-> > > in some needless resumes in error cases, etc.
-> > >
-> > > Signed-off-by: Rob Clark <robdclark@chromium.org>
-> > > ---
-> > >  drivers/gpu/drm/msm/msm_gem_submit.c | 15 +++++++++++++--
-> > >  1 file changed, 13 insertions(+), 2 deletions(-)
-> > >
-> > > diff --git a/drivers/gpu/drm/msm/msm_gem_submit.c b/drivers/gpu/drm/msm/msm_gem_submit.c
-> > > index 002130d826aa..a9422d043bfe 100644
-> > > --- a/drivers/gpu/drm/msm/msm_gem_submit.c
-> > > +++ b/drivers/gpu/drm/msm/msm_gem_submit.c
-> > > @@ -744,11 +744,20 @@ int msm_ioctl_gem_submit(struct drm_device *dev, void *data,
-> > >
-> > >       ret = submit_lookup_objects(submit, args, file);
-> > >       if (ret)
-> > > -             goto out;
-> > > +             goto out_pre_pm;
-> > >
-> > >       ret = submit_lookup_cmds(submit, args, file);
-> > >       if (ret)
-> > > -             goto out;
-> > > +             goto out_pre_pm;
-> > > +
-> > > +     /*
-> > > +      * Thanks to dev_pm_opp opp_table_lock interactions with mm->mmap_sem
-> > > +      * in the resume path, we need to to rpm get before we lock objs.
-> > > +      * Which unfortunately might involve powering up the GPU sooner than
-> > > +      * is necessary.  But at least in the explicit fencing case, we will
-> > > +      * have already done all the fence waiting.
-> > > +      */
-> > > +     pm_runtime_get_sync(&gpu->pdev->dev);
-> > >
-> > >       /* copy_*_user while holding a ww ticket upsets lockdep */
-> > >       ww_acquire_init(&submit->ticket, &reservation_ww_class);
-> > > @@ -825,6 +834,8 @@ int msm_ioctl_gem_submit(struct drm_device *dev, void *data,
-> > >
-> > >
-> > >  out:
-> > > +     pm_runtime_put(&gpu->pdev->dev);
-> > > +out_pre_pm:
-> > >       submit_cleanup(submit);
-> > >       if (has_ww_ticket)
-> > >               ww_acquire_fini(&submit->ticket);
+I've got some minor nits below.
 
--- 
-viresh
+On Sun, 18 Oct 2020 at 14:54, <kholk11@gmail.com> wrote:
+>
+> From: AngeloGioacchino Del Regno <kholk11@gmail.com>
+>
+> Add the support for VFE 4.8 in the camss-vfe-4-7 driver, as this one
+> really is a minor revision, requiring the very same management and
+> basically having the same register layout as VFE 4.7, but needing
+> a different QoS and DS configuration, using a different register to
+> enable the wm and habing the same UB size for both instances (instead
+> of a different size between instance 0 and 1).
+>
+> Signed-off-by: AngeloGioacchino Del Regno <kholk11@gmail.com>
+> ---
+>  .../media/platform/qcom/camss/camss-vfe-4-7.c | 129 ++++++++++++++++--
+>  drivers/media/platform/qcom/camss/camss-vfe.h |   1 +
+>  2 files changed, 122 insertions(+), 8 deletions(-)
+>
+> diff --git a/drivers/media/platform/qcom/camss/camss-vfe-4-7.c b/drivers/media/platform/qcom/camss/camss-vfe-4-7.c
+> index 0dca8bf9281e..e48d58a4a9d1 100644
+> --- a/drivers/media/platform/qcom/camss/camss-vfe-4-7.c
+> +++ b/drivers/media/platform/qcom/camss/camss-vfe-4-7.c
+> @@ -133,6 +133,11 @@
+>  #define VFE_0_BUS_BDG_QOS_CFG_7                0x420
+>  #define VFE_0_BUS_BDG_QOS_CFG_7_CFG    0x0001aaa9
+>
+> +#define VFE48_0_BUS_BDG_QOS_CFG_0_CFG  0xaaa5aaa5
+> +#define VFE48_0_BUS_BDG_QOS_CFG_3_CFG  0xaa55aaa5
+> +#define VFE48_0_BUS_BDG_QOS_CFG_4_CFG  0xaa55aa55
+> +#define VFE48_0_BUS_BDG_QOS_CFG_7_CFG  0x0005aa55
+> +
+>  #define VFE_0_BUS_BDG_DS_CFG_0         0x424
+>  #define VFE_0_BUS_BDG_DS_CFG_0_CFG     0xcccc0011
+>  #define VFE_0_BUS_BDG_DS_CFG_1         0x428
+> @@ -153,6 +158,9 @@
+>  #define VFE_0_BUS_BDG_DS_CFG_16                0x464
+>  #define VFE_0_BUS_BDG_DS_CFG_16_CFG    0x40000103
+>
+> +#define VFE48_0_BUS_BDG_DS_CFG_0_CFG   0xcccc1111
+> +#define VFE48_0_BUS_BDG_DS_CFG_16_CFG  0x00000110
+> +
+>  #define VFE_0_RDI_CFG_x(x)             (0x46c + (0x4 * (x)))
+>  #define VFE_0_RDI_CFG_x_RDI_STREAM_SEL_SHIFT   28
+>  #define VFE_0_RDI_CFG_x_RDI_STREAM_SEL_MASK    (0xf << 28)
+> @@ -231,6 +239,9 @@
+>  #define VFE_0_REALIGN_BUF_CFG_CR_ODD_PIXEL     BIT(3)
+>  #define VFE_0_REALIGN_BUF_CFG_HSUB_ENABLE      BIT(4)
+>
+> +#define VFE48_0_BUS_IMAGE_MASTER_CMD           0xcec
+> +#define VFE48_0_BUS_IMAGE_MASTER_n_SHIFT(x)    (2 * (x))
+> +
+>  #define CAMIF_TIMEOUT_SLEEP_US 1000
+>  #define CAMIF_TIMEOUT_ALL_US 1000000
+>
+> @@ -246,7 +257,7 @@ static void vfe_hw_version_read(struct vfe_device *vfe, struct device *dev)
+>         dev_err(dev, "VFE HW Version = 0x%08x\n", hw_version);
+>  }
+>
+> -static u16 vfe_get_ub_size(u8 vfe_id)
+> +static u16 vfe47_get_ub_size(u8 vfe_id)
+>  {
+>         if (vfe_id == 0)
+>                 return MSM_VFE_VFE0_UB_SIZE_RDI;
+> @@ -299,7 +310,7 @@ static void vfe_halt_clear(struct vfe_device *vfe)
+>         writel_relaxed(0x0, vfe->base + VFE_0_BUS_BDG_CMD);
+>  }
+>
+> -static void vfe_wm_enable(struct vfe_device *vfe, u8 wm, u8 enable)
+> +static void vfe47_wm_enable(struct vfe_device *vfe, u8 wm, u8 enable)
+>  {
+>         if (enable)
+>                 vfe_reg_set(vfe, VFE_0_BUS_IMAGE_MASTER_n_WR_CFG(wm),
+> @@ -883,7 +894,7 @@ static void vfe_set_clamp_cfg(struct vfe_device *vfe)
+>         writel_relaxed(val, vfe->base + VFE_0_CLAMP_ENC_MIN_CFG);
+>  }
+>
+> -static void vfe_set_qos(struct vfe_device *vfe)
+> +static void vfe47_set_qos(struct vfe_device *vfe)
+>  {
+>         u32 val = VFE_0_BUS_BDG_QOS_CFG_0_CFG;
+>         u32 val7 = VFE_0_BUS_BDG_QOS_CFG_7_CFG;
+> @@ -898,7 +909,7 @@ static void vfe_set_qos(struct vfe_device *vfe)
+>         writel_relaxed(val7, vfe->base + VFE_0_BUS_BDG_QOS_CFG_7);
+>  }
+>
+> -static void vfe_set_ds(struct vfe_device *vfe)
+> +static void vfe47_set_ds(struct vfe_device *vfe)
+>  {
+>         u32 val = VFE_0_BUS_BDG_DS_CFG_0_CFG;
+>         u32 val16 = VFE_0_BUS_BDG_DS_CFG_16_CFG;
+> @@ -1098,11 +1109,113 @@ static irqreturn_t vfe_isr(int irq, void *dev)
+>
+>  const struct vfe_hw_ops vfe_ops_4_7 = {
+>         .hw_version_read = vfe_hw_version_read,
+> -       .get_ub_size = vfe_get_ub_size,
+> +       .get_ub_size = vfe47_get_ub_size,
+> +       .global_reset = vfe_global_reset,
+> +       .halt_request = vfe_halt_request,
+> +       .halt_clear = vfe_halt_clear,
+> +       .wm_enable = vfe47_wm_enable,
+> +       .wm_frame_based = vfe_wm_frame_based,
+> +       .wm_line_based = vfe_wm_line_based,
+> +       .wm_set_framedrop_period = vfe_wm_set_framedrop_period,
+> +       .wm_set_framedrop_pattern = vfe_wm_set_framedrop_pattern,
+> +       .wm_set_ub_cfg = vfe_wm_set_ub_cfg,
+> +       .bus_reload_wm = vfe_bus_reload_wm,
+> +       .wm_set_ping_addr = vfe_wm_set_ping_addr,
+> +       .wm_set_pong_addr = vfe_wm_set_pong_addr,
+> +       .wm_get_ping_pong_status = vfe_wm_get_ping_pong_status,
+> +       .bus_enable_wr_if = vfe_bus_enable_wr_if,
+> +       .bus_connect_wm_to_rdi = vfe_bus_connect_wm_to_rdi,
+> +       .wm_set_subsample = vfe_wm_set_subsample,
+> +       .bus_disconnect_wm_from_rdi = vfe_bus_disconnect_wm_from_rdi,
+> +       .set_xbar_cfg = vfe_set_xbar_cfg,
+> +       .set_realign_cfg = vfe_set_realign_cfg,
+> +       .set_rdi_cid = vfe_set_rdi_cid,
+> +       .reg_update = vfe_reg_update,
+> +       .reg_update_clear = vfe_reg_update_clear,
+> +       .enable_irq_wm_line = vfe_enable_irq_wm_line,
+> +       .enable_irq_pix_line = vfe_enable_irq_pix_line,
+> +       .enable_irq_common = vfe_enable_irq_common,
+> +       .set_demux_cfg = vfe_set_demux_cfg,
+> +       .set_scale_cfg = vfe_set_scale_cfg,
+> +       .set_crop_cfg = vfe_set_crop_cfg,
+> +       .set_clamp_cfg = vfe_set_clamp_cfg,
+> +       .set_qos = vfe47_set_qos,
+> +       .set_ds = vfe47_set_ds,
+> +       .set_cgc_override = vfe_set_cgc_override,
+> +       .set_camif_cfg = vfe_set_camif_cfg,
+> +       .set_camif_cmd = vfe_set_camif_cmd,
+> +       .set_module_cfg = vfe_set_module_cfg,
+> +       .camif_wait_for_stop = vfe_camif_wait_for_stop,
+> +       .isr_read = vfe_isr_read,
+> +       .violation_read = vfe_violation_read,
+> +       .isr = vfe_isr,
+> +};
+
+I would consider splitting the assignments that aren't related to
+vfe48 support out into another commit. The ones that are vfe48 related
+can stay in this commit.
+
+> +
+> +static u16 vfe48_get_ub_size(u8 vfe_id)
+> +{
+> +       /* On VFE4.8 the ub-size is the same on both instances */
+> +       return MSM_VFE_VFE0_UB_SIZE_RDI;
+> +}
+> +
+> +static void vfe48_wm_enable(struct vfe_device *vfe, u8 wm, u8 enable)
+> +{
+> +       if (enable)
+> +               writel_relaxed(2 << VFE48_0_BUS_IMAGE_MASTER_n_SHIFT(wm),
+> +                              vfe->base + VFE48_0_BUS_IMAGE_MASTER_CMD);
+> +       else
+> +               writel_relaxed(1 << VFE48_0_BUS_IMAGE_MASTER_n_SHIFT(wm),
+> +                              vfe->base + VFE48_0_BUS_IMAGE_MASTER_CMD);
+> +       wmb();
+
+checkpatch rightly complains about this wmb() call being uncommented.
+None or nearly none of the other wmb() calls are documented, but I
+think it would be good practice to start documenting their purpose in
+order to increase long-term maintainability.
+
+> +}
+> +
+> +static void vfe48_set_qos(struct vfe_device *vfe)
+> +{
+> +       u32 val = VFE48_0_BUS_BDG_QOS_CFG_0_CFG;
+> +       u32 val3 = VFE48_0_BUS_BDG_QOS_CFG_3_CFG;
+> +       u32 val4 = VFE48_0_BUS_BDG_QOS_CFG_4_CFG;
+> +       u32 val7 = VFE48_0_BUS_BDG_QOS_CFG_7_CFG;
+> +
+> +       writel_relaxed(val, vfe->base + VFE_0_BUS_BDG_QOS_CFG_0);
+> +       writel_relaxed(val, vfe->base + VFE_0_BUS_BDG_QOS_CFG_1);
+> +       writel_relaxed(val, vfe->base + VFE_0_BUS_BDG_QOS_CFG_2);
+> +       writel_relaxed(val3, vfe->base + VFE_0_BUS_BDG_QOS_CFG_3);
+> +       writel_relaxed(val4, vfe->base + VFE_0_BUS_BDG_QOS_CFG_4);
+> +       writel_relaxed(val4, vfe->base + VFE_0_BUS_BDG_QOS_CFG_5);
+> +       writel_relaxed(val4, vfe->base + VFE_0_BUS_BDG_QOS_CFG_6);
+> +       writel_relaxed(val7, vfe->base + VFE_0_BUS_BDG_QOS_CFG_7);
+> +}
+> +
+> +static void vfe48_set_ds(struct vfe_device *vfe)
+> +{
+> +       u32 val = VFE48_0_BUS_BDG_DS_CFG_0_CFG;
+> +       u32 val16 = VFE48_0_BUS_BDG_DS_CFG_16_CFG;
+> +
+> +       writel_relaxed(val, vfe->base + VFE_0_BUS_BDG_DS_CFG_0);
+> +       writel_relaxed(val, vfe->base + VFE_0_BUS_BDG_DS_CFG_1);
+> +       writel_relaxed(val, vfe->base + VFE_0_BUS_BDG_DS_CFG_2);
+> +       writel_relaxed(val, vfe->base + VFE_0_BUS_BDG_DS_CFG_3);
+> +       writel_relaxed(val, vfe->base + VFE_0_BUS_BDG_DS_CFG_4);
+> +       writel_relaxed(val, vfe->base + VFE_0_BUS_BDG_DS_CFG_5);
+> +       writel_relaxed(val, vfe->base + VFE_0_BUS_BDG_DS_CFG_6);
+> +       writel_relaxed(val, vfe->base + VFE_0_BUS_BDG_DS_CFG_7);
+> +       writel_relaxed(val, vfe->base + VFE_0_BUS_BDG_DS_CFG_8);
+> +       writel_relaxed(val, vfe->base + VFE_0_BUS_BDG_DS_CFG_9);
+> +       writel_relaxed(val, vfe->base + VFE_0_BUS_BDG_DS_CFG_10);
+> +       writel_relaxed(val, vfe->base + VFE_0_BUS_BDG_DS_CFG_11);
+> +       writel_relaxed(val, vfe->base + VFE_0_BUS_BDG_DS_CFG_12);
+> +       writel_relaxed(val, vfe->base + VFE_0_BUS_BDG_DS_CFG_13);
+> +       writel_relaxed(val, vfe->base + VFE_0_BUS_BDG_DS_CFG_14);
+> +       writel_relaxed(val, vfe->base + VFE_0_BUS_BDG_DS_CFG_15);
+> +       writel_relaxed(val16, vfe->base + VFE_0_BUS_BDG_DS_CFG_16);
+> +}
+> +
+> +const struct vfe_hw_ops vfe_ops_4_8 = {
+> +       .hw_version_read = vfe_hw_version_read,
+> +       .get_ub_size = vfe48_get_ub_size,
+>         .global_reset = vfe_global_reset,
+>         .halt_request = vfe_halt_request,
+>         .halt_clear = vfe_halt_clear,
+> -       .wm_enable = vfe_wm_enable,
+> +       .wm_enable = vfe48_wm_enable,
+>         .wm_frame_based = vfe_wm_frame_based,
+>         .wm_line_based = vfe_wm_line_based,
+>         .wm_set_framedrop_period = vfe_wm_set_framedrop_period,
+> @@ -1128,8 +1241,8 @@ const struct vfe_hw_ops vfe_ops_4_7 = {
+>         .set_scale_cfg = vfe_set_scale_cfg,
+>         .set_crop_cfg = vfe_set_crop_cfg,
+>         .set_clamp_cfg = vfe_set_clamp_cfg,
+> -       .set_qos = vfe_set_qos,
+> -       .set_ds = vfe_set_ds,
+> +       .set_qos = vfe48_set_qos,
+> +       .set_ds = vfe48_set_ds,
+>         .set_cgc_override = vfe_set_cgc_override,
+>         .set_camif_cfg = vfe_set_camif_cfg,
+>         .set_camif_cmd = vfe_set_camif_cmd,
+> diff --git a/drivers/media/platform/qcom/camss/camss-vfe.h b/drivers/media/platform/qcom/camss/camss-vfe.h
+> index a90b0d2cc6de..5bce6736e4bb 100644
+> --- a/drivers/media/platform/qcom/camss/camss-vfe.h
+> +++ b/drivers/media/platform/qcom/camss/camss-vfe.h
+> @@ -180,5 +180,6 @@ void msm_vfe_get_vfe_line_id(struct media_entity *entity, enum vfe_line_id *id);
+>
+>  extern const struct vfe_hw_ops vfe_ops_4_1;
+>  extern const struct vfe_hw_ops vfe_ops_4_7;
+> +extern const struct vfe_hw_ops vfe_ops_4_8;
+>
+>  #endif /* QC_MSM_CAMSS_VFE_H */
+> --
+> 2.28.0
+>
