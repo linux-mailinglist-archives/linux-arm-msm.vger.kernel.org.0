@@ -2,185 +2,485 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 1CD78294347
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Oct 2020 21:39:42 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A521D2943A2
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Oct 2020 21:57:28 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2409089AbgJTTjk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 20 Oct 2020 15:39:40 -0400
-Received: from mail.kernel.org ([198.145.29.99]:43150 "EHLO mail.kernel.org"
+        id S2405415AbgJTT51 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 20 Oct 2020 15:57:27 -0400
+Received: from m42-4.mailgun.net ([69.72.42.4]:38071 "EHLO m42-4.mailgun.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2409074AbgJTTjh (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 20 Oct 2020 15:39:37 -0400
-Received: from localhost (fw-tnat.cambridge.arm.com [217.140.96.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        id S1729928AbgJTT51 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 20 Oct 2020 15:57:27 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1603223845; h=Message-ID: References: In-Reply-To: Reply-To:
+ Subject: Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=MQQMElofRADDeLEcAgb6PRHkTibxavAdOg9Dq0MjA1s=;
+ b=ouSzUJVWuQfH8sip19mUip9FXkXYKtqoSsD/2KTQlvU6VU/zumAx0/QfmpyQPE+VhF0em7uK
+ ebSzz6GT9ZiLcITDp/oQdqZtZLP+TODQCGDca9anInVGjWWmuO56Ib3qgKrsonvip8Ux6fOb
+ qWxBamuk96/BIgWjhOXlObtVgw4=
+X-Mailgun-Sending-Ip: 69.72.42.4
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n07.prod.us-west-2.postgun.com with SMTP id
+ 5f8f412083370fa1c16c3bde (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 20 Oct 2020 19:57:20
+ GMT
+Sender: bbhatt=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id BC982C433FE; Tue, 20 Oct 2020 19:57:20 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 89CFF2225D;
-        Tue, 20 Oct 2020 19:39:35 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1603222776;
-        bh=UdgnNWumPxY1W96SexJ8p035CUKD9xNftds7uTA3ZK8=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=H+SgDQ1yyKmeI7/XvknsTfx3uKsx0C4YIEiaKTndN+kZHjVJccqivzcHeSqv/1DKK
-         iCB3+nwQLtxtab1fEN+Zo69syX/jDw+7kTuRtWvK5ikn8DeNKfxdBnCG40uijfbVoS
-         EhWcV3WGdtk+RaJj4lEO5WJeTflpJgATgvtBei0U=
-Date:   Tue, 20 Oct 2020 20:39:25 +0100
-From:   Mark Brown <broonie@kernel.org>
-To:     Cheng-yi Chiang <cychiang@chromium.org>
-Cc:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        linux-kernel <linux-kernel@vger.kernel.org>,
-        Taniya Das <tdas@codeaurora.org>,
-        Rohit kumar <rohitkr@codeaurora.org>,
-        Banajit Goswami <bgoswami@codeaurora.org>,
-        Patrick Lai <plai@codeaurora.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Jaroslav Kysela <perex@perex.cz>,
-        Takashi Iwai <tiwai@suse.com>,
-        Stephan Gerhold <stephan@gerhold.net>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        Heiko Stuebner <heiko@sntech.de>,
-        Srinivasa Rao <srivasam@codeaurora.org>,
-        Doug Anderson <dianders@chromium.org>,
-        Dylan Reid <dgreid@chromium.org>,
-        Tzung-Bi Shih <tzungbi@chromium.org>,
-        Linux ARM <linux-arm-kernel@lists.infradead.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>,
-        "moderated list:SOUND - SOC LAYER / DYNAMIC AUDIO POWER MANAGEM..." 
-        <alsa-devel@alsa-project.org>,
-        "moderated list:ARM/Mediatek SoC support" 
-        <linux-mediatek@lists.infradead.org>,
-        "open list:ARM/Rockchip SoC..." <linux-rockchip@lists.infradead.org>,
-        Ajye Huang <ajye_huang@compal.corp-partner.google.com>
-Subject: Re: [PATCH v11 2/3] ASoC: qcom: dt-bindings: Add sc7180 machine
- bindings
-Message-ID: <20201020193925.GF9448@sirena.org.uk>
-References: <20200914080619.4178587-1-cychiang@chromium.org>
- <20200914080619.4178587-3-cychiang@chromium.org>
- <7bdc0d63-27b1-f99e-c5f8-65f880733d16@linaro.org>
- <CAFv8NwLkvxX2avoLY+4NY5gBv0dQ863hFFiqy7iQOJxH4WenmQ@mail.gmail.com>
- <20201015161251.GF4390@sirena.org.uk>
- <CAFv8NwL1xX=yPGFqQL_mOzAnPTfH0Z0J6ibG1+D32W46Nx0KYQ@mail.gmail.com>
- <20201020143711.GC9448@sirena.org.uk>
- <CAFv8NwKuLjLeM1KLeV8Br2TZC8L7DO6KWHL=pXvhAUV5+wSBPg@mail.gmail.com>
+        (Authenticated sender: bbhatt)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 21D6DC433C9;
+        Tue, 20 Oct 2020 19:57:19 +0000 (UTC)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="oFbHfjnMgUMsrGjO"
-Content-Disposition: inline
-In-Reply-To: <CAFv8NwKuLjLeM1KLeV8Br2TZC8L7DO6KWHL=pXvhAUV5+wSBPg@mail.gmail.com>
-X-Cookie: The people rule.
-User-Agent: Mutt/1.10.1 (2018-07-13)
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Tue, 20 Oct 2020 12:57:19 -0700
+From:   Bhaumik Bhatt <bbhatt@codeaurora.org>
+To:     Loic Poulain <loic.poulain@linaro.org>
+Cc:     manivannan.sadhasivam@linaro.org, hemantk@codeaurora.org,
+        linux-arm-msm@vger.kernel.org, bjorn.andersson@linaro.org,
+        jhugo@codeaurora.org
+Subject: Re: [PATCH v4] bus: mhi: Add MHI PCI support for WWAN modems
+Organization: Qualcomm Innovation Center, Inc.
+Reply-To: bbhatt@codeaurora.org
+Mail-Reply-To: bbhatt@codeaurora.org
+In-Reply-To: <1603108844-22286-1-git-send-email-loic.poulain@linaro.org>
+References: <1603108844-22286-1-git-send-email-loic.poulain@linaro.org>
+Message-ID: <0c1cb6f09966e0d20b7e4271b45ad8a4@codeaurora.org>
+X-Sender: bbhatt@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On 2020-10-19 05:00, Loic Poulain wrote:
+> This is a generic MHI-over-PCI controller driver for MHI only devices
+> such as QCOM modems. For now it supports registering of Qualcomm SDX55
+> based PCIe modules. The MHI channels have been extracted from mhi
+> downstream driver.
+> 
+> This driver is for MHI-only devices which have all functionnalities
+> exposed through MHI channels and accessed by the corresponding MHI
+> device drivers (no out-of-band communication).
+> 
+> Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
+Reviewed-by: Bhaumik Bhatt <bbhatt@codeaurora.org>
+> ---
+>  v2: - remove useless delay.h include
+>      - remove over-logging on error
+>      - remove controller subdir
+>      - rename to mhi_pci_modem.c
+>      - Fix mhi_pci_probe exit path on error
+>      - expand module description
+>      - drop module version
+>  v3: - Rename to mhi_pci_generic
+>      - Add hardware accelerated IP channel (IPA)
+>      - Added fw/edl names for sdx55m
+>  v4: - Configurable dma width access
+>      - Configurable PCI BAR number (default is 0)
+> 
+>  drivers/bus/mhi/Kconfig           |   9 +
+>  drivers/bus/mhi/Makefile          |   3 +
+>  drivers/bus/mhi/mhi_pci_generic.c | 336 
+> ++++++++++++++++++++++++++++++++++++++
+>  3 files changed, 348 insertions(+)
+>  create mode 100644 drivers/bus/mhi/mhi_pci_generic.c
+> 
+> diff --git a/drivers/bus/mhi/Kconfig b/drivers/bus/mhi/Kconfig
+> index e841c10..daa8528 100644
+> --- a/drivers/bus/mhi/Kconfig
+> +++ b/drivers/bus/mhi/Kconfig
+> @@ -20,3 +20,12 @@ config MHI_BUS_DEBUG
+>  	  Enable debugfs support for use with the MHI transport. Allows
+>  	  reading and/or modifying some values within the MHI controller
+>  	  for debug and test purposes.
+> +
+> +config MHI_BUS_PCI_GENERIC
+> +	tristate "MHI PCI controller driver"
+> +	depends on MHI_BUS
+> +	depends on PCI
+> +	help
+> +	  This driver provides Modem Host Interface (MHI) PCI controller 
+> driver
+> +	  for devices such as Qualcomm SDX55 based PCIe modems.
+> +
+> diff --git a/drivers/bus/mhi/Makefile b/drivers/bus/mhi/Makefile
+> index 19e6443..d1a4ef3 100644
+> --- a/drivers/bus/mhi/Makefile
+> +++ b/drivers/bus/mhi/Makefile
+> @@ -1,2 +1,5 @@
+>  # core layer
+>  obj-y += core/
+> +
+> +obj-$(CONFIG_MHI_BUS_PCI_GENERIC) := mhi_pci_generic.o
+> +
+> diff --git a/drivers/bus/mhi/mhi_pci_generic.c
+> b/drivers/bus/mhi/mhi_pci_generic.c
+> new file mode 100644
+> index 0000000..dcd6c1a
+> --- /dev/null
+> +++ b/drivers/bus/mhi/mhi_pci_generic.c
+> @@ -0,0 +1,336 @@
+> +// SPDX-License-Identifier: GPL-2.0-or-later
+> +/*
+> + * MHI PCI driver - MHI over PCI controller driver
+> + *
+> + * This module is a generic driver for registering MHI-over-PCI 
+> devices,
+> + * such as PCIe QCOM modems.
+> + *
+> + * Copyright (C) 2020 Linaro Ltd <loic.poulain@linaro.org>
+> + */
+> +
+> +#include <linux/device.h>
+> +#include <linux/mhi.h>
+> +#include <linux/module.h>
+> +#include <linux/pci.h>
+> +
+> +#define MHI_PCI_DEFAULT_BAR_NUM 0
+> +
+> +struct mhi_pci_dev_info {
+> +	const struct mhi_controller_config *config;
+> +	const char *name;
+> +	const char *fw;
+> +	const char *edl;
+> +	unsigned int bar_num;
+> +	unsigned int dma_data_width;
+> +};
+> +
+> +#define MHI_CHANNEL_CONFIG_UL(cnum, cname, elems, event)	\
+> +	{							\
+> +		.num = cnum,					\
+> +		.name = cname,					\
+> +		.num_elements = elems,				\
+> +		.event_ring = event,				\
+> +		.dir = DMA_TO_DEVICE,				\
+> +		.ee_mask = BIT(MHI_EE_AMSS),			\
+> +		.pollcfg = 0,					\
+> +		.doorbell = MHI_DB_BRST_DISABLE,		\
+> +		.lpm_notify = false,				\
+> +		.offload_channel = false,			\
+> +		.doorbell_mode_switch = false,			\
+> +	}							\
+> +
+> +#define MHI_CHANNEL_CONFIG_DL(cnum, cname, elems, event)	\
+> +	{							\
+> +		.num = cnum,					\
+> +		.name = cname,					\
+> +		.num_elements = elems,				\
+> +		.event_ring = event,				\
+> +		.dir = DMA_FROM_DEVICE,				\
+> +		.ee_mask = BIT(MHI_EE_AMSS),			\
+> +		.pollcfg = 0,					\
+> +		.doorbell = MHI_DB_BRST_DISABLE,		\
+> +		.lpm_notify = false,				\
+> +		.offload_channel = false,			\
+> +		.doorbell_mode_switch = false,			\
+> +	}
+> +
+> +#define MHI_EVENT_CONFIG_CTRL(enum)		\
+> +	{					\
+> +		.num_elements = 64,		\
+> +		.irq_moderation_ms = 0,		\
+> +		.irq = (enum) + 1,		\
+> +		.priority = 1,			\
+> +		.mode = MHI_DB_BRST_DISABLE,	\
+> +		.data_type = MHI_ER_CTRL,	\
+> +		.hardware_event = false,	\
+> +		.client_managed = false,	\
+> +		.offload_channel = false,	\
+> +	}
+> +
+> +#define MHI_EVENT_CONFIG_DATA(enum)		\
+> +	{					\
+> +		.num_elements = 128,		\
+> +		.irq_moderation_ms = 5,		\
+> +		.irq = (enum) + 1,		\
+> +		.priority = 1,			\
+> +		.mode = MHI_DB_BRST_DISABLE,	\
+> +		.data_type = MHI_ER_DATA,	\
+> +		.hardware_event = false,	\
+> +		.client_managed = false,	\
+> +		.offload_channel = false,	\
+> +	}
+> +
+> +#define MHI_EVENT_CONFIG_HW_DATA(enum, cnum)	\
+> +	{					\
+> +		.num_elements = 128,		\
+> +		.irq_moderation_ms = 5,		\
+> +		.irq = (enum) + 1,		\
+> +		.priority = 1,			\
+> +		.mode = MHI_DB_BRST_DISABLE,	\
+> +		.data_type = MHI_ER_DATA,	\
+> +		.hardware_event = true,		\
+> +		.client_managed = false,	\
+> +		.offload_channel = false,	\
+> +		.channel = cnum,		\
+> +	}
+> +
+> +static const struct mhi_channel_config modem_qcom_v1_mhi_channels[] = 
+> {
+> +	MHI_CHANNEL_CONFIG_UL(12, "MBIM", 4, 0),
+> +	MHI_CHANNEL_CONFIG_DL(13, "MBIM", 4, 0),
+> +	MHI_CHANNEL_CONFIG_UL(14, "QMI", 4, 0),
+> +	MHI_CHANNEL_CONFIG_DL(15, "QMI", 4, 0),
+> +	MHI_CHANNEL_CONFIG_UL(20, "IPCR", 8, 0),
+> +	MHI_CHANNEL_CONFIG_DL(21, "IPCR", 8, 0),
+> +	MHI_CHANNEL_CONFIG_UL(100, "IP_HW0", 128, 1),
+> +	MHI_CHANNEL_CONFIG_DL(101, "IP_HW0", 128, 2),
+> +};
+> +
+> +static const struct mhi_event_config modem_qcom_v1_mhi_events[] = {
+> +	/* first ring is control+data ring */
+> +	MHI_EVENT_CONFIG_CTRL(0),
+> +	/* Hardware channels request dedicated hardware event rings */
+> +	MHI_EVENT_CONFIG_HW_DATA(1, 100),
+> +	MHI_EVENT_CONFIG_HW_DATA(2, 101)
+> +};
+> +
+> +static const struct mhi_controller_config modem_qcom_v1_mhi_config = {
+> +	.max_channels = 128,
+> +	.timeout_ms = 5000,
+> +	.num_channels = ARRAY_SIZE(modem_qcom_v1_mhi_channels),
+> +	.ch_cfg = modem_qcom_v1_mhi_channels,
+> +	.num_events = ARRAY_SIZE(modem_qcom_v1_mhi_events),
+> +	.event_cfg = modem_qcom_v1_mhi_events,
+> +};
+> +
+> +static const struct mhi_pci_dev_info mhi_qcom_sdx55_info = {
+> +	.name = "qcom-sdx55m",
+> +	.fw = "qcom/sdx55m/sbl1.mbn",
+> +	.edl = "qcom/sdx55m/edl.mbn",
+> +	.config = &modem_qcom_v1_mhi_config,
+> +	.bar_num = MHI_PCI_DEFAULT_BAR_NUM,
+> +	.dma_data_width = 32
+> +};
+> +
+> +static const struct pci_device_id mhi_pci_id_table[] = {
+> +	{ PCI_DEVICE(PCI_VENDOR_ID_QCOM, 0x0306),
+> +		.driver_data = (kernel_ulong_t) &mhi_qcom_sdx55_info },
+> +	{  }
+> +};
+> +MODULE_DEVICE_TABLE(pci, mhi_pci_id_table);
+> +
+> +static int mhi_pci_read_reg(struct mhi_controller *mhic, void __iomem 
+> *addr,
+> +			    u32 *out)
+> +{
+> +	*out = readl(addr);
+> +	return 0;
+> +}
+> +
+> +static void mhi_pci_write_reg(struct mhi_controller *mhic, void 
+> __iomem *addr,
+> +			      u32 val)
+> +{
+> +	writel(val, addr);
+> +}
+> +
+> +static void mhi_pci_status_cb(struct mhi_controller *mhi_cntrl,
+> +			      enum mhi_callback cb)
+> +{
+> +	return;
+> +}
+> +
+> +static int mhi_pci_claim(struct mhi_controller *mhic, unsigned int 
+> bar_num,
+> +			 u64 dma_mask)
+> +{
+> +	struct pci_dev *pdev = to_pci_dev(mhic->cntrl_dev);
+> +	int err;
+> +
+> +	err = pci_assign_resource(pdev, bar_num);
+> +	if (err)
+> +		return err;
+> +
+> +	err = pcim_enable_device(pdev);
+> +	if (err) {
+> +		dev_err(&pdev->dev, "failed to enable pci device: %d\n", err);
+> +		return err;
+> +	}
+> +
+> +	err = pcim_iomap_regions(pdev, 1 << bar_num, pci_name(pdev));
+> +	if (err) {
+> +		dev_err(&pdev->dev, "failed to map pci region: %d\n", err);
+> +		return err;
+> +	}
+> +	mhic->regs = pcim_iomap_table(pdev)[bar_num];
+> +
+> +	err = pci_set_dma_mask(pdev, dma_mask);
+> +	if (err) {
+> +		dev_err(&pdev->dev, "Cannot set proper DMA mask\n");
+> +		return err;
+> +	}
+> +
+> +	err = pci_set_consistent_dma_mask(pdev, dma_mask);
+> +	if (err) {
+> +		dev_err(&pdev->dev, "set consistent dma mask failed\n");
+> +		return err;
+> +	}
+> +
+> +	pci_set_master(pdev);
+> +
+> +	return 0;
+> +}
+> +
+> +static int mhi_pci_get_irqs(struct mhi_controller *mhic,
+> +			    const struct mhi_controller_config *mhic_config)
+> +{
+> +	struct pci_dev *pdev = to_pci_dev(mhic->cntrl_dev);
+> +	int nr_vectors, i;
+> +	int *irq;
+> +
+> +	/*
+> +	 * Alloc one MSI vector for BHI + one vector per event ring, 
+> ideally...
+> +	 * No explicit pci_free_irq_vectors required, done by pcim_release.
+> +	 */
+> +	mhic->nr_irqs = 1 + mhic_config->num_events;
+> +
+> +	nr_vectors = pci_alloc_irq_vectors(pdev, 1, mhic->nr_irqs, 
+> PCI_IRQ_MSI);
+> +	if (nr_vectors < 0) {
+> +		dev_err(&pdev->dev, "Error allocating MSI vectors %d\n",
+> +			nr_vectors);
+> +		return nr_vectors;
+> +	}
+> +
+> +	if (nr_vectors < mhic->nr_irqs) {
+> +		dev_warn(&pdev->dev, "Not enough MSI vectors (%d/%d)\n",
+> +			 nr_vectors, mhic_config->num_events);
+> +		/* continue... use shared IRQ */
+> +	}
+> +
+> +	irq = devm_kcalloc(&pdev->dev, mhic->nr_irqs, sizeof(int), 
+> GFP_KERNEL);
+> +	if (!irq)
+> +		return -ENOMEM;
+> +
+> +	for (i = 0; i < mhic->nr_irqs; i++) {
+> +		int vector = i >= nr_vectors ? (nr_vectors - 1) : i;
+> +
+> +		irq[i] = pci_irq_vector(pdev, vector);
+> +	}
+> +
+> +	mhic->irq = irq;
+> +
+> +	return 0;
+> +}
+> +
+> +static int mhi_pci_runtime_get(struct mhi_controller *mhi_cntrl)
+> +{
+> +	/* no PM for now */
+> +	return 0;
+> +}
+> +
+> +static void mhi_pci_runtime_put(struct mhi_controller *mhi_cntrl)
+> +{
+> +	/* no PM for now */
+> +	return;
+> +}
+> +
+> +static int mhi_pci_probe(struct pci_dev *pdev, const struct 
+> pci_device_id *id)
+> +{
+> +	const struct mhi_pci_dev_info *info = (struct mhi_pci_dev_info *)
+> id->driver_data;
+> +	const struct mhi_controller_config *mhic_config;
+> +	struct mhi_controller *mhic;
+> +	int err;
+> +
+> +	dev_info(&pdev->dev, "MHI PCI device found: %s\n", info->name);
+> +
+> +	mhic = devm_kzalloc(&pdev->dev, sizeof(*mhic), GFP_KERNEL);
+> +	if (!mhic)
+> +		return -ENOMEM;
+> +
+> +	mhic_config = info->config;
+> +	mhic->cntrl_dev = &pdev->dev;
+> +	mhic->iova_start = 0;
+> +	mhic->iova_stop = DMA_BIT_MASK(info->dma_data_width);
+> +	mhic->fw_image = info->fw;
+> +	mhic->edl_image = info->edl;
+> +
+> +	mhic->read_reg = mhi_pci_read_reg;
+> +	mhic->write_reg = mhi_pci_write_reg;
+> +	mhic->status_cb = mhi_pci_status_cb;
+> +	mhic->runtime_get = mhi_pci_runtime_get;
+> +	mhic->runtime_put = mhi_pci_runtime_put;
+> +
+> +	err = mhi_pci_claim(mhic, info->bar_num, 
+> DMA_BIT_MASK(info->dma_data_width));
+> +	if (err)
+> +		return err;
+> +
+> +	err = mhi_pci_get_irqs(mhic, mhic_config);
+> +	if (err)
+> +		return err;
+> +
+> +	pci_set_drvdata(pdev, mhic);
+> +
+> +	err = mhi_register_controller(mhic, mhic_config);
+> +	if (err)
+> +		return err;
+> +
+> +	/* MHI bus does not power up the controller by default */
+> +	err = mhi_prepare_for_power_up(mhic);
+> +	if (err) {
+> +		dev_err(&pdev->dev, "failed to prepare MHI controller\n");
+> +		goto err_unregister;
+> +	}
+> +
+> +	err = mhi_sync_power_up(mhic);
+> +	if (err) {
+> +		dev_err(&pdev->dev, "failed to power up MHI controller\n");
+> +		goto err_unprepare;
+> +	}
+> +
+> +	return 0;
+> +
+> +err_unprepare:
+> +	mhi_unprepare_after_power_down(mhic);
+> +
+> +err_unregister:
+> +	mhi_unregister_controller(mhic);
+> +
+> +	return err;
+> +}
+> +
+> +static void mhi_pci_remove(struct pci_dev *pdev)
+> +{
+> +	struct mhi_controller *mhic = pci_get_drvdata(pdev);
+> +
+> +	mhi_power_down(mhic, true);
+> +	mhi_unprepare_after_power_down(mhic);
+> +	mhi_unregister_controller(mhic);
+> +}
+> +
+> +static struct pci_driver mhi_pci_driver = {
+> +	.name		= "mhi-pci-generic",
+> +	.id_table	= mhi_pci_id_table,
+> +	.probe		= mhi_pci_probe,
+> +	.remove		= mhi_pci_remove
+> +};
+> +module_pci_driver(mhi_pci_driver);
+> +
+> +MODULE_AUTHOR("Loic Poulain <loic.poulain@linaro,org>");
+> +MODULE_DESCRIPTION("Modem Host Interface (MHI) PCI controller 
+> driver");
+> +MODULE_LICENSE("GPL");
 
---oFbHfjnMgUMsrGjO
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-
-On Wed, Oct 21, 2020 at 02:51:33AM +0800, Cheng-yi Chiang wrote:
-> On Tue, Oct 20, 2020 at 10:37 PM Mark Brown <broonie@kernel.org> wrote:
-
-> > If the device has both front and rear mics and only one can be active at
-> > once that seems obvious and sensible.  If the devices only have one of
-> > these then this seems like a bad idea.
-
-> trogdor board: only front mic.
-> pompom board: having both front mic and rear mic. Only one of them
-> will be used at a time. It is toggled by mixer control backed by a
-> gpio.
-
-> My proposed solution: instead of using compatible strings, expose only
-> dmic-gpio property.
-> When the machine driver sees this property, it uses the dapm widgets
-> and controls created in the machine driver.
-
-Yes, that is what I would expect.
-
-> > I don't understand what "logic scattered in various dtsi files" means,
-> > sorry.
-
-> I mean I don't want to use device property to pass in widget name,
-> type, text and callbacks.
-> Let me give an example:
-
-> - Board trogdor uses front mic, rt5682, and max98357a.
-> - Board pompom is based on board trogdor, but it has front mic and rear mic.
-> If we somehow managed to add the code to pass in widget, route, type,
-> text, and callbacks needed for dmic control, we will need to put a
-> bunch of properties in trogdor-pompom.dtsi file.
-
-Most of this code is already there as part of the generic card
-infrastructure, the only thing that stands out for me is the GPIO to
-switch between the front and rear mics.
-
-> - Board ABC is based on trogdor as well, and it has front mic and rear
-> mic, but with a different speaker amp.
-
-> To use widget, route, type, text and callbacks for front mic and rear
-> mic, in trogdor-ABC.dtsi file we would copy some properties used in
-> trogdor-pompom.dtsi file. To support the different combination of
-> codec, we would need some modification of the route and widget.
-
-It shouldn't be hugely difficult to split the DT files up usually, and
-ideally they'd be small enough that just having an entirely new sound
-bit isn't the end of the world.  Again I'm just not clear what you're
-seeing here.
-
-> > The CODEC change is going to be described in the DT no matter what -
-> > you'll have a reference to the CODEC node but it may make sense if
-> > there's enough custom code around it.  For front vs rear mic the
-> > simplest thing would just be to not mention which if this is a hardware
-> > fixed thing, otherwise a control.
-
-> Would you suggest checking whether the codec node is a rt5682 node,
-> and call required PLL calls accordingly ?
-
-Potentially, or there might be so little shared that it's just a
-separate machine driver.
-
-> "For front vs rear mic the simplest thing would just be to not mention
-> which if this is a hardware fixed thing, otherwise a control."
-> Sorry I am not sure if I understand this correctly. Please correct me
-> if I am wrong.
-
-> - For default case having 1 mic: not mention this at all
-> - For front mic / rear mic case: see gpio property and use an
-> additional control.
-
-Yes.
-
-> "These feel more like things that fit with compatible" regarding
-> replacing alc5682 with adau7002. Please let me know which one solution
-> you prefer:
-> -  deriving this information from codec node
-> -  deriving this information from different sound card name
-
-To an extent this depends on how different the CODECs and general setup
-are but a different CODEC is something that often justifies a separate
-compatible.  Of course you also have an awful lot of systems that work
-with the generic card drivers and all different kinds of CPU and CODEC,
-usually because the driver doesn't need to know anything about the
-implementation of either.
-
---oFbHfjnMgUMsrGjO
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAl+PPOwACgkQJNaLcl1U
-h9Aikwf/cynQzcrnT9zavQbVgUM4IpP4TyshlCrJfrrtg2rnigRO/tJDK7eYQvoU
-i8t45o6LbCdnh6avdl5zMLxi3tRLw3DAArA7f6OqW+3qH654iwE8Xdu8qg757bLy
-kX50QfhefTMQqL3DGFNdORYWx3HB3PI8u5SWN9akkAxFJksNBKw4CjdsipJ6BgRj
-k4t4u0owVRNJRuG/egx2TNt8/FziiX29lTQPrtRQsgae7au3O4POXzvYYoxeeOYS
-fUuzo+wdtgqImF8sXYdRpRQ6a3sCgcXW5qWZhjmmbtPvIlTx3cHuwNnQDy7xGUjB
-XO/DmKtA4HIUE0BNgckWhNOQHVcTjw==
-=ybKE
------END PGP SIGNATURE-----
-
---oFbHfjnMgUMsrGjO--
+-- 
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora 
+Forum,
+a Linux Foundation Collaborative Project
