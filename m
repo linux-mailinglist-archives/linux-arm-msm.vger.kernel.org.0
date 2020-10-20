@@ -2,264 +2,319 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 11E4D29377B
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Oct 2020 11:03:31 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 698A829379A
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Oct 2020 11:07:34 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2392349AbgJTJDF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 20 Oct 2020 05:03:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45774 "EHLO
+        id S2390698AbgJTJHd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 20 Oct 2020 05:07:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46460 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729865AbgJTJDE (ORCPT
+        with ESMTP id S2390385AbgJTJHc (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 20 Oct 2020 05:03:04 -0400
-Received: from mail-pj1-x1044.google.com (mail-pj1-x1044.google.com [IPv6:2607:f8b0:4864:20::1044])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 48DCAC0613D1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Oct 2020 02:03:04 -0700 (PDT)
-Received: by mail-pj1-x1044.google.com with SMTP id b6so626970pju.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Oct 2020 02:03:04 -0700 (PDT)
+        Tue, 20 Oct 2020 05:07:32 -0400
+Received: from mail-pg1-x544.google.com (mail-pg1-x544.google.com [IPv6:2607:f8b0:4864:20::544])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D1F36C061755
+        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Oct 2020 02:07:32 -0700 (PDT)
+Received: by mail-pg1-x544.google.com with SMTP id s22so688969pga.9
+        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Oct 2020 02:07:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=4lQcBmOx+lvoDIHPYrOlN9FBXHgOaL5X05LzK3XG/XQ=;
-        b=v+he3CT+vb5JfZ0WlJ1o1sKt8IelhzSVPbdoKqDaMa3qicDs8NSBARNqrwLVI0t6Ty
-         FgKbb4XuNvDqIlCT1BG0paS4VI1ybb2zIlCfRPAwIvWTNOXyd9JfMnLdv4BF0c4MfokU
-         L1eIqY97FugKgjx2q72bTywQvQ/CsH28WNPLhWrYZ2skPK2XdPNG50i76LgNJLU1EGB1
-         Ox3jOh5jHBq41skGgbrODfSHiqO3v96xm7zzEM2m400KMkgfTtfQlpjs4fI1+Psn5Wxj
-         qedWL6RFJwzpiZY/qoMIXTAW5mWATlxDTjsW5Fl/E2wMLR6kKsqJ3NG4oXjbUjzTsK0Q
-         afbQ==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=C+lXu8huo3GM/+zHeAPPhY4A4nrjQeddBfBXz8wgpYw=;
+        b=vpnE2D56Bp9ToqiKgEF4SR/yjTeNtEcbw4Md5FZN7JGxVlMJNFctFzwoN1t9ZhNuxR
+         JOiWYH4NtXEx6T5v3TWxK+afNiljExnYpQrP9y+WeX/WTv0YUCOPuDGg21eEW7Hi+syQ
+         8bYna5o+mtM8kkWfyfmjA/HX91ztH1xOjX2UdTfKt9Vs5fFL8EoSSCqYxGE/1RsBXIhD
+         CnC2hGP+KdTfovqQNH4t6r5MHKPDvGC53uSQhz3AkvBtwgRQ7zOcprIraDXr9FRg2674
+         X85v5i3UmIhn/LSU2Q9bavElRAHy0Mt2EkiKuV8SBnFqOZFKXZc+/a8kv/YK8XuJZeiY
+         IApw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=4lQcBmOx+lvoDIHPYrOlN9FBXHgOaL5X05LzK3XG/XQ=;
-        b=dVojdI1/8B6TWNU1/70DyTYZ2Q7gGiJxMP1cvnJt58CoB/Dui+t00lUi2GUN7I2qDn
-         XECJcfivuLI/Wi80sS/mRcxMPptsdm37GYs1/P8cC69Ux1K5yB3BUNBptjuLyaX3NVNc
-         ZHesWwpgwOFdqZn+72/g+4cbxYIRYoGp8IT19DH9Zkg8dY+NQ+xuCOPEMMa0lUHOjN2C
-         kCytLjEL2Zb5eeYtbN8vtmgl/yGE6IO/g9c3pU2Er9cH3SHDDE1cfW8dqRGeNW8u1RGx
-         hxRmjrZgVTeefwekv9LUB0wLlwHVykVwnnRs2tblcGE2qZnldyLjJGTs40DG67shcziV
-         YbOw==
-X-Gm-Message-State: AOAM5334sWNZ75zcJwinfCdvwmzMyk5/tHpvUTx50b671E04YKqMRczV
-        Vy/eJ8+9bgktQXZEsXYtUdfBPDq+akyHJ1g3zwh+Mg==
-X-Google-Smtp-Source: ABdhPJwWCzlh8uDQnkFjSqFvhNnIZyi4d3tXWB6qbOY8CvvsOGePNZT4R9Cn1vFLc3D5jU5csfuet3fJdMBQ//klqa0=
-X-Received: by 2002:a17:90a:160f:: with SMTP id n15mr1905532pja.75.1603184583629;
- Tue, 20 Oct 2020 02:03:03 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=C+lXu8huo3GM/+zHeAPPhY4A4nrjQeddBfBXz8wgpYw=;
+        b=ZzRMI5jdefOhBnQMfaABWapSdOO3Q6YC5xH+ejHn9w0C8q+loUbaiU/kbb3areFelq
+         MPLjokl0AeGssrxN1rjuIrwzCTfaYZ3QHbnT+zM7PLASrNttpBipcOWGX4JFqrLlsOSS
+         /OMDiuIJ4J5yscYQ5C98sqjyLFLPa4CbVthQj80d4Ozqc1yiFW6Dkbq8RPlhnfFbpKdX
+         mmK1o1KWa3e7jNQtwGwNTG5Atk8Op8g1bEmE8FDfS9Im5AfQ7HQ63im40pMsIAPpBhwN
+         NctqZ+QNSajt/GuhiIcJdQMQFnJKS9jUPFqtaKoXPZUbhkmkhIYPQ3/3B9OsAVs9XR9b
+         CCtA==
+X-Gm-Message-State: AOAM5312aPup9rVVYM+EqvYoLNQxoTQpTsVC7LoKOKLz0MF5ZctUDAAF
+        b+/KzgkTu+jtIy72mwyonkpR15elg6OoQQ==
+X-Google-Smtp-Source: ABdhPJwfOAGHPoop8aAQY48Li/WV46JU/mutltv8U8uyGSW/+kHjlyfNLsHfL8dR+PpnrN8I2W9Fwg==
+X-Received: by 2002:a62:6202:0:b029:15c:dac8:866 with SMTP id w2-20020a6262020000b029015cdac80866mr1732194pfb.72.1603184852250;
+        Tue, 20 Oct 2020 02:07:32 -0700 (PDT)
+Received: from localhost ([122.181.54.133])
+        by smtp.gmail.com with ESMTPSA id w10sm1254300pjy.13.2020.10.20.02.07.30
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 20 Oct 2020 02:07:30 -0700 (PDT)
+Date:   Tue, 20 Oct 2020 14:37:29 +0530
+From:   Viresh Kumar <viresh.kumar@linaro.org>
+To:     Rob Clark <robdclark@gmail.com>
+Cc:     dri-devel <dri-devel@lists.freedesktop.org>,
+        Rob Clark <robdclark@chromium.org>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
+        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
+        <linux-arm-msm@vger.kernel.org>,
+        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
+        <freedreno@lists.freedesktop.org>,
+        open list <linux-kernel@vger.kernel.org>,
+        Daniel Vetter <daniel@ffwll.ch>, "Menon, Nishanth" <nm@ti.com>
+Subject: Re: [PATCH v2 07/22] drm/msm: Do rpm get sooner in the submit path
+Message-ID: <20201020090729.qgqish5kqamhvatj@vireshk-i7>
+References: <20201012020958.229288-1-robdclark@gmail.com>
+ <20201012020958.229288-8-robdclark@gmail.com>
+ <20201012143555.GA438822@phenom.ffwll.local>
+ <CAF6AEGstGtBswUUiyHxT2cCm8NwZekDnMzD0J_pQH37GwS=LiA@mail.gmail.com>
 MIME-Version: 1.0
-References: <20201018125237.16717-1-kholk11@gmail.com> <20201018125237.16717-3-kholk11@gmail.com>
- <CAG3jFysokz0+NCHLp9-nhxG3wGVzk1TAFBwZmhMgViUr-sk-BA@mail.gmail.com>
-In-Reply-To: <CAG3jFysokz0+NCHLp9-nhxG3wGVzk1TAFBwZmhMgViUr-sk-BA@mail.gmail.com>
-From:   Robert Foss <robert.foss@linaro.org>
-Date:   Tue, 20 Oct 2020 11:02:51 +0200
-Message-ID: <CAG3jFysUQJXdy0ogK1shbgW1Tmk6DJbS26EaeRPMDEnObQ2_zg@mail.gmail.com>
-Subject: Re: [PATCH 2/6] media: camss: ispif: Correctly reset based on the VFE ID
-To:     kholk11@gmail.com
-Cc:     Todor Tomov <todor.too@gmail.com>, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>, marijns95@gmail.com,
-        konradybcio@gmail.com, martin.botka1@gmail.com,
-        linux-arm-msm@vger.kernel.org,
-        linux-media <linux-media@vger.kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>,
-        linux-kernel <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAF6AEGstGtBswUUiyHxT2cCm8NwZekDnMzD0J_pQH37GwS=LiA@mail.gmail.com>
+User-Agent: NeoMutt/20180716-391-311a52
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-I found a build issue in this commit.
+On 12-10-20, 08:43, Rob Clark wrote:
+> On Mon, Oct 12, 2020 at 7:35 AM Daniel Vetter <daniel@ffwll.ch> wrote:
+> >
+> > On Sun, Oct 11, 2020 at 07:09:34PM -0700, Rob Clark wrote:
+> > > From: Rob Clark <robdclark@chromium.org>
+> > >
+> > > Unfortunately, due to an dev_pm_opp locking interaction with
+> > > mm->mmap_sem, we need to do pm get before aquiring obj locks,
+> > > otherwise we can have anger lockdep with the chain:
+> >
+> > tbh this sounds like a bug in that subsystem, since it means we cannot use
+> > said subsystem in mmap handlers either.
+> >
+> > So if you have some remapping unit or need to wake up your gpu to blt the
+> > buffer into system memory first, we're toast. That doesn't sound right. So
+> > maybe Cc: pm folks and figure out how to fix this long term properly? Imo
+> > not a good reason to hold up this patch set, since unwrangling mmap_sem
+> > tends to be work ...
+> 
+> + a couple of PM folks
+> 
+> Looks like it has been this way for quite some time, so I guess the
+> overlap between things using dev_pm_opp and mmap is low..
+> 
+> fwiw, example splat so folks can see the locking interaction I am
+> talking about.. I suspect the pm_opp interaction with mm->mmap_sem is
+> from the debugfs calls while opp_table_lock is held?
 
+I am not very sure about why this circular locking dependency is
+happening here and how exactly can we fix it. The OPP core works under
+the opp_table_lock, from within which it creates/remove the debugfs
+stuff as well.
 
-On Tue, 20 Oct 2020 at 10:59, Robert Foss <robert.foss@linaro.org> wrote:
->
-> Nice catch! This patch looks good to me.
->
-> Signed-off-by: Robert Foss <robert.foss@linaro.org>
->
-> On Sun, 18 Oct 2020 at 14:54, <kholk11@gmail.com> wrote:
+> [   15.627855] ======================================================
+> [   15.634202] WARNING: possible circular locking dependency detected
+> [   15.640550] 5.4.70 #41 Not tainted
+> [   15.644050] ------------------------------------------------------
+> [   15.650397] chrome/1805 is trying to acquire lock:
+> [   15.655314] ffffffed90720738 (opp_table_lock){+.+.}, at:
+> _find_opp_table+0x34/0x74
+> [   15.663092]
+> [   15.663092] but task is already holding lock:
+> [   15.669082] ffffff80ff3911a8 (reservation_ww_class_mutex){+.+.},
+> at: submit_lock_objects+0x70/0x1ec
+> [   15.678369]
+> [   15.678369] which lock already depends on the new lock.
+> [   15.678369]
+> [   15.686764]
+> [   15.686764] the existing dependency chain (in reverse order) is:
+> [   15.694438]
+> [   15.694438] -> #3 (reservation_ww_class_mutex){+.+.}:
+> [   15.701146]        __mutex_lock_common+0xec/0xc0c
+> [   15.705978]        ww_mutex_lock_interruptible+0x5c/0xc4
+> [   15.711432]        msm_gem_fault+0x2c/0x124
+> [   15.715731]        __do_fault+0x40/0x16c
+> [   15.719766]        handle_mm_fault+0x7cc/0xd98
+> [   15.724337]        do_page_fault+0x230/0x3b4
+> [   15.728721]        do_translation_fault+0x5c/0x78
+> [   15.733558]        do_mem_abort+0x4c/0xb4
+> [   15.737680]        el0_da+0x1c/0x20
+> [   15.741266]
+> [   15.741266] -> #2 (&mm->mmap_sem){++++}:
+> [   15.746809]        __might_fault+0x70/0x98
+> [   15.751022]        compat_filldir+0xf8/0x48c
+> [   15.755412]        dcache_readdir+0x70/0x1dc
+> [   15.759808]        iterate_dir+0xd4/0x180
+> [   15.763931]        __arm64_compat_sys_getdents+0xa0/0x19c
+> [   15.769476]        el0_svc_common+0xa8/0x178
+> [   15.773861]        el0_svc_compat_handler+0x2c/0x40
+> [   15.778868]        el0_svc_compat+0x8/0x10
+> [   15.783075]
+> [   15.783075] -> #1 (&sb->s_type->i_mutex_key#3){++++}:
+> [   15.789788]        down_write+0x54/0x16c
+> [   15.793826]        debugfs_remove_recursive+0x50/0x158
+> [   15.799108]        opp_debug_unregister+0x34/0x114
+> [   15.804028]        dev_pm_opp_put_opp_table+0xd0/0x14c
+> [   15.809308]        dev_pm_opp_put_clkname+0x3c/0x50
+> [   15.814318]        msm_dsi_host_destroy+0xb0/0xcc
+> [   15.819149]        dsi_destroy+0x40/0x58
+> [   15.823184]        dsi_bind+0x90/0x170
+> [   15.827041]        component_bind_all+0xf0/0x208
+> [   15.831787]        msm_drm_init+0x188/0x60c
+> [   15.836084]        msm_drm_bind+0x24/0x30
+> [   15.840205]        try_to_bring_up_master+0x15c/0x1a4
+> [   15.845396]        __component_add+0x98/0x14c
+> [   15.849878]        component_add+0x28/0x34
+> [   15.854086]        dp_display_probe+0x324/0x370
+> [   15.858744]        platform_drv_probe+0x90/0xb0
+> [   15.863400]        really_probe+0x134/0x2ec
+> [   15.867699]        driver_probe_device+0x64/0xfc
+> [   15.872443]        __device_attach_driver+0x8c/0xa4
+> [   15.877459]        bus_for_each_drv+0x90/0xd8
+> [   15.881939]        __device_attach+0xc0/0x148
+> [   15.886420]        device_initial_probe+0x20/0x2c
+> [   15.891254]        bus_probe_device+0x34/0x94
+> [   15.895726]        deferred_probe_work_func+0x78/0xb4
+> [   15.900914]        process_one_work+0x30c/0x5d0
+> [   15.905573]        worker_thread+0x240/0x3f0
+> [   15.909959]        kthread+0x144/0x154
+> [   15.913809]        ret_from_fork+0x10/0x18
+> [   15.918016]
+> [   15.918016] -> #0 (opp_table_lock){+.+.}:
+> [   15.923660]        __lock_acquire+0xee4/0x2450
+> [   15.928230]        lock_acquire+0x1cc/0x210
+> [   15.932527]        __mutex_lock_common+0xec/0xc0c
+> [   15.937359]        mutex_lock_nested+0x40/0x50
+> [   15.941928]        _find_opp_table+0x34/0x74
+> [   15.946312]        dev_pm_opp_find_freq_exact+0x2c/0xdc
+> [   15.951680]        a6xx_gmu_resume+0xc8/0xecc
+> [   15.952812] fscrypt: AES-256-CTS-CBC using implementation "cts-cbc-aes-ce"
+> [   15.956161]        a6xx_pm_resume+0x148/0x200
+> [   15.956166]        adreno_resume+0x28/0x34
+> [   15.956171]        pm_generic_runtime_resume+0x34/0x48
+> [   15.956174]        __rpm_callback+0x70/0x10c
+> [   15.956176]        rpm_callback+0x34/0x8c
+> [   15.956179]        rpm_resume+0x414/0x550
+> [   15.956182]        __pm_runtime_resume+0x7c/0xa0
+> [   15.956185]        msm_gpu_submit+0x60/0x1c0
+> [   15.956190]        msm_ioctl_gem_submit+0xadc/0xb60
+> [   16.003961]        drm_ioctl_kernel+0x9c/0x118
+> [   16.008532]        drm_ioctl+0x27c/0x408
+> [   16.012562]        drm_compat_ioctl+0xcc/0xdc
+> [   16.017038]        __se_compat_sys_ioctl+0x100/0x206c
+> [   16.022224]        __arm64_compat_sys_ioctl+0x20/0x2c
+> [   16.027412]        el0_svc_common+0xa8/0x178
+> [   16.031800]        el0_svc_compat_handler+0x2c/0x40
+> [   16.036810]        el0_svc_compat+0x8/0x10
+> [   16.041021]
+> [   16.041021] other info that might help us debug this:
+> [   16.041021]
+> [   16.049235] Chain exists of:
+> [   16.049235]   opp_table_lock --> &mm->mmap_sem --> reservation_ww_class_mutex
+> [   16.049235]
+> [   16.061014]  Possible unsafe locking scenario:
+> [   16.061014]
+> [   16.067091]        CPU0                    CPU1
+> [   16.071750]        ----                    ----
+> [   16.076399]   lock(reservation_ww_class_mutex);
+> [   16.081059]                                lock(&mm->mmap_sem);
+> [   16.087134]                                lock(reservation_ww_class_mutex);
+> [   16.094369]   lock(opp_table_lock);
+> [   16.097961]
+> [   16.097961]  *** DEADLOCK ***
+> [   16.097961]
+> [   16.104038] 3 locks held by chrome/1805:
+> [   16.108068]  #0: ffffff80fb20c0d8 (&dev->struct_mutex){+.+.}, at:
+> msm_ioctl_gem_submit+0x264/0xb60
+> [   16.117264]  #1: ffffff80dd712c70
+> (reservation_ww_class_acquire){+.+.}, at:
+> msm_ioctl_gem_submit+0x8e8/0xb60
+> [   16.127357]  #2: ffffff80ff3911a8
+> (reservation_ww_class_mutex){+.+.}, at: submit_lock_objects+0x70/0x1ec
+> [   16.137089]
+> [   16.137089] stack backtrace:
+> [   16.141567] CPU: 4 PID: 1805 Comm: chrome Not tainted 5.4.70 #41
+> [   16.147733] Hardware name: Google Lazor (rev1+) with LTE (DT)
+> [   16.153632] Call trace:
+> [   16.156154]  dump_backtrace+0x0/0x158
+> [   16.159924]  show_stack+0x20/0x2c
+> [   16.163340]  dump_stack+0xc8/0x160
+> [   16.166840]  print_circular_bug+0x2c4/0x2c8
+> [   16.171144]  check_noncircular+0x1a8/0x1b0
+> [   16.175351]  __lock_acquire+0xee4/0x2450
+> [   16.179382]  lock_acquire+0x1cc/0x210
+> [   16.183146]  __mutex_lock_common+0xec/0xc0c
+> [   16.187450]  mutex_lock_nested+0x40/0x50
+> [   16.191481]  _find_opp_table+0x34/0x74
+> [   16.195344]  dev_pm_opp_find_freq_exact+0x2c/0xdc
+> [   16.200178]  a6xx_gmu_resume+0xc8/0xecc
+> [   16.204120]  a6xx_pm_resume+0x148/0x200
+> [   16.208064]  adreno_resume+0x28/0x34
+> [   16.211743]  pm_generic_runtime_resume+0x34/0x48
+> [   16.216488]  __rpm_callback+0x70/0x10c
+> [   16.220342]  rpm_callback+0x34/0x8c
+> [   16.223933]  rpm_resume+0x414/0x550
+> [   16.227524]  __pm_runtime_resume+0x7c/0xa0
+> [   16.231731]  msm_gpu_submit+0x60/0x1c0
+> [   16.235586]  msm_ioctl_gem_submit+0xadc/0xb60
+> [   16.240066]  drm_ioctl_kernel+0x9c/0x118
+> [   16.244097]  drm_ioctl+0x27c/0x408
+> [   16.247602]  drm_compat_ioctl+0xcc/0xdc
+> [   16.251546]  __se_compat_sys_ioctl+0x100/0x206c
+> [   16.256204]  __arm64_compat_sys_ioctl+0x20/0x2c
+> [   16.260861]  el0_svc_common+0xa8/0x178
+> [   16.264716]  el0_svc_compat_handler+0x2c/0x40
+> [   16.269196]  el0_svc_compat+0x8/0x10
+> 
+> BR,
+> -R
+> 
+> > -Daniel
 > >
-> > From: AngeloGioacchino Del Regno <kholk11@gmail.com>
-> >
-> > Resetting the ISPIF VFE0 context is wrong if we are using the VFE1
-> > for dual-camera or simply because a secondary camera is connected
-> > to it: in this case the reset will always happen on the VFE0 ctx
-> > of the ISPIF, which is .. useless.
-> >
-> > Fix this usecase by adding the ISPIF_RST_CMD_1 address and choose
-> > where to do the (or what to) reset based on the VFE line id.
-> >
-> > Signed-off-by: AngeloGioacchino Del Regno <kholk11@gmail.com>
-> > ---
-> >  .../media/platform/qcom/camss/camss-ispif.c   | 87 ++++++++++++-------
-> >  .../media/platform/qcom/camss/camss-ispif.h   |  2 +-
-> >  2 files changed, 57 insertions(+), 32 deletions(-)
-> >
-> > diff --git a/drivers/media/platform/qcom/camss/camss-ispif.c b/drivers/media/platform/qcom/camss/camss-ispif.c
-> > index db94cfd6c508..252db6b33dab 100644
-> > --- a/drivers/media/platform/qcom/camss/camss-ispif.c
-> > +++ b/drivers/media/platform/qcom/camss/camss-ispif.c
-> > @@ -26,6 +26,7 @@
-> >  #define MSM_ISPIF_NAME "msm_ispif"
-> >
-> >  #define ISPIF_RST_CMD_0                        0x008
-> > +#define ISPIF_RST_CMD_1                        0x00c
-> >  #define ISPIF_RST_CMD_0_STROBED_RST_EN         (1 << 0)
-> >  #define ISPIF_RST_CMD_0_MISC_LOGIC_RST         (1 << 1)
-> >  #define ISPIF_RST_CMD_0_SW_REG_RST             (1 << 2)
-> > @@ -179,7 +180,10 @@ static irqreturn_t ispif_isr_8x96(int irq, void *dev)
-> >         writel(0x1, ispif->base + ISPIF_IRQ_GLOBAL_CLEAR_CMD);
-> >
-> >         if ((value0 >> 27) & 0x1)
-> > -               complete(&ispif->reset_complete);
-> > +               complete(&ispif->reset_complete[0]);
-> > +
-> > +       if ((value3 >> 27) & 0x1)
-> > +               complete(&ispif->reset_complete[1]);
-> >
-> >         if (unlikely(value0 & ISPIF_VFE_m_IRQ_STATUS_0_PIX0_OVERFLOW))
-> >                 dev_err_ratelimited(to_device(ispif), "VFE0 pix0 overflow\n");
-> > @@ -237,7 +241,7 @@ static irqreturn_t ispif_isr_8x16(int irq, void *dev)
-> >         writel(0x1, ispif->base + ISPIF_IRQ_GLOBAL_CLEAR_CMD);
-> >
-> >         if ((value0 >> 27) & 0x1)
-> > -               complete(&ispif->reset_complete);
-> > +               complete(&ispif->reset_complete[0]);
-> >
-> >         if (unlikely(value0 & ISPIF_VFE_m_IRQ_STATUS_0_PIX0_OVERFLOW))
-> >                 dev_err_ratelimited(to_device(ispif), "VFE0 pix0 overflow\n");
-> > @@ -257,33 +261,17 @@ static irqreturn_t ispif_isr_8x16(int irq, void *dev)
-> >         return IRQ_HANDLED;
-> >  }
-> >
-> > -/*
-> > - * ispif_reset - Trigger reset on ISPIF module and wait to complete
-> > - * @ispif: ISPIF device
-> > - *
-> > - * Return 0 on success or a negative error code otherwise
-> > - */
-> > -static int ispif_reset(struct ispif_device *ispif)
-> > +static int ispif_vfe_reset(struct ispif_device *ispif, u8 vfe_id)
-> >  {
-> > -       unsigned long time;
-> >         u32 val;
-> > -       int ret;
-> > -
-> > -       ret = camss_pm_domain_on(to_camss(ispif), PM_DOMAIN_VFE0);
-> > -       if (ret < 0)
-> > -               return ret;
-> >
-> > -       ret = camss_pm_domain_on(to_camss(ispif), PM_DOMAIN_VFE1);
-> > -       if (ret < 0)
-> > -               return ret;
-> > -
-> > -       ret = camss_enable_clocks(ispif->nclocks_for_reset,
-> > -                                 ispif->clock_for_reset,
-> > -                                 to_device(ispif));
-> > -       if (ret < 0)
-> > -               return ret;
-> > +       if (vfe_id > (to_camss(ispif)->vfe_num - 1)) {
-> > +               dev_err(to_device(ispif),
-> > +                       "Error: asked reset for invalid VFE%d\n", vfe_id);
-> > +               return -ENOENT;
-> > +       }
-> >
-> > -       reinit_completion(&ispif->reset_complete);
-> > +       reinit_completion(&ispif->reset_complete[vfe_id]);
-> >
-> >         val = ISPIF_RST_CMD_0_STROBED_RST_EN |
-> >                 ISPIF_RST_CMD_0_MISC_LOGIC_RST |
-> > @@ -303,15 +291,51 @@ static int ispif_reset(struct ispif_device *ispif)
-> >                 ISPIF_RST_CMD_0_RDI_OUTPUT_1_MISR_RST |
-> >                 ISPIF_RST_CMD_0_RDI_OUTPUT_2_MISR_RST;
-> >
-> > -       writel_relaxed(val, ispif->base + ISPIF_RST_CMD_0);
-> > +       if (vfe_id == 1)
-> > +               writel_relaxed(val, ispif->base + ISPIF_RST_CMD_1);
-> > +       else
-> > +               writel_relaxed(val, ispif->base + ISPIF_RST_CMD_0);
-> >
-> > -       time = wait_for_completion_timeout(&ispif->reset_complete,
-> > +       time = wait_for_completion_timeout(&ispif->reset_complete[vfe_id],
+> > >
+> > >   opp_table_lock --> &mm->mmap_sem --> reservation_ww_class_mutex
+> > >
+> > > For an explicit fencing userspace, the impact should be minimal
+> > > as we do all the fence waits before this point.  It could result
+> > > in some needless resumes in error cases, etc.
+> > >
+> > > Signed-off-by: Rob Clark <robdclark@chromium.org>
+> > > ---
+> > >  drivers/gpu/drm/msm/msm_gem_submit.c | 15 +++++++++++++--
+> > >  1 file changed, 13 insertions(+), 2 deletions(-)
+> > >
+> > > diff --git a/drivers/gpu/drm/msm/msm_gem_submit.c b/drivers/gpu/drm/msm/msm_gem_submit.c
+> > > index 002130d826aa..a9422d043bfe 100644
+> > > --- a/drivers/gpu/drm/msm/msm_gem_submit.c
+> > > +++ b/drivers/gpu/drm/msm/msm_gem_submit.c
+> > > @@ -744,11 +744,20 @@ int msm_ioctl_gem_submit(struct drm_device *dev, void *data,
+> > >
+> > >       ret = submit_lookup_objects(submit, args, file);
+> > >       if (ret)
+> > > -             goto out;
+> > > +             goto out_pre_pm;
+> > >
+> > >       ret = submit_lookup_cmds(submit, args, file);
+> > >       if (ret)
+> > > -             goto out;
+> > > +             goto out_pre_pm;
+> > > +
+> > > +     /*
+> > > +      * Thanks to dev_pm_opp opp_table_lock interactions with mm->mmap_sem
+> > > +      * in the resume path, we need to to rpm get before we lock objs.
+> > > +      * Which unfortunately might involve powering up the GPU sooner than
+> > > +      * is necessary.  But at least in the explicit fencing case, we will
+> > > +      * have already done all the fence waiting.
+> > > +      */
+> > > +     pm_runtime_get_sync(&gpu->pdev->dev);
+> > >
+> > >       /* copy_*_user while holding a ww ticket upsets lockdep */
+> > >       ww_acquire_init(&submit->ticket, &reservation_ww_class);
+> > > @@ -825,6 +834,8 @@ int msm_ioctl_gem_submit(struct drm_device *dev, void *data,
+> > >
+> > >
+> > >  out:
+> > > +     pm_runtime_put(&gpu->pdev->dev);
+> > > +out_pre_pm:
+> > >       submit_cleanup(submit);
+> > >       if (has_ww_ticket)
+> > >               ww_acquire_fini(&submit->ticket);
 
-'time' is not a variable that exists in this scope, so the build fails.
-
-> >                 msecs_to_jiffies(ISPIF_RESET_TIMEOUT_MS));
-> >         if (!time) {
-> > -               dev_err(to_device(ispif), "ISPIF reset timeout\n");
-> > -               ret = -EIO;
-> > +               dev_err(to_device(ispif),
-> > +                       "ISPIF for VFE%d reset timeout\n", vfe_id);
-> > +               return -EIO;
-> >         }
-> >
-> > +       return 0;
-> > +}
-> > +
-> > +/*
-> > + * ispif_reset - Trigger reset on ISPIF module and wait to complete
-> > + * @ispif: ISPIF device
-> > + *
-> > + * Return 0 on success or a negative error code otherwise
-> > + */
-> > +static int ispif_reset(struct ispif_device *ispif, u8 vfe_id)
-> > +{
-> > +       unsigned long time;
-> > +       int ret;
-> > +
-> > +       ret = camss_pm_domain_on(to_camss(ispif), PM_DOMAIN_VFE0);
-> > +       if (ret < 0)
-> > +               return ret;
-> > +
-> > +       ret = camss_pm_domain_on(to_camss(ispif), PM_DOMAIN_VFE1);
-> > +       if (ret < 0)
-> > +               return ret;
-> > +
-> > +       ret = camss_enable_clocks(ispif->nclocks_for_reset,
-> > +                                 ispif->clock_for_reset,
-> > +                                 to_device(ispif));
-> > +       if (ret < 0)
-> > +               return ret;
-> > +
-> > +       ret = ispif_vfe_reset(ispif, vfe_id);
-> > +       if (ret)
-> > +               dev_dbg(to_device(ispif), "ISPIF Reset failed\n");
-> > +
-> >         camss_disable_clocks(ispif->nclocks_for_reset, ispif->clock_for_reset);
-> >
-> >         camss_pm_domain_off(to_camss(ispif), PM_DOMAIN_VFE0);
-> > @@ -355,7 +379,7 @@ static int ispif_set_power(struct v4l2_subdev *sd, int on)
-> >                         goto exit;
-> >                 }
-> >
-> > -               ret = ispif_reset(ispif);
-> > +               ret = ispif_reset(ispif, line->vfe_id);
-> >                 if (ret < 0) {
-> >                         pm_runtime_put_sync(dev);
-> >                         camss_disable_clocks(ispif->nclocks, ispif->clock);
-> > @@ -1192,7 +1216,8 @@ int msm_ispif_subdev_init(struct ispif_device *ispif,
-> >
-> >         mutex_init(&ispif->config_lock);
-> >
-> > -       init_completion(&ispif->reset_complete);
-> > +       for (i = 0; i < MSM_ISPIF_VFE_NUM; i++)
-> > +               init_completion(&ispif->reset_complete[i]);
-> >
-> >         return 0;
-> >  }
-> > diff --git a/drivers/media/platform/qcom/camss/camss-ispif.h b/drivers/media/platform/qcom/camss/camss-ispif.h
-> > index 1a5ba2425a42..4132174f7ea1 100644
-> > --- a/drivers/media/platform/qcom/camss/camss-ispif.h
-> > +++ b/drivers/media/platform/qcom/camss/camss-ispif.h
-> > @@ -56,7 +56,7 @@ struct ispif_device {
-> >         int nclocks;
-> >         struct camss_clock  *clock_for_reset;
-> >         int nclocks_for_reset;
-> > -       struct completion reset_complete;
-> > +       struct completion reset_complete[MSM_ISPIF_VFE_NUM];
-> >         int power_count;
-> >         struct mutex power_lock;
-> >         struct ispif_intf_cmd_reg intf_cmd[MSM_ISPIF_VFE_NUM];
-> > --
-> > 2.28.0
-> >
+-- 
+viresh
