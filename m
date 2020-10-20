@@ -2,485 +2,328 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A521D2943A2
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Oct 2020 21:57:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 74D6D2943D0
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Oct 2020 22:26:45 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2405415AbgJTT51 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 20 Oct 2020 15:57:27 -0400
-Received: from m42-4.mailgun.net ([69.72.42.4]:38071 "EHLO m42-4.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1729928AbgJTT51 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 20 Oct 2020 15:57:27 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1603223845; h=Message-ID: References: In-Reply-To: Reply-To:
- Subject: Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=MQQMElofRADDeLEcAgb6PRHkTibxavAdOg9Dq0MjA1s=;
- b=ouSzUJVWuQfH8sip19mUip9FXkXYKtqoSsD/2KTQlvU6VU/zumAx0/QfmpyQPE+VhF0em7uK
- ebSzz6GT9ZiLcITDp/oQdqZtZLP+TODQCGDca9anInVGjWWmuO56Ib3qgKrsonvip8Ux6fOb
- qWxBamuk96/BIgWjhOXlObtVgw4=
-X-Mailgun-Sending-Ip: 69.72.42.4
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n07.prod.us-west-2.postgun.com with SMTP id
- 5f8f412083370fa1c16c3bde (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 20 Oct 2020 19:57:20
- GMT
-Sender: bbhatt=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id BC982C433FE; Tue, 20 Oct 2020 19:57:20 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: bbhatt)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 21D6DC433C9;
-        Tue, 20 Oct 2020 19:57:19 +0000 (UTC)
+        id S2409452AbgJTU0n (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 20 Oct 2020 16:26:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39112 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2409411AbgJTU0n (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 20 Oct 2020 16:26:43 -0400
+Received: from mail-wr1-x441.google.com (mail-wr1-x441.google.com [IPv6:2a00:1450:4864:20::441])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 64F5DC0613CE;
+        Tue, 20 Oct 2020 13:26:42 -0700 (PDT)
+Received: by mail-wr1-x441.google.com with SMTP id n6so4069506wrm.13;
+        Tue, 20 Oct 2020 13:26:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=GRDowTMD/B/aM8Vilpj3Q1yA7p1GXJzFf43kGQzygwo=;
+        b=ulR6tNd23JxYymvbJ+dNOMzHuFJrQqcrbddwWlxHlmFezevH5ivFxh7sNXNeReKAot
+         TtUTOTxyA7M9xNCPInyIuH28Rl2ieJ+OoYykoNJ8tlUmje1FFIYHUypRN3w4WeqtPIz6
+         7ycbYOC893EEDkWbjQKE8X3MkX38w5WSLUHu683OmcZ00VFoXjmGW7KX/8+n9sXHTtER
+         1HhskBAs5CwarLXaAF6foHEn/sC8Lg9allOFBEK8uWPgvRn/l+GrmhfFbuIMDxYduQGY
+         dZ+lCZXKPxIExSD+RBatZ09Yx2VMVVFqXloHKb3AcS0PzY6+vFkNXZrjJ6kE8TXJ2UYJ
+         CWbw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=GRDowTMD/B/aM8Vilpj3Q1yA7p1GXJzFf43kGQzygwo=;
+        b=N4tQkU83Dmh7ELWlPYe/cchkdXys+fF5ve8AqcYehNMi8Z0WJaGFcOvrdIPm1kbve/
+         3tp08uIVEkBy103qec7Qsx69G3CtowzPZe6g1FQwkaBzayZ0CW8L1a7vvMXJxcysskKZ
+         FT3Q1d8/bqBOQkU6mV3ICnXBV7EBsmuhikQCe9X2il0U2E4pwbbG3rooPPr4D2wvA2/d
+         XiHS4oP/tzHY3Yi1Fn76/z5lo5Cj39iktRt4mRbiMniNg0VR3KG6Ud9xY45bc8Cvk0lu
+         O8wKiuwnEAk1Kliw8/EkgcGNfw5q4Gq3UfzQKcRbQwrz7TgUdvdIW8iRewXAwwoNGSQX
+         jk4w==
+X-Gm-Message-State: AOAM5331Ms+D6SgapfUZdVaQNGAD3FigB9n/alBsTftysS78CQfoUvWR
+        MFJ072Sg0nwr407W/9GuVijwydZN+h39QHr2sTE=
+X-Google-Smtp-Source: ABdhPJzzUvAYACoH6eSL4YBFTZRcY53dLwg+34P2ct9pX97I6f0E+1gfhBhjLEp6Bpx3sCnY6KzBM4UusbeIZGqOUXA=
+X-Received: by 2002:a1c:b486:: with SMTP id d128mr4535862wmf.164.1603225600790;
+ Tue, 20 Oct 2020 13:26:40 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Tue, 20 Oct 2020 12:57:19 -0700
-From:   Bhaumik Bhatt <bbhatt@codeaurora.org>
-To:     Loic Poulain <loic.poulain@linaro.org>
-Cc:     manivannan.sadhasivam@linaro.org, hemantk@codeaurora.org,
-        linux-arm-msm@vger.kernel.org, bjorn.andersson@linaro.org,
-        jhugo@codeaurora.org
-Subject: Re: [PATCH v4] bus: mhi: Add MHI PCI support for WWAN modems
-Organization: Qualcomm Innovation Center, Inc.
-Reply-To: bbhatt@codeaurora.org
-Mail-Reply-To: bbhatt@codeaurora.org
-In-Reply-To: <1603108844-22286-1-git-send-email-loic.poulain@linaro.org>
-References: <1603108844-22286-1-git-send-email-loic.poulain@linaro.org>
-Message-ID: <0c1cb6f09966e0d20b7e4271b45ad8a4@codeaurora.org>
-X-Sender: bbhatt@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+References: <20201019211101.143327-1-robdclark@gmail.com> <20201020082404.GJ401619@phenom.ffwll.local>
+ <CAF6AEGuT6ZSpitNS0eBcjKhAVW1QBg+uPJQQkBLckOk=_GBx=A@mail.gmail.com>
+ <CAKMK7uEg-iz2zK6E0RFA-JQ+GfjuUcnrdu+e_3FWq9E9_9WUZA@mail.gmail.com>
+ <CAF6AEGuF_76hMHa-n7VYHY+sSKGTt=gTBh8r+2992Bhx-RE61A@mail.gmail.com>
+ <CAKMK7uEHSsgVDsFnpedx2_w0B8ST3RKA1O62NXOtDr2bCrie+A@mail.gmail.com>
+ <CAF6AEGtfLpueGUF_2oWzAt2KCHh0mmF4fDnNRHB3P5H_-Xn=6A@mail.gmail.com> <CAKMK7uEsv36Y3ZiKdtHFCSxv_Wywm6M2nZ1BxpjOCfF46UKZpw@mail.gmail.com>
+In-Reply-To: <CAKMK7uEsv36Y3ZiKdtHFCSxv_Wywm6M2nZ1BxpjOCfF46UKZpw@mail.gmail.com>
+From:   Rob Clark <robdclark@gmail.com>
+Date:   Tue, 20 Oct 2020 13:26:29 -0700
+Message-ID: <CAF6AEGs+=pw=ufKQwwb2xCBzVjeQs_W9-4TT5BDWDucQUhmduA@mail.gmail.com>
+Subject: Re: [PATCH 0/3] drm/msm: kthread_worker conversion
+To:     Daniel Vetter <daniel@ffwll.ch>
+Cc:     dri-devel <dri-devel@lists.freedesktop.org>,
+        Akhil P Oommen <akhilpo@codeaurora.org>,
+        Tanmay Shah <tanmay@codeaurora.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        AngeloGioacchino Del Regno <kholk11@gmail.com>,
+        Sam Ravnborg <sam@ravnborg.org>,
+        Emil Velikov <emil.velikov@collabora.com>,
+        Rob Clark <robdclark@chromium.org>,
+        Jonathan Marek <jonathan@marek.ca>,
+        Qinglang Miao <miaoqinglang@huawei.com>,
+        Roy Spliet <nouveau@spliet.org>,
+        Wambui Karuga <wambui.karugax@gmail.com>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Sharat Masetty <smasetty@codeaurora.org>,
+        Kalyan Thota <kalyan_t@codeaurora.org>,
+        Rajendra Nayak <rnayak@codeaurora.org>,
+        "Gustavo A. R. Silva" <gustavoars@kernel.org>,
+        open list <linux-kernel@vger.kernel.org>,
+        tongtiangen <tongtiangen@huawei.com>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        Drew Davenport <ddavenport@chromium.org>,
+        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
+        <freedreno@lists.freedesktop.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2020-10-19 05:00, Loic Poulain wrote:
-> This is a generic MHI-over-PCI controller driver for MHI only devices
-> such as QCOM modems. For now it supports registering of Qualcomm SDX55
-> based PCIe modules. The MHI channels have been extracted from mhi
-> downstream driver.
-> 
-> This driver is for MHI-only devices which have all functionnalities
-> exposed through MHI channels and accessed by the corresponding MHI
-> device drivers (no out-of-band communication).
-> 
-> Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
-Reviewed-by: Bhaumik Bhatt <bbhatt@codeaurora.org>
-> ---
->  v2: - remove useless delay.h include
->      - remove over-logging on error
->      - remove controller subdir
->      - rename to mhi_pci_modem.c
->      - Fix mhi_pci_probe exit path on error
->      - expand module description
->      - drop module version
->  v3: - Rename to mhi_pci_generic
->      - Add hardware accelerated IP channel (IPA)
->      - Added fw/edl names for sdx55m
->  v4: - Configurable dma width access
->      - Configurable PCI BAR number (default is 0)
-> 
->  drivers/bus/mhi/Kconfig           |   9 +
->  drivers/bus/mhi/Makefile          |   3 +
->  drivers/bus/mhi/mhi_pci_generic.c | 336 
-> ++++++++++++++++++++++++++++++++++++++
->  3 files changed, 348 insertions(+)
->  create mode 100644 drivers/bus/mhi/mhi_pci_generic.c
-> 
-> diff --git a/drivers/bus/mhi/Kconfig b/drivers/bus/mhi/Kconfig
-> index e841c10..daa8528 100644
-> --- a/drivers/bus/mhi/Kconfig
-> +++ b/drivers/bus/mhi/Kconfig
-> @@ -20,3 +20,12 @@ config MHI_BUS_DEBUG
->  	  Enable debugfs support for use with the MHI transport. Allows
->  	  reading and/or modifying some values within the MHI controller
->  	  for debug and test purposes.
-> +
-> +config MHI_BUS_PCI_GENERIC
-> +	tristate "MHI PCI controller driver"
-> +	depends on MHI_BUS
-> +	depends on PCI
-> +	help
-> +	  This driver provides Modem Host Interface (MHI) PCI controller 
-> driver
-> +	  for devices such as Qualcomm SDX55 based PCIe modems.
-> +
-> diff --git a/drivers/bus/mhi/Makefile b/drivers/bus/mhi/Makefile
-> index 19e6443..d1a4ef3 100644
-> --- a/drivers/bus/mhi/Makefile
-> +++ b/drivers/bus/mhi/Makefile
-> @@ -1,2 +1,5 @@
->  # core layer
->  obj-y += core/
-> +
-> +obj-$(CONFIG_MHI_BUS_PCI_GENERIC) := mhi_pci_generic.o
-> +
-> diff --git a/drivers/bus/mhi/mhi_pci_generic.c
-> b/drivers/bus/mhi/mhi_pci_generic.c
-> new file mode 100644
-> index 0000000..dcd6c1a
-> --- /dev/null
-> +++ b/drivers/bus/mhi/mhi_pci_generic.c
-> @@ -0,0 +1,336 @@
-> +// SPDX-License-Identifier: GPL-2.0-or-later
-> +/*
-> + * MHI PCI driver - MHI over PCI controller driver
-> + *
-> + * This module is a generic driver for registering MHI-over-PCI 
-> devices,
-> + * such as PCIe QCOM modems.
-> + *
-> + * Copyright (C) 2020 Linaro Ltd <loic.poulain@linaro.org>
-> + */
-> +
-> +#include <linux/device.h>
-> +#include <linux/mhi.h>
-> +#include <linux/module.h>
-> +#include <linux/pci.h>
-> +
-> +#define MHI_PCI_DEFAULT_BAR_NUM 0
-> +
-> +struct mhi_pci_dev_info {
-> +	const struct mhi_controller_config *config;
-> +	const char *name;
-> +	const char *fw;
-> +	const char *edl;
-> +	unsigned int bar_num;
-> +	unsigned int dma_data_width;
-> +};
-> +
-> +#define MHI_CHANNEL_CONFIG_UL(cnum, cname, elems, event)	\
-> +	{							\
-> +		.num = cnum,					\
-> +		.name = cname,					\
-> +		.num_elements = elems,				\
-> +		.event_ring = event,				\
-> +		.dir = DMA_TO_DEVICE,				\
-> +		.ee_mask = BIT(MHI_EE_AMSS),			\
-> +		.pollcfg = 0,					\
-> +		.doorbell = MHI_DB_BRST_DISABLE,		\
-> +		.lpm_notify = false,				\
-> +		.offload_channel = false,			\
-> +		.doorbell_mode_switch = false,			\
-> +	}							\
-> +
-> +#define MHI_CHANNEL_CONFIG_DL(cnum, cname, elems, event)	\
-> +	{							\
-> +		.num = cnum,					\
-> +		.name = cname,					\
-> +		.num_elements = elems,				\
-> +		.event_ring = event,				\
-> +		.dir = DMA_FROM_DEVICE,				\
-> +		.ee_mask = BIT(MHI_EE_AMSS),			\
-> +		.pollcfg = 0,					\
-> +		.doorbell = MHI_DB_BRST_DISABLE,		\
-> +		.lpm_notify = false,				\
-> +		.offload_channel = false,			\
-> +		.doorbell_mode_switch = false,			\
-> +	}
-> +
-> +#define MHI_EVENT_CONFIG_CTRL(enum)		\
-> +	{					\
-> +		.num_elements = 64,		\
-> +		.irq_moderation_ms = 0,		\
-> +		.irq = (enum) + 1,		\
-> +		.priority = 1,			\
-> +		.mode = MHI_DB_BRST_DISABLE,	\
-> +		.data_type = MHI_ER_CTRL,	\
-> +		.hardware_event = false,	\
-> +		.client_managed = false,	\
-> +		.offload_channel = false,	\
-> +	}
-> +
-> +#define MHI_EVENT_CONFIG_DATA(enum)		\
-> +	{					\
-> +		.num_elements = 128,		\
-> +		.irq_moderation_ms = 5,		\
-> +		.irq = (enum) + 1,		\
-> +		.priority = 1,			\
-> +		.mode = MHI_DB_BRST_DISABLE,	\
-> +		.data_type = MHI_ER_DATA,	\
-> +		.hardware_event = false,	\
-> +		.client_managed = false,	\
-> +		.offload_channel = false,	\
-> +	}
-> +
-> +#define MHI_EVENT_CONFIG_HW_DATA(enum, cnum)	\
-> +	{					\
-> +		.num_elements = 128,		\
-> +		.irq_moderation_ms = 5,		\
-> +		.irq = (enum) + 1,		\
-> +		.priority = 1,			\
-> +		.mode = MHI_DB_BRST_DISABLE,	\
-> +		.data_type = MHI_ER_DATA,	\
-> +		.hardware_event = true,		\
-> +		.client_managed = false,	\
-> +		.offload_channel = false,	\
-> +		.channel = cnum,		\
-> +	}
-> +
-> +static const struct mhi_channel_config modem_qcom_v1_mhi_channels[] = 
-> {
-> +	MHI_CHANNEL_CONFIG_UL(12, "MBIM", 4, 0),
-> +	MHI_CHANNEL_CONFIG_DL(13, "MBIM", 4, 0),
-> +	MHI_CHANNEL_CONFIG_UL(14, "QMI", 4, 0),
-> +	MHI_CHANNEL_CONFIG_DL(15, "QMI", 4, 0),
-> +	MHI_CHANNEL_CONFIG_UL(20, "IPCR", 8, 0),
-> +	MHI_CHANNEL_CONFIG_DL(21, "IPCR", 8, 0),
-> +	MHI_CHANNEL_CONFIG_UL(100, "IP_HW0", 128, 1),
-> +	MHI_CHANNEL_CONFIG_DL(101, "IP_HW0", 128, 2),
-> +};
-> +
-> +static const struct mhi_event_config modem_qcom_v1_mhi_events[] = {
-> +	/* first ring is control+data ring */
-> +	MHI_EVENT_CONFIG_CTRL(0),
-> +	/* Hardware channels request dedicated hardware event rings */
-> +	MHI_EVENT_CONFIG_HW_DATA(1, 100),
-> +	MHI_EVENT_CONFIG_HW_DATA(2, 101)
-> +};
-> +
-> +static const struct mhi_controller_config modem_qcom_v1_mhi_config = {
-> +	.max_channels = 128,
-> +	.timeout_ms = 5000,
-> +	.num_channels = ARRAY_SIZE(modem_qcom_v1_mhi_channels),
-> +	.ch_cfg = modem_qcom_v1_mhi_channels,
-> +	.num_events = ARRAY_SIZE(modem_qcom_v1_mhi_events),
-> +	.event_cfg = modem_qcom_v1_mhi_events,
-> +};
-> +
-> +static const struct mhi_pci_dev_info mhi_qcom_sdx55_info = {
-> +	.name = "qcom-sdx55m",
-> +	.fw = "qcom/sdx55m/sbl1.mbn",
-> +	.edl = "qcom/sdx55m/edl.mbn",
-> +	.config = &modem_qcom_v1_mhi_config,
-> +	.bar_num = MHI_PCI_DEFAULT_BAR_NUM,
-> +	.dma_data_width = 32
-> +};
-> +
-> +static const struct pci_device_id mhi_pci_id_table[] = {
-> +	{ PCI_DEVICE(PCI_VENDOR_ID_QCOM, 0x0306),
-> +		.driver_data = (kernel_ulong_t) &mhi_qcom_sdx55_info },
-> +	{  }
-> +};
-> +MODULE_DEVICE_TABLE(pci, mhi_pci_id_table);
-> +
-> +static int mhi_pci_read_reg(struct mhi_controller *mhic, void __iomem 
-> *addr,
-> +			    u32 *out)
-> +{
-> +	*out = readl(addr);
-> +	return 0;
-> +}
-> +
-> +static void mhi_pci_write_reg(struct mhi_controller *mhic, void 
-> __iomem *addr,
-> +			      u32 val)
-> +{
-> +	writel(val, addr);
-> +}
-> +
-> +static void mhi_pci_status_cb(struct mhi_controller *mhi_cntrl,
-> +			      enum mhi_callback cb)
-> +{
-> +	return;
-> +}
-> +
-> +static int mhi_pci_claim(struct mhi_controller *mhic, unsigned int 
-> bar_num,
-> +			 u64 dma_mask)
-> +{
-> +	struct pci_dev *pdev = to_pci_dev(mhic->cntrl_dev);
-> +	int err;
-> +
-> +	err = pci_assign_resource(pdev, bar_num);
-> +	if (err)
-> +		return err;
-> +
-> +	err = pcim_enable_device(pdev);
-> +	if (err) {
-> +		dev_err(&pdev->dev, "failed to enable pci device: %d\n", err);
-> +		return err;
-> +	}
-> +
-> +	err = pcim_iomap_regions(pdev, 1 << bar_num, pci_name(pdev));
-> +	if (err) {
-> +		dev_err(&pdev->dev, "failed to map pci region: %d\n", err);
-> +		return err;
-> +	}
-> +	mhic->regs = pcim_iomap_table(pdev)[bar_num];
-> +
-> +	err = pci_set_dma_mask(pdev, dma_mask);
-> +	if (err) {
-> +		dev_err(&pdev->dev, "Cannot set proper DMA mask\n");
-> +		return err;
-> +	}
-> +
-> +	err = pci_set_consistent_dma_mask(pdev, dma_mask);
-> +	if (err) {
-> +		dev_err(&pdev->dev, "set consistent dma mask failed\n");
-> +		return err;
-> +	}
-> +
-> +	pci_set_master(pdev);
-> +
-> +	return 0;
-> +}
-> +
-> +static int mhi_pci_get_irqs(struct mhi_controller *mhic,
-> +			    const struct mhi_controller_config *mhic_config)
-> +{
-> +	struct pci_dev *pdev = to_pci_dev(mhic->cntrl_dev);
-> +	int nr_vectors, i;
-> +	int *irq;
-> +
-> +	/*
-> +	 * Alloc one MSI vector for BHI + one vector per event ring, 
-> ideally...
-> +	 * No explicit pci_free_irq_vectors required, done by pcim_release.
-> +	 */
-> +	mhic->nr_irqs = 1 + mhic_config->num_events;
-> +
-> +	nr_vectors = pci_alloc_irq_vectors(pdev, 1, mhic->nr_irqs, 
-> PCI_IRQ_MSI);
-> +	if (nr_vectors < 0) {
-> +		dev_err(&pdev->dev, "Error allocating MSI vectors %d\n",
-> +			nr_vectors);
-> +		return nr_vectors;
-> +	}
-> +
-> +	if (nr_vectors < mhic->nr_irqs) {
-> +		dev_warn(&pdev->dev, "Not enough MSI vectors (%d/%d)\n",
-> +			 nr_vectors, mhic_config->num_events);
-> +		/* continue... use shared IRQ */
-> +	}
-> +
-> +	irq = devm_kcalloc(&pdev->dev, mhic->nr_irqs, sizeof(int), 
-> GFP_KERNEL);
-> +	if (!irq)
-> +		return -ENOMEM;
-> +
-> +	for (i = 0; i < mhic->nr_irqs; i++) {
-> +		int vector = i >= nr_vectors ? (nr_vectors - 1) : i;
-> +
-> +		irq[i] = pci_irq_vector(pdev, vector);
-> +	}
-> +
-> +	mhic->irq = irq;
-> +
-> +	return 0;
-> +}
-> +
-> +static int mhi_pci_runtime_get(struct mhi_controller *mhi_cntrl)
-> +{
-> +	/* no PM for now */
-> +	return 0;
-> +}
-> +
-> +static void mhi_pci_runtime_put(struct mhi_controller *mhi_cntrl)
-> +{
-> +	/* no PM for now */
-> +	return;
-> +}
-> +
-> +static int mhi_pci_probe(struct pci_dev *pdev, const struct 
-> pci_device_id *id)
-> +{
-> +	const struct mhi_pci_dev_info *info = (struct mhi_pci_dev_info *)
-> id->driver_data;
-> +	const struct mhi_controller_config *mhic_config;
-> +	struct mhi_controller *mhic;
-> +	int err;
-> +
-> +	dev_info(&pdev->dev, "MHI PCI device found: %s\n", info->name);
-> +
-> +	mhic = devm_kzalloc(&pdev->dev, sizeof(*mhic), GFP_KERNEL);
-> +	if (!mhic)
-> +		return -ENOMEM;
-> +
-> +	mhic_config = info->config;
-> +	mhic->cntrl_dev = &pdev->dev;
-> +	mhic->iova_start = 0;
-> +	mhic->iova_stop = DMA_BIT_MASK(info->dma_data_width);
-> +	mhic->fw_image = info->fw;
-> +	mhic->edl_image = info->edl;
-> +
-> +	mhic->read_reg = mhi_pci_read_reg;
-> +	mhic->write_reg = mhi_pci_write_reg;
-> +	mhic->status_cb = mhi_pci_status_cb;
-> +	mhic->runtime_get = mhi_pci_runtime_get;
-> +	mhic->runtime_put = mhi_pci_runtime_put;
-> +
-> +	err = mhi_pci_claim(mhic, info->bar_num, 
-> DMA_BIT_MASK(info->dma_data_width));
-> +	if (err)
-> +		return err;
-> +
-> +	err = mhi_pci_get_irqs(mhic, mhic_config);
-> +	if (err)
-> +		return err;
-> +
-> +	pci_set_drvdata(pdev, mhic);
-> +
-> +	err = mhi_register_controller(mhic, mhic_config);
-> +	if (err)
-> +		return err;
-> +
-> +	/* MHI bus does not power up the controller by default */
-> +	err = mhi_prepare_for_power_up(mhic);
-> +	if (err) {
-> +		dev_err(&pdev->dev, "failed to prepare MHI controller\n");
-> +		goto err_unregister;
-> +	}
-> +
-> +	err = mhi_sync_power_up(mhic);
-> +	if (err) {
-> +		dev_err(&pdev->dev, "failed to power up MHI controller\n");
-> +		goto err_unprepare;
-> +	}
-> +
-> +	return 0;
-> +
-> +err_unprepare:
-> +	mhi_unprepare_after_power_down(mhic);
-> +
-> +err_unregister:
-> +	mhi_unregister_controller(mhic);
-> +
-> +	return err;
-> +}
-> +
-> +static void mhi_pci_remove(struct pci_dev *pdev)
-> +{
-> +	struct mhi_controller *mhic = pci_get_drvdata(pdev);
-> +
-> +	mhi_power_down(mhic, true);
-> +	mhi_unprepare_after_power_down(mhic);
-> +	mhi_unregister_controller(mhic);
-> +}
-> +
-> +static struct pci_driver mhi_pci_driver = {
-> +	.name		= "mhi-pci-generic",
-> +	.id_table	= mhi_pci_id_table,
-> +	.probe		= mhi_pci_probe,
-> +	.remove		= mhi_pci_remove
-> +};
-> +module_pci_driver(mhi_pci_driver);
-> +
-> +MODULE_AUTHOR("Loic Poulain <loic.poulain@linaro,org>");
-> +MODULE_DESCRIPTION("Modem Host Interface (MHI) PCI controller 
-> driver");
-> +MODULE_LICENSE("GPL");
+On Tue, Oct 20, 2020 at 11:14 AM Daniel Vetter <daniel@ffwll.ch> wrote:
+>
+> On Tue, Oct 20, 2020 at 7:23 PM Rob Clark <robdclark@gmail.com> wrote:
+> >
+> > On Tue, Oct 20, 2020 at 10:02 AM Daniel Vetter <daniel@ffwll.ch> wrote:
+> > >
+> > > On Tue, Oct 20, 2020 at 5:08 PM Rob Clark <robdclark@gmail.com> wrote:
+> > > >
+> > > > On Tue, Oct 20, 2020 at 7:29 AM Daniel Vetter <daniel@ffwll.ch> wrote:
+> > > > >
+> > > > > On Tue, Oct 20, 2020 at 4:01 PM Rob Clark <robdclark@gmail.com> wrote:
+> > > > > >
+> > > > > > On Tue, Oct 20, 2020 at 1:24 AM Daniel Vetter <daniel@ffwll.ch> wrote:
+> > > > > > >
+> > > > > > > On Mon, Oct 19, 2020 at 02:10:50PM -0700, Rob Clark wrote:
+> > > > > > > > From: Rob Clark <robdclark@chromium.org>
+> > > > > > > >
+> > > > > > > > In particular, converting the async atomic commit (for cursor updates,
+> > > > > > > > etc) to SCHED_FIFO kthread_worker helps with some cases where we
+> > > > > > > > wouldn't manage to flush the updates within the 1ms-before-vblank
+> > > > > > > > deadline resulting in fps drops when there is cursor movement.
+> > > > > > > >
+> > > > > > > > Rob Clark (3):
+> > > > > > > >   drm/msm/gpu: Convert retire/recover work to kthread_worker
+> > > > > > > >   drm/msm/kms: Update msm_kms_init/destroy
+> > > > > > > >   drm/msm/atomic: Convert to per-CRTC kthread_work
+> > > > > > >
+> > > > > > > So i915 has it's own commit worker already for $reasons, but I don't think
+> > > > > > > that's a good path to go down with more drivers. And the problem seems
+> > > > > > > entirely generic in nature ...
+> > > > > >
+> > > > > > I'm not *entirely* sure what your point is here?  This is just
+> > > > > > migrating away from a shared ordered wq to per-crtc kthread so that we
+> > > > > > don't miss vblank deadlines for silly reasons (and then stall on the
+> > > > > > next frame's pageflip because we are still waiting for the cursor
+> > > > > > update to latch).  Kind of like vblank-work but scheduled prior to,
+> > > > > > rather than after, vblank.
+> > > > > >
+> > > > > > And you're right that the problem is partially generic.. hw that (a)
+> > > > > > doesn't have true async (cursor and/or otherwise) updates, and (b) has
+> > > > > > various flush bits that latch register updates on vblank, is not that
+> > > > > > uncommon.  But the current atomic helper API would have to be a bit
+> > > > > > redesigned to look more like the interface between msm_atomic and the
+> > > > > > display backend.  That is a fair bit of churn for re-using a small bit
+> > > > > > of code.
+> > > > >
+> > > > > I was making some assumptions about what you're doing, and I was
+> > > > > wrong. So I went and tried to understand what's actually going on
+> > > > > here.
+> > > > >
+> > > > > I'm trying to understand what exactly you've added with that async msm
+> > > > > support 2d99ced787e3d. I think this breaks the state structure update
+> > > > > model, you can't access any ->state pointers from the commit functions
+> > > > > after you've called drm_atomic_helper_commit_hw_done, or you might
+> > > > > have a use after free. And that seems to be happening from this commit
+> > > > > work thing you added to your existing commit work that the atomic
+> > > > > helpers provide already.
+> > > > >
+> > > > > The various commit functions seem to grab various state objects by
+> > > > > just chasing pointers from the objects (instead of the
+> > > > > drm_atomic_state stuff), so this all feels like it's yolo
+> > > > > free-wheeling.
+> > > > >
+> > > > > You also seem to be using the async_commit stuff from the atomic
+> > > > > helpers (which is actually synchronous (i.e. blocking) from the pov of
+> > > > > how the code runs, but seems to be for mdp5 only and not others. Also
+> > > > > your can_do_async still checks for legacy_cursor_update (maybe a
+> > > > > leftover, or needed on !mdp5 platforms) and ->async_update.
+> > > > >
+> > > > > I'm thoroughly confused how this all works.
+> > > >
+> > > > The legacy_cursor_update is really the thing that motivated the async
+> > > > commit support in the first place.  Sadly we still have userspace that
+> > > > expects to be able to use legacy cursor API, and that it will be
+> > > > nonblocking (and not cause fps drop).  (I'm not a fan of the legacy
+> > > > cursor UAPI.. don't hate the player..)
+> > >
+> > > Yeah this is why we have these atomic_async_check/commit functions,
+> > > and msm is even using them for mdp5. Not hating the player here at
+> > > all.
+> > >
+> > > > The premise is to do everything in terms of crtc_mask, although yeah,
+> > > > it looks like there are a few points that need to look at things like
+> > > > crtc->state->active.  The only point in msm-atomic itself that does
+> > > > this is vblank_get/put(), possibly we can fix drm_vblank instead and
+> > > > drop that workaround (see 43906812eaab06423f56af5cca9a9fcdbb4ac454)
+> > > >
+> > > > The rest of the async part is really just supposed to be writing the
+> > > > appropriate flush reg(s) and waiting until flush completes, although
+> > > > dpu's excess layering makes this harder than it needs to be.
+> > > >
+> > > > In practice, the kms->wait_flush() at the top of
+> > > > msm_atomic_commit_tail() will block until a pending async commit
+> > > > completes (this is where we hit the fps drop if we miss vblank
+> > > > deadline), so I don't *think* you can trigger a use-after-free.  But
+> > > > the dpu code could be better cleaned up to have less obj->state
+> > > > dereference in the kms->flush_commit(crtc_mask)/etc path.
+> > >
+> > > Hm this is more or less what the atomic_async_commit/check stuff was
+> > > meant to help facilitate too, and now msm is using that for mdp5, but
+> > > not for other pieces. That seems very confusing.
+> > >
+> > > Also I'm not sure how this works if you still end up flushing anyway,
+> > > since then you'd be back to doing everything in-order. Or will an
+> > > normal atomic flip push all the cursor updates to the next frame (in
+> > > which case you really should be able to do this all with async helpers
+> > > we have instead of hand-rolling a bunch of it in strange places).
+> >
+> > So, "flush" from the core-atomic part is writing all the various
+> > registers (overlay scanout bo/format/position/etc).. this is all done
+> > at the normal time (ie. whenever we get the cursor update).  The only
+> > thing we defer until close-to-vblank is writing the hw flush registers
+> > (ie. registers with bitmasks of the various hw blocks to latch on
+> > vblank).
+> >
+> > So a cursor update applies the state normally, from the PoV of
+> > sequence of atomic updates.  But tries to defer writing the flush regs
+> > so we can merge in future cursor updates and/or pageflip into the same
+> > frame.
+> >
+> > Modulo the stuff that derefs kmsobj->state but shouldn't, I think (at
+> > least for hw that works this way with flush registers) this is a
+> > better approach to handling cursor updates.  The mdp5 async cursor
+> > stuff predates dpu, and I've just not had a chance to update mdp5 to
+> > use the new async flush path yet.
+>
+> The trouble is that this is moving back to legacy_cursor_update hack
+> instead of retiring it for good, so I'm not super thrilled about this.
 
--- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora 
-Forum,
-a Linux Foundation Collaborative Project
+state->async==true for cursor updates would work for me.. at the end
+of the day, it doesn't really matter that it is a cursor plane, or
+what the UAPI was, just that it is async.
+
+> Can't we do the register update from atomic_async_commit, and then
+> latch the timed worker, so that it all fits into the bigger thing?
+> Maybe also subsume the mdp5 stuff like that.
+
+The current async update path replaced a previous async commit
+implementation, which might have been using atomic_async_commit?  I'd
+have to dig back thru git history.  The big problem with it was that
+an async commit could race with a sync/nonblock commit, and one of the
+paths could write flush regs while other is still updating regs.
+
+The important thing about the current async approach is the separation
+of commit and flush, and the kms->wait_flush() at the top of
+commit_tail() which serializes hw updates and flush, so we don't have
+problems with racing commits.  I'm not sure how that would fit in with
+atomic_async_commit().
+
+> And that commit worker then probably needs the minimal amount of state
+> protected by a spinlock or similar, so they're not trampling over each
+> other. At least I'm still not seeing how you both make stuff async and
+> prevent havoc when an update races with the commit worker. Or can that
+> only happen for cursor commits, where we don't care when the cursor is
+> very rarely misplaced because the hw takes an inconsistent update.
+
+preventing the race is a combination of the locking (which recently
+slightly changed and switched to per-crtc locks) and the
+kms->wait_flush() which ensures previous updates have flushed.
+
+BR,
+-R
+
+> -Daniel
+>
+>
+> > BR,
+> > -R
+> >
+> > > You probably still need the worker to push out the update at the right
+> > > time, and I'm not sure what some good locking for that is. At least
+> > > I'm not really seeing how you sync that worker against a racing update
+> > > for the next cursor move.
+> > > -Daniel
+> > >
+> > >
+> > > > BR,
+> > > > -R
+> > > >
+> > > > > I do agree though that you probably want this to be a real time fifo
+> > > > > kthread worker, like for the vblank worker. Except now that I looked,
+> > > > > I'm not sure it's actually working intended and correct.
+> > > > > -Daniel
+> > > > >
+> > > > > > BR,
+> > > > > > -R
+> > > > > >
+> > > > > > > -Daniel
+> > > > > > >
+> > > > > > > >
+> > > > > > > >  drivers/gpu/drm/msm/adreno/a5xx_gpu.c     |  3 +--
+> > > > > > > >  drivers/gpu/drm/msm/adreno/a5xx_preempt.c |  6 ++---
+> > > > > > > >  drivers/gpu/drm/msm/adreno/a6xx_gmu.c     |  4 +--
+> > > > > > > >  drivers/gpu/drm/msm/adreno/a6xx_gpu.c     |  4 +--
+> > > > > > > >  drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c   |  8 +++++-
+> > > > > > > >  drivers/gpu/drm/msm/disp/mdp4/mdp4_kms.c  |  8 +++++-
+> > > > > > > >  drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c  | 11 ++++++---
+> > > > > > > >  drivers/gpu/drm/msm/disp/mdp_kms.h        |  9 +++++--
+> > > > > > > >  drivers/gpu/drm/msm/msm_atomic.c          | 25 +++++++++++++++----
+> > > > > > > >  drivers/gpu/drm/msm/msm_drv.h             |  3 ++-
+> > > > > > > >  drivers/gpu/drm/msm/msm_gpu.c             | 30 +++++++++++++++--------
+> > > > > > > >  drivers/gpu/drm/msm/msm_gpu.h             | 13 +++++++---
+> > > > > > > >  drivers/gpu/drm/msm/msm_kms.h             | 23 ++++++++++++++---
+> > > > > > > >  13 files changed, 104 insertions(+), 43 deletions(-)
+> > > > > > > >
+> > > > > > > > --
+> > > > > > > > 2.26.2
+> > > > > > > >
+> > > > > > > > _______________________________________________
+> > > > > > > > dri-devel mailing list
+> > > > > > > > dri-devel@lists.freedesktop.org
+> > > > > > > > https://lists.freedesktop.org/mailman/listinfo/dri-devel
+> > > > > > >
+> > > > > > > --
+> > > > > > > Daniel Vetter
+> > > > > > > Software Engineer, Intel Corporation
+> > > > > > > http://blog.ffwll.ch
+> > > > > > _______________________________________________
+> > > > > > dri-devel mailing list
+> > > > > > dri-devel@lists.freedesktop.org
+> > > > > > https://lists.freedesktop.org/mailman/listinfo/dri-devel
+> > > > >
+> > > > >
+> > > > >
+> > > > > --
+> > > > > Daniel Vetter
+> > > > > Software Engineer, Intel Corporation
+> > > > > http://blog.ffwll.ch
+> > >
+> > >
+> > >
+> > > --
+> > > Daniel Vetter
+> > > Software Engineer, Intel Corporation
+> > > http://blog.ffwll.ch
+>
+>
+>
+> --
+> Daniel Vetter
+> Software Engineer, Intel Corporation
+> http://blog.ffwll.ch
