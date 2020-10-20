@@ -2,23 +2,23 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id F216B29450A
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Oct 2020 00:17:47 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6B13129450B
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Oct 2020 00:17:48 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2439008AbgJTWRi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 20 Oct 2020 18:17:38 -0400
+        id S2439013AbgJTWRm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 20 Oct 2020 18:17:42 -0400
 Received: from alexa-out-sd-02.qualcomm.com ([199.106.114.39]:58331 "EHLO
         alexa-out-sd-02.qualcomm.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S2388361AbgJTWRh (ORCPT
+        by vger.kernel.org with ESMTP id S1727155AbgJTWRi (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 20 Oct 2020 18:17:37 -0400
+        Tue, 20 Oct 2020 18:17:38 -0400
 Received: from unknown (HELO ironmsg04-sd.qualcomm.com) ([10.53.140.144])
   by alexa-out-sd-02.qualcomm.com with ESMTP; 20 Oct 2020 15:17:36 -0700
 X-QCInternal: smtphost
 Received: from gurus-linux.qualcomm.com ([10.46.162.81])
   by ironmsg04-sd.qualcomm.com with ESMTP; 20 Oct 2020 15:17:35 -0700
 Received: by gurus-linux.qualcomm.com (Postfix, from userid 383780)
-        id 309BA1946; Tue, 20 Oct 2020 15:17:35 -0700 (PDT)
+        id 42FA2194C; Tue, 20 Oct 2020 15:17:35 -0700 (PDT)
 From:   Guru Das Srinagesh <gurus@codeaurora.org>
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
@@ -28,10 +28,11 @@ Cc:     Subbaraman Narayanamurthy <subbaram@codeaurora.org>,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
         Stephen Boyd <sboyd@kernel.org>,
         Anirudh Ghayal <aghayal@codeaurora.org>,
+        Kavya Nunna <knunna@codeaurora.org>,
         Guru Das Srinagesh <gurus@codeaurora.org>
-Subject: [RESEND PATCH v2 1/2] bindings: pm8941-misc: Convert to YAML and add support for VBUS detection
-Date:   Tue, 20 Oct 2020 15:17:24 -0700
-Message-Id: <1407c8a264de11cb9cd7a13b8f7b5f66ca957127.1603231949.git.gurus@codeaurora.org>
+Subject: [RESEND PATCH v2 2/2] extcon: qcom-spmi: Add support for VBUS detection
+Date:   Tue, 20 Oct 2020 15:17:25 -0700
+Message-Id: <be397c0bad2ff981890e7585aff7d10d9c005d07.1603231949.git.gurus@codeaurora.org>
 X-Mailer: git-send-email 2.7.4
 In-Reply-To: <cover.1603231949.git.gurus@codeaurora.org>
 References: <cover.1603231949.git.gurus@codeaurora.org>
@@ -43,128 +44,187 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 From: Anirudh Ghayal <aghayal@codeaurora.org>
 
-Convert bindings to YAML. Also add compatible string that adds support
-for reporting the VBUS status that can be detected via a dedicated PMIC
-pin.
+VBUS can be detected via a dedicated PMIC pin. Add support
+for reporting the VBUS status.
 
 Signed-off-by: Anirudh Ghayal <aghayal@codeaurora.org>
+Signed-off-by: Kavya Nunna <knunna@codeaurora.org>
 Signed-off-by: Guru Das Srinagesh <gurus@codeaurora.org>
 ---
- .../bindings/extcon/qcom,pm8941-misc.txt           | 41 ----------------
- .../bindings/extcon/qcom,pm8941-misc.yaml          | 56 ++++++++++++++++++++++
- 2 files changed, 56 insertions(+), 41 deletions(-)
- delete mode 100644 Documentation/devicetree/bindings/extcon/qcom,pm8941-misc.txt
- create mode 100644 Documentation/devicetree/bindings/extcon/qcom,pm8941-misc.yaml
+ drivers/extcon/extcon-qcom-spmi-misc.c | 100 ++++++++++++++++++++++++++-------
+ 1 file changed, 81 insertions(+), 19 deletions(-)
 
-diff --git a/Documentation/devicetree/bindings/extcon/qcom,pm8941-misc.txt b/Documentation/devicetree/bindings/extcon/qcom,pm8941-misc.txt
-deleted file mode 100644
-index 35383adb..0000000
---- a/Documentation/devicetree/bindings/extcon/qcom,pm8941-misc.txt
-+++ /dev/null
-@@ -1,41 +0,0 @@
--Qualcomm's PM8941 USB ID Extcon device
--
--Some Qualcomm PMICs have a "misc" module that can be used to detect when
--the USB ID pin has been pulled low or high.
--
--PROPERTIES
--
--- compatible:
--    Usage: required
--    Value type: <string>
--    Definition: Should contain "qcom,pm8941-misc";
--
--- reg:
--    Usage: required
--    Value type: <u32>
--    Definition: Should contain the offset to the misc address space
--
--- interrupts:
--    Usage: required
--    Value type: <prop-encoded-array>
--    Definition: Should contain the usb id interrupt
--
--- interrupt-names:
--    Usage: required
--    Value type: <stringlist>
--    Definition: Should contain the string "usb_id" for the usb id interrupt
--
--Example:
--
--	pmic {
--		usb_id: misc@900 {
--			compatible = "qcom,pm8941-misc";
--			reg = <0x900>;
--			interrupts = <0x0 0x9 0 IRQ_TYPE_EDGE_BOTH>;
--			interrupt-names = "usb_id";
--		};
--	}
--
--	usb-controller {
--		extcon = <&usb_id>;
--	};
-diff --git a/Documentation/devicetree/bindings/extcon/qcom,pm8941-misc.yaml b/Documentation/devicetree/bindings/extcon/qcom,pm8941-misc.yaml
-new file mode 100644
-index 0000000..9fbdb5f
---- /dev/null
-+++ b/Documentation/devicetree/bindings/extcon/qcom,pm8941-misc.yaml
-@@ -0,0 +1,56 @@
-+# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-+%YAML 1.2
-+---
-+$id: http://devicetree.org/schemas/extcon/qcom,pm8941-misc.yaml#
-+$schema: http://devicetree.org/meta-schemas/core.yaml#
+diff --git a/drivers/extcon/extcon-qcom-spmi-misc.c b/drivers/extcon/extcon-qcom-spmi-misc.c
+index 6b836ae..6bd6746 100644
+--- a/drivers/extcon/extcon-qcom-spmi-misc.c
++++ b/drivers/extcon/extcon-qcom-spmi-misc.c
+@@ -1,7 +1,7 @@
+ // SPDX-License-Identifier: GPL-2.0-only
+ /**
+  * extcon-qcom-spmi-misc.c - Qualcomm USB extcon driver to support USB ID
+- *				detection based on extcon-usb-gpio.c.
++ *			and VBUS detection based on extcon-usb-gpio.c.
+  *
+  * Copyright (C) 2016 Linaro, Ltd.
+  * Stephen Boyd <stephen.boyd@linaro.org>
+@@ -21,30 +21,56 @@
+ 
+ struct qcom_usb_extcon_info {
+ 	struct extcon_dev *edev;
+-	int irq;
++	int id_irq;
++	int vbus_irq;
+ 	struct delayed_work wq_detcable;
+ 	unsigned long debounce_jiffies;
+ };
+ 
+ static const unsigned int qcom_usb_extcon_cable[] = {
++	EXTCON_USB,
+ 	EXTCON_USB_HOST,
+ 	EXTCON_NONE,
+ };
+ 
+ static void qcom_usb_extcon_detect_cable(struct work_struct *work)
+ {
+-	bool id;
++	bool state = false;
+ 	int ret;
++	union extcon_property_value val;
+ 	struct qcom_usb_extcon_info *info = container_of(to_delayed_work(work),
+ 						    struct qcom_usb_extcon_info,
+ 						    wq_detcable);
+ 
+-	/* check ID and update cable state */
+-	ret = irq_get_irqchip_state(info->irq, IRQCHIP_STATE_LINE_LEVEL, &id);
+-	if (ret)
+-		return;
++	if (info->id_irq > 0) {
++		/* check ID and update cable state */
++		ret = irq_get_irqchip_state(info->id_irq,
++				IRQCHIP_STATE_LINE_LEVEL, &state);
++		if (ret)
++			return;
 +
-+title: Qualcomm's PM8941 USB ID Extcon device
++		if (!state) {
++			val.intval = true;
++			extcon_set_property(info->edev, EXTCON_USB_HOST,
++						EXTCON_PROP_USB_SS, val);
++		}
++		extcon_set_state_sync(info->edev, EXTCON_USB_HOST, !state);
++	}
+ 
+-	extcon_set_state_sync(info->edev, EXTCON_USB_HOST, !id);
++	if (info->vbus_irq > 0) {
++		/* check VBUS and update cable state */
++		ret = irq_get_irqchip_state(info->vbus_irq,
++				IRQCHIP_STATE_LINE_LEVEL, &state);
++		if (ret)
++			return;
 +
-+maintainers:
-+  - Guru Das Srinagesh <gurus@codeaurora.org>
++		if (state) {
++			val.intval = true;
++			extcon_set_property(info->edev, EXTCON_USB,
++						EXTCON_PROP_USB_SS, val);
++		}
++		extcon_set_state_sync(info->edev, EXTCON_USB, state);
++	}
+ }
+ 
+ static irqreturn_t qcom_usb_irq_handler(int irq, void *dev_id)
+@@ -79,21 +105,48 @@ static int qcom_usb_extcon_probe(struct platform_device *pdev)
+ 		return ret;
+ 	}
+ 
++	ret = extcon_set_property_capability(info->edev,
++			EXTCON_USB, EXTCON_PROP_USB_SS);
++	ret |= extcon_set_property_capability(info->edev,
++			EXTCON_USB_HOST, EXTCON_PROP_USB_SS);
++	if (ret) {
++		dev_err(dev, "failed to register extcon props rc=%d\n",
++						ret);
++		return ret;
++	}
 +
-+description: |
-+  Some Qualcomm PMICs have a "misc" module that can be used to detect when
-+  the USB ID pin has been pulled low or high.
+ 	info->debounce_jiffies = msecs_to_jiffies(USB_ID_DEBOUNCE_MS);
+ 	INIT_DELAYED_WORK(&info->wq_detcable, qcom_usb_extcon_detect_cable);
+ 
+-	info->irq = platform_get_irq_byname(pdev, "usb_id");
+-	if (info->irq < 0)
+-		return info->irq;
++	info->id_irq = platform_get_irq_byname(pdev, "usb_id");
++	if (info->id_irq > 0) {
++		ret = devm_request_threaded_irq(dev, info->id_irq, NULL,
++					qcom_usb_irq_handler,
++					IRQF_TRIGGER_RISING |
++					IRQF_TRIGGER_FALLING | IRQF_ONESHOT,
++					pdev->name, info);
++		if (ret < 0) {
++			dev_err(dev, "failed to request handler for ID IRQ\n");
++			return ret;
++		}
++	}
+ 
+-	ret = devm_request_threaded_irq(dev, info->irq, NULL,
++	info->vbus_irq = platform_get_irq_byname(pdev, "usb_vbus");
++	if (info->vbus_irq > 0) {
++		ret = devm_request_threaded_irq(dev, info->vbus_irq, NULL,
+ 					qcom_usb_irq_handler,
+ 					IRQF_TRIGGER_RISING |
+ 					IRQF_TRIGGER_FALLING | IRQF_ONESHOT,
+ 					pdev->name, info);
+-	if (ret < 0) {
+-		dev_err(dev, "failed to request handler for ID IRQ\n");
+-		return ret;
++		if (ret < 0) {
++			dev_err(dev, "failed to request handler for VBUS IRQ\n");
++			return ret;
++		}
++	}
 +
-+properties:
-+  compatible:
-+    oneOf:
-+      - const:
-+          - qcom,pm8941-misc
-+          - qcom,pmd-vbus-det
-+
-+  reg:
-+    maxItems: 1
-+
-+  interrupts:
-+    maxItems: 2
-+
-+  interrupt-names:
-+    anyOf:
-+      - const:
-+          - usb_id
-+          - usb_vbus
-+
-+required:
-+  - compatible
-+  - reg
-+  - interrupts
-+  - interrupt-names
-+
-+additionalProperties: false
-+
-+examples:
-+  - |
-+    pmic {
-+            usb_id: misc@900 {
-+                    compatible = "qcom,pm8941-misc";
-+                    reg = <0x900>;
-+                    interrupts = <0x0 0x9 0 IRQ_TYPE_EDGE_BOTH>;
-+                    interrupt-names = "usb_id";
-+            };
-+    }
-+
-+    usb-controller {
-+           extcon = <&usb_id>;
-+    };
++	if (info->id_irq < 0 && info->vbus_irq < 0) {
++		dev_err(dev, "ID and VBUS IRQ not found\n");
++		return -EINVAL;
+ 	}
+ 
+ 	platform_set_drvdata(pdev, info);
+@@ -120,8 +173,12 @@ static int qcom_usb_extcon_suspend(struct device *dev)
+ 	struct qcom_usb_extcon_info *info = dev_get_drvdata(dev);
+ 	int ret = 0;
+ 
+-	if (device_may_wakeup(dev))
+-		ret = enable_irq_wake(info->irq);
++	if (device_may_wakeup(dev)) {
++		if (info->id_irq > 0)
++			ret = enable_irq_wake(info->id_irq);
++		if (info->vbus_irq > 0)
++			ret = enable_irq_wake(info->vbus_irq);
++	}
+ 
+ 	return ret;
+ }
+@@ -131,8 +188,12 @@ static int qcom_usb_extcon_resume(struct device *dev)
+ 	struct qcom_usb_extcon_info *info = dev_get_drvdata(dev);
+ 	int ret = 0;
+ 
+-	if (device_may_wakeup(dev))
+-		ret = disable_irq_wake(info->irq);
++	if (device_may_wakeup(dev)) {
++		if (info->id_irq > 0)
++			ret = disable_irq_wake(info->id_irq);
++		if (info->vbus_irq > 0)
++			ret = disable_irq_wake(info->vbus_irq);
++	}
+ 
+ 	return ret;
+ }
+@@ -143,6 +204,7 @@ static SIMPLE_DEV_PM_OPS(qcom_usb_extcon_pm_ops,
+ 
+ static const struct of_device_id qcom_usb_extcon_dt_match[] = {
+ 	{ .compatible = "qcom,pm8941-misc", },
++	{ .compatible = "qcom,pmd-vbus-det", },
+ 	{ }
+ };
+ MODULE_DEVICE_TABLE(of, qcom_usb_extcon_dt_match);
 -- 
 The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
 a Linux Foundation Collaborative Project
