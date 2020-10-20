@@ -2,102 +2,264 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 88E16293762
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Oct 2020 11:01:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 11E4D29377B
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Oct 2020 11:03:31 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2392284AbgJTJBm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 20 Oct 2020 05:01:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45564 "EHLO
+        id S2392349AbgJTJDF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 20 Oct 2020 05:03:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45774 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2392280AbgJTJBm (ORCPT
+        with ESMTP id S1729865AbgJTJDE (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 20 Oct 2020 05:01:42 -0400
-Received: from mail-wr1-x442.google.com (mail-wr1-x442.google.com [IPv6:2a00:1450:4864:20::442])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CA9F8C0613D3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Oct 2020 02:01:41 -0700 (PDT)
-Received: by mail-wr1-x442.google.com with SMTP id i1so1164473wro.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Oct 2020 02:01:41 -0700 (PDT)
+        Tue, 20 Oct 2020 05:03:04 -0400
+Received: from mail-pj1-x1044.google.com (mail-pj1-x1044.google.com [IPv6:2607:f8b0:4864:20::1044])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 48DCAC0613D1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Oct 2020 02:03:04 -0700 (PDT)
+Received: by mail-pj1-x1044.google.com with SMTP id b6so626970pju.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Oct 2020 02:03:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=q4O6c5ivLmf5Ylkh4llF14kt1PENj2Zzl8IB9YFIIj4=;
-        b=m6eHkmT8IEJpYr2gcGiLGKBcZkF81y5O8Z+qXZPwHQyM4EyEn/vONmrRSoD8KUP1X+
-         +zCT0rHB77mVw1NrAGD4FB0+FjB2+Pml1pNdF4eHUPW6OzP+3RCTaMgWkjDxb2oAtPVa
-         Lf9ePlf8LP2nNXfB12DYW7AuoMFitb84Wq47bEvGocLpm8o+k1XlLgeqE4kURGu5SVMW
-         nUzOxwwdDkDlDG9sWmobczknUQmwuEw6lSqWewhvb4A8dRKK/2xhkJGxWR73GJgSI2ET
-         GaJLk2oN/ShfwRoUSXiKlub1gN9+CJ1Qr3f3iXdnWy/1iKeyvlZIrEzqCLc6V44NvHNy
-         94zA==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=4lQcBmOx+lvoDIHPYrOlN9FBXHgOaL5X05LzK3XG/XQ=;
+        b=v+he3CT+vb5JfZ0WlJ1o1sKt8IelhzSVPbdoKqDaMa3qicDs8NSBARNqrwLVI0t6Ty
+         FgKbb4XuNvDqIlCT1BG0paS4VI1ybb2zIlCfRPAwIvWTNOXyd9JfMnLdv4BF0c4MfokU
+         L1eIqY97FugKgjx2q72bTywQvQ/CsH28WNPLhWrYZ2skPK2XdPNG50i76LgNJLU1EGB1
+         Ox3jOh5jHBq41skGgbrODfSHiqO3v96xm7zzEM2m400KMkgfTtfQlpjs4fI1+Psn5Wxj
+         qedWL6RFJwzpiZY/qoMIXTAW5mWATlxDTjsW5Fl/E2wMLR6kKsqJ3NG4oXjbUjzTsK0Q
+         afbQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=q4O6c5ivLmf5Ylkh4llF14kt1PENj2Zzl8IB9YFIIj4=;
-        b=MqvdSw8eHAOylInSDhvK3GrkqoZSubxFgpAN7qXS9Di71JrwwQ2EYQHM/zcLAsPsGr
-         29nJqkYqsN9/WNTHWrYUrAI+9k8v+aefrNMSDakTbotfV8oYktJ4rDJlV9UoYRNh/nZi
-         Xxo5IWCdD1nNOIvhzmGfQcMdLV4VzhrxwmBr1m7lf61bBDZbQW/PEHWHtE2p5Y17S5P5
-         oc8FwfeNs7cjpNCl+MMIoIs4wkk5uJDM9iNfF5gsAPGoGZibaK5btvn314MCnefWUZQl
-         ZdP6Qj5Jp1EdbSk2BzTHJTb9y1I+oS3fk9pd2s15pFrgD6ky4rmOhYoV99/Ic/Y8udWO
-         oLXQ==
-X-Gm-Message-State: AOAM532Hh6Cagt/u5OJj1CIchvoY8gbP012cKUb5DKxiIfkib+pCDuHZ
-        9c4jrRZiB13tyn9+Z/ceaGEiyHAej0OvJg==
-X-Google-Smtp-Source: ABdhPJzTL0aKsgR/snCSdeHOMhJQnqO/Ml9Vj2IqzAyO5HT5bSkRr7fMGxq3FQUW7rb/RaUFkcwrdQ==
-X-Received: by 2002:adf:d4c5:: with SMTP id w5mr2420156wrk.226.1603184500233;
-        Tue, 20 Oct 2020 02:01:40 -0700 (PDT)
-Received: from [192.168.86.34] (cpc86377-aztw32-2-0-cust226.18-1.cable.virginm.net. [92.233.226.227])
-        by smtp.googlemail.com with ESMTPSA id 71sm2057313wrm.20.2020.10.20.02.01.38
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 20 Oct 2020 02:01:39 -0700 (PDT)
-Subject: Re: [PATCH v3 0/4] clk: qcom : add sm8250 LPASS GFM drivers
-To:     Stephen Boyd <sboyd@kernel.org>, devicetree@vger.kernel.org,
-        linux-clk@vger.kernel.org
-Cc:     bjorn.andersson@linaro.org, mturquette@baylibre.com,
-        robh+dt@kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-References: <20201016141241.5839-1-srinivas.kandagatla@linaro.org>
- <160314732379.884498.15569172477533491589@swboyd.mtv.corp.google.com>
-From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Message-ID: <af7d64f5-aa30-2965-3c2c-ca72aed1ae49@linaro.org>
-Date:   Tue, 20 Oct 2020 10:01:38 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.8.0
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=4lQcBmOx+lvoDIHPYrOlN9FBXHgOaL5X05LzK3XG/XQ=;
+        b=dVojdI1/8B6TWNU1/70DyTYZ2Q7gGiJxMP1cvnJt58CoB/Dui+t00lUi2GUN7I2qDn
+         XECJcfivuLI/Wi80sS/mRcxMPptsdm37GYs1/P8cC69Ux1K5yB3BUNBptjuLyaX3NVNc
+         ZHesWwpgwOFdqZn+72/g+4cbxYIRYoGp8IT19DH9Zkg8dY+NQ+xuCOPEMMa0lUHOjN2C
+         kCytLjEL2Zb5eeYtbN8vtmgl/yGE6IO/g9c3pU2Er9cH3SHDDE1cfW8dqRGeNW8u1RGx
+         hxRmjrZgVTeefwekv9LUB0wLlwHVykVwnnRs2tblcGE2qZnldyLjJGTs40DG67shcziV
+         YbOw==
+X-Gm-Message-State: AOAM5334sWNZ75zcJwinfCdvwmzMyk5/tHpvUTx50b671E04YKqMRczV
+        Vy/eJ8+9bgktQXZEsXYtUdfBPDq+akyHJ1g3zwh+Mg==
+X-Google-Smtp-Source: ABdhPJwWCzlh8uDQnkFjSqFvhNnIZyi4d3tXWB6qbOY8CvvsOGePNZT4R9Cn1vFLc3D5jU5csfuet3fJdMBQ//klqa0=
+X-Received: by 2002:a17:90a:160f:: with SMTP id n15mr1905532pja.75.1603184583629;
+ Tue, 20 Oct 2020 02:03:03 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <160314732379.884498.15569172477533491589@swboyd.mtv.corp.google.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+References: <20201018125237.16717-1-kholk11@gmail.com> <20201018125237.16717-3-kholk11@gmail.com>
+ <CAG3jFysokz0+NCHLp9-nhxG3wGVzk1TAFBwZmhMgViUr-sk-BA@mail.gmail.com>
+In-Reply-To: <CAG3jFysokz0+NCHLp9-nhxG3wGVzk1TAFBwZmhMgViUr-sk-BA@mail.gmail.com>
+From:   Robert Foss <robert.foss@linaro.org>
+Date:   Tue, 20 Oct 2020 11:02:51 +0200
+Message-ID: <CAG3jFysUQJXdy0ogK1shbgW1Tmk6DJbS26EaeRPMDEnObQ2_zg@mail.gmail.com>
+Subject: Re: [PATCH 2/6] media: camss: ispif: Correctly reset based on the VFE ID
+To:     kholk11@gmail.com
+Cc:     Todor Tomov <todor.too@gmail.com>, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>, marijns95@gmail.com,
+        konradybcio@gmail.com, martin.botka1@gmail.com,
+        linux-arm-msm@vger.kernel.org,
+        linux-media <linux-media@vger.kernel.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>,
+        linux-kernel <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+I found a build issue in this commit.
 
 
-On 19/10/2020 23:42, Stephen Boyd wrote:
-> Quoting Srinivas Kandagatla (2020-10-16 07:12:37)
->> This patchset adds support for GFM Muxes found in LPASS
->> (Low Power Audio SubSystem) IP in Audio Clock Controller
->> and Always ON clock controller.
->>
->> Clocks derived from these muxes are consumed by LPASS Digital Codec.
->> Currently the driver for Audio and Always ON clock controller only
->> supports GFM Muxes, however it should be easy to add more clock
->> support when required
->>
->> Changes since v2:
->> - updated Kconfig text and help as suggested by Stephen
->> - removed unnecessary header file include
->> - use fw_name instead of name for parents
->> - use devm_platform_ioremap_resource
->>
->> verified dt_binding_check to pass on linux master,
-> Which linux master? Can you try on linux-next?
+On Tue, 20 Oct 2020 at 10:59, Robert Foss <robert.foss@linaro.org> wrote:
+>
+> Nice catch! This patch looks good to me.
+>
+> Signed-off-by: Robert Foss <robert.foss@linaro.org>
+>
+> On Sun, 18 Oct 2020 at 14:54, <kholk11@gmail.com> wrote:
+> >
+> > From: AngeloGioacchino Del Regno <kholk11@gmail.com>
+> >
+> > Resetting the ISPIF VFE0 context is wrong if we are using the VFE1
+> > for dual-camera or simply because a secondary camera is connected
+> > to it: in this case the reset will always happen on the VFE0 ctx
+> > of the ISPIF, which is .. useless.
+> >
+> > Fix this usecase by adding the ISPIF_RST_CMD_1 address and choose
+> > where to do the (or what to) reset based on the VFE line id.
+> >
+> > Signed-off-by: AngeloGioacchino Del Regno <kholk11@gmail.com>
+> > ---
+> >  .../media/platform/qcom/camss/camss-ispif.c   | 87 ++++++++++++-------
+> >  .../media/platform/qcom/camss/camss-ispif.h   |  2 +-
+> >  2 files changed, 57 insertions(+), 32 deletions(-)
+> >
+> > diff --git a/drivers/media/platform/qcom/camss/camss-ispif.c b/drivers/media/platform/qcom/camss/camss-ispif.c
+> > index db94cfd6c508..252db6b33dab 100644
+> > --- a/drivers/media/platform/qcom/camss/camss-ispif.c
+> > +++ b/drivers/media/platform/qcom/camss/camss-ispif.c
+> > @@ -26,6 +26,7 @@
+> >  #define MSM_ISPIF_NAME "msm_ispif"
+> >
+> >  #define ISPIF_RST_CMD_0                        0x008
+> > +#define ISPIF_RST_CMD_1                        0x00c
+> >  #define ISPIF_RST_CMD_0_STROBED_RST_EN         (1 << 0)
+> >  #define ISPIF_RST_CMD_0_MISC_LOGIC_RST         (1 << 1)
+> >  #define ISPIF_RST_CMD_0_SW_REG_RST             (1 << 2)
+> > @@ -179,7 +180,10 @@ static irqreturn_t ispif_isr_8x96(int irq, void *dev)
+> >         writel(0x1, ispif->base + ISPIF_IRQ_GLOBAL_CLEAR_CMD);
+> >
+> >         if ((value0 >> 27) & 0x1)
+> > -               complete(&ispif->reset_complete);
+> > +               complete(&ispif->reset_complete[0]);
+> > +
+> > +       if ((value3 >> 27) & 0x1)
+> > +               complete(&ispif->reset_complete[1]);
+> >
+> >         if (unlikely(value0 & ISPIF_VFE_m_IRQ_STATUS_0_PIX0_OVERFLOW))
+> >                 dev_err_ratelimited(to_device(ispif), "VFE0 pix0 overflow\n");
+> > @@ -237,7 +241,7 @@ static irqreturn_t ispif_isr_8x16(int irq, void *dev)
+> >         writel(0x1, ispif->base + ISPIF_IRQ_GLOBAL_CLEAR_CMD);
+> >
+> >         if ((value0 >> 27) & 0x1)
+> > -               complete(&ispif->reset_complete);
+> > +               complete(&ispif->reset_complete[0]);
+> >
+> >         if (unlikely(value0 & ISPIF_VFE_m_IRQ_STATUS_0_PIX0_OVERFLOW))
+> >                 dev_err_ratelimited(to_device(ispif), "VFE0 pix0 overflow\n");
+> > @@ -257,33 +261,17 @@ static irqreturn_t ispif_isr_8x16(int irq, void *dev)
+> >         return IRQ_HANDLED;
+> >  }
+> >
+> > -/*
+> > - * ispif_reset - Trigger reset on ISPIF module and wait to complete
+> > - * @ispif: ISPIF device
+> > - *
+> > - * Return 0 on success or a negative error code otherwise
+> > - */
+> > -static int ispif_reset(struct ispif_device *ispif)
+> > +static int ispif_vfe_reset(struct ispif_device *ispif, u8 vfe_id)
+> >  {
+> > -       unsigned long time;
+> >         u32 val;
+> > -       int ret;
+> > -
+> > -       ret = camss_pm_domain_on(to_camss(ispif), PM_DOMAIN_VFE0);
+> > -       if (ret < 0)
+> > -               return ret;
+> >
+> > -       ret = camss_pm_domain_on(to_camss(ispif), PM_DOMAIN_VFE1);
+> > -       if (ret < 0)
+> > -               return ret;
+> > -
+> > -       ret = camss_enable_clocks(ispif->nclocks_for_reset,
+> > -                                 ispif->clock_for_reset,
+> > -                                 to_device(ispif));
+> > -       if (ret < 0)
+> > -               return ret;
+> > +       if (vfe_id > (to_camss(ispif)->vfe_num - 1)) {
+> > +               dev_err(to_device(ispif),
+> > +                       "Error: asked reset for invalid VFE%d\n", vfe_id);
+> > +               return -ENOENT;
+> > +       }
+> >
+> > -       reinit_completion(&ispif->reset_complete);
+> > +       reinit_completion(&ispif->reset_complete[vfe_id]);
+> >
+> >         val = ISPIF_RST_CMD_0_STROBED_RST_EN |
+> >                 ISPIF_RST_CMD_0_MISC_LOGIC_RST |
+> > @@ -303,15 +291,51 @@ static int ispif_reset(struct ispif_device *ispif)
+> >                 ISPIF_RST_CMD_0_RDI_OUTPUT_1_MISR_RST |
+> >                 ISPIF_RST_CMD_0_RDI_OUTPUT_2_MISR_RST;
+> >
+> > -       writel_relaxed(val, ispif->base + ISPIF_RST_CMD_0);
+> > +       if (vfe_id == 1)
+> > +               writel_relaxed(val, ispif->base + ISPIF_RST_CMD_1);
+> > +       else
+> > +               writel_relaxed(val, ispif->base + ISPIF_RST_CMD_0);
+> >
+> > -       time = wait_for_completion_timeout(&ispif->reset_complete,
+> > +       time = wait_for_completion_timeout(&ispif->reset_complete[vfe_id],
 
-I meant linus master branch. However I learned that Bot runs only based 
-on rc1 tag (5.9-rc1 in this case) which is why its still reporting this 
-errors even though the dependent patches are already in linus master branch!
+'time' is not a variable that exists in this scope, so the build fails.
 
-I will resend this version patchset once rc1 is out!
-
-thanks,
-srini
+> >                 msecs_to_jiffies(ISPIF_RESET_TIMEOUT_MS));
+> >         if (!time) {
+> > -               dev_err(to_device(ispif), "ISPIF reset timeout\n");
+> > -               ret = -EIO;
+> > +               dev_err(to_device(ispif),
+> > +                       "ISPIF for VFE%d reset timeout\n", vfe_id);
+> > +               return -EIO;
+> >         }
+> >
+> > +       return 0;
+> > +}
+> > +
+> > +/*
+> > + * ispif_reset - Trigger reset on ISPIF module and wait to complete
+> > + * @ispif: ISPIF device
+> > + *
+> > + * Return 0 on success or a negative error code otherwise
+> > + */
+> > +static int ispif_reset(struct ispif_device *ispif, u8 vfe_id)
+> > +{
+> > +       unsigned long time;
+> > +       int ret;
+> > +
+> > +       ret = camss_pm_domain_on(to_camss(ispif), PM_DOMAIN_VFE0);
+> > +       if (ret < 0)
+> > +               return ret;
+> > +
+> > +       ret = camss_pm_domain_on(to_camss(ispif), PM_DOMAIN_VFE1);
+> > +       if (ret < 0)
+> > +               return ret;
+> > +
+> > +       ret = camss_enable_clocks(ispif->nclocks_for_reset,
+> > +                                 ispif->clock_for_reset,
+> > +                                 to_device(ispif));
+> > +       if (ret < 0)
+> > +               return ret;
+> > +
+> > +       ret = ispif_vfe_reset(ispif, vfe_id);
+> > +       if (ret)
+> > +               dev_dbg(to_device(ispif), "ISPIF Reset failed\n");
+> > +
+> >         camss_disable_clocks(ispif->nclocks_for_reset, ispif->clock_for_reset);
+> >
+> >         camss_pm_domain_off(to_camss(ispif), PM_DOMAIN_VFE0);
+> > @@ -355,7 +379,7 @@ static int ispif_set_power(struct v4l2_subdev *sd, int on)
+> >                         goto exit;
+> >                 }
+> >
+> > -               ret = ispif_reset(ispif);
+> > +               ret = ispif_reset(ispif, line->vfe_id);
+> >                 if (ret < 0) {
+> >                         pm_runtime_put_sync(dev);
+> >                         camss_disable_clocks(ispif->nclocks, ispif->clock);
+> > @@ -1192,7 +1216,8 @@ int msm_ispif_subdev_init(struct ispif_device *ispif,
+> >
+> >         mutex_init(&ispif->config_lock);
+> >
+> > -       init_completion(&ispif->reset_complete);
+> > +       for (i = 0; i < MSM_ISPIF_VFE_NUM; i++)
+> > +               init_completion(&ispif->reset_complete[i]);
+> >
+> >         return 0;
+> >  }
+> > diff --git a/drivers/media/platform/qcom/camss/camss-ispif.h b/drivers/media/platform/qcom/camss/camss-ispif.h
+> > index 1a5ba2425a42..4132174f7ea1 100644
+> > --- a/drivers/media/platform/qcom/camss/camss-ispif.h
+> > +++ b/drivers/media/platform/qcom/camss/camss-ispif.h
+> > @@ -56,7 +56,7 @@ struct ispif_device {
+> >         int nclocks;
+> >         struct camss_clock  *clock_for_reset;
+> >         int nclocks_for_reset;
+> > -       struct completion reset_complete;
+> > +       struct completion reset_complete[MSM_ISPIF_VFE_NUM];
+> >         int power_count;
+> >         struct mutex power_lock;
+> >         struct ispif_intf_cmd_reg intf_cmd[MSM_ISPIF_VFE_NUM];
+> > --
+> > 2.28.0
+> >
