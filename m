@@ -2,140 +2,155 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 8365F29403C
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Oct 2020 18:11:34 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 492CF2940FA
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Oct 2020 19:00:30 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2389868AbgJTQLe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 20 Oct 2020 12:11:34 -0400
-Received: from z5.mailgun.us ([104.130.96.5]:48892 "EHLO z5.mailgun.us"
+        id S2395084AbgJTRA3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 20 Oct 2020 13:00:29 -0400
+Received: from z5.mailgun.us ([104.130.96.5]:61733 "EHLO z5.mailgun.us"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1732278AbgJTQKS (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 20 Oct 2020 12:10:18 -0400
+        id S2395035AbgJTRA3 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 20 Oct 2020 13:00:29 -0400
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1603210217; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=XvlHKEFFXv5PkxuWl23fXuNfCB22Cwbykpq1imIZEOU=;
- b=hqX5UFOL1A/fPOJmXK0Elfk8TRuZreycooJO6uo7/iq8a1Z7YMMT8TDtv2ZHY7WlYn0xxM60
- 6jTuI10plNLmfJ897kTfOq15gVx7CH9hU6ybWfH46wjYOMKaEmw/kSoH5t0a9Z5YQ9T+rXHk
- m3+Fsp6XFiOA6fT69v3DnIr13As=
+ s=smtp; t=1603213229; h=Content-Transfer-Encoding: MIME-Version:
+ Message-Id: Date: Subject: Cc: To: From: Sender;
+ bh=UvDGTaz8J2/Cnaz46As0MAOMJxrv3yTPNC6RTt8QiVA=; b=fW8SfExNRhXio+QRY4J83nbDEUUBfSzPsQw2bkOypij/sElrsh1T/EsMEtw0PrN1qOeR3uzU
+ fT3p5SCtOLls5FoRfq2WJYxQhaZ5rdqRkhgF3ABWqlKJrDYIB+3uWUPijGl0O7omaG2khofy
+ 3ZTY4+hisie2hTzj3DFEwCGd3II=
 X-Mailgun-Sending-Ip: 104.130.96.5
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org
  (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n04.prod.us-west-2.postgun.com with SMTP id
- 5f8f0be5ad37af35ec54954e (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 20 Oct 2020 16:10:13
+ smtp-out-n05.prod.us-east-1.postgun.com with SMTP id
+ 5f8f179fef891f1ee26aa2b0 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 20 Oct 2020 17:00:15
  GMT
-Sender: saiprakash.ranjan=codeaurora.org@mg.codeaurora.org
+Sender: khsieh=codeaurora.org@mg.codeaurora.org
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 3D0A8C43387; Tue, 20 Oct 2020 16:10:13 +0000 (UTC)
+        id 73E81C433FF; Tue, 20 Oct 2020 17:00:14 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
+        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+Received: from khsieh-linux1.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
         (No client certificate requested)
-        (Authenticated sender: saiprakash.ranjan)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 663ACC433CB;
-        Tue, 20 Oct 2020 16:10:12 +0000 (UTC)
+        (Authenticated sender: khsieh)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id B748EC433FE;
+        Tue, 20 Oct 2020 17:00:12 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org B748EC433FE
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=khsieh@codeaurora.org
+From:   Kuogee Hsieh <khsieh@codeaurora.org>
+To:     robdclark@gmail.com, sean@poorly.run, swboyd@chromium.org
+Cc:     tanmay@codeaurora.org, abhinavk@codeaurora.org,
+        aravindh@codeaurora.org, khsieh@codeaurora.org, airlied@linux.ie,
+        daniel@ffwll.ch, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH] drm/msm/dp: skip checking LINK_STATUS_UPDATED bit
+Date:   Tue, 20 Oct 2020 09:59:59 -0700
+Message-Id: <20201020165959.7441-1-khsieh@codeaurora.org>
+X-Mailer: git-send-email 2.27.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8;
- format=flowed
 Content-Transfer-Encoding: 8bit
-Date:   Tue, 20 Oct 2020 21:40:12 +0530
-From:   Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-To:     Suzuki K Poulose <suzuki.poulose@arm.com>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>
-Cc:     mike.leach@linaro.org, coresight@lists.linaro.org,
-        swboyd@chromium.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        denik@google.com, leo.yan@linaro.org, peterz@infradead.org
-Subject: Re: [PATCH 1/2] coresight: tmc-etf: Fix NULL ptr dereference in
- tmc_enable_etf_sink_perf()
-In-Reply-To: <5ad6acdc69c1c2e1e17f5c701a09b7e1@codeaurora.org>
-References: <cover.1602074787.git.saiprakash.ranjan@codeaurora.org>
- <d7a2dd53d88360b12e5a14933cb931198760dd63.1602074787.git.saiprakash.ranjan@codeaurora.org>
- <5bbb2d35-3e56-56d7-4722-bf34c5efa2fb@arm.com>
- <9fa4fcc25dac17b343d151a9d089b48c@codeaurora.org>
- <707b7860-0daa-d3e3-1f0f-17e1b05feae2@arm.com>
- <5ad6acdc69c1c2e1e17f5c701a09b7e1@codeaurora.org>
-Message-ID: <8affc09d4045812e2f5a065695b375de@codeaurora.org>
-X-Sender: saiprakash.ranjan@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2020-10-14 21:29, Sai Prakash Ranjan wrote:
-> On 2020-10-14 18:46, Suzuki K Poulose wrote:
->> On 10/14/2020 10:36 AM, Sai Prakash Ranjan wrote:
->>> On 2020-10-13 22:05, Suzuki K Poulose wrote:
->>>> On 10/07/2020 02:00 PM, Sai Prakash Ranjan wrote:
->>>>> There was a report of NULL pointer dereference in ETF enable
->>>>> path for perf CS mode with PID monitoring. It is almost 100%
->>>>> reproducible when the process to monitor is something very
->>>>> active such as chrome and with ETF as the sink and not ETR.
->>>>> Currently in a bid to find the pid, the owner is dereferenced
->>>>> via task_pid_nr() call in tmc_enable_etf_sink_perf() and with
->>>>> owner being NULL, we get a NULL pointer dereference.
->>>>> 
->>>>> Looking at the ETR and other places in the kernel, ETF and the
->>>>> ETB are the only places trying to dereference the task(owner)
->>>>> in tmc_enable_etf_sink_perf() which is also called from the
->>>>> sched_in path as in the call trace. Owner(task) is NULL even
->>>>> in the case of ETR in tmc_enable_etr_sink_perf(), but since we
->>>>> cache the PID in alloc_buffer() callback and it is done as part
->>>>> of etm_setup_aux() when allocating buffer for ETR sink, we never
->>>>> dereference this NULL pointer and we are safe. So lets do the
->>>> 
->>>> The patch is necessary to fix some of the issues. But I feel it is
->>>> not complete. Why is it safe earlier and not later ? I believe we 
->>>> are
->>>> simply reducing the chances of hitting the issue, by doing this 
->>>> earlier than
->>>> later. I would say we better fix all instances to make sure that the
->>>> event->owner is valid. (e.g, I can see that the for kernel events
->>>> event->owner == -1 ?)
->>>> 
->>>> struct task_struct *tsk = READ_ONCE(event->owner);
->>>> 
->>>> if (!tsk || is_kernel_event(event))
->>>>    /* skip ? */
->>>> 
->>> 
->>> Looking at it some more, is_kernel_event() is not exposed
->>> outside events core and probably for good reason. Why do
->>> we need to check for this and not just tsk?
->> 
->> Because the event->owner could be :
->> 
->>  = NULL
->>  = -1UL  // kernel event
->>  = valid.
->> 
-> 
-> Yes I understood that part, but here we were trying to
-> fix the NULL pointer dereference right and hence the
-> question as to why we need to check for kernel events?
-> I am no expert in perf but I don't see anywhere in the
-> kernel checking for is_kernel_event(), so I am a bit
-> skeptical if exporting that is actually right or not.
-> 
+No need to check LINK_STATuS_UPDATED bit before
+return 6 bytes of link status during link training.
+This patch also fix phy compliance test link rate
+conversion error.
 
-I have stress tested with the original patch many times
-now, i.e., without a check for event->owner and is_kernel_event()
-and didn't observe any crash. Plus on ETR where this was already
-done, no crashes were reported till date and with ETF, the issue
-was quickly reproducible, so I am fairly confident that this
-doesn't just delay the original issue but actually fixes
-it. I will run an overnight test again to confirm this.
+Signed-off-by: Kuogee Hsieh <khsieh@codeaurora.org>
+---
+ drivers/gpu/drm/msm/dp/dp_ctrl.c | 20 ++++++--------------
+ drivers/gpu/drm/msm/dp/dp_link.c | 24 +++++++++++-------------
+ 2 files changed, 17 insertions(+), 27 deletions(-)
 
-Thanks,
-Sai
+diff --git a/drivers/gpu/drm/msm/dp/dp_ctrl.c b/drivers/gpu/drm/msm/dp/dp_ctrl.c
+index 6bdaec778c4c..76e891c91c6e 100644
+--- a/drivers/gpu/drm/msm/dp/dp_ctrl.c
++++ b/drivers/gpu/drm/msm/dp/dp_ctrl.c
+@@ -1061,23 +1061,15 @@ static bool dp_ctrl_train_pattern_set(struct dp_ctrl_private *ctrl,
+ static int dp_ctrl_read_link_status(struct dp_ctrl_private *ctrl,
+ 				    u8 *link_status)
+ {
+-	int len = 0;
+-	u32 const offset = DP_LANE_ALIGN_STATUS_UPDATED - DP_LANE0_1_STATUS;
+-	u32 link_status_read_max_retries = 100;
+-
+-	while (--link_status_read_max_retries) {
+-		len = drm_dp_dpcd_read_link_status(ctrl->aux,
+-			link_status);
+-		if (len != DP_LINK_STATUS_SIZE) {
+-			DRM_ERROR("DP link status read failed, err: %d\n", len);
+-			return len;
+-		}
++	int ret = 0, len;
+ 
+-		if (!(link_status[offset] & DP_LINK_STATUS_UPDATED))
+-			return 0;
++	len = drm_dp_dpcd_read_link_status(ctrl->aux, link_status);
++	if (len != DP_LINK_STATUS_SIZE) {
++		DRM_ERROR("DP link status read failed, err: %d\n", len);
++		ret = len;
+ 	}
+ 
+-	return -ETIMEDOUT;
++	return ret;
+ }
+ 
+ static int dp_ctrl_link_train_1(struct dp_ctrl_private *ctrl,
+diff --git a/drivers/gpu/drm/msm/dp/dp_link.c b/drivers/gpu/drm/msm/dp/dp_link.c
+index c811da515fb3..58d65daae3b3 100644
+--- a/drivers/gpu/drm/msm/dp/dp_link.c
++++ b/drivers/gpu/drm/msm/dp/dp_link.c
+@@ -773,7 +773,8 @@ static int dp_link_process_link_training_request(struct dp_link_private *link)
+ 			link->request.test_lane_count);
+ 
+ 	link->dp_link.link_params.num_lanes = link->request.test_lane_count;
+-	link->dp_link.link_params.rate = link->request.test_link_rate;
++	link->dp_link.link_params.rate =
++		drm_dp_bw_code_to_link_rate(link->request.test_link_rate);
+ 
+ 	return 0;
+ }
+@@ -939,20 +940,17 @@ static u8 get_link_status(const u8 link_status[DP_LINK_STATUS_SIZE], int r)
+  */
+ static int dp_link_process_link_status_update(struct dp_link_private *link)
+ {
+-	if (!(get_link_status(link->link_status,
+-				DP_LANE_ALIGN_STATUS_UPDATED) &
+-				DP_LINK_STATUS_UPDATED) ||
+-			(drm_dp_clock_recovery_ok(link->link_status,
+-					link->dp_link.link_params.num_lanes) &&
+-			drm_dp_channel_eq_ok(link->link_status,
+-					link->dp_link.link_params.num_lanes)))
+-		return -EINVAL;
++	bool channel_eq_done = drm_dp_channel_eq_ok(link->link_status,
++			link->dp_link.link_params.num_lanes);
++
++	bool clock_recovery_done = drm_dp_clock_recovery_ok(link->link_status,
++			link->dp_link.link_params.num_lanes);
+ 
+ 	DRM_DEBUG_DP("channel_eq_done = %d, clock_recovery_done = %d\n",
+-			drm_dp_clock_recovery_ok(link->link_status,
+-			link->dp_link.link_params.num_lanes),
+-			drm_dp_clock_recovery_ok(link->link_status,
+-			link->dp_link.link_params.num_lanes));
++			channel_eq_done, clock_recovery_done);
++
++	if (channel_eq_done && clock_recovery_done)
++		return -EINVAL;
+ 
+ 	return 0;
+ }
 
+base-commit: 0855cb4b31953b8c539e57b970da8146bcd4405a
 -- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a 
-member
-of Code Aurora Forum, hosted by The Linux Foundation
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
+
