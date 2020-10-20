@@ -2,246 +2,256 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 7D54D293745
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Oct 2020 10:57:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9A2AA29374D
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Oct 2020 10:59:39 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2390149AbgJTI5m (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 20 Oct 2020 04:57:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44922 "EHLO
+        id S2390152AbgJTI7i (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 20 Oct 2020 04:59:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45230 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2390041AbgJTI5l (ORCPT
+        with ESMTP id S2390158AbgJTI7h (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 20 Oct 2020 04:57:41 -0400
-Received: from mail-oo1-xc41.google.com (mail-oo1-xc41.google.com [IPv6:2607:f8b0:4864:20::c41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1C1B6C061755
-        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Oct 2020 01:57:41 -0700 (PDT)
-Received: by mail-oo1-xc41.google.com with SMTP id c25so258658ooe.13
-        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Oct 2020 01:57:41 -0700 (PDT)
+        Tue, 20 Oct 2020 04:59:37 -0400
+Received: from mail-pf1-x442.google.com (mail-pf1-x442.google.com [IPv6:2607:f8b0:4864:20::442])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AAC72C0613D1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Oct 2020 01:59:37 -0700 (PDT)
+Received: by mail-pf1-x442.google.com with SMTP id y14so789406pfp.13
+        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Oct 2020 01:59:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
+        d=linaro.org; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=uT0NXS//qb947TsojT9yUxidX+OMPncJLo1H0INLQEM=;
-        b=msWlPbdDZxBNc5Qy14JyQkFhY4XUh6YKd8wwOYJnYzqM31bknOgjJsUbNU6mAWxqaf
-         vhnn3M/aVFdvVe9tQ3Re9ykUg7U4/o6acqsj5lzpFlaPJfthQd1AVIwWtmSK+lV6oFoj
-         dZ/+4WjPM1HVIZfM1/A/pt6HSCxSYNW8SpCdk=
+        bh=OzWls94jQ8pq52AMk7jKEXrTP1OQTMot6mH/T4YUYBA=;
+        b=nU9Mwl6o0Qd+Gr4ubPUva9x2DPCXpPfPZXu0ZKfRsCipgcVSs5nalL2v/dHyHN+PKK
+         NZg+H2I9awMs+f5Rz8gPCQOvehDicp01RidO74mOR6qDsvz2EVd7y4WYmvY13GJEBJat
+         /rRigmJ7MiPP9IpK8duYKlPHOrHF3lofxbO9fHOX8NBd3iozrP7N0apAxzF2umTw/KnZ
+         l1Sjhi1SkRedW+feXqXWc3JOTLkJbW0S+gvR5SUwsgh6Qb8L6Bvu3tj1u9EEbZ2bPUdo
+         F3llTjVCnOrX1gfukYFx1nXfLOSn0X+eOUSbqRbpvPKuT6h5TS28qt7DPNI0Ok4fefoq
+         2Tkw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=uT0NXS//qb947TsojT9yUxidX+OMPncJLo1H0INLQEM=;
-        b=NHhqdv+gTwoxl+wE6Mqz/afOYTvyvSAdUP8vOU9VtzPvuo0xOjkbCbaF1KT0XYf63s
-         hUVsVouHtIJUdDxBEjFPwHpb6iEQLzIB/U3+j0PhCQZt+pqpaXu9U8DydUUBw8gQpNNj
-         IP6gmv8mbmKTEr0n8nD1kror6OI/x7n/uTmgBYRLUZUrAcEi/86WScPanIuRdY7+S7Zw
-         80dF5zZ8DEUfB6IuZ/lzwbks57XbZ64y8Ua76+/TY5t6d8miN9CKlI86gowMhVP2N96M
-         RbKMiaX7DvDPyldaMxwE5kET28e7Yu9ygNvGjrSZgIeS0+Bxn7dQ0CxQC+kQZZw1InmJ
-         cwsQ==
-X-Gm-Message-State: AOAM532or/cnywvbor/3ZiJz2Nid77lxrCwgxTbV3auS+6BMkGBeDWth
-        BfKcR3OQOHbgVveefMFeHPlsnCFtf7CwVQ==
-X-Google-Smtp-Source: ABdhPJx39QsXA5a9ZJa1IdXNNN6z3AQ1PTc1nF9wNiA1q03PMRmSNLCH2meqS9YBI08O8L4k4l6igA==
-X-Received: by 2002:a4a:a447:: with SMTP id w7mr1058496ool.42.1603184260167;
-        Tue, 20 Oct 2020 01:57:40 -0700 (PDT)
-Received: from mail-ot1-f49.google.com (mail-ot1-f49.google.com. [209.85.210.49])
-        by smtp.gmail.com with ESMTPSA id p4sm372340oib.9.2020.10.20.01.57.39
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 20 Oct 2020 01:57:39 -0700 (PDT)
-Received: by mail-ot1-f49.google.com with SMTP id m11so1039921otk.13
-        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Oct 2020 01:57:39 -0700 (PDT)
-X-Received: by 2002:a9d:7313:: with SMTP id e19mr961207otk.97.1603184258633;
- Tue, 20 Oct 2020 01:57:38 -0700 (PDT)
+        bh=OzWls94jQ8pq52AMk7jKEXrTP1OQTMot6mH/T4YUYBA=;
+        b=Dd8+cZGns0BiyxX02DyyvkwNDL88xnKsdcq5/z1V3NwX+/IzdSTXudzpi8JeUKRVS9
+         oUln4hYEFaJ2sT3OlZe5FrAHyxkOJJJ3jOIFBkjwr4bVmVrVtz+aa+y3GSGBNgG2pggS
+         2bULeD3iZ2fV0dOtjfRG2csnrUN+ZD9vMITB0+LN009h3KiP37v+ngi8WEI/771HujqV
+         b45tMEtWZYlxwEWszfeFyHYKlkvvXSXQt2UyQtLHlcr0cHFrM/notBXS+VS9q/fzwExU
+         hfywPfooqrWZe9iK08UWPX1Qs9WJIVonFpifGq8ylGZUl4TYiu755t+757ZJhhI+S+mS
+         z21Q==
+X-Gm-Message-State: AOAM532l+gb+ryCH61ZyOmPUfbt1515w/al/nnwjEltWcaPJp/oOwUG/
+        t2Lt6HO2UxFF3a7X6oxp5NA6eoN+RxeArql25LGUEQ==
+X-Google-Smtp-Source: ABdhPJx0U+unN/ZGAFVBtuf0U/TY7ARophCsIgh6K5hN4jgovZQJjCdR4A9cXgPZXOSSARJj1NKi7fUoPKkvU6+W2do=
+X-Received: by 2002:aa7:9245:0:b029:156:552a:1275 with SMTP id
+ 5-20020aa792450000b0290156552a1275mr1838556pfp.12.1603184377105; Tue, 20 Oct
+ 2020 01:59:37 -0700 (PDT)
 MIME-Version: 1.0
-References: <1603117737-16965-1-git-send-email-dikshita@codeaurora.org>
-In-Reply-To: <1603117737-16965-1-git-send-email-dikshita@codeaurora.org>
-From:   Alexandre Courbot <acourbot@chromium.org>
-Date:   Tue, 20 Oct 2020 17:57:26 +0900
-X-Gmail-Original-Message-ID: <CAPBb6MVPmW7MVveAKYzBXm=g=Ou4xviv5DjqMG+n0ax4OR7O0A@mail.gmail.com>
-Message-ID: <CAPBb6MVPmW7MVveAKYzBXm=g=Ou4xviv5DjqMG+n0ax4OR7O0A@mail.gmail.com>
-Subject: Re: [PATCH] venus: venc: add handling for VIDIOC_ENCODER_CMD
-To:     Dikshita Agarwal <dikshita@codeaurora.org>
-Cc:     Linux Media Mailing List <linux-media@vger.kernel.org>,
-        Stanimir Varbanov <stanimir.varbanov@linaro.org>,
-        LKML <linux-kernel@vger.kernel.org>,
+References: <20201018125237.16717-1-kholk11@gmail.com> <20201018125237.16717-3-kholk11@gmail.com>
+In-Reply-To: <20201018125237.16717-3-kholk11@gmail.com>
+From:   Robert Foss <robert.foss@linaro.org>
+Date:   Tue, 20 Oct 2020 10:59:24 +0200
+Message-ID: <CAG3jFysokz0+NCHLp9-nhxG3wGVzk1TAFBwZmhMgViUr-sk-BA@mail.gmail.com>
+Subject: Re: [PATCH 2/6] media: camss: ispif: Correctly reset based on the VFE ID
+To:     kholk11@gmail.com
+Cc:     Todor Tomov <todor.too@gmail.com>, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>, marijns95@gmail.com,
+        konradybcio@gmail.com, martin.botka1@gmail.com,
         linux-arm-msm@vger.kernel.org,
-        Vikash Garodia <vgarodia@codeaurora.org>
+        linux-media <linux-media@vger.kernel.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>,
+        linux-kernel <linux-kernel@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Dikshita,
+Nice catch! This patch looks good to me.
 
-On Mon, Oct 19, 2020 at 11:29 PM Dikshita Agarwal
-<dikshita@codeaurora.org> wrote:
+Signed-off-by: Robert Foss <robert.foss@linaro.org>
+
+On Sun, 18 Oct 2020 at 14:54, <kholk11@gmail.com> wrote:
 >
-> Add handling for below commands in encoder:
-> 1. V4L2_ENC_CMD_STOP
-> 2. V4L2_ENC_CMD_START
-
-I suspect this can be implemented more easily (and more safely) using
-the m2m encoder helpers introduced recently. Please see this commit
-for details:
-
-https://github.com/torvalds/linux/commit/2b48e113866a6735de3a99531183afb6217c2a60
-
-By making use of this you can probably get rid of venus_enc_state
-entirely. Also this generic implementation should take care of corner
-cases that this patch does not address (like streaming off while a
-drain is in progress).
-
+> From: AngeloGioacchino Del Regno <kholk11@gmail.com>
 >
-> Signed-off-by: Dikshita Agarwal <dikshita@codeaurora.org>
+> Resetting the ISPIF VFE0 context is wrong if we are using the VFE1
+> for dual-camera or simply because a secondary camera is connected
+> to it: in this case the reset will always happen on the VFE0 ctx
+> of the ISPIF, which is .. useless.
+>
+> Fix this usecase by adding the ISPIF_RST_CMD_1 address and choose
+> where to do the (or what to) reset based on the VFE line id.
+>
+> Signed-off-by: AngeloGioacchino Del Regno <kholk11@gmail.com>
 > ---
->  drivers/media/platform/qcom/venus/core.h |  9 +++++
->  drivers/media/platform/qcom/venus/venc.c | 64 +++++++++++++++++++++++++++++++-
->  2 files changed, 72 insertions(+), 1 deletion(-)
+>  .../media/platform/qcom/camss/camss-ispif.c   | 87 ++++++++++++-------
+>  .../media/platform/qcom/camss/camss-ispif.h   |  2 +-
+>  2 files changed, 57 insertions(+), 32 deletions(-)
 >
-> diff --git a/drivers/media/platform/qcom/venus/core.h b/drivers/media/platform/qcom/venus/core.h
-> index e30eeaf..5c46936 100644
-> --- a/drivers/media/platform/qcom/venus/core.h
-> +++ b/drivers/media/platform/qcom/venus/core.h
-> @@ -276,6 +276,14 @@ enum venus_dec_state {
->         VENUS_DEC_STATE_DRC             = 7,
->  };
+> diff --git a/drivers/media/platform/qcom/camss/camss-ispif.c b/drivers/media/platform/qcom/camss/camss-ispif.c
+> index db94cfd6c508..252db6b33dab 100644
+> --- a/drivers/media/platform/qcom/camss/camss-ispif.c
+> +++ b/drivers/media/platform/qcom/camss/camss-ispif.c
+> @@ -26,6 +26,7 @@
+>  #define MSM_ISPIF_NAME "msm_ispif"
 >
-> +enum venus_enc_state {
-> +       VENUS_ENC_STATE_DEINIT          = 0,
-> +       VENUS_ENC_STATE_INIT            = 1,
-> +       VENUS_ENC_STATE_ENCODING        = 2,
-> +       VENUS_ENC_STATE_STOPPED         = 3,
-> +       VENUS_ENC_STATE_DRAIN           = 4,
-> +};
+>  #define ISPIF_RST_CMD_0                        0x008
+> +#define ISPIF_RST_CMD_1                        0x00c
+>  #define ISPIF_RST_CMD_0_STROBED_RST_EN         (1 << 0)
+>  #define ISPIF_RST_CMD_0_MISC_LOGIC_RST         (1 << 1)
+>  #define ISPIF_RST_CMD_0_SW_REG_RST             (1 << 2)
+> @@ -179,7 +180,10 @@ static irqreturn_t ispif_isr_8x96(int irq, void *dev)
+>         writel(0x1, ispif->base + ISPIF_IRQ_GLOBAL_CLEAR_CMD);
+>
+>         if ((value0 >> 27) & 0x1)
+> -               complete(&ispif->reset_complete);
+> +               complete(&ispif->reset_complete[0]);
 > +
->  struct venus_ts_metadata {
->         bool used;
->         u64 ts_ns;
-> @@ -367,6 +375,7 @@ struct venus_inst {
->         u8 quantization;
->         u8 xfer_func;
->         enum venus_dec_state codec_state;
-> +       enum venus_enc_state enc_state;
->         wait_queue_head_t reconf_wait;
->         unsigned int subscriptions;
->         int buf_count;
-> diff --git a/drivers/media/platform/qcom/venus/venc.c b/drivers/media/platform/qcom/venus/venc.c
-> index f7fb6e3..c6143b0 100644
-> --- a/drivers/media/platform/qcom/venus/venc.c
-> +++ b/drivers/media/platform/qcom/venus/venc.c
-> @@ -498,6 +498,46 @@ static int venc_enum_frameintervals(struct file *file, void *fh,
->         return 0;
+> +       if ((value3 >> 27) & 0x1)
+> +               complete(&ispif->reset_complete[1]);
+>
+>         if (unlikely(value0 & ISPIF_VFE_m_IRQ_STATUS_0_PIX0_OVERFLOW))
+>                 dev_err_ratelimited(to_device(ispif), "VFE0 pix0 overflow\n");
+> @@ -237,7 +241,7 @@ static irqreturn_t ispif_isr_8x16(int irq, void *dev)
+>         writel(0x1, ispif->base + ISPIF_IRQ_GLOBAL_CLEAR_CMD);
+>
+>         if ((value0 >> 27) & 0x1)
+> -               complete(&ispif->reset_complete);
+> +               complete(&ispif->reset_complete[0]);
+>
+>         if (unlikely(value0 & ISPIF_VFE_m_IRQ_STATUS_0_PIX0_OVERFLOW))
+>                 dev_err_ratelimited(to_device(ispif), "VFE0 pix0 overflow\n");
+> @@ -257,33 +261,17 @@ static irqreturn_t ispif_isr_8x16(int irq, void *dev)
+>         return IRQ_HANDLED;
 >  }
 >
-> +static int
-> +venc_encoder_cmd(struct file *file, void *fh, struct v4l2_encoder_cmd *cmd)
-> +{
-> +       struct venus_inst *inst = to_inst(file);
-> +       struct hfi_frame_data fdata = {0};
-> +       int ret = 0;
-> +
-> +       ret = v4l2_m2m_ioctl_try_encoder_cmd(file, fh, cmd);
-> +       if (ret)
-> +               return ret;
-> +
-> +       mutex_lock(&inst->lock);
-> +
-> +       if (cmd->cmd == V4L2_ENC_CMD_STOP &&
-> +           inst->enc_state == VENUS_ENC_STATE_ENCODING) {
-> +               /*
-> +                * Implement V4L2_ENC_CMD_STOP by enqueue an empty buffer on
-> +                * encoder input to signal EOS.
-> +                */
-> +               if (!(inst->streamon_out && inst->streamon_cap))
-> +                       goto unlock;
-> +
-> +               fdata.buffer_type = HFI_BUFFER_INPUT;
-> +               fdata.flags |= HFI_BUFFERFLAG_EOS;
-> +               fdata.device_addr = 0xdeadb000;
-> +
-> +               ret = hfi_session_process_buf(inst, &fdata);
-> +
-> +               inst->enc_state = VENUS_ENC_STATE_DRAIN;
-> +       } else if (cmd->cmd == V4L2_ENC_CMD_START &&
-> +               inst->enc_state == VENUS_ENC_STATE_STOPPED) {
-> +               vb2_clear_last_buffer_dequeued(&inst->fh.m2m_ctx->cap_q_ctx.q);
-> +               inst->enc_state = VENUS_ENC_STATE_ENCODING;
+> -/*
+> - * ispif_reset - Trigger reset on ISPIF module and wait to complete
+> - * @ispif: ISPIF device
+> - *
+> - * Return 0 on success or a negative error code otherwise
+> - */
+> -static int ispif_reset(struct ispif_device *ispif)
+> +static int ispif_vfe_reset(struct ispif_device *ispif, u8 vfe_id)
+>  {
+> -       unsigned long time;
+>         u32 val;
+> -       int ret;
+> -
+> -       ret = camss_pm_domain_on(to_camss(ispif), PM_DOMAIN_VFE0);
+> -       if (ret < 0)
+> -               return ret;
+>
+> -       ret = camss_pm_domain_on(to_camss(ispif), PM_DOMAIN_VFE1);
+> -       if (ret < 0)
+> -               return ret;
+> -
+> -       ret = camss_enable_clocks(ispif->nclocks_for_reset,
+> -                                 ispif->clock_for_reset,
+> -                                 to_device(ispif));
+> -       if (ret < 0)
+> -               return ret;
+> +       if (vfe_id > (to_camss(ispif)->vfe_num - 1)) {
+> +               dev_err(to_device(ispif),
+> +                       "Error: asked reset for invalid VFE%d\n", vfe_id);
+> +               return -ENOENT;
 > +       }
-> +
-> +unlock:
-> +       mutex_unlock(&inst->lock);
-> +       return ret;
+>
+> -       reinit_completion(&ispif->reset_complete);
+> +       reinit_completion(&ispif->reset_complete[vfe_id]);
+>
+>         val = ISPIF_RST_CMD_0_STROBED_RST_EN |
+>                 ISPIF_RST_CMD_0_MISC_LOGIC_RST |
+> @@ -303,15 +291,51 @@ static int ispif_reset(struct ispif_device *ispif)
+>                 ISPIF_RST_CMD_0_RDI_OUTPUT_1_MISR_RST |
+>                 ISPIF_RST_CMD_0_RDI_OUTPUT_2_MISR_RST;
+>
+> -       writel_relaxed(val, ispif->base + ISPIF_RST_CMD_0);
+> +       if (vfe_id == 1)
+> +               writel_relaxed(val, ispif->base + ISPIF_RST_CMD_1);
+> +       else
+> +               writel_relaxed(val, ispif->base + ISPIF_RST_CMD_0);
+>
+> -       time = wait_for_completion_timeout(&ispif->reset_complete,
+> +       time = wait_for_completion_timeout(&ispif->reset_complete[vfe_id],
+>                 msecs_to_jiffies(ISPIF_RESET_TIMEOUT_MS));
+>         if (!time) {
+> -               dev_err(to_device(ispif), "ISPIF reset timeout\n");
+> -               ret = -EIO;
+> +               dev_err(to_device(ispif),
+> +                       "ISPIF for VFE%d reset timeout\n", vfe_id);
+> +               return -EIO;
+>         }
+>
+> +       return 0;
 > +}
 > +
->  static const struct v4l2_ioctl_ops venc_ioctl_ops = {
->         .vidioc_querycap = venc_querycap,
->         .vidioc_enum_fmt_vid_cap = venc_enum_fmt,
-> @@ -525,6 +565,7 @@ static int venc_enum_frameintervals(struct file *file, void *fh,
->         .vidioc_enum_frameintervals = venc_enum_frameintervals,
->         .vidioc_subscribe_event = v4l2_ctrl_subscribe_event,
->         .vidioc_unsubscribe_event = v4l2_event_unsubscribe,
-> +       .vidioc_encoder_cmd = venc_encoder_cmd,
->  };
->
->  static int venc_set_properties(struct venus_inst *inst)
-> @@ -884,6 +925,8 @@ static int venc_start_streaming(struct vb2_queue *q, unsigned int count)
->         if (ret)
->                 goto deinit_sess;
->
-> +       inst->enc_state = VENUS_ENC_STATE_ENCODING;
+> +/*
+> + * ispif_reset - Trigger reset on ISPIF module and wait to complete
+> + * @ispif: ISPIF device
+> + *
+> + * Return 0 on success or a negative error code otherwise
+> + */
+> +static int ispif_reset(struct ispif_device *ispif, u8 vfe_id)
+> +{
+> +       unsigned long time;
+> +       int ret;
 > +
->         mutex_unlock(&inst->lock);
+> +       ret = camss_pm_domain_on(to_camss(ispif), PM_DOMAIN_VFE0);
+> +       if (ret < 0)
+> +               return ret;
+> +
+> +       ret = camss_pm_domain_on(to_camss(ispif), PM_DOMAIN_VFE1);
+> +       if (ret < 0)
+> +               return ret;
+> +
+> +       ret = camss_enable_clocks(ispif->nclocks_for_reset,
+> +                                 ispif->clock_for_reset,
+> +                                 to_device(ispif));
+> +       if (ret < 0)
+> +               return ret;
+> +
+> +       ret = ispif_vfe_reset(ispif, vfe_id);
+> +       if (ret)
+> +               dev_dbg(to_device(ispif), "ISPIF Reset failed\n");
+> +
+>         camss_disable_clocks(ispif->nclocks_for_reset, ispif->clock_for_reset);
+>
+>         camss_pm_domain_off(to_camss(ispif), PM_DOMAIN_VFE0);
+> @@ -355,7 +379,7 @@ static int ispif_set_power(struct v4l2_subdev *sd, int on)
+>                         goto exit;
+>                 }
+>
+> -               ret = ispif_reset(ispif);
+> +               ret = ispif_reset(ispif, line->vfe_id);
+>                 if (ret < 0) {
+>                         pm_runtime_put_sync(dev);
+>                         camss_disable_clocks(ispif->nclocks, ispif->clock);
+> @@ -1192,7 +1216,8 @@ int msm_ispif_subdev_init(struct ispif_device *ispif,
+>
+>         mutex_init(&ispif->config_lock);
+>
+> -       init_completion(&ispif->reset_complete);
+> +       for (i = 0; i < MSM_ISPIF_VFE_NUM; i++)
+> +               init_completion(&ispif->reset_complete[i]);
 >
 >         return 0;
-> @@ -903,8 +946,19 @@ static int venc_start_streaming(struct vb2_queue *q, unsigned int count)
->  static void venc_vb2_buf_queue(struct vb2_buffer *vb)
->  {
->         struct venus_inst *inst = vb2_get_drv_priv(vb->vb2_queue);
-> +       struct vb2_v4l2_buffer *vbuf = to_vb2_v4l2_buffer(vb);
->
->         mutex_lock(&inst->lock);
-> +
-> +       if (inst->enc_state == VENUS_ENC_STATE_STOPPED) {
-> +               vbuf->sequence = inst->sequence_cap++;
-> +               vbuf->field = V4L2_FIELD_NONE;
-> +               vb2_set_plane_payload(vb, 0, 0);
-> +               v4l2_m2m_buf_done(vbuf, VB2_BUF_STATE_DONE);
-> +               mutex_unlock(&inst->lock);
-> +               return;
-> +       }
-> +
->         venus_helper_vb2_buf_queue(vb);
->         mutex_unlock(&inst->lock);
 >  }
-> @@ -943,6 +997,11 @@ static void venc_buf_done(struct venus_inst *inst, unsigned int buf_type,
->                 vb->planes[0].data_offset = data_offset;
->                 vb->timestamp = timestamp_us * NSEC_PER_USEC;
->                 vbuf->sequence = inst->sequence_cap++;
-> +
-> +               if ((vbuf->flags & V4L2_BUF_FLAG_LAST) &&
-> +                   inst->enc_state == VENUS_ENC_STATE_DRAIN) {
-> +                       inst->enc_state = VENUS_ENC_STATE_STOPPED;
-> +               }
->         } else {
->                 vbuf->sequence = inst->sequence_out++;
->         }
-> @@ -1041,6 +1100,9 @@ static int venc_open(struct file *file)
->         inst->clk_data.core_id = VIDC_CORE_ID_DEFAULT;
->         inst->core_acquired = false;
->
-> +       if (inst->enc_state == VENUS_ENC_STATE_DEINIT)
-> +               inst->enc_state = VENUS_ENC_STATE_INIT;
-> +
->         venus_helper_init_instance(inst);
->
->         ret = pm_runtime_get_sync(core->dev_enc);
-> @@ -1105,7 +1167,7 @@ static int venc_close(struct file *file)
->         mutex_destroy(&inst->lock);
->         v4l2_fh_del(&inst->fh);
->         v4l2_fh_exit(&inst->fh);
-> -
-> +       inst->enc_state = VENUS_ENC_STATE_DEINIT;
->         pm_runtime_put_sync(inst->core->dev_enc);
->
->         kfree(inst);
+> diff --git a/drivers/media/platform/qcom/camss/camss-ispif.h b/drivers/media/platform/qcom/camss/camss-ispif.h
+> index 1a5ba2425a42..4132174f7ea1 100644
+> --- a/drivers/media/platform/qcom/camss/camss-ispif.h
+> +++ b/drivers/media/platform/qcom/camss/camss-ispif.h
+> @@ -56,7 +56,7 @@ struct ispif_device {
+>         int nclocks;
+>         struct camss_clock  *clock_for_reset;
+>         int nclocks_for_reset;
+> -       struct completion reset_complete;
+> +       struct completion reset_complete[MSM_ISPIF_VFE_NUM];
+>         int power_count;
+>         struct mutex power_lock;
+>         struct ispif_intf_cmd_reg intf_cmd[MSM_ISPIF_VFE_NUM];
 > --
-> 1.9.1
+> 2.28.0
 >
