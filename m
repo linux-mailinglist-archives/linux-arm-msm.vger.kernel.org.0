@@ -2,132 +2,148 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 5AC21294519
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Oct 2020 00:24:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B487C294527
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Oct 2020 00:33:56 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2392105AbgJTWYc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 20 Oct 2020 18:24:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57428 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2390360AbgJTWYc (ORCPT
+        id S2439085AbgJTWdy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 20 Oct 2020 18:33:54 -0400
+Received: from alexa-out-sd-01.qualcomm.com ([199.106.114.38]:55334 "EHLO
+        alexa-out-sd-01.qualcomm.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S2439082AbgJTWdy (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 20 Oct 2020 18:24:32 -0400
-Received: from mail-pj1-x1043.google.com (mail-pj1-x1043.google.com [IPv6:2607:f8b0:4864:20::1043])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 92DA8C0613CE;
-        Tue, 20 Oct 2020 15:24:30 -0700 (PDT)
-Received: by mail-pj1-x1043.google.com with SMTP id kk5so90256pjb.1;
-        Tue, 20 Oct 2020 15:24:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=OmjtnWyk38ZBX1D8MavpXL10VCl/FwBII1zAmAlKY9s=;
-        b=Awop/oxHP1NDOcP0KnWp5FWHkrltx2DjbBqr7tobJcMxu4Ei7uqjExLbcyvm7SYfmD
-         aTC06k45zMNEUfhCm2PQwnTAsv1vwHUXXzO5sYSFgyj00L1rnJB1dv9MQUUcMmlc94wB
-         23UuqEnat7si/49sUfgx87zNuyahxeqf0gWGKX27jUpi0eDf2wj+eJWxv1W6O7qeji2N
-         iy782NcFvHIrIR3HTQEXIr0RDMcFk+xzJt1oM599ZKmSniBgczX31zjhvC9itH9+imp4
-         4Dz7so2eEpAvFfXxXVPWbn8aUJPALFL3sG8JebTcK4cIXCgdVCfnXYkUMG7elJqBd2pr
-         axug==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=OmjtnWyk38ZBX1D8MavpXL10VCl/FwBII1zAmAlKY9s=;
-        b=rM3ICxdaCUE8gILZw3EVpxgObrPJ0S7Ko1TuQOjM7E1FmRydq7WJiAJnUiNsSJ6H3G
-         FxnIbyZuYwx3ZnRGRjYTERqXG6Tx1QkhJH4GvImMmUMcW6L8EYlEnJU831Y5MjwU11LX
-         4CIhULfETG8gZ9OQ7rePSO9l3tf7a4RKbavIfw8KhfknTfzefLJZaaMHVdftKlEi/Oy/
-         xap5YfYZbF8GCRYODK8pDskBn+KtTTm0aaw4gy0LjXMB3Dm7Qflh/iV26FsviaUOtZ6I
-         lpXIW/gLIKBCZV5XdpBRUu4sXj718TKxtCa9VLV+pywAoGsHua9zTToDHalZpIeVgEe3
-         MZyQ==
-X-Gm-Message-State: AOAM531M9mJBWS2CWRb2zxzDcQgUfoiodO2FJRZo6Wq+2BM5oAIWcTIf
-        Dh5SXgbmXHg5BFpWJE8K3u1iSk2VqJB6iw==
-X-Google-Smtp-Source: ABdhPJxIXbNsMsSh0dWfqwmYT1q1f863Oej76OZAU7iVStwx6Wktb0HzU61GvcvkkulTBDT3epizqA==
-X-Received: by 2002:a17:90a:6b0a:: with SMTP id v10mr237477pjj.141.1603232669947;
-        Tue, 20 Oct 2020 15:24:29 -0700 (PDT)
-Received: from localhost ([2601:1c0:5200:a6:307:a401:7b76:c6e5])
-        by smtp.gmail.com with ESMTPSA id c12sm147612pgd.57.2020.10.20.15.24.28
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 20 Oct 2020 15:24:28 -0700 (PDT)
-From:   Rob Clark <robdclark@gmail.com>
-To:     dri-devel@lists.freedesktop.org
-Cc:     Krishna Manikandan <mkrishn@codeaurora.org>,
-        Rob Clark <robdclark@chromium.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        linux-arm-msm@vger.kernel.org (open list:DRM DRIVER FOR MSM ADRENO GPU),
-        freedreno@lists.freedesktop.org (open list:DRM DRIVER FOR MSM ADRENO
-        GPU), linux-kernel@vger.kernel.org (open list)
-Subject: [PATCH] drm/msm/atomic: Drop per-CRTC locks in reverse order
-Date:   Tue, 20 Oct 2020 15:26:00 -0700
-Message-Id: <20201020222600.264876-1-robdclark@gmail.com>
-X-Mailer: git-send-email 2.26.2
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+        Tue, 20 Oct 2020 18:33:54 -0400
+Received: from unknown (HELO ironmsg03-sd.qualcomm.com) ([10.53.140.143])
+  by alexa-out-sd-01.qualcomm.com with ESMTP; 20 Oct 2020 15:33:53 -0700
+X-QCInternal: smtphost
+Received: from gurus-linux.qualcomm.com ([10.46.162.81])
+  by ironmsg03-sd.qualcomm.com with ESMTP; 20 Oct 2020 15:33:53 -0700
+Received: by gurus-linux.qualcomm.com (Postfix, from userid 383780)
+        id 8D0301946; Tue, 20 Oct 2020 15:33:53 -0700 (PDT)
+From:   Guru Das Srinagesh <gurus@codeaurora.org>
+To:     Mark Brown <broonie@kernel.org>,
+        Markus Elfring <Markus.Elfring@web.de>,
+        Lee Jones <lee.jones@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Greg KH <gregkh@linuxfoundation.org>,
+        Guenter Roeck <linux@roeck-us.net>,
+        Joe Perches <joe@perches.com>,
+        Subbaraman Narayanamurthy <subbaram@codeaurora.org>,
+        David Collins <collinsd@codeaurora.org>,
+        Anirudh Ghayal <aghayal@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org,
+        Guru Das Srinagesh <gurus@codeaurora.org>
+Subject: [RFC PATCH RESEND v1 0/3] Add support for Qualcomm MFD PMIC register layout
+Date:   Tue, 20 Oct 2020 15:33:40 -0700
+Message-Id: <cover.1603232320.git.gurus@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Rob Clark <robdclark@chromium.org>
+(Re-sending to add devicetree mailing list)
 
-lockdep dislikes seeing locks unwound in a non-nested fashion.
+This is a follow-up as promised [1] to the earlier attempts [2] [3] to upstream
+the driver that has been hitherto used to handle IRQs for Qualcomm's PMICs that
+have multiple on-board peripherals when they are interfaced over the I2C
+interface.
 
-Fixes: 37c2016e3608 ("drm/msm: Fix race condition in msm driver with async layer updates")
-Signed-off-by: Rob Clark <robdclark@chromium.org>
----
- drivers/gpu/drm/msm/msm_atomic.c |  2 +-
- drivers/gpu/drm/msm/msm_kms.h    |  4 ++++
- include/drm/drm_crtc.h           | 10 ++++++++++
- 3 files changed, 15 insertions(+), 1 deletion(-)
+This series is a rewrite of that driver while making use of the regmap-irq
+framework, which needs some modifications to handle the register layout of
+Qualcomm's PMICs. This is an RFC because I would like to get feedback on my
+general approach before submitting as a patch per se.
 
-diff --git a/drivers/gpu/drm/msm/msm_atomic.c b/drivers/gpu/drm/msm/msm_atomic.c
-index b03d6ab6b19b..6a326761dc4a 100644
---- a/drivers/gpu/drm/msm/msm_atomic.c
-+++ b/drivers/gpu/drm/msm/msm_atomic.c
-@@ -67,7 +67,7 @@ static void unlock_crtcs(struct msm_kms *kms, unsigned int crtc_mask)
- {
- 	struct drm_crtc *crtc;
- 
--	for_each_crtc_mask(kms->dev, crtc, crtc_mask)
-+	for_each_crtc_mask_reverse(kms->dev, crtc, crtc_mask)
- 		mutex_unlock(&kms->commit_lock[drm_crtc_index(crtc)]);
- }
- 
-diff --git a/drivers/gpu/drm/msm/msm_kms.h b/drivers/gpu/drm/msm/msm_kms.h
-index 8d3e626c9fee..d8151a89e163 100644
---- a/drivers/gpu/drm/msm/msm_kms.h
-+++ b/drivers/gpu/drm/msm/msm_kms.h
-@@ -211,4 +211,8 @@ int dpu_mdss_init(struct drm_device *dev);
- 	drm_for_each_crtc(crtc, dev) \
- 		for_each_if (drm_crtc_mask(crtc) & (crtc_mask))
- 
-+#define for_each_crtc_mask_reverse(dev, crtc, crtc_mask) \
-+	drm_for_each_crtc_reverse(crtc, dev) \
-+		for_each_if (drm_crtc_mask(crtc) & (crtc_mask))
-+
- #endif /* __MSM_KMS_H__ */
-diff --git a/include/drm/drm_crtc.h b/include/drm/drm_crtc.h
-index dfdb04619b0d..25f5958f2882 100644
---- a/include/drm/drm_crtc.h
-+++ b/include/drm/drm_crtc.h
-@@ -1274,4 +1274,14 @@ static inline struct drm_crtc *drm_crtc_find(struct drm_device *dev,
- #define drm_for_each_crtc(crtc, dev) \
- 	list_for_each_entry(crtc, &(dev)->mode_config.crtc_list, head)
- 
-+/**
-+ * drm_for_each_crtc_reverse - iterate over all CRTCs in reverse order
-+ * @crtc: a &struct drm_crtc as the loop cursor
-+ * @dev: the &struct drm_device
-+ *
-+ * Iterate over all CRTCs of @dev.
-+ */
-+#define drm_for_each_crtc_reverse(crtc, dev) \
-+	list_for_each_entry_reverse(crtc, &(dev)->mode_config.crtc_list, head)
-+
- #endif /* __DRM_CRTC_H__ */
+Upon inspection of the regmap-irq framework, it was observed that the
+downstream driver was essentially replicating the framework's IRQ handling
+logic (such as adding an IRQ domain, and the interrupt handler thread that
+reads sub-irqs from a main status register). It was also observed that the
+framework could not be used as-is because:
+- Qualcomm's PMIC peripheral register layout does not follow a fixed
+  irq_reg_stride, and
+- The "IRQ TYPE" configuration register takes one bit per interrupt, which when
+  set configures that interrupt as Edge triggered, and when cleared sets it to
+  Level triggered.
+- There are two IRQ configuration registers in addition to "IRQ TYPE" that
+  further configure the IRQ type as triggered by rising-edge/level high or
+  alternatively, falling-edge/level low that have no support in the regmap-irq
+  framework currently.
+
+This patch series has been tested on an internal platform using PM8008 as a
+test MFD PMIC chip. PM8008 is a PMIC that contains 7 LDOs, 2 GPIOs, temperature
+monitoring, and can be interfaced over I2C.
+
+Both the framework modifications as well as the chip driver
+have been submitted here for review. Some details about the specific
+differences between the framework and QCOM PMICs' register layout are provided
+below using PM8008 as an example.
+
+[PM8008 peripheral register layout]
+
+Of all the peripherals in PM8008, only a few need IRQ support. They are laid
+out at the following base addresses (only four are added at the moment for
+simplicity):
+
+	0x0900, 0x2400, 0xC000, 0xC100
+
+Each peripheral is allocated a uniform size of 0x100 bytes and its IRQs are
+configured through a set of registers that are located at fixed offsets from
+the above base addresses, uniformly:
+
+	Register name	       Addr	regmap-irq equivalent	Comment
+	-----------------------------------------------------------------------
+	INT_RT_STS_OFFSET      0x10	(no equivalent)		See #1 below
+	INT_SET_TYPE_OFFSET    0x11	type_base 		See #2 below
+	INT_POL_HIGH_OFFSET    0x12	(no equivalent)		See #3 below
+	INT_POL_LOW_OFFSET     0x13	(no equivalent)		See #3 below
+	INT_LATCHED_CLR_OFFSET 0x14	ack_base
+	INT_EN_SET_OFFSET      0x15	unmask_base		See #4 below
+	INT_EN_CLR_OFFSET      0x16	mask_base		See #4 below
+	INT_LATCHED_STS_OFFSET 0x18	status_base
+
+Comments (all registers are one bit per interrupt):
+1. INT_RT_STS_OFFSET is not used by the regmap-irq, so it may be ignored.
+2. INT_SET_TYPE_OFFSET: 1 for edge trigger, 0 for level trigger.
+3. Support needs to be added for writing to INT_POL_HIGH_OFFSET and
+   INT_POL_LOW_OFFSET correctly in the framework. Set to 1 or 0 to enable or
+   disable rising-edge/level high or falling-edge/level low.
+4. Even though INT_EN_SET_OFFSET and INT_EN_CLR_OFFSET map to unmask_base and
+   mask_base in the regmap-irq framework conceptually, they are swapped in the
+   chip driver because `unmask_offset` in the framework expects unmask_base to
+   be larger than mask_base numerically. This has to be kept in mind while
+   reviewing the "mfd: Add PM8008 driver" patch below.
+
+[Summary of framework changes]
+
+The main thrust of the changes is to introduce an array of peripheral offset
+values, which are to be added to the *_base addresses in order to arrive at the
+correct register addresses per peripheral. In order to get at the first
+peripheral's addresses, the first element of this array must be zero.
+
+Since there are two new registers (INT_POL_HIGH_OFFSET and INT_POL_LOW_OFFSET),
+add support for storing the per-peripheral values and also writing to them.
+These will be used only if peripheral offsets are specified.
+
+[1] https://lore.kernel.org/lkml/20200519185757.GA13992@codeaurora.org/
+[2] https://lore.kernel.org/lkml/cover.1588037638.git.gurus@codeaurora.org/
+[3] https://lore.kernel.org/lkml/cover.1588115326.git.gurus@codeaurora.org/
+
+Guru Das Srinagesh (3):
+  regmap-irq: Add support for peripheral offsets
+  dt-bindings: mfd: Add QCOM PM8008 MFD bindings
+  mfd: Add PM8008 driver
+
+ .../bindings/mfd/qcom,pm8008-irqchip.yaml          | 103 +++++++++++
+ drivers/base/regmap/regmap-irq.c                   | 191 ++++++++++++++++----
+ drivers/mfd/Kconfig                                |  14 ++
+ drivers/mfd/Makefile                               |   1 +
+ drivers/mfd/qcom-pm8008.c                          | 197 +++++++++++++++++++++
+ include/linux/regmap.h                             |   6 +
+ 6 files changed, 478 insertions(+), 34 deletions(-)
+ create mode 100644 Documentation/devicetree/bindings/mfd/qcom,pm8008-irqchip.yaml
+ create mode 100644 drivers/mfd/qcom-pm8008.c
+
 -- 
-2.26.2
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
 
