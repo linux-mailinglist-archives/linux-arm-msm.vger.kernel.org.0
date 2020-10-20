@@ -2,149 +2,107 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 6C074293F11
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Oct 2020 16:55:50 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E8B01293F29
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Oct 2020 17:02:30 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731470AbgJTOzt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 20 Oct 2020 10:55:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44352 "EHLO
+        id S2407320AbgJTPC2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 20 Oct 2020 11:02:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45382 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728489AbgJTOzt (ORCPT
+        with ESMTP id S2407149AbgJTPCZ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 20 Oct 2020 10:55:49 -0400
-Received: from mail-wm1-x341.google.com (mail-wm1-x341.google.com [IPv6:2a00:1450:4864:20::341])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 27817C0613D1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Oct 2020 07:55:49 -0700 (PDT)
-Received: by mail-wm1-x341.google.com with SMTP id d81so2106005wmc.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Oct 2020 07:55:49 -0700 (PDT)
+        Tue, 20 Oct 2020 11:02:25 -0400
+Received: from mail-ot1-x344.google.com (mail-ot1-x344.google.com [IPv6:2607:f8b0:4864:20::344])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 59741C061755
+        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Oct 2020 08:02:25 -0700 (PDT)
+Received: by mail-ot1-x344.google.com with SMTP id d28so2017535ote.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Oct 2020 08:02:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=uf/L+N0SXiT5GxWzSMpW76s8MjBMaRe3gnVIlCSIR5M=;
-        b=cK9G7+OH/TUQCyR8rfJv0QoQ3SjEQsnF9XCjVN6xqr/O8yU3IlDfbvmsbTfkhxQ06f
-         q4IpVZ8VlQ3fVXlWWHGSfLpylD2IH5P4NE25315km3BTplz4wROeM/cLeRnrZhnHb/v5
-         PyAaPitLsRWmdVTipbLqX4Out+F21VmQJ/X09y763klLznhk8Wjph5Dm6ltToTwu1GKi
-         6cF9SRXzSOe+CnDRgo2LkN4n5tkvfZ7EpQsA7EkHbGt3NkoE1mD/PmAfdxkXt8UbFE9X
-         RN1mqjge119zJMoJpTqXMa+rN2apg4iQxVK+dpL4RLHKRIlCnNkTt3EAvl5wmXLl4Uz1
-         eT1A==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=wA7leJ3r329vjuShQjin2/YX33n4txaRPx7BAT6IFiY=;
+        b=Cvbf3WPCAnEloUeJQsig/ltKiMYzrByTjlTuRmzEZ8A9Na4Uy7ovbruvo1GF1zIv9T
+         Isjq2MtLW9tp4BD7jKyckOihW+fyZjiV48m1pXTjgB1wyKCA9zt2mNKXOGMfSTM2ImIz
+         FQxfgoRh64HaUn1KYR86rh9mXDC5T2S2kXNKkLVnC3MtXPl4P9QMnn2TX5MIUYawjlN/
+         7L6ATQSG6S1l/uq13hVIc56WChdD9mKonjNCmQGbbGpf34UKBs/2fvr1ZdnoNwmis8/l
+         7H/qXbmHCRyfhFwsFIuisLnV2B1GI6gblp2hi/4E0aAAOZ3A+V0oP1jiWTJb2XAac3CX
+         Kvsg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=uf/L+N0SXiT5GxWzSMpW76s8MjBMaRe3gnVIlCSIR5M=;
-        b=LQgHi4VVFAdKDQER0OT4kitjkRtse/gY3UFAg9WiAhz4I25N1zIFASKWumHhLvifMw
-         +OewHp5Vyp3NoEgiN/c4Z9BugOU/oGTuZT/1Ctkf54A30sddtDmIfO2YmvJ3fE2GRqzK
-         qQqMgnzR/Odgbhzka7lzTH+HipSOzpWR3KXe2MfIgUUzg1LgSiQerQW0vW2Ks/MGyMva
-         NTXqOyuhdQ+pBThI3t1Ska+tf9qsVZ6kjkfaRs5h+LxnrNYsMgW6YHSNby/oyGwIH1He
-         H+gWd4QVHmhgyezyiKWadXXcAcQrPCyN3ZR5RB9P8lXB3FCpIlkGeH+XeJOykGwapB2m
-         WN0w==
-X-Gm-Message-State: AOAM533A5pbTcGkq2CIMEhEd9zJKT675hd5tliKvn+/iS1nBfMI74hnh
-        UEhrhbfpKGXH/ndpE/vYhPaQTw==
-X-Google-Smtp-Source: ABdhPJwZTIfXIjPLWWjL97y1NfJTXN0Y2s/to/X10G0kOS41vqvGeaVeSXPhf5OZA0t9DHJLkiPgNg==
-X-Received: by 2002:a7b:ce8f:: with SMTP id q15mr3351776wmj.88.1603205747699;
-        Tue, 20 Oct 2020 07:55:47 -0700 (PDT)
-Received: from [192.168.86.34] (cpc86377-aztw32-2-0-cust226.18-1.cable.virginm.net. [92.233.226.227])
-        by smtp.googlemail.com with ESMTPSA id 1sm3868599wre.61.2020.10.20.07.55.45
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 20 Oct 2020 07:55:46 -0700 (PDT)
-Subject: Re: [PATCH v11 2/3] ASoC: qcom: dt-bindings: Add sc7180 machine
- bindings
-To:     Mark Brown <broonie@kernel.org>,
-        Cheng-yi Chiang <cychiang@chromium.org>
-Cc:     linux-kernel <linux-kernel@vger.kernel.org>,
-        Taniya Das <tdas@codeaurora.org>,
-        Rohit kumar <rohitkr@codeaurora.org>,
-        Banajit Goswami <bgoswami@codeaurora.org>,
-        Patrick Lai <plai@codeaurora.org>,
-        Andy Gross <agross@kernel.org>,
+        bh=wA7leJ3r329vjuShQjin2/YX33n4txaRPx7BAT6IFiY=;
+        b=WdHZg01iaSSssGXAQI3R1X1st/D8Zg4Czi/0VMbAOlpfNIvlFeE6QTSF3/NEC16SVB
+         zsdrf+PgsW1G9hHT4h/mA6i0E5sj6ZN7/3cF5DCIpXEXd17DtUkW/LLgmKNJmYbIfaJZ
+         50ZohQ0LInnKC0rTpEtYbykViBszhmN2yzB4ixTdkrpX+m0DZ8xmpCKZ8l6aVagluP4y
+         VhqPzl862Ej0TiV0kPdYqfLpjhI0ctstN/FAX4wBlcdsYc1cgSIMyjL/Y7J3rGDm330g
+         UlRnO36WaaPJLbKUVqJnJmZ/IBd9hEJw/ihg9QoAuoXpYDr4m0gU6OGCcxXsLQASWLHx
+         1Y9g==
+X-Gm-Message-State: AOAM531Y9PzGcwN/Taewo0J7xiAnKUoQ1kLuwEhbPcjCbx/hYdCXNOrs
+        2PdV7tZSSjrhHBwgn1zCLUSF4w==
+X-Google-Smtp-Source: ABdhPJzxU5HWzcCVST4Xx2Iv1CHt6jDtD3iktDJRDA8bxSGq5XzqTloe5QDsJkJ/VB8zOm4PBxgokQ==
+X-Received: by 2002:a9d:6307:: with SMTP id q7mr2072814otk.218.1603206143816;
+        Tue, 20 Oct 2020 08:02:23 -0700 (PDT)
+Received: from localhost.localdomain (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
+        by smtp.gmail.com with ESMTPSA id m10sm511658oon.27.2020.10.20.08.02.22
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 20 Oct 2020 08:02:22 -0700 (PDT)
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Jaroslav Kysela <perex@perex.cz>,
-        Takashi Iwai <tiwai@suse.com>,
-        Stephan Gerhold <stephan@gerhold.net>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        Heiko Stuebner <heiko@sntech.de>,
-        Srinivasa Rao <srivasam@codeaurora.org>,
-        Doug Anderson <dianders@chromium.org>,
-        Dylan Reid <dgreid@chromium.org>,
-        Tzung-Bi Shih <tzungbi@chromium.org>,
-        Linux ARM <linux-arm-kernel@lists.infradead.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>,
-        "moderated list:SOUND - SOC LAYER / DYNAMIC AUDIO POWER MANAGEM..." 
-        <alsa-devel@alsa-project.org>,
-        "moderated list:ARM/Mediatek SoC support" 
-        <linux-mediatek@lists.infradead.org>,
-        "open list:ARM/Rockchip SoC..." <linux-rockchip@lists.infradead.org>,
-        Ajye Huang <ajye_huang@compal.corp-partner.google.com>
-References: <20200914080619.4178587-1-cychiang@chromium.org>
- <20200914080619.4178587-3-cychiang@chromium.org>
- <7bdc0d63-27b1-f99e-c5f8-65f880733d16@linaro.org>
- <CAFv8NwLkvxX2avoLY+4NY5gBv0dQ863hFFiqy7iQOJxH4WenmQ@mail.gmail.com>
- <20201015161251.GF4390@sirena.org.uk>
- <CAFv8NwL1xX=yPGFqQL_mOzAnPTfH0Z0J6ibG1+D32W46Nx0KYQ@mail.gmail.com>
- <20201020143711.GC9448@sirena.org.uk>
-From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Message-ID: <63f1a29c-0758-97b8-ce80-fe43d91630fa@linaro.org>
-Date:   Tue, 20 Oct 2020 15:55:45 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.8.0
+        Rob Herring <robh+dt@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: [RFT PATCH] arm64: dts: sdm845: Add iommus property to qup
+Date:   Tue, 20 Oct 2020 08:03:01 -0700
+Message-Id: <20201020150301.3259814-1-bjorn.andersson@linaro.org>
+X-Mailer: git-send-email 2.28.0
 MIME-Version: 1.0
-In-Reply-To: <20201020143711.GC9448@sirena.org.uk>
-Content-Type: text/plain; charset=windows-1252; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+From: Stephen Boyd <swboyd@chromium.org>
 
+The SMMU that sits in front of the QUP needs to be programmed properly
+so that the i2c geni driver can allocate DMA descriptors. Failure to do
+this leads to faults when using devices such as an i2c touchscreen where
+the transaction is larger than 32 bytes and we use a DMA buffer.
 
-On 20/10/2020 15:37, Mark Brown wrote:
-> I don't understand what "logic scattered in various dtsi files" means,
-> sorry.
-> 
->> Yes, that should work to describe the dailink we are using.
->> But a more tricky issue is how to do calls like setting PLL in dai startup ops.
-> ...
-> 
->> I think that asking a generic machine driver to do configuration like
->> this with only a limited interface of device property
->> might be too much of an ask for the machine driver.
-> Richard was looking at some basic configuration for PLLs.
-> 
->> Would you mind if I simplify the compatible string like Srinivas
->> suggested, and send a v12?
->> As for other two kinds of variations that I am aware of:
->> 1. front mic / rear mic
->> 2. replace alc5682 with adau7002
-> The CODEC change is going to be described in the DT no matter what -
-> you'll have a reference to the CODEC node but it may make sense if
-> there's enough custom code around it.  For front vs rear mic the
-> simplest thing would just be to not mention which if this is a hardware
-> fixed thing, otherwise a control.
-> 
->> We can set different board names and different compatible strings to
->> achieve such variation.
->> So that it would make sense to describe configuration in compatible
->> strings like you suggested, and also provides UCM a way to distinguish
->> different boards.
-> I don't recall having suggested distinguishing these things with a
-> compatible string, especially not the microphones.  UCM can already use
-> the display names for the boards to distinguish things.
+arm-smmu 15000000.iommu: Unexpected global fault, this could be serious
+arm-smmu 15000000.iommu:         GFSR 0x00000002, GFSYNR0 0x00000002, GFSYNR1 0x000006c0, GFSYNR2 0x00000000
 
+Add the right SID and mask so this works.
 
-Not with the compatible string!
+Signed-off-by: Stephen Boyd <swboyd@chromium.org>
+[bjorn: Define for second QUP as well]
+Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+---
+ arch/arm64/boot/dts/qcom/sdm845.dtsi | 2 ++
+ 1 file changed, 2 insertions(+)
 
-Currently card name, and long name are exactly same in all Qualcomm 
-soundcards, which makes it very difficult to identify how those boards 
-re wired up at UCM2 level. So the plan is to properly populate card long 
-name with "model" property which can include details on how things are 
-wiredup on that board.
+diff --git a/arch/arm64/boot/dts/qcom/sdm845.dtsi b/arch/arm64/boot/dts/qcom/sdm845.dtsi
+index 8eb5a31346d2..7d635bc919cb 100644
+--- a/arch/arm64/boot/dts/qcom/sdm845.dtsi
++++ b/arch/arm64/boot/dts/qcom/sdm845.dtsi
+@@ -811,6 +811,7 @@ qupv3_id_0: geniqup@8c0000 {
+ 			clock-names = "m-ahb", "s-ahb";
+ 			clocks = <&gcc GCC_QUPV3_WRAP_0_M_AHB_CLK>,
+ 				 <&gcc GCC_QUPV3_WRAP_0_S_AHB_CLK>;
++			iommus = <&apps_smmu 0x0 0x3>;
+ 			#address-cells = <2>;
+ 			#size-cells = <2>;
+ 			ranges;
+@@ -1119,6 +1120,7 @@ qupv3_id_1: geniqup@ac0000 {
+ 			clock-names = "m-ahb", "s-ahb";
+ 			clocks = <&gcc GCC_QUPV3_WRAP_1_M_AHB_CLK>,
+ 				 <&gcc GCC_QUPV3_WRAP_1_S_AHB_CLK>;
++			iommus = <&apps_smmu 0x6c0 0x3>;
+ 			#address-cells = <2>;
+ 			#size-cells = <2>;
+ 			ranges;
+-- 
+2.28.0
 
---srini
