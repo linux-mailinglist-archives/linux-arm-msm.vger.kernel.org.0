@@ -2,88 +2,117 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 412CA2943EB
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Oct 2020 22:31:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 42A33294408
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Oct 2020 22:41:24 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730742AbgJTUbg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 20 Oct 2020 16:31:36 -0400
-Received: from z5.mailgun.us ([104.130.96.5]:62783 "EHLO z5.mailgun.us"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1729700AbgJTUbf (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 20 Oct 2020 16:31:35 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1603225895; h=Content-Transfer-Encoding: MIME-Version:
- Message-Id: Date: Subject: Cc: To: From: Sender;
- bh=nPdQtAcetVPn/AzI0CYvXfG1JS+4MG9ZEa1ajIhuL6k=; b=lkyD0joec86VYhYjBGucHRskTkkRsBTOeT21X3a5cR2OQhFe/qfnCaMMtU/lCEn0WZ4YWQT5
- F4hjJWwJytItqbdy2rX33pv1bndnDkXhkMD4FHn6ZZvTlhJZ0RRptI+BsU/R10k5C2Vphkol
- I/LoRxIl3eK924L5PnmatHBWe8g=
-X-Mailgun-Sending-Ip: 104.130.96.5
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n02.prod.us-east-1.postgun.com with SMTP id
- 5f8f48c50764f13b00e96360 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 20 Oct 2020 20:29:57
- GMT
-Sender: jhugo=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id A26CEC433F1; Tue, 20 Oct 2020 20:29:56 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
-        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
-Received: from jhugo-lnx.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: jhugo)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 9CDC9C433C9;
-        Tue, 20 Oct 2020 20:29:55 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 9CDC9C433C9
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=jhugo@codeaurora.org
-From:   Jeffrey Hugo <jhugo@codeaurora.org>
-To:     manivannan.sadhasivam@linaro.org, hemantk@codeaurora.org,
-        bbhatt@codeaurora.org
-Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Jeffrey Hugo <jhugo@codeaurora.org>
-Subject: [PATCH] bus: mhi: core: fix potential operator-precedence with BHI macros
-Date:   Tue, 20 Oct 2020 14:29:45 -0600
-Message-Id: <1603225785-21368-1-git-send-email-jhugo@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
+        id S2409563AbgJTUlX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 20 Oct 2020 16:41:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41434 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2405124AbgJTUlW (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 20 Oct 2020 16:41:22 -0400
+Received: from mail-vk1-xa35.google.com (mail-vk1-xa35.google.com [IPv6:2607:f8b0:4864:20::a35])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6AF60C0613CE
+        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Oct 2020 13:41:21 -0700 (PDT)
+Received: by mail-vk1-xa35.google.com with SMTP id m195so805641vkh.11
+        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Oct 2020 13:41:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=8oNb4bPuTPJc9IazjKYiO1BrhZxahR3FAJrD2QNpZEE=;
+        b=GoQ+EVKaGML1O0xuJJyCjTyBiaV9U1ZfOBGG8NL6oeTeU5wmSLXa0hXtERape/LFcS
+         qtAE7eYPxGswSe7yyoFdd27uU/nT8A6GhdRO4zLnhYDUh1mpbyNp66Mfg/QfLYOugVpR
+         H07ef9O5BRyU6uQFsy3Yu6D/+/T9GWoSvHj4U=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=8oNb4bPuTPJc9IazjKYiO1BrhZxahR3FAJrD2QNpZEE=;
+        b=cbdYiZTwhWy7Pj2z7h5/xiTi8hjBm/WKw3sFzBEeKX5q5jhZQG98xnK7pwluFEh5jM
+         SO8yMcHkIfJTuw4dDhOaC0+wvsOrf38xbzwk9VLqNBXF07GfKj7RUfOkEwSsL1Vgm539
+         vLG50/vpCwouMIx5u22awkoKP+V3ojcszC88D36ZGCS7Rdw2sPZoiOOelzel8QWKm6qX
+         EfcZXJRzQhLOGV1xXn+73AQDESBe7Oy2BpZlPNpe0yhrdJnULcMima6zCFSRuVRGHsDS
+         y80DQOstqhrlH6C7MjjKzKYxWfy3xwiuKRz+O85kKYRKHj+hJy2jw8i6n3VMl0d3Y1No
+         nwSA==
+X-Gm-Message-State: AOAM5313FqF6vCtcUGmac0AvALYuQRZ4kyPbtWJsW8ND+5txnaDcxOJi
+        mS1g4rH8FM3yUnbN8QgVKUtVls0S6OrtYXxq41ke3w==
+X-Google-Smtp-Source: ABdhPJzr5l3bDAXW3EOAftEuudCHyMKi5cGy1Hw3cWDeuY2TudVm6cfkI7qnQuUSnjYigue2Up2FbPDYaIBW9jh8e/k=
+X-Received: by 2002:a1f:9d0e:: with SMTP id g14mr2712231vke.2.1603226480594;
+ Tue, 20 Oct 2020 13:41:20 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
+References: <b74ea9cb201bb98691ecbfb3893d2a49@codeaurora.org> <CANFp7mXMfvHrAcaJhY7q2oZk3MtqOMxLGOEpNc-hnzVSyA+LZA@mail.gmail.com>
+In-Reply-To: <CANFp7mXMfvHrAcaJhY7q2oZk3MtqOMxLGOEpNc-hnzVSyA+LZA@mail.gmail.com>
+From:   Abhishek Pandit-Subedi <abhishekpandit@chromium.org>
+Date:   Tue, 20 Oct 2020 13:41:09 -0700
+Message-ID: <CANFp7mWTPLKx=eKxgZvXGEPi5KbphDJnSGZb12Efe_SWTKdDdg@mail.gmail.com>
+Subject: Re: Update WCN3991 FW file
+To:     asitshah@codeaurora.org
+Cc:     linux-firmware@kernel.org, jwboyer@kernel.org,
+        Matthias Kaehlcke <mka@chromium.org>,
+        LKML <linux-kernel@vger.kernel.org>,
+        Bluez mailing list <linux-bluetooth@vger.kernel.org>,
+        linux-arm-msm@vger.kernel.org, Hemantg <hemantg@codeaurora.org>,
+        Venkata Lakshmi Narayana Gubba <gubbaven@codeaurora.org>,
+        Balakrishna Godavarthi <bgodavar@codeaurora.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The BHI_MSMHWID and BHI_OEMPKHASH macros take a value 'n' which is
-a BHI register index. If 'n' is an expression rather than a simple
-value, there can be an operator precedence issue which can result
-in the incorrect calculation of the register offset. Adding
-parentheses around the macro parameter can prevent such issues.
+It looks like we hadn't merged an earlier update to crnv32.bin in ChromeOS:
+ad1da95 - QCA : Updated firmware files for WCN3991 (3 weeks ago) <Asit Shah>
 
-Signed-off-by: Jeffrey Hugo <jhugo@codeaurora.org>
----
- drivers/bus/mhi/core/internal.h | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+After merging that commit, everything is working as expected.
+--
 
-diff --git a/drivers/bus/mhi/core/internal.h b/drivers/bus/mhi/core/internal.h
-index 7989269..78e4e84 100644
---- a/drivers/bus/mhi/core/internal.h
-+++ b/drivers/bus/mhi/core/internal.h
-@@ -153,8 +153,8 @@ extern struct bus_type mhi_bus_type;
- #define BHI_SERIALNU (0x40)
- #define BHI_SBLANTIROLLVER (0x44)
- #define BHI_NUMSEG (0x48)
--#define BHI_MSMHWID(n) (0x4C + (0x4 * n))
--#define BHI_OEMPKHASH(n) (0x64 + (0x4 * n))
-+#define BHI_MSMHWID(n) (0x4C + (0x4 * (n)))
-+#define BHI_OEMPKHASH(n) (0x64 + (0x4 * (n)))
- #define BHI_RSVD5 (0xC4)
- #define BHI_STATUS_MASK (0xC0000000)
- #define BHI_STATUS_SHIFT (30)
--- 
-Qualcomm Technologies, Inc. is a member of the
-Code Aurora Forum, a Linux Foundation Collaborative Project.
+Tested-by: Abhishek Pandit-Subedi <abhishekpandit@chromium.org>
 
+On Mon, Oct 19, 2020 at 2:37 PM Abhishek Pandit-Subedi
+<abhishekpandit@chromium.org> wrote:
+>
+> Nack.
+>
+> This resulted in a boot loop on ChromeOS. It looks like only
+> 'crbtfw32.tlv' was changed and not 'crnv32.bin'.
+>
+> Abhishek
+>
+> On Sat, Oct 17, 2020 at 8:33 AM <asitshah@codeaurora.org> wrote:
+> >
+> >
+> > Hi Team,
+> >
+> > Please include updated firmware bin for WCN3991.
+> >
+> > Snapshot of pull request is as below, let me know if anything is
+> > missing.
+> >
+> > >>>>>
+> >
+> > The following changes since commit
+> > 58d41d0facca2478d3e45f6321224361519aee96:
+> >
+> >    ice: Add comms package file for Intel E800 series driver (2020-10-05
+> > 08:09:03 -0400)
+> >
+> > are available in the git repository at:
+> >
+> >    https://github.com/shahasit/bt-linux-firmware/tree/master
+> >
+> > for you to fetch changes up to 8877322c1254f327f47c86ec02c46013b68b9a47:
+> >
+> >    QCA : Updated firmware file for WCN3991 (2020-10-17 20:53:36 +0530)
+> >
+> > ----------------------------------------------------------------
+> > Asit Shah (1):
+> >        QCA : Updated firmware file for WCN3991
+> >
+> >   qca/crbtfw32.tlv | Bin 126300 -> 126832 bytes
+> >   1 file changed, 0 insertions(+), 0 deletions(-)
+> >
+> > <<<<<<
+> >
+> > Regards,
+> > Asit
