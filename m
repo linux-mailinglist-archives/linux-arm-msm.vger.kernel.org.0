@@ -2,135 +2,85 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 953FB293AAC
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Oct 2020 14:01:51 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2682A293C16
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Oct 2020 14:44:46 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2404961AbgJTMBt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 20 Oct 2020 08:01:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45350 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2404945AbgJTMBs (ORCPT
+        id S2406504AbgJTMof (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 20 Oct 2020 08:44:35 -0400
+Received: from mail-wm1-f66.google.com ([209.85.128.66]:36329 "EHLO
+        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2406500AbgJTMoe (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 20 Oct 2020 08:01:48 -0400
-Received: from mail-pl1-x643.google.com (mail-pl1-x643.google.com [IPv6:2607:f8b0:4864:20::643])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 16052C0613D1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Oct 2020 05:01:48 -0700 (PDT)
-Received: by mail-pl1-x643.google.com with SMTP id t18so920933plo.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Oct 2020 05:01:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=TjrnApYSSHfkJA9XyzMImP/Ax8x/fHdiuRCtnfYhIS4=;
-        b=ioeZItDIsacnc+ENFAmDhOgyQASCUSk3Z1BgUOm4DdrgPZbdiJ/IZ44dXDV9yQ+z3+
-         50KwyPtNBGtvVWcK1DO4rB4ieZ9e1qZxvQBWgb5Uh0kI7Vd8DBiB81GpFutmVmAyIlZh
-         mEblSrD1U8ZCJxs+1MvD8Ix90AJKHcwvLtc9xZh3RFW84FC05WyeDvGyYdIbRb89Z7/G
-         52JI8j8NJFln+cwTmbvrSeGmNi9m2q1pCxfXG/IIlgNyyLaGtrROlWJIlAP7H4Pt9git
-         6aZTgrVAjhE4atU4+xx2iIB/8LW0G+R7JoqnSJIohscrn6sR4UMCL+j8ksT96LpaZ4uI
-         Q7+A==
+        Tue, 20 Oct 2020 08:44:34 -0400
+Received: by mail-wm1-f66.google.com with SMTP id e2so1725727wme.1;
+        Tue, 20 Oct 2020 05:44:32 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=TjrnApYSSHfkJA9XyzMImP/Ax8x/fHdiuRCtnfYhIS4=;
-        b=JkQJKqULt9/Oivh0oAPdcyx0/iwXQ/e/rytO2C+137Z2DDjLw6BDVt48tA7scxV0Ch
-         L60MS7azqaVUPXtOp6+YnBIM5RunPiw9LbGvMqOqMwXGeU/z1KIGngg4RQPdfxkuey8r
-         vDSVTBU1gr23nN+lbrFnamX84OPvqb9znUz9dYXsaf6U3aVwoKx2lY78Oa43p+QFMWgN
-         xUo581xUnYuFRaHG6NzsSV80pgKNax1V55QABT5s1sLrXWStdGHZ+9zXTOZUO9Q7bnd2
-         aINH6HyepCECMxqtbkRrodyi1GMAI5ZHbf8gFBEvjYtr+m7KOfBazJwqnjf2A3KfVQEC
-         0Ljw==
-X-Gm-Message-State: AOAM530vFwsbPUvWBTQ7i9OPbpYrVg4BGIyfVsn+BGP8bN+nyId9FkAK
-        K3q5SBDlW0x6kD1yqkVdRejjUNIvl0rQfABpXrjiig==
-X-Google-Smtp-Source: ABdhPJylQnQikBvrUcz3Q0APww40MI9CIQFOSnDz0xGU3cktgRGBrt4LRDoniVI18vWIkMWdmQg3cUSidXa6Z271tts=
-X-Received: by 2002:a17:90a:160f:: with SMTP id n15mr2452586pja.75.1603195307474;
- Tue, 20 Oct 2020 05:01:47 -0700 (PDT)
-MIME-Version: 1.0
-References: <20201018125237.16717-1-kholk11@gmail.com>
-In-Reply-To: <20201018125237.16717-1-kholk11@gmail.com>
-From:   Robert Foss <robert.foss@linaro.org>
-Date:   Tue, 20 Oct 2020 14:01:36 +0200
-Message-ID: <CAG3jFyvY1Uq=3V=tkCzRwOK0Zpqy+wEd=tjjr04w8pHrz=LARg@mail.gmail.com>
-Subject: Re: [PATCH 0/6] Add support for SDM630/660 Camera Subsystem
-To:     kholk11@gmail.com
-Cc:     Todor Tomov <todor.too@gmail.com>, Andy Gross <agross@kernel.org>,
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=IzZX4zGGwluZ70Rb48zONj29b5Z7XTIenJHYm8MJX6U=;
+        b=R9y6LLdqu19zCUOVcHWCf2aRzwTUxAaPyrKCM8hsgieDig4ecaRRsU+TtR2B2skGhS
+         s5BPzbOnDAo1Ja8lHgqmiSg9XUpd6UjwoS6/WAjNTcafgWGzBSngGBKBpwcUmJaJRVpf
+         Qvkd1bvugT2hPU7UyPEMF9uwJfJ5vAd3Z9WO+a9v5GUSkqx0iay+NpZq9Qpa9PBudM2F
+         gICTQP+Zsyx/7UbwUn9h5LAW05W7fnqu2LfjMEGgVfmM4sbBlmDcsqnVJf3vVjOhxgKw
+         a66f2NM9hZcrS875nhQBN+jAYNrFpzbm3g/hbwLhYWXOOSbDkHu7Vhlk6HPA4acdyR1d
+         rj3A==
+X-Gm-Message-State: AOAM531unJFlI8SJdWXUxP24nDIYxFOOLFEGBWTzpSlw7JU+iM+F1d+2
+        Y5vhdjdyPsV/62c4aflBPokWh2V8hLQjK+a2
+X-Google-Smtp-Source: ABdhPJyGjKoqZPYMot+a1OkS+n8PXkomZ+8CgF1E4gXdXXoRvO2bbYazsP6IjtG1H/mg+x6uuoXGnQ==
+X-Received: by 2002:a1c:6643:: with SMTP id a64mr2861815wmc.142.1603197872185;
+        Tue, 20 Oct 2020 05:44:32 -0700 (PDT)
+Received: from kozik-lap ([194.230.155.171])
+        by smtp.googlemail.com with ESMTPSA id u2sm2554384wme.1.2020.10.20.05.44.30
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 20 Oct 2020 05:44:31 -0700 (PDT)
+Date:   Tue, 20 Oct 2020 14:44:28 +0200
+From:   Krzysztof Kozlowski <krzk@kernel.org>
+To:     Serge Semin <Sergey.Semin@baikalelectronics.ru>
+Cc:     Felipe Balbi <balbi@kernel.org>,
+        Florian Fainelli <f.fainelli@gmail.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>, marijns95@gmail.com,
-        konradybcio@gmail.com, martin.botka1@gmail.com,
-        linux-arm-msm@vger.kernel.org,
-        linux-media <linux-media@vger.kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>,
-        linux-kernel <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+        Serge Semin <fancer.lancer@gmail.com>,
+        linux-arm-kernel@lists.infradead.org, linux-usb@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH 29/29] arm64: dts: qcom: Harmonize DWC USB3 DT nodes name
+Message-ID: <20201020124428.GX127386@kozik-lap>
+References: <20201020115959.2658-1-Sergey.Semin@baikalelectronics.ru>
+ <20201020115959.2658-30-Sergey.Semin@baikalelectronics.ru>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20201020115959.2658-30-Sergey.Semin@baikalelectronics.ru>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hey Angelo,
+On Tue, Oct 20, 2020 at 02:59:59PM +0300, Serge Semin wrote:
+> In accordance with the DWC USB3 bindings the corresponding node
+> name is suppose to comply with the Generic USB HCD DT schema, which
+> requires the USB nodes to have the name acceptable by the regexp:
+> "^usb(@.*)?" . Make sure the "snps,dwc3"-compatible nodes are correctly
+> named.
+> 
+> Signed-off-by: Serge Semin <Sergey.Semin@baikalelectronics.ru>
+> ---
+>  arch/arm64/boot/dts/qcom/apq8096-db820c.dtsi | 4 ++--
+>  arch/arm64/boot/dts/qcom/ipq8074.dtsi        | 4 ++--
+>  arch/arm64/boot/dts/qcom/msm8996.dtsi        | 4 ++--
+>  arch/arm64/boot/dts/qcom/msm8998.dtsi        | 2 +-
+>  arch/arm64/boot/dts/qcom/qcs404-evb.dtsi     | 2 +-
+>  arch/arm64/boot/dts/qcom/qcs404.dtsi         | 4 ++--
+>  arch/arm64/boot/dts/qcom/sc7180.dtsi         | 2 +-
+>  arch/arm64/boot/dts/qcom/sdm845.dtsi         | 4 ++--
+>  arch/arm64/boot/dts/qcom/sm8150.dtsi         | 2 +-
+>  9 files changed, 14 insertions(+), 14 deletions(-)
+> 
 
-Thanks for submitting this, and fixing other issues as you went.
+Acked-by: Krzysztof Kozlowski <krzk@kernel.org>
 
-I sent out some SoBs which should have been Reviewed-bys, so if you
-add them to your commit please replace the SoBs with RBs.
-
-
-Rob.
-
-On Sun, 18 Oct 2020 at 14:52, <kholk11@gmail.com> wrote:
->
-> From: AngeloGioacchino Del Regno <kholk11@gmail.com>
->
-> This patch series implements support for the entire camera subsystem
-> found in SDM630/636/660 and SDA variants, including CSIPHY 3-Phase,
-> CSID v5.0, ISPIF 3.0 (though it didn't need any adaptation) and
-> VFE 4.8.
->
-> One small note about VFE4.8, even if I wrote it in the commit that
-> adds support for it: I know, the VFE support here is split in
-> multiple files having the name of the actual VFE version that it is
-> targeting... but it didn't feel right to commonize the VFE 4.7 file
-> and make another one only for VFE4.8, when it's just about something
-> like 3 small differences.
-> That VFE 4.8 seems to be just a minor revision of VFE 4.7.
->
-> While at it, also fix a small issue when using two VFEs: only one
-> of them was being resetted (always VFE0) so, after the first usage
-> of VFE1, in case we leave it in a bad state, it would not properly
-> start again. Now... it's fine :)))
->
-> P.S.: SDM630/660's camss seems to be *very* similar to MSM8998, so
->       likely 90% of this series should be reusable on that one, too!
->
-> Tested on:
->  - Sony Xperia XA2 (IMX300 on CSI0/PHY0/VFE0, IMX219 on CSI2,PHY2,VFE1)
->    * VFE0/1 RDI only, as the VIDEO one does not work with SRGGB Bayer
->      formats yet. As far as I can see, that color format hasn't been
->      implemented yet in the video interface.
->
-> AngeloGioacchino Del Regno (6):
->   media: camss: csiphy-3ph: Add support for SDM630/660
->   media: camss: ispif: Correctly reset based on the VFE ID
->   media: camss: vfe: Add support for VFE 4.8
->   media: camss: Add support for SDM630/636/660 camera subsystem
->   media: dt-bindings: media: qcom,camss: Add bindings for SDM660 camss
->   media: camss: csiphy: Set rate on csiX_phy clock on SDM630/660
->
->  .../devicetree/bindings/media/qcom,camss.txt  |   7 +
->  .../media/platform/qcom/camss/camss-csid.c    |   9 +-
->  .../qcom/camss/camss-csiphy-3ph-1-0.c         |   7 +-
->  .../media/platform/qcom/camss/camss-csiphy.c  |  25 ++-
->  .../media/platform/qcom/camss/camss-csiphy.h  |   1 +
->  .../media/platform/qcom/camss/camss-ispif.c   | 100 ++++++---
->  .../media/platform/qcom/camss/camss-ispif.h   |   2 +-
->  .../media/platform/qcom/camss/camss-vfe-4-7.c | 129 ++++++++++-
->  drivers/media/platform/qcom/camss/camss-vfe.c |  19 +-
->  drivers/media/platform/qcom/camss/camss-vfe.h |   1 +
->  .../media/platform/qcom/camss/camss-video.c   |   3 +-
->  drivers/media/platform/qcom/camss/camss.c     | 206 +++++++++++++++++-
->  drivers/media/platform/qcom/camss/camss.h     |   1 +
->  13 files changed, 448 insertions(+), 62 deletions(-)
->
-> --
-> 2.28.0
->
+Best regards,
+Krzysztof
