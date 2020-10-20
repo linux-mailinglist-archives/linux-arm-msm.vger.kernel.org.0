@@ -2,220 +2,95 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 26466293F4C
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Oct 2020 17:09:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 21121293F9F
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Oct 2020 17:32:07 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2408540AbgJTPI4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 20 Oct 2020 11:08:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46424 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2408519AbgJTPIz (ORCPT
+        id S2408631AbgJTPb7 convert rfc822-to-8bit (ORCPT
+        <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 20 Oct 2020 11:31:59 -0400
+Received: from mail-oo1-f43.google.com ([209.85.161.43]:33807 "EHLO
+        mail-oo1-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727133AbgJTPb6 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 20 Oct 2020 11:08:55 -0400
-Received: from mail-wr1-x442.google.com (mail-wr1-x442.google.com [IPv6:2a00:1450:4864:20::442])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7E8DCC061755;
-        Tue, 20 Oct 2020 08:08:55 -0700 (PDT)
-Received: by mail-wr1-x442.google.com with SMTP id i1so2589950wro.1;
-        Tue, 20 Oct 2020 08:08:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=SFeBwkUn/dDhXTnD86F6OZeuGilRBUIWND1rdi/Y/kg=;
-        b=RZobnZ05ih+Rqqkx+8PI3HMewGx7h+RU0lk2W+R6cz2W6sMFIA32Dm0b9ueilSUpa0
-         Opvp06mGNbBl1t7pMC2qbK3EaElYG2ULo9HTekKorx45iKG9+CVeAcswCH+lsEIPCDGu
-         TXxd76Y2I3f5/mPeRU6IJCSQyUCzHOQZxjCp4Zbhv7SkH9Xu1fqbV2EAIP4MOz/M4Hv0
-         igerqviguRaETTRaW3u+W6oNFipcHFEqMCER8GWUEGpjeMF8P8g4hUtPkgBskQNeS/L4
-         3m8RwZ6xNEbqGMGzVBkUD28kmhNugQ6Jf45q4WTYX8bqMopURRpNCFuWZN/+Eas+6vgC
-         T4tQ==
+        Tue, 20 Oct 2020 11:31:58 -0400
+Received: by mail-oo1-f43.google.com with SMTP id f1so553580oov.1;
+        Tue, 20 Oct 2020 08:31:57 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=SFeBwkUn/dDhXTnD86F6OZeuGilRBUIWND1rdi/Y/kg=;
-        b=o65mmLrFPrRYydO4YP9bsggcxD2aHH+dclXVlAyKZcsR+IYaN/vhuL/ehoIlQm8Dig
-         oitgaRaJWbJCTyKpdgqoY5IENpt4M81RXHMtkhMDpi6Dpp0WdJFo4qVNAr63jiQanIFR
-         iIorXMfV4/jz3LVqpZfhWMjfArrOTMkRhKRQ0PhCkCktANa6PfGutP3tL1N1DsF9p/pF
-         /5h3HSvApBIz2s8RMX8L2aTBTAdZ0n8QVILCZAjjetdWudRhaqdwSiSN9QhzJAdu2g96
-         JsE0JWdAGaulI3GG7t8SR66em1PZndLJ5RHY6kcCkUaKbZIDbzrXnxoXIcHsT72ANkpy
-         xt0A==
-X-Gm-Message-State: AOAM530WZnEcf5orhuolotvBDpPIP61VPDFIZbBL14XfT9wC3GeFQC3S
-        2Tm7/7u1wgtFH3B3tmKR47UAhQipwNcV6ac7Yuc=
-X-Google-Smtp-Source: ABdhPJygbYnX+nV8d8fzFa/3T3PsbIQumRCaay7yM34oEEVqsx9Ni9Jns9BNcN6ydTiFrQtz/nu+Y8xZMsivIx3GdtE=
-X-Received: by 2002:a5d:4987:: with SMTP id r7mr3798344wrq.327.1603206533995;
- Tue, 20 Oct 2020 08:08:53 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to;
+        bh=70xUmNgnj7zARzwfJVSKZm1rg83afZ4Hf/Ak9+tdF6k=;
+        b=AN0YJ51ECwoKkCf8ORJ9iY9kxntbsI9fohcuYpuT2OmXT/nyxIUCApVPjrrU1yQXKN
+         3iQEXZR4qZ760D6ziozDE5ecsKab8h4IXGTDbydWRQyc4yFLwZ1p6kZycUpdBDqhznrI
+         /aUL71JVdkTTUVqZC7mx89RmRGNlIveAHrLwToE1nUu5sSkLhRqG2gXz8cYF0UWkHdGt
+         RPemo145D/OxuJswI+P9uzmOvq+B0fawrhVgfuomVAJg5Y0aXN5KVzMtstYHx0HdznEh
+         GcufhFTbdkcvfapDfe4SrYnyrNSpbRAhQ2VZHMxM385XVhmrd7pMiIjyrAsx6r/FrSaW
+         RVmQ==
+X-Gm-Message-State: AOAM532UY+lEadPNuEh8caOsBQOGQs0AIs5+lfU8LCBot2rXR6Z/lO0N
+        VU5sjmbll7O8H33T1uRHwg==
+X-Google-Smtp-Source: ABdhPJyc9UV3cPqUuktaJf8qhvrd1agYOIaqU4lW3UtbAtc+tY62RB/NgE5V6x+NPpSsK6kT1l3OmQ==
+X-Received: by 2002:a4a:3e8a:: with SMTP id t132mr2251250oot.20.1603207916794;
+        Tue, 20 Oct 2020 08:31:56 -0700 (PDT)
+Received: from xps15 (24-155-109-49.dyn.grandenetworks.net. [24.155.109.49])
+        by smtp.gmail.com with ESMTPSA id l23sm505030otk.68.2020.10.20.08.31.55
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 20 Oct 2020 08:31:56 -0700 (PDT)
+Received: (nullmailer pid 877351 invoked by uid 1000);
+        Tue, 20 Oct 2020 15:31:55 -0000
+Date:   Tue, 20 Oct 2020 10:31:55 -0500
+From:   Rob Herring <robh@kernel.org>
+To:     Hsin-Hsiung Wang <hsin-hsiung.wang@mediatek.com>
+Cc:     Mark Brown <broonie@kernel.org>, linux-kernel@vger.kernel.org,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        linux-arm-kernel@lists.infradead.org,
+        Rob Herring <robh+dt@kernel.org>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, Stephen Boyd <sboyd@kernel.org>,
+        srv_heupstream@mediatek.com
+Subject: Re: [PATCH v2 2/3] dt-bindings: regulator: document binding for
+ MT6315 regulator
+Message-ID: <20201020153155.GA876906@bogus>
+References: <1603187810-30481-1-git-send-email-hsin-hsiung.wang@mediatek.com>
+ <1603187810-30481-3-git-send-email-hsin-hsiung.wang@mediatek.com>
 MIME-Version: 1.0
-References: <20201019211101.143327-1-robdclark@gmail.com> <20201020082404.GJ401619@phenom.ffwll.local>
- <CAF6AEGuT6ZSpitNS0eBcjKhAVW1QBg+uPJQQkBLckOk=_GBx=A@mail.gmail.com> <CAKMK7uEg-iz2zK6E0RFA-JQ+GfjuUcnrdu+e_3FWq9E9_9WUZA@mail.gmail.com>
-In-Reply-To: <CAKMK7uEg-iz2zK6E0RFA-JQ+GfjuUcnrdu+e_3FWq9E9_9WUZA@mail.gmail.com>
-From:   Rob Clark <robdclark@gmail.com>
-Date:   Tue, 20 Oct 2020 08:08:42 -0700
-Message-ID: <CAF6AEGuF_76hMHa-n7VYHY+sSKGTt=gTBh8r+2992Bhx-RE61A@mail.gmail.com>
-Subject: Re: [PATCH 0/3] drm/msm: kthread_worker conversion
-To:     Daniel Vetter <daniel@ffwll.ch>
-Cc:     dri-devel <dri-devel@lists.freedesktop.org>,
-        Akhil P Oommen <akhilpo@codeaurora.org>,
-        Tanmay Shah <tanmay@codeaurora.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        AngeloGioacchino Del Regno <kholk11@gmail.com>,
-        Sam Ravnborg <sam@ravnborg.org>,
-        Emil Velikov <emil.velikov@collabora.com>,
-        Rob Clark <robdclark@chromium.org>,
-        Jonathan Marek <jonathan@marek.ca>,
-        Qinglang Miao <miaoqinglang@huawei.com>,
-        Roy Spliet <nouveau@spliet.org>,
-        Wambui Karuga <wambui.karugax@gmail.com>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Sharat Masetty <smasetty@codeaurora.org>,
-        Kalyan Thota <kalyan_t@codeaurora.org>,
-        Rajendra Nayak <rnayak@codeaurora.org>,
-        "Gustavo A. R. Silva" <gustavoars@kernel.org>,
-        open list <linux-kernel@vger.kernel.org>,
-        tongtiangen <tongtiangen@huawei.com>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        Drew Davenport <ddavenport@chromium.org>,
-        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
-        <freedreno@lists.freedesktop.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: 8BIT
+In-Reply-To: <1603187810-30481-3-git-send-email-hsin-hsiung.wang@mediatek.com>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Oct 20, 2020 at 7:29 AM Daniel Vetter <daniel@ffwll.ch> wrote:
->
-> On Tue, Oct 20, 2020 at 4:01 PM Rob Clark <robdclark@gmail.com> wrote:
-> >
-> > On Tue, Oct 20, 2020 at 1:24 AM Daniel Vetter <daniel@ffwll.ch> wrote:
-> > >
-> > > On Mon, Oct 19, 2020 at 02:10:50PM -0700, Rob Clark wrote:
-> > > > From: Rob Clark <robdclark@chromium.org>
-> > > >
-> > > > In particular, converting the async atomic commit (for cursor updates,
-> > > > etc) to SCHED_FIFO kthread_worker helps with some cases where we
-> > > > wouldn't manage to flush the updates within the 1ms-before-vblank
-> > > > deadline resulting in fps drops when there is cursor movement.
-> > > >
-> > > > Rob Clark (3):
-> > > >   drm/msm/gpu: Convert retire/recover work to kthread_worker
-> > > >   drm/msm/kms: Update msm_kms_init/destroy
-> > > >   drm/msm/atomic: Convert to per-CRTC kthread_work
-> > >
-> > > So i915 has it's own commit worker already for $reasons, but I don't think
-> > > that's a good path to go down with more drivers. And the problem seems
-> > > entirely generic in nature ...
-> >
-> > I'm not *entirely* sure what your point is here?  This is just
-> > migrating away from a shared ordered wq to per-crtc kthread so that we
-> > don't miss vblank deadlines for silly reasons (and then stall on the
-> > next frame's pageflip because we are still waiting for the cursor
-> > update to latch).  Kind of like vblank-work but scheduled prior to,
-> > rather than after, vblank.
-> >
-> > And you're right that the problem is partially generic.. hw that (a)
-> > doesn't have true async (cursor and/or otherwise) updates, and (b) has
-> > various flush bits that latch register updates on vblank, is not that
-> > uncommon.  But the current atomic helper API would have to be a bit
-> > redesigned to look more like the interface between msm_atomic and the
-> > display backend.  That is a fair bit of churn for re-using a small bit
-> > of code.
->
-> I was making some assumptions about what you're doing, and I was
-> wrong. So I went and tried to understand what's actually going on
-> here.
->
-> I'm trying to understand what exactly you've added with that async msm
-> support 2d99ced787e3d. I think this breaks the state structure update
-> model, you can't access any ->state pointers from the commit functions
-> after you've called drm_atomic_helper_commit_hw_done, or you might
-> have a use after free. And that seems to be happening from this commit
-> work thing you added to your existing commit work that the atomic
-> helpers provide already.
->
-> The various commit functions seem to grab various state objects by
-> just chasing pointers from the objects (instead of the
-> drm_atomic_state stuff), so this all feels like it's yolo
-> free-wheeling.
->
-> You also seem to be using the async_commit stuff from the atomic
-> helpers (which is actually synchronous (i.e. blocking) from the pov of
-> how the code runs, but seems to be for mdp5 only and not others. Also
-> your can_do_async still checks for legacy_cursor_update (maybe a
-> leftover, or needed on !mdp5 platforms) and ->async_update.
->
-> I'm thoroughly confused how this all works.
+On Tue, 20 Oct 2020 17:56:49 +0800, Hsin-Hsiung Wang wrote:
+> Add device tree binding information for MT6315 regulator driver.
+> Example bindings for MT6315 are added.
+> 
+> Signed-off-by: Hsin-Hsiung Wang <hsin-hsiung.wang@mediatek.com>
+> ---
+>  .../regulator/mtk,mt6315-regulator.yaml       | 88 +++++++++++++++++++
+>  include/dt-bindings/regulator/mtk,mt6315.h    | 17 ++++
+>  2 files changed, 105 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/regulator/mtk,mt6315-regulator.yaml
+>  create mode 100644 include/dt-bindings/regulator/mtk,mt6315.h
+> 
 
-The legacy_cursor_update is really the thing that motivated the async
-commit support in the first place.  Sadly we still have userspace that
-expects to be able to use legacy cursor API, and that it will be
-nonblocking (and not cause fps drop).  (I'm not a fan of the legacy
-cursor UAPI.. don't hate the player..)
 
-The premise is to do everything in terms of crtc_mask, although yeah,
-it looks like there are a few points that need to look at things like
-crtc->state->active.  The only point in msm-atomic itself that does
-this is vblank_get/put(), possibly we can fix drm_vblank instead and
-drop that workaround (see 43906812eaab06423f56af5cca9a9fcdbb4ac454)
+My bot found errors running 'make dt_binding_check' on your patch:
 
-The rest of the async part is really just supposed to be writing the
-appropriate flush reg(s) and waiting until flush completes, although
-dpu's excess layering makes this harder than it needs to be.
+/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/regulator/mtk,mt6315-regulator.example.dt.yaml: example-0: mt6315@6:reg:0: [6, 0, 11, 1] is too long
+	From schema: /usr/local/lib/python3.8/dist-packages/dtschema/schemas/reg.yaml
+/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/regulator/mtk,mt6315-regulator.example.dt.yaml: vbuck1: 'mtk,combined-regulator' does not match any of the regexes: '^#.*', '^(at25|devbus|dmacap|dsa|exynos|fsi[ab]|gpio-fan|gpio|gpmc|hdmi|i2c-gpio),.*', '^(keypad|m25p|max8952|max8997|max8998|mpmc),.*', '^(pinctrl-single|#pinctrl-single|PowerPC),.*', '^(pl022|pxa-mmc|rcar_sound|rotary-encoder|s5m8767|sdhci),.*', '^(simple-audio-card|st-plgpio|st-spics|ts),.*', '^70mai,.*', '^GEFanuc,.*', '^ORCL,.*', '^SUNW,.*', '^[a-zA-Z0-9#_][a-zA-Z0-9+\\-._@]{0,63}$', '^[a-zA-Z0-9+\\-._]*@[0-9a-zA-Z,]*$', '^abilis,.*', '^abracon,.*', '^acer,.*', '^acme,.*', '^actions,.*', '^active-semi,.*', '^ad,.*', '^adafruit,.*', '^adapteva,.*', '^adaptrum,.*', '^adh,.*', '^adi,.*', '^advantech,.*', '^aeroflexgaisler,.*', '^al,.*', '^allegro,.*', '^allo,.*', '^allwinner,.*', '^alphascale,.*', '^alps,.*', '^altr,.*', '^amarula,.*', '^amazon,.*', '^amcc,.*', '^amd,.*', '^amediatech,.*', '^amlogic,.*', '^ampire,.*', '^ams,.*', '^amstaos,.*', '^analogix,.*', '^andestech,.*', '^anvo,.*', '^apm,.*', '^aptina,.*', '^arasan,.*', '^archermind,.*', '^arctic,.*', '^arcx,.*', '^aries,.*', '^arm,.*', '^armadeus,.*', '^arrow,.*', '^artesyn,.*', '^asahi-kasei,.*', '^asc,.*', '^aspeed,.*', '^asus,.*', '^atlas,.*', '^atmel,.*', '^auo,.*', '^auvidea,.*', '^avago,.*', '^avia,.*', '^avic,.*', '^avnet,.*', '^awinic,.*', '^axentia,.*', '^axis,.*', '^azoteq,.*', '^azw,.*', '^baikal,.*', '^bananapi,.*', '^beacon,.*', '^beagle,.*', '^bhf,.*', '^bitmain,.*', '^boe,.*', '^bosch,.*', '^boundary,.*', '^brcm,.*', '^broadmobi,.*', '^bticino,.*', '^buffalo,.*', '^bur,.*', '^calaosystems,.*', '^calxeda,.*', '^capella,.*', '^cascoda,.*', '^catalyst,.*', '^cavium,.*', '^cdns,.*', '^cdtech,.*', '^cellwise,.*', '^ceva,.*', '^checkpoint,.*', '^chipidea,.*', '^chipone,.*', '^chipspark,.*', '^chrontel,.*', '^chrp,.*', '^chunghwa,.*', '^chuwi,.*', '^ciaa,.*', '^cirrus,.*', '^cloudengines,.*', '^cnm,.*', '^cnxt,.*', '^colorfly,.*', '^compulab,.*', '^coreriver,.*', '^corpro,.*', '^cortina,.*', '^cosmic,.*', '^crane,.*', '^creative,.*', '^crystalfontz,.*', '^csky,.*', '^csq,.*', '^cubietech,.*', '^cypress,.*', '^cznic,.*', '^dallas,.*', '^dataimage,.*', '^davicom,.*', '^dell,.*', '^delta,.*', '^denx,.*', '^devantech,.*', '^dfi,.*', '^dh,.*', '^difrnce,.*', '^digi,.*', '^digilent,.*', '^dioo,.*', '^dlc,.*', '^dlg,.*', '^dlink,.*', '^dmo,.*', '^domintech,.*', '^dongwoon,.*', '^dptechnics,.*', '^dragino,.*', '^dserve,.*', '^dynaimage,.*', '^ea,.*', '^ebs-systart,.*', '^ebv,.*', '^eckelmann,.*', '^edt,.*', '^eeti,.*', '^einfochips,.*', '^elan,.*', '^elgin,.*', '^elida,.*', '^embest,.*', '^emlid,.*', '^emmicro,.*', '^empire-electronix,.*', '^emtrion,.*', '^endless,.*', '^ene,.*', '^energymicro,.*', '^engicam,.*', '^epcos,.*', '^epfl,.*', '^epson,.*', '^esp,.*', '^est,.*', '^ettus,.*', '^eukrea,.*', '^everest,.*', '^everspin,.*', '^evervision,.*', '^exar,.*', '^excito,.*', '^ezchip,.*', '^facebook,.*', '^fairphone,.*', '^faraday,.*', '^fastrax,.*', '^fcs,.*', '^feixin,.*', '^feiyang,.*', '^firefly,.*', '^focaltech,.*', '^frida,.*', '^friendlyarm,.*', '^fsl,.*', '^fujitsu,.*', '^gardena,.*', '^gateworks,.*', '^gcw,.*', '^ge,.*', '^geekbuying,.*', '^gef,.*', '^gemei,.*', '^geniatech,.*', '^giantec,.*', '^giantplus,.*', '^globalscale,.*', '^globaltop,.*', '^gmt,.*', '^goodix,.*', '^google,.*', '^grinn,.*', '^grmn,.*', '^gumstix,.*', '^gw,.*', '^hannstar,.*', '^haoyu,.*', '^hardkernel,.*', '^hideep,.*', '^himax,.*', '^hisilicon,.*', '^hit,.*', '^hitex,.*', '^holt,.*', '^holtek,.*', '^honeywell,.*', '^hoperun,.*', '^hp,.*', '^hsg,.*', '^hugsun,.*', '^hwacom,.*', '^hydis,.*', '^hyundai,.*', '^i2se,.*', '^ibm,.*', '^icplus,.*', '^idt,.*', '^ifi,.*', '^ilitek,.*', '^img,.*', '^imi,.*', '^incircuit,.*', '^inet-tek,.*', '^infineon,.*', '^inforce,.*', '^ingenic,.*', '^innolux,.*', '^inside-secure,.*', '^inspur,.*', '^intel,.*', '^intercontrol,.*', '^invensense,.*', '^inversepath,.*', '^iom,.*', '^isee,.*', '^isil,.*', '^issi,.*', '^ite,.*', '^itead,.*', '^ivo,.*', '^iwave,.*', '^jdi,.*', '^jedec,.*', '^jesurun,.*', '^jianda,.*', '^kam,.*', '^karo,.*', '^keithkoep,.*', '^keymile,.*', '^khadas,.*', '^kiebackpeter,.*', '^kinetic,.*', '^kingdisplay,.*', '^kingnovel,.*', '^kionix,.*', '^kobo,.*', '^koe,.*', '^kontron,.*', '^kosagi,.*', '^kyo,.*', '^lacie,.*', '^laird,.*', '^lamobo,.*', '^lantiq,.*', '^lattice,.*', '^leadtek,.*', '^leez,.*', '^lego,.*', '^lemaker,.*', '^lenovo,.*', '^lg,.*', '^lgphilips,.*', '^libretech,.*', '^licheepi,.*', '^linaro,.*', '^linksprite,.*', '^linksys,.*', '^linutronix,.*', '^linux,.*', '^linx,.*', '^lltc,.*', '^logicpd,.*', '^logictechno,.*', '^longcheer,.*', '^loongson,.*', '^lsi,.*', '^lwn,.*', '^lxa,.*', '^macnica,.*', '^mapleboard,.*', '^marvell,.*', '^maxbotix,.*', '^maxim,.*', '^mbvl,.*', '^mcube,.*', '^meas,.*', '^mecer,.*', '^mediatek,.*', '^megachips,.*', '^mele,.*', '^melexis,.*', '^melfas,.*', '^mellanox,.*', '^memsic,.*', '^menlo,.*', '^meraki,.*', '^merrii,.*', '^micrel,.*', '^microchip,.*', '^microcrystal,.*', '^micron,.*', '^microsoft,.*', '^mikroe,.*', '^mikrotik,.*', '^miniand,.*', '^minix,.*', '^miramems,.*', '^mitsubishi,.*', '^mosaixtech,.*', '^motorola,.*', '^moxa,.*', '^mpl,.*', '^mps,.*', '^mqmaker,.*', '^mrvl,.*', '^mscc,.*', '^msi,.*', '^mstar,.*', '^mti,.*', '^multi-inno,.*', '^mundoreader,.*', '^murata,.*', '^mxicy,.*', '^myir,.*', '^national,.*', '^nec,.*', '^neonode,.*', '^netgear,.*', '^netlogic,.*', '^netron-dy,.*', '^netxeon,.*', '^neweast,.*', '^newhaven,.*', '^nexbox,.*', '^nextthing,.*', '^ni,.*', '^nintendo,.*', '^nlt,.*', '^nokia,.*', '^nordic,.*', '^novtech,.*', '^nutsboard,.*', '^nuvoton,.*', '^nvd,.*', '^nvidia,.*', '^nxp,.*', '^oceanic,.*', '^okaya,.*', '^oki,.*', '^olimex,.*', '^olpc,.*', '^onion,.*', '^onnn,.*', '^ontat,.*', '^opalkelly,.*', '^opencores,.*', '^openrisc,.*', '^option,.*', '^oranth,.*', '^orisetech,.*', '^ortustech,.*', '^osddisplays,.*', '^overkiz,.*', '^ovti,.*', '^oxsemi,.*', '^ozzmaker,.*', '^panasonic,.*', '^parade,.*', '^parallax,.*', '^pda,.*', '^pericom,.*', '^pervasive,.*', '^phicomm,.*', '^phytec,.*', '^picochip,.*', '^pine64,.*', '^pineriver,.*', '^pixcir,.*', '^plantower,.*', '^plathome,.*', '^plda,.*', '^plx,.*', '^pni,.*', '^pocketbook,.*', '^polaroid,.*', '^portwell,.*', '^poslab,.*', '^pov,.*', '^powervr,.*', '^primux,.*', '^probox2,.*', '^prt,.*', '^pulsedlight,.*', '^purism,.*', '^qca,.*', '^qcom,.*', '^qemu,.*', '^qi,.*', '^qiaodian,.*', '^qihua,.*', '^qnap,.*', '^radxa,.*', '^raidsonic,.*', '^ralink,.*', '^ramtron,.*', '^raspberrypi,.*', '^raydium,.*', '^rda,.*', '^realtek,.*', '^renesas,.*', '^rervision,.*', '^rex,.*', '^richtek,.*', '^ricoh,.*', '^rikomagic,.*', '^riot,.*', '^riscv,.*', '^rockchip,.*', '^rocktech,.*', '^rohm,.*', '^ronbo,.*', '^roofull,.*', '^samsung,.*', '^samtec,.*', '^sancloud,.*', '^sandisk,.*', '^satoz,.*', '^sbs,.*', '^schindler,.*', '^seagate,.*', '^seirobotics,.*', '^semtech,.*', '^sensirion,.*', '^sensortek,.*', '^sff,.*', '^sgd,.*', '^sgmicro,.*', '^sgx,.*', '^sharp,.*', '^shimafuji,.*', '^shiratech,.*', '^si-en,.*', '^si-linux,.*', '^sifive,.*', '^sigma,.*', '^sii,.*', '^sil,.*', '^silabs,.*', '^silead,.*', '^silergy,.*', '^silex-insight,.*', '^siliconmitus,.*', '^simtek,.*', '^sinlinx,.*', '^sinovoip,.*', '^sipeed,.*', '^sirf,.*', '^sis,.*', '^sitronix,.*', '^skyworks,.*', '^smartlabs,.*', '^smsc,.*', '^snps,.*', '^sochip,.*', '^socionext,.*', '^solidrun,.*', '^solomon,.*', '^sony,.*', '^spansion,.*', '^sprd,.*', '^sst,.*', '^sstar,.*', '^st,.*', '^st-ericsson,.*', '^starry,.*', '^startek,.*', '^ste,.*', '^stericsson,.*', '^summit,.*', '^sunchip,.*', '^swir,.*', '^syna,.*', '^synology,.*', '^tbs,.*', '^tbs-biometrics,.*', '^tcg,.*', '^tcl,.*', '^technexion,.*', '^technologic,.*', '^techstar,.*', '^tempo,.*', '^terasic,.*', '^tfc,.*', '^thine,.*', '^thingyjp,.*', '^ti,.*', '^tianma,.*', '^tlm,.*', '^tmt,.*', '^topeet,.*', '^toppoly,.*', '^topwise,.*', '^toradex,.*', '^toshiba,.*', '^toumaz,.*', '^tpk,.*', '^tplink,.*', '^tpo,.*', '^tq,.*', '^tronfy,.*', '^tronsmart,.*', '^truly,.*', '^tsd,.*', '^tyan,.*', '^u-blox,.*', '^u-boot,.*', '^ubnt,.*', '^ucrobotics,.*', '^udoo,.*', '^ugoos,.*', '^uniwest,.*', '^upisemi,.*', '^urt,.*', '^usi,.*', '^utoo,.*', '^v3,.*', '^vaisala,.*', '^vamrs,.*', '^variscite,.*', '^via,.*', '^videostrong,.*', '^virtio,.*', '^vishay,.*', '^visionox,.*', '^vitesse,.*', '^vivante,.*', '^vocore,.*', '^voipac,.*', '^vot,.*', '^vxt,.*', '^wand,.*', '^waveshare,.*', '^wd,.*', '^we,.*', '^wetek,.*', '^wexler,.*', '^whwave,.*', '^wi2wi,.*', '^winbond,.*', '^winstar,.*', '^wits,.*', '^wlf,.*', '^wm,.*', '^wobo,.*', '^x-powers,.*', '^xes,.*', '^xiaomi,.*', '^xillybus,.*', '^xingbangda,.*', '^xinpeng,.*', '^xlnx,.*', '^xnano,.*', '^xunlong,.*', '^xylon,.*', '^ylm,.*', '^yna,.*', '^yones-toptech,.*', '^ysoft,.*', '^zarlink,.*', '^zealz,.*', '^zeitec,.*', '^zidoo,.*', '^zii,.*', '^zte,.*', '^zyxel,.*'
+	From schema: /builds/robherring/linux-dt-review/Documentation/devicetree/bindings/vendor-prefixes.yaml
 
-In practice, the kms->wait_flush() at the top of
-msm_atomic_commit_tail() will block until a pending async commit
-completes (this is where we hit the fps drop if we miss vblank
-deadline), so I don't *think* you can trigger a use-after-free.  But
-the dpu code could be better cleaned up to have less obj->state
-dereference in the kms->flush_commit(crtc_mask)/etc path.
 
-BR,
--R
+See https://patchwork.ozlabs.org/patch/1384771
 
-> I do agree though that you probably want this to be a real time fifo
-> kthread worker, like for the vblank worker. Except now that I looked,
-> I'm not sure it's actually working intended and correct.
-> -Daniel
->
-> > BR,
-> > -R
-> >
-> > > -Daniel
-> > >
-> > > >
-> > > >  drivers/gpu/drm/msm/adreno/a5xx_gpu.c     |  3 +--
-> > > >  drivers/gpu/drm/msm/adreno/a5xx_preempt.c |  6 ++---
-> > > >  drivers/gpu/drm/msm/adreno/a6xx_gmu.c     |  4 +--
-> > > >  drivers/gpu/drm/msm/adreno/a6xx_gpu.c     |  4 +--
-> > > >  drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c   |  8 +++++-
-> > > >  drivers/gpu/drm/msm/disp/mdp4/mdp4_kms.c  |  8 +++++-
-> > > >  drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c  | 11 ++++++---
-> > > >  drivers/gpu/drm/msm/disp/mdp_kms.h        |  9 +++++--
-> > > >  drivers/gpu/drm/msm/msm_atomic.c          | 25 +++++++++++++++----
-> > > >  drivers/gpu/drm/msm/msm_drv.h             |  3 ++-
-> > > >  drivers/gpu/drm/msm/msm_gpu.c             | 30 +++++++++++++++--------
-> > > >  drivers/gpu/drm/msm/msm_gpu.h             | 13 +++++++---
-> > > >  drivers/gpu/drm/msm/msm_kms.h             | 23 ++++++++++++++---
-> > > >  13 files changed, 104 insertions(+), 43 deletions(-)
-> > > >
-> > > > --
-> > > > 2.26.2
-> > > >
-> > > > _______________________________________________
-> > > > dri-devel mailing list
-> > > > dri-devel@lists.freedesktop.org
-> > > > https://lists.freedesktop.org/mailman/listinfo/dri-devel
-> > >
-> > > --
-> > > Daniel Vetter
-> > > Software Engineer, Intel Corporation
-> > > http://blog.ffwll.ch
-> > _______________________________________________
-> > dri-devel mailing list
-> > dri-devel@lists.freedesktop.org
-> > https://lists.freedesktop.org/mailman/listinfo/dri-devel
->
->
->
-> --
-> Daniel Vetter
-> Software Engineer, Intel Corporation
-> http://blog.ffwll.ch
+If you already ran 'make dt_binding_check' and didn't see the above
+error(s), then make sure dt-schema is up to date:
+
+pip3 install git+https://github.com/devicetree-org/dt-schema.git@master --upgrade
+
+Please check and re-submit.
+
