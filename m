@@ -2,58 +2,58 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 4BDBE29427E
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Oct 2020 20:52:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 76C2B29428B
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Oct 2020 20:55:19 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2437755AbgJTSwI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 20 Oct 2020 14:52:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52780 "EHLO
+        id S2437864AbgJTSzP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 20 Oct 2020 14:55:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53270 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2437753AbgJTSwF (ORCPT
+        with ESMTP id S2437854AbgJTSzP (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 20 Oct 2020 14:52:05 -0400
-Received: from mail-wr1-x443.google.com (mail-wr1-x443.google.com [IPv6:2a00:1450:4864:20::443])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1385DC0613D1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Oct 2020 11:52:04 -0700 (PDT)
-Received: by mail-wr1-x443.google.com with SMTP id h5so3496244wrv.7
-        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Oct 2020 11:52:03 -0700 (PDT)
+        Tue, 20 Oct 2020 14:55:15 -0400
+Received: from mail-wr1-x441.google.com (mail-wr1-x441.google.com [IPv6:2a00:1450:4864:20::441])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0708BC0613CE
+        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Oct 2020 11:55:14 -0700 (PDT)
+Received: by mail-wr1-x441.google.com with SMTP id n18so3529310wrs.5
+        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Oct 2020 11:55:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=jYFdycc4cemOIaYFUQzd2hjpOFiC6YIkhXB4IeoEDOc=;
-        b=dbg1dsucJfSwBHh00T6Mc9TxIy2cA3D0xo1Vm098iBuTl3wM9obmhlk2Rgw+3Fe9DE
-         lhn/KcJI0CzGJ6oaNtkW3L2DYRWLDfMqxzbcRxS7Ipt1zizebN8Dh7Zxgafe7FBS9DOS
-         DhU2QoyTkvFT2KdsWGAohFct9ghNqDtSzxfoY=
+        bh=mScZ8ah2UgtXD/hHaoKN6/WZjy3yp0sHiaOHV6wLFW8=;
+        b=kC1bm7nzh6+1h/Q0nN45KdnVbW/OI5uUooOLQ2Vs/LpFzRvJnYRUV+JwP0kcW7T4QR
+         41jNfWJ2Z9lO48O89PVVflQTzDH60CTncg14/nyfU9FIEeibQS8Vrf68eqVidtcHz3vp
+         3lByNPbOMsEb9+VEVy4e6EqFieABTbe7vnr3g=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=jYFdycc4cemOIaYFUQzd2hjpOFiC6YIkhXB4IeoEDOc=;
-        b=f8Xexyvve3cDlDVAEmrpDM/hM7sDnxvmZGU9MpcW5s+22u8Swe7XOApjBgGu97pZhi
-         O/qUP61djKBomZjBpzyXmBo8in2SvOAaPd6rp/HTcQ5Wx5+wGeo1mnSHcwHN/AuJ2YD1
-         poG2JkD7LF1JTCeqmETMT25KhUppSF28XICuw5dF6t6W9HhlYL2KYoDhUjXLJiLUbIgp
-         ReGgNvt4vJMiiqsF1+lECrpj09z3sa+aQSmg7VHy9wixbKJC+0WdBqEjMhgyByOdfREg
-         moFaLrmx/qNeoNW40+Iikk+nPMZthVh9+idNCy3rWoV/YEv4B3vXZd2EPYk58M+U1FOY
-         Ap7w==
-X-Gm-Message-State: AOAM533AGMbZvI1CPe2sNHqWnM7LxubrwOt+ntyPHs5h2WQkSBF8/WwX
-        3xSKyAw8y5Cf+Mrd1jrekeoUKWDIvRVsiQeON25I1w==
-X-Google-Smtp-Source: ABdhPJzwG1O5oS9ghCKoJUxg59+XPLW7h0AAeoCd9EgHF2nhb1cMfI/IvqKJePI2HX9vcvnVxX2frJft2ThKtBNDJrA=
-X-Received: by 2002:a5d:4001:: with SMTP id n1mr5162648wrp.426.1603219922351;
- Tue, 20 Oct 2020 11:52:02 -0700 (PDT)
+        bh=mScZ8ah2UgtXD/hHaoKN6/WZjy3yp0sHiaOHV6wLFW8=;
+        b=qnppVkYf0wKEnTwUEthR32oYrxnlSb/m7j+gn7qslT124UUv9JO9qwe+uQkLfIq7Od
+         Pvd5zcLYO2lEv0A6In87CCSj/nN4vAw2GqTyjz/QW+FPB1EV5H3oyhVIyVV7RT0LAwX7
+         kxNpAk6aQXpUV7FJJh3wrnouLwXFHzh8IAmZiqqKSK0iOUvaW/Fgncz9IJhm+Jr/zrJ5
+         QXKHA+m5WIYgGyUWVBpHQjNFEy14OPwhMVypeQ+36Av/FxHVHWfRPsN2Bxcv2dYX+NCG
+         9XJzeDXhvCbEd2IXxfVOYGYhZTssnZW7KppqDmz5TeMK7bTA52njuLkDUj0YVU5fsinY
+         5PRQ==
+X-Gm-Message-State: AOAM532CFAwHMOFocuMVQ2OA0AIFNY+xBg705CCdoxsDNRSoG2k84Bxa
+        JZ95ZdbS7HmWbYmdthDT55mYmxTZbC5NeMNG15uAwg==
+X-Google-Smtp-Source: ABdhPJxsMtKaYZKishW1LFkqqTjFYaAFJFl/nN/EX/ADY7U9joK0FSO7QV5LU0tzsLkN7u78bKqbrTQK/Z5k/u4nUP8=
+X-Received: by 2002:a5d:49ca:: with SMTP id t10mr5023373wrs.404.1603220112425;
+ Tue, 20 Oct 2020 11:55:12 -0700 (PDT)
 MIME-Version: 1.0
 References: <20200914080619.4178587-1-cychiang@chromium.org>
  <20200914080619.4178587-3-cychiang@chromium.org> <7bdc0d63-27b1-f99e-c5f8-65f880733d16@linaro.org>
  <CAFv8NwLkvxX2avoLY+4NY5gBv0dQ863hFFiqy7iQOJxH4WenmQ@mail.gmail.com>
  <20201015161251.GF4390@sirena.org.uk> <CAFv8NwL1xX=yPGFqQL_mOzAnPTfH0Z0J6ibG1+D32W46Nx0KYQ@mail.gmail.com>
- <20201020143711.GC9448@sirena.org.uk>
-In-Reply-To: <20201020143711.GC9448@sirena.org.uk>
+ <20201020143711.GC9448@sirena.org.uk> <63f1a29c-0758-97b8-ce80-fe43d91630fa@linaro.org>
+In-Reply-To: <63f1a29c-0758-97b8-ce80-fe43d91630fa@linaro.org>
 From:   Cheng-yi Chiang <cychiang@chromium.org>
-Date:   Wed, 21 Oct 2020 02:51:33 +0800
-Message-ID: <CAFv8NwKuLjLeM1KLeV8Br2TZC8L7DO6KWHL=pXvhAUV5+wSBPg@mail.gmail.com>
+Date:   Wed, 21 Oct 2020 02:54:43 +0800
+Message-ID: <CAFv8NwJ-+f146Ss9Mk=nEXjm1B--ZwhAgnfx-cTi7DGEKqC1-Q@mail.gmail.com>
 Subject: Re: [PATCH v11 2/3] ASoC: qcom: dt-bindings: Add sc7180 machine bindings
-To:     Mark Brown <broonie@kernel.org>
-Cc:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+To:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Cc:     Mark Brown <broonie@kernel.org>,
         linux-kernel <linux-kernel@vger.kernel.org>,
         Taniya Das <tdas@codeaurora.org>,
         Rohit kumar <rohitkr@codeaurora.org>,
@@ -88,132 +88,63 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Oct 20, 2020 at 10:37 PM Mark Brown <broonie@kernel.org> wrote:
+On Tue, Oct 20, 2020 at 10:55 PM Srinivas Kandagatla
+<srinivas.kandagatla@linaro.org> wrote:
 >
-> On Tue, Oct 20, 2020 at 09:37:05PM +0800, Cheng-yi Chiang wrote:
 >
-> > May I know your suggestion on Ajye's patch "ASoC: qcom: sc7180: Modify
-> > machine driver for 2mic" ?
 >
-> > https://lore.kernel.org/r/20200928063744.525700-3-ajye_huang@compal.corp-partner.google.com
+> On 20/10/2020 15:37, Mark Brown wrote:
+> > I don't understand what "logic scattered in various dtsi files" means,
+> > sorry.
+> >
+> >> Yes, that should work to describe the dailink we are using.
+> >> But a more tricky issue is how to do calls like setting PLL in dai startup ops.
+> > ...
+> >
+> >> I think that asking a generic machine driver to do configuration like
+> >> this with only a limited interface of device property
+> >> might be too much of an ask for the machine driver.
+> > Richard was looking at some basic configuration for PLLs.
+> >
+> >> Would you mind if I simplify the compatible string like Srinivas
+> >> suggested, and send a v12?
+> >> As for other two kinds of variations that I am aware of:
+> >> 1. front mic / rear mic
+> >> 2. replace alc5682 with adau7002
+> > The CODEC change is going to be described in the DT no matter what -
+> > you'll have a reference to the CODEC node but it may make sense if
+> > there's enough custom code around it.  For front vs rear mic the
+> > simplest thing would just be to not mention which if this is a hardware
+> > fixed thing, otherwise a control.
+> >
+> >> We can set different board names and different compatible strings to
+> >> achieve such variation.
+> >> So that it would make sense to describe configuration in compatible
+> >> strings like you suggested, and also provides UCM a way to distinguish
+> >> different boards.
+> > I don't recall having suggested distinguishing these things with a
+> > compatible string, especially not the microphones.  UCM can already use
+> > the display names for the boards to distinguish things.
 >
-> > I think adding code in the machine driver makes the intent straightforward.
-> > If we want the machine driver to be fully configurable,
-> > we can always add more code to handle properties like gpio, route,
-> > widget (mux, text selection) passed in from the device tree.
 >
-> If the device has both front and rear mics and only one can be active at
-> once that seems obvious and sensible.  If the devices only have one of
-> these then this seems like a bad idea.
+> Not with the compatible string!
 >
+> Currently card name, and long name are exactly same in all Qualcomm
+> soundcards, which makes it very difficult to identify how those boards
+> re wired up at UCM2 level. So the plan is to properly populate card long
+> name with "model" property which can include details on how things are
+> wiredup on that board.
+>
+> --srini
 
-trogdor board: only front mic.
-pompom board: having both front mic and rear mic. Only one of them
-will be used at a time. It is toggled by mixer control backed by a
-gpio.
+Hi Srini,
+Thanks for taking a look.
+Let me try to clarify your comments in case there is any misunderstanding.
 
-My proposed solution: instead of using compatible strings, expose only
-dmic-gpio property.
-When the machine driver sees this property, it uses the dapm widgets
-and controls created in the machine driver.
+I understand your request on having different board variations using
+different sound card names through model property, and I totally agree
+with that.
+As for compatible strings, do you insist on having all the board
+variations using exactly the same compatible string ?
 
-> > But I feel that we don't need a machine driver to be that configurable
-> > from the device tree.
-> > I think having the logic scattered in various dtsi files and relying
-> > on manual inspection to understand the usage would be less
-> > maintainable than only exposing needed property like gpio.
-> > Especially in the complicated case where we need to create a mux
-> > widget with callback toggling the gpio like this:
->
-> I don't understand what "logic scattered in various dtsi files" means,
-> sorry.
->
-I mean I don't want to use device property to pass in widget name,
-type, text and callbacks.
-Let me give an example:
-
-- Board trogdor uses front mic, rt5682, and max98357a.
-- Board pompom is based on board trogdor, but it has front mic and rear mic.
-If we somehow managed to add the code to pass in widget, route, type,
-text, and callbacks needed for dmic control, we will need to put a
-bunch of properties in trogdor-pompom.dtsi file.
-- Board ABC is based on trogdor as well, and it has front mic and rear
-mic, but with a different speaker amp.
-
-To use widget, route, type, text and callbacks for front mic and rear
-mic, in trogdor-ABC.dtsi file we would copy some properties used in
-trogdor-pompom.dtsi file. To support the different combination of
-codec, we would need some modification of the route and widget.
-
-Now the support of front mic and rear mic switch is scattered in
-trogdor-ABC.dtsi and trogdor-pompom.dtsi files.
-For example, when we change the code to parse or build the widget and
-route, we need to fix both trogdor-pompom.dtsi and trogdor-ABC.dtsi.
-
-Alternatively, if we only expose dmic-gpio property and put
-surrounding code in the machine driver, we can use this dmic-gpio
-property, plus the sound card name to identify the needed widget and
-route.
-
-> > Yes, that should work to describe the dailink we are using.
-> > But a more tricky issue is how to do calls like setting PLL in dai startup ops.
->
-> ...
->
-> > I think that asking a generic machine driver to do configuration like
-> > this with only a limited interface of device property
-> > might be too much of an ask for the machine driver.
->
-> Richard was looking at some basic configuration for PLLs.
-
-That sounds promising. If we don't need to include the codec driver
-header file explicitly, that can make machine drivers simpler.
-Maybe for most of the simple cases we don't even need a dedicated
-machine driver.
-
->
-> > Would you mind if I simplify the compatible string like Srinivas
-> > suggested, and send a v12?
->
-> > As for other two kinds of variations that I am aware of:
->
-> > 1. front mic / rear mic
-> > 2. replace alc5682 with adau7002
->
-> The CODEC change is going to be described in the DT no matter what -
-> you'll have a reference to the CODEC node but it may make sense if
-> there's enough custom code around it.  For front vs rear mic the
-> simplest thing would just be to not mention which if this is a hardware
-> fixed thing, otherwise a control.
->
-
-Would you suggest checking whether the codec node is a rt5682 node,
-and call required PLL calls accordingly ?
-
-"For front vs rear mic the simplest thing would just be to not mention
-which if this is a hardware fixed thing, otherwise a control."
-Sorry I am not sure if I understand this correctly. Please correct me
-if I am wrong.
-
-- For default case having 1 mic: not mention this at all
-- For front mic / rear mic case: see gpio property and use an
-additional control.
-
-> > We can set different board names and different compatible strings to
-> > achieve such variation.
-> > So that it would make sense to describe configuration in compatible
-> > strings like you suggested, and also provides UCM a way to distinguish
-> > different boards.
->
-> I don't recall having suggested distinguishing these things with a
-> compatible string, especially not the microphones.  UCM can already use
-> the display names for the boards to distinguish things.
-
-My apology that I made the wrong interpretation when I read your reply
-"These feel more like things that fit with compatible" regarding
-replacing alc5682 with adau7002. Please let me know which one solution
-you prefer:
--  deriving this information from codec node
--  deriving this information from different sound card name
-
-Thanks so much!
+Thanks!
