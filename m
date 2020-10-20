@@ -2,117 +2,67 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 42A33294408
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Oct 2020 22:41:24 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 45D4F2944B8
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Oct 2020 23:47:08 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2409563AbgJTUlX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 20 Oct 2020 16:41:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41434 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2405124AbgJTUlW (ORCPT
+        id S2438730AbgJTVrH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 20 Oct 2020 17:47:07 -0400
+Received: from alexa-out-sd-01.qualcomm.com ([199.106.114.38]:7397 "EHLO
+        alexa-out-sd-01.qualcomm.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S2389617AbgJTVrG (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 20 Oct 2020 16:41:22 -0400
-Received: from mail-vk1-xa35.google.com (mail-vk1-xa35.google.com [IPv6:2607:f8b0:4864:20::a35])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6AF60C0613CE
-        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Oct 2020 13:41:21 -0700 (PDT)
-Received: by mail-vk1-xa35.google.com with SMTP id m195so805641vkh.11
-        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Oct 2020 13:41:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=8oNb4bPuTPJc9IazjKYiO1BrhZxahR3FAJrD2QNpZEE=;
-        b=GoQ+EVKaGML1O0xuJJyCjTyBiaV9U1ZfOBGG8NL6oeTeU5wmSLXa0hXtERape/LFcS
-         qtAE7eYPxGswSe7yyoFdd27uU/nT8A6GhdRO4zLnhYDUh1mpbyNp66Mfg/QfLYOugVpR
-         H07ef9O5BRyU6uQFsy3Yu6D/+/T9GWoSvHj4U=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=8oNb4bPuTPJc9IazjKYiO1BrhZxahR3FAJrD2QNpZEE=;
-        b=cbdYiZTwhWy7Pj2z7h5/xiTi8hjBm/WKw3sFzBEeKX5q5jhZQG98xnK7pwluFEh5jM
-         SO8yMcHkIfJTuw4dDhOaC0+wvsOrf38xbzwk9VLqNBXF07GfKj7RUfOkEwSsL1Vgm539
-         vLG50/vpCwouMIx5u22awkoKP+V3ojcszC88D36ZGCS7Rdw2sPZoiOOelzel8QWKm6qX
-         EfcZXJRzQhLOGV1xXn+73AQDESBe7Oy2BpZlPNpe0yhrdJnULcMima6zCFSRuVRGHsDS
-         y80DQOstqhrlH6C7MjjKzKYxWfy3xwiuKRz+O85kKYRKHj+hJy2jw8i6n3VMl0d3Y1No
-         nwSA==
-X-Gm-Message-State: AOAM5313FqF6vCtcUGmac0AvALYuQRZ4kyPbtWJsW8ND+5txnaDcxOJi
-        mS1g4rH8FM3yUnbN8QgVKUtVls0S6OrtYXxq41ke3w==
-X-Google-Smtp-Source: ABdhPJzr5l3bDAXW3EOAftEuudCHyMKi5cGy1Hw3cWDeuY2TudVm6cfkI7qnQuUSnjYigue2Up2FbPDYaIBW9jh8e/k=
-X-Received: by 2002:a1f:9d0e:: with SMTP id g14mr2712231vke.2.1603226480594;
- Tue, 20 Oct 2020 13:41:20 -0700 (PDT)
+        Tue, 20 Oct 2020 17:47:06 -0400
+Received: from unknown (HELO ironmsg01-sd.qualcomm.com) ([10.53.140.141])
+  by alexa-out-sd-01.qualcomm.com with ESMTP; 20 Oct 2020 14:47:06 -0700
+X-QCInternal: smtphost
+Received: from gurus-linux.qualcomm.com ([10.46.162.81])
+  by ironmsg01-sd.qualcomm.com with ESMTP; 20 Oct 2020 14:47:05 -0700
+Received: by gurus-linux.qualcomm.com (Postfix, from userid 383780)
+        id 735D21946; Tue, 20 Oct 2020 14:47:05 -0700 (PDT)
+Date:   Tue, 20 Oct 2020 14:47:05 -0700
+From:   Guru Das Srinagesh <gurus@codeaurora.org>
+To:     Rob Herring <robh+dt@kernel.org>
+Cc:     Mark Brown <broonie@kernel.org>,
+        Markus Elfring <Markus.Elfring@web.de>,
+        Lee Jones <lee.jones@linaro.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Greg KH <gregkh@linuxfoundation.org>,
+        Guenter Roeck <linux@roeck-us.net>,
+        Joe Perches <joe@perches.com>,
+        Subbaraman Narayanamurthy <subbaram@codeaurora.org>,
+        David Collins <collinsd@codeaurora.org>,
+        Anirudh Ghayal <aghayal@codeaurora.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>
+Subject: Re: [RFC PATCH RESEND v1 2/3] dt-bindings: mfd: Add QCOM PM8008 MFD
+ bindings
+Message-ID: <20201020214705.GA4555@codeaurora.org>
+References: <cover.1603148363.git.gurus@codeaurora.org>
+ <7a89811f36fe858756daa62f1162d18da7e79a73.1603148363.git.gurus@codeaurora.org>
+ <CAL_Jsq+bfTxbgS0hBo4XeJfFFYK4mcaQ=LF7UE_S2W_Qbm3rtg@mail.gmail.com>
 MIME-Version: 1.0
-References: <b74ea9cb201bb98691ecbfb3893d2a49@codeaurora.org> <CANFp7mXMfvHrAcaJhY7q2oZk3MtqOMxLGOEpNc-hnzVSyA+LZA@mail.gmail.com>
-In-Reply-To: <CANFp7mXMfvHrAcaJhY7q2oZk3MtqOMxLGOEpNc-hnzVSyA+LZA@mail.gmail.com>
-From:   Abhishek Pandit-Subedi <abhishekpandit@chromium.org>
-Date:   Tue, 20 Oct 2020 13:41:09 -0700
-Message-ID: <CANFp7mWTPLKx=eKxgZvXGEPi5KbphDJnSGZb12Efe_SWTKdDdg@mail.gmail.com>
-Subject: Re: Update WCN3991 FW file
-To:     asitshah@codeaurora.org
-Cc:     linux-firmware@kernel.org, jwboyer@kernel.org,
-        Matthias Kaehlcke <mka@chromium.org>,
-        LKML <linux-kernel@vger.kernel.org>,
-        Bluez mailing list <linux-bluetooth@vger.kernel.org>,
-        linux-arm-msm@vger.kernel.org, Hemantg <hemantg@codeaurora.org>,
-        Venkata Lakshmi Narayana Gubba <gubbaven@codeaurora.org>,
-        Balakrishna Godavarthi <bgodavar@codeaurora.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAL_Jsq+bfTxbgS0hBo4XeJfFFYK4mcaQ=LF7UE_S2W_Qbm3rtg@mail.gmail.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-It looks like we hadn't merged an earlier update to crnv32.bin in ChromeOS:
-ad1da95 - QCA : Updated firmware files for WCN3991 (3 weeks ago) <Asit Shah>
+On Tue, Oct 20, 2020 at 08:05:01AM -0500, Rob Herring wrote:
+> On Mon, Oct 19, 2020 at 6:17 PM Guru Das Srinagesh <gurus@codeaurora.org> wrote:
+> >
+> > Add device tree bindings for the driver for Qualcomm Technology Inc.'s
+> > PM8008 MFD PMIC.
+> >
+> > Signed-off-by: Guru Das Srinagesh <gurus@codeaurora.org>
+> > ---
+> >  .../bindings/mfd/qcom,pm8008-irqchip.yaml          | 103 +++++++++++++++++++++
+> >  1 file changed, 103 insertions(+)
+> >  create mode 100644 Documentation/devicetree/bindings/mfd/qcom,pm8008-irqchip.yaml
+> 
+> Please resend to DT list if you want this reviewed.
 
-After merging that commit, everything is working as expected.
---
+Thank you, will resend including the DT list.
 
-Tested-by: Abhishek Pandit-Subedi <abhishekpandit@chromium.org>
-
-On Mon, Oct 19, 2020 at 2:37 PM Abhishek Pandit-Subedi
-<abhishekpandit@chromium.org> wrote:
->
-> Nack.
->
-> This resulted in a boot loop on ChromeOS. It looks like only
-> 'crbtfw32.tlv' was changed and not 'crnv32.bin'.
->
-> Abhishek
->
-> On Sat, Oct 17, 2020 at 8:33 AM <asitshah@codeaurora.org> wrote:
-> >
-> >
-> > Hi Team,
-> >
-> > Please include updated firmware bin for WCN3991.
-> >
-> > Snapshot of pull request is as below, let me know if anything is
-> > missing.
-> >
-> > >>>>>
-> >
-> > The following changes since commit
-> > 58d41d0facca2478d3e45f6321224361519aee96:
-> >
-> >    ice: Add comms package file for Intel E800 series driver (2020-10-05
-> > 08:09:03 -0400)
-> >
-> > are available in the git repository at:
-> >
-> >    https://github.com/shahasit/bt-linux-firmware/tree/master
-> >
-> > for you to fetch changes up to 8877322c1254f327f47c86ec02c46013b68b9a47:
-> >
-> >    QCA : Updated firmware file for WCN3991 (2020-10-17 20:53:36 +0530)
-> >
-> > ----------------------------------------------------------------
-> > Asit Shah (1):
-> >        QCA : Updated firmware file for WCN3991
-> >
-> >   qca/crbtfw32.tlv | Bin 126300 -> 126832 bytes
-> >   1 file changed, 0 insertions(+), 0 deletions(-)
-> >
-> > <<<<<<
-> >
-> > Regards,
-> > Asit
+Guru Das.
