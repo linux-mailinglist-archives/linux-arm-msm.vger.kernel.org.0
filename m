@@ -2,154 +2,122 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 89C2E2936BD
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Oct 2020 10:24:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0A18829372C
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Oct 2020 10:52:59 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388378AbgJTIYK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 20 Oct 2020 04:24:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39772 "EHLO
+        id S2389726AbgJTIw6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 20 Oct 2020 04:52:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44196 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728071AbgJTIYJ (ORCPT
+        with ESMTP id S2389615AbgJTIw5 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 20 Oct 2020 04:24:09 -0400
-Received: from mail-wm1-x341.google.com (mail-wm1-x341.google.com [IPv6:2a00:1450:4864:20::341])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1EB8EC0613CE
-        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Oct 2020 01:24:09 -0700 (PDT)
-Received: by mail-wm1-x341.google.com with SMTP id z22so661576wmi.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Oct 2020 01:24:09 -0700 (PDT)
+        Tue, 20 Oct 2020 04:52:57 -0400
+Received: from mail-pj1-x1042.google.com (mail-pj1-x1042.google.com [IPv6:2607:f8b0:4864:20::1042])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5E8ACC0613D3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Oct 2020 01:52:56 -0700 (PDT)
+Received: by mail-pj1-x1042.google.com with SMTP id b6so615340pju.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Oct 2020 01:52:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ffwll.ch; s=google;
-        h=date:from:to:cc:subject:message-id:mail-followup-to:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=mrQqSJa8Aar4GS8/7wrxTSVqOxQkrKDNi4m7hMd2uFo=;
-        b=Z9VvQfZmtC1Y4vzNAz3kvptekU4P/Ibhm6rYs81RSLlGOtQRbGoNhF0miHgrwdYHCI
-         2IunewN5tv/iZ/vuMS8V4yUUY3j7Ziz+yrTEMkuuQLiksU6evAPMUERo7dIsOOUxRMim
-         lknGTbVq94VjGXF2b1HajbHMEz3cs7KGOT4xs=
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=D/Gf2EPIdX5qA2A6HlcDWWaVkQkKjG0YsM21d64zQ1U=;
+        b=aTeZpAxII2U/rVVZft7oEyyt1XqC7jMP/kkvxEpio0hlobUSyEfH9hY47HwLpIjs8h
+         krQXBk3X6kkPJsazPFAMiINeVsoDMYuDJr1s+EOXKEe+k0ewVjXhaFUoELuosxtMVIcl
+         w/OrH33T0CmTc5+SkMUXFyud9fgaDN82nYiXOEoLnuk73mguRhm7tSlx6q6Kyo2/kRJD
+         1ghEBc+qTxSDi85MU87EHAx8UDgUz6X5knW+7hDhR4ebHk4e+1qamzBjRgGBYj6kzm5B
+         BHvYrusFfdVnbO6lzubiRsy891swODyqSQvmnnxl8PRr83KDiSxYzFFvvntB3kbA+EB8
+         twWA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id
-         :mail-followup-to:references:mime-version:content-disposition
-         :in-reply-to;
-        bh=mrQqSJa8Aar4GS8/7wrxTSVqOxQkrKDNi4m7hMd2uFo=;
-        b=QzzeHdNN5/oaZTXP11yKdpiGYXZnUvVoH8TltGX5QFs1KsMN8z20ddVqv8yzpbww4n
-         d5idcdZQbCRHgmONUuyVYPCOJ6qLHfndZU5+xuiL/55DBBQ1QC5IAoNGVIb03O3OK8/o
-         moIgUjivGH/mPShxeXYNo2mcRYWvwmecW7a5WbE6+gSnhZX8sn0xoiziSZYikUPHlift
-         cauYyvr2Z96MWq6Hnzt969ijH66JVB/Uj1+1TsruMqeSi6aKL7JLWGoGSgkP4Hd4EiKd
-         WxNtXO++laZzuU/alSD3FEVksRD2cjTA4VB3dlZjKv1+XWyFeR1taP+Su4rkgln9SDJ2
-         Ihbg==
-X-Gm-Message-State: AOAM531gv4UDK2QNyADceyEeFGRjlOZSjjIczVgaOe9XpsuPACfGLUW4
-        YcCuNigXwQV73U1fapExuKqxmw==
-X-Google-Smtp-Source: ABdhPJwtLShOv1ZYV3eB9CMVZJLNc4lIYGe5fxTpbduot0zqOSM7NvO9zRraNoE7IJWH4luZXHdLcQ==
-X-Received: by 2002:a1c:68d5:: with SMTP id d204mr1659695wmc.100.1603182247741;
-        Tue, 20 Oct 2020 01:24:07 -0700 (PDT)
-Received: from phenom.ffwll.local ([2a02:168:57f4:0:efd0:b9e5:5ae6:c2fa])
-        by smtp.gmail.com with ESMTPSA id p67sm1561934wmp.11.2020.10.20.01.24.05
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 20 Oct 2020 01:24:06 -0700 (PDT)
-Date:   Tue, 20 Oct 2020 10:24:04 +0200
-From:   Daniel Vetter <daniel@ffwll.ch>
-To:     Rob Clark <robdclark@gmail.com>
-Cc:     dri-devel@lists.freedesktop.org,
-        Akhil P Oommen <akhilpo@codeaurora.org>,
-        Tanmay Shah <tanmay@codeaurora.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        AngeloGioacchino Del Regno <kholk11@gmail.com>,
-        Sam Ravnborg <sam@ravnborg.org>,
-        Emil Velikov <emil.velikov@collabora.com>,
-        Rob Clark <robdclark@chromium.org>,
-        Jonathan Marek <jonathan@marek.ca>,
-        Qinglang Miao <miaoqinglang@huawei.com>,
-        Roy Spliet <nouveau@spliet.org>,
-        Wambui Karuga <wambui.karugax@gmail.com>,
-        linux-arm-msm@vger.kernel.org,
-        Sharat Masetty <smasetty@codeaurora.org>,
-        Kalyan Thota <kalyan_t@codeaurora.org>,
-        Rajendra Nayak <rnayak@codeaurora.org>,
-        "Gustavo A. R. Silva" <gustavoars@kernel.org>,
-        open list <linux-kernel@vger.kernel.org>,
-        tongtiangen <tongtiangen@huawei.com>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        Drew Davenport <ddavenport@chromium.org>,
-        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
-        <freedreno@lists.freedesktop.org>
-Subject: Re: [PATCH 0/3] drm/msm: kthread_worker conversion
-Message-ID: <20201020082404.GJ401619@phenom.ffwll.local>
-Mail-Followup-To: Rob Clark <robdclark@gmail.com>,
-        dri-devel@lists.freedesktop.org,
-        Akhil P Oommen <akhilpo@codeaurora.org>,
-        Tanmay Shah <tanmay@codeaurora.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        AngeloGioacchino Del Regno <kholk11@gmail.com>,
-        Sam Ravnborg <sam@ravnborg.org>,
-        Emil Velikov <emil.velikov@collabora.com>,
-        Rob Clark <robdclark@chromium.org>,
-        Jonathan Marek <jonathan@marek.ca>,
-        Qinglang Miao <miaoqinglang@huawei.com>,
-        Roy Spliet <nouveau@spliet.org>,
-        Wambui Karuga <wambui.karugax@gmail.com>,
-        linux-arm-msm@vger.kernel.org,
-        Sharat Masetty <smasetty@codeaurora.org>,
-        Kalyan Thota <kalyan_t@codeaurora.org>,
-        Rajendra Nayak <rnayak@codeaurora.org>,
-        "Gustavo A. R. Silva" <gustavoars@kernel.org>,
-        open list <linux-kernel@vger.kernel.org>,
-        tongtiangen <tongtiangen@huawei.com>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        Drew Davenport <ddavenport@chromium.org>,
-        "open list:DRM DRIVER FOR MSM ADRENO GPU" <freedreno@lists.freedesktop.org>
-References: <20201019211101.143327-1-robdclark@gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=D/Gf2EPIdX5qA2A6HlcDWWaVkQkKjG0YsM21d64zQ1U=;
+        b=AeQo8iw6KE1/G1riyI0zahMXx9qaSdjmhzR6rLxN8PbQbAbvvR//hjlQL3aRVYTJU1
+         T3c7K61guLraU+2EHC0z5sVQgQd25x0MNkV5+ojAAApa6L5ordHA/rimzAS+WcGWz2JN
+         zUHkCpnxzn2o8/L7DClYr0AtjUlApH9pm0C2+WO7KuVC8m1ykALn3PqxhuBJxT6LFr4V
+         H65OYVr1Oclqx7HEtWox8wjlpONzl4juVf16pKsO+8fG8BwaeMOHkZfeGJTUELq+glap
+         axah6VoJyZpC+Wed48Mrhqw8QcXlgSpwypPvDssgWDppm7VJZjlOuL2u0x+6QXgCddBd
+         Ketg==
+X-Gm-Message-State: AOAM531SjGe13jJU0vCGQsFhws03um/DOMnNKHhgyGiDn8U9UpmXdwbd
+        aaY0Ox0v+PlrY3/LgOmiMXMog18WF512PFbVu9Dw0A==
+X-Google-Smtp-Source: ABdhPJzn235Ieb/yA26fp/gsyes8m4Z1IMTMaB5DacVIupjjGmBYpO2cm8jk4usXtX0nqpoze5E6oCDMq43tVzwbLLc=
+X-Received: by 2002:a17:90a:160f:: with SMTP id n15mr1877221pja.75.1603183975701;
+ Tue, 20 Oct 2020 01:52:55 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20201019211101.143327-1-robdclark@gmail.com>
-X-Operating-System: Linux phenom 5.7.0-1-amd64 
+References: <20201018125237.16717-1-kholk11@gmail.com> <20201018125237.16717-2-kholk11@gmail.com>
+In-Reply-To: <20201018125237.16717-2-kholk11@gmail.com>
+From:   Robert Foss <robert.foss@linaro.org>
+Date:   Tue, 20 Oct 2020 10:52:44 +0200
+Message-ID: <CAG3jFys7mjWmpTjqGm+sR71WKcJcdfGeGwV3hipY+eQ+zb9naA@mail.gmail.com>
+Subject: Re: [PATCH 1/6] media: camss: csiphy-3ph: Add support for SDM630/660
+To:     kholk11@gmail.com
+Cc:     Todor Tomov <todor.too@gmail.com>, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>, marijns95@gmail.com,
+        konradybcio@gmail.com, martin.botka1@gmail.com,
+        linux-arm-msm@vger.kernel.org,
+        linux-media <linux-media@vger.kernel.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>,
+        linux-kernel <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Oct 19, 2020 at 02:10:50PM -0700, Rob Clark wrote:
-> From: Rob Clark <robdclark@chromium.org>
-> 
-> In particular, converting the async atomic commit (for cursor updates,
-> etc) to SCHED_FIFO kthread_worker helps with some cases where we
-> wouldn't manage to flush the updates within the 1ms-before-vblank
-> deadline resulting in fps drops when there is cursor movement.
-> 
-> Rob Clark (3):
->   drm/msm/gpu: Convert retire/recover work to kthread_worker
->   drm/msm/kms: Update msm_kms_init/destroy
->   drm/msm/atomic: Convert to per-CRTC kthread_work
+Hi Angelo,
 
-So i915 has it's own commit worker already for $reasons, but I don't think
-that's a good path to go down with more drivers. And the problem seems
-entirely generic in nature ...
--Daniel
+On Sun, 18 Oct 2020 at 14:52, <kholk11@gmail.com> wrote:
+>
+> From: AngeloGioacchino Del Regno <kholk11@gmail.com>
+>
+> The CSIPHY on SDM630/660 needs a slightly longer T_HS_CLK_MISS
+> configuration on lanes CFG4.
+>
+> Signed-off-by: AngeloGioacchino Del Regno <kholk11@gmail.com>
+> ---
+>  drivers/media/platform/qcom/camss/camss-csiphy-3ph-1-0.c | 7 ++++++-
+>  1 file changed, 6 insertions(+), 1 deletion(-)
+>
+> diff --git a/drivers/media/platform/qcom/camss/camss-csiphy-3ph-1-0.c b/drivers/media/platform/qcom/camss/camss-csiphy-3ph-1-0.c
+> index 2e65caf1ecae..97cb9de85031 100644
+> --- a/drivers/media/platform/qcom/camss/camss-csiphy-3ph-1-0.c
+> +++ b/drivers/media/platform/qcom/camss/camss-csiphy-3ph-1-0.c
+> @@ -8,6 +8,7 @@
+>   * Copyright (C) 2016-2018 Linaro Ltd.
+>   */
+>
+> +#include "camss.h"
+>  #include "camss-csiphy.h"
+>
+>  #include <linux/delay.h>
+> @@ -21,6 +22,7 @@
+>  #define CSIPHY_3PH_LNn_CFG3(n)                 (0x008 + 0x100 * (n))
+>  #define CSIPHY_3PH_LNn_CFG4(n)                 (0x00c + 0x100 * (n))
+>  #define CSIPHY_3PH_LNn_CFG4_T_HS_CLK_MISS      0xa4
+> +#define CSIPHY_3PH_LNn_CFG4_T_HS_CLK_MISS_660  0xa5
+>  #define CSIPHY_3PH_LNn_CFG5(n)                 (0x010 + 0x100 * (n))
+>  #define CSIPHY_3PH_LNn_CFG5_T_HS_DTERM         0x02
+>  #define CSIPHY_3PH_LNn_CFG5_HS_REC_EQ_FQ_INT   0x50
+> @@ -198,7 +200,10 @@ static void csiphy_lanes_enable(struct csiphy_device *csiphy,
+>         val = CSIPHY_3PH_LNn_CFG1_SWI_REC_DLY_PRG;
+>         writel_relaxed(val, csiphy->base + CSIPHY_3PH_LNn_CFG1(l));
+>
+> -       val = CSIPHY_3PH_LNn_CFG4_T_HS_CLK_MISS;
+> +       if (csiphy->camss->version == CAMSS_660)
 
-> 
->  drivers/gpu/drm/msm/adreno/a5xx_gpu.c     |  3 +--
->  drivers/gpu/drm/msm/adreno/a5xx_preempt.c |  6 ++---
->  drivers/gpu/drm/msm/adreno/a6xx_gmu.c     |  4 +--
->  drivers/gpu/drm/msm/adreno/a6xx_gpu.c     |  4 +--
->  drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c   |  8 +++++-
->  drivers/gpu/drm/msm/disp/mdp4/mdp4_kms.c  |  8 +++++-
->  drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c  | 11 ++++++---
->  drivers/gpu/drm/msm/disp/mdp_kms.h        |  9 +++++--
->  drivers/gpu/drm/msm/msm_atomic.c          | 25 +++++++++++++++----
->  drivers/gpu/drm/msm/msm_drv.h             |  3 ++-
->  drivers/gpu/drm/msm/msm_gpu.c             | 30 +++++++++++++++--------
->  drivers/gpu/drm/msm/msm_gpu.h             | 13 +++++++---
->  drivers/gpu/drm/msm/msm_kms.h             | 23 ++++++++++++++---
->  13 files changed, 104 insertions(+), 43 deletions(-)
-> 
-> -- 
-> 2.26.2
-> 
-> _______________________________________________
-> dri-devel mailing list
-> dri-devel@lists.freedesktop.org
-> https://lists.freedesktop.org/mailman/listinfo/dri-devel
+The CAMSS_660 enum is not defined until patch #4, so building fails
+here. I expect to see this issue in a few other places, but I'll
+refrain from pointing them all out.
 
--- 
-Daniel Vetter
-Software Engineer, Intel Corporation
-http://blog.ffwll.ch
+> +               val = CSIPHY_3PH_LNn_CFG4_T_HS_CLK_MISS_660;
+> +       else
+> +               val = CSIPHY_3PH_LNn_CFG4_T_HS_CLK_MISS;
+>         writel_relaxed(val, csiphy->base + CSIPHY_3PH_LNn_CFG4(l));
+>
+>         val = CSIPHY_3PH_LNn_MISC1_IS_CLKLANE;
+> --
+> 2.28.0
+>
