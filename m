@@ -2,301 +2,557 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id BB44C2938A6
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Oct 2020 11:57:48 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 22A0629391C
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Oct 2020 12:27:07 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2405063AbgJTJ5o (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 20 Oct 2020 05:57:44 -0400
-Received: from mailgw01.mediatek.com ([210.61.82.183]:47107 "EHLO
-        mailgw01.mediatek.com" rhost-flags-OK-FAIL-OK-FAIL) by vger.kernel.org
-        with ESMTP id S2404967AbgJTJ5n (ORCPT
+        id S2388871AbgJTK1F (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 20 Oct 2020 06:27:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59002 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2388796AbgJTK1F (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 20 Oct 2020 05:57:43 -0400
-X-UUID: 1fc7779bd0474af58c00c2c52bdd9cf4-20201020
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=mediatek.com; s=dk;
-        h=Content-Transfer-Encoding:Content-Type:MIME-Version:References:In-Reply-To:Message-ID:Date:Subject:CC:To:From; bh=bltWi3855DIox0anjkG4Q5R7NNa5/AdzdcOAfel+uac=;
-        b=UB7N937GSXVwx1telZWrelCX5pELVxAOilAB1HyhQKUK2tAZbo1uryB9AzPxi9psMrdjbcNbxfleNQLPZrxZVZRQqlDWnMc08kuAw68c3n1nLgm2snx9CvGINJhaOf46s9B+B95/S/XdI70aoX8/neqro0oHquV8lrN5MRTo5Q4=;
-X-UUID: 1fc7779bd0474af58c00c2c52bdd9cf4-20201020
-Received: from mtkcas07.mediatek.inc [(172.21.101.84)] by mailgw01.mediatek.com
-        (envelope-from <hsin-hsiung.wang@mediatek.com>)
-        (Cellopoint E-mail Firewall v4.1.14 Build 0819 with TLSv1.2 ECDHE-RSA-AES256-SHA384 256/256)
-        with ESMTP id 1835411858; Tue, 20 Oct 2020 17:57:27 +0800
-Received: from mtkcas08.mediatek.inc (172.21.101.126) by
- mtkmbs07n2.mediatek.inc (172.21.101.141) with Microsoft SMTP Server (TLS) id
- 15.0.1497.2; Tue, 20 Oct 2020 17:57:25 +0800
-Received: from mtksdaap41.mediatek.inc (172.21.77.4) by mtkcas08.mediatek.inc
- (172.21.101.73) with Microsoft SMTP Server id 15.0.1497.2 via Frontend
- Transport; Tue, 20 Oct 2020 17:57:26 +0800
-From:   Hsin-Hsiung Wang <hsin-hsiung.wang@mediatek.com>
-To:     Liam Girdwood <lgirdwood@gmail.com>,
-        Mark Brown <broonie@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        Stephen Boyd <sboyd@kernel.org>
-CC:     <linux-kernel@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-arm-kernel@lists.infradead.org>,
-        <linux-mediatek@lists.infradead.org>,
-        <linux-arm-msm@vger.kernel.org>, <srv_heupstream@mediatek.com>,
-        Hsin-Hsiung Wang <hsin-hsiung.wang@mediatek.com>
-Subject: [PATCH v2 3/3] regulator: mt6315: Add support for MT6315 regulator
-Date:   Tue, 20 Oct 2020 17:56:50 +0800
-Message-ID: <1603187810-30481-4-git-send-email-hsin-hsiung.wang@mediatek.com>
-X-Mailer: git-send-email 2.6.4
-In-Reply-To: <1603187810-30481-1-git-send-email-hsin-hsiung.wang@mediatek.com>
-References: <1603187810-30481-1-git-send-email-hsin-hsiung.wang@mediatek.com>
+        Tue, 20 Oct 2020 06:27:05 -0400
+Received: from mail-pg1-x542.google.com (mail-pg1-x542.google.com [IPv6:2607:f8b0:4864:20::542])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 57257C0613D3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Oct 2020 03:27:05 -0700 (PDT)
+Received: by mail-pg1-x542.google.com with SMTP id s22so800938pga.9
+        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Oct 2020 03:27:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=FSpNfaoui7WFBlBdnjo8IlVFsZ8SXDsfwpX/9Xp6IFI=;
+        b=QQVF9eSHlBcDhZ9WfbW7CBwI2pwhIQdswgsg9Nz6gPK7+lR6VYLThhAlwrkxdi5ElG
+         kNY0kqVMQY7CmKLWShh9NQs7mxGyaHK9ux0EIv2y15m6zf0Xfu+uYi6+zcvdnXJLV0o6
+         D6raLzVMbBUgGCSsoF1drti9f8v2tKYydm7j1RxCg89UJg/eWrzP//9peJ/tlEaqSQrs
+         hKkPU3YkxncRnHY9YV9Wv0A0eI/vpMJCNIjlWeV5z/wLSmvcDauFWXPwSh7ffs4CSn4/
+         YDj48+cxAsvogW8AJXFn3xz5PLc/FgE+tATU2j6IPWbEfmfEjKGafjoyg0JPnYZDOHK/
+         GZGQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=FSpNfaoui7WFBlBdnjo8IlVFsZ8SXDsfwpX/9Xp6IFI=;
+        b=kLjhIrkE/RamnFu7V3JXc+aldeIBOz+c6m7PKkfYw2PoDsujAm2Aigf783qE7QmCCz
+         TAuPOZfVAmgXvNeN34RDIt5Gr+fiu2RbU/mV0AqIdg+ItKozM9NqZ0/xvZLLiuhH+NDK
+         wNTGpbyOfkZU66aOW7/QSXEpG7h/r4MGjx/fXtvRLk9E44Me307nTJzsviFMNax/HzrT
+         NVL8gQZimVzhSW3WSu5JIyW77fA1pmxb9YzMpiqcM+BGloCvgvF50Ba4bDQAXoH+WNIN
+         wq1G8MfoyaBIFT5ihqGTC+e6oM/ERc7uSKrtxoNdsCJ8MUfcliwy2H23P0zhtgblIj+t
+         dtCQ==
+X-Gm-Message-State: AOAM531e07ZDvGEgluViaHziw84rYQouChdif1vLJ1XOcsCbLal2SU17
+        AlEmklVZVSUK8zeTwP+nfM2hU7kJfJPviXRjN6od1Q==
+X-Google-Smtp-Source: ABdhPJxGHA2o5WV7T4Rkq9eN9N5c8uef0QZKvncU82PeW2GXslTFYb8DOwp8DJqAyAbvUn+wdziQzxFItQHc6beVzy4=
+X-Received: by 2002:aa7:9245:0:b029:156:552a:1275 with SMTP id
+ 5-20020aa792450000b0290156552a1275mr2130560pfp.12.1603189624489; Tue, 20 Oct
+ 2020 03:27:04 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-MTK:  N
-Content-Transfer-Encoding: base64
+References: <20201018125237.16717-1-kholk11@gmail.com> <20201018125237.16717-5-kholk11@gmail.com>
+In-Reply-To: <20201018125237.16717-5-kholk11@gmail.com>
+From:   Robert Foss <robert.foss@linaro.org>
+Date:   Tue, 20 Oct 2020 12:26:52 +0200
+Message-ID: <CAG3jFysEzxzD4RGiKWsbxMQC9t2h_buH3xEpkeBsT4tGY1fYMw@mail.gmail.com>
+Subject: Re: [PATCH 4/6] media: camss: Add support for SDM630/636/660 camera subsystem
+To:     kholk11@gmail.com
+Cc:     Todor Tomov <todor.too@gmail.com>, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>, marijns95@gmail.com,
+        konradybcio@gmail.com, martin.botka1@gmail.com,
+        linux-arm-msm@vger.kernel.org,
+        linux-media <linux-media@vger.kernel.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>,
+        linux-kernel <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-VGhlIE1UNjMxNSBpcyBhIHJlZ3VsYXRvciBmb3VuZCBvbiBib2FyZHMgYmFzZWQgb24gTWVkaWFU
-ZWsgTVQ4MTkyIGFuZA0KcHJvYmFibHkgb3RoZXIgU29Dcy4gSXQgY29ubmVjdHMgYXMgYSBzbGF2
-ZSB0byBTb0MgdXNpbmcgU1BNSS4NCg0KU2lnbmVkLW9mZi1ieTogSHNpbi1Ic2l1bmcgV2FuZyA8
-aHNpbi1oc2l1bmcud2FuZ0BtZWRpYXRlay5jb20+DQotLS0NCiBkcml2ZXJzL3JlZ3VsYXRvci9L
-Y29uZmlnICAgICAgICAgICAgICAgICAgfCAgMTAgKw0KIGRyaXZlcnMvcmVndWxhdG9yL01ha2Vm
-aWxlICAgICAgICAgICAgICAgICB8ICAgMSArDQogZHJpdmVycy9yZWd1bGF0b3IvbXQ2MzE1LXJl
-Z3VsYXRvci5jICAgICAgIHwgMzY0ICsrKysrKysrKysrKysrKysrKysrKw0KIGluY2x1ZGUvbGlu
-dXgvcmVndWxhdG9yL210NjMxNS1yZWd1bGF0b3IuaCB8ICAzNyArKysNCiA0IGZpbGVzIGNoYW5n
-ZWQsIDQxMiBpbnNlcnRpb25zKCspDQogY3JlYXRlIG1vZGUgMTAwNjQ0IGRyaXZlcnMvcmVndWxh
-dG9yL210NjMxNS1yZWd1bGF0b3IuYw0KIGNyZWF0ZSBtb2RlIDEwMDY0NCBpbmNsdWRlL2xpbnV4
-L3JlZ3VsYXRvci9tdDYzMTUtcmVndWxhdG9yLmgNCg0KZGlmZiAtLWdpdCBhL2RyaXZlcnMvcmVn
-dWxhdG9yL0tjb25maWcgYi9kcml2ZXJzL3JlZ3VsYXRvci9LY29uZmlnDQppbmRleCBkZTE3ZWY3
-ZTE4ZjAuLjU5NTQ0OTE4MDM0ZSAxMDA2NDQNCi0tLSBhL2RyaXZlcnMvcmVndWxhdG9yL0tjb25m
-aWcNCisrKyBiL2RyaXZlcnMvcmVndWxhdG9yL0tjb25maWcNCkBAIC02OTMsNiArNjkzLDE2IEBA
-IGNvbmZpZyBSRUdVTEFUT1JfTVQ2MzExDQogCSAgVGhpcyBkcml2ZXIgc3VwcG9ydHMgdGhlIGNv
-bnRyb2wgb2YgZGlmZmVyZW50IHBvd2VyIHJhaWxzIG9mIGRldmljZQ0KIAkgIHRocm91Z2ggcmVn
-dWxhdG9yIGludGVyZmFjZS4NCiANCitjb25maWcgUkVHVUxBVE9SX01UNjMxNQ0KKwl0cmlzdGF0
-ZSAiTWVkaWFUZWsgTVQ2MzE1IFBNSUMiDQorCWRlcGVuZHMgb24gU1BNSQ0KKwlzZWxlY3QgUkVH
-TUFQX1NQTUkNCisJaGVscA0KKwkgIFNheSB5IGhlcmUgdG8gc2VsZWN0IHRoaXMgb3B0aW9uIHRv
-IGVuYWJsZSB0aGUgcG93ZXIgcmVndWxhdG9yIG9mDQorCSAgTWVkaWFUZWsgTVQ2MzE1IFBNSUMu
-DQorCSAgVGhpcyBkcml2ZXIgc3VwcG9ydHMgdGhlIGNvbnRyb2wgb2YgZGlmZmVyZW50IHBvd2Vy
-IHJhaWxzIG9mIGRldmljZQ0KKwkgIHRocm91Z2ggcmVndWxhdG9yIGludGVyZmFjZS4NCisNCiBj
-b25maWcgUkVHVUxBVE9SX01UNjMyMw0KIAl0cmlzdGF0ZSAiTWVkaWFUZWsgTVQ2MzIzIFBNSUMi
-DQogCWRlcGVuZHMgb24gTUZEX01UNjM5Nw0KZGlmZiAtLWdpdCBhL2RyaXZlcnMvcmVndWxhdG9y
-L01ha2VmaWxlIGIvZHJpdmVycy9yZWd1bGF0b3IvTWFrZWZpbGUNCmluZGV4IGQ4ZDNlY2Y1MjZh
-OC4uNTQ4OGU1NjNjNjBhIDEwMDY0NA0KLS0tIGEvZHJpdmVycy9yZWd1bGF0b3IvTWFrZWZpbGUN
-CisrKyBiL2RyaXZlcnMvcmVndWxhdG9yL01ha2VmaWxlDQpAQCAtODYsNiArODYsNyBAQCBvYmot
-JChDT05GSUdfUkVHVUxBVE9SX01QODg1OSkgKz0gbXA4ODU5Lm8NCiBvYmotJChDT05GSUdfUkVH
-VUxBVE9SX01QODg2WCkgKz0gbXA4ODZ4Lm8NCiBvYmotJChDT05GSUdfUkVHVUxBVE9SX01QUTc5
-MjApICs9IG1wcTc5MjAubw0KIG9iai0kKENPTkZJR19SRUdVTEFUT1JfTVQ2MzExKSArPSBtdDYz
-MTEtcmVndWxhdG9yLm8NCitvYmotJChDT05GSUdfUkVHVUxBVE9SX01UNjMxNSkgKz0gbXQ2MzE1
-LXJlZ3VsYXRvci5vDQogb2JqLSQoQ09ORklHX1JFR1VMQVRPUl9NVDYzMjMpCSs9IG10NjMyMy1y
-ZWd1bGF0b3Iubw0KIG9iai0kKENPTkZJR19SRUdVTEFUT1JfTVQ2MzU4KQkrPSBtdDYzNTgtcmVn
-dWxhdG9yLm8NCiBvYmotJChDT05GSUdfUkVHVUxBVE9SX01UNjM4MCkJKz0gbXQ2MzgwLXJlZ3Vs
-YXRvci5vDQpkaWZmIC0tZ2l0IGEvZHJpdmVycy9yZWd1bGF0b3IvbXQ2MzE1LXJlZ3VsYXRvci5j
-IGIvZHJpdmVycy9yZWd1bGF0b3IvbXQ2MzE1LXJlZ3VsYXRvci5jDQpuZXcgZmlsZSBtb2RlIDEw
-MDY0NA0KaW5kZXggMDAwMDAwMDAwMDAwLi44ZTNhY2NiMmUzNmYNCi0tLSAvZGV2L251bGwNCisr
-KyBiL2RyaXZlcnMvcmVndWxhdG9yL210NjMxNS1yZWd1bGF0b3IuYw0KQEAgLTAsMCArMSwzNjQg
-QEANCisvLyBTUERYLUxpY2Vuc2UtSWRlbnRpZmllcjogR1BMLTIuMA0KKy8vDQorLy8gQ29weXJp
-Z2h0IChjKSAyMDIwIE1lZGlhVGVrIEluYy4NCisNCisjaW5jbHVkZSA8ZHQtYmluZGluZ3MvcmVn
-dWxhdG9yL210ayxtdDYzMTUuaD4NCisjaW5jbHVkZSA8bGludXgvaW50ZXJydXB0Lmg+DQorI2lu
-Y2x1ZGUgPGxpbnV4L21vZHVsZS5oPg0KKyNpbmNsdWRlIDxsaW51eC9vZl9kZXZpY2UuaD4NCisj
-aW5jbHVkZSA8bGludXgvb2ZfaXJxLmg+DQorI2luY2x1ZGUgPGxpbnV4L3BsYXRmb3JtX2Rldmlj
-ZS5oPg0KKyNpbmNsdWRlIDxsaW51eC9yZWdtYXAuaD4NCisjaW5jbHVkZSA8bGludXgvcmVndWxh
-dG9yL2RyaXZlci5oPg0KKyNpbmNsdWRlIDxsaW51eC9yZWd1bGF0b3IvbWFjaGluZS5oPg0KKyNp
-bmNsdWRlIDxsaW51eC9yZWd1bGF0b3IvbXQ2MzE1LXJlZ3VsYXRvci5oPg0KKyNpbmNsdWRlIDxs
-aW51eC9yZWd1bGF0b3Ivb2ZfcmVndWxhdG9yLmg+DQorI2luY2x1ZGUgPGxpbnV4L3NwbWkuaD4N
-CisNCisjZGVmaW5lIE1UNjMxNV9SRUdfV0lEVEgJOA0KKw0KKyNkZWZpbmUgTVQ2MzE1X0JVQ0tf
-TU9ERV9BVVRPCQkwDQorI2RlZmluZSBNVDYzMTVfQlVDS19NT0RFX0ZPUkNFX1BXTQkxDQorI2Rl
-ZmluZSBNVDYzMTVfQlVDS19NT0RFX0xQCQkyDQorDQorc3RydWN0IG10NjMxNV9yZWd1bGF0b3Jf
-aW5mbyB7DQorCXN0cnVjdCByZWd1bGF0b3JfZGVzYyBkZXNjOw0KKwl1MzIgZGFfdnNlbF9yZWc7
-DQorCXUzMiBkYV9yZWc7DQorCXUzMiBscF9tb2RlX3JlZzsNCisJdTMyIGxwX21vZGVfbWFzazsN
-CisJdTMyIGxwX21vZGVfc2hpZnQ7DQorCXUzMiBtb2Rlc2V0X3JlZzsNCisJdTMyIHFpOw0KK307
-DQorDQorc3RydWN0IG10X3JlZ3VsYXRvcl9pbml0X2RhdGEgew0KKwljb25zdCBzdHJ1Y3QgbXQ2
-MzE1X3JlZ3VsYXRvcl9pbmZvICpyZWd1bGF0b3JfaW5mbzsNCisJdTMyIG1vZGVzZXRfbWFza1tN
-VDYzMTVfVkJVQ0tfTUFYXTsNCit9Ow0KKw0KK3N0cnVjdCBtdDYzMTVfY2hpcCB7DQorCXN0cnVj
-dCBkZXZpY2UgKmRldjsNCisJc3RydWN0IHJlZ21hcCAqcmVnbWFwOw0KK307DQorDQorI2RlZmlu
-ZSBNVF9CVUNLKF9uYW1lLCBfYmlkLCBfdnNlbCkJCQkJXA0KK1tfYmlkXSA9IHsJCQkJCQkJXA0K
-KwkuZGVzYyA9IHsJCQkJCQlcDQorCQkubmFtZSA9IF9uYW1lLAkJCQkJXA0KKwkJLm9mX21hdGNo
-ID0gb2ZfbWF0Y2hfcHRyKF9uYW1lKSwJCVwNCisJCS5yZWd1bGF0b3JzX25vZGUgPSAicmVndWxh
-dG9ycyIsCQlcDQorCQkub3BzID0gJm10NjMxNV92b2x0X3JhbmdlX29wcywJCQlcDQorCQkudHlw
-ZSA9IFJFR1VMQVRPUl9WT0xUQUdFLAkJCVwNCisJCS5pZCA9IF9iaWQsCQkJCQlcDQorCQkub3du
-ZXIgPSBUSElTX01PRFVMRSwJCQkJXA0KKwkJLm5fdm9sdGFnZXMgPSAweGJmLAkJCQlcDQorCQku
-bGluZWFyX3JhbmdlcyA9IG10X3ZvbHRfcmFuZ2UxLAkJXA0KKwkJLm5fbGluZWFyX3JhbmdlcyA9
-IEFSUkFZX1NJWkUobXRfdm9sdF9yYW5nZTEpLAlcDQorCQkudnNlbF9yZWcgPSBfdnNlbCwJCQkJ
-XA0KKwkJLnZzZWxfbWFzayA9IDB4ZmYsCQkJCVwNCisJCS5lbmFibGVfcmVnID0gTVQ2MzE1X0JV
-Q0tfVE9QX0NPTjAsCQlcDQorCQkuZW5hYmxlX21hc2sgPSBCSVQoX2JpZCAtIDEpLAkJCVwNCisJ
-CS5vZl9tYXBfbW9kZSA9IG10NjMxNV9tYXBfbW9kZSwJCQlcDQorCX0sCQkJCQkJCVwNCisJLmRh
-X3ZzZWxfcmVnID0gX2JpZCMjX0RCRzAsCQkJCVwNCisJLmRhX3JlZyA9IF9iaWQjI19EQkc0LAkJ
-CQkJXA0KKwkubHBfbW9kZV9yZWcgPSBNVDYzMTVfQlVDS19UT1BfQ09OMSwJCQlcDQorCS5scF9t
-b2RlX21hc2sgPSBCSVQoX2JpZCAtIDEpLAkJCQlcDQorCS5scF9tb2RlX3NoaWZ0ID0gX2JpZCAt
-IDEsCQkJCVwNCisJLm1vZGVzZXRfcmVnID0gTVQ2MzE1X0JVQ0tfVE9QXzRQSEFTRV9BTkFfQ09O
-NDIsCVwNCisJLnFpID0gQklUKDApLAkJCQkJCVwNCit9DQorDQorc3RhdGljIGNvbnN0IHN0cnVj
-dCBsaW5lYXJfcmFuZ2UgbXRfdm9sdF9yYW5nZTFbXSA9IHsNCisJUkVHVUxBVE9SX0xJTkVBUl9S
-QU5HRSgwLCAwLCAweGJmLCA2MjUwKSwNCit9Ow0KKw0KK3N0YXRpYyB1bnNpZ25lZCBpbnQgbXQ2
-MzE1X21hcF9tb2RlKHUzMiBtb2RlKQ0KK3sNCisJc3dpdGNoIChtb2RlKSB7DQorCWNhc2UgTVQ2
-MzE1X0JVQ0tfTU9ERV9BVVRPOg0KKwkJcmV0dXJuIFJFR1VMQVRPUl9NT0RFX05PUk1BTDsNCisJ
-Y2FzZSBNVDYzMTVfQlVDS19NT0RFX0ZPUkNFX1BXTToNCisJCXJldHVybiBSRUdVTEFUT1JfTU9E
-RV9GQVNUOw0KKwljYXNlIE1UNjMxNV9CVUNLX01PREVfTFA6DQorCQlyZXR1cm4gUkVHVUxBVE9S
-X01PREVfSURMRTsNCisJZGVmYXVsdDoNCisJCXJldHVybiAtRUlOVkFMOw0KKwl9DQorfQ0KKw0K
-K3N0YXRpYyBpbnQgbXQ2MzE1X3JlZ3VsYXRvcl9nZXRfdm9sdGFnZV9zZWwoc3RydWN0IHJlZ3Vs
-YXRvcl9kZXYgKnJkZXYpDQorew0KKwlzdHJ1Y3QgbXRfcmVndWxhdG9yX2luaXRfZGF0YSAqaW5p
-dCA9IHJkZXZfZ2V0X2RydmRhdGEocmRldik7DQorCWNvbnN0IHN0cnVjdCBtdDYzMTVfcmVndWxh
-dG9yX2luZm8gKmluZm87DQorCWludCByZXQsIHJlZ19hZGRyLCByZWdfdmFsID0gMCwgcmVnX2Vu
-ID0gMDsNCisNCisJaW5mbyA9ICZpbml0LT5yZWd1bGF0b3JfaW5mb1tyZGV2X2dldF9pZChyZGV2
-KV07DQorCXJldCA9IHJlZ21hcF9yZWFkKHJkZXYtPnJlZ21hcCwgaW5mby0+ZGFfcmVnLCAmcmVn
-X2VuKTsNCisJaWYgKHJldCAhPSAwKSB7DQorCQlkZXZfbm90aWNlKCZyZGV2LT5kZXYsICJGYWls
-ZWQgdG8gZ2V0IGVuYWJsZSByZWc6ICVkXG4iLCByZXQpOw0KKwkJcmV0dXJuIHJldDsNCisJfQ0K
-Kw0KKwlpZiAocmVnX2VuICYgaW5mby0+cWkpDQorCQlyZWdfYWRkciA9IGluZm8tPmRhX3ZzZWxf
-cmVnOw0KKwllbHNlDQorCQlyZWdfYWRkciA9IHJkZXYtPmRlc2MtPnZzZWxfcmVnOw0KKw0KKwly
-ZXQgPSByZWdtYXBfcmVhZChyZGV2LT5yZWdtYXAsIHJlZ19hZGRyLCAmcmVnX3ZhbCk7DQorCWlm
-IChyZXQgIT0gMCkgew0KKwkJZGV2X25vdGljZSgmcmRldi0+ZGV2LCAiRmFpbGVkIHRvIGdldCB2
-b2x0YWdlOiAlZFxuIiwgcmV0KTsNCisJCXJldHVybiByZXQ7DQorCX0NCisNCisJcmV0ID0gcmVn
-X3ZhbCAmIHJkZXYtPmRlc2MtPnZzZWxfbWFzazsNCisJcmV0dXJuIHJldDsNCit9DQorDQorc3Rh
-dGljIHVuc2lnbmVkIGludCBtdDYzMTVfcmVndWxhdG9yX2dldF9tb2RlKHN0cnVjdCByZWd1bGF0
-b3JfZGV2ICpyZGV2KQ0KK3sNCisJc3RydWN0IG10X3JlZ3VsYXRvcl9pbml0X2RhdGEgKmluaXQg
-PSByZGV2X2dldF9kcnZkYXRhKHJkZXYpOw0KKwljb25zdCBzdHJ1Y3QgbXQ2MzE1X3JlZ3VsYXRv
-cl9pbmZvICppbmZvOw0KKwlpbnQgcmV0ID0gMCwgcmVndmFsID0gMDsNCisJdTMyIG1vZGVzZXRf
-bWFzazsNCisNCisJaW5mbyA9ICZpbml0LT5yZWd1bGF0b3JfaW5mb1tyZGV2X2dldF9pZChyZGV2
-KV07DQorCW1vZGVzZXRfbWFzayA9IGluaXQtPm1vZGVzZXRfbWFza1tyZGV2X2dldF9pZChyZGV2
-KV07DQorCXJldCA9IHJlZ21hcF9yZWFkKHJkZXYtPnJlZ21hcCwgaW5mby0+bW9kZXNldF9yZWcs
-ICZyZWd2YWwpOw0KKwlpZiAocmV0ICE9IDApIHsNCisJCWRldl9ub3RpY2UoJnJkZXYtPmRldiwg
-IkZhaWxlZCB0byBnZXQgbW9kZTogJWRcbiIsIHJldCk7DQorCQlyZXR1cm4gcmV0Ow0KKwl9DQor
-DQorCWlmICgocmVndmFsICYgbW9kZXNldF9tYXNrKSA9PSBtb2Rlc2V0X21hc2spDQorCQlyZXR1
-cm4gUkVHVUxBVE9SX01PREVfRkFTVDsNCisNCisJcmV0ID0gcmVnbWFwX3JlYWQocmRldi0+cmVn
-bWFwLCBpbmZvLT5scF9tb2RlX3JlZywgJnJlZ3ZhbCk7DQorCWlmIChyZXQgIT0gMCkgew0KKwkJ
-ZGV2X25vdGljZSgmcmRldi0+ZGV2LCAiRmFpbGVkIHRvIGdldCBscCBtb2RlOiAlZFxuIiwgcmV0
-KTsNCisJCXJldHVybiByZXQ7DQorCX0NCisNCisJaWYgKHJlZ3ZhbCAmIGluZm8tPmxwX21vZGVf
-bWFzaykNCisJCXJldHVybiBSRUdVTEFUT1JfTU9ERV9JRExFOw0KKwllbHNlDQorCQlyZXR1cm4g
-UkVHVUxBVE9SX01PREVfTk9STUFMOw0KK30NCisNCitzdGF0aWMgaW50IG10NjMxNV9yZWd1bGF0
-b3Jfc2V0X21vZGUoc3RydWN0IHJlZ3VsYXRvcl9kZXYgKnJkZXYsDQorCQkJCSAgICAgdTMyIG1v
-ZGUpDQorew0KKwlzdHJ1Y3QgbXRfcmVndWxhdG9yX2luaXRfZGF0YSAqaW5pdCA9IHJkZXZfZ2V0
-X2RydmRhdGEocmRldik7DQorCWNvbnN0IHN0cnVjdCBtdDYzMTVfcmVndWxhdG9yX2luZm8gKmlu
-Zm87DQorCWludCByZXQgPSAwLCB2YWwsIGN1cnJfbW9kZTsNCisJdTMyIG1vZGVzZXRfbWFzazsN
-CisNCisJaW5mbyA9ICZpbml0LT5yZWd1bGF0b3JfaW5mb1tyZGV2X2dldF9pZChyZGV2KV07DQor
-CW1vZGVzZXRfbWFzayA9IGluaXQtPm1vZGVzZXRfbWFza1tyZGV2X2dldF9pZChyZGV2KV07DQor
-CWN1cnJfbW9kZSA9IG10NjMxNV9yZWd1bGF0b3JfZ2V0X21vZGUocmRldik7DQorCXN3aXRjaCAo
-bW9kZSkgew0KKwljYXNlIFJFR1VMQVRPUl9NT0RFX0ZBU1Q6DQorCQlyZXQgPSByZWdtYXBfdXBk
-YXRlX2JpdHMocmRldi0+cmVnbWFwLA0KKwkJCQkJIGluZm8tPm1vZGVzZXRfcmVnLA0KKwkJCQkJ
-IG1vZGVzZXRfbWFzaywNCisJCQkJCSBtb2Rlc2V0X21hc2spOw0KKwkJYnJlYWs7DQorCWNhc2Ug
-UkVHVUxBVE9SX01PREVfTk9STUFMOg0KKwkJaWYgKGN1cnJfbW9kZSA9PSBSRUdVTEFUT1JfTU9E
-RV9GQVNUKSB7DQorCQkJcmV0ID0gcmVnbWFwX3VwZGF0ZV9iaXRzKHJkZXYtPnJlZ21hcCwNCisJ
-CQkJCQkgaW5mby0+bW9kZXNldF9yZWcsDQorCQkJCQkJIG1vZGVzZXRfbWFzaywNCisJCQkJCQkg
-MCk7DQorCQl9IGVsc2UgaWYgKGN1cnJfbW9kZSA9PSBSRUdVTEFUT1JfTU9ERV9JRExFKSB7DQor
-CQkJcmV0ID0gcmVnbWFwX3VwZGF0ZV9iaXRzKHJkZXYtPnJlZ21hcCwNCisJCQkJCQkgaW5mby0+
-bHBfbW9kZV9yZWcsDQorCQkJCQkJIGluZm8tPmxwX21vZGVfbWFzaywNCisJCQkJCQkgMCk7DQor
-CQkJdXNsZWVwX3JhbmdlKDEwMCwgMTEwKTsNCisJCX0NCisJCWJyZWFrOw0KKwljYXNlIFJFR1VM
-QVRPUl9NT0RFX0lETEU6DQorCQl2YWwgPSBNVDYzMTVfQlVDS19NT0RFX0xQID4+IDE7DQorCQl2
-YWwgPDw9IGluZm8tPmxwX21vZGVfc2hpZnQ7DQorCQlyZXQgPSByZWdtYXBfdXBkYXRlX2JpdHMo
-cmRldi0+cmVnbWFwLA0KKwkJCQkJIGluZm8tPmxwX21vZGVfcmVnLA0KKwkJCQkJIGluZm8tPmxw
-X21vZGVfbWFzaywNCisJCQkJCSB2YWwpOw0KKwkJYnJlYWs7DQorCWRlZmF1bHQ6DQorCQlyZXQg
-PSAtRUlOVkFMOw0KKwkJZ290byBlcnJfbW9kZTsNCisJfQ0KKw0KK2Vycl9tb2RlOg0KKwlpZiAo
-cmV0ICE9IDApIHsNCisJCWRldl9ub3RpY2UoJnJkZXYtPmRldiwgIkZhaWxlZCB0byBzZXQgbW9k
-ZTogJWRcbiIsIHJldCk7DQorCQlyZXR1cm4gcmV0Ow0KKwl9DQorDQorCXJldHVybiAwOw0KK30N
-CisNCitzdGF0aWMgaW50IG10NjMxNV9nZXRfc3RhdHVzKHN0cnVjdCByZWd1bGF0b3JfZGV2ICpy
-ZGV2KQ0KK3sNCisJc3RydWN0IG10X3JlZ3VsYXRvcl9pbml0X2RhdGEgKmluaXQgPSByZGV2X2dl
-dF9kcnZkYXRhKHJkZXYpOw0KKwljb25zdCBzdHJ1Y3QgbXQ2MzE1X3JlZ3VsYXRvcl9pbmZvICpp
-bmZvOw0KKwlpbnQgcmV0ID0gMDsNCisJdTMyIHJlZ3ZhbCA9IDA7DQorDQorCWluZm8gPSAmaW5p
-dC0+cmVndWxhdG9yX2luZm9bcmRldl9nZXRfaWQocmRldildOw0KKwlyZXQgPSByZWdtYXBfcmVh
-ZChyZGV2LT5yZWdtYXAsIGluZm8tPmRhX3JlZywgJnJlZ3ZhbCk7DQorCWlmIChyZXQgIT0gMCkg
-ew0KKwkJZGV2X25vdGljZSgmcmRldi0+ZGV2LCAiRmFpbGVkIHRvIGdldCBlbmFibGUgcmVnOiAl
-ZFxuIiwgcmV0KTsNCisJCXJldHVybiByZXQ7DQorCX0NCisNCisJcmV0dXJuIChyZWd2YWwgJiBp
-bmZvLT5xaSkgPyBSRUdVTEFUT1JfU1RBVFVTX09OIDogUkVHVUxBVE9SX1NUQVRVU19PRkY7DQor
-fQ0KKw0KK3N0YXRpYyBjb25zdCBzdHJ1Y3QgcmVndWxhdG9yX29wcyBtdDYzMTVfdm9sdF9yYW5n
-ZV9vcHMgPSB7DQorCS5saXN0X3ZvbHRhZ2UgPSByZWd1bGF0b3JfbGlzdF92b2x0YWdlX2xpbmVh
-cl9yYW5nZSwNCisJLm1hcF92b2x0YWdlID0gcmVndWxhdG9yX21hcF92b2x0YWdlX2xpbmVhcl9y
-YW5nZSwNCisJLnNldF92b2x0YWdlX3NlbCA9IHJlZ3VsYXRvcl9zZXRfdm9sdGFnZV9zZWxfcmVn
-bWFwLA0KKwkuZ2V0X3ZvbHRhZ2Vfc2VsID0gbXQ2MzE1X3JlZ3VsYXRvcl9nZXRfdm9sdGFnZV9z
-ZWwsDQorCS5zZXRfdm9sdGFnZV90aW1lX3NlbCA9IHJlZ3VsYXRvcl9zZXRfdm9sdGFnZV90aW1l
-X3NlbCwNCisJLmVuYWJsZSA9IHJlZ3VsYXRvcl9lbmFibGVfcmVnbWFwLA0KKwkuZGlzYWJsZSA9
-IHJlZ3VsYXRvcl9kaXNhYmxlX3JlZ21hcCwNCisJLmlzX2VuYWJsZWQgPSByZWd1bGF0b3JfaXNf
-ZW5hYmxlZF9yZWdtYXAsDQorCS5nZXRfc3RhdHVzID0gbXQ2MzE1X2dldF9zdGF0dXMsDQorCS5z
-ZXRfbW9kZSA9IG10NjMxNV9yZWd1bGF0b3Jfc2V0X21vZGUsDQorCS5nZXRfbW9kZSA9IG10NjMx
-NV9yZWd1bGF0b3JfZ2V0X21vZGUsDQorfTsNCisNCitzdGF0aWMgY29uc3Qgc3RydWN0IG10NjMx
-NV9yZWd1bGF0b3JfaW5mbyBtdDYzMTVfcmVndWxhdG9yc1tNVDYzMTVfVkJVQ0tfTUFYXSA9IHsN
-CisJTVRfQlVDSygidmJ1Y2sxIiwgTVQ2MzE1X1ZCVUNLMSwgTVQ2MzE1X0JVQ0tfVE9QX0VMUjAp
-LA0KKwlNVF9CVUNLKCJ2YnVjazIiLCBNVDYzMTVfVkJVQ0syLCBNVDYzMTVfQlVDS19UT1BfRUxS
-MiksDQorCU1UX0JVQ0soInZidWNrMyIsIE1UNjMxNV9WQlVDSzMsIE1UNjMxNV9CVUNLX1RPUF9F
-TFI0KSwNCisJTVRfQlVDSygidmJ1Y2s0IiwgTVQ2MzE1X1ZCVUNLNCwgTVQ2MzE1X0JVQ0tfVE9Q
-X0VMUjYpLA0KK307DQorDQorc3RhdGljIGNvbnN0IHN0cnVjdCByZWdtYXBfY29uZmlnIG10NjMx
-NV9yZWdtYXBfY29uZmlnID0gew0KKwkucmVnX2JpdHMJPSAxNiwNCisJLnZhbF9iaXRzCT0gOCwN
-CisJLm1heF9yZWdpc3Rlcgk9IDB4MTZkMCwNCisJLmZhc3RfaW8JPSB0cnVlLA0KK307DQorDQor
-c3RhdGljIGNvbnN0IHN0cnVjdCBvZl9kZXZpY2VfaWQgbXQ2MzE1X29mX21hdGNoW10gPSB7DQor
-CXsNCisJCS5jb21wYXRpYmxlID0gIm1lZGlhdGVrLG10NjMxNV8zLXJlZ3VsYXRvciIsDQorCX0s
-IHsNCisJCS5jb21wYXRpYmxlID0gIm1lZGlhdGVrLG10NjMxNV82LXJlZ3VsYXRvciIsDQorCX0s
-IHsNCisJCS5jb21wYXRpYmxlID0gIm1lZGlhdGVrLG10NjMxNV83LXJlZ3VsYXRvciIsDQorCX0s
-IHsNCisJCS8qIHNlbnRpbmVsICovDQorCX0sDQorfTsNCitNT0RVTEVfREVWSUNFX1RBQkxFKG9m
-LCBtdDYzMTVfb2ZfbWF0Y2gpOw0KKw0KK3N0YXRpYyB2b2lkIG10NjMxNV9wYXJzaW5nX2R0KHN0
-cnVjdCByZWd1bGF0b3JfZGV2ICpyZGV2LCB1MzIgKmFycikNCit7DQorCXN0cnVjdCBkZXZpY2Vf
-bm9kZSAqbnA7DQorCXN0cnVjdCBtdF9yZWd1bGF0b3JfaW5pdF9kYXRhICppbml0ID0gcmRldl9n
-ZXRfZHJ2ZGF0YShyZGV2KTsNCisJdTMyIGJ1Y2tfaWQsICptb2Rlc2V0Ow0KKwlpbnQgaSwgaWNv
-dW50Ow0KKw0KKwlucCA9IHJkZXYtPmRldi5vZl9ub2RlOw0KKwlpZiAoIW5wKQ0KKwkJcmV0dXJu
-Ow0KKw0KKwlpY291bnQgPSBvZl9wcm9wZXJ0eV9jb3VudF9lbGVtc19vZl9zaXplKG5wLCAibXRr
-LGNvbWJpbmVkLXJlZ3VsYXRvciIsIHNpemVvZih1MzIpKTsNCisJaWYgKGljb3VudCA8PSAwKQ0K
-KwkJcmV0dXJuOw0KKw0KKwltb2Rlc2V0ID0gJmluaXQtPm1vZGVzZXRfbWFza1tyZGV2X2dldF9p
-ZChyZGV2KV07DQorCWZvciAoaSA9IDA7IGkgPCBpY291bnQ7IGkrKykgew0KKwkJaWYgKG9mX3By
-b3BlcnR5X3JlYWRfdTMyX2luZGV4KG5wLCAibXRrLGNvbWJpbmVkLXJlZ3VsYXRvciIsIGksICZi
-dWNrX2lkKSkNCisJCQlyZXR1cm47DQorDQorCQlpZiAoYnVja19pZCA8IE1UNjMxNV9WQlVDS19N
-QVgpIHsNCisJCQkvKiB3aGl0ZSBsaXN0ICovDQorCQkJKihhcnIgKyBidWNrX2lkKSA9IDE7DQor
-CQkJLyogYWRkIG1vZGVzZXQgYml0IG9mIGNvbWJpbmVkLXJlZ3VsYXRvciAqLw0KKwkJCSptb2Rl
-c2V0ICs9IEJJVChidWNrX2lkIC0gMSk7DQorCQl9DQorCX0NCit9DQorDQorc3RhdGljIGludCBt
-dDYzMTVfcmVndWxhdG9yX3Byb2JlKHN0cnVjdCBzcG1pX2RldmljZSAqcGRldikNCit7DQorCXN0
-cnVjdCBkZXZpY2UgKmRldiA9ICZwZGV2LT5kZXY7DQorCXN0cnVjdCByZWdtYXAgKnJlZ21hcDsN
-CisJc3RydWN0IG10NjMxNV9jaGlwICpjaGlwOw0KKwlzdHJ1Y3QgbXRfcmVndWxhdG9yX2luaXRf
-ZGF0YSAqaW5pdF9kYXRhOw0KKwlzdHJ1Y3QgcmVndWxhdG9yX2NvbmZpZyBjb25maWcgPSB7fTsN
-CisJc3RydWN0IHJlZ3VsYXRvcl9kZXYgKnJkZXY7DQorCWludCBpOw0KKwl1MzIgbXQ2MzE1X2R0
-X2xpc3RbTVQ2MzE1X1ZCVUNLX01BWF0gPSB7MH07DQorDQorCXJlZ21hcCA9IGRldm1fcmVnbWFw
-X2luaXRfc3BtaV9leHQocGRldiwgJm10NjMxNV9yZWdtYXBfY29uZmlnKTsNCisJaWYgKCFyZWdt
-YXApDQorCQlyZXR1cm4gLUVOT0RFVjsNCisNCisJY2hpcCA9IGRldm1fa3phbGxvYyhkZXYsIHNp
-emVvZihzdHJ1Y3QgbXQ2MzE1X2NoaXApLCBHRlBfS0VSTkVMKTsNCisJaWYgKCFjaGlwKQ0KKwkJ
-cmV0dXJuIC1FTk9NRU07DQorDQorCWluaXRfZGF0YSA9IGRldm1fa3phbGxvYyhkZXYsIHNpemVv
-ZihzdHJ1Y3QgbXRfcmVndWxhdG9yX2luaXRfZGF0YSksIEdGUF9LRVJORUwpOw0KKwlpZiAoIWlu
-aXRfZGF0YSkNCisJCXJldHVybiAtRU5PTUVNOw0KKw0KKwljaGlwLT5kZXYgPSBkZXY7DQorCWNo
-aXAtPnJlZ21hcCA9IHJlZ21hcDsNCisJZGV2X3NldF9kcnZkYXRhKGRldiwgY2hpcCk7DQorDQor
-CWNvbmZpZy5kZXYgPSBkZXY7DQorCWNvbmZpZy5yZWdtYXAgPSByZWdtYXA7DQorCWluaXRfZGF0
-YS0+cmVndWxhdG9yX2luZm8gPSBtdDYzMTVfcmVndWxhdG9yczsNCisJZm9yIChpID0gTVQ2MzE1
-X1ZCVUNLMTsgaSA8IE1UNjMxNV9WQlVDS19NQVg7IGkrKykgew0KKwkJaWYgKG10NjMxNV9kdF9s
-aXN0W2ldKQ0KKwkJCWNvbnRpbnVlOw0KKw0KKwkJaW5pdF9kYXRhLT5tb2Rlc2V0X21hc2tbaV0g
-PSAxIDw8IChpIC0gMSk7DQorCQljb25maWcuZHJpdmVyX2RhdGEgPSBpbml0X2RhdGE7DQorCQly
-ZGV2ID0gZGV2bV9yZWd1bGF0b3JfcmVnaXN0ZXIoZGV2LCAmbXQ2MzE1X3JlZ3VsYXRvcnNbaV0u
-ZGVzYywgJmNvbmZpZyk7DQorCQlpZiAoSVNfRVJSKHJkZXYpKSB7DQorCQkJZGV2X25vdGljZShk
-ZXYsICJGYWlsZWQgdG8gcmVnaXN0ZXIgJXNcbiIsIG10NjMxNV9yZWd1bGF0b3JzW2ldLmRlc2Mu
-bmFtZSk7DQorCQkJY29udGludWU7DQorCQl9DQorCQltdDYzMTVfcGFyc2luZ19kdChyZGV2LCBt
-dDYzMTVfZHRfbGlzdCk7DQorCX0NCisJcmV0dXJuIDA7DQorfQ0KKw0KK3N0YXRpYyB2b2lkIG10
-NjMxNV9yZWd1bGF0b3Jfc2h1dGRvd24oc3RydWN0IHNwbWlfZGV2aWNlICpwZGV2KQ0KK3sNCisJ
-c3RydWN0IG10NjMxNV9jaGlwICpjaGlwID0gZGV2X2dldF9kcnZkYXRhKCZwZGV2LT5kZXYpOw0K
-KwlpbnQgcmV0ID0gMDsNCisNCisJcmV0IHw9IHJlZ21hcF93cml0ZShjaGlwLT5yZWdtYXAsIE1U
-NjMxNV9UT1BfVE1BX0tFWV9ILCBQUk9URUNUSU9OX0tFWV9IKTsNCisJcmV0IHw9IHJlZ21hcF93
-cml0ZShjaGlwLT5yZWdtYXAsIE1UNjMxNV9UT1BfVE1BX0tFWSwgUFJPVEVDVElPTl9LRVkpOw0K
-KwlyZXQgfD0gcmVnbWFwX3VwZGF0ZV9iaXRzKGNoaXAtPnJlZ21hcCwgTVQ2MzE1X1RPUDJfRUxS
-NywgMSwgMSk7DQorCXJldCB8PSByZWdtYXBfd3JpdGUoY2hpcC0+cmVnbWFwLCBNVDYzMTVfVE9Q
-X1RNQV9LRVksIDApOw0KKwlyZXQgfD0gcmVnbWFwX3dyaXRlKGNoaXAtPnJlZ21hcCwgTVQ2MzE1
-X1RPUF9UTUFfS0VZX0gsIDApOw0KKwlpZiAocmV0IDwgMCkNCisJCWRldl9ub3RpY2UoJnBkZXYt
-PmRldiwgIlslI3hdIEZhaWxlZCB0byBlbmFibGUgcG93ZXIgb2ZmIHNlcXVlbmNlLiAlZFxuIiwN
-CisJCQkgICBwZGV2LT51c2lkLCByZXQpOw0KK30NCisNCitzdGF0aWMgc3RydWN0IHNwbWlfZHJp
-dmVyIG10NjMxNV9yZWd1bGF0b3JfZHJpdmVyID0gew0KKwkuZHJpdmVyCQk9IHsNCisJCS5uYW1l
-CT0gIm10NjMxNS1yZWd1bGF0b3IiLA0KKwkJLm9mX21hdGNoX3RhYmxlID0gbXQ2MzE1X29mX21h
-dGNoLA0KKwl9LA0KKwkucHJvYmUgPSBtdDYzMTVfcmVndWxhdG9yX3Byb2JlLA0KKwkuc2h1dGRv
-d24gPSBtdDYzMTVfcmVndWxhdG9yX3NodXRkb3duLA0KK307DQorDQorbW9kdWxlX3NwbWlfZHJp
-dmVyKG10NjMxNV9yZWd1bGF0b3JfZHJpdmVyKTsNCisNCitNT0RVTEVfQVVUSE9SKCJIc2luLUhz
-aXVuZyBXYW5nIDxoc2luLWhzaXVuZy53YW5nQG1lZGlhdGVrLmNvbT4iKTsNCitNT0RVTEVfREVT
-Q1JJUFRJT04oIlJlZ3VsYXRvciBEcml2ZXIgZm9yIE1lZGlhVGVrIE1UNjMxNSBQTUlDIik7DQor
-TU9EVUxFX0xJQ0VOU0UoIkdQTCIpOw0KZGlmZiAtLWdpdCBhL2luY2x1ZGUvbGludXgvcmVndWxh
-dG9yL210NjMxNS1yZWd1bGF0b3IuaCBiL2luY2x1ZGUvbGludXgvcmVndWxhdG9yL210NjMxNS1y
-ZWd1bGF0b3IuaA0KbmV3IGZpbGUgbW9kZSAxMDA2NDQNCmluZGV4IDAwMDAwMDAwMDAwMC4uNGIz
-YmQxNzJjYmExDQotLS0gL2Rldi9udWxsDQorKysgYi9pbmNsdWRlL2xpbnV4L3JlZ3VsYXRvci9t
-dDYzMTUtcmVndWxhdG9yLmgNCkBAIC0wLDAgKzEsMzcgQEANCisvKiBTUERYLUxpY2Vuc2UtSWRl
-bnRpZmllcjogR1BMLTIuMCAqLw0KKy8qDQorICogQ29weXJpZ2h0IChjKSAyMDIwIE1lZGlhVGVr
-IEluYy4NCisgKi8NCisNCisjaWZuZGVmIF9fTElOVVhfUkVHVUxBVE9SX01UNjMxNV9IDQorI2Rl
-ZmluZSBfX0xJTlVYX1JFR1VMQVRPUl9NVDYzMTVfSA0KKw0KKyNkZWZpbmUgTVQ2MzE1X1NMQVZF
-X0lEXzMJMw0KKyNkZWZpbmUgTVQ2MzE1X1NMQVZFX0lEXzYJNg0KKyNkZWZpbmUgTVQ2MzE1X1NM
-QVZFX0lEXzcJNw0KKw0KKy8qIFJlZ2lzdGVyICovDQorI2RlZmluZSBNVDYzMTVfU1dDSURfSAkJ
-CQkweGINCisjZGVmaW5lIE1UNjMxNV9UT1AyX0VMUjcJCQkweDEzOQ0KKyNkZWZpbmUgTVQ2MzE1
-X1RPUF9UTUFfS0VZCQkJMHgzOWYNCisjZGVmaW5lIE1UNjMxNV9UT1BfVE1BX0tFWV9ICQkJMHgz
-YTANCisjZGVmaW5lIE1UNjMxNV9CVUNLX1RPUF9DT04wCQkJMHgxNDQwDQorI2RlZmluZSBNVDYz
-MTVfQlVDS19UT1BfQ09OMQkJCTB4MTQ0Mw0KKyNkZWZpbmUgTVQ2MzE1X0JVQ0tfVE9QX0VMUjAJ
-CQkweDE0NDkNCisjZGVmaW5lIE1UNjMxNV9CVUNLX1RPUF9FTFIyCQkJMHgxNDRiDQorI2RlZmlu
-ZSBNVDYzMTVfQlVDS19UT1BfRUxSNAkJCTB4MTQ0ZA0KKyNkZWZpbmUgTVQ2MzE1X0JVQ0tfVE9Q
-X0VMUjYJCQkweDE0NGYNCisjZGVmaW5lIE1UNjMxNV9WQlVDSzFfREJHMAkJCTB4MTQ5OQ0KKyNk
-ZWZpbmUgTVQ2MzE1X1ZCVUNLMV9EQkc0CQkJMHgxNDlkDQorI2RlZmluZSBNVDYzMTVfVkJVQ0sy
-X0RCRzAJCQkweDE1MTkNCisjZGVmaW5lIE1UNjMxNV9WQlVDSzJfREJHNAkJCTB4MTUxZA0KKyNk
-ZWZpbmUgTVQ2MzE1X1ZCVUNLM19EQkcwCQkJMHgxNTk5DQorI2RlZmluZSBNVDYzMTVfVkJVQ0sz
-X0RCRzQJCQkweDE1OWQNCisjZGVmaW5lIE1UNjMxNV9WQlVDSzRfREJHMAkJCTB4MTYxOQ0KKyNk
-ZWZpbmUgTVQ2MzE1X1ZCVUNLNF9EQkc0CQkJMHgxNjFkDQorI2RlZmluZSBNVDYzMTVfQlVDS19U
-T1BfNFBIQVNFX0FOQV9DT040MgkweDE2YjENCisNCisjZGVmaW5lIFBST1RFQ1RJT05fS0VZX0gJ
-CQkweDlDDQorI2RlZmluZSBQUk9URUNUSU9OX0tFWQkJCQkweEVBDQorDQorI2VuZGlmIC8qIF9f
-TElOVVhfUkVHVUxBVE9SX01UNjMxNV9IICovDQotLSANCjIuMTguMA0K
+Looks good to me.
 
+Signed-off-by: Robert Foss <robert.foss@linaro.org>
+
+On Sun, 18 Oct 2020 at 14:53, <kholk11@gmail.com> wrote:
+>
+> From: AngeloGioacchino Del Regno <kholk11@gmail.com>
+>
+> Add support for the Qualcomm SDM630/636/660 and SDA variants' camera
+> subsystem. These SoCs are equipped with:
+> - 3x CSI PHY 3-Phase v1.0 (downstream csiphy-v3.5)
+> - 4x CSID v5.0
+> - 2x ISPIF v3.0
+> - 2x VFE 4.8
+> As a note, this camera subsystem is very similar to the one that
+> is found in the MSM8998/APQ8098 SoCs.
+>
+> Signed-off-by: AngeloGioacchino Del Regno <kholk11@gmail.com>
+> ---
+>  .../media/platform/qcom/camss/camss-csid.c    |   9 +-
+>  .../media/platform/qcom/camss/camss-csiphy.c  |   3 +-
+>  .../media/platform/qcom/camss/camss-ispif.c   |  17 +-
+>  drivers/media/platform/qcom/camss/camss-vfe.c |  19 +-
+>  .../media/platform/qcom/camss/camss-video.c   |   3 +-
+>  drivers/media/platform/qcom/camss/camss.c     | 206 +++++++++++++++++-
+>  drivers/media/platform/qcom/camss/camss.h     |   1 +
+>  7 files changed, 238 insertions(+), 20 deletions(-)
+>
+> diff --git a/drivers/media/platform/qcom/camss/camss-csid.c b/drivers/media/platform/qcom/camss/camss-csid.c
+> index 2ffcda06706b..be3fe76f3dc3 100644
+> --- a/drivers/media/platform/qcom/camss/camss-csid.c
+> +++ b/drivers/media/platform/qcom/camss/camss-csid.c
+> @@ -383,7 +383,8 @@ static u32 csid_src_pad_code(struct csid_device *csid, u32 sink_code,
+>                         return 0;
+>
+>                 return sink_code;
+> -       } else if (csid->camss->version == CAMSS_8x96) {
+> +       } else if (csid->camss->version == CAMSS_8x96 ||
+> +                  csid->camss->version == CAMSS_660) {
+>                 switch (sink_code) {
+>                 case MEDIA_BUS_FMT_SBGGR10_1X10:
+>                 {
+> @@ -718,7 +719,8 @@ static int csid_set_stream(struct v4l2_subdev *sd, int enable)
+>                 val |= df << CAMSS_CSID_CID_n_CFG_DECODE_FORMAT_SHIFT;
+>                 val |= CAMSS_CSID_CID_n_CFG_RDI_MODE_RAW_DUMP;
+>
+> -               if (csid->camss->version == CAMSS_8x96) {
+> +               if (csid->camss->version == CAMSS_8x96 ||
+> +                   csid->camss->version == CAMSS_660) {
+>                         u32 sink_code = csid->fmt[MSM_CSID_PAD_SINK].code;
+>                         u32 src_code = csid->fmt[MSM_CSID_PAD_SRC].code;
+>
+> @@ -1098,7 +1100,8 @@ int msm_csid_subdev_init(struct camss *camss, struct csid_device *csid,
+>                 csid->formats = csid_formats_8x16;
+>                 csid->nformats =
+>                                 ARRAY_SIZE(csid_formats_8x16);
+> -       } else if (camss->version == CAMSS_8x96) {
+> +       } else if (camss->version == CAMSS_8x96 ||
+> +                  camss->version == CAMSS_660) {
+>                 csid->formats = csid_formats_8x96;
+>                 csid->nformats =
+>                                 ARRAY_SIZE(csid_formats_8x96);
+> diff --git a/drivers/media/platform/qcom/camss/camss-csiphy.c b/drivers/media/platform/qcom/camss/camss-csiphy.c
+> index 03ef9c5f4774..c00f25aac21b 100644
+> --- a/drivers/media/platform/qcom/camss/camss-csiphy.c
+> +++ b/drivers/media/platform/qcom/camss/camss-csiphy.c
+> @@ -552,7 +552,8 @@ int msm_csiphy_subdev_init(struct camss *camss,
+>                 csiphy->ops = &csiphy_ops_2ph_1_0;
+>                 csiphy->formats = csiphy_formats_8x16;
+>                 csiphy->nformats = ARRAY_SIZE(csiphy_formats_8x16);
+> -       } else if (camss->version == CAMSS_8x96) {
+> +       } else if (camss->version == CAMSS_8x96 ||
+> +                  camss->version == CAMSS_660) {
+>                 csiphy->ops = &csiphy_ops_3ph_1_0;
+>                 csiphy->formats = csiphy_formats_8x96;
+>                 csiphy->nformats = ARRAY_SIZE(csiphy_formats_8x96);
+> diff --git a/drivers/media/platform/qcom/camss/camss-ispif.c b/drivers/media/platform/qcom/camss/camss-ispif.c
+> index 252db6b33dab..adeb92808998 100644
+> --- a/drivers/media/platform/qcom/camss/camss-ispif.c
+> +++ b/drivers/media/platform/qcom/camss/camss-ispif.c
+> @@ -263,6 +263,7 @@ static irqreturn_t ispif_isr_8x16(int irq, void *dev)
+>
+>  static int ispif_vfe_reset(struct ispif_device *ispif, u8 vfe_id)
+>  {
+> +       unsigned long time;
+>         u32 val;
+>
+>         if (vfe_id > (to_camss(ispif)->vfe_num - 1)) {
+> @@ -315,7 +316,6 @@ static int ispif_vfe_reset(struct ispif_device *ispif, u8 vfe_id)
+>   */
+>  static int ispif_reset(struct ispif_device *ispif, u8 vfe_id)
+>  {
+> -       unsigned long time;
+>         int ret;
+>
+>         ret = camss_pm_domain_on(to_camss(ispif), PM_DOMAIN_VFE0);
+> @@ -825,7 +825,8 @@ static int ispif_set_stream(struct v4l2_subdev *sd, int enable)
+>                 ispif_select_csid(ispif, intf, csid, vfe, 1);
+>                 ispif_select_cid(ispif, intf, cid, vfe, 1);
+>                 ispif_config_irq(ispif, intf, vfe, 1);
+> -               if (to_camss(ispif)->version == CAMSS_8x96)
+> +               if (to_camss(ispif)->version == CAMSS_8x96 ||
+> +                   to_camss(ispif)->version == CAMSS_660)
+>                         ispif_config_pack(ispif,
+>                                           line->fmt[MSM_ISPIF_PAD_SINK].code,
+>                                           intf, cid, vfe, 1);
+> @@ -842,7 +843,8 @@ static int ispif_set_stream(struct v4l2_subdev *sd, int enable)
+>                         return ret;
+>
+>                 mutex_lock(&ispif->config_lock);
+> -               if (to_camss(ispif)->version == CAMSS_8x96)
+> +               if (to_camss(ispif)->version == CAMSS_8x96 ||
+> +                   to_camss(ispif)->version == CAMSS_660)
+>                         ispif_config_pack(ispif,
+>                                           line->fmt[MSM_ISPIF_PAD_SINK].code,
+>                                           intf, cid, vfe, 0);
+> @@ -1098,7 +1100,8 @@ int msm_ispif_subdev_init(struct ispif_device *ispif,
+>         /* Number of ISPIF lines - same as number of CSID hardware modules */
+>         if (to_camss(ispif)->version == CAMSS_8x16)
+>                 ispif->line_num = 2;
+> -       else if (to_camss(ispif)->version == CAMSS_8x96)
+> +       else if (to_camss(ispif)->version == CAMSS_8x96 ||
+> +                to_camss(ispif)->version == CAMSS_660)
+>                 ispif->line_num = 4;
+>         else
+>                 return -EINVAL;
+> @@ -1116,7 +1119,8 @@ int msm_ispif_subdev_init(struct ispif_device *ispif,
+>                         ispif->line[i].formats = ispif_formats_8x16;
+>                         ispif->line[i].nformats =
+>                                         ARRAY_SIZE(ispif_formats_8x16);
+> -               } else if (to_camss(ispif)->version == CAMSS_8x96) {
+> +               } else if (to_camss(ispif)->version == CAMSS_8x96 ||
+> +                          to_camss(ispif)->version == CAMSS_660) {
+>                         ispif->line[i].formats = ispif_formats_8x96;
+>                         ispif->line[i].nformats =
+>                                         ARRAY_SIZE(ispif_formats_8x96);
+> @@ -1156,7 +1160,8 @@ int msm_ispif_subdev_init(struct ispif_device *ispif,
+>         if (to_camss(ispif)->version == CAMSS_8x16)
+>                 ret = devm_request_irq(dev, ispif->irq, ispif_isr_8x16,
+>                                IRQF_TRIGGER_RISING, ispif->irq_name, ispif);
+> -       else if (to_camss(ispif)->version == CAMSS_8x96)
+> +       else if (to_camss(ispif)->version == CAMSS_8x96 ||
+> +                to_camss(ispif)->version == CAMSS_660)
+>                 ret = devm_request_irq(dev, ispif->irq, ispif_isr_8x96,
+>                                IRQF_TRIGGER_RISING, ispif->irq_name, ispif);
+>         else
+> diff --git a/drivers/media/platform/qcom/camss/camss-vfe.c b/drivers/media/platform/qcom/camss/camss-vfe.c
+> index b7d2293a5004..fae2b513b2f9 100644
+> --- a/drivers/media/platform/qcom/camss/camss-vfe.c
+> +++ b/drivers/media/platform/qcom/camss/camss-vfe.c
+> @@ -205,7 +205,8 @@ static u32 vfe_src_pad_code(struct vfe_line *line, u32 sink_code,
+>
+>                         return sink_code;
+>                 }
+> -       else if (vfe->camss->version == CAMSS_8x96)
+> +       else if (vfe->camss->version == CAMSS_8x96 ||
+> +                vfe->camss->version == CAMSS_660)
+>                 switch (sink_code) {
+>                 case MEDIA_BUS_FMT_YUYV8_2X8:
+>                 {
+> @@ -1991,12 +1992,19 @@ int msm_vfe_subdev_init(struct camss *camss, struct vfe_device *vfe,
+>         vfe->isr_ops.comp_done = vfe_isr_comp_done;
+>         vfe->isr_ops.wm_done = vfe_isr_wm_done;
+>
+> -       if (camss->version == CAMSS_8x16)
+> +       switch (camss->version) {
+> +       case CAMSS_8x16:
+>                 vfe->ops = &vfe_ops_4_1;
+> -       else if (camss->version == CAMSS_8x96)
+> +               break;
+> +       case CAMSS_8x96:
+>                 vfe->ops = &vfe_ops_4_7;
+> -       else
+> +               break;
+> +       case CAMSS_660:
+> +               vfe->ops = &vfe_ops_4_8;
+> +               break;
+> +       default:
+>                 return -EINVAL;
+> +       }
+>
+>         /* Memory */
+>
+> @@ -2095,7 +2103,8 @@ int msm_vfe_subdev_init(struct camss *camss, struct vfe_device *vfe,
+>                                 l->formats = formats_rdi_8x16;
+>                                 l->nformats = ARRAY_SIZE(formats_rdi_8x16);
+>                         }
+> -               } else if (camss->version == CAMSS_8x96) {
+> +               } else if (camss->version == CAMSS_8x96 ||
+> +                          camss->version == CAMSS_660) {
+>                         if (i == VFE_LINE_PIX) {
+>                                 l->formats = formats_pix_8x96;
+>                                 l->nformats = ARRAY_SIZE(formats_pix_8x96);
+> diff --git a/drivers/media/platform/qcom/camss/camss-video.c b/drivers/media/platform/qcom/camss/camss-video.c
+> index 114c3ae4a4ab..fbba9e45d732 100644
+> --- a/drivers/media/platform/qcom/camss/camss-video.c
+> +++ b/drivers/media/platform/qcom/camss/camss-video.c
+> @@ -970,7 +970,8 @@ int msm_video_register(struct camss_video *video, struct v4l2_device *v4l2_dev,
+>                         video->formats = formats_rdi_8x16;
+>                         video->nformats = ARRAY_SIZE(formats_rdi_8x16);
+>                 }
+> -       } else if (video->camss->version == CAMSS_8x96) {
+> +       } else if (video->camss->version == CAMSS_8x96 ||
+> +                  video->camss->version == CAMSS_660) {
+>                 if (is_pix) {
+>                         video->formats = formats_pix_8x96;
+>                         video->nformats = ARRAY_SIZE(formats_pix_8x96);
+> diff --git a/drivers/media/platform/qcom/camss/camss.c b/drivers/media/platform/qcom/camss/camss.c
+> index 9186881afc98..8fefce57bc49 100644
+> --- a/drivers/media/platform/qcom/camss/camss.c
+> +++ b/drivers/media/platform/qcom/camss/camss.c
+> @@ -283,6 +283,188 @@ static const struct resources vfe_res_8x96[] = {
+>         }
+>  };
+>
+> +static const struct resources csiphy_res_660[] = {
+> +       /* CSIPHY0 */
+> +       {
+> +               .regulator = { NULL },
+> +               .clock = { "top_ahb", "ispif_ahb", "ahb", "csiphy0_timer",
+> +                          "csi0_phy", "csiphy_ahb2crif" },
+> +               .clock_rate = { { 0 },
+> +                               { 0 },
+> +                               { 0 },
+> +                               { 100000000, 200000000, 269333333 },
+> +                               { 0 } },
+> +               .reg = { "csiphy0", "csiphy0_clk_mux" },
+> +               .interrupt = { "csiphy0" }
+> +       },
+> +
+> +       /* CSIPHY1 */
+> +       {
+> +               .regulator = { NULL },
+> +               .clock = { "top_ahb", "ispif_ahb", "ahb", "csiphy1_timer",
+> +                          "csi1_phy", "csiphy_ahb2crif" },
+> +               .clock_rate = { { 0 },
+> +                               { 0 },
+> +                               { 0 },
+> +                               { 100000000, 200000000, 269333333 },
+> +                               { 0 } },
+> +               .reg = { "csiphy1", "csiphy1_clk_mux" },
+> +               .interrupt = { "csiphy1" }
+> +       },
+> +
+> +       /* CSIPHY2 */
+> +       {
+> +               .regulator = { NULL },
+> +               .clock = { "top_ahb", "ispif_ahb", "ahb", "csiphy2_timer",
+> +                          "csi2_phy", "csiphy_ahb2crif" },
+> +               .clock_rate = { { 0 },
+> +                               { 0 },
+> +                               { 0 },
+> +                               { 100000000, 200000000, 269333333 },
+> +                               { 0 } },
+> +               .reg = { "csiphy2", "csiphy2_clk_mux" },
+> +               .interrupt = { "csiphy2" }
+> +       }
+> +};
+> +
+> +static const struct resources csid_res_660[] = {
+> +       /* CSID0 */
+> +       {
+> +               .regulator = { "vdda", "vdd_sec" },
+> +               .clock = { "top_ahb", "ispif_ahb", "csi0_ahb", "ahb",
+> +                          "csi0", "csi0_phy", "csi0_pix", "csi0_rdi",
+> +                          "cphy_csid0" },
+> +               .clock_rate = { { 0 },
+> +                               { 0 },
+> +                               { 0 },
+> +                               { 0 },
+> +                               { 100000000, 200000000, 310000000,
+> +                                 404000000, 465000000 },
+> +                               { 0 },
+> +                               { 0 },
+> +                               { 0 },
+> +                               { 0 } },
+> +               .reg = { "csid0" },
+> +               .interrupt = { "csid0" }
+> +       },
+> +
+> +       /* CSID1 */
+> +       {
+> +               .regulator = { "vdda", "vdd_sec" },
+> +               .clock = { "top_ahb", "ispif_ahb", "csi1_ahb", "ahb",
+> +                          "csi1", "csi1_phy", "csi1_pix", "csi1_rdi",
+> +                          "cphy_csid1" },
+> +               .clock_rate = { { 0 },
+> +                               { 0 },
+> +                               { 0 },
+> +                               { 0 },
+> +                               { 100000000, 200000000, 310000000,
+> +                                 404000000, 465000000 },
+> +                               { 0 },
+> +                               { 0 },
+> +                               { 0 },
+> +                               { 0 } },
+> +               .reg = { "csid1" },
+> +               .interrupt = { "csid1" }
+> +       },
+> +
+> +       /* CSID2 */
+> +       {
+> +               .regulator = { "vdda", "vdd_sec" },
+> +               .clock = { "top_ahb", "ispif_ahb", "csi2_ahb", "ahb",
+> +                          "csi2", "csi2_phy", "csi2_pix", "csi2_rdi",
+> +                          "cphy_csid2" },
+> +               .clock_rate = { { 0 },
+> +                               { 0 },
+> +                               { 0 },
+> +                               { 0 },
+> +                               { 100000000, 200000000, 310000000,
+> +                                 404000000, 465000000 },
+> +                               { 0 },
+> +                               { 0 },
+> +                               { 0 },
+> +                               { 0 } },
+> +               .reg = { "csid2" },
+> +               .interrupt = { "csid2" }
+> +       },
+> +
+> +       /* CSID3 */
+> +       {
+> +               .regulator = { "vdda", "vdd_sec" },
+> +               .clock = { "top_ahb", "ispif_ahb", "csi3_ahb", "ahb",
+> +                          "csi3", "csi3_phy", "csi3_pix", "csi3_rdi",
+> +                          "cphy_csid3" },
+> +               .clock_rate = { { 0 },
+> +                               { 0 },
+> +                               { 0 },
+> +                               { 0 },
+> +                               { 100000000, 200000000, 310000000,
+> +                                 404000000, 465000000 },
+> +                               { 0 },
+> +                               { 0 },
+> +                               { 0 },
+> +                               { 0 } },
+> +               .reg = { "csid3" },
+> +               .interrupt = { "csid3" }
+> +       }
+> +};
+> +
+> +static const struct resources_ispif ispif_res_660 = {
+> +       /* ISPIF */
+> +       .clock = { "top_ahb", "ahb", "ispif_ahb",
+> +                  "csi0", "csi0_pix", "csi0_rdi",
+> +                  "csi1", "csi1_pix", "csi1_rdi",
+> +                  "csi2", "csi2_pix", "csi2_rdi",
+> +                  "csi3", "csi3_pix", "csi3_rdi" },
+> +       .clock_for_reset = { "vfe0", "csi_vfe0", "vfe1", "csi_vfe1" },
+> +       .reg = { "ispif", "csi_clk_mux" },
+> +       .interrupt = "ispif"
+> +};
+> +
+> +static const struct resources vfe_res_660[] = {
+> +       /* VFE0 */
+> +       {
+> +               .regulator = { NULL },
+> +               .clock = { "throttle_axi", "top_ahb", "ahb", "vfe0",
+> +                          "csi_vfe0", "vfe_ahb", "vfe0_ahb", "vfe_axi",
+> +                          "vfe0_stream"},
+> +               .clock_rate = { { 0 },
+> +                               { 0 },
+> +                               { 0 },
+> +                               { 120000000, 200000000, 256000000,
+> +                                 300000000, 404000000, 480000000,
+> +                                 540000000, 576000000 },
+> +                               { 0 },
+> +                               { 0 },
+> +                               { 0 },
+> +                               { 0 },
+> +                               { 0 } },
+> +               .reg = { "vfe0" },
+> +               .interrupt = { "vfe0" }
+> +       },
+> +
+> +       /* VFE1 */
+> +       {
+> +               .regulator = { NULL },
+> +               .clock = { "throttle_axi", "top_ahb", "ahb", "vfe1",
+> +                          "csi_vfe1", "vfe_ahb", "vfe1_ahb", "vfe_axi",
+> +                          "vfe1_stream"},
+> +               .clock_rate = { { 0 },
+> +                               { 0 },
+> +                               { 0 },
+> +                               { 120000000, 200000000, 256000000,
+> +                                 300000000, 404000000, 480000000,
+> +                                 540000000, 576000000 },
+> +                               { 0 },
+> +                               { 0 },
+> +                               { 0 },
+> +                               { 0 },
+> +                               { 0 } },
+> +               .reg = { "vfe1" },
+> +               .interrupt = { "vfe1" }
+> +       }
+> +};
+> +
+>  /*
+>   * camss_add_clock_margin - Add margin to clock frequency rate
+>   * @rate: Clock frequency rate
+> @@ -397,7 +579,8 @@ int camss_get_pixel_clock(struct media_entity *entity, u32 *pixel_clock)
+>
+>  int camss_pm_domain_on(struct camss *camss, int id)
+>  {
+> -       if (camss->version == CAMSS_8x96) {
+> +       if (camss->version == CAMSS_8x96 ||
+> +           camss->version == CAMSS_660) {
+>                 camss->genpd_link[id] = device_link_add(camss->dev,
+>                                 camss->genpd[id], DL_FLAG_STATELESS |
+>                                 DL_FLAG_PM_RUNTIME | DL_FLAG_RPM_ACTIVE);
+> @@ -411,7 +594,8 @@ int camss_pm_domain_on(struct camss *camss, int id)
+>
+>  void camss_pm_domain_off(struct camss *camss, int id)
+>  {
+> -       if (camss->version == CAMSS_8x96)
+> +       if (camss->version == CAMSS_8x96 ||
+> +           camss->version == CAMSS_660)
+>                 device_link_del(camss->genpd_link[id]);
+>  }
+>
+> @@ -533,6 +717,11 @@ static int camss_init_subdevices(struct camss *camss)
+>                 csid_res = csid_res_8x96;
+>                 ispif_res = &ispif_res_8x96;
+>                 vfe_res = vfe_res_8x96;
+> +       } else if (camss->version == CAMSS_660) {
+> +               csiphy_res = csiphy_res_660;
+> +               csid_res = csid_res_660;
+> +               ispif_res = &ispif_res_660;
+> +               vfe_res = vfe_res_660;
+>         } else {
+>                 return -EINVAL;
+>         }
+> @@ -833,6 +1022,12 @@ static int camss_probe(struct platform_device *pdev)
+>                 camss->csiphy_num = 3;
+>                 camss->csid_num = 4;
+>                 camss->vfe_num = 2;
+> +       } else if (of_device_is_compatible(dev->of_node,
+> +                                          "qcom,sdm660-camss")) {
+> +               camss->version = CAMSS_660;
+> +               camss->csiphy_num = 3;
+> +               camss->csid_num = 4;
+> +               camss->vfe_num = 2;
+>         } else {
+>                 ret = -EINVAL;
+>                 goto err_free;
+> @@ -919,7 +1114,8 @@ static int camss_probe(struct platform_device *pdev)
+>                 }
+>         }
+>
+> -       if (camss->version == CAMSS_8x96) {
+> +       if (camss->version == CAMSS_8x96 ||
+> +           camss->version == CAMSS_660) {
+>                 camss->genpd[PM_DOMAIN_VFE0] = dev_pm_domain_attach_by_id(
+>                                                 camss->dev, PM_DOMAIN_VFE0);
+>                 if (IS_ERR(camss->genpd[PM_DOMAIN_VFE0]))
+> @@ -958,7 +1154,8 @@ void camss_delete(struct camss *camss)
+>
+>         pm_runtime_disable(camss->dev);
+>
+> -       if (camss->version == CAMSS_8x96) {
+> +       if (camss->version == CAMSS_8x96 ||
+> +           camss->version == CAMSS_660) {
+>                 dev_pm_domain_detach(camss->genpd[PM_DOMAIN_VFE0], true);
+>                 dev_pm_domain_detach(camss->genpd[PM_DOMAIN_VFE1], true);
+>         }
+> @@ -989,6 +1186,7 @@ static int camss_remove(struct platform_device *pdev)
+>  static const struct of_device_id camss_dt_match[] = {
+>         { .compatible = "qcom,msm8916-camss" },
+>         { .compatible = "qcom,msm8996-camss" },
+> +       { .compatible = "qcom,sdm660-camss" },
+>         { }
+>  };
+>
+> diff --git a/drivers/media/platform/qcom/camss/camss.h b/drivers/media/platform/qcom/camss/camss.h
+> index 1376b07889bf..3a0484683cd6 100644
+> --- a/drivers/media/platform/qcom/camss/camss.h
+> +++ b/drivers/media/platform/qcom/camss/camss.h
+> @@ -65,6 +65,7 @@ enum pm_domain {
+>  enum camss_version {
+>         CAMSS_8x16,
+>         CAMSS_8x96,
+> +       CAMSS_660,
+>  };
+>
+>  struct camss {
+> --
+> 2.28.0
+>
