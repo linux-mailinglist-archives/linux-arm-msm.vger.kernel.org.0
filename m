@@ -2,230 +2,135 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 4F98D293A7C
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Oct 2020 14:01:05 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 953FB293AAC
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Oct 2020 14:01:51 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2403952AbgJTMAl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 20 Oct 2020 08:00:41 -0400
-Received: from mail.baikalelectronics.com ([87.245.175.226]:52370 "EHLO
-        mail.baikalelectronics.ru" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2403765AbgJTMAj (ORCPT
+        id S2404961AbgJTMBt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 20 Oct 2020 08:01:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45350 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2404945AbgJTMBs (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 20 Oct 2020 08:00:39 -0400
-Received: from localhost (unknown [127.0.0.1])
-        by mail.baikalelectronics.ru (Postfix) with ESMTP id B5BE1803071A;
-        Tue, 20 Oct 2020 12:00:34 +0000 (UTC)
-X-Virus-Scanned: amavisd-new at baikalelectronics.ru
-Received: from mail.baikalelectronics.ru ([127.0.0.1])
-        by localhost (mail.baikalelectronics.ru [127.0.0.1]) (amavisd-new, port 10024)
-        with ESMTP id yFO_V1obEfJ3; Tue, 20 Oct 2020 15:00:34 +0300 (MSK)
-From:   Serge Semin <Sergey.Semin@baikalelectronics.ru>
-To:     Felipe Balbi <balbi@kernel.org>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        Florian Fainelli <f.fainelli@gmail.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-CC:     Serge Semin <Sergey.Semin@baikalelectronics.ru>,
-        Serge Semin <fancer.lancer@gmail.com>,
-        <linux-arm-kernel@lists.infradead.org>,
-        <linux-usb@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>
-Subject: [PATCH 29/29] arm64: dts: qcom: Harmonize DWC USB3 DT nodes name
-Date:   Tue, 20 Oct 2020 14:59:59 +0300
-Message-ID: <20201020115959.2658-30-Sergey.Semin@baikalelectronics.ru>
-In-Reply-To: <20201020115959.2658-1-Sergey.Semin@baikalelectronics.ru>
-References: <20201020115959.2658-1-Sergey.Semin@baikalelectronics.ru>
+        Tue, 20 Oct 2020 08:01:48 -0400
+Received: from mail-pl1-x643.google.com (mail-pl1-x643.google.com [IPv6:2607:f8b0:4864:20::643])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 16052C0613D1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Oct 2020 05:01:48 -0700 (PDT)
+Received: by mail-pl1-x643.google.com with SMTP id t18so920933plo.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Oct 2020 05:01:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=TjrnApYSSHfkJA9XyzMImP/Ax8x/fHdiuRCtnfYhIS4=;
+        b=ioeZItDIsacnc+ENFAmDhOgyQASCUSk3Z1BgUOm4DdrgPZbdiJ/IZ44dXDV9yQ+z3+
+         50KwyPtNBGtvVWcK1DO4rB4ieZ9e1qZxvQBWgb5Uh0kI7Vd8DBiB81GpFutmVmAyIlZh
+         mEblSrD1U8ZCJxs+1MvD8Ix90AJKHcwvLtc9xZh3RFW84FC05WyeDvGyYdIbRb89Z7/G
+         52JI8j8NJFln+cwTmbvrSeGmNi9m2q1pCxfXG/IIlgNyyLaGtrROlWJIlAP7H4Pt9git
+         6aZTgrVAjhE4atU4+xx2iIB/8LW0G+R7JoqnSJIohscrn6sR4UMCL+j8ksT96LpaZ4uI
+         Q7+A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=TjrnApYSSHfkJA9XyzMImP/Ax8x/fHdiuRCtnfYhIS4=;
+        b=JkQJKqULt9/Oivh0oAPdcyx0/iwXQ/e/rytO2C+137Z2DDjLw6BDVt48tA7scxV0Ch
+         L60MS7azqaVUPXtOp6+YnBIM5RunPiw9LbGvMqOqMwXGeU/z1KIGngg4RQPdfxkuey8r
+         vDSVTBU1gr23nN+lbrFnamX84OPvqb9znUz9dYXsaf6U3aVwoKx2lY78Oa43p+QFMWgN
+         xUo581xUnYuFRaHG6NzsSV80pgKNax1V55QABT5s1sLrXWStdGHZ+9zXTOZUO9Q7bnd2
+         aINH6HyepCECMxqtbkRrodyi1GMAI5ZHbf8gFBEvjYtr+m7KOfBazJwqnjf2A3KfVQEC
+         0Ljw==
+X-Gm-Message-State: AOAM530vFwsbPUvWBTQ7i9OPbpYrVg4BGIyfVsn+BGP8bN+nyId9FkAK
+        K3q5SBDlW0x6kD1yqkVdRejjUNIvl0rQfABpXrjiig==
+X-Google-Smtp-Source: ABdhPJylQnQikBvrUcz3Q0APww40MI9CIQFOSnDz0xGU3cktgRGBrt4LRDoniVI18vWIkMWdmQg3cUSidXa6Z271tts=
+X-Received: by 2002:a17:90a:160f:: with SMTP id n15mr2452586pja.75.1603195307474;
+ Tue, 20 Oct 2020 05:01:47 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7BIT
-Content-Type:   text/plain; charset=US-ASCII
-X-ClientProxiedBy: MAIL.baikal.int (192.168.51.25) To mail (192.168.51.25)
+References: <20201018125237.16717-1-kholk11@gmail.com>
+In-Reply-To: <20201018125237.16717-1-kholk11@gmail.com>
+From:   Robert Foss <robert.foss@linaro.org>
+Date:   Tue, 20 Oct 2020 14:01:36 +0200
+Message-ID: <CAG3jFyvY1Uq=3V=tkCzRwOK0Zpqy+wEd=tjjr04w8pHrz=LARg@mail.gmail.com>
+Subject: Re: [PATCH 0/6] Add support for SDM630/660 Camera Subsystem
+To:     kholk11@gmail.com
+Cc:     Todor Tomov <todor.too@gmail.com>, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>, marijns95@gmail.com,
+        konradybcio@gmail.com, martin.botka1@gmail.com,
+        linux-arm-msm@vger.kernel.org,
+        linux-media <linux-media@vger.kernel.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>,
+        linux-kernel <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-In accordance with the DWC USB3 bindings the corresponding node
-name is suppose to comply with the Generic USB HCD DT schema, which
-requires the USB nodes to have the name acceptable by the regexp:
-"^usb(@.*)?" . Make sure the "snps,dwc3"-compatible nodes are correctly
-named.
+Hey Angelo,
 
-Signed-off-by: Serge Semin <Sergey.Semin@baikalelectronics.ru>
----
- arch/arm64/boot/dts/qcom/apq8096-db820c.dtsi | 4 ++--
- arch/arm64/boot/dts/qcom/ipq8074.dtsi        | 4 ++--
- arch/arm64/boot/dts/qcom/msm8996.dtsi        | 4 ++--
- arch/arm64/boot/dts/qcom/msm8998.dtsi        | 2 +-
- arch/arm64/boot/dts/qcom/qcs404-evb.dtsi     | 2 +-
- arch/arm64/boot/dts/qcom/qcs404.dtsi         | 4 ++--
- arch/arm64/boot/dts/qcom/sc7180.dtsi         | 2 +-
- arch/arm64/boot/dts/qcom/sdm845.dtsi         | 4 ++--
- arch/arm64/boot/dts/qcom/sm8150.dtsi         | 2 +-
- 9 files changed, 14 insertions(+), 14 deletions(-)
+Thanks for submitting this, and fixing other issues as you went.
 
-diff --git a/arch/arm64/boot/dts/qcom/apq8096-db820c.dtsi b/arch/arm64/boot/dts/qcom/apq8096-db820c.dtsi
-index defcbd15edf9..34e97da98270 100644
---- a/arch/arm64/boot/dts/qcom/apq8096-db820c.dtsi
-+++ b/arch/arm64/boot/dts/qcom/apq8096-db820c.dtsi
-@@ -1064,7 +1064,7 @@ &usb2 {
- 	status = "okay";
- 	extcon = <&usb2_id>;
- 
--	dwc3@7600000 {
-+	usb@7600000 {
- 		extcon = <&usb2_id>;
- 		dr_mode = "otg";
- 		maximum-speed = "high-speed";
-@@ -1075,7 +1075,7 @@ &usb3 {
- 	status = "okay";
- 	extcon = <&usb3_id>;
- 
--	dwc3@6a00000 {
-+	usb@6a00000 {
- 		extcon = <&usb3_id>;
- 		dr_mode = "otg";
- 	};
-diff --git a/arch/arm64/boot/dts/qcom/ipq8074.dtsi b/arch/arm64/boot/dts/qcom/ipq8074.dtsi
-index 96a5ec89b5f0..1129062a4ca1 100644
---- a/arch/arm64/boot/dts/qcom/ipq8074.dtsi
-+++ b/arch/arm64/boot/dts/qcom/ipq8074.dtsi
-@@ -427,7 +427,7 @@ usb_0: usb@8af8800 {
- 			resets = <&gcc GCC_USB0_BCR>;
- 			status = "disabled";
- 
--			dwc_0: dwc3@8a00000 {
-+			dwc_0: usb@8a00000 {
- 				compatible = "snps,dwc3";
- 				reg = <0x8a00000 0xcd00>;
- 				interrupts = <GIC_SPI 140 IRQ_TYPE_LEVEL_HIGH>;
-@@ -468,7 +468,7 @@ usb_1: usb@8cf8800 {
- 			resets = <&gcc GCC_USB1_BCR>;
- 			status = "disabled";
- 
--			dwc_1: dwc3@8c00000 {
-+			dwc_1: usb@8c00000 {
- 				compatible = "snps,dwc3";
- 				reg = <0x8c00000 0xcd00>;
- 				interrupts = <GIC_SPI 99 IRQ_TYPE_LEVEL_HIGH>;
-diff --git a/arch/arm64/boot/dts/qcom/msm8996.dtsi b/arch/arm64/boot/dts/qcom/msm8996.dtsi
-index 9951286db775..66b6d2f0a093 100644
---- a/arch/arm64/boot/dts/qcom/msm8996.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8996.dtsi
-@@ -1767,7 +1767,7 @@ usb3: usb@6af8800 {
- 			power-domains = <&gcc USB30_GDSC>;
- 			status = "disabled";
- 
--			dwc3@6a00000 {
-+			usb@6a00000 {
- 				compatible = "snps,dwc3";
- 				reg = <0x06a00000 0xcc00>;
- 				interrupts = <0 131 IRQ_TYPE_LEVEL_HIGH>;
-@@ -1978,7 +1978,7 @@ usb2: usb@76f8800 {
- 			power-domains = <&gcc USB30_GDSC>;
- 			status = "disabled";
- 
--			dwc3@7600000 {
-+			usb@7600000 {
- 				compatible = "snps,dwc3";
- 				reg = <0x07600000 0xcc00>;
- 				interrupts = <0 138 IRQ_TYPE_LEVEL_HIGH>;
-diff --git a/arch/arm64/boot/dts/qcom/msm8998.dtsi b/arch/arm64/boot/dts/qcom/msm8998.dtsi
-index c45870600909..7cc7897e7b83 100644
---- a/arch/arm64/boot/dts/qcom/msm8998.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8998.dtsi
-@@ -1678,7 +1678,7 @@ usb3: usb@a8f8800 {
- 
- 			resets = <&gcc GCC_USB_30_BCR>;
- 
--			usb3_dwc3: dwc3@a800000 {
-+			usb3_dwc3: usb@a800000 {
- 				compatible = "snps,dwc3";
- 				reg = <0x0a800000 0xcd00>;
- 				interrupts = <GIC_SPI 131 IRQ_TYPE_LEVEL_HIGH>;
-diff --git a/arch/arm64/boot/dts/qcom/qcs404-evb.dtsi b/arch/arm64/boot/dts/qcom/qcs404-evb.dtsi
-index 6422cf9d5855..88d7b7a53743 100644
---- a/arch/arm64/boot/dts/qcom/qcs404-evb.dtsi
-+++ b/arch/arm64/boot/dts/qcom/qcs404-evb.dtsi
-@@ -337,7 +337,7 @@ &usb2_phy_sec {
- &usb3 {
- 	status = "okay";
- 
--	dwc3@7580000 {
-+	usb@7580000 {
- 		dr_mode = "host";
- 	};
- };
-diff --git a/arch/arm64/boot/dts/qcom/qcs404.dtsi b/arch/arm64/boot/dts/qcom/qcs404.dtsi
-index b654b802e95c..f6ef17553064 100644
---- a/arch/arm64/boot/dts/qcom/qcs404.dtsi
-+++ b/arch/arm64/boot/dts/qcom/qcs404.dtsi
-@@ -544,7 +544,7 @@ usb3: usb@7678800 {
- 			assigned-clock-rates = <19200000>, <200000000>;
- 			status = "disabled";
- 
--			dwc3@7580000 {
-+			usb@7580000 {
- 				compatible = "snps,dwc3";
- 				reg = <0x07580000 0xcd00>;
- 				interrupts = <GIC_SPI 26 IRQ_TYPE_LEVEL_HIGH>;
-@@ -573,7 +573,7 @@ usb2: usb@79b8800 {
- 			assigned-clock-rates = <19200000>, <133333333>;
- 			status = "disabled";
- 
--			dwc3@78c0000 {
-+			usb@78c0000 {
- 				compatible = "snps,dwc3";
- 				reg = <0x078c0000 0xcc00>;
- 				interrupts = <GIC_SPI 44 IRQ_TYPE_LEVEL_HIGH>;
-diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-index d46b3833e52f..bbc9a2b5c570 100644
---- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-@@ -2673,7 +2673,7 @@ usb_1: usb@a6f8800 {
- 					<&gem_noc MASTER_APPSS_PROC &config_noc SLAVE_USB3>;
- 			interconnect-names = "usb-ddr", "apps-usb";
- 
--			usb_1_dwc3: dwc3@a600000 {
-+			usb_1_dwc3: usb@a600000 {
- 				compatible = "snps,dwc3";
- 				reg = <0 0x0a600000 0 0xe000>;
- 				interrupts = <GIC_SPI 133 IRQ_TYPE_LEVEL_HIGH>;
-diff --git a/arch/arm64/boot/dts/qcom/sdm845.dtsi b/arch/arm64/boot/dts/qcom/sdm845.dtsi
-index 2884577dcb77..ca20e4e91f61 100644
---- a/arch/arm64/boot/dts/qcom/sdm845.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sdm845.dtsi
-@@ -3573,7 +3573,7 @@ usb_1: usb@a6f8800 {
- 					<&gladiator_noc MASTER_APPSS_PROC &config_noc SLAVE_USB3_0>;
- 			interconnect-names = "usb-ddr", "apps-usb";
- 
--			usb_1_dwc3: dwc3@a600000 {
-+			usb_1_dwc3: usb@a600000 {
- 				compatible = "snps,dwc3";
- 				reg = <0 0x0a600000 0 0xcd00>;
- 				interrupts = <GIC_SPI 133 IRQ_TYPE_LEVEL_HIGH>;
-@@ -3621,7 +3621,7 @@ usb_2: usb@a8f8800 {
- 					<&gladiator_noc MASTER_APPSS_PROC &config_noc SLAVE_USB3_1>;
- 			interconnect-names = "usb-ddr", "apps-usb";
- 
--			usb_2_dwc3: dwc3@a800000 {
-+			usb_2_dwc3: usb@a800000 {
- 				compatible = "snps,dwc3";
- 				reg = <0 0x0a800000 0 0xcd00>;
- 				interrupts = <GIC_SPI 138 IRQ_TYPE_LEVEL_HIGH>;
-diff --git a/arch/arm64/boot/dts/qcom/sm8150.dtsi b/arch/arm64/boot/dts/qcom/sm8150.dtsi
-index b86a7ead3006..167d14dda974 100644
---- a/arch/arm64/boot/dts/qcom/sm8150.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8150.dtsi
-@@ -846,7 +846,7 @@ usb_1: usb@a6f8800 {
- 
- 			resets = <&gcc GCC_USB30_PRIM_BCR>;
- 
--			usb_1_dwc3: dwc3@a600000 {
-+			usb_1_dwc3: usb@a600000 {
- 				compatible = "snps,dwc3";
- 				reg = <0 0x0a600000 0 0xcd00>;
- 				interrupts = <GIC_SPI 133 IRQ_TYPE_LEVEL_HIGH>;
--- 
-2.27.0
+I sent out some SoBs which should have been Reviewed-bys, so if you
+add them to your commit please replace the SoBs with RBs.
 
+
+Rob.
+
+On Sun, 18 Oct 2020 at 14:52, <kholk11@gmail.com> wrote:
+>
+> From: AngeloGioacchino Del Regno <kholk11@gmail.com>
+>
+> This patch series implements support for the entire camera subsystem
+> found in SDM630/636/660 and SDA variants, including CSIPHY 3-Phase,
+> CSID v5.0, ISPIF 3.0 (though it didn't need any adaptation) and
+> VFE 4.8.
+>
+> One small note about VFE4.8, even if I wrote it in the commit that
+> adds support for it: I know, the VFE support here is split in
+> multiple files having the name of the actual VFE version that it is
+> targeting... but it didn't feel right to commonize the VFE 4.7 file
+> and make another one only for VFE4.8, when it's just about something
+> like 3 small differences.
+> That VFE 4.8 seems to be just a minor revision of VFE 4.7.
+>
+> While at it, also fix a small issue when using two VFEs: only one
+> of them was being resetted (always VFE0) so, after the first usage
+> of VFE1, in case we leave it in a bad state, it would not properly
+> start again. Now... it's fine :)))
+>
+> P.S.: SDM630/660's camss seems to be *very* similar to MSM8998, so
+>       likely 90% of this series should be reusable on that one, too!
+>
+> Tested on:
+>  - Sony Xperia XA2 (IMX300 on CSI0/PHY0/VFE0, IMX219 on CSI2,PHY2,VFE1)
+>    * VFE0/1 RDI only, as the VIDEO one does not work with SRGGB Bayer
+>      formats yet. As far as I can see, that color format hasn't been
+>      implemented yet in the video interface.
+>
+> AngeloGioacchino Del Regno (6):
+>   media: camss: csiphy-3ph: Add support for SDM630/660
+>   media: camss: ispif: Correctly reset based on the VFE ID
+>   media: camss: vfe: Add support for VFE 4.8
+>   media: camss: Add support for SDM630/636/660 camera subsystem
+>   media: dt-bindings: media: qcom,camss: Add bindings for SDM660 camss
+>   media: camss: csiphy: Set rate on csiX_phy clock on SDM630/660
+>
+>  .../devicetree/bindings/media/qcom,camss.txt  |   7 +
+>  .../media/platform/qcom/camss/camss-csid.c    |   9 +-
+>  .../qcom/camss/camss-csiphy-3ph-1-0.c         |   7 +-
+>  .../media/platform/qcom/camss/camss-csiphy.c  |  25 ++-
+>  .../media/platform/qcom/camss/camss-csiphy.h  |   1 +
+>  .../media/platform/qcom/camss/camss-ispif.c   | 100 ++++++---
+>  .../media/platform/qcom/camss/camss-ispif.h   |   2 +-
+>  .../media/platform/qcom/camss/camss-vfe-4-7.c | 129 ++++++++++-
+>  drivers/media/platform/qcom/camss/camss-vfe.c |  19 +-
+>  drivers/media/platform/qcom/camss/camss-vfe.h |   1 +
+>  .../media/platform/qcom/camss/camss-video.c   |   3 +-
+>  drivers/media/platform/qcom/camss/camss.c     | 206 +++++++++++++++++-
+>  drivers/media/platform/qcom/camss/camss.h     |   1 +
+>  13 files changed, 448 insertions(+), 62 deletions(-)
+>
+> --
+> 2.28.0
+>
