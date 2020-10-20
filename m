@@ -2,85 +2,69 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 2682A293C16
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Oct 2020 14:44:46 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0ED59293CE4
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Oct 2020 15:05:16 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2406504AbgJTMof (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 20 Oct 2020 08:44:35 -0400
-Received: from mail-wm1-f66.google.com ([209.85.128.66]:36329 "EHLO
-        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2406500AbgJTMoe (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 20 Oct 2020 08:44:34 -0400
-Received: by mail-wm1-f66.google.com with SMTP id e2so1725727wme.1;
-        Tue, 20 Oct 2020 05:44:32 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=IzZX4zGGwluZ70Rb48zONj29b5Z7XTIenJHYm8MJX6U=;
-        b=R9y6LLdqu19zCUOVcHWCf2aRzwTUxAaPyrKCM8hsgieDig4ecaRRsU+TtR2B2skGhS
-         s5BPzbOnDAo1Ja8lHgqmiSg9XUpd6UjwoS6/WAjNTcafgWGzBSngGBKBpwcUmJaJRVpf
-         Qvkd1bvugT2hPU7UyPEMF9uwJfJ5vAd3Z9WO+a9v5GUSkqx0iay+NpZq9Qpa9PBudM2F
-         gICTQP+Zsyx/7UbwUn9h5LAW05W7fnqu2LfjMEGgVfmM4sbBlmDcsqnVJf3vVjOhxgKw
-         a66f2NM9hZcrS875nhQBN+jAYNrFpzbm3g/hbwLhYWXOOSbDkHu7Vhlk6HPA4acdyR1d
-         rj3A==
-X-Gm-Message-State: AOAM531unJFlI8SJdWXUxP24nDIYxFOOLFEGBWTzpSlw7JU+iM+F1d+2
-        Y5vhdjdyPsV/62c4aflBPokWh2V8hLQjK+a2
-X-Google-Smtp-Source: ABdhPJyGjKoqZPYMot+a1OkS+n8PXkomZ+8CgF1E4gXdXXoRvO2bbYazsP6IjtG1H/mg+x6uuoXGnQ==
-X-Received: by 2002:a1c:6643:: with SMTP id a64mr2861815wmc.142.1603197872185;
-        Tue, 20 Oct 2020 05:44:32 -0700 (PDT)
-Received: from kozik-lap ([194.230.155.171])
-        by smtp.googlemail.com with ESMTPSA id u2sm2554384wme.1.2020.10.20.05.44.30
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 20 Oct 2020 05:44:31 -0700 (PDT)
-Date:   Tue, 20 Oct 2020 14:44:28 +0200
-From:   Krzysztof Kozlowski <krzk@kernel.org>
-To:     Serge Semin <Sergey.Semin@baikalelectronics.ru>
-Cc:     Felipe Balbi <balbi@kernel.org>,
-        Florian Fainelli <f.fainelli@gmail.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Serge Semin <fancer.lancer@gmail.com>,
-        linux-arm-kernel@lists.infradead.org, linux-usb@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH 29/29] arm64: dts: qcom: Harmonize DWC USB3 DT nodes name
-Message-ID: <20201020124428.GX127386@kozik-lap>
-References: <20201020115959.2658-1-Sergey.Semin@baikalelectronics.ru>
- <20201020115959.2658-30-Sergey.Semin@baikalelectronics.ru>
+        id S2407072AbgJTNFP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 20 Oct 2020 09:05:15 -0400
+Received: from mail.kernel.org ([198.145.29.99]:58512 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S2406822AbgJTNFO (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 20 Oct 2020 09:05:14 -0400
+Received: from mail-oi1-f172.google.com (mail-oi1-f172.google.com [209.85.167.172])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id 6AAF5224D3;
+        Tue, 20 Oct 2020 13:05:13 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1603199113;
+        bh=P//lj6K311r5btfpqbVgclWKNTCDgXGdUzB0poiKCXU=;
+        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+        b=qtgAvetdhVveUfEg8eEeh9mPtJdRz2ghfNFuYPMKICOIydgAhUUvCX6BWcyqH1VaT
+         7bmhvK0xGZ/lvcTnCxI68tsHcuW1RoR26BXc24Jp+CDWKO0TloWdzuYbHT3UgumY5F
+         5qFwu0pq8WGyINo84UnwZ2Eu7uj4XO3gQvsuGjBo=
+Received: by mail-oi1-f172.google.com with SMTP id q136so2038338oic.8;
+        Tue, 20 Oct 2020 06:05:13 -0700 (PDT)
+X-Gm-Message-State: AOAM532KkwvwjhdzZ8BwJRgojHh9FjOHjXAyepn+OqSGU2iG6NS5OB8A
+        U92X4PeJcHOkk8aTDjmwQXpsBcUkUm+36htKew==
+X-Google-Smtp-Source: ABdhPJwur0VjhxUMPuAAjcuxZlUKJVKP6/t6vtVmHoBVVnFxoiwxggwm7mf0lmRtdVbJYrELUliXQF8km4rM70OwG8Q=
+X-Received: by 2002:a05:6808:10e:: with SMTP id b14mr1794086oie.152.1603199112623;
+ Tue, 20 Oct 2020 06:05:12 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20201020115959.2658-30-Sergey.Semin@baikalelectronics.ru>
+References: <cover.1603148363.git.gurus@codeaurora.org> <7a89811f36fe858756daa62f1162d18da7e79a73.1603148363.git.gurus@codeaurora.org>
+In-Reply-To: <7a89811f36fe858756daa62f1162d18da7e79a73.1603148363.git.gurus@codeaurora.org>
+From:   Rob Herring <robh+dt@kernel.org>
+Date:   Tue, 20 Oct 2020 08:05:01 -0500
+X-Gmail-Original-Message-ID: <CAL_Jsq+bfTxbgS0hBo4XeJfFFYK4mcaQ=LF7UE_S2W_Qbm3rtg@mail.gmail.com>
+Message-ID: <CAL_Jsq+bfTxbgS0hBo4XeJfFFYK4mcaQ=LF7UE_S2W_Qbm3rtg@mail.gmail.com>
+Subject: Re: [RFC PATCH RESEND v1 2/3] dt-bindings: mfd: Add QCOM PM8008 MFD bindings
+To:     Guru Das Srinagesh <gurus@codeaurora.org>
+Cc:     Mark Brown <broonie@kernel.org>,
+        Markus Elfring <Markus.Elfring@web.de>,
+        Lee Jones <lee.jones@linaro.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Greg KH <gregkh@linuxfoundation.org>,
+        Guenter Roeck <linux@roeck-us.net>,
+        Joe Perches <joe@perches.com>,
+        Subbaraman Narayanamurthy <subbaram@codeaurora.org>,
+        David Collins <collinsd@codeaurora.org>,
+        Anirudh Ghayal <aghayal@codeaurora.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Oct 20, 2020 at 02:59:59PM +0300, Serge Semin wrote:
-> In accordance with the DWC USB3 bindings the corresponding node
-> name is suppose to comply with the Generic USB HCD DT schema, which
-> requires the USB nodes to have the name acceptable by the regexp:
-> "^usb(@.*)?" . Make sure the "snps,dwc3"-compatible nodes are correctly
-> named.
-> 
-> Signed-off-by: Serge Semin <Sergey.Semin@baikalelectronics.ru>
+On Mon, Oct 19, 2020 at 6:17 PM Guru Das Srinagesh <gurus@codeaurora.org> wrote:
+>
+> Add device tree bindings for the driver for Qualcomm Technology Inc.'s
+> PM8008 MFD PMIC.
+>
+> Signed-off-by: Guru Das Srinagesh <gurus@codeaurora.org>
 > ---
->  arch/arm64/boot/dts/qcom/apq8096-db820c.dtsi | 4 ++--
->  arch/arm64/boot/dts/qcom/ipq8074.dtsi        | 4 ++--
->  arch/arm64/boot/dts/qcom/msm8996.dtsi        | 4 ++--
->  arch/arm64/boot/dts/qcom/msm8998.dtsi        | 2 +-
->  arch/arm64/boot/dts/qcom/qcs404-evb.dtsi     | 2 +-
->  arch/arm64/boot/dts/qcom/qcs404.dtsi         | 4 ++--
->  arch/arm64/boot/dts/qcom/sc7180.dtsi         | 2 +-
->  arch/arm64/boot/dts/qcom/sdm845.dtsi         | 4 ++--
->  arch/arm64/boot/dts/qcom/sm8150.dtsi         | 2 +-
->  9 files changed, 14 insertions(+), 14 deletions(-)
-> 
+>  .../bindings/mfd/qcom,pm8008-irqchip.yaml          | 103 +++++++++++++++++++++
+>  1 file changed, 103 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/mfd/qcom,pm8008-irqchip.yaml
 
-Acked-by: Krzysztof Kozlowski <krzk@kernel.org>
-
-Best regards,
-Krzysztof
+Please resend to DT list if you want this reviewed.
