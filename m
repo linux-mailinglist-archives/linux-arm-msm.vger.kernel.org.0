@@ -2,110 +2,244 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B37BE293A32
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Oct 2020 13:42:48 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C4CD2293AA8
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Oct 2020 14:01:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2393623AbgJTLmp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 20 Oct 2020 07:42:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42392 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2393553AbgJTLmp (ORCPT
+        id S2394046AbgJTMA1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 20 Oct 2020 08:00:27 -0400
+Received: from mail.baikalelectronics.com ([87.245.175.226]:52014 "EHLO
+        mail.baikalelectronics.ru" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2393969AbgJTMA0 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 20 Oct 2020 07:42:45 -0400
-Received: from mail-oo1-xc41.google.com (mail-oo1-xc41.google.com [IPv6:2607:f8b0:4864:20::c41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0F30FC061755
-        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Oct 2020 04:42:45 -0700 (PDT)
-Received: by mail-oo1-xc41.google.com with SMTP id c25so355124ooe.13
-        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Oct 2020 04:42:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ffwll.ch; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=R+o8387W9/ZCn4LvR5U6YDN3Hh+8V5WW6tTBimBSuj0=;
-        b=H4if/7cPRAnox8YksApTgg0t73vJQHSJOOVU5OQ9YHMpaBkWSqFKfMKJIuEozOz6Iw
-         EA784/M765Tisiz8tfO+LZAFAgoIf/Qj060xxXjk1c7gM+UjG2ajoZ9BOsz3gtn/dm+f
-         F9tIxwT4zJSGligcusWCJUFCe68BT/mXcn8Wk=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=R+o8387W9/ZCn4LvR5U6YDN3Hh+8V5WW6tTBimBSuj0=;
-        b=RQPQs2Z4twEYJhFStyyJPEB8NhhHH8de7mc7WerMNk6u9r/Be+SqWjjmiJo7APxDvd
-         6fBfTFvw2iTsesNeEbDHkVsAyE4u5i5LEoedC/yf5iZ1XyQRvC+vCdF7fU9oVz1v9K57
-         0RyS6uRFtvRvEk2avtTqhNdFwaopdVkqUt4JFcdt49h/jcsAEJvZHTpnO4RRyJe1BCFi
-         eDyiCIFSsF7FulnqYdOHHLfCixI7rxcJeb5UrkGveAh/P6nj9mvp8H93qKjbDml12oSG
-         MfDS1IL4WrVHwMsFfwOSgcu4mHiU6gqXDYI/q72chno5RLimfcvjcrfl++RXWgYaJmki
-         lG3g==
-X-Gm-Message-State: AOAM533b+4UCwVPLU57nNzIas6Jr5YUppFWKj8mL4zv1f/n6KLONu34J
-        rm/D3jfiQcANYawhZrGrRAI1THrEAvTzQ27JynpRPQ==
-X-Google-Smtp-Source: ABdhPJz5jqm21tJbsKMZknC7WQ/UHndcHNg9KDxpoJgyyMcRMTewgrvULjlJHVJu7koXNwvWpY6/fG5Eck9+CfXJUFA=
-X-Received: by 2002:a4a:b503:: with SMTP id r3mr1486690ooo.28.1603194164455;
- Tue, 20 Oct 2020 04:42:44 -0700 (PDT)
+        Tue, 20 Oct 2020 08:00:26 -0400
+Received: from localhost (unknown [127.0.0.1])
+        by mail.baikalelectronics.ru (Postfix) with ESMTP id 147B4803071D;
+        Tue, 20 Oct 2020 12:00:19 +0000 (UTC)
+X-Virus-Scanned: amavisd-new at baikalelectronics.ru
+Received: from mail.baikalelectronics.ru ([127.0.0.1])
+        by localhost (mail.baikalelectronics.ru [127.0.0.1]) (amavisd-new, port 10024)
+        with ESMTP id B6FqHc1ZZjU6; Tue, 20 Oct 2020 15:00:15 +0300 (MSK)
+From:   Serge Semin <Sergey.Semin@baikalelectronics.ru>
+To:     Felipe Balbi <balbi@kernel.org>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        Florian Fainelli <f.fainelli@gmail.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+CC:     Serge Semin <Sergey.Semin@baikalelectronics.ru>,
+        Serge Semin <fancer.lancer@gmail.com>,
+        <linux-arm-kernel@lists.infradead.org>,
+        <linux-usb@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, Vineet Gupta <vgupta@synopsys.com>,
+        Rafal Milecki <zajec5@gmail.com>,
+        Wei Xu <xuwei5@hisilicon.com>,
+        Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
+        Michael Ellerman <mpe@ellerman.id.au>,
+        Jason Cooper <jason@lakedaemon.net>,
+        Santosh Shilimkar <ssantosh@kernel.org>,
+        Shawn Guo <shawnguo@kernel.org>,
+        Benoit Cousson <bcousson@baylibre.com>,
+        Patrice Chotard <patrice.chotard@st.com>,
+        Maxime Ripard <mripard@kernel.org>,
+        Khuong Dinh <khuong@os.amperecomputing.com>,
+        Andy Gross <agross@kernel.org>,
+        Alexey Brodkin <abrodkin@synopsys.com>,
+        Hauke Mehrtens <hauke@hauke-m.de>,
+        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+        Alexandre Torgue <alexandre.torgue@st.com>,
+        Amelie Delaunay <amelie.delaunay@st.com>,
+        Vladimir Zapolskiy <vz@mleia.com>,
+        Paul Cercueil <paul@crapouillou.net>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        Benjamin Herrenschmidt <benh@kernel.crashing.org>,
+        Paul Mackerras <paulus@samba.org>,
+        Andrew Lunn <andrew@lunn.ch>,
+        Gregory Clement <gregory.clement@bootlin.com>,
+        Sebastian Hesselbarth <sebastian.hesselbarth@gmail.com>,
+        Kukjin Kim <kgene@kernel.org>, Li Yang <leoyang.li@nxp.com>,
+        Tony Lindgren <tony@atomide.com>, Chen-Yu Tsai <wens@csie.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        <linux-snps-arc@lists.infradead.org>,
+        <bcm-kernel-feedback-list@broadcom.com>,
+        <linux-stm32@st-md-mailman.stormreply.com>,
+        <linux-mips@vger.kernel.org>, <linux-mediatek@lists.infradead.org>,
+        <linuxppc-dev@lists.ozlabs.org>,
+        <linux-samsung-soc@vger.kernel.org>, <linux-omap@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>
+Subject: [PATCH 00/29] dt-bindings: usb: Harmonize xHCI/EHCI/OHCI/DWC3 nodes name
+Date:   Tue, 20 Oct 2020 14:59:30 +0300
+Message-ID: <20201020115959.2658-1-Sergey.Semin@baikalelectronics.ru>
 MIME-Version: 1.0
-References: <20201012020958.229288-1-robdclark@gmail.com> <20201012020958.229288-8-robdclark@gmail.com>
- <20201012143555.GA438822@phenom.ffwll.local> <CAF6AEGstGtBswUUiyHxT2cCm8NwZekDnMzD0J_pQH37GwS=LiA@mail.gmail.com>
- <20201020090729.qgqish5kqamhvatj@vireshk-i7> <CAKMK7uHAgVUPHOPxDdt3LeAWqokxfuzqjZj4qqFkoKxFbRbRrg@mail.gmail.com>
- <20201020112413.xbk2vow2kgjky3pb@vireshk-i7>
-In-Reply-To: <20201020112413.xbk2vow2kgjky3pb@vireshk-i7>
-From:   Daniel Vetter <daniel@ffwll.ch>
-Date:   Tue, 20 Oct 2020 13:42:33 +0200
-Message-ID: <CAKMK7uHYBCoBvTGyMHGMrt2YRrB7RFt+maWNRjApgz621hu8JA@mail.gmail.com>
-Subject: Re: [PATCH v2 07/22] drm/msm: Do rpm get sooner in the submit path
-To:     Viresh Kumar <viresh.kumar@linaro.org>
-Cc:     Rob Clark <robdclark@gmail.com>,
-        dri-devel <dri-devel@lists.freedesktop.org>,
-        Rob Clark <robdclark@chromium.org>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
-        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
-        <linux-arm-msm@vger.kernel.org>,
-        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
-        <freedreno@lists.freedesktop.org>,
-        open list <linux-kernel@vger.kernel.org>,
-        "Menon, Nishanth" <nm@ti.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7BIT
+Content-Type:   text/plain; charset=US-ASCII
+X-ClientProxiedBy: MAIL.baikal.int (192.168.51.25) To mail (192.168.51.25)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Oct 20, 2020 at 1:24 PM Viresh Kumar <viresh.kumar@linaro.org> wrote:
->
-> On 20-10-20, 12:56, Daniel Vetter wrote:
-> > Yeah that's bad practice. Generally you shouldn't need to hold locks
-> > in setup/teardown code, since there's no other thread which can
-> > possible hold a reference to anything your touching anymore. Ofc
-> > excluding quickly grabbing/dropping a lock to insert/remove objects
-> > into lists and stuff.
-> >
-> > The other reason is that especially with anything related to sysfs or
-> > debugfs, the locking dependencies you're pulling in are enormous: vfs
-> > locks pull in mm locks (due to mmap) and at that point there's pretty
-> > much nothing left you're allowed to hold while acquiring such a lock.
-> > For simple drivers this is no issue, but for fancy drivers (like gpu
-> > drivers) which need to interact with core mm) this means your
-> > subsystem is a major pain to use.
-> >
-> > Usually the correct fix is to only hold your subsystem locks in
-> > setup/teardown when absolutely required, and fix any data
-> > inconsistency issues by reordering your setup/teardown code: When you
-> > register as the last step and unregister as the first step, there's no
-> > need for any additional locking. And hence no need to call debugfs
-> > functions while holding your subsystem locks.
-> >
-> > The catch phrase I use for this is "don't solve object lifetime issues
-> > with locking". Instead use refcounting and careful ordering in
-> > setup/teardown code.
->
-> This is exactly what I have done in the OPP core, the locks were taken
-> only when really necessary, though as we have seen now I have missed
-> that at a single place and that should be fixed as well. Will do that,
-> thanks.
+As the subject states this series is an attempt to harmonize the xHCI,
+EHCI, OHCI and DWC USB3 DT nodes with the DT schema introduced in the
+framework of the patchset [1].
 
-Excellent. If the fix is small enough can you push it into 5.10? That
-way drm/msm doesn't have to carry the temporary solution for 5.11 (the
-issue only pops up with the locking rework, which teaches lockdep a
-few more things about what's going on as a side effect).
--Daniel
+Firstly as Krzysztof suggested we've removed a support of DWC USB3
+controllers with "synopsys,"-vendor prefix compatible string in favor of
+the ones with valid "snps,"-prefix. It's done in the controller driver and
+in all the DTS files, which have been unfortunate to define such nodes.
+
+Secondly we suggest to fix the snps,quirk-frame-length-adjustment property
+declaration in the Amlogic meson-g12-common.dtsi DTS file, since it has
+been erroneously declared as boolean while having uint32 type. Neil said
+it was ok to init that property with 0x20 value.
+
+Thirdly the main part of the patchset concern fixing the xHCI, EHCI/OHCI
+and DWC USB3 DT nodes name as in accordance with their DT schema the
+corresponding node name is suppose to comply with the Generic USB HCD DT
+schema, which requires the USB nodes to have the name acceptable by the
+regexp: "^usb(@.*)?". Such requirement had been applicable even before we
+introduced the new DT schema in [1], but as we can see it hasn't been
+strictly implemented for a lot the DTS files. Since DT schema is now
+available the automated DTS validation shall make sure that the rule isn't
+violated.
+
+Note most of these patches have been a part of the last three patches of
+[1]. But since there is no way to have them merged in in a combined
+manner, I had to move them to the dedicated series and split them up so to
+be accepted by the corresponding subsystem maintainers one-by-one.
+
+[1] Link: https://lore.kernel.org/linux-usb/20201014101402.18271-1-Sergey.Semin@baikalelectronics.ru/
+Changelog v0:
+- As Krzysztof suggested I've created a script which checked whether the
+  node names had been also updated in all the depended dts files. As a
+  result I found two more files which should have been also modified:
+  arch/arc/boot/dts/{axc003.dtsi,axc003_idu.dtsi}
+- Correct the USB DWC3 nodes name found in
+  arch/arm64/boot/dts/apm/{apm-storm.dtsi,apm-shadowcat.dtsi} too.
+
+Cc: Vineet Gupta <vgupta@synopsys.com>
+Cc: Rafal Milecki <zajec5@gmail.com>
+Cc: Wei Xu <xuwei5@hisilicon.com>
+Cc: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Cc: Michael Ellerman <mpe@ellerman.id.au>
+Cc: Jason Cooper <jason@lakedaemon.net>
+Cc: Santosh Shilimkar <ssantosh@kernel.org>
+Cc: Shawn Guo <shawnguo@kernel.org>
+Cc: Benoit Cousson <bcousson@baylibre.com>
+Cc: Patrice Chotard <patrice.chotard@st.com>
+Cc: Maxime Ripard <mripard@kernel.org>
+Cc: Khuong Dinh <khuong@os.amperecomputing.com>
+Cc: Andy Gross <agross@kernel.org>
+Cc: Alexey Brodkin <abrodkin@synopsys.com>
+Cc: Hauke Mehrtens <hauke@hauke-m.de>
+Cc: Maxime Coquelin <mcoquelin.stm32@gmail.com>
+Cc: Alexandre Torgue <alexandre.torgue@st.com>
+Cc: Amelie Delaunay <amelie.delaunay@st.com>
+Cc: Vladimir Zapolskiy <vz@mleia.com>
+Cc: Paul Cercueil <paul@crapouillou.net>
+Cc: Matthias Brugger <matthias.bgg@gmail.com>
+Cc: Benjamin Herrenschmidt <benh@kernel.crashing.org>
+Cc: Paul Mackerras <paulus@samba.org>
+Cc: Andrew Lunn <andrew@lunn.ch>
+Cc: Gregory Clement <gregory.clement@bootlin.com>
+Cc: Sebastian Hesselbarth <sebastian.hesselbarth@gmail.com>
+Cc: Kukjin Kim <kgene@kernel.org>
+Cc: Li Yang <leoyang.li@nxp.com>
+Cc: Tony Lindgren <tony@atomide.com>
+Cc: Chen-Yu Tsai <wens@csie.org>
+Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc: linux-snps-arc@lists.infradead.org
+Cc: bcm-kernel-feedback-list@broadcom.com
+Cc: linux-stm32@st-md-mailman.stormreply.com
+Cc: linux-arm-kernel@lists.infradead.org
+Cc: linux-mips@vger.kernel.org
+Cc: linux-mediatek@lists.infradead.org
+Cc: linuxppc-dev@lists.ozlabs.org
+Cc: linux-samsung-soc@vger.kernel.org
+Cc: linux-omap@vger.kernel.org
+Cc: linux-arm-msm@vger.kernel.org
+Cc: devicetree@vger.kernel.org
+Cc: linux-kernel@vger.kernel.org
+
+Serge Semin (29):
+  usb: dwc3: Discard synopsys,dwc3 compatibility string
+  arm: dts: keystone: Correct DWC USB3 compatible string
+  arm: dts: am437x: Correct DWC USB3 compatible string
+  arm: dts: exynos: Correct DWC USB3 compatible string
+  arm64: dts: amlogic: meson-g12: Set FL-adj property value
+  arc: dts: Harmonize EHCI/OHCI DT nodes name
+  arm: dts: bcm53x: Harmonize EHCI/OHCI DT nodes name
+  arm: dts: stm32: Harmonize EHCI/OHCI DT nodes name
+  arm: dts: hisi-x5hd2: Harmonize EHCI/OHCI DT nodes name
+  arm: dts: lpc18xx: Harmonize EHCI/OHCI DT nodes name
+  arm64: dts: hisi: Harmonize EHCI/OHCI DT nodes name
+  mips: dts: jz47x: Harmonize EHCI/OHCI DT nodes name
+  mips: dts: sead3: Harmonize EHCI/OHCI DT nodes name
+  mips: dts: ralink: mt7628a: Harmonize EHCI/OHCI DT nodes name
+  powerpc: dts: akebono: Harmonize EHCI/OHCI DT nodes name
+  arm: dts: bcm5301x: Harmonize xHCI DT nodes name
+  arm64: dts: marvell: cp11x: Harmonize xHCI DT nodes name
+  arm: dts: marvell: armada-375: Harmonize DWC USB3 DT nodes name
+  arm: dts: exynos: Harmonize DWC USB3 DT nodes name
+  arm: dts: keystone: Harmonize DWC USB3 DT nodes name
+  arm: dts: ls1021a: Harmonize DWC USB3 DT nodes name
+  arm: dts: omap5: Harmonize DWC USB3 DT nodes name
+  arm: dts: stih407-family: Harmonize DWC USB3 DT nodes name
+  arm64: dts: allwinner: h6: Harmonize DWC USB3 DT nodes name
+  arm64: dts: apm: Harmonize DWC USB3 DT nodes name
+  arm64: dts: exynos: Harmonize DWC USB3 DT nodes name
+  arm64: dts: layerscape: Harmonize DWC USB3 DT nodes name
+  arm64: dts: hi3660: Harmonize DWC USB3 DT nodes name
+  arm64: dts: qcom: Harmonize DWC USB3 DT nodes name
+
+ arch/arc/boot/dts/axc003.dtsi                     | 4 ++--
+ arch/arc/boot/dts/axc003_idu.dtsi                 | 4 ++--
+ arch/arc/boot/dts/axs10x_mb.dtsi                  | 4 ++--
+ arch/arc/boot/dts/hsdk.dts                        | 4 ++--
+ arch/arc/boot/dts/vdk_axs10x_mb.dtsi              | 2 +-
+ arch/arm/boot/dts/am437x-l4.dtsi                  | 4 ++--
+ arch/arm/boot/dts/armada-375.dtsi                 | 2 +-
+ arch/arm/boot/dts/bcm5301x.dtsi                   | 6 +++---
+ arch/arm/boot/dts/bcm53573.dtsi                   | 4 ++--
+ arch/arm/boot/dts/exynos5250.dtsi                 | 4 ++--
+ arch/arm/boot/dts/exynos54xx.dtsi                 | 4 ++--
+ arch/arm/boot/dts/hisi-x5hd2.dtsi                 | 4 ++--
+ arch/arm/boot/dts/keystone-k2e.dtsi               | 6 +++---
+ arch/arm/boot/dts/keystone.dtsi                   | 4 ++--
+ arch/arm/boot/dts/lpc18xx.dtsi                    | 4 ++--
+ arch/arm/boot/dts/ls1021a.dtsi                    | 2 +-
+ arch/arm/boot/dts/omap5-l4.dtsi                   | 2 +-
+ arch/arm/boot/dts/stih407-family.dtsi             | 2 +-
+ arch/arm/boot/dts/stm32mp151.dtsi                 | 4 ++--
+ arch/arm64/boot/dts/allwinner/sun50i-h6.dtsi      | 2 +-
+ arch/arm64/boot/dts/amlogic/meson-g12-common.dtsi | 2 +-
+ arch/arm64/boot/dts/apm/apm-shadowcat.dtsi        | 4 ++--
+ arch/arm64/boot/dts/apm/apm-storm.dtsi            | 6 +++---
+ arch/arm64/boot/dts/exynos/exynos5433.dtsi        | 4 ++--
+ arch/arm64/boot/dts/exynos/exynos7.dtsi           | 2 +-
+ arch/arm64/boot/dts/freescale/fsl-ls1012a.dtsi    | 4 ++--
+ arch/arm64/boot/dts/freescale/fsl-ls1043a.dtsi    | 6 +++---
+ arch/arm64/boot/dts/freescale/fsl-ls1088a.dtsi    | 4 ++--
+ arch/arm64/boot/dts/freescale/fsl-ls208xa.dtsi    | 4 ++--
+ arch/arm64/boot/dts/hisilicon/hi3660.dtsi         | 2 +-
+ arch/arm64/boot/dts/hisilicon/hi3798cv200.dtsi    | 4 ++--
+ arch/arm64/boot/dts/hisilicon/hip06.dtsi          | 4 ++--
+ arch/arm64/boot/dts/hisilicon/hip07.dtsi          | 4 ++--
+ arch/arm64/boot/dts/marvell/armada-cp11x.dtsi     | 4 ++--
+ arch/arm64/boot/dts/qcom/apq8096-db820c.dtsi      | 4 ++--
+ arch/arm64/boot/dts/qcom/ipq8074.dtsi             | 4 ++--
+ arch/arm64/boot/dts/qcom/msm8996.dtsi             | 4 ++--
+ arch/arm64/boot/dts/qcom/msm8998.dtsi             | 2 +-
+ arch/arm64/boot/dts/qcom/qcs404-evb.dtsi          | 2 +-
+ arch/arm64/boot/dts/qcom/qcs404.dtsi              | 4 ++--
+ arch/arm64/boot/dts/qcom/sc7180.dtsi              | 2 +-
+ arch/arm64/boot/dts/qcom/sdm845.dtsi              | 4 ++--
+ arch/arm64/boot/dts/qcom/sm8150.dtsi              | 2 +-
+ arch/mips/boot/dts/ingenic/jz4740.dtsi            | 2 +-
+ arch/mips/boot/dts/ingenic/jz4770.dtsi            | 2 +-
+ arch/mips/boot/dts/mti/sead3.dts                  | 2 +-
+ arch/mips/boot/dts/ralink/mt7628a.dtsi            | 2 +-
+ arch/powerpc/boot/dts/akebono.dts                 | 6 +++---
+ drivers/usb/dwc3/core.c                           | 3 ---
+ 49 files changed, 84 insertions(+), 87 deletions(-)
+
 -- 
-Daniel Vetter
-Software Engineer, Intel Corporation
-http://blog.ffwll.ch
+2.27.0
+
