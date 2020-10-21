@@ -2,159 +2,123 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 5901F295355
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Oct 2020 22:12:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1ECE5295458
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Oct 2020 23:41:15 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2505160AbgJUUL4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 21 Oct 2020 16:11:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33570 "EHLO
+        id S2506323AbgJUVlK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 21 Oct 2020 17:41:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47358 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2505134AbgJUULz (ORCPT
+        with ESMTP id S2506317AbgJUVlK (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 21 Oct 2020 16:11:55 -0400
-Received: from mail-oi1-x242.google.com (mail-oi1-x242.google.com [IPv6:2607:f8b0:4864:20::242])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A9BABC0613D4
-        for <linux-arm-msm@vger.kernel.org>; Wed, 21 Oct 2020 13:11:53 -0700 (PDT)
-Received: by mail-oi1-x242.google.com with SMTP id n3so3473616oie.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 21 Oct 2020 13:11:53 -0700 (PDT)
+        Wed, 21 Oct 2020 17:41:10 -0400
+Received: from mail-vs1-xe44.google.com (mail-vs1-xe44.google.com [IPv6:2607:f8b0:4864:20::e44])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 00B3BC0613CF
+        for <linux-arm-msm@vger.kernel.org>; Wed, 21 Oct 2020 14:41:10 -0700 (PDT)
+Received: by mail-vs1-xe44.google.com with SMTP id l6so2106283vsr.7
+        for <linux-arm-msm@vger.kernel.org>; Wed, 21 Oct 2020 14:41:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=h3IjEKBycl4AdV4pHmY8x7WaZ0Ptwe7SpKSP+5fA0v0=;
-        b=Bsil/4/VIe8KiAFM+fsJ3dsLu5fJ+LYGHFp8iH99zcx6Djp2uzo6FD2YjXSd82lkVg
-         piz/Xirt+WifCSz0l7gLClPZiP14tb0WYUyQ1zMTlVmshXF5Pz67/vDfyp2wt9XTPsFA
-         Fki4xWfLpSGf3CdTu/ToVli9ItQoWdBLKslbw39xMVutqkMO5lA39tyHb0vI3OtID41X
-         G7EuxKdKKEWeAa1c1hB4lNV0Et9TDTU7mqWIovKwHX1KCyWvWgOWqKJpPaMRWW8ursu2
-         CFBMyaLzPkkNQwauUzoy+G+anTLhUQY3fTNYAeSL6JKYR/OZo6RewIblcuW9ngtEzREg
-         XCLg==
+        d=chromium.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=fiI+ivAkRfzoArXOKg0GeDaxWAM5Ef0WBWauCl2e4lY=;
+        b=GU69OBpfiopIipOmEG3+SBUQ1TFsTZ8rOfH655pf1Au0FRsI5BvydXLkZZwCr/xC0U
+         uHuaDjnbmUV6JIic2c6K+dAm5Ef3ZoyV0ceaZIEbwQkKhjuDGwHTKAWhUs+YGVG3VR1R
+         s0ph1pA08bd6Fm/7mOHhwfOLs4GY2x57CH+nc=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=h3IjEKBycl4AdV4pHmY8x7WaZ0Ptwe7SpKSP+5fA0v0=;
-        b=kFQXaaTBEKZM83DfTSX5lP5mgCEjUMJcnvcDp0q/cco9MdCsR5nkWMkeJfJeixUmd0
-         o5IaEI4QBLS4gaGZ75PgBaItDbrx718SLd87qUiAzCSP7LdcOLqJWrEi85MNYjSSTGdZ
-         2G0RAz0HcwgeILYeP27ODJYAT6SgyDp/RzA6yXNttkzQ714Rrl6aL41r3YDrwQrqq50r
-         MwPZSHT22AtLDGVHtDNt/WLqWsGMn1wl+qq7UimNc3AA8XqbhLwJq94rDO2/Wx9MmqwD
-         KvOdGYIruHq39FXNRItdWksOtkr7NALfKibzif1qQyJZ1lstozob9I7qkc67PkF1sgl2
-         DlAw==
-X-Gm-Message-State: AOAM533Uq9hHopE32/JvlsD18Fa7yMJKf1Q+EzvKtc4EvklteqNLBP6W
-        s9JAWddmMJ1U+7TGNUPOoWd3Jw==
-X-Google-Smtp-Source: ABdhPJwpXwGpMMY0lOzWhIQyAznwBP9uD5c44odQWyNTc7tB26G8V2bFUSw/A6eCXg3EraLWJUhDoQ==
-X-Received: by 2002:aca:442:: with SMTP id 63mr3195841oie.111.1603311113085;
-        Wed, 21 Oct 2020 13:11:53 -0700 (PDT)
-Received: from localhost.localdomain (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id t5sm838166otl.22.2020.10.21.13.11.51
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 21 Oct 2020 13:11:52 -0700 (PDT)
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Pavel Machek <pavel@ucw.cz>, Dan Murphy <dmurphy@ti.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        =?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= 
-        <u.kleine-koenig@pengutronix.de>, Lee Jones <lee.jones@linaro.org>,
-        Martin Botka <martin.botka1@gmail.com>
-Cc:     linux-leds@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-pwm@vger.kernel.org
-Subject: [PATCH v6 4/4] arm64: dts: qcom: Add user LEDs on db820c
-Date:   Wed, 21 Oct 2020 13:12:24 -0700
-Message-Id: <20201021201224.3430546-5-bjorn.andersson@linaro.org>
-X-Mailer: git-send-email 2.28.0
-In-Reply-To: <20201021201224.3430546-1-bjorn.andersson@linaro.org>
-References: <20201021201224.3430546-1-bjorn.andersson@linaro.org>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=fiI+ivAkRfzoArXOKg0GeDaxWAM5Ef0WBWauCl2e4lY=;
+        b=BFlLUddho3GHoO7zOAD4wtzC+lwH3FMtvKyzmYSpJYxhgtFASO01Ea8jT8JSB2eeJE
+         JfT9v68i1fGsVF730PS4xW+zvEPF0tuB8ZR+2MmCPHx/ZUtq5gPxBP2qGrHATeJQx6Ny
+         cSl8uC79DJEpItWinRO94SzckTLBlo/GpTsb9tBKYMPoZIvNCa/TOs+4JNT/UIrDyYf5
+         QkUOIwPm9eK3X1u2WYzP3MUVt9hhdKQPntCe0NCMloV9wRveCMqPskER9lT4smDY8N8u
+         p0C+9o3BWkTgrKubkjEJYHlaTITo7HwQod8NsLyxlkkTjXzNdzPTBdlGqG88ZxhS0K8Q
+         2uvg==
+X-Gm-Message-State: AOAM532br/aLiy/5QjhR7O4+x8pp9FXuS6NTatO7B7IpXy/fwUqxgpPR
+        nr8XUHpDWPPTi3So05CqzpnAyTGyD8OIRw==
+X-Google-Smtp-Source: ABdhPJwrS+AQ5Jd2zNwG4Xr4oimtDS3LNOq8sycY3qTKtdMzOsZnJAN3ztaWDm/KlRzC512aTytwLw==
+X-Received: by 2002:a05:6102:21aa:: with SMTP id i10mr126106vsb.9.1603316468547;
+        Wed, 21 Oct 2020 14:41:08 -0700 (PDT)
+Received: from mail-vs1-f53.google.com (mail-vs1-f53.google.com. [209.85.217.53])
+        by smtp.gmail.com with ESMTPSA id v136sm326101vsv.26.2020.10.21.14.41.07
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 21 Oct 2020 14:41:07 -0700 (PDT)
+Received: by mail-vs1-f53.google.com with SMTP id h5so1839610vsp.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 21 Oct 2020 14:41:07 -0700 (PDT)
+X-Received: by 2002:a67:e3b9:: with SMTP id j25mr3757348vsm.37.1603316467072;
+ Wed, 21 Oct 2020 14:41:07 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20201016192654.32610-1-evgreen@chromium.org> <20201016122559.v2.1.I8b447ca96abfbef5f298d77350e6c9d1d18d00f6@changeid>
+In-Reply-To: <20201016122559.v2.1.I8b447ca96abfbef5f298d77350e6c9d1d18d00f6@changeid>
+From:   Doug Anderson <dianders@chromium.org>
+Date:   Wed, 21 Oct 2020 14:40:55 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=VyBxXFLGsPZFpX29xFL5p8ZZPQ0uJEku3Wo04VFOEZOg@mail.gmail.com>
+Message-ID: <CAD=FV=VyBxXFLGsPZFpX29xFL5p8ZZPQ0uJEku3Wo04VFOEZOg@mail.gmail.com>
+Subject: Re: [PATCH v2 1/4] dt-bindings: nvmem: Add soc qfprom compatible strings
+To:     Evan Green <evgreen@chromium.org>
+Cc:     Rob Herring <robh+dt@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Andy Gross <agross@kernel.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        LKML <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The db820c has 4 "user LEDs", all connected to the PMI8994. The first
-three are connected to the three current sinks provided by the TRILED
-and the fourth is connected to MPP2.
+Hi,
 
-By utilizing the DTEST bus the MPP is fed the control signal from the
-fourth LPG block, providing a consistent interface to the user.
+On Fri, Oct 16, 2020 at 12:27 PM Evan Green <evgreen@chromium.org> wrote:
+>
+> Add SoC-specific compatible strings so that data can be attached
+> to it in the driver.
+>
+> Signed-off-by: Evan Green <evgreen@chromium.org>
+> ---
+>
+> Changes in v2:
+>  - Add other soc compatible strings (Doug)
+>  - Fix compatible string definition (Doug)
+>
+>  .../devicetree/bindings/nvmem/qcom,qfprom.yaml      | 13 ++++++++++++-
+>  1 file changed, 12 insertions(+), 1 deletion(-)
+>
+> diff --git a/Documentation/devicetree/bindings/nvmem/qcom,qfprom.yaml b/Documentation/devicetree/bindings/nvmem/qcom,qfprom.yaml
+> index 1a18b6bab35e7..eb1440045aff1 100644
+> --- a/Documentation/devicetree/bindings/nvmem/qcom,qfprom.yaml
+> +++ b/Documentation/devicetree/bindings/nvmem/qcom,qfprom.yaml
+> @@ -14,7 +14,18 @@ allOf:
+>
+>  properties:
+>    compatible:
+> -    const: qcom,qfprom
+> +    items:
+> +      - enum:
+> +          - qcom,apq8064-qfprom
+> +          - qcom,apq8084-qfprom
+> +          - qcom,msm8974-qfprom
+> +          - qcom,msm8916-qfprom
+> +          - qcom,msm8996-qfprom
+> +          - qcom,msm8998-qfprom
+> +          - qcom,qcs404-qfprom
+> +          - qcom,sc7180-qfprom
+> +          - qcom,sdm845-qfprom
+> +      - const: qcom,qfprom
+>
+>    reg:
+>      # If the QFPROM is read-only OS image then only the corrected region
 
-Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
----
+As Rob's bot found, your example no longer matches your requirements.
+It needs an SoC-specific string plus the "qcom,qfprom".  It's always
+good to try running "make dt_binding_check" to catch these sorts of
+things.
 
-Changes since v5:
-- None
 
- arch/arm64/boot/dts/qcom/apq8096-db820c.dtsi | 49 ++++++++++++++++++++
- 1 file changed, 49 insertions(+)
-
-diff --git a/arch/arm64/boot/dts/qcom/apq8096-db820c.dtsi b/arch/arm64/boot/dts/qcom/apq8096-db820c.dtsi
-index defcbd15edf9..7e51677d256e 100644
---- a/arch/arm64/boot/dts/qcom/apq8096-db820c.dtsi
-+++ b/arch/arm64/boot/dts/qcom/apq8096-db820c.dtsi
-@@ -8,6 +8,7 @@
- #include "pmi8994.dtsi"
- #include <dt-bindings/input/input.h>
- #include <dt-bindings/gpio/gpio.h>
-+#include <dt-bindings/leds/common.h>
- #include <dt-bindings/pinctrl/qcom,pmic-gpio.h>
- #include <dt-bindings/sound/qcom,q6afe.h>
- #include <dt-bindings/sound/qcom,q6asm.h>
-@@ -682,6 +683,54 @@ pinconf {
- 	};
- };
- 
-+&pmi8994_mpps {
-+	pmi8994_mpp2_userled4: mpp2-userled4 {
-+		pins = "mpp2";
-+		function = "sink";
-+
-+		output-low;
-+		qcom,dtest = <4>;
-+	};
-+};
-+
-+&pmi8994_lpg {
-+	qcom,power-source = <1>;
-+
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&pmi8994_mpp2_userled4>;
-+
-+	status = "okay";
-+
-+	#address-cells = <1>;
-+	#size-cells = <0>;
-+
-+	led@1 {
-+		reg = <1>;
-+		label = "green:user1";
-+
-+		linux,default-trigger = "heartbeat";
-+		default-state = "on";
-+	};
-+
-+	led@2 {
-+		reg = <2>;
-+		label = "green:user0";
-+		default-state = "on";
-+	};
-+
-+	led@3 {
-+		reg = <3>;
-+		label = "green:user2";
-+	};
-+
-+	led@4 {
-+		reg = <4>;
-+		label = "green:user3";
-+
-+		qcom,dtest = <4 1>;
-+	};
-+};
-+
- &pmi8994_spmi_regulators {
- 	vdd_gfx: s2@1700 {
- 		reg = <0x1700 0x100>;
--- 
-2.28.0
-
+-Doug
