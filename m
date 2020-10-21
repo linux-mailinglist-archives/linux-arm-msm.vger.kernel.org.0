@@ -2,80 +2,96 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C7DF22950CC
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Oct 2020 18:33:08 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 873DB29510F
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Oct 2020 18:46:15 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2502945AbgJUQdI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 21 Oct 2020 12:33:08 -0400
-Received: from m42-4.mailgun.net ([69.72.42.4]:49216 "EHLO m42-4.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2438250AbgJUQdI (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 21 Oct 2020 12:33:08 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1603297987; h=Content-Transfer-Encoding: Content-Type:
- In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
- Subject: Sender; bh=wvO5zR9EQASc5KuaM9v+5jS+2r+RAJFBwotKW+D0OfY=; b=Zxk2qd/74IitUNvczg8UOtq1IJ3ihvDd+1h5h/j3I5D4alwFlsuRhed7B+TagEpV/B4BIMBV
- 6gMx9TF6eXC94PFG/7viak4XUZq5ECsJJlsvSVF499BeOpQZZVDkHoUYciJWZD6XpOB1mMbd
- l6b+Y5TRvJqdmHxFQgdKvx7A7i8=
-X-Mailgun-Sending-Ip: 69.72.42.4
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n05.prod.us-east-1.postgun.com with SMTP id
- 5f9062c252f4fccef08ffbbb (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 21 Oct 2020 16:33:06
- GMT
-Sender: hemantk=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id C6B8CC433CB; Wed, 21 Oct 2020 16:33:05 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        NICE_REPLY_A,SPF_FAIL,URIBL_BLOCKED autolearn=no autolearn_force=no
-        version=3.4.0
-Received: from [10.46.162.249] (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: hemantk)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id E62DDC433C9;
-        Wed, 21 Oct 2020 16:33:04 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org E62DDC433C9
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=hemantk@codeaurora.org
-Subject: Re: [PATCH] bus: mhi: core: fix potential operator-precedence with
- BHI macros
-To:     Jeffrey Hugo <jhugo@codeaurora.org>,
-        manivannan.sadhasivam@linaro.org, bbhatt@codeaurora.org
-Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <1603225785-21368-1-git-send-email-jhugo@codeaurora.org>
-From:   Hemant Kumar <hemantk@codeaurora.org>
-Message-ID: <ddea7e85-888b-301b-90fa-85655c2ceb45@codeaurora.org>
-Date:   Wed, 21 Oct 2020 09:33:04 -0700
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.10.0
+        id S2503138AbgJUQqO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 21 Oct 2020 12:46:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58214 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2409368AbgJUQqN (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 21 Oct 2020 12:46:13 -0400
+Received: from mail-ed1-x541.google.com (mail-ed1-x541.google.com [IPv6:2a00:1450:4864:20::541])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6B19CC0613CE
+        for <linux-arm-msm@vger.kernel.org>; Wed, 21 Oct 2020 09:46:13 -0700 (PDT)
+Received: by mail-ed1-x541.google.com with SMTP id x1so3277574eds.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 21 Oct 2020 09:46:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=8NUOfNpYzEL3LD+5zJArE8vgQr+8xwXTLaDNDtvbDwA=;
+        b=Wfq8T3EqHqQ8lWbnZHAcop1pwmrgYSGiQ8y+QBQzhgJvWkUVddeQVTARpQt+C6qHMN
+         5CtfwdzNoX4TezJ3KM0QNKJZr+VQgbetsV+XnfEDlSw+QeXvGl4lOITQBjJU6WSH+LhM
+         qFASZk18S1La+NfdRIrQ+wzrhK1Zy71XWZbv7KDb5bi9sHqiD97UjlSsB5wixNS/qxhj
+         B/IEMSp8o5UuBuKJQl/P2Myf4dtM2v9NQXi81OwJsba/BaHV6mbraD5k8uev40GziwWb
+         u/S6IxYevQLa41WHjF5FwPMjMZkg5le/zLXkRWoEHoHxeIIJntihdeN6k1sDu6ndFV1H
+         /nLw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=8NUOfNpYzEL3LD+5zJArE8vgQr+8xwXTLaDNDtvbDwA=;
+        b=G9I2YUX6PnCqZCGcS52T2UGmx83cIYjbQCAZEm5HpsrPAEhMLiyn6IBKLGfspUh4gI
+         oyCbksEa6HNcH1Jq+JGi+sIMYJ1BP6ux1/1d/e5PkWvfXWNNc3NKKNsd/7e+Ui0XukiA
+         9zYd60jShwrMSdiCZNWRF0MEvHTUAAyFTTKl2KLGEobqYti0y7ddl5tWxm5K8SD9Vaup
+         ehsk6ytNBn/TYiC0lwdGGe0m01SE/6JfLTh8R+WOn9OgexgwH4OKBMdH0lO2avKTeirq
+         XfIt+jlvH0A94hq2nJNtIIkMIlYq1j2+KNbqx9mQ954S7HyZxT6dbtsZPwSG043v0GVY
+         Z3cA==
+X-Gm-Message-State: AOAM533OSkQrKGgA5XT4RqmcZ8kKsPPALFnzYoV9JOph9CzRzx9rRwwa
+        nbIO/utLRgCRbi4nAd/6fwLirX19TYARumSIKdhYTw==
+X-Google-Smtp-Source: ABdhPJxFG7eP6jPrXMEObBNGYCEE//beJ2SGdl4GivAzZsysEUsSAlvo+98dcFhiemFVn4SHy/ry0C68roOSK/sZv+Q=
+X-Received: by 2002:a05:6402:1158:: with SMTP id g24mr3799631edw.323.1603298771874;
+ Wed, 21 Oct 2020 09:46:11 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <1603225785-21368-1-git-send-email-jhugo@codeaurora.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+References: <1602907457-13680-1-git-send-email-hemantk@codeaurora.org>
+ <1602907457-13680-2-git-send-email-hemantk@codeaurora.org>
+ <20201021152714.GD3334@Mani-XPS-13-9360> <CAMZdPi8xcsrKx2eV5da98fsGt2zO3f6ARMz7WJsyDSb3CnM0FA@mail.gmail.com>
+ <20201021162540.GG3334@Mani-XPS-13-9360>
+In-Reply-To: <20201021162540.GG3334@Mani-XPS-13-9360>
+From:   Loic Poulain <loic.poulain@linaro.org>
+Date:   Wed, 21 Oct 2020 18:51:36 +0200
+Message-ID: <CAMZdPi-SY-r2H7RBLKoNk9yfu5umrrwYMr0ckJoxSx-iqYXdQg@mail.gmail.com>
+Subject: Re: [PATCH v7 1/4] bus: mhi: core: Add helper API to return number of
+ free TREs
+To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc:     Hemant Kumar <hemantk@codeaurora.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        open list <linux-kernel@vger.kernel.org>,
+        Jeffrey Hugo <jhugo@codeaurora.org>,
+        Bhaumik Bhatt <bbhatt@codeaurora.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Wed, 21 Oct 2020 at 18:25, Manivannan Sadhasivam
+<manivannan.sadhasivam@linaro.org> wrote:
+>
+> On Wed, Oct 21, 2020 at 05:43:14PM +0200, Loic Poulain wrote:
+> > On Wed, 21 Oct 2020 at 17:27, Manivannan Sadhasivam <
+> > manivannan.sadhasivam@linaro.org> wrote:
+> >
+> > > On Fri, Oct 16, 2020 at 09:04:14PM -0700, Hemant Kumar wrote:
+> > > > Introduce mhi_get_free_desc_count() API to return number
+> > >
+> >
+> > Would it not be a good idea to have naming aligned with other methods?
+> > Like mhi_queue_num_free() or mhi_queue_no_free_elem...
+> >
+>
+> 'queue_num_free' doesn't sound like getting the number of available
+> descriptors...
 
+Right, TBH, just wanted the function to start with mhi_queue since
+it's about getting info about remaining size of the DL or UL 'virtual
+queue'. But AFAIU, this is the number of available ring elements that
+is returned here, not the number of transfer descriptors (that can be
+composed of one or more ring elements), so maybe
+mhi_queue_num_free_elements or something similar, I don't want to be
+picky here.
 
-On 10/20/20 1:29 PM, Jeffrey Hugo wrote:
-> The BHI_MSMHWID and BHI_OEMPKHASH macros take a value 'n' which is
-> a BHI register index. If 'n' is an expression rather than a simple
-> value, there can be an operator precedence issue which can result
-> in the incorrect calculation of the register offset. Adding
-> parentheses around the macro parameter can prevent such issues.
-> 
-> Signed-off-by: Jeffrey Hugo <jhugo@codeaurora.org>
-> ---
-Reviewed-by: Hemant Kumar <hemantk@codeaurora.org>
-
--- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project
+Regards,
+Loic
