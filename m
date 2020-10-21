@@ -2,57 +2,31 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E8B0E294C1F
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Oct 2020 14:01:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DFE63294CD8
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Oct 2020 14:39:29 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2439880AbgJUMBB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 21 Oct 2020 08:01:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42160 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2404943AbgJUMBA (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 21 Oct 2020 08:01:00 -0400
-Received: from mail-wm1-x344.google.com (mail-wm1-x344.google.com [IPv6:2a00:1450:4864:20::344])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D5B5DC0613D2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 21 Oct 2020 05:00:58 -0700 (PDT)
-Received: by mail-wm1-x344.google.com with SMTP id d78so1797764wmd.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 21 Oct 2020 05:00:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=2fJBIpEa92kQMJ5/9beWt+N555m7+v1D1vPnkJrcT60=;
-        b=SenAqoqlLi2aW37fpwhuD9srFzhLzrEbBnol9BebPsYEEI+KDFkpx8T7/egwqBcrXA
-         VKXMHj3+b41FIQ4eI7Myj0Na0a6bAyVKcAbDSlj32qMfgAeqpfHG++isqgO4Ii89gzJ4
-         JdpTeaZZGUhg4QPD0sGFy9Z/DF5jWisVimMRkRKV/T6oPAt4/20N1owP7yvOCZriHz6X
-         MlMQSoxh+Jwwv/iMBlIRdYWmeReU1RJKhiIFKPGCzvTcp2zrd+oHDfQmGvVCJFr7YPR+
-         vQuoHN7O+rf4SXzK+HkSZwxDxt11IINm8k11O5XS/rsp4h9RtxIkDu8YGDJoy3daSq3j
-         kHew==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=2fJBIpEa92kQMJ5/9beWt+N555m7+v1D1vPnkJrcT60=;
-        b=bg6qXldYjQcfrulOOBEp+eswf37HWYoIGCSKrCKIIw2no3b8VGjDSSMKq44bTseXdF
-         TOW9MB/MAH7Y6oVO9wSvzkYoKQ5XzT5M/sdjYm5rYIYDoAWlPkO8H66sguQXp8VlSQ+G
-         bm9on+emSTzDHMwPvt4J1ZN7KFeHy3qi8EdtXiVLvSTEIbQuVZ7lQTuHG8EgTdmLbQ5s
-         GPyRukJM66DSm1j4frPw1MwsInSLdEncopCQq/EMxwQZ4RQKj3ja6POx2IZIlabieMsG
-         kn0aPE4bSrj5TtK9oFP1RuIlmo1Y+cVX5yCGUlav1/69t+KaXVPy2HbdjHCB20fO+7Fw
-         OPwQ==
-X-Gm-Message-State: AOAM5328EHM0ypvC7IuQxmKEP7zTzYIsBrPkwp+muAplfDrAUlgQ7DDD
-        2QEbJ4E+46HunlzxFHpz7hAsIA==
-X-Google-Smtp-Source: ABdhPJyBuNQJw//BB7VhJ/IyfJhB0D0zjEufDlMEYNH8dKwZxjKPNA+bODFYfmYhr9qj+l9595JgRg==
-X-Received: by 2002:a05:600c:d3:: with SMTP id u19mr3261018wmm.150.1603281657485;
-        Wed, 21 Oct 2020 05:00:57 -0700 (PDT)
-Received: from [192.168.86.34] (cpc86377-aztw32-2-0-cust226.18-1.cable.virginm.net. [92.233.226.227])
-        by smtp.googlemail.com with ESMTPSA id h16sm3896356wre.87.2020.10.21.05.00.55
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 21 Oct 2020 05:00:56 -0700 (PDT)
-Subject: Re: [PATCH v11 2/3] ASoC: qcom: dt-bindings: Add sc7180 machine
- bindings
-To:     Cheng-yi Chiang <cychiang@chromium.org>
-Cc:     Mark Brown <broonie@kernel.org>,
+        id S2408091AbgJUMj0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 21 Oct 2020 08:39:26 -0400
+Received: from mail.kernel.org ([198.145.29.99]:37990 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S2394282AbgJUMjZ (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 21 Oct 2020 08:39:25 -0400
+Received: from localhost (fw-tnat.cambridge.arm.com [217.140.96.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id 2EE1422249;
+        Wed, 21 Oct 2020 12:39:24 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1603283964;
+        bh=mWU0XX6TP23oXRtNhUtKZR9PQ/87umOD4p89GJOQWxo=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=ZkxgulnNF2NFH9jo07oDU4EUHcw6hfl48FCyYKMbN/fSIbwuhDeBZjNQiRP4WeJVn
+         B8QXAA2jbjmKiJc96KJ/3h4MnZ5r7rEFwrOTx6tdj9oAJl7UOSCPeJ3t17BykafjTz
+         Zzm1hizSASBgt/k0uj2D29o+8bUuTp2GI6pY/12Q=
+Date:   Wed, 21 Oct 2020 13:39:13 +0100
+From:   Mark Brown <broonie@kernel.org>
+To:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Cc:     Cheng-yi Chiang <cychiang@chromium.org>,
         linux-kernel <linux-kernel@vger.kernel.org>,
         Taniya Das <tdas@codeaurora.org>,
         Rohit kumar <rohitkr@codeaurora.org>,
@@ -82,6 +56,9 @@ Cc:     Mark Brown <broonie@kernel.org>,
         <linux-mediatek@lists.infradead.org>,
         "open list:ARM/Rockchip SoC..." <linux-rockchip@lists.infradead.org>,
         Ajye Huang <ajye_huang@compal.corp-partner.google.com>
+Subject: Re: [PATCH v11 2/3] ASoC: qcom: dt-bindings: Add sc7180 machine
+ bindings
+Message-ID: <20201021123913.GD4497@sirena.org.uk>
 References: <20200914080619.4178587-1-cychiang@chromium.org>
  <20200914080619.4178587-3-cychiang@chromium.org>
  <7bdc0d63-27b1-f99e-c5f8-65f880733d16@linaro.org>
@@ -91,103 +68,50 @@ References: <20200914080619.4178587-1-cychiang@chromium.org>
  <20201020143711.GC9448@sirena.org.uk>
  <63f1a29c-0758-97b8-ce80-fe43d91630fa@linaro.org>
  <CAFv8NwJ-+f146Ss9Mk=nEXjm1B--ZwhAgnfx-cTi7DGEKqC1-Q@mail.gmail.com>
-From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Message-ID: <e876421c-dfeb-e853-1b65-53a786e9bcf9@linaro.org>
-Date:   Wed, 21 Oct 2020 13:00:54 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.8.0
+ <e876421c-dfeb-e853-1b65-53a786e9bcf9@linaro.org>
 MIME-Version: 1.0
-In-Reply-To: <CAFv8NwJ-+f146Ss9Mk=nEXjm1B--ZwhAgnfx-cTi7DGEKqC1-Q@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="/3yNEOqWowh/8j+e"
+Content-Disposition: inline
+In-Reply-To: <e876421c-dfeb-e853-1b65-53a786e9bcf9@linaro.org>
+X-Cookie: That does not compute.
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
+--/3yNEOqWowh/8j+e
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-On 20/10/2020 19:54, Cheng-yi Chiang wrote:
->> Not with the compatible string!
->>
->> Currently card name, and long name are exactly same in all Qualcomm
->> soundcards, which makes it very difficult to identify how those boards
->> re wired up at UCM2 level. So the plan is to properly populate card long
->> name with "model" property which can include details on how things are
->> wiredup on that board.
->>
->> --srini
-> Hi Srini,
-> Thanks for taking a look.
-> Let me try to clarify your comments in case there is any misunderstanding.
-> 
-> I understand your request on having different board variations using
-> different sound card names through model property, and I totally agree
-> with that.
-> As for compatible strings, do you insist on having all the board
-> variations using exactly the same compatible string ?
+On Wed, Oct 21, 2020 at 01:00:54PM +0100, Srinivas Kandagatla wrote:
 
+> This is totally not very useful w.r.t UCM2 and makes it very difficult to
+> common up parts of the configs.
 
-For example if we set below property for sound card in Device tree
-model = "RB5";
+> My suggestions are.
+> 1. set card->driver_name to something more sensible in your sound card
+> driver.
 
-We will end up with
+> 2. set long name in model DT property and set it as card long name
 
-#   cat /proc/asound/cards
-  0 [RB5            ]: RB5 - RB5
-                       RB5
+It's also worth taking a look at what Intel are doing here with their
+cards.
 
-This is totally not very useful w.r.t UCM2 and makes it very difficult 
-to common up parts of the configs.
+--/3yNEOqWowh/8j+e
+Content-Type: application/pgp-signature; name="signature.asc"
 
+-----BEGIN PGP SIGNATURE-----
 
-My suggestions are.
-1. set card->driver_name to something more sensible in your sound card 
-driver.
+iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAl+QK/AACgkQJNaLcl1U
+h9BbUwf/eOnrTlDEbw+QGCrFiYUmnzBGx64NN4D6F6QHebJyBsYrT6PB95nEpzei
+/il7qT8KENMbMgMUSN4N3vMUVWAkrFYjtI5TXCjDvYy1h790B9UIPXyrq+1+hr3U
++KuyJJ4+adkM1dYEH904ynqdFapjo8DfVcD0YNZ2DstV8UdOnegpQP06Fygn7Vm8
+7diV0uAnJrtMX74ezClTiKcTB6/Nl0B/ve5m9o8usTa9H1LL9v6HgGrqjrFhMS/p
+6h8MzEw2zJS6+kAU//U8MNVBYAmhR7Urw93XHEx7gisLq3STJgnW0580I4lLHd0i
+9/H/UCdqrnIcE7b8lByvQDy/V2Ydhw==
+=jQZx
+-----END PGP SIGNATURE-----
 
-ex:
-	card->driver_name = "SM8250";
-
-2. set long name in model DT property and set it as card long name
-ex:
-in DT:
-	model = "Qualcomm-RB5-WSA8815-Speakers-DMIC0";
-
-in sound driver or common.c:
-
-of_property_read_string_index(np, "model", 0, &card->long_name);
-
-With this set:
-
-now
-#   cat /proc/asound/cards
-  0 [QualcommRB5WSA8]: SM8250 - Qualcomm-RB5-WSA8815-Speakers-D
-                       Qualcomm-RB5-WSA8815-Speakers-DMIC0
-
-This also means that in UCM2 we can have a top level SM8250 directory 
-which can contain other board variants something like:
-
-ucm2/Qualcomm/sm8250/Qualcomm-RB5-WSA8815-Speakers-DMIC0.conf
-ucm2/Qualcomm/sm8250/Qualcomm-RB5-WSA8810-Speakers-DMIC123.conf
-and so on!
-
-Finally Only comment I had regarding compatible was not to encapsulate 
-the connection details in it!. these can be made more sensible, 
-something like
-"qcom,sc7180-trogdor-v1", "qcom,sc7180-trogdor-v2".. and so on.
-
-This compatible has nothing to do with driver or card short and long name.
-
-Does that makes sense?
-
-
-Thanks,
-srini
-
-
-with
-
-
-
-
-Currently if
+--/3yNEOqWowh/8j+e--
