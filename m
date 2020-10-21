@@ -2,116 +2,106 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id DFE63294CD8
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Oct 2020 14:39:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 27903294F06
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Oct 2020 16:49:32 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2408091AbgJUMj0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 21 Oct 2020 08:39:26 -0400
-Received: from mail.kernel.org ([198.145.29.99]:37990 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2394282AbgJUMjZ (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 21 Oct 2020 08:39:25 -0400
-Received: from localhost (fw-tnat.cambridge.arm.com [217.140.96.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 2EE1422249;
-        Wed, 21 Oct 2020 12:39:24 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1603283964;
-        bh=mWU0XX6TP23oXRtNhUtKZR9PQ/87umOD4p89GJOQWxo=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=ZkxgulnNF2NFH9jo07oDU4EUHcw6hfl48FCyYKMbN/fSIbwuhDeBZjNQiRP4WeJVn
-         B8QXAA2jbjmKiJc96KJ/3h4MnZ5r7rEFwrOTx6tdj9oAJl7UOSCPeJ3t17BykafjTz
-         Zzm1hizSASBgt/k0uj2D29o+8bUuTp2GI6pY/12Q=
-Date:   Wed, 21 Oct 2020 13:39:13 +0100
-From:   Mark Brown <broonie@kernel.org>
-To:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Cc:     Cheng-yi Chiang <cychiang@chromium.org>,
-        linux-kernel <linux-kernel@vger.kernel.org>,
-        Taniya Das <tdas@codeaurora.org>,
-        Rohit kumar <rohitkr@codeaurora.org>,
-        Banajit Goswami <bgoswami@codeaurora.org>,
-        Patrick Lai <plai@codeaurora.org>,
-        Andy Gross <agross@kernel.org>,
+        id S2443333AbgJUOta (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 21 Oct 2020 10:49:30 -0400
+Received: from mail-oi1-f194.google.com ([209.85.167.194]:39510 "EHLO
+        mail-oi1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2442644AbgJUOta (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 21 Oct 2020 10:49:30 -0400
+Received: by mail-oi1-f194.google.com with SMTP id u127so2344555oib.6;
+        Wed, 21 Oct 2020 07:49:29 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=NtlmBu5h4iBh+zHC2TUxv/prMu3eprBos0xHpsw4cig=;
+        b=K4iy6uMlrvnAYqBbLyCBojyC0e0+vGJm9bSIu+/KItua83wMUbkf2djbk+QQ/iYYQF
+         oLARrBNoLaxNP+342AlYLBAtsydflIR3pdMualQWbk9eI5E53j2IZTgzHLT05nFsVv5c
+         1aeCWLFs0kbUyH6MahbdJD7sBZOTRkX/RroQZTX8I+rZ05XebuVidBBDpOqW3jSNnILa
+         IlWLWF3bEtNBBVyAfru5v55mcrdwPHP8j8bmY/GPTGp/AqnplPxsFOnnzHHqwalKkSM+
+         I40eTOTlEfA2q3TRUAhpW80D9FioJZieTQqKOVmtXNUwWL2vv3thbRbkvIRI5hZuVxbK
+         yImQ==
+X-Gm-Message-State: AOAM533mN2TFI3UlmMDO8YWDM9lVNCf7xdutJIW+KtOPS88emUMHpSg7
+        CAvasMPDqiamqV4715OHf/+Ka1YH4g==
+X-Google-Smtp-Source: ABdhPJwO0ZRqPMszwKp5Dk5j2KSjbKG9sYl+Mws9bBotwxs921MNAUZKWIdI040bfSmMgcNWQNflgQ==
+X-Received: by 2002:aca:cdc4:: with SMTP id d187mr2672003oig.19.1603291769336;
+        Wed, 21 Oct 2020 07:49:29 -0700 (PDT)
+Received: from xps15 (24-155-109-49.dyn.grandenetworks.net. [24.155.109.49])
+        by smtp.gmail.com with ESMTPSA id q7sm737163oig.42.2020.10.21.07.49.28
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 21 Oct 2020 07:49:28 -0700 (PDT)
+Received: (nullmailer pid 2769342 invoked by uid 1000);
+        Wed, 21 Oct 2020 14:49:27 -0000
+Date:   Wed, 21 Oct 2020 09:49:27 -0500
+From:   Rob Herring <robh@kernel.org>
+To:     Guru Das Srinagesh <gurus@codeaurora.org>
+Cc:     Rob Herring <robh+dt@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Jaroslav Kysela <perex@perex.cz>,
-        Takashi Iwai <tiwai@suse.com>,
-        Stephan Gerhold <stephan@gerhold.net>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        Heiko Stuebner <heiko@sntech.de>,
-        Srinivasa Rao <srivasam@codeaurora.org>,
-        Doug Anderson <dianders@chromium.org>,
-        Dylan Reid <dgreid@chromium.org>,
-        Tzung-Bi Shih <tzungbi@chromium.org>,
-        Linux ARM <linux-arm-kernel@lists.infradead.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>,
-        "moderated list:SOUND - SOC LAYER / DYNAMIC AUDIO POWER MANAGEM..." 
-        <alsa-devel@alsa-project.org>,
-        "moderated list:ARM/Mediatek SoC support" 
-        <linux-mediatek@lists.infradead.org>,
-        "open list:ARM/Rockchip SoC..." <linux-rockchip@lists.infradead.org>,
-        Ajye Huang <ajye_huang@compal.corp-partner.google.com>
-Subject: Re: [PATCH v11 2/3] ASoC: qcom: dt-bindings: Add sc7180 machine
- bindings
-Message-ID: <20201021123913.GD4497@sirena.org.uk>
-References: <20200914080619.4178587-1-cychiang@chromium.org>
- <20200914080619.4178587-3-cychiang@chromium.org>
- <7bdc0d63-27b1-f99e-c5f8-65f880733d16@linaro.org>
- <CAFv8NwLkvxX2avoLY+4NY5gBv0dQ863hFFiqy7iQOJxH4WenmQ@mail.gmail.com>
- <20201015161251.GF4390@sirena.org.uk>
- <CAFv8NwL1xX=yPGFqQL_mOzAnPTfH0Z0J6ibG1+D32W46Nx0KYQ@mail.gmail.com>
- <20201020143711.GC9448@sirena.org.uk>
- <63f1a29c-0758-97b8-ce80-fe43d91630fa@linaro.org>
- <CAFv8NwJ-+f146Ss9Mk=nEXjm1B--ZwhAgnfx-cTi7DGEKqC1-Q@mail.gmail.com>
- <e876421c-dfeb-e853-1b65-53a786e9bcf9@linaro.org>
+        linux-kernel@vger.kernel.org, Stephen Boyd <sboyd@kernel.org>,
+        devicetree@vger.kernel.org,
+        David Collins <collinsd@codeaurora.org>,
+        Andy Gross <agross@kernel.org>,
+        Anirudh Ghayal <aghayal@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org,
+        Subbaraman Narayanamurthy <subbaram@codeaurora.org>
+Subject: Re: [RESEND PATCH v2 1/2] bindings: pm8941-misc: Convert to YAML and
+ add support for VBUS detection
+Message-ID: <20201021144927.GA2768609@bogus>
+References: <cover.1603231949.git.gurus@codeaurora.org>
+ <1407c8a264de11cb9cd7a13b8f7b5f66ca957127.1603231949.git.gurus@codeaurora.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="/3yNEOqWowh/8j+e"
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <e876421c-dfeb-e853-1b65-53a786e9bcf9@linaro.org>
-X-Cookie: That does not compute.
-User-Agent: Mutt/1.10.1 (2018-07-13)
+In-Reply-To: <1407c8a264de11cb9cd7a13b8f7b5f66ca957127.1603231949.git.gurus@codeaurora.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Tue, 20 Oct 2020 15:17:24 -0700, Guru Das Srinagesh wrote:
+> From: Anirudh Ghayal <aghayal@codeaurora.org>
+> 
+> Convert bindings to YAML. Also add compatible string that adds support
+> for reporting the VBUS status that can be detected via a dedicated PMIC
+> pin.
+> 
+> Signed-off-by: Anirudh Ghayal <aghayal@codeaurora.org>
+> Signed-off-by: Guru Das Srinagesh <gurus@codeaurora.org>
+> ---
+>  .../bindings/extcon/qcom,pm8941-misc.txt           | 41 ----------------
+>  .../bindings/extcon/qcom,pm8941-misc.yaml          | 56 ++++++++++++++++++++++
+>  2 files changed, 56 insertions(+), 41 deletions(-)
+>  delete mode 100644 Documentation/devicetree/bindings/extcon/qcom,pm8941-misc.txt
+>  create mode 100644 Documentation/devicetree/bindings/extcon/qcom,pm8941-misc.yaml
+> 
 
---/3yNEOqWowh/8j+e
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
 
-On Wed, Oct 21, 2020 at 01:00:54PM +0100, Srinivas Kandagatla wrote:
+My bot found errors running 'make dt_binding_check' on your patch:
 
-> This is totally not very useful w.r.t UCM2 and makes it very difficult to
-> common up parts of the configs.
+/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/extcon/qcom,pm8941-misc.yaml: properties:compatible:oneOf:0:const: ['qcom,pm8941-misc', 'qcom,pmd-vbus-det'] is not of type 'string'
+/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/extcon/qcom,pm8941-misc.yaml: properties:interrupt-names:anyOf:0:const: ['usb_id', 'usb_vbus'] is not of type 'string'
+/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/extcon/qcom,pm8941-misc.yaml: ignoring, error in schema: properties: compatible: oneOf: 0: const
+warning: no schema found in file: ./Documentation/devicetree/bindings/extcon/qcom,pm8941-misc.yaml
+Error: Documentation/devicetree/bindings/extcon/qcom,pm8941-misc.example.dts:23.49-50 syntax error
+FATAL ERROR: Unable to parse input tree
+make[1]: *** [scripts/Makefile.lib:342: Documentation/devicetree/bindings/extcon/qcom,pm8941-misc.example.dt.yaml] Error 1
+make[1]: *** Waiting for unfinished jobs....
+make: *** [Makefile:1366: dt_binding_check] Error 2
 
-> My suggestions are.
-> 1. set card->driver_name to something more sensible in your sound card
-> driver.
 
-> 2. set long name in model DT property and set it as card long name
+See https://patchwork.ozlabs.org/patch/1385252
 
-It's also worth taking a look at what Intel are doing here with their
-cards.
+The base for the patch is generally the last rc1. Any dependencies
+should be noted.
 
---/3yNEOqWowh/8j+e
-Content-Type: application/pgp-signature; name="signature.asc"
+If you already ran 'make dt_binding_check' and didn't see the above
+error(s), then make sure 'yamllint' is installed and dt-schema is up to
+date:
 
------BEGIN PGP SIGNATURE-----
+pip3 install dtschema --upgrade
 
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAl+QK/AACgkQJNaLcl1U
-h9BbUwf/eOnrTlDEbw+QGCrFiYUmnzBGx64NN4D6F6QHebJyBsYrT6PB95nEpzei
-/il7qT8KENMbMgMUSN4N3vMUVWAkrFYjtI5TXCjDvYy1h790B9UIPXyrq+1+hr3U
-+KuyJJ4+adkM1dYEH904ynqdFapjo8DfVcD0YNZ2DstV8UdOnegpQP06Fygn7Vm8
-7diV0uAnJrtMX74ezClTiKcTB6/Nl0B/ve5m9o8usTa9H1LL9v6HgGrqjrFhMS/p
-6h8MzEw2zJS6+kAU//U8MNVBYAmhR7Urw93XHEx7gisLq3STJgnW0580I4lLHd0i
-9/H/UCdqrnIcE7b8lByvQDy/V2Ydhw==
-=jQZx
------END PGP SIGNATURE-----
+Please check and re-submit.
 
---/3yNEOqWowh/8j+e--
