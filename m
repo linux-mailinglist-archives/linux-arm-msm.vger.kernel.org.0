@@ -2,93 +2,190 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 87A9C2948D5
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Oct 2020 09:24:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 707452948E6
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Oct 2020 09:29:43 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2440903AbgJUHYL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 21 Oct 2020 03:24:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55370 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2440892AbgJUHYK (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 21 Oct 2020 03:24:10 -0400
-Received: from mail-pf1-x442.google.com (mail-pf1-x442.google.com [IPv6:2607:f8b0:4864:20::442])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 12B0CC0613CE
-        for <linux-arm-msm@vger.kernel.org>; Wed, 21 Oct 2020 00:24:09 -0700 (PDT)
-Received: by mail-pf1-x442.google.com with SMTP id b26so964423pff.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 21 Oct 2020 00:24:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=hAIhzFswDyObHC/AccJ2pW9tYMVZUmTRll6IsakeHDI=;
-        b=hcxqhkvAd7gaUVg+ADZjC/g5t7FunCEWj40dk9Jkh/xjioI52ZXAkwo5BMXN3dd6bK
-         5yXuvLzPNM3xRKnqdyMdj4t+47mqUiHukE7zp03beKQSUIMlvPx4UIwK8I+FHjqcmJK+
-         m/BFHJXQmFjXQ8bMAZqWLhKkQs9XMJMwLfK9KLRTPTTK0VqGNT1ILV7h8O1faqdo/jo4
-         RnbVTYrqOhJJX40NnBh57Kvpk11HcrFZljb+h+jDOuMIAQLRZDKUntg+d0RwJGn2AWEH
-         05nApZQVycKIsoa+R52Nh1RncFPKJRVeAHd/N+wiBZk7rXT5ryOvdRuVzz3Kc2MSGxVM
-         o+vQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=hAIhzFswDyObHC/AccJ2pW9tYMVZUmTRll6IsakeHDI=;
-        b=hrk1eGNpfdIiSOK14RwctWqfqlK2jjrMlbXHzcnIYOSs2KUWY46DINNibV2K9QYH/d
-         3+n0nV55dmmQcVVF6Ez5qONEnj0mxMVl9Wlu7Q8CKTvppSp7X/wY/f9ePaZxpXn3zN03
-         upPxfOHrXovCX68onwGVZaotspfRIMeu3p5hmupUiDs1FOUMio/JK0DmK+0KscWqQx1F
-         CuNwCgwK1zx4ByhacB4GXzoVpKaLcaQc4/A/IGVQ5IwV9RiBz8xdDhjyFMXp456TTkLy
-         h042yu0PztZU6N9b/2RODbPIImq3/3P5CoRB2Pl7wG04vQfPyI9dYRvmN7jE/xbbVJWS
-         ninA==
-X-Gm-Message-State: AOAM531nE+D4kQooSH+0HvpVxGZb2eQlE5/QnvwcWOuwRH5qOp+ds5Dv
-        VP5K600OZfVCJvfC3BFsHCJL8A==
-X-Google-Smtp-Source: ABdhPJxdvf151N9thd6CsPj2u4ESktngUMo7t9TYxraGbFVI19jZ698HL0h3xJRccblV6DfAzwc+Ng==
-X-Received: by 2002:aa7:84c6:0:b029:155:d56e:5191 with SMTP id x6-20020aa784c60000b0290155d56e5191mr2068267pfn.41.1603265047189;
-        Wed, 21 Oct 2020 00:24:07 -0700 (PDT)
-Received: from localhost ([122.181.54.133])
-        by smtp.gmail.com with ESMTPSA id o2sm1377845pgg.3.2020.10.21.00.24.05
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 21 Oct 2020 00:24:06 -0700 (PDT)
-Date:   Wed, 21 Oct 2020 12:54:04 +0530
-From:   Viresh Kumar <viresh.kumar@linaro.org>
-To:     rnayak@codeaurora.org, Rob Clark <robdclark@gmail.com>,
-        Sean Paul <sean@poorly.run>
-Cc:     linux-pm@vger.kernel.org,
-        Vincent Guittot <vincent.guittot@linaro.org>,
-        Rafael Wysocki <rjw@rjwysocki.net>,
-        Stephen Boyd <sboyd@kernel.org>, Nishanth Menon <nm@ti.com>,
-        Douglas Anderson <dianders@chromium.org>,
-        Naresh Kamboju <naresh.kamboju@linaro.org>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH V2 3/8] drm/msm: Unconditionally call
- dev_pm_opp_of_remove_table()
-Message-ID: <20201021072404.y43tjzd2ehclrejp@vireshk-i7>
-References: <cover.1598594714.git.viresh.kumar@linaro.org>
- <6e4110032f8711e8bb0acbeccfe66dec3b09d5c1.1598594714.git.viresh.kumar@linaro.org>
- <20201005062633.ejpehkpeuwksrx3e@vireshk-i7>
+        id S2407717AbgJUH3j (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 21 Oct 2020 03:29:39 -0400
+Received: from z5.mailgun.us ([104.130.96.5]:62495 "EHLO z5.mailgun.us"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S2407734AbgJUH3j (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 21 Oct 2020 03:29:39 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1603265378; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=C02hDgWV8WL/Mgowwhjuc5XmmX/v8fdfGLciqHxcx6w=;
+ b=LfS7il7i4isPqRB6kmZ3KNOWjUYuI+lDXx1LlYlzipUF34gGeslMP+qeZ/Du9lHQp45npW9l
+ igGwCk1YaiKtIODPf8xCSoNlR9Buy+blbe7XlQMKntJxuIGkMccOaa/JX6UgMvwBUZV2tKHT
+ uvzBr+6PEG4/54cOnezPAc0dmIo=
+X-Mailgun-Sending-Ip: 104.130.96.5
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n05.prod.us-east-1.postgun.com with SMTP id
+ 5f8fe361bfed2afaa6722297 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 21 Oct 2020 07:29:37
+ GMT
+Sender: saiprakash.ranjan=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 68022C43385; Wed, 21 Oct 2020 07:29:36 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: saiprakash.ranjan)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 7E393C433CB;
+        Wed, 21 Oct 2020 07:29:35 +0000 (UTC)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20201005062633.ejpehkpeuwksrx3e@vireshk-i7>
-User-Agent: NeoMutt/20180716-391-311a52
+Content-Type: text/plain; charset=UTF-8;
+ format=flowed
+Content-Transfer-Encoding: 8bit
+Date:   Wed, 21 Oct 2020 12:59:35 +0530
+From:   Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+To:     Suzuki K Poulose <suzuki.poulose@arm.com>,
+        Mathieu Poirier <mathieu.poirier@linaro.org>
+Cc:     mike.leach@linaro.org, coresight@lists.linaro.org,
+        swboyd@chromium.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        denik@google.com, leo.yan@linaro.org, peterz@infradead.org
+Subject: Re: [PATCH 1/2] coresight: tmc-etf: Fix NULL ptr dereference in
+ tmc_enable_etf_sink_perf()
+In-Reply-To: <8affc09d4045812e2f5a065695b375de@codeaurora.org>
+References: <cover.1602074787.git.saiprakash.ranjan@codeaurora.org>
+ <d7a2dd53d88360b12e5a14933cb931198760dd63.1602074787.git.saiprakash.ranjan@codeaurora.org>
+ <5bbb2d35-3e56-56d7-4722-bf34c5efa2fb@arm.com>
+ <9fa4fcc25dac17b343d151a9d089b48c@codeaurora.org>
+ <707b7860-0daa-d3e3-1f0f-17e1b05feae2@arm.com>
+ <5ad6acdc69c1c2e1e17f5c701a09b7e1@codeaurora.org>
+ <8affc09d4045812e2f5a065695b375de@codeaurora.org>
+Message-ID: <0ee3566e50143bac5b662b2edf551b89@codeaurora.org>
+X-Sender: saiprakash.ranjan@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 05-10-20, 11:56, Viresh Kumar wrote:
-> On 28-08-20, 11:37, Viresh Kumar wrote:
-> > dev_pm_opp_of_remove_table() doesn't report any errors when it fails to
-> > find the OPP table with error -ENODEV (i.e. OPP table not present for
-> > the device). And we can call dev_pm_opp_of_remove_table()
-> > unconditionally here.
-> > 
-> > While at it, also create a label to put clkname.
-> > 
-> > Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
+On 2020-10-20 21:40, Sai Prakash Ranjan wrote:
+> On 2020-10-14 21:29, Sai Prakash Ranjan wrote:
+>> On 2020-10-14 18:46, Suzuki K Poulose wrote:
+>>> On 10/14/2020 10:36 AM, Sai Prakash Ranjan wrote:
+>>>> On 2020-10-13 22:05, Suzuki K Poulose wrote:
+>>>>> On 10/07/2020 02:00 PM, Sai Prakash Ranjan wrote:
+>>>>>> There was a report of NULL pointer dereference in ETF enable
+>>>>>> path for perf CS mode with PID monitoring. It is almost 100%
+>>>>>> reproducible when the process to monitor is something very
+>>>>>> active such as chrome and with ETF as the sink and not ETR.
+>>>>>> Currently in a bid to find the pid, the owner is dereferenced
+>>>>>> via task_pid_nr() call in tmc_enable_etf_sink_perf() and with
+>>>>>> owner being NULL, we get a NULL pointer dereference.
+>>>>>> 
+>>>>>> Looking at the ETR and other places in the kernel, ETF and the
+>>>>>> ETB are the only places trying to dereference the task(owner)
+>>>>>> in tmc_enable_etf_sink_perf() which is also called from the
+>>>>>> sched_in path as in the call trace. Owner(task) is NULL even
+>>>>>> in the case of ETR in tmc_enable_etr_sink_perf(), but since we
+>>>>>> cache the PID in alloc_buffer() callback and it is done as part
+>>>>>> of etm_setup_aux() when allocating buffer for ETR sink, we never
+>>>>>> dereference this NULL pointer and we are safe. So lets do the
+>>>>> 
+>>>>> The patch is necessary to fix some of the issues. But I feel it is
+>>>>> not complete. Why is it safe earlier and not later ? I believe we 
+>>>>> are
+>>>>> simply reducing the chances of hitting the issue, by doing this 
+>>>>> earlier than
+>>>>> later. I would say we better fix all instances to make sure that 
+>>>>> the
+>>>>> event->owner is valid. (e.g, I can see that the for kernel events
+>>>>> event->owner == -1 ?)
+>>>>> 
+>>>>> struct task_struct *tsk = READ_ONCE(event->owner);
+>>>>> 
+>>>>> if (!tsk || is_kernel_event(event))
+>>>>>    /* skip ? */
+>>>>> 
+>>>> 
+>>>> Looking at it some more, is_kernel_event() is not exposed
+>>>> outside events core and probably for good reason. Why do
+>>>> we need to check for this and not just tsk?
+>>> 
+>>> Because the event->owner could be :
+>>> 
+>>>  = NULL
+>>>  = -1UL  // kernel event
+>>>  = valid.
+>>> 
+>> 
+>> Yes I understood that part, but here we were trying to
+>> fix the NULL pointer dereference right and hence the
+>> question as to why we need to check for kernel events?
+>> I am no expert in perf but I don't see anywhere in the
+>> kernel checking for is_kernel_event(), so I am a bit
+>> skeptical if exporting that is actually right or not.
+>> 
 > 
-> Can someone please apply this and the other drm patch (2/8) ?
+> I have stress tested with the original patch many times
+> now, i.e., without a check for event->owner and is_kernel_event()
+> and didn't observe any crash. Plus on ETR where this was already
+> done, no crashes were reported till date and with ETF, the issue
+> was quickly reproducible, so I am fairly confident that this
+> doesn't just delay the original issue but actually fixes
+> it. I will run an overnight test again to confirm this.
+> 
 
-Rob/Rajendra, can someone please have a look at these patches ?
+I ran the overnight test which collected aroung 4G data(see below),
+with the following small change to see if the two cases
+(event->owner=NULL and is_kernel_event()) are triggered
+with suggested changes and it didn't trigger at all.
+Do we still need those additional checks?
+
+[ perf record: Captured and wrote 4677.989 MB perf.data ]
+
+diff --git a/drivers/hwtracing/coresight/coresight-tmc-etf.c 
+b/drivers/hwtracing/coresight/coresight-tmc-etf.c
+index 989d965f3d90..123c446ce585 100644
+--- a/drivers/hwtracing/coresight/coresight-tmc-etf.c
++++ b/drivers/hwtracing/coresight/coresight-tmc-etf.c
+@@ -13,6 +13,13 @@
+  #include "coresight-tmc.h"
+  #include "coresight-etm-perf.h"
+
++#define TASK_TOMBSTONE ((void *)-1L)
++
++static bool is_kernel_event2(struct perf_event *event)
++{
++       return READ_ONCE(event->owner) == TASK_TOMBSTONE;
++}
++
+  static int tmc_set_etf_buffer(struct coresight_device *csdev,
+                               struct perf_output_handle *handle);
+
+@@ -392,6 +399,15 @@ static void *tmc_alloc_etf_buffer(struct 
+coresight_device *csdev,
+  {
+         int node;
+         struct cs_buffers *buf;
++       struct task_struct *task = READ_ONCE(event->owner);
++
++       if (!task) {
++               pr_info("**sai in task=NULL**\n");
++               return NULL;
++       }
++
++       if (is_kernel_event2(event))
++               pr_info("**sai in is_kernel_event**\n");
+
+         node = (event->cpu == -1) ? NUMA_NO_NODE : 
+cpu_to_node(event->cpu);
+
+
+Thanks,
+Sai
 
 -- 
-viresh
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a 
+member
+of Code Aurora Forum, hosted by The Linux Foundation
