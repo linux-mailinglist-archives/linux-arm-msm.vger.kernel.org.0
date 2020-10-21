@@ -2,459 +2,399 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 5764929504F
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Oct 2020 18:01:11 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B8BD0295073
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Oct 2020 18:12:52 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2444333AbgJUQBE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 21 Oct 2020 12:01:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51204 "EHLO
+        id S2502856AbgJUQMG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 21 Oct 2020 12:12:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52892 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2444332AbgJUQBE (ORCPT
+        with ESMTP id S2502852AbgJUQMG (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 21 Oct 2020 12:01:04 -0400
-Received: from mail-ej1-x641.google.com (mail-ej1-x641.google.com [IPv6:2a00:1450:4864:20::641])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9DDE8C0613CE
-        for <linux-arm-msm@vger.kernel.org>; Wed, 21 Oct 2020 09:01:03 -0700 (PDT)
-Received: by mail-ej1-x641.google.com with SMTP id p5so4018547ejj.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 21 Oct 2020 09:01:03 -0700 (PDT)
+        Wed, 21 Oct 2020 12:12:06 -0400
+Received: from mail-pl1-x643.google.com (mail-pl1-x643.google.com [IPv6:2607:f8b0:4864:20::643])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EC9ADC0613D2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 21 Oct 2020 09:12:05 -0700 (PDT)
+Received: by mail-pl1-x643.google.com with SMTP id w11so1443592pll.8
+        for <linux-arm-msm@vger.kernel.org>; Wed, 21 Oct 2020 09:12:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=iw8oum+yOtOWuMj6l8Bwey2ZkXCDw2Q+q/F76pBHixU=;
-        b=gEYe0nhMMtdA/GBOz6Z2xHWMDzrBu5dWwiZkxvtZik/+LzHhaV57b6Yhahezr7qKvR
-         ob9aegaxt9q/RY0LYMcfSODtZ6c8BklWOgUVdSOOp7tLwVl0GzijAcHYRZuqCAWRODHZ
-         BeMPlYrM6minQlDIQXxsuvQu2cL7BH5nEUukMQbukFsmy49voqBBHIny/1SZNMC20Ow3
-         sev/i84JZool/rX44tg7vCbsb9mB1xhQYkUtr9kfjCGpXevs+WZSCuDu+ban9k2l3DWe
-         t6PkEr+i2E57pGvF4YY9HDjca7a2eLd5i7jToomBr+L8IpGMPkvz2j2A/3V9alFr0r1N
-         KSjA==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=MDZI3EK3idwd//KAW51RS4zI7bvU+JrWVheI3N5Vli8=;
+        b=UW+bDTHTXOH6mMqR88Vb/0LZeZAcx0Zr23g+Uzd1QenSq2ZtyU+4NdWSxv/rwTgfyE
+         CtMAeDbK0vGNAkz8gVC4sPA8tJoS7CBoubnK1zgjZrgQUj3m9kLQ88eDrzc2sK0k2mmm
+         h2fQFMZXii9d6hO4AYbya2tHk1GIznP/dtXJZujjJzipQrxX7ejUzJ3p3cnD84ryD4gn
+         udU5odmKZ/bg1CCCbSjwoaOKoYkQ1bwVZdjTR1fFV/rPWJx36K3VVfEu6LARJ8BLqFX7
+         Z1dcl+UZ3BsnwuyW+7+mbkkigyFWZzJ0+Gjog+lCdd34qNIwpuD9F1+ZzeRd1M57RXiM
+         1DFw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=iw8oum+yOtOWuMj6l8Bwey2ZkXCDw2Q+q/F76pBHixU=;
-        b=p4dBybcng9p4HC+xvEpm9jy60E6+xlHqk5XCvt4NHo2MSskPskoRRGVfIHKO8k27Ut
-         zuovTVstG/ZDhh0hSKMZzoyBKF2JAtphbtTFeM5bWU3nxbXpzKf/QIW8rAND/1bm199k
-         rtPq9W4Lk7qewpfO2/eecznZEA1+5Cm+Dyq2BzF87+WiqueXI2/BI7yiUusFe/Wg5ykP
-         TEodBvTpfAHijq0OmqRrp0U7j1yMLd9rqQS6zLZ/tZlFUaPODPNhqcvAQjPW3g41RQxs
-         1Jd1blRdhJ9p18yMk/yf418B9T67DEcO1lAYRCBMNj3IHG7vND8EI13hbislgSjVistT
-         FjJg==
-X-Gm-Message-State: AOAM530yLNJahRdCtSBYB+OG2mL3dMgyOGM4v/7Ds3xktgsS5rV1o1R2
-        Ekxk6fmKjNZf0l0vsWVPvYkuwqrbR0DC2y5Fr+nOTk13eiNaPAeN
-X-Google-Smtp-Source: ABdhPJyzc/5XcjGc41Yel/j8P+63jGy6TiNMrTb9DSDKM1tpJ2aOA56Q1XGe/5KFb9zaVtkX2CkWWWjAUq/5rJYfB5Y=
-X-Received: by 2002:a17:906:2e59:: with SMTP id r25mr4254733eji.520.1603296062104;
- Wed, 21 Oct 2020 09:01:02 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=MDZI3EK3idwd//KAW51RS4zI7bvU+JrWVheI3N5Vli8=;
+        b=SBZyjV3je0HyL8KDk7NfjVUR2guhunSInNQWvXJRhBTAEDWY6l4hTuSiNJj9/qpNjF
+         UPI1P3fn7pIM8aFjX93RwbbMsb0xbOz2/azilw5UmIwhTThK4Copp2TFEvJp+6yNVVMR
+         0tReorijuwQhK2S/rfR8O57e9aR4x3pnEv00PyjE6l+UQYtBU45mZwnCk1i3d8snpjb5
+         UEcR3bAwCI+ipKyDz4oMY624wxVoXXte1nFAuFrJU4HDJTisnzjM6608XZHStfTX5F9K
+         tYoz8sKvrcfXucqd8ho3W7freSC4hxzdT154vOdgXuL+Oi5bWsdMcbJo2hussG0/Mv6K
+         ftUg==
+X-Gm-Message-State: AOAM533e+6RMxTWzPMsAdNo0Vl+yjh44yG995l5pIJAPjT+91CYC9Lug
+        pqAV3Ob9G9RRCmTEcXS7aDgh
+X-Google-Smtp-Source: ABdhPJwoz3DXXi6YFin4kd6ltOyMtuScqTHAArcv92fclbXARZigMypKM4H7MLAg7uEgR70zR8BHOw==
+X-Received: by 2002:a17:902:a704:b029:d3:b2d4:a847 with SMTP id w4-20020a170902a704b02900d3b2d4a847mr4215652plq.77.1603296725159;
+        Wed, 21 Oct 2020 09:12:05 -0700 (PDT)
+Received: from Mani-XPS-13-9360 ([2409:4072:70e:2a27:314a:6d22:ec47:a603])
+        by smtp.gmail.com with ESMTPSA id x19sm1494179pjk.25.2020.10.21.09.11.59
+        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 21 Oct 2020 09:12:03 -0700 (PDT)
+Date:   Wed, 21 Oct 2020 21:41:56 +0530
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     Hemant Kumar <hemantk@codeaurora.org>
+Cc:     gregkh@linuxfoundation.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, jhugo@codeaurora.org,
+        bbhatt@codeaurora.org, loic.poulain@linaro.org
+Subject: Re: [PATCH v7 4/4] bus: mhi: Add userspace client interface driver
+Message-ID: <20201021161156.GE3334@Mani-XPS-13-9360>
+References: <1602907457-13680-1-git-send-email-hemantk@codeaurora.org>
+ <1602907457-13680-5-git-send-email-hemantk@codeaurora.org>
 MIME-Version: 1.0
-References: <1603108844-22286-1-git-send-email-loic.poulain@linaro.org> <20201021152029.GB3334@Mani-XPS-13-9360>
-In-Reply-To: <20201021152029.GB3334@Mani-XPS-13-9360>
-From:   Loic Poulain <loic.poulain@linaro.org>
-Date:   Wed, 21 Oct 2020 18:06:25 +0200
-Message-ID: <CAMZdPi96x91e7hux7WK=xQY62k1=1S1v=Tk2gadPidtOA=Augw@mail.gmail.com>
-Subject: Re: [PATCH v4] bus: mhi: Add MHI PCI support for WWAN modems
-To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc:     Hemant Kumar <hemantk@codeaurora.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Jeffrey Hugo <jhugo@codeaurora.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1602907457-13680-5-git-send-email-hemantk@codeaurora.org>
+User-Agent: Mutt/1.9.4 (2018-02-28)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Mani,
+On Fri, Oct 16, 2020 at 09:04:17PM -0700, Hemant Kumar wrote:
+> This MHI client driver allows userspace clients to transfer
+> raw data between MHI device and host using standard file operations.
+> Driver instantiates uci device object which is associated to device
+> file node. uci device object instantiates uci channel object when device
+> file node is opened. uci channel object is used to manage MHI channels
+> by calling MHI core APIs for read and write operations. MHI channels
+> are started as part of device open(). MHI channels remain in start
+> state until last release() is called on uci device file node. Device
+> file node is created with format
+> 
+> /dev/mhi_<controller_name>_<mhi_device_name>
+> 
+> Currently it supports LOOPBACK channel.
+> 
+> Signed-off-by: Hemant Kumar <hemantk@codeaurora.org>
+> ---
+>  drivers/bus/mhi/Kconfig  |  13 +
+>  drivers/bus/mhi/Makefile |   4 +
+>  drivers/bus/mhi/uci.c    | 656 +++++++++++++++++++++++++++++++++++++++++++++++
+>  3 files changed, 673 insertions(+)
+>  create mode 100644 drivers/bus/mhi/uci.c
+> 
+> diff --git a/drivers/bus/mhi/Kconfig b/drivers/bus/mhi/Kconfig
+> index e841c10..3891b31 100644
+> --- a/drivers/bus/mhi/Kconfig
+> +++ b/drivers/bus/mhi/Kconfig
+> @@ -20,3 +20,16 @@ config MHI_BUS_DEBUG
+>  	  Enable debugfs support for use with the MHI transport. Allows
+>  	  reading and/or modifying some values within the MHI controller
+>  	  for debug and test purposes.
+> +
+> +config MHI_UCI
+> +	tristate "MHI UCI"
+> +	depends on MHI_BUS
+> +	help
+> +	  MHI based userspace client interface driver is used for transferring
 
-On Wed, 21 Oct 2020 at 17:20, Manivannan Sadhasivam
-<manivannan.sadhasivam@linaro.org> wrote:
->
-> On Mon, Oct 19, 2020 at 02:00:44PM +0200, Loic Poulain wrote:
-> > This is a generic MHI-over-PCI controller driver for MHI only devices
-> > such as QCOM modems. For now it supports registering of Qualcomm SDX55
-> > based PCIe modules. The MHI channels have been extracted from mhi
-> > downstream driver.
-> >
-> > This driver is for MHI-only devices which have all functionnalities
->
-> s/functionnalities/functionalities
->
-> > exposed through MHI channels and accessed by the corresponding MHI
-> > device drivers (no out-of-band communication).
-> >
-> > Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
-> > ---
-> >  v2: - remove useless delay.h include
-> >      - remove over-logging on error
-> >      - remove controller subdir
-> >      - rename to mhi_pci_modem.c
-> >      - Fix mhi_pci_probe exit path on error
-> >      - expand module description
-> >      - drop module version
-> >  v3: - Rename to mhi_pci_generic
-> >      - Add hardware accelerated IP channel (IPA)
-> >      - Added fw/edl names for sdx55m
-> >  v4: - Configurable dma width access
-> >      - Configurable PCI BAR number (default is 0)
-> >
-> >  drivers/bus/mhi/Kconfig           |   9 +
-> >  drivers/bus/mhi/Makefile          |   3 +
-> >  drivers/bus/mhi/mhi_pci_generic.c | 336 ++++++++++++++++++++++++++++++++++++++
-> >  3 files changed, 348 insertions(+)
-> >  create mode 100644 drivers/bus/mhi/mhi_pci_generic.c
-> >
-> > diff --git a/drivers/bus/mhi/Kconfig b/drivers/bus/mhi/Kconfig
-> > index e841c10..daa8528 100644
-> > --- a/drivers/bus/mhi/Kconfig
-> > +++ b/drivers/bus/mhi/Kconfig
-> > @@ -20,3 +20,12 @@ config MHI_BUS_DEBUG
-> >         Enable debugfs support for use with the MHI transport. Allows
-> >         reading and/or modifying some values within the MHI controller
-> >         for debug and test purposes.
-> > +
-> > +config MHI_BUS_PCI_GENERIC
-> > +     tristate "MHI PCI controller driver"
-> > +     depends on MHI_BUS
-> > +     depends on PCI
-> > +     help
-> > +       This driver provides Modem Host Interface (MHI) PCI controller driver
->
-> No need to expand MHI here. It is already done in CONFIG_MHI_BUS.
->
-> > +       for devices such as Qualcomm SDX55 based PCIe modems.
-> > +
-> > diff --git a/drivers/bus/mhi/Makefile b/drivers/bus/mhi/Makefile
-> > index 19e6443..d1a4ef3 100644
-> > --- a/drivers/bus/mhi/Makefile
-> > +++ b/drivers/bus/mhi/Makefile
-> > @@ -1,2 +1,5 @@
-> >  # core layer
-> >  obj-y += core/
-> > +
-> > +obj-$(CONFIG_MHI_BUS_PCI_GENERIC) := mhi_pci_generic.o
->
-> The driver is already under bus/mhi so no need of mhi_ prefix here.
->
-> > +
-> > diff --git a/drivers/bus/mhi/mhi_pci_generic.c b/drivers/bus/mhi/mhi_pci_generic.c
-> > new file mode 100644
-> > index 0000000..dcd6c1a
-> > --- /dev/null
-> > +++ b/drivers/bus/mhi/mhi_pci_generic.c
-> > @@ -0,0 +1,336 @@
-> > +// SPDX-License-Identifier: GPL-2.0-or-later
-> > +/*
-> > + * MHI PCI driver - MHI over PCI controller driver
-> > + *
-> > + * This module is a generic driver for registering MHI-over-PCI devices,
-> > + * such as PCIe QCOM modems.
-> > + *
-> > + * Copyright (C) 2020 Linaro Ltd <loic.poulain@linaro.org>
->
-> Is this driver completely written from scratch? If not then you need to provide
-> the copyright in downstream.
+Userspace Client Interface (UCI)
 
-Yes, the code itself has been written from scratch, though some
-information, like channel IDs come from downstream parts.
+And please use the caps form UCI in comments throughout the driver.
 
->
->
-> > + */
-> > +
-> > +#include <linux/device.h>
-> > +#include <linux/mhi.h>
-> > +#include <linux/module.h>
-> > +#include <linux/pci.h>
-> > +
-> > +#define MHI_PCI_DEFAULT_BAR_NUM 0
-> > +
-> > +struct mhi_pci_dev_info {
-> > +     const struct mhi_controller_config *config;
-> > +     const char *name;
-> > +     const char *fw;
-> > +     const char *edl;
-> > +     unsigned int bar_num;
-> > +     unsigned int dma_data_width;
-> > +};
->
-> Can you please add Kdoc for this structure?
+> +	  raw data between host and device using standard file operations from
+> +	  userspace. Open, read, write, and close operations are supported
+> +	  by this driver. Please check mhi_uci_match_table for all supported
+> +	  channels that are exposed to userspace.
+> +
+> +	  To compile this driver as a module, choose M here: the module will be
+> +	  called mhi_uci.
+> diff --git a/drivers/bus/mhi/Makefile b/drivers/bus/mhi/Makefile
+> index 19e6443..80feefb 100644
+> --- a/drivers/bus/mhi/Makefile
+> +++ b/drivers/bus/mhi/Makefile
+> @@ -1,2 +1,6 @@
+>  # core layer
+>  obj-y += core/
+> +
+> +# MHI client
+> +mhi_uci-y := uci.o
+> +obj-$(CONFIG_MHI_UCI) += mhi_uci.o
+> diff --git a/drivers/bus/mhi/uci.c b/drivers/bus/mhi/uci.c
+> new file mode 100644
+> index 0000000..8334836
+> --- /dev/null
+> +++ b/drivers/bus/mhi/uci.c
+> @@ -0,0 +1,656 @@
+> +// SPDX-License-Identifier: GPL-2.0-only
+> +/* Copyright (c) 2018-2020, The Linux Foundation. All rights reserved.*/
+> +
+> +#include <linux/kernel.h>
+> +#include <linux/mhi.h>
+> +#include <linux/mod_devicetable.h>
+> +#include <linux/module.h>
+> +#include <linux/poll.h>
+> +
+> +#define DEVICE_NAME "mhi"
+> +#define MHI_UCI_DRIVER_NAME "mhi_uci"
+> +#define MAX_UCI_MINORS (128)
 
-sure
+No need of ().
 
->
-> > +
-> > +#define MHI_CHANNEL_CONFIG_UL(cnum, cname, elems, event)     \
->
-> ch_num, ch_name sounds more apt here...
->
-> > +     {                                                       \
-> > +             .num = cnum,                                    \
-> > +             .name = cname,                                  \
-> > +             .num_elements = elems,                          \
-> > +             .event_ring = event,                            \
-> > +             .dir = DMA_TO_DEVICE,                           \
-> > +             .ee_mask = BIT(MHI_EE_AMSS),                    \
-> > +             .pollcfg = 0,                                   \
-> > +             .doorbell = MHI_DB_BRST_DISABLE,                \
-> > +             .lpm_notify = false,                            \
-> > +             .offload_channel = false,                       \
-> > +             .doorbell_mode_switch = false,                  \
-> > +     }                                                       \
-> > +
-> > +#define MHI_CHANNEL_CONFIG_DL(cnum, cname, elems, event)     \
-> > +     {                                                       \
-> > +             .num = cnum,                                    \
-> > +             .name = cname,                                  \
-> > +             .num_elements = elems,                          \
-> > +             .event_ring = event,                            \
-> > +             .dir = DMA_FROM_DEVICE,                         \
-> > +             .ee_mask = BIT(MHI_EE_AMSS),                    \
-> > +             .pollcfg = 0,                                   \
-> > +             .doorbell = MHI_DB_BRST_DISABLE,                \
-> > +             .lpm_notify = false,                            \
-> > +             .offload_channel = false,                       \
-> > +             .doorbell_mode_switch = false,                  \
-> > +     }
-> > +
-> > +#define MHI_EVENT_CONFIG_CTRL(enum)          \
->
-> Can you use a better name instead of enum?
+> +
+> +static DEFINE_IDR(uci_idr);
+> +static DEFINE_MUTEX(uci_drv_mutex);
+> +static struct class *uci_dev_class;
+> +static int uci_dev_major;
+> +
+> +/**
+> + * struct uci_chan - MHI channel for a uci device
+> + * @udev: associated uci device object
+> + * @ul_wq: wait queue for writer
+> + * @write_lock: mutex write lock for ul channel
+> + * @dl_wq: wait queue for reader
+> + * @read_lock: mutex read lock for dl channel
+> + * @dl_lock: spin lock
+> + * @pending: list of dl buffers userspace is waiting to read
+> + * @cur_buf: current buffer userspace is reading
+> + * @dl_size: size of the current dl buffer userspace is reading
+> + * @ref_count: uci_chan reference count
+> + */
+> +struct uci_chan {
+> +	struct uci_dev *udev;
+> +	wait_queue_head_t ul_wq;
+> +
+> +	/* ul channel lock to synchronize multiple writes */
 
-certainly
+Please move these inline comments to Kdoc.
 
->
-> > +     {                                       \
-> > +             .num_elements = 64,             \
-> > +             .irq_moderation_ms = 0,         \
-> > +             .irq = (enum) + 1,              \
-> > +             .priority = 1,                  \
-> > +             .mode = MHI_DB_BRST_DISABLE,    \
-> > +             .data_type = MHI_ER_CTRL,       \
-> > +             .hardware_event = false,        \
-> > +             .client_managed = false,        \
-> > +             .offload_channel = false,       \
-> > +     }
-> > +
-> > +#define MHI_EVENT_CONFIG_DATA(enum)          \
-> > +     {                                       \
-> > +             .num_elements = 128,            \
-> > +             .irq_moderation_ms = 5,         \
-> > +             .irq = (enum) + 1,              \
-> > +             .priority = 1,                  \
-> > +             .mode = MHI_DB_BRST_DISABLE,    \
-> > +             .data_type = MHI_ER_DATA,       \
-> > +             .hardware_event = false,        \
-> > +             .client_managed = false,        \
-> > +             .offload_channel = false,       \
-> > +     }
-> > +
-> > +#define MHI_EVENT_CONFIG_HW_DATA(enum, cnum) \
-> > +     {                                       \
-> > +             .num_elements = 128,            \
-> > +             .irq_moderation_ms = 5,         \
-> > +             .irq = (enum) + 1,              \
-> > +             .priority = 1,                  \
-> > +             .mode = MHI_DB_BRST_DISABLE,    \
-> > +             .data_type = MHI_ER_DATA,       \
-> > +             .hardware_event = true,         \
-> > +             .client_managed = false,        \
-> > +             .offload_channel = false,       \
-> > +             .channel = cnum,                \
-> > +     }
-> > +
-> > +static const struct mhi_channel_config modem_qcom_v1_mhi_channels[] = {
-> > +     MHI_CHANNEL_CONFIG_UL(12, "MBIM", 4, 0),
-> > +     MHI_CHANNEL_CONFIG_DL(13, "MBIM", 4, 0),
-> > +     MHI_CHANNEL_CONFIG_UL(14, "QMI", 4, 0),
-> > +     MHI_CHANNEL_CONFIG_DL(15, "QMI", 4, 0),
-> > +     MHI_CHANNEL_CONFIG_UL(20, "IPCR", 8, 0),
-> > +     MHI_CHANNEL_CONFIG_DL(21, "IPCR", 8, 0),
-> > +     MHI_CHANNEL_CONFIG_UL(100, "IP_HW0", 128, 1),
-> > +     MHI_CHANNEL_CONFIG_DL(101, "IP_HW0", 128, 2),
-> > +};
-> > +
-> > +static const struct mhi_event_config modem_qcom_v1_mhi_events[] = {
-> > +     /* first ring is control+data ring */
-> > +     MHI_EVENT_CONFIG_CTRL(0),
-> > +     /* Hardware channels request dedicated hardware event rings */
-> > +     MHI_EVENT_CONFIG_HW_DATA(1, 100),
-> > +     MHI_EVENT_CONFIG_HW_DATA(2, 101)
-> > +};
-> > +
-> > +static const struct mhi_controller_config modem_qcom_v1_mhi_config = {
-> > +     .max_channels = 128,
-> > +     .timeout_ms = 5000,
-> > +     .num_channels = ARRAY_SIZE(modem_qcom_v1_mhi_channels),
-> > +     .ch_cfg = modem_qcom_v1_mhi_channels,
-> > +     .num_events = ARRAY_SIZE(modem_qcom_v1_mhi_events),
-> > +     .event_cfg = modem_qcom_v1_mhi_events,
-> > +};
-> > +
-> > +static const struct mhi_pci_dev_info mhi_qcom_sdx55_info = {
-> > +     .name = "qcom-sdx55m",
-> > +     .fw = "qcom/sdx55m/sbl1.mbn",
-> > +     .edl = "qcom/sdx55m/edl.mbn",
-> > +     .config = &modem_qcom_v1_mhi_config,
-> > +     .bar_num = MHI_PCI_DEFAULT_BAR_NUM,
-> > +     .dma_data_width = 32
-> > +};
-> > +
-> > +static const struct pci_device_id mhi_pci_id_table[] = {
-> > +     { PCI_DEVICE(PCI_VENDOR_ID_QCOM, 0x0306),
-> > +             .driver_data = (kernel_ulong_t) &mhi_qcom_sdx55_info },
-> > +     {  }
-> > +};
-> > +MODULE_DEVICE_TABLE(pci, mhi_pci_id_table);
-> > +
-> > +static int mhi_pci_read_reg(struct mhi_controller *mhic, void __iomem *addr,
-> > +                         u32 *out)
->
-> Nit: Align the wrapped parameter with the start of '('
->
-> > +{
-> > +     *out = readl(addr);
-> > +     return 0;
-> > +}
-> > +
-> > +static void mhi_pci_write_reg(struct mhi_controller *mhic, void __iomem *addr,
-> > +                           u32 val)
-> > +{
-> > +     writel(val, addr);
-> > +}
-> > +
-> > +static void mhi_pci_status_cb(struct mhi_controller *mhi_cntrl,
-> > +                           enum mhi_callback cb)
-> > +{
-> > +     return;
-> > +}
-> > +
-> > +static int mhi_pci_claim(struct mhi_controller *mhic, unsigned int bar_num,
->
-> s/mhic/mhi_cntrl - Just to be consistent with the core MHI bus.
->
-> > +                      u64 dma_mask)
-> > +{
-> > +     struct pci_dev *pdev = to_pci_dev(mhic->cntrl_dev);
-> > +     int err;
-> > +
-> > +     err = pci_assign_resource(pdev, bar_num);
-> > +     if (err)
-> > +             return err;
-> > +
-> > +     err = pcim_enable_device(pdev);
-> > +     if (err) {
-> > +             dev_err(&pdev->dev, "failed to enable pci device: %d\n", err);
-> > +             return err;
-> > +     }
-> > +
-> > +     err = pcim_iomap_regions(pdev, 1 << bar_num, pci_name(pdev));
-> > +     if (err) {
-> > +             dev_err(&pdev->dev, "failed to map pci region: %d\n", err);
-> > +             return err;
-> > +     }
-> > +     mhic->regs = pcim_iomap_table(pdev)[bar_num];
-> > +
-> > +     err = pci_set_dma_mask(pdev, dma_mask);
-> > +     if (err) {
-> > +             dev_err(&pdev->dev, "Cannot set proper DMA mask\n");
-> > +             return err;
-> > +     }
-> > +
-> > +     err = pci_set_consistent_dma_mask(pdev, dma_mask);
-> > +     if (err) {
-> > +             dev_err(&pdev->dev, "set consistent dma mask failed\n");
-> > +             return err;
-> > +     }
-> > +
-> > +     pci_set_master(pdev);
-> > +
-> > +     return 0;
-> > +}
-> > +
-> > +static int mhi_pci_get_irqs(struct mhi_controller *mhic,
-> > +                         const struct mhi_controller_config *mhic_config)
-> > +{
-> > +     struct pci_dev *pdev = to_pci_dev(mhic->cntrl_dev);
-> > +     int nr_vectors, i;
-> > +     int *irq;
-> > +
-> > +     /*
-> > +      * Alloc one MSI vector for BHI + one vector per event ring, ideally...
-> > +      * No explicit pci_free_irq_vectors required, done by pcim_release.
-> > +      */
-> > +     mhic->nr_irqs = 1 + mhic_config->num_events;
-> > +
-> > +     nr_vectors = pci_alloc_irq_vectors(pdev, 1, mhic->nr_irqs, PCI_IRQ_MSI);
-> > +     if (nr_vectors < 0) {
-> > +             dev_err(&pdev->dev, "Error allocating MSI vectors %d\n",
-> > +                     nr_vectors);
-> > +             return nr_vectors;
-> > +     }
-> > +
-> > +     if (nr_vectors < mhic->nr_irqs) {
-> > +             dev_warn(&pdev->dev, "Not enough MSI vectors (%d/%d)\n",
-> > +                      nr_vectors, mhic_config->num_events);
-> > +             /* continue... use shared IRQ */
->
-> Perhaps add this info to the warning as well?
->
-> > +     }
-> > +
-> > +     irq = devm_kcalloc(&pdev->dev, mhic->nr_irqs, sizeof(int), GFP_KERNEL);
->
-> So you're allocating 'mhic->nr_irqs' even for (nr_vectors < mhic->nr_irqs) case?
+> +	struct mutex write_lock;
+> +
+> +	wait_queue_head_t dl_wq;
+> +
+> +	/* dl channel lock to synchronize multiple reads */
+> +	struct mutex read_lock;
+> +
+> +	/*
+> +	 * protects pending and cur_buf members in bh context, channel release,
+> +	 * read and poll
+> +	 */
+> +	spinlock_t dl_lock;
+> +
+> +	struct list_head pending;
+> +	struct uci_buf *cur_buf;
+> +	size_t dl_size;
+> +	struct kref ref_count;
+> +};
+> +
+> +/**
+> + * struct uci_buf - uci buffer
+> + * @data: data buffer
+> + * @len: length of data buffer
+> + * @node: list node of the uci buffer
+> + */
+> +struct uci_buf {
+> +	void *data;
+> +	size_t len;
+> +	struct list_head node;
+> +};
+> +
+> +/**
+> + * struct uci_dev - MHI uci device
+> + * @minor: uci device node minor number
+> + * @mhi_dev: associated mhi device object
+> + * @uchan: uci uplink and downlink channel object
+> + * @mtu: max TRE buffer length
+> + * @enabled: uci device probed
 
-Yes, simply because I want to keep mhi_event_config which contains IRQ
-IDs is constant (and would like to keep it constant).
-That allows a simple matching between ring ID and interrupt ID.
+Use something like, "Flag to track the state of the UCI device".
 
->
-> > +     if (!irq)
-> > +             return -ENOMEM;
-> > +
-> > +     for (i = 0; i < mhic->nr_irqs; i++) {
-> > +             int vector = i >= nr_vectors ? (nr_vectors - 1) : i;
-> > +
-> > +             irq[i] = pci_irq_vector(pdev, vector);
-> > +     }
-> > +
-> > +     mhic->irq = irq;
-> > +
-> > +     return 0;
-> > +}
-> > +
-> > +static int mhi_pci_runtime_get(struct mhi_controller *mhi_cntrl)
-> > +{
-> > +     /* no PM for now */
-> > +     return 0;
-> > +}
-> > +
-> > +static void mhi_pci_runtime_put(struct mhi_controller *mhi_cntrl)
-> > +{
-> > +     /* no PM for now */
-> > +     return;
-> > +}
-> > +
-> > +static int mhi_pci_probe(struct pci_dev *pdev, const struct pci_device_id *id)
-> > +{
-> > +     const struct mhi_pci_dev_info *info = (struct mhi_pci_dev_info *) id->driver_data;
-> > +     const struct mhi_controller_config *mhic_config;
->
-> s/mhic_config/mhi_config
->
-> > +     struct mhi_controller *mhic;
-> > +     int err;
-> > +
-> > +     dev_info(&pdev->dev, "MHI PCI device found: %s\n", info->name);
->
-> Make it dev_dbg.
->
-> > +
-> > +     mhic = devm_kzalloc(&pdev->dev, sizeof(*mhic), GFP_KERNEL);
->
-> You should use mhi_alloc_controller() API for allocating the controller struct.
-> but then you need to free it in error paths as well...
+> + * @lock: mutex lock to manage uchan object
+> + * @ref_count: uci_dev reference count
+> + */
+> +struct uci_dev {
+> +	unsigned int minor;
+> +	struct mhi_device *mhi_dev;
+> +	struct uci_chan *uchan;
+> +	size_t mtu;
+> +	bool enabled;
+> +
+> +	/* synchronize open, release and driver remove */
+> +	struct mutex lock;
+> +	struct kref ref_count;
+> +};
+> +
 
-TBH, not sure what is the point of using mhi_alloc_controller, since
-kzalloc allows
-zeroed allocation as well, and devm is so useful.
+[...]
 
-Regards,
-Loic
+> +
+> +static int mhi_uci_dev_start_chan(struct uci_dev *udev)
+> +{
+> +	int ret = 0;
+> +	struct uci_chan *uchan;
+> +
+> +	mutex_lock(&udev->lock);
+> +	if (!udev->uchan || !kref_get_unless_zero(&udev->uchan->ref_count)) {
+> +		uchan = kzalloc(sizeof(*uchan), GFP_KERNEL);
+> +		if (!uchan) {
+> +			ret = -ENOMEM;
+> +			goto error_chan_start;
+> +		}
+> +
+> +		udev->uchan = uchan;
+> +		uchan->udev = udev;
+> +		init_waitqueue_head(&uchan->ul_wq);
+> +		init_waitqueue_head(&uchan->dl_wq);
+> +		mutex_init(&uchan->write_lock);
+> +		mutex_init(&uchan->read_lock);
+> +		spin_lock_init(&uchan->dl_lock);
+> +		INIT_LIST_HEAD(&uchan->pending);
+> +
+> +		ret = mhi_prepare_for_transfer(udev->mhi_dev);
+> +		if (ret) {
+> +			dev_err(&udev->mhi_dev->dev, "Error starting transfer channels\n");
+> +			goto error_chan_cleanup;
+> +		}
+> +
+> +		ret = mhi_queue_inbound(udev);
+> +		if (ret)
+> +			goto error_chan_cleanup;
+> +
+> +		kref_init(&uchan->ref_count);
+> +	}
+> +
+> +	mutex_unlock(&udev->lock);
+
+Please leave a new line before return.
+
+> +	return 0;
+> +
+> +error_chan_cleanup:
+> +	mhi_uci_dev_chan_release(&uchan->ref_count);
+> +error_chan_start:
+> +	mutex_unlock(&udev->lock);
+> +	return ret;
+> +}
+> +
+
+[...]
+
+> +
+> +static int mhi_uci_probe(struct mhi_device *mhi_dev,
+> +			 const struct mhi_device_id *id)
+> +{
+> +	struct uci_dev *udev;
+> +	struct mhi_controller *mhi_cntrl = mhi_dev->mhi_cntrl;
+> +	struct device *dev;
+> +	int index;
+> +
+> +	udev = kzalloc(sizeof(*udev), GFP_KERNEL);
+> +	if (!udev)
+> +		return -ENOMEM;
+> +
+> +	kref_init(&udev->ref_count);
+> +	mutex_init(&udev->lock);
+> +	udev->mhi_dev = mhi_dev;
+> +
+> +	mutex_lock(&uci_drv_mutex);
+
+Do we really need the lock here?
+
+> +	index = idr_alloc(&uci_idr, udev, 0, MAX_UCI_MINORS, GFP_KERNEL);
+> +	mutex_unlock(&uci_drv_mutex);
+> +	if (index < 0) {
+> +		kfree(udev);
+> +		return index;
+> +	}
+> +
+> +	udev->minor = index;
+> +
+> +	udev->mtu = min_t(size_t, id->driver_data, MHI_MAX_MTU);
+> +	dev_set_drvdata(&mhi_dev->dev, udev);
+> +	udev->enabled = true;
+> +
+> +	/* create device file node /dev/mhi_<cntrl_dev_name>_<mhi_dev_name> */
+> +	dev = device_create(uci_dev_class, &mhi_dev->dev,
+> +			    MKDEV(uci_dev_major, index), udev,
+> +			    DEVICE_NAME "_%s_%s",
+> +			    dev_name(mhi_cntrl->cntrl_dev), mhi_dev->name);
+> +	if (IS_ERR(dev)) {
+> +		mutex_lock(&uci_drv_mutex);
+> +		idr_remove(&uci_idr, udev->minor);
+> +		mutex_unlock(&uci_drv_mutex);
+> +		dev_set_drvdata(&mhi_dev->dev, NULL);
+> +		kfree(udev);
+> +		return PTR_ERR(dev);
+> +	}
+> +
+> +	dev_dbg(&mhi_dev->dev, "probed uci dev: minor %d\n", index);
+> +
+> +	return 0;
+> +};
+> +
+> +static void mhi_uci_remove(struct mhi_device *mhi_dev)
+> +{
+> +	struct uci_dev *udev = dev_get_drvdata(&mhi_dev->dev);
+> +
+> +	/* disable the node */
+> +	mutex_lock(&udev->lock);
+> +	udev->enabled = false;
+> +
+> +	/* delete the node to prevent new opens */
+> +	device_destroy(uci_dev_class, MKDEV(uci_dev_major, udev->minor));
+> +
+> +	/* return error for any blocked read or write */
+> +	if (udev->uchan) {
+> +		wake_up(&udev->uchan->ul_wq);
+> +		wake_up(&udev->uchan->dl_wq);
+> +	}
+> +	mutex_unlock(&udev->lock);
+> +
+> +	mutex_lock(&uci_drv_mutex);
+> +	idr_remove(&uci_idr, udev->minor);
+> +	kref_put(&udev->ref_count, mhi_uci_dev_release);
+> +	mutex_unlock(&uci_drv_mutex);
+> +}
+> +
+> +/* .driver_data stores max mtu */
+> +static const struct mhi_device_id mhi_uci_match_table[] = {
+> +	{ .chan = "LOOPBACK", .driver_data = 0x1000},
+> +	{},
+> +};
+> +MODULE_DEVICE_TABLE(mhi, mhi_uci_match_table);
+> +
+> +static struct mhi_driver mhi_uci_driver = {
+> +	.id_table = mhi_uci_match_table,
+> +	.remove = mhi_uci_remove,
+> +	.probe = mhi_uci_probe,
+> +	.ul_xfer_cb = mhi_ul_xfer_cb,
+> +	.dl_xfer_cb = mhi_dl_xfer_cb,
+> +	.driver = {
+> +		.name = MHI_UCI_DRIVER_NAME,
+> +	},
+> +};
+> +
+> +static int mhi_uci_init(void)
+> +{
+> +	int ret;
+> +
+> +	ret = register_chrdev(0, MHI_UCI_DRIVER_NAME, &mhidev_fops);
+> +	if (ret < 0)
+> +		return ret;
+> +
+> +	uci_dev_major = ret;
+> +	uci_dev_class = class_create(THIS_MODULE, MHI_UCI_DRIVER_NAME);
+> +	if (IS_ERR(uci_dev_class)) {
+> +		unregister_chrdev(uci_dev_major, MHI_UCI_DRIVER_NAME);
+
+Use an error path for cleaning this.
+
+Thanks,
+Mani
