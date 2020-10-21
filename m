@@ -2,120 +2,192 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 09637294B74
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Oct 2020 12:50:42 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E8B0E294C1F
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Oct 2020 14:01:01 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2439019AbgJUKul (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 21 Oct 2020 06:50:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59578 "EHLO
+        id S2439880AbgJUMBB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 21 Oct 2020 08:01:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42160 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2392411AbgJUKuk (ORCPT
+        with ESMTP id S2404943AbgJUMBA (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 21 Oct 2020 06:50:40 -0400
-Received: from mail-pl1-x643.google.com (mail-pl1-x643.google.com [IPv6:2607:f8b0:4864:20::643])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E1345C0613CE
-        for <linux-arm-msm@vger.kernel.org>; Wed, 21 Oct 2020 03:50:40 -0700 (PDT)
-Received: by mail-pl1-x643.google.com with SMTP id h2so1006926pll.11
-        for <linux-arm-msm@vger.kernel.org>; Wed, 21 Oct 2020 03:50:40 -0700 (PDT)
+        Wed, 21 Oct 2020 08:01:00 -0400
+Received: from mail-wm1-x344.google.com (mail-wm1-x344.google.com [IPv6:2a00:1450:4864:20::344])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D5B5DC0613D2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 21 Oct 2020 05:00:58 -0700 (PDT)
+Received: by mail-wm1-x344.google.com with SMTP id d78so1797764wmd.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 21 Oct 2020 05:00:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=z1ROSdysWAJRA35AhGES/43NRpXVq6YDaJOz7zl7nL8=;
-        b=w9jC/C5ogypGG2B4CHyrIKLiagWGjJugRQu6KmvufLSpIJmf6uviAuPsQimJcsygWy
-         aO2hQ/4vFZjPo/PXF0CCYPQ5lxPB6DlokTEK4DWWokxVd43Fak9M3m1kaEHOxNB5ID1U
-         017H9CQfaQ2gmp4maSOT/Rkq7peo9+QycbvGsmxkmrrRPmDgb3XJt/4NK0ub0lP4MwKk
-         rO+ZRJmZTKAEpDaIBJyNviGP7cxH/ZjFO5Xe2aoCjUAFWIxeZCXFzy40LTiXyFgpBuMj
-         fYs5i2W0ECR/j/Agl43miVh2mhxycJZkd6vTVyMk8VBxvFW4hVtulqK1KMJ5UJE+Xj2P
-         K5/w==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=2fJBIpEa92kQMJ5/9beWt+N555m7+v1D1vPnkJrcT60=;
+        b=SenAqoqlLi2aW37fpwhuD9srFzhLzrEbBnol9BebPsYEEI+KDFkpx8T7/egwqBcrXA
+         VKXMHj3+b41FIQ4eI7Myj0Na0a6bAyVKcAbDSlj32qMfgAeqpfHG++isqgO4Ii89gzJ4
+         JdpTeaZZGUhg4QPD0sGFy9Z/DF5jWisVimMRkRKV/T6oPAt4/20N1owP7yvOCZriHz6X
+         MlMQSoxh+Jwwv/iMBlIRdYWmeReU1RJKhiIFKPGCzvTcp2zrd+oHDfQmGvVCJFr7YPR+
+         vQuoHN7O+rf4SXzK+HkSZwxDxt11IINm8k11O5XS/rsp4h9RtxIkDu8YGDJoy3daSq3j
+         kHew==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=z1ROSdysWAJRA35AhGES/43NRpXVq6YDaJOz7zl7nL8=;
-        b=R81JBjInX57AbZIwwhM3GuOf2VBKRLreb2FKE6deNtE5M0gsBBjFc+dDN5ghgH+T5w
-         t6YeeSaCj0MDcNOcYsiVGL4XOLeu45YPWYRcVOrZnJ0s0VA5mfB3ifXJYpBSzWnuVxgk
-         wgTI+5KUJ4s5NJoATSWJxOTB1PcazkZVmb4fyy4MdYpDx4uiJHwDUDF+md/tr4nnE07I
-         llCpoJ568oKPSiDW8668Nom48v880VC4ra1QlX5zE3uHVRCjx+mSFGpBt1hkvc6UlxNx
-         p4WDoqJnn01ddMWIa7Vco+291N79fH0KWlfa/DY5HU1i3NfDBaXkM11I9rYqq2lL0pRl
-         82Tg==
-X-Gm-Message-State: AOAM531tPZ2Gj/QTLNBlz9+3eYch7v2SHUcvJrqkI9ZszR1Vnx/sL1vO
-        NkrGHNrRnGNRY5K9sPkvATL2mg==
-X-Google-Smtp-Source: ABdhPJxwgr3r5rDb2EwR7ApDlfOTIHsXkLRSCBwfkQlQC2nu8iBeNlICjuUksRIYaFtg91h3GN0GUA==
-X-Received: by 2002:a17:902:d896:b029:d2:288e:bafc with SMTP id b22-20020a170902d896b02900d2288ebafcmr3097921plz.43.1603277440281;
-        Wed, 21 Oct 2020 03:50:40 -0700 (PDT)
-Received: from localhost ([122.181.54.133])
-        by smtp.gmail.com with ESMTPSA id e21sm2018906pfl.22.2020.10.21.03.50.38
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=2fJBIpEa92kQMJ5/9beWt+N555m7+v1D1vPnkJrcT60=;
+        b=bg6qXldYjQcfrulOOBEp+eswf37HWYoIGCSKrCKIIw2no3b8VGjDSSMKq44bTseXdF
+         TOW9MB/MAH7Y6oVO9wSvzkYoKQ5XzT5M/sdjYm5rYIYDoAWlPkO8H66sguQXp8VlSQ+G
+         bm9on+emSTzDHMwPvt4J1ZN7KFeHy3qi8EdtXiVLvSTEIbQuVZ7lQTuHG8EgTdmLbQ5s
+         GPyRukJM66DSm1j4frPw1MwsInSLdEncopCQq/EMxwQZ4RQKj3ja6POx2IZIlabieMsG
+         kn0aPE4bSrj5TtK9oFP1RuIlmo1Y+cVX5yCGUlav1/69t+KaXVPy2HbdjHCB20fO+7Fw
+         OPwQ==
+X-Gm-Message-State: AOAM5328EHM0ypvC7IuQxmKEP7zTzYIsBrPkwp+muAplfDrAUlgQ7DDD
+        2QEbJ4E+46HunlzxFHpz7hAsIA==
+X-Google-Smtp-Source: ABdhPJyBuNQJw//BB7VhJ/IyfJhB0D0zjEufDlMEYNH8dKwZxjKPNA+bODFYfmYhr9qj+l9595JgRg==
+X-Received: by 2002:a05:600c:d3:: with SMTP id u19mr3261018wmm.150.1603281657485;
+        Wed, 21 Oct 2020 05:00:57 -0700 (PDT)
+Received: from [192.168.86.34] (cpc86377-aztw32-2-0-cust226.18-1.cable.virginm.net. [92.233.226.227])
+        by smtp.googlemail.com with ESMTPSA id h16sm3896356wre.87.2020.10.21.05.00.55
         (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 21 Oct 2020 03:50:39 -0700 (PDT)
-Date:   Wed, 21 Oct 2020 16:20:37 +0530
-From:   Viresh Kumar <viresh.kumar@linaro.org>
-To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc:     Hector Yuan <hector.yuan@mediatek.com>, rjw@rjwysocki.net,
-        robh+dt@kernel.org, linux-pm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        bjorn.andersson@linaro.org, linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH v3 1/2] dt-bindings: arm: cpus: Document
- 'qcom,freq-domain' property
-Message-ID: <20201021105037.vrqgmvbxxhccch33@vireshk-i7>
-References: <20201020153944.18047-1-manivannan.sadhasivam@linaro.org>
- <1603247803.20224.5.camel@mtkswgap22>
- <20201021095916.GA3334@Mani-XPS-13-9360>
+        Wed, 21 Oct 2020 05:00:56 -0700 (PDT)
+Subject: Re: [PATCH v11 2/3] ASoC: qcom: dt-bindings: Add sc7180 machine
+ bindings
+To:     Cheng-yi Chiang <cychiang@chromium.org>
+Cc:     Mark Brown <broonie@kernel.org>,
+        linux-kernel <linux-kernel@vger.kernel.org>,
+        Taniya Das <tdas@codeaurora.org>,
+        Rohit kumar <rohitkr@codeaurora.org>,
+        Banajit Goswami <bgoswami@codeaurora.org>,
+        Patrick Lai <plai@codeaurora.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Jaroslav Kysela <perex@perex.cz>,
+        Takashi Iwai <tiwai@suse.com>,
+        Stephan Gerhold <stephan@gerhold.net>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        Heiko Stuebner <heiko@sntech.de>,
+        Srinivasa Rao <srivasam@codeaurora.org>,
+        Doug Anderson <dianders@chromium.org>,
+        Dylan Reid <dgreid@chromium.org>,
+        Tzung-Bi Shih <tzungbi@chromium.org>,
+        Linux ARM <linux-arm-kernel@lists.infradead.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>,
+        "moderated list:SOUND - SOC LAYER / DYNAMIC AUDIO POWER MANAGEM..." 
+        <alsa-devel@alsa-project.org>,
+        "moderated list:ARM/Mediatek SoC support" 
+        <linux-mediatek@lists.infradead.org>,
+        "open list:ARM/Rockchip SoC..." <linux-rockchip@lists.infradead.org>,
+        Ajye Huang <ajye_huang@compal.corp-partner.google.com>
+References: <20200914080619.4178587-1-cychiang@chromium.org>
+ <20200914080619.4178587-3-cychiang@chromium.org>
+ <7bdc0d63-27b1-f99e-c5f8-65f880733d16@linaro.org>
+ <CAFv8NwLkvxX2avoLY+4NY5gBv0dQ863hFFiqy7iQOJxH4WenmQ@mail.gmail.com>
+ <20201015161251.GF4390@sirena.org.uk>
+ <CAFv8NwL1xX=yPGFqQL_mOzAnPTfH0Z0J6ibG1+D32W46Nx0KYQ@mail.gmail.com>
+ <20201020143711.GC9448@sirena.org.uk>
+ <63f1a29c-0758-97b8-ce80-fe43d91630fa@linaro.org>
+ <CAFv8NwJ-+f146Ss9Mk=nEXjm1B--ZwhAgnfx-cTi7DGEKqC1-Q@mail.gmail.com>
+From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Message-ID: <e876421c-dfeb-e853-1b65-53a786e9bcf9@linaro.org>
+Date:   Wed, 21 Oct 2020 13:00:54 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.8.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20201021095916.GA3334@Mani-XPS-13-9360>
-User-Agent: NeoMutt/20180716-391-311a52
+In-Reply-To: <CAFv8NwJ-+f146Ss9Mk=nEXjm1B--ZwhAgnfx-cTi7DGEKqC1-Q@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 21-10-20, 15:29, Manivannan Sadhasivam wrote:
-> Hi,
-> 
-> On Wed, Oct 21, 2020 at 10:36:43AM +0800, Hector Yuan wrote:
-> > Hi, Manivannan
-> > 
-> > On Tue, 2020-10-20 at 21:09 +0530, Manivannan Sadhasivam wrote:
-> > > Add devicetree documentation for 'qcom,freq-domain' property specific
-> > > to Qualcomm CPUs. This property is used to reference the CPUFREQ node
-> > > along with Domain ID (0/1).
-> > > 
-> > > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> > > ---
-> > >  Documentation/devicetree/bindings/arm/cpus.yaml | 6 ++++++
-> > >  1 file changed, 6 insertions(+)
-> > > 
-> > > diff --git a/Documentation/devicetree/bindings/arm/cpus.yaml b/Documentation/devicetree/bindings/arm/cpus.yaml
-> > > index 1222bf1831fa..f40564bf004f 100644
-> > > --- a/Documentation/devicetree/bindings/arm/cpus.yaml
-> > > +++ b/Documentation/devicetree/bindings/arm/cpus.yaml
-> > > @@ -290,6 +290,12 @@ properties:
-> > >  
-> > >        * arm/msm/qcom,kpss-acc.txt
-> > >  
-> > > +  qcom,freq-domain:
-> > Do you mind to change "qcom, freq-domain" to common naming? or drop the
-> > prefix. So that we can use this CPU node and map it to each freq-domain.
-> > Thanks a lot. 
-> 
-> I can do that but did the domain value match for other platforms as well?
 
-I am not sure if you can. The code needs to be backward compatible so it can
-support all devices shipped with older bootloaders and latest kernels. And so
-changing the bindings isn't a good idea normally.
 
+On 20/10/2020 19:54, Cheng-yi Chiang wrote:
+>> Not with the compatible string!
+>>
+>> Currently card name, and long name are exactly same in all Qualcomm
+>> soundcards, which makes it very difficult to identify how those boards
+>> re wired up at UCM2 level. So the plan is to properly populate card long
+>> name with "model" property which can include details on how things are
+>> wiredup on that board.
+>>
+>> --srini
+> Hi Srini,
+> Thanks for taking a look.
+> Let me try to clarify your comments in case there is any misunderstanding.
 > 
-> > 
-> > > +    $ref: '/schemas/types.yaml#/definitions/phandle-array'
-> > > +    description: |
-> > > +      CPUs supporting freq-domain must set their "qcom,freq-domain" property
-> > > +      with phandle to a cpufreq_hw node followed by the Domain ID(0/1).
-> > > +
-> > >    rockchip,pmu:
-> > >      $ref: '/schemas/types.yaml#/definitions/phandle'
-> > >      description: |
-> > 
+> I understand your request on having different board variations using
+> different sound card names through model property, and I totally agree
+> with that.
+> As for compatible strings, do you insist on having all the board
+> variations using exactly the same compatible string ?
 
--- 
-viresh
+
+For example if we set below property for sound card in Device tree
+model = "RB5";
+
+We will end up with
+
+#   cat /proc/asound/cards
+  0 [RB5            ]: RB5 - RB5
+                       RB5
+
+This is totally not very useful w.r.t UCM2 and makes it very difficult 
+to common up parts of the configs.
+
+
+My suggestions are.
+1. set card->driver_name to something more sensible in your sound card 
+driver.
+
+ex:
+	card->driver_name = "SM8250";
+
+2. set long name in model DT property and set it as card long name
+ex:
+in DT:
+	model = "Qualcomm-RB5-WSA8815-Speakers-DMIC0";
+
+in sound driver or common.c:
+
+of_property_read_string_index(np, "model", 0, &card->long_name);
+
+With this set:
+
+now
+#   cat /proc/asound/cards
+  0 [QualcommRB5WSA8]: SM8250 - Qualcomm-RB5-WSA8815-Speakers-D
+                       Qualcomm-RB5-WSA8815-Speakers-DMIC0
+
+This also means that in UCM2 we can have a top level SM8250 directory 
+which can contain other board variants something like:
+
+ucm2/Qualcomm/sm8250/Qualcomm-RB5-WSA8815-Speakers-DMIC0.conf
+ucm2/Qualcomm/sm8250/Qualcomm-RB5-WSA8810-Speakers-DMIC123.conf
+and so on!
+
+Finally Only comment I had regarding compatible was not to encapsulate 
+the connection details in it!. these can be made more sensible, 
+something like
+"qcom,sc7180-trogdor-v1", "qcom,sc7180-trogdor-v2".. and so on.
+
+This compatible has nothing to do with driver or card short and long name.
+
+Does that makes sense?
+
+
+Thanks,
+srini
+
+
+with
+
+
+
+
+Currently if
