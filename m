@@ -2,111 +2,102 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 997F22954F5
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Oct 2020 00:51:18 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 70A9829569A
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Oct 2020 05:04:59 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2506940AbgJUWvR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 21 Oct 2020 18:51:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58136 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2506938AbgJUWvQ (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 21 Oct 2020 18:51:16 -0400
-Received: from mail-lf1-x141.google.com (mail-lf1-x141.google.com [IPv6:2a00:1450:4864:20::141])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1AE56C0613CF
-        for <linux-arm-msm@vger.kernel.org>; Wed, 21 Oct 2020 15:51:15 -0700 (PDT)
-Received: by mail-lf1-x141.google.com with SMTP id b1so5115043lfp.11
-        for <linux-arm-msm@vger.kernel.org>; Wed, 21 Oct 2020 15:51:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=ICAICiNyo+EcMXjUhGuIhiIEersvXHJzVxJKSGdteTM=;
-        b=JvEnR4tRFXIYdCbHscJ9GWGxDi1dIvLHNzdffaWokQS90FA379cJx6I0wR6OTYc9MU
-         LozDzCnTj1m1z1Lg4A7aeelciFHB2pX4jMoZOSL8TlKc0UQqZVqAn7U1HC8XAW2CKmww
-         mwIOr6qRvdlu+UafFTCmErP8b7lily5r007/nvhIscJMpU1IIygLdFXFQDWKOcnNnEs0
-         wNezxZ02hf+8buYD8gsaeGnpsXDBfUdJmvoHwmdEsWERiPFXOxpOF8C9zau7gnckrDA8
-         kBhnv8N1HzgMPS0wUQQ3oy/Y6togiveG0YjjcHsYxRbvtpK1J7SllcM/OE6V0YO2jTmo
-         RUjw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=ICAICiNyo+EcMXjUhGuIhiIEersvXHJzVxJKSGdteTM=;
-        b=ddVOSRsEzT5oJaFpk+kkraKRfmrb784lNdVZbBf/A2whCNCcDNM6gBoXA0cbEOcXGN
-         TTiSEepcNEn9hzpetKNe0EiCEfd5I9cppDkCc8lE0aY/mTi4FjmPEtrlnRWuV7XUh+EQ
-         PodkqYeDA3fPK4Gnf6NZUJS+aEf8J+NyRz2/Sxm23EqviZb8ReaUU8jF9ohqYCRnSdpc
-         I3luQJ8LNkAqAFJy0GV5HTMiNDC1H/nnS+wF4L0ZbTUu5Hw8Ewvji8sHkfBSC+aZfy5w
-         sVg9caUpS44rEJfs8sZ4A5NIoueRDYdDG//0Jr0B4S661WWxlhuDOPN73alE02HbJ2cg
-         HpfQ==
-X-Gm-Message-State: AOAM532PsWP729gCS9BMmwnnTEAhYqIe8/7rZOSDK3v58cCUg0KCcqWM
-        9vkSfDN5L5xmM7PgeRPpeWZvPw==
-X-Google-Smtp-Source: ABdhPJzz/fJNgntQdkyZa7dPBtnccqsA/OUhtXZDmFk4rqyua01TQTFC5361SXrKHbvGEhnuT8xdCg==
-X-Received: by 2002:a19:f518:: with SMTP id j24mr1903146lfb.307.1603320673622;
-        Wed, 21 Oct 2020 15:51:13 -0700 (PDT)
-Received: from eriador.lan ([188.162.64.195])
-        by smtp.gmail.com with ESMTPSA id h11sm652062ljc.21.2020.10.21.15.51.12
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 21 Oct 2020 15:51:12 -0700 (PDT)
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Pavel Machek <pavel@ucw.cz>, Dan Murphy <dmurphy@ti.com>
-Cc:     Rob Herring <robh+dt@kernel.org>, linux-leds@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Subject: [PATCH 5/5] arm64: dts: qrb5165-rb5: declare tri-led user leds
-Date:   Thu, 22 Oct 2020 01:51:00 +0300
-Message-Id: <20201021225100.162795-6-dmitry.baryshkov@linaro.org>
-X-Mailer: git-send-email 2.28.0
-In-Reply-To: <20201021225100.162795-1-dmitry.baryshkov@linaro.org>
-References: <20201021225100.162795-1-dmitry.baryshkov@linaro.org>
+        id S2895283AbgJVDE5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 21 Oct 2020 23:04:57 -0400
+Received: from z5.mailgun.us ([104.130.96.5]:39668 "EHLO z5.mailgun.us"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S2895287AbgJVDE4 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 21 Oct 2020 23:04:56 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1603335896; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
+ Subject: Sender; bh=+nQ5ZSBmVVyAWKnZjaUdFuEquc1+aCE/YrO2L81++rQ=; b=uuZO1dLGysDeqZPTEQG7tP+USdQ+CJGBSmSxdbBoWtsaVg3//T1J+OOERlmcmVsoi0RGJaa9
+ fGLyoYlsQnwC9jEMb1ookio6Mn2LwpXVO7Z6ICvtSpkXfyfUqGzFqroHhZfaQloFfKvIU8zu
+ xpKN4XeIs7VdP7/GknyG+Us+M2k=
+X-Mailgun-Sending-Ip: 104.130.96.5
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n05.prod.us-east-1.postgun.com with SMTP id
+ 5f90f6d44f8cc67c313300a4 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 22 Oct 2020 03:04:52
+ GMT
+Sender: jhugo=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id BD1E3C433FE; Thu, 22 Oct 2020 03:04:51 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        NICE_REPLY_A,SPF_FAIL autolearn=no autolearn_force=no version=3.4.0
+Received: from [10.226.59.216] (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: jhugo)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id B0472C433C9;
+        Thu, 22 Oct 2020 03:04:50 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org B0472C433C9
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=jhugo@codeaurora.org
+Subject: Re: [PATCH v7 3/4] docs: Add documentation for userspace client
+ interface
+To:     Hemant Kumar <hemantk@codeaurora.org>,
+        manivannan.sadhasivam@linaro.org, gregkh@linuxfoundation.org
+Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        bbhatt@codeaurora.org, loic.poulain@linaro.org
+References: <1602907457-13680-1-git-send-email-hemantk@codeaurora.org>
+ <1602907457-13680-4-git-send-email-hemantk@codeaurora.org>
+ <c5dd8ec9-f4bf-dee4-98e1-9fba171b1f1d@codeaurora.org>
+ <b0209674-8dcb-c994-c0ef-0d2caefd28ff@codeaurora.org>
+From:   Jeffrey Hugo <jhugo@codeaurora.org>
+Message-ID: <198e5431-756c-38b1-2426-eb4ab8074b60@codeaurora.org>
+Date:   Wed, 21 Oct 2020 21:04:50 -0600
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.3.2
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <b0209674-8dcb-c994-c0ef-0d2caefd28ff@codeaurora.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Qualcomm RB5 platform uses Light Pulse Generator tri-led block to drive
-three green leds. Add device nodes defining those leds.
+On 10/21/2020 11:46 AM, Hemant Kumar wrote:
+> Hi Jeff,
+> 
+> On 10/21/20 8:28 AM, Jeffrey Hugo wrote:
+>> On 10/16/2020 10:04 PM, Hemant Kumar wrote:
+>>> +release
+>>
+>> Should this be "close" since close() is the actual function userspace 
+>> would call?
+> I was keeping kernel driver in mind while writing this, i can change it 
+> to close() if release() is confusing here.
 
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
----
- arch/arm64/boot/dts/qcom/qrb5165-rb5.dts | 23 +++++++++++++++++++++++
- 1 file changed, 23 insertions(+)
+I guess I was considering the client perspective, but this is kernel 
+documentation so I can see your perspective.  I don't have a strong 
+preference.  I suppose keep it as is.
 
-diff --git a/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts b/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts
-index 01708d84fdf6..04eff24f9d71 100644
---- a/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts
-+++ b/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts
-@@ -1014,6 +1014,29 @@ &pm8150_rtc {
- 	status = "okay";
- };
- 
-+&pm8150l_lpg {
-+	status = "okay";
-+
-+	led@1 {
-+		reg = <1>;
-+		label = "green:user0";
-+
-+		linux,default-trigger = "heartbeat";
-+		default-state = "on";
-+	};
-+
-+	led@2 {
-+		reg = <2>;
-+		label = "green:user1";
-+		default-state = "on";
-+	};
-+
-+	led@3 {
-+		reg = <3>;
-+		label = "green:user2";
-+	};
-+};
-+
- &qupv3_id_0 {
- 	status = "okay";
- };
+>>
+>>> +-------
+>>> +
+>>> +Decrements UCI device reference count and UCI channel reference 
+>>> count upon last
+>>> +release(). UCI channel clean up is performed. MHI channel moves to 
+>>> disabled
+>>> +state and inbound buffers are freed.
+>>> +
+>>
+>>
+> Thanks,
+> Hemant
+
+
 -- 
-2.28.0
-
+Jeffrey Hugo
+Qualcomm Technologies, Inc. is a member of the
+Code Aurora Forum, a Linux Foundation Collaborative Project.
