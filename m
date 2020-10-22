@@ -2,152 +2,133 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 2B4BE2959DD
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Oct 2020 10:08:16 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3CCFE295A2B
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Oct 2020 10:23:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2894371AbgJVIIH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 22 Oct 2020 04:08:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58848 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2894374AbgJVIGr (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 22 Oct 2020 04:06:47 -0400
-Received: from mail-pj1-x1043.google.com (mail-pj1-x1043.google.com [IPv6:2607:f8b0:4864:20::1043])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9085CC0613CF
-        for <linux-arm-msm@vger.kernel.org>; Thu, 22 Oct 2020 01:06:47 -0700 (PDT)
-Received: by mail-pj1-x1043.google.com with SMTP id hk7so573110pjb.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 22 Oct 2020 01:06:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=TVfb7WnwNXKGUxz4iiR3sXsOPTJFuGFroopSW7eD6Gk=;
-        b=VXy3s7QjvhLDl7KsBOg8MVmOhDTShSxGrDo6aWcBaOc02FD0F85qf0Ti+YtY62gqo0
-         fQvsKNmMSTtfrleV5GPKxLU+JcUEc2NSUgl+bZqbTTJxWGVdAW4Ks+6O+WpMyT0UYZQU
-         Rk77fNgDCNEX1rBFx3tEw9PNvK5zoEOTcw4Exzt4s4Kw7B/lg/rPlU9NFNmT5+fHkPsJ
-         L6jVrWsH6VfFT6UlRDL93//CvMxZ+gekuFnxD58I6yOGqSKCXsq41PVDX1T/ttn8Zw46
-         jyhR4qHH+pZ/cQmtByv3Eoc+7RyZzWcCjxuptfiSir3cOI6jaqjAtUWeYCqvGt5RwgoA
-         0OuA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=TVfb7WnwNXKGUxz4iiR3sXsOPTJFuGFroopSW7eD6Gk=;
-        b=Ek8iACJK+gui2wnjefvOM7QDPXbRMPr3VWFoEqtgzoUh9AVD6BBWKnovn7cTJNApLP
-         yYkY3bZ6jFtV6l/HPRcFkIO3Htd8eUB3M+eqcLKC0WSRui3DMiGYgPNb0BXVhwl7aN/M
-         jisQEpQW4F3iL6uwttL3v5ueERsz2l4GkOaG1j1fzu7ixnJaSEUDT5DnSjOGfAVPQS+z
-         Y5pni2IP5VO77FrTu1VobMetDLZx3yANuwy+3GNU4306u5H9wcCZ1cJvAp9+D6TUZj+z
-         O9IHoV10XE9FtVO5NRMTtIgMjTWdA0YT7L+ydDNNmgXza35r1HMtN8dq3PK0WUaeEtb9
-         RymQ==
-X-Gm-Message-State: AOAM532pZKhtsmehVM73s5bkPsEBWmMmACH2WjS/LyKKh/1TdOfxJMV4
-        PzniTXXx7UTg5DU62JdO0Lc/sw==
-X-Google-Smtp-Source: ABdhPJwVqL7oVk5t6FqFadGaytgpFZzZfoLCZKLY/TTEFKuYJ70F6UW4MwiJzoxuD6cE1PnzwUK9mQ==
-X-Received: by 2002:a17:902:7fcd:b029:d3:f037:d9dc with SMTP id t13-20020a1709027fcdb02900d3f037d9dcmr1305142plb.79.1603354007060;
-        Thu, 22 Oct 2020 01:06:47 -0700 (PDT)
-Received: from localhost ([122.181.54.133])
-        by smtp.gmail.com with ESMTPSA id v13sm1292150pgl.6.2020.10.22.01.06.45
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 22 Oct 2020 01:06:46 -0700 (PDT)
-Date:   Thu, 22 Oct 2020 13:36:44 +0530
-From:   Viresh Kumar <viresh.kumar@linaro.org>
-To:     Rob Clark <robdclark@gmail.com>
-Cc:     Daniel Vetter <daniel@ffwll.ch>,
-        dri-devel <dri-devel@lists.freedesktop.org>,
-        Rob Clark <robdclark@chromium.org>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
-        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
-        <linux-arm-msm@vger.kernel.org>,
-        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
-        <freedreno@lists.freedesktop.org>,
-        open list <linux-kernel@vger.kernel.org>,
-        "Menon, Nishanth" <nm@ti.com>
-Subject: Re: [PATCH v2 07/22] drm/msm: Do rpm get sooner in the submit path
-Message-ID: <20201022080644.2ck4okrxygmkuatn@vireshk-i7>
-References: <20201012020958.229288-1-robdclark@gmail.com>
- <20201012020958.229288-8-robdclark@gmail.com>
- <20201012143555.GA438822@phenom.ffwll.local>
- <CAF6AEGstGtBswUUiyHxT2cCm8NwZekDnMzD0J_pQH37GwS=LiA@mail.gmail.com>
- <20201020090729.qgqish5kqamhvatj@vireshk-i7>
- <CAKMK7uHAgVUPHOPxDdt3LeAWqokxfuzqjZj4qqFkoKxFbRbRrg@mail.gmail.com>
- <20201020112413.xbk2vow2kgjky3pb@vireshk-i7>
- <CAF6AEGsCj-AtFozn8d1xiNNFNbuMJ0UxS-eMhBVXiQ7rKahKnQ@mail.gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAF6AEGsCj-AtFozn8d1xiNNFNbuMJ0UxS-eMhBVXiQ7rKahKnQ@mail.gmail.com>
-User-Agent: NeoMutt/20180716-391-311a52
+        id S2895365AbgJVIWs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 22 Oct 2020 04:22:48 -0400
+Received: from m42-4.mailgun.net ([69.72.42.4]:54440 "EHLO m42-4.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S2895343AbgJVIWr (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 22 Oct 2020 04:22:47 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1603354966; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=nz+6blzchbpU+rQzWL3pFAXSYM5FumNzY2VE8GR66fU=; b=nnD8YqongJPL+SRQN26qxiieqyj4sKfjpG4Gvy4g3VQxJpy/YhoJ32F65tFTvakEB9cShCwP
+ ANmrKVyoS9Voedco1Nuj5AGguoqtHCg4Uodn0Z9iLNmW79B7FFQGzvfjI37QGzG2DVLT+oXL
+ NpSBMvcBsiFpovXFyzeQr8lF0tE=
+X-Mailgun-Sending-Ip: 69.72.42.4
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n07.prod.us-west-2.postgun.com with SMTP id
+ 5f914156a03b63d673593960 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 22 Oct 2020 08:22:46
+ GMT
+Sender: hemantk=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 2D319C43391; Thu, 22 Oct 2020 08:22:46 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL
+        autolearn=no autolearn_force=no version=3.4.0
+Received: from codeaurora.org (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: hemantk)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 3497BC433C9;
+        Thu, 22 Oct 2020 08:22:45 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 3497BC433C9
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=hemantk@codeaurora.org
+From:   Hemant Kumar <hemantk@codeaurora.org>
+To:     manivannan.sadhasivam@linaro.org, gregkh@linuxfoundation.org
+Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        jhugo@codeaurora.org, bbhatt@codeaurora.org,
+        loic.poulain@linaro.org, Hemant Kumar <hemantk@codeaurora.org>
+Subject: [PATCH v8 0/4] userspace MHI client interface driver
+Date:   Thu, 22 Oct 2020 01:22:34 -0700
+Message-Id: <1603354958-24025-1-git-send-email-hemantk@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 20-10-20, 07:13, Rob Clark wrote:
-> On Tue, Oct 20, 2020 at 4:24 AM Viresh Kumar <viresh.kumar@linaro.org> wrote:
-> >
-> > On 20-10-20, 12:56, Daniel Vetter wrote:
-> > > Yeah that's bad practice. Generally you shouldn't need to hold locks
-> > > in setup/teardown code, since there's no other thread which can
-> > > possible hold a reference to anything your touching anymore. Ofc
-> > > excluding quickly grabbing/dropping a lock to insert/remove objects
-> > > into lists and stuff.
-> > >
-> > > The other reason is that especially with anything related to sysfs or
-> > > debugfs, the locking dependencies you're pulling in are enormous: vfs
-> > > locks pull in mm locks (due to mmap) and at that point there's pretty
-> > > much nothing left you're allowed to hold while acquiring such a lock.
-> > > For simple drivers this is no issue, but for fancy drivers (like gpu
-> > > drivers) which need to interact with core mm) this means your
-> > > subsystem is a major pain to use.
-> > >
-> > > Usually the correct fix is to only hold your subsystem locks in
-> > > setup/teardown when absolutely required, and fix any data
-> > > inconsistency issues by reordering your setup/teardown code: When you
-> > > register as the last step and unregister as the first step, there's no
-> > > need for any additional locking. And hence no need to call debugfs
-> > > functions while holding your subsystem locks.
-> > >
-> > > The catch phrase I use for this is "don't solve object lifetime issues
-> > > with locking". Instead use refcounting and careful ordering in
-> > > setup/teardown code.
-> >
-> > This is exactly what I have done in the OPP core, the locks were taken
-> > only when really necessary, though as we have seen now I have missed
-> > that at a single place and that should be fixed as well. Will do that,
-> > thanks.
-> 
-> I do have an easy enough way to repro the issue, so if you have a
-> patch I can certainly test it.
+This patch series adds support for UCI driver. UCI driver enables userspace
+clients to communicate to external MHI devices like modem and WLAN. UCI driver
+probe creates standard character device file nodes for userspace clients to
+perform open, read, write, poll and release file operations. These file
+operations call MHI core layer APIs to perform data transfer using MHI bus
+to communicate with MHI device. Patch is tested using arm64 based platform.
 
-Does this fix it for you ? There is one more place still left where we
-are taking the opp_table_lock while adding stuff to debugfs and that's
-not that straight forward to fix. But I didn't see that path in your
-circular dependency trace, so who knows :)
+V8:
+- Fixed kernel test robot compilation error by changing %lu to %zu for
+  size_t.
+- Replaced uci with UCI in Kconfig, commit text, and comments in driver
+  code.
+- Fixed minor style related comments.
 
-diff --git a/drivers/opp/core.c b/drivers/opp/core.c
-index 2483e765318a..4cc0fb716381 100644
---- a/drivers/opp/core.c
-+++ b/drivers/opp/core.c
-@@ -1181,6 +1181,10 @@ static void _opp_table_kref_release(struct kref *kref)
-        struct opp_device *opp_dev, *temp;
-        int i;
- 
-+       /* Drop the lock as soon as we can */
-+       list_del(&opp_table->node);
-+       mutex_unlock(&opp_table_lock);
-+
-        _of_clear_opp_table(opp_table);
- 
-        /* Release clk */
-@@ -1208,10 +1212,7 @@ static void _opp_table_kref_release(struct kref *kref)
- 
-        mutex_destroy(&opp_table->genpd_virt_dev_lock);
-        mutex_destroy(&opp_table->lock);
--       list_del(&opp_table->node);
-        kfree(opp_table);
--
--       mutex_unlock(&opp_table_lock);
- }
- 
- void dev_pm_opp_put_opp_table(struct opp_table *opp_table)
+V7:
+- Decoupled uci device and uci channel objects. uci device is
+  associated with device file node. uci channel is associated
+  with MHI channels. uci device refers to uci channel to perform
+  MHI channel operations for device file operations like read()
+  and write(). uci device increments its reference count for
+  every open(). uci device calls mhi_uci_dev_start_chan() to start
+  the MHI channel. uci channel object is tracking number of times
+  MHI channel is referred. This allows to keep the MHI channel in
+  start state until last release() is called. After that uci channel
+  reference count goes to 0 and uci channel clean up is performed
+  which stops the MHI channel. After the last call to release() if
+  driver is removed uci reference count becomes 0 and uci object is
+  cleaned up.
+- Use separate uci channel read and write lock to fine grain locking
+  between reader and writer.
+- Use uci device lock to synchronize open, release and driver remove.
+- Optimize for downlink only or uplink only UCI device.
+
+V6:
+- Moved uci.c to mhi directory.
+- Updated Kconfig to add module information.
+- Updated Makefile to rename uci object file name as mhi_uci
+- Removed kref for open count
+
+V5:
+- Removed mhi_uci_drv structure.
+- Used idr instead of creating global list of uci devices.
+- Used kref instead of local ref counting for uci device and
+  open count.
+- Removed unlikely macro.
+
+V4:
+- Fix locking to protect proper struct members.
+- Updated documentation describing uci client driver use cases.
+- Fixed uci ref counting in mhi_uci_open for error case.
+- Addressed style related review comments.
+
+V3: Added documentation for MHI UCI driver.
+
+V2: Added mutex lock to prevent multiple readers to access same
+mhi buffer which can result into use after free.
+Hemant Kumar (4):
+  bus: mhi: core: Add helper API to return number of free TREs
+  bus: mhi: core: Move MHI_MAX_MTU to external header file
+  docs: Add documentation for userspace client interface
+  bus: mhi: Add userspace client interface driver
+
+ Documentation/mhi/index.rst     |   1 +
+ Documentation/mhi/uci.rst       |  83 +++++
+ drivers/bus/mhi/Kconfig         |  13 +
+ drivers/bus/mhi/Makefile        |   4 +
+ drivers/bus/mhi/core/internal.h |   1 -
+ drivers/bus/mhi/core/main.c     |  12 +
+ drivers/bus/mhi/uci.c           | 657 ++++++++++++++++++++++++++++++++++++++++
+ include/linux/mhi.h             |  12 +
+ 8 files changed, 782 insertions(+), 1 deletion(-)
+ create mode 100644 Documentation/mhi/uci.rst
+ create mode 100644 drivers/bus/mhi/uci.c
 
 -- 
-viresh
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
+
