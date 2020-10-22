@@ -2,100 +2,93 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 0D8482961B3
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Oct 2020 17:32:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9AB622962CA
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Oct 2020 18:36:41 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2508547AbgJVPcl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 22 Oct 2020 11:32:41 -0400
-Received: from foss.arm.com ([217.140.110.172]:59854 "EHLO foss.arm.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2508506AbgJVPcl (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 22 Oct 2020 11:32:41 -0400
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id DA788D6E;
-        Thu, 22 Oct 2020 08:32:40 -0700 (PDT)
-Received: from [10.57.13.45] (unknown [10.57.13.45])
-        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id C11773F66E;
-        Thu, 22 Oct 2020 08:32:37 -0700 (PDT)
-Subject: Re: [PATCHv2 2/4] coresight: tmc-etf: Fix NULL ptr dereference in
- tmc_enable_etf_sink_perf()
-To:     Peter Zijlstra <peterz@infradead.org>
-Cc:     Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Mike Leach <mike.leach@linaro.org>,
-        Ingo Molnar <mingo@redhat.com>,
-        Arnaldo Carvalho de Melo <acme@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-        Jiri Olsa <jolsa@redhat.com>,
-        Namhyung Kim <namhyung@kernel.org>, coresight@lists.linaro.org,
-        Stephen Boyd <swboyd@chromium.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org
-References: <cover.1603363729.git.saiprakash.ranjan@codeaurora.org>
- <aa6e571156d6e26e54da0bb3015ba474e4a08da0.1603363729.git.saiprakash.ranjan@codeaurora.org>
- <20201022113214.GD2611@hirez.programming.kicks-ass.net>
- <e7d236f7-61c2-731d-571b-839e0e545563@arm.com>
- <20201022150609.GI2611@hirez.programming.kicks-ass.net>
-From:   Suzuki Poulose <suzuki.poulose@arm.com>
-Message-ID: <788706f2-0670-b7b6-a153-3ec6f16e0f2e@arm.com>
-Date:   Thu, 22 Oct 2020 16:32:36 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.3.2
+        id S2897361AbgJVQgk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 22 Oct 2020 12:36:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53086 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2897355AbgJVQgk (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 22 Oct 2020 12:36:40 -0400
+Received: from mail-pl1-x641.google.com (mail-pl1-x641.google.com [IPv6:2607:f8b0:4864:20::641])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6DB22C0613CE;
+        Thu, 22 Oct 2020 09:36:40 -0700 (PDT)
+Received: by mail-pl1-x641.google.com with SMTP id v22so1237024ply.12;
+        Thu, 22 Oct 2020 09:36:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=nDX397cQgzi1RP7Xa1kem+DTa9TAokdNyCTIWzzUu0o=;
+        b=pXYjdUUlvrho5ldzchG0lyeU5Q6V1ftioPW0uTf/tZZRqG98j2CjL49DDiWZ9rCEt9
+         anfqlFejUAvnOFFQBEPt1T5OyZjZezCKi5DyZvUAK3H/kSfGqZFa4cXuh/1bWoHieNmv
+         lIZJC276WWoA35g8gzVfgOxHJuV33k06s5cZhhpk36LkdQUrpqNf8nkrGOQbqWw7AUrS
+         SBym7vllUO+wDk0LH38l3+NZqP+9TBrrPPXHw2nakJ26e6GMWK6VeR4/VlKa346tJZpI
+         sxON8P5qZpynMXpNg4l939Un6KQToJ3C1dr7Ypy7JPL65dLAuQpwau+9EUsHw9A5h6rw
+         VUhA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=nDX397cQgzi1RP7Xa1kem+DTa9TAokdNyCTIWzzUu0o=;
+        b=UhoaSu7ERwzVuNU85BzrGhFmp4biK5/KTpH3taZjCyNIJRsyoHZC90i3sZGBiYfjeD
+         0/SdPMkeY4XKbtRyJCSaJTzuzVkM+Zl1/kCImn7YML3UOczM955Wh4xXqaaEUA2mxwsh
+         ym9HX/1FTuwb4AhI+hu3rKASzLuHJdk2RKaxoVCy9hSuK25xzXQgRwBXtqyQF/p5AE8T
+         rswgO6wM7YnIstR+IrumtwxoN1Apzy8pTkZjwdEzuxgXyq0sANO3IQBaqS81huXK9iHc
+         dV7/ncAAA3CNI9l41X1HjS6T3qSJmbRxtjpH4M02TM/38/sx9DreIfY9dwcyGPwO8ghn
+         GaNw==
+X-Gm-Message-State: AOAM532qHU0Ge+HW1GXkMfEShkpmAALxAk2HZAMHbrfbvU2JABWoyAog
+        ZQDtY1iBRC0qSRVuYqHcRRLDI7Am0o0Hdg==
+X-Google-Smtp-Source: ABdhPJyyLpC5UK2zwIZgXPbUBYWPShqmVVk4l8rDynQHePrbP4vvhbq00vnT1ujOemB+Up500kqESA==
+X-Received: by 2002:a17:902:654a:b029:d5:e98f:2436 with SMTP id d10-20020a170902654ab02900d5e98f2436mr3323426pln.21.1603384599163;
+        Thu, 22 Oct 2020 09:36:39 -0700 (PDT)
+Received: from localhost ([2601:1c0:5200:a6:307:a401:7b76:c6e5])
+        by smtp.gmail.com with ESMTPSA id z73sm2822004pfc.75.2020.10.22.09.36.37
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 22 Oct 2020 09:36:37 -0700 (PDT)
+From:   Rob Clark <robdclark@gmail.com>
+To:     linux-arm-msm@vger.kernel.org
+Cc:     Rob Clark <robdclark@chromium.org>, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        devicetree@vger.kernel.org (open list:OPEN FIRMWARE AND FLATTENED
+        DEVICE TREE BINDINGS), linux-kernel@vger.kernel.org (open list)
+Subject: [PATCH] arm64: dts: qcom: sc7180: Fix number of interconnect cells
+Date:   Thu, 22 Oct 2020 09:38:10 -0700
+Message-Id: <20201022163810.429737-1-robdclark@gmail.com>
+X-Mailer: git-send-email 2.26.2
 MIME-Version: 1.0
-In-Reply-To: <20201022150609.GI2611@hirez.programming.kicks-ass.net>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-GB
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 10/22/20 4:06 PM, Peter Zijlstra wrote:
-> On Thu, Oct 22, 2020 at 02:30:21PM +0100, Suzuki Poulose wrote:
->> On 10/22/20 12:32 PM, Peter Zijlstra wrote:
->>> On Thu, Oct 22, 2020 at 04:27:52PM +0530, Sai Prakash Ranjan wrote:
->>>
->>>> Looking at the ETR and other places in the kernel, ETF and the
->>>> ETB are the only places trying to dereference the task(owner)
->>>> in tmc_enable_etf_sink_perf() which is also called from the
->>>> sched_in path as in the call trace.
->>>
->>>> @@ -391,6 +392,10 @@ static void *tmc_alloc_etf_buffer(struct coresight_device *csdev,
->>>>    {
->>>>    	int node;
->>>>    	struct cs_buffers *buf;
->>>> +	struct task_struct *task = READ_ONCE(event->owner);
->>>> +
->>>> +	if (!task || is_kernel_event(event))
->>>> +		return NULL;
->>>
->>>
->>> This is *wrong*... why do you care about who owns the events?
->>>
->>
->> This is due to the special case of the CoreSight configuration, where
->> a "sink" (where the trace data is captured) is shared by multiple Trace
->> units. So, we could share the "sink" for multiple trace units if they
->> are tracing the events that belong to the same "perf" session. (The
->> userspace tool could decode the trace data based on the TraceID
->> in the trace packets). Is there a better way to do this ?
-> 
-> I thought we added sink identification through perf_event_attr::config2
-> ?
-> 
+From: Rob Clark <robdclark@chromium.org>
 
-Correct. attr:config2 identifies the "sink" for the collection. But,
-that doesn't solve the problem we have here. If two separate perf
-sessions use the "same sink", we don't want to mix the
-trace data into the same sink for events from different sessions.
+Looks like thru some sort of mid-air collision, updating the # of
+interconnect cells for the display was missed.
 
-Thus, we need a way to check if a new event starting the tracing on
-an ETM belongs to the same session as the one already pumping the trace
-into the sink.
+Fixes: e23b1220a2460 ("arm64: dts: qcom: sc7180: Increase the number of interconnect cells")
+Signed-off-by: Rob Clark <robdclark@chromium.org>
+---
+ arch/arm64/boot/dts/qcom/sc7180.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-We use event->owner pid for this check and thats where we encountered
-a NULL event->owner. Looking at the code further, we identified that
-kernel events could also trigger this issue.
+diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi b/arch/arm64/boot/dts/qcom/sc7180.dtsi
+index 6678f1e8e3958..a02776ce77a10 100644
+--- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
+@@ -2811,7 +2811,7 @@ mdss: mdss@ae00000 {
+ 			interrupt-controller;
+ 			#interrupt-cells = <1>;
+ 
+-			interconnects = <&mmss_noc MASTER_MDP0 &mc_virt SLAVE_EBI1>;
++			interconnects = <&mmss_noc MASTER_MDP0 0 &mc_virt SLAVE_EBI1 0>;
+ 			interconnect-names = "mdp0-mem";
+ 
+ 			iommus = <&apps_smmu 0x800 0x2>;
+-- 
+2.26.2
 
-Suzuki
