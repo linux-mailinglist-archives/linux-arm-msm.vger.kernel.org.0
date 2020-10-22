@@ -2,150 +2,90 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 86492295F93
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Oct 2020 15:17:18 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B4AA8295FFD
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Oct 2020 15:27:26 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2899443AbgJVNRS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 22 Oct 2020 09:17:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50354 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2899437AbgJVNRR (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 22 Oct 2020 09:17:17 -0400
-Received: from mail-lf1-x144.google.com (mail-lf1-x144.google.com [IPv6:2a00:1450:4864:20::144])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C08EBC0613CF
-        for <linux-arm-msm@vger.kernel.org>; Thu, 22 Oct 2020 06:17:15 -0700 (PDT)
-Received: by mail-lf1-x144.google.com with SMTP id 77so2234792lfl.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 22 Oct 2020 06:17:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=JmVKaqDJbIj1ObPBFRvm3kEt/2ALolZJ1yEXKws/Dq8=;
-        b=C8kiBmQLGHtx57ogBT24njBN7gdf6AvHJAj0RFEqv7sW5WY2SXIhsemPnnwyWCbo7l
-         HfdZ3QZV2FFIpQrdnjxtXLthfMPrhZTKRwTY62VbOGF7HigBs5mRrQIgpRNXD/oH/WQE
-         Q6L8gVu+iRlalHDmNulRxo3nePU0s9RVd2e7SYDo613RlLoq9u9VIAKXHxR4+DaTLVG1
-         KIXusjGQLJzeZXuQLyXr/PWykbjgUskBuLhNh47rLJJG/ZjJmT79AZR7BPiuTyY4hiw8
-         PbZxRZWBr9AcCHTSTnBve4TIlDCE4+ncU+Qk4QOYCLTLm+YGefj1dbElmIH6eh+atMNN
-         edkQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=JmVKaqDJbIj1ObPBFRvm3kEt/2ALolZJ1yEXKws/Dq8=;
-        b=Oc2B6//UiTOtiHLrFfo8P8Spjsnc6JR9oMKSbwRtJ9SkAMfjoXoWK/6MhOXMscKtXm
-         5QfudA3ITT7Y7wi1NCxwKAeTaj5Pa+mm+k8Phvn56TVIOYF66bc2d8kjtLG6PocGDsN6
-         STY2KZoXd4s9xHSbMr3yTKqYCdIrPxDNYvc0bkPvH9k/ehspRdi6yUlZLNhyDVvebSff
-         NRGZTwfwj/bLvJycs7vlgUawDYDaCtYYlwOk5vspd13HC1hp1IbYAfCo6vcS7Z/g46Xh
-         Y2PnUrbJeTx3w1/6OOWQ8z1PfxCEF9vFr9G1LNYuJ4PQkqIEtWbVqPEpOywHEhDVf3ai
-         fDUg==
-X-Gm-Message-State: AOAM532W9rNFLhBH4c7HaCANyJVUKHc8N9lEf81mrMASgHT7Xwt60tGs
-        VwHfb8N9y1EOxikJgXk7Wpcd2A==
-X-Google-Smtp-Source: ABdhPJxsvKm0DlnseodCY9VzFXF3ux0nJQBCKFwLawjrW0Qkhrf9x4DngAWq3WNr/fgEH0zeQThujw==
-X-Received: by 2002:ac2:4ec9:: with SMTP id p9mr823114lfr.428.1603372634275;
-        Thu, 22 Oct 2020 06:17:14 -0700 (PDT)
-Received: from eriador.lan ([188.162.64.195])
-        by smtp.gmail.com with ESMTPSA id j10sm308514ljb.93.2020.10.22.06.17.12
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 22 Oct 2020 06:17:13 -0700 (PDT)
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Jonathan Marek <jonathan@marek.ca>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org
-Cc:     David Airlie <airlied@linux.ie>, Daniel Vetter <daniel@ffwll.ch>
-Subject: [PATCH 5/5] drm/msm/dpu: enable merge_3d support on sm8150/sm8250
-Date:   Thu, 22 Oct 2020 16:16:58 +0300
-Message-Id: <20201022131658.181363-6-dmitry.baryshkov@linaro.org>
-X-Mailer: git-send-email 2.28.0
-In-Reply-To: <20201022131658.181363-1-dmitry.baryshkov@linaro.org>
-References: <20201022131658.181363-1-dmitry.baryshkov@linaro.org>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+        id S2895175AbgJVN1W (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 22 Oct 2020 09:27:22 -0400
+Received: from m42-4.mailgun.net ([69.72.42.4]:63119 "EHLO m42-4.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S2894635AbgJVN1V (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 22 Oct 2020 09:27:21 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1603373241; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=zyk+rmaPFWFn8X4EommTKBeeayYl4rYBD+sOjpF0y08=; b=cWgoRH+SlCmoj57JL7GS+z+O3YK+GitWI6cfau9uybc7AYuqFRpz3iDjz175kVVnlyrE6p6W
+ Nn6V5sVx3iUQCXxiXDTl07IBj6/Zinh7u/MJzWakTDrVqm81sa2LJS46xqvp9nfc/pqxjucm
+ ENwhU7o9jKuDFO4ERO56j+/cnd0=
+X-Mailgun-Sending-Ip: 69.72.42.4
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n01.prod.us-east-1.postgun.com with SMTP id
+ 5f9188b4ef891f1ee2621207 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 22 Oct 2020 13:27:16
+ GMT
+Sender: srivasam=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id AE909C433FF; Thu, 22 Oct 2020 13:27:15 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
+        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+Received: from hyd-lnxbld210.qualcomm.com (unknown [202.46.22.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: srivasam)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 03427C433C9;
+        Thu, 22 Oct 2020 13:27:09 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 03427C433C9
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=srivasam@codeaurora.org
+From:   Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
+To:     agross@kernel.org, bjorn.andersson@linaro.org, lgirdwood@gmail.com,
+        broonie@kernel.org, robh+dt@kernel.org, plai@codeaurora.org,
+        bgoswami@codeaurora.org, perex@perex.cz, tiwai@suse.com,
+        srinivas.kandagatla@linaro.org, rohitkr@codeaurora.org,
+        linux-arm-msm@vger.kernel.org, alsa-devel@alsa-project.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Cc:     V Sujith Kumar Reddy <vsujithk@codeaurora.org>,
+        Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
+Subject: [PATCH] Asoc: qcom: lpass-sc7180: Fix MI2S bitwidth field bit positions
+Date:   Thu, 22 Oct 2020 18:56:59 +0530
+Message-Id: <1603373219-19374-1-git-send-email-srivasam@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Handle new merge_3d block setup in dpu encoder code. Pass correct mode
-and id. Note, that merge_3d blocks are not handled via usual RM
-reservation mechanism, as each merge_3d block is tied to two PPs, so by
-reserving PP you get merge_3d automatically.
+From: V Sujith Kumar Reddy <vsujithk@codeaurora.org>
 
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Update SC7180 lpass_variant structure with proper I2S bitwidth
+field bit positions, as bitwidth denotes 0 to 1 bits,
+but previously used only 0 bit.
+
+Fixes: commit cba62c8b49bead ("Merge series "ASoC: qcom: Add support for SC7180 lpass variant" from Rohit kumar <rohitkr@codeaurora.org>:")
+
+Signed-off-by: V Sujith Kumar Reddy <vsujithk@codeaurora.org>
+Signed-off-by: Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
 ---
- drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c | 11 +++++++++++
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_pingpong.h      |  1 +
- drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c               |  2 ++
- 3 files changed, 14 insertions(+)
+ sound/soc/qcom/lpass-sc7180.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
-index a0d8aeec3e75..9a69fad832cd 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
-@@ -5,6 +5,7 @@
- #define pr_fmt(fmt)	"[drm:%s:%d] " fmt, __func__, __LINE__
- #include "dpu_encoder_phys.h"
- #include "dpu_hw_interrupts.h"
-+#include "dpu_hw_merge3d.h"
- #include "dpu_core_irq.h"
- #include "dpu_formats.h"
- #include "dpu_trace.h"
-@@ -282,6 +283,8 @@ static void dpu_encoder_phys_vid_setup_timing_engine(
- 	intf_cfg.intf_mode_sel = DPU_CTL_MODE_SEL_VID;
- 	intf_cfg.stream_sel = 0; /* Don't care value for video mode */
- 	intf_cfg.mode_3d = dpu_encoder_helper_get_3d_blend_mode(phys_enc);
-+	if (phys_enc->hw_pp->merge_3d)
-+		intf_cfg.merge_3d = phys_enc->hw_pp->merge_3d->id;
+diff --git a/sound/soc/qcom/lpass-sc7180.c b/sound/soc/qcom/lpass-sc7180.c
+index c6292f9e..bc998d5 100644
+--- a/sound/soc/qcom/lpass-sc7180.c
++++ b/sound/soc/qcom/lpass-sc7180.c
+@@ -188,7 +188,7 @@ static struct lpass_variant sc7180_data = {
+ 	.micmode		= REG_FIELD_ID(0x1000, 4, 8, 3, 0x1000),
+ 	.micmono		= REG_FIELD_ID(0x1000, 3, 3, 3, 0x1000),
+ 	.wssrc			= REG_FIELD_ID(0x1000, 2, 2, 3, 0x1000),
+-	.bitwidth		= REG_FIELD_ID(0x1000, 0, 0, 3, 0x1000),
++	.bitwidth		= REG_FIELD_ID(0x1000, 0, 1, 3, 0x1000),
  
- 	spin_lock_irqsave(phys_enc->enc_spinlock, lock_flags);
- 	phys_enc->hw_intf->ops.setup_timing_gen(phys_enc->hw_intf,
-@@ -295,6 +298,12 @@ static void dpu_encoder_phys_vid_setup_timing_engine(
- 				true,
- 				phys_enc->hw_pp->idx);
- 
-+	if (phys_enc->hw_pp->merge_3d) {
-+		struct dpu_hw_merge_3d *merge_3d = to_dpu_hw_merge_3d(phys_enc->hw_pp->merge_3d);
-+
-+		merge_3d->ops.setup_3d_mode(merge_3d, intf_cfg.mode_3d);
-+	}
-+
- 	spin_unlock_irqrestore(phys_enc->enc_spinlock, lock_flags);
- 
- 	programmable_fetch_config(phys_enc, &timing_params);
-@@ -451,6 +460,8 @@ static void dpu_encoder_phys_vid_enable(struct dpu_encoder_phys *phys_enc)
- 		goto skip_flush;
- 
- 	ctl->ops.update_pending_flush_intf(ctl, phys_enc->hw_intf->idx);
-+	if (ctl->ops.update_pending_flush_merge_3d && phys_enc->hw_pp->merge_3d)
-+		ctl->ops.update_pending_flush_merge_3d(ctl, phys_enc->hw_pp->merge_3d->id);
- 
- skip_flush:
- 	DPU_DEBUG_VIDENC(phys_enc,
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_pingpong.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_pingpong.h
-index 065996b3ece9..6902b9b95c8e 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_pingpong.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_pingpong.h
-@@ -119,6 +119,7 @@ struct dpu_hw_pingpong {
- 	/* pingpong */
- 	enum dpu_pingpong idx;
- 	const struct dpu_pingpong_cfg *caps;
-+	struct dpu_hw_blk *merge_3d;
- 
- 	/* ops */
- 	struct dpu_hw_pingpong_ops ops;
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c
-index 7ddc26f51d8e..0ae8a36ffcff 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c
-@@ -161,6 +161,8 @@ int dpu_rm_init(struct dpu_rm *rm,
- 				rc);
- 			goto fail;
- 		}
-+		if (pp->merge_3d && pp->merge_3d < MERGE_3D_MAX)
-+			hw->merge_3d = rm->merge_3d_blks[pp->merge_3d - MERGE_3D_0];
- 		rm->pingpong_blks[pp->id - PINGPONG_0] = &hw->base;
- 	}
- 
+ 	.rdma_dyncclk		= REG_FIELD_ID(0xC000, 21, 21, 5, 0x1000),
+ 	.rdma_bursten		= REG_FIELD_ID(0xC000, 20, 20, 5, 0x1000),
 -- 
-2.28.0
+Qualcomm India Private Limited, on behalf of Qualcomm Innovation Center, Inc.,
+is a member of Code Aurora Forum, a Linux Foundation Collaborative Project.
 
