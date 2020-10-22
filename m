@@ -2,49 +2,49 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 482C1295791
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Oct 2020 07:05:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 004AC295798
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Oct 2020 07:05:29 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2507731AbgJVFFS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 22 Oct 2020 01:05:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59162 "EHLO
+        id S2443993AbgJVFFY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 22 Oct 2020 01:05:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59186 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2502058AbgJVFFP (ORCPT
+        with ESMTP id S2507743AbgJVFFW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 22 Oct 2020 01:05:15 -0400
-Received: from mail-pl1-x642.google.com (mail-pl1-x642.google.com [IPv6:2607:f8b0:4864:20::642])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 109EFC0613D5
-        for <linux-arm-msm@vger.kernel.org>; Wed, 21 Oct 2020 22:05:14 -0700 (PDT)
-Received: by mail-pl1-x642.google.com with SMTP id bh6so322837plb.5
-        for <linux-arm-msm@vger.kernel.org>; Wed, 21 Oct 2020 22:05:14 -0700 (PDT)
+        Thu, 22 Oct 2020 01:05:22 -0400
+Received: from mail-pl1-x641.google.com (mail-pl1-x641.google.com [IPv6:2607:f8b0:4864:20::641])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3F3A7C0613CE
+        for <linux-arm-msm@vger.kernel.org>; Wed, 21 Oct 2020 22:05:21 -0700 (PDT)
+Received: by mail-pl1-x641.google.com with SMTP id d23so319799pll.7
+        for <linux-arm-msm@vger.kernel.org>; Wed, 21 Oct 2020 22:05:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=br1VG/AftR5rvhAmwlJkFmu6wT77im0wqYMY63lXCPc=;
-        b=f48hBtEYiQ9cumyN91pZln9WRYzYGIagC8IaqGZt02+O2MHl6eQhg0BtJ9+cg1Lz5h
-         o78FtZXmTE3jBKH3YGJw6UO0d0jZFwtKCoYPkexfnY1SZ/dfXt7VslCJZM/bN6IMdzvi
-         1GjVCtofogBD1D5SMd8g0By60jOJ/X9Pviva4=
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=wpLYvGhuKyxRXzfVKDpynuN2d2Rj3ki47jaONctjv2M=;
+        b=RBhmk4Yoxh9jge/imYHKNgrjYeOVihPb1YzvKBi30BYoocMGuVr03u2v8Yh5x9HBY+
+         9x+ZgOAWZy+tADrZRVw85qC71V6vjSqpprPTk7GaRbCkW9+/42aAwkMrHLTfeneklWye
+         ZtEXbdQU53ltimT+Ktri5sDHtWTTQNfASUZ58=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=br1VG/AftR5rvhAmwlJkFmu6wT77im0wqYMY63lXCPc=;
-        b=FafFWG/eg5IWO1rW/ZdSvN0vqVEUT+3eErij0BJ2O2p1aaOnTo63948Oy6TOC1twQz
-         Y6qX4mRWJTNjDsDr2AlZ4NWpmFpR/hlpZHq4mWBpa2JXzhPENyQzv3fMMOhqLKnzxp6I
-         AewqshO/I0fg8TEPypQqFJwhWtpCrxfwaZyF5UAgzSWRCfiqleGvU8zimFPT3I0JPXbG
-         SywjhTpfQOGjuP+IoqQhIpzsHyuf78eZHeZYZb44pCv+RoqlngpuyaNlEYj6kvWHvLOI
-         YsGApbBzs/cmKM3k+azDpldNZIFHhFefjIhWNFfcaLaFQ6/GgX2V0PeeSzNgIJ+pStkY
-         OHCA==
-X-Gm-Message-State: AOAM531/uqtXM1yRevo8ADNV4B1gSDzuj+TxYVALcJFmn1BRpm9g4MHq
-        WpLJ8T06QMNAofesigwtx8EB7A==
-X-Google-Smtp-Source: ABdhPJymcPyyQm+Vwkk6bRyWkhQZdrrKBm+8kHDpsoJwQTQghvs0I0e+UpqN3Vxv1JCNbjDoQlFwsw==
-X-Received: by 2002:a17:902:ab89:b029:d5:b297:2cc1 with SMTP id f9-20020a170902ab89b02900d5b2972cc1mr765458plr.7.1603343113453;
-        Wed, 21 Oct 2020 22:05:13 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=wpLYvGhuKyxRXzfVKDpynuN2d2Rj3ki47jaONctjv2M=;
+        b=VE1Gnd2fwBcmLrlhq52JgPJjHsGhqiYRgNy1DH+hj0UCEU2NcFOnHElKAVWWhrrPrS
+         Fyr0KqIW6mdhhJUOI+9ra8cGn67Vn5s3HNCfTidM9aGnmtxGIuH4UkMCkOjzmhEaGb+R
+         oxY4h0LGTUOOGS3HbemoDicmkhdA8T5d8Yx11VmkT3d4LhLp+X5BmBfWTd9zwG9IRHD8
+         DO1n2L98kSI0dIYPHLk3AMqkv/anZGpPgAMNTgjehi7gZIiBYltJw34Da4vxO58UAXpc
+         h/SIIe2nikeO1Ix+L9XPumxC/M946GepdgPvCmO9P74hBdZXtwVe3/HyPN03DM3AuXmW
+         d68w==
+X-Gm-Message-State: AOAM530GGHV/b8l6DzwWFL+1XwDTLyVYFm/+ICDt8/JHH4Nur2t69aPc
+        LZTNA0FbfN5ePKj1y+s2MW57UA==
+X-Google-Smtp-Source: ABdhPJwE6Djg9sy5FUg+MODQPTa7yCYtbMqMJOwWukFS48qoFn6DL7xRd79dt+BffZ+JvAe/dWMiIg==
+X-Received: by 2002:a17:90a:788a:: with SMTP id x10mr86917pjk.236.1603343120839;
+        Wed, 21 Oct 2020 22:05:20 -0700 (PDT)
 Received: from alex-desktop.lan (c-73-63-253-164.hsd1.ca.comcast.net. [73.63.253.164])
-        by smtp.gmail.com with ESMTPSA id q16sm394954pfu.206.2020.10.21.22.05.07
+        by smtp.gmail.com with ESMTPSA id q16sm394954pfu.206.2020.10.21.22.05.17
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 21 Oct 2020 22:05:12 -0700 (PDT)
+        Wed, 21 Oct 2020 22:05:20 -0700 (PDT)
 From:   Alexandru Stan <amstan@chromium.org>
 To:     Heiko Stuebner <heiko@sntech.de>, Rob Herring <robh+dt@kernel.org>,
         Andy Gross <agross@kernel.org>,
@@ -59,65 +59,58 @@ Cc:     Douglas Anderson <dianders@chromium.org>,
         Matthias Kaehlcke <mka@chromium.org>,
         Enric Balletbo i Serra <enric.balletbo@collabora.com>,
         Alexandru Stan <amstan@chromium.org>,
-        devicetree@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, linux-fbdev@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-pwm@vger.kernel.org,
-        linux-rockchip@lists.infradead.org
-Subject: [PATCH v3 0/3] PWM backlight interpolation adjustments
-Date:   Wed, 21 Oct 2020 22:04:42 -0700
-Message-Id: <20201022050445.930403-1-amstan@chromium.org>
+        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH v3 2/3] arm64: dts: qcom: trogdor: Add brightness-levels
+Date:   Wed, 21 Oct 2020 22:04:44 -0700
+Message-Id: <20201021220404.v3.2.Ie4d84af5a85e8dcb8f575845518fa39f324a827d@changeid>
 X-Mailer: git-send-email 2.28.0
+In-Reply-To: <20201022050445.930403-1-amstan@chromium.org>
+References: <20201022050445.930403-1-amstan@chromium.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-I was trying to adjust the brightness-levels for the trogdor boards:
-https://chromium-review.googlesource.com/c/chromiumos/third_party/kernel/+/2291209
-Like on a lot of panels, trogdor's low end needs to be cropped,
-and now that we have the interpolation stuff I wanted to make use of it
-and bake in even the curve that's customary to have on chromebooks.
+We want userspace to represent the human perceived brightness.
+Since the led drivers and the leds themselves don't have a
+linear response to the value we give them in terms of perceived
+brightness, we'll bake the curve into the dts.
 
-I found the current behavior of the pwm_bl driver a little unintuitive
-and non-linear. See patch 1 for a suggested fix for this.
+The panel also doesn't have a good response under 5%, so we'll avoid
+sending it anything lower than that.
 
-A few veyron dts files were relying on this (perhaps weird) behavior.
-Those devices also want a minimum brightness like trogdor, so changed
-them to use the new way.
+Note: Ideally this patch should be coupled with the driver change from
+"backlight: pwm_bl: Fix interpolation", but it can work without it,
+without looking too ugly.
 
-Finally, given that trogdor's dts is part of linux-next now, add the
-brightness-levels to it, since that's the original reason I was looking at
-this.
+Signed-off-by: Alexandru Stan <amstan@chromium.org>
+---
 
-Changes in v3:
-- Reordered patches, since both dts changes will work just fine
-  even before the driver change.
-- Rewrote a bit of the commit message to describe the new policy,
-  as Daniel suggested.
-- Removed redundant s64 for something that's always positive
+ arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-Changes in v2:
-- Fixed type promotion in the driver
-- Removed "backlight: pwm_bl: Artificially add 0% during interpolation",
-  userspace works just fine without it because it already knows how to use
-  bl_power for turning off the display.
-- Added brightness-levels to trogdor as well, now the dts is upstream.
-
-
-Alexandru Stan (3):
-  ARM: dts: rockchip: veyron: Remove 0 point from brightness-levels
-  arm64: dts: qcom: trogdor: Add brightness-levels
-  backlight: pwm_bl: Fix interpolation
-
- arch/arm/boot/dts/rk3288-veyron-jaq.dts      |  2 +-
- arch/arm/boot/dts/rk3288-veyron-minnie.dts   |  2 +-
- arch/arm/boot/dts/rk3288-veyron-tiger.dts    |  2 +-
- arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi |  9 +++
- drivers/video/backlight/pwm_bl.c             | 70 +++++++++-----------
- 5 files changed, 43 insertions(+), 42 deletions(-)
-
+diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
+index bf875589d364..ccdabc6c4994 100644
+--- a/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
+@@ -179,6 +179,15 @@ pp3300_fp_tp: pp3300-fp-tp-regulator {
+ 	backlight: backlight {
+ 		compatible = "pwm-backlight";
+ 
++		/* The panels don't seem to like anything below ~ 5% */
++		brightness-levels = <
++			196 256 324 400 484 576 676 784 900 1024 1156 1296
++			1444 1600 1764 1936 2116 2304 2500 2704 2916 3136
++			3364 3600 3844 4096
++		>;
++		num-interpolated-steps = <64>;
++		default-brightness-level = <951>;
++
+ 		pwms = <&cros_ec_pwm 1>;
+ 		enable-gpios = <&tlmm 12 GPIO_ACTIVE_HIGH>;
+ 		power-supply = <&ppvar_sys>;
 -- 
 2.28.0
 
