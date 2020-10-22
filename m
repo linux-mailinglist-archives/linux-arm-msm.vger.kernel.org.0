@@ -2,147 +2,150 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 81A2D296673
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Oct 2020 23:20:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EDFC92966B8
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Oct 2020 23:36:04 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S372239AbgJVVUh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 22 Oct 2020 17:20:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40662 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S372217AbgJVVUg (ORCPT
+        id S372351AbgJVVfr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 22 Oct 2020 17:35:47 -0400
+Received: from alexa-out-sd-02.qualcomm.com ([199.106.114.39]:55827 "EHLO
+        alexa-out-sd-02.qualcomm.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S372340AbgJVVfq (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 22 Oct 2020 17:20:36 -0400
-Received: from mail-pf1-x442.google.com (mail-pf1-x442.google.com [IPv6:2607:f8b0:4864:20::442])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 88EEBC0613CE
-        for <linux-arm-msm@vger.kernel.org>; Thu, 22 Oct 2020 14:20:36 -0700 (PDT)
-Received: by mail-pf1-x442.google.com with SMTP id f19so2021173pfj.11
-        for <linux-arm-msm@vger.kernel.org>; Thu, 22 Oct 2020 14:20:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=YsUSHc5bYUNmuFMA3WRkMmx4GDjXmb6yOh7O9xZbDRc=;
-        b=N/0AvT8+Hmb3Rp8IZcUtW/xq7QBs+gg8I6Im+7uExqg6EoLb9sXgBZz51+CZ+qnUuh
-         SBx7rgrojGMMIHQoHOr/JSqOuFR35YDeN14XDliCDF1gmzKsxxor3D8TtwnO43MDPC3L
-         CitQN82Mgy21Xnf1OAs2eG/ca46bJrn/G+FZFpfdhEhmZeLLBGNYI7z77kJTWcUthBRO
-         Kk3lUArNhh5snSxjzXB2p10AvB+shf/2Uk2zAiCQDT+lB0BhYAX7x4T8RBuZ9X8Pse+3
-         VXgbuUmLljtDtL/KxQc23w1wka+dptL4JtJPQP4cXFKa2oImmbpxw01grfDWRrQXPkl8
-         0huw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=YsUSHc5bYUNmuFMA3WRkMmx4GDjXmb6yOh7O9xZbDRc=;
-        b=HIdxQW+NzL4q4tLnHjvQnAqOhdp+93ZmUl/SavMeBeMNu9iQvTaf0Vkfmtpmy1Zz4w
-         fR0QY/2PmPzezWCxS6n59riVqkiFbSjTSFcBkgX3uIRjSqzhaLi8k+wmNEGWkAyusoSE
-         /vjJAVPUZ9sauddUNSaEWIeDK/YM8zXbKjbqTMnoJifFVn4ENBeP3gn9VGrBxITsSxLe
-         fo4U3UxjBpaPLSeJ2lHzZ+vIdpm6fu/JqRXsFK2xV/y8QP6HtS3lY/JypMPqtYPkGff2
-         QvSdyTpvmepbemqJEWSSYrB6IUeUN6ucTbZKYB9+1MHL6pkMtsRolL4gdOi0AeDPEBQW
-         FTsg==
-X-Gm-Message-State: AOAM531wdftVBaASMPzJxC7DFaJqUDftHxHFaYNhn7SwFh475jAUNXPD
-        lkURI6shYvHa3FxBIbO8pabwYw==
-X-Google-Smtp-Source: ABdhPJz+Cp9vygopwE/M6gjCd4Vr2adBC00b2KaBAjRV6HQipRCfUo6ON+X5DoToZl8Q4eAKTSdMMg==
-X-Received: by 2002:a17:90a:f504:: with SMTP id cs4mr3832476pjb.134.1603401636089;
-        Thu, 22 Oct 2020 14:20:36 -0700 (PDT)
-Received: from xps15 (S0106002369de4dac.cg.shawcable.net. [68.147.8.254])
-        by smtp.gmail.com with ESMTPSA id j23sm3154622pgm.76.2020.10.22.14.20.34
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 22 Oct 2020 14:20:35 -0700 (PDT)
-Date:   Thu, 22 Oct 2020 15:20:33 -0600
-From:   Mathieu Poirier <mathieu.poirier@linaro.org>
-To:     Suzuki Poulose <suzuki.poulose@arm.com>
-Cc:     Peter Zijlstra <peterz@infradead.org>,
-        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
-        Mike Leach <mike.leach@linaro.org>,
-        Ingo Molnar <mingo@redhat.com>,
-        Arnaldo Carvalho de Melo <acme@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-        Jiri Olsa <jolsa@redhat.com>,
-        Namhyung Kim <namhyung@kernel.org>, coresight@lists.linaro.org,
-        Stephen Boyd <swboyd@chromium.org>,
+        Thu, 22 Oct 2020 17:35:46 -0400
+Received: from unknown (HELO ironmsg01-sd.qualcomm.com) ([10.53.140.141])
+  by alexa-out-sd-02.qualcomm.com with ESMTP; 22 Oct 2020 14:35:45 -0700
+X-QCInternal: smtphost
+Received: from gurus-linux.qualcomm.com ([10.46.162.81])
+  by ironmsg01-sd.qualcomm.com with ESMTP; 22 Oct 2020 14:35:45 -0700
+Received: by gurus-linux.qualcomm.com (Postfix, from userid 383780)
+        id 4D541193C; Thu, 22 Oct 2020 14:35:45 -0700 (PDT)
+From:   Guru Das Srinagesh <gurus@codeaurora.org>
+To:     Mark Brown <broonie@kernel.org>,
+        Markus Elfring <Markus.Elfring@web.de>,
+        Lee Jones <lee.jones@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Greg KH <gregkh@linuxfoundation.org>,
+        Guenter Roeck <linux@roeck-us.net>,
+        Joe Perches <joe@perches.com>,
+        Subbaraman Narayanamurthy <subbaram@codeaurora.org>,
+        David Collins <collinsd@codeaurora.org>,
+        Anirudh Ghayal <aghayal@codeaurora.org>,
         linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org
-Subject: Re: [PATCHv2 2/4] coresight: tmc-etf: Fix NULL ptr dereference in
- tmc_enable_etf_sink_perf()
-Message-ID: <20201022212033.GA646497@xps15>
-References: <cover.1603363729.git.saiprakash.ranjan@codeaurora.org>
- <aa6e571156d6e26e54da0bb3015ba474e4a08da0.1603363729.git.saiprakash.ranjan@codeaurora.org>
- <20201022113214.GD2611@hirez.programming.kicks-ass.net>
- <e7d236f7-61c2-731d-571b-839e0e545563@arm.com>
- <20201022150609.GI2611@hirez.programming.kicks-ass.net>
- <788706f2-0670-b7b6-a153-3ec6f16e0f2e@arm.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <788706f2-0670-b7b6-a153-3ec6f16e0f2e@arm.com>
+        devicetree@vger.kernel.org,
+        Guru Das Srinagesh <gurus@codeaurora.org>
+Subject: [PATCH v2 0/3] Add support for Qualcomm MFD PMIC register layout
+Date:   Thu, 22 Oct 2020 14:35:39 -0700
+Message-Id: <cover.1603402280.git.gurus@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Peter,
+Changes from v1:
+- Fixed YAML errors in dt binding document.
 
-On Thu, Oct 22, 2020 at 04:32:36PM +0100, Suzuki Poulose wrote:
-> On 10/22/20 4:06 PM, Peter Zijlstra wrote:
-> > On Thu, Oct 22, 2020 at 02:30:21PM +0100, Suzuki Poulose wrote:
-> > > On 10/22/20 12:32 PM, Peter Zijlstra wrote:
-> > > > On Thu, Oct 22, 2020 at 04:27:52PM +0530, Sai Prakash Ranjan wrote:
-> > > > 
-> > > > > Looking at the ETR and other places in the kernel, ETF and the
-> > > > > ETB are the only places trying to dereference the task(owner)
-> > > > > in tmc_enable_etf_sink_perf() which is also called from the
-> > > > > sched_in path as in the call trace.
-> > > > 
-> > > > > @@ -391,6 +392,10 @@ static void *tmc_alloc_etf_buffer(struct coresight_device *csdev,
-> > > > >    {
-> > > > >    	int node;
-> > > > >    	struct cs_buffers *buf;
-> > > > > +	struct task_struct *task = READ_ONCE(event->owner);
-> > > > > +
-> > > > > +	if (!task || is_kernel_event(event))
-> > > > > +		return NULL;
-> > > > 
-> > > > 
-> > > > This is *wrong*... why do you care about who owns the events?
-> > > > 
-> > > 
-> > > This is due to the special case of the CoreSight configuration, where
-> > > a "sink" (where the trace data is captured) is shared by multiple Trace
-> > > units. So, we could share the "sink" for multiple trace units if they
-> > > are tracing the events that belong to the same "perf" session. (The
-> > > userspace tool could decode the trace data based on the TraceID
-> > > in the trace packets). Is there a better way to do this ?
-> > 
-> > I thought we added sink identification through perf_event_attr::config2
-> > ?
-> > 
-> 
-> Correct. attr:config2 identifies the "sink" for the collection. But,
-> that doesn't solve the problem we have here. If two separate perf
-> sessions use the "same sink", we don't want to mix the
-> trace data into the same sink for events from different sessions.
-> 
-> Thus, we need a way to check if a new event starting the tracing on
-> an ETM belongs to the same session as the one already pumping the trace
-> into the sink.
+This is a follow-up as promised [1] to the earlier attempts [2] [3] to upstream
+the driver that has been hitherto used to handle IRQs for Qualcomm's PMICs that
+have multiple on-board peripherals when they are interfaced over the I2C
+interface.
 
-Suzuki's depiction of the usecase is accurate.  Using the pid of the process
-that created the events comes out of a discussion you and I had in the common
-area by the Intel booth at ELC in Edinburgh in the fall of 2018.  At the time I
-exposed the problem of having multiple events sharing the same HW resources and
-you advised to proceed this way.
+This series is a rewrite of that driver while making use of the regmap-irq
+framework, which needs some modifications to handle the register layout of
+Qualcomm's PMICs. This is an RFC because I would like to get feedback on my
+general approach before submitting as a patch per se.
 
-That being said it is plausible that I did not expressed myself clearly enough
-for you to understand the full extend of the problem.  If that is the case we
-are more than willing to revisit that solution.  Do you see a better option than
-what has currently been implemented?
+Upon inspection of the regmap-irq framework, it was observed that the
+downstream driver was essentially replicating the framework's IRQ handling
+logic (such as adding an IRQ domain, and the interrupt handler thread that
+reads sub-irqs from a main status register). It was also observed that the
+framework could not be used as-is because:
+- Qualcomm's PMIC peripheral register layout does not follow a fixed
+  irq_reg_stride, and
+- The "IRQ TYPE" configuration register takes one bit per interrupt, which when
+  set configures that interrupt as Edge triggered, and when cleared sets it to
+  Level triggered.
+- There are two IRQ configuration registers in addition to "IRQ TYPE" that
+  further configure the IRQ type as triggered by rising-edge/level high or
+  alternatively, falling-edge/level low that have no support in the regmap-irq
+  framework currently.
 
-Many thanks,
-Mathieu
+This patch series has been tested on an internal platform using PM8008 as a
+test MFD PMIC chip. PM8008 is a PMIC that contains 7 LDOs, 2 GPIOs, temperature
+monitoring, and can be interfaced over I2C.
 
-> 
-> We use event->owner pid for this check and thats where we encountered
-> a NULL event->owner. Looking at the code further, we identified that
-> kernel events could also trigger this issue.
-> 
-> Suzuki
+Both the framework modifications as well as the chip driver
+have been submitted here for review. Some details about the specific
+differences between the framework and QCOM PMICs' register layout are provided
+below using PM8008 as an example.
+
+[PM8008 peripheral register layout]
+
+Of all the peripherals in PM8008, only a few need IRQ support. They are laid
+out at the following base addresses (only four are added at the moment for
+simplicity):
+
+	0x0900, 0x2400, 0xC000, 0xC100
+
+Each peripheral is allocated a uniform size of 0x100 bytes and its IRQs are
+configured through a set of registers that are located at fixed offsets from
+the above base addresses, uniformly:
+
+	Register name	       Addr	regmap-irq equivalent	Comment
+	-----------------------------------------------------------------------
+	INT_RT_STS_OFFSET      0x10	(no equivalent)		See #1 below
+	INT_SET_TYPE_OFFSET    0x11	type_base 		See #2 below
+	INT_POL_HIGH_OFFSET    0x12	(no equivalent)		See #3 below
+	INT_POL_LOW_OFFSET     0x13	(no equivalent)		See #3 below
+	INT_LATCHED_CLR_OFFSET 0x14	ack_base
+	INT_EN_SET_OFFSET      0x15	unmask_base		See #4 below
+	INT_EN_CLR_OFFSET      0x16	mask_base		See #4 below
+	INT_LATCHED_STS_OFFSET 0x18	status_base
+
+Comments (all registers are one bit per interrupt):
+1. INT_RT_STS_OFFSET is not used by the regmap-irq, so it may be ignored.
+2. INT_SET_TYPE_OFFSET: 1 for edge trigger, 0 for level trigger.
+3. Support needs to be added for writing to INT_POL_HIGH_OFFSET and
+   INT_POL_LOW_OFFSET correctly in the framework. Set to 1 or 0 to enable or
+   disable rising-edge/level high or falling-edge/level low.
+4. Even though INT_EN_SET_OFFSET and INT_EN_CLR_OFFSET map to unmask_base and
+   mask_base in the regmap-irq framework conceptually, they are swapped in the
+   chip driver because `unmask_offset` in the framework expects unmask_base to
+   be larger than mask_base numerically. This has to be kept in mind while
+   reviewing the "mfd: Add PM8008 driver" patch below.
+
+[Summary of framework changes]
+
+The main thrust of the changes is to introduce an array of peripheral offset
+values, which are to be added to the *_base addresses in order to arrive at the
+correct register addresses per peripheral. In order to get at the first
+peripheral's addresses, the first element of this array must be zero.
+
+Since there are two new registers (INT_POL_HIGH_OFFSET and INT_POL_LOW_OFFSET),
+add support for storing the per-peripheral values and also writing to them.
+These will be used only if peripheral offsets are specified.
+
+[1] https://lore.kernel.org/lkml/20200519185757.GA13992@codeaurora.org/
+[2] https://lore.kernel.org/lkml/cover.1588037638.git.gurus@codeaurora.org/
+[3] https://lore.kernel.org/lkml/cover.1588115326.git.gurus@codeaurora.org/
+
+
+Guru Das Srinagesh (3):
+  regmap-irq: Add support for peripheral offsets
+  dt-bindings: mfd: Add QCOM PM8008 MFD bindings
+  mfd: Add PM8008 driver
+
+ .../bindings/mfd/qcom,pm8008-irqchip.yaml          | 102 +++++++++++
+ drivers/base/regmap/regmap-irq.c                   | 191 ++++++++++++++++----
+ drivers/mfd/Kconfig                                |  14 ++
+ drivers/mfd/Makefile                               |   1 +
+ drivers/mfd/qcom-pm8008.c                          | 197 +++++++++++++++++++++
+ include/linux/regmap.h                             |   6 +
+ 6 files changed, 477 insertions(+), 34 deletions(-)
+ create mode 100644 Documentation/devicetree/bindings/mfd/qcom,pm8008-irqchip.yaml
+ create mode 100644 drivers/mfd/qcom-pm8008.c
+
+-- 
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
+
