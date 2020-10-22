@@ -2,230 +2,103 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B8B452966C7
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Oct 2020 23:48:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D553B29678D
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Oct 2020 01:13:42 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S372471AbgJVVrr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 22 Oct 2020 17:47:47 -0400
-Received: from alexa-out-sd-02.qualcomm.com ([199.106.114.39]:49240 "EHLO
-        alexa-out-sd-02.qualcomm.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S372460AbgJVVrq (ORCPT
+        id S368496AbgJVXNm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 22 Oct 2020 19:13:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57958 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2504396AbgJVXNl (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 22 Oct 2020 17:47:46 -0400
-Received: from unknown (HELO ironmsg-SD-alpha.qualcomm.com) ([10.53.140.30])
-  by alexa-out-sd-02.qualcomm.com with ESMTP; 22 Oct 2020 14:47:45 -0700
-X-QCInternal: smtphost
-Received: from gurus-linux.qualcomm.com ([10.46.162.81])
-  by ironmsg-SD-alpha.qualcomm.com with ESMTP; 22 Oct 2020 14:47:45 -0700
-Received: by gurus-linux.qualcomm.com (Postfix, from userid 383780)
-        id 0B3F119BF; Thu, 22 Oct 2020 14:47:45 -0700 (PDT)
-From:   Guru Das Srinagesh <gurus@codeaurora.org>
-To:     Andy Gross <agross@kernel.org>,
+        Thu, 22 Oct 2020 19:13:41 -0400
+Received: from mail-vs1-xe41.google.com (mail-vs1-xe41.google.com [IPv6:2607:f8b0:4864:20::e41])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BF398C0613CE
+        for <linux-arm-msm@vger.kernel.org>; Thu, 22 Oct 2020 16:13:39 -0700 (PDT)
+Received: by mail-vs1-xe41.google.com with SMTP id e3so1847802vsr.8
+        for <linux-arm-msm@vger.kernel.org>; Thu, 22 Oct 2020 16:13:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=XqZRiMhuJbb9xQjfZ/Kso8UhUVd+NGKCMF23xD+oK5A=;
+        b=G0PWbSpxIEODLM5nxyFaH4wcSC5Tof/eTKvTFJfDjb4jdSxh2k8WP0w07CycnNkqSs
+         uVupbWaEV3DgvKcdVUr023+qrEjkshzPyyEO/uc3JhL9c/OIwsiOvagKq1aJG5DeQy7e
+         iP06v2r5JX4Qjn83Q+ncdtCN2QZf0gf30vzfM=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=XqZRiMhuJbb9xQjfZ/Kso8UhUVd+NGKCMF23xD+oK5A=;
+        b=AVOBAeJJ20JcH9zQkHo9QN6ljTPQbyi+3DE4N3Udj2gtacVDAhk2qVD4oHLEDZgWua
+         ZXWSVPay05G2XN7nWXrhGBSWP99KTSXMsAM80sljiK4noYXEItXiyfOlF6T3daVXcncI
+         /Vmlq7azam382MgnEbbam5litcYzSlF1UgFJqkjvvWNYMJao0+6M82boKprUfuGlIanG
+         W31yyCyKLRKUCIM1KpEkQ/UzK0+sNHaDIjV0wQppN13v6Hy+Re8zG1dIYGIvKrHrZOIa
+         POyTJt7MndN+IiOAApqhTOhVwyDO8eniZiN2wB2MxsWs9rZG/LKouMndb2n7+ASqoVjH
+         A13Q==
+X-Gm-Message-State: AOAM5302p+pVNELjPlQdYfM7gY3BJoDv822DWEpGbD+dr4dvyzLiJCIx
+        AB1ZDZcPKMCR454mbnG1To0elpbmoePWfQ==
+X-Google-Smtp-Source: ABdhPJy5pe1KuAEH6wcmyUwY6p9lcAxgGXttCgJRYr0jstXv+FwSkhqbHm/GgBVrYuDk2cX1krwKsg==
+X-Received: by 2002:a67:ffd8:: with SMTP id w24mr4012100vsq.18.1603408418842;
+        Thu, 22 Oct 2020 16:13:38 -0700 (PDT)
+Received: from mail-ua1-f52.google.com (mail-ua1-f52.google.com. [209.85.222.52])
+        by smtp.gmail.com with ESMTPSA id t71sm455788vkb.7.2020.10.22.16.13.38
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 22 Oct 2020 16:13:38 -0700 (PDT)
+Received: by mail-ua1-f52.google.com with SMTP id r9so960913uat.12
+        for <linux-arm-msm@vger.kernel.org>; Thu, 22 Oct 2020 16:13:38 -0700 (PDT)
+X-Received: by 2002:a9f:31ce:: with SMTP id w14mr3531663uad.104.1603408090224;
+ Thu, 22 Oct 2020 16:08:10 -0700 (PDT)
+MIME-Version: 1.0
+References: <20201022050445.930403-1-amstan@chromium.org> <20201021220404.v3.2.Ie4d84af5a85e8dcb8f575845518fa39f324a827d@changeid>
+In-Reply-To: <20201021220404.v3.2.Ie4d84af5a85e8dcb8f575845518fa39f324a827d@changeid>
+From:   Doug Anderson <dianders@chromium.org>
+Date:   Thu, 22 Oct 2020 16:07:58 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=VeRs=EzBoQkVNVYnrEmUAwV0B-zKtYeS9s80TpEjPmgg@mail.gmail.com>
+Message-ID: <CAD=FV=VeRs=EzBoQkVNVYnrEmUAwV0B-zKtYeS9s80TpEjPmgg@mail.gmail.com>
+Subject: Re: [PATCH v3 2/3] arm64: dts: qcom: trogdor: Add brightness-levels
+To:     Alexandru Stan <amstan@chromium.org>
+Cc:     Heiko Stuebner <heiko@sntech.de>, Rob Herring <robh+dt@kernel.org>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        linux-arm-msm@vger.kernel.org, Rob Herring <robh+dt@kernel.org>
-Cc:     Subbaraman Narayanamurthy <subbaram@codeaurora.org>,
-        David Collins <collinsd@codeaurora.org>,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Stephen Boyd <sboyd@kernel.org>,
-        Anirudh Ghayal <aghayal@codeaurora.org>,
-        Kavya Nunna <knunna@codeaurora.org>,
-        Guru Das Srinagesh <gurus@codeaurora.org>
-Subject: [PATCH v3 2/2] extcon: qcom-spmi: Add support for VBUS detection
-Date:   Thu, 22 Oct 2020 14:47:44 -0700
-Message-Id: <e6e708ccc41c01eb7a345f1d46dc6d32ff8c7d63.1603403020.git.gurus@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <cover.1603403020.git.gurus@codeaurora.org>
-References: <cover.1603403020.git.gurus@codeaurora.org>
-In-Reply-To: <cover.1603403020.git.gurus@codeaurora.org>
-References: <cover.1603403020.git.gurus@codeaurora.org>
+        Thierry Reding <thierry.reding@gmail.com>,
+        =?UTF-8?Q?Uwe_Kleine=2DK=C3=B6nig?= 
+        <u.kleine-koenig@pengutronix.de>, Lee Jones <lee.jones@linaro.org>,
+        Daniel Thompson <daniel.thompson@linaro.org>,
+        Jingoo Han <jingoohan1@gmail.com>,
+        Bartlomiej Zolnierkiewicz <b.zolnierkie@samsung.com>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        Enric Balletbo i Serra <enric.balletbo@collabora.com>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        LKML <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Anirudh Ghayal <aghayal@codeaurora.org>
+Hi,
 
-VBUS can be detected via a dedicated PMIC pin. Add support
-for reporting the VBUS status.
+On Wed, Oct 21, 2020 at 10:05 PM Alexandru Stan <amstan@chromium.org> wrote:
+>
+> We want userspace to represent the human perceived brightness.
+> Since the led drivers and the leds themselves don't have a
+> linear response to the value we give them in terms of perceived
+> brightness, we'll bake the curve into the dts.
+>
+> The panel also doesn't have a good response under 5%, so we'll avoid
+> sending it anything lower than that.
+>
+> Note: Ideally this patch should be coupled with the driver change from
+> "backlight: pwm_bl: Fix interpolation", but it can work without it,
+> without looking too ugly.
+>
+> Signed-off-by: Alexandru Stan <amstan@chromium.org>
+> ---
+>
+>  arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi | 9 +++++++++
+>  1 file changed, 9 insertions(+)
 
-Signed-off-by: Anirudh Ghayal <aghayal@codeaurora.org>
-Signed-off-by: Kavya Nunna <knunna@codeaurora.org>
-Signed-off-by: Guru Das Srinagesh <gurus@codeaurora.org>
----
- drivers/extcon/extcon-qcom-spmi-misc.c | 100 ++++++++++++++++++++++++++-------
- 1 file changed, 81 insertions(+), 19 deletions(-)
-
-diff --git a/drivers/extcon/extcon-qcom-spmi-misc.c b/drivers/extcon/extcon-qcom-spmi-misc.c
-index 6b836ae..6bd6746 100644
---- a/drivers/extcon/extcon-qcom-spmi-misc.c
-+++ b/drivers/extcon/extcon-qcom-spmi-misc.c
-@@ -1,7 +1,7 @@
- // SPDX-License-Identifier: GPL-2.0-only
- /**
-  * extcon-qcom-spmi-misc.c - Qualcomm USB extcon driver to support USB ID
-- *				detection based on extcon-usb-gpio.c.
-+ *			and VBUS detection based on extcon-usb-gpio.c.
-  *
-  * Copyright (C) 2016 Linaro, Ltd.
-  * Stephen Boyd <stephen.boyd@linaro.org>
-@@ -21,30 +21,56 @@
- 
- struct qcom_usb_extcon_info {
- 	struct extcon_dev *edev;
--	int irq;
-+	int id_irq;
-+	int vbus_irq;
- 	struct delayed_work wq_detcable;
- 	unsigned long debounce_jiffies;
- };
- 
- static const unsigned int qcom_usb_extcon_cable[] = {
-+	EXTCON_USB,
- 	EXTCON_USB_HOST,
- 	EXTCON_NONE,
- };
- 
- static void qcom_usb_extcon_detect_cable(struct work_struct *work)
- {
--	bool id;
-+	bool state = false;
- 	int ret;
-+	union extcon_property_value val;
- 	struct qcom_usb_extcon_info *info = container_of(to_delayed_work(work),
- 						    struct qcom_usb_extcon_info,
- 						    wq_detcable);
- 
--	/* check ID and update cable state */
--	ret = irq_get_irqchip_state(info->irq, IRQCHIP_STATE_LINE_LEVEL, &id);
--	if (ret)
--		return;
-+	if (info->id_irq > 0) {
-+		/* check ID and update cable state */
-+		ret = irq_get_irqchip_state(info->id_irq,
-+				IRQCHIP_STATE_LINE_LEVEL, &state);
-+		if (ret)
-+			return;
-+
-+		if (!state) {
-+			val.intval = true;
-+			extcon_set_property(info->edev, EXTCON_USB_HOST,
-+						EXTCON_PROP_USB_SS, val);
-+		}
-+		extcon_set_state_sync(info->edev, EXTCON_USB_HOST, !state);
-+	}
- 
--	extcon_set_state_sync(info->edev, EXTCON_USB_HOST, !id);
-+	if (info->vbus_irq > 0) {
-+		/* check VBUS and update cable state */
-+		ret = irq_get_irqchip_state(info->vbus_irq,
-+				IRQCHIP_STATE_LINE_LEVEL, &state);
-+		if (ret)
-+			return;
-+
-+		if (state) {
-+			val.intval = true;
-+			extcon_set_property(info->edev, EXTCON_USB,
-+						EXTCON_PROP_USB_SS, val);
-+		}
-+		extcon_set_state_sync(info->edev, EXTCON_USB, state);
-+	}
- }
- 
- static irqreturn_t qcom_usb_irq_handler(int irq, void *dev_id)
-@@ -79,21 +105,48 @@ static int qcom_usb_extcon_probe(struct platform_device *pdev)
- 		return ret;
- 	}
- 
-+	ret = extcon_set_property_capability(info->edev,
-+			EXTCON_USB, EXTCON_PROP_USB_SS);
-+	ret |= extcon_set_property_capability(info->edev,
-+			EXTCON_USB_HOST, EXTCON_PROP_USB_SS);
-+	if (ret) {
-+		dev_err(dev, "failed to register extcon props rc=%d\n",
-+						ret);
-+		return ret;
-+	}
-+
- 	info->debounce_jiffies = msecs_to_jiffies(USB_ID_DEBOUNCE_MS);
- 	INIT_DELAYED_WORK(&info->wq_detcable, qcom_usb_extcon_detect_cable);
- 
--	info->irq = platform_get_irq_byname(pdev, "usb_id");
--	if (info->irq < 0)
--		return info->irq;
-+	info->id_irq = platform_get_irq_byname(pdev, "usb_id");
-+	if (info->id_irq > 0) {
-+		ret = devm_request_threaded_irq(dev, info->id_irq, NULL,
-+					qcom_usb_irq_handler,
-+					IRQF_TRIGGER_RISING |
-+					IRQF_TRIGGER_FALLING | IRQF_ONESHOT,
-+					pdev->name, info);
-+		if (ret < 0) {
-+			dev_err(dev, "failed to request handler for ID IRQ\n");
-+			return ret;
-+		}
-+	}
- 
--	ret = devm_request_threaded_irq(dev, info->irq, NULL,
-+	info->vbus_irq = platform_get_irq_byname(pdev, "usb_vbus");
-+	if (info->vbus_irq > 0) {
-+		ret = devm_request_threaded_irq(dev, info->vbus_irq, NULL,
- 					qcom_usb_irq_handler,
- 					IRQF_TRIGGER_RISING |
- 					IRQF_TRIGGER_FALLING | IRQF_ONESHOT,
- 					pdev->name, info);
--	if (ret < 0) {
--		dev_err(dev, "failed to request handler for ID IRQ\n");
--		return ret;
-+		if (ret < 0) {
-+			dev_err(dev, "failed to request handler for VBUS IRQ\n");
-+			return ret;
-+		}
-+	}
-+
-+	if (info->id_irq < 0 && info->vbus_irq < 0) {
-+		dev_err(dev, "ID and VBUS IRQ not found\n");
-+		return -EINVAL;
- 	}
- 
- 	platform_set_drvdata(pdev, info);
-@@ -120,8 +173,12 @@ static int qcom_usb_extcon_suspend(struct device *dev)
- 	struct qcom_usb_extcon_info *info = dev_get_drvdata(dev);
- 	int ret = 0;
- 
--	if (device_may_wakeup(dev))
--		ret = enable_irq_wake(info->irq);
-+	if (device_may_wakeup(dev)) {
-+		if (info->id_irq > 0)
-+			ret = enable_irq_wake(info->id_irq);
-+		if (info->vbus_irq > 0)
-+			ret = enable_irq_wake(info->vbus_irq);
-+	}
- 
- 	return ret;
- }
-@@ -131,8 +188,12 @@ static int qcom_usb_extcon_resume(struct device *dev)
- 	struct qcom_usb_extcon_info *info = dev_get_drvdata(dev);
- 	int ret = 0;
- 
--	if (device_may_wakeup(dev))
--		ret = disable_irq_wake(info->irq);
-+	if (device_may_wakeup(dev)) {
-+		if (info->id_irq > 0)
-+			ret = disable_irq_wake(info->id_irq);
-+		if (info->vbus_irq > 0)
-+			ret = disable_irq_wake(info->vbus_irq);
-+	}
- 
- 	return ret;
- }
-@@ -143,6 +204,7 @@ static SIMPLE_DEV_PM_OPS(qcom_usb_extcon_pm_ops,
- 
- static const struct of_device_id qcom_usb_extcon_dt_match[] = {
- 	{ .compatible = "qcom,pm8941-misc", },
-+	{ .compatible = "qcom,pmd-vbus-det", },
- 	{ }
- };
- MODULE_DEVICE_TABLE(of, qcom_usb_extcon_dt_match);
--- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project
-
+Reviewed-by: Douglas Anderson <dianders@chromium.org>
