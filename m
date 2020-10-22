@@ -2,166 +2,152 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 9CE962959C6
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Oct 2020 10:02:34 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2B4BE2959DD
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Oct 2020 10:08:16 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2509183AbgJVICd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 22 Oct 2020 04:02:33 -0400
-Received: from z5.mailgun.us ([104.130.96.5]:10469 "EHLO z5.mailgun.us"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2509182AbgJVICd (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 22 Oct 2020 04:02:33 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1603353752; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=xE/wNkQvD+z2zJqtzsBmXwB80uN6i6lSw07emzccLIc=;
- b=LG0T2IzMTKTJ3xJAhGjl0Y1XMt1eAPfQPo5YCAhLwenn4FJPqmGKEvfOCfK1kVZPOY88HFGR
- tiigTyW5HwuwQRbGDTvt2/WYmvtooTNIkBzI9WR3LiQbGLxfUOAvOT1iSa1mDN0WnOgdBNxQ
- CJxfNggTy5oqGBFev2e1oe4s7NQ=
-X-Mailgun-Sending-Ip: 104.130.96.5
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n02.prod.us-east-1.postgun.com with SMTP id
- 5f913c974f8cc67c318d8fa6 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 22 Oct 2020 08:02:31
- GMT
-Sender: saiprakash.ranjan=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id E2C2CC43387; Thu, 22 Oct 2020 08:02:30 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: saiprakash.ranjan)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id EF572C433CB;
-        Thu, 22 Oct 2020 08:02:29 +0000 (UTC)
+        id S2894371AbgJVIIH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 22 Oct 2020 04:08:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58848 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2894374AbgJVIGr (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 22 Oct 2020 04:06:47 -0400
+Received: from mail-pj1-x1043.google.com (mail-pj1-x1043.google.com [IPv6:2607:f8b0:4864:20::1043])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9085CC0613CF
+        for <linux-arm-msm@vger.kernel.org>; Thu, 22 Oct 2020 01:06:47 -0700 (PDT)
+Received: by mail-pj1-x1043.google.com with SMTP id hk7so573110pjb.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 22 Oct 2020 01:06:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=TVfb7WnwNXKGUxz4iiR3sXsOPTJFuGFroopSW7eD6Gk=;
+        b=VXy3s7QjvhLDl7KsBOg8MVmOhDTShSxGrDo6aWcBaOc02FD0F85qf0Ti+YtY62gqo0
+         fQvsKNmMSTtfrleV5GPKxLU+JcUEc2NSUgl+bZqbTTJxWGVdAW4Ks+6O+WpMyT0UYZQU
+         Rk77fNgDCNEX1rBFx3tEw9PNvK5zoEOTcw4Exzt4s4Kw7B/lg/rPlU9NFNmT5+fHkPsJ
+         L6jVrWsH6VfFT6UlRDL93//CvMxZ+gekuFnxD58I6yOGqSKCXsq41PVDX1T/ttn8Zw46
+         jyhR4qHH+pZ/cQmtByv3Eoc+7RyZzWcCjxuptfiSir3cOI6jaqjAtUWeYCqvGt5RwgoA
+         0OuA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=TVfb7WnwNXKGUxz4iiR3sXsOPTJFuGFroopSW7eD6Gk=;
+        b=Ek8iACJK+gui2wnjefvOM7QDPXbRMPr3VWFoEqtgzoUh9AVD6BBWKnovn7cTJNApLP
+         yYkY3bZ6jFtV6l/HPRcFkIO3Htd8eUB3M+eqcLKC0WSRui3DMiGYgPNb0BXVhwl7aN/M
+         jisQEpQW4F3iL6uwttL3v5ueERsz2l4GkOaG1j1fzu7ixnJaSEUDT5DnSjOGfAVPQS+z
+         Y5pni2IP5VO77FrTu1VobMetDLZx3yANuwy+3GNU4306u5H9wcCZ1cJvAp9+D6TUZj+z
+         O9IHoV10XE9FtVO5NRMTtIgMjTWdA0YT7L+ydDNNmgXza35r1HMtN8dq3PK0WUaeEtb9
+         RymQ==
+X-Gm-Message-State: AOAM532pZKhtsmehVM73s5bkPsEBWmMmACH2WjS/LyKKh/1TdOfxJMV4
+        PzniTXXx7UTg5DU62JdO0Lc/sw==
+X-Google-Smtp-Source: ABdhPJwVqL7oVk5t6FqFadGaytgpFZzZfoLCZKLY/TTEFKuYJ70F6UW4MwiJzoxuD6cE1PnzwUK9mQ==
+X-Received: by 2002:a17:902:7fcd:b029:d3:f037:d9dc with SMTP id t13-20020a1709027fcdb02900d3f037d9dcmr1305142plb.79.1603354007060;
+        Thu, 22 Oct 2020 01:06:47 -0700 (PDT)
+Received: from localhost ([122.181.54.133])
+        by smtp.gmail.com with ESMTPSA id v13sm1292150pgl.6.2020.10.22.01.06.45
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 22 Oct 2020 01:06:46 -0700 (PDT)
+Date:   Thu, 22 Oct 2020 13:36:44 +0530
+From:   Viresh Kumar <viresh.kumar@linaro.org>
+To:     Rob Clark <robdclark@gmail.com>
+Cc:     Daniel Vetter <daniel@ffwll.ch>,
+        dri-devel <dri-devel@lists.freedesktop.org>,
+        Rob Clark <robdclark@chromium.org>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
+        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
+        <linux-arm-msm@vger.kernel.org>,
+        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
+        <freedreno@lists.freedesktop.org>,
+        open list <linux-kernel@vger.kernel.org>,
+        "Menon, Nishanth" <nm@ti.com>
+Subject: Re: [PATCH v2 07/22] drm/msm: Do rpm get sooner in the submit path
+Message-ID: <20201022080644.2ck4okrxygmkuatn@vireshk-i7>
+References: <20201012020958.229288-1-robdclark@gmail.com>
+ <20201012020958.229288-8-robdclark@gmail.com>
+ <20201012143555.GA438822@phenom.ffwll.local>
+ <CAF6AEGstGtBswUUiyHxT2cCm8NwZekDnMzD0J_pQH37GwS=LiA@mail.gmail.com>
+ <20201020090729.qgqish5kqamhvatj@vireshk-i7>
+ <CAKMK7uHAgVUPHOPxDdt3LeAWqokxfuzqjZj4qqFkoKxFbRbRrg@mail.gmail.com>
+ <20201020112413.xbk2vow2kgjky3pb@vireshk-i7>
+ <CAF6AEGsCj-AtFozn8d1xiNNFNbuMJ0UxS-eMhBVXiQ7rKahKnQ@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8;
- format=flowed
-Content-Transfer-Encoding: 8bit
-Date:   Thu, 22 Oct 2020 13:32:29 +0530
-From:   Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-To:     Suzuki Poulose <suzuki.poulose@arm.com>
-Cc:     Mathieu Poirier <mathieu.poirier@linaro.org>,
-        mike.leach@linaro.org, coresight@lists.linaro.org,
-        swboyd@chromium.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        denik@google.com, leo.yan@linaro.org, peterz@infradead.org
-Subject: Re: [PATCH 1/2] coresight: tmc-etf: Fix NULL ptr dereference in
- tmc_enable_etf_sink_perf()
-In-Reply-To: <fdee606e-a045-e252-0823-14bdbef779c0@arm.com>
-References: <cover.1602074787.git.saiprakash.ranjan@codeaurora.org>
- <d7a2dd53d88360b12e5a14933cb931198760dd63.1602074787.git.saiprakash.ranjan@codeaurora.org>
- <5bbb2d35-3e56-56d7-4722-bf34c5efa2fb@arm.com>
- <9fa4fcc25dac17b343d151a9d089b48c@codeaurora.org>
- <707b7860-0daa-d3e3-1f0f-17e1b05feae2@arm.com>
- <5ad6acdc69c1c2e1e17f5c701a09b7e1@codeaurora.org>
- <8affc09d4045812e2f5a065695b375de@codeaurora.org>
- <0ee3566e50143bac5b662b2edf551b89@codeaurora.org>
- <fdee606e-a045-e252-0823-14bdbef779c0@arm.com>
-Message-ID: <6db16b0547122ab8a53d56bdfbfb391e@codeaurora.org>
-X-Sender: saiprakash.ranjan@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAF6AEGsCj-AtFozn8d1xiNNFNbuMJ0UxS-eMhBVXiQ7rKahKnQ@mail.gmail.com>
+User-Agent: NeoMutt/20180716-391-311a52
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2020-10-21 15:38, Suzuki Poulose wrote:
-> On 10/21/20 8:29 AM, Sai Prakash Ranjan wrote:
->> On 2020-10-20 21:40, Sai Prakash Ranjan wrote:
->>> On 2020-10-14 21:29, Sai Prakash Ranjan wrote:
->>>> On 2020-10-14 18:46, Suzuki K Poulose wrote:
->>>>> On 10/14/2020 10:36 AM, Sai Prakash Ranjan wrote:
->>>>>> On 2020-10-13 22:05, Suzuki K Poulose wrote:
->>>>>>> On 10/07/2020 02:00 PM, Sai Prakash Ranjan wrote:
->>>>>>>> There was a report of NULL pointer dereference in ETF enable
->>>>>>>> path for perf CS mode with PID monitoring. It is almost 100%
->>>>>>>> reproducible when the process to monitor is something very
->>>>>>>> active such as chrome and with ETF as the sink and not ETR.
->>>>>>>> Currently in a bid to find the pid, the owner is dereferenced
->>>>>>>> via task_pid_nr() call in tmc_enable_etf_sink_perf() and with
->>>>>>>> owner being NULL, we get a NULL pointer dereference.
->>>>>>>> 
->>>>>>>> Looking at the ETR and other places in the kernel, ETF and the
->>>>>>>> ETB are the only places trying to dereference the task(owner)
->>>>>>>> in tmc_enable_etf_sink_perf() which is also called from the
->>>>>>>> sched_in path as in the call trace. Owner(task) is NULL even
->>>>>>>> in the case of ETR in tmc_enable_etr_sink_perf(), but since we
->>>>>>>> cache the PID in alloc_buffer() callback and it is done as part
->>>>>>>> of etm_setup_aux() when allocating buffer for ETR sink, we never
->>>>>>>> dereference this NULL pointer and we are safe. So lets do the
->>>>>>> 
->>>>>>> The patch is necessary to fix some of the issues. But I feel it 
->>>>>>> is
->>>>>>> not complete. Why is it safe earlier and not later ? I believe we 
->>>>>>> are
->>>>>>> simply reducing the chances of hitting the issue, by doing this 
->>>>>>> earlier than
->>>>>>> later. I would say we better fix all instances to make sure that 
->>>>>>> the
->>>>>>> event->owner is valid. (e.g, I can see that the for kernel events
->>>>>>> event->owner == -1 ?)
->>>>>>> 
->>>>>>> struct task_struct *tsk = READ_ONCE(event->owner);
->>>>>>> 
->>>>>>> if (!tsk || is_kernel_event(event))
->>>>>>>    /* skip ? */
->>>>>>> 
->>>>>> 
->>>>>> Looking at it some more, is_kernel_event() is not exposed
->>>>>> outside events core and probably for good reason. Why do
->>>>>> we need to check for this and not just tsk?
->>>>> 
->>>>> Because the event->owner could be :
->>>>> 
->>>>>  = NULL
->>>>>  = -1UL  // kernel event
->>>>>  = valid.
->>>>> 
->>>> 
->>>> Yes I understood that part, but here we were trying to
->>>> fix the NULL pointer dereference right and hence the
->>>> question as to why we need to check for kernel events?
->>>> I am no expert in perf but I don't see anywhere in the
->>>> kernel checking for is_kernel_event(), so I am a bit
->>>> skeptical if exporting that is actually right or not.
->>>> 
->>> 
->>> I have stress tested with the original patch many times
->>> now, i.e., without a check for event->owner and is_kernel_event()
->>> and didn't observe any crash. Plus on ETR where this was already
->>> done, no crashes were reported till date and with ETF, the issue
->>> was quickly reproducible, so I am fairly confident that this
->>> doesn't just delay the original issue but actually fixes
->>> it. I will run an overnight test again to confirm this.
->>> 
->> 
->> I ran the overnight test which collected aroung 4G data(see below),
->> with the following small change to see if the two cases
->> (event->owner=NULL and is_kernel_event()) are triggered
->> with suggested changes and it didn't trigger at all.
->> Do we still need those additional checks?
->> 
+On 20-10-20, 07:13, Rob Clark wrote:
+> On Tue, Oct 20, 2020 at 4:24 AM Viresh Kumar <viresh.kumar@linaro.org> wrote:
+> >
+> > On 20-10-20, 12:56, Daniel Vetter wrote:
+> > > Yeah that's bad practice. Generally you shouldn't need to hold locks
+> > > in setup/teardown code, since there's no other thread which can
+> > > possible hold a reference to anything your touching anymore. Ofc
+> > > excluding quickly grabbing/dropping a lock to insert/remove objects
+> > > into lists and stuff.
+> > >
+> > > The other reason is that especially with anything related to sysfs or
+> > > debugfs, the locking dependencies you're pulling in are enormous: vfs
+> > > locks pull in mm locks (due to mmap) and at that point there's pretty
+> > > much nothing left you're allowed to hold while acquiring such a lock.
+> > > For simple drivers this is no issue, but for fancy drivers (like gpu
+> > > drivers) which need to interact with core mm) this means your
+> > > subsystem is a major pain to use.
+> > >
+> > > Usually the correct fix is to only hold your subsystem locks in
+> > > setup/teardown when absolutely required, and fix any data
+> > > inconsistency issues by reordering your setup/teardown code: When you
+> > > register as the last step and unregister as the first step, there's no
+> > > need for any additional locking. And hence no need to call debugfs
+> > > functions while holding your subsystem locks.
+> > >
+> > > The catch phrase I use for this is "don't solve object lifetime issues
+> > > with locking". Instead use refcounting and careful ordering in
+> > > setup/teardown code.
+> >
+> > This is exactly what I have done in the OPP core, the locks were taken
+> > only when really necessary, though as we have seen now I have missed
+> > that at a single place and that should be fixed as well. Will do that,
+> > thanks.
 > 
-> Yes. Please see perf_event_create_kernel_event(), which is
-> an exported function allowing any kernel code (including modules)
-> to use the PMU (just like the userspace perf tool would do).
-> Just because your use case doesn't trigger this (because
-> you don't run something that can trigger this) doesn't mean
-> this can't be triggered.
-> 
+> I do have an easy enough way to repro the issue, so if you have a
+> patch I can certainly test it.
 
-Thanks for that pointer, I will add them in the next version.
+Does this fix it for you ? There is one more place still left where we
+are taking the opp_table_lock while adding stuff to debugfs and that's
+not that straight forward to fix. But I didn't see that path in your
+circular dependency trace, so who knows :)
 
-Thanks,
-Sai
+diff --git a/drivers/opp/core.c b/drivers/opp/core.c
+index 2483e765318a..4cc0fb716381 100644
+--- a/drivers/opp/core.c
++++ b/drivers/opp/core.c
+@@ -1181,6 +1181,10 @@ static void _opp_table_kref_release(struct kref *kref)
+        struct opp_device *opp_dev, *temp;
+        int i;
+ 
++       /* Drop the lock as soon as we can */
++       list_del(&opp_table->node);
++       mutex_unlock(&opp_table_lock);
++
+        _of_clear_opp_table(opp_table);
+ 
+        /* Release clk */
+@@ -1208,10 +1212,7 @@ static void _opp_table_kref_release(struct kref *kref)
+ 
+        mutex_destroy(&opp_table->genpd_virt_dev_lock);
+        mutex_destroy(&opp_table->lock);
+-       list_del(&opp_table->node);
+        kfree(opp_table);
+-
+-       mutex_unlock(&opp_table_lock);
+ }
+ 
+ void dev_pm_opp_put_opp_table(struct opp_table *opp_table)
 
 -- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a 
-member
-of Code Aurora Forum, hosted by The Linux Foundation
+viresh
