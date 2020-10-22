@@ -2,94 +2,147 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 8452B296547
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Oct 2020 21:25:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 81A2D296673
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Oct 2020 23:20:38 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S370189AbgJVTZi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 22 Oct 2020 15:25:38 -0400
-Received: from mail.z3ntu.xyz ([128.199.32.197]:56162 "EHLO mail.z3ntu.xyz"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S370187AbgJVTZh (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 22 Oct 2020 15:25:37 -0400
-Received: by mail.z3ntu.xyz (Postfix, from userid 182)
-        id 7DD85C7218; Thu, 22 Oct 2020 19:25:34 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=z3ntu.xyz; s=z3ntu;
-        t=1603394734; bh=AFNcYWN73jXXlPkynUL1liT45MKc2/cfgOevOqrJe2E=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References;
-        b=jFyZz9aLvJfIjb3HAGm7dQFw6S49OGVQwJGZm2EVINeXUKCAZXRXs3Ps79kPq8TWZ
-         kqwjhpOlg2fWiWJBDcQ1jkpskQHOCLv2d9b5p+fklGrR/uEjMYpyh1QEXbaqvPOF1x
-         vBDolVSKGVoKZtGSR8kD0xd2mfffLeLM3P62pldY=
-X-Spam-Checker-Version: SpamAssassin 3.4.4 (2020-01-24) on arch-vps
-X-Spam-Level: 
-X-Spam-Status: No, score=0.9 required=5.0 tests=ALL_TRUSTED,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FROM_SUSPICIOUS_NTLD,
-        PDS_OTHER_BAD_TLD,URIBL_BLOCKED autolearn=no autolearn_force=no
-        version=3.4.4
-Received: from g550jk.localnet (80-110-125-173.cgn.dynamic.surfer.at [80.110.125.173])
-        by mail.z3ntu.xyz (Postfix) with ESMTPSA id 45380C669B;
-        Thu, 22 Oct 2020 19:25:32 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=z3ntu.xyz; s=z3ntu;
-        t=1603394732; bh=AFNcYWN73jXXlPkynUL1liT45MKc2/cfgOevOqrJe2E=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References;
-        b=qOGdj963fPa7D28jT90vH01qDZdMKfXkWrKzTnfvFQKODGxLTncuwHeX0wintU3yz
-         5jbmpTgkEQJhtbJyiCYyQZ0L4sAWnena+v+J4EhSyQE124ZoItW4fBiPPu/AOgCRXD
-         6JvaCLuQ/lFecpHws0Bvk1g1cZ1toEy/N9A51lME=
-From:   Luca Weiss <luca@z3ntu.xyz>
-To:     Pavel Machek <pavel@ucw.cz>, Dan Murphy <dmurphy@ti.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Uwe =?ISO-8859-1?Q?Kleine=2DK=F6nig?= 
-        <u.kleine-koenig@pengutronix.de>, Lee Jones <lee.jones@linaro.org>,
-        Martin Botka <martin.botka1@gmail.com>,
-        linux-arm-msm@vger.kernel.org
-Cc:     linux-leds@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-pwm@vger.kernel.org,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-Subject: Re: [PATCH v6 2/4] leds: Add driver for Qualcomm LPG
-Date:   Thu, 22 Oct 2020 21:25:31 +0200
-Message-ID: <7499087.fvuViRk2k7@g550jk>
-In-Reply-To: <20201021201224.3430546-3-bjorn.andersson@linaro.org>
-References: <20201021201224.3430546-1-bjorn.andersson@linaro.org> <20201021201224.3430546-3-bjorn.andersson@linaro.org>
+        id S372239AbgJVVUh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 22 Oct 2020 17:20:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40662 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S372217AbgJVVUg (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 22 Oct 2020 17:20:36 -0400
+Received: from mail-pf1-x442.google.com (mail-pf1-x442.google.com [IPv6:2607:f8b0:4864:20::442])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 88EEBC0613CE
+        for <linux-arm-msm@vger.kernel.org>; Thu, 22 Oct 2020 14:20:36 -0700 (PDT)
+Received: by mail-pf1-x442.google.com with SMTP id f19so2021173pfj.11
+        for <linux-arm-msm@vger.kernel.org>; Thu, 22 Oct 2020 14:20:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=YsUSHc5bYUNmuFMA3WRkMmx4GDjXmb6yOh7O9xZbDRc=;
+        b=N/0AvT8+Hmb3Rp8IZcUtW/xq7QBs+gg8I6Im+7uExqg6EoLb9sXgBZz51+CZ+qnUuh
+         SBx7rgrojGMMIHQoHOr/JSqOuFR35YDeN14XDliCDF1gmzKsxxor3D8TtwnO43MDPC3L
+         CitQN82Mgy21Xnf1OAs2eG/ca46bJrn/G+FZFpfdhEhmZeLLBGNYI7z77kJTWcUthBRO
+         Kk3lUArNhh5snSxjzXB2p10AvB+shf/2Uk2zAiCQDT+lB0BhYAX7x4T8RBuZ9X8Pse+3
+         VXgbuUmLljtDtL/KxQc23w1wka+dptL4JtJPQP4cXFKa2oImmbpxw01grfDWRrQXPkl8
+         0huw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=YsUSHc5bYUNmuFMA3WRkMmx4GDjXmb6yOh7O9xZbDRc=;
+        b=HIdxQW+NzL4q4tLnHjvQnAqOhdp+93ZmUl/SavMeBeMNu9iQvTaf0Vkfmtpmy1Zz4w
+         fR0QY/2PmPzezWCxS6n59riVqkiFbSjTSFcBkgX3uIRjSqzhaLi8k+wmNEGWkAyusoSE
+         /vjJAVPUZ9sauddUNSaEWIeDK/YM8zXbKjbqTMnoJifFVn4ENBeP3gn9VGrBxITsSxLe
+         fo4U3UxjBpaPLSeJ2lHzZ+vIdpm6fu/JqRXsFK2xV/y8QP6HtS3lY/JypMPqtYPkGff2
+         QvSdyTpvmepbemqJEWSSYrB6IUeUN6ucTbZKYB9+1MHL6pkMtsRolL4gdOi0AeDPEBQW
+         FTsg==
+X-Gm-Message-State: AOAM531wdftVBaASMPzJxC7DFaJqUDftHxHFaYNhn7SwFh475jAUNXPD
+        lkURI6shYvHa3FxBIbO8pabwYw==
+X-Google-Smtp-Source: ABdhPJz+Cp9vygopwE/M6gjCd4Vr2adBC00b2KaBAjRV6HQipRCfUo6ON+X5DoToZl8Q4eAKTSdMMg==
+X-Received: by 2002:a17:90a:f504:: with SMTP id cs4mr3832476pjb.134.1603401636089;
+        Thu, 22 Oct 2020 14:20:36 -0700 (PDT)
+Received: from xps15 (S0106002369de4dac.cg.shawcable.net. [68.147.8.254])
+        by smtp.gmail.com with ESMTPSA id j23sm3154622pgm.76.2020.10.22.14.20.34
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 22 Oct 2020 14:20:35 -0700 (PDT)
+Date:   Thu, 22 Oct 2020 15:20:33 -0600
+From:   Mathieu Poirier <mathieu.poirier@linaro.org>
+To:     Suzuki Poulose <suzuki.poulose@arm.com>
+Cc:     Peter Zijlstra <peterz@infradead.org>,
+        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
+        Mike Leach <mike.leach@linaro.org>,
+        Ingo Molnar <mingo@redhat.com>,
+        Arnaldo Carvalho de Melo <acme@kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+        Jiri Olsa <jolsa@redhat.com>,
+        Namhyung Kim <namhyung@kernel.org>, coresight@lists.linaro.org,
+        Stephen Boyd <swboyd@chromium.org>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org
+Subject: Re: [PATCHv2 2/4] coresight: tmc-etf: Fix NULL ptr dereference in
+ tmc_enable_etf_sink_perf()
+Message-ID: <20201022212033.GA646497@xps15>
+References: <cover.1603363729.git.saiprakash.ranjan@codeaurora.org>
+ <aa6e571156d6e26e54da0bb3015ba474e4a08da0.1603363729.git.saiprakash.ranjan@codeaurora.org>
+ <20201022113214.GD2611@hirez.programming.kicks-ass.net>
+ <e7d236f7-61c2-731d-571b-839e0e545563@arm.com>
+ <20201022150609.GI2611@hirez.programming.kicks-ass.net>
+ <788706f2-0670-b7b6-a153-3ec6f16e0f2e@arm.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7Bit
-Content-Type: text/plain; charset="us-ascii"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <788706f2-0670-b7b6-a153-3ec6f16e0f2e@arm.com>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Bjorn,
+Hi Peter,
 
-On Mittwoch, 21. Oktober 2020 22:12:22 CEST Bjorn Andersson wrote:
-> The Light Pulse Generator (LPG) is a PWM-block found in a wide range of
-> PMICs from Qualcomm. It can operate on fixed parameters or based on a
-> lookup-table, altering the duty cycle over time - which provides the
-> means for e.g. hardware assisted transitions of LED brightness.
+On Thu, Oct 22, 2020 at 04:32:36PM +0100, Suzuki Poulose wrote:
+> On 10/22/20 4:06 PM, Peter Zijlstra wrote:
+> > On Thu, Oct 22, 2020 at 02:30:21PM +0100, Suzuki Poulose wrote:
+> > > On 10/22/20 12:32 PM, Peter Zijlstra wrote:
+> > > > On Thu, Oct 22, 2020 at 04:27:52PM +0530, Sai Prakash Ranjan wrote:
+> > > > 
+> > > > > Looking at the ETR and other places in the kernel, ETF and the
+> > > > > ETB are the only places trying to dereference the task(owner)
+> > > > > in tmc_enable_etf_sink_perf() which is also called from the
+> > > > > sched_in path as in the call trace.
+> > > > 
+> > > > > @@ -391,6 +392,10 @@ static void *tmc_alloc_etf_buffer(struct coresight_device *csdev,
+> > > > >    {
+> > > > >    	int node;
+> > > > >    	struct cs_buffers *buf;
+> > > > > +	struct task_struct *task = READ_ONCE(event->owner);
+> > > > > +
+> > > > > +	if (!task || is_kernel_event(event))
+> > > > > +		return NULL;
+> > > > 
+> > > > 
+> > > > This is *wrong*... why do you care about who owns the events?
+> > > > 
+> > > 
+> > > This is due to the special case of the CoreSight configuration, where
+> > > a "sink" (where the trace data is captured) is shared by multiple Trace
+> > > units. So, we could share the "sink" for multiple trace units if they
+> > > are tracing the events that belong to the same "perf" session. (The
+> > > userspace tool could decode the trace data based on the TraceID
+> > > in the trace packets). Is there a better way to do this ?
+> > 
+> > I thought we added sink identification through perf_event_attr::config2
+> > ?
+> > 
 > 
-> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-> ---
+> Correct. attr:config2 identifies the "sink" for the collection. But,
+> that doesn't solve the problem we have here. If two separate perf
+> sessions use the "same sink", we don't want to mix the
+> trace data into the same sink for events from different sessions.
 > 
-> Changes since v5:
-> - Make sure to not used the state of the last channel in a group to
-> determine if the current sink should be active for all channels in the
-> group. - Replacement of unsigned -1 with UINT_MAX
-> - Work around potential overflow by using larger data types, instead of
-> separate code paths - Use cpu_to_l16() rather than hand rolling them
-> - Minor style cleanups
+> Thus, we need a way to check if a new event starting the tracing on
+> an ETM belongs to the same session as the one already pumping the trace
+> into the sink.
+
+Suzuki's depiction of the usecase is accurate.  Using the pid of the process
+that created the events comes out of a discussion you and I had in the common
+area by the Intel booth at ELC in Edinburgh in the fall of 2018.  At the time I
+exposed the problem of having multiple events sharing the same HW resources and
+you advised to proceed this way.
+
+That being said it is plausible that I did not expressed myself clearly enough
+for you to understand the full extend of the problem.  If that is the case we
+are more than willing to revisit that solution.  Do you see a better option than
+what has currently been implemented?
+
+Many thanks,
+Mathieu
+
 > 
->  drivers/leds/Kconfig         |    9 +
->  drivers/leds/Makefile        |    1 +
->  drivers/leds/leds-qcom-lpg.c | 1190 ++++++++++++++++++++++++++++++++++
->  3 files changed, 1200 insertions(+)
->  create mode 100644 drivers/leds/leds-qcom-lpg.c
-
-Tested on msm8974 (pm8941) on the Fairphone 2, works great there!
-
-Tested-by: Luca Weiss <luca@z3ntu.xyz>
-
-Regards
-Luca
-
-
+> We use event->owner pid for this check and thats where we encountered
+> a NULL event->owner. Looking at the code further, we identified that
+> kernel events could also trigger this issue.
+> 
+> Suzuki
