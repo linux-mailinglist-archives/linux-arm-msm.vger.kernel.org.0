@@ -2,115 +2,108 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 004AC295798
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Oct 2020 07:05:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4FAD72957B0
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Oct 2020 07:13:02 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2443993AbgJVFFY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 22 Oct 2020 01:05:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59186 "EHLO
+        id S2502677AbgJVFMs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 22 Oct 2020 01:12:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60330 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2507743AbgJVFFW (ORCPT
+        with ESMTP id S2444218AbgJVFMs (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 22 Oct 2020 01:05:22 -0400
-Received: from mail-pl1-x641.google.com (mail-pl1-x641.google.com [IPv6:2607:f8b0:4864:20::641])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3F3A7C0613CE
-        for <linux-arm-msm@vger.kernel.org>; Wed, 21 Oct 2020 22:05:21 -0700 (PDT)
-Received: by mail-pl1-x641.google.com with SMTP id d23so319799pll.7
-        for <linux-arm-msm@vger.kernel.org>; Wed, 21 Oct 2020 22:05:21 -0700 (PDT)
+        Thu, 22 Oct 2020 01:12:48 -0400
+Received: from mail-pf1-x444.google.com (mail-pf1-x444.google.com [IPv6:2607:f8b0:4864:20::444])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BD2F8C0613D2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 21 Oct 2020 22:12:46 -0700 (PDT)
+Received: by mail-pf1-x444.google.com with SMTP id b26so413834pff.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 21 Oct 2020 22:12:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=wpLYvGhuKyxRXzfVKDpynuN2d2Rj3ki47jaONctjv2M=;
-        b=RBhmk4Yoxh9jge/imYHKNgrjYeOVihPb1YzvKBi30BYoocMGuVr03u2v8Yh5x9HBY+
-         9x+ZgOAWZy+tADrZRVw85qC71V6vjSqpprPTk7GaRbCkW9+/42aAwkMrHLTfeneklWye
-         ZtEXbdQU53ltimT+Ktri5sDHtWTTQNfASUZ58=
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=2Zb63bH1NbEum/OLuzSIrhnLWeKUO8Zod+ndrWM7EmA=;
+        b=Ju9bd5gphU99uj/yh0ufc8gQO+ePImeOwBqeesvMqPmC3AyeC0tO/3AyY71FcT8+UJ
+         lhZWTwfk556SigBHRAMOs+x8SrDWcBTfqbt/rKeOSeiEtgT6Omg8FDoJz9Y8tVjy/mhy
+         W2gpzNN+/VLnHnzOpW4uuZITN/dre75uqO3aoFILFRAcb3Fyub7jadMs9KCSgq8W0A+W
+         XvDueW/cbwwS/N78UYnh07M9h5ohJTKWRx8DJqlXS5WfrN/BMHxA/wyRdGF3bMBvo3G7
+         Azv+j0mVpLtSIkuEjWr8jdSb/cEP4Ve+suem9ZNycndWhPZeLNj0QwF5kLLQh69akiXK
+         Z4HQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=wpLYvGhuKyxRXzfVKDpynuN2d2Rj3ki47jaONctjv2M=;
-        b=VE1Gnd2fwBcmLrlhq52JgPJjHsGhqiYRgNy1DH+hj0UCEU2NcFOnHElKAVWWhrrPrS
-         Fyr0KqIW6mdhhJUOI+9ra8cGn67Vn5s3HNCfTidM9aGnmtxGIuH4UkMCkOjzmhEaGb+R
-         oxY4h0LGTUOOGS3HbemoDicmkhdA8T5d8Yx11VmkT3d4LhLp+X5BmBfWTd9zwG9IRHD8
-         DO1n2L98kSI0dIYPHLk3AMqkv/anZGpPgAMNTgjehi7gZIiBYltJw34Da4vxO58UAXpc
-         h/SIIe2nikeO1Ix+L9XPumxC/M946GepdgPvCmO9P74hBdZXtwVe3/HyPN03DM3AuXmW
-         d68w==
-X-Gm-Message-State: AOAM530GGHV/b8l6DzwWFL+1XwDTLyVYFm/+ICDt8/JHH4Nur2t69aPc
-        LZTNA0FbfN5ePKj1y+s2MW57UA==
-X-Google-Smtp-Source: ABdhPJwE6Djg9sy5FUg+MODQPTa7yCYtbMqMJOwWukFS48qoFn6DL7xRd79dt+BffZ+JvAe/dWMiIg==
-X-Received: by 2002:a17:90a:788a:: with SMTP id x10mr86917pjk.236.1603343120839;
-        Wed, 21 Oct 2020 22:05:20 -0700 (PDT)
-Received: from alex-desktop.lan (c-73-63-253-164.hsd1.ca.comcast.net. [73.63.253.164])
-        by smtp.gmail.com with ESMTPSA id q16sm394954pfu.206.2020.10.21.22.05.17
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 21 Oct 2020 22:05:20 -0700 (PDT)
-From:   Alexandru Stan <amstan@chromium.org>
-To:     Heiko Stuebner <heiko@sntech.de>, Rob Herring <robh+dt@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        =?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= 
-        <u.kleine-koenig@pengutronix.de>, Lee Jones <lee.jones@linaro.org>,
-        Daniel Thompson <daniel.thompson@linaro.org>,
-        Jingoo Han <jingoohan1@gmail.com>,
-        Bartlomiej Zolnierkiewicz <b.zolnierkie@samsung.com>
-Cc:     Douglas Anderson <dianders@chromium.org>,
-        Matthias Kaehlcke <mka@chromium.org>,
-        Enric Balletbo i Serra <enric.balletbo@collabora.com>,
-        Alexandru Stan <amstan@chromium.org>,
-        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: [PATCH v3 2/3] arm64: dts: qcom: trogdor: Add brightness-levels
-Date:   Wed, 21 Oct 2020 22:04:44 -0700
-Message-Id: <20201021220404.v3.2.Ie4d84af5a85e8dcb8f575845518fa39f324a827d@changeid>
-X-Mailer: git-send-email 2.28.0
-In-Reply-To: <20201022050445.930403-1-amstan@chromium.org>
-References: <20201022050445.930403-1-amstan@chromium.org>
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=2Zb63bH1NbEum/OLuzSIrhnLWeKUO8Zod+ndrWM7EmA=;
+        b=i6JXkyomZqaijna+wYxqZQhPRrnJKuWrnLVV8PrCr1lGLw3LklB0aXMHcdnmAkSQdd
+         b7dl4Bkmv99zqxO7yrenxP1LMqwYqj2MCcrlKBozYvm8BRkCuCggHJTcWs8jcQ8Li+EC
+         QAopY1lRVJrZHUxRnrWoS48hx0EopuQ7140t89+QpD30LBfFAEs0muvn+zJm8+m1t7BY
+         LeppbLJWqhBheOY1Z/EpBoPA6zgI04+7QuraNKtrHQaoqdiUnsAH5LnisOuIjg/Iyfhg
+         imRCkx2IxAdr1/WojKZ5t7fMrGkdBnxLcFp3v1yCg9YTffHaLehkt0Evg1aC3jqbNItW
+         Agew==
+X-Gm-Message-State: AOAM532AJ5odqJ8n15iPVHsw/HB4oxiieRlu5ZUgeA1SJQ+nSrlNkg9o
+        FBasaBBLV8deP2G8pHHQvT1PMA==
+X-Google-Smtp-Source: ABdhPJyeB2dOc+PbV3anGzAlbLWOVkX8Lfo6+NfKbVZ5BbJKHOgDEoPAhSmOXTX5LGmjkYXRJZQ01A==
+X-Received: by 2002:a63:24c2:: with SMTP id k185mr870579pgk.421.1603343565998;
+        Wed, 21 Oct 2020 22:12:45 -0700 (PDT)
+Received: from localhost ([122.181.54.133])
+        by smtp.gmail.com with ESMTPSA id q66sm505225pfc.109.2020.10.21.22.12.44
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 21 Oct 2020 22:12:45 -0700 (PDT)
+Date:   Thu, 22 Oct 2020 10:42:43 +0530
+From:   Viresh Kumar <viresh.kumar@linaro.org>
+To:     Rob Clark <robdclark@gmail.com>
+Cc:     Rajendra Nayak <rnayak@codeaurora.org>,
+        Sean Paul <sean@poorly.run>,
+        Linux PM <linux-pm@vger.kernel.org>,
+        Vincent Guittot <vincent.guittot@linaro.org>,
+        Rafael Wysocki <rjw@rjwysocki.net>,
+        Stephen Boyd <sboyd@kernel.org>, Nishanth Menon <nm@ti.com>,
+        Douglas Anderson <dianders@chromium.org>,
+        Naresh Kamboju <naresh.kamboju@linaro.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        dri-devel <dri-devel@lists.freedesktop.org>,
+        freedreno <freedreno@lists.freedesktop.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH V2 3/8] drm/msm: Unconditionally call
+ dev_pm_opp_of_remove_table()
+Message-ID: <20201022051243.gsjx2ksoilec4wo2@vireshk-i7>
+References: <cover.1598594714.git.viresh.kumar@linaro.org>
+ <6e4110032f8711e8bb0acbeccfe66dec3b09d5c1.1598594714.git.viresh.kumar@linaro.org>
+ <20201005062633.ejpehkpeuwksrx3e@vireshk-i7>
+ <20201021072404.y43tjzd2ehclrejp@vireshk-i7>
+ <CAF6AEGvAK_mAxJB32vvPOD3jumpYprRtUBPT8GRBV8gty7fxFQ@mail.gmail.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAF6AEGvAK_mAxJB32vvPOD3jumpYprRtUBPT8GRBV8gty7fxFQ@mail.gmail.com>
+User-Agent: NeoMutt/20180716-391-311a52
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-We want userspace to represent the human perceived brightness.
-Since the led drivers and the leds themselves don't have a
-linear response to the value we give them in terms of perceived
-brightness, we'll bake the curve into the dts.
+On 21-10-20, 09:58, Rob Clark wrote:
+> On Wed, Oct 21, 2020 at 12:24 AM Viresh Kumar <viresh.kumar@linaro.org> wrote:
+> >
+> > On 05-10-20, 11:56, Viresh Kumar wrote:
+> > > On 28-08-20, 11:37, Viresh Kumar wrote:
+> > > > dev_pm_opp_of_remove_table() doesn't report any errors when it fails to
+> > > > find the OPP table with error -ENODEV (i.e. OPP table not present for
+> > > > the device). And we can call dev_pm_opp_of_remove_table()
+> > > > unconditionally here.
+> > > >
+> > > > While at it, also create a label to put clkname.
+> > > >
+> > > > Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
+> > >
+> > > Can someone please apply this and the other drm patch (2/8) ?
+> >
+> > Rob/Rajendra, can someone please have a look at these patches ?
+> 
+> Oh, sorry I missed that, could someone re-send it and CC
+> freedreno@lists.freedesktop.org so it shows up in patchworks.. that is
+> more reliable counting on me to not overlook something in my mail
 
-The panel also doesn't have a good response under 5%, so we'll avoid
-sending it anything lower than that.
+I have just bounced it back to you and freedreno was already cc'd,
+though I have bounced it there again.
 
-Note: Ideally this patch should be coupled with the driver change from
-"backlight: pwm_bl: Fix interpolation", but it can work without it,
-without looking too ugly.
-
-Signed-off-by: Alexandru Stan <amstan@chromium.org>
----
-
- arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi | 9 +++++++++
- 1 file changed, 9 insertions(+)
-
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
-index bf875589d364..ccdabc6c4994 100644
---- a/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
-@@ -179,6 +179,15 @@ pp3300_fp_tp: pp3300-fp-tp-regulator {
- 	backlight: backlight {
- 		compatible = "pwm-backlight";
- 
-+		/* The panels don't seem to like anything below ~ 5% */
-+		brightness-levels = <
-+			196 256 324 400 484 576 676 784 900 1024 1156 1296
-+			1444 1600 1764 1936 2116 2304 2500 2704 2916 3136
-+			3364 3600 3844 4096
-+		>;
-+		num-interpolated-steps = <64>;
-+		default-brightness-level = <951>;
-+
- 		pwms = <&cros_ec_pwm 1>;
- 		enable-gpios = <&tlmm 12 GPIO_ACTIVE_HIGH>;
- 		power-supply = <&ppvar_sys>;
 -- 
-2.28.0
-
+viresh
