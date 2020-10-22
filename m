@@ -2,211 +2,149 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id CAF2A295CCD
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Oct 2020 12:38:50 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BAF85295D0A
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Oct 2020 12:58:16 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2896576AbgJVKit (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 22 Oct 2020 06:38:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54032 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2896543AbgJVKit (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 22 Oct 2020 06:38:49 -0400
-Received: from mail-wm1-x344.google.com (mail-wm1-x344.google.com [IPv6:2a00:1450:4864:20::344])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 42463C0613CE
-        for <linux-arm-msm@vger.kernel.org>; Thu, 22 Oct 2020 03:38:47 -0700 (PDT)
-Received: by mail-wm1-x344.google.com with SMTP id c194so1445365wme.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 22 Oct 2020 03:38:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ffwll.ch; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=txbkDvjTNAII8rOC8GSkf0rgFd3hEgAtArEm7k8V/4A=;
-        b=THLyInhdAjRNNnVfqtoAC2IKp58xDoy8omOcPdbkUooWMa4rQmjjsu13SBp/XCmuYX
-         f+yX7clHSQrfWNbfVFW6Nyf8+AHqDR/bgk8v/tlqx6/v3ioJDCIP/3HDsnFsuF19G/OB
-         bZNj4ht7rB2norZzFEahUP4FT+QUUE+vhR0oo=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=txbkDvjTNAII8rOC8GSkf0rgFd3hEgAtArEm7k8V/4A=;
-        b=P1CA10o2NF+zQZAqG/wGYg3mcuI1H/ogEuJv+QvxtPNOBhyfmdePQRdTAvfwYCDhgm
-         N/tfqIGLy9v7JAJjxqgcrQ9BQTMR8ab6LJ18ldHc6tTgySeoIvCYw7IKcP+ES7KX3+HJ
-         9XMQtfEWMIg4zB8qufQSmAJmJrqI2RoXkIj13b49eo1Wspa7ClL5fCwd5iQRvONzj4dF
-         mcAHCoKGus2Fafh38u8YyHIkWHE59Wiq5xFGnWPwZwF82bbXKfSHnNgOiYldlcHAAdHd
-         2i1cUiY6gKY0SEOLw26KkiN9oYaZGWR10xIxZnrwtWB3vQttrVBsk01Tsxj3Xct/VmVI
-         8C2A==
-X-Gm-Message-State: AOAM533SHz/tTToT5duZRrn065XQPitrZzCTQC5OHGPrwkUtM/ma8Olk
-        yu2GeR9/rvutfL7EB8/5kV4FC/g8uoqf0+QK
-X-Google-Smtp-Source: ABdhPJzpM5anNGxMyIxf5ktXINVJdO0Pf1jqmjbpv7vlMP/5DSCjq9O985xrRCSV4G83AfwEV8uojA==
-X-Received: by 2002:a1c:1f87:: with SMTP id f129mr1960742wmf.182.1603363125943;
-        Thu, 22 Oct 2020 03:38:45 -0700 (PDT)
-Received: from phenom.ffwll.local ([2a02:168:57f4:0:efd0:b9e5:5ae6:c2fa])
-        by smtp.gmail.com with ESMTPSA id 205sm2986262wme.38.2020.10.22.03.38.44
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 22 Oct 2020 03:38:45 -0700 (PDT)
-Date:   Thu, 22 Oct 2020 12:38:43 +0200
-From:   Daniel Vetter <daniel@ffwll.ch>
-To:     Abhinav Kumar <abhinavk@codeaurora.org>
-Cc:     dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        swboyd@chromium.org, khsieh@codeaurora.org, seanpaul@chromium.org,
-        tanmay@codeaurora.org, aravindh@codeaurora.org,
-        freedreno@lists.freedesktop.org
-Subject: Re: [PATCH 1/4] drm: allow drm_atomic_print_state() to accept any
- drm_printer
-Message-ID: <20201022103843.GW401619@phenom.ffwll.local>
-References: <20201022050148.27105-1-abhinavk@codeaurora.org>
- <20201022050148.27105-2-abhinavk@codeaurora.org>
+        id S2896819AbgJVK6P (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 22 Oct 2020 06:58:15 -0400
+Received: from z5.mailgun.us ([104.130.96.5]:57721 "EHLO z5.mailgun.us"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S2896817AbgJVK6O (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 22 Oct 2020 06:58:14 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1603364293; h=Content-Transfer-Encoding: MIME-Version:
+ Message-Id: Date: Subject: Cc: To: From: Sender;
+ bh=mP+mZlEO6VkH4kSw2NcGwN/hbwL9FhPgo/5PKfqy1pI=; b=CfNxFHHFJV33AzqP6gMHmGBeyMx7Trs3NZWUbwp1jKINCNpP9l3sxhLimHlga2PylXmlBy3n
+ H8XDMU0pvtup//vqppkjOPqv45aaj8yswdMkZKQY5l4rUQs1udDLfR5xVftdZPhYUe22inKl
+ B3JTrhvNxnnNMSPrDJzbmKYpe/g=
+X-Mailgun-Sending-Ip: 104.130.96.5
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n01.prod.us-west-2.postgun.com with SMTP id
+ 5f9165c557b88ccb5648219d (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 22 Oct 2020 10:58:13
+ GMT
+Sender: saiprakash.ranjan=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 47E28C433A0; Thu, 22 Oct 2020 10:58:13 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL
+        autolearn=no autolearn_force=no version=3.4.0
+Received: from blr-ubuntu-253.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: saiprakash.ranjan)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id B233BC433F0;
+        Thu, 22 Oct 2020 10:58:07 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org B233BC433F0
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=saiprakash.ranjan@codeaurora.org
+From:   Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+To:     Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Suzuki K Poulose <suzuki.poulose@arm.com>,
+        Mike Leach <mike.leach@linaro.org>,
+        Peter Zijlstra <peterz@infradead.org>,
+        Ingo Molnar <mingo@redhat.com>,
+        Arnaldo Carvalho de Melo <acme@kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+        Jiri Olsa <jolsa@redhat.com>,
+        Namhyung Kim <namhyung@kernel.org>
+Cc:     coresight@lists.linaro.org, Stephen Boyd <swboyd@chromium.org>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org,
+        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+Subject: [PATCHv2 0/4] coresight: etf/etb10/etr: Fix NULL pointer dereference crashes
+Date:   Thu, 22 Oct 2020 16:27:50 +0530
+Message-Id: <cover.1603363729.git.saiprakash.ranjan@codeaurora.org>
+X-Mailer: git-send-email 2.27.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20201022050148.27105-2-abhinavk@codeaurora.org>
-X-Operating-System: Linux phenom 5.7.0-1-amd64 
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Oct 21, 2020 at 10:01:45PM -0700, Abhinav Kumar wrote:
-> Currently drm_atomic_print_state() internally allocates and uses a
-> drm_info printer. Allow it to accept any drm_printer type so that
-> the API can be leveraged even for taking drm snapshot.
-> 
-> Signed-off-by: Abhinav Kumar <abhinavk@codeaurora.org>
-> ---
->  drivers/gpu/drm/drm_atomic.c        | 17 ++++++++++++-----
->  drivers/gpu/drm/drm_atomic_uapi.c   |  4 +++-
->  drivers/gpu/drm/drm_crtc_internal.h |  4 +++-
->  3 files changed, 18 insertions(+), 7 deletions(-)
-> 
-> diff --git a/drivers/gpu/drm/drm_atomic.c b/drivers/gpu/drm/drm_atomic.c
-> index 58527f151984..e7079a5f439c 100644
-> --- a/drivers/gpu/drm/drm_atomic.c
-> +++ b/drivers/gpu/drm/drm_atomic.c
-> @@ -1,6 +1,7 @@
->  /*
->   * Copyright (C) 2014 Red Hat
->   * Copyright (C) 2014 Intel Corp.
-> + * Copyright (c) 2020, The Linux Foundation. All rights reserved.
->   *
->   * Permission is hereby granted, free of charge, to any person obtaining a
->   * copy of this software and associated documentation files (the "Software"),
-> @@ -1543,9 +1544,9 @@ int __drm_atomic_helper_set_config(struct drm_mode_set *set,
->  }
->  EXPORT_SYMBOL(__drm_atomic_helper_set_config);
->  
-> -void drm_atomic_print_state(const struct drm_atomic_state *state)
-> +void drm_atomic_print_state(const struct drm_atomic_state *state,
-> +		struct drm_printer *p)
+There was a report of NULL pointer dereference in ETF enable
+path for perf CS mode with PID monitoring. It is almost 100%
+reproducible when the process to monitor is something very
+active such as chrome and with ETF as the sink and not ETR.
+Currently in a bid to find the pid, the owner is dereferenced
+via task_pid_nr() call in tmc_enable_etf_sink_perf() and with
+owner being NULL, we get a NULL pointer dereference.
 
-Please add a nice kerneldoc for this newly exported function. Specifically
-this kerneldoc needs to include a warning that state updates after call
-drm_atomic_state_helper_commit_hw_done() is unsafe to print using this
-function, because it looks at the new state objects. Only the old state
-structures will stay like this.
+Looking at the ETR and other places in the kernel, ETF and the
+ETB are the only places trying to dereference the task(owner)
+in tmc_enable_etf_sink_perf() which is also called from the
+sched_in path as in the call trace. Owner(task) is NULL even
+in the case of ETR in tmc_enable_etr_sink_perf(), but since we
+cache the PID in alloc_buffer() callback and it is done as part
+of etm_setup_aux() when allocating buffer for ETR sink, we never
+dereference this NULL pointer and we are safe. So lets do the
+same thing with ETF and ETB and cache the PID to which the
+cs_buffer belongs in alloc_buffer() callback for ETF and ETB as
+done for ETR. This will also remove the unnecessary function calls
+(task_pid_nr()) in tmc_enable_etr_sink_perf() and etb_enable_perf().
 
-So maybe rename the function to say print_new_state() to make this
-completely clear. That way we can eventually add a print_old_state() when
-needed.
+In addition to this, add a check to validate event->owner before
+dereferencing it in ETR, ETB and ETF to avoid any possible NULL
+pointer dereference crashes in their corresponding alloc_buffer
+callbacks and check for kernel events as well.
 
-Otherwise I think this makes sense, and nicely avoids the locking issue of
-looking at ->state pointers without the right locking.
--Daniel
+Easily reproducible running below:
 
->  {
-> -	struct drm_printer p = drm_info_printer(state->dev->dev);
->  	struct drm_plane *plane;
->  	struct drm_plane_state *plane_state;
->  	struct drm_crtc *crtc;
-> @@ -1554,17 +1555,23 @@ void drm_atomic_print_state(const struct drm_atomic_state *state)
->  	struct drm_connector_state *connector_state;
->  	int i;
->  
-> +	if (!p) {
-> +		DRM_ERROR("invalid drm printer\n");
-> +		return;
-> +	}
-> +
->  	DRM_DEBUG_ATOMIC("checking %p\n", state);
->  
->  	for_each_new_plane_in_state(state, plane, plane_state, i)
-> -		drm_atomic_plane_print_state(&p, plane_state);
-> +		drm_atomic_plane_print_state(p, plane_state);
->  
->  	for_each_new_crtc_in_state(state, crtc, crtc_state, i)
-> -		drm_atomic_crtc_print_state(&p, crtc_state);
-> +		drm_atomic_crtc_print_state(p, crtc_state);
->  
->  	for_each_new_connector_in_state(state, connector, connector_state, i)
-> -		drm_atomic_connector_print_state(&p, connector_state);
-> +		drm_atomic_connector_print_state(p, connector_state);
->  }
-> +EXPORT_SYMBOL(drm_atomic_print_state);
->  
->  static void __drm_state_dump(struct drm_device *dev, struct drm_printer *p,
->  			     bool take_locks)
-> diff --git a/drivers/gpu/drm/drm_atomic_uapi.c b/drivers/gpu/drm/drm_atomic_uapi.c
-> index 25c269bc4681..d9ae86c92608 100644
-> --- a/drivers/gpu/drm/drm_atomic_uapi.c
-> +++ b/drivers/gpu/drm/drm_atomic_uapi.c
-> @@ -2,6 +2,7 @@
->   * Copyright (C) 2014 Red Hat
->   * Copyright (C) 2014 Intel Corp.
->   * Copyright (C) 2018 Intel Corp.
-> + * Copyright (c) 2020, The Linux Foundation. All rights reserved.
->   *
->   * Permission is hereby granted, free of charge, to any person obtaining a
->   * copy of this software and associated documentation files (the "Software"),
-> @@ -1294,6 +1295,7 @@ int drm_mode_atomic_ioctl(struct drm_device *dev,
->  	struct drm_out_fence_state *fence_state;
->  	int ret = 0;
->  	unsigned int i, j, num_fences;
-> +	struct drm_printer p = drm_info_printer(dev->dev);
->  
->  	/* disallow for drivers not supporting atomic: */
->  	if (!drm_core_check_feature(dev, DRIVER_ATOMIC))
-> @@ -1413,7 +1415,7 @@ int drm_mode_atomic_ioctl(struct drm_device *dev,
->  		ret = drm_atomic_nonblocking_commit(state);
->  	} else {
->  		if (drm_debug_enabled(DRM_UT_STATE))
-> -			drm_atomic_print_state(state);
-> +			drm_atomic_print_state(state, &p);
->  
->  		ret = drm_atomic_commit(state);
->  	}
-> diff --git a/drivers/gpu/drm/drm_crtc_internal.h b/drivers/gpu/drm/drm_crtc_internal.h
-> index da96b2f64d7e..d34215366936 100644
-> --- a/drivers/gpu/drm/drm_crtc_internal.h
-> +++ b/drivers/gpu/drm/drm_crtc_internal.h
-> @@ -5,6 +5,7 @@
->   *   Jesse Barnes <jesse.barnes@intel.com>
->   * Copyright © 2014 Intel Corporation
->   *   Daniel Vetter <daniel.vetter@ffwll.ch>
-> + * Copyright (c) 2020, The Linux Foundation. All rights reserved.
->   *
->   * Permission is hereby granted, free of charge, to any person obtaining a
->   * copy of this software and associated documentation files (the "Software"),
-> @@ -233,7 +234,8 @@ int __drm_atomic_helper_disable_plane(struct drm_plane *plane,
->  int __drm_atomic_helper_set_config(struct drm_mode_set *set,
->  				   struct drm_atomic_state *state);
->  
-> -void drm_atomic_print_state(const struct drm_atomic_state *state);
-> +void drm_atomic_print_state(const struct drm_atomic_state *state,
-> +		struct drm_printer *p);
->  
->  /* drm_atomic_uapi.c */
->  int drm_atomic_connector_commit_dpms(struct drm_atomic_state *state,
-> -- 
-> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-> a Linux Foundation Collaborative Project
-> 
-> _______________________________________________
-> dri-devel mailing list
-> dri-devel@lists.freedesktop.org
-> https://lists.freedesktop.org/mailman/listinfo/dri-devel
+ perf record -e cs_etm/@tmc_etf0/ -N -p <pid>
 
+Unable to handle kernel NULL pointer dereference at virtual address 0000000000000548
+Mem abort info:
+  ESR = 0x96000006
+  EC = 0x25: DABT (current EL), IL = 32 bits
+  SET = 0, FnV = 0
+  EA = 0, S1PTW = 0
+Data abort info:
+  ISV = 0, ISS = 0x00000006
+  CM = 0, WnR = 0
+<snip>...
+Call trace:
+ tmc_enable_etf_sink+0xe4/0x280
+ coresight_enable_path+0x168/0x1fc
+ etm_event_start+0x8c/0xf8
+ etm_event_add+0x38/0x54
+ event_sched_in+0x194/0x2ac
+ group_sched_in+0x54/0x12c
+ flexible_sched_in+0xd8/0x120
+ visit_groups_merge+0x100/0x16c
+ ctx_flexible_sched_in+0x50/0x74
+ ctx_sched_in+0xa4/0xa8
+ perf_event_sched_in+0x60/0x6c
+ perf_event_context_sched_in+0x98/0xe0
+ __perf_event_task_sched_in+0x5c/0xd8
+ finish_task_switch+0x184/0x1cc
+ schedule_tail+0x20/0xec
+ ret_from_fork+0x4/0x18
+
+Sai Prakash Ranjan (4):
+  perf/core: Export is_kernel_event()
+  coresight: tmc-etf: Fix NULL ptr dereference in
+    tmc_enable_etf_sink_perf()
+  coresight: etb10: Fix possible NULL ptr dereference in
+    etb_enable_perf()
+  coresight: tmc-etr: Fix possible NULL ptr dereference in
+    get_perf_etr_buf_cpu_wide()
+
+ drivers/hwtracing/coresight/coresight-etb10.c   | 8 +++++++-
+ drivers/hwtracing/coresight/coresight-priv.h    | 2 ++
+ drivers/hwtracing/coresight/coresight-tmc-etf.c | 8 +++++++-
+ drivers/hwtracing/coresight/coresight-tmc-etr.c | 6 +++++-
+ include/linux/perf_event.h                      | 2 ++
+ kernel/events/core.c                            | 3 ++-
+ 6 files changed, 25 insertions(+), 4 deletions(-)
+
+
+base-commit: f4cb5e9daedf56671badc93ac7f364043aa33886
 -- 
-Daniel Vetter
-Software Engineer, Intel Corporation
-http://blog.ffwll.ch
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
+of Code Aurora Forum, hosted by The Linux Foundation
+
