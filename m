@@ -2,142 +2,144 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B75F4297851
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Oct 2020 22:37:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A5267297988
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 24 Oct 2020 01:18:29 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756218AbgJWUhe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 23 Oct 2020 16:37:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58690 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1756136AbgJWUhd (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 23 Oct 2020 16:37:33 -0400
-Received: from mail-pl1-x644.google.com (mail-pl1-x644.google.com [IPv6:2607:f8b0:4864:20::644])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BC613C0613D2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Oct 2020 13:37:33 -0700 (PDT)
-Received: by mail-pl1-x644.google.com with SMTP id b19so1604641pld.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Oct 2020 13:37:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=CGGzYJFzvaAClgoRLNesvAoSeLjys7jFkN1Zjf9m1Mg=;
-        b=YQ+zi25/jTA5S0YJD+eHWDE4qmiYDzQKrABHi4pdtuJsUIeyaRHwjp5l1TrhwJQyGt
-         CJ8iMpPENPDlPNsAjIFBhS2wa0pK9Dt30CifMlddAjdoNOAV8OZQfFG4ZMY47Tb+3XyJ
-         pR9Zz6mLi39wlcO/FSWM6qT9eXxzZ6DuF/gMqua1qjRi9reky7ZHkW+KM3VXy5oZwcX5
-         gdKkthNHczliC1MZKI/uUSkP6QHBsxMVHjQIFHEZNGsr8bXI3tgxMh8LzgGvX6j1PgDq
-         PDsr5cSlaJDlSDwwodCMYo5RTHEgYjzOt91miZwg02NAQKkkEQc1Xb92LjFOpiUF2O2a
-         OPDQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=CGGzYJFzvaAClgoRLNesvAoSeLjys7jFkN1Zjf9m1Mg=;
-        b=Q3qgunzz4UBMKJ0lFyTtc6Xk8h+er90MlaC3T7OUBRl5Dv4rN2oeAPT175WZ78OC98
-         dCmfznP3cYlM9PwD+wRPOto4cpO5nHtZ1w0/SkDUkR/UD38p2jILep01Uw49m4dLPLYR
-         u0fF3oqVhDFP8gG3LOyVJEhtCn2yDYTKt2Rk3zB5x8rmLKN8vPckXoBCia62g3tIND3M
-         CepT1w+JG0e15oL+91ZT1E5quB8dkraozYGw2Womo0d2TNikOZ8dZLLqRcH12QeVS8c9
-         t3vCItBjI5sgZuaNVH6GwKpzTwErk0EMTulS37UCxe7HxlfhgamGgzdT/TrofPSpoS4g
-         gqKw==
-X-Gm-Message-State: AOAM533b6B2MH0fJpkl7k9gGdjO0q+0guioNwTDa062utmLqJW+hLwCX
-        dR5IARkzOXYNFeKg5mkloTCrHQ==
-X-Google-Smtp-Source: ABdhPJwuZEiGe28KTMKDAU/MsHgXJUs+YHE+Shscfvekf1Trif4cZAlWPZevIE9oKRHF7mHoEUnvEw==
-X-Received: by 2002:a17:902:ba96:b029:d5:f36b:44af with SMTP id k22-20020a170902ba96b02900d5f36b44afmr654523pls.51.1603485453114;
-        Fri, 23 Oct 2020 13:37:33 -0700 (PDT)
-Received: from xps15 (S0106002369de4dac.cg.shawcable.net. [68.147.8.254])
-        by smtp.gmail.com with ESMTPSA id q4sm2874788pgj.44.2020.10.23.13.37.30
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 23 Oct 2020 13:37:31 -0700 (PDT)
-Date:   Fri, 23 Oct 2020 14:37:29 -0600
-From:   Mathieu Poirier <mathieu.poirier@linaro.org>
-To:     Peter Zijlstra <peterz@infradead.org>
-Cc:     Suzuki Poulose <suzuki.poulose@arm.com>,
-        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
-        Mike Leach <mike.leach@linaro.org>,
-        Ingo Molnar <mingo@redhat.com>,
-        Arnaldo Carvalho de Melo <acme@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-        Jiri Olsa <jolsa@redhat.com>,
-        Namhyung Kim <namhyung@kernel.org>, coresight@lists.linaro.org,
-        Stephen Boyd <swboyd@chromium.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org
-Subject: Re: [PATCHv2 2/4] coresight: tmc-etf: Fix NULL ptr dereference in
- tmc_enable_etf_sink_perf()
-Message-ID: <20201023203729.GA819775@xps15>
-References: <20201022212033.GA646497@xps15>
- <20201023073905.GM2611@hirez.programming.kicks-ass.net>
- <174e6461-4d46-cb65-c094-c06ee3b21568@arm.com>
- <20201023094115.GR2611@hirez.programming.kicks-ass.net>
- <bd8c136d-9dfa-a760-31f9-eb8d6698aced@arm.com>
- <20201023105431.GM2594@hirez.programming.kicks-ass.net>
- <2457de8f-8bc3-b350-fdc7-61276da31ce6@arm.com>
- <20201023131628.GY2628@hirez.programming.kicks-ass.net>
- <728fd89c-78f2-0c5c-0443-c91c62b02f0e@arm.com>
- <20201023134416.GA2628@hirez.programming.kicks-ass.net>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20201023134416.GA2628@hirez.programming.kicks-ass.net>
+        id S1758529AbgJWXSG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 23 Oct 2020 19:18:06 -0400
+Received: from m42-4.mailgun.net ([69.72.42.4]:25459 "EHLO m42-4.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1758521AbgJWXSG (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 23 Oct 2020 19:18:06 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1603495085; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=0f5/ytiH+Cqg+mb/yUuFRUe/V1yccgp4ACqV4gwy/vI=; b=GR0XnKEABhsE9qXycI4ozk1iOb1/00WXB71wa3iYDzwfs+t3FhVfP+wtiRK9uSN2Zc/07g0b
+ 8bq6PflvYJAnjph408uFPuLAkCJYPnOzwaT37F6lwlaHf8hYh6/100hqy+7/9oX9HtkS2Skk
+ M9pKxBIISOzlKTfimRQtt4ohF/Q=
+X-Mailgun-Sending-Ip: 69.72.42.4
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n06.prod.us-east-1.postgun.com with SMTP id
+ 5f9364ada56a9bfef05b4db1 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 23 Oct 2020 23:18:05
+ GMT
+Sender: hemantk=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 66CBEC43385; Fri, 23 Oct 2020 23:18:04 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL
+        autolearn=no autolearn_force=no version=3.4.0
+Received: from codeaurora.org (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: hemantk)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 3C787C433C9;
+        Fri, 23 Oct 2020 23:18:01 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 3C787C433C9
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=hemantk@codeaurora.org
+From:   Hemant Kumar <hemantk@codeaurora.org>
+To:     manivannan.sadhasivam@linaro.org, gregkh@linuxfoundation.org
+Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        jhugo@codeaurora.org, bbhatt@codeaurora.org,
+        loic.poulain@linaro.org, netdev@vger.kernel.org,
+        Hemant Kumar <hemantk@codeaurora.org>
+Subject: [PATCH v9 0/4] userspace MHI client interface driver
+Date:   Fri, 23 Oct 2020 16:17:51 -0700
+Message-Id: <1603495075-11462-1-git-send-email-hemantk@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Oct 23, 2020 at 03:44:16PM +0200, Peter Zijlstra wrote:
-> On Fri, Oct 23, 2020 at 02:29:54PM +0100, Suzuki Poulose wrote:
-> > On 10/23/20 2:16 PM, Peter Zijlstra wrote:
-> > > On Fri, Oct 23, 2020 at 01:56:47PM +0100, Suzuki Poulose wrote:
-> 
-> > > > That way another session could use the same sink if it is free. i.e
-> > > > 
-> > > > perf record -e cs_etm/@sink0/u --per-thread app1
-> > > > 
-> > > > and
-> > > > 
-> > > > perf record -e cs_etm/@sink0/u --per-thread app2
-> > > > 
-> > > > both can work as long as the sink is not used by the other session.
-> > > 
-> > > Like said above, if sink is shared between CPUs, that's going to be a
-> > > trainwreck :/ Why do you want that?
-> > 
-> > That ship has sailed. That is how the current generation of systems are,
-> > unfortunately. But as I said, this is changing and there are guidelines
-> > in place to avoid these kind of topologies. With the future
-> > technologies, this will be completely gone.
-> 
-> I understand that the hardware is like that, but why do you want to
-> support this insanity in software?
-> 
-> If you only allow a single sink user (group) at the same time, your
-> problem goes away. Simply disallow the above scenario, do not allow
-> concurrent sink users if sinks are shared like this.
-> 
-> Have the perf-record of app2 above fail because the sink is in-user
-> already.
+This patch series adds support for UCI driver. UCI driver enables userspace
+clients to communicate to external MHI devices like modem and WLAN. UCI driver
+probe creates standard character device file nodes for userspace clients to
+perform open, read, write, poll and release file operations. These file
+operations call MHI core layer APIs to perform data transfer using MHI bus
+to communicate with MHI device. Patch is tested using arm64 based platform.
 
-I agree with you that --per-thread scenarios are easy to deal with, but to
-support cpu-wide scenarios events must share a sink (because there is one event
-per CPU).  CPU-wide support can't be removed because it has been around
-for close to a couple of years and heavily used. I also think using the pid of
-the process that created the events, i.e perf, is a good idea.  We just need to
-agree on how to gain access to it.
+V9:
+- Renamed dl_lock to dl_pending _lock and pending list to dl_pending for
+  clarity.
+- Used read lock to protect cur_buf.
+- Change transfer status check logic and only consider 0 and -EOVERFLOW as
+  only success.
+- Added __int to module init function.
+- Print channel name instead of minor number upon successful probe.
 
-In Sai's patch you objected to the following:
+V8:
+- Fixed kernel test robot compilation error by changing %lu to %zu for
+  size_t.
+- Replaced uci with UCI in Kconfig, commit text, and comments in driver
+  code.
+- Fixed minor style related comments.
 
-> +     struct task_struct *task = READ_ONCE(event->owner);
-> +
-> +     if (!task || is_kernel_event(event))
+V7:
+- Decoupled uci device and uci channel objects. uci device is
+  associated with device file node. uci channel is associated
+  with MHI channels. uci device refers to uci channel to perform
+  MHI channel operations for device file operations like read()
+  and write(). uci device increments its reference count for
+  every open(). uci device calls mhi_uci_dev_start_chan() to start
+  the MHI channel. uci channel object is tracking number of times
+  MHI channel is referred. This allows to keep the MHI channel in
+  start state until last release() is called. After that uci channel
+  reference count goes to 0 and uci channel clean up is performed
+  which stops the MHI channel. After the last call to release() if
+  driver is removed uci reference count becomes 0 and uci object is
+  cleaned up.
+- Use separate uci channel read and write lock to fine grain locking
+  between reader and writer.
+- Use uci device lock to synchronize open, release and driver remove.
+- Optimize for downlink only or uplink only UCI device.
 
-Would it be better to use task_nr_pid(current) instead of event->owner?  The end
-result will be exactly the same.  There is also no need to check the validity of
-@current since it is a user process.
+V6:
+- Moved uci.c to mhi directory.
+- Updated Kconfig to add module information.
+- Updated Makefile to rename uci object file name as mhi_uci
+- Removed kref for open count
 
-Thanks,
-Mathieu 
+V5:
+- Removed mhi_uci_drv structure.
+- Used idr instead of creating global list of uci devices.
+- Used kref instead of local ref counting for uci device and
+  open count.
+- Removed unlikely macro.
 
-[1]. https://elixir.bootlin.com/linux/latest/source/kernel/events/core.c#L6170
+V4:
+- Fix locking to protect proper struct members.
+- Updated documentation describing uci client driver use cases.
+- Fixed uci ref counting in mhi_uci_open for error case.
+- Addressed style related review comments.
 
-> 
-> Only if the hardware has per-CPU sinks can you allow this.
+V3: Added documentation for MHI UCI driver.
+
+V2: Added mutex lock to prevent multiple readers to access same
+mhi buffer which can result into use after free.
+
+Hemant Kumar (4):
+  bus: mhi: core: Add helper API to return number of free TREs
+  bus: mhi: core: Move MHI_MAX_MTU to external header file
+  docs: Add documentation for userspace client interface
+  bus: mhi: Add userspace client interface driver
+
+ Documentation/mhi/index.rst     |   1 +
+ Documentation/mhi/uci.rst       |  83 +++++
+ drivers/bus/mhi/Kconfig         |  13 +
+ drivers/bus/mhi/Makefile        |   4 +
+ drivers/bus/mhi/core/internal.h |   1 -
+ drivers/bus/mhi/core/main.c     |  12 +
+ drivers/bus/mhi/uci.c           | 658 ++++++++++++++++++++++++++++++++++++++++
+ include/linux/mhi.h             |  12 +
+ 8 files changed, 783 insertions(+), 1 deletion(-)
+ create mode 100644 Documentation/mhi/uci.rst
+ create mode 100644 drivers/bus/mhi/uci.c
+
+-- 
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
+
