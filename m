@@ -2,115 +2,142 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 0BB682976C3
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Oct 2020 20:20:09 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B75F4297851
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Oct 2020 22:37:37 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750556AbgJWSUI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 23 Oct 2020 14:20:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37466 "EHLO
+        id S1756218AbgJWUhe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 23 Oct 2020 16:37:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58690 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S465244AbgJWSUI (ORCPT
+        with ESMTP id S1756136AbgJWUhd (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 23 Oct 2020 14:20:08 -0400
-Received: from metis.ext.pengutronix.de (metis.ext.pengutronix.de [IPv6:2001:67c:670:201:290:27ff:fe1d:cc33])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 01EA3C0613CE
-        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Oct 2020 11:20:08 -0700 (PDT)
-Received: from [2a0a:edc0:0:900:6245:cbff:fea0:1793] (helo=kresse.office.stw.pengutronix.de)
-        by metis.ext.pengutronix.de with esmtp (Exim 4.92)
-        (envelope-from <l.stach@pengutronix.de>)
-        id 1kW1fY-0006et-DX; Fri, 23 Oct 2020 20:20:05 +0200
-Message-ID: <d0fb714b99f13bea6000ecd17fba324433782ae5.camel@pengutronix.de>
-From:   Lucas Stach <l.stach@pengutronix.de>
-To:     Rob Clark <robdclark@gmail.com>, dri-devel@lists.freedesktop.org
-Cc:     Rob Clark <robdclark@chromium.org>,
-        David Airlie <airlied@linux.ie>, linux-arm-msm@vger.kernel.org,
-        open list <linux-kernel@vger.kernel.org>,
-        Sean Paul <sean@poorly.run>,
-        "Kristian H . Kristensen" <hoegsberg@google.com>,
-        freedreno@lists.freedesktop.org
-Date:   Fri, 23 Oct 2020 20:20:02 +0200
-In-Reply-To: <20201023165136.561680-24-robdclark@gmail.com>
-References: <20201023165136.561680-1-robdclark@gmail.com>
-         <20201023165136.561680-24-robdclark@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-User-Agent: Evolution 3.30.5-1.1 
+        Fri, 23 Oct 2020 16:37:33 -0400
+Received: from mail-pl1-x644.google.com (mail-pl1-x644.google.com [IPv6:2607:f8b0:4864:20::644])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BC613C0613D2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Oct 2020 13:37:33 -0700 (PDT)
+Received: by mail-pl1-x644.google.com with SMTP id b19so1604641pld.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Oct 2020 13:37:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=CGGzYJFzvaAClgoRLNesvAoSeLjys7jFkN1Zjf9m1Mg=;
+        b=YQ+zi25/jTA5S0YJD+eHWDE4qmiYDzQKrABHi4pdtuJsUIeyaRHwjp5l1TrhwJQyGt
+         CJ8iMpPENPDlPNsAjIFBhS2wa0pK9Dt30CifMlddAjdoNOAV8OZQfFG4ZMY47Tb+3XyJ
+         pR9Zz6mLi39wlcO/FSWM6qT9eXxzZ6DuF/gMqua1qjRi9reky7ZHkW+KM3VXy5oZwcX5
+         gdKkthNHczliC1MZKI/uUSkP6QHBsxMVHjQIFHEZNGsr8bXI3tgxMh8LzgGvX6j1PgDq
+         PDsr5cSlaJDlSDwwodCMYo5RTHEgYjzOt91miZwg02NAQKkkEQc1Xb92LjFOpiUF2O2a
+         OPDQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=CGGzYJFzvaAClgoRLNesvAoSeLjys7jFkN1Zjf9m1Mg=;
+        b=Q3qgunzz4UBMKJ0lFyTtc6Xk8h+er90MlaC3T7OUBRl5Dv4rN2oeAPT175WZ78OC98
+         dCmfznP3cYlM9PwD+wRPOto4cpO5nHtZ1w0/SkDUkR/UD38p2jILep01Uw49m4dLPLYR
+         u0fF3oqVhDFP8gG3LOyVJEhtCn2yDYTKt2Rk3zB5x8rmLKN8vPckXoBCia62g3tIND3M
+         CepT1w+JG0e15oL+91ZT1E5quB8dkraozYGw2Womo0d2TNikOZ8dZLLqRcH12QeVS8c9
+         t3vCItBjI5sgZuaNVH6GwKpzTwErk0EMTulS37UCxe7HxlfhgamGgzdT/TrofPSpoS4g
+         gqKw==
+X-Gm-Message-State: AOAM533b6B2MH0fJpkl7k9gGdjO0q+0guioNwTDa062utmLqJW+hLwCX
+        dR5IARkzOXYNFeKg5mkloTCrHQ==
+X-Google-Smtp-Source: ABdhPJwuZEiGe28KTMKDAU/MsHgXJUs+YHE+Shscfvekf1Trif4cZAlWPZevIE9oKRHF7mHoEUnvEw==
+X-Received: by 2002:a17:902:ba96:b029:d5:f36b:44af with SMTP id k22-20020a170902ba96b02900d5f36b44afmr654523pls.51.1603485453114;
+        Fri, 23 Oct 2020 13:37:33 -0700 (PDT)
+Received: from xps15 (S0106002369de4dac.cg.shawcable.net. [68.147.8.254])
+        by smtp.gmail.com with ESMTPSA id q4sm2874788pgj.44.2020.10.23.13.37.30
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 23 Oct 2020 13:37:31 -0700 (PDT)
+Date:   Fri, 23 Oct 2020 14:37:29 -0600
+From:   Mathieu Poirier <mathieu.poirier@linaro.org>
+To:     Peter Zijlstra <peterz@infradead.org>
+Cc:     Suzuki Poulose <suzuki.poulose@arm.com>,
+        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
+        Mike Leach <mike.leach@linaro.org>,
+        Ingo Molnar <mingo@redhat.com>,
+        Arnaldo Carvalho de Melo <acme@kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+        Jiri Olsa <jolsa@redhat.com>,
+        Namhyung Kim <namhyung@kernel.org>, coresight@lists.linaro.org,
+        Stephen Boyd <swboyd@chromium.org>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org
+Subject: Re: [PATCHv2 2/4] coresight: tmc-etf: Fix NULL ptr dereference in
+ tmc_enable_etf_sink_perf()
+Message-ID: <20201023203729.GA819775@xps15>
+References: <20201022212033.GA646497@xps15>
+ <20201023073905.GM2611@hirez.programming.kicks-ass.net>
+ <174e6461-4d46-cb65-c094-c06ee3b21568@arm.com>
+ <20201023094115.GR2611@hirez.programming.kicks-ass.net>
+ <bd8c136d-9dfa-a760-31f9-eb8d6698aced@arm.com>
+ <20201023105431.GM2594@hirez.programming.kicks-ass.net>
+ <2457de8f-8bc3-b350-fdc7-61276da31ce6@arm.com>
+ <20201023131628.GY2628@hirez.programming.kicks-ass.net>
+ <728fd89c-78f2-0c5c-0443-c91c62b02f0e@arm.com>
+ <20201023134416.GA2628@hirez.programming.kicks-ass.net>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
-X-SA-Exim-Connect-IP: 2a0a:edc0:0:900:6245:cbff:fea0:1793
-X-SA-Exim-Mail-From: l.stach@pengutronix.de
-X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on
-        metis.ext.pengutronix.de
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.5 required=4.0 tests=AWL,BAYES_00,RDNS_NONE,
-        SPF_HELO_NONE,SPF_SOFTFAIL autolearn=no autolearn_force=no
-        version=3.4.2
-Subject: Re: [PATCH v4 23/23] drm/msm: Don't implicit-sync if only a single
- ring
-X-SA-Exim-Version: 4.2.1 (built Wed, 08 May 2019 21:11:16 +0000)
-X-SA-Exim-Scanned: Yes (on metis.ext.pengutronix.de)
-X-PTX-Original-Recipient: linux-arm-msm@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20201023134416.GA2628@hirez.programming.kicks-ass.net>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fr, 2020-10-23 at 09:51 -0700, Rob Clark wrote:
-> From: Rob Clark <robdclark@chromium.org>
+On Fri, Oct 23, 2020 at 03:44:16PM +0200, Peter Zijlstra wrote:
+> On Fri, Oct 23, 2020 at 02:29:54PM +0100, Suzuki Poulose wrote:
+> > On 10/23/20 2:16 PM, Peter Zijlstra wrote:
+> > > On Fri, Oct 23, 2020 at 01:56:47PM +0100, Suzuki Poulose wrote:
 > 
-> If there is only a single ring (no-preemption), everything is FIFO order
-> and there is no need to implicit-sync.
+> > > > That way another session could use the same sink if it is free. i.e
+> > > > 
+> > > > perf record -e cs_etm/@sink0/u --per-thread app1
+> > > > 
+> > > > and
+> > > > 
+> > > > perf record -e cs_etm/@sink0/u --per-thread app2
+> > > > 
+> > > > both can work as long as the sink is not used by the other session.
+> > > 
+> > > Like said above, if sink is shared between CPUs, that's going to be a
+> > > trainwreck :/ Why do you want that?
+> > 
+> > That ship has sailed. That is how the current generation of systems are,
+> > unfortunately. But as I said, this is changing and there are guidelines
+> > in place to avoid these kind of topologies. With the future
+> > technologies, this will be completely gone.
 > 
-> Mesa should probably just always use MSM_SUBMIT_NO_IMPLICIT, as behavior
-> is undefined when fences are not used to synchronize buffer usage across
-> contexts (which is the only case where multiple different priority rings
-> could come into play).
-
-Really, doesn't this break cross-device implicit sync? Okay, you may
-not have many peripherals that rely on implicit sync on devices where
-Adreno is usually found, but it seems rather heavy-handed.
-
-Wouldn't it be better to only ignore fences from your own ring context
-in the implicit sync, like we do in the common DRM scheduler
-(drm_sched_dependency_optimized)?
-
-Regards,
-Lucas
-
-> Signed-off-by: Rob Clark <robdclark@chromium.org>
-> Reviewed-by: Kristian H. Kristensen <hoegsberg@google.com>
-> ---
->  drivers/gpu/drm/msm/msm_gem_submit.c | 7 ++++---
->  1 file changed, 4 insertions(+), 3 deletions(-)
+> I understand that the hardware is like that, but why do you want to
+> support this insanity in software?
 > 
-> diff --git a/drivers/gpu/drm/msm/msm_gem_submit.c b/drivers/gpu/drm/msm/msm_gem_submit.c
-> index d04c349d8112..b6babc7f9bb8 100644
-> --- a/drivers/gpu/drm/msm/msm_gem_submit.c
-> +++ b/drivers/gpu/drm/msm/msm_gem_submit.c
-> @@ -283,7 +283,7 @@ static int submit_lock_objects(struct msm_gem_submit *submit)
->  	return ret;
->  }
->  
-> -static int submit_fence_sync(struct msm_gem_submit *submit, bool no_implicit)
-> +static int submit_fence_sync(struct msm_gem_submit *submit, bool implicit_sync)
->  {
->  	int i, ret = 0;
->  
-> @@ -303,7 +303,7 @@ static int submit_fence_sync(struct msm_gem_submit *submit, bool no_implicit)
->  				return ret;
->  		}
->  
-> -		if (no_implicit)
-> +		if (!implicit_sync)
->  			continue;
->  
->  		ret = msm_gem_sync_object(&msm_obj->base, submit->ring->fctx,
-> @@ -774,7 +774,8 @@ int msm_ioctl_gem_submit(struct drm_device *dev, void *data,
->  	if (ret)
->  		goto out;
->  
-> -	ret = submit_fence_sync(submit, !!(args->flags & MSM_SUBMIT_NO_IMPLICIT));
-> +	ret = submit_fence_sync(submit, (gpu->nr_rings > 1) &&
-> +			!(args->flags & MSM_SUBMIT_NO_IMPLICIT));
->  	if (ret)
->  		goto out;
->  
+> If you only allow a single sink user (group) at the same time, your
+> problem goes away. Simply disallow the above scenario, do not allow
+> concurrent sink users if sinks are shared like this.
+> 
+> Have the perf-record of app2 above fail because the sink is in-user
+> already.
 
+I agree with you that --per-thread scenarios are easy to deal with, but to
+support cpu-wide scenarios events must share a sink (because there is one event
+per CPU).  CPU-wide support can't be removed because it has been around
+for close to a couple of years and heavily used. I also think using the pid of
+the process that created the events, i.e perf, is a good idea.  We just need to
+agree on how to gain access to it.
+
+In Sai's patch you objected to the following:
+
+> +     struct task_struct *task = READ_ONCE(event->owner);
+> +
+> +     if (!task || is_kernel_event(event))
+
+Would it be better to use task_nr_pid(current) instead of event->owner?  The end
+result will be exactly the same.  There is also no need to check the validity of
+@current since it is a user process.
+
+Thanks,
+Mathieu 
+
+[1]. https://elixir.bootlin.com/linux/latest/source/kernel/events/core.c#L6170
+
+> 
+> Only if the hardware has per-CPU sinks can you allow this.
