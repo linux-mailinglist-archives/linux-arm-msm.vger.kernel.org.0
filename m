@@ -2,87 +2,115 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 3D1D42975DF
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Oct 2020 19:38:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0BB682976C3
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Oct 2020 20:20:09 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753609AbgJWRin (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 23 Oct 2020 13:38:43 -0400
-Received: from mail.kernel.org ([198.145.29.99]:35646 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1753608AbgJWRim (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 23 Oct 2020 13:38:42 -0400
-Received: from kicinski-fedora-PC1C0HJN.hsd1.ca.comcast.net (unknown [163.114.132.6])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 426F921527;
-        Fri, 23 Oct 2020 17:38:41 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1603474721;
-        bh=10O4uc6pV6KD59oydIH3GBuIwPrNvEt9O4uEKzdaHw8=;
-        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-        b=PAAMF4PP0JRie9zR23MwTCy9ni2h5VUcxGG9cRAxOIAHna/8c7xKqyndZvIS9SYhj
-         M7bXyBSvG+9dG/Paokx03wtONM6PE+0F4yeBAlUra3s6jBjcmlXUAwWvWMakQnGufd
-         V4UpJmbI99r04G8HQ+ymYMgDnwub2KEptqAaBRf4=
-Date:   Fri, 23 Oct 2020 10:38:40 -0700
-From:   Jakub Kicinski <kuba@kernel.org>
-To:     Hemant Kumar <hemantk@codeaurora.org>
-Cc:     manivannan.sadhasivam@linaro.org, gregkh@linuxfoundation.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        jhugo@codeaurora.org, bbhatt@codeaurora.org,
-        loic.poulain@linaro.org
-Subject: Re: [PATCH v8 0/4] userspace MHI client interface driver
-Message-ID: <20201023103840.296091f9@kicinski-fedora-PC1C0HJN.hsd1.ca.comcast.net>
-In-Reply-To: <58b8c981-491e-3d02-3adc-7224c5692d61@codeaurora.org>
-References: <1603354958-24025-1-git-send-email-hemantk@codeaurora.org>
-        <20201023093734.7b06694e@kicinski-fedora-PC1C0HJN.hsd1.ca.comcast.net>
-        <58b8c981-491e-3d02-3adc-7224c5692d61@codeaurora.org>
+        id S1750556AbgJWSUI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 23 Oct 2020 14:20:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37466 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S465244AbgJWSUI (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 23 Oct 2020 14:20:08 -0400
+Received: from metis.ext.pengutronix.de (metis.ext.pengutronix.de [IPv6:2001:67c:670:201:290:27ff:fe1d:cc33])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 01EA3C0613CE
+        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Oct 2020 11:20:08 -0700 (PDT)
+Received: from [2a0a:edc0:0:900:6245:cbff:fea0:1793] (helo=kresse.office.stw.pengutronix.de)
+        by metis.ext.pengutronix.de with esmtp (Exim 4.92)
+        (envelope-from <l.stach@pengutronix.de>)
+        id 1kW1fY-0006et-DX; Fri, 23 Oct 2020 20:20:05 +0200
+Message-ID: <d0fb714b99f13bea6000ecd17fba324433782ae5.camel@pengutronix.de>
+From:   Lucas Stach <l.stach@pengutronix.de>
+To:     Rob Clark <robdclark@gmail.com>, dri-devel@lists.freedesktop.org
+Cc:     Rob Clark <robdclark@chromium.org>,
+        David Airlie <airlied@linux.ie>, linux-arm-msm@vger.kernel.org,
+        open list <linux-kernel@vger.kernel.org>,
+        Sean Paul <sean@poorly.run>,
+        "Kristian H . Kristensen" <hoegsberg@google.com>,
+        freedreno@lists.freedesktop.org
+Date:   Fri, 23 Oct 2020 20:20:02 +0200
+In-Reply-To: <20201023165136.561680-24-robdclark@gmail.com>
+References: <20201023165136.561680-1-robdclark@gmail.com>
+         <20201023165136.561680-24-robdclark@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+User-Agent: Evolution 3.30.5-1.1 
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
+X-SA-Exim-Connect-IP: 2a0a:edc0:0:900:6245:cbff:fea0:1793
+X-SA-Exim-Mail-From: l.stach@pengutronix.de
+X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on
+        metis.ext.pengutronix.de
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.5 required=4.0 tests=AWL,BAYES_00,RDNS_NONE,
+        SPF_HELO_NONE,SPF_SOFTFAIL autolearn=no autolearn_force=no
+        version=3.4.2
+Subject: Re: [PATCH v4 23/23] drm/msm: Don't implicit-sync if only a single
+ ring
+X-SA-Exim-Version: 4.2.1 (built Wed, 08 May 2019 21:11:16 +0000)
+X-SA-Exim-Scanned: Yes (on metis.ext.pengutronix.de)
+X-PTX-Original-Recipient: linux-arm-msm@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, 23 Oct 2020 10:22:19 -0700 Hemant Kumar wrote:
-> On 10/23/20 9:37 AM, Jakub Kicinski wrote:
-> > On Thu, 22 Oct 2020 01:22:34 -0700 Hemant Kumar wrote:  
-> >> This patch series adds support for UCI driver. UCI driver enables userspace
-> >> clients to communicate to external MHI devices like modem and WLAN. UCI driver
-> >> probe creates standard character device file nodes for userspace clients to
-> >> perform open, read, write, poll and release file operations. These file
-> >> operations call MHI core layer APIs to perform data transfer using MHI bus
-> >> to communicate with MHI device. Patch is tested using arm64 based platform.  
-> > 
-> > Until you CC netdev on this (as suggested [1]), here's my:
-> > 
-> > Nacked-by: Jakub Kicinski <kuba@kernel.org>
-> > 
-> > [1]
-> > https://lore.kernel.org/netdev/20201016183759.7fa7c0ef@kicinski-fedora-pc1c0hjn.dhcp.thefacebook.com/
-> >   
+On Fr, 2020-10-23 at 09:51 -0700, Rob Clark wrote:
+> From: Rob Clark <robdclark@chromium.org>
 > 
-> UCI driver patch series includes following patches
+> If there is only a single ring (no-preemption), everything is FIFO order
+> and there is no need to implicit-sync.
 > 
-> 1)   bus: mhi: core: Add helper API to return number of free TREs
-> 2)   bus: mhi: core: Move MHI_MAX_MTU to external header file
-> 3)   docs: Add documentation for userspace client interface
-> 4)   bus: mhi: Add userspace client interface driver
-> 
-> mhi net driver can use  #1 and #2 and these two are part of MHI core 
-> driver change. These are helper API/macro which can be used by any mhi 
-> clients like UCI or mhi net dev.
-> 
-> #3 and #4 are MHI UCI character driver completely unrelated to netdev.
-> 
-> How about splitting the patch series between #1,#2 and #3, #4 and add 
-> netdev to #1, #2?
-> 
-> #1,#2 were already reviewed by two folks in community so it would be 
-> much easier for netdev folks to refer that in context of mhi net device 
-> driver.
-> 
-> Please let me know what do you think about this idea.
+> Mesa should probably just always use MSM_SUBMIT_NO_IMPLICIT, as behavior
+> is undefined when fences are not used to synchronize buffer usage across
+> contexts (which is the only case where multiple different priority rings
+> could come into play).
 
-CC netdev on the entire series.
+Really, doesn't this break cross-device implicit sync? Okay, you may
+not have many peripherals that rely on implicit sync on devices where
+Adreno is usually found, but it seems rather heavy-handed.
 
-We will judge what is and isn't related to networking.
+Wouldn't it be better to only ignore fences from your own ring context
+in the implicit sync, like we do in the common DRM scheduler
+(drm_sched_dependency_optimized)?
+
+Regards,
+Lucas
+
+> Signed-off-by: Rob Clark <robdclark@chromium.org>
+> Reviewed-by: Kristian H. Kristensen <hoegsberg@google.com>
+> ---
+>  drivers/gpu/drm/msm/msm_gem_submit.c | 7 ++++---
+>  1 file changed, 4 insertions(+), 3 deletions(-)
+> 
+> diff --git a/drivers/gpu/drm/msm/msm_gem_submit.c b/drivers/gpu/drm/msm/msm_gem_submit.c
+> index d04c349d8112..b6babc7f9bb8 100644
+> --- a/drivers/gpu/drm/msm/msm_gem_submit.c
+> +++ b/drivers/gpu/drm/msm/msm_gem_submit.c
+> @@ -283,7 +283,7 @@ static int submit_lock_objects(struct msm_gem_submit *submit)
+>  	return ret;
+>  }
+>  
+> -static int submit_fence_sync(struct msm_gem_submit *submit, bool no_implicit)
+> +static int submit_fence_sync(struct msm_gem_submit *submit, bool implicit_sync)
+>  {
+>  	int i, ret = 0;
+>  
+> @@ -303,7 +303,7 @@ static int submit_fence_sync(struct msm_gem_submit *submit, bool no_implicit)
+>  				return ret;
+>  		}
+>  
+> -		if (no_implicit)
+> +		if (!implicit_sync)
+>  			continue;
+>  
+>  		ret = msm_gem_sync_object(&msm_obj->base, submit->ring->fctx,
+> @@ -774,7 +774,8 @@ int msm_ioctl_gem_submit(struct drm_device *dev, void *data,
+>  	if (ret)
+>  		goto out;
+>  
+> -	ret = submit_fence_sync(submit, !!(args->flags & MSM_SUBMIT_NO_IMPLICIT));
+> +	ret = submit_fence_sync(submit, (gpu->nr_rings > 1) &&
+> +			!(args->flags & MSM_SUBMIT_NO_IMPLICIT));
+>  	if (ret)
+>  		goto out;
+>  
+
