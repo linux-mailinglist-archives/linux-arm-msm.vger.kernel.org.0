@@ -2,121 +2,112 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 660FC29752B
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Oct 2020 18:51:18 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DA5212975B3
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Oct 2020 19:22:29 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752824AbgJWQvL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 23 Oct 2020 12:51:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51828 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752816AbgJWQvJ (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 23 Oct 2020 12:51:09 -0400
-Received: from mail-pl1-x644.google.com (mail-pl1-x644.google.com [IPv6:2607:f8b0:4864:20::644])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2DE04C0613D2;
-        Fri, 23 Oct 2020 09:51:09 -0700 (PDT)
-Received: by mail-pl1-x644.google.com with SMTP id r3so1169212plo.1;
-        Fri, 23 Oct 2020 09:51:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=JZButkyF/GaInfh9Hmb9ywY7tT0fYvah1q73Sv4+lT8=;
-        b=sXtjrbzfkYQvrfjr3zL0uuJzC9ek8b3OGqkGU2HW1MwDpUR0gg8uMK9y5Lm+q9dOGE
-         6o/bQ15eQR3VoOwnM+A01v7WAuxAi8l4FVoSFW/hZD2FonDlwEDPXR4btVVboQJSdcWn
-         Y4oekw90qn7FGh+zbLuk6WAgP0cgOw7DGn3lw6cOg8qwYkpB7u2IykkHJ4zdWfBDeuEQ
-         C+tXnng8tPUQMfUNHx/1ijmRc2WVx5tdK8MDRHUKEOiXQ7oNy9TNJ2uoGniIVTl3VJ66
-         rRHagoab/ceV0VUBgEteX6PzcYosNyRx9tnaTrmogo8Ks9uMkCvJC/clViKNKmTB6NCD
-         czvQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=JZButkyF/GaInfh9Hmb9ywY7tT0fYvah1q73Sv4+lT8=;
-        b=FaNDORYyZ3Tvz6GsyUOlFaRegwYe8lSxhjfUKpACSxf/8AGWNMKo91zsoXwKkn0ZZI
-         8ejj+VHU2Mn8lLxxE7FiOP0dUQ+L9vaJbkWFfv02k+lSOF9kt31+6ggOHfRgIP4Onstk
-         dkyhEWnWUBGsdSUIMJQhmtzN0LgV5wT0ZF2mc7VAL+XeMTQifZhbA2O3AHHyErlndUwu
-         yqWp9vxrs/7GaTMrQrYk9VVv9uT2MPbz169MCJXiJr9/BFRcUsSKPXjw2f9kMndBWHEe
-         BRNL/+1P0n+xX+bHAHxojwH0BPi6m+rV31H3xSFeD+bVHy+4hLjAQ7q0ZYyqMpU/fuvF
-         u7Mw==
-X-Gm-Message-State: AOAM531K2kX+bZAkqEHrowU7SMJGdl4u0m9lmlggYiSJVKxLMyGDAcrP
-        Ktj0RYIvB+LW2LPWFjlX4no=
-X-Google-Smtp-Source: ABdhPJz7W7twine0CZiWQPxl1uDo6NOAvvpvr9BrcmqP82wpMVrayYrN0o3GK0pR8TO+1aMw0Xjuow==
-X-Received: by 2002:a17:902:ab92:b029:d5:d5f4:5118 with SMTP id f18-20020a170902ab92b02900d5d5f45118mr3297409plr.21.1603471868616;
-        Fri, 23 Oct 2020 09:51:08 -0700 (PDT)
-Received: from localhost (c-73-25-156-94.hsd1.or.comcast.net. [73.25.156.94])
-        by smtp.gmail.com with ESMTPSA id j8sm2696025pfr.121.2020.10.23.09.51.07
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 23 Oct 2020 09:51:07 -0700 (PDT)
-From:   Rob Clark <robdclark@gmail.com>
-To:     dri-devel@lists.freedesktop.org
-Cc:     linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
-        Rob Clark <robdclark@chromium.org>,
-        "Kristian H . Kristensen" <hoegsberg@google.com>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        linux-kernel@vger.kernel.org (open list)
-Subject: [PATCH v4 23/23] drm/msm: Don't implicit-sync if only a single ring
-Date:   Fri, 23 Oct 2020 09:51:24 -0700
-Message-Id: <20201023165136.561680-24-robdclark@gmail.com>
-X-Mailer: git-send-email 2.26.2
-In-Reply-To: <20201023165136.561680-1-robdclark@gmail.com>
-References: <20201023165136.561680-1-robdclark@gmail.com>
+        id S1751828AbgJWRW0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 23 Oct 2020 13:22:26 -0400
+Received: from z5.mailgun.us ([104.130.96.5]:54850 "EHLO z5.mailgun.us"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1753311AbgJWRWZ (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 23 Oct 2020 13:22:25 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1603473745; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
+ Subject: Sender; bh=DWn/rqx3OrIlRsjoSgcpz7Qb10m3vaDCTP9An8Owmzc=; b=jOlm/0eFmeCRZ4xEdq6vXFXseRnuF6oK+UmA2WSX2UXdJmIrWUvPwvTr0pqCwhsA+YAuXqR/
+ nPtO4uCKq5oQyGY0US+tSk8/dw3lYpWtyJm1h4r2rEu1NSViQq4gizurgITdHrEPF/E/9/+R
+ riyDtMC0fdGiB8QKEw8ZVYxxpxw=
+X-Mailgun-Sending-Ip: 104.130.96.5
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n01.prod.us-east-1.postgun.com with SMTP id
+ 5f93114d86718f090a8dfda0 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 23 Oct 2020 17:22:21
+ GMT
+Sender: hemantk=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 96CF2C433C9; Fri, 23 Oct 2020 17:22:20 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-3.0 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        NICE_REPLY_A,SPF_FAIL autolearn=no autolearn_force=no version=3.4.0
+Received: from [10.46.162.249] (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: hemantk)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id AA13DC433C9;
+        Fri, 23 Oct 2020 17:22:19 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org AA13DC433C9
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=hemantk@codeaurora.org
+Subject: Re: [PATCH v8 0/4] userspace MHI client interface driver
+To:     Jakub Kicinski <kuba@kernel.org>
+Cc:     manivannan.sadhasivam@linaro.org, gregkh@linuxfoundation.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        jhugo@codeaurora.org, bbhatt@codeaurora.org,
+        loic.poulain@linaro.org
+References: <1603354958-24025-1-git-send-email-hemantk@codeaurora.org>
+ <20201023093734.7b06694e@kicinski-fedora-PC1C0HJN.hsd1.ca.comcast.net>
+From:   Hemant Kumar <hemantk@codeaurora.org>
+Message-ID: <58b8c981-491e-3d02-3adc-7224c5692d61@codeaurora.org>
+Date:   Fri, 23 Oct 2020 10:22:19 -0700
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.10.0
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <20201023093734.7b06694e@kicinski-fedora-PC1C0HJN.hsd1.ca.comcast.net>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Rob Clark <robdclark@chromium.org>
+Hi Jakub,
 
-If there is only a single ring (no-preemption), everything is FIFO order
-and there is no need to implicit-sync.
+On 10/23/20 9:37 AM, Jakub Kicinski wrote:
+> On Thu, 22 Oct 2020 01:22:34 -0700 Hemant Kumar wrote:
+>> This patch series adds support for UCI driver. UCI driver enables userspace
+>> clients to communicate to external MHI devices like modem and WLAN. UCI driver
+>> probe creates standard character device file nodes for userspace clients to
+>> perform open, read, write, poll and release file operations. These file
+>> operations call MHI core layer APIs to perform data transfer using MHI bus
+>> to communicate with MHI device. Patch is tested using arm64 based platform.
+> 
+> Until you CC netdev on this (as suggested [1]), here's my:
+> 
+> Nacked-by: Jakub Kicinski <kuba@kernel.org>
+> 
+> [1]
+> https://lore.kernel.org/netdev/20201016183759.7fa7c0ef@kicinski-fedora-pc1c0hjn.dhcp.thefacebook.com/
+> 
 
-Mesa should probably just always use MSM_SUBMIT_NO_IMPLICIT, as behavior
-is undefined when fences are not used to synchronize buffer usage across
-contexts (which is the only case where multiple different priority rings
-could come into play).
+UCI driver patch series includes following patches
 
-Signed-off-by: Rob Clark <robdclark@chromium.org>
-Reviewed-by: Kristian H. Kristensen <hoegsberg@google.com>
----
- drivers/gpu/drm/msm/msm_gem_submit.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+1)   bus: mhi: core: Add helper API to return number of free TREs
+2)   bus: mhi: core: Move MHI_MAX_MTU to external header file
+3)   docs: Add documentation for userspace client interface
+4)   bus: mhi: Add userspace client interface driver
 
-diff --git a/drivers/gpu/drm/msm/msm_gem_submit.c b/drivers/gpu/drm/msm/msm_gem_submit.c
-index d04c349d8112..b6babc7f9bb8 100644
---- a/drivers/gpu/drm/msm/msm_gem_submit.c
-+++ b/drivers/gpu/drm/msm/msm_gem_submit.c
-@@ -283,7 +283,7 @@ static int submit_lock_objects(struct msm_gem_submit *submit)
- 	return ret;
- }
- 
--static int submit_fence_sync(struct msm_gem_submit *submit, bool no_implicit)
-+static int submit_fence_sync(struct msm_gem_submit *submit, bool implicit_sync)
- {
- 	int i, ret = 0;
- 
-@@ -303,7 +303,7 @@ static int submit_fence_sync(struct msm_gem_submit *submit, bool no_implicit)
- 				return ret;
- 		}
- 
--		if (no_implicit)
-+		if (!implicit_sync)
- 			continue;
- 
- 		ret = msm_gem_sync_object(&msm_obj->base, submit->ring->fctx,
-@@ -774,7 +774,8 @@ int msm_ioctl_gem_submit(struct drm_device *dev, void *data,
- 	if (ret)
- 		goto out;
- 
--	ret = submit_fence_sync(submit, !!(args->flags & MSM_SUBMIT_NO_IMPLICIT));
-+	ret = submit_fence_sync(submit, (gpu->nr_rings > 1) &&
-+			!(args->flags & MSM_SUBMIT_NO_IMPLICIT));
- 	if (ret)
- 		goto out;
- 
+mhi net driver can use  #1 and #2 and these two are part of MHI core 
+driver change. These are helper API/macro which can be used by any mhi 
+clients like UCI or mhi net dev.
+
+#3 and #4 are MHI UCI character driver completely unrelated to netdev.
+
+How about splitting the patch series between #1,#2 and #3, #4 and add 
+netdev to #1, #2?
+
+#1,#2 were already reviewed by two folks in community so it would be 
+much easier for netdev folks to refer that in context of mhi net device 
+driver.
+
+Please let me know what do you think about this idea.
+
+Thanks,
+Hemant
+
 -- 
-2.26.2
-
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
