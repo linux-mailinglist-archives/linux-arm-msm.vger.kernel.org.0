@@ -2,65 +2,64 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 0BAD6297527
+	by mail.lfdr.de (Postfix) with ESMTP id 7B20A297528
 	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Oct 2020 18:51:17 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752796AbgJWQux (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 23 Oct 2020 12:50:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51768 "EHLO
+        id S1752804AbgJWQvA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 23 Oct 2020 12:51:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51778 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752791AbgJWQuv (ORCPT
+        with ESMTP id S1752266AbgJWQuz (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 23 Oct 2020 12:50:51 -0400
-Received: from mail-pf1-x442.google.com (mail-pf1-x442.google.com [IPv6:2607:f8b0:4864:20::442])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 47776C0613D2;
-        Fri, 23 Oct 2020 09:50:51 -0700 (PDT)
-Received: by mail-pf1-x442.google.com with SMTP id j18so1807141pfa.0;
-        Fri, 23 Oct 2020 09:50:51 -0700 (PDT)
+        Fri, 23 Oct 2020 12:50:55 -0400
+Received: from mail-pg1-x543.google.com (mail-pg1-x543.google.com [IPv6:2607:f8b0:4864:20::543])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CFECBC0613CE;
+        Fri, 23 Oct 2020 09:50:53 -0700 (PDT)
+Received: by mail-pg1-x543.google.com with SMTP id o3so1675392pgr.11;
+        Fri, 23 Oct 2020 09:50:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=GKxFRnjWbzeynLjiAycb1bjQvjSpLQB6o5QawmkEOkA=;
-        b=rIiKuuNVvOgMEozh4x6fmQlP5rcSe4l3M7Ynk4bzHcFIzKYXi48PE/YOJ7fyUv1Gjm
-         Vbfp0+kL8aGEF1jVEOr8FTZ3EtHt9nHleQuiIFUuEGTMdYG/Flksc36R/VQvBXb8+jZ8
-         jhkiU+3uV0jwo02K36IWwL1+FLnN2HFwIjr8PyNRCbT5H62xKj9OhOk77vr4UQYfxfBv
-         qRoGgPMEak8JfXysY4PGG/VhZS88yYKFijKvAA0O1EM26TrqiLHlite0H18FXKwnH6br
-         uWd+TJCriUHlui0qg4DXChSEkHc0Q19ZD1PnnLF1plLU3WmbxN50YcntFCMym1CA6lEi
-         yqOw==
+        bh=T65l5OzdCWVlcYo2A+cV1OI3UJqt/gtMxWAEJ0nkpyI=;
+        b=LpeSyaXQ5Uq5TNwOlPK9WX4WMRNr+SFQfDimiv4wY/ZkutkYyhIs/pnisIqt5SIL4y
+         KZanpAVtzXDdblPb9Lc/fRTJMCsN1QOF/roXuJMbH3DwWHYsERxwjGWjvViaV5pRxa3G
+         y6dcBMWgh0zYn2MhxBRmH/IlA4NIkssyGKs8rZcBwR4irJwJ7Wrw+GRyND8p8NQEQxnO
+         Z774gM5m1yHUU4/T5/7CSbJDESSF7vOxqHcpBBY1VzEOd/KejiVZsCHRoSTQgjAPCqPY
+         4lHvnAQZ2LZcrlhMbq4cpaRiV9lz5/KvBxgGmo4zo1A3ONz36Y2n6rQryupz7mXhcXp5
+         OSTA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=GKxFRnjWbzeynLjiAycb1bjQvjSpLQB6o5QawmkEOkA=;
-        b=q7Dpn38YNCSBze0xSYcn/Wr2XUqOiF6RVcBt8A34fv7GJnkaVnkpdEwNMXtg8Wwn5f
-         iOpsgKmp8N08AT++wgy7XKdXellSdAt9eJJ/Zzhw96scYj+nqawlTqPCqsbP6XJeK3l0
-         XYgkCtN7FqY57H/f7i56aJ8oCYUAqPOx31JLorreHtp5hZdLhNFToMnPTLrwQ5bBCORI
-         tkLdNYVp5ET+93xDbu5iq9Vr55y07II6pZq9CNy9gSAZBwNUUZqFnh9Kj+ks9kYlWNwl
-         32E69413uZrF0VIYXyecnYL0/ph5/ZTfxtFOMFBM/xS1QI46/7R7oS0lUVsslI+7o2n1
-         DObg==
-X-Gm-Message-State: AOAM533rm2AGRL0x6r8CryTahxhDMgoY6xvzidy37MS/vQAie2ZsU0L/
-        4867ZJx/dNSHWsI0SWNoj1c=
-X-Google-Smtp-Source: ABdhPJwRvknrForq9c0tmRaatGiXS5uxRbvnYUkSD0tCwEvqSkO/ctwT1h0MipvB2W4kg657j9Wtcw==
-X-Received: by 2002:a63:3004:: with SMTP id w4mr2714510pgw.249.1603471850767;
-        Fri, 23 Oct 2020 09:50:50 -0700 (PDT)
+        bh=T65l5OzdCWVlcYo2A+cV1OI3UJqt/gtMxWAEJ0nkpyI=;
+        b=B1f608sm7p39yu2YRHd1Bqy4MhjaBaSry9eAU2UcOMp/3KXXAPbsMntHdVWn5/aMwl
+         CJ7cvApFjT21OsjtCBkP/rPtCeOJ6SsmVJocTm53slI7Sf522RMbea9SPOS4oHtC8Dve
+         OvN64glPcXnVaPAtTtqTVB74VIsp5u0BMtS9NCbKDpv//3C1yZTl6P5B36baPzXoMYct
+         jGrgl4ukAeI2gY0pxeLUxpk1NvQVcd/ekLyQCNB1U/i5LhJqOWl40m1ony0hyo4nGRFV
+         T/O73dvp+0NnchcwongyTaIrLaOVpQiCsjHgZ336lxALmTCpHUxDBPnIAa9lmqKDs70p
+         pXPw==
+X-Gm-Message-State: AOAM533okRh9l7IP8Lf8QOmE/AUIi5kXPpI6psaN/IcJAqF5ahI/5R2D
+        0jxkqy3WtJMXD2qlYPVP7IxuvhmwaJhlCQ==
+X-Google-Smtp-Source: ABdhPJxdsGn4DcW3sIu1T8u4cxzkDAUGi6q8In/53gQmu61hevJk4ZwWopThRrd5CvYRNlJCcvNw9g==
+X-Received: by 2002:a62:ce08:0:b029:156:4427:4b29 with SMTP id y8-20020a62ce080000b029015644274b29mr3112775pfg.70.1603471853312;
+        Fri, 23 Oct 2020 09:50:53 -0700 (PDT)
 Received: from localhost (c-73-25-156-94.hsd1.or.comcast.net. [73.25.156.94])
-        by smtp.gmail.com with ESMTPSA id e6sm2684025pfn.190.2020.10.23.09.50.49
+        by smtp.gmail.com with ESMTPSA id t6sm2661170pfl.50.2020.10.23.09.50.51
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 23 Oct 2020 09:50:49 -0700 (PDT)
+        Fri, 23 Oct 2020 09:50:52 -0700 (PDT)
 From:   Rob Clark <robdclark@gmail.com>
 To:     dri-devel@lists.freedesktop.org
 Cc:     linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
         Rob Clark <robdclark@chromium.org>,
-        Jordan Crouse <jcrouse@codeaurora.org>,
         "Kristian H . Kristensen" <hoegsberg@google.com>,
         Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
         David Airlie <airlied@linux.ie>,
         Daniel Vetter <daniel@ffwll.ch>,
         linux-kernel@vger.kernel.org (open list)
-Subject: [PATCH v4 16/23] drm/msm: Refcount submits
-Date:   Fri, 23 Oct 2020 09:51:17 -0700
-Message-Id: <20201023165136.561680-17-robdclark@gmail.com>
+Subject: [PATCH v4 17/23] drm/msm: Remove obj->gpu
+Date:   Fri, 23 Oct 2020 09:51:18 -0700
+Message-Id: <20201023165136.561680-18-robdclark@gmail.com>
 X-Mailer: git-send-email 2.26.2
 In-Reply-To: <20201023165136.561680-1-robdclark@gmail.com>
 References: <20201023165136.561680-1-robdclark@gmail.com>
@@ -72,156 +71,67 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 From: Rob Clark <robdclark@chromium.org>
 
-Before we remove dev->struct_mutex from the retire path, we have to deal
-with the situation of a submit retiring before the submit ioctl returns.
-
-To deal with this, ring->submits will hold a reference to the submit,
-which is dropped when the submit is retired.  And the submit ioctl path
-holds it's own ref, which it drops when it is done with the submit.
-
-Also, add to submit list *after* getting/pinning bo's, to prevent badness
-in case the completed fence is corrupted, and retire_worker mistakenly
-believes the submit is done too early.
+It cannot be atomically updated with obj->active_count, and the only
+purpose is a useless WARN_ON() (which becomes a buggy WARN_ON() once
+retire_submits() is not serialized with incoming submits via
+struct_mutex)
 
 Signed-off-by: Rob Clark <robdclark@chromium.org>
-Reviewed-by: Jordan Crouse <jcrouse@codeaurora.org>
 Reviewed-by: Kristian H. Kristensen <hoegsberg@google.com>
 ---
- drivers/gpu/drm/msm/msm_drv.h        |  1 -
- drivers/gpu/drm/msm/msm_gem.h        | 13 +++++++++++++
- drivers/gpu/drm/msm/msm_gem_submit.c | 11 +++++------
- drivers/gpu/drm/msm/msm_gpu.c        | 21 ++++++++++++++++-----
- 4 files changed, 34 insertions(+), 12 deletions(-)
+ drivers/gpu/drm/msm/msm_gem.c | 2 --
+ drivers/gpu/drm/msm/msm_gem.h | 1 -
+ drivers/gpu/drm/msm/msm_gpu.c | 5 -----
+ 3 files changed, 8 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/msm_drv.h b/drivers/gpu/drm/msm/msm_drv.h
-index a17dadd38685..2ef5cff19883 100644
---- a/drivers/gpu/drm/msm/msm_drv.h
-+++ b/drivers/gpu/drm/msm/msm_drv.h
-@@ -277,7 +277,6 @@ void msm_unregister_mmu(struct drm_device *dev, struct msm_mmu *mmu);
+diff --git a/drivers/gpu/drm/msm/msm_gem.c b/drivers/gpu/drm/msm/msm_gem.c
+index 81ed03322a74..b9de19462109 100644
+--- a/drivers/gpu/drm/msm/msm_gem.c
++++ b/drivers/gpu/drm/msm/msm_gem.c
+@@ -775,7 +775,6 @@ void msm_gem_active_get(struct drm_gem_object *obj, struct msm_gpu *gpu)
  
- bool msm_use_mmu(struct drm_device *dev);
+ 	if (!atomic_fetch_inc(&msm_obj->active_count)) {
+ 		mutex_lock(&priv->mm_lock);
+-		msm_obj->gpu = gpu;
+ 		list_del_init(&msm_obj->mm_list);
+ 		list_add_tail(&msm_obj->mm_list, &gpu->active_list);
+ 		mutex_unlock(&priv->mm_lock);
+@@ -791,7 +790,6 @@ void msm_gem_active_put(struct drm_gem_object *obj)
  
--void msm_gem_submit_free(struct msm_gem_submit *submit);
- int msm_ioctl_gem_submit(struct drm_device *dev, void *data,
- 		struct drm_file *file);
- 
+ 	if (!atomic_dec_return(&msm_obj->active_count)) {
+ 		mutex_lock(&priv->mm_lock);
+-		msm_obj->gpu = NULL;
+ 		list_del_init(&msm_obj->mm_list);
+ 		list_add_tail(&msm_obj->mm_list, &priv->inactive_list);
+ 		mutex_unlock(&priv->mm_lock);
 diff --git a/drivers/gpu/drm/msm/msm_gem.h b/drivers/gpu/drm/msm/msm_gem.h
-index f0608d96ef03..2f289c436ddd 100644
+index 2f289c436ddd..f4e73c6f07bf 100644
 --- a/drivers/gpu/drm/msm/msm_gem.h
 +++ b/drivers/gpu/drm/msm/msm_gem.h
-@@ -213,6 +213,7 @@ void msm_gem_free_work(struct work_struct *work);
-  * lasts for the duration of the submit-ioctl.
-  */
- struct msm_gem_submit {
-+	struct kref ref;
- 	struct drm_device *dev;
- 	struct msm_gpu *gpu;
- 	struct msm_gem_address_space *aspace;
-@@ -249,6 +250,18 @@ struct msm_gem_submit {
- 	} bos[];
- };
+@@ -64,7 +64,6 @@ struct msm_gem_object {
+ 	 *
+ 	 */
+ 	struct list_head mm_list;
+-	struct msm_gpu *gpu;     /* non-null if active */
  
-+void __msm_gem_submit_destroy(struct kref *kref);
-+
-+static inline void msm_gem_submit_get(struct msm_gem_submit *submit)
-+{
-+	kref_get(&submit->ref);
-+}
-+
-+static inline void msm_gem_submit_put(struct msm_gem_submit *submit)
-+{
-+	kref_put(&submit->ref, __msm_gem_submit_destroy);
-+}
-+
- /* helper to determine of a buffer in submit should be dumped, used for both
-  * devcoredump and debugfs cmdstream dumping:
-  */
-diff --git a/drivers/gpu/drm/msm/msm_gem_submit.c b/drivers/gpu/drm/msm/msm_gem_submit.c
-index 24ce4c65429d..d04c349d8112 100644
---- a/drivers/gpu/drm/msm/msm_gem_submit.c
-+++ b/drivers/gpu/drm/msm/msm_gem_submit.c
-@@ -42,6 +42,7 @@ static struct msm_gem_submit *submit_create(struct drm_device *dev,
- 	if (!submit)
- 		return NULL;
- 
-+	kref_init(&submit->ref);
- 	submit->dev = dev;
- 	submit->aspace = queue->ctx->aspace;
- 	submit->gpu = gpu;
-@@ -60,14 +61,13 @@ static struct msm_gem_submit *submit_create(struct drm_device *dev,
- 	return submit;
- }
- 
--void msm_gem_submit_free(struct msm_gem_submit *submit)
-+void __msm_gem_submit_destroy(struct kref *kref)
- {
-+	struct msm_gem_submit *submit =
-+			container_of(kref, struct msm_gem_submit, ref);
- 	unsigned i;
- 
- 	dma_fence_put(submit->fence);
--	spin_lock(&submit->ring->submit_lock);
--	list_del(&submit->node);
--	spin_unlock(&submit->ring->submit_lock);
- 	put_pid(submit->pid);
- 	msm_submitqueue_put(submit->queue);
- 
-@@ -847,8 +847,7 @@ int msm_ioctl_gem_submit(struct drm_device *dev, void *data,
- 	submit_cleanup(submit);
- 	if (has_ww_ticket)
- 		ww_acquire_fini(&submit->ticket);
--	if (ret)
--		msm_gem_submit_free(submit);
-+	msm_gem_submit_put(submit);
- out_unlock:
- 	if (ret && (out_fence_fd >= 0))
- 		put_unused_fd(out_fence_fd);
+ 	/* Transiently in the process of submit ioctl, objects associated
+ 	 * with the submit are on submit->bo_list.. this only lasts for
 diff --git a/drivers/gpu/drm/msm/msm_gpu.c b/drivers/gpu/drm/msm/msm_gpu.c
-index 1d6f3dc3fe78..bcd9b4fa98b2 100644
+index bcd9b4fa98b2..d0f625112a97 100644
 --- a/drivers/gpu/drm/msm/msm_gpu.c
 +++ b/drivers/gpu/drm/msm/msm_gpu.c
-@@ -722,7 +722,12 @@ static void retire_submit(struct msm_gpu *gpu, struct msm_ringbuffer *ring,
+@@ -810,11 +810,6 @@ void msm_gpu_submit(struct msm_gpu *gpu, struct msm_gem_submit *submit)
+ 		struct drm_gem_object *drm_obj = &msm_obj->base;
+ 		uint64_t iova;
  
- 	pm_runtime_mark_last_busy(&gpu->pdev->dev);
- 	pm_runtime_put_autosuspend(&gpu->pdev->dev);
--	msm_gem_submit_free(submit);
-+
-+	spin_lock(&ring->submit_lock);
-+	list_del(&submit->node);
-+	spin_unlock(&ring->submit_lock);
-+
-+	msm_gem_submit_put(submit);
- }
- 
- static void retire_submits(struct msm_gpu *gpu)
-@@ -796,10 +801,6 @@ void msm_gpu_submit(struct msm_gpu *gpu, struct msm_gem_submit *submit)
- 
- 	submit->seqno = ++ring->seqno;
- 
--	spin_lock(&ring->submit_lock);
--	list_add_tail(&submit->node, &ring->submits);
--	spin_unlock(&ring->submit_lock);
+-		/* can't happen yet.. but when we add 2d support we'll have
+-		 * to deal w/ cross-ring synchronization:
+-		 */
+-		WARN_ON(is_active(msm_obj) && (msm_obj->gpu != gpu));
 -
- 	msm_rd_dump_submit(priv->rd, submit, NULL);
- 
- 	update_sw_cntrs(gpu);
-@@ -826,6 +827,16 @@ void msm_gpu_submit(struct msm_gpu *gpu, struct msm_gem_submit *submit)
- 		msm_gem_active_get(drm_obj, gpu);
- 	}
- 
-+	/*
-+	 * ring->submits holds a ref to the submit, to deal with the case
-+	 * that a submit completes before msm_ioctl_gem_submit() returns.
-+	 */
-+	msm_gem_submit_get(submit);
-+
-+	spin_lock(&ring->submit_lock);
-+	list_add_tail(&submit->node, &ring->submits);
-+	spin_unlock(&ring->submit_lock);
-+
- 	gpu->funcs->submit(gpu, submit);
- 	priv->lastctx = submit->queue->ctx;
- 
+ 		/* submit takes a reference to the bo and iova until retired: */
+ 		drm_gem_object_get(&msm_obj->base);
+ 		msm_gem_get_and_pin_iova_locked(&msm_obj->base, submit->aspace, &iova);
 -- 
 2.26.2
 
