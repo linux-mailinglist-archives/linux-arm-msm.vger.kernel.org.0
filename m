@@ -2,52 +2,52 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 9E400297532
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Oct 2020 18:53:16 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2326A29751A
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Oct 2020 18:51:12 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752725AbgJWQuV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 23 Oct 2020 12:50:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51664 "EHLO
+        id S1752735AbgJWQuY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 23 Oct 2020 12:50:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51674 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752722AbgJWQuT (ORCPT
+        with ESMTP id S1752728AbgJWQuV (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 23 Oct 2020 12:50:19 -0400
-Received: from mail-pg1-x542.google.com (mail-pg1-x542.google.com [IPv6:2607:f8b0:4864:20::542])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5395AC0613CE;
-        Fri, 23 Oct 2020 09:50:19 -0700 (PDT)
-Received: by mail-pg1-x542.google.com with SMTP id x13so1689399pgp.7;
-        Fri, 23 Oct 2020 09:50:19 -0700 (PDT)
+        Fri, 23 Oct 2020 12:50:21 -0400
+Received: from mail-pf1-x444.google.com (mail-pf1-x444.google.com [IPv6:2607:f8b0:4864:20::444])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D60FAC0613CE;
+        Fri, 23 Oct 2020 09:50:21 -0700 (PDT)
+Received: by mail-pf1-x444.google.com with SMTP id f19so1770578pfj.11;
+        Fri, 23 Oct 2020 09:50:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=9Wh4Tpb4E3T4aFd9Kh6fmewic7oU3pwniyHoMkAYkA8=;
-        b=kVD8LMEMRzjn2qtF/+k1SrbXBzibfwnWhnxuYAP0ISYC00oaMpiy+A73inF3xAFxVq
-         I0EDjCEGvW+pB+QmE6cNgPbgV4FoKOURVE3yzG/de6Qi3FVNN/3jzC/4MVPsJ3HlOSWO
-         nZ/1l8vunxCYT0ajt9VadT69WxrLsXdw7hp7aJQBtv0aGDYvqH6eLjQumTJMTuI0l6kY
-         yD80FP6L8a/c4mbeh2shxagBKD41yMHzP8+fgPH6eL/GCY+yp/BuLQPPVGy5Atf1tXYN
-         9TRa/YrCpfb71cfMxPmVX0RkRfvjM0/N5qb13EVzOqhUbpJucO7zFSOhX9GtGg/B0fto
-         NTSQ==
+        bh=LQsd8hTmdHRzfZ5R+TDzPM5mnO3yOLJdR6nT0gp28Sg=;
+        b=fzzN6gcPILZEBwjxOYq7s69EeTbni/0MSPbPWnfvls29qMtx/Lnd2NmpMAxbPbx/tF
+         Ob61dDQ4wEyqwAyKj7V0IXPm+/EdSK+uOMjibgnfTKySSAh4nUW3I+RhhJWzwoNepoLY
+         sciXQpSowo+iWYkJJsJeRKeR+F7hKFHFlnx3bNpKCrGHM8w2rR2/k34bjOw7hdGTeji3
+         Y5BxENPy4o+n0KgBZHS3zmCZOQFC7MBdt6+MqE2veOfm3Ktr5HcnuJwwdUR+kcXZW9Xr
+         TQ1IC4mh/4jufuwqhu4TtWen8hI5EQJERyPfI1JyGh9Ks3A88lnUadfXRPOENzghmNu5
+         nlrQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=9Wh4Tpb4E3T4aFd9Kh6fmewic7oU3pwniyHoMkAYkA8=;
-        b=cTObOJVOn2vNvqu0BzbuEMSwwQrIU0uEeAww1sTBG6+pMZH1Y+BEwvXR3qNT58zFwl
-         SpUcpfZBJ/XgoHf0sLPLaoL5fcVv5IBuGSk0cbIKLVvMWKOXUkschopgyqLuNKk5SScz
-         Mc0k0Hi73kSKMXZnoSGBZLAge9AZqgI2qRhnq30dM7/7S9RWw3xMq2nGdDlGCvqEW03U
-         0uifdbPqUKxSipZbptOTXO0dYp7wCB4IMGFwGjU5QYXvlgZY65ZjvYrYvF5rppkUigrx
-         9LoihTGRPUJApwUwiwgwKwpbvNqc20ER1ZXkfSQSrilRRVIwbXTz2zWKDsdD6fctYnM6
-         ohpQ==
-X-Gm-Message-State: AOAM5323iVvvM7aNhk+Jg3cof5yzYmVr0dkgIzteTQLFrfjt1dmUayZn
-        ZZVJ4cpPUzVLmQROOXMMyEw=
-X-Google-Smtp-Source: ABdhPJzibyyG7lF0omhwXSlr32CTBFvl7nuhRfjcedbVNMzKEIboEkSoXaR/Aa6kDXoHI/5ArcaCPg==
-X-Received: by 2002:a63:4d18:: with SMTP id a24mr2632363pgb.414.1603471818752;
-        Fri, 23 Oct 2020 09:50:18 -0700 (PDT)
+        bh=LQsd8hTmdHRzfZ5R+TDzPM5mnO3yOLJdR6nT0gp28Sg=;
+        b=FbFr2xpMqXM2b2r/KQRLTlkEZeiV8kHHClyoP3+DSMviUOqT/fkVPHoIxacR/nrac2
+         uoakz256mEG55VjtZDnpIm7OU8kKY0HekbZJdSdy9Rrhi5290T5/EeVkqnLZ5kVbW6mj
+         Q4yEHsPr5xyOYnYkcpmhOCLHKUhzvHVmrKHPVJMikWu9UoUel38/+tyXE3+EHtFwXvih
+         0Ukzf+qvAOR2GCu0Q74Fjibc9ucQMnk7kNrzcyLbO9F3T7F7IMxJf0TU/8E38qdocvJC
+         I5mjjACWci+hpb139eWJBUj+u42OVWniwtAJ7fbf04yDOPlLpcT1aR+IaTqNbf7J3sc9
+         n1rg==
+X-Gm-Message-State: AOAM5311JaUlvsFZDNrwoziq3j6d2Ws2XSX9JAAb0dNUd9lABlEeFV8P
+        3avIjswf/u2KhtHR1JKjfRA=
+X-Google-Smtp-Source: ABdhPJw30Dv1hjuiRzG11GMPDznX7yCamst62qVCxMvq2UhnlEWCjOaIDV1PZqfgJ/8m8+hrf1wUlg==
+X-Received: by 2002:a65:478a:: with SMTP id e10mr2865562pgs.365.1603471821327;
+        Fri, 23 Oct 2020 09:50:21 -0700 (PDT)
 Received: from localhost (c-73-25-156-94.hsd1.or.comcast.net. [73.25.156.94])
-        by smtp.gmail.com with ESMTPSA id v186sm2622032pfv.135.2020.10.23.09.50.17
+        by smtp.gmail.com with ESMTPSA id x29sm2717526pfp.152.2020.10.23.09.50.19
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 23 Oct 2020 09:50:17 -0700 (PDT)
+        Fri, 23 Oct 2020 09:50:20 -0700 (PDT)
 From:   Rob Clark <robdclark@gmail.com>
 To:     dri-devel@lists.freedesktop.org
 Cc:     linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
@@ -56,25 +56,10 @@ Cc:     linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
         Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
         David Airlie <airlied@linux.ie>,
         Daniel Vetter <daniel@ffwll.ch>,
-        Sumit Semwal <sumit.semwal@linaro.org>,
-        =?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        Emil Velikov <emil.velikov@collabora.com>,
-        Sam Ravnborg <sam@ravnborg.org>,
-        Maxime Ripard <mripard@kernel.org>,
-        Liviu Dudau <liviu.dudau@arm.com>,
-        Brian Masney <masneyb@onstation.org>,
-        Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
-        Harigovindan P <harigovi@codeaurora.org>,
-        Jordan Crouse <jcrouse@codeaurora.org>,
-        Rajendra Nayak <rnayak@codeaurora.org>,
-        linux-kernel@vger.kernel.org (open list),
-        linux-media@vger.kernel.org (open list:DMA BUFFER SHARING FRAMEWORK),
-        linaro-mm-sig@lists.linaro.org (moderated list:DMA BUFFER SHARING
-        FRAMEWORK)
-Subject: [PATCH v4 04/23] drm/msm/gem: Move prototypes to msm_gem.h
-Date:   Fri, 23 Oct 2020 09:51:05 -0700
-Message-Id: <20201023165136.561680-5-robdclark@gmail.com>
+        linux-kernel@vger.kernel.org (open list)
+Subject: [PATCH v4 05/23] drm/msm/gem: Add some _locked() helpers
+Date:   Fri, 23 Oct 2020 09:51:06 -0700
+Message-Id: <20201023165136.561680-6-robdclark@gmail.com>
 X-Mailer: git-send-email 2.26.2
 In-Reply-To: <20201023165136.561680-1-robdclark@gmail.com>
 References: <20201023165136.561680-1-robdclark@gmail.com>
@@ -86,213 +71,225 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 From: Rob Clark <robdclark@chromium.org>
 
+When we cut-over to using dma_resv_lock/etc instead of msm_obj->lock,
+we'll need these for the submit path (where resv->lock is already held).
+
 Signed-off-by: Rob Clark <robdclark@chromium.org>
 Reviewed-by: Kristian H. Kristensen <hoegsberg@google.com>
 ---
- drivers/gpu/drm/msm/disp/mdp4/mdp4_crtc.c |  1 +
- drivers/gpu/drm/msm/disp/mdp5/mdp5_crtc.c |  1 +
- drivers/gpu/drm/msm/dsi/dsi_host.c        |  1 +
- drivers/gpu/drm/msm/msm_drv.h             | 54 ----------------------
- drivers/gpu/drm/msm/msm_fbdev.c           |  1 +
- drivers/gpu/drm/msm/msm_gem.h             | 56 +++++++++++++++++++++++
- 6 files changed, 60 insertions(+), 54 deletions(-)
+ drivers/gpu/drm/msm/msm_gem.c | 89 +++++++++++++++++++++++++++--------
+ drivers/gpu/drm/msm/msm_gem.h |  6 +++
+ 2 files changed, 75 insertions(+), 20 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/disp/mdp4/mdp4_crtc.c b/drivers/gpu/drm/msm/disp/mdp4/mdp4_crtc.c
-index a0253297bc76..b65b2329cc8d 100644
---- a/drivers/gpu/drm/msm/disp/mdp4/mdp4_crtc.c
-+++ b/drivers/gpu/drm/msm/disp/mdp4/mdp4_crtc.c
-@@ -11,6 +11,7 @@
- #include <drm/drm_vblank.h>
+diff --git a/drivers/gpu/drm/msm/msm_gem.c b/drivers/gpu/drm/msm/msm_gem.c
+index dec89fe79025..e0d8d739b068 100644
+--- a/drivers/gpu/drm/msm/msm_gem.c
++++ b/drivers/gpu/drm/msm/msm_gem.c
+@@ -435,18 +435,14 @@ static int msm_gem_pin_iova(struct drm_gem_object *obj,
+ 			msm_obj->sgt, obj->size >> PAGE_SHIFT);
+ }
  
- #include "mdp4_kms.h"
-+#include "msm_gem.h"
- 
- struct mdp4_crtc {
- 	struct drm_crtc base;
-diff --git a/drivers/gpu/drm/msm/disp/mdp5/mdp5_crtc.c b/drivers/gpu/drm/msm/disp/mdp5/mdp5_crtc.c
-index c39dad151bb6..81fbd52ad7e7 100644
---- a/drivers/gpu/drm/msm/disp/mdp5/mdp5_crtc.c
-+++ b/drivers/gpu/drm/msm/disp/mdp5/mdp5_crtc.c
-@@ -15,6 +15,7 @@
- #include <drm/drm_vblank.h>
- 
- #include "mdp5_kms.h"
-+#include "msm_gem.h"
- 
- #define CURSOR_WIDTH	64
- #define CURSOR_HEIGHT	64
-diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/dsi/dsi_host.c
-index b17ac6c27554..5e7cdc11c764 100644
---- a/drivers/gpu/drm/msm/dsi/dsi_host.c
-+++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
-@@ -26,6 +26,7 @@
- #include "sfpb.xml.h"
- #include "dsi_cfg.h"
- #include "msm_kms.h"
-+#include "msm_gem.h"
- 
- #define DSI_RESET_TOGGLE_DELAY_MS 20
- 
-diff --git a/drivers/gpu/drm/msm/msm_drv.h b/drivers/gpu/drm/msm/msm_drv.h
-index b9dd8f8f4887..79ee7d05b363 100644
---- a/drivers/gpu/drm/msm/msm_drv.h
-+++ b/drivers/gpu/drm/msm/msm_drv.h
-@@ -273,28 +273,6 @@ int msm_ioctl_gem_submit(struct drm_device *dev, void *data,
- void msm_gem_shrinker_init(struct drm_device *dev);
- void msm_gem_shrinker_cleanup(struct drm_device *dev);
- 
--int msm_gem_mmap_obj(struct drm_gem_object *obj,
--			struct vm_area_struct *vma);
--int msm_gem_mmap(struct file *filp, struct vm_area_struct *vma);
--vm_fault_t msm_gem_fault(struct vm_fault *vmf);
--uint64_t msm_gem_mmap_offset(struct drm_gem_object *obj);
--int msm_gem_get_iova(struct drm_gem_object *obj,
--		struct msm_gem_address_space *aspace, uint64_t *iova);
+-/*
+- * get iova and pin it. Should have a matching put
+- * limits iova to specified range (in pages)
+- */
 -int msm_gem_get_and_pin_iova_range(struct drm_gem_object *obj,
--		struct msm_gem_address_space *aspace, uint64_t *iova,
--		u64 range_start, u64 range_end);
--int msm_gem_get_and_pin_iova(struct drm_gem_object *obj,
--		struct msm_gem_address_space *aspace, uint64_t *iova);
--uint64_t msm_gem_iova(struct drm_gem_object *obj,
--		struct msm_gem_address_space *aspace);
--void msm_gem_unpin_iova(struct drm_gem_object *obj,
--		struct msm_gem_address_space *aspace);
--struct page **msm_gem_get_pages(struct drm_gem_object *obj);
--void msm_gem_put_pages(struct drm_gem_object *obj);
--int msm_gem_dumb_create(struct drm_file *file, struct drm_device *dev,
--		struct drm_mode_create_dumb *args);
--int msm_gem_dumb_map_offset(struct drm_file *file, struct drm_device *dev,
--		uint32_t handle, uint64_t *offset);
- struct sg_table *msm_gem_prime_get_sg_table(struct drm_gem_object *obj);
- void *msm_gem_prime_vmap(struct drm_gem_object *obj);
- void msm_gem_prime_vunmap(struct drm_gem_object *obj, void *vaddr);
-@@ -303,38 +281,8 @@ struct drm_gem_object *msm_gem_prime_import_sg_table(struct drm_device *dev,
- 		struct dma_buf_attachment *attach, struct sg_table *sg);
- int msm_gem_prime_pin(struct drm_gem_object *obj);
- void msm_gem_prime_unpin(struct drm_gem_object *obj);
--void *msm_gem_get_vaddr(struct drm_gem_object *obj);
--void *msm_gem_get_vaddr_active(struct drm_gem_object *obj);
--void msm_gem_put_vaddr(struct drm_gem_object *obj);
--int msm_gem_madvise(struct drm_gem_object *obj, unsigned madv);
--int msm_gem_sync_object(struct drm_gem_object *obj,
--		struct msm_fence_context *fctx, bool exclusive);
--void msm_gem_active_get(struct drm_gem_object *obj, struct msm_gpu *gpu);
--void msm_gem_active_put(struct drm_gem_object *obj);
--int msm_gem_cpu_prep(struct drm_gem_object *obj, uint32_t op, ktime_t *timeout);
--int msm_gem_cpu_fini(struct drm_gem_object *obj);
--void msm_gem_free_object(struct drm_gem_object *obj);
--int msm_gem_new_handle(struct drm_device *dev, struct drm_file *file,
--		uint32_t size, uint32_t flags, uint32_t *handle, char *name);
--struct drm_gem_object *msm_gem_new(struct drm_device *dev,
--		uint32_t size, uint32_t flags);
--struct drm_gem_object *msm_gem_new_locked(struct drm_device *dev,
--		uint32_t size, uint32_t flags);
--void *msm_gem_kernel_new(struct drm_device *dev, uint32_t size,
--		uint32_t flags, struct msm_gem_address_space *aspace,
--		struct drm_gem_object **bo, uint64_t *iova);
--void *msm_gem_kernel_new_locked(struct drm_device *dev, uint32_t size,
--		uint32_t flags, struct msm_gem_address_space *aspace,
--		struct drm_gem_object **bo, uint64_t *iova);
--void msm_gem_kernel_put(struct drm_gem_object *bo,
--		struct msm_gem_address_space *aspace, bool locked);
--struct drm_gem_object *msm_gem_import(struct drm_device *dev,
--		struct dma_buf *dmabuf, struct sg_table *sgt);
- void msm_gem_free_work(struct work_struct *work);
++static int get_and_pin_iova_range_locked(struct drm_gem_object *obj,
+ 		struct msm_gem_address_space *aspace, uint64_t *iova,
+ 		u64 range_start, u64 range_end)
+ {
+ 	u64 local;
+ 	int ret;
  
--__printf(2, 3)
--void msm_gem_object_set_name(struct drm_gem_object *bo, const char *fmt, ...);
--
- int msm_framebuffer_prepare(struct drm_framebuffer *fb,
- 		struct msm_gem_address_space *aspace);
- void msm_framebuffer_cleanup(struct drm_framebuffer *fb,
-@@ -447,8 +395,6 @@ void __init msm_dpu_register(void);
- void __exit msm_dpu_unregister(void);
+-	msm_gem_lock(obj);
++	WARN_ON(!msm_gem_is_locked(obj));
  
- #ifdef CONFIG_DEBUG_FS
--void msm_gem_describe(struct drm_gem_object *obj, struct seq_file *m);
--void msm_gem_describe_objects(struct list_head *list, struct seq_file *m);
- void msm_framebuffer_describe(struct drm_framebuffer *fb, struct seq_file *m);
- int msm_debugfs_late_init(struct drm_device *dev);
- int msm_rd_debugfs_init(struct drm_minor *minor);
-diff --git a/drivers/gpu/drm/msm/msm_fbdev.c b/drivers/gpu/drm/msm/msm_fbdev.c
-index 47235f8c5922..678dba1725a6 100644
---- a/drivers/gpu/drm/msm/msm_fbdev.c
-+++ b/drivers/gpu/drm/msm/msm_fbdev.c
-@@ -9,6 +9,7 @@
- #include <drm/drm_fourcc.h>
+ 	ret = get_iova_locked(obj, aspace, &local,
+ 		range_start, range_end);
+@@ -457,10 +453,32 @@ int msm_gem_get_and_pin_iova_range(struct drm_gem_object *obj,
+ 	if (!ret)
+ 		*iova = local;
  
- #include "msm_drv.h"
-+#include "msm_gem.h"
- #include "msm_kms.h"
- 
- extern int msm_gem_mmap_obj(struct drm_gem_object *obj,
-diff --git a/drivers/gpu/drm/msm/msm_gem.h b/drivers/gpu/drm/msm/msm_gem.h
-index f6482154e8bb..fbad08badf43 100644
---- a/drivers/gpu/drm/msm/msm_gem.h
-+++ b/drivers/gpu/drm/msm/msm_gem.h
-@@ -93,6 +93,62 @@ struct msm_gem_object {
- };
- #define to_msm_bo(x) container_of(x, struct msm_gem_object, base)
- 
-+int msm_gem_mmap_obj(struct drm_gem_object *obj,
-+			struct vm_area_struct *vma);
-+int msm_gem_mmap(struct file *filp, struct vm_area_struct *vma);
-+vm_fault_t msm_gem_fault(struct vm_fault *vmf);
-+uint64_t msm_gem_mmap_offset(struct drm_gem_object *obj);
-+int msm_gem_get_iova(struct drm_gem_object *obj,
-+		struct msm_gem_address_space *aspace, uint64_t *iova);
++	return ret;
++}
++
++/*
++ * get iova and pin it. Should have a matching put
++ * limits iova to specified range (in pages)
++ */
 +int msm_gem_get_and_pin_iova_range(struct drm_gem_object *obj,
 +		struct msm_gem_address_space *aspace, uint64_t *iova,
-+		u64 range_start, u64 range_end);
-+int msm_gem_get_and_pin_iova(struct drm_gem_object *obj,
-+		struct msm_gem_address_space *aspace, uint64_t *iova);
-+uint64_t msm_gem_iova(struct drm_gem_object *obj,
-+		struct msm_gem_address_space *aspace);
-+void msm_gem_unpin_iova(struct drm_gem_object *obj,
-+		struct msm_gem_address_space *aspace);
-+struct page **msm_gem_get_pages(struct drm_gem_object *obj);
-+void msm_gem_put_pages(struct drm_gem_object *obj);
-+int msm_gem_dumb_create(struct drm_file *file, struct drm_device *dev,
-+		struct drm_mode_create_dumb *args);
-+int msm_gem_dumb_map_offset(struct drm_file *file, struct drm_device *dev,
-+		uint32_t handle, uint64_t *offset);
-+void *msm_gem_get_vaddr(struct drm_gem_object *obj);
-+void *msm_gem_get_vaddr_active(struct drm_gem_object *obj);
-+void msm_gem_put_vaddr(struct drm_gem_object *obj);
-+int msm_gem_madvise(struct drm_gem_object *obj, unsigned madv);
-+int msm_gem_sync_object(struct drm_gem_object *obj,
-+		struct msm_fence_context *fctx, bool exclusive);
-+void msm_gem_active_get(struct drm_gem_object *obj, struct msm_gpu *gpu);
-+void msm_gem_active_put(struct drm_gem_object *obj);
-+int msm_gem_cpu_prep(struct drm_gem_object *obj, uint32_t op, ktime_t *timeout);
-+int msm_gem_cpu_fini(struct drm_gem_object *obj);
-+void msm_gem_free_object(struct drm_gem_object *obj);
-+int msm_gem_new_handle(struct drm_device *dev, struct drm_file *file,
-+		uint32_t size, uint32_t flags, uint32_t *handle, char *name);
-+struct drm_gem_object *msm_gem_new(struct drm_device *dev,
-+		uint32_t size, uint32_t flags);
-+struct drm_gem_object *msm_gem_new_locked(struct drm_device *dev,
-+		uint32_t size, uint32_t flags);
-+void *msm_gem_kernel_new(struct drm_device *dev, uint32_t size,
-+		uint32_t flags, struct msm_gem_address_space *aspace,
-+		struct drm_gem_object **bo, uint64_t *iova);
-+void *msm_gem_kernel_new_locked(struct drm_device *dev, uint32_t size,
-+		uint32_t flags, struct msm_gem_address_space *aspace,
-+		struct drm_gem_object **bo, uint64_t *iova);
-+void msm_gem_kernel_put(struct drm_gem_object *bo,
-+		struct msm_gem_address_space *aspace, bool locked);
-+struct drm_gem_object *msm_gem_import(struct drm_device *dev,
-+		struct dma_buf *dmabuf, struct sg_table *sgt);
-+__printf(2, 3)
-+void msm_gem_object_set_name(struct drm_gem_object *bo, const char *fmt, ...);
-+#ifdef CONFIG_DEBUG_FS
-+void msm_gem_describe(struct drm_gem_object *obj, struct seq_file *m);
-+void msm_gem_describe_objects(struct list_head *list, struct seq_file *m);
-+#endif
++		u64 range_start, u64 range_end)
++{
++	int ret;
 +
- static inline void
- msm_gem_lock(struct drm_gem_object *obj)
++	msm_gem_lock(obj);
++	ret = get_and_pin_iova_range_locked(obj, aspace, iova, range_start, range_end);
+ 	msm_gem_unlock(obj);
++
+ 	return ret;
+ }
+ 
++int msm_gem_get_and_pin_iova_locked(struct drm_gem_object *obj,
++		struct msm_gem_address_space *aspace, uint64_t *iova)
++{
++	return get_and_pin_iova_range_locked(obj, aspace, iova, 0, U64_MAX);
++}
++
+ /* get iova and pin it. Should have a matching put */
+ int msm_gem_get_and_pin_iova(struct drm_gem_object *obj,
+ 		struct msm_gem_address_space *aspace, uint64_t *iova)
+@@ -501,21 +519,31 @@ uint64_t msm_gem_iova(struct drm_gem_object *obj,
+ }
+ 
+ /*
+- * Unpin a iova by updating the reference counts. The memory isn't actually
+- * purged until something else (shrinker, mm_notifier, destroy, etc) decides
+- * to get rid of it
++ * Locked variant of msm_gem_unpin_iova()
+  */
+-void msm_gem_unpin_iova(struct drm_gem_object *obj,
++void msm_gem_unpin_iova_locked(struct drm_gem_object *obj,
+ 		struct msm_gem_address_space *aspace)
  {
+ 	struct msm_gem_vma *vma;
+ 
+-	msm_gem_lock(obj);
++	WARN_ON(!msm_gem_is_locked(obj));
++
+ 	vma = lookup_vma(obj, aspace);
+ 
+ 	if (!WARN_ON(!vma))
+ 		msm_gem_unmap_vma(aspace, vma);
++}
+ 
++/*
++ * Unpin a iova by updating the reference counts. The memory isn't actually
++ * purged until something else (shrinker, mm_notifier, destroy, etc) decides
++ * to get rid of it
++ */
++void msm_gem_unpin_iova(struct drm_gem_object *obj,
++		struct msm_gem_address_space *aspace)
++{
++	msm_gem_lock(obj);
++	msm_gem_unpin_iova_locked(obj, aspace);
+ 	msm_gem_unlock(obj);
+ }
+ 
+@@ -554,15 +582,14 @@ static void *get_vaddr(struct drm_gem_object *obj, unsigned madv)
+ 	struct msm_gem_object *msm_obj = to_msm_bo(obj);
+ 	int ret = 0;
+ 
++	WARN_ON(!msm_gem_is_locked(obj));
++
+ 	if (obj->import_attach)
+ 		return ERR_PTR(-ENODEV);
+ 
+-	msm_gem_lock(obj);
+-
+ 	if (WARN_ON(msm_obj->madv > madv)) {
+ 		DRM_DEV_ERROR(obj->dev->dev, "Invalid madv state: %u vs %u\n",
+ 			msm_obj->madv, madv);
+-		msm_gem_unlock(obj);
+ 		return ERR_PTR(-EBUSY);
+ 	}
+ 
+@@ -588,20 +615,29 @@ static void *get_vaddr(struct drm_gem_object *obj, unsigned madv)
+ 		}
+ 	}
+ 
+-	msm_gem_unlock(obj);
+ 	return msm_obj->vaddr;
+ 
+ fail:
+ 	msm_obj->vmap_count--;
+-	msm_gem_unlock(obj);
+ 	return ERR_PTR(ret);
+ }
+ 
+-void *msm_gem_get_vaddr(struct drm_gem_object *obj)
++void *msm_gem_get_vaddr_locked(struct drm_gem_object *obj)
+ {
+ 	return get_vaddr(obj, MSM_MADV_WILLNEED);
+ }
+ 
++void *msm_gem_get_vaddr(struct drm_gem_object *obj)
++{
++	void *ret;
++
++	msm_gem_lock(obj);
++	ret = msm_gem_get_vaddr_locked(obj);
++	msm_gem_unlock(obj);
++
++	return ret;
++}
++
+ /*
+  * Don't use this!  It is for the very special case of dumping
+  * submits from GPU hangs or faults, were the bo may already
+@@ -610,16 +646,29 @@ void *msm_gem_get_vaddr(struct drm_gem_object *obj)
+  */
+ void *msm_gem_get_vaddr_active(struct drm_gem_object *obj)
+ {
+-	return get_vaddr(obj, __MSM_MADV_PURGED);
++	void *ret;
++
++	msm_gem_lock(obj);
++	ret = get_vaddr(obj, __MSM_MADV_PURGED);
++	msm_gem_unlock(obj);
++
++	return ret;
+ }
+ 
+-void msm_gem_put_vaddr(struct drm_gem_object *obj)
++void msm_gem_put_vaddr_locked(struct drm_gem_object *obj)
+ {
+ 	struct msm_gem_object *msm_obj = to_msm_bo(obj);
+ 
+-	msm_gem_lock(obj);
++	WARN_ON(!msm_gem_is_locked(obj));
+ 	WARN_ON(msm_obj->vmap_count < 1);
++
+ 	msm_obj->vmap_count--;
++}
++
++void msm_gem_put_vaddr(struct drm_gem_object *obj)
++{
++	msm_gem_lock(obj);
++	msm_gem_put_vaddr_locked(obj);
+ 	msm_gem_unlock(obj);
+ }
+ 
+diff --git a/drivers/gpu/drm/msm/msm_gem.h b/drivers/gpu/drm/msm/msm_gem.h
+index fbad08badf43..d55d5401a2d2 100644
+--- a/drivers/gpu/drm/msm/msm_gem.h
++++ b/drivers/gpu/drm/msm/msm_gem.h
+@@ -103,10 +103,14 @@ int msm_gem_get_iova(struct drm_gem_object *obj,
+ int msm_gem_get_and_pin_iova_range(struct drm_gem_object *obj,
+ 		struct msm_gem_address_space *aspace, uint64_t *iova,
+ 		u64 range_start, u64 range_end);
++int msm_gem_get_and_pin_iova_locked(struct drm_gem_object *obj,
++		struct msm_gem_address_space *aspace, uint64_t *iova);
+ int msm_gem_get_and_pin_iova(struct drm_gem_object *obj,
+ 		struct msm_gem_address_space *aspace, uint64_t *iova);
+ uint64_t msm_gem_iova(struct drm_gem_object *obj,
+ 		struct msm_gem_address_space *aspace);
++void msm_gem_unpin_iova_locked(struct drm_gem_object *obj,
++		struct msm_gem_address_space *aspace);
+ void msm_gem_unpin_iova(struct drm_gem_object *obj,
+ 		struct msm_gem_address_space *aspace);
+ struct page **msm_gem_get_pages(struct drm_gem_object *obj);
+@@ -115,8 +119,10 @@ int msm_gem_dumb_create(struct drm_file *file, struct drm_device *dev,
+ 		struct drm_mode_create_dumb *args);
+ int msm_gem_dumb_map_offset(struct drm_file *file, struct drm_device *dev,
+ 		uint32_t handle, uint64_t *offset);
++void *msm_gem_get_vaddr_locked(struct drm_gem_object *obj);
+ void *msm_gem_get_vaddr(struct drm_gem_object *obj);
+ void *msm_gem_get_vaddr_active(struct drm_gem_object *obj);
++void msm_gem_put_vaddr_locked(struct drm_gem_object *obj);
+ void msm_gem_put_vaddr(struct drm_gem_object *obj);
+ int msm_gem_madvise(struct drm_gem_object *obj, unsigned madv);
+ int msm_gem_sync_object(struct drm_gem_object *obj,
 -- 
 2.26.2
 
