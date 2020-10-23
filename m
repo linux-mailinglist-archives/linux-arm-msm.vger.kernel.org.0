@@ -2,52 +2,52 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 295C0297537
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Oct 2020 18:53:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 660FC29752B
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Oct 2020 18:51:18 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752822AbgJWQvK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 23 Oct 2020 12:51:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51818 "EHLO
+        id S1752824AbgJWQvL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 23 Oct 2020 12:51:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51828 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752815AbgJWQvG (ORCPT
+        with ESMTP id S1752816AbgJWQvJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 23 Oct 2020 12:51:06 -0400
-Received: from mail-pl1-x642.google.com (mail-pl1-x642.google.com [IPv6:2607:f8b0:4864:20::642])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9362CC0613CE;
-        Fri, 23 Oct 2020 09:51:06 -0700 (PDT)
-Received: by mail-pl1-x642.google.com with SMTP id r3so1169136plo.1;
-        Fri, 23 Oct 2020 09:51:06 -0700 (PDT)
+        Fri, 23 Oct 2020 12:51:09 -0400
+Received: from mail-pl1-x644.google.com (mail-pl1-x644.google.com [IPv6:2607:f8b0:4864:20::644])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2DE04C0613D2;
+        Fri, 23 Oct 2020 09:51:09 -0700 (PDT)
+Received: by mail-pl1-x644.google.com with SMTP id r3so1169212plo.1;
+        Fri, 23 Oct 2020 09:51:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=+y45oOjahWFnPOijBG1RjZS6QNlundMFracTuBu5nFw=;
-        b=uMQ6ut+28KSF/d2T/mMdJ9gJ+8d0lrPiTStP+3woilItyiOZZ+r8H/knJ9o7W3QXJR
-         Vsm9yZ2ZQmpraVcnAgf15A6pDwhxpStJBm0KRI4pBiccBslqt6RTNXlSUVqv30AeGoL5
-         gufnon++t2BS5uvWQeTO+uGtsObDF37a/ClsEQ99LVrkJm8P8t/Cc2QDlPRo16bY0jZq
-         EeIHIXOgp9ynXWTHgHj7U0ujdPWiNC+eFwz7gryGWbgkQd51AnN7sPhPX3MCEUbkcTfs
-         2SkqnXwqwP2AbeU5Jxmilvxx1PeLFmShMp480020rPQ67WZin0pPp9E/y2SAaA66jAwJ
-         hkZQ==
+        bh=JZButkyF/GaInfh9Hmb9ywY7tT0fYvah1q73Sv4+lT8=;
+        b=sXtjrbzfkYQvrfjr3zL0uuJzC9ek8b3OGqkGU2HW1MwDpUR0gg8uMK9y5Lm+q9dOGE
+         6o/bQ15eQR3VoOwnM+A01v7WAuxAi8l4FVoSFW/hZD2FonDlwEDPXR4btVVboQJSdcWn
+         Y4oekw90qn7FGh+zbLuk6WAgP0cgOw7DGn3lw6cOg8qwYkpB7u2IykkHJ4zdWfBDeuEQ
+         C+tXnng8tPUQMfUNHx/1ijmRc2WVx5tdK8MDRHUKEOiXQ7oNy9TNJ2uoGniIVTl3VJ66
+         rRHagoab/ceV0VUBgEteX6PzcYosNyRx9tnaTrmogo8Ks9uMkCvJC/clViKNKmTB6NCD
+         czvQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=+y45oOjahWFnPOijBG1RjZS6QNlundMFracTuBu5nFw=;
-        b=LMdbs89aZ6q2/oLskNt8jkxCHApf1TGEJ6kW2VBqx5v8/EroEqvqCyLliplH5kfyqC
-         11V1Q6mGsadUssuJAXl/oIE5ojvjRVnPQ4379APzjuZyDifBTgspZPrndsuuS/e7BE4Q
-         5sWGrx65FDeARyCqw9Lac7zH0YHO7ZQ7wXSXkcp094y+/8jDGDYfRlzJlYZ1IgpPczSJ
-         DOyg5FRvmM/DQ2L/YZvP0V0j7Vd3GBVy24vK03qG38hGI/XiyLC11UqSLWr4tUx73WSR
-         BAcPYU1hqGXIPeW1g9sd8lZp5f8oWUTEOf8u9N6lAN4R/z+ArkdEP136odFPHPELk3lR
-         FcUA==
-X-Gm-Message-State: AOAM530A8UZi8DbIzStM+BxjnR2qFWIboX2wxdYPOUSvHvWTyu2EGqGE
-        rZkexVvRRLvI+7R2uMPKzsg=
-X-Google-Smtp-Source: ABdhPJzOrhH9Lf+kx9ky/4JoNzEVfS+XfiI/Gs5d2XPCWsxzUeVmUKjNOksMwmGIUuQhpinAivxxgA==
-X-Received: by 2002:a17:902:a609:b029:d5:dde6:f135 with SMTP id u9-20020a170902a609b02900d5dde6f135mr3248918plq.75.1603471866097;
-        Fri, 23 Oct 2020 09:51:06 -0700 (PDT)
+        bh=JZButkyF/GaInfh9Hmb9ywY7tT0fYvah1q73Sv4+lT8=;
+        b=FaNDORYyZ3Tvz6GsyUOlFaRegwYe8lSxhjfUKpACSxf/8AGWNMKo91zsoXwKkn0ZZI
+         8ejj+VHU2Mn8lLxxE7FiOP0dUQ+L9vaJbkWFfv02k+lSOF9kt31+6ggOHfRgIP4Onstk
+         dkyhEWnWUBGsdSUIMJQhmtzN0LgV5wT0ZF2mc7VAL+XeMTQifZhbA2O3AHHyErlndUwu
+         yqWp9vxrs/7GaTMrQrYk9VVv9uT2MPbz169MCJXiJr9/BFRcUsSKPXjw2f9kMndBWHEe
+         BRNL/+1P0n+xX+bHAHxojwH0BPi6m+rV31H3xSFeD+bVHy+4hLjAQ7q0ZYyqMpU/fuvF
+         u7Mw==
+X-Gm-Message-State: AOAM531K2kX+bZAkqEHrowU7SMJGdl4u0m9lmlggYiSJVKxLMyGDAcrP
+        Ktj0RYIvB+LW2LPWFjlX4no=
+X-Google-Smtp-Source: ABdhPJz7W7twine0CZiWQPxl1uDo6NOAvvpvr9BrcmqP82wpMVrayYrN0o3GK0pR8TO+1aMw0Xjuow==
+X-Received: by 2002:a17:902:ab92:b029:d5:d5f4:5118 with SMTP id f18-20020a170902ab92b02900d5d5f45118mr3297409plr.21.1603471868616;
+        Fri, 23 Oct 2020 09:51:08 -0700 (PDT)
 Received: from localhost (c-73-25-156-94.hsd1.or.comcast.net. [73.25.156.94])
-        by smtp.gmail.com with ESMTPSA id o13sm3023420pjq.19.2020.10.23.09.51.04
+        by smtp.gmail.com with ESMTPSA id j8sm2696025pfr.121.2020.10.23.09.51.07
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 23 Oct 2020 09:51:04 -0700 (PDT)
+        Fri, 23 Oct 2020 09:51:07 -0700 (PDT)
 From:   Rob Clark <robdclark@gmail.com>
 To:     dri-devel@lists.freedesktop.org
 Cc:     linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
@@ -57,9 +57,9 @@ Cc:     linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
         David Airlie <airlied@linux.ie>,
         Daniel Vetter <daniel@ffwll.ch>,
         linux-kernel@vger.kernel.org (open list)
-Subject: [PATCH v4 22/23] drm/msm: Drop struct_mutex in shrinker path
-Date:   Fri, 23 Oct 2020 09:51:23 -0700
-Message-Id: <20201023165136.561680-23-robdclark@gmail.com>
+Subject: [PATCH v4 23/23] drm/msm: Don't implicit-sync if only a single ring
+Date:   Fri, 23 Oct 2020 09:51:24 -0700
+Message-Id: <20201023165136.561680-24-robdclark@gmail.com>
 X-Mailer: git-send-email 2.26.2
 In-Reply-To: <20201023165136.561680-1-robdclark@gmail.com>
 References: <20201023165136.561680-1-robdclark@gmail.com>
@@ -71,140 +71,52 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 From: Rob Clark <robdclark@chromium.org>
 
-Now that the inactive_list is protected by mm_lock, and everything
-else on per-obj basis is protected by obj->lock, we no longer depend
-on struct_mutex.
+If there is only a single ring (no-preemption), everything is FIFO order
+and there is no need to implicit-sync.
+
+Mesa should probably just always use MSM_SUBMIT_NO_IMPLICIT, as behavior
+is undefined when fences are not used to synchronize buffer usage across
+contexts (which is the only case where multiple different priority rings
+could come into play).
 
 Signed-off-by: Rob Clark <robdclark@chromium.org>
 Reviewed-by: Kristian H. Kristensen <hoegsberg@google.com>
 ---
- drivers/gpu/drm/msm/msm_gem.c          |  1 -
- drivers/gpu/drm/msm/msm_gem_shrinker.c | 54 --------------------------
- 2 files changed, 55 deletions(-)
+ drivers/gpu/drm/msm/msm_gem_submit.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/msm_gem.c b/drivers/gpu/drm/msm/msm_gem.c
-index 7f24a58c0390..a9a834bb7794 100644
---- a/drivers/gpu/drm/msm/msm_gem.c
-+++ b/drivers/gpu/drm/msm/msm_gem.c
-@@ -688,7 +688,6 @@ void msm_gem_purge(struct drm_gem_object *obj)
- 	struct drm_device *dev = obj->dev;
- 	struct msm_gem_object *msm_obj = to_msm_bo(obj);
- 
--	WARN_ON(!mutex_is_locked(&dev->struct_mutex));
- 	WARN_ON(!is_purgeable(msm_obj));
- 	WARN_ON(obj->import_attach);
- 
-diff --git a/drivers/gpu/drm/msm/msm_gem_shrinker.c b/drivers/gpu/drm/msm/msm_gem_shrinker.c
-index 6be073b8ca08..6f4b1355725f 100644
---- a/drivers/gpu/drm/msm/msm_gem_shrinker.c
-+++ b/drivers/gpu/drm/msm/msm_gem_shrinker.c
-@@ -8,48 +8,13 @@
- #include "msm_gem.h"
- #include "msm_gpu_trace.h"
- 
--static bool msm_gem_shrinker_lock(struct drm_device *dev, bool *unlock)
--{
--	/* NOTE: we are *closer* to being able to get rid of
--	 * mutex_trylock_recursive().. the msm_gem code itself does
--	 * not need struct_mutex, although codepaths that can trigger
--	 * shrinker are still called in code-paths that hold the
--	 * struct_mutex.
--	 *
--	 * Also, msm_obj->madv is protected by struct_mutex.
--	 *
--	 * The next step is probably split out a seperate lock for
--	 * protecting inactive_list, so that shrinker does not need
--	 * struct_mutex.
--	 */
--	switch (mutex_trylock_recursive(&dev->struct_mutex)) {
--	case MUTEX_TRYLOCK_FAILED:
--		return false;
--
--	case MUTEX_TRYLOCK_SUCCESS:
--		*unlock = true;
--		return true;
--
--	case MUTEX_TRYLOCK_RECURSIVE:
--		*unlock = false;
--		return true;
--	}
--
--	BUG();
--}
--
- static unsigned long
- msm_gem_shrinker_count(struct shrinker *shrinker, struct shrink_control *sc)
- {
- 	struct msm_drm_private *priv =
- 		container_of(shrinker, struct msm_drm_private, shrinker);
--	struct drm_device *dev = priv->dev;
- 	struct msm_gem_object *msm_obj;
- 	unsigned long count = 0;
--	bool unlock;
--
--	if (!msm_gem_shrinker_lock(dev, &unlock))
--		return 0;
- 
- 	mutex_lock(&priv->mm_lock);
- 
-@@ -63,9 +28,6 @@ msm_gem_shrinker_count(struct shrinker *shrinker, struct shrink_control *sc)
- 
- 	mutex_unlock(&priv->mm_lock);
- 
--	if (unlock)
--		mutex_unlock(&dev->struct_mutex);
--
- 	return count;
+diff --git a/drivers/gpu/drm/msm/msm_gem_submit.c b/drivers/gpu/drm/msm/msm_gem_submit.c
+index d04c349d8112..b6babc7f9bb8 100644
+--- a/drivers/gpu/drm/msm/msm_gem_submit.c
++++ b/drivers/gpu/drm/msm/msm_gem_submit.c
+@@ -283,7 +283,7 @@ static int submit_lock_objects(struct msm_gem_submit *submit)
+ 	return ret;
  }
  
-@@ -74,13 +36,8 @@ msm_gem_shrinker_scan(struct shrinker *shrinker, struct shrink_control *sc)
+-static int submit_fence_sync(struct msm_gem_submit *submit, bool no_implicit)
++static int submit_fence_sync(struct msm_gem_submit *submit, bool implicit_sync)
  {
- 	struct msm_drm_private *priv =
- 		container_of(shrinker, struct msm_drm_private, shrinker);
--	struct drm_device *dev = priv->dev;
- 	struct msm_gem_object *msm_obj;
- 	unsigned long freed = 0;
--	bool unlock;
--
--	if (!msm_gem_shrinker_lock(dev, &unlock))
--		return SHRINK_STOP;
+ 	int i, ret = 0;
  
- 	mutex_lock(&priv->mm_lock);
+@@ -303,7 +303,7 @@ static int submit_fence_sync(struct msm_gem_submit *submit, bool no_implicit)
+ 				return ret;
+ 		}
  
-@@ -98,9 +55,6 @@ msm_gem_shrinker_scan(struct shrinker *shrinker, struct shrink_control *sc)
+-		if (no_implicit)
++		if (!implicit_sync)
+ 			continue;
  
- 	mutex_unlock(&priv->mm_lock);
+ 		ret = msm_gem_sync_object(&msm_obj->base, submit->ring->fctx,
+@@ -774,7 +774,8 @@ int msm_ioctl_gem_submit(struct drm_device *dev, void *data,
+ 	if (ret)
+ 		goto out;
  
--	if (unlock)
--		mutex_unlock(&dev->struct_mutex);
--
- 	if (freed > 0)
- 		trace_msm_gem_purge(freed << PAGE_SHIFT);
+-	ret = submit_fence_sync(submit, !!(args->flags & MSM_SUBMIT_NO_IMPLICIT));
++	ret = submit_fence_sync(submit, (gpu->nr_rings > 1) &&
++			!(args->flags & MSM_SUBMIT_NO_IMPLICIT));
+ 	if (ret)
+ 		goto out;
  
-@@ -112,13 +66,8 @@ msm_gem_shrinker_vmap(struct notifier_block *nb, unsigned long event, void *ptr)
- {
- 	struct msm_drm_private *priv =
- 		container_of(nb, struct msm_drm_private, vmap_notifier);
--	struct drm_device *dev = priv->dev;
- 	struct msm_gem_object *msm_obj;
- 	unsigned unmapped = 0;
--	bool unlock;
--
--	if (!msm_gem_shrinker_lock(dev, &unlock))
--		return NOTIFY_DONE;
- 
- 	mutex_lock(&priv->mm_lock);
- 
-@@ -141,9 +90,6 @@ msm_gem_shrinker_vmap(struct notifier_block *nb, unsigned long event, void *ptr)
- 
- 	mutex_unlock(&priv->mm_lock);
- 
--	if (unlock)
--		mutex_unlock(&dev->struct_mutex);
--
- 	*(unsigned long *)ptr += unmapped;
- 
- 	if (unmapped > 0)
 -- 
 2.26.2
 
