@@ -2,144 +2,142 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 855C3296FC6
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Oct 2020 14:57:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B626E297026
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Oct 2020 15:16:43 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S464152AbgJWM5a (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 23 Oct 2020 08:57:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43378 "EHLO
+        id S464414AbgJWNQn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 23 Oct 2020 09:16:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46350 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S464143AbgJWM5Z (ORCPT
+        with ESMTP id S464413AbgJWNQm (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 23 Oct 2020 08:57:25 -0400
-Received: from mail-wr1-x444.google.com (mail-wr1-x444.google.com [IPv6:2a00:1450:4864:20::444])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4D0BBC0613D7
-        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Oct 2020 05:57:25 -0700 (PDT)
-Received: by mail-wr1-x444.google.com with SMTP id s9so1695065wro.8
-        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Oct 2020 05:57:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=+xri++KZd0ajH9qdVfAp67Rdv968jiyDThdwgMpFlQU=;
-        b=C1s2PoR5O3lgcFe585reoiQJvXOXD6IBX9C7RDoyIHQqE+G2XDhpnGVoatJW551ssX
-         FALN9Y7qmuik7OlOkaOrSpRKNMQJ5wts0JBvoOCg7OU2PYFka4ecQDFeZl3FaQ5KJn8E
-         p85w7vrEMAnsJVngcaweMZYCJ2sB8UbLc85G3z226198JwO/rQ6UAk7Y4c+5qnvrKZy8
-         rB8Rq8XOZ7Vf41a6mVgnyADdcnTpli6x/8BgO0rFBjJQFkMea68RknoIM0Dye1oISd86
-         SmtYjnqEwg2qPhvjevKr9Gwu/kMjbW9By4O3XXPCXZkx7FmJ5iSU9aBuSFXYHkvEruJ4
-         hmMA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=+xri++KZd0ajH9qdVfAp67Rdv968jiyDThdwgMpFlQU=;
-        b=gnVzLjK5v9WO2zarXG0kBj6WWkqSGH3zsXcPQS5/2Wa2QREbkiMfuPAX+7nkjgzEgv
-         +ABpIFRjg96CSjOm9S3SrvxjTxkY7Wh7x5HvUnKkfpzUPJBN75RC/DbZEo3aHXkAI4t7
-         fRrnJGUbfpBmqzLa42+BH78RTVk/IkQJciVeKkK3gUiFCEgV3XT1WpTY+bdiVMhs6bF/
-         B4F0FU57q/PZfXcA8xzaLVMJpgWzRnsfrVvIw+dGn97L4HbxD60+RJetpVrd7g7/FCMn
-         2oOLg9Gkz7LQmiM0rCPWI1dlEs63SNOfTpjAs3vEisCdNKQbnLtjRylxYRXSLHItzLjk
-         L+8Q==
-X-Gm-Message-State: AOAM531aPwGsHOA+13CosTJbOi3paD/FmpSH4H6Uxpd1e+VGG0exSgen
-        Q+Md4BSinmouY64swalezZ0F5w==
-X-Google-Smtp-Source: ABdhPJwNk4Ej8+YvZTaW3P3YHgDEX1teggYAa0I8cBEU+Xl67inPYEEqk39KnkHG1tYLjpq1oK0kXQ==
-X-Received: by 2002:adf:eccb:: with SMTP id s11mr2529446wro.135.1603457843988;
-        Fri, 23 Oct 2020 05:57:23 -0700 (PDT)
-Received: from localhost.localdomain (hst-221-77.medicom.bg. [84.238.221.77])
-        by smtp.gmail.com with ESMTPSA id s19sm3475873wmc.0.2020.10.23.05.57.23
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 23 Oct 2020 05:57:23 -0700 (PDT)
-From:   Stanimir Varbanov <stanimir.varbanov@linaro.org>
-To:     linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Cc:     Vikash Garodia <vgarodia@codeaurora.org>,
-        Alexandre Courbot <acourbot@chromium.org>,
-        Tomasz Figa <tfiga@chromium.org>,
-        Dikshita Agarwal <dikshita@codeaurora.org>,
-        Stanimir Varbanov <stanimir.varbanov@linaro.org>
-Subject: [PATCH 4/4] venus: helpers: Delete unused stop streaming helper
-Date:   Fri, 23 Oct 2020 15:57:04 +0300
-Message-Id: <20201023125704.4984-5-stanimir.varbanov@linaro.org>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20201023125704.4984-1-stanimir.varbanov@linaro.org>
-References: <20201023125704.4984-1-stanimir.varbanov@linaro.org>
+        Fri, 23 Oct 2020 09:16:42 -0400
+Received: from casper.infradead.org (casper.infradead.org [IPv6:2001:8b0:10b:1236::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9B56DC0613CE;
+        Fri, 23 Oct 2020 06:16:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+        d=infradead.org; s=casper.20170209; h=In-Reply-To:Content-Type:MIME-Version:
+        References:Message-ID:Subject:Cc:To:From:Date:Sender:Reply-To:
+        Content-Transfer-Encoding:Content-ID:Content-Description;
+        bh=f2ugiX9dLGJTsb+7jg1YhjwKk+hw5A7t8TuQNw8y1QM=; b=tj/Dxpvg8n2uDQE1cje//2o+Iu
+        MNEVnQcmTtOQ5MaoLhl7va1Ej3ULpOfdbyH9aWpYE+9zvIoLMLWc4OFykJOBsg/jlMTuES6ddHIK4
+        5pc+Yvwlkx85bAe3Dto7W06h+40KZ3T79LU+YN0s86aPM8Z1JemtW6oWcqRl87AP9SGWP7gSXJqRN
+        8j4EX7rFI4R4Kubd3OWZyChO2T/t+UdzWHYR3gSJwzhtXld5X3Ecgj4BHzfMjVUqFhVLouJlji5fu
+        jx+JB9loeiEp9dMxOVuCQUcntaMZq7LdUHu+FRMEjskNGkjpKOP/f53dYNH+bPpodjpcIAZ2MQbCd
+        UHDNJjPg==;
+Received: from j217100.upc-j.chello.nl ([24.132.217.100] helo=noisy.programming.kicks-ass.net)
+        by casper.infradead.org with esmtpsa (Exim 4.92.3 #3 (Red Hat Linux))
+        id 1kVwvn-0005SV-5u; Fri, 23 Oct 2020 13:16:31 +0000
+Received: from hirez.programming.kicks-ass.net (hirez.programming.kicks-ass.net [192.168.1.225])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (Client did not present a certificate)
+        by noisy.programming.kicks-ass.net (Postfix) with ESMTPS id 57F46302753;
+        Fri, 23 Oct 2020 15:16:28 +0200 (CEST)
+Received: by hirez.programming.kicks-ass.net (Postfix, from userid 1000)
+        id 44FD32B6778C0; Fri, 23 Oct 2020 15:16:28 +0200 (CEST)
+Date:   Fri, 23 Oct 2020 15:16:28 +0200
+From:   Peter Zijlstra <peterz@infradead.org>
+To:     Suzuki Poulose <suzuki.poulose@arm.com>
+Cc:     Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
+        Mike Leach <mike.leach@linaro.org>,
+        Ingo Molnar <mingo@redhat.com>,
+        Arnaldo Carvalho de Melo <acme@kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+        Jiri Olsa <jolsa@redhat.com>,
+        Namhyung Kim <namhyung@kernel.org>, coresight@lists.linaro.org,
+        Stephen Boyd <swboyd@chromium.org>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org
+Subject: Re: [PATCHv2 2/4] coresight: tmc-etf: Fix NULL ptr dereference in
+ tmc_enable_etf_sink_perf()
+Message-ID: <20201023131628.GY2628@hirez.programming.kicks-ass.net>
+References: <e7d236f7-61c2-731d-571b-839e0e545563@arm.com>
+ <20201022150609.GI2611@hirez.programming.kicks-ass.net>
+ <788706f2-0670-b7b6-a153-3ec6f16e0f2e@arm.com>
+ <20201022212033.GA646497@xps15>
+ <20201023073905.GM2611@hirez.programming.kicks-ass.net>
+ <174e6461-4d46-cb65-c094-c06ee3b21568@arm.com>
+ <20201023094115.GR2611@hirez.programming.kicks-ass.net>
+ <bd8c136d-9dfa-a760-31f9-eb8d6698aced@arm.com>
+ <20201023105431.GM2594@hirez.programming.kicks-ass.net>
+ <2457de8f-8bc3-b350-fdc7-61276da31ce6@arm.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <2457de8f-8bc3-b350-fdc7-61276da31ce6@arm.com>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-After re-design of encoder driver this helper is not needed
-anymore.
+On Fri, Oct 23, 2020 at 01:56:47PM +0100, Suzuki Poulose wrote:
+> On 10/23/20 11:54 AM, Peter Zijlstra wrote:
 
-Signed-off-by: Stanimir Varbanov <stanimir.varbanov@linaro.org>
----
- drivers/media/platform/qcom/venus/helpers.c | 43 ---------------------
- drivers/media/platform/qcom/venus/helpers.h |  1 -
- 2 files changed, 44 deletions(-)
+> > I think I'm more confused now :-/
+> > 
+> > Where do we use ->owner after event creation? The moment you create your
+> > eventN you create the link to sink0. That link either succeeds (same
+> > 'cookie') or fails.
+> 
+> The event->sink link is established at creation. At event::add(), we
+> check the sink is free (i.e, it is inactive) or is used by an event
+> of the same session (this is where the owner field *was* required. But
+> this is not needed anymore, as we cache the "owner" read pid in the
+> handle->rb->aux_priv for each event and this is compared against the
+> pid from the handle currently driving the hardware)
 
-diff --git a/drivers/media/platform/qcom/venus/helpers.c b/drivers/media/platform/qcom/venus/helpers.c
-index 8d0ca70d740d..1668cbaf3c72 100644
---- a/drivers/media/platform/qcom/venus/helpers.c
-+++ b/drivers/media/platform/qcom/venus/helpers.c
-@@ -1404,49 +1404,6 @@ void venus_helper_buffers_done(struct venus_inst *inst, unsigned int type,
- }
- EXPORT_SYMBOL_GPL(venus_helper_buffers_done);
- 
--void venus_helper_vb2_stop_streaming(struct vb2_queue *q)
--{
--	struct venus_inst *inst = vb2_get_drv_priv(q);
--	struct venus_core *core = inst->core;
--	int ret;
--
--	mutex_lock(&inst->lock);
--
--	if (inst->streamon_out & inst->streamon_cap) {
--		ret = hfi_session_stop(inst);
--		ret |= hfi_session_unload_res(inst);
--		ret |= venus_helper_unregister_bufs(inst);
--		ret |= venus_helper_intbufs_free(inst);
--		ret |= hfi_session_deinit(inst);
--
--		if (inst->session_error || core->sys_error)
--			ret = -EIO;
--
--		if (ret)
--			hfi_session_abort(inst);
--
--		venus_helper_free_dpb_bufs(inst);
--
--		venus_pm_load_scale(inst);
--		INIT_LIST_HEAD(&inst->registeredbufs);
--	}
--
--	venus_helper_buffers_done(inst, V4L2_BUF_TYPE_VIDEO_OUTPUT_MPLANE,
--				  VB2_BUF_STATE_ERROR);
--	venus_helper_buffers_done(inst, V4L2_BUF_TYPE_VIDEO_CAPTURE_MPLANE,
--				  VB2_BUF_STATE_ERROR);
--
--	if (q->type == V4L2_BUF_TYPE_VIDEO_OUTPUT_MPLANE)
--		inst->streamon_out = 0;
--	else
--		inst->streamon_cap = 0;
--
--	venus_pm_release_core(inst);
--
--	mutex_unlock(&inst->lock);
--}
--EXPORT_SYMBOL_GPL(venus_helper_vb2_stop_streaming);
--
- int venus_helper_process_initial_cap_bufs(struct venus_inst *inst)
- {
- 	struct v4l2_m2m_ctx *m2m_ctx = inst->m2m_ctx;
-diff --git a/drivers/media/platform/qcom/venus/helpers.h b/drivers/media/platform/qcom/venus/helpers.h
-index dca4794c05d9..b8d6c5085d4f 100644
---- a/drivers/media/platform/qcom/venus/helpers.h
-+++ b/drivers/media/platform/qcom/venus/helpers.h
-@@ -20,7 +20,6 @@ int venus_helper_vb2_buf_init(struct vb2_buffer *vb);
- int venus_helper_vb2_buf_prepare(struct vb2_buffer *vb);
- void venus_helper_vb2_buf_queue(struct vb2_buffer *vb);
- void venus_helper_process_buf(struct vb2_buffer *vb);
--void venus_helper_vb2_stop_streaming(struct vb2_queue *q);
- int venus_helper_vb2_start_streaming(struct venus_inst *inst);
- void venus_helper_m2m_device_run(void *priv);
- void venus_helper_m2m_job_abort(void *priv);
--- 
-2.17.1
+*groan*.. that's going to be a mess with sinks that are shared between
+CPUs :/
 
+> > I'm also not seeing why exactly we need ->owner in the first place.
+> > 
+> > Suppose we make the sink0 device return -EBUSY on open() when it is
+> > active. Then a perf session can open the sink0 device, create perf
+> > events and attach them to the sink0 device using
+> > perf_event_attr::config2. The events will attach to sink0 and increment
+> > its usage count, such that any further open() will fail.
+> 
+> Thats where we are diverging. The sink device doesn't have any fops. It
+> is all managed by the coresight driver transparent to the perf tool. All
+> the perf tool does is, specifying which sink to use (btw, we now have
+> automatic sink selection support which gets rid of this, and uses
+> the best possible sink e.g, in case of per-CPU sinks).
+
+per-CPU sinks sounds a lot better.
+
+I'm really not convinced it makes sense to do what you do with shared
+sinks though. You'll loose random parts of the execution trace because
+of what the other CPUs do.
+
+Full exclusive sink access is far more deterministic.
+
+> > Once the events are created, the perf tool close()s the sink0 device,
+> > which is now will in-use by the events. No other events can be attached
+> > to it.
+> > 
+> > Or are you doing the event->sink mapping every time you do: pmu::add()?
+> > That sounds insane.
+> 
+> Sink is already mapped at event create. But yes, the refcount on the
+> sink is managed at start/stop. Thats when we need to make sure that the
+> event being scheduled belongs to the same owner as the one already
+> driving the sink.
+
+pmu::add() I might hope, because pmu::start() is not allowed to fail.
+
+> That way another session could use the same sink if it is free. i.e
+> 
+> perf record -e cs_etm/@sink0/u --per-thread app1
+> 
+> and
+> 
+> perf record -e cs_etm/@sink0/u --per-thread app2
+> 
+> both can work as long as the sink is not used by the other session.
+
+Like said above, if sink is shared between CPUs, that's going to be a
+trainwreck :/ Why do you want that?
+
+And once you have per-CPU sinks like mentioned above, the whole problem
+goes away.
