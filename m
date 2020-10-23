@@ -2,40 +2,40 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C6528296C02
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Oct 2020 11:23:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C5FDB296C43
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Oct 2020 11:41:27 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S461314AbgJWJXs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 23 Oct 2020 05:23:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38512 "EHLO
+        id S461606AbgJWJl0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 23 Oct 2020 05:41:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41250 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S461296AbgJWJXs (ORCPT
+        with ESMTP id S461592AbgJWJl0 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 23 Oct 2020 05:23:48 -0400
+        Fri, 23 Oct 2020 05:41:26 -0400
 Received: from merlin.infradead.org (merlin.infradead.org [IPv6:2001:8b0:10b:1231::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3BAD9C0613CE;
-        Fri, 23 Oct 2020 02:23:48 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 34E58C0613CE;
+        Fri, 23 Oct 2020 02:41:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
         d=infradead.org; s=merlin.20170209; h=In-Reply-To:Content-Type:MIME-Version:
         References:Message-ID:Subject:Cc:To:From:Date:Sender:Reply-To:
         Content-Transfer-Encoding:Content-ID:Content-Description;
-        bh=FhPQVYPKzjZ8/oy407X+/jEjQ3F6X7vjeMfGUTwb1/s=; b=SntEyj6RUzJKiVSNK0R8fP7o43
-        lFHAFYQdWYluGPCpfeHIr8gcpC32+mdL5UhfBktIJXnwKNt/5YpDc1LkN0ugKka6FzDJhUH/Owj6x
-        xzcnRXLobLR0DZMnAU+xqiX8YEsQFa0PCNns7XMiDthnzQiJG8J6MfR+TtxYPiBzHHJyYy89u+HWZ
-        KFUz13zm/T9vajibb2OZPSvWWjc823NEHrxNKeJzGZTSPfTHUfkWKsEMoDcXmCjlRaYNrOceYw5TJ
-        6HQogX7xruk/ArxsCMU6YPhcxkfj/1TzooiR7AqiLWeM8pPDVkYhsx0UY/RoB+SzS1E+GilQoxFbA
-        T8XIW/Ew==;
+        bh=71opRXk+CVt0coUz0FPhVzMU7R20E+INO+PfC/78r9s=; b=LCt7s0vsBWeNbFSqkiV4Hp8kGZ
+        QtaThUO+HSqDN+ZhLsve9PrO3O/pZgUFRBq8PQ/XdJBL9ax2EJiDMn7njL7HpM//UfsWstDCOMq0d
+        d4GUW8h92cGdr+DjhPnGjt+vOiNDKDigpj81EOphkW1mai1r56dek13logIPV8FMvFOTBOY0ELhWI
+        BYeFSx3/GwueGQH+MQ8vJVHUk62MQIOjwYgn9Q9WGb/Ii5qjRt0DILOyii5zZf+JJ6FVj05kXBr5B
+        N9PcJ+BJS/iJYiYp7ciesNoGqUYd7LkPiz+3GSzPKczgPTu3qyIuDF2eKzCjSmm9sPOvEfFpPQwua
+        o3CsVZEQ==;
 Received: from j217100.upc-j.chello.nl ([24.132.217.100] helo=noisy.programming.kicks-ass.net)
         by merlin.infradead.org with esmtpsa (Exim 4.92.3 #3 (Red Hat Linux))
-        id 1kVtIR-0000wo-Ct; Fri, 23 Oct 2020 09:23:39 +0000
+        id 1kVtZU-0005So-Ov; Fri, 23 Oct 2020 09:41:16 +0000
 Received: from hirez.programming.kicks-ass.net (hirez.programming.kicks-ass.net [192.168.1.225])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (Client did not present a certificate)
-        by noisy.programming.kicks-ass.net (Postfix) with ESMTPS id D2489302753;
-        Fri, 23 Oct 2020 11:23:37 +0200 (CEST)
+        by noisy.programming.kicks-ass.net (Postfix) with ESMTPS id 698B7304D2B;
+        Fri, 23 Oct 2020 11:41:15 +0200 (CEST)
 Received: by hirez.programming.kicks-ass.net (Postfix, from userid 1000)
-        id A4655209DE6E2; Fri, 23 Oct 2020 11:23:37 +0200 (CEST)
-Date:   Fri, 23 Oct 2020 11:23:37 +0200
+        id 5005E2B945263; Fri, 23 Oct 2020 11:41:15 +0200 (CEST)
+Date:   Fri, 23 Oct 2020 11:41:15 +0200
 From:   Peter Zijlstra <peterz@infradead.org>
 To:     Suzuki Poulose <suzuki.poulose@arm.com>
 Cc:     Mathieu Poirier <mathieu.poirier@linaro.org>,
@@ -52,7 +52,7 @@ Cc:     Mathieu Poirier <mathieu.poirier@linaro.org>,
         linux-arm-kernel@lists.infradead.org
 Subject: Re: [PATCHv2 2/4] coresight: tmc-etf: Fix NULL ptr dereference in
  tmc_enable_etf_sink_perf()
-Message-ID: <20201023092337.GQ2611@hirez.programming.kicks-ass.net>
+Message-ID: <20201023094115.GR2611@hirez.programming.kicks-ass.net>
 References: <cover.1603363729.git.saiprakash.ranjan@codeaurora.org>
  <aa6e571156d6e26e54da0bb3015ba474e4a08da0.1603363729.git.saiprakash.ranjan@codeaurora.org>
  <20201022113214.GD2611@hirez.programming.kicks-ass.net>
@@ -79,39 +79,7 @@ On Fri, Oct 23, 2020 at 09:49:53AM +0100, Suzuki Poulose wrote:
 > Part of the patch from Sai, fixes this by avoiding the dereferencing
 > after event creation (by caching it). But the kernel events needs
 > fixing.
-> 
-> One follow up question on the !->owner issue. Given the ->owner is
-> dying, does it prevent events from being scheduled ? Or is there a delay
-> between that and eventually stopping the events. In this case, we hit
-> the issue when :
-> 
-> A					  A or B ?
-> 
-> event_start()
->   ...					event->owner = NULL
-> 
->  READ_ONCE(event->owner);
-> 
-> Is this expected ?
 
-Yeah, teardown is a bit of an effort. Also, you can pass an fd over a
-unix socket to another process, so this isn't something you can rely on
-in any case.
-
-The perf tool doesn't do it, but the kernel infra should be able to deal
-with someone doing a perf-deamon of sorts, where you can request a perf
-event and recieve a fd from it.
-
-Imagine the fun ;-)
-
-> > As for the kernel events.. why do you care about the actual task_struct
-> > * in there? I see you're using it to grab the task-pid, but how is that
-> > useful?
-> 
-> Correct, kernel events are something that the driver didn't account for.
-> May be we could handle this case with a "special pid" and simply
-> disallow sharing (which is fine I believe, given there are not grouping
-> for the kernel created events).
-
-Why do you need a pid in the first place? Can't you use the "task_struct
-*" as a value?
+I'm fundamentally failing here. Creating a link to the sink is strictly
+event-creation time. Why would you ever need it again later? Later you
+already have the sink setup.
