@@ -2,52 +2,52 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id F1E9529702E
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Oct 2020 15:19:48 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D156E297041
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Oct 2020 15:20:07 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S464438AbgJWNTg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 23 Oct 2020 09:19:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46782 "EHLO
+        id S464441AbgJWNTf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 23 Oct 2020 09:19:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46794 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S464435AbgJWNTe (ORCPT
+        with ESMTP id S464427AbgJWNTe (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
         Fri, 23 Oct 2020 09:19:34 -0400
-Received: from mail-lf1-x141.google.com (mail-lf1-x141.google.com [IPv6:2a00:1450:4864:20::141])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 46235C0613CE
-        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Oct 2020 06:19:32 -0700 (PDT)
-Received: by mail-lf1-x141.google.com with SMTP id 184so2057687lfd.6
-        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Oct 2020 06:19:32 -0700 (PDT)
+Received: from mail-lf1-x142.google.com (mail-lf1-x142.google.com [IPv6:2a00:1450:4864:20::142])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 59DBFC0613CE
+        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Oct 2020 06:19:34 -0700 (PDT)
+Received: by mail-lf1-x142.google.com with SMTP id h6so2059809lfj.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Oct 2020 06:19:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=gkX+2gUi+v8i47aSHUAizP4Ds7j6F45LzqwxJroTws0=;
-        b=Z/wgNcMVhdp16LL6ZQWvlDZnxOeAJfCVSNOty5uKbdAEduIs6JIxbsHZjQGYzEj6l3
-         jkeG3UWtq+oKNGjCG9KbQ3Urh1wRg0MhHk7Fh2zYs04JRPYhJYyrXSLPHYs20OVMxavl
-         3YPCChAk4MYNJlbg3JjhmsQwJdWz7/ZmuLfiLuaIGsd5cWraWsbvT5CJMt8ghcffBWtb
-         EZXtNnvx5aSGkmQgzBt2Dk0VVnL7v81RhtonwfPXAyhOYNnNy0crJv0jAa78+5xNrYjK
-         SH1jU5oVP5lmL7lqvkuGR0tjyMBk0gAk1xJ2wN05kYTqppe9nnIugZsqpKVB7uyQPlir
-         tlMw==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=Qx8/8JORiXv27o7v4yO39cefNVmWr3jvO/t75+dTjdY=;
+        b=O4WPwwWWSIuLDEhXdfDmBZxgy/Nr8cebRFOYQJJ3+J7ISE6p/nk5iIPmM+zgUGewyg
+         MP+TKcbNJzxvYkZdJmi+FdBJeM/ohwuRIVdLf8LrSWXplvXpPRadHCw2JZXCZpcEPOoc
+         ktI1tJOQH+JKOXtvO3feIt7P2bPll32MDidUcJb505BLFpnjgDUa33neAJYZoa53c45T
+         kqa+EfmhCH7caOXvAZGJ7Qw4FmWTVm6526FmYGyJGTEFWc/G42qIzAZMYAXjhTfODJmH
+         MIDFtJ8ug/drLHsoQSPUpz3wU1UOM20Fl2O4s9U/JGwxHofMx6hOoCCDAN+8/A8C0K+j
+         2ZLA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=gkX+2gUi+v8i47aSHUAizP4Ds7j6F45LzqwxJroTws0=;
-        b=HBVhPbSogJAIV82FSGEAs5zLUbAMed+P08zO48eKZxfJ3hIDWfWTrR0NM3CXoc8H/M
-         BpPrswy0xk9bbHkHYNkg4tjvRnBaRwU1GL6JCcJSxOVIb5NdC/ASr7yeHDrMc1D+hf55
-         hLtlnWPwCr5g8JiKAqcI2cnea042PFww4eaVy3nxQRJl8SeDmgYOA1RObwIKh2nMtcRV
-         IN8mjbA2yy3FS99lQ+wOUl9DBXnZIyDyw6jb8jttHrdhjxUiXrs7Rz7zpuNAy8ym00iG
-         3iASI0BA/gc+vGEZZfTessukktF7Eig5R1izAiBp1iwMz0ECHXBSsDV2uCFlpdcErkEt
-         j7cQ==
-X-Gm-Message-State: AOAM531COzE9SOYNLmd67iQf41/SMMNE74p0i3SYFAMKkqMjCBMxNlh4
-        O3u2KOLErZGD1nkPVsCDCiJS7A==
-X-Google-Smtp-Source: ABdhPJwKRS1l0bWn+x3x3WMk7PvtBibC5R1oMkR5S6y7F7XYMl6I2GvcgR+rbri7PKkeVqIUDRgk0A==
-X-Received: by 2002:a19:c8d6:: with SMTP id y205mr715023lff.293.1603459170604;
-        Fri, 23 Oct 2020 06:19:30 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=Qx8/8JORiXv27o7v4yO39cefNVmWr3jvO/t75+dTjdY=;
+        b=Whfxr/fU5vvxosvnCnVANET4iOsjKgHvHIgIhXbs1Syed42265JFrgNk0j6l5KENW2
+         ax5fQgnZaBu2lfh7t2xxx+qaiXvRsBL/HYsttiOhJ5NIHzZJwXhpmJBs431Kr3hqOHo/
+         OHgK2654ZxuMchVJ88BJ56Z9L1EMrARSw2ZxETy7hoZpWBcTzurdw7nb83syLa6+Lz0j
+         x4S62ZXEQcUjbJdyZersf7RFKT48kPKIZWkz9JDGIIfj4doeBg+9NUHP/SgKIFVbX3Js
+         ZjgsVneZq7XYgaYeGWuRYcLoSlntKgaSB9WfTn8uWphPhtzaM5F1s1rZ9AeXwcWyXe5R
+         F0gw==
+X-Gm-Message-State: AOAM532HZoKm0zipNP5uhbcVdukcYjPnxCZ7e7C5YQ+FPtMSV8OIQfTj
+        4GdHR65pk7u//1zSQhYyGzDlCA==
+X-Google-Smtp-Source: ABdhPJy869i54RJ9lJRegmrL7jXaydJIBnXbZK4NV5LGAXgaZbez6DNT7lcUk+T2TUqH4/5SWz+7/A==
+X-Received: by 2002:ac2:4ec8:: with SMTP id p8mr710093lfr.433.1603459172815;
+        Fri, 23 Oct 2020 06:19:32 -0700 (PDT)
 Received: from eriador.lan ([188.162.64.195])
-        by smtp.gmail.com with ESMTPSA id o22sm161564ljg.122.2020.10.23.06.19.28
+        by smtp.gmail.com with ESMTPSA id o22sm161564ljg.122.2020.10.23.06.19.30
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 23 Oct 2020 06:19:29 -0700 (PDT)
+        Fri, 23 Oct 2020 06:19:32 -0700 (PDT)
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
@@ -61,35 +61,102 @@ Cc:     linux-arm-msm@vger.kernel.org,
         Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
         devicetree@vger.kernel.org, linux-clk@vger.kernel.org,
         linux-kernel@vger.kernel.org
-Subject: [PATCH v2 0/5] 
-Date:   Fri, 23 Oct 2020 16:19:20 +0300
-Message-Id: <20201023131925.334864-1-dmitry.baryshkov@linaro.org>
+Subject: [PATCH v2 1/5] dt-bindings: regulator: fixed: provide bindings using power domain
+Date:   Fri, 23 Oct 2020 16:19:21 +0300
+Message-Id: <20201023131925.334864-2-dmitry.baryshkov@linaro.org>
 X-Mailer: git-send-email 2.28.0
+In-Reply-To: <20201023131925.334864-1-dmitry.baryshkov@linaro.org>
+References: <20201023131925.334864-1-dmitry.baryshkov@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On SM8250 MDSS_GDSC (and the rest of display clock controller) is
-supplied power by MMCX power domain. Handle this link in GDSC code by
-binding the power domain in dts file.
+Define bindings for fixed regulator using power domain performance state
+to enable/disable corresponding regulator.
 
-This patchset depends on [1]
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+---
+ .../bindings/regulator/fixed-regulator.yaml   | 47 +++++++++++++++++++
+ 1 file changed, 47 insertions(+)
 
-Changes since v1:
- - Define fixed-regulator-domain regulator using power domain
-   performance state for enabling/disabling.
- - Rework to use new fixed regulator type (fixed-regulator-domain)
-   instead of controlling power domain directly from gdsc code.
-
-Changes since RFC:
- - Fix naming of gdsc_supply_on/gdsc_supply_off functions
- - Fix detaching of solo gdsc's power domain in error handling code
- - Drop the dts patch, as respective display nodes are still not
-   submitted to the mailing list.
-
-[1]
-https://lore.kernel.org/linux-arm-msm/20200927190653.13876-1-jonathan@marek.ca/
-
+diff --git a/Documentation/devicetree/bindings/regulator/fixed-regulator.yaml b/Documentation/devicetree/bindings/regulator/fixed-regulator.yaml
+index 92211f2b3b0c..d3d0dc13dd8b 100644
+--- a/Documentation/devicetree/bindings/regulator/fixed-regulator.yaml
++++ b/Documentation/devicetree/bindings/regulator/fixed-regulator.yaml
+@@ -26,12 +26,22 @@ if:
+         const: regulator-fixed-clock
+   required:
+     - clocks
++else:
++  if:
++    properties:
++      compatible:
++        contains:
++          const: regulator-fixed-domain
++    required:
++      - power-domains
++      - required-opps
+ 
+ properties:
+   compatible:
+     enum:
+       - regulator-fixed
+       - regulator-fixed-clock
++      - regulator-fixed-domain
+ 
+   regulator-name: true
+ 
+@@ -46,6 +56,20 @@ properties:
+       is mandatory if compatible is chosen to regulator-fixed-clock.
+     maxItems: 1
+ 
++  power-domains:
++    description:
++      Power domain to use for enable control. This binding is only
++      available if the compatible is chosen to regulator-fixed-domain.
++    maxItems: 1
++
++  required-opps:
++    description:
++      Performance state to use for enable control. This binding is only
++      available if the compatible is chosen to regulator-fixed-domain. The
++      power-domain binding is mandatory if compatible is chosen to
++      regulator-fixed-domain.
++    maxItems: 1
++
+   startup-delay-us:
+     description: startup time in microseconds
+     $ref: /schemas/types.yaml#/definitions/uint32
+@@ -89,4 +113,27 @@ examples:
+       gpio-open-drain;
+       vin-supply = <&parent_reg>;
+     };
++    reg_1v8_clk: regulator-1v8-clk {
++      compatible = "regulator-fixed-clock";
++      regulator-name = "1v8";
++      regulator-min-microvolt = <1800000>;
++      regulator-max-microvolt = <1800000>;
++      clocks = <&clock1>;
++      startup-delay-us = <70000>;
++      enable-active-high;
++      regulator-boot-on;
++      vin-supply = <&parent_reg>;
++    };
++    reg_1v8_domain: regulator-1v8-domain {
++      compatible = "regulator-fixed-domain";
++      regulator-name = "1v8";
++      regulator-min-microvolt = <1800000>;
++      regulator-max-microvolt = <1800000>;
++      power-domains = <&domain1>;
++      required-opps = <&domain1_state1>;
++      startup-delay-us = <70000>;
++      enable-active-high;
++      regulator-boot-on;
++      vin-supply = <&parent_reg>;
++    };
+ ...
+-- 
+2.28.0
 
