@@ -2,68 +2,56 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 092A02973B3
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Oct 2020 18:28:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2A17229748C
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Oct 2020 18:39:13 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750575AbgJWQ21 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 23 Oct 2020 12:28:27 -0400
-Received: from mail-oi1-f194.google.com ([209.85.167.194]:42272 "EHLO
-        mail-oi1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S371933AbgJWQ20 (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 23 Oct 2020 12:28:26 -0400
-Received: by mail-oi1-f194.google.com with SMTP id 16so2458579oix.9;
-        Fri, 23 Oct 2020 09:28:26 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=2/F4gcPmqW9k3gfZUEuVT5UA/z/NAFC4iSRG11LIn+c=;
-        b=Uqz+rcI5WVlo49bCzJieO7mRqmcOWlCa8GyfLmjVjJyuT8JpDeGwVM2tpPJo6leKpt
-         JxRJ3W7zT5sAYndFLM7y46R0dITEVu7pnasoUs1uAszPHOIsUyCgZ9KdzB+lkx6iOMfx
-         fG49TPK3Ndj+bwdFCVVTJ170kkP/5pQDneXRSOArofjwonS3xNvr/S617Jfm/YXyMmdh
-         PLYfdgg3tkvH0+7WEzuP8INtbD96GePjgF4v4QuEe859gIyL7wwc3GeI2RJk5+gKV+hc
-         TN2tJtwNxk2CKeJzSoQBEF6Hf1U3gZnVr0CVabnGXtUKsFXtdM5v8ESerZn2htVcPXIx
-         5D6g==
-X-Gm-Message-State: AOAM5327mpeOqm/R8S4MI1WamDTSScaLGGfna2fS99VSHYwhXGXS2zRj
-        GOZTWbG0mfVkg9wUGeS47A==
-X-Google-Smtp-Source: ABdhPJwe2qFcFHOCLXfp3Qrfl3ZtYE+6ZoVPO+xoTzzWaoe7uJCZB+rDCGHpJkSp9Bs/iJoaQtD+yA==
-X-Received: by 2002:aca:f084:: with SMTP id o126mr2397685oih.104.1603470506162;
-        Fri, 23 Oct 2020 09:28:26 -0700 (PDT)
-Received: from xps15 (24-155-109-49.dyn.grandenetworks.net. [24.155.109.49])
-        by smtp.gmail.com with ESMTPSA id e76sm601380oib.16.2020.10.23.09.28.25
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 23 Oct 2020 09:28:25 -0700 (PDT)
-Received: (nullmailer pid 2820622 invoked by uid 1000);
-        Fri, 23 Oct 2020 16:28:24 -0000
-Date:   Fri, 23 Oct 2020 11:28:24 -0500
-From:   Rob Herring <robh@kernel.org>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, Pavel Machek <pavel@ucw.cz>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Dan Murphy <dmurphy@ti.com>, devicetree@vger.kernel.org,
-        Rob Herring <robh+dt@kernel.org>, linux-leds@vger.kernel.org
-Subject: Re: [PATCH 1/5] dt-bindings: leds: leds-qcom-lpg: add pm8150[bl]
- compatible strings
-Message-ID: <20201023162824.GA2820586@bogus>
-References: <20201021225100.162795-1-dmitry.baryshkov@linaro.org>
- <20201021225100.162795-2-dmitry.baryshkov@linaro.org>
+        id S1750161AbgJWQhi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 23 Oct 2020 12:37:38 -0400
+Received: from mail.kernel.org ([198.145.29.99]:37476 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751236AbgJWQhg (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 23 Oct 2020 12:37:36 -0400
+Received: from kicinski-fedora-PC1C0HJN.hsd1.ca.comcast.net (unknown [163.114.132.6])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id AA97F206B5;
+        Fri, 23 Oct 2020 16:37:35 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1603471056;
+        bh=pakbrjuqJm1C+JONrWcP/W6WZYcilIeIuIdbYcqb0zk=;
+        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+        b=CFm1oryIQLo8UKL1lcUQr4aObJUoQWc+HglRWeGO1x9f6VL7+czRkWRmx8Od25AD8
+         FBBeY4MLV77jEroRkJDU2PNsCty+hdKntc+RGnPJpdyv7aSqFfyzsuRey58y3d0rpo
+         E8dEJmGckqGn26lpUwkOEpbj7BUQU+P5vaseYOVs=
+Date:   Fri, 23 Oct 2020 09:37:34 -0700
+From:   Jakub Kicinski <kuba@kernel.org>
+To:     Hemant Kumar <hemantk@codeaurora.org>
+Cc:     manivannan.sadhasivam@linaro.org, gregkh@linuxfoundation.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        jhugo@codeaurora.org, bbhatt@codeaurora.org,
+        loic.poulain@linaro.org
+Subject: Re: [PATCH v8 0/4] userspace MHI client interface driver
+Message-ID: <20201023093734.7b06694e@kicinski-fedora-PC1C0HJN.hsd1.ca.comcast.net>
+In-Reply-To: <1603354958-24025-1-git-send-email-hemantk@codeaurora.org>
+References: <1603354958-24025-1-git-send-email-hemantk@codeaurora.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20201021225100.162795-2-dmitry.baryshkov@linaro.org>
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 22 Oct 2020 01:50:56 +0300, Dmitry Baryshkov wrote:
-> Add two more compatible strings for Light Pulse Generator blocks as
-> found on PM8150B and PM8150A/L chips.
-> 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
->  Documentation/devicetree/bindings/leds/leds-qcom-lpg.yaml | 2 ++
->  1 file changed, 2 insertions(+)
-> 
+On Thu, 22 Oct 2020 01:22:34 -0700 Hemant Kumar wrote:
+> This patch series adds support for UCI driver. UCI driver enables userspace
+> clients to communicate to external MHI devices like modem and WLAN. UCI driver
+> probe creates standard character device file nodes for userspace clients to
+> perform open, read, write, poll and release file operations. These file
+> operations call MHI core layer APIs to perform data transfer using MHI bus
+> to communicate with MHI device. Patch is tested using arm64 based platform.
 
-Acked-by: Rob Herring <robh@kernel.org>
+Until you CC netdev on this (as suggested [1]), here's my:
+
+Nacked-by: Jakub Kicinski <kuba@kernel.org>
+
+[1]
+https://lore.kernel.org/netdev/20201016183759.7fa7c0ef@kicinski-fedora-pc1c0hjn.dhcp.thefacebook.com/
