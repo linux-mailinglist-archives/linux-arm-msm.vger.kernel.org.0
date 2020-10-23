@@ -2,105 +2,115 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 349D72970D4
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Oct 2020 15:44:34 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0CDE629713E
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Oct 2020 16:22:06 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750019AbgJWNod (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 23 Oct 2020 09:44:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50812 "EHLO
+        id S374604AbgJWOV7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 23 Oct 2020 10:21:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56598 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750018AbgJWNoc (ORCPT
+        with ESMTP id S374556AbgJWOV6 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 23 Oct 2020 09:44:32 -0400
-Received: from casper.infradead.org (casper.infradead.org [IPv6:2001:8b0:10b:1236::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A7453C0613CE;
-        Fri, 23 Oct 2020 06:44:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-        d=infradead.org; s=casper.20170209; h=In-Reply-To:Content-Type:MIME-Version:
-        References:Message-ID:Subject:Cc:To:From:Date:Sender:Reply-To:
-        Content-Transfer-Encoding:Content-ID:Content-Description;
-        bh=627oe94ZLeKyjbn+qyvUY++lrQo5+wHp1qVKRnwOyEA=; b=tAeBy66w9joU2PrbRcza5JTXle
-        OQ1GNbtKm1kuwALnI3n5XGE48bmTbzeIUI3woO3q/FJzb5CMWMcPWAr2mw4nh/tkvhoTmvRMse5M5
-        398H/FWTpl07yUabCgpJ3R43gitI0mK0dEzUUNo/vAl9B5F0hjZPr9XWXtd9ythKH1x4j8HnmvTpV
-        XxR/NkHFLrB/KjBpbKKGC7ui/GCLc9dXVwMVVqGcz9iaJ2qK02ANhTToLcwLuLZskBzmufSxPUTRY
-        H17rSXqWnece4UGf2Oj722qSORrug+kLR5xQI9znH+pwqIUVHki8yvnZtkFe6g3jq+X4sGqr+jcQ2
-        dmRyGHmA==;
-Received: from j217100.upc-j.chello.nl ([24.132.217.100] helo=noisy.programming.kicks-ass.net)
-        by casper.infradead.org with esmtpsa (Exim 4.92.3 #3 (Red Hat Linux))
-        id 1kVxMh-0007Dn-0M; Fri, 23 Oct 2020 13:44:19 +0000
-Received: from hirez.programming.kicks-ass.net (hirez.programming.kicks-ass.net [192.168.1.225])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (Client did not present a certificate)
-        by noisy.programming.kicks-ass.net (Postfix) with ESMTPS id CF997304D28;
-        Fri, 23 Oct 2020 15:44:16 +0200 (CEST)
-Received: by hirez.programming.kicks-ass.net (Postfix, from userid 1000)
-        id B819D23268BA4; Fri, 23 Oct 2020 15:44:16 +0200 (CEST)
-Date:   Fri, 23 Oct 2020 15:44:16 +0200
-From:   Peter Zijlstra <peterz@infradead.org>
-To:     Suzuki Poulose <suzuki.poulose@arm.com>
-Cc:     Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
-        Mike Leach <mike.leach@linaro.org>,
-        Ingo Molnar <mingo@redhat.com>,
-        Arnaldo Carvalho de Melo <acme@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-        Jiri Olsa <jolsa@redhat.com>,
-        Namhyung Kim <namhyung@kernel.org>, coresight@lists.linaro.org,
-        Stephen Boyd <swboyd@chromium.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org
-Subject: Re: [PATCHv2 2/4] coresight: tmc-etf: Fix NULL ptr dereference in
- tmc_enable_etf_sink_perf()
-Message-ID: <20201023134416.GA2628@hirez.programming.kicks-ass.net>
-References: <788706f2-0670-b7b6-a153-3ec6f16e0f2e@arm.com>
- <20201022212033.GA646497@xps15>
- <20201023073905.GM2611@hirez.programming.kicks-ass.net>
- <174e6461-4d46-cb65-c094-c06ee3b21568@arm.com>
- <20201023094115.GR2611@hirez.programming.kicks-ass.net>
- <bd8c136d-9dfa-a760-31f9-eb8d6698aced@arm.com>
- <20201023105431.GM2594@hirez.programming.kicks-ass.net>
- <2457de8f-8bc3-b350-fdc7-61276da31ce6@arm.com>
- <20201023131628.GY2628@hirez.programming.kicks-ass.net>
- <728fd89c-78f2-0c5c-0443-c91c62b02f0e@arm.com>
+        Fri, 23 Oct 2020 10:21:58 -0400
+Received: from mail-ej1-x644.google.com (mail-ej1-x644.google.com [IPv6:2a00:1450:4864:20::644])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 82F17C0613CE;
+        Fri, 23 Oct 2020 07:21:58 -0700 (PDT)
+Received: by mail-ej1-x644.google.com with SMTP id gs25so2664176ejb.1;
+        Fri, 23 Oct 2020 07:21:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:sender:from:date:message-id
+         :subject:to:cc;
+        bh=3rcXVSOL+tJRZBQm0pw/Zq9ogwm9bItd4VPlftbM00g=;
+        b=Bge8D9q4Ck+6oQR5swtz7kx/CVmO3H/gxI93IJbbAM8yPEyVzaym+n/+CREN6Aya6V
+         48qAhym76RmXks5OZYbeJqEh6rZj+GDw+9zgBKjBjHpYCpiUckLxwxM85Wxpqws4WCG1
+         kw6bp5+QWJAyIUd+vV5gVlCvpkg6SRKDSM36LJ0w3RW/wqdmznrdb01WoNfYVcRo/yjK
+         hqHr633nbepgJoGUrk2p+PeYO9lOG9GAetosPfND6Lk0euVNFd0YRCH46VaYi3reDIqo
+         37IYNKd0A/k96+BQXtXDcD8KJ3EuGkf0xITNm34FzUeTWudaHg33pg9qPLWTONieWWhM
+         WLoA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:sender:from
+         :date:message-id:subject:to:cc;
+        bh=3rcXVSOL+tJRZBQm0pw/Zq9ogwm9bItd4VPlftbM00g=;
+        b=d+uvW5Uq7QAr2ik/Wd7pq7jboStl0nEaMdZFcU8o1/ztx5XB2hoelmkUWOcakBvlB/
+         JuHII/rV5Es+l6Ifz7DazUwamEsVaM1P+63k8eypveWfxIgYCKb959WyL97r0DxC5sSU
+         8KIow+zHfZtcquhW8YMGSZG9I6d3U8kkGU4Ho8H3iZX4ZMxGn/ESDdChgsRUGrFNKUXy
+         i2M89dKNwroXn2PJhbT73YubR/jVcgCdRHWvYjgZ/lUe6dc3yScQ0SVETdxxgczZb/3m
+         LyreTGXvvPZetzLALY+LHkNNX87pQNvk6ZSoLr+PPcX3LYWGJ79ysJ/y4uG8TryRKFMX
+         arBA==
+X-Gm-Message-State: AOAM532Z60mF6n7d/YMCs3wVU4I1vlTt9Pfw96xYb/CLpnU+sH8VHXZn
+        /FN6hWemwQqgJXF64b6E7r2U8nfRs+F6lcf1Da8=
+X-Google-Smtp-Source: ABdhPJxPWuUVMmCsJll590lxcX3FUKbgd71i6nIoh0ZydFGbplw/o9febMpu6Mv6DOTrtp2ltM5kHrANFd2w2IZum5Q=
+X-Received: by 2002:a17:906:33c7:: with SMTP id w7mr2067255eja.398.1603462917224;
+ Fri, 23 Oct 2020 07:21:57 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <728fd89c-78f2-0c5c-0443-c91c62b02f0e@arm.com>
+References: <20180129005948.7714-1-bjorn.andersson@linaro.org>
+In-Reply-To: <20180129005948.7714-1-bjorn.andersson@linaro.org>
+Sender: getarunks@gmail.com
+X-Google-Sender-Delegation: getarunks@gmail.com
+From:   Arun KS <arunks.linux@gmail.com>
+Date:   Fri, 23 Oct 2020 19:51:45 +0530
+X-Google-Sender-Auth: _vvNSE9j93IlwHnXLdmbEcZjtDI
+Message-ID: <CAKZGPAPrwXNeYk+bDiMBRczVf4PaBANnzhmenZie+V0BJ7OqBg@mail.gmail.com>
+Subject: Re: [PATCH] pinctrl: msm: Use dynamic GPIO numbering
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Linus Walleij <linus.walleij@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
+        linux-kernel@vger.kernel.org, Timur Tabi <timur@codeaurora.org>,
+        Arun KS <getarunks@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Oct 23, 2020 at 02:29:54PM +0100, Suzuki Poulose wrote:
-> On 10/23/20 2:16 PM, Peter Zijlstra wrote:
-> > On Fri, Oct 23, 2020 at 01:56:47PM +0100, Suzuki Poulose wrote:
+On Mon, Jan 29, 2018 at 8:30 AM Bjorn Andersson
+<bjorn.andersson@linaro.org> wrote:
+>
+> The base of the TLMM gpiochip should not be statically defined as 0, fix
+> this to not artificially restrict the existence of multiple pinctrl-msm
+> devices.
 
-> > > That way another session could use the same sink if it is free. i.e
-> > > 
-> > > perf record -e cs_etm/@sink0/u --per-thread app1
-> > > 
-> > > and
-> > > 
-> > > perf record -e cs_etm/@sink0/u --per-thread app2
-> > > 
-> > > both can work as long as the sink is not used by the other session.
-> > 
-> > Like said above, if sink is shared between CPUs, that's going to be a
-> > trainwreck :/ Why do you want that?
-> 
-> That ship has sailed. That is how the current generation of systems are,
-> unfortunately. But as I said, this is changing and there are guidelines
-> in place to avoid these kind of topologies. With the future
-> technologies, this will be completely gone.
+Can someone please provide the details why this is needed for
+pinctrl-msm.  Is there any msm-chipset using multiple tlmm devices?  I
+m only concerned because, after this change, the use of gpio number
+from user space has become a little difficult. Can we merge the patch
+from Timur to maintain the past behavior when multiple tlmm devices
+are not present, which is most likely the case?
 
-I understand that the hardware is like that, but why do you want to
-support this insanity in software?
+     static int base = 0;
 
-If you only allow a single sink user (group) at the same time, your
-problem goes away. Simply disallow the above scenario, do not allow
-concurrent sink users if sinks are shared like this.
+     chip->base = base;
+     base = -1;
 
-Have the perf-record of app2 above fail because the sink is in-user
-already.
+Regards,
+Arun
 
-Only if the hardware has per-CPU sinks can you allow this.
+>
+> Fixes: f365be092572 ("pinctrl: Add Qualcomm TLMM driver")
+> Reported-by: Timur Tabi <timur@codeaurora.org>
+> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> ---
+>  drivers/pinctrl/qcom/pinctrl-msm.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/drivers/pinctrl/qcom/pinctrl-msm.c b/drivers/pinctrl/qcom/pinctrl-msm.c
+> index 495432f3341b..95e5c5ea40af 100644
+> --- a/drivers/pinctrl/qcom/pinctrl-msm.c
+> +++ b/drivers/pinctrl/qcom/pinctrl-msm.c
+> @@ -818,7 +818,7 @@ static int msm_gpio_init(struct msm_pinctrl *pctrl)
+>                 return -EINVAL;
+>
+>         chip = &pctrl->chip;
+> -       chip->base = 0;
+> +       chip->base = -1;
+>         chip->ngpio = ngpio;
+>         chip->label = dev_name(pctrl->dev);
+>         chip->parent = pctrl->dev;
+> --
+> 2.15.0
+>
+> --
+> To unsubscribe from this list: send the line "unsubscribe linux-arm-msm" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
