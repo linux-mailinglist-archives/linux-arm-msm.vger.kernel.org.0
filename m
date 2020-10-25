@@ -2,376 +2,1048 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 3C6A62982C4
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 25 Oct 2020 18:39:22 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 960BE298302
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 25 Oct 2020 19:11:44 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1417661AbgJYRjU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 25 Oct 2020 13:39:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48928 "EHLO
+        id S1417961AbgJYSLm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 25 Oct 2020 14:11:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53862 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1417660AbgJYRjU (ORCPT
+        with ESMTP id S1417960AbgJYSLm (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 25 Oct 2020 13:39:20 -0400
-Received: from mail-wr1-x444.google.com (mail-wr1-x444.google.com [IPv6:2a00:1450:4864:20::444])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C1340C061755;
-        Sun, 25 Oct 2020 10:39:19 -0700 (PDT)
-Received: by mail-wr1-x444.google.com with SMTP id i1so9927517wro.1;
-        Sun, 25 Oct 2020 10:39:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=eUixt7kjjRYvk+Y9YAKueBUK8sv8y9L7VAY1elFnrtU=;
-        b=jjKNU270tzovGUzFz/YHinq34ec6mXvydr0wzz01ZbytWTZ9SiIPQFauamh+pF9DjM
-         ZZ7fKh3ItcPK9UGjffz5sfp1upKcPMLS53fCuwUvQLtu9VJ4jtxtdGo6RHlTYNLsUBkp
-         5U46do46/nDWBqehQg3u55+d4Q03emExGs3Vh4FwucLa+bFsPtLeEhHsydEhoxbTvPck
-         +82n4as7E+Uvctkyl0pkZWaUmj/gmU2GxH5lZrdz8FHkloEKMMKNPfPp8aWLtwfZ6WWn
-         dIBhPlpbDDNkhSFmO6t2YjsCTRukEoJEISatwzt8ngdsiXBBiwl8lEr+lvXkyAgu1pHP
-         FZdw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=eUixt7kjjRYvk+Y9YAKueBUK8sv8y9L7VAY1elFnrtU=;
-        b=CHdzwDKjM3FkZHw6hXf3KS7j+SgHS4NPgyISZ1BnA4oSBCdXq9sZVeaWjaan4vOy7c
-         xQbV7NfZp+B5AUjmOwOQSOGmRw5ZkCrghnw7dOxel1Wtcy+ttEwHA7g/yV+A9jcFE4u7
-         jQ09+x15a/7ejnhHtlMx4Onkp6M3CVggrdXjttYkv/nMcUQ1A+Mm4eYErL3mptH1uCJG
-         SsnLUSM2P/hn54t+01BxaRX4JurEZsVfiT8R8Mut/ZPY2ezsEOMgvvn2eKz0zXu2Y4Nh
-         i2dW1LTt0iwGVaKMp3vK4Q0j4q4ZLX39IrrtCpFeUeypl/B7EexB6AeYhFPY+fgI2BRx
-         r9Vw==
-X-Gm-Message-State: AOAM533L4Mu1/AVmc2ODkmOrJPDTUWBSxjudKIVdHJ75AGQu6YKA03c5
-        ybftPtPSVjbGJUaaFdVrGkVj9PAzCvTWcjYZiiU=
-X-Google-Smtp-Source: ABdhPJwD5StHUGXMfpUoENpCVOeSGT7bdoImJSwK66yINOD5nnL8hvvYQqttjrvEYgP7LyvfE55hiu2y0qqfDUgZjgM=
-X-Received: by 2002:adf:bc0f:: with SMTP id s15mr13786817wrg.83.1603647558171;
- Sun, 25 Oct 2020 10:39:18 -0700 (PDT)
+        Sun, 25 Oct 2020 14:11:42 -0400
+Received: from the.earth.li (the.earth.li [IPv6:2a00:1098:86:4d:c0ff:ee:15:900d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D0464C061755;
+        Sun, 25 Oct 2020 11:11:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=earth.li;
+         s=the; h=In-Reply-To:Content-Type:MIME-Version:References:Message-ID:Subject
+        :To:From:Date:Sender:Reply-To:Cc:Content-Transfer-Encoding:Content-ID:
+        Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
+        :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
+        List-Post:List-Owner:List-Archive;
+        bh=sSB03AMMITG/wa7nVEI32XF5nAE0wwFsvgUgRHtSpoE=; b=PfwjRQtGNQdAMrBUFTNBj0UnEm
+        qFHKCqBhO8PBX8g7AIOh2Kxn+v0YT+FSnTlnXhD8ui15ZVBHWtSMTIZJ5qGPVZv6FHt3qvw5D74Ab
+        I119xrIp8ID3D7WXCe7fN5YkHlTl506tAXE0gkAN+5mxBXVea4+MYsA7q5pXSFOILaOA/3g6K8Olj
+        59v+CKAJbqTXLP5j4b6RSOUnrg/m4GJ/IaM39ddYsHp9F4PvKz4RQ1muSQqgqquT3WOaj5HEKbs5z
+        eHnhmzK6l8swfmrqjOXylICO7AnRW5kx0dd9yoFQDaL1Mdw2/usy9S5XRAPQUXDAG456Vl2VDIyME
+        lWm1Zj6Q==;
+Received: from noodles by the.earth.li with local (Exim 4.92)
+        (envelope-from <noodles@earth.li>)
+        id 1kWkUP-0007rW-OO; Sun, 25 Oct 2020 18:11:33 +0000
+Date:   Sun, 25 Oct 2020 18:11:33 +0000
+From:   Jonathan McDowell <noodles@earth.li>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Dan Williams <dan.j.williams@intel.com>,
+        Philipp Zabel <p.zabel@pengutronix.de>,
+        Thomas Pedersen <twp@codeaurora.org>,
+        Vinod Koul <vkoul@kernel.org>, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, dmaengine@vger.kernel.org
+Subject: Re: [PATCH v4] dmaengine: qcom: Add ADM driver
+Message-ID: <20201025181133.GB941@earth.li>
+References: <20200916064326.GA13963@earth.li>
+ <20200919185739.GS3411@earth.li>
+ <20200920181204.GT3411@earth.li>
+ <20200923194056.GY3411@earth.li>
 MIME-Version: 1.0
-References: <20201012020958.229288-1-robdclark@gmail.com> <20201012020958.229288-8-robdclark@gmail.com>
- <20201012143555.GA438822@phenom.ffwll.local> <CAF6AEGstGtBswUUiyHxT2cCm8NwZekDnMzD0J_pQH37GwS=LiA@mail.gmail.com>
- <20201020090729.qgqish5kqamhvatj@vireshk-i7> <CAKMK7uHAgVUPHOPxDdt3LeAWqokxfuzqjZj4qqFkoKxFbRbRrg@mail.gmail.com>
- <20201020112413.xbk2vow2kgjky3pb@vireshk-i7> <CAF6AEGsCj-AtFozn8d1xiNNFNbuMJ0UxS-eMhBVXiQ7rKahKnQ@mail.gmail.com>
- <20201022080644.2ck4okrxygmkuatn@vireshk-i7>
-In-Reply-To: <20201022080644.2ck4okrxygmkuatn@vireshk-i7>
-From:   Rob Clark <robdclark@gmail.com>
-Date:   Sun, 25 Oct 2020 10:39:06 -0700
-Message-ID: <CAF6AEGv6RMCsK4yp-W2d1mVTMcEiiwFGAb+V8rYLhDdMhqP80Q@mail.gmail.com>
-Subject: Re: [PATCH v2 07/22] drm/msm: Do rpm get sooner in the submit path
-To:     Viresh Kumar <viresh.kumar@linaro.org>
-Cc:     Daniel Vetter <daniel@ffwll.ch>,
-        dri-devel <dri-devel@lists.freedesktop.org>,
-        Rob Clark <robdclark@chromium.org>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
-        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
-        <linux-arm-msm@vger.kernel.org>,
-        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
-        <freedreno@lists.freedesktop.org>,
-        open list <linux-kernel@vger.kernel.org>,
-        "Menon, Nishanth" <nm@ti.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20200923194056.GY3411@earth.li>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Oct 22, 2020 at 1:06 AM Viresh Kumar <viresh.kumar@linaro.org> wrote:
->
-> On 20-10-20, 07:13, Rob Clark wrote:
-> > On Tue, Oct 20, 2020 at 4:24 AM Viresh Kumar <viresh.kumar@linaro.org> wrote:
-> > >
-> > > On 20-10-20, 12:56, Daniel Vetter wrote:
-> > > > Yeah that's bad practice. Generally you shouldn't need to hold locks
-> > > > in setup/teardown code, since there's no other thread which can
-> > > > possible hold a reference to anything your touching anymore. Ofc
-> > > > excluding quickly grabbing/dropping a lock to insert/remove objects
-> > > > into lists and stuff.
-> > > >
-> > > > The other reason is that especially with anything related to sysfs or
-> > > > debugfs, the locking dependencies you're pulling in are enormous: vfs
-> > > > locks pull in mm locks (due to mmap) and at that point there's pretty
-> > > > much nothing left you're allowed to hold while acquiring such a lock.
-> > > > For simple drivers this is no issue, but for fancy drivers (like gpu
-> > > > drivers) which need to interact with core mm) this means your
-> > > > subsystem is a major pain to use.
-> > > >
-> > > > Usually the correct fix is to only hold your subsystem locks in
-> > > > setup/teardown when absolutely required, and fix any data
-> > > > inconsistency issues by reordering your setup/teardown code: When you
-> > > > register as the last step and unregister as the first step, there's no
-> > > > need for any additional locking. And hence no need to call debugfs
-> > > > functions while holding your subsystem locks.
-> > > >
-> > > > The catch phrase I use for this is "don't solve object lifetime issues
-> > > > with locking". Instead use refcounting and careful ordering in
-> > > > setup/teardown code.
-> > >
-> > > This is exactly what I have done in the OPP core, the locks were taken
-> > > only when really necessary, though as we have seen now I have missed
-> > > that at a single place and that should be fixed as well. Will do that,
-> > > thanks.
-> >
-> > I do have an easy enough way to repro the issue, so if you have a
-> > patch I can certainly test it.
->
-> Does this fix it for you ? There is one more place still left where we
-> are taking the opp_table_lock while adding stuff to debugfs and that's
-> not that straight forward to fix. But I didn't see that path in your
-> circular dependency trace, so who knows :)
+Gentle ping on this one; looks like I missed the window for 5.10, but is
+there anything outstanding for it to hit 5.11 or should I just have
+patience?
 
-Nope, I suspect any creation of debugfs files will be problematic.
-
-(btw, _add_opp_dev_unlocked() looks like it should be called
-_add_opp_dev_locked()?)
-
-It does look like 'struct opp_table' is already refcnt'd, so I suspect
-you could replace holding opp_table_lock while calling into debugfs
-with holding a reference to the opp_table instead?
-
-BR,
--R
-
-[  +0.074543] ======================================================
-[  +0.006347] WARNING: possible circular locking dependency detected
-[  +0.006349] 5.4.72 #14 Not tainted
-[  +0.003501] ------------------------------------------------------
-[  +0.006350] chrome/1865 is trying to acquire lock:
-[  +0.004922] ffffffdd34921750 (opp_table_lock){+.+.}, at:
-_find_opp_table+0x34/0x74
-[  +0.007779]
-              but task is already holding lock:
-[  +0.005989] ffffff81f0fc71a8 (reservation_ww_class_mutex){+.+.}, at:
-submit_lock_objects+0x70/0x1ec
-[  +0.001132] fscrypt: AES-256-CTS-CBC using implementation "cts-cbc-aes-ce"
-[  +0.008156]
-              which lock already depends on the new lock.
-
-[  +0.000002]
-              the existing dependency chain (in reverse order) is:
-[  +0.000002]
-              -> #4 (reservation_ww_class_mutex){+.+.}:
-[  +0.000009]        __mutex_lock_common+0xec/0xc0c
-[  +0.000004]        ww_mutex_lock_interruptible+0x5c/0xc4
-[  +0.000003]        msm_gem_fault+0x2c/0x124
-[  +0.000005]        __do_fault+0x40/0x16c
-[  +0.000003]        handle_mm_fault+0x7cc/0xd98
-[  +0.000005]        do_page_fault+0x230/0x3b4
-[  +0.000003]        do_translation_fault+0x5c/0x78
-[  +0.000004]        do_mem_abort+0x4c/0xb4
-[  +0.000006]        el0_da+0x1c/0x20
-[  +0.069917]
-              -> #3 (&mm->mmap_sem){++++}:
-[  +0.005548]        __might_fault+0x70/0x98
-[  +0.004209]        compat_filldir+0xf8/0x48c
-[  +0.004394]        dcache_readdir+0x70/0x1dc
-[  +0.004394]        iterate_dir+0xd4/0x180
-[  +0.004119]        __arm64_compat_sys_getdents+0xa0/0x19c
-[  +0.005549]        el0_svc_common+0xa8/0x178
-[  +0.004394]        el0_svc_compat_handler+0x2c/0x40
-[  +0.005007]        el0_svc_compat+0x8/0x10
-[  +0.004205]
-              -> #2 (&sb->s_type->i_mutex_key#3){++++}:
-[  +0.006708]        down_write+0x54/0x16c
-[  +0.004034]        start_creating+0x68/0x128
-[  +0.004392]        debugfs_create_dir+0x28/0x114
-[  +0.004747]        opp_debug_register+0x8c/0xc0
-[  +0.004657]        _add_opp_dev_unlocked+0x5c/0x70
-[  +0.004920]        _add_opp_dev+0x38/0x58
-[  +0.004118]        _opp_get_opp_table+0xdc/0x1ac
-[  +0.004745]        dev_pm_opp_get_opp_table_indexed+0x24/0x30
-[  +0.005899]        dev_pm_opp_of_add_table_indexed+0x48/0x84
-[  +0.005813]        of_genpd_add_provider_onecell+0xc0/0x1b8
-[  +0.005724]        rpmhpd_probe+0x240/0x268
-[  +0.004307]        platform_drv_probe+0x90/0xb0
-[  +0.004654]        really_probe+0x134/0x2ec
-[  +0.004304]        driver_probe_device+0x64/0xfc
-[  +0.004746]        __device_attach_driver+0x8c/0xa4
-[  +0.005008]        bus_for_each_drv+0x90/0xd8
-[  +0.004481]        __device_attach+0xc0/0x148
-[  +0.004480]        device_initial_probe+0x20/0x2c
-[  +0.004832]        bus_probe_device+0x34/0x94
-[  +0.004482]        device_add+0x1fc/0x3b0
-[  +0.004121]        of_device_add+0x3c/0x4c
-[  +0.004206]        of_platform_device_create_pdata+0xb8/0xfc
-[  +0.005811]        of_platform_bus_create+0x1e4/0x368
-[  +0.005185]        of_platform_populate+0x70/0xbc
-[  +0.004833]        devm_of_platform_populate+0x58/0xa0
-[  +0.005283]        rpmh_rsc_probe+0x36c/0x3cc
-[  +0.004481]        platform_drv_probe+0x90/0xb0
-[  +0.004657]        really_probe+0x134/0x2ec
-[  +0.004305]        driver_probe_device+0x64/0xfc
-[  +0.004745]        __device_attach_driver+0x8c/0xa4
-[  +0.005007]        bus_for_each_drv+0x90/0xd8
-[  +0.004480]        __device_attach+0xc0/0x148
-[  +0.004481]        device_initial_probe+0x20/0x2c
-[  +0.004833]        bus_probe_device+0x34/0x94
-[  +0.004481]        device_add+0x1fc/0x3b0
-[  +0.004119]        of_device_add+0x3c/0x4c
-[  +0.004206]        of_platform_device_create_pdata+0xb8/0xfc
-[  +0.005811]        of_platform_bus_create+0x1e4/0x368
-[  +0.005185]        of_platform_bus_create+0x230/0x368
-[  +0.005185]        of_platform_populate+0x70/0xbc
-[  +0.004836]        of_platform_default_populate_init+0xa8/0xc0
-[  +0.005986]        do_one_initcall+0x1c8/0x3fc
-[  +0.004572]        do_initcall_level+0xb4/0x10c
-[  +0.004657]        do_basic_setup+0x30/0x48
-[  +0.004304]        kernel_init_freeable+0x124/0x1a4
-[  +0.005009]        kernel_init+0x14/0x104
-[  +0.004119]        ret_from_fork+0x10/0x18
-[  +0.004205]
-              -> #1 (&opp_table->lock){+.+.}:
-[  +0.005815]        __mutex_lock_common+0xec/0xc0c
-[  +0.004832]        mutex_lock_nested+0x40/0x50
-[  +0.004570]        _add_opp_dev+0x2c/0x58
-[  +0.004119]        _opp_get_opp_table+0xdc/0x1ac
-[  +0.004745]        dev_pm_opp_get_opp_table_indexed+0x24/0x30
-[  +0.005899]        dev_pm_opp_of_add_table_indexed+0x48/0x84
-[  +0.005814]        of_genpd_add_provider_onecell+0xc0/0x1b8
-[  +0.005721]        rpmhpd_probe+0x240/0x268
-[  +0.004306]        platform_drv_probe+0x90/0xb0
-[  +0.004656]        really_probe+0x134/0x2ec
-[  +0.004305]        driver_probe_device+0x64/0xfc
-[  +0.004745]        __device_attach_driver+0x8c/0xa4
-[  +0.005007]        bus_for_each_drv+0x90/0xd8
-[  +0.004481]        __device_attach+0xc0/0x148
-[  +0.004481]        device_initial_probe+0x20/0x2c
-[  +0.004832]        bus_probe_device+0x34/0x94
-[  +0.004481]        device_add+0x1fc/0x3b0
-[  +0.004119]        of_device_add+0x3c/0x4c
-[  +0.004206]        of_platform_device_create_pdata+0xb8/0xfc
-[  +0.005810]        of_platform_bus_create+0x1e4/0x368
-[  +0.005197]        of_platform_populate+0x70/0xbc
-[  +0.004832]        devm_of_platform_populate+0x58/0xa0
-[  +0.005284]        rpmh_rsc_probe+0x36c/0x3cc
-[  +0.004480]        platform_drv_probe+0x90/0xb0
-[  +0.004658]        really_probe+0x134/0x2ec
-[  +0.004301]        driver_probe_device+0x64/0xfc
-[  +0.004745]        __device_attach_driver+0x8c/0xa4
-[  +0.005007]        bus_for_each_drv+0x90/0xd8
-[  +0.004480]        __device_attach+0xc0/0x148
-[  +0.004481]        device_initial_probe+0x20/0x2c
-[  +0.004831]        bus_probe_device+0x34/0x94
-[  +0.004482]        device_add+0x1fc/0x3b0
-[  +0.004118]        of_device_add+0x3c/0x4c
-[  +0.004214]        of_platform_device_create_pdata+0xb8/0xfc
-[  +0.005817]        of_platform_bus_create+0x1e4/0x368
-[  +0.005186]        of_platform_bus_create+0x230/0x368
-[  +0.005188]        of_platform_populate+0x70/0xbc
-[  +0.004832]        of_platform_default_populate_init+0xa8/0xc0
-[  +0.005987]        do_one_initcall+0x1c8/0x3fc
-[  +0.004569]        do_initcall_level+0xb4/0x10c
-[  +0.004657]        do_basic_setup+0x30/0x48
-[  +0.004305]        kernel_init_freeable+0x124/0x1a4
-[  +0.005008]        kernel_init+0x14/0x104
-[  +0.004119]        ret_from_fork+0x10/0x18
-[  +0.004206]
-              -> #0 (opp_table_lock){+.+.}:
-[  +0.005640]        __lock_acquire+0xee4/0x2450
-[  +0.004570]        lock_acquire+0x1cc/0x210
-[  +0.004305]        __mutex_lock_common+0xec/0xc0c
-[  +0.004833]        mutex_lock_nested+0x40/0x50
-[  +0.004570]        _find_opp_table+0x34/0x74
-[  +0.004393]        dev_pm_opp_find_freq_exact+0x2c/0xdc
-[  +0.005372]        a6xx_gmu_resume+0xc8/0xecc
-[  +0.004480]        a6xx_pm_resume+0x148/0x200
-[  +0.004482]        adreno_resume+0x28/0x34
-[  +0.004209]        pm_generic_runtime_resume+0x34/0x48
-[  +0.005283]        __rpm_callback+0x70/0x10c
-[  +0.004393]        rpm_callback+0x34/0x8c
-[  +0.004119]        rpm_resume+0x414/0x550
-[  +0.004119]        __pm_runtime_resume+0x7c/0xa0
-[  +0.004746]        msm_gpu_submit+0x60/0x1c0
-[  +0.004394]        msm_ioctl_gem_submit+0xadc/0xb60
-[  +0.005010]        drm_ioctl_kernel+0x9c/0x118
-[  +0.004569]        drm_ioctl+0x27c/0x408
-[  +0.004034]        drm_compat_ioctl+0xcc/0xdc
-[  +0.004483]        __se_compat_sys_ioctl+0x100/0x206c
-[  +0.005186]        __arm64_compat_sys_ioctl+0x20/0x2c
-[  +0.005187]        el0_svc_common+0xa8/0x178
-[  +0.004393]        el0_svc_compat_handler+0x2c/0x40
-[  +0.005009]        el0_svc_compat+0x8/0x10
-[  +0.004205]
-              other info that might help us debug this:
-
-[  +0.008213] Chain exists of:
-                opp_table_lock --> &mm->mmap_sem --> reservation_ww_class_mutex
-
-[  +0.011780]  Possible unsafe locking scenario:
-
-[  +0.006082]        CPU0                    CPU1
-[  +0.004660]        ----                    ----
-[  +0.004656]   lock(reservation_ww_class_mutex);
-[  +0.004657]                                lock(&mm->mmap_sem);
-[  +0.006079]                                lock(reservation_ww_class_mutex);
-[  +0.007237]   lock(opp_table_lock);
-[  +0.003592]
-               *** DEADLOCK ***
-
-[  +0.006084] 3 locks held by chrome/1865:
-[  +0.004031]  #0: ffffff81edecc0d8 (&dev->struct_mutex){+.+.}, at:
-msm_ioctl_gem_submit+0x264/0xb60
-[  +0.009198]  #1: ffffff81d0000870
-(reservation_ww_class_acquire){+.+.}, at:
-msm_ioctl_gem_submit+0x8e8/0xb60
-[  +0.010086]  #2: ffffff81f0fc71a8
-(reservation_ww_class_mutex){+.+.}, at: submit_lock_objects+0x70/0x1ec
-[  +0.009735]
-              stack backtrace:
-[  +0.004482] CPU: 0 PID: 1865 Comm: chrome Not tainted 5.4.72 #14
-[  +0.006173] Hardware name: Google Lazor (rev1+) with LTE (DT)
-[  +0.005899] Call trace:
-[  +0.002515]  dump_backtrace+0x0/0x158
-[  +0.003768]  show_stack+0x20/0x2c
-[  +0.003407]  dump_stack+0xc8/0x160
-[  +0.003506]  print_circular_bug+0x2c4/0x2c8
-[  +0.004305]  check_noncircular+0x1a8/0x1b0
-[  +0.004206]  __lock_acquire+0xee4/0x2450
-[  +0.004032]  lock_acquire+0x1cc/0x210
-[  +0.003768]  __mutex_lock_common+0xec/0xc0c
-[  +0.004305]  mutex_lock_nested+0x40/0x50
-[  +0.004033]  _find_opp_table+0x34/0x74
-[  +0.003855]  dev_pm_opp_find_freq_exact+0x2c/0xdc
-[  +0.004833]  a6xx_gmu_resume+0xc8/0xecc
-[  +0.003943]  a6xx_pm_resume+0x148/0x200
-[  +0.003944]  adreno_resume+0x28/0x34
-[  +0.003681]  pm_generic_runtime_resume+0x34/0x48
-[  +0.004745]  __rpm_callback+0x70/0x10c
-[  +0.003854]  rpm_callback+0x34/0x8c
-[  +0.003592]  rpm_resume+0x414/0x550
-[  +0.003592]  __pm_runtime_resume+0x7c/0xa0
-[  +0.004207]  msm_gpu_submit+0x60/0x1c0
-[  +0.003855]  msm_ioctl_gem_submit+0xadc/0xb60
-[  +0.004481]  drm_ioctl_kernel+0x9c/0x118
-[  +0.004031]  drm_ioctl+0x27c/0x408
-[  +0.003504]  drm_compat_ioctl+0xcc/0xdc
-[  +0.003945]  __se_compat_sys_ioctl+0x100/0x206c
-[  +0.004658]  __arm64_compat_sys_ioctl+0x20/0x2c
-[  +0.004659]  el0_svc_common+0xa8/0x178
-[  +0.003855]  el0_svc_compat_handler+0x2c/0x40
-[  +0.004480]  el0_svc_compat+0x8/0x10
-
-> diff --git a/drivers/opp/core.c b/drivers/opp/core.c
-> index 2483e765318a..4cc0fb716381 100644
-> --- a/drivers/opp/core.c
-> +++ b/drivers/opp/core.c
-> @@ -1181,6 +1181,10 @@ static void _opp_table_kref_release(struct kref *kref)
->         struct opp_device *opp_dev, *temp;
->         int i;
->
-> +       /* Drop the lock as soon as we can */
-> +       list_del(&opp_table->node);
-> +       mutex_unlock(&opp_table_lock);
+On Wed, Sep 23, 2020 at 08:40:56PM +0100, Jonathan McDowell wrote:
+> Add the DMA engine driver for the QCOM Application Data Mover (ADM) DMA
+> controller found in the MSM8x60 and IPQ/APQ8064 platforms.
+> 
+> The ADM supports both memory to memory transactions and memory
+> to/from peripheral device transactions.  The controller also provides
+> flow control capabilities for transactions to/from peripheral devices.
+> 
+> The initial release of this driver supports slave transfers to/from
+> peripherals and also incorporates CRCI (client rate control interface)
+> flow control.
+> 
+> Signed-off-by: Andy Gross <agross@codeaurora.org>
+> Signed-off-by: Thomas Pedersen <twp@codeaurora.org>
+> Signed-off-by: Jonathan McDowell <noodles@earth.li>
+> 
+> (I'm not sure how best to attribute this. It's originally from Andy
+> Gross, the version I picked up was a later version from Thomas Pedersen,
+> and I can't find clear indication of why the latest version wasn't
+> applied. The device tree details were added back in September 2014. The
+> driver is the missing piece in mainline for IPQ8064 NAND support and
+> I've been using it successfully with my RB3011 device on 5.8+)
+> 
+> v4:
+> - Reorder probe function to acquire resources before enabling anything
+> v3:
+> - Depend on !PHYS_ADDR_T_64BIT rather than !64BIT as reported by kernel
+>   test robot <lkp@intel.com>
+> v2:
+> - Address Vinod's review comments
+>   - GFP_NOWAIT instead of GFP_ATOMIC
+>   - Use devm_platform_ioremap_resource()
+>   - Call tasklet_kill on remove
+>   - Sort Kconfig/Makefile entries
+>   - SPDX identifier
+>   - Formatting fixes for checkpatch --strict
+> ---
+>  drivers/dma/qcom/Kconfig    |  11 +
+>  drivers/dma/qcom/Makefile   |   1 +
+>  drivers/dma/qcom/qcom_adm.c | 903 ++++++++++++++++++++++++++++++++++++
+>  3 files changed, 915 insertions(+)
+>  create mode 100644 drivers/dma/qcom/qcom_adm.c
+> 
+> diff --git a/drivers/dma/qcom/Kconfig b/drivers/dma/qcom/Kconfig
+> index 3bcb689162c6..0389d60d2604 100644
+> --- a/drivers/dma/qcom/Kconfig
+> +++ b/drivers/dma/qcom/Kconfig
+> @@ -1,4 +1,15 @@
+>  # SPDX-License-Identifier: GPL-2.0-only
+> +config QCOM_ADM
+> +	tristate "Qualcomm ADM support"
+> +	depends on (ARCH_QCOM || COMPILE_TEST) && !PHYS_ADDR_T_64BIT
+> +	select DMA_ENGINE
+> +	select DMA_VIRTUAL_CHANNELS
+> +	help
+> +	  Enable support for the Qualcomm Application Data Mover (ADM) DMA
+> +	  controller, as present on MSM8x60, APQ8064, and IPQ8064 devices.
+> +	  This controller provides DMA capabilities for both general purpose
+> +	  and on-chip peripheral devices.
 > +
->         _of_clear_opp_table(opp_table);
->
->         /* Release clk */
-> @@ -1208,10 +1212,7 @@ static void _opp_table_kref_release(struct kref *kref)
->
->         mutex_destroy(&opp_table->genpd_virt_dev_lock);
->         mutex_destroy(&opp_table->lock);
-> -       list_del(&opp_table->node);
->         kfree(opp_table);
-> -
-> -       mutex_unlock(&opp_table_lock);
->  }
->
->  void dev_pm_opp_put_opp_table(struct opp_table *opp_table)
->
-> --
-> viresh
+>  config QCOM_BAM_DMA
+>  	tristate "QCOM BAM DMA support"
+>  	depends on ARCH_QCOM || (COMPILE_TEST && OF && ARM)
+> diff --git a/drivers/dma/qcom/Makefile b/drivers/dma/qcom/Makefile
+> index 1ae92da88b0c..346e643fbb6d 100644
+> --- a/drivers/dma/qcom/Makefile
+> +++ b/drivers/dma/qcom/Makefile
+> @@ -1,4 +1,5 @@
+>  # SPDX-License-Identifier: GPL-2.0
+> +obj-$(CONFIG_QCOM_ADM) += qcom_adm.o
+>  obj-$(CONFIG_QCOM_BAM_DMA) += bam_dma.o
+>  obj-$(CONFIG_QCOM_HIDMA_MGMT) += hdma_mgmt.o
+>  hdma_mgmt-objs	 := hidma_mgmt.o hidma_mgmt_sys.o
+> diff --git a/drivers/dma/qcom/qcom_adm.c b/drivers/dma/qcom/qcom_adm.c
+> new file mode 100644
+> index 000000000000..9b6f8e050ecc
+> --- /dev/null
+> +++ b/drivers/dma/qcom/qcom_adm.c
+> @@ -0,0 +1,903 @@
+> +// SPDX-License-Identifier: GPL-2.0-only
+> +/*
+> + * Copyright (c) 2013-2015, The Linux Foundation. All rights reserved.
+> + */
+> +
+> +#include <linux/clk.h>
+> +#include <linux/delay.h>
+> +#include <linux/device.h>
+> +#include <linux/dmaengine.h>
+> +#include <linux/dma-mapping.h>
+> +#include <linux/init.h>
+> +#include <linux/interrupt.h>
+> +#include <linux/io.h>
+> +#include <linux/kernel.h>
+> +#include <linux/module.h>
+> +#include <linux/of.h>
+> +#include <linux/of_address.h>
+> +#include <linux/of_irq.h>
+> +#include <linux/of_dma.h>
+> +#include <linux/platform_device.h>
+> +#include <linux/reset.h>
+> +#include <linux/scatterlist.h>
+> +#include <linux/slab.h>
+> +
+> +#include "../dmaengine.h"
+> +#include "../virt-dma.h"
+> +
+> +/* ADM registers - calculated from channel number and security domain */
+> +#define ADM_CHAN_MULTI			0x4
+> +#define ADM_CI_MULTI			0x4
+> +#define ADM_CRCI_MULTI			0x4
+> +#define ADM_EE_MULTI			0x800
+> +#define ADM_CHAN_OFFS(chan)		(ADM_CHAN_MULTI * (chan))
+> +#define ADM_EE_OFFS(ee)			(ADM_EE_MULTI * (ee))
+> +#define ADM_CHAN_EE_OFFS(chan, ee)	(ADM_CHAN_OFFS(chan) + ADM_EE_OFFS(ee))
+> +#define ADM_CHAN_OFFS(chan)		(ADM_CHAN_MULTI * (chan))
+> +#define ADM_CI_OFFS(ci)			(ADM_CHAN_OFF(ci))
+> +#define ADM_CH_CMD_PTR(chan, ee)	(ADM_CHAN_EE_OFFS(chan, ee))
+> +#define ADM_CH_RSLT(chan, ee)		(0x40 + ADM_CHAN_EE_OFFS(chan, ee))
+> +#define ADM_CH_FLUSH_STATE0(chan, ee)	(0x80 + ADM_CHAN_EE_OFFS(chan, ee))
+> +#define ADM_CH_STATUS_SD(chan, ee)	(0x200 + ADM_CHAN_EE_OFFS(chan, ee))
+> +#define ADM_CH_CONF(chan)		(0x240 + ADM_CHAN_OFFS(chan))
+> +#define ADM_CH_RSLT_CONF(chan, ee)	(0x300 + ADM_CHAN_EE_OFFS(chan, ee))
+> +#define ADM_SEC_DOMAIN_IRQ_STATUS(ee)	(0x380 + ADM_EE_OFFS(ee))
+> +#define ADM_CI_CONF(ci)			(0x390 + (ci) * ADM_CI_MULTI)
+> +#define ADM_GP_CTL			0x3d8
+> +#define ADM_CRCI_CTL(crci, ee)		(0x400 + (crci) * ADM_CRCI_MULTI + \
+> +						ADM_EE_OFFS(ee))
+> +
+> +/* channel status */
+> +#define ADM_CH_STATUS_VALID		BIT(1)
+> +
+> +/* channel result */
+> +#define ADM_CH_RSLT_VALID		BIT(31)
+> +#define ADM_CH_RSLT_ERR			BIT(3)
+> +#define ADM_CH_RSLT_FLUSH		BIT(2)
+> +#define ADM_CH_RSLT_TPD			BIT(1)
+> +
+> +/* channel conf */
+> +#define ADM_CH_CONF_SHADOW_EN		BIT(12)
+> +#define ADM_CH_CONF_MPU_DISABLE		BIT(11)
+> +#define ADM_CH_CONF_PERM_MPU_CONF	BIT(9)
+> +#define ADM_CH_CONF_FORCE_RSLT_EN	BIT(7)
+> +#define ADM_CH_CONF_SEC_DOMAIN(ee)	((((ee) & 0x3) << 4) | (((ee) & 0x4) << 11))
+> +
+> +/* channel result conf */
+> +#define ADM_CH_RSLT_CONF_FLUSH_EN	BIT(1)
+> +#define ADM_CH_RSLT_CONF_IRQ_EN		BIT(0)
+> +
+> +/* CRCI CTL */
+> +#define ADM_CRCI_CTL_MUX_SEL		BIT(18)
+> +#define ADM_CRCI_CTL_RST		BIT(17)
+> +
+> +/* CI configuration */
+> +#define ADM_CI_RANGE_END(x)		((x) << 24)
+> +#define ADM_CI_RANGE_START(x)		((x) << 16)
+> +#define ADM_CI_BURST_4_WORDS		BIT(2)
+> +#define ADM_CI_BURST_8_WORDS		BIT(3)
+> +
+> +/* GP CTL */
+> +#define ADM_GP_CTL_LP_EN		BIT(12)
+> +#define ADM_GP_CTL_LP_CNT(x)		((x) << 8)
+> +
+> +/* Command pointer list entry */
+> +#define ADM_CPLE_LP			BIT(31)
+> +#define ADM_CPLE_CMD_PTR_LIST		BIT(29)
+> +
+> +/* Command list entry */
+> +#define ADM_CMD_LC			BIT(31)
+> +#define ADM_CMD_DST_CRCI(n)		(((n) & 0xf) << 7)
+> +#define ADM_CMD_SRC_CRCI(n)		(((n) & 0xf) << 3)
+> +
+> +#define ADM_CMD_TYPE_SINGLE		0x0
+> +#define ADM_CMD_TYPE_BOX		0x3
+> +
+> +#define ADM_CRCI_MUX_SEL		BIT(4)
+> +#define ADM_DESC_ALIGN			8
+> +#define ADM_MAX_XFER			(SZ_64K - 1)
+> +#define ADM_MAX_ROWS			(SZ_64K - 1)
+> +#define ADM_MAX_CHANNELS		16
+> +
+> +struct adm_desc_hw_box {
+> +	u32 cmd;
+> +	u32 src_addr;
+> +	u32 dst_addr;
+> +	u32 row_len;
+> +	u32 num_rows;
+> +	u32 row_offset;
+> +};
+> +
+> +struct adm_desc_hw_single {
+> +	u32 cmd;
+> +	u32 src_addr;
+> +	u32 dst_addr;
+> +	u32 len;
+> +};
+> +
+> +struct adm_async_desc {
+> +	struct virt_dma_desc vd;
+> +	struct adm_device *adev;
+> +
+> +	size_t length;
+> +	enum dma_transfer_direction dir;
+> +	dma_addr_t dma_addr;
+> +	size_t dma_len;
+> +
+> +	void *cpl;
+> +	dma_addr_t cp_addr;
+> +	u32 crci;
+> +	u32 mux;
+> +	u32 blk_size;
+> +};
+> +
+> +struct adm_chan {
+> +	struct virt_dma_chan vc;
+> +	struct adm_device *adev;
+> +
+> +	/* parsed from DT */
+> +	u32 id;			/* channel id */
+> +
+> +	struct adm_async_desc *curr_txd;
+> +	struct dma_slave_config slave;
+> +	struct list_head node;
+> +
+> +	int error;
+> +	int initialized;
+> +};
+> +
+> +static inline struct adm_chan *to_adm_chan(struct dma_chan *common)
+> +{
+> +	return container_of(common, struct adm_chan, vc.chan);
+> +}
+> +
+> +struct adm_device {
+> +	void __iomem *regs;
+> +	struct device *dev;
+> +	struct dma_device common;
+> +	struct device_dma_parameters dma_parms;
+> +	struct adm_chan *channels;
+> +
+> +	u32 ee;
+> +
+> +	struct clk *core_clk;
+> +	struct clk *iface_clk;
+> +
+> +	struct reset_control *clk_reset;
+> +	struct reset_control *c0_reset;
+> +	struct reset_control *c1_reset;
+> +	struct reset_control *c2_reset;
+> +	int irq;
+> +};
+> +
+> +/**
+> + * adm_free_chan - Frees dma resources associated with the specific channel
+> + *
+> + * Free all allocated descriptors associated with this channel
+> + *
+> + */
+> +static void adm_free_chan(struct dma_chan *chan)
+> +{
+> +	/* free all queued descriptors */
+> +	vchan_free_chan_resources(to_virt_chan(chan));
+> +}
+> +
+> +/**
+> + * adm_get_blksize - Get block size from burst value
+> + *
+> + */
+> +static int adm_get_blksize(unsigned int burst)
+> +{
+> +	int ret;
+> +
+> +	switch (burst) {
+> +	case 16:
+> +	case 32:
+> +	case 64:
+> +	case 128:
+> +		ret = ffs(burst >> 4) - 1;
+> +		break;
+> +	case 192:
+> +		ret = 4;
+> +		break;
+> +	case 256:
+> +		ret = 5;
+> +		break;
+> +	default:
+> +		ret = -EINVAL;
+> +		break;
+> +	}
+> +
+> +	return ret;
+> +}
+> +
+> +/**
+> + * adm_process_fc_descriptors - Process descriptors for flow controlled xfers
+> + *
+> + * @achan: ADM channel
+> + * @desc: Descriptor memory pointer
+> + * @sg: Scatterlist entry
+> + * @crci: CRCI value
+> + * @burst: Burst size of transaction
+> + * @direction: DMA transfer direction
+> + */
+> +static void *adm_process_fc_descriptors(struct adm_chan *achan, void *desc,
+> +					struct scatterlist *sg, u32 crci,
+> +					u32 burst,
+> +					enum dma_transfer_direction direction)
+> +{
+> +	struct adm_desc_hw_box *box_desc = NULL;
+> +	struct adm_desc_hw_single *single_desc;
+> +	u32 remainder = sg_dma_len(sg);
+> +	u32 rows, row_offset, crci_cmd;
+> +	u32 mem_addr = sg_dma_address(sg);
+> +	u32 *incr_addr = &mem_addr;
+> +	u32 *src, *dst;
+> +
+> +	if (direction == DMA_DEV_TO_MEM) {
+> +		crci_cmd = ADM_CMD_SRC_CRCI(crci);
+> +		row_offset = burst;
+> +		src = &achan->slave.src_addr;
+> +		dst = &mem_addr;
+> +	} else {
+> +		crci_cmd = ADM_CMD_DST_CRCI(crci);
+> +		row_offset = burst << 16;
+> +		src = &mem_addr;
+> +		dst = &achan->slave.dst_addr;
+> +	}
+> +
+> +	while (remainder >= burst) {
+> +		box_desc = desc;
+> +		box_desc->cmd = ADM_CMD_TYPE_BOX | crci_cmd;
+> +		box_desc->row_offset = row_offset;
+> +		box_desc->src_addr = *src;
+> +		box_desc->dst_addr = *dst;
+> +
+> +		rows = remainder / burst;
+> +		rows = min_t(u32, rows, ADM_MAX_ROWS);
+> +		box_desc->num_rows = rows << 16 | rows;
+> +		box_desc->row_len = burst << 16 | burst;
+> +
+> +		*incr_addr += burst * rows;
+> +		remainder -= burst * rows;
+> +		desc += sizeof(*box_desc);
+> +	}
+> +
+> +	/* if leftover bytes, do one single descriptor */
+> +	if (remainder) {
+> +		single_desc = desc;
+> +		single_desc->cmd = ADM_CMD_TYPE_SINGLE | crci_cmd;
+> +		single_desc->len = remainder;
+> +		single_desc->src_addr = *src;
+> +		single_desc->dst_addr = *dst;
+> +		desc += sizeof(*single_desc);
+> +
+> +		if (sg_is_last(sg))
+> +			single_desc->cmd |= ADM_CMD_LC;
+> +	} else {
+> +		if (box_desc && sg_is_last(sg))
+> +			box_desc->cmd |= ADM_CMD_LC;
+> +	}
+> +
+> +	return desc;
+> +}
+> +
+> +/**
+> + * adm_process_non_fc_descriptors - Process descriptors for non-fc xfers
+> + *
+> + * @achan: ADM channel
+> + * @desc: Descriptor memory pointer
+> + * @sg: Scatterlist entry
+> + * @direction: DMA transfer direction
+> + */
+> +static void *adm_process_non_fc_descriptors(struct adm_chan *achan, void *desc,
+> +					    struct scatterlist *sg,
+> +					    enum dma_transfer_direction direction)
+> +{
+> +	struct adm_desc_hw_single *single_desc;
+> +	u32 remainder = sg_dma_len(sg);
+> +	u32 mem_addr = sg_dma_address(sg);
+> +	u32 *incr_addr = &mem_addr;
+> +	u32 *src, *dst;
+> +
+> +	if (direction == DMA_DEV_TO_MEM) {
+> +		src = &achan->slave.src_addr;
+> +		dst = &mem_addr;
+> +	} else {
+> +		src = &mem_addr;
+> +		dst = &achan->slave.dst_addr;
+> +	}
+> +
+> +	do {
+> +		single_desc = desc;
+> +		single_desc->cmd = ADM_CMD_TYPE_SINGLE;
+> +		single_desc->src_addr = *src;
+> +		single_desc->dst_addr = *dst;
+> +		single_desc->len = (remainder > ADM_MAX_XFER) ?
+> +				ADM_MAX_XFER : remainder;
+> +
+> +		remainder -= single_desc->len;
+> +		*incr_addr += single_desc->len;
+> +		desc += sizeof(*single_desc);
+> +	} while (remainder);
+> +
+> +	/* set last command if this is the end of the whole transaction */
+> +	if (sg_is_last(sg))
+> +		single_desc->cmd |= ADM_CMD_LC;
+> +
+> +	return desc;
+> +}
+> +
+> +/**
+> + * adm_prep_slave_sg - Prep slave sg transaction
+> + *
+> + * @chan: dma channel
+> + * @sgl: scatter gather list
+> + * @sg_len: length of sg
+> + * @direction: DMA transfer direction
+> + * @flags: DMA flags
+> + * @context: transfer context (unused)
+> + */
+> +static struct dma_async_tx_descriptor *adm_prep_slave_sg(struct dma_chan *chan,
+> +							 struct scatterlist *sgl,
+> +							 unsigned int sg_len,
+> +							 enum dma_transfer_direction direction,
+> +							 unsigned long flags,
+> +							 void *context)
+> +{
+> +	struct adm_chan *achan = to_adm_chan(chan);
+> +	struct adm_device *adev = achan->adev;
+> +	struct adm_async_desc *async_desc;
+> +	struct scatterlist *sg;
+> +	dma_addr_t cple_addr;
+> +	u32 i, burst;
+> +	u32 single_count = 0, box_count = 0, crci = 0;
+> +	void *desc;
+> +	u32 *cple;
+> +	int blk_size = 0;
+> +
+> +	if (!is_slave_direction(direction)) {
+> +		dev_err(adev->dev, "invalid dma direction\n");
+> +		return NULL;
+> +	}
+> +
+> +	/*
+> +	 * get burst value from slave configuration
+> +	 */
+> +	burst = (direction == DMA_MEM_TO_DEV) ?
+> +		achan->slave.dst_maxburst :
+> +		achan->slave.src_maxburst;
+> +
+> +	/* if using flow control, validate burst and crci values */
+> +	if (achan->slave.device_fc) {
+> +		blk_size = adm_get_blksize(burst);
+> +		if (blk_size < 0) {
+> +			dev_err(adev->dev, "invalid burst value: %d\n",
+> +				burst);
+> +			return ERR_PTR(-EINVAL);
+> +		}
+> +
+> +		crci = achan->slave.slave_id & 0xf;
+> +		if (!crci || achan->slave.slave_id > 0x1f) {
+> +			dev_err(adev->dev, "invalid crci value\n");
+> +			return ERR_PTR(-EINVAL);
+> +		}
+> +	}
+> +
+> +	/* iterate through sgs and compute allocation size of structures */
+> +	for_each_sg(sgl, sg, sg_len, i) {
+> +		if (achan->slave.device_fc) {
+> +			box_count += DIV_ROUND_UP(sg_dma_len(sg) / burst,
+> +						  ADM_MAX_ROWS);
+> +			if (sg_dma_len(sg) % burst)
+> +				single_count++;
+> +		} else {
+> +			single_count += DIV_ROUND_UP(sg_dma_len(sg),
+> +						     ADM_MAX_XFER);
+> +		}
+> +	}
+> +
+> +	async_desc = kzalloc(sizeof(*async_desc), GFP_NOWAIT);
+> +	if (!async_desc)
+> +		return ERR_PTR(-ENOMEM);
+> +
+> +	if (crci)
+> +		async_desc->mux = achan->slave.slave_id & ADM_CRCI_MUX_SEL ?
+> +					ADM_CRCI_CTL_MUX_SEL : 0;
+> +	async_desc->crci = crci;
+> +	async_desc->blk_size = blk_size;
+> +	async_desc->dma_len = single_count * sizeof(struct adm_desc_hw_single) +
+> +				box_count * sizeof(struct adm_desc_hw_box) +
+> +				sizeof(*cple) + 2 * ADM_DESC_ALIGN;
+> +
+> +	async_desc->cpl = kzalloc(async_desc->dma_len, GFP_NOWAIT);
+> +	if (!async_desc->cpl)
+> +		goto free;
+> +
+> +	async_desc->adev = adev;
+> +
+> +	/* both command list entry and descriptors must be 8 byte aligned */
+> +	cple = PTR_ALIGN(async_desc->cpl, ADM_DESC_ALIGN);
+> +	desc = PTR_ALIGN(cple + 1, ADM_DESC_ALIGN);
+> +
+> +	for_each_sg(sgl, sg, sg_len, i) {
+> +		async_desc->length += sg_dma_len(sg);
+> +
+> +		if (achan->slave.device_fc)
+> +			desc = adm_process_fc_descriptors(achan, desc, sg, crci,
+> +							  burst, direction);
+> +		else
+> +			desc = adm_process_non_fc_descriptors(achan, desc, sg,
+> +							      direction);
+> +	}
+> +
+> +	async_desc->dma_addr = dma_map_single(adev->dev, async_desc->cpl,
+> +					      async_desc->dma_len,
+> +					      DMA_TO_DEVICE);
+> +	if (dma_mapping_error(adev->dev, async_desc->dma_addr))
+> +		goto free;
+> +
+> +	cple_addr = async_desc->dma_addr + ((void *)cple - async_desc->cpl);
+> +
+> +	/* init cmd list */
+> +	dma_sync_single_for_cpu(adev->dev, cple_addr, sizeof(*cple),
+> +				DMA_TO_DEVICE);
+> +	*cple = ADM_CPLE_LP;
+> +	*cple |= (async_desc->dma_addr + ADM_DESC_ALIGN) >> 3;
+> +	dma_sync_single_for_device(adev->dev, cple_addr, sizeof(*cple),
+> +				   DMA_TO_DEVICE);
+> +
+> +	return vchan_tx_prep(&achan->vc, &async_desc->vd, flags);
+> +
+> +free:
+> +	kfree(async_desc);
+> +	return ERR_PTR(-ENOMEM);
+> +}
+> +
+> +/**
+> + * adm_terminate_all - terminate all transactions on a channel
+> + * @achan: adm dma channel
+> + *
+> + * Dequeues and frees all transactions, aborts current transaction
+> + * No callbacks are done
+> + *
+> + */
+> +static int adm_terminate_all(struct dma_chan *chan)
+> +{
+> +	struct adm_chan *achan = to_adm_chan(chan);
+> +	struct adm_device *adev = achan->adev;
+> +	unsigned long flags;
+> +	LIST_HEAD(head);
+> +
+> +	spin_lock_irqsave(&achan->vc.lock, flags);
+> +	vchan_get_all_descriptors(&achan->vc, &head);
+> +
+> +	/* send flush command to terminate current transaction */
+> +	writel_relaxed(0x0,
+> +		       adev->regs + ADM_CH_FLUSH_STATE0(achan->id, adev->ee));
+> +
+> +	spin_unlock_irqrestore(&achan->vc.lock, flags);
+> +
+> +	vchan_dma_desc_free_list(&achan->vc, &head);
+> +
+> +	return 0;
+> +}
+> +
+> +static int adm_slave_config(struct dma_chan *chan, struct dma_slave_config *cfg)
+> +{
+> +	struct adm_chan *achan = to_adm_chan(chan);
+> +	unsigned long flag;
+> +
+> +	spin_lock_irqsave(&achan->vc.lock, flag);
+> +	memcpy(&achan->slave, cfg, sizeof(struct dma_slave_config));
+> +	spin_unlock_irqrestore(&achan->vc.lock, flag);
+> +
+> +	return 0;
+> +}
+> +
+> +/**
+> + * adm_start_dma - start next transaction
+> + * @achan - ADM dma channel
+> + */
+> +static void adm_start_dma(struct adm_chan *achan)
+> +{
+> +	struct virt_dma_desc *vd = vchan_next_desc(&achan->vc);
+> +	struct adm_device *adev = achan->adev;
+> +	struct adm_async_desc *async_desc;
+> +
+> +	lockdep_assert_held(&achan->vc.lock);
+> +
+> +	if (!vd)
+> +		return;
+> +
+> +	list_del(&vd->node);
+> +
+> +	/* write next command list out to the CMD FIFO */
+> +	async_desc = container_of(vd, struct adm_async_desc, vd);
+> +	achan->curr_txd = async_desc;
+> +
+> +	/* reset channel error */
+> +	achan->error = 0;
+> +
+> +	if (!achan->initialized) {
+> +		/* enable interrupts */
+> +		writel(ADM_CH_CONF_SHADOW_EN |
+> +		       ADM_CH_CONF_PERM_MPU_CONF |
+> +		       ADM_CH_CONF_MPU_DISABLE |
+> +		       ADM_CH_CONF_SEC_DOMAIN(adev->ee),
+> +		       adev->regs + ADM_CH_CONF(achan->id));
+> +
+> +		writel(ADM_CH_RSLT_CONF_IRQ_EN | ADM_CH_RSLT_CONF_FLUSH_EN,
+> +		       adev->regs + ADM_CH_RSLT_CONF(achan->id, adev->ee));
+> +
+> +		achan->initialized = 1;
+> +	}
+> +
+> +	/* set the crci block size if this transaction requires CRCI */
+> +	if (async_desc->crci) {
+> +		writel(async_desc->mux | async_desc->blk_size,
+> +		       adev->regs + ADM_CRCI_CTL(async_desc->crci, adev->ee));
+> +	}
+> +
+> +	/* make sure IRQ enable doesn't get reordered */
+> +	wmb();
+> +
+> +	/* write next command list out to the CMD FIFO */
+> +	writel(ALIGN(async_desc->dma_addr, ADM_DESC_ALIGN) >> 3,
+> +	       adev->regs + ADM_CH_CMD_PTR(achan->id, adev->ee));
+> +}
+> +
+> +/**
+> + * adm_dma_irq - irq handler for ADM controller
+> + * @irq: IRQ of interrupt
+> + * @data: callback data
+> + *
+> + * IRQ handler for the bam controller
+> + */
+> +static irqreturn_t adm_dma_irq(int irq, void *data)
+> +{
+> +	struct adm_device *adev = data;
+> +	u32 srcs, i;
+> +	struct adm_async_desc *async_desc;
+> +	unsigned long flags;
+> +
+> +	srcs = readl_relaxed(adev->regs +
+> +			ADM_SEC_DOMAIN_IRQ_STATUS(adev->ee));
+> +
+> +	for (i = 0; i < ADM_MAX_CHANNELS; i++) {
+> +		struct adm_chan *achan = &adev->channels[i];
+> +		u32 status, result;
+> +
+> +		if (srcs & BIT(i)) {
+> +			status = readl_relaxed(adev->regs +
+> +					       ADM_CH_STATUS_SD(i, adev->ee));
+> +
+> +			/* if no result present, skip */
+> +			if (!(status & ADM_CH_STATUS_VALID))
+> +				continue;
+> +
+> +			result = readl_relaxed(adev->regs +
+> +				ADM_CH_RSLT(i, adev->ee));
+> +
+> +			/* no valid results, skip */
+> +			if (!(result & ADM_CH_RSLT_VALID))
+> +				continue;
+> +
+> +			/* flag error if transaction was flushed or failed */
+> +			if (result & (ADM_CH_RSLT_ERR | ADM_CH_RSLT_FLUSH))
+> +				achan->error = 1;
+> +
+> +			spin_lock_irqsave(&achan->vc.lock, flags);
+> +			async_desc = achan->curr_txd;
+> +
+> +			achan->curr_txd = NULL;
+> +
+> +			if (async_desc) {
+> +				vchan_cookie_complete(&async_desc->vd);
+> +
+> +				/* kick off next DMA */
+> +				adm_start_dma(achan);
+> +			}
+> +
+> +			spin_unlock_irqrestore(&achan->vc.lock, flags);
+> +		}
+> +	}
+> +
+> +	return IRQ_HANDLED;
+> +}
+> +
+> +/**
+> + * adm_tx_status - returns status of transaction
+> + * @chan: dma channel
+> + * @cookie: transaction cookie
+> + * @txstate: DMA transaction state
+> + *
+> + * Return status of dma transaction
+> + */
+> +static enum dma_status adm_tx_status(struct dma_chan *chan, dma_cookie_t cookie,
+> +				     struct dma_tx_state *txstate)
+> +{
+> +	struct adm_chan *achan = to_adm_chan(chan);
+> +	struct virt_dma_desc *vd;
+> +	enum dma_status ret;
+> +	unsigned long flags;
+> +	size_t residue = 0;
+> +
+> +	ret = dma_cookie_status(chan, cookie, txstate);
+> +	if (ret == DMA_COMPLETE || !txstate)
+> +		return ret;
+> +
+> +	spin_lock_irqsave(&achan->vc.lock, flags);
+> +
+> +	vd = vchan_find_desc(&achan->vc, cookie);
+> +	if (vd)
+> +		residue = container_of(vd, struct adm_async_desc, vd)->length;
+> +
+> +	spin_unlock_irqrestore(&achan->vc.lock, flags);
+> +
+> +	/*
+> +	 * residue is either the full length if it is in the issued list, or 0
+> +	 * if it is in progress.  We have no reliable way of determining
+> +	 * anything inbetween
+> +	 */
+> +	dma_set_residue(txstate, residue);
+> +
+> +	if (achan->error)
+> +		return DMA_ERROR;
+> +
+> +	return ret;
+> +}
+> +
+> +/**
+> + * adm_issue_pending - starts pending transactions
+> + * @chan: dma channel
+> + *
+> + * Issues all pending transactions and starts DMA
+> + */
+> +static void adm_issue_pending(struct dma_chan *chan)
+> +{
+> +	struct adm_chan *achan = to_adm_chan(chan);
+> +	unsigned long flags;
+> +
+> +	spin_lock_irqsave(&achan->vc.lock, flags);
+> +
+> +	if (vchan_issue_pending(&achan->vc) && !achan->curr_txd)
+> +		adm_start_dma(achan);
+> +	spin_unlock_irqrestore(&achan->vc.lock, flags);
+> +}
+> +
+> +/**
+> + * adm_dma_free_desc - free descriptor memory
+> + * @vd: virtual descriptor
+> + *
+> + */
+> +static void adm_dma_free_desc(struct virt_dma_desc *vd)
+> +{
+> +	struct adm_async_desc *async_desc = container_of(vd,
+> +			struct adm_async_desc, vd);
+> +
+> +	dma_unmap_single(async_desc->adev->dev, async_desc->dma_addr,
+> +			 async_desc->dma_len, DMA_TO_DEVICE);
+> +	kfree(async_desc->cpl);
+> +	kfree(async_desc);
+> +}
+> +
+> +static void adm_channel_init(struct adm_device *adev, struct adm_chan *achan,
+> +			     u32 index)
+> +{
+> +	achan->id = index;
+> +	achan->adev = adev;
+> +
+> +	vchan_init(&achan->vc, &adev->common);
+> +	achan->vc.desc_free = adm_dma_free_desc;
+> +}
+> +
+> +static int adm_dma_probe(struct platform_device *pdev)
+> +{
+> +	struct adm_device *adev;
+> +	int ret;
+> +	u32 i;
+> +
+> +	adev = devm_kzalloc(&pdev->dev, sizeof(*adev), GFP_KERNEL);
+> +	if (!adev)
+> +		return -ENOMEM;
+> +
+> +	adev->dev = &pdev->dev;
+> +
+> +	adev->regs = devm_platform_ioremap_resource(pdev, 0);
+> +	if (IS_ERR(adev->regs))
+> +		return PTR_ERR(adev->regs);
+> +
+> +	adev->irq = platform_get_irq(pdev, 0);
+> +	if (adev->irq < 0)
+> +		return adev->irq;
+> +
+> +	ret = of_property_read_u32(pdev->dev.of_node, "qcom,ee", &adev->ee);
+> +	if (ret) {
+> +		dev_err(adev->dev, "Execution environment unspecified\n");
+> +		return ret;
+> +	}
+> +
+> +	adev->core_clk = devm_clk_get(adev->dev, "core");
+> +	if (IS_ERR(adev->core_clk))
+> +		return PTR_ERR(adev->core_clk);
+> +
+> +	adev->iface_clk = devm_clk_get(adev->dev, "iface");
+> +	if (IS_ERR(adev->iface_clk))
+> +		return PTR_ERR(adev->iface_clk);
+> +
+> +	adev->clk_reset = devm_reset_control_get_exclusive(&pdev->dev, "clk");
+> +	if (IS_ERR(adev->clk_reset)) {
+> +		dev_err(adev->dev, "failed to get ADM0 reset\n");
+> +		return PTR_ERR(adev->clk_reset);
+> +	}
+> +
+> +	adev->c0_reset = devm_reset_control_get_exclusive(&pdev->dev, "c0");
+> +	if (IS_ERR(adev->c0_reset)) {
+> +		dev_err(adev->dev, "failed to get ADM0 C0 reset\n");
+> +		return PTR_ERR(adev->c0_reset);
+> +	}
+> +
+> +	adev->c1_reset = devm_reset_control_get_exclusive(&pdev->dev, "c1");
+> +	if (IS_ERR(adev->c1_reset)) {
+> +		dev_err(adev->dev, "failed to get ADM0 C1 reset\n");
+> +		return PTR_ERR(adev->c1_reset);
+> +	}
+> +
+> +	adev->c2_reset = devm_reset_control_get_exclusive(&pdev->dev, "c2");
+> +	if (IS_ERR(adev->c2_reset)) {
+> +		dev_err(adev->dev, "failed to get ADM0 C2 reset\n");
+> +		return PTR_ERR(adev->c2_reset);
+> +	}
+> +
+> +	ret = clk_prepare_enable(adev->core_clk);
+> +	if (ret) {
+> +		dev_err(adev->dev, "failed to prepare/enable core clock\n");
+> +		return ret;
+> +	}
+> +
+> +	ret = clk_prepare_enable(adev->iface_clk);
+> +	if (ret) {
+> +		dev_err(adev->dev, "failed to prepare/enable iface clock\n");
+> +		goto err_disable_core_clk;
+> +	}
+> +
+> +	reset_control_assert(adev->clk_reset);
+> +	reset_control_assert(adev->c0_reset);
+> +	reset_control_assert(adev->c1_reset);
+> +	reset_control_assert(adev->c2_reset);
+> +
+> +	udelay(2);
+> +
+> +	reset_control_deassert(adev->clk_reset);
+> +	reset_control_deassert(adev->c0_reset);
+> +	reset_control_deassert(adev->c1_reset);
+> +	reset_control_deassert(adev->c2_reset);
+> +
+> +	adev->channels = devm_kcalloc(adev->dev, ADM_MAX_CHANNELS,
+> +				      sizeof(*adev->channels), GFP_KERNEL);
+> +
+> +	if (!adev->channels) {
+> +		ret = -ENOMEM;
+> +		goto err_disable_clks;
+> +	}
+> +
+> +	/* allocate and initialize channels */
+> +	INIT_LIST_HEAD(&adev->common.channels);
+> +
+> +	for (i = 0; i < ADM_MAX_CHANNELS; i++)
+> +		adm_channel_init(adev, &adev->channels[i], i);
+> +
+> +	/* reset CRCIs */
+> +	for (i = 0; i < 16; i++)
+> +		writel(ADM_CRCI_CTL_RST, adev->regs +
+> +			ADM_CRCI_CTL(i, adev->ee));
+> +
+> +	/* configure client interfaces */
+> +	writel(ADM_CI_RANGE_START(0x40) | ADM_CI_RANGE_END(0xb0) |
+> +	       ADM_CI_BURST_8_WORDS, adev->regs + ADM_CI_CONF(0));
+> +	writel(ADM_CI_RANGE_START(0x2a) | ADM_CI_RANGE_END(0x2c) |
+> +	       ADM_CI_BURST_8_WORDS, adev->regs + ADM_CI_CONF(1));
+> +	writel(ADM_CI_RANGE_START(0x12) | ADM_CI_RANGE_END(0x28) |
+> +	       ADM_CI_BURST_8_WORDS, adev->regs + ADM_CI_CONF(2));
+> +	writel(ADM_GP_CTL_LP_EN | ADM_GP_CTL_LP_CNT(0xf),
+> +	       adev->regs + ADM_GP_CTL);
+> +
+> +	ret = devm_request_irq(adev->dev, adev->irq, adm_dma_irq,
+> +			       0, "adm_dma", adev);
+> +	if (ret)
+> +		goto err_disable_clks;
+> +
+> +	platform_set_drvdata(pdev, adev);
+> +
+> +	adev->common.dev = adev->dev;
+> +	adev->common.dev->dma_parms = &adev->dma_parms;
+> +
+> +	/* set capabilities */
+> +	dma_cap_zero(adev->common.cap_mask);
+> +	dma_cap_set(DMA_SLAVE, adev->common.cap_mask);
+> +	dma_cap_set(DMA_PRIVATE, adev->common.cap_mask);
+> +
+> +	/* initialize dmaengine apis */
+> +	adev->common.directions = BIT(DMA_DEV_TO_MEM | DMA_MEM_TO_DEV);
+> +	adev->common.residue_granularity = DMA_RESIDUE_GRANULARITY_DESCRIPTOR;
+> +	adev->common.src_addr_widths = DMA_SLAVE_BUSWIDTH_4_BYTES;
+> +	adev->common.dst_addr_widths = DMA_SLAVE_BUSWIDTH_4_BYTES;
+> +	adev->common.device_free_chan_resources = adm_free_chan;
+> +	adev->common.device_prep_slave_sg = adm_prep_slave_sg;
+> +	adev->common.device_issue_pending = adm_issue_pending;
+> +	adev->common.device_tx_status = adm_tx_status;
+> +	adev->common.device_terminate_all = adm_terminate_all;
+> +	adev->common.device_config = adm_slave_config;
+> +
+> +	ret = dma_async_device_register(&adev->common);
+> +	if (ret) {
+> +		dev_err(adev->dev, "failed to register dma async device\n");
+> +		goto err_disable_clks;
+> +	}
+> +
+> +	ret = of_dma_controller_register(pdev->dev.of_node,
+> +					 of_dma_xlate_by_chan_id,
+> +					 &adev->common);
+> +	if (ret)
+> +		goto err_unregister_dma;
+> +
+> +	return 0;
+> +
+> +err_unregister_dma:
+> +	dma_async_device_unregister(&adev->common);
+> +err_disable_clks:
+> +	clk_disable_unprepare(adev->iface_clk);
+> +err_disable_core_clk:
+> +	clk_disable_unprepare(adev->core_clk);
+> +
+> +	return ret;
+> +}
+> +
+> +static int adm_dma_remove(struct platform_device *pdev)
+> +{
+> +	struct adm_device *adev = platform_get_drvdata(pdev);
+> +	struct adm_chan *achan;
+> +	u32 i;
+> +
+> +	of_dma_controller_free(pdev->dev.of_node);
+> +	dma_async_device_unregister(&adev->common);
+> +
+> +	for (i = 0; i < ADM_MAX_CHANNELS; i++) {
+> +		achan = &adev->channels[i];
+> +
+> +		/* mask IRQs for this channel/EE pair */
+> +		writel(0, adev->regs + ADM_CH_RSLT_CONF(achan->id, adev->ee));
+> +
+> +		tasklet_kill(&adev->channels[i].vc.task);
+> +		adm_terminate_all(&adev->channels[i].vc.chan);
+> +	}
+> +
+> +	devm_free_irq(adev->dev, adev->irq, adev);
+> +
+> +	clk_disable_unprepare(adev->core_clk);
+> +	clk_disable_unprepare(adev->iface_clk);
+> +
+> +	return 0;
+> +}
+> +
+> +static const struct of_device_id adm_of_match[] = {
+> +	{ .compatible = "qcom,adm", },
+> +	{}
+> +};
+> +MODULE_DEVICE_TABLE(of, adm_of_match);
+> +
+> +static struct platform_driver adm_dma_driver = {
+> +	.probe = adm_dma_probe,
+> +	.remove = adm_dma_remove,
+> +	.driver = {
+> +		.name = "adm-dma-engine",
+> +		.of_match_table = adm_of_match,
+> +	},
+> +};
+> +
+> +module_platform_driver(adm_dma_driver);
+> +
+> +MODULE_AUTHOR("Andy Gross <agross@codeaurora.org>");
+> +MODULE_DESCRIPTION("QCOM ADM DMA engine driver");
+> +MODULE_LICENSE("GPL v2");
+> -- 
+> 2.20.1
+> 
+
+J.
+
+-- 
