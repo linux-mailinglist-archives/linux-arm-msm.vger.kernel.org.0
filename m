@@ -2,110 +2,112 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 8E214298FE8
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Oct 2020 15:51:14 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D2DE629905D
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Oct 2020 16:01:42 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1782096AbgJZOvN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 26 Oct 2020 10:51:13 -0400
-Received: from mail-oi1-f196.google.com ([209.85.167.196]:46236 "EHLO
-        mail-oi1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1782089AbgJZOvM (ORCPT
+        id S1782892AbgJZPBj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 26 Oct 2020 11:01:39 -0400
+Received: from mail-wr1-f67.google.com ([209.85.221.67]:38819 "EHLO
+        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1782888AbgJZPBi (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 26 Oct 2020 10:51:12 -0400
-Received: by mail-oi1-f196.google.com with SMTP id x1so2928308oic.13
-        for <linux-arm-msm@vger.kernel.org>; Mon, 26 Oct 2020 07:51:11 -0700 (PDT)
+        Mon, 26 Oct 2020 11:01:38 -0400
+Received: by mail-wr1-f67.google.com with SMTP id n18so12974198wrs.5
+        for <linux-arm-msm@vger.kernel.org>; Mon, 26 Oct 2020 08:01:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=mWob+tzedQRU+r/coolBGzfAZbJH7LoTHZ6SLSxbMY4=;
-        b=twUIGiwfWIRMWBeJSy6dgI4GpWSLHpg3THcr1YyNW+Z5jLeHYls96uEMFambf5NboL
-         Z5hPI5udjL7TykBpTYqfdhQiGroQJSBHYxqUbkD+eSy4RgOf+drJCHUsQb0gQY4LrXr8
-         zxUS2JEuPLIrJ7Rjs4D9kagvqVywc4Or4SsmfPQNB9BuGVo+irPKERbLXXwdnSGeSZ8C
-         GUzRL77BG9+zozZciuwVmMcuIRqpwv9txfdbhpMYi1SAd3JYUHNCASvj+GyPJOOb8wYS
-         VUxpCtJS0Im6wWHp6hUpXp1Opoiubk0MwV62lp8vhCwZ8edpucuhSo+mwuCQJuPDpLtI
-         20ig==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=U97g4DPk37yBTbr4sK3d+QCMl4K1OpjO58zJeloILjc=;
+        b=uXgwrHyoB/oVh3VPXCniZeS4cme8VQiCH4mJUmf6fVFsiJN8mC6nzwHz7tC7EytqYj
+         CYZOV4+jlcL+Lnwom/Y/MzEXEyGvOsAk4/W2ZB7rIus+ZQdJ/Ks2SNbvhRK8F87shls9
+         Lw4JZBQbl9pfHwKgQuaAMIA5khCEmy7TAyQgZNi9hgsm4wgru7pbE447D3lSzDmF+s2t
+         k5XtQtIjhJ8JiyGsOK5VdEcFmVWzcEt4Y38gT3sbizazWSA+54IJEjmEYhi+NeVYt9no
+         xKIJoIFKtET6z4mPQj08LxJguvP1H5cqHgwChbub9D5MfAWYZ6nPUHuQp25epRa/HGhk
+         wLCA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=mWob+tzedQRU+r/coolBGzfAZbJH7LoTHZ6SLSxbMY4=;
-        b=H2pk5D2RuMzSk0I0dQQm7em59O/tHmRNE5rPs6MvDyvCSctPQA2+rnowh1TaXXLy1V
-         M+Cbv18qHQfn+gux2kPOR/c+jcesZctxh7iZkgSOr7d3ATAZDc0vHSL3lEum6dgVyeED
-         NT95Fn0NK7VXxufPUxe3RJnq0xC6TRWjGWqPAK7X1osu3qSaUwhZ7uZWbT/hoQ+I+y6n
-         0V6H7ih1lVi4vTM3fSNYfmmWg+lXwDYFXgrmfImfu/2XOIVLgFTgj5L+hDgyCLk9zTel
-         gBmHag/LAQ2TggOnxrk4ezAV6sk78Ho0tHVvy0Y2qxMGTuAy2zkFl7jI8K5tQsShYjPz
-         q0iw==
-X-Gm-Message-State: AOAM5319ggW19AiaGnt64AxYIGzPaTsOAP/V3+byoeYTsbw1byVpPa0/
-        EQma1cTLbwW+Etjmc1x2Os4eEQ==
-X-Google-Smtp-Source: ABdhPJwo9kp3RaDSpiGBhV+80QW/beHexUe7tsTU0QJgn+iPVr7AP7TlvSJY20fmG/Nkh72BBqi5Bw==
-X-Received: by 2002:aca:4e4b:: with SMTP id c72mr1415245oib.96.1603723871230;
-        Mon, 26 Oct 2020 07:51:11 -0700 (PDT)
-Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id w3sm4006512oov.48.2020.10.26.07.51.10
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 26 Oct 2020 07:51:10 -0700 (PDT)
-Date:   Mon, 26 Oct 2020 09:51:08 -0500
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Rob Herring <robh@kernel.org>
-Cc:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        rjw@rjwysocki.net, viresh.kumar@linaro.org,
-        linux-pm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH v3 1/2] dt-bindings: arm: cpus: Document
- 'qcom,freq-domain' property
-Message-ID: <20201026145108.GG12646@builder.lan>
-References: <20201020153944.18047-1-manivannan.sadhasivam@linaro.org>
- <20201026143203.GA112606@bogus>
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=U97g4DPk37yBTbr4sK3d+QCMl4K1OpjO58zJeloILjc=;
+        b=qBXQqI254U3vhJwR45s8kv0S23739xPMQRxVODu8S9/KxJZ4seRCDQitvP9J6rDKQe
+         5XI7K/eyAinY5wnAomK1cqiy646V/bntwuX+5eheD80QvN060P1/KfQG0ggREeUH8yAC
+         /m0uycy5X1juf89gN5kAD03qBOgPdO6Z+yR704u7b5b3vbI2Fr5HbiAFFyp+mgKo1csQ
+         6PxOEroKlGa5oVsbMB8jcw3iApNTcstAoj5J2ShPGuwoYuMsFqy0g4iQtQTEQMKx4t60
+         j3/DFqm0KdS0k1sQwCGhJ7kje749B+k4XtIwYsdu8Fzt4HBS9bAlerO7bTgQLmxnRrl2
+         H/tA==
+X-Gm-Message-State: AOAM531mnH/fWxpO6DTCtW6UlENqlqzxre3IUKqvBfSNMU55xbZYp4BW
+        IMl1ZhiEouHGmcVb2ghwjAR/VA==
+X-Google-Smtp-Source: ABdhPJwwb/Bivg+EAjiajD6Nc7JOqnZTCvtVkr5/QG5ozwvdx65HSpznlKuBPwU9mfAMsDDOYJjP8g==
+X-Received: by 2002:adf:e4c4:: with SMTP id v4mr18073433wrm.79.1603724496207;
+        Mon, 26 Oct 2020 08:01:36 -0700 (PDT)
+Received: from [192.168.86.34] (cpc86377-aztw32-2-0-cust226.18-1.cable.virginm.net. [92.233.226.227])
+        by smtp.googlemail.com with ESMTPSA id w11sm22317715wrs.26.2020.10.26.08.01.34
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 26 Oct 2020 08:01:35 -0700 (PDT)
+Subject: Re: [PATCH] Asoc: qcom: lpass-sc7180: Fix MI2S bitwidth field bit
+ positions
+To:     Srinivasa Rao Mandadapu <srivasam@codeaurora.org>,
+        agross@kernel.org, bjorn.andersson@linaro.org, lgirdwood@gmail.com,
+        broonie@kernel.org, robh+dt@kernel.org, plai@codeaurora.org,
+        bgoswami@codeaurora.org, perex@perex.cz, tiwai@suse.com,
+        rohitkr@codeaurora.org, linux-arm-msm@vger.kernel.org,
+        alsa-devel@alsa-project.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Cc:     V Sujith Kumar Reddy <vsujithk@codeaurora.org>
+References: <1603373219-19374-1-git-send-email-srivasam@codeaurora.org>
+From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Message-ID: <335f1d55-8a85-8501-fd69-0397f44e21af@linaro.org>
+Date:   Mon, 26 Oct 2020 15:01:33 +0000
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.8.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20201026143203.GA112606@bogus>
+In-Reply-To: <1603373219-19374-1-git-send-email-srivasam@codeaurora.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon 26 Oct 09:32 CDT 2020, Rob Herring wrote:
 
-> On Tue, Oct 20, 2020 at 09:09:43PM +0530, Manivannan Sadhasivam wrote:
-> > Add devicetree documentation for 'qcom,freq-domain' property specific
-> > to Qualcomm CPUs. This property is used to reference the CPUFREQ node
-> > along with Domain ID (0/1).
-> > 
-> > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> > ---
-> >  Documentation/devicetree/bindings/arm/cpus.yaml | 6 ++++++
-> >  1 file changed, 6 insertions(+)
-> > 
-> > diff --git a/Documentation/devicetree/bindings/arm/cpus.yaml b/Documentation/devicetree/bindings/arm/cpus.yaml
-> > index 1222bf1831fa..f40564bf004f 100644
-> > --- a/Documentation/devicetree/bindings/arm/cpus.yaml
-> > +++ b/Documentation/devicetree/bindings/arm/cpus.yaml
-> > @@ -290,6 +290,12 @@ properties:
-> >  
-> >        * arm/msm/qcom,kpss-acc.txt
-> >  
-> > +  qcom,freq-domain:
-> > +    $ref: '/schemas/types.yaml#/definitions/phandle-array'
-> > +    description: |
-> > +      CPUs supporting freq-domain must set their "qcom,freq-domain" property
-> > +      with phandle to a cpufreq_hw node followed by the Domain ID(0/1).
+
+On 22/10/2020 14:26, Srinivasa Rao Mandadapu wrote:
+> From: V Sujith Kumar Reddy <vsujithk@codeaurora.org>
 > 
-> There's no 3 patches doing the same thing. Mediatek and SCMI are the 
-> others. This will need to be common. 
+> Update SC7180 lpass_variant structure with proper I2S bitwidth
+> field bit positions, as bitwidth denotes 0 to 1 bits,
+> but previously used only 0 bit.
+> 
+> Fixes: commit cba62c8b49bead ("Merge series "ASoC: qcom: Add support for SC7180 lpass variant" from Rohit kumar <rohitkr@codeaurora.org>:")
+this should be 12 chars long, for this particular fix it should be!
+
+Fixes: 24caf8d9eb108 ("ASoC: qcom: lpass-sc7180: Add platform driver for 
+lpass audio")
 > 
 
-This property is used by existing dtbs for Qualcomm sdm845, sm8150,
-sm8250 and sc7180 based devices, so I expect that the support for the
-existing property will stay.
+No empty line after Fixes tag!
 
-Regards,
-Bjorn
 
-> > +
-> >    rockchip,pmu:
-> >      $ref: '/schemas/types.yaml#/definitions/phandle'
-> >      description: |
-> > -- 
-> > 2.17.1
-> > 
+> Signed-off-by: V Sujith Kumar Reddy <vsujithk@codeaurora.org>
+> Signed-off-by: Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
+> ---
+>   sound/soc/qcom/lpass-sc7180.c | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/sound/soc/qcom/lpass-sc7180.c b/sound/soc/qcom/lpass-sc7180.c
+> index c6292f9e..bc998d5 100644
+> --- a/sound/soc/qcom/lpass-sc7180.c
+> +++ b/sound/soc/qcom/lpass-sc7180.c
+> @@ -188,7 +188,7 @@ static struct lpass_variant sc7180_data = {
+>   	.micmode		= REG_FIELD_ID(0x1000, 4, 8, 3, 0x1000),
+>   	.micmono		= REG_FIELD_ID(0x1000, 3, 3, 3, 0x1000),
+>   	.wssrc			= REG_FIELD_ID(0x1000, 2, 2, 3, 0x1000),
+> -	.bitwidth		= REG_FIELD_ID(0x1000, 0, 0, 3, 0x1000),
+> +	.bitwidth		= REG_FIELD_ID(0x1000, 0, 1, 3, 0x1000),
+>   
+>   	.rdma_dyncclk		= REG_FIELD_ID(0xC000, 21, 21, 5, 0x1000),
+>   	.rdma_bursten		= REG_FIELD_ID(0xC000, 20, 20, 5, 0x1000),
+> 
+--srini
