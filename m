@@ -2,104 +2,98 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 2F6CB298E2A
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Oct 2020 14:37:56 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 8F264298E39
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Oct 2020 14:38:54 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1780303AbgJZNhy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 26 Oct 2020 09:37:54 -0400
-Received: from mail-ot1-f67.google.com ([209.85.210.67]:44141 "EHLO
-        mail-ot1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1772881AbgJZNhx (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 26 Oct 2020 09:37:53 -0400
-Received: by mail-ot1-f67.google.com with SMTP id e20so7959083otj.11;
-        Mon, 26 Oct 2020 06:37:52 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=t64kmtN/HDyxP4t5ivuGyA/qPv7YzZlRpPGh3lKtqTI=;
-        b=rpSrVUML7FZiBFC1lnkXgqFmbXuzlUhO1B4h9ApnHoVqWF6nVp6+eQJB6cL3H99eon
-         drzTSNXrEMLJJytzQFiSBVOqklz9MbVsOTT7uO/KaGTCP05F9LrtMUkdhYzrDkEK4eef
-         BBOjtjnzviDFVJeFJDVX+jg1QMrUps2hd7CNuXIMuD955RNAUoyGw8Y2hbKrA+M0uutz
-         j4k/kTSXIwCjx8E35eSPgNqzi0C73xqqKgK2el0D+KRChtmIdBGTScMxwhe5VEV2nw19
-         ahdmk9rY/eOMtipaUl5uQjZaDBP+HwwlquWpoSvuSuohy3nD9RFmdEj+jbb8YaPpTBMb
-         8wIA==
-X-Gm-Message-State: AOAM5302Yyi9R9Q+mhYHqd07uiB83hOHcqiPwrvVtnilMjoY8vcS87oZ
-        yGDlBDo3oTudWugRCW3toKtqNpofwg==
-X-Google-Smtp-Source: ABdhPJwFWowVXR46tpcBVBTc1a9/5mTGJ/6c9gdWvieDSmH6ZIEqs+3E3MTlTuX3IKjN2c0Qav7dfg==
-X-Received: by 2002:a9d:3e54:: with SMTP id h20mr11224458otg.236.1603719471915;
-        Mon, 26 Oct 2020 06:37:51 -0700 (PDT)
-Received: from xps15 (24-155-109-49.dyn.grandenetworks.net. [24.155.109.49])
-        by smtp.gmail.com with ESMTPSA id w9sm1502116otm.47.2020.10.26.06.37.50
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 26 Oct 2020 06:37:51 -0700 (PDT)
-Received: (nullmailer pid 42863 invoked by uid 1000);
-        Mon, 26 Oct 2020 13:37:50 -0000
-Date:   Mon, 26 Oct 2020 08:37:50 -0500
-From:   Rob Herring <robh@kernel.org>
-To:     Akhil P Oommen <akhilpo@codeaurora.org>
-Cc:     freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
-        dri-devel@freedesktop.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, jcrouse@codeaurora.org,
-        mka@chromium.org, robdclark@gmail.com, dianders@chromium.org
-Subject: Re: [PATCH v2 3/3] dt-bindings: drm/msm/gpu: Add cooling device
- support
-Message-ID: <20201026133750.GA41262@bogus>
-References: <1603113268-21161-1-git-send-email-akhilpo@codeaurora.org>
- <1603113268-21161-3-git-send-email-akhilpo@codeaurora.org>
+        id S1775977AbgJZNix (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 26 Oct 2020 09:38:53 -0400
+Received: from z5.mailgun.us ([104.130.96.5]:34949 "EHLO z5.mailgun.us"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1775693AbgJZNiw (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 26 Oct 2020 09:38:52 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1603719532; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
+ Subject: Sender; bh=+hVdywHHZmfZ44penl6jEODMuz9wxI7cPJN7PB3/jd4=; b=Rq8mlB2awQ2Nt/vcRDU7dILXjp4/lR9xz/56Lp7FznnZyGPiYWHoVpmmWh7bJU7VOo49Y+LS
+ 50j+kaR+JVqLW2+rJp2V+rWT93VSD3Tpg7uZGS20KVOGhFcwhU9y8fTmTq7J2ne41vJhQXea
+ TrSb3MJq+eeRDhtLLczDztRyeas=
+X-Mailgun-Sending-Ip: 104.130.96.5
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n07.prod.us-west-2.postgun.com with SMTP id
+ 5f96d1686311e6e92006aec6 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 26 Oct 2020 13:38:48
+ GMT
+Sender: jhugo=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 7385EC433C9; Mon, 26 Oct 2020 13:38:48 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-5.1 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        NICE_REPLY_A,SPF_FAIL autolearn=ham autolearn_force=no version=3.4.0
+Received: from [10.226.59.216] (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: jhugo)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 3BE41C433FF;
+        Mon, 26 Oct 2020 13:38:47 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 3BE41C433FF
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=jhugo@codeaurora.org
+Subject: Re: [PATCH v9 3/4] docs: Add documentation for userspace client
+ interface
+To:     Jakub Kicinski <kuba@kernel.org>,
+        Hemant Kumar <hemantk@codeaurora.org>
+Cc:     manivannan.sadhasivam@linaro.org, gregkh@linuxfoundation.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        bbhatt@codeaurora.org, loic.poulain@linaro.org,
+        netdev@vger.kernel.org
+References: <1603495075-11462-1-git-send-email-hemantk@codeaurora.org>
+ <1603495075-11462-4-git-send-email-hemantk@codeaurora.org>
+ <20201025144627.65b2324e@kicinski-fedora-PC1C0HJN.hsd1.ca.comcast.net>
+From:   Jeffrey Hugo <jhugo@codeaurora.org>
+Message-ID: <e92a5a5b-ac62-a6d8-b6b4-b65587e64255@codeaurora.org>
+Date:   Mon, 26 Oct 2020 07:38:46 -0600
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.3.2
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1603113268-21161-3-git-send-email-akhilpo@codeaurora.org>
+In-Reply-To: <20201025144627.65b2324e@kicinski-fedora-PC1C0HJN.hsd1.ca.comcast.net>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Oct 19, 2020 at 06:44:28PM +0530, Akhil P Oommen wrote:
-> Add cooling device support to gpu. A cooling device is bound to a
-> thermal zone to allow thermal mitigation.
+On 10/25/2020 3:46 PM, Jakub Kicinski wrote:
+> On Fri, 23 Oct 2020 16:17:54 -0700 Hemant Kumar wrote:
+>> +UCI driver enables userspace clients to communicate to external MHI devices
+>> +like modem and WLAN. UCI driver probe creates standard character device file
+>> +nodes for userspace clients to perform open, read, write, poll and release file
+>> +operations.
 > 
-> Signed-off-by: Akhil P Oommen <akhilpo@codeaurora.org>
-> ---
->  Documentation/devicetree/bindings/display/msm/gpu.txt | 7 +++++++
->  1 file changed, 7 insertions(+)
+> What's the user space that talks to this?
 > 
-> diff --git a/Documentation/devicetree/bindings/display/msm/gpu.txt b/Documentation/devicetree/bindings/display/msm/gpu.txt
-> index 1af0ff1..a496381 100644
-> --- a/Documentation/devicetree/bindings/display/msm/gpu.txt
-> +++ b/Documentation/devicetree/bindings/display/msm/gpu.txt
-> @@ -39,6 +39,10 @@ Required properties:
->          a4xx Snapdragon SoCs. See
->          Documentation/devicetree/bindings/sram/qcom,ocmem.yaml.
->  
-> +Optional properties:
-> +- #cooling-cells: The value must be 2. Please refer
-> +	Documentation/devicetree/bindings/thermal/thermal.txt for detail.
 
-This file doesn't exist anymore.
+Multiple.
 
-> +
->  Example 3xx/4xx:
->  
->  / {
-> @@ -61,6 +65,7 @@ Example 3xx/4xx:
->  		power-domains = <&mmcc OXILICX_GDSC>;
->  		operating-points-v2 = <&gpu_opp_table>;
->  		iommus = <&gpu_iommu 0>;
-> +		#cooling-cells = <2>;
->  	};
->  
->  	gpu_sram: ocmem@fdd00000 {
-> @@ -98,6 +103,8 @@ Example a6xx (with GMU):
->  		reg = <0x5000000 0x40000>, <0x509e000 0x10>;
->  		reg-names = "kgsl_3d0_reg_memory", "cx_mem";
->  
-> +		#cooling-cells = <2>;
-> +
->  		/*
->  		 * Look ma, no clocks! The GPU clocks and power are
->  		 * controlled entirely by the GMU
-> -- 
-> 2.7.4
-> 
+Each channel has a different purpose.  There it is expected that a 
+different userspace application would be using it.
+
+Hemant implemented the loopback channel, which is a simple channel that 
+just sends you back anything you send it.  Typically this is consumed by 
+a test application.
+
+Diag is a typical channel to be consumed by userspace.  This is consumed 
+by various applications that talk to the remote device for diagnostic 
+information (logs and such).
+
+Sahara is another common channel that is usually used for the multistage 
+firmware loading process.
+
+-- 
+Jeffrey Hugo
+Qualcomm Technologies, Inc. is a member of the
+Code Aurora Forum, a Linux Foundation Collaborative Project.
