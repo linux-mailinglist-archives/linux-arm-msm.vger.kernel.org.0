@@ -2,277 +2,148 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 182A6299064
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Oct 2020 16:02:43 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 96AF1299072
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Oct 2020 16:05:05 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1782918AbgJZPCl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 26 Oct 2020 11:02:41 -0400
-Received: from mail-ot1-f65.google.com ([209.85.210.65]:44772 "EHLO
-        mail-ot1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1782749AbgJZPCl (ORCPT
+        id S1783053AbgJZPFE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 26 Oct 2020 11:05:04 -0400
+Received: from mail-oo1-f67.google.com ([209.85.161.67]:32837 "EHLO
+        mail-oo1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1783052AbgJZPFE (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 26 Oct 2020 11:02:41 -0400
-Received: by mail-ot1-f65.google.com with SMTP id e20so8222409otj.11;
-        Mon, 26 Oct 2020 08:02:38 -0700 (PDT)
+        Mon, 26 Oct 2020 11:05:04 -0400
+Received: by mail-oo1-f67.google.com with SMTP id u5so533853oot.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 26 Oct 2020 08:05:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=kq+7FxltUFEKWao6Ng5CqD92DLdJvQHqtziMujIoaWU=;
+        b=wlhwRO0BCTyvIsi7sRjI5lW4fI6pRs0Bui2pdXQKTQJ880xC5sP7Fe8MirJ3hkd+/c
+         nOd/Vbt0Qbbft+k2qsnraq/QdQSHpn+4cH1kGkHjcbzVFYttw/yYo998lm9cBKTefNVw
+         kvEovFR+M4dysgPr2gqhtbf0ns1eLN3/083vz7wHD4LBbmaH6Hn8UTAR65qG4Awo1kLo
+         6nnrNS2PBxireJez3tw3lTqn2hrs66XpkLsrwKTb52YleHik/K7vIA48aQhOzEbm8Shl
+         Fo7HdDssxskYZk+jdDCQMPEB/6rlw4VC+axLNu92uRf40MjFMLliEq37UIYpbyJIilgi
+         NqZw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=2aiLRf1lQzD4dmA+9Qc8/8CVqPN/upZ+zNSr1+Xbbnk=;
-        b=jEihGHWA9JCNgqDH4vbBRr1h5JIKXLEiu0zTH/LPUrsH493KGpRFgTUekR91JUl4ZF
-         LmMvWhdthlQRVFTHnJFHgmCk8HRbysnfqFWnjNkLGrgvBQXgMai8eFVi2an95ACkwh3u
-         3s4o62T91kwrlCLiGMJhgAS5pjLap8JSmA3Se2EB93z1Kqdvq9vjh4z5lEbj+MGN8EeJ
-         5mcpBzTJ9HHBdD5K1r1AT72zT4+uLIdcb7v2nt4gMNOq2S8uoRDoaFSEL5R/NCFln3fk
-         h2cld9zAhzp9XH0r/3R671yoy8ik1kdqB4+uTUtXvucRoAiOiKsETSVMYUIZ9pX6bJwE
-         j6ug==
-X-Gm-Message-State: AOAM532Se/Tcq8S7/EHpkYwsfnEzitfwUs/w7VWaHilKMmZpxX3SDpVJ
-        rQmUW7aBAeiCU2uOD7WKHw==
-X-Google-Smtp-Source: ABdhPJwZIO7eFvyYC6iIW/01eosuWEdyWYpFD9Md2hkD3Kl2sB29RW5rARlUyAQvIWydhS7rQT12Jg==
-X-Received: by 2002:a9d:172f:: with SMTP id i47mr10180077ota.74.1603724557602;
-        Mon, 26 Oct 2020 08:02:37 -0700 (PDT)
-Received: from xps15 (24-155-109-49.dyn.grandenetworks.net. [24.155.109.49])
-        by smtp.gmail.com with ESMTPSA id h6sm4126286oia.51.2020.10.26.08.02.36
+        bh=kq+7FxltUFEKWao6Ng5CqD92DLdJvQHqtziMujIoaWU=;
+        b=IDPemhz+QiOlhkmAh8lC23vKfJK0b9K0A46SJqyJPNB+CyryyWWa9ZMPGqtazj0zsm
+         o3SEG4sUrb1/24ZWFbxFZFZ8m2SF557I+eXzL27zeUTu9MM/IIoerv/SyGWXN8OqWay2
+         q6aIkkDaGcbEVeNJPuk1fjFtkxCyq0855A7tLLUue2G5uElnjceCTB9qXx4LvcIZFVk/
+         ++wlP4gP3t7RhbX/btK1WJdE6wOoU+S6GLXn9tw/Glo6Yyal5bVdPFCDr0S/picdA2b/
+         AOPDHqeXqfMVei7AqZ4/f67pyJR5G62OyFSupa7fJN/KW5X8ZS7wKJzqr/vOvVGhr00o
+         9Idw==
+X-Gm-Message-State: AOAM531W1o+Y6fnhVakn8hkScwos1iTRppLbIY6mBNyGk6Ovi1Ds3Ow6
+        agjwuJKiLaBZgTtMJTEVu1tvdg==
+X-Google-Smtp-Source: ABdhPJyibHqcT9VCcuN+aYxjNELmt6onDRja6XEXW3drk+d3dVDNWAIVZThTKuFx5JVa8NWEfCVGEw==
+X-Received: by 2002:a4a:af03:: with SMTP id w3mr12579646oon.93.1603724703143;
+        Mon, 26 Oct 2020 08:05:03 -0700 (PDT)
+Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
+        by smtp.gmail.com with ESMTPSA id h5sm3689953otb.11.2020.10.26.08.05.01
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 26 Oct 2020 08:02:36 -0700 (PDT)
-Received: (nullmailer pid 156045 invoked by uid 1000);
-        Mon, 26 Oct 2020 15:02:35 -0000
-Date:   Mon, 26 Oct 2020 10:02:35 -0500
-From:   Rob Herring <robh@kernel.org>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Pavel Machek <pavel@ucw.cz>, Dan Murphy <dmurphy@ti.com>,
-        Andy Gross <agross@kernel.org>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
-        <u.kleine-koenig@pengutronix.de>, Lee Jones <lee.jones@linaro.org>,
-        Martin Botka <martin.botka1@gmail.com>,
-        linux-leds@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-pwm@vger.kernel.org
-Subject: Re: [PATCH v6 1/4] dt-bindings: leds: Add Qualcomm Light Pulse
- Generator binding
-Message-ID: <20201026150235.GA140013@bogus>
-References: <20201021201224.3430546-1-bjorn.andersson@linaro.org>
- <20201021201224.3430546-2-bjorn.andersson@linaro.org>
+        Mon, 26 Oct 2020 08:05:02 -0700 (PDT)
+Date:   Mon, 26 Oct 2020 10:05:00 -0500
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Wolfram Sang <wsa@kernel.org>
+Cc:     Douglas Anderson <dianders@chromium.org>,
+        Akash Asthana <akashast@codeaurora.org>,
+        linux-i2c@vger.kernel.org,
+        Roja Rani Yarubandi <rojay@codeaurora.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        linux-arm-msm@vger.kernel.org, Andy Gross <agross@kernel.org>,
+        Mukesh Savaliya <msavaliy@codeaurora.org>,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2 2/3] Revert "i2c: i2c-qcom-geni: Fix DMA transfer race"
+Message-ID: <20201026150500.GA26921@builder.lan>
+References: <20201013212531.428538-1-dianders@chromium.org>
+ <20201013142448.v2.2.I7b22281453b8a18ab16ef2bfd4c641fb1cc6a92c@changeid>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20201021201224.3430546-2-bjorn.andersson@linaro.org>
+In-Reply-To: <20201013142448.v2.2.I7b22281453b8a18ab16ef2bfd4c641fb1cc6a92c@changeid>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Oct 21, 2020 at 01:12:21PM -0700, Bjorn Andersson wrote:
-> This adds the binding document describing the three hardware blocks
-> related to the Light Pulse Generator found in a wide range of Qualcomm
-> PMICs.
+On Tue 13 Oct 16:25 CDT 2020, Douglas Anderson wrote:
+
+> This reverts commit 02b9aec59243c6240fc42884acc958602146ddf6.
 > 
-> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> As talked about in the patch ("soc: qcom: geni: More properly switch
+> to DMA mode"), swapping the order of geni_se_setup_m_cmd() and
+> geni_se_xx_dma_prep() can sometimes cause corrupted transfers.  Thus
+> we traded one problem for another.  Now that we've debugged the
+> problem further and fixed the geni helper functions to more disable
+> FIFO interrupts when we move to DMA mode we can revert it and end up
+> with (hopefully) zero problems!
+> 
+> To be explicit, the patch ("soc: qcom: geni: More properly switch
+> to DMA mode") is a prerequisite for this one.
+> 
+> Fixes: 02b9aec59243 ("i2c: i2c-qcom-geni: Fix DMA transfer race")
+> Signed-off-by: Douglas Anderson <dianders@chromium.org>
+> Reviewed-by: Stephen Boyd <swboyd@chromium.org>
+> Reviewed-by: Akash Asthana <akashast@codeaurora.org>
+> Tested-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+
+Wolfram, would you like to pick this patch or would you prefer that it
+goes together with the other two through the soc tree?
+
+Per Doug's description it has a functional dependency on patch 1, but as
+long as all three patches makes it into v5.11 I'm okay with either way.
+
+Regards,
+Bjorn
+
 > ---
 > 
-> Changes since v5:
-> - None
+> (no changes since v1)
 > 
->  .../bindings/leds/leds-qcom-lpg.yaml          | 170 ++++++++++++++++++
->  1 file changed, 170 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/leds/leds-qcom-lpg.yaml
+>  drivers/i2c/busses/i2c-qcom-geni.c | 6 ++----
+>  1 file changed, 2 insertions(+), 4 deletions(-)
 > 
-> diff --git a/Documentation/devicetree/bindings/leds/leds-qcom-lpg.yaml b/Documentation/devicetree/bindings/leds/leds-qcom-lpg.yaml
-> new file mode 100644
-> index 000000000000..5ccf0f3d8f1b
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/leds/leds-qcom-lpg.yaml
-> @@ -0,0 +1,170 @@
-> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/leds/leds-qcom-lpg.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> +
-> +title: Qualcomm Light Pulse Generator
-> +
-> +maintainers:
-> +  - Bjorn Andersson <bjorn.andersson@linaro.org>
-> +
-> +description: >
-> +  The Qualcomm Light Pulse Generator consists of three different hardware blocks;
-> +  a ramp generator with lookup table, the light pulse generator and a three
-> +  channel current sink. These blocks are found in a wide range of Qualcomm PMICs.
-> +
-> +properties:
-> +  compatible:
-> +    enum:
-> +      - qcom,pm8916-pwm
-
-Are the LED properties valid when PWM is used/enabled? The schema 
-suggests yes, the example suggests no. If not, I think this should be 2 
-schema docs.
-
-> +      - qcom,pm8941-lpg
-> +      - qcom,pm8994-lpg
-> +      - qcom,pmi8994-lpg
-> +      - qcom,pmi8998-lpg
-> +
-> +  "#pwm-cells":
-> +    const: 2
-> +
-> +  "#address-cells":
-> +    const: 1
-> +
-> +  "#size-cells":
-> +    const: 0
-> +
-> +  qcom,power-source:
-> +    $ref: /schemas/types.yaml#definitions/uint32
-
-led-sources can't be made to work for this?
-
-> +    description: >
-> +      power-source used to drive the output, as defined in the datasheet.
-> +      Should be specified if the TRILED block is present
-> +    enum:
-> +      - 0
-> +      - 1
-> +      - 3
-> +
-> +  multi-led:
-> +    type: object
-> +    $ref: leds-class-multicolor.yaml#
-> +    properties:
-> +      "#address-cells":
-> +        const: 1
-> +
-> +      "#size-cells":
-> +        const: 0
-> +
-> +      "^led@[0-9a-f]$":
-> +        type: object
-> +        $ref: common.yaml#
-> +
-> +        properties:
-> +          "qcom,dtest":
-
-Don't need quotes.
-
-> +            $ref: /schemas/types.yaml#definitions/uint32-array
-
-The description sounds like a matrix rather than an array.
-
-> +            description: >
-> +              configures the output into an internal test line of the pmic. Specified
-> +              by a list of u32 pairs, one pair per channel, where each pair denotes the
-> +              test line to drive and the second configures how the value should be
-> +              outputed, as defined in the datasheet
-> +            minItems: 2
-> +            maxItems: 2
-
-If so, then you'd want:
-
-items:
-  minItems: 2
-  maxItems: 2
-
-> +
-> +        required:
-> +          - reg
-> +
-> +patternProperties:
-> +  "^led@[0-9a-f]$":
-> +    type: object
-> +    $ref: common.yaml#
-> +    properties:
-> +      "qcom,dtest":
-> +        $ref: /schemas/types.yaml#definitions/uint32-array
-> +        description: >
-> +          configures the output into an internal test line of the pmic. Specified
-> +          by a list of u32 pairs, one pair per channel, where each pair denotes the
-> +          test line to drive and the second configures how the value should be
-> +          outputed, as defined in the datasheet
-> +        minItems: 2
-> +        maxItems: 2
-> +
-> +    required:
-> +      - reg
-> +
-> +required:
-> +  - compatible
-> +
-> +additionalProperties: false
-> +
-> +examples:
-> +  - |
-> +    #include <dt-bindings/leds/common.h>
-> +
-> +    lpg {
-> +      compatible = "qcom,pmi8994-lpg";
-> +
-> +      #address-cells = <1>;
-> +      #size-cells = <0>;
-> +
-> +      qcom,power-source = <1>;
-> +
-> +      led@1 {
-> +        reg = <1>;
-> +        label = "green:user1";
-> +      };
-> +
-> +      led@2 {
-> +        reg = <2>;
-> +        label = "green:user0";
-> +        default-state = "on";
-> +      };
-> +
-> +      led@3 {
-> +        reg = <3>;
-> +        label = "green:user2";
-> +      };
-> +
-> +      led@4 {
-> +        reg = <4>;
-> +        label = "green:user3";
-> +
-> +        qcom,dtest = <4 1>;
-> +      };
-> +    };
-> +  - |
-> +    #include <dt-bindings/leds/common.h>
-> +
-> +    lpg {
-> +      compatible = "qcom,pmi8994-lpg";
-> +
-> +      #address-cells = <1>;
-> +      #size-cells = <0>;
-> +
-> +      qcom,power-source = <1>;
-> +
-> +      multi-led {
-> +        color = <LED_COLOR_ID_MULTI>;
-> +        label = "rgb:notification";
-> +
-> +        #address-cells = <1>;
-> +        #size-cells = <0>;
-> +
-> +        led@1 {
-> +          reg = <1>;
-> +          color = <LED_COLOR_ID_RED>;
-> +        };
-> +
-> +        led@2 {
-> +          reg = <2>;
-> +          color = <LED_COLOR_ID_GREEN>;
-> +        };
-> +
-> +        led@3 {
-> +          reg = <3>;
-> +          color = <LED_COLOR_ID_BLUE>;
-> +        };
-> +      };
-> +    };
-> +  - |
-> +    lpg {
-> +      compatible = "qcom,pm8916-pwm";
-> +      #pwm-cells = <2>;
-> +    };
-> +...
+> diff --git a/drivers/i2c/busses/i2c-qcom-geni.c b/drivers/i2c/busses/i2c-qcom-geni.c
+> index dead5db3315a..32b2a9921b14 100644
+> --- a/drivers/i2c/busses/i2c-qcom-geni.c
+> +++ b/drivers/i2c/busses/i2c-qcom-geni.c
+> @@ -367,6 +367,7 @@ static int geni_i2c_rx_one_msg(struct geni_i2c_dev *gi2c, struct i2c_msg *msg,
+>  		geni_se_select_mode(se, GENI_SE_FIFO);
+>  
+>  	writel_relaxed(len, se->base + SE_I2C_RX_TRANS_LEN);
+> +	geni_se_setup_m_cmd(se, I2C_READ, m_param);
+>  
+>  	if (dma_buf && geni_se_rx_dma_prep(se, dma_buf, len, &rx_dma)) {
+>  		geni_se_select_mode(se, GENI_SE_FIFO);
+> @@ -374,8 +375,6 @@ static int geni_i2c_rx_one_msg(struct geni_i2c_dev *gi2c, struct i2c_msg *msg,
+>  		dma_buf = NULL;
+>  	}
+>  
+> -	geni_se_setup_m_cmd(se, I2C_READ, m_param);
+> -
+>  	time_left = wait_for_completion_timeout(&gi2c->done, XFER_TIMEOUT);
+>  	if (!time_left)
+>  		geni_i2c_abort_xfer(gi2c);
+> @@ -409,6 +408,7 @@ static int geni_i2c_tx_one_msg(struct geni_i2c_dev *gi2c, struct i2c_msg *msg,
+>  		geni_se_select_mode(se, GENI_SE_FIFO);
+>  
+>  	writel_relaxed(len, se->base + SE_I2C_TX_TRANS_LEN);
+> +	geni_se_setup_m_cmd(se, I2C_WRITE, m_param);
+>  
+>  	if (dma_buf && geni_se_tx_dma_prep(se, dma_buf, len, &tx_dma)) {
+>  		geni_se_select_mode(se, GENI_SE_FIFO);
+> @@ -416,8 +416,6 @@ static int geni_i2c_tx_one_msg(struct geni_i2c_dev *gi2c, struct i2c_msg *msg,
+>  		dma_buf = NULL;
+>  	}
+>  
+> -	geni_se_setup_m_cmd(se, I2C_WRITE, m_param);
+> -
+>  	if (!dma_buf) /* Get FIFO IRQ */
+>  		writel_relaxed(1, se->base + SE_GENI_TX_WATERMARK_REG);
+>  
 > -- 
-> 2.28.0
+> 2.28.0.1011.ga647a8990f-goog
 > 
