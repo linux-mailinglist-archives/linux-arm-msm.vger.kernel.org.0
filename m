@@ -2,115 +2,90 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id ECFA8298EA2
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Oct 2020 14:56:48 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1D8B0298F5D
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Oct 2020 15:32:34 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1780804AbgJZN4s (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 26 Oct 2020 09:56:48 -0400
-Received: from z5.mailgun.us ([104.130.96.5]:50364 "EHLO z5.mailgun.us"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1770282AbgJZN4r (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 26 Oct 2020 09:56:47 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1603720606; h=Content-Transfer-Encoding: Content-Type:
- In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
- Subject: Sender; bh=6WReYE7EsI0TzLP4fHRo6o5oMyKnwMkBqs5Ms1eH5XM=; b=utWbho/eNMWHNxatvjKBQrQfDd7QB5lEnrW9Xt/pQ2BCCMXF/l1LJKSljDFiqRRiwN0T96ZX
- d9izu+KvRAaMtJATtzCy19CZYLouW6dd0CxPBelICDk0ALA88t3ltyDU3FjsD1Y+nuh8N80v
- GKAHbmYDQlYnV79euqe4IoHgm+M=
-X-Mailgun-Sending-Ip: 104.130.96.5
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n01.prod.us-west-2.postgun.com with SMTP id
- 5f96d5936b827c4eefbbd18d (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 26 Oct 2020 13:56:35
- GMT
-Sender: jhugo=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id C74A9C43385; Mon, 26 Oct 2020 13:56:35 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-5.1 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        NICE_REPLY_A,SPF_FAIL autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from [10.226.59.216] (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: jhugo)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 520CDC433C9;
-        Mon, 26 Oct 2020 13:56:34 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 520CDC433C9
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=jhugo@codeaurora.org
-Subject: Re: [PATCH v9 3/4] docs: Add documentation for userspace client
- interface
-To:     Dan Williams <dcbw@redhat.com>, Jakub Kicinski <kuba@kernel.org>,
-        Hemant Kumar <hemantk@codeaurora.org>
-Cc:     manivannan.sadhasivam@linaro.org, gregkh@linuxfoundation.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        bbhatt@codeaurora.org, loic.poulain@linaro.org,
-        netdev@vger.kernel.org
-References: <1603495075-11462-1-git-send-email-hemantk@codeaurora.org>
- <1603495075-11462-4-git-send-email-hemantk@codeaurora.org>
- <20201025144627.65b2324e@kicinski-fedora-PC1C0HJN.hsd1.ca.comcast.net>
- <e92a5a5b-ac62-a6d8-b6b4-b65587e64255@codeaurora.org>
- <4e4dc63d0a0b5a820f7a70e30e29746fd6735a96.camel@redhat.com>
-From:   Jeffrey Hugo <jhugo@codeaurora.org>
-Message-ID: <7934e50d-72bd-f20a-54da-33f29c66c3fa@codeaurora.org>
-Date:   Mon, 26 Oct 2020 07:56:33 -0600
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.3.2
+        id S1781413AbgJZOcY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 26 Oct 2020 10:32:24 -0400
+Received: from mail-ot1-f68.google.com ([209.85.210.68]:38622 "EHLO
+        mail-ot1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1781286AbgJZOcG (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 26 Oct 2020 10:32:06 -0400
+Received: by mail-ot1-f68.google.com with SMTP id b2so7589887ots.5;
+        Mon, 26 Oct 2020 07:32:05 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=JBvgDt7emBztIGO8StCH4tfzHv+hqLMzjAEA52hgcqM=;
+        b=Bg+LMomwUIHq9QK6BP9P6VW4m/VwhkaGHiLyOGnIMMkgGq7Wvni0rZkl5cUQZz0jmZ
+         GWEqKOeoc4xLFgLhLbnryjagXlIQO13dsDJ4o4XVmAzSmyc/5r5IuxakxbJR1uwfKgWU
+         ZRC0lTTQ0nJvFw+zSgO8mfMdL8fzGB/bVjsOoOrCVYHJzswLIaL6TUtpgoTmvWC3WXjO
+         cOZ0PzqmNSTrhZfKtd5n9lx3gIA8StfmNTIc7mDeWengOum78uMg9JjTRtG4LumxpCs8
+         T+WII5MTyMUiOZyUOr4sDW4bQUHYbUlBArMO8F/P3lES5pNzPuYqbiFZh2Bg37h3/PXJ
+         JcRg==
+X-Gm-Message-State: AOAM530gn5SFnK5wCTMwKgF022iqA6+WMHNNKfnAHCEG3JcbDkVhqjG8
+        +mgcBGevljaEtnGlrtkMOE5qpi2cag==
+X-Google-Smtp-Source: ABdhPJz3h/R6/JxK/xTIyb4YBd7u1ygBvi4k+eafrmmQJBWLoUwvrZ+WynbrruqpPyAs4xMZOP+DWA==
+X-Received: by 2002:a05:6830:1d8:: with SMTP id r24mr14271488ota.283.1603722725156;
+        Mon, 26 Oct 2020 07:32:05 -0700 (PDT)
+Received: from xps15 (24-155-109-49.dyn.grandenetworks.net. [24.155.109.49])
+        by smtp.gmail.com with ESMTPSA id s189sm4040211oig.46.2020.10.26.07.32.04
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 26 Oct 2020 07:32:04 -0700 (PDT)
+Received: (nullmailer pid 114717 invoked by uid 1000);
+        Mon, 26 Oct 2020 14:32:03 -0000
+Date:   Mon, 26 Oct 2020 09:32:03 -0500
+From:   Rob Herring <robh@kernel.org>
+To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc:     rjw@rjwysocki.net, viresh.kumar@linaro.org,
+        linux-pm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, bjorn.andersson@linaro.org,
+        linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH v3 1/2] dt-bindings: arm: cpus: Document
+ 'qcom,freq-domain' property
+Message-ID: <20201026143203.GA112606@bogus>
+References: <20201020153944.18047-1-manivannan.sadhasivam@linaro.org>
 MIME-Version: 1.0
-In-Reply-To: <4e4dc63d0a0b5a820f7a70e30e29746fd6735a96.camel@redhat.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20201020153944.18047-1-manivannan.sadhasivam@linaro.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 10/26/2020 7:46 AM, Dan Williams wrote:
-> On Mon, 2020-10-26 at 07:38 -0600, Jeffrey Hugo wrote:
->> On 10/25/2020 3:46 PM, Jakub Kicinski wrote:
->>> On Fri, 23 Oct 2020 16:17:54 -0700 Hemant Kumar wrote:
->>>> +UCI driver enables userspace clients to communicate to external
->>>> MHI devices
->>>> +like modem and WLAN. UCI driver probe creates standard character
->>>> device file
->>>> +nodes for userspace clients to perform open, read, write, poll
->>>> and release file
->>>> +operations.
->>>
->>> What's the user space that talks to this?
->>>
->>
->> Multiple.
->>
->> Each channel has a different purpose.  There it is expected that a
->> different userspace application would be using it.
->>
->> Hemant implemented the loopback channel, which is a simple channel
->> that
->> just sends you back anything you send it.  Typically this is consumed
->> by
->> a test application.
->>
->> Diag is a typical channel to be consumed by userspace.  This is
->> consumed
->> by various applications that talk to the remote device for
->> diagnostic
->> information (logs and such).
+On Tue, Oct 20, 2020 at 09:09:43PM +0530, Manivannan Sadhasivam wrote:
+> Add devicetree documentation for 'qcom,freq-domain' property specific
+> to Qualcomm CPUs. This property is used to reference the CPUFREQ node
+> along with Domain ID (0/1).
 > 
-> QMI too?
-> Dan
+> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> ---
+>  Documentation/devicetree/bindings/arm/cpus.yaml | 6 ++++++
+>  1 file changed, 6 insertions(+)
+> 
+> diff --git a/Documentation/devicetree/bindings/arm/cpus.yaml b/Documentation/devicetree/bindings/arm/cpus.yaml
+> index 1222bf1831fa..f40564bf004f 100644
+> --- a/Documentation/devicetree/bindings/arm/cpus.yaml
+> +++ b/Documentation/devicetree/bindings/arm/cpus.yaml
+> @@ -290,6 +290,12 @@ properties:
+>  
+>        * arm/msm/qcom,kpss-acc.txt
+>  
+> +  qcom,freq-domain:
+> +    $ref: '/schemas/types.yaml#/definitions/phandle-array'
+> +    description: |
+> +      CPUs supporting freq-domain must set their "qcom,freq-domain" property
+> +      with phandle to a cpufreq_hw node followed by the Domain ID(0/1).
 
-Interesting question.  My product doesn't use QMI.  I would expect that 
-all QMI runs through Router these days, but I am seeing some QMI 
-channels in the downstream source.
+There's no 3 patches doing the same thing. Mediatek and SCMI are the 
+others. This will need to be common. 
 
-Hemant, Do you know what is the usecase for the QMI0/QMI1 channels?
-
--- 
-Jeffrey Hugo
-Qualcomm Technologies, Inc. is a member of the
-Code Aurora Forum, a Linux Foundation Collaborative Project.
+> +
+>    rockchip,pmu:
+>      $ref: '/schemas/types.yaml#/definitions/phandle'
+>      description: |
+> -- 
+> 2.17.1
+> 
