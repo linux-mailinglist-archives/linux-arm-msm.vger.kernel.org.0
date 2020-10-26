@@ -2,86 +2,77 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 65A602990BC
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Oct 2020 16:13:57 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 02A962990E8
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Oct 2020 16:19:53 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1783416AbgJZPN4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 26 Oct 2020 11:13:56 -0400
-Received: from mail.kernel.org ([198.145.29.99]:46954 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1783343AbgJZPN4 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 26 Oct 2020 11:13:56 -0400
-Received: from localhost (p54b335fd.dip0.t-ipconnect.de [84.179.53.253])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 735CB2222C;
-        Mon, 26 Oct 2020 15:13:54 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1603725235;
-        bh=rdypqWru50mKsVqtG1SbMdaWW5DpSTgT2JsspxBvrBM=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=kRIa4GuxF5XYhTsdWuV4S9Z82noyYZpSGBxpZXOcvqkGCaHx1jda7mHC2hV9lT4xH
-         5Vo+rCci5gtwT4gXwL700meVOPdh7lsY/tuyZvZQdpOCyh5P0CCAERJ0XY73KX1P5o
-         zB6B3esvWd6sLNna5vjEQmJBYAG6Ivy65RBeG1l8=
-Date:   Mon, 26 Oct 2020 16:13:51 +0100
-From:   Wolfram Sang <wsa@kernel.org>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Douglas Anderson <dianders@chromium.org>,
-        Akash Asthana <akashast@codeaurora.org>,
-        linux-i2c@vger.kernel.org,
-        Roja Rani Yarubandi <rojay@codeaurora.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        linux-arm-msm@vger.kernel.org, Andy Gross <agross@kernel.org>,
-        Mukesh Savaliya <msavaliy@codeaurora.org>,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2 2/3] Revert "i2c: i2c-qcom-geni: Fix DMA transfer race"
-Message-ID: <20201026151351.GB1044@ninjato>
-References: <20201013212531.428538-1-dianders@chromium.org>
- <20201013142448.v2.2.I7b22281453b8a18ab16ef2bfd4c641fb1cc6a92c@changeid>
- <20201026150500.GA26921@builder.lan>
+        id S1783707AbgJZPTv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 26 Oct 2020 11:19:51 -0400
+Received: from mail-ej1-f66.google.com ([209.85.218.66]:33082 "EHLO
+        mail-ej1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1783347AbgJZPTv (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 26 Oct 2020 11:19:51 -0400
+Received: by mail-ej1-f66.google.com with SMTP id c15so14178640ejs.0;
+        Mon, 26 Oct 2020 08:19:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=UVCULFh/HSUomtNcBIFR0JMZ7sMmUjhTNpFI+1qIyFQ=;
+        b=srN5VM0TT2gcHKYehOQsyh/wiLk/7rh6a6UAwl5rYNz8T8i8iTsJSMH8RqWN8nWfFA
+         pHMbR459cGMtc5NXZRW4v62BZl7zEr8a1x8fJOpUZS1akonSzaHuXxjxn9+kYIg4wu7h
+         hABUGo3EjYYCNCdVvjjrtRFxua3vuxnYC2D0Q6rwXOEkR6+6+uBpqaZJuKFBcTpXjGdR
+         nQn+tFA4C1+lmsO8UhVWrPzoNwAGqSBQj3fQJHkKR1sNKowYbASKv9RI85Zqx5lHj0jk
+         yJGS5B9PEXAIRWef5cU8dsX6DSzmrknvAsD0AnS12r6tJKAzGfv4RCtoogDG0lZWMLLX
+         kQXA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=UVCULFh/HSUomtNcBIFR0JMZ7sMmUjhTNpFI+1qIyFQ=;
+        b=IA7tiKShsQ0wFQ6P4P3KsHfoPQzKvRr9+wAXXczrWFOwXtgYlyj9DZ6bWRpbgyduC2
+         ueMu9dePt23aMTFKD1TIkSAzKQU0bmWT4XTg9HJ5K7miHmRgsikTSJSOIBocLUoOSoaT
+         cxx97KF8e4PmTgi/rYOrxSLLf0HsnChFdImgMgU3CYpKI/YXVWkdUDAApWQzU+/ZclZK
+         qNnOHXQDAi5xPy9xWL6sUFhEN9TrnPyfKBkQaUB6MEtt35RqyMgLU89DrngjLX/VkGg3
+         KObiwnmndCgQ2Wzsj0e0etoNbnwVHafMsenz+NW6cbHYsGrfVjrJfDfE4ZkjEk3WCbtV
+         dymw==
+X-Gm-Message-State: AOAM530btNtGLRb3B8uXCThCaUcxXD5doUSXCAd6pj0YFk+dAYcTISbY
+        Y5r2jO5HnOITFbgWI7Kr+bOKA3shxSKOkhrPx4Y=
+X-Google-Smtp-Source: ABdhPJxz32SJlXbJzg1AvE3KciOuVRJCIGRb970HxJSINrxzNG5+n4Glj6b28kxu4+056TYmISLJNAvPhkH16cUVLTg=
+X-Received: by 2002:a17:906:564d:: with SMTP id v13mr16878992ejr.217.1603725587392;
+ Mon, 26 Oct 2020 08:19:47 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="EuxKj2iCbKjpUGkD"
-Content-Disposition: inline
-In-Reply-To: <20201026150500.GA26921@builder.lan>
+References: <20201017052057.2698588-1-bjorn.andersson@linaro.org>
+ <20201017052057.2698588-3-bjorn.andersson@linaro.org> <CADQ2G_Exk7+uXMcoyFu-VOcSf48Qjvg9KUCm0P6yXdQn8K_3wQ@mail.gmail.com>
+ <20201026082732.GB8884@duo.ucw.cz> <CADQ2G_FeBFVa+ep5N8QGMLWrMKEwQf6J2Gu0FmQYf+n942hGew@mail.gmail.com>
+ <20201026151105.GB10480@duo.ucw.cz>
+In-Reply-To: <20201026151105.GB10480@duo.ucw.cz>
+From:   Martin Botka <martin.botka1@gmail.com>
+Date:   Mon, 26 Oct 2020 16:19:36 +0100
+Message-ID: <CADQ2G_EX700e2OzZ3s14cd_RiChbOU_MwiF+uR7HmSxzfQ4Yuw@mail.gmail.com>
+Subject: Re: [PATCH v5 2/4] leds: Add driver for Qualcomm LPG
+To:     Pavel Machek <pavel@ucw.cz>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Dan Murphy <dmurphy@ti.com>, Rob Herring <robh+dt@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        =?UTF-8?Q?Uwe_Kleine=2DK=C3=B6nig?= 
+        <u.kleine-koenig@pengutronix.de>, Lee Jones <lee.jones@linaro.org>,
+        Linux LED Subsystem <linux-leds@vger.kernel.org>,
+        devicetree <devicetree@vger.kernel.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        linux-arm-msm@vger.kernel.org, linux-pwm@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Hi!
 
---EuxKj2iCbKjpUGkD
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+> I was trying to use obviously bogus numbers to make you to specify
+> which patches you reviewed :-).
 
+Ahhhh now that makes much more sense.
 
-> Wolfram, would you like to pick this patch or would you prefer that it
-> goes together with the other two through the soc tree?
-
-Actually, I prefer the soc tree because of the functional dependency. I
-am not aware of any pending qcom-geni patches, yet I think an immutable
-branch for me to pull in would be nice in this case. Could you provide
-one for me?
-
-
---EuxKj2iCbKjpUGkD
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEEOZGx6rniZ1Gk92RdFA3kzBSgKbYFAl+W56sACgkQFA3kzBSg
-Kbag5Q/+MDIQrIrcVr4d8UHc9MsdoSJUNYl64v50xdhP2yxGys+USr2rgJ1gcUCy
-R9YR65gJL3m8ogdMDJ+TT35LcIXEtlWWPV+UXDE/LqkicwyuTxLOTqdpCZg1X9Jx
-jQmnal61gEdBh+ShT4rQCY7iRFqm4aMkuYXraWk4H7rF008F2lfapB7zL9R0sHXX
-t7NXKCQaAw52gxdPJEgisbGHKyUrUVKUXRVBp+TivOJ4MJ8pZhcSjylKWzXeHaxI
-k9XTKVGqmqmvke5TVllo+aQeA5NvKzmPLvpVKQwfHTcjTwTqLbT8dSe4m36k/Xjn
-2g0mvDb3THcyQHw955OUH8qAuV35I04eHTOFgiKa9JOaEIvoM7K6zcukwPkTNHLi
-PGD6uK6bJ5dALt14KnLB4k4w+6Gy9C+tKs6Dz8szhKUZzeniVQ8C0Fl1aSuZky8v
-vugl4R//IK44cdTWhy+tZnOKvw2LwiTiSgNuCvVUTc1Y22LGD1r9sU3eP2MB/HAA
-thelzmWzhZULTH/HpZNCgRc7BGRYN71f8+v6oyZ391Uj/O9BlvWLreikSxkkMcO1
-e70inxFQV4R70epazvqhK9ZFizpMC+Wg1VBZbkxJVU38QMAIXVwgO+C0SkZbVpRk
-yARhc/eTgaSxeSMUMm1fT/RXYa8EzU2JR2YY2iOsjvPyS7gWrUA=
-=mSR+
------END PGP SIGNATURE-----
-
---EuxKj2iCbKjpUGkD--
+I reviewed patch 2.
+Tho from the quick look i dont see anything wrong with the DTS changes either.
