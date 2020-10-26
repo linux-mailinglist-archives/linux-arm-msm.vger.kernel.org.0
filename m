@@ -2,107 +2,72 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 0FC71298587
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Oct 2020 03:21:19 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 5A007298843
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Oct 2020 09:27:36 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1421380AbgJZCVO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 25 Oct 2020 22:21:14 -0400
-Received: from szxga06-in.huawei.com ([45.249.212.32]:3004 "EHLO
-        szxga06-in.huawei.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1421377AbgJZCVO (ORCPT
+        id S1771672AbgJZI1f (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 26 Oct 2020 04:27:35 -0400
+Received: from jabberwock.ucw.cz ([46.255.230.98]:37904 "EHLO
+        jabberwock.ucw.cz" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1769975AbgJZI1f (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 25 Oct 2020 22:21:14 -0400
-Received: from DGGEMS406-HUB.china.huawei.com (unknown [172.30.72.59])
-        by szxga06-in.huawei.com (SkyGuard) with ESMTP id 4CKJVN40gBzhb9K;
-        Mon, 26 Oct 2020 10:21:16 +0800 (CST)
-Received: from [127.0.0.1] (10.174.178.230) by DGGEMS406-HUB.china.huawei.com
- (10.3.19.206) with Microsoft SMTP Server id 14.3.487.0; Mon, 26 Oct 2020
- 10:21:09 +0800
-Subject: Re: [PATCH v2 1/2] arm64: dts: broadcom: clear the warnings caused by
- empty dma-ranges
-To:     Arnd Bergmann <arnd@kernel.org>
-CC:     Florian Fainelli <f.fainelli@gmail.com>,
-        Rob Herring <robh+dt@kernel.org>, Ray Jui <rjui@broadcom.com>,
-        Scott Branden <sbranden@broadcom.com>,
-        bcm-kernel-feedback-list <bcm-kernel-feedback-list@broadcom.com>,
+        Mon, 26 Oct 2020 04:27:35 -0400
+Received: by jabberwock.ucw.cz (Postfix, from userid 1017)
+        id 32A6A1C0BA2; Mon, 26 Oct 2020 09:27:33 +0100 (CET)
+Date:   Mon, 26 Oct 2020 09:27:32 +0100
+From:   Pavel Machek <pavel@ucw.cz>
+To:     Martin Botka <martin.botka1@gmail.com>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Dan Murphy <dmurphy@ti.com>, Rob Herring <robh+dt@kernel.org>,
         Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
+        <u.kleine-koenig@pengutronix.de>, Lee Jones <lee.jones@linaro.org>,
+        Linux LED Subsystem <linux-leds@vger.kernel.org>,
         devicetree <devicetree@vger.kernel.org>,
-        linux-arm-kernel <linux-arm-kernel@lists.infradead.org>,
-        linux-kernel <linux-kernel@vger.kernel.org>
-References: <20201016090833.1892-1-thunder.leizhen@huawei.com>
- <20201016090833.1892-2-thunder.leizhen@huawei.com>
- <CAK8P3a2TSmsNSi-XFpT6AQ3jvVxJ1AW7Uf5tAo477wtwXZwUzg@mail.gmail.com>
- <e27dc152-7aef-10df-f391-bf56e13e23df@gmail.com>
- <CAK8P3a13ywHh7igdfDSPQz9Bw8YAnKWFLKARkk2NL5u6=6yb=w@mail.gmail.com>
- <0eee3fd2-7400-7de7-27a7-7fcaa0955854@gmail.com>
- <d42745b7-ef76-e584-0da2-751ac8c1cf3a@huawei.com>
- <CAK8P3a335TT1+bdHqB=FetPanXXfGv3dC7ZCkx+w+F3j00kj5A@mail.gmail.com>
-From:   "Leizhen (ThunderTown)" <thunder.leizhen@huawei.com>
-Message-ID: <07ab3bdd-dcb1-5a59-d813-f82451b3f028@huawei.com>
-Date:   Mon, 26 Oct 2020 10:21:08 +0800
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.7.0
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        linux-arm-msm@vger.kernel.org, linux-pwm@vger.kernel.org
+Subject: Re: [PATCH v5 2/4] leds: Add driver for Qualcomm LPG
+Message-ID: <20201026082732.GB8884@duo.ucw.cz>
+References: <20201017052057.2698588-1-bjorn.andersson@linaro.org>
+ <20201017052057.2698588-3-bjorn.andersson@linaro.org>
+ <CADQ2G_Exk7+uXMcoyFu-VOcSf48Qjvg9KUCm0P6yXdQn8K_3wQ@mail.gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <CAK8P3a335TT1+bdHqB=FetPanXXfGv3dC7ZCkx+w+F3j00kj5A@mail.gmail.com>
-Content-Type: text/plain; charset="utf-8"
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.174.178.230]
-X-CFilter-Loop: Reflected
+Content-Type: multipart/signed; micalg=pgp-sha1;
+        protocol="application/pgp-signature"; boundary="24zk1gE8NUlDmwG9"
+Content-Disposition: inline
+In-Reply-To: <CADQ2G_Exk7+uXMcoyFu-VOcSf48Qjvg9KUCm0P6yXdQn8K_3wQ@mail.gmail.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
+--24zk1gE8NUlDmwG9
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-On 2020/10/23 15:17, Arnd Bergmann wrote:
-> On Sun, Oct 18, 2020 at 4:10 AM Leizhen (ThunderTown)
-> <thunder.leizhen@huawei.com> wrote:
->> On 2020/10/17 3:27, Florian Fainelli wrote:
->>> On 10/16/20 11:23 AM, Arnd Bergmann wrote:
->>>> On Fri, Oct 16, 2020 at 6:48 PM Florian Fainelli <f.fainelli@gmail.com> wrote:
->>>>> On 10/16/20 4:01 AM, Arnd Bergmann wrote:
->>>>>> On Fri, Oct 16, 2020 at 11:09 AM Zhen Lei <thunder.leizhen@huawei.com> wrote:
->>>>>>>
->>>>>>> Suggested-by: Arnd Bergmann <arnd@arndb.de>
->>>>>>> Signed-off-by: Zhen Lei <thunder.leizhen@huawei.com>
->>>>>>
->>>>>> Acked-by: Arnd Bergmann <arnd@arndb.de>
->>>>>>
->>>>>> I see that at least the 'bcd' and 'xhci' devices in fact try to
->>>>>> use 64-bit DMA. It would be good to test this on actual
->>>>>> hardware to ensure that it works correctly when this is enabled.
->>>>>>
->>>>>> Ideally avoiding the swiotlb bounce buffering should only
->>>>>> make it faster here, but there are many chips on which
->>>>>> 64-bit DMA is broken in some form.
->>>>>
->>>>> Is this change really an improvement though? This 'usb' pseudo bus node
->>>>> could just keep being defined with #address-cells = <1> and #size-cells
->>>>> = <1> so as to satisfy the 'reg' definition however we could just adjust
->>>>> dma-ranges to indicate full 64-bit addressing capability. Would not that
->>>>> work?
->>>>
->>>> When #address-cells is '1', you cannot specify dma-ranges that
->>>> go beyond a 32-bit address range.
->>>
->>> Would not it be enough to remove the 'dma-ranges' property though? Sorry
->>> for being slow here.
->>
->> Remove the 'dma-ranges' property should also work. After all, it is equivalent
->> to the original empty dma-ranges scheme. In addition, since the IOMMU nodes are
->> defined, it should be enabled.
-> 
-> Are you sure? I was expecting the IOMMU not to get used here since
-> the devices do contain list an 'iommus' property.
+Hi!
 
-OK，If the SMMU maybe disabled, then your proposal is necessary.
+> With the changes done to in V5 i have nothing to add.
 
-> 
->       Arnd
-> 
-> .
-> 
+Good way to say that is "Patches 7 and 28, Reviewed-by:"...
 
+Best regards,
+							Pavel
+
+--=20
+http://www.livejournal.com/~pavelmachek
+
+--24zk1gE8NUlDmwG9
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iF0EABECAB0WIQRPfPO7r0eAhk010v0w5/Bqldv68gUCX5aIdAAKCRAw5/Bqldv6
+8iRmAJ4z+fRZ1vlEpQzMltk3jyClTjYu2gCfb+D61DMMnrWZohAPVlPfkcIyUNE=
+=T0VA
+-----END PGP SIGNATURE-----
+
+--24zk1gE8NUlDmwG9--
