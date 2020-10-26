@@ -2,122 +2,124 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 7CA6C299A59
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Oct 2020 00:23:22 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id CB966299A70
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Oct 2020 00:30:46 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2404610AbgJZXXS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 26 Oct 2020 19:23:18 -0400
-Received: from m42-4.mailgun.net ([69.72.42.4]:27803 "EHLO m42-4.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2404593AbgJZXXS (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 26 Oct 2020 19:23:18 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1603754597; h=Content-Transfer-Encoding: Content-Type:
- In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
- Subject: Sender; bh=rkfjILLJaxqI/obAVbh6rCzjEuv5Rj8NXWFQMUhMDc4=; b=K6GExS91Z0LKk+AKQCHLKd4Td6bx5AdWTsOoL87WLZemwmwOC/XqG7yZqSeWhzvPFtyaaKik
- oDZAgTDrDG1bkLnvvPDoqeE3FwDZ6n2qDcPD2NmBHx6kP7OAJtLEK3gQHm/TaS2WLWFVjOw0
- Bgsl2tV82DmwlF0tNjJBmaDT7jw=
-X-Mailgun-Sending-Ip: 69.72.42.4
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n03.prod.us-east-1.postgun.com with SMTP id
- 5f975a217c1cca52db63b218 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 26 Oct 2020 23:22:09
- GMT
-Sender: hemantk=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 03DA2C433CB; Mon, 26 Oct 2020 23:22:09 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-5.1 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        NICE_REPLY_A,SPF_FAIL autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from [10.46.162.249] (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: hemantk)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id F037CC433C9;
-        Mon, 26 Oct 2020 23:22:07 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org F037CC433C9
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=hemantk@codeaurora.org
-Subject: Re: [PATCH v9 3/4] docs: Add documentation for userspace client
- interface
-To:     Jakub Kicinski <kuba@kernel.org>,
-        Jeffrey Hugo <jhugo@codeaurora.org>
-Cc:     manivannan.sadhasivam@linaro.org, gregkh@linuxfoundation.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        bbhatt@codeaurora.org, loic.poulain@linaro.org,
-        netdev@vger.kernel.org
-References: <1603495075-11462-1-git-send-email-hemantk@codeaurora.org>
- <1603495075-11462-4-git-send-email-hemantk@codeaurora.org>
- <20201025144627.65b2324e@kicinski-fedora-PC1C0HJN.hsd1.ca.comcast.net>
- <e92a5a5b-ac62-a6d8-b6b4-b65587e64255@codeaurora.org>
- <20201026155617.350c45ab@kicinski-fedora-PC1C0HJN.hsd1.ca.comcast.net>
-From:   Hemant Kumar <hemantk@codeaurora.org>
-Message-ID: <b7d2f4d9-6755-c099-07f7-f503b97c9f09@codeaurora.org>
-Date:   Mon, 26 Oct 2020 16:22:07 -0700
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.10.0
-MIME-Version: 1.0
-In-Reply-To: <20201026155617.350c45ab@kicinski-fedora-PC1C0HJN.hsd1.ca.comcast.net>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+        id S2406291AbgJZXao (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 26 Oct 2020 19:30:44 -0400
+Received: from alexa-out-sd-02.qualcomm.com ([199.106.114.39]:25462 "EHLO
+        alexa-out-sd-02.qualcomm.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S2406250AbgJZXan (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 26 Oct 2020 19:30:43 -0400
+Received: from unknown (HELO ironmsg-SD-alpha.qualcomm.com) ([10.53.140.30])
+  by alexa-out-sd-02.qualcomm.com with ESMTP; 26 Oct 2020 16:30:42 -0700
+X-QCInternal: smtphost
+Received: from asutoshd-linux1.qualcomm.com ([10.46.160.39])
+  by ironmsg-SD-alpha.qualcomm.com with ESMTP; 26 Oct 2020 16:30:42 -0700
+Received: by asutoshd-linux1.qualcomm.com (Postfix, from userid 92687)
+        id 1364A20DDC; Mon, 26 Oct 2020 16:30:42 -0700 (PDT)
+From:   Asutosh Das <asutoshd@codeaurora.org>
+To:     cang@codeaurora.org, martin.petersen@oracle.com,
+        linux-scsi@vger.kernel.org
+Cc:     linux-arm-msm@vger.kernel.org,
+        Asutosh Das <asutoshd@codeaurora.org>,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        Avri Altman <avri.altman@wdc.com>,
+        "James E.J. Bottomley" <jejb@linux.ibm.com>,
+        Stanley Chu <stanley.chu@mediatek.com>,
+        Bean Huo <beanhuo@micron.com>,
+        Bart Van Assche <bvanassche@acm.org>,
+        Satya Tangirala <satyat@google.com>,
+        linux-kernel@vger.kernel.org (open list)
+Subject: [PATCH v1 1/2] scsi: ufs: Put hba into LPM during clk gating
+Date:   Mon, 26 Oct 2020 16:30:08 -0700
+Message-Id: <ce0a3be9c685506803597fb770e37c099ae27232.1603754932.git.asutoshd@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Jakub,
+From: Can Guo <cang@codeaurora.org>
 
-On 10/26/20 3:56 PM, Jakub Kicinski wrote:
-> On Mon, 26 Oct 2020 07:38:46 -0600 Jeffrey Hugo wrote:
->> On 10/25/2020 3:46 PM, Jakub Kicinski wrote:
->>> On Fri, 23 Oct 2020 16:17:54 -0700 Hemant Kumar wrote:
->>>> +UCI driver enables userspace clients to communicate to external MHI devices
->>>> +like modem and WLAN. UCI driver probe creates standard character device file
->>>> +nodes for userspace clients to perform open, read, write, poll and release file
->>>> +operations.
->>>
->>> What's the user space that talks to this?
->>
->> Multiple.
->>
->> Each channel has a different purpose.  There it is expected that a
->> different userspace application would be using it.
->>
->> Hemant implemented the loopback channel, which is a simple channel that
->> just sends you back anything you send it.  Typically this is consumed by
->> a test application.
->>
->> Diag is a typical channel to be consumed by userspace.  This is consumed
->> by various applications that talk to the remote device for diagnostic
->> information (logs and such).
->>
->> Sahara is another common channel that is usually used for the multistage
->> firmware loading process.
-> 
-> Thanks for the info, are there any open source tests based on the
-> loopback channel (perhaps even in tree?)
-> 
-> Since that's the only channel enabled in this set its the only one
-> we can comment on.
-> 
-i am not aware of any open source tests based on loopback channel. My 
-testing includes multiple sessions of echo, cat etc using adb to confirm 
-what is sent is received back. Loic is using UCI driver for his use case 
-too.
+During clock gating, after clocks are disabled,
+put hba into LPM to save more power.
 
-Loic, in case you have any use case (which is part of open source) which 
-can use UCI driver, pls share that info ?
+Signed-off-by: Can Guo <cang@codeaurora.org>
+Signed-off-by: Asutosh Das <asutoshd@codeaurora.org>
+---
+ drivers/scsi/ufs/ufshcd.c |  7 +++++--
+ drivers/scsi/ufs/ufshcd.h | 13 +++++++++++++
+ 2 files changed, 18 insertions(+), 2 deletions(-)
 
-I think as soon as UCI becomes part of the tree, more and more channels 
-would get added to the driver having open source code for that from 
-other folks in community (Loic would be one of them i guess).
-
-Thanks,
-Hemant
+diff --git a/drivers/scsi/ufs/ufshcd.c b/drivers/scsi/ufs/ufshcd.c
+index 47c544d..55ca8c6 100644
+--- a/drivers/scsi/ufs/ufshcd.c
++++ b/drivers/scsi/ufs/ufshcd.c
+@@ -1548,6 +1548,7 @@ static void ufshcd_ungate_work(struct work_struct *work)
+ 	}
+ 
+ 	spin_unlock_irqrestore(hba->host->host_lock, flags);
++	ufshcd_hba_vreg_set_hpm(hba);
+ 	ufshcd_setup_clocks(hba, true);
+ 
+ 	ufshcd_enable_irq(hba);
+@@ -1713,6 +1714,8 @@ static void ufshcd_gate_work(struct work_struct *work)
+ 		/* If link is active, device ref_clk can't be switched off */
+ 		__ufshcd_setup_clocks(hba, false, true);
+ 
++	/* Put the host controller in low power mode if possible */
++	ufshcd_hba_vreg_set_lpm(hba);
+ 	/*
+ 	 * In case you are here to cancel this work the gating state
+ 	 * would be marked as REQ_CLKS_ON. In this case keep the state
+@@ -8405,13 +8408,13 @@ static int ufshcd_vreg_set_hpm(struct ufs_hba *hba)
+ 
+ static void ufshcd_hba_vreg_set_lpm(struct ufs_hba *hba)
+ {
+-	if (ufshcd_is_link_off(hba))
++	if (ufshcd_is_link_off(hba) || ufshcd_can_aggressive_pc(hba))
+ 		ufshcd_setup_hba_vreg(hba, false);
+ }
+ 
+ static void ufshcd_hba_vreg_set_hpm(struct ufs_hba *hba)
+ {
+-	if (ufshcd_is_link_off(hba))
++	if (ufshcd_is_link_off(hba) || ufshcd_can_aggressive_pc(hba))
+ 		ufshcd_setup_hba_vreg(hba, true);
+ }
+ 
+diff --git a/drivers/scsi/ufs/ufshcd.h b/drivers/scsi/ufs/ufshcd.h
+index 47eb143..0fbb735 100644
+--- a/drivers/scsi/ufs/ufshcd.h
++++ b/drivers/scsi/ufs/ufshcd.h
+@@ -592,6 +592,13 @@ enum ufshcd_caps {
+ 	 * inline crypto engine, if it is present
+ 	 */
+ 	UFSHCD_CAP_CRYPTO				= 1 << 8,
++
++	/*
++	 * This capability allows the controller regulators to be put into
++	 * lpm mode aggressively during clock gating.
++	 * This would increase power savings.
++	 */
++	UFSHCD_CAP_AGGR_POWER_COLLAPSE			= 1 << 9,
+ };
+ 
+ struct ufs_hba_variant_params {
+@@ -829,6 +836,12 @@ return true;
+ #endif
+ }
+ 
++static inline bool ufshcd_can_aggressive_pc(struct ufs_hba *hba)
++{
++	return !!(ufshcd_is_link_hibern8(hba) &&
++		  (hba->caps & UFSHCD_CAP_AGGR_POWER_COLLAPSE));
++}
++
+ static inline bool ufshcd_is_auto_hibern8_supported(struct ufs_hba *hba)
+ {
+ 	return (hba->capabilities & MASK_AUTO_HIBERN8_SUPPORT) &&
 -- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project
+Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum, a Linux Foundation Collaborative Project.
+
