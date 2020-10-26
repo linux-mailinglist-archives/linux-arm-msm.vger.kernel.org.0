@@ -2,184 +2,136 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 4297E298977
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Oct 2020 10:34:22 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 53D97298C52
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Oct 2020 12:54:20 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1422420AbgJZJeP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 26 Oct 2020 05:34:15 -0400
-Received: from mail-wr1-f65.google.com ([209.85.221.65]:41665 "EHLO
-        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1422415AbgJZJeL (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 26 Oct 2020 05:34:11 -0400
-Received: by mail-wr1-f65.google.com with SMTP id s9so11533574wro.8
-        for <linux-arm-msm@vger.kernel.org>; Mon, 26 Oct 2020 02:34:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ffwll.ch; s=google;
-        h=date:from:to:cc:subject:message-id:mail-followup-to:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=gYzieEkyuY5GK4uIKGUgpkX8O/MjJBNKsXAywCS/qUs=;
-        b=RSgUj4PXQdjvjhUxcBC2NkgGKsRMLzp3PYY9p4Uj7B7AfgPG3ewdfVQ2Mxj+FvMlKu
-         0nM+RnXg+PoAL+CHWjAhOGn0dcjtQLB4B33Ee9ctifIVcnGBeey4DCtSyvZ/0tKbQpNJ
-         IBJhSVHrSrVQvlRbv8fS4LsmShIvyYlV2SRTk=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id
-         :mail-followup-to:references:mime-version:content-disposition
-         :in-reply-to;
-        bh=gYzieEkyuY5GK4uIKGUgpkX8O/MjJBNKsXAywCS/qUs=;
-        b=JhjJ8byXbyqKrtVLNKzuthhhrqaizPtapFDNLpSnaRa4JboaN+PJnd7tI8D4NhsScJ
-         JfsEEznewG4G525bAyb7dg2AbIGvpUDpRh4NWLvYV8ZvaUwevWja0gIoIWEojUt9f+dx
-         yvB0frANg92ncoPd7cZSKwuQ+KwDmLFGf2T3+q5r5frpjediMFgs7nWoH9Xmrxim+oEw
-         GuJaJTwoXQ9LTvvjzJ76v8N/6ZDLrGnFMpYis0J+SwJx3J/fdvJ2uIZCLZ6MkRS2gsiE
-         lFuGoNsyAV3GmcwPXNUZkffevgofe64Dw+UyI1YwfOMZHYO1H0Mujlr+m77tfVnCg2kJ
-         B49Q==
-X-Gm-Message-State: AOAM532HWdfOrfm8Lj8MI//aMVgCAg3XmjVloey/MdI90p2sKEF1pfjy
-        JhJtgszyCOUVPfa5yKl8+UZ9OEdtqlUZXFP3
-X-Google-Smtp-Source: ABdhPJwLY/UfUb4b5DuGG2QhDX+v52BtLVPVfOd8+FPAKqX9G1N3GacfhGqDO8qEumDJ6El2XwbvcQ==
-X-Received: by 2002:adf:a306:: with SMTP id c6mr16496122wrb.160.1603704848072;
-        Mon, 26 Oct 2020 02:34:08 -0700 (PDT)
-Received: from phenom.ffwll.local ([2a02:168:57f4:0:efd0:b9e5:5ae6:c2fa])
-        by smtp.gmail.com with ESMTPSA id j5sm23591677wrx.88.2020.10.26.02.34.06
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 26 Oct 2020 02:34:07 -0700 (PDT)
-Date:   Mon, 26 Oct 2020 10:34:05 +0100
-From:   Daniel Vetter <daniel@ffwll.ch>
-To:     Rob Clark <robdclark@gmail.com>
-Cc:     Lucas Stach <l.stach@pengutronix.de>,
-        Rob Clark <robdclark@chromium.org>,
-        freedreno <freedreno@lists.freedesktop.org>,
-        David Airlie <airlied@linux.ie>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        open list <linux-kernel@vger.kernel.org>,
-        dri-devel <dri-devel@lists.freedesktop.org>,
+        id S1774079AbgJZLyT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 26 Oct 2020 07:54:19 -0400
+Received: from z5.mailgun.us ([104.130.96.5]:28744 "EHLO z5.mailgun.us"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1774075AbgJZLyT (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 26 Oct 2020 07:54:19 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1603713257; h=Content-Transfer-Encoding: MIME-Version:
+ Message-Id: Date: Subject: Cc: To: From: Sender;
+ bh=szGp3b/hhWRxwpJshGTpSP+kxFDoTXvVtB0VW0Yh+A4=; b=Jp0U0QMHCbYDx5+7Nx0WA9dVMvn0pLRxikdhnHJnCMaRwKMvAxDoPXM5adRgqV16HaruEzkj
+ nLccLtO1UeSlCxg0wa9UVMhT/OvwtWA3kpsdk5yEQBk3Ga/uCpJLHPqlu+3EveiZ/Lc4BfT0
+ H6A5UpNyHTcmqyI6oFMzCsoaMi0=
+X-Mailgun-Sending-Ip: 104.130.96.5
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n01.prod.us-east-1.postgun.com with SMTP id
+ 5f96b8e867b50553e26089aa (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 26 Oct 2020 11:54:16
+ GMT
+Sender: saiprakash.ranjan=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 30D15C43382; Mon, 26 Oct 2020 11:54:16 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
+        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+Received: from blr-ubuntu-253.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: saiprakash.ranjan)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 3FA89C433C9;
+        Mon, 26 Oct 2020 11:54:10 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 3FA89C433C9
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=saiprakash.ranjan@codeaurora.org
+From:   Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+To:     Will Deacon <will@kernel.org>, Robin Murphy <robin.murphy@arm.com>,
+        Joerg Roedel <joro@8bytes.org>,
+        Jordan Crouse <jcrouse@codeaurora.org>,
+        Rob Clark <robdclark@gmail.com>
+Cc:     iommu@lists.linux-foundation.org,
+        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org,
+        Akhil P Oommen <akhilpo@codeaurora.org>,
+        freedreno@lists.freedesktop.org,
         "Kristian H . Kristensen" <hoegsberg@google.com>,
-        Sean Paul <sean@poorly.run>
-Subject: Re: [PATCH v4 23/23] drm/msm: Don't implicit-sync if only a single
- ring
-Message-ID: <20201026093405.GG401619@phenom.ffwll.local>
-Mail-Followup-To: Rob Clark <robdclark@gmail.com>,
-        Lucas Stach <l.stach@pengutronix.de>,
-        Rob Clark <robdclark@chromium.org>,
-        freedreno <freedreno@lists.freedesktop.org>,
-        David Airlie <airlied@linux.ie>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        open list <linux-kernel@vger.kernel.org>,
-        dri-devel <dri-devel@lists.freedesktop.org>,
-        "Kristian H . Kristensen" <hoegsberg@google.com>,
-        Sean Paul <sean@poorly.run>
-References: <20201023165136.561680-1-robdclark@gmail.com>
- <20201023165136.561680-24-robdclark@gmail.com>
- <d0fb714b99f13bea6000ecd17fba324433782ae5.camel@pengutronix.de>
- <CAF6AEGsf=pJ5H4guvL-+AAkK0PwCZ5g9k3K=7UPYzFmr02ReoA@mail.gmail.com>
+        dri-devel@lists.freedesktop.org,
+        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+Subject: [PATCHv6 0/6] System Cache support for GPU and required SMMU support
+Date:   Mon, 26 Oct 2020 17:23:59 +0530
+Message-Id: <cover.1603448364.git.saiprakash.ranjan@codeaurora.org>
+X-Mailer: git-send-email 2.27.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAF6AEGsf=pJ5H4guvL-+AAkK0PwCZ5g9k3K=7UPYzFmr02ReoA@mail.gmail.com>
-X-Operating-System: Linux phenom 5.7.0-1-amd64 
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Oct 23, 2020 at 08:49:14PM -0700, Rob Clark wrote:
-> On Fri, Oct 23, 2020 at 11:20 AM Lucas Stach <l.stach@pengutronix.de> wrote:
-> >
-> > On Fr, 2020-10-23 at 09:51 -0700, Rob Clark wrote:
-> > > From: Rob Clark <robdclark@chromium.org>
-> > >
-> > > If there is only a single ring (no-preemption), everything is FIFO order
-> > > and there is no need to implicit-sync.
-> > >
-> > > Mesa should probably just always use MSM_SUBMIT_NO_IMPLICIT, as behavior
-> > > is undefined when fences are not used to synchronize buffer usage across
-> > > contexts (which is the only case where multiple different priority rings
-> > > could come into play).
-> >
-> > Really, doesn't this break cross-device implicit sync? Okay, you may
-> > not have many peripherals that rely on implicit sync on devices where
-> > Adreno is usually found, but it seems rather heavy-handed.
-> >
-> > Wouldn't it be better to only ignore fences from your own ring context
-> > in the implicit sync, like we do in the common DRM scheduler
-> > (drm_sched_dependency_optimized)?
-> 
-> we already do this.. as was discussed on an earlier iteration of this patchset
-> 
-> But I'm not aware of any other non-gpu related implicit sync use-case
-> (even on imx devices where display is decoupled from gpu).. I'll
-> revert the patch if someone comes up with one, but otherwise lets let
-> the implicit sync baggage die
+Some hardware variants contain a system cache or the last level
+cache(llc). This cache is typically a large block which is shared
+by multiple clients on the SOC. GPU uses the system cache to cache
+both the GPU data buffers(like textures) as well the SMMU pagetables.
+This helps with improved render performance as well as lower power
+consumption by reducing the bus traffic to the system memory.
 
-The thing is, dma_resv won't die, even if implicit sync is dead. We're
-using internally for activity tracking and memory management. If you don't
-set these, then we can't share generic code with msm, and I think everyone
-inventing their own memory management is a bit a mistake.
+The system cache architecture allows the cache to be split into slices
+which then be used by multiple SOC clients. This patch series is an
+effort to enable and use two of those slices perallocated for the GPU,
+one for the GPU data buffers and another for the GPU SMMU hardware
+pagetables.
 
-Now you only kill the implicit write sync stuff here, but I'm not sure
-that's worth much since you still install all the read fences for
-consistency. And if userspace doesn't want to be synced, they can set the
-flag and do this on their own: I think you should be able to achieve
-exactly the same thing in mesa.
+Patch 1 - Patch 4 adds system cache support in SMMU and GPU driver.
+Patch 5 and 6 are minor cleanups for arm-smmu impl.
 
-Aside: If you're worried about overhead, you can do O(1) submit if you
-manage your ppgtt like amdgpu does.
--Daniel
+The series is based on top of https://gitlab.freedesktop.org/drm/msm/-/tree/msm-next-pgtables
 
-> 
-> BR,
-> -R
-> 
-> 
-> 
-> >
-> > Regards,
-> > Lucas
-> >
-> > > Signed-off-by: Rob Clark <robdclark@chromium.org>
-> > > Reviewed-by: Kristian H. Kristensen <hoegsberg@google.com>
-> > > ---
-> > >  drivers/gpu/drm/msm/msm_gem_submit.c | 7 ++++---
-> > >  1 file changed, 4 insertions(+), 3 deletions(-)
-> > >
-> > > diff --git a/drivers/gpu/drm/msm/msm_gem_submit.c b/drivers/gpu/drm/msm/msm_gem_submit.c
-> > > index d04c349d8112..b6babc7f9bb8 100644
-> > > --- a/drivers/gpu/drm/msm/msm_gem_submit.c
-> > > +++ b/drivers/gpu/drm/msm/msm_gem_submit.c
-> > > @@ -283,7 +283,7 @@ static int submit_lock_objects(struct msm_gem_submit *submit)
-> > >       return ret;
-> > >  }
-> > >
-> > > -static int submit_fence_sync(struct msm_gem_submit *submit, bool no_implicit)
-> > > +static int submit_fence_sync(struct msm_gem_submit *submit, bool implicit_sync)
-> > >  {
-> > >       int i, ret = 0;
-> > >
-> > > @@ -303,7 +303,7 @@ static int submit_fence_sync(struct msm_gem_submit *submit, bool no_implicit)
-> > >                               return ret;
-> > >               }
-> > >
-> > > -             if (no_implicit)
-> > > +             if (!implicit_sync)
-> > >                       continue;
-> > >
-> > >               ret = msm_gem_sync_object(&msm_obj->base, submit->ring->fctx,
-> > > @@ -774,7 +774,8 @@ int msm_ioctl_gem_submit(struct drm_device *dev, void *data,
-> > >       if (ret)
-> > >               goto out;
-> > >
-> > > -     ret = submit_fence_sync(submit, !!(args->flags & MSM_SUBMIT_NO_IMPLICIT));
-> > > +     ret = submit_fence_sync(submit, (gpu->nr_rings > 1) &&
-> > > +                     !(args->flags & MSM_SUBMIT_NO_IMPLICIT));
-> > >       if (ret)
-> > >               goto out;
-> > >
-> >
-> _______________________________________________
-> dri-devel mailing list
-> dri-devel@lists.freedesktop.org
-> https://lists.freedesktop.org/mailman/listinfo/dri-devel
+Changes in v6:
+ * Move table to arm-smmu-qcom (Robin)
 
+Changes in v5:
+ * Drop cleanup of blank lines since it was intentional (Robin)
+ * Rebase again on top of msm-next-pgtables as it moves pretty fast
+
+Changes in v4:
+ * Drop IOMMU_SYS_CACHE prot flag
+ * Rebase on top of https://gitlab.freedesktop.org/drm/msm/-/tree/msm-next-pgtables
+
+Changes in v3:
+ * Fix domain attribute setting to before iommu_attach_device()
+ * Fix few code style and checkpatch warnings
+ * Rebase on top of Jordan's latest split pagetables and per-instance
+   pagetables support
+
+Changes in v2:
+ * Addressed review comments and rebased on top of Jordan's split
+   pagetables series
+
+Sai Prakash Ranjan (4):
+  iommu/io-pgtable-arm: Add support to use system cache
+  iommu/arm-smmu: Add domain attribute for system cache
+  iommu: arm-smmu-impl: Use table to list QCOM implementations
+  iommu: arm-smmu-impl: Add a space before open parenthesis
+
+Sharat Masetty (2):
+  drm/msm: rearrange the gpu_rmw() function
+  drm/msm/a6xx: Add support for using system cache(LLC)
+
+ drivers/gpu/drm/msm/adreno/a6xx_gpu.c      | 83 ++++++++++++++++++++++
+ drivers/gpu/drm/msm/adreno/a6xx_gpu.h      |  4 ++
+ drivers/gpu/drm/msm/adreno/adreno_gpu.c    | 17 +++++
+ drivers/gpu/drm/msm/msm_drv.c              |  8 +++
+ drivers/gpu/drm/msm/msm_drv.h              |  1 +
+ drivers/gpu/drm/msm/msm_gpu.h              |  5 +-
+ drivers/iommu/arm/arm-smmu/arm-smmu-impl.c | 11 +--
+ drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c | 21 ++++--
+ drivers/iommu/arm/arm-smmu/arm-smmu.c      | 17 +++++
+ drivers/iommu/arm/arm-smmu/arm-smmu.h      |  2 +-
+ drivers/iommu/io-pgtable-arm.c             |  7 +-
+ include/linux/io-pgtable.h                 |  4 ++
+ include/linux/iommu.h                      |  1 +
+ 13 files changed, 161 insertions(+), 20 deletions(-)
+
+
+base-commit: ea95e543fd6201aceff96a0dd95530b2085874c4
 -- 
-Daniel Vetter
-Software Engineer, Intel Corporation
-http://blog.ffwll.ch
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
+of Code Aurora Forum, hosted by The Linux Foundation
+
