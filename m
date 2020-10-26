@@ -2,150 +2,85 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 318F5299284
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Oct 2020 17:33:30 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0ABA5299345
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Oct 2020 18:03:08 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1421598AbgJZQdZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 26 Oct 2020 12:33:25 -0400
-Received: from mail-wm1-f68.google.com ([209.85.128.68]:54421 "EHLO
-        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1421242AbgJZQdY (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 26 Oct 2020 12:33:24 -0400
-Received: by mail-wm1-f68.google.com with SMTP id w23so11217265wmi.4
-        for <linux-arm-msm@vger.kernel.org>; Mon, 26 Oct 2020 09:33:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=baylibre-com.20150623.gappssmtp.com; s=20150623;
-        h=references:user-agent:from:to:cc:subject:in-reply-to:date
-         :message-id:mime-version;
-        bh=/lQRM2+EAb+jKRJafntJPMlzMeoOKfJANas/j8SJLN4=;
-        b=e/I0HscW2QgWc5e2sSX9P9394/GMnjHxQzVKqbxpXS0yQNJgP5oMXIXyZELYT2JzT7
-         /zH6+cn3Uvi6aBylxRweBESwO5QSHZDpYlx2Ba20Uha95pmp22BxEcmArfwiAiWCcabV
-         9V63eoEtrRPg6WukH0OlQNvqmKxD5FVWjuB9oJhdkWo+z9pOv3XccJVVyEBiho+mFJDA
-         94BY7C7W04ufQ39cbsIv+c/0H59wnNDwX4cXXetaFT/MbylnPG3ndSAwN8kXQr08QrIH
-         P2BdAAu7NWWSYjex5WlaMWNrtgPEC4GbeMYI0GpWiyIpxEn5ZlrK9zIz7V+L7lJgnWIW
-         N/fQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:references:user-agent:from:to:cc:subject
-         :in-reply-to:date:message-id:mime-version;
-        bh=/lQRM2+EAb+jKRJafntJPMlzMeoOKfJANas/j8SJLN4=;
-        b=slHmJF5wagSITxlrGj/pcke8d9J1mJFAeSf/BDXn12V/pTDEZn6/hhLMv1gTx2KwGY
-         +3pAUYaTOmKh63eyFAg8P3gjTt46Qs6E4UY/txxDO2K9TAFf98/z2AUVUk/YvQG7GG5A
-         96PS8Tw5IiGs8Wv+I0weZJ7PrTbtP00sHu9KWFcA+yw5QmI4a2fFUxVDZp2cdvfgIQ3X
-         cdQL47FGhtI9huOzGXnYCd/hu9i2qvrLdtIWnKQN7UC7wfWyxppgN4+N7JFIIPZLK3No
-         DCqB46LeX8m6Mr2gUq8l42UZCHSB+OjEAm/3+49Di1r16IeHtFM/b7ZDdoW1nnMkYtjU
-         AC/g==
-X-Gm-Message-State: AOAM530uuOm5k0XaEbMl2Gvt1RkCDe461+EM1hlWGUmuQbCnmq0iYNX2
-        enFQFC0eEfaUf2WVId3aOiZdfg==
-X-Google-Smtp-Source: ABdhPJyreI18jIz7IrPx9Nt27h0Xuo9pf/2DbqlqowWOvewXDYrAULqhjkoLwyDCkT1sfcHYa7Oc4Q==
-X-Received: by 2002:a1c:e354:: with SMTP id a81mr16520015wmh.101.1603730002576;
-        Mon, 26 Oct 2020 09:33:22 -0700 (PDT)
-Received: from localhost (82-65-169-74.subs.proxad.net. [82.65.169.74])
-        by smtp.gmail.com with ESMTPSA id m8sm22620877wrw.17.2020.10.26.09.33.21
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 26 Oct 2020 09:33:22 -0700 (PDT)
-References: <20201026161411.3708639-1-arnd@kernel.org>
-User-agent: mu4e 1.3.3; emacs 26.3
-From:   Jerome Brunet <jbrunet@baylibre.com>
-To:     Arnd Bergmann <arnd@kernel.org>,
-        Neil Armstrong <narmstrong@baylibre.com>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Kevin Hilman <khilman@baylibre.com>,
-        Andy Gross <agross@kernel.org>,
+        id S1775616AbgJZRCz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 26 Oct 2020 13:02:55 -0400
+Received: from mail.kernel.org ([198.145.29.99]:50896 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1787091AbgJZRCy (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 26 Oct 2020 13:02:54 -0400
+Received: from localhost (fw-tnat.cambridge.arm.com [217.140.96.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id 7878622450;
+        Mon, 26 Oct 2020 17:02:53 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1603731774;
+        bh=Vx3kwhUrgAstRm7ol0WS1C7y+i6SeJQpZ/usDeWwXjw=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=1HGmyQZdomU/Kcotc6fonPISgftZKhHwL7gHb6VeyrwzgMJltpq9pWE80mmu1RFE3
+         x3zRvpo2a5VLA1Ht1UohZDgVrhKlBQxFrV83VyfrPOV6ZDzbxhiwhmStcsZeqO4uPA
+         e4IRJW31qs8XutTP77u+GSEVcLP9WBLbvvFEWSX8=
+Date:   Mon, 26 Oct 2020 17:02:49 +0000
+From:   Mark Brown <broonie@kernel.org>
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Mike Turquette <mturquette@linaro.org>
-Cc:     Arnd Bergmann <arnd@arndb.de>, Stephen Boyd <sboyd@codeaurora.org>,
-        Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
-        linux-amlogic@lists.infradead.org, linux-clk@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH] clk: define to_clk_regmap() as inline function
-In-reply-to: <20201026161411.3708639-1-arnd@kernel.org>
-Date:   Mon, 26 Oct 2020 17:33:21 +0100
-Message-ID: <1ja6w9j6b2.fsf@starbuckisacylon.baylibre.com>
+        Rob Herring <robh+dt@kernel.org>,
+        Jonathan Marek <jonathan@marek.ca>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        linux-arm-msm@vger.kernel.org,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        devicetree@vger.kernel.org, linux-clk@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2 1/5] dt-bindings: regulator: fixed: provide bindings
+ using power domain
+Message-ID: <20201026170249.GH7402@sirena.org.uk>
+References: <20201023131925.334864-1-dmitry.baryshkov@linaro.org>
+ <20201023131925.334864-2-dmitry.baryshkov@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="ewQ5hdP4CtoTt3oD"
+Content-Disposition: inline
+In-Reply-To: <20201023131925.334864-2-dmitry.baryshkov@linaro.org>
+X-Cookie: Safety Third.
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
-On Mon 26 Oct 2020 at 17:13, Arnd Bergmann <arnd@kernel.org> wrote:
+--ewQ5hdP4CtoTt3oD
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-> From: Arnd Bergmann <arnd@arndb.de>
->
-> Nesting container_of() causes warnings with W=2, which is
-> annoying if it happens in headers and fills the build log
-> like:
->
-> In file included from drivers/clk/qcom/clk-alpha-pll.c:6:
-> drivers/clk/qcom/clk-alpha-pll.c: In function 'clk_alpha_pll_hwfsm_enable':
-> include/linux/kernel.h:852:8: warning: declaration of '__mptr' shadows a previous local [-Wshadow]
->   852 |  void *__mptr = (void *)(ptr);     \
->       |        ^~~~~~
-> drivers/clk/qcom/clk-alpha-pll.c:155:31: note: in expansion of macro 'container_of'
->   155 | #define to_clk_alpha_pll(_hw) container_of(to_clk_regmap(_hw), \
->       |                               ^~~~~~~~~~~~
-> drivers/clk/qcom/clk-regmap.h:27:28: note: in expansion of macro 'container_of'
->    27 | #define to_clk_regmap(_hw) container_of(_hw, struct clk_regmap, hw)
->       |                            ^~~~~~~~~~~~
-> drivers/clk/qcom/clk-alpha-pll.c:155:44: note: in expansion of macro 'to_clk_regmap'
->   155 | #define to_clk_alpha_pll(_hw) container_of(to_clk_regmap(_hw), \
->       |                                            ^~~~~~~~~~~~~
-> drivers/clk/qcom/clk-alpha-pll.c:254:30: note: in expansion of macro 'to_clk_alpha_pll'
->   254 |  struct clk_alpha_pll *pll = to_clk_alpha_pll(hw);
->       |                              ^~~~~~~~~~~~~~~~
-> include/linux/kernel.h:852:8: note: shadowed declaration is here
->   852 |  void *__mptr = (void *)(ptr);     \
->       |        ^~~~~~
->
-> Redefine two copies of the to_clk_regmap() macro as inline functions
-> to avoid a lot of these.
->
-> Fixes: ea11dda9e091 ("clk: meson: add regmap clocks")
-> Fixes: 085d7a455444 ("clk: qcom: Add a regmap type clock struct")
-> Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+On Fri, Oct 23, 2020 at 04:19:21PM +0300, Dmitry Baryshkov wrote:
+> Define bindings for fixed regulator using power domain performance state
+> to enable/disable corresponding regulator.
 
-Acked-by: Jerome Brunet <jbrunet@baylibre.com>
+Please submit patches using subject lines reflecting the style for the
+subsystem, this makes it easier for people to identify relevant patches.
+Look at what existing commits in the area you're changing are doing and
+make sure your subject lines visually resemble what they're doing.
+There's no need to resubmit to fix this alone.
 
-> ---
->  drivers/clk/meson/clk-regmap.h | 5 ++++-
->  drivers/clk/qcom/clk-regmap.h  | 6 +++++-
->  2 files changed, 9 insertions(+), 2 deletions(-)
->
-> diff --git a/drivers/clk/meson/clk-regmap.h b/drivers/clk/meson/clk-regmap.h
-> index c4a39604cffd..e365312da54e 100644
-> --- a/drivers/clk/meson/clk-regmap.h
-> +++ b/drivers/clk/meson/clk-regmap.h
-> @@ -26,7 +26,10 @@ struct clk_regmap {
->  	void		*data;
->  };
->  
-> -#define to_clk_regmap(_hw) container_of(_hw, struct clk_regmap, hw)
-> +static inline struct clk_regmap *to_clk_regmap(struct clk_hw *hw)
-> +{
-> +	return container_of(hw, struct clk_regmap, hw);
-> +}
->  
->  /**
->   * struct clk_regmap_gate_data - regmap backed gate specific data
-> diff --git a/drivers/clk/qcom/clk-regmap.h b/drivers/clk/qcom/clk-regmap.h
-> index 6cfc1bccb255..14ec659a3a77 100644
-> --- a/drivers/clk/qcom/clk-regmap.h
-> +++ b/drivers/clk/qcom/clk-regmap.h
-> @@ -24,7 +24,11 @@ struct clk_regmap {
->  	unsigned int enable_mask;
->  	bool enable_is_inverted;
->  };
-> -#define to_clk_regmap(_hw) container_of(_hw, struct clk_regmap, hw)
-> +
-> +static inline struct clk_regmap *to_clk_regmap(struct clk_hw *hw)
-> +{
-> +	return container_of(hw, struct clk_regmap, hw);
-> +}
->  
->  int clk_is_enabled_regmap(struct clk_hw *hw);
->  int clk_enable_regmap(struct clk_hw *hw);
+--ewQ5hdP4CtoTt3oD
+Content-Type: application/pgp-signature; name="signature.asc"
 
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAl+XATgACgkQJNaLcl1U
+h9B3ZQf/b7wpRLW/WpVwlv/42X+6gg4wtsqgDCgaVyn4HGeEN0DFdW6WdAmKTygm
+eQwftDetW7iOVVMC9hOjWcqjqsv9mOEerwPyEwv9PN8GKtf6RKpBl2+6q0Bazv/Y
+45WSBguDbosl/Km4cHIviwAgfiTNFvPLKsm7I+OJGSkQgjeO9sIAel7NbcHoOH7p
+qBimFcit4Ztw2p7MNGzsg2G73ddnYQAWHosVs6fdClGIOJ0y3jfCG0FKrvrvBpdz
+fUqrlurarkaR+C/2mnI5S2wGMXsd6HGLV+YkThN71hYjUKovn76o0e+LTPaXltIL
+aj1yZK1NiGho3IJDqRjeudSZa5R20A==
+=6lYt
+-----END PGP SIGNATURE-----
+
+--ewQ5hdP4CtoTt3oD--
