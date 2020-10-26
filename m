@@ -2,93 +2,106 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id CA28D298C70
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Oct 2020 12:55:27 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id BB2DC298C95
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Oct 2020 13:02:28 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1772512AbgJZLzU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 26 Oct 2020 07:55:20 -0400
-Received: from z5.mailgun.us ([104.130.96.5]:28744 "EHLO z5.mailgun.us"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1772568AbgJZLzT (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 26 Oct 2020 07:55:19 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1603713318; h=Content-Transfer-Encoding: MIME-Version:
- References: In-Reply-To: Message-Id: Date: Subject: Cc: To: From:
- Sender; bh=gWbIE7C0uttXUDIpuGQCOy8JhDjczIXQfYWdOHE0ZWM=; b=aj5Cv7tRODnjLEmU4N4V8wtRPTEwNzhH+Fp56uECTQHaJNaX9ip/1vtbMbftewUT/K39hDIi
- rlcR6KqNyA7d3OdcX7FL0Bq04pSOoDz5lnz0Pf0l6eahRFZM3VNLsMmQmb4M05iXYAD5fuCr
- 3MSY/dv2oCG4OH1ajPJT3uCJtLY=
-X-Mailgun-Sending-Ip: 104.130.96.5
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n01.prod.us-west-2.postgun.com with SMTP id
- 5f96b90befbfd79b377138d1 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 26 Oct 2020 11:54:51
- GMT
-Sender: saiprakash.ranjan=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 44C64C4344D; Mon, 26 Oct 2020 11:54:51 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
-        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
-Received: from blr-ubuntu-253.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: saiprakash.ranjan)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 7D905C43395;
-        Mon, 26 Oct 2020 11:54:46 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 7D905C43395
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=saiprakash.ranjan@codeaurora.org
-From:   Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-To:     Will Deacon <will@kernel.org>, Robin Murphy <robin.murphy@arm.com>,
-        Joerg Roedel <joro@8bytes.org>,
-        Jordan Crouse <jcrouse@codeaurora.org>,
-        Rob Clark <robdclark@gmail.com>
-Cc:     iommu@lists.linux-foundation.org,
-        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+        id S1774642AbgJZMC1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 26 Oct 2020 08:02:27 -0400
+Received: from mail-wr1-f66.google.com ([209.85.221.66]:34312 "EHLO
+        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1769492AbgJZMC1 (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 26 Oct 2020 08:02:27 -0400
+Received: by mail-wr1-f66.google.com with SMTP id i1so12154793wro.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 26 Oct 2020 05:02:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=rzDcAsPcv9VfA3khTArkxlqmE18NNhfd2DKZyq6irZY=;
+        b=uZPtgb0tzTa6z7hyIgpYYeiGvN2Lk58Yu7JfKzN5prXR7zq4DIVxngBEFXTIbE4I2H
+         hg1HKf2qLDXQ+CpaVf85YEXzB7p+UuQM+G1c0mHhp7TcksAehhrvvra95s0tR9r/bfdg
+         XlLspjjirubQjw+r2vhKqx5PfN+kCZHlcJiGvnggxMzagxPDtleeMqVbFdMzgcbVStfp
+         IPgTqucPsZ6Poqp5yHmAnGPa6WebVhvE2sBZm7oEpm4Yl0vSd4xIEVVGeM7boDsKdT9r
+         aGQNtEt6gECNemFc6EI8ZpefOKB7DmG/+Or25J+vJ78EzpJVnFvJrkNVu5K04KDnv1gW
+         GdaQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=rzDcAsPcv9VfA3khTArkxlqmE18NNhfd2DKZyq6irZY=;
+        b=dIwoZWpJeRqGr4KiHX7dM42u2+Wy29G3VUUxs3XwLp8Uy3zDuERcwr5u/LQD91861h
+         DlTjLU6I1iCP8uAs7O7NaJ4stbnKN7f0uTYpoD4L33BwDzIq44OHu/qxEoNr+nEFbMEL
+         eizFINHseKQn5gW0SDHJXAIaMdHH7qyx9HMkt1f+RyfSfA8I39JEZV55SjrYAub/JMjl
+         +G31Zq/2dcz41Y6Ce+L4biQzESjcduZxeGS13h3nB2B1refoUZ58KKu2hMl2celFOb5G
+         +fFlPKmnqikuDPHwcUoy+2wAq25KB5Ra5e2BD4s9xIQVoV7uMzjh8eLPpQKcvImRyv/3
+         prGg==
+X-Gm-Message-State: AOAM532F+zvXlpCEa+krtGCS5MyKFkgF9HmgfBs8RUOf8X1sP+ERPvhy
+        kI5hpXtD/AZZ8QTxRw1HNIBY4w==
+X-Google-Smtp-Source: ABdhPJypvNXJuxmMM7Zf/cRBse301AwywIM5EX/nLsZGHuYZNtWiSXQSa4Qtp2BQvHZqpu18jMUbug==
+X-Received: by 2002:adf:fe81:: with SMTP id l1mr17322530wrr.11.1603713744985;
+        Mon, 26 Oct 2020 05:02:24 -0700 (PDT)
+Received: from srini-hackbox.lan (cpc86377-aztw32-2-0-cust226.18-1.cable.virginm.net. [92.233.226.227])
+        by smtp.gmail.com with ESMTPSA id i33sm23659337wri.79.2020.10.26.05.02.23
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 26 Oct 2020 05:02:24 -0700 (PDT)
+From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+To:     sboyd@kernel.org, linux-clk@vger.kernel.org,
+        devicetree@vger.kernel.org
+Cc:     bjorn.andersson@linaro.org, mturquette@baylibre.com,
+        robh+dt@kernel.org, linux-kernel@vger.kernel.org,
         linux-arm-msm@vger.kernel.org,
-        Akhil P Oommen <akhilpo@codeaurora.org>,
-        freedreno@lists.freedesktop.org,
-        "Kristian H . Kristensen" <hoegsberg@google.com>,
-        dri-devel@lists.freedesktop.org,
-        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-Subject: [PATCHv6 6/6] iommu: arm-smmu-impl: Add a space before open parenthesis
-Date:   Mon, 26 Oct 2020 17:24:05 +0530
-Message-Id: <2f53c9fb61613c7531d142c30e12789c60276201.1603448364.git.saiprakash.ranjan@codeaurora.org>
-X-Mailer: git-send-email 2.27.0
-In-Reply-To: <cover.1603448364.git.saiprakash.ranjan@codeaurora.org>
-References: <cover.1603448364.git.saiprakash.ranjan@codeaurora.org>
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Subject: [RESEND PATCH v3 0/4] clk: qcom : add sm8250 LPASS GFM drivers
+Date:   Mon, 26 Oct 2020 12:02:17 +0000
+Message-Id: <20201026120221.18984-1-srinivas.kandagatla@linaro.org>
+X-Mailer: git-send-email 2.21.0
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Fix the checkpatch warning for space required before the open
-parenthesis.
+This is resend of v3, due to dt_bindings check failure as
+rc1 was not out when previous v3 was sent!
 
-Signed-off-by: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
----
- drivers/iommu/arm/arm-smmu/arm-smmu-impl.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+This patchset adds support for GFM Muxes found in LPASS
+(Low Power Audio SubSystem) IP in Audio Clock Controller
+and Always ON clock controller.
 
-diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu-impl.c b/drivers/iommu/arm/arm-smmu/arm-smmu-impl.c
-index ffaf3f91ba52..f16da4a21270 100644
---- a/drivers/iommu/arm/arm-smmu/arm-smmu-impl.c
-+++ b/drivers/iommu/arm/arm-smmu/arm-smmu-impl.c
-@@ -12,7 +12,7 @@
- 
- static int arm_smmu_gr0_ns(int offset)
- {
--	switch(offset) {
-+	switch (offset) {
- 	case ARM_SMMU_GR0_sCR0:
- 	case ARM_SMMU_GR0_sACR:
- 	case ARM_SMMU_GR0_sGFSR:
+Clocks derived from these muxes are consumed by LPASS Digital Codec.
+Currently the driver for Audio and Always ON clock controller only
+supports GFM Muxes, however it should be easy to add more clock
+support when required
+
+Changes since v2:
+- updated Kconfig text and help as suggested by Stephen
+- removed unnecessary header file include
+- use fw_name instead of name for parents
+- use devm_platform_ioremap_resource
+
+verified dt_binding_check to pass on rc1,
+
+Srinivas Kandagatla (4):
+  dt-bindings: clock: Add support for LPASS Audio Clock Controller
+  dt-bindings: clock: Add support for LPASS Always ON Controller
+  clk: qcom: Add support to LPASS AUDIO_CC Glitch Free Mux clocks
+  clk: qcom: Add support to LPASS AON_CC Glitch Free Mux clocks
+
+ .../bindings/clock/qcom,aoncc-sm8250.yaml     |  58 ++++
+ .../bindings/clock/qcom,audiocc-sm8250.yaml   |  58 ++++
+ drivers/clk/qcom/Kconfig                      |   6 +
+ drivers/clk/qcom/Makefile                     |   1 +
+ drivers/clk/qcom/lpass-gfm-sm8250.c           | 320 ++++++++++++++++++
+ .../clock/qcom,sm8250-lpass-aoncc.h           |  11 +
+ .../clock/qcom,sm8250-lpass-audiocc.h         |  13 +
+ 7 files changed, 467 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/clock/qcom,aoncc-sm8250.yaml
+ create mode 100644 Documentation/devicetree/bindings/clock/qcom,audiocc-sm8250.yaml
+ create mode 100644 drivers/clk/qcom/lpass-gfm-sm8250.c
+ create mode 100644 include/dt-bindings/clock/qcom,sm8250-lpass-aoncc.h
+ create mode 100644 include/dt-bindings/clock/qcom,sm8250-lpass-audiocc.h
+
 -- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
-of Code Aurora Forum, hosted by The Linux Foundation
+2.21.0
 
