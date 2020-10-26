@@ -2,112 +2,277 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D2DE629905D
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Oct 2020 16:01:42 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 182A6299064
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Oct 2020 16:02:43 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1782892AbgJZPBj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 26 Oct 2020 11:01:39 -0400
-Received: from mail-wr1-f67.google.com ([209.85.221.67]:38819 "EHLO
-        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1782888AbgJZPBi (ORCPT
+        id S1782918AbgJZPCl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 26 Oct 2020 11:02:41 -0400
+Received: from mail-ot1-f65.google.com ([209.85.210.65]:44772 "EHLO
+        mail-ot1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1782749AbgJZPCl (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 26 Oct 2020 11:01:38 -0400
-Received: by mail-wr1-f67.google.com with SMTP id n18so12974198wrs.5
-        for <linux-arm-msm@vger.kernel.org>; Mon, 26 Oct 2020 08:01:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=U97g4DPk37yBTbr4sK3d+QCMl4K1OpjO58zJeloILjc=;
-        b=uXgwrHyoB/oVh3VPXCniZeS4cme8VQiCH4mJUmf6fVFsiJN8mC6nzwHz7tC7EytqYj
-         CYZOV4+jlcL+Lnwom/Y/MzEXEyGvOsAk4/W2ZB7rIus+ZQdJ/Ks2SNbvhRK8F87shls9
-         Lw4JZBQbl9pfHwKgQuaAMIA5khCEmy7TAyQgZNi9hgsm4wgru7pbE447D3lSzDmF+s2t
-         k5XtQtIjhJ8JiyGsOK5VdEcFmVWzcEt4Y38gT3sbizazWSA+54IJEjmEYhi+NeVYt9no
-         xKIJoIFKtET6z4mPQj08LxJguvP1H5cqHgwChbub9D5MfAWYZ6nPUHuQp25epRa/HGhk
-         wLCA==
+        Mon, 26 Oct 2020 11:02:41 -0400
+Received: by mail-ot1-f65.google.com with SMTP id e20so8222409otj.11;
+        Mon, 26 Oct 2020 08:02:38 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=U97g4DPk37yBTbr4sK3d+QCMl4K1OpjO58zJeloILjc=;
-        b=qBXQqI254U3vhJwR45s8kv0S23739xPMQRxVODu8S9/KxJZ4seRCDQitvP9J6rDKQe
-         5XI7K/eyAinY5wnAomK1cqiy646V/bntwuX+5eheD80QvN060P1/KfQG0ggREeUH8yAC
-         /m0uycy5X1juf89gN5kAD03qBOgPdO6Z+yR704u7b5b3vbI2Fr5HbiAFFyp+mgKo1csQ
-         6PxOEroKlGa5oVsbMB8jcw3iApNTcstAoj5J2ShPGuwoYuMsFqy0g4iQtQTEQMKx4t60
-         j3/DFqm0KdS0k1sQwCGhJ7kje749B+k4XtIwYsdu8Fzt4HBS9bAlerO7bTgQLmxnRrl2
-         H/tA==
-X-Gm-Message-State: AOAM531mnH/fWxpO6DTCtW6UlENqlqzxre3IUKqvBfSNMU55xbZYp4BW
-        IMl1ZhiEouHGmcVb2ghwjAR/VA==
-X-Google-Smtp-Source: ABdhPJwwb/Bivg+EAjiajD6Nc7JOqnZTCvtVkr5/QG5ozwvdx65HSpznlKuBPwU9mfAMsDDOYJjP8g==
-X-Received: by 2002:adf:e4c4:: with SMTP id v4mr18073433wrm.79.1603724496207;
-        Mon, 26 Oct 2020 08:01:36 -0700 (PDT)
-Received: from [192.168.86.34] (cpc86377-aztw32-2-0-cust226.18-1.cable.virginm.net. [92.233.226.227])
-        by smtp.googlemail.com with ESMTPSA id w11sm22317715wrs.26.2020.10.26.08.01.34
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 26 Oct 2020 08:01:35 -0700 (PDT)
-Subject: Re: [PATCH] Asoc: qcom: lpass-sc7180: Fix MI2S bitwidth field bit
- positions
-To:     Srinivasa Rao Mandadapu <srivasam@codeaurora.org>,
-        agross@kernel.org, bjorn.andersson@linaro.org, lgirdwood@gmail.com,
-        broonie@kernel.org, robh+dt@kernel.org, plai@codeaurora.org,
-        bgoswami@codeaurora.org, perex@perex.cz, tiwai@suse.com,
-        rohitkr@codeaurora.org, linux-arm-msm@vger.kernel.org,
-        alsa-devel@alsa-project.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Cc:     V Sujith Kumar Reddy <vsujithk@codeaurora.org>
-References: <1603373219-19374-1-git-send-email-srivasam@codeaurora.org>
-From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Message-ID: <335f1d55-8a85-8501-fd69-0397f44e21af@linaro.org>
-Date:   Mon, 26 Oct 2020 15:01:33 +0000
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.8.0
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=2aiLRf1lQzD4dmA+9Qc8/8CVqPN/upZ+zNSr1+Xbbnk=;
+        b=jEihGHWA9JCNgqDH4vbBRr1h5JIKXLEiu0zTH/LPUrsH493KGpRFgTUekR91JUl4ZF
+         LmMvWhdthlQRVFTHnJFHgmCk8HRbysnfqFWnjNkLGrgvBQXgMai8eFVi2an95ACkwh3u
+         3s4o62T91kwrlCLiGMJhgAS5pjLap8JSmA3Se2EB93z1Kqdvq9vjh4z5lEbj+MGN8EeJ
+         5mcpBzTJ9HHBdD5K1r1AT72zT4+uLIdcb7v2nt4gMNOq2S8uoRDoaFSEL5R/NCFln3fk
+         h2cld9zAhzp9XH0r/3R671yoy8ik1kdqB4+uTUtXvucRoAiOiKsETSVMYUIZ9pX6bJwE
+         j6ug==
+X-Gm-Message-State: AOAM532Se/Tcq8S7/EHpkYwsfnEzitfwUs/w7VWaHilKMmZpxX3SDpVJ
+        rQmUW7aBAeiCU2uOD7WKHw==
+X-Google-Smtp-Source: ABdhPJwZIO7eFvyYC6iIW/01eosuWEdyWYpFD9Md2hkD3Kl2sB29RW5rARlUyAQvIWydhS7rQT12Jg==
+X-Received: by 2002:a9d:172f:: with SMTP id i47mr10180077ota.74.1603724557602;
+        Mon, 26 Oct 2020 08:02:37 -0700 (PDT)
+Received: from xps15 (24-155-109-49.dyn.grandenetworks.net. [24.155.109.49])
+        by smtp.gmail.com with ESMTPSA id h6sm4126286oia.51.2020.10.26.08.02.36
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 26 Oct 2020 08:02:36 -0700 (PDT)
+Received: (nullmailer pid 156045 invoked by uid 1000);
+        Mon, 26 Oct 2020 15:02:35 -0000
+Date:   Mon, 26 Oct 2020 10:02:35 -0500
+From:   Rob Herring <robh@kernel.org>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Pavel Machek <pavel@ucw.cz>, Dan Murphy <dmurphy@ti.com>,
+        Andy Gross <agross@kernel.org>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
+        <u.kleine-koenig@pengutronix.de>, Lee Jones <lee.jones@linaro.org>,
+        Martin Botka <martin.botka1@gmail.com>,
+        linux-leds@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-pwm@vger.kernel.org
+Subject: Re: [PATCH v6 1/4] dt-bindings: leds: Add Qualcomm Light Pulse
+ Generator binding
+Message-ID: <20201026150235.GA140013@bogus>
+References: <20201021201224.3430546-1-bjorn.andersson@linaro.org>
+ <20201021201224.3430546-2-bjorn.andersson@linaro.org>
 MIME-Version: 1.0
-In-Reply-To: <1603373219-19374-1-git-send-email-srivasam@codeaurora.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20201021201224.3430546-2-bjorn.andersson@linaro.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 22/10/2020 14:26, Srinivasa Rao Mandadapu wrote:
-> From: V Sujith Kumar Reddy <vsujithk@codeaurora.org>
+On Wed, Oct 21, 2020 at 01:12:21PM -0700, Bjorn Andersson wrote:
+> This adds the binding document describing the three hardware blocks
+> related to the Light Pulse Generator found in a wide range of Qualcomm
+> PMICs.
 > 
-> Update SC7180 lpass_variant structure with proper I2S bitwidth
-> field bit positions, as bitwidth denotes 0 to 1 bits,
-> but previously used only 0 bit.
-> 
-> Fixes: commit cba62c8b49bead ("Merge series "ASoC: qcom: Add support for SC7180 lpass variant" from Rohit kumar <rohitkr@codeaurora.org>:")
-this should be 12 chars long, for this particular fix it should be!
-
-Fixes: 24caf8d9eb108 ("ASoC: qcom: lpass-sc7180: Add platform driver for 
-lpass audio")
-> 
-
-No empty line after Fixes tag!
-
-
-> Signed-off-by: V Sujith Kumar Reddy <vsujithk@codeaurora.org>
-> Signed-off-by: Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
+> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 > ---
->   sound/soc/qcom/lpass-sc7180.c | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
 > 
-> diff --git a/sound/soc/qcom/lpass-sc7180.c b/sound/soc/qcom/lpass-sc7180.c
-> index c6292f9e..bc998d5 100644
-> --- a/sound/soc/qcom/lpass-sc7180.c
-> +++ b/sound/soc/qcom/lpass-sc7180.c
-> @@ -188,7 +188,7 @@ static struct lpass_variant sc7180_data = {
->   	.micmode		= REG_FIELD_ID(0x1000, 4, 8, 3, 0x1000),
->   	.micmono		= REG_FIELD_ID(0x1000, 3, 3, 3, 0x1000),
->   	.wssrc			= REG_FIELD_ID(0x1000, 2, 2, 3, 0x1000),
-> -	.bitwidth		= REG_FIELD_ID(0x1000, 0, 0, 3, 0x1000),
-> +	.bitwidth		= REG_FIELD_ID(0x1000, 0, 1, 3, 0x1000),
->   
->   	.rdma_dyncclk		= REG_FIELD_ID(0xC000, 21, 21, 5, 0x1000),
->   	.rdma_bursten		= REG_FIELD_ID(0xC000, 20, 20, 5, 0x1000),
+> Changes since v5:
+> - None
 > 
---srini
+>  .../bindings/leds/leds-qcom-lpg.yaml          | 170 ++++++++++++++++++
+>  1 file changed, 170 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/leds/leds-qcom-lpg.yaml
+> 
+> diff --git a/Documentation/devicetree/bindings/leds/leds-qcom-lpg.yaml b/Documentation/devicetree/bindings/leds/leds-qcom-lpg.yaml
+> new file mode 100644
+> index 000000000000..5ccf0f3d8f1b
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/leds/leds-qcom-lpg.yaml
+> @@ -0,0 +1,170 @@
+> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/leds/leds-qcom-lpg.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: Qualcomm Light Pulse Generator
+> +
+> +maintainers:
+> +  - Bjorn Andersson <bjorn.andersson@linaro.org>
+> +
+> +description: >
+> +  The Qualcomm Light Pulse Generator consists of three different hardware blocks;
+> +  a ramp generator with lookup table, the light pulse generator and a three
+> +  channel current sink. These blocks are found in a wide range of Qualcomm PMICs.
+> +
+> +properties:
+> +  compatible:
+> +    enum:
+> +      - qcom,pm8916-pwm
+
+Are the LED properties valid when PWM is used/enabled? The schema 
+suggests yes, the example suggests no. If not, I think this should be 2 
+schema docs.
+
+> +      - qcom,pm8941-lpg
+> +      - qcom,pm8994-lpg
+> +      - qcom,pmi8994-lpg
+> +      - qcom,pmi8998-lpg
+> +
+> +  "#pwm-cells":
+> +    const: 2
+> +
+> +  "#address-cells":
+> +    const: 1
+> +
+> +  "#size-cells":
+> +    const: 0
+> +
+> +  qcom,power-source:
+> +    $ref: /schemas/types.yaml#definitions/uint32
+
+led-sources can't be made to work for this?
+
+> +    description: >
+> +      power-source used to drive the output, as defined in the datasheet.
+> +      Should be specified if the TRILED block is present
+> +    enum:
+> +      - 0
+> +      - 1
+> +      - 3
+> +
+> +  multi-led:
+> +    type: object
+> +    $ref: leds-class-multicolor.yaml#
+> +    properties:
+> +      "#address-cells":
+> +        const: 1
+> +
+> +      "#size-cells":
+> +        const: 0
+> +
+> +      "^led@[0-9a-f]$":
+> +        type: object
+> +        $ref: common.yaml#
+> +
+> +        properties:
+> +          "qcom,dtest":
+
+Don't need quotes.
+
+> +            $ref: /schemas/types.yaml#definitions/uint32-array
+
+The description sounds like a matrix rather than an array.
+
+> +            description: >
+> +              configures the output into an internal test line of the pmic. Specified
+> +              by a list of u32 pairs, one pair per channel, where each pair denotes the
+> +              test line to drive and the second configures how the value should be
+> +              outputed, as defined in the datasheet
+> +            minItems: 2
+> +            maxItems: 2
+
+If so, then you'd want:
+
+items:
+  minItems: 2
+  maxItems: 2
+
+> +
+> +        required:
+> +          - reg
+> +
+> +patternProperties:
+> +  "^led@[0-9a-f]$":
+> +    type: object
+> +    $ref: common.yaml#
+> +    properties:
+> +      "qcom,dtest":
+> +        $ref: /schemas/types.yaml#definitions/uint32-array
+> +        description: >
+> +          configures the output into an internal test line of the pmic. Specified
+> +          by a list of u32 pairs, one pair per channel, where each pair denotes the
+> +          test line to drive and the second configures how the value should be
+> +          outputed, as defined in the datasheet
+> +        minItems: 2
+> +        maxItems: 2
+> +
+> +    required:
+> +      - reg
+> +
+> +required:
+> +  - compatible
+> +
+> +additionalProperties: false
+> +
+> +examples:
+> +  - |
+> +    #include <dt-bindings/leds/common.h>
+> +
+> +    lpg {
+> +      compatible = "qcom,pmi8994-lpg";
+> +
+> +      #address-cells = <1>;
+> +      #size-cells = <0>;
+> +
+> +      qcom,power-source = <1>;
+> +
+> +      led@1 {
+> +        reg = <1>;
+> +        label = "green:user1";
+> +      };
+> +
+> +      led@2 {
+> +        reg = <2>;
+> +        label = "green:user0";
+> +        default-state = "on";
+> +      };
+> +
+> +      led@3 {
+> +        reg = <3>;
+> +        label = "green:user2";
+> +      };
+> +
+> +      led@4 {
+> +        reg = <4>;
+> +        label = "green:user3";
+> +
+> +        qcom,dtest = <4 1>;
+> +      };
+> +    };
+> +  - |
+> +    #include <dt-bindings/leds/common.h>
+> +
+> +    lpg {
+> +      compatible = "qcom,pmi8994-lpg";
+> +
+> +      #address-cells = <1>;
+> +      #size-cells = <0>;
+> +
+> +      qcom,power-source = <1>;
+> +
+> +      multi-led {
+> +        color = <LED_COLOR_ID_MULTI>;
+> +        label = "rgb:notification";
+> +
+> +        #address-cells = <1>;
+> +        #size-cells = <0>;
+> +
+> +        led@1 {
+> +          reg = <1>;
+> +          color = <LED_COLOR_ID_RED>;
+> +        };
+> +
+> +        led@2 {
+> +          reg = <2>;
+> +          color = <LED_COLOR_ID_GREEN>;
+> +        };
+> +
+> +        led@3 {
+> +          reg = <3>;
+> +          color = <LED_COLOR_ID_BLUE>;
+> +        };
+> +      };
+> +    };
+> +  - |
+> +    lpg {
+> +      compatible = "qcom,pm8916-pwm";
+> +      #pwm-cells = <2>;
+> +    };
+> +...
+> -- 
+> 2.28.0
+> 
