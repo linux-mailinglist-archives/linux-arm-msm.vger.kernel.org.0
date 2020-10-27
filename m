@@ -2,223 +2,249 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 4F23B29A81A
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Oct 2020 10:44:23 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C1C5B29A91B
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Oct 2020 11:11:04 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2895772AbgJ0JoD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 27 Oct 2020 05:44:03 -0400
-Received: from mail-eopbgr1310077.outbound.protection.outlook.com ([40.107.131.77]:2320
-        "EHLO APC01-SG2-obe.outbound.protection.outlook.com"
-        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S2895771AbgJ0JoD (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 27 Oct 2020 05:44:03 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=WoQqVqqXdFghQtWJ7kRUcahx+sEgSkqUggpy2hAhQL8+YSyqb+BXRGhgg5E72jDBZQlQGlNZz54BX7FdWkK009aZbwzEcnWc1eqYVG/DhEvIhoS3ijF64YSFfzk0xzC6d7WHQ8zzULeOSLjvQixLIugDu3n5XQb7OrBGsxOkrD7jeNaSVkiu983AU04HBn51RJfU/RQzU/g4outfRKrC8NtGt+qVr7t+oyY/Ymm/qmS7BWf3YlCa6aGko5ufbC0SWDbFa2TZ3u7BppR4jdfpag4ICcOezvCwpCxd461MQSg6883q0UiPX2XCQN5lAv7MwKUkxL/lO3H+AHNZVavUvg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=vCSW2038tEymiHbY59BuVi8UpfhXXkiygzsZqpXwXDk=;
- b=g5HRjqcEega5taewUXuFnxYWc9WvHjlUluSgWY+B52j0OjB4/Ds/8B5c84IuhbKTXJE4L5+HP35op2xPdtTmOmhpw7DNhMkQFyclmDBjnrfy0sx3fHtaCCd6Uvd2x5Z1GhadRGRBWE86g3z9B6eQMvDTmDlKoJ8CW++NZPGCQPPLqTp2pDDlSZ9RAIzGouYszDUgOirX51dQT5rcNxi3mxrUnH/054bMyTVttFiMWRtpmAoLQj1wUhn2M+sUjUSRkOspajMU31fQUDodNcxVvlCjkNDbxmZ2WSS2ETa/pWEBv5TCdz/tDKy5/x7xzFj57FGzCTpixibkSMJVZScTgw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=quectel.com; dmarc=pass action=none header.from=quectel.com;
- dkim=pass header.d=quectel.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quectel.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=vCSW2038tEymiHbY59BuVi8UpfhXXkiygzsZqpXwXDk=;
- b=kMX8NxZ4JxlPadwkJKA7UoD8S1J4qAMohbX9LHnYV1CYuC37/7QWv7kz0Ai01U3d5+4MlUpKmEq0pZYOPZ8Jjut5sXabMM/0YXIqJtfpGvuvg76OWnssD0s5TyUMFBXsrEpEePefVFIhFJhtevAWVEcKvL6x6G95q0DwSgch09o=
-Authentication-Results: linaro.org; dkim=none (message not signed)
- header.d=none;linaro.org; dmarc=none action=none header.from=quectel.com;
-Received: from HK2PR06MB3507.apcprd06.prod.outlook.com (2603:1096:202:3e::14)
- by HK0PR06MB3858.apcprd06.prod.outlook.com (2603:1096:203:ba::21) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.3477.26; Tue, 27 Oct
- 2020 09:43:58 +0000
-Received: from HK2PR06MB3507.apcprd06.prod.outlook.com
- ([fe80::94f:c55a:f9c8:22f4]) by HK2PR06MB3507.apcprd06.prod.outlook.com
- ([fe80::94f:c55a:f9c8:22f4%5]) with mapi id 15.20.3477.028; Tue, 27 Oct 2020
- 09:43:58 +0000
-From:   carl.yin@quectel.com
-To:     manivannan.sadhasivam@linaro.org, hemantk@codeaurora.org,
-        sfr@canb.auug.org.au
-Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        carl.yin@quectel.com, naveen.kumar@quectel.com
-Subject: [PATCH] bus: mhi: core: Add support MHI EE FP for download firmware
-Date:   Tue, 27 Oct 2020 17:43:38 +0800
-Message-Id: <20201027094338.23110-1-carl.yin@quectel.com>
-X-Mailer: git-send-email 2.17.1
-Content-Type: text/plain
-X-Originating-IP: [203.93.254.85]
-X-ClientProxiedBy: HK2PR06CA0006.apcprd06.prod.outlook.com
- (2603:1096:202:2e::18) To HK2PR06MB3507.apcprd06.prod.outlook.com
- (2603:1096:202:3e::14)
+        id S2438674AbgJ0KIB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 27 Oct 2020 06:08:01 -0400
+Received: from mail-wr1-f67.google.com ([209.85.221.67]:35186 "EHLO
+        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2438681AbgJ0KIA (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 27 Oct 2020 06:08:00 -0400
+Received: by mail-wr1-f67.google.com with SMTP id n15so1204791wrq.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 27 Oct 2020 03:07:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=ei3u24rIHuUlXFN659f6wxEdLp7W3x7O+DS6Q5fs7ws=;
+        b=vwX17LkFQN9VmSk/zsSEQ9SxEJQDJ1JMaJs+RIlkwFQEf8BtkIDogxkC8/t6kyWU0v
+         /CwB8tyGJ6i4O6Xem4VotrXV/uNJawEstv4Yn2RYmspGd7zL1sf1sbngmLvxDXxB8GQ1
+         dtrfpW8+AzdqfUXI4E/LTFGw1dQmg0GgzOeWnygoEs3Sdoom7CGu3hxhcghgadqPNvwD
+         jeyx1ag8UrJgIFlbvVhaX9CYZgHMI92OB1w/7xtexYykY6E4+pPFpPqjD9ej1lPlinLJ
+         rmzy62ttsrCoHyo/5DD84nM7F2/B/ApC/Vpu3uB8JuY3ziXSFdGxLSlaUqTUmHq19ESa
+         FcMQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=ei3u24rIHuUlXFN659f6wxEdLp7W3x7O+DS6Q5fs7ws=;
+        b=lyR/MNIeL1JXuecuxvRCfvI1X++PKX1wm0zDNHGEzPwdx7qaYruJoSNq1gSL4iRJgh
+         HDhoRPd1oCR+ymYyTMHTvZdOWfXK3YS/BWsP2R2AaQV+aFJ4i4FZluvsuYk/1KflYCsH
+         kkBcyR3cfmMFEtKNh/xGKZ6UKS2d0jjpmFL4PJQW70y7Fw1LiYo9Dn8++/altLeQ6c06
+         4kCWIr3VImRopI/mLFUAnglwmGZG7a5V/8v26nS/xSrqESww8YcChHAKmT7fW+v9HmNJ
+         RkPl3KEv/VolzuOoaqZvmsBbN5hVTxYIot9XoyfvP9Q6Rgp6HrX+3ReSqedpJZ/3eW18
+         H3Ug==
+X-Gm-Message-State: AOAM531B3bWQZU2o/lidV2iSHbOiLmUZi9/Ap7BBi8wqy9D6jFIYJKDL
+        CWWIImL08rL7lFiqbn2QiHtoOg==
+X-Google-Smtp-Source: ABdhPJzc7V2HgcIEkvba+6199zd1BCJe8hFyMd14K8tTvw55Goq1lfkLy50L41t3mH0cpHB5Sr7eWQ==
+X-Received: by 2002:adf:e751:: with SMTP id c17mr1229850wrn.345.1603793277117;
+        Tue, 27 Oct 2020 03:07:57 -0700 (PDT)
+Received: from [192.168.86.34] (cpc86377-aztw32-2-0-cust226.18-1.cable.virginm.net. [92.233.226.227])
+        by smtp.googlemail.com with ESMTPSA id i33sm1463259wri.79.2020.10.27.03.07.55
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 27 Oct 2020 03:07:56 -0700 (PDT)
+Subject: Re: [PATCH v12 1/2] ASoC: google: dt-bindings: Add sc7180-trogdor
+ machine bindings
+To:     Cheng-Yi Chiang <cychiang@chromium.org>,
+        linux-kernel@vger.kernel.org
+Cc:     Mark Brown <broonie@kernel.org>, Taniya Das <tdas@codeaurora.org>,
+        Rohit kumar <rohitkr@codeaurora.org>,
+        Banajit Goswami <bgoswami@codeaurora.org>,
+        Patrick Lai <plai@codeaurora.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Jaroslav Kysela <perex@perex.cz>,
+        Takashi Iwai <tiwai@suse.com>,
+        Stephan Gerhold <stephan@gerhold.net>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        Heiko Stuebner <heiko@sntech.de>,
+        Srinivasa Rao <srivasam@codeaurora.org>,
+        Ajye Huang <ajye_huang@compal.corp-partner.google.com>,
+        xuyuqing@huaqin.corp-partner.google.com, dianders@chromium.org,
+        dgreid@chromium.org, tzungbi@chromium.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        alsa-devel@alsa-project.org
+References: <20201027032234.1705835-1-cychiang@chromium.org>
+ <20201027032234.1705835-2-cychiang@chromium.org>
+From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Message-ID: <1f5f9ee9-f77c-7142-efe4-7e845fe54953@linaro.org>
+Date:   Tue, 27 Oct 2020 10:07:54 +0000
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.8.0
 MIME-Version: 1.0
-X-MS-Exchange-MessageSentRepresentingType: 1
-Received: from localhost.localdomain (203.93.254.85) by HK2PR06CA0006.apcprd06.prod.outlook.com (2603:1096:202:2e::18) with Microsoft SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.3499.18 via Frontend Transport; Tue, 27 Oct 2020 09:43:57 +0000
-X-MS-PublicTrafficType: Email
-X-MS-Office365-Filtering-Correlation-Id: 53dcc269-9262-4d7a-de34-08d87a5cd389
-X-MS-TrafficTypeDiagnostic: HK0PR06MB3858:
-X-MS-Exchange-Transport-Forked: True
-X-Microsoft-Antispam-PRVS: <HK0PR06MB385839A82E201F8C60F1F24886160@HK0PR06MB3858.apcprd06.prod.outlook.com>
-X-MS-Oob-TLC-OOBClassifiers: OLM:152;
-X-MS-Exchange-SenderADCheck: 1
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: VSenXHnGyzkgKId/GTjcAZOoyezKYSfoeJTP2hkoAz215p0kZlRRBusgA3A+1ph5c6smtXJelQKTpHtaFJwVVvXm+8r1NQNg8Z70mqXkFNT23T2a8zRq8r2PiQhVGpJzWH2RaXVjplTsRlVTv8053gX5hFDHEcoUFeWglxm/0rpT2FakTQdZnTfpZKgLlJrK15qKmNGIO70Af6UI6pUu+bXqJnQpl90gMxSq6s6WmuKyyU5aFplfh/qrrS9Tkol+3chi6Qh1UNKlTjbF1ZBZiCYW4XFDnBKjhbFJAhg2J9dR5xCTMwFErPMPrxJv6NEqbYYNkP7puU5szQ0vza5R/4zZhTuobpD16pf+YB/11aBN8P+ZNLaBgqlWc6UmK/3U
-X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:HK2PR06MB3507.apcprd06.prod.outlook.com;PTR:;CAT:NONE;SFS:(39860400002)(136003)(396003)(366004)(346002)(376002)(6512007)(66556008)(86362001)(186003)(9686003)(36756003)(5660300002)(2906002)(83380400001)(316002)(66946007)(16526019)(26005)(6506007)(69590400008)(52116002)(1076003)(6666004)(107886003)(66476007)(478600001)(956004)(2616005)(4326008)(8676002)(8936002)(6486002);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData: UnqEBTPSM1O9t4FohQzjKb5T55+fADnk5sl1xs7BH/qCYObrugQn1HuS3QtrbP/Vy3v3tUbhJLGtKiMMxUeJGQvFxpXDBtZVcGsqL+mdNskhDUOaD3BHuZq7xyw4ESlAWhPa8VaVDdPsSI+E6QimPIQboztsR+rjWADxXV/q5IXtLdRnXgOt2MMJvtWsqSJHF7UaGGJiwcL2iY0Px44DGMBPgvTFXYzycXdtmox9Few0UCwGa6TQwZJurDBRwfvweAvp7n1F8N49x7/bCLNH+PEC4gXid7BqWMShFDGbJIGsp8G/e4jHfX7YWaRQhdOLXFV6d6xo0VFUNcQCHtf0h0al6PJuSQZUqueE2OXJBBx5dux8wv0tXEHnKUnhT0hPOZW3cwK9vWlm7deMqti4uml93J8sYS1vBShbCNkPtshY7zty7lkfMqb4L5LzmFMJF4XaNOriWkQroJuaoNFU4PGh3kaXZg7RIsdHBkceJuemAswVEXNkSLXzMnskf0gL7jPaUjUjtA1h9KEvnQNvzRVDUig2/X/VeSBgyqkcA+0ziCGqXJH5adnp74q/ZhrSrElDf6UFbbKYjHplpe+D/In3Gvv4iBooNxaOoQMPb3rpsq/UH9wwkLdHofaYUAISdQLqLyibu5BFTLzu7DfM0Q==
-X-OriginatorOrg: quectel.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 53dcc269-9262-4d7a-de34-08d87a5cd389
-X-MS-Exchange-CrossTenant-AuthSource: HK2PR06MB3507.apcprd06.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 27 Oct 2020 09:43:57.9771
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 7730d043-e129-480c-b1ba-e5b6a9f476aa
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: VfRKlfGFtSXbjtZ9RUl2XqR03jOmv5nSleZMDgvzPuTFcLgDBhdSHgkilTFurvJ3rO5Ses6oW2YrYe0zmqSpbw==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: HK0PR06MB3858
+In-Reply-To: <20201027032234.1705835-2-cychiang@chromium.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: "carl.yin" <carl.yin@quectel.com>
+Thanks for doing this!
 
-MHI wwan modems support download firmware to nand or emmc
-by firehose protocol, process as next:
-1. wwan modem normal bootup and enter EE AMSS, create mhi DIAG chan device
-2. send EDL cmd via DIAG chan, then modem enter EE EDL
-3. boot.c download 'firehose/prog_firehose_sdx55.mbn' via BHI interface
-4. modem enter EE FP, and create mhi EDL chan device
-5. user space tool download FW to modem via EDL chan by firehose protocol
 
-Signed-off-by: carl.yin <carl.yin@quectel.com>
----
- drivers/bus/mhi/core/boot.c     |  4 +++-
- drivers/bus/mhi/core/init.c     |  2 ++
- drivers/bus/mhi/core/internal.h |  1 +
- drivers/bus/mhi/core/main.c     |  3 +++
- drivers/bus/mhi/core/pm.c       | 16 +++++++++++++++-
- include/linux/mhi.h             |  4 +++-
- 6 files changed, 27 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/bus/mhi/core/boot.c b/drivers/bus/mhi/core/boot.c
-index 24422f5..ab39ad6 100644
---- a/drivers/bus/mhi/core/boot.c
-+++ b/drivers/bus/mhi/core/boot.c
-@@ -460,8 +460,10 @@ void mhi_fw_load_handler(struct mhi_controller *mhi_cntrl)
- 		return;
- 	}
- 
--	if (mhi_cntrl->ee == MHI_EE_EDL)
-+	if (mhi_cntrl->ee == MHI_EE_EDL) {
-+		mhi_ready_state_transition(mhi_cntrl);
- 		return;
-+	}
- 
- 	write_lock_irq(&mhi_cntrl->pm_lock);
- 	mhi_cntrl->dev_state = MHI_STATE_RESET;
-diff --git a/drivers/bus/mhi/core/init.c b/drivers/bus/mhi/core/init.c
-index ac4aa5c..9c2c2f3 100644
---- a/drivers/bus/mhi/core/init.c
-+++ b/drivers/bus/mhi/core/init.c
-@@ -26,6 +26,7 @@ const char * const mhi_ee_str[MHI_EE_MAX] = {
- 	[MHI_EE_WFW] = "WFW",
- 	[MHI_EE_PTHRU] = "PASS THRU",
- 	[MHI_EE_EDL] = "EDL",
-+	[MHI_EE_FP] = "FP",
- 	[MHI_EE_DISABLE_TRANSITION] = "DISABLE",
- 	[MHI_EE_NOT_SUPPORTED] = "NOT SUPPORTED",
- };
-@@ -35,6 +36,7 @@ const char * const dev_state_tran_str[DEV_ST_TRANSITION_MAX] = {
- 	[DEV_ST_TRANSITION_READY] = "READY",
- 	[DEV_ST_TRANSITION_SBL] = "SBL",
- 	[DEV_ST_TRANSITION_MISSION_MODE] = "MISSION_MODE",
-+	[DEV_ST_TRANSITION_FP] = "FP",
- 	[DEV_ST_TRANSITION_SYS_ERR] = "SYS_ERR",
- 	[DEV_ST_TRANSITION_DISABLE] = "DISABLE",
- };
-diff --git a/drivers/bus/mhi/core/internal.h b/drivers/bus/mhi/core/internal.h
-index 4abf0cf..6ae897a 100644
---- a/drivers/bus/mhi/core/internal.h
-+++ b/drivers/bus/mhi/core/internal.h
-@@ -386,6 +386,7 @@ enum dev_st_transition {
- 	DEV_ST_TRANSITION_READY,
- 	DEV_ST_TRANSITION_SBL,
- 	DEV_ST_TRANSITION_MISSION_MODE,
-+	DEV_ST_TRANSITION_FP,
- 	DEV_ST_TRANSITION_SYS_ERR,
- 	DEV_ST_TRANSITION_DISABLE,
- 	DEV_ST_TRANSITION_MAX,
-diff --git a/drivers/bus/mhi/core/main.c b/drivers/bus/mhi/core/main.c
-index 3950792..e307b58 100644
---- a/drivers/bus/mhi/core/main.c
-+++ b/drivers/bus/mhi/core/main.c
-@@ -782,6 +782,9 @@ int mhi_process_ctrl_ev_ring(struct mhi_controller *mhi_cntrl,
- 			case MHI_EE_SBL:
- 				st = DEV_ST_TRANSITION_SBL;
- 				break;
-+			case MHI_EE_FP:
-+				st = DEV_ST_TRANSITION_FP;
-+				break;
- 			case MHI_EE_WFW:
- 			case MHI_EE_AMSS:
- 				st = DEV_ST_TRANSITION_MISSION_MODE;
-diff --git a/drivers/bus/mhi/core/pm.c b/drivers/bus/mhi/core/pm.c
-index 3de7b16..3c95a5d 100644
---- a/drivers/bus/mhi/core/pm.c
-+++ b/drivers/bus/mhi/core/pm.c
-@@ -563,7 +563,15 @@ static void mhi_pm_disable_transition(struct mhi_controller *mhi_cntrl,
- 	}
- 
- 	if (cur_state == MHI_PM_SYS_ERR_PROCESS) {
--		mhi_ready_state_transition(mhi_cntrl);
-+		if (mhi_get_exec_env(mhi_cntrl) == MHI_EE_EDL
-+			&& mhi_get_mhi_state(mhi_cntrl) == MHI_STATE_RESET) {
-+			write_lock_irq(&mhi_cntrl->pm_lock);
-+			cur_state = mhi_tryset_pm_state(mhi_cntrl, MHI_PM_POR);
-+			write_unlock_irq(&mhi_cntrl->pm_lock);
-+			mhi_queue_state_transition(mhi_cntrl, DEV_ST_TRANSITION_PBL);
-+		} else {
-+			mhi_ready_state_transition(mhi_cntrl);
-+		}
- 	} else {
- 		/* Move to disable state */
- 		write_lock_irq(&mhi_cntrl->pm_lock);
-@@ -658,6 +666,12 @@ void mhi_pm_st_worker(struct work_struct *work)
- 		case DEV_ST_TRANSITION_MISSION_MODE:
- 			mhi_pm_mission_mode_transition(mhi_cntrl);
- 			break;
-+		case DEV_ST_TRANSITION_FP:
-+			write_lock_irq(&mhi_cntrl->pm_lock);
-+			mhi_cntrl->ee = MHI_EE_FP;
-+			write_unlock_irq(&mhi_cntrl->pm_lock);
-+			mhi_create_devices(mhi_cntrl);
-+			break;
- 		case DEV_ST_TRANSITION_READY:
- 			mhi_ready_state_transition(mhi_cntrl);
- 			break;
-diff --git a/include/linux/mhi.h b/include/linux/mhi.h
-index 6e1122c..4620af8 100644
---- a/include/linux/mhi.h
-+++ b/include/linux/mhi.h
-@@ -120,6 +120,7 @@ struct mhi_link_info {
-  * @MHI_EE_WFW: WLAN firmware mode
-  * @MHI_EE_PTHRU: Passthrough
-  * @MHI_EE_EDL: Embedded downloader
-+ * @MHI_EE_FP, Flash Programmer Environment
-  */
- enum mhi_ee_type {
- 	MHI_EE_PBL,
-@@ -129,7 +130,8 @@ enum mhi_ee_type {
- 	MHI_EE_WFW,
- 	MHI_EE_PTHRU,
- 	MHI_EE_EDL,
--	MHI_EE_MAX_SUPPORTED = MHI_EE_EDL,
-+	MHI_EE_FP,
-+	MHI_EE_MAX_SUPPORTED = MHI_EE_FP,
- 	MHI_EE_DISABLE_TRANSITION, /* local EE, not related to mhi spec */
- 	MHI_EE_NOT_SUPPORTED,
- 	MHI_EE_MAX,
--- 
-2.25.1
 
+On 27/10/2020 03:22, Cheng-Yi Chiang wrote:
+> Add devicetree bindings documentation file for sc7180 sound card.
+> 
+> Signed-off-by: Cheng-Yi Chiang <cychiang@chromium.org>
+
+Looks good to me!
+
+Reviewed-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+
+
+> ---
+> Changes from v11 to v12
+> - Documentation:
+>   - Change the file and title name for new compatible string google,sc7180-trogdor.
+>   - Change the example of model name.
+> 
+>   .../bindings/sound/google,sc7180-trogdor.yaml | 130 ++++++++++++++++++
+>   1 file changed, 130 insertions(+)
+>   create mode 100644 Documentation/devicetree/bindings/sound/google,sc7180-trogdor.yaml
+> 
+> diff --git a/Documentation/devicetree/bindings/sound/google,sc7180-trogdor.yaml b/Documentation/devicetree/bindings/sound/google,sc7180-trogdor.yaml
+> new file mode 100644
+> index 000000000000..efc34689d6b5
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/sound/google,sc7180-trogdor.yaml
+> @@ -0,0 +1,130 @@
+> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/sound/google,sc7180-trogdor.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: Google SC7180-Trogdor ASoC sound card driver
+> +
+> +maintainers:
+> +  - Rohit kumar <rohitkr@codeaurora.org>
+> +  - Cheng-Yi Chiang <cychiang@chromium.org>
+> +
+> +description:
+> +  This binding describes the SC7180 sound card which uses LPASS for audio.
+> +
+> +properties:
+> +  compatible:
+> +    const: google,sc7180-trogdor
+> +
+> +  audio-routing:
+> +    $ref: /schemas/types.yaml#/definitions/non-unique-string-array
+> +    description:
+> +      A list of the connections between audio components. Each entry is a
+> +      pair of strings, the first being the connection's sink, the second
+> +      being the connection's source.
+> +
+> +  model:
+> +    $ref: /schemas/types.yaml#/definitions/string
+> +    description: User specified audio sound card name
+> +
+> +  "#address-cells":
+> +    const: 1
+> +
+> +  "#size-cells":
+> +    const: 0
+> +
+> +patternProperties:
+> +  "^dai-link(@[0-9])?$":
+> +    description:
+> +      Each subnode represents a dai link. Subnodes of each dai links would be
+> +      cpu/codec dais.
+> +
+> +    type: object
+> +
+> +    properties:
+> +      link-name:
+> +        description: Indicates dai-link name and PCM stream name.
+> +        $ref: /schemas/types.yaml#/definitions/string
+> +        maxItems: 1
+> +
+> +      reg:
+> +        description: dai link address.
+> +
+> +      cpu:
+> +        description: Holds subnode which indicates cpu dai.
+> +        type: object
+> +        properties:
+> +          sound-dai: true
+> +
+> +      codec:
+> +        description: Holds subnode which indicates codec dai.
+> +        type: object
+> +        properties:
+> +          sound-dai: true
+> +
+> +    required:
+> +      - link-name
+> +      - cpu
+> +      - codec
+> +
+> +    additionalProperties: false
+> +
+> +required:
+> +  - compatible
+> +  - model
+> +  - "#address-cells"
+> +  - "#size-cells"
+> +
+> +additionalProperties: false
+> +
+> +examples:
+> +
+> +  - |
+> +    sound {
+> +        compatible = "google,sc7180-trogdor";
+> +        model = "sc7180-rt5682-max98357a-1mic";
+> +
+> +        audio-routing =
+> +                    "Headphone Jack", "HPOL",
+> +                    "Headphone Jack", "HPOR";
+> +
+> +        #address-cells = <1>;
+> +        #size-cells = <0>;
+> +
+> +        dai-link@0 {
+> +            link-name = "MultiMedia0";
+> +            reg = <0>;
+> +            cpu {
+> +                sound-dai = <&lpass_cpu 0>;
+> +            };
+> +
+> +            codec {
+> +                sound-dai = <&alc5682 0>;
+> +            };
+> +        };
+> +
+> +        dai-link@1 {
+> +            link-name = "MultiMedia1";
+> +            reg = <1>;
+> +            cpu {
+> +                sound-dai = <&lpass_cpu 1>;
+> +            };
+> +
+> +            codec {
+> +                sound-dai = <&max98357a>;
+> +            };
+> +        };
+> +
+> +        dai-link@2 {
+> +            link-name = "MultiMedia2";
+> +            reg = <2>;
+> +            cpu {
+> +                sound-dai = <&lpass_hdmi 0>;
+> +            };
+> +
+> +            codec {
+> +                sound-dai = <&msm_dp>;
+> +            };
+> +        };
+> +    };
+> 
