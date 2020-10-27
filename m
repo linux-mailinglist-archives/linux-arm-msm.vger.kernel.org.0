@@ -2,98 +2,149 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 95EEF29A0A4
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Oct 2020 01:32:25 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 129B329A21D
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Oct 2020 02:19:40 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2409490AbgJ0AcM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 26 Oct 2020 20:32:12 -0400
-Received: from mail.kernel.org ([198.145.29.99]:51912 "EHLO mail.kernel.org"
+        id S2503719AbgJ0BTG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 26 Oct 2020 21:19:06 -0400
+Received: from m42-4.mailgun.net ([69.72.42.4]:41343 "EHLO m42-4.mailgun.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2409373AbgJZXvT (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 26 Oct 2020 19:51:19 -0400
-Received: from sasha-vm.mshome.net (c-73-47-72-35.hsd1.nh.comcast.net [73.47.72.35])
+        id S2408700AbgJ0BTG (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 26 Oct 2020 21:19:06 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1603761544; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
+ Subject: Sender; bh=ykRa/SRdEbudabccJMxxWepehMTr63NuIg68ElZPYA8=; b=JThBPs1vAU+gtKXSeLsMczHJKvAlqFo/d5SL9AtChbmsMORspQQ5OyAPLT2Fk4gmFT/JrUKZ
+ h80tj75a5FhC4pVUiCtXFrK3bFiheg+d8igy6pHL78dFOQz5qx4OdVg+J/uflgVVS0XVwF21
+ HdwB0XoIM+ugrU/41sHMwXULXwU=
+X-Mailgun-Sending-Ip: 69.72.42.4
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n01.prod.us-east-1.postgun.com with SMTP id
+ 5f97758401bdd11b7948caae (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 27 Oct 2020 01:19:00
+ GMT
+Sender: hemantk=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 3DB17C433CB; Tue, 27 Oct 2020 01:18:59 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-5.1 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        NICE_REPLY_A,SPF_FAIL autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from [10.46.162.249] (i-global254.qualcomm.com [199.106.103.254])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id D94F620874;
-        Mon, 26 Oct 2020 23:51:17 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1603756278;
-        bh=dqa6JtxLJRn8iT3a/4dQdhFUK2GrFl4nkpI3gzWfnGc=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=VIdT1FoC0o+dCqIPM3dyRFvBKMJtX9slY0QRu8uOVcgZGGkzvQfXVNwuXMZ+0L0fd
-         GdzeY0lB8fDFNuTPYe2Tnf0xbLzbov5n5gTBX4yiQqD5zLhZGCcefg/0WWucWjn6ba
-         tbo8WkZgeC4Em1h+co7/1UcLLAmtIAXC3vmJYGlc=
-From:   Sasha Levin <sashal@kernel.org>
-To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
-Cc:     Chris Lew <clew@codeaurora.org>,
-        Arun Kumar Neelakantam <aneela@codeaurora.org>,
-        Deepak Kumar Singh <deesin@codeaurora.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Sasha Levin <sashal@kernel.org>, linux-arm-msm@vger.kernel.org,
-        linux-remoteproc@vger.kernel.org
-Subject: [PATCH AUTOSEL 5.9 109/147] rpmsg: glink: Use complete_all for open states
-Date:   Mon, 26 Oct 2020 19:48:27 -0400
-Message-Id: <20201026234905.1022767-109-sashal@kernel.org>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20201026234905.1022767-1-sashal@kernel.org>
-References: <20201026234905.1022767-1-sashal@kernel.org>
+        (Authenticated sender: hemantk)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 30096C433C9;
+        Tue, 27 Oct 2020 01:18:58 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 30096C433C9
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=hemantk@codeaurora.org
+Subject: Re: [PATCH v9 4/4] bus: mhi: Add userspace client interface driver
+To:     Loic Poulain <loic.poulain@linaro.org>
+Cc:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        open list <linux-kernel@vger.kernel.org>,
+        Jeffrey Hugo <jhugo@codeaurora.org>,
+        Bhaumik Bhatt <bbhatt@codeaurora.org>, netdev@vger.kernel.org
+References: <1603495075-11462-1-git-send-email-hemantk@codeaurora.org>
+ <1603495075-11462-5-git-send-email-hemantk@codeaurora.org>
+ <CAMZdPi_MQ0SqK7s6h_1_9yEDD0vuAOpCTjSHTd1PBsGjvXukiA@mail.gmail.com>
+From:   Hemant Kumar <hemantk@codeaurora.org>
+Message-ID: <aefee6d1-da2c-d081-6bda-b9bd49e8c12f@codeaurora.org>
+Date:   Mon, 26 Oct 2020 18:18:57 -0700
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.10.0
 MIME-Version: 1.0
-X-stable: review
-X-Patchwork-Hint: Ignore
+In-Reply-To: <CAMZdPi_MQ0SqK7s6h_1_9yEDD0vuAOpCTjSHTd1PBsGjvXukiA@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Chris Lew <clew@codeaurora.org>
+Hi Loic,
 
-[ Upstream commit 4fcdaf6e28d11e2f3820d54dd23cd12a47ddd44e ]
+On 10/26/20 10:34 AM, Loic Poulain wrote:
+> Hi Hemant,
+> 
+> That looks better IMHO, just small comments on locking.
+> 
+[..]
+>     +static ssize_t mhi_uci_write(struct file *file,
+>     +                            const char __user *buf,
+>     +                            size_t count,
+>     +                            loff_t *offp)
+>     +{
+>     +       struct uci_dev *udev = file->private_data;
+>     +       struct mhi_device *mhi_dev = udev->mhi_dev;
+>     +       struct device *dev = &mhi_dev->dev;
+>     +       struct uci_chan *uchan = udev->uchan;
+>     +       size_t bytes_xfered = 0;
+>     +       int ret, nr_avail = 0;
+>     +
+>     +       /* if ul channel is not supported return error */
+>     +       if (!buf || !count || !mhi_dev->ul_chan)
+>     +               return -EINVAL;
+>     +
+>     +       dev_dbg(dev, "%s: to xfer: %zu bytes\n", __func__, count);
+>     +
+>     +       mutex_lock(&uchan->write_lock);
+> 
+> 
+> Maybe mutex_lock_interruptible is more appropriate here (same in read fops).
+i agree, will return -EINTR if mutex_lock_interruptible returns < 0.
+> 
+[..]
+>     +static ssize_t mhi_uci_read(struct file *file,
+>     +                           char __user *buf,
+>     +                           size_t count,
+>     +                           loff_t *ppos)
+>     +{
+>     +       struct uci_dev *udev = file->private_data;
+>     +       struct mhi_device *mhi_dev = udev->mhi_dev;
+>     +       struct uci_chan *uchan = udev->uchan;
+>     +       struct device *dev = &mhi_dev->dev;
+>     +       struct uci_buf *ubuf;
+>     +       size_t rx_buf_size;
+>     +       char *ptr;
+>     +       size_t to_copy;
+>     +       int ret = 0;
+>     +
+>     +       /* if dl channel is not supported return error */
+>     +       if (!buf || !mhi_dev->dl_chan)
+>     +               return -EINVAL;
+>     +
+>     +       mutex_lock(&uchan->read_lock);
+>     +       spin_lock_bh(&uchan->dl_pending_lock);
+>     +       /* No data available to read, wait */
+>     +       if (!uchan->cur_buf && list_empty(&uchan->dl_pending)) {
+>     +               dev_dbg(dev, "No data available to read, waiting\n");
+>     +
+>     +               spin_unlock_bh(&uchan->dl_pending_lock);
+>     +               ret = wait_event_interruptible(uchan->dl_wq,
+>     +                                              (!udev->enabled ||
+>     +                                           
+>       !list_empty(&uchan->dl_pending)));
+> 
+> 
+> If you need to protect dl_pending list against concurent access, you 
+> need to do it in wait_event as well. I would suggest to lookg at 
+> `wait_event_interruptible_lock_irq` function, that allows to pass a 
+> locked spinlock as parameter. That would be safer and prevent this 
+> lock/unlock dance.
+When using this API difference is, first we take spin_lock_bh() and then 
+wait API is using spin_unlock_irq()/spin_lock_irq(). I am getting
+"BUG: scheduling while atomic" when i use this way. When i changed 
+spin_lock_bh to spin_lock_irq then we got rid of the kernel BUG.
 
-The open_req and open_ack completion variables are the state variables
-to represet a remote channel as open. Use complete_all so there are no
-races with waiters and using completion_done.
+Thanks,
+Hemant
 
-Signed-off-by: Chris Lew <clew@codeaurora.org>
-Signed-off-by: Arun Kumar Neelakantam <aneela@codeaurora.org>
-Signed-off-by: Deepak Kumar Singh <deesin@codeaurora.org>
-Link: https://lore.kernel.org/r/1593017121-7953-2-git-send-email-deesin@codeaurora.org
-Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
----
- drivers/rpmsg/qcom_glink_native.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
-
-diff --git a/drivers/rpmsg/qcom_glink_native.c b/drivers/rpmsg/qcom_glink_native.c
-index f40312b16da06..b5570c83a28c6 100644
---- a/drivers/rpmsg/qcom_glink_native.c
-+++ b/drivers/rpmsg/qcom_glink_native.c
-@@ -970,7 +970,7 @@ static int qcom_glink_rx_open_ack(struct qcom_glink *glink, unsigned int lcid)
- 		return -EINVAL;
- 	}
- 
--	complete(&channel->open_ack);
-+	complete_all(&channel->open_ack);
- 
- 	return 0;
- }
-@@ -1178,7 +1178,7 @@ static int qcom_glink_announce_create(struct rpmsg_device *rpdev)
- 	__be32 *val = defaults;
- 	int size;
- 
--	if (glink->intentless)
-+	if (glink->intentless || !completion_done(&channel->open_ack))
- 		return 0;
- 
- 	prop = of_find_property(np, "qcom,intents", NULL);
-@@ -1413,7 +1413,7 @@ static int qcom_glink_rx_open(struct qcom_glink *glink, unsigned int rcid,
- 	channel->rcid = ret;
- 	spin_unlock_irqrestore(&glink->idr_lock, flags);
- 
--	complete(&channel->open_req);
-+	complete_all(&channel->open_req);
- 
- 	if (create_device) {
- 		rpdev = kzalloc(sizeof(*rpdev), GFP_KERNEL);
 -- 
-2.25.1
-
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
