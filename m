@@ -2,61 +2,89 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 3C83529A268
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Oct 2020 02:57:31 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id ADC3429A26B
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Oct 2020 02:57:32 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2504185AbgJ0Bxp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 26 Oct 2020 21:53:45 -0400
-Received: from mailgw01.mediatek.com ([210.61.82.183]:36872 "EHLO
-        mailgw01.mediatek.com" rhost-flags-OK-FAIL-OK-FAIL) by vger.kernel.org
-        with ESMTP id S2504182AbgJ0Bxo (ORCPT
+        id S2504203AbgJ0By0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 26 Oct 2020 21:54:26 -0400
+Received: from mail-lj1-f194.google.com ([209.85.208.194]:35780 "EHLO
+        mail-lj1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2504201AbgJ0ByZ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 26 Oct 2020 21:53:44 -0400
-X-UUID: 226aefd4c30841cfa359834994fff7be-20201027
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=mediatek.com; s=dk;
-        h=Content-Transfer-Encoding:MIME-Version:Content-Type:References:In-Reply-To:Date:CC:To:From:Subject:Message-ID; bh=wwWUNMKywSAbaJtNHiIr+Yim+MEAyDNc5pgDqalR8Nw=;
-        b=fXWq64A18BTKXdrN3xUh0Uo3oqS3k7fFJB6y98ExxS2eWW9KCQJKSDcgquqprMJI1xkvk9aKcJDOW3GgAgnh/v3NBkkLsB8h9GaNm6T8psPSeyjsMvDVNJwm665NITtUysgIM8C9YBLmHktN5l2aazn/0usP6xagvtSHZQLpNkw=;
-X-UUID: 226aefd4c30841cfa359834994fff7be-20201027
-Received: from mtkcas10.mediatek.inc [(172.21.101.39)] by mailgw01.mediatek.com
-        (envelope-from <stanley.chu@mediatek.com>)
-        (Cellopoint E-mail Firewall v4.1.14 Build 0819 with TLSv1.2 ECDHE-RSA-AES256-SHA384 256/256)
-        with ESMTP id 85215013; Tue, 27 Oct 2020 09:53:41 +0800
-Received: from mtkcas08.mediatek.inc (172.21.101.126) by
- MTKMBS09N1.mediatek.inc (172.21.101.35) with Microsoft SMTP Server (TLS) id
- 15.0.1497.2; Tue, 27 Oct 2020 09:53:40 +0800
-Received: from [172.21.77.33] (172.21.77.33) by mtkcas08.mediatek.inc
- (172.21.101.73) with Microsoft SMTP Server id 15.0.1497.2 via Frontend
- Transport; Tue, 27 Oct 2020 09:53:40 +0800
-Message-ID: <1603763620.2104.0.camel@mtkswgap22>
-Subject: Re: [PATCH v1 1/2] scsi: ufs: Put hba into LPM during clk gating
-From:   Stanley Chu <stanley.chu@mediatek.com>
-To:     Asutosh Das <asutoshd@codeaurora.org>
-CC:     <cang@codeaurora.org>, <martin.petersen@oracle.com>,
-        <linux-scsi@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        Avri Altman <avri.altman@wdc.com>,
-        "James E.J. Bottomley" <jejb@linux.ibm.com>,
-        Bean Huo <beanhuo@micron.com>,
-        "Bart Van Assche" <bvanassche@acm.org>,
-        Satya Tangirala <satyat@google.com>,
-        open list <linux-kernel@vger.kernel.org>
-Date:   Tue, 27 Oct 2020 09:53:40 +0800
-In-Reply-To: <ce0a3be9c685506803597fb770e37c099ae27232.1603754932.git.asutoshd@codeaurora.org>
-References: <ce0a3be9c685506803597fb770e37c099ae27232.1603754932.git.asutoshd@codeaurora.org>
-Content-Type: text/plain; charset="UTF-8"
-X-Mailer: Evolution 3.2.3-0ubuntu6 
+        Mon, 26 Oct 2020 21:54:25 -0400
+Received: by mail-lj1-f194.google.com with SMTP id x16so13013686ljh.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 26 Oct 2020 18:54:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=LLnZq0fw5BkskFKbMKLE/UEUqWEDM6IwXjFAFUfkNXc=;
+        b=s+4T7WNwafEKsaZTJAqZ3ZXZjvsMNvQSvh3sliD1ErIwBmKLUEQuoWTZmohDXucNSP
+         7HL54TOrnk4/opKU4jtoZpllD2hpdbugyABT+hEw4Nnal6iEMrMoBKv4QoVRoseDCOUr
+         aqH8g1k/l+A1krfPVNTxBd4VAPrVwWx9F53J/wNTr1btUUY+MV7vXn5DC+2vm7qmh3JT
+         gzAsm31yPr1T1PHnL/W7Zrzh568dL2CRzKUxr/4BpqILcx51h7AzGKT3XvuGsn+ophlv
+         VqY9tK6D6kKj4mTe36yRt++7rxLcKt1mBLMqvSvjI21Srxa9xMmt8MqSDQVmZqUm+pwK
+         VCjg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=LLnZq0fw5BkskFKbMKLE/UEUqWEDM6IwXjFAFUfkNXc=;
+        b=abiGcOb5oW8Fm6WbnLCxgjp46YuD5ys8tgOVEytIAHxro+X4/GCVUAitWpk3ZubLua
+         CRZ7J/WL2ppvHdUVonWjlTkx55lxKKUvlfSFzM0e7WP7Kl7nCJOT31KTYmWlEU/pULLh
+         bCl2An26YO3vQgc+0WJP5gNakyYTnwqS0D/YJjeEO1Hht4SfP//ics4rkAu3W+gnPGaP
+         C0dlysl2YGJiDSBLHjipXb8Z8ikeI3ztNOH6WQys53f0m5+qNXVmE/J3MMaYiKAr5Y1N
+         8FcJPaCnWRTJZGkKqMsUtNErM2gE63o7dL5/mRmCa4AHsUuGRZkAJYWPNroeMxRoKJt4
+         mTuw==
+X-Gm-Message-State: AOAM5332ObUF1FpbFHBbvR+nng/+KvFwjyj/duspUCueLld2+Gb+UHzl
+        becrEDtfaW0HvMlqSvwc5uCEKiqiGj9wAFNw
+X-Google-Smtp-Source: ABdhPJxUVYVcN5kBsztFguH3Pmpi0hgJSeuM94hRMSkFKovpAwN2bz0uYE7Bwzghy6qIKMzyMyvxpQ==
+X-Received: by 2002:a2e:81cf:: with SMTP id s15mr18256ljg.147.1603763663627;
+        Mon, 26 Oct 2020 18:54:23 -0700 (PDT)
+Received: from eriador.lan ([188.162.64.195])
+        by smtp.gmail.com with ESMTPSA id p145sm1219721lfa.256.2020.10.26.18.54.22
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 26 Oct 2020 18:54:23 -0700 (PDT)
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org
+Subject: [PATCH] arm64: dts: qcom: sm8250: remove wakeup-parent for TLMM node
+Date:   Tue, 27 Oct 2020 04:54:20 +0300
+Message-Id: <20201027015420.908945-1-dmitry.baryshkov@linaro.org>
+X-Mailer: git-send-email 2.28.0
 MIME-Version: 1.0
-X-MTK:  N
-Content-Transfer-Encoding: base64
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-T24gTW9uLCAyMDIwLTEwLTI2IGF0IDE2OjMwIC0wNzAwLCBBc3V0b3NoIERhcyB3cm90ZToNCj4g
-RnJvbTogQ2FuIEd1byA8Y2FuZ0Bjb2RlYXVyb3JhLm9yZz4NCj4gDQo+IER1cmluZyBjbG9jayBn
-YXRpbmcsIGFmdGVyIGNsb2NrcyBhcmUgZGlzYWJsZWQsDQo+IHB1dCBoYmEgaW50byBMUE0gdG8g
-c2F2ZSBtb3JlIHBvd2VyLg0KPiANCj4gU2lnbmVkLW9mZi1ieTogQ2FuIEd1byA8Y2FuZ0Bjb2Rl
-YXVyb3JhLm9yZz4NCj4gU2lnbmVkLW9mZi1ieTogQXN1dG9zaCBEYXMgPGFzdXRvc2hkQGNvZGVh
-dXJvcmEub3JnPg0KDQpBY2tlZC1ieTogU3RhbmxleSBDaHUgPHN0YW5sZXkuY2h1QG1lZGlhdGVr
-LmNvbT4NCg0KDQo=
+On SM8250 TLMM doesn't use PDC interrupt controller for wakeup events.
+Instead it handles them on their own (not implemented yet). In addition
+setting wakeup-parent property to &pdc will result in parent hwirq being
+set to ~0UL, which interact badly with the irqdomains trimming code. So
+remove the wakeup-parent property.
+
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Fixes: 16951b490b20 ("arm64: dts: qcom: sm8250: Add TLMM pinctrl node")
+---
+ arch/arm64/boot/dts/qcom/sm8250.dtsi | 1 -
+ 1 file changed, 1 deletion(-)
+
+diff --git a/arch/arm64/boot/dts/qcom/sm8250.dtsi b/arch/arm64/boot/dts/qcom/sm8250.dtsi
+index ccbdb47d6119..77ea20421752 100644
+--- a/arch/arm64/boot/dts/qcom/sm8250.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm8250.dtsi
+@@ -2418,7 +2418,6 @@ tlmm: pinctrl@f100000 {
+ 			interrupt-controller;
+ 			#interrupt-cells = <2>;
+ 			gpio-ranges = <&tlmm 0 0 180>;
+-			wakeup-parent = <&pdc>;
+ 
+ 			pri_mi2s_sck_active: pri-mi2s-sck-active {
+ 				mux {
+-- 
+2.28.0
 
