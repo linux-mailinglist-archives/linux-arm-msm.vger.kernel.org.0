@@ -2,110 +2,150 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 6B04C29CC0C
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Oct 2020 23:34:54 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E0C4A29CC1F
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Oct 2020 23:43:54 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1832487AbgJ0Wej (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 27 Oct 2020 18:34:39 -0400
-Received: from z5.mailgun.us ([104.130.96.5]:52783 "EHLO z5.mailgun.us"
+        id S2902335AbgJ0Wnv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 27 Oct 2020 18:43:51 -0400
+Received: from m42-4.mailgun.net ([69.72.42.4]:40251 "EHLO m42-4.mailgun.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1832460AbgJ0We0 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 27 Oct 2020 18:34:26 -0400
+        id S372875AbgJ0Wnu (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 27 Oct 2020 18:43:50 -0400
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1603838066; h=Content-Transfer-Encoding: MIME-Version:
- References: In-Reply-To: Message-Id: Date: Subject: Cc: To: From:
- Sender; bh=oCS6rrjus9PAM663x7+ECmgucjExZnYZnUqtOqwzQxQ=; b=K0pmzWwqWUpd9Vsq9eXDhjdfqYftsmm2M0jAbYyJBD0TfQxTgq6OFeBfideeD+nBGdM7KIxt
- 0J+EMNw5aC5Qqhd1ozWaQfIVyOTSrp1U85NZ3H/LtfzLfmcfzZXcFEYgsaoxfVR3g/eaEYsq
- EbesuS50qaSvyOI5wN8R034MEng=
-X-Mailgun-Sending-Ip: 104.130.96.5
+ s=smtp; t=1603838630; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
+ Subject: Sender; bh=3rDmPFdxOUjBCqUsTJliBqGs3RTx+ZIi5ERCsbuDXX8=; b=eR/eNvh6Sy6J6wAEIvGbbUf3or5NAuADtK4U00nmgXdLgSUtmhIa/2V8yZwDLiknF26we7sn
+ iucEZIif5zct6O8V4SyJChMUPYEXEYfZzwYEfBnOFHRS2/eCr5u/5xuHAuhrvQEW0vX0lEEH
+ JPc4pGtHfuT+0VN212nz/U7zQhU=
+X-Mailgun-Sending-Ip: 69.72.42.4
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org
  (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n07.prod.us-west-2.postgun.com with SMTP id
- 5f98a072da4f4647733e1f22 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 27 Oct 2020 22:34:26
+ smtp-out-n07.prod.us-east-1.postgun.com with SMTP id
+ 5f98a2a0f119df899762fbe7 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 27 Oct 2020 22:43:44
  GMT
-Sender: jcrouse=codeaurora.org@mg.codeaurora.org
+Sender: hemantk=codeaurora.org@mg.codeaurora.org
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 1345EC43385; Tue, 27 Oct 2020 22:34:26 +0000 (UTC)
+        id 9A093C433F0; Tue, 27 Oct 2020 22:43:43 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
-        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
-Received: from jordan-laptop.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+X-Spam-Status: No, score=-5.1 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        NICE_REPLY_A,SPF_FAIL,URIBL_BLOCKED autolearn=ham autolearn_force=no
+        version=3.4.0
+Received: from [10.46.162.249] (i-global254.qualcomm.com [199.106.103.254])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        (Authenticated sender: jcrouse)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id E255FC43385;
-        Tue, 27 Oct 2020 22:34:23 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org E255FC43385
+        (Authenticated sender: hemantk)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id BD780C433C9;
+        Tue, 27 Oct 2020 22:43:42 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org BD780C433C9
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=jcrouse@codeaurora.org
-From:   Jordan Crouse <jcrouse@codeaurora.org>
-To:     linux-arm-msm@vger.kernel.org
-Cc:     Rob Clark <robdclark@chromium.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: [PATCH v18 4/4] arm: dts: qcom: sm845: Set the compatible string for the GPU SMMU
-Date:   Tue, 27 Oct 2020 16:34:08 -0600
-Message-Id: <20201027223408.469893-5-jcrouse@codeaurora.org>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20201027223408.469893-1-jcrouse@codeaurora.org>
-References: <20201027223408.469893-1-jcrouse@codeaurora.org>
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=hemantk@codeaurora.org
+Subject: Re: [PATCH] bus: mhi: core: Introduce sysfs ul chan id for mhi chan
+ device
+To:     Jeffrey Hugo <jhugo@codeaurora.org>, carl.yin@quectel.com,
+        manivannan.sadhasivam@linaro.org, sfr@canb.auug.org.au
+Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        naveen.kumar@quectel.com
+References: <20201027094304.23025-1-carl.yin@quectel.com>
+ <b1da800d-4919-edac-b651-ecdd7e0625ca@codeaurora.org>
+From:   Hemant Kumar <hemantk@codeaurora.org>
+Message-ID: <d041b002-7a2c-64be-f5bd-0988c3611503@codeaurora.org>
+Date:   Tue, 27 Oct 2020 15:43:42 -0700
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.10.0
 MIME-Version: 1.0
+In-Reply-To: <b1da800d-4919-edac-b651-ecdd7e0625ca@codeaurora.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Set the qcom,adreno-smmu compatible string for the GPU SMMU to enable
-split pagetables and per-instance pagetables for drm/msm.
+Hi Carl,
 
-Signed-off-by: Jordan Crouse <jcrouse@codeaurora.org>
-Signed-off-by: Rob Clark <robdclark@chromium.org>
-Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
----
+On 10/27/20 8:06 AM, Jeffrey Hugo wrote:
+> On 10/27/2020 3:43 AM, carl.yin@quectel.com wrote:
+>> From: "carl.yin" <carl.yin@quectel.com>
+>>
+>> User space software like ModemManager can identify the function
+>> of the mhi chan device by ul_chan_id.
+>>
+>> Signed-off-by: carl.yin <carl.yin@quectel.com>
+>> ---
+>>   Documentation/ABI/stable/sysfs-bus-mhi | 10 ++++++++++
+>>   drivers/bus/mhi/core/init.c            | 15 +++++++++++++++
+>>   2 files changed, 25 insertions(+)
+>>
+>> diff --git a/Documentation/ABI/stable/sysfs-bus-mhi 
+>> b/Documentation/ABI/stable/sysfs-bus-mhi
+>> index ecfe766..6d52768 100644
+>> --- a/Documentation/ABI/stable/sysfs-bus-mhi
+>> +++ b/Documentation/ABI/stable/sysfs-bus-mhi
+>> @@ -19,3 +19,13 @@ Description:    The file holds the OEM PK Hash 
+>> value of the endpoint device
+>>           read without having the device power on at least once, the file
+>>           will read all 0's.
+>>   Users:        Any userspace application or clients interested in 
+>> device info.
+>> +
+>> +What:        /sys/bus/mhi/devices/.../ul_chan_id
+>> +Date:        November 2020
+>> +KernelVersion:    5.10
+>> +Contact:    Carl Yin <carl.yin@quectel.com>
+>> +Description:    The file holds the uplink chan id of the mhi chan 
+>> device.
+>> +        User space software like ModemManager can identify the 
+>> function of
+>> +        the mhi chan device. If the mhi device is not a chan device,
+>> +        eg mhi controller device, the file read -1.
+>> +Users:        Any userspace application or clients interested in 
+>> device info.
+>> diff --git a/drivers/bus/mhi/core/init.c b/drivers/bus/mhi/core/init.c
+>> index c6b43e9..ac4aa5c 100644
+>> --- a/drivers/bus/mhi/core/init.c
+>> +++ b/drivers/bus/mhi/core/init.c
+>> @@ -105,9 +105,24 @@ static ssize_t oem_pk_hash_show(struct device *dev,
+>>   }
+>>   static DEVICE_ATTR_RO(oem_pk_hash);
+>> +static ssize_t ul_chan_id_show(struct device *dev,
+>> +                struct device_attribute *attr,
+>> +                char *buf)
+>> +{
+>> +    struct mhi_device *mhi_dev = to_mhi_device(dev);
+>> +    int ul_chan_id = -1;
+>> +
+>> +    if (mhi_dev->ul_chan)
+>> +        ul_chan_id = mhi_dev->ul_chan_id;
+>> +
+>> +    return snprintf(buf, PAGE_SIZE, "%d\n", ul_chan_id);
+>> +}
+>> +static DEVICE_ATTR_RO(ul_chan_id);
+>> +
+>>   static struct attribute *mhi_dev_attrs[] = {
+>>       &dev_attr_serial_number.attr,
+>>       &dev_attr_oem_pk_hash.attr,
+>> +    &dev_attr_ul_chan_id.attr,
+>>       NULL,
+>>   };
+>>   ATTRIBUTE_GROUPS(mhi_dev);
+>>
+> 
+> NACK
+> 
+> Channel ID is a device specific detail.  Userspace should be basing 
+> decisions on the channel name.
+> 
+I agree with Jeff, why do you need to know the channel id, if you need 
+to poll for any device node to get created you can try to open the 
+device node from user space and wait until the device gets opened.
+Are you trying to wait for EDL channels to get started using UCI ?
 
- arch/arm64/boot/dts/qcom/sdm845-cheza.dtsi | 9 +++++++++
- arch/arm64/boot/dts/qcom/sdm845.dtsi       | 2 +-
- 2 files changed, 10 insertions(+), 1 deletion(-)
-
-diff --git a/arch/arm64/boot/dts/qcom/sdm845-cheza.dtsi b/arch/arm64/boot/dts/qcom/sdm845-cheza.dtsi
-index 64fc1bfd66fa..39f23cdcbd02 100644
---- a/arch/arm64/boot/dts/qcom/sdm845-cheza.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sdm845-cheza.dtsi
-@@ -633,6 +633,15 @@ &mdss_mdp {
- 	status = "okay";
- };
- 
-+/*
-+ * Cheza fw does not properly program the GPU aperture to allow the
-+ * GPU to update the SMMU pagetables for context switches.  Work
-+ * around this by dropping the "qcom,adreno-smmu" compat string.
-+ */
-+&adreno_smmu {
-+	compatible = "qcom,sdm845-smmu-v2", "qcom,smmu-v2";
-+};
-+
- &mss_pil {
- 	iommus = <&apps_smmu 0x781 0x0>,
- 		 <&apps_smmu 0x724 0x3>;
-diff --git a/arch/arm64/boot/dts/qcom/sdm845.dtsi b/arch/arm64/boot/dts/qcom/sdm845.dtsi
-index 40e8c11f23ab..0508e86140bd 100644
---- a/arch/arm64/boot/dts/qcom/sdm845.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sdm845.dtsi
-@@ -4103,7 +4103,7 @@ opp-257000000 {
- 		};
- 
- 		adreno_smmu: iommu@5040000 {
--			compatible = "qcom,sdm845-smmu-v2", "qcom,smmu-v2";
-+			compatible = "qcom,sdm845-smmu-v2", "qcom,adreno-smmu", "qcom,smmu-v2";
- 			reg = <0 0x5040000 0 0x10000>;
- 			#iommu-cells = <1>;
- 			#global-interrupts = <2>;
+Thanks,
+Hemant
 -- 
-2.25.1
-
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
