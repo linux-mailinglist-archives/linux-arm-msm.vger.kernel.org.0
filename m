@@ -2,58 +2,56 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 1809D29A9A0
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Oct 2020 11:27:50 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 783A229AA5A
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Oct 2020 12:14:28 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2898122AbgJ0K1g (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 27 Oct 2020 06:27:36 -0400
-Received: from mail-lj1-f196.google.com ([209.85.208.196]:33771 "EHLO
-        mail-lj1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2898123AbgJ0K1g (ORCPT
+        id S2896855AbgJ0LO1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 27 Oct 2020 07:14:27 -0400
+Received: from mail-lf1-f65.google.com ([209.85.167.65]:45667 "EHLO
+        mail-lf1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2437103AbgJ0LO0 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 27 Oct 2020 06:27:36 -0400
-Received: by mail-lj1-f196.google.com with SMTP id c21so1164386ljj.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 27 Oct 2020 03:27:34 -0700 (PDT)
+        Tue, 27 Oct 2020 07:14:26 -0400
+Received: by mail-lf1-f65.google.com with SMTP id r127so1744186lff.12
+        for <linux-arm-msm@vger.kernel.org>; Tue, 27 Oct 2020 04:14:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=gCvescP5dSLVAXgQnwSOh5I7PubzBY6cI1Voa43IB8U=;
-        b=pZEfMD2yDs/S/7GgBy1MMnU0ghnX+IObgLHS9qlIl2ZMZfmGzdIPVyMd4KvYbGBZaM
-         BIL4x0CTu5qkw4jLyFrJ26/wuI8Zhj8AO6BLjMv/joKjahnAvBYjGSUU5CnMcAL+uHTS
-         A4WHR/zHi4S5jhaeH9LJYvydozZHo8g805YaFpSCSotoap0MzP/BnHZvEEAJL5m/E2ss
-         tI3I4IVeLfvJbCB7nIzNX4clXVxs7haNpCgcG+IpJccGUIkBO2JOE+EJw/W5zThoI3WG
-         HvjTi/KicQP1mdtGTCq/xsb94MLMjt2DRrjimgvDUkSEeUxdLXoWMcaK80KVA46x7bjW
-         HdIg==
+        bh=Kx7CART/DxUoMm7Sa0Vnq6dGV13FhDvd/kD3/8Gg8ho=;
+        b=WRJYCi/8PhiE0aSiq4DKWnugOqmyTUWLV8teC20a5eXAm5ZLQiJW04YbGu5S4FHHq3
+         1+IeBpgH04lJoQ6rWkn2/QxP9VVQdrJNsOLULYrKF8NDLE0stJ/XBfuan65BZf+7nmNt
+         pKhzp0IvahIJI5FENoxBxlrik/XKeWlWHzYl2/mHDRIvolZzBXKvlpY/0sJNXJcQVU2w
+         YsMhKCGwCNkKz+SJYLNdmCkSOi2dPx8EccUG0L7Y8Tqb8pzXVBMLE8LG9qwamBBAxYqu
+         +bNJxg7y+jnflAyqykkVER2bHI5Ac1j+JTGAjcjXjmPhG4QVNcv36LDYcg4rfBK9jtqp
+         BStg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=gCvescP5dSLVAXgQnwSOh5I7PubzBY6cI1Voa43IB8U=;
-        b=uR31H9ju6DvpoJwZjUhcgUXjMyaqo6M6n9twVvGhMakinIDX0tzwqgMa95g8nMv1xV
-         ErE7+8g6Du6K+B2QuDK7omv/HTa/uvvkTJbbjhvOTru0rPNJcMOJ7slNcob5b7CKfvt2
-         uIKmfHoMaO6nDJCq6jHVyX6+nwe27ZttbutWOQB0IFNw3Oj3KVUXfN1DCDZzbB+1F7nK
-         G22acOo6rY2yMBjYrSC7iwB/ppjFvQnazeFlB7J0scxpGy08ViGug46QHsC8YxRooQJC
-         IGNmhopiBiRG4lQ9JAXXgn0hVeNf+DGHmiTCY2vmvAtmSBpsJ6FBcK86tlCO0GwCd9js
-         6Inw==
-X-Gm-Message-State: AOAM532Ee5PcemljmKBrIE76Ng2xqZR+OIZhq4++x6T5WQ2twUcLfyoJ
-        XhQwjfMQXZkRnp9Gm3L9yteIZQ==
-X-Google-Smtp-Source: ABdhPJyioIK1VSWaQI4/Am6kRTzmspO6F/aqyjN/dRPjtHLtuKlZJoRBgyvyVGMo8GSOthOqMGYXuw==
-X-Received: by 2002:a2e:b558:: with SMTP id a24mr738696ljn.328.1603794453902;
-        Tue, 27 Oct 2020 03:27:33 -0700 (PDT)
-Received: from eriador.lan ([188.162.64.248])
-        by smtp.gmail.com with ESMTPSA id l6sm129686lfc.8.2020.10.27.03.27.32
+        bh=Kx7CART/DxUoMm7Sa0Vnq6dGV13FhDvd/kD3/8Gg8ho=;
+        b=cBT4pQ3GmydNrK3H1mML4SOqaRyETfwEJqd2rRs520/HbbgsrMkvc81/QlnCGN/Lze
+         dKsaLW37nn5sroPfDVUELCnq+CwdH+5JHzNvkC0WgYlUDShMo4lTHDVRgq40wUqRZvmt
+         lHpiIKiBOhQaHX1aZTryPYloULc8hF80ue84YM0gfE8v/pkJPLjKU3Njvq98iHOCb9+S
+         fOPwZ3xKc2MFdwQ7UY06/l1L34+x2mqo+Oe3CU5arYenI7wUAj73lECzhBOYxqWPPpmt
+         WFd70e6tW2CQ2lxwiJpn9rff++ZOgF8TxoVDk4BI5fXcDVMTw6aegfpJ9amMPBlaCZpR
+         4oAw==
+X-Gm-Message-State: AOAM532H8UJYRMKSxhIOaIsxG4kgcMPE//fcA53dgG2kl1ptVPvRss2h
+        NinGgMJphB/HPl7Bj4rte1xTKMaTmbqjRMNx
+X-Google-Smtp-Source: ABdhPJy51B0fBfONLYlyme+1w8w8xXl3VWMrx+7AUldah86lSav3URmcgsagxOT3Yt43Hco6OvucOQ==
+X-Received: by 2002:a19:84d3:: with SMTP id g202mr703123lfd.346.1603797264351;
+        Tue, 27 Oct 2020 04:14:24 -0700 (PDT)
+Received: from localhost (c-9b28e555.07-21-73746f28.bbcust.telenor.se. [85.229.40.155])
+        by smtp.gmail.com with ESMTPSA id j19sm140462lfb.74.2020.10.27.04.14.23
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 27 Oct 2020 03:27:33 -0700 (PDT)
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Georgi Djakov <georgi.djakov@linaro.org>,
-        Jonathan Marek <jonathan@marek.ca>
-Cc:     linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org
-Subject: [PATCH] interconnect: qcom: use icc_sync state for sm8[12]50
-Date:   Tue, 27 Oct 2020 13:27:31 +0300
-Message-Id: <20201027102731.951421-1-dmitry.baryshkov@linaro.org>
+        Tue, 27 Oct 2020 04:14:23 -0700 (PDT)
+From:   Anders Roxell <anders.roxell@linaro.org>
+To:     agross@kernel.org, bjorn.andersson@linaro.org
+Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Anders Roxell <anders.roxell@linaro.org>
+Subject: [PATCH] soc: qcom: QCOM_RPMH fix build with modular QCOM_RPMH
+Date:   Tue, 27 Oct 2020 12:14:22 +0100
+Message-Id: <20201027111422.4008114-1-anders.roxell@linaro.org>
 X-Mailer: git-send-email 2.28.0
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
@@ -61,41 +59,37 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-In addition to the rest of Qcom interconnect drivers use icc_sync_state
-for SM8150/SM8250 interconnect drivers to notify the interconnect
-framework when all consumers are probed and there is no need to keep the
-bandwidth set to maximum anymore.
+When building allmodconfig leading to the following link error with
+CONFIG_QCOM_RPMH=y and CONFIG_QCOM_COMMAND_DB=m:
 
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+aarch64-linux-gnu-ld: drivers/clk/qcom/clk-rpmh.o: in function `clk_rpmh_probe':
+  drivers/clk/qcom/clk-rpmh.c:474: undefined reference to `cmd_db_read_addr'
+  drivers/clk/qcom/clk-rpmh.c:474:(.text+0x254): relocation truncated to fit: R_AARCH64_CALL26 against undefined symbol `cmd_db_read_addr'
+
+Fix this by adding a Kconfig depenency and forcing QCOM_RPMH to be a
+module when QCOM_COMMAND_DB is a module. Also removing the dependency on
+'ARCH_QCOM || COMPILE_TEST' since that is already a dependency for
+QCOM_COMMAND_DB.
+
+Fixes: 778279f4f5e4 ("soc: qcom: cmd-db: allow loading as a module")
+Signed-off-by: Anders Roxell <anders.roxell@linaro.org>
 ---
- drivers/interconnect/qcom/sm8150.c | 1 +
- drivers/interconnect/qcom/sm8250.c | 1 +
- 2 files changed, 2 insertions(+)
+ drivers/soc/qcom/Kconfig | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/interconnect/qcom/sm8150.c b/drivers/interconnect/qcom/sm8150.c
-index 9218efed04a0..30fb6567fe19 100644
---- a/drivers/interconnect/qcom/sm8150.c
-+++ b/drivers/interconnect/qcom/sm8150.c
-@@ -627,6 +627,7 @@ static struct platform_driver qnoc_driver = {
- 	.driver = {
- 		.name = "qnoc-sm8150",
- 		.of_match_table = qnoc_of_match,
-+		.sync_state = icc_sync_state,
- 	},
- };
- module_platform_driver(qnoc_driver);
-diff --git a/drivers/interconnect/qcom/sm8250.c b/drivers/interconnect/qcom/sm8250.c
-index 9b58946f7898..49c5ee2e70f0 100644
---- a/drivers/interconnect/qcom/sm8250.c
-+++ b/drivers/interconnect/qcom/sm8250.c
-@@ -643,6 +643,7 @@ static struct platform_driver qnoc_driver = {
- 	.driver = {
- 		.name = "qnoc-sm8250",
- 		.of_match_table = qnoc_of_match,
-+		.sync_state = icc_sync_state,
- 	},
- };
- module_platform_driver(qnoc_driver);
+diff --git a/drivers/soc/qcom/Kconfig b/drivers/soc/qcom/Kconfig
+index 9b4ae9c16ba7..3bdd1604f78f 100644
+--- a/drivers/soc/qcom/Kconfig
++++ b/drivers/soc/qcom/Kconfig
+@@ -109,7 +109,7 @@ config QCOM_RMTFS_MEM
+ 
+ config QCOM_RPMH
+ 	tristate "Qualcomm RPM-Hardened (RPMH) Communication"
+-	depends on ARCH_QCOM || COMPILE_TEST
++	depends on QCOM_COMMAND_DB
+ 	help
+ 	  Support for communication with the hardened-RPM blocks in
+ 	  Qualcomm Technologies Inc (QTI) SoCs. RPMH communication uses an
 -- 
 2.28.0
 
