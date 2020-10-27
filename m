@@ -2,453 +2,180 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id AB3A129A6A3
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Oct 2020 09:33:48 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 78C9429A7A6
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Oct 2020 10:20:26 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2894953AbgJ0Id0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 27 Oct 2020 04:33:26 -0400
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:33994 "EHLO
+        id S2508755AbgJ0JT4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 27 Oct 2020 05:19:56 -0400
+Received: from mail-wr1-f68.google.com ([209.85.221.68]:42034 "EHLO
         mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2894936AbgJ0IdU (ORCPT
+        with ESMTP id S2408662AbgJ0JT4 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 27 Oct 2020 04:33:20 -0400
-Received: by mail-wr1-f68.google.com with SMTP id i1so887334wro.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 27 Oct 2020 01:33:17 -0700 (PDT)
+        Tue, 27 Oct 2020 05:19:56 -0400
+Received: by mail-wr1-f68.google.com with SMTP id j7so995175wrt.9
+        for <linux-arm-msm@vger.kernel.org>; Tue, 27 Oct 2020 02:19:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=kyNCk1nnSz645iYCcNPWj71o0yYMWwlI/sqvYy5mgj0=;
-        b=L3Z7u/Alf2G7D0waF9sgzlbANvsNVO9aYqBJ5SgIoZofMFtQ7HIZgD7USROWa9IsBu
-         hmLCw4PdJ/Ed1jxOODzlXJ/UcXLrPv/uTHWBGEG3wZz7kfhsmKu3ZcU/UT0QsjtItgZN
-         +qyvhMKDmyBqXKNpeax/2z2fuWfPBe4KgBE7s5hOx0V3H5xA0gjBoJ5sbjfQ2Y6+gXyB
-         6w+pQtw3nerYPszUnwCDmqI2n8TQ6fJDK9KTHY78aFACf80gyBNxwSuuSyF94wcRZqtz
-         FdzYUibkwMJSwcf+t0Qu/8oMfFCHCToi0v+wlOrmcJf019/N1LgllIscl3uqjgCdooB4
-         ZAjA==
+        h=from:to:cc:subject:date:message-id;
+        bh=/wDjT/SlZ3lKVqpNwVDGAcf/aKgztmBHkRCUdNnZ+aw=;
+        b=vdYfDY/TYNYCUgUHMhh+fIs/CSYiFFsyY+p6u4EvFhFraYVRB+9sfXxFgmnQVpjFFZ
+         t7TQqqEObuDsMpVky/Lm1YJg3RVAG7ox13tpuFg0HgAPOKGsarXP2yD96nkoRJLMhdLT
+         2D8UFmfF5BasOtQ+lnsgCxv2oqSiriPcMkUOzFmi6GPFZLdT+kkUrwT5gWOYUCdNUuTu
+         z4i4xMc8jIu1Bb+eaE6fywlbRpVL5oe6C9YF7l/qXlAHl8i70CxhvxxdaGWAaJzHqsh7
+         BvJkLbs/KDLQxns65ayk2DILD8HJfNGy6Bp/nFg2MUuCy85dzAV03YWyhPzx59Wc3tO5
+         W5ZQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=kyNCk1nnSz645iYCcNPWj71o0yYMWwlI/sqvYy5mgj0=;
-        b=gZ4QvgUu4XW07E6cjql+JZtXDzdsQG/vFizlMIZHvliCWMReToLf9PtT3nagYWGJdb
-         +VfAuACUk6PkXqCTGpdAOdDy4HxqObGSxjmhr5h/fw452NltDnihStsaiZhe24B5zNdt
-         yU6viuffXLgEFai0AhWZe6pJq699UL5kpyYqkc+m3KGjWHibvZmwrBY2u+JBMRY1K7eh
-         FUyHTNL/2QajDBrK/aSq8uEm6unKu61lewZaVL/cmewn/DnPUYcr+DkMppQp1eOHOZJ2
-         9rvHrvaEOc3QrLNbk1kr7a3mpwcMXvAYJq4RtLIBjLQGghrFtVj/M2LXy4EaAbJZBz+z
-         iAKQ==
-X-Gm-Message-State: AOAM533L7R15zjvVyWelUBHQEDQFoGJNRG+CjzvxKz+V8bQ7iWLY+yyw
-        X1YyjYx73tbvuNi8hNPytG90WQ==
-X-Google-Smtp-Source: ABdhPJwndJwYE2ckNLF/2OhJ77dULP8Rs0F3Iw4Nwlcx6pgOYRYyFUYo2fIP/dbf4zDl/c8tZVPZQA==
-X-Received: by 2002:a5d:6149:: with SMTP id y9mr1435816wrt.352.1603787596105;
-        Tue, 27 Oct 2020 01:33:16 -0700 (PDT)
-Received: from localhost.localdomain ([88.122.66.28])
-        by smtp.gmail.com with ESMTPSA id u6sm976361wmj.40.2020.10.27.01.33.15
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 27 Oct 2020 01:33:15 -0700 (PDT)
-From:   Loic Poulain <loic.poulain@linaro.org>
-To:     kuba@kernel.org, davem@davemloft.net,
-        manivannan.sadhasivam@linaro.org, hemantk@codeaurora.org
-Cc:     netdev@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        jhugo@codeaurora.org, bbhatt@codeaurora.org,
-        Loic Poulain <loic.poulain@linaro.org>
-Subject: [PATCH v7 2/2] net: Add mhi-net driver
-Date:   Tue, 27 Oct 2020 09:39:37 +0100
-Message-Id: <1603787977-6975-2-git-send-email-loic.poulain@linaro.org>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1603787977-6975-1-git-send-email-loic.poulain@linaro.org>
-References: <1603787977-6975-1-git-send-email-loic.poulain@linaro.org>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=/wDjT/SlZ3lKVqpNwVDGAcf/aKgztmBHkRCUdNnZ+aw=;
+        b=aE/dgT8AhfUY144Vac+9qVFNYZumt3RXb0+N1pZduAmbwv+Dc8HrgF5hAWXbna661x
+         ahrj9cYCaxOnu/RSdIfbgXegkAy28Brvg52cOQ2PRT96/A2Ub9vwPS5YS3RP7VmGkktr
+         rlzICGNvrmGYGuprDHY7AuPNm9iRtTo6mlPPOH9kTee8oKCSm/lq9yE2Cl53Lk/8VEsp
+         tsbxs1M1DXPl7t6X1pSEZruzqe+RbZAsj06I2dko4FHGzEt4Pz3/a0adtWTwXsN/zjW7
+         LJtRuOv/i5N2dwuC1yVkKixcsPrkiIPBd/YHBvdOHb8uMXrDknQSrOaWUY85tN7LQ099
+         5dxQ==
+X-Gm-Message-State: AOAM531UZ2n7QPbXFqqKfVqdfZ9tk+5PqB3jnh/NETpbBlShIj9ps3eP
+        I0MN7Ed2EimbIvqdqWUlyn7rc0QO1b+qEg==
+X-Google-Smtp-Source: ABdhPJwUKSYbFKqHrh9OmKMvhBJbJjb9tAmt/GvrtiqiTXS0wl6hQDRJ4luJ1lpqYuHMfpo6VttNog==
+X-Received: by 2002:a5d:4001:: with SMTP id n1mr1680682wrp.426.1603790393873;
+        Tue, 27 Oct 2020 02:19:53 -0700 (PDT)
+Received: from localhost.localdomain ([84.238.208.210])
+        by smtp.gmail.com with ESMTPSA id i10sm1292902wrq.27.2020.10.27.02.19.52
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 27 Oct 2020 02:19:53 -0700 (PDT)
+From:   Stanimir Varbanov <stanimir.varbanov@linaro.org>
+To:     linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Cc:     Stanimir Varbanov <stanimir.varbanov@linaro.org>
+Subject: [PATCH v2] venus: venc: Fix setting of profile and level
+Date:   Tue, 27 Oct 2020 11:19:36 +0200
+Message-Id: <20201027091936.14478-1-stanimir.varbanov@linaro.org>
+X-Mailer: git-send-email 2.17.1
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This patch adds a new network driver implementing MHI transport for
-network packets. Packets can be in any format, though QMAP (rmnet)
-is the usual protocol (flow control + PDN mux).
+The profile and level in op_set_ctrl was recently changed but during
+v4l2_ctrl_handler_setup profile and level control values are mangled.
 
-It support two MHI devices, IP_HW0 which is, the path to the IPA
-(IP accelerator) on qcom modem, And IP_SW0 which is the software
-driven IP path (to modem CPU).
-
-Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
+Fixes: 435c53c3698f ("media: venus: venc: Use helper to set profile and level")
+Signed-off-by: Stanimir Varbanov <stanimir.varbanov@linaro.org>
 ---
-  v2: - rebase on net-next
-      - remove useless skb_linearize
-      - check error type on mhi_queue return
-      - rate limited errors
-      - Schedule RX refill only on 'low' buf level
-      - SET_NETDEV_DEV in probe
-      - reorder device remove sequence
-  v3: - Stop channels on net_register error
-      - Remove useles parentheses
-      - Add driver .owner
-  v4: - prevent potential cpu hog in rx-refill loop
-      - Access mtu via READ_ONCE
-  v5: - Fix access to u64 stats
-  v6: - Stop TX queue earlier if queue is full
-      - Preventing 'abnormal' NETDEV_TX_BUSY path
-  v7: - Stop dl/ul cb operations on channel resetting
 
- drivers/net/Kconfig   |   7 ++
- drivers/net/Makefile  |   1 +
- drivers/net/mhi_net.c | 320 ++++++++++++++++++++++++++++++++++++++++++++++++++
- 3 files changed, 328 insertions(+)
- create mode 100644 drivers/net/mhi_net.c
+v2: Fixed kernel test robot WARNING
 
-diff --git a/drivers/net/Kconfig b/drivers/net/Kconfig
-index 1368d1d..11a6357 100644
---- a/drivers/net/Kconfig
-+++ b/drivers/net/Kconfig
-@@ -426,6 +426,13 @@ config VSOCKMON
- 	  mostly intended for developers or support to debug vsock issues. If
- 	  unsure, say N.
+ drivers/media/platform/qcom/venus/core.h      | 15 +++++++--
+ drivers/media/platform/qcom/venus/venc.c      | 31 ++++++++++++++++++-
+ .../media/platform/qcom/venus/venc_ctrls.c    | 14 +++++++--
+ 3 files changed, 55 insertions(+), 5 deletions(-)
+
+diff --git a/drivers/media/platform/qcom/venus/core.h b/drivers/media/platform/qcom/venus/core.h
+index 7b79a33dc9d6..05c9fbd51f0c 100644
+--- a/drivers/media/platform/qcom/venus/core.h
++++ b/drivers/media/platform/qcom/venus/core.h
+@@ -243,8 +243,19 @@ struct venc_controls {
  
-+config MHI_NET
-+	tristate "MHI network driver"
-+	depends on MHI_BUS
-+	help
-+	  This is the network driver for MHI.  It can be used with
-+	  QCOM based WWAN modems (like SDX55).  Say Y or M.
-+
- endif # NET_CORE
+ 	u32 header_mode;
  
- config SUNGEM_PHY
-diff --git a/drivers/net/Makefile b/drivers/net/Makefile
-index 94b6080..8312037 100644
---- a/drivers/net/Makefile
-+++ b/drivers/net/Makefile
-@@ -34,6 +34,7 @@ obj-$(CONFIG_GTP) += gtp.o
- obj-$(CONFIG_NLMON) += nlmon.o
- obj-$(CONFIG_NET_VRF) += vrf.o
- obj-$(CONFIG_VSOCKMON) += vsockmon.o
-+obj-$(CONFIG_MHI_NET) += mhi_net.o
+-	u32 profile;
+-	u32 level;
++	struct {
++		u32 h264;
++		u32 mpeg4;
++		u32 hevc;
++		u32 vp8;
++		u32 vp9;
++	} profile;
++	struct {
++		u32 h264;
++		u32 mpeg4;
++		u32 hevc;
++		u32 vp9;
++	} level;
+ };
  
- #
- # Networking Drivers
-diff --git a/drivers/net/mhi_net.c b/drivers/net/mhi_net.c
-new file mode 100644
-index 0000000..3c8e258
---- /dev/null
-+++ b/drivers/net/mhi_net.c
-@@ -0,0 +1,320 @@
-+// SPDX-License-Identifier: GPL-2.0-or-later
-+/* MHI Network driver - Network over MHI
-+ *
-+ * Copyright (C) 2020 Linaro Ltd <loic.poulain@linaro.org>
-+ */
-+
-+#include <linux/if_arp.h>
-+#include <linux/mhi.h>
-+#include <linux/mod_devicetable.h>
-+#include <linux/module.h>
-+#include <linux/netdevice.h>
-+#include <linux/skbuff.h>
-+#include <linux/u64_stats_sync.h>
-+
-+#define MIN_MTU		ETH_MIN_MTU
-+#define MAX_MTU		0xffff
-+#define DEFAULT_MTU	8192
-+
-+struct mhi_net_stats {
-+	u64_stats_t rx_packets;
-+	u64_stats_t rx_bytes;
-+	u64_stats_t rx_errors;
-+	u64_stats_t rx_dropped;
-+	u64_stats_t tx_packets;
-+	u64_stats_t tx_bytes;
-+	u64_stats_t tx_errors;
-+	u64_stats_t tx_dropped;
-+	atomic_t rx_queued;
-+	struct u64_stats_sync tx_syncp;
-+	struct u64_stats_sync rx_syncp;
-+};
-+
-+struct mhi_net_dev {
-+	struct mhi_device *mdev;
-+	struct net_device *ndev;
-+	struct delayed_work rx_refill;
-+	struct mhi_net_stats stats;
-+	u32 rx_queue_sz;
-+};
-+
-+static int mhi_ndo_open(struct net_device *ndev)
-+{
-+	struct mhi_net_dev *mhi_netdev = netdev_priv(ndev);
-+
-+	/* Feed the rx buffer pool */
-+	schedule_delayed_work(&mhi_netdev->rx_refill, 0);
-+
-+	/* Carrier is established via out-of-band channel (e.g. qmi) */
-+	netif_carrier_on(ndev);
-+
-+	netif_start_queue(ndev);
-+
-+	return 0;
-+}
-+
-+static int mhi_ndo_stop(struct net_device *ndev)
-+{
-+	struct mhi_net_dev *mhi_netdev = netdev_priv(ndev);
-+
-+	netif_stop_queue(ndev);
-+	netif_carrier_off(ndev);
-+	cancel_delayed_work_sync(&mhi_netdev->rx_refill);
-+
-+	return 0;
-+}
-+
-+static int mhi_ndo_xmit(struct sk_buff *skb, struct net_device *ndev)
-+{
-+	struct mhi_net_dev *mhi_netdev = netdev_priv(ndev);
-+	struct mhi_device *mdev = mhi_netdev->mdev;
-+	int err;
-+
-+	/* mhi_queue_skb is not thread-safe, but xmit is serialized by the
-+	 * network core. Once MHI core will be thread save, migrate to
-+	 * NETIF_F_LLTX support.
-+	 */
-+	err = mhi_queue_skb(mdev, DMA_TO_DEVICE, skb, skb->len, MHI_EOT);
-+	if (unlikely(err)) {
-+		net_err_ratelimited("%s: Failed to queue TX buf (%d)\n",
-+				    ndev->name, err);
-+
-+		u64_stats_update_begin(&mhi_netdev->stats.tx_syncp);
-+		u64_stats_inc(&mhi_netdev->stats.tx_dropped);
-+		u64_stats_update_end(&mhi_netdev->stats.tx_syncp);
-+
-+		/* drop the packet */
-+		kfree_skb(skb);
+ struct venus_buffer {
+diff --git a/drivers/media/platform/qcom/venus/venc.c b/drivers/media/platform/qcom/venus/venc.c
+index f8b1484e7dcd..47246528ac7e 100644
+--- a/drivers/media/platform/qcom/venus/venc.c
++++ b/drivers/media/platform/qcom/venus/venc.c
+@@ -537,6 +537,7 @@ static int venc_set_properties(struct venus_inst *inst)
+ 	struct hfi_quantization quant;
+ 	struct hfi_quantization_range quant_range;
+ 	u32 ptype, rate_control, bitrate;
++	u32 profile, level;
+ 	int ret;
+ 
+ 	ret = venus_helper_set_work_mode(inst, VIDC_WORK_MODE_2);
+@@ -684,7 +685,35 @@ static int venc_set_properties(struct venus_inst *inst)
+ 	if (ret)
+ 		return ret;
+ 
+-	ret = venus_helper_set_profile_level(inst, ctr->profile, ctr->level);
++	switch (inst->hfi_codec) {
++	case HFI_VIDEO_CODEC_H264:
++		profile = ctr->profile.h264;
++		level = ctr->level.h264;
++		break;
++	case HFI_VIDEO_CODEC_MPEG4:
++		profile = ctr->profile.mpeg4;
++		level = ctr->level.mpeg4;
++		break;
++	case HFI_VIDEO_CODEC_VP8:
++		profile = ctr->profile.vp8;
++		level = 0;
++		break;
++	case HFI_VIDEO_CODEC_VP9:
++		profile = ctr->profile.vp9;
++		level = ctr->level.vp9;
++		break;
++	case HFI_VIDEO_CODEC_HEVC:
++		profile = ctr->profile.hevc;
++		level = ctr->level.hevc;
++		break;
++	case HFI_VIDEO_CODEC_MPEG2:
++	default:
++		profile = 0;
++		level = 0;
++		break;
 +	}
 +
-+	if (mhi_queue_is_full(mdev, DMA_TO_DEVICE))
-+		netif_stop_queue(ndev);
-+
-+	return NETDEV_TX_OK;
-+}
-+
-+static void mhi_ndo_get_stats64(struct net_device *ndev,
-+				struct rtnl_link_stats64 *stats)
-+{
-+	struct mhi_net_dev *mhi_netdev = netdev_priv(ndev);
-+	unsigned int start;
-+
-+	do {
-+		start = u64_stats_fetch_begin_irq(&mhi_netdev->stats.rx_syncp);
-+		stats->rx_packets = u64_stats_read(&mhi_netdev->stats.rx_packets);
-+		stats->rx_bytes = u64_stats_read(&mhi_netdev->stats.rx_bytes);
-+		stats->rx_errors = u64_stats_read(&mhi_netdev->stats.rx_errors);
-+		stats->rx_dropped = u64_stats_read(&mhi_netdev->stats.rx_dropped);
-+	} while (u64_stats_fetch_retry_irq(&mhi_netdev->stats.rx_syncp, start));
-+
-+	do {
-+		start = u64_stats_fetch_begin_irq(&mhi_netdev->stats.tx_syncp);
-+		stats->tx_packets = u64_stats_read(&mhi_netdev->stats.tx_packets);
-+		stats->tx_bytes = u64_stats_read(&mhi_netdev->stats.tx_bytes);
-+		stats->tx_errors = u64_stats_read(&mhi_netdev->stats.tx_errors);
-+		stats->tx_dropped = u64_stats_read(&mhi_netdev->stats.tx_dropped);
-+	} while (u64_stats_fetch_retry_irq(&mhi_netdev->stats.tx_syncp, start));
-+}
-+
-+static const struct net_device_ops mhi_netdev_ops = {
-+	.ndo_open               = mhi_ndo_open,
-+	.ndo_stop               = mhi_ndo_stop,
-+	.ndo_start_xmit         = mhi_ndo_xmit,
-+	.ndo_get_stats64	= mhi_ndo_get_stats64,
-+};
-+
-+static void mhi_net_setup(struct net_device *ndev)
-+{
-+	ndev->header_ops = NULL;  /* No header */
-+	ndev->type = ARPHRD_NONE; /* QMAP... */
-+	ndev->hard_header_len = 0;
-+	ndev->addr_len = 0;
-+	ndev->flags = IFF_POINTOPOINT | IFF_NOARP;
-+	ndev->netdev_ops = &mhi_netdev_ops;
-+	ndev->mtu = DEFAULT_MTU;
-+	ndev->min_mtu = MIN_MTU;
-+	ndev->max_mtu = MAX_MTU;
-+	ndev->tx_queue_len = 1000;
-+}
-+
-+static void mhi_net_dl_callback(struct mhi_device *mhi_dev,
-+				struct mhi_result *mhi_res)
-+{
-+	struct mhi_net_dev *mhi_netdev = dev_get_drvdata(&mhi_dev->dev);
-+	struct sk_buff *skb = mhi_res->buf_addr;
-+	int remaining;
-+
-+	remaining = atomic_dec_return(&mhi_netdev->stats.rx_queued);
-+
-+	if (unlikely(mhi_res->transaction_status)) {
-+		u64_stats_update_begin(&mhi_netdev->stats.rx_syncp);
-+		u64_stats_inc(&mhi_netdev->stats.rx_errors);
-+		u64_stats_update_end(&mhi_netdev->stats.rx_syncp);
-+
-+		kfree_skb(skb);
-+
-+		/* MHI layer resetting the DL channel */
-+		if (mhi_res->transaction_status == -ENOTCONN)
-+			return;
-+	} else {
-+		u64_stats_update_begin(&mhi_netdev->stats.rx_syncp);
-+		u64_stats_inc(&mhi_netdev->stats.rx_packets);
-+		u64_stats_add(&mhi_netdev->stats.rx_bytes, mhi_res->bytes_xferd);
-+		u64_stats_update_end(&mhi_netdev->stats.rx_syncp);
-+
-+		skb->protocol = htons(ETH_P_MAP);
-+		skb_put(skb, mhi_res->bytes_xferd);
-+		netif_rx(skb);
-+	}
-+
-+	/* Refill if RX buffers queue becomes low */
-+	if (remaining <= mhi_netdev->rx_queue_sz / 2)
-+		schedule_delayed_work(&mhi_netdev->rx_refill, 0);
-+}
-+
-+static void mhi_net_ul_callback(struct mhi_device *mhi_dev,
-+				struct mhi_result *mhi_res)
-+{
-+	struct mhi_net_dev *mhi_netdev = dev_get_drvdata(&mhi_dev->dev);
-+	struct net_device *ndev = mhi_netdev->ndev;
-+	struct sk_buff *skb = mhi_res->buf_addr;
-+
-+	/* Hardware has consumed the buffer, so free the skb (which is not
-+	 * freed by the MHI stack) and perform accounting.
-+	 */
-+	consume_skb(skb);
-+
-+	u64_stats_update_begin(&mhi_netdev->stats.tx_syncp);
-+	if (unlikely(mhi_res->transaction_status)) {
-+		u64_stats_inc(&mhi_netdev->stats.tx_errors);
-+
-+		/* MHI layer resetting the UL channel */
-+		if (mhi_res->transaction_status == -ENOTCONN)
-+			return;
-+	} else {
-+		u64_stats_inc(&mhi_netdev->stats.tx_packets);
-+		u64_stats_add(&mhi_netdev->stats.tx_bytes, mhi_res->bytes_xferd);
-+	}
-+	u64_stats_update_end(&mhi_netdev->stats.tx_syncp);
-+
-+	if (netif_queue_stopped(ndev))
-+		netif_wake_queue(ndev);
-+}
-+
-+static void mhi_net_rx_refill_work(struct work_struct *work)
-+{
-+	struct mhi_net_dev *mhi_netdev = container_of(work, struct mhi_net_dev,
-+						      rx_refill.work);
-+	struct net_device *ndev = mhi_netdev->ndev;
-+	struct mhi_device *mdev = mhi_netdev->mdev;
-+	int size = READ_ONCE(ndev->mtu);
-+	struct sk_buff *skb;
-+	int err;
-+
-+	do {
-+		skb = netdev_alloc_skb(ndev, size);
-+		if (unlikely(!skb))
-+			break;
-+
-+		err = mhi_queue_skb(mdev, DMA_FROM_DEVICE, skb, size, MHI_EOT);
-+		if (err) {
-+			if (unlikely(err != -ENOMEM))
-+				net_err_ratelimited("%s: Failed to queue RX buf (%d)\n",
-+						    ndev->name, err);
-+			kfree_skb(skb);
-+			break;
-+		}
-+
-+		atomic_inc(&mhi_netdev->stats.rx_queued);
-+
-+		/* Do not hog the CPU if rx buffers are completed faster than
-+		 * queued (unlikely).
-+		 */
-+		cond_resched();
-+	} while (1);
-+
-+	/* If we're still starved of rx buffers, reschedule latter */
-+	if (unlikely(!atomic_read(&mhi_netdev->stats.rx_queued)))
-+		schedule_delayed_work(&mhi_netdev->rx_refill, HZ / 2);
-+}
-+
-+static int mhi_net_probe(struct mhi_device *mhi_dev,
-+			 const struct mhi_device_id *id)
-+{
-+	const char *netname = (char *)id->driver_data;
-+	struct mhi_net_dev *mhi_netdev;
-+	struct net_device *ndev;
-+	struct device *dev = &mhi_dev->dev;
-+	int err;
-+
-+	ndev = alloc_netdev(sizeof(*mhi_netdev), netname, NET_NAME_PREDICTABLE,
-+			    mhi_net_setup);
-+	if (!ndev)
-+		return -ENOMEM;
-+
-+	mhi_netdev = netdev_priv(ndev);
-+	dev_set_drvdata(dev, mhi_netdev);
-+	mhi_netdev->ndev = ndev;
-+	mhi_netdev->mdev = mhi_dev;
-+	SET_NETDEV_DEV(ndev, &mhi_dev->dev);
-+
-+	/* All MHI net channels have 128 ring elements (at least for now) */
-+	mhi_netdev->rx_queue_sz = 128;
-+
-+	INIT_DELAYED_WORK(&mhi_netdev->rx_refill, mhi_net_rx_refill_work);
-+	u64_stats_init(&mhi_netdev->stats.rx_syncp);
-+	u64_stats_init(&mhi_netdev->stats.tx_syncp);
-+
-+	/* Start MHI channels */
-+	err = mhi_prepare_for_transfer(mhi_dev);
-+	if (err)
-+		goto out_err;
-+
-+	err = register_netdev(ndev);
-+	if (err) {
-+		mhi_unprepare_from_transfer(mhi_dev);
-+		goto out_err;
-+	}
-+
-+	return 0;
-+
-+out_err:
-+	free_netdev(ndev);
-+	return err;
-+}
-+
-+static void mhi_net_remove(struct mhi_device *mhi_dev)
-+{
-+	struct mhi_net_dev *mhi_netdev = dev_get_drvdata(&mhi_dev->dev);
-+
-+	unregister_netdev(mhi_netdev->ndev);
-+
-+	mhi_unprepare_from_transfer(mhi_netdev->mdev);
-+
-+	free_netdev(mhi_netdev->ndev);
-+}
-+
-+static const struct mhi_device_id mhi_net_id_table[] = {
-+	{ .chan = "IP_HW0", .driver_data = (kernel_ulong_t)"mhi_hwip%d" },
-+	{ .chan = "IP_SW0", .driver_data = (kernel_ulong_t)"mhi_swip%d" },
-+	{}
-+};
-+MODULE_DEVICE_TABLE(mhi, mhi_net_id_table);
-+
-+static struct mhi_driver mhi_net_driver = {
-+	.probe = mhi_net_probe,
-+	.remove = mhi_net_remove,
-+	.dl_xfer_cb = mhi_net_dl_callback,
-+	.ul_xfer_cb = mhi_net_ul_callback,
-+	.id_table = mhi_net_id_table,
-+	.driver = {
-+		.name = "mhi_net",
-+		.owner = THIS_MODULE,
-+	},
-+};
-+
-+module_mhi_driver(mhi_net_driver);
-+
-+MODULE_AUTHOR("Loic Poulain <loic.poulain@linaro.org>");
-+MODULE_DESCRIPTION("Network over MHI");
-+MODULE_LICENSE("GPL v2");
++	ret = venus_helper_set_profile_level(inst, profile, level);
+ 	if (ret)
+ 		return ret;
+ 
+diff --git a/drivers/media/platform/qcom/venus/venc_ctrls.c b/drivers/media/platform/qcom/venus/venc_ctrls.c
+index 0708b3b89d0c..cf860e6446c0 100644
+--- a/drivers/media/platform/qcom/venus/venc_ctrls.c
++++ b/drivers/media/platform/qcom/venus/venc_ctrls.c
+@@ -103,15 +103,25 @@ static int venc_op_s_ctrl(struct v4l2_ctrl *ctrl)
+ 		ctr->h264_entropy_mode = ctrl->val;
+ 		break;
+ 	case V4L2_CID_MPEG_VIDEO_MPEG4_PROFILE:
++		ctr->profile.mpeg4 = ctrl->val;
++		break;
+ 	case V4L2_CID_MPEG_VIDEO_H264_PROFILE:
++		ctr->profile.h264 = ctrl->val;
++		break;
+ 	case V4L2_CID_MPEG_VIDEO_HEVC_PROFILE:
++		ctr->profile.hevc = ctrl->val;
++		break;
+ 	case V4L2_CID_MPEG_VIDEO_VP8_PROFILE:
+-		ctr->profile = ctrl->val;
++		ctr->profile.vp8 = ctrl->val;
+ 		break;
+ 	case V4L2_CID_MPEG_VIDEO_MPEG4_LEVEL:
++		ctr->level.mpeg4 = ctrl->val;
++		break;
+ 	case V4L2_CID_MPEG_VIDEO_H264_LEVEL:
++		ctr->level.h264 = ctrl->val;
++		break;
+ 	case V4L2_CID_MPEG_VIDEO_HEVC_LEVEL:
+-		ctr->level = ctrl->val;
++		ctr->level.hevc = ctrl->val;
+ 		break;
+ 	case V4L2_CID_MPEG_VIDEO_H264_I_FRAME_QP:
+ 		ctr->h264_i_qp = ctrl->val;
 -- 
-2.7.4
+2.17.1
 
