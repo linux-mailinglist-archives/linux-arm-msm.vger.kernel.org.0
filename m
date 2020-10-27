@@ -2,257 +2,120 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 1D37829AAF6
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Oct 2020 12:35:38 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2D02429AB15
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Oct 2020 12:46:48 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2899181AbgJ0Lfh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 27 Oct 2020 07:35:37 -0400
-Received: from mail-pj1-f66.google.com ([209.85.216.66]:51707 "EHLO
-        mail-pj1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2898455AbgJ0Lfh (ORCPT
+        id S2899537AbgJ0Lqr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 27 Oct 2020 07:46:47 -0400
+Received: from mail-io1-f68.google.com ([209.85.166.68]:39161 "EHLO
+        mail-io1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2899480AbgJ0Lou (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 27 Oct 2020 07:35:37 -0400
-Received: by mail-pj1-f66.google.com with SMTP id a17so633833pju.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 27 Oct 2020 04:35:36 -0700 (PDT)
+        Tue, 27 Oct 2020 07:44:50 -0400
+Received: by mail-io1-f68.google.com with SMTP id p7so1155990ioo.6
+        for <linux-arm-msm@vger.kernel.org>; Tue, 27 Oct 2020 04:44:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=c/Krm+1ZA4YmJhqWJ5tHTEQyF/AowEQIIYGwFZByT4c=;
-        b=FLaTxPcUU3hFifx6tDWFaoRvcbFb8B/WI7a7VEHPZOo+6oMv9ZOb1XJfYyusUicGEg
-         odNKEQCDwKXwD0l1ozWWGExUaH/P4WJ/fX2QFzplnuuxvORVKo70uRy8/gOoXnxi4nCi
-         8Yp+9m6Q7Wi7r2v8kCSrqTwtL8PJEDB6FRxCo/CV0nDMt8wEZjRb8cLpa4bOuBeoZMOf
-         07OINL0JGqkB+MozyPRHLzJzc5mxbwTq53cv21Dg60tNU4dPfdGd0GjY25Vcl0vvv0if
-         JZy35vCNcXTDByOivJYn4Ga2PZZbMie8UOlhcBzioTXu53vyqJnkw68GP86DYD2QaI9+
-         6jSg==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=F0K2Mt0cLswR12jsU6gnevEK6yDw/vw4uHmBGVB802s=;
+        b=qyBy7eUmjpEsh3fvokoKwKjVV7MbxuJ0n0N7eZjugv6g4aH1ZSUUsEeECWFZBiMpHO
+         4KMUhqSbhj0eTzv4kgd88rZvLpNFsojoOUvOBaGh7Q3ASh3UOSxY8GDrvrxGp6WNAc/M
+         s6Rv77OELbUEeYJRzmUmi8e08nNBc2VYi9Wz0GXXgtgvLxR/UnKIPy4qU2V6Ej9ouzHt
+         GUvbAU91YROSYag2tQDIVRDRwLPS8e2dTEuC3W6eCf9+8be4J441VZYeF604CbvXh8dd
+         7u0fXkx82xbtPqgiNjguP8yJMA0qLuhHvAM/SlMIzg24RpPGc35C/GoIo24a8UkIurUI
+         yMuA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=c/Krm+1ZA4YmJhqWJ5tHTEQyF/AowEQIIYGwFZByT4c=;
-        b=m1qDRfIi5a+idFiiVewlVC2OiGhuTPwBX96vUdylqnlxprTbxFUP2gimkasSNUMNBl
-         bvXgkXxwgMimA93vrbTY0IfPtd6SVeQCg6+hKl0sO/vjebfli/ogV4uqvQA94iQeXH60
-         ydt938xTNPCWEfTdlqFeTna0ivTClUB83kb4G40ET+R3QJMfNs8I+7Emf/lurOrI+OQf
-         e2Ke1PUrJhXp9NVA09Q3ArDZ4HjJvQ7lyWINeA7bBpnx6O06yTaQhL/vylqeGhWP6Ug5
-         1jo5LNNybxTLicGDqr0mv2T9CwUpLyXXNRdvSyIxSDzB2XaNoKpd6kh0jZOl8fSet3Du
-         /sgw==
-X-Gm-Message-State: AOAM532LdAYhPje8x+ngeR74W/wRPy/vWM/kuRR73G71+UMB6kV+5PYc
-        pQS2sH7D+QmFRBNRJOH9MVscKg==
-X-Google-Smtp-Source: ABdhPJxGGMygDZQtzR6z3or/TovlYieo+JjvlwmM9R7c9+byU3/uH1Knz7hakWSZ7zadUc0tCVk4iA==
-X-Received: by 2002:a17:90a:ed87:: with SMTP id k7mr1613912pjy.127.1603798536231;
-        Tue, 27 Oct 2020 04:35:36 -0700 (PDT)
-Received: from localhost ([122.181.54.133])
-        by smtp.gmail.com with ESMTPSA id gm14sm1827382pjb.2.2020.10.27.04.35.34
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 27 Oct 2020 04:35:35 -0700 (PDT)
-Date:   Tue, 27 Oct 2020 17:05:32 +0530
-From:   Viresh Kumar <viresh.kumar@linaro.org>
-To:     Rob Clark <robdclark@gmail.com>
-Cc:     Daniel Vetter <daniel@ffwll.ch>,
-        dri-devel <dri-devel@lists.freedesktop.org>,
-        Rob Clark <robdclark@chromium.org>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
-        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
-        <linux-arm-msm@vger.kernel.org>,
-        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
-        <freedreno@lists.freedesktop.org>,
-        open list <linux-kernel@vger.kernel.org>,
-        "Menon, Nishanth" <nm@ti.com>
-Subject: Re: [PATCH v2 07/22] drm/msm: Do rpm get sooner in the submit path
-Message-ID: <20201027113532.nriqqws7gdcu5su6@vireshk-i7>
-References: <20201012020958.229288-1-robdclark@gmail.com>
- <20201012020958.229288-8-robdclark@gmail.com>
- <20201012143555.GA438822@phenom.ffwll.local>
- <CAF6AEGstGtBswUUiyHxT2cCm8NwZekDnMzD0J_pQH37GwS=LiA@mail.gmail.com>
- <20201020090729.qgqish5kqamhvatj@vireshk-i7>
- <CAKMK7uHAgVUPHOPxDdt3LeAWqokxfuzqjZj4qqFkoKxFbRbRrg@mail.gmail.com>
- <20201020112413.xbk2vow2kgjky3pb@vireshk-i7>
- <CAF6AEGsCj-AtFozn8d1xiNNFNbuMJ0UxS-eMhBVXiQ7rKahKnQ@mail.gmail.com>
- <20201022080644.2ck4okrxygmkuatn@vireshk-i7>
- <CAF6AEGv6RMCsK4yp-W2d1mVTMcEiiwFGAb+V8rYLhDdMhqP80Q@mail.gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=F0K2Mt0cLswR12jsU6gnevEK6yDw/vw4uHmBGVB802s=;
+        b=GcT4ZPcUoMg2W9YNZyw4s+0PF3x5lccguqfdBqp+HeeOcM25vIUyJuxLLNclg3GqV8
+         vnSGoGlQxZp6LxTGIR6b90I9+BqGlDdqYCN/oqY/e4VlIN+GRwYK6QBBSZ8CvY9c5/N+
+         6nS+kzjtGEOZlqQ7Rra09iN7XVO29Txrwmu2DEVnKO9BNgvLHsK/iJy3RHc+NYmJ8poq
+         LUm+M5atlZm6Od2l80txqnkY6ZyYf10QRtBDv4ZvMqb7DKjTGSzP4w2Sqd9ZDMHKW7/X
+         Z5QimdC72t5is/jUYKAXWuuQJAMzCxV53Bbp3cwU5yeW1dkYSi7SIA7PZroTeyheWGKC
+         eq6Q==
+X-Gm-Message-State: AOAM530qt9maCaNrBQiafMyqJ9E4d0R676Ls3arBedw41htTADBdDCcv
+        RNEHEQ7gV7A5mPIvlxJH5YUat9bXc5bLOwcSmZlUAw==
+X-Google-Smtp-Source: ABdhPJyzoSl9IkDPIXH0U3eudbApcTKUl9+IAmZSejsMQH/+IRauAmqD1yhE5unMri2eA+DrrSOV4+XlFhSNFgJAbU8=
+X-Received: by 2002:a02:c785:: with SMTP id n5mr1891204jao.128.1603799088366;
+ Tue, 27 Oct 2020 04:44:48 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAF6AEGv6RMCsK4yp-W2d1mVTMcEiiwFGAb+V8rYLhDdMhqP80Q@mail.gmail.com>
-User-Agent: NeoMutt/20180716-391-311a52
+References: <20201027111422.4008114-1-anders.roxell@linaro.org>
+In-Reply-To: <20201027111422.4008114-1-anders.roxell@linaro.org>
+From:   Naresh Kamboju <naresh.kamboju@linaro.org>
+Date:   Tue, 27 Oct 2020 17:14:37 +0530
+Message-ID: <CA+G9fYuk57Ys8jVS7Ue7fPc2jd8fTBPY-ZvAixDvpgy3+H9hHA@mail.gmail.com>
+Subject: Re: [PATCH] soc: qcom: QCOM_RPMH fix build with modular QCOM_RPMH
+To:     Anders Roxell <anders.roxell@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        open list <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 25-10-20, 10:39, Rob Clark wrote:
-> Nope, I suspect any creation of debugfs files will be problematic.
+On Tue, 27 Oct 2020 at 16:45, Anders Roxell <anders.roxell@linaro.org> wrote:
+>
+> When building allmodconfig leading to the following link error with
+> CONFIG_QCOM_RPMH=y and CONFIG_QCOM_COMMAND_DB=m:
+>
+> aarch64-linux-gnu-ld: drivers/clk/qcom/clk-rpmh.o: in function `clk_rpmh_probe':
+>   drivers/clk/qcom/clk-rpmh.c:474: undefined reference to `cmd_db_read_addr'
+>   drivers/clk/qcom/clk-rpmh.c:474:(.text+0x254): relocation truncated to fit: R_AARCH64_CALL26 against undefined symbol `cmd_db_read_addr'
+>
+> Fix this by adding a Kconfig depenency and forcing QCOM_RPMH to be a
+> module when QCOM_COMMAND_DB is a module. Also removing the dependency on
+> 'ARCH_QCOM || COMPILE_TEST' since that is already a dependency for
+> QCOM_COMMAND_DB.
+>
+> Fixes: 778279f4f5e4 ("soc: qcom: cmd-db: allow loading as a module")
+> Signed-off-by: Anders Roxell <anders.roxell@linaro.org>
 
-Yeah, so it only fixed part of the problem.
+Tested-by: Naresh Kamboju <naresh.kamboju@linaro.org>
 
-> (btw, _add_opp_dev_unlocked() looks like it should be called
-> _add_opp_dev_locked()?)
-> 
-> It does look like 'struct opp_table' is already refcnt'd, so I suspect
-> you could replace holding opp_table_lock while calling into debugfs
-> with holding a reference to the opp_table instead?
+This patch fixed the arm64 build error.
 
-It isn't that straight forward unfortunately, we need to make sure the
-table doesn't get allocated for the same device twice, so
-find+allocate needs to happen within a locked region.
+> ---
+>  drivers/soc/qcom/Kconfig | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/drivers/soc/qcom/Kconfig b/drivers/soc/qcom/Kconfig
+> index 9b4ae9c16ba7..3bdd1604f78f 100644
+> --- a/drivers/soc/qcom/Kconfig
+> +++ b/drivers/soc/qcom/Kconfig
+> @@ -109,7 +109,7 @@ config QCOM_RMTFS_MEM
+>
+>  config QCOM_RPMH
+>         tristate "Qualcomm RPM-Hardened (RPMH) Communication"
+> -       depends on ARCH_QCOM || COMPILE_TEST
+> +       depends on QCOM_COMMAND_DB
+>         help
+>           Support for communication with the hardened-RPM blocks in
+>           Qualcomm Technologies Inc (QTI) SoCs. RPMH communication uses an
 
-I have taken, not so straight forward, approach to fixing this issue,
-lets see if this fixes it or not.
 
--------------------------8<-------------------------
+Build error noticed on linux next 20201027 tag.
 
-diff --git a/drivers/opp/core.c b/drivers/opp/core.c
-index 4ac4e7ce6b8b..6f4a73a6391f 100644
---- a/drivers/opp/core.c
-+++ b/drivers/opp/core.c
-@@ -29,6 +29,8 @@
- LIST_HEAD(opp_tables);
- /* Lock to allow exclusive modification to the device and opp lists */
- DEFINE_MUTEX(opp_table_lock);
-+/* Flag indicating that opp_tables list is being updated at the moment */
-+static bool opp_tables_busy;
- 
- static struct opp_device *_find_opp_dev(const struct device *dev,
- 					struct opp_table *opp_table)
-@@ -1036,8 +1038,8 @@ static void _remove_opp_dev(struct opp_device *opp_dev,
- 	kfree(opp_dev);
- }
- 
--static struct opp_device *_add_opp_dev_unlocked(const struct device *dev,
--						struct opp_table *opp_table)
-+struct opp_device *_add_opp_dev(const struct device *dev,
-+				struct opp_table *opp_table)
- {
- 	struct opp_device *opp_dev;
- 
-@@ -1048,7 +1050,9 @@ static struct opp_device *_add_opp_dev_unlocked(const struct device *dev,
- 	/* Initialize opp-dev */
- 	opp_dev->dev = dev;
- 
-+	mutex_lock(&opp_table->lock);
- 	list_add(&opp_dev->node, &opp_table->dev_list);
-+	mutex_unlock(&opp_table->lock);
- 
- 	/* Create debugfs entries for the opp_table */
- 	opp_debug_register(opp_dev, opp_table);
-@@ -1056,18 +1060,6 @@ static struct opp_device *_add_opp_dev_unlocked(const struct device *dev,
- 	return opp_dev;
- }
- 
--struct opp_device *_add_opp_dev(const struct device *dev,
--				struct opp_table *opp_table)
--{
--	struct opp_device *opp_dev;
--
--	mutex_lock(&opp_table->lock);
--	opp_dev = _add_opp_dev_unlocked(dev, opp_table);
--	mutex_unlock(&opp_table->lock);
--
--	return opp_dev;
--}
--
- static struct opp_table *_allocate_opp_table(struct device *dev, int index)
- {
- 	struct opp_table *opp_table;
-@@ -1121,8 +1113,6 @@ static struct opp_table *_allocate_opp_table(struct device *dev, int index)
- 	INIT_LIST_HEAD(&opp_table->opp_list);
- 	kref_init(&opp_table->kref);
- 
--	/* Secure the device table modification */
--	list_add(&opp_table->node, &opp_tables);
- 	return opp_table;
- 
- err:
-@@ -1135,27 +1125,64 @@ void _get_opp_table_kref(struct opp_table *opp_table)
- 	kref_get(&opp_table->kref);
- }
- 
-+/*
-+ * We need to make sure that the OPP table for a device doesn't get added twice,
-+ * if this routine gets called in parallel with the same device pointer.
-+ *
-+ * The simplest way to enforce that is to perform everything (find existing
-+ * table and if not found, create a new one) under the opp_table_lock, so only
-+ * one creator gets access to the same. But that expands the critical section
-+ * under the lock and may end up causing circular dependencies with frameworks
-+ * like debugfs, interconnect or clock framework as they may be direct or
-+ * indirect users of OPP core.
-+ *
-+ * And for that reason we have to go for a bit tricky implementation here, which
-+ * uses the opp_tables_busy flag to indicate if another creator is in the middle
-+ * of adding an OPP table and others should wait for it to finish.
-+ */
- static struct opp_table *_opp_get_opp_table(struct device *dev, int index)
- {
- 	struct opp_table *opp_table;
- 
--	/* Hold our table modification lock here */
-+again:
- 	mutex_lock(&opp_table_lock);
- 
- 	opp_table = _find_opp_table_unlocked(dev);
- 	if (!IS_ERR(opp_table))
- 		goto unlock;
- 
-+	/*
-+	 * The opp_tables list or an OPP table's dev_list is getting updated by
-+	 * another user, wait for it to finish.
-+	 */
-+	if (unlikely(opp_tables_busy)) {
-+		mutex_unlock(&opp_table_lock);
-+		cpu_relax();
-+		goto again;
-+	}
-+
-+	opp_tables_busy = true;
- 	opp_table = _managed_opp(dev, index);
-+
-+	/* Drop the lock to reduce the size of critical section */
-+	mutex_unlock(&opp_table_lock);
-+
- 	if (opp_table) {
--		if (!_add_opp_dev_unlocked(dev, opp_table)) {
-+		if (!_add_opp_dev(dev, opp_table)) {
- 			dev_pm_opp_put_opp_table(opp_table);
- 			opp_table = ERR_PTR(-ENOMEM);
- 		}
--		goto unlock;
-+
-+		mutex_lock(&opp_table_lock);
-+	} else {
-+		opp_table = _allocate_opp_table(dev, index);
-+
-+		mutex_lock(&opp_table_lock);
-+		if (!IS_ERR(opp_table))
-+			list_add(&opp_table->node, &opp_tables);
- 	}
- 
--	opp_table = _allocate_opp_table(dev, index);
-+	opp_tables_busy = false;
- 
- unlock:
- 	mutex_unlock(&opp_table_lock);
-@@ -1181,6 +1208,10 @@ static void _opp_table_kref_release(struct kref *kref)
- 	struct opp_device *opp_dev, *temp;
- 	int i;
- 
-+	/* Drop the lock as soon as we can */
-+	list_del(&opp_table->node);
-+	mutex_unlock(&opp_table_lock);
-+
- 	_of_clear_opp_table(opp_table);
- 
- 	/* Release clk */
-@@ -1208,10 +1239,7 @@ static void _opp_table_kref_release(struct kref *kref)
- 
- 	mutex_destroy(&opp_table->genpd_virt_dev_lock);
- 	mutex_destroy(&opp_table->lock);
--	list_del(&opp_table->node);
- 	kfree(opp_table);
--
--	mutex_unlock(&opp_table_lock);
- }
- 
- void dev_pm_opp_put_opp_table(struct opp_table *opp_table)
+ LD      .tmp_vmlinux.kallsyms1
+aarch64-linux-gnu-ld: Unexpected GOT/PLT entries detected!
+aarch64-linux-gnu-ld: Unexpected run-time procedure linkages detected!
+aarch64-linux-gnu-ld: drivers/clk/qcom/clk-rpmh.o: in function `clk_rpmh_probe':
+/home/naresh/kernel/next/linux-next/drivers/clk/qcom/clk-rpmh.c:474:
+undefined reference to `cmd_db_read_addr'
+aarch64-linux-gnu-ld:
+/home/naresh/kernel/next/linux-next/drivers/clk/qcom/clk-rpmh.c:481:
+undefined reference to `cmd_db_read_aux_data'
+aarch64-linux-gnu-ld: drivers/soc/qcom/rpmh-rsc.o: in function `rpmh_rsc_probe':
+/home/naresh/kernel/next/linux-next/drivers/soc/qcom/rpmh-rsc.c:948:
+undefined reference to `cmd_db_ready'
+aarch64-linux-gnu-ld: drivers/regulator/qcom-rpmh-regulator.o: in
+function `rpmh_regulator_init_vreg':
+/home/naresh/kernel/next/linux-next/drivers/regulator/qcom-rpmh-regulator.c:438:
+undefined reference to `cmd_db_read_addr'
+make: *** [Makefile:1164: vmlinux] Error 1
 
--- 
-viresh
+- Naresh
