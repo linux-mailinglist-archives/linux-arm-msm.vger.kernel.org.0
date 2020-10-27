@@ -2,94 +2,155 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 783A229AA5A
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Oct 2020 12:14:28 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id CC0D429AA7C
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Oct 2020 12:24:48 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2896855AbgJ0LO1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 27 Oct 2020 07:14:27 -0400
-Received: from mail-lf1-f65.google.com ([209.85.167.65]:45667 "EHLO
-        mail-lf1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2437103AbgJ0LO0 (ORCPT
+        id S460310AbgJ0LYr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 27 Oct 2020 07:24:47 -0400
+Received: from mail-wm1-f67.google.com ([209.85.128.67]:34852 "EHLO
+        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S460281AbgJ0LYr (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 27 Oct 2020 07:14:26 -0400
-Received: by mail-lf1-f65.google.com with SMTP id r127so1744186lff.12
-        for <linux-arm-msm@vger.kernel.org>; Tue, 27 Oct 2020 04:14:25 -0700 (PDT)
+        Tue, 27 Oct 2020 07:24:47 -0400
+Received: by mail-wm1-f67.google.com with SMTP id h22so1039857wmb.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 27 Oct 2020 04:24:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=Kx7CART/DxUoMm7Sa0Vnq6dGV13FhDvd/kD3/8Gg8ho=;
-        b=WRJYCi/8PhiE0aSiq4DKWnugOqmyTUWLV8teC20a5eXAm5ZLQiJW04YbGu5S4FHHq3
-         1+IeBpgH04lJoQ6rWkn2/QxP9VVQdrJNsOLULYrKF8NDLE0stJ/XBfuan65BZf+7nmNt
-         pKhzp0IvahIJI5FENoxBxlrik/XKeWlWHzYl2/mHDRIvolZzBXKvlpY/0sJNXJcQVU2w
-         YsMhKCGwCNkKz+SJYLNdmCkSOi2dPx8EccUG0L7Y8Tqb8pzXVBMLE8LG9qwamBBAxYqu
-         +bNJxg7y+jnflAyqykkVER2bHI5Ac1j+JTGAjcjXjmPhG4QVNcv36LDYcg4rfBK9jtqp
-         BStg==
+        h=subject:to:cc:references:from:autocrypt:message-id:date
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=n8WNjYrMb3DPWlB1OQ69cZHkYLIkDIqyYLruRZBHgeA=;
+        b=GJq/YRZWWUSkhv7p/j+DQm0bIUYVCBAc9XDOU6zD8hbUYwphLwWfLdIJE422/whcB2
+         jooKwNaLNRTGT0AO2jF/DL7vBAD6OGQxUlkuOIj3iPtKDDCf/+oVGdGwgdJs/MphoCJV
+         mJsxdvVBA2wosfw2xYPZ3+pIBpGiM76v/E1NDGKDNXk8PFyKOKsL91+yMd7LDoPklyxt
+         ycFaGFQJfrCRJ735cT7L8T6+Hpe+MOxbbBDMSK7zV2QSTBfqtQ/41IJcLQhPQWJYst5c
+         4Bl9zbm9M5n3/H5cvXCfd6OEvc/Yk5jwPvhQudhvQzD+aNbv3LsAe8BH3+Wg8C6BZ/dG
+         9LJQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+        h=x-gm-message-state:subject:to:cc:references:from:autocrypt
+         :message-id:date:mime-version:in-reply-to:content-language
          :content-transfer-encoding;
-        bh=Kx7CART/DxUoMm7Sa0Vnq6dGV13FhDvd/kD3/8Gg8ho=;
-        b=cBT4pQ3GmydNrK3H1mML4SOqaRyETfwEJqd2rRs520/HbbgsrMkvc81/QlnCGN/Lze
-         dKsaLW37nn5sroPfDVUELCnq+CwdH+5JHzNvkC0WgYlUDShMo4lTHDVRgq40wUqRZvmt
-         lHpiIKiBOhQaHX1aZTryPYloULc8hF80ue84YM0gfE8v/pkJPLjKU3Njvq98iHOCb9+S
-         fOPwZ3xKc2MFdwQ7UY06/l1L34+x2mqo+Oe3CU5arYenI7wUAj73lECzhBOYxqWPPpmt
-         WFd70e6tW2CQ2lxwiJpn9rff++ZOgF8TxoVDk4BI5fXcDVMTw6aegfpJ9amMPBlaCZpR
-         4oAw==
-X-Gm-Message-State: AOAM532H8UJYRMKSxhIOaIsxG4kgcMPE//fcA53dgG2kl1ptVPvRss2h
-        NinGgMJphB/HPl7Bj4rte1xTKMaTmbqjRMNx
-X-Google-Smtp-Source: ABdhPJy51B0fBfONLYlyme+1w8w8xXl3VWMrx+7AUldah86lSav3URmcgsagxOT3Yt43Hco6OvucOQ==
-X-Received: by 2002:a19:84d3:: with SMTP id g202mr703123lfd.346.1603797264351;
-        Tue, 27 Oct 2020 04:14:24 -0700 (PDT)
-Received: from localhost (c-9b28e555.07-21-73746f28.bbcust.telenor.se. [85.229.40.155])
-        by smtp.gmail.com with ESMTPSA id j19sm140462lfb.74.2020.10.27.04.14.23
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 27 Oct 2020 04:14:23 -0700 (PDT)
-From:   Anders Roxell <anders.roxell@linaro.org>
-To:     agross@kernel.org, bjorn.andersson@linaro.org
-Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Anders Roxell <anders.roxell@linaro.org>
-Subject: [PATCH] soc: qcom: QCOM_RPMH fix build with modular QCOM_RPMH
-Date:   Tue, 27 Oct 2020 12:14:22 +0100
-Message-Id: <20201027111422.4008114-1-anders.roxell@linaro.org>
-X-Mailer: git-send-email 2.28.0
+        bh=n8WNjYrMb3DPWlB1OQ69cZHkYLIkDIqyYLruRZBHgeA=;
+        b=P9UUG6vDtl1/2AyGQJ/EZHc524555l4YA3eUmjUEoOoxqx75AkH9Ov5Ylm5mhvloIa
+         NZc5Ou7AWyig56VuITZaRg00+LvGGST5Np379ZrFTvazfmVqR+BNoDTMIP+MeNCfYl14
+         afc0e1tHOyzDsZqKXIDZs+0tJhx9XTdzWwaHnr5y7fYZ8q07tIlI/d0AKt873vJpvIP+
+         r7hP2qZT1xUmForY3Eblux8cbYsQGgpnXSWV9AhScTHAf/DVLrbaMhGAcBcdA6VwCGC7
+         htf4vJIK4x0DtAx8UtBwvmAk1hO3DbTJGN7j6e4hKBXTMbCxSakiRP+CTe6O569uS+rV
+         zbUg==
+X-Gm-Message-State: AOAM531mM2cRKbW4QA7ouUC/UX+3PTfLrTcvY/YM5UxIjOfrou/PRL3t
+        Pm2XhVvhMJIz/qNLBbH8M1oMdw==
+X-Google-Smtp-Source: ABdhPJxjXh5q7eYJJ+zLXze3N5EZow4mKmya9fN23+aiNtrejYqjmNLgrA92OldULQai49YB9PnS/g==
+X-Received: by 2002:a1c:9c41:: with SMTP id f62mr2146938wme.23.1603797884371;
+        Tue, 27 Oct 2020 04:24:44 -0700 (PDT)
+Received: from [10.44.66.8] ([212.45.67.2])
+        by smtp.googlemail.com with ESMTPSA id z6sm1720345wrm.33.2020.10.27.04.24.43
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 27 Oct 2020 04:24:43 -0700 (PDT)
+Subject: Re: [PATCH] interconnect: qcom: use icc_sync state for sm8[12]50
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Jonathan Marek <jonathan@marek.ca>
+Cc:     Andy Gross <agross@kernel.org>, linux-arm-msm@vger.kernel.org,
+        linux-pm@vger.kernel.org
+References: <20201027102731.951421-1-dmitry.baryshkov@linaro.org>
+From:   Georgi Djakov <georgi.djakov@linaro.org>
+Autocrypt: addr=georgi.djakov@linaro.org; prefer-encrypt=mutual; keydata=
+ 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
+ KEmKjLDvB0pePJkdTw==
+Message-ID: <20047ef9-c84e-2923-f878-5f29dc3dda2a@linaro.org>
+Date:   Tue, 27 Oct 2020 13:24:41 +0200
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <20201027102731.951421-1-dmitry.baryshkov@linaro.org>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-When building allmodconfig leading to the following link error with
-CONFIG_QCOM_RPMH=y and CONFIG_QCOM_COMMAND_DB=m:
+Hi Dmitry,
 
-aarch64-linux-gnu-ld: drivers/clk/qcom/clk-rpmh.o: in function `clk_rpmh_probe':
-  drivers/clk/qcom/clk-rpmh.c:474: undefined reference to `cmd_db_read_addr'
-  drivers/clk/qcom/clk-rpmh.c:474:(.text+0x254): relocation truncated to fit: R_AARCH64_CALL26 against undefined symbol `cmd_db_read_addr'
+Thanks for the patch!
 
-Fix this by adding a Kconfig depenency and forcing QCOM_RPMH to be a
-module when QCOM_COMMAND_DB is a module. Also removing the dependency on
-'ARCH_QCOM || COMPILE_TEST' since that is already a dependency for
-QCOM_COMMAND_DB.
+On 10/27/20 12:27, Dmitry Baryshkov wrote:
+> In addition to the rest of Qcom interconnect drivers use icc_sync_state
+> for SM8150/SM8250 interconnect drivers to notify the interconnect
+> framework when all consumers are probed and there is no need to keep the
+> bandwidth set to maximum anymore.
 
-Fixes: 778279f4f5e4 ("soc: qcom: cmd-db: allow loading as a module")
-Signed-off-by: Anders Roxell <anders.roxell@linaro.org>
----
- drivers/soc/qcom/Kconfig | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Should we add Fixes: tag?
 
-diff --git a/drivers/soc/qcom/Kconfig b/drivers/soc/qcom/Kconfig
-index 9b4ae9c16ba7..3bdd1604f78f 100644
---- a/drivers/soc/qcom/Kconfig
-+++ b/drivers/soc/qcom/Kconfig
-@@ -109,7 +109,7 @@ config QCOM_RMTFS_MEM
- 
- config QCOM_RPMH
- 	tristate "Qualcomm RPM-Hardened (RPMH) Communication"
--	depends on ARCH_QCOM || COMPILE_TEST
-+	depends on QCOM_COMMAND_DB
- 	help
- 	  Support for communication with the hardened-RPM blocks in
- 	  Qualcomm Technologies Inc (QTI) SoCs. RPMH communication uses an
--- 
-2.28.0
+Thanks,
+Georgi
 
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> ---
+>  drivers/interconnect/qcom/sm8150.c | 1 +
+>  drivers/interconnect/qcom/sm8250.c | 1 +
+>  2 files changed, 2 insertions(+)
+> 
+> diff --git a/drivers/interconnect/qcom/sm8150.c b/drivers/interconnect/qcom/sm8150.c
+> index 9218efed04a0..30fb6567fe19 100644
+> --- a/drivers/interconnect/qcom/sm8150.c
+> +++ b/drivers/interconnect/qcom/sm8150.c
+> @@ -627,6 +627,7 @@ static struct platform_driver qnoc_driver = {
+>  	.driver = {
+>  		.name = "qnoc-sm8150",
+>  		.of_match_table = qnoc_of_match,
+> +		.sync_state = icc_sync_state,
+>  	},
+>  };
+>  module_platform_driver(qnoc_driver);
+> diff --git a/drivers/interconnect/qcom/sm8250.c b/drivers/interconnect/qcom/sm8250.c
+> index 9b58946f7898..49c5ee2e70f0 100644
+> --- a/drivers/interconnect/qcom/sm8250.c
+> +++ b/drivers/interconnect/qcom/sm8250.c
+> @@ -643,6 +643,7 @@ static struct platform_driver qnoc_driver = {
+>  	.driver = {
+>  		.name = "qnoc-sm8250",
+>  		.of_match_table = qnoc_of_match,
+> +		.sync_state = icc_sync_state,
+>  	},
+>  };
+>  module_platform_driver(qnoc_driver);
+> 
