@@ -2,118 +2,200 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B4EFA29A426
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Oct 2020 06:33:33 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 88A3329A53A
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Oct 2020 08:08:20 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2505870AbgJ0Fdd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 27 Oct 2020 01:33:33 -0400
-Received: from mail-eopbgr1300045.outbound.protection.outlook.com ([40.107.130.45]:42080
-        "EHLO APC01-HK2-obe.outbound.protection.outlook.com"
-        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S2411813AbgJ0Fdc (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 27 Oct 2020 01:33:32 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=BP/vhFTv4bjrL0YpjoHk0xkgYvPcgl6sWCMkdYlJ187b60SX2F7ndc9E0BkMQwu1AhlR9JSmWhyR1lR0UQC/1FHW0RYRHdonluKEnKL1Hd1ZxZSS/ClK1HnnqqG7/qVikRsBLbaxg3o2Rf1FYe6X0Jj1XbER+VN51upTHpX1BGSGLsDckFl9veSG4GOqKuzMEouwk6q9vLd3iuSUxdSByW6wJLBK1wtULz2N0UOZqAlliGBlvzVn5appcaXU6nW7EZwdbhOgrBvh4M34s6b4DaMJLI0wwSaqcbI4MSKaWVH9BNSZ2/10a4rJDRGWSxwlgueMcl+QTkfAvHr0hxvmsw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=AHOjEh9pp8dZ1gOwDT5XPtJqTEJPQT1zYcLSKTXZ1fw=;
- b=ZuJa4JBYZjrsb7Y6jaDB3NU0fiVlT3MjUY2o/kzVw8cTCDLy9nEyG08jH39xxOWskGdG8mIN6G+xtz5Ms8/kmt/ndY9j28Olm8RMSWM2K6GVHP+0XQUq/fx7TCqrtkc7G5IkYdks94WD2cM7IK9WB84OkJPd8ys0RPuqeh0vcPpOTCgXsCxidk1IlAGspZhLlXKmx1TIjDLjmNAtIHTOvyknC073/b5X0Y/XkF9vJr73uXaimo9O4+qKq7Da9zZ484Rm/LeJYy/jKswWDYF7a95wL42FKpFi6b2zBrYVYr3zHCxVdDd2lV5gGi8qQEM++KEjF2Nnmu6xYKaKkxnssA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=quectel.com; dmarc=pass action=none header.from=quectel.com;
- dkim=pass header.d=quectel.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quectel.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=AHOjEh9pp8dZ1gOwDT5XPtJqTEJPQT1zYcLSKTXZ1fw=;
- b=doZh3/Ms+YE49m9EQSj/kJ+xJV147Hy/9HFthdJRqWWl/J5j9rgK6zr1lv8urqVWUZjE2hRuxCKJJiEOp5WfaHmj3vFhB/TwJGSylFezhM7lUpXO/jFlfJvSJnTn+IydG2T0X4WBEoh4U/HBGFnXwEzp3avvV6Ad4MOqwifqaTg=
-Authentication-Results: linaro.org; dkim=none (message not signed)
- header.d=none;linaro.org; dmarc=none action=none header.from=quectel.com;
-Received: from HK2PR06MB3507.apcprd06.prod.outlook.com (2603:1096:202:3e::14)
- by HK0PR06MB2321.apcprd06.prod.outlook.com (2603:1096:203:49::11) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.3455.21; Tue, 27 Oct
- 2020 05:33:27 +0000
-Received: from HK2PR06MB3507.apcprd06.prod.outlook.com
- ([fe80::94f:c55a:f9c8:22f4]) by HK2PR06MB3507.apcprd06.prod.outlook.com
- ([fe80::94f:c55a:f9c8:22f4%5]) with mapi id 15.20.3477.028; Tue, 27 Oct 2020
- 05:33:27 +0000
-From:   carl.yin@quectel.com
-To:     manivannan.sadhasivam@linaro.org, hemantk@codeaurora.org,
-        sfr@canb.auug.org.au
-Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        carl.yin@quectel.com, naveen.kumar@quectel.com
-Subject: [PATCH] bus: mhi: core: Fix null pointer access
-Date:   Tue, 27 Oct 2020 13:33:10 +0800
-Message-Id: <20201027053310.16469-1-carl.yin@quectel.com>
-X-Mailer: git-send-email 2.17.1
-Content-Type: text/plain
-X-Originating-IP: [203.93.254.82]
-X-ClientProxiedBy: HKAPR03CA0014.apcprd03.prod.outlook.com
- (2603:1096:203:c8::19) To HK2PR06MB3507.apcprd06.prod.outlook.com
- (2603:1096:202:3e::14)
+        id S2507318AbgJ0HIE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 27 Oct 2020 03:08:04 -0400
+Received: from z5.mailgun.us ([104.130.96.5]:59736 "EHLO z5.mailgun.us"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S2507315AbgJ0HIE (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 27 Oct 2020 03:08:04 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1603782484; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=ahIMEJAF2HOCmKrnWEJ6rC/ZR2DgHhKiGOo7hQp4WiM=;
+ b=az1Vlwg/5P8p4hwkU/uS8I5ccj05BtPXG7f5G63iR5ZlCY2xtVu4AmYa9Dk2OrpEeuOiQ6DS
+ bln1aVTlWUrw9pPYeEe2xNVoHnarcoVVdkafdoc0m9Yz1HG15qphJlb4qLVhjf4Tfz6xQPqu
+ ZgN/VrKxuKtpveckZnZ8ceFPolY=
+X-Mailgun-Sending-Ip: 104.130.96.5
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n01.prod.us-west-2.postgun.com with SMTP id
+ 5f97c753856acb9b09cdbd9d (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 27 Oct 2020 07:08:03
+ GMT
+Sender: saiprakash.ranjan=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id A4301C43395; Tue, 27 Oct 2020 07:08:03 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: saiprakash.ranjan)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 51DD3C433CB;
+        Tue, 27 Oct 2020 07:08:02 +0000 (UTC)
 MIME-Version: 1.0
-X-MS-Exchange-MessageSentRepresentingType: 1
-Received: from localhost.localdomain (203.93.254.82) by HKAPR03CA0014.apcprd03.prod.outlook.com (2603:1096:203:c8::19) with Microsoft SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.3499.7 via Frontend Transport; Tue, 27 Oct 2020 05:33:26 +0000
-X-MS-PublicTrafficType: Email
-X-MS-Office365-Filtering-Correlation-Id: 7a4b2049-51e7-4b27-bb73-08d87a39d480
-X-MS-TrafficTypeDiagnostic: HK0PR06MB2321:
-X-MS-Exchange-Transport-Forked: True
-X-Microsoft-Antispam-PRVS: <HK0PR06MB2321B2932F6D4945D013CFAE86160@HK0PR06MB2321.apcprd06.prod.outlook.com>
-X-MS-Oob-TLC-OOBClassifiers: OLM:1186;
-X-MS-Exchange-SenderADCheck: 1
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: XDsmt7reGSeDYdrJFquEH781WNAmyjQRlmd4meGNrLUw60uiZ2aYWSeITnaJLFZruGH8HwdUvksdEuiGAMIDK70R7sCVZ6JzXi5ic0HGdkxKyE8Qn8EdBVBYNZjOAIVKGN36J1+6b5u9OVJKbqmzhxJOPZwRz3DurF3NBWjMK649rzgpCNeCH2YU/gtwbNbhgDIu1rAuzJRbC3E3Mzi2g+YMJOG3+yKtB/HzZrTsj1rfekORLHJ+3UyC5Y1GWMUcWwDqZnjVz82uTTiutm4ROaeP3+T9neDw1DhH810Q3tyfIHxnfqr/sx0ITEnrhnX94Mp2H/NHAihlLERpWy0aQun4+VlAG3mSmdpCgxcJIjY3+9YHn+nm1tbnK64Q4IFn
-X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:HK2PR06MB3507.apcprd06.prod.outlook.com;PTR:;CAT:NONE;SFS:(366004)(136003)(346002)(39850400004)(396003)(376002)(69590400008)(66556008)(66476007)(186003)(6506007)(1076003)(5660300002)(52116002)(2616005)(66946007)(4326008)(316002)(478600001)(36756003)(26005)(6486002)(16526019)(83380400001)(8936002)(2906002)(6512007)(956004)(9686003)(8676002)(6666004)(86362001)(107886003);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData: Kzq8WlDWknrQ0Kp4XssVr1zkwNm7Z1BGemyk1XXpc7oIaVPZRj/W+m6UOy+IT7tFM7iKdmNcxsi+RFC4emjjhXtIQ1gphH1km1gzXaWzhnPnTHMgG3YlOI/6ZoHvCDGqS4Ko/vCVcZYqkJXpavC0alIw1fSShWdylY0xuKKQp7ARPLUSfdjaDLbi80ulir+LVrbEpUIy8IkNucC/mzslvFES4OLUgszhsqy9RAVPVHnISLFMEzXi1DZdIlrpX3v5le+ZVwiqVe/iG34bg3h8x21Hc+dExdBFuUPgIhTSV3jNTNX1LkioQ/9bs3op2AtS10MZj3PxCdiMI2WqQrzrWUyDFVpuxj0RX3rNXa99zuyHva/wcIe13R+m8oCfAPcPCOK5JEYA8TR+zbQXyTnTtJYqblT9+d/4Eb9pAn4WETodufe//NCic7kvmnqxtWkSnbIlxMI5WZBN29vNfw+btUTvduJPyRaKCI+Cv9qVaFrczivTvtFzZ+KDjn7ynApUVDq3CPtQUvrEe1mfWLyjPkgo9JtSIuA//vBooaBdqGlwwuOLTFP1FBx0jKGidUpp1MoOJWUA7leU1QuP2+HUioixCNVY8MYhbJdz/cZcZUGjxvRCJYfvEFllZCQ+qrYpDygZXZm7k/GEg9I/pZ05+Q==
-X-OriginatorOrg: quectel.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 7a4b2049-51e7-4b27-bb73-08d87a39d480
-X-MS-Exchange-CrossTenant-AuthSource: HK2PR06MB3507.apcprd06.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 27 Oct 2020 05:33:27.3144
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 7730d043-e129-480c-b1ba-e5b6a9f476aa
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: 6Z22wK2Aocx0Z/f7AnxhRQiYMHY+AmfjPMF/mt837EWKzMKzM4gGJLfPeQdO+YG0jsBxeUNhdK82d038SwDvgg==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: HK0PR06MB2321
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Tue, 27 Oct 2020 12:38:02 +0530
+From:   Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+To:     Jordan Crouse <jcrouse@codeaurora.org>
+Cc:     linux-arm-msm@vger.kernel.org,
+        Akhil P Oommen <akhilpo@codeaurora.org>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        David Airlie <airlied@linux.ie>,
+        Jonathan Marek <jonathan@marek.ca>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Sharat Masetty <smasetty@codeaurora.org>,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] drm/msm/a6xx: Add support for using system cache on
+ MMU500 based targets
+In-Reply-To: <20201026185428.101443-1-jcrouse@codeaurora.org>
+References: <20201026185428.101443-1-jcrouse@codeaurora.org>
+Message-ID: <d5050762b88d5d0d957ad5057f165b21@codeaurora.org>
+X-Sender: saiprakash.ranjan@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: carl <carl.yin@quectel.com>
+On 2020-10-27 00:24, Jordan Crouse wrote:
+> This is an extension to the series [1] to enable the System Cache (LLC) 
+> for
+> Adreno a6xx targets.
+> 
+> GPU targets with an MMU-500 attached have a slightly different process 
+> for
+> enabling system cache. Use the compatible string on the IOMMU phandle
+> to see if an MMU-500 is attached and modify the programming sequence
+> accordingly.
+> 
+> [1] https://patchwork.freedesktop.org/series/83037/
+> 
+> Signed-off-by: Jordan Crouse <jcrouse@codeaurora.org>
+> ---
+> 
+>  drivers/gpu/drm/msm/adreno/a6xx_gpu.c | 46 +++++++++++++++++++++------
+>  drivers/gpu/drm/msm/adreno/a6xx_gpu.h |  1 +
+>  2 files changed, 37 insertions(+), 10 deletions(-)
+> 
+> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+> b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+> index 95c98c642876..b7737732fbb6 100644
+> --- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+> @@ -1042,6 +1042,8 @@ static void a6xx_llc_deactivate(struct a6xx_gpu 
+> *a6xx_gpu)
+> 
+>  static void a6xx_llc_activate(struct a6xx_gpu *a6xx_gpu)
+>  {
+> +	struct adreno_gpu *adreno_gpu = &a6xx_gpu->base;
+> +	struct msm_gpu *gpu = &adreno_gpu->base;
+>  	u32 cntl1_regval = 0;
+> 
+>  	if (IS_ERR(a6xx_gpu->llc_mmio))
+> @@ -1055,11 +1057,17 @@ static void a6xx_llc_activate(struct a6xx_gpu 
+> *a6xx_gpu)
+>  			       (gpu_scid << 15) | (gpu_scid << 20);
+>  	}
+> 
+> +	/*
+> +	 * For targets with a MMU500, activate the slice but don't program 
+> the
+> +	 * register.  The XBL will take care of that.
+> +	 */
+>  	if (!llcc_slice_activate(a6xx_gpu->htw_llc_slice)) {
+> -		u32 gpuhtw_scid = llcc_get_slice_id(a6xx_gpu->htw_llc_slice);
+> +		if (!a6xx_gpu->have_mmu500) {
+> +			u32 gpuhtw_scid = llcc_get_slice_id(a6xx_gpu->htw_llc_slice);
+> 
+> -		gpuhtw_scid &= 0x1f;
+> -		cntl1_regval |= FIELD_PREP(GENMASK(29, 25), gpuhtw_scid);
+> +			gpuhtw_scid &= 0x1f;
+> +			cntl1_regval |= FIELD_PREP(GENMASK(29, 25), gpuhtw_scid);
+> +		}
+>  	}
+> 
+>  	if (cntl1_regval) {
+> @@ -1067,13 +1075,20 @@ static void a6xx_llc_activate(struct a6xx_gpu 
+> *a6xx_gpu)
+>  		 * Program the slice IDs for the various GPU blocks and GPU MMU
+>  		 * pagetables
+>  		 */
+> -		a6xx_llc_write(a6xx_gpu, REG_A6XX_CX_MISC_SYSTEM_CACHE_CNTL_1, 
+> cntl1_regval);
+> -
+> -		/*
+> -		 * Program cacheability overrides to not allocate cache lines on
+> -		 * a write miss
+> -		 */
+> -		a6xx_llc_rmw(a6xx_gpu, REG_A6XX_CX_MISC_SYSTEM_CACHE_CNTL_0, 0xF, 
+> 0x03);
+> +		if (a6xx_gpu->have_mmu500)
+> +			gpu_rmw(gpu, REG_A6XX_GBIF_SCACHE_CNTL1, GENMASK(24, 0),
+> +				cntl1_regval);
+> +		else {
+> +			a6xx_llc_write(a6xx_gpu,
+> +				REG_A6XX_CX_MISC_SYSTEM_CACHE_CNTL_1, cntl1_regval);
+> +
+> +			/*
+> +			 * Program cacheability overrides to not allocate cache
+> +			 * lines on a write miss
+> +			 */
+> +			a6xx_llc_rmw(a6xx_gpu,
+> +				REG_A6XX_CX_MISC_SYSTEM_CACHE_CNTL_0, 0xF, 0x03);
+> +		}
+>  	}
+>  }
+> 
+> @@ -1086,10 +1101,21 @@ static void a6xx_llc_slices_destroy(struct
+> a6xx_gpu *a6xx_gpu)
+>  static void a6xx_llc_slices_init(struct platform_device *pdev,
+>  		struct a6xx_gpu *a6xx_gpu)
+>  {
+> +	struct device_node *phandle;
+> +
+>  	a6xx_gpu->llc_mmio = msm_ioremap(pdev, "cx_mem", "gpu_cx");
+>  	if (IS_ERR(a6xx_gpu->llc_mmio))
+>  		return;
+> 
+> +	/*
+> +	 * There is a different programming path for targets with an mmu500
+> +	 * attached, so detect if that is the case
+> +	 */
+> +	phandle = of_parse_phandle(pdev->dev.of_node, "iommus", 0);
+> +	a6xx_gpu->have_mmu500 = (phandle &&
+> +		of_device_is_compatible(phandle, "arm,mmu500"));
+> +	of_node_put(phandle);
+> +
+>  	a6xx_gpu->llc_slice = llcc_slice_getd(LLCC_GPU);
+>  	a6xx_gpu->htw_llc_slice = llcc_slice_getd(LLCC_GPUHTW);
+> 
+> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.h
+> b/drivers/gpu/drm/msm/adreno/a6xx_gpu.h
+> index 9e6079af679c..e793d329e77b 100644
+> --- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.h
+> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.h
+> @@ -32,6 +32,7 @@ struct a6xx_gpu {
+>  	void __iomem *llc_mmio;
+>  	void *llc_slice;
+>  	void *htw_llc_slice;
+> +	bool have_mmu500;
+>  };
+> 
+>  #define to_a6xx_gpu(x) container_of(x, struct a6xx_gpu, base)
 
-function parse_ev_cfg and parse_ch_cfg access mhi_cntrl->mhi_dev
-before it is set in function mhi_register_controller,
-use cntrl_dev to instead mhi_dev.
+Thanks Jordan for the patch.
 
-Signed-off-by: carl <carl.yin@quectel.com>
----
- drivers/bus/mhi/core/init.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
-
-diff --git a/drivers/bus/mhi/core/init.c b/drivers/bus/mhi/core/init.c
-index 0ffdebde8..c6b43e90b 100644
---- a/drivers/bus/mhi/core/init.c
-+++ b/drivers/bus/mhi/core/init.c
-@@ -610,7 +610,7 @@ static int parse_ev_cfg(struct mhi_controller *mhi_cntrl,
- {
- 	struct mhi_event *mhi_event;
- 	const struct mhi_event_config *event_cfg;
--	struct device *dev = &mhi_cntrl->mhi_dev->dev;
-+	struct device *dev = mhi_cntrl->cntrl_dev;
- 	int i, num;
- 
- 	num = config->num_events;
-@@ -692,7 +692,7 @@ static int parse_ch_cfg(struct mhi_controller *mhi_cntrl,
- 			const struct mhi_controller_config *config)
- {
- 	const struct mhi_channel_config *ch_cfg;
--	struct device *dev = &mhi_cntrl->mhi_dev->dev;
-+	struct device *dev = mhi_cntrl->cntrl_dev;
- 	int i;
- 	u32 chan;
- 
 -- 
-2.17.1
-
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a 
+member
+of Code Aurora Forum, hosted by The Linux Foundation
