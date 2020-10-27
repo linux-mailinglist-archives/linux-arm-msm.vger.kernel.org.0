@@ -2,106 +2,191 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 82C9C29CB0E
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Oct 2020 22:16:36 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 918B929CB1F
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Oct 2020 22:22:35 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S373704AbgJ0VQd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 27 Oct 2020 17:16:33 -0400
-Received: from z5.mailgun.us ([104.130.96.5]:36296 "EHLO z5.mailgun.us"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S373557AbgJ0VQc (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 27 Oct 2020 17:16:32 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1603833392; h=In-Reply-To: Content-Type: MIME-Version:
- References: Message-ID: Subject: Cc: To: From: Date: Sender;
- bh=1IAAZO+JxIM064yeTBlbAYAX6R/5t+b3oS0O5W5n3sw=; b=GWYOMsggKu61zeLXu5dKKS+cXUFAcOVO6WEXrot6tSBAUxKq4lXtFrGQKVO7s6t5o8fYS0YJ
- AZFoP+bm4IfJwv+OSoY2jhZcOPRwX/5a5Ut0Zaqa+wHkF9LBwzfDave4l6PSRXlPsB95FKuG
- WMHsLefxHNgcCEBauFsM0ZmIYgk=
-X-Mailgun-Sending-Ip: 104.130.96.5
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n05.prod.us-west-2.postgun.com with SMTP id
- 5f988dfa807e82a153ea9f02 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 27 Oct 2020 21:15:38
- GMT
-Sender: ilina=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 8CAAAC433F0; Tue, 27 Oct 2020 21:15:38 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
-        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
-Received: from localhost (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: ilina)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 87251C433CB;
-        Tue, 27 Oct 2020 21:15:37 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 87251C433CB
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=ilina@codeaurora.org
-Date:   Tue, 27 Oct 2020 15:15:36 -0600
-From:   Lina Iyer <ilina@codeaurora.org>
-To:     Anders Roxell <anders.roxell@linaro.org>
-Cc:     agross@kernel.org, bjorn.andersson@linaro.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        mkshah@codeaurora.org
-Subject: Re: [PATCH] soc: qcom: QCOM_RPMH fix build with modular QCOM_RPMH
-Message-ID: <20201027211536.GB19979@codeaurora.org>
-References: <20201027111422.4008114-1-anders.roxell@linaro.org>
+        id S373758AbgJ0VWe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 27 Oct 2020 17:22:34 -0400
+Received: from mail-vk1-f195.google.com ([209.85.221.195]:44481 "EHLO
+        mail-vk1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S373756AbgJ0VWe (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 27 Oct 2020 17:22:34 -0400
+Received: by mail-vk1-f195.google.com with SMTP id k125so269822vka.11
+        for <linux-arm-msm@vger.kernel.org>; Tue, 27 Oct 2020 14:22:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=61SQDQfppS9Qc+OygRSU43zO8VZ0Ckc876OXS708Obc=;
+        b=p1LdYtqI3GyeoSOeF2F5yC7s5f7en2gwLjNsxKtJ8c0buF3uJiJiBgJeVOqM1QO6s9
+         Q8hNmUipj4yM0mlNmlup/44YPWSOUTCP9DPbrNUJpBiWa5/28maB8t9jCRSWAC++810b
+         Z42Q2IXkTGtFH2ZypuEFltGH/iwrbTwAGtawJy2Il378EjYwC0cQhwcvL6yXJeX8GncS
+         lTetpjK/e0l2e+IUzyQhgkZbgDX97gAhkafTqddo+y2XORo0puMov3bmxNFmT6js2Si5
+         frFk7RjsDTMRLTpjQmU9endd+qIxEohRFNOpTfB0xdXefsNZwLeAq/bXmVp2H1kUqHv2
+         2g/A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=61SQDQfppS9Qc+OygRSU43zO8VZ0Ckc876OXS708Obc=;
+        b=fcF1vKnZiYbxRMa4lNRMGESJBekQgdj6YSI9GDCLUAvWnG9/iWxZW16CCtRVaONyu+
+         TcX4hd+w78v1pTJaDqgXIuOXvAmvVUSFjIF2muwovqEjlZPi/LHwtzWUyLtP7amC1Yhv
+         RnFHEazEaFxQSyexmdZs08P2gYQR3BecF42Yr5pBTZFEOzDNys9/afw7TvprdxTLPROY
+         FqKb+B1FaN7Mseenp6AiXu+4GNxuWis1SUcLW85zSeRih9LVuILSymSHFffoez2bjkHe
+         IlZRWd04oGcWSAAF8oLXtTVqPKKYe9aYXCRdtg9WxjPNkmXWv0IiENwib4ucECZj1Srp
+         Ly/A==
+X-Gm-Message-State: AOAM531pFByycwtu95V4en3TAuWtFNdHBiIzLUZ1jVng5qA2Ru6bWxa+
+        1yqleTyDwY1SAcJqNzibShXAjK2K5WM=
+X-Google-Smtp-Source: ABdhPJz6ZpuHtiyz0kpYZs47TEx9IQcswhnxkFNgy6NiXrqOpBT7NLTulRXRoJy7SZSnNTY6ZwuBeQ==
+X-Received: by 2002:a1f:5586:: with SMTP id j128mr3470693vkb.10.1603833751167;
+        Tue, 27 Oct 2020 14:22:31 -0700 (PDT)
+Received: from mail-vs1-f45.google.com (mail-vs1-f45.google.com. [209.85.217.45])
+        by smtp.gmail.com with ESMTPSA id r7sm312097vkf.13.2020.10.27.14.22.29
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 27 Oct 2020 14:22:30 -0700 (PDT)
+Received: by mail-vs1-f45.google.com with SMTP id d19so1703136vso.10
+        for <linux-arm-msm@vger.kernel.org>; Tue, 27 Oct 2020 14:22:29 -0700 (PDT)
+X-Received: by 2002:a67:c981:: with SMTP id y1mr3135711vsk.14.1603833749252;
+ Tue, 27 Oct 2020 14:22:29 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Disposition: inline
-In-Reply-To: <20201027111422.4008114-1-anders.roxell@linaro.org>
+References: <1603787977-6975-1-git-send-email-loic.poulain@linaro.org> <1603787977-6975-2-git-send-email-loic.poulain@linaro.org>
+In-Reply-To: <1603787977-6975-2-git-send-email-loic.poulain@linaro.org>
+From:   Willem de Bruijn <willemdebruijn.kernel@gmail.com>
+Date:   Tue, 27 Oct 2020 17:21:52 -0400
+X-Gmail-Original-Message-ID: <CA+FuTSddjtB0sbUjE59CLqC1vXXnvsV9od5xD7sQkyE5cG7WFA@mail.gmail.com>
+Message-ID: <CA+FuTSddjtB0sbUjE59CLqC1vXXnvsV9od5xD7sQkyE5cG7WFA@mail.gmail.com>
+Subject: Re: [PATCH v7 2/2] net: Add mhi-net driver
+To:     Loic Poulain <loic.poulain@linaro.org>
+Cc:     Jakub Kicinski <kuba@kernel.org>,
+        David Miller <davem@davemloft.net>,
+        manivannan.sadhasivam@linaro.org, hemantk@codeaurora.org,
+        Network Development <netdev@vger.kernel.org>,
+        linux-arm-msm@vger.kernel.org, jhugo@codeaurora.org,
+        bbhatt@codeaurora.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Anders,
+On Tue, Oct 27, 2020 at 4:33 AM Loic Poulain <loic.poulain@linaro.org> wrote:
+>
+> This patch adds a new network driver implementing MHI transport for
+> network packets. Packets can be in any format, though QMAP (rmnet)
+> is the usual protocol (flow control + PDN mux).
+>
+> It support two MHI devices, IP_HW0 which is, the path to the IPA
+> (IP accelerator) on qcom modem, And IP_SW0 which is the software
+> driven IP path (to modem CPU).
+>
+> Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
 
-On Tue, Oct 27 2020 at 05:14 -0600, Anders Roxell wrote:
->When building allmodconfig leading to the following link error with
->CONFIG_QCOM_RPMH=y and CONFIG_QCOM_COMMAND_DB=m:
->
->aarch64-linux-gnu-ld: drivers/clk/qcom/clk-rpmh.o: in function `clk_rpmh_probe':
->  drivers/clk/qcom/clk-rpmh.c:474: undefined reference to `cmd_db_read_addr'
->  drivers/clk/qcom/clk-rpmh.c:474:(.text+0x254): relocation truncated to fit: R_AARCH64_CALL26 against undefined symbol `cmd_db_read_addr'
->
->Fix this by adding a Kconfig depenency and forcing QCOM_RPMH to be a
->module when QCOM_COMMAND_DB is a module. Also removing the dependency on
->'ARCH_QCOM || COMPILE_TEST' since that is already a dependency for
->QCOM_COMMAND_DB.
->
->Fixes: 778279f4f5e4 ("soc: qcom: cmd-db: allow loading as a module")
->Signed-off-by: Anders Roxell <anders.roxell@linaro.org>
->---
-> drivers/soc/qcom/Kconfig | 2 +-
-> 1 file changed, 1 insertion(+), 1 deletion(-)
->
->diff --git a/drivers/soc/qcom/Kconfig b/drivers/soc/qcom/Kconfig
->index 9b4ae9c16ba7..3bdd1604f78f 100644
->--- a/drivers/soc/qcom/Kconfig
->+++ b/drivers/soc/qcom/Kconfig
->@@ -109,7 +109,7 @@ config QCOM_RMTFS_MEM
->
-> config QCOM_RPMH
-> 	tristate "Qualcomm RPM-Hardened (RPMH) Communication"
->-	depends on ARCH_QCOM || COMPILE_TEST
->+	depends on QCOM_COMMAND_DB
-A solution was posted in the mailing list alredy -
-https://lore.kernel.org/linux-arm-msm/20201008040907.7036-1-ilina@codeaurora.org/
+> +static int mhi_ndo_xmit(struct sk_buff *skb, struct net_device *ndev)
+> +{
+> +       struct mhi_net_dev *mhi_netdev = netdev_priv(ndev);
+> +       struct mhi_device *mdev = mhi_netdev->mdev;
+> +       int err;
+> +
+> +       /* mhi_queue_skb is not thread-safe, but xmit is serialized by the
+> +        * network core. Once MHI core will be thread save, migrate to
 
-If you get a chance, please give that a shot to see if that works for
-you.
+nit: thread-safe.
 
-Thanks,
-Lina
+I also wonder whether you'd gain much from converting to
+driver-internal locking, perhaps this comment is premature?
 
-> 	help
-> 	  Support for communication with the hardened-RPM blocks in
-> 	  Qualcomm Technologies Inc (QTI) SoCs. RPMH communication uses an
->-- 
->2.28.0
->
+> +static void mhi_net_rx_refill_work(struct work_struct *work)
+> +{
+> +       struct mhi_net_dev *mhi_netdev = container_of(work, struct mhi_net_dev,
+> +                                                     rx_refill.work);
+> +       struct net_device *ndev = mhi_netdev->ndev;
+> +       struct mhi_device *mdev = mhi_netdev->mdev;
+> +       int size = READ_ONCE(ndev->mtu);
+> +       struct sk_buff *skb;
+> +       int err;
+> +
+> +       do {
+> +               skb = netdev_alloc_skb(ndev, size);
+> +               if (unlikely(!skb))
+> +                       break;
+> +
+> +               err = mhi_queue_skb(mdev, DMA_FROM_DEVICE, skb, size, MHI_EOT);
+> +               if (err) {
+> +                       if (unlikely(err != -ENOMEM))
+> +                               net_err_ratelimited("%s: Failed to queue RX buf (%d)\n",
+> +                                                   ndev->name, err);
+> +                       kfree_skb(skb);
+> +                       break;
+> +               }
+> +
+> +               atomic_inc(&mhi_netdev->stats.rx_queued);
+> +
+> +               /* Do not hog the CPU if rx buffers are completed faster than
+> +                * queued (unlikely).
+> +                */
+> +               cond_resched();
+> +       } while (1);
+
+This function has to allocate + kfree_skb one too many skbs to break
+out of the loop? Can it not observe the queue full based on rx_queued?
+
+> +
+> +       /* If we're still starved of rx buffers, reschedule latter */
+
+nit: later
+
+> +       if (unlikely(!atomic_read(&mhi_netdev->stats.rx_queued)))
+> +               schedule_delayed_work(&mhi_netdev->rx_refill, HZ / 2);
+
+what is the rationale for HZ / 2?
+
+> +}
+> +
+> +static int mhi_net_probe(struct mhi_device *mhi_dev,
+> +                        const struct mhi_device_id *id)
+> +{
+> +       const char *netname = (char *)id->driver_data;
+> +       struct mhi_net_dev *mhi_netdev;
+> +       struct net_device *ndev;
+> +       struct device *dev = &mhi_dev->dev;
+> +       int err;
+> +
+> +       ndev = alloc_netdev(sizeof(*mhi_netdev), netname, NET_NAME_PREDICTABLE,
+> +                           mhi_net_setup);
+> +       if (!ndev)
+> +               return -ENOMEM;
+> +
+> +       mhi_netdev = netdev_priv(ndev);
+> +       dev_set_drvdata(dev, mhi_netdev);
+> +       mhi_netdev->ndev = ndev;
+> +       mhi_netdev->mdev = mhi_dev;
+> +       SET_NETDEV_DEV(ndev, &mhi_dev->dev);
+> +
+> +       /* All MHI net channels have 128 ring elements (at least for now) */
+> +       mhi_netdev->rx_queue_sz = 128;
+> +
+> +       INIT_DELAYED_WORK(&mhi_netdev->rx_refill, mhi_net_rx_refill_work);
+> +       u64_stats_init(&mhi_netdev->stats.rx_syncp);
+> +       u64_stats_init(&mhi_netdev->stats.tx_syncp);
+> +
+> +       /* Start MHI channels */
+> +       err = mhi_prepare_for_transfer(mhi_dev);
+> +       if (err)
+> +               goto out_err;
+> +
+> +       err = register_netdev(ndev);
+> +       if (err) {
+> +               mhi_unprepare_from_transfer(mhi_dev);
+> +               goto out_err;
+
+It's a bit odd to combine error branches with jump labels. I'd add
+out_register_err: below
+> +       }
+> +
+> +       return 0;
+> +
+> +out_err:
+> +       free_netdev(ndev);
+> +       return err;
+> +}
