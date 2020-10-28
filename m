@@ -2,192 +2,113 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D6DBD29D9BD
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Oct 2020 00:02:21 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0741D29DB3E
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Oct 2020 00:46:22 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2389473AbgJ1XCS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 28 Oct 2020 19:02:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32892 "EHLO
+        id S1726094AbgJ1XqT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 28 Oct 2020 19:46:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39940 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2387486AbgJ1XCS (ORCPT
+        with ESMTP id S1728258AbgJ1XpW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 28 Oct 2020 19:02:18 -0400
-Received: from mail-yb1-xb42.google.com (mail-yb1-xb42.google.com [IPv6:2607:f8b0:4864:20::b42])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A861AC0613CF
-        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Oct 2020 16:02:17 -0700 (PDT)
-Received: by mail-yb1-xb42.google.com with SMTP id d15so559225ybl.10
-        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Oct 2020 16:02:17 -0700 (PDT)
+        Wed, 28 Oct 2020 19:45:22 -0400
+Received: from mail-yb1-xb43.google.com (mail-yb1-xb43.google.com [IPv6:2607:f8b0:4864:20::b43])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A196BC0613CF
+        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Oct 2020 16:45:22 -0700 (PDT)
+Received: by mail-yb1-xb43.google.com with SMTP id h196so657197ybg.4
+        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Oct 2020 16:45:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=+XiyYcEFSv40qmGk78jL7y009Wmf2FvqP17FLO0o/wQ=;
-        b=S/EeI5L5iAm7mA8nFOB8+fUM0G/jJrP+3a8lJEOvcn/KPF20Ut2xnUHnE6YtHhm5qf
-         68rA3FoD3tGHI1O5h37n4AdrDUFnHG8vciVcUz6pK0xlsMhjfCIKNKnDd9Gei3hMkYv0
-         7q6zQwD2pXp6tVZb4J6ieDqgGAB+l7vQUfiM9H2t0NPgKwMTEYXULF/4vKrKewrVzN5i
-         cCRiO6JBIWYcDuPj96QowHAxkNmd9t5j+V7gpngfEkCCexC5lG8w4cu9KBeoerQoAZed
-         fyTzQ+I4md8wSyL73/OBkeU3RcBiLN9QuDALxnTy3nONHMpeAcDi77n0b785ivDcM+KK
-         Ztsg==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=3pjMjmENtYUj621klFYYU6RWKKnbIsd5hygGgsndT34=;
+        b=PCRgtAydIUY+L/sB1ctbgzy5LolXIozx/vTA1kQsZ3Bfm21b/kEnBbAIsHqQtGATrs
+         WNoxj/N4WLvAH6GObloXatgZNrSivpxy9nbVPCBh9B3OnJOU4HBWSwfZXqkIJnYEsd4l
+         DrUkgJCXFVI4DJExXnNcGvXPW5SPEysYJkRAmcV4IIfx9IpjM5GIb8z17L7cm2HP0zdP
+         ckjmHyoewkVAI4AupOH4trsLjDeGLRdrJewJeIWNbiyWisTVysLeB0PlNxfQOuCRf46y
+         lfwzaM1d7Jrzg1zC4ccCjg24NcDhT0hqEHTGZADIcGyjpmO96PYVp1Qb0aMSQQLak3H6
+         H5+w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=+XiyYcEFSv40qmGk78jL7y009Wmf2FvqP17FLO0o/wQ=;
-        b=KWY39G1LCrvgAbzeUrmx7i6DLNEFGgaTUln9bsUXMIFti60dBmg9+JVeRwsMYJsklO
-         v9dfIoJksDksGkSC6/qs8ogsS/MI60mKWyXeh2p2mFtI8u9hRyXuX9fX4W6faAOO0Sck
-         4zhevoz/klRiQm+erBk9TtchAtojSra//R97t224VXBR/iIvonzVtjio5iblYzU1tPBF
-         O/1EwoskF4SZa7v4i9PrEYYbCvQTFTM3zbcT74/Oh9TPqJotjqXAJ+/ydYUFZ7sCRAcb
-         0ryGqIeQ0nOxrntNkvlJj6+v+Ga59xFU43doB76NXnF2itVZ/T4llW+epZdt8ckVPXUv
-         RVnQ==
-X-Gm-Message-State: AOAM532lwzejyCWlDL42iBg/engFPromX/5bkZXyB7iJpfnWmRvZs6tZ
-        d6/W3vHs6dKzIMS/p4tQhPoSxAewSUWw2g==
-X-Google-Smtp-Source: ABdhPJyOEsX2NrkArkQ+lhEF+JTD42MIssKbrKwgoF/zEzysvAYajpmNlBFC5Ml9f1fcMV7VXNEE5Q==
-X-Received: by 2002:a4a:d0a4:: with SMTP id t4mr6387691oor.21.1603902959220;
-        Wed, 28 Oct 2020 09:35:59 -0700 (PDT)
-Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id d145sm2810205oob.37.2020.10.28.09.35.57
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=3pjMjmENtYUj621klFYYU6RWKKnbIsd5hygGgsndT34=;
+        b=DAt+a7Cv3ETazFW4CLY2B61VoQgsi2DO2oqfeSQ38dGeLs8e2M8OR74YQ9XgzDKWvU
+         sJbjkRfnzpcBMdlhG1OxHbZ+7aycqTuuIB3fIos/UiCNMqVQHTul1/GyNXKdCsRZwrGS
+         hD4wrK8ZYgiwWPRkljQGzoMMDVDPB91Zj+iB9i00H3+0TSmUR9Kj/ZrBRZDiQ149ErXd
+         Ss6JJA4VogBYzzS1t1aafaVXXEUoblJ/fdoBYg+EZQrIgVH8ZQETnfqdeIJ2yQq5pVRs
+         gNhaY7wAl3kqRBRnBb0I2P+YLZ56Ul7PUzmMURa6yBtj4Hy4Lw9HFSfXGYPzvHClqn25
+         XHmQ==
+X-Gm-Message-State: AOAM533dEqAXFL6xtTRfxPknbYCqHitW21B7t1tDLr9aG6Bph8RL71lr
+        G11QmXF9IYBpoaHfP2A633H0f2wmhyOrFQ==
+X-Google-Smtp-Source: ABdhPJwfeZapuZ+9lvwIuDhnpi76l3f17jnxbk+XoJjRCMZkvvRxulr2ODP2TBVAvkZYDv3vePJZlw==
+X-Received: by 2002:a05:6820:100b:: with SMTP id v11mr4338189oor.87.1603859773332;
+        Tue, 27 Oct 2020 21:36:13 -0700 (PDT)
+Received: from localhost.localdomain (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
+        by smtp.gmail.com with ESMTPSA id k51sm1895884otc.46.2020.10.27.21.36.12
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 28 Oct 2020 09:35:58 -0700 (PDT)
-Date:   Wed, 28 Oct 2020 11:35:56 -0500
+        Tue, 27 Oct 2020 21:36:12 -0700 (PDT)
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Vinod Koul <vkoul@kernel.org>
-Cc:     Linus Walleij <linus.walleij@linaro.org>,
-        Jeevan Shriram <jshriram@codeaurora.org>,
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
         Andy Gross <agross@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 2/2] pinctrl: qcom: Add SDX55 pincontrol driver
-Message-ID: <20201028163556.GD3151@builder.lan>
-References: <20201028083017.611810-1-vkoul@kernel.org>
- <20201028083017.611810-2-vkoul@kernel.org>
+        Linus Walleij <linus.walleij@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH] pinctrl: qcom: sm8250: Specify PDC map
+Date:   Tue, 27 Oct 2020 21:36:42 -0700
+Message-Id: <20201028043642.1141723-1-bjorn.andersson@linaro.org>
+X-Mailer: git-send-email 2.28.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20201028083017.611810-2-vkoul@kernel.org>
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed 28 Oct 03:30 CDT 2020, Vinod Koul wrote:
-> diff --git a/drivers/pinctrl/qcom/pinctrl-sdx55.c b/drivers/pinctrl/qcom/pinctrl-sdx55.c
-[..]
-> +static const struct msm_function sdx55_functions[] = {
-[..]
-> +	FUNCTION(qdss_gpio),
-> +	FUNCTION(qdss_gpio0),
-> +	FUNCTION(qdss_gpio1),
-> +	FUNCTION(qdss_gpio2),
-> +	FUNCTION(qdss_gpio3),
-> +	FUNCTION(qdss_gpio4),
-> +	FUNCTION(qdss_gpio5),
-> +	FUNCTION(qdss_gpio6),
-> +	FUNCTION(qdss_gpio7),
-> +	FUNCTION(qdss_gpio8),
-> +	FUNCTION(qdss_gpio9),
-> +	FUNCTION(qdss_gpio10),
-> +	FUNCTION(qdss_gpio11),
-> +	FUNCTION(qdss_gpio12),
-> +	FUNCTION(qdss_gpio13),
-> +	FUNCTION(qdss_gpio14),
-> +	FUNCTION(qdss_gpio15),
+Specify the PDC mapping for SM8250, so that gpio interrupts are
+propertly mapped to the wakeup IRQs of the PDC.
 
-As there are no overlaps within pingroups you can keep qdss_gpio as a
-single function.
+Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+---
+ drivers/pinctrl/qcom/pinctrl-sm8250.c | 18 ++++++++++++++++++
+ 1 file changed, 18 insertions(+)
 
-> +	FUNCTION(qdss_stm0),
-> +	FUNCTION(qdss_stm1),
-> +	FUNCTION(qdss_stm2),
-> +	FUNCTION(qdss_stm3),
-> +	FUNCTION(qdss_stm4),
-> +	FUNCTION(qdss_stm5),
-> +	FUNCTION(qdss_stm6),
-> +	FUNCTION(qdss_stm7),
-> +	FUNCTION(qdss_stm8),
-> +	FUNCTION(qdss_stm9),
-> +	FUNCTION(qdss_stm10),
-> +	FUNCTION(qdss_stm11),
-> +	FUNCTION(qdss_stm12),
-> +	FUNCTION(qdss_stm13),
-> +	FUNCTION(qdss_stm14),
-> +	FUNCTION(qdss_stm15),
-> +	FUNCTION(qdss_stm16),
-> +	FUNCTION(qdss_stm17),
-> +	FUNCTION(qdss_stm18),
-> +	FUNCTION(qdss_stm19),
-> +	FUNCTION(qdss_stm20),
-> +	FUNCTION(qdss_stm21),
-> +	FUNCTION(qdss_stm22),
-> +	FUNCTION(qdss_stm23),
-> +	FUNCTION(qdss_stm24),
-> +	FUNCTION(qdss_stm25),
-> +	FUNCTION(qdss_stm26),
-> +	FUNCTION(qdss_stm27),
-> +	FUNCTION(qdss_stm28),
-> +	FUNCTION(qdss_stm29),
-> +	FUNCTION(qdss_stm30),
-> +	FUNCTION(qdss_stm31),
+diff --git a/drivers/pinctrl/qcom/pinctrl-sm8250.c b/drivers/pinctrl/qcom/pinctrl-sm8250.c
+index 826df0d637ea..af144e724bd9 100644
+--- a/drivers/pinctrl/qcom/pinctrl-sm8250.c
++++ b/drivers/pinctrl/qcom/pinctrl-sm8250.c
+@@ -1313,6 +1313,22 @@ static const struct msm_pingroup sm8250_groups[] = {
+ 	[183] = SDC_PINGROUP(sdc2_data, 0xb7000, 9, 0),
+ };
+ 
++static const struct msm_gpio_wakeirq_map sm8250_pdc_map[] = {
++	{ 0, 79 }, { 1, 84 }, { 2, 80 }, { 3, 82 }, { 4, 107 }, { 7, 43 },
++	{ 11, 42 }, { 14, 44 }, { 15, 52 }, { 19, 67 }, { 23, 68 }, { 24, 105 },
++	{ 27, 92 }, { 28, 106 }, { 31, 69 }, { 35, 70 }, { 39, 37 },
++	{ 40, 108 }, { 43, 71 }, { 45, 72 }, { 47, 83 }, { 51, 74 }, { 55, 77 },
++	{ 59, 78 }, { 63, 75 }, { 64, 81 }, { 65, 87 }, { 66, 88 }, { 67, 89 },
++	{ 68, 54 }, { 70, 85 }, { 77, 46 }, { 80, 90 }, { 81, 91 }, { 83, 97 },
++	{ 84, 98 }, { 86, 99 }, { 87, 100 }, { 88, 101 }, { 89, 102 },
++	{ 92, 103 }, { 93, 104 }, { 100, 53 }, { 103, 47 }, { 104, 48 },
++	{ 108, 49 }, { 109, 94 }, { 110, 95 }, { 111, 96 }, { 112, 55 },
++	{ 113, 56 }, { 118, 50 }, { 121, 51 }, { 122, 57 }, { 123, 58 },
++	{ 124, 45 }, { 126, 59 }, { 128, 76 }, { 129, 86 }, { 132, 93 },
++	{ 133, 65 }, { 134, 66 }, { 136, 62 }, { 137, 63 }, { 138, 64 },
++	{ 142, 60 }, { 143, 61 }
++};
++
+ static const struct msm_pinctrl_soc_data sm8250_pinctrl = {
+ 	.pins = sm8250_pins,
+ 	.npins = ARRAY_SIZE(sm8250_pins),
+@@ -1323,6 +1339,8 @@ static const struct msm_pinctrl_soc_data sm8250_pinctrl = {
+ 	.ngpios = 181,
+ 	.tiles = sm8250_tiles,
+ 	.ntiles = ARRAY_SIZE(sm8250_tiles),
++	.wakeirq_map = sm8250_pdc_map,
++	.nwakeirq_map = ARRAY_SIZE(sm8250_pdc_map),
+ };
+ 
+ static int sm8250_pinctrl_probe(struct platform_device *pdev)
+-- 
+2.28.0
 
-Ditto.
-
-> +	FUNCTION(qlink0_en),
-> +	FUNCTION(qlink0_req),
-> +	FUNCTION(qlink0_wmss),
-> +	FUNCTION(qlink1_en),
-> +	FUNCTION(qlink1_req),
-> +	FUNCTION(qlink1_wmss),
-> +	FUNCTION(spmi_coex),
-> +	FUNCTION(sec_mi2s),
-> +	FUNCTION(spmi_vgi),
-> +	FUNCTION(tgu_ch0),
-> +	FUNCTION(uim1_clk),
-> +	FUNCTION(uim1_data),
-> +	FUNCTION(uim1_present),
-> +	FUNCTION(uim1_reset),
-> +	FUNCTION(uim2_clk),
-> +	FUNCTION(uim2_data),
-> +	FUNCTION(uim2_present),
-> +	FUNCTION(uim2_reset),
-> +	FUNCTION(usb2phy_ac),
-> +	FUNCTION(vsense_trigger),
-> +};
-> +
-> +/* Every pin is maintained as a single group, and missing or non-existing pin
-> + * would be maintained as dummy group to synchronize pin group index with
-> + * pin descriptor registered with pinctrl core.
-> + * Clients would not be able to request these dummy pin groups.
-> + */
-> +static const struct msm_pingroup sdx55_groups[] = {
-> +	[0] = PINGROUP(0, uim2_data, blsp_uart1, qdss_stm31, ebi0_wrcdc, _,
-> +		       _, _, _, _),
-
-Please break the 80 character suggestion and leave these unwrapped.
-
-[..]
-> +	[108] = UFS_RESET(ufs_reset, 0x0),
-
-SDX55 doesn't have UFS support and I'm not able to find any UFS_RESET
-register in the TLMM block. So I suspect this is a copy paste issue
-somewhere.
-
-PS. Don't forget to drop the macro, if we don't need it.
-
-> +	[109] = SDC_PINGROUP(sdc1_rclk, 0x9a000, 15, 0),
-> +	[110] = SDC_PINGROUP(sdc1_clk, 0x9a000, 13, 6),
-> +	[111] = SDC_PINGROUP(sdc1_cmd, 0x9a000, 11, 3),
-> +	[112] = SDC_PINGROUP(sdc1_data, 0x9a000, 9, 0),
-> +};
-> +
-> +static const struct msm_pinctrl_soc_data sdx55_pinctrl = {
-> +	.pins = sdx55_pins,
-> +	.npins = ARRAY_SIZE(sdx55_pins),
-> +	.functions = sdx55_functions,
-> +	.nfunctions = ARRAY_SIZE(sdx55_functions),
-> +	.groups = sdx55_groups,
-> +	.ngroups = ARRAY_SIZE(sdx55_groups),
-> +	.ngpios = 108,
-
-If we had UFS_RESET, this should include it; i.e. be 109.
-
-Regards,
-Bjorn
