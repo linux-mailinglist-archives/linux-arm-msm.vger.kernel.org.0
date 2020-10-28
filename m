@@ -2,107 +2,268 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 7FB2929D904
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Oct 2020 23:42:01 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D538F29D8EF
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Oct 2020 23:41:06 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2389135AbgJ1Wlk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 28 Oct 2020 18:41:40 -0400
-Received: from mail-ua1-f67.google.com ([209.85.222.67]:41525 "EHLO
-        mail-ua1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731064AbgJ1Wlk (ORCPT
+        id S2389057AbgJ1WlF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 28 Oct 2020 18:41:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57576 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730725AbgJ1WlD (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 28 Oct 2020 18:41:40 -0400
-Received: by mail-ua1-f67.google.com with SMTP id b34so181406uab.8;
-        Wed, 28 Oct 2020 15:41:39 -0700 (PDT)
+        Wed, 28 Oct 2020 18:41:03 -0400
+Received: from mail-oo1-xc43.google.com (mail-oo1-xc43.google.com [IPv6:2607:f8b0:4864:20::c43])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BD360C0613CF
+        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Oct 2020 15:41:02 -0700 (PDT)
+Received: by mail-oo1-xc43.google.com with SMTP id j41so265018oof.12
+        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Oct 2020 15:41:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=gCivUbStvJDP8xgScYqBn5b1q1aHgztV8Ojsrk4C91c=;
+        b=R1NA7ex6ineh2ONOHDYzR/H1eDdpkpozALl1ENbG0AQDqLUe8oixe2OmztHrWu/UuW
+         rgAjYdpP3EvHACRsAzNenjTW64Dv8c9cVpCuYGS1pkpsH9dHpwETZozqGRohAucORyhL
+         rgife7OAqVe/CtQfe8hzSEDLFnMTNIiCO54oW3OfY0CPQx3nuSey/2eXFWKQFEfle22V
+         4ZNHow+sFw4NYMtuTZxdRYXellxgOzoskqXvXHrvkWCQuWCXUjPVxYXj1UjEJ3jG4n/R
+         MNCaif7kvbpg6JHpsU3vgGU9rUAIgitZ5qibn7Q16stxQKcqKR2BKKpf6bO9JUj2AhX/
+         V6zA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=ifdl6rm0gNvcSFKZ5I/tiV7YK1rwdOd+QhoFYwULzTg=;
-        b=psODguIavg8esBbE+vLlNOr8dliLd38X24ndBpKLiM3QEJE0NHdLaXXhaMvI5eGX3T
-         /vt7yEPoOPrsUeUEVr4/Ow1odoXmlAmV35jWUlND3QXArD7rO15yRQUuyk7G+sC8Z+LJ
-         okm+wAo7l2dInQGCktB03YEDmcJHl9o70T2ds6RWPFsXdtajx863Q3pEYNmUEr1P+NX+
-         od8+Kqpsi3Xu6vmd0/Tz+7aX1kTAaVF2lAZPe5JHVcfDPHIJvIZjv4yoJQHJBgwADaOA
-         9js/QOO7UWPrLA+osrOM2ZwtWL70pU2xBRkf00xiiSTcsF5gdw0xojUY5dhhbGjHGCh6
-         OzNg==
-X-Gm-Message-State: AOAM533GthAXfcMpvzqO8UJjrP6mHZ8diBaslAFG0DtgIKWOrUwKMZ2w
-        pm1wZJfnybDfqToA2zrOADxhpLlevQ==
-X-Google-Smtp-Source: ABdhPJziwrjiHTpXAkJ8pP/F82V8cE+tb5yLZhtJRaSIq9hNGSvT/Lg+akyRINC2pPgUjGmP9rs+Lw==
-X-Received: by 2002:a9d:a0d:: with SMTP id 13mr5267372otg.348.1603899998892;
-        Wed, 28 Oct 2020 08:46:38 -0700 (PDT)
-Received: from xps15 (24-155-109-49.dyn.grandenetworks.net. [24.155.109.49])
-        by smtp.gmail.com with ESMTPSA id d17sm2146587ote.47.2020.10.28.08.46.37
+        bh=gCivUbStvJDP8xgScYqBn5b1q1aHgztV8Ojsrk4C91c=;
+        b=I1l5Gja5BaVLuEOzeMToC6wtYJgLkz4z+yWFWiNVGB3/dPxTsv6O+IIdXnNBfZR3ig
+         Wc0VnQ7rfjlxs7my6smI9v8Qil004Ft8yf5aO9ZXEld+0fNMm1xLkh5k4goil9BPLcnn
+         Dah21qg24yuaWn3mVonE9PWnONyTXqIXqVCTAeup2z1bF6AJ7OwM6nAuwVxJno5R54I4
+         1aYXWl/VzZ6czhVZlIQIkrqoBw4Dgf+62/1QRHo4CP5sm75+/As9UWaGl3rHKjIIDTUE
+         PTjuy9f7YwIjczdYtGzJFOTQ3j2MRVB212Zv6+z5TVkrmjpKSIgy32PedMObzo7GCBv4
+         fRTg==
+X-Gm-Message-State: AOAM533y2G5ohmzx5ni2bya/tolYwo2t7RC8mlHh/pcHqaZeYbvf/2FB
+        LBcIBGdlBVjqiQNGsd7g4YLRG0YTlQpY0g==
+X-Google-Smtp-Source: ABdhPJwt5bhTrOYWSh8rilMCFuSjSlAfXcv+D8iu3ECZYewD+u0IiIXA0/qWTmEb9g15/NQ3iJ99DQ==
+X-Received: by 2002:a9d:5e87:: with SMTP id f7mr1257018otl.230.1603900727475;
+        Wed, 28 Oct 2020 08:58:47 -0700 (PDT)
+Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
+        by smtp.gmail.com with ESMTPSA id p17sm2692876oov.1.2020.10.28.08.58.46
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 28 Oct 2020 08:46:38 -0700 (PDT)
-Received: (nullmailer pid 4082138 invoked by uid 1000);
-        Wed, 28 Oct 2020 15:46:37 -0000
-Date:   Wed, 28 Oct 2020 10:46:37 -0500
-From:   Rob Herring <robh@kernel.org>
-To:     Viresh Kumar <viresh.kumar@linaro.org>
-Cc:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        Hector Yuan <hector.yuan@mediatek.com>, rjw@rjwysocki.net,
-        linux-pm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, bjorn.andersson@linaro.org,
-        linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH v3 1/2] dt-bindings: arm: cpus: Document
- 'qcom,freq-domain' property
-Message-ID: <20201028154637.GB4065833@bogus>
-References: <20201020153944.18047-1-manivannan.sadhasivam@linaro.org>
- <1603247803.20224.5.camel@mtkswgap22>
- <20201021095916.GA3334@Mani-XPS-13-9360>
- <20201021105037.vrqgmvbxxhccch33@vireshk-i7>
+        Wed, 28 Oct 2020 08:58:46 -0700 (PDT)
+Date:   Wed, 28 Oct 2020 10:58:44 -0500
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Vladimir Lypak <junak.pub@gmail.com>
+Cc:     Andy Gross <agross@kernel.org>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2 2/2] dt-bindings: pinctrl: qcom: add msm8953 pinctrl
+ bindings
+Message-ID: <20201028155844.GC3151@builder.lan>
+References: <20201007160611.942754-1-junak.pub@gmail.com>
+ <20201007160611.942754-2-junak.pub@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20201021105037.vrqgmvbxxhccch33@vireshk-i7>
+In-Reply-To: <20201007160611.942754-2-junak.pub@gmail.com>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Oct 21, 2020 at 04:20:37PM +0530, Viresh Kumar wrote:
-> On 21-10-20, 15:29, Manivannan Sadhasivam wrote:
-> > Hi,
-> > 
-> > On Wed, Oct 21, 2020 at 10:36:43AM +0800, Hector Yuan wrote:
-> > > Hi, Manivannan
-> > > 
-> > > On Tue, 2020-10-20 at 21:09 +0530, Manivannan Sadhasivam wrote:
-> > > > Add devicetree documentation for 'qcom,freq-domain' property specific
-> > > > to Qualcomm CPUs. This property is used to reference the CPUFREQ node
-> > > > along with Domain ID (0/1).
-> > > > 
-> > > > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> > > > ---
-> > > >  Documentation/devicetree/bindings/arm/cpus.yaml | 6 ++++++
-> > > >  1 file changed, 6 insertions(+)
-> > > > 
-> > > > diff --git a/Documentation/devicetree/bindings/arm/cpus.yaml b/Documentation/devicetree/bindings/arm/cpus.yaml
-> > > > index 1222bf1831fa..f40564bf004f 100644
-> > > > --- a/Documentation/devicetree/bindings/arm/cpus.yaml
-> > > > +++ b/Documentation/devicetree/bindings/arm/cpus.yaml
-> > > > @@ -290,6 +290,12 @@ properties:
-> > > >  
-> > > >        * arm/msm/qcom,kpss-acc.txt
-> > > >  
-> > > > +  qcom,freq-domain:
-> > > Do you mind to change "qcom, freq-domain" to common naming? or drop the
-> > > prefix. So that we can use this CPU node and map it to each freq-domain.
-> > > Thanks a lot. 
-> > 
-> > I can do that but did the domain value match for other platforms as well?
+On Wed 07 Oct 11:06 CDT 2020, Vladimir Lypak wrote:
+
+> Add device tree bindings documentation for Qualcomm MSM8953
+> pinctrl driver.
 > 
-> I am not sure if you can. The code needs to be backward compatible so it can
-> support all devices shipped with older bootloaders and latest kernels. And so
-> changing the bindings isn't a good idea normally.
+> Signed-off-by: Vladimir Lypak <junak.pub@gmail.com>
 
-It can be done. We'd need to do the following:
+Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 
-- schema defines the common property/binding.
-- The kernel supports both names and that is backported to stable.
-- Update all the Qcom dts files to the new binding
+Regards,
+Bjorn
 
-Whether we actually do that or not, I'd like to keep the option open. 
-Aligning the current proposals should be possible. My concern is more 
-about what's the next addition and non-cpu device support.
-
-Rob
+> ---
+> Changes in V2:
+>  - removed "wakeup-parent" property.
+>  - changed pincfg property pattern to '-pins$' and added its description.
+>  - added "serial-pins" subnode to example.
+> ---
+>  .../pinctrl/qcom,msm8953-pinctrl.yaml         | 167 ++++++++++++++++++
+>  1 file changed, 167 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/pinctrl/qcom,msm8953-pinctrl.yaml
+> 
+> diff --git a/Documentation/devicetree/bindings/pinctrl/qcom,msm8953-pinctrl.yaml b/Documentation/devicetree/bindings/pinctrl/qcom,msm8953-pinctrl.yaml
+> new file mode 100644
+> index 000000000000..abe9f4c9b1e3
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/pinctrl/qcom,msm8953-pinctrl.yaml
+> @@ -0,0 +1,167 @@
+> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/pinctrl/qcom,msm8953-pinctrl.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: Qualcomm Technologies, Inc. MSM8953 TLMM block
+> +
+> +maintainers:
+> +  - Bjorn Andersson <bjorn.andersson@linaro.org>
+> +
+> +description: |
+> +  This binding describes the Top Level Mode Multiplexer block found in the
+> +  MSM8953 platform.
+> +
+> +properties:
+> +  compatible:
+> +    const: qcom,msm8953-pinctrl
+> +
+> +  reg:
+> +    maxItems: 1
+> +
+> +  interrupts:
+> +    description: Specifies the TLMM summary IRQ
+> +    maxItems: 1
+> +
+> +  interrupt-controller: true
+> +
+> +  '#interrupt-cells':
+> +    description:
+> +      Specifies the PIN numbers and Flags, as defined in defined in
+> +      include/dt-bindings/interrupt-controller/irq.h
+> +    const: 2
+> +
+> +  gpio-controller: true
+> +
+> +  '#gpio-cells':
+> +    description: Specifying the pin number and flags, as defined in
+> +      include/dt-bindings/gpio/gpio.h
+> +    const: 2
+> +
+> +  gpio-ranges:
+> +    maxItems: 1
+> +
+> +#PIN CONFIGURATION NODES
+> +patternProperties:
+> +  '-pins$':
+> +    type: object
+> +    description:
+> +      Pinctrl node's client devices use subnodes for desired pin configuration.
+> +      Client device subnodes use below standard properties.
+> +    $ref: "/schemas/pinctrl/pincfg-node.yaml"
+> +
+> +    properties:
+> +      pins:
+> +        description:
+> +          List of gpio pins affected by the properties specified in this
+> +          subnode.
+> +        items:
+> +          oneOf:
+> +            - pattern: "^gpio([0-9]|[1-9][0-9]|1[0-7][0-9])$"
+> +            - enum: [ sdc1_clk, sdc1_cmd, sdc1_data, sdc1_rclk, sdc2_clk,
+> +                      sdc2_cmd, sdc2_data, qdsd_clk, qdsd_cmd, qdsd_data0,
+> +                      qdsd_data1, qdsd_data2, qdsd_data3 ]
+> +        minItems: 1
+> +        maxItems: 16
+> +
+> +      function:
+> +        description:
+> +          Specify the alternative function to be configured for the specified
+> +          pins.
+> +
+> +        enum: [ accel_int, adsp_ext, alsp_int, atest_bbrx0, atest_bbrx1,
+> +                atest_char, atest_char0, atest_char1, atest_char2, atest_char3,
+> +                atest_gpsadc_dtest0_native, atest_gpsadc_dtest1_native, atest_tsens,
+> +                atest_wlan0, atest_wlan1, bimc_dte0, bimc_dte1, blsp1_spi,
+> +                blsp3_spi, blsp6_spi, blsp7_spi, blsp_i2c1, blsp_i2c2, blsp_i2c3,
+> +                blsp_i2c4, blsp_i2c5, blsp_i2c6, blsp_i2c7, blsp_i2c8, blsp_spi1,
+> +                blsp_spi2, blsp_spi3, blsp_spi4, blsp_spi5, blsp_spi6, blsp_spi7,
+> +                blsp_spi8, blsp_uart2, blsp_uart4, blsp_uart5, blsp_uart6, cam0_ldo,
+> +                cam1_ldo, cam1_rst, cam1_standby, cam2_rst, cam2_standby, cam3_rst,
+> +                cam3_standby, cam_irq, cam_mclk, cap_int, cci_async, cci_i2c,
+> +                cci_timer0, cci_timer1, cci_timer2, cci_timer3, cci_timer4,
+> +                cdc_pdm0, codec_int1, codec_int2, codec_reset, cri_trng, cri_trng0,
+> +                cri_trng1, dac_calib0, dac_calib1, dac_calib10, dac_calib11,
+> +                dac_calib12, dac_calib13, dac_calib14, dac_calib15, dac_calib16,
+> +                dac_calib17, dac_calib18, dac_calib19, dac_calib2, dac_calib20,
+> +                dac_calib21, dac_calib22, dac_calib23, dac_calib24, dac_calib25,
+> +                dac_calib3, dac_calib4, dac_calib5, dac_calib6, dac_calib7,
+> +                dac_calib8, dac_calib9, dbg_out, ddr_bist, dmic0_clk, dmic0_data,
+> +                ebi_cdc, ebi_ch0, ext_lpass, flash_strobe, fp_int, gcc_gp1_clk_a,
+> +                gcc_gp1_clk_b, gcc_gp2_clk_a, gcc_gp2_clk_b, gcc_gp3_clk_a,
+> +                gcc_gp3_clk_b, gcc_plltest, gcc_tlmm, gpio, gsm0_tx, gsm1_tx,
+> +                gyro_int, hall_int, hdmi_int, key_focus, key_home, key_snapshot,
+> +                key_volp, ldo_en, ldo_update, lpass_slimbus, lpass_slimbus0,
+> +                lpass_slimbus1, m_voc, mag_int, mdp_vsync, mipi_dsi0, modem_tsync,
+> +                mss_lte, nav_pps, nav_pps_in_a, nav_pps_in_b, nav_tsync,
+> +                nfc_disable, nfc_dwl, nfc_irq, ois_sync, pa_indicator, pbs0, pbs1,
+> +                pbs2, pressure_int, pri_mi2s, pri_mi2s_mclk_a, pri_mi2s_mclk_b,
+> +                pri_mi2s_ws, prng_rosc, pwr_crypto_enabled_a, pwr_crypto_enabled_b,
+> +                pwr_down, pwr_modem_enabled_a, pwr_modem_enabled_b,
+> +                pwr_nav_enabled_a, pwr_nav_enabled_b, qdss_cti_trig_in_a0,
+> +                qdss_cti_trig_in_a1, qdss_cti_trig_in_b0, qdss_cti_trig_in_b1,
+> +                qdss_cti_trig_out_a0, qdss_cti_trig_out_a1, qdss_cti_trig_out_b0,
+> +                qdss_cti_trig_out_b1, qdss_traceclk_a, qdss_traceclk_b,
+> +                qdss_tracectl_a, qdss_tracectl_b, qdss_tracedata_a,
+> +                qdss_tracedata_b, sd_write, sdcard_det, sec_mi2s, sec_mi2s_mclk_a,
+> +                sec_mi2s_mclk_b, smb_int, ss_switch, ssbi_wtr1, ts_resout,
+> +                ts_sample, ts_xvdd, tsens_max, uim1_clk, uim1_data, uim1_present,
+> +                uim1_reset, uim2_clk, uim2_data, uim2_present, uim2_reset,
+> +                uim_batt, us_emitter, us_euro, wcss_bt, wcss_fm, wcss_wlan,
+> +                wcss_wlan0, wcss_wlan1, wcss_wlan2, wsa_en, wsa_io, wsa_irq ]
+> +
+> +      drive-strength:
+> +        enum: [2, 4, 6, 8, 10, 12, 14, 16]
+> +        default: 2
+> +        description:
+> +          Selects the drive strength for the specified pins, in mA.
+> +
+> +      bias-pull-down: true
+> +
+> +      bias-pull-up: true
+> +
+> +      bias-disable: true
+> +
+> +      output-high: true
+> +
+> +      output-low: true
+> +
+> +    required:
+> +      - pins
+> +      - function
+> +
+> +    additionalProperties: false
+> +
+> +required:
+> +  - compatible
+> +  - reg
+> +  - interrupts
+> +  - interrupt-controller
+> +  - '#interrupt-cells'
+> +  - gpio-controller
+> +  - '#gpio-cells'
+> +  - gpio-ranges
+> +
+> +additionalProperties: false
+> +
+> +examples:
+> +  - |
+> +        #include <dt-bindings/interrupt-controller/arm-gic.h>
+> +        tlmm: pinctrl@1000000 {
+> +              compatible = "qcom,msm8953-pinctrl";
+> +              reg = <0x01000000 0x300000>;
+> +              interrupts = <GIC_SPI 208 IRQ_TYPE_LEVEL_HIGH>;
+> +              interrupt-controller;
+> +              #interrupt-cells = <2>;
+> +              gpio-controller;
+> +              #gpio-cells = <2>;
+> +              gpio-ranges = <&tlmm 0 0 142>;
+> +
+> +              serial_default: serial-pins {
+> +                    pins = "gpio4", "gpio5";
+> +                    function = "blsp_uart2";
+> +                    drive-strength = <2>;
+> +                    bias-disable;
+> +              };
+> +        };
+> -- 
+> 2.28.0
+> 
