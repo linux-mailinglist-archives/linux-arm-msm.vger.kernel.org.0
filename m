@@ -2,112 +2,191 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 6019429DCEA
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Oct 2020 01:33:31 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 9770A29DE7B
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Oct 2020 01:55:05 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732289AbgJ1WV2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 28 Oct 2020 18:21:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54166 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731649AbgJ1WVQ (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 28 Oct 2020 18:21:16 -0400
-Received: from mail-pl1-x641.google.com (mail-pl1-x641.google.com [IPv6:2607:f8b0:4864:20::641])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 820C3C0613CF
-        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Oct 2020 15:21:16 -0700 (PDT)
-Received: by mail-pl1-x641.google.com with SMTP id t22so315997plr.9
-        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Oct 2020 15:21:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=aD/m2VgCYiafD5XJrexC8xG2hc+36DzQpHElqK1SRuE=;
-        b=v23DjL4BqoRVxPR9GiRf0kU1JhgymDI0xiYjXnCz4Q785C1+xKWhpKU6Km8WPOp58w
-         xGur69N7GeI8fwXXwA+kVV+RcFy4HsedaSVvKdI47qTsXih/LGVM3DGC0btx4VoxTYxJ
-         cLSx2YmlYZW9A8eUFhVGuOquAzmHZ8jND6vyejb2sKUqdSR/CFagLZUEYBVJKs/2kDc6
-         JGC5vPGT+PpvhNxJJFT4rYUlvHhjTjPn8MOkZc/uu565J5yhEcMDFCxPX6kKim6nGVzT
-         NCdS4ntm1tBymmjYUg6XJ53cjrMCeKuIT63npvN/BqgJ9tqRhjtf3+wNAzJBxOxVCa+y
-         0RXA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=aD/m2VgCYiafD5XJrexC8xG2hc+36DzQpHElqK1SRuE=;
-        b=eBGxZ/0g4srz5Uv2J6qKXkPzpH6NKYuoHUSGg1RyiaLWAO1JvFvAwZOvn3W2PKmk33
-         9vLU5eTLjcHKRnKYDR+9dsorfCAsmRKt5YkmFXty6Ax0wErcxiLoH/yV+/oq2yCIH279
-         ZQpviKK+TlZgQ2PyJeUv34Eb29gb+OxMdc90HFavpL2YDnpOckA7iGc73HZHAnLrDlYi
-         VfQjfU48IZomWhqQZpISocTcNXlvFpH5I1izzoefpbme2Cc35KAI9wSN3WGHlv74ns2Z
-         WolaCjJJg1samlJm1wVNoMiDKEMLU1wSDtp8HcEXTIfGuuRe1nu0rkuth3ghWnhqivx7
-         ZHjQ==
-X-Gm-Message-State: AOAM530YYdX5CBGJ7YqZxeTnjogSaxFmdC30wa7gmjHi6zDAEcBIqz8D
-        WHTBvXO3Uy5j6LYyeEN97KnicyJcwFa9
-X-Google-Smtp-Source: ABdhPJz8bqfzm3rNPe2a2hytHwPw1HH8gsns4sap2sQtA7nMk9rNUILQwS2zVPM5K3yckVKsL3p6JQ==
-X-Received: by 2002:aa7:911a:0:b029:155:8521:ba6c with SMTP id 26-20020aa7911a0000b02901558521ba6cmr5161777pfh.8.1603870995286;
-        Wed, 28 Oct 2020 00:43:15 -0700 (PDT)
-Received: from localhost.localdomain ([103.59.133.81])
-        by smtp.gmail.com with ESMTPSA id e7sm4289579pgj.19.2020.10.28.00.43.12
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 28 Oct 2020 00:43:14 -0700 (PDT)
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     sboyd@kernel.org, mturquette@baylibre.com, robh+dt@kernel.org
-Cc:     bjorn.andersson@linaro.org, vkoul@kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Subject: [PATCH 4/4] clk: qcom: Add support for SDX55 RPMh clocks
-Date:   Wed, 28 Oct 2020 13:12:32 +0530
-Message-Id: <20201028074232.22922-5-manivannan.sadhasivam@linaro.org>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20201028074232.22922-1-manivannan.sadhasivam@linaro.org>
-References: <20201028074232.22922-1-manivannan.sadhasivam@linaro.org>
+        id S1731748AbgJ1WSF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 28 Oct 2020 18:18:05 -0400
+Received: from mail.kernel.org ([198.145.29.99]:60544 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1731756AbgJ1WRo (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 28 Oct 2020 18:17:44 -0400
+Received: from willie-the-truck (236.31.169.217.in-addr.arpa [217.169.31.236])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id 4FE0624727;
+        Wed, 28 Oct 2020 13:51:22 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1603893085;
+        bh=moCxEZSMazEeeNSIlOh3V56k434+FqJF87QQl5L674I=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=ZnpUhbIrEkwPQWoHKCSGgVy4b6TKud37u+pXaMxtHWbYGOcZQio4QKapNpcoxJV0p
+         RZrIV26mPEL52xtwFvUrIbcBnwKvjQchKvlFSgoD8aLH02Ngqm3RwbuuEdQ7qJ77pe
+         s3050hFnf9ujuEcc1btkzobSYWDJqTRLL4DSYWE4=
+Date:   Wed, 28 Oct 2020 13:51:18 +0000
+From:   Will Deacon <will@kernel.org>
+To:     John Stultz <john.stultz@linaro.org>
+Cc:     lkml <linux-kernel@vger.kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Joerg Roedel <joro@8bytes.org>,
+        Thomas Gleixner <tglx@linutronix.de>,
+        Jason Cooper <jason@lakedaemon.net>,
+        Marc Zyngier <maz@kernel.org>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Maulik Shah <mkshah@codeaurora.org>,
+        Lina Iyer <ilina@codeaurora.org>,
+        Saravana Kannan <saravanak@google.com>,
+        Todd Kjos <tkjos@google.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        iommu@lists.linux-foundation.org,
+        "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>
+Subject: Re: [PATCH v2 5/5] firmware: QCOM_SCM: Allow qcom_scm driver to be
+ loadable as a permenent module
+Message-ID: <20201028135118.GA28554@willie-the-truck>
+References: <20200625001039.56174-1-john.stultz@linaro.org>
+ <20200625001039.56174-6-john.stultz@linaro.org>
+ <20200702141825.GA16941@willie-the-truck>
+ <CALAqxLVZ2EhutYjOt7Be1RgnYwHT6-4m6DxA-t1wuxuSy=6yDQ@mail.gmail.com>
+ <20200710075411.GA30011@willie-the-truck>
+ <CALAqxLWadLrxckRHRAR0Q417RnFKquQJbRfO_DLEVH56cykRow@mail.gmail.com>
+ <20200713204133.GA3731@willie-the-truck>
+ <CALAqxLUDVEq4ds2Wbic6uaK3=dELKKO4eGQxjHFFz19GeUFd_w@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CALAqxLUDVEq4ds2Wbic6uaK3=dELKKO4eGQxjHFFz19GeUFd_w@mail.gmail.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add support for clocks maintained by RPMh in SDX55 SoCs.
+On Tue, Oct 27, 2020 at 10:53:47PM -0700, John Stultz wrote:
+> On Mon, Jul 13, 2020 at 1:41 PM Will Deacon <will@kernel.org> wrote:
+> > On Fri, Jul 10, 2020 at 03:21:53PM -0700, John Stultz wrote:
+> > > On Fri, Jul 10, 2020 at 12:54 AM Will Deacon <will@kernel.org> wrote:
+> > > > On Thu, Jul 09, 2020 at 08:28:45PM -0700, John Stultz wrote:
+> > > > > On Thu, Jul 2, 2020 at 7:18 AM Will Deacon <will@kernel.org> wrote:
+> > > > > > On Thu, Jun 25, 2020 at 12:10:39AM +0000, John Stultz wrote:
+> > > > > > > diff --git a/drivers/iommu/Kconfig b/drivers/iommu/Kconfig
+> > > > > > > index b510f67dfa49..714893535dd2 100644
+> > > > > > > --- a/drivers/iommu/Kconfig
+> > > > > > > +++ b/drivers/iommu/Kconfig
+> > > > > > > @@ -381,6 +381,7 @@ config SPAPR_TCE_IOMMU
+> > > > > > >  config ARM_SMMU
+> > > > > > >       tristate "ARM Ltd. System MMU (SMMU) Support"
+> > > > > > >       depends on (ARM64 || ARM || (COMPILE_TEST && !GENERIC_ATOMIC64)) && MMU
+> > > > > > > +     depends on QCOM_SCM || !QCOM_SCM #if QCOM_SCM=m this can't be =y
+> > > > > > >       select IOMMU_API
+> > > > > > >       select IOMMU_IO_PGTABLE_LPAE
+> > > > > > >       select ARM_DMA_USE_IOMMU if ARM
+> > > > > >
+> > > > > > This looks like a giant hack. Is there another way to handle this?
+> > > > >
+> > > > > Sorry for the slow response here.
+> > > > >
+> > > > > So, I agree the syntax looks strange (requiring a comment obviously
+> > > > > isn't a good sign), but it's a fairly common way to ensure drivers
+> > > > > don't get built in if they optionally depend on another driver that
+> > > > > can be built as a module.
+> > > > >   See "RFKILL || !RFKILL", "EXTCON || !EXTCON", or "USB_GADGET ||
+> > > > > !USB_GADGET" in various Kconfig files.
+> > > > >
+> > > > > I'm open to using a different method, and in a different thread you
+> > > > > suggested using something like symbol_get(). I need to look into it
+> > > > > more, but that approach looks even more messy and prone to runtime
+> > > > > failures. Blocking the unwanted case at build time seems a bit cleaner
+> > > > > to me, even if the syntax is odd.
+> > > >
+> > > > Maybe just split it out then, so that the ARM_SMMU entry doesn't have this,
+> > > > as that driver _really_ doesn't care about SoC details like this. In other
+> > > > words, add a new entry along the lines of:
+> > > >
+> > > >         config ARM_SMMU_QCOM_IMPL
+> > > >         default y
+> > > >         #if QCOM_SCM=m this can't be =y
+> > > >         depends on ARM_SMMU & (QCOM_SCM || !QCOM_SCM)
+> > > >
+> > > > and then have arm-smmu.h provide a static inline qcom_smmu_impl_init()
+> > > > which returns -ENODEV if CONFIG_ARM_SMMU_QCOM_IMPL=n and hack the Makefile
+> > > > so that we don't bother to compile arm-smmu-qcom.o in that case.
+> > > >
+> > > > Would that work?
+> > >
+> > > I think this proposal still has problems with the directionality of the call.
+> > >
+> > > The arm-smmu-impl.o calls to arm-smmu-qcom.o which calls qcom_scm.o
+> > > So if qcom_scm.o is part of a module, the calling code in
+> > > arm-smmu-qcom.o also needs to be a module, which means CONFIG_ARM_SMMU
+> > > needs to be a module.
+> > >
+> > > I know you said the arm-smmu driver doesn't care about SoC details,
+> > > but the trouble is that currently the arm-smmu driver does directly
+> > > call the qcom-scm code. So it is a real dependency. However, if
+> > > QCOM_SCM is not configured, it calls stubs and that's ok.  In that
+> > > way, the "depends on QCOM_SCM || !QCOM_SCM" line actually makes sense.
+> > > It looks terrible because we're used to boolean logic, but it's
+> > > ternary.
+> >
+> > Yes, it looks ugly, but the part I really have issues with is that building
+> > QCOM_SCM=m and ARM_SMMU=y is perfectly fine if you don't run on an SoC
+> > with the qcom implementation. I don't see why we need to enforce things
+> > here beyond making sure that all selectable permutations _build_ and
+> > fail gracefully at runtime on the qcom SoC if SCM isn't available.
+> 
+> Hey Will,
+>   Sorry to dredge up this old thread. I've been off busy with other
+> things and didn't get around to trying to rework this until now.
+> 
+> Unfortunately I'm still having some trouble coming up with a better
+> solution. Initially I figured I'd rework the qcom_scm driver to, so
+> that we have the various qcom_scm_* as inline functions, which call
+> out to function pointers that the qcom_scm driver would register when
+> the module loaded (Oof, and unfortunately there are a *ton* qcom_scm_*
+> functions so its a bunch of churn).
+> 
+> The trouble I realized with that approach is that if the ARM_SMMU code
+> is built in, then it may try to use the qcom_scm code before the
+> module loads and sets those function pointers. So while it would build
+> ok, the issue would be when the arm_smmu_device_reset() is done by
+> done on arm_smmu_device_probe(), it wouldn't actually call the right
+> code.  There isn't a really good way to deal with the module loading
+> at some random time after arm_smmu_device_probe() completes.
+> 
+> This is the benefit of the module symbol dependency tracking: If the
+> arm_smmu.ko calls symbols in qcom_scm.ko then qcom_scm.ko has to load
+> first.
+> But if arm_smmu is built in, I haven't found a clear mechanism to
+> force qcom_scm to load before we probe, if it's configured as a
+> module.
+> 
+> I also looked into the idea of reworking the arm-smmu-impl code to be
+> modular instead, and while it does provide a similar method of using
+> function pointers to minimize the amount of symbols the arm-smmu code
+> needs to know about, the initialization call path is
+> arm_smmu_device_probe -> arm_smmu_impl_init -> qcom_smmu_impl_init. So
+> it doesn't really allow for dynamic registration of implementation
+> modules at runtime.
+> 
+> So I'm sort of stewing on maybe trying to rework the directionality,
+> so the arm-smmu-qcom.o code probes and calls arm_smmu_impl_init and
+> that is what initializes the arm_smmu_device_probe logic?
+> 
+> Alternatively, I'm considering trying to switch the module dependency
+> annotation so that the CONFIG_QCOM_SCM modularity depends on ARM_SMMU
+> being a module. But that is sort of putting the restriction on the
+> callee instead of the caller (sort of flipping the meaning of the
+> depends), which feels prone to later trouble (and with multiple users
+> of CONFIG_QCOM_SCM needing similar treatment, it would make it
+> difficult to discover the right combination of configs needed to allow
+> it to be a module).
+> 
+> Anyway, I wanted to reach out to see if you had any further ideas
+> here. Sorry for letting such a large time gap pass!
 
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
----
- drivers/clk/qcom/clk-rpmh.c | 20 ++++++++++++++++++++
- 1 file changed, 20 insertions(+)
+Well we can always go with your original hack, if it helps?
 
-diff --git a/drivers/clk/qcom/clk-rpmh.c b/drivers/clk/qcom/clk-rpmh.c
-index e2c669b08aff..88d010178b59 100644
---- a/drivers/clk/qcom/clk-rpmh.c
-+++ b/drivers/clk/qcom/clk-rpmh.c
-@@ -432,6 +432,25 @@ static const struct clk_rpmh_desc clk_rpmh_sm8250 = {
- 	.num_clks = ARRAY_SIZE(sm8250_rpmh_clocks),
- };
- 
-+DEFINE_CLK_RPMH_VRM(sdx55, rf_clk1, rf_clk1_ao, "rfclkd1", 1);
-+DEFINE_CLK_RPMH_VRM(sdx55, rf_clk2, rf_clk2_ao, "rfclkd2", 1);
-+DEFINE_CLK_RPMH_BCM(sdx55, qpic_clk, "QP0");
-+
-+static struct clk_hw *sdx55_rpmh_clocks[] = {
-+	[RPMH_CXO_CLK]		= &sdm845_bi_tcxo.hw,
-+	[RPMH_CXO_CLK_A]	= &sdm845_bi_tcxo_ao.hw,
-+	[RPMH_RF_CLK1]		= &sdx55_rf_clk1.hw,
-+	[RPMH_RF_CLK1_A]	= &sdx55_rf_clk1_ao.hw,
-+	[RPMH_RF_CLK2]		= &sdx55_rf_clk2.hw,
-+	[RPMH_RF_CLK2_A]	= &sdx55_rf_clk2_ao.hw,
-+	[RPMH_QPIC_CLK]		= &sdx55_qpic_clk.hw,
-+};
-+
-+static const struct clk_rpmh_desc clk_rpmh_sdx55 = {
-+	.clks = sdx55_rpmh_clocks,
-+	.num_clks = ARRAY_SIZE(sdx55_rpmh_clocks),
-+};
-+
- static struct clk_hw *of_clk_rpmh_hw_get(struct of_phandle_args *clkspec,
- 					 void *data)
- {
-@@ -519,6 +538,7 @@ static const struct of_device_id clk_rpmh_match_table[] = {
- 	{ .compatible = "qcom,sdm845-rpmh-clk", .data = &clk_rpmh_sdm845},
- 	{ .compatible = "qcom,sm8150-rpmh-clk", .data = &clk_rpmh_sm8150},
- 	{ .compatible = "qcom,sm8250-rpmh-clk", .data = &clk_rpmh_sm8250},
-+	{ .compatible = "qcom,sdx55-rpmh-clk", .data = &clk_rpmh_sdx55},
- 	{ }
- };
- MODULE_DEVICE_TABLE(of, clk_rpmh_match_table);
--- 
-2.17.1
+https://lore.kernel.org/linux-iommu/20200714075603.GE4277@willie-the-truck/
 
+Will
