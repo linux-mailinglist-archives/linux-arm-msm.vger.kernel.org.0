@@ -2,123 +2,116 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B8F8B29D981
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Oct 2020 23:55:46 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id DE23E29D91C
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Oct 2020 23:44:31 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2389835AbgJ1Wzo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 28 Oct 2020 18:55:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60034 "EHLO
+        id S2389165AbgJ1Wob (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 28 Oct 2020 18:44:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57850 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2389842AbgJ1Wzn (ORCPT
+        with ESMTP id S2389164AbgJ1Wmm (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 28 Oct 2020 18:55:43 -0400
-Received: from mail-wm1-x343.google.com (mail-wm1-x343.google.com [IPv6:2a00:1450:4864:20::343])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1E200C0613CF
-        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Oct 2020 15:55:42 -0700 (PDT)
-Received: by mail-wm1-x343.google.com with SMTP id c18so766352wme.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Oct 2020 15:55:42 -0700 (PDT)
+        Wed, 28 Oct 2020 18:42:42 -0400
+Received: from mail-ua1-x944.google.com (mail-ua1-x944.google.com [IPv6:2607:f8b0:4864:20::944])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C81F4C0613CF
+        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Oct 2020 15:42:41 -0700 (PDT)
+Received: by mail-ua1-x944.google.com with SMTP id b34so182042uab.8
+        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Oct 2020 15:42:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=zrUkUnQWdd+Y/Q8i7IOb2KIFyQ5NaKYRP/IYCUM5/+o=;
-        b=JrISsXlyRVaK23OpNAQoKp7miwW6GWni2F4aktn0FHoa2pYYDJAM5bgevk5mGCAmcb
-         TxNkGiJk4LVTwLSfB22U8RzOJNxBQZkmKoWBOrgdwirKo0yFwscx2cJIPvLJS1oucsti
-         46RuIPA96cI6uuIVXOz/aiul4/A3EnykMCPB97d46zs4npDhHui51LvugX8PsXisuYAc
-         JcZMdH0a/PDKq4Hu1afYXYadQIlBr4UhKGY/e7gM8D/jM/juHmTav/9SmEskI/h374PL
-         9zdmk0MDpmtovVF4oOJrMbT//x1fqnDH2WwGdgf6xC8Hrlr0ciOiMvLk5DK2YsYPiq8g
-         c5aA==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=SLwuvMzZvnnRNQP9we9x59FzXelhwfghvGsrUjCw4VU=;
+        b=RhHG4HNLIvQOsKCKHMFdQG5fs/Mi3bnrL+uhZVtOtEPwgm7l8Kvlgq5+7bAAIJDIZy
+         Ws2PXYZVCaUR12gMSyaiAYhIMDvGbUlv+Ej83F2O+nIySiFW2fsYHQrp12w//YPSzbf7
+         xb36K+7+JCa5forimaubJnMEPqQAeU7CqhIiejJE7uke9RLQ6+Y22KO0G5TUzIcvFIZD
+         k4NFqDjN7dU+7PuIZJJkzVKtD4Uqx5xauUIjz70dJvYImXDu3e3R0eYdu4Wiq4wKtD5E
+         GRwSgaI4X2KVd+3wdqacGA2Pm3CzZFP8WdyZY4h9llIGUaSqJYZ8u0GfZeL4AbYPP0tJ
+         6zVg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=zrUkUnQWdd+Y/Q8i7IOb2KIFyQ5NaKYRP/IYCUM5/+o=;
-        b=uM61et1Hx7mnnCf0SBLYABOjodfRf2wY+LjHUTxTJmDo97VaVSjg5y/8Idk0nhFATk
-         QoWbBqUN/LqKEJCu0D59MWViXCnS+9K1weYmGsX6dp4pmAI/mW9YW9A0+b99ZBYZyNzn
-         H4MGfar+EfNWoRGLMuZqPHjAAPJ18kRD7T13RKhE7zLsFlVsj8LP6ucZe1emsQtNaBvz
-         9OGcC2708SQXr8M7DzM5UyAvuf3CXspZlkMggNR+vycDx2fwDhhdT9LsoATJtq9VzzyI
-         wZTVU7GPak0P07SjE786LaGbrXEAWm5cKwbXnlvuxNIp0tWYNx+CPAWhyfreye7RTOOJ
-         AfjQ==
-X-Gm-Message-State: AOAM530woPA9/ift/LtE1ESEs6fPxO1aS3XUXsCKbYc9jGx16DSXLbCz
-        g/ZoN9DUO2cT20193kx1R7PvXHShbiEkrw==
-X-Google-Smtp-Source: ABdhPJz6KFPLqOpMtLn/WZ00OwZap4cgejbdYYKNUcMROfqSYDKD75hda1r765JOz5gvn1Lj7mQU3A==
-X-Received: by 2002:a7b:c1d5:: with SMTP id a21mr5110912wmj.38.1603896980631;
-        Wed, 28 Oct 2020 07:56:20 -0700 (PDT)
-Received: from holly.lan (cpc141216-aztw34-2-0-cust174.18-1.cable.virginm.net. [80.7.220.175])
-        by smtp.gmail.com with ESMTPSA id s2sm7540795wmh.9.2020.10.28.07.56.19
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=SLwuvMzZvnnRNQP9we9x59FzXelhwfghvGsrUjCw4VU=;
+        b=ambWvCmSEbKQT74ukdxUg15Uz8UrsOPxqdIDUJP2fRSHOSuh50bkK1Uuz/LbqdL0aT
+         L/oV4yFg6ZIDb/jAZKQL/1SlJPvI1yxKmg+FiWE8a3JQcaG91H2icG5wGXCFmBKjGxqn
+         4JJAg8T7hwKXAY8rKswZY+BrH5wqX9Rv9ObNYENou2BpV83leEvsCclk95S2ZGS1FPms
+         upECvTRF+cRvQa9M6p+eKrnCh84pmna5TC0BcEOv+1ZVpEr5i/RYob4mGNpBKNTGmM+h
+         Xe/rUX0YAA9YZmY5Sil67YjogjSIj9z+D0luk3sYIGMOFkeZ3gqZwyhSy2D96Que+Ngz
+         GKEg==
+X-Gm-Message-State: AOAM533/cGIZeu0xPfhLzCOZtvknkmDkfeN2Sb6oAFHw//ft1bQftwIw
+        Z1hZNqUfnlHG5ffiiqUleD75L/H9KEtSgA==
+X-Google-Smtp-Source: ABdhPJzcQn+pi4scFs4Et0ODIMxdwgv+wQwl2Usiplw+seac0umWnfV8DesXaeFja8jdkurmnB1XQg==
+X-Received: by 2002:a05:6830:1e70:: with SMTP id m16mr5395840otr.51.1603898412480;
+        Wed, 28 Oct 2020 08:20:12 -0700 (PDT)
+Received: from localhost.localdomain (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
+        by smtp.gmail.com with ESMTPSA id h6sm2708389oia.51.2020.10.28.08.20.11
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 28 Oct 2020 07:56:19 -0700 (PDT)
-Date:   Wed, 28 Oct 2020 14:56:17 +0000
-From:   Daniel Thompson <daniel.thompson@linaro.org>
-To:     Alexandru Stan <amstan@chromium.org>
-Cc:     Heiko Stuebner <heiko@sntech.de>, Rob Herring <robh+dt@kernel.org>,
-        Andy Gross <agross@kernel.org>,
+        Wed, 28 Oct 2020 08:20:11 -0700 (PDT)
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= 
-        <u.kleine-koenig@pengutronix.de>, Lee Jones <lee.jones@linaro.org>,
-        Jingoo Han <jingoohan1@gmail.com>,
-        Bartlomiej Zolnierkiewicz <b.zolnierkie@samsung.com>,
-        Douglas Anderson <dianders@chromium.org>,
-        Matthias Kaehlcke <mka@chromium.org>,
-        Enric Balletbo i Serra <enric.balletbo@collabora.com>,
-        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        Andy Gross <agross@kernel.org>,
+        Linus Walleij <linus.walleij@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
         linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v3 2/3] arm64: dts: qcom: trogdor: Add brightness-levels
-Message-ID: <20201028145617.ermdpqomthxxj7qe@holly.lan>
-References: <20201022050445.930403-1-amstan@chromium.org>
- <20201021220404.v3.2.Ie4d84af5a85e8dcb8f575845518fa39f324a827d@changeid>
+Subject: [RESEND PATCH] pinctrl: qcom: sm8250: Specify PDC map
+Date:   Wed, 28 Oct 2020 08:20:40 -0700
+Message-Id: <20201028152040.1142473-1-bjorn.andersson@linaro.org>
+X-Mailer: git-send-email 2.28.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20201021220404.v3.2.Ie4d84af5a85e8dcb8f575845518fa39f324a827d@changeid>
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Oct 21, 2020 at 10:04:44PM -0700, Alexandru Stan wrote:
-> We want userspace to represent the human perceived brightness.
-> Since the led drivers and the leds themselves don't have a
-> linear response to the value we give them in terms of perceived
-> brightness, we'll bake the curve into the dts.
-> 
-> The panel also doesn't have a good response under 5%, so we'll avoid
-> sending it anything lower than that.
-> 
-> Note: Ideally this patch should be coupled with the driver change from
-> "backlight: pwm_bl: Fix interpolation", but it can work without it,
-> without looking too ugly.
-> 
-> Signed-off-by: Alexandru Stan <amstan@chromium.org>
+Specify the PDC mapping for SM8250, so that gpio interrupts are
+propertly mapped to the wakeup IRQs of the PDC.
 
-Acked-by: Daniel Thompson <daniel.thompson@linaro.org>
+Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+---
 
+Resending this as it didn't seem to have hit the list.
 
+ drivers/pinctrl/qcom/pinctrl-sm8250.c | 18 ++++++++++++++++++
+ 1 file changed, 18 insertions(+)
 
-> ---
-> 
->  arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi | 9 +++++++++
->  1 file changed, 9 insertions(+)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
-> index bf875589d364..ccdabc6c4994 100644
-> --- a/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
-> @@ -179,6 +179,15 @@ pp3300_fp_tp: pp3300-fp-tp-regulator {
->  	backlight: backlight {
->  		compatible = "pwm-backlight";
->  
-> +		/* The panels don't seem to like anything below ~ 5% */
-> +		brightness-levels = <
-> +			196 256 324 400 484 576 676 784 900 1024 1156 1296
-> +			1444 1600 1764 1936 2116 2304 2500 2704 2916 3136
-> +			3364 3600 3844 4096
-> +		>;
-> +		num-interpolated-steps = <64>;
-> +		default-brightness-level = <951>;
-> +
->  		pwms = <&cros_ec_pwm 1>;
->  		enable-gpios = <&tlmm 12 GPIO_ACTIVE_HIGH>;
->  		power-supply = <&ppvar_sys>;
-> -- 
-> 2.28.0
+diff --git a/drivers/pinctrl/qcom/pinctrl-sm8250.c b/drivers/pinctrl/qcom/pinctrl-sm8250.c
+index 826df0d637ea..af144e724bd9 100644
+--- a/drivers/pinctrl/qcom/pinctrl-sm8250.c
++++ b/drivers/pinctrl/qcom/pinctrl-sm8250.c
+@@ -1313,6 +1313,22 @@ static const struct msm_pingroup sm8250_groups[] = {
+ 	[183] = SDC_PINGROUP(sdc2_data, 0xb7000, 9, 0),
+ };
+ 
++static const struct msm_gpio_wakeirq_map sm8250_pdc_map[] = {
++	{ 0, 79 }, { 1, 84 }, { 2, 80 }, { 3, 82 }, { 4, 107 }, { 7, 43 },
++	{ 11, 42 }, { 14, 44 }, { 15, 52 }, { 19, 67 }, { 23, 68 }, { 24, 105 },
++	{ 27, 92 }, { 28, 106 }, { 31, 69 }, { 35, 70 }, { 39, 37 },
++	{ 40, 108 }, { 43, 71 }, { 45, 72 }, { 47, 83 }, { 51, 74 }, { 55, 77 },
++	{ 59, 78 }, { 63, 75 }, { 64, 81 }, { 65, 87 }, { 66, 88 }, { 67, 89 },
++	{ 68, 54 }, { 70, 85 }, { 77, 46 }, { 80, 90 }, { 81, 91 }, { 83, 97 },
++	{ 84, 98 }, { 86, 99 }, { 87, 100 }, { 88, 101 }, { 89, 102 },
++	{ 92, 103 }, { 93, 104 }, { 100, 53 }, { 103, 47 }, { 104, 48 },
++	{ 108, 49 }, { 109, 94 }, { 110, 95 }, { 111, 96 }, { 112, 55 },
++	{ 113, 56 }, { 118, 50 }, { 121, 51 }, { 122, 57 }, { 123, 58 },
++	{ 124, 45 }, { 126, 59 }, { 128, 76 }, { 129, 86 }, { 132, 93 },
++	{ 133, 65 }, { 134, 66 }, { 136, 62 }, { 137, 63 }, { 138, 64 },
++	{ 142, 60 }, { 143, 61 }
++};
++
+ static const struct msm_pinctrl_soc_data sm8250_pinctrl = {
+ 	.pins = sm8250_pins,
+ 	.npins = ARRAY_SIZE(sm8250_pins),
+@@ -1323,6 +1339,8 @@ static const struct msm_pinctrl_soc_data sm8250_pinctrl = {
+ 	.ngpios = 181,
+ 	.tiles = sm8250_tiles,
+ 	.ntiles = ARRAY_SIZE(sm8250_tiles),
++	.wakeirq_map = sm8250_pdc_map,
++	.nwakeirq_map = ARRAY_SIZE(sm8250_pdc_map),
+ };
+ 
+ static int sm8250_pinctrl_probe(struct platform_device *pdev)
+-- 
+2.28.0
+
