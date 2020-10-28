@@ -2,110 +2,92 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C76B229DAB8
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Oct 2020 00:29:17 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B9A3629DA6B
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Oct 2020 00:23:18 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2390459AbgJ1X26 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 28 Oct 2020 19:28:58 -0400
-Received: from alexa-out.qualcomm.com ([129.46.98.28]:4913 "EHLO
-        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2390331AbgJ1X1G (ORCPT
+        id S1732931AbgJ1XXM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 28 Oct 2020 19:23:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36302 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1732633AbgJ1XWy (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 28 Oct 2020 19:27:06 -0400
-Received: from ironmsg07-lv.qualcomm.com (HELO ironmsg07-lv.qulacomm.com) ([10.47.202.151])
-  by alexa-out.qualcomm.com with ESMTP; 28 Oct 2020 04:20:46 -0700
-X-QCInternal: smtphost
-Received: from ironmsg02-blr.qualcomm.com ([10.86.208.131])
-  by ironmsg07-lv.qulacomm.com with ESMTP/TLS/AES256-SHA; 28 Oct 2020 04:20:44 -0700
-X-QCInternal: smtphost
-Received: from vbadigan1-linux.qualcomm.com ([10.206.25.77])
-  by ironmsg02-blr.qualcomm.com with ESMTP; 28 Oct 2020 16:50:23 +0530
-Received: by vbadigan1-linux.qualcomm.com (Postfix, from userid 76677)
-        id 9FEE9213D0; Wed, 28 Oct 2020 16:50:22 +0530 (IST)
-From:   Veerabhadrarao Badiganti <vbadigan@codeaurora.org>
-To:     adrian.hunter@intel.com, ulf.hansson@linaro.org
-Cc:     linux-mmc@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org,
-        Veerabhadrarao Badiganti <vbadigan@codeaurora.org>,
-        Jens Axboe <axboe@kernel.dk>,
-        Baolin Wang <baolin.wang@linaro.org>,
-        Chaotian Jing <chaotian.jing@mediatek.com>,
-        Peng Hao <richard.peng@oppo.com>
-Subject: [PATCH] mmc: block: Prevent new req entering queue while freeing up the queue
-Date:   Wed, 28 Oct 2020 16:49:42 +0530
-Message-Id: <1603883984-24333-1-git-send-email-vbadigan@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
+        Wed, 28 Oct 2020 19:22:54 -0400
+Received: from mail-lf1-x143.google.com (mail-lf1-x143.google.com [IPv6:2a00:1450:4864:20::143])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0C6F5C0613CF
+        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Oct 2020 16:22:54 -0700 (PDT)
+Received: by mail-lf1-x143.google.com with SMTP id 184so957404lfd.6
+        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Oct 2020 16:22:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=xbOwsNa5EgRVEPC6RsF2q+pJppK0zBbrf2UvDq3Bu3k=;
+        b=NLLliVa2a6XNUl5f/NOZPSxQfz4jsOb4UqYugDxUyxw8R1ax20WqSDU5sJdq6tYAiW
+         ebPo22WdT1c6hhj5bYo7igBg+asiI3bZvt6DkbqfglijnChQ+J5Jkmz1xNUDG06HmJro
+         eGAV1qzNMe4ulbsqjSO4aAzKpyAp7noQg0gTXoITZq/uvf731kKlpnj8dTgjokZy3t5q
+         DFFR0ZsgBUG0UebBskwEWPr7K4cfUMU2I2UdHCx/5uGOstBWvQWHf4fH8wZ79dqqyZ1T
+         0P2DeUT8XlCtpm0F6Rry2RGVO64jfvRmCEyfhHsFoEZpRsqCehM/fwCbePiD5x6SmxVU
+         ix3g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=xbOwsNa5EgRVEPC6RsF2q+pJppK0zBbrf2UvDq3Bu3k=;
+        b=KDtYJ3zU4gZW2JacLt/6Dx5TtSww869ng6CXBcwdJceNT2d5z9UwnjojknjLZQjfko
+         VW//ikvi6Qa0rRLi2CmslYlO83VlcUQN14iFX6UPLgZuAubpskUMOnQth9imEk5S6XiK
+         W7+NGxgf26hA2k9Uy5Lnz5Al8i4+LUSBqowYjIuAzu3Li/F7d3d0arR4575BpbFFDKar
+         EzD+UieNTOnfd6Yz6tvz76TnaSdML5SBKOkJFBSFhuLvTa6lAOqtRwkGjo42ocZuXwWv
+         ctzlA/swPGWq2a8CUK/+G1BUDFfnkVuXMGBc40l3zYW7LtY53yWz4br5VuvAmLYOQh9C
+         Ed0w==
+X-Gm-Message-State: AOAM531dtzGhuTdL6ZFfRmtKSLFlvG6KB7GzjCv7S8b0si46pD2+jM6Q
+        NqY97ZGBIpWeJchg5E6rpWg9YZB/b0+9jpF1
+X-Google-Smtp-Source: ABdhPJwcy1/s5l+4NNPfPxPf/3fOq3OSdL83y3SCKNP9lqRadYetgpYN140fV8IH3Z65QGUNZkMcvA==
+X-Received: by 2002:ac2:5449:: with SMTP id d9mr2358527lfn.546.1603885955039;
+        Wed, 28 Oct 2020 04:52:35 -0700 (PDT)
+Received: from [192.168.1.211] ([188.162.64.219])
+        by smtp.gmail.com with ESMTPSA id s1sm507051lfs.66.2020.10.28.04.52.33
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 28 Oct 2020 04:52:34 -0700 (PDT)
+Subject: Re: [PATCH] arm64: dts: qcom: sm8250: remove wakeup-parent for TLMM
+ node
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>, linux-arm-msm@vger.kernel.org,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org
+References: <20201027015420.908945-1-dmitry.baryshkov@linaro.org>
+ <20201028044056.GA3151@builder.lan>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Message-ID: <947976df-05c5-bc6d-455f-e71aa061055f@linaro.org>
+Date:   Wed, 28 Oct 2020 14:52:32 +0300
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.2.2
+MIME-Version: 1.0
+In-Reply-To: <20201028044056.GA3151@builder.lan>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-GB
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The commit bbdc74dc19e0 ("mmc: block: Prevent new req entering queue
-after its cleanup") has introduced this change but it got moved after
-del_gendisk() with commit 57678e5a3d51 ("mmc: block: Delete gendisk
-before cleaning up the request queue").
+On 28/10/2020 07:40, Bjorn Andersson wrote:
+> On Mon 26 Oct 20:54 CDT 2020, Dmitry Baryshkov wrote:
+> 
+>> On SM8250 TLMM doesn't use PDC interrupt controller for wakeup events.
+>> Instead it handles them on their own (not implemented yet). In addition
+>> setting wakeup-parent property to &pdc will result in parent hwirq being
+>> set to ~0UL, which interact badly with the irqdomains trimming code. So
+>> remove the wakeup-parent property.
+>>
+> 
+> Would you accept this patch instead?
+> 
+> https://lore.kernel.org/r/20201028043642.1141723-1-bjorn.andersson@linaro.org
 
-It is blocking reboot with below Call stack().
+not found
 
-INFO: task reboot:3086 blocked for more than 122 seconds.
-     __schedule
-     schedule
-     schedule_timeout
-     io_schedule_timeout
-     do_wait_for_common
-     wait_for_completion_io
-     submit_bio_wait
-     blkdev_issue_flush
-     ext4_sync_fs
-     __sync_filesystem
-     sync_filesystem
-     fsync_bdev
-     invalidate_partition
-     del_gendisk
-     mmc_blk_remove_req
-     mmc_blk_remove
-     mmc_bus_remove
-     device_release_driver_internal
-     device_release_driver
-     bus_remove_device
-     device_del
-     mmc_remove_card
-     mmc_remove
-     mmc_stop_host
-     mmc_remove_host
-     sdhci_remove_host
-     sdhci_msm_remove
-     sdhci_msm_shutdown
-     platform_drv_shutdown
-     device_shutdown
-     kernel_restart_prepare
-     kernel_restart
 
-So bringing this change back.
-
-Signed-off-by: Veerabhadrarao Badiganti <vbadigan@codeaurora.org>
----
-
-I'm observing this issue 100% of the time with shutdown callback added to sdhci-msm driver.
-I'm trying on 5.4 kernel with ChromeOS.
-
-Please let me know if this can be fixed in a better way.
----
-
- drivers/mmc/core/block.c | 1 +
- 1 file changed, 1 insertion(+)
-
-diff --git a/drivers/mmc/core/block.c b/drivers/mmc/core/block.c
-index 8d3df0be0355..76dbb2b8a13b 100644
---- a/drivers/mmc/core/block.c
-+++ b/drivers/mmc/core/block.c
-@@ -2627,6 +2627,7 @@ static void mmc_blk_remove_req(struct mmc_blk_data *md)
- 		 * from being accepted.
- 		 */
- 		card = md->queue.card;
-+		blk_set_queue_dying(md->queue.queue);
- 		if (md->disk->flags & GENHD_FL_UP) {
- 			device_remove_file(disk_to_dev(md->disk), &md->force_ro);
- 			if ((md->area_type & MMC_BLK_DATA_AREA_BOOT) &&
 -- 
-Qualcomm India Private Limited, on behalf of Qualcomm Innovation Center, Inc., is a member of Code Aurora Forum, a Linux Foundation Collaborative Project
-
+With best wishes
+Dmitry
