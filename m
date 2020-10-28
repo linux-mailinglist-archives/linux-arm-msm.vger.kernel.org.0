@@ -2,102 +2,135 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id BBE7F29E200
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Oct 2020 03:05:31 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2BADB29E1D1
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Oct 2020 03:04:07 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727113AbgJ2CFN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 28 Oct 2020 22:05:13 -0400
-Received: from m42-4.mailgun.net ([69.72.42.4]:23201 "EHLO m42-4.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727106AbgJ1Vil (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 28 Oct 2020 17:38:41 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1603921121; h=References: In-Reply-To: Message-Id: Date:
- Subject: Cc: To: From: Sender;
- bh=H308bgHtNMckRynOpOEBssH/vo6aQHBFl+tdwdPWVmU=; b=TEgs4JZVu3d+5ntx+iYqvQb2dliNGZigC+gZYh2m9GuOgG3YZffBZq81WRzjKSrXifFBFrZ5
- 0ob/5TtyGkQBhvqchi602lUeKdLAuDJ/fwiTBJ4XN0Cek0U4y1ou6euiL2uz9PibdmNdXRKz
- HUMVo+4aZIuHDiEOlDmBMcoVqu4=
-X-Mailgun-Sending-Ip: 69.72.42.4
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n04.prod.us-east-1.postgun.com with SMTP id
- 5f9974bd38c6e4004525b9e9 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 28 Oct 2020 13:40:13
- GMT
-Sender: akhilpo=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 26736C43395; Wed, 28 Oct 2020 13:40:13 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
-        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
-Received: from akhilpo-linux.qualcomm.com (unknown [202.46.22.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: akhilpo)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 6BECEC433A0;
-        Wed, 28 Oct 2020 13:40:09 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 6BECEC433A0
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=akhilpo@codeaurora.org
-From:   Akhil P Oommen <akhilpo@codeaurora.org>
-To:     freedreno@lists.freedesktop.org, devicetree@vger.kernel.org
-Cc:     robh@kernel.org, dri-devel@freedesktop.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        jcrouse@codeaurora.org, mka@chromium.org, robdclark@gmail.com,
-        dianders@chromium.org
-Subject: [PATCH v3 3/3] dt-bindings: drm/msm/gpu: Add cooling device support
-Date:   Wed, 28 Oct 2020 19:09:54 +0530
-Message-Id: <1603892395-3570-3-git-send-email-akhilpo@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1603892395-3570-1-git-send-email-akhilpo@codeaurora.org>
-References: <1603892395-3570-1-git-send-email-akhilpo@codeaurora.org>
+        id S1725843AbgJ1VnA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 28 Oct 2020 17:43:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47420 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726328AbgJ1Vm4 (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 28 Oct 2020 17:42:56 -0400
+Received: from mail-wr1-x442.google.com (mail-wr1-x442.google.com [IPv6:2a00:1450:4864:20::442])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 76579C0613CF
+        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Oct 2020 14:42:56 -0700 (PDT)
+Received: by mail-wr1-x442.google.com with SMTP id g12so607083wrp.10
+        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Oct 2020 14:42:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=pO6LThXOtBiDEi5s3AU4bK7ClmEzefDtSdQh29OfxfE=;
+        b=woeDlqOxzaMhYO/W3xE4Xt/FTXjXZS9IYCVk3C7SKpiAoiMc9+QCYQ+gFLGeJ+eNRK
+         PNuHm0SaaqEjnGSJxhk/8T47O9l3FZ7YQHqAXVZTkTkjyXxD2oLbNLBLn6w/MSpYO1Wd
+         DT0w6zHurgmWD/izmWmZoVnG3+tZhS8W6fx77YFpOKH7vZ9mgo+3wJM1x9MDKSqd77xj
+         dJmmAe2mDKXQ3FURd/WCfAAgUbomckzaLd6uKMsmQlLwDPlui065sY4sexKCAtPrB0tI
+         zeHC24jIB1Q1AVR1+D5WF4E7KClct/2717U+jut0ytiCntB+tWs6Z61RrMfq1r5dXYfC
+         dFyA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=pO6LThXOtBiDEi5s3AU4bK7ClmEzefDtSdQh29OfxfE=;
+        b=XPN1R0oGC307BSAL8/wZ20tugN6p69Hy7HzicV+rdBPOPz0oIOdlD+8PyQCaJoKtGa
+         uJUA10cGQiAIZq4yCSQxs8oNLyZX6KVEnns2hfjFlQ7XUopZKRtshUehXDKXoqpODly3
+         MOcEnLuBxxv6CbAIKbEGjG+5slZ6MIRyZ431w+XJrEZ3q+rOXgMjxAnbcLoGAL4LZmZi
+         JbnlcASQc8Is4br8afildihMPX3EilXdVDPnMwM0lDgaeMAydy65k6/M72NqutRqsfXG
+         IFblIdq42ktgGJvReCPti52uTMKWLFwTZSNfjCSLLDy2d6L3VFpU1dU3LdNHmjI8h1mM
+         /kPg==
+X-Gm-Message-State: AOAM531N9Bp5HBMX2sgRIHYy0SjOeUrvJ7t1cnYRQU41ZTTpBUDGBmLk
+        9gSKcKWcjy1GMUQUjbpaOa1E/TSrGNhmhtpH
+X-Google-Smtp-Source: ABdhPJwjC6oLcIeuFDqOhbI7uZMtQ7+6D0eUG7rTCO3UhVflfNApwtNhr9R9z6GC6kYAwnSTX31/rg==
+X-Received: by 2002:a05:6512:3102:: with SMTP id n2mr199836lfb.153.1603912198219;
+        Wed, 28 Oct 2020 12:09:58 -0700 (PDT)
+Received: from eriador.lan ([188.162.64.219])
+        by smtp.gmail.com with ESMTPSA id c7sm52595ljk.59.2020.10.28.12.09.56
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 28 Oct 2020 12:09:57 -0700 (PDT)
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Rob Herring <robh+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Subject: [PATCH 1/2] arm64: dts: qcom: sm8250: Add support for SDC2
+Date:   Wed, 28 Oct 2020 22:09:54 +0300
+Message-Id: <20201028190955.1264526-1-dmitry.baryshkov@linaro.org>
+X-Mailer: git-send-email 2.28.0
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add cooling device support to gpu. A cooling device is bound to a
-thermal zone to allow thermal mitigation.
+From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 
-Signed-off-by: Akhil P Oommen <akhilpo@codeaurora.org>
+Add support for SDC2 which can be used to interface uSD card.
+
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+[DB: minor fixes: clocks, iommus, opps]
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
- Documentation/devicetree/bindings/display/msm/gpu.txt | 7 +++++++
- 1 file changed, 7 insertions(+)
+ arch/arm64/boot/dts/qcom/sm8250.dtsi | 45 ++++++++++++++++++++++++++++
+ 1 file changed, 45 insertions(+)
 
-diff --git a/Documentation/devicetree/bindings/display/msm/gpu.txt b/Documentation/devicetree/bindings/display/msm/gpu.txt
-index 1af0ff1..090dcb3 100644
---- a/Documentation/devicetree/bindings/display/msm/gpu.txt
-+++ b/Documentation/devicetree/bindings/display/msm/gpu.txt
-@@ -39,6 +39,10 @@ Required properties:
-         a4xx Snapdragon SoCs. See
-         Documentation/devicetree/bindings/sram/qcom,ocmem.yaml.
+diff --git a/arch/arm64/boot/dts/qcom/sm8250.dtsi b/arch/arm64/boot/dts/qcom/sm8250.dtsi
+index 457c3e65c0b6..2de4a9f808d5 100644
+--- a/arch/arm64/boot/dts/qcom/sm8250.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm8250.dtsi
+@@ -1462,6 +1462,51 @@ IPCC_MPROC_SIGNAL_GLINK_QMP
+ 			};
+ 		};
  
-+Optional properties:
-+- #cooling-cells: The value must be 2. For details, please refer
-+	Documentation/devicetree/bindings/thermal/thermal-cooling-devices.yaml.
++		sdhc_2: sdhci@8804000 {
++			compatible = "qcom,sm8250-sdhci", "qcom,sdhci-msm-v5";
++			reg = <0 0x08804000 0 0x1000>;
 +
- Example 3xx/4xx:
- 
- / {
-@@ -61,6 +65,7 @@ Example 3xx/4xx:
- 		power-domains = <&mmcc OXILICX_GDSC>;
- 		operating-points-v2 = <&gpu_opp_table>;
- 		iommus = <&gpu_iommu 0>;
-+		#cooling-cells = <2>;
- 	};
- 
- 	gpu_sram: ocmem@fdd00000 {
-@@ -98,6 +103,8 @@ Example a6xx (with GMU):
- 		reg = <0x5000000 0x40000>, <0x509e000 0x10>;
- 		reg-names = "kgsl_3d0_reg_memory", "cx_mem";
- 
-+		#cooling-cells = <2>;
++			interrupts = <GIC_SPI 204 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 222 IRQ_TYPE_LEVEL_HIGH>;
++			interrupt-names = "hc_irq", "pwr_irq";
 +
- 		/*
- 		 * Look ma, no clocks! The GPU clocks and power are
- 		 * controlled entirely by the GMU
++			clocks = <&gcc GCC_SDCC2_AHB_CLK>,
++				 <&gcc GCC_SDCC2_APPS_CLK>,
++				 <&xo_board>;
++			clock-names = "iface", "core", "xo";
++			iommus = <&apps_smmu 0x4a0 0x0>;
++			qcom,dll-config = <0x0007642c>;
++			qcom,ddr-config = <0x80040868>;
++			power-domains = <&rpmhpd SM8250_CX>;
++			operating-points-v2 = <&sdhc2_opp_table>;
++
++			status = "disabled";
++
++			sdhc2_opp_table: sdhc2-opp-table {
++				compatible = "operating-points-v2";
++
++				opp-19200000 {
++					opp-hz = /bits/ 64 <19200000>;
++					required-opps = <&rpmhpd_opp_min_svs>;
++				};
++
++				opp-50000000 {
++					opp-hz = /bits/ 64 <50000000>;
++					required-opps = <&rpmhpd_opp_low_svs>;
++				};
++
++				opp-100000000 {
++					opp-hz = /bits/ 64 <100000000>;
++					required-opps = <&rpmhpd_opp_svs>;
++				};
++
++				opp-202000000 {
++					opp-hz = /bits/ 64 <202000000>;
++					required-opps = <&rpmhpd_opp_svs_l1>;
++				};
++			};
++		};
++
+ 		dc_noc: interconnect@90c0000 {
+ 			compatible = "qcom,sm8250-dc-noc";
+ 			reg = <0 0x090c0000 0 0x4200>;
 -- 
-2.7.4
+2.28.0
 
