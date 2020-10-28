@@ -2,230 +2,91 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 5DFB529DA97
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Oct 2020 00:26:14 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 9EA8229D9FC
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Oct 2020 00:08:46 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2387487AbgJ1XZ5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 28 Oct 2020 19:25:57 -0400
-Received: from alexa-out-sd-02.qualcomm.com ([199.106.114.39]:53231 "EHLO
-        alexa-out-sd-02.qualcomm.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S2390353AbgJ1XZQ (ORCPT
+        id S1732751AbgJ1XIq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 28 Oct 2020 19:08:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33944 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1732861AbgJ1XIp (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 28 Oct 2020 19:25:16 -0400
-Received: from unknown (HELO ironmsg02-sd.qualcomm.com) ([10.53.140.142])
-  by alexa-out-sd-02.qualcomm.com with ESMTP; 28 Oct 2020 00:18:56 -0700
-X-QCInternal: smtphost
-Received: from gurus-linux.qualcomm.com ([10.46.162.81])
-  by ironmsg02-sd.qualcomm.com with ESMTP; 28 Oct 2020 00:18:56 -0700
-Received: by gurus-linux.qualcomm.com (Postfix, from userid 383780)
-        id 549D01B21; Wed, 28 Oct 2020 00:18:56 -0700 (PDT)
-From:   Guru Das Srinagesh <gurus@codeaurora.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        linux-arm-msm@vger.kernel.org, Rob Herring <robh+dt@kernel.org>
-Cc:     Subbaraman Narayanamurthy <subbaram@codeaurora.org>,
-        David Collins <collinsd@codeaurora.org>,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Stephen Boyd <sboyd@kernel.org>,
-        Anirudh Ghayal <aghayal@codeaurora.org>,
-        Kavya Nunna <knunna@codeaurora.org>,
-        Guru Das Srinagesh <gurus@codeaurora.org>
-Subject: [PATCH v4 3/3] extcon: qcom-spmi: Add support for VBUS detection
-Date:   Wed, 28 Oct 2020 00:18:54 -0700
-Message-Id: <9068e6be0da4ea051e6c072f78a37d6f27fd9fc2.1603869292.git.gurus@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <cover.1603869292.git.gurus@codeaurora.org>
-References: <cover.1603869292.git.gurus@codeaurora.org>
-In-Reply-To: <cover.1603869292.git.gurus@codeaurora.org>
-References: <cover.1603869292.git.gurus@codeaurora.org>
+        Wed, 28 Oct 2020 19:08:45 -0400
+Received: from mail-pl1-x643.google.com (mail-pl1-x643.google.com [IPv6:2607:f8b0:4864:20::643])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 67CC2C0613CF
+        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Oct 2020 16:08:45 -0700 (PDT)
+Received: by mail-pl1-x643.google.com with SMTP id f21so378832plr.5
+        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Oct 2020 16:08:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=1pIhF3Lx72mYJfiMtwf9QoYKy68h8haDkbJMtDNYKEw=;
+        b=A5zt5zl/3a+3Lf6ycRXqaL23CVTsmGCVta8hYuuRyWm85jhP7yy4UtsmSZy7osgGO8
+         0Htg7p+tSzx943zm1oqpQtVMxsYpCQLWsZR+s3FSJhV1niNcbt8n/UlIJzuYS9jEwutH
+         4HJR14Hc9K5YbNBcIm9/PEMAdrMM5Jbw2mq6S0/rIQRPDGoZ//V8RgwDNTuPMxhc7haO
+         bfd92SIOiVSQ1+uNr+jLeTMg8hkUo3f36tTcyiGag/PIA1uoT0CXOZcUHjy4HSuRZhEG
+         gpNL89nH/JtWad1FLF6I17dXaAvqYJfXtIU22lU5Rld5yfJri5H0Xe134gj9JwAzpov2
+         PZAw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=1pIhF3Lx72mYJfiMtwf9QoYKy68h8haDkbJMtDNYKEw=;
+        b=pHGh0oi2kDbSbeLbx7qPYC8c2cpNgwhW9uDVcEsMavWbu2NS1/oK1DlXWz4V5mwKwI
+         XePlAGtYHz4hQGdSbRgIU3RWA7dwM7AljsJXk5PvEAYjasisv+0OXbh9RxixJtFgUGIR
+         JN99aQe5s4FWVT7xEtGo2v0gTHz+2hw/1L6JaX9y6nSaN7TPbobx/F4AUKIhW9+gaTMC
+         ZA4a6Bw0E6V41icCJdl6xgqGLRV5PbTqlxzIix9GYpDXQVy57Pz8lTjqB+QttpnydUOc
+         7dQegCezMyboBrRGKat6Ru0qR0k3pvdmVj6sn1E/2vJdcHc1S5BTrXCpAYtrEQVKS3Uf
+         1n7w==
+X-Gm-Message-State: AOAM530OikvGGkTw8hcmy41ebFjaU2A9sMuZ1fF5u/SscTz7Z2tYL1mX
+        EWmb118fu5OLd7YM82gwFhRzvi4++tE6RQ==
+X-Google-Smtp-Source: ABdhPJw/lN1Rdn4IAlyuzBmnXHAuWRhy9Jalsrt5qmfXLWggNb6REZMG2RfZFvV2Oa+QU+95iAenSQ==
+X-Received: by 2002:a17:902:8a8b:b029:d5:f871:92bd with SMTP id p11-20020a1709028a8bb02900d5f87192bdmr6827921plo.10.1603880985833;
+        Wed, 28 Oct 2020 03:29:45 -0700 (PDT)
+Received: from localhost ([122.181.54.133])
+        by smtp.gmail.com with ESMTPSA id p5sm4520672pjz.47.2020.10.28.03.29.44
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 28 Oct 2020 03:29:44 -0700 (PDT)
+Date:   Wed, 28 Oct 2020 15:59:42 +0530
+From:   Viresh Kumar <viresh.kumar@linaro.org>
+To:     Frank Lee <frank@allwinnertech.com>
+Cc:     robdclark@gmail.com, sean@poorly.run, airlied@linux.ie,
+        daniel@ffwll.ch, vireshk@kernel.org, nm@ti.com, sboyd@kernel.org,
+        rjw@rjwysocki.net, jcrouse@codeaurora.org, eric@anholt.net,
+        tiny.windzz@gmail.com, kholk11@gmail.com,
+        emil.velikov@collabora.com, gustavoars@kernel.org,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+        linux-pm@vger.kernel.org
+Subject: Re: [PATCH 2/3] opp: Add devres wrapper for dev_pm_opp_set_prop_name
+Message-ID: <20201028102942.zc5hgqpo2bfrn6in@vireshk-i7>
+References: <20201012135517.19468-1-frank@allwinnertech.com>
+ <20201012135517.19468-3-frank@allwinnertech.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20201012135517.19468-3-frank@allwinnertech.com>
+User-Agent: NeoMutt/20180716-391-311a52
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Anirudh Ghayal <aghayal@codeaurora.org>
+On 12-10-20, 21:55, Frank Lee wrote:
+> From: Yangtao Li <tiny.windzz@gmail.com>
+> 
+> Add devres wrapper for dev_pm_opp_set_prop_name() to simplify driver
+> code.
+> 
+> Signed-off-by: Yangtao Li <tiny.windzz@gmail.com>
+> Signed-off-by: Yangtao Li <frank@allwinnertech.com>
+> ---
+>  drivers/opp/core.c     | 39 +++++++++++++++++++++++++++++++++++++++
+>  include/linux/pm_opp.h |  6 ++++++
+>  2 files changed, 45 insertions(+)
 
-VBUS can be detected via a dedicated PMIC pin. Add support
-for reporting the VBUS status.
+On a second thought I am looking at dropping this one as you haven't
+added any users yet and I am afraid it will stay unused.
 
-Signed-off-by: Anirudh Ghayal <aghayal@codeaurora.org>
-Signed-off-by: Kavya Nunna <knunna@codeaurora.org>
-Signed-off-by: Guru Das Srinagesh <gurus@codeaurora.org>
----
- drivers/extcon/extcon-qcom-spmi-misc.c | 100 ++++++++++++++++++++++++++-------
- 1 file changed, 81 insertions(+), 19 deletions(-)
-
-diff --git a/drivers/extcon/extcon-qcom-spmi-misc.c b/drivers/extcon/extcon-qcom-spmi-misc.c
-index 6b836ae..6bd6746 100644
---- a/drivers/extcon/extcon-qcom-spmi-misc.c
-+++ b/drivers/extcon/extcon-qcom-spmi-misc.c
-@@ -1,7 +1,7 @@
- // SPDX-License-Identifier: GPL-2.0-only
- /**
-  * extcon-qcom-spmi-misc.c - Qualcomm USB extcon driver to support USB ID
-- *				detection based on extcon-usb-gpio.c.
-+ *			and VBUS detection based on extcon-usb-gpio.c.
-  *
-  * Copyright (C) 2016 Linaro, Ltd.
-  * Stephen Boyd <stephen.boyd@linaro.org>
-@@ -21,30 +21,56 @@
- 
- struct qcom_usb_extcon_info {
- 	struct extcon_dev *edev;
--	int irq;
-+	int id_irq;
-+	int vbus_irq;
- 	struct delayed_work wq_detcable;
- 	unsigned long debounce_jiffies;
- };
- 
- static const unsigned int qcom_usb_extcon_cable[] = {
-+	EXTCON_USB,
- 	EXTCON_USB_HOST,
- 	EXTCON_NONE,
- };
- 
- static void qcom_usb_extcon_detect_cable(struct work_struct *work)
- {
--	bool id;
-+	bool state = false;
- 	int ret;
-+	union extcon_property_value val;
- 	struct qcom_usb_extcon_info *info = container_of(to_delayed_work(work),
- 						    struct qcom_usb_extcon_info,
- 						    wq_detcable);
- 
--	/* check ID and update cable state */
--	ret = irq_get_irqchip_state(info->irq, IRQCHIP_STATE_LINE_LEVEL, &id);
--	if (ret)
--		return;
-+	if (info->id_irq > 0) {
-+		/* check ID and update cable state */
-+		ret = irq_get_irqchip_state(info->id_irq,
-+				IRQCHIP_STATE_LINE_LEVEL, &state);
-+		if (ret)
-+			return;
-+
-+		if (!state) {
-+			val.intval = true;
-+			extcon_set_property(info->edev, EXTCON_USB_HOST,
-+						EXTCON_PROP_USB_SS, val);
-+		}
-+		extcon_set_state_sync(info->edev, EXTCON_USB_HOST, !state);
-+	}
- 
--	extcon_set_state_sync(info->edev, EXTCON_USB_HOST, !id);
-+	if (info->vbus_irq > 0) {
-+		/* check VBUS and update cable state */
-+		ret = irq_get_irqchip_state(info->vbus_irq,
-+				IRQCHIP_STATE_LINE_LEVEL, &state);
-+		if (ret)
-+			return;
-+
-+		if (state) {
-+			val.intval = true;
-+			extcon_set_property(info->edev, EXTCON_USB,
-+						EXTCON_PROP_USB_SS, val);
-+		}
-+		extcon_set_state_sync(info->edev, EXTCON_USB, state);
-+	}
- }
- 
- static irqreturn_t qcom_usb_irq_handler(int irq, void *dev_id)
-@@ -79,21 +105,48 @@ static int qcom_usb_extcon_probe(struct platform_device *pdev)
- 		return ret;
- 	}
- 
-+	ret = extcon_set_property_capability(info->edev,
-+			EXTCON_USB, EXTCON_PROP_USB_SS);
-+	ret |= extcon_set_property_capability(info->edev,
-+			EXTCON_USB_HOST, EXTCON_PROP_USB_SS);
-+	if (ret) {
-+		dev_err(dev, "failed to register extcon props rc=%d\n",
-+						ret);
-+		return ret;
-+	}
-+
- 	info->debounce_jiffies = msecs_to_jiffies(USB_ID_DEBOUNCE_MS);
- 	INIT_DELAYED_WORK(&info->wq_detcable, qcom_usb_extcon_detect_cable);
- 
--	info->irq = platform_get_irq_byname(pdev, "usb_id");
--	if (info->irq < 0)
--		return info->irq;
-+	info->id_irq = platform_get_irq_byname(pdev, "usb_id");
-+	if (info->id_irq > 0) {
-+		ret = devm_request_threaded_irq(dev, info->id_irq, NULL,
-+					qcom_usb_irq_handler,
-+					IRQF_TRIGGER_RISING |
-+					IRQF_TRIGGER_FALLING | IRQF_ONESHOT,
-+					pdev->name, info);
-+		if (ret < 0) {
-+			dev_err(dev, "failed to request handler for ID IRQ\n");
-+			return ret;
-+		}
-+	}
- 
--	ret = devm_request_threaded_irq(dev, info->irq, NULL,
-+	info->vbus_irq = platform_get_irq_byname(pdev, "usb_vbus");
-+	if (info->vbus_irq > 0) {
-+		ret = devm_request_threaded_irq(dev, info->vbus_irq, NULL,
- 					qcom_usb_irq_handler,
- 					IRQF_TRIGGER_RISING |
- 					IRQF_TRIGGER_FALLING | IRQF_ONESHOT,
- 					pdev->name, info);
--	if (ret < 0) {
--		dev_err(dev, "failed to request handler for ID IRQ\n");
--		return ret;
-+		if (ret < 0) {
-+			dev_err(dev, "failed to request handler for VBUS IRQ\n");
-+			return ret;
-+		}
-+	}
-+
-+	if (info->id_irq < 0 && info->vbus_irq < 0) {
-+		dev_err(dev, "ID and VBUS IRQ not found\n");
-+		return -EINVAL;
- 	}
- 
- 	platform_set_drvdata(pdev, info);
-@@ -120,8 +173,12 @@ static int qcom_usb_extcon_suspend(struct device *dev)
- 	struct qcom_usb_extcon_info *info = dev_get_drvdata(dev);
- 	int ret = 0;
- 
--	if (device_may_wakeup(dev))
--		ret = enable_irq_wake(info->irq);
-+	if (device_may_wakeup(dev)) {
-+		if (info->id_irq > 0)
-+			ret = enable_irq_wake(info->id_irq);
-+		if (info->vbus_irq > 0)
-+			ret = enable_irq_wake(info->vbus_irq);
-+	}
- 
- 	return ret;
- }
-@@ -131,8 +188,12 @@ static int qcom_usb_extcon_resume(struct device *dev)
- 	struct qcom_usb_extcon_info *info = dev_get_drvdata(dev);
- 	int ret = 0;
- 
--	if (device_may_wakeup(dev))
--		ret = disable_irq_wake(info->irq);
-+	if (device_may_wakeup(dev)) {
-+		if (info->id_irq > 0)
-+			ret = disable_irq_wake(info->id_irq);
-+		if (info->vbus_irq > 0)
-+			ret = disable_irq_wake(info->vbus_irq);
-+	}
- 
- 	return ret;
- }
-@@ -143,6 +204,7 @@ static SIMPLE_DEV_PM_OPS(qcom_usb_extcon_pm_ops,
- 
- static const struct of_device_id qcom_usb_extcon_dt_match[] = {
- 	{ .compatible = "qcom,pm8941-misc", },
-+	{ .compatible = "qcom,pmd-vbus-det", },
- 	{ }
- };
- MODULE_DEVICE_TABLE(of, qcom_usb_extcon_dt_match);
 -- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project
-
+viresh
