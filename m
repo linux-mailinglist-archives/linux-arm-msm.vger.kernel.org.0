@@ -2,158 +2,138 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 87DCD29D521
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Oct 2020 22:58:56 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1DB7B29D4DF
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Oct 2020 22:55:41 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729208AbgJ1V6t (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 28 Oct 2020 17:58:49 -0400
-Received: from m42-4.mailgun.net ([69.72.42.4]:35975 "EHLO m42-4.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1729225AbgJ1V6s (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 28 Oct 2020 17:58:48 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1603922328; h=Message-ID: References: In-Reply-To: Reply-To:
- Subject: Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=B38mMIzITGT8PJaao7b5c6lhDRqKzAlKVY/jp8d0p1M=;
- b=Uai2ApgWl0/ByHplN9fcFI/nkxEKIhguOLTsALV7U1hdHQosMtJFrCsbls96SXegw0OWO+f6
- I/gly7nKvzbo7Xm8GvtfL8Js14KmMtKUwR7zpbccxxMYDaN6lLQxeaw01ZBYU3QtNdYx1/SJ
- egWdkA1C+iGVz8BeBv+RPTh7xvs=
-X-Mailgun-Sending-Ip: 69.72.42.4
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n07.prod.us-east-1.postgun.com with SMTP id
- 5f99cdeb99d22f6577a0e17d (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 28 Oct 2020 20:00:43
- GMT
-Sender: bbhatt=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 20F4EC433FE; Wed, 28 Oct 2020 20:00:43 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: bbhatt)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 4F36EC433CB;
-        Wed, 28 Oct 2020 20:00:42 +0000 (UTC)
+        id S1728810AbgJ1Vys (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 28 Oct 2020 17:54:48 -0400
+Received: from mail-ua1-f68.google.com ([209.85.222.68]:42979 "EHLO
+        mail-ua1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728500AbgJ1Vwt (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 28 Oct 2020 17:52:49 -0400
+Received: by mail-ua1-f68.google.com with SMTP id f15so140852uaq.9;
+        Wed, 28 Oct 2020 14:52:48 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=fkYpsqioT7Tb7YApRr6kOuIOqhvTBzDRVXioLFVYRRs=;
+        b=k2jYjlcMKpMD2XLjyWigYvkY87yVovtG4wl8FuzmK1dE1jE5i1BrpDypzG1v6Q0mst
+         cQbM+EW8kQbhvEfDQXqd7hc4PiVZJdoSWqHGyS9Fkgk0tfocLRRBgEcjXpUIwXRmpY0S
+         zy0ePDgsJyJL34Zz0JP4BBcX9LbXdkOIas1QciWmqnMqA4NcO+3Z2ybeUsU1FPCSCfwm
+         KZLJmmA+ZPu3+wRvWhJxy4eh6mBDEeK/dtcI2SFRoVoAkQ+odXzcuv2jf7OrMUjbBzOU
+         4KuxNmskXgIPYIN/hh/0Rin/wzGry06MM2MQKtUVtR7wSBVeh9qS80WMtf4LwJIb+w0D
+         ap2w==
+X-Gm-Message-State: AOAM533tu8csPmSwVwbN6+ajQuF8Fb7ZkuCUfnQipkHLzaoRNi//d9yy
+        igsRWRqrNaPLufw3srQNLLmbcQ/2Pw==
+X-Google-Smtp-Source: ABdhPJzUHZm4YYIM4XMiwc5sacukMJ5Sdrdk/i+veAcVoB9ovA+Vih+j4WmB8WVNzg3/epAFFNC3mg==
+X-Received: by 2002:a05:6830:1694:: with SMTP id k20mr912314otr.100.1603918009773;
+        Wed, 28 Oct 2020 13:46:49 -0700 (PDT)
+Received: from xps15.herring.priv (24-155-109-49.dyn.grandenetworks.net. [24.155.109.49])
+        by smtp.googlemail.com with ESMTPSA id t17sm116123oor.3.2020.10.28.13.46.47
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 28 Oct 2020 13:46:49 -0700 (PDT)
+From:   Rob Herring <robh@kernel.org>
+To:     Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>
+Cc:     linux-pci@vger.kernel.org, Andy Gross <agross@kernel.org>,
+        Binghui Wang <wangbinghui@hisilicon.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        Fabio Estevam <festevam@gmail.com>,
+        Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
+        Jerome Brunet <jbrunet@baylibre.com>,
+        Jesper Nilsson <jesper.nilsson@axis.com>,
+        Jingoo Han <jingoohan1@gmail.com>,
+        Jonathan Chocron <jonnyc@amazon.com>,
+        Jonathan Hunter <jonathanh@nvidia.com>,
+        Kevin Hilman <khilman@baylibre.com>,
+        Kishon Vijay Abraham I <kishon@ti.com>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        Kukjin Kim <kgene@kernel.org>,
+        Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
+        linux-amlogic@lists.infradead.org, linux-arm-kernel@axis.com,
+        linux-arm-msm@vger.kernel.org, linux-omap@vger.kernel.org,
+        linuxppc-dev@lists.ozlabs.org, linux-samsung-soc@vger.kernel.org,
+        linux-tegra@vger.kernel.org, Lucas Stach <l.stach@pengutronix.de>,
+        Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
+        Masahiro Yamada <yamada.masahiro@socionext.com>,
+        Minghuan Lian <minghuan.Lian@nxp.com>,
+        Mingkai Hu <mingkai.hu@nxp.com>,
+        Murali Karicheri <m-karicheri2@ti.com>,
+        Neil Armstrong <narmstrong@baylibre.com>,
+        NXP Linux Team <linux-imx@nxp.com>,
+        Pengutronix Kernel Team <kernel@pengutronix.de>,
+        Pratyush Anand <pratyush.anand@gmail.com>,
+        Richard Zhu <hongxing.zhu@nxp.com>,
+        Roy Zang <roy.zang@nxp.com>,
+        Sascha Hauer <s.hauer@pengutronix.de>,
+        Shawn Guo <shawnguo@kernel.org>,
+        Stanimir Varbanov <svarbanov@mm-sol.com>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Thomas Petazzoni <thomas.petazzoni@bootlin.com>,
+        Xiaowei Song <songxiaowei@hisilicon.com>,
+        Yue Wang <yue.wang@Amlogic.com>
+Subject: [PATCH 00/13] PCI: dwc: Another round of clean-ups
+Date:   Wed, 28 Oct 2020 15:46:33 -0500
+Message-Id: <20201028204646.356535-1-robh@kernel.org>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Wed, 28 Oct 2020 13:00:42 -0700
-From:   Bhaumik Bhatt <bbhatt@codeaurora.org>
-To:     =?UTF-8?Q?Carl_Yin=28=E6=AE=B7=E5=BC=A0=E6=88=90=29?= 
-        <carl.yin@quectel.com>
-Cc:     manivannan.sadhasivam@linaro.org, hemantk@codeaurora.org,
-        sfr@canb.auug.org.au, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Naveen Kumar <naveen.kumar@quectel.com>
-Subject: =?UTF-8?Q?Re=3A_=E7=AD=94=E5=A4=8D=3A_=5BPATCH=5D_bus=3A_mhi=3A_?=
- =?UTF-8?Q?core=3A_Fix_null_pointer_access?=
-Organization: Qualcomm Innovation Center, Inc.
-Reply-To: bbhatt@codeaurora.org
-Mail-Reply-To: bbhatt@codeaurora.org
-In-Reply-To: <HK2PR06MB3507360AE3E2D14FA9DE90C286170@HK2PR06MB3507.apcprd06.prod.outlook.com>
-References: <41058752035efde392e1c55d0fd5b58c@sslemail.net>
- <b3bf32de1f3580210ebad6c4b2c7a802@codeaurora.org>
- <HK2PR06MB3507360AE3E2D14FA9DE90C286170@HK2PR06MB3507.apcprd06.prod.outlook.com>
-Message-ID: <4a02c189fab49b75dc827fa54fe69663@codeaurora.org>
-X-Sender: bbhatt@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2020-10-27 19:03, Carl Yin wrote:
-> Hi bbhatt:
-> 
-> On Wednesday, October 28, 2020 9:02 AM, bbhatt wrote:
-> 
->> Hi Carl,
->> 
->> Yes this change is needed. Good catch. I ran in to this issue as well 
->> when a
->> dev_err() call was made with a bad MHI configuration.
-> [carl.yin] yes, I also meet this error with a bad MHI configuration.
->> 
->> Maybe you can explain a little more in the commit text subject?
->> 
->> You could say, "Fix null pointer access when parsing MHI 
->> configuration"?
->> 
->> On 2020-10-26 22:33, carl.yin@quectel.com wrote:
->> > From: carl <carl.yin@quectel.com>
->> >
->> > function parse_ev_cfg and parse_ch_cfg access mhi_cntrl->mhi_dev
->> Functions parse_ev_cfg() and parse_ch_cfg()
->> > before it is set in function mhi_register_controller,
->> mhi_register_controller()
->> > use cntrl_dev to instead mhi_dev.
->> use cntrl_dev instead of mhi_dev.
->> >
->> > Signed-off-by: carl <carl.yin@quectel.com>
->> With these commit text updates,
-> [carl.yin] thank for words correction, for my mother language is not 
-> English,
-> there are lots of words wrong in the commit.
->> 
-No problem.
->> Reviewed-by: Bhaumik Bhatt <bbhatt@codeaurora.org>
->> > ---
->> >  drivers/bus/mhi/core/init.c | 4 ++--
->> >  1 file changed, 2 insertions(+), 2 deletions(-)
->> >
->> > diff --git a/drivers/bus/mhi/core/init.c b/drivers/bus/mhi/core/init.c
->> > index 0ffdebde8..c6b43e90b 100644
->> > --- a/drivers/bus/mhi/core/init.c
->> > +++ b/drivers/bus/mhi/core/init.c
->> > @@ -610,7 +610,7 @@ static int parse_ev_cfg(struct mhi_controller
->> > *mhi_cntrl,  {
->> >  	struct mhi_event *mhi_event;
->> >  	const struct mhi_event_config *event_cfg;
->> > -	struct device *dev = &mhi_cntrl->mhi_dev->dev;
->> > +	struct device *dev = mhi_cntrl->cntrl_dev;
->> >  	int i, num;
->> >
->> >  	num = config->num_events;
->> > @@ -692,7 +692,7 @@ static int parse_ch_cfg(struct mhi_controller
->> > *mhi_cntrl,
->> >  			const struct mhi_controller_config *config)  {
->> >  	const struct mhi_channel_config *ch_cfg;
->> > -	struct device *dev = &mhi_cntrl->mhi_dev->dev;
->> > +	struct device *dev = mhi_cntrl->cntrl_dev;
->> >  	int i;
->> >  	u32 chan;
->> 
->> --
->> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora 
->> Forum, a
->> Linux Foundation Collaborative Project
+Here's another batch of DWC PCI host refactoring. This series primarily
+moves more of the MSI, link up, and resource handling to the core
+code.
 
-Can you also add a "Fixes:" tag to the patch?
+No doubt I've probably broken something. Please test. A git branch is
+here[1].
 
-Refer Documentation/process/submitting-patches.rst:
+Rob
 
-If your patch fixes a bug in a specific commit, e.g. you found an issue 
-using
-``git bisect``, please use the 'Fixes:' tag with the first 12 characters 
-of
-the SHA-1 ID, and the one line summary.  Do not split the tag across 
-multiple
-lines, tags are exempt from the "wrap at 75 columns" rule in order to 
-simplify
-parsing scripts.  For example::
+[1] git://git.kernel.org/pub/scm/linux/kernel/git/robh/linux.git pci-more-dwc-cleanup
 
-	Fixes: 54a4f0239f2e ("KVM: MMU: make kvm_mmu_zap_page() return the 
-number of pages it actually freed")
+Rob Herring (13):
+  PCI: dwc/imx6: Drop setting PCI_MSI_FLAGS_ENABLE
+  PCI: dwc/intel-gw: Move ATU offset out of driver match data
+  PCI: dwc: Move "dbi", "dbi2", and "addr_space" resource setup into
+    common code
+  PCI: dwc/intel-gw: Remove some unneeded function wrappers
+  PCI: dwc: Ensure all outbound ATU windows are reset
+  PCI: dwc/dra7xx: Use the common MSI irq_chip
+  PCI: dwc: Drop the .set_num_vectors() host op
+  PCI: dwc: Move MSI interrupt setup into DWC common code
+  PCI: dwc: Rework MSI initialization
+  PCI: dwc: Move link handling into common code
+  PCI: dwc: Move dw_pcie_msi_init() into core
+  PCI: dwc: Move dw_pcie_setup_rc() to DWC common code
+  PCI: dwc: Remove unnecessary wrappers around dw_pcie_host_init()
 
-Thanks,
-Bhaumik
--- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora 
-Forum,
-a Linux Foundation Collaborative Project
+ drivers/pci/controller/dwc/pci-dra7xx.c       | 141 +-----------------
+ drivers/pci/controller/dwc/pci-exynos.c       |  50 ++-----
+ drivers/pci/controller/dwc/pci-imx6.c         |  51 +------
+ drivers/pci/controller/dwc/pci-keystone.c     |  68 +--------
+ .../pci/controller/dwc/pci-layerscape-ep.c    |  37 +----
+ drivers/pci/controller/dwc/pci-layerscape.c   |  67 +--------
+ drivers/pci/controller/dwc/pci-meson.c        |  53 ++-----
+ drivers/pci/controller/dwc/pcie-al.c          |  29 +---
+ drivers/pci/controller/dwc/pcie-armada8k.c    |  37 ++---
+ drivers/pci/controller/dwc/pcie-artpec6.c     |  76 +---------
+ .../pci/controller/dwc/pcie-designware-ep.c   |  29 +++-
+ .../pci/controller/dwc/pcie-designware-host.c |  80 ++++++----
+ .../pci/controller/dwc/pcie-designware-plat.c |  70 +--------
+ drivers/pci/controller/dwc/pcie-designware.h  |  12 +-
+ drivers/pci/controller/dwc/pcie-histb.c       |  37 ++---
+ drivers/pci/controller/dwc/pcie-intel-gw.c    |  59 ++------
+ drivers/pci/controller/dwc/pcie-kirin.c       |  62 +-------
+ drivers/pci/controller/dwc/pcie-qcom.c        |  38 +----
+ drivers/pci/controller/dwc/pcie-spear13xx.c   |  62 +++-----
+ drivers/pci/controller/dwc/pcie-tegra194.c    |  40 +----
+ drivers/pci/controller/dwc/pcie-uniphier-ep.c |  38 +----
+ drivers/pci/controller/dwc/pcie-uniphier.c    |  51 +------
+ 22 files changed, 217 insertions(+), 970 deletions(-)
+
+--
+2.25.1
