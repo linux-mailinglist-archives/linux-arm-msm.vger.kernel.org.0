@@ -2,217 +2,122 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id CD7DB29DCAA
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Oct 2020 01:32:15 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C58FB29DCF7
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Oct 2020 01:34:02 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731201AbgJ1Was (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 28 Oct 2020 18:30:48 -0400
-Received: from m42-4.mailgun.net ([69.72.42.4]:63932 "EHLO m42-4.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2387779AbgJ1Was (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 28 Oct 2020 18:30:48 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1603924246; h=References: In-Reply-To: Message-Id: Date:
- Subject: Cc: To: From: Sender;
- bh=kOcg0WYKaIRshihN1c1cKYUb+IAy+ds7gbPfrP+HBck=; b=HQYVJrDyOTBk1df69sC5yu0O/TCqrer5+a8wmRY2fDLDsADxeoAFp7LCnGJucuiWrUm4+t/h
- sbv5eQsP9WVxfbpVxZICBcoZp9XysNUTlpg6hb07GHRtwYdBH/tuAmncRK0KocuEri2P6mG9
- /ka1HDpqMnPK229eBQ+boP1fetE=
-X-Mailgun-Sending-Ip: 69.72.42.4
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n03.prod.us-west-2.postgun.com with SMTP id
- 5f9981abfb7f8d1c8b243da2 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 28 Oct 2020 14:35:23
- GMT
-Sender: akhilpo=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id A47E7C43391; Wed, 28 Oct 2020 14:35:23 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
-        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
-Received: from akhilpo-linux.qualcomm.com (unknown [202.46.22.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: akhilpo)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 10B6DC433C9;
-        Wed, 28 Oct 2020 14:35:19 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 10B6DC433C9
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=akhilpo@codeaurora.org
-From:   Akhil P Oommen <akhilpo@codeaurora.org>
-To:     freedreno@lists.freedesktop.org
-Cc:     dri-devel@freedesktop.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, jcrouse@codeaurora.org,
-        mka@chromium.org, robdclark@gmail.com, dianders@chromium.org
-Subject: [PATCH v2 2/2] drm/msm: Fix duplicate gpu node in icc summary
-Date:   Wed, 28 Oct 2020 20:05:11 +0530
-Message-Id: <1603895711-23755-2-git-send-email-akhilpo@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1603895711-23755-1-git-send-email-akhilpo@codeaurora.org>
-References: <1603895711-23755-1-git-send-email-akhilpo@codeaurora.org>
+        id S1729225AbgJ2Ad6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 28 Oct 2020 20:33:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54102 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1732371AbgJ1WUz (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 28 Oct 2020 18:20:55 -0400
+Received: from mail-vs1-xe44.google.com (mail-vs1-xe44.google.com [IPv6:2607:f8b0:4864:20::e44])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 18E46C0613CF
+        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Oct 2020 15:20:55 -0700 (PDT)
+Received: by mail-vs1-xe44.google.com with SMTP id f4so439264vsk.7
+        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Oct 2020 15:20:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=gyZXe4UlIiJyEgA29yuKS3oeW8M7zKVy8IBiRsmYAmc=;
+        b=onAmLV9juNbP7wo91heam4H8gAMYtfy0venQZrmZZMNDJ8HiSHuuZ+CS/6A/yrwoSy
+         ZZNOgWqUW4BH3NZGYK6+7vUXkGUv/DTH/Bfzi6Ln8fRJBp8+Cyb29Ra3Jy4YdefTcDo/
+         zGGjvWhGYKGbs1ClJV+Ye7VjWBEJ3XORqgnVA4dlgEbukbSJ7Bcx9oRwo+L6XeApeMcx
+         FdZha+HtwNipI11KsEjqoYfnLUDq5xnY3NObfd4sQySAytfwzKMntQM/bYaoqkpDl/Z5
+         UzZfGapIufvzWiB4QEkzOuPpfvs+I8KiQ4YFpJ73sM1046oIlPRkgLy7DXNTV7u7ufqC
+         jxJQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=gyZXe4UlIiJyEgA29yuKS3oeW8M7zKVy8IBiRsmYAmc=;
+        b=PMRCcMF9wLoQMGpiaepyS2+HOYMFSEhWApHu4OnWBCT7NDcUQYlhkSppMkaptufxg9
+         iQORnZQ3OKmVXccPeZIa493P4lDc5l7kMG1dJob/sLqXm2M5AN/Txd8DN0EwbCx6V0dI
+         rVmC+t7r/IuHcVFtfTzWlk2frJ1htpyHEsqsw5wz4b5+A9rt7Do3EQMXNz5SCD2rGS6C
+         vs3VM05u1oMXpgECXqx7a+Dn8LlHgtFL+vPz1NctquMP7tsYzwxGbxRy7fhUkUQLVtRT
+         hkGdt4nbbidi4WRUQKh8HJImEbEzecVUdiaV7UjgIzhOvDkmla1ZwA5zRUN5NCijMYSS
+         v63A==
+X-Gm-Message-State: AOAM530S3VZ9Ci6Ez/1Q83dCwo8CIEEsvQ8e/bZXSobKAWbE3j5JVBum
+        rBNC2TbBwYH6Bjf83TgrgDC3evlIMWal
+X-Google-Smtp-Source: ABdhPJy4wp8FcMTLG82s6NTTpGozSLiiRiD9djXMWJMN+OzFd+L2lYlZ4UuNtdVzO4TBLhilRIP1pA==
+X-Received: by 2002:a62:be04:0:b029:15d:7423:e320 with SMTP id l4-20020a62be040000b029015d7423e320mr8247134pff.42.1603904943114;
+        Wed, 28 Oct 2020 10:09:03 -0700 (PDT)
+Received: from Mani-XPS-13-9360 ([2409:4072:6e05:4ccd:292c:2726:5b8f:786d])
+        by smtp.gmail.com with ESMTPSA id h13sm187608pfk.23.2020.10.28.10.08.56
+        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 28 Oct 2020 10:09:02 -0700 (PDT)
+Date:   Wed, 28 Oct 2020 22:38:53 +0530
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     bjorn.andersson@linaro.org
+Cc:     sboyd@kernel.org, mturquette@baylibre.com, robh+dt@kernel.org,
+        vkoul@kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-clk@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 0/4] Add GCC and RPMh clock support for SDX55
+Message-ID: <20201028170853.GA3191@Mani-XPS-13-9360>
+References: <20201028074232.22922-1-manivannan.sadhasivam@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20201028074232.22922-1-manivannan.sadhasivam@linaro.org>
+User-Agent: Mutt/1.9.4 (2018-02-28)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The dev_pm_opp_of_add_table() api initializes the icc nodes for gpu
-indirectly. So we can avoid using of_icc_get() api in the common
-probe path. To improve this, move of_icc_get() to target specific code
-where it is required.
+On Wed, Oct 28, 2020 at 01:12:28PM +0530, Manivannan Sadhasivam wrote:
+> Hello,
+> 
+> This series adds Global Clock Controller (GCC) and RPMh clock support
+> for SDX55 SoC from Qualcomm with relevant DT bindings.
+> 
+> This series has been tested on SDX55 MTP board. The dts patches for this
+> SoC/board will be posted later.
+> 
+> Thanks,
+> Mani
+> 
+> Manivannan Sadhasivam (1):
+>   clk: qcom: Add support for SDX55 RPMh clocks
+> 
+> Naveen Yadav (1):
+>   clk: qcom: Add SDX55 GCC support
 
-This patch helps to fix duplicate gpu node listed in the interconnect
-summary from the debugfs.
+Bjorn, I've inherited the gcc driver from downstream and did some modification.
+But I'm not sure if I can take the authorship of this patch hence kept it to the
+downstream author.
 
-Signed-off-by: Akhil P Oommen <akhilpo@codeaurora.org>
----
-Changes in v2:
-	1. Minor updates (Jordan)
+In my point of view, the downstream author wrote the driver so I should keep
+the copyright and even list them as MODULE_AUTHOR. But I don't think I should
+give the patch authorship to them because I haven't received the patch anyhow.
+I usually keep the authorship if I take the patch from a source like LKML and
+repost it. But in this case, I authored the patch using someone's code!
 
- drivers/gpu/drm/msm/adreno/a3xx_gpu.c   | 21 +++++++++++++++++++--
- drivers/gpu/drm/msm/adreno/a4xx_gpu.c   | 20 ++++++++++++++++++--
- drivers/gpu/drm/msm/adreno/adreno_gpu.c | 32 +-------------------------------
- 3 files changed, 38 insertions(+), 35 deletions(-)
+What is your view on this?
 
-diff --git a/drivers/gpu/drm/msm/adreno/a3xx_gpu.c b/drivers/gpu/drm/msm/adreno/a3xx_gpu.c
-index f29c77d..93da668 100644
---- a/drivers/gpu/drm/msm/adreno/a3xx_gpu.c
-+++ b/drivers/gpu/drm/msm/adreno/a3xx_gpu.c
-@@ -519,6 +519,8 @@ struct msm_gpu *a3xx_gpu_init(struct drm_device *dev)
- 	struct msm_gpu *gpu;
- 	struct msm_drm_private *priv = dev->dev_private;
- 	struct platform_device *pdev = priv->gpu_pdev;
-+	struct icc_path *ocmem_icc_path;
-+	struct icc_path *icc_path;
- 	int ret;
- 
- 	if (!pdev) {
-@@ -566,13 +568,28 @@ struct msm_gpu *a3xx_gpu_init(struct drm_device *dev)
- 		goto fail;
- 	}
- 
-+	icc_path = devm_of_icc_get(&pdev->dev, "gfx-mem");
-+	ret = IS_ERR(icc_path);
-+	if (ret)
-+		goto fail;
-+
-+	ocmem_icc_path = devm_of_icc_get(&pdev->dev, "ocmem");
-+	ret = IS_ERR(ocmem_icc_path);
-+	if (ret) {
-+		/* allow -ENODATA, ocmem icc is optional */
-+		if (ret != -ENODATA)
-+			goto fail;
-+		ocmem_icc_path = NULL;
-+	}
-+
-+
- 	/*
- 	 * Set the ICC path to maximum speed for now by multiplying the fastest
- 	 * frequency by the bus width (8). We'll want to scale this later on to
- 	 * improve battery life.
- 	 */
--	icc_set_bw(gpu->icc_path, 0, Bps_to_icc(gpu->fast_rate) * 8);
--	icc_set_bw(gpu->ocmem_icc_path, 0, Bps_to_icc(gpu->fast_rate) * 8);
-+	icc_set_bw(icc_path, 0, Bps_to_icc(gpu->fast_rate) * 8);
-+	icc_set_bw(ocmem_icc_path, 0, Bps_to_icc(gpu->fast_rate) * 8);
- 
- 	return gpu;
- 
-diff --git a/drivers/gpu/drm/msm/adreno/a4xx_gpu.c b/drivers/gpu/drm/msm/adreno/a4xx_gpu.c
-index 2b93b33..c0be3a0 100644
---- a/drivers/gpu/drm/msm/adreno/a4xx_gpu.c
-+++ b/drivers/gpu/drm/msm/adreno/a4xx_gpu.c
-@@ -648,6 +648,8 @@ struct msm_gpu *a4xx_gpu_init(struct drm_device *dev)
- 	struct msm_gpu *gpu;
- 	struct msm_drm_private *priv = dev->dev_private;
- 	struct platform_device *pdev = priv->gpu_pdev;
-+	struct icc_path *ocmem_icc_path;
-+	struct icc_path *icc_path;
- 	int ret;
- 
- 	if (!pdev) {
-@@ -694,13 +696,27 @@ struct msm_gpu *a4xx_gpu_init(struct drm_device *dev)
- 		goto fail;
- 	}
- 
-+	icc_path = devm_of_icc_get(&pdev->dev, "gfx-mem");
-+	ret = IS_ERR(icc_path);
-+	if (ret)
-+		goto fail;
-+
-+	ocmem_icc_path = devm_of_icc_get(&pdev->dev, "ocmem");
-+	ret = IS_ERR(ocmem_icc_path);
-+	if (ret) {
-+		/* allow -ENODATA, ocmem icc is optional */
-+		if (ret != -ENODATA)
-+			goto fail;
-+		ocmem_icc_path = NULL;
-+	}
-+
- 	/*
- 	 * Set the ICC path to maximum speed for now by multiplying the fastest
- 	 * frequency by the bus width (8). We'll want to scale this later on to
- 	 * improve battery life.
- 	 */
--	icc_set_bw(gpu->icc_path, 0, Bps_to_icc(gpu->fast_rate) * 8);
--	icc_set_bw(gpu->ocmem_icc_path, 0, Bps_to_icc(gpu->fast_rate) * 8);
-+	icc_set_bw(icc_path, 0, Bps_to_icc(gpu->fast_rate) * 8);
-+	icc_set_bw(ocmem_icc_path, 0, Bps_to_icc(gpu->fast_rate) * 8);
- 
- 	return gpu;
- 
-diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.c b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
-index fd8f491..ddbd863 100644
---- a/drivers/gpu/drm/msm/adreno/adreno_gpu.c
-+++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
-@@ -899,7 +899,6 @@ int adreno_gpu_init(struct drm_device *drm, struct platform_device *pdev,
- 	struct adreno_platform_config *config = dev->platform_data;
- 	struct msm_gpu_config adreno_gpu_config  = { 0 };
- 	struct msm_gpu *gpu = &adreno_gpu->base;
--	int ret;
- 
- 	adreno_gpu->funcs = funcs;
- 	adreno_gpu->info = adreno_info(config->rev);
-@@ -918,37 +917,8 @@ int adreno_gpu_init(struct drm_device *drm, struct platform_device *pdev,
- 	pm_runtime_use_autosuspend(dev);
- 	pm_runtime_enable(dev);
- 
--	ret = msm_gpu_init(drm, pdev, &adreno_gpu->base, &funcs->base,
-+	return msm_gpu_init(drm, pdev, &adreno_gpu->base, &funcs->base,
- 			adreno_gpu->info->name, &adreno_gpu_config);
--	if (ret)
--		return ret;
--
--	/*
--	 * The legacy case, before "interconnect-names", only has a
--	 * single interconnect path which is equivalent to "gfx-mem"
--	 */
--	if (!of_find_property(dev->of_node, "interconnect-names", NULL)) {
--		gpu->icc_path = of_icc_get(dev, NULL);
--	} else {
--		gpu->icc_path = of_icc_get(dev, "gfx-mem");
--		gpu->ocmem_icc_path = of_icc_get(dev, "ocmem");
--	}
--
--	if (IS_ERR(gpu->icc_path)) {
--		ret = PTR_ERR(gpu->icc_path);
--		gpu->icc_path = NULL;
--		return ret;
--	}
--
--	if (IS_ERR(gpu->ocmem_icc_path)) {
--		ret = PTR_ERR(gpu->ocmem_icc_path);
--		gpu->ocmem_icc_path = NULL;
--		/* allow -ENODATA, ocmem icc is optional */
--		if (ret != -ENODATA)
--			return ret;
--	}
--
--	return 0;
- }
- 
- void adreno_gpu_cleanup(struct adreno_gpu *adreno_gpu)
--- 
-2.7.4
+Thanks,
+Mani
 
+> 
+> Vinod Koul (2):
+>   dt-bindings: clock: Add SDX55 GCC clock bindings
+>   dt-bindings: clock: Introduce RPMHCC bindings for SDX55
+> 
+>  .../bindings/clock/qcom,gcc-sdx55.yaml        |   71 +
+>  .../bindings/clock/qcom,rpmhcc.yaml           |    1 +
+>  drivers/clk/qcom/Kconfig                      |    8 +
+>  drivers/clk/qcom/Makefile                     |    1 +
+>  drivers/clk/qcom/clk-rpmh.c                   |   20 +
+>  drivers/clk/qcom/gcc-sdx55.c                  | 1667 +++++++++++++++++
+>  include/dt-bindings/clock/qcom,gcc-sdx55.h    |  112 ++
+>  include/dt-bindings/clock/qcom,rpmh.h         |    1 +
+>  8 files changed, 1881 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/clock/qcom,gcc-sdx55.yaml
+>  create mode 100644 drivers/clk/qcom/gcc-sdx55.c
+>  create mode 100644 include/dt-bindings/clock/qcom,gcc-sdx55.h
+> 
+> -- 
+> 2.17.1
+> 
