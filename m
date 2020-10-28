@@ -2,112 +2,158 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C543A29D543
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Oct 2020 23:00:06 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 87DCD29D521
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Oct 2020 22:58:56 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729346AbgJ1V7o (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 28 Oct 2020 17:59:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50372 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729310AbgJ1V7o (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 28 Oct 2020 17:59:44 -0400
-Received: from mail-pf1-x444.google.com (mail-pf1-x444.google.com [IPv6:2607:f8b0:4864:20::444])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0AC88C0613CF
-        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Oct 2020 14:59:44 -0700 (PDT)
-Received: by mail-pf1-x444.google.com with SMTP id o129so604023pfb.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Oct 2020 14:59:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=ywjXoX2kkK2KmqL6ZyGoB6Pybvnry+Rvqj9uaI5d5iE=;
-        b=X5W234U1YTYXSeJeyK2Vk+eLiUVBUfulNxLgtgDTC7Y2iq0ShIDFDyJL/pdwnwYUa+
-         OEYlEzLQjjCTHnrkgNNR7g00BW8ESFAEEQT1XcoJj6ZFN54o+wKgCxjD+O60PhuDQ7vD
-         84AXSoKF6QrULCiwA8LXd2DmMUV2GG7NtSjIJ6BviQWr4LdyVlTkrWrzwGw1XwH04BXw
-         wUann1odVUWJfSTWmw+2UN7YWM3rbwimRI5KzkuOeG5fKlaBIz9oc3Vs4E2lZJFK3gLq
-         v5fMgJHzOEzcx8IjzPNRfwrnMS/3QWCVvcyZ6Acqu806VBeEArIYp+nxMc7wfmvp6hZI
-         ASUQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=ywjXoX2kkK2KmqL6ZyGoB6Pybvnry+Rvqj9uaI5d5iE=;
-        b=cwK+s2OV1oGqkv6R5cH6ef2SZu/PNkZ5xIaMuyqtjfT+68Klp5Tz5CNXZXmHjHQ+TA
-         PuUv677BwdBy2R9qzRqau+UdcesMpDpVURQK68Y0nUcpjQdhe3xo1vpnz6gIQ/8hacVu
-         z2HMVVtk4nYWspzijejbOC9oayQBAwki70ReM8Z2r1/vJg3ftpq2+SB8n0PZyTOlUAsm
-         0OCBlRctSWvL27BIsgL2/z17tlW/0wb+7+OH9Ih8C8QV/f/IFPxuTERt/a/rZghOOvIW
-         l5Uf3BnhJGjAde6nIMEdDc6Oq9A+uxP7N+avSW2n2bFznNF5II/lDZkjpVtn5zjt46o3
-         7R/A==
-X-Gm-Message-State: AOAM533IiwKxEmWhmp0sY+q2oJB2a22sk1q6Ng3QcWF4suQ9EXRhvjNF
-        2UPW+v8Xb0uWhra5bj3fywPTJ84XVV8MfQ==
-X-Google-Smtp-Source: ABdhPJxGfGHUfZR5/hgoqBA9Cp4UZZF2zoq2xSX/vVSEcnm+GlrQO4gwem8tQVD3yMYhu0Zz27HGPQ==
-X-Received: by 2002:a63:e444:: with SMTP id i4mr6715119pgk.304.1603896392305;
-        Wed, 28 Oct 2020 07:46:32 -0700 (PDT)
-Received: from localhost ([122.181.54.133])
-        by smtp.gmail.com with ESMTPSA id y5sm3087840pfq.79.2020.10.28.07.46.30
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 28 Oct 2020 07:46:31 -0700 (PDT)
-Date:   Wed, 28 Oct 2020 20:16:28 +0530
-From:   Viresh Kumar <viresh.kumar@linaro.org>
-To:     Frank Lee <tiny.windzz@gmail.com>
-Cc:     Frank Lee <frank@allwinnertech.com>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        airlied@linux.ie, daniel@ffwll.ch,
-        Viresh Kumar <vireshk@kernel.org>, Nishanth Menon <nm@ti.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        "Rafael J. Wysocki" <rjw@rjwysocki.net>, jcrouse@codeaurora.org,
-        eric@anholt.net, kholk11@gmail.com, emil.velikov@collabora.com,
-        gustavoars@kernel.org, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        Linux PM <linux-pm@vger.kernel.org>
-Subject: Re: [PATCH 2/3] opp: Add devres wrapper for dev_pm_opp_set_prop_name
-Message-ID: <20201028144628.qm2t2hbzmouqkciy@vireshk-i7>
-References: <20201012135517.19468-1-frank@allwinnertech.com>
- <20201012135517.19468-3-frank@allwinnertech.com>
- <20201028102942.zc5hgqpo2bfrn6in@vireshk-i7>
- <CAEExFWvNgK2wbvmxZjsJR4g-VBq=ggsBLew77rzmNdkpqTRuDA@mail.gmail.com>
+        id S1729208AbgJ1V6t (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 28 Oct 2020 17:58:49 -0400
+Received: from m42-4.mailgun.net ([69.72.42.4]:35975 "EHLO m42-4.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1729225AbgJ1V6s (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 28 Oct 2020 17:58:48 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1603922328; h=Message-ID: References: In-Reply-To: Reply-To:
+ Subject: Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=B38mMIzITGT8PJaao7b5c6lhDRqKzAlKVY/jp8d0p1M=;
+ b=Uai2ApgWl0/ByHplN9fcFI/nkxEKIhguOLTsALV7U1hdHQosMtJFrCsbls96SXegw0OWO+f6
+ I/gly7nKvzbo7Xm8GvtfL8Js14KmMtKUwR7zpbccxxMYDaN6lLQxeaw01ZBYU3QtNdYx1/SJ
+ egWdkA1C+iGVz8BeBv+RPTh7xvs=
+X-Mailgun-Sending-Ip: 69.72.42.4
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n07.prod.us-east-1.postgun.com with SMTP id
+ 5f99cdeb99d22f6577a0e17d (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 28 Oct 2020 20:00:43
+ GMT
+Sender: bbhatt=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 20F4EC433FE; Wed, 28 Oct 2020 20:00:43 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: bbhatt)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 4F36EC433CB;
+        Wed, 28 Oct 2020 20:00:42 +0000 (UTC)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAEExFWvNgK2wbvmxZjsJR4g-VBq=ggsBLew77rzmNdkpqTRuDA@mail.gmail.com>
-User-Agent: NeoMutt/20180716-391-311a52
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Wed, 28 Oct 2020 13:00:42 -0700
+From:   Bhaumik Bhatt <bbhatt@codeaurora.org>
+To:     =?UTF-8?Q?Carl_Yin=28=E6=AE=B7=E5=BC=A0=E6=88=90=29?= 
+        <carl.yin@quectel.com>
+Cc:     manivannan.sadhasivam@linaro.org, hemantk@codeaurora.org,
+        sfr@canb.auug.org.au, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Naveen Kumar <naveen.kumar@quectel.com>
+Subject: =?UTF-8?Q?Re=3A_=E7=AD=94=E5=A4=8D=3A_=5BPATCH=5D_bus=3A_mhi=3A_?=
+ =?UTF-8?Q?core=3A_Fix_null_pointer_access?=
+Organization: Qualcomm Innovation Center, Inc.
+Reply-To: bbhatt@codeaurora.org
+Mail-Reply-To: bbhatt@codeaurora.org
+In-Reply-To: <HK2PR06MB3507360AE3E2D14FA9DE90C286170@HK2PR06MB3507.apcprd06.prod.outlook.com>
+References: <41058752035efde392e1c55d0fd5b58c@sslemail.net>
+ <b3bf32de1f3580210ebad6c4b2c7a802@codeaurora.org>
+ <HK2PR06MB3507360AE3E2D14FA9DE90C286170@HK2PR06MB3507.apcprd06.prod.outlook.com>
+Message-ID: <4a02c189fab49b75dc827fa54fe69663@codeaurora.org>
+X-Sender: bbhatt@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 28-10-20, 19:02, Frank Lee wrote:
-> On Wed, Oct 28, 2020 at 6:29 PM Viresh Kumar <viresh.kumar@linaro.org> wrote:
-> >
-> > On 12-10-20, 21:55, Frank Lee wrote:
-> > > From: Yangtao Li <tiny.windzz@gmail.com>
-> > >
-> > > Add devres wrapper for dev_pm_opp_set_prop_name() to simplify driver
-> > > code.
-> > >
-> > > Signed-off-by: Yangtao Li <tiny.windzz@gmail.com>
-> > > Signed-off-by: Yangtao Li <frank@allwinnertech.com>
-> > > ---
-> > >  drivers/opp/core.c     | 39 +++++++++++++++++++++++++++++++++++++++
-> > >  include/linux/pm_opp.h |  6 ++++++
-> > >  2 files changed, 45 insertions(+)
-> >
-> > On a second thought I am looking at dropping this one as you haven't
-> > added any users yet and I am afraid it will stay unused.
+On 2020-10-27 19:03, Carl Yin wrote:
+> Hi bbhatt:
 > 
-> Now it looks like that dev_pm_opp_set_prop_name() is used relatively less.
-> Maybe we can wait until a caller, and then pick up the patch.
+> On Wednesday, October 28, 2020 9:02 AM, bbhatt wrote:
+> 
+>> Hi Carl,
+>> 
+>> Yes this change is needed. Good catch. I ran in to this issue as well 
+>> when a
+>> dev_err() call was made with a bad MHI configuration.
+> [carl.yin] yes, I also meet this error with a bad MHI configuration.
+>> 
+>> Maybe you can explain a little more in the commit text subject?
+>> 
+>> You could say, "Fix null pointer access when parsing MHI 
+>> configuration"?
+>> 
+>> On 2020-10-26 22:33, carl.yin@quectel.com wrote:
+>> > From: carl <carl.yin@quectel.com>
+>> >
+>> > function parse_ev_cfg and parse_ch_cfg access mhi_cntrl->mhi_dev
+>> Functions parse_ev_cfg() and parse_ch_cfg()
+>> > before it is set in function mhi_register_controller,
+>> mhi_register_controller()
+>> > use cntrl_dev to instead mhi_dev.
+>> use cntrl_dev instead of mhi_dev.
+>> >
+>> > Signed-off-by: carl <carl.yin@quectel.com>
+>> With these commit text updates,
+> [carl.yin] thank for words correction, for my mother language is not 
+> English,
+> there are lots of words wrong in the commit.
+>> 
+No problem.
+>> Reviewed-by: Bhaumik Bhatt <bbhatt@codeaurora.org>
+>> > ---
+>> >  drivers/bus/mhi/core/init.c | 4 ++--
+>> >  1 file changed, 2 insertions(+), 2 deletions(-)
+>> >
+>> > diff --git a/drivers/bus/mhi/core/init.c b/drivers/bus/mhi/core/init.c
+>> > index 0ffdebde8..c6b43e90b 100644
+>> > --- a/drivers/bus/mhi/core/init.c
+>> > +++ b/drivers/bus/mhi/core/init.c
+>> > @@ -610,7 +610,7 @@ static int parse_ev_cfg(struct mhi_controller
+>> > *mhi_cntrl,  {
+>> >  	struct mhi_event *mhi_event;
+>> >  	const struct mhi_event_config *event_cfg;
+>> > -	struct device *dev = &mhi_cntrl->mhi_dev->dev;
+>> > +	struct device *dev = mhi_cntrl->cntrl_dev;
+>> >  	int i, num;
+>> >
+>> >  	num = config->num_events;
+>> > @@ -692,7 +692,7 @@ static int parse_ch_cfg(struct mhi_controller
+>> > *mhi_cntrl,
+>> >  			const struct mhi_controller_config *config)  {
+>> >  	const struct mhi_channel_config *ch_cfg;
+>> > -	struct device *dev = &mhi_cntrl->mhi_dev->dev;
+>> > +	struct device *dev = mhi_cntrl->cntrl_dev;
+>> >  	int i;
+>> >  	u32 chan;
+>> 
+>> --
+>> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora 
+>> Forum, a
+>> Linux Foundation Collaborative Project
 
-I am even wondering if we should be adding any of the devm_* helpers
-for now to be honest. Even for the other one we have only one user.
-Them major user of the OPP core is the CPU subsystem and it is never
-going to use these devm_* helpers as the CPU device doesn't get bound
-to a driver, it is rather a fake platform device which gets the
-cpufreq drivers probed. So the only users of these devm_* helpers is
-going to be non-CPU devices. Considering that we have only one user
-right now, it may be better to just fix it instead of adding any of
-the devm_* helpers.
+Can you also add a "Fixes:" tag to the patch?
 
+Refer Documentation/process/submitting-patches.rst:
+
+If your patch fixes a bug in a specific commit, e.g. you found an issue 
+using
+``git bisect``, please use the 'Fixes:' tag with the first 12 characters 
+of
+the SHA-1 ID, and the one line summary.  Do not split the tag across 
+multiple
+lines, tags are exempt from the "wrap at 75 columns" rule in order to 
+simplify
+parsing scripts.  For example::
+
+	Fixes: 54a4f0239f2e ("KVM: MMU: make kvm_mmu_zap_page() return the 
+number of pages it actually freed")
+
+Thanks,
+Bhaumik
 -- 
-viresh
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora 
+Forum,
+a Linux Foundation Collaborative Project
