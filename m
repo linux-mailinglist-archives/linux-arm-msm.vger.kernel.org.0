@@ -2,135 +2,210 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 2BADB29E1D1
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Oct 2020 03:04:07 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4FA5229E230
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Oct 2020 03:11:51 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725843AbgJ1VnA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 28 Oct 2020 17:43:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47420 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726328AbgJ1Vm4 (ORCPT
+        id S1733086AbgJ2CLm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 28 Oct 2020 22:11:42 -0400
+Received: from mail-oi1-f196.google.com ([209.85.167.196]:42976 "EHLO
+        mail-oi1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726834AbgJ1Vgs (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 28 Oct 2020 17:42:56 -0400
-Received: from mail-wr1-x442.google.com (mail-wr1-x442.google.com [IPv6:2a00:1450:4864:20::442])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 76579C0613CF
-        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Oct 2020 14:42:56 -0700 (PDT)
-Received: by mail-wr1-x442.google.com with SMTP id g12so607083wrp.10
-        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Oct 2020 14:42:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=pO6LThXOtBiDEi5s3AU4bK7ClmEzefDtSdQh29OfxfE=;
-        b=woeDlqOxzaMhYO/W3xE4Xt/FTXjXZS9IYCVk3C7SKpiAoiMc9+QCYQ+gFLGeJ+eNRK
-         PNuHm0SaaqEjnGSJxhk/8T47O9l3FZ7YQHqAXVZTkTkjyXxD2oLbNLBLn6w/MSpYO1Wd
-         DT0w6zHurgmWD/izmWmZoVnG3+tZhS8W6fx77YFpOKH7vZ9mgo+3wJM1x9MDKSqd77xj
-         dJmmAe2mDKXQ3FURd/WCfAAgUbomckzaLd6uKMsmQlLwDPlui065sY4sexKCAtPrB0tI
-         zeHC24jIB1Q1AVR1+D5WF4E7KClct/2717U+jut0ytiCntB+tWs6Z61RrMfq1r5dXYfC
-         dFyA==
+        Wed, 28 Oct 2020 17:36:48 -0400
+Received: by mail-oi1-f196.google.com with SMTP id c72so1085835oig.9;
+        Wed, 28 Oct 2020 14:36:47 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=pO6LThXOtBiDEi5s3AU4bK7ClmEzefDtSdQh29OfxfE=;
-        b=XPN1R0oGC307BSAL8/wZ20tugN6p69Hy7HzicV+rdBPOPz0oIOdlD+8PyQCaJoKtGa
-         uJUA10cGQiAIZq4yCSQxs8oNLyZX6KVEnns2hfjFlQ7XUopZKRtshUehXDKXoqpODly3
-         MOcEnLuBxxv6CbAIKbEGjG+5slZ6MIRyZ431w+XJrEZ3q+rOXgMjxAnbcLoGAL4LZmZi
-         JbnlcASQc8Is4br8afildihMPX3EilXdVDPnMwM0lDgaeMAydy65k6/M72NqutRqsfXG
-         IFblIdq42ktgGJvReCPti52uTMKWLFwTZSNfjCSLLDy2d6L3VFpU1dU3LdNHmjI8h1mM
-         /kPg==
-X-Gm-Message-State: AOAM531N9Bp5HBMX2sgRIHYy0SjOeUrvJ7t1cnYRQU41ZTTpBUDGBmLk
-        9gSKcKWcjy1GMUQUjbpaOa1E/TSrGNhmhtpH
-X-Google-Smtp-Source: ABdhPJwjC6oLcIeuFDqOhbI7uZMtQ7+6D0eUG7rTCO3UhVflfNApwtNhr9R9z6GC6kYAwnSTX31/rg==
-X-Received: by 2002:a05:6512:3102:: with SMTP id n2mr199836lfb.153.1603912198219;
-        Wed, 28 Oct 2020 12:09:58 -0700 (PDT)
-Received: from eriador.lan ([188.162.64.219])
-        by smtp.gmail.com with ESMTPSA id c7sm52595ljk.59.2020.10.28.12.09.56
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=PxZqaaZeM9rn0EmiB2pyN8ld61KaiAeovfT1I1hXfhU=;
+        b=jbkO+wvKRRV3ikg+PXT6GNDQITwfA3vVwTdPYx0DX304QJLoL3iYGJU9kGkea4QsLg
+         GFosw2jnRLw76ggy/mlmZkKpbhFIvEtYd3iR9wt6s3GsVTirIXGDeNtcOkGr6cM80jjI
+         EDMTFO+7kKfERpJs+H+u6URrbYKFcWyVLwayn+RJ7CLP83iaH4Bq//LFLIxKUTvz+Cdi
+         ohl74w1RLlcr27TbwH9hSxv4xenBUZ8YF1TNQsLULpyDR0M1c+pEHjP3sjG/uHLKutaE
+         UDTM2E1N3Go8RrRoxGt71qSMddD6V74lyen002ctLOC8o3FSs5TNMH2MwcBT2mu5RBDq
+         A//w==
+X-Gm-Message-State: AOAM530w8M92wwaD28+mOG/gEsmLVsYB3Z1Y0tlQNNKxSyYYw5cXGrdU
+        BKgRLg7064v5/zwmr/0HQTptQ6Hogw==
+X-Google-Smtp-Source: ABdhPJyFp7QnoFosByRfbGom+wWmaa8T9lbdi9qswtTyff4qMNEAI9VDyjl5mqDEBjA5fFbiY8f1Ew==
+X-Received: by 2002:a54:4194:: with SMTP id 20mr606316oiy.137.1603918027560;
+        Wed, 28 Oct 2020 13:47:07 -0700 (PDT)
+Received: from xps15.herring.priv (24-155-109-49.dyn.grandenetworks.net. [24.155.109.49])
+        by smtp.googlemail.com with ESMTPSA id t17sm116123oor.3.2020.10.28.13.47.05
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 28 Oct 2020 12:09:57 -0700 (PDT)
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Rob Herring <robh+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Subject: [PATCH 1/2] arm64: dts: qcom: sm8250: Add support for SDC2
-Date:   Wed, 28 Oct 2020 22:09:54 +0300
-Message-Id: <20201028190955.1264526-1-dmitry.baryshkov@linaro.org>
-X-Mailer: git-send-email 2.28.0
+        Wed, 28 Oct 2020 13:47:06 -0700 (PDT)
+From:   Rob Herring <robh@kernel.org>
+To:     Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>
+Cc:     linux-pci@vger.kernel.org, Andy Gross <agross@kernel.org>,
+        Binghui Wang <wangbinghui@hisilicon.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        Fabio Estevam <festevam@gmail.com>,
+        Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
+        Jerome Brunet <jbrunet@baylibre.com>,
+        Jesper Nilsson <jesper.nilsson@axis.com>,
+        Jingoo Han <jingoohan1@gmail.com>,
+        Jonathan Chocron <jonnyc@amazon.com>,
+        Jonathan Hunter <jonathanh@nvidia.com>,
+        Kevin Hilman <khilman@baylibre.com>,
+        Kishon Vijay Abraham I <kishon@ti.com>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        Kukjin Kim <kgene@kernel.org>,
+        Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
+        linux-amlogic@lists.infradead.org, linux-arm-kernel@axis.com,
+        linux-arm-msm@vger.kernel.org, linux-omap@vger.kernel.org,
+        linuxppc-dev@lists.ozlabs.org, linux-samsung-soc@vger.kernel.org,
+        linux-tegra@vger.kernel.org, Lucas Stach <l.stach@pengutronix.de>,
+        Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
+        Masahiro Yamada <yamada.masahiro@socionext.com>,
+        Minghuan Lian <minghuan.Lian@nxp.com>,
+        Mingkai Hu <mingkai.hu@nxp.com>,
+        Murali Karicheri <m-karicheri2@ti.com>,
+        Neil Armstrong <narmstrong@baylibre.com>,
+        NXP Linux Team <linux-imx@nxp.com>,
+        Pengutronix Kernel Team <kernel@pengutronix.de>,
+        Pratyush Anand <pratyush.anand@gmail.com>,
+        Richard Zhu <hongxing.zhu@nxp.com>,
+        Roy Zang <roy.zang@nxp.com>,
+        Sascha Hauer <s.hauer@pengutronix.de>,
+        Shawn Guo <shawnguo@kernel.org>,
+        Stanimir Varbanov <svarbanov@mm-sol.com>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Thomas Petazzoni <thomas.petazzoni@bootlin.com>,
+        Xiaowei Song <songxiaowei@hisilicon.com>,
+        Yue Wang <yue.wang@Amlogic.com>
+Subject: [PATCH 07/13] PCI: dwc: Drop the .set_num_vectors() host op
+Date:   Wed, 28 Oct 2020 15:46:40 -0500
+Message-Id: <20201028204646.356535-8-robh@kernel.org>
+X-Mailer: git-send-email 2.25.1
+In-Reply-To: <20201028204646.356535-1-robh@kernel.org>
+References: <20201028204646.356535-1-robh@kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+There's no reason for the .set_num_vectors() host op. Drivers needing a
+non-default value can just initialize pcie_port.num_vectors directly.
 
-Add support for SDC2 which can be used to interface uSD card.
-
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-[DB: minor fixes: clocks, iommus, opps]
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: Jingoo Han <jingoohan1@gmail.com>
+Cc: Gustavo Pimentel <gustavo.pimentel@synopsys.com>
+Cc: Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>
+Cc: Bjorn Helgaas <bhelgaas@google.com>
+Cc: Thierry Reding <thierry.reding@gmail.com>
+Cc: Jonathan Hunter <jonathanh@nvidia.com>
+Cc: linux-tegra@vger.kernel.org
+Signed-off-by: Rob Herring <robh@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/sm8250.dtsi | 45 ++++++++++++++++++++++++++++
- 1 file changed, 45 insertions(+)
+ .../pci/controller/dwc/pcie-designware-host.c | 19 ++++---------------
+ .../pci/controller/dwc/pcie-designware-plat.c |  7 +------
+ drivers/pci/controller/dwc/pcie-designware.h  |  1 -
+ drivers/pci/controller/dwc/pcie-tegra194.c    |  7 +------
+ 4 files changed, 6 insertions(+), 28 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8250.dtsi b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-index 457c3e65c0b6..2de4a9f808d5 100644
---- a/arch/arm64/boot/dts/qcom/sm8250.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-@@ -1462,6 +1462,51 @@ IPCC_MPROC_SIGNAL_GLINK_QMP
- 			};
- 		};
+diff --git a/drivers/pci/controller/dwc/pcie-designware-host.c b/drivers/pci/controller/dwc/pcie-designware-host.c
+index 265a48f1a0ae..1bd6a9762426 100644
+--- a/drivers/pci/controller/dwc/pcie-designware-host.c
++++ b/drivers/pci/controller/dwc/pcie-designware-host.c
+@@ -365,22 +365,11 @@ int dw_pcie_host_init(struct pcie_port *pp)
+ 		pci->link_gen = of_pci_get_max_link_speed(np);
  
-+		sdhc_2: sdhci@8804000 {
-+			compatible = "qcom,sm8250-sdhci", "qcom,sdhci-msm-v5";
-+			reg = <0 0x08804000 0 0x1000>;
-+
-+			interrupts = <GIC_SPI 204 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 222 IRQ_TYPE_LEVEL_HIGH>;
-+			interrupt-names = "hc_irq", "pwr_irq";
-+
-+			clocks = <&gcc GCC_SDCC2_AHB_CLK>,
-+				 <&gcc GCC_SDCC2_APPS_CLK>,
-+				 <&xo_board>;
-+			clock-names = "iface", "core", "xo";
-+			iommus = <&apps_smmu 0x4a0 0x0>;
-+			qcom,dll-config = <0x0007642c>;
-+			qcom,ddr-config = <0x80040868>;
-+			power-domains = <&rpmhpd SM8250_CX>;
-+			operating-points-v2 = <&sdhc2_opp_table>;
-+
-+			status = "disabled";
-+
-+			sdhc2_opp_table: sdhc2-opp-table {
-+				compatible = "operating-points-v2";
-+
-+				opp-19200000 {
-+					opp-hz = /bits/ 64 <19200000>;
-+					required-opps = <&rpmhpd_opp_min_svs>;
-+				};
-+
-+				opp-50000000 {
-+					opp-hz = /bits/ 64 <50000000>;
-+					required-opps = <&rpmhpd_opp_low_svs>;
-+				};
-+
-+				opp-100000000 {
-+					opp-hz = /bits/ 64 <100000000>;
-+					required-opps = <&rpmhpd_opp_svs>;
-+				};
-+
-+				opp-202000000 {
-+					opp-hz = /bits/ 64 <202000000>;
-+					required-opps = <&rpmhpd_opp_svs_l1>;
-+				};
-+			};
-+		};
-+
- 		dc_noc: interconnect@90c0000 {
- 			compatible = "qcom,sm8250-dc-noc";
- 			reg = <0 0x090c0000 0 0x4200>;
+ 	if (pci_msi_enabled()) {
+-		/*
+-		 * If a specific SoC driver needs to change the
+-		 * default number of vectors, it needs to implement
+-		 * the set_num_vectors callback.
+-		 */
+-		if (!pp->ops->set_num_vectors) {
++		if (!pp->num_vectors) {
+ 			pp->num_vectors = MSI_DEF_NUM_VECTORS;
+-		} else {
+-			pp->ops->set_num_vectors(pp);
+-
+-			if (pp->num_vectors > MAX_MSI_IRQS ||
+-			    pp->num_vectors == 0) {
+-				dev_err(dev,
+-					"Invalid number of vectors\n");
+-				return -EINVAL;
+-			}
++		} else if (pp->num_vectors > MAX_MSI_IRQS) {
++			dev_err(dev, "Invalid number of vectors\n");
++			return -EINVAL;
+ 		}
+ 
+ 		if (!pp->ops->msi_host_init) {
+diff --git a/drivers/pci/controller/dwc/pcie-designware-plat.c b/drivers/pci/controller/dwc/pcie-designware-plat.c
+index 562a05e07b1d..13fede1d4157 100644
+--- a/drivers/pci/controller/dwc/pcie-designware-plat.c
++++ b/drivers/pci/controller/dwc/pcie-designware-plat.c
+@@ -44,14 +44,8 @@ static int dw_plat_pcie_host_init(struct pcie_port *pp)
+ 	return 0;
+ }
+ 
+-static void dw_plat_set_num_vectors(struct pcie_port *pp)
+-{
+-	pp->num_vectors = MAX_MSI_IRQS;
+-}
+-
+ static const struct dw_pcie_host_ops dw_plat_pcie_host_ops = {
+ 	.host_init = dw_plat_pcie_host_init,
+-	.set_num_vectors = dw_plat_set_num_vectors,
+ };
+ 
+ static int dw_plat_pcie_establish_link(struct dw_pcie *pci)
+@@ -128,6 +122,7 @@ static int dw_plat_add_pcie_port(struct dw_plat_pcie *dw_plat_pcie,
+ 			return pp->msi_irq;
+ 	}
+ 
++	pp->num_vectors = MAX_MSI_IRQS;
+ 	pp->ops = &dw_plat_pcie_host_ops;
+ 
+ 	ret = dw_pcie_host_init(pp);
+diff --git a/drivers/pci/controller/dwc/pcie-designware.h b/drivers/pci/controller/dwc/pcie-designware.h
+index ed19c34dd0fe..96382dcb2859 100644
+--- a/drivers/pci/controller/dwc/pcie-designware.h
++++ b/drivers/pci/controller/dwc/pcie-designware.h
+@@ -171,7 +171,6 @@ enum dw_pcie_device_mode {
+ 
+ struct dw_pcie_host_ops {
+ 	int (*host_init)(struct pcie_port *pp);
+-	void (*set_num_vectors)(struct pcie_port *pp);
+ 	int (*msi_host_init)(struct pcie_port *pp);
+ };
+ 
+diff --git a/drivers/pci/controller/dwc/pcie-tegra194.c b/drivers/pci/controller/dwc/pcie-tegra194.c
+index f8fca6794282..5e2841f58700 100644
+--- a/drivers/pci/controller/dwc/pcie-tegra194.c
++++ b/drivers/pci/controller/dwc/pcie-tegra194.c
+@@ -990,11 +990,6 @@ static int tegra_pcie_dw_link_up(struct dw_pcie *pci)
+ 	return !!(val & PCI_EXP_LNKSTA_DLLLA);
+ }
+ 
+-static void tegra_pcie_set_msi_vec_num(struct pcie_port *pp)
+-{
+-	pp->num_vectors = MAX_MSI_IRQS;
+-}
+-
+ static int tegra_pcie_dw_start_link(struct dw_pcie *pci)
+ {
+ 	struct tegra_pcie_dw *pcie = to_tegra_pcie(pci);
+@@ -1019,7 +1014,6 @@ static const struct dw_pcie_ops tegra_dw_pcie_ops = {
+ 
+ static struct dw_pcie_host_ops tegra_pcie_dw_host_ops = {
+ 	.host_init = tegra_pcie_dw_host_init,
+-	.set_num_vectors = tegra_pcie_set_msi_vec_num,
+ };
+ 
+ static void tegra_pcie_disable_phy(struct tegra_pcie_dw *pcie)
+@@ -1995,6 +1989,7 @@ static int tegra_pcie_dw_probe(struct platform_device *pdev)
+ 	pci->n_fts[1] = FTS_VAL;
+ 
+ 	pp = &pci->pp;
++	pp->num_vectors = MAX_MSI_IRQS;
+ 	pcie->dev = &pdev->dev;
+ 	pcie->mode = (enum dw_pcie_device_mode)data->mode;
+ 
 -- 
-2.28.0
+2.25.1
 
