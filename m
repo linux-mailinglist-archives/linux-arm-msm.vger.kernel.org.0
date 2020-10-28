@@ -2,130 +2,123 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id DAF8229D857
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Oct 2020 23:31:33 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B8F8B29D981
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Oct 2020 23:55:46 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2387902AbgJ1Wb3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 28 Oct 2020 18:31:29 -0400
-Received: from m42-4.mailgun.net ([69.72.42.4]:63932 "EHLO m42-4.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2387897AbgJ1Wb2 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 28 Oct 2020 18:31:28 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1603924288; h=In-Reply-To: Content-Type: MIME-Version:
- References: Message-ID: Subject: Cc: To: From: Date: Sender;
- bh=Uun2BBWyN9O6gGUON67BLRc5oqgnJ4TIcEJ9tL9SWV0=; b=TT6mUTgTmMM58vVGkFiXC8TfoIySxWLa1qjHUFKnicmB7073ddl7Tq2ckdazVJXIMz5lPYSw
- H8eW6iX9pCzuzfFPV4Q10lyyJI8faeU9EDehsHOkt3Kvw8Bnl7V1YCpKolG2hz69YxPFbZ9B
- zxiCEkyOunw2pTNYrccKwlLhVBo=
-X-Mailgun-Sending-Ip: 69.72.42.4
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n01.prod.us-east-1.postgun.com with SMTP id
- 5f9981ab4e4fe7071da1fdae (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 28 Oct 2020 14:35:23
- GMT
-Sender: ilina=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id D8CCEC433F0; Wed, 28 Oct 2020 14:35:22 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
-        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
-Received: from localhost (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: ilina)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 26B23C433CB;
-        Wed, 28 Oct 2020 14:35:22 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 26B23C433CB
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=ilina@codeaurora.org
-Date:   Wed, 28 Oct 2020 08:35:21 -0600
-From:   Lina Iyer <ilina@codeaurora.org>
-To:     Anders Roxell <anders.roxell@linaro.org>
-Cc:     agross@kernel.org, Bjorn Andersson <bjorn.andersson@linaro.org>,
-        linux-arm-msm@vger.kernel.org,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        mkshah@codeaurora.org
-Subject: Re: [PATCH] soc: qcom: QCOM_RPMH fix build with modular QCOM_RPMH
-Message-ID: <20201028143521.GD19979@codeaurora.org>
-References: <20201027111422.4008114-1-anders.roxell@linaro.org>
- <20201027211536.GB19979@codeaurora.org>
- <CADYN=9LP1p9Kg0BJRHs5JMgfWKB-vHxVkr=DdFt3Uyb5Ka0=UQ@mail.gmail.com>
+        id S2389835AbgJ1Wzo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 28 Oct 2020 18:55:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60034 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2389842AbgJ1Wzn (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 28 Oct 2020 18:55:43 -0400
+Received: from mail-wm1-x343.google.com (mail-wm1-x343.google.com [IPv6:2a00:1450:4864:20::343])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1E200C0613CF
+        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Oct 2020 15:55:42 -0700 (PDT)
+Received: by mail-wm1-x343.google.com with SMTP id c18so766352wme.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Oct 2020 15:55:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=zrUkUnQWdd+Y/Q8i7IOb2KIFyQ5NaKYRP/IYCUM5/+o=;
+        b=JrISsXlyRVaK23OpNAQoKp7miwW6GWni2F4aktn0FHoa2pYYDJAM5bgevk5mGCAmcb
+         TxNkGiJk4LVTwLSfB22U8RzOJNxBQZkmKoWBOrgdwirKo0yFwscx2cJIPvLJS1oucsti
+         46RuIPA96cI6uuIVXOz/aiul4/A3EnykMCPB97d46zs4npDhHui51LvugX8PsXisuYAc
+         JcZMdH0a/PDKq4Hu1afYXYadQIlBr4UhKGY/e7gM8D/jM/juHmTav/9SmEskI/h374PL
+         9zdmk0MDpmtovVF4oOJrMbT//x1fqnDH2WwGdgf6xC8Hrlr0ciOiMvLk5DK2YsYPiq8g
+         c5aA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=zrUkUnQWdd+Y/Q8i7IOb2KIFyQ5NaKYRP/IYCUM5/+o=;
+        b=uM61et1Hx7mnnCf0SBLYABOjodfRf2wY+LjHUTxTJmDo97VaVSjg5y/8Idk0nhFATk
+         QoWbBqUN/LqKEJCu0D59MWViXCnS+9K1weYmGsX6dp4pmAI/mW9YW9A0+b99ZBYZyNzn
+         H4MGfar+EfNWoRGLMuZqPHjAAPJ18kRD7T13RKhE7zLsFlVsj8LP6ucZe1emsQtNaBvz
+         9OGcC2708SQXr8M7DzM5UyAvuf3CXspZlkMggNR+vycDx2fwDhhdT9LsoATJtq9VzzyI
+         wZTVU7GPak0P07SjE786LaGbrXEAWm5cKwbXnlvuxNIp0tWYNx+CPAWhyfreye7RTOOJ
+         AfjQ==
+X-Gm-Message-State: AOAM530woPA9/ift/LtE1ESEs6fPxO1aS3XUXsCKbYc9jGx16DSXLbCz
+        g/ZoN9DUO2cT20193kx1R7PvXHShbiEkrw==
+X-Google-Smtp-Source: ABdhPJz6KFPLqOpMtLn/WZ00OwZap4cgejbdYYKNUcMROfqSYDKD75hda1r765JOz5gvn1Lj7mQU3A==
+X-Received: by 2002:a7b:c1d5:: with SMTP id a21mr5110912wmj.38.1603896980631;
+        Wed, 28 Oct 2020 07:56:20 -0700 (PDT)
+Received: from holly.lan (cpc141216-aztw34-2-0-cust174.18-1.cable.virginm.net. [80.7.220.175])
+        by smtp.gmail.com with ESMTPSA id s2sm7540795wmh.9.2020.10.28.07.56.19
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 28 Oct 2020 07:56:19 -0700 (PDT)
+Date:   Wed, 28 Oct 2020 14:56:17 +0000
+From:   Daniel Thompson <daniel.thompson@linaro.org>
+To:     Alexandru Stan <amstan@chromium.org>
+Cc:     Heiko Stuebner <heiko@sntech.de>, Rob Herring <robh+dt@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= 
+        <u.kleine-koenig@pengutronix.de>, Lee Jones <lee.jones@linaro.org>,
+        Jingoo Han <jingoohan1@gmail.com>,
+        Bartlomiej Zolnierkiewicz <b.zolnierkie@samsung.com>,
+        Douglas Anderson <dianders@chromium.org>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        Enric Balletbo i Serra <enric.balletbo@collabora.com>,
+        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v3 2/3] arm64: dts: qcom: trogdor: Add brightness-levels
+Message-ID: <20201028145617.ermdpqomthxxj7qe@holly.lan>
+References: <20201022050445.930403-1-amstan@chromium.org>
+ <20201021220404.v3.2.Ie4d84af5a85e8dcb8f575845518fa39f324a827d@changeid>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <CADYN=9LP1p9Kg0BJRHs5JMgfWKB-vHxVkr=DdFt3Uyb5Ka0=UQ@mail.gmail.com>
+In-Reply-To: <20201021220404.v3.2.Ie4d84af5a85e8dcb8f575845518fa39f324a827d@changeid>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Oct 28 2020 at 03:43 -0600, Anders Roxell wrote:
->On Tue, 27 Oct 2020 at 22:15, Lina Iyer <ilina@codeaurora.org> wrote:
->>
->> Hi Anders,
->>
->> On Tue, Oct 27 2020 at 05:14 -0600, Anders Roxell wrote:
->> >When building allmodconfig leading to the following link error with
->> >CONFIG_QCOM_RPMH=y and CONFIG_QCOM_COMMAND_DB=m:
->> >
->> >aarch64-linux-gnu-ld: drivers/clk/qcom/clk-rpmh.o: in function `clk_rpmh_probe':
->> >  drivers/clk/qcom/clk-rpmh.c:474: undefined reference to `cmd_db_read_addr'
->> >  drivers/clk/qcom/clk-rpmh.c:474:(.text+0x254): relocation truncated to fit: R_AARCH64_CALL26 against undefined symbol `cmd_db_read_addr'
->> >
->> >Fix this by adding a Kconfig depenency and forcing QCOM_RPMH to be a
->> >module when QCOM_COMMAND_DB is a module. Also removing the dependency on
->> >'ARCH_QCOM || COMPILE_TEST' since that is already a dependency for
->> >QCOM_COMMAND_DB.
->> >
->> >Fixes: 778279f4f5e4 ("soc: qcom: cmd-db: allow loading as a module")
->> >Signed-off-by: Anders Roxell <anders.roxell@linaro.org>
->> >---
->> > drivers/soc/qcom/Kconfig | 2 +-
->> > 1 file changed, 1 insertion(+), 1 deletion(-)
->> >
->> >diff --git a/drivers/soc/qcom/Kconfig b/drivers/soc/qcom/Kconfig
->> >index 9b4ae9c16ba7..3bdd1604f78f 100644
->> >--- a/drivers/soc/qcom/Kconfig
->> >+++ b/drivers/soc/qcom/Kconfig
->> >@@ -109,7 +109,7 @@ config QCOM_RMTFS_MEM
->> >
->> > config QCOM_RPMH
->> >       tristate "Qualcomm RPM-Hardened (RPMH) Communication"
->> >-      depends on ARCH_QCOM || COMPILE_TEST
->> >+      depends on QCOM_COMMAND_DB
->> A solution was posted in the mailing list alredy -
->> https://lore.kernel.org/linux-arm-msm/20201008040907.7036-1-ilina@codeaurora.org/
->
->I missed that one, thanks.
->
->>
->> If you get a chance, please give that a shot to see if that works for
->> you.
->
->That will work too, but the "depends on ARCH_QCOM || COMPILE_TEST"
->isn't needed since that is already the dependency for QCOM_COMMAND_DB.
->So that should be met here too or am I missing something?
->
-Sure, if you want to post an update to the patch, that would be fine
-too.
-Bjorn: Have you picked up this patch yet? If he hasn't please feel free
-to update the patch. Or, I can do that as well.
+On Wed, Oct 21, 2020 at 10:04:44PM -0700, Alexandru Stan wrote:
+> We want userspace to represent the human perceived brightness.
+> Since the led drivers and the leds themselves don't have a
+> linear response to the value we give them in terms of perceived
+> brightness, we'll bake the curve into the dts.
+> 
+> The panel also doesn't have a good response under 5%, so we'll avoid
+> sending it anything lower than that.
+> 
+> Note: Ideally this patch should be coupled with the driver change from
+> "backlight: pwm_bl: Fix interpolation", but it can work without it,
+> without looking too ugly.
+> 
+> Signed-off-by: Alexandru Stan <amstan@chromium.org>
 
---Lina
+Acked-by: Daniel Thompson <daniel.thompson@linaro.org>
 
->Cheers,
->Anders
->
->>
->> Thanks,
->> Lina
->>
->> >       help
->> >         Support for communication with the hardened-RPM blocks in
->> >         Qualcomm Technologies Inc (QTI) SoCs. RPMH communication uses an
->> >--
->> >2.28.0
->> >
+
+
+> ---
+> 
+>  arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi | 9 +++++++++
+>  1 file changed, 9 insertions(+)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
+> index bf875589d364..ccdabc6c4994 100644
+> --- a/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
+> @@ -179,6 +179,15 @@ pp3300_fp_tp: pp3300-fp-tp-regulator {
+>  	backlight: backlight {
+>  		compatible = "pwm-backlight";
+>  
+> +		/* The panels don't seem to like anything below ~ 5% */
+> +		brightness-levels = <
+> +			196 256 324 400 484 576 676 784 900 1024 1156 1296
+> +			1444 1600 1764 1936 2116 2304 2500 2704 2916 3136
+> +			3364 3600 3844 4096
+> +		>;
+> +		num-interpolated-steps = <64>;
+> +		default-brightness-level = <951>;
+> +
+>  		pwms = <&cros_ec_pwm 1>;
+>  		enable-gpios = <&tlmm 12 GPIO_ACTIVE_HIGH>;
+>  		power-supply = <&ppvar_sys>;
+> -- 
+> 2.28.0
