@@ -2,147 +2,121 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 68A0529D700
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Oct 2020 23:20:05 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 8763729D958
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Oct 2020 23:52:52 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731974AbgJ1WTb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 28 Oct 2020 18:19:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53812 "EHLO
+        id S1730921AbgJ1Wwv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 28 Oct 2020 18:52:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59432 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731787AbgJ1WTM (ORCPT
+        with ESMTP id S2389660AbgJ1WwJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 28 Oct 2020 18:19:12 -0400
-Received: from mail-ej1-x641.google.com (mail-ej1-x641.google.com [IPv6:2a00:1450:4864:20::641])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E233DC0613CF
-        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Oct 2020 15:19:11 -0700 (PDT)
-Received: by mail-ej1-x641.google.com with SMTP id p9so1138777eji.4
-        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Oct 2020 15:19:11 -0700 (PDT)
+        Wed, 28 Oct 2020 18:52:09 -0400
+Received: from mail-ed1-x541.google.com (mail-ed1-x541.google.com [IPv6:2a00:1450:4864:20::541])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 24E2DC0613CF
+        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Oct 2020 15:52:08 -0700 (PDT)
+Received: by mail-ed1-x541.google.com with SMTP id o18so1208394edq.4
+        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Oct 2020 15:52:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=X+9CMR89RIjvhaJgbEWulHsiFiBj9DskJPmBidEwcdM=;
-        b=vuCk5p61JvFkHGOOsrLLSTDQjp28EFuXH0Yuw8HCH43YEi24rlqU8xOTf7OLZmMugj
-         3LNYAwbQFQBPJ55akO5XMIlgfFmUQ9MHS71A9uPk9ZSz21vX2P4HOEkb/prZ1hDc1OKV
-         1n2RAMAccaVCh+Ksp6VQpAWzqtSeYMGkX75SOCb9erH6hu3n3rzZSxvvbU9rb/CrawkQ
-         vUR4J/DrAMIammIy4sz/Cp5+Q5WY/o4aZBBVSpBZyFwlaKO4sk+hUcI+19wuf2mdCKJW
-         0iqeOQ9Titv6LNeDjHVazmAHhBYO9rDs4cBify151VurI5K0Jq9V2sDGH6jJo3v5xTqZ
-         5Pcg==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=ZhjeIVE20A01faSTkSkIK60VFjLSoytoTo0XKrz+6B4=;
+        b=zu8OkdgvEeQB5FHxzaWvI2AP3L0lWAa9WeW+xXlDJ6+2pWLtNcXQ5wNIfCU4nVPyZv
+         sEX7S/Ni9gTmlZamKn0bW05wkV15F01qn6zniIAn7u9/60jhKJEgvNUnO9U4kHhNY/Cn
+         zbIVJOxbQkM1QvAYEs+hCssyigeioz7fnlnXpjOH6ZkLR+w5TfgG6MTITaep4Ty4/8g1
+         fY0KyBGgCtJe2nHb842duBifxaRzc/WF2lCINQ/181ahWtSpOlpKssnt8k5ySkQ5WlL+
+         46QBaO7okEHX78Jlyrm0lIxH/CFNiDyGNJmFnbaN1iQmilA2lpQlZrSXHOP0LX9Rv9Yf
+         8gTQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=X+9CMR89RIjvhaJgbEWulHsiFiBj9DskJPmBidEwcdM=;
-        b=q71lxsjQK8XRK8vxeccqWgm6YIcorBMYYH9by/QLC9MXW03s8WJwQPwAJsNOX+XMWQ
-         sdpC76PtWOOvVlGGHCepzFwV/ad3kY589nyX9eZpxrp9qCIRvVlm1xaF3cblKTTRrSD3
-         RHQ5sIzwJn7Ch6ZqgTJ7iZYcNgWWxmFtGZ0MwnfLUkIFnGLV8eORGTkzqb54Z5Zwp3IN
-         AR1jm8pKhPV7VshbAiXu3h/nTAumZRojHWU0AzCy2CxWwkZ4wxctomsQdcBy52gnjXVE
-         YkVfULRD1VAoXp7cNIxE/ldr3Pw/yYD09TXI82z0RgxDwrh7S0UeAIJS5KlZuMyIm1p/
-         QHfQ==
-X-Gm-Message-State: AOAM5322CkH0DFte5EmGH7YuhJSjpxOvNh9SO9LRZpJNMgxU+MUkmThZ
-        3ss2PlilQZIBeAniiyax1bARxMxUaHsn9EJl
-X-Google-Smtp-Source: ABdhPJx0P/i7X2q9h33qW+hh3xPqphMcYmpKicQgm75nTUdHpbY+h+XSQ+MRSmUCBIkAfiTvPWNsEA==
-X-Received: by 2002:a19:2294:: with SMTP id i142mr195623lfi.579.1603912199902;
-        Wed, 28 Oct 2020 12:09:59 -0700 (PDT)
-Received: from eriador.lan ([188.162.64.219])
-        by smtp.gmail.com with ESMTPSA id c7sm52595ljk.59.2020.10.28.12.09.58
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 28 Oct 2020 12:09:59 -0700 (PDT)
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Rob Herring <robh+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Subject: [PATCH 2/2] arm64: dts: qcom: rb5: Add support for uSD card
-Date:   Wed, 28 Oct 2020 22:09:55 +0300
-Message-Id: <20201028190955.1264526-2-dmitry.baryshkov@linaro.org>
-X-Mailer: git-send-email 2.28.0
-In-Reply-To: <20201028190955.1264526-1-dmitry.baryshkov@linaro.org>
-References: <20201028190955.1264526-1-dmitry.baryshkov@linaro.org>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=ZhjeIVE20A01faSTkSkIK60VFjLSoytoTo0XKrz+6B4=;
+        b=KILncalCMq8SdhOCV54YXbJVed06JN7P8rxS6/ugLm+2AWePCytT2d7bPjIZCNuWsy
+         Udr00mCYwZn0QPnwQ18MTAATbHlWmvsSsOcq4139SOVjjFDkojrqSdUWDNyO3Yvolu6M
+         5TGv6HkDr3j9jcqC/xL1htfBxRlvJbODM2IEgRFI1zlzCV6FpQW1yjo9iyLx1ad5R17j
+         tohUBjPxS26JLcDDcFGmpa5zpm3ng6Ig6rJdCeJ36Mq9+tpMl18cqy2e5YoFkyoU6227
+         RwWQj/7ywdoj+CxtxVrs45KIVWJX+DtYtC/m6owTBupkI3KdfQOkqu2+SPd8X7BXeGlA
+         Aw4Q==
+X-Gm-Message-State: AOAM533i98FRtBMCC0ZBag2ifq64FoftUt9g8Kut6TtvuvXjxyxutWvH
+        6bFObem6gYYQGBvyrCO48wGfuUfKe2IIiMTDSar/LoIss6jpfKLa
+X-Google-Smtp-Source: ABdhPJwSQkD6mafcdYyymrwBIsfD/N0YGAX8rdtfY3Ffnid6SuSqbtYCE2OHtfi22H2ousjzURn4kfC/HdDb1CQZ7Ic=
+X-Received: by 2002:a2e:8986:: with SMTP id c6mr3020719lji.29.1603878212020;
+ Wed, 28 Oct 2020 02:43:32 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20201027111422.4008114-1-anders.roxell@linaro.org> <20201027211536.GB19979@codeaurora.org>
+In-Reply-To: <20201027211536.GB19979@codeaurora.org>
+From:   Anders Roxell <anders.roxell@linaro.org>
+Date:   Wed, 28 Oct 2020 10:43:21 +0100
+Message-ID: <CADYN=9LP1p9Kg0BJRHs5JMgfWKB-vHxVkr=DdFt3Uyb5Ka0=UQ@mail.gmail.com>
+Subject: Re: [PATCH] soc: qcom: QCOM_RPMH fix build with modular QCOM_RPMH
+To:     Lina Iyer <ilina@codeaurora.org>
+Cc:     agross@kernel.org, Bjorn Andersson <bjorn.andersson@linaro.org>,
+        linux-arm-msm@vger.kernel.org,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        mkshah@codeaurora.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+On Tue, 27 Oct 2020 at 22:15, Lina Iyer <ilina@codeaurora.org> wrote:
+>
+> Hi Anders,
+>
+> On Tue, Oct 27 2020 at 05:14 -0600, Anders Roxell wrote:
+> >When building allmodconfig leading to the following link error with
+> >CONFIG_QCOM_RPMH=y and CONFIG_QCOM_COMMAND_DB=m:
+> >
+> >aarch64-linux-gnu-ld: drivers/clk/qcom/clk-rpmh.o: in function `clk_rpmh_probe':
+> >  drivers/clk/qcom/clk-rpmh.c:474: undefined reference to `cmd_db_read_addr'
+> >  drivers/clk/qcom/clk-rpmh.c:474:(.text+0x254): relocation truncated to fit: R_AARCH64_CALL26 against undefined symbol `cmd_db_read_addr'
+> >
+> >Fix this by adding a Kconfig depenency and forcing QCOM_RPMH to be a
+> >module when QCOM_COMMAND_DB is a module. Also removing the dependency on
+> >'ARCH_QCOM || COMPILE_TEST' since that is already a dependency for
+> >QCOM_COMMAND_DB.
+> >
+> >Fixes: 778279f4f5e4 ("soc: qcom: cmd-db: allow loading as a module")
+> >Signed-off-by: Anders Roxell <anders.roxell@linaro.org>
+> >---
+> > drivers/soc/qcom/Kconfig | 2 +-
+> > 1 file changed, 1 insertion(+), 1 deletion(-)
+> >
+> >diff --git a/drivers/soc/qcom/Kconfig b/drivers/soc/qcom/Kconfig
+> >index 9b4ae9c16ba7..3bdd1604f78f 100644
+> >--- a/drivers/soc/qcom/Kconfig
+> >+++ b/drivers/soc/qcom/Kconfig
+> >@@ -109,7 +109,7 @@ config QCOM_RMTFS_MEM
+> >
+> > config QCOM_RPMH
+> >       tristate "Qualcomm RPM-Hardened (RPMH) Communication"
+> >-      depends on ARCH_QCOM || COMPILE_TEST
+> >+      depends on QCOM_COMMAND_DB
+> A solution was posted in the mailing list alredy -
+> https://lore.kernel.org/linux-arm-msm/20201008040907.7036-1-ilina@codeaurora.org/
 
-Add support for uSD card on RB5 using the SDHC2 interface.
+I missed that one, thanks.
 
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-[DB: disabled 1.8V support to get SDHC to work]
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
----
- arch/arm64/boot/dts/qcom/qrb5165-rb5.dts | 41 ++++++++++++++++++++++++
- 1 file changed, 41 insertions(+)
+>
+> If you get a chance, please give that a shot to see if that works for
+> you.
 
-diff --git a/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts b/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts
-index 1528a865f1f8..aed00f707f1d 100644
---- a/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts
-+++ b/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts
-@@ -18,6 +18,7 @@ / {
- 
- 	aliases {
- 		serial0 = &uart12;
-+		sdhc2 = &sdhc_2;
- 	};
- 
- 	chosen {
-@@ -471,6 +472,20 @@ &qupv3_id_2 {
- 	status = "okay";
- };
- 
-+&sdhc_2 {
-+	status = "okay";
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&sdc2_default_state &sdc2_card_det_n>;
-+	vmmc-supply = <&vreg_l9c_2p96>;
-+	vqmmc-supply = <&vreg_l6c_2p96>;
-+	cd-gpios = <&tlmm 77 GPIO_ACTIVE_LOW>;
-+	bus-width = <4>;
-+	/* there seem to be issues with HS400-1.8V mode, so disable it */
-+	no-1-8-v;
-+	no-sdio;
-+	no-emmc;
-+};
-+
- /* CAN */
- &spi0 {
- 	status = "okay";
-@@ -659,6 +674,32 @@ &tlmm {
- 		"HST_BLE_SNS_UART_RX",
- 		"HST_WLAN_UART_TX",
- 		"HST_WLAN_UART_RX";
-+
-+	sdc2_default_state: sdc2-default {
-+		clk {
-+			pins = "sdc2_clk";
-+			bias-disable;
-+			drive-strength = <16>;
-+		};
-+
-+		cmd {
-+			pins = "sdc2_cmd";
-+			bias-pull-up;
-+			drive-strength = <16>;
-+		};
-+
-+		data {
-+			pins = "sdc2_data";
-+			bias-pull-up;
-+			drive-strength = <16>;
-+		};
-+	};
-+
-+	sdc2_card_det_n: sd-card-det-n {
-+		pins = "gpio77";
-+		function = "gpio";
-+		bias-pull-up;
-+	};
- };
- 
- &uart12 {
--- 
-2.28.0
+That will work too, but the "depends on ARCH_QCOM || COMPILE_TEST"
+isn't needed since that is already the dependency for QCOM_COMMAND_DB.
+So that should be met here too or am I missing something?
 
+Cheers,
+Anders
+
+>
+> Thanks,
+> Lina
+>
+> >       help
+> >         Support for communication with the hardened-RPM blocks in
+> >         Qualcomm Technologies Inc (QTI) SoCs. RPMH communication uses an
+> >--
+> >2.28.0
+> >
