@@ -2,203 +2,316 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 2A29229EAEE
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Oct 2020 12:46:16 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4263829EB65
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Oct 2020 13:13:56 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725379AbgJ2LqP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 29 Oct 2020 07:46:15 -0400
-Received: from mail-02.mail-europe.com ([51.89.119.103]:40696 "EHLO
-        mail-02.mail-europe.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725300AbgJ2LqO (ORCPT
+        id S1725982AbgJ2MNk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 29 Oct 2020 08:13:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44178 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725950AbgJ2MNj (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 29 Oct 2020 07:46:14 -0400
-Date:   Thu, 29 Oct 2020 11:46:04 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
-        s=protonmail; t=1603971969;
-        bh=alx00HFOahz26wEg9HUXveVnPCsuP2rcMdupvsuByN4=;
-        h=Date:To:From:Reply-To:Subject:From;
-        b=xoOyS1VHc1b1nTAe+clCqTCruCpb4TpN/IEnRRwqyZHFgJfygnaz/HArb54nw+oLw
-         ZCX6YWeJ9bBSW2gExKGMxPLtWw/6r1umKVm469wS0USAiGU8BY3DU59qxbWC5qO/ES
-         NdRSJiywYmX4KC04UvR6fN292mKX0ZdaAFRxS9go=
-To:     "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
-        "linux-scsi@vger.kernel.org" <linux-scsi@vger.kernel.org>
-From:   Yassine Oudjana <y.oudjana@protonmail.com>
-Reply-To: Yassine Oudjana <y.oudjana@protonmail.com>
-Subject: ufs: Unrecoverable UFSHCD_UIC_DL_TCx_REPLAY_ERROR after some write operations
-Message-ID: <Ax8WZP5mKeS4D-elLrXw3AUz9iT7Dgfh-VVWbSOiypPXlS9KRr6GFXhrlf2v6QrhWeFtheX0gYhM-zGawalUidf1noc1gE-TvinLrKryibc=@protonmail.com>
+        Thu, 29 Oct 2020 08:13:39 -0400
+Received: from mail-pl1-x641.google.com (mail-pl1-x641.google.com [IPv6:2607:f8b0:4864:20::641])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CC409C0613CF;
+        Thu, 29 Oct 2020 05:13:37 -0700 (PDT)
+Received: by mail-pl1-x641.google.com with SMTP id j5so1202383plk.7;
+        Thu, 29 Oct 2020 05:13:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=g7ZEDn15eyX1XeDKP5z4w+qUietYP3YvKn3vn65Qc0E=;
+        b=O2pvzOa6S8Ybvb5XjV0uWYBlsA0GFMm/Fk4bNuSnxqvWH2klL3473TfX0MZyOgcePE
+         jg3q9vIfonz4peRj1NOB1YUc4W71MW3LdI/NQwdBbbmd4XqRcXUV1S4ljy8JQOl6mAEG
+         Xf5JS3240Uryy+dhpli9H8oOWCNO7m2sdR/hVKtjr7PCEBJvi6ubTKvP9lYJn1fa9hZr
+         cPvHaF8m2rq9GVetErmhoh32E8orcecbnAcEyru+Jc3qaW94VZwcTZilRjG5PWSQ4/sj
+         ojkw20qNPhYXrxCU3ykudE17BfgKwyFicVr4BzDVio5FjeUfx1NA1FKHZJiOeFl9kiqU
+         QYEA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=g7ZEDn15eyX1XeDKP5z4w+qUietYP3YvKn3vn65Qc0E=;
+        b=tA7RT1osyr3AFlvqHouZMp5ZqgifwVbhnE8IBd9rKmW5SCx+BNg9kquLB8S8S+knN1
+         b7audU6/MCJZ+yRos760PhTdclnbMcRrFzqRo/jjagSMhA8mHV27MWcXa0iXw5eKoGP/
+         oqIrJHVxFDJHK70TF6+5y9hk0Ga8odI8r/NFcJwk9Gkz44lbe8/SjqxlowLxXKvtW5Z8
+         ouTHZOhSbloUC9UWF9lpwTPgm2qloL3zuZ4mb4sKpJfA6wxTFBQgsui4FIrPWIbZh2pB
+         JhrBYQEpeKfGRKgz6RKk9jUoi9o3fk105eehYrfGxZEocmM6LRIuhO2F9KruVu7A1n1y
+         l3OA==
+X-Gm-Message-State: AOAM530PpxNpj0oUh2cwVaC7ew9aAPaPssEOlJiHMWWrcpXTxyGzy3wH
+        sWI0Opv8sl6Fezs8kr8U6Lr+374+nG+YykaLD8g=
+X-Google-Smtp-Source: ABdhPJzQQtn9Lo5eT93NIA8y7EekBZVWR4mP9HtmRZxaja3G5tyjp2t60dDkJGJjK/oCSRSJHS6rB5KPpuR6HNPNgvY=
+X-Received: by 2002:a17:902:bc4a:b029:d6:7ef9:689c with SMTP id
+ t10-20020a170902bc4ab02900d67ef9689cmr3858929plz.21.1603973617254; Thu, 29
+ Oct 2020 05:13:37 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=-1.2 required=10.0 tests=ALL_TRUSTED,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM shortcircuit=no
-        autolearn=disabled version=3.4.4
-X-Spam-Checker-Version: SpamAssassin 3.4.4 (2020-01-24) on
-        mailout.protonmail.ch
+References: <20201017052057.2698588-1-bjorn.andersson@linaro.org>
+ <20201017052057.2698588-3-bjorn.andersson@linaro.org> <CAHp75VeVbK1Wx2BEPghtEbEghqDAF2jFFN9=ARLEw-rvTUZ3yw@mail.gmail.com>
+ <20201020042403.GE6705@builder.lan>
+In-Reply-To: <20201020042403.GE6705@builder.lan>
+From:   Andy Shevchenko <andy.shevchenko@gmail.com>
+Date:   Thu, 29 Oct 2020 14:14:26 +0200
+Message-ID: <CAHp75Vde5Qfe-Ycn69J_-8=GPpxChkp+L4WgrUsp+uK=NMdHug@mail.gmail.com>
+Subject: Re: [PATCH v5 2/4] leds: Add driver for Qualcomm LPG
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Pavel Machek <pavel@ucw.cz>, Dan Murphy <dmurphy@ti.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        "Uwe Kleine-K?nig" <u.kleine-koenig@pengutronix.de>,
+        Lee Jones <lee.jones@linaro.org>,
+        Martin Botka <martin.botka1@gmail.com>,
+        Linux LED Subsystem <linux-leds@vger.kernel.org>,
+        devicetree <devicetree@vger.kernel.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        linux-arm-msm@vger.kernel.org, linux-pwm@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-I'm trying to get the mainline kernel working on a Xiaomi Mi Note 2 with MS=
-M8996Pro and
-Samsung KLUCG4J1CB-B0B1, but I'm getting UFSHCD_UIC_DL_TCx_REPLAY_ERROR aft=
-er some write operations.
+On Tue, Oct 20, 2020 at 7:29 AM Bjorn Andersson
+<bjorn.andersson@linaro.org> wrote:
+> On Sun 18 Oct 15:12 CDT 2020, Andy Shevchenko wrote:
+> > On Sat, Oct 17, 2020 at 8:41 AM Bjorn Andersson
+> > <bjorn.andersson@linaro.org> wrote:
 
-I'm not certain what kind of write is causing it, but it never happens when=
- root is set to be
-mounted read-only, so I don't think it's reading that causes it. However, I=
- was able to write dmesg
-without any errors by using an initramfs hook, except that is before I get =
-the error.
+...
 
-As soon as it happens, it never recovers from it. It tries to reset, but it=
- just gets the error
-again after resetting.
+> > > +static int lpg_lut_store(struct lpg *lpg, struct led_pattern *pattern,
+> > > +                        size_t len, unsigned int *lo_idx, unsigned int *hi_idx)
+> > > +{
+> > > +       unsigned int idx;
+> > > +       u8 val[2];
+> >
+> > __be16 val;
+> >
+> > > +       int i;
+> > > +
+> > > +       /* Hardware does not behave when LO_IDX == HI_IDX */
+> > > +       if (len == 1)
+> > > +               return -EINVAL;
+> > > +
+> > > +       idx = bitmap_find_next_zero_area(lpg->lut_bitmap, lpg->lut_size,
+> > > +                                        0, len, 0);
+> > > +       if (idx >= lpg->lut_size)
+> > > +               return -ENOMEM;
+> > > +
+> > > +       for (i = 0; i < len; i++) {
+> > > +               val[0] = pattern[i].brightness & 0xff;
+> > > +               val[1] = pattern[i].brightness >> 8;
+> >
+> > cpu_to_be16();
+> >
+>
+> I like it, but isn't that a le16?
 
-UFS reset isn't defined currently in the msm8996 device tree, so I defined =
-it:
+Oh, yes.
 
---- a/arch/arm64/boot/dts/qcom/msm8996.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8996.dtsi
-@@ -1100,6 +1100,8 @@ ufshc: ufshc@624000 {
+> > > +               regmap_bulk_write(lpg->map,
+> > > +                                 lpg->lut_base + LPG_LUT_REG(idx + i), val, 2);
+> > > +       }
+> > > +
+> > > +       bitmap_set(lpg->lut_bitmap, idx, len);
+> > > +
+> > > +       *lo_idx = idx;
+> > > +       *hi_idx = idx + len - 1;
+> > > +
+> > > +       return 0;
+> > > +}
 
-                        lanes-per-direction =3D <1>;
-                        #reset-cells =3D <1>;
-+                       resets =3D <&gcc GCC_UFS_BCR>;
-+                       reset-names =3D "rst";
-                        status =3D "disabled";
+...
 
-                        ufs_variant {
+> > > +               period_n = (period_us * NSEC_PER_USEC) >> 6;
+> > > +               n = 6;
+> > > +       } else {
+> > > +               period_n = (period_us >> 9) * NSEC_PER_USEC;
+> > > +               n = 9;
 
-When I did that, PHY poweron started to fail (qcom_qmp_phy_power_on in the =
-PHY driver was
-timing out). I looked into the downstream kernel for this device, and found=
- out that it calibrates
-the PHY while the reset is asserted. So I did this and was able to "fix"(?)=
- it:
+> > Why inconsistency in branches? Can you rather derive n and calculate
+> > only once like
+> >
+> >            period_n = (period_us >> n) * NSEC_PER_USEC;
+> >
+> > ?
+>
+> I inherited this piece from the downstream driver and I assume that the
+> purpose was to avoid loss of precision. I will review this and if
+> nothing else it seems like I would be able to cast period_us to more
+> bits, do the multiply and then shift - in both cases.
 
---- a/drivers/scsi/ufs/ufs-qcom.c
-+++ b/drivers/scsi/ufs/ufs-qcom.c
-@@ -292,11 +294,9 @@ static int ufs_qcom_power_up_sequence(struct ufs_hba *=
-hba)
-        bool is_rate_B =3D (UFS_QCOM_LIMIT_HS_RATE =3D=3D PA_HS_MODE_B)
-                                                        ? true : false;
+Understood. Yes, please check if precision doesn't suffer and update
+accordingly.
 
--       /* Reset UFS Host Controller and PHY */
--       ret =3D ufs_qcom_host_reset(hba);
--       if (ret)
--               dev_warn(hba->dev, "%s: host reset returned %d\n",
--                                 __func__, ret);
-+       ufs_qcom_assert_reset(hba);
-+       /* provide 1ms delay to let the reset pulse propagate. */
-+       usleep_range(1000, 1100);
+...
 
-        if (is_rate_B)
-                phy_set_mode(phy, PHY_MODE_UFS_HS_B);
-@@ -309,11 +309,19 @@ static int ufs_qcom_power_up_sequence(struct ufs_hba =
-*hba)
-                goto out;
-        }
+> > > +static void lpg_calc_duty(struct lpg_channel *chan, unsigned int duty_us)
+> > > +{
+> > > +       unsigned long max = (1 << chan->pwm_size) - 1;
+> >
+> > BIT() ?
 
-+       ufs_qcom_deassert_reset(hba);
-+       /*
-+        * after reset deassertion, phy will need all ref clocks,
-+        * voltage, current to settle down before starting serdes.
-+        */
-+       usleep_range(1000, 1100);
-+
-        /* power on phy - start serdes and phy's power and clocks */
-        ret =3D phy_power_on(phy);
+Actually if you don't use BIT() here (or U suffix) it is UB for pwm_size == 31.
 
-Note that using reset_control_de/assert(host->core_reset) instead of ufs_qc=
-om_de/assert_reset(hba)
-didn't work. I thought it was only about the order of operations (PHY calib=
-ration before deasserting
-the reset), but it seems like there's more to it.
+> >
+> > > +       unsigned long val;
+> > > +
+> > > +       /* Figure out pwm_value with overflow handling */
+> >
+> > > +       if (duty_us < 1 << (sizeof(val) * 8 - chan->pwm_size))
+> >
+> > BITS_PER_TYPE, but actually BITS_PER_LONG here.
+> >
+> > BIT(BITS_PER_LONG - ...)
+> >
+>
+> Again, this seems to just be a question of avoiding overflow of the 32
+> bit duty_us. I'll double check the math here as well.
 
-Now phy poweron succeeds again, but it still isn't able to recover from
-UFSHCD_UIC_DL_TCx_REPLAY_ERROR when it happens.
+Can pwm_size be equal to 0?
 
-I also found some differences in the PHY calibration tables in the downstre=
-am kernel, so I changed
-them here:
+> > > +               val = (duty_us << chan->pwm_size) / chan->period_us;
+> > > +       else
+> > > +               val = duty_us / (chan->period_us >> chan->pwm_size);
+> > > +
+> > > +       if (val > max)
+> > > +               val = max;
+> > > +
+> > > +       chan->pwm_value = val;
+> > > +}
 
---- a/drivers/phy/qualcomm/phy-qcom-qmp.c
-+++ b/drivers/phy/qualcomm/phy-qcom-qmp.c
-@@ -461,22 +461,22 @@ static const struct qmp_phy_init_tbl msm8998_pcie_pcs=
-_tbl[] =3D {
- static const struct qmp_phy_init_tbl msm8996_ufs_serdes_tbl[] =3D {
-        QMP_PHY_INIT_CFG(QPHY_POWER_DOWN_CONTROL, 0x01),
-        QMP_PHY_INIT_CFG(QSERDES_COM_CMN_CONFIG, 0x0e),
--       QMP_PHY_INIT_CFG(QSERDES_COM_SYSCLK_EN_SEL, 0xd7),
-+       QMP_PHY_INIT_CFG(QSERDES_COM_SYSCLK_EN_SEL, 0x14),
-        QMP_PHY_INIT_CFG(QSERDES_COM_CLK_SELECT, 0x30),
--       QMP_PHY_INIT_CFG(QSERDES_COM_SYS_CLK_CTRL, 0x06),
-+       QMP_PHY_INIT_CFG(QSERDES_COM_SYS_CLK_CTRL, 0x02),
-        QMP_PHY_INIT_CFG(QSERDES_COM_BIAS_EN_CLKBUFLR_EN, 0x08),
-        QMP_PHY_INIT_CFG(QSERDES_COM_BG_TIMER, 0x0a),
--       QMP_PHY_INIT_CFG(QSERDES_COM_HSCLK_SEL, 0x05),
-+       QMP_PHY_INIT_CFG(QSERDES_COM_HSCLK_SEL, 0x00),
-        QMP_PHY_INIT_CFG(QSERDES_COM_CORECLK_DIV, 0x0a),
-        QMP_PHY_INIT_CFG(QSERDES_COM_CORECLK_DIV_MODE1, 0x0a),
-        QMP_PHY_INIT_CFG(QSERDES_COM_LOCK_CMP_EN, 0x01),
--       QMP_PHY_INIT_CFG(QSERDES_COM_VCO_TUNE_CTRL, 0x10),
-+       QMP_PHY_INIT_CFG(QSERDES_COM_VCO_TUNE_CTRL, 0x00),
-        QMP_PHY_INIT_CFG(QSERDES_COM_RESETSM_CNTRL, 0x20),
-        QMP_PHY_INIT_CFG(QSERDES_COM_CORE_CLK_EN, 0x00),
-        QMP_PHY_INIT_CFG(QSERDES_COM_LOCK_CMP_CFG, 0x00),
-        QMP_PHY_INIT_CFG(QSERDES_COM_VCO_TUNE_TIMER1, 0xff),
-        QMP_PHY_INIT_CFG(QSERDES_COM_VCO_TUNE_TIMER2, 0x3f),
--       QMP_PHY_INIT_CFG(QSERDES_COM_VCO_TUNE_MAP, 0x54),
-+       QMP_PHY_INIT_CFG(QSERDES_COM_VCO_TUNE_MAP, 0x44),
-        QMP_PHY_INIT_CFG(QSERDES_COM_SVS_MODE_CLK_SEL, 0x05),
-        QMP_PHY_INIT_CFG(QSERDES_COM_DEC_START_MODE0, 0x82),
-        QMP_PHY_INIT_CFG(QSERDES_COM_DIV_FRAC_START1_MODE0, 0x00),
-@@ -510,21 +510,40 @@ static const struct qmp_phy_init_tbl msm8996_ufs_serd=
-es_tbl[] =3D {
+...
 
- static const struct qmp_phy_init_tbl msm8996_ufs_tx_tbl[] =3D {
-        QMP_PHY_INIT_CFG(QSERDES_TX_HIGHZ_TRANSCEIVEREN_BIAS_DRVR_EN, 0x45)=
-,
--       QMP_PHY_INIT_CFG(QSERDES_TX_LANE_MODE, 0x02),
-+       QMP_PHY_INIT_CFG(QSERDES_TX_LANE_MODE, 0x06),
- };
+> > > +static int lpg_blink_set(struct lpg_led *led,
+> > > +                        unsigned long delay_on, unsigned long delay_off)
+> > > +{
+> > > +       struct lpg_channel *chan;
+> > > +       unsigned int period_us;
+> > > +       unsigned int duty_us;
+> > > +       int i;
+> > > +
+> > > +       if (!delay_on && !delay_off) {
+> > > +               delay_on = 500;
+> > > +               delay_off = 500;
+> > > +       }
+> >
+> > Homegrown duty cycle?
+> > I mean, why simply not to pass the duty cycle in percentage in the first place?
+>
+> Can you explain what you're saying here.
 
- static const struct qmp_phy_init_tbl msm8996_ufs_rx_tbl[] =3D {
-        QMP_PHY_INIT_CFG(QSERDES_RX_SIGDET_LVL, 0x24),
--       QMP_PHY_INIT_CFG(QSERDES_RX_SIGDET_CNTRL, 0x02),
--       QMP_PHY_INIT_CFG(QSERDES_RX_RX_INTERFACE_MODE, 0x00),
--       QMP_PHY_INIT_CFG(QSERDES_RX_SIGDET_DEGLITCH_CNTRL, 0x18),
--       QMP_PHY_INIT_CFG(QSERDES_RX_UCDR_FASTLOCK_FO_GAIN, 0x0B),
-+       QMP_PHY_INIT_CFG(QSERDES_RX_SIGDET_CNTRL, 0x0f),
-+       QMP_PHY_INIT_CFG(QSERDES_RX_RX_INTERFACE_MODE, 0x40),
-+       QMP_PHY_INIT_CFG(QSERDES_RX_SIGDET_DEGLITCH_CNTRL, 0x1e),
-+       QMP_PHY_INIT_CFG(QSERDES_RX_UCDR_FASTLOCK_FO_GAIN, 0x0b),
-        QMP_PHY_INIT_CFG(QSERDES_RX_RX_TERM_BW, 0x5b),
-        QMP_PHY_INIT_CFG(QSERDES_RX_RX_EQ_GAIN1_LSB, 0xff),
-        QMP_PHY_INIT_CFG(QSERDES_RX_RX_EQ_GAIN1_MSB, 0x3f),
-        QMP_PHY_INIT_CFG(QSERDES_RX_RX_EQ_GAIN2_LSB, 0xff),
--       QMP_PHY_INIT_CFG(QSERDES_RX_RX_EQ_GAIN2_MSB, 0x0f),
--       QMP_PHY_INIT_CFG(QSERDES_RX_RX_EQU_ADAPTOR_CNTRL2, 0x0E),
-+       QMP_PHY_INIT_CFG(QSERDES_RX_RX_EQ_GAIN2_MSB, 0x3f),
-+       QMP_PHY_INIT_CFG(QSERDES_RX_RX_EQU_ADAPTOR_CNTRL2, 0x0d),
-};
+Why not to use duty cycle (in %) and period (in us) as a parameter to
+the function directly?
 
-That didn't change anything either.
+> > > +       duty_us = delay_on * USEC_PER_MSEC;
+> > > +       period_us = (delay_on + delay_off) * USEC_PER_MSEC;
+> > > +
+> > > +       for (i = 0; i < led->num_channels; i++) {
+> > > +               chan = led->channels[i];
+> > > +
+> > > +               lpg_calc_freq(chan, period_us);
+> > > +               lpg_calc_duty(chan, duty_us);
+> > > +
+> > > +               chan->enabled = true;
+> > > +               chan->ramp_enabled = false;
+> > > +
+> > > +               lpg_apply(chan);
+> > > +       }
+> > > +
+> > > +       return 0;
+> > > +}
 
-I noticed that in downstream there are 3 slightly different calibration tab=
-les for host versions
-2.0.0, 2.1.0, and 2.2.0 which this device has.
-Also, I noticed that QSERDES_COM_VCO_TUNE_MAP differs between rate A and B,=
- where it's set to 0x14
-for rate A, and to 0x54 for rate B. This was done on mainline too until the=
- 14nm-specific QMP PHY
-driver and others were combined into one driver (phy-qcom-qmp.c), and after=
- then only the rate B
-value 0x54 is used always.
-Those aren't necessarily related to this issue, but I thought I'd mention t=
-hem since I noticed them
-on my way.
+...
 
-What else could be causing this?
+> > Can you rather create a generic one under lib/ or start include/linux/math.h ?
 
-Using the mainline tree at 4525c8781ec0701ce824e8bd379ae1b129e26568
+> Forgot about this, but I've seen one on LKML, will find it and work on
+> getting that accepted.
+
+Note, I have submitted the patch that splits out math.h from kernel.h
+(it's in Andrew's quilt and in Linux Next as of today), you may send a
+follow up patch that adds this functionality.
+
+...
+
+> > > +       ret = of_property_read_u32(np, "color", &color);
+> > > +       if (ret < 0 && ret != -EINVAL)
+> >
+> > This check is fishy. Either you have optional property or not, in the
+> > latter case return any error code.
+> >
+>
+> There's three possible outcomes here:
+> 1) We found _one_ integer in the property, color is assigned and 0 is
+> returned.
+
+I didn't get this. Doesn't your YAML schema say that it must be a
+single integer?
+
+> 2) We found no property named "color", -EINVAL is returned without color
+> being modified.
+> 3) We found a property but it wasn't a single u32 value so a negative
+> error (not EINVAL) is returned.
+>
+> > > +               return ret;
+> > > +
+> > > +       chan->color = color;
+> >
+> > So, it may be -EINVAL?!
+> >
+>
+> So color will either be the value or the property color, or if omitted
+> LED_COLOR_ID_GREEN.
+
+If property is optional, we do simple
+
+ret = of_read_property_...(&x);
+if (ret)
+ x = default_value;
+
+Otherwise simple
+ret = ...
+if (ret)
+  return ret;
+
+is sufficient.
+
+What you have done is a little bit unusual.
+
+...
+
+> > > +       ret = of_property_read_u32_array(np, "qcom,dtest", dtest, 2);
+> > > +       if (ret < 0 && ret != -EINVAL) {
+> > > +               dev_err(lpg->dev, "malformed qcom,dtest of %pOFn\n", np);
+> > > +               return ret;
+> > > +       } else if (!ret) {
+> > > +               chan->dtest_line = dtest[0];
+> > > +               chan->dtest_value = dtest[1];
+> > > +       }
+> >
+> > Ditto.
+> >
+>
+> We're in !ret and as such dtest is initialized.
+
+As above.
+
+...
+
+> > > +       ret = of_property_read_u32(np, "color", &color);
+> > > +       if (ret < 0 && ret != -EINVAL)
+> > > +               return ret;
+> >
+> > Ditto.
+> >
+>
+> As above, if no property color is specified, color remains 0 here which
+> is not LED_COLOR_ID_MULTI and this is a single channel LED without its
+> color specified.
+
+As above.
+
+-- 
+With Best Regards,
+Andy Shevchenko
