@@ -2,39 +2,43 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 23CB729E67E
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Oct 2020 09:37:27 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 57A4B29E682
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Oct 2020 09:38:43 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725982AbgJ2IhS convert rfc822-to-8bit (ORCPT
+        id S1725808AbgJ2Iil convert rfc822-to-8bit (ORCPT
         <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 29 Oct 2020 04:37:18 -0400
-Received: from relay4-d.mail.gandi.net ([217.70.183.196]:50603 "EHLO
-        relay4-d.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725747AbgJ2IhS (ORCPT
+        Thu, 29 Oct 2020 04:38:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38786 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729975AbgJ2Ii1 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 29 Oct 2020 04:37:18 -0400
-X-Greylist: delayed 2606 seconds by postgrey-1.27 at vger.kernel.org; Thu, 29 Oct 2020 04:37:16 EDT
-X-Originating-IP: 91.224.148.103
-Received: from xps13 (unknown [91.224.148.103])
-        (Authenticated sender: miquel.raynal@bootlin.com)
-        by relay4-d.mail.gandi.net (Postfix) with ESMTPSA id E16B8E0014;
-        Thu, 29 Oct 2020 08:37:12 +0000 (UTC)
-Date:   Thu, 29 Oct 2020 09:37:11 +0100
-From:   Miquel Raynal <miquel.raynal@bootlin.com>
-To:     mdalam@codeaurora.org
-Cc:     agross@kernel.org, bjorn.andersson@linaro.org, richard@nod.at,
-        vigneshr@ti.com, robh+dt@kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-mtd@lists.infradead.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, sricharan@codeaurora.org
+        Thu, 29 Oct 2020 04:38:27 -0400
+Received: from bhuna.collabora.co.uk (bhuna.collabora.co.uk [IPv6:2a00:1098:0:82:1000:25:2eeb:e3e3])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A20E2C0613D2;
+        Thu, 29 Oct 2020 01:38:27 -0700 (PDT)
+Received: from localhost (unknown [IPv6:2a01:e0a:2c:6930:5cf4:84a1:2763:fe0d])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: bbrezillon)
+        by bhuna.collabora.co.uk (Postfix) with ESMTPSA id 9CEF41F45880;
+        Thu, 29 Oct 2020 08:38:24 +0000 (GMT)
+Date:   Thu, 29 Oct 2020 09:38:16 +0100
+From:   Boris Brezillon <boris.brezillon@collabora.com>
+To:     Miquel Raynal <miquel.raynal@bootlin.com>
+Cc:     mdalam@codeaurora.org, devicetree@vger.kernel.org, vigneshr@ti.com,
+        richard@nod.at, linux-kernel@vger.kernel.org, robh+dt@kernel.org,
+        bjorn.andersson@linaro.org, agross@kernel.org,
+        linux-mtd@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+        sricharan@codeaurora.org
 Subject: Re: [PATCH 0/5] mtd: rawnand: qcom: Add support for QSPI nand
-Message-ID: <20201029093711.0c7c5903@xps13>
+Message-ID: <20201029093816.7dab154a@collabora.com>
 In-Reply-To: <20201029085344.5b2a4b51@xps13>
 References: <1602307902-16761-1-git-send-email-mdalam@codeaurora.org>
         <20201028104835.3dc31745@xps13>
         <10db598eed716d7759bc0125b6977cf1@codeaurora.org>
         <20201029085344.5b2a4b51@xps13>
-Organization: Bootlin
-X-Mailer: Claws Mail 3.17.4 (GTK+ 2.24.32; x86_64-pc-linux-gnu)
+Organization: Collabora
+X-Mailer: Claws Mail 3.17.7 (GTK+ 2.24.32; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8BIT
@@ -42,9 +46,8 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-Miquel Raynal <miquel.raynal@bootlin.com> wrote on Thu, 29 Oct 2020
-08:53:44 +0100:
+On Thu, 29 Oct 2020 08:53:44 +0100
+Miquel Raynal <miquel.raynal@bootlin.com> wrote:
 
 > Hello,
 > 
@@ -100,12 +103,20 @@ Miquel Raynal <miquel.raynal@bootlin.com> wrote on Thu, 29 Oct 2020
 > > raw/qcom_nand.c code will get duplicated. Would it be ok ?  
 > 
 > What about moving the generic code to drivers/mtd/nand/common/ and
+
+Yeah, I don't think drivers/mtd/nand/common/ is the right place to put
+this common code TBH, and I don't really see what's to be shared between
+the NAND controller and SPI controller drivers. If it's just helpers to
+access the registers, those can probably live in
+drivers/soc/qcom/qcom_qpic2.c.
+
 > referring to it from drivers/mtd/nand/raw/qcom_nand.c and
 > drivers/spi/spi-qcom.c (or such)?
+> 
+> Thanks,
+> Miquèl
+> 
+> ______________________________________________________
+> Linux MTD discussion mailing list
+> http://lists.infradead.org/mailman/listinfo/linux-mtd/
 
-Actually, perhaps drivers/memory/ is the right location for the generic
-bits.
-
-
-Thanks,
-Miquèl
