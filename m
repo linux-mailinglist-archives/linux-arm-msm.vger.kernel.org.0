@@ -2,104 +2,143 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D0A7629DC15
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Oct 2020 01:21:21 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C617529DC1B
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Oct 2020 01:21:32 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729452AbgJ2AVJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 28 Oct 2020 20:21:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45582 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727327AbgJ2AUl (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 28 Oct 2020 20:20:41 -0400
-Received: from mail-oi1-x244.google.com (mail-oi1-x244.google.com [IPv6:2607:f8b0:4864:20::244])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5F1C9C0613CF
-        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Oct 2020 17:20:40 -0700 (PDT)
-Received: by mail-oi1-x244.google.com with SMTP id u127so1491814oib.6
-        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Oct 2020 17:20:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=jIZlLkBGOaSCnIwNpEnTip+DsnvhRjSeNkOjB+Yd+ok=;
-        b=PCHRnFRwqwsKJJ5M+mco+ElTez4O8L3YDFzeoNiyk311geH2rJYyanqJUZ3N7mOTbl
-         rEf257iZUOcxRXcw0go56TL3iQT5s/E1P3e7avybksjv65KPra4j18/caH3ktdX6l0pB
-         0/V6rCilg7g4FnsAnhv8gK0glFd9QKy+RVSxcU1bIRca/Gyk2/h+qiKWwEMxDIYj4Mc+
-         X2uX8+BJ29eR4Gh8+16CSdPSwIj5eO3W+Y+UxnkI1OLtZtB7sMwnExtE4HFf3D7rz25C
-         h0LzudKfmOVfccn244rOCLPbPW5UzJkBgZkeAXPuEz+hplFq+4+6PxNjHRD+YMEfZk/A
-         5a5Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=jIZlLkBGOaSCnIwNpEnTip+DsnvhRjSeNkOjB+Yd+ok=;
-        b=WD0BeOLOyBnIlE/LtM5/eTIBDgeLE2Z1utaSRGcca+bNJyLEkZ+PHPi+FrRpSTIaOF
-         inwk7ISRAkpBbwOQ277JJ1p8J3Acu7Kg5hRSg047rESFFJk3z4nB1YEm7X4oTYtLfeCQ
-         NvVomy/mOuPwKcZDUgrP/p41uZAS+wiqlWBZJTsIEy7ZS4wmksZ517xWBpyM+a9gg18b
-         fwghYDGN7jKL35mh1Wzk3/yoyew3+xej8EjfYQuOw4d9dH+TN8751pNixTuhT50wQYNv
-         hxvM3CFRUmCiJyXP1zcN06lKYU4bf2DAnaAoyiBx3hQCurR8xayKrmQxvJpENzc926s0
-         2mJg==
-X-Gm-Message-State: AOAM533h92AdhG/GmB3jmSUEPP1dGLmzBJJcK1gHd4ldOVwXtssZmzPu
-        oyYTN81OTmGlG7w6T0qUaTtw9y3Rl6U2Pg==
-X-Google-Smtp-Source: ABdhPJyPdN3crNv7lr1M+2z+kGHhyGKYAxmq3EZajtACi9dxmOlgg07OqSdunTw2SebagLvRbRcwWQ==
-X-Received: by 2002:aca:b606:: with SMTP id g6mr3778610oif.22.1603860058922;
-        Tue, 27 Oct 2020 21:40:58 -0700 (PDT)
-Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id a17sm1176487otl.77.2020.10.27.21.40.57
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 27 Oct 2020 21:40:58 -0700 (PDT)
-Date:   Tue, 27 Oct 2020 23:40:56 -0500
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>, linux-arm-msm@vger.kernel.org,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org
-Subject: Re: [PATCH] arm64: dts: qcom: sm8250: remove wakeup-parent for TLMM
- node
-Message-ID: <20201028044056.GA3151@builder.lan>
-References: <20201027015420.908945-1-dmitry.baryshkov@linaro.org>
+        id S2390908AbgJ2AV3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 28 Oct 2020 20:21:29 -0400
+Received: from bilbo.ozlabs.org ([203.11.71.1]:44765 "EHLO ozlabs.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727315AbgJ2AV1 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 28 Oct 2020 20:21:27 -0400
+Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange ECDHE (P-256) server-signature RSA-PSS (4096 bits) server-digest SHA256)
+        (No client certificate requested)
+        by mail.ozlabs.org (Postfix) with ESMTPSA id 4CM5hY1c5jz9sTf;
+        Thu, 29 Oct 2020 11:21:17 +1100 (AEDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=ellerman.id.au;
+        s=201909; t=1603930883;
+        bh=1H+0lWYSxaRNRPccmOFzTYzYgErk8Jx3rJ+1kAphuRA=;
+        h=From:To:Cc:Subject:In-Reply-To:References:Date:From;
+        b=fBZNMVGf2DpDigzvlO5EFKrSfhcHEKaclKWRSpd0rMT3nijHNgh+K7YZaMcJgG+I1
+         Sqp0aSWWEEdsZy58/OpXsqjKdLh1Go0930GvCaNP/rPdkcm6jj8VLu+RtZAYju7Lwv
+         1OyJzCDTJEPo7fb3YVK+7vVSD947EigxRUEp47FaWl3boTdjoiwTlcbdL3lqCGS/Ir
+         HjS3q0q57c4NP98/lAG95E/PIIhVcbnSgznNbTvydd0ukv+wu90vIX/fgrejZmKL/x
+         fFgnf7BJJuzQ19szmCiiqO1GyzQ9nRbhKLLimDSXto/YVs3qcf351XsGaZm3WEkFCR
+         8YPZdn5UhcwWA==
+From:   Michael Ellerman <mpe@ellerman.id.au>
+To:     Rob Herring <robh@kernel.org>,
+        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>
+Cc:     Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
+        Neil Armstrong <narmstrong@baylibre.com>,
+        linux-pci@vger.kernel.org,
+        Binghui Wang <wangbinghui@hisilicon.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        linux-tegra@vger.kernel.org,
+        Thierry Reding <thierry.reding@gmail.com>,
+        linux-arm-kernel@axis.com,
+        Thomas Petazzoni <thomas.petazzoni@bootlin.com>,
+        Jonathan Chocron <jonnyc@amazon.com>,
+        Shawn Guo <shawnguo@kernel.org>,
+        Jonathan Hunter <jonathanh@nvidia.com>,
+        Fabio Estevam <festevam@gmail.com>,
+        Jerome Brunet <jbrunet@baylibre.com>,
+        Jesper Nilsson <jesper.nilsson@axis.com>,
+        linux-samsung-soc@vger.kernel.org,
+        Minghuan Lian <minghuan.Lian@nxp.com>,
+        Kevin Hilman <khilman@baylibre.com>,
+        Pratyush Anand <pratyush.anand@gmail.com>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        Kishon Vijay Abraham I <kishon@ti.com>,
+        Kukjin Kim <kgene@kernel.org>,
+        NXP Linux Team <linux-imx@nxp.com>,
+        Xiaowei Song <songxiaowei@hisilicon.com>,
+        Richard Zhu <hongxing.zhu@nxp.com>,
+        Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
+        linux-arm-msm@vger.kernel.org,
+        Sascha Hauer <s.hauer@pengutronix.de>,
+        Yue Wang <yue.wang@Amlogic.com>,
+        Murali Karicheri <m-karicheri2@ti.com>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        linux-amlogic@lists.infradead.org, linux-omap@vger.kernel.org,
+        Mingkai Hu <mingkai.hu@nxp.com>, Roy Zang <roy.zang@nxp.com>,
+        Masahiro Yamada <yamada.masahiro@socionext.com>,
+        Jingoo Han <jingoohan1@gmail.com>,
+        Andy Gross <agross@kernel.org>,
+        Stanimir Varbanov <svarbanov@mm-sol.com>,
+        Pengutronix Kernel Team <kernel@pengutronix.de>,
+        Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
+        linuxppc-dev@lists.ozlabs.org, Lucas Stach <l.stach@pengutronix.de>
+Subject: Re: [PATCH 01/13] PCI: dwc/imx6: Drop setting PCI_MSI_FLAGS_ENABLE
+In-Reply-To: <20201028204646.356535-2-robh@kernel.org>
+References: <20201028204646.356535-1-robh@kernel.org> <20201028204646.356535-2-robh@kernel.org>
+Date:   Thu, 29 Oct 2020 11:21:16 +1100
+Message-ID: <87h7qdx4oz.fsf@mpe.ellerman.id.au>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20201027015420.908945-1-dmitry.baryshkov@linaro.org>
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon 26 Oct 20:54 CDT 2020, Dmitry Baryshkov wrote:
+Rob Herring <robh@kernel.org> writes:
+> No other host driver sets the PCI_MSI_FLAGS_ENABLE bit, so it must not
+> be necessary. If it is, a comment is needed.
 
-> On SM8250 TLMM doesn't use PDC interrupt controller for wakeup events.
-> Instead it handles them on their own (not implemented yet). In addition
-> setting wakeup-parent property to &pdc will result in parent hwirq being
-> set to ~0UL, which interact badly with the irqdomains trimming code. So
-> remove the wakeup-parent property.
-> 
+Yeah, but git blame directly points to:
 
-Would you accept this patch instead?
+  75cb8d20c112 ("PCI: imx: Enable MSI from downstream components")
 
-https://lore.kernel.org/r/20201028043642.1141723-1-bjorn.andersson@linaro.org
+Which has a pretty long explanation. The relevant bit probably being:
 
-Regards,
-Bjorn
+  ... on i.MX6, the MSI Enable bit controls delivery of MSI interrupts
+  from components below the Root Port.
 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> Fixes: 16951b490b20 ("arm64: dts: qcom: sm8250: Add TLMM pinctrl node")
+
+So it seems a little rash to just remove the code.
+
+cheers
+
+
+> Cc: Richard Zhu <hongxing.zhu@nxp.com>
+> Cc: Lucas Stach <l.stach@pengutronix.de>
+> Cc: Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>
+> Cc: Bjorn Helgaas <bhelgaas@google.com>
+> Cc: Shawn Guo <shawnguo@kernel.org>
+> Cc: Sascha Hauer <s.hauer@pengutronix.de>
+> Cc: Pengutronix Kernel Team <kernel@pengutronix.de>
+> Cc: Fabio Estevam <festevam@gmail.com>
+> Cc: NXP Linux Team <linux-imx@nxp.com>
+> Signed-off-by: Rob Herring <robh@kernel.org>
 > ---
->  arch/arm64/boot/dts/qcom/sm8250.dtsi | 1 -
->  1 file changed, 1 deletion(-)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/sm8250.dtsi b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-> index ccbdb47d6119..77ea20421752 100644
-> --- a/arch/arm64/boot/dts/qcom/sm8250.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-> @@ -2418,7 +2418,6 @@ tlmm: pinctrl@f100000 {
->  			interrupt-controller;
->  			#interrupt-cells = <2>;
->  			gpio-ranges = <&tlmm 0 0 180>;
-> -			wakeup-parent = <&pdc>;
+>  drivers/pci/controller/dwc/pci-imx6.c | 8 --------
+>  1 file changed, 8 deletions(-)
+>
+> diff --git a/drivers/pci/controller/dwc/pci-imx6.c b/drivers/pci/controller/dwc/pci-imx6.c
+> index 5cf1ef12fb9b..7dd137d62dca 100644
+> --- a/drivers/pci/controller/dwc/pci-imx6.c
+> +++ b/drivers/pci/controller/dwc/pci-imx6.c
+> @@ -1002,7 +1002,6 @@ static int imx6_pcie_probe(struct platform_device *pdev)
+>  	struct resource *dbi_base;
+>  	struct device_node *node = dev->of_node;
+>  	int ret;
+> -	u16 val;
 >  
->  			pri_mi2s_sck_active: pri-mi2s-sck-active {
->  				mux {
+>  	imx6_pcie = devm_kzalloc(dev, sizeof(*imx6_pcie), GFP_KERNEL);
+>  	if (!imx6_pcie)
+> @@ -1167,13 +1166,6 @@ static int imx6_pcie_probe(struct platform_device *pdev)
+>  	if (ret < 0)
+>  		return ret;
+>  
+> -	if (pci_msi_enabled()) {
+> -		u8 offset = dw_pcie_find_capability(pci, PCI_CAP_ID_MSI);
+> -		val = dw_pcie_readw_dbi(pci, offset + PCI_MSI_FLAGS);
+> -		val |= PCI_MSI_FLAGS_ENABLE;
+> -		dw_pcie_writew_dbi(pci, offset + PCI_MSI_FLAGS, val);
+> -	}
+> -
+>  	return 0;
+>  }
+>  
 > -- 
-> 2.28.0
-> 
+> 2.25.1
