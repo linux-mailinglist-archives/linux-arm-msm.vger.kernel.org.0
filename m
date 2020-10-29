@@ -2,103 +2,128 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id BCAA129E5E6
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Oct 2020 09:12:47 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7A1CA29E5C8
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Oct 2020 09:07:40 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726512AbgJ2IMq convert rfc822-to-8bit (ORCPT
-        <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 29 Oct 2020 04:12:46 -0400
-Received: from mslow2.mail.gandi.net ([217.70.178.242]:50866 "EHLO
-        mslow2.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727021AbgJ2IMo (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 29 Oct 2020 04:12:44 -0400
-Received: from relay1-d.mail.gandi.net (unknown [217.70.183.193])
-        by mslow2.mail.gandi.net (Postfix) with ESMTP id 442083B29ED;
-        Thu, 29 Oct 2020 07:54:20 +0000 (UTC)
-X-Originating-IP: 91.224.148.103
-Received: from xps13 (unknown [91.224.148.103])
-        (Authenticated sender: miquel.raynal@bootlin.com)
-        by relay1-d.mail.gandi.net (Postfix) with ESMTPSA id 1E0AC240002;
-        Thu, 29 Oct 2020 07:53:45 +0000 (UTC)
-Date:   Thu, 29 Oct 2020 08:53:44 +0100
-From:   Miquel Raynal <miquel.raynal@bootlin.com>
-To:     mdalam@codeaurora.org
-Cc:     agross@kernel.org, bjorn.andersson@linaro.org, richard@nod.at,
-        vigneshr@ti.com, robh+dt@kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-mtd@lists.infradead.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, sricharan@codeaurora.org
-Subject: Re: [PATCH 0/5] mtd: rawnand: qcom: Add support for QSPI nand
-Message-ID: <20201029085344.5b2a4b51@xps13>
-In-Reply-To: <10db598eed716d7759bc0125b6977cf1@codeaurora.org>
-References: <1602307902-16761-1-git-send-email-mdalam@codeaurora.org>
-        <20201028104835.3dc31745@xps13>
-        <10db598eed716d7759bc0125b6977cf1@codeaurora.org>
-Organization: Bootlin
-X-Mailer: Claws Mail 3.17.4 (GTK+ 2.24.32; x86_64-pc-linux-gnu)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8BIT
+        id S1726572AbgJ2IHi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 29 Oct 2020 04:07:38 -0400
+Received: from z5.mailgun.us ([104.130.96.5]:56583 "EHLO z5.mailgun.us"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726635AbgJ2IHc (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 29 Oct 2020 04:07:32 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1603958851; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=FmPsHd/lPgc/LuSq+bEof6wEgVqlgEzCxRqYEcQH2Ps=; b=JnLf3FOHXCOZX6R7dafGPx5JSe8+ms0x9497SoD4AM8YLbWWYzlSxZ6wbtDPaB+650c4npgS
+ prttRpv+jf5o+bGhZRFY0TCqiBN+lD2pKbW+oApQZWy+PfjO5vXw67FYdeV1OQAE5BKJTTYH
+ uZ8cxMz28v20lXB0OVvyNFn81fw=
+X-Mailgun-Sending-Ip: 104.130.96.5
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n02.prod.us-west-2.postgun.com with SMTP id
+ 5f9a784395539f1aec03b530 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 29 Oct 2020 08:07:31
+ GMT
+Sender: akhilpo=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 28FEDC43385; Thu, 29 Oct 2020 08:07:31 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
+        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+Received: from akhilpo-linux.qualcomm.com (unknown [202.46.22.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: akhilpo)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 531A0C433F0;
+        Thu, 29 Oct 2020 08:07:27 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 531A0C433F0
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=akhilpo@codeaurora.org
+From:   Akhil P Oommen <akhilpo@codeaurora.org>
+To:     freedreno@lists.freedesktop.org, devicetree@vger.kernel.org
+Cc:     robh@kernel.org, dri-devel@freedesktop.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        jcrouse@codeaurora.org, mka@chromium.org, robdclark@gmail.com,
+        dianders@chromium.org
+Subject: [PATCH v4 1/3] drm/msm: Add support for GPU cooling
+Date:   Thu, 29 Oct 2020 13:37:19 +0530
+Message-Id: <1603958841-20233-1-git-send-email-akhilpo@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hello,
+Register GPU as a devfreq cooling device so that it can be passively
+cooled by the thermal framework.
 
-mdalam@codeaurora.org wrote on Wed, 28 Oct 2020 23:54:23 +0530:
+Signed-off-by: Akhil P Oommen <akhilpo@codeaurora.org>
+Reviewed-by: Matthias Kaehlcke <mka@chromium.org>
+---
+Changes in v4:
+	1. Fix gpu cooling map.
+	2. Add mka's Reviewed-by tag.
+Changes in v3:
+	1. Minor fix in binding documentation (RobH)
+Changes in v2:
+	1. Update the dt bindings documentation
 
-> On 2020-10-28 15:18, Miquel Raynal wrote:
-> > Hello,
-> > 
-> > Md Sadre Alam <mdalam@codeaurora.org> wrote on Sat, 10 Oct 2020
-> > 11:01:37 +0530:
-> >   
-> >> QPIC 2.0 supports Serial NAND support in addition to all features and
-> >> commands in QPIC 1.0 for parallel NAND. Parallel and Serial NAND >> cannot
-> >> operate simultaneously. QSPI nand devices will connect to QPIC >> IO_MACRO
-> >> block of QPIC controller. There is a separate IO_MACRO clock for >> IO_MACRO
-> >> block. Default IO_MACRO block divide the input clock by 4. so if >> IO_MACRO
-> >> input clock is 320MHz then on bus it will be 80MHz, so QSPI nand >> device
-> >> should also support this frequency.  
-> >> >> QPIC provides 4 data pins to QSPI nand. In standard SPI mode (x1 mode) >> data  
-> >> transfer will occur on only 2 pins one pin for Serial data in and one >> for
-> >> serial data out. In QUAD SPI mode (x4 mode) data transfer will occur >> at all
-> >> the four data lines. QPIC controller supports command for x1 mode and >> x4 mode.  
-> >> >> Md Sadre Alam (5):  
-> >>   dt-bindings: qcom_nandc: IPQ5018 QPIC NAND documentation
-> >>   mtd: rawnand: qcom: Add initial support for qspi nand
-> >>   mtd: rawnand: qcom: Read QPIC version
-> >>   mtd: rawnand: qcom: Enable support for erase,read & write for serial
-> >>     nand.
-> >>   mtd: rawnand: qcom: Add support for serial training.  
-> >> >>  .../devicetree/bindings/mtd/qcom_nandc.txt         |   3 +  
-> >>  drivers/mtd/nand/raw/nand_ids.c                    |  13 +
-> >>  drivers/mtd/nand/raw/qcom_nandc.c                  | 502 >> ++++++++++++++++++++-
-> >>  3 files changed, 494 insertions(+), 24 deletions(-)  
-> >> > > I'm sorry but this series clearly breaks the current layering. I cannot  
-> > authorize SPI-NAND code to fall into the raw NAND subsystem.
-> >   
-> 
-> I am agree with you, we should not add SPI-NAND changes inside
-> raw NAND subsystem.
-> 
-> > As both typologies cannot be used at the same time, I guess you should
-> > have another driver handling this feature under the spi/ subsystem +
-> > a few declarations in the SPI-NAND devices list.
-> >   
-> 
-> Initially I was started writing separate driver under SPI-NAND subsystem then I
-> realized that more than 85% of raw/qcom_nand.c code getting duplicated.
-> 
-> That's why I have added this SPI-NAND change in raw/qcom_nand.c since
-> more than 85% of code will be reused.
-> 
-> If I will add this change inside SPI-NAND subsystem then much of
-> raw/qcom_nand.c code will get duplicated. Would it be ok ?
+ drivers/gpu/drm/msm/msm_gpu.c | 12 ++++++++++++
+ drivers/gpu/drm/msm/msm_gpu.h |  2 ++
+ 2 files changed, 14 insertions(+)
 
-What about moving the generic code to drivers/mtd/nand/common/ and
-referring to it from drivers/mtd/nand/raw/qcom_nand.c and
-drivers/spi/spi-qcom.c (or such)?
+diff --git a/drivers/gpu/drm/msm/msm_gpu.c b/drivers/gpu/drm/msm/msm_gpu.c
+index 55d1648..9f9db46 100644
+--- a/drivers/gpu/drm/msm/msm_gpu.c
++++ b/drivers/gpu/drm/msm/msm_gpu.c
+@@ -14,6 +14,7 @@
+ #include <generated/utsrelease.h>
+ #include <linux/string_helpers.h>
+ #include <linux/devfreq.h>
++#include <linux/devfreq_cooling.h>
+ #include <linux/devcoredump.h>
+ #include <linux/sched/task.h>
+ 
+@@ -107,9 +108,18 @@ static void msm_devfreq_init(struct msm_gpu *gpu)
+ 	if (IS_ERR(gpu->devfreq.devfreq)) {
+ 		DRM_DEV_ERROR(&gpu->pdev->dev, "Couldn't initialize GPU devfreq\n");
+ 		gpu->devfreq.devfreq = NULL;
++		return;
+ 	}
+ 
+ 	devfreq_suspend_device(gpu->devfreq.devfreq);
++
++	gpu->cooling = of_devfreq_cooling_register(gpu->pdev->dev.of_node,
++			gpu->devfreq.devfreq);
++	if (IS_ERR(gpu->cooling)) {
++		DRM_DEV_ERROR(&gpu->pdev->dev,
++				"Couldn't register GPU cooling device\n");
++		gpu->cooling = NULL;
++	}
+ }
+ 
+ static int enable_pwrrail(struct msm_gpu *gpu)
+@@ -1005,4 +1015,6 @@ void msm_gpu_cleanup(struct msm_gpu *gpu)
+ 		gpu->aspace->mmu->funcs->detach(gpu->aspace->mmu);
+ 		msm_gem_address_space_put(gpu->aspace);
+ 	}
++
++	devfreq_cooling_unregister(gpu->cooling);
+ }
+diff --git a/drivers/gpu/drm/msm/msm_gpu.h b/drivers/gpu/drm/msm/msm_gpu.h
+index 6c9e1fd..9a8f20d 100644
+--- a/drivers/gpu/drm/msm/msm_gpu.h
++++ b/drivers/gpu/drm/msm/msm_gpu.h
+@@ -147,6 +147,8 @@ struct msm_gpu {
+ 	struct msm_gpu_state *crashstate;
+ 	/* True if the hardware supports expanded apriv (a650 and newer) */
+ 	bool hw_apriv;
++
++	struct thermal_cooling_device *cooling;
+ };
+ 
+ static inline struct msm_gpu *dev_to_gpu(struct device *dev)
+-- 
+2.7.4
 
-Thanks,
-Miquèl
