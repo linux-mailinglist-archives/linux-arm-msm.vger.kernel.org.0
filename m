@@ -2,81 +2,292 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 7833E29F3F4
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Oct 2020 19:16:27 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3965229F3F9
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Oct 2020 19:17:24 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725855AbgJ2SQ0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 29 Oct 2020 14:16:26 -0400
-Received: from jabberwock.ucw.cz ([46.255.230.98]:36698 "EHLO
-        jabberwock.ucw.cz" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725840AbgJ2SQZ (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 29 Oct 2020 14:16:25 -0400
-Received: by jabberwock.ucw.cz (Postfix, from userid 1017)
-        id 450341C0B7C; Thu, 29 Oct 2020 19:16:24 +0100 (CET)
-Date:   Thu, 29 Oct 2020 19:16:23 +0100
-From:   Pavel Machek <pavel@ucw.cz>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Dan Murphy <dmurphy@ti.com>, Rob Herring <robh+dt@kernel.org>,
-        linux-leds@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH 2/5] leds: qcom-lpg: add support for pm8150[bl] leds
-Message-ID: <20201029181623.GF26053@duo.ucw.cz>
-References: <20201021225100.162795-1-dmitry.baryshkov@linaro.org>
- <20201021225100.162795-3-dmitry.baryshkov@linaro.org>
+        id S1725747AbgJ2SRT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 29 Oct 2020 14:17:19 -0400
+Received: from z5.mailgun.us ([104.130.96.5]:31758 "EHLO z5.mailgun.us"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725933AbgJ2SRT (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 29 Oct 2020 14:17:19 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1603995438; h=Message-ID: References: In-Reply-To: Reply-To:
+ Subject: Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=gkQqiTEtxfWCjjSjHmJT1y1DNHPG3piVtca3clIbFOQ=;
+ b=kcxW00lmEoyTvhw9jGlaoeTvmBQc+ZulKJ8IEdwc3NhsmHDPciF9jnBZTpUmufyJjjJBdPKt
+ 60ybluZ2mUHBlYW20mBzKqXUM33eAhne7PgNbb3wz8XzdiQ0fqciIFCisVCV+1xy8X4eO8wt
+ 6FaQzdY+YJ/hop6Zs+ntiQqrobQ=
+X-Mailgun-Sending-Ip: 104.130.96.5
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n03.prod.us-east-1.postgun.com with SMTP id
+ 5f9b072e20b52b32d79c4a74 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 29 Oct 2020 18:17:17
+ GMT
+Sender: bbhatt=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 2C469C43382; Thu, 29 Oct 2020 18:17:17 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: bbhatt)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id B3113C433FE;
+        Thu, 29 Oct 2020 18:17:15 +0000 (UTC)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-        protocol="application/pgp-signature"; boundary="Wb5NtZlyOqqy58h0"
-Content-Disposition: inline
-In-Reply-To: <20201021225100.162795-3-dmitry.baryshkov@linaro.org>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+Content-Type: text/plain; charset=UTF-8;
+ format=flowed
+Content-Transfer-Encoding: 8bit
+Date:   Thu, 29 Oct 2020 11:17:15 -0700
+From:   Bhaumik Bhatt <bbhatt@codeaurora.org>
+To:     =?UTF-8?Q?Carl_Yin=28=E6=AE=B7=E5=BC=A0=E6=88=90=29?= 
+        <carl.yin@quectel.com>
+Cc:     Hemant Kumar <hemantk@codeaurora.org>,
+        Jeffrey Hugo <jhugo@codeaurora.org>,
+        manivannan.sadhasivam@linaro.org, sfr@canb.auug.org.au,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Naveen Kumar <naveen.kumar@quectel.com>
+Subject: Re: [PATCH] bus: mhi: core: Add support MHI EE FP for download
+ firmware
+Organization: Qualcomm Innovation Center, Inc.
+Reply-To: bbhatt@codeaurora.org
+Mail-Reply-To: bbhatt@codeaurora.org
+In-Reply-To: <HK2PR06MB35078506D624FD03D699457E86140@HK2PR06MB3507.apcprd06.prod.outlook.com>
+References: <HK2PR06MB35078506D624FD03D699457E86140@HK2PR06MB3507.apcprd06.prod.outlook.com>
+Message-ID: <c3ad89980d37b29ce86f8be185e49ec6@codeaurora.org>
+X-Sender: bbhatt@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On 2020-10-29 02:26, Carl Yin wrote:
+> On October 28, 2020 7:02 AM, hemantk wrote:
+>> Hi Jeff,
+>> 
+>> On 10/27/20 8:11 AM, Jeffrey Hugo wrote:
+>> > On 10/27/2020 3:43 AM, carl.yin@quectel.com wrote:
+>> >> From: "carl.yin" <carl.yin@quectel.com>
+>> >>
+>> >> MHI wwan modems support download firmware to nand or emmc by firehose
+>> >> protocol, process as next:
+>> >> 1. wwan modem normal bootup and enter EE AMSS, create mhi DIAG chan
+>> >> device 2. send EDL cmd via DIAG chan, then modem enter EE EDL 3.
+>> >> boot.c download 'firehose/prog_firehose_sdx55.mbn' via BHI interface
+>> >> 4. modem enter EE FP, and create mhi EDL chan device 5. user space
+>> >> tool download FW to modem via EDL chan by firehose protocol
+>> >>
+>> >> Signed-off-by: carl.yin <carl.yin@quectel.com>
+>> >> ---
+>> >>   drivers/bus/mhi/core/boot.c     |  4 +++-
+>> >>   drivers/bus/mhi/core/init.c     |  2 ++
+>> >>   drivers/bus/mhi/core/internal.h |  1 +
+>> >>   drivers/bus/mhi/core/main.c     |  3 +++
+>> >>   drivers/bus/mhi/core/pm.c       | 16 +++++++++++++++-
+>> >>   include/linux/mhi.h             |  4 +++-
+>> >>   6 files changed, 27 insertions(+), 3 deletions(-)
+>> >>
+>> >> diff --git a/drivers/bus/mhi/core/boot.c
+>> >> b/drivers/bus/mhi/core/boot.c index 24422f5..ab39ad6 100644
+>> >> --- a/drivers/bus/mhi/core/boot.c
+>> >> +++ b/drivers/bus/mhi/core/boot.c
+>> >> @@ -460,8 +460,10 @@ void mhi_fw_load_handler(struct mhi_controller
+>> >> *mhi_cntrl)
+>> >>           return;
+>> >>       }
+>> >> -    if (mhi_cntrl->ee == MHI_EE_EDL)
+>> >> +    if (mhi_cntrl->ee == MHI_EE_EDL) {
+>> >> +        mhi_ready_state_transition(mhi_cntrl);
+>> >>           return;
+>> >> +    }
+>> >>       write_lock_irq(&mhi_cntrl->pm_lock);
+>> >>       mhi_cntrl->dev_state = MHI_STATE_RESET; diff --git
+>> >> a/drivers/bus/mhi/core/init.c b/drivers/bus/mhi/core/init.c index
+>> >> ac4aa5c..9c2c2f3 100644
+>> >> --- a/drivers/bus/mhi/core/init.c
+>> >> +++ b/drivers/bus/mhi/core/init.c
+>> >> @@ -26,6 +26,7 @@ const char * const mhi_ee_str[MHI_EE_MAX] = {
+>> >>       [MHI_EE_WFW] = "WFW",
+>> >>       [MHI_EE_PTHRU] = "PASS THRU",
+>> >>       [MHI_EE_EDL] = "EDL",
+>> >> +    [MHI_EE_FP] = "FP",
+>> >>       [MHI_EE_DISABLE_TRANSITION] = "DISABLE",
+>> >>       [MHI_EE_NOT_SUPPORTED] = "NOT SUPPORTED",
+>> >>   };
+>> >> @@ -35,6 +36,7 @@ const char * const
+>> >> dev_state_tran_str[DEV_ST_TRANSITION_MAX] = {
+>> >>       [DEV_ST_TRANSITION_READY] = "READY",
+>> >>       [DEV_ST_TRANSITION_SBL] = "SBL",
+>> >>       [DEV_ST_TRANSITION_MISSION_MODE] = "MISSION_MODE",
+>> >> +    [DEV_ST_TRANSITION_FP] = "FP",
+>> >>       [DEV_ST_TRANSITION_SYS_ERR] = "SYS_ERR",
+>> >>       [DEV_ST_TRANSITION_DISABLE] = "DISABLE",
+>> >>   };
+>> >> diff --git a/drivers/bus/mhi/core/internal.h
+>> >> b/drivers/bus/mhi/core/internal.h index 4abf0cf..6ae897a 100644
+>> >> --- a/drivers/bus/mhi/core/internal.h
+>> >> +++ b/drivers/bus/mhi/core/internal.h
+>> >> @@ -386,6 +386,7 @@ enum dev_st_transition {
+>> >>       DEV_ST_TRANSITION_READY,
+>> >>       DEV_ST_TRANSITION_SBL,
+>> >>       DEV_ST_TRANSITION_MISSION_MODE,
+>> >> +    DEV_ST_TRANSITION_FP,
+>> >>       DEV_ST_TRANSITION_SYS_ERR,
+>> >>       DEV_ST_TRANSITION_DISABLE,
+>> >>       DEV_ST_TRANSITION_MAX,
+>> >> diff --git a/drivers/bus/mhi/core/main.c
+>> >> b/drivers/bus/mhi/core/main.c index 3950792..e307b58 100644
+>> >> --- a/drivers/bus/mhi/core/main.c
+>> >> +++ b/drivers/bus/mhi/core/main.c
+>> >> @@ -782,6 +782,9 @@ int mhi_process_ctrl_ev_ring(struct
+>> >> mhi_controller *mhi_cntrl,
+>> >>               case MHI_EE_SBL:
+>> >>                   st = DEV_ST_TRANSITION_SBL;
+>> >>                   break;
+>> >> +            case MHI_EE_FP:
+>> >> +                st = DEV_ST_TRANSITION_FP;
+>> >> +                break;
+>> >>               case MHI_EE_WFW:
+>> >>               case MHI_EE_AMSS:
+>> >>                   st = DEV_ST_TRANSITION_MISSION_MODE; diff
+>> --git
+>> >> a/drivers/bus/mhi/core/pm.c b/drivers/bus/mhi/core/pm.c index
+>> >> 3de7b16..3c95a5d 100644
+>> >> --- a/drivers/bus/mhi/core/pm.c
+>> >> +++ b/drivers/bus/mhi/core/pm.c
+>> >> @@ -563,7 +563,15 @@ static void mhi_pm_disable_transition(struct
+>> >> mhi_controller *mhi_cntrl,
+>> >>       }
+>> >>       if (cur_state == MHI_PM_SYS_ERR_PROCESS) {
+>> >> -        mhi_ready_state_transition(mhi_cntrl);
+>> >> +        if (mhi_get_exec_env(mhi_cntrl) == MHI_EE_EDL
+>> >> +            && mhi_get_mhi_state(mhi_cntrl) == MHI_STATE_RESET) {
+>> >> +            write_lock_irq(&mhi_cntrl->pm_lock);
+>> >> +            cur_state = mhi_tryset_pm_state(mhi_cntrl,
+>> MHI_PM_POR);
+>> >> +            write_unlock_irq(&mhi_cntrl->pm_lock);
+>> >> +            mhi_queue_state_transition(mhi_cntrl,
+>> >> DEV_ST_TRANSITION_PBL);
+>> >> +        } else {
+>> >> +            mhi_ready_state_transition(mhi_cntrl);
+>> >> +        }
+>> >>       } else {
+>> >>           /* Move to disable state */
+>> >>           write_lock_irq(&mhi_cntrl->pm_lock);
+>> >> @@ -658,6 +666,12 @@ void mhi_pm_st_worker(struct work_struct *work)
+>> >>           case DEV_ST_TRANSITION_MISSION_MODE:
+>> >>               mhi_pm_mission_mode_transition(mhi_cntrl);
+>> >>               break;
+>> >> +        case DEV_ST_TRANSITION_FP:
+>> >> +            write_lock_irq(&mhi_cntrl->pm_lock);
+>> >> +            mhi_cntrl->ee = MHI_EE_FP;
+>> >> +            write_unlock_irq(&mhi_cntrl->pm_lock);
+>> >> +            mhi_create_devices(mhi_cntrl);
+>> >> +            break;
+>> >>           case DEV_ST_TRANSITION_READY:
+>> >>               mhi_ready_state_transition(mhi_cntrl);
+>> >>               break;
+>> >> diff --git a/include/linux/mhi.h b/include/linux/mhi.h index
+>> >> 6e1122c..4620af8 100644
+>> >> --- a/include/linux/mhi.h
+>> >> +++ b/include/linux/mhi.h
+>> >> @@ -120,6 +120,7 @@ struct mhi_link_info {
+>> >>    * @MHI_EE_WFW: WLAN firmware mode
+>> >>    * @MHI_EE_PTHRU: Passthrough
+>> >>    * @MHI_EE_EDL: Embedded downloader
+>> >> + * @MHI_EE_FP, Flash Programmer Environment
+>> >>    */
+>> >>   enum mhi_ee_type {
+>> >>       MHI_EE_PBL,
+>> >> @@ -129,7 +130,8 @@ enum mhi_ee_type {
+>> >>       MHI_EE_WFW,
+>> >>       MHI_EE_PTHRU,
+>> >>       MHI_EE_EDL,
+>> >> -    MHI_EE_MAX_SUPPORTED = MHI_EE_EDL,
+>> >> +    MHI_EE_FP,
+>> >> +    MHI_EE_MAX_SUPPORTED = MHI_EE_FP,
+>> >>       MHI_EE_DISABLE_TRANSITION, /* local EE, not related to mhi spec
+>> >> */
+>> >>       MHI_EE_NOT_SUPPORTED,
+>> >>       MHI_EE_MAX,
+>> >>
+>> >
+>> > This gets a NACK from me.  I don't see the FP_EE that this patch
+>> > introduces defined in the spec.  Where did it come from?
+>> >
+>> There is indeed a FP EE, BHI spec will be updated with this EE next 
+>> month.
+>> 
+>> Basically, once device goes to EDL, flash programmer image is 
+>> downloaded using
+>> BHI protocol (same as we download SBL image using BHI from PBL in 
+>> current use
+>> case). Once it is downloaded intvec sends EE change event for FP. Also 
+>> event is
+>> generated for the same which is used to create EDL channels (34, 35) 
+>> which is
+>> used by flash programmer to flash image for AMSS.
+>> 
+>>  >> 2. send EDL cmd via DIAG chan, then modem enter EE EDL
+>> #2 needs to be done in cleaner way. From AMSS when diag cmd is sent to 
+>> switch
+>> to EDL, device would send SYS_ERR which we can use to do a call back 
+>> to mhi
+>> controller to perform power down and power up. Instead of moving pm 
+>> state to
+>> POR from disable transition :-
+> [carl.yin] why I need move pm_state to POR, it is because if pm_state
+> is SYS_ERR,
+> 	mhi_fw_load_handler() will break, and will not download edl image to 
+> device.
+> 	We can change pm.c as next, and revert the change to boot.c
+>      if (cur_state == MHI_PM_SYS_ERR_PROCESS) {
+> 		if (mhi_get_exec_env(mhi_cntrl) == MHI_EE_EDL
+>  			&& mhi_get_mhi_state(mhi_cntrl) == MHI_STATE_RESET) {
+>               write_lock_irq(&mhi_cntrl->pm_lock);
+>               mhi_cntrl->ee = MHI_EE_EDL;
+>               write_unlock_irq(&mhi_cntrl->pm_lock);
+>               mhi_fw_load_handler(mhi_cntrl);
+>           }
+>           mhi_ready_state_transition(mhi_cntrl);
+>       }
+With the explanation from my previous email, you don't need this any 
+more.
+>> 
+>> @@ -563,7 +563,15 @@ static void mhi_pm_disable_transition(struct  >>
+>> mhi_controller *mhi_cntrl,
+>>  >>       }
+>>  >>       if (cur_state == MHI_PM_SYS_ERR_PROCESS) {
+>>  >> -        mhi_ready_state_transition(mhi_cntrl);
+>>  >> +        if (mhi_get_exec_env(mhi_cntrl) == MHI_EE_EDL
+>>  >> +            && mhi_get_mhi_state(mhi_cntrl) == MHI_STATE_RESET) {
+>>  >> +            write_lock_irq(&mhi_cntrl->pm_lock);
+>>  >> +            cur_state = mhi_tryset_pm_state(mhi_cntrl, 
+>> MHI_PM_POR);
+>>  >> +            write_unlock_irq(&mhi_cntrl->pm_lock);
+>>  >> +            mhi_queue_state_transition(mhi_cntrl,
+>>  >> DEV_ST_TRANSITION_PBL);
+>>  >> +        } else {
+>>  >> +            mhi_ready_state_transition(mhi_cntrl);
+>>  >> +        }
+>> 
+>> Thanks,
+>> Hemant
+>> 
+>> --
+>> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora 
+>> Forum, a
+>> Linux Foundation Collaborative Project
 
---Wb5NtZlyOqqy58h0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-Hi!
-
-> Add support for the LPG/PWM block found on newer PMICs: PM8150B and
-> PM8150A/L.
->=20
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
->  drivers/leds/leds-qcom-lpg.c | 68 ++++++++++++++++++++++++++++++++----
->  1 file changed, 61 insertions(+), 7 deletions(-)
->=20
-> diff --git a/drivers/leds/leds-qcom-lpg.c b/drivers/leds/leds-qcom-lpg.c
-> index 86131a65d2c5..4d24e0c973d6 100644
-> --- a/drivers/leds/leds-qcom-lpg.c
-> +++ b/drivers/leds/leds-qcom-lpg.c
-> @@ -48,6 +48,8 @@ struct lpg_data;
->   * @lut_bitmap:	allocation bitmap for LUT entries
->   * @triled_base: base address of the TRILED block (optional)
->   * @triled_src:	power-source for the TRILED
-> + * @triled_no_atc_ctl:	true if there is no TRI_LED_ATC_CTL register
-> + * @triled_no_src_sel:	true if there is no TRI_LED_SRC_SEL register
-
-Please make logic the other way around. ... triled_has_atc_ctl.
-
-Best regards,
-								Pavel
---=20
-http://www.livejournal.com/~pavelmachek
-
---Wb5NtZlyOqqy58h0
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iF0EABECAB0WIQRPfPO7r0eAhk010v0w5/Bqldv68gUCX5sG9wAKCRAw5/Bqldv6
-8sEiAJ9K2UA9erz7P3IYw9npZ2MKUROJ/wCcDk3HHP6eTsKa1rg8qOEmRM8UpM8=
-=WCEj
------END PGP SIGNATURE-----
-
---Wb5NtZlyOqqy58h0--
+Thanks,
+Bhaumik
+-- 
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora 
+Forum,
+a Linux Foundation Collaborative Project
