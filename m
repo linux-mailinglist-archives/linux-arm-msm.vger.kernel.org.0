@@ -2,202 +2,85 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 899D629F657
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Oct 2020 21:41:18 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id BBCD329F666
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Oct 2020 21:48:45 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726433AbgJ2UlA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 29 Oct 2020 16:41:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38730 "EHLO
+        id S1726433AbgJ2Usp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 29 Oct 2020 16:48:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39934 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726808AbgJ2Uk7 (ORCPT
+        with ESMTP id S1725780AbgJ2Uso (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 29 Oct 2020 16:40:59 -0400
-Received: from mail-ot1-x344.google.com (mail-ot1-x344.google.com [IPv6:2607:f8b0:4864:20::344])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 25155C0613D2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Oct 2020 13:31:06 -0700 (PDT)
-Received: by mail-ot1-x344.google.com with SMTP id b2so3562101ots.5
-        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Oct 2020 13:31:06 -0700 (PDT)
+        Thu, 29 Oct 2020 16:48:44 -0400
+Received: from mail-pg1-x534.google.com (mail-pg1-x534.google.com [IPv6:2607:f8b0:4864:20::534])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 963F0C0613CF
+        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Oct 2020 13:48:44 -0700 (PDT)
+Received: by mail-pg1-x534.google.com with SMTP id k9so1640610pgt.9
+        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Oct 2020 13:48:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=kali.org; s=google;
-        h=subject:to:references:from:message-id:date:user-agent:mime-version
-         :in-reply-to:content-transfer-encoding:content-language;
-        bh=UR5Q0rKVUZjqjZjwnrNInjG9jrCLixcHQwLzgr/1Eis=;
-        b=HV9Vy5DGmPZuj3g+adYzUcMkmIcsObWADfy9IOyMUqA81J85Uo3Ty2Bo9eg3i26o2e
-         VIkP/KwY6N2x9aILFnAobvRCThLVfa0To9qUJrvnjHxvjm+YnAU41QjD/2n1Y43t2iAo
-         H617tuMddEvvZcQDir3Fo516PZG87OshVe0Oxbrc9O517qSdg6bA5T1sKDI7KB+CU+mw
-         jOv9kNKGWk4XSzKEF2VQRtHVUifvDdIrNjw3S9Mut/ZhksfEAgL5aAsj5Z2VuQqs7trn
-         8oHkC7SfSvCcui0a/rLmkUYbfJ2/2Cl5J/7gHGZT7kihnSwJeTLrBdtuqClKdjJ/Bhjn
-         nQsw==
+        d=chromium.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=7jTNHive/FLwf9ZZT3i6CSw/O2mDxcoGdERzu325nls=;
+        b=S1eLSOvxPle2SWTXmcWkjdxAG8gKeMEQNERefUSZtQOj35IZKWi6zQ3XA/x7yozwz8
+         SuJqxRhbB4i6YZ/pUVv4PdoQ6A/WOXxwmF1BPT1/90DX/CA1WzuJ0SBOp9PqwSiCKXSH
+         F0G3QbbwVleLe5Wk2wNrW1vW/731JkCOacLvw=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding
-         :content-language;
-        bh=UR5Q0rKVUZjqjZjwnrNInjG9jrCLixcHQwLzgr/1Eis=;
-        b=JIvNYk7ePQ/g8dxSvO57OUnYG0ujR5GVOYmisooc8jyQXY4GbmCd8V5XJSNuZ4m/d3
-         STKPzmZvREF7Y3ABppOBeLSnsqjC74tUNT5gdCaTauXEty7PmSu7svLw49NC0Mejymhv
-         0cEGrxZSlZsgUWwrOINmKaBFXTKfbLgNq3XWyE1CZEpYTgOr7reTyrHcsBGGW3lCUrxH
-         OfUcg0yBTmpqN/177LimuOIH0+lxos+3IrsJxyfe7ZKwEbrU4sshCm7c8Id2xZiy/T9z
-         ErNil6BxUEnJewJOPwUHnS71Ym+abJxFef+5RIMBlmHIxnTPWurCmRKXkWbMlUOjMp7C
-         KlcA==
-X-Gm-Message-State: AOAM531e/iydAEcx8pjBxqk/eAvlceXdS0UgoAjttxB+VNDVUftg/HIf
-        H2VFgJMXWGJTsGw9IBANE2nUj5GxPn5Hag==
-X-Google-Smtp-Source: ABdhPJxVXE0ig9F8lWwLK4LTAPtkSuv1cfubfW6QDWGisnqAKdobrt19osBEbRph4BPo1fWlhr0gMg==
-X-Received: by 2002:a05:6830:1241:: with SMTP id s1mr4415710otp.366.1604003465489;
-        Thu, 29 Oct 2020 13:31:05 -0700 (PDT)
-Received: from Steevs-MBP.hackershack.net (cpe-173-175-113-3.satx.res.rr.com. [173.175.113.3])
-        by smtp.gmail.com with ESMTPSA id z126sm927764oiz.41.2020.10.29.13.31.03
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=7jTNHive/FLwf9ZZT3i6CSw/O2mDxcoGdERzu325nls=;
+        b=tSm4agVoEKhcKkfl7G5B45+ZFBO608U2f2JdtZZdRyJzwm8OcV0LaxrjANKAB7TM5I
+         LVZt80kogsdqCOdz35m4TWATBfd+fsekC4MJvlnqb7nx4GjPv+NQmyxs8VqKAVRQ0KLe
+         fnF4+6XG0KMJ7BHrRtWOiQjpfLTIn9KJn5oPcw6mGa0tbm17OtsBVBnEmhSZKtrNBTOr
+         Wd44nDDOANyHQKEx5YRmUa2TZpu0ZgHGFaNKY3BA3UDeTDwTSH1ElZjSgmfNMVnGGR76
+         6x2WBmsAq7h2VUta5y/HH3ez3fQgYf1oJ/c6SF7xQqJCkDjStxTtJbwpRHmfPyc3BOhJ
+         qUMw==
+X-Gm-Message-State: AOAM531nwNY1EfXWuzp+/Nro4g/It68De1Q/dD6CVM+JN7ko4ecvKD5L
+        Zxz2NM+VhaLYK+crwBEVc+WKew==
+X-Google-Smtp-Source: ABdhPJyNFMcPbWUco+Y+QNwEzgo/c6cxhTHy+B3buEgXZaS5imhK9G19CfKi/1d1jqh/zqA5P53RtQ==
+X-Received: by 2002:a17:90a:6984:: with SMTP id s4mr1082688pjj.206.1604004524081;
+        Thu, 29 Oct 2020 13:48:44 -0700 (PDT)
+Received: from localhost ([2620:15c:202:1:f693:9fff:fef4:e70a])
+        by smtp.gmail.com with ESMTPSA id e5sm808565pjd.0.2020.10.29.13.48.43
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 29 Oct 2020 13:31:04 -0700 (PDT)
-Subject: Re: [PATCH v2] venus: venc: Fix setting of profile and level
-To:     Stanimir Varbanov <stanimir.varbanov@linaro.org>,
-        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20201027091936.14478-1-stanimir.varbanov@linaro.org>
-From:   Steev Klimaszewski <steev@kali.org>
-Message-ID: <b66a9736-e7ec-82d2-8065-d587c379d298@kali.org>
-Date:   Thu, 29 Oct 2020 15:31:02 -0500
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:68.0)
- Gecko/20100101 Thunderbird/68.12.1
+        Thu, 29 Oct 2020 13:48:43 -0700 (PDT)
+Date:   Thu, 29 Oct 2020 13:48:42 -0700
+From:   mka@chromium.org
+To:     Akhil P Oommen <akhilpo@codeaurora.org>
+Cc:     freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        dianders@chromium.org, dri-devel@freedesktop.org
+Subject: Re: [v4,1/3] drm/msm: Add support for GPU cooling
+Message-ID: <20201029204842.GC1855806@google.com>
+References: <1603958841-20233-1-git-send-email-akhilpo@codeaurora.org>
 MIME-Version: 1.0
-In-Reply-To: <20201027091936.14478-1-stanimir.varbanov@linaro.org>
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
-Content-Language: en-US
+Content-Disposition: inline
+In-Reply-To: <1603958841-20233-1-git-send-email-akhilpo@codeaurora.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Thu, Oct 29, 2020 at 01:37:19PM +0530, Akhil P Oommen wrote:
+> Register GPU as a devfreq cooling device so that it can be passively
+> cooled by the thermal framework.
+> 
+> Signed-off-by: Akhil P Oommen <akhilpo@codeaurora.org>
+> Reviewed-by: Matthias Kaehlcke <mka@chromium.org>
 
-On 10/27/20 4:19 AM, Stanimir Varbanov wrote:
-> The profile and level in op_set_ctrl was recently changed but during
-> v4l2_ctrl_handler_setup profile and level control values are mangled.
->
-> Fixes: 435c53c3698f ("media: venus: venc: Use helper to set profile and level")
-> Signed-off-by: Stanimir Varbanov <stanimir.varbanov@linaro.org>
-> ---
->
-> v2: Fixed kernel test robot WARNING
->
->  drivers/media/platform/qcom/venus/core.h      | 15 +++++++--
->  drivers/media/platform/qcom/venus/venc.c      | 31 ++++++++++++++++++-
->  .../media/platform/qcom/venus/venc_ctrls.c    | 14 +++++++--
->  3 files changed, 55 insertions(+), 5 deletions(-)
->
-> diff --git a/drivers/media/platform/qcom/venus/core.h b/drivers/media/platform/qcom/venus/core.h
-> index 7b79a33dc9d6..05c9fbd51f0c 100644
-> --- a/drivers/media/platform/qcom/venus/core.h
-> +++ b/drivers/media/platform/qcom/venus/core.h
-> @@ -243,8 +243,19 @@ struct venc_controls {
->  
->  	u32 header_mode;
->  
-> -	u32 profile;
-> -	u32 level;
-> +	struct {
-> +		u32 h264;
-> +		u32 mpeg4;
-> +		u32 hevc;
-> +		u32 vp8;
-> +		u32 vp9;
-> +	} profile;
-> +	struct {
-> +		u32 h264;
-> +		u32 mpeg4;
-> +		u32 hevc;
-> +		u32 vp9;
-> +	} level;
->  };
->  
->  struct venus_buffer {
-> diff --git a/drivers/media/platform/qcom/venus/venc.c b/drivers/media/platform/qcom/venus/venc.c
-> index f8b1484e7dcd..47246528ac7e 100644
-> --- a/drivers/media/platform/qcom/venus/venc.c
-> +++ b/drivers/media/platform/qcom/venus/venc.c
-> @@ -537,6 +537,7 @@ static int venc_set_properties(struct venus_inst *inst)
->  	struct hfi_quantization quant;
->  	struct hfi_quantization_range quant_range;
->  	u32 ptype, rate_control, bitrate;
-> +	u32 profile, level;
->  	int ret;
->  
->  	ret = venus_helper_set_work_mode(inst, VIDC_WORK_MODE_2);
-> @@ -684,7 +685,35 @@ static int venc_set_properties(struct venus_inst *inst)
->  	if (ret)
->  		return ret;
->  
-> -	ret = venus_helper_set_profile_level(inst, ctr->profile, ctr->level);
-> +	switch (inst->hfi_codec) {
-> +	case HFI_VIDEO_CODEC_H264:
-> +		profile = ctr->profile.h264;
-> +		level = ctr->level.h264;
-> +		break;
-> +	case HFI_VIDEO_CODEC_MPEG4:
-> +		profile = ctr->profile.mpeg4;
-> +		level = ctr->level.mpeg4;
-> +		break;
-> +	case HFI_VIDEO_CODEC_VP8:
-> +		profile = ctr->profile.vp8;
-> +		level = 0;
-> +		break;
-> +	case HFI_VIDEO_CODEC_VP9:
-> +		profile = ctr->profile.vp9;
-> +		level = ctr->level.vp9;
-> +		break;
-> +	case HFI_VIDEO_CODEC_HEVC:
-> +		profile = ctr->profile.hevc;
-> +		level = ctr->level.hevc;
-> +		break;
-> +	case HFI_VIDEO_CODEC_MPEG2:
-> +	default:
-> +		profile = 0;
-> +		level = 0;
-> +		break;
-> +	}
-> +
-> +	ret = venus_helper_set_profile_level(inst, profile, level);
->  	if (ret)
->  		return ret;
->  
-> diff --git a/drivers/media/platform/qcom/venus/venc_ctrls.c b/drivers/media/platform/qcom/venus/venc_ctrls.c
-> index 0708b3b89d0c..cf860e6446c0 100644
-> --- a/drivers/media/platform/qcom/venus/venc_ctrls.c
-> +++ b/drivers/media/platform/qcom/venus/venc_ctrls.c
-> @@ -103,15 +103,25 @@ static int venc_op_s_ctrl(struct v4l2_ctrl *ctrl)
->  		ctr->h264_entropy_mode = ctrl->val;
->  		break;
->  	case V4L2_CID_MPEG_VIDEO_MPEG4_PROFILE:
-> +		ctr->profile.mpeg4 = ctrl->val;
-> +		break;
->  	case V4L2_CID_MPEG_VIDEO_H264_PROFILE:
-> +		ctr->profile.h264 = ctrl->val;
-> +		break;
->  	case V4L2_CID_MPEG_VIDEO_HEVC_PROFILE:
-> +		ctr->profile.hevc = ctrl->val;
-> +		break;
->  	case V4L2_CID_MPEG_VIDEO_VP8_PROFILE:
-> -		ctr->profile = ctrl->val;
-> +		ctr->profile.vp8 = ctrl->val;
->  		break;
->  	case V4L2_CID_MPEG_VIDEO_MPEG4_LEVEL:
-> +		ctr->level.mpeg4 = ctrl->val;
-> +		break;
->  	case V4L2_CID_MPEG_VIDEO_H264_LEVEL:
-> +		ctr->level.h264 = ctrl->val;
-> +		break;
->  	case V4L2_CID_MPEG_VIDEO_HEVC_LEVEL:
-> -		ctr->level = ctrl->val;
-> +		ctr->level.hevc = ctrl->val;
->  		break;
->  	case V4L2_CID_MPEG_VIDEO_H264_I_FRAME_QP:
->  		ctr->h264_i_qp = ctrl->val;
+Wait, I did not post a 'Reviewed-by' tag for this patch!
 
-Hi Stanimir,
+I think the patch should be ok, but I'm still not super happy
+about the resource management involving devfreq in general (see
+discussion on https://patchwork.freedesktop.org/patch/394291/?series=82476&rev=1).
+It's not really something introduced by this patch, but if it ever
+gets fixed releasing the cooling device at the end of
+msm_gpu_cleanup() after everything else might cause trouble.
 
-When I apply this patch on top of my 5.10rc1 tree - (
-https://github.com/steev/linux/commits/c630-5.10-rc1... my c630 no
-longer boots.  Unfortunately... nothing shows up in the logs, and I have
-no idea how to get debug output from the c630. 
+In summary, I'm supportive of landing this patch, but reluctant to
+'sign it off' because of the above.
 
--- Steev
+In any case:
 
+Tested-by: Matthias Kaehlcke <mka@chromium.org>
