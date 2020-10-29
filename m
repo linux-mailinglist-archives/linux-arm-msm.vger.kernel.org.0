@@ -2,116 +2,77 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 6711629EC5E
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Oct 2020 14:02:36 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 80F4A29EDC8
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Oct 2020 15:03:18 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726066AbgJ2NCe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 29 Oct 2020 09:02:34 -0400
-Received: from mail.kernel.org ([198.145.29.99]:33206 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725355AbgJ2NCd (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 29 Oct 2020 09:02:33 -0400
-Received: from mail-ot1-f42.google.com (mail-ot1-f42.google.com [209.85.210.42])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 38CD321775;
-        Thu, 29 Oct 2020 13:01:47 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1603976507;
-        bh=OzIlRpXLdeGRcoA/MVFEQyHps4XuaG+UwlBrggFdE0A=;
-        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-        b=j1mT2NYHsoJ27PjrIOdCHm29Dr0jIJanUSSvW3ovjtCA+2JsQwP4TF17V8h45KLn6
-         q/rWGnzjK5R5HCKtdT1UjO2CPNs0DlEyYrKGlf249zeQobn/tqoqqoSOkKF0nQ/tJx
-         XzpLkOIXBR85Tjr1fxwi0eRNQozFeZBPxlNnWRvE=
-Received: by mail-ot1-f42.google.com with SMTP id 32so2168065otm.3;
-        Thu, 29 Oct 2020 06:01:47 -0700 (PDT)
-X-Gm-Message-State: AOAM5329DpT5iisbFeMEkjPiTDZobOkh/2X8xi/6R5qq43OgNt+uDnFa
-        blf46M/oSl5GRRIFDY/naVaedT2VoUIM2xChbQ==
-X-Google-Smtp-Source: ABdhPJy/bhS7KTF1WNqgQUUalxQA1GfpAd7FTQIi3yYFWyIBt0GxzCWPuCwRMAMfnaaUFyZdFb4NCZ8rTg453LUEqGQ=
-X-Received: by 2002:a9d:62d1:: with SMTP id z17mr3193317otk.192.1603976506229;
- Thu, 29 Oct 2020 06:01:46 -0700 (PDT)
+        id S1726548AbgJ2ODN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 29 Oct 2020 10:03:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32834 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726524AbgJ2ODK (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 29 Oct 2020 10:03:10 -0400
+Received: from mail-lf1-x144.google.com (mail-lf1-x144.google.com [IPv6:2a00:1450:4864:20::144])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EA34CC0613D3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Oct 2020 07:03:09 -0700 (PDT)
+Received: by mail-lf1-x144.google.com with SMTP id j30so3453689lfp.4
+        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Oct 2020 07:03:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=92Wvsa8QeN5oXBJQBgSBXtwtg0x+2FMYvo64EHUo00g=;
+        b=myoxkGc4nH0UwcnEdAdThIJXXyu5AYXIxCiqvNsG3zJefwbWiIjt7BDjTDjgOqCeMV
+         vpV8/pRUqT1IU/z1tIR09QZxo1L90FUoZoKIlMB9V2m1e75EuDGU/1d5MHyHGTsXriis
+         qel5M4rKVY8HFype+DFBb6fn9CAEXrzjVutpK9TwgY8DB8XSyyyCimubSpIgO9oV7fYv
+         0/xt7A+J97tgHfCFRNuWs9HR6nDhaoL3O4+XOi3ThfN8ECf5gPax5o0i6/CHdw2ZDhmu
+         8rX7376FCicQ58AA2Buq7mrFkkhZ/7/aAs/27/ZFb556RYVR55pZdIeu0okYmfLrwD21
+         VRkg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=92Wvsa8QeN5oXBJQBgSBXtwtg0x+2FMYvo64EHUo00g=;
+        b=O1iYs+xx8cVsgN5Vj6z9N9CXPh1BXMMkWxKd/s9VrtdllC5XLDDwVSc9Dvm9jAzAA6
+         LAlikv2COaThpNF8XVKfk38gJ+ozSDe4O73oPZJGSiEQkJaL0AKXjrMrNOI7zNZ5AzVM
+         wJWlxPufBLjeYT5S1XViRvJFT84kVp4RMLYwH4WFnfMTAYulKzMcT/VwDWi9oSUIgBm8
+         RyN3q8+vlL2qYWjIYBh8A5EedMGStR8s0xTxK0Ysi3z+GDM7v7/a5AfEaNuNBChp6kmz
+         Acp3X6phcDbZ/kmA/WQumGDTU3aOUYRSmwMlmhO14ryERASm8pOZRQZbpGckL/KgumtU
+         KtMQ==
+X-Gm-Message-State: AOAM532sngoZotTPqTeeTS+uiXg0VcP5Tyer4Mr5cDQOb2xDnCSsqoFh
+        yg/966mH/2Lumeno2cHlaAcUqRbm3rKGqjk29Qj8MSEFxP9wRA==
+X-Google-Smtp-Source: ABdhPJw5f+pbm+OCagVx13Hp7rRSTnDM2rKzYJ0oz1US7r1kPYSzVzcaUKCONaqZZFCt0KqI/bJrCI92slLADNyb38I=
+X-Received: by 2002:a19:191:: with SMTP id 139mr1536310lfb.502.1603980186701;
+ Thu, 29 Oct 2020 07:03:06 -0700 (PDT)
 MIME-Version: 1.0
-References: <20201028204646.356535-1-robh@kernel.org> <20201028204646.356535-2-robh@kernel.org>
- <87h7qdx4oz.fsf@mpe.ellerman.id.au>
-In-Reply-To: <87h7qdx4oz.fsf@mpe.ellerman.id.au>
-From:   Rob Herring <robh@kernel.org>
-Date:   Thu, 29 Oct 2020 08:01:35 -0500
-X-Gmail-Original-Message-ID: <CAL_JsqJWzmGNifrJEKGg582kZNtjnWHaUkG0EinWqjhGaeL1dg@mail.gmail.com>
-Message-ID: <CAL_JsqJWzmGNifrJEKGg582kZNtjnWHaUkG0EinWqjhGaeL1dg@mail.gmail.com>
-Subject: Re: [PATCH 01/13] PCI: dwc/imx6: Drop setting PCI_MSI_FLAGS_ENABLE
-To:     Michael Ellerman <mpe@ellerman.id.au>
-Cc:     Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
-        Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
-        Neil Armstrong <narmstrong@baylibre.com>,
-        PCI <linux-pci@vger.kernel.org>,
-        Binghui Wang <wangbinghui@hisilicon.com>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        linux-tegra <linux-tegra@vger.kernel.org>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        linux-arm-kernel@axis.com,
-        Thomas Petazzoni <thomas.petazzoni@bootlin.com>,
-        Jonathan Chocron <jonnyc@amazon.com>,
-        Shawn Guo <shawnguo@kernel.org>,
-        Jonathan Hunter <jonathanh@nvidia.com>,
-        Fabio Estevam <festevam@gmail.com>,
-        Jerome Brunet <jbrunet@baylibre.com>,
-        Jesper Nilsson <jesper.nilsson@axis.com>,
-        linux-samsung-soc <linux-samsung-soc@vger.kernel.org>,
-        Minghuan Lian <minghuan.Lian@nxp.com>,
-        Kevin Hilman <khilman@baylibre.com>,
-        Pratyush Anand <pratyush.anand@gmail.com>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        Kishon Vijay Abraham I <kishon@ti.com>,
-        Kukjin Kim <kgene@kernel.org>,
-        NXP Linux Team <linux-imx@nxp.com>,
-        Xiaowei Song <songxiaowei@hisilicon.com>,
-        Richard Zhu <hongxing.zhu@nxp.com>,
-        Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Sascha Hauer <s.hauer@pengutronix.de>,
-        Yue Wang <yue.wang@amlogic.com>,
-        Murali Karicheri <m-karicheri2@ti.com>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        "open list:ARM/Amlogic Meson..." <linux-amlogic@lists.infradead.org>,
-        linux-omap <linux-omap@vger.kernel.org>,
-        Mingkai Hu <mingkai.hu@nxp.com>, Roy Zang <roy.zang@nxp.com>,
-        Masahiro Yamada <yamada.masahiro@socionext.com>,
-        Jingoo Han <jingoohan1@gmail.com>,
-        Andy Gross <agross@kernel.org>,
-        Stanimir Varbanov <svarbanov@mm-sol.com>,
-        Pengutronix Kernel Team <kernel@pengutronix.de>,
-        Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
-        linuxppc-dev <linuxppc-dev@lists.ozlabs.org>,
-        Lucas Stach <l.stach@pengutronix.de>
+References: <1602831532-24818-1-git-send-email-rnayak@codeaurora.org> <1602831532-24818-2-git-send-email-rnayak@codeaurora.org>
+In-Reply-To: <1602831532-24818-2-git-send-email-rnayak@codeaurora.org>
+From:   Linus Walleij <linus.walleij@linaro.org>
+Date:   Thu, 29 Oct 2020 15:02:55 +0100
+Message-ID: <CACRpkdarjBLJFtM7-Cq=G40Bo9dEEgxuny=QDh5y0LogD3CQqA@mail.gmail.com>
+Subject: Re: [PATCH 2/2] pinctrl: qcom: Add sc7280 pinctrl driver
+To:     Rajendra Nayak <rnayak@codeaurora.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>, Rob Herring <robh+dt@kernel.org>,
+        MSM <linux-arm-msm@vger.kernel.org>,
+        "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Oct 28, 2020 at 7:21 PM Michael Ellerman <mpe@ellerman.id.au> wrote:
+On Fri, Oct 16, 2020 at 8:59 AM Rajendra Nayak <rnayak@codeaurora.org> wrote:
+
+> Add initial pinctrl driver to support pin configuration with
+> pinctrl framework for SC7280 SoC
 >
-> Rob Herring <robh@kernel.org> writes:
-> > No other host driver sets the PCI_MSI_FLAGS_ENABLE bit, so it must not
-> > be necessary. If it is, a comment is needed.
->
-> Yeah, but git blame directly points to:
->
->   75cb8d20c112 ("PCI: imx: Enable MSI from downstream components")
+> Signed-off-by: Rajendra Nayak <rnayak@codeaurora.org>
 
-I think I did read this at some point and then forgot about it when I
-made the change later...
+This came in during the merge window I think, waiting for
+Bjorn to have a look at it.
 
-> Which has a pretty long explanation. The relevant bit probably being:
->
->   ... on i.MX6, the MSI Enable bit controls delivery of MSI interrupts
->   from components below the Root Port.
-
-The thing is that all seems not i.MX6 specific but DWC specific given
-MSI handling is contained within the DWC block. So I don't see how
-this could be an integration difference.
-
-So maybe everyone else is still just setting CONFIG_PCIEPORTBUS
-typically and haven't noticed? Is it correct for the host driver to
-set MSI enable?
-
-Rob
+Yours,
+Linus Walleij
