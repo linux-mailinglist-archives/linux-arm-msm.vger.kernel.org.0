@@ -2,52 +2,53 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id EAA0129F468
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Oct 2020 20:02:49 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 82FF629F478
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Oct 2020 20:04:21 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725940AbgJ2TCt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 29 Oct 2020 15:02:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51620 "EHLO
+        id S1725910AbgJ2TEQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 29 Oct 2020 15:04:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51840 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725912AbgJ2TCs (ORCPT
+        with ESMTP id S1725778AbgJ2TEP (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 29 Oct 2020 15:02:48 -0400
-Received: from mail-pf1-x442.google.com (mail-pf1-x442.google.com [IPv6:2607:f8b0:4864:20::442])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BAF90C0613CF;
-        Thu, 29 Oct 2020 12:02:48 -0700 (PDT)
-Received: by mail-pf1-x442.google.com with SMTP id o129so3149291pfb.1;
-        Thu, 29 Oct 2020 12:02:48 -0700 (PDT)
+        Thu, 29 Oct 2020 15:04:15 -0400
+Received: from mail-pg1-x544.google.com (mail-pg1-x544.google.com [IPv6:2607:f8b0:4864:20::544])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 86C7DC0613CF;
+        Thu, 29 Oct 2020 12:04:14 -0700 (PDT)
+Received: by mail-pg1-x544.google.com with SMTP id g12so3116262pgm.8;
+        Thu, 29 Oct 2020 12:04:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:mime-version:content-disposition;
-        bh=azmT/G24N8TE/tNqTJcXP4u4R0G+FAx2JFXhfXQuMug=;
-        b=MFzmyii/YJeRHKCIqFT/YTLhoiu2BinAEhntzjpS0mqt8LswpzA/CFS2KeuOEv0HGK
-         j2kWo8RJcKrKSy9nuG9J3NMPHBqdopefT/QJVs5GD1Kv/0lBbUXzLNxmXAy4zVkD1MIN
-         C7eRRuc5W5q+khDk26AsTcgo6t81c/3Bga+gwjYlIJF+qXbzuQmp7zKmJiuwmISf1/sz
-         vufi+QuFE79Mi9ObCs67utwW3qT3kmJjiUiGkaflT9N+c7AXQydioHOMQdPBQPdtGNQG
-         SSxWYFcXMcRJs+Y2j1QSkzGMl/OwBF3VlfvhPIJvhSGaO7mO84hQQWSxxf8BQLM5WAkk
-         bNnQ==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=E/YO8QhrBtgOUHxaIDNankNBd/9HmVJuOo7AD36126w=;
+        b=PLfkqocEdos35ZQHCQz/KTCSR/zMAv3dAbZfuP5kApLSMaTsx7PFKmmwIEBMuJFbFC
+         qC9PdeAhCfMDVWkvy7mrzdhGx8oHpIjCVqULqOklNfRAXVfXVA2r8nPjl2mFopa9IxIp
+         bGQIykKdYgDlBFjJHtGKn43D02lpYwtRVslmiIVm4XXBTr+RbE5XUwGb+k3LOCthAz7g
+         cv6P2xhzPjSwC8fWDCToPqu0kJOxC3WT8a/sp7Xb7gq40x9A64votvET4rP2ylYSwn+a
+         CNl1LQvuP93+p+ZbgI0roqCVTxygv6KD7V3x6aedt6LifnYrTC8MXqvj7SIP+7AR51fj
+         OqLA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:mime-version
-         :content-disposition;
-        bh=azmT/G24N8TE/tNqTJcXP4u4R0G+FAx2JFXhfXQuMug=;
-        b=aWJFAeo0PWEOT2E3koJFgPFmfbx2+/OyDM/7DjwuvYgSd8OTK3uPuq3LKTPb54govP
-         EXBCwOTqQ/QggN1sxKm4BxwdTft+yZrR8weLuqg+7+24IOUbloeI97ghiewRxv+jRMry
-         UcUhh5S7NLNZgDc5GutZzx5aavf/nCZcNsuCn9SriCn9fryyaC6+h5srODtNKxlJVIcy
-         aZUJMlRF7gA2kSiymB8+K6vrPfMSjjH3gRdLVpORQOSTePfNPW4AWMPGgGhIy9aUHezU
-         qJzP9cHJkHr6OLOwDGLJGs1Afb7ySgNnf3TTR3C8d4KeLkgZWrKcPyZA+4rCJu/LiGGE
-         OWnw==
-X-Gm-Message-State: AOAM533cC+N+suDVqgL1LLnVlGX34O+4S6iZ47pG/iD9LDBuJo22VIK1
-        px0xJz90otprYB0i39t21qc=
-X-Google-Smtp-Source: ABdhPJw5Eyg9jWRWL/0l6YSrt+Zz4nxhuw1qb7xVLw0srA+3h1RQYmrtFAIogzRd9bv84oV1HqsgPA==
-X-Received: by 2002:a62:6496:0:b029:155:b152:f0cf with SMTP id y144-20020a6264960000b0290155b152f0cfmr5910952pfb.75.1603998168350;
-        Thu, 29 Oct 2020 12:02:48 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=E/YO8QhrBtgOUHxaIDNankNBd/9HmVJuOo7AD36126w=;
+        b=cQfsImgYTb7I2PCjSjsHxsJB+rh0+AUcYTzc87B17iTLaO64AeMkrVRbu4y4lYCJcS
+         zdKPoPrZTC7B4woYNAa88miFBUJuCz9B12SI2146bWZLYIhf44XXH48cE8onB3hVCDF0
+         JJmnaHsV25uUFJREFr/wp8GMcAhAeHb80kn+Q9g4QuHu+YGu/wKgA7zBpkRnTMRtpISm
+         DeQSMWGWxLDyngIb+tkb8zm5oAXKnPXJTQkw1Uj2uqxY5m+m07VdTEpUnSbvZBTmP56a
+         RsQpJ6RbfAZTlrsKir7AvTa3rPP9NH7hDtLUrgzbS/ZtzfJbQ1wuk2eB0IVfJ0i1qyxE
+         mvXQ==
+X-Gm-Message-State: AOAM5312anXHvwM1f6d9tCNdxIQS/PrKTZWwoBrXaUym1gFjIyLZ69+I
+        WXvVy6hnI1OWO5Tz22ysNUY=
+X-Google-Smtp-Source: ABdhPJw9nDFNuKk/faRep1zMYuYjpRmAzLiIeyJ73bCvjZKMjBLsJZ2uz8PYM+c8gd4OhgIEGjyrHA==
+X-Received: by 2002:a62:e113:0:b029:152:69aa:6a08 with SMTP id q19-20020a62e1130000b029015269aa6a08mr5770954pfh.14.1603998254180;
+        Thu, 29 Oct 2020 12:04:14 -0700 (PDT)
 Received: from my--box ([103.98.79.70])
-        by smtp.gmail.com with ESMTPSA id i123sm3680527pfc.13.2020.10.29.12.02.44
+        by smtp.gmail.com with ESMTPSA id ne17sm547478pjb.44.2020.10.29.12.04.10
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 29 Oct 2020 12:02:47 -0700 (PDT)
-Date:   Fri, 30 Oct 2020 00:32:41 +0530
+        Thu, 29 Oct 2020 12:04:13 -0700 (PDT)
+Date:   Fri, 30 Oct 2020 00:34:08 +0530
 From:   Deepak R Varma <mh12gx2825@gmail.com>
 To:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
         David Airlie <airlied@linux.ie>,
@@ -55,52 +56,73 @@ To:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
         dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
         linux-kernel@vger.kernel.org, outreachy-kernel@googlegroups.com
 Cc:     mh12gx2825@gmail.com
-Subject: [PATCH 1/2] drm: msm: adreno: use DEFINE_DEBUGFS_ATTRIBUTE with
- debugfs_create_file_unsafe()
-Message-ID: <9ca2c2e4cbd9ebb282b90f742305fd9b481aacc2.1603998014.git.mh12gx2825@gmail.com>
+Subject: [PATCH 2/2] drm: msm: adreno: improve code indentation & alignment
+Message-ID: <e196c426de9e12f149492a92c0a8d92b6106f27c.1603998014.git.mh12gx2825@gmail.com>
+References: <9ca2c2e4cbd9ebb282b90f742305fd9b481aacc2.1603998014.git.mh12gx2825@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
+In-Reply-To: <9ca2c2e4cbd9ebb282b90f742305fd9b481aacc2.1603998014.git.mh12gx2825@gmail.com>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Using DEFINE_DEBUGFS_ATTRIBUTE macro with debugfs_create_file_unsafe()
-function in place of the debugfs_create_file() function will make the
-file operation struct "reset" aware of the file's lifetime. Additional
-details here: https://lists.archive.carbon60.com/linux/kernel/2369498
-
-Issue reported by Coccinelle script:
-scripts/coccinelle/api/debugfs/debugfs_simple_attr.cocci
+Align instructions split across multiple lines as per the coding
+standards. Issue flagged by checkpatch script.
 
 Signed-off-by: Deepak R Varma <mh12gx2825@gmail.com>
 ---
-Please Note: This is project task specific patch.
+Please note: This is a project task specific patch.
 
- drivers/gpu/drm/msm/adreno/a5xx_debugfs.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/msm/adreno/a5xx_debugfs.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
 diff --git a/drivers/gpu/drm/msm/adreno/a5xx_debugfs.c b/drivers/gpu/drm/msm/adreno/a5xx_debugfs.c
-index fc2c905b6c9e..ffe1fb9be155 100644
+index ffe1fb9be155..ac9296f314be 100644
 --- a/drivers/gpu/drm/msm/adreno/a5xx_debugfs.c
 +++ b/drivers/gpu/drm/msm/adreno/a5xx_debugfs.c
-@@ -138,7 +138,7 @@ reset_set(void *data, u64 val)
- 	return 0;
+@@ -20,7 +20,7 @@ static void pfp_print(struct msm_gpu *gpu, struct drm_printer *p)
+ 	for (i = 0; i < 36; i++) {
+ 		gpu_write(gpu, REG_A5XX_CP_PFP_STAT_ADDR, i);
+ 		drm_printf(p, "  %02x: %08x\n", i,
+-			gpu_read(gpu, REG_A5XX_CP_PFP_STAT_DATA));
++			   gpu_read(gpu, REG_A5XX_CP_PFP_STAT_DATA));
+ 	}
  }
  
--DEFINE_SIMPLE_ATTRIBUTE(reset_fops, NULL, reset_set, "%llx\n");
-+DEFINE_DEBUGFS_ATTRIBUTE(reset_fops, NULL, reset_set, "%llx\n");
+@@ -33,7 +33,7 @@ static void me_print(struct msm_gpu *gpu, struct drm_printer *p)
+ 	for (i = 0; i < 29; i++) {
+ 		gpu_write(gpu, REG_A5XX_CP_ME_STAT_ADDR, i);
+ 		drm_printf(p, "  %02x: %08x\n", i,
+-			gpu_read(gpu, REG_A5XX_CP_ME_STAT_DATA));
++			   gpu_read(gpu, REG_A5XX_CP_ME_STAT_DATA));
+ 	}
+ }
  
+@@ -46,7 +46,7 @@ static void meq_print(struct msm_gpu *gpu, struct drm_printer *p)
  
- void a5xx_debugfs_init(struct msm_gpu *gpu, struct drm_minor *minor)
-@@ -154,6 +154,6 @@ void a5xx_debugfs_init(struct msm_gpu *gpu, struct drm_minor *minor)
- 				 ARRAY_SIZE(a5xx_debugfs_list),
+ 	for (i = 0; i < 64; i++) {
+ 		drm_printf(p, "  %02x: %08x\n", i,
+-			gpu_read(gpu, REG_A5XX_CP_MEQ_DBG_DATA));
++			   gpu_read(gpu, REG_A5XX_CP_MEQ_DBG_DATA));
+ 	}
+ }
+ 
+@@ -63,7 +63,7 @@ static void roq_print(struct msm_gpu *gpu, struct drm_printer *p)
+ 		for (j = 0; j < 4; j++)
+ 			val[j] = gpu_read(gpu, REG_A5XX_CP_ROQ_DBG_DATA);
+ 		drm_printf(p, "  %02x: %08x %08x %08x %08x\n", i,
+-			val[0], val[1], val[2], val[3]);
++			   val[0], val[1], val[2], val[3]);
+ 	}
+ }
+ 
+@@ -155,5 +155,5 @@ void a5xx_debugfs_init(struct msm_gpu *gpu, struct drm_minor *minor)
  				 minor->debugfs_root, minor);
  
--	debugfs_create_file("reset", S_IWUGO, minor->debugfs_root, dev,
--			    &reset_fops);
-+	debugfs_create_file_unsafe("reset", S_IWUGO, minor->debugfs_root, dev,
-+				&reset_fops);
+ 	debugfs_create_file_unsafe("reset", S_IWUGO, minor->debugfs_root, dev,
+-				&reset_fops);
++				   &reset_fops);
  }
 -- 
 2.25.1
