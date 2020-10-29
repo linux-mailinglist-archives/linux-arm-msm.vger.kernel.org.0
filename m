@@ -2,128 +2,202 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 82FF629F478
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Oct 2020 20:04:21 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 899D629F657
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Oct 2020 21:41:18 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725910AbgJ2TEQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 29 Oct 2020 15:04:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51840 "EHLO
+        id S1726433AbgJ2UlA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 29 Oct 2020 16:41:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38730 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725778AbgJ2TEP (ORCPT
+        with ESMTP id S1726808AbgJ2Uk7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 29 Oct 2020 15:04:15 -0400
-Received: from mail-pg1-x544.google.com (mail-pg1-x544.google.com [IPv6:2607:f8b0:4864:20::544])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 86C7DC0613CF;
-        Thu, 29 Oct 2020 12:04:14 -0700 (PDT)
-Received: by mail-pg1-x544.google.com with SMTP id g12so3116262pgm.8;
-        Thu, 29 Oct 2020 12:04:14 -0700 (PDT)
+        Thu, 29 Oct 2020 16:40:59 -0400
+Received: from mail-ot1-x344.google.com (mail-ot1-x344.google.com [IPv6:2607:f8b0:4864:20::344])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 25155C0613D2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Oct 2020 13:31:06 -0700 (PDT)
+Received: by mail-ot1-x344.google.com with SMTP id b2so3562101ots.5
+        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Oct 2020 13:31:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=E/YO8QhrBtgOUHxaIDNankNBd/9HmVJuOo7AD36126w=;
-        b=PLfkqocEdos35ZQHCQz/KTCSR/zMAv3dAbZfuP5kApLSMaTsx7PFKmmwIEBMuJFbFC
-         qC9PdeAhCfMDVWkvy7mrzdhGx8oHpIjCVqULqOklNfRAXVfXVA2r8nPjl2mFopa9IxIp
-         bGQIykKdYgDlBFjJHtGKn43D02lpYwtRVslmiIVm4XXBTr+RbE5XUwGb+k3LOCthAz7g
-         cv6P2xhzPjSwC8fWDCToPqu0kJOxC3WT8a/sp7Xb7gq40x9A64votvET4rP2ylYSwn+a
-         CNl1LQvuP93+p+ZbgI0roqCVTxygv6KD7V3x6aedt6LifnYrTC8MXqvj7SIP+7AR51fj
-         OqLA==
+        d=kali.org; s=google;
+        h=subject:to:references:from:message-id:date:user-agent:mime-version
+         :in-reply-to:content-transfer-encoding:content-language;
+        bh=UR5Q0rKVUZjqjZjwnrNInjG9jrCLixcHQwLzgr/1Eis=;
+        b=HV9Vy5DGmPZuj3g+adYzUcMkmIcsObWADfy9IOyMUqA81J85Uo3Ty2Bo9eg3i26o2e
+         VIkP/KwY6N2x9aILFnAobvRCThLVfa0To9qUJrvnjHxvjm+YnAU41QjD/2n1Y43t2iAo
+         H617tuMddEvvZcQDir3Fo516PZG87OshVe0Oxbrc9O517qSdg6bA5T1sKDI7KB+CU+mw
+         jOv9kNKGWk4XSzKEF2VQRtHVUifvDdIrNjw3S9Mut/ZhksfEAgL5aAsj5Z2VuQqs7trn
+         8oHkC7SfSvCcui0a/rLmkUYbfJ2/2Cl5J/7gHGZT7kihnSwJeTLrBdtuqClKdjJ/Bhjn
+         nQsw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=E/YO8QhrBtgOUHxaIDNankNBd/9HmVJuOo7AD36126w=;
-        b=cQfsImgYTb7I2PCjSjsHxsJB+rh0+AUcYTzc87B17iTLaO64AeMkrVRbu4y4lYCJcS
-         zdKPoPrZTC7B4woYNAa88miFBUJuCz9B12SI2146bWZLYIhf44XXH48cE8onB3hVCDF0
-         JJmnaHsV25uUFJREFr/wp8GMcAhAeHb80kn+Q9g4QuHu+YGu/wKgA7zBpkRnTMRtpISm
-         DeQSMWGWxLDyngIb+tkb8zm5oAXKnPXJTQkw1Uj2uqxY5m+m07VdTEpUnSbvZBTmP56a
-         RsQpJ6RbfAZTlrsKir7AvTa3rPP9NH7hDtLUrgzbS/ZtzfJbQ1wuk2eB0IVfJ0i1qyxE
-         mvXQ==
-X-Gm-Message-State: AOAM5312anXHvwM1f6d9tCNdxIQS/PrKTZWwoBrXaUym1gFjIyLZ69+I
-        WXvVy6hnI1OWO5Tz22ysNUY=
-X-Google-Smtp-Source: ABdhPJw9nDFNuKk/faRep1zMYuYjpRmAzLiIeyJ73bCvjZKMjBLsJZ2uz8PYM+c8gd4OhgIEGjyrHA==
-X-Received: by 2002:a62:e113:0:b029:152:69aa:6a08 with SMTP id q19-20020a62e1130000b029015269aa6a08mr5770954pfh.14.1603998254180;
-        Thu, 29 Oct 2020 12:04:14 -0700 (PDT)
-Received: from my--box ([103.98.79.70])
-        by smtp.gmail.com with ESMTPSA id ne17sm547478pjb.44.2020.10.29.12.04.10
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 29 Oct 2020 12:04:13 -0700 (PDT)
-Date:   Fri, 30 Oct 2020 00:34:08 +0530
-From:   Deepak R Varma <mh12gx2825@gmail.com>
-To:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        linux-kernel@vger.kernel.org, outreachy-kernel@googlegroups.com
-Cc:     mh12gx2825@gmail.com
-Subject: [PATCH 2/2] drm: msm: adreno: improve code indentation & alignment
-Message-ID: <e196c426de9e12f149492a92c0a8d92b6106f27c.1603998014.git.mh12gx2825@gmail.com>
-References: <9ca2c2e4cbd9ebb282b90f742305fd9b481aacc2.1603998014.git.mh12gx2825@gmail.com>
+        h=x-gm-message-state:subject:to:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding
+         :content-language;
+        bh=UR5Q0rKVUZjqjZjwnrNInjG9jrCLixcHQwLzgr/1Eis=;
+        b=JIvNYk7ePQ/g8dxSvO57OUnYG0ujR5GVOYmisooc8jyQXY4GbmCd8V5XJSNuZ4m/d3
+         STKPzmZvREF7Y3ABppOBeLSnsqjC74tUNT5gdCaTauXEty7PmSu7svLw49NC0Mejymhv
+         0cEGrxZSlZsgUWwrOINmKaBFXTKfbLgNq3XWyE1CZEpYTgOr7reTyrHcsBGGW3lCUrxH
+         OfUcg0yBTmpqN/177LimuOIH0+lxos+3IrsJxyfe7ZKwEbrU4sshCm7c8Id2xZiy/T9z
+         ErNil6BxUEnJewJOPwUHnS71Ym+abJxFef+5RIMBlmHIxnTPWurCmRKXkWbMlUOjMp7C
+         KlcA==
+X-Gm-Message-State: AOAM531e/iydAEcx8pjBxqk/eAvlceXdS0UgoAjttxB+VNDVUftg/HIf
+        H2VFgJMXWGJTsGw9IBANE2nUj5GxPn5Hag==
+X-Google-Smtp-Source: ABdhPJxVXE0ig9F8lWwLK4LTAPtkSuv1cfubfW6QDWGisnqAKdobrt19osBEbRph4BPo1fWlhr0gMg==
+X-Received: by 2002:a05:6830:1241:: with SMTP id s1mr4415710otp.366.1604003465489;
+        Thu, 29 Oct 2020 13:31:05 -0700 (PDT)
+Received: from Steevs-MBP.hackershack.net (cpe-173-175-113-3.satx.res.rr.com. [173.175.113.3])
+        by smtp.gmail.com with ESMTPSA id z126sm927764oiz.41.2020.10.29.13.31.03
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 29 Oct 2020 13:31:04 -0700 (PDT)
+Subject: Re: [PATCH v2] venus: venc: Fix setting of profile and level
+To:     Stanimir Varbanov <stanimir.varbanov@linaro.org>,
+        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20201027091936.14478-1-stanimir.varbanov@linaro.org>
+From:   Steev Klimaszewski <steev@kali.org>
+Message-ID: <b66a9736-e7ec-82d2-8065-d587c379d298@kali.org>
+Date:   Thu, 29 Oct 2020 15:31:02 -0500
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:68.0)
+ Gecko/20100101 Thunderbird/68.12.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <9ca2c2e4cbd9ebb282b90f742305fd9b481aacc2.1603998014.git.mh12gx2825@gmail.com>
+In-Reply-To: <20201027091936.14478-1-stanimir.varbanov@linaro.org>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
+Content-Language: en-US
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Align instructions split across multiple lines as per the coding
-standards. Issue flagged by checkpatch script.
 
-Signed-off-by: Deepak R Varma <mh12gx2825@gmail.com>
----
-Please note: This is a project task specific patch.
+On 10/27/20 4:19 AM, Stanimir Varbanov wrote:
+> The profile and level in op_set_ctrl was recently changed but during
+> v4l2_ctrl_handler_setup profile and level control values are mangled.
+>
+> Fixes: 435c53c3698f ("media: venus: venc: Use helper to set profile and level")
+> Signed-off-by: Stanimir Varbanov <stanimir.varbanov@linaro.org>
+> ---
+>
+> v2: Fixed kernel test robot WARNING
+>
+>  drivers/media/platform/qcom/venus/core.h      | 15 +++++++--
+>  drivers/media/platform/qcom/venus/venc.c      | 31 ++++++++++++++++++-
+>  .../media/platform/qcom/venus/venc_ctrls.c    | 14 +++++++--
+>  3 files changed, 55 insertions(+), 5 deletions(-)
+>
+> diff --git a/drivers/media/platform/qcom/venus/core.h b/drivers/media/platform/qcom/venus/core.h
+> index 7b79a33dc9d6..05c9fbd51f0c 100644
+> --- a/drivers/media/platform/qcom/venus/core.h
+> +++ b/drivers/media/platform/qcom/venus/core.h
+> @@ -243,8 +243,19 @@ struct venc_controls {
+>  
+>  	u32 header_mode;
+>  
+> -	u32 profile;
+> -	u32 level;
+> +	struct {
+> +		u32 h264;
+> +		u32 mpeg4;
+> +		u32 hevc;
+> +		u32 vp8;
+> +		u32 vp9;
+> +	} profile;
+> +	struct {
+> +		u32 h264;
+> +		u32 mpeg4;
+> +		u32 hevc;
+> +		u32 vp9;
+> +	} level;
+>  };
+>  
+>  struct venus_buffer {
+> diff --git a/drivers/media/platform/qcom/venus/venc.c b/drivers/media/platform/qcom/venus/venc.c
+> index f8b1484e7dcd..47246528ac7e 100644
+> --- a/drivers/media/platform/qcom/venus/venc.c
+> +++ b/drivers/media/platform/qcom/venus/venc.c
+> @@ -537,6 +537,7 @@ static int venc_set_properties(struct venus_inst *inst)
+>  	struct hfi_quantization quant;
+>  	struct hfi_quantization_range quant_range;
+>  	u32 ptype, rate_control, bitrate;
+> +	u32 profile, level;
+>  	int ret;
+>  
+>  	ret = venus_helper_set_work_mode(inst, VIDC_WORK_MODE_2);
+> @@ -684,7 +685,35 @@ static int venc_set_properties(struct venus_inst *inst)
+>  	if (ret)
+>  		return ret;
+>  
+> -	ret = venus_helper_set_profile_level(inst, ctr->profile, ctr->level);
+> +	switch (inst->hfi_codec) {
+> +	case HFI_VIDEO_CODEC_H264:
+> +		profile = ctr->profile.h264;
+> +		level = ctr->level.h264;
+> +		break;
+> +	case HFI_VIDEO_CODEC_MPEG4:
+> +		profile = ctr->profile.mpeg4;
+> +		level = ctr->level.mpeg4;
+> +		break;
+> +	case HFI_VIDEO_CODEC_VP8:
+> +		profile = ctr->profile.vp8;
+> +		level = 0;
+> +		break;
+> +	case HFI_VIDEO_CODEC_VP9:
+> +		profile = ctr->profile.vp9;
+> +		level = ctr->level.vp9;
+> +		break;
+> +	case HFI_VIDEO_CODEC_HEVC:
+> +		profile = ctr->profile.hevc;
+> +		level = ctr->level.hevc;
+> +		break;
+> +	case HFI_VIDEO_CODEC_MPEG2:
+> +	default:
+> +		profile = 0;
+> +		level = 0;
+> +		break;
+> +	}
+> +
+> +	ret = venus_helper_set_profile_level(inst, profile, level);
+>  	if (ret)
+>  		return ret;
+>  
+> diff --git a/drivers/media/platform/qcom/venus/venc_ctrls.c b/drivers/media/platform/qcom/venus/venc_ctrls.c
+> index 0708b3b89d0c..cf860e6446c0 100644
+> --- a/drivers/media/platform/qcom/venus/venc_ctrls.c
+> +++ b/drivers/media/platform/qcom/venus/venc_ctrls.c
+> @@ -103,15 +103,25 @@ static int venc_op_s_ctrl(struct v4l2_ctrl *ctrl)
+>  		ctr->h264_entropy_mode = ctrl->val;
+>  		break;
+>  	case V4L2_CID_MPEG_VIDEO_MPEG4_PROFILE:
+> +		ctr->profile.mpeg4 = ctrl->val;
+> +		break;
+>  	case V4L2_CID_MPEG_VIDEO_H264_PROFILE:
+> +		ctr->profile.h264 = ctrl->val;
+> +		break;
+>  	case V4L2_CID_MPEG_VIDEO_HEVC_PROFILE:
+> +		ctr->profile.hevc = ctrl->val;
+> +		break;
+>  	case V4L2_CID_MPEG_VIDEO_VP8_PROFILE:
+> -		ctr->profile = ctrl->val;
+> +		ctr->profile.vp8 = ctrl->val;
+>  		break;
+>  	case V4L2_CID_MPEG_VIDEO_MPEG4_LEVEL:
+> +		ctr->level.mpeg4 = ctrl->val;
+> +		break;
+>  	case V4L2_CID_MPEG_VIDEO_H264_LEVEL:
+> +		ctr->level.h264 = ctrl->val;
+> +		break;
+>  	case V4L2_CID_MPEG_VIDEO_HEVC_LEVEL:
+> -		ctr->level = ctrl->val;
+> +		ctr->level.hevc = ctrl->val;
+>  		break;
+>  	case V4L2_CID_MPEG_VIDEO_H264_I_FRAME_QP:
+>  		ctr->h264_i_qp = ctrl->val;
 
- drivers/gpu/drm/msm/adreno/a5xx_debugfs.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+Hi Stanimir,
 
-diff --git a/drivers/gpu/drm/msm/adreno/a5xx_debugfs.c b/drivers/gpu/drm/msm/adreno/a5xx_debugfs.c
-index ffe1fb9be155..ac9296f314be 100644
---- a/drivers/gpu/drm/msm/adreno/a5xx_debugfs.c
-+++ b/drivers/gpu/drm/msm/adreno/a5xx_debugfs.c
-@@ -20,7 +20,7 @@ static void pfp_print(struct msm_gpu *gpu, struct drm_printer *p)
- 	for (i = 0; i < 36; i++) {
- 		gpu_write(gpu, REG_A5XX_CP_PFP_STAT_ADDR, i);
- 		drm_printf(p, "  %02x: %08x\n", i,
--			gpu_read(gpu, REG_A5XX_CP_PFP_STAT_DATA));
-+			   gpu_read(gpu, REG_A5XX_CP_PFP_STAT_DATA));
- 	}
- }
- 
-@@ -33,7 +33,7 @@ static void me_print(struct msm_gpu *gpu, struct drm_printer *p)
- 	for (i = 0; i < 29; i++) {
- 		gpu_write(gpu, REG_A5XX_CP_ME_STAT_ADDR, i);
- 		drm_printf(p, "  %02x: %08x\n", i,
--			gpu_read(gpu, REG_A5XX_CP_ME_STAT_DATA));
-+			   gpu_read(gpu, REG_A5XX_CP_ME_STAT_DATA));
- 	}
- }
- 
-@@ -46,7 +46,7 @@ static void meq_print(struct msm_gpu *gpu, struct drm_printer *p)
- 
- 	for (i = 0; i < 64; i++) {
- 		drm_printf(p, "  %02x: %08x\n", i,
--			gpu_read(gpu, REG_A5XX_CP_MEQ_DBG_DATA));
-+			   gpu_read(gpu, REG_A5XX_CP_MEQ_DBG_DATA));
- 	}
- }
- 
-@@ -63,7 +63,7 @@ static void roq_print(struct msm_gpu *gpu, struct drm_printer *p)
- 		for (j = 0; j < 4; j++)
- 			val[j] = gpu_read(gpu, REG_A5XX_CP_ROQ_DBG_DATA);
- 		drm_printf(p, "  %02x: %08x %08x %08x %08x\n", i,
--			val[0], val[1], val[2], val[3]);
-+			   val[0], val[1], val[2], val[3]);
- 	}
- }
- 
-@@ -155,5 +155,5 @@ void a5xx_debugfs_init(struct msm_gpu *gpu, struct drm_minor *minor)
- 				 minor->debugfs_root, minor);
- 
- 	debugfs_create_file_unsafe("reset", S_IWUGO, minor->debugfs_root, dev,
--				&reset_fops);
-+				   &reset_fops);
- }
--- 
-2.25.1
+When I apply this patch on top of my 5.10rc1 tree - (
+https://github.com/steev/linux/commits/c630-5.10-rc1... my c630 no
+longer boots.  Unfortunately... nothing shows up in the logs, and I have
+no idea how to get debug output from the c630. 
+
+-- Steev
 
