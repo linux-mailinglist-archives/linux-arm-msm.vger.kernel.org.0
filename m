@@ -2,225 +2,276 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 9732F29EE0E
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Oct 2020 15:21:41 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1FD8929EE55
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Oct 2020 15:33:19 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726676AbgJ2OVf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 29 Oct 2020 10:21:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35512 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726510AbgJ2OUL (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 29 Oct 2020 10:20:11 -0400
-Received: from mail-ot1-x342.google.com (mail-ot1-x342.google.com [IPv6:2607:f8b0:4864:20::342])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 24756C0613CF
-        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Oct 2020 07:20:11 -0700 (PDT)
-Received: by mail-ot1-x342.google.com with SMTP id a6so2353012otp.10
-        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Oct 2020 07:20:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=pE36nmfKCnsKpAZPVaNXR7cA+FjGaWm58O/lID5CHBg=;
-        b=dgXWPdG7OHhZ/9q5wSEL2GR0eP0apXyicy1uTbs9L8zrqsk+rJQV0pqThAnWZUufe2
-         QqJH3q3iSYdjz7eYi2Ci/ycHKiz418H9K90OhrBlUymFMeZYR/GPE4IfOSRuwHbnY/XA
-         WWd1tFeZ/NT3bB89cDgfpoHPPVUgd58sNGLSinPyhKS428GLTMz9DQG2SpQIru3eT1TM
-         Lrj7ACJuT0lZfm3REmDvPA3w60p6cSVfec/rImVBJKRF64ZpKeh+eGKAXTIiETV+ry4z
-         A1JdWIEsdI2u8+tlnKZS1muiH4pIr3NVTOQLGYEW4mW+6X6+uZ86alW5+/WchxjSmFy6
-         ax1A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=pE36nmfKCnsKpAZPVaNXR7cA+FjGaWm58O/lID5CHBg=;
-        b=lm632xC2AUs0h9jZlkI87w/FwnaTDInPtVeCoM8zqzPcd21tNo1fCpOunuwQYa+kl0
-         RTA9zcUju0hbT10WrlZRuCpMydH1bbD57SCWqzziHjBeWWNA7ycyzTxsg44e9AnGEnWu
-         8SfKmRNk2ZPn8vad/RvdLojsk2qAChrY7BR9nZNLE9WgguqIpZpuacpRYLZ5MJ8HEJVx
-         nmBGde9ksOG5kYLkKI5R6kZWs9u1syR5ojTEvMa9sOaiLkt5kHYHHwMi9V4MZEh+ffoz
-         ydhYWMLqiGeJ4qSua99I81ej5z8ZVNJxFs5MgwYx4DHcBOPFEwVp7pKQEU5FZY5Jq9MH
-         163g==
-X-Gm-Message-State: AOAM532KJ9xxjok1fex8W3+gOaRnG8SQ32iP8x0LtOCKaRZyBttSsMl1
-        En4J4CQj1N8JSz8QOQ/UqbBJgA==
-X-Google-Smtp-Source: ABdhPJz+jDbt9HxVC8yigRGbCacjLxvrpguWaPk+NajhzjAhJsDG5UIAC1ki397dKFs0h3C6avC8HA==
-X-Received: by 2002:a9d:7419:: with SMTP id n25mr3447311otk.183.1603981210414;
-        Thu, 29 Oct 2020 07:20:10 -0700 (PDT)
-Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id m6sm638016otm.76.2020.10.29.07.20.09
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 29 Oct 2020 07:20:09 -0700 (PDT)
-Date:   Thu, 29 Oct 2020 09:20:08 -0500
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Rajendra Nayak <rnayak@codeaurora.org>
-Cc:     agross@kernel.org, linus.walleij@linaro.org, robh+dt@kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 2/2] pinctrl: qcom: Add sc7280 pinctrl driver
-Message-ID: <20201029142008.GE3151@builder.lan>
-References: <1602831532-24818-1-git-send-email-rnayak@codeaurora.org>
- <1602831532-24818-2-git-send-email-rnayak@codeaurora.org>
+        id S1726297AbgJ2OdB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 29 Oct 2020 10:33:01 -0400
+Received: from m42-4.mailgun.net ([69.72.42.4]:16659 "EHLO m42-4.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726471AbgJ2Oc7 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 29 Oct 2020 10:32:59 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1603981979; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
+ Subject: Sender; bh=+5CEPu5nA9/sChcmqgIXVmYq2DsW+la0hD1ym0HCYpU=; b=NMfH6OY5uE0rHgL/9E1cArR8MtPb8INs1ot3fclxNsQ/VkWYqZ5taKQU5H0ouze3W1F1lFFT
+ kT5UPCKaYfygrZgE7OHGQmCfZsKk30oxXEe9HNZSLdEC2cO2WI8d5HW33HQNMVT9dVh0qvop
+ fvs4Br2K7W32Bck4eFzFu3kX+8g=
+X-Mailgun-Sending-Ip: 69.72.42.4
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n01.prod.us-east-1.postgun.com with SMTP id
+ 5f9acfcd4e4fe7071d3c93ad (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 29 Oct 2020 14:21:01
+ GMT
+Sender: jhugo=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 18EF2C433FF; Thu, 29 Oct 2020 14:21:00 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-3.2 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        NICE_REPLY_A,SPF_FAIL,URIBL_BLOCKED autolearn=no autolearn_force=no
+        version=3.4.0
+Received: from [10.226.59.216] (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: jhugo)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id B74BBC433FE;
+        Thu, 29 Oct 2020 14:20:57 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org B74BBC433FE
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=jhugo@codeaurora.org
+Subject: =?UTF-8?B?UmU6IOetlOWkjTog562U5aSNOiBbUEFUQ0hdIGJ1czogbWhpOiBjb3Jl?=
+ =?UTF-8?Q?=3a_Add_support_MHI_EE_FP_for_download_firmware?=
+To:     =?UTF-8?B?Q2FybCBZaW4o5q635byg5oiQKQ==?= <carl.yin@quectel.com>,
+        Hemant Kumar <hemantk@codeaurora.org>,
+        "manivannan.sadhasivam@linaro.org" <manivannan.sadhasivam@linaro.org>,
+        "sfr@canb.auug.org.au" <sfr@canb.auug.org.au>
+Cc:     "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+        Naveen Kumar <naveen.kumar@quectel.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+References: <a9d5117e4c6647a5e6c3ed3e2fb049a3@sslemail.net>
+ <322cf3df-86f1-7614-62b1-db8594a8062a@codeaurora.org>
+ <HK2PR06MB35079165F7A51A3D995AA46A86170@HK2PR06MB3507.apcprd06.prod.outlook.com>
+ <45c9497e-4186-8c5f-431b-ad5eb003f505@codeaurora.org>
+ <HK2PR06MB3507DA5F5DA6969C772E679886140@HK2PR06MB3507.apcprd06.prod.outlook.com>
+From:   Jeffrey Hugo <jhugo@codeaurora.org>
+Message-ID: <1bbf97db-38dc-116a-f554-5092124786b1@codeaurora.org>
+Date:   Thu, 29 Oct 2020 08:20:56 -0600
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.3.2
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1602831532-24818-2-git-send-email-rnayak@codeaurora.org>
+In-Reply-To: <HK2PR06MB3507DA5F5DA6969C772E679886140@HK2PR06MB3507.apcprd06.prod.outlook.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri 16 Oct 01:58 CDT 2020, Rajendra Nayak wrote:
-> diff --git a/drivers/pinctrl/qcom/pinctrl-sc7280.c b/drivers/pinctrl/qcom/pinctrl-sc7280.c
-[..]
-> +static const struct msm_function sc7280_functions[] = {
-[..]
-> +	FUNCTION(phase_flag0),
-> +	FUNCTION(phase_flag1),
-> +	FUNCTION(phase_flag10),
-> +	FUNCTION(phase_flag11),
-> +	FUNCTION(phase_flag12),
-> +	FUNCTION(phase_flag13),
-> +	FUNCTION(phase_flag14),
-> +	FUNCTION(phase_flag15),
-> +	FUNCTION(phase_flag16),
-> +	FUNCTION(phase_flag17),
-> +	FUNCTION(phase_flag18),
-> +	FUNCTION(phase_flag19),
-> +	FUNCTION(phase_flag2),
-> +	FUNCTION(phase_flag20),
-> +	FUNCTION(phase_flag21),
-> +	FUNCTION(phase_flag22),
-> +	FUNCTION(phase_flag23),
-> +	FUNCTION(phase_flag24),
-> +	FUNCTION(phase_flag25),
-> +	FUNCTION(phase_flag26),
-> +	FUNCTION(phase_flag27),
-> +	FUNCTION(phase_flag28),
-> +	FUNCTION(phase_flag29),
-> +	FUNCTION(phase_flag3),
-> +	FUNCTION(phase_flag30),
-> +	FUNCTION(phase_flag31),
-> +	FUNCTION(phase_flag4),
-> +	FUNCTION(phase_flag5),
-> +	FUNCTION(phase_flag6),
-> +	FUNCTION(phase_flag7),
-> +	FUNCTION(phase_flag8),
-> +	FUNCTION(phase_flag9),
+On 10/28/2020 7:12 PM, Carl Yin(殷张成) wrote:
+> Hi Jeffery:
+> 
+> On Wednesday, October 28, 2020 10:24 PM, jhugo wrote:
+>> On 10/27/2020 7:39 PM, Carl Yin(殷张成) wrote:
+>>> Hi Hemant and Jeffery:
+>>>
+>>> On Wednesday, October 28, 2020 7:02 AM, hemantk wrote:
+>>>> Hi Jeff,
+>>>>
+>>>> On 10/27/20 8:11 AM, Jeffrey Hugo wrote:
+>>>>> On 10/27/2020 3:43 AM, carl.yin@quectel.com wrote:
+>>>>>> From: "carl.yin" <carl.yin@quectel.com>
+>>>>>>
+>>>>>> MHI wwan modems support download firmware to nand or emmc by
+>>>>>> firehose protocol, process as next:
+>>>>>> 1. wwan modem normal bootup and enter EE AMSS, create mhi DIAG chan
+>>>>>> device 2. send EDL cmd via DIAG chan, then modem enter EE EDL 3.
+>>>>>> boot.c download 'firehose/prog_firehose_sdx55.mbn' via BHI
+>>>>>> interface 4. modem enter EE FP, and create mhi EDL chan device 5.
+>>>>>> user space tool download FW to modem via EDL chan by firehose
+>>>>>> protocol
+>>>>>>
+>>>>>> Signed-off-by: carl.yin <carl.yin@quectel.com>
+>>>>>> ---
+>>>>>>     drivers/bus/mhi/core/boot.c     |  4 +++-
+>>>>>>     drivers/bus/mhi/core/init.c     |  2 ++
+>>>>>>     drivers/bus/mhi/core/internal.h |  1 +
+>>>>>>     drivers/bus/mhi/core/main.c     |  3 +++
+>>>>>>     drivers/bus/mhi/core/pm.c       | 16 +++++++++++++++-
+>>>>>>     include/linux/mhi.h             |  4 +++-
+>>>>>>     6 files changed, 27 insertions(+), 3 deletions(-)
+>>>>>>
+>>>>>> diff --git a/drivers/bus/mhi/core/boot.c
+>>>>>> b/drivers/bus/mhi/core/boot.c index 24422f5..ab39ad6 100644
+>>>>>> --- a/drivers/bus/mhi/core/boot.c
+>>>>>> +++ b/drivers/bus/mhi/core/boot.c
+>>>>>> @@ -460,8 +460,10 @@ void mhi_fw_load_handler(struct mhi_controller
+>>>>>> *mhi_cntrl)
+>>>>>>             return;
+>>>>>>         }
+>>>>>> -    if (mhi_cntrl->ee == MHI_EE_EDL)
+>>>>>> +    if (mhi_cntrl->ee == MHI_EE_EDL) {
+>>>>>> +        mhi_ready_state_transition(mhi_cntrl);
+>>>>>>             return;
+>>>>>> +    }
+>>>>>>         write_lock_irq(&mhi_cntrl->pm_lock);
+>>>>>>         mhi_cntrl->dev_state = MHI_STATE_RESET; diff --git
+>>>>>> a/drivers/bus/mhi/core/init.c b/drivers/bus/mhi/core/init.c index
+>>>>>> ac4aa5c..9c2c2f3 100644
+>>>>>> --- a/drivers/bus/mhi/core/init.c
+>>>>>> +++ b/drivers/bus/mhi/core/init.c
+>>>>>> @@ -26,6 +26,7 @@ const char * const mhi_ee_str[MHI_EE_MAX] = {
+>>>>>>         [MHI_EE_WFW] = "WFW",
+>>>>>>         [MHI_EE_PTHRU] = "PASS THRU",
+>>>>>>         [MHI_EE_EDL] = "EDL",
+>>>>>> +    [MHI_EE_FP] = "FP",
+>>>>>>         [MHI_EE_DISABLE_TRANSITION] = "DISABLE",
+>>>>>>         [MHI_EE_NOT_SUPPORTED] = "NOT SUPPORTED",
+>>>>>>     };
+>>>>>> @@ -35,6 +36,7 @@ const char * const
+>>>>>> dev_state_tran_str[DEV_ST_TRANSITION_MAX] = {
+>>>>>>         [DEV_ST_TRANSITION_READY] = "READY",
+>>>>>>         [DEV_ST_TRANSITION_SBL] = "SBL",
+>>>>>>         [DEV_ST_TRANSITION_MISSION_MODE] = "MISSION_MODE",
+>>>>>> +    [DEV_ST_TRANSITION_FP] = "FP",
+>>>>>>         [DEV_ST_TRANSITION_SYS_ERR] = "SYS_ERR",
+>>>>>>         [DEV_ST_TRANSITION_DISABLE] = "DISABLE",
+>>>>>>     };
+>>>>>> diff --git a/drivers/bus/mhi/core/internal.h
+>>>>>> b/drivers/bus/mhi/core/internal.h index 4abf0cf..6ae897a 100644
+>>>>>> --- a/drivers/bus/mhi/core/internal.h
+>>>>>> +++ b/drivers/bus/mhi/core/internal.h
+>>>>>> @@ -386,6 +386,7 @@ enum dev_st_transition {
+>>>>>>         DEV_ST_TRANSITION_READY,
+>>>>>>         DEV_ST_TRANSITION_SBL,
+>>>>>>         DEV_ST_TRANSITION_MISSION_MODE,
+>>>>>> +    DEV_ST_TRANSITION_FP,
+>>>>>>         DEV_ST_TRANSITION_SYS_ERR,
+>>>>>>         DEV_ST_TRANSITION_DISABLE,
+>>>>>>         DEV_ST_TRANSITION_MAX,
+>>>>>> diff --git a/drivers/bus/mhi/core/main.c
+>>>>>> b/drivers/bus/mhi/core/main.c index 3950792..e307b58 100644
+>>>>>> --- a/drivers/bus/mhi/core/main.c
+>>>>>> +++ b/drivers/bus/mhi/core/main.c
+>>>>>> @@ -782,6 +782,9 @@ int mhi_process_ctrl_ev_ring(struct
+>>>>>> mhi_controller *mhi_cntrl,
+>>>>>>                 case MHI_EE_SBL:
+>>>>>>                     st = DEV_ST_TRANSITION_SBL;
+>>>>>>                     break;
+>>>>>> +            case MHI_EE_FP:
+>>>>>> +                st = DEV_ST_TRANSITION_FP;
+>>>>>> +                break;
+>>>>>>                 case MHI_EE_WFW:
+>>>>>>                 case MHI_EE_AMSS:
+>>>>>>                     st = DEV_ST_TRANSITION_MISSION_MODE;
+>> diff
+>>>> --git
+>>>>>> a/drivers/bus/mhi/core/pm.c b/drivers/bus/mhi/core/pm.c index
+>>>>>> 3de7b16..3c95a5d 100644
+>>>>>> --- a/drivers/bus/mhi/core/pm.c
+>>>>>> +++ b/drivers/bus/mhi/core/pm.c
+>>>>>> @@ -563,7 +563,15 @@ static void mhi_pm_disable_transition(struct
+>>>>>> mhi_controller *mhi_cntrl,
+>>>>>>         }
+>>>>>>         if (cur_state == MHI_PM_SYS_ERR_PROCESS) {
+>>>>>> -        mhi_ready_state_transition(mhi_cntrl);
+>>>>>> +        if (mhi_get_exec_env(mhi_cntrl) == MHI_EE_EDL
+>>>>>> +            && mhi_get_mhi_state(mhi_cntrl) ==
+>> MHI_STATE_RESET) {
+>>>>>> +            write_lock_irq(&mhi_cntrl->pm_lock);
+>>>>>> +            cur_state = mhi_tryset_pm_state(mhi_cntrl,
+>>>> MHI_PM_POR);
+>>>>>> +            write_unlock_irq(&mhi_cntrl->pm_lock);
+>>>>>> +            mhi_queue_state_transition(mhi_cntrl,
+>>>>>> DEV_ST_TRANSITION_PBL);
+>>>>>> +        } else {
+>>>>>> +            mhi_ready_state_transition(mhi_cntrl);
+>>>>>> +        }
+>>>>>>         } else {
+>>>>>>             /* Move to disable state */
+>>>>>>             write_lock_irq(&mhi_cntrl->pm_lock);
+>>>>>> @@ -658,6 +666,12 @@ void mhi_pm_st_worker(struct work_struct
+>>>>>> *work)
+>>>>>>             case DEV_ST_TRANSITION_MISSION_MODE:
+>>>>>>                 mhi_pm_mission_mode_transition(mhi_cntrl);
+>>>>>>                 break;
+>>>>>> +        case DEV_ST_TRANSITION_FP:
+>>>>>> +            write_lock_irq(&mhi_cntrl->pm_lock);
+>>>>>> +            mhi_cntrl->ee = MHI_EE_FP;
+>>>>>> +            write_unlock_irq(&mhi_cntrl->pm_lock);
+>>>>>> +            mhi_create_devices(mhi_cntrl);
+>>>>>> +            break;
+>>>>>>             case DEV_ST_TRANSITION_READY:
+>>>>>>                 mhi_ready_state_transition(mhi_cntrl);
+>>>>>>                 break;
+>>>>>> diff --git a/include/linux/mhi.h b/include/linux/mhi.h index
+>>>>>> 6e1122c..4620af8 100644
+>>>>>> --- a/include/linux/mhi.h
+>>>>>> +++ b/include/linux/mhi.h
+>>>>>> @@ -120,6 +120,7 @@ struct mhi_link_info {
+>>>>>>      * @MHI_EE_WFW: WLAN firmware mode
+>>>>>>      * @MHI_EE_PTHRU: Passthrough
+>>>>>>      * @MHI_EE_EDL: Embedded downloader
+>>>>>> + * @MHI_EE_FP, Flash Programmer Environment
+>>>>>>      */
+>>>>>>     enum mhi_ee_type {
+>>>>>>         MHI_EE_PBL,
+>>>>>> @@ -129,7 +130,8 @@ enum mhi_ee_type {
+>>>>>>         MHI_EE_WFW,
+>>>>>>         MHI_EE_PTHRU,
+>>>>>>         MHI_EE_EDL,
+>>>>>> -    MHI_EE_MAX_SUPPORTED = MHI_EE_EDL,
+>>>>>> +    MHI_EE_FP,
+>>>>>> +    MHI_EE_MAX_SUPPORTED = MHI_EE_FP,
+>>>>>>         MHI_EE_DISABLE_TRANSITION, /* local EE, not related to mhi
+>>>>>> spec */
+>>>>>>         MHI_EE_NOT_SUPPORTED,
+>>>>>>         MHI_EE_MAX,
+>>>>>>
+>>>>>
+>>>>> This gets a NACK from me.  I don't see the FP_EE that this patch
+>>>>> introduces defined in the spec.  Where did it come from?
+>>>>>
+>>>> There is indeed a FP EE, BHI spec will be updated with this EE next month.
+>>>>
+>>>> Basically, once device goes to EDL, flash programmer image is
+>>>> downloaded using BHI protocol (same as we download SBL image using
+>>>> BHI from PBL in current use case). Once it is downloaded intvec sends
+>>>> EE change event for FP. Also event is generated for the same which is
+>>>> used to create EDL channels (34, 35) which is used by flash programmer to
+>> flash image for AMSS.
+>>>>
+>>> [carl.yin] I am refer to QUALLCOMM's windows MHI driver.
+>>> And the patch work well on my SDX24&SDX55 modems.
+>>> I can use it to upgrade my modems.
+>>
+>> Linaro has an opensource utility that implements firehose -
+>> https://github.com/andersson/qdl
+>>
+>> Did you test with that?
+> [carl.yin] I am test with https://github.com/carlyin/mhi_for_quectel_modem/blob/main/tools/firehose_protocol.c
+> Firehose protocol is same for mhi and usb device,
+> and different on download edl image.
+> For usb device, use space tool download edl image by sahara protocol,
+> For mhi device, mhi driver download edl image by BHI interface,
+> For wwan device, it is better do it in user space.
 
-I prefer when we squash these into a single function.
+Your utility has no license on it, so it looks like no one but you can 
+use it.  This is not good, particularly when an opensource alternative 
+exists.  I would like to use EDL over MHI in future, but right now it 
+looks like that is not possible.
 
-> +	FUNCTION(pll_bist),
-> +	FUNCTION(pll_bypassnl),
-> +	FUNCTION(pll_clk),
-> +	FUNCTION(pll_reset),
-> +	FUNCTION(pri_mi2s),
-> +	FUNCTION(prng_rosc),
-> +	FUNCTION(qdss_cti),
-> +	FUNCTION(qdss_gpio),
-> +	FUNCTION(qdss_gpio0),
-> +	FUNCTION(qdss_gpio1),
-> +	FUNCTION(qdss_gpio10),
-> +	FUNCTION(qdss_gpio11),
-> +	FUNCTION(qdss_gpio12),
-> +	FUNCTION(qdss_gpio13),
-> +	FUNCTION(qdss_gpio14),
-> +	FUNCTION(qdss_gpio15),
-> +	FUNCTION(qdss_gpio2),
-> +	FUNCTION(qdss_gpio3),
-> +	FUNCTION(qdss_gpio4),
-> +	FUNCTION(qdss_gpio5),
-> +	FUNCTION(qdss_gpio6),
-> +	FUNCTION(qdss_gpio7),
-> +	FUNCTION(qdss_gpio8),
-> +	FUNCTION(qdss_gpio9),
+Additionally, we shouldn't have N tools, when one would do.  Having 
+different tools for usb/mhi/wwan seems like a poor user experience.
 
-Ditto.
+Please test with the Linaro implementation.  If it doesn't work, please 
+work with Linaro to update it.
 
-> +	FUNCTION(qlink0_enable),
-> +	FUNCTION(qlink0_request),
-> +	FUNCTION(qlink0_wmss),
-> +	FUNCTION(qlink1_enable),
-> +	FUNCTION(qlink1_request),
-> +	FUNCTION(qlink1_wmss),
-> +	FUNCTION(qspi_clk),
-> +	FUNCTION(qspi_cs),
-> +	FUNCTION(qspi_data),
-> +	FUNCTION(qup00),
-> +	FUNCTION(qup01),
-> +	FUNCTION(qup02),
-> +	FUNCTION(qup03),
-> +	FUNCTION(qup04),
-> +	FUNCTION(qup05),
-> +	FUNCTION(qup06),
-> +	FUNCTION(qup07),
-> +	FUNCTION(qup10),
-> +	FUNCTION(qup11),
-> +	FUNCTION(qup12),
-> +	FUNCTION(qup13),
-> +	FUNCTION(qup14),
-> +	FUNCTION(qup15),
-> +	FUNCTION(qup16),
-> +	FUNCTION(qup17),
-> +	FUNCTION(sdc40),
-> +	FUNCTION(sdc41),
-> +	FUNCTION(sdc42),
-> +	FUNCTION(sdc43),
-> +	FUNCTION(sdc4_clk),
-> +	FUNCTION(sdc4_cmd),
-> +	FUNCTION(sd_write),
-> +	FUNCTION(sec_mi2s),
-> +	FUNCTION(tb_trig),
-> +	FUNCTION(tgu_ch0),
-> +	FUNCTION(tgu_ch1),
-> +	FUNCTION(tsense_pwm1),
-> +	FUNCTION(tsense_pwm2),
-> +	FUNCTION(uim0_clk),
-> +	FUNCTION(uim0_data),
-> +	FUNCTION(uim0_present),
-> +	FUNCTION(uim0_reset),
-> +	FUNCTION(uim1_clk),
-> +	FUNCTION(uim1_data),
-> +	FUNCTION(uim1_present),
-> +	FUNCTION(uim1_reset),
-> +	FUNCTION(usb2phy_ac),
-> +	FUNCTION(usb_phy),
-> +	FUNCTION(vfr_0),
-> +	FUNCTION(vfr_1),
-> +	FUNCTION(vsense_trigger),
-> +};
-> +
-> +/* Every pin is maintained as a single group, and missing or non-existing pin
-> + * would be maintained as dummy group to synchronize pin group index with
-> + * pin descriptor registered with pinctrl core.
-> + * Clients would not be able to request these dummy pin groups.
-> + */
-> +static const struct msm_pingroup sc7280_groups[] = {
-[..]
-> +	[174] = PINGROUP(174, qdss_gpio15, _, _, _, _, _, _, _, _),
-> +	[175] = SDC_QDSD_PINGROUP(sdc1_rclk, 0x1b3000, 15, 0),
-> +	[176] = SDC_QDSD_PINGROUP(sdc1_clk, 0x1b3000, 13, 6),
-> +	[177] = SDC_QDSD_PINGROUP(sdc1_cmd, 0x1b3000, 11, 3),
-> +	[178] = SDC_QDSD_PINGROUP(sdc1_data, 0x1b3000, 9, 0),
-> +	[179] = SDC_QDSD_PINGROUP(sdc2_clk, 0x1b4000, 14, 6),
-> +	[180] = SDC_QDSD_PINGROUP(sdc2_cmd, 0x1b4000, 11, 3),
-> +	[181] = SDC_QDSD_PINGROUP(sdc2_data, 0x1b4000, 9, 0),
-> +	[182] = UFS_RESET(ufs_reset, 0x1be000),
-
-Rather than fiddling ufs reset using pinconf we expose it as a gp(i)o
-pin upstream. So please move this to be the 175th item in the list and
-bump ngpios to 176 below.
-
-> +};
-> +
-> +static const struct msm_pinctrl_soc_data sc7280_pinctrl = {
-> +	.pins = sc7280_pins,
-> +	.npins = ARRAY_SIZE(sc7280_pins),
-> +	.functions = sc7280_functions,
-> +	.nfunctions = ARRAY_SIZE(sc7280_functions),
-> +	.groups = sc7280_groups,
-> +	.ngroups = ARRAY_SIZE(sc7280_groups),
-> +	.ngpios = 175,
-> +};
-> +
-
-Apart from that it looks good.
-
-Regards,
-Bjorn
+-- 
+Jeffrey Hugo
+Qualcomm Technologies, Inc. is a member of the
+Code Aurora Forum, a Linux Foundation Collaborative Project.
