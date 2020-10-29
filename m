@@ -2,77 +2,116 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 418E229EC02
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Oct 2020 13:40:35 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 6711629EC5E
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Oct 2020 14:02:36 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726487AbgJ2Mk2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 29 Oct 2020 08:40:28 -0400
-Received: from mail.kernel.org ([198.145.29.99]:53062 "EHLO mail.kernel.org"
+        id S1726066AbgJ2NCe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 29 Oct 2020 09:02:34 -0400
+Received: from mail.kernel.org ([198.145.29.99]:33206 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726452AbgJ2Mk2 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 29 Oct 2020 08:40:28 -0400
-Received: from localhost (fw-tnat.cambridge.arm.com [217.140.96.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        id S1725355AbgJ2NCd (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 29 Oct 2020 09:02:33 -0400
+Received: from mail-ot1-f42.google.com (mail-ot1-f42.google.com [209.85.210.42])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id CFB492075E;
-        Thu, 29 Oct 2020 12:40:26 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id 38CD321775;
+        Thu, 29 Oct 2020 13:01:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1603975227;
-        bh=uDEi8l3tLwU6LdqHUgog52VUPP3I1HsdRFofzCw0ukY=;
-        h=Date:From:To:Cc:In-Reply-To:References:Subject:From;
-        b=j3yDLKE8Wp8Q1jPOTKmVjhE3oBiG+HZWB6zJftxnxe4d/5KVCxSeRi6G4rtckRCI0
-         jolHYITB5hlAs94rx72pDbftxSOn8E0/+zfodwJTaFAMr1V/F8c1XXqh+ltDP2DgJl
-         3QDO43EUXr3lMO2OjrJlE+MM8m1kHIM0Z8hsHybw=
-Date:   Thu, 29 Oct 2020 12:40:21 +0000
-From:   Mark Brown <broonie@kernel.org>
-To:     devicetree@vger.kernel.org, perex@perex.cz, robh+dt@kernel.org,
-        linux-kernel@vger.kernel.org, rohitkr@codeaurora.org,
-        Srinivasa Rao Mandadapu <srivasam@codeaurora.org>,
-        srinivas.kandagatla@linaro.org, agross@kernel.org,
-        plai@codeaurora.org, linux-arm-msm@vger.kernel.org,
-        lgirdwood@gmail.com, bgoswami@codeaurora.org, tiwai@suse.com,
-        bjorn.andersson@linaro.org, alsa-devel@alsa-project.org
-Cc:     V Sujith Kumar Reddy <vsujithk@codeaurora.org>
-In-Reply-To: <1603798474-4897-1-git-send-email-srivasam@codeaurora.org>
-References: <1603798474-4897-1-git-send-email-srivasam@codeaurora.org>
-Subject: Re: [PATCH v2] Asoc: qcom: lpass-sc7180: Fix MI2S bitwidth field bit positions
-Message-Id: <160397520896.55401.5296685926917915952.b4-ty@kernel.org>
+        s=default; t=1603976507;
+        bh=OzIlRpXLdeGRcoA/MVFEQyHps4XuaG+UwlBrggFdE0A=;
+        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+        b=j1mT2NYHsoJ27PjrIOdCHm29Dr0jIJanUSSvW3ovjtCA+2JsQwP4TF17V8h45KLn6
+         q/rWGnzjK5R5HCKtdT1UjO2CPNs0DlEyYrKGlf249zeQobn/tqoqqoSOkKF0nQ/tJx
+         XzpLkOIXBR85Tjr1fxwi0eRNQozFeZBPxlNnWRvE=
+Received: by mail-ot1-f42.google.com with SMTP id 32so2168065otm.3;
+        Thu, 29 Oct 2020 06:01:47 -0700 (PDT)
+X-Gm-Message-State: AOAM5329DpT5iisbFeMEkjPiTDZobOkh/2X8xi/6R5qq43OgNt+uDnFa
+        blf46M/oSl5GRRIFDY/naVaedT2VoUIM2xChbQ==
+X-Google-Smtp-Source: ABdhPJy/bhS7KTF1WNqgQUUalxQA1GfpAd7FTQIi3yYFWyIBt0GxzCWPuCwRMAMfnaaUFyZdFb4NCZ8rTg453LUEqGQ=
+X-Received: by 2002:a9d:62d1:: with SMTP id z17mr3193317otk.192.1603976506229;
+ Thu, 29 Oct 2020 06:01:46 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+References: <20201028204646.356535-1-robh@kernel.org> <20201028204646.356535-2-robh@kernel.org>
+ <87h7qdx4oz.fsf@mpe.ellerman.id.au>
+In-Reply-To: <87h7qdx4oz.fsf@mpe.ellerman.id.au>
+From:   Rob Herring <robh@kernel.org>
+Date:   Thu, 29 Oct 2020 08:01:35 -0500
+X-Gmail-Original-Message-ID: <CAL_JsqJWzmGNifrJEKGg582kZNtjnWHaUkG0EinWqjhGaeL1dg@mail.gmail.com>
+Message-ID: <CAL_JsqJWzmGNifrJEKGg582kZNtjnWHaUkG0EinWqjhGaeL1dg@mail.gmail.com>
+Subject: Re: [PATCH 01/13] PCI: dwc/imx6: Drop setting PCI_MSI_FLAGS_ENABLE
+To:     Michael Ellerman <mpe@ellerman.id.au>
+Cc:     Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
+        Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
+        Neil Armstrong <narmstrong@baylibre.com>,
+        PCI <linux-pci@vger.kernel.org>,
+        Binghui Wang <wangbinghui@hisilicon.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        linux-tegra <linux-tegra@vger.kernel.org>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        linux-arm-kernel@axis.com,
+        Thomas Petazzoni <thomas.petazzoni@bootlin.com>,
+        Jonathan Chocron <jonnyc@amazon.com>,
+        Shawn Guo <shawnguo@kernel.org>,
+        Jonathan Hunter <jonathanh@nvidia.com>,
+        Fabio Estevam <festevam@gmail.com>,
+        Jerome Brunet <jbrunet@baylibre.com>,
+        Jesper Nilsson <jesper.nilsson@axis.com>,
+        linux-samsung-soc <linux-samsung-soc@vger.kernel.org>,
+        Minghuan Lian <minghuan.Lian@nxp.com>,
+        Kevin Hilman <khilman@baylibre.com>,
+        Pratyush Anand <pratyush.anand@gmail.com>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        Kishon Vijay Abraham I <kishon@ti.com>,
+        Kukjin Kim <kgene@kernel.org>,
+        NXP Linux Team <linux-imx@nxp.com>,
+        Xiaowei Song <songxiaowei@hisilicon.com>,
+        Richard Zhu <hongxing.zhu@nxp.com>,
+        Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Sascha Hauer <s.hauer@pengutronix.de>,
+        Yue Wang <yue.wang@amlogic.com>,
+        Murali Karicheri <m-karicheri2@ti.com>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        "open list:ARM/Amlogic Meson..." <linux-amlogic@lists.infradead.org>,
+        linux-omap <linux-omap@vger.kernel.org>,
+        Mingkai Hu <mingkai.hu@nxp.com>, Roy Zang <roy.zang@nxp.com>,
+        Masahiro Yamada <yamada.masahiro@socionext.com>,
+        Jingoo Han <jingoohan1@gmail.com>,
+        Andy Gross <agross@kernel.org>,
+        Stanimir Varbanov <svarbanov@mm-sol.com>,
+        Pengutronix Kernel Team <kernel@pengutronix.de>,
+        Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
+        linuxppc-dev <linuxppc-dev@lists.ozlabs.org>,
+        Lucas Stach <l.stach@pengutronix.de>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, 27 Oct 2020 17:04:34 +0530, Srinivasa Rao Mandadapu wrote:
-> Update SC7180 lpass_variant structure with proper I2S bitwidth
-> field bit positions, as bitwidth denotes 0 to 1 bits,
-> but previously used only 0 bit.
+On Wed, Oct 28, 2020 at 7:21 PM Michael Ellerman <mpe@ellerman.id.au> wrote:
+>
+> Rob Herring <robh@kernel.org> writes:
+> > No other host driver sets the PCI_MSI_FLAGS_ENABLE bit, so it must not
+> > be necessary. If it is, a comment is needed.
+>
+> Yeah, but git blame directly points to:
+>
+>   75cb8d20c112 ("PCI: imx: Enable MSI from downstream components")
 
-Applied to
+I think I did read this at some point and then forgot about it when I
+made the change later...
 
-   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/sound.git for-next
+> Which has a pretty long explanation. The relevant bit probably being:
+>
+>   ... on i.MX6, the MSI Enable bit controls delivery of MSI interrupts
+>   from components below the Root Port.
 
-Thanks!
+The thing is that all seems not i.MX6 specific but DWC specific given
+MSI handling is contained within the DWC block. So I don't see how
+this could be an integration difference.
 
-[1/1] ASoC: qcom: lpass-sc7180: Fix MI2S bitwidth field bit positions
-      commit: cf9d21984da2c8e852320d12c03ddb7d11760a32
+So maybe everyone else is still just setting CONFIG_PCIEPORTBUS
+typically and haven't noticed? Is it correct for the host driver to
+set MSI enable?
 
-All being well this means that it will be integrated into the linux-next
-tree (usually sometime in the next 24 hours) and sent to Linus during
-the next merge window (or sooner if it is a bug fix), however if
-problems are discovered then the patch may be dropped or reverted.
-
-You may get further e-mails resulting from automated or manual testing
-and review of the tree, please engage with people reporting problems and
-send followup patches addressing any issues that are reported if needed.
-
-If any updates are required or you are submitting further changes they
-should be sent as incremental updates against current git, existing
-patches will not be replaced.
-
-Please add any relevant lists and maintainers to the CCs when replying
-to this mail.
-
-Thanks,
-Mark
+Rob
