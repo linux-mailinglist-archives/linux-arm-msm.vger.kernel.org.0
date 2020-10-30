@@ -2,154 +2,852 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 69FCD2A0170
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Oct 2020 10:32:52 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C07242A02F5
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Oct 2020 11:34:22 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725946AbgJ3Jcv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 30 Oct 2020 05:32:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44636 "EHLO
+        id S1726234AbgJ3KeT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 30 Oct 2020 06:34:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54456 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725355AbgJ3Jcv (ORCPT
+        with ESMTP id S1725790AbgJ3KeT (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 30 Oct 2020 05:32:51 -0400
-Received: from mail-pg1-x544.google.com (mail-pg1-x544.google.com [IPv6:2607:f8b0:4864:20::544])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C84F1C0613CF
-        for <linux-arm-msm@vger.kernel.org>; Fri, 30 Oct 2020 02:31:50 -0700 (PDT)
-Received: by mail-pg1-x544.google.com with SMTP id z24so4725347pgk.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 30 Oct 2020 02:31:50 -0700 (PDT)
+        Fri, 30 Oct 2020 06:34:19 -0400
+Received: from mail-pl1-x643.google.com (mail-pl1-x643.google.com [IPv6:2607:f8b0:4864:20::643])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 44825C0613D4
+        for <linux-arm-msm@vger.kernel.org>; Fri, 30 Oct 2020 03:34:19 -0700 (PDT)
+Received: by mail-pl1-x643.google.com with SMTP id w11so2739741pll.8
+        for <linux-arm-msm@vger.kernel.org>; Fri, 30 Oct 2020 03:34:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=0mBERVLDtSHcobV5rXzV1VXCz/lMoV3S8wOBLlyQgfc=;
-        b=P0SUtkBJFHQUGOGWUtZTD15ev+XBR0Yx/F0fFBr2tcMzU/n39ApnJ5+0XxnQtyr1Zb
-         cs9I5U2L9qnIsB+nn6IeXumKjQZsHPd506yICOeNJIH+YopgrTp8hlgYpGCLubkDvmrl
-         HJQqjLW05i1fpYquRfIKwueTqqNxmupMrTCEapuYmNSB/rDOnyB9TCSdEd0VKOvLpIQK
-         5mDCfUVnAj/UNgOhPf7sGypmfUPdP3u6hx7AXxrvlNN6FnBLjbTCYI3fZ0rbgHHqLj/r
-         ecSEMXJBa/rmuLIA4C2mrIMKLMtXc6mQdWmO+EgX8H5NwvwloaBqzdgZkGAUpQSIBDtt
-         S61w==
+        bh=LYPs9iY20GzCD7l0lV5GirjS5+gTTzf1hOzaaAshKWQ=;
+        b=ChTHxwza2Dmhf3oLLVsP4nj3w7bp4Ej7w/I5s3a5v4KzBN2ofrMfYC+41Np/QeteCZ
+         WMGQGgFKH93FhKxwIXo4LIEreIKyGwmJIOVKpzxyB0/7ihATb4DPYpPvX7zi7J6HOcNS
+         RZe5erfny9QBxhpqnvBeM5TiUmxYO3aB+bTTNdsdlyYCAmqVN7aXZNBGgb9dbJe2zMkv
+         AnbriJq5ezbPS9G4bJQN7raOv5bOXLihjaq51vJ7No4eDH2a19IdfDlpV3TcbBKp9cGb
+         EIqrL6n5mlW0s0wlQQSiyuUXg0V9nlKSUAXt0JKU20ae4fMDUimHHwq07fPbDbkYZu4t
+         d+wg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=0mBERVLDtSHcobV5rXzV1VXCz/lMoV3S8wOBLlyQgfc=;
-        b=Y4/SgYmmMExqA8lJXBwSGOupOXlcU0i8QbewQFdQvg8D8ffD1craIY+axYpIvW1uVX
-         pxB2FYpLh5i0fUXhCXOECcBm6Qsp6FqUzJNki3gvxo4+/Pd8WMbs9xuhRXU5vLV13uEQ
-         cwJjepk7vjse3OuM3w4AYBqHoSRdxFgKxHanjQac1fxqpBG/8YGGYyE5BAmMdJxzVUbO
-         wDLCsU2svE9OiEZc+WmFHdwuPrM0rrm+KD3S4+/zSlmdr5LI7aRVNGmEb+eZCJmgO9WK
-         d9Ing9Pp0u311ubDur/0ueg/du4Thv7RGkRUntzAE2J2rW7PESFPUb1YRR+a7om+FcNy
-         g3IQ==
-X-Gm-Message-State: AOAM532HXAx65YJGBz/92XuWRxamQlhaTBip4wvTe1a+fs1b4HLsdaYg
-        jk8L+/9TPdzAQcyW7vWWMZMQ
-X-Google-Smtp-Source: ABdhPJzmHTFiUpj8fRe7j2dtUEk4YAeeI/cp4Q/pOnA4XE6X2U494ENjRMpm0dAsPXx9q0pZjgTG3w==
-X-Received: by 2002:a17:90a:4b87:: with SMTP id i7mr1826436pjh.68.1604050310001;
-        Fri, 30 Oct 2020 02:31:50 -0700 (PDT)
+        bh=LYPs9iY20GzCD7l0lV5GirjS5+gTTzf1hOzaaAshKWQ=;
+        b=eCdH1mKH0md1w0GHVQ1G1Is3Prqi3NQvvWsB2LgGtDimNZDIMyZr7Qc0yHhEdgUPYv
+         5pYc7WXnDPi1UY1fSW6eTWaIkEpGQQtKXYBSNODj8DheynWqzcyyU8qXVAOMgzSeIi5n
+         ERnNkLFYqFV6s2obL5JFdUGARWdnTjYRXGA1W+2pj5STaoO15ulxscybK+qbn2k6BsTd
+         9oDUC4ti+dUXUSnz/u84XjnKmbN7JX9VSkrk0n9Qwy/IRVdAD5TF1XZjLYyea+QWXmX9
+         fdRVZwYxv598qUDKsAXtSYCSLGq/8ryggB5JjoSxfWi2v9pTUJxV/CopEtObu9sqqt7+
+         mOqg==
+X-Gm-Message-State: AOAM531rgt++oUx+KfnT0qNUMV8KjiFI3iE3x9kF65Bt9t+bV7vG+lxc
+        ekjAUp8S/Bypah+37RbrvsH4
+X-Google-Smtp-Source: ABdhPJwbfnM534Z50otfnIxRP7CVPczGBM8QcFkFVLv2PYktngK1Jl0SX4x+b9e6VdpGxJoIMQMJiA==
+X-Received: by 2002:a17:902:c20a:b029:d6:722b:6631 with SMTP id 10-20020a170902c20ab02900d6722b6631mr8166157pll.61.1604054058364;
+        Fri, 30 Oct 2020 03:34:18 -0700 (PDT)
 Received: from Mani-XPS-13-9360 ([2409:4072:918:28fe:10d5:aaf5:e319:ec72])
-        by smtp.gmail.com with ESMTPSA id n19sm5294222pfu.24.2020.10.30.02.31.44
+        by smtp.gmail.com with ESMTPSA id t5sm2912269pjq.7.2020.10.30.03.34.12
         (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 30 Oct 2020 02:31:49 -0700 (PDT)
-Date:   Fri, 30 Oct 2020 15:01:41 +0530
+        Fri, 30 Oct 2020 03:34:17 -0700 (PDT)
+Date:   Fri, 30 Oct 2020 16:04:10 +0530
 From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     Loic Poulain <loic.poulain@linaro.org>
-Cc:     kuba@kernel.org, davem@davemloft.net, hemantk@codeaurora.org,
-        netdev@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        bbhatt@codeaurora.org, willemdebruijn.kernel@gmail.com,
-        jhugo@codeaurora.org
-Subject: Re: [PATCH v8 2/2] net: Add mhi-net driver
-Message-ID: <20201030093141.GC3818@Mani-XPS-13-9360>
-References: <1603902898-25233-1-git-send-email-loic.poulain@linaro.org>
- <1603902898-25233-2-git-send-email-loic.poulain@linaro.org>
+To:     Hemant Kumar <hemantk@codeaurora.org>
+Cc:     gregkh@linuxfoundation.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, jhugo@codeaurora.org,
+        bbhatt@codeaurora.org, loic.poulain@linaro.org,
+        netdev@vger.kernel.org
+Subject: Re: [PATCH v11 4/4] bus: mhi: Add userspace client interface driver
+Message-ID: <20201030103410.GD3818@Mani-XPS-13-9360>
+References: <1604025946-28288-1-git-send-email-hemantk@codeaurora.org>
+ <1604025946-28288-5-git-send-email-hemantk@codeaurora.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <1603902898-25233-2-git-send-email-loic.poulain@linaro.org>
+In-Reply-To: <1604025946-28288-5-git-send-email-hemantk@codeaurora.org>
 User-Agent: Mutt/1.9.4 (2018-02-28)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Oct 28, 2020 at 05:34:58PM +0100, Loic Poulain wrote:
-> This patch adds a new network driver implementing MHI transport for
-> network packets. Packets can be in any format, though QMAP (rmnet)
-> is the usual protocol (flow control + PDN mux).
-> 
-> It support two MHI devices, IP_HW0 which is, the path to the IPA
-> (IP accelerator) on qcom modem, And IP_SW0 which is the software
-> driven IP path (to modem CPU).
-> 
-> Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
-> ---
->   v2: - rebase on net-next
->       - remove useless skb_linearize
->       - check error type on mhi_queue return
->       - rate limited errors
->       - Schedule RX refill only on 'low' buf level
->       - SET_NETDEV_DEV in probe
->       - reorder device remove sequence
->   v3: - Stop channels on net_register error
->       - Remove useles parentheses
->       - Add driver .owner
->   v4: - prevent potential cpu hog in rx-refill loop
->       - Access mtu via READ_ONCE
->   v5: - Fix access to u64 stats
->   v6: - Stop TX queue earlier if queue is full
->       - Preventing 'abnormal' NETDEV_TX_BUSY path
->   v7: - Stop dl/ul cb operations on channel resetting
->   v8: - remove premature comment about TX threading gain
->       - check rx_queued to determine queuing limits
->       - fix probe error path (unified goto usage)
-> 
->  drivers/net/Kconfig   |   7 ++
->  drivers/net/Makefile  |   1 +
->  drivers/net/mhi_net.c | 313 ++++++++++++++++++++++++++++++++++++++++++++++++++
->  3 files changed, 321 insertions(+)
->  create mode 100644 drivers/net/mhi_net.c
-> 
+Hi Hemant,
 
-[...]
+On Thu, Oct 29, 2020 at 07:45:46PM -0700, Hemant Kumar wrote:
+> This MHI client driver allows userspace clients to transfer
+> raw data between MHI device and host using standard file operations.
+> Driver instantiates UCI device object which is associated to device
+> file node. UCI device object instantiates UCI channel object when device
+> file node is opened. UCI channel object is used to manage MHI channels
+> by calling MHI core APIs for read and write operations. MHI channels
+> are started as part of device open(). MHI channels remain in start
+> state until last release() is called on UCI device file node. Device
+> file node is created with format
+> 
+> /dev/mhi_<controller_name>_<mhi_device_name>
+> 
+> Currently it supports LOOPBACK channel.
+> 
+> Signed-off-by: Hemant Kumar <hemantk@codeaurora.org>
 
-> +static int mhi_net_probe(struct mhi_device *mhi_dev,
-> +			 const struct mhi_device_id *id)
-> +{
-> +	const char *netname = (char *)id->driver_data;
-> +	struct mhi_net_dev *mhi_netdev;
-> +	struct net_device *ndev;
-> +	struct device *dev = &mhi_dev->dev;
-> +	int err;
-> +
-> +	ndev = alloc_netdev(sizeof(*mhi_netdev), netname, NET_NAME_PREDICTABLE,
-> +			    mhi_net_setup);
-> +	if (!ndev)
-> +		return -ENOMEM;
-> +
-> +	mhi_netdev = netdev_priv(ndev);
-> +	dev_set_drvdata(dev, mhi_netdev);
-> +	mhi_netdev->ndev = ndev;
-> +	mhi_netdev->mdev = mhi_dev;
-> +	SET_NETDEV_DEV(ndev, &mhi_dev->dev);
-> +
-> +	/* All MHI net channels have 128 ring elements (at least for now) */
-> +	mhi_netdev->rx_queue_sz = 128;
-> +
-> +	INIT_DELAYED_WORK(&mhi_netdev->rx_refill, mhi_net_rx_refill_work);
-> +	u64_stats_init(&mhi_netdev->stats.rx_syncp);
-> +	u64_stats_init(&mhi_netdev->stats.tx_syncp);
-> +
-> +	/* Start MHI channels */
-> +	err = mhi_prepare_for_transfer(mhi_dev);
-> +	if (err)
-> +		goto out_prep_err;
-> +
-> +	err = register_netdev(ndev);
-> +	if (err)
-> +		goto out_register_err;
-> +
-> +	return 0;
-> +
-> +out_register_err:
-> +	mhi_unprepare_from_transfer(mhi_dev);
-
-Missed this one. MHI stack will do this for you incase of failure.
+Thanks for continuously updating the series based on reviews, now the locking
+part looks a _lot_ cleaner than it used to be. I just have one query (inline)
+regarding the usage of refcount for uci_chan and uci_dev. Once you fix that,
+I think this is good to go in.
 
 Thanks,
 Mani
+
+> ---
+>  drivers/bus/mhi/Kconfig  |  13 +
+>  drivers/bus/mhi/Makefile |   4 +
+>  drivers/bus/mhi/uci.c    | 662 +++++++++++++++++++++++++++++++++++++++++++++++
+>  3 files changed, 679 insertions(+)
+>  create mode 100644 drivers/bus/mhi/uci.c
+> 
+> diff --git a/drivers/bus/mhi/Kconfig b/drivers/bus/mhi/Kconfig
+> index e841c10..476cc55 100644
+> --- a/drivers/bus/mhi/Kconfig
+> +++ b/drivers/bus/mhi/Kconfig
+> @@ -20,3 +20,16 @@ config MHI_BUS_DEBUG
+>  	  Enable debugfs support for use with the MHI transport. Allows
+>  	  reading and/or modifying some values within the MHI controller
+>  	  for debug and test purposes.
+> +
+> +config MHI_UCI
+> +	tristate "MHI UCI"
+> +	depends on MHI_BUS
+> +	help
+> +	  MHI based Userspace Client Interface (UCI) driver is used for
+> +	  transferring raw data between host and device using standard file
+> +	  operations from userspace. Open, read, write, and close operations
+> +	  are supported by this driver. Please check mhi_uci_match_table for
+> +	  all supported channels that are exposed to userspace.
+> +
+> +	  To compile this driver as a module, choose M here: the module will be
+> +	  called mhi_uci.
+> diff --git a/drivers/bus/mhi/Makefile b/drivers/bus/mhi/Makefile
+> index 19e6443..80feefb 100644
+> --- a/drivers/bus/mhi/Makefile
+> +++ b/drivers/bus/mhi/Makefile
+> @@ -1,2 +1,6 @@
+>  # core layer
+>  obj-y += core/
+> +
+> +# MHI client
+> +mhi_uci-y := uci.o
+> +obj-$(CONFIG_MHI_UCI) += mhi_uci.o
+> diff --git a/drivers/bus/mhi/uci.c b/drivers/bus/mhi/uci.c
+> new file mode 100644
+> index 0000000..ea73c08
+> --- /dev/null
+> +++ b/drivers/bus/mhi/uci.c
+> @@ -0,0 +1,662 @@
+> +// SPDX-License-Identifier: GPL-2.0-only
+> +/* Copyright (c) 2018-2020, The Linux Foundation. All rights reserved.*/
+> +
+> +#include <linux/kernel.h>
+> +#include <linux/mhi.h>
+> +#include <linux/mod_devicetable.h>
+> +#include <linux/module.h>
+> +#include <linux/poll.h>
+> +
+> +#define DEVICE_NAME "mhi"
+> +#define MHI_UCI_DRIVER_NAME "mhi_uci"
+> +#define MAX_UCI_MINORS 128
+
+Prefix MHI for these.
+
+> +
+> +static DEFINE_IDR(uci_idr);
+> +static DEFINE_MUTEX(uci_drv_mutex);
+> +static struct class *uci_dev_class;
+> +static int uci_dev_major;
+> +
+> +/**
+> + * struct uci_chan - MHI channel for a UCI device
+> + * @udev: associated UCI device object
+> + * @ul_wq: wait queue for writer
+> + * @write_lock: mutex write lock for ul channel
+> + * @dl_wq: wait queue for reader
+> + * @read_lock: mutex read lock for dl channel
+> + * @dl_pending_lock: spin lock for dl_pending list
+> + * @dl_pending: list of dl buffers userspace is waiting to read
+> + * @cur_buf: current buffer userspace is reading
+> + * @dl_size: size of the current dl buffer userspace is reading
+> + * @ref_count: uci_chan reference count
+> + */
+> +struct uci_chan {
+> +	struct uci_dev *udev;
+> +	wait_queue_head_t ul_wq;
+> +
+> +	/* ul channel lock to synchronize multiple writes */
+
+I asked you to move these comments to Kdoc in previous iteration.
+
+> +	struct mutex write_lock;
+> +
+> +	wait_queue_head_t dl_wq;
+> +
+> +	/* dl channel lock to synchronize multiple reads */
+> +	struct mutex read_lock;
+> +
+> +	/*
+> +	 * protects pending list in bh context, channel release, read and
+> +	 * poll
+> +	 */
+> +	spinlock_t dl_pending_lock;
+> +
+> +	struct list_head dl_pending;
+> +	struct uci_buf *cur_buf;
+> +	size_t dl_size;
+> +	struct kref ref_count;
+
+I'm now thinking that instead of having two reference counts for uci_chan and
+uci_dev, why can't you club them together and just use uci_dev's refcount to
+handle the channel management also.
+
+For instance in uci_open, you are incrementing the refcount for uci_dev before
+starting the channel and then doing the same for uci_chan in
+mhi_uci_dev_start_chan(). So why can't you just use a single refcount once the
+mhi_uci_dev_start_chan() succeeds? The UCI device is useless without a channel,
+isn't it?
+
+> +};
+> +
+> +/**
+> + * struct uci_buf - UCI buffer
+> + * @data: data buffer
+> + * @len: length of data buffer
+> + * @node: list node of the UCI buffer
+> + */
+> +struct uci_buf {
+> +	void *data;
+> +	size_t len;
+> +	struct list_head node;
+> +};
+> +
+> +/**
+> + * struct uci_dev - MHI UCI device
+> + * @minor: UCI device node minor number
+> + * @mhi_dev: associated mhi device object
+> + * @uchan: UCI uplink and downlink channel object
+> + * @mtu: max TRE buffer length
+> + * @enabled: Flag to track the state of the UCI device
+> + * @lock: mutex lock to manage uchan object
+> + * @ref_count: uci_dev reference count
+> + */
+> +struct uci_dev {
+> +	unsigned int minor;
+> +	struct mhi_device *mhi_dev;
+> +	struct uci_chan *uchan;
+> +	size_t mtu;
+> +	bool enabled;
+> +
+> +	/* synchronize open, release and driver remove */
+> +	struct mutex lock;
+> +	struct kref ref_count;
+> +};
+> +
+> +static void mhi_uci_dev_chan_release(struct kref *ref)
+> +{
+> +	struct uci_buf *buf_itr, *tmp;
+> +	struct uci_chan *uchan =
+> +		container_of(ref, struct uci_chan, ref_count);
+> +
+> +	if (uchan->udev->enabled)
+> +		mhi_unprepare_from_transfer(uchan->udev->mhi_dev);
+> +
+> +	spin_lock_bh(&uchan->dl_pending_lock);
+> +	list_for_each_entry_safe(buf_itr, tmp, &uchan->dl_pending, node) {
+> +		list_del(&buf_itr->node);
+> +		kfree(buf_itr->data);
+> +	}
+> +	spin_unlock_bh(&uchan->dl_pending_lock);
+> +
+> +	wake_up(&uchan->ul_wq);
+> +	wake_up(&uchan->dl_wq);
+> +
+> +	mutex_lock(&uchan->read_lock);
+> +	if (uchan->cur_buf)
+> +		kfree(uchan->cur_buf->data);
+> +
+> +	uchan->cur_buf = NULL;
+> +	mutex_unlock(&uchan->read_lock);
+> +
+> +	mutex_destroy(&uchan->write_lock);
+> +	mutex_destroy(&uchan->read_lock);
+> +
+> +	uchan->udev->uchan = NULL;
+> +	kfree(uchan);
+> +}
+> +
+> +static int mhi_queue_inbound(struct uci_dev *udev)
+> +{
+> +	struct mhi_device *mhi_dev = udev->mhi_dev;
+> +	struct device *dev = &mhi_dev->dev;
+> +	int nr_trbs, i, ret = -EIO;
+
+s/nr_trbs/nr_desc
+
+> +	size_t dl_buf_size;
+> +	void *buf;
+> +	struct uci_buf *ubuf;
+> +
+> +	/* dont queue if dl channel is not supported */
+> +	if (!udev->mhi_dev->dl_chan)
+> +		return 0;
+
+Not returning an error?
+
+> +
+> +	nr_trbs = mhi_get_free_desc_count(mhi_dev, DMA_FROM_DEVICE);
+> +
+> +	for (i = 0; i < nr_trbs; i++) {
+> +		buf = kmalloc(udev->mtu, GFP_KERNEL);
+> +		if (!buf)
+> +			return -ENOMEM;
+> +
+> +		dl_buf_size = udev->mtu - sizeof(*ubuf);
+> +
+> +		/* save uci_buf info at the end of buf */
+> +		ubuf = buf + dl_buf_size;
+> +		ubuf->data = buf;
+> +
+> +		dev_dbg(dev, "Allocated buf %d of %d size %zu\n", i, nr_trbs,
+> +			dl_buf_size);
+> +
+> +		ret = mhi_queue_buf(mhi_dev, DMA_FROM_DEVICE, buf, dl_buf_size,
+> +				    MHI_EOT);
+> +		if (ret) {
+> +			kfree(buf);
+> +			dev_err(dev, "Failed to queue buffer %d\n", i);
+> +			return ret;
+> +		}
+> +	}
+> +
+> +	return ret;
+> +}
+> +
+> +static int mhi_uci_dev_start_chan(struct uci_dev *udev)
+> +{
+> +	int ret = 0;
+> +	struct uci_chan *uchan;
+> +
+> +	mutex_lock(&udev->lock);
+> +	if (!udev->uchan || !kref_get_unless_zero(&udev->uchan->ref_count)) {
+> +		uchan = kzalloc(sizeof(*uchan), GFP_KERNEL);
+> +		if (!uchan) {
+> +			ret = -ENOMEM;
+> +			goto error_chan_start;
+> +		}
+> +
+> +		udev->uchan = uchan;
+> +		uchan->udev = udev;
+> +		init_waitqueue_head(&uchan->ul_wq);
+> +		init_waitqueue_head(&uchan->dl_wq);
+> +		mutex_init(&uchan->write_lock);
+> +		mutex_init(&uchan->read_lock);
+> +		spin_lock_init(&uchan->dl_pending_lock);
+> +		INIT_LIST_HEAD(&uchan->dl_pending);
+> +
+> +		ret = mhi_prepare_for_transfer(udev->mhi_dev);
+> +		if (ret) {
+> +			dev_err(&udev->mhi_dev->dev, "Error starting transfer channels\n");
+> +			goto error_chan_cleanup;
+> +		}
+> +
+> +		ret = mhi_queue_inbound(udev);
+> +		if (ret)
+> +			goto error_chan_cleanup;
+> +
+> +		kref_init(&uchan->ref_count);
+> +	}
+> +
+> +	mutex_unlock(&udev->lock);
+> +
+> +	return 0;
+> +
+> +error_chan_cleanup:
+> +	mhi_uci_dev_chan_release(&uchan->ref_count);
+> +error_chan_start:
+> +	mutex_unlock(&udev->lock);
+> +	return ret;
+> +}
+> +
+> +static void mhi_uci_dev_release(struct kref *ref)
+> +{
+> +	struct uci_dev *udev =
+> +		container_of(ref, struct uci_dev, ref_count);
+> +
+> +	mutex_destroy(&udev->lock);
+> +
+> +	kfree(udev);
+> +}
+> +
+> +static int mhi_uci_open(struct inode *inode, struct file *filp)
+> +{
+> +	unsigned int minor = iminor(inode);
+> +	struct uci_dev *udev = NULL;
+> +	int ret;
+> +
+> +	mutex_lock(&uci_drv_mutex);
+> +	udev = idr_find(&uci_idr, minor);
+> +	if (!udev) {
+> +		pr_debug("uci dev: minor %d not found\n", minor);
+> +		mutex_unlock(&uci_drv_mutex);
+> +		return -ENODEV;
+> +	}
+> +
+> +	kref_get(&udev->ref_count);
+> +	mutex_unlock(&uci_drv_mutex);
+> +
+> +	ret = mhi_uci_dev_start_chan(udev);
+> +	if (ret) {
+> +		kref_put(&udev->ref_count, mhi_uci_dev_release);
+> +		return ret;
+> +	}
+> +
+> +	filp->private_data = udev;
+> +
+> +	return 0;
+> +}
+> +
+> +static int mhi_uci_release(struct inode *inode, struct file *file)
+> +{
+> +	struct uci_dev *udev = file->private_data;
+> +
+> +	mutex_lock(&udev->lock);
+> +	kref_put(&udev->uchan->ref_count, mhi_uci_dev_chan_release);
+> +	mutex_unlock(&udev->lock);
+> +
+> +	kref_put(&udev->ref_count, mhi_uci_dev_release);
+> +
+> +	return 0;
+> +}
+> +
+> +static __poll_t mhi_uci_poll(struct file *file, poll_table *wait)
+> +{
+> +	struct uci_dev *udev = file->private_data;
+> +	struct mhi_device *mhi_dev = udev->mhi_dev;
+> +	struct device *dev = &mhi_dev->dev;
+> +	struct uci_chan *uchan = udev->uchan;
+> +	__poll_t mask = 0;
+> +
+> +	poll_wait(file, &udev->uchan->ul_wq, wait);
+> +	poll_wait(file, &udev->uchan->dl_wq, wait);
+> +
+> +	if (!udev->enabled) {
+> +		mask = EPOLLERR;
+> +		goto done;
+> +	}
+> +
+> +	spin_lock_bh(&uchan->dl_pending_lock);
+> +	if (!list_empty(&uchan->dl_pending) || uchan->cur_buf) {
+> +		dev_dbg(dev, "Client can read from node\n");
+
+Since you're printing the mask, no need of the debug statement here.
+
+> +		mask |= EPOLLIN | EPOLLRDNORM;
+> +	}
+> +	spin_unlock_bh(&uchan->dl_pending_lock);
+> +
+> +	if (mhi_get_free_desc_count(mhi_dev, DMA_TO_DEVICE) > 0) {
+> +		dev_dbg(dev, "Client can write to node\n");
+
+Same as above.
+
+> +		mask |= EPOLLOUT | EPOLLWRNORM;
+> +	}
+> +
+> +	dev_dbg(dev, "Client attempted to poll, returning mask 0x%x\n", mask);
+> +
+> +done:
+> +	return mask;
+> +}
+> +
+> +static ssize_t mhi_uci_write(struct file *file,
+> +			     const char __user *buf,
+> +			     size_t count,
+> +			     loff_t *offp)
+> +{
+> +	struct uci_dev *udev = file->private_data;
+> +	struct mhi_device *mhi_dev = udev->mhi_dev;
+> +	struct device *dev = &mhi_dev->dev;
+> +	struct uci_chan *uchan = udev->uchan;
+> +	size_t bytes_xfered = 0;
+> +	int ret, nr_avail = 0;
+
+s/nr_avail/nr_desc
+
+> +
+> +	/* if ul channel is not supported return error */
+> +	if (!buf || !count || !mhi_dev->ul_chan)
+
+Shouldn't we return ENOTSUPP for !mhi_dev->dl_chan?
+
+> +		return -EINVAL;
+> +
+> +	dev_dbg(dev, "%s: to xfer: %zu bytes\n", __func__, count);
+> +
+> +	if (mutex_lock_interruptible(&uchan->write_lock))
+> +		return -EINTR;
+> +
+> +	while (count) {
+> +		size_t xfer_size;
+> +		void *kbuf;
+> +		enum mhi_flags flags;
+> +
+> +		/* wait for free descriptors */
+> +		ret = wait_event_interruptible(uchan->ul_wq,
+> +					       (!udev->enabled) ||
+> +				(nr_avail = mhi_get_free_desc_count(mhi_dev,
+> +					       DMA_TO_DEVICE)) > 0);
+> +
+> +		if (ret == -ERESTARTSYS) {
+> +			dev_dbg(dev, "Interrupted by a signal in %s, exiting\n",
+> +				__func__);
+> +			goto err_mtx_unlock;
+> +		}
+> +
+> +		if (!udev->enabled) {
+> +			ret = -ENODEV;
+> +			goto err_mtx_unlock;
+> +		}
+> +
+> +		xfer_size = min_t(size_t, count, udev->mtu);
+> +		kbuf = kmalloc(xfer_size, GFP_KERNEL);
+> +		if (!kbuf) {
+> +			ret = -ENOMEM;
+> +			goto err_mtx_unlock;
+> +		}
+> +
+> +		ret = copy_from_user(kbuf, buf, xfer_size);
+> +		if (ret) {
+> +			kfree(kbuf);
+> +			ret = -EFAULT;
+> +			goto err_mtx_unlock;
+> +		}
+> +
+> +		/* if ring is full after this force EOT */
+> +		if (nr_avail > 1 && (count - xfer_size))
+> +			flags = MHI_CHAIN;
+> +		else
+> +			flags = MHI_EOT;
+> +
+> +		ret = mhi_queue_buf(mhi_dev, DMA_TO_DEVICE, kbuf, xfer_size,
+> +				    flags);
+> +		if (ret) {
+> +			kfree(kbuf);
+> +			goto err_mtx_unlock;
+> +		}
+> +
+> +		bytes_xfered += xfer_size;
+> +		count -= xfer_size;
+> +		buf += xfer_size;
+> +	}
+> +
+> +	mutex_unlock(&uchan->write_lock);
+> +	dev_dbg(dev, "%s: bytes xferred: %zu\n", __func__, bytes_xfered);
+> +
+> +	return bytes_xfered;
+> +
+> +err_mtx_unlock:
+> +	mutex_unlock(&uchan->write_lock);
+> +
+> +	return ret;
+> +}
+> +
+> +static ssize_t mhi_uci_read(struct file *file,
+> +			    char __user *buf,
+> +			    size_t count,
+> +			    loff_t *ppos)
+> +{
+> +	struct uci_dev *udev = file->private_data;
+> +	struct mhi_device *mhi_dev = udev->mhi_dev;
+> +	struct uci_chan *uchan = udev->uchan;
+> +	struct device *dev = &mhi_dev->dev;
+> +	struct uci_buf *ubuf;
+> +	size_t rx_buf_size;
+> +	char *ptr;
+> +	size_t to_copy;
+> +	int ret = 0;
+> +
+> +	/* if dl channel is not supported return error */
+> +	if (!buf || !mhi_dev->dl_chan)
+> +		return -EINVAL;
+
+Shouldn't we return ENOTSUPP for !mhi_dev->dl_chan?
+
+> +
+> +	if (mutex_lock_interruptible(&uchan->read_lock))
+> +		return -EINTR;
+> +
+> +	spin_lock_bh(&uchan->dl_pending_lock);
+> +	/* No data available to read, wait */
+> +	if (!uchan->cur_buf && list_empty(&uchan->dl_pending)) {
+> +		dev_dbg(dev, "No data available to read, waiting\n");
+> +
+> +		spin_unlock_bh(&uchan->dl_pending_lock);
+> +		ret = wait_event_interruptible(uchan->dl_wq,
+> +					       (!udev->enabled ||
+> +					      !list_empty(&uchan->dl_pending)));
+> +
+> +		if (ret == -ERESTARTSYS) {
+> +			dev_dbg(dev, "Interrupted by a signal in %s, exiting\n",
+> +				__func__);
+> +			goto err_mtx_unlock;
+> +		}
+> +
+> +		if (!udev->enabled) {
+> +			ret = -ENODEV;
+> +			goto err_mtx_unlock;
+> +		}
+> +		spin_lock_bh(&uchan->dl_pending_lock);
+> +	}
+> +
+> +	/* new read, get the next descriptor from the list */
+> +	if (!uchan->cur_buf) {
+> +		ubuf = list_first_entry_or_null(&uchan->dl_pending,
+> +						struct uci_buf, node);
+> +		if (!ubuf) {
+> +			ret = -EIO;
+> +			goto err_spin_unlock;
+> +		}
+> +
+> +		list_del(&ubuf->node);
+> +		uchan->cur_buf = ubuf;
+> +		uchan->dl_size = ubuf->len;
+> +		dev_dbg(dev, "Got pkt of size: %zu\n", uchan->dl_size);
+> +	}
+> +	spin_unlock_bh(&uchan->dl_pending_lock);
+> +
+> +	ubuf = uchan->cur_buf;
+> +
+> +	/* Copy the buffer to user space */
+> +	to_copy = min_t(size_t, count, uchan->dl_size);
+> +	ptr = ubuf->data + (ubuf->len - uchan->dl_size);
+> +
+> +	ret = copy_to_user(buf, ptr, to_copy);
+> +	if (ret) {
+> +		ret = -EFAULT;
+> +		goto err_mtx_unlock;
+> +	}
+> +
+> +	dev_dbg(dev, "Copied %zu of %zu bytes\n", to_copy, uchan->dl_size);
+> +	uchan->dl_size -= to_copy;
+> +
+> +	/* we finished with this buffer, queue it back to hardware */
+> +	if (!uchan->dl_size) {
+> +		uchan->cur_buf = NULL;
+> +
+> +		rx_buf_size = udev->mtu - sizeof(*ubuf);
+> +		ret = mhi_queue_buf(mhi_dev, DMA_FROM_DEVICE, ubuf->data,
+> +				    rx_buf_size, MHI_EOT);
+> +		if (ret) {
+> +			dev_err(dev, "Failed to recycle element: %d\n", ret);
+> +			kfree(ubuf->data);
+> +			goto err_mtx_unlock;
+> +		}
+> +	}
+> +	mutex_unlock(&uchan->read_lock);
+> +
+> +	dev_dbg(dev, "%s: Returning %zu bytes\n", __func__, to_copy);
+> +
+> +	return to_copy;
+> +
+> +err_spin_unlock:
+> +	spin_unlock_bh(&uchan->dl_pending_lock);
+> +err_mtx_unlock:
+> +	mutex_unlock(&uchan->read_lock);
+> +	return ret;
+> +}
+> +
+> +static const struct file_operations mhidev_fops = {
+> +	.owner = THIS_MODULE,
+> +	.open = mhi_uci_open,
+> +	.release = mhi_uci_release,
+> +	.read = mhi_uci_read,
+> +	.write = mhi_uci_write,
+> +	.poll = mhi_uci_poll,
+> +};
+> +
+> +static void mhi_ul_xfer_cb(struct mhi_device *mhi_dev,
+> +			   struct mhi_result *mhi_result)
+> +{
+> +	struct uci_dev *udev = dev_get_drvdata(&mhi_dev->dev);
+> +	struct uci_chan *uchan = udev->uchan;
+> +	struct device *dev = &mhi_dev->dev;
+> +
+> +	dev_dbg(dev, "status: %d xfer_len: %zu\n",
+> +		mhi_result->transaction_status, mhi_result->bytes_xferd);
+
+How this print is going to be useful alone? Atleast you should print the
+function name.
+
+> +
+> +	kfree(mhi_result->buf_addr);
+> +
+> +	if (!mhi_result->transaction_status)
+> +		wake_up(&uchan->ul_wq);
+> +}
+> +
+> +static void mhi_dl_xfer_cb(struct mhi_device *mhi_dev,
+> +			   struct mhi_result *mhi_result)
+> +{
+> +	struct uci_dev *udev = dev_get_drvdata(&mhi_dev->dev);
+> +	struct uci_chan *uchan = udev->uchan;
+> +	struct device *dev = &mhi_dev->dev;
+> +	struct uci_buf *ubuf;
+> +	size_t dl_buf_size = udev->mtu - sizeof(*ubuf);
+> +
+> +	dev_dbg(dev, "status: %d receive_len: %zu\n",
+> +		mhi_result->transaction_status, mhi_result->bytes_xferd);
+
+Same as above.
+
+> +
+> +	if (mhi_result->transaction_status &&
+> +	    mhi_result->transaction_status != -EOVERFLOW) {
+> +		kfree(mhi_result->buf_addr);
+> +		return;
+> +	}
+> +
+> +	ubuf = mhi_result->buf_addr + dl_buf_size;
+> +	ubuf->data = mhi_result->buf_addr;
+> +	ubuf->len = mhi_result->bytes_xferd;
+> +	spin_lock_bh(&uchan->dl_pending_lock);
+> +	list_add_tail(&ubuf->node, &uchan->dl_pending);
+> +	spin_unlock_bh(&uchan->dl_pending_lock);
+> +
+> +	wake_up(&uchan->dl_wq);
+> +}
+> +
+> +static int mhi_uci_probe(struct mhi_device *mhi_dev,
+> +			 const struct mhi_device_id *id)
+> +{
+> +	struct uci_dev *udev;
+> +	struct mhi_controller *mhi_cntrl = mhi_dev->mhi_cntrl;
+> +	struct device *dev;
+> +	int index;
+> +
+> +	udev = kzalloc(sizeof(*udev), GFP_KERNEL);
+> +	if (!udev)
+> +		return -ENOMEM;
+> +
+> +	kref_init(&udev->ref_count);
+> +	mutex_init(&udev->lock);
+> +	udev->mhi_dev = mhi_dev;
+> +
+> +	mutex_lock(&uci_drv_mutex);
+> +	index = idr_alloc(&uci_idr, udev, 0, MAX_UCI_MINORS, GFP_KERNEL);
+> +	mutex_unlock(&uci_drv_mutex);
+> +	if (index < 0) {
+> +		kfree(udev);
+> +		return index;
+> +	}
+> +
+> +	udev->minor = index;
+> +
+> +	udev->mtu = min_t(size_t, id->driver_data, MHI_MAX_MTU);
+> +	dev_set_drvdata(&mhi_dev->dev, udev);
+> +	udev->enabled = true;
+> +
+> +	/* create device file node /dev/mhi_<cntrl_dev_name>_<mhi_dev_name> */
+> +	dev = device_create(uci_dev_class, &mhi_dev->dev,
+> +			    MKDEV(uci_dev_major, index), udev,
+> +			    DEVICE_NAME "_%s_%s",
+> +			    dev_name(mhi_cntrl->cntrl_dev), mhi_dev->name);
+> +	if (IS_ERR(dev)) {
+> +		mutex_lock(&uci_drv_mutex);
+> +		idr_remove(&uci_idr, udev->minor);
+> +		mutex_unlock(&uci_drv_mutex);
+> +		dev_set_drvdata(&mhi_dev->dev, NULL);
+> +		kfree(udev);
+> +		return PTR_ERR(dev);
+> +	}
+> +
+> +	dev_dbg(&mhi_dev->dev, "probed uci dev: %s\n", id->chan);
+> +
+> +	return 0;
+> +};
+> +
+> +static void mhi_uci_remove(struct mhi_device *mhi_dev)
+> +{
+> +	struct uci_dev *udev = dev_get_drvdata(&mhi_dev->dev);
+> +
+> +	/* disable the node */
+> +	mutex_lock(&udev->lock);
+> +	udev->enabled = false;
+> +
+> +	/* delete the node to prevent new opens */
+> +	device_destroy(uci_dev_class, MKDEV(uci_dev_major, udev->minor));
+> +
+> +	/* return error for any blocked read or write */
+> +	if (udev->uchan) {
+> +		wake_up(&udev->uchan->ul_wq);
+> +		wake_up(&udev->uchan->dl_wq);
+> +	}
+> +	mutex_unlock(&udev->lock);
+> +
+> +	mutex_lock(&uci_drv_mutex);
+> +	idr_remove(&uci_idr, udev->minor);
+> +	kref_put(&udev->ref_count, mhi_uci_dev_release);
+> +	mutex_unlock(&uci_drv_mutex);
+> +}
+> +
+> +/* .driver_data stores max mtu */
+> +static const struct mhi_device_id mhi_uci_match_table[] = {
+> +	{ .chan = "LOOPBACK", .driver_data = 0x1000},
+> +	{},
+> +};
+> +MODULE_DEVICE_TABLE(mhi, mhi_uci_match_table);
+> +
+> +static struct mhi_driver mhi_uci_driver = {
+> +	.id_table = mhi_uci_match_table,
+> +	.remove = mhi_uci_remove,
+> +	.probe = mhi_uci_probe,
+> +	.ul_xfer_cb = mhi_ul_xfer_cb,
+> +	.dl_xfer_cb = mhi_dl_xfer_cb,
+> +	.driver = {
+> +		.name = MHI_UCI_DRIVER_NAME,
+> +	},
+> +};
+> +
+> +static int __init mhi_uci_init(void)
+> +{
+> +	int ret;
+> +
+> +	ret = register_chrdev(0, MHI_UCI_DRIVER_NAME, &mhidev_fops);
+> +	if (ret < 0)
+> +		return ret;
+> +
+> +	uci_dev_major = ret;
+> +	uci_dev_class = class_create(THIS_MODULE, MHI_UCI_DRIVER_NAME);
+> +	if (IS_ERR(uci_dev_class)) {
+> +		unregister_chrdev(uci_dev_major, MHI_UCI_DRIVER_NAME);
+> +		return PTR_ERR(uci_dev_class);
+> +	}
+> +
+> +	ret = mhi_driver_register(&mhi_uci_driver);
+> +	if (ret) {
+> +		class_destroy(uci_dev_class);
+> +		unregister_chrdev(uci_dev_major, MHI_UCI_DRIVER_NAME);
+> +	}
+> +
+> +	return ret;
+> +}
+> +
+> +static void __exit mhi_uci_exit(void)
+> +{
+> +	mhi_driver_unregister(&mhi_uci_driver);
+> +	class_destroy(uci_dev_class);
+> +	unregister_chrdev(uci_dev_major, MHI_UCI_DRIVER_NAME);
+> +	idr_destroy(&uci_idr);
+> +}
+> +
+> +module_init(mhi_uci_init);
+> +module_exit(mhi_uci_exit);
+> +MODULE_LICENSE("GPL v2");
+> +MODULE_DESCRIPTION("MHI UCI Driver");
+> -- 
+> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+> a Linux Foundation Collaborative Project
+> 
