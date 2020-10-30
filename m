@@ -2,117 +2,88 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 11F822A03F5
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Oct 2020 12:19:23 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id CB42C2A03F6
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Oct 2020 12:19:38 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726102AbgJ3LTP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 30 Oct 2020 07:19:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33188 "EHLO
+        id S1726293AbgJ3LTh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 30 Oct 2020 07:19:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33252 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725888AbgJ3LTO (ORCPT
+        with ESMTP id S1726120AbgJ3LTh (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 30 Oct 2020 07:19:14 -0400
-Received: from mail-ed1-x541.google.com (mail-ed1-x541.google.com [IPv6:2a00:1450:4864:20::541])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A6242C0613D2;
-        Fri, 30 Oct 2020 04:19:13 -0700 (PDT)
-Received: by mail-ed1-x541.google.com with SMTP id a71so864660edf.9;
-        Fri, 30 Oct 2020 04:19:13 -0700 (PDT)
+        Fri, 30 Oct 2020 07:19:37 -0400
+Received: from mail-io1-xd44.google.com (mail-io1-xd44.google.com [IPv6:2607:f8b0:4864:20::d44])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5DD7AC0613D4
+        for <linux-arm-msm@vger.kernel.org>; Fri, 30 Oct 2020 04:19:37 -0700 (PDT)
+Received: by mail-io1-xd44.google.com with SMTP id p15so7137194ioh.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 30 Oct 2020 04:19:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
+        d=google.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=0Bio/v4ZtLiE540NPLGsg4zm25sQfEKR1TzDT+ehFjU=;
-        b=QCqN2JeZ6j0DKHQQS+CXVkzwXNCyGppBlDRFLsJCyR2l9dE5eFsvnEHprWAVITNHe/
-         b50Q3kEgVDD6NwuI5vvun1/5aoLMKNHH51y7ZLfS1xhQ+D37ky96V5fQeosYD+GWrICj
-         d+CCE0RDtC32PSHk2wOC8lPM8MrktC1Cp8yLSN+NrL3hmuUwEC8jVFDPyQ0jwl4gfFV4
-         I5cpmUk1hOO+SkpJ7HNfSnGq1yy7UY3H5jYdk/NX4TlFhvKX1Z9d9Oxj+o3gf8WH20XY
-         uey60IW6twCqrClT/hVDpxRC10ZVYHM1axzHd4hPxiMUQ17T/vSBCFEkC8Wd3M0WaUIv
-         8NTQ==
+         :cc;
+        bh=5RA/dTcPLcLSjFsM4pTf8628QTB+ljlVPvTwaOAvSI8=;
+        b=vPF6leW+6gfiBr1s7qfSqOlKqUhfUMZVxmg71BGMeoJBHzeltWCTbYEuXa0oT2dpud
+         wFpsNu4u69HfrJAKI0EOaTm6zsS8jIGH3m+9HVCNWrLlCCPoSjJqD2wE8IxwVeOWCTT/
+         s9zIz/l9hy6s0sd/GXp4XfEvSvKGZqcAbjIb+9V91QPh/+m5tmqwRgj69T+okuTdts7j
+         f8Rb2Xhxxuv3wU2FnzTR+xffJLffig2bPxtSDt6/d+Kun2cCrXvDLDclwQ1mGchUWUEe
+         kh7V2O04DMTgLQ+QNYBQpIuNOLClV0FN3U+CjlNZaGC2yFYQ9Oo0c77oTqWY7rM+3aR7
+         b19w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=0Bio/v4ZtLiE540NPLGsg4zm25sQfEKR1TzDT+ehFjU=;
-        b=XTj+F/KfBk2jLyuY/uBOYmPTJgVRDZZafQ2BqzkMF7B9dd3R18cnf17ubwEtG9Knjl
-         3tqe6/W448tDCpgOlKy1J7ASpCIEYwYmfCw+wWMQQvC/cKOeXLjapKV3V6p+CP8qgQZT
-         8MluHu2K3NiUkUjmSI8kPQqC8a+a2sRL9ApCaDh+1tSewH1ziG2Dq5nleLv9Y8SN9tfo
-         KAAeHGc6r5DSlKz6Ep4qz1ym71jezqibERtzlEq0IDSzTXGY4VDmLhWCpJMe4xHKvDmX
-         ADV/aZy9VVFi3HZy5aVHngn04iB+rIz6RlECw+oJ4faxztnnEB8xMjeCaB6LugPien4n
-         DFNw==
-X-Gm-Message-State: AOAM531w8uUUlgoon9EFjraHkQ9XTJSpbKTKIyYuzNYOl7mI1O79rTP1
-        Yr1sTs4KudBjv/tGD7l3MowOMMJxz9nNq79+NSefMAoplwIRKQ==
-X-Google-Smtp-Source: ABdhPJwvqEm5pZuWmeOrmp8SDuL5ILCfj40cZZI7zsZuebllxG6q1P0isA2txHkQgJiWvHzXhJYWWc31Zq+h4UhXDNA=
-X-Received: by 2002:a50:9e82:: with SMTP id a2mr1681188edf.117.1604056752432;
- Fri, 30 Oct 2020 04:19:12 -0700 (PDT)
+         :message-id:subject:to:cc;
+        bh=5RA/dTcPLcLSjFsM4pTf8628QTB+ljlVPvTwaOAvSI8=;
+        b=ncXLAuebNzfccSthALF+7OZdbIE2PAVUKLhqmSsc9cTUre0zGOfpiLqTxEyQMnj6r5
+         bbbXlAoqy3fcdYqRgeF+qAiRw4BxKHCgfqQbVKssQBrb8rIKtFCn/rwO8F8ZMTzDlQDD
+         IIPCVQ/4bqKd5QbnecQ8AAUXOJJm7258Al07+tGnECBDGgDdmgSMVHUTpBs2yaKhTFfm
+         l40xZARFFu/XC3N+5OaUoXnLtX2MCFWJvjBwX6HczjxwBPzgsOj/pj39VkHAMfrA4adh
+         Fz0wXE/9BBre9Vic3imIgOT3HHNaftubXgPiNcIx8UfCwJW7uhURjyj/o+qdx71Pp05m
+         lNHQ==
+X-Gm-Message-State: AOAM531HTdqa77sJV/zqPNs2PO9VclGwmk0QfZCxxDbx2ZrL0xuBNFG9
+        +JrTScHHQG1tlMIo7tc/VgeSiTqe1xHxfIhCYfOqRw==
+X-Google-Smtp-Source: ABdhPJy/oufOebW5MWlnuf1Ro28TfvpmK+4mcN6r8qxQ28XDMOnf4ekL4Po96CPF9erK2pQu3QvP3fFFwmkHIFBVjmc=
+X-Received: by 2002:a5e:9244:: with SMTP id z4mr1374790iop.53.1604056776404;
+ Fri, 30 Oct 2020 04:19:36 -0700 (PDT)
 MIME-Version: 1.0
-References: <20201012135517.19468-1-frank@allwinnertech.com>
- <20201012135517.19468-3-frank@allwinnertech.com> <20201028102942.zc5hgqpo2bfrn6in@vireshk-i7>
- <CAEExFWvNgK2wbvmxZjsJR4g-VBq=ggsBLew77rzmNdkpqTRuDA@mail.gmail.com> <20201028144628.qm2t2hbzmouqkciy@vireshk-i7>
-In-Reply-To: <20201028144628.qm2t2hbzmouqkciy@vireshk-i7>
-From:   Frank Lee <tiny.windzz@gmail.com>
-Date:   Fri, 30 Oct 2020 19:19:00 +0800
-Message-ID: <CAEExFWtYrT3psuLC0fd7cX2GrmPaYxqZK65OLUv+2s97ehz97g@mail.gmail.com>
-Subject: Re: [PATCH 2/3] opp: Add devres wrapper for dev_pm_opp_set_prop_name
-To:     Viresh Kumar <viresh.kumar@linaro.org>
-Cc:     Frank Lee <frank@allwinnertech.com>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        airlied@linux.ie, Daniel Vetter <daniel@ffwll.ch>,
-        Viresh Kumar <vireshk@kernel.org>, Nishanth Menon <nm@ti.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        "Rafael J. Wysocki" <rjw@rjwysocki.net>, jcrouse@codeaurora.org,
-        eric@anholt.net, kholk11@gmail.com, emil.velikov@collabora.com,
-        gustavoars@kernel.org, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+References: <20201030075724.1616766-1-ajye_huang@compal.corp-partner.google.com>
+ <20201030075724.1616766-3-ajye_huang@compal.corp-partner.google.com>
+ <CA+Px+wXPRg7aDU5+vr6R_BxuFfhuDeG3iEQeAUKWNtX8YmVC1Q@mail.gmail.com> <CALprXBZ+NmR8Y4sMkh4Y-N_FG+rGEOhUBVTKXRXNFp8H+f0btw@mail.gmail.com>
+In-Reply-To: <CALprXBZ+NmR8Y4sMkh4Y-N_FG+rGEOhUBVTKXRXNFp8H+f0btw@mail.gmail.com>
+From:   Tzung-Bi Shih <tzungbi@google.com>
+Date:   Fri, 30 Oct 2020 19:19:25 +0800
+Message-ID: <CA+Px+wWouXWS2F+Bqs3MkJxCuXORhpXcUF5ZuSHo6exprBF4hg@mail.gmail.com>
+Subject: Re: [PATCH v2 2/2] ASoC: qcom: sc7180: Modify machine driver for 2mic
+To:     Ajye Huang <ajye_huang@compal.corp-partner.google.com>
+Cc:     Ajye Huang <ajye.huang@gmail.com>,
         Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        Linux PM <linux-pm@vger.kernel.org>
+        Mark Brown <broonie@kernel.org>,
+        Rohit kumar <rohitkr@codeaurora.org>,
+        Banajit Goswami <bgoswami@codeaurora.org>,
+        Patrick Lai <plai@codeaurora.org>,
+        Srinivasa Rao Mandadapu <srivasam@codeaurora.org>,
+        Srini Kandagatla <srinivas.kandagatla@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Jaroslav Kysela <perex@perex.cz>,
+        Cheng-Yi Chiang <cychiang@chromium.org>,
+        Tzung-Bi Shih <tzungbi@chromium.org>,
+        Douglas Anderson <dianders@chromium.org>,
+        "moderated list:ARM/Mediatek SoC support" 
+        <linux-arm-kernel@lists.infradead.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>,
+        ALSA development <alsa-devel@alsa-project.org>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Oct 28, 2020 at 10:46 PM Viresh Kumar <viresh.kumar@linaro.org> wro=
-te:
->
-> On 28-10-20, 19:02, Frank Lee wrote:
-> > On Wed, Oct 28, 2020 at 6:29 PM Viresh Kumar <viresh.kumar@linaro.org> =
-wrote:
-> > >
-> > > On 12-10-20, 21:55, Frank Lee wrote:
-> > > > From: Yangtao Li <tiny.windzz@gmail.com>
-> > > >
-> > > > Add devres wrapper for dev_pm_opp_set_prop_name() to simplify drive=
-r
-> > > > code.
-> > > >
-> > > > Signed-off-by: Yangtao Li <tiny.windzz@gmail.com>
-> > > > Signed-off-by: Yangtao Li <frank@allwinnertech.com>
-> > > > ---
-> > > >  drivers/opp/core.c     | 39 ++++++++++++++++++++++++++++++++++++++=
-+
-> > > >  include/linux/pm_opp.h |  6 ++++++
-> > > >  2 files changed, 45 insertions(+)
-> > >
-> > > On a second thought I am looking at dropping this one as you haven't
-> > > added any users yet and I am afraid it will stay unused.
-> >
-> > Now it looks like that dev_pm_opp_set_prop_name() is used relatively le=
-ss.
-> > Maybe we can wait until a caller, and then pick up the patch.
->
-> I am even wondering if we should be adding any of the devm_* helpers
-> for now to be honest. Even for the other one we have only one user.
-> Them major user of the OPP core is the CPU subsystem and it is never
-> going to use these devm_* helpers as the CPU device doesn't get bound
-> to a driver, it is rather a fake platform device which gets the
-> cpufreq drivers probed. So the only users of these devm_* helpers is
-> going to be non-CPU devices. Considering that we have only one user
-> right now, it may be better to just fix it instead of adding any of
-> the devm_* helpers.
+On Fri, Oct 30, 2020 at 6:55 PM Ajye Huang
+<ajye_huang@compal.corp-partner.google.com> wrote:
+> But dmic_get() will need dmic_switch, should i keep dmic_switch?
 
-GPU is also a relatively large number of opp consumers.
-Most of the time, the dev_pm_opp_set_* functions will only be set once.
-If don't need the driver to dynamically manage and release the opp, it
-may be OK=EF=BC=9F
-
-Yangtao
+I see.  I overlooked it.  You can keep the dmic_switch for this
+purpose or just call gpiod_get_value_cansleep().
