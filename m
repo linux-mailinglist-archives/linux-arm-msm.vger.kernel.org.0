@@ -2,152 +2,107 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id CA2712A072C
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Oct 2020 14:55:32 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D2C3A2A0734
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Oct 2020 14:56:46 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726573AbgJ3Nzb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 30 Oct 2020 09:55:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57402 "EHLO
+        id S1726718AbgJ3N4j (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 30 Oct 2020 09:56:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57586 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725939AbgJ3Nzb (ORCPT
+        with ESMTP id S1726178AbgJ3N4i (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 30 Oct 2020 09:55:31 -0400
-Received: from mail-lj1-x243.google.com (mail-lj1-x243.google.com [IPv6:2a00:1450:4864:20::243])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AC67DC0613CF
-        for <linux-arm-msm@vger.kernel.org>; Fri, 30 Oct 2020 06:55:30 -0700 (PDT)
-Received: by mail-lj1-x243.google.com with SMTP id t13so6914084ljk.12
-        for <linux-arm-msm@vger.kernel.org>; Fri, 30 Oct 2020 06:55:30 -0700 (PDT)
+        Fri, 30 Oct 2020 09:56:38 -0400
+Received: from mail-pf1-x444.google.com (mail-pf1-x444.google.com [IPv6:2607:f8b0:4864:20::444])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DD844C0613CF
+        for <linux-arm-msm@vger.kernel.org>; Fri, 30 Oct 2020 06:56:36 -0700 (PDT)
+Received: by mail-pf1-x444.google.com with SMTP id e7so5323781pfn.12
+        for <linux-arm-msm@vger.kernel.org>; Fri, 30 Oct 2020 06:56:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=jEivHHHppW7lKJKSPaA2MJ5onUInG0PkEmmlb+QvN6w=;
-        b=htnlI/L0D+pPOTdEbli9XM5YC/psfkjbq7r2oMpqoiWUyoGis/mQCEbr+t/EYnCc0C
-         979OuGH5bYgzBKnrAZ+6W/E9f8qxwnMYapNv/omy8Qu0E8Kl/hTiOV7lCqN6IO5UnunT
-         NxcGVEHKW10cbrwjW1aZruyU5AZBiQMBUk4eqkDEuUAPTwx6I9fwI/lcf0DLlxKmAqd9
-         h/2cux67cuo3A8zYwyrO1C8WkMGu+vQ+PZLLmHgnDcaDrSwwI/gadVOGF/UAbi1m0aHW
-         VNdn7TuImE3850PXxcNtzDgyo/tY3iFAlD8ssbcY6jKuBtHYCWz7dSVAyVXroKxDXxL9
-         DWMg==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=aSHiPFU1PNrnVd14nC1sU5GQ+wrXJKS+FnkjSYfXuYg=;
+        b=uKAnRtofJnQlPQ4F0mplXHKRqAwuFFHiMtK4LIIKVgLC4POIYgreSBMPH5rnKQh1fC
+         5I2sQmr6nCAHW8K0egfuy9aw3mr3ZyESTpPsU2qVb6aXIllEWsVOY/FleGz+eslRN5OJ
+         V/+ZKRiOezeHR9E0JgFH+wRQMWGh6suZN8s+etYPrVyY4Z03OUtUbGma1n1TAh3hRxA7
+         O6cgFS/Hsdqd3nz8AKfYRRPyEg0tXrB+Vk1eY22Jn/ICFYw2wMUbGn0tPMXLxmPzEYV/
+         SEmanWWQYR7eguGiwhz2iGewcDVPgeMi07LhgvaW0ZTkKd1WJQVoarn0wt8+aiUPUWbZ
+         HIXQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=jEivHHHppW7lKJKSPaA2MJ5onUInG0PkEmmlb+QvN6w=;
-        b=cAB+XMKZRiczTBwCajwqmncucXeA4XbgMDtr+4EihezfNnLV7to+XmPgvTRBjwXCl5
-         fSBo9hzbRmYXB1VC1UpBberRdLO/JTpukg5deY9ot09NxzcJ1Zl4GAZbhX9b+RvL643C
-         6/VYxvJnlgoWwv/BMYCl8eJcqQH0MfdNhoEW+K8hn32usi/TL8+yFYNppbC3xNJO347I
-         YrDFEW0FpP9Gt6kERFMKVz0evqGofKwKzi6G6YQbRrGOl3nuAr2Sa3CqKNp8h4kXOBbO
-         X7mZZynioyyCejdsdv6S5Gsp63LaMEvCHb4IxPKVrpDfXc0tBZ8xDPQOiZA9UWz0VdJp
-         pWhA==
-X-Gm-Message-State: AOAM533ILSrtQGUdxk309Qxm/rozMpgK94Q80YcyfYQT4HtmmJrXVnvX
-        U1dt1bWeKeoONcLp0TCBkE6Pk9zQvfJcBv7N
-X-Google-Smtp-Source: ABdhPJxcxVFBXD2WZ2FNbzFXyybMDQDLxJSVhSrScs29gB2Kab/Nk1XvOZiqO64RPpB7wOWcP8lo6Q==
-X-Received: by 2002:a05:651c:1343:: with SMTP id j3mr1071034ljb.336.1604066129156;
-        Fri, 30 Oct 2020 06:55:29 -0700 (PDT)
-Received: from [192.168.1.211] ([188.162.64.225])
-        by smtp.gmail.com with ESMTPSA id b15sm696918ljp.117.2020.10.30.06.55.26
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 30 Oct 2020 06:55:28 -0700 (PDT)
-Subject: Re: [PATCH] drm/msm/dsi: save PLL registers across first PHY reset
-To:     benl@squareup.com, robdclark@gmail.com, sean@poorly.run
-Cc:     David Airlie <airlied@linux.ie>, Daniel Vetter <daniel@ffwll.ch>,
-        AngeloGioacchino Del Regno <kholk11@gmail.com>,
-        Harigovindan P <harigovi@codeaurora.org>,
-        Konrad Dybcio <konradybcio@gmail.com>,
-        zhengbin <zhengbin13@huawei.com>, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        linux-kernel@vger.kernel.org,
-        Anibal Limon <anibal.limon@linaro.org>
-References: <010101750064e17e-3db0087e-fc37-494d-aac9-2c2b9b0a7c5b-000000@us-west-2.amazonses.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Message-ID: <508ae9e2-5240-2f43-6c97-493bb7d9fbe8@linaro.org>
-Date:   Fri, 30 Oct 2020 16:55:25 +0300
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.2.2
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=aSHiPFU1PNrnVd14nC1sU5GQ+wrXJKS+FnkjSYfXuYg=;
+        b=DfMQu92t+nEZ5ybR1zfvym+VeVAwIWRMISX84Bw8H5CqyFC54gRKPWz0WxGaoRy535
+         0pWUBMmUgXRYuLhCQFjNtNJoF86gO0k36uv6miLCoaezJ6hQUbfL2jl/+6wOoCxDgkqK
+         UZptIDrtm3mDEWJwQSU/iKHh0D3eBbOVRXeCfR+CONzew/T5xrXS6TBOVsUCRugKvEHs
+         kUDvK4JNQsevzGS1q5X+0KCv1JJ92k6r4vZWwm0KMzuqdGa8fhs/RLEytsvvqkYjAGdu
+         nuYGoxi+mKCO3xowmfI8jKQdXUpveKlLA37+RB++pXKc4FuPnPYwA26IwcIqrZCoEToL
+         JAbQ==
+X-Gm-Message-State: AOAM532xl2mv4CX6CI//tDmomA1uj6ywPpdW/B0ur00XaoaL9YmhN0jW
+        ++dNyPZhj3nu2GTnhsTeqO7R
+X-Google-Smtp-Source: ABdhPJzLy4XqCGGBATGas/Pt3Gei75Zask1U2mvffrW0Td4wwLYSA4pIMdguJ/pHvR+dbFyKGr3GDw==
+X-Received: by 2002:a17:90b:3501:: with SMTP id ls1mr2954756pjb.26.1604066196343;
+        Fri, 30 Oct 2020 06:56:36 -0700 (PDT)
+Received: from Mani-XPS-13-9360 ([2409:4072:918:28fe:10d5:aaf5:e319:ec72])
+        by smtp.gmail.com with ESMTPSA id b6sm3504041pjq.42.2020.10.30.06.56.32
+        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
+        Fri, 30 Oct 2020 06:56:35 -0700 (PDT)
+Date:   Fri, 30 Oct 2020 19:26:29 +0530
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     Bhaumik Bhatt <bbhatt@codeaurora.org>
+Cc:     linux-arm-msm@vger.kernel.org, hemantk@codeaurora.org,
+        jhugo@codeaurora.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v3 05/12] bus: mhi: core: Prevent sending multiple RDDM
+ entry callbacks
+Message-ID: <20201030135629.GH3818@Mani-XPS-13-9360>
+References: <1604031057-32820-1-git-send-email-bbhatt@codeaurora.org>
+ <1604031057-32820-6-git-send-email-bbhatt@codeaurora.org>
 MIME-Version: 1.0
-In-Reply-To: <010101750064e17e-3db0087e-fc37-494d-aac9-2c2b9b0a7c5b-000000@us-west-2.amazonses.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-GB
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1604031057-32820-6-git-send-email-bbhatt@codeaurora.org>
+User-Agent: Mutt/1.9.4 (2018-02-28)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hello,
+On Thu, Oct 29, 2020 at 09:10:50PM -0700, Bhaumik Bhatt wrote:
+> If an mhi_power_down() is initiated after the device has entered
+> RDDM and a status callback was provided for it, it is possible
+> that another BHI interrupt fires while waiting for the MHI
+> RESET to be cleared. If that happens, MHI host would have moved
+> a "disabled" execution environment and the check to allow sending
+> an RDDM status callback will pass when it is should not. Add a
+> check to see if MHI is in an active state before proceeding.
+> 
+> Signed-off-by: Bhaumik Bhatt <bbhatt@codeaurora.org>
 
-On 07/10/2020 03:10, benl-kernelpatches@squareup.com wrote:
-> From: Benjamin Li <benl@squareup.com>
-> 
-> Take advantage of previously-added support for persisting PLL
-> registers across DSI PHY disable/enable cycles (see 328e1a6
-> 'drm/msm/dsi: Save/Restore PLL status across PHY reset') to
-> support persisting across the very first DSI PHY enable at
-> boot.
+Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 
-Interesting enough, this breaks exactly on 8016. On DB410c with latest 
-bootloader and w/o splash screen this patch causes boot freeze. Without 
-this patch the board would successfully boot with display routed to HDMI.
+Thanks,
+Mani
 
-> The bootloader may have left the PLL registers in a non-default
-> state. For example, for dsi_pll_28nm.c on 8x16/8x39, the byte
-> clock mux's power-on reset configuration is to bypass DIV1, but
-> depending on bandwidth requirements[1] the bootloader may have
-> set the DIV1 path.
-> 
-> When the byte clock mux is registered with the generic clock
-> framework at probe time, the framework reads & caches the value
-> of the mux bit field (the initial clock parent). After PHY enable,
-> when clk_set_rate is called on the byte clock, the framework
-> assumes there is no need to reparent, and doesn't re-write the
-> mux bit field. But PHY enable resets PLL registers, so the mux
-> bit field actually silently reverted to the DIV1 bypass path.
-> This causes the byte clock to be off by a factor of e.g. 2 for
-> our tested WXGA panel.
-> 
-> The above issue manifests as the display not working and a
-> constant stream of FIFO/LP0 contention errors.
-> 
-> [1] The specific requirement for triggering the DIV1 path (and
-> thus this issue) on 28nm is a panel with pixel clock <116.7MHz
-> (one-third the minimum VCO setting). FHD/1080p (~145MHz) is fine,
-> WXGA/1280x800 (~75MHz) is not.
-> 
-> Signed-off-by: Benjamin Li <benl@squareup.com>
 > ---
->   drivers/gpu/drm/msm/dsi/phy/dsi_phy.c | 16 ++++++++++++++++
->   1 file changed, 16 insertions(+)
+>  drivers/bus/mhi/core/main.c | 4 ++++
+>  1 file changed, 4 insertions(+)
 > 
-> diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c b/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c
-> index 009f5b843dd1..139b4a5aaf86 100644
-> --- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c
-> +++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c
-> @@ -621,6 +621,22 @@ static int dsi_phy_driver_probe(struct platform_device *pdev)
->   		phy->pll = NULL;
->   	}
->   
-> +	/*
-> +	 * As explained in msm_dsi_phy_enable, resetting the DSI PHY (as done
-> +	 * in dsi_mgr_phy_enable) silently changes its PLL registers to power-on
-> +	 * defaults, but the generic clock framework manages and caches several
-> +	 * of the PLL registers. It initializes these caches at registration
-> +	 * time via register read.
-> +	 *
-> +	 * As a result, we need to save DSI PLL registers once at probe in order
-> +	 * for the first call to msm_dsi_phy_enable to successfully bring PLL
-> +	 * registers back in line with what the generic clock framework expects.
-> +	 *
-> +	 * Subsequent PLL restores during msm_dsi_phy_enable will always be
-> +	 * paired with PLL saves in msm_dsi_phy_disable.
-> +	 */
-> +	msm_dsi_pll_save_state(phy->pll);
+> diff --git a/drivers/bus/mhi/core/main.c b/drivers/bus/mhi/core/main.c
+> index 1f32d67..172b48b 100644
+> --- a/drivers/bus/mhi/core/main.c
+> +++ b/drivers/bus/mhi/core/main.c
+> @@ -399,6 +399,10 @@ irqreturn_t mhi_intvec_threaded_handler(int irq_number, void *priv)
+>  
+>  	 /* If device supports RDDM don't bother processing SYS error */
+>  	if (mhi_cntrl->rddm_image) {
+> +		/* host may be performing a device power down already */
+> +		if (!mhi_is_active(mhi_cntrl))
+> +			goto exit_intvec;
 > +
->   	dsi_phy_disable_resource(phy);
->   
->   	platform_set_drvdata(pdev, phy);
+>  		if (mhi_cntrl->ee == MHI_EE_RDDM && mhi_cntrl->ee != ee) {
+>  			mhi_cntrl->status_cb(mhi_cntrl, MHI_CB_EE_RDDM);
+>  			wake_up_all(&mhi_cntrl->state_event);
+> -- 
+> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+> a Linux Foundation Collaborative Project
 > 
-
-
--- 
-With best wishes
-Dmitry
