@@ -2,160 +2,253 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A43CC29FF48
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Oct 2020 09:00:01 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E42FC29FF73
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Oct 2020 09:14:05 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725355AbgJ3IAA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 30 Oct 2020 04:00:00 -0400
-Received: from m42-4.mailgun.net ([69.72.42.4]:47714 "EHLO m42-4.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725823AbgJ3H77 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 30 Oct 2020 03:59:59 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1604044798; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=wzAYLmtiqKUHYKNwoQvgJ/EArCoML40Wcybfuv2xAzo=;
- b=IRpRmwxSwAoo3sRXPH4upLl1L+ZVQBIGG4g9QOojdddWj9x72vaqX2B4SVrRn+bPLghUaTxS
- QjvmNTDZsC27MqfmrIINveNyWLynK4jSf1NHAMwz/bmLd+8ZmbOW9BC7MribnQ6B40S99u5C
- +Jm6kECcfx6j6Euap0Ayg7nmYoU=
-X-Mailgun-Sending-Ip: 69.72.42.4
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n04.prod.us-east-1.postgun.com with SMTP id
- 5f9bc7fe89dd7476335ded73 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 30 Oct 2020 07:59:58
- GMT
-Sender: saiprakash.ranjan=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 6E955C433FE; Fri, 30 Oct 2020 07:59:57 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: saiprakash.ranjan)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 445F1C433C6;
-        Fri, 30 Oct 2020 07:59:56 +0000 (UTC)
+        id S1725876AbgJ3IOF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 30 Oct 2020 04:14:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60816 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725355AbgJ3IOC (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 30 Oct 2020 04:14:02 -0400
+Received: from mail-pf1-x441.google.com (mail-pf1-x441.google.com [IPv6:2607:f8b0:4864:20::441])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3E266C0613D2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 30 Oct 2020 01:14:01 -0700 (PDT)
+Received: by mail-pf1-x441.google.com with SMTP id x13so4587680pfa.9
+        for <linux-arm-msm@vger.kernel.org>; Fri, 30 Oct 2020 01:14:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=FErVvc6A5qH1alUpiUZdXd2Gs1X4yIXnaPUiKV1XzBs=;
+        b=XQaqqZUY+vDaoFE35JDQU2j1Gg88/6OGfk3ha++ZZS0kAmVs45uvH2T4kBLSzvQIGt
+         wDTZ2NNMBZ0c57F67DSMEpsP5m8lIat+mp31y89QwmkP8FNwSRDANNcoQMmFOoqzihxb
+         wRzEZ2Kgg1sB9sxPstCYjn1v0W6hfe4BspsveT+cd7dydWhjMefFl5+zHmnJXD6+seKv
+         JFIE8DPHVhI8DI4aXM0L0P/H/b5tNrqoD80vlY86XVwQ7DzRPwDPLUld0X0mGBFq6NTJ
+         8pBGwGj/SKwK+DjruV/zx0PjaipNCkdkDP6ZLmQrM/oLjjc1+OW+Za2UFFxh9pLamOKS
+         BjnA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=FErVvc6A5qH1alUpiUZdXd2Gs1X4yIXnaPUiKV1XzBs=;
+        b=L1kPgZs698F9m2Te0e2tdfZD59NHTnwIwJDDtUyDoBbX8/zxUlyt+hEcj/K9cDUCpb
+         bDX1PsjsB7OF8yActCThEEdayAoPW1VufkHHYqyW6VlgdxLLKAG0zkjX94KxlFgQ5nOz
+         3mgOk/B06IHzxxXVzxRXzzgegxSchTcgNzQ7bx820ng8kpR0pg/mDMOPFs4Wvdnkvb/r
+         842gtynwtdKSZYeUAawoYqieDG2Gz4jdZo2VehoMQLUwMMl8c0FfGD6rJJ4z3CobcNf1
+         ZZgFqDypyTzX/FsCdl4HPUINObr2k0yTPn54h+9mjUP151BXXP7QnUheDJ4KqKqTcJCg
+         xuyw==
+X-Gm-Message-State: AOAM530RZ/zTblNhpazQP+axyucuzTB7nkAaAevaltkxVl1yIT1NzWnU
+        4pXEHRlkq0YvGDOs5wFXsnWR
+X-Google-Smtp-Source: ABdhPJxA3H1UxqI4VmnmX2Pt7IQMmfBLVy2EiecG2wlc/LPj38xhT55LydbbIbJbNla+xJTdThPx6g==
+X-Received: by 2002:a17:90b:b12:: with SMTP id bf18mr1077616pjb.205.1604045640696;
+        Fri, 30 Oct 2020 01:14:00 -0700 (PDT)
+Received: from Mani-XPS-13-9360 ([2409:4072:918:28fe:10d5:aaf5:e319:ec72])
+        by smtp.gmail.com with ESMTPSA id gb13sm2250181pjb.55.2020.10.30.01.13.54
+        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
+        Fri, 30 Oct 2020 01:13:59 -0700 (PDT)
+Date:   Fri, 30 Oct 2020 13:43:51 +0530
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     Loic Poulain <loic.poulain@linaro.org>
+Cc:     kuba@kernel.org, davem@davemloft.net, hemantk@codeaurora.org,
+        netdev@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        bbhatt@codeaurora.org, willemdebruijn.kernel@gmail.com,
+        jhugo@codeaurora.org
+Subject: Re: [PATCH v8 2/2] net: Add mhi-net driver
+Message-ID: <20201030081351.GA3818@Mani-XPS-13-9360>
+References: <1603902898-25233-1-git-send-email-loic.poulain@linaro.org>
+ <1603902898-25233-2-git-send-email-loic.poulain@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Fri, 30 Oct 2020 13:29:56 +0530
-From:   Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-To:     Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Peter Zijlstra <peterz@infradead.org>,
-        Suzuki Poulose <suzuki.poulose@arm.com>
-Cc:     Mike Leach <mike.leach@linaro.org>, Ingo Molnar <mingo@redhat.com>,
-        Arnaldo Carvalho de Melo <acme@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-        Jiri Olsa <jolsa@redhat.com>,
-        Namhyung Kim <namhyung@kernel.org>, coresight@lists.linaro.org,
-        Stephen Boyd <swboyd@chromium.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org
-Subject: Re: [PATCHv2 2/4] coresight: tmc-etf: Fix NULL ptr dereference in
- tmc_enable_etf_sink_perf()
-In-Reply-To: <20201023203729.GA819775@xps15>
-References: <20201022212033.GA646497@xps15>
- <20201023073905.GM2611@hirez.programming.kicks-ass.net>
- <174e6461-4d46-cb65-c094-c06ee3b21568@arm.com>
- <20201023094115.GR2611@hirez.programming.kicks-ass.net>
- <bd8c136d-9dfa-a760-31f9-eb8d6698aced@arm.com>
- <20201023105431.GM2594@hirez.programming.kicks-ass.net>
- <2457de8f-8bc3-b350-fdc7-61276da31ce6@arm.com>
- <20201023131628.GY2628@hirez.programming.kicks-ass.net>
- <728fd89c-78f2-0c5c-0443-c91c62b02f0e@arm.com>
- <20201023134416.GA2628@hirez.programming.kicks-ass.net>
- <20201023203729.GA819775@xps15>
-Message-ID: <70e3a508af119be481c8f0a0acf0a44d@codeaurora.org>
-X-Sender: saiprakash.ranjan@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1603902898-25233-2-git-send-email-loic.poulain@linaro.org>
+User-Agent: Mutt/1.9.4 (2018-02-28)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hello guys,
+Hi Loic,
 
-On 2020-10-24 02:07, Mathieu Poirier wrote:
-> On Fri, Oct 23, 2020 at 03:44:16PM +0200, Peter Zijlstra wrote:
->> On Fri, Oct 23, 2020 at 02:29:54PM +0100, Suzuki Poulose wrote:
->> > On 10/23/20 2:16 PM, Peter Zijlstra wrote:
->> > > On Fri, Oct 23, 2020 at 01:56:47PM +0100, Suzuki Poulose wrote:
->> 
->> > > > That way another session could use the same sink if it is free. i.e
->> > > >
->> > > > perf record -e cs_etm/@sink0/u --per-thread app1
->> > > >
->> > > > and
->> > > >
->> > > > perf record -e cs_etm/@sink0/u --per-thread app2
->> > > >
->> > > > both can work as long as the sink is not used by the other session.
->> > >
->> > > Like said above, if sink is shared between CPUs, that's going to be a
->> > > trainwreck :/ Why do you want that?
->> >
->> > That ship has sailed. That is how the current generation of systems are,
->> > unfortunately. But as I said, this is changing and there are guidelines
->> > in place to avoid these kind of topologies. With the future
->> > technologies, this will be completely gone.
->> 
->> I understand that the hardware is like that, but why do you want to
->> support this insanity in software?
->> 
->> If you only allow a single sink user (group) at the same time, your
->> problem goes away. Simply disallow the above scenario, do not allow
->> concurrent sink users if sinks are shared like this.
->> 
->> Have the perf-record of app2 above fail because the sink is in-user
->> already.
+On Wed, Oct 28, 2020 at 05:34:58PM +0100, Loic Poulain wrote:
+> This patch adds a new network driver implementing MHI transport for
+> network packets. Packets can be in any format, though QMAP (rmnet)
+> is the usual protocol (flow control + PDN mux).
 > 
-> I agree with you that --per-thread scenarios are easy to deal with, but 
-> to
-> support cpu-wide scenarios events must share a sink (because there is 
-> one event
-> per CPU).  CPU-wide support can't be removed because it has been around
-> for close to a couple of years and heavily used. I also think using the 
-> pid of
-> the process that created the events, i.e perf, is a good idea.  We just 
-> need to
-> agree on how to gain access to it.
-> 
-> In Sai's patch you objected to the following:
-> 
->> +     struct task_struct *task = READ_ONCE(event->owner);
->> +
->> +     if (!task || is_kernel_event(event))
-> 
-> Would it be better to use task_nr_pid(current) instead of event->owner? 
->  The end
-> result will be exactly the same.  There is also no need to check the 
-> validity of
-> @current since it is a user process.
+> It support two MHI devices, IP_HW0 which is, the path to the IPA
+> (IP accelerator) on qcom modem, And IP_SW0 which is the software
+> driven IP path (to modem CPU).
 > 
 
-We have devices deployed where these crashes are seen consistently,
-so for some immediate relief, could we atleast get some fix in this
-cycle without major design overhaul which would likely take more time.
-Perhaps my first patch [1] without any check for owner or
-I can post a new version as Suzuki suggested [2] dropping the export
-of is_kernel_event(). Then we can always work on top of it based on the
-conclusion of this discussion, we will atleast not have the systems
-crash in the meantime, thoughts?
+This patch looks good to me. I just commented few nits inline. With those
+addressed, you can have my:
 
-[1] https://lore.kernel.org/patchwork/patch/1318098/
-[2] 
-https://lore.kernel.org/lkml/fa6cdf34-88a0-1050-b9ea-556d0a9438cb@arm.com/
+Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 
 Thanks,
-Sai
+Mani
 
--- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a 
-member
-of Code Aurora Forum, hosted by The Linux Foundation
+> Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
+> ---
+>   v2: - rebase on net-next
+>       - remove useless skb_linearize
+>       - check error type on mhi_queue return
+>       - rate limited errors
+>       - Schedule RX refill only on 'low' buf level
+>       - SET_NETDEV_DEV in probe
+>       - reorder device remove sequence
+>   v3: - Stop channels on net_register error
+>       - Remove useles parentheses
+>       - Add driver .owner
+>   v4: - prevent potential cpu hog in rx-refill loop
+>       - Access mtu via READ_ONCE
+>   v5: - Fix access to u64 stats
+>   v6: - Stop TX queue earlier if queue is full
+>       - Preventing 'abnormal' NETDEV_TX_BUSY path
+>   v7: - Stop dl/ul cb operations on channel resetting
+>   v8: - remove premature comment about TX threading gain
+>       - check rx_queued to determine queuing limits
+>       - fix probe error path (unified goto usage)
+> 
+>  drivers/net/Kconfig   |   7 ++
+>  drivers/net/Makefile  |   1 +
+>  drivers/net/mhi_net.c | 313 ++++++++++++++++++++++++++++++++++++++++++++++++++
+>  3 files changed, 321 insertions(+)
+>  create mode 100644 drivers/net/mhi_net.c
+> 
+> diff --git a/drivers/net/Kconfig b/drivers/net/Kconfig
+> index 1368d1d..11a6357 100644
+> --- a/drivers/net/Kconfig
+> +++ b/drivers/net/Kconfig
+> @@ -426,6 +426,13 @@ config VSOCKMON
+>  	  mostly intended for developers or support to debug vsock issues. If
+>  	  unsure, say N.
+>  
+> +config MHI_NET
+> +	tristate "MHI network driver"
+> +	depends on MHI_BUS
+> +	help
+> +	  This is the network driver for MHI.  It can be used with
+
+network driver for MHI bus.
+
+> +	  QCOM based WWAN modems (like SDX55).  Say Y or M.
+> +
+>  endif # NET_CORE
+>  
+>  config SUNGEM_PHY
+> diff --git a/drivers/net/Makefile b/drivers/net/Makefile
+> index 94b6080..8312037 100644
+> --- a/drivers/net/Makefile
+> +++ b/drivers/net/Makefile
+> @@ -34,6 +34,7 @@ obj-$(CONFIG_GTP) += gtp.o
+>  obj-$(CONFIG_NLMON) += nlmon.o
+>  obj-$(CONFIG_NET_VRF) += vrf.o
+>  obj-$(CONFIG_VSOCKMON) += vsockmon.o
+> +obj-$(CONFIG_MHI_NET) += mhi_net.o
+>  
+>  #
+>  # Networking Drivers
+> diff --git a/drivers/net/mhi_net.c b/drivers/net/mhi_net.c
+> new file mode 100644
+> index 0000000..4ba146d
+> --- /dev/null
+> +++ b/drivers/net/mhi_net.c
+> @@ -0,0 +1,313 @@
+> +// SPDX-License-Identifier: GPL-2.0-or-later
+> +/* MHI Network driver - Network over MHI
+
+Network over MHI bus.
+
+> + *
+> + * Copyright (C) 2020 Linaro Ltd <loic.poulain@linaro.org>
+> + */
+> +
+> +#include <linux/if_arp.h>
+> +#include <linux/mhi.h>
+> +#include <linux/mod_devicetable.h>
+> +#include <linux/module.h>
+> +#include <linux/netdevice.h>
+> +#include <linux/skbuff.h>
+> +#include <linux/u64_stats_sync.h>
+> +
+> +#define MIN_MTU		ETH_MIN_MTU
+> +#define MAX_MTU		0xffff
+> +#define DEFAULT_MTU	16384
+
+Please add a prefix to avoid namespace issues in future...
+
+> +
+> +struct mhi_net_stats {
+> +	u64_stats_t rx_packets;
+> +	u64_stats_t rx_bytes;
+> +	u64_stats_t rx_errors;
+> +	u64_stats_t rx_dropped;
+> +	u64_stats_t tx_packets;
+> +	u64_stats_t tx_bytes;
+> +	u64_stats_t tx_errors;
+> +	u64_stats_t tx_dropped;
+> +	atomic_t rx_queued;
+> +	struct u64_stats_sync tx_syncp;
+> +	struct u64_stats_sync rx_syncp;
+> +};
+> +
+> +struct mhi_net_dev {
+> +	struct mhi_device *mdev;
+> +	struct net_device *ndev;
+> +	struct delayed_work rx_refill;
+> +	struct mhi_net_stats stats;
+> +	u32 rx_queue_sz;
+> +};
+> +
+
+[...]
+
+> +static void mhi_net_rx_refill_work(struct work_struct *work)
+> +{
+> +	struct mhi_net_dev *mhi_netdev = container_of(work, struct mhi_net_dev,
+> +						      rx_refill.work);
+> +	struct net_device *ndev = mhi_netdev->ndev;
+> +	struct mhi_device *mdev = mhi_netdev->mdev;
+> +	int size = READ_ONCE(ndev->mtu);
+> +	struct sk_buff *skb;
+> +	int err;
+> +
+> +	do {
+> +		skb = netdev_alloc_skb(ndev, size);
+> +		if (unlikely(!skb))
+> +			break;
+> +
+> +		err = mhi_queue_skb(mdev, DMA_FROM_DEVICE, skb, size, MHI_EOT);
+> +		if (unlikely(err)) {
+> +			net_err_ratelimited("%s: Failed to queue RX buf (%d)\n",
+> +					    ndev->name, err);
+> +			kfree_skb(skb);
+> +			break;
+> +		}
+> +
+> +		/* Do not hog the CPU if rx buffers are completed faster than
+> +		 * queued (unlikely).
+
+s/completed/consumed
+
+> +		 */
+> +		cond_resched();
+> +	} while (atomic_inc_return(&mhi_netdev->stats.rx_queued) < mhi_netdev->rx_queue_sz);
+> +
+> +	/* If we're still starved of rx buffers, reschedule later */
+> +	if (unlikely(!atomic_read(&mhi_netdev->stats.rx_queued)))
+> +		schedule_delayed_work(&mhi_netdev->rx_refill, HZ / 2);
+> +}
+> +
+> +static int mhi_net_probe(struct mhi_device *mhi_dev,
+> +			 const struct mhi_device_id *id)
+> +{
+> +	const char *netname = (char *)id->driver_data;
+> +	struct mhi_net_dev *mhi_netdev;
+> +	struct net_device *ndev;
+> +	struct device *dev = &mhi_dev->dev;
+> +	int err;
+
+Since this is a networking driver, please stick to reverse xmas tree order for
+local variables.
