@@ -2,111 +2,229 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A28D329FA4F
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Oct 2020 02:07:31 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 57E0529FA5E
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Oct 2020 02:12:40 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726152AbgJ3BH3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 29 Oct 2020 21:07:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51638 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726122AbgJ3BH3 (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 29 Oct 2020 21:07:29 -0400
-Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3943FC0613D2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Oct 2020 18:07:27 -0700 (PDT)
-Received: by mail-lf1-x12d.google.com with SMTP id a9so5761499lfc.7
-        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Oct 2020 18:07:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=QViQgAeoKYf7Iu82LVxWPMaTDwhUZNQ6uzFRhsBC9QQ=;
-        b=orT0AVb6wpcbaB4cOcZktemGwXtEtIn/5F1pze6EHOAx0GlUohuWeJuHku2NIHldlC
-         7eOvKhbw/DSo7MFXJRJIT0H6fQ4SZINbpNEL6EMLjcMHxsWxnxZ/bLiTkFpgLgvCDNUM
-         DgyLdFNuvtPpy0kuG8U/wOEBgkzF4rULDSecF3vhFqtARelgCh7Wmhd7y/y+S5DWcvZS
-         dWbHR9XoK2Gjv50dr10G0zsSfMWz69EgkzOAT74h14EL0t98Jx+dLN30rL6SOyMUiNUJ
-         k2bFyzmG2A2LCm/SdzuTckV0MpKDJ/yvxUobX9UiShs8FgtHQTCuN1ic87bbVcoYxTfM
-         8iaA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=QViQgAeoKYf7Iu82LVxWPMaTDwhUZNQ6uzFRhsBC9QQ=;
-        b=ZNMcu09zv29UDH1MsEXZ7fZZRGVrvEHKAeL4g2LDKL7WBw249akVr3iyNUo6m0miW/
-         bIEOiJ32U21E5btQWjEuvbvS146R2A/K1MTJ6l64JahWbSVloWSgCpzLrgYgNgeI6rz+
-         xCSa5GYFSu4dzMYuSfGbx1sRC8Le1YgO814ULQVOj/r1peyS6cGla+hGwlBA7UnJxPv3
-         XqGSKQKU1PkNlaZvqSASqtX9vW+Mx25/fVja9Td8KTqtNaEY1aHuDHnJc6DcYBQVWdz1
-         rf0ea3r7vXJHn+lrLH1LtKbIxmDklxx3ldo759N6W5nOWlXNjCBwP0/6UbIVXc64WJY6
-         cgRA==
-X-Gm-Message-State: AOAM533JY7zwLQ9TYOSKMX8w+XCOTzeqey7Imo+3ScfrRuJmjnbIYQsV
-        zIQGEXy0ReXrNRUM/Xa0N8T+yg==
-X-Google-Smtp-Source: ABdhPJwMQ8mJJAIEFq0SK4wnTzMtVGJRlDwOXQuWiFM0xv0axvzuANNoVT/IEg+GpH9yYT4AVxFN5w==
-X-Received: by 2002:a05:6512:3490:: with SMTP id v16mr2432620lfr.61.1604020045762;
-        Thu, 29 Oct 2020 18:07:25 -0700 (PDT)
-Received: from eriador.lan ([188.162.64.219])
-        by smtp.gmail.com with ESMTPSA id c6sm447130lfm.226.2020.10.29.18.07.24
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 29 Oct 2020 18:07:25 -0700 (PDT)
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Pavel Machek <pavel@ucw.cz>, Dan Murphy <dmurphy@ti.com>
-Cc:     linux-leds@vger.kernel.org, Rob Herring <robh+dt@kernel.org>,
-        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Subject: [PATCH v2 5/5] arm64: dts: qrb5165-rb5: declare tri-led user leds
-Date:   Fri, 30 Oct 2020 04:07:13 +0300
-Message-Id: <20201030010713.247009-6-dmitry.baryshkov@linaro.org>
-X-Mailer: git-send-email 2.28.0
-In-Reply-To: <20201030010713.247009-1-dmitry.baryshkov@linaro.org>
-References: <20201030010713.247009-1-dmitry.baryshkov@linaro.org>
+        id S1726111AbgJ3BMj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 29 Oct 2020 21:12:39 -0400
+Received: from m42-4.mailgun.net ([69.72.42.4]:18135 "EHLO m42-4.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725797AbgJ3BMj (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 29 Oct 2020 21:12:39 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1604020358; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=rLqH04x7OKfH7f79UZd2BGTmUAb1ZvVeFCX4tIl5CAU=;
+ b=POeiCGsnlyBv/e3vE+GKPxbcymEKn7lQYeQA+byOfMnLNcZSmdUnkBmx6b/sFHob46bVl+iB
+ xyh6uvjBx8gsim6syA+gb0hfGaTX8DSheg2ZZK38jk3fRSYN6Da4kJ1b3EKKK+JDx/IC62+9
+ 9/f6t6bTdrjL3jmBcTxV/mKFQxY=
+X-Mailgun-Sending-Ip: 69.72.42.4
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n05.prod.us-west-2.postgun.com with SMTP id
+ 5f9b6886b01cad7dbf3fee1a (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 30 Oct 2020 01:12:38
+ GMT
+Sender: abhinavk=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 3FE0EC433C6; Fri, 30 Oct 2020 01:12:38 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: abhinavk)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id D526BC433C6;
+        Fri, 30 Oct 2020 01:12:36 +0000 (UTC)
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8;
+ format=flowed
 Content-Transfer-Encoding: 8bit
+Date:   Thu, 29 Oct 2020 18:12:36 -0700
+From:   abhinavk@codeaurora.org
+To:     Daniel Vetter <daniel@ffwll.ch>
+Cc:     dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        swboyd@chromium.org, khsieh@codeaurora.org, seanpaul@chromium.org,
+        tanmay@codeaurora.org, aravindh@codeaurora.org,
+        freedreno@lists.freedesktop.org
+Subject: Re: [PATCH 1/4] drm: allow drm_atomic_print_state() to accept any
+ drm_printer
+In-Reply-To: <20201022103843.GW401619@phenom.ffwll.local>
+References: <20201022050148.27105-1-abhinavk@codeaurora.org>
+ <20201022050148.27105-2-abhinavk@codeaurora.org>
+ <20201022103843.GW401619@phenom.ffwll.local>
+Message-ID: <a932084d3eaa3f7b12e3010e40379c16@codeaurora.org>
+X-Sender: abhinavk@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Qualcomm RB5 platform uses Light Pulse Generator tri-led block to drive
-three green leds. Add device nodes defining those leds.
+Hi Daniel
 
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
----
- arch/arm64/boot/dts/qcom/qrb5165-rb5.dts | 23 +++++++++++++++++++++++
- 1 file changed, 23 insertions(+)
+On 2020-10-22 03:38, Daniel Vetter wrote:
+> On Wed, Oct 21, 2020 at 10:01:45PM -0700, Abhinav Kumar wrote:
+>> Currently drm_atomic_print_state() internally allocates and uses a
+>> drm_info printer. Allow it to accept any drm_printer type so that
+>> the API can be leveraged even for taking drm snapshot.
+>> 
+>> Signed-off-by: Abhinav Kumar <abhinavk@codeaurora.org>
+>> ---
+>>  drivers/gpu/drm/drm_atomic.c        | 17 ++++++++++++-----
+>>  drivers/gpu/drm/drm_atomic_uapi.c   |  4 +++-
+>>  drivers/gpu/drm/drm_crtc_internal.h |  4 +++-
+>>  3 files changed, 18 insertions(+), 7 deletions(-)
+>> 
+>> diff --git a/drivers/gpu/drm/drm_atomic.c 
+>> b/drivers/gpu/drm/drm_atomic.c
+>> index 58527f151984..e7079a5f439c 100644
+>> --- a/drivers/gpu/drm/drm_atomic.c
+>> +++ b/drivers/gpu/drm/drm_atomic.c
+>> @@ -1,6 +1,7 @@
+>>  /*
+>>   * Copyright (C) 2014 Red Hat
+>>   * Copyright (C) 2014 Intel Corp.
+>> + * Copyright (c) 2020, The Linux Foundation. All rights reserved.
+>>   *
+>>   * Permission is hereby granted, free of charge, to any person 
+>> obtaining a
+>>   * copy of this software and associated documentation files (the 
+>> "Software"),
+>> @@ -1543,9 +1544,9 @@ int __drm_atomic_helper_set_config(struct 
+>> drm_mode_set *set,
+>>  }
+>>  EXPORT_SYMBOL(__drm_atomic_helper_set_config);
+>> 
+>> -void drm_atomic_print_state(const struct drm_atomic_state *state)
+>> +void drm_atomic_print_state(const struct drm_atomic_state *state,
+>> +		struct drm_printer *p)
+> 
+> Please add a nice kerneldoc for this newly exported function. 
+> Specifically
+> this kerneldoc needs to include a warning that state updates after call
+> drm_atomic_state_helper_commit_hw_done() is unsafe to print using this
+> function, because it looks at the new state objects. Only the old state
+> structures will stay like this.
+> 
+> So maybe rename the function to say print_new_state() to make this
+> completely clear. That way we can eventually add a print_old_state() 
+> when
+> needed.
+> 
+> Otherwise I think this makes sense, and nicely avoids the locking issue 
+> of
+> looking at ->state pointers without the right locking.
+> -Daniel
+> 
 
-diff --git a/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts b/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts
-index df2d01f915c9..bf3d3f44016e 100644
---- a/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts
-+++ b/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts
-@@ -1017,6 +1017,29 @@ &pm8150_rtc {
- 	status = "okay";
- };
- 
-+&pm8150l_lpg {
-+	status = "okay";
-+
-+	led@1 {
-+		reg = <1>;
-+		label = "green:user0";
-+
-+		linux,default-trigger = "heartbeat";
-+		default-state = "on";
-+	};
-+
-+	led@2 {
-+		reg = <2>;
-+		label = "green:user1";
-+		default-state = "on";
-+	};
-+
-+	led@3 {
-+		reg = <3>;
-+		label = "green:user2";
-+	};
-+};
-+
- &qupv3_id_0 {
- 	status = "okay";
- };
--- 
-2.28.0
+Thanks for the review, I have addressed these comments and posted a V2.
+-Abhinav
 
+>>  {
+>> -	struct drm_printer p = drm_info_printer(state->dev->dev);
+>>  	struct drm_plane *plane;
+>>  	struct drm_plane_state *plane_state;
+>>  	struct drm_crtc *crtc;
+>> @@ -1554,17 +1555,23 @@ void drm_atomic_print_state(const struct 
+>> drm_atomic_state *state)
+>>  	struct drm_connector_state *connector_state;
+>>  	int i;
+>> 
+>> +	if (!p) {
+>> +		DRM_ERROR("invalid drm printer\n");
+>> +		return;
+>> +	}
+>> +
+>>  	DRM_DEBUG_ATOMIC("checking %p\n", state);
+>> 
+>>  	for_each_new_plane_in_state(state, plane, plane_state, i)
+>> -		drm_atomic_plane_print_state(&p, plane_state);
+>> +		drm_atomic_plane_print_state(p, plane_state);
+>> 
+>>  	for_each_new_crtc_in_state(state, crtc, crtc_state, i)
+>> -		drm_atomic_crtc_print_state(&p, crtc_state);
+>> +		drm_atomic_crtc_print_state(p, crtc_state);
+>> 
+>>  	for_each_new_connector_in_state(state, connector, connector_state, 
+>> i)
+>> -		drm_atomic_connector_print_state(&p, connector_state);
+>> +		drm_atomic_connector_print_state(p, connector_state);
+>>  }
+>> +EXPORT_SYMBOL(drm_atomic_print_state);
+>> 
+>>  static void __drm_state_dump(struct drm_device *dev, struct 
+>> drm_printer *p,
+>>  			     bool take_locks)
+>> diff --git a/drivers/gpu/drm/drm_atomic_uapi.c 
+>> b/drivers/gpu/drm/drm_atomic_uapi.c
+>> index 25c269bc4681..d9ae86c92608 100644
+>> --- a/drivers/gpu/drm/drm_atomic_uapi.c
+>> +++ b/drivers/gpu/drm/drm_atomic_uapi.c
+>> @@ -2,6 +2,7 @@
+>>   * Copyright (C) 2014 Red Hat
+>>   * Copyright (C) 2014 Intel Corp.
+>>   * Copyright (C) 2018 Intel Corp.
+>> + * Copyright (c) 2020, The Linux Foundation. All rights reserved.
+>>   *
+>>   * Permission is hereby granted, free of charge, to any person 
+>> obtaining a
+>>   * copy of this software and associated documentation files (the 
+>> "Software"),
+>> @@ -1294,6 +1295,7 @@ int drm_mode_atomic_ioctl(struct drm_device 
+>> *dev,
+>>  	struct drm_out_fence_state *fence_state;
+>>  	int ret = 0;
+>>  	unsigned int i, j, num_fences;
+>> +	struct drm_printer p = drm_info_printer(dev->dev);
+>> 
+>>  	/* disallow for drivers not supporting atomic: */
+>>  	if (!drm_core_check_feature(dev, DRIVER_ATOMIC))
+>> @@ -1413,7 +1415,7 @@ int drm_mode_atomic_ioctl(struct drm_device 
+>> *dev,
+>>  		ret = drm_atomic_nonblocking_commit(state);
+>>  	} else {
+>>  		if (drm_debug_enabled(DRM_UT_STATE))
+>> -			drm_atomic_print_state(state);
+>> +			drm_atomic_print_state(state, &p);
+>> 
+>>  		ret = drm_atomic_commit(state);
+>>  	}
+>> diff --git a/drivers/gpu/drm/drm_crtc_internal.h 
+>> b/drivers/gpu/drm/drm_crtc_internal.h
+>> index da96b2f64d7e..d34215366936 100644
+>> --- a/drivers/gpu/drm/drm_crtc_internal.h
+>> +++ b/drivers/gpu/drm/drm_crtc_internal.h
+>> @@ -5,6 +5,7 @@
+>>   *   Jesse Barnes <jesse.barnes@intel.com>
+>>   * Copyright © 2014 Intel Corporation
+>>   *   Daniel Vetter <daniel.vetter@ffwll.ch>
+>> + * Copyright (c) 2020, The Linux Foundation. All rights reserved.
+>>   *
+>>   * Permission is hereby granted, free of charge, to any person 
+>> obtaining a
+>>   * copy of this software and associated documentation files (the 
+>> "Software"),
+>> @@ -233,7 +234,8 @@ int __drm_atomic_helper_disable_plane(struct 
+>> drm_plane *plane,
+>>  int __drm_atomic_helper_set_config(struct drm_mode_set *set,
+>>  				   struct drm_atomic_state *state);
+>> 
+>> -void drm_atomic_print_state(const struct drm_atomic_state *state);
+>> +void drm_atomic_print_state(const struct drm_atomic_state *state,
+>> +		struct drm_printer *p);
+>> 
+>>  /* drm_atomic_uapi.c */
+>>  int drm_atomic_connector_commit_dpms(struct drm_atomic_state *state,
+>> --
+>> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora 
+>> Forum,
+>> a Linux Foundation Collaborative Project
+>> 
+>> _______________________________________________
+>> dri-devel mailing list
+>> dri-devel@lists.freedesktop.org
+>> https://lists.freedesktop.org/mailman/listinfo/dri-devel
