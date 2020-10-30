@@ -2,223 +2,167 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 38AC02A0E99
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Oct 2020 20:24:41 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 5B74B2A0EA9
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Oct 2020 20:30:16 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727635AbgJ3TYj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 30 Oct 2020 15:24:39 -0400
-Received: from mail-ot1-f68.google.com ([209.85.210.68]:41770 "EHLO
-        mail-ot1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727433AbgJ3TYi (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 30 Oct 2020 15:24:38 -0400
-Received: by mail-ot1-f68.google.com with SMTP id n15so6544948otl.8;
-        Fri, 30 Oct 2020 12:24:37 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=7CC8EZYA7EKd+jMRhRgrtEId3HKWwKTjiQQx7JgP/lo=;
-        b=kl/6uievJqaxYyvBbwJIjUQY9kvWXV7YaXayGPXi8/IIkrOARxU9KGABqMaxEkKuAz
-         WzcoBl8NCde/gNR6dh5+I7QVuoegVTsu/b9OgsLedxg9GJRQ4YP2657JV87EWlwwIxuY
-         o/W06uSBilIhFIlMIdXF2J9UkoeSrzK4Z3PD0wYlt6hUJejE0nEBhgpPYKvkZJc2OsUk
-         hrYO0wj9Frymd14yWitqDyuxBnKJ+R8hdRvBau8dshINFOW+DrIStMMvzfe1+dP1P0KY
-         DKaRtSiIce1kQUP55uNc1h8264dBaWz4C/dbUDK7Ud+iA4Lr0JRM80v61L8sfiiz9+bF
-         78qQ==
-X-Gm-Message-State: AOAM530dx0iSTWWIS0QhlWlwqw2CBp9rf7vUqhHutgV14MFxnXRytfHv
-        ljFr4fP2LQEZg3T89BY3dgqJ8MvMeg==
-X-Google-Smtp-Source: ABdhPJxREACOlU1vLSVvMCVJes6ku9YB2JWJ0HahOwOj1kvJVybVhMN/nCWGMDq0g0Q6+sDwp5nRsg==
-X-Received: by 2002:a9d:2905:: with SMTP id d5mr2730120otb.343.1604085877153;
-        Fri, 30 Oct 2020 12:24:37 -0700 (PDT)
-Received: from xps15 (24-155-109-49.dyn.grandenetworks.net. [24.155.109.49])
-        by smtp.gmail.com with ESMTPSA id i12sm1659842oon.26.2020.10.30.12.24.36
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 30 Oct 2020 12:24:36 -0700 (PDT)
-Received: (nullmailer pid 4181835 invoked by uid 1000);
-        Fri, 30 Oct 2020 19:24:35 -0000
-Date:   Fri, 30 Oct 2020 14:24:35 -0500
-From:   Rob Herring <robh@kernel.org>
-To:     Vinod Koul <vkoul@kernel.org>
-Cc:     Linus Walleij <linus.walleij@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 1/2] dt-bindings: pinctrl: qcom: Add SDX55 pinctrl
- bindings
-Message-ID: <20201030192435.GA4179566@bogus>
-References: <20201028083017.611810-1-vkoul@kernel.org>
+        id S1727416AbgJ3TaJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 30 Oct 2020 15:30:09 -0400
+Received: from z5.mailgun.us ([104.130.96.5]:61969 "EHLO z5.mailgun.us"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727318AbgJ3TaJ (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 30 Oct 2020 15:30:09 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1604086207; h=Message-ID: References: In-Reply-To: Reply-To:
+ Subject: Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=aMVth6hwZwOVSjCuTwSCJ1aUcxckVR0dkeIqsdhpRpE=;
+ b=V3oSCwKHK2dTV5/lCIpiLvrimpodO+OsKcEUCU4/7R54lt7pEj//Y8y5I2Sf0Va5VIIZsvy3
+ r36PB3+XpaLeJfQwAll+GdIqtLysjYrh0ytVBN0Lijez/kQNk3O30eA+YPY3ZwoCgqaMj4Qz
+ zJMsP5Y0VoD16tk3LHJjzlsSgbE=
+X-Mailgun-Sending-Ip: 104.130.96.5
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n06.prod.us-east-1.postgun.com with SMTP id
+ 5f9c69b85a52eef4951931a6 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 30 Oct 2020 19:30:00
+ GMT
+Sender: bbhatt=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id EA302C433FE; Fri, 30 Oct 2020 19:29:59 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: bbhatt)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 84C64C433F0;
+        Fri, 30 Oct 2020 19:29:59 +0000 (UTC)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20201028083017.611810-1-vkoul@kernel.org>
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Fri, 30 Oct 2020 12:29:59 -0700
+From:   Bhaumik Bhatt <bbhatt@codeaurora.org>
+To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, hemantk@codeaurora.org,
+        jhugo@codeaurora.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v3 04/12] bus: mhi: core: Move to SYS_ERROR regardless of
+ RDDM capability
+Organization: Qualcomm Innovation Center, Inc.
+Reply-To: bbhatt@codeaurora.org
+Mail-Reply-To: bbhatt@codeaurora.org
+In-Reply-To: <20201030135218.GG3818@Mani-XPS-13-9360>
+References: <1604031057-32820-1-git-send-email-bbhatt@codeaurora.org>
+ <1604031057-32820-5-git-send-email-bbhatt@codeaurora.org>
+ <20201030135218.GG3818@Mani-XPS-13-9360>
+Message-ID: <59d5abb24e06920311719862f6e749a1@codeaurora.org>
+X-Sender: bbhatt@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Oct 28, 2020 at 02:00:16PM +0530, Vinod Koul wrote:
-> Add device tree binding Documentation details for Qualcomm SDX55
-> pinctrl driver.
-> 
-> Signed-off-by: Vinod Koul <vkoul@kernel.org>
-> ---
->  .../bindings/pinctrl/qcom,sdx55-pinctrl.yaml  | 144 ++++++++++++++++++
->  1 file changed, 144 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/pinctrl/qcom,sdx55-pinctrl.yaml
-> 
-> diff --git a/Documentation/devicetree/bindings/pinctrl/qcom,sdx55-pinctrl.yaml b/Documentation/devicetree/bindings/pinctrl/qcom,sdx55-pinctrl.yaml
-> new file mode 100644
-> index 000000000000..2dd045a2fb03
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/pinctrl/qcom,sdx55-pinctrl.yaml
-> @@ -0,0 +1,144 @@
-> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/pinctrl/qcom,sdx55-pinctrl.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> +
-> +title: Qualcomm Technologies, Inc. SDX55 TLMM block
-> +
-> +maintainers:
-> +  - Vinod Koul <vkoul@kernel.org>
-> +
-> +description: |
-> +  This binding describes the Top Level Mode Multiplexer block found in the
-> +  SDX55 platform.
-> +
-> +properties:
-> +  compatible:
-> +    const: qcom,sdx55-pinctrl
-> +
-> +  reg:
-> +    maxItems: 1
-> +
-> +  interrupts:
-> +    description: Specifies the TLMM summary IRQ
-> +    maxItems: 1
-> +
-> +  interrupt-controller: true
-> +
-> +  '#interrupt-cells':
-> +    description:
-> +      Specifies the PIN numbers and Flags, as defined in defined in
-> +      include/dt-bindings/interrupt-controller/irq.h
-> +    const: 2
-> +
-> +  gpio-controller: true
-> +
-> +  '#gpio-cells':
-> +    description: Specifying the pin number and flags, as defined in
-> +      include/dt-bindings/gpio/gpio.h
-> +    const: 2
-> +
-> +  gpio-ranges:
-> +    maxItems: 1
-> +
-> +  wakeup-parent:
-> +    maxItems: 1
-> +
-> +#PIN CONFIGURATION NODES
-> +patternProperties:
-> +  '^.*$':
-> +    if:
-> +      type: object
-> +    then:
+Hi Mani,
 
-For new bindings, just name the nodes '-pins$' and forget this hack.
-
-> +      properties:
-> +        pins:
-> +          description:
-> +            List of gpio pins affected by the properties specified in this
-> +            subnode.
-> +          items:
-> +            oneOf:
-> +              - pattern: "^gpio([0-9]|[1-9][0-9]|1[0-7][0-9])$"
-> +              - enum: [ ufs_reset, sdc1_rclk, sdc1_clk, sdc1_cmd, sdc1_data ]
-> +          minItems: 1
-> +          maxItems: 36
-> +
-> +        function:
-> +          description:
-> +            Specify the alternative function to be configured for the specified
-> +            pins.
-> +
-> +          enum: [ adsp_ext, atest, audio_ref, bimc_dte0, bimc_dte1, blsp_i2c1,
-> +                  blsp_i2c2, blsp_i2c3, blsp_i2c4, blsp_spi1, blsp_spi2,
-> +                  blsp_spi3, blsp_spi4, blsp_uart1, blsp_uart2, blsp_uart3,
-> +                  blsp_uart4, char_exec, coex_uart, coex_uart2, cri_trng,
-> +                  cri_trng0, cri_trng1, dbg_out, ddr_bist, ddr_pxi0,
-> +                  ebi0_wrcdc, ebi2_a, ebi2_lcd, emac_gcc0, emac_gcc1,
-> +                  emac_pps0, emac_pps1, ext_dbg, gcc_gp1, gcc_gp2, gcc_gp3,
-> +                  gcc_plltest, gpio, i2s_mclk, jitter_bist, ldo_en, ldo_update,
-> +                  mgpi_clk, m_voc, native_char, native_char0, native_char1,
-> +                  native_char2, native_char3, native_tsens, native_tsense,
-> +                  nav_gpio, pa_indicator, pcie_clkreq, pci_e, pll_bist, pll_ref,
-> +                  pll_test, pri_mi2s, prng_rosc, qdss_cti, qdss_gpio,
-> +                  qdss_gpio0, qdss_gpio1, qdss_gpio2, qdss_gpio3, qdss_gpio4,
-> +                  qdss_gpio5, qdss_gpio6, qdss_gpio7, qdss_gpio8, qdss_gpio9,
-> +                  qdss_gpio10, qdss_gpio11, qdss_gpio12, qdss_gpio13,
-> +                  qdss_gpio14, qdss_gpio15, qdss_stm0, qdss_stm1, qdss_stm2,
-> +                  qdss_stm3, qdss_stm4, qdss_stm5, qdss_stm6, qdss_stm7,
-> +                  qdss_stm8, qdss_stm9, qdss_stm10, qdss_stm11, qdss_stm12,
-> +                  qdss_stm13, qdss_stm14, qdss_stm15, qdss_stm16, qdss_stm17,
-> +                  qdss_stm18, qdss_stm19, qdss_stm20, qdss_stm21, qdss_stm22,
-> +                  qdss_stm23, qdss_stm24, qdss_stm25, qdss_stm26, qdss_stm27,
-> +                  qdss_stm28, qdss_stm29, qdss_stm30, qdss_stm31, qlink0_en,
-> +                  qlink0_req, qlink0_wmss, qlink1_en, qlink1_req, qlink1_wmss,
-> +                  spmi_coex, sec_mi2s, spmi_vgi, tgu_ch0, uim1_clk, uim1_data,
-> +                  uim1_present, uim1_reset, uim2_clk, uim2_data, uim2_present,
-> +                  uim2_reset, usb2phy_ac, vsense_trigger ]
-> +
-> +        drive-strength:
-> +          enum: [2, 4, 6, 8, 10, 12, 14, 16]
-> +          default: 2
-> +          description:
-> +            Selects the drive strength for the specified pins, in mA.
-> +
-> +        bias-pull-down: true
-> +
-> +        bias-pull-up: true
-> +
-> +        bias-disable: true
-> +
-> +        output-high: true
-> +
-> +        output-low: true
-> +
-> +      required:
-> +        - pins
-> +        - function
-> +
-> +      additionalProperties: false
-> +
-> +required:
-> +  - compatible
-> +  - reg
-> +  - interrupts
-> +  - interrupt-controller
-> +  - '#interrupt-cells'
-> +  - gpio-controller
-> +  - '#gpio-cells'
-> +
-> +additionalProperties: false
-> +
-> +examples:
-> +  - |
-> +        #include <dt-bindings/interrupt-controller/arm-gic.h>
-> +        pinctrl@1f00000 {
-> +                compatible = "qcom,sdx55-pinctrl";
-> +                reg = <0x0f100000 0x300000>;
-> +                interrupts = <GIC_SPI 212 IRQ_TYPE_LEVEL_HIGH>;
-> +                #interrupt-cells = <2>;
-> +                interrupt-controller;
-> +                gpio-controller;
-> +                #gpio-cells = <2>;
-> +        };
-> +
-> +...
-> -- 
-> 2.26.2
+On 2020-10-30 06:52, Manivannan Sadhasivam wrote:
+> On Thu, Oct 29, 2020 at 09:10:49PM -0700, Bhaumik Bhatt wrote:
+>> In some cases, the entry of device to RDDM execution environment
+>> can occur after a significant amount of time has elapsed and a
+>> SYS_ERROR state change event has already arrived.
 > 
+> I don't quite understand this statement. Can you elaborate? This 
+> doesn't
+> relate to what the patch is doing.
+> 
+So the mhi_intvec_threaded_handler() (BHI) MSI that fires to switch the 
+EE
+to RDDM may come much later than the SYS_ERROR state change event from 
+the
+control event ring. We currently, do not move to MHI_PM_SYS_ERR_DETECT
+state if RDDM is supported i.e. mhi_cntrl->rddm_image is set. However, 
+it
+means that we will remain in an "active" MHI PM state for the duration 
+of
+time until RDDM EE (BHI) MSI comes in. We have seen it take 5 seconds in
+some bad cases.
+>> This can result
+>> in scenarios where MHI controller and client drivers are unaware
+>> of the error state of the device. Remove the check for rddm_image
+>> when processing the SYS_ERROR state change as it is present in
+>> mhi_pm_sys_err_handler() already and prevent further activity
+>> until the expected RDDM execution environment change occurs or
+>> the controller driver decides further action.
+>> 
+>> Signed-off-by: Bhaumik Bhatt <bbhatt@codeaurora.org>
+>> ---
+>>  drivers/bus/mhi/core/main.c | 12 ++++--------
+>>  1 file changed, 4 insertions(+), 8 deletions(-)
+>> 
+>> diff --git a/drivers/bus/mhi/core/main.c b/drivers/bus/mhi/core/main.c
+>> index 2cff5dd..1f32d67 100644
+>> --- a/drivers/bus/mhi/core/main.c
+>> +++ b/drivers/bus/mhi/core/main.c
+>> @@ -733,19 +733,15 @@ int mhi_process_ctrl_ev_ring(struct 
+>> mhi_controller *mhi_cntrl,
+>>  				break;
+>>  			case MHI_STATE_SYS_ERR:
+>>  			{
+>> -				enum mhi_pm_state new_state;
+>> -
+>> -				/* skip SYS_ERROR handling if RDDM supported */
+>> -				if (mhi_cntrl->ee == MHI_EE_RDDM ||
+>> -				    mhi_cntrl->rddm_image)
+>> -					break;
+>> +				enum mhi_pm_state state = MHI_PM_STATE_MAX;
+>> 
+>>  				dev_dbg(dev, "System error detected\n");
+>>  				write_lock_irq(&mhi_cntrl->pm_lock);
+>> -				new_state = mhi_tryset_pm_state(mhi_cntrl,
+>> +				if (mhi_cntrl->ee != MHI_EE_RDDM)
+> 
+> But you are still checking for RDDM EE?
+> 
+> Please explain why you want to skip RDDM check.
+> 
+> Thanks,
+> Mani
+> 
+Yes, the point is to only remove the mhi_cntrl->rddm_image check but 
+still
+retain the "has EE moved to become RDDM" check. This allows us to avoid 
+any
+extra processing of moving states to MHI_PM_SYS_ERR_DETECT state if it 
+may
+be unnecessary (EE already changed to RDDM). The mhi_cntrl->rddm_image 
+is
+also present in mhi_pm_sys_err_handler(mhi_cntrl) function so it is not
+needed here.
+>> +					state = mhi_tryset_pm_state(mhi_cntrl,
+>>  							MHI_PM_SYS_ERR_DETECT);
+>>  				write_unlock_irq(&mhi_cntrl->pm_lock);
+>> -				if (new_state == MHI_PM_SYS_ERR_DETECT)
+>> +				if (state == MHI_PM_SYS_ERR_DETECT)
+>>  					mhi_pm_sys_err_handler(mhi_cntrl);
+>>  				break;
+>>  			}
+>> --
+>> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora 
+>> Forum,
+>> a Linux Foundation Collaborative Project
+>> 
+
+This is why I mention the word RDDM "capability". If controller supports 
+RDDM
+is not enough to skip the move to MHI_PM_SYS_ERR_DETECT state as it is 
+safer
+to move and stop client drivers from pushing data.
+
+Thanks,
+Bhaumik
+-- 
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora 
+Forum,
+a Linux Foundation Collaborative Project
