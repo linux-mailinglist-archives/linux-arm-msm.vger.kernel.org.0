@@ -2,234 +2,130 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id BE63B2A009B
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Oct 2020 10:01:01 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 8A6892A00B0
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Oct 2020 10:05:51 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725801AbgJ3JBA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 30 Oct 2020 05:01:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39820 "EHLO
+        id S1726115AbgJ3JFr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 30 Oct 2020 05:05:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40554 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725790AbgJ3JBA (ORCPT
+        with ESMTP id S1725808AbgJ3JFr (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 30 Oct 2020 05:01:00 -0400
-Received: from mail-wr1-x441.google.com (mail-wr1-x441.google.com [IPv6:2a00:1450:4864:20::441])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 233D7C0613D2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 30 Oct 2020 02:01:00 -0700 (PDT)
-Received: by mail-wr1-x441.google.com with SMTP id w14so5556048wrs.9
-        for <linux-arm-msm@vger.kernel.org>; Fri, 30 Oct 2020 02:01:00 -0700 (PDT)
+        Fri, 30 Oct 2020 05:05:47 -0400
+Received: from mail-pl1-x644.google.com (mail-pl1-x644.google.com [IPv6:2607:f8b0:4864:20::644])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EACF8C0613D2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 30 Oct 2020 02:05:46 -0700 (PDT)
+Received: by mail-pl1-x644.google.com with SMTP id z1so2635261plo.12
+        for <linux-arm-msm@vger.kernel.org>; Fri, 30 Oct 2020 02:05:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ffwll.ch; s=google;
+        d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=lS9cLVa7ki23Q9hV5df0gycL8TDk+suWHefN1yZAvQI=;
-        b=bLdnNBx991+fEL6unEVZ8c1nk/xvgTVbXjcGKB4Q1eS8ZXJnv4P81WNLlCMOuLhg2k
-         5tqLuwqfha9zMuCOR/TA3MM7zyxv6R0rOWeVT17ffLEMAtqLBJUOOacmfSchNaD+7hBx
-         S867tbVvqUZFuoI/p3WrDfaDtGzjnmGbF0xsU=
+         :content-disposition:in-reply-to:user-agent;
+        bh=AbksnLfkcwG8yf5ykfRdvvZSe6AB/bMZVij8MToOslM=;
+        b=eTrTkDr1kTichRbE8kLMaWmpVBJQBT451cQFCXJ00FJLPA2LdU61Ggv7JDofL5ZYGl
+         xeVQTOu7vQOWCtVJmRHXDUqUNr1Sv1Zh2uxRd0BlEPm2STUYmoZXA9fi0WJ7PS0/QrOU
+         NTMifAxSm7Zs6n8qfpum/IQroxNpaowCDbFkJSWGLDZYgNkiLZZXBQNrd7OJ8l1VBJ6x
+         8Bwd2YxCcCVlAR9liPpuGjQ5xCMd4UsfXYR8zggwN+lkjVf8cIWqm7tBcC3UV7gChxdd
+         uP4DIji4gcLby+WoEXynmF9HQB15qC87gu0o/kxfVKQWEbPCjDQfQ66/u4knA55aisxY
+         06tw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=lS9cLVa7ki23Q9hV5df0gycL8TDk+suWHefN1yZAvQI=;
-        b=MlmhgkDirxCqet3tLqzUIQPcXpoP9WWlcWjtdZQuz470NucCNtfzrsH6C63vqKk+RJ
-         XUrCuz2AvzqgxQsVndkaDrkcN4BHQWO1c/PqJ0376ocpS5okk6bLw9lfyXqNbOXETlNP
-         z048e1Sy22BG5zaVmMLFXT+uNghc89UoD5llYIZbNuJxn/CNbpWEZQqZGghxUntYmjkY
-         Ho5fDF8WG6A5l+gdbEZBl6D/53dd2tll0TcR/AAOyZTxTES/ebjoZPbBl59r25/NqMxV
-         WZZscDtquRwx9VdAc9QSLdlHw/Y8iJ8O7EC/TJZIY5FR6tG3knMHr9y95CVyFiGfekJu
-         r5ww==
-X-Gm-Message-State: AOAM531+lCBYtJkvJMY62WBEOy76jqBPQXaKlbcVP0LJKrlcOpuWF5n2
-        sH2mFteSczG41DLuW8+Jh5IuKA==
-X-Google-Smtp-Source: ABdhPJwQxYTb0APmo+jOySsAO8r2hc4ifYBDW46GYqt577jI7TaikEFfn1bTiE9MXKtJM6IQK25iZA==
-X-Received: by 2002:adf:ab05:: with SMTP id q5mr1682043wrc.32.1604048458831;
-        Fri, 30 Oct 2020 02:00:58 -0700 (PDT)
-Received: from phenom.ffwll.local ([2a02:168:57f4:0:efd0:b9e5:5ae6:c2fa])
-        by smtp.gmail.com with ESMTPSA id f17sm3978456wmh.10.2020.10.30.02.00.57
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 30 Oct 2020 02:00:58 -0700 (PDT)
-Date:   Fri, 30 Oct 2020 10:00:56 +0100
-From:   Daniel Vetter <daniel@ffwll.ch>
-To:     Abhinav Kumar <abhinavk@codeaurora.org>
-Cc:     dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        freedreno@lists.freedesktop.org, robdclark@gmail.com,
-        seanpaul@chromium.org, swboyd@chromium.org, nganji@codeaurora.org,
-        aravindh@codeaurora.org, tanmay@codeaurora.org,
-        khsieh@codeaurora.org, daniel@ffwll.ch,
-        kernel test robot <lkp@intel.com>
-Subject: Re: [PATCH v2 1/4] drm: allow drm_atomic_print_state() to accept any
- drm_printer
-Message-ID: <20201030090056.GG401619@phenom.ffwll.local>
-References: <20201030010101.4345-1-abhinavk@codeaurora.org>
- <20201030010101.4345-2-abhinavk@codeaurora.org>
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=AbksnLfkcwG8yf5ykfRdvvZSe6AB/bMZVij8MToOslM=;
+        b=syYxmyDZPqUlV4tk9ZKFNCGDewij9gc+phd4sfvMPnaF+CywDKV3tvSNL4FEEru9VB
+         ltqIGoG/iS6ZSLB3JQZGN1FjOTgK2auZvC6TTXQ471qi+u3jFkuMUzdxJ4EzghjZjR6T
+         FvBKyz4QaGHjw84pt5/YWxSxN1bCgihcRkpamZ5GCzogktbWIaONKClaqcXizUEewMde
+         +nNy1i/WgmW4rRmlrjhw4zyLqOzIsHhyF0vLeZn76Uf8FZ932Lpp1EUf1pJAuP/YZ++4
+         1CoMp35SFJ1g880EzqpgJOHCWqrQII2r4UMg9mrxNuSRMNUJ1vWGmi74obca841kPKaz
+         3QuQ==
+X-Gm-Message-State: AOAM532eKxBfTsLTTeaH9mL3l4gY15ZahT4VNOv7Q9zVnE4vnL9B5ZGs
+        YQxNuJnmkeffscBGaxbIYGRH
+X-Google-Smtp-Source: ABdhPJzjJmMH5o4TOknm1Yx6FpW1rWYEOX8i/P9gy5Ro28gLBp4dY7mMHKTT+yu3mSQX7f7FqP4ClQ==
+X-Received: by 2002:a17:902:a609:b029:d5:dde6:f135 with SMTP id u9-20020a170902a609b02900d5dde6f135mr8264086plq.75.1604048746340;
+        Fri, 30 Oct 2020 02:05:46 -0700 (PDT)
+Received: from Mani-XPS-13-9360 ([2409:4072:918:28fe:10d5:aaf5:e319:ec72])
+        by smtp.gmail.com with ESMTPSA id e5sm5421996pfl.216.2020.10.30.02.05.42
+        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
+        Fri, 30 Oct 2020 02:05:45 -0700 (PDT)
+Date:   Fri, 30 Oct 2020 14:35:39 +0530
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     Loic Poulain <loic.poulain@linaro.org>
+Cc:     kuba@kernel.org, davem@davemloft.net, hemantk@codeaurora.org,
+        netdev@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        bbhatt@codeaurora.org, willemdebruijn.kernel@gmail.com,
+        jhugo@codeaurora.org
+Subject: Re: [PATCH v8 1/2] bus: mhi: Add mhi_queue_is_full function
+Message-ID: <20201030090539.GB3818@Mani-XPS-13-9360>
+References: <1603902898-25233-1-git-send-email-loic.poulain@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20201030010101.4345-2-abhinavk@codeaurora.org>
-X-Operating-System: Linux phenom 5.7.0-1-amd64 
+In-Reply-To: <1603902898-25233-1-git-send-email-loic.poulain@linaro.org>
+User-Agent: Mutt/1.9.4 (2018-02-28)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Oct 29, 2020 at 06:00:58PM -0700, Abhinav Kumar wrote:
-> Currently drm_atomic_print_state() internally allocates and uses a
-> drm_info printer. Allow it to accept any drm_printer type so that
-> the API can be leveraged even for taking drm snapshot.
+On Wed, Oct 28, 2020 at 05:34:57PM +0100, Loic Poulain wrote:
+> This function can be used by client driver to determine whether it's
+> possible to queue new elements in a channel ring.
 > 
-> Rename the drm_atomic_print_state() to drm_atomic_print_new_state()
-> so that it reflects its functionality better.
-> 
-> changes in v2:
-> - Rename the function drm_atomic_print_state to
->   drm_atomic_print_new_state and update the commit text
-> - Fix kbot errors
-> - Add kernel doc for the newly exported function
-> 
-> Reported-by: kernel test robot <lkp@intel.com>
-> Signed-off-by: Abhinav Kumar <abhinavk@codeaurora.org>
+> Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
+
+Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+
+Thanks,
+Mani
+
 > ---
->  drivers/gpu/drm/drm_atomic.c                  | 29 +++++++++++++++----
->  drivers/gpu/drm/drm_atomic_uapi.c             |  4 ++-
->  drivers/gpu/drm/drm_crtc_internal.h           |  4 ++-
->  .../gpu/drm/selftests/test-drm_framebuffer.c  |  1 +
->  4 files changed, 31 insertions(+), 7 deletions(-)
+>  v1->v5: not part of the series
+>  v6: Add this commit, used for stopping TX queue
+>  v7: no change
+>  v8: remove static change (up to the compiler)
 > 
-> diff --git a/drivers/gpu/drm/drm_atomic.c b/drivers/gpu/drm/drm_atomic.c
-> index 58527f151984..5df7b67ced78 100644
-> --- a/drivers/gpu/drm/drm_atomic.c
-> +++ b/drivers/gpu/drm/drm_atomic.c
-> @@ -1,6 +1,7 @@
->  /*
->   * Copyright (C) 2014 Red Hat
->   * Copyright (C) 2014 Intel Corp.
-> + * Copyright (c) 2020, The Linux Foundation. All rights reserved.
->   *
->   * Permission is hereby granted, free of charge, to any person obtaining a
->   * copy of this software and associated documentation files (the "Software"),
-> @@ -1543,9 +1544,21 @@ int __drm_atomic_helper_set_config(struct drm_mode_set *set,
+>  drivers/bus/mhi/core/main.c | 11 +++++++++++
+>  include/linux/mhi.h         |  7 +++++++
+>  2 files changed, 18 insertions(+)
+> 
+> diff --git a/drivers/bus/mhi/core/main.c b/drivers/bus/mhi/core/main.c
+> index a588eac..bab38d2 100644
+> --- a/drivers/bus/mhi/core/main.c
+> +++ b/drivers/bus/mhi/core/main.c
+> @@ -1173,6 +1173,17 @@ int mhi_queue_buf(struct mhi_device *mhi_dev, enum dma_data_direction dir,
 >  }
->  EXPORT_SYMBOL(__drm_atomic_helper_set_config);
+>  EXPORT_SYMBOL_GPL(mhi_queue_buf);
 >  
-> -void drm_atomic_print_state(const struct drm_atomic_state *state)
-> +/**
-> + * drm_atomic_print_new_state - prints drm atomic state
-> + * @state: atomic configuration to check
-> + * @p: drm printer
-> + *
-> + * This functions prints the drm atomic state snapshot using the drm printer
-> + * which is passed to it. This snapshot can be used for debugging purposes.
-> + *
-> + * Note that this function looks into the new state objects and hence its not
-> + * safe to be used after the call to drm_atomic_helper_commit_hw_done().
-> + *
-
-Empty line here in the docs. With that removed.
-
-Reviewed-by: Daniel Vetter <daniel.vetter@ffwll.ch>
-
-> + */
-> +void drm_atomic_print_new_state(const struct drm_atomic_state *state,
-> +		struct drm_printer *p)
->  {
-> -	struct drm_printer p = drm_info_printer(state->dev->dev);
->  	struct drm_plane *plane;
->  	struct drm_plane_state *plane_state;
->  	struct drm_crtc *crtc;
-> @@ -1554,17 +1567,23 @@ void drm_atomic_print_state(const struct drm_atomic_state *state)
->  	struct drm_connector_state *connector_state;
->  	int i;
->  
-> +	if (!p) {
-> +		DRM_ERROR("invalid drm printer\n");
-> +		return;
-> +	}
+> +bool mhi_queue_is_full(struct mhi_device *mhi_dev, enum dma_data_direction dir)
+> +{
+> +	struct mhi_controller *mhi_cntrl = mhi_dev->mhi_cntrl;
+> +	struct mhi_chan *mhi_chan = (dir == DMA_TO_DEVICE) ?
+> +					mhi_dev->ul_chan : mhi_dev->dl_chan;
+> +	struct mhi_ring *tre_ring = &mhi_chan->tre_ring;
 > +
->  	DRM_DEBUG_ATOMIC("checking %p\n", state);
+> +	return mhi_is_ring_full(mhi_cntrl, tre_ring);
+> +}
+> +EXPORT_SYMBOL_GPL(mhi_queue_is_full);
+> +
+>  int mhi_send_cmd(struct mhi_controller *mhi_cntrl,
+>  		 struct mhi_chan *mhi_chan,
+>  		 enum mhi_cmd_type cmd)
+> diff --git a/include/linux/mhi.h b/include/linux/mhi.h
+> index 9d67e75..f72c3a4 100644
+> --- a/include/linux/mhi.h
+> +++ b/include/linux/mhi.h
+> @@ -745,4 +745,11 @@ int mhi_queue_buf(struct mhi_device *mhi_dev, enum dma_data_direction dir,
+>  int mhi_queue_skb(struct mhi_device *mhi_dev, enum dma_data_direction dir,
+>  		  struct sk_buff *skb, size_t len, enum mhi_flags mflags);
 >  
->  	for_each_new_plane_in_state(state, plane, plane_state, i)
-> -		drm_atomic_plane_print_state(&p, plane_state);
-> +		drm_atomic_plane_print_state(p, plane_state);
->  
->  	for_each_new_crtc_in_state(state, crtc, crtc_state, i)
-> -		drm_atomic_crtc_print_state(&p, crtc_state);
-> +		drm_atomic_crtc_print_state(p, crtc_state);
->  
->  	for_each_new_connector_in_state(state, connector, connector_state, i)
-> -		drm_atomic_connector_print_state(&p, connector_state);
-> +		drm_atomic_connector_print_state(p, connector_state);
->  }
-> +EXPORT_SYMBOL(drm_atomic_print_new_state);
->  
->  static void __drm_state_dump(struct drm_device *dev, struct drm_printer *p,
->  			     bool take_locks)
-> diff --git a/drivers/gpu/drm/drm_atomic_uapi.c b/drivers/gpu/drm/drm_atomic_uapi.c
-> index 25c269bc4681..b4b3cb28a8ea 100644
-> --- a/drivers/gpu/drm/drm_atomic_uapi.c
-> +++ b/drivers/gpu/drm/drm_atomic_uapi.c
-> @@ -2,6 +2,7 @@
->   * Copyright (C) 2014 Red Hat
->   * Copyright (C) 2014 Intel Corp.
->   * Copyright (C) 2018 Intel Corp.
-> + * Copyright (c) 2020, The Linux Foundation. All rights reserved.
->   *
->   * Permission is hereby granted, free of charge, to any person obtaining a
->   * copy of this software and associated documentation files (the "Software"),
-> @@ -1294,6 +1295,7 @@ int drm_mode_atomic_ioctl(struct drm_device *dev,
->  	struct drm_out_fence_state *fence_state;
->  	int ret = 0;
->  	unsigned int i, j, num_fences;
-> +	struct drm_printer p = drm_info_printer(dev->dev);
->  
->  	/* disallow for drivers not supporting atomic: */
->  	if (!drm_core_check_feature(dev, DRIVER_ATOMIC))
-> @@ -1413,7 +1415,7 @@ int drm_mode_atomic_ioctl(struct drm_device *dev,
->  		ret = drm_atomic_nonblocking_commit(state);
->  	} else {
->  		if (drm_debug_enabled(DRM_UT_STATE))
-> -			drm_atomic_print_state(state);
-> +			drm_atomic_print_new_state(state, &p);
->  
->  		ret = drm_atomic_commit(state);
->  	}
-> diff --git a/drivers/gpu/drm/drm_crtc_internal.h b/drivers/gpu/drm/drm_crtc_internal.h
-> index da96b2f64d7e..2bd56ec9fb0e 100644
-> --- a/drivers/gpu/drm/drm_crtc_internal.h
-> +++ b/drivers/gpu/drm/drm_crtc_internal.h
-> @@ -5,6 +5,7 @@
->   *   Jesse Barnes <jesse.barnes@intel.com>
->   * Copyright © 2014 Intel Corporation
->   *   Daniel Vetter <daniel.vetter@ffwll.ch>
-> + * Copyright (c) 2020, The Linux Foundation. All rights reserved.
->   *
->   * Permission is hereby granted, free of charge, to any person obtaining a
->   * copy of this software and associated documentation files (the "Software"),
-> @@ -233,7 +234,8 @@ int __drm_atomic_helper_disable_plane(struct drm_plane *plane,
->  int __drm_atomic_helper_set_config(struct drm_mode_set *set,
->  				   struct drm_atomic_state *state);
->  
-> -void drm_atomic_print_state(const struct drm_atomic_state *state);
-> +void drm_atomic_print_new_state(const struct drm_atomic_state *state,
-> +		struct drm_printer *p);
->  
->  /* drm_atomic_uapi.c */
->  int drm_atomic_connector_commit_dpms(struct drm_atomic_state *state,
-> diff --git a/drivers/gpu/drm/selftests/test-drm_framebuffer.c b/drivers/gpu/drm/selftests/test-drm_framebuffer.c
-> index 2d29ea6f92e2..9296c68cbe71 100644
-> --- a/drivers/gpu/drm/selftests/test-drm_framebuffer.c
-> +++ b/drivers/gpu/drm/selftests/test-drm_framebuffer.c
-> @@ -8,6 +8,7 @@
->  #include <drm/drm_device.h>
->  #include <drm/drm_mode.h>
->  #include <drm/drm_fourcc.h>
-> +#include <drm/drm_print.h>
->  
->  #include "../drm_crtc_internal.h"
->  
+> +/**
+> + * mhi_queue_is_full - Determine whether queueing new elements is possible
+> + * @mhi_dev: Device associated with the channels
+> + * @dir: DMA direction for the channel
+> + */
+> +bool mhi_queue_is_full(struct mhi_device *mhi_dev, enum dma_data_direction dir);
+> +
+>  #endif /* _MHI_H_ */
 > -- 
-> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-> a Linux Foundation Collaborative Project
+> 2.7.4
 > 
-
--- 
-Daniel Vetter
-Software Engineer, Intel Corporation
-http://blog.ffwll.ch
