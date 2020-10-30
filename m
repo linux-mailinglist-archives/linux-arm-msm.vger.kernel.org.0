@@ -2,130 +2,146 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 8A6892A00B0
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Oct 2020 10:05:51 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id ECB2A2A0142
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Oct 2020 10:24:04 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726115AbgJ3JFr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 30 Oct 2020 05:05:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40554 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725808AbgJ3JFr (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 30 Oct 2020 05:05:47 -0400
-Received: from mail-pl1-x644.google.com (mail-pl1-x644.google.com [IPv6:2607:f8b0:4864:20::644])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EACF8C0613D2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 30 Oct 2020 02:05:46 -0700 (PDT)
-Received: by mail-pl1-x644.google.com with SMTP id z1so2635261plo.12
-        for <linux-arm-msm@vger.kernel.org>; Fri, 30 Oct 2020 02:05:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=AbksnLfkcwG8yf5ykfRdvvZSe6AB/bMZVij8MToOslM=;
-        b=eTrTkDr1kTichRbE8kLMaWmpVBJQBT451cQFCXJ00FJLPA2LdU61Ggv7JDofL5ZYGl
-         xeVQTOu7vQOWCtVJmRHXDUqUNr1Sv1Zh2uxRd0BlEPm2STUYmoZXA9fi0WJ7PS0/QrOU
-         NTMifAxSm7Zs6n8qfpum/IQroxNpaowCDbFkJSWGLDZYgNkiLZZXBQNrd7OJ8l1VBJ6x
-         8Bwd2YxCcCVlAR9liPpuGjQ5xCMd4UsfXYR8zggwN+lkjVf8cIWqm7tBcC3UV7gChxdd
-         uP4DIji4gcLby+WoEXynmF9HQB15qC87gu0o/kxfVKQWEbPCjDQfQ66/u4knA55aisxY
-         06tw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=AbksnLfkcwG8yf5ykfRdvvZSe6AB/bMZVij8MToOslM=;
-        b=syYxmyDZPqUlV4tk9ZKFNCGDewij9gc+phd4sfvMPnaF+CywDKV3tvSNL4FEEru9VB
-         ltqIGoG/iS6ZSLB3JQZGN1FjOTgK2auZvC6TTXQ471qi+u3jFkuMUzdxJ4EzghjZjR6T
-         FvBKyz4QaGHjw84pt5/YWxSxN1bCgihcRkpamZ5GCzogktbWIaONKClaqcXizUEewMde
-         +nNy1i/WgmW4rRmlrjhw4zyLqOzIsHhyF0vLeZn76Uf8FZ932Lpp1EUf1pJAuP/YZ++4
-         1CoMp35SFJ1g880EzqpgJOHCWqrQII2r4UMg9mrxNuSRMNUJ1vWGmi74obca841kPKaz
-         3QuQ==
-X-Gm-Message-State: AOAM532eKxBfTsLTTeaH9mL3l4gY15ZahT4VNOv7Q9zVnE4vnL9B5ZGs
-        YQxNuJnmkeffscBGaxbIYGRH
-X-Google-Smtp-Source: ABdhPJzjJmMH5o4TOknm1Yx6FpW1rWYEOX8i/P9gy5Ro28gLBp4dY7mMHKTT+yu3mSQX7f7FqP4ClQ==
-X-Received: by 2002:a17:902:a609:b029:d5:dde6:f135 with SMTP id u9-20020a170902a609b02900d5dde6f135mr8264086plq.75.1604048746340;
-        Fri, 30 Oct 2020 02:05:46 -0700 (PDT)
-Received: from Mani-XPS-13-9360 ([2409:4072:918:28fe:10d5:aaf5:e319:ec72])
-        by smtp.gmail.com with ESMTPSA id e5sm5421996pfl.216.2020.10.30.02.05.42
-        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 30 Oct 2020 02:05:45 -0700 (PDT)
-Date:   Fri, 30 Oct 2020 14:35:39 +0530
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     Loic Poulain <loic.poulain@linaro.org>
-Cc:     kuba@kernel.org, davem@davemloft.net, hemantk@codeaurora.org,
-        netdev@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        bbhatt@codeaurora.org, willemdebruijn.kernel@gmail.com,
-        jhugo@codeaurora.org
-Subject: Re: [PATCH v8 1/2] bus: mhi: Add mhi_queue_is_full function
-Message-ID: <20201030090539.GB3818@Mani-XPS-13-9360>
-References: <1603902898-25233-1-git-send-email-loic.poulain@linaro.org>
+        id S1726231AbgJ3JYB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 30 Oct 2020 05:24:01 -0400
+Received: from m42-4.mailgun.net ([69.72.42.4]:49523 "EHLO m42-4.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726345AbgJ3JYA (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 30 Oct 2020 05:24:00 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1604049839; h=Content-Transfer-Encoding: MIME-Version:
+ Message-Id: Date: Subject: Cc: To: From: Sender;
+ bh=sp3VGRZxfTRi7zyMLplfiFQMyG0a61g9nkqFH0o13ZY=; b=b3k3eK3gtssEb7NIKz4qmJeYXFXqQ4gXGJHBjbWhEvP9U/LiS4F4ua69dByNxRTVtLQkQYul
+ BqZ2qTBjGzpCzRmuOoTfO89IwNAs6ht3ATglMcBXaBNDCqWMq3pSN91RvhOE4FoHd8440lHH
+ zHAE5jIPCL3gi33LJFcl9oZloTo=
+X-Mailgun-Sending-Ip: 69.72.42.4
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n07.prod.us-west-2.postgun.com with SMTP id
+ 5f9bdb901df7f5f83cf293bd (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 30 Oct 2020 09:23:28
+ GMT
+Sender: saiprakash.ranjan=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 4266DC43382; Fri, 30 Oct 2020 09:23:28 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
+        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+Received: from blr-ubuntu-253.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: saiprakash.ranjan)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id EBBADC43382;
+        Fri, 30 Oct 2020 09:23:22 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org EBBADC43382
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=saiprakash.ranjan@codeaurora.org
+From:   Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+To:     Will Deacon <will@kernel.org>, Robin Murphy <robin.murphy@arm.com>,
+        Joerg Roedel <joro@8bytes.org>,
+        Jordan Crouse <jcrouse@codeaurora.org>,
+        Rob Clark <robdclark@gmail.com>
+Cc:     iommu@lists.linux-foundation.org,
+        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org,
+        Akhil P Oommen <akhilpo@codeaurora.org>,
+        freedreno@lists.freedesktop.org,
+        "Kristian H . Kristensen" <hoegsberg@google.com>,
+        dri-devel@lists.freedesktop.org,
+        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+Subject: [PATCHv7 0/7] System Cache support for GPU and required SMMU support
+Date:   Fri, 30 Oct 2020 14:53:07 +0530
+Message-Id: <cover.1604048969.git.saiprakash.ranjan@codeaurora.org>
+X-Mailer: git-send-email 2.27.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1603902898-25233-1-git-send-email-loic.poulain@linaro.org>
-User-Agent: Mutt/1.9.4 (2018-02-28)
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Oct 28, 2020 at 05:34:57PM +0100, Loic Poulain wrote:
-> This function can be used by client driver to determine whether it's
-> possible to queue new elements in a channel ring.
-> 
-> Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
+Some hardware variants contain a system cache or the last level
+cache(llc). This cache is typically a large block which is shared
+by multiple clients on the SOC. GPU uses the system cache to cache
+both the GPU data buffers(like textures) as well the SMMU pagetables.
+This helps with improved render performance as well as lower power
+consumption by reducing the bus traffic to the system memory.
 
-Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+The system cache architecture allows the cache to be split into slices
+which then be used by multiple SOC clients. This patch series is an
+effort to enable and use two of those slices preallocated for the GPU,
+one for the GPU data buffers and another for the GPU SMMU hardware
+pagetables.
 
-Thanks,
-Mani
+Patch 1 - Patch 5 adds system cache support in SMMU and GPU driver.
+Patch 6 and 7 are minor cleanups for arm-smmu impl.
 
-> ---
->  v1->v5: not part of the series
->  v6: Add this commit, used for stopping TX queue
->  v7: no change
->  v8: remove static change (up to the compiler)
-> 
->  drivers/bus/mhi/core/main.c | 11 +++++++++++
->  include/linux/mhi.h         |  7 +++++++
->  2 files changed, 18 insertions(+)
-> 
-> diff --git a/drivers/bus/mhi/core/main.c b/drivers/bus/mhi/core/main.c
-> index a588eac..bab38d2 100644
-> --- a/drivers/bus/mhi/core/main.c
-> +++ b/drivers/bus/mhi/core/main.c
-> @@ -1173,6 +1173,17 @@ int mhi_queue_buf(struct mhi_device *mhi_dev, enum dma_data_direction dir,
->  }
->  EXPORT_SYMBOL_GPL(mhi_queue_buf);
->  
-> +bool mhi_queue_is_full(struct mhi_device *mhi_dev, enum dma_data_direction dir)
-> +{
-> +	struct mhi_controller *mhi_cntrl = mhi_dev->mhi_cntrl;
-> +	struct mhi_chan *mhi_chan = (dir == DMA_TO_DEVICE) ?
-> +					mhi_dev->ul_chan : mhi_dev->dl_chan;
-> +	struct mhi_ring *tre_ring = &mhi_chan->tre_ring;
-> +
-> +	return mhi_is_ring_full(mhi_cntrl, tre_ring);
-> +}
-> +EXPORT_SYMBOL_GPL(mhi_queue_is_full);
-> +
->  int mhi_send_cmd(struct mhi_controller *mhi_cntrl,
->  		 struct mhi_chan *mhi_chan,
->  		 enum mhi_cmd_type cmd)
-> diff --git a/include/linux/mhi.h b/include/linux/mhi.h
-> index 9d67e75..f72c3a4 100644
-> --- a/include/linux/mhi.h
-> +++ b/include/linux/mhi.h
-> @@ -745,4 +745,11 @@ int mhi_queue_buf(struct mhi_device *mhi_dev, enum dma_data_direction dir,
->  int mhi_queue_skb(struct mhi_device *mhi_dev, enum dma_data_direction dir,
->  		  struct sk_buff *skb, size_t len, enum mhi_flags mflags);
->  
-> +/**
-> + * mhi_queue_is_full - Determine whether queueing new elements is possible
-> + * @mhi_dev: Device associated with the channels
-> + * @dir: DMA direction for the channel
-> + */
-> +bool mhi_queue_is_full(struct mhi_device *mhi_dev, enum dma_data_direction dir);
-> +
->  #endif /* _MHI_H_ */
-> -- 
-> 2.7.4
-> 
+Changes in v7:
+ * Squash Jordan's patch to support MMU500 targets
+ * Rebase on top of for-joerg/arm-smmu/updates and Jordan's short series for adreno-smmu impl
+
+Changes in v6:
+ * Move table to arm-smmu-qcom (Robin)
+
+Changes in v5:
+ * Drop cleanup of blank lines since it was intentional (Robin)
+ * Rebase again on top of msm-next-pgtables as it moves pretty fast
+
+Changes in v4:
+ * Drop IOMMU_SYS_CACHE prot flag
+ * Rebase on top of https://gitlab.freedesktop.org/drm/msm/-/tree/msm-next-pgtables
+
+Changes in v3:
+ * Fix domain attribute setting to before iommu_attach_device()
+ * Fix few code style and checkpatch warnings
+ * Rebase on top of Jordan's latest split pagetables and per-instance
+   pagetables support
+
+Changes in v2:
+ * Addressed review comments and rebased on top of Jordan's split
+   pagetables series
+
+Jordan Crouse (1):
+  drm/msm/a6xx: Add support for using system cache on MMU500 based
+    targets
+
+Sai Prakash Ranjan (4):
+  iommu/io-pgtable-arm: Add support to use system cache
+  iommu/arm-smmu: Add domain attribute for system cache
+  iommu: arm-smmu-impl: Use table to list QCOM implementations
+  iommu: arm-smmu-impl: Add a space before open parenthesis
+
+Sharat Masetty (2):
+  drm/msm: rearrange the gpu_rmw() function
+  drm/msm/a6xx: Add support for using system cache(LLC)
+
+ drivers/gpu/drm/msm/adreno/a6xx_gpu.c      | 109 +++++++++++++++++++++
+ drivers/gpu/drm/msm/adreno/a6xx_gpu.h      |   5 +
+ drivers/gpu/drm/msm/adreno/adreno_gpu.c    |  17 ++++
+ drivers/gpu/drm/msm/msm_drv.c              |   8 ++
+ drivers/gpu/drm/msm/msm_drv.h              |   1 +
+ drivers/gpu/drm/msm/msm_gpu.h              |   5 +-
+ drivers/iommu/arm/arm-smmu/arm-smmu-impl.c |  11 +--
+ drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c |  21 +++-
+ drivers/iommu/arm/arm-smmu/arm-smmu.c      |  17 ++++
+ drivers/iommu/arm/arm-smmu/arm-smmu.h      |   2 +-
+ drivers/iommu/io-pgtable-arm.c             |   7 +-
+ include/linux/io-pgtable.h                 |   4 +
+ include/linux/iommu.h                      |   1 +
+ 13 files changed, 188 insertions(+), 20 deletions(-)
+
+
+base-commit: f9081b8ff5934b8d69c748d0200e844cadd2c667
+prerequisite-patch-id: db09851f375ca5efde35f2e5c21b3959eed7d8a8
+prerequisite-patch-id: 55c6af17808c2047b67cdbd04af5541156ef496e
+prerequisite-patch-id: e82c1e678da701e112ac255ea966c6797d975692
+prerequisite-patch-id: f7978f5f2fb06528b7a1f75fa4255e386a30b91a
+-- 
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
+of Code Aurora Forum, hosted by The Linux Foundation
+
