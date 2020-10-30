@@ -2,103 +2,450 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 784842A032B
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Oct 2020 11:47:34 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D08932A0313
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Oct 2020 11:42:32 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726171AbgJ3Krd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 30 Oct 2020 06:47:33 -0400
-Received: from m42-4.mailgun.net ([69.72.42.4]:58788 "EHLO m42-4.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726424AbgJ3Krc (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 30 Oct 2020 06:47:32 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1604054852; h=References: In-Reply-To: Message-Id: Date:
- Subject: Cc: To: From: Sender;
- bh=VSDDXhZl2nxI6IAloLDnByNgL5/PQUcokBebruDQBaw=; b=Z1pp7HSdP8f1zsoIlf7roo/eAAVwcoHD8g/+PEjTQatYTsqyKUPfA08bUfnFj8DcuWf3b1Ih
- 9aRxeguZzPTeHHd0MEgquv1197RU6aZrndU4uoVRQ9EpE5IV8r7vBySV6HQnVDNj37UsXYm7
- M0vAsDANB/5HDl6wjvk1+c0qZTo=
-X-Mailgun-Sending-Ip: 69.72.42.4
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n06.prod.us-west-2.postgun.com with SMTP id
- 5f9bef43aa9367276b159e8d (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 30 Oct 2020 10:47:31
- GMT
-Sender: akhilpo=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id BD987C433C6; Fri, 30 Oct 2020 10:47:31 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
-        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
-Received: from akhilpo-linux.qualcomm.com (unknown [202.46.22.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: akhilpo)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id E030FC433C6;
-        Fri, 30 Oct 2020 10:47:26 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org E030FC433C6
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=akhilpo@codeaurora.org
-From:   Akhil P Oommen <akhilpo@codeaurora.org>
-To:     freedreno@lists.freedesktop.org, devicetree@vger.kernel.org
-Cc:     robh@kernel.org, dri-devel@freedesktop.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        jcrouse@codeaurora.org, mka@chromium.org, robdclark@gmail.com,
-        dianders@chromium.org
-Subject: [PATCH v5 3/3] dt-bindings: drm/msm/gpu: Add cooling device support
-Date:   Fri, 30 Oct 2020 16:17:12 +0530
-Message-Id: <1604054832-3114-3-git-send-email-akhilpo@codeaurora.org>
+        id S1725808AbgJ3Kmc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 30 Oct 2020 06:42:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55718 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725801AbgJ3Kmb (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 30 Oct 2020 06:42:31 -0400
+Received: from mail-wm1-x343.google.com (mail-wm1-x343.google.com [IPv6:2a00:1450:4864:20::343])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 563E1C0613CF
+        for <linux-arm-msm@vger.kernel.org>; Fri, 30 Oct 2020 03:42:31 -0700 (PDT)
+Received: by mail-wm1-x343.google.com with SMTP id k18so2487601wmj.5
+        for <linux-arm-msm@vger.kernel.org>; Fri, 30 Oct 2020 03:42:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id;
+        bh=7SKRcpJBDvushs/+KG/I886TAzE11R66+iefP6d6//k=;
+        b=EHkwB/eciqRteK4HAhD6P/7oTDJmvnFmSsaez+AhbmGfrRV9kULlnghrMcq+YP6q33
+         s5LOqOBhIrwzTlqyxfLKP6Ozf995HBZyN3Ulhg3PjzmvoOpms/EmJM/l/7xx/ERxAQ8o
+         Gw6emh2q3TmCEtNtuqM7zaxSjJ2VNuM2UmLTL+A6rlGnfI36QxA8ShT/cQbiTm/WS7XL
+         EbaWS17SLMPKi4rquG7OZVbqwYLzAJncV5oVsDt6zeZVJgIMnoyVSj0Dyakw7yY/LxOh
+         CqmhA0nIaCFGJhP0mCmXTt7OYpaNCfikjcZA9N8Cma5RUVeSs4Uy/0rzx2TnXhHPUh/W
+         SI/w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=7SKRcpJBDvushs/+KG/I886TAzE11R66+iefP6d6//k=;
+        b=mp8N2YvJ3lj+cBFfSJsQFVgcwRMpjXM40BEWRudcp7aeUFbwltXcwsPHnumXfchXh9
+         b+y8F03NCTp7twk5+X0liwLMWSnJ3btL90/B1j/t/JMnz/dsTvhQsHamopJJNv1AxX6p
+         go03KkwTBodYZYQsAZBG3BjzbZ4Sx39T/QphYWod1uOrQ3lZHeUfKPKOotqvtzBoaJUk
+         cL3LFx3nRYlsWBb8H/0CtZtZzWDYfNQCf1eY8B1XJ69830Cg7faKCetQVfG6jFvBBvWh
+         aEuZpR0sjhe7CZQHpyRkmLL2xqJ+NhoV3pZMpam3cS7D8vNCqNZ4WcqyUCSChbEDC+/6
+         hIcQ==
+X-Gm-Message-State: AOAM532y7Yq0GLv8wOX2IDkfhuJIFwPivU08apHjffyAv7vMqbwtTBuJ
+        jp599nnlPq83Sm5OdBidjG5jNQ==
+X-Google-Smtp-Source: ABdhPJx0Kj4GfYsccW1P4lggo0r5MHZGosTnyD2u8T618g+U7exPgFvDZLMpzVmO7D+5Dhp7qYQdDw==
+X-Received: by 2002:a1c:740f:: with SMTP id p15mr1898330wmc.106.1604054549973;
+        Fri, 30 Oct 2020 03:42:29 -0700 (PDT)
+Received: from localhost.localdomain ([88.122.66.28])
+        by smtp.gmail.com with ESMTPSA id l26sm4060567wmi.39.2020.10.30.03.42.23
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 30 Oct 2020 03:42:29 -0700 (PDT)
+From:   Loic Poulain <loic.poulain@linaro.org>
+To:     kuba@kernel.org, davem@davemloft.net
+Cc:     netdev@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        bbhatt@codeaurora.org, willemdebruijn.kernel@gmail.com,
+        jhugo@codeaurora.org, manivannan.sadhasivam@linaro.org,
+        hemantk@codeaurora.org, Loic Poulain <loic.poulain@linaro.org>
+Subject: [PATCH v9 2/2] net: Add mhi-net driver
+Date:   Fri, 30 Oct 2020 11:48:15 +0100
+Message-Id: <1604054895-29137-1-git-send-email-loic.poulain@linaro.org>
 X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1604054832-3114-1-git-send-email-akhilpo@codeaurora.org>
-References: <1604054832-3114-1-git-send-email-akhilpo@codeaurora.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add cooling device support to gpu. A cooling device is bound to a
-thermal zone to allow thermal mitigation.
+This patch adds a new network driver implementing MHI transport for
+network packets. Packets can be in any format, though QMAP (rmnet)
+is the usual protocol (flow control + PDN mux).
 
-Signed-off-by: Akhil P Oommen <akhilpo@codeaurora.org>
-Reviewed-by: Matthias Kaehlcke <mka@chromium.org>
+It support two MHI devices, IP_HW0 which is, the path to the IPA
+(IP accelerator) on qcom modem, And IP_SW0 which is the software
+driven IP path (to modem CPU).
+
+Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
+Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 ---
- Documentation/devicetree/bindings/display/msm/gpu.txt | 7 +++++++
- 1 file changed, 7 insertions(+)
+ v2: - rebase on net-next
+      - remove useless skb_linearize
+      - check error type on mhi_queue return
+      - rate limited errors
+      - Schedule RX refill only on 'low' buf level
+      - SET_NETDEV_DEV in probe
+      - reorder device remove sequence
+  v3: - Stop channels on net_register error
+      - Remove useles parentheses
+      - Add driver .owner
+  v4: - prevent potential cpu hog in rx-refill loop
+      - Access mtu via READ_ONCE
+  v5: - Fix access to u64 stats
+  v6: - Stop TX queue earlier if queue is full
+      - Preventing 'abnormal' NETDEV_TX_BUSY path
+  v7: - Stop dl/ul cb operations on channel resetting
+  v8: - remove premature comment about TX threading gain
+      - check rx_queued to determine queuing limits
+      - fix probe error path (unified goto usage)
+  v9: - fix coding style and comments for MHI bus
+      - remove useless mhi_unprepare in probe (done by mhi core)
 
-diff --git a/Documentation/devicetree/bindings/display/msm/gpu.txt b/Documentation/devicetree/bindings/display/msm/gpu.txt
-index 1af0ff1..090dcb3 100644
---- a/Documentation/devicetree/bindings/display/msm/gpu.txt
-+++ b/Documentation/devicetree/bindings/display/msm/gpu.txt
-@@ -39,6 +39,10 @@ Required properties:
-         a4xx Snapdragon SoCs. See
-         Documentation/devicetree/bindings/sram/qcom,ocmem.yaml.
+ drivers/net/Kconfig   |   7 ++
+ drivers/net/Makefile  |   1 +
+ drivers/net/mhi_net.c | 311 ++++++++++++++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 319 insertions(+)
+ create mode 100644 drivers/net/mhi_net.c
+
+diff --git a/drivers/net/Kconfig b/drivers/net/Kconfig
+index 1368d1d..ef830ed 100644
+--- a/drivers/net/Kconfig
++++ b/drivers/net/Kconfig
+@@ -426,6 +426,13 @@ config VSOCKMON
+ 	  mostly intended for developers or support to debug vsock issues. If
+ 	  unsure, say N.
  
-+Optional properties:
-+- #cooling-cells: The value must be 2. For details, please refer
-+	Documentation/devicetree/bindings/thermal/thermal-cooling-devices.yaml.
++config MHI_NET
++	tristate "MHI network driver"
++	depends on MHI_BUS
++	help
++	  This is the network driver for MHI bus.  It can be used with
++	  QCOM based WWAN modems (like SDX55).  Say Y or M.
 +
- Example 3xx/4xx:
+ endif # NET_CORE
  
- / {
-@@ -61,6 +65,7 @@ Example 3xx/4xx:
- 		power-domains = <&mmcc OXILICX_GDSC>;
- 		operating-points-v2 = <&gpu_opp_table>;
- 		iommus = <&gpu_iommu 0>;
-+		#cooling-cells = <2>;
- 	};
+ config SUNGEM_PHY
+diff --git a/drivers/net/Makefile b/drivers/net/Makefile
+index 94b6080..8312037 100644
+--- a/drivers/net/Makefile
++++ b/drivers/net/Makefile
+@@ -34,6 +34,7 @@ obj-$(CONFIG_GTP) += gtp.o
+ obj-$(CONFIG_NLMON) += nlmon.o
+ obj-$(CONFIG_NET_VRF) += vrf.o
+ obj-$(CONFIG_VSOCKMON) += vsockmon.o
++obj-$(CONFIG_MHI_NET) += mhi_net.o
  
- 	gpu_sram: ocmem@fdd00000 {
-@@ -98,6 +103,8 @@ Example a6xx (with GMU):
- 		reg = <0x5000000 0x40000>, <0x509e000 0x10>;
- 		reg-names = "kgsl_3d0_reg_memory", "cx_mem";
- 
-+		#cooling-cells = <2>;
+ #
+ # Networking Drivers
+diff --git a/drivers/net/mhi_net.c b/drivers/net/mhi_net.c
+new file mode 100644
+index 0000000..9136085
+--- /dev/null
++++ b/drivers/net/mhi_net.c
+@@ -0,0 +1,311 @@
++// SPDX-License-Identifier: GPL-2.0-or-later
++/* MHI Network driver - Network over MHI bus
++ *
++ * Copyright (C) 2020 Linaro Ltd <loic.poulain@linaro.org>
++ */
 +
- 		/*
- 		 * Look ma, no clocks! The GPU clocks and power are
- 		 * controlled entirely by the GMU
++#include <linux/if_arp.h>
++#include <linux/mhi.h>
++#include <linux/mod_devicetable.h>
++#include <linux/module.h>
++#include <linux/netdevice.h>
++#include <linux/skbuff.h>
++#include <linux/u64_stats_sync.h>
++
++#define MHI_NET_MIN_MTU		ETH_MIN_MTU
++#define MHI_NET_MAX_MTU		0xffff
++#define MHI_NET_DEFAULT_MTU	0x4000
++
++struct mhi_net_stats {
++	u64_stats_t rx_packets;
++	u64_stats_t rx_bytes;
++	u64_stats_t rx_errors;
++	u64_stats_t rx_dropped;
++	u64_stats_t tx_packets;
++	u64_stats_t tx_bytes;
++	u64_stats_t tx_errors;
++	u64_stats_t tx_dropped;
++	atomic_t rx_queued;
++	struct u64_stats_sync tx_syncp;
++	struct u64_stats_sync rx_syncp;
++};
++
++struct mhi_net_dev {
++	struct mhi_device *mdev;
++	struct net_device *ndev;
++	struct delayed_work rx_refill;
++	struct mhi_net_stats stats;
++	u32 rx_queue_sz;
++};
++
++static int mhi_ndo_open(struct net_device *ndev)
++{
++	struct mhi_net_dev *mhi_netdev = netdev_priv(ndev);
++
++	/* Feed the rx buffer pool */
++	schedule_delayed_work(&mhi_netdev->rx_refill, 0);
++
++	/* Carrier is established via out-of-band channel (e.g. qmi) */
++	netif_carrier_on(ndev);
++
++	netif_start_queue(ndev);
++
++	return 0;
++}
++
++static int mhi_ndo_stop(struct net_device *ndev)
++{
++	struct mhi_net_dev *mhi_netdev = netdev_priv(ndev);
++
++	netif_stop_queue(ndev);
++	netif_carrier_off(ndev);
++	cancel_delayed_work_sync(&mhi_netdev->rx_refill);
++
++	return 0;
++}
++
++static int mhi_ndo_xmit(struct sk_buff *skb, struct net_device *ndev)
++{
++	struct mhi_net_dev *mhi_netdev = netdev_priv(ndev);
++	struct mhi_device *mdev = mhi_netdev->mdev;
++	int err;
++
++	err = mhi_queue_skb(mdev, DMA_TO_DEVICE, skb, skb->len, MHI_EOT);
++	if (unlikely(err)) {
++		net_err_ratelimited("%s: Failed to queue TX buf (%d)\n",
++				    ndev->name, err);
++
++		u64_stats_update_begin(&mhi_netdev->stats.tx_syncp);
++		u64_stats_inc(&mhi_netdev->stats.tx_dropped);
++		u64_stats_update_end(&mhi_netdev->stats.tx_syncp);
++
++		/* drop the packet */
++		kfree_skb(skb);
++	}
++
++	if (mhi_queue_is_full(mdev, DMA_TO_DEVICE))
++		netif_stop_queue(ndev);
++
++	return NETDEV_TX_OK;
++}
++
++static void mhi_ndo_get_stats64(struct net_device *ndev,
++				struct rtnl_link_stats64 *stats)
++{
++	struct mhi_net_dev *mhi_netdev = netdev_priv(ndev);
++	unsigned int start;
++
++	do {
++		start = u64_stats_fetch_begin_irq(&mhi_netdev->stats.rx_syncp);
++		stats->rx_packets = u64_stats_read(&mhi_netdev->stats.rx_packets);
++		stats->rx_bytes = u64_stats_read(&mhi_netdev->stats.rx_bytes);
++		stats->rx_errors = u64_stats_read(&mhi_netdev->stats.rx_errors);
++		stats->rx_dropped = u64_stats_read(&mhi_netdev->stats.rx_dropped);
++	} while (u64_stats_fetch_retry_irq(&mhi_netdev->stats.rx_syncp, start));
++
++	do {
++		start = u64_stats_fetch_begin_irq(&mhi_netdev->stats.tx_syncp);
++		stats->tx_packets = u64_stats_read(&mhi_netdev->stats.tx_packets);
++		stats->tx_bytes = u64_stats_read(&mhi_netdev->stats.tx_bytes);
++		stats->tx_errors = u64_stats_read(&mhi_netdev->stats.tx_errors);
++		stats->tx_dropped = u64_stats_read(&mhi_netdev->stats.tx_dropped);
++	} while (u64_stats_fetch_retry_irq(&mhi_netdev->stats.tx_syncp, start));
++}
++
++static const struct net_device_ops mhi_netdev_ops = {
++	.ndo_open               = mhi_ndo_open,
++	.ndo_stop               = mhi_ndo_stop,
++	.ndo_start_xmit         = mhi_ndo_xmit,
++	.ndo_get_stats64	= mhi_ndo_get_stats64,
++};
++
++static void mhi_net_setup(struct net_device *ndev)
++{
++	ndev->header_ops = NULL;  /* No header */
++	ndev->type = ARPHRD_NONE; /* QMAP... */
++	ndev->hard_header_len = 0;
++	ndev->addr_len = 0;
++	ndev->flags = IFF_POINTOPOINT | IFF_NOARP;
++	ndev->netdev_ops = &mhi_netdev_ops;
++	ndev->mtu = MHI_NET_DEFAULT_MTU;
++	ndev->min_mtu = MHI_NET_MIN_MTU;
++	ndev->max_mtu = MHI_NET_MAX_MTU;
++	ndev->tx_queue_len = 1000;
++}
++
++static void mhi_net_dl_callback(struct mhi_device *mhi_dev,
++				struct mhi_result *mhi_res)
++{
++	struct mhi_net_dev *mhi_netdev = dev_get_drvdata(&mhi_dev->dev);
++	struct sk_buff *skb = mhi_res->buf_addr;
++	int remaining;
++
++	remaining = atomic_dec_return(&mhi_netdev->stats.rx_queued);
++
++	if (unlikely(mhi_res->transaction_status)) {
++		u64_stats_update_begin(&mhi_netdev->stats.rx_syncp);
++		u64_stats_inc(&mhi_netdev->stats.rx_errors);
++		u64_stats_update_end(&mhi_netdev->stats.rx_syncp);
++
++		kfree_skb(skb);
++
++		/* MHI layer resetting the DL channel */
++		if (mhi_res->transaction_status == -ENOTCONN)
++			return;
++	} else {
++		u64_stats_update_begin(&mhi_netdev->stats.rx_syncp);
++		u64_stats_inc(&mhi_netdev->stats.rx_packets);
++		u64_stats_add(&mhi_netdev->stats.rx_bytes, mhi_res->bytes_xferd);
++		u64_stats_update_end(&mhi_netdev->stats.rx_syncp);
++
++		skb->protocol = htons(ETH_P_MAP);
++		skb_put(skb, mhi_res->bytes_xferd);
++		netif_rx(skb);
++	}
++
++	/* Refill if RX buffers queue becomes low */
++	if (remaining <= mhi_netdev->rx_queue_sz / 2)
++		schedule_delayed_work(&mhi_netdev->rx_refill, 0);
++}
++
++static void mhi_net_ul_callback(struct mhi_device *mhi_dev,
++				struct mhi_result *mhi_res)
++{
++	struct mhi_net_dev *mhi_netdev = dev_get_drvdata(&mhi_dev->dev);
++	struct net_device *ndev = mhi_netdev->ndev;
++	struct sk_buff *skb = mhi_res->buf_addr;
++
++	/* Hardware has consumed the buffer, so free the skb (which is not
++	 * freed by the MHI stack) and perform accounting.
++	 */
++	consume_skb(skb);
++
++	u64_stats_update_begin(&mhi_netdev->stats.tx_syncp);
++	if (unlikely(mhi_res->transaction_status)) {
++		u64_stats_inc(&mhi_netdev->stats.tx_errors);
++
++		/* MHI layer resetting the UL channel */
++		if (mhi_res->transaction_status == -ENOTCONN)
++			return;
++	} else {
++		u64_stats_inc(&mhi_netdev->stats.tx_packets);
++		u64_stats_add(&mhi_netdev->stats.tx_bytes, mhi_res->bytes_xferd);
++	}
++	u64_stats_update_end(&mhi_netdev->stats.tx_syncp);
++
++	if (netif_queue_stopped(ndev))
++		netif_wake_queue(ndev);
++}
++
++static void mhi_net_rx_refill_work(struct work_struct *work)
++{
++	struct mhi_net_dev *mhi_netdev = container_of(work, struct mhi_net_dev,
++						      rx_refill.work);
++	struct net_device *ndev = mhi_netdev->ndev;
++	struct mhi_device *mdev = mhi_netdev->mdev;
++	int size = READ_ONCE(ndev->mtu);
++	struct sk_buff *skb;
++	int err;
++
++	do {
++		skb = netdev_alloc_skb(ndev, size);
++		if (unlikely(!skb))
++			break;
++
++		err = mhi_queue_skb(mdev, DMA_FROM_DEVICE, skb, size, MHI_EOT);
++		if (unlikely(err)) {
++			net_err_ratelimited("%s: Failed to queue RX buf (%d)\n",
++					    ndev->name, err);
++			kfree_skb(skb);
++			break;
++		}
++
++		/* Do not hog the CPU if rx buffers are consumed faster than
++		 * queued (unlikely).
++		 */
++		cond_resched();
++	} while (atomic_inc_return(&mhi_netdev->stats.rx_queued) < mhi_netdev->rx_queue_sz);
++
++	/* If we're still starved of rx buffers, reschedule later */
++	if (unlikely(!atomic_read(&mhi_netdev->stats.rx_queued)))
++		schedule_delayed_work(&mhi_netdev->rx_refill, HZ / 2);
++}
++
++static int mhi_net_probe(struct mhi_device *mhi_dev,
++			 const struct mhi_device_id *id)
++{
++	const char *netname = (char *)id->driver_data;
++	struct device *dev = &mhi_dev->dev;
++	struct mhi_net_dev *mhi_netdev;
++	struct net_device *ndev;
++	int err;
++
++	ndev = alloc_netdev(sizeof(*mhi_netdev), netname, NET_NAME_PREDICTABLE,
++			    mhi_net_setup);
++	if (!ndev)
++		return -ENOMEM;
++
++	mhi_netdev = netdev_priv(ndev);
++	dev_set_drvdata(dev, mhi_netdev);
++	mhi_netdev->ndev = ndev;
++	mhi_netdev->mdev = mhi_dev;
++	SET_NETDEV_DEV(ndev, &mhi_dev->dev);
++
++	/* All MHI net channels have 128 ring elements (at least for now) */
++	mhi_netdev->rx_queue_sz = 128;
++
++	INIT_DELAYED_WORK(&mhi_netdev->rx_refill, mhi_net_rx_refill_work);
++	u64_stats_init(&mhi_netdev->stats.rx_syncp);
++	u64_stats_init(&mhi_netdev->stats.tx_syncp);
++
++	/* Start MHI channels */
++	err = mhi_prepare_for_transfer(mhi_dev);
++	if (err)
++		goto out_err;
++
++	err = register_netdev(ndev);
++	if (err)
++		goto out_err;
++
++	return 0;
++
++out_err:
++	free_netdev(ndev);
++	return err;
++}
++
++static void mhi_net_remove(struct mhi_device *mhi_dev)
++{
++	struct mhi_net_dev *mhi_netdev = dev_get_drvdata(&mhi_dev->dev);
++
++	unregister_netdev(mhi_netdev->ndev);
++
++	mhi_unprepare_from_transfer(mhi_netdev->mdev);
++
++	free_netdev(mhi_netdev->ndev);
++}
++
++static const struct mhi_device_id mhi_net_id_table[] = {
++	{ .chan = "IP_HW0", .driver_data = (kernel_ulong_t)"mhi_hwip%d" },
++	{ .chan = "IP_SW0", .driver_data = (kernel_ulong_t)"mhi_swip%d" },
++	{}
++};
++MODULE_DEVICE_TABLE(mhi, mhi_net_id_table);
++
++static struct mhi_driver mhi_net_driver = {
++	.probe = mhi_net_probe,
++	.remove = mhi_net_remove,
++	.dl_xfer_cb = mhi_net_dl_callback,
++	.ul_xfer_cb = mhi_net_ul_callback,
++	.id_table = mhi_net_id_table,
++	.driver = {
++		.name = "mhi_net",
++		.owner = THIS_MODULE,
++	},
++};
++
++module_mhi_driver(mhi_net_driver);
++
++MODULE_AUTHOR("Loic Poulain <loic.poulain@linaro.org>");
++MODULE_DESCRIPTION("Network over MHI");
++MODULE_LICENSE("GPL v2");
 -- 
 2.7.4
 
