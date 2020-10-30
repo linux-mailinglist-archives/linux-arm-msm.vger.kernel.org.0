@@ -2,32 +2,32 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 8BD7129FC9B
+	by mail.lfdr.de (Postfix) with ESMTP id 1F2E429FC9A
 	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Oct 2020 05:11:52 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726620AbgJ3ELq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        id S1726619AbgJ3ELq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
         Fri, 30 Oct 2020 00:11:46 -0400
-Received: from z5.mailgun.us ([104.130.96.5]:63062 "EHLO z5.mailgun.us"
+Received: from z5.mailgun.us ([104.130.96.5]:18400 "EHLO z5.mailgun.us"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726447AbgJ3ELN (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        id S1726441AbgJ3ELN (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
         Fri, 30 Oct 2020 00:11:13 -0400
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1604031072; h=References: In-Reply-To: Message-Id: Date:
+ s=smtp; t=1604031071; h=References: In-Reply-To: Message-Id: Date:
  Subject: Cc: To: From: Sender;
- bh=6XTYQyO2klmQXkKHAEjhN4DTjPEKBBsIlMgadavihz4=; b=pR2t5uSj37NmKGUlnQHuiFwsCSm4JkVMz4pKa2fIGs9PrBoVOTFGhUCNslkfBt9NU1B17Wpt
- mjMPSllSSFR4DAT9NBwJ2CT/vlwuiF46xsMet5dJTrCEYKMWYDOi11Wbrsk2W9ZtW6n1uP5r
- jRkZ2+y+Eo73PBzKmW0Eij0MkAc=
+ bh=Du0L7znsZbpysoHB9CLpyUVXUEDUv0T27NVa+UG6pNg=; b=orH1+RpPYGzN/u2JQKSI/A5EJFpGyHBzsvPe8D4dUe6dccjKMqtA3Iq23EU4mFeo6/klES7M
+ Nvl854nHStgGOZkVmQb+UFrFWi9OhR4TAROWgM+8PhyK48ZooT+pXblH+eeRnxVkD03+mOK7
+ vPo2SO1AYkusG8udIivszX7/ztk=
 X-Mailgun-Sending-Ip: 104.130.96.5
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org
  (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n06.prod.us-east-1.postgun.com with SMTP id
- 5f9b925f59fd12ae189cc08d (version=TLS1.2,
+ smtp-out-n06.prod.us-west-2.postgun.com with SMTP id
+ 5f9b925faa9367276ba2e6d9 (version=TLS1.2,
  cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 30 Oct 2020 04:11:11
  GMT
 Sender: bbhatt=codeaurora.org@mg.codeaurora.org
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id EE6AEC4339C; Fri, 30 Oct 2020 04:11:10 +0000 (UTC)
+        id 54CDDC433A1; Fri, 30 Oct 2020 04:11:11 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
@@ -37,9 +37,9 @@ Received: from malabar-linux.qualcomm.com (i-global254.qualcomm.com [199.106.103
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
         (No client certificate requested)
         (Authenticated sender: bbhatt)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 9A864C433C8;
-        Fri, 30 Oct 2020 04:11:09 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 9A864C433C8
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 32A5EC43382;
+        Fri, 30 Oct 2020 04:11:10 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 32A5EC43382
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=bbhatt@codeaurora.org
 From:   Bhaumik Bhatt <bbhatt@codeaurora.org>
@@ -47,9 +47,9 @@ To:     manivannan.sadhasivam@linaro.org
 Cc:     linux-arm-msm@vger.kernel.org, hemantk@codeaurora.org,
         jhugo@codeaurora.org, linux-kernel@vger.kernel.org,
         Bhaumik Bhatt <bbhatt@codeaurora.org>
-Subject: [PATCH v3 10/12] bus: mhi: core: Separate system error and power down handling
-Date:   Thu, 29 Oct 2020 21:10:55 -0700
-Message-Id: <1604031057-32820-11-git-send-email-bbhatt@codeaurora.org>
+Subject: [PATCH v3 11/12] bus: mhi: core: Mark and maintain device states early on after power down
+Date:   Thu, 29 Oct 2020 21:10:56 -0700
+Message-Id: <1604031057-32820-12-git-send-email-bbhatt@codeaurora.org>
 X-Mailer: git-send-email 2.7.4
 In-Reply-To: <1604031057-32820-1-git-send-email-bbhatt@codeaurora.org>
 References: <1604031057-32820-1-git-send-email-bbhatt@codeaurora.org>
@@ -57,218 +57,163 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Currently, there exist a set of if...else statements in the
-mhi_pm_disable_transition() function which make handling system
-error and disable transitions differently complex. To make that
-cleaner and facilitate differences in behavior, separate these
-two transitions for MHI host.
+mhi_power_down() does not ensure that the PM state is moved to an
+inaccessible state soon enough as the system can encounter
+scheduling delays till mhi_pm_disable_transition() gets called.
+Additionally, if an MHI controller decides that the device is now
+inaccessible and issues a power down, the register inaccessible
+state is not maintained by moving from MHI_PM_LD_ERR_FATAL_DETECT
+to MHI_PM_SHUTDOWN_PROCESS. This can result in bus errors if a
+client driver attempted to read registers when powering down.
+Close these gaps and avoid any race conditions to prevent such
+activity.
 
 Signed-off-by: Bhaumik Bhatt <bbhatt@codeaurora.org>
 ---
- drivers/bus/mhi/core/pm.c | 159 +++++++++++++++++++++++++++++++++++++++-------
- 1 file changed, 137 insertions(+), 22 deletions(-)
+ drivers/bus/mhi/core/pm.c | 77 ++++++++++++++++++++---------------------------
+ 1 file changed, 33 insertions(+), 44 deletions(-)
 
 diff --git a/drivers/bus/mhi/core/pm.c b/drivers/bus/mhi/core/pm.c
-index 1d04e401..347ae7d 100644
+index 347ae7d..ffbf6f5 100644
 --- a/drivers/bus/mhi/core/pm.c
 +++ b/drivers/bus/mhi/core/pm.c
-@@ -444,7 +444,7 @@ static int mhi_pm_mission_mode_transition(struct mhi_controller *mhi_cntrl)
- 	return ret;
+@@ -37,9 +37,10 @@
+  *     M0 -> FW_DL_ERR
+  *     M0 -> M3_ENTER -> M3 -> M3_EXIT --> M0
+  * L1: SYS_ERR_DETECT -> SYS_ERR_PROCESS --> POR
+- * L2: SHUTDOWN_PROCESS -> DISABLE
++ * L2: SHUTDOWN_PROCESS -> LD_ERR_FATAL_DETECT
++ *     SHUTDOWN_PROCESS -> DISABLE
+  * L3: LD_ERR_FATAL_DETECT <--> LD_ERR_FATAL_DETECT
+- *     LD_ERR_FATAL_DETECT -> SHUTDOWN_PROCESS
++ *     LD_ERR_FATAL_DETECT -> DISABLE
+  */
+ static struct mhi_pm_transitions const dev_state_transitions[] = {
+ 	/* L0 States */
+@@ -72,7 +73,7 @@ static struct mhi_pm_transitions const dev_state_transitions[] = {
+ 	{
+ 		MHI_PM_M3,
+ 		MHI_PM_M3_EXIT | MHI_PM_SYS_ERR_DETECT |
+-		MHI_PM_SHUTDOWN_PROCESS | MHI_PM_LD_ERR_FATAL_DETECT
++		MHI_PM_LD_ERR_FATAL_DETECT
+ 	},
+ 	{
+ 		MHI_PM_M3_EXIT,
+@@ -103,7 +104,7 @@ static struct mhi_pm_transitions const dev_state_transitions[] = {
+ 	/* L3 States */
+ 	{
+ 		MHI_PM_LD_ERR_FATAL_DETECT,
+-		MHI_PM_LD_ERR_FATAL_DETECT | MHI_PM_SHUTDOWN_PROCESS
++		MHI_PM_LD_ERR_FATAL_DETECT | MHI_PM_DISABLE
+ 	},
+ };
+ 
+@@ -445,10 +446,9 @@ static int mhi_pm_mission_mode_transition(struct mhi_controller *mhi_cntrl)
  }
  
--/* Handle SYS_ERR and Shutdown transitions */
-+/* Handle shutdown transitions */
- static void mhi_pm_disable_transition(struct mhi_controller *mhi_cntrl,
- 				      enum mhi_pm_state transition_state)
+ /* Handle shutdown transitions */
+-static void mhi_pm_disable_transition(struct mhi_controller *mhi_cntrl,
+-				      enum mhi_pm_state transition_state)
++static void mhi_pm_disable_transition(struct mhi_controller *mhi_cntrl)
  {
-@@ -460,10 +460,6 @@ static void mhi_pm_disable_transition(struct mhi_controller *mhi_cntrl,
- 		to_mhi_pm_state_str(mhi_cntrl->pm_state),
- 		to_mhi_pm_state_str(transition_state));
+-	enum mhi_pm_state cur_state, prev_state;
++	enum mhi_pm_state cur_state;
+ 	struct mhi_event *mhi_event;
+ 	struct mhi_cmd_ctxt *cmd_ctxt;
+ 	struct mhi_cmd *mhi_cmd;
+@@ -456,33 +456,13 @@ static void mhi_pm_disable_transition(struct mhi_controller *mhi_cntrl,
+ 	struct device *dev = &mhi_cntrl->mhi_dev->dev;
+ 	int ret, i;
  
--	/* We must notify MHI control driver so it can clean up first */
--	if (transition_state == MHI_PM_SYS_ERR_PROCESS)
--		mhi_cntrl->status_cb(mhi_cntrl, MHI_CB_SYS_ERROR);
--
+-	dev_dbg(dev, "Transitioning from PM state: %s to: %s\n",
+-		to_mhi_pm_state_str(mhi_cntrl->pm_state),
+-		to_mhi_pm_state_str(transition_state));
++	dev_dbg(dev, "Processing disable transition with PM state: %s\n",
++		to_mhi_pm_state_str(mhi_cntrl->pm_state));
+ 
  	mutex_lock(&mhi_cntrl->pm_mutex);
- 	write_lock_irq(&mhi_cntrl->pm_lock);
- 	prev_state = mhi_cntrl->pm_state;
-@@ -502,11 +498,8 @@ static void mhi_pm_disable_transition(struct mhi_controller *mhi_cntrl,
- 							    MHICTRL_RESET_SHIFT,
- 							    &in_reset) ||
- 					!in_reset, timeout);
--		if ((!ret || in_reset) && cur_state == MHI_PM_SYS_ERR_PROCESS) {
-+		if (!ret || in_reset)
- 			dev_err(dev, "Device failed to exit MHI Reset state\n");
--			mutex_unlock(&mhi_cntrl->pm_mutex);
--			return;
--		}
+-	write_lock_irq(&mhi_cntrl->pm_lock);
+-	prev_state = mhi_cntrl->pm_state;
+-	cur_state = mhi_tryset_pm_state(mhi_cntrl, transition_state);
+-	if (cur_state == transition_state) {
+-		mhi_cntrl->ee = MHI_EE_DISABLE_TRANSITION;
+-		mhi_cntrl->dev_state = MHI_STATE_RESET;
+-	}
+-	write_unlock_irq(&mhi_cntrl->pm_lock);
+-
+-	/* Wake up threads waiting for state transition */
+-	wake_up_all(&mhi_cntrl->state_event);
+-
+-	if (cur_state != transition_state) {
+-		dev_err(dev, "Failed to transition to state: %s from: %s\n",
+-			to_mhi_pm_state_str(transition_state),
+-			to_mhi_pm_state_str(cur_state));
+-		mutex_unlock(&mhi_cntrl->pm_mutex);
+-		return;
+-	}
  
- 		/*
- 		 * Device will clear BHI_INTVEC as a part of RESET processing,
-@@ -566,19 +559,142 @@ static void mhi_pm_disable_transition(struct mhi_controller *mhi_cntrl,
- 		er_ctxt->wp = er_ctxt->rbase;
- 	}
+ 	/* Trigger MHI RESET so that the device will not access host memory */
+-	if (MHI_REG_ACCESS_VALID(prev_state)) {
++	if (!MHI_PM_IN_FATAL_STATE(mhi_cntrl->pm_state)) {
+ 		u32 in_reset = -1;
+ 		unsigned long timeout = msecs_to_jiffies(mhi_cntrl->timeout_ms);
  
--	if (cur_state == MHI_PM_SYS_ERR_PROCESS) {
--		mhi_ready_state_transition(mhi_cntrl);
--	} else {
--		/* Move to disable state */
+@@ -785,8 +765,7 @@ void mhi_pm_st_worker(struct work_struct *work)
+ 			mhi_pm_sys_error_transition(mhi_cntrl);
+ 			break;
+ 		case DEV_ST_TRANSITION_DISABLE:
+-			mhi_pm_disable_transition
+-				(mhi_cntrl, MHI_PM_SHUTDOWN_PROCESS);
++			mhi_pm_disable_transition(mhi_cntrl);
+ 			break;
+ 		default:
+ 			break;
+@@ -1153,23 +1132,33 @@ EXPORT_SYMBOL_GPL(mhi_async_power_up);
+ 
+ void mhi_power_down(struct mhi_controller *mhi_cntrl, bool graceful)
+ {
+-	enum mhi_pm_state cur_state;
++	enum mhi_pm_state cur_state, transition_state;
+ 	struct device *dev = &mhi_cntrl->mhi_dev->dev;
+ 
+ 	/* If it's not a graceful shutdown, force MHI to linkdown state */
+-	if (!graceful) {
+-		mutex_lock(&mhi_cntrl->pm_mutex);
 -		write_lock_irq(&mhi_cntrl->pm_lock);
--		cur_state = mhi_tryset_pm_state(mhi_cntrl, MHI_PM_DISABLE);
+-		cur_state = mhi_tryset_pm_state(mhi_cntrl,
+-						MHI_PM_LD_ERR_FATAL_DETECT);
 -		write_unlock_irq(&mhi_cntrl->pm_lock);
--		if (unlikely(cur_state != MHI_PM_DISABLE))
--			dev_err(dev, "Error moving from PM state: %s to: %s\n",
--				to_mhi_pm_state_str(cur_state),
--				to_mhi_pm_state_str(MHI_PM_DISABLE));
-+	/* Move to disable state */
-+	write_lock_irq(&mhi_cntrl->pm_lock);
-+	cur_state = mhi_tryset_pm_state(mhi_cntrl, MHI_PM_DISABLE);
-+	write_unlock_irq(&mhi_cntrl->pm_lock);
-+	if (unlikely(cur_state != MHI_PM_DISABLE))
-+		dev_err(dev, "Error moving from PM state: %s to: %s\n",
-+			to_mhi_pm_state_str(cur_state),
-+			to_mhi_pm_state_str(MHI_PM_DISABLE));
-+
-+	dev_dbg(dev, "Exiting with PM state: %s, MHI state: %s\n",
-+		to_mhi_pm_state_str(mhi_cntrl->pm_state),
-+		TO_MHI_STATE_STR(mhi_cntrl->dev_state));
-+
-+	mutex_unlock(&mhi_cntrl->pm_mutex);
-+}
-+
-+/* Handle system error transitions */
-+static void mhi_pm_sys_error_transition(struct mhi_controller *mhi_cntrl)
-+{
-+	enum mhi_pm_state cur_state, prev_state;
-+	struct mhi_event *mhi_event;
-+	struct mhi_cmd_ctxt *cmd_ctxt;
-+	struct mhi_cmd *mhi_cmd;
-+	struct mhi_event_ctxt *er_ctxt;
-+	struct device *dev = &mhi_cntrl->mhi_dev->dev;
-+	int ret, i;
-+
-+	dev_dbg(dev, "Transitioning from PM state: %s to: %s\n",
-+		to_mhi_pm_state_str(mhi_cntrl->pm_state),
-+		to_mhi_pm_state_str(MHI_PM_SYS_ERR_PROCESS));
-+
-+	/* We must notify MHI control driver so it can clean up first */
-+	mhi_cntrl->status_cb(mhi_cntrl, MHI_CB_SYS_ERROR);
+-		mutex_unlock(&mhi_cntrl->pm_mutex);
+-		if (cur_state != MHI_PM_LD_ERR_FATAL_DETECT)
+-			dev_dbg(dev, "Failed to move to state: %s from: %s\n",
+-				to_mhi_pm_state_str(MHI_PM_LD_ERR_FATAL_DETECT),
+-				to_mhi_pm_state_str(mhi_cntrl->pm_state));
++	transition_state = (graceful) ? MHI_PM_SHUTDOWN_PROCESS :
++			   MHI_PM_LD_ERR_FATAL_DETECT;
 +
 +	mutex_lock(&mhi_cntrl->pm_mutex);
 +	write_lock_irq(&mhi_cntrl->pm_lock);
-+	prev_state = mhi_cntrl->pm_state;
-+	cur_state = mhi_tryset_pm_state(mhi_cntrl, MHI_PM_SYS_ERR_PROCESS);
-+	write_unlock_irq(&mhi_cntrl->pm_lock);
-+
-+	if (cur_state != MHI_PM_SYS_ERR_PROCESS) {
-+		dev_err(dev, "Failed to transition from PM state: %s to: %s\n",
-+			to_mhi_pm_state_str(cur_state),
-+			to_mhi_pm_state_str(MHI_PM_SYS_ERR_PROCESS));
-+		goto exit_sys_error_transition;
-+	}
-+
++	cur_state = mhi_tryset_pm_state(mhi_cntrl, transition_state);
++	if (cur_state != transition_state) {
++		dev_err(dev, "Failed to move to state: %s from: %s\n",
++			to_mhi_pm_state_str(transition_state),
++			to_mhi_pm_state_str(mhi_cntrl->pm_state));
++		/* Force link down or error fatal detected state */
++		mhi_cntrl->pm_state = MHI_PM_LD_ERR_FATAL_DETECT;
+ 	}
+ 
++	/* mark device inactive to avoid any further host processing */
 +	mhi_cntrl->ee = MHI_EE_DISABLE_TRANSITION;
 +	mhi_cntrl->dev_state = MHI_STATE_RESET;
 +
-+	/* Wake up threads waiting for state transition */
 +	wake_up_all(&mhi_cntrl->state_event);
 +
-+	/* Trigger MHI RESET so that the device will not access host memory */
-+	if (MHI_REG_ACCESS_VALID(prev_state)) {
-+		u32 in_reset = -1;
-+		unsigned long timeout = msecs_to_jiffies(mhi_cntrl->timeout_ms);
-+
-+		dev_dbg(dev, "Triggering MHI Reset in device\n");
-+		mhi_set_mhi_state(mhi_cntrl, MHI_STATE_RESET);
-+
-+		/* Wait for the reset bit to be cleared by the device */
-+		ret = wait_event_timeout(mhi_cntrl->state_event,
-+					 mhi_read_reg_field(mhi_cntrl,
-+							    mhi_cntrl->regs,
-+							    MHICTRL,
-+							    MHICTRL_RESET_MASK,
-+							    MHICTRL_RESET_SHIFT,
-+							    &in_reset) ||
-+					!in_reset, timeout);
-+		if (!ret || in_reset) {
-+			dev_err(dev, "Device failed to exit MHI Reset state\n");
-+			goto exit_sys_error_transition;
-+		}
-+
-+		/*
-+		 * Device will clear BHI_INTVEC as a part of RESET processing,
-+		 * hence re-program it
-+		 */
-+		mhi_write_reg(mhi_cntrl, mhi_cntrl->bhi, BHI_INTVEC, 0);
-+	}
-+
-+	dev_dbg(dev,
-+		"Waiting for all pending event ring processing to complete\n");
-+	mhi_event = mhi_cntrl->mhi_event;
-+	for (i = 0; i < mhi_cntrl->total_ev_rings; i++, mhi_event++) {
-+		if (mhi_event->offload_ev)
-+			continue;
-+		tasklet_kill(&mhi_event->task);
- 	}
- 
-+	/* Release lock and wait for all pending threads to complete */
++	write_unlock_irq(&mhi_cntrl->pm_lock);
 +	mutex_unlock(&mhi_cntrl->pm_mutex);
-+	dev_dbg(dev, "Waiting for all pending threads to complete\n");
-+	wake_up_all(&mhi_cntrl->state_event);
 +
-+	dev_dbg(dev, "Reset all active channels and remove MHI devices\n");
-+	device_for_each_child(mhi_cntrl->cntrl_dev, NULL, mhi_destroy_device);
-+
-+	mutex_lock(&mhi_cntrl->pm_mutex);
-+
-+	WARN_ON(atomic_read(&mhi_cntrl->dev_wake));
-+	WARN_ON(atomic_read(&mhi_cntrl->pending_pkts));
-+
-+	/* Reset the ev rings and cmd rings */
-+	dev_dbg(dev, "Resetting EV CTXT and CMD CTXT\n");
-+	mhi_cmd = mhi_cntrl->mhi_cmd;
-+	cmd_ctxt = mhi_cntrl->mhi_ctxt->cmd_ctxt;
-+	for (i = 0; i < NR_OF_CMD_RINGS; i++, mhi_cmd++, cmd_ctxt++) {
-+		struct mhi_ring *ring = &mhi_cmd->ring;
-+
-+		ring->rp = ring->base;
-+		ring->wp = ring->base;
-+		cmd_ctxt->rp = cmd_ctxt->rbase;
-+		cmd_ctxt->wp = cmd_ctxt->rbase;
-+	}
-+
-+	mhi_event = mhi_cntrl->mhi_event;
-+	er_ctxt = mhi_cntrl->mhi_ctxt->er_ctxt;
-+	for (i = 0; i < mhi_cntrl->total_ev_rings; i++, er_ctxt++,
-+	     mhi_event++) {
-+		struct mhi_ring *ring = &mhi_event->ring;
-+
-+		/* Skip offload events */
-+		if (mhi_event->offload_ev)
-+			continue;
-+
-+		ring->rp = ring->base;
-+		ring->wp = ring->base;
-+		er_ctxt->rp = er_ctxt->rbase;
-+		er_ctxt->wp = er_ctxt->rbase;
-+	}
-+
-+	mhi_ready_state_transition(mhi_cntrl);
-+
-+exit_sys_error_transition:
- 	dev_dbg(dev, "Exiting with PM state: %s, MHI state: %s\n",
- 		to_mhi_pm_state_str(mhi_cntrl->pm_state),
- 		TO_MHI_STATE_STR(mhi_cntrl->dev_state));
-@@ -666,8 +782,7 @@ void mhi_pm_st_worker(struct work_struct *work)
- 			mhi_ready_state_transition(mhi_cntrl);
- 			break;
- 		case DEV_ST_TRANSITION_SYS_ERR:
--			mhi_pm_disable_transition
--				(mhi_cntrl, MHI_PM_SYS_ERR_PROCESS);
-+			mhi_pm_sys_error_transition(mhi_cntrl);
- 			break;
- 		case DEV_ST_TRANSITION_DISABLE:
- 			mhi_pm_disable_transition
+ 	mhi_queue_state_transition(mhi_cntrl, DEV_ST_TRANSITION_DISABLE);
+ 
+ 	/* Wait for shutdown to complete */
 -- 
 The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
 a Linux Foundation Collaborative Project
