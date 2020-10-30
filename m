@@ -2,52 +2,52 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id AE9C929FF36
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Oct 2020 08:57:42 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0A41729FF3B
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Oct 2020 08:57:51 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726061AbgJ3H5m (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 30 Oct 2020 03:57:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58304 "EHLO
+        id S1726092AbgJ3H5r (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 30 Oct 2020 03:57:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58322 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726009AbgJ3H5l (ORCPT
+        with ESMTP id S1726083AbgJ3H5r (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 30 Oct 2020 03:57:41 -0400
-Received: from mail-pg1-x531.google.com (mail-pg1-x531.google.com [IPv6:2607:f8b0:4864:20::531])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CD3AFC0613CF;
-        Fri, 30 Oct 2020 00:57:41 -0700 (PDT)
-Received: by mail-pg1-x531.google.com with SMTP id g12so4523459pgm.8;
-        Fri, 30 Oct 2020 00:57:41 -0700 (PDT)
+        Fri, 30 Oct 2020 03:57:47 -0400
+Received: from mail-pg1-x541.google.com (mail-pg1-x541.google.com [IPv6:2607:f8b0:4864:20::541])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1042FC0613CF;
+        Fri, 30 Oct 2020 00:57:47 -0700 (PDT)
+Received: by mail-pg1-x541.google.com with SMTP id i7so2596444pgh.6;
+        Fri, 30 Oct 2020 00:57:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=mdVPkO/q4ig27b41Ma0ipj3qPAj1LWAThPCU+KMAntY=;
-        b=TIAZA7N8mLmP6GAoy04oBaSwZCDUDemagaep0eIu6AVKSnUnnYtVhNIHCbEpMG83/6
-         vFXKk85L3GDQnUQja8BMduB43h6WCwm8GO4sbAEsIrOZpCMsw25Rlj5buLnDSbAY8TC2
-         q+NMGg0/JaGHONi3izuRNMWV2o1sWYA657QDl4nEksP5Ok8DkeycBPgkZHTGM78FKv3x
-         K2PLL+kUkHWEwPwA8LYwqbm4s0h+r71tMTD+99n/xZLMae79b0SvC9FTGmqnvsmOiNVX
-         WwmsrRnCJGM2VyOSe+SLDQ5H4X8FDJDIGW2af4SZPRevmXkuIfOPj4X2svN3nKlzQ0AP
-         LbyA==
+        bh=PdodUo+6mcNMJwIz8HCiSd/BPrJxVSi77oUzRemdDVU=;
+        b=tQoyLfsyZlXvHg2b1MunUYxzh17UMQmrrYCBspTbicI7tC8VuB0FbNbVRCUIuoZgxP
+         1yq7jk0/YnRMA1qLOLLJ4K6q/K/rVnEa5FPA1f3EZNExA37wdvy8GXHh/hnTjf+3xoGp
+         ASskqvXt7SCPfELXlJD2UFCqwhnMLfug3Cf3j3x4TGYptej0TZEihb+wGLfcjlUHqAaf
+         luQu9EQyaV3O0U99lydlXufUR6zUitfBX/J6h1B9u+zviLuN4raKOOG2oen2jJL679tt
+         izRQwYT2zqLL7dpxhXb84uZ4gz0dE95sNod5mskV+/pkOk2k3bMYNu9Mv8rxrOZJWJT4
+         Vwgw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=mdVPkO/q4ig27b41Ma0ipj3qPAj1LWAThPCU+KMAntY=;
-        b=CBleGD76a/gwAARiQpxJH6tiJc6TnA2IfaPTDPG9CvTGJik0+MXsmWbKWTjB5bGb+z
-         xRSW7c94GtW8lYvChAGTL8p42qdJ1jeHNyvtgbqa7yCU18KM5wEBsArPAFs4wNDc5uup
-         CbO05SfGgxn3xjvpeWnevMtaYFJ2jztLbkVFRBS/TOEA1nia/n9x1clkbCT1bRPk2LiK
-         gi4D/fypPefR8T/95OnmLkWJAs3aCRwofRCa5WxDU1C4DV5GkM0qzw2jOJaI8uJbVGTw
-         zc+1/rtLPc4qr20NxXCiMXrhHssPEv5vgA0JRT8nBCMTaet6BEQRA4ozmAeacpLw32IS
-         qF+w==
-X-Gm-Message-State: AOAM532PyDBsRUXMJKRJA3yk3OyRDaZPvW56G7D2uSMyCfClHo+0d6tY
-        nmy8vZXX8Iu5VzcvqV4xi7rXd1qbwbIimA==
-X-Google-Smtp-Source: ABdhPJw/cGM0YEr1SGpC70+EE0aduMjiy3DUOtzXdXm1f2UI48ICWPnnjkNAv7zmg2/7VnoLQWJSkw==
-X-Received: by 2002:a17:90a:5106:: with SMTP id t6mr1303122pjh.235.1604044661233;
-        Fri, 30 Oct 2020 00:57:41 -0700 (PDT)
+        bh=PdodUo+6mcNMJwIz8HCiSd/BPrJxVSi77oUzRemdDVU=;
+        b=RnifNdlvwjn/LECdKxw0i3czLhlUCO3yMOZe9CdbT/Okx2xxODYzIvRUis7NtIM+lI
+         8dJHtQnBtuD0q/bBQyJYElEkLUGyWuWWsHLm9DL+0zaNxw/rumdsTTLClwMGMpTwvaoJ
+         LVt1ljf99VZs1YMhhz3QQY4wOMKqxUkBv8xJ0iKNXp7nXJSmzgLAKx0ZZzSw/+vPIDnD
+         gGB8SHQAqeVh7EFplaeKpdU1qML0JvUi9ItLeMrlZpCZZ3npsjoOe6KIxHINr7nplyZk
+         cTz/RRJhdltsCxm5tcJt3+5atAXPUK76HcooownQbcyt4CuzJEChaNt/yP6Kl93GogjR
+         HU9Q==
+X-Gm-Message-State: AOAM531FTTboeIcI9zRJWf7hBjFWcQMPqmAWoan7axYQ7P0wlV/Io7mr
+        lMX3+3pIChcTLwujSvFoI/BqNv2B6/t3gQ==
+X-Google-Smtp-Source: ABdhPJzNlDsxhwQNEze1EEKkOurdKJhokUzfb3AC4vmpr4YhZDvoUJ56zx/W4XVqnFo9vWYKxhrM8A==
+X-Received: by 2002:aa7:96f6:0:b029:164:2def:5ef7 with SMTP id i22-20020aa796f60000b02901642def5ef7mr8009841pfq.44.1604044666400;
+        Fri, 30 Oct 2020 00:57:46 -0700 (PDT)
 Received: from localhost (114-34-18-97.HINET-IP.hinet.net. [114.34.18.97])
-        by smtp.gmail.com with ESMTPSA id a143sm5423045pfd.138.2020.10.30.00.57.40
+        by smtp.gmail.com with ESMTPSA id e4sm2388392pjg.44.2020.10.30.00.57.45
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 30 Oct 2020 00:57:40 -0700 (PDT)
+        Fri, 30 Oct 2020 00:57:45 -0700 (PDT)
 From:   Ajye Huang <ajye.huang@gmail.com>
 X-Google-Original-From: Ajye Huang <ajye_huang@compal.corp-partner.google.com>
 To:     linux-kernel@vger.kernel.org
@@ -66,9 +66,9 @@ Cc:     Mark Brown <broonie@kernel.org>,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         alsa-devel@alsa-project.org,
         Ajye Huang <ajye_huang@compal.corp-partner.google.com>
-Subject: [PATCH v2 1/2] ASoC: google: dt-bindings: modify machine bindings for two MICs case
-Date:   Fri, 30 Oct 2020 15:57:23 +0800
-Message-Id: <20201030075724.1616766-2-ajye_huang@compal.corp-partner.google.com>
+Subject: [PATCH v2 2/2] ASoC: qcom: sc7180: Modify machine driver for 2mic
+Date:   Fri, 30 Oct 2020 15:57:24 +0800
+Message-Id: <20201030075724.1616766-3-ajye_huang@compal.corp-partner.google.com>
 X-Mailer: git-send-email 2.25.1
 In-Reply-To: <20201030075724.1616766-1-ajye_huang@compal.corp-partner.google.com>
 References: <20201030075724.1616766-1-ajye_huang@compal.corp-partner.google.com>
@@ -78,93 +78,115 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add a property "dmic-gpios" for switching between two MICs.
+In addition, having mixer control to switch between DMICs by
+using "dmic-gpios" property.
+
+Refer to this one as an example,
+commit b7a742cff3f6 ("ASoC: AMD: Use mixer control to switch between DMICs")
 
 Signed-off-by: Ajye Huang <ajye_huang@compal.corp-partner.google.com>
 ---
- .../bindings/sound/google,sc7180-trogdor.yaml | 58 +++++++++++++++++++
- 1 file changed, 58 insertions(+)
+ sound/soc/qcom/sc7180.c | 59 +++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 59 insertions(+)
 
-diff --git a/Documentation/devicetree/bindings/sound/google,sc7180-trogdor.yaml b/Documentation/devicetree/bindings/sound/google,sc7180-trogdor.yaml
-index efc34689d6b5..9e0505467e57 100644
---- a/Documentation/devicetree/bindings/sound/google,sc7180-trogdor.yaml
-+++ b/Documentation/devicetree/bindings/sound/google,sc7180-trogdor.yaml
-@@ -34,6 +34,9 @@ properties:
-   "#size-cells":
-     const: 0
+diff --git a/sound/soc/qcom/sc7180.c b/sound/soc/qcom/sc7180.c
+index b391f64c3a80..e9366bb5f3c2 100644
+--- a/sound/soc/qcom/sc7180.c
++++ b/sound/soc/qcom/sc7180.c
+@@ -5,6 +5,8 @@
+ // sc7180.c -- ALSA SoC Machine driver for SC7180
  
-+  dmic-gpios:
-+    description: GPIO for switching between DMICs
-+
- patternProperties:
-   "^dai-link(@[0-9])?$":
-     description:
-@@ -81,6 +84,7 @@ additionalProperties: false
- examples:
+ #include <dt-bindings/sound/sc7180-lpass.h>
++#include <linux/gpio.h>
++#include <linux/gpio/consumer.h>
+ #include <linux/module.h>
+ #include <linux/of_device.h>
+ #include <linux/platform_device.h>
+@@ -23,6 +25,9 @@
  
-   - |
-+    //Example 1
-     sound {
-         compatible = "google,sc7180-trogdor";
-         model = "sc7180-rt5682-max98357a-1mic";
-@@ -128,3 +132,57 @@ examples:
-             };
-         };
-     };
+ #define DRIVER_NAME "SC7180"
+ 
++static struct gpio_desc *dmic_sel;
++static int dmic_switch;
 +
-+  - |
-+    //Example 2 (2mic case)
-+    sound {
-+        compatible = "google,sc7180-trogdor";
-+        model = "sc7180-rt5682-max98357a-2mic";
+ struct sc7180_snd_data {
+ 	struct snd_soc_card card;
+ 	u32 pri_mi2s_clk_count;
+@@ -169,6 +174,23 @@ static int sc7180_snd_startup(struct snd_pcm_substream *substream)
+ 	return 0;
+ }
+ 
++static int dmic_get(struct snd_kcontrol *kcontrol,
++		    struct snd_ctl_elem_value *ucontrol)
++{
++	ucontrol->value.integer.value[0] = dmic_switch;
++	return 0;
++}
 +
-+        audio-routing =
-+                    "Headphone Jack", "HPOL",
-+                    "Headphone Jack", "HPOR";
++static int dmic_set(struct snd_kcontrol *kcontrol,
++		    struct snd_ctl_elem_value *ucontrol)
++{
++	if (dmic_sel) {
++		dmic_switch = ucontrol->value.integer.value[0];
++		gpiod_set_value(dmic_sel, dmic_switch);
++	}
++	return 0;
++}
 +
-+        #address-cells = <1>;
-+        #size-cells = <0>;
+ static void sc7180_snd_shutdown(struct snd_pcm_substream *substream)
+ {
+ 	struct snd_soc_pcm_runtime *rtd = substream->private_data;
+@@ -206,6 +228,30 @@ static const struct snd_soc_dapm_widget sc7180_snd_widgets[] = {
+ 	SND_SOC_DAPM_MIC("Headset Mic", NULL),
+ };
+ 
++static const char * const dmic_mux_text[] = {
++	"Front Mic",
++	"Rear Mic",
++};
 +
-+        dmic-gpios = <&tlmm 86 0>;
++static SOC_ENUM_SINGLE_DECL(sc7180_dmic_enum,
++			    SND_SOC_NOPM, 0, dmic_mux_text);
 +
-+        dai-link@0 {
-+            link-name = "MultiMedia0";
-+            reg = <0>;
-+            cpu {
-+                sound-dai = <&lpass_cpu 0>;
-+            };
++static const struct snd_kcontrol_new sc7180_dmic_mux_control =
++	SOC_DAPM_ENUM_EXT("DMIC Select Mux", sc7180_dmic_enum,
++			  dmic_get, dmic_set);
 +
-+            codec {
-+                sound-dai = <&alc5682 0>;
-+            };
-+        };
++static const struct snd_soc_dapm_widget sc7180_snd_dual_mic_widgets[] = {
++	SND_SOC_DAPM_HP("Headphone Jack", NULL),
++	SND_SOC_DAPM_MIC("Headset Mic", NULL),
++	SND_SOC_DAPM_MIC("DMIC", NULL),
++	SND_SOC_DAPM_MUX("Dmic Mux", SND_SOC_NOPM, 0, 0, &sc7180_dmic_mux_control),
++};
 +
-+        dai-link@1 {
-+            link-name = "MultiMedia1";
-+            reg = <1>;
-+            cpu {
-+                sound-dai = <&lpass_cpu 1>;
-+            };
++static const struct snd_soc_dapm_route sc7180_snd_dual_mic_audio_route[] = {
++	{"Dmic Mux", "Front Mic", "DMIC"},
++	{"Dmic Mux", "Rear Mic", "DMIC"},
++};
 +
-+            codec {
-+                sound-dai = <&max98357a>;
-+            };
-+        };
+ static void sc7180_add_ops(struct snd_soc_card *card)
+ {
+ 	struct snd_soc_dai_link *link;
+@@ -238,6 +284,19 @@ static int sc7180_snd_platform_probe(struct platform_device *pdev)
+ 	card->dapm_widgets = sc7180_snd_widgets;
+ 	card->num_dapm_widgets = ARRAY_SIZE(sc7180_snd_widgets);
+ 
++	if (of_property_read_bool(dev->of_node, "dmic-gpios")) {
++		card->dapm_widgets = sc7180_snd_dual_mic_widgets,
++		card->num_dapm_widgets = ARRAY_SIZE(sc7180_snd_dual_mic_widgets),
++		card->dapm_routes = sc7180_snd_dual_mic_audio_route,
++		card->num_dapm_routes = ARRAY_SIZE(sc7180_snd_dual_mic_audio_route),
++		dmic_sel = devm_gpiod_get(&pdev->dev, "dmic", GPIOD_OUT_LOW);
++		if (IS_ERR(dmic_sel)) {
++			dev_err(&pdev->dev, "DMIC gpio failed err=%d\n",
++				PTR_ERR(dmic_sel));
++				return PTR_ERR(dmic_sel);
++		}
++	}
 +
-+        dai-link@2 {
-+            link-name = "MultiMedia2";
-+            reg = <2>;
-+            cpu {
-+                sound-dai = <&lpass_hdmi 0>;
-+            };
-+
-+            codec {
-+                sound-dai = <&msm_dp>;
-+            };
-+        };
-+    };
-+
-+...
+ 	ret = qcom_snd_parse_of(card);
+ 	if (ret)
+ 		return ret;
 -- 
 2.25.1
 
