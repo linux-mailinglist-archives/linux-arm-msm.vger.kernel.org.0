@@ -2,32 +2,32 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 1CE8E29FAE3
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Oct 2020 02:53:37 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 8B8EA29FAD9
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Oct 2020 02:53:32 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726338AbgJ3Bwr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 29 Oct 2020 21:52:47 -0400
-Received: from z5.mailgun.us ([104.130.96.5]:43112 "EHLO z5.mailgun.us"
+        id S1726334AbgJ3BwR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 29 Oct 2020 21:52:17 -0400
+Received: from m42-4.mailgun.net ([69.72.42.4]:29468 "EHLO m42-4.mailgun.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726070AbgJ3Bwq (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 29 Oct 2020 21:52:46 -0400
+        id S1726322AbgJ3BwQ (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 29 Oct 2020 21:52:16 -0400
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1604022765; h=References: In-Reply-To: Message-Id: Date:
+ s=smtp; t=1604022736; h=References: In-Reply-To: Message-Id: Date:
  Subject: Cc: To: From: Sender;
- bh=sG+Hz7q1w0f+xVvgAmIqgk5pLO8+fZGC0xGXb78HCWI=; b=omF2kEJNZDS4TXP8h9v8cigOhZJ9HiQFDNwuQSfGLyM3/zyNO9co2moSlP2F34Yd0qYfSy13
- Bnlbt34bUOG6EnN9WdutcNHN0E6cqcJbx6wrXdGg7hHy2zZbrdrXs56o0KjG8zPz2GFO04t2
- HtlD8DEUS3dow4W2aG3VaWUhGyE=
-X-Mailgun-Sending-Ip: 104.130.96.5
+ bh=uDkB0j/nHi+yko6XBTUhnB4d9dN2gZbTP2OcDO6gRrY=; b=JJAaeHIgk/4yew1pdA4kd8mjN+pSg5eOZrq1IjLwnw2mzSvQ4/ocWDUrrBEHv/HxmbuyDwh/
+ E+zmBwvFYfO5nkbzP3XXV8QtUKffTuhVvoCBdoFoCUb4IKsX398L6w00/DxXx5z40zPxYTHp
+ 3nU4OZGddictDgsssDJPYKdj6+w=
+X-Mailgun-Sending-Ip: 69.72.42.4
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org
  (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n05.prod.us-west-2.postgun.com with SMTP id
- 5f9b71cfc3d7c9858ad1429e (version=TLS1.2,
+ smtp-out-n04.prod.us-west-2.postgun.com with SMTP id
+ 5f9b71cfc3d7c9858ad1431e (version=TLS1.2,
  cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 30 Oct 2020 01:52:15
  GMT
 Sender: bbhatt=codeaurora.org@mg.codeaurora.org
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 4E388C433C9; Fri, 30 Oct 2020 01:52:15 +0000 (UTC)
+        id DAD73C433CB; Fri, 30 Oct 2020 01:52:15 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
@@ -37,9 +37,9 @@ Received: from malabar-linux.qualcomm.com (i-global254.qualcomm.com [199.106.103
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
         (No client certificate requested)
         (Authenticated sender: bbhatt)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 6C5B5C433F0;
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id E811AC433C8;
         Fri, 30 Oct 2020 01:52:14 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 6C5B5C433F0
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org E811AC433C8
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=bbhatt@codeaurora.org
 From:   Bhaumik Bhatt <bbhatt@codeaurora.org>
@@ -47,9 +47,9 @@ To:     manivannan.sadhasivam@linaro.org
 Cc:     linux-arm-msm@vger.kernel.org, hemantk@codeaurora.org,
         jhugo@codeaurora.org, linux-kernel@vger.kernel.org,
         Bhaumik Bhatt <bbhatt@codeaurora.org>
-Subject: [PATCH v2 08/12] bus: mhi: core: Move to an error state on mission mode failure
-Date:   Thu, 29 Oct 2020 18:51:59 -0700
-Message-Id: <1604022723-34578-9-git-send-email-bbhatt@codeaurora.org>
+Subject: [PATCH v2 09/12] bus: mhi: core: Check for IRQ availability during registration
+Date:   Thu, 29 Oct 2020 18:52:00 -0700
+Message-Id: <1604022723-34578-10-git-send-email-bbhatt@codeaurora.org>
 X-Mailer: git-send-email 2.7.4
 In-Reply-To: <1604022723-34578-1-git-send-email-bbhatt@codeaurora.org>
 References: <1604022723-34578-1-git-send-email-bbhatt@codeaurora.org>
@@ -57,39 +57,46 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-If the host receives a mission mode event and by the time it can get
-to processing it, the register accesses fail implying a connectivity
-error, MHI should move to an error state. This helps avoid longer wait
-times from a synchronous power up perspective and accurately reflects
-the MHI execution environment and power management states.
+Current design allows a controller to register with MHI successfully
+without the need to have any IRQs available for use. If no IRQs are
+available, power up requests to MHI can fail after a successful
+registration with MHI. Improve the design by checking for the number
+of IRQs available sooner within the mhi_regsiter_controller() API as
+it is required to be specified by the controller.
 
 Signed-off-by: Bhaumik Bhatt <bbhatt@codeaurora.org>
-Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 ---
- drivers/bus/mhi/core/pm.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ drivers/bus/mhi/core/init.c | 2 +-
+ drivers/bus/mhi/core/pm.c   | 3 ---
+ 2 files changed, 1 insertion(+), 4 deletions(-)
 
+diff --git a/drivers/bus/mhi/core/init.c b/drivers/bus/mhi/core/init.c
+index 23b6dd6..5dd9e39 100644
+--- a/drivers/bus/mhi/core/init.c
++++ b/drivers/bus/mhi/core/init.c
+@@ -858,7 +858,7 @@ int mhi_register_controller(struct mhi_controller *mhi_cntrl,
+ 
+ 	if (!mhi_cntrl->runtime_get || !mhi_cntrl->runtime_put ||
+ 	    !mhi_cntrl->status_cb || !mhi_cntrl->read_reg ||
+-	    !mhi_cntrl->write_reg)
++	    !mhi_cntrl->write_reg || !mhi_cntrl->nr_irqs)
+ 		return -EINVAL;
+ 
+ 	ret = parse_config(mhi_cntrl, config);
 diff --git a/drivers/bus/mhi/core/pm.c b/drivers/bus/mhi/core/pm.c
-index 0299196..06adea2 100644
+index 06adea2..1d04e401 100644
 --- a/drivers/bus/mhi/core/pm.c
 +++ b/drivers/bus/mhi/core/pm.c
-@@ -383,10 +383,14 @@ static int mhi_pm_mission_mode_transition(struct mhi_controller *mhi_cntrl)
- 	write_lock_irq(&mhi_cntrl->pm_lock);
- 	if (MHI_REG_ACCESS_VALID(mhi_cntrl->pm_state))
- 		mhi_cntrl->ee = mhi_get_exec_env(mhi_cntrl);
--	write_unlock_irq(&mhi_cntrl->pm_lock);
+@@ -926,9 +926,6 @@ int mhi_async_power_up(struct mhi_controller *mhi_cntrl)
  
--	if (!MHI_IN_MISSION_MODE(mhi_cntrl->ee))
-+	if (!MHI_IN_MISSION_MODE(mhi_cntrl->ee)) {
-+		mhi_cntrl->pm_state = MHI_PM_LD_ERR_FATAL_DETECT;
-+		write_unlock_irq(&mhi_cntrl->pm_lock);
-+		wake_up_all(&mhi_cntrl->state_event);
- 		return -EIO;
-+	}
-+	write_unlock_irq(&mhi_cntrl->pm_lock);
+ 	dev_info(dev, "Requested to power ON\n");
  
- 	wake_up_all(&mhi_cntrl->state_event);
- 
+-	if (mhi_cntrl->nr_irqs < 1)
+-		return -EINVAL;
+-
+ 	/* Supply default wake routines if not provided by controller driver */
+ 	if (!mhi_cntrl->wake_get || !mhi_cntrl->wake_put ||
+ 	    !mhi_cntrl->wake_toggle) {
 -- 
 The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
 a Linux Foundation Collaborative Project
