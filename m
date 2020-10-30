@@ -2,97 +2,93 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 4EF2D29FACE
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Oct 2020 02:52:27 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D0D1D29FAF8
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Oct 2020 02:58:10 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726376AbgJ3BwX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 29 Oct 2020 21:52:23 -0400
-Received: from m42-4.mailgun.net ([69.72.42.4]:29468 "EHLO m42-4.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726359AbgJ3BwT (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 29 Oct 2020 21:52:19 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1604022739; h=References: In-Reply-To: Message-Id: Date:
- Subject: Cc: To: From: Sender;
- bh=muClZ3aEgtW2SVMTa7yNNtr5APzEcgr+2RBahZX568o=; b=c/ud4dv+6emgiFvhgCpOwtFyIv7E4+FH5pCqkSFX/Wj1ICBZZNz24qlBPZ/HmLe3UP5vrrBa
- C35pHMFr0BK4jWKAWx6TbGKOzcazAGQs+qhKIiwYpEdPBS9u4x14jueV0XjZr+fSG1XrCxPM
- hhkEq9W7JCmtlDRft3F9BGjUh1c=
-X-Mailgun-Sending-Ip: 69.72.42.4
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n01.prod.us-east-1.postgun.com with SMTP id
- 5f9b71d252a6c59f17fb873f (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 30 Oct 2020 01:52:18
- GMT
-Sender: bbhatt=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 43A25C43387; Fri, 30 Oct 2020 01:52:17 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
-        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
-Received: from malabar-linux.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: bbhatt)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 7EAE6C43382;
-        Fri, 30 Oct 2020 01:52:16 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 7EAE6C43382
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=bbhatt@codeaurora.org
-From:   Bhaumik Bhatt <bbhatt@codeaurora.org>
-To:     manivannan.sadhasivam@linaro.org
-Cc:     linux-arm-msm@vger.kernel.org, hemantk@codeaurora.org,
-        jhugo@codeaurora.org, linux-kernel@vger.kernel.org,
-        Bhaumik Bhatt <bbhatt@codeaurora.org>
-Subject: [PATCH v2 12/12] bus: mhi: core: Remove MHI event ring IRQ handlers when powering down
-Date:   Thu, 29 Oct 2020 18:52:03 -0700
-Message-Id: <1604022723-34578-13-git-send-email-bbhatt@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1604022723-34578-1-git-send-email-bbhatt@codeaurora.org>
-References: <1604022723-34578-1-git-send-email-bbhatt@codeaurora.org>
+        id S1726253AbgJ3B6J (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 29 Oct 2020 21:58:09 -0400
+Received: from userp2120.oracle.com ([156.151.31.85]:58200 "EHLO
+        userp2120.oracle.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726240AbgJ3B6J (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 29 Oct 2020 21:58:09 -0400
+Received: from pps.filterd (userp2120.oracle.com [127.0.0.1])
+        by userp2120.oracle.com (8.16.0.42/8.16.0.42) with SMTP id 09U1meL5165332;
+        Fri, 30 Oct 2020 01:57:43 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=to : cc : subject :
+ from : message-id : references : date : in-reply-to : mime-version :
+ content-type; s=corp-2020-01-29;
+ bh=Xo4961axV8+bFG/0+a1irfWYVoKHxcVZBEbloOyD+OI=;
+ b=TGaH6sbnseOioiaCfe3Tln7baygF+t91CosgtuKpRisdLMWTJUA+pjCE04PpUvTuZZXM
+ Ggh0eSiJEMfSZZldoef9Cfmzt/tpVM3/Bx8fcVBqFDlNlMhwCUcmi2+36AjfLMi8Bmzp
+ cTfF/krecrYIitVWHY+YxGuV4kdNs3iNozSrPi0S23NNSQjySPzEVp5BRLDX3lMlfkrl
+ IrbERUmnSSZf92CmqHqd57/iTq8/PXy0McnDUJZzLC0vz9XL3oNAytGPnz/DB2EQ0Ow3
+ CyaGO9ViAXTlbi/sEAM3DvHmU3U20vriec/ehh0wuME//MpLrAIRt0Kf6Tl5SFrBQYjP AQ== 
+Received: from aserp3020.oracle.com (aserp3020.oracle.com [141.146.126.70])
+        by userp2120.oracle.com with ESMTP id 34dgm4d9yw-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=FAIL);
+        Fri, 30 Oct 2020 01:57:42 +0000
+Received: from pps.filterd (aserp3020.oracle.com [127.0.0.1])
+        by aserp3020.oracle.com (8.16.0.42/8.16.0.42) with SMTP id 09U1uBE7104141;
+        Fri, 30 Oct 2020 01:57:42 GMT
+Received: from aserv0121.oracle.com (aserv0121.oracle.com [141.146.126.235])
+        by aserp3020.oracle.com with ESMTP id 34cx616f11-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+        Fri, 30 Oct 2020 01:57:42 +0000
+Received: from abhmp0018.oracle.com (abhmp0018.oracle.com [141.146.116.24])
+        by aserv0121.oracle.com (8.14.4/8.13.8) with ESMTP id 09U1vcO4028926;
+        Fri, 30 Oct 2020 01:57:38 GMT
+Received: from ca-mkp.ca.oracle.com (/10.159.214.123)
+        by default (Oracle Beehive Gateway v4.0)
+        with ESMTP ; Thu, 29 Oct 2020 18:57:38 -0700
+To:     Asutosh Das <asutoshd@codeaurora.org>
+Cc:     cang@codeaurora.org, martin.petersen@oracle.com,
+        linux-scsi@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        Avri Altman <avri.altman@wdc.com>,
+        "James E.J. Bottomley" <jejb@linux.ibm.com>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        Stanley Chu <stanley.chu@mediatek.com>,
+        Bean Huo <beanhuo@micron.com>,
+        Bart Van Assche <bvanassche@acm.org>,
+        Satya Tangirala <satyat@google.com>,
+        linux-kernel@vger.kernel.org (open list),
+        linux-arm-kernel@lists.infradead.org (moderated list:ARM/Mediatek SoC
+        support),
+        linux-mediatek@lists.infradead.org (moderated list:ARM/Mediatek SoC
+        support)
+Subject: Re: [PATCH v2 1/2] scsi: ufs: Put hba into LPM during clk gating
+From:   "Martin K. Petersen" <martin.petersen@oracle.com>
+Organization: Oracle Corporation
+Message-ID: <yq1mu041nnc.fsf@ca-mkp.ca.oracle.com>
+References: <52198e70bff750632740d78678a815256d697e43.1603825776.git.asutoshd@codeaurora.org>
+Date:   Thu, 29 Oct 2020 21:57:35 -0400
+In-Reply-To: <52198e70bff750632740d78678a815256d697e43.1603825776.git.asutoshd@codeaurora.org>
+        (Asutosh Das's message of "Tue, 27 Oct 2020 12:10:36 -0700")
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Proofpoint-Virus-Version: vendor=nai engine=6000 definitions=9789 signatures=668682
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 adultscore=0 mlxscore=0 mlxlogscore=999
+ suspectscore=1 bulkscore=0 malwarescore=0 spamscore=0 phishscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2009150000
+ definitions=main-2010300012
+X-Proofpoint-Virus-Version: vendor=nai engine=6000 definitions=9789 signatures=668682
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 lowpriorityscore=0 impostorscore=0
+ adultscore=0 bulkscore=0 spamscore=0 phishscore=0 mlxlogscore=999
+ suspectscore=1 clxscore=1011 mlxscore=0 malwarescore=0 priorityscore=1501
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2009150000
+ definitions=main-2010300011
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-While powering down, the device may or may not acknowledge an MHI
-RESET issued by host for a graceful shutdown scenario and end up
-sending an incoming data packet after tasklets have been killed.
-If a rogue device sends this interrupt for a data transfer event
-ring update, it can result in a tasklet getting scheduled while a
-clean up is ongoing or has completed and cause access to freed
-memory leading to a NULL pointer exception. Remove the interrupt
-handlers for MHI event rings early on to avoid this scenario.
 
-Signed-off-by: Bhaumik Bhatt <bbhatt@codeaurora.org>
----
- drivers/bus/mhi/core/pm.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+Asutosh,
 
-diff --git a/drivers/bus/mhi/core/pm.c b/drivers/bus/mhi/core/pm.c
-index ffbf6f5..28e2b87 100644
---- a/drivers/bus/mhi/core/pm.c
-+++ b/drivers/bus/mhi/core/pm.c
-@@ -627,6 +627,7 @@ static void mhi_pm_sys_error_transition(struct mhi_controller *mhi_cntrl)
- 	for (i = 0; i < mhi_cntrl->total_ev_rings; i++, mhi_event++) {
- 		if (mhi_event->offload_ev)
- 			continue;
-+		free_irq(mhi_cntrl->irq[mhi_event->irq], mhi_event);
- 		tasklet_kill(&mhi_event->task);
- 	}
- 
-@@ -1164,7 +1165,7 @@ void mhi_power_down(struct mhi_controller *mhi_cntrl, bool graceful)
- 	/* Wait for shutdown to complete */
- 	flush_work(&mhi_cntrl->st_worker);
- 
--	mhi_deinit_free_irq(mhi_cntrl);
-+	free_irq(mhi_cntrl->irq[0], mhi_cntrl);
- 
- 	if (!mhi_cntrl->pre_init) {
- 		/* Free all allocated resources */
+> During clock gating, after clocks are disabled, put hba into LPM to
+> save more power.
+
+Applied to 5.11/scsi-staging, thanks!
+
 -- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project
-
+Martin K. Petersen	Oracle Linux Engineering
