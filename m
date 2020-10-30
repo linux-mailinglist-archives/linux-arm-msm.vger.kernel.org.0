@@ -2,118 +2,83 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 24C4D2A0792
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Oct 2020 15:12:33 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 118422A08AE
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Oct 2020 15:58:44 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726852AbgJ3OMU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 30 Oct 2020 10:12:20 -0400
-Received: from foss.arm.com ([217.140.110.172]:35516 "EHLO foss.arm.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726259AbgJ3OMU (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 30 Oct 2020 10:12:20 -0400
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 5D098139F;
-        Fri, 30 Oct 2020 07:12:19 -0700 (PDT)
-Received: from [10.57.54.223] (unknown [10.57.54.223])
-        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id C06B13F68F;
-        Fri, 30 Oct 2020 07:12:16 -0700 (PDT)
-Subject: Re: [PATCH v2 5/5] firmware: QCOM_SCM: Allow qcom_scm driver to be
- loadable as a permenent module
-To:     John Stultz <john.stultz@linaro.org>
-Cc:     Will Deacon <will@kernel.org>, Maulik Shah <mkshah@codeaurora.org>,
-        Jason Cooper <jason@lakedaemon.net>,
-        Saravana Kannan <saravanak@google.com>,
-        Marc Zyngier <maz@kernel.org>,
-        lkml <linux-kernel@vger.kernel.org>,
-        Lina Iyer <ilina@codeaurora.org>,
-        "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
-        iommu@lists.linux-foundation.org, Andy Gross <agross@kernel.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Thomas Gleixner <tglx@linutronix.de>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Todd Kjos <tkjos@google.com>
-References: <20200625001039.56174-1-john.stultz@linaro.org>
- <20200625001039.56174-6-john.stultz@linaro.org>
- <20200702141825.GA16941@willie-the-truck>
- <CALAqxLVZ2EhutYjOt7Be1RgnYwHT6-4m6DxA-t1wuxuSy=6yDQ@mail.gmail.com>
- <20200710075411.GA30011@willie-the-truck>
- <CALAqxLWadLrxckRHRAR0Q417RnFKquQJbRfO_DLEVH56cykRow@mail.gmail.com>
- <20200713204133.GA3731@willie-the-truck>
- <CALAqxLUDVEq4ds2Wbic6uaK3=dELKKO4eGQxjHFFz19GeUFd_w@mail.gmail.com>
- <20201028135118.GA28554@willie-the-truck>
- <ae6ba27a-d3c8-8b98-c263-ec779ef35738@arm.com>
- <CALAqxLW13=cvTX3ghskb9uG_YoVh7kvp8UQGUB8mVDGYXHWpVQ@mail.gmail.com>
-From:   Robin Murphy <robin.murphy@arm.com>
-Message-ID: <b5c5146d-4112-e0c2-d1dd-2ad0882190b3@arm.com>
-Date:   Fri, 30 Oct 2020 14:12:15 +0000
-User-Agent: Mozilla/5.0 (Windows NT 10.0; rv:78.0) Gecko/20100101
- Thunderbird/78.4.0
+        id S1726882AbgJ3O6l (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 30 Oct 2020 10:58:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39130 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726794AbgJ3O6b (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 30 Oct 2020 10:58:31 -0400
+Received: from mail-ed1-x541.google.com (mail-ed1-x541.google.com [IPv6:2a00:1450:4864:20::541])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 962FEC0613DB
+        for <linux-arm-msm@vger.kernel.org>; Fri, 30 Oct 2020 07:58:31 -0700 (PDT)
+Received: by mail-ed1-x541.google.com with SMTP id g25so6142155edm.6
+        for <linux-arm-msm@vger.kernel.org>; Fri, 30 Oct 2020 07:58:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:reply-to:from:date:message-id:subject:to;
+        bh=9fkQXWnoPSypfyxvIrXWSyd1r4Ua0eeDJczOBpIf/BU=;
+        b=cba/prsbSBmYoHoIyJJ/4nz72WNuXyuE8Im8hHokykrknu6T+ZGQ3oNaEZCnDQMKfK
+         7InrWK9/LAehftIUxFF07tvuUQ/41xDXt8c8cRINmlHgR1biRfbdW9zZPxVC6xa8zOlP
+         K6M6oRsBtl8MN1IVNiGcNelh1LOXBPRCedQHjpXjHdhTZUoXOfQ5ssal2G05i4dOSCvv
+         FIx5VhgkFc0MSmWonLWORS6bGxkDSNKyYqWmGabj1TsHCGlpIexLxPpAsXs6aOmBy4OY
+         u1xNW9W0JHHwE2pLQBvrBX9wQMtbUIk6CF2f6hu1cvsgwIaE0/cl0h377THHVavVg8oE
+         Ypbg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
+         :subject:to;
+        bh=9fkQXWnoPSypfyxvIrXWSyd1r4Ua0eeDJczOBpIf/BU=;
+        b=Sgncr6YMjFRwvsPXEL2bbATXFrSjl2NNI0cgOTVa7HbeKnDgdKFJwgfAuOWVO5BpQt
+         VG9ENNpProQIJ0fYw3hXceBQdAOP2+TwsZUK3nbvFXNiHaFOUY7dfYctBziL6avYdOYG
+         0l6ahrTrQfUmPMdGF39hN6RD0pAIUhckJABGB/q7NULJUHa2uG8EK4HdLoXDp8E9r3Mi
+         9FklCYSOSrzyvA7Nc/8rywt020wZ7RhhS/GWmdaL8+mrubEDcRF3OWJvwKiduJPBDI0Z
+         XwffoHVWZzPUhuaYtMI9Rb7aJxliiII1Uct373KenZNXEStltnYYW9bSyXEYJPKxuapO
+         jSKA==
+X-Gm-Message-State: AOAM530HuD42DShJK75L/HzQ8AeSEc0tK7Dxr94VugaTWWxeJLAa/l5/
+        ZzGX+FTkK+sKn5q8xm4RSWmIRlr24ybbxV9bHQ==
+X-Google-Smtp-Source: ABdhPJz2xsjxOvoK0J4Ck702AA6tUztWDi8Hr+jNkMDLFNqNVV9sSKYCidfmYBReGemdlea1AJeouFi1w4gUiDPqlYM=
+X-Received: by 2002:a50:9e82:: with SMTP id a2mr2760020edf.117.1604069910083;
+ Fri, 30 Oct 2020 07:58:30 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <CALAqxLW13=cvTX3ghskb9uG_YoVh7kvp8UQGUB8mVDGYXHWpVQ@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-GB
-Content-Transfer-Encoding: 7bit
+Received: by 2002:a50:f14c:0:0:0:0:0 with HTTP; Fri, 30 Oct 2020 07:58:29
+ -0700 (PDT)
+Reply-To: li.anable85@gmail.com
+From:   Liliane Abel <k.griest04@gmail.com>
+Date:   Fri, 30 Oct 2020 15:58:29 +0100
+Message-ID: <CABAZL7kO5JQZMDhdiGK6i8XTXe8pbB5xWmsnDKzGXmDahQmacQ@mail.gmail.com>
+Subject: 
+To:     undisclosed-recipients:;
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2020-10-30 01:02, John Stultz wrote:
-> On Wed, Oct 28, 2020 at 7:51 AM Robin Murphy <robin.murphy@arm.com> wrote:
->> Hmm, perhaps I'm missing something here, but even if the config options
->> *do* line up, what prevents arm-smmu probing before qcom-scm and
->> dereferencing NULL in qcom_scm_qsmmu500_wait_safe_toggle() before __scm
->> is initialised?
-> 
-> Oh man, this spun me on a "wait, but how does it all work!" trip. :)
-> 
-> So in the non-module case, the qcom_scm driver is a subsys_initcall
-> and the arm-smmu is a module_platform_driver, so the ordering works
-> out.
-> 
-> In the module case, the arm-smmu code isn't loaded until the qcom_scm
-> driver finishes probing due to the symbol dependency handling.
+Dearest
 
-My point is that module load != driver probe. AFAICS you could disable 
-drivers_autoprobe, load both modules, bind the SMMU to its driver first, 
-and boom!
+Greeting my dear, I am Liliane Abel by name, The only daughter of late
+Mr.Benson Abel. My father is one of the top Politician in our country
+and my mother is a farmers and cocoa merchant when they were both
+alive. After the death of my mother, long ago, my father was
+controlling their business until he was poisoned by his business
+associates which he suffered and died.
 
-> To double check this, I added a big msleep at the top of the
-> qcom_scm_probe to try to open the race window you described, but the
-> arm_smmu_device_probe() doesn't run until after qcom_scm_probe
-> completes.
-
-I don't think asynchronous probing is enabled by default, so indeed I 
-would expect that to still happen to work ;)
-
-> So at least as a built in / built in, or a module/module case its ok.
-> And in the case where arm-smmu is a module and qcom_scm is built in
-> that's ok too.
-
-In the built-in case, I'm sure it happens to work out similarly because 
-the order of nodes in the DTB tends to be the order in which devices are 
-autoprobed. Again, async probe might be enough to break things; manually 
-binding drivers definitely should; moving the firmware node to the end 
-of the DTB probably would as well.
-
-> Its just the case my patch is trying to prevent is where arm-smmu is
-> built in, but qcom_scm is a module that it can't work (due to build
-> errors in missing symbols,  or if we tried to use function pointers to
-> plug in the qcom_scm - the lack of initialization ordering).
-> 
-> Hopefully that addresses your concern? Let me know if I'm still
-> missing something.
-
-What I was dancing around is that the SCM API (and/or its users) appears 
-to need a general way to tell whether SCM is ready or not, because the 
-initialisation ordering problem is there anyway. Neither Kconfig nor the 
-module loader can solve that.
-
-One possible self-contained workaround would be to see if an SCM DT node 
-exists, see if a corresponding device exists, and see if that device has 
-a driver bound. It's a little ugly, and strictly it still doesn't tell 
-you that the _right_ driver is bound, but at least it's a lot more 
-robust than implicitly relying on DT order, default probing behaviours, 
-and hope.
-
-Robin.
+Before the death of my father, He told me about (two million five
+hundred thousand united states dollars) which he deposited in the bank
+in Lome-Togo, It was the money he intended to transfer overseas for
+investment before he was poisoned. He also instructed me that I should
+seek for foreign partners in any country of my choice who will assist
+me transfer this money in overseas account where the money will be
+wisely invested.
+I am seeking for your kind assistance in the following ways:  (1) to
+provide a safe bank account into where the money will be transferred
+for investment. (2) To serve as a guardian of this fund since I am a
+girl of 19 years old. (3) To make arrangement for me to come over to
+your country to further my education. This is my reason for writing to
+you. Please if you are willing to assist me I will offer you 25% of
+the total money. Reply if  you are interested
+Best regards.
+Liliane Abel.
