@@ -2,204 +2,93 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 6631E2A0A3F
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Oct 2020 16:49:05 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 53E0F2A0B3A
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Oct 2020 17:34:30 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726953AbgJ3PtE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 30 Oct 2020 11:49:04 -0400
-Received: from mail-ot1-f66.google.com ([209.85.210.66]:40576 "EHLO
-        mail-ot1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726259AbgJ3PtD (ORCPT
+        id S1726662AbgJ3Qe2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 30 Oct 2020 12:34:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54504 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725948AbgJ3Qe2 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 30 Oct 2020 11:49:03 -0400
-Received: by mail-ot1-f66.google.com with SMTP id f97so5936435otb.7;
-        Fri, 30 Oct 2020 08:49:03 -0700 (PDT)
+        Fri, 30 Oct 2020 12:34:28 -0400
+Received: from mail-wr1-x442.google.com (mail-wr1-x442.google.com [IPv6:2a00:1450:4864:20::442])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2461DC0613D6
+        for <linux-arm-msm@vger.kernel.org>; Fri, 30 Oct 2020 09:34:28 -0700 (PDT)
+Received: by mail-wr1-x442.google.com with SMTP id s9so7125480wro.8
+        for <linux-arm-msm@vger.kernel.org>; Fri, 30 Oct 2020 09:34:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=NMvHZyncsJAnCGJ7bRzzXbcuUxrhrDjwZNoH8hbjauU=;
+        b=HczhKDcXNJEktVrJ2FWkhcM1XR/qR77jn3aPoUh+Xei/ezpJpFNNsIhvs6YwIoN79H
+         4p3lC1CMuf3aw0M3gLTwRSzq60mRuiptOx+VPKdIS8OSjSTmxOU48dcpnEvfC9NhMSZj
+         y1QqTsjhujEqfV7kVeKCI8waFBP/rc3xmTKy00IEOWtJ7sJmLPyZsUVaa7zyOoqGgNFu
+         I9rYYgYrgBjRMaHFa085kqr2x/SuVCnBpHkVp8F4YO8VoMzw4dNp9k9nCNAw0A9o4lBQ
+         FrdTdqVX+pwsCh0xTTFKV82j5e+daljKgslTcQhU1rzYv7zwWnAijNXmMfWncLftkLFC
+         1a6Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=wvhmhQZ595EHWiOyMTrpXxnXiO+S8jr6sziyYhJ7P/c=;
-        b=LOWKlbDSa8uW+G9xdGBehYu2pTnIIf2dpIIVl4rsYMharb0K6iXfddxLxZKjg6Sn7B
-         acvkBPNJmZMTl4U9Gy4B4jiZcVkX+WyFIMrMqx6IDZP09SMDJFKYQLee0tmKxWJyJyJA
-         K1Cew2z3Ze2zcoKPqqktGbw5/K4TFSBv4Pi7Vzcjt1idUEJy0So43NZ8OLGuWuzaFgew
-         PrDGfsPSaNnUxjd7aT7hoRm9COUL62eQb4wNtSR6lnBXC2Pn+VPrbADa4iSYjC9YakH+
-         T7r/84/DEMN96Xm7AHe/cf852UWfAWhuXVTRccWdqy6LwGdL4erihtKaXdrYH5STMKHr
-         y0kg==
-X-Gm-Message-State: AOAM5304T2LScT2qH19Wqx+VHgoSQziHH56+a2U4Fg5juVh07zQKrXcq
-        InvFzqfi6iMtwSGp7nS7x8XQpZI9OQ==
-X-Google-Smtp-Source: ABdhPJzvwtWYSfsAkZsXKE4AQZP7q8bZS1ji8R3rczatLWY+P3gyv4r3JunHxDA269Um0LmsnJSVvw==
-X-Received: by 2002:a9d:8e3:: with SMTP id 90mr2193424otf.309.1604072942991;
-        Fri, 30 Oct 2020 08:49:02 -0700 (PDT)
-Received: from xps15 (24-155-109-49.dyn.grandenetworks.net. [24.155.109.49])
-        by smtp.gmail.com with ESMTPSA id y5sm1423510ool.30.2020.10.30.08.49.01
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=NMvHZyncsJAnCGJ7bRzzXbcuUxrhrDjwZNoH8hbjauU=;
+        b=ExRzAneFxahaM7g8yH8u2u25fW+cNWWaUv9BISTApfwuKEGqJtdkjrTZzhbOx1Xjmg
+         JNXnnIak7u81pgGrDacqkEd+E2AUHmh5F3ri3M7wCQnT26J+iWgGUr4+IRORLO6fDjJ7
+         EjBAMVNBnrES5zKAIHZgheHWLFf8xzDSLPTTHswwWutumiftgxmznRUevbpYWTb8/XgS
+         w8eW0mmdBMC86FvnRWgw/AvJoOfIrJlhYND7l58OQfhzkzcTUDo8P19TOUrwSXxQW+Sw
+         Wmv0s/zxFL0jc9ScE4f/ybnreZFPk08y7rshXJ7uNOtZ5plh2h/J56IvDUy/1eJj7YBE
+         tqUg==
+X-Gm-Message-State: AOAM531Y0JuAuCG7oi2DWaHtUeH/JLcZxveGzKHwcesj62YCQnwmTpWW
+        2zcrrAbTlbqR7T4y3cYuMrX37g==
+X-Google-Smtp-Source: ABdhPJxQtRnmsUD/6XK3HXHT+A8ZUqi3Ua5KDsXRg8vgZWDCVYFVV1EgwEikQP9Tw33Dm7Ruxkj8ZA==
+X-Received: by 2002:a5d:6506:: with SMTP id x6mr4483138wru.71.1604075666733;
+        Fri, 30 Oct 2020 09:34:26 -0700 (PDT)
+Received: from srini-hackbox.lan (cpc86377-aztw32-2-0-cust226.18-1.cable.virginm.net. [92.233.226.227])
+        by smtp.gmail.com with ESMTPSA id z6sm5031989wmi.1.2020.10.30.09.34.25
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 30 Oct 2020 08:49:02 -0700 (PDT)
-Received: (nullmailer pid 3904388 invoked by uid 1000);
-        Fri, 30 Oct 2020 15:49:00 -0000
-Date:   Fri, 30 Oct 2020 10:49:00 -0500
-From:   Rob Herring <robh@kernel.org>
-To:     Guru Das Srinagesh <gurus@codeaurora.org>
-Cc:     Mark Brown <broonie@kernel.org>,
-        Markus Elfring <Markus.Elfring@web.de>,
-        Lee Jones <lee.jones@linaro.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Greg KH <gregkh@linuxfoundation.org>,
-        Guenter Roeck <linux@roeck-us.net>,
-        Joe Perches <joe@perches.com>,
-        Subbaraman Narayanamurthy <subbaram@codeaurora.org>,
-        David Collins <collinsd@codeaurora.org>,
-        Anirudh Ghayal <aghayal@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org
-Subject: Re: [PATCH v2 2/3] dt-bindings: mfd: Add QCOM PM8008 MFD bindings
-Message-ID: <20201030154900.GA3896697@bogus>
-References: <cover.1603402280.git.gurus@codeaurora.org>
- <b224632c03055a92022edb5929f22f26db66bc6d.1603402280.git.gurus@codeaurora.org>
+        Fri, 30 Oct 2020 09:34:26 -0700 (PDT)
+From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+To:     linus.walleij@linaro.org, bjorn.andersson@linaro.org,
+        robh+dt@kernel.org
+Cc:     agross@kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-gpio@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Subject: [PATCH 0/2] pinctrl: qcom: Add sm8250 lpass lpi pinctrl support
+Date:   Fri, 30 Oct 2020 16:34:19 +0000
+Message-Id: <20201030163421.14041-1-srinivas.kandagatla@linaro.org>
+X-Mailer: git-send-email 2.21.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <b224632c03055a92022edb5929f22f26db66bc6d.1603402280.git.gurus@codeaurora.org>
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Oct 22, 2020 at 02:35:41PM -0700, Guru Das Srinagesh wrote:
-> Add device tree bindings for the driver for Qualcomm Technology Inc.'s
-> PM8008 MFD PMIC.
-> 
-> Signed-off-by: Guru Das Srinagesh <gurus@codeaurora.org>
-> ---
->  .../bindings/mfd/qcom,pm8008-irqchip.yaml          | 102 +++++++++++++++++++++
->  1 file changed, 102 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/mfd/qcom,pm8008-irqchip.yaml
-> 
-> diff --git a/Documentation/devicetree/bindings/mfd/qcom,pm8008-irqchip.yaml b/Documentation/devicetree/bindings/mfd/qcom,pm8008-irqchip.yaml
-> new file mode 100644
-> index 0000000..31d7b68
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/mfd/qcom,pm8008-irqchip.yaml
-> @@ -0,0 +1,102 @@
-> +# SPDX-License-Identifier: GPL-2.0-only OR BSD-2-Clause
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/mfd/qcom,pm8008-irqchip.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> +
-> +title: Qualcomm Technologies, Inc. PM8008 Multi-Function Device PMIC
-> +
-> +maintainers:
-> +  - Guru Das Srinagesh <gurus@codeaurora.org>
-> +
-> +description: |
-> +  PM8008 is a PMIC that contains 7 LDOs, 2 GPIOs, temperature monitoring, and
-> +  can be interfaced over I2C.
+This patch adds support for LPASS (Low Power Audio SubSystem)
+LPI (Low Power Island) pinctrl on SM8250.
 
-No bindings for all those functions? Bindings should be complete.
+This patch has been tested on support to Qualcomm Robotics RB5 Development
+Kit based on QRB5165 Robotics SoC. This board has 2 WSA881X smart speakers
+with onboard DMIC connected to internal LPASS codec via WSA  and VA macros
+respectively.
 
-> +
-> +properties:
-> +  compatible:
-> +    items:
-> +      - const: qcom,pm8008-irqchip
+Most of the work is derived from downstream Qualcomm kernels.
+Credits to various Qualcomm authors from Patrick Lai's team who have
+contributed to this code.
 
-Why irqchip?
+Srinivas Kandagatla (2):
+  dt-bindings: pinctrl: qcom: Add sm8250 lpass lpi pinctrl bindings
+  pinctrl: qcom: Add sm8250 lpass lpi pinctrl driver
 
-> +
-> +  reg:
-> +    maxItems: 1
-> +
-> +  interrupt-names:
-> +    items:
-> +      - const: pm8008
-> +
-> +  interrupts:
-> +    maxItems: 1
-> +
-> +  interrupt-controller: true
-> +
-> +  "#address-cells":
-> +    const: 1
-> +    description: Must be specified if child nodes are specified.
-> +
-> +  "#size-cells":
-> +    const: 0
-> +    description: Must be specified if child nodes are specified.
-> +
-> +  "#interrupt-cells":
-> +    const: 2
-> +    description: |
-> +      The first cell is the IRQ number, the second cell is the IRQ trigger flag.
-> +
-> +patternProperties:
-> +  "^.*@[0-9a-f]+$":
+ .../pinctrl/qcom,lpass-lpi-pinctrl.yaml       | 129 +++
+ drivers/pinctrl/qcom/Kconfig                  |   8 +
+ drivers/pinctrl/qcom/Makefile                 |   1 +
+ drivers/pinctrl/qcom/pinctrl-lpass-lpi.c      | 781 ++++++++++++++++++
+ 4 files changed, 919 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/pinctrl/qcom,lpass-lpi-pinctrl.yaml
+ create mode 100644 drivers/pinctrl/qcom/pinctrl-lpass-lpi.c
 
-'^.*' can be dropped. That's redundant.
+-- 
+2.21.0
 
-> +    type: object
-> +    # Each peripheral in PM8008 must be represented as a child node with an
-> +    # optional label for referencing as phandle elsewhere. This is optional.
-> +    properties:
-> +      compatible:
-> +        description: The compatible string for the peripheral's driver.
-> +
-> +      reg:
-> +        maxItems: 1
-
-What does the address represent? It's non-standard, so it needs to be 
-defined.
-
-> +
-> +      interrupts:
-> +        maxItems: 1
-> +
-> +    required:
-> +      - compatible
-> +      - reg
-> +      - interrupts
-> +
-> +required:
-> +  - compatible
-> +  - reg
-> +  - interrupts
-> +  - "#interrupt-cells"
-> +
-> +additionalProperties: false
-> +
-> +examples:
-> +  - |
-> +    #include <dt-bindings/interrupt-controller/irq.h>
-> +    qupv3_se13_i2c {
-> +            #address-cells = <1>;
-> +            #size-cells = <0>;
-> +
-> +            pm8008i@8 {
-> +                    compatible = "qcom,pm8008-irqchip";
-> +                    reg = <0x8>;
-> +                    #address-cells = <1>;
-> +                    #size-cells = <0>;
-> +                    interrupt-controller;
-> +                    #interrupt-cells = <2>;
-> +
-> +                    interrupt-names = "pm8008";
-> +                    interrupt-parent = <&tlmm>;
-> +                    interrupts = <32 IRQ_TYPE_EDGE_RISING>;
-> +
-> +                    pm8008_tz: qcom,temp-alarm@2400 {
-
-Must be documented.
-
-And don't use vendor prefixes in node names. 
-
-> +                            compatible = "qcom,spmi-temp-alarm";
-> +                            reg = <0x2400>;
-> +                            interrupts = <0x5 IRQ_TYPE_EDGE_BOTH>;
-> +                            #thermal-sensor-cells = <0>;
-> +                    };
-> +            };
-> +    };
-> +
-> +...
-> -- 
-> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-> a Linux Foundation Collaborative Project
-> 
