@@ -2,191 +2,160 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 0A41729FF3B
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Oct 2020 08:57:51 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A43CC29FF48
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Oct 2020 09:00:01 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726092AbgJ3H5r (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 30 Oct 2020 03:57:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58322 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726083AbgJ3H5r (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 30 Oct 2020 03:57:47 -0400
-Received: from mail-pg1-x541.google.com (mail-pg1-x541.google.com [IPv6:2607:f8b0:4864:20::541])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1042FC0613CF;
-        Fri, 30 Oct 2020 00:57:47 -0700 (PDT)
-Received: by mail-pg1-x541.google.com with SMTP id i7so2596444pgh.6;
-        Fri, 30 Oct 2020 00:57:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=PdodUo+6mcNMJwIz8HCiSd/BPrJxVSi77oUzRemdDVU=;
-        b=tQoyLfsyZlXvHg2b1MunUYxzh17UMQmrrYCBspTbicI7tC8VuB0FbNbVRCUIuoZgxP
-         1yq7jk0/YnRMA1qLOLLJ4K6q/K/rVnEa5FPA1f3EZNExA37wdvy8GXHh/hnTjf+3xoGp
-         ASskqvXt7SCPfELXlJD2UFCqwhnMLfug3Cf3j3x4TGYptej0TZEihb+wGLfcjlUHqAaf
-         luQu9EQyaV3O0U99lydlXufUR6zUitfBX/J6h1B9u+zviLuN4raKOOG2oen2jJL679tt
-         izRQwYT2zqLL7dpxhXb84uZ4gz0dE95sNod5mskV+/pkOk2k3bMYNu9Mv8rxrOZJWJT4
-         Vwgw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=PdodUo+6mcNMJwIz8HCiSd/BPrJxVSi77oUzRemdDVU=;
-        b=RnifNdlvwjn/LECdKxw0i3czLhlUCO3yMOZe9CdbT/Okx2xxODYzIvRUis7NtIM+lI
-         8dJHtQnBtuD0q/bBQyJYElEkLUGyWuWWsHLm9DL+0zaNxw/rumdsTTLClwMGMpTwvaoJ
-         LVt1ljf99VZs1YMhhz3QQY4wOMKqxUkBv8xJ0iKNXp7nXJSmzgLAKx0ZZzSw/+vPIDnD
-         gGB8SHQAqeVh7EFplaeKpdU1qML0JvUi9ItLeMrlZpCZZ3npsjoOe6KIxHINr7nplyZk
-         cTz/RRJhdltsCxm5tcJt3+5atAXPUK76HcooownQbcyt4CuzJEChaNt/yP6Kl93GogjR
-         HU9Q==
-X-Gm-Message-State: AOAM531FTTboeIcI9zRJWf7hBjFWcQMPqmAWoan7axYQ7P0wlV/Io7mr
-        lMX3+3pIChcTLwujSvFoI/BqNv2B6/t3gQ==
-X-Google-Smtp-Source: ABdhPJzNlDsxhwQNEze1EEKkOurdKJhokUzfb3AC4vmpr4YhZDvoUJ56zx/W4XVqnFo9vWYKxhrM8A==
-X-Received: by 2002:aa7:96f6:0:b029:164:2def:5ef7 with SMTP id i22-20020aa796f60000b02901642def5ef7mr8009841pfq.44.1604044666400;
-        Fri, 30 Oct 2020 00:57:46 -0700 (PDT)
-Received: from localhost (114-34-18-97.HINET-IP.hinet.net. [114.34.18.97])
-        by smtp.gmail.com with ESMTPSA id e4sm2388392pjg.44.2020.10.30.00.57.45
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 30 Oct 2020 00:57:45 -0700 (PDT)
-From:   Ajye Huang <ajye.huang@gmail.com>
-X-Google-Original-From: Ajye Huang <ajye_huang@compal.corp-partner.google.com>
-To:     linux-kernel@vger.kernel.org
-Cc:     Mark Brown <broonie@kernel.org>,
-        Rohit kumar <rohitkr@codeaurora.org>,
-        Banajit Goswami <bgoswami@codeaurora.org>,
-        Patrick Lai <plai@codeaurora.org>,
-        Srinivasa Rao Mandadapu <srivasam@codeaurora.org>,
-        srinivas.kandagatla@linaro.org, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Jaroslav Kysela <perex@perex.cz>, cychiang@chromium.org,
-        tzungbi@chromium.org, dianders@chromium.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        alsa-devel@alsa-project.org,
-        Ajye Huang <ajye_huang@compal.corp-partner.google.com>
-Subject: [PATCH v2 2/2] ASoC: qcom: sc7180: Modify machine driver for 2mic
-Date:   Fri, 30 Oct 2020 15:57:24 +0800
-Message-Id: <20201030075724.1616766-3-ajye_huang@compal.corp-partner.google.com>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20201030075724.1616766-1-ajye_huang@compal.corp-partner.google.com>
-References: <20201030075724.1616766-1-ajye_huang@compal.corp-partner.google.com>
+        id S1725355AbgJ3IAA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 30 Oct 2020 04:00:00 -0400
+Received: from m42-4.mailgun.net ([69.72.42.4]:47714 "EHLO m42-4.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725823AbgJ3H77 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 30 Oct 2020 03:59:59 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1604044798; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=wzAYLmtiqKUHYKNwoQvgJ/EArCoML40Wcybfuv2xAzo=;
+ b=IRpRmwxSwAoo3sRXPH4upLl1L+ZVQBIGG4g9QOojdddWj9x72vaqX2B4SVrRn+bPLghUaTxS
+ QjvmNTDZsC27MqfmrIINveNyWLynK4jSf1NHAMwz/bmLd+8ZmbOW9BC7MribnQ6B40S99u5C
+ +Jm6kECcfx6j6Euap0Ayg7nmYoU=
+X-Mailgun-Sending-Ip: 69.72.42.4
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n04.prod.us-east-1.postgun.com with SMTP id
+ 5f9bc7fe89dd7476335ded73 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 30 Oct 2020 07:59:58
+ GMT
+Sender: saiprakash.ranjan=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 6E955C433FE; Fri, 30 Oct 2020 07:59:57 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: saiprakash.ranjan)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 445F1C433C6;
+        Fri, 30 Oct 2020 07:59:56 +0000 (UTC)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Fri, 30 Oct 2020 13:29:56 +0530
+From:   Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+To:     Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Peter Zijlstra <peterz@infradead.org>,
+        Suzuki Poulose <suzuki.poulose@arm.com>
+Cc:     Mike Leach <mike.leach@linaro.org>, Ingo Molnar <mingo@redhat.com>,
+        Arnaldo Carvalho de Melo <acme@kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+        Jiri Olsa <jolsa@redhat.com>,
+        Namhyung Kim <namhyung@kernel.org>, coresight@lists.linaro.org,
+        Stephen Boyd <swboyd@chromium.org>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org
+Subject: Re: [PATCHv2 2/4] coresight: tmc-etf: Fix NULL ptr dereference in
+ tmc_enable_etf_sink_perf()
+In-Reply-To: <20201023203729.GA819775@xps15>
+References: <20201022212033.GA646497@xps15>
+ <20201023073905.GM2611@hirez.programming.kicks-ass.net>
+ <174e6461-4d46-cb65-c094-c06ee3b21568@arm.com>
+ <20201023094115.GR2611@hirez.programming.kicks-ass.net>
+ <bd8c136d-9dfa-a760-31f9-eb8d6698aced@arm.com>
+ <20201023105431.GM2594@hirez.programming.kicks-ass.net>
+ <2457de8f-8bc3-b350-fdc7-61276da31ce6@arm.com>
+ <20201023131628.GY2628@hirez.programming.kicks-ass.net>
+ <728fd89c-78f2-0c5c-0443-c91c62b02f0e@arm.com>
+ <20201023134416.GA2628@hirez.programming.kicks-ass.net>
+ <20201023203729.GA819775@xps15>
+Message-ID: <70e3a508af119be481c8f0a0acf0a44d@codeaurora.org>
+X-Sender: saiprakash.ranjan@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-In addition, having mixer control to switch between DMICs by
-using "dmic-gpios" property.
+Hello guys,
 
-Refer to this one as an example,
-commit b7a742cff3f6 ("ASoC: AMD: Use mixer control to switch between DMICs")
+On 2020-10-24 02:07, Mathieu Poirier wrote:
+> On Fri, Oct 23, 2020 at 03:44:16PM +0200, Peter Zijlstra wrote:
+>> On Fri, Oct 23, 2020 at 02:29:54PM +0100, Suzuki Poulose wrote:
+>> > On 10/23/20 2:16 PM, Peter Zijlstra wrote:
+>> > > On Fri, Oct 23, 2020 at 01:56:47PM +0100, Suzuki Poulose wrote:
+>> 
+>> > > > That way another session could use the same sink if it is free. i.e
+>> > > >
+>> > > > perf record -e cs_etm/@sink0/u --per-thread app1
+>> > > >
+>> > > > and
+>> > > >
+>> > > > perf record -e cs_etm/@sink0/u --per-thread app2
+>> > > >
+>> > > > both can work as long as the sink is not used by the other session.
+>> > >
+>> > > Like said above, if sink is shared between CPUs, that's going to be a
+>> > > trainwreck :/ Why do you want that?
+>> >
+>> > That ship has sailed. That is how the current generation of systems are,
+>> > unfortunately. But as I said, this is changing and there are guidelines
+>> > in place to avoid these kind of topologies. With the future
+>> > technologies, this will be completely gone.
+>> 
+>> I understand that the hardware is like that, but why do you want to
+>> support this insanity in software?
+>> 
+>> If you only allow a single sink user (group) at the same time, your
+>> problem goes away. Simply disallow the above scenario, do not allow
+>> concurrent sink users if sinks are shared like this.
+>> 
+>> Have the perf-record of app2 above fail because the sink is in-user
+>> already.
+> 
+> I agree with you that --per-thread scenarios are easy to deal with, but 
+> to
+> support cpu-wide scenarios events must share a sink (because there is 
+> one event
+> per CPU).  CPU-wide support can't be removed because it has been around
+> for close to a couple of years and heavily used. I also think using the 
+> pid of
+> the process that created the events, i.e perf, is a good idea.  We just 
+> need to
+> agree on how to gain access to it.
+> 
+> In Sai's patch you objected to the following:
+> 
+>> +     struct task_struct *task = READ_ONCE(event->owner);
+>> +
+>> +     if (!task || is_kernel_event(event))
+> 
+> Would it be better to use task_nr_pid(current) instead of event->owner? 
+>  The end
+> result will be exactly the same.  There is also no need to check the 
+> validity of
+> @current since it is a user process.
+> 
 
-Signed-off-by: Ajye Huang <ajye_huang@compal.corp-partner.google.com>
----
- sound/soc/qcom/sc7180.c | 59 +++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 59 insertions(+)
+We have devices deployed where these crashes are seen consistently,
+so for some immediate relief, could we atleast get some fix in this
+cycle without major design overhaul which would likely take more time.
+Perhaps my first patch [1] without any check for owner or
+I can post a new version as Suzuki suggested [2] dropping the export
+of is_kernel_event(). Then we can always work on top of it based on the
+conclusion of this discussion, we will atleast not have the systems
+crash in the meantime, thoughts?
 
-diff --git a/sound/soc/qcom/sc7180.c b/sound/soc/qcom/sc7180.c
-index b391f64c3a80..e9366bb5f3c2 100644
---- a/sound/soc/qcom/sc7180.c
-+++ b/sound/soc/qcom/sc7180.c
-@@ -5,6 +5,8 @@
- // sc7180.c -- ALSA SoC Machine driver for SC7180
- 
- #include <dt-bindings/sound/sc7180-lpass.h>
-+#include <linux/gpio.h>
-+#include <linux/gpio/consumer.h>
- #include <linux/module.h>
- #include <linux/of_device.h>
- #include <linux/platform_device.h>
-@@ -23,6 +25,9 @@
- 
- #define DRIVER_NAME "SC7180"
- 
-+static struct gpio_desc *dmic_sel;
-+static int dmic_switch;
-+
- struct sc7180_snd_data {
- 	struct snd_soc_card card;
- 	u32 pri_mi2s_clk_count;
-@@ -169,6 +174,23 @@ static int sc7180_snd_startup(struct snd_pcm_substream *substream)
- 	return 0;
- }
- 
-+static int dmic_get(struct snd_kcontrol *kcontrol,
-+		    struct snd_ctl_elem_value *ucontrol)
-+{
-+	ucontrol->value.integer.value[0] = dmic_switch;
-+	return 0;
-+}
-+
-+static int dmic_set(struct snd_kcontrol *kcontrol,
-+		    struct snd_ctl_elem_value *ucontrol)
-+{
-+	if (dmic_sel) {
-+		dmic_switch = ucontrol->value.integer.value[0];
-+		gpiod_set_value(dmic_sel, dmic_switch);
-+	}
-+	return 0;
-+}
-+
- static void sc7180_snd_shutdown(struct snd_pcm_substream *substream)
- {
- 	struct snd_soc_pcm_runtime *rtd = substream->private_data;
-@@ -206,6 +228,30 @@ static const struct snd_soc_dapm_widget sc7180_snd_widgets[] = {
- 	SND_SOC_DAPM_MIC("Headset Mic", NULL),
- };
- 
-+static const char * const dmic_mux_text[] = {
-+	"Front Mic",
-+	"Rear Mic",
-+};
-+
-+static SOC_ENUM_SINGLE_DECL(sc7180_dmic_enum,
-+			    SND_SOC_NOPM, 0, dmic_mux_text);
-+
-+static const struct snd_kcontrol_new sc7180_dmic_mux_control =
-+	SOC_DAPM_ENUM_EXT("DMIC Select Mux", sc7180_dmic_enum,
-+			  dmic_get, dmic_set);
-+
-+static const struct snd_soc_dapm_widget sc7180_snd_dual_mic_widgets[] = {
-+	SND_SOC_DAPM_HP("Headphone Jack", NULL),
-+	SND_SOC_DAPM_MIC("Headset Mic", NULL),
-+	SND_SOC_DAPM_MIC("DMIC", NULL),
-+	SND_SOC_DAPM_MUX("Dmic Mux", SND_SOC_NOPM, 0, 0, &sc7180_dmic_mux_control),
-+};
-+
-+static const struct snd_soc_dapm_route sc7180_snd_dual_mic_audio_route[] = {
-+	{"Dmic Mux", "Front Mic", "DMIC"},
-+	{"Dmic Mux", "Rear Mic", "DMIC"},
-+};
-+
- static void sc7180_add_ops(struct snd_soc_card *card)
- {
- 	struct snd_soc_dai_link *link;
-@@ -238,6 +284,19 @@ static int sc7180_snd_platform_probe(struct platform_device *pdev)
- 	card->dapm_widgets = sc7180_snd_widgets;
- 	card->num_dapm_widgets = ARRAY_SIZE(sc7180_snd_widgets);
- 
-+	if (of_property_read_bool(dev->of_node, "dmic-gpios")) {
-+		card->dapm_widgets = sc7180_snd_dual_mic_widgets,
-+		card->num_dapm_widgets = ARRAY_SIZE(sc7180_snd_dual_mic_widgets),
-+		card->dapm_routes = sc7180_snd_dual_mic_audio_route,
-+		card->num_dapm_routes = ARRAY_SIZE(sc7180_snd_dual_mic_audio_route),
-+		dmic_sel = devm_gpiod_get(&pdev->dev, "dmic", GPIOD_OUT_LOW);
-+		if (IS_ERR(dmic_sel)) {
-+			dev_err(&pdev->dev, "DMIC gpio failed err=%d\n",
-+				PTR_ERR(dmic_sel));
-+				return PTR_ERR(dmic_sel);
-+		}
-+	}
-+
- 	ret = qcom_snd_parse_of(card);
- 	if (ret)
- 		return ret;
+[1] https://lore.kernel.org/patchwork/patch/1318098/
+[2] 
+https://lore.kernel.org/lkml/fa6cdf34-88a0-1050-b9ea-556d0a9438cb@arm.com/
+
+Thanks,
+Sai
+
 -- 
-2.25.1
-
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a 
+member
+of Code Aurora Forum, hosted by The Linux Foundation
