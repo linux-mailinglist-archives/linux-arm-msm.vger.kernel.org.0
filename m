@@ -2,136 +2,99 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id EECC42A0158
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Oct 2020 10:24:46 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C9EAC2A0134
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Oct 2020 10:23:23 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726171AbgJ3JYq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 30 Oct 2020 05:24:46 -0400
-Received: from m42-4.mailgun.net ([69.72.42.4]:12335 "EHLO m42-4.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726027AbgJ3JYp (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 30 Oct 2020 05:24:45 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1604049885; h=Content-Transfer-Encoding: MIME-Version:
- References: In-Reply-To: Message-Id: Date: Subject: Cc: To: From:
- Sender; bh=vrgQ8RVETWUH1hQjD/0ggJjHA8S6VTYAIs13Idv4bzY=; b=cpIbis7NMemJgODarWmNZu5ti1E49vFsE1Chu7FdqQcp/604OYVgcvjwM0bHEIx+fEAckHjj
- jQ8qHLmsb0h0DZ9f4zPTBtGbuRK2Mv0Zg1nLIe2e/KD9sF3TYa5vm9Bor68QJiQ3q9gjbSXd
- RxM3qM2u5bssn91ktW5mSMDis4U=
-X-Mailgun-Sending-Ip: 69.72.42.4
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n04.prod.us-east-1.postgun.com with SMTP id
- 5f9bdbb0902d6b255d2fd6ba (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 30 Oct 2020 09:24:00
- GMT
-Sender: saiprakash.ranjan=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 84BC1C433F0; Fri, 30 Oct 2020 09:23:59 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
-        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
-Received: from blr-ubuntu-253.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: saiprakash.ranjan)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id BA7ABC433F0;
-        Fri, 30 Oct 2020 09:23:53 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org BA7ABC433F0
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=saiprakash.ranjan@codeaurora.org
-From:   Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-To:     Will Deacon <will@kernel.org>, Robin Murphy <robin.murphy@arm.com>,
-        Joerg Roedel <joro@8bytes.org>,
-        Jordan Crouse <jcrouse@codeaurora.org>,
-        Rob Clark <robdclark@gmail.com>
-Cc:     iommu@lists.linux-foundation.org,
-        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org,
-        Akhil P Oommen <akhilpo@codeaurora.org>,
-        freedreno@lists.freedesktop.org,
-        "Kristian H . Kristensen" <hoegsberg@google.com>,
-        dri-devel@lists.freedesktop.org,
-        Sharat Masetty <smasetty@codeaurora.org>,
-        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-Subject: [PATCHv7 3/7] drm/msm: rearrange the gpu_rmw() function
-Date:   Fri, 30 Oct 2020 14:53:10 +0530
-Message-Id: <9c7af6b5098277825bcdc31581cc7a63542df34a.1604048969.git.saiprakash.ranjan@codeaurora.org>
-X-Mailer: git-send-email 2.27.0
-In-Reply-To: <cover.1604048969.git.saiprakash.ranjan@codeaurora.org>
-References: <cover.1604048969.git.saiprakash.ranjan@codeaurora.org>
+        id S1725946AbgJ3JXW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 30 Oct 2020 05:23:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43342 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725790AbgJ3JXW (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 30 Oct 2020 05:23:22 -0400
+Received: from mail-io1-xd41.google.com (mail-io1-xd41.google.com [IPv6:2607:f8b0:4864:20::d41])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3AB52C0613D2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 30 Oct 2020 02:23:22 -0700 (PDT)
+Received: by mail-io1-xd41.google.com with SMTP id b15so6751007iod.13
+        for <linux-arm-msm@vger.kernel.org>; Fri, 30 Oct 2020 02:23:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=CBA+zo6LaSoFeL0OA7IbUTdbUJNI/GOykxoTxkhm2nk=;
+        b=UO5IfL8R5QFcwjro3zMCatag08rvnj7MG+rIfVf8CZY1PLx4Z0SoVQtu3DvG/0uf2N
+         YIRVCW8AOfZZVXKBcMTqoLCPZMQ5Kdr+w2h4Jyf/fzhu6jZud64aAlrfyOQbqcC7FZig
+         6RxtRmtJurOtE9CKuMpk1+tU/vGvKGRNHkDxmw8yP7WTwOpd+GVyHY20Brqmw6oBEwuq
+         QvZM45AWJDmHUwcapmaYrBa+pQ32oebVFliheC058EYqeCLz6IBmN6i+RIW2LIsORGah
+         PPcv4Mf1Xo6nq/dRGbcCEpsqtymMwkMc30l3lLgjDsRtVNql2yXNOini1QEbK9TJHv/h
+         xoFw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=CBA+zo6LaSoFeL0OA7IbUTdbUJNI/GOykxoTxkhm2nk=;
+        b=Aon72i07+2C9pRn9P9BtAinNMY2rmkjfCamkkxXaV7vfmXtfS0+Gk641RXu6usXVdU
+         +kUdVet8NbHAR7sqBJuYcE42WzylVYbiaxXu6CtNsm0g1BvoYhH5hHJqgmFYXbrkFRHJ
+         2Epyq2cofQiPs0q2TitMnRhb9pHfhqsvYPzqRREqaVTZlVXcdUFSmNVNe9Zrh8JbGe5M
+         M1Pz+kCtSUtQ0zZUhoHSnfXuow9hY/LAFUaeI+ddhwlB3G4jr6ufktJ/UmF/Mm+ZqF92
+         5+4SGLmYgzE1VE/5oztDIQDE7LeqbcFj+IirT0e02Ws4Qdftuf3qSt4dgUOvGcy+NAGI
+         OeVw==
+X-Gm-Message-State: AOAM531STGKwd6D+aM5gTQpsH8NinBVeND8foo9BItvV/R3ypy0XYKc1
+        QKNexDy8hxX/ZFn3DzcKqbFic1tPRL/nWYIupLxHMg==
+X-Google-Smtp-Source: ABdhPJyH+9c8dw1FcU0h83mbgXToEcZDNuIgSVvIgnpkYquj90LicUxQtsuxCBKhNY9sYkw8F9Rt7qhEa3t2HuwKEyA=
+X-Received: by 2002:a6b:c8c1:: with SMTP id y184mr1050821iof.109.1604049801372;
+ Fri, 30 Oct 2020 02:23:21 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20201030075724.1616766-1-ajye_huang@compal.corp-partner.google.com>
+ <20201030075724.1616766-3-ajye_huang@compal.corp-partner.google.com>
+In-Reply-To: <20201030075724.1616766-3-ajye_huang@compal.corp-partner.google.com>
+From:   Tzung-Bi Shih <tzungbi@google.com>
+Date:   Fri, 30 Oct 2020 17:23:10 +0800
+Message-ID: <CA+Px+wXPRg7aDU5+vr6R_BxuFfhuDeG3iEQeAUKWNtX8YmVC1Q@mail.gmail.com>
+Subject: Re: [PATCH v2 2/2] ASoC: qcom: sc7180: Modify machine driver for 2mic
+To:     Ajye Huang <ajye.huang@gmail.com>
+Cc:     Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        Mark Brown <broonie@kernel.org>,
+        Rohit kumar <rohitkr@codeaurora.org>,
+        Banajit Goswami <bgoswami@codeaurora.org>,
+        Patrick Lai <plai@codeaurora.org>,
+        Srinivasa Rao Mandadapu <srivasam@codeaurora.org>,
+        Srini Kandagatla <srinivas.kandagatla@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Jaroslav Kysela <perex@perex.cz>,
+        Cheng-Yi Chiang <cychiang@chromium.org>,
+        Tzung-Bi Shih <tzungbi@chromium.org>,
+        Douglas Anderson <dianders@chromium.org>,
+        "moderated list:ARM/Mediatek SoC support" 
+        <linux-arm-kernel@lists.infradead.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>,
+        ALSA development <alsa-devel@alsa-project.org>,
+        Ajye Huang <ajye_huang@compal.corp-partner.google.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Sharat Masetty <smasetty@codeaurora.org>
+On Fri, Oct 30, 2020 at 3:57 PM Ajye Huang <ajye.huang@gmail.com> wrote:
+> +static struct gpio_desc *dmic_sel;
+> +static int dmic_switch;
 
-The register read-modify-write construct is generic enough
-that it can be used by other subsystems as needed, create
-a more generic rmw() function and have the gpu_rmw() use
-this new function.
+If you really need them, you should put them in struct sc7180_snd_data.
 
-Signed-off-by: Sharat Masetty <smasetty@codeaurora.org>
-Reviewed-by: Jordan Crouse <jcrouse@codeaurora.org>
-Signed-off-by: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
----
- drivers/gpu/drm/msm/msm_drv.c | 8 ++++++++
- drivers/gpu/drm/msm/msm_drv.h | 1 +
- drivers/gpu/drm/msm/msm_gpu.h | 5 +----
- 3 files changed, 10 insertions(+), 4 deletions(-)
+> +static int dmic_set(struct snd_kcontrol *kcontrol,
+> +                   struct snd_ctl_elem_value *ucontrol)
+> +{
+> +       if (dmic_sel) {
 
-diff --git a/drivers/gpu/drm/msm/msm_drv.c b/drivers/gpu/drm/msm/msm_drv.c
-index 49685571dc0e..a1e22b974b77 100644
---- a/drivers/gpu/drm/msm/msm_drv.c
-+++ b/drivers/gpu/drm/msm/msm_drv.c
-@@ -180,6 +180,14 @@ u32 msm_readl(const void __iomem *addr)
- 	return val;
- }
- 
-+void msm_rmw(void __iomem *addr, u32 mask, u32 or)
-+{
-+	u32 val = msm_readl(addr);
-+
-+	val &= ~mask;
-+	msm_writel(val | or, addr);
-+}
-+
- struct msm_vblank_work {
- 	struct work_struct work;
- 	int crtc_id;
-diff --git a/drivers/gpu/drm/msm/msm_drv.h b/drivers/gpu/drm/msm/msm_drv.h
-index b9dd8f8f4887..655b3b0424a1 100644
---- a/drivers/gpu/drm/msm/msm_drv.h
-+++ b/drivers/gpu/drm/msm/msm_drv.h
-@@ -478,6 +478,7 @@ void __iomem *msm_ioremap_quiet(struct platform_device *pdev, const char *name,
- 		const char *dbgname);
- void msm_writel(u32 data, void __iomem *addr);
- u32 msm_readl(const void __iomem *addr);
-+void msm_rmw(void __iomem *addr, u32 mask, u32 or);
- 
- struct msm_gpu_submitqueue;
- int msm_submitqueue_init(struct drm_device *drm, struct msm_file_private *ctx);
-diff --git a/drivers/gpu/drm/msm/msm_gpu.h b/drivers/gpu/drm/msm/msm_gpu.h
-index 6c9e1fdc1a76..b2b419277953 100644
---- a/drivers/gpu/drm/msm/msm_gpu.h
-+++ b/drivers/gpu/drm/msm/msm_gpu.h
-@@ -246,10 +246,7 @@ static inline u32 gpu_read(struct msm_gpu *gpu, u32 reg)
- 
- static inline void gpu_rmw(struct msm_gpu *gpu, u32 reg, u32 mask, u32 or)
- {
--	uint32_t val = gpu_read(gpu, reg);
--
--	val &= ~mask;
--	gpu_write(gpu, reg, val | or);
-+	msm_rmw(gpu->mmio + (reg << 2), mask, or);
- }
- 
- static inline u64 gpu_read64(struct msm_gpu *gpu, u32 lo, u32 hi)
--- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
-of Code Aurora Forum, hosted by The Linux Foundation
+if (IS_ERR(dmic_sel))
+But I think you don't need to check dmic_sel.  Suppose your _probe()
+already returned error, the code here shouldn't be called.
 
+> +               dmic_switch = ucontrol->value.integer.value[0];
+
+Looks like it can be a local variable.  You don't need to save dmic_switch.
