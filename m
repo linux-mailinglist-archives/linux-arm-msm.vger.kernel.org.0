@@ -2,73 +2,135 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 47F3A2A0A17
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Oct 2020 16:43:10 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 65EFD2A0A3D
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Oct 2020 16:48:57 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726939AbgJ3PnJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 30 Oct 2020 11:43:09 -0400
-Received: from mail-ot1-f67.google.com ([209.85.210.67]:33212 "EHLO
-        mail-ot1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725939AbgJ3PnJ (ORCPT
+        id S1727136AbgJ3Psx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 30 Oct 2020 11:48:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47184 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727134AbgJ3Psw (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 30 Oct 2020 11:43:09 -0400
-Received: by mail-ot1-f67.google.com with SMTP id i18so1207064ots.0;
-        Fri, 30 Oct 2020 08:43:08 -0700 (PDT)
+        Fri, 30 Oct 2020 11:48:52 -0400
+Received: from mail-pg1-x541.google.com (mail-pg1-x541.google.com [IPv6:2607:f8b0:4864:20::541])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D8158C0613D5
+        for <linux-arm-msm@vger.kernel.org>; Fri, 30 Oct 2020 08:48:51 -0700 (PDT)
+Received: by mail-pg1-x541.google.com with SMTP id n16so5528905pgv.13
+        for <linux-arm-msm@vger.kernel.org>; Fri, 30 Oct 2020 08:48:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=Kag6TyjC9aBeFEQ7I12GSONru4nIvJXFjhdQUAsl6eQ=;
+        b=dKyrx5LKFqZ5wrgaxIsiGRG3SDm/dVthQbLRcQeUWc9QeVuHlhOUp0SNibgvB0ZV8Z
+         9XF56RDmHnJg6ruNUDd40F65a4vDW9OCDC7ZaZCaRdQR92m9dcbxdi49wU9x+073/vyC
+         EV5ydopMCqm0IY1QIypE7MfBVs03d4OR4VeEE=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=qQnCpTL2n7MfqOJCYXtINnhpLooq+fy/JdUHJMJc17g=;
-        b=WJSSruMkjas+kPjYDqmflBwVMzGBq5eN5e/Wenrt50MlfuKK3qLj9MIHeKEmo/LVSY
-         gO6+OtX1IyEhEkmVW5wtCuWJ80xOzdUHjksRVC/oj2cW0xXfcL478jK4IdKJTNGcw6Ny
-         EgDj2e6Ry5QCXvTTxZII4lZOpbs1GdVlSJDSMQ5q8u/lNaQiNlC6abmUFUk1mdmhabPU
-         gsHdKbxIFO6okgcDK6HsAsJv+i7ONYl+X0UjbGAXUKUl5gdE5njspWXKdkdH2BF9Dnju
-         vKurOoNZ0kK1sZ8WDdZTNt/dKoGczYm57lnGtfoivqJ8bgTWy66Za+pWvDGQqNUh6A36
-         ztDQ==
-X-Gm-Message-State: AOAM53031XQpY6sjM1ejOueZ8H5Gp+zGHVZmtqWp0EuH98RosW5isxCD
-        JKcT4jCpV3gNRDhx9AHleQ==
-X-Google-Smtp-Source: ABdhPJzFC6jxXMm/AwgFxaqnmiQsXOtJlVokFGyvuCqqoZ+wdlTz7QJ0w94vk91/TLuPVMet8ZtG6g==
-X-Received: by 2002:a05:6830:15c8:: with SMTP id j8mr2279776otr.209.1604072588127;
-        Fri, 30 Oct 2020 08:43:08 -0700 (PDT)
-Received: from xps15 (24-155-109-49.dyn.grandenetworks.net. [24.155.109.49])
-        by smtp.gmail.com with ESMTPSA id d26sm1377879otp.3.2020.10.30.08.43.05
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 30 Oct 2020 08:43:06 -0700 (PDT)
-Received: (nullmailer pid 3896566 invoked by uid 1000);
-        Fri, 30 Oct 2020 15:43:05 -0000
-Date:   Fri, 30 Oct 2020 10:43:05 -0500
-From:   Rob Herring <robh@kernel.org>
-To:     kholk11@gmail.com
-Cc:     robert.foss@linaro.org, marijns95@gmail.com, agross@kernel.org,
-        bjorn.andersson@linaro.org, mchehab@kernel.org,
-        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, todor.too@gmail.com,
-        konradybcio@gmail.com, martin.botka1@gmail.com,
-        linux-media@vger.kernel.org, robh+dt@kernel.org
-Subject: Re: [PATCH v2 6/7] media: dt-bindings: media: qcom,camss: Add
- bindings for SDM660 camss
-Message-ID: <20201030154305.GA3896512@bogus>
-References: <20201022174706.8813-1-kholk11@gmail.com>
- <20201022174706.8813-7-kholk11@gmail.com>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=Kag6TyjC9aBeFEQ7I12GSONru4nIvJXFjhdQUAsl6eQ=;
+        b=lxhN3nGmFqV9jC/Ip/5PQSYRAopa74LL/ovX8ktuTbsS6b1Uanu57LOMV0UF91NJe/
+         SdpycO+fJRsF7tYQfXiTQ/03XGuz1BnznWwQjNGjNrnLfqdT7phjgETFp21Y6Yu4Rmhh
+         o9/CYzjb0lxRxu/HnpvCKpGyLjbcI3FBLtmGg+MbdFjVxBurQtabui50vEWGRTvleTRK
+         w/wEWrRvwxIGDGIkTbmrQBrU8zJvGUrLy7gwR1uDPPi+X/js72NhrgjfKYt5egUNPAug
+         eVkfvreT3+sk5u12IuR/z3qbMSPF/oKr8pc3AXqkl+scdxWdJhzTCF18aIYjVHoNEtXT
+         jlzw==
+X-Gm-Message-State: AOAM531s4S1DhLM1vuW+McMvSq6XZC2NxJ5PKg3a5JCXJ4k5dPhTR5Hf
+        HbHMEMk1xTPizPqmDxfBtqqDUw==
+X-Google-Smtp-Source: ABdhPJwJPYDBlFNl67jviis6ZvI8jCSF+Y+UrcaM9uLV/TWDNP6edijcgqfMubiD45uy8XfwSCAYsw==
+X-Received: by 2002:a65:68d2:: with SMTP id k18mr2797518pgt.374.1604072931458;
+        Fri, 30 Oct 2020 08:48:51 -0700 (PDT)
+Received: from localhost ([2620:15c:202:1:f693:9fff:fef4:e70a])
+        by smtp.gmail.com with ESMTPSA id z66sm6230021pfb.109.2020.10.30.08.48.50
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 30 Oct 2020 08:48:50 -0700 (PDT)
+From:   Matthias Kaehlcke <mka@chromium.org>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        Douglas Anderson <dianders@chromium.org>,
+        linux-kernel@vger.kernel.org,
+        Antony Wang <antony_wang@compal.corp-partner.google.com>,
+        Matthias Kaehlcke <mka@chromium.org>
+Subject: [PATCH] arm64: qcom: sc7180: trogdor: Add ADC nodes and thermal zone for charger thermistor
+Date:   Fri, 30 Oct 2020 08:48:43 -0700
+Message-Id: <20201030084840.1.If389f211a8532b83095ff8c66ec181424440f8d6@changeid>
+X-Mailer: git-send-email 2.29.1.341.ge80a0c044ae-goog
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20201022174706.8813-7-kholk11@gmail.com>
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 22 Oct 2020 19:47:05 +0200, kholk11@gmail.com wrote:
-> From: AngeloGioacchino Del Regno <kholk11@gmail.com>
-> 
-> Add bindings for qcom,sdm660-camss in order to support the camera
-> subsystem on SDM630/660 and SDA variants.
-> 
-> Signed-off-by: AngeloGioacchino Del Regno <kholk11@gmail.com>
-> Reviewed-by: Robert Foss <robert.foss@linaro.org>
-> ---
->  Documentation/devicetree/bindings/media/qcom,camss.txt | 7 +++++++
->  1 file changed, 7 insertions(+)
-> 
+From: Antony Wang <antony_wang@compal.corp-partner.google.com>
 
-Acked-by: Rob Herring <robh@kernel.org>
+Trogdor has a thermistor to monitor the temperature of the charger IC.
+Add the ADC (monitor) nodes and a thermal zone for this thermistor.
+
+Signed-off-by: Antony Wang <antony_wang@compal.corp-partner.google.com>
+[ mka: tweaked commit message ]
+Signed-off-by: Matthias Kaehlcke <mka@chromium.org>
+---
+
+ arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi | 36 ++++++++++++++++++++
+ 1 file changed, 36 insertions(+)
+
+diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
+index bf875589d364..f68305c35c74 100644
+--- a/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
+@@ -13,6 +13,23 @@
+ #include "pm6150.dtsi"
+ #include "pm6150l.dtsi"
+ 
++/ {
++	thermal-zones {
++		charger-thermal {
++			polling-delay-passive = <0>;
++			polling-delay = <0>;
++
++			thermal-sensors = <&pm6150_adc_tm 1>;
++
++			trips {
++				temperature = <125000>;
++				hysteresis = <1000>;
++				type = "critical";
++			};
++		};
++	};
++};
++
+ /*
+  * Reserved memory changes
+  *
+@@ -733,6 +750,25 @@ &mdss {
+ 	status = "okay";
+ };
+ 
++&pm6150_adc {
++	charger-thermistor@4f {
++		reg = <ADC5_AMUX_THM3_100K_PU>;
++		qcom,ratiometric;
++		qcom,hw-settle-time = <200>;
++	};
++};
++
++&pm6150_adc_tm {
++	status = "okay";
++
++	charger-thermistor@1 {
++		reg = <1>;
++		io-channels = <&pm6150_adc ADC5_AMUX_THM3_100K_PU>;
++		qcom,ratiometric;
++		qcom,hw-settle-time-us = <200>;
++	};
++};
++
+ &pm6150_pwrkey {
+ 	status = "disabled";
+ };
+-- 
+2.29.1.341.ge80a0c044ae-goog
+
