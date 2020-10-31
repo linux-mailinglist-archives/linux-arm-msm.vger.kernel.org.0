@@ -2,106 +2,148 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 220C62A11F4
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 31 Oct 2020 01:33:20 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id CFCCF2A11F9
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 31 Oct 2020 01:37:27 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725939AbgJaAdT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 30 Oct 2020 20:33:19 -0400
-Received: from z5.mailgun.us ([104.130.96.5]:31058 "EHLO z5.mailgun.us"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725933AbgJaAdT (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 30 Oct 2020 20:33:19 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1604104398; h=Content-Transfer-Encoding: Content-Type:
- In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
- Subject: Sender; bh=J4FlgY/H003ixJRCI3Aazuz/jorK6RSptRDy0aW+C+o=; b=MYjY0DvlTC1i2vq/1ybWty93Cbv0oDPnxYRGfNneTt2JtMISIsVS6JeL14efxkCvOy0PbCfK
- XCymTMgSYw+0GJMC7UWGFTy6okfP7I/Sdrl9inmWY3fpIhTcq0LvXSkjnwfCrflDNvJvTxyT
- O01xYF/UahidxhzYbWqpt3RiDHw=
-X-Mailgun-Sending-Ip: 104.130.96.5
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n04.prod.us-east-1.postgun.com with SMTP id
- 5f9cb0ce96c0873ad5c01a07 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Sat, 31 Oct 2020 00:33:18
- GMT
-Sender: hemantk=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 52C6AC43382; Sat, 31 Oct 2020 00:33:17 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-3.2 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        NICE_REPLY_A,SPF_FAIL autolearn=no autolearn_force=no version=3.4.0
-Received: from [10.46.162.249] (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: hemantk)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 5BF78C433C9;
-        Sat, 31 Oct 2020 00:33:16 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 5BF78C433C9
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=hemantk@codeaurora.org
-Subject: Re: [PATCH v11 4/4] bus: mhi: Add userspace client interface driver
-To:     Randy Dunlap <rdunlap@infradead.org>,
-        manivannan.sadhasivam@linaro.org, gregkh@linuxfoundation.org
-Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        jhugo@codeaurora.org, bbhatt@codeaurora.org,
-        loic.poulain@linaro.org, netdev@vger.kernel.org
-References: <1604025946-28288-1-git-send-email-hemantk@codeaurora.org>
- <1604025946-28288-5-git-send-email-hemantk@codeaurora.org>
- <88077bd6-be17-d88a-2959-9ea249614019@infradead.org>
-From:   Hemant Kumar <hemantk@codeaurora.org>
-Message-ID: <2aa9fcbb-40f2-ab87-a3c7-10082f2995e2@codeaurora.org>
-Date:   Fri, 30 Oct 2020 17:33:15 -0700
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.10.0
-MIME-Version: 1.0
-In-Reply-To: <88077bd6-be17-d88a-2959-9ea249614019@infradead.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+        id S1725681AbgJaAh1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 30 Oct 2020 20:37:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44778 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725536AbgJaAh1 (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 30 Oct 2020 20:37:27 -0400
+Received: from mail-pf1-x442.google.com (mail-pf1-x442.google.com [IPv6:2607:f8b0:4864:20::442])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E06CFC0613D5
+        for <linux-arm-msm@vger.kernel.org>; Fri, 30 Oct 2020 17:37:26 -0700 (PDT)
+Received: by mail-pf1-x442.google.com with SMTP id j18so6729566pfa.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 30 Oct 2020 17:37:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id;
+        bh=slkfJzLThfnq7dp6T3hHJaR873aqxgp2bKc6BsX9aV0=;
+        b=d27j2ULI1adERw0Mu20sV02cDmRxBknyx87aj2jNGSy2/M7FhauOGGIYsa/Riauctg
+         EOhOPIR2uCCmfhcS+oUvPpXBRSNFYtd276GaskBByCba6IEvNT5TTOtszcE7VyxsUFqx
+         ewjkRK0mj/PtB5XBM1m+yM8aN89NMbuO1JbXqfeYY3Hs3Z1Qd+XVGP8yBPpNYqMh1Ul9
+         leNi9X8AFkNvi5HXNNUy3Ksrs78MufZo0B1tf25ZKzzOY8fD2bVQBhoaGaEGFm+hAoa1
+         2/2I5/iXDrHp+HsjqL5fP40bJ4ViVQ1fp34Av4TyhSI9D1Miysjhu8pknQVl2Rcs+wPx
+         Id0g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=slkfJzLThfnq7dp6T3hHJaR873aqxgp2bKc6BsX9aV0=;
+        b=W34nND2nao/R3NiKJaJCXTpKaK7xHzPFoy3OYL/o4dyUYwL1Hm04dW7zOR1LvUSJYr
+         HwOoB4U6meJe3aihGVJvUFwcB0lacahiIx2Azy2zhPu36CeVwX9tgf29nvo3lhiSyG5x
+         VRi8i0IeQGNydKVont04sdgiMVeTomMnGJMX2HzrS7z/263DuabIDxfyxMrhGHXJUpjz
+         53Dk2KGiIxsYVYl3+SS8/oI1YWEPX72eAwLSNK9PDaznHI9G/AOUgsihcch2T4AheI7c
+         pmh59BjlHq8VB9aRSmHJ1dnG8GIbwOZGPsvMWtoLC8GSDQqlKs+3mVz/nqiWUlK/0vrX
+         Ch1A==
+X-Gm-Message-State: AOAM530Mlq9djTRj2GNuFHu20r9c7o8IN2+QoC/kLClMusyUbHb5So4D
+        GAZugOczQjJpzaX/MF/9/jv6dXlq75/L6Q==
+X-Google-Smtp-Source: ABdhPJwsAAj5WjEJppnE9Spzkm3zC39E6buD+bP6zorkZkq6ERJ/7NpLN//oW7RJhe6svibAhZLCsw==
+X-Received: by 2002:a63:3111:: with SMTP id x17mr4241208pgx.329.1604104645927;
+        Fri, 30 Oct 2020 17:37:25 -0700 (PDT)
+Received: from localhost.localdomain ([2601:1c2:680:1319:692:26ff:feda:3a81])
+        by smtp.gmail.com with ESMTPSA id 3sm7011935pfv.92.2020.10.30.17.37.24
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 30 Oct 2020 17:37:25 -0700 (PDT)
+From:   John Stultz <john.stultz@linaro.org>
+To:     lkml <linux-kernel@vger.kernel.org>
+Cc:     John Stultz <john.stultz@linaro.org>,
+        Robin Murphy <robin.murphy@arm.com>,
+        Will Deacon <will@kernel.org>, Andy Gross <agross@kernel.org>,
+        Maulik Shah <mkshah@codeaurora.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Saravana Kannan <saravanak@google.com>,
+        Marc Zyngier <maz@kernel.org>,
+        Lina Iyer <ilina@codeaurora.org>,
+        iommu@lists.linux-foundation.org,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>
+Subject: [RFC][PATCH 1/2] arm-smmu-qcom: Ensure the qcom_scm driver has finished probing
+Date:   Sat, 31 Oct 2020 00:37:20 +0000
+Message-Id: <20201031003721.40973-1-john.stultz@linaro.org>
+X-Mailer: git-send-email 2.17.1
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Randy,
+Robin Murphy pointed out that if the arm-smmu driver probes before
+the qcom_scm driver, we may call qcom_scm_qsmmu500_wait_safe_toggle()
+before the __scm is initialized.
 
-On 10/29/20 10:48 PM, Randy Dunlap wrote:
-> On 10/29/20 7:45 PM, Hemant Kumar wrote:
->> diff --git a/drivers/bus/mhi/Kconfig b/drivers/bus/mhi/Kconfig
->> index e841c10..476cc55 100644
->> --- a/drivers/bus/mhi/Kconfig
->> +++ b/drivers/bus/mhi/Kconfig
->> @@ -20,3 +20,16 @@ config MHI_BUS_DEBUG
->>   	  Enable debugfs support for use with the MHI transport. Allows
->>   	  reading and/or modifying some values within the MHI controller
->>   	  for debug and test purposes.
->> +
->> +config MHI_UCI
->> +	tristate "MHI UCI"
->> +	depends on MHI_BUS
->> +	help
->> +	  MHI based Userspace Client Interface (UCI) driver is used for
-> 
-> 	  MHI-based
-> 
->> +	  transferring raw data between host and device using standard file
->> +	  operations from userspace. Open, read, write, and close operations
->> +	  are supported by this driver. Please check mhi_uci_match_table for
-> 
-> also poll according to the documentation.
-good catch, will add in next patch set.
-> 
->> +	  all supported channels that are exposed to userspace.
->> +
->> +	  To compile this driver as a module, choose M here: the module will be
->> +	  called mhi_uci.
-> 
-> 
+Now, getting this to happen is a bit contrived, as in my efforts it
+required enabling asynchronous probing for both drivers, moving the
+firmware dts node to the end of the dtsi file, as well as forcing a
+long delay in the qcom_scm_probe function.
 
-Thanks,
-Hemant
+With those tweaks we ran into the following crash:
+[    2.631040] arm-smmu 15000000.iommu:         Stage-1: 48-bit VA -> 48-bit IPA
+[    2.633372] Unable to handle kernel NULL pointer dereference at virtual address 0000000000000000
+...
+[    2.633402] [0000000000000000] user address but active_mm is swapper
+[    2.633409] Internal error: Oops: 96000005 [#1] PREEMPT SMP
+[    2.633415] Modules linked in:
+[    2.633427] CPU: 5 PID: 117 Comm: kworker/u16:2 Tainted: G        W         5.10.0-rc1-mainline-00025-g272a618fc36-dirty #3971
+[    2.633430] Hardware name: Thundercomm Dragonboard 845c (DT)
+[    2.633448] Workqueue: events_unbound async_run_entry_fn
+[    2.633456] pstate: 80c00005 (Nzcv daif +PAN +UAO -TCO BTYPE=--)
+[    2.633465] pc : qcom_scm_qsmmu500_wait_safe_toggle+0x78/0xb0
+[    2.633473] lr : qcom_smmu500_reset+0x58/0x78
+[    2.633476] sp : ffffffc0105a3b60
+...
+[    2.633567] Call trace:
+[    2.633572]  qcom_scm_qsmmu500_wait_safe_toggle+0x78/0xb0
+[    2.633576]  qcom_smmu500_reset+0x58/0x78
+[    2.633581]  arm_smmu_device_reset+0x194/0x270
+[    2.633585]  arm_smmu_device_probe+0xc94/0xeb8
+[    2.633592]  platform_drv_probe+0x58/0xa8
+[    2.633597]  really_probe+0xec/0x398
+[    2.633601]  driver_probe_device+0x5c/0xb8
+[    2.633606]  __driver_attach_async_helper+0x64/0x88
+[    2.633610]  async_run_entry_fn+0x4c/0x118
+[    2.633617]  process_one_work+0x20c/0x4b0
+[    2.633621]  worker_thread+0x48/0x460
+[    2.633628]  kthread+0x14c/0x158
+[    2.633634]  ret_from_fork+0x10/0x18
+[    2.633642] Code: a9034fa0 d0007f73 29107fa0 91342273 (f9400020)
+
+To avoid this, this patch adds a check on qcom_scm_is_available() in
+the qcom_smmu_impl_init() function, returning -EPROBE_DEFER if its
+not ready.
+
+This allows the driver to try to probe again later after qcom_scm has
+finished probing.
+
+Cc: Robin Murphy <robin.murphy@arm.com>
+Cc: Will Deacon <will@kernel.org>
+Cc: Andy Gross <agross@kernel.org>
+Cc: Maulik Shah <mkshah@codeaurora.org>
+Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc: Saravana Kannan <saravanak@google.com>
+Cc: Marc Zyngier <maz@kernel.org>
+Cc: Lina Iyer <ilina@codeaurora.org>
+Cc: iommu@lists.linux-foundation.org
+Cc: linux-arm-msm <linux-arm-msm@vger.kernel.org>
+Reported-by: Robin Murphy <robin.murphy@arm.com>
+Signed-off-by: John Stultz <john.stultz@linaro.org>
+---
+ drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c | 4 ++++
+ 1 file changed, 4 insertions(+)
+
+diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
+index 66ba4870659f4..ef37ccfa82562 100644
+--- a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
++++ b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
+@@ -159,6 +159,10 @@ struct arm_smmu_device *qcom_smmu_impl_init(struct arm_smmu_device *smmu)
+ {
+ 	struct qcom_smmu *qsmmu;
+ 
++	/* Check to make sure qcom_scm has finished probing */
++	if (!qcom_scm_is_available())
++		return ERR_PTR(-EPROBE_DEFER);
++
+ 	qsmmu = devm_kzalloc(smmu->dev, sizeof(*qsmmu), GFP_KERNEL);
+ 	if (!qsmmu)
+ 		return ERR_PTR(-ENOMEM);
 -- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project
+2.17.1
+
