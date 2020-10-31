@@ -2,222 +2,227 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 8A72C2A1341
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 31 Oct 2020 04:04:20 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7AC052A1354
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 31 Oct 2020 04:29:52 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726184AbgJaDER (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 30 Oct 2020 23:04:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39064 "EHLO
+        id S1725841AbgJaD3w (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 30 Oct 2020 23:29:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42948 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726158AbgJaDEQ (ORCPT
+        with ESMTP id S1725536AbgJaD3v (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 30 Oct 2020 23:04:16 -0400
-Received: from mail-pj1-x102a.google.com (mail-pj1-x102a.google.com [IPv6:2607:f8b0:4864:20::102a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 16F7FC0613D5
-        for <linux-arm-msm@vger.kernel.org>; Fri, 30 Oct 2020 20:04:14 -0700 (PDT)
-Received: by mail-pj1-x102a.google.com with SMTP id gi3so290000pjb.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 30 Oct 2020 20:04:14 -0700 (PDT)
+        Fri, 30 Oct 2020 23:29:51 -0400
+Received: from mail-pj1-x1044.google.com (mail-pj1-x1044.google.com [IPv6:2607:f8b0:4864:20::1044])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A61B1C0613D7
+        for <linux-arm-msm@vger.kernel.org>; Fri, 30 Oct 2020 20:29:51 -0700 (PDT)
+Received: by mail-pj1-x1044.google.com with SMTP id a3so312404pjh.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 30 Oct 2020 20:29:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=dOaiRG7nzOcew4Z/xa4Y9xhaCfEOzzX+L3+jYCW8uRY=;
-        b=DMAwc6lK6ZUTOXaQLELuJb+DLulnLu/TsWegaajGm8rDAtlcvhxuJl1EYsOxRgJK4L
-         l/OVWkCKS7qxsdxQ1U+ryuVkJdqO4HLjatwwu2Mcz0AsfY1ZVaKdN61cnWnodQTsw0vW
-         C8ONCAMQ9/JH2jR8SNL5mGZpx7n1AfO7pE9/2SX4QssIgCmNzaVJSzrjTASk6EyXRrA9
-         4J9tlWmXfQfKSts8AhH+O3O76q/lMHF+9tnJy11zK11B74LYHixhLk1puRbVBgg4+sev
-         dheLcfIYTDi8yIVsP5Ir8k4a3p5MZsjQyd0z+Hhbxp9Q4Zc3T/06Xe9XR+fhlR6NDMcK
-         laVQ==
+        bh=76DThdNWebcvO0jIjCg/uL/CgMF8urxPrOK03ud7nT0=;
+        b=AHXLBo9DAH9XH3EOJrRvufMD00GFaxVB2stykDP4uZK+x7U4PauNsAAcO7R7TW/OfB
+         FBVvYo09QULuGN2SjJY4qJlu+pA4H5V0ZTEcCgf1K5OfMJsCxh6NrnQhsVyOMAtwB7Ri
+         BlD+zWJXmestHYeh2VSx9bJczYhgo/39097ktj5um+tOLvg80y6DmFSFwghwgJ99fiHN
+         3n8Ncc5jTv5oCLMbYayERwaMLKlWclq4QXFiGFCaB+fTjXOLTd5QbOoPwcEN2SRKE+M4
+         0wrIL2qT6MTrnZ0S+rVYkYkZubVI7D+yAbNgDtcuDrxJHt9BTEYxMdKyQHGbDw+fJ3J1
+         gZCQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=dOaiRG7nzOcew4Z/xa4Y9xhaCfEOzzX+L3+jYCW8uRY=;
-        b=OR3WEUyTAhO6HesHm69miAjtolQDp0+6ZAZqMUo9VsBmYvG9ftTy/802SarF73pj8u
-         JdINUGxgPktRxxjXR/RY/96Uaat/Yg5TIafzdtVYu3S2jxicw6ep/UFiomaoRQ/v2st3
-         cbwd2CqA5Q4L76RJhSejuJImsyBI1Tge6xUuYWHa9pBjqdt0hVMgV+o3rmYOO+kILbE3
-         xM4MsSGKnaWmozHWKXcLV1hAWGB//da8huEftfs+to+q1VxktcN5TOYb9VGb0xrW/xZG
-         KzgIil38H3TYOSIdeKKdPj8INhsiwX8cIGgMzlqnyrkWLO2ndDOOxLt8TJ2CdO4KHn60
-         RGzw==
-X-Gm-Message-State: AOAM530A1t9VU+4fXMGlpo1eAT7ezeZ6hkzRchjyIVaSunl9/tLUBBtW
-        H8ZENuems4nsdGvkorXwVTcq
-X-Google-Smtp-Source: ABdhPJzjVcvaGvc+ZvZMF2wQLN0gJBl5ruQ7dMt0KnAS41Bf5OA37Aed06fGLQnAGelK7iHJFRfjZw==
-X-Received: by 2002:a17:90a:8d08:: with SMTP id c8mr6308573pjo.33.1604113452797;
-        Fri, 30 Oct 2020 20:04:12 -0700 (PDT)
+        bh=76DThdNWebcvO0jIjCg/uL/CgMF8urxPrOK03ud7nT0=;
+        b=AAFzVYgIOCjIA9Ve63UmZ3DX0O0gu8IK5ce97UqGuZd1M2wR5H+8kTuFrrYBydHT+/
+         11gNaMKqLSnX0M1gce9FiVkKBvfTp5Iwu4x4q7bhQGIj1jSHeYIioqWxBzurIiVBtqfA
+         hcBmsb7FlTEqWM6lI1c3Fo1Yo089hMpvwD5odSx6dfSQmIPL3Spp9HzGQQxOLbqhoJP4
+         adW79rXWf/cXETaN4mv7kAuUABAi1ISzi+Qfn0I0hztEfOXu1uNKrmPbLXnh+BzJpZ+A
+         l0fQ1RKxQJBAoYMpzKp3a4WtYdeciYkHuS3Hvs62iuLarHPlIJR3O9M+naVEEHRzRcrm
+         Vj4Q==
+X-Gm-Message-State: AOAM531R8qjudAxA4g0AcfWkewNWmeqaDUzAVjZwddyx/qiJO1reSkq1
+        Kr3ud7rw9oECT0ZT6gabR2uSUsidec7h
+X-Google-Smtp-Source: ABdhPJyRXsMwGdWZIMPqbxTxOkTtp+X7q4C/t7/xgSwooZvdz7F2X7P3tAZygMvvgATznDMimfBipg==
+X-Received: by 2002:a17:90b:297:: with SMTP id az23mr6671619pjb.71.1604114990963;
+        Fri, 30 Oct 2020 20:29:50 -0700 (PDT)
 Received: from Mani-XPS-13-9360 ([2409:4072:6097:a88a:8051:aa6b:aaa2:8d63])
-        by smtp.gmail.com with ESMTPSA id i123sm7096266pfc.13.2020.10.30.20.04.07
+        by smtp.gmail.com with ESMTPSA id w31sm4716090pjj.32.2020.10.30.20.29.46
         (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 30 Oct 2020 20:04:11 -0700 (PDT)
-Date:   Sat, 31 Oct 2020 08:34:05 +0530
+        Fri, 30 Oct 2020 20:29:50 -0700 (PDT)
+Date:   Sat, 31 Oct 2020 08:59:44 +0530
 From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     Hemant Kumar <hemantk@codeaurora.org>
-Cc:     gregkh@linuxfoundation.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, jhugo@codeaurora.org,
-        bbhatt@codeaurora.org, loic.poulain@linaro.org,
-        netdev@vger.kernel.org
-Subject: Re: [PATCH v11 4/4] bus: mhi: Add userspace client interface driver
-Message-ID: <20201031030405.GA4664@Mani-XPS-13-9360>
-References: <1604025946-28288-1-git-send-email-hemantk@codeaurora.org>
- <1604025946-28288-5-git-send-email-hemantk@codeaurora.org>
- <20201030103410.GD3818@Mani-XPS-13-9360>
- <5cfbcc14-5fd2-b1ae-8a3d-ac28d567a74d@codeaurora.org>
+To:     Rob Herring <robh@kernel.org>
+Cc:     sboyd@kernel.org, mturquette@baylibre.com,
+        bjorn.andersson@linaro.org, vkoul@kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 1/4] dt-bindings: clock: Add SDX55 GCC clock bindings
+Message-ID: <20201031032944.GA5635@Mani-XPS-13-9360>
+References: <20201028074232.22922-1-manivannan.sadhasivam@linaro.org>
+ <20201028074232.22922-2-manivannan.sadhasivam@linaro.org>
+ <20201030192225.GA4174677@bogus>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <5cfbcc14-5fd2-b1ae-8a3d-ac28d567a74d@codeaurora.org>
+In-Reply-To: <20201030192225.GA4174677@bogus>
 User-Agent: Mutt/1.9.4 (2018-02-28)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-hi Hemant,
+Hi Rob,
 
-On Fri, Oct 30, 2020 at 06:26:38PM -0700, Hemant Kumar wrote:
-> Hi Mani,
+On Fri, Oct 30, 2020 at 02:22:25PM -0500, Rob Herring wrote:
+> On Wed, Oct 28, 2020 at 01:12:29PM +0530, Manivannan Sadhasivam wrote:
+> > From: Vinod Koul <vkoul@kernel.org>
+> > 
+> > Add device tree bindings for global clock controller on SDX55 SoCs.
+> > 
+> > Signed-off-by: Vinod Koul <vkoul@kernel.org>
 > 
-> On 10/30/20 3:34 AM, Manivannan Sadhasivam wrote:
-> > Hi Hemant,
-> > 
-> > On Thu, Oct 29, 2020 at 07:45:46PM -0700, Hemant Kumar wrote:
-> > > This MHI client driver allows userspace clients to transfer
-> > > raw data between MHI device and host using standard file operations.
-> > > Driver instantiates UCI device object which is associated to device
-> > > file node. UCI device object instantiates UCI channel object when device
-> > > file node is opened. UCI channel object is used to manage MHI channels
-> > > by calling MHI core APIs for read and write operations. MHI channels
-> > > are started as part of device open(). MHI channels remain in start
-> > > state until last release() is called on UCI device file node. Device
-> > > file node is created with format
-> > > 
-> > > /dev/mhi_<controller_name>_<mhi_device_name>
-> > > 
-> > > Currently it supports LOOPBACK channel.
-> > > 
-> > > Signed-off-by: Hemant Kumar <hemantk@codeaurora.org>
-> > 
-> > Thanks for continuously updating the series based on reviews, now the locking
-> > part looks a _lot_ cleaner than it used to be. I just have one query (inline)
-> > regarding the usage of refcount for uci_chan and uci_dev. Once you fix that,
-> > I think this is good to go in.
-> Thanks for reviewing my changes.
-> 
-> [..]
-> 
-> > > +#define DEVICE_NAME "mhi"
-> > > +#define MHI_UCI_DRIVER_NAME "mhi_uci"
-> > > +#define MAX_UCI_MINORS 128
-> > 
-> > Prefix MHI for these.
-> Done.
-> 
-> > 
-> > > +
-> > > +static DEFINE_IDR(uci_idr);
-> > > +static DEFINE_MUTEX(uci_drv_mutex);
-> > > +static struct class *uci_dev_class;
-> > > +static int uci_dev_major;
-> > > +
-> > > +/**
-> > > + * struct uci_chan - MHI channel for a UCI device
-> > > + * @udev: associated UCI device object
-> > > + * @ul_wq: wait queue for writer
-> > > + * @write_lock: mutex write lock for ul channel
-> > > + * @dl_wq: wait queue for reader
-> > > + * @read_lock: mutex read lock for dl channel
-> > > + * @dl_pending_lock: spin lock for dl_pending list
-> > > + * @dl_pending: list of dl buffers userspace is waiting to read
-> > > + * @cur_buf: current buffer userspace is reading
-> > > + * @dl_size: size of the current dl buffer userspace is reading
-> > > + * @ref_count: uci_chan reference count
-> > > + */
-> > > +struct uci_chan {
-> > > +	struct uci_dev *udev;
-> > > +	wait_queue_head_t ul_wq;
-> > > +
-> > > +	/* ul channel lock to synchronize multiple writes */
-> > 
-> > I asked you to move these comments to Kdoc in previous iteration.
-> There are multiple revisions of UCI pushed after i responded on this one. On
-> V7 i responded to your comment  :)
-> 
-> "This was added because checkpatch --strict required to add a comment when
-> lock is added to struct, after adding inline comment, checkpatch error was
-> gone."
-> 
-> i was sticking to --strict option. Considering it is best to address what
-> --strict is complaining for.
-
-Ah okay.
-
-> > 
-> > > +	struct mutex write_lock;
-> > > +
-> > > +	wait_queue_head_t dl_wq;
-> > > +
-> > > +	/* dl channel lock to synchronize multiple reads */
-> > > +	struct mutex read_lock;
-> > > +
-> > > +	/*
-> > > +	 * protects pending list in bh context, channel release, read and
-> > > +	 * poll
-> > > +	 */
-> > > +	spinlock_t dl_pending_lock;
-> > > +
-> > > +	struct list_head dl_pending;
-> > > +	struct uci_buf *cur_buf;
-> > > +	size_t dl_size;
-> > > +	struct kref ref_count;
-> > 
-> > I'm now thinking that instead of having two reference counts for uci_chan and
-> > uci_dev, why can't you club them together and just use uci_dev's refcount to
-> > handle the channel management also.
-> > 
-> > For instance in uci_open, you are incrementing the refcount for uci_dev before
-> > starting the channel and then doing the same for uci_chan in
-> > mhi_uci_dev_start_chan(). So why can't you just use a single refcount once the
-> > mhi_uci_dev_start_chan() succeeds? The UCI device is useless without a channel,
-> > isn't it?
-> Main idea is to have the uci driver probed (uci device object is
-> instantiated) but it is possible that device node is not opened or if it was
-> opened before and release() was called after that. So UCI channel is not
-> active but device node would continue to exist. Which can be opened again
-> and channel would move to start state. So we dont want to couple mhi driver
-> probe with starting of channels. We start channels only when it is really
-> needed. This would allow MHI device to go to lower power state when channels
-> are disabled.
+> This should carry your S-o-b too.
 > 
 
-Okay, makes sense! Please make sure you add it in Documentation.
+Ah yes!
 
-> [..]
+> > ---
+> >  .../bindings/clock/qcom,gcc-sdx55.yaml        |  71 +++++++++++
+> >  include/dt-bindings/clock/qcom,gcc-sdx55.h    | 112 ++++++++++++++++++
+> >  2 files changed, 183 insertions(+)
+> >  create mode 100644 Documentation/devicetree/bindings/clock/qcom,gcc-sdx55.yaml
+> >  create mode 100644 include/dt-bindings/clock/qcom,gcc-sdx55.h
+> > 
+
+[...]
+
+> > diff --git a/include/dt-bindings/clock/qcom,gcc-sdx55.h b/include/dt-bindings/clock/qcom,gcc-sdx55.h
+> > new file mode 100644
+> > index 000000000000..09ca45c6de73
+> > --- /dev/null
+> > +++ b/include/dt-bindings/clock/qcom,gcc-sdx55.h
+> > @@ -0,0 +1,112 @@
+> > +/* SPDX-License-Identifier: GPL-2.0-only */
 > 
-> > > +
-> > > +static int mhi_queue_inbound(struct uci_dev *udev)
-> > > +{
-> > > +	struct mhi_device *mhi_dev = udev->mhi_dev;
-> > > +	struct device *dev = &mhi_dev->dev;
-> > > +	int nr_trbs, i, ret = -EIO;
-> > 
-> > s/nr_trbs/nr_desc
-> Done.
-> > 
-> > > +	size_t dl_buf_size;
-> > > +	void *buf;
-> > > +	struct uci_buf *ubuf;
-> > > +
-> > > +	/* dont queue if dl channel is not supported */
-> > > +	if (!udev->mhi_dev->dl_chan)
-> > > +		return 0;
-> > 
-> > Not returning an error?
-> Here we dont need to return error because when open is called it would call
-> this function and if dl_chan is not supported we still want to return
-> success for a uci device which only supports UL channel.
-> Keeping this check inside function looks clean so i am not adding this check
-> in open().
+> Dual license? 
 > 
 
-Hmm, okay. Please add a comment regarding this.
+The downstream code just lists the GPL2.0 and I'm not sure if I can make
+it as dual license. Whereas the binding we made it dual license since we
+authored it.
 
 Thanks,
 Mani
+
+> > +/*
+> > + * Copyright (c) 2018, The Linux Foundation. All rights reserved.
+> > + * Copyright (c) 2020, Linaro Ltd.
+> > + */
+> > +
+> > +#ifndef _DT_BINDINGS_CLK_QCOM_GCC_SDX55_H
+> > +#define _DT_BINDINGS_CLK_QCOM_GCC_SDX55_H
+> > +
+> > +#define GPLL0							3
+> > +#define GPLL0_OUT_EVEN						4
+> > +#define GPLL4							5
+> > +#define GPLL4_OUT_EVEN						6
+> > +#define GPLL5							7
+> > +#define GCC_AHB_PCIE_LINK_CLK					8
+> > +#define GCC_BLSP1_AHB_CLK					9
+> > +#define GCC_BLSP1_QUP1_I2C_APPS_CLK				10
+> > +#define GCC_BLSP1_QUP1_I2C_APPS_CLK_SRC				11
+> > +#define GCC_BLSP1_QUP1_SPI_APPS_CLK				12
+> > +#define GCC_BLSP1_QUP1_SPI_APPS_CLK_SRC				13
+> > +#define GCC_BLSP1_QUP2_I2C_APPS_CLK				14
+> > +#define GCC_BLSP1_QUP2_I2C_APPS_CLK_SRC				15
+> > +#define GCC_BLSP1_QUP2_SPI_APPS_CLK				16
+> > +#define GCC_BLSP1_QUP2_SPI_APPS_CLK_SRC				17
+> > +#define GCC_BLSP1_QUP3_I2C_APPS_CLK				18
+> > +#define GCC_BLSP1_QUP3_I2C_APPS_CLK_SRC				19
+> > +#define GCC_BLSP1_QUP3_SPI_APPS_CLK				20
+> > +#define GCC_BLSP1_QUP3_SPI_APPS_CLK_SRC				21
+> > +#define GCC_BLSP1_QUP4_I2C_APPS_CLK				22
+> > +#define GCC_BLSP1_QUP4_I2C_APPS_CLK_SRC				23
+> > +#define GCC_BLSP1_QUP4_SPI_APPS_CLK				24
+> > +#define GCC_BLSP1_QUP4_SPI_APPS_CLK_SRC				25
+> > +#define GCC_BLSP1_UART1_APPS_CLK				26
+> > +#define GCC_BLSP1_UART1_APPS_CLK_SRC				27
+> > +#define GCC_BLSP1_UART2_APPS_CLK				28
+> > +#define GCC_BLSP1_UART2_APPS_CLK_SRC				29
+> > +#define GCC_BLSP1_UART3_APPS_CLK				30
+> > +#define GCC_BLSP1_UART3_APPS_CLK_SRC				31
+> > +#define GCC_BLSP1_UART4_APPS_CLK				32
+> > +#define GCC_BLSP1_UART4_APPS_CLK_SRC				33
+> > +#define GCC_BOOT_ROM_AHB_CLK					34
+> > +#define GCC_CE1_AHB_CLK						35
+> > +#define GCC_CE1_AXI_CLK						36
+> > +#define GCC_CE1_CLK						37
+> > +#define GCC_CPUSS_AHB_CLK					38
+> > +#define GCC_CPUSS_AHB_CLK_SRC					39
+> > +#define GCC_CPUSS_GNOC_CLK					40
+> > +#define GCC_CPUSS_RBCPR_CLK					41
+> > +#define GCC_CPUSS_RBCPR_CLK_SRC					42
+> > +#define GCC_EMAC_CLK_SRC					43
+> > +#define GCC_EMAC_PTP_CLK_SRC					44
+> > +#define GCC_ETH_AXI_CLK						45
+> > +#define GCC_ETH_PTP_CLK						46
+> > +#define GCC_ETH_RGMII_CLK					47
+> > +#define GCC_ETH_SLAVE_AHB_CLK					48
+> > +#define GCC_GP1_CLK						49
+> > +#define GCC_GP1_CLK_SRC						50
+> > +#define GCC_GP2_CLK						51
+> > +#define GCC_GP2_CLK_SRC						52
+> > +#define GCC_GP3_CLK						53
+> > +#define GCC_GP3_CLK_SRC						54
+> > +#define GCC_PCIE_0_CLKREF_CLK					55
+> > +#define GCC_PCIE_AUX_CLK					56
+> > +#define GCC_PCIE_AUX_PHY_CLK_SRC				57
+> > +#define GCC_PCIE_CFG_AHB_CLK					58
+> > +#define GCC_PCIE_MSTR_AXI_CLK					59
+> > +#define GCC_PCIE_PIPE_CLK					60
+> > +#define GCC_PCIE_RCHNG_PHY_CLK					61
+> > +#define GCC_PCIE_RCHNG_PHY_CLK_SRC				62
+> > +#define GCC_PCIE_SLEEP_CLK					63
+> > +#define GCC_PCIE_SLV_AXI_CLK					64
+> > +#define GCC_PCIE_SLV_Q2A_AXI_CLK				65
+> > +#define GCC_PDM2_CLK						66
+> > +#define GCC_PDM2_CLK_SRC					67
+> > +#define GCC_PDM_AHB_CLK						68
+> > +#define GCC_PDM_XO4_CLK						69
+> > +#define GCC_SDCC1_AHB_CLK					70
+> > +#define GCC_SDCC1_APPS_CLK					71
+> > +#define GCC_SDCC1_APPS_CLK_SRC					72
+> > +#define GCC_SYS_NOC_CPUSS_AHB_CLK				73
+> > +#define GCC_USB30_MASTER_CLK					74
+> > +#define GCC_USB30_MASTER_CLK_SRC				75
+> > +#define GCC_USB30_MOCK_UTMI_CLK					76
+> > +#define GCC_USB30_MOCK_UTMI_CLK_SRC				77
+> > +#define GCC_USB30_MSTR_AXI_CLK					78
+> > +#define GCC_USB30_SLEEP_CLK					79
+> > +#define GCC_USB30_SLV_AHB_CLK					80
+> > +#define GCC_USB3_PHY_AUX_CLK					81
+> > +#define GCC_USB3_PHY_AUX_CLK_SRC				82
+> > +#define GCC_USB3_PHY_PIPE_CLK					83
+> > +#define GCC_USB3_PRIM_CLKREF_CLK				84
+> > +#define GCC_USB_PHY_CFG_AHB2PHY_CLK				85
+> > +#define GCC_XO_DIV4_CLK						86
+> > +#define GCC_XO_PCIE_LINK_CLK					87
+> > +
+> > +#define GCC_EMAC_BCR						0
+> > +#define GCC_PCIE_BCR						1
+> > +#define GCC_PCIE_LINK_DOWN_BCR					2
+> > +#define GCC_PCIE_NOCSR_COM_PHY_BCR				3
+> > +#define GCC_PCIE_PHY_BCR					4
+> > +#define GCC_PCIE_PHY_CFG_AHB_BCR				5
+> > +#define GCC_PCIE_PHY_COM_BCR					6
+> > +#define GCC_PCIE_PHY_NOCSR_COM_PHY_BCR				7
+> > +#define GCC_PDM_BCR						8
+> > +#define GCC_QUSB2PHY_BCR					9
+> > +#define GCC_TCSR_PCIE_BCR					10
+> > +#define GCC_USB30_BCR						11
+> > +#define GCC_USB3_PHY_BCR					12
+> > +#define GCC_USB3PHY_PHY_BCR					13
+> > +#define GCC_USB_PHY_CFG_AHB2PHY_BCR				14
+> > +
+> > +#endif
+> > -- 
+> > 2.17.1
+> > 
