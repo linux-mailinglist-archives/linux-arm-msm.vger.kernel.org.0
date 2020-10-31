@@ -2,50 +2,51 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id CFCCF2A11F9
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 31 Oct 2020 01:37:27 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 842322A11FC
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 31 Oct 2020 01:37:32 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725681AbgJaAh1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 30 Oct 2020 20:37:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44778 "EHLO
+        id S1725959AbgJaAha (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 30 Oct 2020 20:37:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44786 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725536AbgJaAh1 (ORCPT
+        with ESMTP id S1725960AbgJaAh3 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 30 Oct 2020 20:37:27 -0400
-Received: from mail-pf1-x442.google.com (mail-pf1-x442.google.com [IPv6:2607:f8b0:4864:20::442])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E06CFC0613D5
-        for <linux-arm-msm@vger.kernel.org>; Fri, 30 Oct 2020 17:37:26 -0700 (PDT)
-Received: by mail-pf1-x442.google.com with SMTP id j18so6729566pfa.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 30 Oct 2020 17:37:26 -0700 (PDT)
+        Fri, 30 Oct 2020 20:37:29 -0400
+Received: from mail-pg1-x544.google.com (mail-pg1-x544.google.com [IPv6:2607:f8b0:4864:20::544])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C1BDEC0613D5
+        for <linux-arm-msm@vger.kernel.org>; Fri, 30 Oct 2020 17:37:27 -0700 (PDT)
+Received: by mail-pg1-x544.google.com with SMTP id g12so6540957pgm.8
+        for <linux-arm-msm@vger.kernel.org>; Fri, 30 Oct 2020 17:37:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id;
-        bh=slkfJzLThfnq7dp6T3hHJaR873aqxgp2bKc6BsX9aV0=;
-        b=d27j2ULI1adERw0Mu20sV02cDmRxBknyx87aj2jNGSy2/M7FhauOGGIYsa/Riauctg
-         EOhOPIR2uCCmfhcS+oUvPpXBRSNFYtd276GaskBByCba6IEvNT5TTOtszcE7VyxsUFqx
-         ewjkRK0mj/PtB5XBM1m+yM8aN89NMbuO1JbXqfeYY3Hs3Z1Qd+XVGP8yBPpNYqMh1Ul9
-         leNi9X8AFkNvi5HXNNUy3Ksrs78MufZo0B1tf25ZKzzOY8fD2bVQBhoaGaEGFm+hAoa1
-         2/2I5/iXDrHp+HsjqL5fP40bJ4ViVQ1fp34Av4TyhSI9D1Miysjhu8pknQVl2Rcs+wPx
-         Id0g==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=hvoWVjH5MrvJlNL+Wpvlrvtr/qdzZEjizkDpZ+3TUPw=;
+        b=bRnUkU5QJDdovKB+3Oe64UD9XdGDPdwmEL0e6homqfsQ1GrFivNaT1ceK4jr1G1+hD
+         Xbxz4vWZTuO7moh7D/gW1/RgAf7UfMkBg5sT/9tzH5t5cDLLDpZNgMsiPjipAuG9JU9a
+         /oJaZOVt49Hshtnxjyt3fN+2HhvC0sdg9XYHDTDLnfWn+9GFau6SbOzuehTkD9sXpeyz
+         QlOOZ+vBKupPhbBvtMsR2abFGbElx1JBNuqPQLrDA9LsFD3PRpg7o6cZ3fdIr5sdZqZ0
+         TkQ+0OvYEwaPH/hljQjozd5Ynr4RR/vYgr5LS3ISaJs/vgJmazLuhn6jX01hFMa3nbZm
+         s4Ew==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=slkfJzLThfnq7dp6T3hHJaR873aqxgp2bKc6BsX9aV0=;
-        b=W34nND2nao/R3NiKJaJCXTpKaK7xHzPFoy3OYL/o4dyUYwL1Hm04dW7zOR1LvUSJYr
-         HwOoB4U6meJe3aihGVJvUFwcB0lacahiIx2Azy2zhPu36CeVwX9tgf29nvo3lhiSyG5x
-         VRi8i0IeQGNydKVont04sdgiMVeTomMnGJMX2HzrS7z/263DuabIDxfyxMrhGHXJUpjz
-         53Dk2KGiIxsYVYl3+SS8/oI1YWEPX72eAwLSNK9PDaznHI9G/AOUgsihcch2T4AheI7c
-         pmh59BjlHq8VB9aRSmHJ1dnG8GIbwOZGPsvMWtoLC8GSDQqlKs+3mVz/nqiWUlK/0vrX
-         Ch1A==
-X-Gm-Message-State: AOAM530Mlq9djTRj2GNuFHu20r9c7o8IN2+QoC/kLClMusyUbHb5So4D
-        GAZugOczQjJpzaX/MF/9/jv6dXlq75/L6Q==
-X-Google-Smtp-Source: ABdhPJwsAAj5WjEJppnE9Spzkm3zC39E6buD+bP6zorkZkq6ERJ/7NpLN//oW7RJhe6svibAhZLCsw==
-X-Received: by 2002:a63:3111:: with SMTP id x17mr4241208pgx.329.1604104645927;
-        Fri, 30 Oct 2020 17:37:25 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=hvoWVjH5MrvJlNL+Wpvlrvtr/qdzZEjizkDpZ+3TUPw=;
+        b=rvxCr5xLkz8okW/HptaN7hUqTqMl0scz6p+4FdmnsOKxCXERbkBIeIQ5QMQrVoypLO
+         og/CGhd4q+xfVVvq1fbsQ4tV5w/OfGeEhEPTwfFZqRoe6VbxQaSzooHswKmx8ioeNNI1
+         8LMULoD74GZ1NXiRHy5YuEKWDBFKG/Y8ddtcArziCx4K+KRCsxScpNTeIawlmNEpv1Rz
+         bK0e5AZ4zXL7pTrse9S/YzU/pCyIyEnqKDcFUHv/qhA/KdDKjrM9rCAkUO3cRR+/4/Il
+         vucpFexWPW8d1mxr7n173UWt1q8X8E09Gqz/FlVv5L2sHp4DniOIXK+yPVPo+3mT3UZ8
+         v+rQ==
+X-Gm-Message-State: AOAM530g2xCq0MGgs0wM/sBvgXboTFPSzKSesHOThi6uMIj/AkUU7X/9
+        FD3FjwvWv4YOtrN0tXQEVwRWXQ==
+X-Google-Smtp-Source: ABdhPJxeqhaBAC7zYRx5xaemqM+o7fL8zXijASb2rLhquYgoiO/uJc+BWuRhrzTtrM6vCX+g3MXc8A==
+X-Received: by 2002:aa7:9095:0:b029:164:75c4:5d15 with SMTP id i21-20020aa790950000b029016475c45d15mr11561202pfa.49.1604104647290;
+        Fri, 30 Oct 2020 17:37:27 -0700 (PDT)
 Received: from localhost.localdomain ([2601:1c2:680:1319:692:26ff:feda:3a81])
-        by smtp.gmail.com with ESMTPSA id 3sm7011935pfv.92.2020.10.30.17.37.24
+        by smtp.gmail.com with ESMTPSA id 3sm7011935pfv.92.2020.10.30.17.37.26
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 30 Oct 2020 17:37:25 -0700 (PDT)
+        Fri, 30 Oct 2020 17:37:26 -0700 (PDT)
 From:   John Stultz <john.stultz@linaro.org>
 To:     lkml <linux-kernel@vger.kernel.org>
 Cc:     John Stultz <john.stultz@linaro.org>,
@@ -58,60 +59,72 @@ Cc:     John Stultz <john.stultz@linaro.org>,
         Lina Iyer <ilina@codeaurora.org>,
         iommu@lists.linux-foundation.org,
         linux-arm-msm <linux-arm-msm@vger.kernel.org>
-Subject: [RFC][PATCH 1/2] arm-smmu-qcom: Ensure the qcom_scm driver has finished probing
-Date:   Sat, 31 Oct 2020 00:37:20 +0000
-Message-Id: <20201031003721.40973-1-john.stultz@linaro.org>
+Subject: [RFC][PATCH 2/2] iommu: Avoid crash if iommu_group is null
+Date:   Sat, 31 Oct 2020 00:37:21 +0000
+Message-Id: <20201031003721.40973-2-john.stultz@linaro.org>
 X-Mailer: git-send-email 2.17.1
+In-Reply-To: <20201031003721.40973-1-john.stultz@linaro.org>
+References: <20201031003721.40973-1-john.stultz@linaro.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Robin Murphy pointed out that if the arm-smmu driver probes before
-the qcom_scm driver, we may call qcom_scm_qsmmu500_wait_safe_toggle()
-before the __scm is initialized.
-
-Now, getting this to happen is a bit contrived, as in my efforts it
-required enabling asynchronous probing for both drivers, moving the
-firmware dts node to the end of the dtsi file, as well as forcing a
-long delay in the qcom_scm_probe function.
-
-With those tweaks we ran into the following crash:
-[    2.631040] arm-smmu 15000000.iommu:         Stage-1: 48-bit VA -> 48-bit IPA
-[    2.633372] Unable to handle kernel NULL pointer dereference at virtual address 0000000000000000
+In trying to handle a possible driver probe ordering issue
+brought up by Robin Murphy, I ran across a separate null pointer
+crash in the iommu core in iommu_group_remove_device():
+[    2.732803] dwc3-qcom a6f8800.usb: failed to get usb-ddr path: -517
+[    2.739281] Unable to handle kernel NULL pointer dereference at virtual address 00000000000000c0
 ...
-[    2.633402] [0000000000000000] user address but active_mm is swapper
-[    2.633409] Internal error: Oops: 96000005 [#1] PREEMPT SMP
-[    2.633415] Modules linked in:
-[    2.633427] CPU: 5 PID: 117 Comm: kworker/u16:2 Tainted: G        W         5.10.0-rc1-mainline-00025-g272a618fc36-dirty #3971
-[    2.633430] Hardware name: Thundercomm Dragonboard 845c (DT)
-[    2.633448] Workqueue: events_unbound async_run_entry_fn
-[    2.633456] pstate: 80c00005 (Nzcv daif +PAN +UAO -TCO BTYPE=--)
-[    2.633465] pc : qcom_scm_qsmmu500_wait_safe_toggle+0x78/0xb0
-[    2.633473] lr : qcom_smmu500_reset+0x58/0x78
-[    2.633476] sp : ffffffc0105a3b60
+[    2.775619] [00000000000000c0] user address but active_mm is swapper
+[    2.782039] Internal error: Oops: 96000005 [#1] PREEMPT SMP
+[    2.787670] Modules linked in:
+[    2.790769] CPU: 6 PID: 1 Comm: swapper/0 Tainted: G        W         5.10.0-rc1-mainline-00025-g272a618fc36-dirty #3973
+[    2.801719] Hardware name: Thundercomm Dragonboard 845c (DT)
+[    2.807431] pstate: 00c00005 (nzcv daif +PAN +UAO -TCO BTYPE=--)
+[    2.813508] pc : iommu_group_remove_device+0x30/0x1b0
+[    2.818611] lr : iommu_release_device+0x4c/0x78
+[    2.823189] sp : ffffffc01005b950
 ...
-[    2.633567] Call trace:
-[    2.633572]  qcom_scm_qsmmu500_wait_safe_toggle+0x78/0xb0
-[    2.633576]  qcom_smmu500_reset+0x58/0x78
-[    2.633581]  arm_smmu_device_reset+0x194/0x270
-[    2.633585]  arm_smmu_device_probe+0xc94/0xeb8
-[    2.633592]  platform_drv_probe+0x58/0xa8
-[    2.633597]  really_probe+0xec/0x398
-[    2.633601]  driver_probe_device+0x5c/0xb8
-[    2.633606]  __driver_attach_async_helper+0x64/0x88
-[    2.633610]  async_run_entry_fn+0x4c/0x118
-[    2.633617]  process_one_work+0x20c/0x4b0
-[    2.633621]  worker_thread+0x48/0x460
-[    2.633628]  kthread+0x14c/0x158
-[    2.633634]  ret_from_fork+0x10/0x18
-[    2.633642] Code: a9034fa0 d0007f73 29107fa0 91342273 (f9400020)
+[    2.907082] Call trace:
+[    2.909566]  iommu_group_remove_device+0x30/0x1b0
+[    2.914323]  iommu_release_device+0x4c/0x78
+[    2.918559]  iommu_bus_notifier+0xe8/0x108
+[    2.922708]  blocking_notifier_call_chain+0x78/0xb8
+[    2.927641]  device_del+0x2ac/0x3d0
+[    2.931177]  platform_device_del.part.9+0x20/0x98
+[    2.935933]  platform_device_unregister+0x2c/0x40
+[    2.940694]  of_platform_device_destroy+0xd8/0xe0
+[    2.945450]  device_for_each_child_reverse+0x58/0xb0
+[    2.950471]  of_platform_depopulate+0x4c/0x78
+[    2.954886]  dwc3_qcom_probe+0x93c/0xcb8
+[    2.958858]  platform_drv_probe+0x58/0xa8
+[    2.962917]  really_probe+0xec/0x398
+[    2.966531]  driver_probe_device+0x5c/0xb8
+[    2.970677]  device_driver_attach+0x74/0x98
+[    2.974911]  __driver_attach+0x60/0xe8
+[    2.978700]  bus_for_each_dev+0x84/0xd8
+[    2.982581]  driver_attach+0x30/0x40
+[    2.986194]  bus_add_driver+0x160/0x208
+[    2.990076]  driver_register+0x64/0x110
+[    2.993957]  __platform_driver_register+0x58/0x68
+[    2.998716]  dwc3_qcom_driver_init+0x20/0x28
+[    3.003041]  do_one_initcall+0x6c/0x2d0
+[    3.006925]  kernel_init_freeable+0x214/0x268
+[    3.011339]  kernel_init+0x18/0x118
+[    3.014876]  ret_from_fork+0x10/0x18
+[    3.018495] Code: d0006a21 f9417295 91130021 910162b6 (b940c2a2)
 
-To avoid this, this patch adds a check on qcom_scm_is_available() in
-the qcom_smmu_impl_init() function, returning -EPROBE_DEFER if its
-not ready.
+In the case above, the arm-smmu driver fails to probe with
+EPROBE_DEFER, and I'm guessing I'm guessing that causes
+iommu_group_add_device() to fail and sets the
+dev->iommu_group = NULL, then somehow we hit
+iommu_group_remove_device() and trip over the null value?
+I'm not really sure...
 
-This allows the driver to try to probe again later after qcom_scm has
-finished probing.
+Anyway, adding the null check seems to avoid the issue and the
+system boots fine after the arm-smmu driver later reprobed.
+
+Feedback or better ideas for a solution would be appreciated!
 
 Cc: Robin Murphy <robin.murphy@arm.com>
 Cc: Will Deacon <will@kernel.org>
@@ -123,27 +136,26 @@ Cc: Marc Zyngier <maz@kernel.org>
 Cc: Lina Iyer <ilina@codeaurora.org>
 Cc: iommu@lists.linux-foundation.org
 Cc: linux-arm-msm <linux-arm-msm@vger.kernel.org>
-Reported-by: Robin Murphy <robin.murphy@arm.com>
 Signed-off-by: John Stultz <john.stultz@linaro.org>
 ---
- drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c | 4 ++++
+ drivers/iommu/iommu.c | 4 ++++
  1 file changed, 4 insertions(+)
 
-diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-index 66ba4870659f4..ef37ccfa82562 100644
---- a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-+++ b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-@@ -159,6 +159,10 @@ struct arm_smmu_device *qcom_smmu_impl_init(struct arm_smmu_device *smmu)
- {
- 	struct qcom_smmu *qsmmu;
+diff --git a/drivers/iommu/iommu.c b/drivers/iommu/iommu.c
+index 8c470f451a323..44639b88e77db 100644
+--- a/drivers/iommu/iommu.c
++++ b/drivers/iommu/iommu.c
+@@ -877,6 +877,10 @@ void iommu_group_remove_device(struct device *dev)
+ 	struct iommu_group *group = dev->iommu_group;
+ 	struct group_device *tmp_device, *device = NULL;
  
-+	/* Check to make sure qcom_scm has finished probing */
-+	if (!qcom_scm_is_available())
-+		return ERR_PTR(-EPROBE_DEFER);
++	/* Avoid crash if iommu_group value is null */
++	if (!group)
++		return;
 +
- 	qsmmu = devm_kzalloc(smmu->dev, sizeof(*qsmmu), GFP_KERNEL);
- 	if (!qsmmu)
- 		return ERR_PTR(-ENOMEM);
+ 	dev_info(dev, "Removing from iommu group %d\n", group->id);
+ 
+ 	/* Pre-notify listeners that a device is being removed. */
 -- 
 2.17.1
 
