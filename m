@@ -2,122 +2,85 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 07E0E2A286F
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Nov 2020 11:46:19 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 5B3D42A299D
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Nov 2020 12:35:45 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728437AbgKBKqQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 2 Nov 2020 05:46:16 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41970 "EHLO
+        id S1728627AbgKBLfo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 2 Nov 2020 06:35:44 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49866 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728317AbgKBKqQ (ORCPT
+        with ESMTP id S1728512AbgKBLfk (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 2 Nov 2020 05:46:16 -0500
-Received: from mail-io1-xd44.google.com (mail-io1-xd44.google.com [IPv6:2607:f8b0:4864:20::d44])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ED67EC061A04
-        for <linux-arm-msm@vger.kernel.org>; Mon,  2 Nov 2020 02:46:15 -0800 (PST)
-Received: by mail-io1-xd44.google.com with SMTP id u19so14505091ion.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 02 Nov 2020 02:46:15 -0800 (PST)
+        Mon, 2 Nov 2020 06:35:40 -0500
+Received: from mail-ed1-x544.google.com (mail-ed1-x544.google.com [IPv6:2a00:1450:4864:20::544])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 569FCC061A47
+        for <linux-arm-msm@vger.kernel.org>; Mon,  2 Nov 2020 03:35:40 -0800 (PST)
+Received: by mail-ed1-x544.google.com with SMTP id v4so14056110edi.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 02 Nov 2020 03:35:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=VRpjL02zuTcuiv/Rvb/qTyae7wJ0n/tsrDk8nGGEoq0=;
-        b=JbF7Xzcx6Wu8FIV7/iG4L8/z373ZoWlCO6auRph8RxolPKUCY1c9JzvvbI3Ea8+Uwf
-         623DoaDsaJKCpWEQpXNj98q9gCj1aDehvtpItUkRrmtnB8aAV6mbbK04ddWHMkKMYtl7
-         4oFJG1NT4N39UbIQ64IZIa0hXFMu0mTCuVoaXGy4E2hUE7fq1sNC37u1OnLRK+srC62G
-         gfLCwVF7Pxw1UMQ/VlJ9hmuYmHSRgkVb/yWTy7xhVu91Rqz72oua6GOBx3TI2A2tO1oE
-         MW6MhUJSrVNgZbnseXvs+TSZ8ZsJonOti3crmrOCtAmx7l1ybcV9Qx+yIWni9YtIGJ0B
-         y6Vg==
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id;
+        bh=5ZRnhbjvF5vhabbPJRjSHqRgQjYY8yji4DiDRURWAfY=;
+        b=G1QX6xet8AfPZqPVhIGOAc5PPJ/F6vo77jLJYQfxWENLGmrR5SkUBtwj5hwE9saITE
+         Rse6H0V0c1RJ1AjWMQwaIX3C8ZFXp3YUd5bz/OcrtxtlS3AhECfIhQNlsO2iTfn+HlBm
+         s77h81JFh3EQRKHT7hLQJOfqb9TQQBBwPUTb3p9L7AXhxzHJFmL+DRNmF5OaWG3+XDrv
+         LmrwUSUfSZtsGroWpYTHadzjUv4Z+J0RYOueB+aW+UheJFWlJoH0rA4KvYdLFVyfsCnB
+         Afmb6WZKH0FzY1fiNt31KbbQGr/aKdbuhRw7h38iWRR9buchM3uFVjpFNks/QNUY9fwy
+         HzRg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=VRpjL02zuTcuiv/Rvb/qTyae7wJ0n/tsrDk8nGGEoq0=;
-        b=DPXxX5Ip8NsQZpxClno9ObfeiShxJuGDyTpUxiBMSmzmthiBI9A39yj7ti8mDnKfis
-         My3neqQnffb5dzZJ9dos8vjqoKb97ofKCQpIRRs6IXfrY/oftPkZ4RNpr49wNuAeyEL2
-         Cwj52g9ezCyHbWAq7E9gnJYa/bGM274JSG40gGnb98DxiGnv2qzFEwUYiwsUnnASMFRP
-         w79ZDbzLzSFVxGzAYKGQz7QgbDYKCTlganhXYZ+c1UAxMvtzZ7nslVz4RC5iB1mzgnd8
-         rIkWKrX5PviQVSwJWAYMhkP3tEjzHwjhxLC755MhRpcnDlgFgyDv8T/nxI+vKMSnLQcd
-         9Ang==
-X-Gm-Message-State: AOAM530r3lp97albjsZC/rkYzygJRazuXTLgT8k+TIm0lk6aObWahxpu
-        aNapd9uXhgzgaR0fG+3DMDfFAf1AUh/Q39edCNTDpw==
-X-Google-Smtp-Source: ABdhPJxKwVLNAuofbLNcJ13qTFoIFIxwQPlrQC3KzP9RuGcr//5ixy6TdSJ29X5luQ0fmV1hraBbt8Ty1Pv6VXZ7MzI=
-X-Received: by 2002:a6b:7a0b:: with SMTP id h11mr2777649iom.76.1604313974919;
- Mon, 02 Nov 2020 02:46:14 -0800 (PST)
-MIME-Version: 1.0
-References: <20201102062408.331572-1-ajye_huang@compal.corp-partner.google.com>
- <20201102062408.331572-3-ajye_huang@compal.corp-partner.google.com>
-In-Reply-To: <20201102062408.331572-3-ajye_huang@compal.corp-partner.google.com>
-From:   Tzung-Bi Shih <tzungbi@google.com>
-Date:   Mon, 2 Nov 2020 18:46:04 +0800
-Message-ID: <CA+Px+wV9Lmdphp4iMgF1d72vewb2m9aiZzywvavLGgtkAczCDQ@mail.gmail.com>
-Subject: Re: [PATCH v3 2/2] ASoC: qcom: sc7180: Modify machine driver for 2mic
-To:     Ajye Huang <ajye.huang@gmail.com>
-Cc:     Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        Mark Brown <broonie@kernel.org>,
-        Rohit kumar <rohitkr@codeaurora.org>,
-        Banajit Goswami <bgoswami@codeaurora.org>,
-        Patrick Lai <plai@codeaurora.org>,
-        Srinivasa Rao Mandadapu <srivasam@codeaurora.org>,
-        Srini Kandagatla <srinivas.kandagatla@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Jaroslav Kysela <perex@perex.cz>,
-        Cheng-Yi Chiang <cychiang@chromium.org>,
-        Tzung-Bi Shih <tzungbi@chromium.org>,
-        Douglas Anderson <dianders@chromium.org>,
-        "moderated list:ARM/Mediatek SoC support" 
-        <linux-arm-kernel@lists.infradead.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>,
-        ALSA development <alsa-devel@alsa-project.org>,
-        Ajye Huang <ajye_huang@compal.corp-partner.google.com>
-Content-Type: text/plain; charset="UTF-8"
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=5ZRnhbjvF5vhabbPJRjSHqRgQjYY8yji4DiDRURWAfY=;
+        b=rjw+m+qlhs5xjSXPrgP04d+jS7Rb6jp8bkkDlK/JTYpVdB1owID7EHSgDwTXRl74rh
+         Y7zPhrNIcE0AWfh1OPlHIsUvWuAu7iu9ZKe2/yo2fUyvN0QV8Yvkwe4tgTM8VquAv6JM
+         EdkwveW1aLLApnE5QYo0Nx0AGNeHfGl7nOHcY9kax0ehefmcCkNwiqWCkNbwrEsd9LLE
+         LijZXzHuzRd435V3ar40jAg1v0i4Bcoqqaw8YON0augvRRkJwzmwrSxtez65QWBfB4gL
+         P2DuAMqNKdOpc+XDWIr3fy/yTUiEJ1z1/cEFG7z6MXb+0rcXqSa7IseL6Pf7lGI1Nyly
+         Kh0w==
+X-Gm-Message-State: AOAM5303s08PHsu7JMueBasufywJDi6XlkHhSUtW9TJdCxZ0T0qnOwyl
+        YngiqeO2eAxUpgoNGmFeYqpJzA==
+X-Google-Smtp-Source: ABdhPJzeFdJG4XY7UQ6yHGasew1646U4JPaHzki24LIL7RrLhjFgFTPPb0ZBvGZ5Qz8Y8pVNkYavrg==
+X-Received: by 2002:a05:6402:142c:: with SMTP id c12mr16629660edx.41.1604316939104;
+        Mon, 02 Nov 2020 03:35:39 -0800 (PST)
+Received: from localhost.localdomain (hst-221-54.medicom.bg. [84.238.221.54])
+        by smtp.gmail.com with ESMTPSA id g20sm9424234ejz.88.2020.11.02.03.35.37
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 02 Nov 2020 03:35:38 -0800 (PST)
+From:   Stanimir Varbanov <stanimir.varbanov@linaro.org>
+To:     linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Georgi Djakov <georgi.djakov@linaro.org>,
+        Stanimir Varbanov <stanimir.varbanov@linaro.org>
+Subject: [PATCH 15/17] arm64: dts: sdm845: Add interconnect properties for Venus
+Date:   Mon,  2 Nov 2020 13:35:29 +0200
+Message-Id: <20201102113529.16152-1-stanimir.varbanov@linaro.org>
+X-Mailer: git-send-email 2.17.1
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Nov 2, 2020 at 2:24 PM Ajye Huang <ajye.huang@gmail.com> wrote:
->
-> In addition, having mixer control to switch between DMICs by
-> using "dmic-gpios" property.
->
-> Refer to this one as an example,
-> commit b7a742cff3f6 ("ASoC: AMD: Use mixer control to switch between DMICs")
->
-> Signed-off-by: Ajye Huang <ajye_huang@compal.corp-partner.google.com>
+Populate Venus DT node with interconnect properties.
 
-I am not sure if it would be better if you use another email (e.g.
-@gmail) for signoff.
+Signed-off-by: Stanimir Varbanov <stanimir.varbanov@linaro.org>
+---
+ arch/arm64/boot/dts/qcom/sdm845.dtsi | 3 +++
+ 1 file changed, 3 insertions(+)
 
-> +static int dmic_get(struct snd_kcontrol *kcontrol,
-> +                   struct snd_ctl_elem_value *ucontrol)
-> +{
-> +       struct snd_soc_dapm_context *dapm = snd_soc_dapm_kcontrol_dapm(kcontrol);
-> +       struct sc7180_snd_data *data = snd_soc_card_get_drvdata(dapm->card);
-> +
-> +       if (data)
+diff --git a/arch/arm64/boot/dts/qcom/sdm845.dtsi b/arch/arm64/boot/dts/qcom/sdm845.dtsi
+index 40e8c11f23ab..aca7e9c954e0 100644
+--- a/arch/arm64/boot/dts/qcom/sdm845.dtsi
++++ b/arch/arm64/boot/dts/qcom/sdm845.dtsi
+@@ -3661,6 +3661,9 @@
+ 			iommus = <&apps_smmu 0x10a0 0x8>,
+ 				 <&apps_smmu 0x10b0 0x0>;
+ 			memory-region = <&venus_mem>;
++			interconnects = <&mmss_noc MASTER_VIDEO_P0 0 &mem_noc SLAVE_EBI1 0>,
++					<&gladiator_noc MASTER_APPSS_PROC 0 &config_noc SLAVE_VENUS_CFG 0>;
++			interconnect-names = "video-mem", "cpu-cfg";
+ 
+ 			video-core0 {
+ 				compatible = "venus-decoder";
+-- 
+2.17.1
 
-You don't need to check for NULL.  If snd_soc_card_get_drvdata()
-returns NULL, it shouldn't run into here.  See other
-snd_soc_card_get_drvdata() calls in the file.
-
-> +static int dmic_set(struct snd_kcontrol *kcontrol,
-> +                   struct snd_ctl_elem_value *ucontrol)
-> +{
-> +       struct snd_soc_dapm_context *dapm = snd_soc_dapm_kcontrol_dapm(kcontrol);
-> +       struct sc7180_snd_data *data = snd_soc_card_get_drvdata(dapm->card);
-> +
-> +       if (data) {
-
-Ditto.
-
-> +               if (IS_ERR(data->dmic_sel)) {
-> +                       dev_err(&pdev->dev, "DMIC gpio failed err=%d\n",
-> +                               PTR_ERR(data->dmic_sel));
-> +                               return PTR_ERR(data->dmic_sel);
-
-Remove 1 level indent.
