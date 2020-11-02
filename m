@@ -2,361 +2,188 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 52DF02A3069
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Nov 2020 17:53:36 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0D9FD2A30EC
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Nov 2020 18:08:07 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727498AbgKBQxQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 2 Nov 2020 11:53:16 -0500
-Received: from m42-4.mailgun.net ([69.72.42.4]:20481 "EHLO m42-4.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727196AbgKBQxP (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 2 Nov 2020 11:53:15 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1604335994; h=Message-ID: References: In-Reply-To: Reply-To:
- Subject: Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=Nape3Zlvkwkx2JbI1Q8BIro237BlC8e8SFugN/cKslc=;
- b=Pk18vzJ8H6Ggb3J8QTCyCMKlGitQM1OE1nBoKuMnlkgHSy8thSugaBUe6g6RmYCOyTF0BB7k
- 51YoC1+5nlHXpYbrhQzHzVcI+7oPnRm6GDnjOIkXPRKkXPuGmY6vup1Y7yJP3igGEM63nAa+
- 0PXqnwz2SD+zQPSg7goY9fMQImM=
-X-Mailgun-Sending-Ip: 69.72.42.4
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n07.prod.us-east-1.postgun.com with SMTP id
- 5fa039607b1a71d668bb2b0d (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 02 Nov 2020 16:52:47
- GMT
-Sender: bbhatt=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 22F2FC43387; Mon,  2 Nov 2020 16:52:47 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: bbhatt)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 09DA6C433C9;
-        Mon,  2 Nov 2020 16:52:44 +0000 (UTC)
+        id S1727265AbgKBRIF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 2 Nov 2020 12:08:05 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45540 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727150AbgKBRIE (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 2 Nov 2020 12:08:04 -0500
+Received: from mail-ot1-x341.google.com (mail-ot1-x341.google.com [IPv6:2607:f8b0:4864:20::341])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 993DBC0617A6
+        for <linux-arm-msm@vger.kernel.org>; Mon,  2 Nov 2020 09:08:04 -0800 (PST)
+Received: by mail-ot1-x341.google.com with SMTP id m26so13240898otk.11
+        for <linux-arm-msm@vger.kernel.org>; Mon, 02 Nov 2020 09:08:04 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=h835lHTQAu95wxA6PWFRRi1Mf/8MD2a5rJ3lZGCt1cc=;
+        b=JXzV2p0vzQ8oWk1hcaXFG0FvtdrXkV2dRVgA/IbVQE/hgmv5n5pCVIvX3ESBoyvRGf
+         tgtfY7MWJUbRHG067Bs69792lkKZW5h9t+tEeDcB6BRq9PRAy76YtZ1WQ93f5nn5qQkz
+         h/9uGzvP827kIjRUVNnANCl7bQ4nnsPVFpKVQknecDyRFRRGcqSTOfEjWdipbFNiKj9K
+         6/v0/FxOSV95gWgZNzOpV+sb61Bq0be7/mu8AiAVV3H916cU3YOXRmnVEShMx06rfuXz
+         B42vxCATidn5x/xPrejMPvHKUB+LnQe0ofCsZgj42RK/AQoodaBKYalUoN9NELtSuyav
+         4l6Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=h835lHTQAu95wxA6PWFRRi1Mf/8MD2a5rJ3lZGCt1cc=;
+        b=eYwPB/haopBhtmjvY2XTdhoysKLhfQxSNYcSnL6L39vBnjbJVxrrPrjf86Sn/eSDjH
+         lEMFJJNbTyu/86H8mSn3SFndXt8Q1JsuNG5PYTjJAndfnKxwrCkHUQf+gFI3zruBc2xL
+         UbtJROMzR5JfXmPnwBd3+0jM89ncCFwa6VXD4VShs5upNeRroYqfGlta15GmlEyIJzfs
+         qrjviRtMyO4oCKKe0WhMpmar0aZdWzwxRL9ljS88UEuJyslLBh5L+jeEX86FLVjisDTN
+         X/ioPQ+ylLoUT+Nu5jLDi2EVCNfgfRWp9x+Gp8SO3cOWEygwfOUIEoVTkdCWKR3PUG+m
+         L0qQ==
+X-Gm-Message-State: AOAM532+hZeW2pmTJj1FxQ/parcf3PxLdAzgpyl+R02Y8vqWdA2L80Is
+        u4qu0+mYmRCDqYvDq5XgaO7b1A==
+X-Google-Smtp-Source: ABdhPJwPghsbeLdlR1n488K/KOrm0Vc5OL56hGZgaK6freCCeb7B/2DFK47J9LaHVmCOZ7tOA3hd9g==
+X-Received: by 2002:a05:6830:2018:: with SMTP id e24mr13147614otp.278.1604336883838;
+        Mon, 02 Nov 2020 09:08:03 -0800 (PST)
+Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
+        by smtp.gmail.com with ESMTPSA id y22sm3560488ooa.2.2020.11.02.09.08.02
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 02 Nov 2020 09:08:03 -0800 (PST)
+Date:   Mon, 2 Nov 2020 11:08:01 -0600
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Doug Anderson <dianders@chromium.org>
+Cc:     David Airlie <airlied@linux.ie>, Daniel Vetter <daniel@ffwll.ch>,
+        Rob Herring <robh+dt@kernel.org>,
+        Andrzej Hajda <a.hajda@samsung.com>,
+        Neil Armstrong <narmstrong@baylibre.com>,
+        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
+        Jonas Karlman <jonas@kwiboo.se>,
+        Jernej Skrabec <jernej.skrabec@siol.net>,
+        dri-devel <dri-devel@lists.freedesktop.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>, LKML <linux-kernel@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>
+Subject: Re: [PATCH 1/2] dt-bindings: drm/bridge: ti-sn65dsi86: Replace
+ #pwm-cells
+Message-ID: <20201102170801.GI3151@builder.lan>
+References: <20200930223532.77755-1-bjorn.andersson@linaro.org>
+ <20200930223532.77755-2-bjorn.andersson@linaro.org>
+ <CAD=FV=Unu-PH_RThi3xRF1HUADN2PqcVAOin0O0yo0gcGRWCDQ@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Mon, 02 Nov 2020 08:52:44 -0800
-From:   Bhaumik Bhatt <bbhatt@codeaurora.org>
-To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, hemantk@codeaurora.org,
-        jhugo@codeaurora.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v3 10/12] bus: mhi: core: Separate system error and power
- down handling
-Organization: Qualcomm Innovation Center, Inc.
-Reply-To: bbhatt@codeaurora.org
-Mail-Reply-To: bbhatt@codeaurora.org
-In-Reply-To: <716796DC-0E3E-4021-B764-228E42A3B7FD@linaro.org>
-References: <1604031057-32820-1-git-send-email-bbhatt@codeaurora.org>
- <1604031057-32820-11-git-send-email-bbhatt@codeaurora.org>
- <20201030140656.GL3818@Mani-XPS-13-9360>
- <a02c31409d696075b155ef2d6ee33009@codeaurora.org>
- <716796DC-0E3E-4021-B764-228E42A3B7FD@linaro.org>
-Message-ID: <10e8a8f83a5d6cc77120ebad3b1ab3c2@codeaurora.org>
-X-Sender: bbhatt@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAD=FV=Unu-PH_RThi3xRF1HUADN2PqcVAOin0O0yo0gcGRWCDQ@mail.gmail.com>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Mani,
+On Fri 02 Oct 15:42 CDT 2020, Doug Anderson wrote:
 
-On 2020-10-30 23:54, Manivannan Sadhasivam wrote:
-> Hi Bhaumik,
+> Hi,
 > 
-> On 31 October 2020 1:04:07 AM IST, Bhaumik Bhatt 
-> <bbhatt@codeaurora.org> wrote:
->> Hi Mani,
->> 
->> On 2020-10-30 07:06, Manivannan Sadhasivam wrote:
->>> On Thu, Oct 29, 2020 at 09:10:55PM -0700, Bhaumik Bhatt wrote:
->>>> Currently, there exist a set of if...else statements in the
->>>> mhi_pm_disable_transition() function which make handling system
->>>> error and disable transitions differently complex. To make that
->>>> cleaner and facilitate differences in behavior, separate these
->>>> two transitions for MHI host.
->>>> 
->>> 
->>> And this results in a lot of duplicated code :/
->>> 
->>> Thanks,
->>> Mani
->>> 
->> 
->> I knew this was coming. Mainly, we can avoid adding confusing 
->> if...else
->> statements that plague the current mhi_pm_disable_transition() 
->> function
->> 
->> and in
->> return for some duplicate code, we can make handling separate use 
->> cases
->> 
->> easier
->> as they could pop-up anytime in the future.
->> 
+> On Wed, Sep 30, 2020 at 3:40 PM Bjorn Andersson
+> <bjorn.andersson@linaro.org> wrote:
+> >
+> > While the signal on GPIO4 to drive the backlight controller indeed is
+> > pulse width modulated its purpose is specifically to control the
+> > brightness of a backlight.
 > 
-> If that happens then do it but now, please no.
+> I'm a bit on the fence about this.  I guess you're doing this because
+> it avoids some -EPROBE_DEFER cycles in Linux?  It does seem to have a
+> few downsides, though.
 > 
-> Thanks,
-> Mani
-> 
-It had to be done for 11/12 and 12/12 (last two) patches of the series. 
-It's a
-much cleaner approach and allows us to handle states better. We should 
-be moving
-the dev_state and EE to "Reset" and "Disable" states soon enough when a 
-shutdown
-is initiated and we can resolve bugs such as freeing the IRQs for a 
-shutdown
-sooner as well. Since these differences in shutdown versus SYS_ERROR 
-processing
-are already increasingly apparent and more could come, this patch had to 
-step
-in.
 
-bus: mhi: core: Mark and maintain device states early on after power 
-down
-bus: mhi: core: Remove MHI event ring IRQ handlers when powering down
->>>> Signed-off-by: Bhaumik Bhatt <bbhatt@codeaurora.org>
->>>> ---
->>>>  drivers/bus/mhi/core/pm.c | 159
->>>> +++++++++++++++++++++++++++++++++++++++-------
->>>>  1 file changed, 137 insertions(+), 22 deletions(-)
->>>> 
->>>> diff --git a/drivers/bus/mhi/core/pm.c b/drivers/bus/mhi/core/pm.c
->>>> index 1d04e401..347ae7d 100644
->>>> --- a/drivers/bus/mhi/core/pm.c
->>>> +++ b/drivers/bus/mhi/core/pm.c
->>>> @@ -444,7 +444,7 @@ static int mhi_pm_mission_mode_transition(struct
->> 
->>>> mhi_controller *mhi_cntrl)
->>>>  	return ret;
->>>>  }
->>>> 
->>>> -/* Handle SYS_ERR and Shutdown transitions */
->>>> +/* Handle shutdown transitions */
->>>>  static void mhi_pm_disable_transition(struct mhi_controller
->>>> *mhi_cntrl,
->>>>  				      enum mhi_pm_state transition_state)
->>>>  {
->>>> @@ -460,10 +460,6 @@ static void mhi_pm_disable_transition(struct
->>>> mhi_controller *mhi_cntrl,
->>>>  		to_mhi_pm_state_str(mhi_cntrl->pm_state),
->>>>  		to_mhi_pm_state_str(transition_state));
->>>> 
->>>> -	/* We must notify MHI control driver so it can clean up first */
->>>> -	if (transition_state == MHI_PM_SYS_ERR_PROCESS)
->>>> -		mhi_cntrl->status_cb(mhi_cntrl, MHI_CB_SYS_ERROR);
->>>> -
->>>>  	mutex_lock(&mhi_cntrl->pm_mutex);
->>>>  	write_lock_irq(&mhi_cntrl->pm_lock);
->>>>  	prev_state = mhi_cntrl->pm_state;
->>>> @@ -502,11 +498,8 @@ static void mhi_pm_disable_transition(struct
->>>> mhi_controller *mhi_cntrl,
->>>>  							    MHICTRL_RESET_SHIFT,
->>>>  							    &in_reset) ||
->>>>  					!in_reset, timeout);
->>>> -		if ((!ret || in_reset) && cur_state == MHI_PM_SYS_ERR_PROCESS) {
->>>> +		if (!ret || in_reset)
->>>>  			dev_err(dev, "Device failed to exit MHI Reset state\n");
->>>> -			mutex_unlock(&mhi_cntrl->pm_mutex);
->>>> -			return;
->>>> -		}
->>>> 
->>>>  		/*
->>>>  		 * Device will clear BHI_INTVEC as a part of RESET processing,
->>>> @@ -566,19 +559,142 @@ static void mhi_pm_disable_transition(struct
->>>> mhi_controller *mhi_cntrl,
->>>>  		er_ctxt->wp = er_ctxt->rbase;
->>>>  	}
->>>> 
->>>> -	if (cur_state == MHI_PM_SYS_ERR_PROCESS) {
->>>> -		mhi_ready_state_transition(mhi_cntrl);
->>>> -	} else {
->>>> -		/* Move to disable state */
->>>> -		write_lock_irq(&mhi_cntrl->pm_lock);
->>>> -		cur_state = mhi_tryset_pm_state(mhi_cntrl, MHI_PM_DISABLE);
->>>> -		write_unlock_irq(&mhi_cntrl->pm_lock);
->>>> -		if (unlikely(cur_state != MHI_PM_DISABLE))
->>>> -			dev_err(dev, "Error moving from PM state: %s to: %s\n",
->>>> -				to_mhi_pm_state_str(cur_state),
->>>> -				to_mhi_pm_state_str(MHI_PM_DISABLE));
->>>> +	/* Move to disable state */
->>>> +	write_lock_irq(&mhi_cntrl->pm_lock);
->>>> +	cur_state = mhi_tryset_pm_state(mhi_cntrl, MHI_PM_DISABLE);
->>>> +	write_unlock_irq(&mhi_cntrl->pm_lock);
->>>> +	if (unlikely(cur_state != MHI_PM_DISABLE))
->>>> +		dev_err(dev, "Error moving from PM state: %s to: %s\n",
->>>> +			to_mhi_pm_state_str(cur_state),
->>>> +			to_mhi_pm_state_str(MHI_PM_DISABLE));
->>>> +
->>>> +	dev_dbg(dev, "Exiting with PM state: %s, MHI state: %s\n",
->>>> +		to_mhi_pm_state_str(mhi_cntrl->pm_state),
->>>> +		TO_MHI_STATE_STR(mhi_cntrl->dev_state));
->>>> +
->>>> +	mutex_unlock(&mhi_cntrl->pm_mutex);
->>>> +}
->>>> +
->>>> +/* Handle system error transitions */
->>>> +static void mhi_pm_sys_error_transition(struct mhi_controller
->>>> *mhi_cntrl)
->>>> +{
->>>> +	enum mhi_pm_state cur_state, prev_state;
->>>> +	struct mhi_event *mhi_event;
->>>> +	struct mhi_cmd_ctxt *cmd_ctxt;
->>>> +	struct mhi_cmd *mhi_cmd;
->>>> +	struct mhi_event_ctxt *er_ctxt;
->>>> +	struct device *dev = &mhi_cntrl->mhi_dev->dev;
->>>> +	int ret, i;
->>>> +
->>>> +	dev_dbg(dev, "Transitioning from PM state: %s to: %s\n",
->>>> +		to_mhi_pm_state_str(mhi_cntrl->pm_state),
->>>> +		to_mhi_pm_state_str(MHI_PM_SYS_ERR_PROCESS));
->>>> +
->>>> +	/* We must notify MHI control driver so it can clean up first */
->>>> +	mhi_cntrl->status_cb(mhi_cntrl, MHI_CB_SYS_ERROR);
->>>> +
->>>> +	mutex_lock(&mhi_cntrl->pm_mutex);
->>>> +	write_lock_irq(&mhi_cntrl->pm_lock);
->>>> +	prev_state = mhi_cntrl->pm_state;
->>>> +	cur_state = mhi_tryset_pm_state(mhi_cntrl,
->> MHI_PM_SYS_ERR_PROCESS);
->>>> +	write_unlock_irq(&mhi_cntrl->pm_lock);
->>>> +
->>>> +	if (cur_state != MHI_PM_SYS_ERR_PROCESS) {
->>>> +		dev_err(dev, "Failed to transition from PM state: %s to: %s\n",
->>>> +			to_mhi_pm_state_str(cur_state),
->>>> +			to_mhi_pm_state_str(MHI_PM_SYS_ERR_PROCESS));
->>>> +		goto exit_sys_error_transition;
->>>> +	}
->>>> +
->>>> +	mhi_cntrl->ee = MHI_EE_DISABLE_TRANSITION;
->>>> +	mhi_cntrl->dev_state = MHI_STATE_RESET;
->>>> +
->>>> +	/* Wake up threads waiting for state transition */
->>>> +	wake_up_all(&mhi_cntrl->state_event);
->>>> +
->>>> +	/* Trigger MHI RESET so that the device will not access host
->> memory
->>>> */
->>>> +	if (MHI_REG_ACCESS_VALID(prev_state)) {
->>>> +		u32 in_reset = -1;
->>>> +		unsigned long timeout = msecs_to_jiffies(mhi_cntrl->timeout_ms);
->>>> +
->>>> +		dev_dbg(dev, "Triggering MHI Reset in device\n");
->>>> +		mhi_set_mhi_state(mhi_cntrl, MHI_STATE_RESET);
->>>> +
->>>> +		/* Wait for the reset bit to be cleared by the device */
->>>> +		ret = wait_event_timeout(mhi_cntrl->state_event,
->>>> +					 mhi_read_reg_field(mhi_cntrl,
->>>> +							    mhi_cntrl->regs,
->>>> +							    MHICTRL,
->>>> +							    MHICTRL_RESET_MASK,
->>>> +							    MHICTRL_RESET_SHIFT,
->>>> +							    &in_reset) ||
->>>> +					!in_reset, timeout);
->>>> +		if (!ret || in_reset) {
->>>> +			dev_err(dev, "Device failed to exit MHI Reset state\n");
->>>> +			goto exit_sys_error_transition;
->>>> +		}
->>>> +
->>>> +		/*
->>>> +		 * Device will clear BHI_INTVEC as a part of RESET processing,
->>>> +		 * hence re-program it
->>>> +		 */
->>>> +		mhi_write_reg(mhi_cntrl, mhi_cntrl->bhi, BHI_INTVEC, 0);
->>>> +	}
->>>> +
->>>> +	dev_dbg(dev,
->>>> +		"Waiting for all pending event ring processing to complete\n");
->>>> +	mhi_event = mhi_cntrl->mhi_event;
->>>> +	for (i = 0; i < mhi_cntrl->total_ev_rings; i++, mhi_event++) {
->>>> +		if (mhi_event->offload_ev)
->>>> +			continue;
->>>> +		tasklet_kill(&mhi_event->task);
->>>>  	}
->>>> 
->>>> +	/* Release lock and wait for all pending threads to complete */
->>>> +	mutex_unlock(&mhi_cntrl->pm_mutex);
->>>> +	dev_dbg(dev, "Waiting for all pending threads to complete\n");
->>>> +	wake_up_all(&mhi_cntrl->state_event);
->>>> +
->>>> +	dev_dbg(dev, "Reset all active channels and remove MHI
->> devices\n");
->>>> +	device_for_each_child(mhi_cntrl->cntrl_dev, NULL,
->>>> mhi_destroy_device);
->>>> +
->>>> +	mutex_lock(&mhi_cntrl->pm_mutex);
->>>> +
->>>> +	WARN_ON(atomic_read(&mhi_cntrl->dev_wake));
->>>> +	WARN_ON(atomic_read(&mhi_cntrl->pending_pkts));
->>>> +
->>>> +	/* Reset the ev rings and cmd rings */
->>>> +	dev_dbg(dev, "Resetting EV CTXT and CMD CTXT\n");
->>>> +	mhi_cmd = mhi_cntrl->mhi_cmd;
->>>> +	cmd_ctxt = mhi_cntrl->mhi_ctxt->cmd_ctxt;
->>>> +	for (i = 0; i < NR_OF_CMD_RINGS; i++, mhi_cmd++, cmd_ctxt++) {
->>>> +		struct mhi_ring *ring = &mhi_cmd->ring;
->>>> +
->>>> +		ring->rp = ring->base;
->>>> +		ring->wp = ring->base;
->>>> +		cmd_ctxt->rp = cmd_ctxt->rbase;
->>>> +		cmd_ctxt->wp = cmd_ctxt->rbase;
->>>> +	}
->>>> +
->>>> +	mhi_event = mhi_cntrl->mhi_event;
->>>> +	er_ctxt = mhi_cntrl->mhi_ctxt->er_ctxt;
->>>> +	for (i = 0; i < mhi_cntrl->total_ev_rings; i++, er_ctxt++,
->>>> +	     mhi_event++) {
->>>> +		struct mhi_ring *ring = &mhi_event->ring;
->>>> +
->>>> +		/* Skip offload events */
->>>> +		if (mhi_event->offload_ev)
->>>> +			continue;
->>>> +
->>>> +		ring->rp = ring->base;
->>>> +		ring->wp = ring->base;
->>>> +		er_ctxt->rp = er_ctxt->rbase;
->>>> +		er_ctxt->wp = er_ctxt->rbase;
->>>> +	}
->>>> +
->>>> +	mhi_ready_state_transition(mhi_cntrl);
->>>> +
->>>> +exit_sys_error_transition:
->>>>  	dev_dbg(dev, "Exiting with PM state: %s, MHI state: %s\n",
->>>>  		to_mhi_pm_state_str(mhi_cntrl->pm_state),
->>>>  		TO_MHI_STATE_STR(mhi_cntrl->dev_state));
->>>> @@ -666,8 +782,7 @@ void mhi_pm_st_worker(struct work_struct *work)
->>>>  			mhi_ready_state_transition(mhi_cntrl);
->>>>  			break;
->>>>  		case DEV_ST_TRANSITION_SYS_ERR:
->>>> -			mhi_pm_disable_transition
->>>> -				(mhi_cntrl, MHI_PM_SYS_ERR_PROCESS);
->>>> +			mhi_pm_sys_error_transition(mhi_cntrl);
->>>>  			break;
->>>>  		case DEV_ST_TRANSITION_DISABLE:
->>>>  			mhi_pm_disable_transition
->>>> --
->>>> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora
->>>> Forum,
->>>> a Linux Foundation Collaborative Project
->>>> 
->> 
->> Thanks,
->> Bhaumik
+No, the reason for exposing a backlight is that while the thing
+certainly is a PWM signal, the description of it and the registers
+available to control it surely seems "backlight" to me.
 
-Thanks,
-Bhaumik
--- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora 
-Forum,
-a Linux Foundation Collaborative Project
+In particular No, the reason for exposing a backlight is that while
+while the thing certainly is a PWM signal, the description of it and the
+registers available to control it surely seems "backlight" to me.
+
+> 1. It means a bit of re-inventing the wheel.  It's not a very big
+> wheel, though, I'll give you.  ...but it's still something.
+> 
+
+The main problem I saw with exposing this as a PWM was the fact that we
+have both period and frequency to control...
+
+> 2. I'm not sure why you'd want to, but in theory one could use this
+> PWM for some other purposes.  It really is just a generic PWM.  Your
+> change prevents that.
+> 
+
+...and in the even that you use it as a "generic" PWM I'd expect that
+the specified period is related to the frequency of the signal. But the
+period is documented to be related to the number of brightness steps of
+the panel.
+
+> 
+> 
+> > Drop the #pwm-cells and instead expose a new property to configure the
+> > granularity of the backlight PWM signal.
+> >
+> > Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> > ---
+> >  .../devicetree/bindings/display/bridge/ti,sn65dsi86.yaml | 9 ++++++---
+> >  1 file changed, 6 insertions(+), 3 deletions(-)
+> >
+> > diff --git a/Documentation/devicetree/bindings/display/bridge/ti,sn65dsi86.yaml b/Documentation/devicetree/bindings/display/bridge/ti,sn65dsi86.yaml
+> > index f8622bd0f61e..e380218b4646 100644
+> > --- a/Documentation/devicetree/bindings/display/bridge/ti,sn65dsi86.yaml
+> > +++ b/Documentation/devicetree/bindings/display/bridge/ti,sn65dsi86.yaml
+> > @@ -66,9 +66,12 @@ properties:
+> >        1-based to match the datasheet.  See ../../gpio/gpio.txt for more
+> >        information.
+> >
+> > -  '#pwm-cells':
+> > -    const: 1
+> > -    description: See ../../pwm/pwm.yaml for description of the cell formats.
+> > +  ti,backlight-scale:
+> > +    description:
+> > +      The granularity of brightness for the PWM signal provided on GPIO4, if
+> > +      this property is specified.
+> > +    minimum: 0
+> > +    maximum: 65535
+> 
+> A few issues here:
+> 
+> 1. Maybe call this "num-steps" instead of backlight-scale.  That's
+> essentially what it is, right?  Saying how many discrete steps you're
+> allowing in your backlight?
+> 
+
+That would work, I had it as "max-brightness" for a while as well. But I
+reverted to backlight-scale, because that's the name used in the
+datasheet.
+
+I'm fine with whatever color of the shed though :)
+
+> 2. IMO you need the PWM frequency specified, since it can actually
+> matter.  NOTE: once you have the PWM frequency specified, you could
+> imagine automatically figuring out what "num-steps" was.  Really you'd
+> want it to be the largest possible value you could achieve with your
+> hardware at the specified frequency.  There's no advantage (is there?)
+> of providing fewer steps to the backlight client.
+> 
+
+I guess there's no problem in having a "num-steps" that is unrelated to
+the number of brightness steps of the panel - but I did distinguish them
+because the datasheet clearly does so.
+
+> 3. Some backlights are specified inverted.  It looks like this maps
+> nicely to the bridge chip, which has a bit for it.  Probably nice to
+> expose this?
+> 
+
+Yes, that should be covered.
+
+> Of course, if we were just exposing the PWM directly to Linux we could
+> just use the PWM backlight driver and it'd all magically work.  ;-)
+> 
+
+Please help me figure out how to properly expose this in the PWM api and
+I'll be happy to respin it using this - as you say my wheel does look
+pretty similar...
+
+Regards,
+Bjorn
