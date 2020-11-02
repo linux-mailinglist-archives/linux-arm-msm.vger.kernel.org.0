@@ -2,128 +2,118 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id ED1742A32C1
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Nov 2020 19:19:05 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 55DB22A32C9
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Nov 2020 19:21:48 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725882AbgKBSTE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 2 Nov 2020 13:19:04 -0500
-Received: from foss.arm.com ([217.140.110.172]:35904 "EHLO foss.arm.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725833AbgKBSTC (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 2 Nov 2020 13:19:02 -0500
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 5E14B139F;
-        Mon,  2 Nov 2020 10:19:02 -0800 (PST)
-Received: from [10.57.54.223] (unknown [10.57.54.223])
-        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id DF6BA3F719;
-        Mon,  2 Nov 2020 10:18:46 -0800 (PST)
-Subject: Re: [PATCH v18 2/4] iommu/arm-smmu: Add a way for implementations to
- influence SCTLR
-To:     Jordan Crouse <jcrouse@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org
-Cc:     iommu@lists.linux-foundation.org, Will Deacon <will@kernel.org>,
-        Rob Clark <robdclark@chromium.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Joerg Roedel <joro@8bytes.org>,
-        Krishna Reddy <vdumpa@nvidia.com>,
-        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Thierry Reding <treding@nvidia.com>,
-        Vivek Gautam <vivek.gautam@codeaurora.org>,
-        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org
-References: <20201102171416.654337-1-jcrouse@codeaurora.org>
- <20201102171416.654337-3-jcrouse@codeaurora.org>
-From:   Robin Murphy <robin.murphy@arm.com>
-Message-ID: <0a00c162-ad77-46b7-85ad-e11229b57a3d@arm.com>
-Date:   Mon, 2 Nov 2020 18:18:45 +0000
-User-Agent: Mozilla/5.0 (Windows NT 10.0; rv:78.0) Gecko/20100101
- Thunderbird/78.4.0
+        id S1725801AbgKBSVr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 2 Nov 2020 13:21:47 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57266 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725797AbgKBSVr (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 2 Nov 2020 13:21:47 -0500
+Received: from mail-oo1-xc41.google.com (mail-oo1-xc41.google.com [IPv6:2607:f8b0:4864:20::c41])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9E19CC0617A6
+        for <linux-arm-msm@vger.kernel.org>; Mon,  2 Nov 2020 10:21:47 -0800 (PST)
+Received: by mail-oo1-xc41.google.com with SMTP id j6so3582255oot.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 02 Nov 2020 10:21:47 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=xRQ0CcPYOKhYGnMLgxmXXhFo34bjmKd0lXwyZmV5goY=;
+        b=pMjqPLADOae/tAXYMIGENJtu4YmHlq1z4uQT2H7/S8VZEulMPLPBOCVMkQLErEAkN5
+         7cWln7Ih2Toagjj9H1v1zRPCVbc0HJcUxAGANyLOn/FfBQIY6fVM625nfDDkQ8XVfYlt
+         KzlErXfYI4xN/QyURH2sX/suWRpDJ85f/bVDNjh7qr0dt6UKRvOp5y5WCo0XYR/8cJWO
+         5+fYnIL1JeDTDm5ySd2ULLIZdPrwE1wGCXPAZRDjSps8bM/lpJsO0ZRExJn4bk8Fj8+q
+         rxv/GTkNF5526s06R3YUsCDLmjcfYXyZzPtYUaUXIeIwIqzX+MfeT7RN0g5vZbeVsl/F
+         N8JQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=xRQ0CcPYOKhYGnMLgxmXXhFo34bjmKd0lXwyZmV5goY=;
+        b=jFo9VRXRuyah0TD+bASBFeyTmqlqgL4AtAo8pzQ2o9/oXMI0jdfs/WaUgpqfhZAC6H
+         jlXQ0LVm4z/M2UbawHU8VzS/mrc4QUv8Q+/DsUP1P0HHuXYl20OXxNkT/IAb+Nct48hv
+         7Cb4JkwCjyeb+5snylP4PoxMdo1swfZGZ45NiVeB9N0VbGOAu8TOjKIJbUSof9Rs7jm1
+         cC/6uBPVJKzk93QJhyX61oeE1NXjvMhkUzADqrBXZTX92r6agi4KO6GeguZ7iOJ6P/tb
+         pv86uhfeOwQkzqYtfPsw3iaOvz5h09tjkmfUz0do4BgEBIEtr7foiaNOWrjt4SMMmXN0
+         XXgg==
+X-Gm-Message-State: AOAM530vijn1CQenwefrEeJLAoIdRbC5fAJk0JWR8XreeAq1oJgcJ5/v
+        /25Hse5GiWeCl78wuXztp5zyyw==
+X-Google-Smtp-Source: ABdhPJzMMVGvhuvlkpsuzCCvBxYHqtTOzTsVqRH582t2kvcDB0+hJcsYmcZrjoWbMCQ9LZ/9XEzZBg==
+X-Received: by 2002:a4a:d554:: with SMTP id q20mr12886552oos.23.1604341306983;
+        Mon, 02 Nov 2020 10:21:46 -0800 (PST)
+Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
+        by smtp.gmail.com with ESMTPSA id b8sm3555544oov.29.2020.11.02.10.21.45
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 02 Nov 2020 10:21:46 -0800 (PST)
+Date:   Mon, 2 Nov 2020 12:21:44 -0600
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        Kalyan Thota <kalyan_t@codeaurora.org>
+Subject: Re: [PATCH] drm/msm/dpu: fix clock scaling on non-sc7180 board
+Message-ID: <20201102182144.GK3151@builder.lan>
+References: <20201027102304.945424-1-dmitry.baryshkov@linaro.org>
 MIME-Version: 1.0
-In-Reply-To: <20201102171416.654337-3-jcrouse@codeaurora.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-GB
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20201027102304.945424-1-dmitry.baryshkov@linaro.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2020-11-02 17:14, Jordan Crouse wrote:
-> From: Rob Clark <robdclark@chromium.org>
+On Tue 27 Oct 05:23 CDT 2020, Dmitry Baryshkov wrote:
+
+> c33b7c0389e1 ("drm/msm/dpu: add support for clk and bw scaling for
+> display") has added support for handling bandwidth voting in kms path in
+> addition to old mdss path. However this broke all other platforms since
+> _dpu_core_perf_crtc_update_bus() will now error out instead of properly
+> calculating bandwidth and core clocks. Fix
+> _dpu_core_perf_crtc_update_bus() to just skip bandwidth setting instead
+> of returning an error in case kms->num_paths == 0 (MDSS is used for
+> bandwidth management).
 > 
-> For the Adreno GPU's SMMU, we want SCTLR.HUPCF set to ensure that
-> pending translations are not terminated on iova fault.  Otherwise
-> a terminated CP read could hang the GPU by returning invalid
-> command-stream data.
-> 
-> Signed-off-by: Rob Clark <robdclark@chromium.org>
-> Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-> Signed-off-by: Jordan Crouse <jcrouse@codeaurora.org>
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+
+Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+
+Thanks Dmitry,
+Bjorn
+
+> Fixes: c33b7c0389e1 ("drm/msm/dpu: add support for clk and bw scaling for display")
 > ---
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c | 6 +++---
+>  1 file changed, 3 insertions(+), 3 deletions(-)
 > 
->   drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c | 6 ++++++
->   drivers/iommu/arm/arm-smmu/arm-smmu.c      | 3 +++
->   drivers/iommu/arm/arm-smmu/arm-smmu.h      | 3 +++
->   3 files changed, 12 insertions(+)
-> 
-> diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-> index 1e942eed2dfc..0663d7d26908 100644
-> --- a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-> +++ b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-> @@ -129,6 +129,12 @@ static int qcom_adreno_smmu_init_context(struct arm_smmu_domain *smmu_domain,
->   	    (smmu_domain->cfg.fmt == ARM_SMMU_CTX_FMT_AARCH64))
->   		pgtbl_cfg->quirks |= IO_PGTABLE_QUIRK_ARM_TTBR1;
->   
-> +	/*
-> +	 * On the GPU device we want to process subsequent transactions after a
-> +	 * fault to keep the GPU from hanging
-> +	 */
-> +	smmu_domain->cfg.sctlr_set |= ARM_SMMU_SCTLR_HUPCF;
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c
+> index 393858ef8a83..37c8270681c2 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c
+> @@ -219,9 +219,6 @@ static int _dpu_core_perf_crtc_update_bus(struct dpu_kms *kms,
+>  	int i, ret = 0;
+>  	u64 avg_bw;
+>  
+> -	if (!kms->num_paths)
+> -		return -EINVAL;
+> -
+>  	drm_for_each_crtc(tmp_crtc, crtc->dev) {
+>  		if (tmp_crtc->enabled &&
+>  			curr_client_type ==
+> @@ -239,6 +236,9 @@ static int _dpu_core_perf_crtc_update_bus(struct dpu_kms *kms,
+>  		}
+>  	}
+>  
+> +	if (!kms->num_paths)
+> +		return 0;
 > +
->   	/*
->   	 * Initialize private interface with GPU:
->   	 */
-> diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu.c b/drivers/iommu/arm/arm-smmu/arm-smmu.c
-> index dad7fa86fbd4..1f06ab219819 100644
-> --- a/drivers/iommu/arm/arm-smmu/arm-smmu.c
-> +++ b/drivers/iommu/arm/arm-smmu/arm-smmu.c
-> @@ -617,6 +617,9 @@ void arm_smmu_write_context_bank(struct arm_smmu_device *smmu, int idx)
->   	if (IS_ENABLED(CONFIG_CPU_BIG_ENDIAN))
->   		reg |= ARM_SMMU_SCTLR_E;
->   
-> +	reg |= cfg->sctlr_set;
-> +	reg &= ~cfg->sctlr_clr;
-
-Since we now have a write_s2cr hook, I'm inclined to think that the 
-consistency of a write_sctlr hook that could similarly apply its own 
-arbitrary tweaks would make sense for this. Does anyone have any strong 
-opinions?
-
-Robin.
-
-> +
->   	arm_smmu_cb_write(smmu, idx, ARM_SMMU_CB_SCTLR, reg);
->   }
->   
-> diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu.h b/drivers/iommu/arm/arm-smmu/arm-smmu.h
-> index 6c5ff9999eae..ddf2ca4c923d 100644
-> --- a/drivers/iommu/arm/arm-smmu/arm-smmu.h
-> +++ b/drivers/iommu/arm/arm-smmu/arm-smmu.h
-> @@ -144,6 +144,7 @@ enum arm_smmu_cbar_type {
->   #define ARM_SMMU_CB_SCTLR		0x0
->   #define ARM_SMMU_SCTLR_S1_ASIDPNE	BIT(12)
->   #define ARM_SMMU_SCTLR_CFCFG		BIT(7)
-> +#define ARM_SMMU_SCTLR_HUPCF		BIT(8)
->   #define ARM_SMMU_SCTLR_CFIE		BIT(6)
->   #define ARM_SMMU_SCTLR_CFRE		BIT(5)
->   #define ARM_SMMU_SCTLR_E		BIT(4)
-> @@ -341,6 +342,8 @@ struct arm_smmu_cfg {
->   		u16			asid;
->   		u16			vmid;
->   	};
-> +	u32				sctlr_set;    /* extra bits to set in SCTLR */
-> +	u32				sctlr_clr;    /* bits to mask in SCTLR */
->   	enum arm_smmu_cbar_type		cbar;
->   	enum arm_smmu_context_fmt	fmt;
->   };
+>  	avg_bw = perf.bw_ctl;
+>  	do_div(avg_bw, (kms->num_paths * 1000)); /*Bps_to_icc*/
+>  
+> -- 
+> 2.28.0
 > 
