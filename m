@@ -2,143 +2,120 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 584022A2A61
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Nov 2020 13:07:47 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 134502A2AA9
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Nov 2020 13:27:54 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728600AbgKBMHq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 2 Nov 2020 07:07:46 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54998 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728421AbgKBMHq (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 2 Nov 2020 07:07:46 -0500
-Received: from mail-wr1-x441.google.com (mail-wr1-x441.google.com [IPv6:2a00:1450:4864:20::441])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BB709C061A04
-        for <linux-arm-msm@vger.kernel.org>; Mon,  2 Nov 2020 04:07:45 -0800 (PST)
-Received: by mail-wr1-x441.google.com with SMTP id n15so14339016wrq.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 02 Nov 2020 04:07:45 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=subject:to:cc:references:from:autocrypt:message-id:date
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=eUVjcwISJQW+1frTu7OCHLFQysscXZZHpmz3yRtdTVQ=;
-        b=KQB2gHngwPyyOsVQ4B0OZ7GVfj2NciKQIQYRch/wSmsQyepnRwXg3UoY/vWSVDWRl7
-         HMsqOO6uRGJ+/Hdj/4432079AlYXWDvyYdtnJuitArUvTrhXvhJhBN7W0ko/CqqHnRTU
-         7Lum8CjxRR4/GzwScT82n9/YJ+Dc+PA0FJbSdF3jld3nFMbjfwaQ03aTYFmJ0SsDEWPK
-         vMqvtNKA+xkh1r9S2KtjptoluPlWr3yc/zoDuEgyuAOLaxZBcyI5FTzY9sJUUu3W8Nlp
-         fwYHrpUVqg8VmL6x7CjoDrsGiOO3u6g+1efqF1JtYoX9MxqVhzOs4yDTeQSrMOCyrhg/
-         ct8w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:autocrypt
-         :message-id:date:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=eUVjcwISJQW+1frTu7OCHLFQysscXZZHpmz3yRtdTVQ=;
-        b=fSoZahnwU5qppNg4kCGC+UOtagR6wWAFv1wDY5PlvAbw5cfrOjYu/p7o/PVq3GnB1S
-         ebXsH4O4bECLKdGsDIINTL0CJhTQdx7dUj/C7N5qySR770g/rF6vJ/eiu4bPMQSZRknw
-         zLu/Zm9KBIndbXLhnBm3n5UY4EGDfoHUEpOR3x0Lel4mmxECCDoWJQABhmGLuzp+WVRt
-         UIrosytdH7D7vLh+SV1gmd/axJBSX+y3S/3kAZfY5xakUqPC6dAVirC/onTONiXJ3wR3
-         JekMcFZSFobKNCWd7panw3r4Q6EqdFzv61qF4VW6kwT5laLirgZcPN6Z8CFqpgN+6b1F
-         B+ZA==
-X-Gm-Message-State: AOAM532684/gkA3erqovk7mBKU6ASbr/74/qyqq/1EM3foE71yOOQPOc
-        Ht7EfdtbReeiSDN66ros2HDlDg==
-X-Google-Smtp-Source: ABdhPJwTajJQeiR3nsV4qOBNRFjFrC/62yAM6XnOpVBwlopbqb4d2cBKvCaXnO14VeHiD+KqGJHhWw==
-X-Received: by 2002:adf:a195:: with SMTP id u21mr12924380wru.132.1604318864419;
-        Mon, 02 Nov 2020 04:07:44 -0800 (PST)
-Received: from [10.44.66.8] ([212.45.67.2])
-        by smtp.googlemail.com with ESMTPSA id a12sm6937840wrr.31.2020.11.02.04.07.43
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 02 Nov 2020 04:07:43 -0800 (PST)
-Subject: Re: [PATCH 15/17] arm64: dts: sdm845: Add interconnect properties for
- Venus
-To:     Stanimir Varbanov <stanimir.varbanov@linaro.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org
-References: <20201102113529.16152-1-stanimir.varbanov@linaro.org>
-From:   Georgi Djakov <georgi.djakov@linaro.org>
-Autocrypt: addr=georgi.djakov@linaro.org; prefer-encrypt=mutual; keydata=
- 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
- KEmKjLDvB0pePJkdTw==
-Message-ID: <04afbbe2-0e31-1ca1-8215-504e64186969@linaro.org>
-Date:   Mon, 2 Nov 2020 14:07:44 +0200
+        id S1728484AbgKBM1x (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 2 Nov 2020 07:27:53 -0500
+Received: from mail-eopbgr1300074.outbound.protection.outlook.com ([40.107.130.74]:44858
+        "EHLO APC01-HK2-obe.outbound.protection.outlook.com"
+        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+        id S1728359AbgKBM1w (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 2 Nov 2020 07:27:52 -0500
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=bt6U0uVOg6vRtFWkh6ovxdA00lYG9jqlj7/GT9IV798and/9ZKpWHXJoAbRd67hYy4apPwivRP+avorY1NvxZYcQqwPYJEvaNjsvo1IEkBL9EKPu/2C/IvcY4XV+EBKtUqH0rx3gYRZN3a5a5raxmqg0a7357m+mw/GPnRr68hg0aoRutUvvCnIf3YXAB4Ddgy3PLcP41McgtF0Fr5vdGhXg9SpzbNRcgdU1mwy1lo4500+3HXg1/M3xz74kWPbNaQda7MbVzi5XkdbjbHnCE+9i5OII/aiDnsSlZTh0QPYM58CDsdgK7t5uSt6LfD5YwfPdGxIf4M88emw2TZWe4g==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=PVHzbeI/KEEVJb3fByHYJfrYeAfRYsjUbGs8A7Z2srY=;
+ b=oCcN+djIxEWB0miIIj6XniNjXl8/1nnihsFr/bjLRYX+Jx1S0BZrTAEv1LEGtcBvlGUSGnkX8FKGHYmemhfcvDQrbfAEhbKsoFBgFQ3uiuM8JKXRRR+ZkbMdMp37ena/qbSFFsXOyh1T1bUJMKxWmvV99w9viXk5oEnA+xemhkWv9RhlANsjEW3Z7bro53i4kienZmcah7xgfP5BleVevQKKgLzWLMvpbkTS+Qz1BO9rN+NHUnrIZfkkxjkc/8uZuo7/hIiAnCeNfMNHn1NZGWAmGImqPpU1wY+ArThvNkc8s9C3jmTr/WuN+WGAUo45sqGXEyMPV/SnqWqFBpx0SA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=quectel.com; dmarc=pass action=none header.from=quectel.com;
+ dkim=pass header.d=quectel.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quectel.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=PVHzbeI/KEEVJb3fByHYJfrYeAfRYsjUbGs8A7Z2srY=;
+ b=AbgnE8WSSvHpk7xtJSaKatgNVJMf6q/jEYv3Fc4SUolvfHciheOjGu5HfB8t6hOQ8hN0mDc4bx8CZ7Kpxyplbqa0XGgGkK2ft7gSVvk7WWn/DGaB7WSWHrfpmrQ4+HfCCaCeNBp4dlsEghga760s/fl5E1+eu9bPUIrfK+6iqQM=
+Authentication-Results: linaro.org; dkim=none (message not signed)
+ header.d=none;linaro.org; dmarc=none action=none header.from=quectel.com;
+Received: from HK2PR06MB3507.apcprd06.prod.outlook.com (2603:1096:202:3e::14)
+ by HK0PR06MB2225.apcprd06.prod.outlook.com (2603:1096:203:50::22) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.3499.18; Mon, 2 Nov
+ 2020 12:27:46 +0000
+Received: from HK2PR06MB3507.apcprd06.prod.outlook.com
+ ([fe80::94f:c55a:f9c8:22f4]) by HK2PR06MB3507.apcprd06.prod.outlook.com
+ ([fe80::94f:c55a:f9c8:22f4%5]) with mapi id 15.20.3499.029; Mon, 2 Nov 2020
+ 12:27:46 +0000
+From:   carl.yin@quectel.com
+To:     manivannan.sadhasivam@linaro.org, hemantk@codeaurora.org,
+        sfr@canb.auug.org.au
+Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        carl.yin@quectel.com, naveen.kumar@quectel.com
+Subject: [PATCH v2] bus: mhi: core: Fix null pointer access when parsing MHI configuration
+Date:   Mon,  2 Nov 2020 20:27:10 +0800
+Message-Id: <20201102122710.23406-1-carl.yin@quectel.com>
+X-Mailer: git-send-email 2.17.1
+Content-Type: text/plain
+X-Originating-IP: [203.93.254.82]
+X-ClientProxiedBy: HK0PR03CA0102.apcprd03.prod.outlook.com
+ (2603:1096:203:b0::18) To HK2PR06MB3507.apcprd06.prod.outlook.com
+ (2603:1096:202:3e::14)
 MIME-Version: 1.0
-In-Reply-To: <20201102113529.16152-1-stanimir.varbanov@linaro.org>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+X-MS-Exchange-MessageSentRepresentingType: 1
+Received: from localhost.localdomain (203.93.254.82) by HK0PR03CA0102.apcprd03.prod.outlook.com (2603:1096:203:b0::18) with Microsoft SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.3499.18 via Frontend Transport; Mon, 2 Nov 2020 12:27:45 +0000
+X-MS-PublicTrafficType: Email
+X-MS-Office365-Filtering-Correlation-Id: b94d863f-c403-41e6-da98-08d87f2ab3f9
+X-MS-TrafficTypeDiagnostic: HK0PR06MB2225:
+X-MS-Exchange-Transport-Forked: True
+X-Microsoft-Antispam-PRVS: <HK0PR06MB22255EA247959A3654FA275F86100@HK0PR06MB2225.apcprd06.prod.outlook.com>
+X-MS-Oob-TLC-OOBClassifiers: OLM:1468;
+X-MS-Exchange-SenderADCheck: 1
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info: 2f7buR906Cjj5QQ4MpFjZm+KTI/QcUa+Xy1P5sZz96aGmmTlO789d/IlFx5pttWMzSP97WGy3MjxkJnpR+Gcj+EK4iLvQmjqt6qXE1nsFkdqO1y1jT0fK/ezFYmRP0uUjEG3gkUGArbNLb3QfMhpea0OeKzoteZiU0c9oPvHgBdxEpJeg4RSQmudM9u685T6PA8tLWt57aI4YBymcfpK37R4tHivPyKDfBlbKrVsAFAZtf3ZkcBY09t6ORr/mHekF8y5txe33vJFKVy8LTQO9EeWO6RP65K0CqLWE/k0pfbKzPNwbznyqvaUASOTG9bqQAAhcVxbHr/2I9UQHGBV6RwN4T1Nq2tM9GjKFu/PRioHyGCG6t00lMbO8fjMA4/U
+X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:HK2PR06MB3507.apcprd06.prod.outlook.com;PTR:;CAT:NONE;SFS:(376002)(346002)(136003)(39860400002)(366004)(396003)(26005)(956004)(69590400008)(83380400001)(186003)(316002)(2616005)(66476007)(66946007)(478600001)(66556008)(16526019)(4326008)(6506007)(52116002)(8676002)(6486002)(36756003)(2906002)(8936002)(1076003)(6512007)(9686003)(5660300002)(86362001)(6666004)(107886003);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData: x8xB+mrNJI0IBjOqgdiIOv0C4R4/WINxihw4pgKGfVGOR88FjNqmeYzUumZXR7+wW6D7q/j80M0tj2ZPjOerG9B/XdVIhWMXhQmqczC09EXxov7fz2qY5RprMAI4k0bMwSqCCiODTLpHvPBeYXXU2k0U6UWYd/5B4rL/U1ASRFxtLfUG+z6pHYntlRobOeszNQ9vfwDXFtzMr2FBfDUHDc9g02h+Zml/Iu+PZoe+NaX/yMv8yqItrtw3LvVPDiPrlHbSIgqfU7AgSrwdUYd8VkgqvhWGgBkAxDmMcOQlf0jxYzUsI8RvwtgyG2mlb4Dy/qj5XSOyhdeJ1gX0n8SARRAA1EQSfllfZEdVsVhLnozi5wrWd1xWpJR5tWXPichEukXMvwDDELk//Xwkj5r12v3W7oUTpij6ZxLP/lbbMVkUSnEIMDUY1Zfbd19Ekwh6cdEKXPtCCLiOdT6lPWzrJCQo/E80NXffl3wzgJlU0Ss0jbg9vV2JE56PbarMG6JTQmoun6+wPiK+S0r6WmeXJHwL9RUYzbddRTZDgVgEW1VNjF1YC/lcB24NyE/oIHqltQRNi7/XRVo1so9hmPcBHQPJtbVYfoyP1mGK8hc8QQXzJjc0n1RH54vohO080lyKIknCdi7m+wQNVK63yIftjQ==
+X-OriginatorOrg: quectel.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: b94d863f-c403-41e6-da98-08d87f2ab3f9
+X-MS-Exchange-CrossTenant-AuthSource: HK2PR06MB3507.apcprd06.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 02 Nov 2020 12:27:46.1133
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 7730d043-e129-480c-b1ba-e5b6a9f476aa
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: A1NS+MF5uP6GDTBBdTVA2ap//IRqqjraxU5ZM0SwP+pKnL2uHZ0t0LfDHx6YljM+zXA5QyUR6D9y+WMCW4WwiA==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: HK0PR06MB2225
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Stan,
+From: "carl.yin" <carl.yin@quectel.com>
 
-On 11/2/20 13:35, Stanimir Varbanov wrote:
-> Populate Venus DT node with interconnect properties.
-> 
-> Signed-off-by: Stanimir Varbanov <stanimir.varbanov@linaro.org>
+Functions parse_ev_cfg() and parse_ch_cfg() access mhi_cntrl->mhi_dev
+before it is set in function mhi_register_controller(),
+use cntrl_dev instead of mhi_dev.
 
-Reviewed-by: Georgi Djakov <georgi.djakov@linaro.org>
+Fixes: 0cbf260820fa ("bus: mhi: core: Add support for registering MHI controllers")
+Signed-off-by: carl.yin <carl.yin@quectel.com>
+Reviewed-by: Bhaumik Bhatt <bbhatt@codeaurora.org>
+---
+ drivers/bus/mhi/core/init.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-Thanks!
-Georgi
+diff --git a/drivers/bus/mhi/core/init.c b/drivers/bus/mhi/core/init.c
+index 0ffdebd..c6b43e9 100644
+--- a/drivers/bus/mhi/core/init.c
++++ b/drivers/bus/mhi/core/init.c
+@@ -610,7 +610,7 @@ static int parse_ev_cfg(struct mhi_controller *mhi_cntrl,
+ {
+ 	struct mhi_event *mhi_event;
+ 	const struct mhi_event_config *event_cfg;
+-	struct device *dev = &mhi_cntrl->mhi_dev->dev;
++	struct device *dev = mhi_cntrl->cntrl_dev;
+ 	int i, num;
+ 
+ 	num = config->num_events;
+@@ -692,7 +692,7 @@ static int parse_ch_cfg(struct mhi_controller *mhi_cntrl,
+ 			const struct mhi_controller_config *config)
+ {
+ 	const struct mhi_channel_config *ch_cfg;
+-	struct device *dev = &mhi_cntrl->mhi_dev->dev;
++	struct device *dev = mhi_cntrl->cntrl_dev;
+ 	int i;
+ 	u32 chan;
+ 
+-- 
+2.25.1
 
-> ---
->  arch/arm64/boot/dts/qcom/sdm845.dtsi | 3 +++
->  1 file changed, 3 insertions(+)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/sdm845.dtsi b/arch/arm64/boot/dts/qcom/sdm845.dtsi
-> index 40e8c11f23ab..aca7e9c954e0 100644
-> --- a/arch/arm64/boot/dts/qcom/sdm845.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sdm845.dtsi
-> @@ -3661,6 +3661,9 @@
->  			iommus = <&apps_smmu 0x10a0 0x8>,
->  				 <&apps_smmu 0x10b0 0x0>;
->  			memory-region = <&venus_mem>;
-> +			interconnects = <&mmss_noc MASTER_VIDEO_P0 0 &mem_noc SLAVE_EBI1 0>,
-> +					<&gladiator_noc MASTER_APPSS_PROC 0 &config_noc SLAVE_VENUS_CFG 0>;
-> +			interconnect-names = "video-mem", "cpu-cfg";
->  
->  			video-core0 {
->  				compatible = "venus-decoder";
-> 
