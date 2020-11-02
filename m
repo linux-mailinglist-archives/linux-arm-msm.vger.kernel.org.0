@@ -2,210 +2,97 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D0F722A3497
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Nov 2020 20:52:47 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id DFAC72A34F7
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Nov 2020 21:13:59 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727116AbgKBTwl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 2 Nov 2020 14:52:41 -0500
-Received: from alexa-out-sd-01.qualcomm.com ([199.106.114.38]:35465 "EHLO
-        alexa-out-sd-01.qualcomm.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1727085AbgKBTwk (ORCPT
+        id S1726744AbgKBUNy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 2 Nov 2020 15:13:54 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46468 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726754AbgKBUMl (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 2 Nov 2020 14:52:40 -0500
-Received: from unknown (HELO ironmsg01-sd.qualcomm.com) ([10.53.140.141])
-  by alexa-out-sd-01.qualcomm.com with ESMTP; 02 Nov 2020 11:52:39 -0800
-X-QCInternal: smtphost
-Received: from gurus-linux.qualcomm.com ([10.46.162.81])
-  by ironmsg01-sd.qualcomm.com with ESMTP; 02 Nov 2020 11:52:39 -0800
-Received: by gurus-linux.qualcomm.com (Postfix, from userid 383780)
-        id 11736188E; Mon,  2 Nov 2020 11:52:39 -0800 (PST)
-Date:   Mon, 2 Nov 2020 11:52:39 -0800
-From:   Guru Das Srinagesh <gurus@codeaurora.org>
-To:     Rob Herring <robh@kernel.org>
-Cc:     Mark Brown <broonie@kernel.org>,
-        Markus Elfring <Markus.Elfring@web.de>,
-        Lee Jones <lee.jones@linaro.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Greg KH <gregkh@linuxfoundation.org>,
-        Guenter Roeck <linux@roeck-us.net>,
-        Joe Perches <joe@perches.com>,
-        Subbaraman Narayanamurthy <subbaram@codeaurora.org>,
-        David Collins <collinsd@codeaurora.org>,
-        Anirudh Ghayal <aghayal@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org
-Subject: Re: [PATCH v2 2/3] dt-bindings: mfd: Add QCOM PM8008 MFD bindings
-Message-ID: <20201102195238.GB29492@codeaurora.org>
-References: <cover.1603402280.git.gurus@codeaurora.org>
- <b224632c03055a92022edb5929f22f26db66bc6d.1603402280.git.gurus@codeaurora.org>
- <20201030154900.GA3896697@bogus>
+        Mon, 2 Nov 2020 15:12:41 -0500
+X-Greylist: delayed 595 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Mon, 02 Nov 2020 12:12:40 PST
+Received: from relay05.th.seeweb.it (relay05.th.seeweb.it [IPv6:2001:4b7a:2000:18::166])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F057FC0617A6
+        for <linux-arm-msm@vger.kernel.org>; Mon,  2 Nov 2020 12:12:40 -0800 (PST)
+Received: from Marijn-Arch-PC.localdomain (94-209-165-62.cable.dynamic.v4.ziggo.nl [94.209.165.62])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id E34CA3E7B1;
+        Mon,  2 Nov 2020 21:02:41 +0100 (CET)
+From:   Marijn Suijten <marijn.suijten@somainline.org>
+To:     robdclark@gmail.com
+Cc:     konrad.dybcio@somainline.org, martin.botka@somainline.org,
+        phone-devel@vger.kernel.org,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Jordan Crouse <jcrouse@codeaurora.org>,
+        Konrad Dybcio <konradybcio@gmail.com>,
+        AngeloGioacchino Del Regno <kholk11@gmail.com>,
+        Eric Anholt <eric@anholt.net>, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH] drm/msm: a5xx: Make preemption reset case reentrant
+Date:   Mon,  2 Nov 2020 21:02:25 +0100
+Message-Id: <20201102200227.8876-1-marijn.suijten@somainline.org>
+X-Mailer: git-send-email 2.29.2
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20201030154900.GA3896697@bogus>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Oct 30, 2020 at 10:49:00AM -0500, Rob Herring wrote:
-> On Thu, Oct 22, 2020 at 02:35:41PM -0700, Guru Das Srinagesh wrote:
-> > Add device tree bindings for the driver for Qualcomm Technology Inc.'s
-> > PM8008 MFD PMIC.
-> > 
-> > Signed-off-by: Guru Das Srinagesh <gurus@codeaurora.org>
-> > ---
-> >  .../bindings/mfd/qcom,pm8008-irqchip.yaml          | 102 +++++++++++++++++++++
-> >  1 file changed, 102 insertions(+)
-> >  create mode 100644 Documentation/devicetree/bindings/mfd/qcom,pm8008-irqchip.yaml
-> > 
-> > diff --git a/Documentation/devicetree/bindings/mfd/qcom,pm8008-irqchip.yaml b/Documentation/devicetree/bindings/mfd/qcom,pm8008-irqchip.yaml
-> > new file mode 100644
-> > index 0000000..31d7b68
-> > --- /dev/null
-> > +++ b/Documentation/devicetree/bindings/mfd/qcom,pm8008-irqchip.yaml
-> > @@ -0,0 +1,102 @@
-> > +# SPDX-License-Identifier: GPL-2.0-only OR BSD-2-Clause
-> > +%YAML 1.2
-> > +---
-> > +$id: http://devicetree.org/schemas/mfd/qcom,pm8008-irqchip.yaml#
-> > +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> > +
-> > +title: Qualcomm Technologies, Inc. PM8008 Multi-Function Device PMIC
-> > +
-> > +maintainers:
-> > +  - Guru Das Srinagesh <gurus@codeaurora.org>
-> > +
-> > +description: |
-> > +  PM8008 is a PMIC that contains 7 LDOs, 2 GPIOs, temperature monitoring, and
-> > +  can be interfaced over I2C.
-> 
-> No bindings for all those functions? Bindings should be complete.
+nr_rings is reset to 1, but when this function is called for a second
+(and third!) time nr_rings > 1 is false, thus the else case is entered
+to set up a buffer for the RPTR shadow and consequently written to
+RB_RPTR_ADDR, hanging platforms without WHERE_AM_I firmware support.
 
-While pushing out this patchset, I accidentally dropped the "RFC" tag in
-the mail subjects. This driver and binding document are meant to be just
-an exemplar for how the framework changes would be used, and hence I
-felt adding only a single node would suffice for illustration purposes.
+Restructure the condition in such a way that shadow buffer setup only
+ever happens when has_whereami is true; otherwise preemption is only
+finalized when the number of ring buffers has not been reset to 1 yet.
 
-> 
-> > +
-> > +properties:
-> > +  compatible:
-> > +    items:
-> > +      - const: qcom,pm8008-irqchip
-> 
-> Why irqchip?
+Fixes: 8907afb476ac ("drm/msm: Allow a5xx to mark the RPTR shadow as privileged")
+Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
+Tested-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
+---
+ drivers/gpu/drm/msm/adreno/a5xx_gpu.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-Since the driver's main functions are to register with the regmap-irq
-framework and to pass a regmap to the child nodes it populates. Would
-"qcom,pm8008-mfd" be more appropriate?
+diff --git a/drivers/gpu/drm/msm/adreno/a5xx_gpu.c b/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
+index d6804a802355..9a202a7da131 100644
+--- a/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
++++ b/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
+@@ -755,12 +755,8 @@ static int a5xx_hw_init(struct msm_gpu *gpu)
+ 	gpu_write(gpu, REG_A5XX_CP_RB_CNTL,
+ 		MSM_GPU_RB_CNTL_DEFAULT | AXXX_CP_RB_CNTL_NO_UPDATE);
+ 
+-	/* Disable preemption if WHERE_AM_I isn't available */
+-	if (!a5xx_gpu->has_whereami && gpu->nr_rings > 1) {
+-		a5xx_preempt_fini(gpu);
+-		gpu->nr_rings = 1;
+-	} else {
+-		/* Create a privileged buffer for the RPTR shadow */
++	/* Create a privileged buffer for the RPTR shadow */
++	if (a5xx_gpu->has_whereami) {
+ 		if (!a5xx_gpu->shadow_bo) {
+ 			a5xx_gpu->shadow = msm_gem_kernel_new(gpu->dev,
+ 				sizeof(u32) * gpu->nr_rings,
+@@ -774,6 +770,10 @@ static int a5xx_hw_init(struct msm_gpu *gpu)
+ 
+ 		gpu_write64(gpu, REG_A5XX_CP_RB_RPTR_ADDR,
+ 			REG_A5XX_CP_RB_RPTR_ADDR_HI, shadowptr(a5xx_gpu, gpu->rb[0]));
++	} else if (gpu->nr_rings > 1) {
++		/* Disable preemption if WHERE_AM_I isn't available */
++		a5xx_preempt_fini(gpu);
++		gpu->nr_rings = 1;
+ 	}
+ 
+ 	a5xx_preempt_hw_init(gpu);
+-- 
+2.29.2
 
-> 
-> > +
-> > +  reg:
-> > +    maxItems: 1
-> > +
-> > +  interrupt-names:
-> > +    items:
-> > +      - const: pm8008
-> > +
-> > +  interrupts:
-> > +    maxItems: 1
-> > +
-> > +  interrupt-controller: true
-> > +
-> > +  "#address-cells":
-> > +    const: 1
-> > +    description: Must be specified if child nodes are specified.
-> > +
-> > +  "#size-cells":
-> > +    const: 0
-> > +    description: Must be specified if child nodes are specified.
-> > +
-> > +  "#interrupt-cells":
-> > +    const: 2
-> > +    description: |
-> > +      The first cell is the IRQ number, the second cell is the IRQ trigger flag.
-> > +
-> > +patternProperties:
-> > +  "^.*@[0-9a-f]+$":
-> 
-> '^.*' can be dropped. That's redundant.
-
-Done.
-
-> 
-> > +    type: object
-> > +    # Each peripheral in PM8008 must be represented as a child node with an
-> > +    # optional label for referencing as phandle elsewhere. This is optional.
-> > +    properties:
-> > +      compatible:
-> > +        description: The compatible string for the peripheral's driver.
-> > +
-> > +      reg:
-> > +        maxItems: 1
-> 
-> What does the address represent? It's non-standard, so it needs to be 
-> defined.
-
-Will add description.
-
-> 
-> > +
-> > +      interrupts:
-> > +        maxItems: 1
-> > +
-> > +    required:
-> > +      - compatible
-> > +      - reg
-> > +      - interrupts
-> > +
-> > +required:
-> > +  - compatible
-> > +  - reg
-> > +  - interrupts
-> > +  - "#interrupt-cells"
-> > +
-> > +additionalProperties: false
-> > +
-> > +examples:
-> > +  - |
-> > +    #include <dt-bindings/interrupt-controller/irq.h>
-> > +    qupv3_se13_i2c {
-> > +            #address-cells = <1>;
-> > +            #size-cells = <0>;
-> > +
-> > +            pm8008i@8 {
-> > +                    compatible = "qcom,pm8008-irqchip";
-> > +                    reg = <0x8>;
-> > +                    #address-cells = <1>;
-> > +                    #size-cells = <0>;
-> > +                    interrupt-controller;
-> > +                    #interrupt-cells = <2>;
-> > +
-> > +                    interrupt-names = "pm8008";
-> > +                    interrupt-parent = <&tlmm>;
-> > +                    interrupts = <32 IRQ_TYPE_EDGE_RISING>;
-> > +
-> > +                    pm8008_tz: qcom,temp-alarm@2400 {
-> 
-> Must be documented.
-> 
-> And don't use vendor prefixes in node names. 
-
-Done.
-
-> 
-> > +                            compatible = "qcom,spmi-temp-alarm";
-> > +                            reg = <0x2400>;
-> > +                            interrupts = <0x5 IRQ_TYPE_EDGE_BOTH>;
-> > +                            #thermal-sensor-cells = <0>;
-> > +                    };
-> > +            };
-> > +    };
-> > +
-> > +...
-> > -- 
-> > The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-> > a Linux Foundation Collaborative Project
-> > 
