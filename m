@@ -2,132 +2,74 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D7B592A2C5A
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Nov 2020 15:14:03 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C4AC52A2CC1
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Nov 2020 15:26:02 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725959AbgKBOOB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 2 Nov 2020 09:14:01 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46254 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725956AbgKBON7 (ORCPT
+        id S1726177AbgKBOYL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 2 Nov 2020 09:24:11 -0500
+Received: from szxga05-in.huawei.com ([45.249.212.191]:7575 "EHLO
+        szxga05-in.huawei.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726120AbgKBOX4 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 2 Nov 2020 09:13:59 -0500
-Received: from mail-lf1-x142.google.com (mail-lf1-x142.google.com [IPv6:2a00:1450:4864:20::142])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 97533C061A47
-        for <linux-arm-msm@vger.kernel.org>; Mon,  2 Nov 2020 06:13:57 -0800 (PST)
-Received: by mail-lf1-x142.google.com with SMTP id l28so17607075lfp.10
-        for <linux-arm-msm@vger.kernel.org>; Mon, 02 Nov 2020 06:13:57 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=KxbCraeiLdRhhJpaK4sNkK6tPwuu92CTTqqZ8+wCJio=;
-        b=ZM4LaTgzml5bUPWSYTKj3diGMPNamkdpShH5l8t1VMnmUehipaDrX71br6RaGOveNc
-         /yl8Xzi0wn8Cxlsb498dQw5DOCL5LLMqIUxozIqEL8Jv/Dfj/H+Bb9yIVxfgwO2Qgwq3
-         eUytQo5ExrWGWR6O4ZESs3SNl+spxTGTn5gsYW9CwiSsMuMHxhVbhV+NhCgL3wDzIWn4
-         Ht6OUKJNYAkn1Hfq3yRM9OUyYjva3aGEPid7gLU80nOcfW8sb4adbwyvbbNYDBFH4WqG
-         26EaYiNDR9YIwdHeFIDLSJilMRqoe/8Z2OeUaLrrI1jXOwP2uh3xV7We0sPiS4LFhUPm
-         1lxw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=KxbCraeiLdRhhJpaK4sNkK6tPwuu92CTTqqZ8+wCJio=;
-        b=SzAhT2KGyw3Kl7Wco5V4f3YD+mUZCFCTe2phM0KohRpDQKpwXO1XlRJYJAlugBc0oc
-         /8umiTGYVoSZoEhurwZBHSWQMKiAAf2KNzsVDnPkmgTgzImuv2DnxXJR7Vw3zRk3K14T
-         VrngOKHiTB47MLMxW+S19uuYJqlQBElLk5/1WW8wV8Dgq4t6qi2tfidASk2xflhdU+UR
-         Uk8YdySeLTZn5FF3Fmjb+UVbuh7f6dECPVKebA45DVwfPGm2xQRzlCtnrFt9FuCr/QjE
-         IDG+7obxJ9RWCAXrky2YCdwiiQC+tWMi6w019CA7sK1GCjq/+5bWssc0SiYaOYxKtkZt
-         8FLA==
-X-Gm-Message-State: AOAM530V75LcLG3eOiAhcrFtOPLxCsSxQtW4xYoJIbhyrP6HJZeIxwdh
-        FNkaIrl1GpvyglI3akJR31Shnl3q3QwxBnkXssZBBQ==
-X-Google-Smtp-Source: ABdhPJzqeipx/W1I0SHKEcjfqh+sscD2n/q6sWL0P3hkangcPzWHpBBKHArZunBT2LjnW+rq6DfD3qni7BR6JlMFOpE=
-X-Received: by 2002:a19:a56:: with SMTP id 83mr4927665lfk.131.1604326435967;
- Mon, 02 Nov 2020 06:13:55 -0800 (PST)
+        Mon, 2 Nov 2020 09:23:56 -0500
+Received: from DGGEMS412-HUB.china.huawei.com (unknown [172.30.72.60])
+        by szxga05-in.huawei.com (SkyGuard) with ESMTP id 4CPwBv44XNzLsJ3;
+        Mon,  2 Nov 2020 22:23:51 +0800 (CST)
+Received: from huawei.com (10.90.53.225) by DGGEMS412-HUB.china.huawei.com
+ (10.3.19.212) with Microsoft SMTP Server id 14.3.487.0; Mon, 2 Nov 2020
+ 22:23:49 +0800
+From:   Zhang Qilong <zhangqilong3@huawei.com>
+To:     <agross@kernel.org>, <bjorn.andersson@linaro.org>,
+        <ohad@wizery.com>
+CC:     <linux-arm-msm@vger.kernel.org>, <linux-remoteproc@vger.kernel.org>
+Subject: [PATCH] remoteproc: q6v5-mss: fix error handling in q6v5_pds_enable
+Date:   Mon, 2 Nov 2020 22:34:33 +0800
+Message-ID: <20201102143433.143996-1-zhangqilong3@huawei.com>
+X-Mailer: git-send-email 2.26.0.106.g9fadedd
 MIME-Version: 1.0
-References: <20201102062408.331572-1-ajye_huang@compal.corp-partner.google.com>
- <20201102062408.331572-3-ajye_huang@compal.corp-partner.google.com> <CA+Px+wV9Lmdphp4iMgF1d72vewb2m9aiZzywvavLGgtkAczCDQ@mail.gmail.com>
-In-Reply-To: <CA+Px+wV9Lmdphp4iMgF1d72vewb2m9aiZzywvavLGgtkAczCDQ@mail.gmail.com>
-From:   Ajye Huang <ajye_huang@compal.corp-partner.google.com>
-Date:   Mon, 2 Nov 2020 22:13:45 +0800
-Message-ID: <CALprXBZ-nO5NtgEeS+G4bhE=EHcwvtZOOa67ea4k=CXyT+JpJg@mail.gmail.com>
-Subject: Re: [PATCH v3 2/2] ASoC: qcom: sc7180: Modify machine driver for 2mic
-To:     Tzung-Bi Shih <tzungbi@google.com>
-Cc:     Ajye Huang <ajye.huang@gmail.com>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        Mark Brown <broonie@kernel.org>,
-        Rohit kumar <rohitkr@codeaurora.org>,
-        Banajit Goswami <bgoswami@codeaurora.org>,
-        Patrick Lai <plai@codeaurora.org>,
-        Srinivasa Rao Mandadapu <srivasam@codeaurora.org>,
-        Srini Kandagatla <srinivas.kandagatla@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Jaroslav Kysela <perex@perex.cz>,
-        Cheng-Yi Chiang <cychiang@chromium.org>,
-        Tzung-Bi Shih <tzungbi@chromium.org>,
-        Douglas Anderson <dianders@chromium.org>,
-        "moderated list:ARM/Mediatek SoC support" 
-        <linux-arm-kernel@lists.infradead.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>,
-        ALSA development <alsa-devel@alsa-project.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7BIT
+Content-Type:   text/plain; charset=US-ASCII
+X-Originating-IP: [10.90.53.225]
+X-CFilter-Loop: Reflected
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Nov 2, 2020 at 6:46 PM Tzung-Bi Shih <tzungbi@google.com> wrote:
->
-> On Mon, Nov 2, 2020 at 2:24 PM Ajye Huang <ajye.huang@gmail.com> wrote:
-> >
-> > In addition, having mixer control to switch between DMICs by
-> > using "dmic-gpios" property.
-> >
-> > Refer to this one as an example,
-> > commit b7a742cff3f6 ("ASoC: AMD: Use mixer control to switch between DMICs")
-> >
-> > Signed-off-by: Ajye Huang <ajye_huang@compal.corp-partner.google.com>
->
-> I am not sure if it would be better if you use another email (e.g.
-> @gmail) for signoff.
->
-hi, Tzung-Bi
-Thank you for your review, it's our company's rule to use  this PD account
+If the pm_runtime_get_sync failed in q6v5_pds_enable when
+loop (i), The unroll_pd_votes will start from (i - 1), and
+it will resulted in following problems:
 
-> > +static int dmic_get(struct snd_kcontrol *kcontrol,
-> > +                   struct snd_ctl_elem_value *ucontrol)
-> > +{
-> > +       struct snd_soc_dapm_context *dapm = snd_soc_dapm_kcontrol_dapm(kcontrol);
-> > +       struct sc7180_snd_data *data = snd_soc_card_get_drvdata(dapm->card);
-> > +
-> > +       if (data)
->
-> You don't need to check for NULL.  If snd_soc_card_get_drvdata()
-> returns NULL, it shouldn't run into here.  See other
-> snd_soc_card_get_drvdata() calls in the file.
->
-your are right, I will remove on v4
+  1) pm_runtime_get_sync will increment pm usage counter even it
+     failed. Forgetting to pm_runtime_put_noidle will result in
+     reference leak.
 
-> > +static int dmic_set(struct snd_kcontrol *kcontrol,
-> > +                   struct snd_ctl_elem_value *ucontrol)
-> > +{
-> > +       struct snd_soc_dapm_context *dapm = snd_soc_dapm_kcontrol_dapm(kcontrol);
-> > +       struct sc7180_snd_data *data = snd_soc_card_get_drvdata(dapm->card);
-> > +
-> > +       if (data) {
->
-> Ditto.
->
-I will remove it on v4
+  2) Have not reset pds[i] performance state.
 
-> > +               if (IS_ERR(data->dmic_sel)) {
-> > +                       dev_err(&pdev->dev, "DMIC gpio failed err=%d\n",
-> > +                               PTR_ERR(data->dmic_sel));
-> > +                               return PTR_ERR(data->dmic_sel);
->
-> Remove 1 level indent.
-Your are really attentive, I will remove the indent on v4, thank you so much.
+Then we fix it.
+
+Fixes: 4760a896be88e ("remoteproc: q6v5-mss: Vote for rpmh power domains")
+Signed-off-by: Zhang Qilong <zhangqilong3@huawei.com>
+---
+ drivers/remoteproc/qcom_q6v5_mss.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
+
+diff --git a/drivers/remoteproc/qcom_q6v5_mss.c b/drivers/remoteproc/qcom_q6v5_mss.c
+index eb3457a6c3b7..ba6f7551242d 100644
+--- a/drivers/remoteproc/qcom_q6v5_mss.c
++++ b/drivers/remoteproc/qcom_q6v5_mss.c
+@@ -349,8 +349,11 @@ static int q6v5_pds_enable(struct q6v5 *qproc, struct device **pds,
+ 	for (i = 0; i < pd_count; i++) {
+ 		dev_pm_genpd_set_performance_state(pds[i], INT_MAX);
+ 		ret = pm_runtime_get_sync(pds[i]);
+-		if (ret < 0)
++		if (ret < 0) {
++			pm_runtime_put_noidle(pds[i]);
++			dev_pm_genpd_set_performance_state(pds[i], 0);
+ 			goto unroll_pd_votes;
++		}
+ 	}
+ 
+ 	return 0;
+-- 
+2.17.1
+
