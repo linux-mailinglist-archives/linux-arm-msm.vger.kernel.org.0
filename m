@@ -2,188 +2,121 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 0D9FD2A30EC
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Nov 2020 18:08:07 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1924B2A30F2
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Nov 2020 18:08:51 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727265AbgKBRIF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 2 Nov 2020 12:08:05 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45540 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727150AbgKBRIE (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 2 Nov 2020 12:08:04 -0500
-Received: from mail-ot1-x341.google.com (mail-ot1-x341.google.com [IPv6:2607:f8b0:4864:20::341])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 993DBC0617A6
-        for <linux-arm-msm@vger.kernel.org>; Mon,  2 Nov 2020 09:08:04 -0800 (PST)
-Received: by mail-ot1-x341.google.com with SMTP id m26so13240898otk.11
-        for <linux-arm-msm@vger.kernel.org>; Mon, 02 Nov 2020 09:08:04 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=h835lHTQAu95wxA6PWFRRi1Mf/8MD2a5rJ3lZGCt1cc=;
-        b=JXzV2p0vzQ8oWk1hcaXFG0FvtdrXkV2dRVgA/IbVQE/hgmv5n5pCVIvX3ESBoyvRGf
-         tgtfY7MWJUbRHG067Bs69792lkKZW5h9t+tEeDcB6BRq9PRAy76YtZ1WQ93f5nn5qQkz
-         h/9uGzvP827kIjRUVNnANCl7bQ4nnsPVFpKVQknecDyRFRRGcqSTOfEjWdipbFNiKj9K
-         6/v0/FxOSV95gWgZNzOpV+sb61Bq0be7/mu8AiAVV3H916cU3YOXRmnVEShMx06rfuXz
-         B42vxCATidn5x/xPrejMPvHKUB+LnQe0ofCsZgj42RK/AQoodaBKYalUoN9NELtSuyav
-         4l6Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=h835lHTQAu95wxA6PWFRRi1Mf/8MD2a5rJ3lZGCt1cc=;
-        b=eYwPB/haopBhtmjvY2XTdhoysKLhfQxSNYcSnL6L39vBnjbJVxrrPrjf86Sn/eSDjH
-         lEMFJJNbTyu/86H8mSn3SFndXt8Q1JsuNG5PYTjJAndfnKxwrCkHUQf+gFI3zruBc2xL
-         UbtJROMzR5JfXmPnwBd3+0jM89ncCFwa6VXD4VShs5upNeRroYqfGlta15GmlEyIJzfs
-         qrjviRtMyO4oCKKe0WhMpmar0aZdWzwxRL9ljS88UEuJyslLBh5L+jeEX86FLVjisDTN
-         X/ioPQ+ylLoUT+Nu5jLDi2EVCNfgfRWp9x+Gp8SO3cOWEygwfOUIEoVTkdCWKR3PUG+m
-         L0qQ==
-X-Gm-Message-State: AOAM532+hZeW2pmTJj1FxQ/parcf3PxLdAzgpyl+R02Y8vqWdA2L80Is
-        u4qu0+mYmRCDqYvDq5XgaO7b1A==
-X-Google-Smtp-Source: ABdhPJwPghsbeLdlR1n488K/KOrm0Vc5OL56hGZgaK6freCCeb7B/2DFK47J9LaHVmCOZ7tOA3hd9g==
-X-Received: by 2002:a05:6830:2018:: with SMTP id e24mr13147614otp.278.1604336883838;
-        Mon, 02 Nov 2020 09:08:03 -0800 (PST)
-Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id y22sm3560488ooa.2.2020.11.02.09.08.02
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 02 Nov 2020 09:08:03 -0800 (PST)
-Date:   Mon, 2 Nov 2020 11:08:01 -0600
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Doug Anderson <dianders@chromium.org>
-Cc:     David Airlie <airlied@linux.ie>, Daniel Vetter <daniel@ffwll.ch>,
+        id S1727185AbgKBRIh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 2 Nov 2020 12:08:37 -0500
+Received: from z5.mailgun.us ([104.130.96.5]:26289 "EHLO z5.mailgun.us"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727413AbgKBRIh (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 2 Nov 2020 12:08:37 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1604336916; h=In-Reply-To: Content-Type: MIME-Version:
+ References: Message-ID: Subject: Cc: To: From: Date: Sender;
+ bh=SAL9Z21PfWH8XRXmXiAkD5Twef6r/IdjwYPZ2uz0nHA=; b=MAYT0R1FUXCo4njhNZPwKhhXwzlQVB57eDj9NM3zK5wyFhwaCZlf5QpMoT+6Pi9EWA7fbzCf
+ Di07oyNyzpgfRtS9wuRKIoTxuo8s65sdJY6oeODZGGsna1oGu3JK0TYdbvY8xtQQvTgQ5Wxo
+ XamSdqw1LMaeZooNWfMGneJTslM=
+X-Mailgun-Sending-Ip: 104.130.96.5
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n02.prod.us-east-1.postgun.com with SMTP id
+ 5fa03d0e8646b0f2686a0f78 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 02 Nov 2020 17:08:30
+ GMT
+Sender: jcrouse=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 6FC35C43391; Mon,  2 Nov 2020 17:08:29 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL
+        autolearn=no autolearn_force=no version=3.4.0
+Received: from jcrouse1-lnx.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: jcrouse)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id AF89DC433C8;
+        Mon,  2 Nov 2020 17:08:26 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org AF89DC433C8
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=jcrouse@codeaurora.org
+Date:   Mon, 2 Nov 2020 10:08:23 -0700
+From:   Jordan Crouse <jcrouse@codeaurora.org>
+To:     Will Deacon <will@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Joerg Roedel <joro@8bytes.org>,
+        Krishna Reddy <vdumpa@nvidia.com>,
+        Rob Clark <robdclark@chromium.org>,
         Rob Herring <robh+dt@kernel.org>,
-        Andrzej Hajda <a.hajda@samsung.com>,
-        Neil Armstrong <narmstrong@baylibre.com>,
-        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
-        Jonas Karlman <jonas@kwiboo.se>,
-        Jernej Skrabec <jernej.skrabec@siol.net>,
-        dri-devel <dri-devel@lists.freedesktop.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>, LKML <linux-kernel@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>
-Subject: Re: [PATCH 1/2] dt-bindings: drm/bridge: ti-sn65dsi86: Replace
- #pwm-cells
-Message-ID: <20201102170801.GI3151@builder.lan>
-References: <20200930223532.77755-1-bjorn.andersson@linaro.org>
- <20200930223532.77755-2-bjorn.andersson@linaro.org>
- <CAD=FV=Unu-PH_RThi3xRF1HUADN2PqcVAOin0O0yo0gcGRWCDQ@mail.gmail.com>
+        Robin Murphy <robin.murphy@arm.com>,
+        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
+        Sibi Sankar <sibis@codeaurora.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Vivek Gautam <vivek.gautam@codeaurora.org>,
+        devicetree@vger.kernel.org, iommu@lists.linux-foundation.org,
+        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v18 0/4] iommu/arm-smmu: Add adreno-smmu implementation
+ and bindings
+Message-ID: <20201102170823.GA1032@jcrouse1-lnx.qualcomm.com>
+Mail-Followup-To: Will Deacon <will@kernel.org>,
+        linux-arm-msm@vger.kernel.org, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Joerg Roedel <joro@8bytes.org>, Krishna Reddy <vdumpa@nvidia.com>,
+        Rob Clark <robdclark@chromium.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Robin Murphy <robin.murphy@arm.com>,
+        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
+        Sibi Sankar <sibis@codeaurora.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Vivek Gautam <vivek.gautam@codeaurora.org>,
+        devicetree@vger.kernel.org, iommu@lists.linux-foundation.org,
+        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org
+References: <20201027223408.469893-1-jcrouse@codeaurora.org>
+ <20201029172607.GA30745@willie-the-truck>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <CAD=FV=Unu-PH_RThi3xRF1HUADN2PqcVAOin0O0yo0gcGRWCDQ@mail.gmail.com>
+In-Reply-To: <20201029172607.GA30745@willie-the-truck>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri 02 Oct 15:42 CDT 2020, Doug Anderson wrote:
-
-> Hi,
+On Thu, Oct 29, 2020 at 05:26:08PM +0000, Will Deacon wrote:
+> On Tue, Oct 27, 2020 at 04:34:04PM -0600, Jordan Crouse wrote:
+> > This short series adds support for the adreno-smmu implementation of the
+> > arm-smmu driver and the device-tree bindings to turn on the implementation
+> > for the sm845 and sc7180 GPUs. These changes are the last ones needed to enable
+> > per-instance pagetables in the drm/msm driver.
+> > 
+> > No deltas in this patchset since the last go-around for 5.10 [1].
+> > 
+> > [1] https://patchwork.freedesktop.org/series/81393/
+> > 
+> > Jordan Crouse (3):
+> >   iommu/arm-smmu-qcom: Add implementation for the adreno GPU SMMU
+> >   dt-bindings: arm-smmu: Add compatible string for Adreno GPU SMMU
+> >   arm: dts: qcom: sm845: Set the compatible string for the GPU SMMU
+> > 
+> > Rob Clark (1):
+> >   iommu/arm-smmu: Add a way for implementations to influence SCTLR
 > 
-> On Wed, Sep 30, 2020 at 3:40 PM Bjorn Andersson
-> <bjorn.andersson@linaro.org> wrote:
-> >
-> > While the signal on GPIO4 to drive the backlight controller indeed is
-> > pulse width modulated its purpose is specifically to control the
-> > brightness of a backlight.
+> FYI: this patch (patch 4/4) doesn't seem to have made it anywhere (I don't
+> have it, and neither does the archive).
 > 
-> I'm a bit on the fence about this.  I guess you're doing this because
-> it avoids some -EPROBE_DEFER cycles in Linux?  It does seem to have a
-> few downsides, though.
-> 
+> Will
 
-No, the reason for exposing a backlight is that while the thing
-certainly is a PWM signal, the description of it and the registers
-available to control it surely seems "backlight" to me.
+Patch 4/4 was the bindings for sdm845 and I didn't explicitly add IOMMU to the
+CC list and so patman did what patman does.
 
-In particular No, the reason for exposing a backlight is that while
-while the thing certainly is a PWM signal, the description of it and the
-registers available to control it surely seems "backlight" to me.
+I'll resend.
 
-> 1. It means a bit of re-inventing the wheel.  It's not a very big
-> wheel, though, I'll give you.  ...but it's still something.
-> 
-
-The main problem I saw with exposing this as a PWM was the fact that we
-have both period and frequency to control...
-
-> 2. I'm not sure why you'd want to, but in theory one could use this
-> PWM for some other purposes.  It really is just a generic PWM.  Your
-> change prevents that.
-> 
-
-...and in the even that you use it as a "generic" PWM I'd expect that
-the specified period is related to the frequency of the signal. But the
-period is documented to be related to the number of brightness steps of
-the panel.
-
-> 
-> 
-> > Drop the #pwm-cells and instead expose a new property to configure the
-> > granularity of the backlight PWM signal.
-> >
-> > Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-> > ---
-> >  .../devicetree/bindings/display/bridge/ti,sn65dsi86.yaml | 9 ++++++---
-> >  1 file changed, 6 insertions(+), 3 deletions(-)
-> >
-> > diff --git a/Documentation/devicetree/bindings/display/bridge/ti,sn65dsi86.yaml b/Documentation/devicetree/bindings/display/bridge/ti,sn65dsi86.yaml
-> > index f8622bd0f61e..e380218b4646 100644
-> > --- a/Documentation/devicetree/bindings/display/bridge/ti,sn65dsi86.yaml
-> > +++ b/Documentation/devicetree/bindings/display/bridge/ti,sn65dsi86.yaml
-> > @@ -66,9 +66,12 @@ properties:
-> >        1-based to match the datasheet.  See ../../gpio/gpio.txt for more
-> >        information.
-> >
-> > -  '#pwm-cells':
-> > -    const: 1
-> > -    description: See ../../pwm/pwm.yaml for description of the cell formats.
-> > +  ti,backlight-scale:
-> > +    description:
-> > +      The granularity of brightness for the PWM signal provided on GPIO4, if
-> > +      this property is specified.
-> > +    minimum: 0
-> > +    maximum: 65535
-> 
-> A few issues here:
-> 
-> 1. Maybe call this "num-steps" instead of backlight-scale.  That's
-> essentially what it is, right?  Saying how many discrete steps you're
-> allowing in your backlight?
-> 
-
-That would work, I had it as "max-brightness" for a while as well. But I
-reverted to backlight-scale, because that's the name used in the
-datasheet.
-
-I'm fine with whatever color of the shed though :)
-
-> 2. IMO you need the PWM frequency specified, since it can actually
-> matter.  NOTE: once you have the PWM frequency specified, you could
-> imagine automatically figuring out what "num-steps" was.  Really you'd
-> want it to be the largest possible value you could achieve with your
-> hardware at the specified frequency.  There's no advantage (is there?)
-> of providing fewer steps to the backlight client.
-> 
-
-I guess there's no problem in having a "num-steps" that is unrelated to
-the number of brightness steps of the panel - but I did distinguish them
-because the datasheet clearly does so.
-
-> 3. Some backlights are specified inverted.  It looks like this maps
-> nicely to the bridge chip, which has a bit for it.  Probably nice to
-> expose this?
-> 
-
-Yes, that should be covered.
-
-> Of course, if we were just exposing the PWM directly to Linux we could
-> just use the PWM backlight driver and it'd all magically work.  ;-)
-> 
-
-Please help me figure out how to properly expose this in the PWM api and
-I'll be happy to respin it using this - as you say my wheel does look
-pretty similar...
-
-Regards,
-Bjorn
+Jordan
+-- 
+The Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum,
+a Linux Foundation Collaborative Project
