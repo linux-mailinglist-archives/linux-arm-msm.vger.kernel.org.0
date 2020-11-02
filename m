@@ -2,258 +2,292 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 221012A323E
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Nov 2020 18:50:52 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 9B37E2A3290
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Nov 2020 19:10:56 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726241AbgKBRug (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 2 Nov 2020 12:50:36 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52344 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726090AbgKBRuf (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 2 Nov 2020 12:50:35 -0500
-Received: from mail-lj1-x241.google.com (mail-lj1-x241.google.com [IPv6:2a00:1450:4864:20::241])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6A5FDC0617A6
-        for <linux-arm-msm@vger.kernel.org>; Mon,  2 Nov 2020 09:50:35 -0800 (PST)
-Received: by mail-lj1-x241.google.com with SMTP id p15so16009881ljj.8
-        for <linux-arm-msm@vger.kernel.org>; Mon, 02 Nov 2020 09:50:35 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=IlnfeC5dNMsfRj34KVveDWWiSX6big7HcGo7tOgQ3Ps=;
-        b=atTXbIOjdyelJGkkPsM7YtaXXxqQ4qnq7Gh7ViWVnC32V/7zZu18EKv8PpVcGzcpHE
-         NcrIfZlvwqEbjWE/dPxV4Yik8pSCwyr5C4jBOe//4k8Sdfynd6Avr+f8PcemlQYGsnIE
-         hLXS62G7k5mO56vve3N3xTitOb1rJcw0hmWguqTeNNukAf87XYPwD73RALRSzd7B+uoT
-         fK/d9h/vQ9lr5ZSEB0iPCEW5DVZzsU3+9n7dOR5uM93xaPovpOFTi42FK8PqG1DEbtC4
-         DV3gM+Pk6fJjDBGZ0AlFWiOZzm2ql741hr9UC3WqcIQ2taiejJGAda/a8wNknGgoqZ8Y
-         GMSw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=IlnfeC5dNMsfRj34KVveDWWiSX6big7HcGo7tOgQ3Ps=;
-        b=r1Ponn3f+BlFwmdTBEAJ4kq7WcpCp8k9ZKCqt/rqDfAmF2oWEvvF4Z5MOAywl43PW5
-         OmOOlFPNzc6sgkrQfwi9rLig9IhpvEYbFpNYZoPLOC32nfv0/5hjMOnSFOukWJXqHVXx
-         6Jl0Ngpdaqu87nN9+6DZQGCdBsl/WSYaF2JdS+DdLOEdWv71BdlYEcNhyCekQZAHY6E8
-         bXmAi9J3ULXdHYeU1eQKBlt3etchsj4McpI0SVWyhtr8XEc04K9p/SJ7XadYltIU+ASi
-         LXhHlO6wCL0IPrcGam7ARLE7EIao9k4moInn9Au9gHAmImJ641zuMLlHp+GgO5u9E5tP
-         XM/Q==
-X-Gm-Message-State: AOAM531CuYDwrMeGmIZtUXz8rG0DvNivY0vfrcsRR3uUO35yhzPqlzQA
-        0c3aOQsWD/wr8Mw13OhOwI3bog==
-X-Google-Smtp-Source: ABdhPJxPESrKcpGyHG3QtQjGrH+6W5Judnxsu9UnXcewixA3la0/a2YedG3wzNohdrQDnW0yMX5uuw==
-X-Received: by 2002:a2e:b809:: with SMTP id u9mr6550047ljo.212.1604339433858;
-        Mon, 02 Nov 2020 09:50:33 -0800 (PST)
-Received: from eriador.lan ([94.25.229.254])
-        by smtp.gmail.com with ESMTPSA id r7sm2516163lfc.206.2020.11.02.09.50.31
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 02 Nov 2020 09:50:33 -0800 (PST)
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
+        id S1725927AbgKBSK4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 2 Nov 2020 13:10:56 -0500
+Received: from foss.arm.com ([217.140.110.172]:35800 "EHLO foss.arm.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725789AbgKBSK4 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 2 Nov 2020 13:10:56 -0500
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id A85CB139F;
+        Mon,  2 Nov 2020 10:10:51 -0800 (PST)
+Received: from [10.57.54.223] (unknown [10.57.54.223])
+        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 4B5BE3F719;
+        Mon,  2 Nov 2020 10:10:48 -0800 (PST)
+Subject: Re: [PATCH v18 1/4] iommu/arm-smmu-qcom: Add implementation for the
+ adreno GPU SMMU
+To:     Jordan Crouse <jcrouse@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org
+Cc:     iommu@lists.linux-foundation.org, Will Deacon <will@kernel.org>,
+        Rob Clark <robdclark@chromium.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Zhang Rui <rui.zhang@intel.com>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>,
-        Amit Kucheria <amitk@kernel.org>,
-        Jonathan Cameron <jic23@kernel.org>,
-        Hartmut Knaack <knaack.h@gmx.de>,
-        Lars-Peter Clausen <lars@metafoo.de>,
-        Peter Meerwald-Stadler <pmeerw@pmeerw.net>
-Cc:     linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-iio@vger.kernel.org,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        Jishnu Prakash <jprakash@qti.qualcomm.com>
-Subject: [PATCH v9 15/15] arm64: dts: qrb5165-rb5: port thermal zone definitions
-Date:   Mon,  2 Nov 2020 20:49:50 +0300
-Message-Id: <20201102174950.1148498-16-dmitry.baryshkov@linaro.org>
-X-Mailer: git-send-email 2.28.0
-In-Reply-To: <20201102174950.1148498-1-dmitry.baryshkov@linaro.org>
-References: <20201102174950.1148498-1-dmitry.baryshkov@linaro.org>
+        Joerg Roedel <joro@8bytes.org>,
+        Krishna Reddy <vdumpa@nvidia.com>,
+        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
+        Sibi Sankar <sibis@codeaurora.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Vivek Gautam <vivek.gautam@codeaurora.org>,
+        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org
+References: <20201102171416.654337-1-jcrouse@codeaurora.org>
+ <20201102171416.654337-2-jcrouse@codeaurora.org>
+From:   Robin Murphy <robin.murphy@arm.com>
+Message-ID: <bb92e6d1-be56-576f-365f-d7b946cb948e@arm.com>
+Date:   Mon, 2 Nov 2020 18:10:46 +0000
+User-Agent: Mozilla/5.0 (Windows NT 10.0; rv:78.0) Gecko/20100101
+ Thunderbird/78.4.0
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <20201102171416.654337-2-jcrouse@codeaurora.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-GB
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add thermal zones definitions basing on the downstream kernel.
+On 2020-11-02 17:14, Jordan Crouse wrote:
+> Add a special implementation for the SMMU attached to most Adreno GPU
+> target triggered from the qcom,adreno-smmu compatible string.
+> 
+> The new Adreno SMMU implementation will enable split pagetables
+> (TTBR1) for the domain attached to the GPU device (SID 0) and
+> hard code it context bank 0 so the GPU hardware can implement
+> per-instance pagetables.
+> 
+> Co-developed-by: Rob Clark <robdclark@chromium.org>
+> Signed-off-by: Jordan Crouse <jcrouse@codeaurora.org>
+> Signed-off-by: Rob Clark <robdclark@chromium.org>
+> Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> ---
+> 
+>   drivers/iommu/arm/arm-smmu/arm-smmu-impl.c |   3 +
+>   drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c | 151 ++++++++++++++++++++-
+>   drivers/iommu/arm/arm-smmu/arm-smmu.h      |   1 +
+>   3 files changed, 153 insertions(+), 2 deletions(-)
+> 
+> diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu-impl.c b/drivers/iommu/arm/arm-smmu/arm-smmu-impl.c
+> index 88f17cc33023..d199b4bff15d 100644
+> --- a/drivers/iommu/arm/arm-smmu/arm-smmu-impl.c
+> +++ b/drivers/iommu/arm/arm-smmu/arm-smmu-impl.c
+> @@ -223,6 +223,9 @@ struct arm_smmu_device *arm_smmu_impl_init(struct arm_smmu_device *smmu)
+>   	    of_device_is_compatible(np, "qcom,sm8250-smmu-500"))
+>   		return qcom_smmu_impl_init(smmu);
+>   
+> +	if (of_device_is_compatible(smmu->dev->of_node, "qcom,adreno-smmu"))
+> +		return qcom_adreno_smmu_impl_init(smmu);
+> +
+>   	if (of_device_is_compatible(np, "marvell,ap806-smmu-500"))
+>   		smmu->impl = &mrvl_mmu500_impl;
+>   
+> diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
+> index be4318044f96..1e942eed2dfc 100644
+> --- a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
+> +++ b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
+> @@ -3,6 +3,7 @@
+>    * Copyright (c) 2019, The Linux Foundation. All rights reserved.
+>    */
+>   
+> +#include <linux/adreno-smmu-priv.h>
+>   #include <linux/of_device.h>
+>   #include <linux/qcom_scm.h>
+>   
+> @@ -12,6 +13,134 @@ struct qcom_smmu {
+>   	struct arm_smmu_device smmu;
+>   };
+>   
+> +#define QCOM_ADRENO_SMMU_GPU_SID 0
+> +
+> +static bool qcom_adreno_smmu_is_gpu_device(struct device *dev)
+> +{
+> +	struct iommu_fwspec *fwspec = dev_iommu_fwspec_get(dev);
+> +	int i;
+> +
+> +	/*
+> +	 * The GPU will always use SID 0 so that is a handy way to uniquely
+> +	 * identify it and configure it for per-instance pagetables
+> +	 */
+> +	for (i = 0; i < fwspec->num_ids; i++) {
+> +		u16 sid = FIELD_GET(ARM_SMMU_SMR_ID, fwspec->ids[i]);
+> +
+> +		if (sid == QCOM_ADRENO_SMMU_GPU_SID)
+> +			return true;
+> +	}
+> +
+> +	return false;
+> +}
+> +
+> +static const struct io_pgtable_cfg *qcom_adreno_smmu_get_ttbr1_cfg(
+> +		const void *cookie)
+> +{
+> +	struct arm_smmu_domain *smmu_domain = (void *)cookie;
+> +	struct io_pgtable *pgtable =
+> +		io_pgtable_ops_to_pgtable(smmu_domain->pgtbl_ops);
+> +	return &pgtable->cfg;
+> +}
+> +
+> +/*
+> + * Local implementation to configure TTBR0 with the specified pagetable config.
+> + * The GPU driver will call this to enable TTBR0 when per-instance pagetables
+> + * are active
+> + */
+> +
+> +static int qcom_adreno_smmu_set_ttbr0_cfg(const void *cookie,
+> +		const struct io_pgtable_cfg *pgtbl_cfg)
+> +{
+> +	struct arm_smmu_domain *smmu_domain = (void *)cookie;
+> +	struct io_pgtable *pgtable = io_pgtable_ops_to_pgtable(smmu_domain->pgtbl_ops);
+> +	struct arm_smmu_cfg *cfg = &smmu_domain->cfg;
+> +	struct arm_smmu_cb *cb = &smmu_domain->smmu->cbs[cfg->cbndx];
+> +
+> +	/* The domain must have split pagetables already enabled */
+> +	if (cb->tcr[0] & ARM_SMMU_TCR_EPD1)
+> +		return -EINVAL;
+> +
+> +	/* If the pagetable config is NULL, disable TTBR0 */
+> +	if (!pgtbl_cfg) {
+> +		/* Do nothing if it is already disabled */
+> +		if ((cb->tcr[0] & ARM_SMMU_TCR_EPD0))
+> +			return -EINVAL;
+> +
+> +		/* Set TCR to the original configuration */
+> +		cb->tcr[0] = arm_smmu_lpae_tcr(&pgtable->cfg);
+> +		cb->ttbr[0] = FIELD_PREP(ARM_SMMU_TTBRn_ASID, cb->cfg->asid);
+> +	} else {
+> +		u32 tcr = cb->tcr[0];
+> +
+> +		/* Don't call this again if TTBR0 is already enabled */
+> +		if (!(cb->tcr[0] & ARM_SMMU_TCR_EPD0))
+> +			return -EINVAL;
+> +
+> +		tcr |= arm_smmu_lpae_tcr(pgtbl_cfg);
+> +		tcr &= ~(ARM_SMMU_TCR_EPD0 | ARM_SMMU_TCR_EPD1);
+> +
+> +		cb->tcr[0] = tcr;
+> +		cb->ttbr[0] = pgtbl_cfg->arm_lpae_s1_cfg.ttbr;
+> +		cb->ttbr[0] |= FIELD_PREP(ARM_SMMU_TTBRn_ASID, cb->cfg->asid);
+> +	}
+> +
+> +	arm_smmu_write_context_bank(smmu_domain->smmu, cb->cfg->cbndx);
+> +
+> +	return 0;
+> +}
+> +
+> +static int qcom_adreno_smmu_alloc_context_bank(struct arm_smmu_domain *smmu_domain,
+> +					       struct arm_smmu_device *smmu,
+> +					       struct device *dev, int start)
+> +{
+> +	int count;
+> +
+> +	/*
+> +	 * Assign context bank 0 to the GPU device so the GPU hardware can
+> +	 * switch pagetables
+> +	 */
+> +	if (qcom_adreno_smmu_is_gpu_device(dev)) {
+> +		start = 0;
+> +		count = 1;
+> +	} else {
+> +		start = 1;
+> +		count = smmu->num_context_banks;
+> +	}
+> +
+> +	return __arm_smmu_alloc_bitmap(smmu->context_map, start, count);
+> +}
+> +static int qcom_adreno_smmu_init_context(struct arm_smmu_domain *smmu_domain,
+> +		struct io_pgtable_cfg *pgtbl_cfg, struct device *dev)
+> +{
+> +	struct adreno_smmu_priv *priv;
+> +
+> +	/* Only enable split pagetables for the GPU device (SID 0) */
+> +	if (!qcom_adreno_smmu_is_gpu_device(dev))
+> +		return 0;
+> +
+> +	/*
+> +	 * All targets that use the qcom,adreno-smmu compatible string *should*
+> +	 * be AARCH64 stage 1 but double check because the arm-smmu code assumes
+> +	 * that is the case when the TTBR1 quirk is enabled
+> +	 */
+> +	if ((smmu_domain->stage == ARM_SMMU_DOMAIN_S1) &&
+> +	    (smmu_domain->cfg.fmt == ARM_SMMU_CTX_FMT_AARCH64))
+> +		pgtbl_cfg->quirks |= IO_PGTABLE_QUIRK_ARM_TTBR1;
+> +
+> +	/*
+> +	 * Initialize private interface with GPU:
+> +	 */
+> +
+> +	priv = dev_get_drvdata(dev);
+> +	priv->cookie = smmu_domain;
+> +	priv->get_ttbr1_cfg = qcom_adreno_smmu_get_ttbr1_cfg;
+> +	priv->set_ttbr0_cfg = qcom_adreno_smmu_set_ttbr0_cfg;
 
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
----
- arch/arm64/boot/dts/qcom/qrb5165-rb5.dts | 154 +++++++++++++++++++++++
- 1 file changed, 154 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts b/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts
-index 1528a865f1f8..6cb8688910a2 100644
---- a/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts
-+++ b/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts
-@@ -58,6 +58,77 @@ bt {
- 
- 	};
- 
-+	thermal-zones {
-+		xo-therm {
-+			polling-delay-passive = <0>;
-+			polling-delay = <0>;
-+			thermal-sensors = <&pm8150_adc_tm 0>;
-+			trips {
-+				active-config0 {
-+					temperature = <50000>;
-+					hysteresis = <4000>;
-+					type = "passive";
-+				};
-+			};
-+		};
-+
-+		wifi-therm {
-+			polling-delay-passive = <0>;
-+			polling-delay = <0>;
-+			thermal-sensors = <&pm8150_adc_tm 1>;
-+			trips {
-+				active-config0 {
-+					temperature = <52000>;
-+					hysteresis = <4000>;
-+					type = "passive";
-+				};
-+			};
-+		};
-+
-+		conn-therm {
-+			polling-delay-passive = <0>;
-+			polling-delay = <0>;
-+			thermal-sensors = <&pm8150b_adc_tm 0>;
-+
-+			trips {
-+				active-config0 {
-+					temperature = <125000>;
-+					hysteresis = <1000>;
-+					type = "critical";
-+				};
-+			};
-+		};
-+
-+		skin-msm-therm {
-+			polling-delay-passive = <0>;
-+			polling-delay = <0>;
-+			thermal-sensors = <&pm8150l_adc_tm 0>;
-+
-+			trips {
-+				active-config0 {
-+					temperature = <50000>;
-+					hysteresis = <4000>;
-+					type = "passive";
-+				};
-+			};
-+		};
-+
-+		pm8150l-therm {
-+			polling-delay-passive = <0>;
-+			polling-delay = <0>;
-+			thermal-sensors = <&pm8150l_adc_tm 1>;
-+
-+			trips {
-+				active-config0 {
-+					temperature = <50000>;
-+					hysteresis = <4000>;
-+					type = "passive";
-+				};
-+			};
-+		};
-+
-+	};
-+
- 	vbat: vbat-regulator {
- 		compatible = "regulator-fixed";
- 		regulator-name = "VBAT";
-@@ -412,6 +483,89 @@ &i2c15 {
- 	status = "okay";
- };
- 
-+&pm8150_adc {
-+	xo-therm@4c {
-+		reg = <ADC5_XO_THERM_100K_PU>;
-+		qcom,ratiometric;
-+		qcom,hw-settle-time = <200>;
-+	};
-+
-+	wifi-therm@4e {
-+		reg = <ADC5_AMUX_THM2_100K_PU>;
-+		qcom,ratiometric;
-+		qcom,hw-settle-time = <200>;
-+	};
-+};
-+
-+&pm8150b_adc {
-+	conn-therm@4f {
-+		reg = <ADC5_AMUX_THM3_100K_PU>;
-+		qcom,ratiometric;
-+		qcom,hw-settle-time = <200>;
-+	};
-+};
-+
-+&pm8150l_adc {
-+	skin-msm-therm@4e {
-+		reg = <ADC5_AMUX_THM2_100K_PU>;
-+		qcom,ratiometric;
-+		qcom,hw-settle-time = <200>;
-+	};
-+
-+	pm8150l-therm@4f {
-+		reg = <ADC5_AMUX_THM3_100K_PU>;
-+		qcom,ratiometric;
-+		qcom,hw-settle-time = <200>;
-+	};
-+};
-+
-+&pm8150_adc_tm {
-+	status = "okay";
-+
-+	xo-therm@0 {
-+		reg = <0>;
-+		io-channels = <&pm8150_adc ADC5_XO_THERM_100K_PU>;
-+		qcom,ratiometric;
-+		qcom,hw-settle-time-us = <200>;
-+	};
-+
-+	wifi-therm@1 {
-+		reg = <1>;
-+		io-channels = <&pm8150_adc ADC5_AMUX_THM2_100K_PU>;
-+		qcom,ratiometric;
-+		qcom,hw-settle-time-us = <200>;
-+	};
-+};
-+
-+&pm8150b_adc_tm {
-+	status = "okay";
-+
-+	conn-therm@0 {
-+		reg = <0>;
-+		io-channels = <&pm8150b_adc ADC5_AMUX_THM3_100K_PU>;
-+		qcom,ratiometric;
-+		qcom,hw-settle-time-us = <200>;
-+	};
-+};
-+
-+&pm8150l_adc_tm {
-+	status = "okay";
-+
-+	skin-msm-therm@0 {
-+		reg = <0>;
-+		io-channels = <&pm8150l_adc ADC5_AMUX_THM2_100K_PU>;
-+		qcom,ratiometric;
-+		qcom,hw-settle-time-us = <200>;
-+	};
-+
-+	pm8150l-therm@1 {
-+		reg = <1>;
-+		io-channels = <&pm8150l_adc ADC5_AMUX_THM3_100K_PU>;
-+		qcom,ratiometric;
-+		qcom,hw-settle-time-us = <200>;
-+	};
-+};
-+
- &pm8150_gpios {
- 	gpio-reserved-ranges = <1 1>, <3 2>, <7 1>;
- 	gpio-line-names =
--- 
-2.28.0
+I still think it would have been logical to reserve context bank 0 
+outright in cfg_probe, then just swizzle cbndx/irptndx at this point 
+once everything else has proven that this is to be the One Special 
+Domain. I guess this way at least you don't have to intervene in 
+domain_free, but by the same token that means you never get to clean up 
+the dangling pointer in priv->cookie, which is a little bit yuck. Oh well...
 
+Acked-by: Robin Murphy <robin.murphy@arm.com>
+
+Thanks,
+Robin.
+
+> +
+> +	return 0;
+> +}
+> +
+>   static const struct of_device_id qcom_smmu_client_of_match[] __maybe_unused = {
+>   	{ .compatible = "qcom,adreno" },
+>   	{ .compatible = "qcom,mdp4" },
+> @@ -65,7 +194,15 @@ static const struct arm_smmu_impl qcom_smmu_impl = {
+>   	.reset = qcom_smmu500_reset,
+>   };
+>   
+> -struct arm_smmu_device *qcom_smmu_impl_init(struct arm_smmu_device *smmu)
+> +static const struct arm_smmu_impl qcom_adreno_smmu_impl = {
+> +	.init_context = qcom_adreno_smmu_init_context,
+> +	.def_domain_type = qcom_smmu_def_domain_type,
+> +	.reset = qcom_smmu500_reset,
+> +	.alloc_context_bank = qcom_adreno_smmu_alloc_context_bank,
+> +};
+> +
+> +static struct arm_smmu_device *qcom_smmu_create(struct arm_smmu_device *smmu,
+> +		const struct arm_smmu_impl *impl)
+>   {
+>   	struct qcom_smmu *qsmmu;
+>   
+> @@ -75,8 +212,18 @@ struct arm_smmu_device *qcom_smmu_impl_init(struct arm_smmu_device *smmu)
+>   
+>   	qsmmu->smmu = *smmu;
+>   
+> -	qsmmu->smmu.impl = &qcom_smmu_impl;
+> +	qsmmu->smmu.impl = impl;
+>   	devm_kfree(smmu->dev, smmu);
+>   
+>   	return &qsmmu->smmu;
+>   }
+> +
+> +struct arm_smmu_device *qcom_smmu_impl_init(struct arm_smmu_device *smmu)
+> +{
+> +	return qcom_smmu_create(smmu, &qcom_smmu_impl);
+> +}
+> +
+> +struct arm_smmu_device *qcom_adreno_smmu_impl_init(struct arm_smmu_device *smmu)
+> +{
+> +	return qcom_smmu_create(smmu, &qcom_adreno_smmu_impl);
+> +}
+> diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu.h b/drivers/iommu/arm/arm-smmu/arm-smmu.h
+> index 1a746476927c..6c5ff9999eae 100644
+> --- a/drivers/iommu/arm/arm-smmu/arm-smmu.h
+> +++ b/drivers/iommu/arm/arm-smmu/arm-smmu.h
+> @@ -520,6 +520,7 @@ static inline void arm_smmu_writeq(struct arm_smmu_device *smmu, int page,
+>   struct arm_smmu_device *arm_smmu_impl_init(struct arm_smmu_device *smmu);
+>   struct arm_smmu_device *nvidia_smmu_impl_init(struct arm_smmu_device *smmu);
+>   struct arm_smmu_device *qcom_smmu_impl_init(struct arm_smmu_device *smmu);
+> +struct arm_smmu_device *qcom_adreno_smmu_impl_init(struct arm_smmu_device *smmu);
+>   
+>   void arm_smmu_write_context_bank(struct arm_smmu_device *smmu, int idx);
+>   int arm_mmu500_reset(struct arm_smmu_device *smmu);
+> 
