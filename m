@@ -2,222 +2,186 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 6B8A22A3529
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Nov 2020 21:35:04 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 69AA62A3596
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Nov 2020 21:54:47 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726705AbgKBUfC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 2 Nov 2020 15:35:02 -0500
-Received: from alexa-out-sd-02.qualcomm.com ([199.106.114.39]:2106 "EHLO
-        alexa-out-sd-02.qualcomm.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726563AbgKBUfC (ORCPT
+        id S1726360AbgKBUy0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 2 Nov 2020 15:54:26 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52810 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726758AbgKBUxH (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 2 Nov 2020 15:35:02 -0500
-Received: from unknown (HELO ironmsg01-sd.qualcomm.com) ([10.53.140.141])
-  by alexa-out-sd-02.qualcomm.com with ESMTP; 02 Nov 2020 12:35:01 -0800
-X-QCInternal: smtphost
-Received: from gurus-linux.qualcomm.com ([10.46.162.81])
-  by ironmsg01-sd.qualcomm.com with ESMTP; 02 Nov 2020 12:35:00 -0800
-Received: by gurus-linux.qualcomm.com (Postfix, from userid 383780)
-        id 862B81AE9; Mon,  2 Nov 2020 12:35:00 -0800 (PST)
-From:   Guru Das Srinagesh <gurus@codeaurora.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        linux-arm-msm@vger.kernel.org, Rob Herring <robh+dt@kernel.org>
-Cc:     Subbaraman Narayanamurthy <subbaram@codeaurora.org>,
-        David Collins <collinsd@codeaurora.org>,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Stephen Boyd <sboyd@kernel.org>,
-        Anirudh Ghayal <aghayal@codeaurora.org>,
-        Kavya Nunna <knunna@codeaurora.org>,
-        Guru Das Srinagesh <gurus@codeaurora.org>
-Subject: [PATCH v5 3/3] extcon: qcom-spmi: Add support for VBUS detection
-Date:   Mon,  2 Nov 2020 12:34:59 -0800
-Message-Id: <fcf7dabed7d5664b5c48485b881f7cbda7977315.1604349076.git.gurus@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <cover.1604349076.git.gurus@codeaurora.org>
-References: <cover.1604349076.git.gurus@codeaurora.org>
-In-Reply-To: <cover.1604349076.git.gurus@codeaurora.org>
-References: <cover.1604349076.git.gurus@codeaurora.org>
+        Mon, 2 Nov 2020 15:53:07 -0500
+Received: from mail-pf1-x442.google.com (mail-pf1-x442.google.com [IPv6:2607:f8b0:4864:20::442])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EEE07C061A04
+        for <linux-arm-msm@vger.kernel.org>; Mon,  2 Nov 2020 12:53:06 -0800 (PST)
+Received: by mail-pf1-x442.google.com with SMTP id e7so12173106pfn.12
+        for <linux-arm-msm@vger.kernel.org>; Mon, 02 Nov 2020 12:53:06 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=mime-version:content-transfer-encoding:in-reply-to:references
+         :subject:from:cc:to:date:message-id:user-agent;
+        bh=l5vIbL7zQ7n4XZHyhwW01YWfGRyYMBZYUrSZpG6FbLs=;
+        b=N0yLEXezBABYB2tPL4AuEEXwYGKOXDecmwzSVE8bnDq1ew8Ubu+drYtDQ/NkpIwcJf
+         L3moZQiC5mITS4SqyL/PT6mN0ypSPUqxLBDFRjbu8vIECqjZCFTggm2bmAKVkQOiW7kM
+         58q6lALMnQgpix4nh/2pSGxpVTZSZ9/N1Ym6I=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:content-transfer-encoding
+         :in-reply-to:references:subject:from:cc:to:date:message-id
+         :user-agent;
+        bh=l5vIbL7zQ7n4XZHyhwW01YWfGRyYMBZYUrSZpG6FbLs=;
+        b=gkf1kuTTmHc92YbMrhG9oxzmaWyEswNQ1AROKp3n2vtjTi/U1e/x/+fFXpBg+uNEFa
+         HKSCLCPc8vYzr2kI2PtcZ7oPD/I5dtdzGuz25QqhqyesbbZIire2jgksZgTYrECD6OL1
+         uZ8BfDLxWt/+4DdHkulSjIrI20+VuWj6JNiVdI2tQ7u/Oi50wZ753fzL9ewmcY7PTFpX
+         epdFyqvvb6jGPWv7ejg6SEmAnQTgm35PdaHpruF9pcos1EVGi5hWJIM1UzWrBsM1+JJK
+         8EM2C2oVQNSuLmyGsaC8ptS/DAprU8ZX5dtrxYqVoii39NSBReblbzk7B/FlXJ6zsWSP
+         q9ZA==
+X-Gm-Message-State: AOAM533kt0HfUrCnHGXIh3Ib/NhdzlIW/Swp6UdwqQ/iu5yOQMKRXAOA
+        SqHnw2FbtnVSOJhrK1/NdptDtw==
+X-Google-Smtp-Source: ABdhPJw1NO5xOgyXHyhI3oWwQJeO56qgUTuPxt4QU+RDUNnB48VToL/F4DAVmG01MfXtEfgKrDhsEw==
+X-Received: by 2002:a17:90a:4742:: with SMTP id y2mr13520pjg.228.1604350386498;
+        Mon, 02 Nov 2020 12:53:06 -0800 (PST)
+Received: from chromium.org ([2620:15c:202:201:3e52:82ff:fe6c:83ab])
+        by smtp.gmail.com with ESMTPSA id y5sm15250451pfq.79.2020.11.02.12.53.05
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 02 Nov 2020 12:53:05 -0800 (PST)
+Content-Type: text/plain; charset="utf-8"
+MIME-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <20201030232310.11100-1-khsieh@codeaurora.org>
+References: <20201030232310.11100-1-khsieh@codeaurora.org>
+Subject: Re: [PATCH v2] drm/msm/dp: skip checking LINK_STATUS_UPDATED bit
+From:   Stephen Boyd <swboyd@chromium.org>
+Cc:     tanmay@codeaurora.org, abhinavk@codeaurora.org,
+        aravindh@codeaurora.org, khsieh@codeaurora.org,
+        rnayak@codeaurora.org, airlied@linux.ie, daniel@ffwll.ch,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
+To:     Kuogee Hsieh <khsieh@codeaurora.org>, robdclark@gmail.com,
+        sean@poorly.run
+Date:   Mon, 02 Nov 2020 12:53:04 -0800
+Message-ID: <160435038402.884498.10403326257118588679@swboyd.mtv.corp.google.com>
+User-Agent: alot/0.9.1
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Anirudh Ghayal <aghayal@codeaurora.org>
+Quoting Kuogee Hsieh (2020-10-30 16:23:10)
+> Some dongle will not clear LINK_STATUS_UPDATED bit after
+> DPCD read which cause link training failed. This patch
 
-VBUS can be detected via a dedicated PMIC pin. Add support
-for reporting the VBUS status.
+$ git grep 'this patch' -- Documentation/process/submitting-patches.rst
 
-Signed-off-by: Anirudh Ghayal <aghayal@codeaurora.org>
-Signed-off-by: Kavya Nunna <knunna@codeaurora.org>
-Signed-off-by: Guru Das Srinagesh <gurus@codeaurora.org>
----
- drivers/extcon/extcon-qcom-spmi-misc.c | 99 +++++++++++++++++++++++++++-------
- 1 file changed, 80 insertions(+), 19 deletions(-)
+> just read 6 bytes of DPCD link status from sink and return
+> without checking LINK_STATUS_UPDATED bit.
+> Link rate read back from sink need to be convert into
+> really rate by timing 2.7Mb.=20
 
-diff --git a/drivers/extcon/extcon-qcom-spmi-misc.c b/drivers/extcon/extcon-qcom-spmi-misc.c
-index 6b836ae..9e8ccfb 100644
---- a/drivers/extcon/extcon-qcom-spmi-misc.c
-+++ b/drivers/extcon/extcon-qcom-spmi-misc.c
-@@ -1,7 +1,7 @@
- // SPDX-License-Identifier: GPL-2.0-only
- /**
-  * extcon-qcom-spmi-misc.c - Qualcomm USB extcon driver to support USB ID
-- *				detection based on extcon-usb-gpio.c.
-+ *			and VBUS detection based on extcon-usb-gpio.c.
-  *
-  * Copyright (C) 2016 Linaro, Ltd.
-  * Stephen Boyd <stephen.boyd@linaro.org>
-@@ -21,30 +21,56 @@
- 
- struct qcom_usb_extcon_info {
- 	struct extcon_dev *edev;
--	int irq;
-+	int id_irq;
-+	int vbus_irq;
- 	struct delayed_work wq_detcable;
- 	unsigned long debounce_jiffies;
- };
- 
- static const unsigned int qcom_usb_extcon_cable[] = {
-+	EXTCON_USB,
- 	EXTCON_USB_HOST,
- 	EXTCON_NONE,
- };
- 
- static void qcom_usb_extcon_detect_cable(struct work_struct *work)
- {
--	bool id;
-+	bool state = false;
- 	int ret;
-+	union extcon_property_value val;
- 	struct qcom_usb_extcon_info *info = container_of(to_delayed_work(work),
- 						    struct qcom_usb_extcon_info,
- 						    wq_detcable);
- 
--	/* check ID and update cable state */
--	ret = irq_get_irqchip_state(info->irq, IRQCHIP_STATE_LINE_LEVEL, &id);
--	if (ret)
--		return;
-+	if (info->id_irq > 0) {
-+		/* check ID and update cable state */
-+		ret = irq_get_irqchip_state(info->id_irq,
-+				IRQCHIP_STATE_LINE_LEVEL, &state);
-+		if (ret)
-+			return;
-+
-+		if (!state) {
-+			val.intval = true;
-+			extcon_set_property(info->edev, EXTCON_USB_HOST,
-+						EXTCON_PROP_USB_SS, val);
-+		}
-+		extcon_set_state_sync(info->edev, EXTCON_USB_HOST, !state);
-+	}
- 
--	extcon_set_state_sync(info->edev, EXTCON_USB_HOST, !id);
-+	if (info->vbus_irq > 0) {
-+		/* check VBUS and update cable state */
-+		ret = irq_get_irqchip_state(info->vbus_irq,
-+				IRQCHIP_STATE_LINE_LEVEL, &state);
-+		if (ret)
-+			return;
-+
-+		if (state) {
-+			val.intval = true;
-+			extcon_set_property(info->edev, EXTCON_USB,
-+						EXTCON_PROP_USB_SS, val);
-+		}
-+		extcon_set_state_sync(info->edev, EXTCON_USB, state);
-+	}
- }
- 
- static irqreturn_t qcom_usb_irq_handler(int irq, void *dev_id)
-@@ -79,21 +105,48 @@ static int qcom_usb_extcon_probe(struct platform_device *pdev)
- 		return ret;
- 	}
- 
-+	ret = extcon_set_property_capability(info->edev,
-+			EXTCON_USB, EXTCON_PROP_USB_SS);
-+	ret |= extcon_set_property_capability(info->edev,
-+			EXTCON_USB_HOST, EXTCON_PROP_USB_SS);
-+	if (ret) {
-+		dev_err(dev, "failed to register extcon props rc=%d\n",
-+						ret);
-+		return ret;
-+	}
-+
- 	info->debounce_jiffies = msecs_to_jiffies(USB_ID_DEBOUNCE_MS);
- 	INIT_DELAYED_WORK(&info->wq_detcable, qcom_usb_extcon_detect_cable);
- 
--	info->irq = platform_get_irq_byname(pdev, "usb_id");
--	if (info->irq < 0)
--		return info->irq;
-+	info->id_irq = platform_get_irq_byname(pdev, "usb_id");
-+	if (info->id_irq > 0) {
-+		ret = devm_request_threaded_irq(dev, info->id_irq, NULL,
-+					qcom_usb_irq_handler,
-+					IRQF_TRIGGER_RISING |
-+					IRQF_TRIGGER_FALLING | IRQF_ONESHOT,
-+					pdev->name, info);
-+		if (ret < 0) {
-+			dev_err(dev, "failed to request handler for ID IRQ\n");
-+			return ret;
-+		}
-+	}
- 
--	ret = devm_request_threaded_irq(dev, info->irq, NULL,
-+	info->vbus_irq = platform_get_irq_byname(pdev, "usb_vbus");
-+	if (info->vbus_irq > 0) {
-+		ret = devm_request_threaded_irq(dev, info->vbus_irq, NULL,
- 					qcom_usb_irq_handler,
- 					IRQF_TRIGGER_RISING |
- 					IRQF_TRIGGER_FALLING | IRQF_ONESHOT,
- 					pdev->name, info);
--	if (ret < 0) {
--		dev_err(dev, "failed to request handler for ID IRQ\n");
--		return ret;
-+		if (ret < 0) {
-+			dev_err(dev, "failed to request handler for VBUS IRQ\n");
-+			return ret;
-+		}
-+	}
-+
-+	if (info->id_irq < 0 && info->vbus_irq < 0) {
-+		dev_err(dev, "ID and VBUS IRQ not found\n");
-+		return -EINVAL;
- 	}
- 
- 	platform_set_drvdata(pdev, info);
-@@ -120,8 +173,12 @@ static int qcom_usb_extcon_suspend(struct device *dev)
- 	struct qcom_usb_extcon_info *info = dev_get_drvdata(dev);
- 	int ret = 0;
- 
--	if (device_may_wakeup(dev))
--		ret = enable_irq_wake(info->irq);
-+	if (device_may_wakeup(dev)) {
-+		if (info->id_irq > 0)
-+			ret = enable_irq_wake(info->id_irq);
-+		if (info->vbus_irq > 0)
-+			ret = enable_irq_wake(info->vbus_irq);
-+	}
- 
- 	return ret;
- }
-@@ -131,8 +188,12 @@ static int qcom_usb_extcon_resume(struct device *dev)
- 	struct qcom_usb_extcon_info *info = dev_get_drvdata(dev);
- 	int ret = 0;
- 
--	if (device_may_wakeup(dev))
--		ret = disable_irq_wake(info->irq);
-+	if (device_may_wakeup(dev)) {
-+		if (info->id_irq > 0)
-+			ret = disable_irq_wake(info->id_irq);
-+		if (info->vbus_irq > 0)
-+			ret = disable_irq_wake(info->vbus_irq);
-+	}
- 
- 	return ret;
- }
--- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project
+This last sentence doesn't make sense to me, sorry. What is being said?
 
+> For example 0x0A is equivalent
+> to 2.7Gb. This patch also convert link rate correctly to fix
+> phy compliance test link rate error.
+>=20
+> Chanegs in V2:
+> -- revise commit text
+>=20
+> Fixes: fd4a29bed29b (drm/msm/dp: DisplayPort PHY compliance tests fixup)
+>=20
+
+Shouldn't be any space here between SoB and Fixes tag.
+
+> Signed-off-by: Kuogee Hsieh <khsieh@codeaurora.org>
+> ---
+>  drivers/gpu/drm/msm/dp/dp_ctrl.c | 20 ++++++--------------
+>  drivers/gpu/drm/msm/dp/dp_link.c | 24 +++++++++++-------------
+>  2 files changed, 17 insertions(+), 27 deletions(-)
+>=20
+> diff --git a/drivers/gpu/drm/msm/dp/dp_ctrl.c b/drivers/gpu/drm/msm/dp/dp=
+_ctrl.c
+> index 904698dfc7f7..844ba756a2c6 100644
+> --- a/drivers/gpu/drm/msm/dp/dp_ctrl.c
+> +++ b/drivers/gpu/drm/msm/dp/dp_ctrl.c
+> @@ -1061,23 +1061,15 @@ static bool dp_ctrl_train_pattern_set(struct dp_c=
+trl_private *ctrl,
+>  static int dp_ctrl_read_link_status(struct dp_ctrl_private *ctrl,
+>                                     u8 *link_status)
+>  {
+> -       int len =3D 0;
+> -       u32 const offset =3D DP_LANE_ALIGN_STATUS_UPDATED - DP_LANE0_1_ST=
+ATUS;
+> -       u32 link_status_read_max_retries =3D 100;
+> -
+> -       while (--link_status_read_max_retries) {
+> -               len =3D drm_dp_dpcd_read_link_status(ctrl->aux,
+> -                       link_status);
+> -               if (len !=3D DP_LINK_STATUS_SIZE) {
+> -                       DRM_ERROR("DP link status read failed, err: %d\n"=
+, len);
+> -                       return len;
+> -               }
+> +       int ret =3D 0, len;
+> =20
+> -               if (!(link_status[offset] & DP_LINK_STATUS_UPDATED))
+> -                       return 0;
+> +       len =3D drm_dp_dpcd_read_link_status(ctrl->aux, link_status);
+> +       if (len !=3D DP_LINK_STATUS_SIZE) {
+> +               DRM_ERROR("DP link status read failed, err: %d\n", len);
+> +               ret =3D len;
+
+So if this returns the integer 2 it's OK? Shouldn't it return some error
+value?
+
+>         }
+> =20
+> -       return -ETIMEDOUT;
+> +       return ret;
+>  }
+> =20
+>  static int dp_ctrl_link_train_1(struct dp_ctrl_private *ctrl,
+> diff --git a/drivers/gpu/drm/msm/dp/dp_link.c b/drivers/gpu/drm/msm/dp/dp=
+_link.c
+> index 49d7fad36fc4..64a002d100c7 100644
+> --- a/drivers/gpu/drm/msm/dp/dp_link.c
+> +++ b/drivers/gpu/drm/msm/dp/dp_link.c
+> @@ -943,20 +944,17 @@ static u8 get_link_status(const u8 link_status[DP_L=
+INK_STATUS_SIZE], int r)
+>   */
+>  static int dp_link_process_link_status_update(struct dp_link_private *li=
+nk)
+>  {
+> -       if (!(get_link_status(link->link_status,
+> -                               DP_LANE_ALIGN_STATUS_UPDATED) &
+> -                               DP_LINK_STATUS_UPDATED) ||
+> -                       (drm_dp_clock_recovery_ok(link->link_status,
+> -                                       link->dp_link.link_params.num_lan=
+es) &&
+> -                       drm_dp_channel_eq_ok(link->link_status,
+> -                                       link->dp_link.link_params.num_lan=
+es)))
+> -               return -EINVAL;
+> +       bool channel_eq_done =3D drm_dp_channel_eq_ok(link->link_status,
+> +                       link->dp_link.link_params.num_lanes);
+> +
+> +       bool clock_recovery_done =3D drm_dp_clock_recovery_ok(link->link_=
+status,
+> +                       link->dp_link.link_params.num_lanes);
+> =20
+>         DRM_DEBUG_DP("channel_eq_done =3D %d, clock_recovery_done =3D %d\=
+n",
+> -                       drm_dp_clock_recovery_ok(link->link_status,
+> -                       link->dp_link.link_params.num_lanes),
+> -                       drm_dp_clock_recovery_ok(link->link_status,
+> -                       link->dp_link.link_params.num_lanes));
+> +                       channel_eq_done, clock_recovery_done);
+> +
+> +       if (channel_eq_done && clock_recovery_done)
+> +               return -EINVAL;
+> =20
+>         return 0;
+>  }
+>=20
+> base-commit: 03a9adc88c206b3857ce95f4f4d3b185d429fa31
+
+What is this commit?
