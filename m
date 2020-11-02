@@ -2,137 +2,210 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id CEE662A340C
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Nov 2020 20:29:31 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D0F722A3497
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Nov 2020 20:52:47 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726501AbgKBT3a (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 2 Nov 2020 14:29:30 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39716 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725806AbgKBT3a (ORCPT
+        id S1727116AbgKBTwl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 2 Nov 2020 14:52:41 -0500
+Received: from alexa-out-sd-01.qualcomm.com ([199.106.114.38]:35465 "EHLO
+        alexa-out-sd-01.qualcomm.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1727085AbgKBTwk (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 2 Nov 2020 14:29:30 -0500
-Received: from mail-pg1-x542.google.com (mail-pg1-x542.google.com [IPv6:2607:f8b0:4864:20::542])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8777AC0617A6
-        for <linux-arm-msm@vger.kernel.org>; Mon,  2 Nov 2020 11:29:30 -0800 (PST)
-Received: by mail-pg1-x542.google.com with SMTP id o3so11631391pgr.11
-        for <linux-arm-msm@vger.kernel.org>; Mon, 02 Nov 2020 11:29:30 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:content-transfer-encoding:in-reply-to:references
-         :subject:from:cc:to:date:message-id:user-agent;
-        bh=uoOxuimGqR/XZohg3kDNnqLGh44Gb3rHGmhcimxdOOY=;
-        b=X/cJK6On7gCEku6gf7AommmoOsjU/a5tlIE4w3Lty5H00mkIV5rNXD2hV5drnpvER7
-         RuQ18vm1/trkX2my4c491xbgR8ybadobgs5JQu9jdUO4SKrwVCrwCmQKiE9mgwhrJdMR
-         byvh/r5+J24rf4ov9GZLSpFpLphkTvgaKkm0c=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:content-transfer-encoding
-         :in-reply-to:references:subject:from:cc:to:date:message-id
-         :user-agent;
-        bh=uoOxuimGqR/XZohg3kDNnqLGh44Gb3rHGmhcimxdOOY=;
-        b=bmKuamZU83NOOlEAl8M6exlX1iCkREwKae60BcUKm6+iqPo871g43ldRDIT63O1RD/
-         Dz8I84h5vOvY2IjQeACTwMD2EbHg2SYFI7U6WyJRZZrtEM1pEu72fBQ1ABxLB0ddYvUK
-         8r9qjefL0IxkqY7x6mbViff0qOvXZDdgqzUEPXDsH+p8Y5lsAdDOR3J+n6YbLDWsAdHS
-         bLPEaHyGOogKAT/sKXfViHd8XJWMQSH0VP3Rv8rdloZ9mSVmeDV7oEdkRylidTjPOtMy
-         25y6CLi0TLQq5IqYq5ZU4o/6gUKNHujt2VjL6QpIAiZk73vQWMtFAxrIzJVX8zyKqPqa
-         BgUg==
-X-Gm-Message-State: AOAM533v/x7vlrTTipSRPqe419RJDd2DiGogNiGPnN9GUuizk8BI4xtz
-        0SU2II+Xt0yKZeOei5XRdAEpOQ==
-X-Google-Smtp-Source: ABdhPJxVKt+kRsHzbnU0rETD6G/1efTmJN02g/NGxauAmXXTQrMIxC6/YcVUoL/EqVkPVsDTdrz6Ow==
-X-Received: by 2002:aa7:8548:0:b029:164:769a:353 with SMTP id y8-20020aa785480000b0290164769a0353mr23105505pfn.45.1604345370040;
-        Mon, 02 Nov 2020 11:29:30 -0800 (PST)
-Received: from chromium.org ([2620:15c:202:201:3e52:82ff:fe6c:83ab])
-        by smtp.gmail.com with ESMTPSA id j11sm14286248pfh.143.2020.11.02.11.29.29
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 02 Nov 2020 11:29:29 -0800 (PST)
-Content-Type: text/plain; charset="utf-8"
+        Mon, 2 Nov 2020 14:52:40 -0500
+Received: from unknown (HELO ironmsg01-sd.qualcomm.com) ([10.53.140.141])
+  by alexa-out-sd-01.qualcomm.com with ESMTP; 02 Nov 2020 11:52:39 -0800
+X-QCInternal: smtphost
+Received: from gurus-linux.qualcomm.com ([10.46.162.81])
+  by ironmsg01-sd.qualcomm.com with ESMTP; 02 Nov 2020 11:52:39 -0800
+Received: by gurus-linux.qualcomm.com (Postfix, from userid 383780)
+        id 11736188E; Mon,  2 Nov 2020 11:52:39 -0800 (PST)
+Date:   Mon, 2 Nov 2020 11:52:39 -0800
+From:   Guru Das Srinagesh <gurus@codeaurora.org>
+To:     Rob Herring <robh@kernel.org>
+Cc:     Mark Brown <broonie@kernel.org>,
+        Markus Elfring <Markus.Elfring@web.de>,
+        Lee Jones <lee.jones@linaro.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Greg KH <gregkh@linuxfoundation.org>,
+        Guenter Roeck <linux@roeck-us.net>,
+        Joe Perches <joe@perches.com>,
+        Subbaraman Narayanamurthy <subbaram@codeaurora.org>,
+        David Collins <collinsd@codeaurora.org>,
+        Anirudh Ghayal <aghayal@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org
+Subject: Re: [PATCH v2 2/3] dt-bindings: mfd: Add QCOM PM8008 MFD bindings
+Message-ID: <20201102195238.GB29492@codeaurora.org>
+References: <cover.1603402280.git.gurus@codeaurora.org>
+ <b224632c03055a92022edb5929f22f26db66bc6d.1603402280.git.gurus@codeaurora.org>
+ <20201030154900.GA3896697@bogus>
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <20201030232324.11170-1-khsieh@codeaurora.org>
-References: <20201030232324.11170-1-khsieh@codeaurora.org>
-Subject: Re: [PATCH] drm/msm/dp: promote irq_hpd handle to handle link trainign correctly
-From:   Stephen Boyd <swboyd@chromium.org>
-Cc:     tanmay@codeaurora.org, abhinavk@codeaurora.org,
-        aravindh@codeaurora.org, khsieh@codeaurora.org,
-        rnayak@codeaurora.org, airlied@linux.ie, daniel@ffwll.ch,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
-To:     Kuogee Hsieh <khsieh@codeaurora.org>, robdclark@gmail.com,
-        sean@poorly.run
-Date:   Mon, 02 Nov 2020 11:29:28 -0800
-Message-ID: <160434536802.884498.16389146296525781476@swboyd.mtv.corp.google.com>
-User-Agent: alot/0.9.1
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20201030154900.GA3896697@bogus>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Subject has a typo in "training".
+On Fri, Oct 30, 2020 at 10:49:00AM -0500, Rob Herring wrote:
+> On Thu, Oct 22, 2020 at 02:35:41PM -0700, Guru Das Srinagesh wrote:
+> > Add device tree bindings for the driver for Qualcomm Technology Inc.'s
+> > PM8008 MFD PMIC.
+> > 
+> > Signed-off-by: Guru Das Srinagesh <gurus@codeaurora.org>
+> > ---
+> >  .../bindings/mfd/qcom,pm8008-irqchip.yaml          | 102 +++++++++++++++++++++
+> >  1 file changed, 102 insertions(+)
+> >  create mode 100644 Documentation/devicetree/bindings/mfd/qcom,pm8008-irqchip.yaml
+> > 
+> > diff --git a/Documentation/devicetree/bindings/mfd/qcom,pm8008-irqchip.yaml b/Documentation/devicetree/bindings/mfd/qcom,pm8008-irqchip.yaml
+> > new file mode 100644
+> > index 0000000..31d7b68
+> > --- /dev/null
+> > +++ b/Documentation/devicetree/bindings/mfd/qcom,pm8008-irqchip.yaml
+> > @@ -0,0 +1,102 @@
+> > +# SPDX-License-Identifier: GPL-2.0-only OR BSD-2-Clause
+> > +%YAML 1.2
+> > +---
+> > +$id: http://devicetree.org/schemas/mfd/qcom,pm8008-irqchip.yaml#
+> > +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> > +
+> > +title: Qualcomm Technologies, Inc. PM8008 Multi-Function Device PMIC
+> > +
+> > +maintainers:
+> > +  - Guru Das Srinagesh <gurus@codeaurora.org>
+> > +
+> > +description: |
+> > +  PM8008 is a PMIC that contains 7 LDOs, 2 GPIOs, temperature monitoring, and
+> > +  can be interfaced over I2C.
+> 
+> No bindings for all those functions? Bindings should be complete.
 
-Quoting Kuogee Hsieh (2020-10-30 16:23:24)
-> Some dongles, such as Apple, required link training done at irq_hpd
+While pushing out this patchset, I accidentally dropped the "RFC" tag in
+the mail subjects. This driver and binding document are meant to be just
+an exemplar for how the framework changes would be used, and hence I
+felt adding only a single node would suffice for illustration purposes.
 
-s/required/require/
+> 
+> > +
+> > +properties:
+> > +  compatible:
+> > +    items:
+> > +      - const: qcom,pm8008-irqchip
+> 
+> Why irqchip?
 
-> request instead of plugin request. This patch promote irq_hpd hanlder
+Since the driver's main functions are to register with the regmap-irq
+framework and to pass a regmap to the child nodes it populates. Would
+"qcom,pm8008-mfd" be more appropriate?
 
-s/hanlder/handler/
+> 
+> > +
+> > +  reg:
+> > +    maxItems: 1
+> > +
+> > +  interrupt-names:
+> > +    items:
+> > +      - const: pm8008
+> > +
+> > +  interrupts:
+> > +    maxItems: 1
+> > +
+> > +  interrupt-controller: true
+> > +
+> > +  "#address-cells":
+> > +    const: 1
+> > +    description: Must be specified if child nodes are specified.
+> > +
+> > +  "#size-cells":
+> > +    const: 0
+> > +    description: Must be specified if child nodes are specified.
+> > +
+> > +  "#interrupt-cells":
+> > +    const: 2
+> > +    description: |
+> > +      The first cell is the IRQ number, the second cell is the IRQ trigger flag.
+> > +
+> > +patternProperties:
+> > +  "^.*@[0-9a-f]+$":
+> 
+> '^.*' can be dropped. That's redundant.
 
-> to handle link training and setup hpd_state correctly.
->=20
-> Signed-off-by: Kuogee Hsieh <khsieh@codeaurora.org>
-> ---
+Done.
 
-Any Fixes tag?
+> 
+> > +    type: object
+> > +    # Each peripheral in PM8008 must be represented as a child node with an
+> > +    # optional label for referencing as phandle elsewhere. This is optional.
+> > +    properties:
+> > +      compatible:
+> > +        description: The compatible string for the peripheral's driver.
+> > +
+> > +      reg:
+> > +        maxItems: 1
+> 
+> What does the address represent? It's non-standard, so it needs to be 
+> defined.
 
->  drivers/gpu/drm/msm/dp/dp_display.c | 20 ++++++++++++++++++--
->  1 file changed, 18 insertions(+), 2 deletions(-)
->=20
-> diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp=
-/dp_display.c
-> index 13b66266cd69..55627530957c 100644
-> --- a/drivers/gpu/drm/msm/dp/dp_display.c
-> +++ b/drivers/gpu/drm/msm/dp/dp_display.c
-> @@ -483,10 +485,24 @@ static int dp_display_usbpd_attention_cb(struct dev=
-ice *dev)
->                 return -ENODEV;
->         }
-> =20
-> +       hpd =3D dp->usbpd;
-> +
->         /* check for any test request issued by sink */
->         rc =3D dp_link_process_request(dp->link);
-> -       if (!rc)
-> -               dp_display_handle_irq_hpd(dp);
-> +       if (!rc) {
-> +               sink_request =3D dp->link->sink_request;
-> +               if (sink_request & DS_PORT_STATUS_CHANGED) {
-> +                       dp->hpd_state =3D ST_CONNECT_PENDING;
-> +                       hpd->hpd_high =3D 1;
-> +               }
-> +
-> +               rc =3D dp_display_handle_irq_hpd(dp);
-> +
-> +               if (rc && sink_request & DS_PORT_STATUS_CHANGED) {
+Will add description.
 
-Can you add parenthesis around this?
+> 
+> > +
+> > +      interrupts:
+> > +        maxItems: 1
+> > +
+> > +    required:
+> > +      - compatible
+> > +      - reg
+> > +      - interrupts
+> > +
+> > +required:
+> > +  - compatible
+> > +  - reg
+> > +  - interrupts
+> > +  - "#interrupt-cells"
+> > +
+> > +additionalProperties: false
+> > +
+> > +examples:
+> > +  - |
+> > +    #include <dt-bindings/interrupt-controller/irq.h>
+> > +    qupv3_se13_i2c {
+> > +            #address-cells = <1>;
+> > +            #size-cells = <0>;
+> > +
+> > +            pm8008i@8 {
+> > +                    compatible = "qcom,pm8008-irqchip";
+> > +                    reg = <0x8>;
+> > +                    #address-cells = <1>;
+> > +                    #size-cells = <0>;
+> > +                    interrupt-controller;
+> > +                    #interrupt-cells = <2>;
+> > +
+> > +                    interrupt-names = "pm8008";
+> > +                    interrupt-parent = <&tlmm>;
+> > +                    interrupts = <32 IRQ_TYPE_EDGE_RISING>;
+> > +
+> > +                    pm8008_tz: qcom,temp-alarm@2400 {
+> 
+> Must be documented.
+> 
+> And don't use vendor prefixes in node names. 
 
-		if (rc && (sink_request & DS_PORT_STATUS_CHANGED)) {
+Done.
 
-
-I honestly don't know what's going on in this patch. It talks about
-making link training happen during irq hpd handler but this is the
-attention handler and we're checking port status changed? This is
-related? The code is really not clear.
-
-> +                       hpd->hpd_high =3D 0;
-> +                       dp->hpd_state =3D ST_DISCONNECTED;
-> +               }
-> +       }
-> =20
->         return rc;
->  }
->=20
-> base-commit: 0e162b10644605428cd2596c12f8ed410cf9d2d9
-
-What commit is this?
+> 
+> > +                            compatible = "qcom,spmi-temp-alarm";
+> > +                            reg = <0x2400>;
+> > +                            interrupts = <0x5 IRQ_TYPE_EDGE_BOTH>;
+> > +                            #thermal-sensor-cells = <0>;
+> > +                    };
+> > +            };
+> > +    };
+> > +
+> > +...
+> > -- 
+> > The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+> > a Linux Foundation Collaborative Project
+> > 
