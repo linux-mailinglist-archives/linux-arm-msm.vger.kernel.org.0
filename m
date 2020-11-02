@@ -2,79 +2,97 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 761EC2A2E5D
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Nov 2020 16:32:48 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 5A3992A2E73
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Nov 2020 16:39:22 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726366AbgKBPcr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 2 Nov 2020 10:32:47 -0500
-Received: from mail-oi1-f196.google.com ([209.85.167.196]:36171 "EHLO
-        mail-oi1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726014AbgKBPcr (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 2 Nov 2020 10:32:47 -0500
-Received: by mail-oi1-f196.google.com with SMTP id d9so9048180oib.3;
-        Mon, 02 Nov 2020 07:32:46 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=ZIIR6Y93kJtDVN6OdQxyGkcBJEBLbqKHPY5lopcjGcM=;
-        b=rX5++5boP73N1SgdWdrXJahDyCynmLajF5A9AtoR7w4uzW1nE0m4/l4Tee51b79XTa
-         RS2DeyZBGHddOcxDNmZBZyp7YXqdaet6M9BNcZTALAvvqJdvEeTYakLpWXeX7PsZRYO7
-         QLkvwFiNNrKT9coHyOjZhxGVLLJWmDZN0sjp3GuL96H5B4SsrZsFgK8jDUewWrFMle+y
-         zymnTlTQaBRJJ7/lFbiNbtqXNR4VCjUiPd/k1ASR1j1PqyoUi/5Iu38Y1Y2qpHShX/DM
-         q++tuRXRMFpDsKa0kmu9aju1KEl24//lNCSDxCt36jqXuxjvjrYZfk4Y8nJCicnlVyiZ
-         NPRw==
-X-Gm-Message-State: AOAM531865tKqrs4R5CW6GRJSbZIz/vc+sjQ+6N+oIBrDUX6bpf67v7J
-        CUwlhrJfe5Pp00YzDeX60g==
-X-Google-Smtp-Source: ABdhPJxVmphuk8mJdLlRvmuSLnh7cCLFj0cJ3+mKBBPbdUSY81JXWlUDkb/A41ExxACV+GqRPkRrwQ==
-X-Received: by 2002:aca:b854:: with SMTP id i81mr10737409oif.6.1604331165909;
-        Mon, 02 Nov 2020 07:32:45 -0800 (PST)
-Received: from xps15 (24-155-109-49.dyn.grandenetworks.net. [24.155.109.49])
-        by smtp.gmail.com with ESMTPSA id u22sm3414989oor.13.2020.11.02.07.32.44
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 02 Nov 2020 07:32:45 -0800 (PST)
-Received: (nullmailer pid 3929592 invoked by uid 1000);
-        Mon, 02 Nov 2020 15:32:44 -0000
-Date:   Mon, 2 Nov 2020 09:32:44 -0600
-From:   Rob Herring <robh@kernel.org>
-To:     Evan Green <evgreen@chromium.org>
-Cc:     devicetree@vger.kernel.org, Rob Herring <robh+dt@kernel.org>,
-        Andy Gross <agross@kernel.org>, linux-arm-msm@vger.kernel.org,
-        Stephen Boyd <swboyd@chromium.org>,
-        Douglas Anderson <dianders@chromium.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v3 1/4] dt-bindings: nvmem: Add soc qfprom compatible
- strings
-Message-ID: <20201102153244.GA3929537@bogus>
-References: <20201029002827.1729915-1-evgreen@chromium.org>
- <20201028172737.v3.1.I8b447ca96abfbef5f298d77350e6c9d1d18d00f6@changeid>
+        id S1726228AbgKBPjT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 2 Nov 2020 10:39:19 -0500
+Received: from m42-4.mailgun.net ([69.72.42.4]:37494 "EHLO m42-4.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725791AbgKBPjS (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 2 Nov 2020 10:39:18 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1604331557; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=nWkWyhgDV1pCPYK9XrTbWNIO5s3A7DMr3m4XNRjMFEc=;
+ b=okvrbUBnIuPf+iS6Qi1q4ISf0sVDPiT+GCxkMlNg8vR9nFMV6DUY8T4q7jvtq14xUH3LLYnF
+ pjW7BKpu9mT4+8XaQPtsxNXxOZGIc0iPtSkO5w0MZcahvQqLh+NlVPekM9KPXHBPSpJndW/7
+ qHfWlOJHvUrIjHQoZsflYdGCvFU=
+X-Mailgun-Sending-Ip: 69.72.42.4
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n04.prod.us-west-2.postgun.com with SMTP id
+ 5fa02825d8a9d167f3387cb4 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 02 Nov 2020 15:39:17
+ GMT
+Sender: vgarodia=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 3836AC433C9; Mon,  2 Nov 2020 15:39:17 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: vgarodia)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 710A0C433CB;
+        Mon,  2 Nov 2020 15:39:15 +0000 (UTC)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20201028172737.v3.1.I8b447ca96abfbef5f298d77350e6c9d1d18d00f6@changeid>
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Mon, 02 Nov 2020 21:09:15 +0530
+From:   vgarodia@codeaurora.org
+To:     Mansur Alisha Shaik <mansur@codeaurora.org>
+Cc:     linux-media@vger.kernel.org, stanimir.varbanov@linaro.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
+Subject: Re: [RESEND] venus: fix calculating mbps in calculate_inst_freq()
+In-Reply-To: <1604313097-2178-1-git-send-email-mansur@codeaurora.org>
+References: <1604313097-2178-1-git-send-email-mansur@codeaurora.org>
+Message-ID: <bf8acb0c470207289a09f63d829dfb08@codeaurora.org>
+X-Sender: vgarodia@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, 28 Oct 2020 17:28:24 -0700, Evan Green wrote:
-> Add SoC-specific compatible strings so that data can be attached
-> to it in the driver.
-> 
-> Signed-off-by: Evan Green <evgreen@chromium.org>
-> ---
-> 
-> Changes in v3:
->  - Fixed example (Doug and rob-bot)
-> 
-> Changes in v2:
->  - Add other soc compatible strings (Doug)
->  - Fix compatible string definition (Doug)
-> 
->  .../devicetree/bindings/nvmem/qcom,qfprom.yaml  | 17 ++++++++++++++---
->  1 file changed, 14 insertions(+), 3 deletions(-)
-> 
+Hi Mansur,
 
-Reviewed-by: Rob Herring <robh@kernel.org>
+On 2020-11-02 16:01, Mansur Alisha Shaik wrote:
+> Currently in calculate_inst_freq(), video driver is calculating
+> macro blocks per frame in stead of macro blocks per second(mpbs).
+instead
+
+> Which results frequency is always setting to lower frequency (150MB)
+> as per frequency table for sc7180. Hence the playback is not smooth.
+150MHz
+
+> 
+> Corrected this by correcting the mbps calculation in 
+> calculate_inst_freq().
+> 
+> Signed-off-by: Mansur Alisha Shaik <mansur@codeaurora.org>
+> ---
+>  drivers/media/platform/qcom/venus/pm_helpers.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/drivers/media/platform/qcom/venus/pm_helpers.c
+> b/drivers/media/platform/qcom/venus/pm_helpers.c
+> index 57877ea..001513f 100644
+> --- a/drivers/media/platform/qcom/venus/pm_helpers.c
+> +++ b/drivers/media/platform/qcom/venus/pm_helpers.c
+> @@ -928,7 +928,7 @@ static unsigned long calculate_inst_freq(struct
+> venus_inst *inst,
+>  	u32 fps = (u32)inst->fps;
+>  	u32 mbs_per_sec;
+> 
+> -	mbs_per_sec = load_per_instance(inst) / fps;
+> +	mbs_per_sec = load_per_instance(inst);
+
+Good find.
+
+Thanks,
+Vikash
