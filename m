@@ -2,142 +2,117 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 936282A4D10
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Nov 2020 18:34:35 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E8F382A4D37
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Nov 2020 18:38:53 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728697AbgKCReW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 3 Nov 2020 12:34:22 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48140 "EHLO
+        id S1729033AbgKCRiv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 3 Nov 2020 12:38:51 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48854 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727971AbgKCReW (ORCPT
+        with ESMTP id S1728690AbgKCRiu (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 3 Nov 2020 12:34:22 -0500
-Received: from mail-oi1-x243.google.com (mail-oi1-x243.google.com [IPv6:2607:f8b0:4864:20::243])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 62851C0613D1
-        for <linux-arm-msm@vger.kernel.org>; Tue,  3 Nov 2020 09:34:22 -0800 (PST)
-Received: by mail-oi1-x243.google.com with SMTP id s21so19212495oij.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 03 Nov 2020 09:34:22 -0800 (PST)
+        Tue, 3 Nov 2020 12:38:50 -0500
+Received: from mail-oi1-x242.google.com (mail-oi1-x242.google.com [IPv6:2607:f8b0:4864:20::242])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6A5E6C0617A6
+        for <linux-arm-msm@vger.kernel.org>; Tue,  3 Nov 2020 09:38:50 -0800 (PST)
+Received: by mail-oi1-x242.google.com with SMTP id w145so13529890oie.9
+        for <linux-arm-msm@vger.kernel.org>; Tue, 03 Nov 2020 09:38:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=1JaZqXqFdIPWnt0E572LVN0+nDbV1o5m6gHDSDoIC4I=;
-        b=Q2n8tpHV5nvmR2OSazRvxRWjiFH+PKL/RCPajflFlEudEY3RSDuRnYEQVw4yaus37x
-         8YPDStWRw8UUe7KUhTt/YXdJ6a4/b5XzFw7pgoJEeO4PnTLiFCiUR90suFcU6V3mm9Ag
-         v9kRYp1akaOMtiswKY5Ia6V3Wg5CAta7OWvv7YZ8vTpPXsWYlI8xONYzj4DrjflJU7nb
-         TfgTPj4oqYkDJNOZHZPciKnMyuo/pUcLdTxK00YuA/+1wpQGHhiuYp/lyRvW7tLb7GO8
-         qNPmiO4bXYC/5h5/j/Qqyl/0y+MmidTJDA4tmN2ow2p9SbLLsDtXgvDnfDBpAeVR5sLQ
-         wVjA==
+        bh=6yq0B3gvpA5I9jO0QaxOACvCmaKCwDtvfH76pkYCkZg=;
+        b=FqmmT6V8Gq5zNDIRdAcsPxa3SHsggSSNGDGshs9JNs2boyl4bwPhwJvkChemdgu8sQ
+         8g2z9V5syZcqucGxPh97feZDakb+BmVINkLo8avFUzEv38aC/OVzMdmrhq2Db3D7IDbA
+         DAE5DBqAk9bVC59sFuSRAFsy57q+Ckyl4WCT9fakS/H5JmJX/zuLpBtNOSudLhwi79Lg
+         h155UN0cN2fM/3gR5qV+FC604ThUqXqqSpxTK4Up6THGOgyx3ecwMZ4g8/CJSTPwnxsB
+         j17Jji8+K47Z/mVwX3f1Ro2UH6C0HqHfIHvR1uUfYb4f/6OoCh8XMNNALRoACXkNzB9w
+         /j6Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=1JaZqXqFdIPWnt0E572LVN0+nDbV1o5m6gHDSDoIC4I=;
-        b=MwFEKXyE2gztvfCoPpEUCbsVR8Us1Cmwkv/6F9AxhBA7OsjsJsQ/FK5M2/mEv6FMBY
-         VVv2IrCa2tGJQwI2x/jQ3ZWDAvIjCS70gsTocqARzXBOPiIPKWsqCMy9q52/sme0vDR7
-         zTuU4lXcqbSOAhAHwLmPZvW3fhmYgBc0GDFP3f6NQJuVi4qODLJiMQMX59lgiFsj9Jxe
-         e7YwpRry8Y42IyD4PQ8sOakY8RAUdrdTKPuE+4nmjEJ0Te2+l5u97F7qx7SU0E79DvTi
-         suUkcZmyvgMqiIo1wn22p6VXs/hO6/ik9cvtYJ/xNZttpNm/S4ZdnYVEt0xrZJSZFTm0
-         gFLQ==
-X-Gm-Message-State: AOAM53309Rl7fEUq1SORFMi2Cdg2VVNq0JRSxYOnR5yGd++CHdvAvW/5
-        53oOE6xiAhWJYp0vTe60wjx+Ow==
-X-Google-Smtp-Source: ABdhPJxHzlfUfcI++bJ+iZGECeMfHDlxPyTogVh3GwkhPPMW09JbfIDc7FH7/XeiZPCfD6Y4u1WguA==
-X-Received: by 2002:aca:5d07:: with SMTP id r7mr135553oib.87.1604424861654;
-        Tue, 03 Nov 2020 09:34:21 -0800 (PST)
+        bh=6yq0B3gvpA5I9jO0QaxOACvCmaKCwDtvfH76pkYCkZg=;
+        b=XLKsuoZtmtuhzubH+uENnyrLZ9p6PuxTSi7/dIHYR5n2qLfeD8YX0l0wn0AdSLz6vv
+         8v75uzb3e4Qj1LmYpy5pCJomrhF6DgO6TYkMo5HhgItjG2Duv20asrVNXdos+tjxu/uI
+         Rvq8IXKzcDiLUxlmMnw6viuKTv4aE51Kvm0fl1vlZSVLiFHCMu3Lv4K8TcOiPd+vH5vJ
+         ckccaWVjqckQSPh48Zl6ZP/grj1y6aqy448wTE85TJBHtHLrb6fV8LQGzp8gOF37l0nX
+         3GcBOBxmQMYtIoIKuy3++Kq2eeYiTJdN8GPo1ncKNOld5SftQV63LbgZZtCznpR5OPRa
+         8yVg==
+X-Gm-Message-State: AOAM5310mUbiOxzDwn/tg0RxC3kV4Sdd02891tNz35lKVQ7awqSF9P1w
+        psY6LOLJuRzo5ydtARRehrV5Mg==
+X-Google-Smtp-Source: ABdhPJypPLRjFtGH2biL/X5Yn96B4TBH3Vu+himb7NU0CUAstfPyiQfNjdgy9o775vs0mUl4QvjBxw==
+X-Received: by 2002:aca:fcd5:: with SMTP id a204mr146080oii.161.1604425129714;
+        Tue, 03 Nov 2020 09:38:49 -0800 (PST)
 Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id t65sm4261575oib.50.2020.11.03.09.34.20
+        by smtp.gmail.com with ESMTPSA id h3sm4288352oom.18.2020.11.03.09.38.48
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 03 Nov 2020 09:34:20 -0800 (PST)
-Date:   Tue, 3 Nov 2020 11:34:19 -0600
+        Tue, 03 Nov 2020 09:38:48 -0800 (PST)
+Date:   Tue, 3 Nov 2020 11:38:47 -0600
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
 To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 Cc:     sboyd@kernel.org, mturquette@baylibre.com, robh+dt@kernel.org,
         vkoul@kernel.org, linux-arm-msm@vger.kernel.org,
         linux-clk@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 0/4] Add GCC and RPMh clock support for SDX55
-Message-ID: <20201103173419.GP3151@builder.lan>
+Subject: Re: [PATCH 3/4] dt-bindings: clock: Introduce RPMHCC bindings for
+ SDX55
+Message-ID: <20201103173847.GQ3151@builder.lan>
 References: <20201028074232.22922-1-manivannan.sadhasivam@linaro.org>
- <20201028170853.GA3191@Mani-XPS-13-9360>
+ <20201028074232.22922-4-manivannan.sadhasivam@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20201028170853.GA3191@Mani-XPS-13-9360>
+In-Reply-To: <20201028074232.22922-4-manivannan.sadhasivam@linaro.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed 28 Oct 12:08 CDT 2020, Manivannan Sadhasivam wrote:
+On Wed 28 Oct 02:42 CDT 2020, Manivannan Sadhasivam wrote:
 
-> On Wed, Oct 28, 2020 at 01:12:28PM +0530, Manivannan Sadhasivam wrote:
-> > Hello,
-> > 
-> > This series adds Global Clock Controller (GCC) and RPMh clock support
-> > for SDX55 SoC from Qualcomm with relevant DT bindings.
-> > 
-> > This series has been tested on SDX55 MTP board. The dts patches for this
-> > SoC/board will be posted later.
-> > 
-> > Thanks,
-> > Mani
-> > 
-> > Manivannan Sadhasivam (1):
-> >   clk: qcom: Add support for SDX55 RPMh clocks
-> > 
-> > Naveen Yadav (1):
-> >   clk: qcom: Add SDX55 GCC support
+> From: Vinod Koul <vkoul@kernel.org>
 > 
-> Bjorn, I've inherited the gcc driver from downstream and did some modification.
-> But I'm not sure if I can take the authorship of this patch hence kept it to the
-> downstream author.
+> Add compatible for SDX55 RPMHCC and DT include.
 > 
-> In my point of view, the downstream author wrote the driver so I should keep
-> the copyright and even list them as MODULE_AUTHOR. But I don't think I should
-> give the patch authorship to them because I haven't received the patch anyhow.
-> I usually keep the authorship if I take the patch from a source like LKML and
-> repost it. But in this case, I authored the patch using someone's code!
-> 
-> What is your view on this?
-> 
+> Signed-off-by: Vinod Koul <vkoul@kernel.org>
 
-I think the author should be the person whom prepared the patch.
+Given that you handled the patch on its way here you should add your
+Signed-off-by.
 
-Given that the downstream driver is a series of patches from a single
-author it's not unreasonable to squash those and retain the author. But
-if your effort to prepare the patch for upstream was non-trivial I would
-consider it reasonable for you to claim authorship of the patch.
+When doing so feel free to add my:
+Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 
-If this is the case it's definitely preferable to give credit to the
-original author(s) by mentioning them in the commit message (e.g. "Based
-on downstream implementation by Jane Doe").
-
-And the copyright for the work definitely needs to come along, possibly
-with the addition of yours, depending on your modifications.
-
-Thanks,
+Regards,
 Bjorn
 
-> Thanks,
-> Mani
+> ---
+>  Documentation/devicetree/bindings/clock/qcom,rpmhcc.yaml | 1 +
+>  include/dt-bindings/clock/qcom,rpmh.h                    | 1 +
+>  2 files changed, 2 insertions(+)
 > 
-> > 
-> > Vinod Koul (2):
-> >   dt-bindings: clock: Add SDX55 GCC clock bindings
-> >   dt-bindings: clock: Introduce RPMHCC bindings for SDX55
-> > 
-> >  .../bindings/clock/qcom,gcc-sdx55.yaml        |   71 +
-> >  .../bindings/clock/qcom,rpmhcc.yaml           |    1 +
-> >  drivers/clk/qcom/Kconfig                      |    8 +
-> >  drivers/clk/qcom/Makefile                     |    1 +
-> >  drivers/clk/qcom/clk-rpmh.c                   |   20 +
-> >  drivers/clk/qcom/gcc-sdx55.c                  | 1667 +++++++++++++++++
-> >  include/dt-bindings/clock/qcom,gcc-sdx55.h    |  112 ++
-> >  include/dt-bindings/clock/qcom,rpmh.h         |    1 +
-> >  8 files changed, 1881 insertions(+)
-> >  create mode 100644 Documentation/devicetree/bindings/clock/qcom,gcc-sdx55.yaml
-> >  create mode 100644 drivers/clk/qcom/gcc-sdx55.c
-> >  create mode 100644 include/dt-bindings/clock/qcom,gcc-sdx55.h
-> > 
-> > -- 
-> > 2.17.1
-> > 
+> diff --git a/Documentation/devicetree/bindings/clock/qcom,rpmhcc.yaml b/Documentation/devicetree/bindings/clock/qcom,rpmhcc.yaml
+> index a46a3a799a70..a54930f111ba 100644
+> --- a/Documentation/devicetree/bindings/clock/qcom,rpmhcc.yaml
+> +++ b/Documentation/devicetree/bindings/clock/qcom,rpmhcc.yaml
+> @@ -19,6 +19,7 @@ properties:
+>      enum:
+>        - qcom,sc7180-rpmh-clk
+>        - qcom,sdm845-rpmh-clk
+> +      - qcom,sdx55-rpmh-clk
+>        - qcom,sm8150-rpmh-clk
+>        - qcom,sm8250-rpmh-clk
+>  
+> diff --git a/include/dt-bindings/clock/qcom,rpmh.h b/include/dt-bindings/clock/qcom,rpmh.h
+> index 2e6c54e65455..cd806eccb7dd 100644
+> --- a/include/dt-bindings/clock/qcom,rpmh.h
+> +++ b/include/dt-bindings/clock/qcom,rpmh.h
+> @@ -21,5 +21,6 @@
+>  #define RPMH_IPA_CLK				12
+>  #define RPMH_LN_BB_CLK1				13
+>  #define RPMH_LN_BB_CLK1_A			14
+> +#define RPMH_QPIC_CLK				15
+>  
+>  #endif
+> -- 
+> 2.17.1
+> 
