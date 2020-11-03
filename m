@@ -2,641 +2,239 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C8DBE2A3845
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Nov 2020 02:16:40 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 06CAE2A3A05
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Nov 2020 02:47:25 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725855AbgKCBQi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 2 Nov 2020 20:16:38 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37266 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726026AbgKCBQi (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 2 Nov 2020 20:16:38 -0500
-Received: from mail-ej1-x642.google.com (mail-ej1-x642.google.com [IPv6:2a00:1450:4864:20::642])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2DAF5C061A47
-        for <linux-arm-msm@vger.kernel.org>; Mon,  2 Nov 2020 17:16:37 -0800 (PST)
-Received: by mail-ej1-x642.google.com with SMTP id k3so21705395ejj.10
-        for <linux-arm-msm@vger.kernel.org>; Mon, 02 Nov 2020 17:16:37 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=iRTRhdmglnQQIjk4jAnelh6dgOfEddAYTw5OESNSjsI=;
-        b=UOLeQgOtTvJQDsuHPLgQ6PO/7Z5MWCJLewulIF5fj2IvYyoVf3TPXZA6yzgftUaw5q
-         2IDdx6u0p1B1KZ1Zj9aAz8Ox3nNzVP6zpAxlM/csu7RrmnwTqN4xUEQySCqnmP5tR472
-         oXqUaDTwJdrZf0HvLpyFc6mhB8XXBGQSrcmhY=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=iRTRhdmglnQQIjk4jAnelh6dgOfEddAYTw5OESNSjsI=;
-        b=deVpp49cq9MSDhSKxmj45xMHlvrrOOTPI5z/J3i08N5F+8AtGxyQ8eqPQkaoZHfQTL
-         hyqkwP2K9kO3wquR38G2EFzJwdZ3FV4q1N6+cYTMzztF+1gSrthuoLEwaTucFI3Ky57r
-         fa/z6nCYUFEUSZnFPeUDpFpnahlxUlyzQfEDhwPmQa+Hv/tqbq6OknZOOhTwCy36zfXz
-         PXYcX9+0Ig5jkw7R7+gZfRctA8AYPmFuv5kVyIJhvddWs/TZUgutXBmTaF4Rr42Ic07g
-         q6m+MECoCjPu/hwrdf0uvFZBfYNdi/HQmgKudgj7E1EqkZYumDO9ZMHIFWWwaFj2pMeZ
-         Xqaw==
-X-Gm-Message-State: AOAM530dWqdc4dCv2CJTs/wDwWJRtxo6js5z9ZJDczlsMhYsFDG/t7TY
-        p3MxX0SCxvT3u5CU/Mlp8Z0mNbNbtiZAZg==
-X-Google-Smtp-Source: ABdhPJyWmFWxRJq9v7uDWpBArPRNoqRPORPVaDvOe1FmKny7/C29zkL1sUbTVN8Ii5aLySRZCMApyw==
-X-Received: by 2002:a17:906:a10a:: with SMTP id t10mr18772223ejy.89.1604366195904;
-        Mon, 02 Nov 2020 17:16:35 -0800 (PST)
-Received: from mail-wr1-f48.google.com (mail-wr1-f48.google.com. [209.85.221.48])
-        by smtp.gmail.com with ESMTPSA id f16sm11050893edc.44.2020.11.02.17.16.34
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 02 Nov 2020 17:16:35 -0800 (PST)
-Received: by mail-wr1-f48.google.com with SMTP id b3so10757287wrx.11
-        for <linux-arm-msm@vger.kernel.org>; Mon, 02 Nov 2020 17:16:34 -0800 (PST)
-X-Received: by 2002:adf:ea0b:: with SMTP id q11mr23432527wrm.80.1604366194271;
- Mon, 02 Nov 2020 17:16:34 -0800 (PST)
+        id S1726482AbgKCBrY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 2 Nov 2020 20:47:24 -0500
+Received: from mail-eopbgr1320053.outbound.protection.outlook.com ([40.107.132.53]:44019
+        "EHLO APC01-PU1-obe.outbound.protection.outlook.com"
+        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+        id S1726026AbgKCBrX (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 2 Nov 2020 20:47:23 -0500
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=Br/gah28E2RcFBC0ikiG/ar+PrTZKZhH2MHIJounzhZgjBebRoxZGk5QxS+P8WOAX80FCMRbSZ+i8pNFWEwCKnFoVU+yVHoYl6U77g39l5pssSv3ivaMn49DF8zImzOWNYFvLAqQrqN8FMkfLbdv0BYPu4neJ0zp6ufmzKPyoMfiiLwzy3l3fAB7tUnYiYWZiAHPp64LXabyEgOiq5VWObexrTiiCktMNcz35IzqWYRsoQ2xeTp8aZO/ilZxMb57RiiYL9Xb1CtbLwKCV5eej6shfoSyOSyI/ACN33Tg8ZoX0Eggq6BuZRnW5k2Q7Zjl0701yKLQHolFuyUxkkWZCg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=fguaFQRRCPEmyIOYAbbJmBV/3U3vC6Rl4S0v9gO8Q8o=;
+ b=Acw7/bQPKTztEEQerEIE5U7yLFF1SGgoDtpoHfYrM48/IDF8bSNO4J6gVEjlQdZ5The1tAI7dJV2SwuzzrqJGPhBBhFWQEGLfV5gVr2TPgG20VILlH1U88LiEJZviTy7xWL2AVvI2gvPOdLWSyqHFzQU5vsynsuHFMsWgM/8XRx9qutapmgoVxq8drFU9qhNH3XvzRazlHd9yGKA/8WENbl02xY/gYxpKCgnhUndrYKkapDwxBVSOjFxmh8C9B0BOhPvlNNoMZlK63HkjgHCrMZCTjoN+3z/DogWi3WGLHhvGmaLh1h+RlV0eK/PDNRzGMOmmR3Yc9xQGAhuDufW9A==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=quectel.com; dmarc=pass action=none header.from=quectel.com;
+ dkim=pass header.d=quectel.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quectel.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=fguaFQRRCPEmyIOYAbbJmBV/3U3vC6Rl4S0v9gO8Q8o=;
+ b=NHQ0jNEAJoVVbLNK8SNxoygdQA5kcI2UU9UGl1T+ZXw6fbpOK+ozjWdiee7T1w8sM6c/d7qCvCf3uMOaxOu8XQ4TrNFz6C7KwB4oEDlI13SRnqg1XFmt+0d61pD9L4jKvKufEer1gLSvv1LFxfwf7lkYZCNTYxMZcBd3gSSRGBo=
+Received: from HK2PR06MB3507.apcprd06.prod.outlook.com (2603:1096:202:3e::14)
+ by HK2PR06MB3299.apcprd06.prod.outlook.com (2603:1096:202:32::14) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.3499.18; Tue, 3 Nov
+ 2020 01:47:17 +0000
+Received: from HK2PR06MB3507.apcprd06.prod.outlook.com
+ ([fe80::94f:c55a:f9c8:22f4]) by HK2PR06MB3507.apcprd06.prod.outlook.com
+ ([fe80::94f:c55a:f9c8:22f4%5]) with mapi id 15.20.3499.032; Tue, 3 Nov 2020
+ 01:47:16 +0000
+From:   =?utf-8?B?Q2FybCBZaW4o5q635byg5oiQKQ==?= <carl.yin@quectel.com>
+To:     "bbhatt@codeaurora.org" <bbhatt@codeaurora.org>
+CC:     "manivannan.sadhasivam@linaro.org" <manivannan.sadhasivam@linaro.org>,
+        "hemantk@codeaurora.org" <hemantk@codeaurora.org>,
+        "sfr@canb.auug.org.au" <sfr@canb.auug.org.au>,
+        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+        "Naveen Kumar" <naveen.kumar@quectel.com>
+Subject: RE: [PATCH v2] bus: mhi: core: Add support MHI EE FP for download
+ firmware
+Thread-Topic: [PATCH v2] bus: mhi: core: Add support MHI EE FP for download
+ firmware
+Thread-Index: AdaxgsmDllZBBKh6SAmLspPlBLRMTQ==
+Date:   Tue, 3 Nov 2020 01:47:16 +0000
+Message-ID: <HK2PR06MB3507DC3767E6A8D13EC05BA486110@HK2PR06MB3507.apcprd06.prod.outlook.com>
+Accept-Language: zh-CN, en-US
+Content-Language: zh-CN
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: codeaurora.org; dkim=none (message not signed)
+ header.d=none;codeaurora.org; dmarc=none action=none header.from=quectel.com;
+x-originating-ip: [203.93.254.84]
+x-ms-publictraffictype: Email
+x-ms-office365-filtering-correlation-id: 0a176f46-0f9b-4425-7967-08d87f9a64f7
+x-ms-traffictypediagnostic: HK2PR06MB3299:
+x-ms-exchange-transport-forked: True
+x-microsoft-antispam-prvs: <HK2PR06MB3299875741071FDFE2BF0A5586110@HK2PR06MB3299.apcprd06.prod.outlook.com>
+x-ms-oob-tlc-oobclassifiers: OLM:8273;
+x-ms-exchange-senderadcheck: 1
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info: QMgSHFugm/dHgBrKSRaN5TyZzQicHFznCPXDmYvKVMfhYd/5tbXKZXD6H4uq3KZEUf/IrXRn28U/mpEedWhNJ4FLNB9/iRJdm48wE7kzQLZ7i/XkezMFujYO5BZYHeFlVYIa1m6L4UpM0QQJ6Jc5XPHKEjkUCttP2eZKVnZuHgK5SPpEKGcliumwWnYfKOC7oVa/DL7RGhVAZLsT+jy5qQeQ5Cs4HnhZmt+IDl/wtn/X8+oUThuLk2bULi/rDwjCJvdAWgy0ZHztT64O4GA5J0ljdt05xQ3FUmMgz65SbmeQz6/PGtaGiRe8tAoeu+wU/kQKCIRxLzw6ozXqUy3/rQ==
+x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:HK2PR06MB3507.apcprd06.prod.outlook.com;PTR:;CAT:NONE;SFS:(39850400004)(396003)(136003)(366004)(346002)(376002)(66556008)(4326008)(316002)(9686003)(33656002)(64756008)(8676002)(66446008)(66946007)(52536014)(76116006)(107886003)(71200400001)(66476007)(54906003)(5660300002)(83380400001)(8936002)(2906002)(6916009)(186003)(85182001)(7696005)(86362001)(478600001)(26005)(6506007)(55016002)(53546011);DIR:OUT;SFP:1101;
+x-ms-exchange-antispam-messagedata: OvRNb2Nh+ufxrNckUmKPUCW6RuDU1KtWmeGmm4mEG56e2RTF1O0VZjFG3DWtMEZ6TW92ueObw7Ps6ex6jyG+04kdkIWGQre4Z3FJZFSAdMu0gExNNrB7QKE72R03yYwF4pInUjJWzS/a5NgcdXw8tz1gatQxzgOWOeYrQOprC5yuT3uxdZVt/tQUPGc79k1KnMnwuAEr0DRrsiKHCPEkfLZBk+eNvVea/NrLATDbElf8Sx1bwfEgdjWXvFLrjEXUzgsYDKwgSvsa4rEqkhGO0wtULAScXMFksPnBZbyDUj6K+KfsFnFqb2cbI4Z8Rq5s//KPvYqNgOra8emvNJUjWFogNwgU5JOgvd4gkd1+VA+GOIRucmjTlOqY3qg8BLDMV/OBVXEdfTd+qes4lJv3CMOeO1yK1oeSdOG+PWtUlkLl5UxveV6QbLv2qSKtUoTtLWlddj/kIE2vwZo8U/Nj8ac99LUVMZtJsp0bikgFC8pxs5whgbRXuXh5FxtRLbMe8fy6rrdWLZIEMuQmrwZJKHmmvSZ/A8QZRcjRz0lNlc+zE02lPr6exeukykYmb7hGrLCcygiUAIHwSGkFEkm/lk7dLifr6Tj0ekaWJKP55qXJ9wObe65h1gYc+QGHTqHUYCQDfdID1i9hCt6ezGUeCw==
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-References: <20201023125704.4984-1-stanimir.varbanov@linaro.org> <20201023125704.4984-4-stanimir.varbanov@linaro.org>
-In-Reply-To: <20201023125704.4984-4-stanimir.varbanov@linaro.org>
-From:   Fritz Koenig <frkoenig@chromium.org>
-Date:   Mon, 2 Nov 2020 17:16:21 -0800
-X-Gmail-Original-Message-ID: <CAMfZQbywe7OcSRebeh0fmphmz8xz8KUyMUMOhxLgh1Uc-gyWQA@mail.gmail.com>
-Message-ID: <CAMfZQbywe7OcSRebeh0fmphmz8xz8KUyMUMOhxLgh1Uc-gyWQA@mail.gmail.com>
-Subject: Re: [PATCH 3/4] venus: venc: Handle reset encoder state
-To:     Stanimir Varbanov <stanimir.varbanov@linaro.org>
-Cc:     linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Vikash Garodia <vgarodia@codeaurora.org>,
-        Alexandre Courbot <acourbot@chromium.org>,
-        Tomasz Figa <tfiga@chromium.org>,
-        Dikshita Agarwal <dikshita@codeaurora.org>
-Content-Type: text/plain; charset="UTF-8"
+X-OriginatorOrg: quectel.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: HK2PR06MB3507.apcprd06.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 0a176f46-0f9b-4425-7967-08d87f9a64f7
+X-MS-Exchange-CrossTenant-originalarrivaltime: 03 Nov 2020 01:47:16.7716
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 7730d043-e129-480c-b1ba-e5b6a9f476aa
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: IQGDVS8Lr392M/hdq66JpUZxwZu8/wKexE3XvX+CUTsmGyLyU6tYsKlXa0rHfaTW+F3+IsEFe6QBOsEn2NuYRg==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: HK2PR06MB3299
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Oct 23, 2020 at 5:57 AM Stanimir Varbanov
-<stanimir.varbanov@linaro.org> wrote:
->
-> Redesign the encoder driver to be compliant with stateful encoder
-> spec - specifically adds handling of Reset state.
->
-> Signed-off-by: Stanimir Varbanov <stanimir.varbanov@linaro.org>
-> ---
->  drivers/media/platform/qcom/venus/core.h |  10 +-
->  drivers/media/platform/qcom/venus/venc.c | 242 ++++++++++++++++++-----
->  2 files changed, 197 insertions(+), 55 deletions(-)
->
-> diff --git a/drivers/media/platform/qcom/venus/core.h b/drivers/media/platform/qcom/venus/core.h
-> index 5c4693678e3f..294d5467a6a1 100644
-> --- a/drivers/media/platform/qcom/venus/core.h
-> +++ b/drivers/media/platform/qcom/venus/core.h
-> @@ -277,11 +277,11 @@ enum venus_dec_state {
->  };
->
->  enum venus_enc_state {
-> -       VENUS_ENC_STATE_DEINIT          = 0,
-> -       VENUS_ENC_STATE_INIT            = 1,
-> -       VENUS_ENC_STATE_ENCODING        = 2,
-> -       VENUS_ENC_STATE_STOPPED         = 3,
-> -       VENUS_ENC_STATE_DRAIN           = 4,
-> +       VENUS_ENC_STATE_INIT            = 0,
-> +       VENUS_ENC_STATE_ENCODING        = 1,
-> +       VENUS_ENC_STATE_STOPPED         = 2,
-> +       VENUS_ENC_STATE_DRAIN           = 3,
-> +       VENUS_ENC_STATE_RESET           = 4,
->  };
->
->  struct venus_ts_metadata {
-> diff --git a/drivers/media/platform/qcom/venus/venc.c b/drivers/media/platform/qcom/venus/venc.c
-> index c6143b07914c..aa9255ddb0a5 100644
-> --- a/drivers/media/platform/qcom/venus/venc.c
-> +++ b/drivers/media/platform/qcom/venus/venc.c
-> @@ -565,6 +565,7 @@ static const struct v4l2_ioctl_ops venc_ioctl_ops = {
->         .vidioc_enum_frameintervals = venc_enum_frameintervals,
->         .vidioc_subscribe_event = v4l2_ctrl_subscribe_event,
->         .vidioc_unsubscribe_event = v4l2_event_unsubscribe,
-> +       .vidioc_try_encoder_cmd = v4l2_m2m_ioctl_try_encoder_cmd,
->         .vidioc_encoder_cmd = venc_encoder_cmd,
->  };
->
-> @@ -850,6 +851,69 @@ static int venc_queue_setup(struct vb2_queue *q,
->         return ret;
->  }
->
-> +static void venc_release_session(struct venus_inst *inst)
-> +{
-> +       struct venus_core *core = inst->core;
-> +       int ret, abort = 0;
-> +
-> +       mutex_lock(&inst->lock);
-> +
-> +       if (inst->enc_state != VENUS_ENC_STATE_RESET)
-> +               dev_dbg(core->dev_enc, VDBGH "wrong state!\n");
-> +
-> +       ret = hfi_session_stop(inst);
-> +       abort |= (ret && ret != -EINVAL) ? 1 : 0;
-> +       ret = hfi_session_unload_res(inst);
-> +       abort |= (ret && ret != -EINVAL) ? 1 : 0;
-> +       ret = venus_helper_unregister_bufs(inst);
-> +       abort |= (ret && ret != -EINVAL) ? 1 : 0;
-> +       ret = venus_helper_intbufs_free(inst);
-> +       abort |= (ret && ret != -EINVAL) ? 1 : 0;
-> +       ret = hfi_session_deinit(inst);
-> +       abort |= (ret && ret != -EINVAL) ? 1 : 0;
-> +
-> +       if (inst->session_error)
-> +               abort = 1;
-> +
-> +       if (abort)
-> +               hfi_session_abort(inst);
-> +
-> +       venus_pm_load_scale(inst);
-
-venus_pm_load_scale depends on inst->clk_data.codec_freq_data being
-set up. This occurs in venc_init_session().  I am seeing scenarios
-where the encoder is getting setup up, but before it is finished,
-teardown occurs.  If this teardown occurs before
-inst->clk_data.codec_freq_data is initalized, a crash occurs.  (also
-"wrong state!" is printed out)
-
-[  106.593198] Unable to handle kernel NULL pointer dereference at
-virtual address 0000000000000008
-[  106.603916] Mem abort info:
-[  106.608470]   ESR = 0x96000006
-[  106.613802]   EC = 0x25: DABT (current EL), IL = 32 bits
-[  106.619426]   SET = 0, FnV = 0
-[  106.622619]   EA = 0, S1PTW = 0
-[  106.625862] Data abort info:
-[  106.628835]   ISV = 0, ISS = 0x00000006
-[  106.632785]   CM = 0, WnR = 0
-[  106.635850] user pgtable: 4k pages, 39-bit VAs, pgdp=000000014839f000
-[  106.642472] [0000000000000008] pgd=000000016ab1f003,
-pud=000000016ab1f003, pmd=0000000000000000
-[  106.651410] Internal error: Oops: 96000006 [#1] PREEMPT SMP
-[  106.657132] Modules linked in: rfcomm algif_hash algif_skcipher
-af_alg uinput venus_dec venus_enc videobuf2_dma_sg hci_uart btqca
-venus_core qcom_spmi_adc5 qcom_spmi_temp_alarm qcom_vadc_common
-snd_soc_rt5682_i2c v4l2_mem2mem snd_soc_sc7180 snd_soc_rt5682
-snd_soc_qcom_common snd_soc_rl6231 bluetooth ecdh_generic ecc
-snd_soc_lpass_sc7180 snd_soc_lpass_hdmi snd_soc_lpass_cpu
-snd_soc_lpass_platform snd_soc_max98357a xt_MASQUERADE fuse
-iio_trig_sysfs cros_ec_lid_angle cros_ec_sensors cros_ec_sensors_core
-industrialio_triggered_buffer cros_ec_sensors_ring rmtfs_mem kfifo_buf
-cros_ec_sensorhub ath10k_snoc lzo_rle ath10k_core lzo_compress ath
-zram mac80211 ipa qmi_helpers cfg80211 qcom_q6v5_mss qcom_pil_info
-qcom_q6v5 qcom_common cdc_ether usbnet r8152 mii uvcvideo
-videobuf2_vmalloc videobuf2_memops videobuf2_v4l2 videobuf2_common
-joydev
-[  106.732576] CPU: 7 PID: 3622 Comm: DrmThread Not tainted 5.4.72 #40
-[  106.739004] Hardware name: Google Lazor (rev1+) (DT)
-[  106.744103] pstate: 60400009 (nZCv daif +PAN -UAO)
-[  106.749027] pc : load_scale_v4+0x160/0x3a4 [venus_core]
-[  106.754396] lr : load_scale_v4+0x154/0x3a4 [venus_core]
-[  106.759766] sp : ffffffc0120ab9e0
-[  106.763171] x29: ffffffc0120ab9e0 x28: 0000000000000005
-[  106.768629] x27: 0000000000000000 x26: 0000000000000000
-[  106.774080] x25: 0000000000000000 x24: 000000000000001e
-[  106.779530] x23: 0000000000000000 x22: ffffff80b41a8000
-[  106.784980] x21: ffffffd344e97e98 x20: ffffff80cb5b8080
-[  106.790431] x19: ffffff80fa3b1410 x18: 00000000ffff0a10
-[  106.795881] x17: 000000000000003c x16: ffffffd398ec2e88
-[  106.801329] x15: 0000000000000006 x14: ffff001000000600
-[  106.806779] x13: 000000000002cca2 x12: 0000000000000000
-[  106.812229] x11: 0000000000000000 x10: 0000000000000000
-[  106.817679] x9 : 472cbd12793c4600 x8 : 0000000000000000
-[  106.823137] x7 : 0000000000000000 x6 : ffffffd399dbcc6c
-[  106.828585] x5 : 0000000000000000 x4 : 0000000000000000
-[  106.834035] x3 : 0000000000000000 x2 : ffffff80ff6ae5c0
-[  106.839487] x1 : ffffff80ff69e018 x0 : ffffffd344e990ac
-[  106.844937] Call trace:
-[  106.847460]  load_scale_v4+0x160/0x3a4 [venus_core]
-[  106.852473]  venc_buf_cleanup+0x198/0x1f0 [venus_enc]
-[  106.857656]  __vb2_queue_free+0x90/0x1f4 [videobuf2_common]
-[  106.863374]  vb2_core_queue_release+0x3c/0x50 [videobuf2_common]
-[  106.869541]  vb2_queue_release+0x1c/0x28 [videobuf2_v4l2]
-[  106.875082]  v4l2_m2m_ctx_release+0x24/0x40 [v4l2_mem2mem]
-[  106.880710]  venc_close+0x24/0x78 [venus_enc]
-[  106.885188]  v4l2_release+0x8c/0xdc
-[  106.888779]  __fput+0xe0/0x214
-[  106.891916]  ____fput+0x1c/0x28
-[  106.895148]  task_work_run+0x94/0xc4
-[  106.898828]  do_exit+0x244/0x7c8
-[  106.902147]  do_group_exit+0x88/0x98
-[  106.905825]  get_signal+0x1cc/0x674
-[  106.909415]  do_notify_resume+0x134/0x1410
-[  106.913619]  work_pending+0x8/0x10
-[  106.917119] Code: 97ffd58d f94032c8 90000020 9102b000 (f9400501)
-[  106.923377] ---[ end trace a9caaf72c228e386 ]---
-[  106.928767] Kernel panic - not syncing: Fatal exception
-[  106.934131] SMP: stopping secondary CPUs
-[  106.938347] Kernel Offset: 0x1388a00000 from 0xffffffc010000000
-[  106.944426] PHYS_OFFSET: 0xffffffd900000000
-[  106.948722] CPU features: 0x08102e,2a80aa18
-[  106.953015] Memory Limit: none
-
-
-This is the debug log before the crash:
-[Nov 2 15:33] qcom-venus aa00000.video-codec: VenusLow : venus hw
-version 4.44.20a
-[  +0.000065] videodev: v4l2_open: video2: open (0)
-[  +0.000019] video2: VIDIOC_ENUM_FMT: index=0, type=vid-cap-mplane,
-flags=0x1, pixelformat=H264, description='H.264'
-[  +0.000017] video2: VIDIOC_ENUM_FMT: index=1, type=vid-cap-mplane,
-flags=0x1, pixelformat=VP80, description='VP8'
-[  +0.000042] video2: VIDIOC_ENUM_FMT: index=2, type=vid-cap-mplane,
-flags=0x1, pixelformat=HEVC, description='HEVC'
-[  +0.000030] video2: VIDIOC_ENUM_FMT: error -22: index=3,
-type=vid-cap-mplane, flags=0x0, pixelformat=\x00\x00\x00\x00,
-description=''
-[  +0.000068] videodev: v4l2_release: video2: release
-[  +0.002752] qcom-venus aa00000.video-codec: VenusLow : venus hw
-version 4.44.20a
-[  +0.000062] videodev: v4l2_open: video2: open (0)
-[  +0.000071] video2: VIDIOC_ENUM_FRAMESIZES: index=0,
-pixelformat=H264, type=3, min=96x96, max=4096x4096, step=16x16
-[  +0.000012] video2: VIDIOC_TRY_ENCODER_CMD: cmd=1, flags=0x0
-[  +0.000005] video2: VIDIOC_QUERYCAP: driver=qcom-venus,
-card=Qualcomm Venus video encoder, bus=platform:qcom-venus,
-version=0x00050448, capabilities=0x84204000, device_caps=0x04204000
-[  +0.001055] video2: VIDIOC_REQBUFS: count=0, type=vid-out-mplane, memory=mmap
-[  +0.000382] video2: VIDIOC_REQBUFS: count=0, type=vid-cap-mplane, memory=mmap
-[  +0.000227] video2: VIDIOC_S_FMT: type=vid-cap-mplane, width=96,
-height=96, format=H264, field=none, colorspace=0, num_planes=1,
-flags=0x0, ycbcr_enc=0, quantization=0, xfer_func=0
-[  +0.000027] plane 0: bytesperline=0 sizeimage=2097152
-[  +0.000527] video2: VIDIOC_S_FMT: type=vid-out-mplane, width=384,
-height=192, format=NV12, field=none, colorspace=0, num_planes=1,
-flags=0x0, ycbcr_enc=0, quantization=0, xfer_func=0
-[  +0.000024] plane 0: bytesperline=384 sizeimage=122880
-[  +0.000032] video2: VIDIOC_S_FMT: type=vid-out-mplane, width=384,
-height=192, format=NV12, field=none, colorspace=0, num_planes=1,
-flags=0x0, ycbcr_enc=0, quantization=0, xfer_func=0
-[  +0.000017] plane 0: bytesperline=384 sizeimage=122880
-[  +0.000024] video2: VIDIOC_S_FMT: type=vid-out-mplane, width=384,
-height=192, format=NV12, field=none, colorspace=0, num_planes=1,
-flags=0x0, ycbcr_enc=0, quantization=0, xfer_func=0
-[  +0.000017] plane 0: bytesperline=384 sizeimage=122880
-[  +0.000075] video2: VIDIOC_S_SELECTION: type=vid-out, target=0,
-flags=0x0, wxh=320x192, x,y=0,0
-[  +0.028300] video2: VIDIOC_S_FMT: type=vid-out-mplane, width=384,
-height=192, format=NV12, field=none, colorspace=0, num_planes=1,
-flags=0x0, ycbcr_enc=0, quantization=0, xfer_func=0
-[  +0.000036] plane 0: bytesperline=384 sizeimage=122880
-[  +0.000033] video2: VIDIOC_S_FMT: type=vid-out-mplane, width=384,
-height=192, format=NV12, field=none, colorspace=0, num_planes=1,
-flags=0x0, ycbcr_enc=0, quantization=0, xfer_func=0
-[  +0.000014] plane 0: bytesperline=384 sizeimage=122880
-[  +0.000020] video2: VIDIOC_S_FMT: type=vid-out-mplane, width=384,
-height=192, format=NV12, field=none, colorspace=0, num_planes=1,
-flags=0x0, ycbcr_enc=0, quantization=0, xfer_func=0
-[  +0.000120] plane 0: bytesperline=384 sizeimage=122880
-[  +0.000157] video2: VIDIOC_S_SELECTION: type=vid-out, target=0,
-flags=0x0, wxh=320x192, x,y=0,0
-[  +0.000250] video2: VIDIOC_S_EXT_CTRLS: which=0x990000, count=1,
-error_idx=0, request_fd=0, id/val=0x9909d7/0x1
-[  +0.000120] video2: VIDIOC_QUERYCTRL: error -22: id=0x990b84,
-type=0, name=, min/max=0/0, step=0, default=0, flags=0x00000000
-[  +0.000368] v4l2-ctrls: try_set_ext_ctrls: video2: video2:
-try_set_ext_ctrls_common failed (-22)
-[  +0.000087] video2: VIDIOC_S_EXT_CTRLS: error -22: which=0x990000,
-count=5, error_idx=5, request_fd=0, id/val=0x9909ca/0x0,
-id/val=0x990a62/0x33, id/val=0x990a6b/0x2, id/val=0x990a67/0xb,
-id/val=0x9909d8/0x1
-[  +0.000290] v4l2-ctrls: prepare_ext_ctrls: video2: cannot find
-control id 0x9909da
-[  +0.000010] v4l2-ctrls: try_set_ext_ctrls: video2: video2:
-try_set_ext_ctrls_common failed (-22)
-[  +0.000014] video2: VIDIOC_S_EXT_CTRLS: error -22: which=0x990000,
-count=2, error_idx=2, request_fd=0, id/val=0x9909da/0x1,
-id/val=0x9909cb/0x0
-[  +0.000225] video2: VIDIOC_G_FMT: type=vid-cap-mplane, width=320,
-height=192, format=H264, field=none, colorspace=0, num_planes=1,
-flags=0x0, ycbcr_enc=0, quantization=0, xfer_func=0
-[  +0.000028] plane 0: bytesperline=0 sizeimage=49152
-[  +0.002272] video2: VIDIOC_REQBUFS: count=4, type=vid-cap-mplane, memory=mmap
-[  +0.001661] video2: VIDIOC_QUERYBUF: 00:00:00.00000000 index=0,
-type=vid-cap-mplane, request_fd=0, flags=0x00004000, field=any,
-sequence=0, memory=mmap
-[  +0.000034] plane 0: bytesused=0, data_offset=0x00000000,
-offset/userptr=0xee18ad4840000000, length=2097152
-[  +0.000009] timecode=00:00:00 type=0, flags=0x00000000, frames=0,
-userbits=0x00000000
-[  +0.000142] video2: VIDIOC_QUERYBUF: 00:00:00.00000000 index=1,
-type=vid-cap-mplane, request_fd=0, flags=0x00004000, field=any,
-sequence=0, memory=mmap
-[  +0.000023] plane 0: bytesused=0, data_offset=0x00000000,
-offset/userptr=0xee18ad4840200000, length=2097152
-[  +0.000008] timecode=00:00:00 type=0, flags=0x00000000, frames=0,
-userbits=0x00000000
-[  +0.000409] video2: VIDIOC_QUERYBUF: 00:00:00.00000000 index=2,
-type=vid-cap-mplane, request_fd=0, flags=0x00004000, field=any,
-sequence=0, memory=mmap
-[  +0.000027] plane 0: bytesused=0, data_offset=0x00000000,
-offset/userptr=0xee18ad4840400000, length=2097152
-[  +0.000007] timecode=00:00:00 type=0, flags=0x00000000, frames=0,
-userbits=0x00000000
-[  +0.000233] video2: VIDIOC_QUERYBUF: 00:00:00.00000000 index=3,
-type=vid-cap-mplane, request_fd=0, flags=0x00004000, field=any,
-sequence=0, memory=mmap
-[  +0.000023] plane 0: bytesused=0, data_offset=0x00000000,
-offset/userptr=0xee18ad4840600000, length=2097152
-[  +0.000015] timecode=00:00:00 type=0, flags=0x00000000, frames=0,
-userbits=0x00000000
-[  +0.000288] video2: VIDIOC_S_EXT_CTRLS: which=0x990000, count=1,
-error_idx=0, request_fd=0, id/val=0x9909cf/0x30d40
-[  +0.000184] video2: VIDIOC_S_PARM: type=vid-out-mplane,
-capability=0x1000, outputmode=0x0, timeperframe=1/30, extendedmode=0,
-writebuffers=0
-[  +0.310832] qcom-venus-encoder aa00000.video-codec:video-encoder:
-VenusHigh: wrong state!
-
-> +       INIT_LIST_HEAD(&inst->registeredbufs);
-> +
-> +       inst->enc_state = VENUS_ENC_STATE_INIT;
-> +
-> +       mutex_unlock(&inst->lock);
-> +
-> +       venus_pm_release_core(inst);
-> +}
-> +
-> +static int venc_buf_init(struct vb2_buffer *vb)
-> +{
-> +       struct venus_inst *inst = vb2_get_drv_priv(vb->vb2_queue);
-> +
-> +       inst->buf_count++;
-> +
-> +       return venus_helper_vb2_buf_init(vb);
-> +}
-> +
-> +static void venc_buf_cleanup(struct vb2_buffer *vb)
-> +{
-> +       struct venus_inst *inst = vb2_get_drv_priv(vb->vb2_queue);
-> +       struct vb2_v4l2_buffer *vbuf = to_vb2_v4l2_buffer(vb);
-> +       struct venus_buffer *buf = to_venus_buffer(vbuf);
-> +
-> +       mutex_lock(&inst->lock);
-> +       if (vb->type == V4L2_BUF_TYPE_VIDEO_CAPTURE_MPLANE)
-> +               if (!list_empty(&inst->registeredbufs))
-> +                       list_del_init(&buf->reg_list);
-> +       mutex_unlock(&inst->lock);
-> +
-> +       inst->buf_count--;
-> +       if (!inst->buf_count)
-> +               venc_release_session(inst);
-> +}
-> +
->  static int venc_verify_conf(struct venus_inst *inst)
->  {
->         enum hfi_version ver = inst->core->res->hfi_version;
-> @@ -881,61 +945,73 @@ static int venc_verify_conf(struct venus_inst *inst)
->  static int venc_start_streaming(struct vb2_queue *q, unsigned int count)
->  {
->         struct venus_inst *inst = vb2_get_drv_priv(q);
-> -       int ret;
-> +       int ret = 0;
->
->         mutex_lock(&inst->lock);
->
-> -       if (q->type == V4L2_BUF_TYPE_VIDEO_OUTPUT_MPLANE)
-> +       if (V4L2_TYPE_IS_OUTPUT(q->type))
->                 inst->streamon_out = 1;
->         else
->                 inst->streamon_cap = 1;
->
-> -       if (!(inst->streamon_out & inst->streamon_cap)) {
-> -               mutex_unlock(&inst->lock);
-> -               return 0;
-> -       }
-> +       if (!(inst->streamon_out & inst->streamon_cap))
-> +               goto unlock;
->
-> -       venus_helper_init_instance(inst);
-> +       if (inst->enc_state == VENUS_ENC_STATE_INIT) {
-> +               venus_helper_init_instance(inst);
->
-> -       inst->sequence_cap = 0;
-> -       inst->sequence_out = 0;
-> +               inst->sequence_cap = 0;
-> +               inst->sequence_out = 0;
->
-> -       ret = venc_init_session(inst);
-> -       if (ret)
-> -               goto bufs_done;
-> +               ret = venc_init_session(inst);
-> +               if (ret)
-> +                       goto bufs_done;
->
-> -       ret = venus_pm_acquire_core(inst);
-> -       if (ret)
-> -               goto deinit_sess;
-> +               ret = venus_pm_acquire_core(inst);
-> +               if (ret)
-> +                       goto deinit_sess;
->
-> -       ret = venc_set_properties(inst);
-> -       if (ret)
-> -               goto deinit_sess;
-> +               ret = venc_verify_conf(inst);
-> +               if (ret)
-> +                       goto deinit_sess;
->
-> -       ret = venc_verify_conf(inst);
-> -       if (ret)
-> -               goto deinit_sess;
-> +               ret = venus_helper_set_num_bufs(inst, inst->num_input_bufs,
-> +                                               inst->num_output_bufs, 0);
-> +               if (ret)
-> +                       goto deinit_sess;
->
-> -       ret = venus_helper_set_num_bufs(inst, inst->num_input_bufs,
-> -                                       inst->num_output_bufs, 0);
-> -       if (ret)
-> -               goto deinit_sess;
-> +               ret = venus_helper_vb2_start_streaming(inst);
-> +               if (ret)
-> +                       goto deinit_sess;
->
-> -       ret = venus_helper_vb2_start_streaming(inst);
-> -       if (ret)
-> -               goto deinit_sess;
-> +               venus_helper_process_initial_out_bufs(inst);
-> +               venus_helper_process_initial_cap_bufs(inst);
->
-> -       inst->enc_state = VENUS_ENC_STATE_ENCODING;
-> +               inst->enc_state = VENUS_ENC_STATE_ENCODING;
-> +       } else if (inst->enc_state == VENUS_ENC_STATE_RESET &&
-> +                  V4L2_TYPE_IS_CAPTURE(q->type)) {
-> +               ret = venus_helper_vb2_start_streaming(inst);
-> +               if (ret)
-> +                       goto bufs_done;
->
-> -       mutex_unlock(&inst->lock);
-> +               venus_helper_process_initial_out_bufs(inst);
-> +               venus_helper_process_initial_cap_bufs(inst);
->
-> -       return 0;
-> +               inst->enc_state = VENUS_ENC_STATE_ENCODING;
-> +       } else if (inst->enc_state == VENUS_ENC_STATE_STOPPED &&
-> +                  V4L2_TYPE_IS_OUTPUT(q->type)) {
-> +               inst->enc_state = VENUS_ENC_STATE_ENCODING;
-> +       }
-> +
-> +unlock:
-> +       mutex_unlock(&inst->lock);
-> +       return ret;
->
->  deinit_sess:
->         hfi_session_deinit(inst);
->  bufs_done:
->         venus_helper_buffers_done(inst, q->type, VB2_BUF_STATE_QUEUED);
-> -       if (q->type == V4L2_BUF_TYPE_VIDEO_OUTPUT_MPLANE)
-> +       if (V4L2_TYPE_IS_OUTPUT(q->type))
->                 inst->streamon_out = 0;
->         else
->                 inst->streamon_cap = 0;
-> @@ -943,33 +1019,97 @@ static int venc_start_streaming(struct vb2_queue *q, unsigned int count)
->         return ret;
->  }
->
-> -static void venc_vb2_buf_queue(struct vb2_buffer *vb)
-> +static int venc_stop_capture(struct venus_inst *inst)
-> +{
-> +       int ret;
-> +
-> +       switch (inst->enc_state) {
-> +       case VENUS_ENC_STATE_ENCODING:
-> +       case VENUS_ENC_STATE_DRAIN:
-> +       case VENUS_ENC_STATE_STOPPED:
-> +               inst->enc_state = VENUS_ENC_STATE_RESET;
-> +               break;
-> +       default:
-> +               return -EINVAL;
-> +       }
-> +
-> +       ret = hfi_session_stop(inst);
-> +       ret |= hfi_session_unload_res(inst);
-> +       ret |= venus_helper_unregister_bufs(inst);
-> +       ret |= venus_helper_intbufs_free(inst);
-> +
-> +       return ret;
-> +}
-> +
-> +static int venc_stop_output(struct venus_inst *inst)
-> +{
-> +       switch (inst->enc_state) {
-> +       case VENUS_ENC_STATE_ENCODING:
-> +               inst->enc_state = VENUS_ENC_STATE_STOPPED;
-> +               break;
-> +       case VENUS_ENC_STATE_DRAIN:
-> +               inst->enc_state = VENUS_ENC_STATE_STOPPED;
-> +               break;
-> +       default:
-> +               return -EINVAL;
-> +       }
-> +
-> +       return 0;
-> +}
-> +
-> +static void venc_stop_streaming(struct vb2_queue *q)
-> +{
-> +       struct venus_inst *inst = vb2_get_drv_priv(q);
-> +       int ret = -EINVAL;
-> +
-> +       mutex_lock(&inst->lock);
-> +
-> +       if (V4L2_TYPE_IS_OUTPUT(q->type))
-> +               ret = venc_stop_output(inst);
-> +       else
-> +               ret = venc_stop_capture(inst);
-> +
-> +       venus_helper_buffers_done(inst, q->type, VB2_BUF_STATE_ERROR);
-> +
-> +       if (ret)
-> +               goto unlock;
-> +
-> +       if (V4L2_TYPE_IS_OUTPUT(q->type))
-> +               inst->streamon_out = 0;
-> +       else
-> +               inst->streamon_cap = 0;
-> +
-> +unlock:
-> +       mutex_unlock(&inst->lock);
-> +}
-> +
-> +static void venc_buf_queue(struct vb2_buffer *vb)
->  {
->         struct venus_inst *inst = vb2_get_drv_priv(vb->vb2_queue);
->         struct vb2_v4l2_buffer *vbuf = to_vb2_v4l2_buffer(vb);
-> +       struct v4l2_m2m_ctx *m2m_ctx = inst->m2m_ctx;
->
->         mutex_lock(&inst->lock);
->
-> -       if (inst->enc_state == VENUS_ENC_STATE_STOPPED) {
-> -               vbuf->sequence = inst->sequence_cap++;
-> -               vbuf->field = V4L2_FIELD_NONE;
-> -               vb2_set_plane_payload(vb, 0, 0);
-> -               v4l2_m2m_buf_done(vbuf, VB2_BUF_STATE_DONE);
-> -               mutex_unlock(&inst->lock);
-> -               return;
-> -       }
-> +       v4l2_m2m_buf_queue(m2m_ctx, vbuf);
-> +
-> +       if (!(inst->streamon_out && inst->streamon_cap))
-> +               goto unlock;
-> +
-> +       venus_helper_process_buf(vb);
->
-> -       venus_helper_vb2_buf_queue(vb);
-> +unlock:
->         mutex_unlock(&inst->lock);
->  }
->
->  static const struct vb2_ops venc_vb2_ops = {
->         .queue_setup = venc_queue_setup,
-> -       .buf_init = venus_helper_vb2_buf_init,
-> +       .buf_init = venc_buf_init,
-> +       .buf_cleanup = venc_buf_cleanup,
->         .buf_prepare = venus_helper_vb2_buf_prepare,
->         .start_streaming = venc_start_streaming,
-> -       .stop_streaming = venus_helper_vb2_stop_streaming,
-> -       .buf_queue = venc_vb2_buf_queue,
-> +       .stop_streaming = venc_stop_streaming,
-> +       .buf_queue = venc_buf_queue,
->  };
->
->  static void venc_buf_done(struct venus_inst *inst, unsigned int buf_type,
-> @@ -1025,8 +1165,12 @@ static const struct hfi_inst_ops venc_hfi_ops = {
->         .event_notify = venc_event_notify,
->  };
->
-> +static void venc_m2m_device_run(void *priv)
-> +{
-> +}
-> +
->  static const struct v4l2_m2m_ops venc_m2m_ops = {
-> -       .device_run = venus_helper_m2m_device_run,
-> +       .device_run = venc_m2m_device_run,
->         .job_abort = venus_helper_m2m_job_abort,
->  };
->
-> @@ -1098,11 +1242,9 @@ static int venc_open(struct file *file)
->         inst->core = core;
->         inst->session_type = VIDC_SESSION_TYPE_ENC;
->         inst->clk_data.core_id = VIDC_CORE_ID_DEFAULT;
-> +       inst->enc_state = VENUS_ENC_STATE_INIT;
->         inst->core_acquired = false;
->
-> -       if (inst->enc_state == VENUS_ENC_STATE_DEINIT)
-> -               inst->enc_state = VENUS_ENC_STATE_INIT;
-> -
->         venus_helper_init_instance(inst);
->
->         ret = pm_runtime_get_sync(core->dev_enc);
-> @@ -1167,7 +1309,7 @@ static int venc_close(struct file *file)
->         mutex_destroy(&inst->lock);
->         v4l2_fh_del(&inst->fh);
->         v4l2_fh_exit(&inst->fh);
-> -       inst->enc_state = VENUS_ENC_STATE_DEINIT;
-> +
->         pm_runtime_put_sync(inst->core->dev_enc);
->
->         kfree(inst);
-> --
-> 2.17.1
->
+SGkgYmJoYXR0Og0KDQpPbiBOb3ZlbWJlciAwMywgMjAyMCAxMjozNCBBTSwgQmhhdHQgd3JvdGU6
+DQo+IE9uIDIwMjAtMTEtMDIgMDQ6MjcsIGNhcmwueWluQHF1ZWN0ZWwuY29tIHdyb3RlOg0KPiA+
+IEZyb206ICJjYXJsLnlpbiIgPGNhcmwueWluQHF1ZWN0ZWwuY29tPg0KPiA+DQo+ID4gTUhJIHd3
+YW4gbW9kZW1zIHN1cHBvcnQgZG93bmxvYWQgZmlybXdhcmUgdG8gbmFuZCBvciBlbW1jIGJ5IGZp
+cmVob3NlDQo+ID4gcHJvdG9jb2wsIHByb2Nlc3MgYXMgbmV4dDoNCj4gPiAxLiBtb2RlbSBib290
+IHVwIGFuZCBlbnRlciBFRSBBTVNTLCBjcmVhdGUgRElBRyBjaGFubmVscyAoNCwgNSkgZGV2aWNl
+DQo+ID4gMi4gdXNlciBzcGFjZSB0b29sIHNlbmQgRURMIGNvbW1hbmQgdmlhIERJQUcgY2hhbm5l
+bCwNCj4gPiAgICB0aGVuIG1vZGVtIGVudGVyIEVFIEVETA0KPiA+IDMuIGJvb3QuYyBkb3dubG9h
+ZCAnZmxhc2ggcHJvZ3JhbW1lciBpbWFnZScgdmlhIEJISSBpbnRlcmZhY2UgNC4gbW9kZW0NCj4g
+PiBlbnRlciBFRSBGUCwgYW5kIGNyZWF0ZSBFREwgY2hhbm5lbHMgKDM0LCAzNSkgZGV2aWNlIDUu
+IHVzZXIgc3BhY2UNCj4gPiB0b29sIGRvd25sb2FkICdmaXJtd2FyZSBpbWFnZScgdG8gbW9kZW0g
+dmlhIEVETCBjaGFubmVscw0KPiA+ICAgIGJ5IGZpcmVob3NlIHByb3RvY29sDQo+ID4NCj4gPiBT
+aWduZWQtb2ZmLWJ5OiBjYXJsLnlpbiA8Y2FybC55aW5AcXVlY3RlbC5jb20+DQo+ID4gLS0tDQo+
+ID4gIGRyaXZlcnMvYnVzL21oaS9jb3JlL2luaXQuYyAgICAgfCAgMiArKw0KPiA+ICBkcml2ZXJz
+L2J1cy9taGkvY29yZS9pbnRlcm5hbC5oIHwgIDEgKw0KPiA+ICBkcml2ZXJzL2J1cy9taGkvY29y
+ZS9tYWluLmMgICAgIHwgIDUgKysrKy0NCj4gPiAgZHJpdmVycy9idXMvbWhpL2NvcmUvcG0uYyAg
+ICAgICB8IDEzICsrKysrKysrKysrKy0NCj4gPiAgaW5jbHVkZS9saW51eC9taGkuaCAgICAgICAg
+ICAgICB8ICA0ICsrKy0NCj4gPiAgNSBmaWxlcyBjaGFuZ2VkLCAyMiBpbnNlcnRpb25zKCspLCAz
+IGRlbGV0aW9ucygtKQ0KPiA+DQo+ID4gZGlmZiAtLWdpdCBhL2RyaXZlcnMvYnVzL21oaS9jb3Jl
+L2luaXQuYyBiL2RyaXZlcnMvYnVzL21oaS9jb3JlL2luaXQuYw0KPiA+IGluZGV4IGFjNGFhNWMu
+LmUzNDYxNmIgMTAwNjQ0DQo+ID4gLS0tIGEvZHJpdmVycy9idXMvbWhpL2NvcmUvaW5pdC5jDQo+
+ID4gKysrIGIvZHJpdmVycy9idXMvbWhpL2NvcmUvaW5pdC5jDQo+ID4gQEAgLTI2LDYgKzI2LDcg
+QEAgY29uc3QgY2hhciAqIGNvbnN0IG1oaV9lZV9zdHJbTUhJX0VFX01BWF0gPSB7DQo+ID4gIAlb
+TUhJX0VFX1dGV10gPSAiV0ZXIiwNCj4gPiAgCVtNSElfRUVfUFRIUlVdID0gIlBBU1MgVEhSVSIs
+DQo+ID4gIAlbTUhJX0VFX0VETF0gPSAiRURMIiwNCj4gPiArCVtNSElfRUVfRlBdID0gIkZMQVNI
+IFBST0dSQU1NRVIiLA0KPiA+ICAJW01ISV9FRV9ESVNBQkxFX1RSQU5TSVRJT05dID0gIkRJU0FC
+TEUiLA0KPiA+ICAJW01ISV9FRV9OT1RfU1VQUE9SVEVEXSA9ICJOT1QgU1VQUE9SVEVEIiwgIH07
+IEBAIC0zNSw2ICszNiw3IEBADQo+ID4gY29uc3QgY2hhciAqIGNvbnN0IGRldl9zdGF0ZV90cmFu
+X3N0cltERVZfU1RfVFJBTlNJVElPTl9NQVhdID0gew0KPiA+ICAJW0RFVl9TVF9UUkFOU0lUSU9O
+X1JFQURZXSA9ICJSRUFEWSIsDQo+ID4gIAlbREVWX1NUX1RSQU5TSVRJT05fU0JMXSA9ICJTQkwi
+LA0KPiA+ICAJW0RFVl9TVF9UUkFOU0lUSU9OX01JU1NJT05fTU9ERV0gPSAiTUlTU0lPTl9NT0RF
+IiwNCj4gPiArCVtERVZfU1RfVFJBTlNJVElPTl9GUF0gPSAiRkxBU0hfUFJPR1JBTU1FUiIsDQo+
+ID4gIAlbREVWX1NUX1RSQU5TSVRJT05fU1lTX0VSUl0gPSAiU1lTX0VSUiIsDQo+ID4gIAlbREVW
+X1NUX1RSQU5TSVRJT05fRElTQUJMRV0gPSAiRElTQUJMRSIsICB9OyBkaWZmIC0tZ2l0DQo+ID4g
+YS9kcml2ZXJzL2J1cy9taGkvY29yZS9pbnRlcm5hbC5oIGIvZHJpdmVycy9idXMvbWhpL2NvcmUv
+aW50ZXJuYWwuaA0KPiA+IGluZGV4IDRhYmYwY2YuLjZhZTg5N2EgMTAwNjQ0DQo+ID4gLS0tIGEv
+ZHJpdmVycy9idXMvbWhpL2NvcmUvaW50ZXJuYWwuaA0KPiA+ICsrKyBiL2RyaXZlcnMvYnVzL21o
+aS9jb3JlL2ludGVybmFsLmgNCj4gPiBAQCAtMzg2LDYgKzM4Niw3IEBAIGVudW0gZGV2X3N0X3Ry
+YW5zaXRpb24gew0KPiA+ICAJREVWX1NUX1RSQU5TSVRJT05fUkVBRFksDQo+ID4gIAlERVZfU1Rf
+VFJBTlNJVElPTl9TQkwsDQo+ID4gIAlERVZfU1RfVFJBTlNJVElPTl9NSVNTSU9OX01PREUsDQo+
+ID4gKwlERVZfU1RfVFJBTlNJVElPTl9GUCwNCj4gPiAgCURFVl9TVF9UUkFOU0lUSU9OX1NZU19F
+UlIsDQo+ID4gIAlERVZfU1RfVFJBTlNJVElPTl9ESVNBQkxFLA0KPiA+ICAJREVWX1NUX1RSQU5T
+SVRJT05fTUFYLA0KPiA+IGRpZmYgLS1naXQgYS9kcml2ZXJzL2J1cy9taGkvY29yZS9tYWluLmMg
+Yi9kcml2ZXJzL2J1cy9taGkvY29yZS9tYWluLmMNCj4gPiBpbmRleCAzOTUwNzkyLi5hMWUxNTYx
+IDEwMDY0NA0KPiA+IC0tLSBhL2RyaXZlcnMvYnVzL21oaS9jb3JlL21haW4uYw0KPiA+ICsrKyBi
+L2RyaXZlcnMvYnVzL21oaS9jb3JlL21haW4uYw0KPiA+IEBAIC00MjIsNyArNDIyLDcgQEAgaXJx
+cmV0dXJuX3QgbWhpX2ludHZlY190aHJlYWRlZF9oYW5kbGVyKGludA0KPiA+IGlycV9udW1iZXIs
+IHZvaWQgKnByaXYpDQo+ID4gIAkJd2FrZV91cF9hbGwoJm1oaV9jbnRybC0+c3RhdGVfZXZlbnQp
+Ow0KPiA+DQo+ID4gIAkJLyogRm9yIGZhdGFsIGVycm9ycywgd2UgbGV0IGNvbnRyb2xsZXIgZGVj
+aWRlIG5leHQgc3RlcCAqLw0KPiA+IC0JCWlmIChNSElfSU5fUEJMKGVlKSkNCj4gPiArCQlpZiAo
+TUhJX0lOX1BCTChtaGlfY250cmwtPmVlKSkNCj4gTGV0J3MgcGxlYXNlIGhhdmUgdGhpcyBhcyBh
+IHNlcGFyYXRlIHBhdGNoIHdpdGggYSBmaXhlcyB0YWcsIGFzIGl0IGZpeGVzIGEgcHJlLWV4aXN0
+aW5nDQo+IGJ1Zy4gSSBhbSBzdXJlIE1hbmkgd291bGQgd2FudCB0aGlzLg0KPiA+ICAJCQltaGlf
+Y250cmwtPnN0YXR1c19jYihtaGlfY250cmwsIE1ISV9DQl9GQVRBTF9FUlJPUik7DQo+ID4gIAkJ
+ZWxzZQ0KPiA+ICAJCQltaGlfcG1fc3lzX2Vycl9oYW5kbGVyKG1oaV9jbnRybCk7DQo+ID4gQEAg
+LTc4Miw2ICs3ODIsOSBAQCBpbnQgbWhpX3Byb2Nlc3NfY3RybF9ldl9yaW5nKHN0cnVjdCBtaGlf
+Y29udHJvbGxlcg0KPiA+ICptaGlfY250cmwsDQo+ID4gIAkJCWNhc2UgTUhJX0VFX1NCTDoNCj4g
+PiAgCQkJCXN0ID0gREVWX1NUX1RSQU5TSVRJT05fU0JMOw0KPiA+ICAJCQkJYnJlYWs7DQo+ID4g
+KwkJCWNhc2UgTUhJX0VFX0ZQOg0KPiA+ICsJCQkJc3QgPSBERVZfU1RfVFJBTlNJVElPTl9GUDsN
+Cj4gPiArCQkJCWJyZWFrOw0KPiBXaGVuIGRvIHlvdSBnZXQgdGhpcyBFRSBldmVudCBvbiB0aGUg
+Y29udHJvbCBldmVudCByaW5nPyBEb2VzIGl0IGNvbWUgYnkgYWZ0ZXINCj4geW91IGhhdmUgZGV0
+ZWN0ZWQgRUUgYXMgRlAgZnJvbSBtaGlfc3luY19wb3dlcl91cCgpIGFuZCBtb3ZlIHRvIHJlYWR5
+IGFuZA0KPiB0aGVuIE0wPw0KW2NhcmwueWluXSBpdCBpcyBmcm9tIHRoZSBsb2csIG5leHQgaXMg
+dGhlIHNkeDI0J3MgbG9nLg0KQW5vdGhlciB0aGluZywgSSBmaW5kIG1oaSBjb250cm9sbGVyJ3Mg
+c3RhdHVzX2NiKCkgc2hvdWxkIG5vdCBkaXJlY3RseSBjYWxsIG1oaV9wb3dlcl9kb3duKCksDQpU
+aGUgZnVuY3Rpb24gc3RhY2sgaXMgbWhpX2ludHZlY190aHJlYWRlZF9oYW5kbGVyKCktPnN0YXR1
+c19jYigpLT5taGlfcG93ZXJfZG93bigpLT5mcmVlX2lycSgpLg0KU2hvdWxkIG5vdCBmcmVlIGly
+cSBpbiB0aGUgaXJxIHRocmVhZC4NCg0KWyAgMzA0LjI2MzExMV0gbWhpIDAwMDA6MDM6MDAuMDog
+UHJlcGFyaW5nIGNoYW5uZWw6IDQNClsgIDMwNC4yNzU1ODBdIG1oaSAwMDAwOjAzOjAwLjA6IENo
+YW46IDQgc3VjY2Vzc2Z1bGx5IG1vdmVkIHRvIHN0YXJ0IHN0YXRlDQpbICAzMDQuMjc1NTgwXSBt
+aGkgMDAwMDowMzowMC4wOiBQcmVwYXJpbmcgY2hhbm5lbDogNQ0KWyAgMzA0LjI4NTkwMV0gbWhp
+IDAwMDA6MDM6MDAuMDogQ2hhbjogNSBzdWNjZXNzZnVsbHkgbW92ZWQgdG8gc3RhcnQgc3RhdGUN
+ClsgIDMwNy4zODA5OTldIG1oaSAwMDAwOjAzOjAwLjA6IGxvY2FsIGVlOkVETCBkZXZpY2UgZWU6
+QU1TUyBkZXZfc3RhdGU6U1lTX0VSUg0KWyAgMzA3LjM4MTAwMF0gbWhpIDAwMDA6MDM6MDAuMDog
+U3lzdGVtIGVycm9yIGRldGVjdGVkDQpbICAzMDcuMzgxMDAxXSBtaGktcGNpLWdlbmVyaWMgMDAw
+MDowMzowMC4wOiBtaGlfcGNpX3N0YXR1c19jYiBlZT02LCBjYj03DQpbICAzMDcuMzgxMDA2XSBt
+aGkgMDAwMDowMzowMC4wOiBIYW5kbGluZyBzdGF0ZSB0cmFuc2l0aW9uOiBESVNBQkxFDQpbICAz
+MDcuMzgxMDA3XSBtaGkgMDAwMDowMzowMC4wOiBUcmFuc2l0aW9uaW5nIGZyb20gUE0gc3RhdGU6
+IFNZU19FUlIgRGV0ZWN0IHRvOiBTSFVURE9XTiBQcm9jZXNzDQpbICAzMDcuMzgxMDA4XSBtaGkg
+MDAwMDowMzowMC4wOiBUcmlnZ2VyaW5nIE1ISSBSZXNldCBpbiBkZXZpY2UNClsgIDMwNy4zODEx
+MTRdIG1oaSAwMDAwOjAzOjAwLjA6IGxvY2FsIGVlOkVETCBkZXZpY2UgZWU6RElTQUJMRSBkZXZf
+c3RhdGU6UkVTRVQNClsgIDMwNy4zODExMjBdIG1oaSAwMDAwOjAzOjAwLjA6IFdhaXRpbmcgZm9y
+IGFsbCBwZW5kaW5nIGV2ZW50IHJpbmcgcHJvY2Vzc2luZyB0byBjb21wbGV0ZQ0KWyAgMzA3LjM4
+MTEyMF0gbWhpIDAwMDA6MDM6MDAuMDogV2FpdGluZyBmb3IgYWxsIHBlbmRpbmcgdGhyZWFkcyB0
+byBjb21wbGV0ZQ0KWyAgMzA3LjM4MTEyMV0gbWhpIDAwMDA6MDM6MDAuMDogUmVzZXQgYWxsIGFj
+dGl2ZSBjaGFubmVscyBhbmQgcmVtb3ZlIE1ISSBkZXZpY2VzDQouLi4uLi4NClsgIDMwNy40MDIy
+NzldIG1oaSAwMDAwOjAzOjAwLjA6IFJlc2V0dGluZyBFViBDVFhUIGFuZCBDTUQgQ1RYVA0KWyAg
+MzA3LjQwMjI4MF0gbWhpIDAwMDA6MDM6MDAuMDogRXhpdGluZyB3aXRoIFBNIHN0YXRlOiBESVNB
+QkxFLCBNSEkgc3RhdGU6IFJFU0VUDQpbICAzMDcuNDAyNTY3XSBtaGkgMDAwMDowMzowMC4wOiBS
+ZXF1ZXN0ZWQgdG8gcG93ZXIgT04NClsgIDMwNy40MDI4NDVdIG1oaSAwMDAwOjAzOjAwLjA6IFBv
+d2VyIG9uIHNldHVwIHN1Y2Nlc3MNClsgIDMwNy40MDI4NDddIG1oaSAwMDAwOjAzOjAwLjA6IEhh
+bmRsaW5nIHN0YXRlIHRyYW5zaXRpb246IFBCTA0KWyAgMzA3LjQwMjk4NV0gbWhpIDAwMDA6MDM6
+MDAuMDogU3RhcnRpbmcgU0JMIGRvd25sb2FkIHZpYSBCSEkuIFNlc3Npb24gSUQ6MTA0ODkyNzQ1
+Ng0KWyAgMzA3LjQzNTI1OV0gbWhpIDAwMDA6MDM6MDAuMDogbG9jYWwgZWU6RURMIGRldmljZSBl
+ZTpFREwgZGV2X3N0YXRlOlJFU0VUDQpbICAzMDguNDYwMzIyXSBtaGkgMDAwMDowMzowMC4wOiBs
+b2NhbCBlZTpGTEFTSCBQUk9HUkFNTUVSIGRldmljZSBlZTpFREwgZGV2X3N0YXRlOlJFQURZDQpb
+ICAzMDguNDYwMzI2XSBtaGkgMDAwMDowMzowMC4wOiBIYW5kbGluZyBzdGF0ZSB0cmFuc2l0aW9u
+OiBSRUFEWQ0KWyAgMzA4LjQ2MDMzNV0gbWhpIDAwMDA6MDM6MDAuMDogRGV2aWNlIGluIFJFQURZ
+IFN0YXRlDQpbICAzMDguNDYwMzM1XSBtaGkgMDAwMDowMzowMC4wOiBJbml0aWFsaXppbmcgTUhJ
+IHJlZ2lzdGVycw0KWyAgMzA4LjQ2NDMwMV0gbWhpIDAwMDA6MDM6MDAuMDogU3RhdGUgY2hhbmdl
+IGV2ZW50IHRvIHN0YXRlOiBNMA0KWyAgMzA4LjQ2NTMwM10gbWhpIDAwMDA6MDM6MDAuMDogUmVj
+ZWl2ZWQgRUUgZXZlbnQ6IEZMQVNIIFBST0dSQU1NRVINClsgIDMwOC40NjUzMTFdIG1oaSAwMDAw
+OjAzOjAwLjA6IEhhbmRsaW5nIHN0YXRlIHRyYW5zaXRpb246IEZMQVNIX1BST0dSQU1NRVINClsg
+IDMwOS4zODE1MDZdIG1oaSAwMDAwOjAzOjAwLjA6IFByZXBhcmluZyBjaGFubmVsOiAzNA0KWyAg
+MzA5LjM4NDYzMV0gbWhpIDAwMDA6MDM6MDAuMDogQ2hhbjogMzQgc3VjY2Vzc2Z1bGx5IG1vdmVk
+IHRvIHN0YXJ0IHN0YXRlDQpbICAzMDkuMzg0NjMxXSBtaGkgMDAwMDowMzowMC4wOiBQcmVwYXJp
+bmcgY2hhbm5lbDogMzUNClsgIDMwOS4zODc5MTBdIG1oaSAwMDAwOjAzOjAwLjA6IENoYW46IDM1
+IHN1Y2Nlc3NmdWxseSBtb3ZlZCB0byBzdGFydCBzdGF0ZQ0KDQo+ID4gIAkJCWNhc2UgTUhJX0VF
+X1dGVzoNCj4gPiAgCQkJY2FzZSBNSElfRUVfQU1TUzoNCj4gPiAgCQkJCXN0ID0gREVWX1NUX1RS
+QU5TSVRJT05fTUlTU0lPTl9NT0RFOyBkaWZmIC0tZ2l0DQo+ID4gYS9kcml2ZXJzL2J1cy9taGkv
+Y29yZS9wbS5jIGIvZHJpdmVycy9idXMvbWhpL2NvcmUvcG0uYyBpbmRleA0KPiA+IDNkZTdiMTYu
+LjJkNjg4MTIgMTAwNjQ0DQo+ID4gLS0tIGEvZHJpdmVycy9idXMvbWhpL2NvcmUvcG0uYw0KPiA+
+ICsrKyBiL2RyaXZlcnMvYnVzL21oaS9jb3JlL3BtLmMNCj4gPiBAQCAtNjU4LDYgKzY1OCwxMiBA
+QCB2b2lkIG1oaV9wbV9zdF93b3JrZXIoc3RydWN0IHdvcmtfc3RydWN0ICp3b3JrKQ0KPiA+ICAJ
+CWNhc2UgREVWX1NUX1RSQU5TSVRJT05fTUlTU0lPTl9NT0RFOg0KPiA+ICAJCQltaGlfcG1fbWlz
+c2lvbl9tb2RlX3RyYW5zaXRpb24obWhpX2NudHJsKTsNCj4gPiAgCQkJYnJlYWs7DQo+ID4gKwkJ
+Y2FzZSBERVZfU1RfVFJBTlNJVElPTl9GUDoNCj4gPiArCQkJd3JpdGVfbG9ja19pcnEoJm1oaV9j
+bnRybC0+cG1fbG9jayk7DQo+ID4gKwkJCW1oaV9jbnRybC0+ZWUgPSBNSElfRUVfRlA7DQo+ID4g
+KwkJCXdyaXRlX3VubG9ja19pcnEoJm1oaV9jbnRybC0+cG1fbG9jayk7DQo+ID4gKwkJCW1oaV9j
+cmVhdGVfZGV2aWNlcyhtaGlfY250cmwpOw0KPiA+ICsJCQlicmVhazsNCj4gPiAgCQljYXNlIERF
+Vl9TVF9UUkFOU0lUSU9OX1JFQURZOg0KPiA+ICAJCQltaGlfcmVhZHlfc3RhdGVfdHJhbnNpdGlv
+bihtaGlfY250cmwpOw0KPiA+ICAJCQlicmVhazsNCj4gPiBAQCAtMTA3NywxMCArMTA4MywxNSBA
+QCBpbnQgbWhpX3N5bmNfcG93ZXJfdXAoc3RydWN0IG1oaV9jb250cm9sbGVyDQo+ID4gKm1oaV9j
+bnRybCkNCj4gPg0KPiA+ICAJd2FpdF9ldmVudF90aW1lb3V0KG1oaV9jbnRybC0+c3RhdGVfZXZl
+bnQsDQo+ID4gIAkJCSAgIE1ISV9JTl9NSVNTSU9OX01PREUobWhpX2NudHJsLT5lZSkgfHwNCj4g
+PiArCQkJICAgbWhpX2NudHJsLT5lZSA9PSBNSElfRUVfRlAgfHwNCj4gPiAgCQkJICAgTUhJX1BN
+X0lOX0VSUk9SX1NUQVRFKG1oaV9jbnRybC0+cG1fc3RhdGUpLA0KPiA+ICAJCQkgICBtc2Vjc190
+b19qaWZmaWVzKG1oaV9jbnRybC0+dGltZW91dF9tcykpOw0KPiA+DQo+ID4gLQlyZXQgPSAoTUhJ
+X0lOX01JU1NJT05fTU9ERShtaGlfY250cmwtPmVlKSkgPyAwIDogLUVUSU1FRE9VVDsNCj4gPiAr
+CWlmIChtaGlfY250cmwtPmVlID09IE1ISV9FRV9GUCkNCj4gPiArCQltaGlfcXVldWVfc3RhdGVf
+dHJhbnNpdGlvbihtaGlfY250cmwsDQo+IERFVl9TVF9UUkFOU0lUSU9OX1JFQURZKTsNCj4gPiAr
+CWVsc2UNCj4gPiArCQlyZXQgPSAoTUhJX0lOX01JU1NJT05fTU9ERShtaGlfY250cmwtPmVlKSkg
+PyAwIDogLUVUSU1FRE9VVDsNCj4gPiArDQo+ID4gIAlpZiAocmV0KQ0KPiA+ICAJCW1oaV9wb3dl
+cl9kb3duKG1oaV9jbnRybCwgZmFsc2UpOw0KPiA+DQo+IFdlIHNob3VsZCBjb21lIHVwIHdpdGgg
+YSBiZXR0ZXIgZGVzaWduIGZvciB0aGlzIGxhdGVyIG9uLg0KPiA+IGRpZmYgLS1naXQgYS9pbmNs
+dWRlL2xpbnV4L21oaS5oIGIvaW5jbHVkZS9saW51eC9taGkuaCBpbmRleA0KPiA+IDZlMTEyMmMu
+LjQ2MjBhZjggMTAwNjQ0DQo+ID4gLS0tIGEvaW5jbHVkZS9saW51eC9taGkuaA0KPiA+ICsrKyBi
+L2luY2x1ZGUvbGludXgvbWhpLmgNCj4gPiBAQCAtMTIwLDYgKzEyMCw3IEBAIHN0cnVjdCBtaGlf
+bGlua19pbmZvIHsNCj4gPiAgICogQE1ISV9FRV9XRlc6IFdMQU4gZmlybXdhcmUgbW9kZQ0KPiA+
+ICAgKiBATUhJX0VFX1BUSFJVOiBQYXNzdGhyb3VnaA0KPiA+ICAgKiBATUhJX0VFX0VETDogRW1i
+ZWRkZWQgZG93bmxvYWRlcg0KPiA+ICsgKiBATUhJX0VFX0ZQLCBGbGFzaCBQcm9ncmFtbWVyIEVu
+dmlyb25tZW50DQo+ID4gICAqLw0KPiA+ICBlbnVtIG1oaV9lZV90eXBlIHsNCj4gPiAgCU1ISV9F
+RV9QQkwsDQo+ID4gQEAgLTEyOSw3ICsxMzAsOCBAQCBlbnVtIG1oaV9lZV90eXBlIHsNCj4gPiAg
+CU1ISV9FRV9XRlcsDQo+ID4gIAlNSElfRUVfUFRIUlUsDQo+ID4gIAlNSElfRUVfRURMLA0KPiA+
+IC0JTUhJX0VFX01BWF9TVVBQT1JURUQgPSBNSElfRUVfRURMLA0KPiA+ICsJTUhJX0VFX0ZQLA0K
+PiA+ICsJTUhJX0VFX01BWF9TVVBQT1JURUQgPSBNSElfRUVfRlAsDQo+ID4gIAlNSElfRUVfRElT
+QUJMRV9UUkFOU0lUSU9OLCAvKiBsb2NhbCBFRSwgbm90IHJlbGF0ZWQgdG8gbWhpIHNwZWMgKi8N
+Cj4gPiAgCU1ISV9FRV9OT1RfU1VQUE9SVEVELA0KPiA+ICAJTUhJX0VFX01BWCwNCj4gDQo+IFRo
+YW5rcywNCj4gQmhhdW1paw0KPiAtLQ0KPiBUaGUgUXVhbGNvbW0gSW5ub3ZhdGlvbiBDZW50ZXIs
+IEluYy4gaXMgYSBtZW1iZXIgb2YgdGhlIENvZGUgQXVyb3JhIEZvcnVtLCBhDQo+IExpbnV4IEZv
+dW5kYXRpb24gQ29sbGFib3JhdGl2ZSBQcm9qZWN0DQo=
