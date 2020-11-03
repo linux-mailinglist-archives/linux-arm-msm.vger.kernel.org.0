@@ -2,32 +2,32 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 761AD2A4CCF
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Nov 2020 18:28:32 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 346592A4CD9
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Nov 2020 18:30:17 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727706AbgKCR2b (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 3 Nov 2020 12:28:31 -0500
-Received: from z5.mailgun.us ([104.130.96.5]:27397 "EHLO z5.mailgun.us"
+        id S1728715AbgKCRaQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 3 Nov 2020 12:30:16 -0500
+Received: from m42-4.mailgun.net ([69.72.42.4]:55450 "EHLO m42-4.mailgun.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727688AbgKCR2b (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 3 Nov 2020 12:28:31 -0500
+        id S1727688AbgKCRaQ (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 3 Nov 2020 12:30:16 -0500
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1604424510; h=In-Reply-To: Content-Type: MIME-Version:
+ s=smtp; t=1604424615; h=In-Reply-To: Content-Type: MIME-Version:
  References: Message-ID: Subject: Cc: To: From: Date: Sender;
- bh=SIY7uNxtZfwPM9wQ4XHUF5oaAuM2aQ3lzPUrO3unZnY=; b=R3ntc+63pLHixMCiiEAQgvQVTYhGsbK5zHmR2YhDFR2X8A72vI2o5YG/o0Fp1DUkqOcBIOC8
- otPwcm7WOsqTPRMCX70yoUD5kLtZQVTKK6faOxRCBq1/kQMKcvuua0cQk+e74m5EQbVJ4BIY
- c19e8AUOq6rTqElL3GB1jvJuqxA=
-X-Mailgun-Sending-Ip: 104.130.96.5
+ bh=C4CMFwI1HM31pHkchZgqYiU+8s6XN3zv2mGhUlUukhY=; b=czHLboZy0Y8v5aLQt6JbeqVxn0GMSf2OOXwu9+nK0erVzrQp1HZWLv2F6GXuydvZ+9O/itRh
+ 6c4h0AsilpSIhkJWnBI+z5BLruf4ULWfXte17cvGXmVFo+PmiX9ql77QiE/J6+0QwyszYsJc
+ o0H4DWUva/jNLOG+c2hyHJMCsVQ=
+X-Mailgun-Sending-Ip: 69.72.42.4
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org
  (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n06.prod.us-west-2.postgun.com with SMTP id
- 5fa19333d981633da3036ee5 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 03 Nov 2020 17:28:19
+ smtp-out-n04.prod.us-east-1.postgun.com with SMTP id
+ 5fa19396fcec43b7830a3836 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 03 Nov 2020 17:29:58
  GMT
 Sender: jcrouse=codeaurora.org@mg.codeaurora.org
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 70994C43387; Tue,  3 Nov 2020 17:28:19 +0000 (UTC)
+        id 8A03EC433FE; Tue,  3 Nov 2020 17:29:57 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
@@ -37,134 +37,103 @@ Received: from jcrouse1-lnx.qualcomm.com (i-global254.qualcomm.com [199.106.103.
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
         (Authenticated sender: jcrouse)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id E6C49C433C8;
-        Tue,  3 Nov 2020 17:28:16 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org E6C49C433C8
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 2239EC433C6;
+        Tue,  3 Nov 2020 17:29:55 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 2239EC433C6
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=jcrouse@codeaurora.org
-Date:   Tue, 3 Nov 2020 10:28:13 -0700
+Date:   Tue, 3 Nov 2020 10:29:52 -0700
 From:   Jordan Crouse <jcrouse@codeaurora.org>
-To:     Robin Murphy <robin.murphy@arm.com>
-Cc:     linux-arm-msm@vger.kernel.org, iommu@lists.linux-foundation.org,
-        Will Deacon <will@kernel.org>,
-        Rob Clark <robdclark@chromium.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Joerg Roedel <joro@8bytes.org>,
-        Krishna Reddy <vdumpa@nvidia.com>,
-        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Thierry Reding <treding@nvidia.com>,
-        Vivek Gautam <vivek.gautam@codeaurora.org>,
-        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v18 2/4] iommu/arm-smmu: Add a way for implementations to
- influence SCTLR
-Message-ID: <20201103172813.GA5934@jcrouse1-lnx.qualcomm.com>
-Mail-Followup-To: Robin Murphy <robin.murphy@arm.com>,
-        linux-arm-msm@vger.kernel.org, iommu@lists.linux-foundation.org,
-        Will Deacon <will@kernel.org>, Rob Clark <robdclark@chromium.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Joerg Roedel <joro@8bytes.org>, Krishna Reddy <vdumpa@nvidia.com>,
-        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Thierry Reding <treding@nvidia.com>,
-        Vivek Gautam <vivek.gautam@codeaurora.org>,
-        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org
-References: <20201102171416.654337-1-jcrouse@codeaurora.org>
- <20201102171416.654337-3-jcrouse@codeaurora.org>
- <0a00c162-ad77-46b7-85ad-e11229b57a3d@arm.com>
+To:     Marijn Suijten <marijn.suijten@somainline.org>
+Cc:     robdclark@gmail.com, konrad.dybcio@somainline.org,
+        martin.botka@somainline.org, phone-devel@vger.kernel.org,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Konrad Dybcio <konradybcio@gmail.com>,
+        AngeloGioacchino Del Regno <kholk11@gmail.com>,
+        Eric Anholt <eric@anholt.net>, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] drm/msm: a5xx: Make preemption reset case reentrant
+Message-ID: <20201103172951.GB5934@jcrouse1-lnx.qualcomm.com>
+Mail-Followup-To: Marijn Suijten <marijn.suijten@somainline.org>,
+        robdclark@gmail.com, konrad.dybcio@somainline.org,
+        martin.botka@somainline.org, phone-devel@vger.kernel.org,
+        AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Konrad Dybcio <konradybcio@gmail.com>,
+        AngeloGioacchino Del Regno <kholk11@gmail.com>,
+        Eric Anholt <eric@anholt.net>, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        linux-kernel@vger.kernel.org
+References: <20201102200227.8876-1-marijn.suijten@somainline.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <0a00c162-ad77-46b7-85ad-e11229b57a3d@arm.com>
+In-Reply-To: <20201102200227.8876-1-marijn.suijten@somainline.org>
 User-Agent: Mutt/1.5.24 (2015-08-30)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Nov 02, 2020 at 06:18:45PM +0000, Robin Murphy wrote:
-> On 2020-11-02 17:14, Jordan Crouse wrote:
-> >From: Rob Clark <robdclark@chromium.org>
-> >
-> >For the Adreno GPU's SMMU, we want SCTLR.HUPCF set to ensure that
-> >pending translations are not terminated on iova fault.  Otherwise
-> >a terminated CP read could hang the GPU by returning invalid
-> >command-stream data.
-> >
-> >Signed-off-by: Rob Clark <robdclark@chromium.org>
-> >Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-> >Signed-off-by: Jordan Crouse <jcrouse@codeaurora.org>
-> >---
-> >
-> >  drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c | 6 ++++++
-> >  drivers/iommu/arm/arm-smmu/arm-smmu.c      | 3 +++
-> >  drivers/iommu/arm/arm-smmu/arm-smmu.h      | 3 +++
-> >  3 files changed, 12 insertions(+)
-> >
-> >diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-> >index 1e942eed2dfc..0663d7d26908 100644
-> >--- a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-> >+++ b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-> >@@ -129,6 +129,12 @@ static int qcom_adreno_smmu_init_context(struct arm_smmu_domain *smmu_domain,
-> >  	    (smmu_domain->cfg.fmt == ARM_SMMU_CTX_FMT_AARCH64))
-> >  		pgtbl_cfg->quirks |= IO_PGTABLE_QUIRK_ARM_TTBR1;
-> >+	/*
-> >+	 * On the GPU device we want to process subsequent transactions after a
-> >+	 * fault to keep the GPU from hanging
-> >+	 */
-> >+	smmu_domain->cfg.sctlr_set |= ARM_SMMU_SCTLR_HUPCF;
-> >+
-> >  	/*
-> >  	 * Initialize private interface with GPU:
-> >  	 */
-> >diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu.c b/drivers/iommu/arm/arm-smmu/arm-smmu.c
-> >index dad7fa86fbd4..1f06ab219819 100644
-> >--- a/drivers/iommu/arm/arm-smmu/arm-smmu.c
-> >+++ b/drivers/iommu/arm/arm-smmu/arm-smmu.c
-> >@@ -617,6 +617,9 @@ void arm_smmu_write_context_bank(struct arm_smmu_device *smmu, int idx)
-> >  	if (IS_ENABLED(CONFIG_CPU_BIG_ENDIAN))
-> >  		reg |= ARM_SMMU_SCTLR_E;
-> >+	reg |= cfg->sctlr_set;
-> >+	reg &= ~cfg->sctlr_clr;
+On Mon, Nov 02, 2020 at 09:02:25PM +0100, Marijn Suijten wrote:
+> nr_rings is reset to 1, but when this function is called for a second
+> (and third!) time nr_rings > 1 is false, thus the else case is entered
+> to set up a buffer for the RPTR shadow and consequently written to
+> RB_RPTR_ADDR, hanging platforms without WHERE_AM_I firmware support.
 > 
-> Since we now have a write_s2cr hook, I'm inclined to think that the
-> consistency of a write_sctlr hook that could similarly apply its own
-> arbitrary tweaks would make sense for this. Does anyone have any strong
-> opinions?
-
-None from me. That would make an eventual stall-on-fault implementation easier
-too.
-
-Jordan
-
-> Robin.
+> Restructure the condition in such a way that shadow buffer setup only
+> ever happens when has_whereami is true; otherwise preemption is only
+> finalized when the number of ring buffers has not been reset to 1 yet.
 > 
-> >+
-> >  	arm_smmu_cb_write(smmu, idx, ARM_SMMU_CB_SCTLR, reg);
-> >  }
-> >diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu.h b/drivers/iommu/arm/arm-smmu/arm-smmu.h
-> >index 6c5ff9999eae..ddf2ca4c923d 100644
-> >--- a/drivers/iommu/arm/arm-smmu/arm-smmu.h
-> >+++ b/drivers/iommu/arm/arm-smmu/arm-smmu.h
-> >@@ -144,6 +144,7 @@ enum arm_smmu_cbar_type {
-> >  #define ARM_SMMU_CB_SCTLR		0x0
-> >  #define ARM_SMMU_SCTLR_S1_ASIDPNE	BIT(12)
-> >  #define ARM_SMMU_SCTLR_CFCFG		BIT(7)
-> >+#define ARM_SMMU_SCTLR_HUPCF		BIT(8)
-> >  #define ARM_SMMU_SCTLR_CFIE		BIT(6)
-> >  #define ARM_SMMU_SCTLR_CFRE		BIT(5)
-> >  #define ARM_SMMU_SCTLR_E		BIT(4)
-> >@@ -341,6 +342,8 @@ struct arm_smmu_cfg {
-> >  		u16			asid;
-> >  		u16			vmid;
-> >  	};
-> >+	u32				sctlr_set;    /* extra bits to set in SCTLR */
-> >+	u32				sctlr_clr;    /* bits to mask in SCTLR */
-> >  	enum arm_smmu_cbar_type		cbar;
-> >  	enum arm_smmu_context_fmt	fmt;
-> >  };
-> >
+> Fixes: 8907afb476ac ("drm/msm: Allow a5xx to mark the RPTR shadow as privileged")
+> Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
+> Tested-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
+
+Way better. Thanks for doing this.
+
+Reviewed-by: Jordan Crouse <jcrouse@codeaurora.org>
+
+> ---
+>  drivers/gpu/drm/msm/adreno/a5xx_gpu.c | 12 ++++++------
+>  1 file changed, 6 insertions(+), 6 deletions(-)
+> 
+> diff --git a/drivers/gpu/drm/msm/adreno/a5xx_gpu.c b/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
+> index d6804a802355..9a202a7da131 100644
+> --- a/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
+> +++ b/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
+> @@ -755,12 +755,8 @@ static int a5xx_hw_init(struct msm_gpu *gpu)
+>  	gpu_write(gpu, REG_A5XX_CP_RB_CNTL,
+>  		MSM_GPU_RB_CNTL_DEFAULT | AXXX_CP_RB_CNTL_NO_UPDATE);
+>  
+> -	/* Disable preemption if WHERE_AM_I isn't available */
+> -	if (!a5xx_gpu->has_whereami && gpu->nr_rings > 1) {
+> -		a5xx_preempt_fini(gpu);
+> -		gpu->nr_rings = 1;
+> -	} else {
+> -		/* Create a privileged buffer for the RPTR shadow */
+> +	/* Create a privileged buffer for the RPTR shadow */
+> +	if (a5xx_gpu->has_whereami) {
+>  		if (!a5xx_gpu->shadow_bo) {
+>  			a5xx_gpu->shadow = msm_gem_kernel_new(gpu->dev,
+>  				sizeof(u32) * gpu->nr_rings,
+> @@ -774,6 +770,10 @@ static int a5xx_hw_init(struct msm_gpu *gpu)
+>  
+>  		gpu_write64(gpu, REG_A5XX_CP_RB_RPTR_ADDR,
+>  			REG_A5XX_CP_RB_RPTR_ADDR_HI, shadowptr(a5xx_gpu, gpu->rb[0]));
+> +	} else if (gpu->nr_rings > 1) {
+> +		/* Disable preemption if WHERE_AM_I isn't available */
+> +		a5xx_preempt_fini(gpu);
+> +		gpu->nr_rings = 1;
+>  	}
+>  
+>  	a5xx_preempt_hw_init(gpu);
+> -- 
+> 2.29.2
+> 
 
 -- 
 The Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum,
