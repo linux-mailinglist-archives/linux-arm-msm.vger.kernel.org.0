@@ -2,100 +2,130 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 88DF62A45B5
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Nov 2020 13:58:25 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3279A2A45C5
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Nov 2020 13:58:54 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729069AbgKCM6X (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 3 Nov 2020 07:58:23 -0500
-Received: from z5.mailgun.us ([104.130.96.5]:44438 "EHLO z5.mailgun.us"
+        id S1728435AbgKCM63 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 3 Nov 2020 07:58:29 -0500
+Received: from m42-4.mailgun.net ([69.72.42.4]:16929 "EHLO m42-4.mailgun.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1729053AbgKCM6W (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 3 Nov 2020 07:58:22 -0500
+        id S1729089AbgKCM61 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 3 Nov 2020 07:58:27 -0500
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1604408301; h=Content-Transfer-Encoding: MIME-Version:
- Message-Id: Date: Subject: Cc: To: From: Sender;
- bh=l5vV2ZlXF8y6CRsqUNbo4YItI4HCWM0SIqYCxVDjxsk=; b=IDlrqhrD8uJbaFhnK4UJDXty1fxqbG6n6DFB4b1DpKhGqupdcjjNg7Iv6cw1nBf8nUTC1i8G
- TmU6cck9iHG+uxnhSnDEvIXrv4r5JZMKGEUfLv7iHlAq/9HM2ftX5ekFnGgQi7ComraUnnTY
- Di+RBeKmMNqxRaM96+U5PZZGaKY=
-X-Mailgun-Sending-Ip: 104.130.96.5
+ s=smtp; t=1604408307; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=Vl1gSkuYNKu59mDRMCZ/CekkC7CyDy0hSBNDzA19YYI=; b=E+dTPstG/eXOuHQPFqTQJkr9wKISjSRAB7wrfIPdctYSyWfMLQEDH4O3lM4cu8bFguENdUBp
+ onEZpizOIsAgkIx33iO7QlZXKbO6tLs3k4+T5o4t15/aM9EU+nZVHvl7mXupygY0S7jsn3P7
+ GTfEo6u+0ZoQnt/FpN3iCDLoC60=
+X-Mailgun-Sending-Ip: 69.72.42.4
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org
  (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n04.prod.us-west-2.postgun.com with SMTP id
- 5fa153eb0ce128468bdfb354 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 03 Nov 2020 12:58:19
+ smtp-out-n05.prod.us-east-1.postgun.com with SMTP id
+ 5fa153ecb64b1c5b78f96c51 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 03 Nov 2020 12:58:20
  GMT
-Sender: abhinavk=codeaurora.org@mg.codeaurora.org
+Sender: sidgup=codeaurora.org@mg.codeaurora.org
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 0957EC433F0; Tue,  3 Nov 2020 01:10:33 +0000 (UTC)
+        id 46297C3853C; Tue,  3 Nov 2020 09:19:30 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
 X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
         URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
-Received: from abhinavk-linux.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+Received: from sidgup-linux.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
         (No client certificate requested)
-        (Authenticated sender: abhinavk)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id B7CC9C433C6;
-        Tue,  3 Nov 2020 01:10:31 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org B7CC9C433C6
+        (Authenticated sender: sidgup)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 2C27CC38537;
+        Tue,  3 Nov 2020 09:19:29 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 2C27CC38537
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=abhinavk@codeaurora.org
-From:   Abhinav Kumar <abhinavk@codeaurora.org>
-To:     dri-devel@lists.freedesktop.org
-Cc:     Abhinav Kumar <abhinavk@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
-        robdclark@gmail.com, seanpaul@chromium.org, swboyd@chromium.org,
-        nganji@codeaurora.org, aravindh@codeaurora.org,
-        tanmay@codeaurora.org, khsieh@codeaurora.org, cychiang@chromium.org
-Subject: [PATCH v2] drm/msm/dp: do not notify audio subsystem if sink doesn't support audio
-Date:   Mon,  2 Nov 2020 17:10:23 -0800
-Message-Id: <20201103011023.21365-1-abhinavk@codeaurora.org>
-X-Mailer: git-send-email 2.23.0
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=sidgup@codeaurora.org
+From:   Siddharth Gupta <sidgup@codeaurora.org>
+To:     agross@kernel.org, bjorn.andersson@linaro.org, ohad@wizery.com,
+        linux-remoteproc@vger.kernel.org
+Cc:     Siddharth Gupta <sidgup@codeaurora.org>,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org, tsoni@codeaurora.org,
+        psodagud@codeaurora.org, rishabhb@codeaurora.org,
+        linux-doc@vger.kernel.org
+Subject: [PATCH v7 0/4] Introduce mini-dump support for remoteproc
+Date:   Tue,  3 Nov 2020 01:19:16 -0800
+Message-Id: <1604395160-12443-1-git-send-email-sidgup@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-For sinks that do not support audio, there is no need to notify
-audio subsystem of the connection event.
+Sometimes firmware sizes can be in tens of MB's and reading all the memory
+during coredump can consume lot of time and memory.
 
-This will make sure that audio routes only to the primary display
-when connected to such sinks.
+Introducing support for mini-dumps. Mini-dump contains smallest amount of
+useful information, that could help to debug subsystem crashes.
 
-changes in v2:
-  - Added fixes tag
-  - Removed nested if condition and removed usage of global pointer
+During bootup memory is allocated in SMEM (Shared memory) in the form of a
+table that contains the physical addresses and sizes of the regions that
+are supposed to be collected during coredump. This memory is shared amongst
+all processors in a Qualcomm platform, so all remoteprocs fill in their
+entry in the global table once they are out of reset.
 
-Fixes: d13e36d7d222 ("drm/msm/dp: add audio support for Display Port on MSM")
-Signed-off-by: Abhinav Kumar <abhinavk@codeaurora.org>
----
- drivers/gpu/drm/msm/dp/dp_display.c | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+This patch series adds support for parsing the global minidump table and
+uses the current coredump frameork to expose this memory to userspace
+during remoteproc's recovery.
 
-diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
-index 2f72817ca24f..3f59ba8fcde5 100644
---- a/drivers/gpu/drm/msm/dp/dp_display.c
-+++ b/drivers/gpu/drm/msm/dp/dp_display.c
-@@ -549,7 +549,14 @@ static int dp_connect_pending_timeout(struct dp_display_private *dp, u32 data)
- static void dp_display_handle_plugged_change(struct msm_dp *dp_display,
- 		bool plugged)
- {
--	if (dp_display->plugged_cb && dp_display->codec_dev)
-+	struct dp_display_private *dp;
-+
-+	dp = container_of(dp_display,
-+			struct dp_display_private, dp_display);
-+
-+	/* notify audio subsystem only if sink supports audio */
-+	if (dp_display->plugged_cb && dp_display->codec_dev &&
-+			dp->audio_supported)
- 		dp_display->plugged_cb(dp_display->codec_dev, plugged);
- }
- 
+This patch series also integrates the patch:
+https://patchwork.kernel.org/patch/11695541/ sent by Siddharth.
+
+Changelog:
+v6 -> v7:
+- The STR_TAB size is calculated dynamically now instead of a predefined size.
+- Added comments to indicate details about the reserved null section header. More
+  details can be found at https://refspecs.linuxfoundation.org/elf/elf.pdf.
+
+v5 -> v6:
+- Removed priv_cleanup operation from rproc_ops. The dump_segments list is
+  updated and cleaned up each time minidump is invoked.
+- Split patch #2 into 2 parts - one that adds the rproc_minidump function, and
+  the other that uses the new function in the qcom_q6v5_pas driver.
+- Updated structs in qcom_minidump to explicitly indicate the endianness of the
+  data stored in SMEM, also updated member names.
+- Read the global table of contents in SMEM each time adsp_minidump is invoked.
+
+v4 -> v5:
+- Fixed adsp_add_minidump_segments to read IO memory using appropriate functions.
+
+v3 -> v4:
+- Made adsp_priv_cleanup a static function.
+
+v2 -> v3:
+- Refactored code to remove dependency on Qualcomm configs.
+- Renamed do_rproc_minidump to rproc_minidump and marked as exported
+  symbol.
+
+v1 -> v2:
+- 3 kernel test robot warnings have been resolved.
+- Introduced priv_cleanup op in order to making the cleaning of
+  private elements used by the remoteproc more readable.
+- Removed rproc_cleanup_priv as it is no longer needed.
+- Switched to if/else format for rproc_alloc in order to keep 
+  the static const decalaration of adsp_minidump_ops.
+
+Siddharth Gupta (4):
+  remoteproc: core: Add ops to enable custom coredump functionality
+  remoteproc: coredump: Add minidump functionality
+  remoteproc: qcom: Add capability to collect minidumps
+  remoteproc: qcom: Add minidump id for sm8150 modem
+
+ drivers/remoteproc/qcom_minidump.h          |  64 +++++++++++++
+ drivers/remoteproc/qcom_q6v5_pas.c          | 105 ++++++++++++++++++++-
+ drivers/remoteproc/remoteproc_core.c        |   6 +-
+ drivers/remoteproc/remoteproc_coredump.c    | 140 ++++++++++++++++++++++++++++
+ drivers/remoteproc/remoteproc_elf_helpers.h |  26 ++++++
+ include/linux/remoteproc.h                  |   3 +
+ 6 files changed, 341 insertions(+), 3 deletions(-)
+ create mode 100644 drivers/remoteproc/qcom_minidump.h
+
 -- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
 a Linux Foundation Collaborative Project
 
