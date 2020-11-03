@@ -2,171 +2,215 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 569142A4B37
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Nov 2020 17:24:30 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 632EA2A4B57
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Nov 2020 17:26:22 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728052AbgKCQY3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 3 Nov 2020 11:24:29 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37120 "EHLO
+        id S1727968AbgKCQ0V (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 3 Nov 2020 11:26:21 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37438 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727883AbgKCQY2 (ORCPT
+        with ESMTP id S1727923AbgKCQ0U (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 3 Nov 2020 11:24:28 -0500
-Received: from mail-wr1-x444.google.com (mail-wr1-x444.google.com [IPv6:2a00:1450:4864:20::444])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9871FC061A04
-        for <linux-arm-msm@vger.kernel.org>; Tue,  3 Nov 2020 08:24:28 -0800 (PST)
-Received: by mail-wr1-x444.google.com with SMTP id p1so19633wrf.12
-        for <linux-arm-msm@vger.kernel.org>; Tue, 03 Nov 2020 08:24:28 -0800 (PST)
+        Tue, 3 Nov 2020 11:26:20 -0500
+Received: from mail-ot1-x343.google.com (mail-ot1-x343.google.com [IPv6:2607:f8b0:4864:20::343])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B87DBC0617A6
+        for <linux-arm-msm@vger.kernel.org>; Tue,  3 Nov 2020 08:26:20 -0800 (PST)
+Received: by mail-ot1-x343.google.com with SMTP id i18so11771048ots.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 03 Nov 2020 08:26:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=subject:to:cc:references:from:autocrypt:message-id:date
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=TWMGG87FE9uxAtDy09w/VsVP9sl7tO1y2QmrppQSsaE=;
-        b=IpbtN+UAsR8RU2BqqBRla23ltFM1COkP4gRGqcT5GOM8fNoEJ/7+Fex9YAGctIm1+c
-         cu6th1RS9ruyiCKj+n96Bju2w8T3vmX33aQLPVJQH8oKa0PtHJb3YxnZk49NYIzTFO5l
-         rRFTUgzc1a6dRkxSfVc5H4qXjOwDsBYyNG/3ge/bFHdJLMLgiZBisemjVAm+RMTX8ak2
-         3yLLrMKMYjOiPa+bzCFeeTrVf1o2hlB/H2qPzr88Dk4q9VO4JT7HDrHI+MeA6+d+tkWo
-         XtOc6ICOOjharPDlq1moJUkhnzGkw+d3YjNdtDqsdtTLfwimf/b9kS7ryBlZhvyUtFwH
-         dloA==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=AUwE9Rysw1nQCYcg+XE2XA62F+xkLhn1VmBT0V3THV0=;
+        b=Q9bY4D8l+m7nmefBKpOmlCB8Nu6/VT3gTZ0CN+qvHXPYZtOjEifl3iNd+MhJ27Y+Xx
+         9him88J4ok1SYgqz/DKI6Kro8JmvGA5Dc6lVmKRAIz3w7CcxGFH7AjFVv8aKWhCnZOwZ
+         uUrQ4mMfM/qGGTTwxufNgetRnvER8/AxCTuc5lh9g7+TtEoJlLpzl+HkM8qGFl3wphWU
+         W8k6jJx4JrIUZb/M+QT7NuT3JdGwKBHsB4NPmt1tqfJPe5uiVPMndV7nSwHyKetwGfkk
+         lXdCGAGiMT7vs26Y0g9pBCraWWiXGLAcUjS6kejb2X3E2+NxwT+HOtUQvRmogdY1VSBW
+         GnSg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:autocrypt
-         :message-id:date:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=TWMGG87FE9uxAtDy09w/VsVP9sl7tO1y2QmrppQSsaE=;
-        b=pYfhdv7zp3r+KBcxe8h0pYTYxj8OVDmB+yIsQkHAG8MtaKumSvnSaxrFAhRDqwgumI
-         ejonbfEKdhIGldjL5mTMQozppDaef8VOeB3UIpiFWpjtBQmSaVtjuNVuR5RotwQvIdfW
-         JglN+IB8QTAIT7T02zHyMS5YU1tmV8+yd6FZXPbzO015FHWwz1g6084akJg3ysBjFJjj
-         3koRT3DoScDo8JH/vJu6/nqMVVCnFzSk1qKXmmhKs4k3q4s/LwC6dmJPlXYakcX3u2uj
-         Jg2d3JYY66gHicEENMa390TNnG4OnPXBEGfaWOQ2B6cpp+5Jqq3aT1IqTUJKme/FaTV7
-         kRJg==
-X-Gm-Message-State: AOAM53025KrQeLwFCaeXX0i/gD3SuXg+ixbPUQbaAL84MsdTuWgiS/t0
-        37Xw3DEBkB9n9kRXbKQ4KGeLAw==
-X-Google-Smtp-Source: ABdhPJy0oLpmlcWd27VCnlo6WCwvu/BBtbCPPJyhvx1h7cnN5MGLYbhvprlPg1+nexxBU9uS13F88A==
-X-Received: by 2002:adf:e2c9:: with SMTP id d9mr26915653wrj.11.1604420667261;
-        Tue, 03 Nov 2020 08:24:27 -0800 (PST)
-Received: from [10.44.66.8] ([212.45.67.2])
-        by smtp.googlemail.com with ESMTPSA id b136sm3286005wmb.21.2020.11.03.08.24.25
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 03 Nov 2020 08:24:26 -0800 (PST)
-Subject: Re: [PATCH v4 2/2] interconnect: qcom: Add SDM660 interconnect
- provider driver
-To:     kholk11@gmail.com
-Cc:     bjorn.andersson@linaro.org, robh+dt@kernel.org, agross@kernel.org,
-        marijns95@gmail.com, konradybcio@gmail.com,
-        martin.botka1@gmail.com, linux-arm-msm@vger.kernel.org,
-        phone-devel@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20201017133718.31327-1-kholk11@gmail.com>
- <20201017133718.31327-3-kholk11@gmail.com>
-From:   Georgi Djakov <georgi.djakov@linaro.org>
-Autocrypt: addr=georgi.djakov@linaro.org; prefer-encrypt=mutual; keydata=
- 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
- KEmKjLDvB0pePJkdTw==
-Message-ID: <24ad51dd-ff54-35af-a7bc-92d8cfa30c48@linaro.org>
-Date:   Tue, 3 Nov 2020 18:24:28 +0200
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=AUwE9Rysw1nQCYcg+XE2XA62F+xkLhn1VmBT0V3THV0=;
+        b=cBdVK4RA7wMPKXiPWdIfaEgw5whGWzkKq9fmWw5NVIHrwVm9v5TDutOJdz5ZBMf6F5
+         p2EV8P0Rsf0GOSqy4eId8WiY/bahMBcnGrdRgQwb1ggND7CylgC64nSqesXQk7oDMJL9
+         sGKapY856VWMveuW3e038QG2Lc+DglQNxaeuPWYnhX2AbVD6pmzBtGDXQUFupO+v+atR
+         ntAWX+moVu3tDbM/FlRDhQDcPKjKn7Zu1j7ANkqhPUpHrMFg/h1jWY+CTnuVAMx7uYwj
+         G3rqasmJLrn1kw0R9dqBzevWaiAoDMucAlyWrXbhGHuhhJ9X5ZcTRdCDO/j9Z/4XLCg5
+         c3BA==
+X-Gm-Message-State: AOAM533qnMVbCoT3UZlCwYPevSwyKkkWvtdGwbz//EMe8QzdZ/jEJb+3
+        5rTtID8wtGnZ3UhoR8bjh5t4tA==
+X-Google-Smtp-Source: ABdhPJxZL9kMeoA6m7/GwIoujaBpWXDJ5FAQNwuWiO+6snPsyt5gkY8V2BzjUIOXlM5MugE3FLt4uw==
+X-Received: by 2002:a05:6830:2401:: with SMTP id j1mr9244756ots.235.1604420779988;
+        Tue, 03 Nov 2020 08:26:19 -0800 (PST)
+Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
+        by smtp.gmail.com with ESMTPSA id 72sm2532704otd.11.2020.11.03.08.26.17
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 03 Nov 2020 08:26:18 -0800 (PST)
+Date:   Tue, 3 Nov 2020 10:26:16 -0600
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Vinod Koul <vkoul@kernel.org>
+Cc:     Linus Walleij <linus.walleij@linaro.org>,
+        linux-arm-msm@vger.kernel.org,
+        Jeevan Shriram <jshriram@codeaurora.org>,
+        Andy Gross <agross@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        linux-gpio@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2 2/2] pinctrl: qcom: Add SDX55 pincontrol driver
+Message-ID: <20201103162616.GN3151@builder.lan>
+References: <20201103055801.472736-1-vkoul@kernel.org>
+ <20201103055801.472736-2-vkoul@kernel.org>
 MIME-Version: 1.0
-In-Reply-To: <20201017133718.31327-3-kholk11@gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20201103055801.472736-2-vkoul@kernel.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 10/17/20 16:37, kholk11@gmail.com wrote:
-> From: AngeloGioacchino Del Regno <kholk11@gmail.com>
+On Mon 02 Nov 23:58 CST 2020, Vinod Koul wrote:
+
+> From: Jeevan Shriram <jshriram@codeaurora.org>
 > 
-> Introduce a driver for the Qualcomm interconnect busses found in
-> the SDM630/SDM636/SDM660 SoCs.
-> The topology consists of several NoCs that are controlled by a
-> remote processor that collects the aggregated bandwidth for each
-> master-slave pairs.
+> Add initial Qualcomm SDX55 pinctrl driver to support pin configuration
+> with pinctrl framewor for SDX55 SoC.
 > 
-> On a note, these chips are managing the "bus QoS" in a "hybrid"
-> fashion: some of the paths in the topology are managed through
-> (and by, of course) the RPM uC, while some others are "AP Owned",
-> meaning that the AP shall do direct writes to the appropriate
-> QoS registers for the specific paths and ports, instead of sending
-> an indication to the RPM and leaving the job to that one.
-> 
-> Signed-off-by: AngeloGioacchino Del Regno <kholk11@gmail.com>
+> Signed-off-by: Jeevan Shriram <jshriram@codeaurora.org>
+> [ported from downstream and tidy up]
+> Signed-off-by: Vinod Koul <vkoul@kernel.org>
 > ---
->  drivers/interconnect/qcom/Kconfig  |   9 +
->  drivers/interconnect/qcom/Makefile |   2 +
->  drivers/interconnect/qcom/sdm660.c | 922 +++++++++++++++++++++++++++++
->  3 files changed, 933 insertions(+)
->  create mode 100644 drivers/interconnect/qcom/sdm660.c
-> 
-[..]> +static const struct of_device_id sdm660_noc_of_match[] = {
-> +	{ .compatible = "qcom,sdm660-a2noc", .data = &sdm660_a2noc },
-> +	{ .compatible = "qcom,sdm660-bimc", .data = &sdm660_bimc },
-> +	{ .compatible = "qcom,sdm660-cnoc", .data = &sdm660_cnoc },
-> +	{ .compatible = "qcom,sdm660-gnoc", .data = &sdm660_gnoc },
-> +	{ .compatible = "qcom,sdm660-mnoc", .data = &sdm660_mnoc },
-> +	{ .compatible = "qcom,sdm660-snoc", .data = &sdm660_snoc },
-> +	{ },
+
+No changes since v1? ;)
+
+>  drivers/pinctrl/qcom/Kconfig         |    9 +
+>  drivers/pinctrl/qcom/Makefile        |    1 +
+>  drivers/pinctrl/qcom/pinctrl-sdx55.c | 1018 ++++++++++++++++++++++++++
+>  3 files changed, 1028 insertions(+)
+>  create mode 100644 drivers/pinctrl/qcom/pinctrl-sdx55.c
+[..]
+> diff --git a/drivers/pinctrl/qcom/pinctrl-sdx55.c b/drivers/pinctrl/qcom/pinctrl-sdx55.c
+[..]
+> +static const struct msm_pingroup sdx55_groups[] = {
+> +	[0] = PINGROUP(0, uim2_data, blsp_uart1, qdss_stm, ebi0_wrcdc, _, _, _, _, _),
+> +	[1] = PINGROUP(1, uim2_present, blsp_uart1, qdss_stm, _, _, _, _, _, _),
+> +	[2] = PINGROUP(2, uim2_reset, blsp_uart1, blsp_i2c1, qdss_stm, ebi0_wrcdc, _, _, _, _),
+> +	[3] = PINGROUP(3, uim2_clk, blsp_uart1, blsp_i2c1, qdss_stm, _, _, _, _, _),
+> +	[4] = PINGROUP(4, blsp_spi2, blsp_uart2, _, qdss_stm, qdss_gpio, _, _, _, _),
+> +	[5] = PINGROUP(5, blsp_spi2, blsp_uart2, _, qdss_stm, qdss_gpio, _, _, _, _),
+> +	[6] = PINGROUP(6, blsp_spi2, blsp_uart2, blsp_i2c2, char_exec, _, qdss_stm, qdss_gpio, _, _),
+> +	[7] = PINGROUP(7, blsp_spi2, blsp_uart2, blsp_i2c2, char_exec, _, qdss_stm, qdss_gpio, _, _),
+> +	[8] = PINGROUP(8, pri_mi2s, blsp_spi3, blsp_uart3, ext_dbg, ldo_en, _, _, _, _),
+> +	[9] = PINGROUP(9, pri_mi2s, blsp_spi3, blsp_uart3, ext_dbg, _, _, _, _, _),
+> +	[10] = PINGROUP(10, pri_mi2s, blsp_spi3, blsp_uart3, blsp_i2c3, ext_dbg, _, _, _, _),
+> +	[11] = PINGROUP(11, pri_mi2s, blsp_spi3, blsp_uart3, blsp_i2c3, ext_dbg, gcc_gp3, _, _, _),
+> +	[12] = PINGROUP(12, pri_mi2s, _, qdss_stm, qdss_gpio, _, _, _, _, _),
+> +	[13] = PINGROUP(13, pri_mi2s, _, qdss_stm, qdss_gpio, _, _, _, _, _),
+> +	[14] = PINGROUP(14, pri_mi2s, emac_gcc1, _, _, qdss_stm, qdss_gpio, bimc_dte0, native_tsens, vsense_trigger),
+> +	[15] = PINGROUP(15, pri_mi2s, emac_gcc0, _, _, qdss_stm, qdss_gpio, bimc_dte1, _, _),
+> +	[16] = PINGROUP(16, sec_mi2s, blsp_spi4, blsp_uart4, qdss_cti, qdss_cti, _, _, qdss_stm, qdss_gpio),
+> +	[17] = PINGROUP(17, sec_mi2s, blsp_spi4, blsp_uart4, qdss_cti, qdss_cti, _, qdss_stm, qdss_gpio, _),
+> +	[18] = PINGROUP(18, sec_mi2s, blsp_spi4, blsp_uart4, blsp_i2c4, gcc_gp1, qdss_stm, qdss_gpio, _, _),
+> +	[19] = PINGROUP(19, sec_mi2s, blsp_spi4, blsp_uart4, blsp_i2c4, jitter_bist, gcc_gp2, _, qdss_stm, qdss_gpio),
+> +	[20] = PINGROUP(20, sec_mi2s, ebi2_a, blsp_uart1, blsp_uart4, qdss_stm, _, _, _, _),
+> +	[21] = PINGROUP(21, sec_mi2s, ebi2_lcd, blsp_uart1, blsp_uart4, _, qdss_stm, _, _, _),
+> +	[22] = PINGROUP(22, sec_mi2s, ebi2_lcd, blsp_uart1, qdss_cti, qdss_cti, blsp_uart4, pll_bist, _, qdss_stm),
+> +	[23] = PINGROUP(23, sec_mi2s, ebi2_lcd, qdss_cti, qdss_cti, blsp_uart1, blsp_uart4, qdss_stm, _, _),
+> +	[24] = PINGROUP(24, adsp_ext, _, _, _, _, _, _, _, _),
+> +	[25] = PINGROUP(25, adsp_ext, _, _, _, _, _, _, _, _),
+> +	[26] = PINGROUP(26, _, _, _, native_char, _, _, _, _, _),
+> +	[27] = PINGROUP(27, _, _, _, _, _, _, _, _, _),
+> +	[28] = PINGROUP(28, qlink0_wmss, _, native_char3, _, _, _, _, _, _),
+> +	[29] = PINGROUP(29, _, _, _, native_char2, native_tsense, _, _, _, _),
+> +	[30] = PINGROUP(30, _, _, _, _, _, _, _, _, _),
+> +	[31] = PINGROUP(31, nav_gpio, _, _, _, _, _, _, _, _),
+> +	[32] = PINGROUP(32, nav_gpio, pll_ref, _, _, _, _, _, _, _),
+> +	[33] = PINGROUP(33, _, pa_indicator, native_char0, _, _, _, _, _, _),
+> +	[34] = PINGROUP(34, qlink0_en, _, _, _, _, _, _, _, _),
+> +	[35] = PINGROUP(35, qlink0_req, pll_test, _, _, _, _, _, _, _),
+> +	[36] = PINGROUP(36, _, _, cri_trng, dbg_out, _, _, _, _, _),
+> +	[37] = PINGROUP(37, _, _, _, _, _, _, _, _, _),
+> +	[38] = PINGROUP(38, _, _, prng_rosc, _, _, _, _, _, _),
+> +	[39] = PINGROUP(39, _, _, _, _, _, _, _, _, _),
+> +	[40] = PINGROUP(40, _, _, cri_trng0, _, _, _, _, _, _),
+> +	[41] = PINGROUP(41, _, _, cri_trng1, _, _, _, _, _, _),
+> +	[42] = PINGROUP(42, _, qdss_gpio, native_char1, _, _, _, _, _, _),
+> +	[43] = PINGROUP(43, _, _, _, _, _, _, _, _, _),
+> +	[44] = PINGROUP(44, coex_uart, spmi_coex, _, qdss_stm, _, _, _, _, _),
+> +	[45] = PINGROUP(45, coex_uart, spmi_coex, qdss_stm, ddr_pxi0, _, _, _, _, _),
+> +	[46] = PINGROUP(46, m_voc, ddr_bist, ddr_pxi0, _, _, _, _, _, _),
+> +	[47] = PINGROUP(47, ddr_bist, _, _, _, _, _, _, _, _),
+> +	[48] = PINGROUP(48, m_voc, ddr_bist, _, _, _, _, _, _, _),
+> +	[49] = PINGROUP(49, m_voc, ddr_bist, _, _, _, _, _, _, _),
+> +	[50] = PINGROUP(50, _, _, _, _, _, _, _, _, _),
+> +	[51] = PINGROUP(51, _, _, _, _, _, _, _, _, _),
+> +	[52] = PINGROUP(52, blsp_spi2, blsp_spi1, blsp_spi3, blsp_spi4, _, _, qdss_stm, _, _),
+> +	[53] = PINGROUP(53, pci_e, _, _, qdss_stm, _, _, _, _, _),
+> +	[54] = PINGROUP(54, qdss_cti, qdss_cti, _, _, _, _, _, _, _),
+> +	[55] = PINGROUP(55, qdss_cti, qdss_cti, tgu_ch0, _, _, _, _, _, _),
+> +	[56] = PINGROUP(56, pcie_clkreq, _, qdss_stm, _, _, _, _, _, _),
+> +	[57] = PINGROUP(57, _, qdss_stm, _, _, _, _, _, _, _),
+> +	[58] = PINGROUP(58, _, _, _, _, _, _, _, _, _),
+> +	[59] = PINGROUP(59, qdss_cti, m_voc, bimc_dte0, _, _, _, _, _, _),
+> +	[60] = PINGROUP(60, qdss_cti, _, m_voc, _, _, _, _, _, _),
+> +	[61] = PINGROUP(61, mgpi_clk, qdss_stm, qdss_gpio, bimc_dte1, _, _, _, _, _),
+> +	[62] = PINGROUP(62, i2s_mclk, audio_ref, blsp_spi1, blsp_spi2, blsp_spi3, blsp_spi4, ldo_update, qdss_stm, _),
+> +	[63] = PINGROUP(63, blsp_uart2, _, qdss_stm, qdss_gpio, atest, _, _, _, _),
+> +	[64] = PINGROUP(64, blsp_uart2, qdss_stm, qdss_gpio, atest, _, _, _, _, _),
+> +	[65] = PINGROUP(65, blsp_uart2, blsp_i2c2, _, qdss_stm, qdss_gpio, atest, _, _, _),
+> +	[66] = PINGROUP(66, blsp_uart2, blsp_i2c2, qdss_stm, qdss_gpio, atest, _, _, _, _),
+> +	[67] = PINGROUP(67, uim1_data, atest, _, _, _, _, _, _, _),
+> +	[68] = PINGROUP(68, uim1_present, _, _, _, _, _, _, _, _),
+> +	[69] = PINGROUP(69, uim1_reset, _, _, _, _, _, _, _, _),
+> +	[70] = PINGROUP(70, uim1_clk, _, _, _, _, _, _, _, _),
+> +	[71] = PINGROUP(71, mgpi_clk, blsp_spi1, blsp_spi2, blsp_spi3, blsp_spi4, _, _, _, _),
+> +	[72] = PINGROUP(72, qlink1_en, _, _, _, _, _, _, _, _),
+> +	[73] = PINGROUP(73, qlink1_req, _, _, _, _, _, _, _, _),
+> +	[74] = PINGROUP(74, qlink1_wmss, _, _, _, _, _, _, _, _),
+> +	[75] = PINGROUP(75, coex_uart2, _, _, _, _, _, _, _, _),
+> +	[76] = PINGROUP(76, coex_uart2, nav_gpio, _, _, _, _, _, _, _),
+> +	[77] = PINGROUP(77, _, _, _, _, _, _, _, _, _),
+> +	[78] = PINGROUP(78, spmi_vgi, blsp_i2c4, _, _, _, _, _, _, _),
+> +	[79] = PINGROUP(79, spmi_vgi, blsp_i2c4, _, _, _, _, _, _, _),
+> +	[80] = PINGROUP(80, _, blsp_spi1, _, _, _, _, _, _, _),
+> +	[81] = PINGROUP(81, _, blsp_spi1, _, gcc_plltest, _, _, _, _, _),
+> +	[82] = PINGROUP(82, _, blsp_spi1, _, blsp_i2c1, gcc_plltest, _, _, _, _),
+> +	[83] = PINGROUP(83, _, blsp_spi1, _, blsp_i2c1, _, _, _, _, _),
+> +	[84] = PINGROUP(84, _, _, _, _, _, _, _, _, _),
+> +	[85] = PINGROUP(85, _, _, _, _, _, _, _, _, _),
+> +	[86] = PINGROUP(86, _, _, _, _, _, _, _, _, _),
+> +	[87] = PINGROUP(87, _, _, _, _, _, _, _, _, _),
+> +	[88] = PINGROUP(88, _, _, _, _, _, _, _, _, _),
+> +	[89] = PINGROUP(89, _, _, _, _, _, _, _, _, _),
+> +	[90] = PINGROUP(90, _, _, _, _, _, _, _, _, _),
+> +	[91] = PINGROUP(91, _, _, _, _, _, _, _, _, _),
+> +	[92] = PINGROUP(92, _, _, _, _, _, _, _, _, _),
+> +	[93] = PINGROUP(93, _, _, usb2phy_ac, _, _, _, _, _, _),
+> +	[94] = PINGROUP(94, qdss_cti, qdss_cti, _, _, _, _, _, _, _),
+> +	[95] = PINGROUP(95, qdss_cti, qdss_cti, emac_pps1, _, _, _, _, _, _),
+> +	[96] = PINGROUP(96, _, _, _, _, _, _, _, _, _),
+> +	[97] = PINGROUP(97, _, _, _, _, _, _, _, _, _),
+> +	[98] = PINGROUP(98, _, _, _, _, _, _, _, _, _),
+> +	[99] = PINGROUP(99, _, _, _, _, _, _, _, _, _),
+> +	[100] = PINGROUP(100, _, _, _, _, _, _, _, _, _),
+> +	[101] = PINGROUP(101, _, _, _, _, _, _, _, _, _),
+> +	[102] = PINGROUP(102, _, _, _, _, _, _, _, _, _),
+> +	[103] = PINGROUP(103, _, _, _, _, _, _, _, _, _),
+> +	[104] = PINGROUP(104, _, _, _, _, _, _, _, _, _),
+> +	[105] = PINGROUP(105, _, _, _, _, _, _, _, _, _),
+> +	[106] = PINGROUP(106, emac_pps0, _, _, _, _, _, _, _, _),
+> +	[107] = PINGROUP(107, _, _, _, _, _, _, _, _, _),
+> +	[109] = SDC_PINGROUP(sdc1_rclk, 0x9a000, 15, 0),
+> +	[110] = SDC_PINGROUP(sdc1_clk, 0x9a000, 13, 6),
+> +	[111] = SDC_PINGROUP(sdc1_cmd, 0x9a000, 11, 3),
+> +	[112] = SDC_PINGROUP(sdc1_data, 0x9a000, 9, 0),
 > +};
-> +MODULE_DEVICE_TABLE(of, sdm660_noc_of_match);
-> +
-> +static struct platform_driver sdm660_noc_driver = {
-> +	.probe = qnoc_probe,
-> +	.remove = qnoc_remove,
-> +	.driver = {
-> +		.name = "qnoc-sdm660",
-> +		.of_match_table = sdm660_noc_of_match,
 
-Just noticed that here we should set the sync_state callback:
-		.sync_state = icc_sync_state,
+Looks better, and ngpios is good.
 
-I will fix it up before applying. Are you planning to send a patch
-that adds the DT nodes?
+Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 
 Thanks,
-Georgi
-
-> +	},
-> +};
-> +module_platform_driver(sdm660_noc_driver);
-> +MODULE_DESCRIPTION("Qualcomm sdm660 NoC driver");
-> +MODULE_LICENSE("GPL v2");
+Bjorn
