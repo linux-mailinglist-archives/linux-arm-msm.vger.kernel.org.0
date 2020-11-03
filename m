@@ -2,117 +2,93 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E8F382A4D37
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Nov 2020 18:38:53 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 6CCBD2A4D43
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Nov 2020 18:40:46 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729033AbgKCRiv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 3 Nov 2020 12:38:51 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48854 "EHLO
+        id S1728742AbgKCRko (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 3 Nov 2020 12:40:44 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49158 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728690AbgKCRiu (ORCPT
+        with ESMTP id S1728697AbgKCRko (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 3 Nov 2020 12:38:50 -0500
-Received: from mail-oi1-x242.google.com (mail-oi1-x242.google.com [IPv6:2607:f8b0:4864:20::242])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6A5E6C0617A6
-        for <linux-arm-msm@vger.kernel.org>; Tue,  3 Nov 2020 09:38:50 -0800 (PST)
-Received: by mail-oi1-x242.google.com with SMTP id w145so13529890oie.9
-        for <linux-arm-msm@vger.kernel.org>; Tue, 03 Nov 2020 09:38:50 -0800 (PST)
+        Tue, 3 Nov 2020 12:40:44 -0500
+Received: from mail-oo1-xc43.google.com (mail-oo1-xc43.google.com [IPv6:2607:f8b0:4864:20::c43])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9E72EC0613D1
+        for <linux-arm-msm@vger.kernel.org>; Tue,  3 Nov 2020 09:40:44 -0800 (PST)
+Received: by mail-oo1-xc43.google.com with SMTP id l26so4385248oop.9
+        for <linux-arm-msm@vger.kernel.org>; Tue, 03 Nov 2020 09:40:44 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=6yq0B3gvpA5I9jO0QaxOACvCmaKCwDtvfH76pkYCkZg=;
-        b=FqmmT6V8Gq5zNDIRdAcsPxa3SHsggSSNGDGshs9JNs2boyl4bwPhwJvkChemdgu8sQ
-         8g2z9V5syZcqucGxPh97feZDakb+BmVINkLo8avFUzEv38aC/OVzMdmrhq2Db3D7IDbA
-         DAE5DBqAk9bVC59sFuSRAFsy57q+Ckyl4WCT9fakS/H5JmJX/zuLpBtNOSudLhwi79Lg
-         h155UN0cN2fM/3gR5qV+FC604ThUqXqqSpxTK4Up6THGOgyx3ecwMZ4g8/CJSTPwnxsB
-         j17Jji8+K47Z/mVwX3f1Ro2UH6C0HqHfIHvR1uUfYb4f/6OoCh8XMNNALRoACXkNzB9w
-         /j6Q==
+        bh=b1f7x14StQHkJKjF4lhkVgxJQNr6aZC3WStUMGQmEuI=;
+        b=pLzQhx38L2Tyv58tW8h9VQ7XucijukO2HnfAV+puaN6ElN2hwRCuCOUumiGvxSJgMQ
+         ktXM3ZpnTgJsJWTUWcYHKfZ/4lMzeWG4/sCo9UkH2bDlLehWcfsKGA0EDN//0mZCuVTe
+         Xr87I9IiMypVvrGsxkmNGJefu6TL/XR6wCgv0rXVpdan6hV/9VJow2DbCUzTr7bTFUL4
+         vbT9OTm1CUxxaEhBKEn5DYzKSCMtsZR6TE9+gqhByS45x93txBCj14yjb+XvH2mcsr5T
+         2tMiwml2Do4vNmc4tKuxL+Wn1pSK9O4v02UwLO6QLjjDB2OBl+YDZFEZ9P5Vyq9U0VyV
+         LOJA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=6yq0B3gvpA5I9jO0QaxOACvCmaKCwDtvfH76pkYCkZg=;
-        b=XLKsuoZtmtuhzubH+uENnyrLZ9p6PuxTSi7/dIHYR5n2qLfeD8YX0l0wn0AdSLz6vv
-         8v75uzb3e4Qj1LmYpy5pCJomrhF6DgO6TYkMo5HhgItjG2Duv20asrVNXdos+tjxu/uI
-         Rvq8IXKzcDiLUxlmMnw6viuKTv4aE51Kvm0fl1vlZSVLiFHCMu3Lv4K8TcOiPd+vH5vJ
-         ckccaWVjqckQSPh48Zl6ZP/grj1y6aqy448wTE85TJBHtHLrb6fV8LQGzp8gOF37l0nX
-         3GcBOBxmQMYtIoIKuy3++Kq2eeYiTJdN8GPo1ncKNOld5SftQV63LbgZZtCznpR5OPRa
-         8yVg==
-X-Gm-Message-State: AOAM5310mUbiOxzDwn/tg0RxC3kV4Sdd02891tNz35lKVQ7awqSF9P1w
-        psY6LOLJuRzo5ydtARRehrV5Mg==
-X-Google-Smtp-Source: ABdhPJypPLRjFtGH2biL/X5Yn96B4TBH3Vu+himb7NU0CUAstfPyiQfNjdgy9o775vs0mUl4QvjBxw==
-X-Received: by 2002:aca:fcd5:: with SMTP id a204mr146080oii.161.1604425129714;
-        Tue, 03 Nov 2020 09:38:49 -0800 (PST)
+        bh=b1f7x14StQHkJKjF4lhkVgxJQNr6aZC3WStUMGQmEuI=;
+        b=oBZRPbIC6YXMO2obq4KfCuV+6/Mtqz6VJwVzFzhyvALcX2aJXjDvcepWVoRaSb05ZE
+         j3KW7lmU7zcE8HG68GURTl2seBB9IRGzNJZbc3XWPsKDPuGxY0shXhdmbSGjaCPULz5V
+         tL3kNHwmN8MHc7mrJV5xTGUSlFHhbfPgpIkyw/tZFz35UTY+VwSBQai7iMoYXtSBX0Zk
+         Q0e+lox5hfdUGwHLlo3lrmfvNOnc9hui7hExCybka3AQorbVEg8hNutFYI7uiI7jbyGe
+         4r9B6RFKGLrpmVA/gV1iEVLtryqllGeC6wgSK+xFQvuiiHijNdTL4ayeWyWjf33XaQas
+         mVeg==
+X-Gm-Message-State: AOAM5316DFB2LGv8kXZ5l2hlIavanFaiRIpN9DmOLn3RFxG/8M1TrQxW
+        fnjoPu9CNOFhAVrJlEqmTA/9OBq/ptIw+A==
+X-Google-Smtp-Source: ABdhPJwZf3epwL2bWWJfFC18L3EIZTkWEJ7jNKhMTRTvUaLMPqlWMP5f3+phy80JsQKPslbdIhKPVQ==
+X-Received: by 2002:a4a:ac4f:: with SMTP id q15mr16211328oon.68.1604425243976;
+        Tue, 03 Nov 2020 09:40:43 -0800 (PST)
 Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id h3sm4288352oom.18.2020.11.03.09.38.48
+        by smtp.gmail.com with ESMTPSA id n128sm4133279oif.4.2020.11.03.09.40.42
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 03 Nov 2020 09:38:48 -0800 (PST)
-Date:   Tue, 3 Nov 2020 11:38:47 -0600
+        Tue, 03 Nov 2020 09:40:42 -0800 (PST)
+Date:   Tue, 3 Nov 2020 11:40:41 -0600
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc:     sboyd@kernel.org, mturquette@baylibre.com, robh+dt@kernel.org,
-        vkoul@kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-clk@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 3/4] dt-bindings: clock: Introduce RPMHCC bindings for
- SDX55
-Message-ID: <20201103173847.GQ3151@builder.lan>
-References: <20201028074232.22922-1-manivannan.sadhasivam@linaro.org>
- <20201028074232.22922-4-manivannan.sadhasivam@linaro.org>
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>, linux-arm-msm@vger.kernel.org,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org
+Subject: Re: [PATCH] arm64: dts: qcom: sm8250: remove wakeup-parent for TLMM
+ node
+Message-ID: <20201103174041.GB65067@builder.lan>
+References: <20201027015420.908945-1-dmitry.baryshkov@linaro.org>
+ <20201028044056.GA3151@builder.lan>
+ <947976df-05c5-bc6d-455f-e71aa061055f@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20201028074232.22922-4-manivannan.sadhasivam@linaro.org>
+In-Reply-To: <947976df-05c5-bc6d-455f-e71aa061055f@linaro.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed 28 Oct 02:42 CDT 2020, Manivannan Sadhasivam wrote:
+On Wed 28 Oct 06:52 CDT 2020, Dmitry Baryshkov wrote:
 
-> From: Vinod Koul <vkoul@kernel.org>
+> On 28/10/2020 07:40, Bjorn Andersson wrote:
+> > On Mon 26 Oct 20:54 CDT 2020, Dmitry Baryshkov wrote:
+> > 
+> > > On SM8250 TLMM doesn't use PDC interrupt controller for wakeup events.
+> > > Instead it handles them on their own (not implemented yet). In addition
+> > > setting wakeup-parent property to &pdc will result in parent hwirq being
+> > > set to ~0UL, which interact badly with the irqdomains trimming code. So
+> > > remove the wakeup-parent property.
+> > > 
+> > 
+> > Would you accept this patch instead?
+> > 
+> > https://lore.kernel.org/r/20201028043642.1141723-1-bjorn.andersson@linaro.org
 > 
-> Add compatible for SDX55 RPMHCC and DT include.
+> not found
 > 
-> Signed-off-by: Vinod Koul <vkoul@kernel.org>
 
-Given that you handled the patch on its way here you should add your
-Signed-off-by.
+Seems like the tubes where slow last week, but the link works now.
+Please take a look and let me know if this works better for you.
 
-When doing so feel free to add my:
-Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-
-Regards,
+Thanks,
 Bjorn
-
-> ---
->  Documentation/devicetree/bindings/clock/qcom,rpmhcc.yaml | 1 +
->  include/dt-bindings/clock/qcom,rpmh.h                    | 1 +
->  2 files changed, 2 insertions(+)
-> 
-> diff --git a/Documentation/devicetree/bindings/clock/qcom,rpmhcc.yaml b/Documentation/devicetree/bindings/clock/qcom,rpmhcc.yaml
-> index a46a3a799a70..a54930f111ba 100644
-> --- a/Documentation/devicetree/bindings/clock/qcom,rpmhcc.yaml
-> +++ b/Documentation/devicetree/bindings/clock/qcom,rpmhcc.yaml
-> @@ -19,6 +19,7 @@ properties:
->      enum:
->        - qcom,sc7180-rpmh-clk
->        - qcom,sdm845-rpmh-clk
-> +      - qcom,sdx55-rpmh-clk
->        - qcom,sm8150-rpmh-clk
->        - qcom,sm8250-rpmh-clk
->  
-> diff --git a/include/dt-bindings/clock/qcom,rpmh.h b/include/dt-bindings/clock/qcom,rpmh.h
-> index 2e6c54e65455..cd806eccb7dd 100644
-> --- a/include/dt-bindings/clock/qcom,rpmh.h
-> +++ b/include/dt-bindings/clock/qcom,rpmh.h
-> @@ -21,5 +21,6 @@
->  #define RPMH_IPA_CLK				12
->  #define RPMH_LN_BB_CLK1				13
->  #define RPMH_LN_BB_CLK1_A			14
-> +#define RPMH_QPIC_CLK				15
->  
->  #endif
-> -- 
-> 2.17.1
-> 
