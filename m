@@ -2,145 +2,140 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B60822A4651
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Nov 2020 14:28:27 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id BC7632A465F
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Nov 2020 14:29:07 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729232AbgKCN21 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 3 Nov 2020 08:28:27 -0500
-Received: from m42-4.mailgun.net ([69.72.42.4]:14742 "EHLO m42-4.mailgun.net"
+        id S1729264AbgKCN2h (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 3 Nov 2020 08:28:37 -0500
+Received: from m42-4.mailgun.net ([69.72.42.4]:62865 "EHLO m42-4.mailgun.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1729217AbgKCN2Z (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 3 Nov 2020 08:28:25 -0500
+        id S1729143AbgKCN2g (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 3 Nov 2020 08:28:36 -0500
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1604410104; h=References: In-Reply-To: Message-Id: Date:
- Subject: Cc: To: From: Sender;
- bh=NlUD522q1UZNeJibuUElRVCfmzqNBBfP4N2mc7yBIMU=; b=KX+l3mmJYISHkHhz3MYqZqp4m20gQz3KKHIOEkuyUs3etdPYgrFMfr4yMig02RLqNouVt//v
- Cq+DtXgADluPWRTq1PptaHmomSpg8gPRoDniSy3AbbUs3dRifptK8KPS49Fn9lITVNoX7JgD
- ryD2SwFtL78KgtKl/tP4u/E9HQQ=
+ s=smtp; t=1604410116; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
+ Subject: Sender; bh=gCMQzXqxVATbZltihWPug0xwxDJnW/aK5mmtdzr6c14=; b=adwTOq8e1yKSKBZg0qa2cg/+XbmS2boiJPWT1wI8BXBdFLpN/zFjNRGB2ndjbG+7VYExxGea
+ rn8iOS6qR49ndPOE08MwcBo47SgQyrUFzDw5YPxw0Xsfnl2LS9rCyF8tt9iFCQpDJIl5Kg16
+ enkX71T99ZfpGNfPOM6jxtRNNI8=
 X-Mailgun-Sending-Ip: 69.72.42.4
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org
  (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n06.prod.us-west-2.postgun.com with SMTP id
- 5fa15af723306fb6028ce10e (version=TLS1.2,
+ smtp-out-n05.prod.us-east-1.postgun.com with SMTP id
+ 5fa15af79f889442bbd11624 (version=TLS1.2,
  cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 03 Nov 2020 13:28:23
  GMT
-Sender: clew=codeaurora.org@mg.codeaurora.org
+Sender: vbadigan=codeaurora.org@mg.codeaurora.org
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 7947BC43452; Tue,  3 Nov 2020 03:19:23 +0000 (UTC)
+        id 0F106C384F8; Tue,  3 Nov 2020 06:42:00 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
-        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
-Received: from swarchsd3-linux.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        NICE_REPLY_A,SPF_FAIL autolearn=no autolearn_force=no version=3.4.0
+Received: from [192.168.0.105] (unknown [49.205.245.25])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        (Authenticated sender: clew)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id B7381C433B1;
-        Tue,  3 Nov 2020 03:19:22 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org B7381C433B1
+        (Authenticated sender: vbadigan)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 34CB7C433B1;
+        Tue,  3 Nov 2020 06:41:55 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 34CB7C433B1
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=clew@codeaurora.org
-From:   Chris Lew <clew@codeaurora.org>
-To:     bjorn.andersson@linaro.org, agross@kernel.org
-Cc:     sibis@codeaurora.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, clew@codeaurora.org
-Subject: [PATCH 2/2] soc: qcom: aoss: Add debugfs send entry
-Date:   Mon,  2 Nov 2020 19:19:01 -0800
-Message-Id: <1604373541-12641-2-git-send-email-clew@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1604373541-12641-1-git-send-email-clew@codeaurora.org>
-References: <1604373541-12641-1-git-send-email-clew@codeaurora.org>
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=vbadigan@codeaurora.org
+Subject: Re: [PATCH] mmc: block: Prevent new req entering queue while freeing
+ up the queue
+To:     adrian.hunter@intel.com, ulf.hansson@linaro.org
+Cc:     linux-mmc@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, Jens Axboe <axboe@kernel.dk>,
+        Baolin Wang <baolin.wang@linaro.org>,
+        Chaotian Jing <chaotian.jing@mediatek.com>,
+        Peng Hao <richard.peng@oppo.com>
+References: <1603883984-24333-1-git-send-email-vbadigan@codeaurora.org>
+From:   Veerabhadrarao Badiganti <vbadigan@codeaurora.org>
+Message-ID: <99b758d8-0fd5-2ee2-a12f-c09e71ec470b@codeaurora.org>
+Date:   Tue, 3 Nov 2020 12:11:47 +0530
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
+ Thunderbird/68.12.1
+MIME-Version: 1.0
+In-Reply-To: <1603883984-24333-1-git-send-email-vbadigan@codeaurora.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-It can be useful to control the different power states of various
-parts of hardware for device testing. Add a debugfs node to send
-messages through qmp to aoss for debugging and testing purposes.
+Hi Ulf, Adrian,
 
-Signed-off-by: Chris Lew <clew@codeaurora.org>
----
- drivers/soc/qcom/qcom_aoss.c | 36 ++++++++++++++++++++++++++++++++++++
- 1 file changed, 36 insertions(+)
+Gentle reminder. Can you share your comments on this issue and change?
 
-diff --git a/drivers/soc/qcom/qcom_aoss.c b/drivers/soc/qcom/qcom_aoss.c
-index 8f052db1880a..2fd755d2a92d 100644
---- a/drivers/soc/qcom/qcom_aoss.c
-+++ b/drivers/soc/qcom/qcom_aoss.c
-@@ -4,6 +4,7 @@
-  */
- #include <dt-bindings/power/qcom-aoss-qmp.h>
- #include <linux/clk-provider.h>
-+#include <linux/debugfs.h>
- #include <linux/interrupt.h>
- #include <linux/io.h>
- #include <linux/mailbox_client.h>
-@@ -85,6 +86,8 @@ struct qmp {
- 	struct clk_hw qdss_clk;
- 	struct genpd_onecell_data pd_data;
- 	struct qmp_cooling_device *cooling_devs;
-+
-+	struct dentry *debugfs_fp;
- };
- 
- struct qmp_pd {
-@@ -541,6 +544,34 @@ struct qmp_device *qmp_get(struct device_node *np)
- }
- EXPORT_SYMBOL_GPL(qmp_get);
- 
-+static ssize_t aoss_dbg_write(struct file *file, const char __user *userstr,
-+			      size_t len, loff_t *pos)
-+{
-+	struct qmp *qmp = file->private_data;
-+	char buf[QMP_MSG_LEN] = {};
-+	int ret;
-+
-+	if (!len || len >= QMP_MSG_LEN)
-+		return len;
-+
-+	ret  = copy_from_user(buf, userstr, len);
-+	if (ret) {
-+		dev_err(qmp->dev, "copy from user failed, ret:%d\n", ret);
-+		return len;
-+	}
-+
-+	ret = qmp_send(qmp, buf, QMP_MSG_LEN);
-+	if (ret)
-+		dev_err(qmp->dev, "debug send failed, ret:%d\n", ret);
-+
-+	return len;
-+}
-+
-+static const struct file_operations aoss_dbg_fops = {
-+	.open = simple_open,
-+	.write = aoss_dbg_write,
-+};
-+
- static int qmp_probe(struct platform_device *pdev)
- {
- 	struct resource *res;
-@@ -595,6 +626,9 @@ static int qmp_probe(struct platform_device *pdev)
- 
- 	platform_set_drvdata(pdev, qmp);
- 
-+	qmp->debugfs_fp = debugfs_create_file("aoss_send_message", 0220, NULL,
-+					      qmp, &aoss_dbg_fops);
-+
- 	return 0;
- 
- err_remove_qdss_clk:
-@@ -611,6 +645,8 @@ static int qmp_remove(struct platform_device *pdev)
- {
- 	struct qmp *qmp = platform_get_drvdata(pdev);
- 
-+	debugfs_remove(qmp->debugfs_fp);
-+
- 	qmp_qdss_clk_remove(qmp);
- 	qmp_pd_remove(qmp);
- 	qmp_cooling_devices_remove(qmp);
--- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project
+Thanks
 
+On 10/28/2020 4:49 PM, Veerabhadrarao Badiganti wrote:
+> The commit bbdc74dc19e0 ("mmc: block: Prevent new req entering queue
+> after its cleanup") has introduced this change but it got moved after
+> del_gendisk() with commit 57678e5a3d51 ("mmc: block: Delete gendisk
+> before cleaning up the request queue").
+>
+> It is blocking reboot with below Call stack().
+>
+> INFO: task reboot:3086 blocked for more than 122 seconds.
+>       __schedule
+>       schedule
+>       schedule_timeout
+>       io_schedule_timeout
+>       do_wait_for_common
+>       wait_for_completion_io
+>       submit_bio_wait
+>       blkdev_issue_flush
+>       ext4_sync_fs
+>       __sync_filesystem
+>       sync_filesystem
+>       fsync_bdev
+>       invalidate_partition
+>       del_gendisk
+>       mmc_blk_remove_req
+>       mmc_blk_remove
+>       mmc_bus_remove
+>       device_release_driver_internal
+>       device_release_driver
+>       bus_remove_device
+>       device_del
+>       mmc_remove_card
+>       mmc_remove
+>       mmc_stop_host
+>       mmc_remove_host
+>       sdhci_remove_host
+>       sdhci_msm_remove
+>       sdhci_msm_shutdown
+>       platform_drv_shutdown
+>       device_shutdown
+>       kernel_restart_prepare
+>       kernel_restart
+>
+> So bringing this change back.
+>
+> Signed-off-by: Veerabhadrarao Badiganti <vbadigan@codeaurora.org>
+> ---
+>
+> I'm observing this issue 100% of the time with shutdown callback added to sdhci-msm driver.
+> I'm trying on 5.4 kernel with ChromeOS.
+>
+> Please let me know if this can be fixed in a better way.
+> ---
+>
+>   drivers/mmc/core/block.c | 1 +
+>   1 file changed, 1 insertion(+)
+>
+> diff --git a/drivers/mmc/core/block.c b/drivers/mmc/core/block.c
+> index 8d3df0be0355..76dbb2b8a13b 100644
+> --- a/drivers/mmc/core/block.c
+> +++ b/drivers/mmc/core/block.c
+> @@ -2627,6 +2627,7 @@ static void mmc_blk_remove_req(struct mmc_blk_data *md)
+>   		 * from being accepted.
+>   		 */
+>   		card = md->queue.card;
+> +		blk_set_queue_dying(md->queue.queue);
+>   		if (md->disk->flags & GENHD_FL_UP) {
+>   			device_remove_file(disk_to_dev(md->disk), &md->force_ro);
+>   			if ((md->area_type & MMC_BLK_DATA_AREA_BOOT) &&
