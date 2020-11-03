@@ -2,52 +2,52 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 0966C2A3AA4
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Nov 2020 03:54:01 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 652E22A3AA9
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Nov 2020 03:54:12 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725968AbgKCCx7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 2 Nov 2020 21:53:59 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52208 "EHLO
+        id S1727317AbgKCCyI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 2 Nov 2020 21:54:08 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52230 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725953AbgKCCx7 (ORCPT
+        with ESMTP id S1725997AbgKCCyH (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 2 Nov 2020 21:53:59 -0500
-Received: from mail-pl1-x630.google.com (mail-pl1-x630.google.com [IPv6:2607:f8b0:4864:20::630])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 36769C0617A6;
-        Mon,  2 Nov 2020 18:53:59 -0800 (PST)
-Received: by mail-pl1-x630.google.com with SMTP id j5so7862976plk.7;
-        Mon, 02 Nov 2020 18:53:59 -0800 (PST)
+        Mon, 2 Nov 2020 21:54:07 -0500
+Received: from mail-pf1-x42e.google.com (mail-pf1-x42e.google.com [IPv6:2607:f8b0:4864:20::42e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 78730C0617A6;
+        Mon,  2 Nov 2020 18:54:07 -0800 (PST)
+Received: by mail-pf1-x42e.google.com with SMTP id e7so12900673pfn.12;
+        Mon, 02 Nov 2020 18:54:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=gqs+1TnFEGdD9FcDOYfC91qpqXfct7hE2tf3ECPoBSs=;
-        b=h3//92rpvD3iQ/zyByZAkFZ0BcjqX4Qh4TZ04zul6pRXuCGJp0XP6iG2eb+QPXZJR1
-         XdpSkDIMU5SAQOv3YMwCT6nO7shM5yIuxEJrsr7QvxqjrJAmYvOpEmAApFJEGXDo/bjM
-         PeUjA73o8WqXAUjuXo8YW3FnYIv0Y2qd0mfI6WWEo0XKjAK700F6op3TGjSb+7OXgB9/
-         0c67pawv5YMb6LBKecao9lO9U1U4j8kQ4k4OAiTRl7kiKSxzOfgnPs4m6TLp+Xqvhr+A
-         W2Yu2+pCvAg0CQlwpnuLYREU2+Na6oipsN9HlgWdZjpbaV0vRYR3Sd8a/JBUXghp8ZOX
-         MNcA==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=mdVPkO/q4ig27b41Ma0ipj3qPAj1LWAThPCU+KMAntY=;
+        b=dB2pukbsNMZr6KZVfAidMjwc3OoduhL5lmwZfkb91FaoDDkmRNth47SrrahktcKt7k
+         i+KEcjV/NbvB4ZuRDRI/+xFdjrSTIp6R3PeJ09yBiNQJJZSK8Odcnmfo/AB7RcbtlX4E
+         rlYO4ehQC9ZqfUhW5Mu5mWeh/EiHFUJ+YZ+g5Syv+kdROZScTLf+ZEsfIJH9rFzIHiI5
+         JLStT8wkG6qBsLCaxBNlZko8V3aLXqPpZU4W8r2fL6lojMdxISuOOeodqNkbyusbG7Rz
+         GzU5vo+DjIkHKywiW7QfWabHyWouxmJioSiORsK+BBsCXSOI+Cz5kAz4W2vy2iL/v4Ak
+         QUsA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=gqs+1TnFEGdD9FcDOYfC91qpqXfct7hE2tf3ECPoBSs=;
-        b=emyvCCSRdUWAdnozIuTWpwiuiLrU106jx406Up7w68+hAFcsNExON8IU6JLki3AMF8
-         e6FfHscXcqKDSec6i3dIqdWr9iU21+k/6cq4KqE1UVxkS6lETsC8nQHxwqsXAk12u2ex
-         rJm/hpWvLbj9InZIjTvDBB8rgAWskv34hNnqg0vIQIgrw8EEbhFI9dWjtH3ZgDnffOVi
-         7N+8enb4jTOo2bk9U3fcVmAI6q+9EmuqjQSS4RRI/ytfri5KMIgzFcOkDpiReryzFD6y
-         Bnhk0osA9OSJy4KGCUd4f2oPrNtufEz4wc6zw2XGHN5spUZi/CDq6F99U2of+HeSURAO
-         CF8Q==
-X-Gm-Message-State: AOAM532FAjWQE/gF+p3/O0Y8LNa47vCbabkHLTOTDMwtBx4qvVNW0CN7
-        +NvA8fIjLOY3hrhuyfzo0eXzFgv5emvSBg==
-X-Google-Smtp-Source: ABdhPJzu5XHybPXfvvmK+2kjYSsHvClT7MzkEy+gcpckiXpa1Cg6UrXC6bbxPS0EIU1BkvkV/2Ek9g==
-X-Received: by 2002:a17:902:bb8c:b029:d2:2503:e458 with SMTP id m12-20020a170902bb8cb02900d22503e458mr23372102pls.18.1604372038547;
-        Mon, 02 Nov 2020 18:53:58 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=mdVPkO/q4ig27b41Ma0ipj3qPAj1LWAThPCU+KMAntY=;
+        b=SUDbFBiOt/zRbZv+sWdbW3HBS6CVNnm1CAmQvWTT7YvF+4IVSNk6680zcYq53+3NYO
+         3RN7SAidJJ3O/Kew/bRY5UbP1iVwuodbXBp9EJxV/cIxfW+nicNAuVcKOQCWl+YIiBCX
+         udYIWuy5tOvKFnRLhXMXsBPkqree29Lhq0MTBP9FjFxHosCJCnRyUdG9cVseXqNVc9kj
+         r/LySNq66+PF+M+rvwZyzI6fjXQClgmNuLkdOY98L9NfenBnvQXQjPhs66Ap3xD1fGOS
+         qS/LAjJo0zBpAtvG4LuG+Hi+KFNHgBpp/FWzmLldtO0qmqq7EHEwkNL1X2De5Wjt+VBz
+         Bq5g==
+X-Gm-Message-State: AOAM533GFklvS1huh+G+yQib1/8EGen1/O2+sFKSgE6qJpbPhmWgZ8yZ
+        4F+7DFzJkhFFp0fuRPy7NlSUn9h0AyoIoQ==
+X-Google-Smtp-Source: ABdhPJwigCQyZXVpZJRNCBT08Fbeo55lCagCxh1R/LyqYJuB7rPcp9zkcGmx63moqL7nZaJrqLGl0w==
+X-Received: by 2002:a17:90b:3587:: with SMTP id mm7mr1464936pjb.234.1604372046783;
+        Mon, 02 Nov 2020 18:54:06 -0800 (PST)
 Received: from localhost (114-34-18-97.HINET-IP.hinet.net. [114.34.18.97])
-        by smtp.gmail.com with ESMTPSA id cv4sm886145pjb.1.2020.11.02.18.53.56
+        by smtp.gmail.com with ESMTPSA id t15sm937012pji.0.2020.11.02.18.54.05
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 02 Nov 2020 18:53:57 -0800 (PST)
+        Mon, 02 Nov 2020 18:54:06 -0800 (PST)
 From:   Ajye Huang <ajye.huang@gmail.com>
 X-Google-Original-From: Ajye Huang <ajye_huang@compal.corp-partner.google.com>
 To:     linux-kernel@vger.kernel.org
@@ -66,47 +66,105 @@ Cc:     Mark Brown <broonie@kernel.org>,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         alsa-devel@alsa-project.org,
         Ajye Huang <ajye_huang@compal.corp-partner.google.com>
-Subject: [PATCH v4 0/2] Modify documentation and machine driver for SC7180 sound card
-Date:   Tue,  3 Nov 2020 10:53:45 +0800
-Message-Id: <20201103025347.510940-1-ajye_huang@compal.corp-partner.google.com>
+Subject: [PATCH v4 1/2] ASoC: google: dt-bindings: modify machine bindings for two MICs case
+Date:   Tue,  3 Nov 2020 10:53:46 +0800
+Message-Id: <20201103025347.510940-2-ajye_huang@compal.corp-partner.google.com>
 X-Mailer: git-send-email 2.25.1
+In-Reply-To: <20201103025347.510940-1-ajye_huang@compal.corp-partner.google.com>
+References: <20201103025347.510940-1-ajye_huang@compal.corp-partner.google.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Note:
-- The patch is made by the collaboration of
- Ajye Huang <ajye_huang@compal.corp-partner.google.com>
- Cheng-Yi Chiang <cychiang@chromium.org>
+Add a property "dmic-gpios" for switching between two MICs.
 
-Changes from v1 to v2:
-- Ducumentation: Modify the dimc-gpios property description and examples.
-- Machine driver: 
-  - Remove "qcom,sc7180-sndcard-rt5682-m98357-2mic" compatible
-  - See gpio property and use anadditional control.
+Signed-off-by: Ajye Huang <ajye_huang@compal.corp-partner.google.com>
+---
+ .../bindings/sound/google,sc7180-trogdor.yaml | 58 +++++++++++++++++++
+ 1 file changed, 58 insertions(+)
 
-Changes from v2 to v3:
-- Machine driver: Addressed suggestions from Tzung-Bi.
-  - move variables "dmic_switch" and "dmic_sel" into struct sc7180_snd_data.
-  - Remove redundant judgments in dmic_set().
-
-Changes from v3 to v4:
-- Machine driver: Addressed suggestions from Tzung-Bi.
-  - Remove redundant judgments in dmic_set() and dmic_get().
-  - Remove 1 level indent of judgment of IS_ERR(data->dmic_sel).
-  
-Thanks for the review!
-
-Ajye Huang (2):
-  ASoC: google: dt-bindings: modify machine bindings for two MICs case
-  ASoC: qcom: sc7180: Modify machine driver for 2mic
-
- .../bindings/sound/google,sc7180-trogdor.yaml | 58 ++++++++++++++++++
- sound/soc/qcom/sc7180.c                       | 61 +++++++++++++++++++
- 2 files changed, 119 insertions(+)
-
+diff --git a/Documentation/devicetree/bindings/sound/google,sc7180-trogdor.yaml b/Documentation/devicetree/bindings/sound/google,sc7180-trogdor.yaml
+index efc34689d6b5..9e0505467e57 100644
+--- a/Documentation/devicetree/bindings/sound/google,sc7180-trogdor.yaml
++++ b/Documentation/devicetree/bindings/sound/google,sc7180-trogdor.yaml
+@@ -34,6 +34,9 @@ properties:
+   "#size-cells":
+     const: 0
+ 
++  dmic-gpios:
++    description: GPIO for switching between DMICs
++
+ patternProperties:
+   "^dai-link(@[0-9])?$":
+     description:
+@@ -81,6 +84,7 @@ additionalProperties: false
+ examples:
+ 
+   - |
++    //Example 1
+     sound {
+         compatible = "google,sc7180-trogdor";
+         model = "sc7180-rt5682-max98357a-1mic";
+@@ -128,3 +132,57 @@ examples:
+             };
+         };
+     };
++
++  - |
++    //Example 2 (2mic case)
++    sound {
++        compatible = "google,sc7180-trogdor";
++        model = "sc7180-rt5682-max98357a-2mic";
++
++        audio-routing =
++                    "Headphone Jack", "HPOL",
++                    "Headphone Jack", "HPOR";
++
++        #address-cells = <1>;
++        #size-cells = <0>;
++
++        dmic-gpios = <&tlmm 86 0>;
++
++        dai-link@0 {
++            link-name = "MultiMedia0";
++            reg = <0>;
++            cpu {
++                sound-dai = <&lpass_cpu 0>;
++            };
++
++            codec {
++                sound-dai = <&alc5682 0>;
++            };
++        };
++
++        dai-link@1 {
++            link-name = "MultiMedia1";
++            reg = <1>;
++            cpu {
++                sound-dai = <&lpass_cpu 1>;
++            };
++
++            codec {
++                sound-dai = <&max98357a>;
++            };
++        };
++
++        dai-link@2 {
++            link-name = "MultiMedia2";
++            reg = <2>;
++            cpu {
++                sound-dai = <&lpass_hdmi 0>;
++            };
++
++            codec {
++                sound-dai = <&msm_dp>;
++            };
++        };
++    };
++
++...
 -- 
 2.25.1
 
