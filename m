@@ -2,91 +2,100 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 047A92A3810
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Nov 2020 01:54:41 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 8C8142A3832
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Nov 2020 02:08:32 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725956AbgKCAyk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 2 Nov 2020 19:54:40 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33856 "EHLO
+        id S1726139AbgKCBIb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 2 Nov 2020 20:08:31 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36004 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725914AbgKCAyj (ORCPT
+        with ESMTP id S1725855AbgKCBIa (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 2 Nov 2020 19:54:39 -0500
-Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com [IPv6:2a00:1450:4864:20::12e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 27BCBC061A47
-        for <linux-arm-msm@vger.kernel.org>; Mon,  2 Nov 2020 16:54:38 -0800 (PST)
-Received: by mail-lf1-x12e.google.com with SMTP id y184so17961655lfa.12
-        for <linux-arm-msm@vger.kernel.org>; Mon, 02 Nov 2020 16:54:38 -0800 (PST)
+        Mon, 2 Nov 2020 20:08:30 -0500
+Received: from mail-ot1-x344.google.com (mail-ot1-x344.google.com [IPv6:2607:f8b0:4864:20::344])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 929BBC061A47
+        for <linux-arm-msm@vger.kernel.org>; Mon,  2 Nov 2020 17:08:28 -0800 (PST)
+Received: by mail-ot1-x344.google.com with SMTP id 32so14510440otm.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 02 Nov 2020 17:08:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=I+q32KKfvQ8vwPBE7D57+tI6W4ETqZSqkktr32GH0s8=;
-        b=T9oYo+51Qmf+L8xW6CAko+biH1KogpMHv07lHPjc87E1meKIb/ZMxqYGEB4Vdb23gw
-         Xi9RTvX7bWVbmnp2Cpdog375w96TF3a9dJc20JhWKE1h3X0NvWXw2BNqjgmRv4m6RY5l
-         adn3PzvX1aOF3cg8MQK2B8FX2YUQfGfAOXlg/FFguSxQs5WyedB2jJESbZI+oXq44lJh
-         9sA207EssdI8WH34O1yFfRj++QJnP0cjNa3ZrsMoGSGE+ewXqyRltQ5FEP/0876j024T
-         I722Tx2X/5QCKbr86WljSjnSwKrQXLl7NP+IGbXb1iM6CViLwZ3J6rYIukrQr0l3Y5Av
-         5BDg==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=oBKyTW2xl7SqJf3gBQbyEjWgtmIkY7uGpGBFbTW7iiw=;
+        b=EjMT4T4sXdFGuj7/NiOpTdCd6IGUpoM3RhaZU5hZapnh04MeXPu48AZzErrxvvZevD
+         j9c49Eoohmokewf989PyNYdCrRpDVWJ9nSA25zuOTLt9B6QNB09tplAxcpt9s0JTciSU
+         H98A6MshbVIm345VWkiBv42RsioQGHSyqDbmftiHK6SIHeBSZeZ5YRkX5+bDyHye3YnB
+         6ZcwPiuuxj/6P9caWpJ6B8GbYRRjp/nURtkkjZt9uNdm31/Z4EabWaHAh5LQHJ59ehnI
+         5IAtqlVjC1ri3c9P7xHIMu+pkSSoDVt61D27OGy6VYD72/mDn5gSK8vo6EypEzKclxAh
+         KZFQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=I+q32KKfvQ8vwPBE7D57+tI6W4ETqZSqkktr32GH0s8=;
-        b=ZyB83Wp77n2Y32ufgw58gEAoZdjbVR9GrAX/0UXp1l7xJ9o/cKW4wtBdyfJjQpCV4P
-         tKx7D6K/6GCYhZk00MdP8zZIbOKKqkWbiLqDKcH8d4tTj8RiLTjL9PTHbam7/n4+KWss
-         fIhwP586d1/Xb149DMz0mPuyTyyPNSOQCLcPeuOuqx/7acJ8lh3gk9hsSUPHU8OxFT9U
-         ohRPfv3yOzHXTiI+WBHNNrQrUf+zUXSbvjqiXqr2+kvQTJUiLrriC85kmHs5pc9JVSRs
-         d6DWdO+pnE8rXgvQjxjaYSF7NkEoqie3RqBuUeKuqMPMidpSWiYfLim8RlXhE9yQ3qA9
-         uFHQ==
-X-Gm-Message-State: AOAM532ZrLtq0iwgtCQjO6326tf01qsBXjgLCIKjxDDOMZjC9IvYcdl9
-        4S5ZL7qguLPPEtzs0FloFsVzTw==
-X-Google-Smtp-Source: ABdhPJzKepFbfzkAtAvVLaf0SNVtBmf0GxP7vqsKDhGq3TITzbPCcIJmgN/O0pB3wDNZgxCGMsHU/A==
-X-Received: by 2002:ac2:519a:: with SMTP id u26mr7198600lfi.73.1604364876657;
-        Mon, 02 Nov 2020 16:54:36 -0800 (PST)
-Received: from eriador.lan ([94.25.229.254])
-        by smtp.gmail.com with ESMTPSA id x20sm3298976ljj.139.2020.11.02.16.54.35
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=oBKyTW2xl7SqJf3gBQbyEjWgtmIkY7uGpGBFbTW7iiw=;
+        b=nyVWVrjUmBAeq8cTwXJDB2fkZCP++G8+iC0vRSm6T9cr6iW3ajDCjrbZiuJMIXl/3Z
+         sEoFuD7vZRm8X5moIEoLEKeSX75rsMps7cFTOwcW00u8GZwnPDfvlAFoL/8ckaoYvdpK
+         1bQkUFTupofij8fd0IkfUwIuLdg9O1m/7CfcCpdy73UMwY2yPTmWd+smoYAmFEeM3oLT
+         lbSFBDLKMhRb66tbO5MrAaqakycT3G4VsU6nszQQx6YHlYybSqUZRKg48X5Zxstkg82o
+         ZqW7mu27Ab0VKwJnRLZZXGcmEKEfJGlscyJNYQzfjGJ/g6+Cl49THoIn2tB21GMlXzPm
+         5vtg==
+X-Gm-Message-State: AOAM531U0BrfVdQfKywcfD3TrOdnjXW9gvXT7OwfPRYTGVx+OG76RQSc
+        +9/Dr1IU6Z1MOigJq6HABqkuDA==
+X-Google-Smtp-Source: ABdhPJxXtlFWaVmD5D+5RtzmD/LQTGrShIC8RUGMLBvdbbVzYZqFhdnGKQqlXoH2VT5zBfOu2vvxaQ==
+X-Received: by 2002:a05:6830:2085:: with SMTP id y5mr13935964otq.37.1604365707837;
+        Mon, 02 Nov 2020 17:08:27 -0800 (PST)
+Received: from localhost.localdomain (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
+        by smtp.gmail.com with ESMTPSA id t71sm3787787oot.5.2020.11.02.17.08.26
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 02 Nov 2020 16:54:36 -0800 (PST)
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Rob Herring <robh+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org
-Subject: [RESEND 2/2] arm64: dts: qcom: enable rtc on sm8250-mtp board
-Date:   Tue,  3 Nov 2020 03:54:32 +0300
-Message-Id: <20201103005432.1181832-2-dmitry.baryshkov@linaro.org>
+        Mon, 02 Nov 2020 17:08:27 -0800 (PST)
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Vinod Koul <vkoul@kernel.org>, john.stultz@linaro.org
+Cc:     Catalin Marinas <catalin.marinas@arm.com>,
+        Will Deacon <will@kernel.org>,
+        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+Subject: [PATCH] arm64: defconfig: Enable Qualcomm Command DB driver
+Date:   Mon,  2 Nov 2020 17:08:50 -0800
+Message-Id: <20201103010850.757500-1-bjorn.andersson@linaro.org>
 X-Mailer: git-send-email 2.28.0
-In-Reply-To: <20201103005432.1181832-1-dmitry.baryshkov@linaro.org>
-References: <20201103005432.1181832-1-dmitry.baryshkov@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Enable PMIC's RTC device on SM8250-MTP board.
+The Qualcomm Command DB driver seems to have been indirectly enabled by
+the Qualcomm DRM driver and up until the introduction of '778279f4f5e4
+("soc: qcom: cmd-db: allow loading as a module")' this resulted in the
+driver "always" being builtin on arm64. But with the introduction of
+said change it, and all other RPMH related drivers, becomes =m.
 
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+The immediate result is that the uart driver fails to probe, which
+depending on userspace's dependency on the presence of /dev/console
+might be fatal. For systems getting past this the default timeout of 0
+seconds for probe deferral of many subsystems causes the system to be
+completely useless.
+
+So, make Command DB builtin.
+
+Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 ---
- arch/arm64/boot/dts/qcom/sm8250-mtp.dts | 4 ++++
- 1 file changed, 4 insertions(+)
+ arch/arm64/configs/defconfig | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8250-mtp.dts b/arch/arm64/boot/dts/qcom/sm8250-mtp.dts
-index fd194ed7fbc8..c85cab9c9b41 100644
---- a/arch/arm64/boot/dts/qcom/sm8250-mtp.dts
-+++ b/arch/arm64/boot/dts/qcom/sm8250-mtp.dts
-@@ -378,6 +378,10 @@ &i2c15 {
- 	/* rtc6226 @ 64 */
- };
- 
-+&pm8150_rtc {
-+	status = "okay";
-+};
-+
- &qupv3_id_0 {
- 	status = "okay";
- };
+diff --git a/arch/arm64/configs/defconfig b/arch/arm64/configs/defconfig
+index 5cfe3cf6f2ac..9e0f664461f4 100644
+--- a/arch/arm64/configs/defconfig
++++ b/arch/arm64/configs/defconfig
+@@ -930,6 +930,7 @@ CONFIG_RASPBERRYPI_POWER=y
+ CONFIG_FSL_DPAA=y
+ CONFIG_FSL_MC_DPIO=y
+ CONFIG_QCOM_AOSS_QMP=y
++CONFIG_QCOM_COMMAND_DB=y
+ CONFIG_QCOM_GENI_SE=y
+ CONFIG_QCOM_RMTFS_MEM=m
+ CONFIG_QCOM_RPMH=y
 -- 
 2.28.0
 
