@@ -2,162 +2,187 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 8C1372A4988
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Nov 2020 16:26:51 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E4D072A499D
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Nov 2020 16:29:19 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728090AbgKCP0t (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 3 Nov 2020 10:26:49 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56034 "EHLO
+        id S1728208AbgKCP3O (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 3 Nov 2020 10:29:14 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56610 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728106AbgKCPZh (ORCPT
+        with ESMTP id S1728202AbgKCP3N (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 3 Nov 2020 10:25:37 -0500
-Received: from mail-vk1-xa42.google.com (mail-vk1-xa42.google.com [IPv6:2607:f8b0:4864:20::a42])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4AFB9C061A04
-        for <linux-arm-msm@vger.kernel.org>; Tue,  3 Nov 2020 07:25:37 -0800 (PST)
-Received: by mail-vk1-xa42.google.com with SMTP id d191so328840vka.13
-        for <linux-arm-msm@vger.kernel.org>; Tue, 03 Nov 2020 07:25:37 -0800 (PST)
+        Tue, 3 Nov 2020 10:29:13 -0500
+Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D3F45C0613D1
+        for <linux-arm-msm@vger.kernel.org>; Tue,  3 Nov 2020 07:29:11 -0800 (PST)
+Received: by mail-wr1-x430.google.com with SMTP id g12so18979005wrp.10
+        for <linux-arm-msm@vger.kernel.org>; Tue, 03 Nov 2020 07:29:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=qLjEoPE1qTScSokPULmNB4sQvaJ/rGjdmpXC27ItG30=;
-        b=Qrcs1D7BqopfjKyXLOMzzVa4eS+9u5GkGdbGwgags0VGkVfZgE8JOzgjzQikJkmKJI
-         Z/+ZonmjqIkK2xEDE7+TP4uiHKTKrrTO2Nh3zBSjC+jNRIsVD9oHeofBbYISiaZmpXcM
-         fDv6q4IadbNmw8LYY4cxsbpgbR3b1iV3eyTEwSflBWiiVM1lNBFvy2MqvOik5bGmm3Le
-         n8avcynw4YGjPa14Hpt3Iu3gh+v8Vibu61GPDxOhO234DdvS690vIkznWsAOfAhz9nUI
-         V7QFDxezt5WBtxfkaGrNo/AAnQdUAEE15qkc+jLmY91fV8NkgwhpKujv/J1yRuuwXO2v
-         1+/Q==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=cinjSse47w4OyBjCwL2P/oafcagxHnLlboUEJDujNWw=;
+        b=cX7YnHDv9m5+T7PbYX1ejAYBuULrQQ+M0omEMTQnojpGH8v/C5HKpdzGwPJOa5ab2J
+         hWvr65vepL8wyiP+0aMOixJkRcMW5S6eaXcMWPrYmd/7G58lnJBRA7mZOEsNleDYa0yr
+         SKIlBUDn2JHHV9/9oFL2tnLHsBG8k26M+lqdFa2vY0c/HN4q7AYGC48aRoGa/vyC4lH/
+         my/WLOeYp1lwX1+QNh/x7yP9dEPhbwuo7fSZHgNeLSf8FfpoUnTAFo5BL3I2Y+E4p++O
+         Hbne+HYaqgTlebyKrpkPS6jDswYcHoysUa1ZTvtvRAVDOBwaryaj9SVgIWvC0yOjixW6
+         hI3A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=qLjEoPE1qTScSokPULmNB4sQvaJ/rGjdmpXC27ItG30=;
-        b=g1aTqioOH1GRFHRERn/F+4FrrZ7YbU30xxjQxH1BdwI1xrJOGmwqk/G+gW/v8ZG+hM
-         pjSdNlEcBsxCeYF0LHaHQ3ESw4xawzGscVeTpCVFl9zOEJvK+gu+D3oAJJicBTgStrjY
-         wiE87WSlQXT6/LKXjeKYUe/5KP1wRuqUK1/J+8KSkG7p4rDAdLLfmOFcCSOX0+VclhRi
-         wKjl+NBIMfC9dffCeT3nYu3kiAM8a/6QVD0rt2eiTrWRuZUbNZBCM9U7OVaXAq0gpsR6
-         qXpT2nsK4vmgY80KuhZqzn50/v4mIKh3NFynPRmG8uLC4D1eJD+GcOkuGGsEKz7aLcxw
-         qPhA==
-X-Gm-Message-State: AOAM533Brc0GVpHXsmLKHNrMH8fjEuc81f+kWPlYhEF4H20QjWSYfUjg
-        BSN0U4Bby0RZdNqS2s0pPNgUEGh+SYAxSqKW9VLGiA==
-X-Google-Smtp-Source: ABdhPJyTp0PHlyAFKFUtsUjjMj+WT1CwwmG3q286e1X59j2WSjlWxw11u3BFrJMk9fcKtdvlqkM/f+2OwetwebVMaHg=
-X-Received: by 2002:ac5:c1ca:: with SMTP id g10mr16837348vkk.6.1604417136460;
- Tue, 03 Nov 2020 07:25:36 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=cinjSse47w4OyBjCwL2P/oafcagxHnLlboUEJDujNWw=;
+        b=lMIynj4pGxqssHRff857qQTK/zTNJrwVDIZU3AdSEVRILWAX2gLQAeLxIPi+QvHv1p
+         lO/i1SnZ8AF332eecrGcsiBmq0NKzKkQiP0GEmy1J103Cd1y2Ftt2sKNyDfYzLVHNaNL
+         j/jV8oGFm1aMQ99/Q9CpzNfxxOp8d9/X9ixtWHhiNMaZObUV40RgsKDsWb3RPN1NXor1
+         7Vz0OAHYHX3mVzbMU6/rYPrPlXfUlMN4UJXfKUmJsjIkdCKLioyoAox0mYf5mKXR4S75
+         fJUy/jL1F7czT9V5rshoOk9jfE15UUlTQEo0w4JjiPmUsZIjGSJ9ta2jsjsbQh2bm9D1
+         D9UA==
+X-Gm-Message-State: AOAM531l8AHKhXzCM1wcE9MPRjgawoDSxo20YNPZ0A5DlPiKMl4FDcAr
+        GB+wRmuZ1/12iMYEh7Drs/48ugh9nENLBRs9
+X-Google-Smtp-Source: ABdhPJyzlV0HXdTidCRBprYLkp0uWjD8RuYpiqDZS7BW//F1Q+dvuU4dB6/3Ff6PqbhKnABb0CWqEw==
+X-Received: by 2002:adf:c803:: with SMTP id d3mr11847040wrh.108.1604417350540;
+        Tue, 03 Nov 2020 07:29:10 -0800 (PST)
+Received: from dell.default ([91.110.221.242])
+        by smtp.gmail.com with ESMTPSA id j127sm3491779wma.31.2020.11.03.07.29.08
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 03 Nov 2020 07:29:09 -0800 (PST)
+From:   Lee Jones <lee.jones@linaro.org>
+To:     lee.jones@linaro.org
+Cc:     linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+        act <dmalek@jlc.net>, Andy Gross <agross@kernel.org>,
+        bcm-kernel-feedback-list@broadcom.com,
+        Ben Dooks <ben@simtec.co.uk>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Cyril Chemparathy <cyril@ti.com>,
+        Dan Malek <dan@embeddedalley.com>,
+        Dave Gerlach <d-gerlach@ti.com>,
+        Doug Anderson <dianders@chromium.org>,
+        Florian Fainelli <f.fainelli@gmail.com>,
+        Heiko Stuebner <heiko@sntech.de>,
+        Jonathan Hunter <jonathanh@nvidia.com>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        linux-arm-msm@vger.kernel.org, linuxppc-dev@lists.ozlabs.org,
+        linux-rockchip@lists.infradead.org,
+        linux-samsung-soc@vger.kernel.org, linux-tegra@vger.kernel.org,
+        Li Yang <leoyang.li@nxp.com>, Mark Brown <broonie@kernel.org>,
+        Qiang Zhao <qiang.zhao@nxp.com>,
+        "Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+        Roy Pledge <Roy.Pledge@nxp.com>,
+        Sandeep Nair <sandeep_n@ti.com>,
+        Santosh Shilimkar <ssantosh@kernel.org>,
+        Scott Wood <scottwood@freescale.com>,
+        "Software, Inc" <source@mvista.com>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Vitaly Bordug <vbordug@ru.mvista.com>,
+        YueHaibing <yuehaibing@huawei.com>
+Subject: [PATCH 00/25] Rid W=1 warnings in SoC
+Date:   Tue,  3 Nov 2020 15:28:13 +0000
+Message-Id: <20201103152838.1290217-1-lee.jones@linaro.org>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-References: <1603883984-24333-1-git-send-email-vbadigan@codeaurora.org>
-In-Reply-To: <1603883984-24333-1-git-send-email-vbadigan@codeaurora.org>
-From:   Ulf Hansson <ulf.hansson@linaro.org>
-Date:   Tue, 3 Nov 2020 16:25:00 +0100
-Message-ID: <CAPDyKFq0zikjeps36=Mq-Y9MuyiOHZyGVELV+Eh56evu8b8D2A@mail.gmail.com>
-Subject: Re: [PATCH] mmc: block: Prevent new req entering queue while freeing
- up the queue
-To:     Veerabhadrarao Badiganti <vbadigan@codeaurora.org>
-Cc:     Adrian Hunter <adrian.hunter@intel.com>,
-        "linux-mmc@vger.kernel.org" <linux-mmc@vger.kernel.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Jens Axboe <axboe@kernel.dk>,
-        Baolin Wang <baolin.wang@linaro.org>,
-        Chaotian Jing <chaotian.jing@mediatek.com>,
-        Peng Hao <richard.peng@oppo.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, 28 Oct 2020 at 12:20, Veerabhadrarao Badiganti
-<vbadigan@codeaurora.org> wrote:
->
-> The commit bbdc74dc19e0 ("mmc: block: Prevent new req entering queue
-> after its cleanup") has introduced this change but it got moved after
-> del_gendisk() with commit 57678e5a3d51 ("mmc: block: Delete gendisk
-> before cleaning up the request queue").
+This set is part of a larger effort attempting to clean-up W=1
+kernel builds, which are currently overwhelmingly riddled with
+niggly little warnings.
 
-This isn't the first time we have spotted errors in this path. Seems
-like a difficult path to get correct. :-)
+Lee Jones (25):
+  soc: bcm: brcmstb: pm: pm-arm: Provide prototype for
+    brcmstb_pm_s3_finish()
+  soc: qcom: qcom_aoss: Remove set but unused variable 'tlen'
+  soc: qcom: qcom_aoss: Add missing description for 'cooling_devs'
+  soc: fsl: dpio: qbman-portal: Fix a bunch of kernel-doc misdemeanours
+  soc: rockchip: io-domain: Remove incorrect and incomplete comment
+    header
+  soc: ti: knav_qmss_queue: Remove set but unchecked variable 'ret'
+  soc: ti: knav_qmss_queue: Fix a whole host of function documentation
+    issues
+  soc: ti: knav_dma: Fix a kernel function doc formatting issue
+  soc: ti: pm33xx: Remove set but unused variable 'ret'
+  soc: ti: wkup_m3_ipc: Document 'm3_ipc' parameter throughout
+  soc: fsl: qe: qe_common: Fix misnamed function attribute 'addr'
+  soc: qcom: qcom-geni-se: Fix misnamed function parameter 'rx_rfr'
+  soc: tegra: fuse: speedo-tegra124: Remove some set but unused
+    variables
+  soc: samsung: s3c-pm-check: Fix incorrectly named variable 'val'
+  soc: qcom: rpmh: Fix possible doc-rot in rpmh_write()'s header
+  soc: qcom: smem: Fix formatting and missing documentation issues
+  soc: qcom: smsm: Fix some kernel-doc formatting and naming problems
+  soc: qcom: wcnss_ctrl: Demote non-conformant struct header and fix
+    function headers
+  soc: qcom: smp2p: Remove unused struct attribute provide another
+  soc: qcom: llcc-qcom: Fix expected kernel-doc formatting
+  soc: qcom: rpmhpd: Provide some missing struct member descriptions
+  soc: qcom: kryo-l2-accessors: Fix misnaming of 'val'
+  soc: ti: k3-ringacc: Provide documentation for 'k3_ring's 'state'
+  soc: tegra: fuse: speedo-tegra210: Remove a group of set but unused
+    variables
+  soc: fsl: qbman: qman: Remove unused variable 'dequeue_wq'
 
->
-> It is blocking reboot with below Call stack().
->
-> INFO: task reboot:3086 blocked for more than 122 seconds.
->      __schedule
->      schedule
->      schedule_timeout
->      io_schedule_timeout
->      do_wait_for_common
->      wait_for_completion_io
->      submit_bio_wait
->      blkdev_issue_flush
->      ext4_sync_fs
->      __sync_filesystem
->      sync_filesystem
->      fsync_bdev
->      invalidate_partition
->      del_gendisk
->      mmc_blk_remove_req
->      mmc_blk_remove
->      mmc_bus_remove
->      device_release_driver_internal
->      device_release_driver
->      bus_remove_device
->      device_del
->      mmc_remove_card
->      mmc_remove
->      mmc_stop_host
->      mmc_remove_host
->      sdhci_remove_host
->      sdhci_msm_remove
+ drivers/soc/bcm/brcmstb/pm/pm-arm.c      |  2 +
+ drivers/soc/fsl/dpio/qbman-portal.c      | 18 +++++--
+ drivers/soc/fsl/qbman/qman.c             |  8 +--
+ drivers/soc/fsl/qe/qe_common.c           |  2 +-
+ drivers/soc/qcom/kryo-l2-accessors.c     |  2 +-
+ drivers/soc/qcom/llcc-qcom.c             |  2 +-
+ drivers/soc/qcom/qcom-geni-se.c          |  5 +-
+ drivers/soc/qcom/qcom_aoss.c             |  4 +-
+ drivers/soc/qcom/rpmh.c                  |  2 +-
+ drivers/soc/qcom/rpmhpd.c                |  3 ++
+ drivers/soc/qcom/smem.c                  |  3 +-
+ drivers/soc/qcom/smp2p.c                 |  3 +-
+ drivers/soc/qcom/smsm.c                  |  4 +-
+ drivers/soc/qcom/wcnss_ctrl.c            |  8 +--
+ drivers/soc/rockchip/io-domain.c         |  3 --
+ drivers/soc/samsung/s3c-pm-check.c       |  2 +-
+ drivers/soc/tegra/fuse/speedo-tegra124.c |  7 ++-
+ drivers/soc/tegra/fuse/speedo-tegra210.c |  8 +--
+ drivers/soc/ti/k3-ringacc.c              |  1 +
+ drivers/soc/ti/knav_dma.c                |  2 +-
+ drivers/soc/ti/knav_qmss_queue.c         | 62 ++++++++++++------------
+ drivers/soc/ti/pm33xx.c                  |  4 +-
+ drivers/soc/ti/wkup_m3_ipc.c             |  8 ++-
+ 23 files changed, 86 insertions(+), 77 deletions(-)
 
-Why do you call sdhci_msm_remove() from the shutdown callback? What
-specific operations do you need to run in the shutdown path for sdhci
-msm?
+Cc: act <dmalek@jlc.net>
+Cc: Andy Gross <agross@kernel.org>
+Cc: bcm-kernel-feedback-list@broadcom.com
+Cc: Ben Dooks <ben@simtec.co.uk>
+Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc: Cyril Chemparathy <cyril@ti.com>
+Cc: Dan Malek <dan@embeddedalley.com>
+Cc: Dave Gerlach <d-gerlach@ti.com>
+Cc: Doug Anderson <dianders@chromium.org>
+Cc: Florian Fainelli <f.fainelli@gmail.com>
+Cc: Heiko Stuebner <heiko@sntech.de>
+Cc: Jonathan Hunter <jonathanh@nvidia.com>
+Cc: Krzysztof Kozlowski <krzk@kernel.org>
+Cc: Liam Girdwood <lgirdwood@gmail.com>
+Cc: linux-arm-msm@vger.kernel.org
+Cc: linuxppc-dev@lists.ozlabs.org
+Cc: linux-rockchip@lists.infradead.org
+Cc: linux-samsung-soc@vger.kernel.org
+Cc: linux-tegra@vger.kernel.org
+Cc: Li Yang <leoyang.li@nxp.com>
+Cc: Mark Brown <broonie@kernel.org>
+Cc: Qiang Zhao <qiang.zhao@nxp.com>
+Cc: "Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
+Cc: Roy Pledge <Roy.Pledge@nxp.com>
+Cc: Sandeep Nair <sandeep_n@ti.com>
+Cc: Santosh Shilimkar <ssantosh@kernel.org>
+Cc: Scott Wood <scottwood@freescale.com>
+Cc: "Software, Inc" <source@mvista.com>
+Cc: Thierry Reding <thierry.reding@gmail.com>
+Cc: Vitaly Bordug <vbordug@ru.mvista.com>
+Cc: YueHaibing <yuehaibing@huawei.com>
 
-The important part should be to do a graceful shutdown of the card
-(and the block device) - is there anything else?
+-- 
+2.25.1
 
-Or you are just using the shutdown callback as a simple way to trigger
-this problem? Could unbinding the driver trigger the same issue?
-
->      sdhci_msm_shutdown
->      platform_drv_shutdown
->      device_shutdown
->      kernel_restart_prepare
->      kernel_restart
->
-> So bringing this change back.
->
-> Signed-off-by: Veerabhadrarao Badiganti <vbadigan@codeaurora.org>
-> ---
->
-> I'm observing this issue 100% of the time with shutdown callback added to sdhci-msm driver.
-> I'm trying on 5.4 kernel with ChromeOS.
->
-> Please let me know if this can be fixed in a better way.
-
-I don't know yet, but I will have a closer look. Let's also see if
-Adrian has some thoughts.
-
-Kind regards
-Uffe
-
-> ---
->
->  drivers/mmc/core/block.c | 1 +
->  1 file changed, 1 insertion(+)
->
-> diff --git a/drivers/mmc/core/block.c b/drivers/mmc/core/block.c
-> index 8d3df0be0355..76dbb2b8a13b 100644
-> --- a/drivers/mmc/core/block.c
-> +++ b/drivers/mmc/core/block.c
-> @@ -2627,6 +2627,7 @@ static void mmc_blk_remove_req(struct mmc_blk_data *md)
->                  * from being accepted.
->                  */
->                 card = md->queue.card;
-> +               blk_set_queue_dying(md->queue.queue);
->                 if (md->disk->flags & GENHD_FL_UP) {
->                         device_remove_file(disk_to_dev(md->disk), &md->force_ro);
->                         if ((md->area_type & MMC_BLK_DATA_AREA_BOOT) &&
-> --
-> Qualcomm India Private Limited, on behalf of Qualcomm Innovation Center, Inc., is a member of Code Aurora Forum, a Linux Foundation Collaborative Project
->
