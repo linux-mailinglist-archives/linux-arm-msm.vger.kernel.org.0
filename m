@@ -2,131 +2,82 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id CC1CE2A5826
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Nov 2020 22:49:26 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 6E3092A5931
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Nov 2020 23:05:58 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731644AbgKCUtq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 3 Nov 2020 15:49:46 -0500
-Received: from z5.mailgun.us ([104.130.96.5]:37364 "EHLO z5.mailgun.us"
+        id S1730542AbgKCWFg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 3 Nov 2020 17:05:36 -0500
+Received: from m42-4.mailgun.net ([69.72.42.4]:50557 "EHLO m42-4.mailgun.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1731636AbgKCUtp (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 3 Nov 2020 15:49:45 -0500
+        id S1730563AbgKCWFc (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 3 Nov 2020 17:05:32 -0500
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1604436585; h=Content-Transfer-Encoding: MIME-Version:
- References: In-Reply-To: Message-Id: Date: Subject: Cc: To: From:
- Sender; bh=QXDW7ApX0OmVBkOprTaLa95T5xEPy4i9pE3/1IvLL/s=; b=HsZ38SPMv7lx2cJXm7lNqIDx0mhAir8vXxvBVnpWfxGLr+aOK5xDXISploX4x8JapliGa/iJ
- AWysEUUWCvOfBnNa/RtEa5XV8VV+09M10R7on8VZeohq0/mNFdEnLnNvYQhGlVyX8W1toKYg
- M5UGPUfA+xZiw3pbkGegFJtJGUM=
-X-Mailgun-Sending-Ip: 104.130.96.5
+ s=smtp; t=1604441131; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
+ Subject: Sender; bh=4BBm67fUFoo0KkqTgZeFbV6Hq2N7kpn5Ax07w3zlOJs=; b=FQcga2j5gnhDP756jMPF+l4M6ojSOg7GQBzP0gpI+SzHiElOCZ8iPU8Xx2Ndrj5uuyGOCQ5X
+ wbB5Hm0DLhnDmYC6WZOyYAlnBW8T6S8zyZnoUS60YKDSR1HGYJJ0eer1ykOceiKGfuXtgxYF
+ QQaFGDKk+OC0hoy6YgEvSrxjUtA=
+X-Mailgun-Sending-Ip: 69.72.42.4
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org
  (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n04.prod.us-east-1.postgun.com with SMTP id
- 5fa1c269b64b1c5b7859f203 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 03 Nov 2020 20:49:45
+ smtp-out-n02.prod.us-west-2.postgun.com with SMTP id
+ 5fa1d4250ce128468bf6dc22 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 03 Nov 2020 22:05:25
  GMT
-Sender: khsieh=codeaurora.org@mg.codeaurora.org
+Sender: hemantk=codeaurora.org@mg.codeaurora.org
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 3BC46C43449; Tue,  3 Nov 2020 20:49:43 +0000 (UTC)
+        id 173F7C4339C; Tue,  3 Nov 2020 22:05:25 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
-        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
-Received: from khsieh-linux1.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        NICE_REPLY_A,SPF_FAIL,URIBL_BLOCKED autolearn=no autolearn_force=no
+        version=3.4.0
+Received: from [10.46.162.249] (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        (Authenticated sender: khsieh)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 53AB2C38522;
-        Tue,  3 Nov 2020 20:49:41 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 53AB2C38522
+        (Authenticated sender: hemantk)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id BDF12C433C6;
+        Tue,  3 Nov 2020 22:05:22 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org BDF12C433C6
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=khsieh@codeaurora.org
-From:   Kuogee Hsieh <khsieh@codeaurora.org>
-To:     dri-devel@lists.freedesktop.org, robdclark@gmail.com,
-        sean@poorly.run, swboyd@chromium.org
-Cc:     Kuogee Hsieh <khsieh@codeaurora.org>, tanmay@codeaurora.org,
-        abhinavk@codeaurora.org, aravindh@codeaurora.org, airlied@linux.ie,
-        daniel@ffwll.ch, linux-arm-msm@vger.kernel.org,
-        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
-Subject: [PATCH 3/3] drm/msm/dp: promote irq_hpd handle to handle link training correctly
-Date:   Tue,  3 Nov 2020 12:49:02 -0800
-Message-Id: <20201103204902.11899-4-khsieh@codeaurora.org>
-X-Mailer: git-send-email 2.27.0
-In-Reply-To: <20201103204902.11899-1-khsieh@codeaurora.org>
-References: <20201103204902.11899-1-khsieh@codeaurora.org>
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=hemantk@codeaurora.org
+Subject: Re: [PATCH v2] bus: mhi: core: Fix null pointer access when parsing
+ MHI configuration
+To:     carl.yin@quectel.com, manivannan.sadhasivam@linaro.org,
+        sfr@canb.auug.org.au
+Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        naveen.kumar@quectel.com
+References: <20201102122710.23406-1-carl.yin@quectel.com>
+From:   Hemant Kumar <hemantk@codeaurora.org>
+Message-ID: <e3f642a6-66de-163a-3006-79c76d6bf572@codeaurora.org>
+Date:   Tue, 3 Nov 2020 14:05:22 -0800
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.10.0
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <20201102122710.23406-1-carl.yin@quectel.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Some dongles require link training done at irq_hpd request instead
-of plugin request. This patch promote irq_hpd handler to handle link
-training and setup hpd_state correctly.
 
- Fixes: fdaf9a5e3c15 (drm/msm/dp: fixes wrong connection state caused by failure of link training)
-Signed-off-by: Kuogee Hsieh <khsieh@codeaurora.org>
----
- drivers/gpu/drm/msm/dp/dp_display.c | 25 +++++++++++++++++++++----
- 1 file changed, 21 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
-index 0c0573ad34e6..27e7e27b8b90 100644
---- a/drivers/gpu/drm/msm/dp/dp_display.c
-+++ b/drivers/gpu/drm/msm/dp/dp_display.c
-@@ -449,10 +449,9 @@ static int dp_display_handle_irq_hpd(struct dp_display_private *dp)
- 	sink_request = dp->link->sink_request;
- 
- 	if (sink_request & DS_PORT_STATUS_CHANGED) {
--		dp_add_event(dp, EV_USER_NOTIFICATION, false, 0);
- 		if (dp_display_is_sink_count_zero(dp)) {
- 			DRM_DEBUG_DP("sink count is zero, nothing to do\n");
--			return 0;
-+			return -ENOTCONN;
- 		}
- 
- 		return dp_display_process_hpd_high(dp);
-@@ -469,7 +468,9 @@ static int dp_display_handle_irq_hpd(struct dp_display_private *dp)
- static int dp_display_usbpd_attention_cb(struct device *dev)
- {
- 	int rc = 0;
-+	u32 sink_request;
- 	struct dp_display_private *dp;
-+	struct dp_usbpd *hpd;
- 
- 	if (!dev) {
- 		DRM_ERROR("invalid dev\n");
-@@ -483,10 +484,26 @@ static int dp_display_usbpd_attention_cb(struct device *dev)
- 		return -ENODEV;
- 	}
- 
-+	hpd = dp->usbpd;
-+
- 	/* check for any test request issued by sink */
- 	rc = dp_link_process_request(dp->link);
--	if (!rc)
--		dp_display_handle_irq_hpd(dp);
-+	if (!rc) {
-+		sink_request = dp->link->sink_request;
-+		if (sink_request & DS_PORT_STATUS_CHANGED) {
-+			/* same as unplugged */
-+			hpd->hpd_high = 0;
-+			dp->hpd_state = ST_DISCONNECT_PENDING;
-+			dp_add_event(dp, EV_USER_NOTIFICATION, false, 0);
-+		}
-+
-+		rc = dp_display_handle_irq_hpd(dp);
-+
-+		if (!rc && (sink_request & DS_PORT_STATUS_CHANGED)) {
-+			hpd->hpd_high = 1;
-+			dp->hpd_state = ST_CONNECT_PENDING;
-+		}
-+	}
- 
- 	return rc;
- }
+On 11/2/20 4:27 AM, carl.yin@quectel.com wrote:
+> From: "carl.yin" <carl.yin@quectel.com>
+> 
+> Functions parse_ev_cfg() and parse_ch_cfg() access mhi_cntrl->mhi_dev
+> before it is set in function mhi_register_controller(),
+> use cntrl_dev instead of mhi_dev.
+> 
+> Fixes: 0cbf260820fa ("bus: mhi: core: Add support for registering MHI controllers")
+> Signed-off-by: carl.yin <carl.yin@quectel.com>
+> Reviewed-by: Bhaumik Bhatt <bbhatt@codeaurora.org>
+
+Reviewed-by: Hemant Kumar <hemantk@codeaurora.org>
 -- 
 The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
 a Linux Foundation Collaborative Project
-
