@@ -2,193 +2,254 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id AF7DC2A3D1A
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Nov 2020 08:00:27 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id AB1312A3FBC
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Nov 2020 10:11:24 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726690AbgKCHA0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 3 Nov 2020 02:00:26 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33556 "EHLO
+        id S1726018AbgKCJLX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 3 Nov 2020 04:11:23 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53788 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725997AbgKCHAZ (ORCPT
+        with ESMTP id S1726013AbgKCJLW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 3 Nov 2020 02:00:25 -0500
-Received: from mail-lf1-x144.google.com (mail-lf1-x144.google.com [IPv6:2a00:1450:4864:20::144])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8B797C061A48
-        for <linux-arm-msm@vger.kernel.org>; Mon,  2 Nov 2020 23:00:25 -0800 (PST)
-Received: by mail-lf1-x144.google.com with SMTP id a7so20732993lfk.9
-        for <linux-arm-msm@vger.kernel.org>; Mon, 02 Nov 2020 23:00:25 -0800 (PST)
+        Tue, 3 Nov 2020 04:11:22 -0500
+Received: from mail-ed1-x544.google.com (mail-ed1-x544.google.com [IPv6:2a00:1450:4864:20::544])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 28583C0617A6
+        for <linux-arm-msm@vger.kernel.org>; Tue,  3 Nov 2020 01:11:22 -0800 (PST)
+Received: by mail-ed1-x544.google.com with SMTP id b9so7262285edu.10
+        for <linux-arm-msm@vger.kernel.org>; Tue, 03 Nov 2020 01:11:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
+        d=linaro.org; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=Xd9jmL8NLRJagrGwF9PSXuFGxAsb2QDRMyRb3WHvNB8=;
-        b=nPPPBxXfD3t0mgR3L4eyvK3/ip01O16uclOf5uHPMNlPNhNVlAmqasJhy/a+r4og75
-         VW9Ub+qibTJzFwSdatbGsTSVcWLdZ5vbShHtw0xfiQO99DR2mPq/8XmHeP/Qm68xKuAQ
-         wwzecgg1L6Bv7EnTCa3Mad0MpPdOosUjlcauyy+nwM415UHSyR2fio4Zz3qJO+UyyZXF
-         cu9R4m9TE+Oy7OOiEHRm7uB1NTt4czRAQdjxrYBxdQqcOWXQh7I8dnfczwb8cKc2gwv4
-         e56usYVODCCZFNyfMYh4MGEeNfdW3bvgu48JhPWqdAeVATErc5slE6HbbmHhyKAe+72u
-         XKNg==
+        bh=FqTLOFBoYdUww8fDPOh9hmMYjpJHH4Tnms+Fpn1TEqo=;
+        b=KsBqxI3QQ7bfrSUMKND5d/I1Yge2jwaTcxvhVqMUrX1SyOzJiVdmZgfKTCoMjGkd1W
+         O6O5BvH34uXVQc8xuzrCuq5QhZGdeUkTaUYUQ9uh/Gi4AAM3MHFB6e0VfT5BQk14zLuc
+         GXVu7pamn2ozQGReFlLmB+1ozK90YOZR7sWEANMLJ6RyhuDAY+9xglMbQxdUCQyoVO1j
+         bQXAHy+zsmKvYDyUrcLVI1BmADHpUSgNks9Ac9sHdnuABSvYTF3cwjyYMF2N2ewT2P5S
+         CctIuKFKz5BSL7HrweqBUb2q+raPd2AMpr+rc1CWsNT7xa9WxchtYMsEoy7oUp1dD7TM
+         JLnA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=Xd9jmL8NLRJagrGwF9PSXuFGxAsb2QDRMyRb3WHvNB8=;
-        b=UNJMDjHQK+gsH/vbesE9ATx4Ngz7EKY/k/qVV4zl2sJOox860GCDXVA1C3hY3IRYLR
-         YLH3HeHfQeQc7tCSlB7RSDOyZqd57RnoLfMbK8aLiy7V1BLeIyPBD62KHc9gMEh24Qt9
-         1CRiaAlKOB2XntsgD0wOgNg30H49avo5dumH3ejaWmXuqSXkAQ2cyq6DMbyDEl9UB7IP
-         lSZjH2CJJuZlF/+sNh9A80JaG9h1VFVyI6sGQ2P8bbEdp3GupSd6SQxo7GVMwbqxsnTT
-         awryoWC7wvbYGQBpiam9MUCoElE+k5CmK3QoREQvJUOKZ76V9FP36iGL+da1U4bxKe95
-         Ly1w==
-X-Gm-Message-State: AOAM533ZGFGiZiexJNNVpRZPISoZNjUR9JDFVgSyyTVZG6DRamXIdkLW
-        5hagxX8OpRJ2lPMLpZ9zaNMuAlSf/m/BTVOrLt+x6Q==
-X-Google-Smtp-Source: ABdhPJzi0uI6+FMH6ZkQJyTAi3yavIsi+kzHjb9xYY0N60Cx/lyDiUSdCeqHLAosIiGo/QeKWaOn0+S9nHNTkTOnzlE=
-X-Received: by 2002:a19:c345:: with SMTP id t66mr4461115lff.536.1604386823858;
- Mon, 02 Nov 2020 23:00:23 -0800 (PST)
+        bh=FqTLOFBoYdUww8fDPOh9hmMYjpJHH4Tnms+Fpn1TEqo=;
+        b=Uudr6yUmD/p1nAKbbfpX+PTm9PkNjKxg060RFlo8YAtfOaqXeq0Ruz73CM1tHSvrdV
+         ceOK7D2tzvcWmmz/pGoGwfULBy4/K1Wsh7pPG6tNVpfRgw5z6knApJbFFfAxOA7tbL7X
+         7DtXVF94NYT4nw+ijJ873JKIup6A9EX1XpsWb10k1aduKLip2tg1okiRRUxjRd7BH2LF
+         aCC09hnziAyiXj9yhmtH8rzN2X2GfyWXHfOx1q+k7mSCrIzC3FZlU4BUTe2zSCJt3UeG
+         8Ar9MGeb+CBOXNsxNiaAEcLOyA74RBbrPR9rfug7s9QXStzV62rM6BwxGWIxpqS0CD7b
+         SulQ==
+X-Gm-Message-State: AOAM530oLKGyXAq2Y/jtRYUvK5ml0YXopxe05HEIuUWaxob3GsFvhotG
+        cEhhhAn3JPtekElwTcq+sYac4HvnPLRxTodyHd9wpA==
+X-Google-Smtp-Source: ABdhPJxkcU0lt2yBymZuKpGG35sFdm8ogMJa6fi6a6ZAyyx6aO9/2mlacNfZnu1X51WTr8TaU0FVzh2w12BoptxGsp0=
+X-Received: by 2002:a05:6402:8cc:: with SMTP id d12mr20789699edz.134.1604394680601;
+ Tue, 03 Nov 2020 01:11:20 -0800 (PST)
 MIME-Version: 1.0
-References: <20201103025347.510940-1-ajye_huang@compal.corp-partner.google.com>
- <20201103025347.510940-2-ajye_huang@compal.corp-partner.google.com>
-In-Reply-To: <20201103025347.510940-2-ajye_huang@compal.corp-partner.google.com>
-From:   Ajye Huang <ajye_huang@compal.corp-partner.google.com>
-Date:   Tue, 3 Nov 2020 15:00:13 +0800
-Message-ID: <CALprXBbPQBsRFWgGBhHo5=5GkcUEODe5pcqz7seeaOkxTb3c8w@mail.gmail.com>
-Subject: Re: [PATCH v4 1/2] ASoC: google: dt-bindings: modify machine bindings
- for two MICs case
-To:     Ajye Huang <ajye.huang@gmail.com>
-Cc:     Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        Mark Brown <broonie@kernel.org>,
-        Rohit kumar <rohitkr@codeaurora.org>,
-        Banajit Goswami <bgoswami@codeaurora.org>,
-        Patrick Lai <plai@codeaurora.org>,
-        Srinivasa Rao Mandadapu <srivasam@codeaurora.org>,
-        Srini Kandagatla <srinivas.kandagatla@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Jaroslav Kysela <perex@perex.cz>,
-        Cheng-yi Chiang <cychiang@chromium.org>,
-        Tzung-Bi Shih <tzungbi@chromium.org>,
-        Douglas Anderson <dianders@chromium.org>,
-        "moderated list:ARM/Mediatek SoC support" 
-        <linux-arm-kernel@lists.infradead.org>,
+References: <1604054895-29137-1-git-send-email-loic.poulain@linaro.org> <20201102144015.2e060d28@kicinski-fedora-PC1C0HJN.hsd1.ca.comcast.net>
+In-Reply-To: <20201102144015.2e060d28@kicinski-fedora-PC1C0HJN.hsd1.ca.comcast.net>
+From:   Loic Poulain <loic.poulain@linaro.org>
+Date:   Tue, 3 Nov 2020 10:17:16 +0100
+Message-ID: <CAMZdPi-a7W5xYTxKQE7a5wQEh1EfsDrvCjupwc25kK-iaJUPTw@mail.gmail.com>
+Subject: Re: [PATCH v9 2/2] net: Add mhi-net driver
+To:     Jakub Kicinski <kuba@kernel.org>
+Cc:     David Miller <davem@davemloft.net>,
+        Network Development <netdev@vger.kernel.org>,
         linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>,
-        ALSA development <alsa-devel@alsa-project.org>
+        Bhaumik Bhatt <bbhatt@codeaurora.org>,
+        Willem de Bruijn <willemdebruijn.kernel@gmail.com>,
+        Jeffrey Hugo <jhugo@codeaurora.org>,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        Hemant Kumar <hemantk@codeaurora.org>
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Rob,
-Could you please kindly review this patch ?
+Hi Jakub,
 
- I had got your "reviewed-by" on v1 patch, the v1 depends on this patch series
-(https://patchwork.kernel.org/patch/11773221) at that time.
+On Mon, 2 Nov 2020 at 23:40, Jakub Kicinski <kuba@kernel.org> wrote:
+>
+> On Fri, 30 Oct 2020 11:48:15 +0100 Loic Poulain wrote:
+> > This patch adds a new network driver implementing MHI transport for
+> > network packets. Packets can be in any format, though QMAP (rmnet)
+> > is the usual protocol (flow control + PDN mux).
+> >
+> > It support two MHI devices, IP_HW0 which is, the path to the IPA
+> > (IP accelerator) on qcom modem, And IP_SW0 which is the software
+> > driven IP path (to modem CPU).
+> >
+> > Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
+> > Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+>
+> > +static int mhi_ndo_stop(struct net_device *ndev)
+> > +{
+> > +     struct mhi_net_dev *mhi_netdev = netdev_priv(ndev);
+> > +
+> > +     netif_stop_queue(ndev);
+> > +     netif_carrier_off(ndev);
+> > +     cancel_delayed_work_sync(&mhi_netdev->rx_refill);
+>
+> Where do you free the allocated skbs? Does
+> mhi_unprepare_from_transfer() do that?
 
-Now, that patch what I depended (11773221) had made modification and
-it was Applied to
-   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/sound.git for-next
-commit e158d2d83cab ("ASoC: google: dt-bindings: Add sc7180-trogdor
-machine bindings")
+When a buffer is queued, it is owned by the device until the transfer
+callback (ul_cb/dl_cb) is called. mhi_unprepare_from_transfer() causes
+the MHI channels to be reset which in turn leads to releasing the
+buffers, for each buffer the MHI core will call the mhi-net transfer
+callback with -ENOTCONN status, and we free it from here.
 
-I noted what I did on cover letter
-Changes from v1 to v2:
-- Documentation: Modify the dimc-gpios property description and examples.
+>
+> The skbs should be freed somehow in .ndo_stop().
 
-That is why I bother you again to review it. Please let me know if
-this looks good to you.
-Thanks!
+The skbs are released in remove() (mhi_unprepare_from_transfer), I do
+not do prepare/unprepare in ndo_open/ndo_stop because we need to have
+channels started during the whole life of the interface. That's
+because it set up kind of internal routing of on the device/modem
+side. Indeed, if channels are not started, configuration of the modem
+(via out-of-band qmi, at commands, etc) is not possible.
 
-On Tue, Nov 3, 2020 at 10:54 AM Ajye Huang <ajye.huang@gmail.com> wrote:
 >
-> Add a property "dmic-gpios" for switching between two MICs.
+> > +     return 0;
+> > +}
+> > +
+> > +static int mhi_ndo_xmit(struct sk_buff *skb, struct net_device *ndev)
+> > +{
+> > +     struct mhi_net_dev *mhi_netdev = netdev_priv(ndev);
+> > +     struct mhi_device *mdev = mhi_netdev->mdev;
+> > +     int err;
+> > +
+> > +     err = mhi_queue_skb(mdev, DMA_TO_DEVICE, skb, skb->len, MHI_EOT);
+> > +     if (unlikely(err)) {
+> > +             net_err_ratelimited("%s: Failed to queue TX buf (%d)\n",
+> > +                                 ndev->name, err);
+> > +
+> > +             u64_stats_update_begin(&mhi_netdev->stats.tx_syncp);
+> > +             u64_stats_inc(&mhi_netdev->stats.tx_dropped);
+> > +             u64_stats_update_end(&mhi_netdev->stats.tx_syncp);
+> > +
+> > +             /* drop the packet */
+> > +             kfree_skb(skb);
 >
-> Signed-off-by: Ajye Huang <ajye_huang@compal.corp-partner.google.com>
-> ---
->  .../bindings/sound/google,sc7180-trogdor.yaml | 58 +++++++++++++++++++
->  1 file changed, 58 insertions(+)
+> dev_kfree_skb_any()
 >
-> diff --git a/Documentation/devicetree/bindings/sound/google,sc7180-trogdor.yaml b/Documentation/devicetree/bindings/sound/google,sc7180-trogdor.yaml
-> index efc34689d6b5..9e0505467e57 100644
-> --- a/Documentation/devicetree/bindings/sound/google,sc7180-trogdor.yaml
-> +++ b/Documentation/devicetree/bindings/sound/google,sc7180-trogdor.yaml
-> @@ -34,6 +34,9 @@ properties:
->    "#size-cells":
->      const: 0
+> > +     }
+> > +
+> > +     if (mhi_queue_is_full(mdev, DMA_TO_DEVICE))
+> > +             netif_stop_queue(ndev);
+> > +
+> > +     return NETDEV_TX_OK;
+> > +}
 >
-> +  dmic-gpios:
-> +    description: GPIO for switching between DMICs
-> +
->  patternProperties:
->    "^dai-link(@[0-9])?$":
->      description:
-> @@ -81,6 +84,7 @@ additionalProperties: false
->  examples:
+> > +static void mhi_net_dl_callback(struct mhi_device *mhi_dev,
+> > +                             struct mhi_result *mhi_res)
+> > +{
+> > +     struct mhi_net_dev *mhi_netdev = dev_get_drvdata(&mhi_dev->dev);
+> > +     struct sk_buff *skb = mhi_res->buf_addr;
+> > +     int remaining;
+> > +
+> > +     remaining = atomic_dec_return(&mhi_netdev->stats.rx_queued);
+> > +
+> > +     if (unlikely(mhi_res->transaction_status)) {
+> > +             u64_stats_update_begin(&mhi_netdev->stats.rx_syncp);
+> > +             u64_stats_inc(&mhi_netdev->stats.rx_errors);
+> > +             u64_stats_update_end(&mhi_netdev->stats.rx_syncp);
+> > +
+> > +             kfree_skb(skb);
 >
->    - |
-> +    //Example 1
->      sound {
->          compatible = "google,sc7180-trogdor";
->          model = "sc7180-rt5682-max98357a-1mic";
-> @@ -128,3 +132,57 @@ examples:
->              };
->          };
->      };
-> +
-> +  - |
-> +    //Example 2 (2mic case)
-> +    sound {
-> +        compatible = "google,sc7180-trogdor";
-> +        model = "sc7180-rt5682-max98357a-2mic";
-> +
-> +        audio-routing =
-> +                    "Headphone Jack", "HPOL",
-> +                    "Headphone Jack", "HPOR";
-> +
-> +        #address-cells = <1>;
-> +        #size-cells = <0>;
-> +
-> +        dmic-gpios = <&tlmm 86 0>;
-> +
-> +        dai-link@0 {
-> +            link-name = "MultiMedia0";
-> +            reg = <0>;
-> +            cpu {
-> +                sound-dai = <&lpass_cpu 0>;
-> +            };
-> +
-> +            codec {
-> +                sound-dai = <&alc5682 0>;
-> +            };
-> +        };
-> +
-> +        dai-link@1 {
-> +            link-name = "MultiMedia1";
-> +            reg = <1>;
-> +            cpu {
-> +                sound-dai = <&lpass_cpu 1>;
-> +            };
-> +
-> +            codec {
-> +                sound-dai = <&max98357a>;
-> +            };
-> +        };
-> +
-> +        dai-link@2 {
-> +            link-name = "MultiMedia2";
-> +            reg = <2>;
-> +            cpu {
-> +                sound-dai = <&lpass_hdmi 0>;
-> +            };
-> +
-> +            codec {
-> +                sound-dai = <&msm_dp>;
-> +            };
-> +        };
-> +    };
-> +
-> +...
-> --
-> 2.25.1
+> Are you sure this never runs with irqs disabled or from irq context?
 >
+> Otherwise dev_kfree_skb_any().
+
+Yes will fix that.
+
+>
+> > +
+> > +             /* MHI layer resetting the DL channel */
+> > +             if (mhi_res->transaction_status == -ENOTCONN)
+> > +                     return;
+> > +     } else {
+> > +             u64_stats_update_begin(&mhi_netdev->stats.rx_syncp);
+> > +             u64_stats_inc(&mhi_netdev->stats.rx_packets);
+> > +             u64_stats_add(&mhi_netdev->stats.rx_bytes, mhi_res->bytes_xferd);
+> > +             u64_stats_update_end(&mhi_netdev->stats.rx_syncp);
+> > +
+> > +             skb->protocol = htons(ETH_P_MAP);
+> > +             skb_put(skb, mhi_res->bytes_xferd);
+> > +             netif_rx(skb);
+> > +     }
+> > +
+> > +     /* Refill if RX buffers queue becomes low */
+> > +     if (remaining <= mhi_netdev->rx_queue_sz / 2)
+> > +             schedule_delayed_work(&mhi_netdev->rx_refill, 0);
+> > +}
+> > +
+> > +static void mhi_net_ul_callback(struct mhi_device *mhi_dev,
+> > +                             struct mhi_result *mhi_res)
+> > +{
+> > +     struct mhi_net_dev *mhi_netdev = dev_get_drvdata(&mhi_dev->dev);
+> > +     struct net_device *ndev = mhi_netdev->ndev;
+> > +     struct sk_buff *skb = mhi_res->buf_addr;
+> > +
+> > +     /* Hardware has consumed the buffer, so free the skb (which is not
+> > +      * freed by the MHI stack) and perform accounting.
+> > +      */
+> > +     consume_skb(skb);
+>
+> ditto
+>
+> > +     u64_stats_update_begin(&mhi_netdev->stats.tx_syncp);
+> > +     if (unlikely(mhi_res->transaction_status)) {
+> > +             u64_stats_inc(&mhi_netdev->stats.tx_errors);
+> > +
+> > +             /* MHI layer resetting the UL channel */
+> > +             if (mhi_res->transaction_status == -ENOTCONN)
+> > +                     return;
+>
+> u64_stats_update_end()
+>
+> > +     } else {
+> > +             u64_stats_inc(&mhi_netdev->stats.tx_packets);
+> > +             u64_stats_add(&mhi_netdev->stats.tx_bytes, mhi_res->bytes_xferd);
+> > +     }
+> > +     u64_stats_update_end(&mhi_netdev->stats.tx_syncp);
+> > +
+> > +     if (netif_queue_stopped(ndev))
+> > +             netif_wake_queue(ndev);
+> > +}
+> > +
+> > +static void mhi_net_rx_refill_work(struct work_struct *work)
+> > +{
+> > +     struct mhi_net_dev *mhi_netdev = container_of(work, struct mhi_net_dev,
+> > +                                                   rx_refill.work);
+> > +     struct net_device *ndev = mhi_netdev->ndev;
+> > +     struct mhi_device *mdev = mhi_netdev->mdev;
+> > +     int size = READ_ONCE(ndev->mtu);
+> > +     struct sk_buff *skb;
+> > +     int err;
+> > +
+> > +     do {
+>
+> should this be a while(), not a do {} while() loop now?
+>
+> > +             skb = netdev_alloc_skb(ndev, size);
+> > +             if (unlikely(!skb))
+> > +                     break;
+> > +
+> > +             err = mhi_queue_skb(mdev, DMA_FROM_DEVICE, skb, size, MHI_EOT);
+> > +             if (unlikely(err)) {
+> > +                     net_err_ratelimited("%s: Failed to queue RX buf (%d)\n",
+> > +                                         ndev->name, err);
+> > +                     kfree_skb(skb);
+> > +                     break;
+> > +             }
+> > +
+> > +             /* Do not hog the CPU if rx buffers are consumed faster than
+> > +              * queued (unlikely).
+> > +              */
+> > +             cond_resched();
+> > +     } while (atomic_inc_return(&mhi_netdev->stats.rx_queued) < mhi_netdev->rx_queue_sz);
+> > +
+> > +     /* If we're still starved of rx buffers, reschedule later */
+> > +     if (unlikely(!atomic_read(&mhi_netdev->stats.rx_queued)))
+> > +             schedule_delayed_work(&mhi_netdev->rx_refill, HZ / 2);
+> > +}
