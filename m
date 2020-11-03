@@ -2,245 +2,227 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id DC6D12A4BC8
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Nov 2020 17:44:03 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 615132A4BD4
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Nov 2020 17:45:13 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727706AbgKCQoC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 3 Nov 2020 11:44:02 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40186 "EHLO
+        id S1725993AbgKCQpM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 3 Nov 2020 11:45:12 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40372 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725997AbgKCQoC (ORCPT
+        with ESMTP id S1728513AbgKCQpL (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 3 Nov 2020 11:44:02 -0500
-Received: from mail-oi1-x241.google.com (mail-oi1-x241.google.com [IPv6:2607:f8b0:4864:20::241])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6BD80C0617A6
-        for <linux-arm-msm@vger.kernel.org>; Tue,  3 Nov 2020 08:44:02 -0800 (PST)
-Received: by mail-oi1-x241.google.com with SMTP id t16so1641682oie.11
-        for <linux-arm-msm@vger.kernel.org>; Tue, 03 Nov 2020 08:44:02 -0800 (PST)
+        Tue, 3 Nov 2020 11:45:11 -0500
+Received: from mail-wm1-x343.google.com (mail-wm1-x343.google.com [IPv6:2a00:1450:4864:20::343])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9F68CC061A04
+        for <linux-arm-msm@vger.kernel.org>; Tue,  3 Nov 2020 08:45:11 -0800 (PST)
+Received: by mail-wm1-x343.google.com with SMTP id k18so13419378wmj.5
+        for <linux-arm-msm@vger.kernel.org>; Tue, 03 Nov 2020 08:45:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=j0VBbXjpdL1m/xb8jfV3yaghCTs9f/IYXw0uJjV4+rU=;
-        b=M+HZ82AtYhoaAt9FZ4rgWk/5MD4+nZb7WcWR3gfEIYlUZqs2y6t1bR7CvbgCPbntUV
-         Afx7XggS3KeT1i5AVXGuSUlLPcq+czFQtHIENyt7wPJWZZOW7QjUUnmHv3E1euL8fnVy
-         ZvOkH9jdI6WT3jqYaIjw4Ri9uepjbGaJHN+4+/BTxjqGh5bmLSNzDAuqXG8dY/Pm96Pn
-         PfHVq72w3NR4vJwri6vLDyUs+nPoxKUU/RAwC3OpLaqVahb4yJh4FjtTJ9OLAUR/CJaB
-         eh+mmoT4u6H0OgG1SFuDfPavB0dvinWJqxtWq3WPL5C8xAaLmktR6hkPqz2K8GBR4lb0
-         C0rw==
+        h=subject:to:cc:references:from:autocrypt:message-id:date
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=QVYSL7Z7XSgVb+kN/ChQfOvuxiKpkqlxd/bMhr/vzd0=;
+        b=eR2eh/ew+5BKh8a8YAYPPrPz99u4o8NTTZPjaHpYEpPSkNh8KQm90kx2omCbKCLedO
+         SqztYlervHqm0+Hht0b9EOr8U4Y97NyEEHjfv67mW8qeUCEQTzP8F+j8BY8Gxi4bsRQO
+         C4PAObCYns+hKSe4u7X/USssgryGxFxwVjX/4A2tydK/5PX8E6+8OIBEy3nWQ7ufMj7y
+         4dUvpd7ZiBdgus7Bib44KWrgvAx8IagpfJukBvdwG5VU9YGF7n+bnhmpwcpx5ubraL3a
+         D+7KBSTA4P3kqX6vtb2cd3ocRQDJTJBPfJiBm1Y/3KiTgQ77piHoSPaM7EZyKU4mh0no
+         EZRw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=j0VBbXjpdL1m/xb8jfV3yaghCTs9f/IYXw0uJjV4+rU=;
-        b=hIxDuWaIlALs/HIC3QAZNJEgB+rVWktBoV58U53YV4nLo+U1EAisxfx6BAAO3mfwTX
-         PYMArw7P+fFVmRuxyBZW+RSUl6bfWIsKLRVfaqyViYmqGaMGnW9XdDtsuQzHBh758u0x
-         owmTwDP24um7oNiNSv4YiFZ3zX45EyFBNz6qDWUExVmxaQLpzARkZU1dTspcrTg/aQ7U
-         QRMClCvSCgjcYX1uLaAqePWwO0SsoooXiKvF+WHmnJBVsL6QtZzSK5dzl1QnP9Gj7DPk
-         ZYyh35ihOsfrg+nzfdMmwGUx73z4wZ7tMk3YlnA8zDl3o2hCLqKTOSJfbJb0JbiTLuKQ
-         xykA==
-X-Gm-Message-State: AOAM532eKR117Dn79ZH/a7BtQ63RWmIt2sEmV8sdaoKfrNoWxCpC2iPa
-        rTFBNiWwT13AlpXTmqCLq4YZWQ==
-X-Google-Smtp-Source: ABdhPJwZjp/dFRtE//tmZhs907FIpCy2zncucfBJOw0PNrwnOe8AbpeFlsJnAONQOEDZNee3PI9UNA==
-X-Received: by 2002:a54:408b:: with SMTP id i11mr163oii.89.1604421841389;
-        Tue, 03 Nov 2020 08:44:01 -0800 (PST)
-Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id a22sm2948498oib.52.2020.11.03.08.43.59
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 03 Nov 2020 08:44:00 -0800 (PST)
-Date:   Tue, 3 Nov 2020 10:43:58 -0600
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Vinod Koul <vkoul@kernel.org>
-Cc:     Linus Walleij <linus.walleij@linaro.org>,
-        linux-arm-msm@vger.kernel.org, Andy Gross <agross@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        linux-gpio@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2 1/2] dt-bindings: pinctrl: qcom: Add SDX55 pinctrl
- bindings
-Message-ID: <20201103164358.GO3151@builder.lan>
-References: <20201103055801.472736-1-vkoul@kernel.org>
+        h=x-gm-message-state:subject:to:cc:references:from:autocrypt
+         :message-id:date:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=QVYSL7Z7XSgVb+kN/ChQfOvuxiKpkqlxd/bMhr/vzd0=;
+        b=NWQp95OztaHm5tygt5H0pF1CKZc0hLUjl/uFpN6LDVzrLlmtyBIlp9VyKpzYDdTc82
+         e6UgQlhXsvnWgz9ve7p6CpV9fzCkU3oq40uviz9xK3OHLrykStoRlFQ4Q2/IwF+YDEk5
+         l9PWzbdZwSJNlhcVn/mMWsVaaljaOtqHBiRCaLl40BKlyER7FtBAZn9F/3D5qz2vDcVu
+         lGPh3WPLC4FEXVKgVsyX+xvUFVatQ4WxK1Q95Bed97K916uzqvGrNnRCagorF6mMA2UR
+         Hl9mgP7JnVvjYjQLyySeZf03edv6TLFo3/bR/E20ssh5rgkL2G6ft1ewoyi+I2+nXwW3
+         pWjg==
+X-Gm-Message-State: AOAM532G0UKeGrEtjgBqVtcg6zwlGbj4FVx1sCRAgYLJvYWnLlYgmtZI
+        iUH+lm0/3P9SeDeRoeAcCTgxCA==
+X-Google-Smtp-Source: ABdhPJwF8gbDb8L3Tz1UdLuY3+8DQb937KN1OTBNJ7x2becQ9TqjfefvGY69ex8uGSenwM77E59owQ==
+X-Received: by 2002:a05:600c:210:: with SMTP id 16mr21621wmi.122.1604421910339;
+        Tue, 03 Nov 2020 08:45:10 -0800 (PST)
+Received: from [10.44.66.8] ([212.45.67.2])
+        by smtp.googlemail.com with ESMTPSA id v6sm3430544wmj.6.2020.11.03.08.45.09
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 03 Nov 2020 08:45:09 -0800 (PST)
+Subject: Re: [PATCH 5/5] interconnect: qcom: Add MSM8939 interconnect provider
+ driver
+To:     Jun Nie <jun.nie@linaro.org>
+Cc:     devicetree@vger.kernel.org, bjorn.andersson@linaro.org,
+        agross@kernel.org, linux-pm@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        robh@kernel.org, shawn.guo@linaro.org
+References: <20200930081645.3434-1-jun.nie@linaro.org>
+ <20200930081645.3434-6-jun.nie@linaro.org>
+From:   Georgi Djakov <georgi.djakov@linaro.org>
+Autocrypt: addr=georgi.djakov@linaro.org; prefer-encrypt=mutual; keydata=
+ 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
+ KEmKjLDvB0pePJkdTw==
+Message-ID: <39ad2fc8-8604-5529-c2d5-d5b434f19859@linaro.org>
+Date:   Tue, 3 Nov 2020 18:45:12 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20201103055801.472736-1-vkoul@kernel.org>
+In-Reply-To: <20200930081645.3434-6-jun.nie@linaro.org>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon 02 Nov 23:58 CST 2020, Vinod Koul wrote:
-
-> Add device tree binding Documentation details for Qualcomm SDX55
-> pinctrl driver.
+On 9/30/20 11:16, Jun Nie wrote:
+> Add driver for the Qualcomm interconnect buses found in MSM8939 based
+> platforms. The topology consists of four NoCs that are controlled by
+> a remote processor that collects the aggregated bandwidth for each
+> master-slave pairs.
 > 
-> Signed-off-by: Vinod Koul <vkoul@kernel.org>
+> Signed-off-by: Jun Nie <jun.nie@linaro.org>
 > ---
->  .../bindings/pinctrl/qcom,sdx55-pinctrl.yaml  | 145 ++++++++++++++++++
->  1 file changed, 145 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/pinctrl/qcom,sdx55-pinctrl.yaml
+>  drivers/interconnect/qcom/Kconfig   |   9 +
+>  drivers/interconnect/qcom/Makefile  |   2 +
+>  drivers/interconnect/qcom/msm8939.c | 355 ++++++++++++++++++++++++++++
+>  3 files changed, 366 insertions(+)
+>  create mode 100644 drivers/interconnect/qcom/msm8939.c
 > 
-> diff --git a/Documentation/devicetree/bindings/pinctrl/qcom,sdx55-pinctrl.yaml b/Documentation/devicetree/bindings/pinctrl/qcom,sdx55-pinctrl.yaml
+> diff --git a/drivers/interconnect/qcom/Kconfig b/drivers/interconnect/qcom/Kconfig
+> index 25486de5a38d..6395404bfe3f 100644
+> --- a/drivers/interconnect/qcom/Kconfig
+> +++ b/drivers/interconnect/qcom/Kconfig
+> @@ -17,6 +17,15 @@ config INTERCONNECT_QCOM_MSM8916
+>  	  This is a driver for the Qualcomm Network-on-Chip on msm8916-based
+>  	  platforms.
+>  
+> +config INTERCONNECT_QCOM_MSM8939
+> +	tristate "Qualcomm MSM8939 interconnect driver"
+> +	depends on INTERCONNECT_QCOM
+> +	depends on QCOM_SMD_RPM
+> +	select INTERCONNECT_QCOM_SMD_RPM
+> +	help
+> +	  This is a driver for the Qualcomm Network-on-Chip on msm8939-based
+> +	  platforms.
+> +
+>  config INTERCONNECT_QCOM_MSM8974
+>  	tristate "Qualcomm MSM8974 interconnect driver"
+>  	depends on INTERCONNECT_QCOM
+> diff --git a/drivers/interconnect/qcom/Makefile b/drivers/interconnect/qcom/Makefile
+> index f5e803489de0..84b75022f0d8 100644
+> --- a/drivers/interconnect/qcom/Makefile
+> +++ b/drivers/interconnect/qcom/Makefile
+> @@ -2,6 +2,7 @@
+>  
+>  icc-bcm-voter-objs			:= bcm-voter.o
+>  qnoc-msm8916-objs			:= msm8916.o
+> +qnoc-msm8939-objs			:= msm8939.o
+>  qnoc-msm8974-objs			:= msm8974.o
+>  icc-osm-l3-objs				:= osm-l3.o
+>  qnoc-qcs404-objs			:= qcs404.o
+> @@ -13,6 +14,7 @@ icc-smd-rpm-objs			:= smd-rpm.o icc-rpm.o
+>  
+>  obj-$(CONFIG_INTERCONNECT_QCOM_BCM_VOTER) += icc-bcm-voter.o
+>  obj-$(CONFIG_INTERCONNECT_QCOM_MSM8916) += qnoc-msm8916.o
+> +obj-$(CONFIG_INTERCONNECT_QCOM_MSM8939) += qnoc-msm8939.o
+>  obj-$(CONFIG_INTERCONNECT_QCOM_MSM8974) += qnoc-msm8974.o
+>  obj-$(CONFIG_INTERCONNECT_QCOM_OSM_L3) += icc-osm-l3.o
+>  obj-$(CONFIG_INTERCONNECT_QCOM_QCS404) += qnoc-qcs404.o
+> diff --git a/drivers/interconnect/qcom/msm8939.c b/drivers/interconnect/qcom/msm8939.c
 > new file mode 100644
-> index 000000000000..95b77d9a608c
+> index 000000000000..dfbec30ed149
 > --- /dev/null
-> +++ b/Documentation/devicetree/bindings/pinctrl/qcom,sdx55-pinctrl.yaml
-> @@ -0,0 +1,145 @@
-> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/pinctrl/qcom,sdx55-pinctrl.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +++ b/drivers/interconnect/qcom/msm8939.c
+> @@ -0,0 +1,355 @@
+> +// SPDX-License-Identifier: GPL-2.0
+> +/*
+> + * Copyright (C) 2020 Linaro Ltd
+> + * Author: Jun Nie <jun.nie@linaro.org>
+> + * With reference of msm8916 interconnect driver of Georgi Djakov.
+> + */
 > +
-> +title: Qualcomm Technologies, Inc. SDX55 TLMM block
-> +
-> +maintainers:
-> +  - Vinod Koul <vkoul@kernel.org>
-> +
-> +description: |
-> +  This binding describes the Top Level Mode Multiplexer block found in the
-> +  SDX55 platform.
-> +
-> +properties:
-> +  compatible:
-> +    const: qcom,sdx55-pinctrl
-> +
-> +  reg:
-> +    maxItems: 1
-> +
-> +  interrupts:
-> +    description: Specifies the TLMM summary IRQ
-> +    maxItems: 1
-> +
-> +  interrupt-controller: true
-> +
-> +  '#interrupt-cells':
-> +    description:
-> +      Specifies the PIN numbers and Flags, as defined in defined in
-> +      include/dt-bindings/interrupt-controller/irq.h
-> +    const: 2
-> +
-> +  gpio-controller: true
-> +
-> +  '#gpio-cells':
-> +    description: Specifying the pin number and flags, as defined in
-> +      include/dt-bindings/gpio/gpio.h
-> +    const: 2
-> +
-> +  gpio-ranges:
-> +    maxItems: 1
-> +
-> +  wakeup-parent:
-> +    maxItems: 1
-> +
-> +#PIN CONFIGURATION NODES
-> +patternProperties:
-> +  '-pins$':
-> +    type: object
-> +    description:
-> +      Pinctrl node's client devices use subnodes for desired pin configuration.
-> +      Client device subnodes use below standard properties.
-> +    $ref: "/schemas/pinctrl/pincfg-node.yaml"
-> +
-> +    properties:
-> +      pins:
-> +        description:
-> +          List of gpio pins affected by the properties specified in this subnode.
-> +        items:
-> +          oneOf:
-> +            - pattern: "^gpio([0-9]|[1-9][0-9]|1[0-1][0-6])$"
-> +            - enum: [ sdc1_clk, sdc1_cmd, sdc1_data, sdc2_clk, sdc2_cmd, sdc2_data ]
-> +        minItems: 1
-> +        maxItems: 36
-> +
-> +      function:
-> +        description:
-> +          Specify the alternative function to be configured for the specified
-> +          pins. Functions are only valid for gpio pins.
-> +        enum: [ adsp_ext, atest, audio_ref, bimc_dte0, bimc_dte1, blsp_i2c1,
-> +                blsp_i2c2, blsp_i2c3, blsp_i2c4, blsp_spi1, blsp_spi2,
-> +                blsp_spi3, blsp_spi4, blsp_uart1, blsp_uart2, blsp_uart3,
-> +                blsp_uart4, char_exec, coex_uart, coex_uart2, cri_trng,
-> +                cri_trng0, cri_trng1, dbg_out, ddr_bist, ddr_pxi0,
-> +                ebi0_wrcdc, ebi2_a, ebi2_lcd, emac_gcc0, emac_gcc1,
-> +                emac_pps0, emac_pps1, ext_dbg, gcc_gp1, gcc_gp2, gcc_gp3,
-> +                gcc_plltest, gpio, i2s_mclk, jitter_bist, ldo_en, ldo_update,
-> +                mgpi_clk, m_voc, native_char, native_char0, native_char1,
-> +                native_char2, native_char3, native_tsens, native_tsense,
-> +                nav_gpio, pa_indicator, pcie_clkreq, pci_e, pll_bist, pll_ref,
-> +                pll_test, pri_mi2s, prng_rosc, qdss_cti, qdss_gpio,
-> +                qdss_gpio0, qdss_gpio1, qdss_gpio2, qdss_gpio3, qdss_gpio4,
-> +                qdss_gpio5, qdss_gpio6, qdss_gpio7, qdss_gpio8, qdss_gpio9,
-> +                qdss_gpio10, qdss_gpio11, qdss_gpio12, qdss_gpio13,
-> +                qdss_gpio14, qdss_gpio15, qdss_stm0, qdss_stm1, qdss_stm2,
-> +                qdss_stm3, qdss_stm4, qdss_stm5, qdss_stm6, qdss_stm7,
-> +                qdss_stm8, qdss_stm9, qdss_stm10, qdss_stm11, qdss_stm12,
-> +                qdss_stm13, qdss_stm14, qdss_stm15, qdss_stm16, qdss_stm17,
-> +                qdss_stm18, qdss_stm19, qdss_stm20, qdss_stm21, qdss_stm22,
-> +                qdss_stm23, qdss_stm24, qdss_stm25, qdss_stm26, qdss_stm27,
-> +                qdss_stm28, qdss_stm29, qdss_stm30, qdss_stm31, qlink0_en,
-> +                qlink0_req, qlink0_wmss, qlink1_en, qlink1_req, qlink1_wmss,
-> +                spmi_coex, sec_mi2s, spmi_vgi, tgu_ch0, uim1_clk, uim1_data,
-> +                uim1_present, uim1_reset, uim2_clk, uim2_data, uim2_present,
-> +                uim2_reset, usb2phy_ac, vsense_trigger ]
-> +
-> +        drive-strength:
-> +          enum: [2, 4, 6, 8, 10, 12, 14, 16]
-> +          default: 2
-> +          description:
-> +            Selects the drive strength for the specified pins, in mA.
-> +
-> +        bias-pull-down: true
-> +
-> +        bias-pull-up: true
-> +
-> +        bias-disable: true
-> +
-> +        output-high: true
-> +
-> +        output-low: true
-> +
-> +      required:
-> +        - pins
-> +        - function
-> +
-> +      additionalProperties: false
-> +
-> +required:
-> +  - compatible
-> +  - reg
-> +  - interrupts
-> +  - interrupt-controller
-> +  - '#interrupt-cells'
-> +  - gpio-controller
-> +  - '#gpio-cells'
-> +
-> +additionalProperties: false
-> +
-> +examples:
-> +  - |
-> +        #include <dt-bindings/interrupt-controller/arm-gic.h>
-> +        pinctrl@1f00000 {
-> +                compatible = "qcom,sdx55-pinctrl";
-> +                reg = <0x0f100000 0x300000>;
-> +                interrupts = <GIC_SPI 212 IRQ_TYPE_LEVEL_HIGH>;
-> +                #interrupt-cells = <2>;
-> +                interrupt-controller;
-> +                gpio-controller;
-> +                #gpio-cells = <2>;
+> +#include <linux/clk.h>
+> +#include <linux/device.h>
+> +#include <linux/interconnect-provider.h>
+> +#include <linux/io.h>
+> +#include <linux/module.h>
+> +#include <linux/platform_device.h>
+> +#include <linux/of_device.h>
 
-Isn't gpio-ranges a required property? Perhaps that's only a functional
-requirement for the hogs to work?
+Nit: Move this above platform_device.h to make it sorted.
 
-
-Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-
-Regards,
-Bjorn
-
-> +        };
 > +
-> +...
-> -- 
-> 2.26.2
+> +#include <dt-bindings/interconnect/qcom,msm8939.h>
+> +
+> +#include "smd-rpm.h"
+> +#include "icc-rpm.h"
+> +
+[..]
+> +static const struct of_device_id msm8939_noc_of_match[] = {
+> +	{ .compatible = "qcom,msm8939-bimc", .data = &msm8939_bimc },
+> +	{ .compatible = "qcom,msm8939-pcnoc", .data = &msm8939_pcnoc },
+> +	{ .compatible = "qcom,msm8939-snoc", .data = &msm8939_snoc },
+> +	{ .compatible = "qcom,msm8939-snoc-mm", .data = &msm8939_snoc_mm },
+> +	{ }
+> +};
+> +MODULE_DEVICE_TABLE(of, msm8939_noc_of_match);
+> +
+> +static struct platform_driver msm8939_noc_driver = {
+> +	.probe = msm8939_qnoc_probe,
+> +	.remove = qnoc_remove,
+> +	.driver = {
+> +		.name = "qnoc-msm8939",
+> +		.of_match_table = msm8939_noc_of_match,
+
+The sync_state patches got merged, so please add this:
+		.sync_state = icc_sync_state,
+
+Thanks,
+Georgi
+
+> +	},
+> +};
+> +module_platform_driver(msm8939_noc_driver);
+> +MODULE_AUTHOR("Jun Nie <jun.nie@linaro.org>");
+> +MODULE_DESCRIPTION("Qualcomm MSM8939 NoC driver");
+> +MODULE_LICENSE("GPL v2");
 > 
