@@ -2,61 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 415812A49BD
+	by mail.lfdr.de (Postfix) with ESMTP id B02FC2A49BE
 	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Nov 2020 16:31:00 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728585AbgKCP3h (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        id S1728523AbgKCP3h (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
         Tue, 3 Nov 2020 10:29:37 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56728 "EHLO
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56732 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728559AbgKCP3f (ORCPT
+        with ESMTP id S1728567AbgKCP3f (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
         Tue, 3 Nov 2020 10:29:35 -0500
-Received: from mail-wr1-x442.google.com (mail-wr1-x442.google.com [IPv6:2a00:1450:4864:20::442])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0EBE0C061A4A
-        for <linux-arm-msm@vger.kernel.org>; Tue,  3 Nov 2020 07:29:34 -0800 (PST)
-Received: by mail-wr1-x442.google.com with SMTP id y12so18997150wrp.6
-        for <linux-arm-msm@vger.kernel.org>; Tue, 03 Nov 2020 07:29:33 -0800 (PST)
+Received: from mail-wr1-x441.google.com (mail-wr1-x441.google.com [IPv6:2a00:1450:4864:20::441])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 131F8C0617A6
+        for <linux-arm-msm@vger.kernel.org>; Tue,  3 Nov 2020 07:29:35 -0800 (PST)
+Received: by mail-wr1-x441.google.com with SMTP id x7so19026863wrl.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 03 Nov 2020 07:29:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=05S3ru4tW4mcaDRoeFk8QLKhxybxsfGcFNjhW6F8wDA=;
-        b=mUHzgMDhCaONSYhvmw/ALRA7QndQYhUnZgTu7ZoaTFh5kihM3G/YdksvozD0IgEffI
-         pkycfuihbdujTsBIL5+VnxXSwLlDtyR9KW9IE8011+Gz/K0CGkTgsLoTj5OJwGeufpQK
-         sJ5F5ouNBch0vfaJcEjAGYFUC1L/b7DEHtGLSCKtVfhzVnTnG12d8pLPOp3fYtBjcTaI
-         hAnquaFCoxWyZ7cWArrkiChK3XacR3l2bcrfUn1J5rokQhVfW8aCmLYwS6fZNeTLOZLx
-         cLW5WTrrJxIVyg8kqBeOJVjYH9wz2Gt0OSb4rzGbC2teSbTZosg+WsN/Xvu76fExJZch
-         EVgw==
+        bh=6LcLORed/eRcqDz+15+2dFY024jFSnB72dDtXU8CVP4=;
+        b=sH3tSij4e2JXoVjfPBQ6g8riNJv08P5aobIjgmRhr+/oMHK6xFROnfShQu9+Uv2TbZ
+         B6XHn9ghMLRkkHOoDh1Ya1eOCQgiakM+fKtKFxQyyLJV52Os4YVWRSanFuJHHzxmunW0
+         X+SYf5bK0RSU5TibslsGUgzTh3+tha+zXqBpEFehQ+x39MVh+SEXA+INfEWYARmSL7E6
+         tRCvBH6uFdOHAmnKTpCj7uGCkK3C+gql2NrTMQpsAgfoYJO7Gt6HWfTU7tLZw3yvNwSJ
+         z6zi+pBYs8kVOWjctAFF/5riCzh8fMEPD+A7K467/36DnZAzRveNu6uo62OmN6HTWu14
+         oDuA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=05S3ru4tW4mcaDRoeFk8QLKhxybxsfGcFNjhW6F8wDA=;
-        b=uGK3EWujdPCy4E28a8Ux/r2D2rIfdllgzNrIDDvek0xTfzHmDF8T9vFodgmhds4MyX
-         HWyJ37hQXTFk2tQNw0l5qTLG4Xir3LJ0Rr325N6typfKLPjALeW2KE8eVkNijtMrNRlF
-         LhGrsKREjEKMtWikFeoY7cLm3raGmdisIt3jN7RsnmmfqW0ZZxYPcPGKflVf0hRJ3ghZ
-         vNfiITo1y4a2h69Ab+P/hbeoTVjmZu0m19xvBJ7t1zMCMIUeAM07wddYVbY+Wi3syYWB
-         RiVXX7N+tyXjXPJEweHwmSdmQZ7wU3CqkxTvX6hm0dCrMoUJHziE84gU9HOyK/A3cZws
-         dKSA==
-X-Gm-Message-State: AOAM533XZbNgFW6Cj3IEzVAcsFZMBWmPcPIAkh3EJoY3tJ4ge5J/5Fsd
-        EoMEzV6E4eEX+4JqEg/GlllyXg==
-X-Google-Smtp-Source: ABdhPJzDNOQApkc32dJ66+dO6QtsCwF2WE0kOXaJCzV+lWdTifAu4mloBHleqsSF6TcNi+erSSQq7w==
-X-Received: by 2002:a5d:4ccd:: with SMTP id c13mr26793520wrt.221.1604417372710;
-        Tue, 03 Nov 2020 07:29:32 -0800 (PST)
+        bh=6LcLORed/eRcqDz+15+2dFY024jFSnB72dDtXU8CVP4=;
+        b=AepwjNVj9t8l9QeO5mbprSrhiBUgkpIre/iEXFEbbLwDsSUuqMQWGpKS1nb3b2iiCs
+         0lN9gyKsd2dTgnDAC1jMis5kg+0/LySTiPGfal/IyR7a+Khlxo4YfoAj9OqWNHW3Zglq
+         ashF3qcPRLlYjaq1DtibvSiP+cCK0y4Pm98CsVlcIj5yyiiN6DEuGKp7wxNaonmX22sZ
+         W2mIavKXDkvx/m7hYnWH0KsStZJiJaMlApOkzxyAfwwRZiGfuwBI/1IxyWq/kh41MkGn
+         3kt9T/Wni8WmX+JSCIzGQl1n/xkOq/v4iU9/8mVOxxn1QEE5t7zqd6GNpjIUfVsg9265
+         hv5g==
+X-Gm-Message-State: AOAM533hdD4KrUqtuklzmeyNDbbXdF2HjsUThV55kEurJXKSRDVSUeqp
+        gkncs2s4m6499eRsKvOCXQ5qqQ==
+X-Google-Smtp-Source: ABdhPJzmEMb5hlUmWHwxx79VDvjikYpwPHslaSGaQMUNH9Aku0+bFz9qKAtJR2LmOFjS1GfOsx+zhw==
+X-Received: by 2002:adf:e486:: with SMTP id i6mr26809923wrm.397.1604417373813;
+        Tue, 03 Nov 2020 07:29:33 -0800 (PST)
 Received: from dell.default ([91.110.221.242])
-        by smtp.gmail.com with ESMTPSA id j127sm3491779wma.31.2020.11.03.07.29.31
+        by smtp.gmail.com with ESMTPSA id j127sm3491779wma.31.2020.11.03.07.29.32
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 03 Nov 2020 07:29:31 -0800 (PST)
+        Tue, 03 Nov 2020 07:29:33 -0800 (PST)
 From:   Lee Jones <lee.jones@linaro.org>
 To:     lee.jones@linaro.org
 Cc:     linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
         linux-arm-msm@vger.kernel.org
-Subject: [PATCH 17/25] soc: qcom: smsm: Fix some kernel-doc formatting and naming problems
-Date:   Tue,  3 Nov 2020 15:28:30 +0000
-Message-Id: <20201103152838.1290217-18-lee.jones@linaro.org>
+Subject: [PATCH 18/25] soc: qcom: wcnss_ctrl: Demote non-conformant struct header and fix function headers
+Date:   Tue,  3 Nov 2020 15:28:31 +0000
+Message-Id: <20201103152838.1290217-19-lee.jones@linaro.org>
 X-Mailer: git-send-email 2.25.1
 In-Reply-To: <20201103152838.1290217-1-lee.jones@linaro.org>
 References: <20201103152838.1290217-1-lee.jones@linaro.org>
@@ -68,42 +68,59 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 Fixes the following W=1 kernel build warning(s):
 
- drivers/soc/qcom/smsm.c:140: warning: Function parameter or member 'mask' not described in 'smsm_update_bits'
- drivers/soc/qcom/smsm.c:140: warning: Excess function parameter 'offset' description in 'smsm_update_bits'
- drivers/soc/qcom/smsm.c:257: warning: bad line:
- drivers/soc/qcom/smsm.c:260: warning: bad line:
+ drivers/soc/qcom/wcnss_ctrl.c:81: warning: Function parameter or member 'major' not described in 'wcnss_version_resp'
+ drivers/soc/qcom/wcnss_ctrl.c:81: warning: Function parameter or member 'minor' not described in 'wcnss_version_resp'
+ drivers/soc/qcom/wcnss_ctrl.c:81: warning: Function parameter or member 'version' not described in 'wcnss_version_resp'
+ drivers/soc/qcom/wcnss_ctrl.c:81: warning: Function parameter or member 'revision' not described in 'wcnss_version_resp'
+ drivers/soc/qcom/wcnss_ctrl.c:122: warning: Function parameter or member 'rpdev' not described in 'wcnss_ctrl_smd_callback'
+ drivers/soc/qcom/wcnss_ctrl.c:122: warning: Function parameter or member 'priv' not described in 'wcnss_ctrl_smd_callback'
+ drivers/soc/qcom/wcnss_ctrl.c:122: warning: Function parameter or member 'addr' not described in 'wcnss_ctrl_smd_callback'
+ drivers/soc/qcom/wcnss_ctrl.c:122: warning: Excess function parameter 'channel' description in 'wcnss_ctrl_smd_callback'
+ drivers/soc/qcom/wcnss_ctrl.c:272: warning: Function parameter or member 'priv' not described in 'qcom_wcnss_open_channel'
 
 Cc: Andy Gross <agross@kernel.org>
 Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
 Cc: linux-arm-msm@vger.kernel.org
 Signed-off-by: Lee Jones <lee.jones@linaro.org>
 ---
- drivers/soc/qcom/smsm.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ drivers/soc/qcom/wcnss_ctrl.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/soc/qcom/smsm.c b/drivers/soc/qcom/smsm.c
-index 70c3c90b997c9..1d3d5e3ec2b07 100644
---- a/drivers/soc/qcom/smsm.c
-+++ b/drivers/soc/qcom/smsm.c
-@@ -130,7 +130,7 @@ struct smsm_host {
- /**
-  * smsm_update_bits() - change bit in outgoing entry and inform subscribers
-  * @data:	smsm context pointer
-- * @offset:	bit in the entry
-+ * @mask:	value mask
-  * @value:	new value
-  *
-  * Used to set and clear the bits in the outgoing/local entry and inform
-@@ -254,10 +254,8 @@ static void smsm_mask_irq(struct irq_data *irqd)
-  * smsm_unmask_irq() - subscribe to cascades of IRQs of a certain status bit
-  * @irqd:	IRQ handle to be unmasked
-  *
--
-  * This subscribes the local CPU to interrupts upon changes to the defined
-  * status bit. The bit is also marked for cascading.
--
+diff --git a/drivers/soc/qcom/wcnss_ctrl.c b/drivers/soc/qcom/wcnss_ctrl.c
+index e5c68051fb175..32bed249f90e5 100644
+--- a/drivers/soc/qcom/wcnss_ctrl.c
++++ b/drivers/soc/qcom/wcnss_ctrl.c
+@@ -68,9 +68,8 @@ struct wcnss_msg_hdr {
+ 	u32 len;
+ } __packed;
+ 
+-/**
++/*
+  * struct wcnss_version_resp - version request response
+- * @hdr:	common packet wcnss_msg_hdr header
   */
- static void smsm_unmask_irq(struct irq_data *irqd)
+ struct wcnss_version_resp {
+ 	struct wcnss_msg_hdr hdr;
+@@ -108,9 +107,11 @@ struct wcnss_download_nv_resp {
+ 
+ /**
+  * wcnss_ctrl_smd_callback() - handler from SMD responses
+- * @channel:	smd channel handle
++ * @rpdev:	remote processor message device pointer
+  * @data:	pointer to the incoming data packet
+  * @count:	size of the incoming data packet
++ * @priv:	unused
++ * @addr:	unused
+  *
+  * Handles any incoming packets from the remote WCNSS_CTRL service.
+  */
+@@ -267,6 +268,7 @@ static int wcnss_download_nv(struct wcnss_ctrl *wcnss, bool *expect_cbc)
+  * @wcnss:	wcnss handle, retrieved from drvdata
+  * @name:	SMD channel name
+  * @cb:		callback to handle incoming data on the channel
++ * @priv:	private data for use in the call-back
+  */
+ struct rpmsg_endpoint *qcom_wcnss_open_channel(void *wcnss, const char *name, rpmsg_rx_cb_t cb, void *priv)
  {
 -- 
 2.25.1
