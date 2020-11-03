@@ -2,177 +2,97 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 0ED9F2A4F0D
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Nov 2020 19:38:49 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 065992A50F5
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Nov 2020 21:35:34 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729325AbgKCSip (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 3 Nov 2020 13:38:45 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58414 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729309AbgKCSip (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 3 Nov 2020 13:38:45 -0500
-Received: from mail-pl1-x641.google.com (mail-pl1-x641.google.com [IPv6:2607:f8b0:4864:20::641])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C609EC0613D1
-        for <linux-arm-msm@vger.kernel.org>; Tue,  3 Nov 2020 10:38:43 -0800 (PST)
-Received: by mail-pl1-x641.google.com with SMTP id j5so8972464plk.7
-        for <linux-arm-msm@vger.kernel.org>; Tue, 03 Nov 2020 10:38:43 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=/y2i5E0lLOisb13IRdBzP56Bd8XoXxDrEf0WMq0vvrM=;
-        b=Z5C3WaI6MFFHbzFSQfNv4RpPgpT4fxVtmM1vLkg3tT63xjg/2Z3SxO7aHJBGbfGjuO
-         OAcDNt9Su0qU/kmEARDZIX74Bep4NpHiMz5App4uIOj82Ju2Fb+zgNZQr7jI2HRvxj3K
-         xRkYUoX53mRTNDt6+nNdWLxfKyXHXc3103BZ0=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=/y2i5E0lLOisb13IRdBzP56Bd8XoXxDrEf0WMq0vvrM=;
-        b=PvuL3KwKTd4Wf+FdHv380rmdzUVaFyha28yU7mf0hOfRo48vg/sY6BqMPFNvYuqTMy
-         2WGhTJ1jYZEqkeZb76JY9X7IKxbdWQtRlf9ITXllHIbWAP9LsopetUBYNo2p86jxNVS4
-         G9nEQlUHcpavmKg8Y+karT2p0IHuc0nah1Scp8538Tdc4W2v+MfcCNqZVNeiUtmueGlx
-         Wv40QBZTjuCYa7mPGb7s2Y/WSpdrI36rwwQzK/3RY5eEhaSFHoz8DsAHAmiKLdfdFQeu
-         a2eHiDAj/5KobXOOJ0GBdx0j4zqgcN/9QEkzXwrfYWPDSqWvrBhXo9hK0GKSALgcnGId
-         C91g==
-X-Gm-Message-State: AOAM533Stzg3ZHoH+0Kh4zJCa3FqEfLGzvQUHUuhAFEGIUBksczAZapb
-        lU12lhhCJmUA2BdyAFs3dV91aw==
-X-Google-Smtp-Source: ABdhPJwCj82luwLwEimPMxozKH8htGeXlq/o5RCPdsw22t1ZiOvgfbjAmqlypZ8iTdEH/E4YYvgaHQ==
-X-Received: by 2002:a17:902:c3c9:b029:d6:7e88:cfa9 with SMTP id j9-20020a170902c3c9b02900d67e88cfa9mr25410888plj.64.1604428723296;
-        Tue, 03 Nov 2020 10:38:43 -0800 (PST)
-Received: from localhost ([2620:15c:202:1:f693:9fff:fef4:e70a])
-        by smtp.gmail.com with ESMTPSA id 16sm4399353pjf.36.2020.11.03.10.38.42
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 03 Nov 2020 10:38:42 -0800 (PST)
-From:   Matthias Kaehlcke <mka@chromium.org>
-To:     Andy Gross <agross@kernel.org>,
+        id S1729085AbgKCUfa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 3 Nov 2020 15:35:30 -0500
+Received: from mail.kernel.org ([198.145.29.99]:46350 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727688AbgKCUf3 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 3 Nov 2020 15:35:29 -0500
+Received: from localhost (p5486c89f.dip0.t-ipconnect.de [84.134.200.159])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id 7E56121556;
+        Tue,  3 Nov 2020 20:35:28 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1604435729;
+        bh=tHwc8s6fjbwKaViOlHw5mcgc1zaRkVkv2Q0CYANhwtw=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=nv5unKjohu5nlqbhgYokpHXosGgIz/ed/asRvGTl9SkILFrnBDoiXtcVJSqytx/ff
+         UQENQefcPq67w2b0Q4dp22zGEH4W0ontG7DGC8VVPBzAtVxI68gDpR7dKP9xrT+ugp
+         2+fY1pwL75wpgz4ZUhpHt0NJre0BNS03UVzD+vH4=
+Date:   Tue, 3 Nov 2020 21:35:22 +0100
+From:   Wolfram Sang <wsa@kernel.org>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Douglas Anderson <dianders@chromium.org>,
+        Akash Asthana <akashast@codeaurora.org>,
+        linux-i2c@vger.kernel.org,
+        Roja Rani Yarubandi <rojay@codeaurora.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        linux-arm-msm@vger.kernel.org, Andy Gross <agross@kernel.org>,
+        Mukesh Savaliya <msavaliy@codeaurora.org>,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2 2/3] Revert "i2c: i2c-qcom-geni: Fix DMA transfer race"
+Message-ID: <20201103203522.GA1583@kunai>
+Mail-Followup-To: Wolfram Sang <wsa@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         Douglas Anderson <dianders@chromium.org>,
-        linux-kernel@vger.kernel.org, Matthias Kaehlcke <mka@chromium.org>
-Subject: [PATCH] arm64: dts: qcom: sc7180-trogdor: Make pp3300_a the default supply for pp3300_hub
-Date:   Tue,  3 Nov 2020 10:38:33 -0800
-Message-Id: <20201103103749.1.I0ed4abdd2b2916fbedf76be254bc3457fb8b9655@changeid>
-X-Mailer: git-send-email 2.29.1.341.ge80a0c044ae-goog
+        Akash Asthana <akashast@codeaurora.org>, linux-i2c@vger.kernel.org,
+        Roja Rani Yarubandi <rojay@codeaurora.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        linux-arm-msm@vger.kernel.org, Andy Gross <agross@kernel.org>,
+        Mukesh Savaliya <msavaliy@codeaurora.org>,
+        linux-kernel@vger.kernel.org
+References: <20201013212531.428538-1-dianders@chromium.org>
+ <20201013142448.v2.2.I7b22281453b8a18ab16ef2bfd4c641fb1cc6a92c@changeid>
+ <20201026150500.GA26921@builder.lan>
+ <20201026151351.GB1044@ninjato>
+ <20201026211534.GA4001@builder.lan>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="YZ5djTAD1cGYuMQK"
+Content-Disposition: inline
+In-Reply-To: <20201026211534.GA4001@builder.lan>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The trogdor design has two options for supplying the pp3300_hub power rail,
-it can be supplied by pp3300_l7c or pp3300_a. Initially pp3300_l7c was
-used, newer revisions (will) use pp3300_a as supply.
 
-Add a DT node for the pp3300_a path which includes a power switch that is
-controlled by a GPIO. Make this path the default and keep trogdor rev1,
-lazor rev0 and rev1 on pp3300_l7c.
+--YZ5djTAD1cGYuMQK
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Signed-off-by: Matthias Kaehlcke <mka@chromium.org>
----
+> Sounds good, please find the series applied on top of v5.10-rc1 at:
+>=20
+> https://git.kernel.org/pub/scm/linux/kernel/git/qcom/linux.git tags/20201=
+013212531.428538-1-dianders@chromium.org
 
- .../boot/dts/qcom/sc7180-trogdor-lazor-r0.dts |  4 +++
- .../boot/dts/qcom/sc7180-trogdor-lazor-r1.dts |  4 +++
- .../arm64/boot/dts/qcom/sc7180-trogdor-r1.dts |  4 +++
- arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi  | 30 ++++++++++++++++++-
- 4 files changed, 41 insertions(+), 1 deletion(-)
+Thanks, pulled.
 
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r0.dts b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r0.dts
-index ae4c23a4fe65..08bf30b761fc 100644
---- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r0.dts
-+++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r0.dts
-@@ -22,3 +22,7 @@ &sn65dsi86_out {
- 	 */
- 	lane-polarities = <1 0>;
- };
-+
-+&usb_hub {
-+	vdd-supply = <&pp3300_hub_7c>;
-+};
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r1.dts b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r1.dts
-index 3151ae31c1cc..9f7a44d78a1a 100644
---- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r1.dts
-+++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r1.dts
-@@ -13,3 +13,7 @@ / {
- 	model = "Google Lazor (rev1+)";
- 	compatible = "google,lazor", "qcom,sc7180";
- };
-+
-+&usb_hub {
-+	 vdd-supply = <&pp3300_hub_7c>;
-+};
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-r1.dts b/arch/arm64/boot/dts/qcom/sc7180-trogdor-r1.dts
-index 0a281c24841c..e1840fe07cd0 100644
---- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-r1.dts
-+++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-r1.dts
-@@ -62,6 +62,10 @@ &sdhc_2 {
- 	status = "okay";
- };
- 
-+&usb_hub {
-+	 vdd-supply = <&pp3300_hub_7c>;
-+};
-+
- /* PINCTRL - board-specific pinctrl */
- 
- &tlmm {
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
-index bf875589d364..2d64e75a2d6d 100644
---- a/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
-@@ -174,6 +174,21 @@ pp3300_fp_tp: pp3300-fp-tp-regulator {
- 		vin-supply = <&pp3300_a>;
- 	};
- 
-+	pp3300_hub: pp3300-hub {
-+		compatible = "regulator-fixed";
-+		regulator-name = "pp3300_hub";
-+
-+		regulator-min-microvolt = <3300000>;
-+		regulator-max-microvolt = <3300000>;
-+
-+		gpio = <&tlmm 84 GPIO_ACTIVE_HIGH>;
-+		enable-active-high;
-+		pinctrl-names = "default";
-+		pinctrl-0 = <&en_pp3300_hub>;
-+
-+		vin-supply = <&pp3300_a>;
-+	};
-+
- 	/* BOARD-SPECIFIC TOP LEVEL NODES */
- 
- 	backlight: backlight {
-@@ -469,7 +484,7 @@ ppvar_l6c: ldo6 {
- 			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
- 		};
- 
--		pp3300_hub:
-+		pp3300_hub_7c:
- 		pp3300_l7c: ldo7 {
- 			regulator-min-microvolt = <3304000>;
- 			regulator-max-microvolt = <3304000>;
-@@ -1151,6 +1166,19 @@ pinconf {
- 		};
- 	};
- 
-+	en_pp3300_hub: en-pp3300-hub {
-+		pinmux {
-+			pins = "gpio84";
-+			function = "gpio";
-+		};
-+
-+		pinconf {
-+			pins = "gpio84";
-+			drive-strength = <2>;
-+			bias-disable;
-+		};
-+	};
-+
- 	en_pp3300_dx_edp: en-pp3300-dx-edp {
- 		pinmux {
- 			pins = "gpio30";
--- 
-2.29.1.341.ge80a0c044ae-goog
 
+--YZ5djTAD1cGYuMQK
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEEOZGx6rniZ1Gk92RdFA3kzBSgKbYFAl+hvwYACgkQFA3kzBSg
+Kba8CRAAn/BrUUlHmwubxRWenvHPX3jpDDj+laBwUX1/U4xkmXURTubzHzNk26lA
+kuucdInwqvKNP40l8Gnhr9N1m1o3XstLND3Tt2mdcvdXINSTdjU6kKdIHr936yFs
+LNYc7QIaOIos6toeySuKGJVjaRnbXyzcvliexw3sz/7khoSG0k/H804n483TiDQt
+CdfGZhenWTv1vYyojs29rU1qEuoDey40rzbKGVhrGPXfCSyH0NfYxsHRN2KTaiMk
+oqwDlc2ddcTlAdzLHdNNvZkq2L5jS9nUeScicmQpgoor50UcpeLV+CTbr6tu55RD
+FfzIjzroabstIbmTVjArfMqRdHBJupSQVuCVQo76N/9F2tyce8PSDEcCpMLjyf2Q
+SQ8Mu98qOeOUtcQw8hrZDw7BgVZoG/4kMG3O25C1OqhnqTwxUjmNLVEdi6j1bOes
+hGa3JNCPlFWVI2xeZH/zG0gdycNN12K7OE3fJK2UWrtX6al04gKnC47SIYMZirl1
+Hd44JpM60fAo8UNKH7GvJObPiIQ+lEIAjQw6FvsC9R0BikH7kjpK2vqOaJecPIMh
+UiJRNEfJftyltNk5fVNJrKwqbnsWyZyCZIHqfSHjwbbLJvzKOvulYtoPnGo3XqvG
+6oqCttv3hGY+/fsRe1K59FwVA4Gw3z2c9KG8kJ69AjXXxhG44uI=
+=Sf2P
+-----END PGP SIGNATURE-----
+
+--YZ5djTAD1cGYuMQK--
