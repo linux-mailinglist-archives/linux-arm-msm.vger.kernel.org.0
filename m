@@ -2,227 +2,213 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 615132A4BD4
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Nov 2020 17:45:13 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id BD0FF2A4BEC
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Nov 2020 17:50:10 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725993AbgKCQpM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 3 Nov 2020 11:45:12 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40372 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728513AbgKCQpL (ORCPT
+        id S1727869AbgKCQuF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 3 Nov 2020 11:50:05 -0500
+Received: from alexa-out.qualcomm.com ([129.46.98.28]:30944 "EHLO
+        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725997AbgKCQuE (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 3 Nov 2020 11:45:11 -0500
-Received: from mail-wm1-x343.google.com (mail-wm1-x343.google.com [IPv6:2a00:1450:4864:20::343])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9F68CC061A04
-        for <linux-arm-msm@vger.kernel.org>; Tue,  3 Nov 2020 08:45:11 -0800 (PST)
-Received: by mail-wm1-x343.google.com with SMTP id k18so13419378wmj.5
-        for <linux-arm-msm@vger.kernel.org>; Tue, 03 Nov 2020 08:45:11 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=subject:to:cc:references:from:autocrypt:message-id:date
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=QVYSL7Z7XSgVb+kN/ChQfOvuxiKpkqlxd/bMhr/vzd0=;
-        b=eR2eh/ew+5BKh8a8YAYPPrPz99u4o8NTTZPjaHpYEpPSkNh8KQm90kx2omCbKCLedO
-         SqztYlervHqm0+Hht0b9EOr8U4Y97NyEEHjfv67mW8qeUCEQTzP8F+j8BY8Gxi4bsRQO
-         C4PAObCYns+hKSe4u7X/USssgryGxFxwVjX/4A2tydK/5PX8E6+8OIBEy3nWQ7ufMj7y
-         4dUvpd7ZiBdgus7Bib44KWrgvAx8IagpfJukBvdwG5VU9YGF7n+bnhmpwcpx5ubraL3a
-         D+7KBSTA4P3kqX6vtb2cd3ocRQDJTJBPfJiBm1Y/3KiTgQ77piHoSPaM7EZyKU4mh0no
-         EZRw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:autocrypt
-         :message-id:date:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=QVYSL7Z7XSgVb+kN/ChQfOvuxiKpkqlxd/bMhr/vzd0=;
-        b=NWQp95OztaHm5tygt5H0pF1CKZc0hLUjl/uFpN6LDVzrLlmtyBIlp9VyKpzYDdTc82
-         e6UgQlhXsvnWgz9ve7p6CpV9fzCkU3oq40uviz9xK3OHLrykStoRlFQ4Q2/IwF+YDEk5
-         l9PWzbdZwSJNlhcVn/mMWsVaaljaOtqHBiRCaLl40BKlyER7FtBAZn9F/3D5qz2vDcVu
-         lGPh3WPLC4FEXVKgVsyX+xvUFVatQ4WxK1Q95Bed97K916uzqvGrNnRCagorF6mMA2UR
-         Hl9mgP7JnVvjYjQLyySeZf03edv6TLFo3/bR/E20ssh5rgkL2G6ft1ewoyi+I2+nXwW3
-         pWjg==
-X-Gm-Message-State: AOAM532G0UKeGrEtjgBqVtcg6zwlGbj4FVx1sCRAgYLJvYWnLlYgmtZI
-        iUH+lm0/3P9SeDeRoeAcCTgxCA==
-X-Google-Smtp-Source: ABdhPJwF8gbDb8L3Tz1UdLuY3+8DQb937KN1OTBNJ7x2becQ9TqjfefvGY69ex8uGSenwM77E59owQ==
-X-Received: by 2002:a05:600c:210:: with SMTP id 16mr21621wmi.122.1604421910339;
-        Tue, 03 Nov 2020 08:45:10 -0800 (PST)
-Received: from [10.44.66.8] ([212.45.67.2])
-        by smtp.googlemail.com with ESMTPSA id v6sm3430544wmj.6.2020.11.03.08.45.09
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 03 Nov 2020 08:45:09 -0800 (PST)
-Subject: Re: [PATCH 5/5] interconnect: qcom: Add MSM8939 interconnect provider
- driver
-To:     Jun Nie <jun.nie@linaro.org>
-Cc:     devicetree@vger.kernel.org, bjorn.andersson@linaro.org,
-        agross@kernel.org, linux-pm@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        robh@kernel.org, shawn.guo@linaro.org
-References: <20200930081645.3434-1-jun.nie@linaro.org>
- <20200930081645.3434-6-jun.nie@linaro.org>
-From:   Georgi Djakov <georgi.djakov@linaro.org>
-Autocrypt: addr=georgi.djakov@linaro.org; prefer-encrypt=mutual; keydata=
- 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
- KEmKjLDvB0pePJkdTw==
-Message-ID: <39ad2fc8-8604-5529-c2d5-d5b434f19859@linaro.org>
-Date:   Tue, 3 Nov 2020 18:45:12 +0200
-MIME-Version: 1.0
-In-Reply-To: <20200930081645.3434-6-jun.nie@linaro.org>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+        Tue, 3 Nov 2020 11:50:04 -0500
+Received: from ironmsg08-lv.qualcomm.com ([10.47.202.152])
+  by alexa-out.qualcomm.com with ESMTP; 03 Nov 2020 08:50:04 -0800
+X-QCInternal: smtphost
+Received: from ironmsg01-blr.qualcomm.com ([10.86.208.130])
+  by ironmsg08-lv.qualcomm.com with ESMTP/TLS/AES256-SHA; 03 Nov 2020 08:50:02 -0800
+X-QCInternal: smtphost
+Received: from dikshita-linux.qualcomm.com ([10.204.65.237])
+  by ironmsg01-blr.qualcomm.com with ESMTP; 03 Nov 2020 22:19:50 +0530
+Received: by dikshita-linux.qualcomm.com (Postfix, from userid 347544)
+        id 0729C55B2; Tue,  3 Nov 2020 22:19:48 +0530 (IST)
+From:   Dikshita Agarwal <dikshita@codeaurora.org>
+To:     linux-media@vger.kernel.org, stanimir.varbanov@linaro.org
+Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        vgarodia@codeaurora.org, Dikshita Agarwal <dikshita@codeaurora.org>
+Subject: [PATCH] venus: venc: fix handlig of S_SELECTION and G_SELECTION
+Date:   Tue,  3 Nov 2020 22:19:44 +0530
+Message-Id: <1604422184-2019-1-git-send-email-dikshita@codeaurora.org>
+X-Mailer: git-send-email 1.9.1
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 9/30/20 11:16, Jun Nie wrote:
-> Add driver for the Qualcomm interconnect buses found in MSM8939 based
-> platforms. The topology consists of four NoCs that are controlled by
-> a remote processor that collects the aggregated bandwidth for each
-> master-slave pairs.
-> 
-> Signed-off-by: Jun Nie <jun.nie@linaro.org>
-> ---
->  drivers/interconnect/qcom/Kconfig   |   9 +
->  drivers/interconnect/qcom/Makefile  |   2 +
->  drivers/interconnect/qcom/msm8939.c | 355 ++++++++++++++++++++++++++++
->  3 files changed, 366 insertions(+)
->  create mode 100644 drivers/interconnect/qcom/msm8939.c
-> 
-> diff --git a/drivers/interconnect/qcom/Kconfig b/drivers/interconnect/qcom/Kconfig
-> index 25486de5a38d..6395404bfe3f 100644
-> --- a/drivers/interconnect/qcom/Kconfig
-> +++ b/drivers/interconnect/qcom/Kconfig
-> @@ -17,6 +17,15 @@ config INTERCONNECT_QCOM_MSM8916
->  	  This is a driver for the Qualcomm Network-on-Chip on msm8916-based
->  	  platforms.
->  
-> +config INTERCONNECT_QCOM_MSM8939
-> +	tristate "Qualcomm MSM8939 interconnect driver"
-> +	depends on INTERCONNECT_QCOM
-> +	depends on QCOM_SMD_RPM
-> +	select INTERCONNECT_QCOM_SMD_RPM
-> +	help
-> +	  This is a driver for the Qualcomm Network-on-Chip on msm8939-based
-> +	  platforms.
-> +
->  config INTERCONNECT_QCOM_MSM8974
->  	tristate "Qualcomm MSM8974 interconnect driver"
->  	depends on INTERCONNECT_QCOM
-> diff --git a/drivers/interconnect/qcom/Makefile b/drivers/interconnect/qcom/Makefile
-> index f5e803489de0..84b75022f0d8 100644
-> --- a/drivers/interconnect/qcom/Makefile
-> +++ b/drivers/interconnect/qcom/Makefile
-> @@ -2,6 +2,7 @@
->  
->  icc-bcm-voter-objs			:= bcm-voter.o
->  qnoc-msm8916-objs			:= msm8916.o
-> +qnoc-msm8939-objs			:= msm8939.o
->  qnoc-msm8974-objs			:= msm8974.o
->  icc-osm-l3-objs				:= osm-l3.o
->  qnoc-qcs404-objs			:= qcs404.o
-> @@ -13,6 +14,7 @@ icc-smd-rpm-objs			:= smd-rpm.o icc-rpm.o
->  
->  obj-$(CONFIG_INTERCONNECT_QCOM_BCM_VOTER) += icc-bcm-voter.o
->  obj-$(CONFIG_INTERCONNECT_QCOM_MSM8916) += qnoc-msm8916.o
-> +obj-$(CONFIG_INTERCONNECT_QCOM_MSM8939) += qnoc-msm8939.o
->  obj-$(CONFIG_INTERCONNECT_QCOM_MSM8974) += qnoc-msm8974.o
->  obj-$(CONFIG_INTERCONNECT_QCOM_OSM_L3) += icc-osm-l3.o
->  obj-$(CONFIG_INTERCONNECT_QCOM_QCS404) += qnoc-qcs404.o
-> diff --git a/drivers/interconnect/qcom/msm8939.c b/drivers/interconnect/qcom/msm8939.c
-> new file mode 100644
-> index 000000000000..dfbec30ed149
-> --- /dev/null
-> +++ b/drivers/interconnect/qcom/msm8939.c
-> @@ -0,0 +1,355 @@
-> +// SPDX-License-Identifier: GPL-2.0
-> +/*
-> + * Copyright (C) 2020 Linaro Ltd
-> + * Author: Jun Nie <jun.nie@linaro.org>
-> + * With reference of msm8916 interconnect driver of Georgi Djakov.
-> + */
-> +
-> +#include <linux/clk.h>
-> +#include <linux/device.h>
-> +#include <linux/interconnect-provider.h>
-> +#include <linux/io.h>
-> +#include <linux/module.h>
-> +#include <linux/platform_device.h>
-> +#include <linux/of_device.h>
+- return correct width and height for G_SELECTION
+- update capture port wxh with rectangle wxh.
+- add support for HFI_PROPERTY_PARAM_UNCOMPRESSED_PLANE_ACTUAL_INFO
+  to set stride info and chroma offset to FW.
 
-Nit: Move this above platform_device.h to make it sorted.
+Signed-off-by: Dikshita Agarwal <dikshita@codeaurora.org>
+---
+ drivers/media/platform/qcom/venus/helpers.c    | 18 +++++++++++++
+ drivers/media/platform/qcom/venus/helpers.h    |  2 ++
+ drivers/media/platform/qcom/venus/hfi_cmds.c   | 12 +++++++++
+ drivers/media/platform/qcom/venus/hfi_helper.h |  4 +--
+ drivers/media/platform/qcom/venus/venc.c       | 36 ++++++++++++++++++--------
+ 5 files changed, 59 insertions(+), 13 deletions(-)
 
-> +
-> +#include <dt-bindings/interconnect/qcom,msm8939.h>
-> +
-> +#include "smd-rpm.h"
-> +#include "icc-rpm.h"
-> +
-[..]
-> +static const struct of_device_id msm8939_noc_of_match[] = {
-> +	{ .compatible = "qcom,msm8939-bimc", .data = &msm8939_bimc },
-> +	{ .compatible = "qcom,msm8939-pcnoc", .data = &msm8939_pcnoc },
-> +	{ .compatible = "qcom,msm8939-snoc", .data = &msm8939_snoc },
-> +	{ .compatible = "qcom,msm8939-snoc-mm", .data = &msm8939_snoc_mm },
-> +	{ }
-> +};
-> +MODULE_DEVICE_TABLE(of, msm8939_noc_of_match);
-> +
-> +static struct platform_driver msm8939_noc_driver = {
-> +	.probe = msm8939_qnoc_probe,
-> +	.remove = qnoc_remove,
-> +	.driver = {
-> +		.name = "qnoc-msm8939",
-> +		.of_match_table = msm8939_noc_of_match,
+diff --git a/drivers/media/platform/qcom/venus/helpers.c b/drivers/media/platform/qcom/venus/helpers.c
+index 2b6925b..6545cfb 100644
+--- a/drivers/media/platform/qcom/venus/helpers.c
++++ b/drivers/media/platform/qcom/venus/helpers.c
+@@ -1621,3 +1621,21 @@ int venus_helper_get_out_fmts(struct venus_inst *inst, u32 v4l2_fmt,
+ 	return -EINVAL;
+ }
+ EXPORT_SYMBOL_GPL(venus_helper_get_out_fmts);
++
++int venus_helper_set_stride(struct venus_inst *inst,
++			    unsigned int width, unsigned int height)
++{
++	const u32 ptype = HFI_PROPERTY_PARAM_UNCOMPRESSED_PLANE_ACTUAL_INFO;
++
++	struct hfi_uncompressed_plane_actual_info plane_actual_info;
++
++	plane_actual_info.buffer_type = HFI_BUFFER_INPUT;
++	plane_actual_info.num_planes = 2;
++	plane_actual_info.plane_format[0].actual_stride = width;
++	plane_actual_info.plane_format[0].actual_plane_buffer_height = height;
++	plane_actual_info.plane_format[1].actual_stride = width;
++	plane_actual_info.plane_format[1].actual_plane_buffer_height = height / 2;
++
++	return hfi_session_set_property(inst, ptype, &plane_actual_info);
++}
++EXPORT_SYMBOL_GPL(venus_helper_set_plane_actual_info);
+diff --git a/drivers/media/platform/qcom/venus/helpers.h b/drivers/media/platform/qcom/venus/helpers.h
+index a4a0562..f36c9f71 100644
+--- a/drivers/media/platform/qcom/venus/helpers.h
++++ b/drivers/media/platform/qcom/venus/helpers.h
+@@ -63,4 +63,6 @@ void venus_helper_get_ts_metadata(struct venus_inst *inst, u64 timestamp_us,
+ 				  struct vb2_v4l2_buffer *vbuf);
+ int venus_helper_get_profile_level(struct venus_inst *inst, u32 *profile, u32 *level);
+ int venus_helper_set_profile_level(struct venus_inst *inst, u32 profile, u32 level);
++int venus_helper_set_stride(struct venus_inst *inst, unsigned int aligned_width,
++			    unsigned int aligned_height);
+ #endif
+diff --git a/drivers/media/platform/qcom/venus/hfi_cmds.c b/drivers/media/platform/qcom/venus/hfi_cmds.c
+index 7022368..4f75658 100644
+--- a/drivers/media/platform/qcom/venus/hfi_cmds.c
++++ b/drivers/media/platform/qcom/venus/hfi_cmds.c
+@@ -1205,6 +1205,18 @@ static int pkt_session_set_property_1x(struct hfi_session_set_property_pkt *pkt,
+ 		pkt->shdr.hdr.size += sizeof(u32) + sizeof(*cu);
+ 		break;
+ 	}
++	case HFI_PROPERTY_PARAM_UNCOMPRESSED_PLANE_ACTUAL_INFO: {
++		struct hfi_uncompressed_plane_actual_info *in = pdata;
++		struct hfi_uncompressed_plane_actual_info *info = prop_data;
++
++		info->buffer_type = in->buffer_type;
++		info->num_planes = in->num_planes;
++		info->plane_format[0] = in->plane_format[0];
++		if (in->num_planes > 1)
++			info->plane_format[1] = in->plane_format[1];
++		pkt->shdr.hdr.size += sizeof(u32) + sizeof(*info);
++		break;
++	}
+ 	case HFI_PROPERTY_CONFIG_VENC_MAX_BITRATE:
+ 	case HFI_PROPERTY_CONFIG_VDEC_POST_LOOP_DEBLOCKER:
+ 	case HFI_PROPERTY_PARAM_BUFFER_ALLOC_MODE:
+diff --git a/drivers/media/platform/qcom/venus/hfi_helper.h b/drivers/media/platform/qcom/venus/hfi_helper.h
+index 60ee247..5938a96 100644
+--- a/drivers/media/platform/qcom/venus/hfi_helper.h
++++ b/drivers/media/platform/qcom/venus/hfi_helper.h
+@@ -908,13 +908,13 @@ struct hfi_uncompressed_plane_actual {
+ struct hfi_uncompressed_plane_actual_info {
+ 	u32 buffer_type;
+ 	u32 num_planes;
+-	struct hfi_uncompressed_plane_actual plane_format[1];
++	struct hfi_uncompressed_plane_actual plane_format[2];
+ };
+ 
+ struct hfi_uncompressed_plane_actual_constraints_info {
+ 	u32 buffer_type;
+ 	u32 num_planes;
+-	struct hfi_uncompressed_plane_constraints plane_format[1];
++	struct hfi_uncompressed_plane_constraints plane_format[2];
+ };
+ 
+ struct hfi_codec_supported {
+diff --git a/drivers/media/platform/qcom/venus/venc.c b/drivers/media/platform/qcom/venus/venc.c
+index 4ecf78e..99bfabf 100644
+--- a/drivers/media/platform/qcom/venus/venc.c
++++ b/drivers/media/platform/qcom/venus/venc.c
+@@ -190,8 +190,10 @@ static int venc_enum_fmt(struct file *file, void *fh, struct v4l2_fmtdesc *f)
+ 	pixmp->height = clamp(pixmp->height, frame_height_min(inst),
+ 			      frame_height_max(inst));
+ 
+-	if (f->type == V4L2_BUF_TYPE_VIDEO_OUTPUT_MPLANE)
++	if (f->type == V4L2_BUF_TYPE_VIDEO_OUTPUT_MPLANE) {
++		pixmp->width = ALIGN(pixmp->width, 128);
+ 		pixmp->height = ALIGN(pixmp->height, 32);
++	}
+ 
+ 	pixmp->width = ALIGN(pixmp->width, 2);
+ 	pixmp->height = ALIGN(pixmp->height, 2);
+@@ -335,13 +337,13 @@ static int venc_g_fmt(struct file *file, void *fh, struct v4l2_format *f)
+ 	switch (s->target) {
+ 	case V4L2_SEL_TGT_CROP_DEFAULT:
+ 	case V4L2_SEL_TGT_CROP_BOUNDS:
+-		s->r.width = inst->width;
+-		s->r.height = inst->height;
+-		break;
+-	case V4L2_SEL_TGT_CROP:
+ 		s->r.width = inst->out_width;
+ 		s->r.height = inst->out_height;
+ 		break;
++	case V4L2_SEL_TGT_CROP:
++		s->r.width = inst->width;
++		s->r.height = inst->height;
++		break;
+ 	default:
+ 		return -EINVAL;
+ 	}
+@@ -360,12 +362,19 @@ static int venc_g_fmt(struct file *file, void *fh, struct v4l2_format *f)
+ 	if (s->type != V4L2_BUF_TYPE_VIDEO_OUTPUT)
+ 		return -EINVAL;
+ 
++	if (s->r.width > inst->out_width ||
++	    s->r.height > inst->out_height)
++		return -EINVAL;
++
++	s->r.width = ALIGN(s->r.width, 2);
++	s->r.height = ALIGN(s->r.height, 2);
++
+ 	switch (s->target) {
+ 	case V4L2_SEL_TGT_CROP:
+-		if (s->r.width != inst->out_width ||
+-		    s->r.height != inst->out_height ||
+-		    s->r.top != 0 || s->r.left != 0)
+-			return -EINVAL;
++		s->r.top = 0;
++		s->r.left = 0;
++		inst->width = s->r.width;
++		inst->height = s->r.height;
+ 		break;
+ 	default:
+ 		return -EINVAL;
+@@ -728,6 +737,11 @@ static int venc_init_session(struct venus_inst *inst)
+ 	if (ret)
+ 		return ret;
+ 
++	ret = venus_helper_set_stride(inst, inst->out_width,
++				      inst->out_height);
++	if (ret)
++		goto deinit;
++
+ 	ret = venus_helper_set_input_resolution(inst, inst->width,
+ 						inst->height);
+ 	if (ret)
+@@ -816,8 +830,8 @@ static int venc_queue_setup(struct vb2_queue *q,
+ 		inst->num_input_bufs = *num_buffers;
+ 
+ 		sizes[0] = venus_helper_get_framesz(inst->fmt_out->pixfmt,
+-						    inst->width,
+-						    inst->height);
++						    inst->out_width,
++						    inst->out_height);
+ 		inst->input_buf_size = sizes[0];
+ 		break;
+ 	case V4L2_BUF_TYPE_VIDEO_CAPTURE_MPLANE:
+-- 
+1.9.1
 
-The sync_state patches got merged, so please add this:
-		.sync_state = icc_sync_state,
-
-Thanks,
-Georgi
-
-> +	},
-> +};
-> +module_platform_driver(msm8939_noc_driver);
-> +MODULE_AUTHOR("Jun Nie <jun.nie@linaro.org>");
-> +MODULE_DESCRIPTION("Qualcomm MSM8939 NoC driver");
-> +MODULE_LICENSE("GPL v2");
-> 
