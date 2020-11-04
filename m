@@ -2,165 +2,252 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 932442A6B93
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Nov 2020 18:24:52 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4473A2A6CAD
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Nov 2020 19:30:26 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730160AbgKDRYw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 4 Nov 2020 12:24:52 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45292 "EHLO
+        id S1730716AbgKDSaV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 4 Nov 2020 13:30:21 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55438 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726604AbgKDRYv (ORCPT
+        with ESMTP id S1726801AbgKDSaU (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 4 Nov 2020 12:24:51 -0500
-Received: from mail-wr1-x443.google.com (mail-wr1-x443.google.com [IPv6:2a00:1450:4864:20::443])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8B576C0613D3
-        for <linux-arm-msm@vger.kernel.org>; Wed,  4 Nov 2020 09:24:51 -0800 (PST)
-Received: by mail-wr1-x443.google.com with SMTP id w14so22889123wrs.9
-        for <linux-arm-msm@vger.kernel.org>; Wed, 04 Nov 2020 09:24:51 -0800 (PST)
+        Wed, 4 Nov 2020 13:30:20 -0500
+Received: from mail-ej1-x643.google.com (mail-ej1-x643.google.com [IPv6:2a00:1450:4864:20::643])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2027EC0613D4
+        for <linux-arm-msm@vger.kernel.org>; Wed,  4 Nov 2020 10:30:19 -0800 (PST)
+Received: by mail-ej1-x643.google.com with SMTP id i19so20140901ejx.9
+        for <linux-arm-msm@vger.kernel.org>; Wed, 04 Nov 2020 10:30:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
+        d=chromium.org; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=2t6bsOvcaKKa8aR9J8fbfDJiM/7JPVfDs636SBMVeQg=;
-        b=oqswMzax2NZZWri8s+7sGggS2Z+ar/36vEeNk36cbDsmy1CY3nBah1lCxd1L/24Kit
-         +eAnPGyMvdMn2c+CZxHiSavR4e8HpFo4WUOawJOnSTGxEUltgSv/M36sKB0PIickks8o
-         EqbPTlbU40dcDX5LeK7g21AnU0f0LLlOQp8hIv4yCQK6axPIarhcLoCBBQvPNUxtGH3T
-         1XvlQLxcfJ8ywZof2f4IMr5RAvLFsULLg6fyyqsPoFe01tjO6aOj8j73YpSIOnLBlx4s
-         EOJMxrQbQ0cr9NPxHzMs3bu+4JV+WGcYelcvhTyBCTruWVbEpvYBF0JIvhA/xsD4ivpV
-         vY1Q==
+        bh=ObXZvuqDTjW88+sZhWTYfkzHwkNpd/2w4NBTS9tL7ew=;
+        b=Bf6YApk3rqg8dXlrfYBYH9ATnDAf0xBN3HUgnv7zNBKLh4n02Gy3392KT8gOSfX+K3
+         8uGh7ZRh+Fa5i47uM1MbVKUIFhv+AS5lQllZ2XFtTQPi6cjflYzlvTZYAoSC0HLo671h
+         XT/flnYZvPQi5Lth97PnRneljo7oax9nuQKDc=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=2t6bsOvcaKKa8aR9J8fbfDJiM/7JPVfDs636SBMVeQg=;
-        b=QwwImMixP7aqBLDMbgU4DdwnGmYSgPQD8ubyVmabHePdleQkamtgYna2TLVWEDVfQ5
-         N2Qc9A8e05BRoikzd3NsbAqvReTr33nr+z06bS4LFnbrRPOyIt/4xc0D/5xkjFyzNGHI
-         nGWvOOcsWPSildRe8kMGZn4mHtk/uj/GY0/ihjKmhNJQOTSz/afqtwehOZtx33DWnlm5
-         5WEKLiDlYEIKLzdVvjlXDwhiTIxx7k6vcvYp6JTXCwOtv3heu8eTyTQRfuU/UgdNYLes
-         3QhFrY+bB10hDbGofqL/5NjXRQTOp5pCHEbjaq7rm+mfpz6Ou+gfICTEoQ6hHGi+Lz9v
-         Nsgw==
-X-Gm-Message-State: AOAM533zQCzqxEMsqB8Ff/fhiZT3qwsXIr6+gZS5k2ldIMGHCIoLPgp8
-        gDptk5g5pIOZF///99NWgr2ChOtNP6NwdT4wz0MU9zW6PMo=
-X-Google-Smtp-Source: ABdhPJyCoTGhdf3bFvQiuuwVj6l+bkeSchp/yzLV6WBnd0fB4fTk+dADo/wtaXwoaSS9CpQtn69K1BCKxbfXS+Rrcb4=
-X-Received: by 2002:a5d:640d:: with SMTP id z13mr32281679wru.28.1604510690248;
- Wed, 04 Nov 2020 09:24:50 -0800 (PST)
+        bh=ObXZvuqDTjW88+sZhWTYfkzHwkNpd/2w4NBTS9tL7ew=;
+        b=M/rUHMOBJKgCf439vzH8T9tN8EywpdUwT/HHQ6hiI4lr/farNEWQe2WgEX02ri3Tmg
+         neVQ+gls34OVr3vgZf/WxSuMEpPx1dafG0IUOI5x7B6IFhJacra+Cleyl8jlfnmvCtKm
+         zRJRpuuJaxLL5Z4Y11WxitQltyhAzewxaDL8WYLbfZBSsCo8w9i4iZf5LOCIQ1Y4naiF
+         nhAyv4MSritotxcHYZKJ37UeomjgMHqiPUieyEy92JT0mhp7w8hE7DjccvwEruiUVeLo
+         QoEY+16Cw/RkNtolWXLDlD9xsZOBOHS+VQezZp4iJG+ZZMOT1bZhX5Wvxu/1jvoccQYs
+         M7Vw==
+X-Gm-Message-State: AOAM532HLjiQiZqvwCYOZxl0l6SuKoaun7JgQLzzkGcn3j99FW5L4yI9
+        H/VdxlEEFuGeqMQMK2SgEV3XdlfwQREf/g==
+X-Google-Smtp-Source: ABdhPJyEO3BkLmeBIAO4xdjQdfCXDa86UGQzWaEsRm5QwhGr/HgMLrOMuUxm94wocnQ91CfHCOPklA==
+X-Received: by 2002:a17:906:a098:: with SMTP id q24mr3346474ejy.191.1604514617443;
+        Wed, 04 Nov 2020 10:30:17 -0800 (PST)
+Received: from mail-wr1-f50.google.com (mail-wr1-f50.google.com. [209.85.221.50])
+        by smtp.gmail.com with ESMTPSA id f16sm1431991edw.15.2020.11.04.10.30.16
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 04 Nov 2020 10:30:16 -0800 (PST)
+Received: by mail-wr1-f50.google.com with SMTP id x7so23155205wrl.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 04 Nov 2020 10:30:16 -0800 (PST)
+X-Received: by 2002:adf:e8cf:: with SMTP id k15mr33486907wrn.262.1604514615979;
+ Wed, 04 Nov 2020 10:30:15 -0800 (PST)
 MIME-Version: 1.0
-References: <20201030010101.4345-1-abhinavk@codeaurora.org> <20201030010101.4345-4-abhinavk@codeaurora.org>
-In-Reply-To: <20201030010101.4345-4-abhinavk@codeaurora.org>
-From:   Rob Clark <robdclark@gmail.com>
-Date:   Wed, 4 Nov 2020 09:26:24 -0800
-Message-ID: <CAF6AEGseHWb43jx0HzqL0aZSGMeijnXcv2eOi7oU9d8peAQOVA@mail.gmail.com>
-Subject: Re: [Freedreno] [PATCH v2 3/4] drm/msm: register the base address
- with dpu_dbg module
-To:     Abhinav Kumar <abhinavk@codeaurora.org>
-Cc:     dri-devel <dri-devel@lists.freedesktop.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Kuogee Hsieh <khsieh@codeaurora.org>, nganji@codeaurora.org,
-        Sean Paul <seanpaul@chromium.org>,
-        Tanmay Shah <tanmay@codeaurora.org>,
-        Daniel Vetter <daniel@ffwll.ch>, aravindh@codeaurora.org,
-        freedreno <freedreno@lists.freedesktop.org>
+References: <1604422184-2019-1-git-send-email-dikshita@codeaurora.org>
+In-Reply-To: <1604422184-2019-1-git-send-email-dikshita@codeaurora.org>
+From:   Fritz Koenig <frkoenig@chromium.org>
+Date:   Wed, 4 Nov 2020 10:30:03 -0800
+X-Gmail-Original-Message-ID: <CAMfZQbzQ0Ao1AOm75vg=ByyvY05Ovach49tP71dRHaYhL3ZU9g@mail.gmail.com>
+Message-ID: <CAMfZQbzQ0Ao1AOm75vg=ByyvY05Ovach49tP71dRHaYhL3ZU9g@mail.gmail.com>
+Subject: Re: [PATCH] venus: venc: fix handlig of S_SELECTION and G_SELECTION
+To:     Dikshita Agarwal <dikshita@codeaurora.org>
+Cc:     linux-media@vger.kernel.org,
+        Stanimir Varbanov <stanimir.varbanov@linaro.org>,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        Vikash Garodia <vgarodia@codeaurora.org>
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Oct 29, 2020 at 6:01 PM Abhinav Kumar <abhinavk@codeaurora.org> wrote:
+On Tue, Nov 3, 2020 at 8:50 AM Dikshita Agarwal <dikshita@codeaurora.org> wrote:
 >
-> Register the base address of various dpu sub-modules with the
-> dpu_dbg module so that it can be dumped out during error scenarios.
+> - return correct width and height for G_SELECTION
+> - update capture port wxh with rectangle wxh.
+> - add support for HFI_PROPERTY_PARAM_UNCOMPRESSED_PLANE_ACTUAL_INFO
+>   to set stride info and chroma offset to FW.
 >
-> changes in v2:
->  - Fix an issue where the same dsi client was getting registered
->    multiple times to the dpu_dbg module
->
-> Signed-off-by: Abhinav Kumar <abhinavk@codeaurora.org>
+> Signed-off-by: Dikshita Agarwal <dikshita@codeaurora.org>
 > ---
->  drivers/gpu/drm/msm/disp/dpu1/dpu_dbg.c       |  4 +--
->  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c    |  6 ++++-
->  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dspp.c   |  7 +++--
->  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c   |  5 +++-
->  .../gpu/drm/msm/disp/dpu1/dpu_hw_pingpong.c   |  6 ++++-
->  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c   |  8 +++++-
->  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_top.c    |  7 ++++-
->  drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c       | 12 +++++++--
->  drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h       |  4 ++-
->  drivers/gpu/drm/msm/dp/dp_catalog.c           | 12 +++++++++
->  drivers/gpu/drm/msm/dp/dp_catalog.h           |  4 +++
->  drivers/gpu/drm/msm/dp/dp_display.c           |  2 ++
->  drivers/gpu/drm/msm/dsi/dsi.c                 |  1 +
->  drivers/gpu/drm/msm/dsi/dsi.h                 |  1 +
->  drivers/gpu/drm/msm/dsi/dsi_host.c            | 15 ++++++++++-
->  drivers/gpu/drm/msm/msm_drv.c                 | 26 ++++++++++++++++++-
->  drivers/gpu/drm/msm/msm_drv.h                 |  3 ++-
->  17 files changed, 108 insertions(+), 15 deletions(-)
+>  drivers/media/platform/qcom/venus/helpers.c    | 18 +++++++++++++
+>  drivers/media/platform/qcom/venus/helpers.h    |  2 ++
+>  drivers/media/platform/qcom/venus/hfi_cmds.c   | 12 +++++++++
+>  drivers/media/platform/qcom/venus/hfi_helper.h |  4 +--
+>  drivers/media/platform/qcom/venus/venc.c       | 36 ++++++++++++++++++--------
+>  5 files changed, 59 insertions(+), 13 deletions(-)
 >
-
-[snip]
-
-> diff --git a/drivers/gpu/drm/msm/msm_drv.c b/drivers/gpu/drm/msm/msm_drv.c
-> index f6fb0187388f..df505a3d53e8 100644
-> --- a/drivers/gpu/drm/msm/msm_drv.c
-> +++ b/drivers/gpu/drm/msm/msm_drv.c
-> @@ -17,8 +17,8 @@
->  #include <drm/drm_prime.h>
->  #include <drm/drm_of.h>
->  #include <drm/drm_vblank.h>
-> -#include "dpu_dbg.h"
->
-> +#include "dpu_dbg.h"
->  #include "msm_drv.h"
->  #include "msm_debugfs.h"
->  #include "msm_fence.h"
-> @@ -166,6 +166,24 @@ void __iomem *msm_ioremap_quiet(struct platform_device *pdev, const char *name,
->         return _msm_ioremap(pdev, name, dbgname, true);
+> diff --git a/drivers/media/platform/qcom/venus/helpers.c b/drivers/media/platform/qcom/venus/helpers.c
+> index 2b6925b..6545cfb 100644
+> --- a/drivers/media/platform/qcom/venus/helpers.c
+> +++ b/drivers/media/platform/qcom/venus/helpers.c
+> @@ -1621,3 +1621,21 @@ int venus_helper_get_out_fmts(struct venus_inst *inst, u32 v4l2_fmt,
+>         return -EINVAL;
 >  }
->
-> +unsigned long msm_iomap_size(struct platform_device *pdev, const char *name)
+>  EXPORT_SYMBOL_GPL(venus_helper_get_out_fmts);
+> +
+> +int venus_helper_set_stride(struct venus_inst *inst,
+> +                           unsigned int width, unsigned int height)
 > +{
-> +       struct resource *res;
+> +       const u32 ptype = HFI_PROPERTY_PARAM_UNCOMPRESSED_PLANE_ACTUAL_INFO;
 > +
-> +       if (name)
-> +               res = platform_get_resource_byname(pdev, IORESOURCE_MEM, name);
-> +       else
-> +               res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
+> +       struct hfi_uncompressed_plane_actual_info plane_actual_info;
 > +
-> +       if (!res) {
-> +               dev_dbg(&pdev->dev, "failed to get memory resource: %s\n",
-> +                               name);
-> +               return 0;
-> +       }
+> +       plane_actual_info.buffer_type = HFI_BUFFER_INPUT;
+> +       plane_actual_info.num_planes = 2;
+> +       plane_actual_info.plane_format[0].actual_stride = width;
+> +       plane_actual_info.plane_format[0].actual_plane_buffer_height = height;
+> +       plane_actual_info.plane_format[1].actual_stride = width;
+> +       plane_actual_info.plane_format[1].actual_plane_buffer_height = height / 2;
 > +
-> +       return resource_size(res);
+> +       return hfi_session_set_property(inst, ptype, &plane_actual_info);
 > +}
+> +EXPORT_SYMBOL_GPL(venus_helper_set_plane_actual_info);
+
+I think this should be EXPORT_SYMBOL_GPL(venus_helper_set_stride);
+
+> diff --git a/drivers/media/platform/qcom/venus/helpers.h b/drivers/media/platform/qcom/venus/helpers.h
+> index a4a0562..f36c9f71 100644
+> --- a/drivers/media/platform/qcom/venus/helpers.h
+> +++ b/drivers/media/platform/qcom/venus/helpers.h
+> @@ -63,4 +63,6 @@ void venus_helper_get_ts_metadata(struct venus_inst *inst, u64 timestamp_us,
+>                                   struct vb2_v4l2_buffer *vbuf);
+>  int venus_helper_get_profile_level(struct venus_inst *inst, u32 *profile, u32 *level);
+>  int venus_helper_set_profile_level(struct venus_inst *inst, u32 profile, u32 level);
+> +int venus_helper_set_stride(struct venus_inst *inst, unsigned int aligned_width,
+> +                           unsigned int aligned_height);
+>  #endif
+> diff --git a/drivers/media/platform/qcom/venus/hfi_cmds.c b/drivers/media/platform/qcom/venus/hfi_cmds.c
+> index 7022368..4f75658 100644
+> --- a/drivers/media/platform/qcom/venus/hfi_cmds.c
+> +++ b/drivers/media/platform/qcom/venus/hfi_cmds.c
+> @@ -1205,6 +1205,18 @@ static int pkt_session_set_property_1x(struct hfi_session_set_property_pkt *pkt,
+>                 pkt->shdr.hdr.size += sizeof(u32) + sizeof(*cu);
+>                 break;
+>         }
+> +       case HFI_PROPERTY_PARAM_UNCOMPRESSED_PLANE_ACTUAL_INFO: {
+> +               struct hfi_uncompressed_plane_actual_info *in = pdata;
+> +               struct hfi_uncompressed_plane_actual_info *info = prop_data;
 > +
->  void msm_writel(u32 data, void __iomem *addr)
->  {
->         if (reglog)
-> @@ -535,6 +553,8 @@ static int msm_drm_init(struct device *dev, struct drm_driver *drv)
+> +               info->buffer_type = in->buffer_type;
+> +               info->num_planes = in->num_planes;
+> +               info->plane_format[0] = in->plane_format[0];
+> +               if (in->num_planes > 1)
+> +                       info->plane_format[1] = in->plane_format[1];
+> +               pkt->shdr.hdr.size += sizeof(u32) + sizeof(*info);
+> +               break;
+> +       }
+>         case HFI_PROPERTY_CONFIG_VENC_MAX_BITRATE:
+>         case HFI_PROPERTY_CONFIG_VDEC_POST_LOOP_DEBLOCKER:
+>         case HFI_PROPERTY_PARAM_BUFFER_ALLOC_MODE:
+> diff --git a/drivers/media/platform/qcom/venus/hfi_helper.h b/drivers/media/platform/qcom/venus/hfi_helper.h
+> index 60ee247..5938a96 100644
+> --- a/drivers/media/platform/qcom/venus/hfi_helper.h
+> +++ b/drivers/media/platform/qcom/venus/hfi_helper.h
+> @@ -908,13 +908,13 @@ struct hfi_uncompressed_plane_actual {
+>  struct hfi_uncompressed_plane_actual_info {
+>         u32 buffer_type;
+>         u32 num_planes;
+> -       struct hfi_uncompressed_plane_actual plane_format[1];
+> +       struct hfi_uncompressed_plane_actual plane_format[2];
+>  };
+>
+>  struct hfi_uncompressed_plane_actual_constraints_info {
+>         u32 buffer_type;
+>         u32 num_planes;
+> -       struct hfi_uncompressed_plane_constraints plane_format[1];
+> +       struct hfi_uncompressed_plane_constraints plane_format[2];
+>  };
+>
+>  struct hfi_codec_supported {
+> diff --git a/drivers/media/platform/qcom/venus/venc.c b/drivers/media/platform/qcom/venus/venc.c
+> index 4ecf78e..99bfabf 100644
+> --- a/drivers/media/platform/qcom/venus/venc.c
+> +++ b/drivers/media/platform/qcom/venus/venc.c
+> @@ -190,8 +190,10 @@ static int venc_enum_fmt(struct file *file, void *fh, struct v4l2_fmtdesc *f)
+>         pixmp->height = clamp(pixmp->height, frame_height_min(inst),
+>                               frame_height_max(inst));
+>
+> -       if (f->type == V4L2_BUF_TYPE_VIDEO_OUTPUT_MPLANE)
+> +       if (f->type == V4L2_BUF_TYPE_VIDEO_OUTPUT_MPLANE) {
+> +               pixmp->width = ALIGN(pixmp->width, 128);
+>                 pixmp->height = ALIGN(pixmp->height, 32);
+> +       }
+>
+>         pixmp->width = ALIGN(pixmp->width, 2);
+>         pixmp->height = ALIGN(pixmp->height, 2);
+> @@ -335,13 +337,13 @@ static int venc_g_fmt(struct file *file, void *fh, struct v4l2_format *f)
+>         switch (s->target) {
+>         case V4L2_SEL_TGT_CROP_DEFAULT:
+>         case V4L2_SEL_TGT_CROP_BOUNDS:
+> -               s->r.width = inst->width;
+> -               s->r.height = inst->height;
+> -               break;
+> -       case V4L2_SEL_TGT_CROP:
+>                 s->r.width = inst->out_width;
+>                 s->r.height = inst->out_height;
+>                 break;
+> +       case V4L2_SEL_TGT_CROP:
+> +               s->r.width = inst->width;
+> +               s->r.height = inst->height;
+> +               break;
+>         default:
+>                 return -EINVAL;
+>         }
+> @@ -360,12 +362,19 @@ static int venc_g_fmt(struct file *file, void *fh, struct v4l2_format *f)
+>         if (s->type != V4L2_BUF_TYPE_VIDEO_OUTPUT)
+>                 return -EINVAL;
+>
+> +       if (s->r.width > inst->out_width ||
+> +           s->r.height > inst->out_height)
+> +               return -EINVAL;
+> +
+> +       s->r.width = ALIGN(s->r.width, 2);
+> +       s->r.height = ALIGN(s->r.height, 2);
+> +
+>         switch (s->target) {
+>         case V4L2_SEL_TGT_CROP:
+> -               if (s->r.width != inst->out_width ||
+> -                   s->r.height != inst->out_height ||
+> -                   s->r.top != 0 || s->r.left != 0)
+> -                       return -EINVAL;
+> +               s->r.top = 0;
+> +               s->r.left = 0;
+> +               inst->width = s->r.width;
+> +               inst->height = s->r.height;
+>                 break;
+>         default:
+>                 return -EINVAL;
+> @@ -728,6 +737,11 @@ static int venc_init_session(struct venus_inst *inst)
 >         if (ret)
->                 goto err_msm_uninit;
+>                 return ret;
 >
-> +       dpu_dbg_register_drm_dev(ddev);
+> +       ret = venus_helper_set_stride(inst, inst->out_width,
+> +                                     inst->out_height);
+> +       if (ret)
+> +               goto deinit;
 > +
->         drm_mode_config_reset(ddev);
+>         ret = venus_helper_set_input_resolution(inst, inst->width,
+>                                                 inst->height);
+>         if (ret)
+> @@ -816,8 +830,8 @@ static int venc_queue_setup(struct vb2_queue *q,
+>                 inst->num_input_bufs = *num_buffers;
 >
->  #ifdef CONFIG_DRM_FBDEV_EMULATION
-> @@ -1282,6 +1302,10 @@ static int msm_pdev_probe(struct platform_device *pdev)
->         int ret;
+>                 sizes[0] = venus_helper_get_framesz(inst->fmt_out->pixfmt,
+> -                                                   inst->width,
+> -                                                   inst->height);
+> +                                                   inst->out_width,
+> +                                                   inst->out_height);
+>                 inst->input_buf_size = sizes[0];
+>                 break;
+>         case V4L2_BUF_TYPE_VIDEO_CAPTURE_MPLANE:
+> --
+> 1.9.1
 >
->         if (get_mdp_ver(pdev)) {
-> +               ret = dpu_dbg_init(&pdev->dev);
-> +               if (ret)
-> +                       pr_err("dpu_dbg_init failed ret = %d\n", ret);
-> +
->                 ret = add_display_components(&pdev->dev, &match);
->                 if (ret)
->                         return ret;
-
-I'm a bit skeptical about where you are registering/initializing dpu
-dbg.. what happens on mdp4/mdp5 devices?
-
-BR,
--R
