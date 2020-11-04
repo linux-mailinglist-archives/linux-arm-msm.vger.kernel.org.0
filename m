@@ -2,158 +2,179 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 10D322A69E1
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Nov 2020 17:34:46 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C13C02A6B59
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Nov 2020 18:03:44 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730918AbgKDQeo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 4 Nov 2020 11:34:44 -0500
-Received: from m42-4.mailgun.net ([69.72.42.4]:25458 "EHLO m42-4.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1730826AbgKDQek (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 4 Nov 2020 11:34:40 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1604507679; h=References: In-Reply-To: Message-Id: Date:
- Subject: Cc: To: From: Sender;
- bh=A7JCIGqgZ7YxmwQMyHpFCOWujVa32j1DWMzu/rWMlfM=; b=J/mcc9Xk7Gx0vB4Ub6tOFVIBDAj3B3M4pdSwesjd9rXXjXn5VIfuO+PfWzPpVUUdt5Y7VSnZ
- vGdHehcBUcwkuFU4hVx8ZutgXlz+wAyeApA6eppsebwnE/nNSC13DIe2Y/Elan2VBP3KjsWQ
- /0aVHCLFuMtslnelBn+D3SshIWA=
-X-Mailgun-Sending-Ip: 69.72.42.4
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n05.prod.us-east-1.postgun.com with SMTP id
- 5fa2d81b82827831805fc880 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 04 Nov 2020 16:34:35
- GMT
-Sender: kathirav=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id CAD4EC433C6; Wed,  4 Nov 2020 16:34:34 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
-        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
-Received: from kathirav-linux.qualcomm.com (blr-c-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.19.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: kathirav)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 7E954C43382;
-        Wed,  4 Nov 2020 16:34:29 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 7E954C43382
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=kathirav@codeaurora.org
-From:   Kathiravan T <kathirav@codeaurora.org>
-To:     agross@kernel.org, miquel.raynal@bootlin.com, richard@nod.at,
-        vigneshr@ti.com, robh+dt@kernel.org, sivaprak@codeaurora.org,
-        peter.ujfalusi@ti.com, boris.brezillon@collabora.com,
-        linux-arm-msm@vger.kernel.org, linux-mtd@lists.infradead.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Cc:     kathirav@codeaurora.org,
-        Anusha Canchi Ramachandra Rao <anusharao@codeaurora.org>
-Subject: [PATCH V2 1/1] arm64: dts: ipq6018: Add the QPIC peripheral nodes
-Date:   Wed,  4 Nov 2020 22:04:13 +0530
-Message-Id: <1604507653-24999-2-git-send-email-kathirav@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1604507653-24999-1-git-send-email-kathirav@codeaurora.org>
-References: <1604507653-24999-1-git-send-email-kathirav@codeaurora.org>
+        id S1731897AbgKDRDl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 4 Nov 2020 12:03:41 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42030 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1731607AbgKDRDk (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 4 Nov 2020 12:03:40 -0500
+Received: from mail-pg1-x541.google.com (mail-pg1-x541.google.com [IPv6:2607:f8b0:4864:20::541])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ED891C0613D4
+        for <linux-arm-msm@vger.kernel.org>; Wed,  4 Nov 2020 09:03:38 -0800 (PST)
+Received: by mail-pg1-x541.google.com with SMTP id 62so9809827pgg.12
+        for <linux-arm-msm@vger.kernel.org>; Wed, 04 Nov 2020 09:03:38 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=cMu7ftuJKYWofdDf+mw7KOC/o+bzARuC9bdbjIr2veY=;
+        b=kIBCBW3l5LWCuLMq9XBIuuGqIIdYwn6PYTcQ1exPNdySkR2xoelVFIaBHnUZ9KoSem
+         jYPmc4SdHgZDzMmlmpNcbJO+2aOcixon7EzVQfu1Qqdmv/PZn2tRj+IWyWGjACD0GWGp
+         9mfhbvZI0/yUhFKn/eS4uf0RUj1GhYWw7X+nM3QUajXkVyPIHl5ojpW07kM709dLhHtw
+         DWwiCKzmk59qXjFwP3alt5h3WD11dgrtSyzsZ1G+Ddx++fQw8cZ+2Vy04TWX1h0ms0pd
+         gP3SNFSMmD0W7dhnMDUJWDsC9km6r43JrS+Sl+QWgtX68ciUCevjSIbzqYIMfGT7D6dE
+         JnLA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=cMu7ftuJKYWofdDf+mw7KOC/o+bzARuC9bdbjIr2veY=;
+        b=S0UXYY15N/rjZpg2SJTZEzf6Ewna+2aXy/SKB7EyU1i4Yh81cQfuLEQF6//OjVPQTQ
+         /tAwnmbjsD9i/nHIUCknPvXYwkax8tcLNwujzF+uZmUCIoIE+sbRDqy8uza9gnTjP0C5
+         yxCCt4jefJY28X0tslJNcvpPf8Sb1eiUKQwkLtdwKdQ0G0RwZn8ChRqFnOofYHug+Dxx
+         OxNBAAZJX4O3C90DNe9F9lsONiOsyChPBOOUeuiFhlyHr25ye64k4WaL9MMdPsUbeEKX
+         4MCGwLCXXKqbmEakuXrgTgHDC7GjTNfgXtWFpCxoAmBp0qpLSwfdjPKeKAAbp1ni1RLH
+         oUGA==
+X-Gm-Message-State: AOAM531ZjGXvE3pw3sBdE3+pW6gQ/01g2sLdE2qC9BjBc5+I5pnDMYHL
+        Q9HgodxquI2919EEVH2NCZDK1Q==
+X-Google-Smtp-Source: ABdhPJzzT3/ryOHyRUm9RNGwSYrm4NGLAOBXZVt3aH0Z/RdpUipHDPneULJNKdYZhn7JaOeU8xIWUQ==
+X-Received: by 2002:a17:90a:b94a:: with SMTP id f10mr5148918pjw.164.1604509418496;
+        Wed, 04 Nov 2020 09:03:38 -0800 (PST)
+Received: from xps15 (S0106002369de4dac.cg.shawcable.net. [68.147.8.254])
+        by smtp.gmail.com with ESMTPSA id z22sm3056775pfa.220.2020.11.04.09.03.36
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 04 Nov 2020 09:03:37 -0800 (PST)
+Date:   Wed, 4 Nov 2020 10:03:35 -0700
+From:   Mathieu Poirier <mathieu.poirier@linaro.org>
+To:     Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+Cc:     Peter Zijlstra <peterz@infradead.org>,
+        Suzuki Poulose <suzuki.poulose@arm.com>,
+        Mike Leach <mike.leach@linaro.org>,
+        Ingo Molnar <mingo@redhat.com>,
+        Arnaldo Carvalho de Melo <acme@kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+        Jiri Olsa <jolsa@redhat.com>,
+        Namhyung Kim <namhyung@kernel.org>, coresight@lists.linaro.org,
+        Stephen Boyd <swboyd@chromium.org>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org
+Subject: Re: [PATCHv2 2/4] coresight: tmc-etf: Fix NULL ptr dereference in
+ tmc_enable_etf_sink_perf()
+Message-ID: <20201104170335.GA2892592@xps15>
+References: <bd8c136d-9dfa-a760-31f9-eb8d6698aced@arm.com>
+ <20201023105431.GM2594@hirez.programming.kicks-ass.net>
+ <2457de8f-8bc3-b350-fdc7-61276da31ce6@arm.com>
+ <20201023131628.GY2628@hirez.programming.kicks-ass.net>
+ <728fd89c-78f2-0c5c-0443-c91c62b02f0e@arm.com>
+ <20201023134416.GA2628@hirez.programming.kicks-ass.net>
+ <20201023203729.GA819775@xps15>
+ <70e3a508af119be481c8f0a0acf0a44d@codeaurora.org>
+ <20201030164806.GB1301231@xps15>
+ <85c285361ce1c71b1a8274493aab9ca7@codeaurora.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <85c285361ce1c71b1a8274493aab9ca7@codeaurora.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add the QPIC BAM and QPIC NAND controller support and
-enable the same in board DTS file.
+On Fri, Oct 30, 2020 at 10:56:09PM +0530, Sai Prakash Ranjan wrote:
+> Hi Mathieu,
+> 
+> On 2020-10-30 22:18, Mathieu Poirier wrote:
+> > On Fri, Oct 30, 2020 at 01:29:56PM +0530, Sai Prakash Ranjan wrote:
+> > > Hello guys,
+> > > 
+> > > On 2020-10-24 02:07, Mathieu Poirier wrote:
+> > > > On Fri, Oct 23, 2020 at 03:44:16PM +0200, Peter Zijlstra wrote:
+> > > > > On Fri, Oct 23, 2020 at 02:29:54PM +0100, Suzuki Poulose wrote:
+> > > > > > On 10/23/20 2:16 PM, Peter Zijlstra wrote:
+> > > > > > > On Fri, Oct 23, 2020 at 01:56:47PM +0100, Suzuki Poulose wrote:
+> > > > >
+> > > > > > > > That way another session could use the same sink if it is free. i.e
+> > > > > > > >
+> > > > > > > > perf record -e cs_etm/@sink0/u --per-thread app1
+> > > > > > > >
+> > > > > > > > and
+> > > > > > > >
+> > > > > > > > perf record -e cs_etm/@sink0/u --per-thread app2
+> > > > > > > >
+> > > > > > > > both can work as long as the sink is not used by the other session.
+> > > > > > >
+> > > > > > > Like said above, if sink is shared between CPUs, that's going to be a
+> > > > > > > trainwreck :/ Why do you want that?
+> > > > > >
+> > > > > > That ship has sailed. That is how the current generation of systems are,
+> > > > > > unfortunately. But as I said, this is changing and there are guidelines
+> > > > > > in place to avoid these kind of topologies. With the future
+> > > > > > technologies, this will be completely gone.
+> > > > >
+> > > > > I understand that the hardware is like that, but why do you want to
+> > > > > support this insanity in software?
+> > > > >
+> > > > > If you only allow a single sink user (group) at the same time, your
+> > > > > problem goes away. Simply disallow the above scenario, do not allow
+> > > > > concurrent sink users if sinks are shared like this.
+> > > > >
+> > > > > Have the perf-record of app2 above fail because the sink is in-user
+> > > > > already.
+> > > >
+> > > > I agree with you that --per-thread scenarios are easy to deal with, but
+> > > > to
+> > > > support cpu-wide scenarios events must share a sink (because there is
+> > > > one event
+> > > > per CPU).  CPU-wide support can't be removed because it has been around
+> > > > for close to a couple of years and heavily used. I also think using the
+> > > > pid of
+> > > > the process that created the events, i.e perf, is a good idea.  We just
+> > > > need to
+> > > > agree on how to gain access to it.
+> > > >
+> > > > In Sai's patch you objected to the following:
+> > > >
+> > > > > +     struct task_struct *task = READ_ONCE(event->owner);
+> > > > > +
+> > > > > +     if (!task || is_kernel_event(event))
+> > > >
+> > > > Would it be better to use task_nr_pid(current) instead of event->owner?
+> > > > The end
+> > > > result will be exactly the same.  There is also no need to check the
+> > > > validity of
+> > > > @current since it is a user process.
+> > > >
+> > > 
+> > > We have devices deployed where these crashes are seen consistently,
+> > > so for some immediate relief, could we atleast get some fix in this
+> > > cycle without major design overhaul which would likely take more time.
+> > > Perhaps my first patch [1] without any check for owner or
+> > > I can post a new version as Suzuki suggested [2] dropping the export
+> > > of is_kernel_event(). Then we can always work on top of it based on
+> > > the
+> > > conclusion of this discussion, we will atleast not have the systems
+> > > crash in the meantime, thoughts?
+> > 
+> > For the time being I think [1], exactly the way it is, is a reasonable
+> > way
+> > forward.
+> > 
+> 
+> Sure, I just checked now and [1] still applies neatly on top of coresight
+> next branch.
+> 
+> [1] https://lore.kernel.org/patchwork/patch/1318098/
 
-Co-developed-by: Anusha Canchi Ramachandra Rao <anusharao@codeaurora.org>
-Signed-off-by: Anusha Canchi Ramachandra Rao <anusharao@codeaurora.org>
-Signed-off-by: Kathiravan T <kathirav@codeaurora.org>
----
- arch/arm64/boot/dts/qcom/ipq6018-cp01-c1.dts | 16 ++++++++
- arch/arm64/boot/dts/qcom/ipq6018.dtsi        | 41 ++++++++++++++++++++
- 2 files changed, 57 insertions(+)
+I have applied both patches that were part of the set.
 
-diff --git a/arch/arm64/boot/dts/qcom/ipq6018-cp01-c1.dts b/arch/arm64/boot/dts/qcom/ipq6018-cp01-c1.dts
-index e8eaa958c199..99cefe88f6f2 100644
---- a/arch/arm64/boot/dts/qcom/ipq6018-cp01-c1.dts
-+++ b/arch/arm64/boot/dts/qcom/ipq6018-cp01-c1.dts
-@@ -62,3 +62,19 @@ spi_0_pins: spi-0-pins {
- 		bias-pull-down;
- 	};
- };
-+
-+&qpic_bam {
-+	status = "okay";
-+};
-+
-+&qpic_nand {
-+	status = "okay";
-+
-+	nand@0 {
-+		reg = <0>;
-+
-+		nand-ecc-strength = <4>;
-+		nand-ecc-step-size = <512>;
-+		nand-bus-width = <8>;
-+	};
-+};
-diff --git a/arch/arm64/boot/dts/qcom/ipq6018.dtsi b/arch/arm64/boot/dts/qcom/ipq6018.dtsi
-index 1aa8d8579463..6b13e390ee29 100644
---- a/arch/arm64/boot/dts/qcom/ipq6018.dtsi
-+++ b/arch/arm64/boot/dts/qcom/ipq6018.dtsi
-@@ -173,6 +173,17 @@ serial_3_pins: serial3-pinmux {
- 				drive-strength = <8>;
- 				bias-pull-down;
- 			};
-+
-+			qpic_pins: qpic-pins {
-+				pins = "gpio1", "gpio3", "gpio4",
-+					"gpio5", "gpio6", "gpio7",
-+					"gpio8", "gpio10", "gpio11",
-+					"gpio12", "gpio13", "gpio14",
-+					"gpio15", "gpio17";
-+				function = "qpic_pad";
-+				drive-strength = <8>;
-+				bias-disable;
-+			};
- 		};
- 
- 		gcc: gcc@1800000 {
-@@ -274,6 +285,36 @@ i2c_1: i2c@78b7000 { /* BLSP1 QUP2 */
- 			status = "disabled";
- 		};
- 
-+		qpic_bam: dma@7984000 {
-+			compatible = "qcom,bam-v1.7.0";
-+			reg = <0x07984000 0x1a000>;
-+			interrupts = <GIC_SPI 146 IRQ_TYPE_LEVEL_HIGH>;
-+			clocks = <&gcc GCC_QPIC_CLK>,
-+				 <&gcc GCC_QPIC_AHB_CLK>;
-+			clock-names = "iface_clk", "bam_clk";
-+			#dma-cells = <1>;
-+			qcom,ee = <0>;
-+			status = "disabled";
-+		};
-+
-+		qpic_nand: nand@79b0000 {
-+			compatible = "qcom,ipq6018-nand";
-+			reg = <0x079b0000 0x10000>;
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			clocks = <&gcc GCC_QPIC_CLK>,
-+				 <&gcc GCC_QPIC_AHB_CLK>;
-+			clock-names = "core", "aon";
-+
-+			dmas = <&qpic_bam 0>,
-+				<&qpic_bam 1>,
-+				<&qpic_bam 2>;
-+			dma-names = "tx", "rx", "cmd";
-+			pinctrl-0 = <&qpic_pins>;
-+			pinctrl-names = "default";
-+			status = "disabled";
-+		};
-+
- 		intc: interrupt-controller@b000000 {
- 			compatible = "qcom,msm-qgic2";
- 			interrupt-controller;
--- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum, hosted by The Linux Foundation
-
+> 
+> Thanks,
+> Sai
+> 
+> -- 
+> QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
+> of Code Aurora Forum, hosted by The Linux Foundation
