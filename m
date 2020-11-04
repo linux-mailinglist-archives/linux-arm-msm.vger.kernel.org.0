@@ -2,179 +2,165 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C13C02A6B59
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Nov 2020 18:03:44 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 932442A6B93
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Nov 2020 18:24:52 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731897AbgKDRDl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 4 Nov 2020 12:03:41 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42030 "EHLO
+        id S1730160AbgKDRYw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 4 Nov 2020 12:24:52 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45292 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731607AbgKDRDk (ORCPT
+        with ESMTP id S1726604AbgKDRYv (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 4 Nov 2020 12:03:40 -0500
-Received: from mail-pg1-x541.google.com (mail-pg1-x541.google.com [IPv6:2607:f8b0:4864:20::541])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ED891C0613D4
-        for <linux-arm-msm@vger.kernel.org>; Wed,  4 Nov 2020 09:03:38 -0800 (PST)
-Received: by mail-pg1-x541.google.com with SMTP id 62so9809827pgg.12
-        for <linux-arm-msm@vger.kernel.org>; Wed, 04 Nov 2020 09:03:38 -0800 (PST)
+        Wed, 4 Nov 2020 12:24:51 -0500
+Received: from mail-wr1-x443.google.com (mail-wr1-x443.google.com [IPv6:2a00:1450:4864:20::443])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8B576C0613D3
+        for <linux-arm-msm@vger.kernel.org>; Wed,  4 Nov 2020 09:24:51 -0800 (PST)
+Received: by mail-wr1-x443.google.com with SMTP id w14so22889123wrs.9
+        for <linux-arm-msm@vger.kernel.org>; Wed, 04 Nov 2020 09:24:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=cMu7ftuJKYWofdDf+mw7KOC/o+bzARuC9bdbjIr2veY=;
-        b=kIBCBW3l5LWCuLMq9XBIuuGqIIdYwn6PYTcQ1exPNdySkR2xoelVFIaBHnUZ9KoSem
-         jYPmc4SdHgZDzMmlmpNcbJO+2aOcixon7EzVQfu1Qqdmv/PZn2tRj+IWyWGjACD0GWGp
-         9mfhbvZI0/yUhFKn/eS4uf0RUj1GhYWw7X+nM3QUajXkVyPIHl5ojpW07kM709dLhHtw
-         DWwiCKzmk59qXjFwP3alt5h3WD11dgrtSyzsZ1G+Ddx++fQw8cZ+2Vy04TWX1h0ms0pd
-         gP3SNFSMmD0W7dhnMDUJWDsC9km6r43JrS+Sl+QWgtX68ciUCevjSIbzqYIMfGT7D6dE
-         JnLA==
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=2t6bsOvcaKKa8aR9J8fbfDJiM/7JPVfDs636SBMVeQg=;
+        b=oqswMzax2NZZWri8s+7sGggS2Z+ar/36vEeNk36cbDsmy1CY3nBah1lCxd1L/24Kit
+         +eAnPGyMvdMn2c+CZxHiSavR4e8HpFo4WUOawJOnSTGxEUltgSv/M36sKB0PIickks8o
+         EqbPTlbU40dcDX5LeK7g21AnU0f0LLlOQp8hIv4yCQK6axPIarhcLoCBBQvPNUxtGH3T
+         1XvlQLxcfJ8ywZof2f4IMr5RAvLFsULLg6fyyqsPoFe01tjO6aOj8j73YpSIOnLBlx4s
+         EOJMxrQbQ0cr9NPxHzMs3bu+4JV+WGcYelcvhTyBCTruWVbEpvYBF0JIvhA/xsD4ivpV
+         vY1Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=cMu7ftuJKYWofdDf+mw7KOC/o+bzARuC9bdbjIr2veY=;
-        b=S0UXYY15N/rjZpg2SJTZEzf6Ewna+2aXy/SKB7EyU1i4Yh81cQfuLEQF6//OjVPQTQ
-         /tAwnmbjsD9i/nHIUCknPvXYwkax8tcLNwujzF+uZmUCIoIE+sbRDqy8uza9gnTjP0C5
-         yxCCt4jefJY28X0tslJNcvpPf8Sb1eiUKQwkLtdwKdQ0G0RwZn8ChRqFnOofYHug+Dxx
-         OxNBAAZJX4O3C90DNe9F9lsONiOsyChPBOOUeuiFhlyHr25ye64k4WaL9MMdPsUbeEKX
-         4MCGwLCXXKqbmEakuXrgTgHDC7GjTNfgXtWFpCxoAmBp0qpLSwfdjPKeKAAbp1ni1RLH
-         oUGA==
-X-Gm-Message-State: AOAM531ZjGXvE3pw3sBdE3+pW6gQ/01g2sLdE2qC9BjBc5+I5pnDMYHL
-        Q9HgodxquI2919EEVH2NCZDK1Q==
-X-Google-Smtp-Source: ABdhPJzzT3/ryOHyRUm9RNGwSYrm4NGLAOBXZVt3aH0Z/RdpUipHDPneULJNKdYZhn7JaOeU8xIWUQ==
-X-Received: by 2002:a17:90a:b94a:: with SMTP id f10mr5148918pjw.164.1604509418496;
-        Wed, 04 Nov 2020 09:03:38 -0800 (PST)
-Received: from xps15 (S0106002369de4dac.cg.shawcable.net. [68.147.8.254])
-        by smtp.gmail.com with ESMTPSA id z22sm3056775pfa.220.2020.11.04.09.03.36
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 04 Nov 2020 09:03:37 -0800 (PST)
-Date:   Wed, 4 Nov 2020 10:03:35 -0700
-From:   Mathieu Poirier <mathieu.poirier@linaro.org>
-To:     Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-Cc:     Peter Zijlstra <peterz@infradead.org>,
-        Suzuki Poulose <suzuki.poulose@arm.com>,
-        Mike Leach <mike.leach@linaro.org>,
-        Ingo Molnar <mingo@redhat.com>,
-        Arnaldo Carvalho de Melo <acme@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-        Jiri Olsa <jolsa@redhat.com>,
-        Namhyung Kim <namhyung@kernel.org>, coresight@lists.linaro.org,
-        Stephen Boyd <swboyd@chromium.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org
-Subject: Re: [PATCHv2 2/4] coresight: tmc-etf: Fix NULL ptr dereference in
- tmc_enable_etf_sink_perf()
-Message-ID: <20201104170335.GA2892592@xps15>
-References: <bd8c136d-9dfa-a760-31f9-eb8d6698aced@arm.com>
- <20201023105431.GM2594@hirez.programming.kicks-ass.net>
- <2457de8f-8bc3-b350-fdc7-61276da31ce6@arm.com>
- <20201023131628.GY2628@hirez.programming.kicks-ass.net>
- <728fd89c-78f2-0c5c-0443-c91c62b02f0e@arm.com>
- <20201023134416.GA2628@hirez.programming.kicks-ass.net>
- <20201023203729.GA819775@xps15>
- <70e3a508af119be481c8f0a0acf0a44d@codeaurora.org>
- <20201030164806.GB1301231@xps15>
- <85c285361ce1c71b1a8274493aab9ca7@codeaurora.org>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=2t6bsOvcaKKa8aR9J8fbfDJiM/7JPVfDs636SBMVeQg=;
+        b=QwwImMixP7aqBLDMbgU4DdwnGmYSgPQD8ubyVmabHePdleQkamtgYna2TLVWEDVfQ5
+         N2Qc9A8e05BRoikzd3NsbAqvReTr33nr+z06bS4LFnbrRPOyIt/4xc0D/5xkjFyzNGHI
+         nGWvOOcsWPSildRe8kMGZn4mHtk/uj/GY0/ihjKmhNJQOTSz/afqtwehOZtx33DWnlm5
+         5WEKLiDlYEIKLzdVvjlXDwhiTIxx7k6vcvYp6JTXCwOtv3heu8eTyTQRfuU/UgdNYLes
+         3QhFrY+bB10hDbGofqL/5NjXRQTOp5pCHEbjaq7rm+mfpz6Ou+gfICTEoQ6hHGi+Lz9v
+         Nsgw==
+X-Gm-Message-State: AOAM533zQCzqxEMsqB8Ff/fhiZT3qwsXIr6+gZS5k2ldIMGHCIoLPgp8
+        gDptk5g5pIOZF///99NWgr2ChOtNP6NwdT4wz0MU9zW6PMo=
+X-Google-Smtp-Source: ABdhPJyCoTGhdf3bFvQiuuwVj6l+bkeSchp/yzLV6WBnd0fB4fTk+dADo/wtaXwoaSS9CpQtn69K1BCKxbfXS+Rrcb4=
+X-Received: by 2002:a5d:640d:: with SMTP id z13mr32281679wru.28.1604510690248;
+ Wed, 04 Nov 2020 09:24:50 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <85c285361ce1c71b1a8274493aab9ca7@codeaurora.org>
+References: <20201030010101.4345-1-abhinavk@codeaurora.org> <20201030010101.4345-4-abhinavk@codeaurora.org>
+In-Reply-To: <20201030010101.4345-4-abhinavk@codeaurora.org>
+From:   Rob Clark <robdclark@gmail.com>
+Date:   Wed, 4 Nov 2020 09:26:24 -0800
+Message-ID: <CAF6AEGseHWb43jx0HzqL0aZSGMeijnXcv2eOi7oU9d8peAQOVA@mail.gmail.com>
+Subject: Re: [Freedreno] [PATCH v2 3/4] drm/msm: register the base address
+ with dpu_dbg module
+To:     Abhinav Kumar <abhinavk@codeaurora.org>
+Cc:     dri-devel <dri-devel@lists.freedesktop.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Kuogee Hsieh <khsieh@codeaurora.org>, nganji@codeaurora.org,
+        Sean Paul <seanpaul@chromium.org>,
+        Tanmay Shah <tanmay@codeaurora.org>,
+        Daniel Vetter <daniel@ffwll.ch>, aravindh@codeaurora.org,
+        freedreno <freedreno@lists.freedesktop.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Oct 30, 2020 at 10:56:09PM +0530, Sai Prakash Ranjan wrote:
-> Hi Mathieu,
-> 
-> On 2020-10-30 22:18, Mathieu Poirier wrote:
-> > On Fri, Oct 30, 2020 at 01:29:56PM +0530, Sai Prakash Ranjan wrote:
-> > > Hello guys,
-> > > 
-> > > On 2020-10-24 02:07, Mathieu Poirier wrote:
-> > > > On Fri, Oct 23, 2020 at 03:44:16PM +0200, Peter Zijlstra wrote:
-> > > > > On Fri, Oct 23, 2020 at 02:29:54PM +0100, Suzuki Poulose wrote:
-> > > > > > On 10/23/20 2:16 PM, Peter Zijlstra wrote:
-> > > > > > > On Fri, Oct 23, 2020 at 01:56:47PM +0100, Suzuki Poulose wrote:
-> > > > >
-> > > > > > > > That way another session could use the same sink if it is free. i.e
-> > > > > > > >
-> > > > > > > > perf record -e cs_etm/@sink0/u --per-thread app1
-> > > > > > > >
-> > > > > > > > and
-> > > > > > > >
-> > > > > > > > perf record -e cs_etm/@sink0/u --per-thread app2
-> > > > > > > >
-> > > > > > > > both can work as long as the sink is not used by the other session.
-> > > > > > >
-> > > > > > > Like said above, if sink is shared between CPUs, that's going to be a
-> > > > > > > trainwreck :/ Why do you want that?
-> > > > > >
-> > > > > > That ship has sailed. That is how the current generation of systems are,
-> > > > > > unfortunately. But as I said, this is changing and there are guidelines
-> > > > > > in place to avoid these kind of topologies. With the future
-> > > > > > technologies, this will be completely gone.
-> > > > >
-> > > > > I understand that the hardware is like that, but why do you want to
-> > > > > support this insanity in software?
-> > > > >
-> > > > > If you only allow a single sink user (group) at the same time, your
-> > > > > problem goes away. Simply disallow the above scenario, do not allow
-> > > > > concurrent sink users if sinks are shared like this.
-> > > > >
-> > > > > Have the perf-record of app2 above fail because the sink is in-user
-> > > > > already.
-> > > >
-> > > > I agree with you that --per-thread scenarios are easy to deal with, but
-> > > > to
-> > > > support cpu-wide scenarios events must share a sink (because there is
-> > > > one event
-> > > > per CPU).  CPU-wide support can't be removed because it has been around
-> > > > for close to a couple of years and heavily used. I also think using the
-> > > > pid of
-> > > > the process that created the events, i.e perf, is a good idea.  We just
-> > > > need to
-> > > > agree on how to gain access to it.
-> > > >
-> > > > In Sai's patch you objected to the following:
-> > > >
-> > > > > +     struct task_struct *task = READ_ONCE(event->owner);
-> > > > > +
-> > > > > +     if (!task || is_kernel_event(event))
-> > > >
-> > > > Would it be better to use task_nr_pid(current) instead of event->owner?
-> > > > The end
-> > > > result will be exactly the same.  There is also no need to check the
-> > > > validity of
-> > > > @current since it is a user process.
-> > > >
-> > > 
-> > > We have devices deployed where these crashes are seen consistently,
-> > > so for some immediate relief, could we atleast get some fix in this
-> > > cycle without major design overhaul which would likely take more time.
-> > > Perhaps my first patch [1] without any check for owner or
-> > > I can post a new version as Suzuki suggested [2] dropping the export
-> > > of is_kernel_event(). Then we can always work on top of it based on
-> > > the
-> > > conclusion of this discussion, we will atleast not have the systems
-> > > crash in the meantime, thoughts?
-> > 
-> > For the time being I think [1], exactly the way it is, is a reasonable
-> > way
-> > forward.
-> > 
-> 
-> Sure, I just checked now and [1] still applies neatly on top of coresight
-> next branch.
-> 
-> [1] https://lore.kernel.org/patchwork/patch/1318098/
+On Thu, Oct 29, 2020 at 6:01 PM Abhinav Kumar <abhinavk@codeaurora.org> wrote:
+>
+> Register the base address of various dpu sub-modules with the
+> dpu_dbg module so that it can be dumped out during error scenarios.
+>
+> changes in v2:
+>  - Fix an issue where the same dsi client was getting registered
+>    multiple times to the dpu_dbg module
+>
+> Signed-off-by: Abhinav Kumar <abhinavk@codeaurora.org>
+> ---
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_dbg.c       |  4 +--
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c    |  6 ++++-
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dspp.c   |  7 +++--
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c   |  5 +++-
+>  .../gpu/drm/msm/disp/dpu1/dpu_hw_pingpong.c   |  6 ++++-
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c   |  8 +++++-
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_top.c    |  7 ++++-
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c       | 12 +++++++--
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h       |  4 ++-
+>  drivers/gpu/drm/msm/dp/dp_catalog.c           | 12 +++++++++
+>  drivers/gpu/drm/msm/dp/dp_catalog.h           |  4 +++
+>  drivers/gpu/drm/msm/dp/dp_display.c           |  2 ++
+>  drivers/gpu/drm/msm/dsi/dsi.c                 |  1 +
+>  drivers/gpu/drm/msm/dsi/dsi.h                 |  1 +
+>  drivers/gpu/drm/msm/dsi/dsi_host.c            | 15 ++++++++++-
+>  drivers/gpu/drm/msm/msm_drv.c                 | 26 ++++++++++++++++++-
+>  drivers/gpu/drm/msm/msm_drv.h                 |  3 ++-
+>  17 files changed, 108 insertions(+), 15 deletions(-)
+>
 
-I have applied both patches that were part of the set.
+[snip]
 
-> 
-> Thanks,
-> Sai
-> 
-> -- 
-> QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
-> of Code Aurora Forum, hosted by The Linux Foundation
+> diff --git a/drivers/gpu/drm/msm/msm_drv.c b/drivers/gpu/drm/msm/msm_drv.c
+> index f6fb0187388f..df505a3d53e8 100644
+> --- a/drivers/gpu/drm/msm/msm_drv.c
+> +++ b/drivers/gpu/drm/msm/msm_drv.c
+> @@ -17,8 +17,8 @@
+>  #include <drm/drm_prime.h>
+>  #include <drm/drm_of.h>
+>  #include <drm/drm_vblank.h>
+> -#include "dpu_dbg.h"
+>
+> +#include "dpu_dbg.h"
+>  #include "msm_drv.h"
+>  #include "msm_debugfs.h"
+>  #include "msm_fence.h"
+> @@ -166,6 +166,24 @@ void __iomem *msm_ioremap_quiet(struct platform_device *pdev, const char *name,
+>         return _msm_ioremap(pdev, name, dbgname, true);
+>  }
+>
+> +unsigned long msm_iomap_size(struct platform_device *pdev, const char *name)
+> +{
+> +       struct resource *res;
+> +
+> +       if (name)
+> +               res = platform_get_resource_byname(pdev, IORESOURCE_MEM, name);
+> +       else
+> +               res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
+> +
+> +       if (!res) {
+> +               dev_dbg(&pdev->dev, "failed to get memory resource: %s\n",
+> +                               name);
+> +               return 0;
+> +       }
+> +
+> +       return resource_size(res);
+> +}
+> +
+>  void msm_writel(u32 data, void __iomem *addr)
+>  {
+>         if (reglog)
+> @@ -535,6 +553,8 @@ static int msm_drm_init(struct device *dev, struct drm_driver *drv)
+>         if (ret)
+>                 goto err_msm_uninit;
+>
+> +       dpu_dbg_register_drm_dev(ddev);
+> +
+>         drm_mode_config_reset(ddev);
+>
+>  #ifdef CONFIG_DRM_FBDEV_EMULATION
+> @@ -1282,6 +1302,10 @@ static int msm_pdev_probe(struct platform_device *pdev)
+>         int ret;
+>
+>         if (get_mdp_ver(pdev)) {
+> +               ret = dpu_dbg_init(&pdev->dev);
+> +               if (ret)
+> +                       pr_err("dpu_dbg_init failed ret = %d\n", ret);
+> +
+>                 ret = add_display_components(&pdev->dev, &match);
+>                 if (ret)
+>                         return ret;
+
+I'm a bit skeptical about where you are registering/initializing dpu
+dbg.. what happens on mdp4/mdp5 devices?
+
+BR,
+-R
