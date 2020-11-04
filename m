@@ -2,91 +2,104 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id CC9132A62E9
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Nov 2020 12:08:05 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 76EBE2A6516
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Nov 2020 14:27:14 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729605AbgKDLH5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 4 Nov 2020 06:07:57 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41660 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729616AbgKDLH5 (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 4 Nov 2020 06:07:57 -0500
-Received: from mail-wr1-x441.google.com (mail-wr1-x441.google.com [IPv6:2a00:1450:4864:20::441])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B8D86C061A4C
-        for <linux-arm-msm@vger.kernel.org>; Wed,  4 Nov 2020 03:07:56 -0800 (PST)
-Received: by mail-wr1-x441.google.com with SMTP id k10so20255344wrw.13
-        for <linux-arm-msm@vger.kernel.org>; Wed, 04 Nov 2020 03:07:56 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=aQ70y6nwaGDpVB89YcPazoVFZhvvvPhw+w2IO+1iReE=;
-        b=jfysMykNr92UGsxIyN652D9xl/9pnxEADKDct0dfoNO4LiBNV3A/PP9Wd83LRENnX3
-         auopbcIq3U8iz7xjlh0FqIBSGUP+eAT3BKoK9btR7rzu6FL+zs+U5xDZaJuMcczeCAhr
-         r3xHpNXrgPA8QuyOEw/HwTUl2EXPEEIufGWGsPC7AUiROdCtJGz9p81OzEngd19rj8Ib
-         p90yTmQv/nlx4AhOwJ8mor3Ho4Tq39dcAkjY8dMxrDcYTpbgQd0l5pfkGgIvFi01MASC
-         /PTksf/V2B4MH/GN/n+sSEWz2uK8+qmgarR/XtML7y/wqxEn19GuaaQjdtZxW77jTvin
-         1hEw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=aQ70y6nwaGDpVB89YcPazoVFZhvvvPhw+w2IO+1iReE=;
-        b=qMGT4+W5hawOAD1sYr9zHsNcBw5fJ+WTf6vnMK0YXFGUJaQEE0PKzgrb5Y1HFN/uxS
-         V0v9nbE0asZCbA4FwV6DG8SyWzO6X/wDyuig/WIxQ6WjFjDrvXoGxWBoHTQMpzuD68GJ
-         GPdctf4ZOre1ON0Pz+R20YXI6jPym4k0GbUE2EaY3PSmi84KJihqUkHFPgVdBRDU0Cjm
-         6fbhVwBCpWSh+JymmSYShnOBKiTxkZM79tNlMlJqrEKItcPZYp0bkYbHXzr/oP1eXkuV
-         4u3Ca6+RlwsQFIf91dLdUyDL0bPxDhNTVQqUu/RqnmrZeLMxWlo7B9Uz+1Z3M8sh7Grg
-         q/7A==
-X-Gm-Message-State: AOAM532PTBhvQAv+6C5alDRc9cP5eagpBqlVJoLyl63YnMJjAI1vBkJY
-        K5XllHKvGe3Od3+mVQvliMkJEw==
-X-Google-Smtp-Source: ABdhPJxcshakygaS5pG5d0dSFGQuQu935SeJv+/o49do1BVAVtfmVD7fWuIEWoa1UUrK19pvhwCoRQ==
-X-Received: by 2002:adf:94e3:: with SMTP id 90mr29585926wrr.380.1604488075362;
-        Wed, 04 Nov 2020 03:07:55 -0800 (PST)
-Received: from dell ([91.110.221.242])
-        by smtp.gmail.com with ESMTPSA id t7sm1889308wrx.42.2020.11.04.03.07.54
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 04 Nov 2020 03:07:54 -0800 (PST)
-Date:   Wed, 4 Nov 2020 11:07:52 +0000
-From:   Lee Jones <lee.jones@linaro.org>
-To:     kholk11@gmail.com
-Cc:     broonie@kernel.org, lgirdwood@gmail.com, agross@kernel.org,
-        bjorn.andersson@linaro.org, robh+dt@kernel.org,
-        marijns95@gmail.com, konradybcio@gmail.com,
-        martin.botka1@gmail.com, linux-arm-msm@vger.kernel.org,
-        phone-devel@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 6/7] mfd: qcom-spmi-pmic: Add support for PM660/PM660L
-Message-ID: <20201104110752.GB4488@dell>
-References: <20200926125549.13191-1-kholk11@gmail.com>
- <20200926125549.13191-7-kholk11@gmail.com>
+        id S1729847AbgKDN1N (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 4 Nov 2020 08:27:13 -0500
+Received: from foss.arm.com ([217.140.110.172]:37138 "EHLO foss.arm.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1729794AbgKDN1N (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 4 Nov 2020 08:27:13 -0500
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 56447139F;
+        Wed,  4 Nov 2020 05:27:12 -0800 (PST)
+Received: from localhost (unknown [10.1.198.32])
+        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id EC37A3F719;
+        Wed,  4 Nov 2020 05:27:11 -0800 (PST)
+Date:   Wed, 4 Nov 2020 13:27:10 +0000
+From:   Ionela Voinescu <ionela.voinescu@arm.com>
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Catalin Marinas <catalin.marinas@arm.com>,
+        Will Deacon <will@kernel.org>, linux-arm-msm@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org
+Subject: Re: [PATCH 1/4] arm64: defconfig: enable INTERCONNECT for Qualcomm
+ chipsets
+Message-ID: <20201104132655.GA1951@arm.com>
+References: <20200917203913.3250205-1-dmitry.baryshkov@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20200926125549.13191-7-kholk11@gmail.com>
+In-Reply-To: <20200917203913.3250205-1-dmitry.baryshkov@linaro.org>
+User-Agent: Mutt/1.9.4 (2018-02-28)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sat, 26 Sep 2020, kholk11@gmail.com wrote:
+Hi guys,
 
-> From: AngeloGioacchino Del Regno <kholk11@gmail.com>
+On Thursday 17 Sep 2020 at 23:39:10 (+0300), Dmitry Baryshkov wrote:
+> Enable CONFIG_INTERCONNECT and interconnect drivers for several Qualcomm
+> chipsets to enable bus bandwidth control on these SoCs.
 > 
-> Add the subtype and compatible strings for PM660 and PM660L,
-> found in various SoCs, including SDM630, SDM636, SDM660 and
-> SDA variants.
-> 
-> Signed-off-by: AngeloGioacchino Del Regno <kholk11@gmail.com>
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 > ---
->  drivers/mfd/qcom-spmi-pmic.c | 4 ++++
->  1 file changed, 4 insertions(+)
+>  arch/arm64/configs/defconfig | 6 ++++++
+>  1 file changed, 6 insertions(+)
+> 
+> diff --git a/arch/arm64/configs/defconfig b/arch/arm64/configs/defconfig
+> index 63003ec116ee..2e746ebb9245 100644
+> --- a/arch/arm64/configs/defconfig
+> +++ b/arch/arm64/configs/defconfig
+> @@ -1023,6 +1023,12 @@ CONFIG_SLIMBUS=m
+>  CONFIG_SLIM_QCOM_CTRL=m
+>  CONFIG_SLIM_QCOM_NGD_CTRL=m
+>  CONFIG_MUX_MMIO=y
+> +CONFIG_INTERCONNECT=y
+> +CONFIG_INTERCONNECT_QCOM=y
+> +CONFIG_INTERCONNECT_QCOM_MSM8916=m
+> +CONFIG_INTERCONNECT_QCOM_SDM845=m
+> +CONFIG_INTERCONNECT_QCOM_SM8150=m
+> +CONFIG_INTERCONNECT_QCOM_SM8250=m
 
-Applied, thanks.
+This needs an additional
 
--- 
-Lee Jones [李琼斯]
-Senior Technical Lead - Developer Services
-Linaro.org │ Open source software for Arm SoCs
-Follow Linaro: Facebook | Twitter | Blog
++CONFIG_INTERCONNECT_QCOM_OSM_L3=m
+or
++CONFIG_INTERCONNECT_QCOM_OSM_L3=y
+
+Without it cpufreq fails to initialize on DB845c.
+
+When CONFIG_INTERCONNECT_QCOM_OSM_L3=n (which is what it will default to
+when doing ARCH=arm64 make defcofnig), the osm_l3 is not registered as a
+provider and therefore will not be found when doing:
+qcom_cpufreq_hw_driver_probe() -> dev_pm_opp_of_find_icc_paths() ->
+of_icc_get_by_index().
+
+This being said, it also does not feel right for cpufreq enablement
+to depend on L3 scaling enablement, so better error filtering might be
+needed in the drivers instead. But I'll leave that decision to you,
+while the above is only a quick fix.
+
+The issue is reproduced with linux next 20201104, after applying the
+iommu patches at [1].
+
+Hope it helps,
+Ionela.
+
+[1]
+https://lore.kernel.org/lkml/160399513141.1314250.8831514745970142969.b4-ty@kernel.org/
+
+>  CONFIG_EXT2_FS=y
+>  CONFIG_EXT3_FS=y
+>  CONFIG_EXT4_FS_POSIX_ACL=y
+> -- 
+> 2.28.0
+> 
+> 
+> _______________________________________________
+> linux-arm-kernel mailing list
+> linux-arm-kernel@lists.infradead.org
+> http://lists.infradead.org/mailman/listinfo/linux-arm-kernel
