@@ -2,101 +2,127 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id ECE152A5CDD
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Nov 2020 04:04:01 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3BB3A2A5E87
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Nov 2020 08:04:32 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729475AbgKDDEA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 3 Nov 2020 22:04:00 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52004 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729078AbgKDDEA (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 3 Nov 2020 22:04:00 -0500
-Received: from mail-pg1-x542.google.com (mail-pg1-x542.google.com [IPv6:2607:f8b0:4864:20::542])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 55269C0401C1
-        for <linux-arm-msm@vger.kernel.org>; Tue,  3 Nov 2020 19:04:00 -0800 (PST)
-Received: by mail-pg1-x542.google.com with SMTP id i7so13381635pgh.6
-        for <linux-arm-msm@vger.kernel.org>; Tue, 03 Nov 2020 19:04:00 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=M+7yANrvElG7vvXiOwG93dIUVBVs3AW4QD34DhOvCCI=;
-        b=btFJkwgN45cTDxVtmE+Vf/+i4KTd+QJ7t7NUxCyZTE8m1tbcZbzqjNbBGYprvd57iN
-         UShejiWVREUTlyzMsd8UIEC1n3FLdTx5oKihlzv2zQeOYrsmRCZgIbcc6awaLDRftLtE
-         zXyerpEX+lcba+6EjdtoMaErPXzcXtWX9M4Y9iH8f2tOBVl07bUpcttN9jtz5woiWfKs
-         E+NHYqOnfFZuFluN5f3wZdCPeP0xl5bojj8vXL3BjMJXkdIgBBDDevUeORWDZDPkDzVZ
-         H2onAvXjL0GO/VwttnAAAPMr+4GLy0YLVKE1PsLXoA6a+UqtctBYVCJ+sIAt5sIl2M7Z
-         d8QQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=M+7yANrvElG7vvXiOwG93dIUVBVs3AW4QD34DhOvCCI=;
-        b=ZByVSOWFukzOQLmHjIYTl5LstwoBqkBnqwYudAdcUE39dOh5J8qU3x2iS/pF/rk3ix
-         dfwdaVPXfyAzzHQdbPDdlaRSDOEttQj1O9oDysdW0idumnskUihGE3lJ3qR0Z0AZ29uK
-         d4fWG7dmfoMX6fJJ+qBag5m3u/Qi6PHXUGC0O6zzqSZpZuZFmV9C4JafLHZQiKaXArV0
-         Q3XyI7cx+X+kR4cDDWld5cr2DtPfbA7PpAWtvUYTpaBLs5EGweifZ9zT0yZR1094ZYlV
-         KiZhCDocNY0H36qnMxQ7KS/n1jB19LQ3+tXMZI8U0ctKbVrTNWJX3tByjuHaSQPjYIbp
-         y7bg==
-X-Gm-Message-State: AOAM531bItcoQKIXh4mP9ag9tFzbnkQEgcW1mYlfO3Z4FWXK3EYT8Nk/
-        A8ek0B0iic82VVKmImCEoExviw==
-X-Google-Smtp-Source: ABdhPJye/niTkH7khNS36zvZ3Ubb6lzZ6FDeMgMpWSwwwaQ4FeRK9FDZcZ/yYMErd1iByJeq4uoX+A==
-X-Received: by 2002:a17:90a:5882:: with SMTP id j2mr2156165pji.177.1604459039793;
-        Tue, 03 Nov 2020 19:03:59 -0800 (PST)
-Received: from localhost ([122.172.12.172])
-        by smtp.gmail.com with ESMTPSA id n64sm491754pfn.134.2020.11.03.19.03.57
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 03 Nov 2020 19:03:58 -0800 (PST)
-Date:   Wed, 4 Nov 2020 08:33:53 +0530
-From:   Viresh Kumar <viresh.kumar@linaro.org>
-To:     Rob Clark <robdclark@gmail.com>
-Cc:     Daniel Vetter <daniel@ffwll.ch>,
-        dri-devel <dri-devel@lists.freedesktop.org>,
-        Rob Clark <robdclark@chromium.org>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
-        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
-        <linux-arm-msm@vger.kernel.org>,
-        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
-        <freedreno@lists.freedesktop.org>,
-        open list <linux-kernel@vger.kernel.org>,
-        "Menon, Nishanth" <nm@ti.com>
-Subject: Re: [PATCH v2 07/22] drm/msm: Do rpm get sooner in the submit path
-Message-ID: <20201104030353.ny7zvakgb4fsye6r@vireshk-i7>
-References: <CAF6AEGstGtBswUUiyHxT2cCm8NwZekDnMzD0J_pQH37GwS=LiA@mail.gmail.com>
- <20201020090729.qgqish5kqamhvatj@vireshk-i7>
- <CAKMK7uHAgVUPHOPxDdt3LeAWqokxfuzqjZj4qqFkoKxFbRbRrg@mail.gmail.com>
- <20201020112413.xbk2vow2kgjky3pb@vireshk-i7>
- <CAF6AEGsCj-AtFozn8d1xiNNFNbuMJ0UxS-eMhBVXiQ7rKahKnQ@mail.gmail.com>
- <20201022080644.2ck4okrxygmkuatn@vireshk-i7>
- <CAF6AEGv6RMCsK4yp-W2d1mVTMcEiiwFGAb+V8rYLhDdMhqP80Q@mail.gmail.com>
- <20201027113532.nriqqws7gdcu5su6@vireshk-i7>
- <20201103054715.4l5j57pyjz6zd6ed@vireshk-i7>
- <CAF6AEGtgUVXm6Wwod0FC38g91Q8CotLFSoC4NmXx7GzcA=1mOA@mail.gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAF6AEGtgUVXm6Wwod0FC38g91Q8CotLFSoC4NmXx7GzcA=1mOA@mail.gmail.com>
-User-Agent: NeoMutt/20180716-391-311a52
+        id S1727001AbgKDHEb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 4 Nov 2020 02:04:31 -0500
+Received: from m42-4.mailgun.net ([69.72.42.4]:19517 "EHLO m42-4.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727098AbgKDHEb (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 4 Nov 2020 02:04:31 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1604473471; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=842P1Vw0/CyU8oFdqPii40F1dxpgOb7DzwKwSzArais=; b=am3GLPeKnIQ54OMxCUr5B5/iB1ZJc4pkfyCMpi/xv4Em8DPYX0E5aOMtKB2rm0ELjyLGTDod
+ Xye5YvR1BfoBr5CjAoVAHPQaOWdruJmNsBDup70AiNNaqUvyP9wkL5wdWWayRxY7DjGau7+k
+ C3uShX1Sjs/W9Q7XHSgCRAFgZ0s=
+X-Mailgun-Sending-Ip: 69.72.42.4
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n04.prod.us-west-2.postgun.com with SMTP id
+ 5fa2525dca0638c0dca909f5 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 04 Nov 2020 07:03:57
+ GMT
+Sender: sibis=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 2A153C433FF; Wed,  4 Nov 2020 07:03:57 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
+        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+Received: from blr-ubuntu-87.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: sibis)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 3D258C433C6;
+        Wed,  4 Nov 2020 07:03:52 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 3D258C433C6
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=sibis@codeaurora.org
+From:   Sibi Sankar <sibis@codeaurora.org>
+To:     bjorn.andersson@linaro.org
+Cc:     ohad@wizery.com, linux-arm-msm@vger.kernel.org,
+        linux-remoteproc@vger.kernel.org, linux-kernel@vger.kernel.org,
+        agross@kernel.org, evgreen@chromium.org,
+        Sibi Sankar <sibis@codeaurora.org>
+Subject: [PATCH 1/2] remoteproc: qcom_q6v5_mss: Replace ioremap with memremap
+Date:   Wed,  4 Nov 2020 12:33:41 +0530
+Message-Id: <1604473422-29639-1-git-send-email-sibis@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 03-11-20, 08:50, Rob Clark wrote:
-> sorry, it didn't apply cleanly (which I guess is due to some other
-> dependencies that need to be picked back to v5.4 product kernel), and
-> due to some other things I'm in middle of debugging I didn't have time
-> yet to switch to v5.10-rc or look at what else needs to
-> cherry-picked..
-> 
-> If you could, pushing a branch with this patch somewhere would be a
-> bit easier to work with (ie. fetch && cherry-pick is easier to deal
-> with than picking things from list)
+Fix the sparse warnings reported by the kernel test bot by replacing
+ioremap calls with memremap.
 
-It has been in linux-next for a few days. Here is the HEAD to pick
-from. There are few patches there since rc1.
+Reported-by: kernel test robot <lkp@intel.com>
+Signed-off-by: Sibi Sankar <sibis@codeaurora.org>
+---
 
-commit 203e29749cc0 ("opp: Allocate the OPP table outside of opp_table_lock")
+I'll send out the patches to convert ioremap to memremap on other
+qc remoteproc drivers once I get a chance to test them.
 
+ drivers/remoteproc/qcom_q6v5_mss.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
+
+diff --git a/drivers/remoteproc/qcom_q6v5_mss.c b/drivers/remoteproc/qcom_q6v5_mss.c
+index 9a473cfef758..2c866b6da23c 100644
+--- a/drivers/remoteproc/qcom_q6v5_mss.c
++++ b/drivers/remoteproc/qcom_q6v5_mss.c
+@@ -1194,7 +1194,7 @@ static int q6v5_mpss_load(struct q6v5 *qproc)
+ 			goto release_firmware;
+ 		}
+ 
+-		ptr = ioremap_wc(qproc->mpss_phys + offset, phdr->p_memsz);
++		ptr = memremap(qproc->mpss_phys + offset, phdr->p_memsz, MEMREMAP_WC);
+ 		if (!ptr) {
+ 			dev_err(qproc->dev,
+ 				"unable to map memory region: %pa+%zx-%x\n",
+@@ -1209,7 +1209,7 @@ static int q6v5_mpss_load(struct q6v5 *qproc)
+ 					"failed to load segment %d from truncated file %s\n",
+ 					i, fw_name);
+ 				ret = -EINVAL;
+-				iounmap(ptr);
++				memunmap(ptr);
+ 				goto release_firmware;
+ 			}
+ 
+@@ -1221,7 +1221,7 @@ static int q6v5_mpss_load(struct q6v5 *qproc)
+ 							ptr, phdr->p_filesz);
+ 			if (ret) {
+ 				dev_err(qproc->dev, "failed to load %s\n", fw_name);
+-				iounmap(ptr);
++				memunmap(ptr);
+ 				goto release_firmware;
+ 			}
+ 
+@@ -1232,7 +1232,7 @@ static int q6v5_mpss_load(struct q6v5 *qproc)
+ 			memset(ptr + phdr->p_filesz, 0,
+ 			       phdr->p_memsz - phdr->p_filesz);
+ 		}
+-		iounmap(ptr);
++		memunmap(ptr);
+ 		size += phdr->p_memsz;
+ 
+ 		code_length = readl(qproc->rmb_base + RMB_PMI_CODE_LENGTH_REG);
+@@ -1299,11 +1299,11 @@ static void qcom_q6v5_dump_segment(struct rproc *rproc,
+ 	}
+ 
+ 	if (!ret)
+-		ptr = ioremap_wc(qproc->mpss_phys + offset + cp_offset, size);
++		ptr = memremap(qproc->mpss_phys + offset + cp_offset, size, MEMREMAP_WC);
+ 
+ 	if (ptr) {
+ 		memcpy(dest, ptr, size);
+-		iounmap(ptr);
++		memunmap(ptr);
+ 	} else {
+ 		memset(dest, 0xff, size);
+ 	}
 -- 
-viresh
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
+
