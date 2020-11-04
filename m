@@ -2,75 +2,98 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 050B62A6E76
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Nov 2020 21:03:06 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 397802A6F46
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Nov 2020 21:56:35 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731600AbgKDUDE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 4 Nov 2020 15:03:04 -0500
-Received: from mail-oi1-f194.google.com ([209.85.167.194]:33858 "EHLO
-        mail-oi1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731394AbgKDUDE (ORCPT
+        id S1731485AbgKDU43 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 4 Nov 2020 15:56:29 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50050 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727013AbgKDU43 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 4 Nov 2020 15:03:04 -0500
-Received: by mail-oi1-f194.google.com with SMTP id c21so8485281oic.1;
-        Wed, 04 Nov 2020 12:03:02 -0800 (PST)
+        Wed, 4 Nov 2020 15:56:29 -0500
+Received: from mail-wm1-x343.google.com (mail-wm1-x343.google.com [IPv6:2a00:1450:4864:20::343])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0FB1AC0613D3;
+        Wed,  4 Nov 2020 12:56:29 -0800 (PST)
+Received: by mail-wm1-x343.google.com with SMTP id p22so3704284wmg.3;
+        Wed, 04 Nov 2020 12:56:28 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=QMz5XuaiSl2y5K3brn4ts6zliBq11tCQumna2ZD9gwg=;
+        b=SJZCCPmggjEI3WSwrNv12XAc3V0t974Tjot8SwxaA5JGO+QOStpAbOhFhtiOnvu3+b
+         yDmvlIEjwUlHMqAk6tS7kx2Qn/mqVpTUdCuw5s3eGDyx7Vb24Qw2cFAfifbhXvThB0ZM
+         BkWEexz8mfawPufJKrMmmu/9sSa/MRKxNzi89UxCf4muNRFC4TCnUGWO8tNRMdmsC8pg
+         or8u3PCTPuOksBmF7KDKEUr48DlKDlLhC7Lh8g1wgErBO7P+nwB9Du48eX7kwvB8Xfmo
+         vuVoztUap4U9Xp6HUDM0NntBsB2YTmI3MTxTeP6eeIIi68YzsWMwgNkaDJQqVN1B9jl2
+         cznQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=oBqDX2AjknVBn06K8/u+vt1ooNK8RMqy/l2tyn5+RE8=;
-        b=Os/yX1tMpL2Ku6JL91ePkLtpaxzbfARvH2GtxbTQxbJe3R8lNO8IpsfvGOugj0o3Nu
-         nteNHNAr+xaEehMEz0v0a/ehYI2SeSzWsNkFhk/jV7llOtm8UAGW3WectvcW1Ck3HmIv
-         u9VUS6qspri3PBN3eQmB4gaQ38m+IbM2wxndEI7jxNJh236iHsa3JOXSmNOKg5nWQl8J
-         ZTB1etulVsc+8nXYXJu5WadzeZBQJctIDY1fdHzZE97iQgJI+SgIAQ7fO4X9PU+n7pjU
-         22nhypsgEo6hK4V0holckrnnMycQ3PcupSchElr/zHCe7KmHk0rvqAZtl4kvwkTyFg3q
-         zniQ==
-X-Gm-Message-State: AOAM533e4GmOMWc2MIgQxyxybCobiUzaSr+DbVH3hcHp+JF80qaAhxxa
-        9sxakDmFR6R3SMgBFXLaTg==
-X-Google-Smtp-Source: ABdhPJwScFjt5SJiTj7x04SzO5UJDiz4X8g4A1clj71IAewexTQOZdLGaJUnD77962i4rsrTIwSVtQ==
-X-Received: by 2002:aca:eb06:: with SMTP id j6mr3334409oih.144.1604520181850;
-        Wed, 04 Nov 2020 12:03:01 -0800 (PST)
-Received: from xps15 (24-155-109-49.dyn.grandenetworks.net. [24.155.109.49])
-        by smtp.gmail.com with ESMTPSA id h8sm660259otm.72.2020.11.04.12.03.00
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 04 Nov 2020 12:03:01 -0800 (PST)
-Received: (nullmailer pid 4037168 invoked by uid 1000);
-        Wed, 04 Nov 2020 20:03:00 -0000
-Date:   Wed, 4 Nov 2020 14:03:00 -0600
-From:   Rob Herring <robh@kernel.org>
-To:     Akhil P Oommen <akhilpo@codeaurora.org>
-Cc:     devicetree@vger.kernel.org, freedreno@lists.freedesktop.org,
-        dri-devel@freedesktop.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, dianders@chromium.org,
-        mka@chromium.org
-Subject: Re: [PATCH v5 3/3] dt-bindings: drm/msm/gpu: Add cooling device
- support
-Message-ID: <20201104200300.GA4036650@bogus>
-References: <1604054832-3114-1-git-send-email-akhilpo@codeaurora.org>
- <1604054832-3114-3-git-send-email-akhilpo@codeaurora.org>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=QMz5XuaiSl2y5K3brn4ts6zliBq11tCQumna2ZD9gwg=;
+        b=TQrrN0Vxh+v+Q5rF+5rgPq20uFwHHSbEEMSR0v5+fSPY5gxYKi36kYvxsxfewKmnrN
+         gEIexoIQlkRNjFwxC9cBXt0tF98EA5F3BXpqiWTyVDkNCA3/me/S8ZvhuPzmrO9d7O4d
+         AxnZQvwOHhGhUb54pKasm6A4F59GbRHQe/N5fFzKsCCSZokAXJVBObKk7jwiU2umRbMY
+         Jv+l9WToxwtbABCtqHZAAYShgAVTDujEqSTH4xb6KwfV/9RvSlvoTvIR00bRmpf89aoZ
+         nUJCGU+ZmreF/4msH6xnQxSDcbNajoanxgDm48rvlw6S42RCsoAI4ziblxr3g9FS9+sw
+         Vmng==
+X-Gm-Message-State: AOAM533xw+NKklIlMfPvc85uiPepmmNo9wDYWNQRIGefLQBrJ7chyFFh
+        wTKgn18Q2BuTM7mN9pUh5zvWXt9XyjI8+gpQM5o=
+X-Google-Smtp-Source: ABdhPJwZj9HwapeVTBuX6MbvmCI10ccxfb2V7iPfEujOr2zcUHGnUhcVOI4/pc/YpbPMBdEWvizQ7MVVagmsgcK7PJE=
+X-Received: by 2002:a7b:c145:: with SMTP id z5mr2246798wmi.164.1604523387717;
+ Wed, 04 Nov 2020 12:56:27 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1604054832-3114-3-git-send-email-akhilpo@codeaurora.org>
+References: <1604054832-3114-1-git-send-email-akhilpo@codeaurora.org>
+ <1604054832-3114-3-git-send-email-akhilpo@codeaurora.org> <20201104200300.GA4036650@bogus>
+In-Reply-To: <20201104200300.GA4036650@bogus>
+From:   Rob Clark <robdclark@gmail.com>
+Date:   Wed, 4 Nov 2020 12:58:02 -0800
+Message-ID: <CAF6AEGvj34MbnRS+A432AhOwMuL2BtTXJ+AD+zQ9w0_meV_-gw@mail.gmail.com>
+Subject: Re: [Freedreno] [PATCH v5 3/3] dt-bindings: drm/msm/gpu: Add cooling
+ device support
+To:     Rob Herring <robh@kernel.org>
+Cc:     Akhil P Oommen <akhilpo@codeaurora.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Douglas Anderson <dianders@chromium.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        dri-devel@freedesktop.org,
+        freedreno <freedreno@lists.freedesktop.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, 30 Oct 2020 16:17:12 +0530, Akhil P Oommen wrote:
-> Add cooling device support to gpu. A cooling device is bound to a
-> thermal zone to allow thermal mitigation.
-> 
-> Signed-off-by: Akhil P Oommen <akhilpo@codeaurora.org>
-> Reviewed-by: Matthias Kaehlcke <mka@chromium.org>
-> ---
->  Documentation/devicetree/bindings/display/msm/gpu.txt | 7 +++++++
->  1 file changed, 7 insertions(+)
-> 
+On Wed, Nov 4, 2020 at 12:03 PM Rob Herring <robh@kernel.org> wrote:
+>
+> On Fri, 30 Oct 2020 16:17:12 +0530, Akhil P Oommen wrote:
+> > Add cooling device support to gpu. A cooling device is bound to a
+> > thermal zone to allow thermal mitigation.
+> >
+> > Signed-off-by: Akhil P Oommen <akhilpo@codeaurora.org>
+> > Reviewed-by: Matthias Kaehlcke <mka@chromium.org>
+> > ---
+> >  Documentation/devicetree/bindings/display/msm/gpu.txt | 7 +++++++
+> >  1 file changed, 7 insertions(+)
+> >
+>
+>
+> Please add Acked-by/Reviewed-by tags when posting new versions. However,
+> there's no need to repost patches *only* to add the tags. The upstream
+> maintainer will do that for acks received on the version they apply.
+>
+> If a tag was not added on purpose, please state why and what changed.
+>
 
 
-Please add Acked-by/Reviewed-by tags when posting new versions. However,
-there's no need to repost patches *only* to add the tags. The upstream
-maintainer will do that for acks received on the version they apply.
+Thanks Rob
 
-If a tag was not added on purpose, please state why and what changed.
+I've copied over your ack from the previous version.. but yes, it
+definitely makes my life easier when patch senders do this for me ;-)
 
+BR,
+-R
