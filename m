@@ -2,169 +2,78 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D222E2A6939
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Nov 2020 17:16:08 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 28D8B2A69DE
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Nov 2020 17:34:37 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730456AbgKDQQF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 4 Nov 2020 11:16:05 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34286 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730415AbgKDQQF (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 4 Nov 2020 11:16:05 -0500
-Received: from mail-oi1-x243.google.com (mail-oi1-x243.google.com [IPv6:2607:f8b0:4864:20::243])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EC88BC061A4A
-        for <linux-arm-msm@vger.kernel.org>; Wed,  4 Nov 2020 08:16:04 -0800 (PST)
-Received: by mail-oi1-x243.google.com with SMTP id c21so7704987oic.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 04 Nov 2020 08:16:04 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=vm2j+unua9jSWcYY0s5yNfN1HsGYkAhPRJxO+bukzZY=;
-        b=uMO+82cqhLHaEZwDXvt5x1TzD1NweYoMzb2LGHJwLw31P5LfsxNbSjRYNC8YkWAWc0
-         wqutSR1tLF55njbugfpXXxPAnZ8MIxIMlNSKKMAbY0F9uR3z29yNnqjy938w8gLWeu9o
-         wUHtqvmkVVhxQ/cNqLCDYtP7PQHNrlZp+jM8k94u280hVblvlcvNeKK6hHr4N/8aeElh
-         PqrcgA2doKiqiRSwvxyoQ/zbL2+w//FaDWYqSL1K+Pm8RYtubV0GS4tK+UWPHeWowpxg
-         B/J4+ar4+/MnQGAY6stAOlnYueMMA/xHrJOblnGR4U8skXI6me60OMSSgA0usOlkT9/i
-         HD4Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=vm2j+unua9jSWcYY0s5yNfN1HsGYkAhPRJxO+bukzZY=;
-        b=KM3BNhTBsr5lkDCBgBlvGDD14t29THhC/Ziw8gMFXtc5EtYTZTNbVzAvcwLf6yZ7ck
-         MnFOmKvrDk5fFZzIukAuwkWtuXt5Xx2WOfdT4AuylU0CMjGj7lhEwgqa1lfN8ORCIpyC
-         5G7luzo7be/xu4t2nsduq5zFsNHoF1yKItpkLP43v069ZjfLANXaFezxvVDFk/Cc64z/
-         R+MQkySAC+kecCkbUovczebJWbWBrN8JclKqSHFAoNgIqEi0ooX7tTEueL+JPbtTb4pb
-         qm7QApkSKHcDsrVsPqe7P2kfNTftHgefR8dBZ/e/d/FlxuYMHRlgc6llTDH91+eo/ph6
-         3EHQ==
-X-Gm-Message-State: AOAM532eQlq92xhlXQEJiK7u50w12BCDVb2fdRBojW1pZliVamRJmbj/
-        +losRwO2HmHJDWF9QUWzAfkFjA==
-X-Google-Smtp-Source: ABdhPJzLBsgz6GvVtHYFKPCzrAidieJH68623rW6bm6uqqwdU+ctjSXbvo+MrfHkHDLUKL5JA03cNg==
-X-Received: by 2002:aca:d6d3:: with SMTP id n202mr2897215oig.74.1604506564180;
-        Wed, 04 Nov 2020 08:16:04 -0800 (PST)
-Received: from localhost.localdomain (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id w79sm544253oia.28.2020.11.04.08.16.03
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 04 Nov 2020 08:16:03 -0800 (PST)
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Ohad Ben-Cohen <ohad@wizery.com>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Siddharth Gupta <sidgup@codeaurora.org>
-Cc:     linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
-        linux-kernel@vger.kernel.org, stable@vger.kernel.org
-Subject: [PATCH] remoteproc: sysmon: Ensure remote notification ordering
-Date:   Wed,  4 Nov 2020 08:16:25 -0800
-Message-Id: <20201104161625.1085981-1-bjorn.andersson@linaro.org>
-X-Mailer: git-send-email 2.28.0
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+        id S1730971AbgKDQef (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 4 Nov 2020 11:34:35 -0500
+Received: from m42-4.mailgun.net ([69.72.42.4]:25458 "EHLO m42-4.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1729211AbgKDQed (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 4 Nov 2020 11:34:33 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1604507672; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=Dh5YK17Yc8Kt2H/U5xETpatLIq1apVHrUbVOsvEsyC4=; b=MpOWDRx3QlrHo8DjIaGuyAIuWt2XE3VBvOqj4LXotM4UdZuO91/sLfz3ChSfizAOyvY+H9Bv
+ zcn/F5o+ZCIoUKJpZDP9f/m5nBlAPXnReSgtPipc+Ztf7z0klVQY2GN/VG//4N01MG7357bW
+ bfO11AvzTJ2LoY8ffB+DNLIrisI=
+X-Mailgun-Sending-Ip: 69.72.42.4
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n05.prod.us-west-2.postgun.com with SMTP id
+ 5fa2d81506fdb87257c05819 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 04 Nov 2020 16:34:29
+ GMT
+Sender: kathirav=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 63472C433C6; Wed,  4 Nov 2020 16:34:29 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL
+        autolearn=no autolearn_force=no version=3.4.0
+Received: from kathirav-linux.qualcomm.com (blr-c-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.19.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: kathirav)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id B2E75C433C9;
+        Wed,  4 Nov 2020 16:34:24 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org B2E75C433C9
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=kathirav@codeaurora.org
+From:   Kathiravan T <kathirav@codeaurora.org>
+To:     agross@kernel.org, miquel.raynal@bootlin.com, richard@nod.at,
+        vigneshr@ti.com, robh+dt@kernel.org, sivaprak@codeaurora.org,
+        peter.ujfalusi@ti.com, boris.brezillon@collabora.com,
+        linux-arm-msm@vger.kernel.org, linux-mtd@lists.infradead.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Cc:     kathirav@codeaurora.org
+Subject: [PATCH V2 0/1] Add QPIC NAND support for IPQ6018
+Date:   Wed,  4 Nov 2020 22:04:12 +0530
+Message-Id: <1604507653-24999-1-git-send-email-kathirav@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The reliance on the remoteproc's state for determining when to send
-sysmon notifications to a remote processor is racy with regard to
-concurrent remoteproc operations.
+IPQ6018 has the QPIC NAND controller of version 1.5.0, which
+uses the BAM DMA. Add support for the QPIC BAM, QPIC NAND and
+enable the same in the board DTS file.
 
-Further more the advertisement of the state of other remote processor to
-a newly started remote processor might not only send the wrong state,
-but might result in a stream of state changes that are out of order.
+[V2]:
+	- Rebased on v5.10-rc2
+	- Replaced "ok" with "okay" for status property
+	- Dropped the MTD and dt-bindings patch as they are already picked in MTD tree
 
-Address this by introducing state tracking within the sysmon instances
-themselves and extend the locking to ensure that the notifications are
-consistent with this state.
+Kathiravan T (1):
+  arm64: dts: ipq6018: Add the QPIC peripheral nodes
 
-The use of a big lock for all instances will cause contention for
-concurrent remote processor state transitions, but the correctness of
-the remote processors' view of their peers is more important.
+ arch/arm64/boot/dts/qcom/ipq6018-cp01-c1.dts | 16 ++++++++
+ arch/arm64/boot/dts/qcom/ipq6018.dtsi        | 41 ++++++++++++++++++++
+ 2 files changed, 57 insertions(+)
 
-Fixes: 1f36ab3f6e3b ("remoteproc: sysmon: Inform current rproc about all active rprocs")
-Fixes: 1877f54f75ad ("remoteproc: sysmon: Add notifications for events")
-Fixes: 1fb82ee806d1 ("remoteproc: qcom: Introduce sysmon")
-Cc: stable@vger.kernel.org
-Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
----
- drivers/remoteproc/qcom_sysmon.c | 20 ++++++++++++++++----
- 1 file changed, 16 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/remoteproc/qcom_sysmon.c b/drivers/remoteproc/qcom_sysmon.c
-index 9eb2f6bccea6..1e507b66354a 100644
---- a/drivers/remoteproc/qcom_sysmon.c
-+++ b/drivers/remoteproc/qcom_sysmon.c
-@@ -22,6 +22,8 @@ struct qcom_sysmon {
- 	struct rproc_subdev subdev;
- 	struct rproc *rproc;
- 
-+	int state;
-+
- 	struct list_head node;
- 
- 	const char *name;
-@@ -448,7 +450,10 @@ static int sysmon_prepare(struct rproc_subdev *subdev)
- 		.ssr_event = SSCTL_SSR_EVENT_BEFORE_POWERUP
- 	};
- 
-+	mutex_lock(&sysmon_lock);
-+	sysmon->state = SSCTL_SSR_EVENT_BEFORE_POWERUP;
- 	blocking_notifier_call_chain(&sysmon_notifiers, 0, (void *)&event);
-+	mutex_unlock(&sysmon_lock);
- 
- 	return 0;
- }
-@@ -472,15 +477,16 @@ static int sysmon_start(struct rproc_subdev *subdev)
- 		.ssr_event = SSCTL_SSR_EVENT_AFTER_POWERUP
- 	};
- 
-+	mutex_lock(&sysmon_lock);
-+	sysmon->state = SSCTL_SSR_EVENT_AFTER_POWERUP;
- 	blocking_notifier_call_chain(&sysmon_notifiers, 0, (void *)&event);
- 
--	mutex_lock(&sysmon_lock);
- 	list_for_each_entry(target, &sysmon_list, node) {
--		if (target == sysmon ||
--		    target->rproc->state != RPROC_RUNNING)
-+		if (target == sysmon)
- 			continue;
- 
- 		event.subsys_name = target->name;
-+		event.ssr_event = target->state;
- 
- 		if (sysmon->ssctl_version == 2)
- 			ssctl_send_event(sysmon, &event);
-@@ -500,7 +506,10 @@ static void sysmon_stop(struct rproc_subdev *subdev, bool crashed)
- 		.ssr_event = SSCTL_SSR_EVENT_BEFORE_SHUTDOWN
- 	};
- 
-+	mutex_lock(&sysmon_lock);
-+	sysmon->state = SSCTL_SSR_EVENT_BEFORE_SHUTDOWN;
- 	blocking_notifier_call_chain(&sysmon_notifiers, 0, (void *)&event);
-+	mutex_unlock(&sysmon_lock);
- 
- 	/* Don't request graceful shutdown if we've crashed */
- 	if (crashed)
-@@ -521,7 +530,10 @@ static void sysmon_unprepare(struct rproc_subdev *subdev)
- 		.ssr_event = SSCTL_SSR_EVENT_AFTER_SHUTDOWN
- 	};
- 
-+	mutex_lock(&sysmon_lock);
-+	sysmon->state = SSCTL_SSR_EVENT_AFTER_SHUTDOWN;
- 	blocking_notifier_call_chain(&sysmon_notifiers, 0, (void *)&event);
-+	mutex_unlock(&sysmon_lock);
- }
- 
- /**
-@@ -538,7 +550,7 @@ static int sysmon_notify(struct notifier_block *nb, unsigned long event,
- 	struct sysmon_event *sysmon_event = data;
- 
- 	/* Skip non-running rprocs and the originating instance */
--	if (rproc->state != RPROC_RUNNING ||
-+	if (sysmon->state != SSCTL_SSR_EVENT_AFTER_POWERUP ||
- 	    !strcmp(sysmon_event->subsys_name, sysmon->name)) {
- 		dev_dbg(sysmon->dev, "not notifying %s\n", sysmon->name);
- 		return NOTIFY_DONE;
+base-commit: 3cea11cd5e3b00d91caf0b4730194039b45c5891
 -- 
-2.28.0
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum, hosted by The Linux Foundation
 
