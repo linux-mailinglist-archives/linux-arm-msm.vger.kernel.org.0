@@ -2,166 +2,128 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id EBD2A2A73C1
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Nov 2020 01:30:10 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C32ED2A73D4
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Nov 2020 01:32:01 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730325AbgKEAaK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 4 Nov 2020 19:30:10 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55234 "EHLO
+        id S1733156AbgKEAcA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 4 Nov 2020 19:32:00 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55534 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1732248AbgKEAaF (ORCPT
+        with ESMTP id S1730273AbgKEAcA (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 4 Nov 2020 19:30:05 -0500
-Received: from mail-vk1-xa43.google.com (mail-vk1-xa43.google.com [IPv6:2607:f8b0:4864:20::a43])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C20ECC0613D2
-        for <linux-arm-msm@vger.kernel.org>; Wed,  4 Nov 2020 16:30:04 -0800 (PST)
-Received: by mail-vk1-xa43.google.com with SMTP id w123so614934vka.4
-        for <linux-arm-msm@vger.kernel.org>; Wed, 04 Nov 2020 16:30:04 -0800 (PST)
+        Wed, 4 Nov 2020 19:32:00 -0500
+Received: from mail-ot1-x342.google.com (mail-ot1-x342.google.com [IPv6:2607:f8b0:4864:20::342])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4126FC0613D1
+        for <linux-arm-msm@vger.kernel.org>; Wed,  4 Nov 2020 16:32:00 -0800 (PST)
+Received: by mail-ot1-x342.google.com with SMTP id h62so512889oth.9
+        for <linux-arm-msm@vger.kernel.org>; Wed, 04 Nov 2020 16:32:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=d5o9eOs5Tiv+TUmgROBahgNX011WshZjeFSi3IU5ZO4=;
-        b=Jz8xTXMUGfKjYINWV76nnlMyGNncfJDBZmnGTdthlDIuR5k52NxJXwzvCdDKnptQAH
-         yS3AyKnVlm7JiwHOaYYSrP0nqH4628VWotg6zKA7qq14CjilU7RYzeQ+E2gm3hCrTYWS
-         9h2CZCT1huTTy8VOtstkeS9+YJJ8ZVoinMDpQ=
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=DhtABJSiSskHDxawNAHeInkIhoLHhr/Rqw/OKeWlcko=;
+        b=c08FE5twIizIFpFrR0X/M7OkgNhJ2p0x0vrQ6RGZw5VXMVCZFwNoSfrHcfZnn81BNj
+         eiR3m10a/IwrOYu+Vle02m3Iw9+XrBhUZPKN2chKPhkqE9DkIOy4J6cFCy9Fuyqifk8P
+         5F4tFe1zGCTXmGSw72IPxFzkbQcnGis8jRzIYh9YQJ9khSwPfD5urXbdLuhArBRytbMH
+         B9Ikxy3A362Hq01A8oZkIXDC6fXPAJtLCv/MnjKdnLneUZA1HySt/Q+PMZO7rKWIQQuu
+         7TpeOADFqg3g7rB3PpiM0iTVFPfO+Aowoj04YtG/tgkK9pDyk+vUJ+CcnBl0wk0pOXId
+         wK1A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=d5o9eOs5Tiv+TUmgROBahgNX011WshZjeFSi3IU5ZO4=;
-        b=RxZDb13jWV8zLiAw9j4OKDb0hFRqJ6duQSdxku8b+zIGy0viuuHfrkwvhirF16OGCi
-         Vzh/r77LpAa0YQpgaLvJ8ixghEmPJfGKhmriFyM/k6mHqf3KzVuG8mYh1s9X5CEJVCH0
-         YCJDTrEFXsK+XYlpJZN5Nk6G5V/FaeyD+wA6NEAqrQJj1MLPRojdejHUmd9c1c0y/LlZ
-         n1s9/iAQeXn6cU7o5eMf1rOYuw8/Ck93nSfy5ELU34bqLWvKAHAHVziq3hk20wdO7E6o
-         CVai7wndOUPVFR/01bhHOCQTe4KkrD3afCaALhdscWoWdJd/e45wtsO0gbSV06Q2AHPZ
-         0bPQ==
-X-Gm-Message-State: AOAM531qRfFNbxw2ijLqHM/str8inpZ/hqU1bRZ4+JuRH9dgn8bgQHsk
-        DaSsEpdy8L3TzGhJvx5edoiMzaN+rzQA5w==
-X-Google-Smtp-Source: ABdhPJx7I+Pj9q0hjyyYoZFbkrapbKWhYih4jWxI9y6cOxwKBtl0X3WDAxtLo0cbiL2gSuAWDc82Ew==
-X-Received: by 2002:a1f:2ed2:: with SMTP id u201mr43571vku.7.1604536203652;
-        Wed, 04 Nov 2020 16:30:03 -0800 (PST)
-Received: from mail-ua1-f54.google.com (mail-ua1-f54.google.com. [209.85.222.54])
-        by smtp.gmail.com with ESMTPSA id l16sm518507vke.27.2020.11.04.16.30.02
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 04 Nov 2020 16:30:02 -0800 (PST)
-Received: by mail-ua1-f54.google.com with SMTP id r23so6227uak.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 04 Nov 2020 16:30:02 -0800 (PST)
-X-Received: by 2002:a9f:36a1:: with SMTP id p30mr250823uap.64.1604536202255;
- Wed, 04 Nov 2020 16:30:02 -0800 (PST)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=DhtABJSiSskHDxawNAHeInkIhoLHhr/Rqw/OKeWlcko=;
+        b=Bjq+yQcw13TvI5/WnVjgDtk96tpIsgMEj72v9zzuB1heUn9ll5cKx0njOwivcnpd/U
+         SWd/Py74RuBMQOcMKXH3WZxj0hhD3Z5xDiSmEq1vrX5t7VFLNHYkcibLHkPrCIvXf8LI
+         XCyt8rt9gxm70Hwt7217yy3NwAaj+EBci7clZUaSJucCCFpVed8AKCc43rEah6jZE/Jl
+         n7jA/GwUREzPREOUd3+kfD3vwHm7ck5kc5kWXTpi3w1Bmso0YJ2b0tfgEYe6eR/o6RI8
+         ZgpMgY3hABGwz2M1OrT7aw4ZOP1GhHIoZBPwRnQEAFRyIayFlz35qk1NIh9wOOHJJZT+
+         bcVA==
+X-Gm-Message-State: AOAM530mpT3vAnqD+m4RO+CWJKR3HUjWkMh5gWa17/6+0bVuLm8z4zV7
+        3OXFu1Bq5IE6rMMQKb3lToahrg==
+X-Google-Smtp-Source: ABdhPJxCS/mOcYL7FqRe4TEjOvLWgtxG77KL5UeDdUxWeQP7HVo0sHNHQ89bndZeMYLeRuDsYPdHDg==
+X-Received: by 2002:a9d:6419:: with SMTP id h25mr222385otl.79.1604536319425;
+        Wed, 04 Nov 2020 16:31:59 -0800 (PST)
+Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
+        by smtp.gmail.com with ESMTPSA id s28sm398527otr.4.2020.11.04.16.31.58
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 04 Nov 2020 16:31:58 -0800 (PST)
+Date:   Wed, 4 Nov 2020 18:31:57 -0600
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Ohad Ben-Cohen <ohad@wizery.com>,
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Siddharth Gupta <sidgup@codeaurora.org>
+Cc:     linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
+        linux-kernel@vger.kernel.org, stable@vger.kernel.org
+Subject: Re: [PATCH] remoteproc: sysmon: Ensure remote notification ordering
+Message-ID: <20201105003157.GC1328@builder.lan>
+References: <20201104161625.1085981-1-bjorn.andersson@linaro.org>
 MIME-Version: 1.0
-References: <20201103103749.1.I0ed4abdd2b2916fbedf76be254bc3457fb8b9655@changeid>
-In-Reply-To: <20201103103749.1.I0ed4abdd2b2916fbedf76be254bc3457fb8b9655@changeid>
-From:   Doug Anderson <dianders@chromium.org>
-Date:   Wed, 4 Nov 2020 16:29:50 -0800
-X-Gmail-Original-Message-ID: <CAD=FV=Wc-b75a-QSX8qLq0+fCbcnvh_6q+N6azL=+Tk+rMie1g@mail.gmail.com>
-Message-ID: <CAD=FV=Wc-b75a-QSX8qLq0+fCbcnvh_6q+N6azL=+Tk+rMie1g@mail.gmail.com>
-Subject: Re: [PATCH] arm64: dts: qcom: sc7180-trogdor: Make pp3300_a the
- default supply for pp3300_hub
-To:     Matthias Kaehlcke <mka@chromium.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>, LKML <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20201104161625.1085981-1-bjorn.andersson@linaro.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+On Wed 04 Nov 10:16 CST 2020, Bjorn Andersson wrote:
 
-On Tue, Nov 3, 2020 at 10:38 AM Matthias Kaehlcke <mka@chromium.org> wrote:
->
-> The trogdor design has two options for supplying the pp3300_hub power rail,
-> it can be supplied by pp3300_l7c or pp3300_a. Initially pp3300_l7c was
-> used, newer revisions (will) use pp3300_a as supply.
->
-> Add a DT node for the pp3300_a path which includes a power switch that is
-> controlled by a GPIO. Make this path the default and keep trogdor rev1,
-> lazor rev0 and rev1 on pp3300_l7c.
-
-It might not hurt to mention that even on early hardware that GPIO84
-was allocated to this purpose but that it was a stuff option for what
-actually provided power to the hub.  This explains why it's OK to add
-the fixed regulator (just with no clients) even on old hardware.  If
-GPIO84 had been used for something else on old hardware this would
-have been bad.
-
-
-> diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
-> index bf875589d364..2d64e75a2d6d 100644
-> --- a/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
-> @@ -174,6 +174,21 @@ pp3300_fp_tp: pp3300-fp-tp-regulator {
->                 vin-supply = <&pp3300_a>;
->         };
->
-> +       pp3300_hub: pp3300-hub {
-> +               compatible = "regulator-fixed";
-> +               regulator-name = "pp3300_hub";
+> The reliance on the remoteproc's state for determining when to send
+> sysmon notifications to a remote processor is racy with regard to
+> concurrent remoteproc operations.
+> 
+> Further more the advertisement of the state of other remote processor to
+> a newly started remote processor might not only send the wrong state,
+> but might result in a stream of state changes that are out of order.
+> 
+> Address this by introducing state tracking within the sysmon instances
+> themselves and extend the locking to ensure that the notifications are
+> consistent with this state.
+> 
+> The use of a big lock for all instances will cause contention for
+> concurrent remote processor state transitions, but the correctness of
+> the remote processors' view of their peers is more important.
+> 
+> Fixes: 1f36ab3f6e3b ("remoteproc: sysmon: Inform current rproc about all active rprocs")
+> Fixes: 1877f54f75ad ("remoteproc: sysmon: Add notifications for events")
+> Fixes: 1fb82ee806d1 ("remoteproc: qcom: Introduce sysmon")
+> Cc: stable@vger.kernel.org
+> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> ---
+>  drivers/remoteproc/qcom_sysmon.c | 20 ++++++++++++++++----
+>  1 file changed, 16 insertions(+), 4 deletions(-)
+> 
+> diff --git a/drivers/remoteproc/qcom_sysmon.c b/drivers/remoteproc/qcom_sysmon.c
+> index 9eb2f6bccea6..1e507b66354a 100644
+> --- a/drivers/remoteproc/qcom_sysmon.c
+> +++ b/drivers/remoteproc/qcom_sysmon.c
+> @@ -22,6 +22,8 @@ struct qcom_sysmon {
+>  	struct rproc_subdev subdev;
+>  	struct rproc *rproc;
+>  
+> +	int state;
 > +
-> +               regulator-min-microvolt = <3300000>;
-> +               regulator-max-microvolt = <3300000>;
-> +
-> +               gpio = <&tlmm 84 GPIO_ACTIVE_HIGH>;
-> +               enable-active-high;
-> +               pinctrl-names = "default";
-> +               pinctrl-0 = <&en_pp3300_hub>;
-> +
-> +               vin-supply = <&pp3300_a>;
+>  	struct list_head node;
+>  
+>  	const char *name;
+> @@ -448,7 +450,10 @@ static int sysmon_prepare(struct rproc_subdev *subdev)
+>  		.ssr_event = SSCTL_SSR_EVENT_BEFORE_POWERUP
+>  	};
+>  
+> +	mutex_lock(&sysmon_lock);
 
-You're leaving things in a bit of an inconsistent state here.  The
-"pp3300_hub_7c" is always_on / boot_on.  This new one isn't.  I know
-this is slightly more complicated due to the fact that downstream we
-have a way to control the hub power but didn't quite get that resolved
-upstream, but the way you have it now, on new hardware upstream will
-power off the hub but also keep "pp3300_hub_7c" powered on for no
-reason.  Seems like that should be fixed?
+This doesn't work, because taking the big lock prevents a concurrently
+failing remote processor from reaching smd orglink to indicate that that
+remote is dead and the first remote's notifications should be
+aborted/fail fast.
 
-
-> +       };
-> +
->         /* BOARD-SPECIFIC TOP LEVEL NODES */
->
->         backlight: backlight {
-> @@ -469,7 +484,7 @@ ppvar_l6c: ldo6 {
->                         regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
->                 };
->
-> -               pp3300_hub:
-> +               pp3300_hub_7c:
-
-nit: If it were me, I probably wouldn't have bothered introducing the
-"pp3300_hub_7c" alias since it's not a real thing in the schematic.  I
-would have just had the older revisions refer to "pp3300_l7c".  If you
-really love the "pp3300_hub_7c", though, I won't stand in your way.
+The result is in most cases that we're stuck here waiting for a timeout,
+but there are extreme corner cases where the notification might be
+waiting for the dead remote to drain the communication fifo.
 
 
->                 pp3300_l7c: ldo7 {
->                         regulator-min-microvolt = <3304000>;
->                         regulator-max-microvolt = <3304000>;
-> @@ -1151,6 +1166,19 @@ pinconf {
->                 };
->         };
->
-> +       en_pp3300_hub: en-pp3300-hub {
-> +               pinmux {
-> +                       pins = "gpio84";
-> +                       function = "gpio";
-> +               };
-> +
-> +               pinconf {
-> +                       pins = "gpio84";
-> +                       drive-strength = <2>;
-> +                       bias-disable;
-> +               };
-> +       };
-> +
->         en_pp3300_dx_edp: en-pp3300-dx-edp {
+Will send a new version that don't rely on the big lock, but still keeps
+state information consistent.
 
-"hub" sorts after "dx", so the ordering is slightly wrong here.
-
--Doug
+Regards,
+Bjorn
