@@ -2,84 +2,98 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 759512A75E9
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Nov 2020 04:06:52 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id BA9022A764F
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Nov 2020 05:22:19 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728416AbgKEDGw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 4 Nov 2020 22:06:52 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51186 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728085AbgKEDGv (ORCPT
+        id S1726690AbgKEEWS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 4 Nov 2020 23:22:18 -0500
+Received: from aserp2120.oracle.com ([141.146.126.78]:59062 "EHLO
+        aserp2120.oracle.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726225AbgKEEWS (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 4 Nov 2020 22:06:51 -0500
-Received: from mail-pg1-x544.google.com (mail-pg1-x544.google.com [IPv6:2607:f8b0:4864:20::544])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8827EC0613CF
-        for <linux-arm-msm@vger.kernel.org>; Wed,  4 Nov 2020 19:06:51 -0800 (PST)
-Received: by mail-pg1-x544.google.com with SMTP id h6so268568pgk.4
-        for <linux-arm-msm@vger.kernel.org>; Wed, 04 Nov 2020 19:06:51 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:content-transfer-encoding:in-reply-to:references
-         :subject:from:cc:to:date:message-id:user-agent;
-        bh=fqzol1toKOJ2RVn1yfN+uFz+FMegwGU92eH/lUKJAVI=;
-        b=A4fecVXEo5PihTIYzuZE0apzH31nKR2CH7ATTvax9pzG9s/4Shxgk71uTzHvyDo8WA
-         S+5F/z7RlKDa2+lOcjmZpNLEPrZJM3eQr60GhqkDvK9OCRFIDqgmajqaYqdR7+FhIGP6
-         x/MAWl41JRq5uPLqQJkrbM/RP9//84d1E6n9I=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:content-transfer-encoding
-         :in-reply-to:references:subject:from:cc:to:date:message-id
-         :user-agent;
-        bh=fqzol1toKOJ2RVn1yfN+uFz+FMegwGU92eH/lUKJAVI=;
-        b=TZ4ku4vZGzcvdsxLfNAmu62icptwWtRyN99w641OdhAF7Gmw+RNufF/fkaaqTkGfbO
-         G6Dwm27NkiMuXO/kYNc4Dt/O1IqJGhIzmdpgdyl6H8VREyvgTHhwhG9xNFyXdo4nfW/Q
-         siR1r8x8acKG0VKyJQplBmuJ2OcXFTdnBSZxGs1GUnxEYhJvZbwPoqp00N0lQE4m2be8
-         C4XuVh745136pSw/Yds+h84BNg796Q6INx93W4fqDtOYlmX0TerS4xbaPsTEFzTdfNHj
-         5mlBDaM69ge1kY1CqftwFsXvz9C8Dlj107Tsy2EzYVUbnDavlrleQq67oxb60V63uaLy
-         261g==
-X-Gm-Message-State: AOAM530SXB3BTtovoH4ZvHKwaXVJPHTPXxKz7dL/X1AVwB/kOkkPFPTp
-        lGY+VQ7LkTU2XnNrcRUY0GlIsA==
-X-Google-Smtp-Source: ABdhPJwQqkKr0xcU/WoDFy1ySt/MLLEIAzvNmTX1lPIJkg74SuC9KzLPe0bDYookJJkiZfjHjZKOWw==
-X-Received: by 2002:a62:790f:0:b029:18a:ae57:353f with SMTP id u15-20020a62790f0000b029018aae57353fmr369277pfc.78.1604545611022;
-        Wed, 04 Nov 2020 19:06:51 -0800 (PST)
-Received: from chromium.org ([2620:15c:202:201:3e52:82ff:fe6c:83ab])
-        by smtp.gmail.com with ESMTPSA id t32sm239063pgl.0.2020.11.04.19.06.49
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 04 Nov 2020 19:06:50 -0800 (PST)
-Content-Type: text/plain; charset="utf-8"
+        Wed, 4 Nov 2020 23:22:18 -0500
+Received: from pps.filterd (aserp2120.oracle.com [127.0.0.1])
+        by aserp2120.oracle.com (8.16.0.42/8.16.0.42) with SMTP id 0A54Jh4m146131;
+        Thu, 5 Nov 2020 04:21:57 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=from : to : cc :
+ subject : date : message-id : in-reply-to : references : mime-version :
+ content-type : content-transfer-encoding; s=corp-2020-01-29;
+ bh=Q/Zxvd8Y2ETDhPysP3vR7GgbkKkwEG1Cl5eXaCf/fe8=;
+ b=xzBkHHw7LXUkd0oDkDaZx33aT+UMvLcF3XsZBEmSc6gdJTky7+BxLaq5trrunXYiwZnJ
+ BfBvjOWewoWvXsJ7b2x4XfTaQXdGwWpbC2L/QtVd8hoVkYTjRuIIfGXAUpgKXHH2Vd8l
+ MHGHq/0J3qj+UDyQIwFWXSoFJiPYPzHPhu3fHV7kAbgWlrrteh6Q/9cQJtC1bljKUezj
+ i63C878rWpa2SUjTF57R9PKApvCS1pOj2O9hiWnan1F7tzS9x71UFMe/6bBxz/CrD5Ds
+ crX3r+pLQEsyNM0cSQP7tfq4sS4QZpAuEIWah+OCBd/P08e+e4phLd4Pb5dGuEXA5z1g eg== 
+Received: from aserp3020.oracle.com (aserp3020.oracle.com [141.146.126.70])
+        by aserp2120.oracle.com with ESMTP id 34hhvchya2-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=FAIL);
+        Thu, 05 Nov 2020 04:21:57 +0000
+Received: from pps.filterd (aserp3020.oracle.com [127.0.0.1])
+        by aserp3020.oracle.com (8.16.0.42/8.16.0.42) with SMTP id 0A54Kkhn020897;
+        Thu, 5 Nov 2020 04:21:57 GMT
+Received: from userv0121.oracle.com (userv0121.oracle.com [156.151.31.72])
+        by aserp3020.oracle.com with ESMTP id 34hw0m0e9k-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+        Thu, 05 Nov 2020 04:21:57 +0000
+Received: from abhmp0006.oracle.com (abhmp0006.oracle.com [141.146.116.12])
+        by userv0121.oracle.com (8.14.4/8.13.8) with ESMTP id 0A54Lo4M017180;
+        Thu, 5 Nov 2020 04:21:50 GMT
+Received: from ca-mkp.ca.oracle.com (/10.156.108.201)
+        by default (Oracle Beehive Gateway v4.0)
+        with ESMTP ; Wed, 04 Nov 2020 20:21:50 -0800
+From:   "Martin K. Petersen" <martin.petersen@oracle.com>
+To:     cang@codeaurora.org, Asutosh Das <asutoshd@codeaurora.org>,
+        linux-scsi@vger.kernel.org
+Cc:     "Martin K . Petersen" <martin.petersen@oracle.com>,
+        Stanley Chu <stanley.chu@mediatek.com>,
+        linux-arm-msm@vger.kernel.org,
+        "moderated list:ARM/Mediatek SoC support" 
+        <linux-mediatek@lists.infradead.org>,
+        Bart Van Assche <bvanassche@acm.org>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        "James E.J. Bottomley" <jejb@linux.ibm.com>,
+        "moderated list:ARM/Mediatek SoC support" 
+        <linux-arm-kernel@lists.infradead.org>,
+        open list <linux-kernel@vger.kernel.org>,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        Avri Altman <avri.altman@wdc.com>,
+        Satya Tangirala <satyat@google.com>,
+        Bean Huo <beanhuo@micron.com>
+Subject: Re: [PATCH v2 1/2] scsi: ufs: Put hba into LPM during clk gating
+Date:   Wed,  4 Nov 2020 23:21:45 -0500
+Message-Id: <160455005256.26277.2812826866099587703.b4-ty@oracle.com>
+X-Mailer: git-send-email 2.28.0
+In-Reply-To: <52198e70bff750632740d78678a815256d697e43.1603825776.git.asutoshd@codeaurora.org>
+References: <52198e70bff750632740d78678a815256d697e43.1603825776.git.asutoshd@codeaurora.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <20201103204902.11899-4-khsieh@codeaurora.org>
-References: <20201103204902.11899-1-khsieh@codeaurora.org> <20201103204902.11899-4-khsieh@codeaurora.org>
-Subject: Re: [PATCH 3/3] drm/msm/dp: promote irq_hpd handle to handle link training correctly
-From:   Stephen Boyd <swboyd@chromium.org>
-Cc:     Kuogee Hsieh <khsieh@codeaurora.org>, tanmay@codeaurora.org,
-        abhinavk@codeaurora.org, aravindh@codeaurora.org, airlied@linux.ie,
-        daniel@ffwll.ch, linux-arm-msm@vger.kernel.org,
-        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
-To:     Kuogee Hsieh <khsieh@codeaurora.org>,
-        dri-devel@lists.freedesktop.org, robdclark@gmail.com,
-        sean@poorly.run
-Date:   Wed, 04 Nov 2020 19:06:47 -0800
-Message-ID: <160454560709.3965362.13891080172465271158@swboyd.mtv.corp.google.com>
-User-Agent: alot/0.9.1
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-Virus-Version: vendor=nai engine=6000 definitions=9795 signatures=668682
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 phishscore=0 adultscore=0 bulkscore=0
+ mlxscore=0 suspectscore=0 spamscore=0 mlxlogscore=999 malwarescore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2009150000
+ definitions=main-2011050030
+X-Proofpoint-Virus-Version: vendor=nai engine=6000 definitions=9795 signatures=668682
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 spamscore=0 suspectscore=0
+ impostorscore=0 malwarescore=0 priorityscore=1501 mlxlogscore=999
+ bulkscore=0 phishscore=0 adultscore=0 mlxscore=0 lowpriorityscore=0
+ clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2009150000 definitions=main-2011050030
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Kuogee Hsieh (2020-11-03 12:49:02)
-> Some dongles require link training done at irq_hpd request instead
-> of plugin request. This patch promote irq_hpd handler to handle link
-> training and setup hpd_state correctly.
->=20
->  Fixes: fdaf9a5e3c15 (drm/msm/dp: fixes wrong connection state caused by =
-failure of link training)
+On Tue, 27 Oct 2020 12:10:36 -0700, Asutosh Das wrote:
 
-This fixes tag has a space before it incorrectly. Also, it should have
-quotes.
+> During clock gating, after clocks are disabled,
+> put hba into LPM to save more power.
 
-Fixes: fdaf9a5e3c15 ("drm/msm/dp: fixes wrong connection state caused by fa=
-ilure of link training")
+Applied to 5.11/scsi-queue, thanks!
 
-> Signed-off-by: Kuogee Hsieh <khsieh@codeaurora.org>
-> ---
+[1/2] scsi: ufs: Put HBA into LPM during clk gating
+      https://git.kernel.org/mkp/scsi/c/dd7143e27cb7
+[2/2] scsi: ufs: qcom: Enable aggressive power collapse for ufs HBA
+      https://git.kernel.org/mkp/scsi/c/61906fd465c0
+
+-- 
+Martin K. Petersen	Oracle Linux Engineering
