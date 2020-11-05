@@ -2,215 +2,314 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 7F2B02A7DFE
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Nov 2020 13:05:11 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C7D752A7E9A
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Nov 2020 13:32:01 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730430AbgKEMEb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 5 Nov 2020 07:04:31 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50006 "EHLO
+        id S1730044AbgKEMbx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 5 Nov 2020 07:31:53 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54224 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730427AbgKEMEY (ORCPT
+        with ESMTP id S1725468AbgKEMbx (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 5 Nov 2020 07:04:24 -0500
-Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D063DC061A4A
-        for <linux-arm-msm@vger.kernel.org>; Thu,  5 Nov 2020 04:04:23 -0800 (PST)
-Received: by mail-wr1-x430.google.com with SMTP id g12so1450341wrp.10
-        for <linux-arm-msm@vger.kernel.org>; Thu, 05 Nov 2020 04:04:23 -0800 (PST)
+        Thu, 5 Nov 2020 07:31:53 -0500
+Received: from mail-pl1-x644.google.com (mail-pl1-x644.google.com [IPv6:2607:f8b0:4864:20::644])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 03645C0613CF;
+        Thu,  5 Nov 2020 04:31:53 -0800 (PST)
+Received: by mail-pl1-x644.google.com with SMTP id b12so724011plr.4;
+        Thu, 05 Nov 2020 04:31:52 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=yoyslaxAm8PV6hIMeTxmfrY9MDfCArcqs8WY1KU6rz0=;
-        b=Q/px6eeYJssao3H6yCGM9ZQFzWv/Ip4Qoxgjfan6OtKo0o5oskWa6bYOhfbcNxPhFE
-         v+heYa/hHB1iDT3p3jrrUF/oXJJnKFyAp2ShllcVFPo0dlZ8TSaQH1cyvVDyyMMF6gNZ
-         kWe+HRQCt9She4HF07U+H3eJp0gYyQdrCfQwukbUF1IKrP/cbeHsVzqSRgDXkbbColrw
-         Bm4CnlfOTl4JG5LgB4kTuyso8oaLsWLtmeKhFMGvoV/Tpw1ITjQ1+GdWovEaChYLP6kz
-         mAtUBNTpkuCVWKRC1RL910LrmVCVt7sg+EjMvB7lju5bSLyU1srZubVnLrKDVYQWwyll
-         uxzw==
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=RM772cDSHAyaI3S6Oht4zbOquKz4eJt+u106DCGoFhM=;
+        b=bnygRq/0tekVuestJ58NXP85dUydoHJKyPVveKREYhd6uhSOAo9ap+JAjyk2uSA+5m
+         DnB1R7xB/IfDmJVnq6+cxbine5kKLvla2UmDMvNRT9zs4Pr7Rq0wA7GRj3mB9tEdCNP2
+         4q782JLutfwanHXIQ60vDKY44FcAPBsaLhdGXMTmsvnKhHSsBkG0YzSJgDs14Edzio/U
+         6s9W8iG6CEW66YG8jFu6PFB8lGgi0cH+d5IBguTC9/M6dD4qbPObBYyziIzqOHVOd5Z8
+         efquoXGVm/vFhiOsS0zf3Q9f5AKwQGz8cnbAu+aHYxDJ2m4EARxdt0mAhxWHyzXdFn1M
+         NsHg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=yoyslaxAm8PV6hIMeTxmfrY9MDfCArcqs8WY1KU6rz0=;
-        b=QqFkCs9CvBwdNLEnge1WaSvpokliSJIMJMzGGYAEFa26ITZRIiOZQ6QzCHHAeYM4u2
-         /L7o3rkVNFlTgM4NM/5gpoucva27DV3nm9y7sXnCYRfq/jR44CFkPP13U+IKi93cW2ve
-         9I5Rnn+Dw25FVzlkR3tUahj/0tiokZ8G837ARMUm14RznSTOBvH1+ekZgngnxbihkRqB
-         WOnOgS1WijKvpLr0YU3An2pQX8xO24vkR+0rtbM5SdeIe4bvVkiUqBcmVRMsvR8z9VG8
-         gqR9BdlB+IbvoJM0+mLHd5G3ob36Tj7DKrosb2LuMBzZUTM7IZAinLVfZLkfSJuQtUNJ
-         Nt/A==
-X-Gm-Message-State: AOAM531AQrLgvsc2LABafTuqnw2mc17aaAX1unz3AsZcT6rWzdVIg/jz
-        jTmIdPtHBjbSR6/wsSgYLsWSNQ==
-X-Google-Smtp-Source: ABdhPJy14ngmZTBXFrYMK/+7HY77vo3847Ea+vDsDFSZ/YZYJwZhVirxAi1vXGPy7JHhJ/W+wUjmVg==
-X-Received: by 2002:adf:f246:: with SMTP id b6mr2499877wrp.111.1604577862456;
-        Thu, 05 Nov 2020 04:04:22 -0800 (PST)
-Received: from srini-hackbox.lan (cpc86377-aztw32-2-0-cust226.18-1.cable.virginm.net. [92.233.226.227])
-        by smtp.gmail.com with ESMTPSA id f4sm2363094wrq.54.2020.11.05.04.04.21
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 05 Nov 2020 04:04:21 -0800 (PST)
-From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-To:     linus.walleij@linaro.org, bjorn.andersson@linaro.org,
-        robh+dt@kernel.org
-Cc:     agross@kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-gpio@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Subject: [PATCH v2 2/2] dt-bindings: pinctrl: qcom: Add sm8250 lpass lpi pinctrl bindings
-Date:   Thu,  5 Nov 2020 12:04:10 +0000
-Message-Id: <20201105120410.18305-3-srinivas.kandagatla@linaro.org>
-X-Mailer: git-send-email 2.21.0
-In-Reply-To: <20201105120410.18305-1-srinivas.kandagatla@linaro.org>
-References: <20201105120410.18305-1-srinivas.kandagatla@linaro.org>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=RM772cDSHAyaI3S6Oht4zbOquKz4eJt+u106DCGoFhM=;
+        b=WIYvsYjLVUBOmx3V9dSOfavzscGQ+9f5Une4hIZBF5TGh1g1M3+oYXYPqxjWgEmTID
+         Oo3Dnr2TGbZahBJOgwLLRM8sZ2qWIdj8jUCpLdreHNTOSwJpnrhyzEohg2X7lxnjFcoN
+         avhfoQdn8JlsRrl+aeBcNlRDF2yf6X3piOV2AmBgh7dIOQvtBburGqjaVpfgMlSKUfch
+         ARlv+wphGzZBaXduTDMduAzOoLR9h36Rw21Gjw1Qw6/MUDlKoex0BWXazB3JD/nqR1pQ
+         S5WfF//hm+ZOEej7/v1g+EjjebdOP0rNFiIayq3CitOhh140Uz/aHMHRhM5esVYYJHHM
+         ZtMw==
+X-Gm-Message-State: AOAM532QQKJAjHH2p3VWko4hsOHVqeSwfAyiskwjdWlOcKWOgH7hXrSz
+        JMjWkUEybtg1Jq1Pd6JzdTjHSRhjMm+dQ9hCF04=
+X-Google-Smtp-Source: ABdhPJy2A7kynh+Cjoe9pc+2nVcIvUEQex3DbleQ3c/V6f04bARBgkPT2MNTmziRExEuL6jVAz/T7qDxGwQOv1rZ5U0=
+X-Received: by 2002:a17:902:bc4a:b029:d6:7ef9:689c with SMTP id
+ t10-20020a170902bc4ab02900d67ef9689cmr2146556plz.21.1604579512404; Thu, 05
+ Nov 2020 04:31:52 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20201105120410.18305-1-srinivas.kandagatla@linaro.org> <20201105120410.18305-2-srinivas.kandagatla@linaro.org>
+In-Reply-To: <20201105120410.18305-2-srinivas.kandagatla@linaro.org>
+From:   Andy Shevchenko <andy.shevchenko@gmail.com>
+Date:   Thu, 5 Nov 2020 14:32:41 +0200
+Message-ID: <CAHp75VdM9LUV2M6rEZyK=4rh_+hwFK5_2-9RB7YQTuMxHSYCMg@mail.gmail.com>
+Subject: Re: [PATCH v2 1/2] pinctrl: qcom: Add sm8250 lpass lpi pinctrl driver
+To:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Cc:     Linus Walleij <linus.walleij@linaro.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Andy Gross <agross@kernel.org>, linux-arm-msm@vger.kernel.org,
+        "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
+        devicetree <devicetree@vger.kernel.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add device tree binding Documentation details for Qualcomm SM8250
-LPASS(Low Power Audio Sub System) LPI(Low Power Island) pinctrl driver.
+On Thu, Nov 5, 2020 at 2:06 PM Srinivas Kandagatla
+<srinivas.kandagatla@linaro.org> wrote:
+>
+> Add initial pinctrl driver to support pin configuration for
+> LPASS (Low Power Audio SubSystem) LPI (Low Power Island) pinctrl
+> on SM8250.
 
-Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
----
- .../pinctrl/qcom,lpass-lpi-pinctrl.yaml       | 129 ++++++++++++++++++
- 1 file changed, 129 insertions(+)
- create mode 100644 Documentation/devicetree/bindings/pinctrl/qcom,lpass-lpi-pinctrl.yaml
+> +config PINCTRL_LPASS_LPI
+> +       tristate "Qualcomm Technologies Inc LPASS LPI pin controller driver"
+> +       depends on GPIOLIB && OF
+> +       help
+> +         This is the pinctrl, pinmux, pinconf and gpiolib driver for the
+> +         Qualcomm Technologies Inc LPASS (Low Power Audio SubSystem) LPI
+> +         (Low Power Island) found on the Qualcomm Technologies Inc SoCs.
 
-diff --git a/Documentation/devicetree/bindings/pinctrl/qcom,lpass-lpi-pinctrl.yaml b/Documentation/devicetree/bindings/pinctrl/qcom,lpass-lpi-pinctrl.yaml
-new file mode 100644
-index 000000000000..562520f41a33
---- /dev/null
-+++ b/Documentation/devicetree/bindings/pinctrl/qcom,lpass-lpi-pinctrl.yaml
-@@ -0,0 +1,129 @@
-+# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-+%YAML 1.2
-+---
-+$id: http://devicetree.org/schemas/pinctrl/qcom,lpass-lpi-pinctrl.yaml#
-+$schema: http://devicetree.org/meta-schemas/core.yaml#
-+
-+title: Qualcomm Technologies, Inc. Low Power Audio SubSystem (LPASS)
-+  Low Power Island (LPI) TLMM block
-+
-+maintainers:
-+  - Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-+
-+description: |
-+  This binding describes the Top Level Mode Multiplexer block found in the
-+  LPASS LPI IP on most Qualcomm SoCs
-+
-+properties:
-+  compatible:
-+    const: qcom,sm8250-lpass-lpi-pinctrl
-+
-+  reg:
-+    minItems: 2
-+    maxItems: 2
-+
-+  clocks:
-+    items:
-+      - description: LPASS Core voting clock
-+      - description: LPASS Audio voting clock
-+
-+  clock-names:
-+    items:
-+      - const: core
-+      - const: audio
-+
-+  gpio-controller: true
-+
-+  '#gpio-cells':
-+    description: Specifying the pin number and flags, as defined in
-+      include/dt-bindings/gpio/gpio.h
-+    const: 2
-+
-+  gpio-ranges:
-+    maxItems: 1
-+
-+#PIN CONFIGURATION NODES
-+patternProperties:
-+  '-pins$':
-+    if:
-+      type: object
-+    then:
-+      properties:
-+        pins:
-+          description:
-+            List of gpio pins affected by the properties specified in this
-+            subnode.
-+          items:
-+            oneOf:
-+              - pattern: "^gpio([0-9]|[1-9][0-9])$"
-+          minItems: 1
-+          maxItems: 14
-+
-+        function:
-+          enum: [ gpio, swr_tx_clk, qua_mi2s_sclk, swr_tx_data1, qua_mi2s_ws,
-+                  swr_tx_data2, qua_mi2s_data0, swr_rx_clk, qua_mi2s_data1,
-+                  swr_rx_data1, qua_mi2s_data2, swr_tx_data3, swr_rx_data2,
-+                  dmic1_clk, i2s1_clk, dmic1_data, i2s1_ws, dmic2_clk,
-+                  i2s1_data0, dmic2_data, i2s1_data1, i2s2_clk, wsa_swr_clk,
-+                  i2s2_ws, wsa_swr_data, dmic3_clk, i2s2_data0, dmic3_data,
-+                  i2s2_data1 ]
-+          description:
-+            Specify the alternative function to be configured for the specified
-+            pins.
-+
-+        drive-strength:
-+          enum: [2, 4, 6, 8, 10, 12, 14, 16]
-+          default: 2
-+          description:
-+            Selects the drive strength for the specified pins, in mA.
-+
-+        slew-rate:
-+          enum: [0, 1, 2, 3]
-+          default: 0
-+          description: |
-+              0: No adjustments
-+              1: Higher Slew rate (faster edges)
-+              2: Lower Slew rate (slower edges)
-+              3: Reserved (No adjustments)
-+
-+        bias-pull-down: true
-+
-+        bias-pull-up: true
-+
-+        bias-disable: true
-+
-+        output-high: true
-+
-+        output-low: true
-+
-+      required:
-+        - pins
-+        - function
-+
-+      additionalProperties: false
-+
-+required:
-+  - compatible
-+  - reg
-+  - clocks
-+  - clock-names
-+  - gpio-controller
-+  - '#gpio-cells'
-+  - gpio-ranges
-+
-+additionalProperties: false
-+
-+examples:
-+  - |
-+    #include <dt-bindings/sound/qcom,q6afe.h>
-+    lpi_tlmm: pinctrl@33c0000 {
-+        compatible = "qcom,sm8250-lpass-lpi-pinctrl";
-+        reg = <0x33c0000 0x20000>,
-+              <0x355a000 0x1000>;
-+        clocks = <&q6afecc LPASS_HW_MACRO_VOTE LPASS_CLK_ATTRIBUTE_COUPLE_NO>,
-+                 <&q6afecc LPASS_HW_DCODEC_VOTE LPASS_CLK_ATTRIBUTE_COUPLE_NO>;
-+        clock-names = "core", "audio";
-+        gpio-controller;
-+        #gpio-cells = <2>;
-+        gpio-ranges = <&lpi_tlmm 0 0 14>;
-+    };
+> +#include <linux/of_device.h>
+> +#include <linux/of.h>
+
+...
+
+> +       val = lpi_gpio_read(pctrl, pin, LPI_GPIO_REG_VAL_CTL);
+
+> +       val &= ~(LPI_GPIO_REG_FUNCTION_MASK);
+
+Redundant parentheses.
+
+> +       val |= i << LPI_GPIO_REG_FUNCTION_SHIFT;
+> +       lpi_gpio_write(pctrl, pin, LPI_GPIO_REG_VAL_CTL, val);
+
+...
+
+> +static unsigned int lpi_drive_to_regval(u32 arg)
+> +{
+> +       return (arg/2 - 1);
+
+Ditto. On top, use spaces.
+
+> +}
+
+...
+
+> +               case PIN_CONFIG_SLEW_RATE:
+> +                       if (arg > LPI_SLEW_RATE_MAX) {
+> +                               dev_err(pctldev->dev, "%s: invalid slew rate %u for pin: %d\n",
+> +                                       __func__, arg, pin);
+
+__func__ is not needed.
+
+> +                               goto set_gpio;
+> +                       }
+
+...
+
+> +                       for (i = 0; i < LPI_SLEW_BITS_SIZE; i++) {
+
+> +                               if (arg & 0x01)
+> +                                       set_bit(offset, &val);
+> +                               else
+> +                                       clear_bit(offset, &val);
+
+assign_bit(, arg & BIT(i))
+
+> +                               offset++;
+
+> +                               arg = arg >> 1;
+
+No need on a separate line, see above.
+
+> +                       }
+
+...
+
+> +done:
+
+Useless label.
+
+> +       return ret;
+
+...
+
+> +#ifdef CONFIG_DEBUG_FS
+> +#include <linux/seq_file.h>
+
+> +#else
+> +#define lpi_gpio_dbg_show NULL
+> +#endif
+
+Hmm... Doesn't pin control provide a wrapper for this?
+
+...
+
+> +       int ret, npins;
+> +       struct clk *core_vote = NULL;
+> +       struct clk *audio_vote = NULL;
+> +
+> +       struct lpi_pinctrl *pctrl;
+> +       const struct lpi_pinctrl_variant_data *data;
+> +       struct device *dev = &pdev->dev;
+> +       struct resource *res;
+
+Redundant blank line. Can you keep them in reversed xmas tree order?
+
+...
+
+> +       core_vote = devm_clk_get(&pdev->dev, "core");
+> +       if (IS_ERR(core_vote)) {
+
+> +               dev_dbg(&pdev->dev, "%s: clk get %s failed %d\n",
+> +                       __func__, "core_vote", ret);
+
+First of all you missed the deferred probe issue, second, __func__ is
+redundant for *_dbg() calls (okay, when Dynamic Debug is enabled).
+That said why not
+  return dev_err_probe();
+?
+
+> +               return PTR_ERR(core_vote);
+> +       }
+
+...
+
+> +       audio_vote = devm_clk_get(&pdev->dev, "audio");
+> +       if (IS_ERR(audio_vote)) {
+> +               dev_dbg(&pdev->dev, "%s: clk get %s failed %d\n",
+> +                       __func__, "audio_vote", ret);
+> +               return PTR_ERR(audio_vote);
+
+Ditto/
+
+> +       }
+
+Why is it not a bulk?
+
+> +       clk_prepare_enable(pctrl->core_vote);
+> +       clk_prepare_enable(pctrl->audio_vote);
+
+Either from them may return an error. Also, when you go devm_*() the
+rule of thumb is either all or none. Because here you will have
+ordering issue on ->remove().
+
+> +       res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
+> +       pctrl->tlmm_base = devm_ioremap_resource(&pdev->dev, res);
+
+devm_platform_ioremap_resource()
+
+> +       if (IS_ERR(pctrl->tlmm_base)) {
+> +               ret = PTR_ERR(pctrl->tlmm_base);
+> +               goto err;
+> +       }
+> +
+> +
+
+One blank line is enough.
+
+> +       res = platform_get_resource(pdev, IORESOURCE_MEM, 1);
+> +       pctrl->slew_base = devm_ioremap_resource(&pdev->dev, res);
+
+As above.
+
+> +       if (IS_ERR(pctrl->slew_base)) {
+> +               ret = PTR_ERR(pctrl->slew_base);
+> +               goto err;
+> +       }
+
+...
+
+> +       ret = gpiochip_add_data(&pctrl->chip, pctrl);
+
+Not devm_?
+
+> +       if (ret) {
+> +               dev_err(pctrl->dev, "can't add gpio chip\n");
+> +               goto err_pinctrl;
+> +       }
+
+> +       ret = gpiochip_add_pin_range(&pctrl->chip, dev_name(dev), 0, 0, npins);
+
+Why not to define a proper callback?
+
+> +       if (ret) {
+> +               dev_err(dev, "failed to add pin range\n");
+> +               goto err_range;
+> +       }
+
+...
+
+> +err_range:
+> +       gpiochip_remove(&pctrl->chip);
+> +err_pinctrl:
+> +       mutex_destroy(&pctrl->slew_access_lock);
+> +err:
+> +       clk_disable_unprepare(pctrl->core_vote);
+> +       clk_disable_unprepare(pctrl->audio_vote);
+> +
+> +       return ret;
+
+These are not needed for devm_ case.
+
+...
+
+> +static int lpi_pinctrl_remove(struct platform_device *pdev)
+> +{
+> +       struct lpi_pinctrl *pctrl = platform_get_drvdata(pdev);
+> +
+> +       gpiochip_remove(&pctrl->chip);
+> +       mutex_destroy(&pctrl->slew_access_lock);
+> +       clk_disable_unprepare(pctrl->core_vote);
+> +       clk_disable_unprepare(pctrl->audio_vote);
+
+Ditto. It also has ordering issues.
+
+> +       return 0;
+> +}
+
+...
+
+> +static const struct of_device_id lpi_pinctrl_of_match[] = {
+> +       {
+> +              .compatible = "qcom,sm8250-lpass-lpi-pinctrl",
+> +              .data = &sm8250_lpi_data,
+> +       },
+
+> +       { },
+
+Comma is not needed here.
+
+> +};
+> +
+
+Extra blank line/
+
+> +MODULE_DEVICE_TABLE(of, lpi_pinctrl_of_match);
+
+...
+
+> +static struct platform_driver lpi_pinctrl_driver = {
+
+> +};
+
+> +
+
+Extra blank line.
+
+> +module_platform_driver(lpi_pinctrl_driver);
+
 -- 
-2.21.0
-
+With Best Regards,
+Andy Shevchenko
