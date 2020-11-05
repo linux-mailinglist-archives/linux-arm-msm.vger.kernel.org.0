@@ -2,52 +2,52 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E8F322A76A0
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Nov 2020 05:50:56 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 29C282A769C
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Nov 2020 05:50:55 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731230AbgKEEuq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 4 Nov 2020 23:50:46 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38932 "EHLO
+        id S1731041AbgKEEug (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 4 Nov 2020 23:50:36 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38944 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730737AbgKEEud (ORCPT
+        with ESMTP id S1730977AbgKEEue (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 4 Nov 2020 23:50:33 -0500
-Received: from mail-ot1-x344.google.com (mail-ot1-x344.google.com [IPv6:2607:f8b0:4864:20::344])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 71D91C0613D2
-        for <linux-arm-msm@vger.kernel.org>; Wed,  4 Nov 2020 20:50:33 -0800 (PST)
-Received: by mail-ot1-x344.google.com with SMTP id i18so302696ots.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 04 Nov 2020 20:50:33 -0800 (PST)
+        Wed, 4 Nov 2020 23:50:34 -0500
+Received: from mail-oo1-xc41.google.com (mail-oo1-xc41.google.com [IPv6:2607:f8b0:4864:20::c41])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C8163C0613D4
+        for <linux-arm-msm@vger.kernel.org>; Wed,  4 Nov 2020 20:50:34 -0800 (PST)
+Received: by mail-oo1-xc41.google.com with SMTP id l26so122586oop.9
+        for <linux-arm-msm@vger.kernel.org>; Wed, 04 Nov 2020 20:50:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=0AMfzJQSHdnGOYZqMbBXX9tseE50EVF4YR2bSIdLe74=;
-        b=PPET8LLKlL/3si+aNNv7BOs1O+rwB3JVqNTsq0aFIm/JVqMT9eplyCNqgJ+JAKQofe
-         d6NYoWOjL2wi2VFtMyJnPxWEF/A2XlzI8OW8Vt26dzsP5r/es5NDTeMtG6XpqZxFvyvB
-         ESs04WnX21nn7MAqMnAwQGOLJUbjJLR2fSpO8UTcjzTaUyCi1RWGeLLTxgagjCz/ymlE
-         yTv+4bnvpYz++eDqfKIIbhtpsGkyWqOqJ2Hi4AObBYGfazImOeCQHoXzcRypBkTJ5pfv
-         vZp4zGRdArrIlqO78Jxj/SCGdz3EmjA0Ta0cdrIm6ICTunc9FP4qlM4KdBsclPqXRoBe
-         TG0Q==
+        bh=gB/8DdyhYbLhO5Kc+ec+n/kffS9x3KIVkFEGOmCDRJQ=;
+        b=T/12uOtjxpMBCy+hcNVksK0w3Ds/WMLclOhdA8ZQlboyiWlsCIWN7K9VOfFekbEmsG
+         DRdkefILdU8kv15wz0+46STpmtYnXqjCjY+XobWRyrBufATbkeL6mMeYyAnMZrJAUH6x
+         Opm7dQKE+Y9ecV6Q/pTeklabK81olgrqfyU2yZipE1bu1IVuFgInoCro/maggP4Vv+7/
+         O2OEUQwgm0gx/sVLlPsRdQElJzd0N6alU3U1nLwos1brzE9ZWhLm36cvUsYjp2W8oodn
+         Uhnl8nwir1KQlC4M4XLjv41+9OP5B4Hl1U2TaRi04XzxV/cFs0PBhH6rUx+fxYSsKfJp
+         lGoQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=0AMfzJQSHdnGOYZqMbBXX9tseE50EVF4YR2bSIdLe74=;
-        b=BG5jpEJUeO+8jfau24kNGgEoHPc3PG9UdddFfSa4m+bbSz7axtrGghK3n0CQ6KZPto
-         UNcOed6StPwf+DVl0P09Sgs4GNzVhAflHJKy6I/E3WeBWD4xzLbGvCe5/SUhM5WemXP/
-         +K82vhXicCClQXX/BVQATssZBWGxidFK64vkguF7Y2EcG62J5hjMLb4gRmsGFj5QaMlG
-         Dh0NpPuH22xmc0B5+OB1LHQO7n56zm7xWOe0U/xp+QMq4e8Icirv1dWyojOuLcGc5PXV
-         CMXfmgfOnEViPZidgSDEfrk2iwmkLMIwyS4yZlDXjHGk0ZZ5O2i/lmuW0ILolvxvgrON
-         xsgg==
-X-Gm-Message-State: AOAM531dhYyTOYLYfcnp2jPVMXjcramGPcQdptO1EA66JUHj8xuW+6IE
-        ljU+NdqevoDFgbDLZRpF0566MpiwpXAqwQ==
-X-Google-Smtp-Source: ABdhPJwcQsdhkwET5pl7CJPqv/BumVDviK7CSwbVN1yVJNzQSMnsLW0S7LwnZeiOF+0RckMkJFCIYA==
-X-Received: by 2002:a9d:6b08:: with SMTP id g8mr424994otp.272.1604551832794;
-        Wed, 04 Nov 2020 20:50:32 -0800 (PST)
+        bh=gB/8DdyhYbLhO5Kc+ec+n/kffS9x3KIVkFEGOmCDRJQ=;
+        b=Mw/LDBiTGmgNUUxMM3f49DQr5afLXQD6+yVE/EISGwdrP/HdVbwDQFDpCnXCe3mSnF
+         SFs/aaZeVoS3sCq52YBgmCFsfNledC7PXVmB/3x1YD4YsyD1CB+dsLuWzQSZF1/muMMZ
+         0KFl94+OlyNcz+UEVX1ezx3gUlcORfRHVBmmdXGy1uITQ+clhJMdckohYdCgb/fCKIAE
+         6Pm6/g1p91jJm7s1TdOZPBJFgMWhWIGPsIca5xjzbWnmGx4gRwwDsy/aTf4frAyEfCLu
+         2Rl86tDE6wmYtP5MtfeJhzuar71HK833HFowy8D/wtFdnbEvfVb8mRLhANs2nG8GbY9Z
+         z22A==
+X-Gm-Message-State: AOAM530TaTm6c38n6o0M4hGMS55WTNw2Ujknuft9npb1rx8p+70uZzhz
+        /NkICA7dwnzwTPNYml5QA0Xcuw==
+X-Google-Smtp-Source: ABdhPJx4ZmvUrrA8jrXcstfyYpHmx/MurkeM5ac5qOudm3eTphho4ODrP1gQQJWpEx1sXanpYNrz4g==
+X-Received: by 2002:a4a:9cc3:: with SMTP id d3mr561837ook.4.1604551834112;
+        Wed, 04 Nov 2020 20:50:34 -0800 (PST)
 Received: from localhost.localdomain (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id k13sm100553ooi.41.2020.11.04.20.50.31
+        by smtp.gmail.com with ESMTPSA id k13sm100553ooi.41.2020.11.04.20.50.32
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 04 Nov 2020 20:50:32 -0800 (PST)
+        Wed, 04 Nov 2020 20:50:33 -0800 (PST)
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
@@ -56,9 +56,9 @@ To:     Andy Gross <agross@kernel.org>,
         Sibi Sankar <sibis@codeaurora.org>
 Cc:     linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
         linux-kernel@vger.kernel.org
-Subject: [PATCH v2 2/4] remoteproc: sysmon: Expose the shutdown result
-Date:   Wed,  4 Nov 2020 20:50:49 -0800
-Message-Id: <20201105045051.1365780-3-bjorn.andersson@linaro.org>
+Subject: [PATCH v2 3/4] remoteproc: qcom: q6v5: Query sysmon before graceful shutdown
+Date:   Wed,  4 Nov 2020 20:50:50 -0800
+Message-Id: <20201105045051.1365780-4-bjorn.andersson@linaro.org>
 X-Mailer: git-send-email 2.28.0
 In-Reply-To: <20201105045051.1365780-1-bjorn.andersson@linaro.org>
 References: <20201105045051.1365780-1-bjorn.andersson@linaro.org>
@@ -68,23 +68,11 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-A graceful shutdown of the Qualcomm remote processors where
-traditionally performed by invoking a shared memory state signal and
-waiting for the associated ack.
-
-This was later superseded by the "sysmon" mechanism, where some form of
-shared memory bus is used to send a "graceful shutdown request" message
-and one of more signals comes back to indicate its success.
-
-But when this newer mechanism is in effect the firmware is shut down by
-the time the older mechanism, implemented in the remoteproc drivers,
-attempts to perform a graceful shutdown - and as such it will never
-receive an ack back.
-
-This patch therefor track the success of the latest shutdown attempt in
-sysmon and exposes a new function in the API that the remoteproc driver
-can use to query the success and the necessity of invoking the older
-mechanism.
+Requesting a graceful shutdown through the shared memory state signals
+will not be acked in the event that sysmon has already successfully shut
+down the remote firmware. So extend the stop request API to optinally
+take the remoteproc's sysmon instance and query if there's already been
+a successful shutdown attempt, before doing the signal dance.
 
 Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 ---
@@ -92,204 +80,121 @@ Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 Changes since v1:
 - New patch
 
- drivers/remoteproc/qcom_common.h |  6 +++
- drivers/remoteproc/qcom_sysmon.c | 82 ++++++++++++++++++++++++--------
- 2 files changed, 69 insertions(+), 19 deletions(-)
+ drivers/remoteproc/qcom_q6v5.c      | 8 +++++++-
+ drivers/remoteproc/qcom_q6v5.h      | 3 ++-
+ drivers/remoteproc/qcom_q6v5_adsp.c | 2 +-
+ drivers/remoteproc/qcom_q6v5_mss.c  | 2 +-
+ drivers/remoteproc/qcom_q6v5_pas.c  | 2 +-
+ drivers/remoteproc/qcom_q6v5_wcss.c | 2 +-
+ 6 files changed, 13 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/remoteproc/qcom_common.h b/drivers/remoteproc/qcom_common.h
-index dfc641c3a98b..8ba9052955bd 100644
---- a/drivers/remoteproc/qcom_common.h
-+++ b/drivers/remoteproc/qcom_common.h
-@@ -51,6 +51,7 @@ struct qcom_sysmon *qcom_add_sysmon_subdev(struct rproc *rproc,
- 					   const char *name,
- 					   int ssctl_instance);
- void qcom_remove_sysmon_subdev(struct qcom_sysmon *sysmon);
-+bool qcom_sysmon_shutdown_acked(struct qcom_sysmon *sysmon);
- #else
- static inline struct qcom_sysmon *qcom_add_sysmon_subdev(struct rproc *rproc,
- 							 const char *name,
-@@ -62,6 +63,11 @@ static inline struct qcom_sysmon *qcom_add_sysmon_subdev(struct rproc *rproc,
- static inline void qcom_remove_sysmon_subdev(struct qcom_sysmon *sysmon)
- {
- }
-+
-+static inline bool qcom_sysmon_shutdown_acked(struct qcom_sysmon *sysmon)
-+{
-+	return false;
-+}
- #endif
+diff --git a/drivers/remoteproc/qcom_q6v5.c b/drivers/remoteproc/qcom_q6v5.c
+index fd6fd36268d9..9627a950928e 100644
+--- a/drivers/remoteproc/qcom_q6v5.c
++++ b/drivers/remoteproc/qcom_q6v5.c
+@@ -13,6 +13,7 @@
+ #include <linux/soc/qcom/smem.h>
+ #include <linux/soc/qcom/smem_state.h>
+ #include <linux/remoteproc.h>
++#include "qcom_common.h"
+ #include "qcom_q6v5.h"
  
- #endif
-diff --git a/drivers/remoteproc/qcom_sysmon.c b/drivers/remoteproc/qcom_sysmon.c
-index 38f63c968fa8..1c42f00010d3 100644
---- a/drivers/remoteproc/qcom_sysmon.c
-+++ b/drivers/remoteproc/qcom_sysmon.c
-@@ -44,6 +44,7 @@ struct qcom_sysmon {
- 	struct mutex lock;
- 
- 	bool ssr_ack;
-+	bool shutdown_acked;
- 
- 	struct qmi_handle qmi;
- 	struct sockaddr_qrtr ssctl;
-@@ -115,10 +116,13 @@ static void sysmon_send_event(struct qcom_sysmon *sysmon,
+ #define Q6V5_PANIC_DELAY_MS	200
+@@ -146,15 +147,20 @@ static irqreturn_t q6v5_stop_interrupt(int irq, void *data)
  /**
-  * sysmon_request_shutdown() - request graceful shutdown of remote
-  * @sysmon:	sysmon context
-+ *
-+ * Return: boolean indicator of the remote processor acking the request
+  * qcom_q6v5_request_stop() - request the remote processor to stop
+  * @q6v5:	reference to qcom_q6v5 context
++ * @sysmon:	reference to the remote's sysmon instance, or NULL
+  *
+  * Return: 0 on success, negative errno on failure
   */
--static void sysmon_request_shutdown(struct qcom_sysmon *sysmon)
-+static bool sysmon_request_shutdown(struct qcom_sysmon *sysmon)
+-int qcom_q6v5_request_stop(struct qcom_q6v5 *q6v5)
++int qcom_q6v5_request_stop(struct qcom_q6v5 *q6v5, struct qcom_sysmon *sysmon)
  {
- 	char *req = "ssr:shutdown";
-+	bool acked = false;
  	int ret;
  
- 	mutex_lock(&sysmon->lock);
-@@ -141,9 +145,13 @@ static void sysmon_request_shutdown(struct qcom_sysmon *sysmon)
- 	if (!sysmon->ssr_ack)
- 		dev_err(sysmon->dev,
- 			"unexpected response to sysmon shutdown request\n");
-+	else
-+		acked = true;
+ 	q6v5->running = false;
  
- out_unlock:
- 	mutex_unlock(&sysmon->lock);
++	/* Don't perform SMP2P dance if sysmon already shut down the remote */
++	if (qcom_sysmon_shutdown_acked(sysmon))
++		return 0;
 +
-+	return acked;
- }
+ 	qcom_smem_state_update_bits(q6v5->state,
+ 				    BIT(q6v5->stop_bit), BIT(q6v5->stop_bit));
  
- static int sysmon_callback(struct rpmsg_device *rpdev, void *data, int count,
-@@ -297,14 +305,33 @@ static struct qmi_msg_handler qmi_indication_handler[] = {
- 	{}
- };
+diff --git a/drivers/remoteproc/qcom_q6v5.h b/drivers/remoteproc/qcom_q6v5.h
+index c4ed887c1499..1c212f670cbc 100644
+--- a/drivers/remoteproc/qcom_q6v5.h
++++ b/drivers/remoteproc/qcom_q6v5.h
+@@ -8,6 +8,7 @@
  
-+static bool ssctl_request_shutdown_wait(struct qcom_sysmon *sysmon)
-+{
-+	int ret;
-+
-+	ret = wait_for_completion_timeout(&sysmon->shutdown_comp, 10 * HZ);
-+	if (ret)
-+		return true;
-+
-+	ret = try_wait_for_completion(&sysmon->ind_comp);
-+	if (ret)
-+		return true;
-+
-+	dev_err(sysmon->dev, "timeout waiting for shutdown ack\n");
-+	return false;
-+}
-+
- /**
-  * ssctl_request_shutdown() - request shutdown via SSCTL QMI service
-  * @sysmon:	sysmon context
-+ *
-+ * Return: boolean indicator of the remote processor acking the request
-  */
--static void ssctl_request_shutdown(struct qcom_sysmon *sysmon)
-+static bool ssctl_request_shutdown(struct qcom_sysmon *sysmon)
- {
- 	struct ssctl_shutdown_resp resp;
- 	struct qmi_txn txn;
-+	bool acked = false;
+ struct rproc;
+ struct qcom_smem_state;
++struct qcom_sysmon;
+ 
+ struct qcom_q6v5 {
+ 	struct device *dev;
+@@ -40,7 +41,7 @@ int qcom_q6v5_init(struct qcom_q6v5 *q6v5, struct platform_device *pdev,
+ 
+ int qcom_q6v5_prepare(struct qcom_q6v5 *q6v5);
+ int qcom_q6v5_unprepare(struct qcom_q6v5 *q6v5);
+-int qcom_q6v5_request_stop(struct qcom_q6v5 *q6v5);
++int qcom_q6v5_request_stop(struct qcom_q6v5 *q6v5, struct qcom_sysmon *sysmon);
+ int qcom_q6v5_wait_for_start(struct qcom_q6v5 *q6v5, int timeout);
+ unsigned long qcom_q6v5_panic(struct qcom_q6v5 *q6v5);
+ 
+diff --git a/drivers/remoteproc/qcom_q6v5_adsp.c b/drivers/remoteproc/qcom_q6v5_adsp.c
+index efb2c1aa80a3..9db0380236e7 100644
+--- a/drivers/remoteproc/qcom_q6v5_adsp.c
++++ b/drivers/remoteproc/qcom_q6v5_adsp.c
+@@ -264,7 +264,7 @@ static int adsp_stop(struct rproc *rproc)
+ 	int handover;
  	int ret;
  
- 	reinit_completion(&sysmon->ind_comp);
-@@ -312,7 +339,7 @@ static void ssctl_request_shutdown(struct qcom_sysmon *sysmon)
- 	ret = qmi_txn_init(&sysmon->qmi, &txn, ssctl_shutdown_resp_ei, &resp);
- 	if (ret < 0) {
- 		dev_err(sysmon->dev, "failed to allocate QMI txn\n");
--		return;
-+		return false;
- 	}
+-	ret = qcom_q6v5_request_stop(&adsp->q6v5);
++	ret = qcom_q6v5_request_stop(&adsp->q6v5, adsp->sysmon);
+ 	if (ret == -ETIMEDOUT)
+ 		dev_err(adsp->dev, "timed out on wait\n");
  
- 	ret = qmi_send_request(&sysmon->qmi, &sysmon->ssctl, &txn,
-@@ -320,27 +347,23 @@ static void ssctl_request_shutdown(struct qcom_sysmon *sysmon)
- 	if (ret < 0) {
- 		dev_err(sysmon->dev, "failed to send shutdown request\n");
- 		qmi_txn_cancel(&txn);
--		return;
-+		return false;
- 	}
+diff --git a/drivers/remoteproc/qcom_q6v5_mss.c b/drivers/remoteproc/qcom_q6v5_mss.c
+index 9a473cfef758..501764934014 100644
+--- a/drivers/remoteproc/qcom_q6v5_mss.c
++++ b/drivers/remoteproc/qcom_q6v5_mss.c
+@@ -1370,7 +1370,7 @@ static int q6v5_stop(struct rproc *rproc)
+ 	struct q6v5 *qproc = (struct q6v5 *)rproc->priv;
+ 	int ret;
  
- 	ret = qmi_txn_wait(&txn, 5 * HZ);
--	if (ret < 0)
-+	if (ret < 0) {
- 		dev_err(sysmon->dev, "failed receiving QMI response\n");
--	else if (resp.resp.result)
-+	} else if (resp.resp.result) {
- 		dev_err(sysmon->dev, "shutdown request failed\n");
--	else
-+	} else {
- 		dev_dbg(sysmon->dev, "shutdown request completed\n");
--
--	if (sysmon->shutdown_irq > 0) {
--		ret = wait_for_completion_timeout(&sysmon->shutdown_comp,
--						  10 * HZ);
--		if (!ret) {
--			ret = try_wait_for_completion(&sysmon->ind_comp);
--			if (!ret)
--				dev_err(sysmon->dev,
--					"timeout waiting for shutdown ack\n");
--		}
-+		acked = true;
- 	}
-+
-+	if (sysmon->shutdown_irq > 0)
-+		return ssctl_request_shutdown_wait(sysmon);
-+
-+	return acked;
- }
+-	ret = qcom_q6v5_request_stop(&qproc->q6v5);
++	ret = qcom_q6v5_request_stop(&qproc->q6v5, qproc->sysmon);
+ 	if (ret == -ETIMEDOUT)
+ 		dev_err(qproc->dev, "timed out on wait\n");
  
- /**
-@@ -508,6 +531,9 @@ static void sysmon_stop(struct rproc_subdev *subdev, bool crashed)
- 		.subsys_name = sysmon->name,
- 		.ssr_event = SSCTL_SSR_EVENT_BEFORE_SHUTDOWN
- 	};
-+	bool acked;
-+
-+	sysmon->shutdown_acked = false;
+diff --git a/drivers/remoteproc/qcom_q6v5_pas.c b/drivers/remoteproc/qcom_q6v5_pas.c
+index 3837f23995e0..ed1772bfa55d 100644
+--- a/drivers/remoteproc/qcom_q6v5_pas.c
++++ b/drivers/remoteproc/qcom_q6v5_pas.c
+@@ -214,7 +214,7 @@ static int adsp_stop(struct rproc *rproc)
+ 	int handover;
+ 	int ret;
  
- 	mutex_lock(&sysmon->state_lock);
- 	sysmon->state = SSCTL_SSR_EVENT_BEFORE_SHUTDOWN;
-@@ -519,9 +545,11 @@ static void sysmon_stop(struct rproc_subdev *subdev, bool crashed)
- 		return;
+-	ret = qcom_q6v5_request_stop(&adsp->q6v5);
++	ret = qcom_q6v5_request_stop(&adsp->q6v5, adsp->sysmon);
+ 	if (ret == -ETIMEDOUT)
+ 		dev_err(adsp->dev, "timed out on wait\n");
  
- 	if (sysmon->ssctl_version)
--		ssctl_request_shutdown(sysmon);
-+		acked = ssctl_request_shutdown(sysmon);
- 	else if (sysmon->ept)
--		sysmon_request_shutdown(sysmon);
-+		acked = sysmon_request_shutdown(sysmon);
-+
-+	sysmon->shutdown_acked = acked;
- }
+diff --git a/drivers/remoteproc/qcom_q6v5_wcss.c b/drivers/remoteproc/qcom_q6v5_wcss.c
+index 8846ef0b0f1a..d6639856069b 100644
+--- a/drivers/remoteproc/qcom_q6v5_wcss.c
++++ b/drivers/remoteproc/qcom_q6v5_wcss.c
+@@ -390,7 +390,7 @@ static int q6v5_wcss_stop(struct rproc *rproc)
+ 	int ret;
  
- static void sysmon_unprepare(struct rproc_subdev *subdev)
-@@ -679,6 +707,22 @@ void qcom_remove_sysmon_subdev(struct qcom_sysmon *sysmon)
- }
- EXPORT_SYMBOL_GPL(qcom_remove_sysmon_subdev);
- 
-+/**
-+ * qcom_sysmon_shutdown_acked() - query the success of the last shutdown
-+ * @sysmon:	sysmon context
-+ *
-+ * When sysmon is used to request a graceful shutdown of the remote processor
-+ * this can be used by the remoteproc driver to query the success, in order to
-+ * know if it should fall back to other means of requesting a shutdown.
-+ *
-+ * Return: boolean indicator of the success of the last shutdown request
-+ */
-+bool qcom_sysmon_shutdown_acked(struct qcom_sysmon *sysmon)
-+{
-+	return sysmon && sysmon->shutdown_acked;
-+}
-+EXPORT_SYMBOL_GPL(qcom_sysmon_shutdown_acked);
-+
- /**
-  * sysmon_probe() - probe sys_mon channel
-  * @rpdev:	rpmsg device handle
+ 	/* WCSS powerdown */
+-	ret = qcom_q6v5_request_stop(&wcss->q6v5);
++	ret = qcom_q6v5_request_stop(&wcss->q6v5, wcss->sysmon);
+ 	if (ret == -ETIMEDOUT) {
+ 		dev_err(wcss->dev, "timed out on wait\n");
+ 		return ret;
 -- 
 2.28.0
 
