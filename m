@@ -2,257 +2,155 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 44C4F2A8730
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Nov 2020 20:29:42 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 540C82A8769
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Nov 2020 20:37:39 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731149AbgKET3l (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 5 Nov 2020 14:29:41 -0500
-Received: from m42-4.mailgun.net ([69.72.42.4]:58778 "EHLO m42-4.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727851AbgKET3l (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 5 Nov 2020 14:29:41 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1604604579; h=In-Reply-To: Content-Type: MIME-Version:
- References: Message-ID: Subject: Cc: To: From: Date: Sender;
- bh=xTUKoyQqWK72KnyGHbpYCnZ0pG+T1pvlVZ0AWmaPtIw=; b=le2Hn3wYBZkYgXuqCzGLJzaawJhZtLmLha0AdYIRGk3sNi0RlAp4WrBJ30u/QVRDaROgDY1l
- LoY7Of+YzQyRTl1ABSAxdu971PuzNn0GHPAOMw1kejcJzxNq3y64u/e8DGioGFSYf4QvN1vR
- LvguMRUWC7X/poGPhwjwbNj2ZRQ=
-X-Mailgun-Sending-Ip: 69.72.42.4
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n02.prod.us-east-1.postgun.com with SMTP id
- 5fa452861f7506a997a3aa20 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 05 Nov 2020 19:29:10
- GMT
-Sender: ilina=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id AC8A9C433C9; Thu,  5 Nov 2020 19:29:09 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
-        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
-Received: from localhost (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: ilina)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 2632DC433C6;
-        Thu,  5 Nov 2020 19:29:07 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 2632DC433C6
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=ilina@codeaurora.org
-Date:   Thu, 5 Nov 2020 12:29:07 -0700
-From:   Lina Iyer <ilina@codeaurora.org>
-To:     "Rafael J. Wysocki" <rafael@kernel.org>
-Cc:     Ulf Hansson <ulf.hansson@linaro.org>,
-        "Rafael J. Wysocki" <rjw@rjwysocki.net>,
-        Linux PM <linux-pm@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>
-Subject: Re: [PATCH v4 2/2] PM / Domains: use device's next wakeup to
- determine domain idle state
-Message-ID: <20201105192907.GB2526@codeaurora.org>
-References: <20201020180413.32225-1-ilina@codeaurora.org>
- <20201020180413.32225-3-ilina@codeaurora.org>
- <CAJZ5v0gTA=_QOFJLMCxH+CqfDFKUJU5ZbpN2+DHLTP1gKg3HQg@mail.gmail.com>
+        id S1731558AbgKEThh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 5 Nov 2020 14:37:37 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36608 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727836AbgKEThh (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 5 Nov 2020 14:37:37 -0500
+Received: from mail-oi1-x242.google.com (mail-oi1-x242.google.com [IPv6:2607:f8b0:4864:20::242])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 64367C0613D3
+        for <linux-arm-msm@vger.kernel.org>; Thu,  5 Nov 2020 11:37:37 -0800 (PST)
+Received: by mail-oi1-x242.google.com with SMTP id t143so2881248oif.10
+        for <linux-arm-msm@vger.kernel.org>; Thu, 05 Nov 2020 11:37:37 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=0IeuWIyuaS2pCWkh8SM9vIHTk3Z9xKMgQga1epoP3ng=;
+        b=KhyQlJxDU6io8FVXlTraVtbTy3bQuNC6sKWSQlCJoDV3eVUN8R8qBKymBN5FpTznBJ
+         4MhBYMa2IuKyTowiy9/fZZPa8rYN0sdd7tu4P2gSHcjnay4/Ewu7Fnkn90lA7bFKqFwU
+         yb6Ge7spA+x/jLS4G8ilTQ0oIFhVBUcg0IOm74/C4jRoKRtkmLSh/gFsNOSLkaQvAvkX
+         LhSfYwfDvUD2o+ek/F5TywPUJ/TNO/UTLQPZ5VTC7cDsFWpESDgcORcU32pa8PnSWqnO
+         98vNzQjj6t5oS5WFavOU9azcEjKsPpiPdpnK/9hEeczBP+OekrcPzv7NotIFDIo4DCVj
+         gLig==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=0IeuWIyuaS2pCWkh8SM9vIHTk3Z9xKMgQga1epoP3ng=;
+        b=YGq4oJ0VUZlEHNCEBt+wWIdYspiXM2mAgWXUkabv+C6gXE4GmgEtfPPv1LNeTiVOte
+         jze2fENlEqxFTUsQQ4lgOlqIm//zKDnwPSYxi3JmzfPpKgvdsSYTsRzwE4Ly9hXT4Yca
+         oiWg7jOdEN7OZAHAlBZj9QyywZO+KZ6hU+YNOyjwNWECbap1OLFIuaJpEfNbXykxxBne
+         jpCZi3b/HMpcqNDP8KikHuUJkphxVN3i2AZ79Pac9Hiha0qtcBuQ2yDUWLS8fWT9K5qA
+         /EAImNiqmGCL3R798lpKDdsOqE/VE+sGuZbdFVB3fzAZe4HBwrofuAxzFJ4HlGcANIDa
+         sMHw==
+X-Gm-Message-State: AOAM530IeGdsTeYXoBzq1y9N/yDU1WIrJAAcdcXUqoM/KrHYwald2i2j
+        yq/pcoHLJYWLCyf9xUKO3qplC+BQqC7gojbR4BWDAg==
+X-Google-Smtp-Source: ABdhPJy6EmV/kijD0O5lYgC/y/tG7BvaOubM7LfjvxCX96j17pkf6e0nRm/f++LPHQRFDQ7t06YdyL9HKphcyBMRX3A=
+X-Received: by 2002:aca:1a07:: with SMTP id a7mr587040oia.169.1604605056727;
+ Thu, 05 Nov 2020 11:37:36 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Disposition: inline
-In-Reply-To: <CAJZ5v0gTA=_QOFJLMCxH+CqfDFKUJU5ZbpN2+DHLTP1gKg3HQg@mail.gmail.com>
+References: <20201031003845.41137-1-john.stultz@linaro.org> <CACRpkda1MV2=0MOMk3t4mr1RczdvfeiNTdbYXX6Jig+6p3TABA@mail.gmail.com>
+In-Reply-To: <CACRpkda1MV2=0MOMk3t4mr1RczdvfeiNTdbYXX6Jig+6p3TABA@mail.gmail.com>
+From:   John Stultz <john.stultz@linaro.org>
+Date:   Thu, 5 Nov 2020 11:37:26 -0800
+Message-ID: <CALAqxLV_GG1tPf9NEHhQN0dtL6DJmOvENVvzdnS-4_o3pNOzoA@mail.gmail.com>
+Subject: Re: [PATCH v5 1/2] pinctrl: qcom: Allow pinctrl-msm code to be
+ loadable as a module
+To:     Linus Walleij <linus.walleij@linaro.org>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        lkml <linux-kernel@vger.kernel.org>,
+        Catalin Marinas <catalin.marinas@arm.com>,
+        Will Deacon <will@kernel.org>, Andy Gross <agross@kernel.org>,
+        Joerg Roedel <joro@8bytes.org>,
+        Thomas Gleixner <tglx@linutronix.de>,
+        Jason Cooper <jason@lakedaemon.net>,
+        Marc Zyngier <maz@kernel.org>, Vinod Koul <vkoul@kernel.org>,
+        Kalle Valo <kvalo@codeaurora.org>,
+        Maulik Shah <mkshah@codeaurora.org>,
+        Lina Iyer <ilina@codeaurora.org>,
+        Saravana Kannan <saravanak@google.com>,
+        Todd Kjos <tkjos@google.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        MSM <linux-arm-msm@vger.kernel.org>,
+        "list@263.net:IOMMU DRIVERS <iommu@lists.linux-foundation.org>, Joerg
+        Roedel <joro@8bytes.org>," <iommu@lists.linux-foundation.org>,
+        "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Thanks for your time Rafael.
+On Thu, Nov 5, 2020 at 6:17 AM Linus Walleij <linus.walleij@linaro.org> wrote:
+> On Sat, Oct 31, 2020 at 1:38 AM John Stultz <john.stultz@linaro.org> wrote:
+>
+> > Tweaks to allow pinctrl-msm code to be loadable as a module.
+> >
+> > This is needed in order to support having the qcom-scm driver,
+> > which pinctrl-msm calls into, configured as a module.
+> >
+> > This requires that we tweak Kconfigs selecting PINCTRL_MSM to
+> > also depend on QCOM_SCM || QCOM_SCM=n so that we match the
+> > module setting of QCOM_SCM.
+> >
+> > Unlike the previous revision of this patch:
+> >   https://lore.kernel.org/lkml/20200625001039.56174-5-john.stultz@linaro.org/
+> > this version reworks PINCTRL_MSM to be a visible option and
+> > instead of having the various SoC specific drivers select
+> > PINCTRL_MSM, this switches those configs to depend on
+> > PINCTRL_MSM. This avoids adding the oddish looking:
+> >   "depend on QCOM_SCM || QCOM_SCM=n"
+> > to every SoC specific driver, as that becomes a maintenance
+> > headache.
+> >
+> > We also add PINCTRL_MSM to the arm64 defconfig to avoid
+> > surprises as otherwise PINCTRL_MSM/IPQ* options previously
+> > enabled, will be off.
+> >
+> > Cc: Catalin Marinas <catalin.marinas@arm.com>
+> > Cc: Will Deacon <will@kernel.org>
+> > Cc: Andy Gross <agross@kernel.org>
+> > Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
+> > Cc: Joerg Roedel <joro@8bytes.org>
+> > Cc: Thomas Gleixner <tglx@linutronix.de>
+> > Cc: Jason Cooper <jason@lakedaemon.net>
+> > Cc: Marc Zyngier <maz@kernel.org>
+> > Cc: Linus Walleij <linus.walleij@linaro.org>
+> > Cc: Vinod Koul <vkoul@kernel.org>
+> > Cc: Kalle Valo <kvalo@codeaurora.org>
+> > Cc: Maulik Shah <mkshah@codeaurora.org>
+> > Cc: Lina Iyer <ilina@codeaurora.org>
+> > Cc: Saravana Kannan <saravanak@google.com>
+> > Cc: Todd Kjos <tkjos@google.com>
+> > Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+> > Cc: linux-arm-msm@vger.kernel.org
+> > Cc: iommu@lists.linux-foundation.org
+> > Cc: linux-gpio@vger.kernel.org
+> > Signed-off-by: John Stultz <john.stultz@linaro.org>
+> > ---
+> > v2:
+> > * Module description and whitespace fixes suggested by Bjorn
+> > * Added QCOM_SCM || QCOM_SCM=n bits on Kconfigs selecting
+> >   PINCTRL_MSM. Reported by both Todd and Bjorn.
+> > v3:
+> > * Make sure the QCOM_SCM || QCOM_SCM=n trick is commented
+> > v4:
+> > * Rework "select PINCTRL_MSM" to "depends on PINCTRL_MSM"
+> >   to consolidate the QCOM_SCM dependency.
+> > v5:
+> > * Add PINCTRL_MSM to arm64 defconfig
+>
+> Bjorn can you have a look at this series?
+>
+> BTW John  I'm afraid I just merged a new QCOM subdriver so we might
+> need to respin this to cover all.
+>
+> It's an important patch so I'll help out in rebasing it if the only problem is
+> that my tree is moving under your feet.
 
-On Thu, Nov 05 2020 at 11:56 -0700, Rafael J. Wysocki wrote:
->On Tue, Oct 20, 2020 at 8:05 PM Lina Iyer <ilina@codeaurora.org> wrote:
->>
->> Currently, a PM domain's idle state is determined based on whether the
->> QoS requirements are met. This may not save power, if the idle state
->> residency requirements are not met.
->>
->> CPU PM domains use the next timer wakeup for the CPUs in the domain to
->> determine the sleep duration of the domain. This is compared with the
->> idle state residencies to determine the optimal idle state. For other PM
->> domains, determining the sleep length is not that straight forward. But
->> if the device's next_event is available, we can use that to determine
->> the sleep duration of the PM domain.
->>
->> Let's update the domain governor logic to check for idle state residency
->> based on the next wakeup of devices as well as QoS constraints.
->>
->> Signed-off-by: Lina Iyer <ilina@codeaurora.org>
->
->A few nits follow.
->
->> ---
->> Changes in v4:
->>         - Update to use next_wakeup from struct generic_pm_domain_data.
->> Changes in v3:
->>         - None
->> Changes in v2:
->>         - Fix state_idx type to hold negative value.
->>         - Update commit text.
->> ---
->>  drivers/base/power/domain_governor.c | 84 ++++++++++++++++++++++++++--
->>  include/linux/pm_domain.h            |  1 +
->>  2 files changed, 80 insertions(+), 5 deletions(-)
->>
->> diff --git a/drivers/base/power/domain_governor.c b/drivers/base/power/domain_governor.c
->> index 490ed7deb99a..092927b60dc0 100644
->> --- a/drivers/base/power/domain_governor.c
->> +++ b/drivers/base/power/domain_governor.c
->> @@ -117,6 +117,49 @@ static bool default_suspend_ok(struct device *dev)
->>         return td->cached_suspend_ok;
->>  }
->>
->> +static void update_domain_next_wakeup(struct generic_pm_domain *genpd, ktime_t now)
->> +{
->> +       ktime_t domain_wakeup = KTIME_MAX;
->> +       ktime_t next_wakeup;
->> +       struct pm_domain_data *pdd;
->> +       struct gpd_link *link;
->> +
->> +       /* Find the earliest wakeup for all devices in the domain */
->> +       list_for_each_entry(pdd, &genpd->dev_list, list_node) {
->> +               next_wakeup = to_gpd_data(pdd)->next_wakeup;
->> +               if (next_wakeup != KTIME_MAX && !ktime_before(next_wakeup, now))
->> +                       if (ktime_before(next_wakeup, domain_wakeup))
->> +                               domain_wakeup = next_wakeup;
->> +       }
->> +
->> +       /* Then find the earliest wakeup of from all the child domains */
->> +       list_for_each_entry(link, &genpd->parent_links, parent_node) {
->> +               next_wakeup = link->child->next_wakeup;
->> +               if (next_wakeup != KTIME_MAX && !ktime_before(next_wakeup, now))
->> +                       if (ktime_before(next_wakeup, domain_wakeup))
->> +                               domain_wakeup = next_wakeup;
->> +       }
->
->This is assuming that the lists will remain stable during the walks
->above, but is that guaranteed?
->
-I would expect so. We are looking up the child domains, which should be
-powered down and therefore their domain::next_wakeup should be locked in
-(because we update next_wakeup only in this governor).
+No worries. I'm mostly wanting to make sure there are no objections
+with switching PINCTRL_MSM from a selected config to a depended
+config.
 
->> +
->> +       genpd->next_wakeup = domain_wakeup;
->> +}
->> +
->> +static bool next_wakeup_allows_state(struct generic_pm_domain *genpd,
->> +                                    unsigned int state, ktime_t now)
->> +{
->> +       s64 idle_time_ns, min_sleep_ns;
->> +       ktime_t domain_wakeup = genpd->next_wakeup;
->
->I'd move the second line to the top (it looks odd now IMO).
->
-I agree and prefer that as well but I missed this.
-Will update in the next spin.
+If that seems ok, I can redo it on whatever point you would like.
 
->> +
->> +       min_sleep_ns = genpd->states[state].power_off_latency_ns +
->> +                      genpd->states[state].power_on_latency_ns +
->> +                      genpd->states[state].residency_ns;
->> +
->> +       idle_time_ns = ktime_to_ns(ktime_sub(domain_wakeup, now));
->> +       if (idle_time_ns < min_sleep_ns)
->> +               return false;
->> +
->> +       return true;
->
->Why not
->
->+       return idle_time_ns >= min_sleep_ns;
->
-OK.
+I realize I can also split that change out separately from the module
+enablement bits as well if its helpful.
 
->> +}
->> +
->>  static bool __default_power_down_ok(struct dev_pm_domain *pd,
->>                                      unsigned int state)
->>  {
->> @@ -210,6 +253,33 @@ static bool default_power_down_ok(struct dev_pm_domain *pd)
->>  {
->>         struct generic_pm_domain *genpd = pd_to_genpd(pd);
->>         struct gpd_link *link;
->> +       int state_idx;
->
->Why not initialize it right away?
->
-OK.
-
-Thanks,
-Lina
-
->> +       ktime_t now = ktime_get();
->> +
->> +       /*
->> +        * Find the next wakeup from devices that can determine their own wakeup
->> +        * to find when the domain would wakeup and do it for every device down
->> +        * the hierarchy. It is not worth while to sleep if the state's residency
->> +        * cannot be met.
->> +        */
->> +       update_domain_next_wakeup(genpd, now);
->> +       state_idx = genpd->state_count - 1;
->> +       if (genpd->next_wakeup != KTIME_MAX) {
->> +               /* Let's find out the deepest domain idle state, the devices prefer */
->> +               while (state_idx >= 0) {
->> +                       if (next_wakeup_allows_state(genpd, state_idx, now)) {
->> +                               genpd->max_off_time_changed = true;
->> +                               break;
->> +                       }
->> +                       state_idx--;
->> +               }
->> +
->> +               if (state_idx < 0) {
->> +                       state_idx = 0;
->> +                       genpd->cached_power_down_ok = false;
->> +                       goto done;
->> +               }
->> +       }
->>
->>         if (!genpd->max_off_time_changed) {
->>                 genpd->state_idx = genpd->cached_power_down_state_idx;
->> @@ -228,17 +298,21 @@ static bool default_power_down_ok(struct dev_pm_domain *pd)
->>         genpd->max_off_time_ns = -1;
->>         genpd->max_off_time_changed = false;
->>         genpd->cached_power_down_ok = true;
->> -       genpd->state_idx = genpd->state_count - 1;
->>
->> -       /* Find a state to power down to, starting from the deepest. */
->> -       while (!__default_power_down_ok(pd, genpd->state_idx)) {
->> -               if (genpd->state_idx == 0) {
->> +       /*
->> +        * Find a state to power down to, starting from the state
->> +        * determined by the next wakeup.
->> +        */
->> +       while (!__default_power_down_ok(pd, state_idx)) {
->> +               if (state_idx == 0) {
->>                         genpd->cached_power_down_ok = false;
->>                         break;
->>                 }
->> -               genpd->state_idx--;
->> +               state_idx--;
->>         }
->>
->> +done:
->> +       genpd->state_idx = state_idx;
->>         genpd->cached_power_down_state_idx = genpd->state_idx;
->>         return genpd->cached_power_down_ok;
->>  }
->> diff --git a/include/linux/pm_domain.h b/include/linux/pm_domain.h
->> index e00c77b1efd8..205b750a2e56 100644
->> --- a/include/linux/pm_domain.h
->> +++ b/include/linux/pm_domain.h
->> @@ -130,6 +130,7 @@ struct generic_pm_domain {
->>                                      unsigned int state);
->>         struct gpd_dev_ops dev_ops;
->>         s64 max_off_time_ns;    /* Maximum allowed "suspended" time. */
->> +       ktime_t next_wakeup;    /* Maintained by the domain governor */
->>         bool max_off_time_changed;
->>         bool cached_power_down_ok;
->>         bool cached_power_down_state_idx;
->> --
+thanks
+-john
