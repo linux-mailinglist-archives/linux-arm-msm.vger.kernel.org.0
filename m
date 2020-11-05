@@ -2,165 +2,225 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 781C42A8641
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Nov 2020 19:43:58 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 9A2292A8681
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Nov 2020 19:56:46 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727017AbgKESny (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 5 Nov 2020 13:43:54 -0500
-Received: from mail-oi1-f195.google.com ([209.85.167.195]:41169 "EHLO
-        mail-oi1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726214AbgKESnx (ORCPT
+        id S1731149AbgKES4q (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 5 Nov 2020 13:56:46 -0500
+Received: from mail-oi1-f194.google.com ([209.85.167.194]:34764 "EHLO
+        mail-oi1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727017AbgKES4p (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 5 Nov 2020 13:43:53 -0500
-Received: by mail-oi1-f195.google.com with SMTP id m13so2713815oih.8;
-        Thu, 05 Nov 2020 10:43:52 -0800 (PST)
+        Thu, 5 Nov 2020 13:56:45 -0500
+Received: by mail-oi1-f194.google.com with SMTP id z26so2785093oid.1;
+        Thu, 05 Nov 2020 10:56:44 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=d5oADnBeNIpIvCSojwrBHVdlvDCR/O5IS/nZKIy1ndA=;
-        b=rQh0dLRBpOY3jvj+AoG50Zg5RY3ZMjtUV5lTdXMx7Y2jy3Nbkq6731eui2AaTO8bT8
-         a9+w0RgxJSwOo/wRGlz1emgvGG6EK4Jg1t8XolAz/n1Egn6Lz0A15U7szeqYAtF9Q1+B
-         dRigCzQq/sPzQWNv47Evf2ImxXAD33i0kaeGACUnYynlLLC/Fh3Q6dw3gvP8n60s7IF8
-         q4g8BxjWZKvR5kFcDFDu/MFZwFQg+QZctBuKXZ4ez+dZxI54UkCYrdp2nbVF9K9x8EsV
-         4TBsnLxXbj5Wdy5XzHMRZ4Fm2w3PZFtUUbn9uXJEyHrIUAUbt2QV2HiAaNGpSIpWQYyQ
-         z06Q==
-X-Gm-Message-State: AOAM531L93jEaDKjjmUitlwZe67MJDPFQ7o2RjIkNpek75mxo0SbciZP
-        sjf9mCsT//IhxT3Mk/4gAzIB4K1tSLW+
-X-Google-Smtp-Source: ABdhPJyYXmS7UjH4bUE7XXBl0KWexDWJQoYRb48zVqEn7FRn3jqT1JFDBgJKqsHgp8p6dVQEG+M/+Q==
-X-Received: by 2002:aca:c084:: with SMTP id q126mr506299oif.129.1604601832353;
-        Thu, 05 Nov 2020 10:43:52 -0800 (PST)
-Received: from xps15 (24-155-109-49.dyn.grandenetworks.net. [24.155.109.49])
-        by smtp.gmail.com with ESMTPSA id k10sm497430otb.81.2020.11.05.10.43.50
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 05 Nov 2020 10:43:51 -0800 (PST)
-Received: (nullmailer pid 1613991 invoked by uid 1000);
-        Thu, 05 Nov 2020 18:43:50 -0000
-Date:   Thu, 5 Nov 2020 12:43:50 -0600
-From:   Rob Herring <robh@kernel.org>
-To:     Ajye Huang <ajye.huang@gmail.com>
-Cc:     linux-kernel@vger.kernel.org, Mark Brown <broonie@kernel.org>,
-        Rohit kumar <rohitkr@codeaurora.org>,
-        Banajit Goswami <bgoswami@codeaurora.org>,
-        Patrick Lai <plai@codeaurora.org>,
-        Srinivasa Rao Mandadapu <srivasam@codeaurora.org>,
-        srinivas.kandagatla@linaro.org, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        Jaroslav Kysela <perex@perex.cz>, cychiang@chromium.org,
-        tzungbi@chromium.org, dianders@chromium.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        alsa-devel@alsa-project.org,
-        Ajye Huang <ajye_huang@compal.corp-partner.google.com>
-Subject: Re: [PATCH v5 1/2] ASoC: google: dt-bindings: modify machine
- bindings for two MICs case
-Message-ID: <20201105184350.GA1611477@bogus>
-References: <20201103103051.34553-1-ajye_huang@compal.corp-partner.google.com>
- <20201103103051.34553-2-ajye_huang@compal.corp-partner.google.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=w1ifJAXyezyeuSWKY8kW4K45SYrEzUhk1OhBKGBp35g=;
+        b=qBGZx2S2JF/KtWfPV2y584fGPHfWYVtFWYYZlNVbjluWcHbpKsrXN8DRcozMZnjBgy
+         loQbIGca+d0LI57kDnlluHmjeWyWQxyY624Ue3rMykioTHJTWj6gRrA7I3EkxMgDI3Fg
+         1m4LUAvvGADo9SIA8iX/pbw0NW0+IExz+9Z54nXd+D1ukoWBe22ZwVthIgRQyKsWm/UC
+         0Apr89+FCOiHAnyRr1WGwJmooTOEWqJJFRwfW8jntngUn9Q8T1gsWQzImVrbRDu2UbaG
+         rND1FiM7Bx2Y55AN52EDIXy+QH/usas1muKyhxQaS4CBPJLv3N1V8xWmXC1GjmDUb5J1
+         DM6Q==
+X-Gm-Message-State: AOAM530zZAvAx0qSLc+k4LSTGz5D0zemcdfiMEr+0yrXUZWEsUYLiqwG
+        KqUiQgt4xvYpeze2URSt/XOuulx2kF0EulSzaDM=
+X-Google-Smtp-Source: ABdhPJwBsyzJDRGTnN/buTPA5WkQhwojl+WmizXPKkZ995dU0nPTjBLGRTxnlSLIPsuka6xw/LLn60Jnr8fUMpPxQSI=
+X-Received: by 2002:aca:cf4b:: with SMTP id f72mr516445oig.157.1604602604323;
+ Thu, 05 Nov 2020 10:56:44 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20201103103051.34553-2-ajye_huang@compal.corp-partner.google.com>
+References: <20201020180413.32225-1-ilina@codeaurora.org> <20201020180413.32225-3-ilina@codeaurora.org>
+In-Reply-To: <20201020180413.32225-3-ilina@codeaurora.org>
+From:   "Rafael J. Wysocki" <rafael@kernel.org>
+Date:   Thu, 5 Nov 2020 19:56:33 +0100
+Message-ID: <CAJZ5v0gTA=_QOFJLMCxH+CqfDFKUJU5ZbpN2+DHLTP1gKg3HQg@mail.gmail.com>
+Subject: Re: [PATCH v4 2/2] PM / Domains: use device's next wakeup to
+ determine domain idle state
+To:     Lina Iyer <ilina@codeaurora.org>,
+        Ulf Hansson <ulf.hansson@linaro.org>
+Cc:     "Rafael J. Wysocki" <rjw@rjwysocki.net>,
+        Linux PM <linux-pm@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Nov 03, 2020 at 06:30:50PM +0800, Ajye Huang wrote:
-> Add a property "dmic-gpios" for switching between two MICs.
-> 
-> Signed-off-by: Ajye Huang <ajye_huang@compal.corp-partner.google.com>
+On Tue, Oct 20, 2020 at 8:05 PM Lina Iyer <ilina@codeaurora.org> wrote:
+>
+> Currently, a PM domain's idle state is determined based on whether the
+> QoS requirements are met. This may not save power, if the idle state
+> residency requirements are not met.
+>
+> CPU PM domains use the next timer wakeup for the CPUs in the domain to
+> determine the sleep duration of the domain. This is compared with the
+> idle state residencies to determine the optimal idle state. For other PM
+> domains, determining the sleep length is not that straight forward. But
+> if the device's next_event is available, we can use that to determine
+> the sleep duration of the PM domain.
+>
+> Let's update the domain governor logic to check for idle state residency
+> based on the next wakeup of devices as well as QoS constraints.
+>
+> Signed-off-by: Lina Iyer <ilina@codeaurora.org>
+
+A few nits follow.
+
 > ---
->  .../bindings/sound/google,sc7180-trogdor.yaml | 58 +++++++++++++++++++
->  1 file changed, 58 insertions(+)
-> 
-> diff --git a/Documentation/devicetree/bindings/sound/google,sc7180-trogdor.yaml b/Documentation/devicetree/bindings/sound/google,sc7180-trogdor.yaml
-> index efc34689d6b5..9e0505467e57 100644
-> --- a/Documentation/devicetree/bindings/sound/google,sc7180-trogdor.yaml
-> +++ b/Documentation/devicetree/bindings/sound/google,sc7180-trogdor.yaml
-> @@ -34,6 +34,9 @@ properties:
->    "#size-cells":
->      const: 0
->  
-> +  dmic-gpios:
-> +    description: GPIO for switching between DMICs
+> Changes in v4:
+>         - Update to use next_wakeup from struct generic_pm_domain_data.
+> Changes in v3:
+>         - None
+> Changes in v2:
+>         - Fix state_idx type to hold negative value.
+>         - Update commit text.
+> ---
+>  drivers/base/power/domain_governor.c | 84 ++++++++++++++++++++++++++--
+>  include/linux/pm_domain.h            |  1 +
+>  2 files changed, 80 insertions(+), 5 deletions(-)
+>
+> diff --git a/drivers/base/power/domain_governor.c b/drivers/base/power/domain_governor.c
+> index 490ed7deb99a..092927b60dc0 100644
+> --- a/drivers/base/power/domain_governor.c
+> +++ b/drivers/base/power/domain_governor.c
+> @@ -117,6 +117,49 @@ static bool default_suspend_ok(struct device *dev)
+>         return td->cached_suspend_ok;
+>  }
+>
+> +static void update_domain_next_wakeup(struct generic_pm_domain *genpd, ktime_t now)
+> +{
+> +       ktime_t domain_wakeup = KTIME_MAX;
+> +       ktime_t next_wakeup;
+> +       struct pm_domain_data *pdd;
+> +       struct gpd_link *link;
+> +
+> +       /* Find the earliest wakeup for all devices in the domain */
+> +       list_for_each_entry(pdd, &genpd->dev_list, list_node) {
+> +               next_wakeup = to_gpd_data(pdd)->next_wakeup;
+> +               if (next_wakeup != KTIME_MAX && !ktime_before(next_wakeup, now))
+> +                       if (ktime_before(next_wakeup, domain_wakeup))
+> +                               domain_wakeup = next_wakeup;
+> +       }
+> +
+> +       /* Then find the earliest wakeup of from all the child domains */
+> +       list_for_each_entry(link, &genpd->parent_links, parent_node) {
+> +               next_wakeup = link->child->next_wakeup;
+> +               if (next_wakeup != KTIME_MAX && !ktime_before(next_wakeup, now))
+> +                       if (ktime_before(next_wakeup, domain_wakeup))
+> +                               domain_wakeup = next_wakeup;
+> +       }
 
-Need to define how many (maxItems: 1).
-
-> +
->  patternProperties:
->    "^dai-link(@[0-9])?$":
->      description:
-> @@ -81,6 +84,7 @@ additionalProperties: false
->  examples:
->  
->    - |
-> +    //Example 1
->      sound {
->          compatible = "google,sc7180-trogdor";
->          model = "sc7180-rt5682-max98357a-1mic";
-> @@ -128,3 +132,57 @@ examples:
->              };
->          };
->      };
-> +
-> +  - |
-> +    //Example 2 (2mic case)
-> +    sound {
-> +        compatible = "google,sc7180-trogdor";
-> +        model = "sc7180-rt5682-max98357a-2mic";
-> +
-> +        audio-routing =
-> +                    "Headphone Jack", "HPOL",
-> +                    "Headphone Jack", "HPOR";
-> +
-> +        #address-cells = <1>;
-> +        #size-cells = <0>;
-> +
-> +        dmic-gpios = <&tlmm 86 0>;
-
-Do we really need another example for this? Can't you just add it to the 
-existing example?
+This is assuming that the lists will remain stable during the walks
+above, but is that guaranteed?
 
 > +
-> +        dai-link@0 {
-> +            link-name = "MultiMedia0";
-> +            reg = <0>;
-> +            cpu {
-> +                sound-dai = <&lpass_cpu 0>;
-> +            };
+> +       genpd->next_wakeup = domain_wakeup;
+> +}
 > +
-> +            codec {
-> +                sound-dai = <&alc5682 0>;
-> +            };
-> +        };
+> +static bool next_wakeup_allows_state(struct generic_pm_domain *genpd,
+> +                                    unsigned int state, ktime_t now)
+> +{
+> +       s64 idle_time_ns, min_sleep_ns;
+> +       ktime_t domain_wakeup = genpd->next_wakeup;
+
+I'd move the second line to the top (it looks odd now IMO).
+
 > +
-> +        dai-link@1 {
-> +            link-name = "MultiMedia1";
-> +            reg = <1>;
-> +            cpu {
-> +                sound-dai = <&lpass_cpu 1>;
-> +            };
+> +       min_sleep_ns = genpd->states[state].power_off_latency_ns +
+> +                      genpd->states[state].power_on_latency_ns +
+> +                      genpd->states[state].residency_ns;
 > +
-> +            codec {
-> +                sound-dai = <&max98357a>;
-> +            };
-> +        };
+> +       idle_time_ns = ktime_to_ns(ktime_sub(domain_wakeup, now));
+> +       if (idle_time_ns < min_sleep_ns)
+> +               return false;
 > +
-> +        dai-link@2 {
-> +            link-name = "MultiMedia2";
-> +            reg = <2>;
-> +            cpu {
-> +                sound-dai = <&lpass_hdmi 0>;
-> +            };
+> +       return true;
+
+Why not
+
++       return idle_time_ns >= min_sleep_ns;
+
+> +}
 > +
-> +            codec {
-> +                sound-dai = <&msm_dp>;
-> +            };
-> +        };
-> +    };
+>  static bool __default_power_down_ok(struct dev_pm_domain *pd,
+>                                      unsigned int state)
+>  {
+> @@ -210,6 +253,33 @@ static bool default_power_down_ok(struct dev_pm_domain *pd)
+>  {
+>         struct generic_pm_domain *genpd = pd_to_genpd(pd);
+>         struct gpd_link *link;
+> +       int state_idx;
+
+Why not initialize it right away?
+
+> +       ktime_t now = ktime_get();
 > +
-> +...
-> -- 
-> 2.25.1
-> 
+> +       /*
+> +        * Find the next wakeup from devices that can determine their own wakeup
+> +        * to find when the domain would wakeup and do it for every device down
+> +        * the hierarchy. It is not worth while to sleep if the state's residency
+> +        * cannot be met.
+> +        */
+> +       update_domain_next_wakeup(genpd, now);
+> +       state_idx = genpd->state_count - 1;
+> +       if (genpd->next_wakeup != KTIME_MAX) {
+> +               /* Let's find out the deepest domain idle state, the devices prefer */
+> +               while (state_idx >= 0) {
+> +                       if (next_wakeup_allows_state(genpd, state_idx, now)) {
+> +                               genpd->max_off_time_changed = true;
+> +                               break;
+> +                       }
+> +                       state_idx--;
+> +               }
+> +
+> +               if (state_idx < 0) {
+> +                       state_idx = 0;
+> +                       genpd->cached_power_down_ok = false;
+> +                       goto done;
+> +               }
+> +       }
+>
+>         if (!genpd->max_off_time_changed) {
+>                 genpd->state_idx = genpd->cached_power_down_state_idx;
+> @@ -228,17 +298,21 @@ static bool default_power_down_ok(struct dev_pm_domain *pd)
+>         genpd->max_off_time_ns = -1;
+>         genpd->max_off_time_changed = false;
+>         genpd->cached_power_down_ok = true;
+> -       genpd->state_idx = genpd->state_count - 1;
+>
+> -       /* Find a state to power down to, starting from the deepest. */
+> -       while (!__default_power_down_ok(pd, genpd->state_idx)) {
+> -               if (genpd->state_idx == 0) {
+> +       /*
+> +        * Find a state to power down to, starting from the state
+> +        * determined by the next wakeup.
+> +        */
+> +       while (!__default_power_down_ok(pd, state_idx)) {
+> +               if (state_idx == 0) {
+>                         genpd->cached_power_down_ok = false;
+>                         break;
+>                 }
+> -               genpd->state_idx--;
+> +               state_idx--;
+>         }
+>
+> +done:
+> +       genpd->state_idx = state_idx;
+>         genpd->cached_power_down_state_idx = genpd->state_idx;
+>         return genpd->cached_power_down_ok;
+>  }
+> diff --git a/include/linux/pm_domain.h b/include/linux/pm_domain.h
+> index e00c77b1efd8..205b750a2e56 100644
+> --- a/include/linux/pm_domain.h
+> +++ b/include/linux/pm_domain.h
+> @@ -130,6 +130,7 @@ struct generic_pm_domain {
+>                                      unsigned int state);
+>         struct gpd_dev_ops dev_ops;
+>         s64 max_off_time_ns;    /* Maximum allowed "suspended" time. */
+> +       ktime_t next_wakeup;    /* Maintained by the domain governor */
+>         bool max_off_time_changed;
+>         bool cached_power_down_ok;
+>         bool cached_power_down_state_idx;
+> --
