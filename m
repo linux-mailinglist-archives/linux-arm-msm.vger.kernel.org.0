@@ -2,213 +2,96 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 76C972A770A
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Nov 2020 06:25:16 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 405CF2A77B5
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Nov 2020 08:06:06 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728342AbgKEFZP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 5 Nov 2020 00:25:15 -0500
-Received: from alexa-out.qualcomm.com ([129.46.98.28]:56760 "EHLO
-        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727711AbgKEFZO (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 5 Nov 2020 00:25:14 -0500
-Received: from ironmsg08-lv.qualcomm.com ([10.47.202.152])
-  by alexa-out.qualcomm.com with ESMTP; 04 Nov 2020 21:25:13 -0800
-X-QCInternal: smtphost
-Received: from ironmsg01-blr.qualcomm.com ([10.86.208.130])
-  by ironmsg08-lv.qualcomm.com with ESMTP/TLS/AES256-SHA; 04 Nov 2020 21:25:11 -0800
-X-QCInternal: smtphost
-Received: from dikshita-linux.qualcomm.com ([10.204.65.237])
-  by ironmsg01-blr.qualcomm.com with ESMTP; 05 Nov 2020 10:54:59 +0530
-Received: by dikshita-linux.qualcomm.com (Postfix, from userid 347544)
-        id 08AC455F9; Thu,  5 Nov 2020 10:54:57 +0530 (IST)
-From:   Dikshita Agarwal <dikshita@codeaurora.org>
-To:     linux-media@vger.kernel.org, stanimir.varbanov@linaro.org
-Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        vgarodia@codeaurora.org, Dikshita Agarwal <dikshita@codeaurora.org>
-Subject: [PATCH v2] venus: venc: fix handlig of S_SELECTION and G_SELECTION
-Date:   Thu,  5 Nov 2020 10:54:56 +0530
-Message-Id: <1604553896-10301-1-git-send-email-dikshita@codeaurora.org>
-X-Mailer: git-send-email 1.9.1
+        id S1725298AbgKEHGF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 5 Nov 2020 02:06:05 -0500
+Received: from m42-4.mailgun.net ([69.72.42.4]:41581 "EHLO m42-4.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726330AbgKEHGF (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 5 Nov 2020 02:06:05 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1604559964; h=Message-ID: Subject: Cc: To: From: Date:
+ Content-Transfer-Encoding: Content-Type: MIME-Version: Sender;
+ bh=1Pctgo6qoLaBH5cW9YYonDcMS4/9/r69lL2AMog1LQI=; b=qx/CgSDxOqqHFeAYwr6tJ0AmtWxpN8VlzlCZUiqO/s7CKoUcWd7GxefcaBwgwYLsAtf8ti2k
+ Rkh3V3Wakpw0QNxuU938soF7rr4s4kPhaMYDB6d7iWHRWnWwqlWo6PKqvTSSAzY3102YlPk2
+ AERCPKQgw0Y6wF3TCxO21Z6zeP0=
+X-Mailgun-Sending-Ip: 69.72.42.4
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n05.prod.us-east-1.postgun.com with SMTP id
+ 5fa3a45ba6bf6cdf63ff63b5 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 05 Nov 2020 07:06:03
+ GMT
+Sender: asitshah=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id DAFAFC433CB; Thu,  5 Nov 2020 07:06:02 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: asitshah)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 645CAC433C6;
+        Thu,  5 Nov 2020 07:06:02 +0000 (UTC)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Thu, 05 Nov 2020 12:36:02 +0530
+From:   asitshah@codeaurora.org
+To:     linux-firmware@kernel.org, jwboyer@kernel.org
+Cc:     mka@chromium.org, linux-kernel@vger.kernel.org,
+        linux-bluetooth@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        hemantg@codeaurora.org, gubbaven@codeaurora.org,
+        abhishekpandit@chromium.org, bgodavar@codeaurora.org
+Subject: Request to Update WCN3991 FW file
+Message-ID: <71acb08c5c7e7b10f4112b350707ee82@codeaurora.org>
+X-Sender: asitshah@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-- return correct width and height for G_SELECTION
-- update capture port wxh with rectangle wxh.
-- add support for HFI_PROPERTY_PARAM_UNCOMPRESSED_PLANE_ACTUAL_INFO
-  to set stride info and chroma offset to FW.
+Hello Team,
 
-Signed-off-by: Dikshita Agarwal <dikshita@codeaurora.org>
----
- drivers/media/platform/qcom/venus/helpers.c    | 18 +++++++++++++
- drivers/media/platform/qcom/venus/helpers.h    |  2 ++
- drivers/media/platform/qcom/venus/hfi_cmds.c   | 12 +++++++++
- drivers/media/platform/qcom/venus/hfi_helper.h |  4 +--
- drivers/media/platform/qcom/venus/venc.c       | 36 ++++++++++++++++++--------
- 5 files changed, 59 insertions(+), 13 deletions(-)
+Please include updated firmware bins for WCN3991. Change includes 
+updated TLV file to fix BT SSR.
 
-diff --git a/drivers/media/platform/qcom/venus/helpers.c b/drivers/media/platform/qcom/venus/helpers.c
-index 2b6925b..efa2781 100644
---- a/drivers/media/platform/qcom/venus/helpers.c
-+++ b/drivers/media/platform/qcom/venus/helpers.c
-@@ -1621,3 +1621,21 @@ int venus_helper_get_out_fmts(struct venus_inst *inst, u32 v4l2_fmt,
- 	return -EINVAL;
- }
- EXPORT_SYMBOL_GPL(venus_helper_get_out_fmts);
-+
-+int venus_helper_set_stride(struct venus_inst *inst,
-+			    unsigned int width, unsigned int height)
-+{
-+	const u32 ptype = HFI_PROPERTY_PARAM_UNCOMPRESSED_PLANE_ACTUAL_INFO;
-+
-+	struct hfi_uncompressed_plane_actual_info plane_actual_info;
-+
-+	plane_actual_info.buffer_type = HFI_BUFFER_INPUT;
-+	plane_actual_info.num_planes = 2;
-+	plane_actual_info.plane_format[0].actual_stride = width;
-+	plane_actual_info.plane_format[0].actual_plane_buffer_height = height;
-+	plane_actual_info.plane_format[1].actual_stride = width;
-+	plane_actual_info.plane_format[1].actual_plane_buffer_height = height / 2;
-+
-+	return hfi_session_set_property(inst, ptype, &plane_actual_info);
-+}
-+EXPORT_SYMBOL_GPL(venus_helper_set_stride);
-diff --git a/drivers/media/platform/qcom/venus/helpers.h b/drivers/media/platform/qcom/venus/helpers.h
-index a4a0562..f36c9f71 100644
---- a/drivers/media/platform/qcom/venus/helpers.h
-+++ b/drivers/media/platform/qcom/venus/helpers.h
-@@ -63,4 +63,6 @@ void venus_helper_get_ts_metadata(struct venus_inst *inst, u64 timestamp_us,
- 				  struct vb2_v4l2_buffer *vbuf);
- int venus_helper_get_profile_level(struct venus_inst *inst, u32 *profile, u32 *level);
- int venus_helper_set_profile_level(struct venus_inst *inst, u32 profile, u32 level);
-+int venus_helper_set_stride(struct venus_inst *inst, unsigned int aligned_width,
-+			    unsigned int aligned_height);
- #endif
-diff --git a/drivers/media/platform/qcom/venus/hfi_cmds.c b/drivers/media/platform/qcom/venus/hfi_cmds.c
-index 7022368..4f75658 100644
---- a/drivers/media/platform/qcom/venus/hfi_cmds.c
-+++ b/drivers/media/platform/qcom/venus/hfi_cmds.c
-@@ -1205,6 +1205,18 @@ static int pkt_session_set_property_1x(struct hfi_session_set_property_pkt *pkt,
- 		pkt->shdr.hdr.size += sizeof(u32) + sizeof(*cu);
- 		break;
- 	}
-+	case HFI_PROPERTY_PARAM_UNCOMPRESSED_PLANE_ACTUAL_INFO: {
-+		struct hfi_uncompressed_plane_actual_info *in = pdata;
-+		struct hfi_uncompressed_plane_actual_info *info = prop_data;
-+
-+		info->buffer_type = in->buffer_type;
-+		info->num_planes = in->num_planes;
-+		info->plane_format[0] = in->plane_format[0];
-+		if (in->num_planes > 1)
-+			info->plane_format[1] = in->plane_format[1];
-+		pkt->shdr.hdr.size += sizeof(u32) + sizeof(*info);
-+		break;
-+	}
- 	case HFI_PROPERTY_CONFIG_VENC_MAX_BITRATE:
- 	case HFI_PROPERTY_CONFIG_VDEC_POST_LOOP_DEBLOCKER:
- 	case HFI_PROPERTY_PARAM_BUFFER_ALLOC_MODE:
-diff --git a/drivers/media/platform/qcom/venus/hfi_helper.h b/drivers/media/platform/qcom/venus/hfi_helper.h
-index 60ee247..5938a96 100644
---- a/drivers/media/platform/qcom/venus/hfi_helper.h
-+++ b/drivers/media/platform/qcom/venus/hfi_helper.h
-@@ -908,13 +908,13 @@ struct hfi_uncompressed_plane_actual {
- struct hfi_uncompressed_plane_actual_info {
- 	u32 buffer_type;
- 	u32 num_planes;
--	struct hfi_uncompressed_plane_actual plane_format[1];
-+	struct hfi_uncompressed_plane_actual plane_format[2];
- };
- 
- struct hfi_uncompressed_plane_actual_constraints_info {
- 	u32 buffer_type;
- 	u32 num_planes;
--	struct hfi_uncompressed_plane_constraints plane_format[1];
-+	struct hfi_uncompressed_plane_constraints plane_format[2];
- };
- 
- struct hfi_codec_supported {
-diff --git a/drivers/media/platform/qcom/venus/venc.c b/drivers/media/platform/qcom/venus/venc.c
-index 4ecf78e..99bfabf 100644
---- a/drivers/media/platform/qcom/venus/venc.c
-+++ b/drivers/media/platform/qcom/venus/venc.c
-@@ -190,8 +190,10 @@ static int venc_enum_fmt(struct file *file, void *fh, struct v4l2_fmtdesc *f)
- 	pixmp->height = clamp(pixmp->height, frame_height_min(inst),
- 			      frame_height_max(inst));
- 
--	if (f->type == V4L2_BUF_TYPE_VIDEO_OUTPUT_MPLANE)
-+	if (f->type == V4L2_BUF_TYPE_VIDEO_OUTPUT_MPLANE) {
-+		pixmp->width = ALIGN(pixmp->width, 128);
- 		pixmp->height = ALIGN(pixmp->height, 32);
-+	}
- 
- 	pixmp->width = ALIGN(pixmp->width, 2);
- 	pixmp->height = ALIGN(pixmp->height, 2);
-@@ -335,13 +337,13 @@ static int venc_g_fmt(struct file *file, void *fh, struct v4l2_format *f)
- 	switch (s->target) {
- 	case V4L2_SEL_TGT_CROP_DEFAULT:
- 	case V4L2_SEL_TGT_CROP_BOUNDS:
--		s->r.width = inst->width;
--		s->r.height = inst->height;
--		break;
--	case V4L2_SEL_TGT_CROP:
- 		s->r.width = inst->out_width;
- 		s->r.height = inst->out_height;
- 		break;
-+	case V4L2_SEL_TGT_CROP:
-+		s->r.width = inst->width;
-+		s->r.height = inst->height;
-+		break;
- 	default:
- 		return -EINVAL;
- 	}
-@@ -360,12 +362,19 @@ static int venc_g_fmt(struct file *file, void *fh, struct v4l2_format *f)
- 	if (s->type != V4L2_BUF_TYPE_VIDEO_OUTPUT)
- 		return -EINVAL;
- 
-+	if (s->r.width > inst->out_width ||
-+	    s->r.height > inst->out_height)
-+		return -EINVAL;
-+
-+	s->r.width = ALIGN(s->r.width, 2);
-+	s->r.height = ALIGN(s->r.height, 2);
-+
- 	switch (s->target) {
- 	case V4L2_SEL_TGT_CROP:
--		if (s->r.width != inst->out_width ||
--		    s->r.height != inst->out_height ||
--		    s->r.top != 0 || s->r.left != 0)
--			return -EINVAL;
-+		s->r.top = 0;
-+		s->r.left = 0;
-+		inst->width = s->r.width;
-+		inst->height = s->r.height;
- 		break;
- 	default:
- 		return -EINVAL;
-@@ -728,6 +737,11 @@ static int venc_init_session(struct venus_inst *inst)
- 	if (ret)
- 		return ret;
- 
-+	ret = venus_helper_set_stride(inst, inst->out_width,
-+				      inst->out_height);
-+	if (ret)
-+		goto deinit;
-+
- 	ret = venus_helper_set_input_resolution(inst, inst->width,
- 						inst->height);
- 	if (ret)
-@@ -816,8 +830,8 @@ static int venc_queue_setup(struct vb2_queue *q,
- 		inst->num_input_bufs = *num_buffers;
- 
- 		sizes[0] = venus_helper_get_framesz(inst->fmt_out->pixfmt,
--						    inst->width,
--						    inst->height);
-+						    inst->out_width,
-+						    inst->out_height);
- 		inst->input_buf_size = sizes[0];
- 		break;
- 	case V4L2_BUF_TYPE_VIDEO_CAPTURE_MPLANE:
--- 
-1.9.1
+Snapshot of pull request is as below, let me know if anything is 
+missing.
 
+>>>>> 
+
+The following changes since commit 
+dae4b4cd084102cd49c37aa8b579b208028ab025:
+
+   Merge branch 'v1.1.5' of 
+https://github.com/irui-wang/linux_fw_vpu_v1.1.5 into main (2020-10-23 
+08:10:37 -0400)
+
+are available in the git repository at:
+
+   https://github.com/shahasit/bt-linux-firmware.git master
+
+for you to fetch changes up to d7793e53b156126f6ea09c8d6e17cc9a8fe0ca77:
+
+   QCA : Fixed BT SSR due to command timeout / IO fatal error (2020-11-05 
+12:26:32 +0530)
+
+----------------------------------------------------------------
+Asit Shah (1):
+       QCA : Fixed BT SSR due to command timeout / IO fatal error
+
+  qca/crbtfw32.tlv | Bin 126832 -> 126892 bytes
+  1 file changed, 0 insertions(+), 0 deletions(-)
+
+<<<<<
+
+Regards,
+Asit
