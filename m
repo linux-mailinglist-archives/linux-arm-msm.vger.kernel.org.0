@@ -2,98 +2,94 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id BA9022A764F
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Nov 2020 05:22:19 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 6C6692A7693
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Nov 2020 05:50:32 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726690AbgKEEWS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 4 Nov 2020 23:22:18 -0500
-Received: from aserp2120.oracle.com ([141.146.126.78]:59062 "EHLO
-        aserp2120.oracle.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726225AbgKEEWS (ORCPT
+        id S1727098AbgKEEub (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 4 Nov 2020 23:50:31 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38920 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726214AbgKEEub (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 4 Nov 2020 23:22:18 -0500
-Received: from pps.filterd (aserp2120.oracle.com [127.0.0.1])
-        by aserp2120.oracle.com (8.16.0.42/8.16.0.42) with SMTP id 0A54Jh4m146131;
-        Thu, 5 Nov 2020 04:21:57 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references : mime-version :
- content-type : content-transfer-encoding; s=corp-2020-01-29;
- bh=Q/Zxvd8Y2ETDhPysP3vR7GgbkKkwEG1Cl5eXaCf/fe8=;
- b=xzBkHHw7LXUkd0oDkDaZx33aT+UMvLcF3XsZBEmSc6gdJTky7+BxLaq5trrunXYiwZnJ
- BfBvjOWewoWvXsJ7b2x4XfTaQXdGwWpbC2L/QtVd8hoVkYTjRuIIfGXAUpgKXHH2Vd8l
- MHGHq/0J3qj+UDyQIwFWXSoFJiPYPzHPhu3fHV7kAbgWlrrteh6Q/9cQJtC1bljKUezj
- i63C878rWpa2SUjTF57R9PKApvCS1pOj2O9hiWnan1F7tzS9x71UFMe/6bBxz/CrD5Ds
- crX3r+pLQEsyNM0cSQP7tfq4sS4QZpAuEIWah+OCBd/P08e+e4phLd4Pb5dGuEXA5z1g eg== 
-Received: from aserp3020.oracle.com (aserp3020.oracle.com [141.146.126.70])
-        by aserp2120.oracle.com with ESMTP id 34hhvchya2-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=FAIL);
-        Thu, 05 Nov 2020 04:21:57 +0000
-Received: from pps.filterd (aserp3020.oracle.com [127.0.0.1])
-        by aserp3020.oracle.com (8.16.0.42/8.16.0.42) with SMTP id 0A54Kkhn020897;
-        Thu, 5 Nov 2020 04:21:57 GMT
-Received: from userv0121.oracle.com (userv0121.oracle.com [156.151.31.72])
-        by aserp3020.oracle.com with ESMTP id 34hw0m0e9k-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-        Thu, 05 Nov 2020 04:21:57 +0000
-Received: from abhmp0006.oracle.com (abhmp0006.oracle.com [141.146.116.12])
-        by userv0121.oracle.com (8.14.4/8.13.8) with ESMTP id 0A54Lo4M017180;
-        Thu, 5 Nov 2020 04:21:50 GMT
-Received: from ca-mkp.ca.oracle.com (/10.156.108.201)
-        by default (Oracle Beehive Gateway v4.0)
-        with ESMTP ; Wed, 04 Nov 2020 20:21:50 -0800
-From:   "Martin K. Petersen" <martin.petersen@oracle.com>
-To:     cang@codeaurora.org, Asutosh Das <asutoshd@codeaurora.org>,
-        linux-scsi@vger.kernel.org
-Cc:     "Martin K . Petersen" <martin.petersen@oracle.com>,
-        Stanley Chu <stanley.chu@mediatek.com>,
-        linux-arm-msm@vger.kernel.org,
-        "moderated list:ARM/Mediatek SoC support" 
-        <linux-mediatek@lists.infradead.org>,
-        Bart Van Assche <bvanassche@acm.org>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        "James E.J. Bottomley" <jejb@linux.ibm.com>,
-        "moderated list:ARM/Mediatek SoC support" 
-        <linux-arm-kernel@lists.infradead.org>,
-        open list <linux-kernel@vger.kernel.org>,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        Avri Altman <avri.altman@wdc.com>,
-        Satya Tangirala <satyat@google.com>,
-        Bean Huo <beanhuo@micron.com>
-Subject: Re: [PATCH v2 1/2] scsi: ufs: Put hba into LPM during clk gating
-Date:   Wed,  4 Nov 2020 23:21:45 -0500
-Message-Id: <160455005256.26277.2812826866099587703.b4-ty@oracle.com>
+        Wed, 4 Nov 2020 23:50:31 -0500
+Received: from mail-oo1-xc43.google.com (mail-oo1-xc43.google.com [IPv6:2607:f8b0:4864:20::c43])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 50AB1C0613CF
+        for <linux-arm-msm@vger.kernel.org>; Wed,  4 Nov 2020 20:50:31 -0800 (PST)
+Received: by mail-oo1-xc43.google.com with SMTP id j6so127945oot.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 04 Nov 2020 20:50:31 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=iXvgDxUHZDgdioVnVUBDyJDddujUGaP7Ie4ZuxcP+CI=;
+        b=nucqWknzsoq365apuWXQVlZcjnkYpcNJaHtDoaRoDKUB9VtXBeHQua/2hyFp8jlOHJ
+         lIAltg8yVtQrq5Nmbo0qFJA08479IkdQvYUt8IaJT7uBn9/JfDt4FK5lDlw1aiCyiPD9
+         UJEuBld5zdrWbrIS5jqvzdqN9LjbCW1nYejygDLY39k1TX9eRYMfpmQbpdTfzGDY/APs
+         AUGCAhhWhsXwal0ove22yWRvOt8Jo17OpD/DOR8kA4njQXL1TA9EtWJM4zf+50AaOwLS
+         DzpatBmTWwhEpyuBu2P6DKQfBUvykIm6uJ7Rx8gII5ghxEcwxE1lSWjhy8NnDwi8TcrM
+         GpQw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=iXvgDxUHZDgdioVnVUBDyJDddujUGaP7Ie4ZuxcP+CI=;
+        b=hMMAlyA5BdUQHcLxLYfubcG1XQz13nXnfISfkjcfdkL23+T2HQo3K+Mwn+wygJXPY5
+         aGN8zvV/fS8eheh5K1vqrkNA8G8v9cFEJAvV+IRFxGb1mq022B3vSo9KWKaJLNHYFbLP
+         h6tqxvxmn+bEesJN6S4an5qq6JnBeYH4fJuf0MS201vQKl89puA9h+rWFeQT0YUepyjx
+         SGytrICOvabeQFZoZvffIxPMi92dJabmiPbDUlzftVSG7s1j49jgCExQx4keuQQjTKVO
+         Pp+F/7IFGuCYRhzz/Dce2NXIWcPrK6R5wt3khKouSvocJR5CvpRcDinbSqTSIFlNA5zC
+         vwHw==
+X-Gm-Message-State: AOAM531q36Hx2r4N0yVzaL2mW1CZn2m94IjyFbpaAjDvZmUcHHtvsr8L
+        /3qVY2TnF/hgdraZr757xPt+7g==
+X-Google-Smtp-Source: ABdhPJyMFQp7wq6UClyhJmtWpQ9QnmWlEsO1pCt2RlzkGZsjTJ+HA4MmmJIEK8SAHA5Oy68pkjl6uQ==
+X-Received: by 2002:a4a:e96d:: with SMTP id i13mr546876ooe.66.1604551830486;
+        Wed, 04 Nov 2020 20:50:30 -0800 (PST)
+Received: from localhost.localdomain (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
+        by smtp.gmail.com with ESMTPSA id k13sm100553ooi.41.2020.11.04.20.50.29
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 04 Nov 2020 20:50:29 -0800 (PST)
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Ohad Ben-Cohen <ohad@wizery.com>,
+        Siddharth Gupta <sidgup@codeaurora.org>,
+        Sibi Sankar <sibis@codeaurora.org>
+Cc:     linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH v2 0/4] remoteproc: Improvement for the Qualcomm sysmon
+Date:   Wed,  4 Nov 2020 20:50:47 -0800
+Message-Id: <20201105045051.1365780-1-bjorn.andersson@linaro.org>
 X-Mailer: git-send-email 2.28.0
-In-Reply-To: <52198e70bff750632740d78678a815256d697e43.1603825776.git.asutoshd@codeaurora.org>
-References: <52198e70bff750632740d78678a815256d697e43.1603825776.git.asutoshd@codeaurora.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Virus-Version: vendor=nai engine=6000 definitions=9795 signatures=668682
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 phishscore=0 adultscore=0 bulkscore=0
- mlxscore=0 suspectscore=0 spamscore=0 mlxlogscore=999 malwarescore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2009150000
- definitions=main-2011050030
-X-Proofpoint-Virus-Version: vendor=nai engine=6000 definitions=9795 signatures=668682
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 spamscore=0 suspectscore=0
- impostorscore=0 malwarescore=0 priorityscore=1501 mlxlogscore=999
- bulkscore=0 phishscore=0 adultscore=0 mlxscore=0 lowpriorityscore=0
- clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2009150000 definitions=main-2011050030
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, 27 Oct 2020 12:10:36 -0700, Asutosh Das wrote:
+The core part of this series is the update to the sysmon driver to ensure that
+notifications sent to the remote processor are consistent and always present
+valid state transitions.
 
-> During clock gating, after clocks are disabled,
-> put hba into LPM to save more power.
+In testing this I finally took the time to fix up the issue of the SMP2P based
+graceful shutdown in the remoteproc drivers always timing out if sysmon has
+already successfully shut down the remote processor.
 
-Applied to 5.11/scsi-queue, thanks!
+Bjorn Andersson (4):
+  remoteproc: sysmon: Ensure remote notification ordering
+  remoteproc: sysmon: Expose the shutdown result
+  remoteproc: qcom: q6v5: Query sysmon before graceful shutdown
+  remoteproc: sysmon: Improve error messages
 
-[1/2] scsi: ufs: Put HBA into LPM during clk gating
-      https://git.kernel.org/mkp/scsi/c/dd7143e27cb7
-[2/2] scsi: ufs: qcom: Enable aggressive power collapse for ufs HBA
-      https://git.kernel.org/mkp/scsi/c/61906fd465c0
+ drivers/remoteproc/qcom_common.h    |   6 ++
+ drivers/remoteproc/qcom_q6v5.c      |   8 +-
+ drivers/remoteproc/qcom_q6v5.h      |   3 +-
+ drivers/remoteproc/qcom_q6v5_adsp.c |   2 +-
+ drivers/remoteproc/qcom_q6v5_mss.c  |   2 +-
+ drivers/remoteproc/qcom_q6v5_pas.c  |   2 +-
+ drivers/remoteproc/qcom_q6v5_wcss.c |   2 +-
+ drivers/remoteproc/qcom_sysmon.c    | 121 +++++++++++++++++++++-------
+ 8 files changed, 109 insertions(+), 37 deletions(-)
 
 -- 
-Martin K. Petersen	Oracle Linux Engineering
+2.28.0
+
