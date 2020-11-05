@@ -2,83 +2,107 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 065242A8041
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Nov 2020 15:01:32 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id BB2932A806A
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Nov 2020 15:10:54 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730681AbgKEOB1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 5 Nov 2020 09:01:27 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40066 "EHLO
+        id S1726874AbgKEOKy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 5 Nov 2020 09:10:54 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41554 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730875AbgKEOB1 (ORCPT
+        with ESMTP id S1726067AbgKEOKx (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 5 Nov 2020 09:01:27 -0500
-Received: from mail-lf1-x142.google.com (mail-lf1-x142.google.com [IPv6:2a00:1450:4864:20::142])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 58550C0613CF
-        for <linux-arm-msm@vger.kernel.org>; Thu,  5 Nov 2020 06:01:25 -0800 (PST)
-Received: by mail-lf1-x142.google.com with SMTP id b1so2419344lfp.11
-        for <linux-arm-msm@vger.kernel.org>; Thu, 05 Nov 2020 06:01:25 -0800 (PST)
+        Thu, 5 Nov 2020 09:10:53 -0500
+Received: from mail-pj1-x1044.google.com (mail-pj1-x1044.google.com [IPv6:2607:f8b0:4864:20::1044])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B9A57C0613D2
+        for <linux-arm-msm@vger.kernel.org>; Thu,  5 Nov 2020 06:10:53 -0800 (PST)
+Received: by mail-pj1-x1044.google.com with SMTP id m17so135348pjz.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 05 Nov 2020 06:10:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=YTXLlhkJUN9wDt8Jv8WPFw5g42cb2iR5qevTYziYtbk=;
-        b=OK14Bnt3+9IeiZ6/M6McIw1LkFDy9LJWahWCHGMdSqbBSVOwLBmGir1yeEiClM89/t
-         mvkzJ1x4S9L/syjymwTkxNlizAAYao/MnA3qdsfAyStk6SQL6fZelVeqox0kMIKl5n6Z
-         zWgT6iKuOLL65ScYqJ9M5GQOeS5dsGoxshMLkR/qPSjvJvtAVBJaR49hdvDSfovIowtc
-         3XNGfaMTuA6XkPTGawdpx563b5LgCrVgSYFmkYUMhjvmWqZMmmYJL2P1zZzHPCgXSEXe
-         ivOCZq3p2hVOqsSq0HXrEmRt4VoRkEnVD9J2Gyvpfkc7mBArdUCN/6FJODadaK6LpIt3
-         /EmQ==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=baAXtX5vqppA7qCUlQzYOK8z1Lg9bB1n7PCPJI2CjKg=;
+        b=lyXX8ctS++5eZuxGljanX3e9s9d/koA/7pgJzBKy52Qb7A3S8W/gJhM4R6STGCY8dx
+         dRUQOCMOMKLp4/3J9ae2YnrF5O0bVM1aOqWoayI+0vcXVTPVJ9LbbF0eXoCF4sjHFoIo
+         ADGWXBUtpZYrb0lA6oGU4LiWNn2mzG003ja9WDMD7I+b9btpCDXyYbp1EcBCVH2R6y8t
+         gAzekhBCrtWuh1TikNd5gsAzA+4jIVEDCYqUf1xF27gu4OxdrHTXEj+qwkIR7wq0TyAr
+         A5nL/mpC9TNWZob2p7rLRrWuR7YkOAa63WS8kNjCq6+7ZNhBFb0BaWQehy7Qtf5s/GQ9
+         uBeA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=YTXLlhkJUN9wDt8Jv8WPFw5g42cb2iR5qevTYziYtbk=;
-        b=Pi/Ff9QfJsCkqwRZV+/x0SL6uhWPm5wtNaJFJCQrAuZi2TPH3L48UKiGaMGKX4l0lD
-         tnHztWIEjDE1OQockF0l0s/2l8AsZHFvH3j9nJtg+3+BA/IPTMrAnc0F0Ki4CKrhVJ9K
-         UIvFiooM13SsX+/fpSoyigC3HYXptn3M59iCoOjO6hUL94mN/WkO4xPc3DR0FRTSd2kd
-         NosRD6lqAQ+uuliDhTqUlolDe5XFD0x9EKGXlffjPniXYt9JWPWaa6+lTGC0xgOJ/2Jm
-         DHLDlm2VUP5JBNMRn5dYMsEm3JKm7VgnoAHaaDnSpDNVmdFM8MS+YblBvkwG0+yYUXll
-         4aJQ==
-X-Gm-Message-State: AOAM530L/tj3J0hR2fNG3IBej9J4j6cUK0yNEysz7Y7w7+KA/5txoYIJ
-        0p0UEpk9gqDwFg5TB/ejN4yHNNrNkk9Uu+PYIgVt0g==
-X-Google-Smtp-Source: ABdhPJzvM65+qqxut8Q8K9FX99fxAPBlc0gUibPjENKKmydRQK0QV33V0O2d25Zm7Cor//tf/DGwRsM1lFrKsUhrY3k=
-X-Received: by 2002:a19:824f:: with SMTP id e76mr987111lfd.572.1604584882549;
- Thu, 05 Nov 2020 06:01:22 -0800 (PST)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=baAXtX5vqppA7qCUlQzYOK8z1Lg9bB1n7PCPJI2CjKg=;
+        b=F5ZG3CWP3GlEXDiuDN4bQBRZcHtL4gTacM/u8ZMy1Tjrefb6YuquXvYWPiMgrYd89l
+         Fjth6y2GRUiSkUrWf1KCoIjSegASLSmHJlXuw13RsSQzVzC1hJo4EJ4hvtz4ZMkBX91H
+         hjrK/TH9evQQ08Am/SrNLTxZz/wstUXTPcj1yPWlYzq4+Jbr2JGjCVQubq6DfE91fpX6
+         PK3Xf6nStjLSfEUpXfdk6f757AsA9zXLI+eG/OqHjLM9g7ZmISIzDMFY0TxZBFj5tHaU
+         fwmtLt2gj7ZCaxPjpowU0ArLD3XJpOnvCcnXQzmQEhswrSLh1p5HdyhAyQ4lz8rGNhBj
+         yupw==
+X-Gm-Message-State: AOAM532qyVbtRG9PKurfQ2wfCZqm6la2tYLVGYo+XPJql9DToqcH95l1
+        QljzKSgBfVW3pjCMHBzyHm7I
+X-Google-Smtp-Source: ABdhPJxY90qX/PDJ4vyDUVtIy+pe3/OhOGE/qfVtkL+YerRwUQNK0AU84qpsEQB5hYPTgqVC9zTk5g==
+X-Received: by 2002:a17:902:8b89:b029:d6:df6e:54df with SMTP id ay9-20020a1709028b89b02900d6df6e54dfmr2642265plb.0.1604585453155;
+        Thu, 05 Nov 2020 06:10:53 -0800 (PST)
+Received: from work ([103.59.133.81])
+        by smtp.gmail.com with ESMTPSA id g14sm3037619pfk.90.2020.11.05.06.10.50
+        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
+        Thu, 05 Nov 2020 06:10:52 -0800 (PST)
+Date:   Thu, 5 Nov 2020 19:40:46 +0530
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     Bhaumik Bhatt <bbhatt@codeaurora.org>
+Cc:     linux-arm-msm@vger.kernel.org, hemantk@codeaurora.org,
+        jhugo@codeaurora.org, linux-kernel@vger.kernel.org,
+        skhan@linuxfoundation.org
+Subject: Re: [PATCH] bus: mhi: core: Remove double locking from
+ mhi_driver_remove()
+Message-ID: <20201105141046.GC7308@work>
+References: <1602787671-9497-1-git-send-email-bbhatt@codeaurora.org>
 MIME-Version: 1.0
-References: <20201007160611.942754-1-junak.pub@gmail.com>
-In-Reply-To: <20201007160611.942754-1-junak.pub@gmail.com>
-From:   Linus Walleij <linus.walleij@linaro.org>
-Date:   Thu, 5 Nov 2020 15:01:08 +0100
-Message-ID: <CACRpkdY_SHWbHpsHQiQswQ9DzSLH-P=tAmeHG2JddQZ76_-0mQ@mail.gmail.com>
-Subject: Re: [PATCH v2 1/2] pinctrl: qcom: add pinctrl driver for msm8953
-To:     Vladimir Lypak <junak.pub@gmail.com>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        MSM <linux-arm-msm@vger.kernel.org>,
-        "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-        Prasad Sodagudi <psodagud@codeaurora.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1602787671-9497-1-git-send-email-bbhatt@codeaurora.org>
+User-Agent: Mutt/1.9.4 (2018-02-28)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Oct 7, 2020 at 6:26 PM Vladimir Lypak <junak.pub@gmail.com> wrote:
+On Thu, Oct 15, 2020 at 11:47:51AM -0700, Bhaumik Bhatt wrote:
+> There is double acquisition of the pm_lock from mhi_driver_remove()
+> function. Remove the read_lock_bh/read_unlock_bh calls for pm_lock
+> taken during a call to mhi_device_put() as the lock is acquired
+> within the function already. This will help avoid a potential
+> kernel panic.
+> 
+> Fixes: 189ff97cca53 ("bus: mhi: core: Add support for data transfer")
+> Reported-by: Shuah Khan <skhan@linuxfoundation.org>
+> Signed-off-by: Bhaumik Bhatt <bbhatt@codeaurora.org>
 
-> Add inititial pinctrl driver for MSM8953 platform. Compatible SoCs are:
-> MSM8953, APQ8053, SDM(SDA)450, SDM(SDA)632.
-> Based off CAF implementation.
->
-> Signed-off-by: Prasad Sodagudi <psodagud@codeaurora.org>
-> Signed-off-by: Vladimir Lypak <junak.pub@gmail.com>
+Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+
+Thanks,
+Mani
+
 > ---
-> Changes in V2:
-> - sorted SDC_QDSD_PINGROUP entries in msm8953_groups array.
-
-Both patches applied, thanks!
-
-Yours,
-Linus Walleij
+>  drivers/bus/mhi/core/init.c | 2 --
+>  1 file changed, 2 deletions(-)
+> 
+> diff --git a/drivers/bus/mhi/core/init.c b/drivers/bus/mhi/core/init.c
+> index 0ffdebd..0a09f82 100644
+> --- a/drivers/bus/mhi/core/init.c
+> +++ b/drivers/bus/mhi/core/init.c
+> @@ -1276,10 +1276,8 @@ static int mhi_driver_remove(struct device *dev)
+>  		mutex_unlock(&mhi_chan->mutex);
+>  	}
+>  
+> -	read_lock_bh(&mhi_cntrl->pm_lock);
+>  	while (mhi_dev->dev_wake)
+>  		mhi_device_put(mhi_dev);
+> -	read_unlock_bh(&mhi_cntrl->pm_lock);
+>  
+>  	return 0;
+>  }
+> -- 
+> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+> a Linux Foundation Collaborative Project
+> 
