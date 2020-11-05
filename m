@@ -2,107 +2,236 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 99F5C2A7B16
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Nov 2020 10:56:17 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 5DF782A7B18
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Nov 2020 10:56:57 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725998AbgKEJ4Q (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 5 Nov 2020 04:56:16 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58256 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726861AbgKEJ4N (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 5 Nov 2020 04:56:13 -0500
-Received: from mail-oi1-x241.google.com (mail-oi1-x241.google.com [IPv6:2607:f8b0:4864:20::241])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 76278C0613D4
-        for <linux-arm-msm@vger.kernel.org>; Thu,  5 Nov 2020 01:56:12 -0800 (PST)
-Received: by mail-oi1-x241.google.com with SMTP id k26so1106617oiw.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 05 Nov 2020 01:56:12 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=ndz5Vv+R7dwHwUNh16wYXBC3DQLbUHpsCLSiSv8wpGw=;
-        b=OJTzDyH0esN9OPZyPAj6631qDN2gKy7xWH7yicsOC4KQfdY/dTXwvMSG+gayb42JMW
-         Zd/x5gaJCd1Fd83MFYkkQtVXu4HRcd0xYvhCht5PuM8n/y0vmnjRUNr7kfyp6JuTPc0t
-         3pOSPwss6bXAbAz66A7tfLPQYYIxd1R4nBfTxWE6YE0M8B95RUVqmukEWLcGzYQfo8IJ
-         ICjj3djjZKHIxfyqy97mleTfyxxBPMLq33nSs4iDShPqcud/W7qrrZubYKqyfVaxGUq0
-         WEetyzgIJLqHpCLiv5WwC07b/98nOMNmPs7zYMKduro2vUZaUFNLvO4s5uojDUZMzqBI
-         PG8g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=ndz5Vv+R7dwHwUNh16wYXBC3DQLbUHpsCLSiSv8wpGw=;
-        b=PYHCcw9Nw6R6SGLk+n+JLc3PXVU9LHD1IG0+tqrpGtn1s/wir7p861NZPzndDVM5+v
-         urmAsDBCQtjaXdknzTE03RVeZaFJxWw+O+dM8SaL2X/o6DkfuovQiCHkw8G62NpHjcno
-         oN0d/mp20RyY+JZ71NvA3dw+K5GR5D762Q70cTw9oLtqbSDVgyh8GgSltog+VCF06oL2
-         OMGt4ozmkEGf+Tap2voIoMD6k2cIH+cwg22YcTiiQ5uyLlrmT2BW51nQaSYpXliueZ8b
-         Sv9KwR/NfWdzW7YoFJuKnUcpfmp320oW4nf0NWa24Jgeiruj1GITH+t0UrYQn2jSaUkQ
-         QOLg==
-X-Gm-Message-State: AOAM530KZX6V4xCDqAuwX16iz/e7d4wOQeTy+VSg5PtbjO0ro1e4GHtF
-        3oeT7iLk7ivb5lKyn+8y2QbiKS94iSDnHs1kHivfeg==
-X-Google-Smtp-Source: ABdhPJzpNj4ARWML+b5ZkSBTL/EAiEsuc6lD/J3O0DQRD37LBqn+eu39NyqkN4z3f9pG87siPsVjo40h8K1SFJ7cKWA=
-X-Received: by 2002:aca:f1c6:: with SMTP id p189mr1076089oih.18.1604570171786;
- Thu, 05 Nov 2020 01:56:11 -0800 (PST)
-MIME-Version: 1.0
-References: <20201023131925.334864-1-dmitry.baryshkov@linaro.org>
- <20201023131925.334864-6-dmitry.baryshkov@linaro.org> <160454417608.3965362.16775651224166864448@swboyd.mtv.corp.google.com>
-In-Reply-To: <160454417608.3965362.16775651224166864448@swboyd.mtv.corp.google.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Thu, 5 Nov 2020 12:56:00 +0300
-Message-ID: <CAA8EJppY3gnumEWHiVtm-T9vBDLVkpojVC-BD4qpfQ0rzhymtA@mail.gmail.com>
-Subject: Re: [PATCH v2 5/5] clk: qcom: dispcc-sm8250: handle MMCX power domain
-To:     Stephen Boyd <sboyd@kernel.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Jonathan Marek <jonathan@marek.ca>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        Mark Brown <broonie@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
-        <linux-arm-msm@vger.kernel.org>,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>,
-        "open list:COMMON CLK FRAMEWORK" <linux-clk@vger.kernel.org>,
-        open list <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+        id S1726715AbgKEJ44 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 5 Nov 2020 04:56:56 -0500
+Received: from z5.mailgun.us ([104.130.96.5]:45218 "EHLO z5.mailgun.us"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726344AbgKEJ44 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 5 Nov 2020 04:56:56 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1604570215; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=Z0Qxl1GVzJ/LBkA2Wk4kXUH2ST+dEbuEQwgEUsG/8Wo=; b=X2prqGs/oJye6eg1a16WcBSiF0VA1T/sHTPwhcHwHM6ICFgbsvMAGiHWnl3RQWvJ/IALeuh2
+ 906WCooIX9uL4ffBYPF2Gr+BoL/tY9hcm8Lf2Yv9bqusB75DBYzTMZiU/3n/AOc2lvbs5yl4
+ xI6vC20toOuiM0WiNAqW8KxJlKY=
+X-Mailgun-Sending-Ip: 104.130.96.5
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n05.prod.us-east-1.postgun.com with SMTP id
+ 5fa3cc6104bfe7f555602b22 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 05 Nov 2020 09:56:49
+ GMT
+Sender: rnayak=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id F0D33C433F0; Thu,  5 Nov 2020 09:56:48 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
+        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+Received: from blr-ubuntu-173.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: rnayak)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id E8C62C433C8;
+        Thu,  5 Nov 2020 09:56:44 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org E8C62C433C8
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=rnayak@codeaurora.org
+From:   Rajendra Nayak <rnayak@codeaurora.org>
+To:     agross@kernel.org, bjorn.andersson@linaro.org,
+        linus.walleij@linaro.org, robh+dt@kernel.org
+Cc:     linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Rajendra Nayak <rnayak@codeaurora.org>
+Subject: [PATCH v2 1/2] dt-bindings: pinctrl: qcom: Add sc7280 pinctrl bindings
+Date:   Thu,  5 Nov 2020 15:26:31 +0530
+Message-Id: <1604570192-15057-1-git-send-email-rnayak@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 5 Nov 2020 at 05:42, Stephen Boyd <sboyd@kernel.org> wrote:
->
-> Quoting Dmitry Baryshkov (2020-10-23 06:19:25)
-> > On SM8250 MMCX power domain is required to access MMDS_GDSC registers.
-> > This power domain is expressed as mmcx-supply regulator property. Use
-> > this regulator as MDSS_GDSC supply.
-> >
-> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> > ---
-> >  drivers/clk/qcom/dispcc-sm8250.c | 1 +
-> >  1 file changed, 1 insertion(+)
-> >
-> > diff --git a/drivers/clk/qcom/dispcc-sm8250.c b/drivers/clk/qcom/dispcc-sm8250.c
-> > index 07a98d3f882d..588575e1169d 100644
-> > --- a/drivers/clk/qcom/dispcc-sm8250.c
-> > +++ b/drivers/clk/qcom/dispcc-sm8250.c
-> > @@ -963,6 +963,7 @@ static struct gdsc mdss_gdsc = {
-> >         },
-> >         .pwrsts = PWRSTS_OFF_ON,
-> >         .flags = HW_CTRL,
-> > +       .supply = "mmcx",
-> >  };
-> >
->
-> Can this patch be applied to clk tree or will it break the tree without
-> the dts/regulator bits in place?
+Add device tree binding Documentation details for Qualcomm SC7280
+TLMM block.
 
-It can be applied to clk tree. Regulator bits are already accepted by
-Mark Brown.
+Signed-off-by: Rajendra Nayak <rnayak@codeaurora.org>
+Reviewed-by: Rob Herring <robh@kernel.org>
+---
+v2: Consolidated functions under phase_flag and qdss
 
+ .../bindings/pinctrl/qcom,sc7280-pinctrl.yaml      | 158 +++++++++++++++++++++
+ 1 file changed, 158 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/pinctrl/qcom,sc7280-pinctrl.yaml
 
+diff --git a/Documentation/devicetree/bindings/pinctrl/qcom,sc7280-pinctrl.yaml b/Documentation/devicetree/bindings/pinctrl/qcom,sc7280-pinctrl.yaml
+new file mode 100644
+index 0000000..7d6a2ab
+--- /dev/null
++++ b/Documentation/devicetree/bindings/pinctrl/qcom,sc7280-pinctrl.yaml
+@@ -0,0 +1,158 @@
++# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
++%YAML 1.2
++---
++$id: http://devicetree.org/schemas/pinctrl/qcom,sc7280-pinctrl.yaml#
++$schema: http://devicetree.org/meta-schemas/core.yaml#
++
++title: Qualcomm Technologies, Inc. SC7280 TLMM block
++
++maintainers:
++  - Rajendra Nayak <rnayak@codeaurora.org>
++
++description: |
++  This binding describes the Top Level Mode Multiplexer block found in the
++  SC7280 platform.
++
++properties:
++  compatible:
++    const: qcom,sc7280-pinctrl
++
++  reg:
++    maxItems: 1
++
++  interrupts:
++    description: Specifies the TLMM summary IRQ
++    maxItems: 1
++
++  interrupt-controller: true
++
++  '#interrupt-cells':
++    description:
++      Specifies the PIN numbers and Flags, as defined in defined in
++      include/dt-bindings/interrupt-controller/irq.h
++    const: 2
++
++  gpio-controller: true
++
++  '#gpio-cells':
++    description: Specifying the pin number and flags, as defined in
++      include/dt-bindings/gpio/gpio.h
++    const: 2
++
++  gpio-ranges:
++    maxItems: 1
++
++  wakeup-parent:
++    maxItems: 1
++
++#PIN CONFIGURATION NODES
++patternProperties:
++  '-pins$':
++    type: object
++    description:
++      Pinctrl node's client devices use subnodes for desired pin configuration.
++      Client device subnodes use below standard properties.
++    $ref: "/schemas/pinctrl/pincfg-node.yaml"
++
++    properties:
++      pins:
++        description:
++          List of gpio pins affected by the properties specified in this
++          subnode.
++        items:
++          oneOf:
++            - pattern: "^gpio([0-9]|[1-9][0-9]|1[0-7][0-4])$"
++            - enum: [ sdc1_rclk, sdc1_clk, sdc1_cmd, sdc1_data, sdc2_clk,
++                      sdc2_cmd, sdc2_data, ufs_reset ]
++        minItems: 1
++        maxItems: 16
++
++      function:
++        description:
++          Specify the alternative function to be configured for the specified
++          pins.
++
++        enum: [ atest_char, atest_char0, atest_char1, atest_char2,
++                atest_char3, atest_usb0, atest_usb00, atest_usb01,
++                atest_usb02, atest_usb03, atest_usb1, atest_usb10,
++                atest_usb11, atest_usb12, atest_usb13, audio_ref,
++                cam_mclk, cci_async, cci_i2c, cci_timer0, cci_timer1,
++                cci_timer2, cci_timer3, cci_timer4, cmu_rng0, cmu_rng1,
++                cmu_rng2, cmu_rng3, coex_uart1, cri_trng, cri_trng0,
++                cri_trng1, dbg_out, ddr_bist, ddr_pxi0, ddr_pxi1, dp_hot,
++                dp_lcd, edp_hot, edp_lcd, gcc_gp1, gcc_gp2, gcc_gp3,
++                gpio, host2wlan_sol, ibi_i3c, jitter_bist, lpass_slimbus,
++                mdp_vsync, mdp_vsync0, mdp_vsync1, mdp_vsync2, mdp_vsync3,
++                mdp_vsync4, mdp_vsync5, mi2s0_data0, mi2s0_data1, mi2s0_sck,
++                mi2s0_ws, mi2s1_data0, mi2s1_data1, mi2s1_sck, mi2s1_ws,
++                mi2s2_data0, mi2s2_data1, mi2s2_sck, mi2s2_ws, mss_grfc0,
++                mss_grfc1, mss_grfc10, mss_grfc11, mss_grfc12, mss_grfc2,
++                mss_grfc3, mss_grfc4, mss_grfc5, mss_grfc6, mss_grfc7,
++                mss_grfc8, mss_grfc9, nav_gpio0, nav_gpio1, nav_gpio2,
++                pa_indicator, pcie0_clkreqn, pcie1_clkreqn, phase_flag,
++                pll_bist, pll_bypassnl, pll_clk, pll_reset, pri_mi2s, prng_rosc,
++                qdss, qdss_cti, qlink0_enable, qlink0_request, qlink0_wmss,
++                qlink1_enable, qlink1_request, qlink1_wmss, qspi_clk, qspi_cs,
++                qspi_data, qup00, qup01, qup02, qup03, qup04, qup05, qup06, qup07,
++                qup10, qup11, qup12, qup13, qup14, qup15, qup16, qup17,
++                sdc40, sdc41, sdc42, sdc43, sdc4_clk, sdc4_cmd, sd_write,
++                sec_mi2s, tb_trig, tgu_ch0, tgu_ch1, tsense_pwm1,
++                tsense_pwm2, uim0_clk, uim0_data, uim0_present, uim0_reset,
++                uim1_clk, uim1_data, uim1_present, uim1_reset, usb2phy_ac,
++                usb_phy, vfr_0, vfr_1, vsense_trigger ]
++
++      drive-strength:
++        enum: [2, 4, 6, 8, 10, 12, 14, 16]
++        default: 2
++        description:
++          Selects the drive strength for the specified pins, in mA.
++
++      bias-pull-down: true
++
++      bias-pull-up: true
++
++      bias-disable: true
++
++      output-high: true
++
++      output-low: true
++
++    required:
++      - pins
++      - function
++
++    additionalProperties: false
++
++required:
++  - compatible
++  - reg
++  - interrupts
++  - interrupt-controller
++  - '#interrupt-cells'
++  - gpio-controller
++  - '#gpio-cells'
++  - gpio-ranges
++
++additionalProperties: false
++
++examples:
++  - |
++        #include <dt-bindings/interrupt-controller/arm-gic.h>
++        tlmm: pinctrl@f000000 {
++                compatible = "qcom,sc7280-pinctrl";
++                reg = <0xf000000 0x1000000>;
++                interrupts = <GIC_SPI 208 IRQ_TYPE_LEVEL_HIGH>;
++                gpio-controller;
++                #gpio-cells = <2>;
++                interrupt-controller;
++                #interrupt-cells = <2>;
++                gpio-ranges = <&tlmm 0 0 175>;
++                wakeup-parent = <&pdc>;
++
++                qup_uart5_default: qup-uart5-pins {
++                        pins = "gpio46", "gpio47";
++                        function = "qup13";
++                        drive-strength = <2>;
++                        bias-disable;
++                };
++        };
 -- 
-With best wishes
-Dmitry
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
+of Code Aurora Forum, hosted by The Linux Foundation
+
