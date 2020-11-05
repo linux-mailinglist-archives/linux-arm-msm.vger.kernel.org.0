@@ -2,94 +2,130 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id BB0BE2A81BC
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Nov 2020 16:01:42 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 88C592A82CF
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Nov 2020 16:57:57 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731204AbgKEPBh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 5 Nov 2020 10:01:37 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49598 "EHLO
+        id S1730854AbgKEP54 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 5 Nov 2020 10:57:56 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58416 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731050AbgKEPBg (ORCPT
+        with ESMTP id S1730973AbgKEP54 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 5 Nov 2020 10:01:36 -0500
-Received: from mail-lf1-x141.google.com (mail-lf1-x141.google.com [IPv6:2a00:1450:4864:20::141])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E8F9FC0613D2
-        for <linux-arm-msm@vger.kernel.org>; Thu,  5 Nov 2020 07:01:35 -0800 (PST)
-Received: by mail-lf1-x141.google.com with SMTP id e27so2738784lfn.7
-        for <linux-arm-msm@vger.kernel.org>; Thu, 05 Nov 2020 07:01:35 -0800 (PST)
+        Thu, 5 Nov 2020 10:57:56 -0500
+Received: from mail-vk1-xa43.google.com (mail-vk1-xa43.google.com [IPv6:2607:f8b0:4864:20::a43])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7AA17C0613D3
+        for <linux-arm-msm@vger.kernel.org>; Thu,  5 Nov 2020 07:57:56 -0800 (PST)
+Received: by mail-vk1-xa43.google.com with SMTP id p201so426714vke.11
+        for <linux-arm-msm@vger.kernel.org>; Thu, 05 Nov 2020 07:57:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=YP+Nqdju6fuzW2lAa4XJEwbHZrtw8MqpA9/si/syIKo=;
-        b=gvhtIHwkfe7sbRRwg1h7msdXsdwAL2E+ntob3AsleBHPIFhIM3CASxGd7CTYJoyY5X
-         XaX3F6vjsVXfN2UDTd3yWuszMS1sAL85YhC8Hb08Tq8TuIkhAvUWh8I0CLZzmJI84Mml
-         CV7/szyDsYC5vR42OPE9hTl5AyWZ1wgAVm3OVsOQ9RBkYMLeAo8kUvzUreiUrndUMGZU
-         6X/rRpyiubqcgDV45w/ufi2Cs05agWE6xZx9CqadzZkTEE8f8CfZ4ALKyuJktjZGR1b2
-         wSqOQIlVzxzaasp2f5AA3FigQzXlnNnhD9aom3RNfVhGW3rlwXP7fzAknReaByHLBdV1
-         St0Q==
+        d=chromium.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=m3OLwziXkpVUL0rRhQIvMEWxkGqdLLkmWdQxgDBNVWo=;
+        b=WlqjJbu5WqsqgcHHy/WPzUmIAHQZZoKDO4ur2Topm5GpRIBT7rwQvPykfAgqDxIx9X
+         m9JmdRsrAQvG+gckaglGfZ082+i5p/dc827N9G6sW4AaBatossGuI3s1RT+UVd5fqS8V
+         Wqyez+9+Iw1ebr9kSHj44qRzdbjTrF7c4x+TM=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=YP+Nqdju6fuzW2lAa4XJEwbHZrtw8MqpA9/si/syIKo=;
-        b=k0rxsSQAdv/hABd3aGuv13UYwzA2MFFBrgLwDDllWtBCVCwaFaMzs7OduOA10hjp/4
-         LMBGAHTbUWrhG2BIQcxKya0NSXv52OSCsfLslYt19vFluB7NqrxoA44MkhljgFo1myL4
-         /DWjH/dMO1UPiBEFM0eMLQPHXqofL7Fl8sPFmzICV3pq1230z5w8m+LfUza9JmMazZ52
-         ewz2OM8k/uOqc4yMvjFSuKgxM1zYs8ySWrVAZtgQAWTtc8rnBzswu1YMStNwXcahWiSK
-         JBGaTIrHZUQ3opv9y/ZSnBQYjRjUbF6M3QRNlDaN+sp1n/q7uyyiAIrf0W07pqaa02CC
-         fsdg==
-X-Gm-Message-State: AOAM530f9iz9oT2WZhCuKLe6LhLjeSMDbbB8HUpct8jkfEN7OD3j21Y3
-        493+cTzFZeSEbOf1pc8jcX4xpw==
-X-Google-Smtp-Source: ABdhPJyQeXV+mWcOx1RggApLTJwIjVqb/wGB+yV+A1sOHKP6bkiHkcA1QyL7qTXqpCkXhuP1A6XVcw==
-X-Received: by 2002:a05:6512:3222:: with SMTP id f2mr1117348lfe.268.1604588493165;
-        Thu, 05 Nov 2020 07:01:33 -0800 (PST)
-Received: from [192.168.1.211] ([94.25.228.67])
-        by smtp.gmail.com with ESMTPSA id f9sm204058lfa.187.2020.11.05.07.01.31
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=m3OLwziXkpVUL0rRhQIvMEWxkGqdLLkmWdQxgDBNVWo=;
+        b=V0YIcL6JNLOR9+G7flbLP6VakwcJGmnrlVdmr4yt7EDIezNHIOIIYzu5x7tHz4iJPh
+         cUtCbzWZIAM2A8VUJBRG+/6owmiSxwcdyq7m7lgCnknBCX6/m3L5rRGGFFgdhf8q97Cx
+         ZP/i8meofUvoogDGlDMDCpJjYhDdSxHGZDWprRql/8g75xSJHCtECaEPttDs/wYyg0JZ
+         cqOMrFMw7ADg8IlKzu9bG3Jxs/AP4GcjeUkfToSbUP4u8HfBlHh2rwFWiUT1ZZ6HX15r
+         sQVQ/NCk9WQ8BGTutSKj8h7TmZkh0einleqE21c/+UKse1qburELbv7xfQJX6X+bnkZq
+         D3Tg==
+X-Gm-Message-State: AOAM531WX6VIoivKcLjb32OCXt/LdYDhq+GZcUhhCWXE7STeOlz6QKNt
+        mP52oJsfvkDrmUGDYYOpEM+D/jyat+HwZg==
+X-Google-Smtp-Source: ABdhPJxXeh9P0eJxyr9s6h5dwvvdcPDeOmy08HkPASmm0LdaXv9uHCQBT2f5lJcmklMcN6+XH0B5JA==
+X-Received: by 2002:a1f:ab87:: with SMTP id u129mr1616742vke.7.1604591875212;
+        Thu, 05 Nov 2020 07:57:55 -0800 (PST)
+Received: from mail-vs1-f41.google.com (mail-vs1-f41.google.com. [209.85.217.41])
+        by smtp.gmail.com with ESMTPSA id m23sm289707vsl.0.2020.11.05.07.57.54
+        for <linux-arm-msm@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 05 Nov 2020 07:01:32 -0800 (PST)
-Subject: Re: [PATCH] pinctrl: qcom: sm8250: Specify PDC map
-To:     Linus Walleij <linus.walleij@linaro.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        MSM <linux-arm-msm@vger.kernel.org>,
-        "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>
-References: <20201028043642.1141723-1-bjorn.andersson@linaro.org>
- <CACRpkdaBbdC5_6y=w5eL-jJ_Mk+toKWy8kj9t-UWx02wNfjo+g@mail.gmail.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Message-ID: <d1c2a25e-3cb1-5d67-d038-be80094c64be@linaro.org>
-Date:   Thu, 5 Nov 2020 18:01:30 +0300
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.2.2
+        Thu, 05 Nov 2020 07:57:54 -0800 (PST)
+Received: by mail-vs1-f41.google.com with SMTP id z123so1050127vsb.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 05 Nov 2020 07:57:54 -0800 (PST)
+X-Received: by 2002:a67:ec9a:: with SMTP id h26mr1838173vsp.34.1604591873786;
+ Thu, 05 Nov 2020 07:57:53 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <CACRpkdaBbdC5_6y=w5eL-jJ_Mk+toKWy8kj9t-UWx02wNfjo+g@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-GB
-Content-Transfer-Encoding: 7bit
+References: <20201103103749.1.I0ed4abdd2b2916fbedf76be254bc3457fb8b9655@changeid>
+ <CAD=FV=Wc-b75a-QSX8qLq0+fCbcnvh_6q+N6azL=+Tk+rMie1g@mail.gmail.com> <20201105015501.GA3079843@google.com>
+In-Reply-To: <20201105015501.GA3079843@google.com>
+From:   Doug Anderson <dianders@chromium.org>
+Date:   Thu, 5 Nov 2020 07:57:42 -0800
+X-Gmail-Original-Message-ID: <CAD=FV=W=L=gjue69UCnC-xbkQYwMaqCUoaGGJsarLxxjagZPpA@mail.gmail.com>
+Message-ID: <CAD=FV=W=L=gjue69UCnC-xbkQYwMaqCUoaGGJsarLxxjagZPpA@mail.gmail.com>
+Subject: Re: [PATCH] arm64: dts: qcom: sc7180-trogdor: Make pp3300_a the
+ default supply for pp3300_hub
+To:     Matthias Kaehlcke <mka@chromium.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>, LKML <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 05/11/2020 16:59, Linus Walleij wrote:
-> On Wed, Oct 28, 2020 at 5:36 AM Bjorn Andersson
-> <bjorn.andersson@linaro.org> wrote:
-> 
->> Specify the PDC mapping for SM8250, so that gpio interrupts are
->> propertly mapped to the wakeup IRQs of the PDC.
->>
->> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-> 
-> Patch applied for next (v5.11).
-> 
-> If this is urgent and needs to go into fixes, just provide me
-> a Fixes: tag and I will move it to the fixes branch.
+Hi,
 
-Yes, please:
+On Wed, Nov 4, 2020 at 5:55 PM Matthias Kaehlcke <mka@chromium.org> wrote:
+>
+> > > diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
+> > > index bf875589d364..2d64e75a2d6d 100644
+> > > --- a/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
+> > > +++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
+> > > @@ -174,6 +174,21 @@ pp3300_fp_tp: pp3300-fp-tp-regulator {
+> > >                 vin-supply = <&pp3300_a>;
+> > >         };
+> > >
+> > > +       pp3300_hub: pp3300-hub {
+> > > +               compatible = "regulator-fixed";
+> > > +               regulator-name = "pp3300_hub";
+> > > +
+> > > +               regulator-min-microvolt = <3300000>;
+> > > +               regulator-max-microvolt = <3300000>;
+> > > +
+> > > +               gpio = <&tlmm 84 GPIO_ACTIVE_HIGH>;
+> > > +               enable-active-high;
+> > > +               pinctrl-names = "default";
+> > > +               pinctrl-0 = <&en_pp3300_hub>;
+> > > +
+> > > +               vin-supply = <&pp3300_a>;
+> >
+> > You're leaving things in a bit of an inconsistent state here.  The
+> > "pp3300_hub_7c" is always_on / boot_on.  This new one isn't.
+>
+> Actually the new "pp3300_hub" it is also on at boot, the Chrome OS bootloader
+> asserts the GPIO.
+>
+> > I know this is slightly more complicated due to the fact that downstream we
+> > have a way to control the hub power but didn't quite get that resolved
+> > upstream, but the way you have it now, on new hardware upstream will
+> > power off the hub but also keep "pp3300_hub_7c" powered on for no
+> > reason.  Seems like that should be fixed?
+>
+> Our EEs told me that it would be ok in terms of power to keep "pp3300_hub_7c"
+> powered, since there would be no significant power consumption without load.
+>
+> In any case unused RPMH regulators are switched off by the kernel ~30s after
+> boot, so I think we are ok:
+>
+> [   31.202219] ldo7: disabling
+>
+> The above is from the l7c regulator on a Lazor rev2.
 
-Fixes: 4e3ec9e407ad ("pinctrl: qcom: Add sm8250 pinctrl driver.")
+I assume this is with the downstream codebase, though?  With what you
+have posted upstream I don't think ldo7 will ever get disabled because
+it's marked "always-on"?
 
--- 
-With best wishes
-Dmitry
+Similarly, with what you've posted upstream I think your new
+"pp3300_hub" _will_ get disabled ~30 seconds after boot because it's
+not marked "always-on" and it has no clients.
+
+-Doug
