@@ -2,155 +2,151 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 540C82A8769
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Nov 2020 20:37:39 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3BD312A8890
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Nov 2020 22:12:06 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731558AbgKEThh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 5 Nov 2020 14:37:37 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36608 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727836AbgKEThh (ORCPT
+        id S1732175AbgKEVME (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 5 Nov 2020 16:12:04 -0500
+Received: from mail-ot1-f66.google.com ([209.85.210.66]:37072 "EHLO
+        mail-ot1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726729AbgKEVME (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 5 Nov 2020 14:37:37 -0500
-Received: from mail-oi1-x242.google.com (mail-oi1-x242.google.com [IPv6:2607:f8b0:4864:20::242])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 64367C0613D3
-        for <linux-arm-msm@vger.kernel.org>; Thu,  5 Nov 2020 11:37:37 -0800 (PST)
-Received: by mail-oi1-x242.google.com with SMTP id t143so2881248oif.10
-        for <linux-arm-msm@vger.kernel.org>; Thu, 05 Nov 2020 11:37:37 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=0IeuWIyuaS2pCWkh8SM9vIHTk3Z9xKMgQga1epoP3ng=;
-        b=KhyQlJxDU6io8FVXlTraVtbTy3bQuNC6sKWSQlCJoDV3eVUN8R8qBKymBN5FpTznBJ
-         4MhBYMa2IuKyTowiy9/fZZPa8rYN0sdd7tu4P2gSHcjnay4/Ewu7Fnkn90lA7bFKqFwU
-         yb6Ge7spA+x/jLS4G8ilTQ0oIFhVBUcg0IOm74/C4jRoKRtkmLSh/gFsNOSLkaQvAvkX
-         LhSfYwfDvUD2o+ek/F5TywPUJ/TNO/UTLQPZ5VTC7cDsFWpESDgcORcU32pa8PnSWqnO
-         98vNzQjj6t5oS5WFavOU9azcEjKsPpiPdpnK/9hEeczBP+OekrcPzv7NotIFDIo4DCVj
-         gLig==
+        Thu, 5 Nov 2020 16:12:04 -0500
+Received: by mail-ot1-f66.google.com with SMTP id l36so2784555ota.4;
+        Thu, 05 Nov 2020 13:12:03 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=0IeuWIyuaS2pCWkh8SM9vIHTk3Z9xKMgQga1epoP3ng=;
-        b=YGq4oJ0VUZlEHNCEBt+wWIdYspiXM2mAgWXUkabv+C6gXE4GmgEtfPPv1LNeTiVOte
-         jze2fENlEqxFTUsQQ4lgOlqIm//zKDnwPSYxi3JmzfPpKgvdsSYTsRzwE4Ly9hXT4Yca
-         oiWg7jOdEN7OZAHAlBZj9QyywZO+KZ6hU+YNOyjwNWECbap1OLFIuaJpEfNbXykxxBne
-         jpCZi3b/HMpcqNDP8KikHuUJkphxVN3i2AZ79Pac9Hiha0qtcBuQ2yDUWLS8fWT9K5qA
-         /EAImNiqmGCL3R798lpKDdsOqE/VE+sGuZbdFVB3fzAZe4HBwrofuAxzFJ4HlGcANIDa
-         sMHw==
-X-Gm-Message-State: AOAM530IeGdsTeYXoBzq1y9N/yDU1WIrJAAcdcXUqoM/KrHYwald2i2j
-        yq/pcoHLJYWLCyf9xUKO3qplC+BQqC7gojbR4BWDAg==
-X-Google-Smtp-Source: ABdhPJy6EmV/kijD0O5lYgC/y/tG7BvaOubM7LfjvxCX96j17pkf6e0nRm/f++LPHQRFDQ7t06YdyL9HKphcyBMRX3A=
-X-Received: by 2002:aca:1a07:: with SMTP id a7mr587040oia.169.1604605056727;
- Thu, 05 Nov 2020 11:37:36 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=6kX9EfPGIe+vgEipGeuVSOOPuy47rKZgDC38PEky6/I=;
+        b=CrRfm9C5yK84aNS9TNuLdEnYRU0jVjTMmVteuSPDoRqnawZbMBmL2GwfLVFggx2p5f
+         3HV1iTZgxGbna50RyNsTwPQTPaTns0NK6EOQ4Gs12Y9RiduJvGNp72W1omqfnlmlWjdC
+         PBxAU9Mnjangp50Lb6y/XTaNYgQI+GN1na+Ep6sZnSoun0wsUG+sad5y31N9/6o7nrrQ
+         B2YrWxWbe68wbslxqHJibKXOAilgKlD7zHtSAl2egXJv4HfFg6ZcOIirkplgaYlPtda3
+         rV4RKHAf73aLI2pWBFCuETcqCmY3hEPe+k4n3hWqYr1QG+x7qncx5ATNuHLumdy488A8
+         gpZQ==
+X-Gm-Message-State: AOAM533JSSiLT+yYKOUVl1Kfv4Ie0Q5mqoDMNmZR+fo2v6qpMVAlYum2
+        P4ffGjTvK3tSNWticWi7fw==
+X-Google-Smtp-Source: ABdhPJxfRm6a7WlZFra36M/W0cF8B4tklW/+2/U/J4e/fwp/StQ3JtLqn3HUrYnVIqGDvSo8N+eI0w==
+X-Received: by 2002:a05:6830:22c9:: with SMTP id q9mr3230515otc.48.1604610722735;
+        Thu, 05 Nov 2020 13:12:02 -0800 (PST)
+Received: from xps15.herring.priv (24-155-109-49.dyn.grandenetworks.net. [24.155.109.49])
+        by smtp.googlemail.com with ESMTPSA id z19sm622549ooi.32.2020.11.05.13.12.00
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 05 Nov 2020 13:12:01 -0800 (PST)
+From:   Rob Herring <robh@kernel.org>
+To:     Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>
+Cc:     linux-pci@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        Andy Gross <agross@kernel.org>,
+        Binghui Wang <wangbinghui@hisilicon.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        Fabio Estevam <festevam@gmail.com>,
+        Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
+        Jerome Brunet <jbrunet@baylibre.com>,
+        Jesper Nilsson <jesper.nilsson@axis.com>,
+        Jingoo Han <jingoohan1@gmail.com>,
+        Jonathan Chocron <jonnyc@amazon.com>,
+        Jonathan Hunter <jonathanh@nvidia.com>,
+        Kevin Hilman <khilman@baylibre.com>,
+        Kishon Vijay Abraham I <kishon@ti.com>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        Kukjin Kim <kgene@kernel.org>,
+        Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
+        linux-amlogic@lists.infradead.org, linux-arm-kernel@axis.com,
+        linux-arm-msm@vger.kernel.org, linux-omap@vger.kernel.org,
+        linuxppc-dev@lists.ozlabs.org, linux-samsung-soc@vger.kernel.org,
+        linux-tegra@vger.kernel.org, Lucas Stach <l.stach@pengutronix.de>,
+        Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
+        Masahiro Yamada <yamada.masahiro@socionext.com>,
+        Minghuan Lian <minghuan.Lian@nxp.com>,
+        Mingkai Hu <mingkai.hu@nxp.com>,
+        Murali Karicheri <m-karicheri2@ti.com>,
+        Neil Armstrong <narmstrong@baylibre.com>,
+        NXP Linux Team <linux-imx@nxp.com>,
+        Pengutronix Kernel Team <kernel@pengutronix.de>,
+        Pratyush Anand <pratyush.anand@gmail.com>,
+        Richard Zhu <hongxing.zhu@nxp.com>,
+        Roy Zang <roy.zang@nxp.com>,
+        Sascha Hauer <s.hauer@pengutronix.de>,
+        Shawn Guo <shawnguo@kernel.org>,
+        Stanimir Varbanov <svarbanov@mm-sol.com>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Thomas Petazzoni <thomas.petazzoni@bootlin.com>,
+        Xiaowei Song <songxiaowei@hisilicon.com>,
+        Yue Wang <yue.wang@Amlogic.com>,
+        Marek Szyprowski <m.szyprowski@samsung.com>,
+        Vidya Sagar <vidyas@nvidia.com>
+Subject: [PATCH v2 00/16] PCI: dwc: Another round of clean-ups
+Date:   Thu,  5 Nov 2020 15:11:43 -0600
+Message-Id: <20201105211159.1814485-1-robh@kernel.org>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-References: <20201031003845.41137-1-john.stultz@linaro.org> <CACRpkda1MV2=0MOMk3t4mr1RczdvfeiNTdbYXX6Jig+6p3TABA@mail.gmail.com>
-In-Reply-To: <CACRpkda1MV2=0MOMk3t4mr1RczdvfeiNTdbYXX6Jig+6p3TABA@mail.gmail.com>
-From:   John Stultz <john.stultz@linaro.org>
-Date:   Thu, 5 Nov 2020 11:37:26 -0800
-Message-ID: <CALAqxLV_GG1tPf9NEHhQN0dtL6DJmOvENVvzdnS-4_o3pNOzoA@mail.gmail.com>
-Subject: Re: [PATCH v5 1/2] pinctrl: qcom: Allow pinctrl-msm code to be
- loadable as a module
-To:     Linus Walleij <linus.walleij@linaro.org>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        lkml <linux-kernel@vger.kernel.org>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        Will Deacon <will@kernel.org>, Andy Gross <agross@kernel.org>,
-        Joerg Roedel <joro@8bytes.org>,
-        Thomas Gleixner <tglx@linutronix.de>,
-        Jason Cooper <jason@lakedaemon.net>,
-        Marc Zyngier <maz@kernel.org>, Vinod Koul <vkoul@kernel.org>,
-        Kalle Valo <kvalo@codeaurora.org>,
-        Maulik Shah <mkshah@codeaurora.org>,
-        Lina Iyer <ilina@codeaurora.org>,
-        Saravana Kannan <saravanak@google.com>,
-        Todd Kjos <tkjos@google.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        MSM <linux-arm-msm@vger.kernel.org>,
-        "list@263.net:IOMMU DRIVERS <iommu@lists.linux-foundation.org>, Joerg
-        Roedel <joro@8bytes.org>," <iommu@lists.linux-foundation.org>,
-        "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Nov 5, 2020 at 6:17 AM Linus Walleij <linus.walleij@linaro.org> wrote:
-> On Sat, Oct 31, 2020 at 1:38 AM John Stultz <john.stultz@linaro.org> wrote:
->
-> > Tweaks to allow pinctrl-msm code to be loadable as a module.
-> >
-> > This is needed in order to support having the qcom-scm driver,
-> > which pinctrl-msm calls into, configured as a module.
-> >
-> > This requires that we tweak Kconfigs selecting PINCTRL_MSM to
-> > also depend on QCOM_SCM || QCOM_SCM=n so that we match the
-> > module setting of QCOM_SCM.
-> >
-> > Unlike the previous revision of this patch:
-> >   https://lore.kernel.org/lkml/20200625001039.56174-5-john.stultz@linaro.org/
-> > this version reworks PINCTRL_MSM to be a visible option and
-> > instead of having the various SoC specific drivers select
-> > PINCTRL_MSM, this switches those configs to depend on
-> > PINCTRL_MSM. This avoids adding the oddish looking:
-> >   "depend on QCOM_SCM || QCOM_SCM=n"
-> > to every SoC specific driver, as that becomes a maintenance
-> > headache.
-> >
-> > We also add PINCTRL_MSM to the arm64 defconfig to avoid
-> > surprises as otherwise PINCTRL_MSM/IPQ* options previously
-> > enabled, will be off.
-> >
-> > Cc: Catalin Marinas <catalin.marinas@arm.com>
-> > Cc: Will Deacon <will@kernel.org>
-> > Cc: Andy Gross <agross@kernel.org>
-> > Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
-> > Cc: Joerg Roedel <joro@8bytes.org>
-> > Cc: Thomas Gleixner <tglx@linutronix.de>
-> > Cc: Jason Cooper <jason@lakedaemon.net>
-> > Cc: Marc Zyngier <maz@kernel.org>
-> > Cc: Linus Walleij <linus.walleij@linaro.org>
-> > Cc: Vinod Koul <vkoul@kernel.org>
-> > Cc: Kalle Valo <kvalo@codeaurora.org>
-> > Cc: Maulik Shah <mkshah@codeaurora.org>
-> > Cc: Lina Iyer <ilina@codeaurora.org>
-> > Cc: Saravana Kannan <saravanak@google.com>
-> > Cc: Todd Kjos <tkjos@google.com>
-> > Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-> > Cc: linux-arm-msm@vger.kernel.org
-> > Cc: iommu@lists.linux-foundation.org
-> > Cc: linux-gpio@vger.kernel.org
-> > Signed-off-by: John Stultz <john.stultz@linaro.org>
-> > ---
-> > v2:
-> > * Module description and whitespace fixes suggested by Bjorn
-> > * Added QCOM_SCM || QCOM_SCM=n bits on Kconfigs selecting
-> >   PINCTRL_MSM. Reported by both Todd and Bjorn.
-> > v3:
-> > * Make sure the QCOM_SCM || QCOM_SCM=n trick is commented
-> > v4:
-> > * Rework "select PINCTRL_MSM" to "depends on PINCTRL_MSM"
-> >   to consolidate the QCOM_SCM dependency.
-> > v5:
-> > * Add PINCTRL_MSM to arm64 defconfig
->
-> Bjorn can you have a look at this series?
->
-> BTW John  I'm afraid I just merged a new QCOM subdriver so we might
-> need to respin this to cover all.
->
-> It's an important patch so I'll help out in rebasing it if the only problem is
-> that my tree is moving under your feet.
+Here's another batch of DWC PCI host refactoring. This series primarily
+moves more of the MSI, link up, and resource handling to the core
+code. Beyond a couple of minor fixes, new in this version is runtime
+detection of iATU regions instead of using DT properties.
 
-No worries. I'm mostly wanting to make sure there are no objections
-with switching PINCTRL_MSM from a selected config to a depended
-config.
+No doubt I've probably broken something. Please test. I've run this thru
+kernelci and checked boards with DWC PCI which currently is just
+Layerscape boards (hint: add boards and/or enable PCI). A git branch is
+here[1].
 
-If that seems ok, I can redo it on whatever point you would like.
+This is dependent on "PCI: dwc: Restore ATU memory resource setup to use
+last entry" which will be in v5.10-rc3.
 
-I realize I can also split that change out separately from the module
-enablement bits as well if its helpful.
+Rob
 
-thanks
--john
+[1] git://git.kernel.org/pub/scm/linux/kernel/git/robh/linux.git pci-more-dwc-cleanup
+
+Rob Herring (16):
+  PCI: dwc: Support multiple ATU memory regions
+  PCI: dwc/intel-gw: Move ATU offset out of driver match data
+  PCI: dwc: Move "dbi", "dbi2", and "addr_space" resource setup into
+    common code
+  PCI: dwc/intel-gw: Remove some unneeded function wrappers
+  PCI: dwc: Ensure all outbound ATU windows are reset
+  PCI: dwc/dra7xx: Use the common MSI irq_chip
+  PCI: dwc: Drop the .set_num_vectors() host op
+  PCI: dwc: Move MSI interrupt setup into DWC common code
+  PCI: dwc: Rework MSI initialization
+  PCI: dwc: Move link handling into common code
+  PCI: dwc: Move dw_pcie_msi_init() into core
+  PCI: dwc: Move dw_pcie_setup_rc() to DWC common code
+  PCI: dwc: Remove unnecessary wrappers around dw_pcie_host_init()
+  Revert "PCI: dwc/keystone: Drop duplicated 'num-viewport'"
+  PCI: dwc: Move inbound and outbound windows to common struct
+  PCI: dwc: Detect number of iATU windows
+
+ drivers/pci/controller/dwc/pci-dra7xx.c       | 141 +-----------------
+ drivers/pci/controller/dwc/pci-exynos.c       |  50 ++-----
+ drivers/pci/controller/dwc/pci-imx6.c         |  39 +----
+ drivers/pci/controller/dwc/pci-keystone.c     |  79 ++--------
+ .../pci/controller/dwc/pci-layerscape-ep.c    |  37 +----
+ drivers/pci/controller/dwc/pci-layerscape.c   |  67 +--------
+ drivers/pci/controller/dwc/pci-meson.c        |  53 ++-----
+ drivers/pci/controller/dwc/pcie-al.c          |  29 +---
+ drivers/pci/controller/dwc/pcie-armada8k.c    |  37 ++---
+ drivers/pci/controller/dwc/pcie-artpec6.c     |  76 +---------
+ .../pci/controller/dwc/pcie-designware-ep.c   |  58 +++----
+ .../pci/controller/dwc/pcie-designware-host.c | 139 ++++++++++-------
+ .../pci/controller/dwc/pcie-designware-plat.c |  70 +--------
+ drivers/pci/controller/dwc/pcie-designware.c  |  93 +++++++++++-
+ drivers/pci/controller/dwc/pcie-designware.h  |  24 +--
+ drivers/pci/controller/dwc/pcie-histb.c       |  37 ++---
+ drivers/pci/controller/dwc/pcie-intel-gw.c    |  67 ++-------
+ drivers/pci/controller/dwc/pcie-kirin.c       |  62 +-------
+ drivers/pci/controller/dwc/pcie-qcom.c        |  38 +----
+ drivers/pci/controller/dwc/pcie-spear13xx.c   |  62 +++-----
+ drivers/pci/controller/dwc/pcie-tegra194.c    |  41 +----
+ drivers/pci/controller/dwc/pcie-uniphier-ep.c |  38 +----
+ drivers/pci/controller/dwc/pcie-uniphier.c    |  51 +------
+ 23 files changed, 356 insertions(+), 1032 deletions(-)
+
+--
+2.25.1
