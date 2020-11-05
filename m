@@ -2,314 +2,94 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C7D752A7E9A
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Nov 2020 13:32:01 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D5B522A7FFD
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Nov 2020 14:52:13 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730044AbgKEMbx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 5 Nov 2020 07:31:53 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54224 "EHLO
+        id S1729992AbgKENwN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 5 Nov 2020 08:52:13 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38584 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725468AbgKEMbx (ORCPT
+        with ESMTP id S1727275AbgKENwM (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 5 Nov 2020 07:31:53 -0500
-Received: from mail-pl1-x644.google.com (mail-pl1-x644.google.com [IPv6:2607:f8b0:4864:20::644])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 03645C0613CF;
-        Thu,  5 Nov 2020 04:31:53 -0800 (PST)
-Received: by mail-pl1-x644.google.com with SMTP id b12so724011plr.4;
-        Thu, 05 Nov 2020 04:31:52 -0800 (PST)
+        Thu, 5 Nov 2020 08:52:12 -0500
+Received: from mail-wr1-x442.google.com (mail-wr1-x442.google.com [IPv6:2a00:1450:4864:20::442])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D3A13C0613D2
+        for <linux-arm-msm@vger.kernel.org>; Thu,  5 Nov 2020 05:52:11 -0800 (PST)
+Received: by mail-wr1-x442.google.com with SMTP id x12so1846127wrm.8
+        for <linux-arm-msm@vger.kernel.org>; Thu, 05 Nov 2020 05:52:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=RM772cDSHAyaI3S6Oht4zbOquKz4eJt+u106DCGoFhM=;
-        b=bnygRq/0tekVuestJ58NXP85dUydoHJKyPVveKREYhd6uhSOAo9ap+JAjyk2uSA+5m
-         DnB1R7xB/IfDmJVnq6+cxbine5kKLvla2UmDMvNRT9zs4Pr7Rq0wA7GRj3mB9tEdCNP2
-         4q782JLutfwanHXIQ60vDKY44FcAPBsaLhdGXMTmsvnKhHSsBkG0YzSJgDs14Edzio/U
-         6s9W8iG6CEW66YG8jFu6PFB8lGgi0cH+d5IBguTC9/M6dD4qbPObBYyziIzqOHVOd5Z8
-         efquoXGVm/vFhiOsS0zf3Q9f5AKwQGz8cnbAu+aHYxDJ2m4EARxdt0mAhxWHyzXdFn1M
-         NsHg==
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=VhmVl6pKH58mc5ZE+7CUGBcwsFA40PZ3itcLExg+u5c=;
+        b=JkuUCZh6IA5iY059NHQMyGdYhNZ+Hq/TJYeapKdolU41BkISmKJzkMe1fcsBbJ7W4v
+         vLRmx7GcZPBuSTCzvnLvpu1/kKAhB2u/rjxzN4hNCqGvyYCknLpdqzdZ2NouZm/KAL7+
+         9qtXGfOdKBzDxv5ROsX9kK+YmWaYNCNi/++n/eCScRvrZLKfnDDdH6fxuEf5p2gb/Fky
+         nDJJnThz89Hb3NKsXrjCif0vuKozBeStlmfii4gQIgzjEVdbTyxmc+YmC4XZ/q2I1b5w
+         NHRn4P54e+ZjcC8XcXE3uxde9GqBzu161eMa3z91lx//yd5A7stCJULbyjk95cJs2Fjn
+         x6Gw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=RM772cDSHAyaI3S6Oht4zbOquKz4eJt+u106DCGoFhM=;
-        b=WIYvsYjLVUBOmx3V9dSOfavzscGQ+9f5Une4hIZBF5TGh1g1M3+oYXYPqxjWgEmTID
-         Oo3Dnr2TGbZahBJOgwLLRM8sZ2qWIdj8jUCpLdreHNTOSwJpnrhyzEohg2X7lxnjFcoN
-         avhfoQdn8JlsRrl+aeBcNlRDF2yf6X3piOV2AmBgh7dIOQvtBburGqjaVpfgMlSKUfch
-         ARlv+wphGzZBaXduTDMduAzOoLR9h36Rw21Gjw1Qw6/MUDlKoex0BWXazB3JD/nqR1pQ
-         S5WfF//hm+ZOEej7/v1g+EjjebdOP0rNFiIayq3CitOhh140Uz/aHMHRhM5esVYYJHHM
-         ZtMw==
-X-Gm-Message-State: AOAM532QQKJAjHH2p3VWko4hsOHVqeSwfAyiskwjdWlOcKWOgH7hXrSz
-        JMjWkUEybtg1Jq1Pd6JzdTjHSRhjMm+dQ9hCF04=
-X-Google-Smtp-Source: ABdhPJy2A7kynh+Cjoe9pc+2nVcIvUEQex3DbleQ3c/V6f04bARBgkPT2MNTmziRExEuL6jVAz/T7qDxGwQOv1rZ5U0=
-X-Received: by 2002:a17:902:bc4a:b029:d6:7ef9:689c with SMTP id
- t10-20020a170902bc4ab02900d67ef9689cmr2146556plz.21.1604579512404; Thu, 05
- Nov 2020 04:31:52 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=VhmVl6pKH58mc5ZE+7CUGBcwsFA40PZ3itcLExg+u5c=;
+        b=QderWaCQ7VNVdbiJf6x/aGPZkzDv88qgs4fstLE0HkMI3OXI3ezwLrVwNpfHvuIptU
+         qYkzMAPATzfXYGbHqdrcroF9CLiraSXDaPNZjrawFJCS2kf4q+y2DiT6Lwf5qn4C9VLw
+         DhnXLqtmYtG5/nJOxxqUUqNA2gbuILFmQZmTaec+B7XuNm/+PmyVrfZ833jblgqgAdZI
+         n1UHl33apaVY1IYkxER8HnMrDxmnlfoQj41Nxm1g5zFjhAW1WQbddIsv7NQ7/1njuWSg
+         aDex2n9AKWjm1UHbVXQ6YeBhJxvdvl44d7U+ijru9cQEtULHF4KGXIb3OZPSZVpYMXYi
+         syOA==
+X-Gm-Message-State: AOAM533Ml/r4W+5b9qVH0ApRAWAoiFYXcHZxBl9d5di1lrvzY6CyExNK
+        thQK+NPtgOiL96+1wxTFDR6m8w==
+X-Google-Smtp-Source: ABdhPJwmvHKNJov/2BVpFq10F2Na1KUGphbOUkkN35QRPUo3OVpq2uebDe4i8Ol+uzRRutXK/6hgZQ==
+X-Received: by 2002:adf:f3c4:: with SMTP id g4mr3256609wrp.207.1604584330630;
+        Thu, 05 Nov 2020 05:52:10 -0800 (PST)
+Received: from localhost.localdomain ([212.45.67.2])
+        by smtp.googlemail.com with ESMTPSA id h4sm2648541wrq.3.2020.11.05.05.52.09
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 05 Nov 2020 05:52:10 -0800 (PST)
+From:   Georgi Djakov <georgi.djakov@linaro.org>
+To:     linux-pm@vger.kernel.org, bjorn.andersson@linaro.org,
+        mdtipton@codeaurora.org
+Cc:     devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        akashast@codeaurora.org, georgi.djakov@linaro.org
+Subject: [PATCH 1/3] dt-bindings: interconnect: sdm845: Add IDs for the QUP ports
+Date:   Thu,  5 Nov 2020 15:52:09 +0200
+Message-Id: <20201105135211.7160-1-georgi.djakov@linaro.org>
+X-Mailer: git-send-email 2.28.0
 MIME-Version: 1.0
-References: <20201105120410.18305-1-srinivas.kandagatla@linaro.org> <20201105120410.18305-2-srinivas.kandagatla@linaro.org>
-In-Reply-To: <20201105120410.18305-2-srinivas.kandagatla@linaro.org>
-From:   Andy Shevchenko <andy.shevchenko@gmail.com>
-Date:   Thu, 5 Nov 2020 14:32:41 +0200
-Message-ID: <CAHp75VdM9LUV2M6rEZyK=4rh_+hwFK5_2-9RB7YQTuMxHSYCMg@mail.gmail.com>
-Subject: Re: [PATCH v2 1/2] pinctrl: qcom: Add sm8250 lpass lpi pinctrl driver
-To:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Cc:     Linus Walleij <linus.walleij@linaro.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Andy Gross <agross@kernel.org>, linux-arm-msm@vger.kernel.org,
-        "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
-        devicetree <devicetree@vger.kernel.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Nov 5, 2020 at 2:06 PM Srinivas Kandagatla
-<srinivas.kandagatla@linaro.org> wrote:
->
-> Add initial pinctrl driver to support pin configuration for
-> LPASS (Low Power Audio SubSystem) LPI (Low Power Island) pinctrl
-> on SM8250.
-
-> +config PINCTRL_LPASS_LPI
-> +       tristate "Qualcomm Technologies Inc LPASS LPI pin controller driver"
-> +       depends on GPIOLIB && OF
-> +       help
-> +         This is the pinctrl, pinmux, pinconf and gpiolib driver for the
-> +         Qualcomm Technologies Inc LPASS (Low Power Audio SubSystem) LPI
-> +         (Low Power Island) found on the Qualcomm Technologies Inc SoCs.
-
-> +#include <linux/of_device.h>
-> +#include <linux/of.h>
-
-...
-
-> +       val = lpi_gpio_read(pctrl, pin, LPI_GPIO_REG_VAL_CTL);
-
-> +       val &= ~(LPI_GPIO_REG_FUNCTION_MASK);
-
-Redundant parentheses.
-
-> +       val |= i << LPI_GPIO_REG_FUNCTION_SHIFT;
-> +       lpi_gpio_write(pctrl, pin, LPI_GPIO_REG_VAL_CTL, val);
-
-...
-
-> +static unsigned int lpi_drive_to_regval(u32 arg)
-> +{
-> +       return (arg/2 - 1);
-
-Ditto. On top, use spaces.
-
-> +}
-
-...
-
-> +               case PIN_CONFIG_SLEW_RATE:
-> +                       if (arg > LPI_SLEW_RATE_MAX) {
-> +                               dev_err(pctldev->dev, "%s: invalid slew rate %u for pin: %d\n",
-> +                                       __func__, arg, pin);
-
-__func__ is not needed.
-
-> +                               goto set_gpio;
-> +                       }
-
-...
-
-> +                       for (i = 0; i < LPI_SLEW_BITS_SIZE; i++) {
-
-> +                               if (arg & 0x01)
-> +                                       set_bit(offset, &val);
-> +                               else
-> +                                       clear_bit(offset, &val);
-
-assign_bit(, arg & BIT(i))
-
-> +                               offset++;
-
-> +                               arg = arg >> 1;
-
-No need on a separate line, see above.
-
-> +                       }
-
-...
-
-> +done:
-
-Useless label.
-
-> +       return ret;
-
-...
-
-> +#ifdef CONFIG_DEBUG_FS
-> +#include <linux/seq_file.h>
-
-> +#else
-> +#define lpi_gpio_dbg_show NULL
-> +#endif
-
-Hmm... Doesn't pin control provide a wrapper for this?
-
-...
-
-> +       int ret, npins;
-> +       struct clk *core_vote = NULL;
-> +       struct clk *audio_vote = NULL;
-> +
-> +       struct lpi_pinctrl *pctrl;
-> +       const struct lpi_pinctrl_variant_data *data;
-> +       struct device *dev = &pdev->dev;
-> +       struct resource *res;
-
-Redundant blank line. Can you keep them in reversed xmas tree order?
-
-...
-
-> +       core_vote = devm_clk_get(&pdev->dev, "core");
-> +       if (IS_ERR(core_vote)) {
-
-> +               dev_dbg(&pdev->dev, "%s: clk get %s failed %d\n",
-> +                       __func__, "core_vote", ret);
-
-First of all you missed the deferred probe issue, second, __func__ is
-redundant for *_dbg() calls (okay, when Dynamic Debug is enabled).
-That said why not
-  return dev_err_probe();
-?
-
-> +               return PTR_ERR(core_vote);
-> +       }
-
-...
-
-> +       audio_vote = devm_clk_get(&pdev->dev, "audio");
-> +       if (IS_ERR(audio_vote)) {
-> +               dev_dbg(&pdev->dev, "%s: clk get %s failed %d\n",
-> +                       __func__, "audio_vote", ret);
-> +               return PTR_ERR(audio_vote);
-
-Ditto/
-
-> +       }
-
-Why is it not a bulk?
-
-> +       clk_prepare_enable(pctrl->core_vote);
-> +       clk_prepare_enable(pctrl->audio_vote);
-
-Either from them may return an error. Also, when you go devm_*() the
-rule of thumb is either all or none. Because here you will have
-ordering issue on ->remove().
-
-> +       res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
-> +       pctrl->tlmm_base = devm_ioremap_resource(&pdev->dev, res);
-
-devm_platform_ioremap_resource()
-
-> +       if (IS_ERR(pctrl->tlmm_base)) {
-> +               ret = PTR_ERR(pctrl->tlmm_base);
-> +               goto err;
-> +       }
-> +
-> +
-
-One blank line is enough.
-
-> +       res = platform_get_resource(pdev, IORESOURCE_MEM, 1);
-> +       pctrl->slew_base = devm_ioremap_resource(&pdev->dev, res);
-
-As above.
-
-> +       if (IS_ERR(pctrl->slew_base)) {
-> +               ret = PTR_ERR(pctrl->slew_base);
-> +               goto err;
-> +       }
-
-...
-
-> +       ret = gpiochip_add_data(&pctrl->chip, pctrl);
-
-Not devm_?
-
-> +       if (ret) {
-> +               dev_err(pctrl->dev, "can't add gpio chip\n");
-> +               goto err_pinctrl;
-> +       }
-
-> +       ret = gpiochip_add_pin_range(&pctrl->chip, dev_name(dev), 0, 0, npins);
-
-Why not to define a proper callback?
-
-> +       if (ret) {
-> +               dev_err(dev, "failed to add pin range\n");
-> +               goto err_range;
-> +       }
-
-...
-
-> +err_range:
-> +       gpiochip_remove(&pctrl->chip);
-> +err_pinctrl:
-> +       mutex_destroy(&pctrl->slew_access_lock);
-> +err:
-> +       clk_disable_unprepare(pctrl->core_vote);
-> +       clk_disable_unprepare(pctrl->audio_vote);
-> +
-> +       return ret;
-
-These are not needed for devm_ case.
-
-...
-
-> +static int lpi_pinctrl_remove(struct platform_device *pdev)
-> +{
-> +       struct lpi_pinctrl *pctrl = platform_get_drvdata(pdev);
-> +
-> +       gpiochip_remove(&pctrl->chip);
-> +       mutex_destroy(&pctrl->slew_access_lock);
-> +       clk_disable_unprepare(pctrl->core_vote);
-> +       clk_disable_unprepare(pctrl->audio_vote);
-
-Ditto. It also has ordering issues.
-
-> +       return 0;
-> +}
-
-...
-
-> +static const struct of_device_id lpi_pinctrl_of_match[] = {
-> +       {
-> +              .compatible = "qcom,sm8250-lpass-lpi-pinctrl",
-> +              .data = &sm8250_lpi_data,
-> +       },
-
-> +       { },
-
-Comma is not needed here.
-
-> +};
-> +
-
-Extra blank line/
-
-> +MODULE_DEVICE_TABLE(of, lpi_pinctrl_of_match);
-
-...
-
-> +static struct platform_driver lpi_pinctrl_driver = {
-
-> +};
-
-> +
-
-Extra blank line.
-
-> +module_platform_driver(lpi_pinctrl_driver);
-
--- 
-With Best Regards,
-Andy Shevchenko
+The QUP ports exist in the topology, but are not exposed as an
+endpoints in DT. Fix this by creating IDs and attach them to their
+NoCs, so that the various QUP drivers (i2c/spi/uart etc.) are able
+to request their interconnect paths and scale their bandwidth.
+
+Signed-off-by: Georgi Djakov <georgi.djakov@linaro.org>
+---
+ include/dt-bindings/interconnect/qcom,sdm845.h | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/include/dt-bindings/interconnect/qcom,sdm845.h b/include/dt-bindings/interconnect/qcom,sdm845.h
+index 290be38f40e6..67b500e24915 100644
+--- a/include/dt-bindings/interconnect/qcom,sdm845.h
++++ b/include/dt-bindings/interconnect/qcom,sdm845.h
+@@ -19,6 +19,7 @@
+ #define SLAVE_A1NOC_SNOC		7
+ #define SLAVE_SERVICE_A1NOC		8
+ #define SLAVE_ANOC_PCIE_A1NOC_SNOC	9
++#define MASTER_QUP_1			10
+ 
+ #define MASTER_A2NOC_CFG		0
+ #define MASTER_QDSS_BAM			1
+@@ -32,6 +33,7 @@
+ #define SLAVE_A2NOC_SNOC		9
+ #define SLAVE_ANOC_PCIE_SNOC		10
+ #define SLAVE_SERVICE_A2NOC		11
++#define MASTER_QUP_2			12
+ 
+ #define MASTER_SPDM			0
+ #define MASTER_TIC			1
