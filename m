@@ -2,252 +2,99 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 2E6612A94FE
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Nov 2020 12:08:11 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id CDD5A2A960E
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Nov 2020 13:16:44 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727122AbgKFLIF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 6 Nov 2020 06:08:05 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40338 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727057AbgKFLIC (ORCPT
+        id S1726876AbgKFMQn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 6 Nov 2020 07:16:43 -0500
+Received: from mail-ot1-f66.google.com ([209.85.210.66]:40494 "EHLO
+        mail-ot1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726317AbgKFMQn (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 6 Nov 2020 06:08:02 -0500
-Received: from mail-wr1-x444.google.com (mail-wr1-x444.google.com [IPv6:2a00:1450:4864:20::444])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A2BBCC0613CF
-        for <linux-arm-msm@vger.kernel.org>; Fri,  6 Nov 2020 03:08:01 -0800 (PST)
-Received: by mail-wr1-x444.google.com with SMTP id p1so868276wrf.12
-        for <linux-arm-msm@vger.kernel.org>; Fri, 06 Nov 2020 03:08:01 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=sZovck2VxxzKcuAzLCRnPBq7DAtyakGMsnCJt5X+VBI=;
-        b=x2fP3lKjXVJB4lIHLjVbI7ZWO00g1dpxrmCr/YF8VSGSUUZ0ttqcLmrkAIUzyrpY9W
-         M3jKIB2UhX/jjV0bnjMdDl2Ghva/cldOvwfAASvlrFaiyq8ueWOzJGdZHH1vI02lDowR
-         f/x/IJqBc58lhd8BXa6lI1Fbukbpqq77vFEELQiS/R59hig8tY7dYLIVILelkiG3hjbW
-         m3qKyYgoCf3+3J/lACgcSh+E8GjXW73GX4OfMK1TGIrxRfIXzMkhFFWWZN0shFr9o/hy
-         hVmYbWq7twAxk/a1yWyVBlkq5RLQVJSx3ww0KUMtWlG39/aM1uN3FpTkrswTPMyoA/ji
-         PWzA==
+        Fri, 6 Nov 2020 07:16:43 -0500
+Received: by mail-ot1-f66.google.com with SMTP id 79so1027071otc.7;
+        Fri, 06 Nov 2020 04:16:42 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=sZovck2VxxzKcuAzLCRnPBq7DAtyakGMsnCJt5X+VBI=;
-        b=ij9RgCi5JaxGk48BqUbY0RFtGQlHETejshOynhH6unKZcdR/lG4XCHX1feu7Yho3kP
-         QcCNmU+f/iu7fXES937LPthv5++frTV9XDLt/TTi0jOKky7aUHMZXHlfFcypZEIcIy1Y
-         v7fsJSppVGadiD/N+7q/f20o8l1v55Ih2Oik85nRkqW8I863bhU/Dd2KtpSN/aYYsuhB
-         mUcj+WXwYB/IPTSwf2dFFvI4g8rQaUhlXt6mHMNEXOWXNFUXY/r8SAeeSwesLQ49XGrT
-         vU9OVLTyCW65BHbAzKGLVR8cDQnynxl/GraYWpAHzkjBAFxb00h37X3bX9HUkNvZEHBC
-         9n5Q==
-X-Gm-Message-State: AOAM530VXrW+CT/qFX+NZH5aS9oGL9S6ry+aoRmpYirS+OinZHzmH1Kw
-        VgFATQo6jbZEYNOV/qUc/ZY2Tg==
-X-Google-Smtp-Source: ABdhPJx1iRcBeFh1BLpkSJmuR8EVMGGBjA8dm9jhpYevRF8IW0ek9v8p0hBlWNjZNszGWVrWjS0iTg==
-X-Received: by 2002:adf:e28c:: with SMTP id v12mr2042781wri.230.1604660880373;
-        Fri, 06 Nov 2020 03:08:00 -0800 (PST)
-Received: from [192.168.86.34] (cpc86377-aztw32-2-0-cust226.18-1.cable.virginm.net. [92.233.226.227])
-        by smtp.googlemail.com with ESMTPSA id n23sm1739750wmk.24.2020.11.06.03.07.59
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 06 Nov 2020 03:07:59 -0800 (PST)
-Subject: Re: [PATCH v2 1/2] pinctrl: qcom: Add sm8250 lpass lpi pinctrl driver
-To:     Linus Walleij <linus.walleij@linaro.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Rob Herring <robh+dt@kernel.org>, Andy Gross <agross@kernel.org>,
-        MSM <linux-arm-msm@vger.kernel.org>,
-        "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>
-References: <20201105120410.18305-1-srinivas.kandagatla@linaro.org>
- <20201105120410.18305-2-srinivas.kandagatla@linaro.org>
- <CACRpkda91ncAVGj8_qcEyKPnRQdJjXMMCQ4ZJ1t7bVfcCZF=CA@mail.gmail.com>
-From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Message-ID: <f6bfa003-b8c7-f0d1-24f1-14f45fa37a23@linaro.org>
-Date:   Fri, 6 Nov 2020 11:07:58 +0000
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.8.0
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=+xDAzLUg1c4ATFWXTeoRwJCCaKgy8LRS6wAzG60O47w=;
+        b=ZxT85t7P/JQRL4PmUhadUdBofRxWfA7uLrA2PoxAHpGWsv7avbzBUV155cqrOStLDR
+         KBGrII4v8l8cN3K/XMGZtdvq3GbgiYgkGzjDmA09yHVgzPNwfEosoeojzYawQE8VUsvn
+         v9hIhnzUc6j7LXdXl3+tns38ZpOi9UUmjkV1J2g38VStCxRixhjRkGYSAmprfAFGymVT
+         eJLMFj7Y0Jhgi4Xc2c7DYe3BxVnAzISiK8JKoqTQkO58WTvpL+ipSN2uu7WuzhmB9hdG
+         jfPE3agpycp3LxOXWkcOxMysBlXjHfKr9JAW1V3am26yNgZ8NDPAThF44IAEDNy6xTby
+         El1w==
+X-Gm-Message-State: AOAM533MLDaHt6XIdsPMW0rM5aExal6VtqAWLTJ1YtFdZTZ32uNHhF8P
+        POHm32trDJ9Z5aPhtAxUvL+DpoVIh4GpfqT/cgI=
+X-Google-Smtp-Source: ABdhPJwsCD7JJXjqS83wKh2AZm22ZIVZUyx+6LkKKzYyucmo+SZ5UmKV2U6I9aLbPMfL4719sAv0kSWGYWR5vCEm8/o=
+X-Received: by 2002:a05:6830:210a:: with SMTP id i10mr914074otc.145.1604665002287;
+ Fri, 06 Nov 2020 04:16:42 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <CACRpkda91ncAVGj8_qcEyKPnRQdJjXMMCQ4ZJ1t7bVfcCZF=CA@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+References: <1602873815-1677-1-git-send-email-tdas@codeaurora.org>
+ <1602873815-1677-5-git-send-email-tdas@codeaurora.org> <160454346831.3965362.1176963402805166784@swboyd.mtv.corp.google.com>
+In-Reply-To: <160454346831.3965362.1176963402805166784@swboyd.mtv.corp.google.com>
+From:   Geert Uytterhoeven <geert@linux-m68k.org>
+Date:   Fri, 6 Nov 2020 13:16:31 +0100
+Message-ID: <CAMuHMdXL9ZdLQGtgZM3nqcQoBrUnjGaS5Hg3cB7zrW8WFGyOjg@mail.gmail.com>
+Subject: Re: [PATCH v3 4/4] clk: qcom: camcc: Add camera clock controller
+ driver for SC7180
+To:     Stephen Boyd <sboyd@kernel.org>
+Cc:     Michael Turquette <mturquette@baylibre.com>,
+        Taniya Das <tdas@codeaurora.org>,
+        David Brown <david.brown@linaro.org>,
+        Rajendra Nayak <rnayak@codeaurora.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        "open list:ARM/QUALCOMM SUPPORT" <linux-soc@vger.kernel.org>,
+        linux-clk <linux-clk@vger.kernel.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>, Rob Herring <robh@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Thanks Linus for review!
+On Thu, Nov 5, 2020 at 5:52 AM Stephen Boyd <sboyd@kernel.org> wrote:
+> Quoting Taniya Das (2020-10-16 11:43:35)
+> > Add support for the camera clock controller found on SC7180 based devices.
+> > This would allow camera drivers to probe and control their clocks.
+> >
+> > Signed-off-by: Taniya Das <tdas@codeaurora.org>
+> > ---
+>
+> Applied to clk-next with some minor fixups.
 
-On 06/11/2020 09:50, Linus Walleij wrote:
-> Hi Srinivas,
-> 
-> thanks for your patch!
-> 
-> On Thu, Nov 5, 2020 at 1:04 PM Srinivas Kandagatla
-> <srinivas.kandagatla@linaro.org> wrote:
-> 
->> Add initial pinctrl driver to support pin configuration for
->> LPASS (Low Power Audio SubSystem) LPI (Low Power Island) pinctrl
->> on SM8250.
->>
->> Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-> 
-> So this is in essence a completely new pin controller that shares
-> nothing with the previous Qcom SoC pin control hardware?
-> 
-> I'd still like Bjorn to review it of course, but if you are going to
-> maintain this driver an entry to the MAINTAINERS file would
-> be nice.
-> 
-> I'd like some more talk in the commit message about how this
-> driver is engineered so I point those things out below.
-> 
->> +config PINCTRL_LPASS_LPI
->> +       tristate "Qualcomm Technologies Inc LPASS LPI pin controller driver"
->> +       depends on GPIOLIB && OF
-> 
-> These days you can actually just
-> select GPIOLIB
-> but no big deal.
-Will take care of this!
+On Fri, Nov 6, 2020 at 8:43 AM <noreply@ellerman.id.au> wrote:
+> FAILED linux-next/m68k-allmodconfig/m68k-gcc8 Fri Nov 06, 18:35
+>
+> http://kisskb.ellerman.id.au/kisskb/buildresult/14393224/
+>
+> Commit:   Add linux-next specific files for 20201106
+>           c34f157421f6905e6b4a79a312e9175dce2bc607
+> Compiler: m68k-linux-gcc (GCC) 8.1.0 / GNU ld (GNU Binutils) 2.30
+>
+> Possible errors
+> ---------------
+>
+> drivers/clk/qcom/camcc-sc7180.c:1672:8: error: implicit declaration of function 'pm_clk_runtime_resume'; did you mean 'pm_runtime_resume'? [-Werror=implicit-function-declaration]
+> drivers/clk/qcom/camcc-sc7180.c:1681:3: error: implicit declaration of function 'pm_clk_runtime_suspend'; did you mean 'pm_runtime_suspend'? [-Werror=implicit-function-declaration]
+> cc1: some warnings being treated as errors
+> make[4]: *** [scripts/Makefile.build:283: drivers/clk/qcom/camcc-sc7180.o] Error 1
+> make[3]: *** [scripts/Makefile.build:500: drivers/clk/qcom] Error 2
 
-> 
->> +#include <linux/bitops.h>
->> +#include <linux/clk.h>
->> +#include <linux/gpio.h>
-> 
-> Do not use this legacy header for new GPIO drivers.
-> #include <linux/gpio/driver.h>
-> should work.
+The pm_clk_runtime_*() functions are only available if CONFIG_PM=y.
+No dummies are provided for the CONFIG_PM=n case yet.
 
-Sure!
+Gr{oetje,eeting}s,
 
-> 
->> +#define LPI_GPIO_REG_VAL_CTL             0x00
->> +#define LPI_GPIO_REG_DIR_CTL             0x04
->> +#define LPI_SLEW_REG_VAL_CTL             0x00
->> +#define LPI_SLEW_RATE_MAX                0x03
->> +#define LPI_SLEW_BITS_SIZE               0x02
->> +#define LPI_GPIO_REG_PULL_SHIFT                0x0
->> +#define LPI_GPIO_REG_PULL_MASK         GENMASK(1, 0)
->> +#define LPI_GPIO_REG_FUNCTION_SHIFT    0x2
->> +#define LPI_GPIO_REG_FUNCTION_MASK     GENMASK(5, 2)
->> +#define LPI_GPIO_REG_OUT_STRENGTH_SHIFT        0x6
->> +#define LPI_GPIO_REG_OUT_STRENGTH_MASK GENMASK(8, 6)
->> +#define LPI_GPIO_REG_OE_SHIFT          0x9
->> +#define LPI_GPIO_REG_OE_MASK           BIT(9)
->> +#define LPI_GPIO_REG_DIR_SHIFT         0x1
->> +#define LPI_GPIO_REG_DIR_MASK          0x2
->> +#define LPI_GPIO_BIAS_DISABLE          0x0
->> +#define LPI_GPIO_PULL_DOWN             0x1
->> +#define LPI_GPIO_KEEPER                        0x2
->> +#define LPI_GPIO_PULL_UP               0x3
-> 
-> So the way I understand it, the GPIO lines have one register each and then the
-> functionality of each line is handled by different bits in that register, like
-> output is driven in bit 9.
-> 
-Yes exactly!
-> This would be nice to have mentioned in the commit message.
+                        Geert
 
-I will add more detailed commit message in next version.
+--
+Geert Uytterhoeven -- There's lots of Linux beyond ia32 -- geert@linux-m68k.org
 
-
-> 
->> +static const unsigned int gpio0_pins[] = { 0 };
->> +static const unsigned int gpio1_pins[] = { 1 };
->> +static const unsigned int gpio2_pins[] = { 2 };
->> +static const unsigned int gpio3_pins[] = { 3 };
->> +static const unsigned int gpio4_pins[] = { 4 };
->> +static const unsigned int gpio5_pins[] = { 5 };
->> +static const unsigned int gpio6_pins[] = { 6 };
->> +static const unsigned int gpio7_pins[] = { 7 };
->> +static const unsigned int gpio8_pins[] = { 8 };
->> +static const unsigned int gpio9_pins[] = { 9 };
->> +static const unsigned int gpio10_pins[] = { 10 };
->> +static const unsigned int gpio11_pins[] = { 11 };
->> +static const unsigned int gpio12_pins[] = { 12 };
->> +static const unsigned int gpio13_pins[] = { 13 };
->> +static const char * const swr_tx_clk_groups[] = { "gpio0" };
->> +static const char * const swr_tx_data1_groups[] = { "gpio1" };
->> +static const char * const swr_tx_data2_groups[] = { "gpio2" };
->> +static const char * const swr_rx_clk_groups[] = { "gpio3" };
->> +static const char * const swr_rx_data1_groups[] = { "gpio4" };
->> +static const char * const swr_tx_data3_groups[] = { "gpio5" };
->> +static const char * const dmic1_clk_groups[] = { "gpio6" };
->> +static const char * const dmic1_data_groups[] = { "gpio7" };
->> +static const char * const dmic2_clk_groups[] = { "gpio8" };
->> +static const char * const dmic2_data_groups[] = { "gpio9" };
->> +static const char * const i2s2_clk_groups[] = { "gpio10" };
->> +static const char * const i2s2_ws_groups[] = { "gpio11" };
->> +static const char * const dmic3_clk_groups[] = { "gpio12" };
->> +static const char * const dmic3_data_groups[] = { "gpio13" };
->> +static const char * const qua_mi2s_sclk_groups[] = { "gpio0" };
->> +static const char * const qua_mi2s_ws_groups[] = { "gpio1" };
->> +static const char * const qua_mi2s_data0_groups[] = { "gpio2" };
->> +static const char * const qua_mi2s_data1_groups[] = { "gpio3" };
->> +static const char * const qua_mi2s_data2_groups[] = { "gpio4" };
->> +static const char * const swr_rx_data2_groups[] = { "gpio5" };
->> +static const char * const i2s1_clk_groups[] = { "gpio6" };
->> +static const char * const i2s1_ws_groups[] = { "gpio7" };
->> +static const char * const i2s1_data0_groups[] = { "gpio8" };
->> +static const char * const i2s1_data1_groups[] = { "gpio9" };
->> +static const char * const wsa_swr_clk_groups[] = { "gpio10" };
->> +static const char * const wsa_swr_data_groups[] = { "gpio11" };
->> +static const char * const i2s2_data0_groups[] = { "gpio12" };
->> +static const char * const i2s2_data1_groups[] = { "gpio13" };
-> 
-> The driver appears to follow other qualcomm pin controllers in using
-> the "one group is one pin" approach. This is idiomatic and should be
-> mentioned in the commit message.
-
-Sure I will do that,
-
-Some more detail of wiring of this additional pin-controller IP:
-
-This IP is an additional pinctrl block on top the existing SoC TLMM 
-pin-controller (Audio) pins.
-
-The hw setup looks like:
-
-TLMM GPIO[146 - 159] --> LPASS LPI GPIO [0 - 13]
-
-
-However SoC TLMM pin-controller can only be touched for use of those 
-pins in GPIO mode and non gpio mode is completely handled by the LPASS 
-LPI pinctrl block. Apart from this slew rate is also available in this 
-block for certain pins which are connected to SLIMbus or SoundWire Bus.
-
-Normally we would not expect these pins to be touched by SoC TLMM 
-pin-controller as these pins are used for audio usecase and the control 
-is always with LPASS LPI controller. There are additional bits to 
-configure/enforce this in SoC TLMM block!
-
-> 
->> +static int sm8250_slew_reg_offsets[] = {
->> +               0x0, 0x2, 0x4, 0x8, 0xa,
->> +               0xc, 0x0, 0x0, 0x0, 0x0,
->> +               0x10, 0x12, 0x0, 0x0,
->> +};
-> 
-> Maybe it is obvious to everyone what this array is about, but why so
-> many zeroes? I think it warrants a comment in the code if that
-> means for example that some pins do not support slew rate setting.
-
-Only pins that are connected to SLIMbus or SoundWire have slew rate 
-settings available, rest of the pins which do not have this are marked 
-as 0x0. I can add some comment in here to
-> 
-> Overall this is a nice and self-contained driver that uses the abstractions
-> the right way and very straight-forward, so I think we can merge it
-> soon.
-> 
-> (Look into Andy's comments as well.)
-
-Thanks, I will address Andy's comments as well in next version!
-
---srini
-
-> 
-> Yours,
-> Linus Walleij
-> 
+In personal conversations with technical people, I call myself a hacker. But
+when I'm talking to journalists I just say "programmer" or something like that.
+                                -- Linus Torvalds
