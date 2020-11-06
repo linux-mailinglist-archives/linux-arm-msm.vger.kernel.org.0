@@ -2,98 +2,354 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 80AFD2A8DCE
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Nov 2020 04:58:38 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4D42B2A8E50
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Nov 2020 05:27:17 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725828AbgKFD6h (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 5 Nov 2020 22:58:37 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58156 "EHLO
+        id S1726057AbgKFE1P (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 5 Nov 2020 23:27:15 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34364 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725815AbgKFD6h (ORCPT
+        with ESMTP id S1725616AbgKFE1O (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 5 Nov 2020 22:58:37 -0500
-Received: from mail-pf1-x441.google.com (mail-pf1-x441.google.com [IPv6:2607:f8b0:4864:20::441])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9292BC0613CF;
-        Thu,  5 Nov 2020 19:58:35 -0800 (PST)
-Received: by mail-pf1-x441.google.com with SMTP id z3so98094pfz.6;
-        Thu, 05 Nov 2020 19:58:35 -0800 (PST)
+        Thu, 5 Nov 2020 23:27:14 -0500
+Received: from mail-pg1-x542.google.com (mail-pg1-x542.google.com [IPv6:2607:f8b0:4864:20::542])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DE3C3C0613CF
+        for <linux-arm-msm@vger.kernel.org>; Thu,  5 Nov 2020 20:27:14 -0800 (PST)
+Received: by mail-pg1-x542.google.com with SMTP id e21so2959727pgr.11
+        for <linux-arm-msm@vger.kernel.org>; Thu, 05 Nov 2020 20:27:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=to:cc:references:from:subject:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=72WK5gdLfg+8RgepOagG7LllxF4BWHujAXVduDm7r+4=;
-        b=SAA4dD3ObW/Kw83JMEzBKEwOFbgINDIl/QDPZnDGEzT9D1MQqtKgLblLF4gon3H6XI
-         e/H8Ricdau5eNPtdBuEZyLdbIfCSXJjcSAWRo8jJmqQl+3eXGlwTZo4pYUf9PdZrtrs8
-         tnvl6bGch2awvWymlM8d51ZMaRs7dPKya07HVre4kb3BietyhriyNTMJvQZpo3R8UH0i
-         +g9Iya/Ua6NJVu5TjXNMXfcSG9CeecnHaE3kKdh/uiWJY1t3hz90Nj+eykhP0viAv/xI
-         6vrbAhd8qt3cREWgij3AXggvFfOxzl2/w7DEtDcbAR48QMxndi9m47EtNWM5usiAwmRx
-         74RQ==
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id;
+        bh=dEjXCFn2GLT5bjrqUgKUeF496DPENv6ARAooxO6dLXo=;
+        b=zZ1+tlMPB0oMfHlatbJiOBxKGsw3wHKAlAa+C7Bu1rVuo+/LSONXdfoQpL7HNH7mT3
+         sCWNeAUAcDX9Y73R4wznUGhoJGrAtt8jhyovrpb3OCSaStM+uPMPD+BD+G87sDzVhUIX
+         TPapo+B8uT0bYbme/0KHVgDznfWyRUClaS9X2VJgGF8EyG0gr49q99LgHQytM2UXFxre
+         P7x11bndOd8FD/osuu8l5Vp+G2c7Ud4hF6ZFIgwng3EdLsgZ/6ffV1Db7YgAe6WQCzH+
+         CVFXdNDJI7nwufITiU2iV5ux5+EJpgaix83dHcofWM06Ae+HsPNgR2BGJG9XXJVTDOBm
+         n5iw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:to:cc:references:from:subject:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=72WK5gdLfg+8RgepOagG7LllxF4BWHujAXVduDm7r+4=;
-        b=EZEjMZPuNUSBbM2K3o9B936FL/iwpdFktli0GhjJvXqMCllRv9EBPAIfXq8kCElKUO
-         QjXtCtN6beAFzfMpR5YbfTKi246dAl1BPREkZDhICdnSzjFmOUM7fKUtElEhh7PzitVw
-         JXdZaZcnmzXP5H0DDtNDd1LZ4zcIwUpxXJUkhl2p7qIdn2C1RupoxJJGrkvMxHjWG00w
-         jtwQ/Aa7OEwH34F0/T3mF5krX5D0vKKywGPGaHzwkeYz6hv8N7BZBiv8PzMiRY8RNIX0
-         EIgQmZjJQi8q9lXMY77K4FYlhV1jAeRYx+nNIfE8fQx76c5SjfqkLZJ8SR+YJsYiZNWJ
-         98ow==
-X-Gm-Message-State: AOAM533yzzLM7BWDwCDXqnTIBf0bhrnNSiHmtHEZOBDlFoXbbvwZjRAO
-        7DgVBMz85nsoFHkxGZF12AE=
-X-Google-Smtp-Source: ABdhPJw197tx4uU6/FgGT5umqJUIokir+xifWVT5zLhPEW3lgXFo7oLNXg+7DZ0uhJVTM6h7GHjN6w==
-X-Received: by 2002:a63:4006:: with SMTP id n6mr42376pga.171.1604635114907;
-        Thu, 05 Nov 2020 19:58:34 -0800 (PST)
-Received: from [10.230.1.248] ([192.19.228.250])
-        by smtp.gmail.com with ESMTPSA id s6sm129495pfh.9.2020.11.05.19.58.32
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 05 Nov 2020 19:58:33 -0800 (PST)
-To:     Prasad Sodagudi <psodagud@codeaurora.org>, rostedt@goodmis.org,
-        mingo@redhat.com, keescook@chromium.org, catalin.marinas@arm.com,
-        saiprakash.ranjan@codeaurora.org, will@kernel.org
-Cc:     linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, gregkh@linuxfoundation.org,
-        anton@enomsg.org, arnd@arndb.de, ccross@android.com,
-        jbaron@akamai.com, jim.cromie@gmail.com, joe@perches.com,
-        joel@joelfernandes.org
-References: <1604631386-178312-1-git-send-email-psodagud@codeaurora.org>
-From:   Florian Fainelli <f.fainelli@gmail.com>
-Subject: Re: [PATCH 2] Register read and writes tracing
-Message-ID: <a9de1928-d709-896f-ffa6-febc5d6d34c6@gmail.com>
-Date:   Thu, 5 Nov 2020 19:58:31 -0800
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Firefox/78.0 Thunderbird/78.4.0
-MIME-Version: 1.0
-In-Reply-To: <1604631386-178312-1-git-send-email-psodagud@codeaurora.org>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=dEjXCFn2GLT5bjrqUgKUeF496DPENv6ARAooxO6dLXo=;
+        b=Ib5cPoHsd8nYZuPOdoZK7YimjeKtgy8WC8YB5E0yK0J/jdKsVj4zSpeszfRRZ9GrDw
+         h1x54xsTBVtTiTmPbE7DLf02hV1dVMB8N0h6L2GKXZ1ZygHrh9bVB0lzEr2E987kV1U2
+         zOpodHGXZ1qB+A7NSeBfw7pkFnTdfkM7HCOs9KhY5LsXGd9xHZj1/oIou37lfpeThT9j
+         PtuRtIQQnG6rwUFJJbLZuzzDtzZj1v6tVf/aA8GhuoufqgtvtNwoysjO+OH341H6tIPk
+         izb3fGVeJTDUZF/enVjdpG2Oyub9BT9EJiLVXwF7A85qS6IW+bkZRo8QxIXJn79IXKnu
+         sIMg==
+X-Gm-Message-State: AOAM531CYfyDiKLDiqQ9v7iwwGpE7b9L4KGiC1F4QsNuvwAhRz1EpG3u
+        HJu5l7vC918yReU3HCqqguHlOw==
+X-Google-Smtp-Source: ABdhPJy3L4zRFTt32HvdpkXrpAgAFtdGFQrnhIcbKANtnnWK+kymIStOHEJymU6KCDj2rFD0IOpHDg==
+X-Received: by 2002:a17:90b:310e:: with SMTP id gc14mr366254pjb.147.1604636834398;
+        Thu, 05 Nov 2020 20:27:14 -0800 (PST)
+Received: from localhost.localdomain ([2601:1c2:680:1319:692:26ff:feda:3a81])
+        by smtp.gmail.com with ESMTPSA id e24sm179864pfl.149.2020.11.05.20.27.13
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 05 Nov 2020 20:27:13 -0800 (PST)
+From:   John Stultz <john.stultz@linaro.org>
+To:     lkml <linux-kernel@vger.kernel.org>
+Cc:     John Stultz <john.stultz@linaro.org>,
+        Catalin Marinas <catalin.marinas@arm.com>,
+        Will Deacon <will@kernel.org>, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Joerg Roedel <joro@8bytes.org>,
+        Thomas Gleixner <tglx@linutronix.de>,
+        Jason Cooper <jason@lakedaemon.net>,
+        Marc Zyngier <maz@kernel.org>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Vinod Koul <vkoul@kernel.org>,
+        Kalle Valo <kvalo@codeaurora.org>,
+        Maulik Shah <mkshah@codeaurora.org>,
+        Lina Iyer <ilina@codeaurora.org>,
+        Saravana Kannan <saravanak@google.com>,
+        Todd Kjos <tkjos@google.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        linux-arm-msm@vger.kernel.org, iommu@lists.linux-foundation.org,
+        linux-gpio@vger.kernel.org
+Subject: [PATCH v6 1/3] pinctrl: qcom: Kconfig: Rework PINCTRL_MSM to be a depenency rather then a selected config
+Date:   Fri,  6 Nov 2020 04:27:08 +0000
+Message-Id: <20201106042710.55979-1-john.stultz@linaro.org>
+X-Mailer: git-send-email 2.17.1
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+This patch reworks PINCTRL_MSM to be a visible option, and
+instead of having the various SoC specific drivers select
+PINCTRL_MSM, this switches those configs to depend on
+PINCTRL_MSM.
 
+This is useful, as it will be needed in order to cleanly support
+having the qcom-scm driver, which pinctrl-msm calls into,
+configured as a module. Without this change, we would eventually
+have to add dependency lines to every config that selects
+PINCTRL_MSM, and that would becomes a maintenance headache.
 
-On 11/5/2020 6:56 PM, Prasad Sodagudi wrote:
-> This patch series adds register read/write event tracing
-> support. Qualcomm team tried upstreaming the register
-> trace buffer solution - [1] with pstore and dynamic debug
-> feature but that patch series didn't merge. I have followed
-> Steve suggestion from -[2] and used tracepoint_enabled() API.
-> 
-> [1] - https://patchwork.kernel.org/project/linux-arm-msm/cover/cover.1536430404.git.saiprakash.ranjan@codeaurora.org/
-> [2] - https://lore.kernel.org/lkml/20200928105501.7e29df65@oasis.local.home/ 
-> 
-> Qualcomm teams uses these logs for debugging various issues
-> in the product life cycle and hopping that this logging
-> would help other silicon vendors as this is generic approach.
+We also add PINCTRL_MSM to the arm64 defconfig to avoid
+surprises as otherwise PINCTRL_MSM/IPQ* options previously
+enabled, will be off.
 
-There is not anything arm64 specific here other than where you have
-hooked into the low-level I/O accessors, you could consider adding this
-as a generic facility to other architectures as well.
+Cc: Catalin Marinas <catalin.marinas@arm.com>
+Cc: Will Deacon <will@kernel.org>
+Cc: Andy Gross <agross@kernel.org>
+Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc: Joerg Roedel <joro@8bytes.org>
+Cc: Thomas Gleixner <tglx@linutronix.de>
+Cc: Jason Cooper <jason@lakedaemon.net>
+Cc: Marc Zyngier <maz@kernel.org>
+Cc: Linus Walleij <linus.walleij@linaro.org>
+Cc: Vinod Koul <vkoul@kernel.org>
+Cc: Kalle Valo <kvalo@codeaurora.org>
+Cc: Maulik Shah <mkshah@codeaurora.org>
+Cc: Lina Iyer <ilina@codeaurora.org>
+Cc: Saravana Kannan <saravanak@google.com>
+Cc: Todd Kjos <tkjos@google.com>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: linux-arm-msm@vger.kernel.org
+Cc: iommu@lists.linux-foundation.org
+Cc: linux-gpio@vger.kernel.org
+Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+Signed-off-by: John Stultz <john.stultz@linaro.org>
+---
+v6:
+* Split PINCTRL_MSM dependency bit out into its own patch
+---
+ arch/arm64/configs/defconfig |  1 +
+ drivers/pinctrl/qcom/Kconfig | 48 ++++++++++++++++++------------------
+ 2 files changed, 25 insertions(+), 24 deletions(-)
 
-Also, have you looked at making mmiotrace less x86 specific and more
-generic?
+diff --git a/arch/arm64/configs/defconfig b/arch/arm64/configs/defconfig
+index 5cfe3cf6f2acb..2ac53d8ae76a3 100644
+--- a/arch/arm64/configs/defconfig
++++ b/arch/arm64/configs/defconfig
+@@ -483,6 +483,7 @@ CONFIG_PINCTRL_IMX8MP=y
+ CONFIG_PINCTRL_IMX8MQ=y
+ CONFIG_PINCTRL_IMX8QXP=y
+ CONFIG_PINCTRL_IMX8DXL=y
++CONFIG_PINCTRL_MSM=y
+ CONFIG_PINCTRL_IPQ8074=y
+ CONFIG_PINCTRL_IPQ6018=y
+ CONFIG_PINCTRL_MSM8916=y
+diff --git a/drivers/pinctrl/qcom/Kconfig b/drivers/pinctrl/qcom/Kconfig
+index 5fe7b8aaf69d8..c9bb2d9e49d47 100644
+--- a/drivers/pinctrl/qcom/Kconfig
++++ b/drivers/pinctrl/qcom/Kconfig
+@@ -2,7 +2,7 @@
+ if (ARCH_QCOM || COMPILE_TEST)
+ 
+ config PINCTRL_MSM
+-	bool
++	bool "Qualcomm core pin controller driver"
+ 	select PINMUX
+ 	select PINCONF
+ 	select GENERIC_PINCONF
+@@ -13,7 +13,7 @@ config PINCTRL_MSM
+ config PINCTRL_APQ8064
+ 	tristate "Qualcomm APQ8064 pin controller driver"
+ 	depends on GPIOLIB && OF
+-	select PINCTRL_MSM
++	depends on PINCTRL_MSM
+ 	help
+ 	  This is the pinctrl, pinmux, pinconf and gpiolib driver for the
+ 	  Qualcomm TLMM block found in the Qualcomm APQ8064 platform.
+@@ -21,7 +21,7 @@ config PINCTRL_APQ8064
+ config PINCTRL_APQ8084
+ 	tristate "Qualcomm APQ8084 pin controller driver"
+ 	depends on GPIOLIB && OF
+-	select PINCTRL_MSM
++	depends on PINCTRL_MSM
+ 	help
+ 	  This is the pinctrl, pinmux, pinconf and gpiolib driver for the
+ 	  Qualcomm TLMM block found in the Qualcomm APQ8084 platform.
+@@ -29,7 +29,7 @@ config PINCTRL_APQ8084
+ config PINCTRL_IPQ4019
+ 	tristate "Qualcomm IPQ4019 pin controller driver"
+ 	depends on GPIOLIB && OF
+-	select PINCTRL_MSM
++	depends on PINCTRL_MSM
+ 	help
+ 	  This is the pinctrl, pinmux, pinconf and gpiolib driver for the
+ 	  Qualcomm TLMM block found in the Qualcomm IPQ4019 platform.
+@@ -37,7 +37,7 @@ config PINCTRL_IPQ4019
+ config PINCTRL_IPQ8064
+ 	tristate "Qualcomm IPQ8064 pin controller driver"
+ 	depends on GPIOLIB && OF
+-	select PINCTRL_MSM
++	depends on PINCTRL_MSM
+ 	help
+ 	  This is the pinctrl, pinmux, pinconf and gpiolib driver for the
+ 	  Qualcomm TLMM block found in the Qualcomm IPQ8064 platform.
+@@ -45,7 +45,7 @@ config PINCTRL_IPQ8064
+ config PINCTRL_IPQ8074
+ 	tristate "Qualcomm Technologies, Inc. IPQ8074 pin controller driver"
+ 	depends on GPIOLIB && OF
+-	select PINCTRL_MSM
++	depends on PINCTRL_MSM
+ 	help
+ 	  This is the pinctrl, pinmux, pinconf and gpiolib driver for
+ 	  the Qualcomm Technologies Inc. TLMM block found on the
+@@ -55,7 +55,7 @@ config PINCTRL_IPQ8074
+ config PINCTRL_IPQ6018
+ 	tristate "Qualcomm Technologies, Inc. IPQ6018 pin controller driver"
+ 	depends on GPIOLIB && OF
+-	select PINCTRL_MSM
++	depends on PINCTRL_MSM
+ 	help
+ 	  This is the pinctrl, pinmux, pinconf and gpiolib driver for
+ 	  the Qualcomm Technologies Inc. TLMM block found on the
+@@ -65,7 +65,7 @@ config PINCTRL_IPQ6018
+ config PINCTRL_MSM8226
+ 	tristate "Qualcomm 8226 pin controller driver"
+ 	depends on GPIOLIB && OF
+-	select PINCTRL_MSM
++	depends on PINCTRL_MSM
+ 	help
+ 	  This is the pinctrl, pinmux, pinconf and gpiolib driver for the
+ 	  Qualcomm Technologies Inc TLMM block found on the Qualcomm
+@@ -74,7 +74,7 @@ config PINCTRL_MSM8226
+ config PINCTRL_MSM8660
+ 	tristate "Qualcomm 8660 pin controller driver"
+ 	depends on GPIOLIB && OF
+-	select PINCTRL_MSM
++	depends on PINCTRL_MSM
+ 	help
+ 	  This is the pinctrl, pinmux, pinconf and gpiolib driver for the
+ 	  Qualcomm TLMM block found in the Qualcomm 8660 platform.
+@@ -82,7 +82,7 @@ config PINCTRL_MSM8660
+ config PINCTRL_MSM8960
+ 	tristate "Qualcomm 8960 pin controller driver"
+ 	depends on GPIOLIB && OF
+-	select PINCTRL_MSM
++	depends on PINCTRL_MSM
+ 	help
+ 	  This is the pinctrl, pinmux, pinconf and gpiolib driver for the
+ 	  Qualcomm TLMM block found in the Qualcomm 8960 platform.
+@@ -90,7 +90,7 @@ config PINCTRL_MSM8960
+ config PINCTRL_MDM9615
+ 	tristate "Qualcomm 9615 pin controller driver"
+ 	depends on GPIOLIB && OF
+-	select PINCTRL_MSM
++	depends on PINCTRL_MSM
+ 	help
+ 	  This is the pinctrl, pinmux, pinconf and gpiolib driver for the
+ 	  Qualcomm TLMM block found in the Qualcomm 9615 platform.
+@@ -98,7 +98,7 @@ config PINCTRL_MDM9615
+ config PINCTRL_MSM8X74
+ 	tristate "Qualcomm 8x74 pin controller driver"
+ 	depends on GPIOLIB && OF
+-	select PINCTRL_MSM
++	depends on PINCTRL_MSM
+ 	help
+ 	  This is the pinctrl, pinmux, pinconf and gpiolib driver for the
+ 	  Qualcomm TLMM block found in the Qualcomm 8974 platform.
+@@ -106,7 +106,7 @@ config PINCTRL_MSM8X74
+ config PINCTRL_MSM8916
+ 	tristate "Qualcomm 8916 pin controller driver"
+ 	depends on GPIOLIB && OF
+-	select PINCTRL_MSM
++	depends on PINCTRL_MSM
+ 	help
+ 	  This is the pinctrl, pinmux, pinconf and gpiolib driver for the
+ 	  Qualcomm TLMM block found on the Qualcomm 8916 platform.
+@@ -114,7 +114,7 @@ config PINCTRL_MSM8916
+ config PINCTRL_MSM8976
+ 	tristate "Qualcomm 8976 pin controller driver"
+ 	depends on GPIOLIB && OF
+-	select PINCTRL_MSM
++	depends on PINCTRL_MSM
+ 	help
+ 	  This is the pinctrl, pinmux, pinconf and gpiolib driver for the
+ 	  Qualcomm TLMM block found on the Qualcomm MSM8976 platform.
+@@ -124,7 +124,7 @@ config PINCTRL_MSM8976
+ config PINCTRL_MSM8994
+ 	tristate "Qualcomm 8994 pin controller driver"
+ 	depends on GPIOLIB && OF
+-	select PINCTRL_MSM
++	depends on PINCTRL_MSM
+ 	help
+ 	  This is the pinctrl, pinmux, pinconf and gpiolib driver for the
+ 	  Qualcomm TLMM block found in the Qualcomm 8994 platform. The
+@@ -133,7 +133,7 @@ config PINCTRL_MSM8994
+ config PINCTRL_MSM8996
+ 	tristate "Qualcomm MSM8996 pin controller driver"
+ 	depends on GPIOLIB && OF
+-	select PINCTRL_MSM
++	depends on PINCTRL_MSM
+ 	help
+ 	  This is the pinctrl, pinmux, pinconf and gpiolib driver for the
+ 	  Qualcomm TLMM block found in the Qualcomm MSM8996 platform.
+@@ -141,7 +141,7 @@ config PINCTRL_MSM8996
+ config PINCTRL_MSM8998
+ 	tristate "Qualcomm MSM8998 pin controller driver"
+ 	depends on GPIOLIB && OF
+-	select PINCTRL_MSM
++	depends on PINCTRL_MSM
+ 	help
+ 	  This is the pinctrl, pinmux, pinconf and gpiolib driver for the
+ 	  Qualcomm TLMM block found in the Qualcomm MSM8998 platform.
+@@ -149,7 +149,7 @@ config PINCTRL_MSM8998
+ config PINCTRL_QCS404
+ 	tristate "Qualcomm QCS404 pin controller driver"
+ 	depends on GPIOLIB && OF
+-	select PINCTRL_MSM
++	depends on PINCTRL_MSM
+ 	help
+ 	  This is the pinctrl, pinmux, pinconf and gpiolib driver for the
+ 	  TLMM block found in the Qualcomm QCS404 platform.
+@@ -157,7 +157,7 @@ config PINCTRL_QCS404
+ config PINCTRL_QDF2XXX
+ 	tristate "Qualcomm Technologies QDF2xxx pin controller driver"
+ 	depends on GPIOLIB && ACPI
+-	select PINCTRL_MSM
++	depends on PINCTRL_MSM
+ 	help
+ 	  This is the GPIO driver for the TLMM block found on the
+ 	  Qualcomm Technologies QDF2xxx SOCs.
+@@ -194,7 +194,7 @@ config PINCTRL_QCOM_SSBI_PMIC
+ config PINCTRL_SC7180
+ 	tristate "Qualcomm Technologies Inc SC7180 pin controller driver"
+ 	depends on GPIOLIB && OF
+-	select PINCTRL_MSM
++	depends on PINCTRL_MSM
+ 	help
+ 	  This is the pinctrl, pinmux, pinconf and gpiolib driver for the
+ 	  Qualcomm Technologies Inc TLMM block found on the Qualcomm
+@@ -203,7 +203,7 @@ config PINCTRL_SC7180
+ config PINCTRL_SDM660
+ 	tristate "Qualcomm Technologies Inc SDM660 pin controller driver"
+ 	depends on GPIOLIB && OF
+-	select PINCTRL_MSM
++	depends on PINCTRL_MSM
+ 	help
+ 	 This is the pinctrl, pinmux, pinconf and gpiolib driver for the
+ 	 Qualcomm Technologies Inc TLMM block found on the Qualcomm
+@@ -212,7 +212,7 @@ config PINCTRL_SDM660
+ config PINCTRL_SDM845
+ 	tristate "Qualcomm Technologies Inc SDM845 pin controller driver"
+ 	depends on GPIOLIB && (OF || ACPI)
+-	select PINCTRL_MSM
++	depends on PINCTRL_MSM
+ 	help
+ 	 This is the pinctrl, pinmux, pinconf and gpiolib driver for the
+ 	 Qualcomm Technologies Inc TLMM block found on the Qualcomm
+@@ -221,7 +221,7 @@ config PINCTRL_SDM845
+ config PINCTRL_SM8150
+ 	tristate "Qualcomm Technologies Inc SM8150 pin controller driver"
+ 	depends on GPIOLIB && OF
+-	select PINCTRL_MSM
++	depends on PINCTRL_MSM
+ 	help
+ 	 This is the pinctrl, pinmux, pinconf and gpiolib driver for the
+ 	 Qualcomm Technologies Inc TLMM block found on the Qualcomm
+@@ -230,7 +230,7 @@ config PINCTRL_SM8150
+ config PINCTRL_SM8250
+ 	tristate "Qualcomm Technologies Inc SM8250 pin controller driver"
+ 	depends on GPIOLIB && OF
+-	select PINCTRL_MSM
++	depends on PINCTRL_MSM
+ 	help
+ 	  This is the pinctrl, pinmux, pinconf and gpiolib driver for the
+ 	  Qualcomm Technologies Inc TLMM block found on the Qualcomm
 -- 
-Florian
+2.17.1
+
