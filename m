@@ -2,96 +2,139 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D96B22A8FF2
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Nov 2020 08:06:36 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3EA982A901F
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Nov 2020 08:16:27 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726522AbgKFHFl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 6 Nov 2020 02:05:41 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58958 "EHLO
+        id S1726353AbgKFHQZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 6 Nov 2020 02:16:25 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60620 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726543AbgKFHFk (ORCPT
+        with ESMTP id S1726337AbgKFHQZ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 6 Nov 2020 02:05:40 -0500
-Received: from mail-pl1-x643.google.com (mail-pl1-x643.google.com [IPv6:2607:f8b0:4864:20::643])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A3778C0613D3
-        for <linux-arm-msm@vger.kernel.org>; Thu,  5 Nov 2020 23:05:40 -0800 (PST)
-Received: by mail-pl1-x643.google.com with SMTP id b12so246245plr.4
-        for <linux-arm-msm@vger.kernel.org>; Thu, 05 Nov 2020 23:05:40 -0800 (PST)
+        Fri, 6 Nov 2020 02:16:25 -0500
+Received: from mail-pg1-x541.google.com (mail-pg1-x541.google.com [IPv6:2607:f8b0:4864:20::541])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DCD5FC0613CF
+        for <linux-arm-msm@vger.kernel.org>; Thu,  5 Nov 2020 23:16:24 -0800 (PST)
+Received: by mail-pg1-x541.google.com with SMTP id 62so230458pgg.12
+        for <linux-arm-msm@vger.kernel.org>; Thu, 05 Nov 2020 23:16:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=pxVky9l6SjSdLAcTA14Zb0ig0mPHGe9JAZ+xYlz+WWM=;
-        b=mhYxA+hfdYdKmPXf+5Uz0ENmGw87DnvuIRtIBfijjW125XoltnFPxPeJAjShhP1zZF
-         CzHGGfPvrH1yEQCVgAcTfBZmHN3ABIvSHx1IaK5Trurbt0YMJtiPt0HhqXRbpPJ7pVmw
-         Vj9iWoAHCCUyS23qBnzK518EtYvDXqzPRzD0KsDn1kPn9/XpFBg2Fz5UJAuSLVy7lRd7
-         d/ecLj2XoE46q4rsnj3OKtDW2ONjIFyjbc8J9B5IHqJvNzST0o4vuKdObU+KurINcgqS
-         34l1mY33qyM58jFdL+CPsZjlLQggsMs2cbeoy9a1GJsRw8pcgEnwd54lhRdiCdC1/vfa
-         XVbg==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=JK18Rhy91HwT2txRvUrbyN9C7BXKAqk0ab4AsbXgEMM=;
+        b=OMswEcKlZ6u7lVSY5ZjSSjpAAlU8mNOo9Eab9GBjF7Pgt3q5emL/wrqJkccjhl5+NJ
+         K5bUWEbteB646OruN6awgDclp8Lzv5xqRT+JScSZ5SJAVlaTlxFksMNjS/m1cXSqW022
+         LOudcHy9smFLD8XB2TORYPNdms6hsEuAYfpjorA8jIXUolnD49bLaUTj3tk6yMcnIuP1
+         mPKyjeauP4jYBIY1oc23BsZ4xGY1a270f+xshybPS05i03DPE2i6b2dH9KGme/JPtxNk
+         fm5RjSsuPG4IctFnTMrugDND7eZAEL26f+jIHd7KzpLqTOoH34VEe+OZma5PpEOMy9vw
+         Ou+g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=pxVky9l6SjSdLAcTA14Zb0ig0mPHGe9JAZ+xYlz+WWM=;
-        b=L9AlmmImkDeW0YyLsQBpluZZnduJE+7AZur8e33Cp7KVIrmmqdOU9ZGnQqznyo4Tve
-         nMfEyldRGAvl5ixcbggxXO1uOgtT040Qre380ZS1zDu0ztopJwWCmFTnqD4ZSCIgZa3s
-         Bi3ux0o8AUyGOIJuXSbv/V2Zi/mqkOTKFK2aY726g/xDbXv9OSoBR1gavaIltI0PiRcG
-         lae9eMcS8KS8Vp2VDs2mIgVYTY3v2bY3vp1MnbJGkOUAZ1YA3GfEAQMKGDIxogyRz49h
-         o/i4ZA97x6HDe1t97pYrKWxQGdBlvn8qaDwVOZFX5lbBK0Sgu2sBVokmDgreK3vR/2xy
-         7bTw==
-X-Gm-Message-State: AOAM530gZj614oN+XwUxA/1Ijd+FL9Bi7TGwSi8+o/VrvtYjqoU/PYry
-        Qkem0UW1h0jIqeHnkYuT/FmeLQ==
-X-Google-Smtp-Source: ABdhPJzB5pJKmoygsJHbeXL3UzkTiA/e90EaTRfyPTER4FtLh1D97O8MORlGdkGm/5rhbsYmfMB2iQ==
-X-Received: by 2002:a17:902:6ac1:b029:d6:c43e:a42d with SMTP id i1-20020a1709026ac1b02900d6c43ea42dmr719733plt.21.1604646340242;
-        Thu, 05 Nov 2020 23:05:40 -0800 (PST)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=JK18Rhy91HwT2txRvUrbyN9C7BXKAqk0ab4AsbXgEMM=;
+        b=eoxO6hr+7q+dEEuZ5cyA2Ra6V0k/TlQwfMQAcD5sJf516EQHdhmndOwQI8f3yvnvo3
+         T/BYqbK91tIfmjKwWwwAlljymttzsLn3DbMjqDnHPgeY10A85ov0CjvgWhAE0ooaEyN9
+         IZiaBon7jqLoM7UcLRe6k/l474hyRxjEKNeyKghc2+ykVNxLA9CIbSzj0tw3YWTfhcrr
+         aJGpc7fzqn3uBJeu/xcRO/cLlkbf/f41XH0B1BqeNTjE5JImWT9F/3WnTCRltJ9SffAc
+         c+TmZu23Dpax/h1Ndk04YFNK9pjLW1Lnqy2pfFyhy2Q0fhCvMtJ1p9awAfbKceNZkfQg
+         4Vuw==
+X-Gm-Message-State: AOAM533bdo165AKL5EibNl9Xl4v9HZtcGqMOrVJFr0CLK/oyJ2aJeXl/
+        cIiaymZf4kdA0rS2WfEsoe8AfA==
+X-Google-Smtp-Source: ABdhPJz+ePL3+cF7buh0lCKBX22R8mn3p0gqXYRUxKc69GWG/jhsr0wV1j83B8aR9Cp3xNgjLldqkQ==
+X-Received: by 2002:a17:90a:a394:: with SMTP id x20mr978947pjp.213.1604646984348;
+        Thu, 05 Nov 2020 23:16:24 -0800 (PST)
 Received: from localhost ([122.172.12.172])
-        by smtp.gmail.com with ESMTPSA id z17sm551372pga.85.2020.11.05.23.05.39
+        by smtp.gmail.com with ESMTPSA id t26sm863991pfl.72.2020.11.05.23.16.22
         (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 05 Nov 2020 23:05:39 -0800 (PST)
+        Thu, 05 Nov 2020 23:16:23 -0800 (PST)
+Date:   Fri, 6 Nov 2020 12:46:21 +0530
 From:   Viresh Kumar <viresh.kumar@linaro.org>
-To:     Stanimir Varbanov <stanimir.varbanov@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Viresh Kumar <viresh.kumar@linaro.org>, linux-pm@vger.kernel.org,
-        Vincent Guittot <vincent.guittot@linaro.org>,
-        Rafael Wysocki <rjw@rjwysocki.net>,
-        Stephen Boyd <sboyd@kernel.org>, Nishanth Menon <nm@ti.com>,
-        digetx@gmail.com, linux-media@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH 7/7] media: venus: dev_pm_opp_put_*() accepts NULL argument
-Date:   Fri,  6 Nov 2020 12:33:27 +0530
-Message-Id: <1b1c2086f01a27f7da6e6512dd47d47d153f626d.1604646059.git.viresh.kumar@linaro.org>
-X-Mailer: git-send-email 2.25.0.rc1.19.g042ed3e048af
-In-Reply-To: <cover.1604646059.git.viresh.kumar@linaro.org>
-References: <cover.1604646059.git.viresh.kumar@linaro.org>
+To:     Rob Clark <robdclark@gmail.com>
+Cc:     Daniel Vetter <daniel@ffwll.ch>,
+        dri-devel <dri-devel@lists.freedesktop.org>,
+        Rob Clark <robdclark@chromium.org>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
+        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
+        <linux-arm-msm@vger.kernel.org>,
+        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
+        <freedreno@lists.freedesktop.org>,
+        open list <linux-kernel@vger.kernel.org>,
+        "Menon, Nishanth" <nm@ti.com>
+Subject: Re: [PATCH v2 07/22] drm/msm: Do rpm get sooner in the submit path
+Message-ID: <20201106071621.j732gt4nqifjrccd@vireshk-i7>
+References: <CAKMK7uHAgVUPHOPxDdt3LeAWqokxfuzqjZj4qqFkoKxFbRbRrg@mail.gmail.com>
+ <20201020112413.xbk2vow2kgjky3pb@vireshk-i7>
+ <CAF6AEGsCj-AtFozn8d1xiNNFNbuMJ0UxS-eMhBVXiQ7rKahKnQ@mail.gmail.com>
+ <20201022080644.2ck4okrxygmkuatn@vireshk-i7>
+ <CAF6AEGv6RMCsK4yp-W2d1mVTMcEiiwFGAb+V8rYLhDdMhqP80Q@mail.gmail.com>
+ <20201027113532.nriqqws7gdcu5su6@vireshk-i7>
+ <20201103054715.4l5j57pyjz6zd6ed@vireshk-i7>
+ <CAF6AEGtgUVXm6Wwod0FC38g91Q8CotLFSoC4NmXx7GzcA=1mOA@mail.gmail.com>
+ <20201104030353.ny7zvakgb4fsye6r@vireshk-i7>
+ <CAF6AEGv215ixcAWmaOWs7UKAqmbMs=aFyTBBYLU-bt8XBnWb7g@mail.gmail.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAF6AEGv215ixcAWmaOWs7UKAqmbMs=aFyTBBYLU-bt8XBnWb7g@mail.gmail.com>
+User-Agent: NeoMutt/20180716-391-311a52
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The dev_pm_opp_put_*() APIs now accepts a NULL opp_table pointer and so
-there is no need for us to carry the extra check. Drop them.
+On 05-11-20, 11:24, Rob Clark wrote:
+> On Tue, Nov 3, 2020 at 7:04 PM Viresh Kumar <viresh.kumar@linaro.org> wrote:
+> >
+> > On 03-11-20, 08:50, Rob Clark wrote:
+> > > sorry, it didn't apply cleanly (which I guess is due to some other
+> > > dependencies that need to be picked back to v5.4 product kernel), and
+> > > due to some other things I'm in middle of debugging I didn't have time
+> > > yet to switch to v5.10-rc or look at what else needs to
+> > > cherry-picked..
+> > >
+> > > If you could, pushing a branch with this patch somewhere would be a
+> > > bit easier to work with (ie. fetch && cherry-pick is easier to deal
+> > > with than picking things from list)
+> >
+> > It has been in linux-next for a few days. Here is the HEAD to pick
+> > from. There are few patches there since rc1.
+> >
+> > commit 203e29749cc0 ("opp: Allocate the OPP table outside of opp_table_lock")
+> >
+> 
+> sorry for the delay, with that cherry-picked, I'm getting a whole lot of:
 
-Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
----
- drivers/media/platform/qcom/venus/pm_helpers.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+Ahh, sorry about that and thanks for reporting it. Here is the fix:
 
-diff --git a/drivers/media/platform/qcom/venus/pm_helpers.c b/drivers/media/platform/qcom/venus/pm_helpers.c
-index 57877eacecf0..e1e9130288ad 100644
---- a/drivers/media/platform/qcom/venus/pm_helpers.c
-+++ b/drivers/media/platform/qcom/venus/pm_helpers.c
-@@ -898,8 +898,7 @@ static void core_put_v4(struct device *dev)
+diff --git a/drivers/opp/of.c b/drivers/opp/of.c
+index c718092757d9..6b7f0066942d 100644
+--- a/drivers/opp/of.c
++++ b/drivers/opp/of.c
+@@ -112,8 +112,6 @@ static struct opp_table *_find_table_of_opp_np(struct device_node *opp_np)
+        struct opp_table *opp_table;
+        struct device_node *opp_table_np;
  
- 	if (core->has_opp_table)
- 		dev_pm_opp_of_remove_table(dev);
--	if (core->opp_table)
--		dev_pm_opp_put_clkname(core->opp_table);
-+	dev_pm_opp_put_clkname(core->opp_table);
+-       lockdep_assert_held(&opp_table_lock);
+-
+        opp_table_np = of_get_parent(opp_np);
+        if (!opp_table_np)
+                goto err;
+@@ -121,12 +119,15 @@ static struct opp_table *_find_table_of_opp_np(struct device_node *opp_np)
+        /* It is safe to put the node now as all we need now is its address */
+        of_node_put(opp_table_np);
  
- }
++       mutex_lock(&opp_table_lock);
+        list_for_each_entry(opp_table, &opp_tables, node) {
+                if (opp_table_np == opp_table->np) {
+                        _get_opp_table_kref(opp_table);
++                       mutex_unlock(&opp_table_lock);
+                        return opp_table;
+                }
+        }
++       mutex_unlock(&opp_table_lock);
  
+ err:
+        return ERR_PTR(-ENODEV);
+
 -- 
-2.25.0.rc1.19.g042ed3e048af
-
+viresh
