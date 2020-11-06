@@ -2,131 +2,131 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 5283D2A99D6
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Nov 2020 17:49:35 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2B1022A99EE
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Nov 2020 17:58:30 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726997AbgKFQt3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 6 Nov 2020 11:49:29 -0500
-Received: from m42-4.mailgun.net ([69.72.42.4]:15987 "EHLO m42-4.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726408AbgKFQt3 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 6 Nov 2020 11:49:29 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1604681369; h=Content-Transfer-Encoding: MIME-Version:
- Message-Id: Date: Subject: Cc: To: From: Sender;
- bh=SIqpORGbW4shELRaFdgQTrSokqzECNUsVNAgwqJ/78c=; b=xROibMTCy2pi04LPU7OJ9bGaSjFHRgIRVelYTbLksocqHvg1FjeTv3Q3USkcz7BhkCB7kCxl
- PqF+K7wqekDh/A/liGDYSXfDXVyqMNvOjOcsYzZhn5pZwGSDhBbujc9jbj+bQw+v69Gzyh1l
- PA4jFxwTzHb9CCn3jPEv5MAX2vE=
-X-Mailgun-Sending-Ip: 69.72.42.4
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n06.prod.us-west-2.postgun.com with SMTP id
- 5fa57e8618b2aa4b1f910e26 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 06 Nov 2020 16:49:10
- GMT
-Sender: ilina=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 5E328C433CB; Fri,  6 Nov 2020 16:49:10 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
-        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
-Received: from codeaurora.org (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: ilina)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id D7838C433CB;
-        Fri,  6 Nov 2020 16:49:08 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org D7838C433CB
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=ilina@codeaurora.org
-From:   Lina Iyer <ilina@codeaurora.org>
-To:     rjw@rjwysocki.net, ulf.hansson@linaro.org
-Cc:     linux-pm@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        Lina Iyer <ilina@codeaurora.org>
-Subject: [PATCH] PM / Domains: replace -ENOTSUPP with -EOPNOTSUPP
-Date:   Fri,  6 Nov 2020 09:49:03 -0700
-Message-Id: <20201106164903.3906-1-ilina@codeaurora.org>
-X-Mailer: git-send-email 2.29.2
+        id S1727323AbgKFQ6Q (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 6 Nov 2020 11:58:16 -0500
+Received: from mail-03.mail-europe.com ([91.134.188.129]:39206 "EHLO
+        mail-03.mail-europe.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726176AbgKFQ6Q (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 6 Nov 2020 11:58:16 -0500
+Date:   Fri, 06 Nov 2020 16:58:04 +0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
+        s=protonmail; t=1604681891;
+        bh=Cxw7DayELvc3qFiSUFsEDeHz2abSz8ZKKvShcAZzGs4=;
+        h=Date:To:From:Cc:Reply-To:Subject:From;
+        b=V4ecOcfMwrzQwVVAadDcFFrVquVfAX0sNE4d9AXx0HTmHp07Oqs6LkIksFi/PCg+b
+         3N3YwWdZenhBVBvceDB/vW3a1sQcnZK3rH7dAcd8SUOgzvVievVXdIBC8v+lr4ecxR
+         GA64X6Cue7yH99ws87Hh7lMGTV3LQH9z7GN2NRLk=
+To:     Pavel Machek <pavel@ucw.cz>, Dan Murphy <dmurphy@ti.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>
+From:   =?utf-8?Q?N=C3=ADcolas_F=2E_R=2E_A=2E_Prado?= 
+        <nfraprado@protonmail.com>
+Cc:     linux-leds@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        Brian Masney <masneyb@onstation.org>,
+        Luca Weiss <luca@z3ntu.xyz>,
+        Russell King <linux@armlinux.org.uk>,
+        Georgi Djakov <georgi.djakov@linaro.org>,
+        linux-kernel@vger.kernel.org, lkcamp@lists.libreplanetbr.org,
+        andrealmeid@collabora.com
+Reply-To: =?utf-8?Q?N=C3=ADcolas_F=2E_R=2E_A=2E_Prado?= 
+          <nfraprado@protonmail.com>
+Subject: [RFC PATCH 0/3] Add support for the flash LED on Nexus 5
+Message-ID: <20201106165737.1029106-1-nfraprado@protonmail.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-1.2 required=10.0 tests=ALL_TRUSTED,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM shortcircuit=no
+        autolearn=disabled version=3.4.4
+X-Spam-Checker-Version: SpamAssassin 3.4.4 (2020-01-24) on
+        mailout.protonmail.ch
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-While submitting a patch to add next_wakeup, checkpatch reported this -
+Hi,
 
-WARNING: ENOTSUPP is not a SUSV4 error code, prefer EOPNOTSUPP
-+       return -ENOTSUPP;
+this patch series adds support for the flash LED on Nexus 5.
 
-Address the above warning in other functions in pm_domain.h.
+The first patch adds the driver for the QPNP flash LED. The code for the dr=
+iver
+was ported from [1], which was for the 3.4 kernel. That driver originally
+supported multiple LED types: WLED, Flash/Torch, RGB, MPP and KPDBL as desc=
+ribed
+in [2], but this port only contains support for Flash/Torch, and the code f=
+or
+the others was removed just because it was easier to test. Also, it was
+originally an SPMI driver, but here I made it into a platform driver that
+matches an SPMI device and uses regmap to read and write on the addresses.
 
-Signed-off-by: Lina Iyer <ilina@codeaurora.org>
----
- include/linux/pm_domain.h | 14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+The second patch adds the driver as a module in qcom's defconfig, which is =
+the
+one used by the Nexus 5.
 
-diff --git a/include/linux/pm_domain.h b/include/linux/pm_domain.h
-index 49982cd58bfd..e390388e6c17 100644
---- a/include/linux/pm_domain.h
-+++ b/include/linux/pm_domain.h
-@@ -259,24 +259,24 @@ static inline int pm_genpd_init(struct generic_pm_domain *genpd,
- }
- static inline int pm_genpd_remove(struct generic_pm_domain *genpd)
- {
--	return -ENOTSUPP;
-+	return -EOPNOTSUPP;
- }
- 
- static inline int dev_pm_genpd_set_performance_state(struct device *dev,
- 						     unsigned int state)
- {
--	return -ENOTSUPP;
-+	return -EOPNOTSUPP;
- }
- 
- static inline int dev_pm_genpd_add_notifier(struct device *dev,
- 					    struct notifier_block *nb)
- {
--	return -ENOTSUPP;
-+	return -EOPNOTSUPP;
- }
- 
- static inline int dev_pm_genpd_remove_notifier(struct device *dev)
- {
--	return -ENOTSUPP;
-+	return -EOPNOTSUPP;
- }
- 
- static inline int dev_pm_genpd_set_next_wakeup(struct device *dev, ktime_t next)
-@@ -334,13 +334,13 @@ struct device *genpd_dev_pm_attach_by_name(struct device *dev,
- static inline int of_genpd_add_provider_simple(struct device_node *np,
- 					struct generic_pm_domain *genpd)
- {
--	return -ENOTSUPP;
-+	return -EOPNOTSUPP;
- }
- 
- static inline int of_genpd_add_provider_onecell(struct device_node *np,
- 					struct genpd_onecell_data *data)
- {
--	return -ENOTSUPP;
-+	return -EOPNOTSUPP;
- }
- 
- static inline void of_genpd_del_provider(struct device_node *np) {}
-@@ -396,7 +396,7 @@ static inline struct device *genpd_dev_pm_attach_by_name(struct device *dev,
- static inline
- struct generic_pm_domain *of_genpd_remove_last(struct device_node *np)
- {
--	return ERR_PTR(-ENOTSUPP);
-+	return ERR_PTR(-EOPNOTSUPP);
- }
- #endif /* CONFIG_PM_GENERIC_DOMAINS_OF */
- 
--- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project
+The third patch adds the relevant nodes to Nexus 5's device tree. These nod=
+es
+were copied from [3] and [4], only changing the flash-boost-supply and
+torch-boost-supply properties to point to the regulator nodes already defin=
+ed
+upstream at qcom-pm8941.dtsi. Again, I'm not sure if the nodes should be ke=
+pt on
+separate .dtsi as they were downstream, I just did what was easier for test=
+ing.
+
+The flash LED can be tested on a Nexus 5 with the following:
+
+To turn the LED on:
+echo 1 > /sys/class/leds/led\:flash_torch/brightness
+
+To turn the LED on only for a couple seconds:
+echo 1 > /sys/class/leds/led\:flash_0/brightness
+
+From what I understand flash and torch correspond to the same LED, but flas=
+h
+only stays on for a couple seconds and uses a different voltage regulator.
+I'm not sure why there are both flash_0 and flash_1. Both seem to do the sa=
+me.
+
+My questions are: Is there something fundamentally wrong with this patch se=
+ries?
+Is it okay to have the driver only support the flash LEDs from QPNP (at lea=
+st
+for the time being)?
+But also please give me any other feedback.
+
+Thanks,
+N=C3=ADcolas
+
+[1] https://github.com/AICP/kernel_lge_hammerhead/blob/n7.1/drivers/leds/le=
+ds-qpnp.c
+[2] https://github.com/AICP/kernel_lge_hammerhead/blob/n7.1/Documentation/d=
+evicetree/bindings/leds/leds-qpnp.txt
+[3] https://github.com/AICP/kernel_lge_hammerhead/blob/n7.1/arch/arm/boot/d=
+ts/msm-pm8941.dtsi
+[4] https://github.com/AICP/kernel_lge_hammerhead/blob/n7.1/arch/arm/boot/d=
+ts/msm8974-leds.dtsi
+My tree: https://gitlab.com/nfraprado/linux/
+
+N=C3=ADcolas F. R. A. Prado (3):
+  leds: Add driver for QPNP flash led
+  ARM: qcom_defconfig: Add QPNP flash LED support
+  ARM: dts: qcom: msm8974-hammerhead: Add support for the flash LED
+
+ .../qcom-msm8974-lge-nexus5-hammerhead.dts    |   56 +
+ arch/arm/configs/qcom_defconfig               |    1 +
+ drivers/leds/Kconfig                          |    9 +
+ drivers/leds/Makefile                         |    1 +
+ drivers/leds/leds-qpnp.c                      | 1351 +++++++++++++++++
+ 5 files changed, 1418 insertions(+)
+ create mode 100644 drivers/leds/leds-qpnp.c
+
+--=20
+2.29.2
+
 
