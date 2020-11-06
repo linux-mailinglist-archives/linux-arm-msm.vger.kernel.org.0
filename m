@@ -2,105 +2,226 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 3A5822A9E37
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Nov 2020 20:41:46 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 796DB2A9FAC
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Nov 2020 23:01:38 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727356AbgKFTlp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 6 Nov 2020 14:41:45 -0500
-Received: from m42-4.mailgun.net ([69.72.42.4]:31914 "EHLO m42-4.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726415AbgKFTlp (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 6 Nov 2020 14:41:45 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1604691704; h=Message-ID: References: In-Reply-To: Reply-To:
- Subject: Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=ZMYgPyvbguxZpSaZECnSIqvfGASG5f6osdSwFVa/NOw=;
- b=qZRd5aPga+nFP6whFdsqJJJNYNugcPtUfVeiGIj1t9I3t7ZH+a5cjqxregHAPLVVQksHW2dD
- LE+GFnXy+uZ0LrzTWw3MiKHeP705VOZYLGKPckjh4ohGR2w1OF6bWadaq1Ipv7o+XI107peO
- AYU5a2vTwo+1GCmdUhbgN/Xy7GE=
-X-Mailgun-Sending-Ip: 69.72.42.4
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n02.prod.us-west-2.postgun.com with SMTP id
- 5fa5a6de18b2aa4b1f04b303 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 06 Nov 2020 19:41:18
- GMT
-Sender: bbhatt=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 5776DC433C8; Fri,  6 Nov 2020 19:41:18 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: bbhatt)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id D6309C433C6;
-        Fri,  6 Nov 2020 19:41:16 +0000 (UTC)
+        id S1728578AbgKFWBh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 6 Nov 2020 17:01:37 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58764 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728558AbgKFWBh (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 6 Nov 2020 17:01:37 -0500
+Received: from mail-pl1-x630.google.com (mail-pl1-x630.google.com [IPv6:2607:f8b0:4864:20::630])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DB7CDC0613D2
+        for <linux-arm-msm@vger.kernel.org>; Fri,  6 Nov 2020 14:01:36 -0800 (PST)
+Received: by mail-pl1-x630.google.com with SMTP id t22so1282776plr.9
+        for <linux-arm-msm@vger.kernel.org>; Fri, 06 Nov 2020 14:01:36 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=W+uIjFpomS32ORnnJTlJpgvJ2GUOPYTDFngxZooh9Yw=;
+        b=mGHs4x96E40ceUJ1gHofW8EdE9O8zAMCLZ10G3TsbE1LbeOuFCV4hLxem3lTZsPaCO
+         AC4QJ/Za62ydIR3ia+KD7GJJ2UbY6pEylwWZqABEB37Up8wJJn5Zz1LvU5CbzJnumit6
+         rZ7/ZBBFkk6QlJG6Viib77aRN3YR+S4pKLXP8=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=W+uIjFpomS32ORnnJTlJpgvJ2GUOPYTDFngxZooh9Yw=;
+        b=jsTjOVK63chtutgewvAhCBB4q20nvaew4EIjXGilRAfkYIqGrVtonGFqOmrg9bBbYy
+         tbqlcah9paCNZZp43868v6P4faPzy/Xe0/I5xcHZAOqdmHfKPlZ7pP/sZokDWNO5OBDQ
+         crpzFv+ZpzmwGR7u7krYiFodsHUVFQILHzQzuROep1FLkTWPn3/YdJ7XnGzAPy9Nrr8F
+         lPqm5qD5ZXcIbDNDOfMLFmSorOfFQtoYK8W/ae6pCBWGWj6oUN/+weLYMP+b8Ao/BuNl
+         6kHzPBbWogvOOMtGcxCInliU3vbwg3AH1zIY7BX2Supg4PgrehYcwvrCGOIOs19LJPOF
+         GNEQ==
+X-Gm-Message-State: AOAM531ilUmlRgFYLZagC0lXWbrdLk2nSqqApEfCyxaaiIch1oM3HkfA
+        kHzfJVcmwiGTbgTDbspUCs6XS4lfslL+5g==
+X-Google-Smtp-Source: ABdhPJxTtRLyN/KpvY0Uvm1maoJ87G0906yF1VT94dM7fgO3qTr7FAmQDfiNoP7FQTJTl5aU3BXrjg==
+X-Received: by 2002:a17:902:8bc4:b029:d6:88c3:ea41 with SMTP id r4-20020a1709028bc4b02900d688c3ea41mr3182918plo.53.1604700096250;
+        Fri, 06 Nov 2020 14:01:36 -0800 (PST)
+Received: from localhost ([2620:15c:202:1:f693:9fff:fef4:e70a])
+        by smtp.gmail.com with ESMTPSA id u5sm3389716pjn.15.2020.11.06.14.01.35
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 06 Nov 2020 14:01:35 -0800 (PST)
+From:   Matthias Kaehlcke <mka@chromium.org>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        Douglas Anderson <dianders@chromium.org>,
+        linux-kernel@vger.kernel.org, Matthias Kaehlcke <mka@chromium.org>
+Subject: [PATCH v3 1/2] arm64: dts: qcom: sc7180: Add sc7180-lazor-r2/r3
+Date:   Fri,  6 Nov 2020 14:01:32 -0800
+Message-Id: <20201106140125.v3.1.I5a75056d573808f40fed22ab7d28ea6be5819f84@changeid>
+X-Mailer: git-send-email 2.29.1.341.ge80a0c044ae-goog
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Fri, 06 Nov 2020 11:41:16 -0800
-From:   Bhaumik Bhatt <bbhatt@codeaurora.org>
-To:     Loic Poulain <loic.poulain@linaro.org>
-Cc:     manivannan.sadhasivam@linaro.org, hemantk@codeaurora.org,
-        linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH] bus: mhi: Fix channel close issue on driver remove
-Organization: Qualcomm Innovation Center, Inc.
-Reply-To: bbhatt@codeaurora.org
-Mail-Reply-To: bbhatt@codeaurora.org
-In-Reply-To: <1602234434-924-1-git-send-email-loic.poulain@linaro.org>
-References: <1602234434-924-1-git-send-email-loic.poulain@linaro.org>
-Message-ID: <4a9fec5ce7e0c8ca72041252344b5347@codeaurora.org>
-X-Sender: bbhatt@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2020-10-09 02:07, Loic Poulain wrote:
-> Some MHI device drivers need to stop the channels in their driver
-> remove callback (e.g. module unloading), but the unprepare function
-> is aborted because MHI core moved the channels to suspended state
-> prior calling driver remove callback. This prevents the driver to
-> send a proper MHI RESET CHAN command to the device. Device is then
-> unaware of the stopped state of these channels.
-> 
-> This causes issue when driver tries to start the channels again (e.g.
-> module is reloaded), since device considers channels as already
-> started (inconsistent state).
-> 
-> Fix this by allowing channel reset when channel is suspended.
-> 
-> Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
-Reviewed-by: Bhaumik Bhatt <bbhatt@codeaurora.org>
-> ---
->  drivers/bus/mhi/core/main.c | 3 ++-
->  1 file changed, 2 insertions(+), 1 deletion(-)
-> 
-> diff --git a/drivers/bus/mhi/core/main.c b/drivers/bus/mhi/core/main.c
-> index d20967a..a588eac 100644
-> --- a/drivers/bus/mhi/core/main.c
-> +++ b/drivers/bus/mhi/core/main.c
-> @@ -1232,7 +1232,8 @@ static void __mhi_unprepare_channel(struct
-> mhi_controller *mhi_cntrl,
->  	/* no more processing events for this channel */
->  	mutex_lock(&mhi_chan->mutex);
->  	write_lock_irq(&mhi_chan->lock);
-> -	if (mhi_chan->ch_state != MHI_CH_STATE_ENABLED) {
-> +	if (mhi_chan->ch_state != MHI_CH_STATE_ENABLED &&
-> +	    mhi_chan->ch_state != MHI_CH_STATE_SUSPENDED) {
->  		write_unlock_irq(&mhi_chan->lock);
->  		mutex_unlock(&mhi_chan->mutex);
->  		return;
+Add configs for lazor rev2 and rev3. There are no relevant deltas
+between rev1 and rev2, so just add the rev2 compatible string to the
+rev1 config.
 
-Thanks,
-Bhaumik
+One important delta in rev3 is a switch of the power supply for the
+onboard USB hub from 'pp3300_l7c' to 'pp3300_a' + a load switch. The
+actual regulator switch is done by the patch 'arm64: dts: qcom:
+sc7180-trogdor: Make pp3300_a the default supply for pp3300_hub',
+since it affects the entire trogdor platform. Here we only add the
+.dts files for lazor rev3 and replace the generic compatible entries
+in the rev1 .dts files.
+
+Signed-off-by: Matthias Kaehlcke <mka@chromium.org>
+---
+
+Changes in v3:
+- rev3 switched the regulator, not rev2
+- also handle rev2 in rev1 files
+- fixed include in -r3-kb.dts
+
+Changes in v2:
+- patch added to the series
+
+ arch/arm64/boot/dts/qcom/Makefile              |  3 +++
+ .../dts/qcom/sc7180-trogdor-lazor-r1-kb.dts    |  4 ++--
+ .../dts/qcom/sc7180-trogdor-lazor-r1-lte.dts   |  4 ++--
+ .../boot/dts/qcom/sc7180-trogdor-lazor-r1.dts  |  4 ++--
+ .../dts/qcom/sc7180-trogdor-lazor-r3-kb.dts    | 17 +++++++++++++++++
+ .../dts/qcom/sc7180-trogdor-lazor-r3-lte.dts   | 18 ++++++++++++++++++
+ .../boot/dts/qcom/sc7180-trogdor-lazor-r3.dts  | 15 +++++++++++++++
+ 7 files changed, 59 insertions(+), 6 deletions(-)
+ create mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r3-kb.dts
+ create mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r3-lte.dts
+ create mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r3.dts
+
+diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
+index fb4631f898fd..3573f7a7b762 100644
+--- a/arch/arm64/boot/dts/qcom/Makefile
++++ b/arch/arm64/boot/dts/qcom/Makefile
+@@ -26,6 +26,9 @@ dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-lazor-r0.dtb
+ dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-lazor-r1.dtb
+ dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-lazor-r1-kb.dtb
+ dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-lazor-r1-lte.dtb
++dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-lazor-r3.dtb
++dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-lazor-r3-kb.dtb
++dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-lazor-r3-lte.dtb
+ dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-r1.dtb
+ dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-r1-lte.dtb
+ dtb-$(CONFIG_ARCH_QCOM)	+= sdm630-sony-xperia-ganges-kirin.dtb
+diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r1-kb.dts b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r1-kb.dts
+index c3f426c3c30a..919bfaea6189 100644
+--- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r1-kb.dts
++++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r1-kb.dts
+@@ -8,8 +8,8 @@
+ #include "sc7180-trogdor-lazor-r1.dts"
+ 
+ / {
+-	model = "Google Lazor (rev1+) with KB Backlight";
+-	compatible = "google,lazor-sku2", "qcom,sc7180";
++	model = "Google Lazor (rev1 - 2) with KB Backlight";
++	compatible = "google,lazor-rev1-sku2", "google,lazor-rev2-sku2", "qcom,sc7180";
+ };
+ 
+ &keyboard_backlight {
+diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r1-lte.dts b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r1-lte.dts
+index 73e59cf7752a..5a67e5baafec 100644
+--- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r1-lte.dts
++++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r1-lte.dts
+@@ -9,8 +9,8 @@
+ #include "sc7180-trogdor-lte-sku.dtsi"
+ 
+ / {
+-	model = "Google Lazor (rev1+) with LTE";
+-	compatible = "google,lazor-sku0", "qcom,sc7180";
++	model = "Google Lazor (rev1 - 2) with LTE";
++	compatible = "google,lazor-rev1-sku0", "google,lazor-rev2-sku0", "qcom,sc7180";
+ };
+ 
+ &keyboard_backlight {
+diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r1.dts b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r1.dts
+index 3151ae31c1cc..9354d4c5ef7d 100644
+--- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r1.dts
++++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r1.dts
+@@ -10,6 +10,6 @@
+ #include "sc7180-trogdor-lazor.dtsi"
+ 
+ / {
+-	model = "Google Lazor (rev1+)";
+-	compatible = "google,lazor", "qcom,sc7180";
++	model = "Google Lazor (rev1 - 2)";
++	compatible = "google,lazor-rev1", "google,lazor-rev2", "qcom,sc7180";
+ };
+diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r3-kb.dts b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r3-kb.dts
+new file mode 100644
+index 000000000000..6985beb97e53
+--- /dev/null
++++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r3-kb.dts
+@@ -0,0 +1,17 @@
++// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
++/*
++ * Google Lazor board device tree source
++ *
++ * Copyright 2020 Google LLC.
++ */
++
++#include "sc7180-trogdor-lazor-r3.dts"
++
++/ {
++	model = "Google Lazor (rev3+) with KB Backlight";
++	compatible = "google,lazor-sku2", "qcom,sc7180";
++};
++
++&keyboard_backlight {
++	status = "okay";
++};
+diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r3-lte.dts b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r3-lte.dts
+new file mode 100644
+index 000000000000..43836fc4d403
+--- /dev/null
++++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r3-lte.dts
+@@ -0,0 +1,18 @@
++// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
++/*
++ * Google Lazor board device tree source
++ *
++ * Copyright 2020 Google LLC.
++ */
++
++#include "sc7180-trogdor-lazor-r3.dts"
++#include "sc7180-trogdor-lte-sku.dtsi"
++
++/ {
++	model = "Google Lazor (rev3+) with LTE";
++	compatible = "google,lazor-sku0", "qcom,sc7180";
++};
++
++&keyboard_backlight {
++	status = "okay";
++};
+diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r3.dts b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r3.dts
+new file mode 100644
+index 000000000000..1b9d2f46359e
+--- /dev/null
++++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r3.dts
+@@ -0,0 +1,15 @@
++// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
++/*
++ * Google Lazor board device tree source
++ *
++ * Copyright 2020 Google LLC.
++ */
++
++/dts-v1/;
++
++#include "sc7180-trogdor-lazor.dtsi"
++
++/ {
++	model = "Google Lazor (rev3+)";
++	compatible = "google,lazor", "qcom,sc7180";
++};
 -- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora 
-Forum,
-a Linux Foundation Collaborative Project
+2.29.1.341.ge80a0c044ae-goog
+
