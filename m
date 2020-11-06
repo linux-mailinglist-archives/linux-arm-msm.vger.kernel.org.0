@@ -2,120 +2,120 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id AF9A32A8EF3
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Nov 2020 06:38:28 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0BC512A8F3F
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Nov 2020 07:14:56 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726105AbgKFFi1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 6 Nov 2020 00:38:27 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45402 "EHLO
+        id S1725842AbgKFGOm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 6 Nov 2020 01:14:42 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50952 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725440AbgKFFi1 (ORCPT
+        with ESMTP id S1725828AbgKFGOl (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 6 Nov 2020 00:38:27 -0500
-Received: from mail-pf1-x442.google.com (mail-pf1-x442.google.com [IPv6:2607:f8b0:4864:20::442])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 23A2DC0613CF
-        for <linux-arm-msm@vger.kernel.org>; Thu,  5 Nov 2020 21:38:26 -0800 (PST)
-Received: by mail-pf1-x442.google.com with SMTP id z3so285460pfz.6
-        for <linux-arm-msm@vger.kernel.org>; Thu, 05 Nov 2020 21:38:26 -0800 (PST)
+        Fri, 6 Nov 2020 01:14:41 -0500
+Received: from mail-pl1-x644.google.com (mail-pl1-x644.google.com [IPv6:2607:f8b0:4864:20::644])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 294C0C0613CF;
+        Thu,  5 Nov 2020 22:14:40 -0800 (PST)
+Received: by mail-pl1-x644.google.com with SMTP id t6so180356plq.11;
+        Thu, 05 Nov 2020 22:14:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=73giOY8/PzyS+yOm7jOoDVLjSGxoM+4SVlRTyYDUinw=;
-        b=X1tDkKTo99uAhP7XFRlGX3sF8frIqTphOl+qm8VHVipTgcOZP39gA0sGRR9UQy6t4e
-         J3e+jP3Xg1x9TlKvF/RgoY/nQEfV//3Mo8Wwh7xIttar0K0LasJfrQYJ32TavYJzKbF3
-         xLonyKL7KBmRd7kYc5L4N4addK6GrmKWYAalK/WJX61XS4gvbDLWHk1T6TyyM/QVWt3c
-         YHc+fsh9142e/M66CT1taprGfFOUBvlHfjCoQyvoe3Sl3CvXD7szuqH5yb3rKGB1A5Kb
-         QkNO9W0RUvYw7ZRa8wlnndDf3unx4zRchUZOA4ZfcEAwGTwo2wTn8AL0wbmg9tmGz+Ns
-         io/w==
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=ZlXKKq4DGEFjUy+nOWMktAH/V5heZC0/6ILxLCieIBI=;
+        b=uzq0KYojkUs4t+Q4y3YBqX0rQNXV7pH3WlTA04d9xfT2HzTtRS3Ey60ivElLdbiQ6C
+         zFVX81uumdUT5FV4Zja3UM60O36+C4AYkDG9oUsJKhIOf7gEmd434azZmqvFrOjlZg4t
+         UPBURLWtRU0ibF94bPAoRqrwQ4fKKP46UwIGQ/DND6ZD2NmUYAgOY8Y7FxC2mmjPnHFV
+         qMtxbD4JZ0jT563EdP6MPHQ0wU3XON48XbuLpy0CQPufsvMGSUpvOsGZn2qDAgVwPAaI
+         AFCfj9D21WFd9CS5UDuTQ3IgCDOlQ1pTCoc9Um/ZEV22ml05J6IGPqssKSUR9n8JSZI2
+         0PEQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=73giOY8/PzyS+yOm7jOoDVLjSGxoM+4SVlRTyYDUinw=;
-        b=tY04AS3f0eZ0cSEdbZfUm0Zug9EdFkhQHwyxiVhCVnUNxC10IHwcu7GGlJivXH1kmu
-         t8GSiqePaIoqVYVoTdKd70QI4v/29nJoB0BJejfVV+EUAZJEDwEoLwaBAy4XxQrS9UWP
-         CCF6H2HqMf504XBsKolfNXQvaRdJFAQfEyIHslBoTsDY8qTNpcQqQozzF6aTnDZwZqu0
-         UBBvSqEUtYL5ra4ME/0mLjieMX+JA7J58bSbuS3AHcWm2cL2tA4KnMd/FcvoSV9VsweR
-         U+MU2WISAOMT4Lbe9V128u9hxj7oHXWsGE9CJJkRPJpZ4Y0uvyxFajnc1hcSyqaiAgQr
-         E+jQ==
-X-Gm-Message-State: AOAM532smWCMWfdr2CsPUoOPmdZ6H0P6vpqtvRDB1Qo4Wv7ed3E6aA2I
-        Vd2edgbhsmjti3Zcilp/9SvghXVXIgK1
-X-Google-Smtp-Source: ABdhPJxDAX67kINgrfO8PMvQka+j2zGlDvcmtKmFcqKFnx6uIstK2oGN9OPnLU+5Qj0vHvcUllvPyA==
-X-Received: by 2002:a17:90a:6392:: with SMTP id f18mr614677pjj.143.1604641105637;
-        Thu, 05 Nov 2020 21:38:25 -0800 (PST)
-Received: from work ([103.59.133.81])
-        by smtp.gmail.com with ESMTPSA id i11sm414301pfd.211.2020.11.05.21.38.23
-        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 05 Nov 2020 21:38:24 -0800 (PST)
-Date:   Fri, 6 Nov 2020 11:08:19 +0530
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     Bhaumik Bhatt <bbhatt@codeaurora.org>
-Cc:     linux-arm-msm@vger.kernel.org, hemantk@codeaurora.org,
-        jhugo@codeaurora.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v1 6/6] bus: mhi: core: Skip RDDM download for unknown
- execution environment
-Message-ID: <20201106053819.GG3473@work>
-References: <1604622869-40212-1-git-send-email-bbhatt@codeaurora.org>
- <1604622869-40212-7-git-send-email-bbhatt@codeaurora.org>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=ZlXKKq4DGEFjUy+nOWMktAH/V5heZC0/6ILxLCieIBI=;
+        b=BWkv/s0wFbxEA/QfL6gQcLHswQSeYeTAtFZkQR0IJz/LuvPbfjk3pGhl5TwLb5DFOt
+         brktebsc10iquIU206K7riN5ZlYbx4rkmMzpfcEE1M5fIyHEGSXyBdY4+WRFMpvZn7gW
+         Vn6oQzoeLM0IS0ILUMWmlFdkHUzGJ18HnC6DI5Zf3SuscVl0h/Bz8KAo0eIymDctvcPc
+         xgUVKy1qp6TiB1D7SbJ3DW70Qqe7K229GggKd9pmOaOIqWHw615M0lJ2O6yE9CQyGcl3
+         z17WmqVx9k6KzZfHgpayhGaBIVzRilY1cEXzBYPXp9tHtbQuu5fg5CRDu7qqbnqF+M1L
+         9NfA==
+X-Gm-Message-State: AOAM533UMpZvmEEVsLVlMUGFZf5ks7SE8iqSUbbMmooB+JvbO7UJbaQR
+        GxqE5xAlw28jAaHZCbZZExYvqvGR+sGTnQ==
+X-Google-Smtp-Source: ABdhPJyroxk5j3uozX4q/49k3ilXtr3HfELI1nHsLBO+uoSc7N38F15qJ9kCIb5kPorMtxomgTZJxQ==
+X-Received: by 2002:a17:902:8a97:b029:d4:d3f4:d209 with SMTP id p23-20020a1709028a97b02900d4d3f4d209mr500321plo.35.1604643279370;
+        Thu, 05 Nov 2020 22:14:39 -0800 (PST)
+Received: from localhost (114-34-18-97.HINET-IP.hinet.net. [114.34.18.97])
+        by smtp.gmail.com with ESMTPSA id y5sm620227pfc.165.2020.11.05.22.14.37
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 05 Nov 2020 22:14:38 -0800 (PST)
+From:   Ajye Huang <ajye.huang@gmail.com>
+X-Google-Original-From: Ajye Huang <ajye_huang@compal.corp-partner.google.com>
+To:     linux-kernel@vger.kernel.org
+Cc:     Mark Brown <broonie@kernel.org>,
+        Rohit kumar <rohitkr@codeaurora.org>,
+        Banajit Goswami <bgoswami@codeaurora.org>,
+        Patrick Lai <plai@codeaurora.org>,
+        Srinivasa Rao Mandadapu <srivasam@codeaurora.org>,
+        srinivas.kandagatla@linaro.org, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Rob Herring <robh+dt@kernel.org>, robh@kernel.org,
+        Jaroslav Kysela <perex@perex.cz>, cychiang@chromium.org,
+        tzungbi@chromium.org, dianders@chromium.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        alsa-devel@alsa-project.org,
+        Ajye Huang <ajye_huang@compal.corp-partner.google.com>
+Subject: [PATCH v6 0/2] Modify documentation and machine driver for SC7180 sound card
+Date:   Fri,  6 Nov 2020 14:14:31 +0800
+Message-Id: <20201106061433.1483129-1-ajye_huang@compal.corp-partner.google.com>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1604622869-40212-7-git-send-email-bbhatt@codeaurora.org>
-User-Agent: Mutt/1.9.4 (2018-02-28)
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Nov 05, 2020 at 04:34:29PM -0800, Bhaumik Bhatt wrote:
-> If MHI is unable to determine the execution environment during
-> the panic path, host must skip the RDDM download. This can happen
-> if the BHI offset read or the BHI_EXECENV register read fails
-> indicating that the underlying transport is unresponsive. Hence,
-> there is no need to trigger an RDDM using SYSERR or request an
-> SOC reset.
-> 
-> Suggested-by: Hemant Kumar <hemantk@codeaurora.org>
-> Signed-off-by: Bhaumik Bhatt <bbhatt@codeaurora.org>
-> ---
->  drivers/bus/mhi/core/boot.c | 7 ++++++-
->  1 file changed, 6 insertions(+), 1 deletion(-)
-> 
-> diff --git a/drivers/bus/mhi/core/boot.c b/drivers/bus/mhi/core/boot.c
-> index 16244cc..40606e5 100644
-> --- a/drivers/bus/mhi/core/boot.c
-> +++ b/drivers/bus/mhi/core/boot.c
-> @@ -92,6 +92,9 @@ static int __mhi_download_rddm_in_panic(struct mhi_controller *mhi_cntrl)
->  	 * image download completion.
->  	 */
->  	ee = mhi_get_exec_env(mhi_cntrl);
-> +	if (ee == MHI_EE_MAX)
-> +		goto error_exit_rddm;
-> +
->  	if (ee != MHI_EE_RDDM) {
->  		dev_dbg(dev, "Trigger device into RDDM mode using SYS ERR\n");
->  		mhi_set_mhi_state(mhi_cntrl, MHI_STATE_SYS_ERR);
-> @@ -140,9 +143,11 @@ static int __mhi_download_rddm_in_panic(struct mhi_controller *mhi_cntrl)
->  	ret = mhi_read_reg(mhi_cntrl, base, BHIE_RXVECSTATUS_OFFS, &rx_status);
->  
->  	dev_err(dev, "Did not complete RDDM transfer\n");
-> -	dev_err(dev, "Current EE: %s\n", TO_MHI_EXEC_STR(ee));
->  	dev_err(dev, "RXVEC_STATUS: 0x%x\n", rx_status);
->  
-> +error_exit_rddm:
-> +	dev_err(dev, "Current EE: %s\n", TO_MHI_EXEC_STR(ee));
+Note:
+- The patch is made by the collaboration of
+ Ajye Huang <ajye_huang@compal.corp-partner.google.com>
+ Cheng-Yi Chiang <cychiang@chromium.org>
 
-Can this error message improved? It doesn't make much sense if error
-path is taken.
+v6:
+- Documentation: Addressed suggestions from Rob Herring.
+  - Define "maxItems: 1" in dmic-gpios property.
+  - Only keep one example and add dmic-gpios property in.
+v5:
+- Machine driver:
+  - Fix a format string warning (Reported-by: kernel test robot <lkp@intel.com>).
+    detailed info at https://lore.kernel.org/patchwork/patch/1331087/
 
-Thanks,
-Mani
+v4:
+- Machine driver: Addressed suggestions from Tzung-Bi.
+  - Remove redundant judgments in dmic_set() and dmic_get().
+  - Remove 1 level indent of judgment of IS_ERR(data->dmic_sel).
 
-> +
->  	return -EIO;
->  }
->  
-> -- 
-> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-> a Linux Foundation Collaborative Project
-> 
+v3:
+- Machine driver: Addressed suggestions from Tzung-Bi.
+  - Move variables "dmic_switch" and "dmic_sel" into struct sc7180_snd_data.
+  - Remove redundant judgments in dmic_set().
+
+v2:
+- Documentation: Modify the dimc-gpios property description and examples.
+- Machine driver: 
+  - Remove "qcom,sc7180-sndcard-rt5682-m98357-2mic" compatible
+  - See gpio property and use anadditional control.
+
+Thanks for the review!
+
+Ajye Huang (2):
+  ASoC: google: dt-bindings: modify machine bindings for two MICs case
+  ASoC: qcom: sc7180: Modify machine driver for 2mic
+
+ .../bindings/sound/google,sc7180-trogdor.yaml |  8 ++-
+ sound/soc/qcom/sc7180.c                       | 61 +++++++++++++++++++
+ 2 files changed, 68 insertions(+), 1 deletion(-)
+
+-- 
+2.25.1
+
