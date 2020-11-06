@@ -2,208 +2,187 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 591C72A9492
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Nov 2020 11:39:53 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D4BA42A94FA
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Nov 2020 12:07:52 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727167AbgKFKjt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 6 Nov 2020 05:39:49 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35962 "EHLO
+        id S1726808AbgKFLHu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 6 Nov 2020 06:07:50 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40296 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726702AbgKFKjs (ORCPT
+        with ESMTP id S1726317AbgKFLHt (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 6 Nov 2020 05:39:48 -0500
-Received: from mail-vs1-xe44.google.com (mail-vs1-xe44.google.com [IPv6:2607:f8b0:4864:20::e44])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0CB02C0613CF
-        for <linux-arm-msm@vger.kernel.org>; Fri,  6 Nov 2020 02:39:48 -0800 (PST)
-Received: by mail-vs1-xe44.google.com with SMTP id 128so397182vso.7
-        for <linux-arm-msm@vger.kernel.org>; Fri, 06 Nov 2020 02:39:48 -0800 (PST)
+        Fri, 6 Nov 2020 06:07:49 -0500
+Received: from mail-wm1-x344.google.com (mail-wm1-x344.google.com [IPv6:2a00:1450:4864:20::344])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8DE24C0613D2
+        for <linux-arm-msm@vger.kernel.org>; Fri,  6 Nov 2020 03:07:46 -0800 (PST)
+Received: by mail-wm1-x344.google.com with SMTP id 23so710925wmg.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 06 Nov 2020 03:07:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=0LfqbFVQDf6EnKMtM2PNGP+fMgWiqJYrhuyrC9aGMG0=;
-        b=Cn2FkJpPTwrScEBFP30KmR+ETYrdD8nqf3x0CR71mlDkB4y4y6gIHcwT3ZztSbJo+G
-         rtY0jbK/4OeoFy7GNlca3ZyqajC86XuArno5O2bv4txDNs6kYwIdCpd89ncbLw4Jwx8b
-         H7BfHfXVug9QIobm+rS6noOyXDdrzJVelFJJBwGl6pwh8vA8uJ/YLStxGDJoLW3Ih6ug
-         jdVPeNH0DvkT+BWeLf8eCxH++yirPopFQ/pg9MhSqR6qo0HG1ttke1qvaGoqK3o+6erc
-         7sFC83bhEERz3eH1wR1xnG/ZDGd9exD0su5iaY9KsSbH2nas5lPKxJk7Fi7J7V0Ev3vE
-         wYSg==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=n7O8QvaxHe67uhrGjIcnRsG7AT5yAAmj1iYj13UlWSk=;
+        b=sotY8lsijBMHrgYWzuJFn2xDYKLi5oQpVgBSlGqq1p9jFgvL2qVYnUnZLOPj6Rc8Ij
+         /zYg00YTvSRuq6ZJL9EVCVxx2ZgwLw78VHw+PNSkhJSay3Xeghsksi63Gs/mFvgltOrE
+         9LOq5eOnwExTRslV6rYH9ctYH0qcMfI0gOcyW0gD77RaEd+JerRvz4BsWwS14ge9B5O3
+         tfNycJsJyxAVRXvKWm3PfvJKiwVOnrgOw861TqoJeTOiCED5HMt11B1GhD5VvJgew66U
+         BcVN925IXn3WWd34yhaESEb+WTuZX1E8oUc0tN+X2gGp4AJBlN65uRYWQkYbxmJUO5wl
+         XrNw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=0LfqbFVQDf6EnKMtM2PNGP+fMgWiqJYrhuyrC9aGMG0=;
-        b=mM+OZoEzo+W8ywl6si0NRjBCmOENh5l4cpjjj0us2l6Gz5KJxpE9zfI0Nb++ar3Tk9
-         bHI5bj9P1XHiqUZaCRa2uFyidTUDqcxZF1wpx7z+VPkp7MQrWU3xzG9Ylcjlj7/rLJxp
-         sym30ByXyyLrQTbBzeZdImFER0pEJHpIOJlbWKCjfhTLSVeQopBMS+D3botrCfo+bJbr
-         bzbm+ZDO7gCoLiBQLogLPzwXrTLichbVe6I/SQnr5PIt4HZM4S4+clbpzRQOucqzrhUi
-         03HF8neKhk04s5evVESr2rEDavi6c8gDVavyGH5zc8LbbDWspeH4G67nQI/7ViUN7TC+
-         tSGQ==
-X-Gm-Message-State: AOAM532CwTcNPKWHu8bSO3KrIJ7Hy8r24nmTZt1Dy4k3UiZSm4csmCXF
-        pHkmy+N6V9F4mzECCmlVm25uxFQTj+97Qp3WG/I4tg==
-X-Google-Smtp-Source: ABdhPJwrrFjUmTEUgSw8KM5zff+kHxaTrTuy1pzw1Z5kVj4qG2MA9Af7aUi7pmz3zMyJk2E8QE6UlKcxpK/Mv0DkSZU=
-X-Received: by 2002:a67:3256:: with SMTP id y83mr522273vsy.48.1604659187176;
- Fri, 06 Nov 2020 02:39:47 -0800 (PST)
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=n7O8QvaxHe67uhrGjIcnRsG7AT5yAAmj1iYj13UlWSk=;
+        b=RN6GeM1pk9Rf2vjIv7qJjncC9UNddRC+4V9FCmmRjjrxt6YSXiz6hn4dhHYS4VKZPN
+         xKlWhHKFPxsTxhgciffjnPCGrHzF0pX1hoTTie3hKEV6iFqrekSot5rK4raJpV6LG2sG
+         fUv9Zb/vWQF6jW+U0qn4csMRmh14yu84UamfO7U+VFUg7kL++WQ1XJGSv8rzjyqqL4OE
+         xur1ALjmENgmHH/L3nuQ0fPmWKW+AIFp6LpQp6hnYe5Ytk1mSdRGC5mYpm+5PH+LZjUb
+         zq4CfpajAcsx6ZQ9Y+4H8SCqg3qrhuaNsDr8NslS8YsQx/XEehaiUiSg10JUy+N+YTam
+         2S6Q==
+X-Gm-Message-State: AOAM5312RGF0sLMTVZqGF08JuSXR+M82bkrMCNUnMcqMaOOYVNNGaVCP
+        qYhLK846UTEGo4pl3y5tsWKobg==
+X-Google-Smtp-Source: ABdhPJz0VpUwzSEJM0C94AmhzrNY+e+xXXJWgjWfhL2b/c+qUr+twopaKZjYT44xkHyz8UuRHlUL5w==
+X-Received: by 2002:a1c:e919:: with SMTP id q25mr1811606wmc.142.1604660865058;
+        Fri, 06 Nov 2020 03:07:45 -0800 (PST)
+Received: from [192.168.86.34] (cpc86377-aztw32-2-0-cust226.18-1.cable.virginm.net. [92.233.226.227])
+        by smtp.googlemail.com with ESMTPSA id q2sm1548574wrw.40.2020.11.06.03.07.43
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 06 Nov 2020 03:07:44 -0800 (PST)
+Subject: Re: [PATCH v2 1/2] pinctrl: qcom: Add sm8250 lpass lpi pinctrl driver
+To:     Andy Shevchenko <andy.shevchenko@gmail.com>
+Cc:     Linus Walleij <linus.walleij@linaro.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Andy Gross <agross@kernel.org>, linux-arm-msm@vger.kernel.org,
+        "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
+        devicetree <devicetree@vger.kernel.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
+References: <20201105120410.18305-1-srinivas.kandagatla@linaro.org>
+ <20201105120410.18305-2-srinivas.kandagatla@linaro.org>
+ <CAHp75VdM9LUV2M6rEZyK=4rh_+hwFK5_2-9RB7YQTuMxHSYCMg@mail.gmail.com>
+From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Message-ID: <640e8a15-d66d-3fca-6637-bd8dae32ea4a@linaro.org>
+Date:   Fri, 6 Nov 2020 11:07:43 +0000
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.8.0
 MIME-Version: 1.0
-References: <20201020180413.32225-1-ilina@codeaurora.org> <20201020180413.32225-2-ilina@codeaurora.org>
-In-Reply-To: <20201020180413.32225-2-ilina@codeaurora.org>
-From:   Ulf Hansson <ulf.hansson@linaro.org>
-Date:   Fri, 6 Nov 2020 11:39:10 +0100
-Message-ID: <CAPDyKFoJkPYG4Qc4gbX6uW7vr1OJm7hXfznU+oSs2kvqSjufUw@mail.gmail.com>
-Subject: Re: [PATCH v4 1/2] PM / domains: inform PM domain of a device's next wakeup
-To:     Lina Iyer <ilina@codeaurora.org>
-Cc:     "Rafael J. Wysocki" <rjw@rjwysocki.net>,
-        Linux PM <linux-pm@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <CAHp75VdM9LUV2M6rEZyK=4rh_+hwFK5_2-9RB7YQTuMxHSYCMg@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, 20 Oct 2020 at 20:04, Lina Iyer <ilina@codeaurora.org> wrote:
->
-> Some devices may have a predictable interrupt pattern while executing
-> usecases. An example would be the VSYNC interrupt associated with
-> display devices. A 60 Hz display could cause a interrupt every 16 ms. If
-> the device were in a PM domain, the domain would need to be powered up
-> for device to resume and handle the interrupt.
->
-> Entering a domain idle state saves power, only if the residency of the
-> idle state is met. Without knowing the idle duration of the domain, the
-> governor would just choose the deepest idle state that matches the QoS
-> requirements. The domain might be powered off just as the device is
-> expecting to wake up. If devices could inform PM frameworks of their
-> next event, the parent PM domain's idle duration can be determined.
->
-> So let's add the pm_genpd_set_next_wake() API for the device to notify
+Thanks Andy for the review,
 
-/s/pm_genpd_set_next_wake/dev_pm_genpd_set_next_wakeup
+On 05/11/2020 12:32, Andy Shevchenko wrote:
+> On Thu, Nov 5, 2020 at 2:06 PM Srinivas Kandagatla
+> <srinivas.kandagatla@linaro.org> wrote:
+>>
+>> Add initial pinctrl driver to support pin configuration for
+>> LPASS (Low Power Audio SubSystem) LPI (Low Power Island) pinctrl
+>> on SM8250.
+> 
+>> +config PINCTRL_LPASS_LPI
+>> +       tristate "Qualcomm Technologies Inc LPASS LPI pin controller driver"
+>> +       depends on GPIOLIB && OF
+>> +       help
+>> +         This is the pinctrl, pinmux, pinconf and gpiolib driver for the
+>> +         Qualcomm Technologies Inc LPASS (Low Power Audio SubSystem) LPI
+>> +         (Low Power Island) found on the Qualcomm Technologies Inc SoCs.
+> 
+>> +#include <linux/of_device.h>
+>> +#include <linux/of.h>
+> 
 
-Also, please don't use the word "notifiy", but rather "inform" or
-similar - to not confuse things with the kernel notifiers.
+I agree with most of the style related comments! will fix them in next 
+version!
 
-There are some more examples below in the patch where "notify" is
-used, please have a look at those as well.
+> ...
+> 
+>> +#ifdef CONFIG_DEBUG_FS
+>> +#include <linux/seq_file.h>
+> 
+>> +#else
+>> +#define lpi_gpio_dbg_show NULL
+>> +#endif
+> 
+> Hmm... Doesn't pin control provide a wrapper for this?
+> 
+I does, but the custom code can provide additional information (such as 
+pullup/pulldown configuration) which default one does not provide.
 
-> PM domains of the impending wakeup. This information will be the domain
-> governor to determine the best idle state given the wakeup.
->
-> Signed-off-by: Lina Iyer <ilina@codeaurora.org>
+Most of the pinctrl drivers have there own version of this!
 
-Other than the nitpicks above, this looks good to me:
+> ...
+> 
+>> +       int ret, npins;
+>> +       struct clk *core_vote = NULL;
+>> +       struct clk *audio_vote = NULL;
+>> +
+>> +       struct lpi_pinctrl *pctrl;
+>> +       const struct lpi_pinctrl_variant_data *data;
+>> +       struct device *dev = &pdev->dev;
+>> +       struct resource *res;
+> 
+> Redundant blank line. Can you keep them in reversed xmas tree order?
+> 
+> ...
+> 
+>> +       core_vote = devm_clk_get(&pdev->dev, "core");
+>> +       if (IS_ERR(core_vote)) {
+> 
+>> +               dev_dbg(&pdev->dev, "%s: clk get %s failed %d\n",
+>> +                       __func__, "core_vote", ret);
+> 
+> First of all you missed the deferred probe issue, second, __func__ is
+> redundant for *_dbg() calls (okay, when Dynamic Debug is enabled).
+> That said why not
+>    return dev_err_probe();
+> ?
+It looks neat, I will use that!
+Thanks for this hint, I never knew we had some function like that!
 
-Reviewed-by: Ulf Hansson <ulf.hansson@linaro.org>
 
-> ---
-> Changes in v4:
->         - Use PM domain data to store next_wakeup
->         - Drop runtime PM documentation
-> Changes in v3:
->         - Fix unwanted change
-> Changes in v2:
->         - Update documentation
->         - Remove runtime PM enabled check
->         - Update commit text
-> ---
->  drivers/base/power/domain.c | 36 ++++++++++++++++++++++++++++++++++++
->  include/linux/pm_domain.h   |  8 ++++++++
->  2 files changed, 44 insertions(+)
->
-> diff --git a/drivers/base/power/domain.c b/drivers/base/power/domain.c
-> index 743268996336..34b90e77e0cd 100644
-> --- a/drivers/base/power/domain.c
-> +++ b/drivers/base/power/domain.c
-> @@ -408,6 +408,41 @@ int dev_pm_genpd_set_performance_state(struct device *dev, unsigned int state)
->  }
->  EXPORT_SYMBOL_GPL(dev_pm_genpd_set_performance_state);
->
-> +/**
-> + * dev_pm_genpd_set_next_wakeup - Notify PM framework of an impending wakeup.
-> + *
-> + * @dev: Device to handle
-> + * @next: impending interrupt/wakeup for the device
-> + *
-> + * Allow devices to inform of the next wakeup. But, if the domain were already
-> + * powered off, we will not wakeup the domain to recompute it's idle duration.
-> + */
-> +int dev_pm_genpd_set_next_wakeup(struct device *dev, ktime_t next)
-> +{
-> +       struct generic_pm_domain *genpd;
-> +       struct generic_pm_domain_data *gpd_data;
-> +       int ret = -EINVAL;
-> +
-> +       genpd = dev_to_genpd_safe(dev);
-> +       if (!genpd)
-> +               return -ENODEV;
-> +
-> +       if (WARN_ON(!dev->power.subsys_data ||
-> +                   !dev->power.subsys_data->domain_data))
-> +               return ret;
-> +
-> +       genpd_lock(genpd);
-> +       gpd_data = to_gpd_data(dev->power.subsys_data->domain_data);
-> +       if (ktime_before(ktime_get(), next)) {
-> +               gpd_data->next_wakeup = next;
-> +               ret = 0;
-> +       }
-> +       genpd_unlock(genpd);
-> +
-> +       return ret;
-> +}
-> +EXPORT_SYMBOL_GPL(dev_pm_genpd_set_next_wakeup);
-> +
->  static int _genpd_power_on(struct generic_pm_domain *genpd, bool timed)
->  {
->         unsigned int state_idx = genpd->state_idx;
-> @@ -1431,6 +1466,7 @@ static struct generic_pm_domain_data *genpd_alloc_dev_data(struct device *dev)
->         gpd_data->td.constraint_changed = true;
->         gpd_data->td.effective_constraint_ns = PM_QOS_RESUME_LATENCY_NO_CONSTRAINT_NS;
->         gpd_data->nb.notifier_call = genpd_dev_pm_qos_notifier;
-> +       gpd_data->next_wakeup = KTIME_MAX;
->
->         spin_lock_irq(&dev->power.lock);
->
-> diff --git a/include/linux/pm_domain.h b/include/linux/pm_domain.h
-> index 1ad0ec481416..e00c77b1efd8 100644
-> --- a/include/linux/pm_domain.h
-> +++ b/include/linux/pm_domain.h
-> @@ -9,6 +9,7 @@
->  #define _LINUX_PM_DOMAIN_H
->
->  #include <linux/device.h>
-> +#include <linux/ktime.h>
->  #include <linux/mutex.h>
->  #include <linux/pm.h>
->  #include <linux/err.h>
-> @@ -191,6 +192,7 @@ struct generic_pm_domain_data {
->         struct notifier_block *power_nb;
->         int cpu;
->         unsigned int performance_state;
-> +       ktime_t next_wakeup;
->         void *data;
->  };
->
-> @@ -217,6 +219,7 @@ int pm_genpd_remove(struct generic_pm_domain *genpd);
->  int dev_pm_genpd_set_performance_state(struct device *dev, unsigned int state);
->  int dev_pm_genpd_add_notifier(struct device *dev, struct notifier_block *nb);
->  int dev_pm_genpd_remove_notifier(struct device *dev);
-> +int dev_pm_genpd_set_next_wakeup(struct device *dev, ktime_t next);
->
->  extern struct dev_power_governor simple_qos_governor;
->  extern struct dev_power_governor pm_domain_always_on_gov;
-> @@ -275,6 +278,11 @@ static inline int dev_pm_genpd_remove_notifier(struct device *dev)
->         return -ENOTSUPP;
->  }
->
-> +static inline int dev_pm_genpd_set_next_wakeup(struct device *dev, ktime_t next)
-> +{
-> +       return -ENOTSUPP;
-> +}
-> +
->  #define simple_qos_governor            (*(struct dev_power_governor *)(NULL))
->  #define pm_domain_always_on_gov                (*(struct dev_power_governor *)(NULL))
->  #endif
-> --
-> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-> a Linux Foundation Collaborative Project
->
+> 
+>> +               return PTR_ERR(core_vote);
+>> +       }
+> 
+> ...
+> 
+>> +       audio_vote = devm_clk_get(&pdev->dev, "audio");
+>> +       if (IS_ERR(audio_vote)) {
+>> +               dev_dbg(&pdev->dev, "%s: clk get %s failed %d\n",
+>> +                       __func__, "audio_vote", ret);
+>> +               return PTR_ERR(audio_vote);
+> 
+> Ditto/
+> 
+>> +       }
+> 
+> Why is it not a bulk?
+
+I can try that!
+> 
+>> +       clk_prepare_enable(pctrl->core_vote);
+>> +       clk_prepare_enable(pctrl->audio_vote);
+> 
+> Either from them may return an error. Also, when you go devm_*() the
+> rule of thumb is either all or none. Because here you will have
+> ordering issue on ->remove().
+> 
+>> +       res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
+>> +       pctrl->tlmm_base = devm_ioremap_resource(&pdev->dev, res);
+> 
+> devm_platform_ioremap_resource()
+
+make sense, I remember doing this! somehow I missed it in this version!
+
+rest of the comments looks sensible to me, will make sure that those are 
+fixed in next version.
+
+
+thanks,
+srini
