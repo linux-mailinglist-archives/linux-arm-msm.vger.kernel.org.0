@@ -2,195 +2,96 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 261462A9360
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Nov 2020 10:51:19 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id BFB452A9375
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Nov 2020 10:55:05 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725893AbgKFJvH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 6 Nov 2020 04:51:07 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56490 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726127AbgKFJvG (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 6 Nov 2020 04:51:06 -0500
-Received: from mail-lj1-x242.google.com (mail-lj1-x242.google.com [IPv6:2a00:1450:4864:20::242])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3F0D6C0613D2
-        for <linux-arm-msm@vger.kernel.org>; Fri,  6 Nov 2020 01:51:06 -0800 (PST)
-Received: by mail-lj1-x242.google.com with SMTP id 2so707928ljj.13
-        for <linux-arm-msm@vger.kernel.org>; Fri, 06 Nov 2020 01:51:06 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=0UwxZE4fayPRnvQxDAbTZKD+y1CSxe7+6Z1whH6kMNE=;
-        b=MP+8Ww1jr5M0U/EN/842njJFwNLARYITc9Xon6uZ8dA1TKARpQyaLBumduDVl7/uzZ
-         x6Scf/u1gF/A0Pt66DGyYin/JtmFO+qNsp8f0eY0kuGGW3tiQSDYS89wjfMv/UR3P6Zi
-         iZOE8y4Ba3dCMdte+VAqnUJPFA8nTaiV5dDFx11asKO/BxmZZoB6nhU5q7XKfeg9oVow
-         4ZV/m6ddzTMXLeYVUcl4+2Psbk3kdLFanOAxO7elc12Nigojmv8iW5zyW1Ulkk1+okKA
-         fLy5JzvQl6OMWH3Fd0nKE3Z4Ziv3WWK6SJn0zgDG2trFi2Z9feVWjuli7xkq4mLY571Z
-         /5SQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=0UwxZE4fayPRnvQxDAbTZKD+y1CSxe7+6Z1whH6kMNE=;
-        b=CGWHLo4wReZ31ZSsuC5plZFNARkPANkSnbD90WSQl2fNNjvNhMO8bFWz3uCOLYlh1l
-         usWHnr3roX+14gtEIAFWgkZ/kN3wCY0olop2y2yTz74roegQXC2e6rY7eP3pe+uWkAKh
-         aIuoaTp1Ew5/pCq4xGTvqPwMN3dAjgLv2gUqV3btvrD3OM8hk7XsXBmov0Y/Ls/AMIze
-         HPH/zpcNAHliP30eWsdupiN4egoVOT6GJhIQRThciCHSisNc/ID9acNdkJ/c+cPccbkW
-         uKWqbZiyOiTTTl9r45LPyS/TZK24unArm83nqbw2S7rQEeAQyXA0Irkrakzrk/OKzLR8
-         wqvg==
-X-Gm-Message-State: AOAM531UU58oK51DjP3MTIUtGKCOVQEXT5s63dLQuBx8bLhakBt5T6DC
-        2Xk1gcOa/j9FxMPY3gEBsSrPXz0sZZj7uNWJDpiXag==
-X-Google-Smtp-Source: ABdhPJxeQK2BYHJcOBYczjSxnwq3O+zvrpPSmHdio7wYUwV3iXXdNLvCmTC8KQhbsAbGmaRxdy9qN6r1KN3q0sLiqU0=
-X-Received: by 2002:a05:651c:1205:: with SMTP id i5mr479722lja.283.1604656264669;
- Fri, 06 Nov 2020 01:51:04 -0800 (PST)
+        id S1726139AbgKFJzE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 6 Nov 2020 04:55:04 -0500
+Received: from mail.kernel.org ([198.145.29.99]:37882 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726075AbgKFJzE (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 6 Nov 2020 04:55:04 -0500
+Received: from localhost (83-86-74-64.cable.dynamic.v4.ziggo.nl [83.86.74.64])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id E42C721734;
+        Fri,  6 Nov 2020 09:55:01 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1604656503;
+        bh=fq0Ui8t6PiSDl63PaQnqQ+wD7V5/mQ8ZBFhNNG3yCok=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=iOqu7iq8fkqhQinW+HWeXRONm4gVqP0ORpaGzDUMT9zotN8/ZoAt8k4smbdnLkRfA
+         gQF4QwYnBsQf3JTygZryT4dYi6nYvqpqKGLuqzS6PEjkhnobvGexT83gHte/RclSzw
+         WjuqDzk0ase4qrOZuSmZgJVWNdu/bBS1goiCMzjw=
+Date:   Fri, 6 Nov 2020 10:54:50 +0100
+From:   Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To:     Lee Jones <lee.jones@linaro.org>
+Cc:     linux-kernel@vger.kernel.org,
+        Alexandre Torgue <alexandre.torgue@st.com>,
+        "Andrew J. Kroll" <ag784@freenet.buffalo.edu>,
+        Andrew Morton <andrewm@uow.edu.eu>,
+        Andy Gross <agross@kernel.org>,
+        Benjamin Herrenschmidt <benh@kernel.crashing.org>,
+        Bill Hawes <whawes@star.net>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Christian =?iso-8859-1?Q?K=F6nig?= <christian.koenig@amd.com>,
+        Colin Ian King <colin.king@canonical.com>,
+        "C. Scott Ananian" <cananian@alumni.princeton.edu>,
+        "David A. Hinds" <dahinds@users.sourceforge.net>,
+        dri-devel@lists.freedesktop.org, Filip Aben <f.aben@option.com>,
+        Gerald Baeza <gerald.baeza@st.com>,
+        Jakub Jelinek <jj@ultra.linux.cz>,
+        Jan Dumon <j.dumon@option.com>,
+        Jiri Slaby <jirislaby@kernel.org>,
+        Jonathan Hunter <jonathanh@nvidia.com>,
+        Joseph Barrow <d.barow@option.com>,
+        -- <julian@uhunix.uhcc.hawaii.edu>,
+        Kevin Wells <kevin.wells@nxp.com>,
+        Laxman Dewangan <ldewangan@nvidia.com>,
+        linaro-mm-sig@lists.linaro.org, linux-arm-msm@vger.kernel.org,
+        linux-media@vger.kernel.org, linuxppc-dev@lists.ozlabs.org,
+        linux-riscv@lists.infradead.org, linux-serial@vger.kernel.org,
+        linux-stm32@st-md-mailman.stormreply.com,
+        linux-tegra@vger.kernel.org, Marko Kohtala <Marko.Kohtala@hut.fi>,
+        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+        Michael Ellerman <mpe@ellerman.id.au>,
+        Michal Simek <michal.simek@xilinx.com>,
+        Mike Hudson <Exoray@isys.ca>, Miloslav Trmac <mitr@redhat.com>,
+        Nick Holloway <alfie@dcs.warwick.ac.uk>,
+        Palmer Dabbelt <palmer@dabbelt.com>, paulkf@microgate.com,
+        Paul Mackerras <paulus@samba.org>,
+        Paul Walmsley <paul.walmsley@sifive.com>,
+        Philipp Zabel <p.zabel@pengutronix.de>,
+        processes-Sapan Bhatia <sapan@corewars.org>,
+        Robert Love <rlove@google.com>, Rob Herring <robh@kernel.org>,
+        Roland Stigge <stigge@antcom.de>,
+        Russell King <linux@armlinux.org.uk>,
+        Russell King <rmk@arm.linux.org.uk>,
+        Russ Gorby <russ.gorby@intel.com>,
+        Stanislav Voronyi <stas@cnti.uanet.kharkov.ua>,
+        Sumit Semwal <sumit.semwal@linaro.org>,
+        Sylvain Lemieux <slemieux.tyco@gmail.com>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Vladimir Zapolskiy <vz@mleia.com>
+Subject: Re: [PATCH 00/36] Rid W=1 issues from TTY
+Message-ID: <20201106095450.GA2660312@kroah.com>
+References: <20201104193549.4026187-1-lee.jones@linaro.org>
 MIME-Version: 1.0
-References: <20201105120410.18305-1-srinivas.kandagatla@linaro.org> <20201105120410.18305-2-srinivas.kandagatla@linaro.org>
-In-Reply-To: <20201105120410.18305-2-srinivas.kandagatla@linaro.org>
-From:   Linus Walleij <linus.walleij@linaro.org>
-Date:   Fri, 6 Nov 2020 10:50:53 +0100
-Message-ID: <CACRpkda91ncAVGj8_qcEyKPnRQdJjXMMCQ4ZJ1t7bVfcCZF=CA@mail.gmail.com>
-Subject: Re: [PATCH v2 1/2] pinctrl: qcom: Add sm8250 lpass lpi pinctrl driver
-To:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Rob Herring <robh+dt@kernel.org>, Andy Gross <agross@kernel.org>,
-        MSM <linux-arm-msm@vger.kernel.org>,
-        "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20201104193549.4026187-1-lee.jones@linaro.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Srinivas,
+On Wed, Nov 04, 2020 at 07:35:13PM +0000, Lee Jones wrote:
+> This set is part of a larger effort attempting to clean-up W=1
+> kernel builds, which are currently overwhelmingly riddled with
+> niggly little warnings.
 
-thanks for your patch!
+Many of these now applied, please update the series against my
+tty-testing branch and resend the rest.
 
-On Thu, Nov 5, 2020 at 1:04 PM Srinivas Kandagatla
-<srinivas.kandagatla@linaro.org> wrote:
+thanks,
 
-> Add initial pinctrl driver to support pin configuration for
-> LPASS (Low Power Audio SubSystem) LPI (Low Power Island) pinctrl
-> on SM8250.
->
-> Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-
-So this is in essence a completely new pin controller that shares
-nothing with the previous Qcom SoC pin control hardware?
-
-I'd still like Bjorn to review it of course, but if you are going to
-maintain this driver an entry to the MAINTAINERS file would
-be nice.
-
-I'd like some more talk in the commit message about how this
-driver is engineered so I point those things out below.
-
-> +config PINCTRL_LPASS_LPI
-> +       tristate "Qualcomm Technologies Inc LPASS LPI pin controller driver"
-> +       depends on GPIOLIB && OF
-
-These days you can actually just
-select GPIOLIB
-but no big deal.
-
-> +#include <linux/bitops.h>
-> +#include <linux/clk.h>
-> +#include <linux/gpio.h>
-
-Do not use this legacy header for new GPIO drivers.
-#include <linux/gpio/driver.h>
-should work.
-
-> +#define LPI_GPIO_REG_VAL_CTL             0x00
-> +#define LPI_GPIO_REG_DIR_CTL             0x04
-> +#define LPI_SLEW_REG_VAL_CTL             0x00
-> +#define LPI_SLEW_RATE_MAX                0x03
-> +#define LPI_SLEW_BITS_SIZE               0x02
-> +#define LPI_GPIO_REG_PULL_SHIFT                0x0
-> +#define LPI_GPIO_REG_PULL_MASK         GENMASK(1, 0)
-> +#define LPI_GPIO_REG_FUNCTION_SHIFT    0x2
-> +#define LPI_GPIO_REG_FUNCTION_MASK     GENMASK(5, 2)
-> +#define LPI_GPIO_REG_OUT_STRENGTH_SHIFT        0x6
-> +#define LPI_GPIO_REG_OUT_STRENGTH_MASK GENMASK(8, 6)
-> +#define LPI_GPIO_REG_OE_SHIFT          0x9
-> +#define LPI_GPIO_REG_OE_MASK           BIT(9)
-> +#define LPI_GPIO_REG_DIR_SHIFT         0x1
-> +#define LPI_GPIO_REG_DIR_MASK          0x2
-> +#define LPI_GPIO_BIAS_DISABLE          0x0
-> +#define LPI_GPIO_PULL_DOWN             0x1
-> +#define LPI_GPIO_KEEPER                        0x2
-> +#define LPI_GPIO_PULL_UP               0x3
-
-So the way I understand it, the GPIO lines have one register each and then the
-functionality of each line is handled by different bits in that register, like
-output is driven in bit 9.
-
-This would be nice to have mentioned in the commit message.
-
-> +static const unsigned int gpio0_pins[] = { 0 };
-> +static const unsigned int gpio1_pins[] = { 1 };
-> +static const unsigned int gpio2_pins[] = { 2 };
-> +static const unsigned int gpio3_pins[] = { 3 };
-> +static const unsigned int gpio4_pins[] = { 4 };
-> +static const unsigned int gpio5_pins[] = { 5 };
-> +static const unsigned int gpio6_pins[] = { 6 };
-> +static const unsigned int gpio7_pins[] = { 7 };
-> +static const unsigned int gpio8_pins[] = { 8 };
-> +static const unsigned int gpio9_pins[] = { 9 };
-> +static const unsigned int gpio10_pins[] = { 10 };
-> +static const unsigned int gpio11_pins[] = { 11 };
-> +static const unsigned int gpio12_pins[] = { 12 };
-> +static const unsigned int gpio13_pins[] = { 13 };
-> +static const char * const swr_tx_clk_groups[] = { "gpio0" };
-> +static const char * const swr_tx_data1_groups[] = { "gpio1" };
-> +static const char * const swr_tx_data2_groups[] = { "gpio2" };
-> +static const char * const swr_rx_clk_groups[] = { "gpio3" };
-> +static const char * const swr_rx_data1_groups[] = { "gpio4" };
-> +static const char * const swr_tx_data3_groups[] = { "gpio5" };
-> +static const char * const dmic1_clk_groups[] = { "gpio6" };
-> +static const char * const dmic1_data_groups[] = { "gpio7" };
-> +static const char * const dmic2_clk_groups[] = { "gpio8" };
-> +static const char * const dmic2_data_groups[] = { "gpio9" };
-> +static const char * const i2s2_clk_groups[] = { "gpio10" };
-> +static const char * const i2s2_ws_groups[] = { "gpio11" };
-> +static const char * const dmic3_clk_groups[] = { "gpio12" };
-> +static const char * const dmic3_data_groups[] = { "gpio13" };
-> +static const char * const qua_mi2s_sclk_groups[] = { "gpio0" };
-> +static const char * const qua_mi2s_ws_groups[] = { "gpio1" };
-> +static const char * const qua_mi2s_data0_groups[] = { "gpio2" };
-> +static const char * const qua_mi2s_data1_groups[] = { "gpio3" };
-> +static const char * const qua_mi2s_data2_groups[] = { "gpio4" };
-> +static const char * const swr_rx_data2_groups[] = { "gpio5" };
-> +static const char * const i2s1_clk_groups[] = { "gpio6" };
-> +static const char * const i2s1_ws_groups[] = { "gpio7" };
-> +static const char * const i2s1_data0_groups[] = { "gpio8" };
-> +static const char * const i2s1_data1_groups[] = { "gpio9" };
-> +static const char * const wsa_swr_clk_groups[] = { "gpio10" };
-> +static const char * const wsa_swr_data_groups[] = { "gpio11" };
-> +static const char * const i2s2_data0_groups[] = { "gpio12" };
-> +static const char * const i2s2_data1_groups[] = { "gpio13" };
-
-The driver appears to follow other qualcomm pin controllers in using
-the "one group is one pin" approach. This is idiomatic and should be
-mentioned in the commit message.
-
-> +static int sm8250_slew_reg_offsets[] = {
-> +               0x0, 0x2, 0x4, 0x8, 0xa,
-> +               0xc, 0x0, 0x0, 0x0, 0x0,
-> +               0x10, 0x12, 0x0, 0x0,
-> +};
-
-Maybe it is obvious to everyone what this array is about, but why so
-many zeroes? I think it warrants a comment in the code if that
-means for example that some pins do not support slew rate setting.
-
-Overall this is a nice and self-contained driver that uses the abstractions
-the right way and very straight-forward, so I think we can merge it
-soon.
-
-(Look into Andy's comments as well.)
-
-Yours,
-Linus Walleij
+greg k-h
