@@ -2,100 +2,93 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 366F02A9C86
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Nov 2020 19:39:33 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C8FD32A9CB3
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Nov 2020 19:52:09 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726415AbgKFSjc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 6 Nov 2020 13:39:32 -0500
-Received: from m42-4.mailgun.net ([69.72.42.4]:62827 "EHLO m42-4.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728014AbgKFSjc (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 6 Nov 2020 13:39:32 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1604687971; h=Message-Id: Date: Subject: Cc: To: From:
- Sender; bh=q41jYODzwoaR+ygNJ5mFB6dSauU1naWcl3L+q392400=; b=giw3Wy6o21FG4Ty+DtWIVNjqep6FYDzDjFTgFzf3VGbCoIhj3iOvO9VXBm6UZX0jlMLipBBw
- JLHO1N1HwjtIMuQD1R/tH+hkIyDH8Pg1CMrEFwuIshIvlkcOKWLiONNSn0GGsGkHczuNjyNM
- QK3ryEm9m6b+MCkrmd69lvtE+OI=
-X-Mailgun-Sending-Ip: 69.72.42.4
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n07.prod.us-west-2.postgun.com with SMTP id
- 5fa5982f60d9475652a41712 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 06 Nov 2020 18:38:39
- GMT
-Sender: tdas=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 4FDC7C433CB; Fri,  6 Nov 2020 18:38:39 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
-        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
-Received: from tdas-linux.qualcomm.com (unknown [202.46.22.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        id S1726075AbgKFSwI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 6 Nov 2020 13:52:08 -0500
+Received: from asavdk3.altibox.net ([109.247.116.14]:57526 "EHLO
+        asavdk3.altibox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726447AbgKFSwI (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 6 Nov 2020 13:52:08 -0500
+Received: from ravnborg.org (unknown [188.228.123.71])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        (Authenticated sender: tdas)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 7D3BFC433C8;
-        Fri,  6 Nov 2020 18:38:35 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 7D3BFC433C8
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=tdas@codeaurora.org
-From:   Taniya Das <tdas@codeaurora.org>
-To:     Rob Herring <robh+dt@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Douglas Anderson <dianders@chromium.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Andy Gross <agross@kernel.org>, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Taniya Das <tdas@codeaurora.org>
-Subject: [PATCH v1] arm64: dts: sc7180: Add camera clock controller node
-Date:   Sat,  7 Nov 2020 00:08:27 +0530
-Message-Id: <1604687907-25712-1-git-send-email-tdas@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
+        by asavdk3.altibox.net (Postfix) with ESMTPS id 062A720071;
+        Fri,  6 Nov 2020 19:52:03 +0100 (CET)
+Date:   Fri, 6 Nov 2020 19:52:02 +0100
+From:   Sam Ravnborg <sam@ravnborg.org>
+To:     Wang Qing <wangqing@vivo.com>
+Cc:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Jordan Crouse <jcrouse@codeaurora.org>,
+        Jonathan Marek <jonathan@marek.ca>,
+        Akhil P Oommen <akhilpo@codeaurora.org>,
+        Sharat Masetty <smasetty@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] drm: Use IS_ERR() instead of null pointer check
+Message-ID: <20201106185202.GA808798@ravnborg.org>
+References: <1604629881-557-1-git-send-email-wangqing@vivo.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1604629881-557-1-git-send-email-wangqing@vivo.com>
+X-CMAE-Score: 0
+X-CMAE-Analysis: v=2.3 cv=VbvZwmh9 c=1 sm=1 tr=0
+        a=S6zTFyMACwkrwXSdXUNehg==:117 a=S6zTFyMACwkrwXSdXUNehg==:17
+        a=kj9zAlcOel0A:10 a=1WtWmnkvAAAA:8 a=e5mUnYsNAAAA:8
+        a=u0hbGyvj-nib5C6JQ3MA:9 a=CjuIK1q_8ugA:10 a=-_UHfarfsM-RsASml2Jt:22
+        a=Vxmtnl_E_bksehYqCbjh:22
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add the camera clock controller node supported on SC7180.
+Hi Wang.
 
-Signed-off-by: Taniya Das <tdas@codeaurora.org>
----
- arch/arm64/boot/dts/qcom/sc7180.dtsi | 13 +++++++++++++
- 1 file changed, 13 insertions(+)
+Thanks for the fix.
 
-diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-index f5ef2cb..e795dba 100644
---- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-@@ -5,6 +5,7 @@
-  * Copyright (c) 2019, The Linux Foundation. All rights reserved.
-  */
+On Fri, Nov 06, 2020 at 10:31:19AM +0800, Wang Qing wrote:
+> a6xx_gmu_get_mmio() never return null in case of error, but ERR_PTR(),
+> so we should use IS_ERR() instead of null pointer check
+> 
+> Signed-off-by: Wang Qing <wangqing@vivo.com>
 
-+#include <dt-bindings/clock/qcom,camcc-sc7180.h>
- #include <dt-bindings/clock/qcom,dispcc-sc7180.h>
- #include <dt-bindings/clock/qcom,gcc-sc7180.h>
- #include <dt-bindings/clock/qcom,gpucc-sc7180.h>
-@@ -2896,6 +2897,18 @@
- 			qcom,bcm-voters = <&apps_bcm_voter>;
- 		};
+In the future please put "drm/<driver-dir>:" in the subject.
+See git log . in said directory for normal practice - this let the
+readers see this is an msm related patch.
 
-+		camcc: clock-controller@ad00000 {
-+			compatible = "qcom,sc7180-camcc";
-+			reg = <0 0x0ad00000 0 0x10000>;
-+			clocks = <&rpmhcc RPMH_CXO_CLK>,
-+			       <&gcc GCC_CAMERA_AHB_CLK>,
-+			       <&gcc GCC_CAMERA_XO_CLK>;
-+			clock-names = "bi_tcxo", "iface", "xo";
-+			#clock-cells = <1>;
-+			#reset-cells = <1>;
-+			#power-domain-cells = <1>;
-+		};
-+
- 		mdss: mdss@ae00000 {
- 			compatible = "qcom,sc7180-mdss";
- 			reg = <0 0x0ae00000 0 0x1000>;
---
-Qualcomm INDIA, on behalf of Qualcomm Innovation Center, Inc.is a member
-of the Code Aurora Forum, hosted by the  Linux Foundation.
 
+
+> ---
+>  drivers/gpu/drm/msm/adreno/a6xx_gmu.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
+> index 491fee4..8c81a89
+> --- a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
+> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
+> @@ -492,7 +492,7 @@ static void a6xx_gmu_rpmh_init(struct a6xx_gmu *gmu)
+>  	void __iomem *seqptr = a6xx_gmu_get_mmio(pdev, "gmu_pdc_seq");
+>  	uint32_t pdc_address_offset;
+>  
+> -	if (!pdcptr || !seqptr)
+> +	if (IS_ERR(pdcptr) || IS_ERR(seqptr))
+>  		goto err;
+
+When the pointer is checked after the err: label the function
+IS_ERR_OR_NULL() is used. Please update both places so they match.
+
+	Sam
+
+>  
+>  	if (adreno_is_a618(adreno_gpu) || adreno_is_a640(adreno_gpu))
+> -- 
+> 2.7.4
+> 
+> _______________________________________________
+> dri-devel mailing list
+> dri-devel@lists.freedesktop.org
+> https://lists.freedesktop.org/mailman/listinfo/dri-devel
