@@ -2,350 +2,220 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B1FD82A8D3B
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Nov 2020 03:57:00 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0E0902A8D3C
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Nov 2020 03:57:10 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725924AbgKFC4w (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 5 Nov 2020 21:56:52 -0500
-Received: from z5.mailgun.us ([104.130.96.5]:28209 "EHLO z5.mailgun.us"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725815AbgKFC4v (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 5 Nov 2020 21:56:51 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1604631410; h=References: In-Reply-To: Message-Id: Date:
- Subject: Cc: To: From: Sender;
- bh=9MQz0tAGsEZJw9iqvJvbEiXLV/HhkINlrjIrKI1wD7U=; b=kxz1E9gub3e8a7xsoW0yr6mg59QqbfMZwIGCN4EUYZHCgMoKzzsW8CvOJgnWUMlyOAxLEx8K
- KNc5c0JGRDXJUsyVU2l1cdQwicQ6mE5x5oBNEp/sEhMYU0Esf4D+nM/irBGh11ceeA78whqr
- FmsJjHNLBn+fU8X/qiDDaKBv7Gc=
-X-Mailgun-Sending-Ip: 104.130.96.5
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n05.prod.us-east-1.postgun.com with SMTP id
- 5fa4bb6ea39cfb5f6caab956 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 06 Nov 2020 02:56:46
- GMT
-Sender: psodagud=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 9906EC433CB; Fri,  6 Nov 2020 02:56:45 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
-        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
-Received: from th-lint-038.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: psodagud)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 19C5FC433CB;
-        Fri,  6 Nov 2020 02:56:42 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 19C5FC433CB
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=psodagud@codeaurora.org
-From:   Prasad Sodagudi <psodagud@codeaurora.org>
-To:     rostedt@goodmis.org, mingo@redhat.com, keescook@chromium.org,
-        catalin.marinas@arm.com, saiprakash.ranjan@codeaurora.org,
-        will@kernel.org
-Cc:     linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, gregkh@linuxfoundation.org,
-        anton@enomsg.org, arnd@arndb.de, ccross@android.com,
-        jbaron@akamai.com, jim.cromie@gmail.com, joe@perches.com,
-        joel@joelfernandes.org, Prasad Sodagudi <psodagud@codeaurora.org>
-Subject: [PATCH v2] tracing: Add register read and write tracing support
-Date:   Thu,  5 Nov 2020 18:56:26 -0800
-Message-Id: <1604631386-178312-2-git-send-email-psodagud@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1604631386-178312-1-git-send-email-psodagud@codeaurora.org>
-References: <1604631386-178312-1-git-send-email-psodagud@codeaurora.org>
+        id S1726024AbgKFC5I (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 5 Nov 2020 21:57:08 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48648 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725815AbgKFC5I (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 5 Nov 2020 21:57:08 -0500
+Received: from mail-ot1-x341.google.com (mail-ot1-x341.google.com [IPv6:2607:f8b0:4864:20::341])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D77D3C0613D2
+        for <linux-arm-msm@vger.kernel.org>; Thu,  5 Nov 2020 18:57:07 -0800 (PST)
+Received: by mail-ot1-x341.google.com with SMTP id i18so64651ots.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 05 Nov 2020 18:57:07 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=aBjGvGWDZWDNyo0wXKsA/2ZZMFYSNHsXKMDpkJKmgg0=;
+        b=zZ+0fRGPq3WO2ejFZUEmCEUBsFlpeNlYkAxZi6GoqqCzeKwBSQeoXJ0aAmF/yswZ8j
+         s5ZIKGe52tJrTY6Jkg2S3uCxV1h2loryLM0M11WQSntPVRC1Zinr3Zlj6ot2t9eVikkQ
+         oYUmS8KVd9Ctm0szZE+uJOX7ALFeHNzMt9O3Y8t8zTX4AusyZA5QT3fF7MQg2yO+iSvV
+         snhVw/TU3UUmEG1Ap7uuHn237gmd1YHuYikDHfLrhuy64y06gA3GHgZs0Jax9XO/wWd3
+         2jjURh5XyPKrTxVKVBSBFOBssJON6hFcgHZ19jXwrsRQmc6AVvsGHowwRH52pdGEiH3/
+         N9cw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=aBjGvGWDZWDNyo0wXKsA/2ZZMFYSNHsXKMDpkJKmgg0=;
+        b=ggrAoYldEMSKbiB9cy0j+PqDO1eW3festUHWquA88376GCwsOAZ4GdAYcq8HiZsWDW
+         6x+u7ZyZzNBos5sQ0NORsJs/KBdiTBClI/YjA1eeRrSgoLJfgwVEfxRM0Kdad0U0iH23
+         OWEIetDD6HbySifaPWzpDWn6hK12bii221i2al8v7gH5qO/E+LV2cbicTQiIo/VHRp1i
+         eYNkNHPdCYtwVo1lZ8n/a7B1YVr6J1/hgu+GOZJkF8eDWMiCxl8f834r6EIsG5jzGGI6
+         fewbrl297WlBu/qjwSNZoaUWv3lqj1T/kvp2heg+b4ofraX9afIhEKYpnXsFIGM857uq
+         JOuw==
+X-Gm-Message-State: AOAM533UPy9Mu1kokZ1vxiIdxiYgit3EcK0py5bJuN+MokGN2G8gPJFI
+        EtVqXVEXFRiMAZeA3HqhqYSajQ==
+X-Google-Smtp-Source: ABdhPJxcGSQ9Kri8+3YIvlJn2ZM1KijUrAuZbpqUWzJIJU6KH+C65BAHY6nKyb53S3c3QKPKHxgcOw==
+X-Received: by 2002:a05:6830:232d:: with SMTP id q13mr3755223otg.324.1604631427166;
+        Thu, 05 Nov 2020 18:57:07 -0800 (PST)
+Received: from yoga (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
+        by smtp.gmail.com with ESMTPSA id e47sm12546ote.50.2020.11.05.18.57.05
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 05 Nov 2020 18:57:06 -0800 (PST)
+Date:   Thu, 5 Nov 2020 20:57:03 -0600
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     John Stultz <john.stultz@linaro.org>
+Cc:     lkml <linux-kernel@vger.kernel.org>,
+        Catalin Marinas <catalin.marinas@arm.com>,
+        Will Deacon <will@kernel.org>, Andy Gross <agross@kernel.org>,
+        Joerg Roedel <joro@8bytes.org>,
+        Thomas Gleixner <tglx@linutronix.de>,
+        Jason Cooper <jason@lakedaemon.net>,
+        Marc Zyngier <maz@kernel.org>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Vinod Koul <vkoul@kernel.org>,
+        Kalle Valo <kvalo@codeaurora.org>,
+        Maulik Shah <mkshah@codeaurora.org>,
+        Lina Iyer <ilina@codeaurora.org>,
+        Saravana Kannan <saravanak@google.com>,
+        Todd Kjos <tkjos@google.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        linux-arm-msm@vger.kernel.org, iommu@lists.linux-foundation.org,
+        linux-gpio@vger.kernel.org
+Subject: Re: [PATCH v5 2/2] firmware: QCOM_SCM: Allow qcom_scm driver to be
+ loadable as a permenent module
+Message-ID: <20201106025703.GC807@yoga>
+References: <20201031003845.41137-1-john.stultz@linaro.org>
+ <20201031003845.41137-2-john.stultz@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20201031003845.41137-2-john.stultz@linaro.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add register read/write operations tracing support.
-ftrace events helps to trace register read and write
-location details of memory mapped IO registers.
-These trace logs helps to debug un clocked access
-of peripherals.
+On Fri 30 Oct 19:38 CDT 2020, John Stultz wrote:
 
-Signed-off-by: Prasad Sodagudi <psodagud@codeaurora.org>
----
- arch/arm64/include/asm/io.h    |  9 ++++++++
- arch/arm64/kernel/image-vars.h |  8 +++++++
- include/linux/iorw.h           | 38 +++++++++++++++++++++++++++++++
- include/trace/events/rwio.h    | 51 ++++++++++++++++++++++++++++++++++++++++++
- kernel/trace/Kconfig           | 11 +++++++++
- kernel/trace/Makefile          |  1 +
- kernel/trace/trace_readwrite.c | 31 +++++++++++++++++++++++++
- 7 files changed, 149 insertions(+)
- create mode 100644 include/linux/iorw.h
- create mode 100644 include/trace/events/rwio.h
- create mode 100644 kernel/trace/trace_readwrite.c
+> Allow the qcom_scm driver to be loadable as a permenent module.
+> 
+> This still uses the "depends on QCOM_SCM || !QCOM_SCM" bit to
+> ensure that drivers that call into the qcom_scm driver are
+> also built as modules. While not ideal in some cases its the
+> only safe way I can find to avoid build errors without having
+> those drivers select QCOM_SCM and have to force it on (as
+> QCOM_SCM=n can be valid for those drivers).
+> 
+> Cc: Catalin Marinas <catalin.marinas@arm.com>
+> Cc: Will Deacon <will@kernel.org>
+> Cc: Andy Gross <agross@kernel.org>
+> Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
+> Cc: Joerg Roedel <joro@8bytes.org>
+> Cc: Thomas Gleixner <tglx@linutronix.de>
+> Cc: Jason Cooper <jason@lakedaemon.net>
+> Cc: Marc Zyngier <maz@kernel.org>
+> Cc: Linus Walleij <linus.walleij@linaro.org>
+> Cc: Vinod Koul <vkoul@kernel.org>
+> Cc: Kalle Valo <kvalo@codeaurora.org>
+> Cc: Maulik Shah <mkshah@codeaurora.org>
+> Cc: Lina Iyer <ilina@codeaurora.org>
+> Cc: Saravana Kannan <saravanak@google.com>
+> Cc: Todd Kjos <tkjos@google.com>
+> Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+> Cc: linux-arm-msm@vger.kernel.org
+> Cc: iommu@lists.linux-foundation.org
+> Cc: linux-gpio@vger.kernel.org
+> Acked-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+> Signed-off-by: John Stultz <john.stultz@linaro.org>
 
-diff --git a/arch/arm64/include/asm/io.h b/arch/arm64/include/asm/io.h
-index fd172c4..bcfc65c 100644
---- a/arch/arm64/include/asm/io.h
-+++ b/arch/arm64/include/asm/io.h
-@@ -9,6 +9,7 @@
- #define __ASM_IO_H
- 
- #include <linux/types.h>
-+#include <linux/iorw.h>
- #include <linux/pgtable.h>
- 
- #include <asm/byteorder.h>
-@@ -24,24 +25,28 @@
- #define __raw_writeb __raw_writeb
- static inline void __raw_writeb(u8 val, volatile void __iomem *addr)
- {
-+	log_write_io(addr);
- 	asm volatile("strb %w0, [%1]" : : "rZ" (val), "r" (addr));
- }
- 
- #define __raw_writew __raw_writew
- static inline void __raw_writew(u16 val, volatile void __iomem *addr)
- {
-+	log_write_io(addr);
- 	asm volatile("strh %w0, [%1]" : : "rZ" (val), "r" (addr));
- }
- 
- #define __raw_writel __raw_writel
- static __always_inline void __raw_writel(u32 val, volatile void __iomem *addr)
- {
-+	log_write_io(addr);
- 	asm volatile("str %w0, [%1]" : : "rZ" (val), "r" (addr));
- }
- 
- #define __raw_writeq __raw_writeq
- static inline void __raw_writeq(u64 val, volatile void __iomem *addr)
- {
-+	log_write_io(addr);
- 	asm volatile("str %x0, [%1]" : : "rZ" (val), "r" (addr));
- }
- 
-@@ -49,6 +54,7 @@ static inline void __raw_writeq(u64 val, volatile void __iomem *addr)
- static inline u8 __raw_readb(const volatile void __iomem *addr)
- {
- 	u8 val;
-+	log_read_io(addr);
- 	asm volatile(ALTERNATIVE("ldrb %w0, [%1]",
- 				 "ldarb %w0, [%1]",
- 				 ARM64_WORKAROUND_DEVICE_LOAD_ACQUIRE)
-@@ -61,6 +67,7 @@ static inline u16 __raw_readw(const volatile void __iomem *addr)
- {
- 	u16 val;
- 
-+	log_read_io(addr);
- 	asm volatile(ALTERNATIVE("ldrh %w0, [%1]",
- 				 "ldarh %w0, [%1]",
- 				 ARM64_WORKAROUND_DEVICE_LOAD_ACQUIRE)
-@@ -72,6 +79,7 @@ static inline u16 __raw_readw(const volatile void __iomem *addr)
- static __always_inline u32 __raw_readl(const volatile void __iomem *addr)
- {
- 	u32 val;
-+	log_read_io(addr);
- 	asm volatile(ALTERNATIVE("ldr %w0, [%1]",
- 				 "ldar %w0, [%1]",
- 				 ARM64_WORKAROUND_DEVICE_LOAD_ACQUIRE)
-@@ -83,6 +91,7 @@ static __always_inline u32 __raw_readl(const volatile void __iomem *addr)
- static inline u64 __raw_readq(const volatile void __iomem *addr)
- {
- 	u64 val;
-+	log_read_io(addr);
- 	asm volatile(ALTERNATIVE("ldr %0, [%1]",
- 				 "ldar %0, [%1]",
- 				 ARM64_WORKAROUND_DEVICE_LOAD_ACQUIRE)
-diff --git a/arch/arm64/kernel/image-vars.h b/arch/arm64/kernel/image-vars.h
-index c615b28..6a70d91 100644
---- a/arch/arm64/kernel/image-vars.h
-+++ b/arch/arm64/kernel/image-vars.h
-@@ -103,6 +103,14 @@ KVM_NVHE_ALIAS(gic_nonsecure_priorities);
- KVM_NVHE_ALIAS(__start___kvm_ex_table);
- KVM_NVHE_ALIAS(__stop___kvm_ex_table);
- 
-+/* raw_read/write logging */
-+#if IS_ENABLED(CONFIG_TRACE_RW)
-+KVM_NVHE_ALIAS(__log_write_io);
-+KVM_NVHE_ALIAS(__log_read_io);
-+KVM_NVHE_ALIAS(__tracepoint_rwio_read);
-+KVM_NVHE_ALIAS(__tracepoint_rwio_write);
-+#endif
-+
- #endif /* CONFIG_KVM */
- 
- #endif /* __ARM64_KERNEL_IMAGE_VARS_H */
-diff --git a/include/linux/iorw.h b/include/linux/iorw.h
-new file mode 100644
-index 0000000..6b571b4
---- /dev/null
-+++ b/include/linux/iorw.h
-@@ -0,0 +1,38 @@
-+/* SPDX-License-Identifier: GPL-2.0 */
-+/*
-+ *
-+ */
-+#ifndef __LOG_IORW_H__
-+#define __LOG_IORW_H__
-+
-+#include <linux/types.h>
-+#include <linux/atomic.h>
-+#include <linux/tracepoint-defs.h>
-+
-+#if IS_ENABLED(CONFIG_TRACE_RW)
-+DECLARE_TRACEPOINT(rwio_write);
-+DECLARE_TRACEPOINT(rwio_read);
-+
-+void __log_write_io(volatile void __iomem *addr);
-+void __log_read_io(const volatile void __iomem *addr);
-+
-+#define log_write_io(addr)			\
-+do {						\
-+	if (tracepoint_enabled(rwio_write))	\
-+		__log_write_io(addr);		\
-+} while (0)
-+
-+#define log_read_io(addr)			\
-+do {						\
-+	if (tracepoint_enabled(rwio_read))	\
-+		__log_read_io(addr);		\
-+} while (0)
-+
-+#else
-+static inline void log_write_io(volatile void __iomem *addr)
-+{ }
-+static inline void log_read_io(const volatile void __iomem *addr)
-+{ }
-+#endif /* CONFIG_TRACE_RW */
-+
-+#endif /* __LOG_IORW_H__  */
-diff --git a/include/trace/events/rwio.h b/include/trace/events/rwio.h
-new file mode 100644
-index 0000000..b26bcaf
---- /dev/null
-+++ b/include/trace/events/rwio.h
-@@ -0,0 +1,51 @@
-+/* SPDX-License-Identifier: GPL-2.0 */
-+
-+#undef TRACE_SYSTEM
-+#define TRACE_SYSTEM rwio
-+
-+#if !defined(_TRACE_RWIO_H) || defined(TRACE_HEADER_MULTI_READ)
-+#define _TRACE_RWIO_H
-+
-+#include <linux/tracepoint.h>
-+
-+TRACE_EVENT(rwio_write,
-+
-+	TP_PROTO(unsigned long fn, volatile void __iomem *addr),
-+
-+	TP_ARGS(fn, addr),
-+
-+	TP_STRUCT__entry(
-+		__field(u64, fn)
-+		__field(u64, addr)
-+	),
-+
-+	TP_fast_assign(
-+		__entry->fn = fn;
-+		__entry->addr = (u64)addr;
-+	),
-+
-+	TP_printk("%pS write addr=%p\n", __entry->fn, __entry->addr)
-+);
-+
-+TRACE_EVENT(rwio_read,
-+
-+	TP_PROTO(unsigned long fn, const volatile void __iomem *addr),
-+
-+	TP_ARGS(fn, addr),
-+
-+	TP_STRUCT__entry(
-+		__field(u64, fn)
-+		__field(u64, addr)
-+	),
-+
-+	TP_fast_assign(
-+		__entry->fn = fn;
-+		__entry->addr = (u64)addr;
-+	),
-+
-+	TP_printk("%pS read addr=%p\n", __entry->fn, __entry->addr)
-+);
-+
-+#endif /* _TRACE_PREEMPTIRQ_H */
-+
-+#include <trace/define_trace.h>
-diff --git a/kernel/trace/Kconfig b/kernel/trace/Kconfig
-index a4020c0..f0408f9 100644
---- a/kernel/trace/Kconfig
-+++ b/kernel/trace/Kconfig
-@@ -81,6 +81,17 @@ config RING_BUFFER_ALLOW_SWAP
- 	 Allow the use of ring_buffer_swap_cpu.
- 	 Adds a very slight overhead to tracing when enabled.
- 
-+config TRACE_RW
-+	bool "Register read/write tracing"
-+	select TRACING
-+	depends on ARM64
-+	help
-+	  Create tracepoints for IO read/write operations, so that
-+	  modules can register hooks to use them.
-+
-+	  Disable this option, when there is support from corresponding
-+	  architecture.
-+
- config PREEMPTIRQ_TRACEPOINTS
- 	bool
- 	depends on TRACE_PREEMPT_TOGGLE || TRACE_IRQFLAGS
-diff --git a/kernel/trace/Makefile b/kernel/trace/Makefile
-index e153be3..69edfe50 100644
---- a/kernel/trace/Makefile
-+++ b/kernel/trace/Makefile
-@@ -92,6 +92,7 @@ obj-$(CONFIG_DYNAMIC_EVENTS) += trace_dynevent.o
- obj-$(CONFIG_PROBE_EVENTS) += trace_probe.o
- obj-$(CONFIG_UPROBE_EVENTS) += trace_uprobe.o
- obj-$(CONFIG_BOOTTIME_TRACING) += trace_boot.o
-+obj-$(CONFIG_TRACE_RW) += trace_readwrite.o
- 
- obj-$(CONFIG_TRACEPOINT_BENCHMARK) += trace_benchmark.o
- 
-diff --git a/kernel/trace/trace_readwrite.c b/kernel/trace/trace_readwrite.c
-new file mode 100644
-index 0000000..d107134
---- /dev/null
-+++ b/kernel/trace/trace_readwrite.c
-@@ -0,0 +1,31 @@
-+// SPDX-License-Identifier: GPL-2.0
-+/*
-+ * Register read and write tracepoints
-+ *
-+ * Copyright (c) 2020, The Linux Foundation. All rights reserved.
-+ */
-+
-+#include <linux/kallsyms.h>
-+#include <linux/uaccess.h>
-+#include <linux/module.h>
-+#include <linux/ftrace.h>
-+#include <linux/iorw.h>
-+
-+#define CREATE_TRACE_POINTS
-+#include <trace/events/rwio.h>
-+
-+#ifdef CONFIG_TRACEPOINTS
-+void __log_write_io(volatile void __iomem *addr)
-+{
-+	trace_rwio_write(CALLER_ADDR0, addr);
-+}
-+EXPORT_SYMBOL_GPL(__log_write_io);
-+EXPORT_TRACEPOINT_SYMBOL_GPL(rwio_write);
-+
-+void __log_read_io(const volatile void __iomem *addr)
-+{
-+	trace_rwio_read(CALLER_ADDR0, addr);
-+}
-+EXPORT_SYMBOL_GPL(__log_read_io);
-+EXPORT_TRACEPOINT_SYMBOL_GPL(rwio_read);
-+#endif
--- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project
+Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 
+Regards,
+Bjorn
+
+> ---
+> v3:
+> * Fix __arm_smccc_smc build issue reported by
+>   kernel test robot <lkp@intel.com>
+> v4:
+> * Add "depends on QCOM_SCM || !QCOM_SCM" bit to ath10k
+>   config that requires it.
+> v5:
+> * Fix QCOM_QCM typo in Kconfig, it should be QCOM_SCM
+> ---
+>  drivers/firmware/Kconfig                | 4 ++--
+>  drivers/firmware/Makefile               | 3 ++-
+>  drivers/firmware/qcom_scm.c             | 4 ++++
+>  drivers/iommu/Kconfig                   | 2 ++
+>  drivers/net/wireless/ath/ath10k/Kconfig | 1 +
+>  5 files changed, 11 insertions(+), 3 deletions(-)
+> 
+> diff --git a/drivers/firmware/Kconfig b/drivers/firmware/Kconfig
+> index 3315e3c215864..5e369928bc567 100644
+> --- a/drivers/firmware/Kconfig
+> +++ b/drivers/firmware/Kconfig
+> @@ -235,8 +235,8 @@ config INTEL_STRATIX10_RSU
+>  	  Say Y here if you want Intel RSU support.
+>  
+>  config QCOM_SCM
+> -	bool
+> -	depends on ARM || ARM64
+> +	tristate "Qcom SCM driver"
+> +	depends on (ARM && HAVE_ARM_SMCCC) || ARM64
+>  	select RESET_CONTROLLER
+>  
+>  config QCOM_SCM_DOWNLOAD_MODE_DEFAULT
+> diff --git a/drivers/firmware/Makefile b/drivers/firmware/Makefile
+> index 5e013b6a3692e..523173cbff335 100644
+> --- a/drivers/firmware/Makefile
+> +++ b/drivers/firmware/Makefile
+> @@ -17,7 +17,8 @@ obj-$(CONFIG_ISCSI_IBFT)	+= iscsi_ibft.o
+>  obj-$(CONFIG_FIRMWARE_MEMMAP)	+= memmap.o
+>  obj-$(CONFIG_RASPBERRYPI_FIRMWARE) += raspberrypi.o
+>  obj-$(CONFIG_FW_CFG_SYSFS)	+= qemu_fw_cfg.o
+> -obj-$(CONFIG_QCOM_SCM)		+= qcom_scm.o qcom_scm-smc.o qcom_scm-legacy.o
+> +obj-$(CONFIG_QCOM_SCM)		+= qcom-scm.o
+> +qcom-scm-objs += qcom_scm.o qcom_scm-smc.o qcom_scm-legacy.o
+>  obj-$(CONFIG_TI_SCI_PROTOCOL)	+= ti_sci.o
+>  obj-$(CONFIG_TRUSTED_FOUNDATIONS) += trusted_foundations.o
+>  obj-$(CONFIG_TURRIS_MOX_RWTM)	+= turris-mox-rwtm.o
+> diff --git a/drivers/firmware/qcom_scm.c b/drivers/firmware/qcom_scm.c
+> index 7be48c1bec96d..6f431b73e617d 100644
+> --- a/drivers/firmware/qcom_scm.c
+> +++ b/drivers/firmware/qcom_scm.c
+> @@ -1280,6 +1280,7 @@ static const struct of_device_id qcom_scm_dt_match[] = {
+>  	{ .compatible = "qcom,scm" },
+>  	{}
+>  };
+> +MODULE_DEVICE_TABLE(of, qcom_scm_dt_match);
+>  
+>  static struct platform_driver qcom_scm_driver = {
+>  	.driver = {
+> @@ -1295,3 +1296,6 @@ static int __init qcom_scm_init(void)
+>  	return platform_driver_register(&qcom_scm_driver);
+>  }
+>  subsys_initcall(qcom_scm_init);
+> +
+> +MODULE_DESCRIPTION("Qualcomm Technologies, Inc. SCM driver");
+> +MODULE_LICENSE("GPL v2");
+> diff --git a/drivers/iommu/Kconfig b/drivers/iommu/Kconfig
+> index 04878caf6da49..c64d7a2b65134 100644
+> --- a/drivers/iommu/Kconfig
+> +++ b/drivers/iommu/Kconfig
+> @@ -248,6 +248,7 @@ config SPAPR_TCE_IOMMU
+>  config ARM_SMMU
+>  	tristate "ARM Ltd. System MMU (SMMU) Support"
+>  	depends on ARM64 || ARM || (COMPILE_TEST && !GENERIC_ATOMIC64)
+> +	depends on QCOM_SCM || !QCOM_SCM #if QCOM_SCM=m this can't be =y
+>  	select IOMMU_API
+>  	select IOMMU_IO_PGTABLE_LPAE
+>  	select ARM_DMA_USE_IOMMU if ARM
+> @@ -375,6 +376,7 @@ config QCOM_IOMMU
+>  	# Note: iommu drivers cannot (yet?) be built as modules
+>  	bool "Qualcomm IOMMU Support"
+>  	depends on ARCH_QCOM || (COMPILE_TEST && !GENERIC_ATOMIC64)
+> +	depends on QCOM_SCM=y
+>  	select IOMMU_API
+>  	select IOMMU_IO_PGTABLE_LPAE
+>  	select ARM_DMA_USE_IOMMU
+> diff --git a/drivers/net/wireless/ath/ath10k/Kconfig b/drivers/net/wireless/ath/ath10k/Kconfig
+> index 40f91bc8514d8..741289e385d59 100644
+> --- a/drivers/net/wireless/ath/ath10k/Kconfig
+> +++ b/drivers/net/wireless/ath/ath10k/Kconfig
+> @@ -44,6 +44,7 @@ config ATH10K_SNOC
+>  	tristate "Qualcomm ath10k SNOC support"
+>  	depends on ATH10K
+>  	depends on ARCH_QCOM || COMPILE_TEST
+> +	depends on QCOM_SCM || !QCOM_SCM #if QCOM_SCM=m this can't be =y
+>  	select QCOM_QMI_HELPERS
+>  	help
+>  	  This module adds support for integrated WCN3990 chip connected
+> -- 
+> 2.17.1
+> 
