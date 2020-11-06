@@ -2,116 +2,125 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 1A1A62A8FE0
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Nov 2020 08:05:21 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C061F2A8FE9
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Nov 2020 08:06:32 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726376AbgKFHFU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 6 Nov 2020 02:05:20 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58864 "EHLO
+        id S1726491AbgKFHF3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 6 Nov 2020 02:05:29 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58904 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725848AbgKFHFT (ORCPT
+        with ESMTP id S1726440AbgKFHF2 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 6 Nov 2020 02:05:19 -0500
-Received: from mail-pg1-x542.google.com (mail-pg1-x542.google.com [IPv6:2607:f8b0:4864:20::542])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 28CBFC0613D2
-        for <linux-arm-msm@vger.kernel.org>; Thu,  5 Nov 2020 23:05:19 -0800 (PST)
-Received: by mail-pg1-x542.google.com with SMTP id 62so210068pgg.12
-        for <linux-arm-msm@vger.kernel.org>; Thu, 05 Nov 2020 23:05:19 -0800 (PST)
+        Fri, 6 Nov 2020 02:05:28 -0500
+Received: from mail-pg1-x543.google.com (mail-pg1-x543.google.com [IPv6:2607:f8b0:4864:20::543])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7AB68C0613D2
+        for <linux-arm-msm@vger.kernel.org>; Thu,  5 Nov 2020 23:05:28 -0800 (PST)
+Received: by mail-pg1-x543.google.com with SMTP id r10so218595pgb.10
+        for <linux-arm-msm@vger.kernel.org>; Thu, 05 Nov 2020 23:05:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=X+vlFfwXaQyT67tNUyi81s2s5dR5xJEgy0PknD0rbz4=;
-        b=x7tyrPdaqh682SqGflCsojgjTQx+BXzkcw1rNmmcDJ4f1/CcNFqWsU2TeslilqRYW6
-         zc5/q2J7DYA6GaZpIl9YJEuw5A+2BygaKtcNZGbiJXmhxkSHLYjjXBFUVrm/3kU2FfxF
-         HOpl09BHz7pxQM1vSb758PMQEHgdQo7a0vFwzSK04ezcCvy5z2tN77zFwQKb0oCEVS7Z
-         5Wf5xaSLDOcwVEQi6x3vCm1v9HcJ36wHsCS7oCefyqpWqoytt13+6MJpeHbxPKWMFUZ8
-         7D71Y1LBl2lTl2Ui7t2WW7/HoEOYoPNzVDuHeqlnp7Y7cKSpCWRT/VBoOVOVT9t0JXT2
-         P84Q==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=vW0y5O6fj/dSbiX5076IJWx7fOAGTl35MulHK3/J9GA=;
+        b=D6uqniTZDu/c8/5235+16Xko0zTWnNMMIAtUtOM/sIJ+qQZOdNWM4FVZCl/cPCrdQg
+         GS8zHO8HsGGyUo9BciWRYPrv/1X0XAp+BnDL8B4nWCIzrKziQFfnxKh3gi4tjacAivfv
+         iqjrHV3iRylbs5Q/gJcy3jIWkjyrw2Z28qDrHGN0d2nTb0DQ1/gxSTICRpsMqc9iGe4B
+         ++aCDQ+oKHncRAq/O8yFa3OcqIvIzIp3pK9ZG196VoI4Fw8oLQ2/Nwd9wFkncXTr/OMI
+         Ezp0rP0wh+Jsy+wjZolrQavV3CNbhP10hcz+etvW45EyNSGa/0yK0Ye/m+eL+TW0Xph2
+         t6Yw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=X+vlFfwXaQyT67tNUyi81s2s5dR5xJEgy0PknD0rbz4=;
-        b=Tu30HkdciuVEz3JdQ7tcevaPBkJcX97UdvOpg+St7+NnTKKJes5Mhp0Gg0VvD5DHIP
-         PjTSpU0WxSxmhGvcuCjWciUsY7OaqP1dfsJTAbIyp9vnKhIuPPf1a25KltPUCBJ+TgzX
-         /Q/ja5DE3scn/SZFXTaWTEbPUKqltqh93sDXFA6oAtDyuCS/x543bWvEJHuZoZnIJrs9
-         dke/BawUGlxa4T2QsL8iNJyX4yKRo2RXbYZlw6+c/hbaUIRlwdfdBiGui8UO7vHl9IZ1
-         gmQ+321lwP2rnmqDHgejkKIgarU2Fz4hRAZgDSaQHUVqfrIn/Fci4bbasQidRZNiXluD
-         k1sA==
-X-Gm-Message-State: AOAM53206o5e6ewk5d3NlwFfk2OrrtYx4jG68h9TNuhBk1C4cPxxVgCo
-        d/+Z0ifFJEo5RwZorllojIiOEQ==
-X-Google-Smtp-Source: ABdhPJwjHQpNsy+GXHXCwxvkwHWtDNd475+Vq8i4kMmtZzheVVRcd/hAft+93Mx61nTSrMPFd3mZ/Q==
-X-Received: by 2002:a17:90a:af89:: with SMTP id w9mr989921pjq.72.1604646318621;
-        Thu, 05 Nov 2020 23:05:18 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=vW0y5O6fj/dSbiX5076IJWx7fOAGTl35MulHK3/J9GA=;
+        b=WoZyQWIwlMh8R/0tFyBHVWU2NTMo7kgVxmqf++W00SJGlfsB0goiK6WYbn5StJzurr
+         YygCuXzsRePxADq73nspWAcL8KYFJ9GgWTQrENIAtrfD/X7ttW3/mzinc01COaSVj70E
+         3JKHPcB+Noo3R8m20F6Ugd1UH9FAGuA7FpZv6jN3MGfkfgllDoGib1apVgS14yAMcxNg
+         7epf1+kZ6obFwcWgX8o9CtKABIRXDPYc2Um1wIknVeLzckcaWl31d0XR5uQUgeey1eCd
+         3PUFNB9zQnU1De5cArfxPz3dESRQnOQqfzj6sMGl/lvWsejBEglFkCvqcGQcZviFVB90
+         pIzA==
+X-Gm-Message-State: AOAM533WaobQfg2P3aa4TcmqpZmyvLMF2hwuVeyp4rU9n7SE5jrP9493
+        GhKfIF7/ayfXMhbIjXEILvhLQw==
+X-Google-Smtp-Source: ABdhPJx3V38k9UrFwXlITLr5bocrlJEnw2LA5dsBmBudBHawZuIukyiRESfoiDC7L1A0LcURRLsUwA==
+X-Received: by 2002:a17:90a:fa8d:: with SMTP id cu13mr926275pjb.161.1604646328060;
+        Thu, 05 Nov 2020 23:05:28 -0800 (PST)
 Received: from localhost ([122.172.12.172])
-        by smtp.gmail.com with ESMTPSA id r3sm1023098pjl.23.2020.11.05.23.05.17
+        by smtp.gmail.com with ESMTPSA id x15sm978047pjh.21.2020.11.05.23.05.27
         (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 05 Nov 2020 23:05:17 -0800 (PST)
+        Thu, 05 Nov 2020 23:05:27 -0800 (PST)
 From:   Viresh Kumar <viresh.kumar@linaro.org>
-To:     Alyssa Rosenzweig <alyssa.rosenzweig@collabora.com>,
-        Andy Gross <agross@kernel.org>,
+To:     Ilia Lin <ilia.lin@kernel.org>, Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Chanwoo Choi <cw00.choi@samsung.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        David Airlie <airlied@linux.ie>,
-        Ilia Lin <ilia.lin@kernel.org>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        Kukjin Kim <kgene@kernel.org>,
-        Kyungmin Park <kyungmin.park@samsung.com>,
-        MyungJoo Ham <myungjoo.ham@samsung.com>,
-        Nishanth Menon <nm@ti.com>, Qiang Yu <yuq825@gmail.com>,
         "Rafael J. Wysocki" <rjw@rjwysocki.net>,
-        Rob Herring <robh@kernel.org>,
-        Stanimir Varbanov <stanimir.varbanov@linaro.org>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Steven Price <steven.price@arm.com>,
-        Tomeu Vizoso <tomeu.vizoso@collabora.com>,
-        Viresh Kumar <vireshk@kernel.org>,
         Viresh Kumar <viresh.kumar@linaro.org>
 Cc:     linux-pm@vger.kernel.org,
-        Vincent Guittot <vincent.guittot@linaro.org>, digetx@gmail.com,
-        dri-devel@lists.freedesktop.org, lima@lists.freedesktop.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-media@vger.kernel.org, linux-samsung-soc@vger.kernel.org
-Subject: [PATCH 0/7] opp: Allow dev_pm_opp_put_*() APIs to accept NULL opp_table
-Date:   Fri,  6 Nov 2020 12:33:20 +0530
-Message-Id: <cover.1604646059.git.viresh.kumar@linaro.org>
+        Vincent Guittot <vincent.guittot@linaro.org>,
+        Stephen Boyd <sboyd@kernel.org>, Nishanth Menon <nm@ti.com>,
+        digetx@gmail.com, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH 3/7] cpufreq: qcom-cpufreq-nvmem: dev_pm_opp_put_*() accepts NULL argument
+Date:   Fri,  6 Nov 2020 12:33:23 +0530
+Message-Id: <86e6dfb0b929e525b568d80e5e852f14487d9b94.1604646059.git.viresh.kumar@linaro.org>
 X-Mailer: git-send-email 2.25.0.rc1.19.g042ed3e048af
+In-Reply-To: <cover.1604646059.git.viresh.kumar@linaro.org>
+References: <cover.1604646059.git.viresh.kumar@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hello,
+The dev_pm_opp_put_*() APIs now accepts a NULL opp_table pointer and so
+there is no need for us to carry the extra checks. Drop them.
 
-This patchset updates the dev_pm_opp_put_*() helpers to accept a NULL
-pointer for the OPP table, in order to allow the callers to drop the
-unnecessary checks they had to carry.
+Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
+---
+ drivers/cpufreq/qcom-cpufreq-nvmem.c | 15 ++++++---------
+ 1 file changed, 6 insertions(+), 9 deletions(-)
 
-All these must get merged upstream through the OPP tree as there is a
-hard dependency on the first patch here. Thanks.
-
-Viresh Kumar (7):
-  opp: Allow dev_pm_opp_put_*() APIs to accept NULL opp_table
-  cpufreq: dt: dev_pm_opp_put_regulators() accepts NULL argument
-  cpufreq: qcom-cpufreq-nvmem: dev_pm_opp_put_*() accepts NULL argument
-  devfreq: exynos: dev_pm_opp_put_*() accepts NULL argument
-  drm/lima: dev_pm_opp_put_*() accepts NULL argument
-  drm/panfrost: dev_pm_opp_put_*() accepts NULL argument
-  media: venus: dev_pm_opp_put_*() accepts NULL argument
-
- drivers/cpufreq/cpufreq-dt.c                   |  6 ++----
- drivers/cpufreq/qcom-cpufreq-nvmem.c           | 15 ++++++---------
- drivers/devfreq/exynos-bus.c                   | 12 ++++--------
- drivers/gpu/drm/lima/lima_devfreq.c            | 13 ++++---------
- drivers/gpu/drm/panfrost/panfrost_devfreq.c    |  6 ++----
- drivers/media/platform/qcom/venus/pm_helpers.c |  3 +--
- drivers/opp/core.c                             | 18 ++++++++++++++++++
- 7 files changed, 37 insertions(+), 36 deletions(-)
-
+diff --git a/drivers/cpufreq/qcom-cpufreq-nvmem.c b/drivers/cpufreq/qcom-cpufreq-nvmem.c
+index d06b37822c3d..747d602f221e 100644
+--- a/drivers/cpufreq/qcom-cpufreq-nvmem.c
++++ b/drivers/cpufreq/qcom-cpufreq-nvmem.c
+@@ -397,19 +397,19 @@ static int qcom_cpufreq_probe(struct platform_device *pdev)
+ 
+ free_genpd_opp:
+ 	for_each_possible_cpu(cpu) {
+-		if (IS_ERR_OR_NULL(drv->genpd_opp_tables[cpu]))
++		if (IS_ERR(drv->genpd_opp_tables[cpu]))
+ 			break;
+ 		dev_pm_opp_detach_genpd(drv->genpd_opp_tables[cpu]);
+ 	}
+ 	kfree(drv->genpd_opp_tables);
+ free_opp:
+ 	for_each_possible_cpu(cpu) {
+-		if (IS_ERR_OR_NULL(drv->names_opp_tables[cpu]))
++		if (IS_ERR(drv->names_opp_tables[cpu]))
+ 			break;
+ 		dev_pm_opp_put_prop_name(drv->names_opp_tables[cpu]);
+ 	}
+ 	for_each_possible_cpu(cpu) {
+-		if (IS_ERR_OR_NULL(drv->hw_opp_tables[cpu]))
++		if (IS_ERR(drv->hw_opp_tables[cpu]))
+ 			break;
+ 		dev_pm_opp_put_supported_hw(drv->hw_opp_tables[cpu]);
+ 	}
+@@ -430,12 +430,9 @@ static int qcom_cpufreq_remove(struct platform_device *pdev)
+ 	platform_device_unregister(cpufreq_dt_pdev);
+ 
+ 	for_each_possible_cpu(cpu) {
+-		if (drv->names_opp_tables[cpu])
+-			dev_pm_opp_put_supported_hw(drv->names_opp_tables[cpu]);
+-		if (drv->hw_opp_tables[cpu])
+-			dev_pm_opp_put_supported_hw(drv->hw_opp_tables[cpu]);
+-		if (drv->genpd_opp_tables[cpu])
+-			dev_pm_opp_detach_genpd(drv->genpd_opp_tables[cpu]);
++		dev_pm_opp_put_supported_hw(drv->names_opp_tables[cpu]);
++		dev_pm_opp_put_supported_hw(drv->hw_opp_tables[cpu]);
++		dev_pm_opp_detach_genpd(drv->genpd_opp_tables[cpu]);
+ 	}
+ 
+ 	kfree(drv->names_opp_tables);
 -- 
 2.25.0.rc1.19.g042ed3e048af
 
