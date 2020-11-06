@@ -2,69 +2,124 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A7FD22A999E
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Nov 2020 17:39:23 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 94E542A99D4
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Nov 2020 17:49:18 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727298AbgKFQjV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 6 Nov 2020 11:39:21 -0500
-Received: from mail.kernel.org ([198.145.29.99]:46128 "EHLO mail.kernel.org"
+        id S1727213AbgKFQtH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 6 Nov 2020 11:49:07 -0500
+Received: from z5.mailgun.us ([104.130.96.5]:31305 "EHLO z5.mailgun.us"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726320AbgKFQjU (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 6 Nov 2020 11:39:20 -0500
-Received: from kicinski-fedora-pc1c0hjn.dhcp.thefacebook.com (unknown [163.114.132.1])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        id S1727158AbgKFQtH (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 6 Nov 2020 11:49:07 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1604681346; h=Content-Transfer-Encoding: MIME-Version:
+ Message-Id: Date: Subject: Cc: To: From: Sender;
+ bh=mmDY3vrSkUBVocMRrTBePZzPrbDq54E0u3YNqfpt3f4=; b=gUIvKP7ltIfaRVDmb9F9Fp7KD6/v3X8YA7FR0ag75mnbrHE7mdcfN1rYrlDT7pMl9kiCIBlX
+ kWQZ++KaUQ18M5+2L9EjD/lbKr55WXpdwxPD5jaa/jZFk6ovzdIh5I54lAwphm5ovlwH1nZD
+ tcJEMplbMksOVPLZrnW86PDHXas=
+X-Mailgun-Sending-Ip: 104.130.96.5
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n06.prod.us-east-1.postgun.com with SMTP id
+ 5fa57e56b82e1b98c66c57e8 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 06 Nov 2020 16:48:22
+ GMT
+Sender: ilina=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 20679C433C9; Fri,  6 Nov 2020 16:48:22 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
+        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+Received: from codeaurora.org (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 9B54E2151B;
-        Fri,  6 Nov 2020 16:39:19 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1604680760;
-        bh=jwPlFovuOrkaW0Z29UuTSioneIhsZji3BtWS11yzRoo=;
-        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-        b=Symxgd1W9QtB1ePiIhHq32Izj6x6aF3rd9+OUoS/v8OkHE5+2f+dnHGSwscwixQuH
-         kdsT6h8n/NyEu7OM+yY60rDZs2WTOgcNFjx3wqSHivNEETJ3GDt79RvYueWNjVoe8w
-         UAzUC58RD0QbnT7IlEE6y46OoEhVkLZMhMeNjEBU=
-Date:   Fri, 6 Nov 2020 08:39:18 -0800
-From:   Jakub Kicinski <kuba@kernel.org>
-To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc:     Loic Poulain <loic.poulain@linaro.org>, davem@davemloft.net,
-        netdev@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        bbhatt@codeaurora.org, willemdebruijn.kernel@gmail.com,
-        jhugo@codeaurora.org, hemantk@codeaurora.org
-Subject: Re: [PATCH v10 1/2] bus: mhi: Add mhi_queue_is_full function
-Message-ID: <20201106083918.5ea0674b@kicinski-fedora-pc1c0hjn.dhcp.thefacebook.com>
-In-Reply-To: <B9A7A95E-BD2F-49C0-A28C-56A8E6D903AC@linaro.org>
-References: <1604424234-24446-1-git-send-email-loic.poulain@linaro.org>
-        <20201105165708.31d24782@kicinski-fedora-pc1c0hjn.dhcp.thefacebook.com>
-        <20201106051353.GA3473@work>
-        <20201106080445.00588690@kicinski-fedora-pc1c0hjn.dhcp.thefacebook.com>
-        <B9A7A95E-BD2F-49C0-A28C-56A8E6D903AC@linaro.org>
+        (Authenticated sender: ilina)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 0F148C433C8;
+        Fri,  6 Nov 2020 16:48:20 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 0F148C433C8
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=ilina@codeaurora.org
+From:   Lina Iyer <ilina@codeaurora.org>
+To:     rjw@rjwysocki.net, ulf.hansson@linaro.org
+Cc:     linux-pm@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        Lina Iyer <ilina@codeaurora.org>
+Subject: [PATCH v5 0/2] Better domain idle from device wakeup patterns
+Date:   Fri,  6 Nov 2020 09:48:09 -0700
+Message-Id: <20201106164811.3698-1-ilina@codeaurora.org>
+X-Mailer: git-send-email 2.29.2
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, 06 Nov 2020 21:58:12 +0530 Manivannan Sadhasivam wrote:
->>> Since you've applied now, what would you propose?  
->>
->> Do you need mhi_queue_is_full() in other branches, or are you just
->> concerned about the conflicts?
-> 
-> Yes, I need this patch in mhi-next.
-> 
->> I'm assuming the concern is just about the mhi/core patch, or would 
->> you need to refactor something in the net driver as well?  
-> 
-> Just the mhi_queue_is_full() patch. 
+Changes since v4 [4]:
+- Address review comments
 
-Okay, I think you can just apply that patch to your tree again and git
-should figure out it's a duplicate. Not optimal, because the change will
-have two hashes, but the function is trivial, shouldn't be an issue
-even if conflict happens.
+Changes since v3 [3]:
+- Move the next_wakeup info of the device deeper into the device's
+  domain data. This should avoid overhead for devices that do not have a
+  predictable wakeup pattern.
 
-Will you need it in wireless (ath11k), or only in other trees?
+Changes since v2:
+- Fix unwanted change
 
-If it ends up in the wireless tree Dave or I will do the resolution when
-we pull from Kalle so it won't even appear to Linus (but then it should
-go into wireless through an immutable branch).
+Changes since v1 [2]:
+- Update documentation and commit text
+- Remove check for runtime PM when setting next_event
+- Fix kernel-test robot reported issue
+
+Changes since RFC [1]:
+- Organized the code to make it cleaner
+- Fixed some issues with idle state determination
+- Add documentation and update commit text
+
+Hello,
+
+I was looking for an option to do better power management for some
+domains where the devices enter runtime PM in a predictable fashion. For
+example a display device that sends a vsync interrupt every 16 ms for a
+60 Hz panel. These interrupts are not timer interrupts but tend to
+interrupt periodically to service the workflow and the devices and
+domains may go back to idle soon after. Two domains are affected by this
+- the device's PM domain and the CPU PM domain.
+
+As a first step, I am looking to solve for the device's PM domain idle
+state (and hopefully solve for the CPU PM domains subsequently). The PM
+domain could have multiple idle states and/or the enter/exit latencies
+could be high. In either case, it may not always be beneficial to power
+off the domain, only to turn it back on before satisfying the idle state
+residency. When the wakeup is known for the device, we could use that to
+determine the worthiness of entering a domain idle state. Only the
+device can tell us when the future event would be and that could change
+as the usecase changes. Like, when the panel refresh rate increases to
+120 Hz. If this information was made available to runtime PM, we could
+use that in the domain governor to determine a suitable idle state. This
+is the idea behind these patches.
+
+Would appreciate your thoughts on this.
+
+Thanks,
+Lina
+
+[1]. https://lore.kernel.org/linux-pm/010101746eccb270-05beb27f-e1e4-40eb-92da-ad1bb48feb41-000000@us-west-2.amazonses.com/T/
+[2]. https://lore.kernel.org/linux-pm/20201012223400.23609-3-ilina@codeaurora.org/T/#u
+[3]. https://lore.kernel.org/linux-pm/20201015193807.17423-1-ilina@codeaurora.org/
+[4]. https://www.spinics.net/lists/linux-arm-msm/msg74322.html
+
+Lina Iyer (2):
+  PM / domains: inform PM domain of a device's next wakeup
+  PM / Domains: use device's next wakeup to determine domain idle state
+
+ drivers/base/power/domain.c          | 36 +++++++++++++
+ drivers/base/power/domain_governor.c | 81 ++++++++++++++++++++++++++--
+ include/linux/pm_domain.h            |  9 ++++
+ 3 files changed, 121 insertions(+), 5 deletions(-)
+
+-- 
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
+
