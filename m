@@ -2,96 +2,208 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id BFB452A9375
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Nov 2020 10:55:05 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 591C72A9492
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Nov 2020 11:39:53 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726139AbgKFJzE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 6 Nov 2020 04:55:04 -0500
-Received: from mail.kernel.org ([198.145.29.99]:37882 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726075AbgKFJzE (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 6 Nov 2020 04:55:04 -0500
-Received: from localhost (83-86-74-64.cable.dynamic.v4.ziggo.nl [83.86.74.64])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id E42C721734;
-        Fri,  6 Nov 2020 09:55:01 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1604656503;
-        bh=fq0Ui8t6PiSDl63PaQnqQ+wD7V5/mQ8ZBFhNNG3yCok=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=iOqu7iq8fkqhQinW+HWeXRONm4gVqP0ORpaGzDUMT9zotN8/ZoAt8k4smbdnLkRfA
-         gQF4QwYnBsQf3JTygZryT4dYi6nYvqpqKGLuqzS6PEjkhnobvGexT83gHte/RclSzw
-         WjuqDzk0ase4qrOZuSmZgJVWNdu/bBS1goiCMzjw=
-Date:   Fri, 6 Nov 2020 10:54:50 +0100
-From:   Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To:     Lee Jones <lee.jones@linaro.org>
-Cc:     linux-kernel@vger.kernel.org,
-        Alexandre Torgue <alexandre.torgue@st.com>,
-        "Andrew J. Kroll" <ag784@freenet.buffalo.edu>,
-        Andrew Morton <andrewm@uow.edu.eu>,
-        Andy Gross <agross@kernel.org>,
-        Benjamin Herrenschmidt <benh@kernel.crashing.org>,
-        Bill Hawes <whawes@star.net>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Christian =?iso-8859-1?Q?K=F6nig?= <christian.koenig@amd.com>,
-        Colin Ian King <colin.king@canonical.com>,
-        "C. Scott Ananian" <cananian@alumni.princeton.edu>,
-        "David A. Hinds" <dahinds@users.sourceforge.net>,
-        dri-devel@lists.freedesktop.org, Filip Aben <f.aben@option.com>,
-        Gerald Baeza <gerald.baeza@st.com>,
-        Jakub Jelinek <jj@ultra.linux.cz>,
-        Jan Dumon <j.dumon@option.com>,
-        Jiri Slaby <jirislaby@kernel.org>,
-        Jonathan Hunter <jonathanh@nvidia.com>,
-        Joseph Barrow <d.barow@option.com>,
-        -- <julian@uhunix.uhcc.hawaii.edu>,
-        Kevin Wells <kevin.wells@nxp.com>,
-        Laxman Dewangan <ldewangan@nvidia.com>,
-        linaro-mm-sig@lists.linaro.org, linux-arm-msm@vger.kernel.org,
-        linux-media@vger.kernel.org, linuxppc-dev@lists.ozlabs.org,
-        linux-riscv@lists.infradead.org, linux-serial@vger.kernel.org,
-        linux-stm32@st-md-mailman.stormreply.com,
-        linux-tegra@vger.kernel.org, Marko Kohtala <Marko.Kohtala@hut.fi>,
-        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-        Michael Ellerman <mpe@ellerman.id.au>,
-        Michal Simek <michal.simek@xilinx.com>,
-        Mike Hudson <Exoray@isys.ca>, Miloslav Trmac <mitr@redhat.com>,
-        Nick Holloway <alfie@dcs.warwick.ac.uk>,
-        Palmer Dabbelt <palmer@dabbelt.com>, paulkf@microgate.com,
-        Paul Mackerras <paulus@samba.org>,
-        Paul Walmsley <paul.walmsley@sifive.com>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        processes-Sapan Bhatia <sapan@corewars.org>,
-        Robert Love <rlove@google.com>, Rob Herring <robh@kernel.org>,
-        Roland Stigge <stigge@antcom.de>,
-        Russell King <linux@armlinux.org.uk>,
-        Russell King <rmk@arm.linux.org.uk>,
-        Russ Gorby <russ.gorby@intel.com>,
-        Stanislav Voronyi <stas@cnti.uanet.kharkov.ua>,
-        Sumit Semwal <sumit.semwal@linaro.org>,
-        Sylvain Lemieux <slemieux.tyco@gmail.com>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Vladimir Zapolskiy <vz@mleia.com>
-Subject: Re: [PATCH 00/36] Rid W=1 issues from TTY
-Message-ID: <20201106095450.GA2660312@kroah.com>
-References: <20201104193549.4026187-1-lee.jones@linaro.org>
+        id S1727167AbgKFKjt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 6 Nov 2020 05:39:49 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35962 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726702AbgKFKjs (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 6 Nov 2020 05:39:48 -0500
+Received: from mail-vs1-xe44.google.com (mail-vs1-xe44.google.com [IPv6:2607:f8b0:4864:20::e44])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0CB02C0613CF
+        for <linux-arm-msm@vger.kernel.org>; Fri,  6 Nov 2020 02:39:48 -0800 (PST)
+Received: by mail-vs1-xe44.google.com with SMTP id 128so397182vso.7
+        for <linux-arm-msm@vger.kernel.org>; Fri, 06 Nov 2020 02:39:48 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=0LfqbFVQDf6EnKMtM2PNGP+fMgWiqJYrhuyrC9aGMG0=;
+        b=Cn2FkJpPTwrScEBFP30KmR+ETYrdD8nqf3x0CR71mlDkB4y4y6gIHcwT3ZztSbJo+G
+         rtY0jbK/4OeoFy7GNlca3ZyqajC86XuArno5O2bv4txDNs6kYwIdCpd89ncbLw4Jwx8b
+         H7BfHfXVug9QIobm+rS6noOyXDdrzJVelFJJBwGl6pwh8vA8uJ/YLStxGDJoLW3Ih6ug
+         jdVPeNH0DvkT+BWeLf8eCxH++yirPopFQ/pg9MhSqR6qo0HG1ttke1qvaGoqK3o+6erc
+         7sFC83bhEERz3eH1wR1xnG/ZDGd9exD0su5iaY9KsSbH2nas5lPKxJk7Fi7J7V0Ev3vE
+         wYSg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=0LfqbFVQDf6EnKMtM2PNGP+fMgWiqJYrhuyrC9aGMG0=;
+        b=mM+OZoEzo+W8ywl6si0NRjBCmOENh5l4cpjjj0us2l6Gz5KJxpE9zfI0Nb++ar3Tk9
+         bHI5bj9P1XHiqUZaCRa2uFyidTUDqcxZF1wpx7z+VPkp7MQrWU3xzG9Ylcjlj7/rLJxp
+         sym30ByXyyLrQTbBzeZdImFER0pEJHpIOJlbWKCjfhTLSVeQopBMS+D3botrCfo+bJbr
+         bzbm+ZDO7gCoLiBQLogLPzwXrTLichbVe6I/SQnr5PIt4HZM4S4+clbpzRQOucqzrhUi
+         03HF8neKhk04s5evVESr2rEDavi6c8gDVavyGH5zc8LbbDWspeH4G67nQI/7ViUN7TC+
+         tSGQ==
+X-Gm-Message-State: AOAM532CwTcNPKWHu8bSO3KrIJ7Hy8r24nmTZt1Dy4k3UiZSm4csmCXF
+        pHkmy+N6V9F4mzECCmlVm25uxFQTj+97Qp3WG/I4tg==
+X-Google-Smtp-Source: ABdhPJwrrFjUmTEUgSw8KM5zff+kHxaTrTuy1pzw1Z5kVj4qG2MA9Af7aUi7pmz3zMyJk2E8QE6UlKcxpK/Mv0DkSZU=
+X-Received: by 2002:a67:3256:: with SMTP id y83mr522273vsy.48.1604659187176;
+ Fri, 06 Nov 2020 02:39:47 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20201104193549.4026187-1-lee.jones@linaro.org>
+References: <20201020180413.32225-1-ilina@codeaurora.org> <20201020180413.32225-2-ilina@codeaurora.org>
+In-Reply-To: <20201020180413.32225-2-ilina@codeaurora.org>
+From:   Ulf Hansson <ulf.hansson@linaro.org>
+Date:   Fri, 6 Nov 2020 11:39:10 +0100
+Message-ID: <CAPDyKFoJkPYG4Qc4gbX6uW7vr1OJm7hXfznU+oSs2kvqSjufUw@mail.gmail.com>
+Subject: Re: [PATCH v4 1/2] PM / domains: inform PM domain of a device's next wakeup
+To:     Lina Iyer <ilina@codeaurora.org>
+Cc:     "Rafael J. Wysocki" <rjw@rjwysocki.net>,
+        Linux PM <linux-pm@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Nov 04, 2020 at 07:35:13PM +0000, Lee Jones wrote:
-> This set is part of a larger effort attempting to clean-up W=1
-> kernel builds, which are currently overwhelmingly riddled with
-> niggly little warnings.
+On Tue, 20 Oct 2020 at 20:04, Lina Iyer <ilina@codeaurora.org> wrote:
+>
+> Some devices may have a predictable interrupt pattern while executing
+> usecases. An example would be the VSYNC interrupt associated with
+> display devices. A 60 Hz display could cause a interrupt every 16 ms. If
+> the device were in a PM domain, the domain would need to be powered up
+> for device to resume and handle the interrupt.
+>
+> Entering a domain idle state saves power, only if the residency of the
+> idle state is met. Without knowing the idle duration of the domain, the
+> governor would just choose the deepest idle state that matches the QoS
+> requirements. The domain might be powered off just as the device is
+> expecting to wake up. If devices could inform PM frameworks of their
+> next event, the parent PM domain's idle duration can be determined.
+>
+> So let's add the pm_genpd_set_next_wake() API for the device to notify
 
-Many of these now applied, please update the series against my
-tty-testing branch and resend the rest.
+/s/pm_genpd_set_next_wake/dev_pm_genpd_set_next_wakeup
 
-thanks,
+Also, please don't use the word "notifiy", but rather "inform" or
+similar - to not confuse things with the kernel notifiers.
 
-greg k-h
+There are some more examples below in the patch where "notify" is
+used, please have a look at those as well.
+
+> PM domains of the impending wakeup. This information will be the domain
+> governor to determine the best idle state given the wakeup.
+>
+> Signed-off-by: Lina Iyer <ilina@codeaurora.org>
+
+Other than the nitpicks above, this looks good to me:
+
+Reviewed-by: Ulf Hansson <ulf.hansson@linaro.org>
+
+> ---
+> Changes in v4:
+>         - Use PM domain data to store next_wakeup
+>         - Drop runtime PM documentation
+> Changes in v3:
+>         - Fix unwanted change
+> Changes in v2:
+>         - Update documentation
+>         - Remove runtime PM enabled check
+>         - Update commit text
+> ---
+>  drivers/base/power/domain.c | 36 ++++++++++++++++++++++++++++++++++++
+>  include/linux/pm_domain.h   |  8 ++++++++
+>  2 files changed, 44 insertions(+)
+>
+> diff --git a/drivers/base/power/domain.c b/drivers/base/power/domain.c
+> index 743268996336..34b90e77e0cd 100644
+> --- a/drivers/base/power/domain.c
+> +++ b/drivers/base/power/domain.c
+> @@ -408,6 +408,41 @@ int dev_pm_genpd_set_performance_state(struct device *dev, unsigned int state)
+>  }
+>  EXPORT_SYMBOL_GPL(dev_pm_genpd_set_performance_state);
+>
+> +/**
+> + * dev_pm_genpd_set_next_wakeup - Notify PM framework of an impending wakeup.
+> + *
+> + * @dev: Device to handle
+> + * @next: impending interrupt/wakeup for the device
+> + *
+> + * Allow devices to inform of the next wakeup. But, if the domain were already
+> + * powered off, we will not wakeup the domain to recompute it's idle duration.
+> + */
+> +int dev_pm_genpd_set_next_wakeup(struct device *dev, ktime_t next)
+> +{
+> +       struct generic_pm_domain *genpd;
+> +       struct generic_pm_domain_data *gpd_data;
+> +       int ret = -EINVAL;
+> +
+> +       genpd = dev_to_genpd_safe(dev);
+> +       if (!genpd)
+> +               return -ENODEV;
+> +
+> +       if (WARN_ON(!dev->power.subsys_data ||
+> +                   !dev->power.subsys_data->domain_data))
+> +               return ret;
+> +
+> +       genpd_lock(genpd);
+> +       gpd_data = to_gpd_data(dev->power.subsys_data->domain_data);
+> +       if (ktime_before(ktime_get(), next)) {
+> +               gpd_data->next_wakeup = next;
+> +               ret = 0;
+> +       }
+> +       genpd_unlock(genpd);
+> +
+> +       return ret;
+> +}
+> +EXPORT_SYMBOL_GPL(dev_pm_genpd_set_next_wakeup);
+> +
+>  static int _genpd_power_on(struct generic_pm_domain *genpd, bool timed)
+>  {
+>         unsigned int state_idx = genpd->state_idx;
+> @@ -1431,6 +1466,7 @@ static struct generic_pm_domain_data *genpd_alloc_dev_data(struct device *dev)
+>         gpd_data->td.constraint_changed = true;
+>         gpd_data->td.effective_constraint_ns = PM_QOS_RESUME_LATENCY_NO_CONSTRAINT_NS;
+>         gpd_data->nb.notifier_call = genpd_dev_pm_qos_notifier;
+> +       gpd_data->next_wakeup = KTIME_MAX;
+>
+>         spin_lock_irq(&dev->power.lock);
+>
+> diff --git a/include/linux/pm_domain.h b/include/linux/pm_domain.h
+> index 1ad0ec481416..e00c77b1efd8 100644
+> --- a/include/linux/pm_domain.h
+> +++ b/include/linux/pm_domain.h
+> @@ -9,6 +9,7 @@
+>  #define _LINUX_PM_DOMAIN_H
+>
+>  #include <linux/device.h>
+> +#include <linux/ktime.h>
+>  #include <linux/mutex.h>
+>  #include <linux/pm.h>
+>  #include <linux/err.h>
+> @@ -191,6 +192,7 @@ struct generic_pm_domain_data {
+>         struct notifier_block *power_nb;
+>         int cpu;
+>         unsigned int performance_state;
+> +       ktime_t next_wakeup;
+>         void *data;
+>  };
+>
+> @@ -217,6 +219,7 @@ int pm_genpd_remove(struct generic_pm_domain *genpd);
+>  int dev_pm_genpd_set_performance_state(struct device *dev, unsigned int state);
+>  int dev_pm_genpd_add_notifier(struct device *dev, struct notifier_block *nb);
+>  int dev_pm_genpd_remove_notifier(struct device *dev);
+> +int dev_pm_genpd_set_next_wakeup(struct device *dev, ktime_t next);
+>
+>  extern struct dev_power_governor simple_qos_governor;
+>  extern struct dev_power_governor pm_domain_always_on_gov;
+> @@ -275,6 +278,11 @@ static inline int dev_pm_genpd_remove_notifier(struct device *dev)
+>         return -ENOTSUPP;
+>  }
+>
+> +static inline int dev_pm_genpd_set_next_wakeup(struct device *dev, ktime_t next)
+> +{
+> +       return -ENOTSUPP;
+> +}
+> +
+>  #define simple_qos_governor            (*(struct dev_power_governor *)(NULL))
+>  #define pm_domain_always_on_gov                (*(struct dev_power_governor *)(NULL))
+>  #endif
+> --
+> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+> a Linux Foundation Collaborative Project
+>
