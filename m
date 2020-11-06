@@ -2,51 +2,51 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id AEF8A2A8E55
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Nov 2020 05:27:29 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 942E42A8E57
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Nov 2020 05:27:30 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726113AbgKFE1Q (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 5 Nov 2020 23:27:16 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34374 "EHLO
+        id S1726150AbgKFE1S (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 5 Nov 2020 23:27:18 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34382 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726105AbgKFE1Q (ORCPT
+        with ESMTP id S1726126AbgKFE1R (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 5 Nov 2020 23:27:16 -0500
-Received: from mail-pf1-x444.google.com (mail-pf1-x444.google.com [IPv6:2607:f8b0:4864:20::444])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 186A8C0613D2
-        for <linux-arm-msm@vger.kernel.org>; Thu,  5 Nov 2020 20:27:16 -0800 (PST)
-Received: by mail-pf1-x444.google.com with SMTP id z3so137771pfb.10
-        for <linux-arm-msm@vger.kernel.org>; Thu, 05 Nov 2020 20:27:16 -0800 (PST)
+        Thu, 5 Nov 2020 23:27:17 -0500
+Received: from mail-pg1-x541.google.com (mail-pg1-x541.google.com [IPv6:2607:f8b0:4864:20::541])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 63A70C0613CF
+        for <linux-arm-msm@vger.kernel.org>; Thu,  5 Nov 2020 20:27:17 -0800 (PST)
+Received: by mail-pg1-x541.google.com with SMTP id u4so2966046pgr.9
+        for <linux-arm-msm@vger.kernel.org>; Thu, 05 Nov 2020 20:27:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=6GAtoi0gVMYIKFbxsRQ9yjVpGK0SYChEDBpydmhHoW4=;
-        b=riyHAwyPJJRJ3tCsc6zGAB3UC/1B1HExo9jctZcDGkiQmEILAD4mHJnvIqCCBXsvag
-         jmfG8D9uSkGQY5+U2dsPWpj61pnEDFVn3HAkearWhUl2K5jBqcYRyV1sMGmx1oMDtfJF
-         mZskj0bXc/q19E8VUxQVa9P99B87zbTMnHhmECAccREzO65Y0/1GcgzKjoQ28tFJ5VX7
-         bvEwiRT2+RSKz3UmFe0PnrJYENQCJnTJFycA35xYumjVo2SSQxPr00KUvDDy374cBc/M
-         aB+jrtSAyl9KqJF/B/rDyLrazqv8iK1yQu2v0qI3g+VlLpz3+kM6bTedAeO/xxSQ/6aG
-         ZJiw==
+        bh=NUyUANspNtxDV6SxRCRDpb8/aThmojrVXw0zcthEhBk=;
+        b=Hu5jg04RZzsiEQNEkfBdU7HvTeClSbA9rbqmuTpj13kO6V2WvZdvCTlRkSjPq6d+JL
+         rwyJm4LFVyIzI6qM/IJjtwf2Y6bDJrgU+FSGuIit1HGlJxOSjCMyMF44Gg4UyFUG7qO3
+         xJS0t4YYM7RIjwwv/ukdeVzHGljKFPSmfxl3eGcGS51EgrhCGt5LaLCK5wRjh1KedWUb
+         5zZdnbWKoSsU9m+RhG56xzrPNLx7NZ3BTIypYAK58JQHiBVaFXrtYc40iqdIyPwMVkVg
+         uCBuF/Wu+WPso6v95Q4CbfbJKsSR+3FYzz3JL3DYmMZIZpTsSU2T/HFaWyMxl/0nXhi4
+         4d9Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=6GAtoi0gVMYIKFbxsRQ9yjVpGK0SYChEDBpydmhHoW4=;
-        b=CibI0OH/H0ejhO+Z55vYBfUl9xvKvBWvstx2HdfZ8KjyyZipz95W5VhpqcjzM+q8B/
-         HyyzN5Pxn4OPmeuucnp4VnhK81I/x93Rv5x0kQpy4vP/+04G5aGtzNyziqWso3sY9w2V
-         3/e+J96GO1HpkUndkMZleWbC3+vGq+VPILknY+nDEkUCE9OiVbJCG7i4IHAwNT53ERWI
-         E9lElXmVsBRLWRpD/CzhqsGt1FO017NC2zaLfCFFEA7MCBRyRxkRHvbPpoERUGygmTSd
-         TvjdT0YCNq5PuHY+zh5pIh94CpyU5ESDzEYH+0x1wz5fbTNT/lAJ8cB1bwyLtmlWDYjN
-         733w==
-X-Gm-Message-State: AOAM531Rk9Ni38/th+NhzIKfUACt5LSQ5PWKy3pf6hPQF5WBe/3vhcMY
-        9ML8gKW6dK5VbCoPthIxbCXnow==
-X-Google-Smtp-Source: ABdhPJwIfqzQs0Hz0ONJ2Cwc9narnnGapHKO01mr7EPFz2YXkckIhaGBz/VTvcX3yWfrD8ZnI2B/Lw==
-X-Received: by 2002:a17:90b:602:: with SMTP id gb2mr387639pjb.12.1604636835693;
-        Thu, 05 Nov 2020 20:27:15 -0800 (PST)
+        bh=NUyUANspNtxDV6SxRCRDpb8/aThmojrVXw0zcthEhBk=;
+        b=qwRpx7LHy+fNEBgeDEH0J8ZxLcVs2WVwckboad4rO3oDNp0lx1oP7i4GeU9L9yav+q
+         1hYXs3R/bv/Rq4qu0lLlzI73ebUfKvZZjxUqtJrkeEWYFVNFp/c6PCL2kB9E2ez8oDg3
+         maRoh5ZtLI0JEpXGclEtuQTjFbznEcgFIOfWp1PmZudpcNlgqtVRc3LhyXzs06Ikp5SO
+         XdLnLRpGvtfXLljuumMeCk18JrVoIehGQJxoiaNFdVkP8aJ3rHV9kIBnnThrOyAIPOMz
+         lgUdfY/0zUPaHx934ZXARSDK0NSg8SowUDFy1/WEP+14A8FUEHZhYymqwCTMfK6EqFEL
+         qQ6A==
+X-Gm-Message-State: AOAM533oRReh7srKaTcskTwIWHKCHGb62w7a7f70kDe83ZlmncV1nBHX
+        3QS5Wx+hH9Bv3VEBpTT2zGtJyQ==
+X-Google-Smtp-Source: ABdhPJxCgyO1IUphemwtnrgRQaBdpcBmVSqDyVQVBYjefKLrAb/d38xXs4evPD2oZV9TF1NkjAjypg==
+X-Received: by 2002:a63:d357:: with SMTP id u23mr161799pgi.106.1604636837005;
+        Thu, 05 Nov 2020 20:27:17 -0800 (PST)
 Received: from localhost.localdomain ([2601:1c2:680:1319:692:26ff:feda:3a81])
-        by smtp.gmail.com with ESMTPSA id e24sm179864pfl.149.2020.11.05.20.27.14
+        by smtp.gmail.com with ESMTPSA id e24sm179864pfl.149.2020.11.05.20.27.15
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 05 Nov 2020 20:27:15 -0800 (PST)
+        Thu, 05 Nov 2020 20:27:16 -0800 (PST)
 From:   John Stultz <john.stultz@linaro.org>
 To:     lkml <linux-kernel@vger.kernel.org>
 Cc:     John Stultz <john.stultz@linaro.org>,
@@ -67,9 +67,9 @@ Cc:     John Stultz <john.stultz@linaro.org>,
         Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
         linux-arm-msm@vger.kernel.org, iommu@lists.linux-foundation.org,
         linux-gpio@vger.kernel.org
-Subject: [PATCH v6 2/3] pinctrl: qcom: Allow pinctrl-msm code to be loadable as a module
-Date:   Fri,  6 Nov 2020 04:27:09 +0000
-Message-Id: <20201106042710.55979-2-john.stultz@linaro.org>
+Subject: [PATCH v6 3/3] firmware: QCOM_SCM: Allow qcom_scm driver to be loadable as a permenent module
+Date:   Fri,  6 Nov 2020 04:27:10 +0000
+Message-Id: <20201106042710.55979-3-john.stultz@linaro.org>
 X-Mailer: git-send-email 2.17.1
 In-Reply-To: <20201106042710.55979-1-john.stultz@linaro.org>
 References: <20201106042710.55979-1-john.stultz@linaro.org>
@@ -77,14 +77,14 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Tweaks to allow pinctrl-msm code to be loadable as a module.
+Allow the qcom_scm driver to be loadable as a permenent module.
 
-This is needed in order to support having the qcom-scm driver,
-which pinctrl-msm calls into, configured as a module.
-
-This requires that we tweak Kconfigs selecting PINCTRL_MSM to
-also depend on QCOM_SCM || QCOM_SCM=n so that we match the
-module setting of QCOM_SCM.
+This still uses the "depends on QCOM_SCM || !QCOM_SCM" bit to
+ensure that drivers that call into the qcom_scm driver are
+also built as modules. While not ideal in some cases its the
+only safe way I can find to avoid build errors without having
+those drivers select QCOM_SCM and have to force it on (as
+QCOM_SCM=n can be valid for those drivers).
 
 Cc: Catalin Marinas <catalin.marinas@arm.com>
 Cc: Will Deacon <will@kernel.org>
@@ -105,51 +105,107 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Cc: linux-arm-msm@vger.kernel.org
 Cc: iommu@lists.linux-foundation.org
 Cc: linux-gpio@vger.kernel.org
+Acked-by: Kalle Valo <kvalo@codeaurora.org>
+Acked-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 Signed-off-by: John Stultz <john.stultz@linaro.org>
 ---
-v2:
-* Module description and whitespace fixes suggested by Bjorn
-* Added QCOM_SCM || QCOM_SCM=n bits on Kconfigs selecting
-  PINCTRL_MSM. Reported by both Todd and Bjorn.
 v3:
-* Make sure the QCOM_SCM || QCOM_SCM=n trick is commented
+* Fix __arm_smccc_smc build issue reported by
+  kernel test robot <lkp@intel.com>
 v4:
-* Rework "select PINCTRL_MSM" to "depends on PINCTRL_MSM"
-  to consolidate the QCOM_SCM dependency.
+* Add "depends on QCOM_SCM || !QCOM_SCM" bit to ath10k
+  config that requires it.
 v5:
-* Add PINCTRL_MSM to arm64 defconfig
-v6:
-* Split PINCTRL_MSM dependency bit out into its own patch
+* Fix QCOM_QCM typo in Kconfig, it should be QCOM_SCM
 ---
- drivers/pinctrl/qcom/Kconfig       | 3 ++-
- drivers/pinctrl/qcom/pinctrl-msm.c | 2 ++
- 2 files changed, 4 insertions(+), 1 deletion(-)
+ drivers/firmware/Kconfig                | 4 ++--
+ drivers/firmware/Makefile               | 3 ++-
+ drivers/firmware/qcom_scm.c             | 4 ++++
+ drivers/iommu/Kconfig                   | 2 ++
+ drivers/net/wireless/ath/ath10k/Kconfig | 1 +
+ 5 files changed, 11 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/pinctrl/qcom/Kconfig b/drivers/pinctrl/qcom/Kconfig
-index c9bb2d9e49d47..8bb786ed152dd 100644
---- a/drivers/pinctrl/qcom/Kconfig
-+++ b/drivers/pinctrl/qcom/Kconfig
-@@ -2,7 +2,8 @@
- if (ARCH_QCOM || COMPILE_TEST)
+diff --git a/drivers/firmware/Kconfig b/drivers/firmware/Kconfig
+index 3315e3c215864..5e369928bc567 100644
+--- a/drivers/firmware/Kconfig
++++ b/drivers/firmware/Kconfig
+@@ -235,8 +235,8 @@ config INTEL_STRATIX10_RSU
+ 	  Say Y here if you want Intel RSU support.
  
- config PINCTRL_MSM
--	bool "Qualcomm core pin controller driver"
-+	tristate "Qualcomm core pin controller driver"
-+	depends on QCOM_SCM || !QCOM_SCM #if QCOM_SCM=m this can't be =y
- 	select PINMUX
- 	select PINCONF
- 	select GENERIC_PINCONF
-diff --git a/drivers/pinctrl/qcom/pinctrl-msm.c b/drivers/pinctrl/qcom/pinctrl-msm.c
-index c4bcda90aac4a..988343ac49b92 100644
---- a/drivers/pinctrl/qcom/pinctrl-msm.c
-+++ b/drivers/pinctrl/qcom/pinctrl-msm.c
-@@ -1443,3 +1443,5 @@ int msm_pinctrl_remove(struct platform_device *pdev)
+ config QCOM_SCM
+-	bool
+-	depends on ARM || ARM64
++	tristate "Qcom SCM driver"
++	depends on (ARM && HAVE_ARM_SMCCC) || ARM64
+ 	select RESET_CONTROLLER
+ 
+ config QCOM_SCM_DOWNLOAD_MODE_DEFAULT
+diff --git a/drivers/firmware/Makefile b/drivers/firmware/Makefile
+index 5e013b6a3692e..523173cbff335 100644
+--- a/drivers/firmware/Makefile
++++ b/drivers/firmware/Makefile
+@@ -17,7 +17,8 @@ obj-$(CONFIG_ISCSI_IBFT)	+= iscsi_ibft.o
+ obj-$(CONFIG_FIRMWARE_MEMMAP)	+= memmap.o
+ obj-$(CONFIG_RASPBERRYPI_FIRMWARE) += raspberrypi.o
+ obj-$(CONFIG_FW_CFG_SYSFS)	+= qemu_fw_cfg.o
+-obj-$(CONFIG_QCOM_SCM)		+= qcom_scm.o qcom_scm-smc.o qcom_scm-legacy.o
++obj-$(CONFIG_QCOM_SCM)		+= qcom-scm.o
++qcom-scm-objs += qcom_scm.o qcom_scm-smc.o qcom_scm-legacy.o
+ obj-$(CONFIG_TI_SCI_PROTOCOL)	+= ti_sci.o
+ obj-$(CONFIG_TRUSTED_FOUNDATIONS) += trusted_foundations.o
+ obj-$(CONFIG_TURRIS_MOX_RWTM)	+= turris-mox-rwtm.o
+diff --git a/drivers/firmware/qcom_scm.c b/drivers/firmware/qcom_scm.c
+index 7be48c1bec96d..6f431b73e617d 100644
+--- a/drivers/firmware/qcom_scm.c
++++ b/drivers/firmware/qcom_scm.c
+@@ -1280,6 +1280,7 @@ static const struct of_device_id qcom_scm_dt_match[] = {
+ 	{ .compatible = "qcom,scm" },
+ 	{}
+ };
++MODULE_DEVICE_TABLE(of, qcom_scm_dt_match);
+ 
+ static struct platform_driver qcom_scm_driver = {
+ 	.driver = {
+@@ -1295,3 +1296,6 @@ static int __init qcom_scm_init(void)
+ 	return platform_driver_register(&qcom_scm_driver);
  }
- EXPORT_SYMBOL(msm_pinctrl_remove);
- 
-+MODULE_DESCRIPTION("Qualcomm Technologies, Inc. TLMM driver");
+ subsys_initcall(qcom_scm_init);
++
++MODULE_DESCRIPTION("Qualcomm Technologies, Inc. SCM driver");
 +MODULE_LICENSE("GPL v2");
+diff --git a/drivers/iommu/Kconfig b/drivers/iommu/Kconfig
+index 04878caf6da49..c64d7a2b65134 100644
+--- a/drivers/iommu/Kconfig
++++ b/drivers/iommu/Kconfig
+@@ -248,6 +248,7 @@ config SPAPR_TCE_IOMMU
+ config ARM_SMMU
+ 	tristate "ARM Ltd. System MMU (SMMU) Support"
+ 	depends on ARM64 || ARM || (COMPILE_TEST && !GENERIC_ATOMIC64)
++	depends on QCOM_SCM || !QCOM_SCM #if QCOM_SCM=m this can't be =y
+ 	select IOMMU_API
+ 	select IOMMU_IO_PGTABLE_LPAE
+ 	select ARM_DMA_USE_IOMMU if ARM
+@@ -375,6 +376,7 @@ config QCOM_IOMMU
+ 	# Note: iommu drivers cannot (yet?) be built as modules
+ 	bool "Qualcomm IOMMU Support"
+ 	depends on ARCH_QCOM || (COMPILE_TEST && !GENERIC_ATOMIC64)
++	depends on QCOM_SCM=y
+ 	select IOMMU_API
+ 	select IOMMU_IO_PGTABLE_LPAE
+ 	select ARM_DMA_USE_IOMMU
+diff --git a/drivers/net/wireless/ath/ath10k/Kconfig b/drivers/net/wireless/ath/ath10k/Kconfig
+index 40f91bc8514d8..741289e385d59 100644
+--- a/drivers/net/wireless/ath/ath10k/Kconfig
++++ b/drivers/net/wireless/ath/ath10k/Kconfig
+@@ -44,6 +44,7 @@ config ATH10K_SNOC
+ 	tristate "Qualcomm ath10k SNOC support"
+ 	depends on ATH10K
+ 	depends on ARCH_QCOM || COMPILE_TEST
++	depends on QCOM_SCM || !QCOM_SCM #if QCOM_SCM=m this can't be =y
+ 	select QCOM_QMI_HELPERS
+ 	help
+ 	  This module adds support for integrated WCN3990 chip connected
 -- 
 2.17.1
 
