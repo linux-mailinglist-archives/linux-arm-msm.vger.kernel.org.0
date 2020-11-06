@@ -2,116 +2,107 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 8F6E62A9971
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Nov 2020 17:28:24 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A00662A998C
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Nov 2020 17:38:39 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726074AbgKFQ2X (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 6 Nov 2020 11:28:23 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34146 "EHLO
+        id S1726408AbgKFQii (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 6 Nov 2020 11:38:38 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35744 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725868AbgKFQ2X (ORCPT
+        with ESMTP id S1726010AbgKFQii (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 6 Nov 2020 11:28:23 -0500
-Received: from mail-pf1-x441.google.com (mail-pf1-x441.google.com [IPv6:2607:f8b0:4864:20::441])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 456BFC0613CF
-        for <linux-arm-msm@vger.kernel.org>; Fri,  6 Nov 2020 08:28:23 -0800 (PST)
-Received: by mail-pf1-x441.google.com with SMTP id g7so1802200pfc.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 06 Nov 2020 08:28:23 -0800 (PST)
+        Fri, 6 Nov 2020 11:38:38 -0500
+Received: from mail-qt1-x843.google.com (mail-qt1-x843.google.com [IPv6:2607:f8b0:4864:20::843])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3281FC0613D2
+        for <linux-arm-msm@vger.kernel.org>; Fri,  6 Nov 2020 08:38:38 -0800 (PST)
+Received: by mail-qt1-x843.google.com with SMTP id 3so1162096qtx.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 06 Nov 2020 08:38:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:user-agent:in-reply-to:references:mime-version
-         :content-transfer-encoding:subject:to:cc:from:message-id;
-        bh=ZBuroc65g5MW4sWFJAdKF0xE7Bmk2Kd5JzOQa/Yr928=;
-        b=W3SZLd26PE0jd4Dt35onQHoPfTRR1wOlNp0xhtsoiGlunbXSD/w5E7tyfTPtt4aMPs
-         gXfDAda1Ws8C3S4cLCyhT5G3o1zJhrQ00qNMrssNWjSiye2GIR07csETbkxxP3F4XB1o
-         GyIVa21OPm/KJAvYmYzMSCWGgGG4yo83qglCY/WDQ6Ohmb2GL5dGxGfHB/Kp0YPvibCt
-         exVp9Agm9XHlIXSm0NrzVEALbZSuhISWqfs9m5rQa+kkKpxjve0sDgXk/+rkcYVSSpbi
-         2dQTlWpHg2of2UKXNG2e2UFQ7ena5rw0vbw4WAdeXGGAf6QaIQkpxM958x1aYm4AxD1P
-         HPvA==
+        d=marek-ca.20150623.gappssmtp.com; s=20150623;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=l//k+DSsx34Nc1jx/NivWPrPdB1Y2U4G87NDV4sY8fM=;
+        b=J+dH50Ir6c9uH6K2wDO7IcS4bmFe8lOV8q7+I16iVL9sjS3ctqlKrze3+q9Dn3fH/p
+         RpMwzXUMrzNbJyPmx+TInGqyYah2NJUHYeomnGj+eemuaR379i/7d8r5X8giuFbGhR7y
+         wrM6ajU8PG6oJDbIPQ9ERXxj/66peBmKJWpqMXvriAry6Z3WSgCMRWZe9tfZ3T9X9y9j
+         QTQwPL+nomvaHWeZlEFoV04dF9gYsCCXTk8CeYNMv10M/BfwBV6pZXPdNV9t7LDRtRoO
+         6lEJFo7vdOQFlmWWaJ8vZA+GtzvCwj4m3nO1x+NSb0nhaMaTJE3zVpMpDnJ4erK0/xQF
+         ZzlQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:user-agent:in-reply-to:references
-         :mime-version:content-transfer-encoding:subject:to:cc:from
-         :message-id;
-        bh=ZBuroc65g5MW4sWFJAdKF0xE7Bmk2Kd5JzOQa/Yr928=;
-        b=E82v7X894g9pbNGWgy3FeFcnLNUY4bdYgGGx6FRvg+MKGyyhfrNBazMA2tAAuBPAVS
-         aTcu4Kh6FhnxtmP3LVBsNp69knNl3TNzNBSSuH5rGCO7AXc8+LVIyaFFugJHIY8vpRkH
-         4Q2jHOuZbhYarxeY+dMFWkgJMcE42vTsEd+Gi+2AYdXb81P+CqdeKjWAgPBsxc/0VDwM
-         WhJhLEv2AaEmlWmsgMd1MYV7laa0WQAR/h/IcT1Jifk1Em7UZri43i6l7xCGnz1LaLMd
-         IAhjTv59ghxyuRTu4dEZps+qwTUP3VS6T/d1L093UQ6GziP03fmJmchNbvXrEQQbWC7T
-         X3+Q==
-X-Gm-Message-State: AOAM532SssAI014xXJOhfnSaDqbd3w332OZluABStkKQfeGjkpzh9r6w
-        vglGFYJ/cUuaUy+tIuYT//kI
-X-Google-Smtp-Source: ABdhPJzPdXqKMXb/HsCZgrn8LKy6GT1USyA1bjpKhJiW/F0hq65z1eU+AENYPkDznR/gSS/9M1FJBQ==
-X-Received: by 2002:a17:90b:3708:: with SMTP id mg8mr367085pjb.192.1604680102616;
-        Fri, 06 Nov 2020 08:28:22 -0800 (PST)
-Received: from [192.168.0.104] ([103.59.133.81])
-        by smtp.gmail.com with ESMTPSA id 6sm2562149pfh.112.2020.11.06.08.28.19
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 06 Nov 2020 08:28:21 -0800 (PST)
-Date:   Fri, 06 Nov 2020 21:58:12 +0530
-User-Agent: K-9 Mail for Android
-In-Reply-To: <20201106080445.00588690@kicinski-fedora-pc1c0hjn.dhcp.thefacebook.com>
-References: <1604424234-24446-1-git-send-email-loic.poulain@linaro.org> <20201105165708.31d24782@kicinski-fedora-pc1c0hjn.dhcp.thefacebook.com> <20201106051353.GA3473@work> <20201106080445.00588690@kicinski-fedora-pc1c0hjn.dhcp.thefacebook.com>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=l//k+DSsx34Nc1jx/NivWPrPdB1Y2U4G87NDV4sY8fM=;
+        b=TABJAZbaOD1LOEJDwbY0WnknkRzzqYHsesJEDboiXcgDPsClggmU5pUBBVDvhocp5J
+         5AzZnIkLA3I1PXle5nPn6G86M7g/2qAYbXVNwxRqqT8XtOSByxR9BhDQ9xXB8sGeh/IW
+         C1nuHml0VgKWKiOl81/Tpi8YErFonSsk/qbbvBbAdiODRdmD8U+1wR5IgtuOUhQyGrDi
+         CubpZOOPz7U6YOpG27EhnuaeGCX3fsJNoRH8TVUzNewfNS5VE5nO3e15/pHtQZi50zvh
+         AfWySHZfIVU2vT9PlPwXH+hXIQEtwKtZ7tZNho9m3lhswFTf8dxqmAizdcFhBn4xhI0B
+         wEow==
+X-Gm-Message-State: AOAM532A56eeUZZIPx1tYi0ysiQHO5FkJzQmjUdZrAG7R54yyoM+9yZf
+        Ofu0JpAH0wvv3iG1lvPqSZHrig==
+X-Google-Smtp-Source: ABdhPJxHUWgYZ4frcBST4WltJsrhWPJrimgJHKRjTXKm4KGGNoJ82BuMMEXhzlmb3W3E9MA/bng0Qg==
+X-Received: by 2002:ac8:5748:: with SMTP id 8mr2284612qtx.114.1604680717401;
+        Fri, 06 Nov 2020 08:38:37 -0800 (PST)
+Received: from localhost.localdomain (modemcable068.184-131-66.mc.videotron.ca. [66.131.184.68])
+        by smtp.gmail.com with ESMTPSA id s3sm860000qkj.27.2020.11.06.08.38.35
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 06 Nov 2020 08:38:36 -0800 (PST)
+From:   Jonathan Marek <jonathan@marek.ca>
+To:     freedreno@lists.freedesktop.org
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Christoph Hellwig <hch@lst.de>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        David Airlie <airlied@linux.ie>,
+        dri-devel@lists.freedesktop.org (open list:DRM DRIVER FOR MSM ADRENO
+        GPU),
+        iommu@lists.linux-foundation.org (open list:DMA MAPPING HELPERS),
+        Jordan Crouse <jcrouse@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org (open list:DRM DRIVER FOR MSM ADRENO GPU),
+        linux-kernel@vger.kernel.org (open list),
+        Marek Szyprowski <m.szyprowski@samsung.com>,
+        Rob Clark <robdclark@gmail.com>,
+        Robin Murphy <robin.murphy@arm.com>,
+        Sean Paul <sean@poorly.run>,
+        Sharat Masetty <smasetty@codeaurora.org>,
+        Shawn Guo <shawn.guo@linaro.org>
+Subject: [PATCH v2 0/5] drm/msm: support for host-cached BOs
+Date:   Fri,  6 Nov 2020 11:34:29 -0500
+Message-Id: <20201106163437.30836-1-jonathan@marek.ca>
+X-Mailer: git-send-email 2.26.1
 MIME-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Subject: Re: [PATCH v10 1/2] bus: mhi: Add mhi_queue_is_full function
-To:     Jakub Kicinski <kuba@kernel.org>
-CC:     Loic Poulain <loic.poulain@linaro.org>, davem@davemloft.net,
-        netdev@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        bbhatt@codeaurora.org, willemdebruijn.kernel@gmail.com,
-        jhugo@codeaurora.org, hemantk@codeaurora.org
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Message-ID: <B9A7A95E-BD2F-49C0-A28C-56A8E6D903AC@linaro.org>
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+This is to support cached and cached-coherent memory types in vulkan.
 
+v2:
+ - added patches 2/3 to enable using dma_ops_bypass
+ - changed DRM_MSM_GEM_SYNC_CACHE patch to use dma_sync_sg_for_device()
+   and dma_sync_sg_for_cpu(), and renamed sync flags.
 
-On 6 November 2020 9:34:45 PM IST, Jakub Kicinski <kuba@kernel=2Eorg> wrot=
-e:
->On Fri, 6 Nov 2020 10:43:53 +0530 Manivannan Sadhasivam wrote:
->> On Thu, Nov 05, 2020 at 04:57:08PM -0800, Jakub Kicinski wrote:
->> > On Tue,  3 Nov 2020 18:23:53 +0100 Loic Poulain wrote: =20
->> > > This function can be used by client driver to determine whether
->it's
->> > > possible to queue new elements in a channel ring=2E
->> > >=20
->> > > Signed-off-by: Loic Poulain <loic=2Epoulain@linaro=2Eorg>
->> > > Reviewed-by: Manivannan Sadhasivam
-><manivannan=2Esadhasivam@linaro=2Eorg> =20
->> >=20
->> > Applied=2E =20
->>=20
->> Oops=2E I should've mentioned this (my bad) that we should use an
->immutable
->> branch to take this change=2E Because, there are changes going to get
->merged
->> into the MHI tree which will introduce merge conflicts=2E And moreover,
->we
->> planned to have an immutable branch to handle a similar case with
->ath11k=2E
->
->Damn, sorry=2E
->
->> Since you've applied now, what would you propose?
->
->Do you need mhi_queue_is_full() in other branches, or are you just
->concerned about the conflicts?
->
+Not sure I did the right thing with for the dma_ops_bypass part,
+this is what I came up with reading the emails.
 
-Yes, I need this patch in mhi-next=2E
+Jonathan Marek (5):
+  drm/msm: add MSM_BO_CACHED_COHERENT
+  dma-direct: add dma_direct_bypass() to force direct ops
+  drm/msm: call dma_direct_bypass()
+  drm/msm: add DRM_MSM_GEM_SYNC_CACHE for non-coherent cache maintenance
+  drm/msm: bump up the uapi version
 
->I'm assuming the concern is just about the mhi/core patch, or would=20
->you need to refactor something in the net driver as well?
+ drivers/gpu/drm/msm/Kconfig                |  1 +
+ drivers/gpu/drm/msm/adreno/adreno_device.c |  1 +
+ drivers/gpu/drm/msm/msm_drv.c              | 32 +++++++++++++++++++---
+ drivers/gpu/drm/msm/msm_drv.h              |  3 ++
+ drivers/gpu/drm/msm/msm_gem.c              | 31 +++++++++++++++++++++
+ include/linux/dma-direct.h                 |  9 ++++++
+ include/uapi/drm/msm_drm.h                 | 25 +++++++++++++++--
+ kernel/dma/direct.c                        | 23 ++++++++++++++++
+ 8 files changed, 118 insertions(+), 7 deletions(-)
 
-Just the mhi_queue_is_full() patch=2E=20
+-- 
+2.26.1
 
-Thanks,=20
-Mani
-
---=20
-Sent from my Android device with K-9 Mail=2E Please excuse my brevity=2E
