@@ -2,130 +2,153 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 81F092A90DB
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Nov 2020 09:00:22 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 358D22A90F7
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Nov 2020 09:06:15 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725830AbgKFIAV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 6 Nov 2020 03:00:21 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39220 "EHLO
+        id S1726423AbgKFIGO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 6 Nov 2020 03:06:14 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40130 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725848AbgKFIAV (ORCPT
+        with ESMTP id S1726419AbgKFIGO (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 6 Nov 2020 03:00:21 -0500
-Received: from mail-pf1-x444.google.com (mail-pf1-x444.google.com [IPv6:2607:f8b0:4864:20::444])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3CE6CC0613CF
-        for <linux-arm-msm@vger.kernel.org>; Fri,  6 Nov 2020 00:00:21 -0800 (PST)
-Received: by mail-pf1-x444.google.com with SMTP id a18so396493pfl.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 06 Nov 2020 00:00:21 -0800 (PST)
+        Fri, 6 Nov 2020 03:06:14 -0500
+Received: from mail-pf1-x442.google.com (mail-pf1-x442.google.com [IPv6:2607:f8b0:4864:20::442])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 84A8EC0613CF
+        for <linux-arm-msm@vger.kernel.org>; Fri,  6 Nov 2020 00:06:12 -0800 (PST)
+Received: by mail-pf1-x442.google.com with SMTP id e7so575826pfn.12
+        for <linux-arm-msm@vger.kernel.org>; Fri, 06 Nov 2020 00:06:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=OUDJWBRHwmYg5tlx0f56mWuGsqX70lEgfuyCu6MGgDY=;
-        b=drBTIQeZXlaXVlJsp27DBaPcuBEycKjamPfhc6zYwpws6xfRK9vfgZiWkV4rNEi7M5
-         OWrmw4f3RSK30h82lZrWg1X+YsHJy/tE9Dsz47/UmJ0/mT7HxZu/b9lbjmfPzjoFdNw6
-         A/4gZ3r9bwpgfdaUM8bgOuTf9zzZJxt2nHtTrd9G454SzIEz0OXannaDks1IW1GuVQw9
-         mvkNK1oWCp4q139za+bDu/4H+zQKgMUlNHDiG7rblNCObYMnhLP2eY4a3Zj/SVWdqo7m
-         idV07qkN/Nvy08s84lPX0sax058qONlFSIjttgXhUiETxNR1JCnD0RQwy56A3jAkpMMs
-         fg5Q==
+        bh=qS7CqIL0iWOp7yrf0mdTJOAu8D0DMWNDCm6U/2JWWds=;
+        b=PMhWbCpgW+tpRHJYe2IsNeYxmYLvxCH0reHZ6KmT8CVfzMsHn2a57NE8DGqMgodYsH
+         15j3SPFfJYGE/gLepC3xZxR7mygSjQ0gxIegjqQShiWH8pKcXgvNd3bC0alnn4uEjrL0
+         SBSVg60mzYSlfpHUypl9n6J1QG+8NyQCGzTjwjXEogzD6Bux9jNzLBPTzFC5Zt5w8K1C
+         +8EBtxB6RJBJ0X6EC5sVAp5Nr3DRXspJYOET9yrpsEtc74GnAx7cT0SRWjGZ5GSBNIt3
+         d/am9TiqLYv3L0qgsfE+UtZUHi4esVxgp2YxtFKa0BpPeA5tmR/8jY2l4p2aYQuuO4oF
+         f8Sg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=OUDJWBRHwmYg5tlx0f56mWuGsqX70lEgfuyCu6MGgDY=;
-        b=Zp2Rwf09I90BY8aFasLIbYsVkfmZ9nnt71mfHlSJPbX0RKjicv3IPiwMkIxv9IxM+C
-         14bjIPBQxp3THb0RQpwMhrqPChagwXOkpuS6gdW9jX5ABI2IPwzPePCjfzZ6pUMZGg0Q
-         N5j/HmKKg4slXMnqmMwxrwRuLlJcyfupTCNreXFMZHDnDm8QBERDp4ac5JNK4FgAKVxA
-         IeRJNHOA9MqFPXiVrwjwIDB3SRo8ZdRNpYDwMj7yL3xZm1+S2dbSH4AtyY4iKWsBs5/f
-         GKepoqg97FjAyAgxpUzTP6+5WOoJHZcoWysQsL7rB4lv3B7OOTs96uOeKia2osJDLKD6
-         P6Gg==
-X-Gm-Message-State: AOAM532gNIl2kx/4sCCgQNm68dYNxt8mEoKxnwgAVbhcKDBfLjJxfP+9
-        yIR8rORLplqjSE/cNrDHgWO8
-X-Google-Smtp-Source: ABdhPJzpUZPKJ5GpbKAVaCk3jBB0uvT90VUsltjwg18aA8NK1aKQ4VNqj1ekuYKQdtox2ZiEh6M/1Q==
-X-Received: by 2002:a17:90b:a51:: with SMTP id gw17mr1125617pjb.218.1604649620738;
-        Fri, 06 Nov 2020 00:00:20 -0800 (PST)
+        bh=qS7CqIL0iWOp7yrf0mdTJOAu8D0DMWNDCm6U/2JWWds=;
+        b=Efs1+AB1cLUYp8l/xRS7bEQ+kCMXB+ilWKwz6DKCRUPcBFQSoMbC2E2Nu/Jf4xCWag
+         JHZeYMrl5ZwhjgRz039R4WESpte6UAuEoyAIneM6pHdKBjO0stl1G1y1lreYoDOjuoxY
+         4HyQNfPVKT996AyLFMM2wQm/eUItj7f7+Qi8qwA1OevNQ7vSKgO4v3zjBayFrcdz5f3T
+         T6HewE76xKFj7NhU5C+m9Lu2ncihq/2qgwj1Um/r24cDmqEao3EVF5mr1C4Znc50CPcx
+         1MempjxNglfbEGwa/tDJRPklfBkyylLbYPeJEm8kpIAKPJeX3QdmIQAkDgsK4SflmYzZ
+         W0gg==
+X-Gm-Message-State: AOAM533y0PrlYUPZaRM1hoxB/ByzzQj+gWi3P8WeK1ETIFJ1o6erwuwv
+        tz2wah2T04GJfeUJLJHaWA4f
+X-Google-Smtp-Source: ABdhPJyjW7oZl7LsL5U6Zw7jwCpqFPldt1WQC3L/aFckMH28fzN7T2z0KZ2dO2ofuwkJ11dTAAz4fA==
+X-Received: by 2002:a17:90b:2342:: with SMTP id ms2mr1239856pjb.136.1604649971992;
+        Fri, 06 Nov 2020 00:06:11 -0800 (PST)
 Received: from work ([103.59.133.81])
-        by smtp.gmail.com with ESMTPSA id a23sm810149pgv.35.2020.11.06.00.00.18
+        by smtp.gmail.com with ESMTPSA id hz18sm1149606pjb.13.2020.11.06.00.06.09
         (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 06 Nov 2020 00:00:19 -0800 (PST)
-Date:   Fri, 6 Nov 2020 13:30:14 +0530
+        Fri, 06 Nov 2020 00:06:11 -0800 (PST)
+Date:   Fri, 6 Nov 2020 13:36:05 +0530
 From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 To:     Hemant Kumar <hemantk@codeaurora.org>
 Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
         jhugo@codeaurora.org, bbhatt@codeaurora.org,
         loic.poulain@linaro.org
-Subject: Re: [PATCH v1 1/2] bus: mhi: core: Count number of HW channels
- supported by controller
-Message-ID: <20201106080014.GH3473@work>
+Subject: Re: [PATCH v1 2/2] bus: mhi: core: Check for device supported event
+ rings and channels
+Message-ID: <20201106080605.GI3473@work>
 References: <1603504843-38557-1-git-send-email-hemantk@codeaurora.org>
- <1603504843-38557-2-git-send-email-hemantk@codeaurora.org>
+ <1603504843-38557-3-git-send-email-hemantk@codeaurora.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <1603504843-38557-2-git-send-email-hemantk@codeaurora.org>
+In-Reply-To: <1603504843-38557-3-git-send-email-hemantk@codeaurora.org>
 User-Agent: Mutt/1.9.4 (2018-02-28)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Oct 23, 2020 at 07:00:42PM -0700, Hemant Kumar wrote:
-> Device provides the total number of HW channels it supports using MHI
-> configuration register. Host supported HW channels shall not exceed
-> that value. In order to make this check, a counter is needed to store
-> total number of HW channels required by host.
+On Fri, Oct 23, 2020 at 07:00:43PM -0700, Hemant Kumar wrote:
+> It is possible that the device does not support the number of event
+> rings and channels that the controller would like to use. Read the
+> MHICFG to determine device-side support and if the controller requests
+> more than the device supports, bailout without configuring device MMIO
+> registers.
 > 
 > Signed-off-by: Hemant Kumar <hemantk@codeaurora.org>
 > ---
->  drivers/bus/mhi/core/init.c     | 2 ++
->  drivers/bus/mhi/core/internal.h | 1 +
->  include/linux/mhi.h             | 1 +
->  3 files changed, 4 insertions(+)
+>  drivers/bus/mhi/core/init.c     | 31 +++++++++++++++++++++++++++++++
+>  drivers/bus/mhi/core/internal.h |  4 ++++
+>  2 files changed, 35 insertions(+)
 > 
 > diff --git a/drivers/bus/mhi/core/init.c b/drivers/bus/mhi/core/init.c
-> index 0ffdebd..70fd6af 100644
+> index 70fd6af..35a6b1d 100644
 > --- a/drivers/bus/mhi/core/init.c
 > +++ b/drivers/bus/mhi/core/init.c
-> @@ -725,6 +725,8 @@ static int parse_ch_cfg(struct mhi_controller *mhi_cntrl,
->  		mhi_chan = &mhi_cntrl->mhi_chan[chan];
->  		mhi_chan->name = ch_cfg->name;
->  		mhi_chan->chan = chan;
-> +		if (chan >= MHI_HW_CHAN_START_IDX)
-> +			mhi_cntrl->hw_chan++;
+> @@ -488,6 +488,37 @@ int mhi_init_mmio(struct mhi_controller *mhi_cntrl)
+>  		{ 0, 0, 0 }
+>  	};
 >  
->  		mhi_chan->tre_ring.elements = ch_cfg->num_elements;
->  		if (!mhi_chan->tre_ring.elements)
-> diff --git a/drivers/bus/mhi/core/internal.h b/drivers/bus/mhi/core/internal.h
-> index 7989269..3d8e480 100644
-> --- a/drivers/bus/mhi/core/internal.h
-> +++ b/drivers/bus/mhi/core/internal.h
-> @@ -454,6 +454,7 @@ enum mhi_pm_state {
->  #define PRIMARY_CMD_RING		0
->  #define MHI_DEV_WAKE_DB			127
->  #define MHI_MAX_MTU			0xffff
-> +#define MHI_HW_CHAN_START_IDX		100
->  #define MHI_RANDOM_U32_NONZERO(bmsk)	(prandom_u32_max(bmsk) + 1)
->  
->  enum mhi_er_type {
-> diff --git a/include/linux/mhi.h b/include/linux/mhi.h
-> index d4841e5..ea441d2 100644
-> --- a/include/linux/mhi.h
-> +++ b/include/linux/mhi.h
-> @@ -389,6 +389,7 @@ struct mhi_controller {
->  	struct list_head lpm_chans;
->  	int *irq;
->  	u32 max_chan;
-> +	u32 hw_chan;
+> +	/* range check b/w host and device supported ev rings and channels */
+> +	ret = mhi_read_reg(mhi_cntrl, base, MHICFG, &val);
+> +	if (ret) {
+> +		dev_err(dev, "Unable to read MHICFG register\n");
+> +		return -EIO;
+> +	}
+> +
+> +	if (MHICFG_NHWER(val) < mhi_cntrl->hw_ev_rings) {
+> +		dev_err(dev, "#HWEV ring: host requires %d dev supports %d\n",
+> +			mhi_cntrl->hw_ev_rings, MHICFG_NHWER(val));
 
-Please add Kdoc for this member. With that,
+Can you please improve this error message? Something like, "Host
+requires %d hw event rings but dev supports only %d".
+
+Do this for below errors as well. With that,
 
 Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 
 Thanks,
 Mani
 
->  	u32 total_ev_rings;
->  	u32 hw_ev_rings;
->  	u32 sw_ev_rings;
+> +		return -EIO;
+> +	}
+> +
+> +	if (MHICFG_NER(val) < mhi_cntrl->total_ev_rings) {
+> +		dev_err(dev, "#EV ring: host requires %d dev supports %d\n",
+> +			mhi_cntrl->total_ev_rings, MHICFG_NER(val));
+> +		return -EIO;
+> +	}
+> +
+> +	if (MHICFG_NHWCH(val) < mhi_cntrl->hw_chan) {
+> +		dev_err(dev, "#HWCH: host requires %d dev supports %d\n",
+> +			mhi_cntrl->hw_chan, MHICFG_NHWCH(val));
+> +		return -EIO;
+> +	}
+> +
+> +	if (MHICFG_NCH(val) < mhi_cntrl->max_chan) {
+> +		dev_err(dev, "#CH: host requires %d dev supports %d\n",
+> +			mhi_cntrl->max_chan, MHICFG_NCH(val));
+> +		return -EIO;
+> +	}
+> +
+>  	dev_dbg(dev, "Initializing MHI registers\n");
+>  
+>  	/* Read channel db offset */
+> diff --git a/drivers/bus/mhi/core/internal.h b/drivers/bus/mhi/core/internal.h
+> index 3d8e480..9cbfa71 100644
+> --- a/drivers/bus/mhi/core/internal.h
+> +++ b/drivers/bus/mhi/core/internal.h
+> @@ -28,6 +28,10 @@ extern struct bus_type mhi_bus_type;
+>  #define MHICFG_NHWCH_SHIFT (8)
+>  #define MHICFG_NCH_MASK (0xFF)
+>  #define MHICFG_NCH_SHIFT (0)
+> +#define MHICFG_NHWER(n) (((n) & MHICFG_NHWER_MASK) >> MHICFG_NHWER_SHIFT)
+> +#define MHICFG_NER(n) (((n) & MHICFG_NER_MASK) >> MHICFG_NER_SHIFT)
+> +#define MHICFG_NHWCH(n) (((n) & MHICFG_NHWCH_MASK) >> MHICFG_NHWCH_SHIFT)
+> +#define MHICFG_NCH(n) (((n) & MHICFG_NCH_MASK) >> MHICFG_NCH_SHIFT)
+>  
+>  #define CHDBOFF (0x18)
+>  #define CHDBOFF_CHDBOFF_MASK (0xFFFFFFFF)
 > -- 
 > The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
 > a Linux Foundation Collaborative Project
