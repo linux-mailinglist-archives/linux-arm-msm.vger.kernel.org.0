@@ -2,58 +2,78 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 9AA1F2AA1DF
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  7 Nov 2020 01:42:37 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 359592AA248
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  7 Nov 2020 04:19:23 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728136AbgKGAmd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 6 Nov 2020 19:42:33 -0500
-Received: from onstation.org ([52.200.56.107]:48080 "EHLO onstation.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726987AbgKGAmd (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 6 Nov 2020 19:42:33 -0500
-X-Greylist: delayed 304 seconds by postgrey-1.27 at vger.kernel.org; Fri, 06 Nov 2020 19:42:32 EST
-Received: from localhost (c-98-239-145-235.hsd1.wv.comcast.net [98.239.145.235])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: masneyb)
-        by onstation.org (Postfix) with ESMTPSA id 00BE03EFBC;
-        Sat,  7 Nov 2020 00:37:27 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=onstation.org;
-        s=default; t=1604709448;
-        bh=nWz/GnnI2ceO0QVg9HoA3H+cIJQoeMxqypBJNafHAKU=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=d9u/hck3qkywNgewXlbhiigNHHNu3IqAeD1NeJHmnYBQrBcbbb0dHaEqJ5B4GAC3N
-         aEvRq2gBDd8cmNM1pS9MQLzpKvBD7/AHqZjIX3LN23eIxXI+kVtXCNvoVwy7wJRAWA
-         49cdmLVcSUnYGWVaV2SyhR3zXxWQA4zRfTjIrBMY=
-Date:   Fri, 6 Nov 2020 19:37:27 -0500
-From:   Brian Masney <masneyb@onstation.org>
-To:     Georgi Djakov <georgi.djakov@linaro.org>
-Cc:     linux-pm@vger.kernel.org, luca@z3ntu.xyz,
-        bjorn.andersson@linaro.org, saravanak@google.com,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] interconnect: qcom: msm8974: Prevent integer overflow in
- rate
-Message-ID: <20201107003727.GD2775@onstation.org>
-References: <20201106144847.7726-1-georgi.djakov@linaro.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20201106144847.7726-1-georgi.djakov@linaro.org>
+        id S1727142AbgKGDTW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 6 Nov 2020 22:19:22 -0500
+Received: from m176115.mail.qiye.163.com ([59.111.176.115]:32596 "EHLO
+        m176115.mail.qiye.163.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727298AbgKGDTV (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 6 Nov 2020 22:19:21 -0500
+Received: from vivo-HP-ProDesk-680-G4-PCI-MT.vivo.xyz (unknown [58.251.74.231])
+        by m176115.mail.qiye.163.com (Hmail) with ESMTPA id 3BA786661BF;
+        Sat,  7 Nov 2020 11:19:16 +0800 (CST)
+From:   Wang Qing <wangqing@vivo.com>
+To:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Jordan Crouse <jcrouse@codeaurora.org>,
+        Jonathan Marek <jonathan@marek.ca>,
+        Sharat Masetty <smasetty@codeaurora.org>,
+        Akhil P Oommen <akhilpo@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
+Cc:     Wang Qing <wangqing@vivo.com>
+Subject: [V2] drm: msm: adreno: use IS_ERR() instead of null pointer check
+Date:   Sat,  7 Nov 2020 11:19:09 +0800
+Message-Id: <1604719151-28491-1-git-send-email-wangqing@vivo.com>
+X-Mailer: git-send-email 2.7.4
+X-HM-Spam-Status: e1kfGhgUHx5ZQUtXWQgYFAkeWUFZS1VLWVdZKFlBSE83V1ktWUFJV1kPCR
+        oVCBIfWUFZSR8YSx4YSEsZTB4YVkpNS09MSkJKTk1MTExVEwETFhoSFyQUDg9ZV1kWGg8SFR0UWU
+        FZT0tIVUpKS0hKQ1VLWQY+
+X-HM-Sender-Digest: e1kMHhlZQR0aFwgeV1kSHx4VD1lBWUc6MBA6Iyo4Nz8aARwhGg5WD1E#
+        NCpPC0NVSlVKTUtPTEpCSk5MSUpIVTMWGhIXVQwaFRwKEhUcOw0SDRRVGBQWRVlXWRILWUFZTkNV
+        SU5KVUxPVUlISllXWQgBWUFJT0xONwY+
+X-HM-Tid: 0a75a0b71db99373kuws3ba786661bf
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Nov 06, 2020 at 04:48:47PM +0200, Georgi Djakov wrote:
-> When sync_state support got introduced recently, by default we try to
-> set the NoCs to run initially at maximum rate. But as these values are
-> aggregated, we may end with a really big clock rate value, which is
-> then converted from "u64" to "long" during the clock rate rounding.
-> But on 32bit platforms this may result an overflow. Fix it by making
-> sure that the rate is within range.
-> 
-> Reported-by: Luca Weiss <luca@z3ntu.xyz>
-> Fixes: b1d681d8d324 ("interconnect: Add sync state support")
-> Signed-off-by: Georgi Djakov <georgi.djakov@linaro.org>
+a6xx_gmu_get_mmio() never return null in case of error, but ERR_PTR(), so 
+we should use IS_ERR() instead of null pointer check and IS_ERR_OR_NULL().
 
-Reviewed-by: Brian Masney <masneyb@onstation.org>
+Signed-off-by: Wang Qing <wangqing@vivo.com>
+---
+ drivers/gpu/drm/msm/adreno/a6xx_gmu.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
+index 491fee4..82420f7
+--- a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
++++ b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
+@@ -492,7 +492,7 @@ static void a6xx_gmu_rpmh_init(struct a6xx_gmu *gmu)
+ 	void __iomem *seqptr = a6xx_gmu_get_mmio(pdev, "gmu_pdc_seq");
+ 	uint32_t pdc_address_offset;
+ 
+-	if (!pdcptr || !seqptr)
++	if (IS_ERR(pdcptr) || IS_ERR(seqptr))
+ 		goto err;
+ 
+ 	if (adreno_is_a618(adreno_gpu) || adreno_is_a640(adreno_gpu))
+@@ -580,9 +580,9 @@ static void a6xx_gmu_rpmh_init(struct a6xx_gmu *gmu)
+ 	wmb();
+ 
+ err:
+-	if (!IS_ERR_OR_NULL(pdcptr))
++	if (!IS_ERR(pdcptr))
+ 		iounmap(pdcptr);
+-	if (!IS_ERR_OR_NULL(seqptr))
++	if (!IS_ERR(seqptr))
+ 		iounmap(seqptr);
+ }
+ 
+-- 
+2.7.4
 
