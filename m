@@ -2,116 +2,114 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 995CA2AAC04
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  8 Nov 2020 16:52:22 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 745DE2AAC51
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  8 Nov 2020 17:53:26 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727958AbgKHPwU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 8 Nov 2020 10:52:20 -0500
-Received: from mail.kernel.org ([198.145.29.99]:54580 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726814AbgKHPwU (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 8 Nov 2020 10:52:20 -0500
-Received: from archlinux (cpc149474-cmbg20-2-0-cust94.5-4.cable.virginm.net [82.4.196.95])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 2319920B1F;
-        Sun,  8 Nov 2020 15:52:16 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1604850739;
-        bh=Uk7+qbF070biGWY7S0qa+YFj/roh4zH+JTWLkehmpK8=;
-        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-        b=W8WKSn+NGyF5bfG7mqPhjfAlBAWYztiwckdEqC6ZRtbOURJ4KZ/gmYqpyFPUXcV6f
-         /JueawVO0JF3A3okuAQOcuVRFmJn44vY3jiGQtBBY5TkJhiY69jaI4It+uasoTI/+/
-         p4oIAjpAWOZNMR3KM+BaZVLFwnZykeJwKsZwCSkA=
-Date:   Sun, 8 Nov 2020 15:52:13 +0000
-From:   Jonathan Cameron <jic23@kernel.org>
-To:     Rob Herring <robh@kernel.org>
-Cc:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Jishnu Prakash <jprakash@qti.qualcomm.com>,
-        Zhang Rui <rui.zhang@intel.com>,
+        id S1728584AbgKHQxC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 8 Nov 2020 11:53:02 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60086 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728104AbgKHQxB (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Sun, 8 Nov 2020 11:53:01 -0500
+Received: from mail-ej1-x644.google.com (mail-ej1-x644.google.com [IPv6:2a00:1450:4864:20::644])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 925C9C0613CF;
+        Sun,  8 Nov 2020 08:53:01 -0800 (PST)
+Received: by mail-ej1-x644.google.com with SMTP id 7so8884153ejm.0;
+        Sun, 08 Nov 2020 08:53:01 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=Rikl1cMUQrKKRfEty9vlE0bbTP/gldAUaSt6ZFA6Ac4=;
+        b=O7ZSLo3dzGjafmpqqFnclreHOVe9FkJWqozL3Ixox4tRNR66EfsvsldQX1ywpxfjsN
+         RxLCV/t8rwjqoS0VNyMR9fAvqEPMRCKifgbUkEpBu4oXxgck+aKQ9vQfihDe31SW7T2+
+         HF9wV5lavJbBkjFH6CL5mrwyIfFsF5B8Q+Sm4Rp5j0ti2oDzuuNc71na6PoL1/31jGTf
+         WYBg/D3Dz3clJFZmKqg7M+Xukf6JxXQKulyUYLP7osdyFrPVBXlNXIg/gRSMcBLLA9sq
+         TOzmPfq0y0Nv4So+3kAdpzo7RU/NUEXay5V1Wl9GmjFupYnCUkQFXnl91YAv/lerJSCq
+         6Z7Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=Rikl1cMUQrKKRfEty9vlE0bbTP/gldAUaSt6ZFA6Ac4=;
+        b=OlUrt2vLc3eKwbna8ayh0DL28QpmRWo6RwKDO2aQy7Ug1yPYzgov5XpPykNmBgj0TX
+         Z2qsBZMEgMX0JyNCdUfGRob1NQyRTUVHyndehJ47Zg/5uW0sO/Ge5azcKhiIoDwvD61x
+         dT9A8MJDTfaqExYigKolEUGw5zqJX1p81afJNfKXBsKNFQVrBu/vDzJ9EYs9fnnGv2pj
+         //LNspaF+1PY9iO2ASbmqZNMr8HIIWXG0LZAX96gY6OXO1I/fKyAX/H7StJKdqVFEvOZ
+         Rgv4rbPZ+VlpL/rhNOOeLvzMwa7UVDa+vBjcudbuMZxc71P14XM99xDY3nkGjHvuKnSZ
+         xrbA==
+X-Gm-Message-State: AOAM533OIUr44fedt6CyX7zjBBq7QSUvrn/wF6eSB8ycVR7FWu+od19U
+        PtmFH6usjydv+Yp0gPGflFc=
+X-Google-Smtp-Source: ABdhPJzKeFZ4YDUaRqvql2Gqeb1pkAFCZ/bH4q99bP/i+x+1fPoTwk4Ei85xGYCuw3ehxLZ+6mSYeA==
+X-Received: by 2002:a17:906:74c6:: with SMTP id z6mr11832276ejl.448.1604854380356;
+        Sun, 08 Nov 2020 08:53:00 -0800 (PST)
+Received: from ?IPv6:2a01:110f:b59:fd00:a483:75f7:76d4:f590? ([2a01:110f:b59:fd00:a483:75f7:76d4:f590])
+        by smtp.gmail.com with ESMTPSA id b6sm6684948edu.21.2020.11.08.08.52.58
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 08 Nov 2020 08:52:59 -0800 (PST)
+Subject: Re: [RFC PATCH 1/3] leds: Add driver for QPNP flash led
+To:     =?UTF-8?B?TsOtY29sYXMgRi4gUi4gQS4gUHJhZG8=?= 
+        <nfraprado@protonmail.com>, Pavel Machek <pavel@ucw.cz>,
+        Dan Murphy <dmurphy@ti.com>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Amit Kucheria <amitk@kernel.org>,
-        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
-        Rob Herring <robh+dt@kernel.org>,
-        Hartmut Knaack <knaack.h@gmx.de>,
         Andy Gross <agross@kernel.org>,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        devicetree@vger.kernel.org, Lars-Peter Clausen <lars@metafoo.de>,
-        Peter Meerwald-Stadler <pmeerw@pmeerw.net>,
-        linux-iio@vger.kernel.org,
-        Daniel Lezcano <daniel.lezcano@linaro.org>
-Subject: Re: [PATCH v9 01/15] dt-bindings: thermal: qcom: add adc-thermal
- monitor bindings
-Message-ID: <20201108155213.1c91e3b9@archlinux>
-In-Reply-To: <20201104183230.GB3913864@bogus>
-References: <20201102174950.1148498-1-dmitry.baryshkov@linaro.org>
-        <20201102174950.1148498-2-dmitry.baryshkov@linaro.org>
-        <20201104183230.GB3913864@bogus>
-X-Mailer: Claws Mail 3.17.7 (GTK+ 2.24.32; x86_64-pc-linux-gnu)
+        Rob Herring <robh+dt@kernel.org>
+Cc:     linux-leds@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        Brian Masney <masneyb@onstation.org>,
+        Luca Weiss <luca@z3ntu.xyz>,
+        Russell King <linux@armlinux.org.uk>,
+        Georgi Djakov <georgi.djakov@linaro.org>,
+        linux-kernel@vger.kernel.org, lkcamp@lists.libreplanetbr.org,
+        andrealmeid@collabora.com
+References: <20201106165737.1029106-1-nfraprado@protonmail.com>
+ <20201106165737.1029106-2-nfraprado@protonmail.com>
+From:   Jacek Anaszewski <jacek.anaszewski@gmail.com>
+Message-ID: <e132bb75-66fb-0cbb-c636-5ef5f279d161@gmail.com>
+Date:   Sun, 8 Nov 2020 17:52:56 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.4.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+In-Reply-To: <20201106165737.1029106-2-nfraprado@protonmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, 4 Nov 2020 12:32:30 -0600
-Rob Herring <robh@kernel.org> wrote:
+Hi Nicolas,
 
-> On Mon, 02 Nov 2020 20:49:36 +0300, Dmitry Baryshkov wrote:
-> > Add bindings for thermal monitor, part of Qualcomm PMIC5 chips. It is a
-> > close counterpart of VADC part of those PMICs.
-> > 
-> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> > Reviewed-by: Rob Herring <robh@kernel.org>
+We have LED flash class framework since 2015. Please refer to the
+following files:
 
-Ah, this got picked up by the additions I made to dt-schema the other day.
+Documentation/leds/leds-class-flash.rst
+Documentation/ABI/testing/sysfs-class-led-flash
+Documentation/devicetree/bindings/leds/common.yaml
+drivers/leds/led-class-flash.c
 
-So there are a few existing places where io-channel-ranges is miss provided
-in dtsi files for io-channel providers (it's being ignored in most the places
-it is specified!)
+Thare are also few LED flash drivers in the tree. Since there seems to
+be boost feature present on the the device then you might want to
+compare drivers/leds/leds-max77693.c with its bindings
+Documentation/devicetree/bindings/mfd/max77693.txt (refer to LED part).
 
-What it means is that the child nodes may use io-channel entries of their parent.
-Hence it should only be specified on the consumer side.
-Here we don't actually need it for the consumer either as the io-channels
-entry is in the child node, not the parent.
+Please also remember to include DT bindings patch to your series.
 
-I'm kind of assuming that I'll eventually do the immutable branch for this
-series. If so I can clean this up whilst applying if everything else is fine
-with v9.
-
-Thanks,
-
-Jonathan
-
-
-> > ---
-> >  .../bindings/thermal/qcom-spmi-adc-tm5.yaml   | 154 ++++++++++++++++++
-> >  1 file changed, 154 insertions(+)
-> >  create mode 100644 Documentation/devicetree/bindings/thermal/qcom-spmi-adc-tm5.yaml
-> >   
+On 11/6/20 5:58 PM, Nícolas F. R. A. Prado wrote:
+> Add driver for the QPNP flash LED. It works over SPMI and is part of the
+> PM8941 PMIC.
 > 
-> 
-> My bot found errors running 'make dt_binding_check' on your patch:
-> 
-> yamllint warnings/errors:
-> 
-> dtschema/dtc warnings/errors:
-> /builds/robherring/linux-dt-review/Documentation/devicetree/bindings/thermal/qcom-spmi-adc-tm5.example.dt.yaml: adc@3100: 'io-channels' is a dependency of 'io-channel-ranges'
-> 	From schema: /usr/local/lib/python3.8/dist-packages/dtschema/schemas/iio/iio-consumer.yaml
-> 
-> 
-> See https://patchwork.ozlabs.org/patch/1392425
-> 
-> The base for the patch is generally the last rc1. Any dependencies
-> should be noted.
-> 
-> If you already ran 'make dt_binding_check' and didn't see the above
-> error(s), then make sure 'yamllint' is installed and dt-schema is up to
-> date:
-> 
-> pip3 install dtschema --upgrade
-> 
-> Please check and re-submit.
+> Signed-off-by: Nícolas F. R. A. Prado <nfraprado@protonmail.com>
+> ---
+>   drivers/leds/Kconfig     |    9 +
+>   drivers/leds/Makefile    |    1 +
+>   drivers/leds/leds-qpnp.c | 1351 ++++++++++++++++++++++++++++++++++++++
+>   3 files changed, 1361 insertions(+)
+>   create mode 100644 drivers/leds/leds-qpnp.c
 > 
 
+-- 
+Best regards,
+Jacek Anaszewski
