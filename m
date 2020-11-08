@@ -2,114 +2,119 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 745DE2AAC51
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  8 Nov 2020 17:53:26 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 8B9302AACAC
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  8 Nov 2020 18:55:56 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728584AbgKHQxC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 8 Nov 2020 11:53:02 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60086 "EHLO
+        id S1727929AbgKHRzx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 8 Nov 2020 12:55:53 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41594 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728104AbgKHQxB (ORCPT
+        with ESMTP id S1727999AbgKHRzw (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 8 Nov 2020 11:53:01 -0500
-Received: from mail-ej1-x644.google.com (mail-ej1-x644.google.com [IPv6:2a00:1450:4864:20::644])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 925C9C0613CF;
-        Sun,  8 Nov 2020 08:53:01 -0800 (PST)
-Received: by mail-ej1-x644.google.com with SMTP id 7so8884153ejm.0;
-        Sun, 08 Nov 2020 08:53:01 -0800 (PST)
+        Sun, 8 Nov 2020 12:55:52 -0500
+Received: from mail-yb1-xb43.google.com (mail-yb1-xb43.google.com [IPv6:2607:f8b0:4864:20::b43])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A363CC0613D2
+        for <linux-arm-msm@vger.kernel.org>; Sun,  8 Nov 2020 09:55:52 -0800 (PST)
+Received: by mail-yb1-xb43.google.com with SMTP id c129so6076178yba.8
+        for <linux-arm-msm@vger.kernel.org>; Sun, 08 Nov 2020 09:55:52 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=Rikl1cMUQrKKRfEty9vlE0bbTP/gldAUaSt6ZFA6Ac4=;
-        b=O7ZSLo3dzGjafmpqqFnclreHOVe9FkJWqozL3Ixox4tRNR66EfsvsldQX1ywpxfjsN
-         RxLCV/t8rwjqoS0VNyMR9fAvqEPMRCKifgbUkEpBu4oXxgck+aKQ9vQfihDe31SW7T2+
-         HF9wV5lavJbBkjFH6CL5mrwyIfFsF5B8Q+Sm4Rp5j0ti2oDzuuNc71na6PoL1/31jGTf
-         WYBg/D3Dz3clJFZmKqg7M+Xukf6JxXQKulyUYLP7osdyFrPVBXlNXIg/gRSMcBLLA9sq
-         TOzmPfq0y0Nv4So+3kAdpzo7RU/NUEXay5V1Wl9GmjFupYnCUkQFXnl91YAv/lerJSCq
-         6Z7Q==
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=bmWUWppYtFwVGnbqnjHVdjfmtFQq6Ssv8szPUV4ghMI=;
+        b=rU7t+xTIfuIcDY5hoRM9w/gETDTs+vfyhqAY2Dd3M/jS2gra/qqOozX8yQfcHFJwdD
+         2LxEb7CL4b8rYoPiLxlbS5Klef0HggKBxYOx6wq9Ya+Qpkj94BZ/U3po/RBTRvxeU+XE
+         uMyaODFQAEOVU8jYFOUIgz38Fu2QCKHRGHUcoLJyyFLgx1ZHNsHGwV1RYqT5ZfgXOK4h
+         iy1FxTyOiotU/nMHvUYKLcC0BZunxINmlrbX36YIF0Lsq+29bGJCPKqV5s2hm/zOxmUA
+         mIeRV+nMSEne4/667rkY/F7RKizgBk/9euaYXQz4g2SzjGaY3zj0kmzEEn/UBD8rkdzx
+         M0kQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=Rikl1cMUQrKKRfEty9vlE0bbTP/gldAUaSt6ZFA6Ac4=;
-        b=OlUrt2vLc3eKwbna8ayh0DL28QpmRWo6RwKDO2aQy7Ug1yPYzgov5XpPykNmBgj0TX
-         Z2qsBZMEgMX0JyNCdUfGRob1NQyRTUVHyndehJ47Zg/5uW0sO/Ge5azcKhiIoDwvD61x
-         dT9A8MJDTfaqExYigKolEUGw5zqJX1p81afJNfKXBsKNFQVrBu/vDzJ9EYs9fnnGv2pj
-         //LNspaF+1PY9iO2ASbmqZNMr8HIIWXG0LZAX96gY6OXO1I/fKyAX/H7StJKdqVFEvOZ
-         Rgv4rbPZ+VlpL/rhNOOeLvzMwa7UVDa+vBjcudbuMZxc71P14XM99xDY3nkGjHvuKnSZ
-         xrbA==
-X-Gm-Message-State: AOAM533OIUr44fedt6CyX7zjBBq7QSUvrn/wF6eSB8ycVR7FWu+od19U
-        PtmFH6usjydv+Yp0gPGflFc=
-X-Google-Smtp-Source: ABdhPJzKeFZ4YDUaRqvql2Gqeb1pkAFCZ/bH4q99bP/i+x+1fPoTwk4Ei85xGYCuw3ehxLZ+6mSYeA==
-X-Received: by 2002:a17:906:74c6:: with SMTP id z6mr11832276ejl.448.1604854380356;
-        Sun, 08 Nov 2020 08:53:00 -0800 (PST)
-Received: from ?IPv6:2a01:110f:b59:fd00:a483:75f7:76d4:f590? ([2a01:110f:b59:fd00:a483:75f7:76d4:f590])
-        by smtp.gmail.com with ESMTPSA id b6sm6684948edu.21.2020.11.08.08.52.58
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 08 Nov 2020 08:52:59 -0800 (PST)
-Subject: Re: [RFC PATCH 1/3] leds: Add driver for QPNP flash led
-To:     =?UTF-8?B?TsOtY29sYXMgRi4gUi4gQS4gUHJhZG8=?= 
-        <nfraprado@protonmail.com>, Pavel Machek <pavel@ucw.cz>,
-        Dan Murphy <dmurphy@ti.com>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>
-Cc:     linux-leds@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        Brian Masney <masneyb@onstation.org>,
-        Luca Weiss <luca@z3ntu.xyz>,
-        Russell King <linux@armlinux.org.uk>,
-        Georgi Djakov <georgi.djakov@linaro.org>,
-        linux-kernel@vger.kernel.org, lkcamp@lists.libreplanetbr.org,
-        andrealmeid@collabora.com
-References: <20201106165737.1029106-1-nfraprado@protonmail.com>
- <20201106165737.1029106-2-nfraprado@protonmail.com>
-From:   Jacek Anaszewski <jacek.anaszewski@gmail.com>
-Message-ID: <e132bb75-66fb-0cbb-c636-5ef5f279d161@gmail.com>
-Date:   Sun, 8 Nov 2020 17:52:56 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.4.0
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=bmWUWppYtFwVGnbqnjHVdjfmtFQq6Ssv8szPUV4ghMI=;
+        b=jPQDMPB2vtIuZJbBMLxYrNviNtLBapbQI6uaBcITTOZKgHjJvHhGnZSLOH/4gIfsaz
+         G4DMoxW0bfLAvDgG7V8oC+sQzj+Q0VazPM1W57L/61aYr1iJhkA2Q9XuCzC3qe4lOM4c
+         sCX8YxL3rWFhO1iaIjcgDzw3xO1Q5dxX8WiFbASR+H1K8lS5B/rz+uhN99jd9KsrvYH6
+         63cqy3lUqcSwRehQP0+iCQdI4RwB2KQt8zcO4BOzF9vT5DQyxF6Teg8pXdI3FB7K0Yuj
+         fqWQFV0iQ6/vgIHa7P3VnLhqi5sWvq1dJqAjBQ6e5nNCcHz+OyoGqOBWVJWQBUu6Sd2l
+         o4UQ==
+X-Gm-Message-State: AOAM532I3tdarMTPg3aJNW4MDb/FsWTK1VBZz4iMGffcYnRcrucddZ+h
+        z9QHralHHwt7b/XVFmGlSTgufvq/nJuSYlCyVCX9Gg==
+X-Google-Smtp-Source: ABdhPJyDSh//P8YGCca/h595WPbNkP9vxMSpO45fIp2fFwEVMxoWVkZ+T5UcRE0J2J1xCgzdUPtWfd4b52s0RoOYFzM=
+X-Received: by 2002:a25:4c1:: with SMTP id 184mr14830144ybe.318.1604858151648;
+ Sun, 08 Nov 2020 09:55:51 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <20201106165737.1029106-2-nfraprado@protonmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+References: <1594899334-19772-1-git-send-email-kalyan_t@codeaurora.org>
+ <1594899334-19772-3-git-send-email-kalyan_t@codeaurora.org> <CAF6AEGsYmxwmG2OWdX3Q-5tio+kU-AwhiL_0EyLTVb0=gWgwgw@mail.gmail.com>
+In-Reply-To: <CAF6AEGsYmxwmG2OWdX3Q-5tio+kU-AwhiL_0EyLTVb0=gWgwgw@mail.gmail.com>
+From:   Amit Pundir <amit.pundir@linaro.org>
+Date:   Sun, 8 Nov 2020 23:25:15 +0530
+Message-ID: <CAMi1Hd1+0Gz18Lzm43-gyAEF+gAqd1+9EcYCsJcsgKNbE3WZSA@mail.gmail.com>
+Subject: Re: [PATCH 3/3] drm/msm/dpu: add support for clk and bw scaling for display
+To:     Rob Clark <robdclark@gmail.com>
+Cc:     Kalyan Thota <kalyan_t@codeaurora.org>,
+        dri-devel <dri-devel@lists.freedesktop.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        freedreno <freedreno@lists.freedesktop.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        Sean Paul <seanpaul@chromium.org>,
+        "Kristian H. Kristensen" <hoegsberg@chromium.org>,
+        Douglas Anderson <dianders@chromium.org>,
+        Krishna Manikandan <mkrishn@codeaurora.org>,
+        Jeykumar Sankaran <jsanka@codeaurora.org>,
+        Raviteja Tamatam <travitej@codeaurora.org>,
+        nganji@codeaurora.org, Georgi Djakov <georgi.djakov@linaro.org>,
+        John Stultz <john.stultz@linaro.org>,
+        Sumit Semwal <sumit.semwal@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Nicolas,
+On Tue, 4 Aug 2020 at 21:09, Rob Clark <robdclark@gmail.com> wrote:
+>
+> On Thu, Jul 16, 2020 at 4:36 AM Kalyan Thota <kalyan_t@codeaurora.org> wrote:
+> >
+> > This change adds support to scale src clk and bandwidth as
+> > per composition requirements.
+> >
+> > Interconnect registration for bw has been moved to mdp
+> > device node from mdss to facilitate the scaling.
+> >
+> > Changes in v1:
+> >  - Address armv7 compilation issues with the patch (Rob)
+> >
+> > Signed-off-by: Kalyan Thota <kalyan_t@codeaurora.org>
+>
+> Reviewed-by: Rob Clark <robdclark@chromium.org>
+>
 
-We have LED flash class framework since 2015. Please refer to the
-following files:
+Hi Kalyan, Rob,
 
-Documentation/leds/leds-class-flash.rst
-Documentation/ABI/testing/sysfs-class-led-flash
-Documentation/devicetree/bindings/leds/common.yaml
-drivers/leds/led-class-flash.c
+This patch broke the display on the PocoF1 phone
+(sdm845-xiaomi-beryllium.dts) running AOSP.
+I can boot to UI but the display is frozen soon after that and
+dmesg is full of following errors:
 
-Thare are also few LED flash drivers in the tree. Since there seems to
-be boost feature present on the the device then you might want to
-compare drivers/leds/leds-max77693.c with its bindings
-Documentation/devicetree/bindings/mfd/max77693.txt (refer to LED part).
+[drm:dpu_core_perf_crtc_update:397] [dpu error]crtc-65: failed to
+update bus bw vote
+[drm:dpu_core_perf_crtc_check:203] [dpu error]exceeds bandwidth:
+7649746kb > 6800000kb
+[drm:dpu_crtc_atomic_check:969] [dpu error]crtc65 failed performance check -7
+[drm:dpu_core_perf_crtc_check:203] [dpu error]exceeds bandwidth:
+7649746kb > 6800000kb
+[drm:dpu_crtc_atomic_check:969] [dpu error]crtc65 failed performance check -7
+[drm:dpu_core_perf_crtc_check:203] [dpu error]exceeds bandwidth:
+7649746kb > 6800000kb
+[drm:dpu_crtc_atomic_check:969] [dpu error]crtc65 failed performance check -7
 
-Please also remember to include DT bindings patch to your series.
+Here is the full dmesg https://pastebin.ubuntu.com/p/PcSdNgMnYw/.
+Georgi pointed out following patch but it didn't help,
+https://lore.kernel.org/dri-devel/20201027102304.945424-1-dmitry.baryshkov@linaro.org/
+Am I missing any other followup fix?
 
-On 11/6/20 5:58 PM, Nícolas F. R. A. Prado wrote:
-> Add driver for the QPNP flash LED. It works over SPMI and is part of the
-> PM8941 PMIC.
-> 
-> Signed-off-by: Nícolas F. R. A. Prado <nfraprado@protonmail.com>
-> ---
->   drivers/leds/Kconfig     |    9 +
->   drivers/leds/Makefile    |    1 +
->   drivers/leds/leds-qpnp.c | 1351 ++++++++++++++++++++++++++++++++++++++
->   3 files changed, 1361 insertions(+)
->   create mode 100644 drivers/leds/leds-qpnp.c
-> 
-
--- 
-Best regards,
-Jacek Anaszewski
+Regards,
+Amit Pundir
