@@ -2,74 +2,107 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E4F4C2AA484
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  7 Nov 2020 12:05:32 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D77112AAA4C
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  8 Nov 2020 10:25:44 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726665AbgKGLFb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 7 Nov 2020 06:05:31 -0500
-Received: from asavdk3.altibox.net ([109.247.116.14]:36300 "EHLO
-        asavdk3.altibox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726242AbgKGLFb (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 7 Nov 2020 06:05:31 -0500
-Received: from ravnborg.org (unknown [188.228.123.71])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        id S1728106AbgKHJZk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 8 Nov 2020 04:25:40 -0500
+Received: from mail.kernel.org ([198.145.29.99]:51886 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726099AbgKHJZh (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Sun, 8 Nov 2020 04:25:37 -0500
+Received: from mail-lj1-f171.google.com (mail-lj1-f171.google.com [209.85.208.171])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by asavdk3.altibox.net (Postfix) with ESMTPS id A254C20023;
-        Sat,  7 Nov 2020 12:05:27 +0100 (CET)
-Date:   Sat, 7 Nov 2020 12:05:26 +0100
-From:   Sam Ravnborg <sam@ravnborg.org>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     devicetree@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        linux-arm-msm@vger.kernel.org,
-        Jernej Skrabec <jernej.skrabec@siol.net>,
-        Neil Armstrong <narmstrong@baylibre.com>,
-        David Airlie <airlied@linux.ie>,
-        Jonas Karlman <jonas@kwiboo.se>,
-        Andrzej Hajda <a.hajda@samsung.com>,
-        Vinod Koul <vkoul@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Subject: Re: [PATCH v4 0/2] Add LT9611UXC DSI to HDMI bridge support
-Message-ID: <20201107110526.GA912360@ravnborg.org>
-References: <20201102011435.1100930-1-dmitry.baryshkov@linaro.org>
+        by mail.kernel.org (Postfix) with ESMTPSA id D0D0720719;
+        Sun,  8 Nov 2020 09:25:35 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1604827536;
+        bh=0Re+BH04OjvQtiodOP0PAVO/kqbxE/PMUbtENeeHUCU=;
+        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+        b=T8aftoYJoOfJoY2D59wtyqCFPrcSPDuCqBe6z9Y88z18itxLZYrLQQoUiySYprX/w
+         CeltL21788RGxrGqCPGHjUWJsuUW/aiyLgkfQF5xQteJWVIw4gGxwp93kbsT47/9ed
+         KFVVrs14i0T/haKa/knwEHH/Xo7Crf9KJaPhdmXY=
+Received: by mail-lj1-f171.google.com with SMTP id r17so693827ljg.5;
+        Sun, 08 Nov 2020 01:25:35 -0800 (PST)
+X-Gm-Message-State: AOAM5335wt3uT3SLq365qpcyGeMWT4K9imATGHktiEFQSWv9lqgxs+Pk
+        re73Q0gs2V+w/MHHyiwkoNSjw5m3HQY3g0MvC+g=
+X-Google-Smtp-Source: ABdhPJyddR8brDR4uTwLcrWRTsQ0eYz6SRGBrDUoAv5c7VKMt2AwiBlznvTTelNyXgQ/X1oyJ30XbCrkOlR4o4w9iyo=
+X-Received: by 2002:a2e:b536:: with SMTP id z22mr4077018ljm.177.1604827534166;
+ Sun, 08 Nov 2020 01:25:34 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20201102011435.1100930-1-dmitry.baryshkov@linaro.org>
-X-CMAE-Score: 0
-X-CMAE-Analysis: v=2.3 cv=VbvZwmh9 c=1 sm=1 tr=0
-        a=S6zTFyMACwkrwXSdXUNehg==:117 a=S6zTFyMACwkrwXSdXUNehg==:17
-        a=kj9zAlcOel0A:10 a=EUspDBNiAAAA:8 a=8n8SyL_cAAAA:8
-        a=gyEoD_T1ygFEYnNRWQQA:9 a=CjuIK1q_8ugA:10 a=rMCfJy6NHDicN4J276Yl:22
-        a=-K6Y0kWoOJXvxDHPO-NO:22
+References: <cover.1604646059.git.viresh.kumar@linaro.org>
+In-Reply-To: <cover.1604646059.git.viresh.kumar@linaro.org>
+From:   Ilia Lin <ilia.lin@kernel.org>
+Date:   Sun, 8 Nov 2020 11:25:22 +0200
+X-Gmail-Original-Message-ID: <CA+5LGR0UwGUeXPw3Jbd7=VkY7fY_rKV_YjLpWV4GbHnvP23Ejg@mail.gmail.com>
+Message-ID: <CA+5LGR0UwGUeXPw3Jbd7=VkY7fY_rKV_YjLpWV4GbHnvP23Ejg@mail.gmail.com>
+Subject: Re: [PATCH 0/7] opp: Allow dev_pm_opp_put_*() APIs to accept NULL opp_table
+To:     Viresh Kumar <viresh.kumar@linaro.org>
+Cc:     Alyssa Rosenzweig <alyssa.rosenzweig@collabora.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Chanwoo Choi <cw00.choi@samsung.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        David Airlie <airlied@linux.ie>,
+        Ilia Lin <ilia.lin@kernel.org>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        Kukjin Kim <kgene@kernel.org>,
+        Kyungmin Park <kyungmin.park@samsung.com>,
+        MyungJoo Ham <myungjoo.ham@samsung.com>,
+        Nishanth Menon <nm@ti.com>, Qiang Yu <yuq825@gmail.com>,
+        "Rafael J. Wysocki" <rjw@rjwysocki.net>,
+        Rob Herring <robh@kernel.org>,
+        Stanimir Varbanov <stanimir.varbanov@linaro.org>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Steven Price <steven.price@arm.com>,
+        Tomeu Vizoso <tomeu.vizoso@collabora.com>,
+        Viresh Kumar <vireshk@kernel.org>,
+        "open list:QUALCOMM CPUFREQ DRIVER MSM8996/APQ8096" 
+        <linux-pm@vger.kernel.org>,
+        Vincent Guittot <vincent.guittot@linaro.org>, digetx@gmail.com,
+        dri-devel@lists.freedesktop.org, lima@lists.freedesktop.org,
+        linux-arm-kernel@lists.infradead.org,
+        "open list:ARM/QUALCOMM SUPPORT" <linux-arm-msm@vger.kernel.org>,
+        open list <linux-kernel@vger.kernel.org>,
+        linux-media@vger.kernel.org, linux-samsung-soc@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Dmitry
+Reviewed-by: Ilia Lin <ilia.lin@kernel.org>
 
-On Mon, Nov 02, 2020 at 04:14:33AM +0300, Dmitry Baryshkov wrote:
-> Hi,
-> 
-> This series adds support for Lontium LT9611UXC bridge chip which takes
-> MIPI DSI as input and provides HDMI signal as output.
-> 
-> The chip can be found in Qualcomm RB5 platform [1], [2].
-> 
-> [1] https://www.qualcomm.com/products/qualcomm-robotics-rb5-platform
-> [2] https://www.thundercomm.com/app_en/product/1590131656070623
-> 
-> Changes since v3:
->  - Support for firmware upgrades
->  - Simplified modes table to include only used fields (w, h, refresh)
->  - Added more entries to display modes table, as more modes are
->    supported by the firmware
->  - Wait for EDID to be available from the hardware before reading it
->  - Do not store EDID in the interim buffer, lowering the size of
->    per-device struct
 
-Thanks, driver is now applied to drm-misc-next.
-
-	Sam
+On Fri, Nov 6, 2020 at 9:05 AM Viresh Kumar <viresh.kumar@linaro.org> wrote:
+>
+> Hello,
+>
+> This patchset updates the dev_pm_opp_put_*() helpers to accept a NULL
+> pointer for the OPP table, in order to allow the callers to drop the
+> unnecessary checks they had to carry.
+>
+> All these must get merged upstream through the OPP tree as there is a
+> hard dependency on the first patch here. Thanks.
+>
+> Viresh Kumar (7):
+>   opp: Allow dev_pm_opp_put_*() APIs to accept NULL opp_table
+>   cpufreq: dt: dev_pm_opp_put_regulators() accepts NULL argument
+>   cpufreq: qcom-cpufreq-nvmem: dev_pm_opp_put_*() accepts NULL argument
+>   devfreq: exynos: dev_pm_opp_put_*() accepts NULL argument
+>   drm/lima: dev_pm_opp_put_*() accepts NULL argument
+>   drm/panfrost: dev_pm_opp_put_*() accepts NULL argument
+>   media: venus: dev_pm_opp_put_*() accepts NULL argument
+>
+>  drivers/cpufreq/cpufreq-dt.c                   |  6 ++----
+>  drivers/cpufreq/qcom-cpufreq-nvmem.c           | 15 ++++++---------
+>  drivers/devfreq/exynos-bus.c                   | 12 ++++--------
+>  drivers/gpu/drm/lima/lima_devfreq.c            | 13 ++++---------
+>  drivers/gpu/drm/panfrost/panfrost_devfreq.c    |  6 ++----
+>  drivers/media/platform/qcom/venus/pm_helpers.c |  3 +--
+>  drivers/opp/core.c                             | 18 ++++++++++++++++++
+>  7 files changed, 37 insertions(+), 36 deletions(-)
+>
+> --
+> 2.25.0.rc1.19.g042ed3e048af
+>
