@@ -2,103 +2,97 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 5C4A12AB50A
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Nov 2020 11:34:28 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 632A72AB51B
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Nov 2020 11:36:01 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728865AbgKIKe0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 9 Nov 2020 05:34:26 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54322 "EHLO
+        id S1727774AbgKIKgB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 9 Nov 2020 05:36:01 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54566 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726423AbgKIKe0 (ORCPT
+        with ESMTP id S1726646AbgKIKgA (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 9 Nov 2020 05:34:26 -0500
-Received: from mail-pg1-x544.google.com (mail-pg1-x544.google.com [IPv6:2607:f8b0:4864:20::544])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 50FE2C0613CF
-        for <linux-arm-msm@vger.kernel.org>; Mon,  9 Nov 2020 02:34:26 -0800 (PST)
-Received: by mail-pg1-x544.google.com with SMTP id f38so6793149pgm.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 09 Nov 2020 02:34:26 -0800 (PST)
+        Mon, 9 Nov 2020 05:36:00 -0500
+Received: from mail-pg1-x542.google.com (mail-pg1-x542.google.com [IPv6:2607:f8b0:4864:20::542])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0E1DFC0613CF
+        for <linux-arm-msm@vger.kernel.org>; Mon,  9 Nov 2020 02:36:00 -0800 (PST)
+Received: by mail-pg1-x542.google.com with SMTP id r10so6771309pgb.10
+        for <linux-arm-msm@vger.kernel.org>; Mon, 09 Nov 2020 02:36:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=KTmupo/EpjgAy2pPuwp43MJbMbOqAR0YnTyRbouORaM=;
-        b=DIeqnSAfnkOX68rTluPtTr1Z/ka/uBkkJE++R5AZx3vtaCnXWhpOlbW7q6Pchny2LW
-         nmpKKNAk0Kqmu2QugOYA5xZUpku0kpAb8JVxgrykC3wSOJZZZIzFlfQ8S9+YjQEVR8NY
-         ogbIU0upC+fJ3ZgVbZYFAKoVWSRCFHev5GFUQ=
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=HQ1/cCsGH4zhTXEL1omQLSlUuW9f89xTkR8XT4vTbP8=;
+        b=ty39HVcWlT4BHMJG0FxUYpqT5o+Mb5pdRonM1J5HWKmMS9BEhLQNThhxNmxow/B4T8
+         A6IRn+O2sm9P8hoxb413fmW3qFkP5tL1pj8oxEw9nQmxOkE6Tleub9DZ7g7fAXAiRb0k
+         r4mAIRgEZDYKOeiHs8SbbuYYbcSjRJ9qvw+rDS4tdX6ZHGBVCimCARqX61/9ejK8JtOz
+         ipSAxJwoRQXWGQMhEqSkRKVrfzQQWc09VuxOR7HKeI5yUzEk0A2Y8jHd1qHMpfeAKZ7s
+         t79GpAsm3arRWK1LxC4SDUAHlsmeBl5KnnzgZIIeTR8Q3QfxYw5VfPDr7og6RChwtPYK
+         2u3w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=KTmupo/EpjgAy2pPuwp43MJbMbOqAR0YnTyRbouORaM=;
-        b=DMP6cF6JxvKMjggpdSQ0gMzZoTCiV6Osxm81vX+BzBw+aEQCmG8MYznS/Pdzwg4SQ+
-         RwJNmPkAXOXCRjg5yEHB2gcNy1J9uUaosKmz5FtRg9HkM2B30ULrsS0HtVAcYRER/VUl
-         YSvHOX0aZtdGJCggC0ct6cv+kv0m58EYPMnZUjn9x7wU5u4nCRbRhqOY74hOfcLFSQe9
-         r+u/u13WPu+zpMYEhArbhqJRRFpayewa5KyVO/nyJVkTi+wMC+b42tUBh+kKJzOVX8no
-         nSRRSCqF/NqRlA0ntFY+hbxqkC4/oga5dzpoTHpoTdfrCwmFCoo6NoS4nNTI0sKLAmCl
-         VrQA==
-X-Gm-Message-State: AOAM532mvOMaWKwG7LY2TTNaYlaXkgbNNYQUOo/tJp2RI3qDZ6yseziA
-        EJF/P/ir0ZmsyTgGHBnlOga5fg==
-X-Google-Smtp-Source: ABdhPJyaNypAicS4XX7Fl08mgehF6nQZq7ki3Z9aXq2gKlrGrFfmnvTBvnq8T/JTZ4f0aahG8xTzeg==
-X-Received: by 2002:a63:2a83:: with SMTP id q125mr12000933pgq.84.1604918065859;
-        Mon, 09 Nov 2020 02:34:25 -0800 (PST)
-Received: from localhost ([2401:fa00:1:10:de4a:3eff:fe7d:d39c])
-        by smtp.gmail.com with ESMTPSA id w131sm10662101pfd.14.2020.11.09.02.34.20
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 09 Nov 2020 02:34:24 -0800 (PST)
-From:   Cheng-Yi Chiang <cychiang@chromium.org>
-To:     linux-kernel@vger.kernel.org
-Cc:     Mark Brown <broonie@kernel.org>, Taniya Das <tdas@codeaurora.org>,
-        Rohit kumar <rohitkr@codeaurora.org>,
-        Banajit Goswami <bgoswami@codeaurora.org>,
-        Patrick Lai <plai@codeaurora.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Jaroslav Kysela <perex@perex.cz>,
-        Takashi Iwai <tiwai@suse.com>,
-        Srini Kandagatla <srinivas.kandagatla@linaro.org>,
-        Stephan Gerhold <stephan@gerhold.net>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        Heiko Stuebner <heiko@sntech.de>,
-        Srinivasa Rao <srivasam@codeaurora.org>,
-        Ajye Huang <ajye_huang@compal.corp-partner.google.com>,
-        xuyuqing@huaqin.corp-partner.google.com, dianders@chromium.org,
-        dgreid@chromium.org, tzungbi@chromium.org, judyhsiao@chromium.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        alsa-devel@alsa-project.org,
-        Cheng-Yi Chiang <cychiang@chromium.org>
-Subject: [PATCH] ASoC: qcom: sc7180: Add missing PM ops
-Date:   Mon,  9 Nov 2020 18:34:15 +0800
-Message-Id: <20201109103415.607495-1-cychiang@chromium.org>
-X-Mailer: git-send-email 2.29.2.222.g5d2a92d10f8-goog
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=HQ1/cCsGH4zhTXEL1omQLSlUuW9f89xTkR8XT4vTbP8=;
+        b=EBCslPR99W8ipsg46E2HQOoxjV2o++Sjibj8xmCQ4SL466tAeF6pZOdNWzZGb1a2bh
+         oqYxfteuDQJFJniEd3Nwt1LiipUMb+qnDCrV2digPZly2OUTJJxQd/aNGMgeSmMbhkdV
+         uuHFrDMIxaTL4ofvDlcvUOiFNuDJY4y2/rBgS7Q5vJQ2uaUcHSXSZcpFDlNM8Q9CfMWl
+         VnpnngasZQHBGm+EbkXDs7N33zcRJ1Bsx56yzHzfc/PcI+8WhqreAbMfLdwzyWT3AxhQ
+         zOcNRdXfly/gIfS2JAVUtPYjsgY+2Abd6YNF6CRMNW+P+AcjgeWYF6X96dyt2KFdN4GI
+         pc6A==
+X-Gm-Message-State: AOAM530XdBUbb2zUP2t/nhmdAoafUq0/8GPXXqCsIfueW39rK672b/eK
+        pyd8d6LNwsnx7136+Aj8ynZD
+X-Google-Smtp-Source: ABdhPJywxXqzYmrfCQ+QsYfi0RRDG06ZpbGsXlrz9jN9CRSPc+3r0q7Xld6ZwwwiFlzPa/iUdDoS7A==
+X-Received: by 2002:a63:f14:: with SMTP id e20mr12856557pgl.52.1604918159591;
+        Mon, 09 Nov 2020 02:35:59 -0800 (PST)
+Received: from work ([103.59.133.81])
+        by smtp.gmail.com with ESMTPSA id t32sm10323467pgl.0.2020.11.09.02.35.57
+        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 09 Nov 2020 02:35:58 -0800 (PST)
+Date:   Mon, 9 Nov 2020 16:05:54 +0530
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     Loic Poulain <loic.poulain@linaro.org>
+Cc:     linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Hemant Kumar <hemantk@codeaurora.org>
+Subject: Re: [PATCH] bus: mhi: Add inbound buffers allocation flag
+Message-ID: <20201109103554.GC24289@work>
+References: <1600874218-10815-1-git-send-email-loic.poulain@linaro.org>
+ <CAMZdPi9EvP-umfpmS-yTK+5Snx-qDcpfkkq_dtExKZjXG4atMg@mail.gmail.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAMZdPi9EvP-umfpmS-yTK+5Snx-qDcpfkkq_dtExKZjXG4atMg@mail.gmail.com>
+User-Agent: Mutt/1.9.4 (2018-02-28)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Use PM ops snd_soc_pm_ops to handle suspend/resume like other machine
-drivers.
+Hi Loic,
 
-Signed-off-by: Cheng-Yi Chiang <cychiang@chromium.org>
----
- sound/soc/qcom/sc7180.c | 1 +
- 1 file changed, 1 insertion(+)
+On Tue, Sep 29, 2020 at 03:37:12PM +0200, Loic Poulain wrote:
+> On Wed, 23 Sep 2020 at 17:11, Loic Poulain <loic.poulain@linaro.org> wrote:
+> 
+> > Currently, the MHI controller driver defines which channels should
+> > have their inbound buffers allocated and queued. But ideally, this is
+> > something that should be decided by the MHI device driver instead,
+> > which actually deals with that buffers.
+> >
+> > Add a flag parameter to mhi_prepare_for_transfer allowing to specify
+> > if buffers have to be allocated and queued by the MHI stack.
+> >
+> > Keep auto_queue flag for now, but should be removed at some point.
+> >
+> > Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
+> >
+> 
+> Please, discard this one, since it will request ath11k and qrtr update as
+> well.
+> I'll send that in a new series.
+> 
 
-diff --git a/sound/soc/qcom/sc7180.c b/sound/soc/qcom/sc7180.c
-index b391f64c3a80..42e366ecc689 100644
---- a/sound/soc/qcom/sc7180.c
-+++ b/sound/soc/qcom/sc7180.c
-@@ -258,6 +258,7 @@ static struct platform_driver sc7180_snd_driver = {
- 	.driver = {
- 		.name = "msm-snd-sc7180",
- 		.of_match_table = sc7180_snd_device_id,
-+		.pm = &snd_soc_pm_ops,
- 	},
- };
- module_platform_driver(sc7180_snd_driver);
--- 
-2.29.2.222.g5d2a92d10f8-goog
+Is this part of any series?
 
+Thanks,
+Mani
+
+> Regards,
+> Loic
