@@ -2,107 +2,136 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 94C9E2AB508
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Nov 2020 11:34:19 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 922EC2AB50E
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Nov 2020 11:34:44 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728465AbgKIKeS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 9 Nov 2020 05:34:18 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54300 "EHLO
+        id S1729316AbgKIKej (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 9 Nov 2020 05:34:39 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54360 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727826AbgKIKeS (ORCPT
+        with ESMTP id S1726176AbgKIKej (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 9 Nov 2020 05:34:18 -0500
-Received: from mail-pf1-x444.google.com (mail-pf1-x444.google.com [IPv6:2607:f8b0:4864:20::444])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 73A88C0613CF
-        for <linux-arm-msm@vger.kernel.org>; Mon,  9 Nov 2020 02:34:18 -0800 (PST)
-Received: by mail-pf1-x444.google.com with SMTP id x13so7710427pfa.9
-        for <linux-arm-msm@vger.kernel.org>; Mon, 09 Nov 2020 02:34:18 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=PWpW2uQvGn1h0nbyrbfd1nJvmqL1odyb76MYsq7s18U=;
-        b=y1DQ4Pwq+l/FBZ1kfseUM/+u8PveS/Wcz8s35YsUDvH97gVLipFI8mY1AL6jOzSvII
-         WaKNe70h3ORWQLzK3NqTWJS8soivk8bC9GoXzIjEEs9y4/17PjVk1bxinouNPWPU99LH
-         XeK5frbmRXe0wkArJD4ivFI95Jb9oytUBqTCemynbTIrmqhuKzbcximQnoCa3SbmD/dS
-         3Y9yCcw6esS9TN0O86QjgD6O7dwDYFfSl4w1uf4YIzBZ2PAriAWdD39bE/UIxAC3f1Ko
-         k5ShxoFocgwwAXKpCSPmzeIteNeZqD2EFr6LFv1hnYiWt0KL3lQHim8cBfBf7nwC2r+s
-         QhAQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=PWpW2uQvGn1h0nbyrbfd1nJvmqL1odyb76MYsq7s18U=;
-        b=fSHnnWlplKn2s1N8k4C1dn7q5jtK/1KeHwmYz1SpJU8VhjKI+uCWX0fPkMLJgYoa9q
-         +eeYiQRUSjDBufpMvbHrZplTf04s2MuQW0r9fHneMKJZNKJ9YNGnC1q4ScF4/ntIYdeM
-         vyBtGf4sqmTl89ePxnKRWzhsP7YkXXVDov6GmLQpVLXMQ0NNATjaAW7pWqvQQ526G0Pf
-         yYkMIE5EwN1A207qjdGCzuG2y7mGUSSTPnqthxwnpo16LuLJCQ6U9Umnz16Zt60enTLF
-         d/e/dW9EIo2cV3LgNY2gO2gLxVcS0/SWw/2EceA5I9LSuALfl33VE71bn2I1Ls0z1j3I
-         p8qA==
-X-Gm-Message-State: AOAM5315POI9JL1g/Fov7z4f/lzlzeda6F+rpbJlaZwy2F1YhOzj6LSd
-        9hlK2EfhCMtqe6M5U2wXP63B
-X-Google-Smtp-Source: ABdhPJxNnNK+/w6Awd8gs1YujmHMKGR3d7M8OAnJy6DmOydPYpJT6/SFH/0FZOU8YiH87nzVr0LBTQ==
-X-Received: by 2002:a17:90a:5508:: with SMTP id b8mr6962383pji.85.1604918058010;
-        Mon, 09 Nov 2020 02:34:18 -0800 (PST)
-Received: from work ([103.59.133.81])
-        by smtp.gmail.com with ESMTPSA id 3sm10733040pfv.92.2020.11.09.02.34.16
-        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 09 Nov 2020 02:34:17 -0800 (PST)
-Date:   Mon, 9 Nov 2020 16:04:12 +0530
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     Loic Poulain <loic.poulain@linaro.org>
-Cc:     hemantk@codeaurora.org, linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH] bus: mhi: Fix channel close issue on driver remove
-Message-ID: <20201109103412.GB24289@work>
-References: <1602234434-924-1-git-send-email-loic.poulain@linaro.org>
+        Mon, 9 Nov 2020 05:34:39 -0500
+Received: from pandora.armlinux.org.uk (pandora.armlinux.org.uk [IPv6:2001:4d48:ad52:32c8:5054:ff:fe00:142])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8B724C0613CF;
+        Mon,  9 Nov 2020 02:34:38 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+        d=armlinux.org.uk; s=pandora-2019; h=Sender:In-Reply-To:Content-Type:
+        MIME-Version:References:Message-ID:Subject:Cc:To:From:Date:Reply-To:
+        Content-Transfer-Encoding:Content-ID:Content-Description:Resent-Date:
+        Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:
+        List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
+         bh=qH9b1O1m9yVoEB6n8QkB/6TaJXHCxIPP32Fq1mFfWKE=; b=gGrvZ5xBLQtSpNi2uSB0ANIyt
+        afY6SWLthCnmt6Eeq9iZZax1/dyotilgV7RwYmDtVPVh7RwXnEAYDGAtLsa727gWFqK5CzSIwzblw
+        DaYTkWl5eVU2agK0Wy6hnKjxer6VycAEWpMtm1NwlVYP8n9kJucFn6RRJt2oQiqC+/YAOq4k6TXTo
+        dYesdPUt9+kdk2famskEu8KnvAp6sqlxtQTkKiPG+IohXg8HNv0sKPXA55oJI+hF72r+UriKjmSUr
+        sydSD86p/UZ7m2nM8/IM9hJ+KGVUGO+/ml+2PkrHYDWyWW/YYlOyIF6iLw25zd+4lV3cvHJvnHiJX
+        ZcxHuRLig==;
+Received: from shell.armlinux.org.uk ([fd8f:7570:feb6:1:5054:ff:fe00:4ec]:56980)
+        by pandora.armlinux.org.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
+        (Exim 4.92)
+        (envelope-from <linux@armlinux.org.uk>)
+        id 1kc4V7-000858-1A; Mon, 09 Nov 2020 10:34:17 +0000
+Received: from linux by shell.armlinux.org.uk with local (Exim 4.92)
+        (envelope-from <linux@shell.armlinux.org.uk>)
+        id 1kc4V4-0000KD-S1; Mon, 09 Nov 2020 10:34:14 +0000
+Date:   Mon, 9 Nov 2020 10:34:14 +0000
+From:   Russell King - ARM Linux admin <linux@armlinux.org.uk>
+To:     Jisheng Zhang <Jisheng.Zhang@synaptics.com>
+Cc:     Felipe Balbi <balbi@kernel.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Kukjin Kim <kgene@kernel.org>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        Kevin Hilman <khilman@baylibre.com>,
+        Neil Armstrong <narmstrong@baylibre.com>,
+        Jerome Brunet <jbrunet@baylibre.com>,
+        Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Patrice Chotard <patrice.chotard@st.com>,
+        linux-samsung-soc@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-amlogic@lists.infradead.org, linux-omap@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org
+Subject: Re: [PATCH usb-next] usb: dwc3: Use devm_of_platform_populate
+Message-ID: <20201109103414.GF1559@shell.armlinux.org.uk>
+References: <20201109095953.7f810239@xhacker.debian>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <1602234434-924-1-git-send-email-loic.poulain@linaro.org>
-User-Agent: Mutt/1.9.4 (2018-02-28)
+In-Reply-To: <20201109095953.7f810239@xhacker.debian>
+User-Agent: Mutt/1.10.1 (2018-07-13)
+Sender: Russell King - ARM Linux admin <linux@armlinux.org.uk>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Oct 09, 2020 at 11:07:14AM +0200, Loic Poulain wrote:
-> Some MHI device drivers need to stop the channels in their driver
-> remove callback (e.g. module unloading), but the unprepare function
-> is aborted because MHI core moved the channels to suspended state
-> prior calling driver remove callback. This prevents the driver to
-> send a proper MHI RESET CHAN command to the device. Device is then
-> unaware of the stopped state of these channels.
-> 
-> This causes issue when driver tries to start the channels again (e.g.
-> module is reloaded), since device considers channels as already
-> started (inconsistent state).
-> 
-> Fix this by allowing channel reset when channel is suspended.
-> 
-> Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
+On Mon, Nov 09, 2020 at 09:59:53AM +0800, Jisheng Zhang wrote:
+> diff --git a/drivers/usb/dwc3/dwc3-meson-g12a.c b/drivers/usb/dwc3/dwc3-meson-g12a.c
+> index 417e05381b5d..83015bb7b926 100644
+> --- a/drivers/usb/dwc3/dwc3-meson-g12a.c
+> +++ b/drivers/usb/dwc3/dwc3-meson-g12a.c
+> @@ -702,7 +702,6 @@ static int dwc3_meson_g12a_probe(struct platform_device *pdev)
+>  {
+>  	struct dwc3_meson_g12a	*priv;
+>  	struct device		*dev = &pdev->dev;
+> -	struct device_node	*np = dev->of_node;
+>  	void __iomem *base;
+>  	int ret, i;
+>  
+> @@ -794,7 +793,7 @@ static int dwc3_meson_g12a_probe(struct platform_device *pdev)
+>  			goto err_phys_power;
+>  	}
+>  
+> -	ret = of_platform_populate(np, NULL, NULL, dev);
+> +	ret = devm_of_platform_populate(dev);
+>  	if (ret)
+>  		goto err_phys_power;
+>  
+> @@ -832,8 +831,6 @@ static int dwc3_meson_g12a_remove(struct platform_device *pdev)
+>  	if (priv->drvdata->otg_switch_supported)
+>  		usb_role_switch_unregister(priv->role_switch);
+>  
+> -	of_platform_depopulate(dev);
+> -
+>  	for (i = 0 ; i < PHY_COUNT ; ++i) {
+>  		phy_power_off(priv->phys[i]);
+>  		phy_exit(priv->phys[i]);
 
-Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Does it matter that the order that things happen in
+dwc3_meson_g12a_remove() is changed as a result of your patch? Was
+the code relying on the platform devices being depopulated before
+powering off the PHYs?
 
-Thanks,
-Mani
+> diff --git a/drivers/usb/dwc3/dwc3-of-simple.c b/drivers/usb/dwc3/dwc3-of-simple.c
+> index e62ecd22b3ed..f1c267e39d62 100644
+> --- a/drivers/usb/dwc3/dwc3-of-simple.c
+> +++ b/drivers/usb/dwc3/dwc3-of-simple.c
+> @@ -73,7 +73,7 @@ static int dwc3_of_simple_probe(struct platform_device *pdev)
+>  	if (ret)
+>  		goto err_resetc_assert;
+>  
+> -	ret = of_platform_populate(np, NULL, NULL, dev);
+> +	ret = devm_of_platform_populate(dev);
+>  	if (ret)
+>  		goto err_clk_put;
+>  
+> @@ -97,8 +97,6 @@ static int dwc3_of_simple_probe(struct platform_device *pdev)
+>  
+>  static void __dwc3_of_simple_teardown(struct dwc3_of_simple *simple)
+>  {
+> -	of_platform_depopulate(simple->dev);
+> -
+>  	clk_bulk_disable_unprepare(simple->num_clocks, simple->clks);
+>  	clk_bulk_put_all(simple->num_clocks, simple->clks);
+>  	simple->num_clocks = 0;
 
-> ---
->  drivers/bus/mhi/core/main.c | 3 ++-
->  1 file changed, 2 insertions(+), 1 deletion(-)
-> 
-> diff --git a/drivers/bus/mhi/core/main.c b/drivers/bus/mhi/core/main.c
-> index d20967a..a588eac 100644
-> --- a/drivers/bus/mhi/core/main.c
-> +++ b/drivers/bus/mhi/core/main.c
-> @@ -1232,7 +1232,8 @@ static void __mhi_unprepare_channel(struct mhi_controller *mhi_cntrl,
->  	/* no more processing events for this channel */
->  	mutex_lock(&mhi_chan->mutex);
->  	write_lock_irq(&mhi_chan->lock);
-> -	if (mhi_chan->ch_state != MHI_CH_STATE_ENABLED) {
-> +	if (mhi_chan->ch_state != MHI_CH_STATE_ENABLED &&
-> +	    mhi_chan->ch_state != MHI_CH_STATE_SUSPENDED) {
->  		write_unlock_irq(&mhi_chan->lock);
->  		mutex_unlock(&mhi_chan->mutex);
->  		return;
-> -- 
-> 2.7.4
-> 
+Same here... and for anywhere else in this patch that you're deleting
+a of_platform_depopulate().
+
+You effectively are moving the call to of_platform_depopulate() *after*
+the driver's .remove function has been called.
+
+-- 
+RMK's Patch system: https://www.armlinux.org.uk/developer/patches/
+FTTP is here! 40Mbps down 10Mbps up. Decent connectivity at last!
