@@ -2,136 +2,103 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 922EC2AB50E
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Nov 2020 11:34:44 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 5C4A12AB50A
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Nov 2020 11:34:28 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729316AbgKIKej (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 9 Nov 2020 05:34:39 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54360 "EHLO
+        id S1728865AbgKIKe0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 9 Nov 2020 05:34:26 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54322 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726176AbgKIKej (ORCPT
+        with ESMTP id S1726423AbgKIKe0 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 9 Nov 2020 05:34:39 -0500
-Received: from pandora.armlinux.org.uk (pandora.armlinux.org.uk [IPv6:2001:4d48:ad52:32c8:5054:ff:fe00:142])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8B724C0613CF;
-        Mon,  9 Nov 2020 02:34:38 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-        d=armlinux.org.uk; s=pandora-2019; h=Sender:In-Reply-To:Content-Type:
-        MIME-Version:References:Message-ID:Subject:Cc:To:From:Date:Reply-To:
-        Content-Transfer-Encoding:Content-ID:Content-Description:Resent-Date:
-        Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:
-        List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
-         bh=qH9b1O1m9yVoEB6n8QkB/6TaJXHCxIPP32Fq1mFfWKE=; b=gGrvZ5xBLQtSpNi2uSB0ANIyt
-        afY6SWLthCnmt6Eeq9iZZax1/dyotilgV7RwYmDtVPVh7RwXnEAYDGAtLsa727gWFqK5CzSIwzblw
-        DaYTkWl5eVU2agK0Wy6hnKjxer6VycAEWpMtm1NwlVYP8n9kJucFn6RRJt2oQiqC+/YAOq4k6TXTo
-        dYesdPUt9+kdk2famskEu8KnvAp6sqlxtQTkKiPG+IohXg8HNv0sKPXA55oJI+hF72r+UriKjmSUr
-        sydSD86p/UZ7m2nM8/IM9hJ+KGVUGO+/ml+2PkrHYDWyWW/YYlOyIF6iLw25zd+4lV3cvHJvnHiJX
-        ZcxHuRLig==;
-Received: from shell.armlinux.org.uk ([fd8f:7570:feb6:1:5054:ff:fe00:4ec]:56980)
-        by pandora.armlinux.org.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
-        (Exim 4.92)
-        (envelope-from <linux@armlinux.org.uk>)
-        id 1kc4V7-000858-1A; Mon, 09 Nov 2020 10:34:17 +0000
-Received: from linux by shell.armlinux.org.uk with local (Exim 4.92)
-        (envelope-from <linux@shell.armlinux.org.uk>)
-        id 1kc4V4-0000KD-S1; Mon, 09 Nov 2020 10:34:14 +0000
-Date:   Mon, 9 Nov 2020 10:34:14 +0000
-From:   Russell King - ARM Linux admin <linux@armlinux.org.uk>
-To:     Jisheng Zhang <Jisheng.Zhang@synaptics.com>
-Cc:     Felipe Balbi <balbi@kernel.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Kukjin Kim <kgene@kernel.org>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        Kevin Hilman <khilman@baylibre.com>,
-        Neil Armstrong <narmstrong@baylibre.com>,
-        Jerome Brunet <jbrunet@baylibre.com>,
-        Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
+        Mon, 9 Nov 2020 05:34:26 -0500
+Received: from mail-pg1-x544.google.com (mail-pg1-x544.google.com [IPv6:2607:f8b0:4864:20::544])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 50FE2C0613CF
+        for <linux-arm-msm@vger.kernel.org>; Mon,  9 Nov 2020 02:34:26 -0800 (PST)
+Received: by mail-pg1-x544.google.com with SMTP id f38so6793149pgm.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 09 Nov 2020 02:34:26 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=KTmupo/EpjgAy2pPuwp43MJbMbOqAR0YnTyRbouORaM=;
+        b=DIeqnSAfnkOX68rTluPtTr1Z/ka/uBkkJE++R5AZx3vtaCnXWhpOlbW7q6Pchny2LW
+         nmpKKNAk0Kqmu2QugOYA5xZUpku0kpAb8JVxgrykC3wSOJZZZIzFlfQ8S9+YjQEVR8NY
+         ogbIU0upC+fJ3ZgVbZYFAKoVWSRCFHev5GFUQ=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=KTmupo/EpjgAy2pPuwp43MJbMbOqAR0YnTyRbouORaM=;
+        b=DMP6cF6JxvKMjggpdSQ0gMzZoTCiV6Osxm81vX+BzBw+aEQCmG8MYznS/Pdzwg4SQ+
+         RwJNmPkAXOXCRjg5yEHB2gcNy1J9uUaosKmz5FtRg9HkM2B30ULrsS0HtVAcYRER/VUl
+         YSvHOX0aZtdGJCggC0ct6cv+kv0m58EYPMnZUjn9x7wU5u4nCRbRhqOY74hOfcLFSQe9
+         r+u/u13WPu+zpMYEhArbhqJRRFpayewa5KyVO/nyJVkTi+wMC+b42tUBh+kKJzOVX8no
+         nSRRSCqF/NqRlA0ntFY+hbxqkC4/oga5dzpoTHpoTdfrCwmFCoo6NoS4nNTI0sKLAmCl
+         VrQA==
+X-Gm-Message-State: AOAM532mvOMaWKwG7LY2TTNaYlaXkgbNNYQUOo/tJp2RI3qDZ6yseziA
+        EJF/P/ir0ZmsyTgGHBnlOga5fg==
+X-Google-Smtp-Source: ABdhPJyaNypAicS4XX7Fl08mgehF6nQZq7ki3Z9aXq2gKlrGrFfmnvTBvnq8T/JTZ4f0aahG8xTzeg==
+X-Received: by 2002:a63:2a83:: with SMTP id q125mr12000933pgq.84.1604918065859;
+        Mon, 09 Nov 2020 02:34:25 -0800 (PST)
+Received: from localhost ([2401:fa00:1:10:de4a:3eff:fe7d:d39c])
+        by smtp.gmail.com with ESMTPSA id w131sm10662101pfd.14.2020.11.09.02.34.20
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 09 Nov 2020 02:34:24 -0800 (PST)
+From:   Cheng-Yi Chiang <cychiang@chromium.org>
+To:     linux-kernel@vger.kernel.org
+Cc:     Mark Brown <broonie@kernel.org>, Taniya Das <tdas@codeaurora.org>,
+        Rohit kumar <rohitkr@codeaurora.org>,
+        Banajit Goswami <bgoswami@codeaurora.org>,
+        Patrick Lai <plai@codeaurora.org>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Patrice Chotard <patrice.chotard@st.com>,
-        linux-samsung-soc@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-amlogic@lists.infradead.org, linux-omap@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org
-Subject: Re: [PATCH usb-next] usb: dwc3: Use devm_of_platform_populate
-Message-ID: <20201109103414.GF1559@shell.armlinux.org.uk>
-References: <20201109095953.7f810239@xhacker.debian>
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Jaroslav Kysela <perex@perex.cz>,
+        Takashi Iwai <tiwai@suse.com>,
+        Srini Kandagatla <srinivas.kandagatla@linaro.org>,
+        Stephan Gerhold <stephan@gerhold.net>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        Heiko Stuebner <heiko@sntech.de>,
+        Srinivasa Rao <srivasam@codeaurora.org>,
+        Ajye Huang <ajye_huang@compal.corp-partner.google.com>,
+        xuyuqing@huaqin.corp-partner.google.com, dianders@chromium.org,
+        dgreid@chromium.org, tzungbi@chromium.org, judyhsiao@chromium.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        alsa-devel@alsa-project.org,
+        Cheng-Yi Chiang <cychiang@chromium.org>
+Subject: [PATCH] ASoC: qcom: sc7180: Add missing PM ops
+Date:   Mon,  9 Nov 2020 18:34:15 +0800
+Message-Id: <20201109103415.607495-1-cychiang@chromium.org>
+X-Mailer: git-send-email 2.29.2.222.g5d2a92d10f8-goog
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20201109095953.7f810239@xhacker.debian>
-User-Agent: Mutt/1.10.1 (2018-07-13)
-Sender: Russell King - ARM Linux admin <linux@armlinux.org.uk>
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Nov 09, 2020 at 09:59:53AM +0800, Jisheng Zhang wrote:
-> diff --git a/drivers/usb/dwc3/dwc3-meson-g12a.c b/drivers/usb/dwc3/dwc3-meson-g12a.c
-> index 417e05381b5d..83015bb7b926 100644
-> --- a/drivers/usb/dwc3/dwc3-meson-g12a.c
-> +++ b/drivers/usb/dwc3/dwc3-meson-g12a.c
-> @@ -702,7 +702,6 @@ static int dwc3_meson_g12a_probe(struct platform_device *pdev)
->  {
->  	struct dwc3_meson_g12a	*priv;
->  	struct device		*dev = &pdev->dev;
-> -	struct device_node	*np = dev->of_node;
->  	void __iomem *base;
->  	int ret, i;
->  
-> @@ -794,7 +793,7 @@ static int dwc3_meson_g12a_probe(struct platform_device *pdev)
->  			goto err_phys_power;
->  	}
->  
-> -	ret = of_platform_populate(np, NULL, NULL, dev);
-> +	ret = devm_of_platform_populate(dev);
->  	if (ret)
->  		goto err_phys_power;
->  
-> @@ -832,8 +831,6 @@ static int dwc3_meson_g12a_remove(struct platform_device *pdev)
->  	if (priv->drvdata->otg_switch_supported)
->  		usb_role_switch_unregister(priv->role_switch);
->  
-> -	of_platform_depopulate(dev);
-> -
->  	for (i = 0 ; i < PHY_COUNT ; ++i) {
->  		phy_power_off(priv->phys[i]);
->  		phy_exit(priv->phys[i]);
+Use PM ops snd_soc_pm_ops to handle suspend/resume like other machine
+drivers.
 
-Does it matter that the order that things happen in
-dwc3_meson_g12a_remove() is changed as a result of your patch? Was
-the code relying on the platform devices being depopulated before
-powering off the PHYs?
+Signed-off-by: Cheng-Yi Chiang <cychiang@chromium.org>
+---
+ sound/soc/qcom/sc7180.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-> diff --git a/drivers/usb/dwc3/dwc3-of-simple.c b/drivers/usb/dwc3/dwc3-of-simple.c
-> index e62ecd22b3ed..f1c267e39d62 100644
-> --- a/drivers/usb/dwc3/dwc3-of-simple.c
-> +++ b/drivers/usb/dwc3/dwc3-of-simple.c
-> @@ -73,7 +73,7 @@ static int dwc3_of_simple_probe(struct platform_device *pdev)
->  	if (ret)
->  		goto err_resetc_assert;
->  
-> -	ret = of_platform_populate(np, NULL, NULL, dev);
-> +	ret = devm_of_platform_populate(dev);
->  	if (ret)
->  		goto err_clk_put;
->  
-> @@ -97,8 +97,6 @@ static int dwc3_of_simple_probe(struct platform_device *pdev)
->  
->  static void __dwc3_of_simple_teardown(struct dwc3_of_simple *simple)
->  {
-> -	of_platform_depopulate(simple->dev);
-> -
->  	clk_bulk_disable_unprepare(simple->num_clocks, simple->clks);
->  	clk_bulk_put_all(simple->num_clocks, simple->clks);
->  	simple->num_clocks = 0;
-
-Same here... and for anywhere else in this patch that you're deleting
-a of_platform_depopulate().
-
-You effectively are moving the call to of_platform_depopulate() *after*
-the driver's .remove function has been called.
-
+diff --git a/sound/soc/qcom/sc7180.c b/sound/soc/qcom/sc7180.c
+index b391f64c3a80..42e366ecc689 100644
+--- a/sound/soc/qcom/sc7180.c
++++ b/sound/soc/qcom/sc7180.c
+@@ -258,6 +258,7 @@ static struct platform_driver sc7180_snd_driver = {
+ 	.driver = {
+ 		.name = "msm-snd-sc7180",
+ 		.of_match_table = sc7180_snd_device_id,
++		.pm = &snd_soc_pm_ops,
+ 	},
+ };
+ module_platform_driver(sc7180_snd_driver);
 -- 
-RMK's Patch system: https://www.armlinux.org.uk/developer/patches/
-FTTP is here! 40Mbps down 10Mbps up. Decent connectivity at last!
+2.29.2.222.g5d2a92d10f8-goog
+
