@@ -2,264 +2,139 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 979BB2AAEDD
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Nov 2020 03:00:13 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 957E72AB090
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Nov 2020 06:16:04 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728326AbgKICAM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 8 Nov 2020 21:00:12 -0500
-Received: from mail-bn8nam11on2064.outbound.protection.outlook.com ([40.107.236.64]:2272
-        "EHLO NAM11-BN8-obe.outbound.protection.outlook.com"
-        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S1728006AbgKICAM (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 8 Nov 2020 21:00:12 -0500
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=b+m1Jg4qdOuqv5ChNGF/muB/aS5p6nyfY737yYDdfgp7Dtgw/xOhNXSmDB7v/Wa+w5555ARO2yEVzGopAYvTm7bSnsOAy2tEQLxWcOGbPQG+OZsalaFaqkSiMv3UIu9QAT3vm+6PMWAKlZPPaN7SrLJgQ9kTiAHPNu/2Go5JGfshiHg2EXnetVKLeIHmEVbo4xgpnOvpkSNYcX5b7gI9TXIeSumdStEC0+8FW+MOKjawUFNfnSO6n4+o1LlX1Qs2ezycWU0/7GBmoAsr83oeKpr4Ek6lX3Y11DLRQIbPSbtjz8jiN65L4RHl3A+SosS2VB76o55RybCZykEMtKONeQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=x/6qidCU8HCYN8iCrmdgB9fVq4wAkDYE6DXfnJSTwlI=;
- b=L6eT8ZG+lpsvTrcRcEAupyXRIutp8GDGX//ulUyUveM2wKBP8JkmzgUPjR3KUS3Lbqc+gkaD4FFnNp57DG4GNoU8Dzv814y7Br5CS/FuE8G7GR3xB4RFeRc7sQhdbeevjS92/53OGGJsq9k8mS+vPxl54e42h/vxY6aiE5U8dTLP3ETO+nK8Oi3dZOa5k4RaqJgH2ZfdtsyKlbrqRR9IIDE8Iaf9aCAe+OEaYYWST+jVO4vCAzmk5ttOMqD9AIKiVCPJ51owhpjpdjdSNvlcUx0uMcoQ7/CqkzbmXQx1Pn/Ak1yU4Hs10f3dK1BYVFHcvMpaPcGFQncI60hA/ziHBQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=synaptics.com; dmarc=pass action=none
- header.from=synaptics.com; dkim=pass header.d=synaptics.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=Synaptics.onmicrosoft.com; s=selector2-Synaptics-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=x/6qidCU8HCYN8iCrmdgB9fVq4wAkDYE6DXfnJSTwlI=;
- b=FbrmHzP0cldX9vrS6b9vSdOPVcrer9reAo37NsK/m9bJgazC93iEFAvOzeZ1j5/CJtptewTUUnAXq23Yw69Wj1C1v+5MZlAT3SfBh2YoRP31FPcQ1Z9t2pzv//KeGKrGOFtwYNbx5XN1LVWt2WAH6OTWLY7V4ESVBzMd62Y1HGE=
-Authentication-Results: kernel.org; dkim=none (message not signed)
- header.d=none;kernel.org; dmarc=none action=none header.from=synaptics.com;
-Received: from SN2PR03MB2383.namprd03.prod.outlook.com (2603:10b6:804:d::23)
- by SN6PR03MB3488.namprd03.prod.outlook.com (2603:10b6:805:40::20) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.3541.25; Mon, 9 Nov
- 2020 02:00:06 +0000
-Received: from SN2PR03MB2383.namprd03.prod.outlook.com
- ([fe80::49be:5ea3:8961:a22]) by SN2PR03MB2383.namprd03.prod.outlook.com
- ([fe80::49be:5ea3:8961:a22%6]) with mapi id 15.20.3541.024; Mon, 9 Nov 2020
- 02:00:06 +0000
-Date:   Mon, 9 Nov 2020 09:59:53 +0800
-From:   Jisheng Zhang <Jisheng.Zhang@synaptics.com>
-To:     Felipe Balbi <balbi@kernel.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Kukjin Kim <kgene@kernel.org>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        Kevin Hilman <khilman@baylibre.com>,
-        Neil Armstrong <narmstrong@baylibre.com>,
-        Jerome Brunet <jbrunet@baylibre.com>,
-        Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Patrice Chotard <patrice.chotard@st.com>
-Cc:     linux-usb@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        linux-samsung-soc@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-amlogic@lists.infradead.org, linux-omap@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-Subject: [PATCH usb-next] usb: dwc3: Use devm_of_platform_populate
-Message-ID: <20201109095953.7f810239@xhacker.debian>
-X-Mailer: Claws Mail 3.17.8 (GTK+ 2.24.32; x86_64-pc-linux-gnu)
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [192.147.44.204]
-X-ClientProxiedBy: BYAPR07CA0016.namprd07.prod.outlook.com
- (2603:10b6:a02:bc::29) To SN2PR03MB2383.namprd03.prod.outlook.com
- (2603:10b6:804:d::23)
+        id S1729335AbgKIFQD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 9 Nov 2020 00:16:03 -0500
+Received: from z5.mailgun.us ([104.130.96.5]:14572 "EHLO z5.mailgun.us"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1729313AbgKIFQD (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 9 Nov 2020 00:16:03 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1604898963; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=uTh+L8CvHLLdJK+ls2fzca5EQ/1eBi1ZJpxQzSgROEU=;
+ b=fL8EMmuWvk0fMjPcrRmZDPgqQo67CjoEyBQi31Qz40cJnADd2nYzgjlRHn8dI1ocJONbyZRn
+ xhNhhUm3GmPsVxcFZyIVNx1/phw8HPfPmUDtIPeoks+NwkjiPa13lsv39zZkLf1FjFtDEeGL
+ txzhMmv4kHqsiGtGOuhuh9qZ2gs=
+X-Mailgun-Sending-Ip: 104.130.96.5
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n03.prod.us-east-1.postgun.com with SMTP id
+ 5fa8d074e41a481b55ac5b4e (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 09 Nov 2020 05:15:32
+ GMT
+Sender: saiprakash.ranjan=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 24548C433C9; Mon,  9 Nov 2020 05:15:32 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: saiprakash.ranjan)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id B63BCC433C8;
+        Mon,  9 Nov 2020 05:15:30 +0000 (UTC)
 MIME-Version: 1.0
-X-MS-Exchange-MessageSentRepresentingType: 1
-Received: from xhacker.debian (192.147.44.204) by BYAPR07CA0016.namprd07.prod.outlook.com (2603:10b6:a02:bc::29) with Microsoft SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.3499.18 via Frontend Transport; Mon, 9 Nov 2020 02:00:00 +0000
-X-MS-PublicTrafficType: Email
-X-MS-Office365-Filtering-Correlation-Id: 44c8004b-f22a-48b6-1f46-08d884532e0c
-X-MS-TrafficTypeDiagnostic: SN6PR03MB3488:
-X-Microsoft-Antispam-PRVS: <SN6PR03MB348822E48A9331DC6CE6734FEDEA0@SN6PR03MB3488.namprd03.prod.outlook.com>
-X-MS-Oob-TLC-OOBClassifiers: OLM:256;
-X-MS-Exchange-SenderADCheck: 1
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: pz6q4Scy7kSOEoPJoTKTEN1QyJ8wuhasmLYYr0FK9X1nWwR5sRanT8ZbHUvCr34KKQs/LfZLlpkspG5v5Jdu8oEfKInxpoJMACcL7JpfXHqZQKfRKsBbXUTP7wv4P0pAHwAJLqYy3k5EL1Dc7yJZXvLbxN+fp1djjrkMcbfjUxNMHdzo2Oc0dk2kprFXkdsIUN+4aZnBnZWFGPTHA6TVMOrVX5u4XeUF1CHJ/GuEXP7AI/vWIbVcNd2jk6KdkAkNuliZYhJWQM3Q+YqJXA4ODG9SrV+KHMMi2rHDKLy83lNejzhLBsXUy3XscrA7PjkOfsACiWwagJ1lFj5jAsk3GOfERzZcfCqOLKlfPM8JtjXZoA6TcuFKyF6eIyct3K5D
-X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SN2PR03MB2383.namprd03.prod.outlook.com;PTR:;CAT:NONE;SFS:(4636009)(39850400004)(366004)(136003)(376002)(396003)(346002)(6506007)(110136005)(186003)(86362001)(26005)(16526019)(316002)(956004)(7696005)(52116002)(8676002)(8936002)(4326008)(7416002)(478600001)(2906002)(9686003)(55016002)(5660300002)(66946007)(83380400001)(1076003)(66476007)(66556008)(6666004)(921003);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData: 1Q1xHlRU8kpfURj/DX4KGduQplaxw1CYM5qqyLgNOqoYhOp+9sc1ei4yRKNL3C3LUayE6yIG7feHiGRsnXpygYCvU7KTOlA/nZsjmBxYVvLu2fImxTqdhvWfYJeAH20OIgCOH3vJb1ju/+hQAmf4vPj/JfaoScWpPnsWkVcmIyLzFcayZF8BisjCkv28yiIFa9cmjqox9R2Z1hf+EWHhlyseu7m5/vcDCZyiWctYx1OpACj4AXPhk61asIF5rGSZzkaDP8ZeC5cW9BnaWMtNdCUX88VwKfEirZO0UZkw4tN0IyYtkxItrENrzYZ2F0M0eEn3XDSLlhz59EqsIbf8atXMZKtNF0cwhiXXPAlFeL93oxlNZUWGscOCsRbe5LUoVakBRg+JeMQTFcexV5dvdb+fA4sxwwZ3ywaW27MwcNxOoHA7Cz62RCxPv/VEOVMVUEan85TAO707FFRqdbBN/LzH5PH0YWDVW4rFlWkJSCfqODJFUtG04RVBuiM8vTrLADMg5oI/0uFvG0QnHa69HDwYhciBgX+FY3VUfu+VC6TipFBe0TN3zN3Br8hVq7vWh3SR8DsgoC3JPiYBivyijOYAPl7Ei6cUqznLGKl2aqTa9cX994TvQEhV9zYNHrAmFv4B4QwIu6RDzrl7qtWrRA==
-X-OriginatorOrg: synaptics.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 44c8004b-f22a-48b6-1f46-08d884532e0c
-X-MS-Exchange-CrossTenant-AuthSource: SN2PR03MB2383.namprd03.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 09 Nov 2020 02:00:06.4372
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 335d1fbc-2124-4173-9863-17e7051a2a0e
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: dMYB2hv/U8iOC13y/GxxLjLyMCNSASkO6zaSXf9hu2t+uwe0g4rD8FUuDBvbwdfHj6/gNuUjIVG2ZUPJQNRz/w==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SN6PR03MB3488
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Mon, 09 Nov 2020 10:45:30 +0530
+From:   Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+To:     Will Deacon <will@kernel.org>, Robin Murphy <robin.murphy@arm.com>,
+        Joerg Roedel <joro@8bytes.org>,
+        Jordan Crouse <jcrouse@codeaurora.org>,
+        Rob Clark <robdclark@gmail.com>
+Cc:     iommu@lists.linux-foundation.org,
+        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org,
+        Akhil P Oommen <akhilpo@codeaurora.org>,
+        freedreno@lists.freedesktop.org,
+        "Kristian H . Kristensen" <hoegsberg@google.com>,
+        dri-devel@lists.freedesktop.org
+Subject: Re: [PATCHv7 0/7] System Cache support for GPU and required SMMU
+ support
+In-Reply-To: <cover.1604048969.git.saiprakash.ranjan@codeaurora.org>
+References: <cover.1604048969.git.saiprakash.ranjan@codeaurora.org>
+Message-ID: <b4ec727f58cfffc6e5b941d1508a4212@codeaurora.org>
+X-Sender: saiprakash.ranjan@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Use managed API devm_of_platform_populate() to simplify error and exit
-code path.
+On 2020-10-30 14:53, Sai Prakash Ranjan wrote:
+> Some hardware variants contain a system cache or the last level
+> cache(llc). This cache is typically a large block which is shared
+> by multiple clients on the SOC. GPU uses the system cache to cache
+> both the GPU data buffers(like textures) as well the SMMU pagetables.
+> This helps with improved render performance as well as lower power
+> consumption by reducing the bus traffic to the system memory.
+> 
+> The system cache architecture allows the cache to be split into slices
+> which then be used by multiple SOC clients. This patch series is an
+> effort to enable and use two of those slices preallocated for the GPU,
+> one for the GPU data buffers and another for the GPU SMMU hardware
+> pagetables.
+> 
+> Patch 1 - Patch 5 adds system cache support in SMMU and GPU driver.
+> Patch 6 and 7 are minor cleanups for arm-smmu impl.
+> 
+> Changes in v7:
+>  * Squash Jordan's patch to support MMU500 targets
+>  * Rebase on top of for-joerg/arm-smmu/updates and Jordan's short
+> series for adreno-smmu impl
+> 
+> Changes in v6:
+>  * Move table to arm-smmu-qcom (Robin)
+> 
+> Changes in v5:
+>  * Drop cleanup of blank lines since it was intentional (Robin)
+>  * Rebase again on top of msm-next-pgtables as it moves pretty fast
+> 
+> Changes in v4:
+>  * Drop IOMMU_SYS_CACHE prot flag
+>  * Rebase on top of
+> https://gitlab.freedesktop.org/drm/msm/-/tree/msm-next-pgtables
+> 
+> Changes in v3:
+>  * Fix domain attribute setting to before iommu_attach_device()
+>  * Fix few code style and checkpatch warnings
+>  * Rebase on top of Jordan's latest split pagetables and per-instance
+>    pagetables support
+> 
+> Changes in v2:
+>  * Addressed review comments and rebased on top of Jordan's split
+>    pagetables series
+> 
+> Jordan Crouse (1):
+>   drm/msm/a6xx: Add support for using system cache on MMU500 based
+>     targets
+> 
+> Sai Prakash Ranjan (4):
+>   iommu/io-pgtable-arm: Add support to use system cache
+>   iommu/arm-smmu: Add domain attribute for system cache
+>   iommu: arm-smmu-impl: Use table to list QCOM implementations
+>   iommu: arm-smmu-impl: Add a space before open parenthesis
+> 
+> Sharat Masetty (2):
+>   drm/msm: rearrange the gpu_rmw() function
+>   drm/msm/a6xx: Add support for using system cache(LLC)
+> 
 
-Signed-off-by: Jisheng Zhang <Jisheng.Zhang@synaptics.com>
----
- drivers/usb/dwc3/dwc3-exynos.c     | 2 +-
- drivers/usb/dwc3/dwc3-keystone.c   | 2 +-
- drivers/usb/dwc3/dwc3-meson-g12a.c | 5 +----
- drivers/usb/dwc3/dwc3-of-simple.c  | 4 +---
- drivers/usb/dwc3/dwc3-omap.c       | 3 +--
- drivers/usb/dwc3/dwc3-qcom.c       | 8 ++------
- drivers/usb/dwc3/dwc3-st.c         | 4 +---
- 7 files changed, 8 insertions(+), 20 deletions(-)
+Hi,
 
-diff --git a/drivers/usb/dwc3/dwc3-exynos.c b/drivers/usb/dwc3/dwc3-exynos.c
-index 90bb022737da..f567d1e63c05 100644
---- a/drivers/usb/dwc3/dwc3-exynos.c
-+++ b/drivers/usb/dwc3/dwc3-exynos.c
-@@ -110,7 +110,7 @@ static int dwc3_exynos_probe(struct platform_device *pdev)
- 	}
- 
- 	if (node) {
--		ret = of_platform_populate(node, NULL, NULL, dev);
-+		ret = devm_of_platform_populate(dev);
- 		if (ret) {
- 			dev_err(dev, "failed to add dwc3 core\n");
- 			goto populate_err;
-diff --git a/drivers/usb/dwc3/dwc3-keystone.c b/drivers/usb/dwc3/dwc3-keystone.c
-index 9a99253d5ba3..626b16c46688 100644
---- a/drivers/usb/dwc3/dwc3-keystone.c
-+++ b/drivers/usb/dwc3/dwc3-keystone.c
-@@ -157,7 +157,7 @@ static int kdwc3_probe(struct platform_device *pdev)
- 	kdwc3_enable_irqs(kdwc);
- 
- skip_irq:
--	error = of_platform_populate(node, NULL, NULL, dev);
-+	error = devm_of_platform_populate(dev);
- 	if (error) {
- 		dev_err(&pdev->dev, "failed to create dwc3 core\n");
- 		goto err_core;
-diff --git a/drivers/usb/dwc3/dwc3-meson-g12a.c b/drivers/usb/dwc3/dwc3-meson-g12a.c
-index 417e05381b5d..83015bb7b926 100644
---- a/drivers/usb/dwc3/dwc3-meson-g12a.c
-+++ b/drivers/usb/dwc3/dwc3-meson-g12a.c
-@@ -702,7 +702,6 @@ static int dwc3_meson_g12a_probe(struct platform_device *pdev)
- {
- 	struct dwc3_meson_g12a	*priv;
- 	struct device		*dev = &pdev->dev;
--	struct device_node	*np = dev->of_node;
- 	void __iomem *base;
- 	int ret, i;
- 
-@@ -794,7 +793,7 @@ static int dwc3_meson_g12a_probe(struct platform_device *pdev)
- 			goto err_phys_power;
- 	}
- 
--	ret = of_platform_populate(np, NULL, NULL, dev);
-+	ret = devm_of_platform_populate(dev);
- 	if (ret)
- 		goto err_phys_power;
- 
-@@ -832,8 +831,6 @@ static int dwc3_meson_g12a_remove(struct platform_device *pdev)
- 	if (priv->drvdata->otg_switch_supported)
- 		usb_role_switch_unregister(priv->role_switch);
- 
--	of_platform_depopulate(dev);
--
- 	for (i = 0 ; i < PHY_COUNT ; ++i) {
- 		phy_power_off(priv->phys[i]);
- 		phy_exit(priv->phys[i]);
-diff --git a/drivers/usb/dwc3/dwc3-of-simple.c b/drivers/usb/dwc3/dwc3-of-simple.c
-index e62ecd22b3ed..f1c267e39d62 100644
---- a/drivers/usb/dwc3/dwc3-of-simple.c
-+++ b/drivers/usb/dwc3/dwc3-of-simple.c
-@@ -73,7 +73,7 @@ static int dwc3_of_simple_probe(struct platform_device *pdev)
- 	if (ret)
- 		goto err_resetc_assert;
- 
--	ret = of_platform_populate(np, NULL, NULL, dev);
-+	ret = devm_of_platform_populate(dev);
- 	if (ret)
- 		goto err_clk_put;
- 
-@@ -97,8 +97,6 @@ static int dwc3_of_simple_probe(struct platform_device *pdev)
- 
- static void __dwc3_of_simple_teardown(struct dwc3_of_simple *simple)
- {
--	of_platform_depopulate(simple->dev);
--
- 	clk_bulk_disable_unprepare(simple->num_clocks, simple->clks);
- 	clk_bulk_put_all(simple->num_clocks, simple->clks);
- 	simple->num_clocks = 0;
-diff --git a/drivers/usb/dwc3/dwc3-omap.c b/drivers/usb/dwc3/dwc3-omap.c
-index 3db17806e92e..46e7a1dd7c50 100644
---- a/drivers/usb/dwc3/dwc3-omap.c
-+++ b/drivers/usb/dwc3/dwc3-omap.c
-@@ -505,7 +505,7 @@ static int dwc3_omap_probe(struct platform_device *pdev)
- 	if (ret < 0)
- 		goto err1;
- 
--	ret = of_platform_populate(node, NULL, NULL, dev);
-+	ret = devm_of_platform_populate(dev);
- 	if (ret) {
- 		dev_err(&pdev->dev, "failed to create dwc3 core\n");
- 		goto err1;
-@@ -535,7 +535,6 @@ static int dwc3_omap_remove(struct platform_device *pdev)
- 
- 	dwc3_omap_disable_irqs(omap);
- 	disable_irq(omap->irq);
--	of_platform_depopulate(omap->dev);
- 	pm_runtime_put_sync(&pdev->dev);
- 	pm_runtime_disable(&pdev->dev);
- 
-diff --git a/drivers/usb/dwc3/dwc3-qcom.c b/drivers/usb/dwc3/dwc3-qcom.c
-index c703d552bbcf..8f5714c3d379 100644
---- a/drivers/usb/dwc3/dwc3-qcom.c
-+++ b/drivers/usb/dwc3/dwc3-qcom.c
-@@ -636,7 +636,7 @@ static int dwc3_qcom_of_register_core(struct platform_device *pdev)
- 		return -ENODEV;
- 	}
- 
--	ret = of_platform_populate(np, NULL, NULL, dev);
-+	ret = devm_of_platform_populate(dev);
- 	if (ret) {
- 		dev_err(dev, "failed to register dwc3 core - %d\n", ret);
- 		return ret;
-@@ -775,9 +775,7 @@ static int dwc3_qcom_probe(struct platform_device *pdev)
- interconnect_exit:
- 	dwc3_qcom_interconnect_exit(qcom);
- depopulate:
--	if (np)
--		of_platform_depopulate(&pdev->dev);
--	else
-+	if (!np)
- 		platform_device_put(pdev);
- clk_disable:
- 	for (i = qcom->num_clocks - 1; i >= 0; i--) {
-@@ -796,8 +794,6 @@ static int dwc3_qcom_remove(struct platform_device *pdev)
- 	struct device *dev = &pdev->dev;
- 	int i;
- 
--	of_platform_depopulate(dev);
--
- 	for (i = qcom->num_clocks - 1; i >= 0; i--) {
- 		clk_disable_unprepare(qcom->clks[i]);
- 		clk_put(qcom->clks[i]);
-diff --git a/drivers/usb/dwc3/dwc3-st.c b/drivers/usb/dwc3/dwc3-st.c
-index e733be840545..9ec2ecf8d81f 100644
---- a/drivers/usb/dwc3/dwc3-st.c
-+++ b/drivers/usb/dwc3/dwc3-st.c
-@@ -259,7 +259,7 @@ static int st_dwc3_probe(struct platform_device *pdev)
- 	}
- 
- 	/* Allocate and initialize the core */
--	ret = of_platform_populate(node, NULL, NULL, dev);
-+	ret = devm_of_platform_populate(dev);
- 	if (ret) {
- 		dev_err(dev, "failed to add dwc3 core\n");
- 		goto err_node_put;
-@@ -309,8 +309,6 @@ static int st_dwc3_remove(struct platform_device *pdev)
- {
- 	struct st_dwc3 *dwc3_data = platform_get_drvdata(pdev);
- 
--	of_platform_depopulate(&pdev->dev);
--
- 	reset_control_assert(dwc3_data->rstc_pwrdn);
- 	reset_control_assert(dwc3_data->rstc_rst);
- 
+Gentle Ping!
+
+Thanks,
+Sai
+
 -- 
-2.29.2
-
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a 
+member
+of Code Aurora Forum, hosted by The Linux Foundation
