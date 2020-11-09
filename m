@@ -2,112 +2,79 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 311342AC40F
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Nov 2020 19:47:58 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A7EC02AC488
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Nov 2020 20:02:45 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729150AbgKISrs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 9 Nov 2020 13:47:48 -0500
-Received: from z5.mailgun.us ([104.130.96.5]:37394 "EHLO z5.mailgun.us"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1729499AbgKISrr (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 9 Nov 2020 13:47:47 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1604947666; h=Content-Transfer-Encoding: MIME-Version:
- References: In-Reply-To: Message-Id: Date: Subject: Cc: To: From:
- Sender; bh=oCS6rrjus9PAM663x7+ECmgucjExZnYZnUqtOqwzQxQ=; b=HmH0f0k+b2lODMShRrdIZqS99KXxDZ8mYwOpjItVn9Q+d+rTiButVLIxJJAtovA/FhMiFqmN
- +sb/9GBJX/D2SV7n1c+N4pyOOM0MXFMtbrWHyjPsekZGq2fESjY8gevWd9B5XUSiFsxEwgJj
- /ar7K0WcHw7P+QEogGzj+sSYcRw=
-X-Mailgun-Sending-Ip: 104.130.96.5
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n07.prod.us-east-1.postgun.com with SMTP id
- 5fa98ed2c6df09e2f2dc4f2c (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 09 Nov 2020 18:47:46
- GMT
-Sender: jcrouse=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 9D60BC433CB; Mon,  9 Nov 2020 18:47:45 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
-        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
-Received: from jordan-laptop.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: jcrouse)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 4E165C433C6;
-        Mon,  9 Nov 2020 18:47:43 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 4E165C433C6
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=jcrouse@codeaurora.org
-From:   Jordan Crouse <jcrouse@codeaurora.org>
-To:     linux-arm-msm@vger.kernel.org
-Cc:     iommu@lists.linux-foundation.org, Will Deacon <will@kernel.org>,
-        Robin Murphy <robin.murphy@arm.com>,
-        Rob Clark <robdclark@chromium.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        id S1729987AbgKITCb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 9 Nov 2020 14:02:31 -0500
+Received: from mail-ot1-f67.google.com ([209.85.210.67]:36106 "EHLO
+        mail-ot1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729499AbgKITCb (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 9 Nov 2020 14:02:31 -0500
+Received: by mail-ot1-f67.google.com with SMTP id 32so10023715otm.3;
+        Mon, 09 Nov 2020 11:02:30 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=Os7Tqy6UODgwd/wlPU8zzDWJnqShuXVfWyTYThhhTQs=;
+        b=aLNKOCb7BKHiWgvV5bGci2OVAIvGf6Pn24eVglj98a9ycz9gRi6gVnWKuGsRG8SO4u
+         nKrFvsXep8Uumk2pXJtS+w+z6dAnPB6/WMB7X1biAtUZnY7m7cBSeTj+Ym/65cjk9SP9
+         2/vF8rQTUVKFDkjD98jm0xTlAaH1sWF6WiBsoGoMZEVZ0MvYzhcypoTx/qRSUnHJkeji
+         puvG9hhFpPTNteomrTkZF8DyG6q697gs+9Jt5rh1y0GxPd8gdedt4/37bBCaBRXviIxY
+         8n8a53ZnmSu6udiqbbK6XUkDENw8lPMb3uibRb1Xn7qUG5WymViIRePiT4SCDQwgaRkL
+         k0tg==
+X-Gm-Message-State: AOAM533TD7a2Rn0qMj1DTQImZcuGgTK19A6q2keP2h3D6CwEtcuc8MvM
+        O20WRlVtQc2vqpJ+VOBX6xKjF4CBkw==
+X-Google-Smtp-Source: ABdhPJzi8cf177x5y7qmvI5oZJQW3sqESbPviEGH6ObpyFz+8kfyg2yeSvBY/c2ERhInbnrt6d4HJQ==
+X-Received: by 2002:a9d:4aa:: with SMTP id 39mr11584971otm.11.1604948550593;
+        Mon, 09 Nov 2020 11:02:30 -0800 (PST)
+Received: from xps15 (24-155-109-49.dyn.grandenetworks.net. [24.155.109.49])
+        by smtp.gmail.com with ESMTPSA id x22sm2572439oix.48.2020.11.09.11.02.28
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 09 Nov 2020 11:02:29 -0800 (PST)
+Received: (nullmailer pid 1593859 invoked by uid 1000);
+        Mon, 09 Nov 2020 19:02:28 -0000
+Date:   Mon, 9 Nov 2020 13:02:28 -0600
+From:   Rob Herring <robh@kernel.org>
+To:     xuyuqing <xuyuqing@huaqin.corp-partner.google.com>
+Cc:     Stephan Gerhold <stephan@gerhold.net>, dgreid@chromium.org,
+        linux-kernel@vger.kernel.org, Taniya Das <tdas@codeaurora.org>,
+        Takashi Iwai <tiwai@suse.com>, alsa-devel@alsa-project.org,
+        cychiang@chromium.org, Banajit Goswami <bgoswami@codeaurora.org>,
+        Liam Girdwood <lgirdwood@gmail.com>,
         Andy Gross <agross@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: [PATCH v19 4/4] arm: dts: qcom: sm845: Set the compatible string for the GPU SMMU
-Date:   Mon,  9 Nov 2020 11:47:28 -0700
-Message-Id: <20201109184728.2463097-5-jcrouse@codeaurora.org>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20201109184728.2463097-1-jcrouse@codeaurora.org>
-References: <20201109184728.2463097-1-jcrouse@codeaurora.org>
+        Patrick Lai <plai@codeaurora.org>, dianders@chromium.org,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        linux-arm-kernel@lists.infradead.org,
+        Rob Herring <robh+dt@kernel.org>,
+        Rohit kumar <rohitkr@codeaurora.org>,
+        Srini Kandagatla <srinivas.kandagatla@linaro.org>,
+        zhouguohui@huaqin.corp-partner.google.com,
+        devicetree@vger.kernel.org, tzungbi@chromium.org,
+        judyhsiao@chromium.org, Mark Brown <broonie@kernel.org>,
+        linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH v1 1/2] ASoC: google: dt-bindings: add new compatible for
+ sc7180-coachz
+Message-ID: <20201109190228.GA1593812@bogus>
+References: <20201105013242.298518-1-xuyuqing@huaqin.corp-partner.google.com>
+ <20201105013242.298518-2-xuyuqing@huaqin.corp-partner.google.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20201105013242.298518-2-xuyuqing@huaqin.corp-partner.google.com>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Set the qcom,adreno-smmu compatible string for the GPU SMMU to enable
-split pagetables and per-instance pagetables for drm/msm.
+On Thu, 05 Nov 2020 09:32:41 +0800, xuyuqing wrote:
+> Add devicetree bindings for coachz in documentation file
+> 
+> Signed-off-by: xuyuqing <xuyuqing@huaqin.corp-partner.google.com>
+> ---
+>  .../devicetree/bindings/sound/google,sc7180-trogdor.yaml      | 4 +++-
+>  1 file changed, 3 insertions(+), 1 deletion(-)
+> 
 
-Signed-off-by: Jordan Crouse <jcrouse@codeaurora.org>
-Signed-off-by: Rob Clark <robdclark@chromium.org>
-Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
----
-
- arch/arm64/boot/dts/qcom/sdm845-cheza.dtsi | 9 +++++++++
- arch/arm64/boot/dts/qcom/sdm845.dtsi       | 2 +-
- 2 files changed, 10 insertions(+), 1 deletion(-)
-
-diff --git a/arch/arm64/boot/dts/qcom/sdm845-cheza.dtsi b/arch/arm64/boot/dts/qcom/sdm845-cheza.dtsi
-index 64fc1bfd66fa..39f23cdcbd02 100644
---- a/arch/arm64/boot/dts/qcom/sdm845-cheza.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sdm845-cheza.dtsi
-@@ -633,6 +633,15 @@ &mdss_mdp {
- 	status = "okay";
- };
- 
-+/*
-+ * Cheza fw does not properly program the GPU aperture to allow the
-+ * GPU to update the SMMU pagetables for context switches.  Work
-+ * around this by dropping the "qcom,adreno-smmu" compat string.
-+ */
-+&adreno_smmu {
-+	compatible = "qcom,sdm845-smmu-v2", "qcom,smmu-v2";
-+};
-+
- &mss_pil {
- 	iommus = <&apps_smmu 0x781 0x0>,
- 		 <&apps_smmu 0x724 0x3>;
-diff --git a/arch/arm64/boot/dts/qcom/sdm845.dtsi b/arch/arm64/boot/dts/qcom/sdm845.dtsi
-index 40e8c11f23ab..0508e86140bd 100644
---- a/arch/arm64/boot/dts/qcom/sdm845.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sdm845.dtsi
-@@ -4103,7 +4103,7 @@ opp-257000000 {
- 		};
- 
- 		adreno_smmu: iommu@5040000 {
--			compatible = "qcom,sdm845-smmu-v2", "qcom,smmu-v2";
-+			compatible = "qcom,sdm845-smmu-v2", "qcom,adreno-smmu", "qcom,smmu-v2";
- 			reg = <0 0x5040000 0 0x10000>;
- 			#iommu-cells = <1>;
- 			#global-interrupts = <2>;
--- 
-2.25.1
-
+Acked-by: Rob Herring <robh@kernel.org>
