@@ -2,146 +2,94 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 8FF852AB754
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Nov 2020 12:40:43 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 10D5B2AB759
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Nov 2020 12:41:28 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729648AbgKILkb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 9 Nov 2020 06:40:31 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36860 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729228AbgKILkb (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 9 Nov 2020 06:40:31 -0500
-Received: from mail-vs1-xe42.google.com (mail-vs1-xe42.google.com [IPv6:2607:f8b0:4864:20::e42])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CD3CDC0613CF
-        for <linux-arm-msm@vger.kernel.org>; Mon,  9 Nov 2020 03:40:30 -0800 (PST)
-Received: by mail-vs1-xe42.google.com with SMTP id m16so4747359vsl.8
-        for <linux-arm-msm@vger.kernel.org>; Mon, 09 Nov 2020 03:40:30 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=tFAREBOaPb8fFLHS5EKBoT6wmZvpmmlQ3mX9b3XT+6Y=;
-        b=ShlgI3kBoDqrUXjBkcgL6ICYr4iudLXeUnk8gSzBhvAzC/SmTX8E2z2VGsv6ERuCEB
-         +8e0Bs2cYn2l0zugI2WNRkx7hgFlCNNnRHgCFkrnXxjgDbDtywhtQA1fYuyjx5tNje94
-         RYy4RJqWZOcDxc2Nik6bIIyRIdtB+1ImM+T/zeYempqQ1DA1fovshciKCWfnlQLqxO83
-         rWakpY3Ix6d9XbBO5mOoScbxyTCW/ibSb1LFZxbYxwEz6e6yo/yHpuDjQDwJguU4RPsC
-         56sQ/P8GebHqJTEHnO71BVPZ2McYNvxNwqLf5TDuC9zX9B2qwKwL+KiwLB9UY4qhdBzz
-         MGZw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=tFAREBOaPb8fFLHS5EKBoT6wmZvpmmlQ3mX9b3XT+6Y=;
-        b=S94y+M4c2Hn/n4A8Gk0oUczwYgwSYjnJ6MFR5CV1d4SudfPDnfJsf5qSzSrH5DGGEw
-         tEJVGu14bjZgvthy7ANMy45Ds5wQ+dKY2llEtmGqQfTagbBftxMplxqIlaNyjyMbAdKL
-         HmQSrS2KgVmCHlr5d/R66stHFyylBG5C8UT2S2JEryOWflRNG3oi1TINLxnw2fCgKKgp
-         9bJ2CzEVl9vrX4HVpAJW9LJdSh2HPl14LuR7wSXlNI5VXFWeWmv6uTin87GNjWpNa8kw
-         u4jSynR8Xj2jVMCvB7TaycECXXvUj+lNK0niRh/tYzACH/AgkxfgY00uxTFbtAscpXXA
-         mhyw==
-X-Gm-Message-State: AOAM531LeT1EcI/Mq80Aac96dJDjx/Wi6oCa38HBTaV8dw8p/34PyWCC
-        w/xa/SeC5oaS7KvgGFinhJuPKT/wbRvTp7tIlM0bG/v7eaGSXg==
-X-Google-Smtp-Source: ABdhPJx4hcYU29RKim6YQ2dljXsMGiAvoGgxIm0ILZrHWvgrDc051LUDUJNM8ZwrzOiSgvpIiNzbl2J5VIdrHj7mW54=
-X-Received: by 2002:a05:6102:30a7:: with SMTP id y7mr7333356vsd.55.1604922029871;
- Mon, 09 Nov 2020 03:40:29 -0800 (PST)
+        id S1729549AbgKILl1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 9 Nov 2020 06:41:27 -0500
+Received: from mail.kernel.org ([198.145.29.99]:33872 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1729320AbgKILl0 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 9 Nov 2020 06:41:26 -0500
+Received: from localhost (unknown [122.171.147.34])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id 051A820684;
+        Mon,  9 Nov 2020 11:41:24 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1604922086;
+        bh=HGqNgTmS0U40pm39xZrWRkCSImvX6c6OezTYr8uPL8U=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=ot9e5LHp1yebv2QTG3Zmke/D6BMZhYJckqyI/gNVz1LnVOW6MaxZJZ7pLfw28GPUJ
+         0R5JQSc1VvhqC6wz5lc0QyY6U6bRqf5IdunqLlrOv1+zzq1OZi3srDix7x7hJ/cRRR
+         eJ5MJtIzAyifbrxJdC7dGHn9UkxbRDfB892RDipI=
+Date:   Mon, 9 Nov 2020 17:11:21 +0530
+From:   Vinod Koul <vkoul@kernel.org>
+To:     Jonathan McDowell <noodles@earth.li>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Dan Williams <dan.j.williams@intel.com>,
+        Philipp Zabel <p.zabel@pengutronix.de>,
+        Thomas Pedersen <twp@codeaurora.org>,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        dmaengine@vger.kernel.org
+Subject: Re: [PATCH v4] dmaengine: qcom: Add ADM driver
+Message-ID: <20201109114121.GG3171@vkoul-mobl>
+References: <20200916064326.GA13963@earth.li>
+ <20200919185739.GS3411@earth.li>
+ <20200920181204.GT3411@earth.li>
+ <20200923194056.GY3411@earth.li>
 MIME-Version: 1.0
-References: <20201106164903.3906-1-ilina@codeaurora.org>
-In-Reply-To: <20201106164903.3906-1-ilina@codeaurora.org>
-From:   Ulf Hansson <ulf.hansson@linaro.org>
-Date:   Mon, 9 Nov 2020 12:39:53 +0100
-Message-ID: <CAPDyKFqvoAjNVJ6e8r3+tDKkq49h6tev6MPoQ1fHZu9FoOU6Nw@mail.gmail.com>
-Subject: Re: [PATCH] PM / Domains: replace -ENOTSUPP with -EOPNOTSUPP
-To:     Lina Iyer <ilina@codeaurora.org>
-Cc:     "Rafael J. Wysocki" <rjw@rjwysocki.net>,
-        Linux PM <linux-pm@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20200923194056.GY3411@earth.li>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, 6 Nov 2020 at 17:49, Lina Iyer <ilina@codeaurora.org> wrote:
->
-> While submitting a patch to add next_wakeup, checkpatch reported this -
->
-> WARNING: ENOTSUPP is not a SUSV4 error code, prefer EOPNOTSUPP
-> +       return -ENOTSUPP;
->
-> Address the above warning in other functions in pm_domain.h.
->
-> Signed-off-by: Lina Iyer <ilina@codeaurora.org>
+HI Jonathan,
 
-I assume you have looked at callers of these functions too, to make
-sure they don't explicitly look at -ENOTSUPP?
+On 23-09-20, 20:40, Jonathan McDowell wrote:
+> Add the DMA engine driver for the QCOM Application Data Mover (ADM) DMA
+> controller found in the MSM8x60 and IPQ/APQ8064 platforms.
 
-Reviewed-by: Ulf Hansson <ulf.hansson@linaro.org>
+Mostly it looks good, some nitpicks
 
-Kind regards
-Uffe
+> The ADM supports both memory to memory transactions and memory
+> to/from peripheral device transactions.  The controller also provides
+> flow control capabilities for transactions to/from peripheral devices.
+> 
+> The initial release of this driver supports slave transfers to/from
+> peripherals and also incorporates CRCI (client rate control interface)
+> flow control.
 
-> ---
->  include/linux/pm_domain.h | 14 +++++++-------
->  1 file changed, 7 insertions(+), 7 deletions(-)
->
-> diff --git a/include/linux/pm_domain.h b/include/linux/pm_domain.h
-> index 49982cd58bfd..e390388e6c17 100644
-> --- a/include/linux/pm_domain.h
-> +++ b/include/linux/pm_domain.h
-> @@ -259,24 +259,24 @@ static inline int pm_genpd_init(struct generic_pm_domain *genpd,
->  }
->  static inline int pm_genpd_remove(struct generic_pm_domain *genpd)
->  {
-> -       return -ENOTSUPP;
-> +       return -EOPNOTSUPP;
->  }
->
->  static inline int dev_pm_genpd_set_performance_state(struct device *dev,
->                                                      unsigned int state)
->  {
-> -       return -ENOTSUPP;
-> +       return -EOPNOTSUPP;
->  }
->
->  static inline int dev_pm_genpd_add_notifier(struct device *dev,
->                                             struct notifier_block *nb)
->  {
-> -       return -ENOTSUPP;
-> +       return -EOPNOTSUPP;
->  }
->
->  static inline int dev_pm_genpd_remove_notifier(struct device *dev)
->  {
-> -       return -ENOTSUPP;
-> +       return -EOPNOTSUPP;
->  }
->
->  static inline int dev_pm_genpd_set_next_wakeup(struct device *dev, ktime_t next)
-> @@ -334,13 +334,13 @@ struct device *genpd_dev_pm_attach_by_name(struct device *dev,
->  static inline int of_genpd_add_provider_simple(struct device_node *np,
->                                         struct generic_pm_domain *genpd)
->  {
-> -       return -ENOTSUPP;
-> +       return -EOPNOTSUPP;
->  }
->
->  static inline int of_genpd_add_provider_onecell(struct device_node *np,
->                                         struct genpd_onecell_data *data)
->  {
-> -       return -ENOTSUPP;
-> +       return -EOPNOTSUPP;
->  }
->
->  static inline void of_genpd_del_provider(struct device_node *np) {}
-> @@ -396,7 +396,7 @@ static inline struct device *genpd_dev_pm_attach_by_name(struct device *dev,
->  static inline
->  struct generic_pm_domain *of_genpd_remove_last(struct device_node *np)
->  {
-> -       return ERR_PTR(-ENOTSUPP);
-> +       return ERR_PTR(-EOPNOTSUPP);
->  }
->  #endif /* CONFIG_PM_GENERIC_DOMAINS_OF */
->
-> --
-> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-> a Linux Foundation Collaborative Project
->
+Can you also convert the binding from txt to yaml?
+
+> diff --git a/drivers/dma/qcom/Kconfig b/drivers/dma/qcom/Kconfig
+> index 3bcb689162c6..0389d60d2604 100644
+> --- a/drivers/dma/qcom/Kconfig
+> +++ b/drivers/dma/qcom/Kconfig
+> @@ -1,4 +1,15 @@
+>  # SPDX-License-Identifier: GPL-2.0-only
+> +config QCOM_ADM
+> +	tristate "Qualcomm ADM support"
+> +	depends on (ARCH_QCOM || COMPILE_TEST) && !PHYS_ADDR_T_64BIT
+
+why !PHYS_ADDR_T_64BIT ..?
+
+> +	select DMA_ENGINE
+> +	select DMA_VIRTUAL_CHANNELS
+> +	help
+> +	  Enable support for the Qualcomm Application Data Mover (ADM) DMA
+> +	  controller, as present on MSM8x60, APQ8064, and IPQ8064 devices.
+> +	  This controller provides DMA capabilities for both general purpose
+> +	  and on-chip peripheral devices.
+
+> +static const struct of_device_id adm_of_match[] = {
+> +	{ .compatible = "qcom,adm", },
+
+I know we have merged the binding, but should we not have a soc specific
+compatible?
+
+-- 
+~Vinod
