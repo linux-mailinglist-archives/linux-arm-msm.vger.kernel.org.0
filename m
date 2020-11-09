@@ -2,109 +2,137 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 5382C2ABBCB
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Nov 2020 14:32:31 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 039812ABDE9
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Nov 2020 14:55:29 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732067AbgKINbC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 9 Nov 2020 08:31:02 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54002 "EHLO
+        id S1729706AbgKINz2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 9 Nov 2020 08:55:28 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57780 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1732079AbgKINbA (ORCPT
+        with ESMTP id S1729320AbgKINz1 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 9 Nov 2020 08:31:00 -0500
-Received: from mail-pf1-x441.google.com (mail-pf1-x441.google.com [IPv6:2607:f8b0:4864:20::441])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C8A4BC0613D3
-        for <linux-arm-msm@vger.kernel.org>; Mon,  9 Nov 2020 05:30:59 -0800 (PST)
-Received: by mail-pf1-x441.google.com with SMTP id q5so5201031pfk.6
-        for <linux-arm-msm@vger.kernel.org>; Mon, 09 Nov 2020 05:30:59 -0800 (PST)
+        Mon, 9 Nov 2020 08:55:27 -0500
+Received: from mail-lj1-x242.google.com (mail-lj1-x242.google.com [IPv6:2a00:1450:4864:20::242])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3C35FC0613D3
+        for <linux-arm-msm@vger.kernel.org>; Mon,  9 Nov 2020 05:55:27 -0800 (PST)
+Received: by mail-lj1-x242.google.com with SMTP id y25so9486190lja.9
+        for <linux-arm-msm@vger.kernel.org>; Mon, 09 Nov 2020 05:55:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=+sz4tbYNuwYjyVl/Ub4iOvWLg0YjxVlle9/HbtnKn3I=;
-        b=ufKvexxEIva0lg+0/eug7BwTwcoisncojILiOcOxK8iGgqzqRFN2dRTHx4+A7F2XLT
-         umwQNfUgA8siwS6Sh/fdr5nmQOZygHKzXeMkrT7BP3VSxz5Y/2PeypLDd88VkPbF8DDn
-         131MQYExWaE4kTGsRPDPPflC5mlEcUX/rWqWEskHV4Z5bdTGijJLJ9esUz/ab13E7AfQ
-         IlesHAtiqt1lykkgqd8hi+QWagdataYSti1zKtjT2+pUFLzdQWS2rnf4+Zf5eKQRUjQw
-         5oi6tSAkC+btdR+AueU52vFL9kDY77kl8u34Pg6BSziBrUOKnfSqUX6BAmgYGKVMZmgE
-         qRBg==
+        d=google.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=lqe5HrIHoZLKJYdgktbLvnJ7WzCQkZi69agPba5hbSs=;
+        b=N94TB+YLkY2zbd2qs/JZiN2GasG9bvVVY4+qr0qm28m37JUwCxHLgcQhFLqdiwG6wP
+         36p80N800qtZO5Y5/54aZ3Ds3GAdrT9imWS8aZb8ep4LsnRqxn28rWQ0L4kka52r8KUG
+         Y2WqlS12ZqNcQ/DS/XYF4A0rpu58FzeiaQhUG5lkWFp1nZDw4XW7skWOaX2w4Q67UGUV
+         s40AMt4lrMVcsuOScsZYctM2DZ32eM3D7zQHgRHReNxiC06jnVgWx6g3kZ4JP9zfkx+S
+         5/PrEpERodbnK0pJW7+SRxRRp4I/b2YxzIp3RZBBGl+I+yAbWCR+Um/ECXQr4LTJ/X/9
+         eI2g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=+sz4tbYNuwYjyVl/Ub4iOvWLg0YjxVlle9/HbtnKn3I=;
-        b=m1hkmy+TI3yEqn1qLZv/09E2tRszrrEslgXC8XSH4VXlWd3OH2eCup8ymrdrTzbAQ1
-         f4LRrnm+EBIMvcsUDMW+WC9prYYsDbPsP3hvVTKKoil5IpJ7z+UaoB2XZZnnz0/u6sgm
-         6dv33NCm2EqvQhvA45SFr3Nolhqc5l+Az0WRD+SuF7JYbOq8z0a5BdkrbA+Uc02psJru
-         4w1OmlGZRL8RnSqmY+blvXw4lr/J2F4rIKnUNWWu450X3DE+ICY4A0ItV/o0kUHChzwA
-         V5WbSMmRVbDfw60n5pUOICQ/fzPRELz6ROoukRmc3EC7fwHVNLG3bdYmV5L0FFXvWfv5
-         edpg==
-X-Gm-Message-State: AOAM531D1nDx8Pnp5kRSq+hDe+dOYVMoP8QSx8Y91OLh7oitzSkqgRAb
-        dDRL46WPi4rvxw6DIPb21oYDDd6T1dgk
-X-Google-Smtp-Source: ABdhPJxms5ZKTWmwkdoTuf00rSaubUgSEiO8B+mlRPFp3HCt+MWWggJDnLrr8AJWBitsNFApgcP7YQ==
-X-Received: by 2002:a17:90b:3687:: with SMTP id mj7mr13252559pjb.143.1604928659159;
-        Mon, 09 Nov 2020 05:30:59 -0800 (PST)
-Received: from work ([103.59.133.81])
-        by smtp.gmail.com with ESMTPSA id p4sm7881148pjo.6.2020.11.09.05.30.56
-        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 09 Nov 2020 05:30:58 -0800 (PST)
-Date:   Mon, 9 Nov 2020 19:00:53 +0530
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     Bhaumik Bhatt <bbhatt@codeaurora.org>
-Cc:     linux-arm-msm@vger.kernel.org, hemantk@codeaurora.org,
-        jhugo@codeaurora.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2 0/6] Minor bug fixes and clean-up for MHI host driver
-Message-ID: <20201109133053.GK24289@work>
-References: <1604684690-31065-1-git-send-email-bbhatt@codeaurora.org>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=lqe5HrIHoZLKJYdgktbLvnJ7WzCQkZi69agPba5hbSs=;
+        b=Tc0rw6W5adtwB8kNUK5gG39/uuBOp/lXRynpWHu3TPwocuRevaYcgQaqT3onYMlkdC
+         2T1ffpgS6fUGSQGiPkvhbR6Uy9gmZo2RNAuNFW+z1YX06ccOJ+imBEY55AOOnHJaUJNw
+         MykAJ6R7QESTvc9quR26Oc1/iiGlq3/a4cfZJ1RZwgdLYQIB5SIgPhcUrq7FAcsC6AWg
+         mWh8J/41C8gNte2vMYWEUusFm46oCujGjQo6sjMJbI2cJvc8qJ2YdkUC/fuVcm9qrcE0
+         HGeuKQtCgDjBuOrFkq4bAofOOyo1tedYlKV2d8wwuQWXFulM4kYg3EogwgSAEPSaDZr5
+         DtWw==
+X-Gm-Message-State: AOAM531QrqsG8QaPtgu5EmB17RkqJRdNBNAmFpCWSrA8SMpIMlDKaEJI
+        BEPi05VgYyre8bfHNyDPAuLP90qpG0mxs0vQBfHKxQ==
+X-Google-Smtp-Source: ABdhPJz3iQtflkEPiWk1FMPU1/Pd2p7uJeOvrzUebarKW+NuNnCZ6Uh/UONYKo/x7LVUoyml/JF+BdvydSLnid3qOuA=
+X-Received: by 2002:a2e:b54a:: with SMTP id a10mr5875868ljn.139.1604930125511;
+ Mon, 09 Nov 2020 05:55:25 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1604684690-31065-1-git-send-email-bbhatt@codeaurora.org>
-User-Agent: Mutt/1.9.4 (2018-02-28)
+References: <20201106061433.1483129-1-ajye_huang@compal.corp-partner.google.com>
+ <20201106061433.1483129-2-ajye_huang@compal.corp-partner.google.com>
+In-Reply-To: <20201106061433.1483129-2-ajye_huang@compal.corp-partner.google.com>
+From:   Ajye Huang <ajye_huang@compal.corp-partner.google.com>
+Date:   Mon, 9 Nov 2020 21:55:14 +0800
+Message-ID: <CALprXBZmC=Qxk5fkGn=QJ4xW4tSGMZxb9LFUbqfMge0vLcP-dQ@mail.gmail.com>
+Subject: Re: [PATCH v6 1/2] ASoC: google: dt-bindings: modify machine bindings
+ for two MICs case
+To:     Ajye Huang <ajye.huang@gmail.com>
+Cc:     Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        Mark Brown <broonie@kernel.org>,
+        Rohit kumar <rohitkr@codeaurora.org>,
+        Banajit Goswami <bgoswami@codeaurora.org>,
+        Patrick Lai <plai@codeaurora.org>,
+        Srinivasa Rao Mandadapu <srivasam@codeaurora.org>,
+        Srini Kandagatla <srinivas.kandagatla@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Rob Herring <robh@kernel.org>,
+        Jaroslav Kysela <perex@perex.cz>,
+        Cheng-yi Chiang <cychiang@chromium.org>,
+        Tzung-Bi Shih <tzungbi@chromium.org>,
+        Douglas Anderson <dianders@chromium.org>,
+        "moderated list:ARM/Mediatek SoC support" 
+        <linux-arm-kernel@lists.infradead.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>,
+        ALSA development <alsa-devel@alsa-project.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Nov 06, 2020 at 09:44:44AM -0800, Bhaumik Bhatt wrote:
-> This patch series serves to clean up the MHI host driver by removing an
-> unnecessary counter and an unused function. It also renames a function to make
-> it clearly worded. There is currently no user of this exported function which
-> makes it is safe to do so now.
-> 
-> Bug fixes include adding a missing EXPORT_SYMBOL_GPL to a function, and adding
-> a return value check to bail out of RDDM download in kernel panic path.
-> 
-> An outlier among the group exports the mhi_get_exec_env() API for use by
-> controller drivers, in case they need to determine behavior on the basis of the
-> current execution environment.
-> 
-> This set of patches was tested on arm64.
+Hi, Rob
 
-Series applied to mhi-next!
+I follow your suggests that adding (maxItems: 1) for dmic-gpis property,
+and keep one example of adding dmic-gpios property in it
 
-Thanks,
-Mani
+Could you please kindly review it ?
 
-> 
-> v2:
-> -Removed the declaration for mhi_get_exec_env() from internal.h
-> -Improved on the error log message in RDDM download exit case due to unknown EE
-> 
-> Bhaumik Bhatt (6):
->   bus: mhi: core: Remove unnecessary counter from mhi_firmware_copy()
->   bus: mhi: core: Add missing EXPORT_SYMBOL for mhi_get_mhi_state()
->   bus: mhi: core: Expose mhi_get_exec_env() API for controllers
->   bus: mhi: core: Remove unused mhi_fw_load_worker() declaration
->   bus: mhi: core: Rename RDDM download function to use proper words
->   bus: mhi: core: Skip RDDM download for unknown execution environment
-> 
->  drivers/bus/mhi/core/boot.c     | 15 +++++++++------
->  drivers/bus/mhi/core/internal.h |  2 --
->  drivers/bus/mhi/core/main.c     |  2 ++
->  include/linux/mhi.h             | 12 +++++++++---
->  4 files changed, 20 insertions(+), 11 deletions(-)
-> 
-> -- 
-> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-> a Linux Foundation Collaborative Project
-> 
+Thank you so much
+Ajye
+
+On Fri, Nov 6, 2020 at 2:14 PM Ajye Huang <ajye.huang@gmail.com> wrote:
+>
+> Add a property "dmic-gpios" for switching between two MICs.
+>
+> Signed-off-by: Ajye Huang <ajye_huang@compal.corp-partner.google.com>
+> ---
+>  .../devicetree/bindings/sound/google,sc7180-trogdor.yaml  | 8 +++++++-
+>  1 file changed, 7 insertions(+), 1 deletion(-)
+>
+> diff --git a/Documentation/devicetree/bindings/sound/google,sc7180-trogdor.yaml b/Documentation/devicetree/bindings/sound/google,sc7180-trogdor.yaml
+> index efc34689d6b5..ce050a9dec94 100644
+> --- a/Documentation/devicetree/bindings/sound/google,sc7180-trogdor.yaml
+> +++ b/Documentation/devicetree/bindings/sound/google,sc7180-trogdor.yaml
+> @@ -34,6 +34,10 @@ properties:
+>    "#size-cells":
+>      const: 0
+>
+> +  dmic-gpios:
+> +    maxItems: 1
+> +    description: GPIO for switching between DMICs
+> +
+>  patternProperties:
+>    "^dai-link(@[0-9])?$":
+>      description:
+> @@ -83,7 +87,7 @@ examples:
+>    - |
+>      sound {
+>          compatible = "google,sc7180-trogdor";
+> -        model = "sc7180-rt5682-max98357a-1mic";
+> +        model = "sc7180-rt5682-max98357a-2mic";
+>
+>          audio-routing =
+>                      "Headphone Jack", "HPOL",
+> @@ -92,6 +96,8 @@ examples:
+>          #address-cells = <1>;
+>          #size-cells = <0>;
+>
+> +        dmic-gpios = <&tlmm 86 0>;
+> +
+>          dai-link@0 {
+>              link-name = "MultiMedia0";
+>              reg = <0>;
+> --
+> 2.25.1
+>
