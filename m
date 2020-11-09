@@ -2,107 +2,237 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 05A842AC27F
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Nov 2020 18:36:41 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 61BA52AC2AA
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Nov 2020 18:41:22 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732170AbgKIRgR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 9 Nov 2020 12:36:17 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35716 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1732041AbgKIRgI (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 9 Nov 2020 12:36:08 -0500
-Received: from mail-ej1-x641.google.com (mail-ej1-x641.google.com [IPv6:2a00:1450:4864:20::641])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4ABE2C0613D6
-        for <linux-arm-msm@vger.kernel.org>; Mon,  9 Nov 2020 09:36:08 -0800 (PST)
-Received: by mail-ej1-x641.google.com with SMTP id dk16so13416874ejb.12
-        for <linux-arm-msm@vger.kernel.org>; Mon, 09 Nov 2020 09:36:08 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=L9F3HkMW13rcGTb3bzExEGKic5ytenCIez631dN7HLE=;
-        b=PitAaj9RXayVuhqFAVZImb2FJzaptvJrhnw4hRd7qLhtpHZt3/13gByfP2V52MOaUX
-         aH5Y7+o8Wug0hJs2gyg/kpATu+uz4xGJqpaA+qMwMJNMx93z7o1RSZbdhe60teDElpma
-         MZWjsED9bHeNSqbizQ32mr7FDj01m120ZIF+PLqQ2hWlxXqmbfq7/C7qIMbzCia4vpk0
-         wNo+WpH7HTWxUI88xYoFekEvbl+0OmG3mqHshaIormsO/9qngltHSg3J2kMiMZiybVvo
-         rnnAax8INabenQwe0yl5nNUwZISmh+wVD3Xw0HE3/3I67qQhxFnAtuHbilgLmxjQDOnA
-         wLSQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=L9F3HkMW13rcGTb3bzExEGKic5ytenCIez631dN7HLE=;
-        b=QaHCYPGqJRtINyWykJDY8viRuZNJHuqPiLeoOz3E25+jRbNR9M+n5ilb7LuQ3C1mch
-         phQcjccWzGL2taq5ONSV17waG+e4zzLqyFtrnc1WMq6xtyFBYoAaWmSFGrFWW5lBqwdE
-         qeYFDxtpL/yNXtD3sK3IiDzbFxipZx2hGRHOyYNwHJJYIL+X9P5z3GDM+U2i0Nq0sLDU
-         S7uGfrLHNFWfvi62mUnHFE7nQyA2HYUmCuWyFIteG+Gi9IxXYy7t9lTRl9r8Jyhd9JYX
-         NbZYu8Xu490cWCsHHXg6HIEyi2hMTt7mCRPZz0757vK64Yh9/bD3nkJ5Q1wFf0ZlI725
-         1UQw==
-X-Gm-Message-State: AOAM5327bW8Q3QSa88rRIYdP7fJhE0GJAR3oYT/amkk/e5jym3B1U7YZ
-        boUyjNyB8EntIVmM1/lVw9O9JA==
-X-Google-Smtp-Source: ABdhPJyPOQ+Ryay5dRFIcvl4AnOiW4HTmIeH+B3sow5u7A2Zn8mHc5EEGOQcqZwKV+qqfynNNsUwQQ==
-X-Received: by 2002:a17:906:1381:: with SMTP id f1mr15609974ejc.87.1604943367038;
-        Mon, 09 Nov 2020 09:36:07 -0800 (PST)
-Received: from localhost.localdomain (hst-221-89.medicom.bg. [84.238.221.89])
-        by smtp.gmail.com with ESMTPSA id jw7sm9123981ejb.54.2020.11.09.09.36.05
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 09 Nov 2020 09:36:06 -0800 (PST)
-From:   Stanimir Varbanov <stanimir.varbanov@linaro.org>
-To:     linux-media@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org
-Cc:     Kyungmin Park <kyungmin.park@samsung.com>,
-        Kamil Debski <kamil@wypas.org>,
-        Hans Verkuil <hverkuil-cisco@xs4all.nl>,
-        Ezequiel Garcia <ezequiel@collabora.com>,
-        Nicolas Dufresne <nicolas.dufresne@collabora.com>,
-        Marek Szyprowski <m.szyprowski@samsung.com>,
-        Stanimir Varbanov <stanimir.varbanov@linaro.org>
-Subject: [PATCH 4/4] docs: Deprecate mfc display delay controls
-Date:   Mon,  9 Nov 2020 19:35:41 +0200
-Message-Id: <20201109173541.10016-5-stanimir.varbanov@linaro.org>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20201109173541.10016-1-stanimir.varbanov@linaro.org>
-References: <20201109173541.10016-1-stanimir.varbanov@linaro.org>
+        id S1731010AbgKIRlU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 9 Nov 2020 12:41:20 -0500
+Received: from z5.mailgun.us ([104.130.96.5]:11533 "EHLO z5.mailgun.us"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1731476AbgKIRlU (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 9 Nov 2020 12:41:20 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1604943680; h=In-Reply-To: Content-Type: MIME-Version:
+ References: Message-ID: Subject: Cc: To: From: Date: Sender;
+ bh=Sgwvj7XffaOrVpgt35ymbzQsn38BkkjSeMIEPrtm/Eo=; b=FLIxnR6drmU6a1fB+m0Xs35bl6GdHo4QoVtlotSPvOYvMII5sDy6uiwsBlAE6HXK6ZHXov/Y
+ flkYIhjBi7Oc2Qoo3Poo9COK/U7PLko2RGrUJODvdBkMvemhUMupul1PVfmS7zFjDRh/Tu9K
+ a6uOw0ESyvzQ1uvkld0CJI9MNkw=
+X-Mailgun-Sending-Ip: 104.130.96.5
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n06.prod.us-east-1.postgun.com with SMTP id
+ 5fa97f3c0fe4be3f43f78485 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 09 Nov 2020 17:41:16
+ GMT
+Sender: ilina=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id D0AE2C433FE; Mon,  9 Nov 2020 17:41:15 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
+        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+Received: from localhost (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: ilina)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id CE35EC433C6;
+        Mon,  9 Nov 2020 17:41:14 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org CE35EC433C6
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=ilina@codeaurora.org
+Date:   Mon, 9 Nov 2020 10:41:13 -0700
+From:   Lina Iyer <ilina@codeaurora.org>
+To:     Ulf Hansson <ulf.hansson@linaro.org>
+Cc:     "Rafael J. Wysocki" <rjw@rjwysocki.net>,
+        Linux PM <linux-pm@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>
+Subject: Re: [PATCH v5 2/2] PM / Domains: use device's next wakeup to
+ determine domain idle state
+Message-ID: <X6l/OcHG37HzgFL8@codeaurora.org>
+References: <20201106164811.3698-1-ilina@codeaurora.org>
+ <20201106164811.3698-3-ilina@codeaurora.org>
+ <CAPDyKFrv-3USmNLR3gjgaTEuTrWuYZjs3qCtnjxSOWqrxv5qsA@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Disposition: inline
+In-Reply-To: <CAPDyKFrv-3USmNLR3gjgaTEuTrWuYZjs3qCtnjxSOWqrxv5qsA@mail.gmail.com>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Deprecate mfc private display delay and display enable controls for
-new clients and use the standard controls instead.
+On Mon, Nov 09 2020 at 08:27 -0700, Ulf Hansson wrote:
+>On Fri, 6 Nov 2020 at 17:48, Lina Iyer <ilina@codeaurora.org> wrote:
+>>
+[...]
+>> +static void update_domain_next_wakeup(struct generic_pm_domain *genpd, ktime_t now)
+>> +{
+>> +       ktime_t domain_wakeup = KTIME_MAX;
+>> +       ktime_t next_wakeup;
+>> +       struct pm_domain_data *pdd;
+>> +       struct gpd_link *link;
+>> +
+>> +       /* Find the earliest wakeup for all devices in the domain */
+>> +       list_for_each_entry(pdd, &genpd->dev_list, list_node) {
+>> +               next_wakeup = to_gpd_data(pdd)->next_wakeup;
+>> +               if (next_wakeup != KTIME_MAX && !ktime_before(next_wakeup, now))
+>> +                       if (ktime_before(next_wakeup, domain_wakeup))
+>> +                               domain_wakeup = next_wakeup;
+>
+>If it turns out that one of the device's next_wakeup is before "now",
+>leading to ktime_before() above returns true - then I think you should
+>bail out, no?
+>
+>At least, we shouldn't just continue and ignore this case, right?
+>
+No, that could be a very common case. Drivers are not expected to clean
+up the next wakeup by setting it to KTIME_MAX. The best we can do is
+to make a choice with the valid information we have. This will also map
+to the current behavior. Say if all next wakeup information provided to
+the devices were in the past, we would be no worse (or better) than what
+we do without this change.
 
-Signed-off-by: Stanimir Varbanov <stanimir.varbanov@linaro.org>
----
- .../userspace-api/media/v4l/ext-ctrls-codec.rst        | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+>> +       }
+>> +
+>> +       /* Then find the earliest wakeup of from all the child domains */
+>> +       list_for_each_entry(link, &genpd->parent_links, parent_node) {
+>> +               next_wakeup = link->child->next_wakeup;
+>> +               if (next_wakeup != KTIME_MAX && !ktime_before(next_wakeup, now))
+>> +                       if (ktime_before(next_wakeup, domain_wakeup))
+>> +                               domain_wakeup = next_wakeup;
+>> +       }
+>> +
+>> +       genpd->next_wakeup = domain_wakeup;
+>> +}
+>> +
+>> +static bool next_wakeup_allows_state(struct generic_pm_domain *genpd,
+>> +                                    unsigned int state, ktime_t now)
+>> +{
+>> +       ktime_t domain_wakeup = genpd->next_wakeup;
+>> +       s64 idle_time_ns, min_sleep_ns;
+>> +
+>> +       min_sleep_ns = genpd->states[state].power_off_latency_ns +
+>> +                      genpd->states[state].power_on_latency_ns +
+>> +                      genpd->states[state].residency_ns;
+>> +
+>
+>I don't think you should include the power_on_latency_ns here.
+>
+>The validation isn't about QoS constraints, but whether we can meet
+>the residency time to make it worth entering the state, from an energy
+>point of view. Right?
+>
+Fair point. I will remove the power_on_latency_ns.
 
-diff --git a/Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst b/Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst
-index 82c9cda40270..b8f69c52b2a2 100644
---- a/Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst
-+++ b/Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst
-@@ -2771,6 +2771,11 @@ MFC 5.1 Control IDs
-     feature can be used for example for generating thumbnails of videos.
-     Applicable to the H264 decoder.
- 
-+    .. note::
-+
-+       This control is deprecated. Use the standard
-+       ``V4L2_CID_MPEG_VIDEO_DECODER_DISPLAY_DELAY_ENABLE`` control instead.
-+
- ``V4L2_CID_MPEG_MFC51_VIDEO_DECODER_H264_DISPLAY_DELAY (integer)``
-     Display delay value for H264 decoder. The decoder is forced to
-     return a decoded frame after the set 'display delay' number of
-@@ -2778,6 +2783,11 @@ MFC 5.1 Control IDs
-     of display order, in addition the hardware may still be using the
-     returned buffer as a reference picture for subsequent frames.
- 
-+    .. note::
-+
-+       This control is deprecated. Use the standard
-+       ``V4L2_CID_MPEG_VIDEO_DECODER_DISPLAY_DELAY`` control instead.
-+
- ``V4L2_CID_MPEG_MFC51_VIDEO_H264_NUM_REF_PIC_FOR_P (integer)``
-     The number of reference pictures used for encoding a P picture.
-     Applicable to the H264 encoder.
--- 
-2.17.1
+>> +       idle_time_ns = ktime_to_ns(ktime_sub(domain_wakeup, now));
+>> +
+>> +       return idle_time_ns >= min_sleep_ns;
+>> +}
+>> +
+>>  static bool __default_power_down_ok(struct dev_pm_domain *pd,
+>>                                      unsigned int state)
+>>  {
+>> @@ -209,8 +250,34 @@ static bool __default_power_down_ok(struct dev_pm_domain *pd,
+>>  static bool default_power_down_ok(struct dev_pm_domain *pd)
+>>  {
+>>         struct generic_pm_domain *genpd = pd_to_genpd(pd);
+>> +       int state_idx = genpd->state_count - 1;
+>> +       ktime_t now = ktime_get();
+>>         struct gpd_link *link;
+>>
+>> +       /*
+>> +        * Find the next wakeup from devices that can determine their own wakeup
+>> +        * to find when the domain would wakeup and do it for every device down
+>> +        * the hierarchy. It is not worth while to sleep if the state's residency
+>> +        * cannot be met.
+>> +        */
+>> +       update_domain_next_wakeup(genpd, now);
+>> +       if (genpd->next_wakeup != KTIME_MAX) {
+>> +               /* Let's find out the deepest domain idle state, the devices prefer */
+>> +               while (state_idx >= 0) {
+>> +                       if (next_wakeup_allows_state(genpd, state_idx, now)) {
+>> +                               genpd->max_off_time_changed = true;
+>> +                               break;
+>> +                       }
+>> +                       state_idx--;
+>> +               }
+>> +
+>> +               if (state_idx < 0) {
+>> +                       state_idx = 0;
+>> +                       genpd->cached_power_down_ok = false;
+>> +                       goto done;
+>> +               }
+>> +       }
+>> +
+>
+>The above would introduce unnecessary overhead, as it may become
+>executed in cases when it's not needed.
+>
+>For example, there's no point doing the above, if the domain doesn't
+>specify residency values for its idle states.
+>
+We would still need to ensure that the next wakeup is after the
+power_off_latency, if specified.
+
+>Additionally, we don't need to recompute the domain's next wakup,
+>unless a device has got a new next_wakeup value set for it. In this
+>case, we can just select a state based upon an previously computed
+>value, thus avoiding the recomputation.
+>
+If the domain's next wakeup was in the past, then using our previously
+computed state may be incorrect.
+
+>>         if (!genpd->max_off_time_changed) {
+>>                 genpd->state_idx = genpd->cached_power_down_state_idx;
+>>                 return genpd->cached_power_down_ok;
+>> @@ -228,17 +295,21 @@ static bool default_power_down_ok(struct dev_pm_domain *pd)
+>>         genpd->max_off_time_ns = -1;
+>>         genpd->max_off_time_changed = false;
+>>         genpd->cached_power_down_ok = true;
+>> -       genpd->state_idx = genpd->state_count - 1;
+>>
+>> -       /* Find a state to power down to, starting from the deepest. */
+>> -       while (!__default_power_down_ok(pd, genpd->state_idx)) {
+>> -               if (genpd->state_idx == 0) {
+>> +       /*
+>> +        * Find a state to power down to, starting from the state
+>> +        * determined by the next wakeup.
+>> +        */
+>> +       while (!__default_power_down_ok(pd, state_idx)) {
+>> +               if (state_idx == 0) {
+>>                         genpd->cached_power_down_ok = false;
+>>                         break;
+>>                 }
+>> -               genpd->state_idx--;
+>> +               state_idx--;
+>>         }
+>>
+>> +done:
+>> +       genpd->state_idx = state_idx;
+>>         genpd->cached_power_down_state_idx = genpd->state_idx;
+>>         return genpd->cached_power_down_ok;
+>>  }
+>
+>Another thing to consider for the above changes, is that the
+>cpu_power_down_ok() calls into default_power_down_ok().
+>
+>Even if I am fine with the approach taken in $subject patch, I think
+>it's important to try to keep the path a slim as possible as it's also
+>executed in the CPU idlepath. 
+Wouldn't this be called only the last CPU is powering down and only if
+the domain is ready to power down?
+
+>For example, $subject change means also
+>that we end up calling ktime_get() twice in the same path, introducing
+>unnecessary overhead. We can do better and avoid that by restructuring
+>the code a bit, don't you think?
+>
+Hmmm, we could. I will submit a follow on patch to reorganize the code
+so the ktime_get() would be called only once for either of the
+power_down_ok callbacks.
+
+Thanks for your review, Ulf.
+
+-- Lina
 
