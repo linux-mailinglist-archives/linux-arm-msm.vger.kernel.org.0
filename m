@@ -2,139 +2,127 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 957E72AB090
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Nov 2020 06:16:04 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A9ED72AB128
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Nov 2020 07:18:26 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729335AbgKIFQD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 9 Nov 2020 00:16:03 -0500
-Received: from z5.mailgun.us ([104.130.96.5]:14572 "EHLO z5.mailgun.us"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1729313AbgKIFQD (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 9 Nov 2020 00:16:03 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1604898963; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=uTh+L8CvHLLdJK+ls2fzca5EQ/1eBi1ZJpxQzSgROEU=;
- b=fL8EMmuWvk0fMjPcrRmZDPgqQo67CjoEyBQi31Qz40cJnADd2nYzgjlRHn8dI1ocJONbyZRn
- xhNhhUm3GmPsVxcFZyIVNx1/phw8HPfPmUDtIPeoks+NwkjiPa13lsv39zZkLf1FjFtDEeGL
- txzhMmv4kHqsiGtGOuhuh9qZ2gs=
-X-Mailgun-Sending-Ip: 104.130.96.5
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n03.prod.us-east-1.postgun.com with SMTP id
- 5fa8d074e41a481b55ac5b4e (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 09 Nov 2020 05:15:32
- GMT
-Sender: saiprakash.ranjan=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 24548C433C9; Mon,  9 Nov 2020 05:15:32 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: saiprakash.ranjan)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id B63BCC433C8;
-        Mon,  9 Nov 2020 05:15:30 +0000 (UTC)
+        id S1729557AbgKIGSZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 9 Nov 2020 01:18:25 -0500
+Received: from szxga05-in.huawei.com ([45.249.212.191]:7616 "EHLO
+        szxga05-in.huawei.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729552AbgKIGSZ (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 9 Nov 2020 01:18:25 -0500
+Received: from DGGEMS408-HUB.china.huawei.com (unknown [172.30.72.58])
+        by szxga05-in.huawei.com (SkyGuard) with ESMTP id 4CV15J5S3gzLwMf;
+        Mon,  9 Nov 2020 14:18:12 +0800 (CST)
+Received: from [127.0.0.1] (10.174.178.230) by DGGEMS408-HUB.china.huawei.com
+ (10.3.19.208) with Microsoft SMTP Server id 14.3.487.0; Mon, 9 Nov 2020
+ 14:18:21 +0800
+Subject: Re: [PATCH v2 1/2] arm64: dts: broadcom: clear the warnings caused by
+ empty dma-ranges
+From:   "Leizhen (ThunderTown)" <thunder.leizhen@huawei.com>
+To:     Arnd Bergmann <arnd@kernel.org>
+CC:     Florian Fainelli <f.fainelli@gmail.com>,
+        Rob Herring <robh+dt@kernel.org>, Ray Jui <rjui@broadcom.com>,
+        Scott Branden <sbranden@broadcom.com>,
+        bcm-kernel-feedback-list <bcm-kernel-feedback-list@broadcom.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        devicetree <devicetree@vger.kernel.org>,
+        linux-arm-kernel <linux-arm-kernel@lists.infradead.org>,
+        linux-kernel <linux-kernel@vger.kernel.org>
+References: <20201016090833.1892-1-thunder.leizhen@huawei.com>
+ <20201016090833.1892-2-thunder.leizhen@huawei.com>
+ <CAK8P3a2TSmsNSi-XFpT6AQ3jvVxJ1AW7Uf5tAo477wtwXZwUzg@mail.gmail.com>
+ <e27dc152-7aef-10df-f391-bf56e13e23df@gmail.com>
+ <CAK8P3a13ywHh7igdfDSPQz9Bw8YAnKWFLKARkk2NL5u6=6yb=w@mail.gmail.com>
+ <0eee3fd2-7400-7de7-27a7-7fcaa0955854@gmail.com>
+ <d42745b7-ef76-e584-0da2-751ac8c1cf3a@huawei.com>
+ <CAK8P3a335TT1+bdHqB=FetPanXXfGv3dC7ZCkx+w+F3j00kj5A@mail.gmail.com>
+ <07ab3bdd-dcb1-5a59-d813-f82451b3f028@huawei.com>
+Message-ID: <5980552d-6e96-fd9f-c758-1b1e9f57100e@huawei.com>
+Date:   Mon, 9 Nov 2020 14:18:19 +0800
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.7.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Mon, 09 Nov 2020 10:45:30 +0530
-From:   Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-To:     Will Deacon <will@kernel.org>, Robin Murphy <robin.murphy@arm.com>,
-        Joerg Roedel <joro@8bytes.org>,
-        Jordan Crouse <jcrouse@codeaurora.org>,
-        Rob Clark <robdclark@gmail.com>
-Cc:     iommu@lists.linux-foundation.org,
-        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org,
-        Akhil P Oommen <akhilpo@codeaurora.org>,
-        freedreno@lists.freedesktop.org,
-        "Kristian H . Kristensen" <hoegsberg@google.com>,
-        dri-devel@lists.freedesktop.org
-Subject: Re: [PATCHv7 0/7] System Cache support for GPU and required SMMU
- support
-In-Reply-To: <cover.1604048969.git.saiprakash.ranjan@codeaurora.org>
-References: <cover.1604048969.git.saiprakash.ranjan@codeaurora.org>
-Message-ID: <b4ec727f58cfffc6e5b941d1508a4212@codeaurora.org>
-X-Sender: saiprakash.ranjan@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+In-Reply-To: <07ab3bdd-dcb1-5a59-d813-f82451b3f028@huawei.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [10.174.178.230]
+X-CFilter-Loop: Reflected
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2020-10-30 14:53, Sai Prakash Ranjan wrote:
-> Some hardware variants contain a system cache or the last level
-> cache(llc). This cache is typically a large block which is shared
-> by multiple clients on the SOC. GPU uses the system cache to cache
-> both the GPU data buffers(like textures) as well the SMMU pagetables.
-> This helps with improved render performance as well as lower power
-> consumption by reducing the bus traffic to the system memory.
-> 
-> The system cache architecture allows the cache to be split into slices
-> which then be used by multiple SOC clients. This patch series is an
-> effort to enable and use two of those slices preallocated for the GPU,
-> one for the GPU data buffers and another for the GPU SMMU hardware
-> pagetables.
-> 
-> Patch 1 - Patch 5 adds system cache support in SMMU and GPU driver.
-> Patch 6 and 7 are minor cleanups for arm-smmu impl.
-> 
-> Changes in v7:
->  * Squash Jordan's patch to support MMU500 targets
->  * Rebase on top of for-joerg/arm-smmu/updates and Jordan's short
-> series for adreno-smmu impl
-> 
-> Changes in v6:
->  * Move table to arm-smmu-qcom (Robin)
-> 
-> Changes in v5:
->  * Drop cleanup of blank lines since it was intentional (Robin)
->  * Rebase again on top of msm-next-pgtables as it moves pretty fast
-> 
-> Changes in v4:
->  * Drop IOMMU_SYS_CACHE prot flag
->  * Rebase on top of
-> https://gitlab.freedesktop.org/drm/msm/-/tree/msm-next-pgtables
-> 
-> Changes in v3:
->  * Fix domain attribute setting to before iommu_attach_device()
->  * Fix few code style and checkpatch warnings
->  * Rebase on top of Jordan's latest split pagetables and per-instance
->    pagetables support
-> 
-> Changes in v2:
->  * Addressed review comments and rebased on top of Jordan's split
->    pagetables series
-> 
-> Jordan Crouse (1):
->   drm/msm/a6xx: Add support for using system cache on MMU500 based
->     targets
-> 
-> Sai Prakash Ranjan (4):
->   iommu/io-pgtable-arm: Add support to use system cache
->   iommu/arm-smmu: Add domain attribute for system cache
->   iommu: arm-smmu-impl: Use table to list QCOM implementations
->   iommu: arm-smmu-impl: Add a space before open parenthesis
-> 
-> Sharat Masetty (2):
->   drm/msm: rearrange the gpu_rmw() function
->   drm/msm/a6xx: Add support for using system cache(LLC)
-> 
+Hi, everybody:
+  How do we deal with this problem? I updated the kernel to the latest and the problem still persists.
 
-Hi,
+  make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- -j24 dtbs 2>err.txt
+  vim err.txt
 
-Gentle Ping!
+arch/arm64/boot/dts/qcom/ipq6018.dtsi:185.3-14: Warning (dma_ranges_format): /soc:dma-ranges: empty "dma-ranges" property but its #address-cells (1) differs from / (2)
+arch/arm64/boot/dts/qcom/ipq6018.dtsi:185.3-14: Warning (dma_ranges_format): /soc:dma-ranges: empty "dma-ranges" property but its #size-cells (1) differs from / (2)
+arch/arm64/boot/dts/broadcom/stingray/stingray-usb.dtsi:7.3-14: Warning (dma_ranges_format): /usb:dma-ranges: empty "dma-ranges" property but its #address-cells (1) differs from / (2)
+arch/arm64/boot/dts/broadcom/stingray/stingray-usb.dtsi:7.3-14: Warning (dma_ranges_format): /usb:dma-ranges: empty "dma-ranges" property but its #size-cells (1) differs from / (2)
+arch/arm64/boot/dts/broadcom/stingray/stingray-usb.dtsi:7.3-14: Warning (dma_ranges_format): /usb:dma-ranges: empty "dma-ranges" property but its #address-cells (1) differs from / (2)
+arch/arm64/boot/dts/broadcom/stingray/stingray-usb.dtsi:7.3-14: Warning (dma_ranges_format): /usb:dma-ranges: empty "dma-ranges" property but its #size-cells (1) differs from / (2)
+arch/arm64/boot/dts/broadcom/stingray/stingray-usb.dtsi:7.3-14: Warning (dma_ranges_format): /usb:dma-ranges: empty "dma-ranges" property but its #address-cells (1) differs from / (2)
+arch/arm64/boot/dts/broadcom/stingray/stingray-usb.dtsi:7.3-14: Warning (dma_ranges_format): /usb:dma-ranges: empty "dma-ranges" property but its #size-cells (1) differs from / (2)
 
-Thanks,
-Sai
 
--- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a 
-member
-of Code Aurora Forum, hosted by The Linux Foundation
+
+
+On 2020/10/26 10:21, Leizhen (ThunderTown) wrote:
+> 
+> 
+> On 2020/10/23 15:17, Arnd Bergmann wrote:
+>> On Sun, Oct 18, 2020 at 4:10 AM Leizhen (ThunderTown)
+>> <thunder.leizhen@huawei.com> wrote:
+>>> On 2020/10/17 3:27, Florian Fainelli wrote:
+>>>> On 10/16/20 11:23 AM, Arnd Bergmann wrote:
+>>>>> On Fri, Oct 16, 2020 at 6:48 PM Florian Fainelli <f.fainelli@gmail.com> wrote:
+>>>>>> On 10/16/20 4:01 AM, Arnd Bergmann wrote:
+>>>>>>> On Fri, Oct 16, 2020 at 11:09 AM Zhen Lei <thunder.leizhen@huawei.com> wrote:
+>>>>>>>>
+>>>>>>>> Suggested-by: Arnd Bergmann <arnd@arndb.de>
+>>>>>>>> Signed-off-by: Zhen Lei <thunder.leizhen@huawei.com>
+>>>>>>>
+>>>>>>> Acked-by: Arnd Bergmann <arnd@arndb.de>
+>>>>>>>
+>>>>>>> I see that at least the 'bcd' and 'xhci' devices in fact try to
+>>>>>>> use 64-bit DMA. It would be good to test this on actual
+>>>>>>> hardware to ensure that it works correctly when this is enabled.
+>>>>>>>
+>>>>>>> Ideally avoiding the swiotlb bounce buffering should only
+>>>>>>> make it faster here, but there are many chips on which
+>>>>>>> 64-bit DMA is broken in some form.
+>>>>>>
+>>>>>> Is this change really an improvement though? This 'usb' pseudo bus node
+>>>>>> could just keep being defined with #address-cells = <1> and #size-cells
+>>>>>> = <1> so as to satisfy the 'reg' definition however we could just adjust
+>>>>>> dma-ranges to indicate full 64-bit addressing capability. Would not that
+>>>>>> work?
+>>>>>
+>>>>> When #address-cells is '1', you cannot specify dma-ranges that
+>>>>> go beyond a 32-bit address range.
+>>>>
+>>>> Would not it be enough to remove the 'dma-ranges' property though? Sorry
+>>>> for being slow here.
+>>>
+>>> Remove the 'dma-ranges' property should also work. After all, it is equivalent
+>>> to the original empty dma-ranges scheme. In addition, since the IOMMU nodes are
+>>> defined, it should be enabled.
+>>
+>> Are you sure? I was expecting the IOMMU not to get used here since
+>> the devices do contain list an 'iommus' property.
+> 
+> OK，If the SMMU maybe disabled, then your proposal is necessary.
+> 
+>>
+>>       Arnd
+>>
+>> .
+>>
+
