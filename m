@@ -2,79 +2,119 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A7EC02AC488
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Nov 2020 20:02:45 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 29B312AC48D
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Nov 2020 20:04:29 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729987AbgKITCb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 9 Nov 2020 14:02:31 -0500
-Received: from mail-ot1-f67.google.com ([209.85.210.67]:36106 "EHLO
-        mail-ot1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729499AbgKITCb (ORCPT
+        id S1729533AbgKITEY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 9 Nov 2020 14:04:24 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49440 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729302AbgKITEY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 9 Nov 2020 14:02:31 -0500
-Received: by mail-ot1-f67.google.com with SMTP id 32so10023715otm.3;
-        Mon, 09 Nov 2020 11:02:30 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=Os7Tqy6UODgwd/wlPU8zzDWJnqShuXVfWyTYThhhTQs=;
-        b=aLNKOCb7BKHiWgvV5bGci2OVAIvGf6Pn24eVglj98a9ycz9gRi6gVnWKuGsRG8SO4u
-         nKrFvsXep8Uumk2pXJtS+w+z6dAnPB6/WMB7X1biAtUZnY7m7cBSeTj+Ym/65cjk9SP9
-         2/vF8rQTUVKFDkjD98jm0xTlAaH1sWF6WiBsoGoMZEVZ0MvYzhcypoTx/qRSUnHJkeji
-         puvG9hhFpPTNteomrTkZF8DyG6q697gs+9Jt5rh1y0GxPd8gdedt4/37bBCaBRXviIxY
-         8n8a53ZnmSu6udiqbbK6XUkDENw8lPMb3uibRb1Xn7qUG5WymViIRePiT4SCDQwgaRkL
-         k0tg==
-X-Gm-Message-State: AOAM533TD7a2Rn0qMj1DTQImZcuGgTK19A6q2keP2h3D6CwEtcuc8MvM
-        O20WRlVtQc2vqpJ+VOBX6xKjF4CBkw==
-X-Google-Smtp-Source: ABdhPJzi8cf177x5y7qmvI5oZJQW3sqESbPviEGH6ObpyFz+8kfyg2yeSvBY/c2ERhInbnrt6d4HJQ==
-X-Received: by 2002:a9d:4aa:: with SMTP id 39mr11584971otm.11.1604948550593;
-        Mon, 09 Nov 2020 11:02:30 -0800 (PST)
-Received: from xps15 (24-155-109-49.dyn.grandenetworks.net. [24.155.109.49])
-        by smtp.gmail.com with ESMTPSA id x22sm2572439oix.48.2020.11.09.11.02.28
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 09 Nov 2020 11:02:29 -0800 (PST)
-Received: (nullmailer pid 1593859 invoked by uid 1000);
-        Mon, 09 Nov 2020 19:02:28 -0000
-Date:   Mon, 9 Nov 2020 13:02:28 -0600
-From:   Rob Herring <robh@kernel.org>
-To:     xuyuqing <xuyuqing@huaqin.corp-partner.google.com>
-Cc:     Stephan Gerhold <stephan@gerhold.net>, dgreid@chromium.org,
-        linux-kernel@vger.kernel.org, Taniya Das <tdas@codeaurora.org>,
-        Takashi Iwai <tiwai@suse.com>, alsa-devel@alsa-project.org,
-        cychiang@chromium.org, Banajit Goswami <bgoswami@codeaurora.org>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        Andy Gross <agross@kernel.org>,
-        Patrick Lai <plai@codeaurora.org>, dianders@chromium.org,
+        Mon, 9 Nov 2020 14:04:24 -0500
+Received: from the.earth.li (the.earth.li [IPv6:2a00:1098:86:4d:c0ff:ee:15:900d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5BFB7C0613CF;
+        Mon,  9 Nov 2020 11:04:24 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=earth.li;
+         s=the; h=In-Reply-To:Content-Type:MIME-Version:References:Message-ID:Subject
+        :Cc:To:From:Date:Sender:Reply-To:Content-Transfer-Encoding:Content-ID:
+        Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
+        :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
+        List-Post:List-Owner:List-Archive;
+        bh=TFKGo0xpBOEg+T74W7oI6xqQWy9esM9XTIUlQGEd/Mk=; b=wALVIypO2VnSRap5o/l6oiHbAt
+        AWYe1Cr7+RyhGemq7Gt6n3sNZczEifqAsATj0BcxYu1Ha7VMZIdEnvTtT3Tl4/nDo3HiJhgoaY9pm
+        WK6v4K0BPkNIeJn5Yp9ldU/hcCz3HPNAZ24HsMMJ7ppWj7NmuhlqE4hOuCXGjnlfzoMnPL/PpMYSW
+        dtbhiMVZ2jLxl7tQOqo/+gyunJyP92tp2me0rwINApgdyFeoegQczdTY2K8/An2UKoBcDXOKpBmah
+        L0VyEre/Wh+XvUAy54r4q7R7w/SVKjj42E3N87BoDHEvJn6WPod7+lL9qfdOciKXHMDF4E24ioclD
+        eY1N8PsQ==;
+Received: from noodles by the.earth.li with local (Exim 4.92)
+        (envelope-from <noodles@earth.li>)
+        id 1kcCSe-0002ic-8z; Mon, 09 Nov 2020 19:04:16 +0000
+Date:   Mon, 9 Nov 2020 19:04:16 +0000
+From:   Jonathan McDowell <noodles@earth.li>
+To:     Vinod Koul <vkoul@kernel.org>
+Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        linux-arm-kernel@lists.infradead.org,
-        Rob Herring <robh+dt@kernel.org>,
-        Rohit kumar <rohitkr@codeaurora.org>,
-        Srini Kandagatla <srinivas.kandagatla@linaro.org>,
-        zhouguohui@huaqin.corp-partner.google.com,
-        devicetree@vger.kernel.org, tzungbi@chromium.org,
-        judyhsiao@chromium.org, Mark Brown <broonie@kernel.org>,
-        linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH v1 1/2] ASoC: google: dt-bindings: add new compatible for
- sc7180-coachz
-Message-ID: <20201109190228.GA1593812@bogus>
-References: <20201105013242.298518-1-xuyuqing@huaqin.corp-partner.google.com>
- <20201105013242.298518-2-xuyuqing@huaqin.corp-partner.google.com>
+        Dan Williams <dan.j.williams@intel.com>,
+        Philipp Zabel <p.zabel@pengutronix.de>,
+        Thomas Pedersen <twp@codeaurora.org>,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        dmaengine@vger.kernel.org
+Subject: Re: [PATCH v4] dmaengine: qcom: Add ADM driver
+Message-ID: <20201109190416.GF32650@earth.li>
+References: <20200916064326.GA13963@earth.li>
+ <20200919185739.GS3411@earth.li>
+ <20200920181204.GT3411@earth.li>
+ <20200923194056.GY3411@earth.li>
+ <20201109114121.GG3171@vkoul-mobl>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20201105013242.298518-2-xuyuqing@huaqin.corp-partner.google.com>
+In-Reply-To: <20201109114121.GG3171@vkoul-mobl>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 05 Nov 2020 09:32:41 +0800, xuyuqing wrote:
-> Add devicetree bindings for coachz in documentation file
+On Mon, Nov 09, 2020 at 05:11:21PM +0530, Vinod Koul wrote:
+> HI Jonathan,
 > 
-> Signed-off-by: xuyuqing <xuyuqing@huaqin.corp-partner.google.com>
-> ---
->  .../devicetree/bindings/sound/google,sc7180-trogdor.yaml      | 4 +++-
->  1 file changed, 3 insertions(+), 1 deletion(-)
+> On 23-09-20, 20:40, Jonathan McDowell wrote:
+> > Add the DMA engine driver for the QCOM Application Data Mover (ADM) DMA
+> > controller found in the MSM8x60 and IPQ/APQ8064 platforms.
 > 
+> Mostly it looks good, some nitpicks
+> 
+> > The ADM supports both memory to memory transactions and memory
+> > to/from peripheral device transactions.  The controller also provides
+> > flow control capabilities for transactions to/from peripheral devices.
+> > 
+> > The initial release of this driver supports slave transfers to/from
+> > peripherals and also incorporates CRCI (client rate control interface)
+> > flow control.
+> 
+> Can you also convert the binding from txt to yaml?
 
-Acked-by: Rob Herring <robh@kernel.org>
+Seems like that can be a separate patch, but sure, I'll give it a whirl.
+
+> > diff --git a/drivers/dma/qcom/Kconfig b/drivers/dma/qcom/Kconfig
+> > index 3bcb689162c6..0389d60d2604 100644
+> > --- a/drivers/dma/qcom/Kconfig
+> > +++ b/drivers/dma/qcom/Kconfig
+> > @@ -1,4 +1,15 @@
+> >  # SPDX-License-Identifier: GPL-2.0-only
+> > +config QCOM_ADM
+> > +	tristate "Qualcomm ADM support"
+> > +	depends on (ARCH_QCOM || COMPILE_TEST) && !PHYS_ADDR_T_64BIT
+> 
+> why !PHYS_ADDR_T_64BIT ..?
+
+The hardware only supports a 32 bit physical address, so specifying
+!PHYS_ADDR_T_64BIT gives maximum COMPILE_TEST coverage without having to
+spend effort on kludging things in the code that will never actually be
+needed on real hardware.
+
+> > +	select DMA_ENGINE
+> > +	select DMA_VIRTUAL_CHANNELS
+> > +	help
+> > +	  Enable support for the Qualcomm Application Data Mover (ADM) DMA
+> > +	  controller, as present on MSM8x60, APQ8064, and IPQ8064 devices.
+> > +	  This controller provides DMA capabilities for both general purpose
+> > +	  and on-chip peripheral devices.
+> 
+> > +static const struct of_device_id adm_of_match[] = {
+> > +	{ .compatible = "qcom,adm", },
+> 
+> I know we have merged the binding, but should we not have a soc specific
+> compatible?
+
+Which soc? Looking at the other QCOM DMA drivers they mostly have
+versioned compatibles and I can't find any indication there are multiple
+variants of this block out there.
+
+J.
+
+-- 
+Web [ Every program is either trivial or it contains at least one  ]
+site: https:// [                   bug.                   ]      Made by
+www.earth.li/~noodles/  [                      ]         HuggieTag 0.0.24
