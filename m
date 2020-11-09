@@ -2,121 +2,103 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 4F4632AB7C8
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Nov 2020 13:08:36 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 52FBF2AB884
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Nov 2020 13:45:21 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729661AbgKIMId (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 9 Nov 2020 07:08:33 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41236 "EHLO
+        id S1729499AbgKIMpM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 9 Nov 2020 07:45:12 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46914 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729650AbgKIMIc (ORCPT
+        with ESMTP id S1729045AbgKIMpL (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 9 Nov 2020 07:08:32 -0500
-Received: from mail-pf1-x444.google.com (mail-pf1-x444.google.com [IPv6:2607:f8b0:4864:20::444])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3A76BC0613D3
-        for <linux-arm-msm@vger.kernel.org>; Mon,  9 Nov 2020 04:08:32 -0800 (PST)
-Received: by mail-pf1-x444.google.com with SMTP id q10so8002846pfn.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 09 Nov 2020 04:08:32 -0800 (PST)
+        Mon, 9 Nov 2020 07:45:11 -0500
+Received: from mail-wr1-x442.google.com (mail-wr1-x442.google.com [IPv6:2a00:1450:4864:20::442])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8B92AC0613D3
+        for <linux-arm-msm@vger.kernel.org>; Mon,  9 Nov 2020 04:45:11 -0800 (PST)
+Received: by mail-wr1-x442.google.com with SMTP id l1so4133512wrb.9
+        for <linux-arm-msm@vger.kernel.org>; Mon, 09 Nov 2020 04:45:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=sYZlhxozQgEvlS+NNVIJ/aB7eGsfKrhfyl/qVNIo11E=;
-        b=z8cwZptV/a7LEfyiMbIZrV6S/mtNo0uR8gM9D4quJp5aa+TxpTW24tFfuZ4ALf8uE4
-         34zdgtpxrr65iQMUFNbS5VZumGtDjAnCWxNlgf9lDxTpLSxkaYGq9qndpHkj4CgyI2tp
-         enSPNx+QQ6+2bfd2xhsKAoUuNxZaXgYHtdwmSl2GXI5MiHUO0gFZKBuqE5C7MW1RjQ9k
-         b2DojHZcDSpGeYsirwQqvWLtGInlzELYvbzjHGEoa1z0yb7LadUzkWLh/HZDtfwcjs1U
-         +rKKSMYBRmSrnHaPlmZK0Lrh9zKp2vZktzk1OQ74Hq1TuX0faF0ADRJOuMCMAfUAsgfc
-         8xng==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=I5og6iQL2F2KU/9VCiyIO/1t7oyXeSMRtxWJsg/eg+g=;
+        b=gk6Y3BhBCWnU2IL1KQsAWPoRse7BEKzs3cZVZMKCdpCN2TibgOHbiInvSTtrJh0dz0
+         QV+ae6jXdwNLSdZl0/pVilO9Hu1wAJLED+q/pEDus6UEFLxCiMQepflmsXsgo5XRhyi4
+         KNcDee4/GEagpFrxVO+3pSxcRFlDdfDRy1PGyY6YRx81kz+FrNDPsBjzm/EsQCSvbEnV
+         LfX/ObUmMf4K8gsgQ4J8y2L6/kkmxlsPWeDKtZT8MMetegulDNNS/0lBhdDjmKHmUNDO
+         ARxYYsFvBZ/8gdyIDHH/RmX58uyQ3gX5rOkbhR4eLovvIdZBYLBc1cdbzFyuwypS15yY
+         n/Kw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=sYZlhxozQgEvlS+NNVIJ/aB7eGsfKrhfyl/qVNIo11E=;
-        b=gAKBsf1DFwK8fD0mKPfDhbcmW1g3x1JrE8bUezmI4Wn/C1lKZ2YEXIHSsN0hqXPhxy
-         mS8S7nqCnvdP6ULugQ0x89h67ufcnjdwjnf0uRSfTfzF/bwvDAR+aV2vII2ogZLYvviC
-         3hQY7UDzG7i9+8v3xywaGqajuSD0ifqd/HWvHMSa0KVsdOb0grnHoOhaD6+uMV4EtTVu
-         Susnv/5XzvVm4mdfiqk7v2eOJ4QU1Ljk4lqxp1F7/h4VRhLXjUWMRpiU1QlDtsMo+kNl
-         Ybdf0Q7oqxlDyOU9s+inxT9wZ5HZrTINYqHuZHMzl2CLyLWDYj4IhN34aUb3toX4lp1X
-         XOBA==
-X-Gm-Message-State: AOAM5319NNJGme6sPtVp5fJ/oVe+HXHvVgSZOvEDi1Rz4JGBp0FG4NFG
-        +14QljaKLDB3HMHF1IL/3kDtJ2sYuJab
-X-Google-Smtp-Source: ABdhPJxY4xS6lDh4ZRNTEFYmxOtjt5t4JTvxZ9W5QEcXk9D2n6sJ/WF5r6bPqKFetF5lKheJLMT6pg==
-X-Received: by 2002:a17:90a:8b08:: with SMTP id y8mr12438935pjn.5.1604923711702;
-        Mon, 09 Nov 2020 04:08:31 -0800 (PST)
-Received: from work ([103.59.133.81])
-        by smtp.gmail.com with ESMTPSA id a24sm11377928pfl.174.2020.11.09.04.08.29
-        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 09 Nov 2020 04:08:30 -0800 (PST)
-Date:   Mon, 9 Nov 2020 17:38:25 +0530
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     Bhaumik Bhatt <bbhatt@codeaurora.org>
-Cc:     linux-arm-msm@vger.kernel.org, hemantk@codeaurora.org,
-        jhugo@codeaurora.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2 6/6] bus: mhi: core: Skip RDDM download for unknown
- execution environment
-Message-ID: <20201109120825.GJ24289@work>
-References: <1604684690-31065-1-git-send-email-bbhatt@codeaurora.org>
- <1604684690-31065-7-git-send-email-bbhatt@codeaurora.org>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=I5og6iQL2F2KU/9VCiyIO/1t7oyXeSMRtxWJsg/eg+g=;
+        b=Nd+Gfv4NcTrfpFFVPzq/eBSzpSBqyp4WaYvj2oJLegRPJFmDqR/LB/1yNJ7g5lR3fR
+         D55cl0b7F6frqzEb9Fqv6byCOq8cP2KGjWGs38Ut752xnfFATAy768pcC+6DI+s1MCkc
+         VOGdxC0rEVx92BOeSvzfrNLyaH/JhsqL0urEwzGdYaA58+VFDuvgMXZq/7a9NymXjHtp
+         AkM9q8fVAp5WdL6SrEsvyPsBuyRXY3kP9nyOKK27Djsr5H4FDL8AcE5tVgfCBC1sszBC
+         5mtCWeeJJ25hjeNT/6ACUCLKs0JSHAqxOVeUdXbhQx3mX9Req/gDAQwBwVBQcu3GHyPO
+         cBhg==
+X-Gm-Message-State: AOAM530gjQDyH7XpZabDRS99qqaHmv1Y8rNxeJw2hqdDuA+GVH9Twit1
+        dD5VfsZL45Z0kBPAbCoc+z5JUQ==
+X-Google-Smtp-Source: ABdhPJwfwHgZiyEE+orXJW69vDATKlc6ekwB3kQ5qEptBVB3A8G5yP0BiBpzzsb8ED8FvWBBbdqFCQ==
+X-Received: by 2002:a5d:4084:: with SMTP id o4mr309309wrp.278.1604925910194;
+        Mon, 09 Nov 2020 04:45:10 -0800 (PST)
+Received: from localhost.localdomain ([212.45.67.2])
+        by smtp.googlemail.com with ESMTPSA id d2sm13113259wrq.34.2020.11.09.04.45.08
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 09 Nov 2020 04:45:09 -0800 (PST)
+From:   Georgi Djakov <georgi.djakov@linaro.org>
+To:     linux-pm@vger.kernel.org, luca@z3ntu.xyz, masneyb@onstation.org
+Cc:     bjorn.andersson@linaro.org, saravanak@google.com,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Georgi Djakov <georgi.djakov@linaro.org>
+Subject: [PATCH] interconnect: qcom: msm8974: Don't boost the NoC rate during boot
+Date:   Mon,  9 Nov 2020 14:45:12 +0200
+Message-Id: <20201109124512.10776-1-georgi.djakov@linaro.org>
+X-Mailer: git-send-email 2.28.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1604684690-31065-7-git-send-email-bbhatt@codeaurora.org>
-User-Agent: Mutt/1.9.4 (2018-02-28)
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Nov 06, 2020 at 09:44:50AM -0800, Bhaumik Bhatt wrote:
-> If MHI is unable to determine the execution environment during
-> the panic path, host must skip the RDDM download. This can happen
-> if the BHI offset read or the BHI_EXECENV register read fails
-> indicating that the underlying transport is unresponsive. Hence,
-> there is no need to trigger an RDDM using SYSERR or request an
-> SOC reset.
-> 
-> Suggested-by: Hemant Kumar <hemantk@codeaurora.org>
-> Signed-off-by: Bhaumik Bhatt <bbhatt@codeaurora.org>
+It has been reported that on Fairphone 2 (msm8974-based), increasing
+the clock rate for some of the NoCs during boot may lead to hangs.
+Let's restore the original behavior and not touch the clock rate of
+any of the NoCs to fix the regression.
 
-Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Reported-by: Luca Weiss <luca@z3ntu.xyz>
+Fixes: b1d681d8d324 ("interconnect: Add sync state support")
+Signed-off-by: Georgi Djakov <georgi.djakov@linaro.org>
+---
+ drivers/interconnect/qcom/msm8974.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-Thanks,
-Mani
-
-> ---
->  drivers/bus/mhi/core/boot.c | 9 +++++++--
->  1 file changed, 7 insertions(+), 2 deletions(-)
-> 
-> diff --git a/drivers/bus/mhi/core/boot.c b/drivers/bus/mhi/core/boot.c
-> index 16244cc..6f0cfb9 100644
-> --- a/drivers/bus/mhi/core/boot.c
-> +++ b/drivers/bus/mhi/core/boot.c
-> @@ -92,6 +92,9 @@ static int __mhi_download_rddm_in_panic(struct mhi_controller *mhi_cntrl)
->  	 * image download completion.
->  	 */
->  	ee = mhi_get_exec_env(mhi_cntrl);
-> +	if (ee == MHI_EE_MAX)
-> +		goto error_exit_rddm;
-> +
->  	if (ee != MHI_EE_RDDM) {
->  		dev_dbg(dev, "Trigger device into RDDM mode using SYS ERR\n");
->  		mhi_set_mhi_state(mhi_cntrl, MHI_STATE_SYS_ERR);
-> @@ -139,10 +142,12 @@ static int __mhi_download_rddm_in_panic(struct mhi_controller *mhi_cntrl)
->  	ee = mhi_get_exec_env(mhi_cntrl);
->  	ret = mhi_read_reg(mhi_cntrl, base, BHIE_RXVECSTATUS_OFFS, &rx_status);
->  
-> -	dev_err(dev, "Did not complete RDDM transfer\n");
-> -	dev_err(dev, "Current EE: %s\n", TO_MHI_EXEC_STR(ee));
->  	dev_err(dev, "RXVEC_STATUS: 0x%x\n", rx_status);
->  
-> +error_exit_rddm:
-> +	dev_err(dev, "RDDM transfer failed. Current EE: %s\n",
-> +		TO_MHI_EXEC_STR(ee));
-> +
->  	return -EIO;
->  }
->  
-> -- 
-> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-> a Linux Foundation Collaborative Project
-> 
+diff --git a/drivers/interconnect/qcom/msm8974.c b/drivers/interconnect/qcom/msm8974.c
+index b6b639dad691..da68ce375a89 100644
+--- a/drivers/interconnect/qcom/msm8974.c
++++ b/drivers/interconnect/qcom/msm8974.c
+@@ -637,6 +637,14 @@ static int msm8974_icc_set(struct icc_node *src, struct icc_node *dst)
+ 	return 0;
+ }
+ 
++static int msm8974_get_bw(struct icc_node *node, u32 *avg, u32 *peak)
++{
++	*avg = 0;
++	*peak = 0;
++
++	return 0;
++}
++
+ static int msm8974_icc_probe(struct platform_device *pdev)
+ {
+ 	const struct msm8974_icc_desc *desc;
+@@ -690,6 +698,7 @@ static int msm8974_icc_probe(struct platform_device *pdev)
+ 	provider->aggregate = icc_std_aggregate;
+ 	provider->xlate = of_icc_xlate_onecell;
+ 	provider->data = data;
++	provider->get_bw = msm8974_get_bw;
+ 
+ 	ret = icc_provider_add(provider);
+ 	if (ret) {
