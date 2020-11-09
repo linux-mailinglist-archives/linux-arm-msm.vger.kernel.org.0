@@ -2,119 +2,87 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 29B312AC48D
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Nov 2020 20:04:29 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A37212AC4C8
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Nov 2020 20:19:00 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729533AbgKITEY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 9 Nov 2020 14:04:24 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49440 "EHLO
+        id S1727303AbgKITS7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 9 Nov 2020 14:18:59 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51666 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729302AbgKITEY (ORCPT
+        with ESMTP id S1729987AbgKITS4 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 9 Nov 2020 14:04:24 -0500
-Received: from the.earth.li (the.earth.li [IPv6:2a00:1098:86:4d:c0ff:ee:15:900d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5BFB7C0613CF;
-        Mon,  9 Nov 2020 11:04:24 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=earth.li;
-         s=the; h=In-Reply-To:Content-Type:MIME-Version:References:Message-ID:Subject
-        :Cc:To:From:Date:Sender:Reply-To:Content-Transfer-Encoding:Content-ID:
-        Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
-        :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
-        List-Post:List-Owner:List-Archive;
-        bh=TFKGo0xpBOEg+T74W7oI6xqQWy9esM9XTIUlQGEd/Mk=; b=wALVIypO2VnSRap5o/l6oiHbAt
-        AWYe1Cr7+RyhGemq7Gt6n3sNZczEifqAsATj0BcxYu1Ha7VMZIdEnvTtT3Tl4/nDo3HiJhgoaY9pm
-        WK6v4K0BPkNIeJn5Yp9ldU/hcCz3HPNAZ24HsMMJ7ppWj7NmuhlqE4hOuCXGjnlfzoMnPL/PpMYSW
-        dtbhiMVZ2jLxl7tQOqo/+gyunJyP92tp2me0rwINApgdyFeoegQczdTY2K8/An2UKoBcDXOKpBmah
-        L0VyEre/Wh+XvUAy54r4q7R7w/SVKjj42E3N87BoDHEvJn6WPod7+lL9qfdOciKXHMDF4E24ioclD
-        eY1N8PsQ==;
-Received: from noodles by the.earth.li with local (Exim 4.92)
-        (envelope-from <noodles@earth.li>)
-        id 1kcCSe-0002ic-8z; Mon, 09 Nov 2020 19:04:16 +0000
-Date:   Mon, 9 Nov 2020 19:04:16 +0000
-From:   Jonathan McDowell <noodles@earth.li>
-To:     Vinod Koul <vkoul@kernel.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Dan Williams <dan.j.williams@intel.com>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        Thomas Pedersen <twp@codeaurora.org>,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        dmaengine@vger.kernel.org
-Subject: Re: [PATCH v4] dmaengine: qcom: Add ADM driver
-Message-ID: <20201109190416.GF32650@earth.li>
-References: <20200916064326.GA13963@earth.li>
- <20200919185739.GS3411@earth.li>
- <20200920181204.GT3411@earth.li>
- <20200923194056.GY3411@earth.li>
- <20201109114121.GG3171@vkoul-mobl>
+        Mon, 9 Nov 2020 14:18:56 -0500
+Received: from mail-lj1-x243.google.com (mail-lj1-x243.google.com [IPv6:2a00:1450:4864:20::243])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 440BBC0613CF
+        for <linux-arm-msm@vger.kernel.org>; Mon,  9 Nov 2020 11:18:55 -0800 (PST)
+Received: by mail-lj1-x243.google.com with SMTP id l10so11782165lji.4
+        for <linux-arm-msm@vger.kernel.org>; Mon, 09 Nov 2020 11:18:55 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=bu0ThKEY7iNNAWO1Gs5nfun8XEbY1iHpVPn66H13xho=;
+        b=MXu1FiX/P8KsnLg7KwJk3Dr/HoYUiRRYwLCjf1j8Ckk0cbMDjVN32AAjT2KTOKu/1C
+         ZsjaDNl2c19oeNtpL5x5MKJpucyMROnOwR9d0EjWq+xjdsWxzl6pyZdjQnZHMP0+6tRz
+         eSfz9fClJxrmCocEbBKr62POOEUtZPpu7Jl8w=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=bu0ThKEY7iNNAWO1Gs5nfun8XEbY1iHpVPn66H13xho=;
+        b=eXB/p4jWtrgWYx74O5Lm/P6kmO30U52S9DU0lFCoPkCD6vmsaz8Y8wOjlQrdu/BXJr
+         QVkz431+L5BhlAO71trBLOKAq873b42SkFUc1VYcDNO1vg5zLj+eWjaiYtw+vDwxP1Mk
+         wynafMK24TemUvgQtDR2BbvDIvZ/LPMmyAyZ9eWb8Ppe4jTOVZQzw5ICIwgNDVPbZURN
+         9gRcVefdl20/hM0TCLmzwFxpSLE+2NviabZ6QSG//o/WBE+gqYsdOqZ+WbEVRt1ZKAsf
+         71bfph/ljy/Jq40ZK9rZySP/+aDnHy8uP5ATfqNYzVPGbOlsSXEmPhEiEcae6raybrch
+         ojrw==
+X-Gm-Message-State: AOAM533hjFHoS9rg9wX5Zyv0LM6t2s/WtmPaXDLIUUfBgDB5AqLcVJwR
+        1XBgyGFUp5VoWpDikYzKTr5fWS8ujOlftQ==
+X-Google-Smtp-Source: ABdhPJy81GK6Wez/hnlpeDy4k7RTWpZqgntrJgmG6/of04/DkWlyJxM6ZwU151gcADkAppND3mKvPA==
+X-Received: by 2002:a2e:b0f8:: with SMTP id h24mr7040613ljl.2.1604949533158;
+        Mon, 09 Nov 2020 11:18:53 -0800 (PST)
+Received: from mail-lj1-f169.google.com (mail-lj1-f169.google.com. [209.85.208.169])
+        by smtp.gmail.com with ESMTPSA id s17sm1854827lfp.117.2020.11.09.11.18.52
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 09 Nov 2020 11:18:52 -0800 (PST)
+Received: by mail-lj1-f169.google.com with SMTP id 11so11772548ljf.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 09 Nov 2020 11:18:52 -0800 (PST)
+X-Received: by 2002:a05:651c:1074:: with SMTP id y20mr4049301ljm.432.1604949531557;
+ Mon, 09 Nov 2020 11:18:51 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20201109114121.GG3171@vkoul-mobl>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+References: <1602786476-27833-1-git-send-email-sibis@codeaurora.org> <CAE=gft4FrAm_QHKm_dF6G0R8fkfJrYFYPMrRu0nPNrQtZ83skw@mail.gmail.com>
+In-Reply-To: <CAE=gft4FrAm_QHKm_dF6G0R8fkfJrYFYPMrRu0nPNrQtZ83skw@mail.gmail.com>
+From:   Evan Green <evgreen@chromium.org>
+Date:   Mon, 9 Nov 2020 11:18:14 -0800
+X-Gmail-Original-Message-ID: <CAE=gft6JKpbcirFn9LAiDYFnM=HMfDQAYfQHAFy6NF+8J4Dmkg@mail.gmail.com>
+Message-ID: <CAE=gft6JKpbcirFn9LAiDYFnM=HMfDQAYfQHAFy6NF+8J4Dmkg@mail.gmail.com>
+Subject: Re: [PATCH] arm64: dts: qcom: sc7180-trogdor: Fixup modem memory region
+To:     Sibi Sankar <sibis@codeaurora.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Doug Anderson <dianders@chromium.org>,
+        Andy Gross <agross@kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>, LKML <linux-kernel@vger.kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Matthias Kaehlcke <mka@chromium.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Nov 09, 2020 at 05:11:21PM +0530, Vinod Koul wrote:
-> HI Jonathan,
-> 
-> On 23-09-20, 20:40, Jonathan McDowell wrote:
-> > Add the DMA engine driver for the QCOM Application Data Mover (ADM) DMA
-> > controller found in the MSM8x60 and IPQ/APQ8064 platforms.
-> 
-> Mostly it looks good, some nitpicks
-> 
-> > The ADM supports both memory to memory transactions and memory
-> > to/from peripheral device transactions.  The controller also provides
-> > flow control capabilities for transactions to/from peripheral devices.
-> > 
-> > The initial release of this driver supports slave transfers to/from
-> > peripherals and also incorporates CRCI (client rate control interface)
-> > flow control.
-> 
-> Can you also convert the binding from txt to yaml?
+On Tue, Oct 20, 2020 at 11:37 AM Evan Green <evgreen@chromium.org> wrote:
+>
+> On Thu, Oct 15, 2020 at 11:28 AM Sibi Sankar <sibis@codeaurora.org> wrote:
+> >
+> > The modem firmware memory requirements vary between 32M/140M on
+> > no-lte/lte skus respectively, so fixup the modem memory region
+> > to reflect the requirements.
+> >
+> > Signed-off-by: Sibi Sankar <sibis@codeaurora.org>
+>
+> Reviewed-by: Evan Green <evgreen@chromium.org>
 
-Seems like that can be a separate patch, but sure, I'll give it a whirl.
-
-> > diff --git a/drivers/dma/qcom/Kconfig b/drivers/dma/qcom/Kconfig
-> > index 3bcb689162c6..0389d60d2604 100644
-> > --- a/drivers/dma/qcom/Kconfig
-> > +++ b/drivers/dma/qcom/Kconfig
-> > @@ -1,4 +1,15 @@
-> >  # SPDX-License-Identifier: GPL-2.0-only
-> > +config QCOM_ADM
-> > +	tristate "Qualcomm ADM support"
-> > +	depends on (ARCH_QCOM || COMPILE_TEST) && !PHYS_ADDR_T_64BIT
-> 
-> why !PHYS_ADDR_T_64BIT ..?
-
-The hardware only supports a 32 bit physical address, so specifying
-!PHYS_ADDR_T_64BIT gives maximum COMPILE_TEST coverage without having to
-spend effort on kludging things in the code that will never actually be
-needed on real hardware.
-
-> > +	select DMA_ENGINE
-> > +	select DMA_VIRTUAL_CHANNELS
-> > +	help
-> > +	  Enable support for the Qualcomm Application Data Mover (ADM) DMA
-> > +	  controller, as present on MSM8x60, APQ8064, and IPQ8064 devices.
-> > +	  This controller provides DMA capabilities for both general purpose
-> > +	  and on-chip peripheral devices.
-> 
-> > +static const struct of_device_id adm_of_match[] = {
-> > +	{ .compatible = "qcom,adm", },
-> 
-> I know we have merged the binding, but should we not have a soc specific
-> compatible?
-
-Which soc? Looking at the other QCOM DMA drivers they mostly have
-versioned compatibles and I can't find any indication there are multiple
-variants of this block out there.
-
-J.
-
--- 
-Web [ Every program is either trivial or it contains at least one  ]
-site: https:// [                   bug.                   ]      Made by
-www.earth.li/~noodles/  [                      ]         HuggieTag 0.0.24
+Did this land anywhere?
