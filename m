@@ -2,88 +2,98 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 5ACBE2AC556
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Nov 2020 20:48:13 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 95D892AC57D
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Nov 2020 20:54:02 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730470AbgKITsI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 9 Nov 2020 14:48:08 -0500
-Received: from mail.kernel.org ([198.145.29.99]:43176 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1730379AbgKITsI (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 9 Nov 2020 14:48:08 -0500
-Received: from localhost (fw-tnat.cambridge.arm.com [217.140.96.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id F0275206E3;
-        Mon,  9 Nov 2020 19:48:06 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1604951287;
-        bh=FYfmW8xxjbT53wT8eCWTN+eqI1IgYtV7lRvsksS17XI=;
-        h=Date:From:To:Cc:In-Reply-To:References:Subject:From;
-        b=Nq7gkvHwLVvMurmEn+w6Wqkmn0NzD78Q23fZkKNOyhOpwkn60VdMVXf2WfhIqWETM
-         FiO9+PrUmnte4662kv8IH+bfzusvB8ablPUcLAOCYsqPA8AZK8k9DUthbxifhCG5r6
-         6V8Y11eIaqR/OOBcWeTpYvAZGlxeZVUpXn2IJkGM=
-Date:   Mon, 09 Nov 2020 19:47:53 +0000
-From:   Mark Brown <broonie@kernel.org>
-To:     Cheng-Yi Chiang <cychiang@chromium.org>,
-        linux-kernel@vger.kernel.org
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        linux-arm-kernel@lists.infradead.org,
-        Banajit Goswami <bgoswami@codeaurora.org>,
-        Srini Kandagatla <srinivas.kandagatla@linaro.org>,
-        dianders@chromium.org, Stephan Gerhold <stephan@gerhold.net>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        xuyuqing@huaqin.corp-partner.google.com, dgreid@chromium.org,
-        alsa-devel@alsa-project.org, Rob Herring <robh+dt@kernel.org>,
-        Taniya Das <tdas@codeaurora.org>, judyhsiao@chromium.org,
-        Takashi Iwai <tiwai@suse.com>,
-        Patrick Lai <plai@codeaurora.org>,
-        Heiko Stuebner <heiko@sntech.de>,
-        Andy Gross <agross@kernel.org>, devicetree@vger.kernel.org,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        Rohit kumar <rohitkr@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org, tzungbi@chromium.org,
-        Srinivasa Rao <srivasam@codeaurora.org>,
-        Ajye Huang <ajye_huang@compal.corp-partner.google.com>
-In-Reply-To: <20201109103415.607495-1-cychiang@chromium.org>
-References: <20201109103415.607495-1-cychiang@chromium.org>
-Subject: Re: [PATCH] ASoC: qcom: sc7180: Add missing PM ops
-Message-Id: <160495125733.49154.11647929702514464617.b4-ty@kernel.org>
+        id S1729740AbgKITyB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 9 Nov 2020 14:54:01 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57154 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727070AbgKITyB (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 9 Nov 2020 14:54:01 -0500
+Received: from bhuna.collabora.co.uk (bhuna.collabora.co.uk [IPv6:2a00:1098:0:82:1000:25:2eeb:e3e3])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 26EB5C0613CF;
+        Mon,  9 Nov 2020 11:54:01 -0800 (PST)
+Received: from [127.0.0.1] (localhost [127.0.0.1])
+        (Authenticated sender: nicolas)
+        with ESMTPSA id 53EE61F44F9B
+Message-ID: <2f907743dbb77f4c2f871675070065dd372514be.camel@collabora.com>
+Subject: Re: [PATCH 0/3] HDR10 static metadata
+From:   Nicolas Dufresne <nicolas.dufresne@collabora.com>
+Reply-To: Nicolas Dufresne <nicolas.dufresne@collabora.com>
+To:     Stanimir Varbanov <stanimir.varbanov@linaro.org>,
+        linux-media@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+Cc:     Ezequiel Garcia <ezequiel@collabora.com>,
+        Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Date:   Mon, 09 Nov 2020 14:53:55 -0500
+In-Reply-To: <20201109173153.23720-1-stanimir.varbanov@linaro.org>
+References: <20201109173153.23720-1-stanimir.varbanov@linaro.org>
+Organization: Collabora
+Content-Type: multipart/signed; micalg="pgp-sha1"; protocol="application/pgp-signature";
+        boundary="=-s289bAYu8a41gujl5mQ2"
+User-Agent: Evolution 3.38.1 (3.38.1-1.fc33) 
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, 9 Nov 2020 18:34:15 +0800, Cheng-Yi Chiang wrote:
-> Use PM ops snd_soc_pm_ops to handle suspend/resume like other machine
-> drivers.
 
-Applied to
+--=-s289bAYu8a41gujl5mQ2
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/sound.git for-next
+Le lundi 09 novembre 2020 =C3=A0 19:31 +0200, Stanimir Varbanov a =C3=A9cri=
+t=C2=A0:
+> Hello,
+>=20
+> This patchset adds two HDR10 HEVC v4l2 controls for Content Light Level
+> and Mastering display colour volume plus implenmentation in Venus encoder
+> driver.
+>=20
+> Comments are welcome!
 
-Thanks!
+It is not a formal review, but I did walked through the new API and
+everything looks fine to me. One question though, are you aware that
+the H.264/AVC equivalent is identical ? What is you plan for that ?
 
-[1/1] ASoC: qcom: sc7180: Add missing PM ops
-      commit: b2fc3029308dd1bace4c11c733eca2ef941b0e29
+>=20
+> regards,
+> Stan
+>=20
+> Stanimir Varbanov (3):
+> =C2=A0=C2=A0v4l: Add HDR10 HEVC static metadata controls
+> =C2=A0=C2=A0docs: media: Document CLL and Mastering display
+> =C2=A0=C2=A0venus: venc: Add support for CLL and Mastering display contro=
+ls
+>=20
+> =C2=A0.../media/v4l/ext-ctrls-codec.rst             | 61 ++++++++++++++++=
++++
+> =C2=A0drivers/media/platform/qcom/venus/core.h      |  3 +
+> =C2=A0drivers/media/platform/qcom/venus/hfi_cmds.c  |  8 +++
+> =C2=A0.../media/platform/qcom/venus/hfi_helper.h    | 20 ++++++
+> =C2=A0drivers/media/platform/qcom/venus/venc.c      | 29 +++++++++
+> =C2=A0.../media/platform/qcom/venus/venc_ctrls.c    | 16 ++++-
+> =C2=A0drivers/media/v4l2-core/v4l2-ctrls.c          | 61 ++++++++++++++++=
++++
+> =C2=A0include/media/hevc-ctrls.h                    | 41 +++++++++++++
+> =C2=A0include/media/v4l2-ctrls.h                    |  2 +
+> =C2=A09 files changed, 240 insertions(+), 1 deletion(-)
+>=20
 
-All being well this means that it will be integrated into the linux-next
-tree (usually sometime in the next 24 hours) and sent to Linus during
-the next merge window (or sooner if it is a bug fix), however if
-problems are discovered then the patch may be dropped or reverted.
 
-You may get further e-mails resulting from automated or manual testing
-and review of the tree, please engage with people reporting problems and
-send followup patches addressing any issues that are reported if needed.
+--=-s289bAYu8a41gujl5mQ2
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: This is a digitally signed message part
+Content-Transfer-Encoding: 7bit
 
-If any updates are required or you are submitting further changes they
-should be sent as incremental updates against current git, existing
-patches will not be replaced.
+-----BEGIN PGP SIGNATURE-----
 
-Please add any relevant lists and maintainers to the CCs when replying
-to this mail.
+iF0EABECAB0WIQSScpfJiL+hb5vvd45xUwItrAaoHAUCX6meUwAKCRBxUwItrAao
+HI6NAJ4hGh10Yxuk5bvayyZGxO+wj3xrVQCfTBF/0PoT8QvRAdlUFA337PtFNT4=
+=qK+H
+-----END PGP SIGNATURE-----
 
-Thanks,
-Mark
+--=-s289bAYu8a41gujl5mQ2--
+
