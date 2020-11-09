@@ -2,50 +2,51 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 7A8EC2AC284
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Nov 2020 18:36:50 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3CBAD2AC271
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Nov 2020 18:36:09 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731792AbgKIRgE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 9 Nov 2020 12:36:04 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35712 "EHLO
+        id S1729879AbgKIRgH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 9 Nov 2020 12:36:07 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35718 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731756AbgKIRgD (ORCPT
+        with ESMTP id S1731969AbgKIRgG (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 9 Nov 2020 12:36:03 -0500
-Received: from mail-ej1-x644.google.com (mail-ej1-x644.google.com [IPv6:2a00:1450:4864:20::644])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 13EFCC0613D3
-        for <linux-arm-msm@vger.kernel.org>; Mon,  9 Nov 2020 09:36:03 -0800 (PST)
-Received: by mail-ej1-x644.google.com with SMTP id i19so13453814ejx.9
-        for <linux-arm-msm@vger.kernel.org>; Mon, 09 Nov 2020 09:36:02 -0800 (PST)
+        Mon, 9 Nov 2020 12:36:06 -0500
+Received: from mail-ed1-x544.google.com (mail-ed1-x544.google.com [IPv6:2a00:1450:4864:20::544])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 527FAC0613D3
+        for <linux-arm-msm@vger.kernel.org>; Mon,  9 Nov 2020 09:36:04 -0800 (PST)
+Received: by mail-ed1-x544.google.com with SMTP id b9so9656155edu.10
+        for <linux-arm-msm@vger.kernel.org>; Mon, 09 Nov 2020 09:36:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id;
-        bh=JIvQBr7O5WeG1riAmknLOUpw/3YS8A77of4sXgFTgmE=;
-        b=Q/5EHT7KAZ6kEaKVGpvmN6+0dqwQ8GcJ3fEJ8b4fAMLdnWAVykMxIiv2nwNwIk4ZIE
-         h83UPx4WgJGV6/5Ci9sFcXVvg2aDi5bvULe8xuS5OQMPNKjH7/EwlArQlqIV/Kx4JqRb
-         Rdt7DGgjr9+/c/nno2SN1P0cZ+JSvRuzdUOfn3fQ7ndjAYq7IBEnD5yxpEbPBvftd9St
-         EX2copPgO1SietMK2eaehdn+XWOMkMRdrKQLmT2ckbnnJvfUyECSbzDOzw94q4GYk+Xw
-         s8K4DVO2Ydnmm1vAFst43LujSHoo7ZP4DVHa4i/Vu+nnrN4EimMxFHZw4sohy4ijW9/o
-         IesQ==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=4uG33267VrZPuq/TP2MGJz5yF4YqwpdNO7AQA5+ar2s=;
+        b=O7BrI5oNvRv+OmwF/UkCImulVAiaztkPKqytKHXY+phxO3mvlbqqkcs7BYsB3rn+Ek
+         gt/KpHJr49OZdbt3NADQHFhpcYjja0bSgE7+WXDaEpg9tTcJTvd6K9bJpFw7UGkQ6IPD
+         zQD8Op68Wh8S0LF2m8pknytLEj1QY2q0+RspgasOMtL1dALe96WnNFKUYYvK+hSXueoQ
+         +oLlVcUZJOe0gwrYm8fEiHaIm6U+zLyzi0+qN7XU+p4k1d/G15GbNbsUen5muluj1D8a
+         WN9VnyOW3Mgpq3uRVEuGPeRZVRta5YJGcTWNftJ1lbfp+i4BmT7fpVjOCs1UsKaMm7tV
+         6kuw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=JIvQBr7O5WeG1riAmknLOUpw/3YS8A77of4sXgFTgmE=;
-        b=LceXSLzWg7Sg0JGlwxqcDdpJIlimATLfZZrkW4PgIlP+LPRTT10vqhhOcwXWy2vVj1
-         +8bDBgSRA+etZREUbWMsn0xAJizIVYwzg9dfnOYmL23KiUo/5UHwwY1pctBTG2dbeZ6C
-         Q+XU1PErti/7zQofi3Jby283efxF6muBet+Uf9Q/yNm8s4qkucs4bMvGOBXrgUZat+FH
-         wQuaf301ivmeArkKqSYvskG2ysdJBf0c0ANfODszZtw3DpUBwFmSqGaIPJ54crqHGTGx
-         qFQmnO7C34u3UdSCyIwYyE3ZiyWyEj5xdVeXm9xpbDv/c56rfdRNPh56OEsptmVl8WgU
-         CEjw==
-X-Gm-Message-State: AOAM532G86axDxuS/xcwIgBAMgi/T2hW+JSRef3hfEZ8NoSsnfPYSc3X
-        n2+Tkr2Ht5AGZjLvg5BIM7oKSw==
-X-Google-Smtp-Source: ABdhPJxnWTaB3pO+sX/0RfT1E5OWwt55PoP9fDmPHyx0IXEvPIt41xAC+8UM6cWbLh75eYyQJ5S2Yw==
-X-Received: by 2002:a17:906:3644:: with SMTP id r4mr15791243ejb.517.1604943361656;
-        Mon, 09 Nov 2020 09:36:01 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=4uG33267VrZPuq/TP2MGJz5yF4YqwpdNO7AQA5+ar2s=;
+        b=DSh7fGeTIGrCmDFNGAJkVwKbtDApuf0nCQu5i7nZhyZnVTGpandrmXAZEjzR2QdW2U
+         s/J5LL6XVr+dolXMg0vxZBEclO/svvHCT6CUDhq+6NMhbVzaiaba2Z/eA9E1dbJ+yExx
+         eqh7/AlBLXqtijCN6OfDCJT3ksRYFodKh7JOuf6WgKeEkpCGul+0zh+5bt+5A0aFlUOx
+         eS2eZEyK7dG7wSJu3uQr4ZOssXHpj+nn7UqhM9TcpUS86iB0T7dcw1OwYomxe56xF+pX
+         nH0RYj6qJ63vCVY3smpxAl6U/9Fl2DuqdB7yvA6D9eTrTixdx+AhpCUn+yGH+8aidvIP
+         4TWQ==
+X-Gm-Message-State: AOAM531AO+5t2n5NDt/HoZ/SSYhMkL7KSxlWLMOndeGPSW6mKULvm6AN
+        qRvv7eU/GkLXGlxad2oIJkAnMd61a1VecHXz
+X-Google-Smtp-Source: ABdhPJwd5XROm0SteLGhK+SA+asZkfwB4SG1O6GLXXZCMl1pEL4LS2NKMI2H3wIFjOKUXuYZgkXwcQ==
+X-Received: by 2002:a50:a40f:: with SMTP id u15mr17002139edb.307.1604943362974;
+        Mon, 09 Nov 2020 09:36:02 -0800 (PST)
 Received: from localhost.localdomain (hst-221-89.medicom.bg. [84.238.221.89])
-        by smtp.gmail.com with ESMTPSA id jw7sm9123981ejb.54.2020.11.09.09.36.00
+        by smtp.gmail.com with ESMTPSA id jw7sm9123981ejb.54.2020.11.09.09.36.01
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 09 Nov 2020 09:36:00 -0800 (PST)
+        Mon, 09 Nov 2020 09:36:02 -0800 (PST)
 From:   Stanimir Varbanov <stanimir.varbanov@linaro.org>
 To:     linux-media@vger.kernel.org, linux-kernel@vger.kernel.org,
         linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org
@@ -56,40 +57,96 @@ Cc:     Kyungmin Park <kyungmin.park@samsung.com>,
         Nicolas Dufresne <nicolas.dufresne@collabora.com>,
         Marek Szyprowski <m.szyprowski@samsung.com>,
         Stanimir Varbanov <stanimir.varbanov@linaro.org>
-Subject: [PATCH 0/4] MFC private ctrls to std ctrls
-Date:   Mon,  9 Nov 2020 19:35:37 +0200
-Message-Id: <20201109173541.10016-1-stanimir.varbanov@linaro.org>
+Subject: [PATCH 1/4] v4l2-ctrl: Make display delay and display enable std controls
+Date:   Mon,  9 Nov 2020 19:35:38 +0200
+Message-Id: <20201109173541.10016-2-stanimir.varbanov@linaro.org>
 X-Mailer: git-send-email 2.17.1
+In-Reply-To: <20201109173541.10016-1-stanimir.varbanov@linaro.org>
+References: <20201109173541.10016-1-stanimir.varbanov@linaro.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+Make display delay and display delay enable MFC controls standard v4l
+controls. This will allow reuse of the controls for other decoder
+drivers. Also the new proposed controls are now codec agnostic because
+they could be used for any codec.
 
-Those four patches makes two V4L2_CID_MPEG_VIDEO_DECODER_DISPLAY_DELAY
-and V4L2_CID_MPEG_VIDEO_DECODER_DISPLAY_DELAY_ENABLE private MFC controls
-standard v4l2 controls, and use them in Venus driver.
+Signed-off-by: Stanimir Varbanov <stanimir.varbanov@linaro.org>
+---
+ .../userspace-api/media/v4l/ext-ctrls-codec.rst   | 15 +++++++++++++++
+ drivers/media/v4l2-core/v4l2-ctrls.c              |  4 ++++
+ include/uapi/linux/v4l2-controls.h                |  2 ++
+ 3 files changed, 21 insertions(+)
 
-Comments are welcome!
-
-regards,
-Stan
-
-Stanimir Varbanov (4):
-  v4l2-ctrl: Make display delay and display enable std controls
-  venus: vdec: Add support for display delay and delay enable controls
-  s5p-mfc: Use display delay and display enable std controls
-  docs: Deprecate mfc display delay controls
-
- .../media/v4l/ext-ctrls-codec.rst             | 25 +++++++++++++++++++
- drivers/media/platform/qcom/venus/core.h      |  2 ++
- drivers/media/platform/qcom/venus/vdec.c      | 10 +++++++-
- .../media/platform/qcom/venus/vdec_ctrls.c    | 16 +++++++++++-
- drivers/media/platform/s5p-mfc/s5p_mfc_dec.c  | 16 ++++++++++++
- drivers/media/v4l2-core/v4l2-ctrls.c          |  4 +++
- include/uapi/linux/v4l2-controls.h            |  2 ++
- 7 files changed, 73 insertions(+), 2 deletions(-)
-
+diff --git a/Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst b/Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst
+index ce728c757eaf..82c9cda40270 100644
+--- a/Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst
++++ b/Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst
+@@ -679,6 +679,21 @@ enum v4l2_mpeg_video_frame_skip_mode -
+     otherwise the decoder expects a single frame in per buffer.
+     Applicable to the decoder, all codecs.
+ 
++``V4L2_CID_MPEG_VIDEO_DECODER_DISPLAY_DELAY_ENABLE (boolean)``
++    If the display delay is enabled then the decoder is forced to return
++    a CAPTURE buffer (decoded frame) after processing a certain number
++    of OUTPUT buffers. The delay can be set through
++    ``V4L2_CID_MPEG_VIDEO_DECODER_DISPLAY_DELAY``. This
++    feature can be used for example for generating thumbnails of videos.
++    Applicable to the decoder.
++
++``V4L2_CID_MPEG_VIDEO_DECODER_DISPLAY_DELAY (integer)``
++    Display delay value for decoder. The decoder is forced to
++    return a decoded frame after the set 'display delay' number of
++    frames. If this number is low it may result in frames returned out
++    of display order, in addition the hardware may still be using the
++    returned buffer as a reference picture for subsequent frames.
++
+ ``V4L2_CID_MPEG_VIDEO_H264_VUI_SAR_ENABLE (boolean)``
+     Enable writing sample aspect ratio in the Video Usability
+     Information. Applicable to the H264 encoder.
+diff --git a/drivers/media/v4l2-core/v4l2-ctrls.c b/drivers/media/v4l2-core/v4l2-ctrls.c
+index bd7f330c941c..4a21802e026b 100644
+--- a/drivers/media/v4l2-core/v4l2-ctrls.c
++++ b/drivers/media/v4l2-core/v4l2-ctrls.c
+@@ -874,6 +874,8 @@ const char *v4l2_ctrl_get_name(u32 id)
+ 	case V4L2_CID_MPEG_VIDEO_HEADER_MODE:			return "Sequence Header Mode";
+ 	case V4L2_CID_MPEG_VIDEO_MAX_REF_PIC:			return "Max Number of Reference Pics";
+ 	case V4L2_CID_MPEG_VIDEO_FRAME_SKIP_MODE:		return "Frame Skip Mode";
++	case V4L2_CID_MPEG_VIDEO_DECODER_DISPLAY_DELAY:		return "Display Delay";
++	case V4L2_CID_MPEG_VIDEO_DECODER_DISPLAY_DELAY_ENABLE:	return "Display Delay Enable";
+ 	case V4L2_CID_MPEG_VIDEO_H263_I_FRAME_QP:		return "H263 I-Frame QP Value";
+ 	case V4L2_CID_MPEG_VIDEO_H263_P_FRAME_QP:		return "H263 P-Frame QP Value";
+ 	case V4L2_CID_MPEG_VIDEO_H263_B_FRAME_QP:		return "H263 B-Frame QP Value";
+@@ -1221,6 +1223,7 @@ void v4l2_ctrl_fill(u32 id, const char **name, enum v4l2_ctrl_type *type,
+ 	case V4L2_CID_FLASH_READY:
+ 	case V4L2_CID_MPEG_VIDEO_DECODER_MPEG4_DEBLOCK_FILTER:
+ 	case V4L2_CID_MPEG_VIDEO_DECODER_SLICE_INTERFACE:
++	case V4L2_CID_MPEG_VIDEO_DECODER_DISPLAY_DELAY_ENABLE:
+ 	case V4L2_CID_MPEG_VIDEO_FRAME_RC_ENABLE:
+ 	case V4L2_CID_MPEG_VIDEO_MB_RC_ENABLE:
+ 	case V4L2_CID_MPEG_VIDEO_H264_8X8_TRANSFORM:
+@@ -1256,6 +1259,7 @@ void v4l2_ctrl_fill(u32 id, const char **name, enum v4l2_ctrl_type *type,
+ 		break;
+ 	case V4L2_CID_MPEG_VIDEO_MV_H_SEARCH_RANGE:
+ 	case V4L2_CID_MPEG_VIDEO_MV_V_SEARCH_RANGE:
++	case V4L2_CID_MPEG_VIDEO_DECODER_DISPLAY_DELAY:
+ 		*type = V4L2_CTRL_TYPE_INTEGER;
+ 		break;
+ 	case V4L2_CID_MPEG_VIDEO_FORCE_KEY_FRAME:
+diff --git a/include/uapi/linux/v4l2-controls.h b/include/uapi/linux/v4l2-controls.h
+index 7035f4fb182c..d6b19f8d0022 100644
+--- a/include/uapi/linux/v4l2-controls.h
++++ b/include/uapi/linux/v4l2-controls.h
+@@ -773,6 +773,8 @@ enum v4l2_mpeg_video_frame_skip_mode {
+ 	V4L2_MPEG_VIDEO_FRAME_SKIP_MODE_LEVEL_LIMIT	= 1,
+ 	V4L2_MPEG_VIDEO_FRAME_SKIP_MODE_BUF_LIMIT	= 2,
+ };
++#define V4L2_CID_MPEG_VIDEO_DECODER_DISPLAY_DELAY		(V4L2_CID_MPEG_BASE + 647)
++#define V4L2_CID_MPEG_VIDEO_DECODER_DISPLAY_DELAY_ENABLE	(V4L2_CID_MPEG_BASE + 648)
+ 
+ /*  MPEG-class control IDs specific to the CX2341x driver as defined by V4L2 */
+ #define V4L2_CID_MPEG_CX2341X_BASE				(V4L2_CTRL_CLASS_MPEG | 0x1000)
 -- 
 2.17.1
 
