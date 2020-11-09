@@ -2,72 +2,104 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id CA5032AC808
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Nov 2020 23:07:16 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id CC3D12AC846
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Nov 2020 23:23:47 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729878AbgKIWHM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 9 Nov 2020 17:07:12 -0500
-Received: from mail-oi1-f193.google.com ([209.85.167.193]:44070 "EHLO
-        mail-oi1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725946AbgKIWHM (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 9 Nov 2020 17:07:12 -0500
-Received: by mail-oi1-f193.google.com with SMTP id t16so11936234oie.11;
-        Mon, 09 Nov 2020 14:07:11 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=4NplLP7reCOX38lHGM3FpIb2UggXOtaiRXhf6SLGOLo=;
-        b=OprZhFEtO17L4P7hKyDtdY8h4Ew5HNve9KKXTvcluZwcQb6wI4288vzNSLABHFJW/B
-         a+p/TscH+Wif+jNAk220aul2LwVzQKfpwBD0Geb/YULl4H6Dut2qmjGZQEbZ7ZNtj4nJ
-         1jjAZgBZrsvXh7XGUgTEk6g15Wn0JGqbJOLIvBNlf09bAb26oc2wvZkM7qD29lPGzBtL
-         v5Dr0L09hbLcnR+3/u115hgXObPA8Zo149LlxsmACCH/ovkUqyEKpx8YNUBii6msl5B8
-         TUOG4lsTXT3Rpye8ZRlQVTv4zmuHrFocATRK14s9D4RFlSQPpp0CSfxgiKmKeQYKUpkm
-         fC/A==
-X-Gm-Message-State: AOAM530SbxWgal7CotSrXz7XbhpIFcDK87GtSxVwMDxEdCXtPvQdeInW
-        tjHoCxl98VbMcNJP6+bEUg==
-X-Google-Smtp-Source: ABdhPJyDPlTFeAl/88WFfyAw41YdRSJO7AZA3RV4dUJnr1UfWL5Jo5z4f9N5ux70F+ZrPi+HwAooPg==
-X-Received: by 2002:aca:7250:: with SMTP id p77mr886934oic.130.1604959631308;
-        Mon, 09 Nov 2020 14:07:11 -0800 (PST)
-Received: from xps15 (24-155-109-49.dyn.grandenetworks.net. [24.155.109.49])
-        by smtp.gmail.com with ESMTPSA id l1sm2812972otj.17.2020.11.09.14.07.10
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 09 Nov 2020 14:07:10 -0800 (PST)
-Received: (nullmailer pid 1840672 invoked by uid 1000);
-        Mon, 09 Nov 2020 22:07:10 -0000
-Date:   Mon, 9 Nov 2020 16:07:10 -0600
-From:   Rob Herring <robh@kernel.org>
-To:     Vinod Koul <vkoul@kernel.org>
-Cc:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        linux-kernel@vger.kernel.org, Rob Herring <robh+dt@kernel.org>,
-        linux-gpio@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, Andy Gross <agross@kernel.org>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-Subject: Re: [PATCH v3 1/2] dt-bindings: pinctrl: qcom: Add SDX55 pinctrl
- bindings
-Message-ID: <20201109220710.GA1840617@bogus>
-References: <20201109062620.14566-1-vkoul@kernel.org>
- <20201109062620.14566-2-vkoul@kernel.org>
+        id S1731388AbgKIWXk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 9 Nov 2020 17:23:40 -0500
+Received: from m42-4.mailgun.net ([69.72.42.4]:15807 "EHLO m42-4.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1731355AbgKIWXi (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 9 Nov 2020 17:23:38 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1604960618; h=Content-Transfer-Encoding: MIME-Version:
+ Message-Id: Date: Subject: Cc: To: From: Sender;
+ bh=h4kLvDOrgWdJbJRz3YUB6R5KJh03EMAS6v5CqdFVeFw=; b=cL8qurElgaTlUd3uhDRiYulg8/P88E9qll5fY63DsYZkdG5yozhSg07nLaVKrgoEUyzNMsOh
+ BtRBfrO6nlnGfB7KUXNpOQp2ETo4MhShLOc/VuleshyxEXq8tuyP7zmCn+kSJMJbVgGkbBbC
+ X/4V2YRd9s67W10JzcyURji8dTs=
+X-Mailgun-Sending-Ip: 69.72.42.4
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n04.prod.us-east-1.postgun.com with SMTP id
+ 5fa9c16102f4ee38017b815e (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 09 Nov 2020 22:23:29
+ GMT
+Sender: jcrouse=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 3D9FBC433B2; Mon,  9 Nov 2020 22:23:28 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL
+        autolearn=no autolearn_force=no version=3.4.0
+Received: from jordan-laptop.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: jcrouse)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 255EBC433C6;
+        Mon,  9 Nov 2020 22:23:22 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 255EBC433C6
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=jcrouse@codeaurora.org
+From:   Jordan Crouse <jcrouse@codeaurora.org>
+To:     linux-arm-msm@vger.kernel.org
+Cc:     Robin Murphy <robin.murphy@arm.com>, Will Deacon <will@kernel.org>,
+        iommu@lists.linux-foundation.org,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        David Airlie <airlied@linux.ie>,
+        Emil Velikov <emil.velikov@collabora.com>,
+        Eric Anholt <eric@anholt.net>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        "Gustavo A. R. Silva" <gustavoars@kernel.org>,
+        Joerg Roedel <joro@8bytes.org>,
+        Jonathan Marek <jonathan@marek.ca>,
+        Krishna Reddy <vdumpa@nvidia.com>,
+        Rob Clark <robdclark@chromium.org>,
+        Rob Clark <robdclark@gmail.com>,
+        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
+        Sam Ravnborg <sam@ravnborg.org>, Sean Paul <sean@poorly.run>,
+        Sharat Masetty <smasetty@codeaurora.org>,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org
+Subject: [RFC PATCH v1 0/3] iommu/arm-smmu: adreno-smmu page fault handling
+Date:   Mon,  9 Nov 2020 15:23:16 -0700
+Message-Id: <20201109222319.2630557-1-jcrouse@codeaurora.org>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20201109062620.14566-2-vkoul@kernel.org>
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, 09 Nov 2020 11:56:19 +0530, Vinod Koul wrote:
-> Add device tree binding Documentation details for Qualcomm SDX55
-> pinctrl driver.
-> 
-> Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-> Signed-off-by: Vinod Koul <vkoul@kernel.org>
-> ---
->  .../bindings/pinctrl/qcom,sdx55-pinctrl.yaml  | 154 ++++++++++++++++++
->  1 file changed, 154 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/pinctrl/qcom,sdx55-pinctrl.yaml
-> 
+This is an RFC to add an Adreno GPU specific handler for pagefaults. The first
+patch starts by wiring up report_iommu_fault for arm-smmu. The next patch adds
+a adreno-smmu-priv function hook to capture a handful of important debugging
+registers such as TTBR0, CONTEXTIDR, FSYNR0 and others. This is used by the
+third patch to print more detailed information on page fault such as the TTBR0
+for the pagetable that caused the fault and the source of the fault as
+determined by a combination of the FSYNR1 register and an internal GPU
+register.
 
-Reviewed-by: Rob Herring <robh@kernel.org>
+This code provides a solid base that we can expand on later for even more
+extensive GPU side page fault debugging capabilities.
+
+Jordan Crouse (3):
+  iommu/arm-smmu: Add support for driver IOMMU fault handlers
+  drm/msm: Add an adreno-smmu-priv callback to get pagefault info
+  drm/msm: Improve the a6xx page fault handler
+
+ drivers/gpu/drm/msm/adreno/a5xx_gpu.c      |  4 +-
+ drivers/gpu/drm/msm/adreno/a6xx_gpu.c      | 76 +++++++++++++++++++++-
+ drivers/gpu/drm/msm/msm_iommu.c            | 11 +++-
+ drivers/gpu/drm/msm/msm_mmu.h              |  4 +-
+ drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c | 19 ++++++
+ drivers/iommu/arm/arm-smmu/arm-smmu.c      | 16 ++++-
+ drivers/iommu/arm/arm-smmu/arm-smmu.h      |  2 +
+ include/linux/adreno-smmu-priv.h           | 31 ++++++++-
+ 8 files changed, 151 insertions(+), 12 deletions(-)
+
+-- 
+2.25.1
+
