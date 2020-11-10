@@ -2,109 +2,110 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 57C902AD60A
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Nov 2020 13:19:16 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id F1A582AD784
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Nov 2020 14:32:07 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730375AbgKJMTD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 10 Nov 2020 07:19:03 -0500
-Received: from mail.kernel.org ([198.145.29.99]:34540 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1730061AbgKJMTD (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 10 Nov 2020 07:19:03 -0500
-Received: from willie-the-truck (236.31.169.217.in-addr.arpa [217.169.31.236])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 02DA820665;
-        Tue, 10 Nov 2020 12:18:59 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1605010742;
-        bh=BWpWOxjo3ugo55ThRY5WPAalknlbV0RrMHib3OTIbeM=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=DQCx3oM2JIIWIma00vDs477AjVO2VRJwU5Tqbi7R9+CdGhHxaNQCLbxqatPdqcVJQ
-         OGSLx/l5gvJT9r8erNNMFfrH9ORo471Hfw9dE/Fsl5QoKNWbjNa1bWZTotE+4O5Vpt
-         3bn1qmKyMCzzUhA3JfczF58H6uSR9hm2UBGkJ/IE=
-Date:   Tue, 10 Nov 2020 12:18:56 +0000
-From:   Will Deacon <will@kernel.org>
-To:     Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-Cc:     Robin Murphy <robin.murphy@arm.com>,
-        Joerg Roedel <joro@8bytes.org>,
-        Jordan Crouse <jcrouse@codeaurora.org>,
-        Rob Clark <robdclark@gmail.com>,
-        iommu@lists.linux-foundation.org,
-        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org,
-        Akhil P Oommen <akhilpo@codeaurora.org>,
-        freedreno@lists.freedesktop.org,
-        "Kristian H . Kristensen" <hoegsberg@google.com>,
-        dri-devel@lists.freedesktop.org
-Subject: Re: [PATCHv7 1/7] iommu/io-pgtable-arm: Add support to use system
- cache
-Message-ID: <20201110121855.GD16239@willie-the-truck>
-References: <cover.1604048969.git.saiprakash.ranjan@codeaurora.org>
- <1d4979c0dcf649c5717605c598067b4b225ab9de.1604048969.git.saiprakash.ranjan@codeaurora.org>
+        id S1730368AbgKJNcG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 10 Nov 2020 08:32:06 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51460 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726721AbgKJNcF (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 10 Nov 2020 08:32:05 -0500
+Received: from mail-lf1-x141.google.com (mail-lf1-x141.google.com [IPv6:2a00:1450:4864:20::141])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 879ADC0613D1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Nov 2020 05:32:05 -0800 (PST)
+Received: by mail-lf1-x141.google.com with SMTP id w142so10556443lff.8
+        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Nov 2020 05:32:05 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=il23hITCqpxK2KRgonKc+lZYY9qSqjOLZ5WOY5ud//k=;
+        b=eZsD/YY8FuEfxVATHStyvm+EUySeSb5pDpxl2yI0vSyMxqVlz5O602Mqb6Ll03GRex
+         B2JFyB4ps5kCym3tA0KpvBkxeisAgbh+8uu1BkHddSVGDWauHO6vZfNj0UitFncjBTSF
+         VrLx3yV9+eJvPBu109zvRX/W0ypnyNbMXQsJo9VYqrt//VxjhfrfbcZ8bK6JDqr5INbd
+         OEFQgPSoHcSp0zOL0vp52Az2ds0NG7GUdkB/QhG1mc0Gy3R1nD26B9TW6UiG7oXZJSSm
+         ewiKW1Mti/Nj4Jfumj7rQIjn9IxDfqSju5xthPR88Tl94HrXEhJdLQ2GOPv3o93gFshU
+         Lx1Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=il23hITCqpxK2KRgonKc+lZYY9qSqjOLZ5WOY5ud//k=;
+        b=LjfX5+zHi/nzNvMcw2NJEJnxiiCwpDsoa+x4PjoC2+0nYawkL//Xod8XChQPPAUpRy
+         MleYji8ln7PKuKhFS77+qyAv/qLd+DorXwAkg2Bb9gBpclreGvUl0UxNPiiVn/+qW1VP
+         cVDGLlnvjdh5kfolX1JoZ44RhJLUldvoeyRpFb98WpKMqWCeG33ZJPKaQjK35SJc1RvA
+         BXGjKgDP+YhWrOGBHsvbH+ejL/S/V0P9roWZMytO5GrQD2W9p+LM0ES4Sq8x1UDFZ43M
+         FH2jaDanUDIsjXaArmbeWON5AeIE/DYmjRaD2n104kvp5V4eukX5WtwhpQjYXu1Z+EHh
+         dElw==
+X-Gm-Message-State: AOAM530UQQSuZlu8OMIDcESyBFj1p6ugaoubK622Q85qJCOKjrc00KVH
+        xbgUMiVRSEjMK/bvIsFdxSf8H4AYOBBZRCuTvfheUw==
+X-Google-Smtp-Source: ABdhPJzWJ3lOVKlGcQ8YECy3hPBeXO41jPP1o22E0DHyk2dojD3Vo8yORWGB+/5mvWJjM1nIipJ8VbO1YOMsF9jqZaw=
+X-Received: by 2002:a19:5e0b:: with SMTP id s11mr6921684lfb.502.1605015123992;
+ Tue, 10 Nov 2020 05:32:03 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1d4979c0dcf649c5717605c598067b4b225ab9de.1604048969.git.saiprakash.ranjan@codeaurora.org>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+References: <1604561884-10166-1-git-send-email-mkshah@codeaurora.org>
+In-Reply-To: <1604561884-10166-1-git-send-email-mkshah@codeaurora.org>
+From:   Linus Walleij <linus.walleij@linaro.org>
+Date:   Tue, 10 Nov 2020 14:31:53 +0100
+Message-ID: <CACRpkdZJ6yrisNKFG8MJEOhzAV7HRtUTniXpnFVd9fpVy75ruw@mail.gmail.com>
+Subject: Re: [PATCH] pinctrl: qcom: Move clearing pending IRQ to
+ .irq_request_resources callback
+To:     Maulik Shah <mkshah@codeaurora.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+        MSM <linux-arm-msm@vger.kernel.org>,
+        "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
+        =?UTF-8?Q?open_list=3AGPIO_SUBSYSTEM_=3Clinux=2Dgpio=40vger=2Ekernel=2Eorg=3E=2C_Andy_?=
+         =?UTF-8?Q?Gross_=3Cagross=40kernel=2Eorg=3E=2C_Thomas_Gleixner_=3Ctglx=40linutronix=2E?=
+         =?UTF-8?Q?de=3E=2C_Jason_Cooper_=3Cjason=40lakedaemon=2Enet=3E=2C_Doug_Anderson_=3Cdia?=
+         =?UTF-8?Q?nders=40chromium=2Eorg=3E=2C_Rajendra_Nayak_=3Crnayak=40codeaurora=2Eorg=3E=2C?=
+         =?UTF-8?Q?_Lina_Iyer_=3Cilina=40codeaurora=2Eorg=3E=2C?= 
+        <dianders@chromium.org>, Stephen Boyd <swboyd@chromium.org>,
+        Evan Green <evgreen@chromium.org>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        Rajendra Nayak <rnayak@codeaurora.org>,
+        Lina Iyer <ilina@codeaurora.org>,
+        =?UTF-8?Q?open_list=3AGPIO_SUBSYSTEM_=3Clinux=2Dgpio=40vger=2Ekernel=2Eorg=3E=2C_Andy_?=
+         =?UTF-8?Q?Gross_=3Cagross=40kernel=2Eorg=3E=2C_Thomas_Gleixner_=3Ctglx=40linutronix=2E?=
+         =?UTF-8?Q?de=3E=2C_Jason_Cooper_=3Cjason=40lakedaemon=2Enet=3E=2C_Doug_Anderson_=3Cdia?=
+         =?UTF-8?Q?nders=40chromium=2Eorg=3E=2C_Rajendra_Nayak_=3Crnayak=40codeaurora=2Eorg=3E=2C?=
+         =?UTF-8?Q?_Lina_Iyer_=3Cilina=40codeaurora=2Eorg=3E=2C?= 
+        <lsrao@codeaurora.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Oct 30, 2020 at 02:53:08PM +0530, Sai Prakash Ranjan wrote:
-> Add a quirk IO_PGTABLE_QUIRK_SYS_CACHE to override the
-> attributes set in TCR for the page table walker when
-> using system cache.
-> 
-> Signed-off-by: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-> ---
->  drivers/iommu/io-pgtable-arm.c | 7 ++++++-
->  include/linux/io-pgtable.h     | 4 ++++
->  2 files changed, 10 insertions(+), 1 deletion(-)
-> 
-> diff --git a/drivers/iommu/io-pgtable-arm.c b/drivers/iommu/io-pgtable-arm.c
-> index a7a9bc08dcd1..a356caf1683a 100644
-> --- a/drivers/iommu/io-pgtable-arm.c
-> +++ b/drivers/iommu/io-pgtable-arm.c
-> @@ -761,7 +761,8 @@ arm_64_lpae_alloc_pgtable_s1(struct io_pgtable_cfg *cfg, void *cookie)
->  
->  	if (cfg->quirks & ~(IO_PGTABLE_QUIRK_ARM_NS |
->  			    IO_PGTABLE_QUIRK_NON_STRICT |
-> -			    IO_PGTABLE_QUIRK_ARM_TTBR1))
-> +			    IO_PGTABLE_QUIRK_ARM_TTBR1 |
-> +			    IO_PGTABLE_QUIRK_SYS_CACHE))
->  		return NULL;
->  
->  	data = arm_lpae_alloc_pgtable(cfg);
-> @@ -773,6 +774,10 @@ arm_64_lpae_alloc_pgtable_s1(struct io_pgtable_cfg *cfg, void *cookie)
->  		tcr->sh = ARM_LPAE_TCR_SH_IS;
->  		tcr->irgn = ARM_LPAE_TCR_RGN_WBWA;
->  		tcr->orgn = ARM_LPAE_TCR_RGN_WBWA;
-> +	} else if (cfg->quirks & IO_PGTABLE_QUIRK_SYS_CACHE) {
-> +		tcr->sh = ARM_LPAE_TCR_SH_OS;
-> +		tcr->irgn = ARM_LPAE_TCR_RGN_NC;
-> +		tcr->orgn = ARM_LPAE_TCR_RGN_WBWA;
+On Thu, Nov 5, 2020 at 8:38 AM Maulik Shah <mkshah@codeaurora.org> wrote:
 
-Given that this only applies in the case where then page-table walker is
-non-coherent, I think we'd be better off renaming the quirk to something
-like IO_PGTABLE_QUIRK_ARM_OUTER_WBWA and then rejecting it in the
-non-coherent case.
+> When GPIOs that are routed to PDC are used as output they can still latch
+> the IRQ pending at GIC. As a result the spurious IRQ was handled when the
+> client driver change the direction to input to starts using it as IRQ.
+>
+> Currently such erroneous latched IRQ are cleared with .irq_enable callback
+> however if the driver continue to use GPIO as interrupt and invokes
+> disable_irq() followed by enable_irq() then everytime during enable_irq()
+> previously latched interrupt gets cleared.
+>
+> This can make edge IRQs not seen after enable_irq() if they had arrived
+> after the driver has invoked disable_irq() and were pending at GIC.
+>
+> Move clearing erroneous IRQ to .irq_request_resources callback as this is
+> the place where GPIO direction is changed as input and its locked as IRQ.
+>
+> While at this add a missing check to invoke msm_gpio_irq_clear_unmask()
+> from .irq_enable callback only when GPIO is not routed to PDC.
+>
+> Fixes: e35a6ae0eb3a ("pinctrl/msm: Setup GPIO chip in hierarchy")
+> Signed-off-by: Maulik Shah <mkshah@codeaurora.org>
 
->  	} else {
->  		tcr->sh = ARM_LPAE_TCR_SH_OS;
->  		tcr->irgn = ARM_LPAE_TCR_RGN_NC;
-> diff --git a/include/linux/io-pgtable.h b/include/linux/io-pgtable.h
-> index 4cde111e425b..86631f711e05 100644
-> --- a/include/linux/io-pgtable.h
-> +++ b/include/linux/io-pgtable.h
-> @@ -86,6 +86,9 @@ struct io_pgtable_cfg {
->  	 *
->  	 * IO_PGTABLE_QUIRK_ARM_TTBR1: (ARM LPAE format) Configure the table
->  	 *	for use in the upper half of a split address space.
-> +	 *
-> +	 * IO_PGTABLE_QUIRK_SYS_CACHE: Override the attributes set in TCR for
-> +	 *	the page table walker when using system cache.
+This looks critical so I applied it for fixes so we get some
+rotation in linux-next.
 
-and then update this accordingly.
+If Bjorn has other opinions he will tell us :)
 
-Will
+Yours,
+Linus Walleij
