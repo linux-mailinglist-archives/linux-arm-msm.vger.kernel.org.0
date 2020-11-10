@@ -2,134 +2,113 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 35A8D2AD2A0
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Nov 2020 10:40:54 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D445F2AD2B8
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Nov 2020 10:44:16 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726787AbgKJJkx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 10 Nov 2020 04:40:53 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43778 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726213AbgKJJkx (ORCPT
+        id S1729417AbgKJJoQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 10 Nov 2020 04:44:16 -0500
+Received: from lb2-smtp-cloud8.xs4all.net ([194.109.24.25]:33341 "EHLO
+        lb2-smtp-cloud8.xs4all.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726467AbgKJJoP (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 10 Nov 2020 04:40:53 -0500
-Received: from mail-lj1-x244.google.com (mail-lj1-x244.google.com [IPv6:2a00:1450:4864:20::244])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C0979C0613CF
-        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Nov 2020 01:40:52 -0800 (PST)
-Received: by mail-lj1-x244.google.com with SMTP id v20so5387314ljk.8
-        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Nov 2020 01:40:52 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=AXdt4/GVN4Y6ww6W0kBy4YLHXliyiP6kmKj8D1Wdz+s=;
-        b=qO5mwF1JeGYhP/NW4uBHRxJwCTdGjTfHfchqISCSp2glgneKh+N0XQ6qPPIvY5RAc2
-         oI0Qjx3dssYp2HnKfVuRxH+R9cmy5asjDX34qDK+PIVEG3npGguBzRWX3gNhCYdV3P3D
-         nDAqGXR9CUQInuueX63CMmJNIk9QZLbY35+STE1FVcwdMXgb1AqMkm5GYy8MHz9atmyI
-         N+AKEA1BC9N2eNYipwv3fQpRCHtdURnd5qnqF2oE60RosuX8WdvlPRJgTAKaQ0l2iZ7Q
-         xR+ku5X7GnBhUJL+E4QYAQJrbPRQIyCVN5xMZ/XBoI2fLk75iI7GRVyk1g1vHeJOLFrH
-         ddhw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=AXdt4/GVN4Y6ww6W0kBy4YLHXliyiP6kmKj8D1Wdz+s=;
-        b=uUbKsCRu+Ose793W4eq3ox6hi2pD2YAdOwMXIElm0i+edMJ0zfJ2/cLAQzLK0PDUnv
-         lSiYwp9wQp4SWyisF6f2q/WOGJ952tucApXU28bEzNfT0JA5N5pknpdSbMcioobgLrSB
-         YHpq6q/YAe+IvkZxRSxJN8b5ObDQQvSHG/4cVK6QxzlU0yeGNMxVcRg6e4D8iDsdAbm0
-         237sjAaQF2TMUdSMDDcX+3SjkbpA3FtWWykszC8BPT2ltEgIehue1BjZ+zQ8qciMzJ5s
-         trjyKjxL/FAiNkEwFuXXurpsyW+kRT4QbCU31cIsJ/iG5pytDykzHQ7dSzNbtcXCDxoE
-         O8hA==
-X-Gm-Message-State: AOAM530eORu7Q9MDhT9Z77eUysZEWiw7YL8pH0dTMlQEJWkA3KV+rAZ/
-        sDnCOCUcRFh0FVSKvDhUtiFk352kx05qjLbxlFD9NQ==
-X-Google-Smtp-Source: ABdhPJyxnYp8OqaXR3MO5Oeb6TIQXCDHSw6iz4a1K8EfahuJjytShDCZTNTXKb/a7OkIAAffzLbSLY5LhBt3p4R/yAc=
-X-Received: by 2002:a2e:b54a:: with SMTP id a10mr7500764ljn.139.1605001251219;
- Tue, 10 Nov 2020 01:40:51 -0800 (PST)
+        Tue, 10 Nov 2020 04:44:15 -0500
+Received: from cust-b5b5937f ([IPv6:fc0c:c16d:66b8:757f:c639:739b:9d66:799d])
+        by smtp-cloud8.xs4all.net with ESMTPA
+        id cQ9okknN2NanzcQ9rk5DX7; Tue, 10 Nov 2020 10:41:47 +0100
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=xs4all.nl; s=s1;
+        t=1605001307; bh=iUgbSl4OPSOSJGki6IpbBA/pJx/DxjIzDGiaU7VBg+I=;
+        h=Subject:From:To:Message-ID:Date:MIME-Version:Content-Type:From:
+         Subject;
+        b=ePAATdNDHM85zueHPdXOQdTkmNZecWI8+iCnyzgbc9rs7wSMwuvEpA6vYx47FIgzd
+         2llLxVNEys9OXetZrnhN66mI5qQJJNUOBoub/5cPhdNUyeDqPiIUuWZfmzqkx3VjpV
+         GFLr08T3nh+TBxfacuybVriB1rYjk7PM5qstA5bl3FCZTlwOxJIUPkaacsSxhG/Z4O
+         kUA79jFJKPjVfRu3vMZvSrq4w7PtQnLnZ3nSvpaxd1E7QROZtqA6knzD0EPu8dQc/P
+         8slkU6nXlEf66syoO4mbCBGtU4zRrh3JehbUgF+edeiLhwwBR/65a7hmIBrBnt68IF
+         +c36od6k9XAng==
+Subject: Re: [PATCH 0/3] HDR10 static metadata
+From:   Hans Verkuil <hverkuil-cisco@xs4all.nl>
+To:     Nicolas Dufresne <nicolas.dufresne@collabora.com>,
+        Stanimir Varbanov <stanimir.varbanov@linaro.org>,
+        linux-media@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+Cc:     Ezequiel Garcia <ezequiel@collabora.com>
+References: <20201109173153.23720-1-stanimir.varbanov@linaro.org>
+ <2f907743dbb77f4c2f871675070065dd372514be.camel@collabora.com>
+ <79148cf4-96dc-0c00-2864-183e526a65e9@xs4all.nl>
+Message-ID: <6b4f23be-060c-db6f-2fb5-e4d328789990@xs4all.nl>
+Date:   Tue, 10 Nov 2020 10:41:44 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.12.0
 MIME-Version: 1.0
-References: <20201106061433.1483129-1-ajye_huang@compal.corp-partner.google.com>
-In-Reply-To: <20201106061433.1483129-1-ajye_huang@compal.corp-partner.google.com>
-From:   Ajye Huang <ajye_huang@compal.corp-partner.google.com>
-Date:   Tue, 10 Nov 2020 17:40:40 +0800
-Message-ID: <CALprXBZCthdkxGbJBZZ+ESJRDBHY879FZMpB_4Mgpq1YAJun2g@mail.gmail.com>
-Subject: Re: [PATCH v6 0/2] Modify documentation and machine driver for SC7180
- sound card
-To:     Ajye Huang <ajye.huang@gmail.com>
-Cc:     Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        Mark Brown <broonie@kernel.org>,
-        Rohit kumar <rohitkr@codeaurora.org>,
-        Banajit Goswami <bgoswami@codeaurora.org>,
-        Patrick Lai <plai@codeaurora.org>,
-        Srinivasa Rao Mandadapu <srivasam@codeaurora.org>,
-        Srini Kandagatla <srinivas.kandagatla@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Rob Herring <robh@kernel.org>,
-        Jaroslav Kysela <perex@perex.cz>,
-        Cheng-yi Chiang <cychiang@chromium.org>,
-        Tzung-Bi Shih <tzungbi@chromium.org>,
-        Douglas Anderson <dianders@chromium.org>,
-        "moderated list:ARM/Mediatek SoC support" 
-        <linux-arm-kernel@lists.infradead.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>,
-        ALSA development <alsa-devel@alsa-project.org>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <79148cf4-96dc-0c00-2864-183e526a65e9@xs4all.nl>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
+X-CMAE-Envelope: MS4xfG/wMabN/muTEFi30FIMD/JhTmID7tYz2KkvbhkfjxElgyaXlI5Zx7aFnxjkzQK9wsrLjXJFiAYxnk1ty67jolxqUhgcd1j+eyW+Ht4fA7lcyRo7HNFq
+ 8xem92G9c4XcXduBe5I2KSJrPZ+qnn7wyupnlld3vSmjSKpjdAUNytkwIDsqmzk2p/rF8+uYijXnNeOp4dbYfVIDIJ7/xXvAoNIupS55AR23EYcIBkWZ92aI
+ OrDlcNnWr2hdaJH5Jqy8OF0dKKjop8IxfUD6el6yDT+j4yzVxeebUOz2/+5i7VRGgizjsHy0RxyO3yO8c2kC60DR+VwEawuQRWwCb3jDYnYZHWeAQgTIcGbN
+ DYEPhcymKyxRMD00N9TwYgXHwXgxcfpGCzQlAmEpU/ZmeyiizGbMdI+g9YmcmXz8AogfTCsl
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi, Mark
+On 10/11/2020 10:38, Hans Verkuil wrote:
+> On 09/11/2020 20:53, Nicolas Dufresne wrote:
+>> Le lundi 09 novembre 2020 à 19:31 +0200, Stanimir Varbanov a écrit :
+>>> Hello,
+>>>
+>>> This patchset adds two HDR10 HEVC v4l2 controls for Content Light Level
+>>> and Mastering display colour volume plus implenmentation in Venus encoder
+>>> driver.
+>>>
+>>> Comments are welcome!
+>>
+>> It is not a formal review, but I did walked through the new API and
+>> everything looks fine to me. One question though, are you aware that
+>> the H.264/AVC equivalent is identical ? What is you plan for that ?
+> 
+> Not only that, but these structures are lifted straight from the
+> CTA-861-G standard: see "6.9 Dynamic Range and Mastering InfoFrame"
+> and "6.9.1 Static Metadata Type 1".
 
-Could you please kindly review the series patch v6? And may I get your
-approval if the review is done.
+Correction: the CTA-861-G lifted it from SMPTE ST-2086 in turn.
 
-thanks
-Ajye
+Regards,
 
-On Fri, Nov 6, 2020 at 2:14 PM Ajye Huang <ajye.huang@gmail.com> wrote:
->
-> Note:
-> - The patch is made by the collaboration of
->  Ajye Huang <ajye_huang@compal.corp-partner.google.com>
->  Cheng-Yi Chiang <cychiang@chromium.org>
->
-> v6:
-> - Documentation: Addressed suggestions from Rob Herring.
->   - Define "maxItems: 1" in dmic-gpios property.
->   - Only keep one example and add dmic-gpios property in.
-> v5:
-> - Machine driver:
->   - Fix a format string warning (Reported-by: kernel test robot <lkp@intel.com>).
->     detailed info at https://lore.kernel.org/patchwork/patch/1331087/
->
-> v4:
-> - Machine driver: Addressed suggestions from Tzung-Bi.
->   - Remove redundant judgments in dmic_set() and dmic_get().
->   - Remove 1 level indent of judgment of IS_ERR(data->dmic_sel).
->
-> v3:
-> - Machine driver: Addressed suggestions from Tzung-Bi.
->   - Move variables "dmic_switch" and "dmic_sel" into struct sc7180_snd_data.
->   - Remove redundant judgments in dmic_set().
->
-> v2:
-> - Documentation: Modify the dimc-gpios property description and examples.
-> - Machine driver:
->   - Remove "qcom,sc7180-sndcard-rt5682-m98357-2mic" compatible
->   - See gpio property and use anadditional control.
->
-> Thanks for the review!
->
-> Ajye Huang (2):
->   ASoC: google: dt-bindings: modify machine bindings for two MICs case
->   ASoC: qcom: sc7180: Modify machine driver for 2mic
->
->  .../bindings/sound/google,sc7180-trogdor.yaml |  8 ++-
->  sound/soc/qcom/sc7180.c                       | 61 +++++++++++++++++++
->  2 files changed, 68 insertions(+), 1 deletion(-)
->
-> --
-> 2.25.1
->
+	Hans
+
+> 
+> So this is equally useful for HDMI receivers and transmitters.
+> 
+> Actually, include/linux/hdmi.h contains a struct for that, but it seems
+> to be missing a lot of fields. But we need a v4l2 control anyway and hdmi.h
+> isn't a good fit for that.
+> 
+> Regards,
+> 
+> 	Hans
+> 
+>>
+>>>
+>>> regards,
+>>> Stan
+>>>
+>>> Stanimir Varbanov (3):
+>>>   v4l: Add HDR10 HEVC static metadata controls
+>>>   docs: media: Document CLL and Mastering display
+>>>   venus: venc: Add support for CLL and Mastering display controls
+>>>
+>>>  .../media/v4l/ext-ctrls-codec.rst             | 61 +++++++++++++++++++
+>>>  drivers/media/platform/qcom/venus/core.h      |  3 +
+>>>  drivers/media/platform/qcom/venus/hfi_cmds.c  |  8 +++
+>>>  .../media/platform/qcom/venus/hfi_helper.h    | 20 ++++++
+>>>  drivers/media/platform/qcom/venus/venc.c      | 29 +++++++++
+>>>  .../media/platform/qcom/venus/venc_ctrls.c    | 16 ++++-
+>>>  drivers/media/v4l2-core/v4l2-ctrls.c          | 61 +++++++++++++++++++
+>>>  include/media/hevc-ctrls.h                    | 41 +++++++++++++
+>>>  include/media/v4l2-ctrls.h                    |  2 +
+>>>  9 files changed, 240 insertions(+), 1 deletion(-)
+>>>
+>>
+> 
+
