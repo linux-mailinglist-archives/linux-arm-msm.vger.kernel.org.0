@@ -2,92 +2,108 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 6C7F72ADB27
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Nov 2020 17:03:24 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 5DC352ADB48
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Nov 2020 17:08:12 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732620AbgKJQDF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 10 Nov 2020 11:03:05 -0500
-Received: from mail.kernel.org ([198.145.29.99]:44902 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1732582AbgKJQDE (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 10 Nov 2020 11:03:04 -0500
-Received: from localhost (fw-tnat.cambridge.arm.com [217.140.96.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 0DCED20829;
-        Tue, 10 Nov 2020 16:03:03 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1605024183;
-        bh=arSU7iObv5TKvnOj6naRt5mQLdMTSeyl4JneYSecfts=;
-        h=Date:From:To:Cc:In-Reply-To:References:Subject:From;
-        b=aoUlOLUo8fWOL4ebcQd9XF/ZfKTW4mTZ+5YkQb53YE2DJ76QTKZq09jrZtxsyfrtb
-         Gne4/wjoyQfVjF7BwPMw+KFcqJr/dcs0xtV/rF8gsIEHK828Vir2rfMTmq4ViQw1pr
-         CYm2jTOzaUiPEaOC2rll/wqA2TovOvW+4C3aB9ZY=
-Date:   Tue, 10 Nov 2020 16:02:49 +0000
-From:   Mark Brown <broonie@kernel.org>
-To:     linux-kernel@vger.kernel.org, Ajye Huang <ajye.huang@gmail.com>
-Cc:     Liam Girdwood <lgirdwood@gmail.com>,
-        Andy Gross <agross@kernel.org>, linux-arm-msm@vger.kernel.org,
-        Ajye Huang <ajye_huang@compal.corp-partner.google.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Srinivasa Rao Mandadapu <srivasam@codeaurora.org>,
-        alsa-devel@alsa-project.org, linux-arm-kernel@lists.infradead.org,
-        cychiang@chromium.org, devicetree@vger.kernel.org,
+        id S1731206AbgKJQIK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 10 Nov 2020 11:08:10 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47940 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730639AbgKJQII (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 10 Nov 2020 11:08:08 -0500
+Received: from mail-lj1-x242.google.com (mail-lj1-x242.google.com [IPv6:2a00:1450:4864:20::242])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 01980C0613D1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Nov 2020 08:08:06 -0800 (PST)
+Received: by mail-lj1-x242.google.com with SMTP id v18so15343628ljc.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Nov 2020 08:08:06 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=IdXpjX2fMBvN29YoOyMaOI1PARSVc0VzhKJzQ6c/jNY=;
+        b=RejgqHVrBZZu4n1N0vlVzMwLbdbQEz7KDOjszF61G4q8FnDRgS6MlMMKiWMrZXVwRi
+         C8H+ONHnQK3GJnpwFCGrj7Fjjj5F4RE4KtWhAayffxNUeXtlvMXbToJGo2vgtLLcaJqY
+         peRHc6Z8Ayw2KbWU+aISfdBvaP/YrBNtZpBsI0qEWF4/hqkHjLL4F8T+mRom6j/cota6
+         TQSbE1NjoQJKPX856Cxow92rdGCYIcyrktxvr8p8+99382ZchOXMvY62mC+8arBWtKey
+         5U+z/S5+mUycsJXW9CjMbci8JwbcUuiXsjlR3nZ4kRBOE4I8I+YIImyCVntI7tSyibnb
+         GUiA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=IdXpjX2fMBvN29YoOyMaOI1PARSVc0VzhKJzQ6c/jNY=;
+        b=uFyBH0+Z1knvaXGhAQNVPQTCiuSh9AxvXK71LFNBKtNssEJK0BGNoHE5o1XBGilDG0
+         rhtUG9ZPzuwWLqMkriBnR+Gx9dMhgmRjD5XLxk9AaGwQ+VVqteWFHWxY8/RQfPRf09bR
+         fHHySiRZDghFWe8NInhyET5Zt8MEHyHhLEtE6r47ySZxROQG2+kWbVSqlRhrFA/3rsOw
+         C84apQGKH4I9iYZ10OVZ+wXJrL/2sToPtn8J3rL1vDjDqwMhyU5s1v5dAjh7yyUwt46H
+         Jl9YhjsgzV1dUmygs0Qg6XzdxDxRHYqnRphEBfiI0pONmgijJjX3lIJZV5Z4g84Yg2+b
+         Mxqw==
+X-Gm-Message-State: AOAM533LrlJjd3yWYpGq0BwoCnKM38o4aX/BRBg20tcg2a+eJs/JNu+8
+        Y1Z9OBRuEBSU+1BcecUuyHFzDQ2vxu+S/PE12XgcnQ==
+X-Google-Smtp-Source: ABdhPJx+3OPv/DyILoTWnWz5YCDXJQRkrl7b/kpZjceXJV8+4bcdHjQXNz+aJr98/86fydWiNskQFSAqwT5vTI8Eyk0=
+X-Received: by 2002:a2e:9449:: with SMTP id o9mr8049890ljh.457.1605024485448;
+ Tue, 10 Nov 2020 08:08:05 -0800 (PST)
+MIME-Version: 1.0
+References: <20201106061433.1483129-1-ajye_huang@compal.corp-partner.google.com>
+ <CALprXBZCthdkxGbJBZZ+ESJRDBHY879FZMpB_4Mgpq1YAJun2g@mail.gmail.com> <20201110115631.GA5957@sirena.org.uk>
+In-Reply-To: <20201110115631.GA5957@sirena.org.uk>
+From:   Ajye Huang <ajye_huang@compal.corp-partner.google.com>
+Date:   Wed, 11 Nov 2020 00:07:54 +0800
+Message-ID: <CALprXBZKnJGzFCLp0=UxJQp423QuaiPiaPzyY3-662k1gHUk-g@mail.gmail.com>
+Subject: Re: [PATCH v6 0/2] Modify documentation and machine driver for SC7180
+ sound card
+To:     Mark Brown <broonie@kernel.org>
+Cc:     Ajye Huang <ajye.huang@gmail.com>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        Rohit kumar <rohitkr@codeaurora.org>,
         Banajit Goswami <bgoswami@codeaurora.org>,
         Patrick Lai <plai@codeaurora.org>,
+        Srinivasa Rao Mandadapu <srivasam@codeaurora.org>,
+        Srini Kandagatla <srinivas.kandagatla@linaro.org>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rohit kumar <rohitkr@codeaurora.org>, tzungbi@chromium.org,
-        dianders@chromium.org
-In-Reply-To: <20200928063744.525700-1-ajye_huang@compal.corp-partner.google.com>
-References: <20200928063744.525700-1-ajye_huang@compal.corp-partner.google.com>
-Subject: Re: [PATCH v1 0/2] Modify documentation and machine driver for SC7180 sound card
-Message-Id: <160502414078.45830.11309600092998215198.b4-ty@kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Rob Herring <robh@kernel.org>,
+        Jaroslav Kysela <perex@perex.cz>,
+        Cheng-yi Chiang <cychiang@chromium.org>,
+        Tzung-Bi Shih <tzungbi@chromium.org>,
+        Douglas Anderson <dianders@chromium.org>,
+        "moderated list:ARM/Mediatek SoC support" 
+        <linux-arm-kernel@lists.infradead.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>,
+        ALSA development <alsa-devel@alsa-project.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, 28 Sep 2020 14:37:42 +0800, Ajye Huang wrote:
-> Note:
-> - This patch depends on this patch series
->  ASoC: qcom: dt-bindings: Add sc7180 machine bindings
->  https://patchwork.kernel.org/patch/11773221/
->  ASoC: qcom: sc7180: Add machine driver for sound card registration
->  https://patchwork.kernel.org/patch/11773223/
-> - The patch is made by the collaboration of
->  Ajye Huang <ajye_huang@compal.corp-partner.google.com>
->  Cheng-Yi Chiang <cychiang@chromium.org>
-> 
-> [...]
+Hi,Mark
 
-Applied to
+Thank you, I already understand, sorry for causing you trouble.
 
-   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/sound.git for-next
+Ajye
 
-Thanks!
-
-[1/2] ASoC: qcom: dt-bindings: Modify sc7180 machine bindings
-      (no commit info)
-[2/2] ASoC: qcom: sc7180: Modify machine driver for 2mic
-      commit: 3cfbf07c6d2779d24a6f5b999a91f400256b1d4e
-
-All being well this means that it will be integrated into the linux-next
-tree (usually sometime in the next 24 hours) and sent to Linus during
-the next merge window (or sooner if it is a bug fix), however if
-problems are discovered then the patch may be dropped or reverted.
-
-You may get further e-mails resulting from automated or manual testing
-and review of the tree, please engage with people reporting problems and
-send followup patches addressing any issues that are reported if needed.
-
-If any updates are required or you are submitting further changes they
-should be sent as incremental updates against current git, existing
-patches will not be replaced.
-
-Please add any relevant lists and maintainers to the CCs when replying
-to this mail.
-
-Thanks,
-Mark
+On Tue, Nov 10, 2020 at 7:56 PM Mark Brown <broonie@kernel.org> wrote:
+>
+> On Tue, Nov 10, 2020 at 05:40:40PM +0800, Ajye Huang wrote:
+> > Hi, Mark
+> >
+> > Could you please kindly review the series patch v6? And may I get your
+> > approval if the review is done.
+>
+> Please don't send content free pings and please allow a reasonable time
+> for review.  People get busy, go on holiday, attend conferences and so
+> on so unless there is some reason for urgency (like critical bug fixes)
+> please allow at least a couple of weeks for review.  If there have been
+> review comments then people may be waiting for those to be addressed.
+>
+> Sending content free pings adds to the mail volume (if they are seen at
+> all) which is often the problem and since they can't be reviewed
+> directly if something has gone wrong you'll have to resend the patches
+> anyway, so sending again is generally a better approach though there are
+> some other maintainers who like them - if in doubt look at how patches
+> for the subsystem are normally handled.
