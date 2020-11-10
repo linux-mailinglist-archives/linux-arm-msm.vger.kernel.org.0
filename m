@@ -2,121 +2,105 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 8B7982AE1BC
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Nov 2020 22:28:18 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 6B0D22AE23F
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Nov 2020 22:56:26 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731657AbgKJV2R (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 10 Nov 2020 16:28:17 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41554 "EHLO
+        id S1726467AbgKJV4Z (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 10 Nov 2020 16:56:25 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45938 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726861AbgKJV2Q (ORCPT
+        with ESMTP id S1726737AbgKJV4Z (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 10 Nov 2020 16:28:16 -0500
-Received: from mail-oi1-x243.google.com (mail-oi1-x243.google.com [IPv6:2607:f8b0:4864:20::243])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 798C2C0613D3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Nov 2020 13:28:16 -0800 (PST)
-Received: by mail-oi1-x243.google.com with SMTP id w145so16125369oie.9
-        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Nov 2020 13:28:16 -0800 (PST)
+        Tue, 10 Nov 2020 16:56:25 -0500
+Received: from mail-pg1-x544.google.com (mail-pg1-x544.google.com [IPv6:2607:f8b0:4864:20::544])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 538F2C0613D3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Nov 2020 13:56:25 -0800 (PST)
+Received: by mail-pg1-x544.google.com with SMTP id f27so8042930pgl.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Nov 2020 13:56:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=WdCTcUp3dt98pd8N/bAI9BPR8MUfMdcKBreEIwkfCWE=;
-        b=cKDjQtDDjB5Lky6jr2FC81N8duXbbH+cdB+mUYl9ikTUJ7j9GcojAmJEG5BVI3wyfT
-         EYNwGSw2Q9kY2uRubIVw62LI2LDhWwN1uEmD4wY2AITz56OHuw3gL1tjz9HMqlKwx+nz
-         pA8JHfW05ZyNKM6CDX9Td5f8KN6q7GdIBBbdz0gwo6rMGugKLA4yaEey8lf9HdGhKbpc
-         Ln9/mz15nnvKxS1xeoR5Rn4tNV+0xPqNzUbEFFw+n7J9lchvyBjpYbPWC8U42W0da+/C
-         Cc8wDMJtb+YwfnH1uoSNx2viMYTLeo09VUOauM7XIlRzZJRbn6Ccoqb8a4/CStzG6bcx
-         XU7g==
+        h=from:to:cc:subject:date:message-id;
+        bh=ixwwp1tp0QJ1czDiV+Ee/USu0gGUVFj7T0q8Sqh5cbY=;
+        b=x2MLkGt2Kwxwa/HHIMbv11SZFn90oPX7JoStsS2efox7c3/KZbj2Ao/6N6ij4UdCCj
+         q6KUmDWvn6uVsIs3NR/2/+FtTKtU/sdZ0s4inpDiewYBuunv7Mn9cLoyNqE6mjqgtp+J
+         it9nzw/HAqCFP83xqB/MldOvypoYuS1zR5lG8DdZjKKDxTLwn1OCC42rnLMrPgcSa797
+         9I2YJh918SdJMEtnoGa3SuHGw+UJQVwn0P9W2huMmMcNCcc3PO6OcxtTJhR2gLw1TtWP
+         P74uE8tF1ZrfVoBYhwM1+pZsn51iCB2H5XD6FqwWB7xka6d06Q2hENyckPNSepCHE991
+         7EKw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=WdCTcUp3dt98pd8N/bAI9BPR8MUfMdcKBreEIwkfCWE=;
-        b=YEVBZ1whthN+RBnEaY+1pLZRoJnPiaeoGcV8FSFD5E+NwjC7EdRXBC3tWegXA8jsKb
-         uDJibTuCBN6eMKGYDiO4ss4fLpzjX3Uw0m33Hw2RDY9IcqFzrY/3DRfdfw5KuOD8XJqZ
-         QdEYfGFGQ9oASuMtvLK0MrtEzU4qFjsLBV6nU0S8i+r2u8vqa1kfLUAWITzC/CtUJaWO
-         rOhclr9VKRBKaisSBpNd7qiVZG+DP6/EUT6hxle45272M30AOTR31GnzT4JhhvvTWliK
-         Lncz7eJb9jGYGvDHU3e6aNMVWNaTua1UqBDuTIMwQDOWG6w/2CmRwyg03MsK3ZBTFWxO
-         MhAg==
-X-Gm-Message-State: AOAM532hNxF9v8yzGaxPckea9D+H7yaLBMutZDeisx3OdTCR3YU5ErLd
-        fEbgqKGfTRD2u4eyjbIQgJe4WyBjbCt33A==
-X-Google-Smtp-Source: ABdhPJyGV9vepmOEKrlYJxQpWVjB8O0kCfQ9th8PqSMEhyIIM/MxzoaDwll65t2fKnc7Vlu3jyk7kw==
-X-Received: by 2002:aca:b588:: with SMTP id e130mr92461oif.56.1605043695752;
-        Tue, 10 Nov 2020 13:28:15 -0800 (PST)
-Received: from yoga (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id g3sm3422228oif.26.2020.11.10.13.28.14
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=ixwwp1tp0QJ1czDiV+Ee/USu0gGUVFj7T0q8Sqh5cbY=;
+        b=FK0U3TB3xY15s3Ma+MEpLLW4A5ZNJzAzKOxjrmJPOd/C3FF4OjQJ2UNAdh/H9gGUyv
+         7ArGDjFFgjuBroa2a2f/2FGO88lcnk3pIVhQkBDpl+xkyuGAiXdWPnxiXPgAZ0/Au6x3
+         et80YSx2fSh5AtI9p3Ohe6FjVbIjezEpgaOq+aypjJvVVC34U5ufD3Uz4yS0j5Tg35p2
+         +oDVFeTyAFqsB6XwCuTD+lp2LcEBKQhAZo3k4t7qS+J+xFkbdP4V3rw1Zk/AV9kYDxSd
+         BSDQHI4IOTK/WwDuBcv9mxg3VNq3CZLIAT+cQy3UEnM/zbEDgMsqd164u7scIGNEQjT4
+         r4SQ==
+X-Gm-Message-State: AOAM530mvmrHErQMklsXS/i6jzD+Dhc+W9MHh9MVOomAfK65qXy1T5LH
+        1I0q06mewbtKjYw5icgRfB8+IA==
+X-Google-Smtp-Source: ABdhPJzx1zz5qx84FHMuwtUBJos+r15YzAWmoHyEyJtRcgfi/PqG9NhmRDy7ODxu0ONbm8LI+4F6gw==
+X-Received: by 2002:a17:90b:1741:: with SMTP id jf1mr232895pjb.144.1605045384898;
+        Tue, 10 Nov 2020 13:56:24 -0800 (PST)
+Received: from localhost.localdomain ([2601:1c2:680:1319:692:26ff:feda:3a81])
+        by smtp.gmail.com with ESMTPSA id n1sm14414390pgl.31.2020.11.10.13.56.23
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 10 Nov 2020 13:28:15 -0800 (PST)
-Date:   Tue, 10 Nov 2020 15:28:13 -0600
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Linus Walleij <linus.walleij@linaro.org>
-Cc:     Maulik Shah <mkshah@codeaurora.org>,
+        Tue, 10 Nov 2020 13:56:24 -0800 (PST)
+From:   John Stultz <john.stultz@linaro.org>
+To:     lkml <linux-kernel@vger.kernel.org>
+Cc:     John Stultz <john.stultz@linaro.org>,
         Andy Gross <agross@kernel.org>,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-        MSM <linux-arm-msm@vger.kernel.org>,
-        "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
-        "open list:GPIO SUBSYSTEM <linux-gpio@vger.kernel.org>, Andy Gross
-        <agross@kernel.org>, Thomas Gleixner <tglx@linutronix.de>, Jason Cooper
-        <jason@lakedaemon.net>, Doug Anderson <dianders@chromium.org>, Rajendra
-        Nayak <rnayak@codeaurora.org>, Lina Iyer <ilina@codeaurora.org>," 
-        <dianders@chromium.org>, Stephen Boyd <swboyd@chromium.org>,
-        Evan Green <evgreen@chromium.org>,
-        Matthias Kaehlcke <mka@chromium.org>,
-        Rajendra Nayak <rnayak@codeaurora.org>,
-        Lina Iyer <ilina@codeaurora.org>,
-        "open list:GPIO SUBSYSTEM <linux-gpio@vger.kernel.org>, Andy Gross
-        <agross@kernel.org>, Thomas Gleixner <tglx@linutronix.de>, Jason Cooper
-        <jason@lakedaemon.net>, Doug Anderson <dianders@chromium.org>, Rajendra
-        Nayak <rnayak@codeaurora.org>, Lina Iyer <ilina@codeaurora.org>," 
-        <lsrao@codeaurora.org>
-Subject: Re: [PATCH] pinctrl: qcom: Move clearing pending IRQ to
- .irq_request_resources callback
-Message-ID: <20201110212813.GF807@yoga>
-References: <1604561884-10166-1-git-send-email-mkshah@codeaurora.org>
- <CACRpkdZJ6yrisNKFG8MJEOhzAV7HRtUTniXpnFVd9fpVy75ruw@mail.gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CACRpkdZJ6yrisNKFG8MJEOhzAV7HRtUTniXpnFVd9fpVy75ruw@mail.gmail.com>
+        Prasad Sodagudi <psodagud@codeaurora.org>,
+        Vladimir Lypak <junak.pub@gmail.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org
+Subject: [PATCH v2] pinctrl: qcom: Fix msm8953 Kconfig entry to depend on, not select PINCTRL_MSM
+Date:   Tue, 10 Nov 2020 21:56:19 +0000
+Message-Id: <20201110215619.86076-1-john.stultz@linaro.org>
+X-Mailer: git-send-email 2.17.1
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue 10 Nov 07:31 CST 2020, Linus Walleij wrote:
+One fixup following my patch commit be117ca32261 ("pinctrl:
+qcom: Kconfig: Rework PINCTRL_MSM to be a depenency rather then
+a selected config") being queued in LinusW's tree, as a new
+config entry was added for the msm8953 that also needs the
+change.
 
-> On Thu, Nov 5, 2020 at 8:38 AM Maulik Shah <mkshah@codeaurora.org> wrote:
-> 
-> > When GPIOs that are routed to PDC are used as output they can still latch
-> > the IRQ pending at GIC. As a result the spurious IRQ was handled when the
-> > client driver change the direction to input to starts using it as IRQ.
-> >
-> > Currently such erroneous latched IRQ are cleared with .irq_enable callback
-> > however if the driver continue to use GPIO as interrupt and invokes
-> > disable_irq() followed by enable_irq() then everytime during enable_irq()
-> > previously latched interrupt gets cleared.
-> >
-> > This can make edge IRQs not seen after enable_irq() if they had arrived
-> > after the driver has invoked disable_irq() and were pending at GIC.
-> >
-> > Move clearing erroneous IRQ to .irq_request_resources callback as this is
-> > the place where GPIO direction is changed as input and its locked as IRQ.
-> >
-> > While at this add a missing check to invoke msm_gpio_irq_clear_unmask()
-> > from .irq_enable callback only when GPIO is not routed to PDC.
-> >
-> > Fixes: e35a6ae0eb3a ("pinctrl/msm: Setup GPIO chip in hierarchy")
-> > Signed-off-by: Maulik Shah <mkshah@codeaurora.org>
-> 
-> This looks critical so I applied it for fixes so we get some
-> rotation in linux-next.
-> 
-> If Bjorn has other opinions he will tell us :)
-> 
+Applies to LinusW's pinctrl devel tree.
 
-No objections, the patch looks reasonable to me.
+Cc: Andy Gross <agross@kernel.org>
+Cc: Prasad Sodagudi <psodagud@codeaurora.org>
+Cc: Vladimir Lypak <junak.pub@gmail.com>
+Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc: Linus Walleij <linus.walleij@linaro.org>
+Cc: linux-arm-msm@vger.kernel.org
+Cc: linux-gpio@vger.kernel.org
+Signed-off-by: John Stultz <john.stultz@linaro.org>
+Change-Id: I9e8e83b1ea57aff338074be9174fce53cef29eff
+---
+v2:
+* Fix flipped numbers in the soc name, pointed out by
+  Jeffrey Hugo
+---
+ drivers/pinctrl/qcom/Kconfig | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Acked-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+diff --git a/drivers/pinctrl/qcom/Kconfig b/drivers/pinctrl/qcom/Kconfig
+index 8bdf878fe970c..cf56e029cd9c7 100644
+--- a/drivers/pinctrl/qcom/Kconfig
++++ b/drivers/pinctrl/qcom/Kconfig
+@@ -115,7 +115,7 @@ config PINCTRL_MSM8916
+ config PINCTRL_MSM8953
+ 	tristate "Qualcomm 8953 pin controller driver"
+ 	depends on GPIOLIB && OF
+-	select PINCTRL_MSM
++	depends on PINCTRL_MSM
+ 	help
+ 	  This is the pinctrl, pinmux, pinconf and gpiolib driver for the
+ 	  Qualcomm TLMM block found on the Qualcomm MSM8953 platform.
+-- 
+2.17.1
 
-Regards,
-Bjorn
