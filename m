@@ -2,69 +2,69 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 6F8752AD33B
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Nov 2020 11:13:23 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id F09EF2AD3C6
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Nov 2020 11:28:18 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728345AbgKJKNP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 10 Nov 2020 05:13:15 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48830 "EHLO
+        id S1731211AbgKJK2L (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 10 Nov 2020 05:28:11 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51234 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726344AbgKJKNO (ORCPT
+        with ESMTP id S1730164AbgKJK2L (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 10 Nov 2020 05:13:14 -0500
-Received: from mail-wm1-x343.google.com (mail-wm1-x343.google.com [IPv6:2a00:1450:4864:20::343])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7A86AC0613D1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Nov 2020 02:13:12 -0800 (PST)
-Received: by mail-wm1-x343.google.com with SMTP id s13so2420691wmh.4
-        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Nov 2020 02:13:12 -0800 (PST)
+        Tue, 10 Nov 2020 05:28:11 -0500
+Received: from mail-wr1-x441.google.com (mail-wr1-x441.google.com [IPv6:2a00:1450:4864:20::441])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 85669C0613D1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Nov 2020 02:28:10 -0800 (PST)
+Received: by mail-wr1-x441.google.com with SMTP id o15so4231009wru.6
+        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Nov 2020 02:28:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=subject:to:cc:references:from:message-id:date:user-agent
          :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=81I9lvfrdyPbV0Zv1LF5At7fH+qtvyCe4iN6MGiOylA=;
-        b=hl8b31BC5nqy/25RShPeBz1hnO+VADpNVy3T2GuMawHYaOeuvEYi5KLWfF1su1WU4A
-         C7kWLrMDXugBUE/oIFdGkj8BUlxCEuFFz9bWEZwbhQXOHw/q1uS+zIlDlKdSxdBHa9x6
-         ySvU9UURMoZ9yrIGgKt8vyDKWCGkptDqBGppy2bAyPEfZKplxU8VT4mC0VJkhwJD1vPy
-         Zii8jj8br4cL5rBcK1YG4I+Lzh9ZSb6ICdpE44SHnulK95xVaqjBcB6LjL381Q/qke6/
-         HMGd91IH3lytKdXZ4rS4EspG8zHOcMCmsAohE32QYE/jtetI6+n16jrxdGWJl0SfW9e4
-         7Now==
+        bh=pqIDM/rZ/Y9RAfg0dyKOEzplrtUBtkplsmTM06tMDJQ=;
+        b=BcAb/EpoDs9F+v8Ugn793tbnYiNlQmUpjuGyNpNKzX4yjbKBv/0r7MEILs5WCoPzhD
+         fNMs2XkoRS+mJ/NFjN4OBygs4qBsWWlb1VSmQAiCKO/AIajH1dTD3Lygh6OEZvM5MUga
+         oFF7nX3RpsXyXYrwW7YlAWso8AvoMlJlN0P1lpckrYoAbjrjbAuxzW3s4MvJt51WQatU
+         cexAGXQXxSUBTpyGm/8+TR5w1+5/E9s1T2EwBL0xRVW9SAcegjg6esqn/6m3r5YfhrX7
+         lFv+3/HjjjiGyeQilK12WlaseZIcOBf8Tn7qqIxzU+l/HtjVN/GNk4iEPTznIQg1YMJs
+         IaxA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:subject:to:cc:references:from:message-id:date
          :user-agent:mime-version:in-reply-to:content-language
          :content-transfer-encoding;
-        bh=81I9lvfrdyPbV0Zv1LF5At7fH+qtvyCe4iN6MGiOylA=;
-        b=MIQmUyjpYK1JCP/t2GybW+0sNK1VJ3Q57JsEz3AnP3f3G0R9qjjC11Nx7Gg4KPm3XI
-         U/E3Ee+fJrwZfPtQvQECR25mHq00zyTqwDxk0c5VDLcePaeQNOxPwywYZjQMCfgOcZfY
-         mQF8o13GEkNyBBYDzh4jI9gFxADsg3ATVKjMLt06V6dmIJsPHxxJsRLq6E3Ir3ZgTDJV
-         37di5POqO+GifvOuTicu5ITw5xTcp4eqK8iKK7nhtVCFwFYmyplcDDNJ2mK5wZxDWB82
-         SsTG3SkdkEHz+il5a0aA8XAAiCXS1QxIbh9B0nEJsutIlA2HJQspGQ11wqrL0ehZ7Bqz
-         irsA==
-X-Gm-Message-State: AOAM533q/2L1oHEmh7b7yUrldXsrlFip2uCAwN2QkpwOPqhdSqMV0UWb
-        ePkNQ8Fb4qn8TJX+vHGpWwVNag==
-X-Google-Smtp-Source: ABdhPJxsb+fbImcS3cdrZSPiEPaZpjgLAXdCK2tJL/itsfTsc70k9Kq2nYXZhHhswKD8mFUpjpe4ng==
-X-Received: by 2002:a7b:c8c5:: with SMTP id f5mr3841043wml.174.1605003191052;
-        Tue, 10 Nov 2020 02:13:11 -0800 (PST)
-Received: from [192.168.0.4] (hst-221-71.medicom.bg. [84.238.221.71])
-        by smtp.googlemail.com with ESMTPSA id g138sm2377956wme.39.2020.11.10.02.13.09
+        bh=pqIDM/rZ/Y9RAfg0dyKOEzplrtUBtkplsmTM06tMDJQ=;
+        b=H+k4Ry/to0ygZk+aERz/CLWJVu8ML7TaCPNlZ3mpnK1HaLQh1XpiguO1v9A2BQn0iE
+         mTR7i2wlgiwb2rlWYrjcjGrDsECmYoWFxInSUGwHnBuQ9A3QLqhCDPMALmB9qL8+eu1j
+         iqTpzbNutlpzo2L6HOyWnieficaiF+BdaN2/EaXXvYQ9stQvlyPMrpwCd86BH0qJ0pCf
+         zuOvwQ5M9RCQgR6lnMfUoYtrKe2gnel9C6+MiXAOQN+IijL472IvVCjThEmktH9vf9i6
+         3wmvLXFU9l/F9+ocTaJu9OoAcxAsmrPLn5A09iMp8qp8EyFjkLYJ/YfWW/BidH9EPfYc
+         kaog==
+X-Gm-Message-State: AOAM531qCE41rPIh/oYq81LjnfMZiUdIJxWu15dIvf7Fd2A7oTL34PqP
+        lfGwVR/hi6blls7mkSitNrnT9Q==
+X-Google-Smtp-Source: ABdhPJwxQlud3/H/xV2Dbfu6P6pYfPXGlRqele+HoGoUBj0HGH9j/JHGsKTEVZU7XxN2PY+0LDQPYQ==
+X-Received: by 2002:a5d:5342:: with SMTP id t2mr21947899wrv.243.1605004089054;
+        Tue, 10 Nov 2020 02:28:09 -0800 (PST)
+Received: from [192.168.0.4] (hst-208-208.medicom.bg. [84.238.208.208])
+        by smtp.googlemail.com with ESMTPSA id w11sm2639462wmg.36.2020.11.10.02.28.07
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 10 Nov 2020 02:13:10 -0800 (PST)
-Subject: Re: [PATCH 1/3] v4l: Add HDR10 HEVC static metadata controls
+        Tue, 10 Nov 2020 02:28:08 -0800 (PST)
+Subject: Re: [PATCH 2/3] docs: media: Document CLL and Mastering display
 To:     Hans Verkuil <hverkuil-cisco@xs4all.nl>,
         linux-media@vger.kernel.org, linux-kernel@vger.kernel.org,
         linux-arm-msm@vger.kernel.org
 Cc:     Nicolas Dufresne <nicolas.dufresne@collabora.com>,
         Ezequiel Garcia <ezequiel@collabora.com>
 References: <20201109173153.23720-1-stanimir.varbanov@linaro.org>
- <20201109173153.23720-2-stanimir.varbanov@linaro.org>
- <dc70bc75-62af-1bdb-1feb-bb58e6f1ff8c@xs4all.nl>
+ <20201109173153.23720-3-stanimir.varbanov@linaro.org>
+ <c907b185-a272-bef5-1aa0-313c7789b07d@xs4all.nl>
 From:   Stanimir Varbanov <stanimir.varbanov@linaro.org>
-Message-ID: <ba370fa4-37ab-32c4-dfcc-c56a4be0cb3a@linaro.org>
-Date:   Tue, 10 Nov 2020 12:13:09 +0200
+Message-ID: <58fda2db-4c2a-0fde-91ce-39af4fbccf99@linaro.org>
+Date:   Tue, 10 Nov 2020 12:28:07 +0200
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
  Thunderbird/68.10.0
 MIME-Version: 1.0
-In-Reply-To: <dc70bc75-62af-1bdb-1feb-bb58e6f1ff8c@xs4all.nl>
+In-Reply-To: <c907b185-a272-bef5-1aa0-313c7789b07d@xs4all.nl>
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
 Content-Transfer-Encoding: 7bit
@@ -74,205 +74,126 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-On 11/10/20 11:43 AM, Hans Verkuil wrote:
+On 11/10/20 11:50 AM, Hans Verkuil wrote:
 > On 09/11/2020 18:31, Stanimir Varbanov wrote:
->> Add Content light level and Mastering display colour volume v4l2
->> compounf controls, relevant payload structures and validation.
-> 
-> Typo: compounf -> compound
-> 
+>> Document Content light level and Mastering display colour volume.
 >>
 >> Signed-off-by: Stanimir Varbanov <stanimir.varbanov@linaro.org>
 >> ---
->>  drivers/media/v4l2-core/v4l2-ctrls.c | 61 ++++++++++++++++++++++++++++
->>  include/media/hevc-ctrls.h           | 41 +++++++++++++++++++
->>  include/media/v4l2-ctrls.h           |  2 +
->>  3 files changed, 104 insertions(+)
+>>  .../media/v4l/ext-ctrls-codec.rst             | 61 +++++++++++++++++++
+>>  1 file changed, 61 insertions(+)
 >>
->> diff --git a/drivers/media/v4l2-core/v4l2-ctrls.c b/drivers/media/v4l2-core/v4l2-ctrls.c
->> index bd7f330c941c..f70eaa6a46df 100644
->> --- a/drivers/media/v4l2-core/v4l2-ctrls.c
->> +++ b/drivers/media/v4l2-core/v4l2-ctrls.c
->> @@ -1023,6 +1023,8 @@ const char *v4l2_ctrl_get_name(u32 id)
->>  	case V4L2_CID_MPEG_VIDEO_HEVC_SLICE_PARAMS:		return "HEVC Slice Parameters";
->>  	case V4L2_CID_MPEG_VIDEO_HEVC_DECODE_MODE:		return "HEVC Decode Mode";
->>  	case V4L2_CID_MPEG_VIDEO_HEVC_START_CODE:		return "HEVC Start Code";
->> +	case V4L2_CID_MPEG_VIDEO_HEVC_CLL_INFO:			return "HEVC Content Light Info";
->> +	case V4L2_CID_MPEG_VIDEO_HEVC_MASTERING_DISPLAY:	return "HEVC Mastering Display";
+>> diff --git a/Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst b/Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst
+>> index ce728c757eaf..39d0aab5ca3d 100644
+>> --- a/Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst
+>> +++ b/Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst
+>> @@ -4382,3 +4382,64 @@ enum v4l2_mpeg_video_hevc_size_of_length_field -
+>>        - Selecting this value specifies that HEVC slices are expected
+>>          to be prefixed by Annex B start codes. According to :ref:`hevc`
+>>          valid start codes can be 3-bytes 0x000001 or 4-bytes 0x00000001.
+>> +
+>> +``V4L2_CID_MPEG_VIDEO_HEVC_CLL_INFO (struct)``
+>> +    The Content Light Level defines upper bounds for the nominal target
+>> +    brightness light level of the pictures.
+>> +
+>> +.. c:type:: v4l2_ctrl_hevc_cll_info
+>> +
+>> +.. cssclass:: longtable
+>> +
+>> +.. flat-table:: struct v4l2_ctrl_hevc_cll_info
+>> +    :header-rows:  0
+>> +    :stub-columns: 0
+>> +    :widths:       1 1 2
+>> +
+>> +    * - __u16
+>> +      - ``max_content_light_level``
+>> +      - An upper bound on the maximum light level among all individual
+>> +        samples for the pictures of coded video sequence, cd/m2.
+>> +    * - __u16
+>> +      - ``max_pic_average_light_level``
+>> +      - An upper bound on the maximum average light level among the
+>> +        samples for any idividual picture of coded video sequence, cd/m2.
 > 
-> Why is this split up in two controls? Can you have one, but not the other?
+> idividual -> individual
 > 
-> From what I can tell they are always combined (see CTA-861-G, SMPTE 2086).
+> In the CTA-861-G spec value 0 is used to indicate that this information is
+> not present. How is that handled here? Can it be 0 as well in an HEVC stream?
 
-I split to two control IDs because in ITU-T Rec. H265 CLL and Mastering
-Display colour volume are different SEI messages. I guessed that they
-could exist in the bitstream independently, though I'm not sure about that.
+ITU-T Rec. H265 says: When equal to 0, no such upper bound is indicated
+by max_content_light_level.
 
-I think, if we decide that hdr10-ctrls.h will be better place for these
-controls we can combine CLL and Mastering display in one control -
-V4L2_CID_MPEG_HDR10_STATIC_METADATA.
-And later we could introduce V4L2_CID_MPEG_HDR10_DYNAMIC_METADATA for
-hdr10+ (2094-40).
+So, the meaning is the same as in CTA-861-G.
+
+> 
+> Same for the next control.
+> 
+>> +
+>> +``V4L2_CID_MPEG_VIDEO_HEVC_MASTERING_DISPLAY (struct)``
+>> +    The mastering display defines the colour volume (the colour primaries,
+>> +    white point and luminance range) of a display considered to be the
+>> +    mastering display for current video content.
+>> +
+>> +.. c:type:: v4l2_ctrl_hevc_mastering_display
+>> +
+>> +.. cssclass:: longtable
+>> +
+>> +.. flat-table:: struct v4l2_ctrl_hevc_mastering_display
+>> +    :header-rows:  0
+>> +    :stub-columns: 0
+>> +    :widths:       1 1 2
+>> +
+>> +    * - __u16
+>> +      - ``display_primaries_x[3]``
+>> +      - Specifies the normalized x chromaticity coordinate of the colour
+>> +        primary component of the mastering display.
+> 
+> CTA-861-G defines this as: "coded as unsigned 16-bit values in units
+> of 0.00002, where 0x0000 represents zero and 0xC350 represents 1.0000."
+> 
+> Is that true here as well? If so, then this should be documented because
+> "normalized x chromaticity coordinate" doesn't say anything meaningful.
+
+Yes, it is the same. Will document that in next version.
+
+> 
+>> +    * - __u16
+>> +      - ``display_primaries_y[3]``
+>> +      - Specifies the normalized y chromaticity coordinate of the colour
+>> +        primary component of the mastering display.
+>> +    * - __u16
+>> +      - ``white_point_x``
+>> +      - Specifies the normalized x chromaticity coordinate of the white
+>> +        point of the mastering display.
+>> +    * - __u16
+>> +      - ``white_point_y``
+>> +      - Specifies the normalized y chromaticity coordinate of the white
+>> +        point of the mastering display.
+>> +    * - __u32
+>> +      - ``max_luminance``
+>> +      - Specifies the nominal maximum display luminance of the mastering
+>> +        display.
+> 
+> In CTA-861-G this is in 1 cd/m^2 units.
+
+In Rec. H265 max_luminance is in the range of 50 000 to 100 000 000 and
+units of 0.0001 cd/m2.
+
+> 
+>> +    * - __u32
+>> +      - ``min_luminance``
+>> +      - specifies the nominal minimum display luminance of the mastering
+>> +        display.
+> 
+> And this in units of 0.0001 cd/m^2.
+
+min_luminance - range of 1 to 50 000 and units of 0.0001 cd/m2.
+
+I will update all these in next patchset version.
 
 > 
 > Regards,
 > 
 > 	Hans
-> 
->>  
->>  	/* CAMERA controls */
->>  	/* Keep the order of the 'case's the same as in v4l2-controls.h! */
->> @@ -1461,6 +1463,12 @@ void v4l2_ctrl_fill(u32 id, const char **name, enum v4l2_ctrl_type *type,
->>  	case V4L2_CID_MPEG_VIDEO_HEVC_SLICE_PARAMS:
->>  		*type = V4L2_CTRL_TYPE_HEVC_SLICE_PARAMS;
->>  		break;
->> +	case V4L2_CID_MPEG_VIDEO_HEVC_CLL_INFO:
->> +		*type = V4L2_CTRL_TYPE_HEVC_CLL_INFO;
->> +		break;
->> +	case V4L2_CID_MPEG_VIDEO_HEVC_MASTERING_DISPLAY:
->> +		*type = V4L2_CTRL_TYPE_HEVC_MASTERING_DISPLAY;
->> +		break;
->>  	case V4L2_CID_UNIT_CELL_SIZE:
->>  		*type = V4L2_CTRL_TYPE_AREA;
->>  		*flags |= V4L2_CTRL_FLAG_READ_ONLY;
->> @@ -1775,6 +1783,7 @@ static int std_validate_compound(const struct v4l2_ctrl *ctrl, u32 idx,
->>  	struct v4l2_ctrl_hevc_sps *p_hevc_sps;
->>  	struct v4l2_ctrl_hevc_pps *p_hevc_pps;
->>  	struct v4l2_ctrl_hevc_slice_params *p_hevc_slice_params;
->> +	struct v4l2_ctrl_hevc_mastering_display *p_hevc_mastering;
->>  	struct v4l2_area *area;
->>  	void *p = ptr.p + idx * ctrl->elem_size;
->>  	unsigned int i;
->> @@ -1934,6 +1943,52 @@ static int std_validate_compound(const struct v4l2_ctrl *ctrl, u32 idx,
->>  		zero_padding(*p_hevc_slice_params);
->>  		break;
->>  
->> +	case V4L2_CTRL_TYPE_HEVC_CLL_INFO:
->> +		break;
->> +
->> +	case V4L2_CTRL_TYPE_HEVC_MASTERING_DISPLAY:
->> +		p_hevc_mastering = p;
->> +
->> +		for (i = 0; i < 3; ++i) {
->> +			if (p_hevc_mastering->display_primaries_x[i] <
->> +				V4L2_HEVC_MASTERING_PRIMARIES_X_LOW ||
->> +			    p_hevc_mastering->display_primaries_x[i] >
->> +				V4L2_HEVC_MASTERING_PRIMARIES_X_HIGH ||
->> +			    p_hevc_mastering->display_primaries_y[i] <
->> +				V4L2_HEVC_MASTERING_PRIMARIES_Y_LOW ||
->> +			    p_hevc_mastering->display_primaries_y[i] >
->> +				V4L2_HEVC_MASTERING_PRIMARIES_Y_HIGH)
->> +				return -EINVAL;
->> +		}
->> +
->> +		if (p_hevc_mastering->white_point_x <
->> +			V4L2_HEVC_MASTERING_WHITE_POINT_X_LOW ||
->> +		    p_hevc_mastering->white_point_x >
->> +			V4L2_HEVC_MASTERING_WHITE_POINT_X_HIGH ||
->> +		    p_hevc_mastering->white_point_y <
->> +			V4L2_HEVC_MASTERING_WHITE_POINT_Y_LOW ||
->> +		    p_hevc_mastering->white_point_y >
->> +			V4L2_HEVC_MASTERING_WHITE_POINT_Y_HIGH)
->> +			return -EINVAL;
->> +
->> +		if (p_hevc_mastering->max_luminance <
->> +			V4L2_HEVC_MASTERING_MAX_LUMA_LOW ||
->> +		    p_hevc_mastering->max_luminance >
->> +			V4L2_HEVC_MASTERING_MAX_LUMA_HIGH ||
->> +		    p_hevc_mastering->min_luminance <
->> +			V4L2_HEVC_MASTERING_MIN_LUMA_LOW ||
->> +		    p_hevc_mastering->min_luminance >
->> +			V4L2_HEVC_MASTERING_MIN_LUMA_HIGH)
->> +			return -EINVAL;
->> +
->> +		if (p_hevc_mastering->max_luminance ==
->> +			V4L2_HEVC_MASTERING_MAX_LUMA_LOW &&
->> +		    p_hevc_mastering->min_luminance ==
->> +			V4L2_HEVC_MASTERING_MIN_LUMA_HIGH)
->> +			return -EINVAL;
->> +
->> +		break;
->> +
->>  	case V4L2_CTRL_TYPE_AREA:
->>  		area = p;
->>  		if (!area->width || !area->height)
->> @@ -2626,6 +2681,12 @@ static struct v4l2_ctrl *v4l2_ctrl_new(struct v4l2_ctrl_handler *hdl,
->>  	case V4L2_CTRL_TYPE_HEVC_SLICE_PARAMS:
->>  		elem_size = sizeof(struct v4l2_ctrl_hevc_slice_params);
->>  		break;
->> +	case V4L2_CTRL_TYPE_HEVC_CLL_INFO:
->> +		elem_size = sizeof(struct v4l2_ctrl_hevc_cll_info);
->> +		break;
->> +	case V4L2_CTRL_TYPE_HEVC_MASTERING_DISPLAY:
->> +		elem_size = sizeof(struct v4l2_ctrl_hevc_mastering_display);
->> +		break;
->>  	case V4L2_CTRL_TYPE_AREA:
->>  		elem_size = sizeof(struct v4l2_area);
->>  		break;
->> diff --git a/include/media/hevc-ctrls.h b/include/media/hevc-ctrls.h
->> index 1009cf0891cc..d254457d2846 100644
->> --- a/include/media/hevc-ctrls.h
->> +++ b/include/media/hevc-ctrls.h
->> @@ -209,4 +209,45 @@ struct v4l2_ctrl_hevc_slice_params {
->>  	__u64	flags;
->>  };
->>  
->> +/*
->> + * Content light level information.
->> + * Source Rec. ITU-T H.265 v7 (11/2019) HEVC; D.2.35
->> + */
->> +#define V4L2_CID_MPEG_VIDEO_HEVC_CLL_INFO	(V4L2_CID_MPEG_BASE + 1017)
->> +#define V4L2_CTRL_TYPE_HEVC_CLL_INFO		0x0123
->> +
->> +struct v4l2_ctrl_hevc_cll_info {
->> +	__u16 max_content_light_level;
->> +	__u16 max_pic_average_light_level;
->> +};
->> +
->> +/*
->> + * Mastering display colour volume.
->> + * Source Rec. ITU-T H.265 v7 (11/2019) HEVC; D.2.28
->> + */
->> +#define V4L2_CID_MPEG_VIDEO_HEVC_MASTERING_DISPLAY (V4L2_CID_MPEG_BASE + 1018)
->> +#define V4L2_CTRL_TYPE_HEVC_MASTERING_DISPLAY	0x0124
->> +
->> +#define V4L2_HEVC_MASTERING_PRIMARIES_X_LOW	5
->> +#define V4L2_HEVC_MASTERING_PRIMARIES_X_HIGH	37000
->> +#define V4L2_HEVC_MASTERING_PRIMARIES_Y_LOW	5
->> +#define V4L2_HEVC_MASTERING_PRIMARIES_Y_HIGH	42000
->> +#define V4L2_HEVC_MASTERING_WHITE_POINT_X_LOW	5
->> +#define V4L2_HEVC_MASTERING_WHITE_POINT_X_HIGH	37000
->> +#define V4L2_HEVC_MASTERING_WHITE_POINT_Y_LOW	5
->> +#define V4L2_HEVC_MASTERING_WHITE_POINT_Y_HIGH	42000
->> +#define V4L2_HEVC_MASTERING_MAX_LUMA_LOW	50000
->> +#define V4L2_HEVC_MASTERING_MAX_LUMA_HIGH	100000000
->> +#define V4L2_HEVC_MASTERING_MIN_LUMA_LOW	1
->> +#define V4L2_HEVC_MASTERING_MIN_LUMA_HIGH	50000
->> +
->> +struct v4l2_ctrl_hevc_mastering_display {
->> +	__u16 display_primaries_x[3];
->> +	__u16 display_primaries_y[3];
->> +	__u16 white_point_x;
->> +	__u16 white_point_y;
->> +	__u32 max_luminance;
->> +	__u32 min_luminance;
->> +};
->> +
->>  #endif
->> diff --git a/include/media/v4l2-ctrls.h b/include/media/v4l2-ctrls.h
->> index cb25f345e9ad..6120e29945e1 100644
->> --- a/include/media/v4l2-ctrls.h
->> +++ b/include/media/v4l2-ctrls.h
->> @@ -80,6 +80,8 @@ union v4l2_ctrl_ptr {
->>  	struct v4l2_ctrl_hevc_sps *p_hevc_sps;
->>  	struct v4l2_ctrl_hevc_pps *p_hevc_pps;
->>  	struct v4l2_ctrl_hevc_slice_params *p_hevc_slice_params;
->> +	struct v4l2_ctrl_hevc_cll_info *p_hevc_cll;
->> +	struct v4l2_ctrl_hevc_mastering_display *p_hevc_mastering;
->>  	struct v4l2_area *p_area;
->>  	void *p;
->>  	const void *p_const;
->>
 > 
 
 -- 
