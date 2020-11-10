@@ -2,61 +2,97 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 531602AD127
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Nov 2020 09:18:59 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2A45E2AD285
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Nov 2020 10:33:20 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726213AbgKJIS6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 10 Nov 2020 03:18:58 -0500
-Received: from m176150.mail.qiye.163.com ([59.111.176.150]:4567 "EHLO
-        m176150.mail.qiye.163.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726721AbgKJIS6 (ORCPT
+        id S1726462AbgKJJdT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 10 Nov 2020 04:33:19 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42618 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726213AbgKJJdS (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 10 Nov 2020 03:18:58 -0500
-Received: from vivo.com (wm-10.qy.internal [127.0.0.1])
-        by m176150.mail.qiye.163.com (Hmail) with ESMTP id 6443F1A3B86;
-        Tue, 10 Nov 2020 16:10:27 +0800 (CST)
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: base64
-Message-ID: <AI*ANACSDfnjQejyeNXUnKoQ.1.1604995827401.Hmail.bernard@vivo.com>
-To:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Drew Davenport <ddavenport@chromium.org>,
-        Bernard Zhao <bernard@vivo.com>,
-        Zheng Bin <zhengbin13@huawei.com>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
-Cc:     opensource.kernel@vivo.com
-Subject: =?UTF-8?B?W1Jlc2VuZF1bUEFUQ0hdIGRybS9tc206IGRlbGV0ZSBjb252ZXJzaW9uIGZyb20gYm9vbCB2YWx1ZSB0byBib29sIHJldHVybg==?=
-X-Priority: 3
-X-Mailer: HMail Webmail Server V2.0 Copyright (c) 2016-163.com
-X-Originating-IP: 58.213.83.157
+        Tue, 10 Nov 2020 04:33:18 -0500
+Received: from mail-wr1-x443.google.com (mail-wr1-x443.google.com [IPv6:2a00:1450:4864:20::443])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6531DC0613CF
+        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Nov 2020 01:33:18 -0800 (PST)
+Received: by mail-wr1-x443.google.com with SMTP id d12so10376101wrr.13
+        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Nov 2020 01:33:18 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ffwll.ch; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=D87wf9S+VQgrir5Y3Im/Lq0uDNDXr/OXwkaKziQOSSk=;
+        b=eqL1EGtwAV0BAaSSSGWva6fXzKWOb6Oa1XVotzJar+d6PpWo5hMHGFJXoBYXBTBNHo
+         f0rstUhe9BA+ySYTaa/XO3JrE0m+/VM4StP0l5JEXeeJjkBiyFQ/+8Bjmyd2465hZ7ED
+         2wQc6/2xM8CqGgjA/wixfzu3N3yl/UlEOwSkc=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=D87wf9S+VQgrir5Y3Im/Lq0uDNDXr/OXwkaKziQOSSk=;
+        b=Gj9gyusCznVB+o5krcBtdg+HTlC8Io2BEKrD908XZmJKhrBam+2clkgRioWQYWr1Z5
+         YrBkkuCOfqDPVBnE3Q/DHFbhFZeHxy4ib8TLtYs/Q3B9HwBTBRuR7Bj6z51fUmOL7HUq
+         uQbfJMKUq7/GKyF9W7M4SWqHcBQh/xgTnYOVNEwj8kBDSWzDQQX1/nxJeUN61BpA/3cQ
+         9zrYvp4l3hP1SFNo3KorZ8CAEkPLt86xHZArwCGVKLFl+9FmV/ndu9VtrQdZ9eH86S9O
+         Llk6etQ7Fqz/Ixib+xIIzherzKzhDHkUoB5iuVl85I6AKiGskAPK5sSXXpXVhPU+8RfJ
+         tIkg==
+X-Gm-Message-State: AOAM531UmlI1YI1dniQ5jMAtWfIUEmqFR9O9hX6TO8I8fHsg/YTFbEQ/
+        ES7IGfeta+Z3BMxiog8Ws7/efA==
+X-Google-Smtp-Source: ABdhPJyGbMjLRkYp8QapsVbIw4iwcuqTaZ4I3ctrgmpDvNh11tupCr/ocZW9QLoIqcZCE+molvVXBg==
+X-Received: by 2002:adf:8465:: with SMTP id 92mr21597643wrf.50.1605000797075;
+        Tue, 10 Nov 2020 01:33:17 -0800 (PST)
+Received: from phenom.ffwll.local ([2a02:168:57f4:0:efd0:b9e5:5ae6:c2fa])
+        by smtp.gmail.com with ESMTPSA id t12sm16411910wrm.25.2020.11.10.01.33.15
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 10 Nov 2020 01:33:16 -0800 (PST)
+Date:   Tue, 10 Nov 2020 10:33:14 +0100
+From:   Daniel Vetter <daniel@ffwll.ch>
+To:     Thomas Zimmermann <tzimmermann@suse.de>
+Cc:     daniel@ffwll.ch, airlied@linux.ie, chunkuang.hu@kernel.org,
+        p.zabel@pengutronix.de, robdclark@gmail.com, sean@poorly.run,
+        linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
+        dri-devel@lists.freedesktop.org
+Subject: Re: [PATCH 0/2] drm: Build fixes for msm and mediatek
+Message-ID: <20201110093314.GE401619@phenom.ffwll.local>
+References: <20201109103242.19544-1-tzimmermann@suse.de>
 MIME-Version: 1.0
-Received: from bernard@vivo.com( [58.213.83.157) ] by ajax-webmail ( [127.0.0.1] ) ; Tue, 10 Nov 2020 16:10:27 +0800 (GMT+08:00)
-From:   Bernard <bernard@vivo.com>
-Date:   Tue, 10 Nov 2020 16:10:27 +0800 (GMT+08:00)
-X-HM-Spam-Status: e1kfGhgUHx5ZQUtXWQgYFAkeWUFZS1VLWVdZKFlBSE83V1ktWUFJV1kPCR
-        oVCBIfWUFZTB5JGUhOGkkdTR9LVkpNS09CQk5DSUxPQ05VEwETFhoSFyQUDg9ZV1kWGg8SFR0UWU
-        FZT0tIVUpKS0hKQ1VLWQY+
-X-HM-Sender-Digest: e1kMHhlZQQ8JDh5XWRIfHhUPWUFZRzoyUTo1OjgoPx0VESoeEQIeNSMu
-        FTAUKlVKVUpNS09CQk5DSUxCQk1VMxYaEhdVGR4JFRoJHzsNEg0UVRgUFkVZV1kSC1lBWU5DVUlK
-        SFVDSFVKTkxZV1kIAVlBSUJDTzcG
-X-HM-Tid: 0a75b134c6e093b4kuws6443f1a3b86
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20201109103242.19544-1-tzimmermann@suse.de>
+X-Operating-System: Linux phenom 5.7.0-1-amd64 
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-RGVsZXRlIHRoZSBjb252ZXJzaW9uIGZyb20gYm9vbCB2YWx1ZSB0byBib29sIGZ1bmN0aW9uIHJl
-dHVybi4KClNpZ25lZC1vZmYtYnk6IEJlcm5hcmQgWmhhbyA8YmVybmFyZEB2aXZvLmNvbT4KLS0t
-CiBkcml2ZXJzL2dwdS9kcm0vbXNtL2Rpc3AvZHB1MS9kcHVfZW5jb2Rlcl9waHlzX2NtZC5jIHwg
-MiArLQogMSBmaWxlIGNoYW5nZWQsIDEgaW5zZXJ0aW9uKCspLCAxIGRlbGV0aW9uKC0pCgpkaWZm
-IC0tZ2l0IGEvZHJpdmVycy9ncHUvZHJtL21zbS9kaXNwL2RwdTEvZHB1X2VuY29kZXJfcGh5c19j
-bWQuYyBiL2RyaXZlcnMvZ3B1L2RybS9tc20vZGlzcC9kcHUxL2RwdV9lbmNvZGVyX3BoeXNfY21k
-LmMKaW5kZXggODQ5M2Q2OGFkODQxLi40MTEyMjJmNGNkNmYgMTAwNjQ0Ci0tLSBhL2RyaXZlcnMv
-Z3B1L2RybS9tc20vZGlzcC9kcHUxL2RwdV9lbmNvZGVyX3BoeXNfY21kLmMKKysrIGIvZHJpdmVy
-cy9ncHUvZHJtL21zbS9kaXNwL2RwdTEvZHB1X2VuY29kZXJfcGh5c19jbWQuYwpAQCAtMzcsNyAr
-MzcsNyBAQAogCiBzdGF0aWMgYm9vbCBkcHVfZW5jb2Rlcl9waHlzX2NtZF9pc19tYXN0ZXIoc3Ry
-dWN0IGRwdV9lbmNvZGVyX3BoeXMgKnBoeXNfZW5jKQogewotCXJldHVybiAocGh5c19lbmMtPnNw
-bGl0X3JvbGUgIT0gRU5DX1JPTEVfU0xBVkUpID8gdHJ1ZSA6IGZhbHNlOworCXJldHVybiAocGh5
-c19lbmMtPnNwbGl0X3JvbGUgIT0gRU5DX1JPTEVfU0xBVkUpOwogfQogCiBzdGF0aWMgYm9vbCBk
-cHVfZW5jb2Rlcl9waHlzX2NtZF9tb2RlX2ZpeHVwKAotLSAKMi4yOS4wCgoNCg0K
+On Mon, Nov 09, 2020 at 11:32:40AM +0100, Thomas Zimmermann wrote:
+> Commit 49a3f51dfeee ("drm/gem: Use struct dma_buf_map in GEM vmap ops and
+> convert GEM backends") changed DRM's internal GEM vmap callbacks. Msm and
+> mediatek were forgotten during the conversion.
+> 
+> Thomas Zimmermann (2):
+>   drm/msm: Use struct dma_buf_map in GEM vmap ops
+>   drm/mediatek: Use struct dma_buf_map in GEM vmap ops
+
+On both:
+
+Reviewed-by: Daniel Vetter <daniel.vetter@ffwll.ch>
+
+I guess more motivation to convert drivers over to shmem helpers, if
+possible ...
+-Daniel
+
+> 
+>  drivers/gpu/drm/mediatek/mtk_drm_gem.c | 20 ++++++++++++--------
+>  drivers/gpu/drm/mediatek/mtk_drm_gem.h |  4 ++--
+>  drivers/gpu/drm/msm/msm_drv.h          |  4 ++--
+>  drivers/gpu/drm/msm/msm_gem_prime.c    | 13 ++++++++++---
+>  4 files changed, 26 insertions(+), 15 deletions(-)
+> 
+> --
+> 2.29.2
+> 
+
+-- 
+Daniel Vetter
+Software Engineer, Intel Corporation
+http://blog.ffwll.ch
