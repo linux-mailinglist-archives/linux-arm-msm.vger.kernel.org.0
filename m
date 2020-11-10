@@ -2,80 +2,85 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 98C5B2AD7D6
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Nov 2020 14:39:18 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1E0802AD7F7
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Nov 2020 14:46:53 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731107AbgKJNjQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 10 Nov 2020 08:39:16 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52650 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730044AbgKJNjQ (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 10 Nov 2020 08:39:16 -0500
-Received: from mail-lj1-x244.google.com (mail-lj1-x244.google.com [IPv6:2a00:1450:4864:20::244])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7A7BDC0613CF
-        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Nov 2020 05:39:14 -0800 (PST)
-Received: by mail-lj1-x244.google.com with SMTP id x9so2256564ljc.7
-        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Nov 2020 05:39:14 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=SHs6rk+covBOCGa2r5C59z2WGwm3xWIwmPpRpLKUBrI=;
-        b=rljdcMQH15DQ/TeY5NhmS4o1EytbBid0vSuhKrAorR2rNginA8bCNSY0zfOtyMEaFe
-         t4k4lx/dBCGVYmYU/nMpYZxg3hZw4ANlKdrVoU7kSdVOnRXZNAlP+uKrazKw0deR8Jjf
-         1xCXGsjZPP+BRJ9Xb8ONAOqvEVDA8uOLmvM7ytQYG/7skKGcT56NbY9zfx3jUujtrmC4
-         4XEjCGK9sXSXsGHGGoKhUlwrdZMU8TxxoCKydKfH08pB7qDsMyLt/kzwFgV9/E5WLnXP
-         aPpcn3i2BCqecFus7aau5lVenc+LchvQ0u2eb2f/Ns0RwXXcG2qEjJR8nThtm0AkT3B6
-         VCIw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=SHs6rk+covBOCGa2r5C59z2WGwm3xWIwmPpRpLKUBrI=;
-        b=dlW2R1LQW7OeJ5Go0daSpJJTJtvabjda5M7dPO9WHlxoYelujD58/1Y5JHjmXmivbq
-         DWZ76y0Rx+tFrrzgKj4a9sxe+St+1yvw8ZClPYdzMJ3/aTTsa+iOQQZ+WMZbalvxmIRN
-         KlEsgXsWDXvPV8vdKsu0tcN+Cj9P4XiGJcnTlk7lU8TYColxSlAjqd7FnQZ9/e2ifgUl
-         Wr6A3tTSYTbkVv9dJ/nTTAdZHppM7M5PZC9Uw5U5NdkYWqfUp10bqx8gxw7RTOZR+4KR
-         aDLqGiAw22bmfOVn55bKICvFVV4khj7AtRNSAjNPIZNg8NL+8fBIVbMnWdIVq1Z+vXSY
-         9ilg==
-X-Gm-Message-State: AOAM533q3rPmQGdHxyVRcGadaJqux//pKjEFZGxk/c3aDUZwX7ue550L
-        IutoRtDJRjPOGQzhlFMw2jHY9H6YLWiFzwv1xhkHgQ==
-X-Google-Smtp-Source: ABdhPJxFkRY1YghIW2j4XkQuAhS5OZqLnFX6JIthyRCWafLjgS8SdBZKjGUYmIWmJTqBtPworFWH3SEKou/Xi3XCz18=
-X-Received: by 2002:a05:651c:1205:: with SMTP id i5mr8925422lja.283.1605015551546;
- Tue, 10 Nov 2020 05:39:11 -0800 (PST)
+        id S1730692AbgKJNqu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 10 Nov 2020 08:46:50 -0500
+Received: from mail.kernel.org ([198.145.29.99]:53008 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1730524AbgKJNqu (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 10 Nov 2020 08:46:50 -0500
+Received: from localhost.localdomain (236.31.169.217.in-addr.arpa [217.169.31.236])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id AD4C22076E;
+        Tue, 10 Nov 2020 13:46:45 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1605016009;
+        bh=P7FNUoUlbSY2GKi42YVDRwQnkOib6vtn54EtBPOLiDQ=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+        b=hYDBbp0DdpYpcHeeOBptc7EzMimHnzDqfHH9zPh4g/fqp3K97yvx/BjCLQYQqw/Bo
+         hm5eVhisSud5otCjw5SndxHvIiSqDHPiXzMJ6baSTsO+5Okx52I/sEFrisL1N/SI1j
+         l25I0lRJXC0UMHi7FqyVZDoJuf3v9Z41LMEfMTH0=
+From:   Will Deacon <will@kernel.org>
+To:     Jordan Crouse <jcrouse@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org
+Cc:     catalin.marinas@arm.com, kernel-team@android.com,
+        Will Deacon <will@kernel.org>, Andy Gross <agross@kernel.org>,
+        linux-kernel@vger.kernel.org,
+        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
+        Thierry Reding <treding@nvidia.com>,
+        devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        Rob Herring <robh+dt@kernel.org>,
+        Hanna Hawa <hannah@marvell.com>,
+        Joerg Roedel <joro@8bytes.org>,
+        Robin Murphy <robin.murphy@arm.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Sibi Sankar <sibis@codeaurora.org>,
+        Rob Clark <robdclark@chromium.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        iommu@lists.linux-foundation.org
+Subject: Re: [PATCH v19 0/4] iommu/arm-smmu: Add adreno-smmu implementation and bindings
+Date:   Tue, 10 Nov 2020 13:46:40 +0000
+Message-Id: <160501115071.4000419.14530620296550155623.b4-ty@kernel.org>
+X-Mailer: git-send-email 2.20.1
+In-Reply-To: <20201109184728.2463097-1-jcrouse@codeaurora.org>
+References: <20201109184728.2463097-1-jcrouse@codeaurora.org>
 MIME-Version: 1.0
-References: <1604570192-15057-1-git-send-email-rnayak@codeaurora.org> <1604570192-15057-2-git-send-email-rnayak@codeaurora.org>
-In-Reply-To: <1604570192-15057-2-git-send-email-rnayak@codeaurora.org>
-From:   Linus Walleij <linus.walleij@linaro.org>
-Date:   Tue, 10 Nov 2020 14:39:00 +0100
-Message-ID: <CACRpkdbhezgd7ph2pS3+FeRijdfVCAKEk_O8Jg2_+FrROSC2mQ@mail.gmail.com>
-Subject: Re: [PATCH v2 2/2] pinctrl: qcom: Add sc7280 pinctrl driver
-To:     Rajendra Nayak <rnayak@codeaurora.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>, Rob Herring <robh+dt@kernel.org>,
-        MSM <linux-arm-msm@vger.kernel.org>,
-        "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Nov 5, 2020 at 10:56 AM Rajendra Nayak <rnayak@codeaurora.org> wrote:
+On Mon, 9 Nov 2020 11:47:24 -0700, Jordan Crouse wrote:
+> This short series adds support for the adreno-smmu implementation of the
+> arm-smmu driver and the device-tree bindings to turn on the implementation
+> for the sm845 and sc7180 GPUs. These changes are the last ones needed to enable
+> per-instance pagetables in the drm/msm driver.
+> 
+> v19: Rebase to kernel/git/will/linux.git for-joerg/arm-smmu/updates to pick up
+>      system cache patches and devm_realloc() updates. Use a function hook to
+>      modify / write sctlr
+> v18: No deltas in this patchset since the last go-around for 5.10 [1].
+> 
+> [...]
 
-> Add initial pinctrl driver to support pin configuration with
-> pinctrl framework for SC7280 SoC
->
-> Signed-off-by: Rajendra Nayak <rnayak@codeaurora.org>
-> ---
-> v2: Consolidated functions under phase_flag and qdss
->     Moved ufs reset pin to pin175 so its exposed as a gpio
->     npios updated from 175 to 176
+Applied patches 1-3 to will (for-joerg/arm-smmu/updates), thanks!
 
-Looks good to me, just waiting for a nod from Bjorn on this one.
+[1/4] iommu/arm-smmu-qcom: Add implementation for the adreno GPU SMMU
+      https://git.kernel.org/will/c/5c7469c66f95
+[2/4] iommu/arm-smmu: Add a way for implementations to influence SCTLR
+      https://git.kernel.org/will/c/bffb2eaf0ba2
+[3/4] dt-bindings: arm-smmu: Add compatible string for Adreno GPU SMMU
+      https://git.kernel.org/will/c/a29bbb0861f4
 
-Yours,
-Linus Walleij
+I assume the .dts change will be routed separately so as to avoid conflicts.
+
+Cheers,
+-- 
+Will
+
+https://fixes.arm64.dev
+https://next.arm64.dev
+https://will.arm64.dev
