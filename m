@@ -2,120 +2,105 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 6161D2ADE97
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Nov 2020 19:42:35 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 101082ADEA3
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Nov 2020 19:45:20 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731403AbgKJSmY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 10 Nov 2020 13:42:24 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43736 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725862AbgKJSmX (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 10 Nov 2020 13:42:23 -0500
-Received: from mail-pl1-x641.google.com (mail-pl1-x641.google.com [IPv6:2607:f8b0:4864:20::641])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F0844C0613D1;
-        Tue, 10 Nov 2020 10:42:22 -0800 (PST)
-Received: by mail-pl1-x641.google.com with SMTP id k7so6931032plk.3;
-        Tue, 10 Nov 2020 10:42:22 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=Aoj89WmcaMMxtRZJCP7ES6axMtLpeMz4nvf536ZBRdM=;
-        b=UH+Sdgv4Jw0IYY6nICZUclvd441VpcOTKJSRDbN2UxfCyy+R6yhqyAdPsiy/FlEkef
-         OdR6BJNAjslO9MjXZJPMmiRDyFOZ72i5feFG/pUUBogLQMLme2unL1+XgcHy/Edxk7I6
-         Lf6sxh7MBZkKk9yrwrW07/Gkyqaf3fE4Emg/rw2GrqTAYtW9JoyTa8QZm+/Q+Kd7qoOm
-         FAUBRJnVOLjAFHmyW/Sin8w8aGtqtabyBYCxKRh6BoarUTWarV3zccmWPzSCxQ0nyX7c
-         2mm8NhVaBMdIlB3eGius33oxaVdcqhcN+Lu4ba79GcyZPXC3xLj5u0Ie/nlSX7ex2HEq
-         e7hg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=Aoj89WmcaMMxtRZJCP7ES6axMtLpeMz4nvf536ZBRdM=;
-        b=PLRBegAbCta273rzFS6pnvbCJkS+dpCb0s8eVi60zsep/qILo5KwXIwz6HApOGazRW
-         oh/AI3ztMLuGp/fFknMONWAlMQARBC9w3jCzOajRWXhVWbAsnba4q2HkA2GL8ZpU8+5o
-         VLlJR1S48ei/7LM4VQDWCc6Zf0tB3ee4xEnigKywbG6kv8HXsUT9L5fP/MJxXvGKtNnG
-         vkSs80Mu/BxhhnuXEdukmJt+220m8H8yGhoJYM80u1g2rZKySzigLqPpEP+cS4wXwwty
-         9Tk1/zFfVOkla9jwdi/NKTFIsKrVyTb95BO+3xYY1BQJmHSkxTg1gWmJw3rigKw20MqF
-         ujHw==
-X-Gm-Message-State: AOAM531WQy1Oc4cnpQDC5O3iEWWhDxOxNkI8cMZN0JpWqp5zp6Fw2m/1
-        i3BFpP4M0X3LkEd88tI3HkQ=
-X-Google-Smtp-Source: ABdhPJwLq87EjJQigjjYbupc+fu/mpLvm2voU3nXL/VLwi8dNJibezorLF7yq2pa5oiLPbrVCfu5EQ==
-X-Received: by 2002:a17:902:bb8c:b029:d2:2503:e458 with SMTP id m12-20020a170902bb8cb02900d22503e458mr17786908pls.18.1605033742518;
-        Tue, 10 Nov 2020 10:42:22 -0800 (PST)
-Received: from localhost ([2601:1c0:5200:a6:307:a401:7b76:c6e5])
-        by smtp.gmail.com with ESMTPSA id cv4sm4051283pjb.1.2020.11.10.10.42.20
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 10 Nov 2020 10:42:21 -0800 (PST)
-From:   Rob Clark <robdclark@gmail.com>
-To:     dri-devel@lists.freedesktop.org
-Cc:     Rob Clark <robdclark@chromium.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Jordan Crouse <jcrouse@codeaurora.org>,
-        "Kristian H. Kristensen" <hoegsberg@google.com>,
-        Eric Anholt <eric@anholt.net>,
-        "Gustavo A. R. Silva" <gustavoars@kernel.org>,
-        Emil Velikov <emil.velikov@collabora.com>,
-        linux-arm-msm@vger.kernel.org (open list:DRM DRIVER FOR MSM ADRENO GPU),
-        freedreno@lists.freedesktop.org (open list:DRM DRIVER FOR MSM ADRENO
-        GPU), linux-kernel@vger.kernel.org (open list)
-Subject: [PATCH 2/2] drm/msm/a5xx: Clear shadow on suspend
-Date:   Tue, 10 Nov 2020 10:44:00 -0800
-Message-Id: <20201110184401.282982-2-robdclark@gmail.com>
-X-Mailer: git-send-email 2.28.0
-In-Reply-To: <20201110184401.282982-1-robdclark@gmail.com>
-References: <20201110184401.282982-1-robdclark@gmail.com>
+        id S1730468AbgKJSpT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 10 Nov 2020 13:45:19 -0500
+Received: from z5.mailgun.us ([104.130.96.5]:42272 "EHLO z5.mailgun.us"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725862AbgKJSpS (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 10 Nov 2020 13:45:18 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1605033918; h=Content-Type: MIME-Version: Message-ID:
+ In-Reply-To: Date: References: Subject: Cc: To: From: Sender;
+ bh=ElUvTbVkzLm41BpUHPizEfq4Yf8HRRWIjdISp4d615A=; b=HjocSFarW44NR19QUd8IIxkJ4+Rx4g4DAoptZhYJu0bYP6u9cQxjzSIZAcQm2/wS3YsGUkeZ
+ n2lz9l9gnEsqeOWvkTMCjymeQM7kQQYe8aERkUttS88jnkdbo/ZXmtyKaiFj7/YZcAskFrDe
+ S+6rrnS+0ZiAKQ0rQXiv8la5Q9s=
+X-Mailgun-Sending-Ip: 104.130.96.5
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n06.prod.us-east-1.postgun.com with SMTP id
+ 5faadf7db8c6a84a5c6963bf (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 10 Nov 2020 18:44:13
+ GMT
+Sender: kvalo=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id AAD29C43385; Tue, 10 Nov 2020 18:44:12 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL
+        autolearn=no autolearn_force=no version=3.4.0
+Received: from tynnyri.adurom.net (tynnyri.adurom.net [51.15.11.48])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: kvalo)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id A10DFC433C6;
+        Tue, 10 Nov 2020 18:44:09 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org A10DFC433C6
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=kvalo@codeaurora.org
+From:   Kalle Valo <kvalo@codeaurora.org>
+To:     Jakub Kicinski <kuba@kernel.org>
+Cc:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        Loic Poulain <loic.poulain@linaro.org>, davem@davemloft.net,
+        netdev@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        bbhatt@codeaurora.org, willemdebruijn.kernel@gmail.com,
+        jhugo@codeaurora.org, hemantk@codeaurora.org,
+        ath11k@lists.infradead.org
+Subject: Re: [PATCH v10 1/2] bus: mhi: Add mhi_queue_is_full function
+References: <1604424234-24446-1-git-send-email-loic.poulain@linaro.org>
+        <20201105165708.31d24782@kicinski-fedora-pc1c0hjn.dhcp.thefacebook.com>
+        <20201106051353.GA3473@work>
+        <20201106080445.00588690@kicinski-fedora-pc1c0hjn.dhcp.thefacebook.com>
+        <B9A7A95E-BD2F-49C0-A28C-56A8E6D903AC@linaro.org>
+        <20201106083918.5ea0674b@kicinski-fedora-pc1c0hjn.dhcp.thefacebook.com>
+Date:   Tue, 10 Nov 2020 20:44:06 +0200
+In-Reply-To: <20201106083918.5ea0674b@kicinski-fedora-pc1c0hjn.dhcp.thefacebook.com>
+        (Jakub Kicinski's message of "Fri, 6 Nov 2020 08:39:18 -0800")
+Message-ID: <87a6vp59xl.fsf@tynnyri.adurom.net>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Rob Clark <robdclark@chromium.org>
++ ath11k list
 
-Similar to the previous patch, clear shadow on suspend to avoid timeouts
-waiting for ringbuffer space.
+Jakub Kicinski <kuba@kernel.org> writes:
 
-Fixes: 8907afb476ac ("drm/msm: Allow a5xx to mark the RPTR shadow as privileged")
-Signed-off-by: Rob Clark <robdclark@chromium.org>
----
- drivers/gpu/drm/msm/adreno/a5xx_gpu.c | 12 +++++++++++-
- 1 file changed, 11 insertions(+), 1 deletion(-)
+> On Fri, 06 Nov 2020 21:58:12 +0530 Manivannan Sadhasivam wrote:
+>>>> Since you've applied now, what would you propose?  
+>>>
+>>> Do you need mhi_queue_is_full() in other branches, or are you just
+>>> concerned about the conflicts?
+>> 
+>> Yes, I need this patch in mhi-next.
+>> 
+>>> I'm assuming the concern is just about the mhi/core patch, or would 
+>>> you need to refactor something in the net driver as well?  
+>> 
+>> Just the mhi_queue_is_full() patch. 
+>
+> Okay, I think you can just apply that patch to your tree again and git
+> should figure out it's a duplicate. Not optimal, because the change will
+> have two hashes, but the function is trivial, shouldn't be an issue
+> even if conflict happens.
+>
+> Will you need it in wireless (ath11k), or only in other trees?
+>
+> If it ends up in the wireless tree Dave or I will do the resolution when
+> we pull from Kalle so it won't even appear to Linus (but then it should
+> go into wireless through an immutable branch).
 
-diff --git a/drivers/gpu/drm/msm/adreno/a5xx_gpu.c b/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
-index b0005ccd81c6..8fa5c917d017 100644
---- a/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
-+++ b/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
-@@ -1206,7 +1206,9 @@ static int a5xx_pm_resume(struct msm_gpu *gpu)
- static int a5xx_pm_suspend(struct msm_gpu *gpu)
- {
- 	struct adreno_gpu *adreno_gpu = to_adreno_gpu(gpu);
-+	struct a5xx_gpu *a5xx_gpu = to_a5xx_gpu(adreno_gpu);
- 	u32 mask = 0xf;
-+	int i, ret;
- 
- 	/* A510 has 3 XIN ports in VBIF */
- 	if (adreno_is_a510(adreno_gpu))
-@@ -1226,7 +1228,15 @@ static int a5xx_pm_suspend(struct msm_gpu *gpu)
- 	gpu_write(gpu, REG_A5XX_RBBM_BLOCK_SW_RESET_CMD, 0x003C0000);
- 	gpu_write(gpu, REG_A5XX_RBBM_BLOCK_SW_RESET_CMD, 0x00000000);
- 
--	return msm_gpu_pm_suspend(gpu);
-+	ret = msm_gpu_pm_suspend(gpu);
-+	if (ret)
-+		return ret;
-+
-+	if (a5xx_gpu->has_whereami)
-+		for (i = 0; i < gpu->nr_rings; i++)
-+			a5xx_gpu->shadow[i] = 0;
-+
-+	return 0;
- }
- 
- static int a5xx_get_timestamp(struct msm_gpu *gpu, uint64_t *value)
+I think in the next few releases we need close coordination between mhi
+and ath11k, both are in active development and there can be changes
+which break ath11k functionality. Let's see how this goes.
+
 -- 
-2.28.0
+https://patchwork.kernel.org/project/linux-wireless/list/
 
+https://wireless.wiki.kernel.org/en/developers/documentation/submittingpatches
