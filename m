@@ -2,200 +2,153 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id F09EF2AD3C6
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Nov 2020 11:28:18 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 96E8B2AD471
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Nov 2020 12:08:41 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731211AbgKJK2L (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 10 Nov 2020 05:28:11 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51234 "EHLO
+        id S1726706AbgKJLIk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 10 Nov 2020 06:08:40 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57548 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730164AbgKJK2L (ORCPT
+        with ESMTP id S1726428AbgKJLIk (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 10 Nov 2020 05:28:11 -0500
-Received: from mail-wr1-x441.google.com (mail-wr1-x441.google.com [IPv6:2a00:1450:4864:20::441])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 85669C0613D1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Nov 2020 02:28:10 -0800 (PST)
-Received: by mail-wr1-x441.google.com with SMTP id o15so4231009wru.6
-        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Nov 2020 02:28:10 -0800 (PST)
+        Tue, 10 Nov 2020 06:08:40 -0500
+Received: from mail-ed1-x541.google.com (mail-ed1-x541.google.com [IPv6:2a00:1450:4864:20::541])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6B250C0613CF
+        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Nov 2020 03:08:38 -0800 (PST)
+Received: by mail-ed1-x541.google.com with SMTP id l5so5768227edq.11
+        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Nov 2020 03:08:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=pqIDM/rZ/Y9RAfg0dyKOEzplrtUBtkplsmTM06tMDJQ=;
-        b=BcAb/EpoDs9F+v8Ugn793tbnYiNlQmUpjuGyNpNKzX4yjbKBv/0r7MEILs5WCoPzhD
-         fNMs2XkoRS+mJ/NFjN4OBygs4qBsWWlb1VSmQAiCKO/AIajH1dTD3Lygh6OEZvM5MUga
-         oFF7nX3RpsXyXYrwW7YlAWso8AvoMlJlN0P1lpckrYoAbjrjbAuxzW3s4MvJt51WQatU
-         cexAGXQXxSUBTpyGm/8+TR5w1+5/E9s1T2EwBL0xRVW9SAcegjg6esqn/6m3r5YfhrX7
-         lFv+3/HjjjiGyeQilK12WlaseZIcOBf8Tn7qqIxzU+l/HtjVN/GNk4iEPTznIQg1YMJs
-         IaxA==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=DHp9Qr/oN/1M5mUr34BLzHSuue5OEsKuWWvTqbOdF+A=;
+        b=hWytcaBG2v1uaXdRkR+Qbx2dTeyCzTCzrlK3iu0q5LOdGJx7wPMrvmcG4ERH4k6ndP
+         NsPLXgzLIRNIUE3f1PJTZVfqHrJlNOLrpa5VFIwKC8KwQkNnoQ5v3J76gNsPyKK7GUc2
+         puf0eXfePu+WpmcKjBHiddRadqi9YyXIDRRsdQETepaGRD/Ul3r0Iv+aa5WyB+DUpLlc
+         u+ZvSFqisy/oZiMKB42EQqZs+MI3ub5kexSKth0bFdTfMSm8rN3B/KVb9FsgVm1PNRz2
+         V271vXALPZtlXZFAnQ2Za6kbuen8whu7sgd0I+Dz7gIHG/WnrPvMPqM5z+c4SfRkkOvh
+         IOAw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=pqIDM/rZ/Y9RAfg0dyKOEzplrtUBtkplsmTM06tMDJQ=;
-        b=H+k4Ry/to0ygZk+aERz/CLWJVu8ML7TaCPNlZ3mpnK1HaLQh1XpiguO1v9A2BQn0iE
-         mTR7i2wlgiwb2rlWYrjcjGrDsECmYoWFxInSUGwHnBuQ9A3QLqhCDPMALmB9qL8+eu1j
-         iqTpzbNutlpzo2L6HOyWnieficaiF+BdaN2/EaXXvYQ9stQvlyPMrpwCd86BH0qJ0pCf
-         zuOvwQ5M9RCQgR6lnMfUoYtrKe2gnel9C6+MiXAOQN+IijL472IvVCjThEmktH9vf9i6
-         3wmvLXFU9l/F9+ocTaJu9OoAcxAsmrPLn5A09iMp8qp8EyFjkLYJ/YfWW/BidH9EPfYc
-         kaog==
-X-Gm-Message-State: AOAM531qCE41rPIh/oYq81LjnfMZiUdIJxWu15dIvf7Fd2A7oTL34PqP
-        lfGwVR/hi6blls7mkSitNrnT9Q==
-X-Google-Smtp-Source: ABdhPJwxQlud3/H/xV2Dbfu6P6pYfPXGlRqele+HoGoUBj0HGH9j/JHGsKTEVZU7XxN2PY+0LDQPYQ==
-X-Received: by 2002:a5d:5342:: with SMTP id t2mr21947899wrv.243.1605004089054;
-        Tue, 10 Nov 2020 02:28:09 -0800 (PST)
-Received: from [192.168.0.4] (hst-208-208.medicom.bg. [84.238.208.208])
-        by smtp.googlemail.com with ESMTPSA id w11sm2639462wmg.36.2020.11.10.02.28.07
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 10 Nov 2020 02:28:08 -0800 (PST)
-Subject: Re: [PATCH 2/3] docs: media: Document CLL and Mastering display
-To:     Hans Verkuil <hverkuil-cisco@xs4all.nl>,
-        linux-media@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-Cc:     Nicolas Dufresne <nicolas.dufresne@collabora.com>,
-        Ezequiel Garcia <ezequiel@collabora.com>
-References: <20201109173153.23720-1-stanimir.varbanov@linaro.org>
- <20201109173153.23720-3-stanimir.varbanov@linaro.org>
- <c907b185-a272-bef5-1aa0-313c7789b07d@xs4all.nl>
-From:   Stanimir Varbanov <stanimir.varbanov@linaro.org>
-Message-ID: <58fda2db-4c2a-0fde-91ce-39af4fbccf99@linaro.org>
-Date:   Tue, 10 Nov 2020 12:28:07 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.10.0
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=DHp9Qr/oN/1M5mUr34BLzHSuue5OEsKuWWvTqbOdF+A=;
+        b=npqQPhDeil3DGDq8zf4thjI53hfMOOiK12wHZGQ9xUn2QGhdQOH4e2948iU7ATDstT
+         ZlD1AqnXe14I4fGsUWcOiWc/9QtQLhA8QANRWuCeKVaUtx9H0inTOF8kabE8+/I9VQ53
+         S35qHpcyZbsAQH8qcs5dHDMYYLIYvCE3nCVWAOCbsE6VpaPbonOvGWrkDiH4G6rlNnwV
+         s32zomJKtAC7Zf0pddM1/IttxqM/CEA6TTFygZa2gUYLGAWcx1ZnlQ+FmiLGrqbiGGCE
+         3Dk6aCTrTbfecO4AUyLlqO0MLZp4ui+kX4Kfikeq9jwOTh/3pNQkYcblqMvxlVR8JL1b
+         /MtA==
+X-Gm-Message-State: AOAM5339bYoxHkCKqzWRUj5S9LgT2a6zfZVdQ+3VbeqwxvECtq4L1Qpt
+        n2AckBGx8CtLB1ZnTpHhM1EpY0Pds+C0TnT70HhOhg==
+X-Google-Smtp-Source: ABdhPJx9xh/Q6tTtlIQ7UiBqsLq/6qQsw+vRlYyudqQnEjfVha5qM+4pNhvjGz8Ar3Qm3iH7QIyxFtGcNNS80o7Xvpo=
+X-Received: by 2002:a05:6402:8cc:: with SMTP id d12mr20476369edz.134.1605006516989;
+ Tue, 10 Nov 2020 03:08:36 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <c907b185-a272-bef5-1aa0-313c7789b07d@xs4all.nl>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+References: <1604961850-27671-1-git-send-email-bbhatt@codeaurora.org> <1604961850-27671-4-git-send-email-bbhatt@codeaurora.org>
+In-Reply-To: <1604961850-27671-4-git-send-email-bbhatt@codeaurora.org>
+From:   Loic Poulain <loic.poulain@linaro.org>
+Date:   Tue, 10 Nov 2020 12:14:27 +0100
+Message-ID: <CAMZdPi_dwT+hj26sxJdMS1v-X-MNd1ys34QD=Bf_O+dvmjOD2Q@mail.gmail.com>
+Subject: Re: [PATCH v1 3/4] bus: mhi: core: Add support to pause or resume
+ channel data transfers
+To:     Bhaumik Bhatt <bbhatt@codeaurora.org>
+Cc:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Hemant Kumar <hemantk@codeaurora.org>,
+        Jeffrey Hugo <jhugo@codeaurora.org>,
+        open list <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Hi Bhaumik,
 
+On Mon, 9 Nov 2020 at 23:44, Bhaumik Bhatt <bbhatt@codeaurora.org> wrote:
+>
+> Some MHI clients may want to request for pausing or resuming of the
+> data transfers for their channels. Enable them to do so using the new
+> APIs provided for the same.
+>
+> Signed-off-by: Bhaumik Bhatt <bbhatt@codeaurora.org>
+> ---
+>  drivers/bus/mhi/core/main.c | 41 +++++++++++++++++++++++++++++++++++++++++
+>  include/linux/mhi.h         | 16 ++++++++++++++++
+>  2 files changed, 57 insertions(+)
+>
+> diff --git a/drivers/bus/mhi/core/main.c b/drivers/bus/mhi/core/main.c
+> index 1226933..01845c6 100644
+> --- a/drivers/bus/mhi/core/main.c
+> +++ b/drivers/bus/mhi/core/main.c
+> @@ -1560,6 +1560,47 @@ void mhi_unprepare_from_transfer(struct mhi_device *mhi_dev)
+>  }
+>  EXPORT_SYMBOL_GPL(mhi_unprepare_from_transfer);
+>
+> +static int mhi_update_transfer_state(struct mhi_device *mhi_dev,
+> +                                    enum mhi_ch_state_type to_state)
+> +{
+> +       struct mhi_controller *mhi_cntrl = mhi_dev->mhi_cntrl;
+> +       struct mhi_chan *mhi_chan;
+> +       int dir, ret;
+> +
+> +       for (dir = 0; dir < 2; dir++) {
+> +               mhi_chan = dir ? mhi_dev->ul_chan : mhi_dev->dl_chan;
+> +
+> +               if (!mhi_chan)
+> +                       continue;
+> +
+> +               /*
+> +                * Bail out if one of the channels fail as client will reset
+> +                * both upon failure
+> +                */
+> +               mutex_lock(&mhi_chan->mutex);
+> +               ret = mhi_update_channel_state(mhi_cntrl, mhi_chan, to_state);
+> +               if (ret) {
+> +                       mutex_unlock(&mhi_chan->mutex);
+> +                       return ret;
+> +               }
+> +               mutex_unlock(&mhi_chan->mutex);
+> +       }
+> +
+> +       return 0;
+> +}
+> +
+> +int mhi_pause_transfer(struct mhi_device *mhi_dev)
+> +{
+> +       return mhi_update_transfer_state(mhi_dev, MHI_CH_STATE_TYPE_STOP);
+> +}
+> +EXPORT_SYMBOL_GPL(mhi_pause_transfer);
+> +
+> +int mhi_resume_transfer(struct mhi_device *mhi_dev)
+> +{
+> +       return mhi_update_transfer_state(mhi_dev, MHI_CH_STATE_TYPE_START);
+> +}
+> +EXPORT_SYMBOL_GPL(mhi_resume_transfer);
 
-On 11/10/20 11:50 AM, Hans Verkuil wrote:
-> On 09/11/2020 18:31, Stanimir Varbanov wrote:
->> Document Content light level and Mastering display colour volume.
->>
->> Signed-off-by: Stanimir Varbanov <stanimir.varbanov@linaro.org>
->> ---
->>  .../media/v4l/ext-ctrls-codec.rst             | 61 +++++++++++++++++++
->>  1 file changed, 61 insertions(+)
->>
->> diff --git a/Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst b/Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst
->> index ce728c757eaf..39d0aab5ca3d 100644
->> --- a/Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst
->> +++ b/Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst
->> @@ -4382,3 +4382,64 @@ enum v4l2_mpeg_video_hevc_size_of_length_field -
->>        - Selecting this value specifies that HEVC slices are expected
->>          to be prefixed by Annex B start codes. According to :ref:`hevc`
->>          valid start codes can be 3-bytes 0x000001 or 4-bytes 0x00000001.
->> +
->> +``V4L2_CID_MPEG_VIDEO_HEVC_CLL_INFO (struct)``
->> +    The Content Light Level defines upper bounds for the nominal target
->> +    brightness light level of the pictures.
->> +
->> +.. c:type:: v4l2_ctrl_hevc_cll_info
->> +
->> +.. cssclass:: longtable
->> +
->> +.. flat-table:: struct v4l2_ctrl_hevc_cll_info
->> +    :header-rows:  0
->> +    :stub-columns: 0
->> +    :widths:       1 1 2
->> +
->> +    * - __u16
->> +      - ``max_content_light_level``
->> +      - An upper bound on the maximum light level among all individual
->> +        samples for the pictures of coded video sequence, cd/m2.
->> +    * - __u16
->> +      - ``max_pic_average_light_level``
->> +      - An upper bound on the maximum average light level among the
->> +        samples for any idividual picture of coded video sequence, cd/m2.
-> 
-> idividual -> individual
-> 
-> In the CTA-861-G spec value 0 is used to indicate that this information is
-> not present. How is that handled here? Can it be 0 as well in an HEVC stream?
+Look like it is stop and start, not pause and resume?
 
-ITU-T Rec. H265 says: When equal to 0, no such upper bound is indicated
-by max_content_light_level.
+TBH maybe we should rework/clarify MHI core and having well-defined
+states, maybe something like that:
 
-So, the meaning is the same as in CTA-861-G.
+1. When MHI core detects device for a driver, MHI core resets and
+initializes the channel(s), then call client driver probe function
+    => channel UNKNOWN->DISABLED state
+    => channel DISABLED->ENABLED state
+2. When driver is ready for sending data, drivers calls mhi_start_transfer
+    => Channel is ENABLED->RUNNING state
+3. Driver performs normal data transfers
+4. The driver can suspend/resume transfer, it stops (suspend) the channel, can
+    => Channel is RUNNING->STOP
+    => Channel is STOP->RUNNING
+   ...
+5. When device is removed, MHI core reset the channel
+    => channel is (RUNNING|STOP) -> DISABLED
 
-> 
-> Same for the next control.
-> 
->> +
->> +``V4L2_CID_MPEG_VIDEO_HEVC_MASTERING_DISPLAY (struct)``
->> +    The mastering display defines the colour volume (the colour primaries,
->> +    white point and luminance range) of a display considered to be the
->> +    mastering display for current video content.
->> +
->> +.. c:type:: v4l2_ctrl_hevc_mastering_display
->> +
->> +.. cssclass:: longtable
->> +
->> +.. flat-table:: struct v4l2_ctrl_hevc_mastering_display
->> +    :header-rows:  0
->> +    :stub-columns: 0
->> +    :widths:       1 1 2
->> +
->> +    * - __u16
->> +      - ``display_primaries_x[3]``
->> +      - Specifies the normalized x chromaticity coordinate of the colour
->> +        primary component of the mastering display.
-> 
-> CTA-861-G defines this as: "coded as unsigned 16-bit values in units
-> of 0.00002, where 0x0000 represents zero and 0xC350 represents 1.0000."
-> 
-> Is that true here as well? If so, then this should be documented because
-> "normalized x chromaticity coordinate" doesn't say anything meaningful.
+Today mhi_prepare_for_transfer performs both ENABLE and RUNNING
+transition, the idea would be to keep channel enabling/disabling in
+the MHI core (before/after driver probe/remove) and channel start/stop
+managed by the client driver.
 
-Yes, it is the same. Will document that in next version.
-
-> 
->> +    * - __u16
->> +      - ``display_primaries_y[3]``
->> +      - Specifies the normalized y chromaticity coordinate of the colour
->> +        primary component of the mastering display.
->> +    * - __u16
->> +      - ``white_point_x``
->> +      - Specifies the normalized x chromaticity coordinate of the white
->> +        point of the mastering display.
->> +    * - __u16
->> +      - ``white_point_y``
->> +      - Specifies the normalized y chromaticity coordinate of the white
->> +        point of the mastering display.
->> +    * - __u32
->> +      - ``max_luminance``
->> +      - Specifies the nominal maximum display luminance of the mastering
->> +        display.
-> 
-> In CTA-861-G this is in 1 cd/m^2 units.
-
-In Rec. H265 max_luminance is in the range of 50 000 to 100 000 000 and
-units of 0.0001 cd/m2.
-
-> 
->> +    * - __u32
->> +      - ``min_luminance``
->> +      - specifies the nominal minimum display luminance of the mastering
->> +        display.
-> 
-> And this in units of 0.0001 cd/m^2.
-
-min_luminance - range of 1 to 50 000 and units of 0.0001 cd/m2.
-
-I will update all these in next patchset version.
-
-> 
-> Regards,
-> 
-> 	Hans
-> 
-
--- 
-regards,
-Stan
+Regards,
+Loic
