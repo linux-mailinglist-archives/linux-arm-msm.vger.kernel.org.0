@@ -2,153 +2,271 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 5EA182AD2DB
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Nov 2020 10:51:23 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D9ED82AD303
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Nov 2020 11:02:18 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726462AbgKJJu6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 10 Nov 2020 04:50:58 -0500
-Received: from lb2-smtp-cloud8.xs4all.net ([194.109.24.25]:55871 "EHLO
-        lb2-smtp-cloud8.xs4all.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1730559AbgKJJuc (ORCPT
+        id S1726690AbgKJKCN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 10 Nov 2020 05:02:13 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47088 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729518AbgKJKCK (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 10 Nov 2020 04:50:32 -0500
-Received: from cust-b5b5937f ([IPv6:fc0c:c16d:66b8:757f:c639:739b:9d66:799d])
-        by smtp-cloud8.xs4all.net with ESMTPA
-        id cQIDkkqmfNanzcQIHk5Fhn; Tue, 10 Nov 2020 10:50:29 +0100
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=xs4all.nl; s=s1;
-        t=1605001829; bh=o/Slietjg3JS+yzZDR327jrRld/7IiJNzS3HQkfzM9c=;
-        h=Subject:To:From:Message-ID:Date:MIME-Version:Content-Type:From:
-         Subject;
-        b=iX3PQ2/TJZdjnQ8kMvJ7Tsl0f67sEizpx8xn1fP0OyCFdOwAA5jjyeDfArInbBEd1
-         QCsYS949zjWLr9F5HNeHBWnXsKUaUJleZUoZS4R6IMA6tYY9NHhtY8aZPG2hVcYj70
-         Rr2WdpzRBTxJP1ckWmZiBX8jjdWOYdjOMD2w1ECz0jGqHqn0mLtno9qr23gi9waWx2
-         RzbDDIWcNWMrSRd8PeS+Nqnk9gRAocXrHVKmzJDvbQ6lEils9glEP9+F4y222Tl+Kp
-         oCPG62vNpWBSCT6ZLsoLqvrBMBNnYd+omrPK1+bkANo72qtC/ROenYQTCYUaBmtYFY
-         P1ML44WrrT17w==
-Subject: Re: [PATCH 2/3] docs: media: Document CLL and Mastering display
-To:     Stanimir Varbanov <stanimir.varbanov@linaro.org>,
-        linux-media@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-Cc:     Nicolas Dufresne <nicolas.dufresne@collabora.com>,
-        Ezequiel Garcia <ezequiel@collabora.com>
-References: <20201109173153.23720-1-stanimir.varbanov@linaro.org>
- <20201109173153.23720-3-stanimir.varbanov@linaro.org>
-From:   Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Message-ID: <c907b185-a272-bef5-1aa0-313c7789b07d@xs4all.nl>
-Date:   Tue, 10 Nov 2020 10:50:25 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.12.0
+        Tue, 10 Nov 2020 05:02:10 -0500
+Received: from mail-vs1-xe41.google.com (mail-vs1-xe41.google.com [IPv6:2607:f8b0:4864:20::e41])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 83CDAC0613D3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Nov 2020 02:02:10 -0800 (PST)
+Received: by mail-vs1-xe41.google.com with SMTP id 128so6688097vso.7
+        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Nov 2020 02:02:10 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=BiQJcafFBQ88xHQcupBP8gBbAXirHmQbPXsm0C0soPA=;
+        b=swGXh4YgskAoYgS+bFvYCOedUrJ59J3k6RjlZ51NvY/vID1Np11aGdRB5P4illh34r
+         HrfyV/0gB3Wc2zoRo+6I9KbIkWcMDmw4WwxuF0aV9rZjyfNEmICkMZ0mSGQEmJvlViEE
+         gZa26atagGogNvTaEplTO7x08/+M/qOn7y1Qc2YCF0XTPLvkQefk1geWNW6nx96nk30g
+         RPpTlGbFrh4S66ln2atq6H2DwOuIHDDwyQ1Laqgkb2daJeDClcU3kpHxJIMUdWgdAj26
+         gyi+hqQTG59BNuxM5Q2C3pL7uhd5wH/S/pK97kMZcS+pUr2vECw1aeYH0GPUmXqY3PZ9
+         tkIw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=BiQJcafFBQ88xHQcupBP8gBbAXirHmQbPXsm0C0soPA=;
+        b=G2dmlIv8w389xdeXZdtPMeXp5oSwc1ST279Zo/QkHHVTF1ZjesEQUT+aKsG5Uv9Urq
+         AzBOODoxSLjfFI+pqu32xrIlU7raLiPRPuHll0YOJCxP29N/hgJuKS2LVvecg/NpeDLY
+         FRamohMBy38qG9sxphRStA2svohIPN70/i9DsD+XjW1XuW6LAlPgqJAJ9EBVJDJDyu6j
+         LsoW5j8ev/dbN1GYuJ//iZKwsm+Hp19ObQ96pnUH1Rehg7zvYQwe8D+6bBEstxhLEGCK
+         fQTLT1CFs77CyCZG14HaSRiER6wivZNfTao2ISCnm9yTfqOh+1urjemJC12TniZEa9v/
+         xHGg==
+X-Gm-Message-State: AOAM531moemVihPgJIM8qRT1G3cdq24nWymI0naShCzEV3yIhEIrpAsI
+        PaSjnRu955CrdSgjSAyyl/yZLQzTR3hG/d2/YjjRSA==
+X-Google-Smtp-Source: ABdhPJzpW7ANGH4Bj5CGi0nKYo81ZP/qeLT1maxK3GX8rS2j5Nul7J9iXVR9Zh3D+Xb0H3ZnifDkxnH6BuclLxBEOZ4=
+X-Received: by 2002:a67:310d:: with SMTP id x13mr11216949vsx.19.1605002529404;
+ Tue, 10 Nov 2020 02:02:09 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <20201109173153.23720-3-stanimir.varbanov@linaro.org>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-X-CMAE-Envelope: MS4xfATtX920J02neZzjkurJjTu4twjJVU1mDc7wO+Lo5PvApGbQkudw8FTYKIvi1Uv4m1276ltKCNCd/DHIhTkXQrudiliiAQp33BjeCk8N1R3qn3Sptz5O
- 0YjkKscoItmXuf4rueKiMtk/G02AzdYGGwQpwfTIuKzSCgxuNg1dp5JATtG/cvQQofbRyxo/P7YF6Ax/5BAfrFcGT9m8fI4YDHULD1Ycfd3zRpn74WhrbK4h
- ZTchkT28fyvkhqEkzwhjlZZ5+nOkoibI0r0avfunqUzI3fNj6SVt5aPgdHOUKkoB8SoXsJMWEEtIQfn4Ad9ak/PyyGYtO0AGR+xgj9j31KAEWEyljV80j0pI
- NtLN/lz/zDCw5UGPPoiS6SiPaUhOTqrc5y/haXVk0ReS4BHOD7TWASDRJHn6ruTS+UUuKGeL
+References: <20201106164811.3698-1-ilina@codeaurora.org> <20201106164811.3698-3-ilina@codeaurora.org>
+ <CAPDyKFrv-3USmNLR3gjgaTEuTrWuYZjs3qCtnjxSOWqrxv5qsA@mail.gmail.com> <X6l/OcHG37HzgFL8@codeaurora.org>
+In-Reply-To: <X6l/OcHG37HzgFL8@codeaurora.org>
+From:   Ulf Hansson <ulf.hansson@linaro.org>
+Date:   Tue, 10 Nov 2020 11:01:32 +0100
+Message-ID: <CAPDyKFr8fdbMM1nsx-RZcMVtveJUP3p38z=HkL1T2C=QgM3gkQ@mail.gmail.com>
+Subject: Re: [PATCH v5 2/2] PM / Domains: use device's next wakeup to
+ determine domain idle state
+To:     Lina Iyer <ilina@codeaurora.org>
+Cc:     "Rafael J. Wysocki" <rjw@rjwysocki.net>,
+        Linux PM <linux-pm@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 09/11/2020 18:31, Stanimir Varbanov wrote:
-> Document Content light level and Mastering display colour volume.
-> 
-> Signed-off-by: Stanimir Varbanov <stanimir.varbanov@linaro.org>
-> ---
->  .../media/v4l/ext-ctrls-codec.rst             | 61 +++++++++++++++++++
->  1 file changed, 61 insertions(+)
-> 
-> diff --git a/Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst b/Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst
-> index ce728c757eaf..39d0aab5ca3d 100644
-> --- a/Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst
-> +++ b/Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst
-> @@ -4382,3 +4382,64 @@ enum v4l2_mpeg_video_hevc_size_of_length_field -
->        - Selecting this value specifies that HEVC slices are expected
->          to be prefixed by Annex B start codes. According to :ref:`hevc`
->          valid start codes can be 3-bytes 0x000001 or 4-bytes 0x00000001.
-> +
-> +``V4L2_CID_MPEG_VIDEO_HEVC_CLL_INFO (struct)``
-> +    The Content Light Level defines upper bounds for the nominal target
-> +    brightness light level of the pictures.
-> +
-> +.. c:type:: v4l2_ctrl_hevc_cll_info
-> +
-> +.. cssclass:: longtable
-> +
-> +.. flat-table:: struct v4l2_ctrl_hevc_cll_info
-> +    :header-rows:  0
-> +    :stub-columns: 0
-> +    :widths:       1 1 2
-> +
-> +    * - __u16
-> +      - ``max_content_light_level``
-> +      - An upper bound on the maximum light level among all individual
-> +        samples for the pictures of coded video sequence, cd/m2.
-> +    * - __u16
-> +      - ``max_pic_average_light_level``
-> +      - An upper bound on the maximum average light level among the
-> +        samples for any idividual picture of coded video sequence, cd/m2.
+On Mon, 9 Nov 2020 at 18:41, Lina Iyer <ilina@codeaurora.org> wrote:
+>
+> On Mon, Nov 09 2020 at 08:27 -0700, Ulf Hansson wrote:
+> >On Fri, 6 Nov 2020 at 17:48, Lina Iyer <ilina@codeaurora.org> wrote:
+> >>
+> [...]
+> >> +static void update_domain_next_wakeup(struct generic_pm_domain *genpd, ktime_t now)
+> >> +{
+> >> +       ktime_t domain_wakeup = KTIME_MAX;
+> >> +       ktime_t next_wakeup;
+> >> +       struct pm_domain_data *pdd;
+> >> +       struct gpd_link *link;
+> >> +
+> >> +       /* Find the earliest wakeup for all devices in the domain */
+> >> +       list_for_each_entry(pdd, &genpd->dev_list, list_node) {
+> >> +               next_wakeup = to_gpd_data(pdd)->next_wakeup;
+> >> +               if (next_wakeup != KTIME_MAX && !ktime_before(next_wakeup, now))
+> >> +                       if (ktime_before(next_wakeup, domain_wakeup))
+> >> +                               domain_wakeup = next_wakeup;
+> >
+> >If it turns out that one of the device's next_wakeup is before "now",
+> >leading to ktime_before() above returns true - then I think you should
+> >bail out, no?
+> >
+> >At least, we shouldn't just continue and ignore this case, right?
+> >
+> No, that could be a very common case. Drivers are not expected to clean
+> up the next wakeup by setting it to KTIME_MAX. The best we can do is
+> to make a choice with the valid information we have. This will also map
+> to the current behavior. Say if all next wakeup information provided to
+> the devices were in the past, we would be no worse (or better) than what
+> we do without this change.
 
-idividual -> individual
+Well, I don't quite agree (at least not yet), but let me elaborate, as
+I think we can do better without having to add complexity.
 
-In the CTA-861-G spec value 0 is used to indicate that this information is
-not present. How is that handled here? Can it be 0 as well in an HEVC stream?
+Normally, I don't think a driver needs to clean up its device's next
+wakeup in between the remote wakeups, instead it should just set a new
+value.
 
-Same for the next control.
+That's because, even if the driver acts to a remote wakeup or deals
+with a request entering a queue, the driver needs to runtime resume
+its device during this period. This prevents genpd from power off the
+PM domain, hence also the genpd governor from potentially looking at
+"invalid" wakeup information for its attached devices.
 
-> +
-> +``V4L2_CID_MPEG_VIDEO_HEVC_MASTERING_DISPLAY (struct)``
-> +    The mastering display defines the colour volume (the colour primaries,
-> +    white point and luminance range) of a display considered to be the
-> +    mastering display for current video content.
-> +
-> +.. c:type:: v4l2_ctrl_hevc_mastering_display
-> +
-> +.. cssclass:: longtable
-> +
-> +.. flat-table:: struct v4l2_ctrl_hevc_mastering_display
-> +    :header-rows:  0
-> +    :stub-columns: 0
-> +    :widths:       1 1 2
-> +
-> +    * - __u16
-> +      - ``display_primaries_x[3]``
-> +      - Specifies the normalized x chromaticity coordinate of the colour
-> +        primary component of the mastering display.
+Of course, I assume there are situations, where a driver actually
+needs to do a clean up of its device's next wakeup, but that should be
+less frequent and likely when a remote wakeup is disabled (for
+whatever reason).
 
-CTA-861-G defines this as: "coded as unsigned 16-bit values in units
-of 0.00002, where 0x0000 represents zero and 0xC350 represents 1.0000."
+>
+> >> +       }
+> >> +
+> >> +       /* Then find the earliest wakeup of from all the child domains */
+> >> +       list_for_each_entry(link, &genpd->parent_links, parent_node) {
+> >> +               next_wakeup = link->child->next_wakeup;
+> >> +               if (next_wakeup != KTIME_MAX && !ktime_before(next_wakeup, now))
+> >> +                       if (ktime_before(next_wakeup, domain_wakeup))
+> >> +                               domain_wakeup = next_wakeup;
+> >> +       }
+> >> +
+> >> +       genpd->next_wakeup = domain_wakeup;
+> >> +}
+> >> +
+> >> +static bool next_wakeup_allows_state(struct generic_pm_domain *genpd,
+> >> +                                    unsigned int state, ktime_t now)
+> >> +{
+> >> +       ktime_t domain_wakeup = genpd->next_wakeup;
+> >> +       s64 idle_time_ns, min_sleep_ns;
+> >> +
+> >> +       min_sleep_ns = genpd->states[state].power_off_latency_ns +
+> >> +                      genpd->states[state].power_on_latency_ns +
+> >> +                      genpd->states[state].residency_ns;
+> >> +
+> >
+> >I don't think you should include the power_on_latency_ns here.
+> >
+> >The validation isn't about QoS constraints, but whether we can meet
+> >the residency time to make it worth entering the state, from an energy
+> >point of view. Right?
+> >
+> Fair point. I will remove the power_on_latency_ns.
+>
+> >> +       idle_time_ns = ktime_to_ns(ktime_sub(domain_wakeup, now));
+> >> +
+> >> +       return idle_time_ns >= min_sleep_ns;
+> >> +}
+> >> +
+> >>  static bool __default_power_down_ok(struct dev_pm_domain *pd,
+> >>                                      unsigned int state)
+> >>  {
+> >> @@ -209,8 +250,34 @@ static bool __default_power_down_ok(struct dev_pm_domain *pd,
+> >>  static bool default_power_down_ok(struct dev_pm_domain *pd)
+> >>  {
+> >>         struct generic_pm_domain *genpd = pd_to_genpd(pd);
+> >> +       int state_idx = genpd->state_count - 1;
+> >> +       ktime_t now = ktime_get();
+> >>         struct gpd_link *link;
+> >>
+> >> +       /*
+> >> +        * Find the next wakeup from devices that can determine their own wakeup
+> >> +        * to find when the domain would wakeup and do it for every device down
+> >> +        * the hierarchy. It is not worth while to sleep if the state's residency
+> >> +        * cannot be met.
+> >> +        */
+> >> +       update_domain_next_wakeup(genpd, now);
+> >> +       if (genpd->next_wakeup != KTIME_MAX) {
+> >> +               /* Let's find out the deepest domain idle state, the devices prefer */
+> >> +               while (state_idx >= 0) {
+> >> +                       if (next_wakeup_allows_state(genpd, state_idx, now)) {
+> >> +                               genpd->max_off_time_changed = true;
+> >> +                               break;
+> >> +                       }
+> >> +                       state_idx--;
+> >> +               }
+> >> +
+> >> +               if (state_idx < 0) {
+> >> +                       state_idx = 0;
+> >> +                       genpd->cached_power_down_ok = false;
+> >> +                       goto done;
+> >> +               }
+> >> +       }
+> >> +
+> >
+> >The above would introduce unnecessary overhead, as it may become
+> >executed in cases when it's not needed.
+> >
+> >For example, there's no point doing the above, if the domain doesn't
+> >specify residency values for its idle states.
+> >
+> We would still need to ensure that the next wakeup is after the
+> power_off_latency, if specified.
 
-Is that true here as well? If so, then this should be documented because
-"normalized x chromaticity coordinate" doesn't say anything meaningful.
+Good point! Although, I would rather avoid adding the overhead, unless
+the residency is specified. Do you see a problem with this approach?
 
-> +    * - __u16
-> +      - ``display_primaries_y[3]``
-> +      - Specifies the normalized y chromaticity coordinate of the colour
-> +        primary component of the mastering display.
-> +    * - __u16
-> +      - ``white_point_x``
-> +      - Specifies the normalized x chromaticity coordinate of the white
-> +        point of the mastering display.
-> +    * - __u16
-> +      - ``white_point_y``
-> +      - Specifies the normalized y chromaticity coordinate of the white
-> +        point of the mastering display.
-> +    * - __u32
-> +      - ``max_luminance``
-> +      - Specifies the nominal maximum display luminance of the mastering
-> +        display.
+Another option is to add a new governor, but if possible, I would like
+to avoid that.
 
-In CTA-861-G this is in 1 cd/m^2 units.
+>
+> >Additionally, we don't need to recompute the domain's next wakup,
+> >unless a device has got a new next_wakeup value set for it. In this
+> >case, we can just select a state based upon an previously computed
+> >value, thus avoiding the recomputation.
+> >
+> If the domain's next wakeup was in the past, then using our previously
+> computed state may be incorrect.
 
-> +    * - __u32
-> +      - ``min_luminance``
-> +      - specifies the nominal minimum display luminance of the mastering
-> +        display.
+I am not saying you should use the previously computed *idlestate*,
+but the previously computed next wakeup.
 
-And this in units of 0.0001 cd/m^2.
+>
+> >>         if (!genpd->max_off_time_changed) {
+> >>                 genpd->state_idx = genpd->cached_power_down_state_idx;
+> >>                 return genpd->cached_power_down_ok;
+> >> @@ -228,17 +295,21 @@ static bool default_power_down_ok(struct dev_pm_domain *pd)
+> >>         genpd->max_off_time_ns = -1;
+> >>         genpd->max_off_time_changed = false;
+> >>         genpd->cached_power_down_ok = true;
+> >> -       genpd->state_idx = genpd->state_count - 1;
+> >>
+> >> -       /* Find a state to power down to, starting from the deepest. */
+> >> -       while (!__default_power_down_ok(pd, genpd->state_idx)) {
+> >> -               if (genpd->state_idx == 0) {
+> >> +       /*
+> >> +        * Find a state to power down to, starting from the state
+> >> +        * determined by the next wakeup.
+> >> +        */
+> >> +       while (!__default_power_down_ok(pd, state_idx)) {
+> >> +               if (state_idx == 0) {
+> >>                         genpd->cached_power_down_ok = false;
+> >>                         break;
+> >>                 }
+> >> -               genpd->state_idx--;
+> >> +               state_idx--;
+> >>         }
+> >>
+> >> +done:
+> >> +       genpd->state_idx = state_idx;
+> >>         genpd->cached_power_down_state_idx = genpd->state_idx;
+> >>         return genpd->cached_power_down_ok;
+> >>  }
+> >
+> >Another thing to consider for the above changes, is that the
+> >cpu_power_down_ok() calls into default_power_down_ok().
+> >
+> >Even if I am fine with the approach taken in $subject patch, I think
+> >it's important to try to keep the path a slim as possible as it's also
+> >executed in the CPU idlepath.
+> Wouldn't this be called only the last CPU is powering down and only if
+> the domain is ready to power down?
+>
+> >For example, $subject change means also
+> >that we end up calling ktime_get() twice in the same path, introducing
+> >unnecessary overhead. We can do better and avoid that by restructuring
+> >the code a bit, don't you think?
+> >
+> Hmmm, we could. I will submit a follow on patch to reorganize the code
+> so the ktime_get() would be called only once for either of the
+> power_down_ok callbacks.
 
-Regards,
+If possible, I would rather make it part of the series. Just fold in
+some "rework" patch before extending the governor, that should be
+possible I think.
 
-	Hans
+Kind regards
+Uffe
