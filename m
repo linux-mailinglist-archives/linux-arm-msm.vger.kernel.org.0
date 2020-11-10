@@ -2,97 +2,103 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 2A45E2AD285
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Nov 2020 10:33:20 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 933212AD2BC
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Nov 2020 10:45:54 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726462AbgKJJdT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 10 Nov 2020 04:33:19 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42618 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726213AbgKJJdS (ORCPT
+        id S1726827AbgKJJpx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 10 Nov 2020 04:45:53 -0500
+Received: from lb2-smtp-cloud8.xs4all.net ([194.109.24.25]:59975 "EHLO
+        lb2-smtp-cloud8.xs4all.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726462AbgKJJpx (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 10 Nov 2020 04:33:18 -0500
-Received: from mail-wr1-x443.google.com (mail-wr1-x443.google.com [IPv6:2a00:1450:4864:20::443])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6531DC0613CF
-        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Nov 2020 01:33:18 -0800 (PST)
-Received: by mail-wr1-x443.google.com with SMTP id d12so10376101wrr.13
-        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Nov 2020 01:33:18 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ffwll.ch; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=D87wf9S+VQgrir5Y3Im/Lq0uDNDXr/OXwkaKziQOSSk=;
-        b=eqL1EGtwAV0BAaSSSGWva6fXzKWOb6Oa1XVotzJar+d6PpWo5hMHGFJXoBYXBTBNHo
-         f0rstUhe9BA+ySYTaa/XO3JrE0m+/VM4StP0l5JEXeeJjkBiyFQ/+8Bjmyd2465hZ7ED
-         2wQc6/2xM8CqGgjA/wixfzu3N3yl/UlEOwSkc=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=D87wf9S+VQgrir5Y3Im/Lq0uDNDXr/OXwkaKziQOSSk=;
-        b=Gj9gyusCznVB+o5krcBtdg+HTlC8Io2BEKrD908XZmJKhrBam+2clkgRioWQYWr1Z5
-         YrBkkuCOfqDPVBnE3Q/DHFbhFZeHxy4ib8TLtYs/Q3B9HwBTBRuR7Bj6z51fUmOL7HUq
-         uQbfJMKUq7/GKyF9W7M4SWqHcBQh/xgTnYOVNEwj8kBDSWzDQQX1/nxJeUN61BpA/3cQ
-         9zrYvp4l3hP1SFNo3KorZ8CAEkPLt86xHZArwCGVKLFl+9FmV/ndu9VtrQdZ9eH86S9O
-         Llk6etQ7Fqz/Ixib+xIIzherzKzhDHkUoB5iuVl85I6AKiGskAPK5sSXXpXVhPU+8RfJ
-         tIkg==
-X-Gm-Message-State: AOAM531UmlI1YI1dniQ5jMAtWfIUEmqFR9O9hX6TO8I8fHsg/YTFbEQ/
-        ES7IGfeta+Z3BMxiog8Ws7/efA==
-X-Google-Smtp-Source: ABdhPJyGbMjLRkYp8QapsVbIw4iwcuqTaZ4I3ctrgmpDvNh11tupCr/ocZW9QLoIqcZCE+molvVXBg==
-X-Received: by 2002:adf:8465:: with SMTP id 92mr21597643wrf.50.1605000797075;
-        Tue, 10 Nov 2020 01:33:17 -0800 (PST)
-Received: from phenom.ffwll.local ([2a02:168:57f4:0:efd0:b9e5:5ae6:c2fa])
-        by smtp.gmail.com with ESMTPSA id t12sm16411910wrm.25.2020.11.10.01.33.15
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 10 Nov 2020 01:33:16 -0800 (PST)
-Date:   Tue, 10 Nov 2020 10:33:14 +0100
-From:   Daniel Vetter <daniel@ffwll.ch>
-To:     Thomas Zimmermann <tzimmermann@suse.de>
-Cc:     daniel@ffwll.ch, airlied@linux.ie, chunkuang.hu@kernel.org,
-        p.zabel@pengutronix.de, robdclark@gmail.com, sean@poorly.run,
-        linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
-        dri-devel@lists.freedesktop.org
-Subject: Re: [PATCH 0/2] drm: Build fixes for msm and mediatek
-Message-ID: <20201110093314.GE401619@phenom.ffwll.local>
-References: <20201109103242.19544-1-tzimmermann@suse.de>
+        Tue, 10 Nov 2020 04:45:53 -0500
+Received: from cust-b5b5937f ([IPv6:fc0c:c16d:66b8:757f:c639:739b:9d66:799d])
+        by smtp-cloud8.xs4all.net with ESMTPA
+        id cQ6rkkm8ENanzcQ6uk5Cft; Tue, 10 Nov 2020 10:38:45 +0100
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=xs4all.nl; s=s1;
+        t=1605001125; bh=hv01Kk2652coHy4On3dL8LtUYjb1Cu0evmgcwltbS2g=;
+        h=Subject:To:From:Message-ID:Date:MIME-Version:Content-Type:From:
+         Subject;
+        b=p43vMlCWUcY7EIwJd/zAboLnwAo21/JPQz2g63kIDXBoSX8mOoxPDFmGzXVgQ6uak
+         fS2el7KGr76MErdLR0gjKS/h1JZ1SUNVZj/FKK2iTk5XyH1Mqxdbdr5f/RFz82Xl38
+         LyQYhm5t39lhk0s+4XNpcIWTeLEa2oAR6agr+cw/lNVTfaxoxCEwzv5/1QIxxclShq
+         R/L9Zr0uFS7r5rxHxs4Xz7SerodpmvDC3lOc1ZTQhZC4oXv/Vhd91Egxm56FRmD4eN
+         K0QW3RwXq6VColiDNsWC/524JHEWTGt+XhWLRYuUERjZAWzZT44PNZz2OfmMwVndP4
+         PCCagogYqiUTw==
+Subject: Re: [PATCH 0/3] HDR10 static metadata
+To:     Nicolas Dufresne <nicolas.dufresne@collabora.com>,
+        Stanimir Varbanov <stanimir.varbanov@linaro.org>,
+        linux-media@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+Cc:     Ezequiel Garcia <ezequiel@collabora.com>
+References: <20201109173153.23720-1-stanimir.varbanov@linaro.org>
+ <2f907743dbb77f4c2f871675070065dd372514be.camel@collabora.com>
+From:   Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Message-ID: <79148cf4-96dc-0c00-2864-183e526a65e9@xs4all.nl>
+Date:   Tue, 10 Nov 2020 10:38:41 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.12.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20201109103242.19544-1-tzimmermann@suse.de>
-X-Operating-System: Linux phenom 5.7.0-1-amd64 
+In-Reply-To: <2f907743dbb77f4c2f871675070065dd372514be.camel@collabora.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
+X-CMAE-Envelope: MS4xfF7Kw0R/bZ69mWXhzR8X4MduX3aPBOFRa9O5RJOWe1Z4f1EQ6Vov5KtHbM1FIixAH3ZV55idg6X5TVwlT6pHfduWtQlT0g3/IQkeF2rgqepIIWv2ljd/
+ 2Kj6THfk7jm78ahdyMGIGqkJciIuutqgoVmltIO4/0LH4PlSw6rNCZYzkrM9+9YbW270iS66gXvxL9POYzWJU+cDDUz/t0GhDSOIRuAUyodbSrhig9i6VHDW
+ PZXzCo/nMJTqu/7rmPHhRbbi+37t6OxP8uVT0kIe1AWmqeR/wD8HjWkXUK7MhzCY/UIri3UtVejW6lSlSJbZlM+23VIaFLDNTifo2wsCFCCVWbyfokVlmked
+ aHFnh42iPVjpHKmioGDcWPtsvdTlxQ3/gD2jeVkobuEEpkJRu1lk2EuBsS2AXhhPfdDb+67B
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Nov 09, 2020 at 11:32:40AM +0100, Thomas Zimmermann wrote:
-> Commit 49a3f51dfeee ("drm/gem: Use struct dma_buf_map in GEM vmap ops and
-> convert GEM backends") changed DRM's internal GEM vmap callbacks. Msm and
-> mediatek were forgotten during the conversion.
+On 09/11/2020 20:53, Nicolas Dufresne wrote:
+> Le lundi 09 novembre 2020 à 19:31 +0200, Stanimir Varbanov a écrit :
+>> Hello,
+>>
+>> This patchset adds two HDR10 HEVC v4l2 controls for Content Light Level
+>> and Mastering display colour volume plus implenmentation in Venus encoder
+>> driver.
+>>
+>> Comments are welcome!
 > 
-> Thomas Zimmermann (2):
->   drm/msm: Use struct dma_buf_map in GEM vmap ops
->   drm/mediatek: Use struct dma_buf_map in GEM vmap ops
+> It is not a formal review, but I did walked through the new API and
+> everything looks fine to me. One question though, are you aware that
+> the H.264/AVC equivalent is identical ? What is you plan for that ?
 
-On both:
+Not only that, but these structures are lifted straight from the
+CTA-861-G standard: see "6.9 Dynamic Range and Mastering InfoFrame"
+and "6.9.1 Static Metadata Type 1".
 
-Reviewed-by: Daniel Vetter <daniel.vetter@ffwll.ch>
+So this is equally useful for HDMI receivers and transmitters.
 
-I guess more motivation to convert drivers over to shmem helpers, if
-possible ...
--Daniel
+Actually, include/linux/hdmi.h contains a struct for that, but it seems
+to be missing a lot of fields. But we need a v4l2 control anyway and hdmi.h
+isn't a good fit for that.
+
+Regards,
+
+	Hans
 
 > 
->  drivers/gpu/drm/mediatek/mtk_drm_gem.c | 20 ++++++++++++--------
->  drivers/gpu/drm/mediatek/mtk_drm_gem.h |  4 ++--
->  drivers/gpu/drm/msm/msm_drv.h          |  4 ++--
->  drivers/gpu/drm/msm/msm_gem_prime.c    | 13 ++++++++++---
->  4 files changed, 26 insertions(+), 15 deletions(-)
-> 
-> --
-> 2.29.2
+>>
+>> regards,
+>> Stan
+>>
+>> Stanimir Varbanov (3):
+>>   v4l: Add HDR10 HEVC static metadata controls
+>>   docs: media: Document CLL and Mastering display
+>>   venus: venc: Add support for CLL and Mastering display controls
+>>
+>>  .../media/v4l/ext-ctrls-codec.rst             | 61 +++++++++++++++++++
+>>  drivers/media/platform/qcom/venus/core.h      |  3 +
+>>  drivers/media/platform/qcom/venus/hfi_cmds.c  |  8 +++
+>>  .../media/platform/qcom/venus/hfi_helper.h    | 20 ++++++
+>>  drivers/media/platform/qcom/venus/venc.c      | 29 +++++++++
+>>  .../media/platform/qcom/venus/venc_ctrls.c    | 16 ++++-
+>>  drivers/media/v4l2-core/v4l2-ctrls.c          | 61 +++++++++++++++++++
+>>  include/media/hevc-ctrls.h                    | 41 +++++++++++++
+>>  include/media/v4l2-ctrls.h                    |  2 +
+>>  9 files changed, 240 insertions(+), 1 deletion(-)
+>>
 > 
 
--- 
-Daniel Vetter
-Software Engineer, Intel Corporation
-http://blog.ffwll.ch
