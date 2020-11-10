@@ -2,271 +2,279 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D9ED82AD303
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Nov 2020 11:02:18 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 6F8752AD33B
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Nov 2020 11:13:23 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726690AbgKJKCN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 10 Nov 2020 05:02:13 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47088 "EHLO
+        id S1728345AbgKJKNP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 10 Nov 2020 05:13:15 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48830 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729518AbgKJKCK (ORCPT
+        with ESMTP id S1726344AbgKJKNO (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 10 Nov 2020 05:02:10 -0500
-Received: from mail-vs1-xe41.google.com (mail-vs1-xe41.google.com [IPv6:2607:f8b0:4864:20::e41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 83CDAC0613D3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Nov 2020 02:02:10 -0800 (PST)
-Received: by mail-vs1-xe41.google.com with SMTP id 128so6688097vso.7
-        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Nov 2020 02:02:10 -0800 (PST)
+        Tue, 10 Nov 2020 05:13:14 -0500
+Received: from mail-wm1-x343.google.com (mail-wm1-x343.google.com [IPv6:2a00:1450:4864:20::343])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7A86AC0613D1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Nov 2020 02:13:12 -0800 (PST)
+Received: by mail-wm1-x343.google.com with SMTP id s13so2420691wmh.4
+        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Nov 2020 02:13:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=BiQJcafFBQ88xHQcupBP8gBbAXirHmQbPXsm0C0soPA=;
-        b=swGXh4YgskAoYgS+bFvYCOedUrJ59J3k6RjlZ51NvY/vID1Np11aGdRB5P4illh34r
-         HrfyV/0gB3Wc2zoRo+6I9KbIkWcMDmw4WwxuF0aV9rZjyfNEmICkMZ0mSGQEmJvlViEE
-         gZa26atagGogNvTaEplTO7x08/+M/qOn7y1Qc2YCF0XTPLvkQefk1geWNW6nx96nk30g
-         RPpTlGbFrh4S66ln2atq6H2DwOuIHDDwyQ1Laqgkb2daJeDClcU3kpHxJIMUdWgdAj26
-         gyi+hqQTG59BNuxM5Q2C3pL7uhd5wH/S/pK97kMZcS+pUr2vECw1aeYH0GPUmXqY3PZ9
-         tkIw==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=81I9lvfrdyPbV0Zv1LF5At7fH+qtvyCe4iN6MGiOylA=;
+        b=hl8b31BC5nqy/25RShPeBz1hnO+VADpNVy3T2GuMawHYaOeuvEYi5KLWfF1su1WU4A
+         C7kWLrMDXugBUE/oIFdGkj8BUlxCEuFFz9bWEZwbhQXOHw/q1uS+zIlDlKdSxdBHa9x6
+         ySvU9UURMoZ9yrIGgKt8vyDKWCGkptDqBGppy2bAyPEfZKplxU8VT4mC0VJkhwJD1vPy
+         Zii8jj8br4cL5rBcK1YG4I+Lzh9ZSb6ICdpE44SHnulK95xVaqjBcB6LjL381Q/qke6/
+         HMGd91IH3lytKdXZ4rS4EspG8zHOcMCmsAohE32QYE/jtetI6+n16jrxdGWJl0SfW9e4
+         7Now==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=BiQJcafFBQ88xHQcupBP8gBbAXirHmQbPXsm0C0soPA=;
-        b=G2dmlIv8w389xdeXZdtPMeXp5oSwc1ST279Zo/QkHHVTF1ZjesEQUT+aKsG5Uv9Urq
-         AzBOODoxSLjfFI+pqu32xrIlU7raLiPRPuHll0YOJCxP29N/hgJuKS2LVvecg/NpeDLY
-         FRamohMBy38qG9sxphRStA2svohIPN70/i9DsD+XjW1XuW6LAlPgqJAJ9EBVJDJDyu6j
-         LsoW5j8ev/dbN1GYuJ//iZKwsm+Hp19ObQ96pnUH1Rehg7zvYQwe8D+6bBEstxhLEGCK
-         fQTLT1CFs77CyCZG14HaSRiER6wivZNfTao2ISCnm9yTfqOh+1urjemJC12TniZEa9v/
-         xHGg==
-X-Gm-Message-State: AOAM531moemVihPgJIM8qRT1G3cdq24nWymI0naShCzEV3yIhEIrpAsI
-        PaSjnRu955CrdSgjSAyyl/yZLQzTR3hG/d2/YjjRSA==
-X-Google-Smtp-Source: ABdhPJzpW7ANGH4Bj5CGi0nKYo81ZP/qeLT1maxK3GX8rS2j5Nul7J9iXVR9Zh3D+Xb0H3ZnifDkxnH6BuclLxBEOZ4=
-X-Received: by 2002:a67:310d:: with SMTP id x13mr11216949vsx.19.1605002529404;
- Tue, 10 Nov 2020 02:02:09 -0800 (PST)
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=81I9lvfrdyPbV0Zv1LF5At7fH+qtvyCe4iN6MGiOylA=;
+        b=MIQmUyjpYK1JCP/t2GybW+0sNK1VJ3Q57JsEz3AnP3f3G0R9qjjC11Nx7Gg4KPm3XI
+         U/E3Ee+fJrwZfPtQvQECR25mHq00zyTqwDxk0c5VDLcePaeQNOxPwywYZjQMCfgOcZfY
+         mQF8o13GEkNyBBYDzh4jI9gFxADsg3ATVKjMLt06V6dmIJsPHxxJsRLq6E3Ir3ZgTDJV
+         37di5POqO+GifvOuTicu5ITw5xTcp4eqK8iKK7nhtVCFwFYmyplcDDNJ2mK5wZxDWB82
+         SsTG3SkdkEHz+il5a0aA8XAAiCXS1QxIbh9B0nEJsutIlA2HJQspGQ11wqrL0ehZ7Bqz
+         irsA==
+X-Gm-Message-State: AOAM533q/2L1oHEmh7b7yUrldXsrlFip2uCAwN2QkpwOPqhdSqMV0UWb
+        ePkNQ8Fb4qn8TJX+vHGpWwVNag==
+X-Google-Smtp-Source: ABdhPJxsb+fbImcS3cdrZSPiEPaZpjgLAXdCK2tJL/itsfTsc70k9Kq2nYXZhHhswKD8mFUpjpe4ng==
+X-Received: by 2002:a7b:c8c5:: with SMTP id f5mr3841043wml.174.1605003191052;
+        Tue, 10 Nov 2020 02:13:11 -0800 (PST)
+Received: from [192.168.0.4] (hst-221-71.medicom.bg. [84.238.221.71])
+        by smtp.googlemail.com with ESMTPSA id g138sm2377956wme.39.2020.11.10.02.13.09
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 10 Nov 2020 02:13:10 -0800 (PST)
+Subject: Re: [PATCH 1/3] v4l: Add HDR10 HEVC static metadata controls
+To:     Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+        linux-media@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+Cc:     Nicolas Dufresne <nicolas.dufresne@collabora.com>,
+        Ezequiel Garcia <ezequiel@collabora.com>
+References: <20201109173153.23720-1-stanimir.varbanov@linaro.org>
+ <20201109173153.23720-2-stanimir.varbanov@linaro.org>
+ <dc70bc75-62af-1bdb-1feb-bb58e6f1ff8c@xs4all.nl>
+From:   Stanimir Varbanov <stanimir.varbanov@linaro.org>
+Message-ID: <ba370fa4-37ab-32c4-dfcc-c56a4be0cb3a@linaro.org>
+Date:   Tue, 10 Nov 2020 12:13:09 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.10.0
 MIME-Version: 1.0
-References: <20201106164811.3698-1-ilina@codeaurora.org> <20201106164811.3698-3-ilina@codeaurora.org>
- <CAPDyKFrv-3USmNLR3gjgaTEuTrWuYZjs3qCtnjxSOWqrxv5qsA@mail.gmail.com> <X6l/OcHG37HzgFL8@codeaurora.org>
-In-Reply-To: <X6l/OcHG37HzgFL8@codeaurora.org>
-From:   Ulf Hansson <ulf.hansson@linaro.org>
-Date:   Tue, 10 Nov 2020 11:01:32 +0100
-Message-ID: <CAPDyKFr8fdbMM1nsx-RZcMVtveJUP3p38z=HkL1T2C=QgM3gkQ@mail.gmail.com>
-Subject: Re: [PATCH v5 2/2] PM / Domains: use device's next wakeup to
- determine domain idle state
-To:     Lina Iyer <ilina@codeaurora.org>
-Cc:     "Rafael J. Wysocki" <rjw@rjwysocki.net>,
-        Linux PM <linux-pm@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <dc70bc75-62af-1bdb-1feb-bb58e6f1ff8c@xs4all.nl>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, 9 Nov 2020 at 18:41, Lina Iyer <ilina@codeaurora.org> wrote:
->
-> On Mon, Nov 09 2020 at 08:27 -0700, Ulf Hansson wrote:
-> >On Fri, 6 Nov 2020 at 17:48, Lina Iyer <ilina@codeaurora.org> wrote:
-> >>
-> [...]
-> >> +static void update_domain_next_wakeup(struct generic_pm_domain *genpd, ktime_t now)
-> >> +{
-> >> +       ktime_t domain_wakeup = KTIME_MAX;
-> >> +       ktime_t next_wakeup;
-> >> +       struct pm_domain_data *pdd;
-> >> +       struct gpd_link *link;
-> >> +
-> >> +       /* Find the earliest wakeup for all devices in the domain */
-> >> +       list_for_each_entry(pdd, &genpd->dev_list, list_node) {
-> >> +               next_wakeup = to_gpd_data(pdd)->next_wakeup;
-> >> +               if (next_wakeup != KTIME_MAX && !ktime_before(next_wakeup, now))
-> >> +                       if (ktime_before(next_wakeup, domain_wakeup))
-> >> +                               domain_wakeup = next_wakeup;
-> >
-> >If it turns out that one of the device's next_wakeup is before "now",
-> >leading to ktime_before() above returns true - then I think you should
-> >bail out, no?
-> >
-> >At least, we shouldn't just continue and ignore this case, right?
-> >
-> No, that could be a very common case. Drivers are not expected to clean
-> up the next wakeup by setting it to KTIME_MAX. The best we can do is
-> to make a choice with the valid information we have. This will also map
-> to the current behavior. Say if all next wakeup information provided to
-> the devices were in the past, we would be no worse (or better) than what
-> we do without this change.
 
-Well, I don't quite agree (at least not yet), but let me elaborate, as
-I think we can do better without having to add complexity.
 
-Normally, I don't think a driver needs to clean up its device's next
-wakeup in between the remote wakeups, instead it should just set a new
-value.
+On 11/10/20 11:43 AM, Hans Verkuil wrote:
+> On 09/11/2020 18:31, Stanimir Varbanov wrote:
+>> Add Content light level and Mastering display colour volume v4l2
+>> compounf controls, relevant payload structures and validation.
+> 
+> Typo: compounf -> compound
+> 
+>>
+>> Signed-off-by: Stanimir Varbanov <stanimir.varbanov@linaro.org>
+>> ---
+>>  drivers/media/v4l2-core/v4l2-ctrls.c | 61 ++++++++++++++++++++++++++++
+>>  include/media/hevc-ctrls.h           | 41 +++++++++++++++++++
+>>  include/media/v4l2-ctrls.h           |  2 +
+>>  3 files changed, 104 insertions(+)
+>>
+>> diff --git a/drivers/media/v4l2-core/v4l2-ctrls.c b/drivers/media/v4l2-core/v4l2-ctrls.c
+>> index bd7f330c941c..f70eaa6a46df 100644
+>> --- a/drivers/media/v4l2-core/v4l2-ctrls.c
+>> +++ b/drivers/media/v4l2-core/v4l2-ctrls.c
+>> @@ -1023,6 +1023,8 @@ const char *v4l2_ctrl_get_name(u32 id)
+>>  	case V4L2_CID_MPEG_VIDEO_HEVC_SLICE_PARAMS:		return "HEVC Slice Parameters";
+>>  	case V4L2_CID_MPEG_VIDEO_HEVC_DECODE_MODE:		return "HEVC Decode Mode";
+>>  	case V4L2_CID_MPEG_VIDEO_HEVC_START_CODE:		return "HEVC Start Code";
+>> +	case V4L2_CID_MPEG_VIDEO_HEVC_CLL_INFO:			return "HEVC Content Light Info";
+>> +	case V4L2_CID_MPEG_VIDEO_HEVC_MASTERING_DISPLAY:	return "HEVC Mastering Display";
+> 
+> Why is this split up in two controls? Can you have one, but not the other?
+> 
+> From what I can tell they are always combined (see CTA-861-G, SMPTE 2086).
 
-That's because, even if the driver acts to a remote wakeup or deals
-with a request entering a queue, the driver needs to runtime resume
-its device during this period. This prevents genpd from power off the
-PM domain, hence also the genpd governor from potentially looking at
-"invalid" wakeup information for its attached devices.
+I split to two control IDs because in ITU-T Rec. H265 CLL and Mastering
+Display colour volume are different SEI messages. I guessed that they
+could exist in the bitstream independently, though I'm not sure about that.
 
-Of course, I assume there are situations, where a driver actually
-needs to do a clean up of its device's next wakeup, but that should be
-less frequent and likely when a remote wakeup is disabled (for
-whatever reason).
+I think, if we decide that hdr10-ctrls.h will be better place for these
+controls we can combine CLL and Mastering display in one control -
+V4L2_CID_MPEG_HDR10_STATIC_METADATA.
+And later we could introduce V4L2_CID_MPEG_HDR10_DYNAMIC_METADATA for
+hdr10+ (2094-40).
 
->
-> >> +       }
-> >> +
-> >> +       /* Then find the earliest wakeup of from all the child domains */
-> >> +       list_for_each_entry(link, &genpd->parent_links, parent_node) {
-> >> +               next_wakeup = link->child->next_wakeup;
-> >> +               if (next_wakeup != KTIME_MAX && !ktime_before(next_wakeup, now))
-> >> +                       if (ktime_before(next_wakeup, domain_wakeup))
-> >> +                               domain_wakeup = next_wakeup;
-> >> +       }
-> >> +
-> >> +       genpd->next_wakeup = domain_wakeup;
-> >> +}
-> >> +
-> >> +static bool next_wakeup_allows_state(struct generic_pm_domain *genpd,
-> >> +                                    unsigned int state, ktime_t now)
-> >> +{
-> >> +       ktime_t domain_wakeup = genpd->next_wakeup;
-> >> +       s64 idle_time_ns, min_sleep_ns;
-> >> +
-> >> +       min_sleep_ns = genpd->states[state].power_off_latency_ns +
-> >> +                      genpd->states[state].power_on_latency_ns +
-> >> +                      genpd->states[state].residency_ns;
-> >> +
-> >
-> >I don't think you should include the power_on_latency_ns here.
-> >
-> >The validation isn't about QoS constraints, but whether we can meet
-> >the residency time to make it worth entering the state, from an energy
-> >point of view. Right?
-> >
-> Fair point. I will remove the power_on_latency_ns.
->
-> >> +       idle_time_ns = ktime_to_ns(ktime_sub(domain_wakeup, now));
-> >> +
-> >> +       return idle_time_ns >= min_sleep_ns;
-> >> +}
-> >> +
-> >>  static bool __default_power_down_ok(struct dev_pm_domain *pd,
-> >>                                      unsigned int state)
-> >>  {
-> >> @@ -209,8 +250,34 @@ static bool __default_power_down_ok(struct dev_pm_domain *pd,
-> >>  static bool default_power_down_ok(struct dev_pm_domain *pd)
-> >>  {
-> >>         struct generic_pm_domain *genpd = pd_to_genpd(pd);
-> >> +       int state_idx = genpd->state_count - 1;
-> >> +       ktime_t now = ktime_get();
-> >>         struct gpd_link *link;
-> >>
-> >> +       /*
-> >> +        * Find the next wakeup from devices that can determine their own wakeup
-> >> +        * to find when the domain would wakeup and do it for every device down
-> >> +        * the hierarchy. It is not worth while to sleep if the state's residency
-> >> +        * cannot be met.
-> >> +        */
-> >> +       update_domain_next_wakeup(genpd, now);
-> >> +       if (genpd->next_wakeup != KTIME_MAX) {
-> >> +               /* Let's find out the deepest domain idle state, the devices prefer */
-> >> +               while (state_idx >= 0) {
-> >> +                       if (next_wakeup_allows_state(genpd, state_idx, now)) {
-> >> +                               genpd->max_off_time_changed = true;
-> >> +                               break;
-> >> +                       }
-> >> +                       state_idx--;
-> >> +               }
-> >> +
-> >> +               if (state_idx < 0) {
-> >> +                       state_idx = 0;
-> >> +                       genpd->cached_power_down_ok = false;
-> >> +                       goto done;
-> >> +               }
-> >> +       }
-> >> +
-> >
-> >The above would introduce unnecessary overhead, as it may become
-> >executed in cases when it's not needed.
-> >
-> >For example, there's no point doing the above, if the domain doesn't
-> >specify residency values for its idle states.
-> >
-> We would still need to ensure that the next wakeup is after the
-> power_off_latency, if specified.
+> 
+> Regards,
+> 
+> 	Hans
+> 
+>>  
+>>  	/* CAMERA controls */
+>>  	/* Keep the order of the 'case's the same as in v4l2-controls.h! */
+>> @@ -1461,6 +1463,12 @@ void v4l2_ctrl_fill(u32 id, const char **name, enum v4l2_ctrl_type *type,
+>>  	case V4L2_CID_MPEG_VIDEO_HEVC_SLICE_PARAMS:
+>>  		*type = V4L2_CTRL_TYPE_HEVC_SLICE_PARAMS;
+>>  		break;
+>> +	case V4L2_CID_MPEG_VIDEO_HEVC_CLL_INFO:
+>> +		*type = V4L2_CTRL_TYPE_HEVC_CLL_INFO;
+>> +		break;
+>> +	case V4L2_CID_MPEG_VIDEO_HEVC_MASTERING_DISPLAY:
+>> +		*type = V4L2_CTRL_TYPE_HEVC_MASTERING_DISPLAY;
+>> +		break;
+>>  	case V4L2_CID_UNIT_CELL_SIZE:
+>>  		*type = V4L2_CTRL_TYPE_AREA;
+>>  		*flags |= V4L2_CTRL_FLAG_READ_ONLY;
+>> @@ -1775,6 +1783,7 @@ static int std_validate_compound(const struct v4l2_ctrl *ctrl, u32 idx,
+>>  	struct v4l2_ctrl_hevc_sps *p_hevc_sps;
+>>  	struct v4l2_ctrl_hevc_pps *p_hevc_pps;
+>>  	struct v4l2_ctrl_hevc_slice_params *p_hevc_slice_params;
+>> +	struct v4l2_ctrl_hevc_mastering_display *p_hevc_mastering;
+>>  	struct v4l2_area *area;
+>>  	void *p = ptr.p + idx * ctrl->elem_size;
+>>  	unsigned int i;
+>> @@ -1934,6 +1943,52 @@ static int std_validate_compound(const struct v4l2_ctrl *ctrl, u32 idx,
+>>  		zero_padding(*p_hevc_slice_params);
+>>  		break;
+>>  
+>> +	case V4L2_CTRL_TYPE_HEVC_CLL_INFO:
+>> +		break;
+>> +
+>> +	case V4L2_CTRL_TYPE_HEVC_MASTERING_DISPLAY:
+>> +		p_hevc_mastering = p;
+>> +
+>> +		for (i = 0; i < 3; ++i) {
+>> +			if (p_hevc_mastering->display_primaries_x[i] <
+>> +				V4L2_HEVC_MASTERING_PRIMARIES_X_LOW ||
+>> +			    p_hevc_mastering->display_primaries_x[i] >
+>> +				V4L2_HEVC_MASTERING_PRIMARIES_X_HIGH ||
+>> +			    p_hevc_mastering->display_primaries_y[i] <
+>> +				V4L2_HEVC_MASTERING_PRIMARIES_Y_LOW ||
+>> +			    p_hevc_mastering->display_primaries_y[i] >
+>> +				V4L2_HEVC_MASTERING_PRIMARIES_Y_HIGH)
+>> +				return -EINVAL;
+>> +		}
+>> +
+>> +		if (p_hevc_mastering->white_point_x <
+>> +			V4L2_HEVC_MASTERING_WHITE_POINT_X_LOW ||
+>> +		    p_hevc_mastering->white_point_x >
+>> +			V4L2_HEVC_MASTERING_WHITE_POINT_X_HIGH ||
+>> +		    p_hevc_mastering->white_point_y <
+>> +			V4L2_HEVC_MASTERING_WHITE_POINT_Y_LOW ||
+>> +		    p_hevc_mastering->white_point_y >
+>> +			V4L2_HEVC_MASTERING_WHITE_POINT_Y_HIGH)
+>> +			return -EINVAL;
+>> +
+>> +		if (p_hevc_mastering->max_luminance <
+>> +			V4L2_HEVC_MASTERING_MAX_LUMA_LOW ||
+>> +		    p_hevc_mastering->max_luminance >
+>> +			V4L2_HEVC_MASTERING_MAX_LUMA_HIGH ||
+>> +		    p_hevc_mastering->min_luminance <
+>> +			V4L2_HEVC_MASTERING_MIN_LUMA_LOW ||
+>> +		    p_hevc_mastering->min_luminance >
+>> +			V4L2_HEVC_MASTERING_MIN_LUMA_HIGH)
+>> +			return -EINVAL;
+>> +
+>> +		if (p_hevc_mastering->max_luminance ==
+>> +			V4L2_HEVC_MASTERING_MAX_LUMA_LOW &&
+>> +		    p_hevc_mastering->min_luminance ==
+>> +			V4L2_HEVC_MASTERING_MIN_LUMA_HIGH)
+>> +			return -EINVAL;
+>> +
+>> +		break;
+>> +
+>>  	case V4L2_CTRL_TYPE_AREA:
+>>  		area = p;
+>>  		if (!area->width || !area->height)
+>> @@ -2626,6 +2681,12 @@ static struct v4l2_ctrl *v4l2_ctrl_new(struct v4l2_ctrl_handler *hdl,
+>>  	case V4L2_CTRL_TYPE_HEVC_SLICE_PARAMS:
+>>  		elem_size = sizeof(struct v4l2_ctrl_hevc_slice_params);
+>>  		break;
+>> +	case V4L2_CTRL_TYPE_HEVC_CLL_INFO:
+>> +		elem_size = sizeof(struct v4l2_ctrl_hevc_cll_info);
+>> +		break;
+>> +	case V4L2_CTRL_TYPE_HEVC_MASTERING_DISPLAY:
+>> +		elem_size = sizeof(struct v4l2_ctrl_hevc_mastering_display);
+>> +		break;
+>>  	case V4L2_CTRL_TYPE_AREA:
+>>  		elem_size = sizeof(struct v4l2_area);
+>>  		break;
+>> diff --git a/include/media/hevc-ctrls.h b/include/media/hevc-ctrls.h
+>> index 1009cf0891cc..d254457d2846 100644
+>> --- a/include/media/hevc-ctrls.h
+>> +++ b/include/media/hevc-ctrls.h
+>> @@ -209,4 +209,45 @@ struct v4l2_ctrl_hevc_slice_params {
+>>  	__u64	flags;
+>>  };
+>>  
+>> +/*
+>> + * Content light level information.
+>> + * Source Rec. ITU-T H.265 v7 (11/2019) HEVC; D.2.35
+>> + */
+>> +#define V4L2_CID_MPEG_VIDEO_HEVC_CLL_INFO	(V4L2_CID_MPEG_BASE + 1017)
+>> +#define V4L2_CTRL_TYPE_HEVC_CLL_INFO		0x0123
+>> +
+>> +struct v4l2_ctrl_hevc_cll_info {
+>> +	__u16 max_content_light_level;
+>> +	__u16 max_pic_average_light_level;
+>> +};
+>> +
+>> +/*
+>> + * Mastering display colour volume.
+>> + * Source Rec. ITU-T H.265 v7 (11/2019) HEVC; D.2.28
+>> + */
+>> +#define V4L2_CID_MPEG_VIDEO_HEVC_MASTERING_DISPLAY (V4L2_CID_MPEG_BASE + 1018)
+>> +#define V4L2_CTRL_TYPE_HEVC_MASTERING_DISPLAY	0x0124
+>> +
+>> +#define V4L2_HEVC_MASTERING_PRIMARIES_X_LOW	5
+>> +#define V4L2_HEVC_MASTERING_PRIMARIES_X_HIGH	37000
+>> +#define V4L2_HEVC_MASTERING_PRIMARIES_Y_LOW	5
+>> +#define V4L2_HEVC_MASTERING_PRIMARIES_Y_HIGH	42000
+>> +#define V4L2_HEVC_MASTERING_WHITE_POINT_X_LOW	5
+>> +#define V4L2_HEVC_MASTERING_WHITE_POINT_X_HIGH	37000
+>> +#define V4L2_HEVC_MASTERING_WHITE_POINT_Y_LOW	5
+>> +#define V4L2_HEVC_MASTERING_WHITE_POINT_Y_HIGH	42000
+>> +#define V4L2_HEVC_MASTERING_MAX_LUMA_LOW	50000
+>> +#define V4L2_HEVC_MASTERING_MAX_LUMA_HIGH	100000000
+>> +#define V4L2_HEVC_MASTERING_MIN_LUMA_LOW	1
+>> +#define V4L2_HEVC_MASTERING_MIN_LUMA_HIGH	50000
+>> +
+>> +struct v4l2_ctrl_hevc_mastering_display {
+>> +	__u16 display_primaries_x[3];
+>> +	__u16 display_primaries_y[3];
+>> +	__u16 white_point_x;
+>> +	__u16 white_point_y;
+>> +	__u32 max_luminance;
+>> +	__u32 min_luminance;
+>> +};
+>> +
+>>  #endif
+>> diff --git a/include/media/v4l2-ctrls.h b/include/media/v4l2-ctrls.h
+>> index cb25f345e9ad..6120e29945e1 100644
+>> --- a/include/media/v4l2-ctrls.h
+>> +++ b/include/media/v4l2-ctrls.h
+>> @@ -80,6 +80,8 @@ union v4l2_ctrl_ptr {
+>>  	struct v4l2_ctrl_hevc_sps *p_hevc_sps;
+>>  	struct v4l2_ctrl_hevc_pps *p_hevc_pps;
+>>  	struct v4l2_ctrl_hevc_slice_params *p_hevc_slice_params;
+>> +	struct v4l2_ctrl_hevc_cll_info *p_hevc_cll;
+>> +	struct v4l2_ctrl_hevc_mastering_display *p_hevc_mastering;
+>>  	struct v4l2_area *p_area;
+>>  	void *p;
+>>  	const void *p_const;
+>>
+> 
 
-Good point! Although, I would rather avoid adding the overhead, unless
-the residency is specified. Do you see a problem with this approach?
-
-Another option is to add a new governor, but if possible, I would like
-to avoid that.
-
->
-> >Additionally, we don't need to recompute the domain's next wakup,
-> >unless a device has got a new next_wakeup value set for it. In this
-> >case, we can just select a state based upon an previously computed
-> >value, thus avoiding the recomputation.
-> >
-> If the domain's next wakeup was in the past, then using our previously
-> computed state may be incorrect.
-
-I am not saying you should use the previously computed *idlestate*,
-but the previously computed next wakeup.
-
->
-> >>         if (!genpd->max_off_time_changed) {
-> >>                 genpd->state_idx = genpd->cached_power_down_state_idx;
-> >>                 return genpd->cached_power_down_ok;
-> >> @@ -228,17 +295,21 @@ static bool default_power_down_ok(struct dev_pm_domain *pd)
-> >>         genpd->max_off_time_ns = -1;
-> >>         genpd->max_off_time_changed = false;
-> >>         genpd->cached_power_down_ok = true;
-> >> -       genpd->state_idx = genpd->state_count - 1;
-> >>
-> >> -       /* Find a state to power down to, starting from the deepest. */
-> >> -       while (!__default_power_down_ok(pd, genpd->state_idx)) {
-> >> -               if (genpd->state_idx == 0) {
-> >> +       /*
-> >> +        * Find a state to power down to, starting from the state
-> >> +        * determined by the next wakeup.
-> >> +        */
-> >> +       while (!__default_power_down_ok(pd, state_idx)) {
-> >> +               if (state_idx == 0) {
-> >>                         genpd->cached_power_down_ok = false;
-> >>                         break;
-> >>                 }
-> >> -               genpd->state_idx--;
-> >> +               state_idx--;
-> >>         }
-> >>
-> >> +done:
-> >> +       genpd->state_idx = state_idx;
-> >>         genpd->cached_power_down_state_idx = genpd->state_idx;
-> >>         return genpd->cached_power_down_ok;
-> >>  }
-> >
-> >Another thing to consider for the above changes, is that the
-> >cpu_power_down_ok() calls into default_power_down_ok().
-> >
-> >Even if I am fine with the approach taken in $subject patch, I think
-> >it's important to try to keep the path a slim as possible as it's also
-> >executed in the CPU idlepath.
-> Wouldn't this be called only the last CPU is powering down and only if
-> the domain is ready to power down?
->
-> >For example, $subject change means also
-> >that we end up calling ktime_get() twice in the same path, introducing
-> >unnecessary overhead. We can do better and avoid that by restructuring
-> >the code a bit, don't you think?
-> >
-> Hmmm, we could. I will submit a follow on patch to reorganize the code
-> so the ktime_get() would be called only once for either of the
-> power_down_ok callbacks.
-
-If possible, I would rather make it part of the series. Just fold in
-some "rework" patch before extending the governor, that should be
-possible I think.
-
-Kind regards
-Uffe
+-- 
+regards,
+Stan
