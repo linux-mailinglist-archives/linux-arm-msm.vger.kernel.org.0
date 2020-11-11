@@ -2,108 +2,320 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D362C2AF8E8
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Nov 2020 20:21:58 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4CBA02AF96D
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Nov 2020 21:03:49 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727676AbgKKTVt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 11 Nov 2020 14:21:49 -0500
-Received: from z5.mailgun.us ([104.130.96.5]:51371 "EHLO z5.mailgun.us"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727739AbgKKTVa (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 11 Nov 2020 14:21:30 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1605122490; h=References: In-Reply-To: Message-Id: Date:
- Subject: Cc: To: From: Sender;
- bh=veCajDnYzKnYRNGbSNuVCbZM+Fh4NCCtNWMvGjUUsBU=; b=A+BlXKIZDNU4hXHQ8Z2xiCKe6b1weHlGMct5Mqgn/eFYaicffHHRXF+zoKpTpUzMIjOa9QZW
- gyr97j/nOrUkzEEs9fKUdo8Fp2dKNloTTNoU1kGMjvJGDFF16EvZZu/g43n8Wss0Fd1Befa+
- C1rNvsgYQU5HHwsSXJzuObZcf+I=
-X-Mailgun-Sending-Ip: 104.130.96.5
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n04.prod.us-west-2.postgun.com with SMTP id
- 5fac39b49a53d19da9a7f3d8 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 11 Nov 2020 19:21:24
- GMT
-Sender: bbhatt=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 411DFC433C9; Wed, 11 Nov 2020 19:21:24 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
-        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
-Received: from malabar-linux.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: bbhatt)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 4FD7FC43382;
-        Wed, 11 Nov 2020 19:21:23 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 4FD7FC43382
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=bbhatt@codeaurora.org
-From:   Bhaumik Bhatt <bbhatt@codeaurora.org>
-To:     manivannan.sadhasivam@linaro.org
-Cc:     linux-arm-msm@vger.kernel.org, hemantk@codeaurora.org,
-        jhugo@codeaurora.org, loic.poulain@linaro.org,
-        kvalo@codeaurora.org, linux-kernel@vger.kernel.org,
-        Bhaumik Bhatt <bbhatt@codeaurora.org>
-Subject: [PATCH v2 6/6] bus: mhi: Improve documentation on channel transfer setup APIs
-Date:   Wed, 11 Nov 2020 11:21:13 -0800
-Message-Id: <1605122473-12179-7-git-send-email-bbhatt@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1605122473-12179-1-git-send-email-bbhatt@codeaurora.org>
-References: <1605122473-12179-1-git-send-email-bbhatt@codeaurora.org>
+        id S1726429AbgKKUDs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 11 Nov 2020 15:03:48 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58168 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725924AbgKKUDr (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 11 Nov 2020 15:03:47 -0500
+Received: from mail-pf1-x442.google.com (mail-pf1-x442.google.com [IPv6:2607:f8b0:4864:20::442])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B4856C0613D4
+        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Nov 2020 12:03:47 -0800 (PST)
+Received: by mail-pf1-x442.google.com with SMTP id g7so2328679pfc.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Nov 2020 12:03:47 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=DXaYZfXLx6Cp2pU+xUA5JlOzbe7aCi/UqFCMY0tSnls=;
+        b=D0MowZnMt52H/BXOEHQRLrGWTU9enHwLPcI+V3J22NwWe4hJWezqbZ+7tKbx82FlXO
+         Ohp7t18z81hFc6IFCmX0dla5d5WNkpR01qIFz7NO5y2KWE/qorN/kQkGPM2aalQNMemP
+         1b+F3EcVjGif5nYwBt2vwDnw33Lx7r+WHuyo0=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=DXaYZfXLx6Cp2pU+xUA5JlOzbe7aCi/UqFCMY0tSnls=;
+        b=PpivSwbklLCox15zooLnGoKRHnsNFK/oEw02qQeNbN7lumj93vzYDoPKlzUnXiQTVl
+         0QnUplo+SPt/9+g7ANW30PkiAUX9276rR83VCTC63ImEZfl/oHr08N5Ktwva394QuylQ
+         +9EK0Ciz8ujHGLhsr2N/AWCD65YZoa7uUuAnZPZhFbECnm2MIJZ8SunfcY0atAhKJ/Hy
+         3VX/R5GwuAs3Vjj2JzHBoNruHdvHxkGjeDUISHukTfpaHW0Z9wqLdNTz+i4uajT45t9+
+         44NoVXcQklMJjj7I1feegG8+fzDjCQgIXqj/fB2XgABDgXbRcbgdFn384MpAkjNgRdxe
+         4bYQ==
+X-Gm-Message-State: AOAM532z3r03WUDKXJusmJjhfaHueHG3Qf6+n8vw1yA0eacU708EyLqA
+        kHyEJIbxccH2bRK3KaG5Js/gPg==
+X-Google-Smtp-Source: ABdhPJwdj6nsqjDpGwFbeVucPrC12E8DS0/xfoDbSNVHt1LqQedq70b0ikdS6MVyUf5e9Ie9kOE+YQ==
+X-Received: by 2002:a63:c43:: with SMTP id 3mr24166118pgm.222.1605125027215;
+        Wed, 11 Nov 2020 12:03:47 -0800 (PST)
+Received: from localhost ([2620:15c:202:1:f693:9fff:fef4:e70a])
+        by smtp.gmail.com with ESMTPSA id k7sm3464316pfa.184.2020.11.11.12.03.46
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 11 Nov 2020 12:03:46 -0800 (PST)
+From:   Matthias Kaehlcke <mka@chromium.org>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Amit Kucheria <amit.kucheria@linaro.org>,
+        Rajeshwari <rkambl@codeaurora.org>,
+        Akhil P Oommen <akhilpo@codeaurora.org>
+Cc:     devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        Douglas Anderson <dianders@chromium.org>,
+        linux-kernel@vger.kernel.org, Matthias Kaehlcke <mka@chromium.org>
+Subject: [PATCH] arm64: dts: qcom: sc7180: Set 'polling-delay-passive' for thermal zones back to 250 ms
+Date:   Wed, 11 Nov 2020 12:03:43 -0800
+Message-Id: <20201111120334.1.Ifc04ea235c3c370e3b21ec3b4d5dead83cc403b4@changeid>
+X-Mailer: git-send-email 2.29.2.222.g5d2a92d10f8-goog
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The mhi_prepare_for_transfer() and mhi_unprepare_from_transfer()
-APIs could use better explanation, especially with the addition
-of two new APIs to start and stop the transfers on channels. Add
-better set of information for those APIs to avoid confusion going
-forward.
+Commit 22337b91022d ("arm64: dts: qcom: sc7180: Changed polling mode
+in Thermal-zones node") sets both 'polling-delay' and
+'polling-delay-passive' to zero with the rationale that TSENS interrupts
+are enabled. A TSENS interrupt fires when the temperature of a thermal
+zone reaches a trip point, which makes regular polling below the passive
+trip point temperature unnecessary. However the situation is different
+when passive cooling is active, regular polling is still needed to
+trigger a periodic evaluation of the thermal zone by the thermal governor.
 
-Signed-off-by: Bhaumik Bhatt <bbhatt@codeaurora.org>
+Change 'polling-delay-passive' back to the original value of 250 ms.
+Commit 2315ae70af95 ("arm64: dts: qcom: sc7180: Add gpu cooling
+support") recently changed the value for the GPU thermal zones from
+zero to 100 ms, also set it to 250 ms for uniformity. If some zones
+really need different values these can be changed in dedicated patches.
+
+Fixes: 22337b91022d ("arm64: dts: qcom: sc7180: Changed polling mode in Thermal-zones node")
+Signed-off-by: Matthias Kaehlcke <mka@chromium.org>
 ---
- include/linux/mhi.h | 18 ++++++++++++++++--
- 1 file changed, 16 insertions(+), 2 deletions(-)
 
-diff --git a/include/linux/mhi.h b/include/linux/mhi.h
-index aee8494..ee9537f 100644
---- a/include/linux/mhi.h
-+++ b/include/linux/mhi.h
-@@ -690,13 +690,27 @@ int mhi_device_get_sync(struct mhi_device *mhi_dev);
- void mhi_device_put(struct mhi_device *mhi_dev);
+ arch/arm64/boot/dts/qcom/sc7180.dtsi | 50 ++++++++++++++--------------
+ 1 file changed, 25 insertions(+), 25 deletions(-)
+
+diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi b/arch/arm64/boot/dts/qcom/sc7180.dtsi
+index 4e7e58c63285..2f454686a883 100644
+--- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
+@@ -3520,7 +3520,7 @@ lpass_hm: clock-controller@63000000 {
  
- /**
-- * mhi_prepare_for_transfer - Setup channel for data transfer
-+ * mhi_prepare_for_transfer - Setup UL and DL channels for data transfer.
-+ *                            Allocate and initialize the channel context and
-+ *                            also issue the START channel command to both
-+ *                            channels. Channels can be started only if both
-+ *                            host and device execution environments match and
-+ *                            channels are in a DISABLED state.
-  * @mhi_dev: Device associated with the channels
-  */
- int mhi_prepare_for_transfer(struct mhi_device *mhi_dev);
+ 	thermal-zones {
+ 		cpu0-thermal {
+-			polling-delay-passive = <0>;
++			polling-delay-passive = <250>;
+ 			polling-delay = <0>;
  
- /**
-- * mhi_unprepare_from_transfer - Unprepare the channels
-+ * mhi_unprepare_from_transfer - Reset UL and DL channels for data transfer.
-+ *                               Issue the RESET channel command and let the
-+ *                               device clean-up the context so no incoming
-+ *                               transfers are seen on the host. Free memory
-+ *                               associated with the context on host. If device
-+ *                               is unresponsive, only perform a host side
-+ *                               clean-up. Channels can be reset only if both
-+ *                               host and device execution environments match
-+ *                               and channels are in an ENABLED, STOPPED or
-+ *                               SUSPENDED state.
-  * @mhi_dev: Device associated with the channels
-  */
- void mhi_unprepare_from_transfer(struct mhi_device *mhi_dev);
+ 			thermal-sensors = <&tsens0 1>;
+@@ -3569,7 +3569,7 @@ map1 {
+ 		};
+ 
+ 		cpu1-thermal {
+-			polling-delay-passive = <0>;
++			polling-delay-passive = <250>;
+ 			polling-delay = <0>;
+ 
+ 			thermal-sensors = <&tsens0 2>;
+@@ -3618,7 +3618,7 @@ map1 {
+ 		};
+ 
+ 		cpu2-thermal {
+-			polling-delay-passive = <0>;
++			polling-delay-passive = <250>;
+ 			polling-delay = <0>;
+ 
+ 			thermal-sensors = <&tsens0 3>;
+@@ -3667,7 +3667,7 @@ map1 {
+ 		};
+ 
+ 		cpu3-thermal {
+-			polling-delay-passive = <0>;
++			polling-delay-passive = <250>;
+ 			polling-delay = <0>;
+ 
+ 			thermal-sensors = <&tsens0 4>;
+@@ -3716,7 +3716,7 @@ map1 {
+ 		};
+ 
+ 		cpu4-thermal {
+-			polling-delay-passive = <0>;
++			polling-delay-passive = <250>;
+ 			polling-delay = <0>;
+ 
+ 			thermal-sensors = <&tsens0 5>;
+@@ -3765,7 +3765,7 @@ map1 {
+ 		};
+ 
+ 		cpu5-thermal {
+-			polling-delay-passive = <0>;
++			polling-delay-passive = <250>;
+ 			polling-delay = <0>;
+ 
+ 			thermal-sensors = <&tsens0 6>;
+@@ -3814,7 +3814,7 @@ map1 {
+ 		};
+ 
+ 		cpu6-thermal {
+-			polling-delay-passive = <0>;
++			polling-delay-passive = <250>;
+ 			polling-delay = <0>;
+ 
+ 			thermal-sensors = <&tsens0 9>;
+@@ -3855,7 +3855,7 @@ map1 {
+ 		};
+ 
+ 		cpu7-thermal {
+-			polling-delay-passive = <0>;
++			polling-delay-passive = <250>;
+ 			polling-delay = <0>;
+ 
+ 			thermal-sensors = <&tsens0 10>;
+@@ -3896,7 +3896,7 @@ map1 {
+ 		};
+ 
+ 		cpu8-thermal {
+-			polling-delay-passive = <0>;
++			polling-delay-passive = <250>;
+ 			polling-delay = <0>;
+ 
+ 			thermal-sensors = <&tsens0 11>;
+@@ -3937,7 +3937,7 @@ map1 {
+ 		};
+ 
+ 		cpu9-thermal {
+-			polling-delay-passive = <0>;
++			polling-delay-passive = <250>;
+ 			polling-delay = <0>;
+ 
+ 			thermal-sensors = <&tsens0 12>;
+@@ -3978,7 +3978,7 @@ map1 {
+ 		};
+ 
+ 		aoss0-thermal {
+-			polling-delay-passive = <0>;
++			polling-delay-passive = <250>;
+ 			polling-delay = <0>;
+ 
+ 			thermal-sensors = <&tsens0 0>;
+@@ -3999,7 +3999,7 @@ aoss0_crit: aoss0_crit {
+ 		};
+ 
+ 		cpuss0-thermal {
+-			polling-delay-passive = <0>;
++			polling-delay-passive = <250>;
+ 			polling-delay = <0>;
+ 
+ 			thermal-sensors = <&tsens0 7>;
+@@ -4019,7 +4019,7 @@ cpuss0_crit: cluster0_crit {
+ 		};
+ 
+ 		cpuss1-thermal {
+-			polling-delay-passive = <0>;
++			polling-delay-passive = <250>;
+ 			polling-delay = <0>;
+ 
+ 			thermal-sensors = <&tsens0 8>;
+@@ -4039,7 +4039,7 @@ cpuss1_crit: cluster0_crit {
+ 		};
+ 
+ 		gpuss0-thermal {
+-			polling-delay-passive = <100>;
++			polling-delay-passive = <250>;
+ 			polling-delay = <0>;
+ 
+ 			thermal-sensors = <&tsens0 13>;
+@@ -4067,7 +4067,7 @@ map0 {
+ 		};
+ 
+ 		gpuss1-thermal {
+-			polling-delay-passive = <100>;
++			polling-delay-passive = <250>;
+ 			polling-delay = <0>;
+ 
+ 			thermal-sensors = <&tsens0 14>;
+@@ -4095,7 +4095,7 @@ map0 {
+ 		};
+ 
+ 		aoss1-thermal {
+-			polling-delay-passive = <0>;
++			polling-delay-passive = <250>;
+ 			polling-delay = <0>;
+ 
+ 			thermal-sensors = <&tsens1 0>;
+@@ -4116,7 +4116,7 @@ aoss1_crit: aoss1_crit {
+ 		};
+ 
+ 		cwlan-thermal {
+-			polling-delay-passive = <0>;
++			polling-delay-passive = <250>;
+ 			polling-delay = <0>;
+ 
+ 			thermal-sensors = <&tsens1 1>;
+@@ -4137,7 +4137,7 @@ cwlan_crit: cwlan_crit {
+ 		};
+ 
+ 		audio-thermal {
+-			polling-delay-passive = <0>;
++			polling-delay-passive = <250>;
+ 			polling-delay = <0>;
+ 
+ 			thermal-sensors = <&tsens1 2>;
+@@ -4158,7 +4158,7 @@ audio_crit: audio_crit {
+ 		};
+ 
+ 		ddr-thermal {
+-			polling-delay-passive = <0>;
++			polling-delay-passive = <250>;
+ 			polling-delay = <0>;
+ 
+ 			thermal-sensors = <&tsens1 3>;
+@@ -4179,7 +4179,7 @@ ddr_crit: ddr_crit {
+ 		};
+ 
+ 		q6-hvx-thermal {
+-			polling-delay-passive = <0>;
++			polling-delay-passive = <250>;
+ 			polling-delay = <0>;
+ 
+ 			thermal-sensors = <&tsens1 4>;
+@@ -4200,7 +4200,7 @@ q6_hvx_crit: q6_hvx_crit {
+ 		};
+ 
+ 		camera-thermal {
+-			polling-delay-passive = <0>;
++			polling-delay-passive = <250>;
+ 			polling-delay = <0>;
+ 
+ 			thermal-sensors = <&tsens1 5>;
+@@ -4221,7 +4221,7 @@ camera_crit: camera_crit {
+ 		};
+ 
+ 		mdm-core-thermal {
+-			polling-delay-passive = <0>;
++			polling-delay-passive = <250>;
+ 			polling-delay = <0>;
+ 
+ 			thermal-sensors = <&tsens1 6>;
+@@ -4242,7 +4242,7 @@ mdm_crit: mdm_crit {
+ 		};
+ 
+ 		mdm-dsp-thermal {
+-			polling-delay-passive = <0>;
++			polling-delay-passive = <250>;
+ 			polling-delay = <0>;
+ 
+ 			thermal-sensors = <&tsens1 7>;
+@@ -4263,7 +4263,7 @@ mdm_dsp_crit: mdm_dsp_crit {
+ 		};
+ 
+ 		npu-thermal {
+-			polling-delay-passive = <0>;
++			polling-delay-passive = <250>;
+ 			polling-delay = <0>;
+ 
+ 			thermal-sensors = <&tsens1 8>;
+@@ -4284,7 +4284,7 @@ npu_crit: npu_crit {
+ 		};
+ 
+ 		video-thermal {
+-			polling-delay-passive = <0>;
++			polling-delay-passive = <250>;
+ 			polling-delay = <0>;
+ 
+ 			thermal-sensors = <&tsens1 9>;
 -- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project
+2.29.2.222.g5d2a92d10f8-goog
 
