@@ -2,221 +2,268 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 01B3D2AE4FD
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Nov 2020 01:41:02 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 6888E2AE51E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Nov 2020 01:48:32 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732319AbgKKAk7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 10 Nov 2020 19:40:59 -0500
-Received: from m42-4.mailgun.net ([69.72.42.4]:33488 "EHLO m42-4.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1730254AbgKKAk6 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 10 Nov 2020 19:40:58 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1605055256; h=Message-ID: References: In-Reply-To: Reply-To:
- Subject: Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=h9nJRMJ3HMDA/rnRX5iuacFcOzRm2As0SPqEkZcvfNY=;
- b=v0XHxgHkAM6EtyNrJVCIIlLUt9rYtjWj5K/8zV7QcKZMxebnN8lK2uK5BgDZn+8u1hTOQunn
- ISliwm5DErq5adL52bre62DK7VIh9CQmGYJvFEcYJEhgdGCi1vxnByc/P4e5R+dsv/4rPv9n
- Bi9u4e2GqQNKJ5gs6so1js7XQho=
-X-Mailgun-Sending-Ip: 69.72.42.4
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n04.prod.us-east-1.postgun.com with SMTP id
- 5fab33160d87d637759fff98 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 11 Nov 2020 00:40:54
- GMT
-Sender: bbhatt=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 7FB14C433C9; Wed, 11 Nov 2020 00:40:53 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: bbhatt)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 905D5C433C6;
-        Wed, 11 Nov 2020 00:40:52 +0000 (UTC)
+        id S1732485AbgKKAsb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 10 Nov 2020 19:48:31 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44576 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1732446AbgKKAsb (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 10 Nov 2020 19:48:31 -0500
+Received: from mail-ua1-x942.google.com (mail-ua1-x942.google.com [IPv6:2607:f8b0:4864:20::942])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1457FC0613D1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Nov 2020 16:48:31 -0800 (PST)
+Received: by mail-ua1-x942.google.com with SMTP id w3so203564uau.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Nov 2020 16:48:31 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=DwI3PFSKWVnaqeshY41Xp/YVBg2cD76OjiJIiFh3rNI=;
+        b=QfIsIHzjHTjAr/jTdIRSiD+ZkEfLnev1EHOTrRrDDTB7WurSHmLapfGiBTNJvwGtWM
+         n0cecZqV6gOBimx3dJHYoejdFvYV+lM1U9yYeRQ2K3KmHrsUZUWvTeK29NnQ/CF3BEKI
+         m3e422SOkDPN1XTyRtLgENxmZHEnNWrVPZYPw=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=DwI3PFSKWVnaqeshY41Xp/YVBg2cD76OjiJIiFh3rNI=;
+        b=INiJ7aaPH1y+8SP8mocSyhyZO2Ft86isXyqa3UxL3KFsaZgNGC8pun5Z+sN5FQgeNh
+         TbwPtVkXudBrlpgxUpUz5LTIQ7LXRzAERcUI5vZw7G+7x3JccoLDxA9/rSFujkhJX7Ts
+         3cLL1ndjsD/6rO412sgUS5l/Ai6Vq+5CJmm60bLPI3UF/SByxdRcHiAjSivPz81bJ+79
+         cv3Y4/j8QPgra51BPgoY+qbXO1TgPwHsWfEWP1RKJRunPKFblLeIb2h927F30oZ+jMnL
+         ZBuxqGL/fsRednTk9IOkl0IWlWXJHoJJne5eGJljSzizKd/5WztdywvmcXMYpsZuE9UI
+         e73w==
+X-Gm-Message-State: AOAM533A61wZ+yUK/P75s0N9ogzVASDaO1iEoS1jHXbdgDOVwZD/o9cZ
+        py27QASsD4TXWyVP7K4mBrUuRD+BdwsO7Q==
+X-Google-Smtp-Source: ABdhPJymYGdsSnFfS8Hii1p4fH6ZzOW/rM2L+AQPTne+Q+urAf0ymE4rTVNaJmHHEw0w/VIT1rUgvA==
+X-Received: by 2002:ab0:7846:: with SMTP id y6mr11538189uaq.16.1605055709751;
+        Tue, 10 Nov 2020 16:48:29 -0800 (PST)
+Received: from mail-ua1-f48.google.com (mail-ua1-f48.google.com. [209.85.222.48])
+        by smtp.gmail.com with ESMTPSA id s6sm58029vkk.20.2020.11.10.16.48.28
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 10 Nov 2020 16:48:29 -0800 (PST)
+Received: by mail-ua1-f48.google.com with SMTP id t15so196579ual.6
+        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Nov 2020 16:48:28 -0800 (PST)
+X-Received: by 2002:a9f:24eb:: with SMTP id 98mr11624331uar.90.1605055707756;
+ Tue, 10 Nov 2020 16:48:27 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Tue, 10 Nov 2020 16:40:52 -0800
-From:   Bhaumik Bhatt <bbhatt@codeaurora.org>
-To:     Loic Poulain <loic.poulain@linaro.org>
-Cc:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Hemant Kumar <hemantk@codeaurora.org>,
-        Jeffrey Hugo <jhugo@codeaurora.org>,
-        open list <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH v1 3/4] bus: mhi: core: Add support to pause or resume
- channel data transfers
-Organization: Qualcomm Innovation Center, Inc.
-Reply-To: bbhatt@codeaurora.org
-Mail-Reply-To: bbhatt@codeaurora.org
-In-Reply-To: <CAMZdPi_dwT+hj26sxJdMS1v-X-MNd1ys34QD=Bf_O+dvmjOD2Q@mail.gmail.com>
-References: <1604961850-27671-1-git-send-email-bbhatt@codeaurora.org>
- <1604961850-27671-4-git-send-email-bbhatt@codeaurora.org>
- <CAMZdPi_dwT+hj26sxJdMS1v-X-MNd1ys34QD=Bf_O+dvmjOD2Q@mail.gmail.com>
-Message-ID: <3710a3051c480bf9d125362303815831@codeaurora.org>
-X-Sender: bbhatt@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+References: <20200930223532.77755-1-bjorn.andersson@linaro.org>
+ <20200930223532.77755-2-bjorn.andersson@linaro.org> <CAD=FV=Unu-PH_RThi3xRF1HUADN2PqcVAOin0O0yo0gcGRWCDQ@mail.gmail.com>
+ <20201102170801.GI3151@builder.lan>
+In-Reply-To: <20201102170801.GI3151@builder.lan>
+From:   Doug Anderson <dianders@chromium.org>
+Date:   Tue, 10 Nov 2020 16:48:16 -0800
+X-Gmail-Original-Message-ID: <CAD=FV=XEyn5tLhOFnVTP4W-_qQG_UpZ0npveEo-vE0Y=wKqaBg@mail.gmail.com>
+Message-ID: <CAD=FV=XEyn5tLhOFnVTP4W-_qQG_UpZ0npveEo-vE0Y=wKqaBg@mail.gmail.com>
+Subject: Re: [PATCH 1/2] dt-bindings: drm/bridge: ti-sn65dsi86: Replace #pwm-cells
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     David Airlie <airlied@linux.ie>, Daniel Vetter <daniel@ffwll.ch>,
+        Rob Herring <robh+dt@kernel.org>,
+        Andrzej Hajda <a.hajda@samsung.com>,
+        Neil Armstrong <narmstrong@baylibre.com>,
+        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
+        Jonas Karlman <jonas@kwiboo.se>,
+        Jernej Skrabec <jernej.skrabec@siol.net>,
+        dri-devel <dri-devel@lists.freedesktop.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>, LKML <linux-kernel@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Loic,
+Hi,
 
-On 2020-11-10 03:14, Loic Poulain wrote:
-> Hi Bhaumik,
-> 
-> On Mon, 9 Nov 2020 at 23:44, Bhaumik Bhatt <bbhatt@codeaurora.org> 
-> wrote:
->> 
->> Some MHI clients may want to request for pausing or resuming of the
->> data transfers for their channels. Enable them to do so using the new
->> APIs provided for the same.
->> 
->> Signed-off-by: Bhaumik Bhatt <bbhatt@codeaurora.org>
->> ---
->>  drivers/bus/mhi/core/main.c | 41 
->> +++++++++++++++++++++++++++++++++++++++++
->>  include/linux/mhi.h         | 16 ++++++++++++++++
->>  2 files changed, 57 insertions(+)
->> 
->> diff --git a/drivers/bus/mhi/core/main.c b/drivers/bus/mhi/core/main.c
->> index 1226933..01845c6 100644
->> --- a/drivers/bus/mhi/core/main.c
->> +++ b/drivers/bus/mhi/core/main.c
->> @@ -1560,6 +1560,47 @@ void mhi_unprepare_from_transfer(struct 
->> mhi_device *mhi_dev)
->>  }
->>  EXPORT_SYMBOL_GPL(mhi_unprepare_from_transfer);
->> 
->> +static int mhi_update_transfer_state(struct mhi_device *mhi_dev,
->> +                                    enum mhi_ch_state_type to_state)
->> +{
->> +       struct mhi_controller *mhi_cntrl = mhi_dev->mhi_cntrl;
->> +       struct mhi_chan *mhi_chan;
->> +       int dir, ret;
->> +
->> +       for (dir = 0; dir < 2; dir++) {
->> +               mhi_chan = dir ? mhi_dev->ul_chan : mhi_dev->dl_chan;
->> +
->> +               if (!mhi_chan)
->> +                       continue;
->> +
->> +               /*
->> +                * Bail out if one of the channels fail as client will 
->> reset
->> +                * both upon failure
->> +                */
->> +               mutex_lock(&mhi_chan->mutex);
->> +               ret = mhi_update_channel_state(mhi_cntrl, mhi_chan, 
->> to_state);
->> +               if (ret) {
->> +                       mutex_unlock(&mhi_chan->mutex);
->> +                       return ret;
->> +               }
->> +               mutex_unlock(&mhi_chan->mutex);
->> +       }
->> +
->> +       return 0;
->> +}
->> +
->> +int mhi_pause_transfer(struct mhi_device *mhi_dev)
->> +{
->> +       return mhi_update_transfer_state(mhi_dev, 
->> MHI_CH_STATE_TYPE_STOP);
->> +}
->> +EXPORT_SYMBOL_GPL(mhi_pause_transfer);
->> +
->> +int mhi_resume_transfer(struct mhi_device *mhi_dev)
->> +{
->> +       return mhi_update_transfer_state(mhi_dev, 
->> MHI_CH_STATE_TYPE_START);
->> +}
->> +EXPORT_SYMBOL_GPL(mhi_resume_transfer);
-> 
-> Look like it is stop and start, not pause and resume?
-I wanted to keep it pause and resume because it could get confusing for 
-someone
-looking at this pair of APIs, that a client driver would also need to 
-"start"
-channels after "preparing" them. Since that is not that case, and the
-mhi_prepare_for_transfer() API itself is supposed to also start the 
-channels, it
-would be better to keep these as "pause" and "resume" instead IMO.
+On Mon, Nov 2, 2020 at 9:08 AM Bjorn Andersson
+<bjorn.andersson@linaro.org> wrote:
+>
+> On Fri 02 Oct 15:42 CDT 2020, Doug Anderson wrote:
+>
+> > Hi,
+> >
+> > On Wed, Sep 30, 2020 at 3:40 PM Bjorn Andersson
+> > <bjorn.andersson@linaro.org> wrote:
+> > >
+> > > While the signal on GPIO4 to drive the backlight controller indeed is
+> > > pulse width modulated its purpose is specifically to control the
+> > > brightness of a backlight.
+> >
+> > I'm a bit on the fence about this.  I guess you're doing this because
+> > it avoids some -EPROBE_DEFER cycles in Linux?  It does seem to have a
+> > few downsides, though.
+> >
+>
+> No, the reason for exposing a backlight is that while the thing
+> certainly is a PWM signal, the description of it and the registers
+> available to control it surely seems "backlight" to me.
+>
+> In particular No, the reason for exposing a backlight is that while
+> while the thing certainly is a PWM signal, the description of it and the
+> registers available to control it surely seems "backlight" to me.
+>
+> > 1. It means a bit of re-inventing the wheel.  It's not a very big
+> > wheel, though, I'll give you.  ...but it's still something.
+> >
+>
+> The main problem I saw with exposing this as a PWM was the fact that we
+> have both period and frequency to control...
+>
+> > 2. I'm not sure why you'd want to, but in theory one could use this
+> > PWM for some other purposes.  It really is just a generic PWM.  Your
+> > change prevents that.
+> >
+>
+> ...and in the even that you use it as a "generic" PWM I'd expect that
+> the specified period is related to the frequency of the signal. But the
+> period is documented to be related to the number of brightness steps of
+> the panel.
 
-Any comments in favor or "stop" and "start"?
-> 
-> TBH maybe we should rework/clarify MHI core and having well-defined
-> states, maybe something like that:
-> 
-> 1. When MHI core detects device for a driver, MHI core resets and
-> initializes the channel(s), then call client driver probe function
->     => channel UNKNOWN->DISABLED state
->     => channel DISABLED->ENABLED state
-> 2. When driver is ready for sending data, drivers calls 
-> mhi_start_transfer
->     => Channel is ENABLED->RUNNING state
-> 3. Driver performs normal data transfers
-> 4. The driver can suspend/resume transfer, it stops (suspend) the 
-> channel, can
->     => Channel is RUNNING->STOP
->     => Channel is STOP->RUNNING
->    ...
-> 5. When device is removed, MHI core reset the channel
->     => channel is (RUNNING|STOP) -> DISABLED
-> 
-> Today mhi_prepare_for_transfer performs both ENABLE and RUNNING
-> transition, the idea would be to keep channel enabling/disabling in
-> the MHI core (before/after driver probe/remove) and channel start/stop
-> managed by the client driver.
-> 
-> Regards,
-> Loic
+I think the key here is that the "number of brightness steps of the
+panel" isn't really a thing that's worried about.  At least in my
+experience, you can pretty much just use as many steps as you can
+represent based on your PWM hardware.  If a panel happens to map some
+of those steps to the same brightness then it wouldn't be the end of
+the world, but in experience it's not really such a digital thing.  If
+you choose 4096 steps then you likely get 4096 different brightness
+levels.  If you choose 256 steps then you get 256 different brightness
+levels.  Once you have "more than enough" steps then everything's
+pretty much fine.
 
-Your idea is good but it would not have much additional benefits and 
-would
-involve MHI core "enabling" channels and allocating memory for each 
-channel
-context when they are only declared as supported by the controller but 
-are not
-actually being put to use.
+Looking at one random panel (just to get an idea of numbers), I see
+that it specifies:
+* min PWM Freq: 200 Hz
+* max PWM Freq: 10,000 Hz.
 
-mhi_prepare_for_transfer() does both channel context initialization and 
-starts
-the channels, which is good because it allocates memory when needed. So, 
-this
-benefits system memory if a controller with support for many channels 
-exists but
-only a few channels are used.
+...and refclk is something between 12 MHz and 38.4 MHz, right?
 
-Regarding the states to track from host:
--> DISABLED (We know channels are not active: in reset state or not 
-probed yet)
--> ENABLED (Active and running when needed for data transfers)
--> STOP (Paused: leaves the channel context as is since channels are not 
-reset)
--> SUSPENDED (Unload in progress: Entered before resetting 
-channels/remove())
+The bridge chip datasheet says:
 
-BTW, we have the debugfs entry for "channels" that dumps the context to 
-show
-exactly what the channel states are from device perspective. We can rely 
-on it
-if needed.
+PWM_FREQ = REFCLK_FREQ / (PWM_PRE_DIV * BACKLIGHT_SCALE + 1)
 
-If there are some comments I can add to make things clear, please let me 
-know.
+So let's see what we can do.  I'm arguing that we want the client to
+be able to specify the PWM frequency and duty cycle and we'll do the
+job of picking the number of steps.  We'll try for the most steps we
+can get (65535).
 
-Thanks,
-Bhaumik
--- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora 
-Forum,
-a Linux Foundation Collaborative Project
+I guess we need to solve for PWM_PRE_DIV :
+
+PWM_FREQ * (PWM_PRE_DIV * BACKLIGHT_SCALE + 1) = REFCLK_FREQ
+PWM_PRE_DIV * BACKLIGHT_SCALE + 1 = REFCLK_FREQ / PWM_FREQ
+PWM_PRE_DIV * BACKLIGHT_SCALE = REFCLK_FREQ / PWM_FREQ - 1
+PWM_PRE_DIV = (REFCLK_FREQ / PWM_FREQ - 1) / BACKLIGHT_SCALE
+
+...and solve for BACKLIGHT_SCALE:
+BACKLIGHT_SCALE = (REFCLK_FREQ / PWM_FREQ - 1) / PWM_PRE_DIV
+
+
+With 1000 Hz, 12 MHz refclk:
+
+PWM_PRE_DIV = DIV_ROUND_UP(12000000 / 1000 - 1, 65535)
+=> 1
+BACKLIGHT_SCALE = (12000000 / 1000 - 1) / 1
+=> 11999
+
+With 1000 Hz, 38.4 MHz refclk:
+PWM_PRE_DIV = DIV_ROUND_UP(38400000 / 1000 - 1, 65535)
+=> 1
+BACKLIGHT_SCALE = (38400000 / 1000 - 1) / 1
+=> 38399
+
+With 200 Hz, 38.4 MHz refclk:
+PWM_PRE_DIV = DIV_ROUND_UP(38400000 / 200 - 1, 65535)
+=> 3
+BACKLIGHT_SCALE = (38400000 / 200 - 1) / 3
+=> 63999
+
+Now that you have BACKLIGHT_SCALE specified, then when someone tries
+to give you a duty cycle you just map it to the closest value you can
+make.  Obviously you won't be able to perfectly make every exact duty
+cycle / period that a client requests, but that's true of all PWMs out
+there.
+
+The nice thing here is that (assuming my math is right) we should be
+getting nearly exactly the frequency that the client requested and
+that (in my mind) is what matters.  You also get as many steps as
+possible which means that (with the PWM backlight API) you'll be able
+to get as close as possible to whatever a user requests.
+
+
+> > > Drop the #pwm-cells and instead expose a new property to configure the
+> > > granularity of the backlight PWM signal.
+> > >
+> > > Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> > > ---
+> > >  .../devicetree/bindings/display/bridge/ti,sn65dsi86.yaml | 9 ++++++---
+> > >  1 file changed, 6 insertions(+), 3 deletions(-)
+> > >
+> > > diff --git a/Documentation/devicetree/bindings/display/bridge/ti,sn65dsi86.yaml b/Documentation/devicetree/bindings/display/bridge/ti,sn65dsi86.yaml
+> > > index f8622bd0f61e..e380218b4646 100644
+> > > --- a/Documentation/devicetree/bindings/display/bridge/ti,sn65dsi86.yaml
+> > > +++ b/Documentation/devicetree/bindings/display/bridge/ti,sn65dsi86.yaml
+> > > @@ -66,9 +66,12 @@ properties:
+> > >        1-based to match the datasheet.  See ../../gpio/gpio.txt for more
+> > >        information.
+> > >
+> > > -  '#pwm-cells':
+> > > -    const: 1
+> > > -    description: See ../../pwm/pwm.yaml for description of the cell formats.
+> > > +  ti,backlight-scale:
+> > > +    description:
+> > > +      The granularity of brightness for the PWM signal provided on GPIO4, if
+> > > +      this property is specified.
+> > > +    minimum: 0
+> > > +    maximum: 65535
+> >
+> > A few issues here:
+> >
+> > 1. Maybe call this "num-steps" instead of backlight-scale.  That's
+> > essentially what it is, right?  Saying how many discrete steps you're
+> > allowing in your backlight?
+> >
+>
+> That would work, I had it as "max-brightness" for a while as well. But I
+> reverted to backlight-scale, because that's the name used in the
+> datasheet.
+>
+> I'm fine with whatever color of the shed though :)
+>
+> > 2. IMO you need the PWM frequency specified, since it can actually
+> > matter.  NOTE: once you have the PWM frequency specified, you could
+> > imagine automatically figuring out what "num-steps" was.  Really you'd
+> > want it to be the largest possible value you could achieve with your
+> > hardware at the specified frequency.  There's no advantage (is there?)
+> > of providing fewer steps to the backlight client.
+> >
+>
+> I guess there's no problem in having a "num-steps" that is unrelated to
+> the number of brightness steps of the panel - but I did distinguish them
+> because the datasheet clearly does so.
+
+I think the datasheet talks about the number of steps that you will be
+able to make, but that doesn't mean it has to be what's exposed to
+clients of this driver, right?
+
+
+> > 3. Some backlights are specified inverted.  It looks like this maps
+> > nicely to the bridge chip, which has a bit for it.  Probably nice to
+> > expose this?
+> >
+>
+> Yes, that should be covered.
+>
+> > Of course, if we were just exposing the PWM directly to Linux we could
+> > just use the PWM backlight driver and it'd all magically work.  ;-)
+> >
+>
+> Please help me figure out how to properly expose this in the PWM api and
+> I'll be happy to respin it using this - as you say my wheel does look
+> pretty similar...
+
+Hopefully the above seems sane to you?
+
+-Doug
