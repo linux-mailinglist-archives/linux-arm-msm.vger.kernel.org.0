@@ -2,32 +2,32 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C1ACB2AF8EA
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Nov 2020 20:21:59 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 53B092AF8EE
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Nov 2020 20:22:06 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727617AbgKKTVx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        id S1727543AbgKKTVx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
         Wed, 11 Nov 2020 14:21:53 -0500
-Received: from z5.mailgun.us ([104.130.96.5]:25660 "EHLO z5.mailgun.us"
+Received: from m42-4.mailgun.net ([69.72.42.4]:33184 "EHLO m42-4.mailgun.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727682AbgKKTVZ (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        id S1727690AbgKKTVZ (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
         Wed, 11 Nov 2020 14:21:25 -0500
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
  s=smtp; t=1605122485; h=References: In-Reply-To: Message-Id: Date:
  Subject: Cc: To: From: Sender;
- bh=AdFskNn3rqtdWQT49khLLkUwLfPujR897XFvITFqsio=; b=aEO4mCT2rZk7sh29erSre+oI7iPSi9Ul/qpKQRHAPByfPX4AT6Rvdu/Z9H5H1MUbpoVCIkHc
- 6hfeZAHZcXoDdhrXibDc0tDar5lEuJbsNwo6hLCNUDZ+UNL+fpQUQCYkbUOwmFX5fVx2sHSZ
- 2FHCMntpjvIIJ6V5hmqGIST0ANc=
-X-Mailgun-Sending-Ip: 104.130.96.5
+ bh=MFeuq/jM+czwRtZuRPr1+aKJgIIR8f/q33eaV7OheJ0=; b=TjzRvEqm6yQS1G4AiOnkTz4AxBpbfGwoE9+0fcH+sZMNIU+SAieZ0oqyjeRFxkpulWGiV7u4
+ 3ApUPoK7xfwGtUo6vSmtekQqO5DMF1SRkKVVN0EFFIr8dgwQcVK7gN67mGZF4tEa4ihWxUAY
+ ogRHOmpAcksbJ/vnfs1cZnHjDL4=
+X-Mailgun-Sending-Ip: 69.72.42.4
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org
  (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n03.prod.us-west-2.postgun.com with SMTP id
- 5fac39b33825e013b539a220 (version=TLS1.2,
+ smtp-out-n05.prod.us-west-2.postgun.com with SMTP id
+ 5fac39b38bd2e3c2225e342c (version=TLS1.2,
  cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 11 Nov 2020 19:21:23
  GMT
 Sender: bbhatt=codeaurora.org@mg.codeaurora.org
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 986F1C43387; Wed, 11 Nov 2020 19:21:23 +0000 (UTC)
+        id 69FE5C433C8; Wed, 11 Nov 2020 19:21:23 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
@@ -37,9 +37,9 @@ Received: from malabar-linux.qualcomm.com (i-global254.qualcomm.com [199.106.103
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
         (No client certificate requested)
         (Authenticated sender: bbhatt)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id D85E2C433FE;
-        Wed, 11 Nov 2020 19:21:21 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org D85E2C433FE
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 9555EC433C9;
+        Wed, 11 Nov 2020 19:21:22 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 9555EC433C9
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=bbhatt@codeaurora.org
 From:   Bhaumik Bhatt <bbhatt@codeaurora.org>
@@ -48,9 +48,9 @@ Cc:     linux-arm-msm@vger.kernel.org, hemantk@codeaurora.org,
         jhugo@codeaurora.org, loic.poulain@linaro.org,
         kvalo@codeaurora.org, linux-kernel@vger.kernel.org,
         Bhaumik Bhatt <bbhatt@codeaurora.org>
-Subject: [PATCH v2 4/6] bus: mhi: core: Check execution environment for channel before issuing reset
-Date:   Wed, 11 Nov 2020 11:21:11 -0800
-Message-Id: <1605122473-12179-5-git-send-email-bbhatt@codeaurora.org>
+Subject: [PATCH v2 5/6] bus: mhi: core: Remove __ prefix for MHI channel unprepare function
+Date:   Wed, 11 Nov 2020 11:21:12 -0800
+Message-Id: <1605122473-12179-6-git-send-email-bbhatt@codeaurora.org>
 X-Mailer: git-send-email 2.7.4
 In-Reply-To: <1605122473-12179-1-git-send-email-bbhatt@codeaurora.org>
 References: <1605122473-12179-1-git-send-email-bbhatt@codeaurora.org>
@@ -58,46 +58,57 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-A client can attempt to unprepare certain channels for transfer even
-after the execution environment they are supposed to run in has changed.
-In the event that happens, the device need not be notified of the reset
-and the host can proceed with clean up for the channel context and
-memory allocated for it on the host.
+The __mhi_unprepare_channel() API does not require the __ prefix.
+Get rid of it and make the internal function consistent with the
+other function names.
 
 Signed-off-by: Bhaumik Bhatt <bbhatt@codeaurora.org>
 ---
- drivers/bus/mhi/core/main.c | 13 +++++++++++++
- 1 file changed, 13 insertions(+)
+ drivers/bus/mhi/core/main.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
 diff --git a/drivers/bus/mhi/core/main.c b/drivers/bus/mhi/core/main.c
-index 1a969f4..e8af85a 100644
+index e8af85a..19156d4 100644
 --- a/drivers/bus/mhi/core/main.c
 +++ b/drivers/bus/mhi/core/main.c
-@@ -1323,11 +1323,24 @@ static void __mhi_unprepare_channel(struct mhi_controller *mhi_cntrl,
- 	/* no more processing events for this channel */
- 	mutex_lock(&mhi_chan->mutex);
+@@ -1312,8 +1312,8 @@ static int mhi_update_channel_state(struct mhi_controller *mhi_cntrl,
+ 	return -EINVAL;
+ }
  
-+	if (!(BIT(mhi_cntrl->ee) & mhi_chan->ee_mask)) {
-+		dev_err(dev,
-+			"Current EE: %s Required EE Mask: 0x%x for chan: %s\n",
-+			TO_MHI_EXEC_STR(mhi_cntrl->ee), mhi_chan->ee_mask,
-+			mhi_chan->name);
-+		goto exit_unprepare_channel;
-+	}
-+
- 	ret = mhi_update_channel_state(mhi_cntrl, mhi_chan,
- 				       MHI_CH_STATE_TYPE_RESET);
- 	if (ret)
- 		dev_err(dev, "Failed to reset channel, still resetting\n");
+-static void __mhi_unprepare_channel(struct mhi_controller *mhi_cntrl,
+-				    struct mhi_chan *mhi_chan)
++static void mhi_unprepare_channel(struct mhi_controller *mhi_cntrl,
++				  struct mhi_chan *mhi_chan)
+ {
+ 	int ret;
+ 	struct device *dev = &mhi_cntrl->mhi_dev->dev;
+@@ -1433,7 +1433,7 @@ int mhi_prepare_channel(struct mhi_controller *mhi_cntrl,
  
-+exit_unprepare_channel:
-+	write_lock_irq(&mhi_chan->lock);
-+	mhi_chan->ch_state = MHI_CH_STATE_DISABLED;
-+	write_unlock_irq(&mhi_chan->lock);
-+
- 	if (!mhi_chan->offload_ch) {
- 		mhi_reset_chan(mhi_cntrl, mhi_chan);
- 		mhi_deinit_chan_ctxt(mhi_cntrl, mhi_chan);
+ error_pre_alloc:
+ 	mutex_unlock(&mhi_chan->mutex);
+-	__mhi_unprepare_channel(mhi_cntrl, mhi_chan);
++	mhi_unprepare_channel(mhi_cntrl, mhi_chan);
+ 
+ 	return ret;
+ }
+@@ -1550,7 +1550,7 @@ int mhi_prepare_for_transfer(struct mhi_device *mhi_dev)
+ 		if (!mhi_chan)
+ 			continue;
+ 
+-		__mhi_unprepare_channel(mhi_cntrl, mhi_chan);
++		mhi_unprepare_channel(mhi_cntrl, mhi_chan);
+ 	}
+ 
+ 	return ret;
+@@ -1568,7 +1568,7 @@ void mhi_unprepare_from_transfer(struct mhi_device *mhi_dev)
+ 		if (!mhi_chan)
+ 			continue;
+ 
+-		__mhi_unprepare_channel(mhi_cntrl, mhi_chan);
++		mhi_unprepare_channel(mhi_cntrl, mhi_chan);
+ 	}
+ }
+ EXPORT_SYMBOL_GPL(mhi_unprepare_from_transfer);
 -- 
 The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
 a Linux Foundation Collaborative Project
