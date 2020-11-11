@@ -2,198 +2,171 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 6FDAC2AE81D
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Nov 2020 06:25:47 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 9EDE12AE833
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Nov 2020 06:40:10 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725867AbgKKFZq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 11 Nov 2020 00:25:46 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59432 "EHLO
+        id S1725468AbgKKFkJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 11 Nov 2020 00:40:09 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33670 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725859AbgKKFZp (ORCPT
+        with ESMTP id S1725870AbgKKFkI (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 11 Nov 2020 00:25:45 -0500
-Received: from mail-ot1-x343.google.com (mail-ot1-x343.google.com [IPv6:2607:f8b0:4864:20::343])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5BECCC0617A6
-        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Nov 2020 21:25:44 -0800 (PST)
-Received: by mail-ot1-x343.google.com with SMTP id f16so1036835otl.11
-        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Nov 2020 21:25:44 -0800 (PST)
+        Wed, 11 Nov 2020 00:40:08 -0500
+Received: from mail-oi1-x243.google.com (mail-oi1-x243.google.com [IPv6:2607:f8b0:4864:20::243])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1DAB0C0617A6
+        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Nov 2020 21:40:08 -0800 (PST)
+Received: by mail-oi1-x243.google.com with SMTP id j7so868523oie.12
+        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Nov 2020 21:40:08 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=y2ndxJgHEnHcPZgvTcxab2Vcfl3sIpgvRbePyhc7fWA=;
-        b=k0+kPp4QegQ8x48cvtzhFv/+5D9Dzcc/GkW9H2cVvWdsV62FFEeh5SomjgkF6ArEbs
-         SALg/lHidLzXzKJDPe75nRCtJMKl+T1DXOhFkqJgHeGSByWcQswiWqNS9RdS1OPCxVY9
-         sheWT6Xmes3YqryK1wzNDycXLFQMTTFdw1Q0QOtfv332yhZEihs5rlicmJNnJ4aqKofH
-         3PQM44SvKJ1pzUNDJ9DmQTiwaoEuFLpE7r53YAHQgZeAjyY0+vMVtM542WaJkvkneani
-         PJVq5THlhQ9375G7mmtdr4YMQ4Nn+5e7cVKti3uV2mwvfz15gwZMliWxEHK9fXeLku9O
-         ODyg==
+        bh=NDUtVAeVkvu9Gc32xI9255swYRKkk0TO9KMq0qQOaaU=;
+        b=dlr8D/YmUWgv/Jf/c0R8525jdTh8nfECXhST6AI+/uG1Syl/mqBvP2XmjV2tL0GUia
+         NE2lL6NPV2JThEGplv1Mv2AKXBJT89u9cjCWG1nhO+Fgek3Wc7xw1uEWwboSpTxpNVO7
+         2/WYgow2Wu668HDGUgzN/w7+FwzW1RVTnCZW2RUHCto4ZEBTi3kU4N+1BR6AigJUk3Eo
+         p+E9TU4l94ftxz4U/BV8Njr6rzrXZE+PcDgkIJQQOcKPYMP1+kwtg8dOmJdm6NUh4VEB
+         ywy5KRP8Zw1kgH/flRfUT7+14BrXSK6b5NlYG3T9pqxCyD0tFX8rMwxkbvwjyuQq1OWF
+         gTMg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=y2ndxJgHEnHcPZgvTcxab2Vcfl3sIpgvRbePyhc7fWA=;
-        b=gu8IEjCv7fx58W93xQ03v7QT4Uz2Ro0W0tfb0gWetPIJcN3v64X2PJ9SCDdFgB7DLP
-         HtEc/wjx+JgINambFtvKcOwXaOJWlyAzqGkUnO+OMQfycCUlPD6R2GaGdBqOl75G4c10
-         aPB5+FPqIwsREdzE+cJwlDh1+QJ9gOEpSZD/fK3bqzaXKDei5zTBQKvldPgAcTEPFWSl
-         4jI9B3/YY+cyOqGzxFfRrpwgo+PXoXYJrK2IsDEh1i6z9xFWDAplxqpXWzUPyLZ/hyTA
-         kcDYndWkUU0cHIagRSPmNlg2fx7qtdwd3I7IGBp93h149BtXl7h0pLwjzYDWQmkqzGf0
-         g27w==
-X-Gm-Message-State: AOAM531DipV4O7kNFiLR3kFSS14PF8JQcwAEYbD/e2zKt+OJG5ixUzQg
-        gzk3p9pQOxcmuLZ/5XgWDQ7DAA==
-X-Google-Smtp-Source: ABdhPJxYlw4HOIVtNlSAXCpvPkLgs0k9q7yaxQqFlvLOOSr3etHIDMddV04BFhc/FMfh+dl4z1o0rw==
-X-Received: by 2002:a9d:62c1:: with SMTP id z1mr15982440otk.108.1605072343541;
-        Tue, 10 Nov 2020 21:25:43 -0800 (PST)
+        bh=NDUtVAeVkvu9Gc32xI9255swYRKkk0TO9KMq0qQOaaU=;
+        b=NoQ6HGq2M6KzVCIpPhxl8dg5ZhFPpNoCOkyPjTY+G/V0ODFwpiaopUximeLfGeVbZu
+         i0PL/ZBC1yL7f31ApEagFW3kNulj+u8q1lctJolr8reWswgXtrGciihbjp+hiLcetCz0
+         s45egwhJTiWiODEb8QgtUOXJS2DAe+5bIrzWYHuzPRlhzXW44GCe6oL+OU7emkw/PaLj
+         7lNXmG+Ru58cweCCwQg4QT7ZxsikPssB+L1LaqGMJxa0nf2u0dvNrfdZr6jM6tHIMbXy
+         yX7etkEmFPVcn20ixkKgnVUOk+1iuRqNb21Wch98rYHN96QmOZdlevZYLKpCqijGE1wc
+         Vc3g==
+X-Gm-Message-State: AOAM533AsqsAIwU1xaAa1qVg0lSm8UyVonV7A+nEriI/WQOMJ3pJICf1
+        a/vQ7jqYyOf7podA7dGDP7apmQ==
+X-Google-Smtp-Source: ABdhPJxK6F7c/RWwxw7TCkgpzaMCWt/aNHqdIKETIZxMQKdxSmrzM+jPTd2O483Ga0o1zzppb+OFdA==
+X-Received: by 2002:aca:90c:: with SMTP id 12mr1138942oij.15.1605073207304;
+        Tue, 10 Nov 2020 21:40:07 -0800 (PST)
 Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id h136sm224748oib.19.2020.11.10.21.25.42
+        by smtp.gmail.com with ESMTPSA id m3sm233355oim.36.2020.11.10.21.40.06
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 10 Nov 2020 21:25:42 -0800 (PST)
-Date:   Tue, 10 Nov 2020 23:25:40 -0600
+        Tue, 10 Nov 2020 21:40:06 -0800 (PST)
+Date:   Tue, 10 Nov 2020 23:40:04 -0600
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Lee Jones <lee.jones@linaro.org>
-Cc:     linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-        act <dmalek@jlc.net>, Andy Gross <agross@kernel.org>,
-        bcm-kernel-feedback-list@broadcom.com,
-        Ben Dooks <ben@simtec.co.uk>, Cyril Chemparathy <cyril@ti.com>,
-        Dan Malek <dan@embeddedalley.com>,
-        Dave Gerlach <d-gerlach@ti.com>,
-        Doug Anderson <dianders@chromium.org>,
-        Florian Fainelli <f.fainelli@gmail.com>,
-        Heiko Stuebner <heiko@sntech.de>,
-        Jonathan Hunter <jonathanh@nvidia.com>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        linux-arm-msm@vger.kernel.org, linuxppc-dev@lists.ozlabs.org,
-        linux-rockchip@lists.infradead.org,
-        linux-samsung-soc@vger.kernel.org, linux-tegra@vger.kernel.org,
-        Li Yang <leoyang.li@nxp.com>, Mark Brown <broonie@kernel.org>,
-        Qiang Zhao <qiang.zhao@nxp.com>,
-        "Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-        Roy Pledge <Roy.Pledge@nxp.com>,
-        Sandeep Nair <sandeep_n@ti.com>,
-        Santosh Shilimkar <ssantosh@kernel.org>,
-        Scott Wood <scottwood@freescale.com>,
-        "Software, Inc" <source@mvista.com>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Vitaly Bordug <vbordug@ru.mvista.com>,
-        YueHaibing <yuehaibing@huawei.com>
-Subject: Re: [PATCH 00/25] Rid W=1 warnings in SoC
-Message-ID: <20201111052540.GH173948@builder.lan>
-References: <20201103152838.1290217-1-lee.jones@linaro.org>
+To:     rishabhb@codeaurora.org
+Cc:     Andy Gross <agross@kernel.org>, Ohad Ben-Cohen <ohad@wizery.com>,
+        Siddharth Gupta <sidgup@codeaurora.org>,
+        Sibi Sankar <sibis@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
+        linux-kernel@vger.kernel.org, stable@vger.kernel.org
+Subject: Re: [PATCH v2 1/4] remoteproc: sysmon: Ensure remote notification
+ ordering
+Message-ID: <20201111054004.GG332990@builder.lan>
+References: <20201105045051.1365780-1-bjorn.andersson@linaro.org>
+ <20201105045051.1365780-2-bjorn.andersson@linaro.org>
+ <fb182a63172af055be473247bc783bd6@codeaurora.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20201103152838.1290217-1-lee.jones@linaro.org>
+In-Reply-To: <fb182a63172af055be473247bc783bd6@codeaurora.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue 03 Nov 09:28 CST 2020, Lee Jones wrote:
+On Tue 10 Nov 18:57 CST 2020, rishabhb@codeaurora.org wrote:
 
-> This set is part of a larger effort attempting to clean-up W=1
-> kernel builds, which are currently overwhelmingly riddled with
-> niggly little warnings.
+> On 2020-11-04 20:50, Bjorn Andersson wrote:
+> > The reliance on the remoteproc's state for determining when to send
+> > sysmon notifications to a remote processor is racy with regard to
+> > concurrent remoteproc operations.
+> > 
+> > Further more the advertisement of the state of other remote processor to
+> > a newly started remote processor might not only send the wrong state,
+> > but might result in a stream of state changes that are out of order.
+> > 
+> > Address this by introducing state tracking within the sysmon instances
+> > themselves and extend the locking to ensure that the notifications are
+> > consistent with this state.
+> > 
+> > Fixes: 1f36ab3f6e3b ("remoteproc: sysmon: Inform current rproc about
+> > all active rprocs")
+> > Fixes: 1877f54f75ad ("remoteproc: sysmon: Add notifications for events")
+> > Fixes: 1fb82ee806d1 ("remoteproc: qcom: Introduce sysmon")
+> > Cc: stable@vger.kernel.org
+> > Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> > ---
+> > 
+> > Changes since v1:
+> > - Reduced the locking to be per sysmon instance
+> > - Dropped unused local "rproc" variable in sysmon_notify()
+> > 
+> >  drivers/remoteproc/qcom_sysmon.c | 27 +++++++++++++++++++++------
+> >  1 file changed, 21 insertions(+), 6 deletions(-)
+> > 
+> > diff --git a/drivers/remoteproc/qcom_sysmon.c
+> > b/drivers/remoteproc/qcom_sysmon.c
+> > index 9eb2f6bccea6..38f63c968fa8 100644
+> > --- a/drivers/remoteproc/qcom_sysmon.c
+> > +++ b/drivers/remoteproc/qcom_sysmon.c
+> > @@ -22,6 +22,9 @@ struct qcom_sysmon {
+> >  	struct rproc_subdev subdev;
+> >  	struct rproc *rproc;
+> > 
+> > +	int state;
+> > +	struct mutex state_lock;
+> > +
+> >  	struct list_head node;
+> > 
+> >  	const char *name;
+> > @@ -448,7 +451,10 @@ static int sysmon_prepare(struct rproc_subdev
+> > *subdev)
+> >  		.ssr_event = SSCTL_SSR_EVENT_BEFORE_POWERUP
+> >  	};
+> > 
+> > +	mutex_lock(&sysmon->state_lock);
+> > +	sysmon->state = SSCTL_SSR_EVENT_BEFORE_POWERUP;
+> >  	blocking_notifier_call_chain(&sysmon_notifiers, 0, (void *)&event);
+> > +	mutex_unlock(&sysmon->state_lock);
+> > 
+> >  	return 0;
+> >  }
+> > @@ -472,22 +478,25 @@ static int sysmon_start(struct rproc_subdev
+> > *subdev)
+> >  		.ssr_event = SSCTL_SSR_EVENT_AFTER_POWERUP
+> >  	};
+> > 
+> > +	mutex_lock(&sysmon->state_lock);
+> > +	sysmon->state = SSCTL_SSR_EVENT_AFTER_POWERUP;
+> >  	blocking_notifier_call_chain(&sysmon_notifiers, 0, (void *)&event);
+> > +	mutex_unlock(&sysmon->state_lock);
+> > 
+> > -	mutex_lock(&sysmon_lock);
 > 
+> We should keep the sysmon_lock to make sure sysmon_list is not modified
+> at the time we are doing this operation?
 
-For patches 2, 3, 12, 15, 16, 17, 18, 19, 20, 21, 22 (i.e. the soc/qcom
-patches):
+Yes, that seems like a very good idea. I will review and update.
 
-Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-and applied towards 5.11
+> >  	list_for_each_entry(target, &sysmon_list, node) {
+> > -		if (target == sysmon ||
+> > -		    target->rproc->state != RPROC_RUNNING)
+> > +		if (target == sysmon)
+> >  			continue;
+> > 
+> > +		mutex_lock(&target->state_lock);
+> >  		event.subsys_name = target->name;
+> > +		event.ssr_event = target->state;
+> 
+> Is it better to only send this event when target->state is
+> "SSCTL_SSR_EVENT_AFTER_POWERUP"?
+
+It depends on what the remote's requirements, I tested this and didn't
+see any problems sending both SSCTL_SSR_EVENT_AFTER_POWERUP and
+SSCTL_SSR_EVENT_AFTER_SHUTDOWN at least...
+I don't know if I managed to hit a case where I sent any of the
+intermediate states.
+
+If you could provide some more input here I would appreciate it -
+although I would be happy to merge the patch after fixing above locking
+issue and then we can limit the events sent once we have a more detailed
+answer, if that helps.
 
 Regards,
 Bjorn
-
-> Lee Jones (25):
->   soc: bcm: brcmstb: pm: pm-arm: Provide prototype for
->     brcmstb_pm_s3_finish()
->   soc: qcom: qcom_aoss: Remove set but unused variable 'tlen'
->   soc: qcom: qcom_aoss: Add missing description for 'cooling_devs'
->   soc: fsl: dpio: qbman-portal: Fix a bunch of kernel-doc misdemeanours
->   soc: rockchip: io-domain: Remove incorrect and incomplete comment
->     header
->   soc: ti: knav_qmss_queue: Remove set but unchecked variable 'ret'
->   soc: ti: knav_qmss_queue: Fix a whole host of function documentation
->     issues
->   soc: ti: knav_dma: Fix a kernel function doc formatting issue
->   soc: ti: pm33xx: Remove set but unused variable 'ret'
->   soc: ti: wkup_m3_ipc: Document 'm3_ipc' parameter throughout
->   soc: fsl: qe: qe_common: Fix misnamed function attribute 'addr'
->   soc: qcom: qcom-geni-se: Fix misnamed function parameter 'rx_rfr'
->   soc: tegra: fuse: speedo-tegra124: Remove some set but unused
->     variables
->   soc: samsung: s3c-pm-check: Fix incorrectly named variable 'val'
->   soc: qcom: rpmh: Fix possible doc-rot in rpmh_write()'s header
->   soc: qcom: smem: Fix formatting and missing documentation issues
->   soc: qcom: smsm: Fix some kernel-doc formatting and naming problems
->   soc: qcom: wcnss_ctrl: Demote non-conformant struct header and fix
->     function headers
->   soc: qcom: smp2p: Remove unused struct attribute provide another
->   soc: qcom: llcc-qcom: Fix expected kernel-doc formatting
->   soc: qcom: rpmhpd: Provide some missing struct member descriptions
->   soc: qcom: kryo-l2-accessors: Fix misnaming of 'val'
->   soc: ti: k3-ringacc: Provide documentation for 'k3_ring's 'state'
->   soc: tegra: fuse: speedo-tegra210: Remove a group of set but unused
->     variables
->   soc: fsl: qbman: qman: Remove unused variable 'dequeue_wq'
-> 
->  drivers/soc/bcm/brcmstb/pm/pm-arm.c      |  2 +
->  drivers/soc/fsl/dpio/qbman-portal.c      | 18 +++++--
->  drivers/soc/fsl/qbman/qman.c             |  8 +--
->  drivers/soc/fsl/qe/qe_common.c           |  2 +-
->  drivers/soc/qcom/kryo-l2-accessors.c     |  2 +-
->  drivers/soc/qcom/llcc-qcom.c             |  2 +-
->  drivers/soc/qcom/qcom-geni-se.c          |  5 +-
->  drivers/soc/qcom/qcom_aoss.c             |  4 +-
->  drivers/soc/qcom/rpmh.c                  |  2 +-
->  drivers/soc/qcom/rpmhpd.c                |  3 ++
->  drivers/soc/qcom/smem.c                  |  3 +-
->  drivers/soc/qcom/smp2p.c                 |  3 +-
->  drivers/soc/qcom/smsm.c                  |  4 +-
->  drivers/soc/qcom/wcnss_ctrl.c            |  8 +--
->  drivers/soc/rockchip/io-domain.c         |  3 --
->  drivers/soc/samsung/s3c-pm-check.c       |  2 +-
->  drivers/soc/tegra/fuse/speedo-tegra124.c |  7 ++-
->  drivers/soc/tegra/fuse/speedo-tegra210.c |  8 +--
->  drivers/soc/ti/k3-ringacc.c              |  1 +
->  drivers/soc/ti/knav_dma.c                |  2 +-
->  drivers/soc/ti/knav_qmss_queue.c         | 62 ++++++++++++------------
->  drivers/soc/ti/pm33xx.c                  |  4 +-
->  drivers/soc/ti/wkup_m3_ipc.c             |  8 ++-
->  23 files changed, 86 insertions(+), 77 deletions(-)
-> 
-> Cc: act <dmalek@jlc.net>
-> Cc: Andy Gross <agross@kernel.org>
-> Cc: bcm-kernel-feedback-list@broadcom.com
-> Cc: Ben Dooks <ben@simtec.co.uk>
-> Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
-> Cc: Cyril Chemparathy <cyril@ti.com>
-> Cc: Dan Malek <dan@embeddedalley.com>
-> Cc: Dave Gerlach <d-gerlach@ti.com>
-> Cc: Doug Anderson <dianders@chromium.org>
-> Cc: Florian Fainelli <f.fainelli@gmail.com>
-> Cc: Heiko Stuebner <heiko@sntech.de>
-> Cc: Jonathan Hunter <jonathanh@nvidia.com>
-> Cc: Krzysztof Kozlowski <krzk@kernel.org>
-> Cc: Liam Girdwood <lgirdwood@gmail.com>
-> Cc: linux-arm-msm@vger.kernel.org
-> Cc: linuxppc-dev@lists.ozlabs.org
-> Cc: linux-rockchip@lists.infradead.org
-> Cc: linux-samsung-soc@vger.kernel.org
-> Cc: linux-tegra@vger.kernel.org
-> Cc: Li Yang <leoyang.li@nxp.com>
-> Cc: Mark Brown <broonie@kernel.org>
-> Cc: Qiang Zhao <qiang.zhao@nxp.com>
-> Cc: "Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
-> Cc: Roy Pledge <Roy.Pledge@nxp.com>
-> Cc: Sandeep Nair <sandeep_n@ti.com>
-> Cc: Santosh Shilimkar <ssantosh@kernel.org>
-> Cc: Scott Wood <scottwood@freescale.com>
-> Cc: "Software, Inc" <source@mvista.com>
-> Cc: Thierry Reding <thierry.reding@gmail.com>
-> Cc: Vitaly Bordug <vbordug@ru.mvista.com>
-> Cc: YueHaibing <yuehaibing@huawei.com>
-> 
-> -- 
-> 2.25.1
-> 
