@@ -2,212 +2,124 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 8A2122AE7CE
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Nov 2020 06:15:52 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7CCC72AE7E9
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Nov 2020 06:20:43 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725975AbgKKFPv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 11 Nov 2020 00:15:51 -0500
-Received: from z5.mailgun.us ([104.130.96.5]:48705 "EHLO z5.mailgun.us"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725860AbgKKFPq (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 11 Nov 2020 00:15:46 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1605071746; h=Message-Id: Date: Subject: Cc: To: From:
- Sender; bh=NM23In9IGRjbgz/t+pqigDE3EKqm4eBLvb7T0R1txUU=; b=MLKkgyoWmMhxmsRjWGLtoGXXsKUTnIWyvmDdH+XEtAclws7vUZ0uZUFBN8NC+mv3B9TEaBcZ
- dx/FNiwoRWJAS9kXFdmMvm6MfD2qT6URcS4Zond+UgnBPm0CjqQtPY7PA0+CwCEefEPEosme
- omJXypQLjH+hRO1eMPrgkavQCO4=
-X-Mailgun-Sending-Ip: 104.130.96.5
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n06.prod.us-west-2.postgun.com with SMTP id
- 5fab73818e090a8886b2781c (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 11 Nov 2020 05:15:45
- GMT
-Sender: bgodavar=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 7E388C433C9; Wed, 11 Nov 2020 05:15:45 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
-        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
-Received: from bgodavar-linux.qualcomm.com (unknown [202.46.22.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: bgodavar)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 6CEA8C433C6;
-        Wed, 11 Nov 2020 05:15:41 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 6CEA8C433C6
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=bgodavar@codeaurora.org
-From:   Balakrishna Godavarthi <bgodavar@codeaurora.org>
-To:     marcel@holtmann.org, johan.hedberg@gmail.com
-Cc:     mka@chromium.org, linux-kernel@vger.kernel.org,
-        linux-bluetooth@vger.kernel.org, hemantg@codeaurora.org,
-        linux-arm-msm@vger.kernel.org, bgodavar@codeaurora.org,
-        abhishekpandit@chromium.org, seanpaul@chromium.org,
-        gubbaven@codeaurora.org, rjliao@codeaurora.org
-Subject: [Resend v1] Bluetooth: hci_qca: Wait for timeout during suspend
-Date:   Wed, 11 Nov 2020 10:45:34 +0530
-Message-Id: <1605071734-5282-1-git-send-email-bgodavar@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
+        id S1725895AbgKKFUm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 11 Nov 2020 00:20:42 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58650 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725859AbgKKFUm (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 11 Nov 2020 00:20:42 -0500
+Received: from mail-oo1-xc44.google.com (mail-oo1-xc44.google.com [IPv6:2607:f8b0:4864:20::c44])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0EC50C0613D4
+        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Nov 2020 21:20:42 -0800 (PST)
+Received: by mail-oo1-xc44.google.com with SMTP id g4so156670oom.9
+        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Nov 2020 21:20:42 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=+8JvIuVhwuPNGMkVQ4guxsEUL9YFtE5AZrTL23JMuJU=;
+        b=lRBauYDaR4Ik4GXYuf38bavNI7EWI2gLFj8p1qDEuI2tZpRsYCOkIQ2q0Pl0xTnsew
+         d1vfUbekQ5ganCOMx/LloZec9K58Poc0pSV3aOgPS2jq3C/pfEdjzruV1ZPV2KnVuiEI
+         k+vVNdReFibS7Q24AkT9KD21JuW5te1S6lI0OLLvO6NjIIIIXzHReqVbWFEoxTqAl4fu
+         wzgA8uvR74Ue1Rw4iBsm7CB9FnVBSacLgGTszR3mBVFGIt8oeTvkS1Cz2ZqhsSzb6LzA
+         nVLKKwFfSNirps9FIDBOI8k+N3hRoYNF/idwgZy1+FdmuwjtdZ5syjZ1Y8LrET1+ve7J
+         trzw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=+8JvIuVhwuPNGMkVQ4guxsEUL9YFtE5AZrTL23JMuJU=;
+        b=jejS7VnEhYLFN1FK14X5v7ilslsrgylco0JgrtZKgEp2R/3mxY52RRXbb7kr9/Obgg
+         bJxdJcVBsYZzH7oubXUFMhnIlTsLmD+RF7S/tWkMiZP13dTUFdQ7KCmcLXJGC1q5/8wX
+         1IuPpG7kCnpiibFz/5soETLGFmrBQ3pAH7104BDu8h+1OAR1jNGyn1pfpXoQK3pfM8Ds
+         Qm2AlyrMeA+a53BIN8Da9tBPamwNvy26opiceMmdLCOZiUOkyLnI8gFzCvz23Yf2wlDp
+         eA5nZbA+ivKzBVUpqLnm49ZbpFu2zizGPvQ3bVbRkPXSgu9/XAcY3ICvTYnHvADKsLrF
+         0UPA==
+X-Gm-Message-State: AOAM532M8eLEZlhX2DEZMQS2EWleZ+tFC+9tcbKdxHQWE4Za5GaUzqHW
+        mtjEgXH8P+3s/sAWYphlrYfVSA==
+X-Google-Smtp-Source: ABdhPJzHvWdZyv3gQOh+mqqPrQU15IMjBhkr35b3v2Dgop+sJwQ0J9xwxHW1eXvWMkEB3YNl6F/jag==
+X-Received: by 2002:a4a:9607:: with SMTP id q7mr16079277ooi.79.1605072041371;
+        Tue, 10 Nov 2020 21:20:41 -0800 (PST)
+Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
+        by smtp.gmail.com with ESMTPSA id k27sm319019ool.7.2020.11.10.21.20.40
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 10 Nov 2020 21:20:40 -0800 (PST)
+Date:   Tue, 10 Nov 2020 23:20:38 -0600
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Lee Jones <lee.jones@linaro.org>
+Cc:     linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+        Andy Gross <agross@kernel.org>, linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH 19/25] soc: qcom: smp2p: Remove unused struct attribute
+ provide another
+Message-ID: <20201111052038.GG173948@builder.lan>
+References: <20201103152838.1290217-1-lee.jones@linaro.org>
+ <20201103152838.1290217-20-lee.jones@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20201103152838.1290217-20-lee.jones@linaro.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Venkata Lakshmi Narayana Gubba <gubbaven@codeaurora.org>
+On Tue 03 Nov 09:28 CST 2020, Lee Jones wrote:
 
-Currently qca_suspend() is relied on IBS mechanism. During
-FW download and memory dump collections, IBS will be disabled.
-In those cases, driver will allow suspend and still uses the
-serdev port, which results to errors. Now added a wait timeout
-if suspend is triggered during FW download and memory collections.
+> Fixes the following W=1 kernel build warning(s):
+> 
+>  drivers/soc/qcom/smp2p.c:74: warning: Function parameter or member 'flags' not described in 'smp2p_smem_item'
+>  drivers/soc/qcom/smp2p.c:149: warning: Function parameter or member 'out' not described in 'qcom_smp2p'
+> 
+> Cc: Andy Gross <agross@kernel.org>
+> Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
+> Cc: linux-arm-msm@vger.kernel.org
+> Signed-off-by: Lee Jones <lee.jones@linaro.org>
+> ---
+>  drivers/soc/qcom/smp2p.c | 3 +--
+>  1 file changed, 1 insertion(+), 2 deletions(-)
+> 
+> diff --git a/drivers/soc/qcom/smp2p.c b/drivers/soc/qcom/smp2p.c
+> index a9709aae54abb..43df63419c327 100644
+> --- a/drivers/soc/qcom/smp2p.c
+> +++ b/drivers/soc/qcom/smp2p.c
+> @@ -52,7 +52,6 @@
+>   * @remote_pid:		processor id of receiving end
+>   * @total_entries:	number of entries - always SMP2P_MAX_ENTRY
+>   * @valid_entries:	number of allocated entries
+> - * @flags:
+>   * @entries:		individual communication entries
+>   *     @name:		name of the entry
+>   *     @value:		content of the entry
+> @@ -65,7 +64,6 @@ struct smp2p_smem_item {
+>  	u16 remote_pid;
+>  	u16 total_entries;
+>  	u16 valid_entries;
+> -	u32 flags;
 
-Signed-off-by: Venkata Lakshmi Narayana Gubba <gubbaven@codeaurora.org>
-Signed-off-by: Balakrishna Godavarthi <bgodavar@codeaurora.org>
-Reviewed-by: Abhishek Pandit-Subedi <abhishekpandit@chromium.org>
----
- drivers/bluetooth/hci_qca.c | 48 ++++++++++++++++++++++++++++++++++++---------
- 1 file changed, 39 insertions(+), 9 deletions(-)
+This struct describes the data shared between processors in the SoC and
+as such these 32 bits are significant. I believe we have an incoming
+patch that adds handling of some flag, so let's document it properly
+at that time.
 
-diff --git a/drivers/bluetooth/hci_qca.c b/drivers/bluetooth/hci_qca.c
-index 1c9a2d46..180b324 100644
---- a/drivers/bluetooth/hci_qca.c
-+++ b/drivers/bluetooth/hci_qca.c
-@@ -50,6 +50,8 @@
- #define IBS_HOST_TX_IDLE_TIMEOUT_MS	2000
- #define CMD_TRANS_TIMEOUT_MS		100
- #define MEMDUMP_TIMEOUT_MS		8000
-+#define IBS_DISABLE_SSR_TIMEOUT_MS	(MEMDUMP_TIMEOUT_MS + 1000)
-+#define FW_DOWNLOAD_TIMEOUT_MS		3000
- 
- /* susclk rate */
- #define SUSCLK_RATE_32KHZ	32768
-@@ -68,12 +70,13 @@
- #define QCA_MEMDUMP_BYTE		0xFB
- 
- enum qca_flags {
--	QCA_IBS_ENABLED,
-+	QCA_IBS_DISABLED,
- 	QCA_DROP_VENDOR_EVENT,
- 	QCA_SUSPENDING,
- 	QCA_MEMDUMP_COLLECTION,
- 	QCA_HW_ERROR_EVENT,
--	QCA_SSR_TRIGGERED
-+	QCA_SSR_TRIGGERED,
-+	QCA_BT_OFF
- };
- 
- enum qca_capabilities {
-@@ -870,7 +873,7 @@ static int qca_enqueue(struct hci_uart *hu, struct sk_buff *skb)
- 	 * Out-Of-Band(GPIOs control) sleep is selected.
- 	 * Don't wake the device up when suspending.
- 	 */
--	if (!test_bit(QCA_IBS_ENABLED, &qca->flags) ||
-+	if (test_bit(QCA_IBS_DISABLED, &qca->flags) ||
- 	    test_bit(QCA_SUSPENDING, &qca->flags)) {
- 		skb_queue_tail(&qca->txq, skb);
- 		spin_unlock_irqrestore(&qca->hci_ibs_lock, flags);
-@@ -1015,7 +1018,7 @@ static void qca_controller_memdump(struct work_struct *work)
- 			 * the controller to send the dump is 8 seconds. let us
- 			 * start timer to handle this asynchronous activity.
- 			 */
--			clear_bit(QCA_IBS_ENABLED, &qca->flags);
-+			set_bit(QCA_IBS_DISABLED, &qca->flags);
- 			set_bit(QCA_MEMDUMP_COLLECTION, &qca->flags);
- 			dump = (void *) skb->data;
- 			dump_size = __le32_to_cpu(dump->dump_size);
-@@ -1619,6 +1622,7 @@ static int qca_power_on(struct hci_dev *hdev)
- 	struct hci_uart *hu = hci_get_drvdata(hdev);
- 	enum qca_btsoc_type soc_type = qca_soc_type(hu);
- 	struct qca_serdev *qcadev;
-+	struct qca_data *qca = hu->priv;
- 	int ret = 0;
- 
- 	/* Non-serdev device usually is powered by external power
-@@ -1638,6 +1642,7 @@ static int qca_power_on(struct hci_dev *hdev)
- 		}
- 	}
- 
-+	clear_bit(QCA_BT_OFF, &qca->flags);
- 	return ret;
- }
- 
-@@ -1657,7 +1662,7 @@ static int qca_setup(struct hci_uart *hu)
- 		return ret;
- 
- 	/* Patch downloading has to be done without IBS mode */
--	clear_bit(QCA_IBS_ENABLED, &qca->flags);
-+	set_bit(QCA_IBS_DISABLED, &qca->flags);
- 
- 	/* Enable controller to do both LE scan and BR/EDR inquiry
- 	 * simultaneously.
-@@ -1708,7 +1713,7 @@ static int qca_setup(struct hci_uart *hu)
- 	ret = qca_uart_setup(hdev, qca_baudrate, soc_type, soc_ver,
- 			firmware_name);
- 	if (!ret) {
--		set_bit(QCA_IBS_ENABLED, &qca->flags);
-+		clear_bit(QCA_IBS_DISABLED, &qca->flags);
- 		qca_debugfs_init(hdev);
- 		hu->hdev->hw_error = qca_hw_error;
- 		hu->hdev->cmd_timeout = qca_cmd_timeout;
-@@ -1816,7 +1821,7 @@ static void qca_power_shutdown(struct hci_uart *hu)
- 	 * data in skb's.
- 	 */
- 	spin_lock_irqsave(&qca->hci_ibs_lock, flags);
--	clear_bit(QCA_IBS_ENABLED, &qca->flags);
-+	set_bit(QCA_IBS_DISABLED, &qca->flags);
- 	qca_flush(hu);
- 	spin_unlock_irqrestore(&qca->hci_ibs_lock, flags);
- 
-@@ -1833,6 +1838,8 @@ static void qca_power_shutdown(struct hci_uart *hu)
- 	} else if (qcadev->bt_en) {
- 		gpiod_set_value_cansleep(qcadev->bt_en, 0);
- 	}
-+
-+	set_bit(QCA_BT_OFF, &qca->flags);
- }
- 
- static int qca_power_off(struct hci_dev *hdev)
-@@ -2090,11 +2097,34 @@ static int __maybe_unused qca_suspend(struct device *dev)
- 	bool tx_pending = false;
- 	int ret = 0;
- 	u8 cmd;
-+	u32 wait_timeout = 0;
- 
- 	set_bit(QCA_SUSPENDING, &qca->flags);
- 
--	/* Device is downloading patch or doesn't support in-band sleep. */
--	if (!test_bit(QCA_IBS_ENABLED, &qca->flags))
-+	if (test_bit(QCA_BT_OFF, &qca->flags))
-+		return 0;
-+
-+	if (test_bit(QCA_IBS_DISABLED, &qca->flags)) {
-+		wait_timeout = test_bit(QCA_SSR_TRIGGERED, &qca->flags) ?
-+					IBS_DISABLE_SSR_TIMEOUT_MS :
-+					FW_DOWNLOAD_TIMEOUT_MS;
-+
-+		/* QCA_IBS_DISABLED flag is set to true, During FW download
-+		 * and during memory dump collection. It is reset to false,
-+		 * After FW download complete and after memory dump collections.
-+		 */
-+		wait_on_bit_timeout(&qca->flags, QCA_IBS_DISABLED,
-+			    TASK_UNINTERRUPTIBLE, msecs_to_jiffies(wait_timeout));
-+
-+		if (test_bit(QCA_IBS_DISABLED, &qca->flags)) {
-+			bt_dev_err(hu->hdev, "SSR or FW download time out");
-+			ret = -ETIMEDOUT;
-+			goto error;
-+		}
-+	}
-+
-+	/* After memory dump collection, Controller is powered off.*/
-+	if (test_bit(QCA_BT_OFF, &qca->flags))
- 		return 0;
- 
- 	cancel_work_sync(&qca->ws_awake_device);
--- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project
+I've applied the second half of the patch for now.
 
+Regards,
+Bjorn
+
+>  
+>  	struct {
+>  		u8 name[SMP2P_MAX_ENTRY_NAME];
+> @@ -112,6 +110,7 @@ struct smp2p_entry {
+>   * struct qcom_smp2p - device driver context
+>   * @dev:	device driver handle
+>   * @in:		pointer to the inbound smem item
+> + * @out:	pointer to the outbound smem item
+>   * @smem_items:	ids of the two smem items
+>   * @valid_entries: already scanned inbound entries
+>   * @local_pid:	processor id of the inbound edge
+> -- 
+> 2.25.1
+> 
