@@ -2,86 +2,148 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D5D162AE7AE
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Nov 2020 05:56:40 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2F7132AE7CB
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Nov 2020 06:15:12 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725973AbgKKE4i (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 10 Nov 2020 23:56:38 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54888 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725898AbgKKE4a (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 10 Nov 2020 23:56:30 -0500
-Received: from mail-oi1-x244.google.com (mail-oi1-x244.google.com [IPv6:2607:f8b0:4864:20::244])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 69408C0613D6
-        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Nov 2020 20:56:30 -0800 (PST)
-Received: by mail-oi1-x244.google.com with SMTP id m17so810264oie.4
-        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Nov 2020 20:56:30 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=cRAt4batTICDyiJ/8EINRniP/Smx50wMzUnQPTpJLC4=;
-        b=uBI8CuLzxljYP3u+E78DkW3m3Rfy6G2IhHNK/5HfWTn5eePeEUQoBcbrb/e078wTW2
-         6EhoCAzvv7vFr3n/UFqL9dIICXh8IwjE6dOAhzeyHQ68Y0lQHEIq49BU1QL+Z01xXGb0
-         PkhcFdkS+ysJYAWoKi1BLDq8ctgdAGizX6tKYZN0doev6pPWfGEUMEqzhS6Wno4EemL3
-         WGTF/wk1s9/qAHf3+Qnz0Fyg37I64BRCyRWtMp6juIYEg0Y30to+wWRkVfYJ8hYvSIah
-         WqyZKj1VHMW+QaBRHTZSYhhZRS6kIodIDDs/PIby2Fv1P393mKmwGe1ushuTb/bKGPTy
-         omFw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=cRAt4batTICDyiJ/8EINRniP/Smx50wMzUnQPTpJLC4=;
-        b=bpZp2r0prHs+glxZJBZiZgBhKMDPRUB4sn9Cbq5JVAH3QQXnknYoJakV0YjRKn1Ed2
-         LPi2cDYWAqePW9Dftap0FmBthKKfHUtLKBqryfL7QElvvSEe1US9NUfL8egG3k60rnjP
-         ErXc72Tnjpr8KsgCKfypd7T7fqEToW5xGWvVIEaBaFtAFs4Sy8BVGAXWR/ApXUS4EWHK
-         wyrWF2+PANbFLzbHCFb5VbfGAXR9qUpMm1WYmQvTLk21HvKb/Albpzj3cV1xJOr8SMrX
-         oQ4+Y7iyJhWZXj+/JZVcmdQTIipfjPqSKP+HxTtzySuXT7RMfKfmEMTmQTi/K3nwlOrJ
-         0Pmg==
-X-Gm-Message-State: AOAM5310vLAT2WoCcwFq1od5PST7co0g8yaXnUXYmggKRZoBWTb4RcO1
-        lhiklO70w9Yv5MkKgkR13YzIVQ==
-X-Google-Smtp-Source: ABdhPJzWDF0IOu9gSQFJfDqj3LfmtrAjDRSYMXzJ5+OE3Zhn38zbdsFXQi+R41CdnEX4GzqTp4n3sA==
-X-Received: by 2002:aca:c6cb:: with SMTP id w194mr1045129oif.27.1605070589680;
-        Tue, 10 Nov 2020 20:56:29 -0800 (PST)
-Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id y15sm277264otq.79.2020.11.10.20.56.28
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 10 Nov 2020 20:56:28 -0800 (PST)
-Date:   Tue, 10 Nov 2020 22:56:27 -0600
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Konrad Dybcio <konradybcio@gmail.com>
-Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        Andy Gross <agross@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        DTML <devicetree@vger.kernel.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH 11/11] arm64: dts: qcom: Add support for Microsoft Lumia
- 950 XL (Cityman)
-Message-ID: <20201111045627.GF173948@builder.lan>
-References: <20201005150313.149754-1-konradybcio@gmail.com>
- <20201005150313.149754-12-konradybcio@gmail.com>
- <CAMS8qEV3kFgCZ34GsOSoy19YceF9q=01JazQHknvxnVJg4thcA@mail.gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAMS8qEV3kFgCZ34GsOSoy19YceF9q=01JazQHknvxnVJg4thcA@mail.gmail.com>
+        id S1725899AbgKKFPL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 11 Nov 2020 00:15:11 -0500
+Received: from m42-4.mailgun.net ([69.72.42.4]:27900 "EHLO m42-4.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725895AbgKKFPL (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 11 Nov 2020 00:15:11 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1605071710; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=x9qlp6TtMCuW6yDR1fjucGV8KPry0uQ9zQlaRPc/GQc=; b=xALWau24ducthZl/op99mfRhpKZ/0HGl7OnKO50+Tpvd+Cq/E2ZAW1k1cP8dQbU/XzfMIGen
+ iyuzYWye+bM0KUfrJVDnex26JumZor+Am/iAcGWPnMhzB+E1gMj9xOZtVepEJt6tgVxs7HGu
+ SbIL48rNUbEjyzIxnwV4ZSWTiV0=
+X-Mailgun-Sending-Ip: 69.72.42.4
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n10.prod.us-east-1.postgun.com with SMTP id
+ 5fab73321bdb18ae752b08d1 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 11 Nov 2020 05:14:26
+ GMT
+Sender: bgodavar=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 7AEC4C433C9; Wed, 11 Nov 2020 05:14:25 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
+        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+Received: from bgodavar-linux.qualcomm.com (unknown [202.46.22.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: bgodavar)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 0A146C433C8;
+        Wed, 11 Nov 2020 05:14:20 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 0A146C433C8
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=bgodavar@codeaurora.org
+From:   Balakrishna Godavarthi <bgodavar@codeaurora.org>
+To:     marcel@holtmann.org, johan.hedberg@gmail.com
+Cc:     mka@chromium.org, linux-kernel@vger.kernel.org,
+        linux-bluetooth@vger.kernel.org, hemantg@codeaurora.org,
+        linux-arm-msm@vger.kernel.org, bgodavar@codeaurora.org,
+        abhishekpandit@chromium.org, seanpaul@chromium.org,
+        gubbaven@codeaurora.org, rjliao@codeaurora.org
+Subject: [Resend v1] Bluetooth: hci_qca: Enhance retry logic in qca_setup
+Date:   Wed, 11 Nov 2020 10:44:13 +0530
+Message-Id: <1605071653-5088-1-git-send-email-bgodavar@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon 05 Oct 10:14 CDT 2020, Konrad Dybcio wrote:
+Currently driver only retries to download FW if FW downloading
+is failed. Sometimes observed command timeout for version request
+command, if this happen on some platforms during boot time, then
+a reboot is needed to turn ON BT. Instead to avoid a reboot, now
+extended retry logic for version request command too.
 
-> >+dtb-$(CONFIG_ARCH_QCOM)        += msm8994-msft-lumia-cityman.dts
-> 
-> I made a typo and instead of .dtb I wrote .dts here. Could that be
-> fixed when applying so that I don't have to spam you guys with 11 more
-> mails?
-> 
+Signed-off-by: Balakrishna Godavarthi <bgodavar@codeaurora.org>
+Reviewed-by: Abhishek Pandit-Subedi <abhishekpandit@chromium.org>
+---
+ drivers/bluetooth/hci_qca.c | 34 ++++++++++++++++++----------------
+ 1 file changed, 18 insertions(+), 16 deletions(-)
 
-Thanks for letting me know, I fixed this up and applied the series for
-5.11.
+diff --git a/drivers/bluetooth/hci_qca.c b/drivers/bluetooth/hci_qca.c
+index 2d3f1f1..1c9a2d46 100644
+--- a/drivers/bluetooth/hci_qca.c
++++ b/drivers/bluetooth/hci_qca.c
+@@ -1672,7 +1672,7 @@ static int qca_setup(struct hci_uart *hu)
+ retry:
+ 	ret = qca_power_on(hdev);
+ 	if (ret)
+-		return ret;
++		goto out;
+ 
+ 	clear_bit(QCA_SSR_TRIGGERED, &qca->flags);
+ 
+@@ -1681,7 +1681,7 @@ static int qca_setup(struct hci_uart *hu)
+ 
+ 		ret = qca_read_soc_version(hdev, &soc_ver, soc_type);
+ 		if (ret)
+-			return ret;
++			goto out;
+ 	} else {
+ 		qca_set_speed(hu, QCA_INIT_SPEED);
+ 	}
+@@ -1691,7 +1691,7 @@ static int qca_setup(struct hci_uart *hu)
+ 	if (speed) {
+ 		ret = qca_set_speed(hu, QCA_OPER_SPEED);
+ 		if (ret)
+-			return ret;
++			goto out;
+ 
+ 		qca_baudrate = qca_get_baudrate_value(speed);
+ 	}
+@@ -1700,7 +1700,7 @@ static int qca_setup(struct hci_uart *hu)
+ 		/* Get QCA version information */
+ 		ret = qca_read_soc_version(hdev, &soc_ver, soc_type);
+ 		if (ret)
+-			return ret;
++			goto out;
+ 	}
+ 
+ 	bt_dev_info(hdev, "QCA controller version 0x%08x", soc_ver);
+@@ -1721,20 +1721,22 @@ static int qca_setup(struct hci_uart *hu)
+ 		 * patch/nvm-config is found, so run with original fw/config.
+ 		 */
+ 		ret = 0;
+-	} else {
+-		if (retries < MAX_INIT_RETRIES) {
+-			qca_power_shutdown(hu);
+-			if (hu->serdev) {
+-				serdev_device_close(hu->serdev);
+-				ret = serdev_device_open(hu->serdev);
+-				if (ret) {
+-					bt_dev_err(hdev, "failed to open port");
+-					return ret;
+-				}
++	}
++
++out:
++	if (ret && retries < MAX_INIT_RETRIES) {
++		bt_dev_warn(hdev, "Retry BT power ON:%d", retries);
++		qca_power_shutdown(hu);
++		if (hu->serdev) {
++			serdev_device_close(hu->serdev);
++			ret = serdev_device_open(hu->serdev);
++			if (ret) {
++				bt_dev_err(hdev, "failed to open port");
++				return ret;
+ 			}
+-			retries++;
+-			goto retry;
+ 		}
++		retries++;
++		goto retry;
+ 	}
+ 
+ 	/* Setup bdaddr */
+-- 
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
 
-Regards,
-Bjorn
