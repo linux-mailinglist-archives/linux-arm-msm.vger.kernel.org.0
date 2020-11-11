@@ -2,122 +2,88 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 7FC992AE542
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Nov 2020 02:04:40 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 31A1E2AE623
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Nov 2020 03:08:52 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732023AbgKKBEj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 10 Nov 2020 20:04:39 -0500
-Received: from m42-4.mailgun.net ([69.72.42.4]:56142 "EHLO m42-4.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1730894AbgKKBEj (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 10 Nov 2020 20:04:39 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1605056679; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=G4FZ8gmhmVNCMNey8HG1PJzz0ZnJLvtQudj18MvCfxc=;
- b=p2cgz/rJYUAKICXBuVukUtVJklLPiQzwSP2GiKdSDqkCxKufvFkRtT3pR34W/oR1Cy1Jl5T8
- Tmze51gYn6DEuPcF8h0qQFKB1Vxv7Cn3HfQxAFkuib5lgI51d8Of/F6CYlz/6hXrItutOdzj
- ++hG0UemUm/CC/2z4Kidd14YUMg=
-X-Mailgun-Sending-Ip: 69.72.42.4
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n01.prod.us-east-1.postgun.com with SMTP id
- 5fab38a4b8c6a84a5c46c860 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 11 Nov 2020 01:04:35
- GMT
-Sender: rishabhb=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 478E6C433C9; Wed, 11 Nov 2020 01:04:35 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: rishabhb)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id D975AC433C8;
-        Wed, 11 Nov 2020 01:04:34 +0000 (UTC)
+        id S1732123AbgKKCIu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 10 Nov 2020 21:08:50 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57024 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726307AbgKKCIu (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 10 Nov 2020 21:08:50 -0500
+Received: from mail-ua1-x942.google.com (mail-ua1-x942.google.com [IPv6:2607:f8b0:4864:20::942])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 61B98C0613D3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Nov 2020 18:08:50 -0800 (PST)
+Received: by mail-ua1-x942.google.com with SMTP id w3so256809uau.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Nov 2020 18:08:50 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=9CTtCQABE7EZnyvMRJRp+ux2mvwXMPszr5VQjn2UmnU=;
+        b=D4hYa65WfHrMf5alNOxHlfnicpj9Vucke/Ha0ieZmTy4CL5qv4AS08Mzgf3N5Dg3LP
+         GloHepCI0Djj9Hb7x1bp/ejfxwmZbgkM7XrU5q5Yi+icuTUuhAI/m93GEiWOeeHuvt2h
+         QW6MGb5eCzhsMdU4s31tUXt4719VQbYGFbwL8=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=9CTtCQABE7EZnyvMRJRp+ux2mvwXMPszr5VQjn2UmnU=;
+        b=PC1Txnv/To+kH8YUKf3OLke6GHWMiV3F3ijm9pLF2OUukp0dOVCb+F2P738xpbwBpT
+         rYa68+yPeL5ZtSI5c1Gx6ya0Lv6ZGwEiG9FfDu8R7YbIq/YL9gZDeAhQyrgNuRjexFSk
+         IvkE6Zf5o4MLrqTS5LShVugPp5W0doDX+vfAQs+x4kNb7rupY4B6Q643LpecrBIyKCbg
+         2ebHKasaToO5qyGahtGhw0Smr8cDJb4gFeYkMFp7XFE/vE6lHGyGLK86nzdxG+gLX77B
+         hMkxJvpw+wAZUKvzRwoqdbyyDMrOg+KswjcrEt767FKn6Y5iDo9vB3fVhPPDa7kP1aE4
+         Q4Qw==
+X-Gm-Message-State: AOAM530y0+dnNHPIFT1UPex5cDfi4+S/JxVtxe3+zaoI5npLTqQsKG15
+        hX+G8+q5lcD4ahZqlTAxbb/Bya3LKpMeew==
+X-Google-Smtp-Source: ABdhPJy/DKVSE/FmuH7jgYgg/22/qyaY5K38cVUKn48POUX9g6Jy35RhQq77NnKeHp55J2J+P1bn+w==
+X-Received: by 2002:ab0:3154:: with SMTP id e20mr5538487uam.43.1605060528583;
+        Tue, 10 Nov 2020 18:08:48 -0800 (PST)
+Received: from mail-vs1-f45.google.com (mail-vs1-f45.google.com. [209.85.217.45])
+        by smtp.gmail.com with ESMTPSA id l76sm78060vkl.26.2020.11.10.18.08.47
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 10 Nov 2020 18:08:47 -0800 (PST)
+Received: by mail-vs1-f45.google.com with SMTP id f7so291964vsh.10
+        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Nov 2020 18:08:47 -0800 (PST)
+X-Received: by 2002:a67:f142:: with SMTP id t2mr13882174vsm.34.1605060526929;
+ Tue, 10 Nov 2020 18:08:46 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Tue, 10 Nov 2020 17:04:34 -0800
-From:   rishabhb@codeaurora.org
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>, Ohad Ben-Cohen <ohad@wizery.com>,
-        Siddharth Gupta <sidgup@codeaurora.org>,
-        Sibi Sankar <sibis@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2 4/4] remoteproc: sysmon: Improve error messages
-In-Reply-To: <20201105045051.1365780-5-bjorn.andersson@linaro.org>
-References: <20201105045051.1365780-1-bjorn.andersson@linaro.org>
- <20201105045051.1365780-5-bjorn.andersson@linaro.org>
-Message-ID: <cb2a980190c5fa542c11a3640441886c@codeaurora.org>
-X-Sender: rishabhb@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+References: <1604687907-25712-1-git-send-email-tdas@codeaurora.org>
+In-Reply-To: <1604687907-25712-1-git-send-email-tdas@codeaurora.org>
+From:   Doug Anderson <dianders@chromium.org>
+Date:   Tue, 10 Nov 2020 18:08:35 -0800
+X-Gmail-Original-Message-ID: <CAD=FV=Ws=s_XU8Fk0mtVmjbFDOrmYrDPk7pbLpWfBAw=bzRmsA@mail.gmail.com>
+Message-ID: <CAD=FV=Ws=s_XU8Fk0mtVmjbFDOrmYrDPk7pbLpWfBAw=bzRmsA@mail.gmail.com>
+Subject: Re: [PATCH v1] arm64: dts: sc7180: Add camera clock controller node
+To:     Taniya Das <tdas@codeaurora.org>
+Cc:     Rob Herring <robh+dt@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Andy Gross <agross@kernel.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        LKML <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2020-11-04 20:50, Bjorn Andersson wrote:
-> Improve the style of a few of the error messages printed by the sysmon
-> implementation and fix the copy-pasted shutdown error in the send-event
-> function.
-> 
-> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+Hi,
+
+On Fri, Nov 6, 2020 at 10:39 AM Taniya Das <tdas@codeaurora.org> wrote:
+>
+> Add the camera clock controller node supported on SC7180.
+>
+> Signed-off-by: Taniya Das <tdas@codeaurora.org>
 > ---
-> 
-> Changes since v1:
-> - New patch
-> 
->  drivers/remoteproc/qcom_sysmon.c | 12 ++++++------
->  1 file changed, 6 insertions(+), 6 deletions(-)
-> 
-> diff --git a/drivers/remoteproc/qcom_sysmon.c 
-> b/drivers/remoteproc/qcom_sysmon.c
-> index 1c42f00010d3..47683932512a 100644
-> --- a/drivers/remoteproc/qcom_sysmon.c
-> +++ b/drivers/remoteproc/qcom_sysmon.c
-> @@ -352,9 +352,9 @@ static bool ssctl_request_shutdown(struct
-> qcom_sysmon *sysmon)
-> 
->  	ret = qmi_txn_wait(&txn, 5 * HZ);
->  	if (ret < 0) {
-> -		dev_err(sysmon->dev, "failed receiving QMI response\n");
-> +		dev_err(sysmon->dev, "timeout waiting for shutdown response\n");
->  	} else if (resp.resp.result) {
-> -		dev_err(sysmon->dev, "shutdown request failed\n");
-> +		dev_err(sysmon->dev, "shutdown request rejected\n");
->  	} else {
->  		dev_dbg(sysmon->dev, "shutdown request completed\n");
->  		acked = true;
-> @@ -397,18 +397,18 @@ static void ssctl_send_event(struct qcom_sysmon 
-> *sysmon,
->  			       SSCTL_SUBSYS_EVENT_REQ, 40,
->  			       ssctl_subsys_event_req_ei, &req);
->  	if (ret < 0) {
-> -		dev_err(sysmon->dev, "failed to send shutdown request\n");
-> +		dev_err(sysmon->dev, "failed to send subsystem event\n");
->  		qmi_txn_cancel(&txn);
->  		return;
->  	}
-> 
->  	ret = qmi_txn_wait(&txn, 5 * HZ);
->  	if (ret < 0)
-> -		dev_err(sysmon->dev, "failed receiving QMI response\n");
-> +		dev_err(sysmon->dev, "timeout waiting for subsystem event 
-> response\n");
->  	else if (resp.resp.result)
-> -		dev_err(sysmon->dev, "ssr event send failed\n");
-> +		dev_err(sysmon->dev, "subsystem event rejected\n");
->  	else
-> -		dev_dbg(sysmon->dev, "ssr event send completed\n");
-> +		dev_dbg(sysmon->dev, "subsystem event accepted\n");
->  }
-> 
->  /**
-Reviewed-by: Rishabh Bhatnagar <rishabhb@codeaurora.org>
+>  arch/arm64/boot/dts/qcom/sc7180.dtsi | 13 +++++++++++++
+>  1 file changed, 13 insertions(+)
+
+This matches the bindings, which has landed in the clock tree.  It's
+also sorted properly.  Thus:
+
+Reviewed-by: Douglas Anderson <dianders@chromium.org>
