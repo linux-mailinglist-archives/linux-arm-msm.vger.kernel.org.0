@@ -2,268 +2,207 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 6888E2AE51E
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Nov 2020 01:48:32 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 8BBDB2AE52D
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Nov 2020 01:57:45 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732485AbgKKAsb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 10 Nov 2020 19:48:31 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44576 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1732446AbgKKAsb (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 10 Nov 2020 19:48:31 -0500
-Received: from mail-ua1-x942.google.com (mail-ua1-x942.google.com [IPv6:2607:f8b0:4864:20::942])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1457FC0613D1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Nov 2020 16:48:31 -0800 (PST)
-Received: by mail-ua1-x942.google.com with SMTP id w3so203564uau.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Nov 2020 16:48:31 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=DwI3PFSKWVnaqeshY41Xp/YVBg2cD76OjiJIiFh3rNI=;
-        b=QfIsIHzjHTjAr/jTdIRSiD+ZkEfLnev1EHOTrRrDDTB7WurSHmLapfGiBTNJvwGtWM
-         n0cecZqV6gOBimx3dJHYoejdFvYV+lM1U9yYeRQ2K3KmHrsUZUWvTeK29NnQ/CF3BEKI
-         m3e422SOkDPN1XTyRtLgENxmZHEnNWrVPZYPw=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=DwI3PFSKWVnaqeshY41Xp/YVBg2cD76OjiJIiFh3rNI=;
-        b=INiJ7aaPH1y+8SP8mocSyhyZO2Ft86isXyqa3UxL3KFsaZgNGC8pun5Z+sN5FQgeNh
-         TbwPtVkXudBrlpgxUpUz5LTIQ7LXRzAERcUI5vZw7G+7x3JccoLDxA9/rSFujkhJX7Ts
-         3cLL1ndjsD/6rO412sgUS5l/Ai6Vq+5CJmm60bLPI3UF/SByxdRcHiAjSivPz81bJ+79
-         cv3Y4/j8QPgra51BPgoY+qbXO1TgPwHsWfEWP1RKJRunPKFblLeIb2h927F30oZ+jMnL
-         ZBuxqGL/fsRednTk9IOkl0IWlWXJHoJJne5eGJljSzizKd/5WztdywvmcXMYpsZuE9UI
-         e73w==
-X-Gm-Message-State: AOAM533A61wZ+yUK/P75s0N9ogzVASDaO1iEoS1jHXbdgDOVwZD/o9cZ
-        py27QASsD4TXWyVP7K4mBrUuRD+BdwsO7Q==
-X-Google-Smtp-Source: ABdhPJymYGdsSnFfS8Hii1p4fH6ZzOW/rM2L+AQPTne+Q+urAf0ymE4rTVNaJmHHEw0w/VIT1rUgvA==
-X-Received: by 2002:ab0:7846:: with SMTP id y6mr11538189uaq.16.1605055709751;
-        Tue, 10 Nov 2020 16:48:29 -0800 (PST)
-Received: from mail-ua1-f48.google.com (mail-ua1-f48.google.com. [209.85.222.48])
-        by smtp.gmail.com with ESMTPSA id s6sm58029vkk.20.2020.11.10.16.48.28
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 10 Nov 2020 16:48:29 -0800 (PST)
-Received: by mail-ua1-f48.google.com with SMTP id t15so196579ual.6
-        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Nov 2020 16:48:28 -0800 (PST)
-X-Received: by 2002:a9f:24eb:: with SMTP id 98mr11624331uar.90.1605055707756;
- Tue, 10 Nov 2020 16:48:27 -0800 (PST)
+        id S1732090AbgKKA5n (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 10 Nov 2020 19:57:43 -0500
+Received: from z5.mailgun.us ([104.130.96.5]:25887 "EHLO z5.mailgun.us"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727275AbgKKA5k (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 10 Nov 2020 19:57:40 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1605056259; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=a1WBMw0GkSFdOrfM/aKho1Ej9cF+u6GPm4QLN9sCOgk=;
+ b=Ui4AkMvbjGI6UVnSuU/rLygNN7KxXebh5uuMn4v8SPAqJNKLZuDQh82dG63+F6BmSx/yDNL9
+ 65eNsLVKixmdjTJ4FYAJT5rjaoxuoykDfkAYIfqSv7J4IoEnKkycG4/KEuV6VxjEI47Rvz7p
+ 1X3N7h7/tVygc1qX2NL5UCdXMas=
+X-Mailgun-Sending-Ip: 104.130.96.5
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n08.prod.us-west-2.postgun.com with SMTP id
+ 5fab37023825e013b5131b36 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 11 Nov 2020 00:57:38
+ GMT
+Sender: rishabhb=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 282BAC433CB; Wed, 11 Nov 2020 00:57:38 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: rishabhb)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 314ECC433C8;
+        Wed, 11 Nov 2020 00:57:37 +0000 (UTC)
 MIME-Version: 1.0
-References: <20200930223532.77755-1-bjorn.andersson@linaro.org>
- <20200930223532.77755-2-bjorn.andersson@linaro.org> <CAD=FV=Unu-PH_RThi3xRF1HUADN2PqcVAOin0O0yo0gcGRWCDQ@mail.gmail.com>
- <20201102170801.GI3151@builder.lan>
-In-Reply-To: <20201102170801.GI3151@builder.lan>
-From:   Doug Anderson <dianders@chromium.org>
-Date:   Tue, 10 Nov 2020 16:48:16 -0800
-X-Gmail-Original-Message-ID: <CAD=FV=XEyn5tLhOFnVTP4W-_qQG_UpZ0npveEo-vE0Y=wKqaBg@mail.gmail.com>
-Message-ID: <CAD=FV=XEyn5tLhOFnVTP4W-_qQG_UpZ0npveEo-vE0Y=wKqaBg@mail.gmail.com>
-Subject: Re: [PATCH 1/2] dt-bindings: drm/bridge: ti-sn65dsi86: Replace #pwm-cells
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Tue, 10 Nov 2020 16:57:37 -0800
+From:   rishabhb@codeaurora.org
 To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     David Airlie <airlied@linux.ie>, Daniel Vetter <daniel@ffwll.ch>,
-        Rob Herring <robh+dt@kernel.org>,
-        Andrzej Hajda <a.hajda@samsung.com>,
-        Neil Armstrong <narmstrong@baylibre.com>,
-        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
-        Jonas Karlman <jonas@kwiboo.se>,
-        Jernej Skrabec <jernej.skrabec@siol.net>,
-        dri-devel <dri-devel@lists.freedesktop.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>, LKML <linux-kernel@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Cc:     Andy Gross <agross@kernel.org>, Ohad Ben-Cohen <ohad@wizery.com>,
+        Siddharth Gupta <sidgup@codeaurora.org>,
+        Sibi Sankar <sibis@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
+        linux-kernel@vger.kernel.org, stable@vger.kernel.org
+Subject: Re: [PATCH v2 1/4] remoteproc: sysmon: Ensure remote notification
+ ordering
+In-Reply-To: <20201105045051.1365780-2-bjorn.andersson@linaro.org>
+References: <20201105045051.1365780-1-bjorn.andersson@linaro.org>
+ <20201105045051.1365780-2-bjorn.andersson@linaro.org>
+Message-ID: <fb182a63172af055be473247bc783bd6@codeaurora.org>
+X-Sender: rishabhb@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+On 2020-11-04 20:50, Bjorn Andersson wrote:
+> The reliance on the remoteproc's state for determining when to send
+> sysmon notifications to a remote processor is racy with regard to
+> concurrent remoteproc operations.
+> 
+> Further more the advertisement of the state of other remote processor 
+> to
+> a newly started remote processor might not only send the wrong state,
+> but might result in a stream of state changes that are out of order.
+> 
+> Address this by introducing state tracking within the sysmon instances
+> themselves and extend the locking to ensure that the notifications are
+> consistent with this state.
+> 
+> Fixes: 1f36ab3f6e3b ("remoteproc: sysmon: Inform current rproc about
+> all active rprocs")
+> Fixes: 1877f54f75ad ("remoteproc: sysmon: Add notifications for 
+> events")
+> Fixes: 1fb82ee806d1 ("remoteproc: qcom: Introduce sysmon")
+> Cc: stable@vger.kernel.org
+> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> ---
+> 
+> Changes since v1:
+> - Reduced the locking to be per sysmon instance
+> - Dropped unused local "rproc" variable in sysmon_notify()
+> 
+>  drivers/remoteproc/qcom_sysmon.c | 27 +++++++++++++++++++++------
+>  1 file changed, 21 insertions(+), 6 deletions(-)
+> 
+> diff --git a/drivers/remoteproc/qcom_sysmon.c 
+> b/drivers/remoteproc/qcom_sysmon.c
+> index 9eb2f6bccea6..38f63c968fa8 100644
+> --- a/drivers/remoteproc/qcom_sysmon.c
+> +++ b/drivers/remoteproc/qcom_sysmon.c
+> @@ -22,6 +22,9 @@ struct qcom_sysmon {
+>  	struct rproc_subdev subdev;
+>  	struct rproc *rproc;
+> 
+> +	int state;
+> +	struct mutex state_lock;
+> +
+>  	struct list_head node;
+> 
+>  	const char *name;
+> @@ -448,7 +451,10 @@ static int sysmon_prepare(struct rproc_subdev 
+> *subdev)
+>  		.ssr_event = SSCTL_SSR_EVENT_BEFORE_POWERUP
+>  	};
+> 
+> +	mutex_lock(&sysmon->state_lock);
+> +	sysmon->state = SSCTL_SSR_EVENT_BEFORE_POWERUP;
+>  	blocking_notifier_call_chain(&sysmon_notifiers, 0, (void *)&event);
+> +	mutex_unlock(&sysmon->state_lock);
+> 
+>  	return 0;
+>  }
+> @@ -472,22 +478,25 @@ static int sysmon_start(struct rproc_subdev 
+> *subdev)
+>  		.ssr_event = SSCTL_SSR_EVENT_AFTER_POWERUP
+>  	};
+> 
+> +	mutex_lock(&sysmon->state_lock);
+> +	sysmon->state = SSCTL_SSR_EVENT_AFTER_POWERUP;
+>  	blocking_notifier_call_chain(&sysmon_notifiers, 0, (void *)&event);
+> +	mutex_unlock(&sysmon->state_lock);
+> 
+> -	mutex_lock(&sysmon_lock);
 
-On Mon, Nov 2, 2020 at 9:08 AM Bjorn Andersson
-<bjorn.andersson@linaro.org> wrote:
->
-> On Fri 02 Oct 15:42 CDT 2020, Doug Anderson wrote:
->
-> > Hi,
-> >
-> > On Wed, Sep 30, 2020 at 3:40 PM Bjorn Andersson
-> > <bjorn.andersson@linaro.org> wrote:
-> > >
-> > > While the signal on GPIO4 to drive the backlight controller indeed is
-> > > pulse width modulated its purpose is specifically to control the
-> > > brightness of a backlight.
-> >
-> > I'm a bit on the fence about this.  I guess you're doing this because
-> > it avoids some -EPROBE_DEFER cycles in Linux?  It does seem to have a
-> > few downsides, though.
-> >
->
-> No, the reason for exposing a backlight is that while the thing
-> certainly is a PWM signal, the description of it and the registers
-> available to control it surely seems "backlight" to me.
->
-> In particular No, the reason for exposing a backlight is that while
-> while the thing certainly is a PWM signal, the description of it and the
-> registers available to control it surely seems "backlight" to me.
->
-> > 1. It means a bit of re-inventing the wheel.  It's not a very big
-> > wheel, though, I'll give you.  ...but it's still something.
-> >
->
-> The main problem I saw with exposing this as a PWM was the fact that we
-> have both period and frequency to control...
->
-> > 2. I'm not sure why you'd want to, but in theory one could use this
-> > PWM for some other purposes.  It really is just a generic PWM.  Your
-> > change prevents that.
-> >
->
-> ...and in the even that you use it as a "generic" PWM I'd expect that
-> the specified period is related to the frequency of the signal. But the
-> period is documented to be related to the number of brightness steps of
-> the panel.
+We should keep the sysmon_lock to make sure sysmon_list is not modified
+at the time we are doing this operation?
+>  	list_for_each_entry(target, &sysmon_list, node) {
+> -		if (target == sysmon ||
+> -		    target->rproc->state != RPROC_RUNNING)
+> +		if (target == sysmon)
+>  			continue;
+> 
+> +		mutex_lock(&target->state_lock);
+>  		event.subsys_name = target->name;
+> +		event.ssr_event = target->state;
 
-I think the key here is that the "number of brightness steps of the
-panel" isn't really a thing that's worried about.  At least in my
-experience, you can pretty much just use as many steps as you can
-represent based on your PWM hardware.  If a panel happens to map some
-of those steps to the same brightness then it wouldn't be the end of
-the world, but in experience it's not really such a digital thing.  If
-you choose 4096 steps then you likely get 4096 different brightness
-levels.  If you choose 256 steps then you get 256 different brightness
-levels.  Once you have "more than enough" steps then everything's
-pretty much fine.
-
-Looking at one random panel (just to get an idea of numbers), I see
-that it specifies:
-* min PWM Freq: 200 Hz
-* max PWM Freq: 10,000 Hz.
-
-...and refclk is something between 12 MHz and 38.4 MHz, right?
-
-The bridge chip datasheet says:
-
-PWM_FREQ = REFCLK_FREQ / (PWM_PRE_DIV * BACKLIGHT_SCALE + 1)
-
-So let's see what we can do.  I'm arguing that we want the client to
-be able to specify the PWM frequency and duty cycle and we'll do the
-job of picking the number of steps.  We'll try for the most steps we
-can get (65535).
-
-I guess we need to solve for PWM_PRE_DIV :
-
-PWM_FREQ * (PWM_PRE_DIV * BACKLIGHT_SCALE + 1) = REFCLK_FREQ
-PWM_PRE_DIV * BACKLIGHT_SCALE + 1 = REFCLK_FREQ / PWM_FREQ
-PWM_PRE_DIV * BACKLIGHT_SCALE = REFCLK_FREQ / PWM_FREQ - 1
-PWM_PRE_DIV = (REFCLK_FREQ / PWM_FREQ - 1) / BACKLIGHT_SCALE
-
-...and solve for BACKLIGHT_SCALE:
-BACKLIGHT_SCALE = (REFCLK_FREQ / PWM_FREQ - 1) / PWM_PRE_DIV
-
-
-With 1000 Hz, 12 MHz refclk:
-
-PWM_PRE_DIV = DIV_ROUND_UP(12000000 / 1000 - 1, 65535)
-=> 1
-BACKLIGHT_SCALE = (12000000 / 1000 - 1) / 1
-=> 11999
-
-With 1000 Hz, 38.4 MHz refclk:
-PWM_PRE_DIV = DIV_ROUND_UP(38400000 / 1000 - 1, 65535)
-=> 1
-BACKLIGHT_SCALE = (38400000 / 1000 - 1) / 1
-=> 38399
-
-With 200 Hz, 38.4 MHz refclk:
-PWM_PRE_DIV = DIV_ROUND_UP(38400000 / 200 - 1, 65535)
-=> 3
-BACKLIGHT_SCALE = (38400000 / 200 - 1) / 3
-=> 63999
-
-Now that you have BACKLIGHT_SCALE specified, then when someone tries
-to give you a duty cycle you just map it to the closest value you can
-make.  Obviously you won't be able to perfectly make every exact duty
-cycle / period that a client requests, but that's true of all PWMs out
-there.
-
-The nice thing here is that (assuming my math is right) we should be
-getting nearly exactly the frequency that the client requested and
-that (in my mind) is what matters.  You also get as many steps as
-possible which means that (with the PWM backlight API) you'll be able
-to get as close as possible to whatever a user requests.
-
-
-> > > Drop the #pwm-cells and instead expose a new property to configure the
-> > > granularity of the backlight PWM signal.
-> > >
-> > > Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-> > > ---
-> > >  .../devicetree/bindings/display/bridge/ti,sn65dsi86.yaml | 9 ++++++---
-> > >  1 file changed, 6 insertions(+), 3 deletions(-)
-> > >
-> > > diff --git a/Documentation/devicetree/bindings/display/bridge/ti,sn65dsi86.yaml b/Documentation/devicetree/bindings/display/bridge/ti,sn65dsi86.yaml
-> > > index f8622bd0f61e..e380218b4646 100644
-> > > --- a/Documentation/devicetree/bindings/display/bridge/ti,sn65dsi86.yaml
-> > > +++ b/Documentation/devicetree/bindings/display/bridge/ti,sn65dsi86.yaml
-> > > @@ -66,9 +66,12 @@ properties:
-> > >        1-based to match the datasheet.  See ../../gpio/gpio.txt for more
-> > >        information.
-> > >
-> > > -  '#pwm-cells':
-> > > -    const: 1
-> > > -    description: See ../../pwm/pwm.yaml for description of the cell formats.
-> > > +  ti,backlight-scale:
-> > > +    description:
-> > > +      The granularity of brightness for the PWM signal provided on GPIO4, if
-> > > +      this property is specified.
-> > > +    minimum: 0
-> > > +    maximum: 65535
-> >
-> > A few issues here:
-> >
-> > 1. Maybe call this "num-steps" instead of backlight-scale.  That's
-> > essentially what it is, right?  Saying how many discrete steps you're
-> > allowing in your backlight?
-> >
->
-> That would work, I had it as "max-brightness" for a while as well. But I
-> reverted to backlight-scale, because that's the name used in the
-> datasheet.
->
-> I'm fine with whatever color of the shed though :)
->
-> > 2. IMO you need the PWM frequency specified, since it can actually
-> > matter.  NOTE: once you have the PWM frequency specified, you could
-> > imagine automatically figuring out what "num-steps" was.  Really you'd
-> > want it to be the largest possible value you could achieve with your
-> > hardware at the specified frequency.  There's no advantage (is there?)
-> > of providing fewer steps to the backlight client.
-> >
->
-> I guess there's no problem in having a "num-steps" that is unrelated to
-> the number of brightness steps of the panel - but I did distinguish them
-> because the datasheet clearly does so.
-
-I think the datasheet talks about the number of steps that you will be
-able to make, but that doesn't mean it has to be what's exposed to
-clients of this driver, right?
-
-
-> > 3. Some backlights are specified inverted.  It looks like this maps
-> > nicely to the bridge chip, which has a bit for it.  Probably nice to
-> > expose this?
-> >
->
-> Yes, that should be covered.
->
-> > Of course, if we were just exposing the PWM directly to Linux we could
-> > just use the PWM backlight driver and it'd all magically work.  ;-)
-> >
->
-> Please help me figure out how to properly expose this in the PWM api and
-> I'll be happy to respin it using this - as you say my wheel does look
-> pretty similar...
-
-Hopefully the above seems sane to you?
-
--Doug
+Is it better to only send this event when target->state is 
+"SSCTL_SSR_EVENT_AFTER_POWERUP"?
+> 
+>  		if (sysmon->ssctl_version == 2)
+>  			ssctl_send_event(sysmon, &event);
+>  		else if (sysmon->ept)
+>  			sysmon_send_event(sysmon, &event);
+> +		mutex_unlock(&target->state_lock);
+>  	}
+> -	mutex_unlock(&sysmon_lock);
+> 
+>  	return 0;
+>  }
+> @@ -500,7 +509,10 @@ static void sysmon_stop(struct rproc_subdev
+> *subdev, bool crashed)
+>  		.ssr_event = SSCTL_SSR_EVENT_BEFORE_SHUTDOWN
+>  	};
+> 
+> +	mutex_lock(&sysmon->state_lock);
+> +	sysmon->state = SSCTL_SSR_EVENT_BEFORE_SHUTDOWN;
+>  	blocking_notifier_call_chain(&sysmon_notifiers, 0, (void *)&event);
+> +	mutex_unlock(&sysmon->state_lock);
+> 
+>  	/* Don't request graceful shutdown if we've crashed */
+>  	if (crashed)
+> @@ -521,7 +533,10 @@ static void sysmon_unprepare(struct rproc_subdev 
+> *subdev)
+>  		.ssr_event = SSCTL_SSR_EVENT_AFTER_SHUTDOWN
+>  	};
+> 
+> +	mutex_lock(&sysmon->state_lock);
+> +	sysmon->state = SSCTL_SSR_EVENT_AFTER_SHUTDOWN;
+>  	blocking_notifier_call_chain(&sysmon_notifiers, 0, (void *)&event);
+> +	mutex_unlock(&sysmon->state_lock);
+>  }
+> 
+>  /**
+> @@ -534,11 +549,10 @@ static int sysmon_notify(struct notifier_block
+> *nb, unsigned long event,
+>  			 void *data)
+>  {
+>  	struct qcom_sysmon *sysmon = container_of(nb, struct qcom_sysmon, 
+> nb);
+> -	struct rproc *rproc = sysmon->rproc;
+>  	struct sysmon_event *sysmon_event = data;
+> 
+>  	/* Skip non-running rprocs and the originating instance */
+> -	if (rproc->state != RPROC_RUNNING ||
+> +	if (sysmon->state != SSCTL_SSR_EVENT_AFTER_POWERUP ||
+>  	    !strcmp(sysmon_event->subsys_name, sysmon->name)) {
+>  		dev_dbg(sysmon->dev, "not notifying %s\n", sysmon->name);
+>  		return NOTIFY_DONE;
+> @@ -591,6 +605,7 @@ struct qcom_sysmon *qcom_add_sysmon_subdev(struct
+> rproc *rproc,
+>  	init_completion(&sysmon->ind_comp);
+>  	init_completion(&sysmon->shutdown_comp);
+>  	mutex_init(&sysmon->lock);
+> +	mutex_init(&sysmon->state_lock);
+> 
+>  	sysmon->shutdown_irq = of_irq_get_byname(sysmon->dev->of_node,
+>  						 "shutdown-ack");
