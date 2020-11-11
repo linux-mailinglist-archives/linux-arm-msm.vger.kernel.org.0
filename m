@@ -2,213 +2,245 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 9DA6F2AF035
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Nov 2020 13:00:43 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 385CF2AF36E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Nov 2020 15:23:35 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726273AbgKKMAm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 11 Nov 2020 07:00:42 -0500
-Received: from lb1-smtp-cloud7.xs4all.net ([194.109.24.24]:38793 "EHLO
-        lb1-smtp-cloud7.xs4all.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726495AbgKKMAl (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 11 Nov 2020 07:00:41 -0500
-Received: from cust-b5b5937f ([IPv6:fc0c:c16d:66b8:757f:c639:739b:9d66:799d])
-        by smtp-cloud7.xs4all.net with ESMTPA
-        id con7kmvMzRiwVconGkaFiV; Wed, 11 Nov 2020 13:00:22 +0100
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=xs4all.nl; s=s1;
-        t=1605096024; bh=l0Ozo/+OjgN/6xyN63j58z4RiGeYnpiEElVQhjW0MUY=;
-        h=Subject:To:From:Message-ID:Date:MIME-Version:Content-Type:From:
-         Subject;
-        b=KpRAGyD+h4yH320VEmBUI32TmLwos4dB9+DM6q65P1tyO0/kXRxiypnLPdlWbangC
-         bDPBahys1rnntfj7xTculER+zYiFENWPLo+IRpUoRexYDvcFmphk/2pymArIWr65Eg
-         JHWfQxnfllX5ZKHhWKRfUN/62uWWuEHyrNrM8ejYE9iohLmkcWm85I+VMtSCtYCCZ9
-         02i6DLZyv/YqXGNqrSkox74T8kzfc7D4YUCqg9n/dQlbPf29na876oMg3yZpLoJcbI
-         Dkugb+l8E3laxKKN4YMJlH01bBCEG7mzeB9NjJLZZzRJLe1lOoGkH4CiA+BKc9XAlf
-         uxZ9gtAk8VTFg==
-Subject: Re: [PATCH v2 1/2] media: v4l2-ctrl: Add frame-specific min/max qp
- controls for hevc
-To:     Dikshita Agarwal <dikshita@codeaurora.org>,
-        linux-media@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-Cc:     mchehab@kernel.org, ezequiel@collabora.com,
-        stanimir.varbanov@linaro.org, vgarodia@codeaurora.org,
-        majja@codeaurora.org
-References: <1600693440-3015-1-git-send-email-dikshita@codeaurora.org>
- <1600693440-3015-2-git-send-email-dikshita@codeaurora.org>
-From:   Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Message-ID: <32716f9e-8fb9-5c8f-7f3b-742200ce00c2@xs4all.nl>
-Date:   Wed, 11 Nov 2020 12:59:57 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.12.0
+        id S1726136AbgKKOXe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 11 Nov 2020 09:23:34 -0500
+Received: from mail.kernel.org ([198.145.29.99]:37124 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726900AbgKKOXc (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 11 Nov 2020 09:23:32 -0500
+Received: from mail-ed1-f48.google.com (mail-ed1-f48.google.com [209.85.208.48])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id 6957021D7F
+        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Nov 2020 14:23:31 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1605104611;
+        bh=xm3rQeDIh2FuZjYEyhCI9+5vLDwhs0MB53yet3dsIaE=;
+        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+        b=YHYqe1XAaUhHzsv5Kqp60wcUzpVUg10Rf1hE9WUDffB3eyNSez3bzOaE0urommKG+
+         4S/vthSBxzglvADka+L/wmjplP1wrZSFya3A2DZMt+SFMkyiXj7GV1ewX1/3nmIqMC
+         zwd2312Z1N6FCegBdAAEv/fyh0fYMibHUH+wFsJ8=
+Received: by mail-ed1-f48.google.com with SMTP id v4so2505942edi.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Nov 2020 06:23:31 -0800 (PST)
+X-Gm-Message-State: AOAM531/ckvwWA4UBkJP+0eyDKCfG5v5SSzDLZZDdTLF0Ty36KSLqi1u
+        eeRsho8KEnGUYV3dyTtlmE2SpZMqk15OoiXOMA==
+X-Google-Smtp-Source: ABdhPJxh+77oiphOx3YcIcxiUEmfWiMYRwROdlpWqzLsSf75JddHNGi9QfuS9fuMmuFcPm/rgVNfg169e9VDB275Qg8=
+X-Received: by 2002:a50:f0d4:: with SMTP id a20mr5290937edm.303.1605104609593;
+ Wed, 11 Nov 2020 06:23:29 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <1600693440-3015-2-git-send-email-dikshita@codeaurora.org>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-X-CMAE-Envelope: MS4xfDwyuppk4vqyjet+IdgaWc5hDCrlM2OI91rLDhqpfPeCf6QMih/OwpgA2TcQMW2YUsIDwFKYRfpy5/0k4n0R4MNN26l5AZ72rqmb7gYrxYPCzElvfN8G
- OaBjTvdVMhhhNKlLTsCfF+JE1+hSVUfoxLmzH8+DbAD9ruehARw4z6O1yokfG3RntTdygDGYpzkJ33PmhCdRopdEnkpmzOV0o4NQ8FtQxWd8B1A/NEGfZFDk
- rsMgSPgfrDJlZQsDzkyDvOZ+qqBOxdvUaf/PJlfdlp1i3K8PMAUEcLQCNT8Jr3eVI2JYz3D0vegvbrMVZW1gy1YJXkdCjk63QX/PBd4sZ8bEsxKvuFb2s9or
- WntV766c1+71OmkmVoxvuLaOBDIdaXwiaHhsYeKWAp7N7bZoTcXQ/FXBkyGUPmIGYmgMhIrUqRDph/G+KyxyMPSCu+niEpziRUUanCX10dGJShOmLzFP9X4h
- hAvjZ07elBggWCdN8ww0kvrRG+MslBX3L6P7FA==
+References: <20201109103242.19544-1-tzimmermann@suse.de> <20201109103242.19544-3-tzimmermann@suse.de>
+In-Reply-To: <20201109103242.19544-3-tzimmermann@suse.de>
+From:   Chun-Kuang Hu <chunkuang.hu@kernel.org>
+Date:   Wed, 11 Nov 2020 22:23:15 +0800
+X-Gmail-Original-Message-ID: <CAAOTY__QuyEA7c4H+eSvrSdFTZttB4DXbjr6HLWoH8WovOD1eQ@mail.gmail.com>
+Message-ID: <CAAOTY__QuyEA7c4H+eSvrSdFTZttB4DXbjr6HLWoH8WovOD1eQ@mail.gmail.com>
+Subject: Re: [PATCH 2/2] drm/mediatek: Use struct dma_buf_map in GEM vmap ops
+To:     Thomas Zimmermann <tzimmermann@suse.de>
+Cc:     Daniel Vetter <daniel@ffwll.ch>, David Airlie <airlied@linux.ie>,
+        Chun-Kuang Hu <chunkuang.hu@kernel.org>,
+        Philipp Zabel <p.zabel@pengutronix.de>, robdclark@gmail.com,
+        sean@poorly.run, linux-arm-msm@vger.kernel.org,
+        freedreno@lists.freedesktop.org,
+        DRI Development <dri-devel@lists.freedesktop.org>,
+        =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>,
+        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Maxime Ripard <mripard@kernel.org>,
+        Dave Airlie <airlied@redhat.com>,
+        Lucas Stach <l.stach@pengutronix.de>,
+        Russell King <linux+etnaviv@armlinux.org.uk>,
+        Christian Gmeiner <christian.gmeiner@gmail.com>,
+        Qiang Yu <yuq825@gmail.com>, Ben Skeggs <bskeggs@redhat.com>,
+        Rob Herring <robh@kernel.org>,
+        Tomeu Vizoso <tomeu.vizoso@collabora.com>,
+        Steven Price <steven.price@arm.com>,
+        Alyssa Rosenzweig <alyssa.rosenzweig@collabora.com>,
+        Gerd Hoffmann <kraxel@redhat.com>,
+        Alex Deucher <alexander.deucher@amd.com>,
+        Sandy Huang <hjc@rock-chips.com>,
+        =?UTF-8?Q?Heiko_St=C3=BCbner?= <heiko@sntech.de>,
+        Hans de Goede <hdegoede@redhat.com>,
+        Eric Anholt <eric@anholt.net>,
+        Rodrigo Siqueira <rodrigosiqueiramelo@gmail.com>,
+        Melissa Wen <melissa.srw@gmail.com>,
+        Haneen Mohammed <hamohammed.sa@gmail.com>,
+        Oleksandr Andrushchenko <oleksandr_andrushchenko@epam.com>,
+        Sumit Semwal <sumit.semwal@linaro.org>,
+        Emil Velikov <emil.velikov@collabora.com>,
+        Marek Szyprowski <m.szyprowski@samsung.com>,
+        Arunpravin <apaneers@amd.com>, Huang Rui <ray.huang@amd.com>,
+        Luben Tuikov <luben.tuikov@amd.com>,
+        Madhav Chauhan <madhav.chauhan@amd.com>,
+        Nirmoy Das <Nirmoy.Das@amd.com>,
+        Jason Gunthorpe <jgg@ziepe.ca>,
+        Sam Ravnborg <sam@ravnborg.org>,
+        Chris Wilson <chris@chris-wilson.co.uk>,
+        etnaviv@lists.freedesktop.org, lima@lists.freedesktop.org,
+        nouveau@lists.freedesktop.org,
+        virtualization@lists.linux-foundation.org,
+        spice-devel@lists.freedesktop.org, amd-gfx@lists.freedesktop.org,
+        Linux ARM <linux-arm-kernel@lists.infradead.org>,
+        linux-rockchip@lists.infradead.org, xen-devel@lists.xenproject.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 21/09/2020 15:03, Dikshita Agarwal wrote:
-> - Adds min/max qp controls for B frame for h264.
-> - Adds min/max qp controls for I/P/B frames for hevc similar to h264.
-> - Update valid range of mim/max qp for hevc to accommodate 10 bit.
-> 
-> Signed-off-by: Dikshita Agarwal <dikshita@codeaurora.org>
+Hi, Thomas:
+
+Thomas Zimmermann <tzimmermann@suse.de> =E6=96=BC 2020=E5=B9=B411=E6=9C=889=
+=E6=97=A5 =E9=80=B1=E4=B8=80 =E4=B8=8B=E5=8D=886:32=E5=AF=AB=E9=81=93=EF=BC=
+=9A
+>
+> Fixes a build failure with mediatek.
+>
+> This change was supposed to be part of commit 49a3f51dfeee ("drm/gem:
+> Use struct dma_buf_map in GEM vmap ops and convert GEM backends"), but
+> mediatek was forgotten.
+
+Acked-by: Chun-Kuang Hu <chunkuang.hu@kernel.org>
+
+>
+> Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
+> Fixes: 49a3f51dfeee ("drm/gem: Use struct dma_buf_map in GEM vmap ops and=
+ convert GEM backends")
+> Cc: Thomas Zimmermann <tzimmermann@suse.de>
+> Cc: Christian K=C3=B6nig <christian.koenig@amd.com>
+> Cc: David Airlie <airlied@linux.ie>
+> Cc: Daniel Vetter <daniel@ffwll.ch>
+> Cc: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>
+> Cc: Maxime Ripard <mripard@kernel.org>
+> Cc: Dave Airlie <airlied@redhat.com>
+> Cc: Lucas Stach <l.stach@pengutronix.de>
+> Cc: Russell King <linux+etnaviv@armlinux.org.uk>
+> Cc: Christian Gmeiner <christian.gmeiner@gmail.com>
+> Cc: Qiang Yu <yuq825@gmail.com>
+> Cc: Ben Skeggs <bskeggs@redhat.com>
+> Cc: Rob Herring <robh@kernel.org>
+> Cc: Tomeu Vizoso <tomeu.vizoso@collabora.com>
+> Cc: Steven Price <steven.price@arm.com>
+> Cc: Alyssa Rosenzweig <alyssa.rosenzweig@collabora.com>
+> Cc: Gerd Hoffmann <kraxel@redhat.com>
+> Cc: Alex Deucher <alexander.deucher@amd.com>
+> Cc: "Christian K=C3=B6nig" <christian.koenig@amd.com>
+> Cc: Sandy Huang <hjc@rock-chips.com>
+> Cc: "Heiko St=C3=BCbner" <heiko@sntech.de>
+> Cc: Hans de Goede <hdegoede@redhat.com>
+> Cc: Sean Paul <sean@poorly.run>
+> Cc: Eric Anholt <eric@anholt.net>
+> Cc: Rodrigo Siqueira <rodrigosiqueiramelo@gmail.com>
+> Cc: Melissa Wen <melissa.srw@gmail.com>
+> Cc: Haneen Mohammed <hamohammed.sa@gmail.com>
+> Cc: Oleksandr Andrushchenko <oleksandr_andrushchenko@epam.com>
+> Cc: Sumit Semwal <sumit.semwal@linaro.org>
+> Cc: Emil Velikov <emil.velikov@collabora.com>
+> Cc: Marek Szyprowski <m.szyprowski@samsung.com>
+> Cc: Arunpravin <apaneers@amd.com>
+> Cc: Huang Rui <ray.huang@amd.com>
+> Cc: Luben Tuikov <luben.tuikov@amd.com>
+> Cc: Madhav Chauhan <madhav.chauhan@amd.com>
+> Cc: Nirmoy Das <Nirmoy.Das@amd.com>
+> Cc: Jason Gunthorpe <jgg@ziepe.ca>
+> Cc: Sam Ravnborg <sam@ravnborg.org>
+> Cc: Chris Wilson <chris@chris-wilson.co.uk>
+> Cc: dri-devel@lists.freedesktop.org
+> Cc: etnaviv@lists.freedesktop.org
+> Cc: lima@lists.freedesktop.org
+> Cc: nouveau@lists.freedesktop.org
+> Cc: virtualization@lists.linux-foundation.org
+> Cc: spice-devel@lists.freedesktop.org
+> Cc: amd-gfx@lists.freedesktop.org
+> Cc: linux-arm-kernel@lists.infradead.org
+> Cc: linux-rockchip@lists.infradead.org
+> Cc: xen-devel@lists.xenproject.org
 > ---
->  .../userspace-api/media/v4l/ext-ctrls-codec.rst    | 54 +++++++++++++++++++++-
->  drivers/media/v4l2-core/v4l2-ctrls.c               |  8 ++++
->  include/uapi/linux/v4l2-controls.h                 |  9 ++++
->  3 files changed, 69 insertions(+), 2 deletions(-)
-> 
-> diff --git a/Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst b/Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst
-> index ce728c75..26f8220 100644
-> --- a/Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst
-> +++ b/Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst
-> @@ -1182,6 +1182,18 @@ enum v4l2_mpeg_video_h264_entropy_mode -
->      V4L2_CID_MPEG_VIDEO_H264_MAX_QP is also set, the quantization parameter
->      should be chosen to meet both requirements.
->  
-> +``V4L2_CID_MPEG_VIDEO_H264_B_FRAME_MIN_QP (integer)``
-> +    Minimum quantization parameter for the H264 B frame to limit B frame
-> +    quality to a range. Valid range: from 0 to 51. If
-> +    V4L2_CID_MPEG_VIDEO_H264_MIN_QP is also set, the quantization parameter
-> +    should be chosen to meet both requirements.
-> +
-> +``V4L2_CID_MPEG_VIDEO_H264_B_FRAME_MAX_QP (integer)``
-> +    Maximum quantization parameter for the H264 B frame to limit B frame
-> +    quality to a range. Valid range: from 0 to 51. If
-> +    V4L2_CID_MPEG_VIDEO_H264_MAX_QP is also set, the quantization parameter
-> +    should be chosen to meet both requirements.
-> +
->  ``V4L2_CID_MPEG_VIDEO_MPEG4_I_FRAME_QP (integer)``
->      Quantization parameter for an I frame for MPEG4. Valid range: from 1
->      to 31.
-> @@ -3441,11 +3453,13 @@ HEVC/H.265 Control IDs
->  
->  ``V4L2_CID_MPEG_VIDEO_HEVC_MIN_QP (integer)``
->      Minimum quantization parameter for HEVC.
-> -    Valid range: from 0 to 51.
-> +    Valid range: from 0 - 51 for 8 bit and
-> +    0 - 63 for 10 bit.
-
-This can be on one line.
-
->  
->  ``V4L2_CID_MPEG_VIDEO_HEVC_MAX_QP (integer)``
->      Maximum quantization parameter for HEVC.
-> -    Valid range: from 0 to 51.
-> +    Valid range: from 0 - 51 for 8 bit and
-> +    0 - 63 for 10 bit
-
-Same here, but this is also missing a period at the end.
-
->  
->  ``V4L2_CID_MPEG_VIDEO_HEVC_I_FRAME_QP (integer)``
->      Quantization parameter for an I frame for HEVC.
-> @@ -3462,6 +3476,42 @@ HEVC/H.265 Control IDs
->      Valid range: [V4L2_CID_MPEG_VIDEO_HEVC_MIN_QP,
->      V4L2_CID_MPEG_VIDEO_HEVC_MAX_QP].
->  
-> +``V4L2_CID_MPEG_VIDEO_HEVC_I_FRAME_MIN_QP (integer)``
-> +    Minimum quantization parameter for the HEVC I frame to limit I frame
-> +    quality to a range. Valid range: from 0 to 51 for 8 bit, 0 - 63 for 10 bit.
-> +    If V4L2_CID_MPEG_VIDEO_HEVC_MIN_QP is also set, the quantization parameter
-> +    should be chosen to meet both requirements.
-> +
-> +``V4L2_CID_MPEG_VIDEO_HEVC_I_FRAME_MAX_QP (integer)``
-> +    Maximum quantization parameter for the HEVC I frame to limit I frame
-> +    quality to a range. Valid range: from 0 to 51 for 8 bit, 0 - 63 for 10 bit.
-> +    If V4L2_CID_MPEG_VIDEO_HEVC_MAX_QP is also set, the quantization parameter
-> +    should be chosen to meet both requirements.
-> +
-> +``V4L2_CID_MPEG_VIDEO_HEVC_P_FRAME_MIN_QP (integer)``
-> +    Minimum quantization parameter for the HEVC P frame to limit P frame
-> +    quality to a range. Valid range: from 0 to 51 for 8 bit, 0 - 63 for 10 bit.
-> +    If V4L2_CID_MPEG_VIDEO_HEVC_MIN_QP is also set, the quantization parameter
-> +    should be chosen to meet both requirements.
-> +
-> +``V4L2_CID_MPEG_VIDEO_HEVC_P_FRAME_MAX_QP (integer)``
-> +    Maximum quantization parameter for the HEVC P frame to limit P frame
-> +    quality to a range. Valid range: from 0 to 51 for 8 bit, 0 - 63 for 10 bit.
-> +    If V4L2_CID_MPEG_VIDEO_HEVC_MAX_QP is also set, the quantization parameter
-> +    should be chosen to meet both requirements.
-> +
-> +``V4L2_CID_MPEG_VIDEO_HEVC_B_FRAME_MIN_QP (integer)``
-> +    Minimum quantization parameter for the HEVC B frame to limit B frame
-> +    quality to a range. Valid range: from 0 to 51 for 8 bit, 0 - 63 for 10 bit.
-> +    If V4L2_CID_MPEG_VIDEO_HEVC_MIN_QP is also set, the quantization parameter
-> +    should be chosen to meet both requirements.
-> +
-> +``V4L2_CID_MPEG_VIDEO_HEVC_B_FRAME_MAX_QP (integer)``
-> +    Maximum quantization parameter for the HEVC B frame to limit B frame
-> +    quality to a range. Valid range: from 0 to 51 for 8 bit, 0 - 63 for 10 bit.
-> +    If V4L2_CID_MPEG_VIDEO_HEVC_MAX_QP is also set, the quantization parameter
-> +    should be chosen to meet both requirements.
-> +
->  ``V4L2_CID_MPEG_VIDEO_HEVC_HIER_QP (boolean)``
->      HIERARCHICAL_QP allows the host to specify the quantization parameter
->      values for each temporal layer through HIERARCHICAL_QP_LAYER. This is
-> diff --git a/drivers/media/v4l2-core/v4l2-ctrls.c b/drivers/media/v4l2-core/v4l2-ctrls.c
-> index bd7f330..abef73e 100644
-> --- a/drivers/media/v4l2-core/v4l2-ctrls.c
-> +++ b/drivers/media/v4l2-core/v4l2-ctrls.c
-> @@ -920,6 +920,8 @@ const char *v4l2_ctrl_get_name(u32 id)
->  	case V4L2_CID_MPEG_VIDEO_H264_I_FRAME_MAX_QP:		return "H264 I-Frame Maximum QP Value";
->  	case V4L2_CID_MPEG_VIDEO_H264_P_FRAME_MIN_QP:		return "H264 P-Frame Minimum QP Value";
->  	case V4L2_CID_MPEG_VIDEO_H264_P_FRAME_MAX_QP:		return "H264 P-Frame Maximum QP Value";
-> +	case V4L2_CID_MPEG_VIDEO_H264_B_FRAME_MIN_QP:		return "H264 B-Frame Minimum QP Value";
-> +	case V4L2_CID_MPEG_VIDEO_H264_B_FRAME_MAX_QP:		return "H264 B-Frame Maximum QP Value";
->  	case V4L2_CID_MPEG_VIDEO_H264_SPS:			return "H264 Sequence Parameter Set";
->  	case V4L2_CID_MPEG_VIDEO_H264_PPS:			return "H264 Picture Parameter Set";
->  	case V4L2_CID_MPEG_VIDEO_H264_SCALING_MATRIX:		return "H264 Scaling Matrix";
-> @@ -978,6 +980,12 @@ const char *v4l2_ctrl_get_name(u32 id)
->  	case V4L2_CID_MPEG_VIDEO_HEVC_B_FRAME_QP:		return "HEVC B-Frame QP Value";
->  	case V4L2_CID_MPEG_VIDEO_HEVC_MIN_QP:			return "HEVC Minimum QP Value";
->  	case V4L2_CID_MPEG_VIDEO_HEVC_MAX_QP:			return "HEVC Maximum QP Value";
-> +	case V4L2_CID_MPEG_VIDEO_HEVC_I_FRAME_MIN_QP:		return "HEVC I-Frame Minimum QP Value";
-> +	case V4L2_CID_MPEG_VIDEO_HEVC_I_FRAME_MAX_QP:		return "HEVC I-Frame Maximum QP Value";
-> +	case V4L2_CID_MPEG_VIDEO_HEVC_P_FRAME_MIN_QP:		return "HEVC P-Frame Minimum QP Value";
-> +	case V4L2_CID_MPEG_VIDEO_HEVC_P_FRAME_MAX_QP:		return "HEVC P-Frame Maximum QP Value";
-> +	case V4L2_CID_MPEG_VIDEO_HEVC_B_FRAME_MIN_QP:		return "HEVC B-Frame Minimum QP Value";
-> +	case V4L2_CID_MPEG_VIDEO_HEVC_B_FRAME_MAX_QP:		return "HEVC B-Frame Maximum QP Value";
->  	case V4L2_CID_MPEG_VIDEO_HEVC_PROFILE:			return "HEVC Profile";
->  	case V4L2_CID_MPEG_VIDEO_HEVC_LEVEL:			return "HEVC Level";
->  	case V4L2_CID_MPEG_VIDEO_HEVC_TIER:			return "HEVC Tier";
-> diff --git a/include/uapi/linux/v4l2-controls.h b/include/uapi/linux/v4l2-controls.h
-> index a184c49..7ba05fe 100644
-> --- a/include/uapi/linux/v4l2-controls.h
-> +++ b/include/uapi/linux/v4l2-controls.h
-> @@ -578,6 +578,8 @@ enum v4l2_mpeg_video_h264_hierarchical_coding_type {
->  #define V4L2_CID_MPEG_VIDEO_H264_I_FRAME_MAX_QP	(V4L2_CID_MPEG_BASE+386)
->  #define V4L2_CID_MPEG_VIDEO_H264_P_FRAME_MIN_QP	(V4L2_CID_MPEG_BASE+387)
->  #define V4L2_CID_MPEG_VIDEO_H264_P_FRAME_MAX_QP	(V4L2_CID_MPEG_BASE+388)
-> +#define V4L2_CID_MPEG_VIDEO_H264_B_FRAME_MIN_QP	(V4L2_CID_MPEG_BASE+389)
-> +#define V4L2_CID_MPEG_VIDEO_H264_B_FRAME_MAX_QP	(V4L2_CID_MPEG_BASE+390)
->  #define V4L2_CID_MPEG_VIDEO_MPEG4_I_FRAME_QP	(V4L2_CID_MPEG_BASE+400)
->  #define V4L2_CID_MPEG_VIDEO_MPEG4_P_FRAME_QP	(V4L2_CID_MPEG_BASE+401)
->  #define V4L2_CID_MPEG_VIDEO_MPEG4_B_FRAME_QP	(V4L2_CID_MPEG_BASE+402)
-> @@ -762,6 +764,13 @@ enum v4l2_cid_mpeg_video_hevc_size_of_length_field {
->  #define V4L2_CID_MPEG_VIDEO_PREPEND_SPSPPS_TO_IDR	(V4L2_CID_MPEG_BASE + 644)
->  #define V4L2_CID_MPEG_VIDEO_CONSTANT_QUALITY		(V4L2_CID_MPEG_BASE + 645)
->  #define V4L2_CID_MPEG_VIDEO_FRAME_SKIP_MODE		(V4L2_CID_MPEG_BASE + 646)
-> +#define V4L2_CID_MPEG_VIDEO_HEVC_I_FRAME_MIN_QP	(V4L2_CID_MPEG_BASE+647)
-> +#define V4L2_CID_MPEG_VIDEO_HEVC_I_FRAME_MAX_QP	(V4L2_CID_MPEG_BASE+648)
-> +#define V4L2_CID_MPEG_VIDEO_HEVC_P_FRAME_MIN_QP	(V4L2_CID_MPEG_BASE+649)
-> +#define V4L2_CID_MPEG_VIDEO_HEVC_P_FRAME_MAX_QP	(V4L2_CID_MPEG_BASE+650)
-> +#define V4L2_CID_MPEG_VIDEO_HEVC_B_FRAME_MIN_QP	(V4L2_CID_MPEG_BASE+651)
-> +#define V4L2_CID_MPEG_VIDEO_HEVC_B_FRAME_MAX_QP	(V4L2_CID_MPEG_BASE+652)
-> +
->  enum v4l2_mpeg_video_frame_skip_mode {
->  	V4L2_MPEG_VIDEO_FRAME_SKIP_MODE_DISABLED	= 0,
->  	V4L2_MPEG_VIDEO_FRAME_SKIP_MODE_LEVEL_LIMIT	= 1,
-> 
-
-Regards,
-
-	Hans
+>  drivers/gpu/drm/mediatek/mtk_drm_gem.c | 20 ++++++++++++--------
+>  drivers/gpu/drm/mediatek/mtk_drm_gem.h |  4 ++--
+>  2 files changed, 14 insertions(+), 10 deletions(-)
+>
+> diff --git a/drivers/gpu/drm/mediatek/mtk_drm_gem.c b/drivers/gpu/drm/med=
+iatek/mtk_drm_gem.c
+> index cdd1a6e61564..28a2ee1336ef 100644
+> --- a/drivers/gpu/drm/mediatek/mtk_drm_gem.c
+> +++ b/drivers/gpu/drm/mediatek/mtk_drm_gem.c
+> @@ -240,23 +240,25 @@ struct drm_gem_object *mtk_gem_prime_import_sg_tabl=
+e(struct drm_device *dev,
+>         return &mtk_gem->base;
+>  }
+>
+> -void *mtk_drm_gem_prime_vmap(struct drm_gem_object *obj)
+> +int mtk_drm_gem_prime_vmap(struct drm_gem_object *obj, struct dma_buf_ma=
+p *map)
+>  {
+>         struct mtk_drm_gem_obj *mtk_gem =3D to_mtk_gem_obj(obj);
+> -       struct sg_table *sgt;
+> +       struct sg_table *sgt =3D NULL;
+>         unsigned int npages;
+>
+>         if (mtk_gem->kvaddr)
+> -               return mtk_gem->kvaddr;
+> +               goto out;
+>
+>         sgt =3D mtk_gem_prime_get_sg_table(obj);
+>         if (IS_ERR(sgt))
+> -               return NULL;
+> +               return PTR_ERR(sgt);
+>
+>         npages =3D obj->size >> PAGE_SHIFT;
+>         mtk_gem->pages =3D kcalloc(npages, sizeof(*mtk_gem->pages), GFP_K=
+ERNEL);
+> -       if (!mtk_gem->pages)
+> -               goto out;
+> +       if (!mtk_gem->pages) {
+> +               kfree(sgt);
+> +               return -ENOMEM;
+> +       }
+>
+>         drm_prime_sg_to_page_addr_arrays(sgt, mtk_gem->pages, NULL, npage=
+s);
+>
+> @@ -265,13 +267,15 @@ void *mtk_drm_gem_prime_vmap(struct drm_gem_object =
+*obj)
+>
+>  out:
+>         kfree(sgt);
+> +       dma_buf_map_set_vaddr(map, mtk_gem->kvaddr);
+>
+> -       return mtk_gem->kvaddr;
+> +       return 0;
+>  }
+>
+> -void mtk_drm_gem_prime_vunmap(struct drm_gem_object *obj, void *vaddr)
+> +void mtk_drm_gem_prime_vunmap(struct drm_gem_object *obj, struct dma_buf=
+_map *map)
+>  {
+>         struct mtk_drm_gem_obj *mtk_gem =3D to_mtk_gem_obj(obj);
+> +       void *vaddr =3D map->vaddr;
+>
+>         if (!mtk_gem->pages)
+>                 return;
+> diff --git a/drivers/gpu/drm/mediatek/mtk_drm_gem.h b/drivers/gpu/drm/med=
+iatek/mtk_drm_gem.h
+> index ff9f976d9807..6da5ccb4b933 100644
+> --- a/drivers/gpu/drm/mediatek/mtk_drm_gem.h
+> +++ b/drivers/gpu/drm/mediatek/mtk_drm_gem.h
+> @@ -45,7 +45,7 @@ int mtk_drm_gem_mmap_buf(struct drm_gem_object *obj,
+>  struct sg_table *mtk_gem_prime_get_sg_table(struct drm_gem_object *obj);
+>  struct drm_gem_object *mtk_gem_prime_import_sg_table(struct drm_device *=
+dev,
+>                         struct dma_buf_attachment *attach, struct sg_tabl=
+e *sg);
+> -void *mtk_drm_gem_prime_vmap(struct drm_gem_object *obj);
+> -void mtk_drm_gem_prime_vunmap(struct drm_gem_object *obj, void *vaddr);
+> +int mtk_drm_gem_prime_vmap(struct drm_gem_object *obj, struct dma_buf_ma=
+p *map);
+> +void mtk_drm_gem_prime_vunmap(struct drm_gem_object *obj, struct dma_buf=
+_map *map);
+>
+>  #endif
+> --
+> 2.29.2
+>
