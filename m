@@ -2,171 +2,147 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 9EDE12AE833
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Nov 2020 06:40:10 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 257992AE89A
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Nov 2020 07:03:00 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725468AbgKKFkJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 11 Nov 2020 00:40:09 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33670 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725870AbgKKFkI (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 11 Nov 2020 00:40:08 -0500
-Received: from mail-oi1-x243.google.com (mail-oi1-x243.google.com [IPv6:2607:f8b0:4864:20::243])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1DAB0C0617A6
-        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Nov 2020 21:40:08 -0800 (PST)
-Received: by mail-oi1-x243.google.com with SMTP id j7so868523oie.12
-        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Nov 2020 21:40:08 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=NDUtVAeVkvu9Gc32xI9255swYRKkk0TO9KMq0qQOaaU=;
-        b=dlr8D/YmUWgv/Jf/c0R8525jdTh8nfECXhST6AI+/uG1Syl/mqBvP2XmjV2tL0GUia
-         NE2lL6NPV2JThEGplv1Mv2AKXBJT89u9cjCWG1nhO+Fgek3Wc7xw1uEWwboSpTxpNVO7
-         2/WYgow2Wu668HDGUgzN/w7+FwzW1RVTnCZW2RUHCto4ZEBTi3kU4N+1BR6AigJUk3Eo
-         p+E9TU4l94ftxz4U/BV8Njr6rzrXZE+PcDgkIJQQOcKPYMP1+kwtg8dOmJdm6NUh4VEB
-         ywy5KRP8Zw1kgH/flRfUT7+14BrXSK6b5NlYG3T9pqxCyD0tFX8rMwxkbvwjyuQq1OWF
-         gTMg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=NDUtVAeVkvu9Gc32xI9255swYRKkk0TO9KMq0qQOaaU=;
-        b=NoQ6HGq2M6KzVCIpPhxl8dg5ZhFPpNoCOkyPjTY+G/V0ODFwpiaopUximeLfGeVbZu
-         i0PL/ZBC1yL7f31ApEagFW3kNulj+u8q1lctJolr8reWswgXtrGciihbjp+hiLcetCz0
-         s45egwhJTiWiODEb8QgtUOXJS2DAe+5bIrzWYHuzPRlhzXW44GCe6oL+OU7emkw/PaLj
-         7lNXmG+Ru58cweCCwQg4QT7ZxsikPssB+L1LaqGMJxa0nf2u0dvNrfdZr6jM6tHIMbXy
-         yX7etkEmFPVcn20ixkKgnVUOk+1iuRqNb21Wch98rYHN96QmOZdlevZYLKpCqijGE1wc
-         Vc3g==
-X-Gm-Message-State: AOAM533AsqsAIwU1xaAa1qVg0lSm8UyVonV7A+nEriI/WQOMJ3pJICf1
-        a/vQ7jqYyOf7podA7dGDP7apmQ==
-X-Google-Smtp-Source: ABdhPJxK6F7c/RWwxw7TCkgpzaMCWt/aNHqdIKETIZxMQKdxSmrzM+jPTd2O483Ga0o1zzppb+OFdA==
-X-Received: by 2002:aca:90c:: with SMTP id 12mr1138942oij.15.1605073207304;
-        Tue, 10 Nov 2020 21:40:07 -0800 (PST)
-Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id m3sm233355oim.36.2020.11.10.21.40.06
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 10 Nov 2020 21:40:06 -0800 (PST)
-Date:   Tue, 10 Nov 2020 23:40:04 -0600
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     rishabhb@codeaurora.org
-Cc:     Andy Gross <agross@kernel.org>, Ohad Ben-Cohen <ohad@wizery.com>,
-        Siddharth Gupta <sidgup@codeaurora.org>,
-        Sibi Sankar <sibis@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
-        linux-kernel@vger.kernel.org, stable@vger.kernel.org
-Subject: Re: [PATCH v2 1/4] remoteproc: sysmon: Ensure remote notification
- ordering
-Message-ID: <20201111054004.GG332990@builder.lan>
-References: <20201105045051.1365780-1-bjorn.andersson@linaro.org>
- <20201105045051.1365780-2-bjorn.andersson@linaro.org>
- <fb182a63172af055be473247bc783bd6@codeaurora.org>
+        id S1725924AbgKKGCz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 11 Nov 2020 01:02:55 -0500
+Received: from z5.mailgun.us ([104.130.96.5]:46186 "EHLO z5.mailgun.us"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725828AbgKKGCz (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 11 Nov 2020 01:02:55 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1605074574; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=19xKhDfznvGCGW+VmHaRPVkvoli1tFBpBhhWtoq6cRk=;
+ b=OsONgQBp6ruq8AxSMA/PaS2sWCBCPs2CKWkF4Biq7MVLPQYdDFOf32BuzIgsEv8GgSNV7jCa
+ 7kIYCEZ7olsR5XjF+vO9VDHiq+qQo2FgWFd5uKdWhrq8IhF6TrX7bGdKsqxrBZQySv4WAB6m
+ fCeId+T8iRzvJcz74HPQcK07+Nc=
+X-Mailgun-Sending-Ip: 104.130.96.5
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n01.prod.us-east-1.postgun.com with SMTP id
+ 5fab7e8336968cecaf715e25 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 11 Nov 2020 06:02:43
+ GMT
+Sender: saiprakash.ranjan=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 2FC3AC43391; Wed, 11 Nov 2020 06:02:43 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: saiprakash.ranjan)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 1B6CAC433F0;
+        Wed, 11 Nov 2020 06:02:42 +0000 (UTC)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <fb182a63172af055be473247bc783bd6@codeaurora.org>
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Wed, 11 Nov 2020 11:32:42 +0530
+From:   Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+To:     Will Deacon <will@kernel.org>
+Cc:     Robin Murphy <robin.murphy@arm.com>,
+        Joerg Roedel <joro@8bytes.org>,
+        Jordan Crouse <jcrouse@codeaurora.org>,
+        Rob Clark <robdclark@gmail.com>,
+        iommu@lists.linux-foundation.org,
+        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org,
+        Akhil P Oommen <akhilpo@codeaurora.org>,
+        freedreno@lists.freedesktop.org,
+        "Kristian H . Kristensen" <hoegsberg@google.com>,
+        dri-devel@lists.freedesktop.org
+Subject: Re: [PATCHv7 1/7] iommu/io-pgtable-arm: Add support to use system
+ cache
+In-Reply-To: <20201110121855.GD16239@willie-the-truck>
+References: <cover.1604048969.git.saiprakash.ranjan@codeaurora.org>
+ <1d4979c0dcf649c5717605c598067b4b225ab9de.1604048969.git.saiprakash.ranjan@codeaurora.org>
+ <20201110121855.GD16239@willie-the-truck>
+Message-ID: <329542c0c09054a46fa8d6d8f92ad739@codeaurora.org>
+X-Sender: saiprakash.ranjan@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue 10 Nov 18:57 CST 2020, rishabhb@codeaurora.org wrote:
-
-> On 2020-11-04 20:50, Bjorn Andersson wrote:
-> > The reliance on the remoteproc's state for determining when to send
-> > sysmon notifications to a remote processor is racy with regard to
-> > concurrent remoteproc operations.
-> > 
-> > Further more the advertisement of the state of other remote processor to
-> > a newly started remote processor might not only send the wrong state,
-> > but might result in a stream of state changes that are out of order.
-> > 
-> > Address this by introducing state tracking within the sysmon instances
-> > themselves and extend the locking to ensure that the notifications are
-> > consistent with this state.
-> > 
-> > Fixes: 1f36ab3f6e3b ("remoteproc: sysmon: Inform current rproc about
-> > all active rprocs")
-> > Fixes: 1877f54f75ad ("remoteproc: sysmon: Add notifications for events")
-> > Fixes: 1fb82ee806d1 ("remoteproc: qcom: Introduce sysmon")
-> > Cc: stable@vger.kernel.org
-> > Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-> > ---
-> > 
-> > Changes since v1:
-> > - Reduced the locking to be per sysmon instance
-> > - Dropped unused local "rproc" variable in sysmon_notify()
-> > 
-> >  drivers/remoteproc/qcom_sysmon.c | 27 +++++++++++++++++++++------
-> >  1 file changed, 21 insertions(+), 6 deletions(-)
-> > 
-> > diff --git a/drivers/remoteproc/qcom_sysmon.c
-> > b/drivers/remoteproc/qcom_sysmon.c
-> > index 9eb2f6bccea6..38f63c968fa8 100644
-> > --- a/drivers/remoteproc/qcom_sysmon.c
-> > +++ b/drivers/remoteproc/qcom_sysmon.c
-> > @@ -22,6 +22,9 @@ struct qcom_sysmon {
-> >  	struct rproc_subdev subdev;
-> >  	struct rproc *rproc;
-> > 
-> > +	int state;
-> > +	struct mutex state_lock;
-> > +
-> >  	struct list_head node;
-> > 
-> >  	const char *name;
-> > @@ -448,7 +451,10 @@ static int sysmon_prepare(struct rproc_subdev
-> > *subdev)
-> >  		.ssr_event = SSCTL_SSR_EVENT_BEFORE_POWERUP
-> >  	};
-> > 
-> > +	mutex_lock(&sysmon->state_lock);
-> > +	sysmon->state = SSCTL_SSR_EVENT_BEFORE_POWERUP;
-> >  	blocking_notifier_call_chain(&sysmon_notifiers, 0, (void *)&event);
-> > +	mutex_unlock(&sysmon->state_lock);
-> > 
-> >  	return 0;
-> >  }
-> > @@ -472,22 +478,25 @@ static int sysmon_start(struct rproc_subdev
-> > *subdev)
-> >  		.ssr_event = SSCTL_SSR_EVENT_AFTER_POWERUP
-> >  	};
-> > 
-> > +	mutex_lock(&sysmon->state_lock);
-> > +	sysmon->state = SSCTL_SSR_EVENT_AFTER_POWERUP;
-> >  	blocking_notifier_call_chain(&sysmon_notifiers, 0, (void *)&event);
-> > +	mutex_unlock(&sysmon->state_lock);
-> > 
-> > -	mutex_lock(&sysmon_lock);
+On 2020-11-10 17:48, Will Deacon wrote:
+> On Fri, Oct 30, 2020 at 02:53:08PM +0530, Sai Prakash Ranjan wrote:
+>> Add a quirk IO_PGTABLE_QUIRK_SYS_CACHE to override the
+>> attributes set in TCR for the page table walker when
+>> using system cache.
+>> 
+>> Signed-off-by: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+>> ---
+>>  drivers/iommu/io-pgtable-arm.c | 7 ++++++-
+>>  include/linux/io-pgtable.h     | 4 ++++
+>>  2 files changed, 10 insertions(+), 1 deletion(-)
+>> 
+>> diff --git a/drivers/iommu/io-pgtable-arm.c 
+>> b/drivers/iommu/io-pgtable-arm.c
+>> index a7a9bc08dcd1..a356caf1683a 100644
+>> --- a/drivers/iommu/io-pgtable-arm.c
+>> +++ b/drivers/iommu/io-pgtable-arm.c
+>> @@ -761,7 +761,8 @@ arm_64_lpae_alloc_pgtable_s1(struct io_pgtable_cfg 
+>> *cfg, void *cookie)
+>> 
+>>  	if (cfg->quirks & ~(IO_PGTABLE_QUIRK_ARM_NS |
+>>  			    IO_PGTABLE_QUIRK_NON_STRICT |
+>> -			    IO_PGTABLE_QUIRK_ARM_TTBR1))
+>> +			    IO_PGTABLE_QUIRK_ARM_TTBR1 |
+>> +			    IO_PGTABLE_QUIRK_SYS_CACHE))
+>>  		return NULL;
+>> 
+>>  	data = arm_lpae_alloc_pgtable(cfg);
+>> @@ -773,6 +774,10 @@ arm_64_lpae_alloc_pgtable_s1(struct 
+>> io_pgtable_cfg *cfg, void *cookie)
+>>  		tcr->sh = ARM_LPAE_TCR_SH_IS;
+>>  		tcr->irgn = ARM_LPAE_TCR_RGN_WBWA;
+>>  		tcr->orgn = ARM_LPAE_TCR_RGN_WBWA;
+>> +	} else if (cfg->quirks & IO_PGTABLE_QUIRK_SYS_CACHE) {
+>> +		tcr->sh = ARM_LPAE_TCR_SH_OS;
+>> +		tcr->irgn = ARM_LPAE_TCR_RGN_NC;
+>> +		tcr->orgn = ARM_LPAE_TCR_RGN_WBWA;
 > 
-> We should keep the sysmon_lock to make sure sysmon_list is not modified
-> at the time we are doing this operation?
-
-Yes, that seems like a very good idea. I will review and update.
-
-> >  	list_for_each_entry(target, &sysmon_list, node) {
-> > -		if (target == sysmon ||
-> > -		    target->rproc->state != RPROC_RUNNING)
-> > +		if (target == sysmon)
-> >  			continue;
-> > 
-> > +		mutex_lock(&target->state_lock);
-> >  		event.subsys_name = target->name;
-> > +		event.ssr_event = target->state;
+> Given that this only applies in the case where then page-table walker 
+> is
+> non-coherent, I think we'd be better off renaming the quirk to 
+> something
+> like IO_PGTABLE_QUIRK_ARM_OUTER_WBWA and then rejecting it in the
+> non-coherent case.
 > 
-> Is it better to only send this event when target->state is
-> "SSCTL_SSR_EVENT_AFTER_POWERUP"?
 
-It depends on what the remote's requirements, I tested this and didn't
-see any problems sending both SSCTL_SSR_EVENT_AFTER_POWERUP and
-SSCTL_SSR_EVENT_AFTER_SHUTDOWN at least...
-I don't know if I managed to hit a case where I sent any of the
-intermediate states.
+Do you mean like below?
 
-If you could provide some more input here I would appreciate it -
-although I would be happy to merge the patch after fixing above locking
-issue and then we can limit the events sent once we have a more detailed
-answer, if that helps.
+diff --git a/drivers/iommu/io-pgtable-arm.c 
+b/drivers/iommu/io-pgtable-arm.c
+index a7a9bc08dcd1..94de1f71db42 100644
+--- a/drivers/iommu/io-pgtable-arm.c
++++ b/drivers/iommu/io-pgtable-arm.c
+@@ -776,7 +776,10 @@ arm_64_lpae_alloc_pgtable_s1(struct io_pgtable_cfg 
+*cfg, void *cookie)
+         } else {
+                 tcr->sh = ARM_LPAE_TCR_SH_OS;
+                 tcr->irgn = ARM_LPAE_TCR_RGN_NC;
+-               tcr->orgn = ARM_LPAE_TCR_RGN_NC;
++               if (!(cfg->quirks & IO_PGTABLE_QUIRK_ARM_OUTER_WBWA))
++                       tcr->orgn = ARM_LPAE_TCR_RGN_NC;
++               else
++                       tcr->orgn = ARM_LPAE_TCR_RGN_WBWA;
+         }
 
-Regards,
-Bjorn
+         tg1 = cfg->quirks & IO_PGTABLE_QUIRK_ARM_TTBR1;
+
+
+Thanks,
+Sai
+
+-- 
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a 
+member
+of Code Aurora Forum, hosted by The Linux Foundation
