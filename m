@@ -2,112 +2,170 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 9CF7E2AF5E0
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Nov 2020 17:11:13 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id CC2692AF6A8
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Nov 2020 17:37:40 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727453AbgKKQLM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 11 Nov 2020 11:11:12 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50308 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727430AbgKKQLM (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 11 Nov 2020 11:11:12 -0500
-Received: from mail-ot1-x343.google.com (mail-ot1-x343.google.com [IPv6:2607:f8b0:4864:20::343])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2096AC0613D4
-        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Nov 2020 08:11:12 -0800 (PST)
-Received: by mail-ot1-x343.google.com with SMTP id 30so2604033otx.9
-        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Nov 2020 08:11:12 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=f+ykpy+tQ8wBKh31P6ADeGnAEx1y44RGfEZjNyqN+vc=;
-        b=Namw3wnM4UZgTp7jowbUZzT8wApZibHbV6PMse35e4cC25jeLpRbFUXeK9wNdVJ+Xz
-         UH3H7NQxOLOj+X4tpa9sJg7GxqAAGkXwHkuKWGNO0NePWHU/5SawGJkxZeWCvasX/QFG
-         bTrcXPw0olsYEoRRIimOFtwlxayXWOYlp8AgtznlGzkNze8A8c/oEgWb0VplP8Zm+gqU
-         98B173z9lD68a3Mr+EjKPeNa7PBaldf+SA4mNq5ISa+R+NgvrfJXHamXq5O2jdDelHcV
-         9E6bTzTxDWiPwhUXCyt7egaEzO334m4enBSh6b28p8nP5X0+8VEmL0d0PGVfhWHNIICG
-         rJjQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=f+ykpy+tQ8wBKh31P6ADeGnAEx1y44RGfEZjNyqN+vc=;
-        b=AffKwz/u6c15YgbISmewsddzNF5OuyQMBi5ULjmW5m2/eyUMcIRJubAXsZT3sGGxoL
-         Y2RJ4ejqpBTtkcSQoofOwklzuqWP3zin/KxNfxDrtngp4qmqrlkTzuxc+ApFPKCYQvhj
-         t+VYOjV1wtqUhSG5unD+Wul9shz0aVaafs/arUeDi/QC2iU6cl7NoRygfNEdjWnE9oTm
-         LQRnwmbGc7vBzvTrf6M+cTeJgoJBG6bRqtxPL3ijAR7IfexLrrP3a80hJlUNskTHaDD6
-         C1n71FV2+mLeFz/Piad37gRaZsTdhIy3OWZqy977LfhKUt3fq5vq5SsZFsqTHPEQwR12
-         b7BA==
-X-Gm-Message-State: AOAM530IT5ovmzxGyhSfi4yk4+f0I8uOuB2lOaW6/bNn5DND9tgQhpV8
-        7JzN7u+qY/FupOt7PcK3hdW6tQ==
-X-Google-Smtp-Source: ABdhPJx1ruPUefHjIi6jcYlxgdcUOSsbEa7ZcgA9fpFt3ban+Z00ztiVbxkyPVseyWooiZ5H43aPEQ==
-X-Received: by 2002:a05:6830:1c62:: with SMTP id s2mr17064385otg.177.1605111071523;
-        Wed, 11 Nov 2020 08:11:11 -0800 (PST)
-Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id 98sm597114otm.54.2020.11.11.08.11.10
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 11 Nov 2020 08:11:10 -0800 (PST)
-Date:   Wed, 11 Nov 2020 10:11:09 -0600
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Douglas Anderson <dianders@chromium.org>
-Cc:     swboyd@chromium.org, mka@chromium.org, vbadigan@codeaurora.org,
-        Andy Gross <agross@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] arm64: dts: qcom: sc7180: Assign numbers to eMMC and SD
-Message-ID: <20201111161109.GK173948@builder.lan>
-References: <20201111073652.1.Ia5bccd9eab7d74ea1ea9a7780e3cdbf662f5a464@changeid>
+        id S1725979AbgKKQhj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 11 Nov 2020 11:37:39 -0500
+Received: from z5.mailgun.us ([104.130.96.5]:32864 "EHLO z5.mailgun.us"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726595AbgKKQhj (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 11 Nov 2020 11:37:39 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1605112658; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
+ Subject: Sender; bh=0MTZNm0gtvDrGwPQUJrq8djAu9H1QIhfhQ6Ri7dD6yI=; b=VsdWryEju7XIQEVEJ9muEzbc7Boxi+EVlzWtHvLdt7pLLtV0hK+4PVN+GevYEJN80m7bntR6
+ Mi/hg43Ji2MK4qZ5DEzKxflRPQtoYvvPmV2Uu/f5xQE1S89RmiKhR/gP4ymdyALAxIQt4aSi
+ sguiy4/G3CSlKu/mXcahqiXxe9o=
+X-Mailgun-Sending-Ip: 104.130.96.5
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n07.prod.us-east-1.postgun.com with SMTP id
+ 5fac0fe71b0f99048360dbf1 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 11 Nov 2020 16:22:48
+ GMT
+Sender: vbadigan=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 2402AC43385; Wed, 11 Nov 2020 16:22:48 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        NICE_REPLY_A,SPF_FAIL,URIBL_BLOCKED autolearn=no autolearn_force=no
+        version=3.4.0
+Received: from [192.168.0.105] (unknown [49.205.245.25])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: vbadigan)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 34773C433C6;
+        Wed, 11 Nov 2020 16:22:43 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 34773C433C6
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=vbadigan@codeaurora.org
+Subject: Re: [PATCH] mmc: block: Prevent new req entering queue while freeing
+ up the queue
+To:     Ulf Hansson <ulf.hansson@linaro.org>
+Cc:     Adrian Hunter <adrian.hunter@intel.com>,
+        "linux-mmc@vger.kernel.org" <linux-mmc@vger.kernel.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Jens Axboe <axboe@kernel.dk>,
+        Baolin Wang <baolin.wang@linaro.org>,
+        Chaotian Jing <chaotian.jing@mediatek.com>,
+        Peng Hao <richard.peng@oppo.com>
+References: <1603883984-24333-1-git-send-email-vbadigan@codeaurora.org>
+ <CAPDyKFq0zikjeps36=Mq-Y9MuyiOHZyGVELV+Eh56evu8b8D2A@mail.gmail.com>
+From:   Veerabhadrarao Badiganti <vbadigan@codeaurora.org>
+Message-ID: <4f27eecd-3d10-796c-6b6c-594770502037@codeaurora.org>
+Date:   Wed, 11 Nov 2020 21:52:35 +0530
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
+ Thunderbird/68.12.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20201111073652.1.Ia5bccd9eab7d74ea1ea9a7780e3cdbf662f5a464@changeid>
+In-Reply-To: <CAPDyKFq0zikjeps36=Mq-Y9MuyiOHZyGVELV+Eh56evu8b8D2A@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed 11 Nov 09:37 CST 2020, Douglas Anderson wrote:
 
-> After many years of struggle, commit fa2d0aa96941 ("mmc: core: Allow
-> setting slot index via device tree alias") finally allows the use of
-> aliases to number SD/MMC slots.  Let's do that for sc7180 SoCs so that
-> if eMMC and SD are both used they have consistent numbers across boots
-> and kernel changes.
-> 
-> Picking numbers can be tricky.  Do we call these "1" and "2" to match
-> the name in documentation or "0" and "1" with the assertion that we
-> should always start at 0 and count up?
-> 
-> While the "start counting at 0" makes sense if there are not already
-> well-defined numbers for all sd/mmc controllers, in the case of sc7180
-> there _are_ well defined numbers.  IMO it is less confusing to use
-> those and match the docs.
-> 
+On 11/3/2020 8:55 PM, Ulf Hansson wrote:
+> On Wed, 28 Oct 2020 at 12:20, Veerabhadrarao Badiganti
+> <vbadigan@codeaurora.org> wrote:
+>> The commit bbdc74dc19e0 ("mmc: block: Prevent new req entering queue
+>> after its cleanup") has introduced this change but it got moved after
+>> del_gendisk() with commit 57678e5a3d51 ("mmc: block: Delete gendisk
+>> before cleaning up the request queue").
+> This isn't the first time we have spotted errors in this path. Seems
+> like a difficult path to get correct. :-)
+>
+>> It is blocking reboot with below Call stack().
+>>
+>> INFO: task reboot:3086 blocked for more than 122 seconds.
+>>       __schedule
+>>       schedule
+>>       schedule_timeout
+>>       io_schedule_timeout
+>>       do_wait_for_common
+>>       wait_for_completion_io
+>>       submit_bio_wait
+>>       blkdev_issue_flush
+>>       ext4_sync_fs
+>>       __sync_filesystem
+>>       sync_filesystem
+>>       fsync_bdev
+>>       invalidate_partition
+>>       del_gendisk
+>>       mmc_blk_remove_req
+>>       mmc_blk_remove
+>>       mmc_bus_remove
+>>       device_release_driver_internal
+>>       device_release_driver
+>>       bus_remove_device
+>>       device_del
+>>       mmc_remove_card
+>>       mmc_remove
+>>       mmc_stop_host
+>>       mmc_remove_host
+>>       sdhci_remove_host
+>>       sdhci_msm_remove
+> Why do you call sdhci_msm_remove() from the shutdown callback? What
+> specific operations do you need to run in the shutdown path for sdhci
+> msm?
+I was suggested to add shutdown callback by memory team to gracefully 
+de-register with smmu driver
+during reboot/shutdown. So tried adding it. Since SMMU team.
 
-I'm happy with this motivation, patch applied.
-
-Regards,
-Bjorn
-
-> Signed-off-by: Douglas Anderson <dianders@chromium.org>
-> ---
-> 
->  arch/arm64/boot/dts/qcom/sc7180.dtsi | 2 ++
->  1 file changed, 2 insertions(+)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-> index 4e7e58c63285..625e922c273d 100644
-> --- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-> @@ -31,6 +31,8 @@ / {
->  	chosen { };
->  
->  	aliases {
-> +		mmc1 = &sdhc_1;
-> +		mmc2 = &sdhc_2;
->  		i2c0 = &i2c0;
->  		i2c1 = &i2c1;
->  		i2c2 = &i2c2;
-> -- 
-> 2.29.2.222.g5d2a92d10f8-goog
-> 
+I just need to ensure that controller is not active anymore and not 
+accessing memory related to any
+requests and de-register with smmu driver during shutdown.
+>
+> The important part should be to do a graceful shutdown of the card
+> (and the block device) - is there anything else?
+>
+> Or you are just using the shutdown callback as a simple way to trigger
+> this problem? Could unbinding the driver trigger the same issue?
+>
+>>       sdhci_msm_shutdown
+>>       platform_drv_shutdown
+>>       device_shutdown
+>>       kernel_restart_prepare
+>>       kernel_restart
+>>
+>> So bringing this change back.
+>>
+>> Signed-off-by: Veerabhadrarao Badiganti <vbadigan@codeaurora.org>
+>> ---
+>>
+>> I'm observing this issue 100% of the time with shutdown callback added to sdhci-msm driver.
+>> I'm trying on 5.4 kernel with ChromeOS.
+>>
+>> Please let me know if this can be fixed in a better way.
+> I don't know yet, but I will have a closer look. Let's also see if
+> Adrian has some thoughts.
+>
+> Kind regards
+> Uffe
+>
+>> ---
+>>
+>>   drivers/mmc/core/block.c | 1 +
+>>   1 file changed, 1 insertion(+)
+>>
+>> diff --git a/drivers/mmc/core/block.c b/drivers/mmc/core/block.c
+>> index 8d3df0be0355..76dbb2b8a13b 100644
+>> --- a/drivers/mmc/core/block.c
+>> +++ b/drivers/mmc/core/block.c
+>> @@ -2627,6 +2627,7 @@ static void mmc_blk_remove_req(struct mmc_blk_data *md)
+>>                   * from being accepted.
+>>                   */
+>>                  card = md->queue.card;
+>> +               blk_set_queue_dying(md->queue.queue);
+>>                  if (md->disk->flags & GENHD_FL_UP) {
+>>                          device_remove_file(disk_to_dev(md->disk), &md->force_ro);
+>>                          if ((md->area_type & MMC_BLK_DATA_AREA_BOOT) &&
+>> --
+>> Qualcomm India Private Limited, on behalf of Qualcomm Innovation Center, Inc., is a member of Code Aurora Forum, a Linux Foundation Collaborative Project
+>>
