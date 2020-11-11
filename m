@@ -2,62 +2,86 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 1E1F32AEF33
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Nov 2020 12:08:51 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 9684A2AEFEF
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Nov 2020 12:48:24 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726263AbgKKLIn convert rfc822-to-8bit (ORCPT
-        <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 11 Nov 2020 06:08:43 -0500
-Received: from coyote.holtmann.net ([212.227.132.17]:47375 "EHLO
-        mail.holtmann.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726198AbgKKLIn (ORCPT
+        id S1726384AbgKKLsX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 11 Nov 2020 06:48:23 -0500
+Received: from lb1-smtp-cloud7.xs4all.net ([194.109.24.24]:47229 "EHLO
+        lb1-smtp-cloud7.xs4all.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1725860AbgKKLsW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 11 Nov 2020 06:08:43 -0500
-Received: from marcel-macbook.holtmann.net (unknown [37.83.201.106])
-        by mail.holtmann.org (Postfix) with ESMTPSA id 6C76ECECFD;
-        Wed, 11 Nov 2020 12:15:50 +0100 (CET)
-Content-Type: text/plain;
-        charset=us-ascii
-Mime-Version: 1.0 (Mac OS X Mail 13.4 \(3608.120.23.2.4\))
-Subject: Re: [PATCH v1] Bluetooth: hci_qca: Wait for timeout during suspend
-From:   Marcel Holtmann <marcel@holtmann.org>
-In-Reply-To: <1601997621-12056-1-git-send-email-bgodavar@codeaurora.org>
-Date:   Wed, 11 Nov 2020 12:08:40 +0100
-Cc:     Johan Hedberg <johan.hedberg@gmail.com>,
-        Matthias Kaehlcke <mka@chromium.org>,
-        open list <linux-kernel@vger.kernel.org>,
-        linux-bluetooth <linux-bluetooth@vger.kernel.org>,
-        Hemantg <hemantg@codeaurora.org>,
-        MSM <linux-arm-msm@vger.kernel.org>,
-        Venkata Lakshmi Narayana Gubba <gubbaven@codeaurora.org>,
-        Abhishek Pandit-Subedi <abhishekpandit@chromium.org>,
-        rjliao@codeaurora.org
-Content-Transfer-Encoding: 8BIT
-Message-Id: <D8614A63-5367-4BFF-AE03-3B639A2216A8@holtmann.org>
-References: <1601997621-12056-1-git-send-email-bgodavar@codeaurora.org>
-To:     Balakrishna Godavarthi <bgodavar@codeaurora.org>
-X-Mailer: Apple Mail (2.3608.120.23.2.4)
+        Wed, 11 Nov 2020 06:48:22 -0500
+Received: from cust-b5b5937f ([IPv6:fc0c:c16d:66b8:757f:c639:739b:9d66:799d])
+        by smtp-cloud7.xs4all.net with ESMTPA
+        id cob8kms8XRiwVcobIkaEFp; Wed, 11 Nov 2020 12:48:14 +0100
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=xs4all.nl; s=s1;
+        t=1605095296; bh=WuBCWYKViMmUl8eqIdMbgwN9AJKK362w9I6qvWQiMdY=;
+        h=Subject:To:From:Message-ID:Date:MIME-Version:Content-Type:From:
+         Subject;
+        b=BHVG6w62dwFXec8XCS+BKWjhxWw9bZrzhR6ThYFAaD648Fv7qpXkEzLad/ozMnRLz
+         pApJK+oRpcgZBzOu0soFqj+x+7bU6IEyTsK54xe3GEuSrQtbAbFdNhILTQ+ZACDb3g
+         z0WgWCJNLXnTtLjyD+v0CtRnACHpz/TScR6RV+ZVoLU5HaTKrTzvIRHue4IfXSE+NQ
+         h1Q4nPegk2qWADtpUCkt8JqL7QwKmgBtXgt6a6zvbcQoxv4XQNzWLMLFn7YNRdpaiX
+         nJI71OE3yGjtM21qSI3QwZO8Ul6TVGd0Pl+Oas1Cii72tSAX8tnj0sLakVGvWGSgIB
+         2tGNdWjWeTcGg==
+Subject: Re: [PATCH v2 0/2] Add new controls for QP and layer bitrate
+To:     Nicolas Dufresne <nicolas@ndufresne.ca>,
+        Dikshita Agarwal <dikshita@codeaurora.org>,
+        linux-media@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+Cc:     mchehab@kernel.org, ezequiel@collabora.com,
+        stanimir.varbanov@linaro.org, vgarodia@codeaurora.org,
+        majja@codeaurora.org
+References: <1600693440-3015-1-git-send-email-dikshita@codeaurora.org>
+ <871d369fc987ac7cc24bdab9bc9df9fadf939c01.camel@ndufresne.ca>
+From:   Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Message-ID: <b871bb4d-34ae-6161-5901-8df7fd82c53b@xs4all.nl>
+Date:   Wed, 11 Nov 2020 12:47:34 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.12.0
+MIME-Version: 1.0
+In-Reply-To: <871d369fc987ac7cc24bdab9bc9df9fadf939c01.camel@ndufresne.ca>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
+X-CMAE-Envelope: MS4xfLaXZhwqqjpGuIkCkVJcuv4yzjWUcdz0fKkQzXK6KLuUa7HMqlJ4UO0kEEgaAOeznOmX9Gs3ZRrf4mc+7C8hOeHkn0Gt+mqtEP1gHD/G3vGgxr3cFdL5
+ uClKOdNAo2agjxXq9O+rjwnxXB4coUYjAHmU1sM4Elb/wikOaCWrJOuLzX5SEqnZd8O2vTEI5dh89DxEv+j54Qp6LCQJ69mb+ykUOwtVHrrI8WPbDx3YDODs
+ t9rspCPjQn+TJZ0zdFWufnyxyO1dG5UUR7BmN82mjuyIH8uSUfmCMFGhkZFrqhFtbw6wrMRuzCgY9NJ/q97v/hvGV2/52Qr6NGSPosq7qmjoWJnCbEt7Xj0P
+ 9HSoLoSlkD3VcY04Ep1KAWMzJl0uUpJO4dqnyLZkQhl2cvcXqGwhUxv1U2itQa3XhoHtQTm68dxlQWPAux9BlFAd/NgiPjtjTVN4Yo8cNiQeW5ULQYIBVKnX
+ NF+DfgY3pbLyEPot2OMvSbCIONpglv7AucpgOHyusM9j5EqlXDYJZh0IOUs=
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Balakrishna,
-
-> Currently qca_suspend() is relied on IBS mechanism. During
-> FW download and memory dump collections, IBS will be disabled.
-> In those cases, driver will allow suspend and still uses the
-> serdev port, which results to errors. Now added a wait timeout
-> if suspend is triggered during FW download and memory collections.
+On 24/09/2020 19:42, Nicolas Dufresne wrote:
+> Le lundi 21 septembre 2020 à 18:33 +0530, Dikshita Agarwal a écrit :
+>> This series adds frame specific min/max qp controls for hevc and layer
+>> wise bitrate control for h264.
 > 
-> Signed-off-by: Venkata Lakshmi Narayana Gubba <gubbaven@codeaurora.org>
-> Signed-off-by: Balakrishna Godavarthi <bgodavar@codeaurora.org>
-> ---
-> drivers/bluetooth/hci_qca.c | 48 ++++++++++++++++++++++++++++++++++++---------
-> 1 file changed, 39 insertions(+), 9 deletions(-)
+> Any chance you could append your driver changes with this set ? I don't
+> think new APIs ever make it without a driver using it.
 
-patch has been applied to bluetooth-next tree.
+Indeed. I'll mark this as 'Changes Requested' in patchwork: I do need a
+version that actually uses these new controls in a driver.
 
-Regards
+Regards,
 
-Marcel
+	Hans
+
+> 
+>>
+>> Chnage since v1:
+>>  corrected email.
+>>
+>> Dikshita Agarwal (2):
+>>   media: v4l2-ctrl: Add frame-specific min/max qp controls for hevc
+>>   media: v4l2-ctrl: Add layer wise bitrate controls for h264
+>>
+>>  .../userspace-api/media/v4l/ext-ctrls-codec.rst    | 74 +++++++++++++++++++++-
+>>  drivers/media/v4l2-core/v4l2-ctrls.c               | 15 +++++
+>>  include/uapi/linux/v4l2-controls.h                 | 17 +++++
+>>  3 files changed, 104 insertions(+), 2 deletions(-)
+>>
+> 
 
