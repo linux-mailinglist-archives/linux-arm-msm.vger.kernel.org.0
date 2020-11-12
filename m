@@ -2,123 +2,107 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B0B8F2B0324
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Nov 2020 11:51:46 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D36342B03AB
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Nov 2020 12:16:20 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727905AbgKLKvp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 12 Nov 2020 05:51:45 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53408 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727884AbgKLKvp (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 12 Nov 2020 05:51:45 -0500
-Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C45F1C0613D4
-        for <linux-arm-msm@vger.kernel.org>; Thu, 12 Nov 2020 02:51:44 -0800 (PST)
-Received: by mail-wr1-x42d.google.com with SMTP id 23so5478059wrc.8
-        for <linux-arm-msm@vger.kernel.org>; Thu, 12 Nov 2020 02:51:44 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=FaiSQA15MIbTKd3si8WMQOsXJC1onbTCZ7T3J5Q6PJs=;
-        b=Ic6zmTPhniTaWPReO7ebSJWMMO0L4x8eQOL6qyt5hP9WU/FWqa1zmaqHNS6qX9aucP
-         QxHnwgbok6KJGXlsNqmEc3vWrdowfwty5PePcXpJPwhRYP4cr19QtEON5HEY4wk2qrTq
-         IG3+1l7FysyatmxP2XgL/Z8TkjgWOXne2MtHPKJiOT7q3GuWwa0TovUBKDd6Jrg/Jyng
-         ouUh4dS4m4YZMXdDyZrE1Dg5J99GkgHCDfgpjoimVXxOS5DXIDxm1chLALR9F/V4R29U
-         VFroffSIpqYKirGP4YOL4NzWqcN7cZJfcYgNs2ZeSCtn5P6fvl26B06VvqOEHoxEJKMb
-         elow==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=FaiSQA15MIbTKd3si8WMQOsXJC1onbTCZ7T3J5Q6PJs=;
-        b=lzqG9ub8mHAz85HvTEnYUCIzZrETiw7gJn0CVCiWdNN9VIrwxkTGZpoWPc5pXFdNST
-         NprAgXRBLKmyrrdCo+tvg43IQdjRWM/MgQRDm1ZbP1ZVHISgogaiMTA85mpbCkn85FxV
-         nkPwPJNgRdFGWsmUSjDvAAeu9Y9JMiSIBQ0rBE3JexGuYDtQJaCiyppQ0Brhl0xcouHF
-         RSRYeufKBd5EBS6iSMkrHvO64+RAvYuqkzEL42KX3H/FKrA3izSrZNqjmzuIlu1xEt9N
-         007AnuWVNbHDv48AQDfB29tGiRQOjPiyxjKZnRt05tx1NkK7Net83Rvqj3Q7KYV5xfpu
-         flBw==
-X-Gm-Message-State: AOAM533itKGROoFljXhYpMICye5bRlf2EZCo1Vw+toMmW6Rx0Zy9SgQK
-        ru11epccdHdeZNWwun40xn075Q==
-X-Google-Smtp-Source: ABdhPJzg2aecgEIDff1fkmEawvO8E4/QfU+FF4fWsC+k5rXFYlVwtXnCs4sTiXcuJwkOZev2clZ0xA==
-X-Received: by 2002:adf:b7c8:: with SMTP id t8mr36300917wre.143.1605178303423;
-        Thu, 12 Nov 2020 02:51:43 -0800 (PST)
-Received: from localhost.localdomain ([212.45.67.2])
-        by smtp.googlemail.com with ESMTPSA id m20sm7264401wrg.81.2020.11.12.02.51.42
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 12 Nov 2020 02:51:42 -0800 (PST)
-From:   Georgi Djakov <georgi.djakov@linaro.org>
-To:     linux-pm@vger.kernel.org, mdtipton@codeaurora.org
-Cc:     bjorn.andersson@linaro.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, georgi.djakov@linaro.org
-Subject: [PATCH] interconnect: qcom: msm8916: Remove rpm-ids from non-RPM nodes
-Date:   Thu, 12 Nov 2020 12:51:40 +0200
-Message-Id: <20201112105140.10092-1-georgi.djakov@linaro.org>
-X-Mailer: git-send-email 2.28.0
+        id S1727836AbgKLLQO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 12 Nov 2020 06:16:14 -0500
+Received: from gloria.sntech.de ([185.11.138.130]:49094 "EHLO gloria.sntech.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725902AbgKLLQO (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 12 Nov 2020 06:16:14 -0500
+Received: from ip5f5aa64a.dynamic.kabel-deutschland.de ([95.90.166.74] helo=phil.lan)
+        by gloria.sntech.de with esmtpsa (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
+        (Exim 4.92)
+        (envelope-from <heiko@sntech.de>)
+        id 1kdAaB-0000QA-9Q; Thu, 12 Nov 2020 12:16:03 +0100
+From:   Heiko Stuebner <heiko@sntech.de>
+To:     Lee Jones <lee.jones@linaro.org>
+Cc:     Heiko Stuebner <heiko@sntech.de>,
+        Scott Wood <scottwood@freescale.com>,
+        linux-arm-msm@vger.kernel.org, linux-samsung-soc@vger.kernel.org,
+        linux-tegra@vger.kernel.org, linux-kernel@vger.kernel.org,
+        "Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+        Li Yang <leoyang.li@nxp.com>, Qiang Zhao <qiang.zhao@nxp.com>,
+        bcm-kernel-feedback-list@broadcom.com,
+        linuxppc-dev@lists.ozlabs.org,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Roy Pledge <Roy.Pledge@nxp.com>,
+        Dan Malek <dan@embeddedalley.com>,
+        Cyril Chemparathy <cyril@ti.com>,
+        Santosh Shilimkar <ssantosh@kernel.org>,
+        Doug Anderson <dianders@chromium.org>,
+        Vitaly Bordug <vbordug@ru.mvista.com>,
+        YueHaibing <yuehaibing@huawei.com>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        Dave Gerlach <d-gerlach@ti.com>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Florian Fainelli <f.fainelli@gmail.com>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        linux-rockchip@lists.infradead.org, Ben Dooks <ben@simtec.co.uk>,
+        linux-arm-kernel@lists.infradead.org,
+        Andy Gross <agross@kernel.org>,
+        Jonathan Hunter <jonathanh@nvidia.com>,
+        Sandeep Nair <sandeep_n@ti.com>,
+        Mark Brown <broonie@kernel.org>, act <dmalek@jlc.net>,
+        "Software, Inc" <source@mvista.com>
+Subject: Re: [PATCH 00/25] Rid W=1 warnings in SoC
+Date:   Thu, 12 Nov 2020 12:16:00 +0100
+Message-Id: <160517975455.81506.16289432612279089945.b4-ty@sntech.de>
+X-Mailer: git-send-email 2.29.2
+In-Reply-To: <20201103152838.1290217-1-lee.jones@linaro.org>
+References: <20201103152838.1290217-1-lee.jones@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Some nodes are incorrectly marked as RPM-controlled (they have RPM
-master and slave ids assigned), but are actually controlled by the
-application CPU instead. The RPM complains when we send requests for
-resources that it can't control. Let's fix this by replacing the IDs,
-with the default "-1" in which case no requests are sent.
+On Tue, 3 Nov 2020 15:28:13 +0000, Lee Jones wrote:
+> This set is part of a larger effort attempting to clean-up W=1
+> kernel builds, which are currently overwhelmingly riddled with
+> niggly little warnings.
+> 
+> Lee Jones (25):
+>   soc: bcm: brcmstb: pm: pm-arm: Provide prototype for
+>     brcmstb_pm_s3_finish()
+>   soc: qcom: qcom_aoss: Remove set but unused variable 'tlen'
+>   soc: qcom: qcom_aoss: Add missing description for 'cooling_devs'
+>   soc: fsl: dpio: qbman-portal: Fix a bunch of kernel-doc misdemeanours
+>   soc: rockchip: io-domain: Remove incorrect and incomplete comment
+>     header
+>   soc: ti: knav_qmss_queue: Remove set but unchecked variable 'ret'
+>   soc: ti: knav_qmss_queue: Fix a whole host of function documentation
+>     issues
+>   soc: ti: knav_dma: Fix a kernel function doc formatting issue
+>   soc: ti: pm33xx: Remove set but unused variable 'ret'
+>   soc: ti: wkup_m3_ipc: Document 'm3_ipc' parameter throughout
+>   soc: fsl: qe: qe_common: Fix misnamed function attribute 'addr'
+>   soc: qcom: qcom-geni-se: Fix misnamed function parameter 'rx_rfr'
+>   soc: tegra: fuse: speedo-tegra124: Remove some set but unused
+>     variables
+>   soc: samsung: s3c-pm-check: Fix incorrectly named variable 'val'
+>   soc: qcom: rpmh: Fix possible doc-rot in rpmh_write()'s header
+>   soc: qcom: smem: Fix formatting and missing documentation issues
+>   soc: qcom: smsm: Fix some kernel-doc formatting and naming problems
+>   soc: qcom: wcnss_ctrl: Demote non-conformant struct header and fix
+>     function headers
+>   soc: qcom: smp2p: Remove unused struct attribute provide another
+>   soc: qcom: llcc-qcom: Fix expected kernel-doc formatting
+>   soc: qcom: rpmhpd: Provide some missing struct member descriptions
+>   soc: qcom: kryo-l2-accessors: Fix misnaming of 'val'
+>   soc: ti: k3-ringacc: Provide documentation for 'k3_ring's 'state'
+>   soc: tegra: fuse: speedo-tegra210: Remove a group of set but unused
+>     variables
+>   soc: fsl: qbman: qman: Remove unused variable 'dequeue_wq'
+> 
+> [...]
 
-Signed-off-by: Georgi Djakov <georgi.djakov@linaro.org>
----
- drivers/interconnect/qcom/msm8916.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+Applied, thanks!
 
-diff --git a/drivers/interconnect/qcom/msm8916.c b/drivers/interconnect/qcom/msm8916.c
-index 93cb675e5806..5d4ac364be8c 100644
---- a/drivers/interconnect/qcom/msm8916.c
-+++ b/drivers/interconnect/qcom/msm8916.c
-@@ -182,7 +182,7 @@ DEFINE_QNODE(mas_pcnoc_sdcc_1, MSM8916_MASTER_SDCC_1, 8, -1, -1, MSM8916_PNOC_IN
- DEFINE_QNODE(mas_pcnoc_sdcc_2, MSM8916_MASTER_SDCC_2, 8, -1, -1, MSM8916_PNOC_INT_1);
- DEFINE_QNODE(mas_qdss_bam, MSM8916_MASTER_QDSS_BAM, 8, -1, -1, MSM8916_SNOC_QDSS_INT);
- DEFINE_QNODE(mas_qdss_etr, MSM8916_MASTER_QDSS_ETR, 8, -1, -1, MSM8916_SNOC_QDSS_INT);
--DEFINE_QNODE(mas_snoc_cfg, MSM8916_MASTER_SNOC_CFG, 4, 20, -1, MSM8916_SNOC_QDSS_INT);
-+DEFINE_QNODE(mas_snoc_cfg, MSM8916_MASTER_SNOC_CFG, 4, -1, -1, MSM8916_SNOC_QDSS_INT);
- DEFINE_QNODE(mas_spdm, MSM8916_MASTER_SPDM, 4, -1, -1, MSM8916_PNOC_MAS_0);
- DEFINE_QNODE(mas_tcu0, MSM8916_MASTER_TCU0, 8, -1, -1, MSM8916_SLAVE_EBI_CH0, MSM8916_BIMC_SNOC_MAS, MSM8916_SLAVE_AMPSS_L2);
- DEFINE_QNODE(mas_tcu1, MSM8916_MASTER_TCU1, 8, -1, -1, MSM8916_SLAVE_EBI_CH0, MSM8916_BIMC_SNOC_MAS, MSM8916_SLAVE_AMPSS_L2);
-@@ -208,14 +208,14 @@ DEFINE_QNODE(pcnoc_snoc_mas, MSM8916_PNOC_SNOC_MAS, 8, 29, -1, MSM8916_PNOC_SNOC
- DEFINE_QNODE(pcnoc_snoc_slv, MSM8916_PNOC_SNOC_SLV, 8, -1, 45, MSM8916_SNOC_INT_0, MSM8916_SNOC_INT_BIMC, MSM8916_SNOC_INT_1);
- DEFINE_QNODE(qdss_int, MSM8916_SNOC_QDSS_INT, 8, -1, -1, MSM8916_SNOC_INT_0, MSM8916_SNOC_INT_BIMC);
- DEFINE_QNODE(slv_apps_l2, MSM8916_SLAVE_AMPSS_L2, 8, -1, -1, 0);
--DEFINE_QNODE(slv_apss, MSM8916_SLAVE_APSS, 4, -1, 20, 0);
-+DEFINE_QNODE(slv_apss, MSM8916_SLAVE_APSS, 4, -1, -1, 0);
- DEFINE_QNODE(slv_audio, MSM8916_SLAVE_LPASS, 4, -1, -1, 0);
- DEFINE_QNODE(slv_bimc_cfg, MSM8916_SLAVE_BIMC_CFG, 4, -1, -1, 0);
- DEFINE_QNODE(slv_blsp_1, MSM8916_SLAVE_BLSP_1, 4, -1, -1, 0);
- DEFINE_QNODE(slv_boot_rom, MSM8916_SLAVE_BOOT_ROM, 4, -1, -1, 0);
- DEFINE_QNODE(slv_camera_cfg, MSM8916_SLAVE_CAMERA_CFG, 4, -1, -1, 0);
--DEFINE_QNODE(slv_cats_0, MSM8916_SLAVE_CATS_128, 16, -1, 106, 0);
--DEFINE_QNODE(slv_cats_1, MSM8916_SLAVE_OCMEM_64, 8, -1, 107, 0);
-+DEFINE_QNODE(slv_cats_0, MSM8916_SLAVE_CATS_128, 16, -1, -1, 0);
-+DEFINE_QNODE(slv_cats_1, MSM8916_SLAVE_OCMEM_64, 8, -1, -1, 0);
- DEFINE_QNODE(slv_clk_ctl, MSM8916_SLAVE_CLK_CTL, 4, -1, -1, 0);
- DEFINE_QNODE(slv_crypto_0_cfg, MSM8916_SLAVE_CRYPTO_0_CFG, 4, -1, -1, 0);
- DEFINE_QNODE(slv_dehr_cfg, MSM8916_SLAVE_DEHR_CFG, 4, -1, -1, 0);
-@@ -239,7 +239,7 @@ DEFINE_QNODE(slv_sdcc_2, MSM8916_SLAVE_SDCC_2, 4, -1, -1, 0);
- DEFINE_QNODE(slv_security, MSM8916_SLAVE_SECURITY, 4, -1, -1, 0);
- DEFINE_QNODE(slv_snoc_cfg, MSM8916_SLAVE_SNOC_CFG, 4, -1, -1, 0);
- DEFINE_QNODE(slv_spdm, MSM8916_SLAVE_SPDM, 4, -1, -1, 0);
--DEFINE_QNODE(slv_srvc_snoc, MSM8916_SLAVE_SRVC_SNOC, 8, -1, 29, 0);
-+DEFINE_QNODE(slv_srvc_snoc, MSM8916_SLAVE_SRVC_SNOC, 8, -1, -1, 0);
- DEFINE_QNODE(slv_tcsr, MSM8916_SLAVE_TCSR, 4, -1, -1, 0);
- DEFINE_QNODE(slv_tlmm, MSM8916_SLAVE_TLMM, 4, -1, -1, 0);
- DEFINE_QNODE(slv_usb_hs, MSM8916_SLAVE_USB_HS, 4, -1, -1, 0);
-@@ -249,7 +249,7 @@ DEFINE_QNODE(snoc_bimc_0_slv, MSM8916_SNOC_BIMC_0_SLV, 8, -1, 24, MSM8916_SLAVE_
- DEFINE_QNODE(snoc_bimc_1_mas, MSM8916_SNOC_BIMC_1_MAS, 16, -1, -1, MSM8916_SNOC_BIMC_1_SLV);
- DEFINE_QNODE(snoc_bimc_1_slv, MSM8916_SNOC_BIMC_1_SLV, 8, -1, -1, MSM8916_SLAVE_EBI_CH0);
- DEFINE_QNODE(snoc_int_0, MSM8916_SNOC_INT_0, 8, 99, 130, MSM8916_SLAVE_QDSS_STM, MSM8916_SLAVE_IMEM, MSM8916_SNOC_PNOC_MAS);
--DEFINE_QNODE(snoc_int_1, MSM8916_SNOC_INT_1, 8, 100, 131, MSM8916_SLAVE_APSS, MSM8916_SLAVE_CATS_128, MSM8916_SLAVE_OCMEM_64);
-+DEFINE_QNODE(snoc_int_1, MSM8916_SNOC_INT_1, 8, -1, -1, MSM8916_SLAVE_APSS, MSM8916_SLAVE_CATS_128, MSM8916_SLAVE_OCMEM_64);
- DEFINE_QNODE(snoc_int_bimc, MSM8916_SNOC_INT_BIMC, 8, 101, 132, MSM8916_SNOC_BIMC_0_MAS);
- DEFINE_QNODE(snoc_pcnoc_mas, MSM8916_SNOC_PNOC_MAS, 8, -1, -1, MSM8916_SNOC_PNOC_SLV);
- DEFINE_QNODE(snoc_pcnoc_slv, MSM8916_SNOC_PNOC_SLV, 8, -1, -1, MSM8916_PNOC_INT_0);
+[1/1] soc: rockchip: io-domain: Remove incorrect and incomplete comment header
+      commit: a6a3a24c129d229a0eb26b329ab617e2a04245dd
+
+Best regards,
+-- 
+Heiko Stuebner <heiko@sntech.de>
