@@ -2,163 +2,152 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 222B32B0517
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Nov 2020 13:41:56 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1A4592B051E
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Nov 2020 13:44:20 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727827AbgKLMly (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 12 Nov 2020 07:41:54 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42380 "EHLO
+        id S1727646AbgKLMoT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 12 Nov 2020 07:44:19 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42762 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727035AbgKLMly (ORCPT
+        with ESMTP id S1727035AbgKLMoT (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 12 Nov 2020 07:41:54 -0500
-Received: from mail-oi1-x244.google.com (mail-oi1-x244.google.com [IPv6:2607:f8b0:4864:20::244])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E68E6C0613D1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 12 Nov 2020 04:41:53 -0800 (PST)
-Received: by mail-oi1-x244.google.com with SMTP id w145so6189900oie.9
-        for <linux-arm-msm@vger.kernel.org>; Thu, 12 Nov 2020 04:41:53 -0800 (PST)
+        Thu, 12 Nov 2020 07:44:19 -0500
+Received: from mail-oi1-x242.google.com (mail-oi1-x242.google.com [IPv6:2607:f8b0:4864:20::242])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E073DC0613D1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 12 Nov 2020 04:44:18 -0800 (PST)
+Received: by mail-oi1-x242.google.com with SMTP id w145so6196813oie.9
+        for <linux-arm-msm@vger.kernel.org>; Thu, 12 Nov 2020 04:44:18 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=1xPF1Lz4nYrB6C/anWXLAqDEnq22PRnhe5LG+L020aI=;
-        b=iW1jERexvQ1poJctwFKEjsfG+AJO62Hu/YEdjGXy5qhtBWMORngcS19a8CUANUQJBZ
-         cPjxno1FNV04E3Oa+SJdWZY6UcMprEdExZfqX0TJ6OrU+98QlL1XGh4+toNkUNMs3O1a
-         o0P2Z91VkVXGOHCvy03gUcX82Qus0Omid6PqXUBcFqzqi3IKloRCef/lbtm8+VfmiYK3
-         ACTozLts8w7s8uy6dEOxr+Tf11PxT0wIdSK+hFlNTUwIcdz5Wod/xY+QeOtqZQc+dmUu
-         1BINXe0cqdPnh2Lwq284JAljvQ/XrjTUE08qcnM4PSrvsvN/O5LPgpFU6HVUDOblug4h
-         XB9g==
+         :cc;
+        bh=03E0bNVNK4Y3y+OxMPgawMwEP2YPQ9Exbd3NfJENI2M=;
+        b=p5O7DGdkUmmz643hKudZkjePrSC+QmrCMAbMLweY2xgOb+bhVks7KPefpThoFpnaq2
+         TwZWXjHpJbEPS2Wg4JJRWtVGb4S1s6d02xJuZlUMVYNJ/Zy2pJcpjbTCs3REjE5R9icu
+         IXTETytMgZImlpJM2Dpyc7Mkbdrb3AJECFdj1R4iKrOiolVvCgtHLue/IQLm4co7Q/cq
+         EsKlT0OYRbxwmilRmjdd6ESKMREE6GfZi81+65B0pD/vbzUD9Hzb7dQrTpfsvJhZ4DX5
+         EwWx7rnfeXMmz9MTWkSeyefVBzZ36GrdlQrY/88qxSKLo6ADdKxqTXsuBk4gUlO45XSO
+         zVWQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=1xPF1Lz4nYrB6C/anWXLAqDEnq22PRnhe5LG+L020aI=;
-        b=fLfqBdBsgZtdecB5V/lNRW9wltB0IVTdl9eb1/sEOBc7egefdK9FQ915x8HtCPSITZ
-         KHGEbQ379AYxyESPbTRRe0KS4HW3M5U3AiHtZaDeYJJPXSW5yuO1TD0AxF2F9kegubkl
-         FWJzxnEevD4OXih2XtspDFrwbGi7tad2mmKASODdwQjmdyD9ijwSBx+U3qB9ZgfqKJOs
-         KvHbPg1NP9QJuLIo3d0EVPRTH/Swcd3u14OyJTx5rHFUkJKnlh1rTEFkA26YGbVsanrN
-         oXLhrUePaobbHR6ZvnCvhdlUfit7nhDIWqbOvWRLa5DPRo6lMMnbg5GjG1Tugz4ldDZr
-         hOIQ==
-X-Gm-Message-State: AOAM533cs04QPrga4S8ybPGbPaETsXs78lGArwdLgXLFKxxJDVwiSoMT
-        FVx7c0VyO1DcjOF9xJkMXNJqpy51uTA5wfDx7r2MmQ==
-X-Google-Smtp-Source: ABdhPJzmjcStUcQx4ZEKaJfl4Ln54yI5c7yw8uIsCn/EiLI5nf+UwJP1vwZCHYtEjWBk7fQxjf5W9lFvqudbY503C/E=
-X-Received: by 2002:aca:548e:: with SMTP id i136mr5532382oib.177.1605184913361;
- Thu, 12 Nov 2020 04:41:53 -0800 (PST)
+         :message-id:subject:to:cc;
+        bh=03E0bNVNK4Y3y+OxMPgawMwEP2YPQ9Exbd3NfJENI2M=;
+        b=fRW+hg6RU0OdQnplVhpFZ7wiID30zom1H7UQ92K0x6drPWlAVz7O6mNv1BVhSpaqya
+         Bc/hzLmdLSWmb2GMB4SBALxP5IqiXDHtPWkYsdadiU3LX4Ke7DyHkUxCTzpYZ5Zlex7O
+         xy//AvRUcKc+5usS/0F1mBRwZP6pkHjWb99F+MCAvpeLtCmNsH2hHnYDsDOdpaSOxGNg
+         UqrVimXn2gxQTGW6P6eVselwWclV1n8053fn1O/D+mx5hl6pVJAyCbILMfwrlSoKFcvE
+         BXolZoqldNWdlqyAZttUItj4MznfFGTcwVKW3RWf7IotsIcVv2js5GmWjsPtamsHgfI1
+         gAvQ==
+X-Gm-Message-State: AOAM530dZ2RByVtFcuDwIFMJ8tM4Jh5xltBk1D/i/1Uev3UxPrxEGuhy
+        8CsS77wb2T34Agzcl1tETB046tC0SanZDzjZS05woQ==
+X-Google-Smtp-Source: ABdhPJx3FVXzIOqDDXV13Unq+2x79nN/M39R/qvSoRh+lgHocAbHgG/95t34bR7QcS7b8mdZCML2vasnH63bbL4eYfc=
+X-Received: by 2002:aca:b145:: with SMTP id a66mr5713510oif.92.1605185058346;
+ Thu, 12 Nov 2020 04:44:18 -0800 (PST)
 MIME-Version: 1.0
-References: <20201102174950.1148498-1-dmitry.baryshkov@linaro.org> <c943f56c-f72c-0f14-b6ed-b67e91573b1e@linaro.org>
-In-Reply-To: <c943f56c-f72c-0f14-b6ed-b67e91573b1e@linaro.org>
+References: <20201111220122.2392823-1-dmitry.baryshkov@linaro.org> <b1cd32a4-64ea-2322-985a-219083671e4b@codeaurora.org>
+In-Reply-To: <b1cd32a4-64ea-2322-985a-219083671e4b@codeaurora.org>
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Thu, 12 Nov 2020 15:41:42 +0300
-Message-ID: <CAA8EJpp+=sQAre+kCiDLEFT+gDB0wO7KypGTXeCDncO8wWzQ-Q@mail.gmail.com>
-Subject: Re: [PATCH v9 00/15] qcom: pm8150: add support for thermal monitoring
-To:     Daniel Lezcano <daniel.lezcano@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
+Date:   Thu, 12 Nov 2020 15:44:07 +0300
+Message-ID: <CAA8EJpomFZuVy+V40y=M1Kuboc4XPGXJcQqeAOPNei=sK8zUZA@mail.gmail.com>
+Subject: Re: [PATCH] mmc: sdhci-msm: detect if tassadar_dll is used by using
+ core version
+To:     Veerabhadrarao Badiganti <vbadigan@codeaurora.org>
+Cc:     Adrian Hunter <adrian.hunter@intel.com>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Zhang Rui <rui.zhang@intel.com>,
-        Amit Kucheria <amitk@kernel.org>,
-        Jonathan Cameron <jic23@kernel.org>,
-        Hartmut Knaack <knaack.h@gmx.de>,
-        Lars-Peter Clausen <lars@metafoo.de>,
-        Peter Meerwald-Stadler <pmeerw@pmeerw.net>,
+        Ulf Hansson <ulf.hansson@linaro.org>,
         "open list:DRM DRIVER FOR MSM ADRENO GPU" 
-        <linux-arm-msm@vger.kernel.org>, linux-pm@vger.kernel.org,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>, linux-iio@vger.kernel.org,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        Jishnu Prakash <jprakash@qti.qualcomm.com>
+        <linux-arm-msm@vger.kernel.org>, linux-mmc@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 12 Nov 2020 at 14:39, Daniel Lezcano <daniel.lezcano@linaro.org> wr=
-ote:
+On Thu, 12 Nov 2020 at 08:59, Veerabhadrarao Badiganti
+<vbadigan@codeaurora.org> wrote:
 >
 >
-> Shall I take patch 1/15 and 12/15 ?
+> On 11/12/2020 3:31 AM, Dmitry Baryshkov wrote:
+> > Detect if tassadar_dll is required by using core version rather than
+> > just specifying it in the sdhci_msm_variant_info.
+> >
+> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> > Cc: Veerabhadrarao Badiganti <vbadigan@codeaurora.org>
+> > ---
+> >   drivers/mmc/host/sdhci-msm.c | 15 +++++----------
+> >   1 file changed, 5 insertions(+), 10 deletions(-)
+> >
+> > diff --git a/drivers/mmc/host/sdhci-msm.c b/drivers/mmc/host/sdhci-msm.c
+> > index 3451eb325513..dd67acab1660 100644
+> > --- a/drivers/mmc/host/sdhci-msm.c
+> > +++ b/drivers/mmc/host/sdhci-msm.c
+> > @@ -248,7 +248,6 @@ struct sdhci_msm_variant_ops {
+> >   struct sdhci_msm_variant_info {
+> >       bool mci_removed;
+> >       bool restore_dll_config;
+> > -     bool uses_tassadar_dll;
+> >       const struct sdhci_msm_variant_ops *var_ops;
+> >       const struct sdhci_msm_offset *offset;
+> >   };
+> > @@ -2154,18 +2153,11 @@ static const struct sdhci_msm_variant_info sdm845_sdhci_var = {
+> >       .offset = &sdhci_msm_v5_offset,
+> >   };
+> >
+> > -static const struct sdhci_msm_variant_info sm8250_sdhci_var = {
+> > -     .mci_removed = true,
+> > -     .uses_tassadar_dll = true,
+> > -     .var_ops = &v5_var_ops,
+> > -     .offset = &sdhci_msm_v5_offset,
+> > -};
+> > -
+> >   static const struct of_device_id sdhci_msm_dt_match[] = {
+> >       {.compatible = "qcom,sdhci-msm-v4", .data = &sdhci_msm_mci_var},
+> >       {.compatible = "qcom,sdhci-msm-v5", .data = &sdhci_msm_v5_var},
+> >       {.compatible = "qcom,sdm845-sdhci", .data = &sdm845_sdhci_var},
+> > -     {.compatible = "qcom,sm8250-sdhci", .data = &sm8250_sdhci_var},
+> > +     {.compatible = "qcom,sm8250-sdhci", .data = &sdm845_sdhci_var},
+> Since you have made it 'uses_tassadar_dll' check generic,
+> SM8250 should work with default compatible string (qcom,sdhci-msm-v5).
+> We can drop the entry to SM8250 from this table.
 
-12/15 will not compile without several previous patches, so it might
-be better to take all of them through the single tree.
+Does SM8250 need restore_dll_config like sdm845/sc7180?
 
+> >       {.compatible = "qcom,sc7180-sdhci", .data = &sdm845_sdhci_var},
+> >       {},
+> >   };
+> > @@ -2249,7 +2241,6 @@ static int sdhci_msm_probe(struct platform_device *pdev)
+> >       msm_host->restore_dll_config = var_info->restore_dll_config;
+> >       msm_host->var_ops = var_info->var_ops;
+> >       msm_host->offset = var_info->offset;
+> > -     msm_host->uses_tassadar_dll = var_info->uses_tassadar_dll;
+> >
+> >       msm_offset = msm_host->offset;
+> >
+> > @@ -2396,6 +2387,10 @@ static int sdhci_msm_probe(struct platform_device *pdev)
+> >       if (core_major == 1 && core_minor >= 0x49)
+> >               msm_host->updated_ddr_cfg = true;
+> >
+> > +     if (core_major == 1 &&
+> > +         (core_minor == 0x6e || core_minor == 0x71 || core_minor == 0x72))
+> > +             msm_host->uses_tassadar_dll = true;
+> > +
+> This new registers that got introduced for supporting this new DLL are
+> present on all versions > 0x71
+> So we can update check as core_minor >= 0x71.
 >
->
->
-> On 02/11/2020 18:49, Dmitry Baryshkov wrote:
-> > This patch serie adds support for thermal monitoring block on Qualcomm'=
-s
-> > PMIC5 chips. PM8150{,b,l} and sm8250-mtp board device trees are extende=
-d
-> > to support thermal zones provided by this thermal monitoring block.
-> > Unlike the rest of PMIC thermal senses, these thermal zones describe
-> > particular thermistors, which differ between from board to board.
-> >
-> > Changes since v8:
-> >  - Simplified qcom_vadc_map_voltage_temp() code by removing ascending
-> >    tables support
-> >  - Simplified qcom-vadc-common volt/temp mapping code
-> >  - Implement suggestions by Matthias Kaehlcke: message formatting,
-> >    rewrite comments, remove unused variable initialization.
-> >
-> > Changes since v7:
-> >  - Move qcom-vadc-common.h header to include/linux/iio/adc/ dir.
-> >  - Use explicit sizeof(var) instead of hand-coding 1 when accessing
-> >    adc-tm registers.
-> >  - Remove buffer read from adc_tm5_init().
-> >  - Remove extra on-stack var from adc_tm5_get_temp().
-> >  - Minor formatting changes as suggested Daniel.
-> >
-> > Changes since v6:
-> >  - Added include <linux/bitfield.h> as noted by Jishnu Prakash.
-> >
-> > Changes since v5:
-> >  - Reworked DT bindings:
-> >    * Removed qcom,adc-channel, instead it is parsed from io-channels
-> >    * Renamed qcom,hw-settle-time to include -us suffix
-> >  - Re-added monitor enabling which got lost during refactored. Noted by
-> >    Jishnu Prakash.
-> >  - Use threaded IRQ handler as susggested by Jishnu.
-> >
-> > Changes since v4:
-> >  - Added kernel-doc comments to ADC-TM structures
-> >  - Used several sizeof(buf) instead of hand-conding register size
-> >
-> > Changes since v3:
-> >  - Fix DT description to spell "thermal monitoring" instead of just TM
-> >  - Fix warnings in DT example
-> >  - Add EXPORT_SYMBOL_GPL(of_iio_channel_get_by_name)
-> >  - Fixed whitespace chanes in qcom-vadc-common.c
-> >  - Removed error message if IIO chanel get returns -EPROBE_DEFER
-> >
-> > Changes since v2:
-> >  - IIO: export of_iio_channel_get_by_name() function
-> >  - dt-bindings: move individual io-channels to each thermal monitoring
-> >    channel rather than listing them all in device node
-> >  - added fallback defaults to of_device_get_match_data calls in
-> >    qcom-spmi-adc5 and qcom-spmi-adc-tm5 drivers
-> >  - minor typo fixes
-> >
-> > Changes since v1:
-> >  - Introduce fixp_linear_interpolate() by Craig Tatlor
-> >  - Lots of syntax/whitespace changes
-> >  - Cleaned up register definitions per Jonathan's suggestion
-> >  - Implemented most of the suggestions from Bjorn's and Jonathan's
-> >    review
-> >
-> >
->
->
-> --
-> <http://www.linaro.org/> Linaro.org =E2=94=82 Open source software for AR=
-M SoCs
->
-> Follow Linaro:  <http://www.facebook.com/pages/Linaro> Facebook |
-> <http://twitter.com/#!/linaroorg> Twitter |
-> <http://www.linaro.org/linaro-blog/> Blog
+> And i dont find any target with SDCC controller minor version 0x6e.So we
+> can remove check for version 0x6e.
+
+I was basing this patch on the published 4.19 tree, which checks for
+0x6e. I'll drop it from v2.
+
+> >       ret = sdhci_msm_register_vreg(msm_host);
+> >       if (ret)
+> >               goto clk_disable;
 
 
 
---=20
+-- 
 With best wishes
 Dmitry
