@@ -2,52 +2,52 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 93F982AFE22
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Nov 2020 06:34:30 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7F54B2AFEFB
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Nov 2020 06:43:07 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726440AbgKLFeU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 12 Nov 2020 00:34:20 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53764 "EHLO
+        id S1728694AbgKLFeV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 12 Nov 2020 00:34:21 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53784 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728964AbgKLBnj (ORCPT
+        with ESMTP id S1729219AbgKLBnq (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 11 Nov 2020 20:43:39 -0500
-Received: from mail-pg1-x536.google.com (mail-pg1-x536.google.com [IPv6:2607:f8b0:4864:20::536])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 025A2C0613D4
-        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Nov 2020 17:43:39 -0800 (PST)
-Received: by mail-pg1-x536.google.com with SMTP id f38so2802988pgm.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Nov 2020 17:43:39 -0800 (PST)
+        Wed, 11 Nov 2020 20:43:46 -0500
+Received: from mail-pl1-x641.google.com (mail-pl1-x641.google.com [IPv6:2607:f8b0:4864:20::641])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2403AC0617A6
+        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Nov 2020 17:43:47 -0800 (PST)
+Received: by mail-pl1-x641.google.com with SMTP id x15so1960148pll.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Nov 2020 17:43:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=huaqin-corp-partner-google-com.20150623.gappssmtp.com; s=20150623;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=7r8yua/nKCeK3vM5yetSQdGOYQSdaEZxJ+KcAFNDCGM=;
-        b=TZVudu4Eom6x7eViMfrgwIEDTOwxuk2NwbzESK1osvd187h+LbGTwrmhIRjbga3l22
-         KAR8+AStRi2/Tibs30YN0GLi7Pf862pd5ccdeLlUpB3Bp4BWCQPrlkdeMOUYOzn8oQdB
-         Dgyky7EOJIFle0oRSOqIb9B0amhdlbHBFn9bpicdT/qN85/N2Gqx457Bxwip+etlgSNz
-         32zuFh2WpV0C3UXX6SBQ+PReEDdctVNuOSgylG3X2iiHy3Y3rojlk0WUCOaJoLL22VxL
-         lKxMn4BcJHF36botuq55UTLxM6JAJTfnp5klsBs4ATdtT47u/tKhX+M5DoG/UhBNr+S+
-         oS5A==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=z7QBX/BgardFaKvLv1+8d41yalYkEi5pE27cczcK9p4=;
+        b=QZ/PChYoddyuq3JaN/kKbFxu64rCiVockPcVMwx/lHoclsRoTl/jjlsJx3IgyHe6rc
+         HlwpFPqbkpDUGYmKIiGP5GobmHvpRmOFjSSl8j13zKo3zqEak2xVHx7faykxEgDlInvG
+         VEEAshdF6ZhTn0Wr1a21gVDHaQjovXRMvSBGTevGFEFJGbOVh1bsT4qX/oT369gDUkEo
+         h6ptvoCyPoHJpQQxykx0bGWAzNiNxQ5KCeVV7D3BvWlu1hFaU3nSWzZHVHU7OQlBrg/n
+         EwKBjo+ez9+0eyXZpEQoa5xw6oRDRvONS2fJOoC9LIB9mYYRuPfPdlAIHyk7lHjw+dIj
+         2xhQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=7r8yua/nKCeK3vM5yetSQdGOYQSdaEZxJ+KcAFNDCGM=;
-        b=Ey1iV3DYWWkPUmCTReDrqQuR1E9Mb72OFm9kVmoJ8SQ/GwzgT/KgpSohSxdL5Eyizv
-         eUkr3GPc/6IQNN7HDOWVyFxOThos2R8dFzqXTtGfhOhwWuzJ9DYJ04rSIQ74lNj74YLU
-         +fZV1pwMih+SO6ewGlCeWz0xdBecEcGfcxloutxjpDH4VybCs7e3UumZiKYzrpaadyHc
-         o8+TM+C+OldVNdKD0Rs1DbnwvrhRUfrAzBKtjDSEmwrRATX202+QLte1QuAc7e5k1LT3
-         lSftb0pe5g8OYIU8s19bA6wktrhR/CuNhByv9UJCZh1lvtYHU3M2PWV+gUlz9loAgtY5
-         Khmg==
-X-Gm-Message-State: AOAM532Xy6YCU4e4igkkAb2VurL0Jeu/vaRpetssAwF/Cyazsmwi/aAH
-        ZteaslpFW3Go1Vik6XHQnSl7
-X-Google-Smtp-Source: ABdhPJy0uKYvQY8jkl612KCh1Ww+d03+vAxg6dCvii/4V/9/OB17X7zWDzjpThierTZKqDWSxvuwCQ==
-X-Received: by 2002:a17:90a:ca91:: with SMTP id y17mr6205555pjt.205.1605145419473;
-        Wed, 11 Nov 2020 17:43:39 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=z7QBX/BgardFaKvLv1+8d41yalYkEi5pE27cczcK9p4=;
+        b=rtk3RpBX+VSETrWGZ7VGZYuyDUcz6fJ7o12yR6NMoQANB5ojS9SWHykw/2DjxIgUyC
+         pjcSq4NbesZceKDkBh+gQ679kDPKc5+nJiSG/QQ1tMghrDOk8cUNw5dPZnpZdqGrYa4r
+         fWCtyUR73I1sjl7SWlmx3RAbWOfkfk95RLvAzKg8xFI/W7+6PQfGI75pJI/Ak+sc2T4U
+         OevW0tefbDBZXAZUkbwwzuJ8vlJLlXCNMGQSDGlOdMgwGwvx3+ktvDvoy+9Ckdl5O+Dj
+         cmQ2/Rgo2GfDzmqPtJGyf313XXv9WncnAVrEpHcylXDHCjUZ4MStBEw+8gBMJtHODEQ3
+         +QhA==
+X-Gm-Message-State: AOAM531fJ8fZbDFjPES3MdvLvQeyX4XzVB1nOLumK70iK1j4OMi/d0NJ
+        3lRyBtpQ+KeUBzEgN2kbDDxC
+X-Google-Smtp-Source: ABdhPJzedmVR729LAKa3+B0hZGeKE4pYmHO6lasGnkD1nL/whI3qy1v7blA8jiftDQqSoyWXN7fPAg==
+X-Received: by 2002:a17:902:9a4c:b029:d6:a250:ab9f with SMTP id x12-20020a1709029a4cb02900d6a250ab9fmr24126046plv.20.1605145426755;
+        Wed, 11 Nov 2020 17:43:46 -0800 (PST)
 Received: from xuyuqing-ZenBook-UX425JA-UX425JA.huaqin.com ([101.78.151.194])
-        by smtp.gmail.com with ESMTPSA id m6sm4062413pfa.61.2020.11.11.17.43.33
+        by smtp.gmail.com with ESMTPSA id m6sm4062413pfa.61.2020.11.11.17.43.41
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 11 Nov 2020 17:43:38 -0800 (PST)
+        Wed, 11 Nov 2020 17:43:46 -0800 (PST)
 From:   xuyuqing <xuyuqing@huaqin.corp-partner.google.com>
 To:     linux-kernel@vger.kernel.org
 Cc:     Mark Brown <broonie@kernel.org>, Taniya Das <tdas@codeaurora.org>,
@@ -68,28 +68,40 @@ Cc:     Mark Brown <broonie@kernel.org>, Taniya Das <tdas@codeaurora.org>,
         alsa-devel@alsa-project.org,
         zhouguohui@huaqin.corp-partner.google.com,
         xuyuqing@huaqin.corp-partner.google.com
-Subject: [PATCH v2 0/2] Support SC7180 sound card variation without headset
-Date:   Thu, 12 Nov 2020 09:43:26 +0800
-Message-Id: <20201112014328.695232-1-xuyuqing@huaqin.corp-partner.google.com>
+Subject: [PATCH v2 1/2] ASoC: google: dt-bindings: add new compatible for sc7180-coachz
+Date:   Thu, 12 Nov 2020 09:43:27 +0800
+Message-Id: <20201112014328.695232-2-xuyuqing@huaqin.corp-partner.google.com>
 X-Mailer: git-send-email 2.25.1
+In-Reply-To: <20201112014328.695232-1-xuyuqing@huaqin.corp-partner.google.com>
+References: <20201112014328.695232-1-xuyuqing@huaqin.corp-partner.google.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Use compatible string to let machine driver handle the case
-where ALC5682 headset codec is replaced with ADAU7002 dmic codec
+Add devicetree bindings for coachz in documentation file
 
-xuyuqing (2):
-  ASoC: google: dt-bindings: add new compatible for sc7180-coachz
-  ASoC: qcom: sc7180: Add machine driver for sound card
+Signed-off-by: xuyuqing <xuyuqing@huaqin.corp-partner.google.com>
+---
+ .../devicetree/bindings/sound/google,sc7180-trogdor.yaml      | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
- .../bindings/sound/google,sc7180-trogdor.yaml |  4 +-
- sound/soc/qcom/Kconfig                        |  1 +
- sound/soc/qcom/sc7180.c                       | 86 ++++++++++++++++---
- 3 files changed, 77 insertions(+), 14 deletions(-)
-
+diff --git a/Documentation/devicetree/bindings/sound/google,sc7180-trogdor.yaml b/Documentation/devicetree/bindings/sound/google,sc7180-trogdor.yaml
+index ce050a9dec94..5095b780e2c7 100644
+--- a/Documentation/devicetree/bindings/sound/google,sc7180-trogdor.yaml
++++ b/Documentation/devicetree/bindings/sound/google,sc7180-trogdor.yaml
+@@ -15,7 +15,9 @@ description:
+ 
+ properties:
+   compatible:
+-    const: google,sc7180-trogdor
++    enum:
++      - google,sc7180-trogdor
++      - google,sc7180-coachz
+ 
+   audio-routing:
+     $ref: /schemas/types.yaml#/definitions/non-unique-string-array
 -- 
 2.25.1
 
