@@ -2,100 +2,313 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D58942B09F7
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Nov 2020 17:28:25 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4FCCB2B0A14
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Nov 2020 17:35:51 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727739AbgKLQ2Y (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 12 Nov 2020 11:28:24 -0500
-Received: from mail2.protonmail.ch ([185.70.40.22]:34103 "EHLO
-        mail2.protonmail.ch" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727863AbgKLQ2X (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 12 Nov 2020 11:28:23 -0500
-X-Greylist: delayed 377 seconds by postgrey-1.27 at vger.kernel.org; Thu, 12 Nov 2020 11:28:22 EST
-Date:   Thu, 12 Nov 2020 16:28:15 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=connolly.tech;
-        s=protonmail; t=1605198501;
-        bh=5FmF3V/1bOBRwV89YfAJNVoOxE4was21MuddwDzgZxc=;
-        h=Date:To:From:Reply-To:Subject:In-Reply-To:References:From;
-        b=R/NnRABceKacVAbcvoK3IorpKla+WOGejzxZvoaxUIA2qAg+m7Ky7r9xHAMPbMU9g
-         axzfq3ehL2xN9SEZuyo2/TGFBt78XvE9zXnnZLTALfmdBuhnclyt8oqc0hXG8p8rGV
-         zQthfXB06PuUqrcd6dW47srmGWoAqIReXTwV2IOA=
-To:     linux-arm-msm@vger.kernel.org
-From:   Caleb Connolly <caleb@connolly.tech>
-Reply-To: Caleb Connolly <caleb@connolly.tech>
-Subject: Re: Add support for the OnePlus 6 and 6T SDM845 devices
-Message-ID: <b8896b2e-9889-f0f3-b277-a8fc2aeab83d@connolly.tech>
-In-Reply-To: <20201112161920.2671430-1-caleb@connolly.tech>
-References: <20201112161920.2671430-1-caleb@connolly.tech>
+        id S1727739AbgKLQfr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 12 Nov 2020 11:35:47 -0500
+Received: from m42-4.mailgun.net ([69.72.42.4]:45060 "EHLO m42-4.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1728220AbgKLQfr (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 12 Nov 2020 11:35:47 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1605198945; h=In-Reply-To: Content-Type: MIME-Version:
+ References: Message-ID: Subject: Cc: To: From: Date: Sender;
+ bh=GpPKFpqRzHEfItsWz+dTFTuMqGgZmD5+BkFgaIg6jiw=; b=OaJ2ZIw6OYoJKznpRdMdt0xYn6sh53Eals6JBl2eIzS/DJhdk9WjiswvGFHp3Db3625io/pk
+ 9A165uMtLVQe00lZf4NeWH8HK/9x0pOHq8l7lt4m/L+6kaNITfVKJM9/ZZhk/dNgrOlsdIBp
+ dtKF1ppnyZ135HjOdL6TyxOnUdY=
+X-Mailgun-Sending-Ip: 69.72.42.4
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n09.prod.us-east-1.postgun.com with SMTP id
+ 5fad6456135ce186e9e6ff50 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 12 Nov 2020 16:35:34
+ GMT
+Sender: jcrouse=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 0AFC7C433C9; Thu, 12 Nov 2020 16:35:34 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
+        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+Received: from jcrouse1-lnx.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: jcrouse)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id C9055C433C6;
+        Thu, 12 Nov 2020 16:35:30 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org C9055C433C6
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=jcrouse@codeaurora.org
+Date:   Thu, 12 Nov 2020 09:35:27 -0700
+From:   Jordan Crouse <jcrouse@codeaurora.org>
+To:     Akhil P Oommen <akhilpo@codeaurora.org>
+Cc:     freedreno@lists.freedesktop.org, dri-devel@freedesktop.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        mka@chromium.org, robdclark@gmail.com, dianders@chromium.org
+Subject: Re: [PATCH] drm/msm: adreno: Make speed-bin support generic
+Message-ID: <20201112163527.GC2661@jcrouse1-lnx.qualcomm.com>
+Mail-Followup-To: Akhil P Oommen <akhilpo@codeaurora.org>,
+        freedreno@lists.freedesktop.org, dri-devel@freedesktop.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        mka@chromium.org, robdclark@gmail.com, dianders@chromium.org
+References: <1605196144-23516-1-git-send-email-akhilpo@codeaurora.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=-1.2 required=10.0 tests=ALL_TRUSTED,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF shortcircuit=no
-        autolearn=disabled version=3.4.4
-X-Spam-Checker-Version: SpamAssassin 3.4.4 (2020-01-24) on
-        mailout.protonmail.ch
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1605196144-23516-1-git-send-email-akhilpo@codeaurora.org>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This is V2 of the series, it should have been set in the subject line=20
-but doesn't seem to have been.
+On Thu, Nov 12, 2020 at 09:19:04PM +0530, Akhil P Oommen wrote:
+> So far a530v2 gpu has support for detecting its supported opps
+> based on a fuse value called speed-bin. This patch makes this
+> support generic across gpu families. This is in preparation to
+> extend speed-bin support to a6x family.
+> 
+> Signed-off-by: Akhil P Oommen <akhilpo@codeaurora.org>
+> ---
+> This patch is rebased on top of msm-next-staging branch in rob's tree.
+> 
+>  drivers/gpu/drm/msm/adreno/a5xx_gpu.c      | 34 --------------
+>  drivers/gpu/drm/msm/adreno/adreno_device.c |  4 ++
+>  drivers/gpu/drm/msm/adreno/adreno_gpu.c    | 71 ++++++++++++++++++++++++++++++
+>  drivers/gpu/drm/msm/adreno/adreno_gpu.h    |  5 +++
+>  4 files changed, 80 insertions(+), 34 deletions(-)
+> 
+> diff --git a/drivers/gpu/drm/msm/adreno/a5xx_gpu.c b/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
+> index 8fa5c91..7d42321 100644
+> --- a/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
+> +++ b/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
+> @@ -1531,38 +1531,6 @@ static const struct adreno_gpu_funcs funcs = {
+>  	.get_timestamp = a5xx_get_timestamp,
+>  };
+>  
+> -static void check_speed_bin(struct device *dev)
+> -{
+> -	struct nvmem_cell *cell;
+> -	u32 val;
+> -
+> -	/*
+> -	 * If the OPP table specifies a opp-supported-hw property then we have
+> -	 * to set something with dev_pm_opp_set_supported_hw() or the table
+> -	 * doesn't get populated so pick an arbitrary value that should
+> -	 * ensure the default frequencies are selected but not conflict with any
+> -	 * actual bins
+> -	 */
+> -	val = 0x80;
+> -
+> -	cell = nvmem_cell_get(dev, "speed_bin");
+> -
+> -	if (!IS_ERR(cell)) {
+> -		void *buf = nvmem_cell_read(cell, NULL);
+> -
+> -		if (!IS_ERR(buf)) {
+> -			u8 bin = *((u8 *) buf);
+> -
+> -			val = (1 << bin);
+> -			kfree(buf);
+> -		}
+> -
+> -		nvmem_cell_put(cell);
+> -	}
+> -
+> -	dev_pm_opp_set_supported_hw(dev, &val, 1);
+> -}
+> -
+>  struct msm_gpu *a5xx_gpu_init(struct drm_device *dev)
+>  {
+>  	struct msm_drm_private *priv = dev->dev_private;
+> @@ -1588,8 +1556,6 @@ struct msm_gpu *a5xx_gpu_init(struct drm_device *dev)
+>  
+>  	a5xx_gpu->lm_leakage = 0x4E001A;
+>  
+> -	check_speed_bin(&pdev->dev);
+> -
+>  	ret = adreno_gpu_init(dev, pdev, adreno_gpu, &funcs, 4);
+>  	if (ret) {
+>  		a5xx_destroy(&(a5xx_gpu->base.base));
+> diff --git a/drivers/gpu/drm/msm/adreno/adreno_device.c b/drivers/gpu/drm/msm/adreno/adreno_device.c
+> index 87c8b03..e0ff16c 100644
+> --- a/drivers/gpu/drm/msm/adreno/adreno_device.c
+> +++ b/drivers/gpu/drm/msm/adreno/adreno_device.c
+> @@ -18,6 +18,8 @@ bool snapshot_debugbus = false;
+>  MODULE_PARM_DESC(snapshot_debugbus, "Include debugbus sections in GPU devcoredump (if not fused off)");
+>  module_param_named(snapshot_debugbus, snapshot_debugbus, bool, 0600);
+>  
+> +const u32 a530v2_speedbins[] = {0, 1, 2, 3, 4, 5, 6, 7};
+> +
+>  static const struct adreno_info gpulist[] = {
+>  	{
+>  		.rev   = ADRENO_REV(2, 0, 0, 0),
+> @@ -163,6 +165,8 @@ static const struct adreno_info gpulist[] = {
+>  			ADRENO_QUIRK_FAULT_DETECT_MASK,
+>  		.init = a5xx_gpu_init,
+>  		.zapfw = "a530_zap.mdt",
+> +		.speedbins = a530v2_speedbins,
+> +		.speedbins_count = ARRAY_SIZE(a530v2_speedbins),
+>  	}, {
+>  		.rev = ADRENO_REV(5, 4, 0, 2),
+>  		.revn = 540,
+> diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.c b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
+> index f21561d..cdd0c11 100644
+> --- a/drivers/gpu/drm/msm/adreno/adreno_gpu.c
+> +++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
+> @@ -14,6 +14,7 @@
+>  #include <linux/pm_opp.h>
+>  #include <linux/slab.h>
+>  #include <linux/soc/qcom/mdt_loader.h>
+> +#include <linux/nvmem-consumer.h>
+>  #include <soc/qcom/ocmem.h>
+>  #include "adreno_gpu.h"
+>  #include "msm_gem.h"
+> @@ -891,6 +892,69 @@ void adreno_gpu_ocmem_cleanup(struct adreno_ocmem *adreno_ocmem)
+>  			   adreno_ocmem->hdl);
+>  }
+>  
+> +static int adreno_set_supported_hw(struct device *dev,
+> +		struct adreno_gpu *adreno_gpu)
+> +{
+> +	u8 speedbins_count = adreno_gpu->info->speedbins_count;
+> +	const u32 *speedbins = adreno_gpu->info->speedbins;
 
-It includes the following changes from V1:
+We don't need to make this generic and put it in the table. Just call the
+function from the target specific code and pass the speedbin array and size from
+there.
 
- =C2=A0* Amendments to the panel driver regarding Sam's comments
- =C2=A0* DTS formatting improvements.
+> +	struct nvmem_cell *cell;
+> +	u32 bin, i;
+> +	u32 val = 0;
+> +	void *buf, *opp_table;
+> +
+> +	cell = nvmem_cell_get(dev, "speed_bin");
+> +	/*
+> +	 * -ENOENT means that the platform doesn't support speedbin which is
+> +	 * fine
+> +	 */
+> +	if (PTR_ERR(cell) == -ENOENT)
+> +		return 0;
+> +	else if (IS_ERR(cell))
+> +		return PTR_ERR(cell);
+> +
+> +	/* A speedbin table is must if the platform supports speedbin */
+> +	if (!speedbins) {
+> +		DRM_DEV_ERROR(dev, "speed-bin table is missing\n");
+> +		return -ENOENT;
+> +	}
+> +
+> +	buf = nvmem_cell_read(cell, NULL);
+> +	if (IS_ERR(buf)) {
+> +		nvmem_cell_put(cell);
+> +		return PTR_ERR(buf);
+> +	}
+> +
+> +	bin = *((u32 *) buf);
+> +
+> +	for (i = 0; i < speedbins_count; i++) {
+> +		if (bin == speedbins[i]) {
+> +			val = (1 << i);
+> +			break;
+> +		}
+> +	}
+> +
+> +	kfree(buf);
+> +	nvmem_cell_put(cell);
+> +
+> +	if (!val) {
+> +		DRM_DEV_ERROR(dev, "missing support for speed-bin: %u\n", bin);
+> +		return -ENOENT;
+> +	}
+> +
+> +	opp_table = dev_pm_opp_set_supported_hw(dev, &val, 1);
+> +	if (IS_ERR(opp_table))
+> +		return PTR_ERR(opp_table);
+> +
+> +	adreno_gpu->opp_table = opp_table;
+> +	return 0;
+> +}
+> +
+> +static void adreno_put_supported_hw(struct opp_table *opp_table)
+> +{
+> +	if (opp_table)
+> +		dev_pm_opp_put_supported_hw(opp_table);
+> +}
+> +
+>  int adreno_gpu_init(struct drm_device *drm, struct platform_device *pdev,
+>  		struct adreno_gpu *adreno_gpu,
+>  		const struct adreno_gpu_funcs *funcs, int nr_rings)
+> @@ -899,6 +963,7 @@ int adreno_gpu_init(struct drm_device *drm, struct platform_device *pdev,
+>  	struct adreno_platform_config *config = dev->platform_data;
+>  	struct msm_gpu_config adreno_gpu_config  = { 0 };
+>  	struct msm_gpu *gpu = &adreno_gpu->base;
+> +	int ret;
+>  
+>  	adreno_gpu->funcs = funcs;
+>  	adreno_gpu->info = adreno_info(config->rev);
+> @@ -910,6 +975,10 @@ int adreno_gpu_init(struct drm_device *drm, struct platform_device *pdev,
+>  
+>  	adreno_gpu_config.nr_rings = nr_rings;
+>  
+> +	ret = adreno_set_supported_hw(dev, adreno_gpu);
+> +	if (ret)
+> +		return ret;
 
-Sorry for any confusion caused.
-Regards,
-Caleb
+This bit should be in the target specific code
+> +
+>  	adreno_get_pwrlevels(dev, gpu);
+>  
+>  	pm_runtime_set_autosuspend_delay(dev,
+> @@ -936,4 +1005,6 @@ void adreno_gpu_cleanup(struct adreno_gpu *adreno_gpu)
+>  
+>  	icc_put(gpu->icc_path);
+>  	icc_put(gpu->ocmem_icc_path);
+> +
+> +	adreno_put_supported_hw(adreno_gpu->opp_table);
 
-On 2020-11-12 16:21, Caleb Connolly wrote:
-> The OnePlus 6/T handsets are based on the SDM845 platform and were
-> released in late 2017. Add support for booting with core
-> functionality including:
->
->   * Display panels and hardware accelerated graphics
->   * Touch screen with Synaptics RMI4
->   * Modem and other remoteprocessors
->   * WiFi / Bluetooth
->   * Buttons and OnePlus Tri-State key
->   * USB gadget mode
->
-> Both devices are almost identical, but use different display panels,
-> with the 6T lacking a headphone jack and notification LED.
->
-> This series depends on the SMMU stream mapping patches which can be
-> found here:
-> https://lore.kernel.org/linux-iommu/20201017043907.2656013-1-bjorn.anders=
-son@linaro.org/
->
-> The devices will fail early in the boot process otherwise.
->
->    drm/panel/samsung-sofef00: Add panel for OnePlus 6/T devices
->    dt-bindings: panel-simple-dsi: add samsung panels for OnePlus 6/T
->    arm64: dts: sdm845: add oneplus 6/t devices
->    dt-bindings: add vendor bindings for OnePlus
->    i2c: geni: sdm845: dont perform DMA for OnePlus 6 devices
->
->   .../bindings/arm/oneplus/oneplus-boards.yaml          |  25 +
->   .../bindings/display/panel/panel-simple-dsi.yaml      |   4 +
->   .../devicetree/bindings/vendor-prefixes.yaml          |   2 +
->   arch/arm64/boot/dts/qcom/Makefile                     |   2 +
->   arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi   | 822 +++++++++++=
-+++++++++++
->   arch/arm64/boot/dts/qcom/sdm845-oneplus-enchilada.dts |  19 +
->   arch/arm64/boot/dts/qcom/sdm845-oneplus-fajita.dts    |  23 +
->   drivers/gpu/drm/panel/Kconfig                         |  12 +
->   drivers/gpu/drm/panel/Makefile                        |   1 +
->   drivers/gpu/drm/panel/panel-samsung-sofef00.c         | 353 ++++++++++
->   drivers/i2c/busses/i2c-qcom-geni.c                    |   6 +-
->   11 files changed, 1267 insertions(+), 2 deletions(-)
->
->
->
->
+And this bit too, though it would be easier to just call the put function
+directly without having a intermediate function.  Also the OPP function should
+be NULL aware but thats a different story.
 
+Jordan
+>  }
+> diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.h b/drivers/gpu/drm/msm/adreno/adreno_gpu.h
+> index c3775f7..a756ad7 100644
+> --- a/drivers/gpu/drm/msm/adreno/adreno_gpu.h
+> +++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.h
+> @@ -55,6 +55,7 @@ struct adreno_reglist {
+>  };
+>  
+>  extern const struct adreno_reglist a630_hwcg[], a640_hwcg[], a650_hwcg[];
+> +extern const u32 a618_speedbins[];
+>  
+>  struct adreno_info {
+>  	struct adreno_rev rev;
+> @@ -67,6 +68,8 @@ struct adreno_info {
+>  	const char *zapfw;
+>  	u32 inactive_period;
+>  	const struct adreno_reglist *hwcg;
+> +	const u32 *speedbins;
+> +	const u8 speedbins_count;
+>  };
+>  
+>  const struct adreno_info *adreno_info(struct adreno_rev rev);
+> @@ -112,6 +115,8 @@ struct adreno_gpu {
+>  	 * code (a3xx_gpu.c) and stored in this common location.
+>  	 */
+>  	const unsigned int *reg_offsets;
+> +
+> +	struct opp_table *opp_table;
+>  };
+>  #define to_adreno_gpu(x) container_of(x, struct adreno_gpu, base)
+>  
+> -- 
+> 2.7.4
+> 
 
+-- 
+The Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum,
+a Linux Foundation Collaborative Project
