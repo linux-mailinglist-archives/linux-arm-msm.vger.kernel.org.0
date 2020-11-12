@@ -2,154 +2,103 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 51FEE2B0591
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Nov 2020 14:00:11 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 720B12B060F
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Nov 2020 14:13:56 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728514AbgKLNAA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 12 Nov 2020 08:00:00 -0500
-Received: from m42-4.mailgun.net ([69.72.42.4]:35780 "EHLO m42-4.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728501AbgKLM7w (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 12 Nov 2020 07:59:52 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1605185991; h=Content-Transfer-Encoding: Content-Type:
- In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
- Subject: Sender; bh=as78P4im7oJRF8nt590Mn1iiOyqK58Te8j/LBmBqibg=; b=sC8SZqkXG00W0RWrIkyrpnGCF9wtQjrB41cMlcYqdTjHNiZKo6xPsSTaZav4xlYgzFPuDALJ
- 2y/tAabfKujiz+2P3K3155zsq+9f+dGWhXky8DafhltPtwXVqP/yk+tAg5IKE6ARerLhdpDm
- 8pDDM8wGO8zPpXexHwkiGsnIokw=
-X-Mailgun-Sending-Ip: 69.72.42.4
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n08.prod.us-west-2.postgun.com with SMTP id
- 5fad31c73825e013b554b22f (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 12 Nov 2020 12:59:51
- GMT
-Sender: vbadigan=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id DA753C433F0; Thu, 12 Nov 2020 12:59:50 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        NICE_REPLY_A,SPF_FAIL,URIBL_BLOCKED autolearn=no autolearn_force=no
-        version=3.4.0
-Received: from [192.168.0.105] (unknown [49.205.245.25])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: vbadigan)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 1AB2EC433C8;
-        Thu, 12 Nov 2020 12:59:46 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 1AB2EC433C8
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=vbadigan@codeaurora.org
-Subject: Re: [PATCH] mmc: sdhci-msm: detect if tassadar_dll is used by using
- core version
+        id S1727899AbgKLNNz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 12 Nov 2020 08:13:55 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47398 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727035AbgKLNNy (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 12 Nov 2020 08:13:54 -0500
+Received: from mail-wr1-x444.google.com (mail-wr1-x444.google.com [IPv6:2a00:1450:4864:20::444])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 946C0C0613D4
+        for <linux-arm-msm@vger.kernel.org>; Thu, 12 Nov 2020 05:13:54 -0800 (PST)
+Received: by mail-wr1-x444.google.com with SMTP id d12so5907312wrr.13
+        for <linux-arm-msm@vger.kernel.org>; Thu, 12 Nov 2020 05:13:54 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=bo6b3plJGeSCfqA2TlRi1WC3RGLlmTiYJkUzuyFzqgg=;
+        b=xqEnu3qOxGCBmIvnubq6qgbQFbZ1GALhsKcWy3ouPmFAnGxWqncXENS0E3AOCV/4+J
+         ZDMV3iem5aUNFgb9zxQzPdO96qfck5iIHcs1je+WjE2DSXc334BC9pqMG3SFMcvEtTg/
+         yuVD5XBeRhIdSwyjRHrf4yQW3rk/eqUvkIl4h6Ne11juJcsx+O1i7hZ9e3+CO0l5itft
+         K3DCOwWVVAkP29iBXMUkxPs94dS/gxyICz5wV7bfoVg6Q92Onq0nSzbvgP/0B0UUKIMg
+         koAMbzCfFK8Z2RVYcLIVKvncInJ/mhAeKnJCSd3dcpfz9JNQkAzEBrKHvCRZjCJ12xzX
+         TMmA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=bo6b3plJGeSCfqA2TlRi1WC3RGLlmTiYJkUzuyFzqgg=;
+        b=JWYTx0+PvEs88XiM8VELewxNgxXq0ee2erG/KS3rYocCpHo69vzh/enzpUYWvnGGiu
+         Akuw4gih/wCpk6Y7ijlNnE+FdRm7ljcMMCsnCADzoIYVE88hwcVMg2nh8jwT1sL/Lzfm
+         nTjLEB7kRFwlE/JswZtbiQyG7z8SyHC1DuZIK8eemWuP9wk0Hw5wB4b9hbM6nhgp6A13
+         KyAmXHLI4b50/x3ndQoG2qCY6P/Es+yzMP+beiOrZJCCB6mTd4D3KfCV1Xy9QnzGcCgR
+         F7txzFBEaUcu0jABddc9UVdBZOXHHMTylpXWkKh7Z9Fnq6CGuMJdWeUNEDVaMTnuJ6rH
+         lDAw==
+X-Gm-Message-State: AOAM532T7LNS1B31SwEHRrhoBb01s01xDVesy7sAJxdAhSzaryWVwMB5
+        VcsG9fJVGBy56RED+q4WUQ+uyQ==
+X-Google-Smtp-Source: ABdhPJzSZTM0aetNvyM1aDGThFnDswNgJp25u/ogvbOp/15JLROiREI2JWpn1R9Gf3vaCpfyMX0yHg==
+X-Received: by 2002:a5d:4e4c:: with SMTP id r12mr9205512wrt.348.1605186833116;
+        Thu, 12 Nov 2020 05:13:53 -0800 (PST)
+Received: from ?IPv6:2a01:e34:ed2f:f020:6971:b700:3764:fa96? ([2a01:e34:ed2f:f020:6971:b700:3764:fa96])
+        by smtp.googlemail.com with ESMTPSA id f7sm7379008wrx.64.2020.11.12.05.13.51
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 12 Nov 2020 05:13:52 -0800 (PST)
+Subject: Re: [PATCH v9 00/15] qcom: pm8150: add support for thermal monitoring
 To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Adrian Hunter <adrian.hunter@intel.com>,
-        Andy Gross <agross@kernel.org>,
+Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Ulf Hansson <ulf.hansson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Zhang Rui <rui.zhang@intel.com>,
+        Amit Kucheria <amitk@kernel.org>,
+        Jonathan Cameron <jic23@kernel.org>,
+        Hartmut Knaack <knaack.h@gmx.de>,
+        Lars-Peter Clausen <lars@metafoo.de>,
+        Peter Meerwald-Stadler <pmeerw@pmeerw.net>,
         "open list:DRM DRIVER FOR MSM ADRENO GPU" 
-        <linux-arm-msm@vger.kernel.org>, linux-mmc@vger.kernel.org
-References: <20201111220122.2392823-1-dmitry.baryshkov@linaro.org>
- <b1cd32a4-64ea-2322-985a-219083671e4b@codeaurora.org>
- <CAA8EJpomFZuVy+V40y=M1Kuboc4XPGXJcQqeAOPNei=sK8zUZA@mail.gmail.com>
-From:   Veerabhadrarao Badiganti <vbadigan@codeaurora.org>
-Message-ID: <11907955-9114-6abf-512a-c6133eab6fb3@codeaurora.org>
-Date:   Thu, 12 Nov 2020 18:29:43 +0530
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
- Thunderbird/68.12.1
+        <linux-arm-msm@vger.kernel.org>, linux-pm@vger.kernel.org,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>, linux-iio@vger.kernel.org,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        Jishnu Prakash <jprakash@qti.qualcomm.com>
+References: <20201102174950.1148498-1-dmitry.baryshkov@linaro.org>
+ <c943f56c-f72c-0f14-b6ed-b67e91573b1e@linaro.org>
+ <CAA8EJpp+=sQAre+kCiDLEFT+gDB0wO7KypGTXeCDncO8wWzQ-Q@mail.gmail.com>
+From:   Daniel Lezcano <daniel.lezcano@linaro.org>
+Message-ID: <a66e75c1-ce30-df75-c77e-e58e660f0105@linaro.org>
+Date:   Thu, 12 Nov 2020 14:13:50 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.10.0
 MIME-Version: 1.0
-In-Reply-To: <CAA8EJpomFZuVy+V40y=M1Kuboc4XPGXJcQqeAOPNei=sK8zUZA@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
+In-Reply-To: <CAA8EJpp+=sQAre+kCiDLEFT+gDB0wO7KypGTXeCDncO8wWzQ-Q@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-On 11/12/2020 6:14 PM, Dmitry Baryshkov wrote:
-> On Thu, 12 Nov 2020 at 08:59, Veerabhadrarao Badiganti
-> <vbadigan@codeaurora.org> wrote:
+On 12/11/2020 13:41, Dmitry Baryshkov wrote:
+> On Thu, 12 Nov 2020 at 14:39, Daniel Lezcano <daniel.lezcano@linaro.org> wrote:
 >>
->> On 11/12/2020 3:31 AM, Dmitry Baryshkov wrote:
->>> Detect if tassadar_dll is required by using core version rather than
->>> just specifying it in the sdhci_msm_variant_info.
->>>
->>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
->>> Cc: Veerabhadrarao Badiganti <vbadigan@codeaurora.org>
->>> ---
->>>    drivers/mmc/host/sdhci-msm.c | 15 +++++----------
->>>    1 file changed, 5 insertions(+), 10 deletions(-)
->>>
->>> diff --git a/drivers/mmc/host/sdhci-msm.c b/drivers/mmc/host/sdhci-msm.c
->>> index 3451eb325513..dd67acab1660 100644
->>> --- a/drivers/mmc/host/sdhci-msm.c
->>> +++ b/drivers/mmc/host/sdhci-msm.c
->>> @@ -248,7 +248,6 @@ struct sdhci_msm_variant_ops {
->>>    struct sdhci_msm_variant_info {
->>>        bool mci_removed;
->>>        bool restore_dll_config;
->>> -     bool uses_tassadar_dll;
->>>        const struct sdhci_msm_variant_ops *var_ops;
->>>        const struct sdhci_msm_offset *offset;
->>>    };
->>> @@ -2154,18 +2153,11 @@ static const struct sdhci_msm_variant_info sdm845_sdhci_var = {
->>>        .offset = &sdhci_msm_v5_offset,
->>>    };
->>>
->>> -static const struct sdhci_msm_variant_info sm8250_sdhci_var = {
->>> -     .mci_removed = true,
->>> -     .uses_tassadar_dll = true,
->>> -     .var_ops = &v5_var_ops,
->>> -     .offset = &sdhci_msm_v5_offset,
->>> -};
->>> -
->>>    static const struct of_device_id sdhci_msm_dt_match[] = {
->>>        {.compatible = "qcom,sdhci-msm-v4", .data = &sdhci_msm_mci_var},
->>>        {.compatible = "qcom,sdhci-msm-v5", .data = &sdhci_msm_v5_var},
->>>        {.compatible = "qcom,sdm845-sdhci", .data = &sdm845_sdhci_var},
->>> -     {.compatible = "qcom,sm8250-sdhci", .data = &sm8250_sdhci_var},
->>> +     {.compatible = "qcom,sm8250-sdhci", .data = &sdm845_sdhci_var},
->> Since you have made it 'uses_tassadar_dll' check generic,
->> SM8250 should work with default compatible string (qcom,sdhci-msm-v5).
->> We can drop the entry to SM8250 from this table.
-> Does SM8250 need restore_dll_config like sdm845/sc7180?
-No. Its not needed.
->>>        {.compatible = "qcom,sc7180-sdhci", .data = &sdm845_sdhci_var},
->>>        {},
->>>    };
->>> @@ -2249,7 +2241,6 @@ static int sdhci_msm_probe(struct platform_device *pdev)
->>>        msm_host->restore_dll_config = var_info->restore_dll_config;
->>>        msm_host->var_ops = var_info->var_ops;
->>>        msm_host->offset = var_info->offset;
->>> -     msm_host->uses_tassadar_dll = var_info->uses_tassadar_dll;
->>>
->>>        msm_offset = msm_host->offset;
->>>
->>> @@ -2396,6 +2387,10 @@ static int sdhci_msm_probe(struct platform_device *pdev)
->>>        if (core_major == 1 && core_minor >= 0x49)
->>>                msm_host->updated_ddr_cfg = true;
->>>
->>> +     if (core_major == 1 &&
->>> +         (core_minor == 0x6e || core_minor == 0x71 || core_minor == 0x72))
->>> +             msm_host->uses_tassadar_dll = true;
->>> +
->> This new registers that got introduced for supporting this new DLL are
->> present on all versions > 0x71
->> So we can update check as core_minor >= 0x71.
 >>
->> And i dont find any target with SDCC controller minor version 0x6e.So we
->> can remove check for version 0x6e.
-> I was basing this patch on the published 4.19 tree, which checks for
-> 0x6e. I'll drop it from v2.
+>> Shall I take patch 1/15 and 12/15 ?
+> 
+> 12/15 will not compile without several previous patches, so it might
+> be better to take all of them through the single tree.
 
-Correct. In qcom downstream code, 0x6e version check was wrongly added.
+Ok, I will take some time to review the driver and ack it, so it can be
+merged through the iio tree.
 
->>>        ret = sdhci_msm_register_vreg(msm_host);
->>>        if (ret)
->>>                goto clk_disable;
->
->
+
+-- 
+<http://www.linaro.org/> Linaro.org │ Open source software for ARM SoCs
+
+Follow Linaro:  <http://www.facebook.com/pages/Linaro> Facebook |
+<http://twitter.com/#!/linaroorg> Twitter |
+<http://www.linaro.org/linaro-blog/> Blog
