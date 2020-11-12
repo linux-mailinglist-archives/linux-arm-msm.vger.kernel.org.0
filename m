@@ -2,241 +2,113 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 805552AFEF9
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Nov 2020 06:43:06 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0D9B62AFE23
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Nov 2020 06:34:31 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728159AbgKLFeV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 12 Nov 2020 00:34:21 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54082 "EHLO
+        id S1728656AbgKLFeW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 12 Nov 2020 00:34:22 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41112 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728656AbgKLBqT (ORCPT
+        with ESMTP id S1728284AbgKLDYg (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 11 Nov 2020 20:46:19 -0500
-Received: from mail-pf1-x441.google.com (mail-pf1-x441.google.com [IPv6:2607:f8b0:4864:20::441])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 17476C061A47
-        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Nov 2020 17:43:59 -0800 (PST)
-Received: by mail-pf1-x441.google.com with SMTP id x15so1685516pfm.9
-        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Nov 2020 17:43:59 -0800 (PST)
+        Wed, 11 Nov 2020 22:24:36 -0500
+Received: from mail-pg1-x542.google.com (mail-pg1-x542.google.com [IPv6:2607:f8b0:4864:20::542])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6FCCCC0613D4
+        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Nov 2020 19:24:36 -0800 (PST)
+Received: by mail-pg1-x542.google.com with SMTP id r10so2957377pgb.10
+        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Nov 2020 19:24:36 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=huaqin-corp-partner-google-com.20150623.gappssmtp.com; s=20150623;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=T0cFLEEzOBFqtPRqMbrgxpfYm1hPATc5ZUJsnwS3q7c=;
-        b=LgjrYdJr7PcK+o197Nr+M5YH81CU1kOQf2n6pwsvQRiOxMXmItm5chnTeozaAoJ0Q4
-         SxG/HgzFyozp3Og4Uif7goQ54o8689RbQEAhI1ILXi3+Q8GdvxlHRIDf1gDhPyUdzqVM
-         oXcvYE0eA5TcEi3KVaF6rmQgmkLcHtSLG9Y99caQWnsnl99fKAEAf6BEcJsTtqwddOqC
-         uf22xYAnyAW481MGFegKkOgaVXiVbXJeFLcPpLcBDNlirbysgj8ZPzpdc18opa3Cv7Zd
-         zrs9ObKES1hLHIPdk39FXE7W3Yp5U3mzu2s1QLOVX0x7ymmxHQmetvNme4G9DH6Zj2VP
-         JwDw==
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=dw/+kFxf0Z+g4MLtsKdkPTZO5yvgI1LNaLgdeBQhODY=;
+        b=hMjAkFbLmvhmNmWj8c38O1RbEN6io/uZBkvFy3oaiEzVVhZmT59cp1la/7zJMTKI6f
+         uQmt2wNeWPya1XFlXHPe4QvjXuk9v+ale6VWl55D059j6swlRLmuHVYWJqnLLK3/a0L5
+         yqQluUVAhavAi8Y6Zdsxxo+VZJF8EGe6e7x4M79xf5f0w2+EGRBRyXLuuP5Gmu+nV3lC
+         ck6qjLLh3lmY3pugNiWausNJdpJ3RxcB/VYPzkeG+o+gvIgGnP1jIlN6bWgYW7ex0rGt
+         /WC7F12K0ghEcem2IO35Sf2Y3iHHOkFQa5zWL6tdNCziHMRXzl8Xw/GgAvdRXaVpUEXD
+         1Vng==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=T0cFLEEzOBFqtPRqMbrgxpfYm1hPATc5ZUJsnwS3q7c=;
-        b=L9QOC0VBzpb/VrbuD7rUWTijEqYDEWT4qsOqTaaYRTy0xuui0In/GrXVHxZ7/7fotl
-         OpaPKimEq0YvMnRh4gI+tmdvfI/xfL8SbvJ/hnyFgm2NL5RVygrwl4v70UBRC37hZP6g
-         2mhj4pCKYb1Fx2wj/WeEDtHMUAqwKWue7+d7iUtlnqQaE8WHfCPXxP7UikReKzSAflir
-         JvGBFyr6JqpnrO7cE0pXu5YgqQLsdWmWM6+WWoH1+Sty/brAE4j7MUNFZwkRpbbVZVd9
-         a6uBbBO39EEjuhIHP2Zd6sLRrBGWGTMuGPmLt5SnGphThtg5716jDlqvFcvY3+5K1M0V
-         Adaw==
-X-Gm-Message-State: AOAM530JhxC3Ny4OTRVJIib6Hkb/Yv5MEP8M5TfcRug/xTFz49YwGuYj
-        c5qnIf4980LIZSlVlR6wNkqS
-X-Google-Smtp-Source: ABdhPJxhXBXAQ6Jc8mv7FpRXR4ISG3WBs0ZhHALrJYJpygtGndZHImr5i3ZP86b31Evg5crtBLGF8A==
-X-Received: by 2002:a62:804d:0:b029:18b:9bf:2979 with SMTP id j74-20020a62804d0000b029018b09bf2979mr8087291pfd.11.1605145438665;
-        Wed, 11 Nov 2020 17:43:58 -0800 (PST)
-Received: from xuyuqing-ZenBook-UX425JA-UX425JA.huaqin.com ([101.78.151.194])
-        by smtp.gmail.com with ESMTPSA id m6sm4062413pfa.61.2020.11.11.17.43.53
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 11 Nov 2020 17:43:58 -0800 (PST)
-From:   xuyuqing <xuyuqing@huaqin.corp-partner.google.com>
-To:     linux-kernel@vger.kernel.org
-Cc:     Mark Brown <broonie@kernel.org>, Taniya Das <tdas@codeaurora.org>,
-        Rohit kumar <rohitkr@codeaurora.org>,
-        Banajit Goswami <bgoswami@codeaurora.org>,
-        Patrick Lai <plai@codeaurora.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Jaroslav Kysela <perex@perex.cz>,
-        Takashi Iwai <tiwai@suse.com>,
-        Srini Kandagatla <srinivas.kandagatla@linaro.org>,
-        Stephan Gerhold <stephan@gerhold.net>, dianders@chromium.org,
-        dgreid@chromium.org, tzungbi@chromium.org, cychiang@chromium.org,
-        judyhsiao@chromium.org, linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        alsa-devel@alsa-project.org,
-        zhouguohui@huaqin.corp-partner.google.com,
-        xuyuqing@huaqin.corp-partner.google.com
-Subject: [PATCH v2 2/2] ASoC: qcom: sc7180: Modify machine driver for sound card
-Date:   Thu, 12 Nov 2020 09:43:28 +0800
-Message-Id: <20201112014328.695232-3-xuyuqing@huaqin.corp-partner.google.com>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20201112014328.695232-1-xuyuqing@huaqin.corp-partner.google.com>
-References: <20201112014328.695232-1-xuyuqing@huaqin.corp-partner.google.com>
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=dw/+kFxf0Z+g4MLtsKdkPTZO5yvgI1LNaLgdeBQhODY=;
+        b=YOMpwF7g83p+zTDjIwNEm1pwr1V4XozqWGVd9ZVgCN2Z26cysnRKAuCeTysw3Armod
+         ABEdX7BtFODVgbfrhv8oLqSzVnunlFpTh7kd41xih6qzWHqFNAS9Itxe2dC3/cD37vw8
+         3cIvQJC2gPOWJeP4zoFoax1Zhr/kOfhWTdve7fMuoSVWSC+asc8luc9SEskVyTR+QchU
+         c1L5DmhQL9W6owv8YrkQoeaowXFJD8i7VOjSilhcGkDjcWfXGNvGMBGrKJjZSQTGZAwQ
+         a3s08IFKy2eBVvZrKKOqbphnZK5bR8R566rc1MTb3in/gIEJMs08ctxcalQBh6T8bmQa
+         6C8A==
+X-Gm-Message-State: AOAM533y7qjh+DWWIzYgpggjRtwWxtl5rZIFSHg6K91ZMVCGk2X+7uoZ
+        s/cI8TX7WtZzihQbU4NO5Z83
+X-Google-Smtp-Source: ABdhPJx8gOPqki6mKuDTjXfwgqpoZ88hW49qoB7413DCug8EolMYL0aK6FTP56mUNd69MdaQ7duJcQ==
+X-Received: by 2002:a17:90b:3781:: with SMTP id mz1mr525724pjb.229.1605151475720;
+        Wed, 11 Nov 2020 19:24:35 -0800 (PST)
+Received: from Mani-XPS-13-9360 ([2409:4072:639b:9d11:cd64:b750:3a8a:63e7])
+        by smtp.gmail.com with ESMTPSA id n1sm4063033pgl.31.2020.11.11.19.24.29
+        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 11 Nov 2020 19:24:34 -0800 (PST)
+Date:   Thu, 12 Nov 2020 08:54:26 +0530
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     Bhaumik Bhatt <bbhatt@codeaurora.org>
+Cc:     Loic Poulain <loic.poulain@linaro.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Hemant Kumar <hemantk@codeaurora.org>,
+        Jeffrey Hugo <jhugo@codeaurora.org>,
+        open list <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH v1 3/4] bus: mhi: core: Add support to pause or resume
+ channel data transfers
+Message-ID: <20201112032426.GB2491@Mani-XPS-13-9360>
+References: <1604961850-27671-1-git-send-email-bbhatt@codeaurora.org>
+ <1604961850-27671-4-git-send-email-bbhatt@codeaurora.org>
+ <CAMZdPi_dwT+hj26sxJdMS1v-X-MNd1ys34QD=Bf_O+dvmjOD2Q@mail.gmail.com>
+ <3710a3051c480bf9d125362303815831@codeaurora.org>
+ <CAMZdPi_b7U1iW79mWq7ikxE4jTr+n+-8Y+EZz8i1xro-UcJhjA@mail.gmail.com>
+ <c56fa0e7dcbe43d65bbe93cf287372a3@codeaurora.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <c56fa0e7dcbe43d65bbe93cf287372a3@codeaurora.org>
+User-Agent: Mutt/1.9.4 (2018-02-28)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Bypass set jack because there is no jack on coachz.
-Create route for dmic.
+On Wed, Nov 11, 2020 at 10:11:37AM -0800, Bhaumik Bhatt wrote:
+> Hi Loic,
+> 
 
-Signed-off-by: xuyuqing <xuyuqing@huaqin.corp-partner.google.com>
----
- sound/soc/qcom/Kconfig  |  1 +
- sound/soc/qcom/sc7180.c | 86 ++++++++++++++++++++++++++++++++++-------
- 2 files changed, 74 insertions(+), 13 deletions(-)
+[...]
 
-diff --git a/sound/soc/qcom/Kconfig b/sound/soc/qcom/Kconfig
-index 41cb08bd5588..27f93006be96 100644
---- a/sound/soc/qcom/Kconfig
-+++ b/sound/soc/qcom/Kconfig
-@@ -145,6 +145,7 @@ config SND_SOC_SC7180
- 	select SND_SOC_LPASS_SC7180
- 	select SND_SOC_MAX98357A
- 	select SND_SOC_RT5682_I2C
-+	select SND_SOC_ADAU7002
- 	help
- 	  To add support for audio on Qualcomm Technologies Inc.
- 	  SC7180 SoC-based systems.
-diff --git a/sound/soc/qcom/sc7180.c b/sound/soc/qcom/sc7180.c
-index 878fd0169aab..e2e6567566af 100644
---- a/sound/soc/qcom/sc7180.c
-+++ b/sound/soc/qcom/sc7180.c
-@@ -221,16 +221,69 @@ static void sc7180_snd_shutdown(struct snd_pcm_substream *substream)
- 	}
- }
- 
-+static int sc7180_adau7002_init(struct snd_soc_pcm_runtime *rtd)
-+{
-+	struct snd_soc_dai *cpu_dai = asoc_rtd_to_cpu(rtd, 0);
-+
-+	switch (cpu_dai->id) {
-+	case MI2S_PRIMARY:
-+		return 0;
-+	case MI2S_SECONDARY:
-+		return 0;
-+	case LPASS_DP_RX:
-+		return sc7180_hdmi_init(rtd);
-+	default:
-+		dev_err(rtd->dev, "%s: invalid dai id 0x%x\n", __func__,
-+			cpu_dai->id);
-+		return -EINVAL;
-+	}
-+	return 0;
-+}
-+
-+static int sc7180_adau7002_snd_startup(struct snd_pcm_substream *substream)
-+{
-+	struct snd_soc_pcm_runtime *rtd = substream->private_data;
-+	struct snd_soc_dai *cpu_dai = asoc_rtd_to_cpu(rtd, 0);
-+	struct snd_soc_dai *codec_dai = asoc_rtd_to_codec(rtd, 0);
-+
-+	switch (cpu_dai->id) {
-+	case MI2S_PRIMARY:
-+		snd_soc_dai_set_fmt(codec_dai,
-+				    SND_SOC_DAIFMT_CBS_CFS |
-+				    SND_SOC_DAIFMT_NB_NF |
-+				    SND_SOC_DAIFMT_I2S);
-+
-+		break;
-+	case MI2S_SECONDARY:
-+		break;
-+	case LPASS_DP_RX:
-+		break;
-+	default:
-+		dev_err(rtd->dev, "%s: invalid dai id 0x%x\n", __func__,
-+			cpu_dai->id);
-+		return -EINVAL;
-+	}
-+	return 0;
-+}
-+
- static const struct snd_soc_ops sc7180_ops = {
- 	.startup = sc7180_snd_startup,
- 	.shutdown = sc7180_snd_shutdown,
- };
- 
-+static const struct snd_soc_ops sc7180_adau7002_ops = {
-+	.startup = sc7180_adau7002_snd_startup,
-+};
-+
- static const struct snd_soc_dapm_widget sc7180_snd_widgets[] = {
- 	SND_SOC_DAPM_HP("Headphone Jack", NULL),
- 	SND_SOC_DAPM_MIC("Headset Mic", NULL),
- };
- 
-+static const struct snd_soc_dapm_widget sc7180_adau7002_snd_widgets[] = {
-+	SND_SOC_DAPM_MIC("DMIC", NULL),
-+};
-+
- static const char * const dmic_mux_text[] = {
- 	"Front Mic",
- 	"Rear Mic",
-@@ -255,23 +308,15 @@ static const struct snd_soc_dapm_route sc7180_snd_dual_mic_audio_route[] = {
- 	{"Dmic Mux", "Rear Mic", "DMIC"},
- };
- 
--static void sc7180_add_ops(struct snd_soc_card *card)
--{
--	struct snd_soc_dai_link *link;
--	int i;
--
--	for_each_card_prelinks(card, i, link) {
--		link->ops = &sc7180_ops;
--		link->init = sc7180_init;
--	}
--}
--
- static int sc7180_snd_platform_probe(struct platform_device *pdev)
- {
- 	struct snd_soc_card *card;
- 	struct sc7180_snd_data *data;
- 	struct device *dev = &pdev->dev;
-+	struct snd_soc_dai_link *link;
- 	int ret;
-+	int i;
-+	bool no_headphone;
- 
- 	/* Allocate the private data */
- 	data = devm_kzalloc(dev, sizeof(*data), GFP_KERNEL);
-@@ -299,17 +344,32 @@ static int sc7180_snd_platform_probe(struct platform_device *pdev)
- 		}
- 	}
- 
-+	if (of_device_is_compatible(dev->of_node, "google,sc7180-coachz")) {
-+		no_headphone = true;
-+		card->dapm_widgets = sc7180_adau7002_snd_widgets;
-+		card->num_dapm_widgets = ARRAY_SIZE(sc7180_adau7002_snd_widgets);
-+	}
-+
- 	ret = qcom_snd_parse_of(card);
- 	if (ret)
- 		return ret;
- 
--	sc7180_add_ops(card);
-+	for_each_card_prelinks(card, i, link) {
-+		if (no_headphone) {
-+			link->ops = &sc7180_adau7002_ops;
-+			link->init = sc7180_adau7002_init;
-+		} else {
-+			link->ops = &sc7180_ops;
-+			link->init = sc7180_init;
-+		}
-+	}
- 
- 	return devm_snd_soc_register_card(dev, card);
- }
- 
- static const struct of_device_id sc7180_snd_device_id[]  = {
--	{ .compatible = "google,sc7180-trogdor"},
-+	{.compatible = "google,sc7180-trogdor"},
-+	{.compatible = "google,sc7180-coachz"},
- 	{},
- };
- MODULE_DEVICE_TABLE(of, sc7180_snd_device_id);
--- 
-2.25.1
+> > > > Look like it is stop and start, not pause and resume?
+> > > I wanted to keep it pause and resume because it could get confusing
+> > > for
+> > > someone
+> > > looking at this pair of APIs, that a client driver would also need to
+> > > "start"
+> > > channels after "preparing" them. Since that is not that case, and the
+> > > mhi_prepare_for_transfer() API itself is supposed to also start the
+> > > channels, it
+> > 
+> > Yes, because prepare_for_transfer is actually init_and_start. I'm not
+> > in favor of hiding what is really done at mhi_core level, start is
+> > start and stop is stop, if it's correctly documented that should not
+> > be confusing. just saying (stop moves channels in stop state, start in
+> > enabled state), but other opinions are welcome.
+> > 
+> I can rename it and have it documented in the mhi_prepare_for_transfer() API
+> that we actually already start the channel, so it is not required to be used
+> at first. I can improve this documentation in mhi.h as a separate patch.
+> 
+> Later, if a client driver wants to issue stop and start commands, it can do
+> so.
+> I'm not too picky with the name. Maybe Mani or someone else may have more
+> comments.
+> 
+
+Please use start and stop to match what the function is doing. We should always
+name the APIs with respect to their function.
+
+Thanks,
+Mani
 
