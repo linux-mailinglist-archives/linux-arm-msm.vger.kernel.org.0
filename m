@@ -2,107 +2,153 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D36342B03AB
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Nov 2020 12:16:20 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id CC6292B040C
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Nov 2020 12:40:47 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727836AbgKLLQO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 12 Nov 2020 06:16:14 -0500
-Received: from gloria.sntech.de ([185.11.138.130]:49094 "EHLO gloria.sntech.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725902AbgKLLQO (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 12 Nov 2020 06:16:14 -0500
-Received: from ip5f5aa64a.dynamic.kabel-deutschland.de ([95.90.166.74] helo=phil.lan)
-        by gloria.sntech.de with esmtpsa (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
-        (Exim 4.92)
-        (envelope-from <heiko@sntech.de>)
-        id 1kdAaB-0000QA-9Q; Thu, 12 Nov 2020 12:16:03 +0100
-From:   Heiko Stuebner <heiko@sntech.de>
-To:     Lee Jones <lee.jones@linaro.org>
-Cc:     Heiko Stuebner <heiko@sntech.de>,
-        Scott Wood <scottwood@freescale.com>,
-        linux-arm-msm@vger.kernel.org, linux-samsung-soc@vger.kernel.org,
-        linux-tegra@vger.kernel.org, linux-kernel@vger.kernel.org,
-        "Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-        Li Yang <leoyang.li@nxp.com>, Qiang Zhao <qiang.zhao@nxp.com>,
-        bcm-kernel-feedback-list@broadcom.com,
-        linuxppc-dev@lists.ozlabs.org,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Roy Pledge <Roy.Pledge@nxp.com>,
-        Dan Malek <dan@embeddedalley.com>,
-        Cyril Chemparathy <cyril@ti.com>,
-        Santosh Shilimkar <ssantosh@kernel.org>,
-        Doug Anderson <dianders@chromium.org>,
-        Vitaly Bordug <vbordug@ru.mvista.com>,
-        YueHaibing <yuehaibing@huawei.com>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        Dave Gerlach <d-gerlach@ti.com>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Florian Fainelli <f.fainelli@gmail.com>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        linux-rockchip@lists.infradead.org, Ben Dooks <ben@simtec.co.uk>,
-        linux-arm-kernel@lists.infradead.org,
+        id S1728155AbgKLLkl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 12 Nov 2020 06:40:41 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32772 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728161AbgKLLjw (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 12 Nov 2020 06:39:52 -0500
+Received: from mail-wr1-x441.google.com (mail-wr1-x441.google.com [IPv6:2a00:1450:4864:20::441])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DB650C0617A6
+        for <linux-arm-msm@vger.kernel.org>; Thu, 12 Nov 2020 03:39:50 -0800 (PST)
+Received: by mail-wr1-x441.google.com with SMTP id p1so5624184wrf.12
+        for <linux-arm-msm@vger.kernel.org>; Thu, 12 Nov 2020 03:39:50 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=2yBcVMAYM89L0pNLBwjheCruacUb1pfQ9rLevl8WsAY=;
+        b=VSkYtzoOqhMtvfFhicPy+3lWsCsFM9Uh8TuGet56GZJ4a9nfE1itQ035jgyaMj/xiD
+         /TQ+HpkdB0CSlr7avcMiGDMZSF+7MTVaRIl1MC8XiDyYLWmOkHby8A0YLw3rYH/9Z3Pi
+         bCusMAsHOvfwUp74mj8MitYrvJhW8AYjTo61vq277NtLIjzpvRYZ+Db1Zze2n+FPBDwS
+         XW/eDowiePzjNJy8tcWGVBaquOA6ZTo++ad98vhu6PwpQKl3A4fxSobPXgAdvQ9WcBcd
+         7RociI45MNzu8Jo0RHLhieurWEeUXeAC/fGbL1j1vUSRGttvkvWzcWYpo82IWJ4MIFq7
+         CEuA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=2yBcVMAYM89L0pNLBwjheCruacUb1pfQ9rLevl8WsAY=;
+        b=I/iq/UHXjoyU/kpsJYtgBTHzJXO1/c3M5i+mgsBP99X8hSHzxBG1h298HPTXcnrRrk
+         eLro5vDZEoZ6ox4DJsyQHox3D6YMpgU7E6XLvVwjhE1NlLfpc13buBTW8OMz5OyMUnQB
+         NIWuzgLtLTLJD9H15fSQzNrNtTTq8rFb/4CXSlfIW/9mQ4D2uA0az/OPPiT2ruTVwIcc
+         kcUTerZ7m8ykKDyqghoYowrVpr6UtJklRT3i6POPB+0xY5iV/IBVvlR5K/hvQRCsi5gC
+         EOpSwsYDtfOvNWKdIjSEWXOx4m47C+U5qcfNuVQuU/Ldx2uY/2k/A2fYo9sNqt+7wJeR
+         /rSg==
+X-Gm-Message-State: AOAM530r++wp5pk79OLyV0z1n9T4WDnLYRYWWTAaqs5ogq5JSVL583iW
+        XrF8UFI9rwAYKkt5xyyb1DyL/w==
+X-Google-Smtp-Source: ABdhPJzsTxA1zW/q5sM0l2RXE9Np/KJT5Rv3SsHglK+wim7/HYjXom4ZLwemm3xLeNDbggkoeMKMDg==
+X-Received: by 2002:adf:e506:: with SMTP id j6mr25938384wrm.411.1605181189271;
+        Thu, 12 Nov 2020 03:39:49 -0800 (PST)
+Received: from ?IPv6:2a01:e34:ed2f:f020:6971:b700:3764:fa96? ([2a01:e34:ed2f:f020:6971:b700:3764:fa96])
+        by smtp.googlemail.com with ESMTPSA id p12sm6369412wrw.28.2020.11.12.03.39.47
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 12 Nov 2020 03:39:48 -0800 (PST)
+Subject: Re: [PATCH v9 00/15] qcom: pm8150: add support for thermal monitoring
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
         Andy Gross <agross@kernel.org>,
-        Jonathan Hunter <jonathanh@nvidia.com>,
-        Sandeep Nair <sandeep_n@ti.com>,
-        Mark Brown <broonie@kernel.org>, act <dmalek@jlc.net>,
-        "Software, Inc" <source@mvista.com>
-Subject: Re: [PATCH 00/25] Rid W=1 warnings in SoC
-Date:   Thu, 12 Nov 2020 12:16:00 +0100
-Message-Id: <160517975455.81506.16289432612279089945.b4-ty@sntech.de>
-X-Mailer: git-send-email 2.29.2
-In-Reply-To: <20201103152838.1290217-1-lee.jones@linaro.org>
-References: <20201103152838.1290217-1-lee.jones@linaro.org>
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Zhang Rui <rui.zhang@intel.com>,
+        Amit Kucheria <amitk@kernel.org>,
+        Jonathan Cameron <jic23@kernel.org>,
+        Hartmut Knaack <knaack.h@gmx.de>,
+        Lars-Peter Clausen <lars@metafoo.de>,
+        Peter Meerwald-Stadler <pmeerw@pmeerw.net>
+Cc:     linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-iio@vger.kernel.org,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        Jishnu Prakash <jprakash@qti.qualcomm.com>
+References: <20201102174950.1148498-1-dmitry.baryshkov@linaro.org>
+From:   Daniel Lezcano <daniel.lezcano@linaro.org>
+Message-ID: <c943f56c-f72c-0f14-b6ed-b67e91573b1e@linaro.org>
+Date:   Thu, 12 Nov 2020 12:39:47 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.10.0
 MIME-Version: 1.0
+In-Reply-To: <20201102174950.1148498-1-dmitry.baryshkov@linaro.org>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, 3 Nov 2020 15:28:13 +0000, Lee Jones wrote:
-> This set is part of a larger effort attempting to clean-up W=1
-> kernel builds, which are currently overwhelmingly riddled with
-> niggly little warnings.
+
+Shall I take patch 1/15 and 12/15 ?
+
+
+
+On 02/11/2020 18:49, Dmitry Baryshkov wrote:
+> This patch serie adds support for thermal monitoring block on Qualcomm's
+> PMIC5 chips. PM8150{,b,l} and sm8250-mtp board device trees are extended
+> to support thermal zones provided by this thermal monitoring block.
+> Unlike the rest of PMIC thermal senses, these thermal zones describe
+> particular thermistors, which differ between from board to board.
 > 
-> Lee Jones (25):
->   soc: bcm: brcmstb: pm: pm-arm: Provide prototype for
->     brcmstb_pm_s3_finish()
->   soc: qcom: qcom_aoss: Remove set but unused variable 'tlen'
->   soc: qcom: qcom_aoss: Add missing description for 'cooling_devs'
->   soc: fsl: dpio: qbman-portal: Fix a bunch of kernel-doc misdemeanours
->   soc: rockchip: io-domain: Remove incorrect and incomplete comment
->     header
->   soc: ti: knav_qmss_queue: Remove set but unchecked variable 'ret'
->   soc: ti: knav_qmss_queue: Fix a whole host of function documentation
->     issues
->   soc: ti: knav_dma: Fix a kernel function doc formatting issue
->   soc: ti: pm33xx: Remove set but unused variable 'ret'
->   soc: ti: wkup_m3_ipc: Document 'm3_ipc' parameter throughout
->   soc: fsl: qe: qe_common: Fix misnamed function attribute 'addr'
->   soc: qcom: qcom-geni-se: Fix misnamed function parameter 'rx_rfr'
->   soc: tegra: fuse: speedo-tegra124: Remove some set but unused
->     variables
->   soc: samsung: s3c-pm-check: Fix incorrectly named variable 'val'
->   soc: qcom: rpmh: Fix possible doc-rot in rpmh_write()'s header
->   soc: qcom: smem: Fix formatting and missing documentation issues
->   soc: qcom: smsm: Fix some kernel-doc formatting and naming problems
->   soc: qcom: wcnss_ctrl: Demote non-conformant struct header and fix
->     function headers
->   soc: qcom: smp2p: Remove unused struct attribute provide another
->   soc: qcom: llcc-qcom: Fix expected kernel-doc formatting
->   soc: qcom: rpmhpd: Provide some missing struct member descriptions
->   soc: qcom: kryo-l2-accessors: Fix misnaming of 'val'
->   soc: ti: k3-ringacc: Provide documentation for 'k3_ring's 'state'
->   soc: tegra: fuse: speedo-tegra210: Remove a group of set but unused
->     variables
->   soc: fsl: qbman: qman: Remove unused variable 'dequeue_wq'
+> Changes since v8:
+>  - Simplified qcom_vadc_map_voltage_temp() code by removing ascending
+>    tables support
+>  - Simplified qcom-vadc-common volt/temp mapping code
+>  - Implement suggestions by Matthias Kaehlcke: message formatting,
+>    rewrite comments, remove unused variable initialization.
 > 
-> [...]
+> Changes since v7:
+>  - Move qcom-vadc-common.h header to include/linux/iio/adc/ dir.
+>  - Use explicit sizeof(var) instead of hand-coding 1 when accessing
+>    adc-tm registers.
+>  - Remove buffer read from adc_tm5_init().
+>  - Remove extra on-stack var from adc_tm5_get_temp().
+>  - Minor formatting changes as suggested Daniel.
+> 
+> Changes since v6:
+>  - Added include <linux/bitfield.h> as noted by Jishnu Prakash.
+> 
+> Changes since v5:
+>  - Reworked DT bindings:
+>    * Removed qcom,adc-channel, instead it is parsed from io-channels
+>    * Renamed qcom,hw-settle-time to include -us suffix
+>  - Re-added monitor enabling which got lost during refactored. Noted by
+>    Jishnu Prakash.
+>  - Use threaded IRQ handler as susggested by Jishnu.
+> 
+> Changes since v4:
+>  - Added kernel-doc comments to ADC-TM structures
+>  - Used several sizeof(buf) instead of hand-conding register size
+> 
+> Changes since v3:
+>  - Fix DT description to spell "thermal monitoring" instead of just TM
+>  - Fix warnings in DT example
+>  - Add EXPORT_SYMBOL_GPL(of_iio_channel_get_by_name)
+>  - Fixed whitespace chanes in qcom-vadc-common.c
+>  - Removed error message if IIO chanel get returns -EPROBE_DEFER
+> 
+> Changes since v2:
+>  - IIO: export of_iio_channel_get_by_name() function
+>  - dt-bindings: move individual io-channels to each thermal monitoring
+>    channel rather than listing them all in device node
+>  - added fallback defaults to of_device_get_match_data calls in
+>    qcom-spmi-adc5 and qcom-spmi-adc-tm5 drivers
+>  - minor typo fixes
+> 
+> Changes since v1:
+>  - Introduce fixp_linear_interpolate() by Craig Tatlor
+>  - Lots of syntax/whitespace changes
+>  - Cleaned up register definitions per Jonathan's suggestion
+>  - Implemented most of the suggestions from Bjorn's and Jonathan's
+>    review
+> 
+> 
 
-Applied, thanks!
 
-[1/1] soc: rockchip: io-domain: Remove incorrect and incomplete comment header
-      commit: a6a3a24c129d229a0eb26b329ab617e2a04245dd
-
-Best regards,
 -- 
-Heiko Stuebner <heiko@sntech.de>
+<http://www.linaro.org/> Linaro.org │ Open source software for ARM SoCs
+
+Follow Linaro:  <http://www.facebook.com/pages/Linaro> Facebook |
+<http://twitter.com/#!/linaroorg> Twitter |
+<http://www.linaro.org/linaro-blog/> Blog
