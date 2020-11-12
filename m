@@ -2,113 +2,140 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 0D9B62AFE23
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Nov 2020 06:34:31 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 363242AFF84
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Nov 2020 06:59:52 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728656AbgKLFeW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 12 Nov 2020 00:34:22 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41112 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728284AbgKLDYg (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 11 Nov 2020 22:24:36 -0500
-Received: from mail-pg1-x542.google.com (mail-pg1-x542.google.com [IPv6:2607:f8b0:4864:20::542])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6FCCCC0613D4
-        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Nov 2020 19:24:36 -0800 (PST)
-Received: by mail-pg1-x542.google.com with SMTP id r10so2957377pgb.10
-        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Nov 2020 19:24:36 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=dw/+kFxf0Z+g4MLtsKdkPTZO5yvgI1LNaLgdeBQhODY=;
-        b=hMjAkFbLmvhmNmWj8c38O1RbEN6io/uZBkvFy3oaiEzVVhZmT59cp1la/7zJMTKI6f
-         uQmt2wNeWPya1XFlXHPe4QvjXuk9v+ale6VWl55D059j6swlRLmuHVYWJqnLLK3/a0L5
-         yqQluUVAhavAi8Y6Zdsxxo+VZJF8EGe6e7x4M79xf5f0w2+EGRBRyXLuuP5Gmu+nV3lC
-         ck6qjLLh3lmY3pugNiWausNJdpJ3RxcB/VYPzkeG+o+gvIgGnP1jIlN6bWgYW7ex0rGt
-         /WC7F12K0ghEcem2IO35Sf2Y3iHHOkFQa5zWL6tdNCziHMRXzl8Xw/GgAvdRXaVpUEXD
-         1Vng==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=dw/+kFxf0Z+g4MLtsKdkPTZO5yvgI1LNaLgdeBQhODY=;
-        b=YOMpwF7g83p+zTDjIwNEm1pwr1V4XozqWGVd9ZVgCN2Z26cysnRKAuCeTysw3Armod
-         ABEdX7BtFODVgbfrhv8oLqSzVnunlFpTh7kd41xih6qzWHqFNAS9Itxe2dC3/cD37vw8
-         3cIvQJC2gPOWJeP4zoFoax1Zhr/kOfhWTdve7fMuoSVWSC+asc8luc9SEskVyTR+QchU
-         c1L5DmhQL9W6owv8YrkQoeaowXFJD8i7VOjSilhcGkDjcWfXGNvGMBGrKJjZSQTGZAwQ
-         a3s08IFKy2eBVvZrKKOqbphnZK5bR8R566rc1MTb3in/gIEJMs08ctxcalQBh6T8bmQa
-         6C8A==
-X-Gm-Message-State: AOAM533y7qjh+DWWIzYgpggjRtwWxtl5rZIFSHg6K91ZMVCGk2X+7uoZ
-        s/cI8TX7WtZzihQbU4NO5Z83
-X-Google-Smtp-Source: ABdhPJx8gOPqki6mKuDTjXfwgqpoZ88hW49qoB7413DCug8EolMYL0aK6FTP56mUNd69MdaQ7duJcQ==
-X-Received: by 2002:a17:90b:3781:: with SMTP id mz1mr525724pjb.229.1605151475720;
-        Wed, 11 Nov 2020 19:24:35 -0800 (PST)
-Received: from Mani-XPS-13-9360 ([2409:4072:639b:9d11:cd64:b750:3a8a:63e7])
-        by smtp.gmail.com with ESMTPSA id n1sm4063033pgl.31.2020.11.11.19.24.29
-        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 11 Nov 2020 19:24:34 -0800 (PST)
-Date:   Thu, 12 Nov 2020 08:54:26 +0530
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     Bhaumik Bhatt <bbhatt@codeaurora.org>
-Cc:     Loic Poulain <loic.poulain@linaro.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Hemant Kumar <hemantk@codeaurora.org>,
-        Jeffrey Hugo <jhugo@codeaurora.org>,
-        open list <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH v1 3/4] bus: mhi: core: Add support to pause or resume
- channel data transfers
-Message-ID: <20201112032426.GB2491@Mani-XPS-13-9360>
-References: <1604961850-27671-1-git-send-email-bbhatt@codeaurora.org>
- <1604961850-27671-4-git-send-email-bbhatt@codeaurora.org>
- <CAMZdPi_dwT+hj26sxJdMS1v-X-MNd1ys34QD=Bf_O+dvmjOD2Q@mail.gmail.com>
- <3710a3051c480bf9d125362303815831@codeaurora.org>
- <CAMZdPi_b7U1iW79mWq7ikxE4jTr+n+-8Y+EZz8i1xro-UcJhjA@mail.gmail.com>
- <c56fa0e7dcbe43d65bbe93cf287372a3@codeaurora.org>
+        id S1725884AbgKLF7u (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 12 Nov 2020 00:59:50 -0500
+Received: from z5.mailgun.us ([104.130.96.5]:55431 "EHLO z5.mailgun.us"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725941AbgKLF7u (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 12 Nov 2020 00:59:50 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1605160789; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
+ Subject: Sender; bh=zwaMc+SVpS1C+Zz1mB49ILbAPgIJNx3GhVUbj+IZG0w=; b=cM2Xz82IcC4lEoKBjXy6erThlMTiYu3WiledFZmapOLnPzwTcPq9/f/1IlHHTa77gqJ9U178
+ tnC1G9AodtF0oi3SPp2ykQZMg3lKi0wgvkd/oF++56HWCuABmKjfnRe96dCeyhvc8n0OiaUh
+ e5WSNfn+fdF8rkinHwo3qbDS/ug=
+X-Mailgun-Sending-Ip: 104.130.96.5
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n09.prod.us-west-2.postgun.com with SMTP id
+ 5faccf5437ede2253bc4ab18 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 12 Nov 2020 05:59:48
+ GMT
+Sender: vbadigan=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 98B11C433C8; Thu, 12 Nov 2020 05:59:48 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        NICE_REPLY_A,SPF_FAIL,URIBL_BLOCKED autolearn=no autolearn_force=no
+        version=3.4.0
+Received: from [192.168.0.105] (unknown [49.205.245.25])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: vbadigan)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 5F6C4C433C6;
+        Thu, 12 Nov 2020 05:59:45 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 5F6C4C433C6
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=vbadigan@codeaurora.org
+Subject: Re: [PATCH] mmc: sdhci-msm: detect if tassadar_dll is used by using
+ core version
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Adrian Hunter <adrian.hunter@intel.com>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Ulf Hansson <ulf.hansson@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-mmc@vger.kernel.org
+References: <20201111220122.2392823-1-dmitry.baryshkov@linaro.org>
+From:   Veerabhadrarao Badiganti <vbadigan@codeaurora.org>
+Message-ID: <b1cd32a4-64ea-2322-985a-219083671e4b@codeaurora.org>
+Date:   Thu, 12 Nov 2020 11:29:42 +0530
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
+ Thunderbird/68.12.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <c56fa0e7dcbe43d65bbe93cf287372a3@codeaurora.org>
-User-Agent: Mutt/1.9.4 (2018-02-28)
+In-Reply-To: <20201111220122.2392823-1-dmitry.baryshkov@linaro.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Nov 11, 2020 at 10:11:37AM -0800, Bhaumik Bhatt wrote:
-> Hi Loic,
-> 
 
-[...]
+On 11/12/2020 3:31 AM, Dmitry Baryshkov wrote:
+> Detect if tassadar_dll is required by using core version rather than
+> just specifying it in the sdhci_msm_variant_info.
+>
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> Cc: Veerabhadrarao Badiganti <vbadigan@codeaurora.org>
+> ---
+>   drivers/mmc/host/sdhci-msm.c | 15 +++++----------
+>   1 file changed, 5 insertions(+), 10 deletions(-)
+>
+> diff --git a/drivers/mmc/host/sdhci-msm.c b/drivers/mmc/host/sdhci-msm.c
+> index 3451eb325513..dd67acab1660 100644
+> --- a/drivers/mmc/host/sdhci-msm.c
+> +++ b/drivers/mmc/host/sdhci-msm.c
+> @@ -248,7 +248,6 @@ struct sdhci_msm_variant_ops {
+>   struct sdhci_msm_variant_info {
+>   	bool mci_removed;
+>   	bool restore_dll_config;
+> -	bool uses_tassadar_dll;
+>   	const struct sdhci_msm_variant_ops *var_ops;
+>   	const struct sdhci_msm_offset *offset;
+>   };
+> @@ -2154,18 +2153,11 @@ static const struct sdhci_msm_variant_info sdm845_sdhci_var = {
+>   	.offset = &sdhci_msm_v5_offset,
+>   };
+>   
+> -static const struct sdhci_msm_variant_info sm8250_sdhci_var = {
+> -	.mci_removed = true,
+> -	.uses_tassadar_dll = true,
+> -	.var_ops = &v5_var_ops,
+> -	.offset = &sdhci_msm_v5_offset,
+> -};
+> -
+>   static const struct of_device_id sdhci_msm_dt_match[] = {
+>   	{.compatible = "qcom,sdhci-msm-v4", .data = &sdhci_msm_mci_var},
+>   	{.compatible = "qcom,sdhci-msm-v5", .data = &sdhci_msm_v5_var},
+>   	{.compatible = "qcom,sdm845-sdhci", .data = &sdm845_sdhci_var},
+> -	{.compatible = "qcom,sm8250-sdhci", .data = &sm8250_sdhci_var},
+> +	{.compatible = "qcom,sm8250-sdhci", .data = &sdm845_sdhci_var},
+Since you have made it 'uses_tassadar_dll' check generic,
+SM8250 should work with default compatible string (qcom,sdhci-msm-v5).
+We can drop the entry to SM8250 from this table.
 
-> > > > Look like it is stop and start, not pause and resume?
-> > > I wanted to keep it pause and resume because it could get confusing
-> > > for
-> > > someone
-> > > looking at this pair of APIs, that a client driver would also need to
-> > > "start"
-> > > channels after "preparing" them. Since that is not that case, and the
-> > > mhi_prepare_for_transfer() API itself is supposed to also start the
-> > > channels, it
-> > 
-> > Yes, because prepare_for_transfer is actually init_and_start. I'm not
-> > in favor of hiding what is really done at mhi_core level, start is
-> > start and stop is stop, if it's correctly documented that should not
-> > be confusing. just saying (stop moves channels in stop state, start in
-> > enabled state), but other opinions are welcome.
-> > 
-> I can rename it and have it documented in the mhi_prepare_for_transfer() API
-> that we actually already start the channel, so it is not required to be used
-> at first. I can improve this documentation in mhi.h as a separate patch.
-> 
-> Later, if a client driver wants to issue stop and start commands, it can do
-> so.
-> I'm not too picky with the name. Maybe Mani or someone else may have more
-> comments.
-> 
+>   	{.compatible = "qcom,sc7180-sdhci", .data = &sdm845_sdhci_var},
+>   	{},
+>   };
+> @@ -2249,7 +2241,6 @@ static int sdhci_msm_probe(struct platform_device *pdev)
+>   	msm_host->restore_dll_config = var_info->restore_dll_config;
+>   	msm_host->var_ops = var_info->var_ops;
+>   	msm_host->offset = var_info->offset;
+> -	msm_host->uses_tassadar_dll = var_info->uses_tassadar_dll;
+>   
+>   	msm_offset = msm_host->offset;
+>   
+> @@ -2396,6 +2387,10 @@ static int sdhci_msm_probe(struct platform_device *pdev)
+>   	if (core_major == 1 && core_minor >= 0x49)
+>   		msm_host->updated_ddr_cfg = true;
+>   
+> +	if (core_major == 1 &&
+> +	    (core_minor == 0x6e || core_minor == 0x71 || core_minor == 0x72))
+> +		msm_host->uses_tassadar_dll = true;
+> +
+This new registers that got introduced for supporting this new DLL are 
+present on all versions > 0x71
+So we can update check as core_minor >= 0x71.
 
-Please use start and stop to match what the function is doing. We should always
-name the APIs with respect to their function.
+And i dont find any target with SDCC controller minor version 0x6e.So we 
+can remove check for version 0x6e.
 
-Thanks,
-Mani
-
+>   	ret = sdhci_msm_register_vreg(msm_host);
+>   	if (ret)
+>   		goto clk_disable;
