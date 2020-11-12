@@ -2,111 +2,94 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 141B42AFD08
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Nov 2020 02:50:44 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 93F982AFE22
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Nov 2020 06:34:30 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728365AbgKLBcU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 11 Nov 2020 20:32:20 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55590 "EHLO
+        id S1726440AbgKLFeU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 12 Nov 2020 00:34:20 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53764 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727261AbgKKWvq (ORCPT
+        with ESMTP id S1728964AbgKLBnj (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 11 Nov 2020 17:51:46 -0500
-Received: from mail-vk1-xa42.google.com (mail-vk1-xa42.google.com [IPv6:2607:f8b0:4864:20::a42])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6BD22C0613D4
-        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Nov 2020 14:23:40 -0800 (PST)
-Received: by mail-vk1-xa42.google.com with SMTP id d191so858682vka.13
-        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Nov 2020 14:23:40 -0800 (PST)
+        Wed, 11 Nov 2020 20:43:39 -0500
+Received: from mail-pg1-x536.google.com (mail-pg1-x536.google.com [IPv6:2607:f8b0:4864:20::536])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 025A2C0613D4
+        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Nov 2020 17:43:39 -0800 (PST)
+Received: by mail-pg1-x536.google.com with SMTP id f38so2802988pgm.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Nov 2020 17:43:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=DnpRf3DpQZWPCc8K1L4I004+4MFqzM2ZdFbLNwwHnYw=;
-        b=C9k51AwCxEhPRdeOTRakEQTuFFOQh4UZkwHCz1URxF01p2AOtXY84wjFUBZ43stsfn
-         LYvn0PUhMDdNs4dwckpA3Hg6lINDOc2zIzXRILApPx9B4pT1moEvZ7weshsWRZf1CUEq
-         W+7naCTDF4POLE2bhgaEEUARcAhnDvxf7N3Qo=
+        d=huaqin-corp-partner-google-com.20150623.gappssmtp.com; s=20150623;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=7r8yua/nKCeK3vM5yetSQdGOYQSdaEZxJ+KcAFNDCGM=;
+        b=TZVudu4Eom6x7eViMfrgwIEDTOwxuk2NwbzESK1osvd187h+LbGTwrmhIRjbga3l22
+         KAR8+AStRi2/Tibs30YN0GLi7Pf862pd5ccdeLlUpB3Bp4BWCQPrlkdeMOUYOzn8oQdB
+         Dgyky7EOJIFle0oRSOqIb9B0amhdlbHBFn9bpicdT/qN85/N2Gqx457Bxwip+etlgSNz
+         32zuFh2WpV0C3UXX6SBQ+PReEDdctVNuOSgylG3X2iiHy3Y3rojlk0WUCOaJoLL22VxL
+         lKxMn4BcJHF36botuq55UTLxM6JAJTfnp5klsBs4ATdtT47u/tKhX+M5DoG/UhBNr+S+
+         oS5A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=DnpRf3DpQZWPCc8K1L4I004+4MFqzM2ZdFbLNwwHnYw=;
-        b=uIHSK9B1Ffqa6zrNnb+jpiU4q0gQud9hdtc2TJY43SbcgsMLUfQCodFonCOt32YvtB
-         ticzquEYA+NCRTEYB1TkohbyIaRfEV4fAzmjef7o9aBsA428m6MNKQrMLT9jsU6neMXG
-         jWe9IzffrP9Cf4Z4AUwgfJo+rIYCPQwKt1Z0hR9eEvAsh2XMVNKxrwEcxt97phhlTIgn
-         +a12fh6515w3lTHDq/qVXWDWKlVGZ1mb2QPGvElNMVTdGmZIxN2WvUNClhZae9pmgh3x
-         7GG5fBhdWzyoiQUdVackTx3d37uHbctWngUSMdlMV30aqeiblRGluwpjebbe2R2H9QDn
-         wphg==
-X-Gm-Message-State: AOAM532EUiqBBcW1uRO6TtKbSB9Sz0Wc7Vdxvf+5V69HglAQ5gOhqOsK
-        1LNgiX0odiTcZz+vhF+V9PVhNS5vT+iF7g==
-X-Google-Smtp-Source: ABdhPJxfCNrcaWwGmKvz7W5iBxLRoobByaZPt6TdG009n4qFOB2BIwG9Zm8gDjwQqpQw00tvoui7iw==
-X-Received: by 2002:a1f:c8c2:: with SMTP id y185mr15968465vkf.4.1605133419231;
-        Wed, 11 Nov 2020 14:23:39 -0800 (PST)
-Received: from mail-ua1-f41.google.com (mail-ua1-f41.google.com. [209.85.222.41])
-        by smtp.gmail.com with ESMTPSA id x131sm423013vkx.39.2020.11.11.14.23.37
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 11 Nov 2020 14:23:38 -0800 (PST)
-Received: by mail-ua1-f41.google.com with SMTP id a10so1221174uan.12
-        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Nov 2020 14:23:37 -0800 (PST)
-X-Received: by 2002:a9f:24eb:: with SMTP id 98mr14362417uar.90.1605133417432;
- Wed, 11 Nov 2020 14:23:37 -0800 (PST)
-MIME-Version: 1.0
-References: <20201111120334.1.Ifc04ea235c3c370e3b21ec3b4d5dead83cc403b4@changeid>
-In-Reply-To: <20201111120334.1.Ifc04ea235c3c370e3b21ec3b4d5dead83cc403b4@changeid>
-From:   Doug Anderson <dianders@chromium.org>
-Date:   Wed, 11 Nov 2020 14:23:25 -0800
-X-Gmail-Original-Message-ID: <CAD=FV=V6fFoEdj8bSQmz4fAJwLvzY0o8Vd+E0fknZaLTq4ZQnA@mail.gmail.com>
-Message-ID: <CAD=FV=V6fFoEdj8bSQmz4fAJwLvzY0o8Vd+E0fknZaLTq4ZQnA@mail.gmail.com>
-Subject: Re: [PATCH] arm64: dts: qcom: sc7180: Set 'polling-delay-passive' for
- thermal zones back to 250 ms
-To:     Matthias Kaehlcke <mka@chromium.org>
-Cc:     Andy Gross <agross@kernel.org>,
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=7r8yua/nKCeK3vM5yetSQdGOYQSdaEZxJ+KcAFNDCGM=;
+        b=Ey1iV3DYWWkPUmCTReDrqQuR1E9Mb72OFm9kVmoJ8SQ/GwzgT/KgpSohSxdL5Eyizv
+         eUkr3GPc/6IQNN7HDOWVyFxOThos2R8dFzqXTtGfhOhwWuzJ9DYJ04rSIQ74lNj74YLU
+         +fZV1pwMih+SO6ewGlCeWz0xdBecEcGfcxloutxjpDH4VybCs7e3UumZiKYzrpaadyHc
+         o8+TM+C+OldVNdKD0Rs1DbnwvrhRUfrAzBKtjDSEmwrRATX202+QLte1QuAc7e5k1LT3
+         lSftb0pe5g8OYIU8s19bA6wktrhR/CuNhByv9UJCZh1lvtYHU3M2PWV+gUlz9loAgtY5
+         Khmg==
+X-Gm-Message-State: AOAM532Xy6YCU4e4igkkAb2VurL0Jeu/vaRpetssAwF/Cyazsmwi/aAH
+        ZteaslpFW3Go1Vik6XHQnSl7
+X-Google-Smtp-Source: ABdhPJy0uKYvQY8jkl612KCh1Ww+d03+vAxg6dCvii/4V/9/OB17X7zWDzjpThierTZKqDWSxvuwCQ==
+X-Received: by 2002:a17:90a:ca91:: with SMTP id y17mr6205555pjt.205.1605145419473;
+        Wed, 11 Nov 2020 17:43:39 -0800 (PST)
+Received: from xuyuqing-ZenBook-UX425JA-UX425JA.huaqin.com ([101.78.151.194])
+        by smtp.gmail.com with ESMTPSA id m6sm4062413pfa.61.2020.11.11.17.43.33
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 11 Nov 2020 17:43:38 -0800 (PST)
+From:   xuyuqing <xuyuqing@huaqin.corp-partner.google.com>
+To:     linux-kernel@vger.kernel.org
+Cc:     Mark Brown <broonie@kernel.org>, Taniya Das <tdas@codeaurora.org>,
+        Rohit kumar <rohitkr@codeaurora.org>,
+        Banajit Goswami <bgoswami@codeaurora.org>,
+        Patrick Lai <plai@codeaurora.org>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Liam Girdwood <lgirdwood@gmail.com>,
         Rob Herring <robh+dt@kernel.org>,
-        Amit Kucheria <amit.kucheria@linaro.org>,
-        Rajeshwari <rkambl@codeaurora.org>,
-        Akhil P Oommen <akhilpo@codeaurora.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        LKML <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+        Jaroslav Kysela <perex@perex.cz>,
+        Takashi Iwai <tiwai@suse.com>,
+        Srini Kandagatla <srinivas.kandagatla@linaro.org>,
+        Stephan Gerhold <stephan@gerhold.net>, dianders@chromium.org,
+        dgreid@chromium.org, tzungbi@chromium.org, cychiang@chromium.org,
+        judyhsiao@chromium.org, linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        alsa-devel@alsa-project.org,
+        zhouguohui@huaqin.corp-partner.google.com,
+        xuyuqing@huaqin.corp-partner.google.com
+Subject: [PATCH v2 0/2] Support SC7180 sound card variation without headset
+Date:   Thu, 12 Nov 2020 09:43:26 +0800
+Message-Id: <20201112014328.695232-1-xuyuqing@huaqin.corp-partner.google.com>
+X-Mailer: git-send-email 2.25.1
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+Use compatible string to let machine driver handle the case
+where ALC5682 headset codec is replaced with ADAU7002 dmic codec
 
-On Wed, Nov 11, 2020 at 12:03 PM Matthias Kaehlcke <mka@chromium.org> wrote:
->
-> Commit 22337b91022d ("arm64: dts: qcom: sc7180: Changed polling mode
-> in Thermal-zones node") sets both 'polling-delay' and
-> 'polling-delay-passive' to zero with the rationale that TSENS interrupts
-> are enabled. A TSENS interrupt fires when the temperature of a thermal
-> zone reaches a trip point, which makes regular polling below the passive
-> trip point temperature unnecessary. However the situation is different
-> when passive cooling is active, regular polling is still needed to
-> trigger a periodic evaluation of the thermal zone by the thermal governor.
->
-> Change 'polling-delay-passive' back to the original value of 250 ms.
-> Commit 2315ae70af95 ("arm64: dts: qcom: sc7180: Add gpu cooling
-> support") recently changed the value for the GPU thermal zones from
-> zero to 100 ms, also set it to 250 ms for uniformity. If some zones
-> really need different values these can be changed in dedicated patches.
->
-> Fixes: 22337b91022d ("arm64: dts: qcom: sc7180: Changed polling mode in Thermal-zones node")
-> Signed-off-by: Matthias Kaehlcke <mka@chromium.org>
-> ---
->
->  arch/arm64/boot/dts/qcom/sc7180.dtsi | 50 ++++++++++++++--------------
->  1 file changed, 25 insertions(+), 25 deletions(-)
+xuyuqing (2):
+  ASoC: google: dt-bindings: add new compatible for sc7180-coachz
+  ASoC: qcom: sc7180: Add machine driver for sound card
 
-For further context:
+ .../bindings/sound/google,sc7180-trogdor.yaml |  4 +-
+ sound/soc/qcom/Kconfig                        |  1 +
+ sound/soc/qcom/sc7180.c                       | 86 ++++++++++++++++---
+ 3 files changed, 77 insertions(+), 14 deletions(-)
 
-https://lore.kernel.org/r/a4be2cf9e51e4f40aae3f9a56989a42f@codeaurora.org
-https://lore.kernel.org/r/20201015221920.GA1657396@google.com
+-- 
+2.25.1
 
-I didn't personally go dig through the code, but what's said in those
-emails seems reasonable to me.
-
-Reviewed-by: Douglas Anderson <dianders@chromium.org>
