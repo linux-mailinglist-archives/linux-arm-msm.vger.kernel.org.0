@@ -2,162 +2,150 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 592B02B1C76
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Nov 2020 14:52:53 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 8E7052B1D0C
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Nov 2020 15:22:42 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727070AbgKMNus (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 13 Nov 2020 08:50:48 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52544 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727140AbgKMNuk (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 13 Nov 2020 08:50:40 -0500
-Received: from mail-wm1-x343.google.com (mail-wm1-x343.google.com [IPv6:2a00:1450:4864:20::343])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8F94AC061A52
-        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Nov 2020 05:50:31 -0800 (PST)
-Received: by mail-wm1-x343.google.com with SMTP id h62so8560592wme.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Nov 2020 05:50:31 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=LO+KljdrZZIZgFM888ZdvLp3rO45dugwj559GBfLspM=;
-        b=gqhHrO4P9lvKa+HYQ2fMKuZWltdhYShxnRKjubXa4pkeYjg6cm0oYSWN04KBydRfbj
-         5xZ2YI2/94LH+so2pECsqPoAcf+BR0o7q43/+FlzcklUKJz4L9lDXIMlRRod1epVC3oV
-         M8sG4qUPHxAFYEeHMAceOCyy4X+p8SK40cki8jMMniU96jJDDPv3BQGrUuQ6lpki01P0
-         FeYhR5/pNrfWIP5hY1B6nw9AeOI26/lWpJjBtVY5ZzDRCzfvDUbi16rFLVkUWShmCTUS
-         EL6TMMFwk6DF7ZA6bIHs2zELCkw3vkNrhACOk/HAebHOltutlyByE5t2GOXWI6K1HNH/
-         PagA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=LO+KljdrZZIZgFM888ZdvLp3rO45dugwj559GBfLspM=;
-        b=tMB4wv8AGqy3PjsLukcb5FFHIu8hrnIPdfp36wL4K+L688jk1LT+NnYZ2cLvWnO2V3
-         Fq9qxKhiJsaOYPVjYjsATzHePz4s8bi93YXS1gmyW46n1UIkehAbBbT1sP+7MJvuhTrt
-         ONxMRO1A0znBRT63Y1cnQoP0DRm8O+DyFDm0mQ9ZE4xTE9fvTooTQDe9NyITOCvhuurE
-         Y9QPilrzSS/F6QcmSrpZglwWp8Xw1HY/OfI31PBw9dWotgrkh/YrN7oZ1aaQxAlAc3Vl
-         kT2X1lNnqlT17R5GywI7V2FD/SaXEsow1KPRITQw4dN8vnZuvWJA6hVwJxyT5dTyqCQW
-         jDsg==
-X-Gm-Message-State: AOAM531aNHmr6UXTClETjN5vyzjUZlAlnAqomazmH0ozWa/XMQo1XoH+
-        YrgarSvS6jd20cup34zJYObf4A==
-X-Google-Smtp-Source: ABdhPJzGn+znnntIyqVcelqBOU+yTpNFBD1sJ9JIuB54Ysv0RKYRALX0IbDg2r4GGu5Q0ois64zBDw==
-X-Received: by 2002:a1c:f31a:: with SMTP id q26mr2637187wmq.178.1605275430282;
-        Fri, 13 Nov 2020 05:50:30 -0800 (PST)
-Received: from dell.default ([91.110.221.159])
-        by smtp.gmail.com with ESMTPSA id t11sm4561614wrm.8.2020.11.13.05.50.29
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 13 Nov 2020 05:50:29 -0800 (PST)
-From:   Lee Jones <lee.jones@linaro.org>
-To:     lee.jones@linaro.org
-Cc:     linux-kernel@vger.kernel.org, Rob Clark <robdclark@gmail.com>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org
-Subject: [PATCH 39/40] drm/msm/disp/dpu1/dpu_encoder: Remove a bunch of unused variables
-Date:   Fri, 13 Nov 2020 13:49:37 +0000
-Message-Id: <20201113134938.4004947-40-lee.jones@linaro.org>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20201113134938.4004947-1-lee.jones@linaro.org>
-References: <20201113134938.4004947-1-lee.jones@linaro.org>
+        id S1726160AbgKMOWl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 13 Nov 2020 09:22:41 -0500
+Received: from foss.arm.com ([217.140.110.172]:39026 "EHLO foss.arm.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726278AbgKMOWl (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 13 Nov 2020 09:22:41 -0500
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 4940C142F;
+        Fri, 13 Nov 2020 06:22:40 -0800 (PST)
+Received: from [10.57.53.43] (unknown [10.57.53.43])
+        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 91AA73F6CF;
+        Fri, 13 Nov 2020 06:22:38 -0800 (PST)
+Subject: Re: [RESEND][PATCH 2/2] iommu: Avoid crash if iommu_group is null
+To:     John Stultz <john.stultz@linaro.org>,
+        lkml <linux-kernel@vger.kernel.org>
+Cc:     Will Deacon <will@kernel.org>, Andy Gross <agross@kernel.org>,
+        Maulik Shah <mkshah@codeaurora.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Saravana Kannan <saravanak@google.com>,
+        Marc Zyngier <maz@kernel.org>,
+        Lina Iyer <ilina@codeaurora.org>,
+        iommu@lists.linux-foundation.org,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>
+References: <20201112220520.48159-1-john.stultz@linaro.org>
+ <20201112220520.48159-2-john.stultz@linaro.org>
+From:   Robin Murphy <robin.murphy@arm.com>
+Message-ID: <71d9e4f1-8205-0dec-5723-e1ae83389481@arm.com>
+Date:   Fri, 13 Nov 2020 14:22:37 +0000
+User-Agent: Mozilla/5.0 (Windows NT 10.0; rv:78.0) Gecko/20100101
+ Thunderbird/78.4.3
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <20201112220520.48159-2-john.stultz@linaro.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-GB
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Fixes the following W=1 kernel build warning(s):
+On 2020-11-12 22:05, John Stultz wrote:
+> In trying to handle a possible driver probe ordering issue
+> brought up by Robin Murphy, I ran across a separate null pointer
+> crash in the iommu core in iommu_group_remove_device():
+> [    2.732803] dwc3-qcom a6f8800.usb: failed to get usb-ddr path: -517
+> [    2.739281] Unable to handle kernel NULL pointer dereference at virtual address 00000000000000c0
+> ...
+> [    2.775619] [00000000000000c0] user address but active_mm is swapper
+> [    2.782039] Internal error: Oops: 96000005 [#1] PREEMPT SMP
+> [    2.787670] Modules linked in:
+> [    2.790769] CPU: 6 PID: 1 Comm: swapper/0 Tainted: G        W         5.10.0-rc1-mainline-00025-g272a618fc36-dirty #3973
+> [    2.801719] Hardware name: Thundercomm Dragonboard 845c (DT)
+> [    2.807431] pstate: 00c00005 (nzcv daif +PAN +UAO -TCO BTYPE=--)
+> [    2.813508] pc : iommu_group_remove_device+0x30/0x1b0
+> [    2.818611] lr : iommu_release_device+0x4c/0x78
+> [    2.823189] sp : ffffffc01005b950
+> ...
+> [    2.907082] Call trace:
+> [    2.909566]  iommu_group_remove_device+0x30/0x1b0
+> [    2.914323]  iommu_release_device+0x4c/0x78
+> [    2.918559]  iommu_bus_notifier+0xe8/0x108
+> [    2.922708]  blocking_notifier_call_chain+0x78/0xb8
+> [    2.927641]  device_del+0x2ac/0x3d0
+> [    2.931177]  platform_device_del.part.9+0x20/0x98
+> [    2.935933]  platform_device_unregister+0x2c/0x40
+> [    2.940694]  of_platform_device_destroy+0xd8/0xe0
+> [    2.945450]  device_for_each_child_reverse+0x58/0xb0
+> [    2.950471]  of_platform_depopulate+0x4c/0x78
+> [    2.954886]  dwc3_qcom_probe+0x93c/0xcb8
+> [    2.958858]  platform_drv_probe+0x58/0xa8
+> [    2.962917]  really_probe+0xec/0x398
+> [    2.966531]  driver_probe_device+0x5c/0xb8
+> [    2.970677]  device_driver_attach+0x74/0x98
+> [    2.974911]  __driver_attach+0x60/0xe8
+> [    2.978700]  bus_for_each_dev+0x84/0xd8
+> [    2.982581]  driver_attach+0x30/0x40
+> [    2.986194]  bus_add_driver+0x160/0x208
+> [    2.990076]  driver_register+0x64/0x110
+> [    2.993957]  __platform_driver_register+0x58/0x68
+> [    2.998716]  dwc3_qcom_driver_init+0x20/0x28
+> [    3.003041]  do_one_initcall+0x6c/0x2d0
+> [    3.006925]  kernel_init_freeable+0x214/0x268
+> [    3.011339]  kernel_init+0x18/0x118
+> [    3.014876]  ret_from_fork+0x10/0x18
+> [    3.018495] Code: d0006a21 f9417295 91130021 910162b6 (b940c2a2)
+> 
+> In the case above, the arm-smmu driver fails to probe with
+> EPROBE_DEFER, and I'm guessing I'm guessing that causes
+> iommu_group_add_device() to fail and sets the
+> dev->iommu_group = NULL, then somehow we hit
+> iommu_group_remove_device() and trip over the null value?
+> I'm not really sure...
+> 
+> Anyway, adding the null check seems to avoid the issue and the
+> system boots fine after the arm-smmu driver later reprobed.
+> 
+> Feedback or better ideas for a solution would be appreciated!
 
- drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c: In function ‘dpu_encoder_virt_mode_set’:
- drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c:981:31: warning: variable ‘num_dspp’ set but not used [-Wunused-but-set-variable]
- drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c:976:30: warning: variable ‘topology’ set but not used [-Wunused-but-set-variable]
- drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c: In function ‘_dpu_encoder_virt_enable_helper’:
- drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c:1099:26: warning: variable ‘priv’ set but not used [-Wunused-but-set-variable]
- drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c: In function ‘dpu_encoder_virt_disable’:
- drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c:1210:18: warning: variable ‘dpu_kms’ set but not used [-Wunused-but-set-variable]
+I think the real issue is that we shouldn't even be here. If the device 
+was still waiting for an IOMMU when it got torn down, then dev->iommu 
+would be non-NULL due to a fwspec being allocated, but it's possible 
+that none of the other setup would have been done, so 
+iommu_release_device() shouldn't be blindly trying to undo it. It 
+happens that iommu_device_unlink() and arm_smmu_release_device() still 
+have some left-over tolerance for invalid inputs, but even if we do make 
+iommu_group_remove_device() similarly tolerant of invalid input, the 
+subsequent module_put() could still be unbalanced if the fwspec and 
+deferral came from of_iommu_configure() without iommu_probe_device() 
+even being called. Therefore I think this needs to be fundamentally 
+fixed by making iommu_release_device() better at handling 
+partially-configured devices in the first place.
 
-Cc: Rob Clark <robdclark@gmail.com>
-Cc: Sean Paul <sean@poorly.run>
-Cc: David Airlie <airlied@linux.ie>
-Cc: Daniel Vetter <daniel@ffwll.ch>
-Cc: linux-arm-msm@vger.kernel.org
-Cc: dri-devel@lists.freedesktop.org
-Cc: freedreno@lists.freedesktop.org
-Signed-off-by: Lee Jones <lee.jones@linaro.org>
----
- drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c | 12 ++----------
- 1 file changed, 2 insertions(+), 10 deletions(-)
+Robin.
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-index f7f5c258b5537..289bfb6f1861c 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-@@ -973,12 +973,11 @@ static void dpu_encoder_virt_mode_set(struct drm_encoder *drm_enc,
- 	struct drm_crtc *drm_crtc;
- 	struct dpu_crtc_state *cstate;
- 	struct dpu_global_state *global_state;
--	struct msm_display_topology topology;
- 	struct dpu_hw_blk *hw_pp[MAX_CHANNELS_PER_ENC];
- 	struct dpu_hw_blk *hw_ctl[MAX_CHANNELS_PER_ENC];
- 	struct dpu_hw_blk *hw_lm[MAX_CHANNELS_PER_ENC];
- 	struct dpu_hw_blk *hw_dspp[MAX_CHANNELS_PER_ENC] = { NULL };
--	int num_lm, num_ctl, num_pp, num_dspp;
-+	int num_lm, num_ctl, num_pp;
- 	int i, j;
- 
- 	if (!drm_enc) {
-@@ -1020,8 +1019,6 @@ static void dpu_encoder_virt_mode_set(struct drm_encoder *drm_enc,
- 		if (drm_crtc->state->encoder_mask & drm_encoder_mask(drm_enc))
- 			break;
- 
--	topology = dpu_encoder_get_topology(dpu_enc, dpu_kms, adj_mode);
--
- 	/* Query resource that have been reserved in atomic check step. */
- 	num_pp = dpu_rm_get_assigned_resources(&dpu_kms->rm, global_state,
- 		drm_enc->base.id, DPU_HW_BLK_PINGPONG, hw_pp,
-@@ -1030,7 +1027,7 @@ static void dpu_encoder_virt_mode_set(struct drm_encoder *drm_enc,
- 		drm_enc->base.id, DPU_HW_BLK_CTL, hw_ctl, ARRAY_SIZE(hw_ctl));
- 	num_lm = dpu_rm_get_assigned_resources(&dpu_kms->rm, global_state,
- 		drm_enc->base.id, DPU_HW_BLK_LM, hw_lm, ARRAY_SIZE(hw_lm));
--	num_dspp = dpu_rm_get_assigned_resources(&dpu_kms->rm, global_state,
-+	dpu_rm_get_assigned_resources(&dpu_kms->rm, global_state,
- 		drm_enc->base.id, DPU_HW_BLK_DSPP, hw_dspp,
- 		ARRAY_SIZE(hw_dspp));
- 
-@@ -1096,7 +1093,6 @@ static void dpu_encoder_virt_mode_set(struct drm_encoder *drm_enc,
- static void _dpu_encoder_virt_enable_helper(struct drm_encoder *drm_enc)
- {
- 	struct dpu_encoder_virt *dpu_enc = NULL;
--	struct msm_drm_private *priv;
- 	int i;
- 
- 	if (!drm_enc || !drm_enc->dev) {
-@@ -1104,8 +1100,6 @@ static void _dpu_encoder_virt_enable_helper(struct drm_encoder *drm_enc)
- 		return;
- 	}
- 
--	priv = drm_enc->dev->dev_private;
--
- 	dpu_enc = to_dpu_encoder_virt(drm_enc);
- 	if (!dpu_enc || !dpu_enc->cur_master) {
- 		DPU_ERROR("invalid dpu encoder/master\n");
-@@ -1207,7 +1201,6 @@ static void dpu_encoder_virt_disable(struct drm_encoder *drm_enc)
- {
- 	struct dpu_encoder_virt *dpu_enc = NULL;
- 	struct msm_drm_private *priv;
--	struct dpu_kms *dpu_kms;
- 	int i = 0;
- 
- 	if (!drm_enc) {
-@@ -1225,7 +1218,6 @@ static void dpu_encoder_virt_disable(struct drm_encoder *drm_enc)
- 	dpu_enc->enabled = false;
- 
- 	priv = drm_enc->dev->dev_private;
--	dpu_kms = to_dpu_kms(priv->kms);
- 
- 	trace_dpu_enc_disable(DRMID(drm_enc));
- 
--- 
-2.25.1
-
+> Cc: Robin Murphy <robin.murphy@arm.com>
+> Cc: Will Deacon <will@kernel.org>
+> Cc: Andy Gross <agross@kernel.org>
+> Cc: Maulik Shah <mkshah@codeaurora.org>
+> Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
+> Cc: Saravana Kannan <saravanak@google.com>
+> Cc: Marc Zyngier <maz@kernel.org>
+> Cc: Lina Iyer <ilina@codeaurora.org>
+> Cc: iommu@lists.linux-foundation.org
+> Cc: linux-arm-msm <linux-arm-msm@vger.kernel.org>
+> Signed-off-by: John Stultz <john.stultz@linaro.org>
+> ---
+>   drivers/iommu/iommu.c | 4 ++++
+>   1 file changed, 4 insertions(+)
+> 
+> diff --git a/drivers/iommu/iommu.c b/drivers/iommu/iommu.c
+> index b53446bb8c6b4..28229f7ef7d5a 100644
+> --- a/drivers/iommu/iommu.c
+> +++ b/drivers/iommu/iommu.c
+> @@ -877,6 +877,10 @@ void iommu_group_remove_device(struct device *dev)
+>   	struct iommu_group *group = dev->iommu_group;
+>   	struct group_device *tmp_device, *device = NULL;
+>   
+> +	/* Avoid crash if iommu_group value is null */
+> +	if (!group)
+> +		return;
+> +
+>   	dev_info(dev, "Removing from iommu group %d\n", group->id);
+>   
+>   	/* Pre-notify listeners that a device is being removed. */
+> 
