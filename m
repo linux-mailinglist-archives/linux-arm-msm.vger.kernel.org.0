@@ -2,224 +2,136 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 396572B1920
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Nov 2020 11:34:32 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id EEF012B1ACD
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Nov 2020 13:06:57 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726184AbgKMKeb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 13 Nov 2020 05:34:31 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49688 "EHLO
+        id S1726493AbgKMMGv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 13 Nov 2020 07:06:51 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36168 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726248AbgKMKe2 (ORCPT
+        with ESMTP id S1726487AbgKMMGs (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 13 Nov 2020 05:34:28 -0500
-Received: from mail-vk1-xa43.google.com (mail-vk1-xa43.google.com [IPv6:2607:f8b0:4864:20::a43])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0A128C0613D6
-        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Nov 2020 02:34:28 -0800 (PST)
-Received: by mail-vk1-xa43.google.com with SMTP id o73so2026662vka.5
-        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Nov 2020 02:34:28 -0800 (PST)
+        Fri, 13 Nov 2020 07:06:48 -0500
+Received: from mail-wm1-x341.google.com (mail-wm1-x341.google.com [IPv6:2a00:1450:4864:20::341])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2AA21C0617A7
+        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Nov 2020 04:00:24 -0800 (PST)
+Received: by mail-wm1-x341.google.com with SMTP id w24so8233332wmi.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Nov 2020 04:00:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=PALuAB8oVM/m0G/j2UGrrN/OBz7MMaWqElt/6b/dyFE=;
-        b=XOoELJ6mcWARstsXGUsmNAxUtzYyAhmn3p0LrYrwIfX4ZVVANvpN7eTiqCFLe4CQF1
-         ADYVZ/egyZqjAEtf3UcsleDaK5r8VENpUkUsvdpPYHul66b4cFYJ/o3x2uA/DsVjVd1b
-         mp0ikEcMIwhBtBqKzgbHzoA06R0WPM4ls95pkaK3oLEBrXtrAT76M2bHCj0oW+Wfq3bY
-         psZp/2xJZBIizcTuQP8mXq6R5++B3kMM1GIyDu0Y0UbCKLDZqxouZayWstNmmuJcXzE/
-         ioEYz7kLRvbjdV8ZeVT70O0BexBtRu1r71TlvveuypmnnvZqLnr+HDBb/9TwrHvqd7h1
-         GDtw==
+        h=subject:to:cc:references:from:autocrypt:message-id:date
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=NuCRg53FQPnGrrcKvABeKmOJP/aEbE+MQNC/BTO5Eg4=;
+        b=vn1At+xgaFtwU8Id5WnHnmawstzAfZV/5fXcLTcO82I+Nlyc5fF6VU1KX1YEUt2KbM
+         FpWhXArjEVp9S8bPqZpWUPb4yOcZddz2eUqsbO5LM5ZshfBnHF2s6E9iwfRgIwjso4qG
+         qw0wgxWRUvr8uSk6p5D8a+c2sc0ev2khfQLxfGNNykwyQRXdLMXiMtimykhJP6PoyMLB
+         KIR+sIzoKgRIqd5kcZHoJi5bLKnOhE52gGmE/A3FS9sTdk5LEj0wOWezdmniFdSfEypF
+         3/C1f13j1Kbm3JJ8hIoDpNomHgPO8yMBkVTwNYLc5xwnWVCNvOc7YTn3GaPpR0JgwGab
+         MKdA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=PALuAB8oVM/m0G/j2UGrrN/OBz7MMaWqElt/6b/dyFE=;
-        b=CwPl4lCdV+0dtcKHhbNhUjC8PvEnlvZIlz7YmSj3xo0zmf/QDQE8MxswdsTN7vzJxr
-         udNF9IyqCFXEGZHZQTu1/g7LENBK1vYSVUZYFEdj1emMW0ra7GqbMzTRyxGf1ufLMG48
-         BJ3QSGp063s4u33JWqavzdqKpSunVRceDm1M+FsG3VsXIxAakwq9o2K/cNztQUgBi+KV
-         P0hS6txcJ9HPhjmJJcoozetQke/DxodYxI4KlKbbpalmHeusvhB4OM4ZGzvqalFne0hL
-         52/NAsbPcPEnSs6z+5S45Nkjz/4dvT40ELC+WnkyYeqVhdIJv5GRo6PGB5EbHjnF0UD4
-         8b6Q==
-X-Gm-Message-State: AOAM530HwuPxnQiQZlYWUbSU0HxK+MoSuhO/K5wccYGVBctkOmRRGscE
-        QV7lUY5a8PDuhWKj+FwJKySSWh/7wVNSldPxYVe9VA==
-X-Google-Smtp-Source: ABdhPJyxI3qvgFgCh3w8nJ3N3pxqYhJg0jmIPKkvwU7Ca7HGf127m4ZwT5G5cD8ykpX5DVq+0rKJSnnpeorUP3WcqH0=
-X-Received: by 2002:a1f:8f48:: with SMTP id r69mr659677vkd.6.1605263667043;
- Fri, 13 Nov 2020 02:34:27 -0800 (PST)
+        h=x-gm-message-state:subject:to:cc:references:from:autocrypt
+         :message-id:date:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=NuCRg53FQPnGrrcKvABeKmOJP/aEbE+MQNC/BTO5Eg4=;
+        b=WvUWo2RAYMFpt/7hOoUQ01+ONeyc7hz2N3VnhzvcfwmTyOmdCzUcfUDPM8HvcfVink
+         ULIotT6YKmRQCe7DAaYpj6g1gaJRa3+cK1P+XaSwicU4Qf3q+8UGtuWr2IyGuJDDcuSV
+         hB/WPCVBQ+Xf25Txi7IsfV9ssGFWriqd0mEvxZCPLmNCAgp2TZ9yu+vgwuiqFYVO437Q
+         s+9rSnaaRuoDuM8Eofj+0OzP+h1t7Y+tVpvSC3vZxVvlEIo+W/bTjCrBT39cQyATrnRT
+         HtSwPKxNr4eGKRfoCR/ekk0gH0M3de7JyaDgFXE0JQ24UjCWJ1fXBM7uXtuOngyoH4Z8
+         lyRg==
+X-Gm-Message-State: AOAM531aosSjsRN8F+aVaDkeqzMze5UBr+/VKv+gBBzxERxPIY/HaJKF
+        teCbVQaH3Yn3YbCI9RPUdEG5nLo2AjTiRA==
+X-Google-Smtp-Source: ABdhPJxxADnMM3AWVW6pI0YlYSGU6dqxv6N43BRr6JnTeIHH0xG2+/SW/cCavb3EyYjeBXhkKOoIvg==
+X-Received: by 2002:a1c:20d0:: with SMTP id g199mr2356253wmg.68.1605268822737;
+        Fri, 13 Nov 2020 04:00:22 -0800 (PST)
+Received: from [10.44.66.8] ([212.45.67.2])
+        by smtp.googlemail.com with ESMTPSA id a18sm4374731wme.18.2020.11.13.04.00.21
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 13 Nov 2020 04:00:22 -0800 (PST)
+Subject: Re: [PATCH 2/3] interconnect: qcom: sdm845: Add the missing nodes for
+ QUP
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     linux-pm@vger.kernel.org, mdtipton@codeaurora.org,
+        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        akashast@codeaurora.org
+References: <20201105135211.7160-1-georgi.djakov@linaro.org>
+ <20201105135211.7160-2-georgi.djakov@linaro.org>
+ <20201111043703.GA173948@builder.lan>
+From:   Georgi Djakov <georgi.djakov@linaro.org>
+Autocrypt: addr=georgi.djakov@linaro.org; prefer-encrypt=mutual; keydata=
+ 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
+ KEmKjLDvB0pePJkdTw==
+Message-ID: <47ce524f-3ba5-2977-3e36-08b646389d68@linaro.org>
+Date:   Fri, 13 Nov 2020 14:00:20 +0200
 MIME-Version: 1.0
-References: <20201106164811.3698-1-ilina@codeaurora.org> <20201106164811.3698-3-ilina@codeaurora.org>
- <CAPDyKFrv-3USmNLR3gjgaTEuTrWuYZjs3qCtnjxSOWqrxv5qsA@mail.gmail.com>
- <X6l/OcHG37HzgFL8@codeaurora.org> <CAPDyKFr8fdbMM1nsx-RZcMVtveJUP3p38z=HkL1T2C=QgM3gkQ@mail.gmail.com>
- <X6wRBLmvzztNai4y@codeaurora.org>
-In-Reply-To: <X6wRBLmvzztNai4y@codeaurora.org>
-From:   Ulf Hansson <ulf.hansson@linaro.org>
-Date:   Fri, 13 Nov 2020 11:33:50 +0100
-Message-ID: <CAPDyKFr9gpH9Kh9=W4D7DRG8OuqBvkaWHvk8i47SToES=338cA@mail.gmail.com>
-Subject: Re: [PATCH v5 2/2] PM / Domains: use device's next wakeup to
- determine domain idle state
-To:     Lina Iyer <ilina@codeaurora.org>
-Cc:     "Rafael J. Wysocki" <rjw@rjwysocki.net>,
-        Linux PM <linux-pm@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <20201111043703.GA173948@builder.lan>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, 11 Nov 2020 at 17:51, Lina Iyer <ilina@codeaurora.org> wrote:
->
-> On Tue, Nov 10 2020 at 03:02 -0700, Ulf Hansson wrote:
-> >On Mon, 9 Nov 2020 at 18:41, Lina Iyer <ilina@codeaurora.org> wrote:
-> >>
-> >> On Mon, Nov 09 2020 at 08:27 -0700, Ulf Hansson wrote:
-> >> >On Fri, 6 Nov 2020 at 17:48, Lina Iyer <ilina@codeaurora.org> wrote:
-> >> >>
-> >> [...]
-> >> >> +static void update_domain_next_wakeup(struct generic_pm_domain *genpd, ktime_t now)
-> >> >> +{
-> >> >> +       ktime_t domain_wakeup = KTIME_MAX;
-> >> >> +       ktime_t next_wakeup;
-> >> >> +       struct pm_domain_data *pdd;
-> >> >> +       struct gpd_link *link;
-> >> >> +
-> >> >> +       /* Find the earliest wakeup for all devices in the domain */
-> >> >> +       list_for_each_entry(pdd, &genpd->dev_list, list_node) {
-> >> >> +               next_wakeup = to_gpd_data(pdd)->next_wakeup;
-> >> >> +               if (next_wakeup != KTIME_MAX && !ktime_before(next_wakeup, now))
-> >> >> +                       if (ktime_before(next_wakeup, domain_wakeup))
-> >> >> +                               domain_wakeup = next_wakeup;
-> >> >
-> >> >If it turns out that one of the device's next_wakeup is before "now",
-> >> >leading to ktime_before() above returns true - then I think you should
-> >> >bail out, no?
-> >> >
-> >> >At least, we shouldn't just continue and ignore this case, right?
-> >> >
-> >> No, that could be a very common case. Drivers are not expected to clean
-> >> up the next wakeup by setting it to KTIME_MAX. The best we can do is
-> >> to make a choice with the valid information we have. This will also map
-> >> to the current behavior. Say if all next wakeup information provided to
-> >> the devices were in the past, we would be no worse (or better) than what
-> >> we do without this change.
-> >
-> >Well, I don't quite agree (at least not yet), but let me elaborate, as
-> >I think we can do better without having to add complexity.
-> >
-> >Normally, I don't think a driver needs to clean up its device's next
-> >wakeup in between the remote wakeups, instead it should just set a new
-> >value.
-> >
-> >That's because, even if the driver acts to a remote wakeup or deals
-> >with a request entering a queue, the driver needs to runtime resume
-> >its device during this period. This prevents genpd from power off the
-> >PM domain, hence also the genpd governor from potentially looking at
-> >"invalid" wakeup information for its attached devices.
-> >
-> Could you elaborate a bit? Why would a remote wakeup affect the next
-> wakeup. I'm afraid that I'm not getting the situation correctly.
+On 11/11/20 06:37, Bjorn Andersson wrote:
+> On Thu 05 Nov 07:52 CST 2020, Georgi Djakov wrote:
+> 
+>> The QUP nodes are currently defined just as entries in the topology,
+>> but they are not referenced by any of the NoCs. Let's fix this and
+>> "attach" them to their NoCs, so that the QUP drivers are able to use
+>> them as path endpoints and scale their bandwidth.
+>>
+>> This is based on the information from the downstream msm-4.9 kernel.
+>>
+>> Signed-off-by: Georgi Djakov <georgi.djakov@linaro.org>
+> 
+> Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> 
+> 
+> Georgi, would you mind if I take the series through my tree, to avoid
+> conflicts in sdm845.dtsi?
 
-Let me try :-)
+Agree. Please take it through your tree.
 
-A remote wakeup is a wakeup irq that is triggered when the device is
-in runtime suspended state.
-
-I was expecting that you would be arming a remote wakeup for the
-corresponding device that is attached to a genpd, when the use case
-becomes enabled. Additionally, to allow the driver to consume the
-wakeup irq, it needs to runtime resume its device (which means its PM
-domain via genpd must be powered on as well, if it's not on already).
-
-Therefore, during the period of when the driver consumes the wakeup
-irq, its device's PM domain remains powered on. When this is
-completed, the driver allows its device to become runtime suspended
-again. At some point before the device becomes runtime suspended, the
-driver should set a new value of the "next wakeup" for its device.
-
->
-> >Of course, I assume there are situations, where a driver actually
-> >needs to do a clean up of its device's next wakeup, but that should be
-> >less frequent and likely when a remote wakeup is disabled (for
-> >whatever reason).
-> >
-> A common case would be that the driver does not know when the usecase is
-> being turned off and therefore may not be able to set the next wakeup to
-> max. If the stale value continues to exist then we may never power off
-> the domain.
-
-Right.
-
-But, how do you know that the use case starts and what prevents us
-from knowing that the use case has stopped?
-
-Maybe if you add a user of the new APIs, this would help me to
-understand better?
-
->
-> >> >> +       /*
-> >> >> +        * Find the next wakeup from devices that can determine their own wakeup
-> >> >> +        * to find when the domain would wakeup and do it for every device down
-> >> >> +        * the hierarchy. It is not worth while to sleep if the state's residency
-> >> >> +        * cannot be met.
-> >> >> +        */
-> >> >> +       update_domain_next_wakeup(genpd, now);
-> >> >> +       if (genpd->next_wakeup != KTIME_MAX) {
-> >> >> +               /* Let's find out the deepest domain idle state, the devices prefer */
-> >> >> +               while (state_idx >= 0) {
-> >> >> +                       if (next_wakeup_allows_state(genpd, state_idx, now)) {
-> >> >> +                               genpd->max_off_time_changed = true;
-> >> >> +                               break;
-> >> >> +                       }
-> >> >> +                       state_idx--;
-> >> >> +               }
-> >> >> +
-> >> >> +               if (state_idx < 0) {
-> >> >> +                       state_idx = 0;
-> >> >> +                       genpd->cached_power_down_ok = false;
-> >> >> +                       goto done;
-> >> >> +               }
-> >> >> +       }
-> >> >> +
-> >> >
-> >> >The above would introduce unnecessary overhead, as it may become
-> >> >executed in cases when it's not needed.
-> >> >
-> >> >For example, there's no point doing the above, if the domain doesn't
-> >> >specify residency values for its idle states.
-> >> >
-> >> We would still need to ensure that the next wakeup is after the
-> >> power_off_latency, if specified.
-> >
-> >Good point! Although, I would rather avoid adding the overhead, unless
-> >the residency is specified. Do you see a problem with this approach?
-> >
-> Hmmm, no strong objections. However, we still need to run through the
-> states to make sure the residency is not set and have a variable track
-> that.
-
-Right.
-
-The important part is that we can do that once and not for every call
-to the governor.
-
-> The devices wouldn't know that and would still continue to set the
-> next wakeup, unless we find a way to let them know we are not using this
-> feature for the domain.
-
-Right.
-
-To allow the driver to know, we could respond with an error code from
-the new dev_pm_genpd_set_performance_state() API (from patch1), in
-case the genpd+governor doesn't support it.
-
-Would that be okay? Otherwise we will have to add a separate genpd
-API, asking explicitly if the "next wakeup" feature is supported.
-
->
-> >Another option is to add a new governor, but if possible, I would like
-> >to avoid that.
-> >
-> Absolutely, we should avoid that.
->
-
-[...]
-
-Kind regards
-Uffe
+Thanks,
+Georgi
