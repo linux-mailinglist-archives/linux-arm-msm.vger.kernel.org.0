@@ -2,132 +2,264 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 5CD882B1B89
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Nov 2020 14:05:39 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B94B12B1C65
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Nov 2020 14:52:45 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726308AbgKMNFi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 13 Nov 2020 08:05:38 -0500
-Received: from foss.arm.com ([217.140.110.172]:37934 "EHLO foss.arm.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726160AbgKMNFh (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 13 Nov 2020 08:05:37 -0500
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 809B5142F;
-        Fri, 13 Nov 2020 05:05:37 -0800 (PST)
-Received: from [10.57.53.43] (unknown [10.57.53.43])
-        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 455043F6CF;
-        Fri, 13 Nov 2020 05:05:34 -0800 (PST)
-Subject: Re: [RESEND][PATCH 1/2] arm-smmu-qcom: Ensure the qcom_scm driver has
- finished probing
-To:     John Stultz <john.stultz@linaro.org>,
-        lkml <linux-kernel@vger.kernel.org>
-Cc:     Will Deacon <will@kernel.org>, Andy Gross <agross@kernel.org>,
-        Maulik Shah <mkshah@codeaurora.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Saravana Kannan <saravanak@google.com>,
-        Marc Zyngier <maz@kernel.org>,
-        Lina Iyer <ilina@codeaurora.org>,
-        iommu@lists.linux-foundation.org,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>
-References: <20201112220520.48159-1-john.stultz@linaro.org>
-From:   Robin Murphy <robin.murphy@arm.com>
-Message-ID: <c0c905c5-d118-2b74-1b76-fcb086a7faf4@arm.com>
-Date:   Fri, 13 Nov 2020 13:05:28 +0000
-User-Agent: Mozilla/5.0 (Windows NT 10.0; rv:78.0) Gecko/20100101
- Thunderbird/78.4.3
+        id S1726427AbgKMNtp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 13 Nov 2020 08:49:45 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52436 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726406AbgKMNto (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 13 Nov 2020 08:49:44 -0500
+Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5B37EC0617A7
+        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Nov 2020 05:49:44 -0800 (PST)
+Received: by mail-wr1-x42e.google.com with SMTP id o15so9986237wru.6
+        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Nov 2020 05:49:44 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=WyNuXCVQx1RiXbGVlsoSFjQskftsnSEq5QsbaFWLc8c=;
+        b=pUV4xAYSW0aqWu4AgWE4Gu2ONVq/tvb+WU7dXYssWQBu4ISundyt8NUCtc3f8rsBFW
+         Xzm7UqTQy9pLCI/Jxq8tXwTjvV9mAN0N/fYkswK2OI2Gd3vVh4RZq0Q7nx39lnCo67Cp
+         pEYP24JGpSOFpO59d+XKbaCuVBYmcsuh6Ya7jp7hTFthga1+7G1qtIzymeh3egKNH5FQ
+         RCyoD1ye0kCX5gf0nYlh2yzcpQYVHocfXme6+rV2peCwPODI6UKj/W9usL5uEjZfG+i7
+         72xj5tJLfB+E0cwDCs2xg0uE3/2741OYcjK9rE93doNXXcVCb1DVU1qo7MiVcBCdgwGc
+         wpQw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=WyNuXCVQx1RiXbGVlsoSFjQskftsnSEq5QsbaFWLc8c=;
+        b=fFQJN0VBG1AGeEAKnVEdQiUJnKsH0dNu2cmI6xl+ARlO7uePsOnqvzeYQNfgWUJCLF
+         dUCPsmftmp7EcbRVo82iNve/Jp71YeD5Ocm4ANoauwkqnUqMquA37sClwCc4tEAp4Qzs
+         GcfVKBno+b2V2DQ/aSdGc/8EAb0xPlpk61chwFTa224aslMnjaQ6QJ7StY+na9skVLht
+         TFReMx2cmy6bvNxEn2pjyVkRWWFPDabPd0eRo7+Wd9gchqxOs513iPKwX4avdPB3t5SV
+         m/GkMUht9NR/8Fs5f+3AViU7aUu+wFS2DrXK/NKT55PnQseBu1vo9nlT0c9N6kMB7W7h
+         5GDg==
+X-Gm-Message-State: AOAM532768rMWwAc5kgukhZHH3Ge7+TMx6CYIzpGINIXxDMomkdwIfg2
+        hkLx4KW39POkGUgbMMcZMOOiEw==
+X-Google-Smtp-Source: ABdhPJzuhrz0RkDiGvF0LEw8t6raG5YB/yTSg1tZvfa/F31g8zu8pmDVbzFZxyxSqiLSK4ZsfQOcgg==
+X-Received: by 2002:adf:f808:: with SMTP id s8mr3615050wrp.257.1605275382853;
+        Fri, 13 Nov 2020 05:49:42 -0800 (PST)
+Received: from dell.default ([91.110.221.159])
+        by smtp.gmail.com with ESMTPSA id t11sm4561614wrm.8.2020.11.13.05.49.41
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 13 Nov 2020 05:49:42 -0800 (PST)
+From:   Lee Jones <lee.jones@linaro.org>
+To:     lee.jones@linaro.org
+Cc:     linux-kernel@vger.kernel.org,
+        Alex Deucher <alexander.deucher@amd.com>,
+        amd-gfx@lists.freedesktop.org,
+        Andres Rodriguez <andresx7@gmail.com>,
+        =?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+        Chun-Kuang Hu <chunkuang.hu@kernel.org>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        David Airlie <airlied@linux.ie>,
+        dri-devel@lists.freedesktop.org, Eric Anholt <eric@anholt.net>,
+        Felix Kuehling <Felix.Kuehling@amd.com>,
+        freedreno@lists.freedesktop.org,
+        Harry Wentland <harry.wentland@amd.com>,
+        Hawking Zhang <Hawking.Zhang@amd.com>,
+        Jerome Brunet <jbrunet@baylibre.com>,
+        Jie Qiu <jie.qiu@mediatek.com>,
+        John Clements <john.clements@amd.com>,
+        Kalyan Thota <kalyan_t@codeaurora.org>,
+        Kevin Hilman <khilman@baylibre.com>,
+        Leo Li <sunpeng.li@amd.com>, lima@lists.freedesktop.org,
+        linaro-mm-sig@lists.linaro.org,
+        Linus Walleij <linus.walleij@linaro.org>,
+        linux-amlogic@lists.infradead.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, linux-mediatek@lists.infradead.org,
+        linux-media@vger.kernel.org, Luben Tuikov <luben.tuikov@amd.com>,
+        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        Maxime Ripard <mripard@kernel.org>, Monk.liu@amd.com,
+        Neil Armstrong <narmstrong@baylibre.com>,
+        Philipp Zabel <p.zabel@pengutronix.de>,
+        Qiang Yu <yuq825@gmail.com>, Rob Clark <robdclark@gmail.com>,
+        Sam Ravnborg <sam@ravnborg.org>, Sean Paul <sean@poorly.run>,
+        Sumit Semwal <sumit.semwal@linaro.org>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        YT SHEN <yt.shen@mediatek.com>
+Subject: [PATCH 00/40] [Set 7] Rid W=1 warnings from GPU
+Date:   Fri, 13 Nov 2020 13:48:58 +0000
+Message-Id: <20201113134938.4004947-1-lee.jones@linaro.org>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-In-Reply-To: <20201112220520.48159-1-john.stultz@linaro.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-GB
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2020-11-12 22:05, John Stultz wrote:
-> Robin Murphy pointed out that if the arm-smmu driver probes before
-> the qcom_scm driver, we may call qcom_scm_qsmmu500_wait_safe_toggle()
-> before the __scm is initialized.
-> 
-> Now, getting this to happen is a bit contrived, as in my efforts it
-> required enabling asynchronous probing for both drivers, moving the
-> firmware dts node to the end of the dtsi file, as well as forcing a
-> long delay in the qcom_scm_probe function.
-> 
-> With those tweaks we ran into the following crash:
-> [    2.631040] arm-smmu 15000000.iommu:         Stage-1: 48-bit VA -> 48-bit IPA
-> [    2.633372] Unable to handle kernel NULL pointer dereference at virtual address 0000000000000000
-> ...
-> [    2.633402] [0000000000000000] user address but active_mm is swapper
-> [    2.633409] Internal error: Oops: 96000005 [#1] PREEMPT SMP
-> [    2.633415] Modules linked in:
-> [    2.633427] CPU: 5 PID: 117 Comm: kworker/u16:2 Tainted: G        W         5.10.0-rc1-mainline-00025-g272a618fc36-dirty #3971
-> [    2.633430] Hardware name: Thundercomm Dragonboard 845c (DT)
-> [    2.633448] Workqueue: events_unbound async_run_entry_fn
-> [    2.633456] pstate: 80c00005 (Nzcv daif +PAN +UAO -TCO BTYPE=--)
-> [    2.633465] pc : qcom_scm_qsmmu500_wait_safe_toggle+0x78/0xb0
-> [    2.633473] lr : qcom_smmu500_reset+0x58/0x78
-> [    2.633476] sp : ffffffc0105a3b60
-> ...
-> [    2.633567] Call trace:
-> [    2.633572]  qcom_scm_qsmmu500_wait_safe_toggle+0x78/0xb0
-> [    2.633576]  qcom_smmu500_reset+0x58/0x78
-> [    2.633581]  arm_smmu_device_reset+0x194/0x270
-> [    2.633585]  arm_smmu_device_probe+0xc94/0xeb8
-> [    2.633592]  platform_drv_probe+0x58/0xa8
-> [    2.633597]  really_probe+0xec/0x398
-> [    2.633601]  driver_probe_device+0x5c/0xb8
-> [    2.633606]  __driver_attach_async_helper+0x64/0x88
-> [    2.633610]  async_run_entry_fn+0x4c/0x118
-> [    2.633617]  process_one_work+0x20c/0x4b0
-> [    2.633621]  worker_thread+0x48/0x460
-> [    2.633628]  kthread+0x14c/0x158
-> [    2.633634]  ret_from_fork+0x10/0x18
-> [    2.633642] Code: a9034fa0 d0007f73 29107fa0 91342273 (f9400020)
-> 
-> To avoid this, this patch adds a check on qcom_scm_is_available() in
-> the qcom_smmu_impl_init() function, returning -EPROBE_DEFER if its
-> not ready.
-> 
-> This allows the driver to try to probe again later after qcom_scm has
-> finished probing.
+This set is part of a larger effort attempting to clean-up W=1
+kernel builds, which are currently overwhelmingly riddled with
+niggly little warnings.
 
-As well as strict correctness, the other motivation here was that 
-qcom_scm_is_available() should be the place to add the "is the module 
-even loaded yet?" dance to iron out the awkward config dependencies in 
-future.
+This brings the running total from 5000 (in v5.9) down to 1400!
 
-Reviewed-by: Robin Murphy <robin.murphy@arm.com>
+Hopefully not too much more to go now.
 
-> Cc: Robin Murphy <robin.murphy@arm.com>
-> Cc: Will Deacon <will@kernel.org>
-> Cc: Andy Gross <agross@kernel.org>
-> Cc: Maulik Shah <mkshah@codeaurora.org>
-> Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
-> Cc: Saravana Kannan <saravanak@google.com>
-> Cc: Marc Zyngier <maz@kernel.org>
-> Cc: Lina Iyer <ilina@codeaurora.org>
-> Cc: iommu@lists.linux-foundation.org
-> Cc: linux-arm-msm <linux-arm-msm@vger.kernel.org>
-> Reported-by: Robin Murphy <robin.murphy@arm.com>
-> Signed-off-by: John Stultz <john.stultz@linaro.org>
-> ---
->   drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c | 4 ++++
->   1 file changed, 4 insertions(+)
-> 
-> diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-> index 66ba4870659f4..ef37ccfa82562 100644
-> --- a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-> +++ b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-> @@ -159,6 +159,10 @@ struct arm_smmu_device *qcom_smmu_impl_init(struct arm_smmu_device *smmu)
->   {
->   	struct qcom_smmu *qsmmu;
->   
-> +	/* Check to make sure qcom_scm has finished probing */
-> +	if (!qcom_scm_is_available())
-> +		return ERR_PTR(-EPROBE_DEFER);
-> +
->   	qsmmu = devm_kzalloc(smmu->dev, sizeof(*qsmmu), GFP_KERNEL);
->   	if (!qsmmu)
->   		return ERR_PTR(-ENOMEM);
-> 
+Lee Jones (40):
+  drm/amd/include/vega10_ip_offset: Mark _BASE structs as __maybe_unused
+  drm/amd/display/dc/core/dc_link_dp: Move
+    DP_VGA_LVDS_CONVERTER_ID_{2,3} to where they're used
+  drm/amd/display/dc/core/dc_link_ddc: Move DP_DVI_CONVERTER_ID_{4,5} to
+    where they're used
+  drm/amd/amdgpu/amdgpu_drv: Move 'amdgpu_info_ioctl()'s prototype to
+    shared header
+  drm/amd/amdgpu/amdgpu_ring: Fix misnaming of param 'max_dw'
+  drm/msm/adreno/a6xx_gpu: Staticise local function 'a6xx_idle'
+  drm/mediatek/mtk_disp_rdma: Fix formatting and supply missing struct
+    member description
+  drm/amd/amdgpu/amdgpu_ib: Fix some incorrect/incomplete function
+    documentation
+  drm/mediatek/mtk_drm_crtc: Demote seriously out-of-date struct header
+  drm/mediatek/mtk_drm_drv: Staticise local function invoked by
+    reference
+  drm/amd/amdgpu/amdgpu_pll: Fix kernel-doc formatting, missing and
+    extra params
+  drm/pl111/pl111_display: Make local function static
+  drm/panel/panel-tpo-tpg110: Correct misnaming and supply missing param
+    description
+  drm/meson/meson_venc: Make local function
+    'meson_venc_hdmi_get_dmt_vmode' static
+  drm/lima/lima_drv: Demote kernel-doc formatting abuse
+  drm/amd/amdgpu/amdgpu_sync: Fix misnamed, missing and extra param
+    descriptions
+  drm/meson/meson_vclk: Make two local functions static
+  drm/mediatek/mtk_dpi: Remove unused struct definition
+    'mtk_dpi_encoder_funcs'
+  drm/amd/amdgpu/amdgpu_vram_mgr: Add missing descriptions for 'dev' and
+    'dir'
+  drm/pl111/pl111_debugfs: Make local function 'pl111_debugfs_regs()'
+    static
+  drm/amd/amdgpu/amdgpu_virt: Make local function
+    'amdgpu_virt_update_vf2pf_work_item()' static
+  drm/amd/amdgpu/amdgpu_sched: Consume our own header containing
+    prototypes
+  drm/lima/lima_sched: Remove unused and unnecessary variable 'ret'
+  drm/amd/amdgpu/amdgpu_ids: Supply missing docs for 'id' and 'vmhub'
+  drm/amd/amdgpu/amdgpu_debugfs: Demote obvious abuse of kernel-doc
+    formatting
+  drm/amd/amdgpu/amdgpu_gmc: Demote one and fix another function header
+  drm/amd/amdgpu/amdgpu_ras: Remove unused function
+    'amdgpu_ras_error_cure'
+  drm/amd/amdgpu/amdgpu_ras: Make local function
+    'amdgpu_ras_error_status_query' static
+  drm/amd/amdgpu/amdgpu_csa: Remove set but unused variable 'r'
+  drm/amd/amdgpu/amdgpu_vm_cpu: Fix 'amdgpu_vm_cpu_prepare()'s doc-rot
+  drm/amd/amdgpu/amdgpu_vm_sdma: Fix 'amdgpu_vm_sdma_prepare()'s doc-rot
+  drm/msm/disp/mdp5/mdp5_crtc: Make local function
+    'mdp5_crtc_setup_pipeline()' static
+  drm/drm_dp_mst_topology: Remove set but never used variable 'len'
+  drm/msm/disp/mdp5/mdp5_ctl: Demote non-conformant kernel-doc headers
+  drm/msm/disp/mdp5/mdp5_kms: Make local functions 'mdp5_{en,dis}able()'
+    static
+  drm/amd/amdgpu/amdgpu_fw_attestation: Consume our own header
+    containing prototypes
+  drm/amd/amdgpu/smu_v11_0_i2c: Provide descriptions for 'control' and
+    'data' params
+  drm/msm/disp/dpu1/dpu_core_perf: Remove set but unused variable
+    'dpu_cstate'
+  drm/msm/disp/dpu1/dpu_encoder: Remove a bunch of unused variables
+  drm/amd/amdgpu/gfx_v7_0: Remove unused struct definition
+
+ drivers/gpu/drm/amd/amdgpu/amdgpu_csa.c       |  3 +-
+ drivers/gpu/drm/amd/amdgpu/amdgpu_debugfs.c   |  4 +-
+ drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c       |  4 +-
+ .../drm/amd/amdgpu/amdgpu_fw_attestation.c    |  3 +-
+ drivers/gpu/drm/amd/amdgpu/amdgpu_gmc.c       |  5 +-
+ drivers/gpu/drm/amd/amdgpu/amdgpu_ib.c        |  6 +-
+ drivers/gpu/drm/amd/amdgpu/amdgpu_ids.c       |  2 +
+ drivers/gpu/drm/amd/amdgpu/amdgpu_kms.c       |  1 +
+ drivers/gpu/drm/amd/amdgpu/amdgpu_kms.h       | 31 ++++++++
+ drivers/gpu/drm/amd/amdgpu/amdgpu_pll.c       | 10 +--
+ drivers/gpu/drm/amd/amdgpu/amdgpu_ras.c       | 11 +--
+ drivers/gpu/drm/amd/amdgpu/amdgpu_ring.c      |  2 +-
+ drivers/gpu/drm/amd/amdgpu/amdgpu_sched.c     |  2 +-
+ drivers/gpu/drm/amd/amdgpu/amdgpu_sync.c      |  4 +-
+ drivers/gpu/drm/amd/amdgpu/amdgpu_virt.c      |  2 +-
+ drivers/gpu/drm/amd/amdgpu/amdgpu_vm_cpu.c    |  4 +-
+ drivers/gpu/drm/amd/amdgpu/amdgpu_vm_sdma.c   |  4 +-
+ drivers/gpu/drm/amd/amdgpu/amdgpu_vram_mgr.c  |  2 +
+ drivers/gpu/drm/amd/amdgpu/gfx_v7_0.c         |  9 ---
+ drivers/gpu/drm/amd/amdgpu/gfx_v7_0.h         |  1 -
+ drivers/gpu/drm/amd/amdgpu/smu_v11_0_i2c.c    |  3 +
+ .../gpu/drm/amd/display/dc/core/dc_link_ddc.c |  4 +
+ .../gpu/drm/amd/display/dc/core/dc_link_dp.c  |  5 ++
+ .../amd/display/include/ddc_service_types.h   |  8 --
+ .../gpu/drm/amd/include/vega10_ip_offset.h    | 76 +++++++++----------
+ drivers/gpu/drm/drm_dp_mst_topology.c         |  4 +-
+ drivers/gpu/drm/lima/lima_drv.c               |  2 +-
+ drivers/gpu/drm/lima/lima_sched.c             |  3 +-
+ drivers/gpu/drm/mediatek/mtk_disp_rdma.c      |  5 +-
+ drivers/gpu/drm/mediatek/mtk_dpi.c            |  9 ---
+ drivers/gpu/drm/mediatek/mtk_drm_crtc.c       |  4 +-
+ drivers/gpu/drm/mediatek/mtk_drm_drv.c        |  4 +-
+ drivers/gpu/drm/meson/meson_vclk.c            |  8 +-
+ drivers/gpu/drm/meson/meson_venc.c            |  4 +-
+ drivers/gpu/drm/msm/adreno/a6xx_gpu.c         |  2 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c |  3 -
+ drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c   | 12 +--
+ drivers/gpu/drm/msm/disp/mdp5/mdp5_crtc.c     |  6 +-
+ drivers/gpu/drm/msm/disp/mdp5/mdp5_ctl.c      |  6 +-
+ drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c      |  4 +-
+ drivers/gpu/drm/panel/panel-tpo-tpg110.c      |  3 +-
+ drivers/gpu/drm/pl111/pl111_debugfs.c         |  2 +-
+ drivers/gpu/drm/pl111/pl111_display.c         |  2 +-
+ 43 files changed, 147 insertions(+), 142 deletions(-)
+ create mode 100644 drivers/gpu/drm/amd/amdgpu/amdgpu_kms.h
+
+Cc: Alex Deucher <alexander.deucher@amd.com>
+Cc: amd-gfx@lists.freedesktop.org
+Cc: Andres Rodriguez <andresx7@gmail.com>
+Cc: "Christian König" <christian.koenig@amd.com>
+Cc: Chun-Kuang Hu <chunkuang.hu@kernel.org>
+Cc: Daniel Vetter <daniel@ffwll.ch>
+Cc: David Airlie <airlied@linux.ie>
+Cc: dri-devel@lists.freedesktop.org
+Cc: Eric Anholt <eric@anholt.net>
+Cc: Felix Kuehling <Felix.Kuehling@amd.com>
+Cc: freedreno@lists.freedesktop.org
+Cc: Harry Wentland <harry.wentland@amd.com>
+Cc: Hawking Zhang <Hawking.Zhang@amd.com>
+Cc: Jerome Brunet <jbrunet@baylibre.com>
+Cc: Jie Qiu <jie.qiu@mediatek.com>
+Cc: John Clements <john.clements@amd.com>
+Cc: Kalyan Thota <kalyan_t@codeaurora.org>
+Cc: Kevin Hilman <khilman@baylibre.com>
+Cc: Leo Li <sunpeng.li@amd.com>
+Cc: lima@lists.freedesktop.org
+Cc: linaro-mm-sig@lists.linaro.org
+Cc: Linus Walleij <linus.walleij@linaro.org>
+Cc: linux-amlogic@lists.infradead.org
+Cc: linux-arm-kernel@lists.infradead.org
+Cc: linux-arm-msm@vger.kernel.org
+Cc: linux-mediatek@lists.infradead.org
+Cc: linux-media@vger.kernel.org
+Cc: Luben Tuikov <luben.tuikov@amd.com>
+Cc: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>
+Cc: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
+Cc: Matthias Brugger <matthias.bgg@gmail.com>
+Cc: Maxime Ripard <mripard@kernel.org>
+Cc: Monk.liu@amd.com
+Cc: Neil Armstrong <narmstrong@baylibre.com>
+Cc: Philipp Zabel <p.zabel@pengutronix.de>
+Cc: Qiang Yu <yuq825@gmail.com>
+Cc: Rob Clark <robdclark@gmail.com>
+Cc: Sam Ravnborg <sam@ravnborg.org>
+Cc: Sean Paul <sean@poorly.run>
+Cc: Sumit Semwal <sumit.semwal@linaro.org>
+Cc: Thierry Reding <thierry.reding@gmail.com>
+Cc: Thomas Zimmermann <tzimmermann@suse.de>
+Cc: YT SHEN <yt.shen@mediatek.com>
+-- 
+2.25.1
+
