@@ -2,84 +2,89 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 24D312B1DC8
+	by mail.lfdr.de (Postfix) with ESMTP id 94F512B1DC9
 	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Nov 2020 15:53:31 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726324AbgKMOx3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 13 Nov 2020 09:53:29 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34348 "EHLO
+        id S1726278AbgKMOxa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 13 Nov 2020 09:53:30 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34350 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726267AbgKMOx3 (ORCPT
+        with ESMTP id S1726267AbgKMOxa (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 13 Nov 2020 09:53:29 -0500
+        Fri, 13 Nov 2020 09:53:30 -0500
 Received: from mail-wr1-x444.google.com (mail-wr1-x444.google.com [IPv6:2a00:1450:4864:20::444])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6C25DC0613D1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Nov 2020 06:53:29 -0800 (PST)
-Received: by mail-wr1-x444.google.com with SMTP id r17so10242459wrw.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Nov 2020 06:53:29 -0800 (PST)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 51E98C0613D1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Nov 2020 06:53:30 -0800 (PST)
+Received: by mail-wr1-x444.google.com with SMTP id j7so10222513wrp.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Nov 2020 06:53:30 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id;
-        bh=x8VcIegIRkslNA382JSNnZzBgiq98EbovbVfhX5Iy4c=;
-        b=N8JCbkXAWv04+I1DcszvON7lo8BoB6OMnr/JQm5IjATN11vm+FewnpYySJGOf5GDOH
-         OigUacLk6p3wchfcg56mJeG3cTERvXpI4LpjMXiToRl06IQxikEa99DEJ99dOgI8Op9X
-         jpN7t65g0LqbK0Hnxs1Q1V3fJDWEUZ2IcYIXp/s5Fneu6iod1i9Tht+jt6w2gZ/XhZYt
-         nLxwlct8+DaBuFT9xdQP4IYpuA8gBlyYvmytF+bMrGp2y/OealmEp4VoQICqNSQ/iBpn
-         LRq5r9uF+pPOoxYjcQ6HWubk5rlZJe07HbygW5xmlKtZ67YNMVVBC7CVEzcnogiNr9ho
-         Gbsw==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=4dySM6ga3g1JccS9VpKiXH/tknJsBk9CHeAdOMBOgi8=;
+        b=jh/Ynuxf9wdpVdshLKXwPYCIUOGXV3uMFK7Nc6VfhzOXY5i50ewzOnZen263xU7GVG
+         WCE2EwG3wxHSGBTexnI8mWevS64LxoLxX3rbKUPeGyopEsN4KwGhei8fYRiQeXPoXZeO
+         pYOq3R+MonZY2ghVpMIoemQtt1e2rUCwK77RmzFkv2h4015gmb5hvf75KHA+0noSKOgM
+         rEKink6KwsTi/L95/YfDBjbtcgXVwqNseA56w5HLm5o2/IZWugfNnHacoy7Hf1aZn6+C
+         JzkjljvdA8+2yTKio+fDgqu7Fzc3ga/3dU9yD3uhE8flbV1h/bO8WVkXsWJ+imfOeLWp
+         2jeA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=x8VcIegIRkslNA382JSNnZzBgiq98EbovbVfhX5Iy4c=;
-        b=AOscW3uhWrzSF8+sXxmxMWkD1BQ96NLc6+FRoUjsc+MMipy0gTTkKCAeat5UULmnPP
-         P2dBs9tZ247XI5RVgcTOJymFe/hLdWBlEctE5tIbvlNNwNliFnFJcZFUD5HrXMuA2dub
-         XkA5Bxc90kQIVo0PkMALjH0SA8tW3gIG8kDDBbfIEzNSQOBn2GPEjNFr72dY0NHz2Bb7
-         6nRWMufcB8ySqQcZMWcc+5ltMAXXrpSzHqI5lWu9FzHHF8vZGuFG4aT7D9fbGB4rAy/2
-         4VZDNmuBb+7YcHsWY1JocWuZBZFdWkiRMbX93EljG7g2vDw7RtSS1WsWJRjk2pGhRUVU
-         m19w==
-X-Gm-Message-State: AOAM531UvA2siLpsKiva1p+r1VcxqYPGZ8An20qQuJB5sORbdBcFMyOK
-        7o2Ud0bZ3jrLgHeeGVADX4CI8aXcoQSXByDf
-X-Google-Smtp-Source: ABdhPJxqBJ3QqObCQTrK8bfn80GUAvRMhverabB0tnwrb69oKaGz0aRv0g5t9LqIhANMfe9q18bRog==
-X-Received: by 2002:a5d:4d86:: with SMTP id b6mr3981189wru.80.1605279208163;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=4dySM6ga3g1JccS9VpKiXH/tknJsBk9CHeAdOMBOgi8=;
+        b=JOgycsXv/EXDZyvf84FkO2/wjZ9gmLtOdhqpIy5DYMLfMhzWv8d/oCHZOwNPorzLH+
+         TPoq+g+MBhnJPn359V8ryLMk3IVbPn1otj1ZpyJ/h4yV8EZhKL3rwgmzkQl7ZstVJ/d5
+         FtWmuGAZ1PE+DFM/RUmeFTD0mc5ZiU52zfmJ6d8UIlTQ2wBrFfO5PQ21mUTO1IyH6Akn
+         jEXJqJIVIzJO4UQJWoRC+CHOG9LUfFD3UJ710p1LCtF5E9+7CdPgEEnJa9ulBKKfyKPq
+         kL5HJzlZSPYJfBtdvD8+A3imwjrz4S+qdZ+BdSi00ZnTe9LctCYmXMIJJWLoSvaxJotA
+         TcYg==
+X-Gm-Message-State: AOAM532J7+2XwTRasmMEkgpZ4ozX+ieOxDQhKNjDFVzQjh3a+BPJPcW9
+        LXAWKZF5HSxFo1JFMVRFV9rjNg==
+X-Google-Smtp-Source: ABdhPJxH9epSt2N08z75Rp7Px+KEdNOhzauPDO02jIO2bKbF6hZ5/7JqDMTDDvHHJDLf1cT+ISqLVQ==
+X-Received: by 2002:a5d:6cc5:: with SMTP id c5mr4137074wrc.301.1605279208934;
         Fri, 13 Nov 2020 06:53:28 -0800 (PST)
 Received: from localhost.localdomain ([2a01:e0a:490:8730:304f:e9d4:6385:8ac5])
-        by smtp.gmail.com with ESMTPSA id i6sm10729341wma.42.2020.11.13.06.53.27
+        by smtp.gmail.com with ESMTPSA id i6sm10729341wma.42.2020.11.13.06.53.28
         (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 13 Nov 2020 06:53:27 -0800 (PST)
+        Fri, 13 Nov 2020 06:53:28 -0800 (PST)
 From:   Loic Poulain <loic.poulain@linaro.org>
 To:     manivannan.sadhasivam@linaro.org, hemantk@codeaurora.org
 Cc:     linux-arm-msm@vger.kernel.org,
         Loic Poulain <loic.poulain@linaro.org>
-Subject: [PATCH 0/8] mhi: pci_generic: Misc improvements
-Date:   Fri, 13 Nov 2020 15:59:54 +0100
-Message-Id: <1605279602-18749-1-git-send-email-loic.poulain@linaro.org>
+Subject: [PATCH 1/8] mhi: pci-generic: Increase number of hardware events
+Date:   Fri, 13 Nov 2020 15:59:55 +0100
+Message-Id: <1605279602-18749-2-git-send-email-loic.poulain@linaro.org>
 X-Mailer: git-send-email 2.7.4
+In-Reply-To: <1605279602-18749-1-git-send-email-loic.poulain@linaro.org>
+References: <1605279602-18749-1-git-send-email-loic.poulain@linaro.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This series adjust some configuration values to ensure stability and
-robustness of mhi pci devices (timeout, number of events, burst mode).
+If the IPA (IP hardware accelerator) is starved of event ring elements,
+the modem is crashing (SDX55). That can be prevented by setting a
+larger number of events (i.e 2 x number of channel ring elements).
 
-It also includes support for system sleep as well as a recovery procedure
-that can be triggered when a PCI error is reported, either by PCI AER or by
-the new health-check mechanism.
+Tested with FN980m module.
 
-All these changes have been tested with Telit FN980m module.
+Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
+---
+ drivers/bus/mhi/pci_generic.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Loic Poulain (8):
-  mhi: pci-generic: Increase number of hardware events
-  mhi: pci-generic: Perform hard reset on remove
-  mhi: pci_generic: Enable burst mode for hardware channels
-  mhi: pci_generic: Add support for reset
-  mhi: pci_generic: Add suspend/resume/recovery procedure
-  mhi: pci_generic: Add PCI error handlers
-  mhi: pci_generic: Add health-check
-  mhi: pci_generic: Increase controller timeout value
-
- drivers/bus/mhi/pci_generic.c | 352 ++++++++++++++++++++++++++++++++++++++++--
- 1 file changed, 335 insertions(+), 17 deletions(-)
-
+diff --git a/drivers/bus/mhi/pci_generic.c b/drivers/bus/mhi/pci_generic.c
+index e3df838..13a7e4f 100644
+--- a/drivers/bus/mhi/pci_generic.c
++++ b/drivers/bus/mhi/pci_generic.c
+@@ -91,7 +91,7 @@ struct mhi_pci_dev_info {
+ 
+ #define MHI_EVENT_CONFIG_HW_DATA(ev_ring, ch_num) \
+ 	{					\
+-		.num_elements = 128,		\
++		.num_elements = 256,		\
+ 		.irq_moderation_ms = 5,		\
+ 		.irq = (ev_ring) + 1,		\
+ 		.priority = 1,			\
 -- 
 2.7.4
 
