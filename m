@@ -2,112 +2,120 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 91EFF2B2332
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Nov 2020 19:00:14 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id AFA3D2B23E4
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Nov 2020 19:38:48 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726395AbgKMSAD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 13 Nov 2020 13:00:03 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35962 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726433AbgKMSAB (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 13 Nov 2020 13:00:01 -0500
-Received: from mail-lj1-x243.google.com (mail-lj1-x243.google.com [IPv6:2a00:1450:4864:20::243])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 17862C0613D1;
-        Fri, 13 Nov 2020 10:00:01 -0800 (PST)
-Received: by mail-lj1-x243.google.com with SMTP id v20so11755887ljk.8;
-        Fri, 13 Nov 2020 10:00:01 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=Uw0QicBXorgBvHkVMMUveBzTYOdcTlrlkWfYL8DrooQ=;
-        b=f4axpBtm11tg1JMtX2IrPRlI2vGjB68er+3shdxmBj/Uo+Zm9NBrfoZiIS5ZhqrWYr
-         9HHdWTYIFjqelqr4hCGFHaM4AcVcVxJKEYqlvN5pO/cGG+fhNfeec3X4N/J/bK3RYiv6
-         i3ZSFAz+uauB9zflPpw514ufhzv00ot4TJunOQUqLJ5DAvEAlujj2F+RiKpHYvdlbWr/
-         WAdnk1i6x2OeVc0/zPzJ9clpxJTjw3d4HTqqBNh43Y2nxSQhzCdD/3z0m7zvsRdiySzz
-         0A6XxQVyDXfblhRVHeENJpKTYpY4iidVuBAMbkwStE7h9tXJwqDdTqOHOiMNblgtJaIN
-         WDtg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=Uw0QicBXorgBvHkVMMUveBzTYOdcTlrlkWfYL8DrooQ=;
-        b=KEVBGiNbsq8Npp7txm/NP9kkxRDS0Ja/DxwRhKLmx49NP71kweVDYeA510Ks9SnKaE
-         Ju8eKPpj2UdnmKCx85cQ566q6tT1gaetp0ewLlZggnbs5fDccvWj5LIwFsulK9fU6geg
-         zYzd1cHtXEt7HiDdZ9q8dy52IXiFowsjMw0mdHRD+0peIlbjYQ6LahBuGCN98ctKMw4s
-         wr/+Z+M6sXIVV31nz9CE6Qx1zNHKuYHT716VqbMFz6nJDvjUUmebKFvhWSz2I7KCcRe0
-         rzMlKJoOADLXneQbKu4CHTxO91zeEfb5cDUbcgRtcByIadmztPlcMdtWc+qa8UbOXpYf
-         3y3Q==
-X-Gm-Message-State: AOAM531Fu7T9BoGafSXV+47cbYDoI+KvqTd6uSzaqu+5VnuB0HJ/lgpX
-        h7e4BQQyRdEcO4TbBE/DvS4=
-X-Google-Smtp-Source: ABdhPJy9aXj6cy4HoVjjs5LcGHaBYPc5vZQvtxUU44wkCLSHKx+ej3+ZRzCt3bnWI+3GEtUPIwPcJw==
-X-Received: by 2002:a2e:5853:: with SMTP id x19mr1549091ljd.232.1605290396985;
-        Fri, 13 Nov 2020 09:59:56 -0800 (PST)
-Received: from localhost.localdomain ([2a01:540:2326:b00:1d75:252:b367:4629])
-        by smtp.gmail.com with ESMTPSA id c1sm1629363lfj.222.2020.11.13.09.59.55
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 13 Nov 2020 09:59:56 -0800 (PST)
-From:   nikitos.tr@gmail.com
-To:     agross@kernel.org, bjorn.andersson@linaro.org
-Cc:     robh+dt@kernel.org, stephan@gerhold.net, Michael.Srba@seznam.cz,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, phone-devel@vger.kernel.org,
-        ~postmarketos/upstreaming@lists.sr.ht,
-        Nikita Travkin <nikitos.tr@gmail.com>
-Subject: [PATCH 6/6] arm64: dts: qcom: msm8916-samsung-a2015: Disable muic i2c pin bias
-Date:   Fri, 13 Nov 2020 22:59:17 +0500
-Message-Id: <20201113175917.189123-6-nikitos.tr@gmail.com>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20201113175917.189123-1-nikitos.tr@gmail.com>
-References: <20201113175917.189123-1-nikitos.tr@gmail.com>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+        id S1726203AbgKMSir (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 13 Nov 2020 13:38:47 -0500
+Received: from z5.mailgun.us ([104.130.96.5]:11622 "EHLO z5.mailgun.us"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726094AbgKMSir (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 13 Nov 2020 13:38:47 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1605292727; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=bNE4U6NO9Qnui5qzRXhH3mUphBMnNuk7wBLDCqEHGzQ=; b=CYh/RG/23AHeXnRANMLpuMH+BkvbhT845RKjRxmleYBnYXx0L5J0zRcw1SoYuvHup/D86kog
+ jv9ewQZ/cUUn0F404mMAJZ6A2QSjCCFBD/kLsjYnvaBPh1QDGE2B/ui4FzxcGML3tcseIEG4
+ ieomPbHOaVIbhqHtrbWTPgwBTXI=
+X-Mailgun-Sending-Ip: 104.130.96.5
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n10.prod.us-west-2.postgun.com with SMTP id
+ 5faed2b08bd2e3c2222313f6 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 13 Nov 2020 18:38:40
+ GMT
+Sender: srivasam=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 69565C433F0; Fri, 13 Nov 2020 18:38:40 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
+        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+Received: from hyd-lnxbld210.qualcomm.com (unknown [202.46.22.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: srivasam)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 21977C433C6;
+        Fri, 13 Nov 2020 18:38:33 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 21977C433C6
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=srivasam@codeaurora.org
+From:   Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
+To:     agross@kernel.org, bjorn.andersson@linaro.org, lgirdwood@gmail.com,
+        broonie@kernel.org, robh+dt@kernel.org, plai@codeaurora.org,
+        bgoswami@codeaurora.org, perex@perex.cz, tiwai@suse.com,
+        srinivas.kandagatla@linaro.org, rohitkr@codeaurora.org,
+        linux-arm-msm@vger.kernel.org, alsa-devel@alsa-project.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Cc:     V Sujith Kumar Reddy <vsujithk@codeaurora.org>,
+        Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
+Subject: [PATCH] Asoc: qcom: sc7180: Register shutdown handler for lpass platform
+Date:   Sat, 14 Nov 2020 00:08:22 +0530
+Message-Id: <1605292702-25046-1-git-send-email-srivasam@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Nikita Travkin <nikitos.tr@gmail.com>
+From: V Sujith Kumar Reddy <vsujithk@codeaurora.org>
 
-Some versions of the firmware leave i2c gpios in a wrong state.
-Add pinctrl that disables pin bias since external pull-up resistors
-are present.
+Register shutdown handler to stop sc7180 lpass platform driver
+and to disable audio clocks.
 
-Fixes: 1329c1ab0730 ("arm64: dts: qcom: Add device tree for Samsung Galaxy A3U/A5U")
-Signed-off-by: Nikita Travkin <nikitos.tr@gmail.com>
+Signed-off-by: V Sujith Kumar Reddy <vsujithk@codeaurora.org>
+Signed-off-by: Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
 ---
- .../boot/dts/qcom/msm8916-samsung-a2015-common.dtsi   | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+ sound/soc/qcom/lpass-cpu.c    | 10 ++++++++++
+ sound/soc/qcom/lpass-sc7180.c |  1 +
+ sound/soc/qcom/lpass.h        |  1 +
+ 3 files changed, 12 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/qcom/msm8916-samsung-a2015-common.dtsi b/arch/arm64/boot/dts/qcom/msm8916-samsung-a2015-common.dtsi
-index 0b0dfd3059de..f91269492d72 100644
---- a/arch/arm64/boot/dts/qcom/msm8916-samsung-a2015-common.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8916-samsung-a2015-common.dtsi
-@@ -78,6 +78,9 @@ i2c-muic {
- 		sda-gpios = <&msmgpio 105 (GPIO_ACTIVE_HIGH|GPIO_OPEN_DRAIN)>;
- 		scl-gpios = <&msmgpio 106 (GPIO_ACTIVE_HIGH|GPIO_OPEN_DRAIN)>;
+diff --git a/sound/soc/qcom/lpass-cpu.c b/sound/soc/qcom/lpass-cpu.c
+index 1fd862e..d33eae6 100644
+--- a/sound/soc/qcom/lpass-cpu.c
++++ b/sound/soc/qcom/lpass-cpu.c
+@@ -914,5 +914,15 @@ int asoc_qcom_lpass_cpu_platform_remove(struct platform_device *pdev)
+ }
+ EXPORT_SYMBOL_GPL(asoc_qcom_lpass_cpu_platform_remove);
  
-+		pinctrl-names = "default";
-+		pinctrl-0 = <&muic_i2c_default>;
++void asoc_qcom_lpass_cpu_platform_shutdown(struct platform_device *pdev)
++{
++	struct lpass_data *drvdata = platform_get_drvdata(pdev);
 +
- 		#address-cells = <1>;
- 		#size-cells = <0>;
++	if (drvdata->variant->exit)
++		drvdata->variant->exit(pdev);
++
++}
++EXPORT_SYMBOL_GPL(asoc_qcom_lpass_cpu_platform_shutdown);
++
+ MODULE_DESCRIPTION("QTi LPASS CPU Driver");
+ MODULE_LICENSE("GPL v2");
+diff --git a/sound/soc/qcom/lpass-sc7180.c b/sound/soc/qcom/lpass-sc7180.c
+index f619590..61b51b5 100644
+--- a/sound/soc/qcom/lpass-sc7180.c
++++ b/sound/soc/qcom/lpass-sc7180.c
+@@ -297,6 +297,7 @@ static struct platform_driver sc7180_lpass_cpu_platform_driver = {
+ 	},
+ 	.probe = asoc_qcom_lpass_cpu_platform_probe,
+ 	.remove = asoc_qcom_lpass_cpu_platform_remove,
++	.shutdown = asoc_qcom_lpass_cpu_platform_shutdown,
+ };
  
-@@ -304,6 +307,14 @@ mdss_sleep: mdss-sleep {
- 		};
- 	};
- 
-+	muic_i2c_default: muic-i2c-default {
-+		pins = "gpio105", "gpio106";
-+		function = "gpio";
-+
-+		drive-strength = <2>;
-+		bias-disable;
-+	};
-+
- 	muic_int_default: muic-int-default {
- 		pins = "gpio12";
- 		function = "gpio";
+ module_platform_driver(sc7180_lpass_cpu_platform_driver);
+diff --git a/sound/soc/qcom/lpass.h b/sound/soc/qcom/lpass.h
+index b4830f3..32a68c4 100644
+--- a/sound/soc/qcom/lpass.h
++++ b/sound/soc/qcom/lpass.h
+@@ -255,6 +255,7 @@ struct lpass_variant {
+ /* register the platform driver from the CPU DAI driver */
+ int asoc_qcom_lpass_platform_register(struct platform_device *);
+ int asoc_qcom_lpass_cpu_platform_remove(struct platform_device *pdev);
++void asoc_qcom_lpass_cpu_platform_shutdown(struct platform_device *pdev);
+ int asoc_qcom_lpass_cpu_platform_probe(struct platform_device *pdev);
+ int asoc_qcom_lpass_cpu_dai_probe(struct snd_soc_dai *dai);
+ extern const struct snd_soc_dai_ops asoc_qcom_lpass_cpu_dai_ops;
 -- 
-2.25.1
+Qualcomm India Private Limited, on behalf of Qualcomm Innovation Center, Inc.,
+is a member of Code Aurora Forum, a Linux Foundation Collaborative Project.
 
