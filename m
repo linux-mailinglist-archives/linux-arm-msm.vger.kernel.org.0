@@ -2,52 +2,52 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 98D692B2334
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Nov 2020 19:00:15 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 91EFF2B2332
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Nov 2020 19:00:14 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726501AbgKMSAM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 13 Nov 2020 13:00:12 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35954 "EHLO
+        id S1726395AbgKMSAD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 13 Nov 2020 13:00:03 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35962 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726353AbgKMR77 (ORCPT
+        with ESMTP id S1726433AbgKMSAB (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 13 Nov 2020 12:59:59 -0500
+        Fri, 13 Nov 2020 13:00:01 -0500
 Received: from mail-lj1-x243.google.com (mail-lj1-x243.google.com [IPv6:2a00:1450:4864:20::243])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 173F9C0613D1;
-        Fri, 13 Nov 2020 09:59:59 -0800 (PST)
-Received: by mail-lj1-x243.google.com with SMTP id y16so11795292ljh.0;
-        Fri, 13 Nov 2020 09:59:59 -0800 (PST)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 17862C0613D1;
+        Fri, 13 Nov 2020 10:00:01 -0800 (PST)
+Received: by mail-lj1-x243.google.com with SMTP id v20so11755887ljk.8;
+        Fri, 13 Nov 2020 10:00:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=42UXRzy/C9RZjC8Og2rUii8dUnL5+xSL6pZzUkEEoOw=;
-        b=YtbLs//L1aHBB2SM5iGUbssetwbD50aGxXS97WZDzQJFZsdwn/RgTgjx0uE1aaCf+M
-         6qt074vIiCVjKkM0snn15LOpWFr/YheHs+sRuSzeITdTX4gtv9zsH3wGDmyBztIiXaQD
-         beqz04HWka+jwZDhDwpEGQdbbc/K2SKeiI4NtThov11bhG1CLtHIAmWFX6waMCjeUpcX
-         Fu00SznPY/mKdaRKuwk6TjuvttOzzfwAIDNouTOD6Gy1KxrBIsrE3T9dK9W1LJrpZXTJ
-         BbatEc8mq4yCwXRAn8Jaho8h584YsuMv6ToKihxB+UUy3LqJimp4HqpQXj0FEmGcB77o
-         mSdw==
+        bh=Uw0QicBXorgBvHkVMMUveBzTYOdcTlrlkWfYL8DrooQ=;
+        b=f4axpBtm11tg1JMtX2IrPRlI2vGjB68er+3shdxmBj/Uo+Zm9NBrfoZiIS5ZhqrWYr
+         9HHdWTYIFjqelqr4hCGFHaM4AcVcVxJKEYqlvN5pO/cGG+fhNfeec3X4N/J/bK3RYiv6
+         i3ZSFAz+uauB9zflPpw514ufhzv00ot4TJunOQUqLJ5DAvEAlujj2F+RiKpHYvdlbWr/
+         WAdnk1i6x2OeVc0/zPzJ9clpxJTjw3d4HTqqBNh43Y2nxSQhzCdD/3z0m7zvsRdiySzz
+         0A6XxQVyDXfblhRVHeENJpKTYpY4iidVuBAMbkwStE7h9tXJwqDdTqOHOiMNblgtJaIN
+         WDtg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=42UXRzy/C9RZjC8Og2rUii8dUnL5+xSL6pZzUkEEoOw=;
-        b=NG28yTXE8GCM8hkFl+DPba4+JMD6+6Jw7wnua038PYALhRbBu4HwDT6/F73E5ZrlhE
-         snLnQsMs8GFv5f14R7PqeJwh6ujgTPMswqw9SKU/zjK5R5HaVC5995oLdyPWKr7hiGfj
-         CHsDKNSLlVHeE8tQkHjMmJRKNCcheRscAxPRW6sj0IJnL1uUv7oEU21zawR2hsxyYQud
-         +6hhC7C6jwFg/zikRfdDhD5CbNFkNh3yiIQ6jyyN+34LBRbYMkkAwltaFzU64PlRlUVA
-         HMsNG4kTPtL8vgjNSC6cmx846CXht7GxmNITdjn6I+xFtnH/fcKK741TgwU5KMqgsMmV
-         VbAQ==
-X-Gm-Message-State: AOAM5329Jxjklp0y5F+pAz9vNYROoyAdX+ApC8AeHzncJCYB6BQA4lEj
-        s2mrpCDK4IsBCTyqd9vWzZg=
-X-Google-Smtp-Source: ABdhPJyHIh+a4W4W0w0vDte+u1hQVyPsUmvbKVT1v2VwHr2Q2LtivIIkbLf2CyvtOiYfP7WztQ4rsw==
-X-Received: by 2002:a2e:b0f6:: with SMTP id h22mr278466ljl.212.1605290395652;
-        Fri, 13 Nov 2020 09:59:55 -0800 (PST)
+        bh=Uw0QicBXorgBvHkVMMUveBzTYOdcTlrlkWfYL8DrooQ=;
+        b=KEVBGiNbsq8Npp7txm/NP9kkxRDS0Ja/DxwRhKLmx49NP71kweVDYeA510Ks9SnKaE
+         Ju8eKPpj2UdnmKCx85cQ566q6tT1gaetp0ewLlZggnbs5fDccvWj5LIwFsulK9fU6geg
+         zYzd1cHtXEt7HiDdZ9q8dy52IXiFowsjMw0mdHRD+0peIlbjYQ6LahBuGCN98ctKMw4s
+         wr/+Z+M6sXIVV31nz9CE6Qx1zNHKuYHT716VqbMFz6nJDvjUUmebKFvhWSz2I7KCcRe0
+         rzMlKJoOADLXneQbKu4CHTxO91zeEfb5cDUbcgRtcByIadmztPlcMdtWc+qa8UbOXpYf
+         3y3Q==
+X-Gm-Message-State: AOAM531Fu7T9BoGafSXV+47cbYDoI+KvqTd6uSzaqu+5VnuB0HJ/lgpX
+        h7e4BQQyRdEcO4TbBE/DvS4=
+X-Google-Smtp-Source: ABdhPJy9aXj6cy4HoVjjs5LcGHaBYPc5vZQvtxUU44wkCLSHKx+ej3+ZRzCt3bnWI+3GEtUPIwPcJw==
+X-Received: by 2002:a2e:5853:: with SMTP id x19mr1549091ljd.232.1605290396985;
+        Fri, 13 Nov 2020 09:59:56 -0800 (PST)
 Received: from localhost.localdomain ([2a01:540:2326:b00:1d75:252:b367:4629])
-        by smtp.gmail.com with ESMTPSA id c1sm1629363lfj.222.2020.11.13.09.59.54
+        by smtp.gmail.com with ESMTPSA id c1sm1629363lfj.222.2020.11.13.09.59.55
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 13 Nov 2020 09:59:55 -0800 (PST)
+        Fri, 13 Nov 2020 09:59:56 -0800 (PST)
 From:   nikitos.tr@gmail.com
 To:     agross@kernel.org, bjorn.andersson@linaro.org
 Cc:     robh+dt@kernel.org, stephan@gerhold.net, Michael.Srba@seznam.cz,
@@ -55,9 +55,9 @@ Cc:     robh+dt@kernel.org, stephan@gerhold.net, Michael.Srba@seznam.cz,
         linux-kernel@vger.kernel.org, phone-devel@vger.kernel.org,
         ~postmarketos/upstreaming@lists.sr.ht,
         Nikita Travkin <nikitos.tr@gmail.com>
-Subject: [PATCH 5/6] arm64: dts: qcom: msm8916-longcheer-l8150: Add notification LED
-Date:   Fri, 13 Nov 2020 22:59:16 +0500
-Message-Id: <20201113175917.189123-5-nikitos.tr@gmail.com>
+Subject: [PATCH 6/6] arm64: dts: qcom: msm8916-samsung-a2015: Disable muic i2c pin bias
+Date:   Fri, 13 Nov 2020 22:59:17 +0500
+Message-Id: <20201113175917.189123-6-nikitos.tr@gmail.com>
 X-Mailer: git-send-email 2.25.1
 In-Reply-To: <20201113175917.189123-1-nikitos.tr@gmail.com>
 References: <20201113175917.189123-1-nikitos.tr@gmail.com>
@@ -69,59 +69,45 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 From: Nikita Travkin <nikitos.tr@gmail.com>
 
-L8150 uses aw2013 LED contriller for notification LED on the front
-of the device. Add it to the device tree
+Some versions of the firmware leave i2c gpios in a wrong state.
+Add pinctrl that disables pin bias since external pull-up resistors
+are present.
 
+Fixes: 1329c1ab0730 ("arm64: dts: qcom: Add device tree for Samsung Galaxy A3U/A5U")
 Signed-off-by: Nikita Travkin <nikitos.tr@gmail.com>
 ---
- .../boot/dts/qcom/msm8916-longcheer-l8150.dts | 34 +++++++++++++++++++
- 1 file changed, 34 insertions(+)
+ .../boot/dts/qcom/msm8916-samsung-a2015-common.dtsi   | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/qcom/msm8916-longcheer-l8150.dts b/arch/arm64/boot/dts/qcom/msm8916-longcheer-l8150.dts
-index 2b8670dd4b71..1e893c0b6fbc 100644
---- a/arch/arm64/boot/dts/qcom/msm8916-longcheer-l8150.dts
-+++ b/arch/arm64/boot/dts/qcom/msm8916-longcheer-l8150.dts
-@@ -83,6 +83,40 @@ flash_led: led {
+diff --git a/arch/arm64/boot/dts/qcom/msm8916-samsung-a2015-common.dtsi b/arch/arm64/boot/dts/qcom/msm8916-samsung-a2015-common.dtsi
+index 0b0dfd3059de..f91269492d72 100644
+--- a/arch/arm64/boot/dts/qcom/msm8916-samsung-a2015-common.dtsi
++++ b/arch/arm64/boot/dts/qcom/msm8916-samsung-a2015-common.dtsi
+@@ -78,6 +78,9 @@ i2c-muic {
+ 		sda-gpios = <&msmgpio 105 (GPIO_ACTIVE_HIGH|GPIO_OPEN_DRAIN)>;
+ 		scl-gpios = <&msmgpio 106 (GPIO_ACTIVE_HIGH|GPIO_OPEN_DRAIN)>;
+ 
++		pinctrl-names = "default";
++		pinctrl-0 = <&muic_i2c_default>;
++
+ 		#address-cells = <1>;
+ 		#size-cells = <0>;
+ 
+@@ -304,6 +307,14 @@ mdss_sleep: mdss-sleep {
+ 		};
  	};
- };
  
-+&blsp_i2c1 {
-+	status = "okay";
++	muic_i2c_default: muic-i2c-default {
++		pins = "gpio105", "gpio106";
++		function = "gpio";
 +
-+	led-controller@45 {
-+		compatible = "awinic,aw2013";
-+		reg = <0x45>;
-+		#address-cells = <1>;
-+		#size-cells = <0>;
-+
-+		vcc-supply = <&pm8916_l17>;
-+
-+		led@0 {
-+			reg = <0>;
-+			led-max-microamp = <5000>;
-+			function = LED_FUNCTION_INDICATOR;
-+			color = <LED_COLOR_ID_RED>;
-+		};
-+
-+		led@1 {
-+			reg = <1>;
-+			led-max-microamp = <5000>;
-+			function = LED_FUNCTION_INDICATOR;
-+			color = <LED_COLOR_ID_GREEN>;
-+		};
-+
-+		led@2 {
-+			reg = <2>;
-+			led-max-microamp = <5000>;
-+			function = LED_FUNCTION_INDICATOR;
-+			color = <LED_COLOR_ID_BLUE>;
-+		};
++		drive-strength = <2>;
++		bias-disable;
 +	};
-+};
 +
- &blsp_i2c2 {
- 	status = "okay";
- 
+ 	muic_int_default: muic-int-default {
+ 		pins = "gpio12";
+ 		function = "gpio";
 -- 
 2.25.1
 
