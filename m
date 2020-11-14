@@ -2,73 +2,64 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 670C62B2A0D
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 14 Nov 2020 01:40:39 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 169AA2B2A23
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 14 Nov 2020 01:50:32 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726239AbgKNAkg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 13 Nov 2020 19:40:36 -0500
-Received: from mail.kernel.org ([198.145.29.99]:40628 "EHLO mail.kernel.org"
+        id S1726189AbgKNAti (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 13 Nov 2020 19:49:38 -0500
+Received: from mail.kernel.org ([198.145.29.99]:44148 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726042AbgKNAkg (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 13 Nov 2020 19:40:36 -0500
-Received: from sol.localdomain (172-10-235-113.lightspeed.sntcca.sbcglobal.net [172.10.235.113])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        id S1725866AbgKNAth (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 13 Nov 2020 19:49:37 -0500
+Received: from sol.attlocal.net (172-10-235-113.lightspeed.sntcca.sbcglobal.net [172.10.235.113])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id C741522265;
-        Sat, 14 Nov 2020 00:40:35 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id 8D3042225E;
+        Sat, 14 Nov 2020 00:49:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1605314436;
-        bh=D1zRQPyp66MkJgSaN2fKWLPCwy5olTbfmofE42dOHWw=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=Lg2LBV8uPC3Eg/NZ9ktGi0UCh1CwzK/kG52D/bhLaAdlReyljRksV3HPyJ9RjFkd5
-         T+76HpF6zsdko6z672HK3jiA9mrUdmZBg6z3+CwgUT52yUvbHCWM8K6FCpIt92t6p2
-         uCDeKS6QKsCrkEjDyj8kZlF7dbDz4PtKE7gYDJNU=
-Date:   Fri, 13 Nov 2020 16:40:34 -0800
+        s=default; t=1605314977;
+        bh=qBaAL4MQUHwMWUUhiKf9tMwN4kN0fQHr7+CN7eAoXTI=;
+        h=From:To:Cc:Subject:Date:From;
+        b=R1xjm4MuS5ug9mWAuq31K5jPWEMl9OXX2DXqSl6aMu3xUtft9xO9PEnU9edRvKzJO
+         +/p3G4/OwzKeMH4EFyQlJWZjd2wPyt8Q7uquE4ai9nNS+46w3qwFcVKhtVtm3CS5Jf
+         /FpK6qu9GzMFH+qgQ+lUttyns9RoXe4q6ix84G2Q=
 From:   Eric Biggers <ebiggers@kernel.org>
-To:     linux-mmc@vger.kernel.org
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-fscrypt@vger.kernel.org, Satya Tangirala <satyat@google.com>,
-        Ulf Hansson <ulf.hansson@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Adrian Hunter <adrian.hunter@intel.com>,
-        Ritesh Harjani <riteshh@codeaurora.org>,
-        Asutosh Das <asutoshd@codeaurora.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Neeraj Soni <neersoni@codeaurora.org>,
-        Barani Muthukumaran <bmuthuku@codeaurora.org>,
-        Peng Zhou <peng.zhou@mediatek.com>,
-        Stanley Chu <stanley.chu@mediatek.com>,
-        Konrad Dybcio <konradybcio@gmail.com>
-Subject: Re: [PATCH 8/8] mmc: sdhci-msm: add Inline Crypto Engine support
-Message-ID: <X68ngpy5BzzqbWOM@sol.localdomain>
-References: <20201112194011.103774-1-ebiggers@kernel.org>
- <20201112194011.103774-9-ebiggers@kernel.org>
+To:     linux-scsi@vger.kernel.org
+Cc:     linux-arm-msm@vger.kernel.org, Satya Tangirala <satyat@google.com>
+Subject: [PATCH] scsi: ufs-qcom: only select QCOM_SCM if SCSI_UFS_CRYPTO
+Date:   Fri, 13 Nov 2020 16:47:54 -0800
+Message-Id: <20201114004754.235378-1-ebiggers@kernel.org>
+X-Mailer: git-send-email 2.29.2
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20201112194011.103774-9-ebiggers@kernel.org>
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Nov 12, 2020 at 11:40:11AM -0800, Eric Biggers wrote:
-> diff --git a/drivers/mmc/host/Kconfig b/drivers/mmc/host/Kconfig
-> index 31481c9fcc2ec..2ede2c86f173b 100644
-> --- a/drivers/mmc/host/Kconfig
-> +++ b/drivers/mmc/host/Kconfig
-> @@ -544,6 +544,7 @@ config MMC_SDHCI_MSM
->  	depends on MMC_SDHCI_PLTFM
->  	select MMC_SDHCI_IO_ACCESSORS
->  	select MMC_CQHCI
-> +	select QCOM_SCM if MMC_CRYPTO
->  	help
->  	  This selects the Secure Digital Host Controller Interface (SDHCI)
->  	  support present in Qualcomm SOCs. The controller supports
+From: Eric Biggers <ebiggers@google.com>
 
-The kernel test robot reported linkage errors caused by QCOM_SCM being selected
-without its dependency (ARM || ARM64).  I'll probably fix this by doing:
+QCOM_SCM is only needed to make the qcom_scm_*() calls in
+ufs-qcom-ice.c, which is only compiled when SCSI_UFS_CRYPTO=y.  So don't
+unnecessarily enable QCOM_SCM when SCSI_UFS_CRYPTO=n.
 
-	select QCOM_SCM if MMC_CRYPTO && ARCH_QCOM
+Signed-off-by: Eric Biggers <ebiggers@google.com>
+---
+ drivers/scsi/ufs/Kconfig | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-- Eric
+diff --git a/drivers/scsi/ufs/Kconfig b/drivers/scsi/ufs/Kconfig
+index dcdb4eb1f90ba..3f6dfed4fe84b 100644
+--- a/drivers/scsi/ufs/Kconfig
++++ b/drivers/scsi/ufs/Kconfig
+@@ -99,7 +99,7 @@ config SCSI_UFS_DWC_TC_PLATFORM
+ config SCSI_UFS_QCOM
+ 	tristate "QCOM specific hooks to UFS controller platform driver"
+ 	depends on SCSI_UFSHCD_PLATFORM && ARCH_QCOM
+-	select QCOM_SCM
++	select QCOM_SCM if SCSI_UFS_CRYPTO
+ 	select RESET_CONTROLLER
+ 	help
+ 	  This selects the QCOM specific additions to UFSHCD platform driver.
+-- 
+2.29.2
+
