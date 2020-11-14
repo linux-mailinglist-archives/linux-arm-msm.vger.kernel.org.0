@@ -2,119 +2,115 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 4C0302B2FB6
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 14 Nov 2020 19:30:41 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C67152B2FCC
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 14 Nov 2020 19:45:34 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726200AbgKNSaT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 14 Nov 2020 13:30:19 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36350 "EHLO
+        id S1726102AbgKNSpN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 14 Nov 2020 13:45:13 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38616 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726198AbgKNSaS (ORCPT
+        with ESMTP id S1726070AbgKNSpN (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 14 Nov 2020 13:30:18 -0500
-Received: from merlin.infradead.org (merlin.infradead.org [IPv6:2001:8b0:10b:1231::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9E8D5C0613D1;
-        Sat, 14 Nov 2020 10:30:18 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-        d=infradead.org; s=merlin.20170209; h=Content-Transfer-Encoding:Content-Type:
-        In-Reply-To:MIME-Version:Date:Message-ID:From:References:Cc:To:Subject:Sender
-        :Reply-To:Content-ID:Content-Description;
-        bh=s2/BETzhhA+FGEyKIwtMzuW1T+rRFdj0w4J0RN+5mn8=; b=xK2Ld/dx9Xttpf01RguKcwqsHn
-        9lgLlOlp8c/pz4HEKNaeCEPCRY7ArQrCnFnJiB4omAvXra/Dui5EidEIa088F2mcg4oViFdT4LIJa
-        Z0BsxGw1vM1uO9a+k1ukME3Q7K39cnZf+5UvSYRAujavz8lymxtKxBtaHt7p5c4FRYH7Q0C3ANrEV
-        IV9w0ACBhwzFD+SeZ0tm/OZBDPptqdXpI9dIzq66kNsrKM+1LrpzXQSmpFdcJf4awsXxQTeWcgxTy
-        i4A5UkUbDajFzlbzsOjfYbeJD2QYuOj93ttbL8j6q98ENHH65uUffSTtVJ0fZC9Yrs9C/IiGP9yvx
-        M3XTbx8g==;
-Received: from [2601:1c0:6280:3f0::f32]
-        by merlin.infradead.org with esmtpsa (Exim 4.92.3 #3 (Red Hat Linux))
-        id 1ke0JL-0000Sr-NL; Sat, 14 Nov 2020 18:30:08 +0000
-Subject: Re: [PATCH] clk: qcom: camcc-sc7180: Use runtime PM ops instead of
- clk ones
-To:     Stephen Boyd <sboyd@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>
-Cc:     linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org,
-        Geert Uytterhoeven <geert@linux-m68k.org>,
-        Nathan Chancellor <natechancellor@gmail.com>,
-        Stephen Rothwell <sfr@canb.auug.org.au>,
-        Taniya Das <tdas@codeaurora.org>,
-        "Rafael J. Wysocki" <rafael@kernel.org>
-References: <20201114174408.579047-1-sboyd@kernel.org>
-From:   Randy Dunlap <rdunlap@infradead.org>
-Message-ID: <79da0ec7-425a-40e9-2101-b55568b3187c@infradead.org>
-Date:   Sat, 14 Nov 2020 10:30:02 -0800
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.12.0
+        Sat, 14 Nov 2020 13:45:13 -0500
+Received: from mail-wr1-x444.google.com (mail-wr1-x444.google.com [IPv6:2a00:1450:4864:20::444])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CFEEFC0613D1;
+        Sat, 14 Nov 2020 10:45:12 -0800 (PST)
+Received: by mail-wr1-x444.google.com with SMTP id s8so13957469wrw.10;
+        Sat, 14 Nov 2020 10:45:12 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=mwaTQ8CRNOisIPpv1s2Kuarb/aJwOV+xZelk78899p4=;
+        b=eXiaXE1zpOF7soDIe0ZFrZUhZudhtfvkavxwo7+c1rjBg6fbIMTMta9ZYySZcwoPQe
+         j2t5qXqq9r/wzUv6z90z6kNo/pyMXXX8EMqj1ZI6n1IMeiAigipzXVLcLe5AqoKNypTT
+         wWJuJmM9ELwq9sjFlLSmnRO0omO1ovv8j0bG1tkZnO66B9XP3JoCL9isxCfVD9AmwVyl
+         ty9Eza2J0fhyjcrDnK6yt0eyH6vMY+vBXpoGN29/O2/Q6lGoJdVQfXtaaCUHL6REcjsO
+         3TS/FWSUTCT//JIJVamaVqDmnA8X5tz6uUqfMXYaS+7rx5UBddXU2n1tJiUGslRZZcg5
+         TbTA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=mwaTQ8CRNOisIPpv1s2Kuarb/aJwOV+xZelk78899p4=;
+        b=iCCN+aiLKS3Q/ifw91TJ9KfR6Xk6h1BJ/h/1/FH6dYEegc51DZRPUFMpfOgJ2yEfOx
+         Af/CSMOYcQEGpeDE9SyUSGfhzzbePdBitNGC0Q1c5crJdSRwO+J5cC/7/em/X7Ouqp3D
+         cZJtzuF5CDRnLjej2jZIzNUsn2nHZcQ56VNVxp3LPnkilNrktSCs/pNyuSvwD7WBfF7F
+         6OIkZZ9Ig2PI9WxsQO0dGoXaOBYh4k+TZafFFSLCvb6FzKS0wAssUoqmHV+HRUYxyU9l
+         v6NWUl4eESM2t6Yx8vWBANQdQJuAELwaWr6nq/IwOkup2ZIZoQcKCF7fGPzfttqoFlqp
+         hmSg==
+X-Gm-Message-State: AOAM531gh+7BWi2w4XQjurNM6s1vLU9FBjxgr00ocICdwganQKvRm2zA
+        i5fKX/CTHTOpegMRqD2D+ZTi0LSsH2vozRDmODg=
+X-Google-Smtp-Source: ABdhPJzzVqEbJpQptFAswg6i7BE/EPfAuddQpxmWjHIdbT4+CANyjD8wZ1iz67UV4WIHafY4RUG8eMwCcs6AqW3aROE=
+X-Received: by 2002:adf:f04b:: with SMTP id t11mr10162129wro.147.1605379511355;
+ Sat, 14 Nov 2020 10:45:11 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <20201114174408.579047-1-sboyd@kernel.org>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+References: <20201114151717.5369-1-jonathan@marek.ca> <20201114151717.5369-5-jonathan@marek.ca>
+ <20201114162406.GC24411@lst.de>
+In-Reply-To: <20201114162406.GC24411@lst.de>
+From:   Rob Clark <robdclark@gmail.com>
+Date:   Sat, 14 Nov 2020 10:46:55 -0800
+Message-ID: <CAF6AEGvujttEkFuRqtt7i+0o7-=2spKXfAvJZrj96uWAFRLYuA@mail.gmail.com>
+Subject: Re: [RESEND PATCH v2 4/5] drm/msm: add DRM_MSM_GEM_SYNC_CACHE for
+ non-coherent cache maintenance
+To:     Christoph Hellwig <hch@lst.de>
+Cc:     Jonathan Marek <jonathan@marek.ca>,
+        freedreno <freedreno@lists.freedesktop.org>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
+        <linux-arm-msm@vger.kernel.org>,
+        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
+        <dri-devel@lists.freedesktop.org>,
+        open list <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 11/14/20 9:44 AM, Stephen Boyd wrote:
-> Let's call pm_runtime_get() here instead of calling the PM clk APIs
-> directly. This avoids a compilation problem on CONFIG_PM=n where the
-> pm_clk_runtime_{resume,suspend}() functions don't exist and covers the
-> intent, i.e. enable the clks for this device so we can program PLL
-> settings.
-> 
-> Reported-by: Randy Dunlap <rdunlap@infradead.org>
-> Reported-by: Geert Uytterhoeven <geert@linux-m68k.org>
-> Cc: Nathan Chancellor <natechancellor@gmail.com>
-> Cc: Stephen Rothwell <sfr@canb.auug.org.au>
-> Cc: Taniya Das <tdas@codeaurora.org>
-> Cc: "Rafael J. Wysocki" <rafael@kernel.org>
-> Fixes: 15d09e830bbc ("clk: qcom: camcc: Add camera clock controller driver for SC7180")
-> Signed-off-by: Stephen Boyd <sboyd@kernel.org>
+On Sat, Nov 14, 2020 at 8:24 AM Christoph Hellwig <hch@lst.de> wrote:
+>
+> On Sat, Nov 14, 2020 at 10:17:12AM -0500, Jonathan Marek wrote:
+> > +void msm_gem_sync_cache(struct drm_gem_object *obj, uint32_t flags,
+> > +             size_t range_start, size_t range_end)
+> > +{
+> > +     struct msm_gem_object *msm_obj = to_msm_bo(obj);
+> > +     struct device *dev = msm_obj->base.dev->dev;
+> > +
+> > +     /* exit early if get_pages() hasn't been called yet */
+> > +     if (!msm_obj->pages)
+> > +             return;
+> > +
+> > +     /* TODO: sync only the specified range */
+> > +
+> > +     if (flags & MSM_GEM_SYNC_FOR_DEVICE) {
+> > +             dma_sync_sg_for_device(dev, msm_obj->sgt->sgl,
+> > +                             msm_obj->sgt->nents, DMA_TO_DEVICE);
+> > +     }
+> > +
+> > +     if (flags & MSM_GEM_SYNC_FOR_CPU) {
+> > +             dma_sync_sg_for_cpu(dev, msm_obj->sgt->sgl,
+> > +                             msm_obj->sgt->nents, DMA_FROM_DEVICE);
+> > +     }
+>
+> Splitting this helper from the only caller is rather strange, epecially
+> with the two unused arguments.  And I think the way this is specified
+> to take a range, but ignoring it is actively dangerous.  User space will
+> rely on it syncing everything sooner or later and then you are stuck.
+> So just define a sync all primitive for now, and if you really need a
+> range sync and have actually implemented it add a new ioctl for that.
 
-Acked-by: Randy Dunlap <rdunlap@infradead.org> # build-tested
+We do already have a split of ioctl "layer" which enforces valid ioctl
+params, etc, and gem (or other) module code which is called by the
+ioctl func.  So I think it is fine to keep this split here.  (Also, I
+think at some point there will be a uring type of ioctl alternative
+which would re-use the same gem func.)
 
-Thanks.
+But I do agree that the range should be respected or added later..
+drm_ioctl() dispatch is well prepared for extending ioctls.
 
-> ---
->  drivers/clk/qcom/camcc-sc7180.c | 12 ++++--------
->  1 file changed, 4 insertions(+), 8 deletions(-)
-> 
-> diff --git a/drivers/clk/qcom/camcc-sc7180.c b/drivers/clk/qcom/camcc-sc7180.c
-> index f51bf5b6decc..dbac5651ab85 100644
-> --- a/drivers/clk/qcom/camcc-sc7180.c
-> +++ b/drivers/clk/qcom/camcc-sc7180.c
-> @@ -1669,16 +1669,14 @@ static int cam_cc_sc7180_probe(struct platform_device *pdev)
->  		goto disable_pm_runtime;
->  	}
->  
-> -	ret = pm_clk_runtime_resume(&pdev->dev);
-> -	if (ret < 0) {
-> -		dev_err(&pdev->dev, "pm runtime resume failed\n");
-> +	ret = pm_runtime_get(&pdev->dev);
-> +	if (ret)
->  		goto destroy_pm_clk;
-> -	}
->  
->  	regmap = qcom_cc_map(pdev, &cam_cc_sc7180_desc);
->  	if (IS_ERR(regmap)) {
->  		ret = PTR_ERR(regmap);
-> -		pm_clk_runtime_suspend(&pdev->dev);
-> +		pm_runtime_put(&pdev->dev);
->  		goto destroy_pm_clk;
->  	}
->  
-> @@ -1688,9 +1686,7 @@ static int cam_cc_sc7180_probe(struct platform_device *pdev)
->  	clk_fabia_pll_configure(&cam_cc_pll3, regmap, &cam_cc_pll3_config);
->  
->  	ret = qcom_cc_really_probe(pdev, &cam_cc_sc7180_desc, regmap);
-> -
-> -	pm_clk_runtime_suspend(&pdev->dev);
-> -
-> +	pm_runtime_put(&pdev->dev);
->  	if (ret < 0) {
->  		dev_err(&pdev->dev, "Failed to register CAM CC clocks\n");
->  		goto destroy_pm_clk;
-> 
+And I assume there should be some validation that the range is aligned
+to cache-line?  Or can we flush a partial cache line?
 
-
--- 
-~Randy
+BR,
+-R
