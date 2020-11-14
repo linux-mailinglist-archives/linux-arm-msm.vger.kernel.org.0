@@ -2,67 +2,63 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id CA4492B2DDA
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 14 Nov 2020 16:21:53 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 26F922B2DDD
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 14 Nov 2020 16:21:55 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726307AbgKNPVH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 14 Nov 2020 10:21:07 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35670 "EHLO
+        id S1726980AbgKNPVM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 14 Nov 2020 10:21:12 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35684 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726884AbgKNPVH (ORCPT
+        with ESMTP id S1726885AbgKNPVL (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 14 Nov 2020 10:21:07 -0500
-Received: from mail-qv1-xf29.google.com (mail-qv1-xf29.google.com [IPv6:2607:f8b0:4864:20::f29])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EB97BC0613D2
-        for <linux-arm-msm@vger.kernel.org>; Sat, 14 Nov 2020 07:21:06 -0800 (PST)
-Received: by mail-qv1-xf29.google.com with SMTP id r12so6468141qvq.13
-        for <linux-arm-msm@vger.kernel.org>; Sat, 14 Nov 2020 07:21:06 -0800 (PST)
+        Sat, 14 Nov 2020 10:21:11 -0500
+Received: from mail-qk1-x742.google.com (mail-qk1-x742.google.com [IPv6:2607:f8b0:4864:20::742])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1B0C3C0617A6
+        for <linux-arm-msm@vger.kernel.org>; Sat, 14 Nov 2020 07:21:10 -0800 (PST)
+Received: by mail-qk1-x742.google.com with SMTP id d9so12444604qke.8
+        for <linux-arm-msm@vger.kernel.org>; Sat, 14 Nov 2020 07:21:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=marek-ca.20150623.gappssmtp.com; s=20150623;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=Had0NO1OldvzTy/dDlNqjQKg348W7mzmn4iytrp+oxQ=;
-        b=aJpgxp0mgMgJ/Gf8GKsH9BrFPYl+5nN7VmiBnAJnCUvBaaREnJatyr+JpWaqIqf5Cp
-         irTFN0+1B4awwp/1iwxvHqvzsRqHcxQsA+WbF/mROoBQQnlVVdX5gsnZaT6J90uPo07l
-         8OQbbzA19WSYV4jOrC/LRSBxA3SbuwSLqCuHP1Hztdhnvuukqm+qicj1onWD8oRI4ZXp
-         fCcCDkedMJQs7SxbojfFRs4JhJlncXOigoQj3+rnV1O215kAOI92XPVGPvWq9Tf4E6ss
-         8AxUjqHjeT8ZRPj3sbfLNEuddr0sleKs9QApibxnly/W9c3vnR36wyX5ToCF4kLUSWos
-         nqTA==
+        bh=hPmKg3FYk3Lzs70K/NYX4J1DHPtpY/HdRoRb6lm0KnA=;
+        b=pJascp7VGYt/H6n29g64kblStEJQHiJchoF3UWHdzGdpjG81mpnsko/3z8m016I0IF
+         QLUAPyXMENTvrzyVFNTy/8OdnM+2B6l3cHde4uEAwzpo48nwwjzvRhZSlnEwofdu6gOj
+         vKgha1gL0RcUMSJ4YOAY1CCHnhKzaLg3s1rBHAxLgEtGt9xs1jzDcGxhJiAj9LsldP46
+         QcSXOwRli2V706fEv5gpY3q+Nfhy1/Q4nvGECR5Xxdxsutm1e3EGO54vbYtv9hjVQqtX
+         TWJknmynolLMmfZXxaacPwU9xBTpnG5YEpgEXoAOoCI6iNZ7NYnpHvxpZLfe9onNNIy+
+         E9fQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=Had0NO1OldvzTy/dDlNqjQKg348W7mzmn4iytrp+oxQ=;
-        b=dznUJcbLmstFSbxJyU+zZV9oVJykVjSqqSYAbI+cj9c/8tcpwIwelWIOucr1ikYYSH
-         tPrt4OP5bOlNYSqHNTT9jO4AAl+BkstTEECQYLgq3qben2EnNKSYCMHBKpUsiaz/SHmY
-         t6Srjw6RI11EWSgPP30guF1L7a+pF0Q+q4A0pBpiknNkkG3slU0tMTUMZbR7W2BZhcgm
-         oQvpIlslfc+qOXldbsyeCe7NN/mODm5A2gZWjGgiq3FmHVZ9ghsF8NGJJc/iFBYX5oRk
-         7lx5OdSnpPdOzThNDcUT3fuyOuUCQpo7AMrV/mT+K1P5xeXwd8eOUCKMzaeA0SFjslnk
-         F7cQ==
-X-Gm-Message-State: AOAM531Xga3HOyAdPGV8btdFYBEoiPtCZOJB/8m/0igqivC3RZOkJFGB
-        g76wPC8MQISbPfbD92K2MCXGcA==
-X-Google-Smtp-Source: ABdhPJzxJ019I/egsMkQcdPxWg5A9PhW4/h3q71ud+MnfOX4UDcEfzJ4lpV2AMyz97W74oEetrE0Ig==
-X-Received: by 2002:a0c:e608:: with SMTP id z8mr7620395qvm.2.1605367266263;
-        Sat, 14 Nov 2020 07:21:06 -0800 (PST)
+        bh=hPmKg3FYk3Lzs70K/NYX4J1DHPtpY/HdRoRb6lm0KnA=;
+        b=rQxQZdJCjbK1hiXjTbblSZfPqaehIZai/yGvBQv3LehhLGdOyEgdLuS9UsLy1E2eP0
+         oeOOdrBjGFLNwqahTm+4hfjfDGR/PHAAxJh6sAdEqcMQ+X/WFVrucsnPnETMvpFEZR7G
+         0Rj1MKblKVxEO3macSAad+x8rm4w2JgRXfug3KyYBO6tyGVReLoQFxooOWY2sWTPwUUk
+         o3HL42UQKBAxg/Zr9Ki05Lh6iQeoDejxiaEALxxdVGBcoDry4ldPxjY47zdBgW6B1my1
+         93Vp9adcxTVUCi0bV5AyxFbNqPt1QQoB70DJfrj1wNiK1b4S1RP+R+uNbLnj2l1ga041
+         jZ1Q==
+X-Gm-Message-State: AOAM530FESFkhJ6VuIv69BZE6nXmEeX7RM6SlYMsLQ1vlakO09u+0zL/
+        gC1bXSWc+GMJfondjDzK65yQ9w==
+X-Google-Smtp-Source: ABdhPJzgscgk0ohNXdNYoDcxxdIkRC8kNTlyMvItOc3OOIL+2bEmEN+MGO8+p9C4UiNuw9dUFWyyaw==
+X-Received: by 2002:a37:2f43:: with SMTP id v64mr6878299qkh.127.1605367269282;
+        Sat, 14 Nov 2020 07:21:09 -0800 (PST)
 Received: from localhost.localdomain (modemcable068.184-131-66.mc.videotron.ca. [66.131.184.68])
-        by smtp.gmail.com with ESMTPSA id h125sm8888368qkc.36.2020.11.14.07.21.05
+        by smtp.gmail.com with ESMTPSA id h125sm8888368qkc.36.2020.11.14.07.21.08
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 14 Nov 2020 07:21:05 -0800 (PST)
+        Sat, 14 Nov 2020 07:21:08 -0800 (PST)
 From:   Jonathan Marek <jonathan@marek.ca>
 To:     freedreno@lists.freedesktop.org, hch@lst.de
-Cc:     Jordan Crouse <jcrouse@codeaurora.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+Cc:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
         David Airlie <airlied@linux.ie>,
         Daniel Vetter <daniel@ffwll.ch>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Shawn Guo <shawn.guo@linaro.org>,
-        Sharat Masetty <smasetty@codeaurora.org>,
         linux-arm-msm@vger.kernel.org (open list:DRM DRIVER FOR MSM ADRENO GPU),
         dri-devel@lists.freedesktop.org (open list:DRM DRIVER FOR MSM ADRENO
         GPU), linux-kernel@vger.kernel.org (open list)
-Subject: [RESEND PATCH v2 1/5] drm/msm: add MSM_BO_CACHED_COHERENT
-Date:   Sat, 14 Nov 2020 10:17:09 -0500
-Message-Id: <20201114151717.5369-2-jonathan@marek.ca>
+Subject: [RESEND PATCH v2 3/5] drm/msm: call dma_direct_bypass()
+Date:   Sat, 14 Nov 2020 10:17:11 -0500
+Message-Id: <20201114151717.5369-4-jonathan@marek.ca>
 X-Mailer: git-send-email 2.26.1
 In-Reply-To: <20201114151717.5369-1-jonathan@marek.ca>
 References: <20201114151717.5369-1-jonathan@marek.ca>
@@ -72,93 +68,56 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add a new cache mode for creating coherent host-cached BOs.
+Always use direct dma ops and no swiotlb.
+
+Note: arm-smmu-qcom already avoids creating iommu dma ops, but not
+everything uses arm-smmu-qcom and this also sets the dma mask.
 
 Signed-off-by: Jonathan Marek <jonathan@marek.ca>
-Reviewed-by: Jordan Crouse <jcrouse@codeaurora.org>
 ---
- drivers/gpu/drm/msm/adreno/adreno_device.c | 1 +
- drivers/gpu/drm/msm/msm_drv.h              | 1 +
- drivers/gpu/drm/msm/msm_gem.c              | 8 ++++++++
- include/uapi/drm/msm_drm.h                 | 5 ++---
- 4 files changed, 12 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/msm/Kconfig   | 1 +
+ drivers/gpu/drm/msm/msm_drv.c | 8 +++++---
+ 2 files changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/adreno/adreno_device.c b/drivers/gpu/drm/msm/adreno/adreno_device.c
-index 58e03b20e1c7..21c9bc954f38 100644
---- a/drivers/gpu/drm/msm/adreno/adreno_device.c
-+++ b/drivers/gpu/drm/msm/adreno/adreno_device.c
-@@ -410,6 +410,7 @@ static int adreno_bind(struct device *dev, struct device *master, void *data)
- 		config.rev.minor, config.rev.patchid);
+diff --git a/drivers/gpu/drm/msm/Kconfig b/drivers/gpu/drm/msm/Kconfig
+index e5816b498494..07c50405970a 100644
+--- a/drivers/gpu/drm/msm/Kconfig
++++ b/drivers/gpu/drm/msm/Kconfig
+@@ -20,6 +20,7 @@ config DRM_MSM
+ 	select SND_SOC_HDMI_CODEC if SND_SOC
+ 	select SYNC_FILE
+ 	select PM_OPP
++	select DMA_OPS_BYPASS
+ 	help
+ 	  DRM/KMS driver for MSM/snapdragon.
  
- 	priv->is_a2xx = config.rev.core == 2;
-+	priv->has_cached_coherent = config.rev.core >= 6;
+diff --git a/drivers/gpu/drm/msm/msm_drv.c b/drivers/gpu/drm/msm/msm_drv.c
+index 49685571dc0e..bae48afca82e 100644
+--- a/drivers/gpu/drm/msm/msm_drv.c
++++ b/drivers/gpu/drm/msm/msm_drv.c
+@@ -6,6 +6,7 @@
+  */
  
- 	gpu = info->init(drm);
- 	if (IS_ERR(gpu)) {
-diff --git a/drivers/gpu/drm/msm/msm_drv.h b/drivers/gpu/drm/msm/msm_drv.h
-index f33281ac7913..22ebecb28349 100644
---- a/drivers/gpu/drm/msm/msm_drv.h
-+++ b/drivers/gpu/drm/msm/msm_drv.h
-@@ -168,6 +168,7 @@ struct msm_drm_private {
- 	struct msm_file_private *lastctx;
- 	/* gpu is only set on open(), but we need this info earlier */
- 	bool is_a2xx;
-+	bool has_cached_coherent;
+ #include <linux/dma-mapping.h>
++#include <linux/dma-direct.h>
+ #include <linux/kthread.h>
+ #include <linux/uaccess.h>
+ #include <uapi/linux/sched/types.h>
+@@ -1288,10 +1289,11 @@ static int msm_pdev_probe(struct platform_device *pdev)
+ 	if (ret)
+ 		goto fail;
  
- 	struct drm_fb_helper *fbdev;
+-	/* on all devices that I am aware of, iommu's which can map
+-	 * any address the cpu can see are used:
++	/* always use direct dma ops and no swiotlb
++	 * note: arm-smmu-qcom already avoids creating iommu dma ops, but
++	 * not everything uses arm-smmu-qcom and this also sets the dma mask
+ 	 */
+-	ret = dma_set_mask_and_coherent(&pdev->dev, ~0);
++	ret = dma_direct_bypass(&pdev->dev);
+ 	if (ret)
+ 		goto fail;
  
-diff --git a/drivers/gpu/drm/msm/msm_gem.c b/drivers/gpu/drm/msm/msm_gem.c
-index 04be4cfcccc1..3d8254b5de16 100644
---- a/drivers/gpu/drm/msm/msm_gem.c
-+++ b/drivers/gpu/drm/msm/msm_gem.c
-@@ -420,6 +420,9 @@ static int msm_gem_pin_iova(struct drm_gem_object *obj,
- 	if (msm_obj->flags & MSM_BO_MAP_PRIV)
- 		prot |= IOMMU_PRIV;
- 
-+	if (msm_obj->flags & MSM_BO_CACHED_COHERENT)
-+		prot |= IOMMU_CACHE;
-+
- 	WARN_ON(!mutex_is_locked(&msm_obj->lock));
- 
- 	if (WARN_ON(msm_obj->madv != MSM_MADV_WILLNEED))
-@@ -1004,6 +1007,7 @@ static int msm_gem_new_impl(struct drm_device *dev,
- 		uint32_t size, uint32_t flags,
- 		struct drm_gem_object **obj)
- {
-+	struct msm_drm_private *priv = dev->dev_private;
- 	struct msm_gem_object *msm_obj;
- 
- 	switch (flags & MSM_BO_CACHE_MASK) {
-@@ -1011,6 +1015,10 @@ static int msm_gem_new_impl(struct drm_device *dev,
- 	case MSM_BO_CACHED:
- 	case MSM_BO_WC:
- 		break;
-+	case MSM_BO_CACHED_COHERENT:
-+		if (priv->has_cached_coherent)
-+			break;
-+		/* fallthrough */
- 	default:
- 		DRM_DEV_ERROR(dev->dev, "invalid cache flag: %x\n",
- 				(flags & MSM_BO_CACHE_MASK));
-diff --git a/include/uapi/drm/msm_drm.h b/include/uapi/drm/msm_drm.h
-index a6c1f3eb2623..474497e8743a 100644
---- a/include/uapi/drm/msm_drm.h
-+++ b/include/uapi/drm/msm_drm.h
-@@ -94,12 +94,11 @@ struct drm_msm_param {
- #define MSM_BO_CACHED        0x00010000
- #define MSM_BO_WC            0x00020000
- #define MSM_BO_UNCACHED      0x00040000
-+#define MSM_BO_CACHED_COHERENT 0x080000
- 
- #define MSM_BO_FLAGS         (MSM_BO_SCANOUT | \
-                               MSM_BO_GPU_READONLY | \
--                              MSM_BO_CACHED | \
--                              MSM_BO_WC | \
--                              MSM_BO_UNCACHED)
-+                              MSM_BO_CACHE_MASK)
- 
- struct drm_msm_gem_new {
- 	__u64 size;           /* in */
 -- 
 2.26.1
 
