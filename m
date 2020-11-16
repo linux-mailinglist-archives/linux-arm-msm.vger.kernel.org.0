@@ -2,1020 +2,315 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 548D42B4430
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Nov 2020 14:01:47 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D3DD52B4592
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Nov 2020 15:11:10 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728420AbgKPM7u (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 16 Nov 2020 07:59:50 -0500
-Received: from mail.kernel.org ([198.145.29.99]:54306 "EHLO mail.kernel.org"
+        id S1726291AbgKPOKM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 16 Nov 2020 09:10:12 -0500
+Received: from m42-4.mailgun.net ([69.72.42.4]:50267 "EHLO m42-4.mailgun.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728117AbgKPM7m (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 16 Nov 2020 07:59:42 -0500
-Received: from mail.kernel.org (ip5f5ad5de.dynamic.kabel-deutschland.de [95.90.213.222])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        id S1727260AbgKPOKM (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 16 Nov 2020 09:10:12 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1605535811; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: From: References: To:
+ Subject: Sender; bh=vzYjXtMwje+e7cEVmiKEsAdkLUBnmDDXuCe90CxqMcI=; b=MyG6HnBnCxkVPftCHMasXyxyf9NA0ps3G1oDJ2+1yGHpxh46NQq6eVbTl/GaaMchrrpPDmkV
+ GKkGSgZ+Oqey+h7viEzOj/sm2Dxyyj7soEgJAzBCxWbR9NHhTFpuGU9YuuLrMvAvhmxwPNWB
+ 5F2IWVoyJnywn3FG5GR5cIbU3G0=
+X-Mailgun-Sending-Ip: 69.72.42.4
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n09.prod.us-west-2.postgun.com with SMTP id
+ 5fb2884237ede2253b5405cc (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 16 Nov 2020 14:10:10
+ GMT
+Sender: akhilpo=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id A5174C43461; Mon, 16 Nov 2020 14:10:10 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        NICE_REPLY_A,SPF_FAIL,URIBL_BLOCKED autolearn=no autolearn_force=no
+        version=3.4.0
+Received: from [192.168.1.9] (unknown [117.210.188.236])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 50E6A222EC;
-        Mon, 16 Nov 2020 12:59:38 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1605531578;
-        bh=UF0+LZ1TIxAJp6btz6tbYF/gfVP+3RWwE4g+jo4FZRk=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=hC4oTGkbUD2TNgYSEj2ypcuddg5XKI6gNhrGXXMwoYFaxZozFt1oc5WEntAjQ9pxD
-         9hjkDYCPs2SPS0dvUoQFL7/0I6eQTyCwlgyJwSAZej8/HnXDzIV2sEBL5iFE6Ge5YH
-         yE1dbwi7x/PjJKMlRQJcBb8337kuGtKUaPSXufzs=
-Received: from mchehab by mail.kernel.org with local (Exim 4.94)
-        (envelope-from <mchehab@kernel.org>)
-        id 1kee6Z-00FyfY-Ir; Mon, 16 Nov 2020 13:59:35 +0100
-From:   Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-To:     Rob Herring <robh+dt@kernel.org>, Stephen Boyd <sboyd@kernel.org>
-Cc:     linuxarm@huawei.com, mauro.chehab@huawei.com,
-        Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
-        "John Stultz" <john.stultz@linaro.org>,
-        "Manivannan Sadhasivam" <mani@kernel.org>,
-        Colin Ian King <colin.king@canonical.com>,
-        Dan Carpenter <dan.carpenter@oracle.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Mayulong <mayulong1@huawei.com>,
-        YueHaibing <yuehaibing@huawei.com>, devel@driverdev.osuosl.org,
-        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: [PATCH 2/8] spmi: hi6421-spmi-pmic: move driver from staging
-Date:   Mon, 16 Nov 2020 13:59:28 +0100
-Message-Id: <7e01d84b31d561fa4df1d42369e4222f4a41a8d3.1605530560.git.mchehab+huawei@kernel.org>
-X-Mailer: git-send-email 2.28.0
-In-Reply-To: <cover.1605530560.git.mchehab+huawei@kernel.org>
-References: <cover.1605530560.git.mchehab+huawei@kernel.org>
+        (Authenticated sender: akhilpo)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id BBBE2C43460;
+        Mon, 16 Nov 2020 14:10:06 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org BBBE2C43460
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=akhilpo@codeaurora.org
+Subject: Re: [PATCH] drm/msm: adreno: Make speed-bin support generic
+To:     freedreno@lists.freedesktop.org, dri-devel@freedesktop.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        mka@chromium.org, robdclark@gmail.com, dianders@chromium.org
+References: <1605196144-23516-1-git-send-email-akhilpo@codeaurora.org>
+ <20201112163527.GC2661@jcrouse1-lnx.qualcomm.com>
+From:   Akhil P Oommen <akhilpo@codeaurora.org>
+Message-ID: <8c215bdf-b739-4b30-6cb0-fa521fde2784@codeaurora.org>
+Date:   Mon, 16 Nov 2020 19:40:03 +0530
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.4.0
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Sender: Mauro Carvalho Chehab <mchehab@kernel.org>
+In-Reply-To: <20201112163527.GC2661@jcrouse1-lnx.qualcomm.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The Hisilicon 6421v600 SPMI driver is ready for mainstream.
+On 11/12/2020 10:05 PM, Jordan Crouse wrote:
+> On Thu, Nov 12, 2020 at 09:19:04PM +0530, Akhil P Oommen wrote:
+>> So far a530v2 gpu has support for detecting its supported opps
+>> based on a fuse value called speed-bin. This patch makes this
+>> support generic across gpu families. This is in preparation to
+>> extend speed-bin support to a6x family.
+>>
+>> Signed-off-by: Akhil P Oommen <akhilpo@codeaurora.org>
+>> ---
+>> This patch is rebased on top of msm-next-staging branch in rob's tree.
+>>
+>>   drivers/gpu/drm/msm/adreno/a5xx_gpu.c      | 34 --------------
+>>   drivers/gpu/drm/msm/adreno/adreno_device.c |  4 ++
+>>   drivers/gpu/drm/msm/adreno/adreno_gpu.c    | 71 ++++++++++++++++++++++++++++++
+>>   drivers/gpu/drm/msm/adreno/adreno_gpu.h    |  5 +++
+>>   4 files changed, 80 insertions(+), 34 deletions(-)
+>>
+>> diff --git a/drivers/gpu/drm/msm/adreno/a5xx_gpu.c b/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
+>> index 8fa5c91..7d42321 100644
+>> --- a/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
+>> +++ b/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
+>> @@ -1531,38 +1531,6 @@ static const struct adreno_gpu_funcs funcs = {
+>>   	.get_timestamp = a5xx_get_timestamp,
+>>   };
+>>   
+>> -static void check_speed_bin(struct device *dev)
+>> -{
+>> -	struct nvmem_cell *cell;
+>> -	u32 val;
+>> -
+>> -	/*
+>> -	 * If the OPP table specifies a opp-supported-hw property then we have
+>> -	 * to set something with dev_pm_opp_set_supported_hw() or the table
+>> -	 * doesn't get populated so pick an arbitrary value that should
+>> -	 * ensure the default frequencies are selected but not conflict with any
+>> -	 * actual bins
+>> -	 */
+>> -	val = 0x80;
+>> -
+>> -	cell = nvmem_cell_get(dev, "speed_bin");
+>> -
+>> -	if (!IS_ERR(cell)) {
+>> -		void *buf = nvmem_cell_read(cell, NULL);
+>> -
+>> -		if (!IS_ERR(buf)) {
+>> -			u8 bin = *((u8 *) buf);
+>> -
+>> -			val = (1 << bin);
+>> -			kfree(buf);
+>> -		}
+>> -
+>> -		nvmem_cell_put(cell);
+>> -	}
+>> -
+>> -	dev_pm_opp_set_supported_hw(dev, &val, 1);
+>> -}
+>> -
+>>   struct msm_gpu *a5xx_gpu_init(struct drm_device *dev)
+>>   {
+>>   	struct msm_drm_private *priv = dev->dev_private;
+>> @@ -1588,8 +1556,6 @@ struct msm_gpu *a5xx_gpu_init(struct drm_device *dev)
+>>   
+>>   	a5xx_gpu->lm_leakage = 0x4E001A;
+>>   
+>> -	check_speed_bin(&pdev->dev);
+>> -
+>>   	ret = adreno_gpu_init(dev, pdev, adreno_gpu, &funcs, 4);
+>>   	if (ret) {
+>>   		a5xx_destroy(&(a5xx_gpu->base.base));
+>> diff --git a/drivers/gpu/drm/msm/adreno/adreno_device.c b/drivers/gpu/drm/msm/adreno/adreno_device.c
+>> index 87c8b03..e0ff16c 100644
+>> --- a/drivers/gpu/drm/msm/adreno/adreno_device.c
+>> +++ b/drivers/gpu/drm/msm/adreno/adreno_device.c
+>> @@ -18,6 +18,8 @@ bool snapshot_debugbus = false;
+>>   MODULE_PARM_DESC(snapshot_debugbus, "Include debugbus sections in GPU devcoredump (if not fused off)");
+>>   module_param_named(snapshot_debugbus, snapshot_debugbus, bool, 0600);
+>>   
+>> +const u32 a530v2_speedbins[] = {0, 1, 2, 3, 4, 5, 6, 7};
+>> +
+>>   static const struct adreno_info gpulist[] = {
+>>   	{
+>>   		.rev   = ADRENO_REV(2, 0, 0, 0),
+>> @@ -163,6 +165,8 @@ static const struct adreno_info gpulist[] = {
+>>   			ADRENO_QUIRK_FAULT_DETECT_MASK,
+>>   		.init = a5xx_gpu_init,
+>>   		.zapfw = "a530_zap.mdt",
+>> +		.speedbins = a530v2_speedbins,
+>> +		.speedbins_count = ARRAY_SIZE(a530v2_speedbins),
+>>   	}, {
+>>   		.rev = ADRENO_REV(5, 4, 0, 2),
+>>   		.revn = 540,
+>> diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.c b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
+>> index f21561d..cdd0c11 100644
+>> --- a/drivers/gpu/drm/msm/adreno/adreno_gpu.c
+>> +++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
+>> @@ -14,6 +14,7 @@
+>>   #include <linux/pm_opp.h>
+>>   #include <linux/slab.h>
+>>   #include <linux/soc/qcom/mdt_loader.h>
+>> +#include <linux/nvmem-consumer.h>
+>>   #include <soc/qcom/ocmem.h>
+>>   #include "adreno_gpu.h"
+>>   #include "msm_gem.h"
+>> @@ -891,6 +892,69 @@ void adreno_gpu_ocmem_cleanup(struct adreno_ocmem *adreno_ocmem)
+>>   			   adreno_ocmem->hdl);jjjj
+>>   }
+>>   
+>> +static int adreno_set_supported_hw(struct device *dev,
+>> +		struct adreno_gpu *adreno_gpu)
+>> +{
+>> +	u8 speedbins_count = adreno_gpu->info->speedbins_count;
+>> +	const u32 *speedbins = adreno_gpu->info->speedbins;
+> 
+> We don't need to make this generic and put it in the table. Just call the
+> function from the target specific code and pass the speedbin array and size from
+> there.
+> 
+I didn't get you entirely. Do you mean we should avoid keeping speedbin 
+array in the adreno_gpu->info table?
 
-So, move it from staging.
-
-Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
----
- .../spmi/hisilicon,hisi-spmi-controller.yaml  |  62 +++
- MAINTAINERS                                   |   7 +
- drivers/spmi/Kconfig                          |   9 +
- drivers/spmi/Makefile                         |   1 +
- drivers/spmi/hisi-spmi-controller.c           | 358 ++++++++++++++++++
- drivers/staging/hikey9xx/Kconfig              |  11 -
- drivers/staging/hikey9xx/Makefile             |   1 -
- .../staging/hikey9xx/hisi-spmi-controller.c   | 358 ------------------
- .../hisilicon,hisi-spmi-controller.yaml       |  62 ---
- 9 files changed, 437 insertions(+), 432 deletions(-)
- create mode 100644 Documentation/devicetree/bindings/spmi/hisilicon,hisi-spmi-controller.yaml
- create mode 100644 drivers/spmi/hisi-spmi-controller.c
- delete mode 100644 drivers/staging/hikey9xx/hisi-spmi-controller.c
- delete mode 100644 drivers/staging/hikey9xx/hisilicon,hisi-spmi-controller.yaml
-
-diff --git a/Documentation/devicetree/bindings/spmi/hisilicon,hisi-spmi-controller.yaml b/Documentation/devicetree/bindings/spmi/hisilicon,hisi-spmi-controller.yaml
-new file mode 100644
-index 000000000000..f2a56fa4e78e
---- /dev/null
-+++ b/Documentation/devicetree/bindings/spmi/hisilicon,hisi-spmi-controller.yaml
-@@ -0,0 +1,62 @@
-+# SPDX-License-Identifier: GPL-2.0
-+%YAML 1.2
-+---
-+$id: http://devicetree.org/schemas/spmi/hisilicon,hisi-spmi-controller.yaml#
-+$schema: http://devicetree.org/meta-schemas/core.yaml#
-+
-+title: HiSilicon SPMI controller
-+
-+maintainers:
-+  - Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-+
-+description: |
-+  The HiSilicon SPMI BUS controller is found on some Kirin-based designs.
-+  It is a MIPI System Power Management (SPMI) controller.
-+
-+  The PMIC part is provided by
-+  drivers/staging/hikey9xx/hisilicon,hi6421-spmi-pmic.yaml.
-+
-+properties:
-+  $nodename:
-+    pattern: "spmi@[0-9a-f]"
-+
-+  compatible:
-+    const: hisilicon,kirin970-spmi-controller
-+
-+  reg:
-+    maxItems: 1
-+
-+  spmi-channel:
-+    description: |
-+      number of the Kirin 970 SPMI channel where the SPMI devices are connected.
-+
-+required:
-+ - compatible
-+ - reg
-+ - spmi-channel
-+
-+patternProperties:
-+  "^pmic@[0-9a-f]$":
-+    description: |
-+      PMIC properties, which are specific to the used SPMI PMIC device(s).
-+      When used in combination with HiSilicon 6421v600, the properties
-+      are documented at
-+      drivers/staging/hikey9xx/hisilicon,hi6421-spmi-pmic.yaml.
-+
-+examples:
-+  - |
-+    bus {
-+      #address-cells = <2>;
-+      #size-cells = <2>;
-+
-+      spmi: spmi@fff24000 {
-+        compatible = "hisilicon,kirin970-spmi-controller";
-+        status = "ok";
-+        reg = <0x0 0xfff24000 0x0 0x1000>;
-+        spmi-channel = <2>;
-+
-+        pmic@0 {
-+          /* pmic properties */
-+        };
-+      };
-+    };
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 14266bb79ff8..14bc7b45ed50 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -7987,6 +7987,13 @@ F:	drivers/crypto/hisilicon/sec2/sec_crypto.c
- F:	drivers/crypto/hisilicon/sec2/sec_crypto.h
- F:	drivers/crypto/hisilicon/sec2/sec_main.c
- 
-+HISILICON SPMI CONTROLLER DRIVER FOR HIKEY 970
-+M:	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-+L:	linux-kernel@vger.kernel.org
-+S:	Maintained
-+F:	Documentation/devicetree/bindings/spmi/hisilicon,hisi-spmi-controller.yaml
-+F:	drivers/spmi/hisi-spmi-controller.c
-+
- HISILICON STAGING DRIVERS FOR HIKEY 960/970
- M:	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
- L:	devel@driverdev.osuosl.org
-diff --git a/drivers/spmi/Kconfig b/drivers/spmi/Kconfig
-index a53bad541f1a..2874b6c26028 100644
---- a/drivers/spmi/Kconfig
-+++ b/drivers/spmi/Kconfig
-@@ -11,6 +11,15 @@ menuconfig SPMI
- 
- if SPMI
- 
-+config SPMI_HISI3670
-+	tristate "Hisilicon 3670 SPMI Controller"
-+	select IRQ_DOMAIN_HIERARCHY
-+	depends on HAS_IOMEM
-+	help
-+	  If you say yes to this option, support will be included for the
-+	  built-in SPMI PMIC Arbiter interface on Hisilicon 3670
-+	  processors.
-+
- config SPMI_MSM_PMIC_ARB
- 	tristate "Qualcomm MSM SPMI Controller (PMIC Arbiter)"
- 	select IRQ_DOMAIN_HIERARCHY
-diff --git a/drivers/spmi/Makefile b/drivers/spmi/Makefile
-index 55a94cadeffe..6e092e6f290c 100644
---- a/drivers/spmi/Makefile
-+++ b/drivers/spmi/Makefile
-@@ -4,4 +4,5 @@
- #
- obj-$(CONFIG_SPMI)	+= spmi.o
- 
-+obj-$(CONFIG_SPMI_HISI3670)	+= hisi-spmi-controller.o
- obj-$(CONFIG_SPMI_MSM_PMIC_ARB)	+= spmi-pmic-arb.o
-diff --git a/drivers/spmi/hisi-spmi-controller.c b/drivers/spmi/hisi-spmi-controller.c
-new file mode 100644
-index 000000000000..f831c43f4783
---- /dev/null
-+++ b/drivers/spmi/hisi-spmi-controller.c
-@@ -0,0 +1,358 @@
-+// SPDX-License-Identifier: GPL-2.0
-+
-+#include <linux/delay.h>
-+#include <linux/err.h>
-+#include <linux/interrupt.h>
-+#include <linux/io.h>
-+#include <linux/kernel.h>
-+#include <linux/module.h>
-+#include <linux/of.h>
-+#include <linux/platform_device.h>
-+#include <linux/seq_file.h>
-+#include <linux/slab.h>
-+#include <linux/spmi.h>
-+
-+/*
-+ * SPMI register addr
-+ */
-+#define SPMI_CHANNEL_OFFSET				0x0300
-+#define SPMI_SLAVE_OFFSET				0x20
-+
-+#define SPMI_APB_SPMI_CMD_BASE_ADDR			0x0100
-+
-+#define SPMI_APB_SPMI_WDATA0_BASE_ADDR			0x0104
-+#define SPMI_APB_SPMI_WDATA1_BASE_ADDR			0x0108
-+#define SPMI_APB_SPMI_WDATA2_BASE_ADDR			0x010c
-+#define SPMI_APB_SPMI_WDATA3_BASE_ADDR			0x0110
-+
-+#define SPMI_APB_SPMI_STATUS_BASE_ADDR			0x0200
-+
-+#define SPMI_APB_SPMI_RDATA0_BASE_ADDR			0x0204
-+#define SPMI_APB_SPMI_RDATA1_BASE_ADDR			0x0208
-+#define SPMI_APB_SPMI_RDATA2_BASE_ADDR			0x020c
-+#define SPMI_APB_SPMI_RDATA3_BASE_ADDR			0x0210
-+
-+#define SPMI_PER_DATAREG_BYTE				4
-+/*
-+ * SPMI cmd register
-+ */
-+#define SPMI_APB_SPMI_CMD_EN				BIT(31)
-+#define SPMI_APB_SPMI_CMD_TYPE_OFFSET			24
-+#define SPMI_APB_SPMI_CMD_LENGTH_OFFSET			20
-+#define SPMI_APB_SPMI_CMD_SLAVEID_OFFSET		16
-+#define SPMI_APB_SPMI_CMD_ADDR_OFFSET			0
-+
-+/* Command Opcodes */
-+
-+enum spmi_controller_cmd_op_code {
-+	SPMI_CMD_REG_ZERO_WRITE = 0,
-+	SPMI_CMD_REG_WRITE = 1,
-+	SPMI_CMD_REG_READ = 2,
-+	SPMI_CMD_EXT_REG_WRITE = 3,
-+	SPMI_CMD_EXT_REG_READ = 4,
-+	SPMI_CMD_EXT_REG_WRITE_L = 5,
-+	SPMI_CMD_EXT_REG_READ_L = 6,
-+	SPMI_CMD_REG_RESET = 7,
-+	SPMI_CMD_REG_SLEEP = 8,
-+	SPMI_CMD_REG_SHUTDOWN = 9,
-+	SPMI_CMD_REG_WAKEUP = 10,
-+};
-+
-+/*
-+ * SPMI status register
-+ */
-+#define SPMI_APB_TRANS_DONE			BIT(0)
-+#define SPMI_APB_TRANS_FAIL			BIT(2)
-+
-+/* Command register fields */
-+#define SPMI_CONTROLLER_CMD_MAX_BYTE_COUNT	16
-+
-+/* Maximum number of support PMIC peripherals */
-+#define SPMI_CONTROLLER_TIMEOUT_US		1000
-+#define SPMI_CONTROLLER_MAX_TRANS_BYTES		16
-+
-+struct spmi_controller_dev {
-+	struct spmi_controller	*controller;
-+	struct device		*dev;
-+	void __iomem		*base;
-+	spinlock_t		lock;
-+	u32			channel;
-+};
-+
-+static int spmi_controller_wait_for_done(struct device *dev,
-+					 struct spmi_controller_dev *ctrl_dev,
-+					 void __iomem *base, u8 sid, u16 addr)
-+{
-+	u32 timeout = SPMI_CONTROLLER_TIMEOUT_US;
-+	u32 status, offset;
-+
-+	offset  = SPMI_APB_SPMI_STATUS_BASE_ADDR;
-+	offset += SPMI_CHANNEL_OFFSET * ctrl_dev->channel + SPMI_SLAVE_OFFSET * sid;
-+
-+	do {
-+		status = readl(base + offset);
-+
-+		if (status & SPMI_APB_TRANS_DONE) {
-+			if (status & SPMI_APB_TRANS_FAIL) {
-+				dev_err(dev, "%s: transaction failed (0x%x)\n",
-+					__func__, status);
-+				return -EIO;
-+			}
-+			dev_dbg(dev, "%s: status 0x%x\n", __func__, status);
-+			return 0;
-+		}
-+		udelay(1);
-+	} while (timeout--);
-+
-+	dev_err(dev, "%s: timeout, status 0x%x\n", __func__, status);
-+	return -ETIMEDOUT;
-+}
-+
-+static int spmi_read_cmd(struct spmi_controller *ctrl,
-+			 u8 opc, u8 slave_id, u16 slave_addr, u8 *__buf, size_t bc)
-+{
-+	struct spmi_controller_dev *spmi_controller = dev_get_drvdata(&ctrl->dev);
-+	u32 chnl_ofst = SPMI_CHANNEL_OFFSET * spmi_controller->channel;
-+	unsigned long flags;
-+	u8 *buf = __buf;
-+	u32 cmd, data;
-+	int rc;
-+	u8 op_code, i;
-+
-+	if (bc > SPMI_CONTROLLER_MAX_TRANS_BYTES) {
-+		dev_err(&ctrl->dev,
-+			"spmi_controller supports 1..%d bytes per trans, but:%zu requested\n",
-+			SPMI_CONTROLLER_MAX_TRANS_BYTES, bc);
-+		return  -EINVAL;
-+	}
-+
-+	switch (opc) {
-+	case SPMI_CMD_READ:
-+		op_code = SPMI_CMD_REG_READ;
-+		break;
-+	case SPMI_CMD_EXT_READ:
-+		op_code = SPMI_CMD_EXT_REG_READ;
-+		break;
-+	case SPMI_CMD_EXT_READL:
-+		op_code = SPMI_CMD_EXT_REG_READ_L;
-+		break;
-+	default:
-+		dev_err(&ctrl->dev, "invalid read cmd 0x%x\n", opc);
-+		return -EINVAL;
-+	}
-+
-+	cmd = SPMI_APB_SPMI_CMD_EN |
-+	     (op_code << SPMI_APB_SPMI_CMD_TYPE_OFFSET) |
-+	     ((bc - 1) << SPMI_APB_SPMI_CMD_LENGTH_OFFSET) |
-+	     ((slave_id & 0xf) << SPMI_APB_SPMI_CMD_SLAVEID_OFFSET) |  /* slvid */
-+	     ((slave_addr & 0xffff)  << SPMI_APB_SPMI_CMD_ADDR_OFFSET); /* slave_addr */
-+
-+	spin_lock_irqsave(&spmi_controller->lock, flags);
-+
-+	writel(cmd, spmi_controller->base + chnl_ofst + SPMI_APB_SPMI_CMD_BASE_ADDR);
-+
-+	rc = spmi_controller_wait_for_done(&ctrl->dev, spmi_controller,
-+					   spmi_controller->base, slave_id, slave_addr);
-+	if (rc)
-+		goto done;
-+
-+	for (i = 0; bc > i * SPMI_PER_DATAREG_BYTE; i++) {
-+		data = readl(spmi_controller->base + chnl_ofst +
-+			     SPMI_SLAVE_OFFSET * slave_id +
-+			     SPMI_APB_SPMI_RDATA0_BASE_ADDR +
-+			     i * SPMI_PER_DATAREG_BYTE);
-+		data = be32_to_cpu((__be32)data);
-+		if ((bc - i * SPMI_PER_DATAREG_BYTE) >> 2) {
-+			memcpy(buf, &data, sizeof(data));
-+			buf += sizeof(data);
-+		} else {
-+			memcpy(buf, &data, bc % SPMI_PER_DATAREG_BYTE);
-+			buf += (bc % SPMI_PER_DATAREG_BYTE);
-+		}
-+	}
-+
-+done:
-+	spin_unlock_irqrestore(&spmi_controller->lock, flags);
-+	if (rc)
-+		dev_err(&ctrl->dev,
-+			"spmi read wait timeout op:0x%x slave_id:%d slave_addr:0x%x bc:%zu\n",
-+			opc, slave_id, slave_addr, bc + 1);
-+	else
-+		dev_dbg(&ctrl->dev, "%s: id:%d slave_addr:0x%x, read value: %*ph\n",
-+			__func__, slave_id, slave_addr, (int)bc, __buf);
-+
-+	return rc;
-+}
-+
-+static int spmi_write_cmd(struct spmi_controller *ctrl,
-+			  u8 opc, u8 slave_id, u16 slave_addr, const u8 *__buf, size_t bc)
-+{
-+	struct spmi_controller_dev *spmi_controller = dev_get_drvdata(&ctrl->dev);
-+	u32 chnl_ofst = SPMI_CHANNEL_OFFSET * spmi_controller->channel;
-+	const u8 *buf = __buf;
-+	unsigned long flags;
-+	u32 cmd, data;
-+	int rc;
-+	u8 op_code, i;
-+
-+	if (bc > SPMI_CONTROLLER_MAX_TRANS_BYTES) {
-+		dev_err(&ctrl->dev,
-+			"spmi_controller supports 1..%d bytes per trans, but:%zu requested\n",
-+			SPMI_CONTROLLER_MAX_TRANS_BYTES, bc);
-+		return  -EINVAL;
-+	}
-+
-+	switch (opc) {
-+	case SPMI_CMD_WRITE:
-+		op_code = SPMI_CMD_REG_WRITE;
-+		break;
-+	case SPMI_CMD_EXT_WRITE:
-+		op_code = SPMI_CMD_EXT_REG_WRITE;
-+		break;
-+	case SPMI_CMD_EXT_WRITEL:
-+		op_code = SPMI_CMD_EXT_REG_WRITE_L;
-+		break;
-+	default:
-+		dev_err(&ctrl->dev, "invalid write cmd 0x%x\n", opc);
-+		return -EINVAL;
-+	}
-+
-+	cmd = SPMI_APB_SPMI_CMD_EN |
-+	      (op_code << SPMI_APB_SPMI_CMD_TYPE_OFFSET) |
-+	      ((bc - 1) << SPMI_APB_SPMI_CMD_LENGTH_OFFSET) |
-+	      ((slave_id & 0xf) << SPMI_APB_SPMI_CMD_SLAVEID_OFFSET) |
-+	      ((slave_addr & 0xffff)  << SPMI_APB_SPMI_CMD_ADDR_OFFSET);
-+
-+	/* Write data to FIFOs */
-+	spin_lock_irqsave(&spmi_controller->lock, flags);
-+
-+	for (i = 0; bc > i * SPMI_PER_DATAREG_BYTE; i++) {
-+		data = 0;
-+		if ((bc - i * SPMI_PER_DATAREG_BYTE) >> 2) {
-+			memcpy(&data, buf, sizeof(data));
-+			buf += sizeof(data);
-+		} else {
-+			memcpy(&data, buf, bc % SPMI_PER_DATAREG_BYTE);
-+			buf += (bc % SPMI_PER_DATAREG_BYTE);
-+		}
-+
-+		writel((u32)cpu_to_be32(data),
-+		       spmi_controller->base + chnl_ofst +
-+		       SPMI_APB_SPMI_WDATA0_BASE_ADDR +
-+		       SPMI_PER_DATAREG_BYTE * i);
-+	}
-+
-+	/* Start the transaction */
-+	writel(cmd, spmi_controller->base + chnl_ofst + SPMI_APB_SPMI_CMD_BASE_ADDR);
-+
-+	rc = spmi_controller_wait_for_done(&ctrl->dev, spmi_controller,
-+					   spmi_controller->base, slave_id,
-+					   slave_addr);
-+	spin_unlock_irqrestore(&spmi_controller->lock, flags);
-+
-+	if (rc)
-+		dev_err(&ctrl->dev, "spmi write wait timeout op:0x%x slave_id:%d slave_addr:0x%x bc:%zu\n",
-+			opc, slave_id, slave_addr, bc);
-+	else
-+		dev_dbg(&ctrl->dev, "%s: id:%d slave_addr:0x%x, wrote value: %*ph\n",
-+			__func__, slave_id, slave_addr, (int)bc, __buf);
-+
-+	return rc;
-+}
-+
-+static int spmi_controller_probe(struct platform_device *pdev)
-+{
-+	struct spmi_controller_dev *spmi_controller;
-+	struct spmi_controller *ctrl;
-+	struct resource *iores;
-+	int ret;
-+
-+	ctrl = spmi_controller_alloc(&pdev->dev, sizeof(*spmi_controller));
-+	if (!ctrl) {
-+		dev_err(&pdev->dev, "can not allocate spmi_controller data\n");
-+		return -ENOMEM;
-+	}
-+	spmi_controller = spmi_controller_get_drvdata(ctrl);
-+	spmi_controller->controller = ctrl;
-+
-+	iores = platform_get_resource(pdev, IORESOURCE_MEM, 0);
-+	if (!iores) {
-+		dev_err(&pdev->dev, "can not get resource!\n");
-+		return -EINVAL;
-+	}
-+
-+	spmi_controller->base = devm_ioremap(&pdev->dev, iores->start,
-+					     resource_size(iores));
-+	if (!spmi_controller->base) {
-+		dev_err(&pdev->dev, "can not remap base addr!\n");
-+		return -EADDRNOTAVAIL;
-+	}
-+
-+	ret = of_property_read_u32(pdev->dev.of_node, "spmi-channel",
-+				   &spmi_controller->channel);
-+	if (ret) {
-+		dev_err(&pdev->dev, "can not get channel\n");
-+		return -ENODEV;
-+	}
-+
-+	platform_set_drvdata(pdev, spmi_controller);
-+	dev_set_drvdata(&ctrl->dev, spmi_controller);
-+
-+	spin_lock_init(&spmi_controller->lock);
-+
-+	ctrl->nr = spmi_controller->channel;
-+	ctrl->dev.parent = pdev->dev.parent;
-+	ctrl->dev.of_node = of_node_get(pdev->dev.of_node);
-+
-+	/* Callbacks */
-+	ctrl->read_cmd = spmi_read_cmd;
-+	ctrl->write_cmd = spmi_write_cmd;
-+
-+	ret = spmi_controller_add(ctrl);
-+	if (ret)
-+		dev_err(&pdev->dev, "spmi_add_controller failed with error %d!\n", ret);
-+
-+	return ret;
-+}
-+
-+static int spmi_del_controller(struct platform_device *pdev)
-+{
-+	struct spmi_controller *ctrl = platform_get_drvdata(pdev);
-+
-+	spmi_controller_remove(ctrl);
-+	kfree(ctrl);
-+	return 0;
-+}
-+
-+static const struct of_device_id spmi_controller_match_table[] = {
-+	{
-+		.compatible = "hisilicon,kirin970-spmi-controller",
-+	},
-+	{}
-+};
-+MODULE_DEVICE_TABLE(of, spmi_controller_match_table);
-+
-+static struct platform_driver spmi_controller_driver = {
-+	.probe		= spmi_controller_probe,
-+	.remove		= spmi_del_controller,
-+	.driver		= {
-+		.name	= "hisi_spmi_controller",
-+		.of_match_table = spmi_controller_match_table,
-+	},
-+};
-+
-+static int __init spmi_controller_init(void)
-+{
-+	return platform_driver_register(&spmi_controller_driver);
-+}
-+postcore_initcall(spmi_controller_init);
-+
-+static void __exit spmi_controller_exit(void)
-+{
-+	platform_driver_unregister(&spmi_controller_driver);
-+}
-+module_exit(spmi_controller_exit);
-+
-+MODULE_LICENSE("GPL v2");
-+MODULE_VERSION("1.0");
-+MODULE_ALIAS("platform:spmi_controller");
-diff --git a/drivers/staging/hikey9xx/Kconfig b/drivers/staging/hikey9xx/Kconfig
-index 0e97b5b9a56a..69392e42cd0d 100644
---- a/drivers/staging/hikey9xx/Kconfig
-+++ b/drivers/staging/hikey9xx/Kconfig
-@@ -1,16 +1,5 @@
- # SPDX-License-Identifier: GPL-2.0
- 
--# to be placed at drivers/spmi
--config SPMI_HISI3670
--	tristate "Hisilicon 3670 SPMI Controller"
--	select IRQ_DOMAIN_HIERARCHY
--	depends on HAS_IOMEM
--	depends on SPMI
--	help
--	  If you say yes to this option, support will be included for the
--	  built-in SPMI PMIC Arbiter interface on Hisilicon 3670
--	  processors.
--
- # to be placed at drivers/mfd
- config MFD_HI6421_SPMI
- 	tristate "HiSilicon Hi6421v600 SPMI PMU/Codec IC"
-diff --git a/drivers/staging/hikey9xx/Makefile b/drivers/staging/hikey9xx/Makefile
-index 9371dcc3d35b..347880fd378f 100644
---- a/drivers/staging/hikey9xx/Makefile
-+++ b/drivers/staging/hikey9xx/Makefile
-@@ -1,5 +1,4 @@
- # SPDX-License-Identifier: GPL-2.0
- 
--obj-$(CONFIG_SPMI_HISI3670)		+= hisi-spmi-controller.o
- obj-$(CONFIG_MFD_HI6421_SPMI)		+= hi6421-spmi-pmic.o
- obj-$(CONFIG_REGULATOR_HI6421V600)	+= hi6421v600-regulator.o
-diff --git a/drivers/staging/hikey9xx/hisi-spmi-controller.c b/drivers/staging/hikey9xx/hisi-spmi-controller.c
-deleted file mode 100644
-index f831c43f4783..000000000000
---- a/drivers/staging/hikey9xx/hisi-spmi-controller.c
-+++ /dev/null
-@@ -1,358 +0,0 @@
--// SPDX-License-Identifier: GPL-2.0
--
--#include <linux/delay.h>
--#include <linux/err.h>
--#include <linux/interrupt.h>
--#include <linux/io.h>
--#include <linux/kernel.h>
--#include <linux/module.h>
--#include <linux/of.h>
--#include <linux/platform_device.h>
--#include <linux/seq_file.h>
--#include <linux/slab.h>
--#include <linux/spmi.h>
--
--/*
-- * SPMI register addr
-- */
--#define SPMI_CHANNEL_OFFSET				0x0300
--#define SPMI_SLAVE_OFFSET				0x20
--
--#define SPMI_APB_SPMI_CMD_BASE_ADDR			0x0100
--
--#define SPMI_APB_SPMI_WDATA0_BASE_ADDR			0x0104
--#define SPMI_APB_SPMI_WDATA1_BASE_ADDR			0x0108
--#define SPMI_APB_SPMI_WDATA2_BASE_ADDR			0x010c
--#define SPMI_APB_SPMI_WDATA3_BASE_ADDR			0x0110
--
--#define SPMI_APB_SPMI_STATUS_BASE_ADDR			0x0200
--
--#define SPMI_APB_SPMI_RDATA0_BASE_ADDR			0x0204
--#define SPMI_APB_SPMI_RDATA1_BASE_ADDR			0x0208
--#define SPMI_APB_SPMI_RDATA2_BASE_ADDR			0x020c
--#define SPMI_APB_SPMI_RDATA3_BASE_ADDR			0x0210
--
--#define SPMI_PER_DATAREG_BYTE				4
--/*
-- * SPMI cmd register
-- */
--#define SPMI_APB_SPMI_CMD_EN				BIT(31)
--#define SPMI_APB_SPMI_CMD_TYPE_OFFSET			24
--#define SPMI_APB_SPMI_CMD_LENGTH_OFFSET			20
--#define SPMI_APB_SPMI_CMD_SLAVEID_OFFSET		16
--#define SPMI_APB_SPMI_CMD_ADDR_OFFSET			0
--
--/* Command Opcodes */
--
--enum spmi_controller_cmd_op_code {
--	SPMI_CMD_REG_ZERO_WRITE = 0,
--	SPMI_CMD_REG_WRITE = 1,
--	SPMI_CMD_REG_READ = 2,
--	SPMI_CMD_EXT_REG_WRITE = 3,
--	SPMI_CMD_EXT_REG_READ = 4,
--	SPMI_CMD_EXT_REG_WRITE_L = 5,
--	SPMI_CMD_EXT_REG_READ_L = 6,
--	SPMI_CMD_REG_RESET = 7,
--	SPMI_CMD_REG_SLEEP = 8,
--	SPMI_CMD_REG_SHUTDOWN = 9,
--	SPMI_CMD_REG_WAKEUP = 10,
--};
--
--/*
-- * SPMI status register
-- */
--#define SPMI_APB_TRANS_DONE			BIT(0)
--#define SPMI_APB_TRANS_FAIL			BIT(2)
--
--/* Command register fields */
--#define SPMI_CONTROLLER_CMD_MAX_BYTE_COUNT	16
--
--/* Maximum number of support PMIC peripherals */
--#define SPMI_CONTROLLER_TIMEOUT_US		1000
--#define SPMI_CONTROLLER_MAX_TRANS_BYTES		16
--
--struct spmi_controller_dev {
--	struct spmi_controller	*controller;
--	struct device		*dev;
--	void __iomem		*base;
--	spinlock_t		lock;
--	u32			channel;
--};
--
--static int spmi_controller_wait_for_done(struct device *dev,
--					 struct spmi_controller_dev *ctrl_dev,
--					 void __iomem *base, u8 sid, u16 addr)
--{
--	u32 timeout = SPMI_CONTROLLER_TIMEOUT_US;
--	u32 status, offset;
--
--	offset  = SPMI_APB_SPMI_STATUS_BASE_ADDR;
--	offset += SPMI_CHANNEL_OFFSET * ctrl_dev->channel + SPMI_SLAVE_OFFSET * sid;
--
--	do {
--		status = readl(base + offset);
--
--		if (status & SPMI_APB_TRANS_DONE) {
--			if (status & SPMI_APB_TRANS_FAIL) {
--				dev_err(dev, "%s: transaction failed (0x%x)\n",
--					__func__, status);
--				return -EIO;
--			}
--			dev_dbg(dev, "%s: status 0x%x\n", __func__, status);
--			return 0;
--		}
--		udelay(1);
--	} while (timeout--);
--
--	dev_err(dev, "%s: timeout, status 0x%x\n", __func__, status);
--	return -ETIMEDOUT;
--}
--
--static int spmi_read_cmd(struct spmi_controller *ctrl,
--			 u8 opc, u8 slave_id, u16 slave_addr, u8 *__buf, size_t bc)
--{
--	struct spmi_controller_dev *spmi_controller = dev_get_drvdata(&ctrl->dev);
--	u32 chnl_ofst = SPMI_CHANNEL_OFFSET * spmi_controller->channel;
--	unsigned long flags;
--	u8 *buf = __buf;
--	u32 cmd, data;
--	int rc;
--	u8 op_code, i;
--
--	if (bc > SPMI_CONTROLLER_MAX_TRANS_BYTES) {
--		dev_err(&ctrl->dev,
--			"spmi_controller supports 1..%d bytes per trans, but:%zu requested\n",
--			SPMI_CONTROLLER_MAX_TRANS_BYTES, bc);
--		return  -EINVAL;
--	}
--
--	switch (opc) {
--	case SPMI_CMD_READ:
--		op_code = SPMI_CMD_REG_READ;
--		break;
--	case SPMI_CMD_EXT_READ:
--		op_code = SPMI_CMD_EXT_REG_READ;
--		break;
--	case SPMI_CMD_EXT_READL:
--		op_code = SPMI_CMD_EXT_REG_READ_L;
--		break;
--	default:
--		dev_err(&ctrl->dev, "invalid read cmd 0x%x\n", opc);
--		return -EINVAL;
--	}
--
--	cmd = SPMI_APB_SPMI_CMD_EN |
--	     (op_code << SPMI_APB_SPMI_CMD_TYPE_OFFSET) |
--	     ((bc - 1) << SPMI_APB_SPMI_CMD_LENGTH_OFFSET) |
--	     ((slave_id & 0xf) << SPMI_APB_SPMI_CMD_SLAVEID_OFFSET) |  /* slvid */
--	     ((slave_addr & 0xffff)  << SPMI_APB_SPMI_CMD_ADDR_OFFSET); /* slave_addr */
--
--	spin_lock_irqsave(&spmi_controller->lock, flags);
--
--	writel(cmd, spmi_controller->base + chnl_ofst + SPMI_APB_SPMI_CMD_BASE_ADDR);
--
--	rc = spmi_controller_wait_for_done(&ctrl->dev, spmi_controller,
--					   spmi_controller->base, slave_id, slave_addr);
--	if (rc)
--		goto done;
--
--	for (i = 0; bc > i * SPMI_PER_DATAREG_BYTE; i++) {
--		data = readl(spmi_controller->base + chnl_ofst +
--			     SPMI_SLAVE_OFFSET * slave_id +
--			     SPMI_APB_SPMI_RDATA0_BASE_ADDR +
--			     i * SPMI_PER_DATAREG_BYTE);
--		data = be32_to_cpu((__be32)data);
--		if ((bc - i * SPMI_PER_DATAREG_BYTE) >> 2) {
--			memcpy(buf, &data, sizeof(data));
--			buf += sizeof(data);
--		} else {
--			memcpy(buf, &data, bc % SPMI_PER_DATAREG_BYTE);
--			buf += (bc % SPMI_PER_DATAREG_BYTE);
--		}
--	}
--
--done:
--	spin_unlock_irqrestore(&spmi_controller->lock, flags);
--	if (rc)
--		dev_err(&ctrl->dev,
--			"spmi read wait timeout op:0x%x slave_id:%d slave_addr:0x%x bc:%zu\n",
--			opc, slave_id, slave_addr, bc + 1);
--	else
--		dev_dbg(&ctrl->dev, "%s: id:%d slave_addr:0x%x, read value: %*ph\n",
--			__func__, slave_id, slave_addr, (int)bc, __buf);
--
--	return rc;
--}
--
--static int spmi_write_cmd(struct spmi_controller *ctrl,
--			  u8 opc, u8 slave_id, u16 slave_addr, const u8 *__buf, size_t bc)
--{
--	struct spmi_controller_dev *spmi_controller = dev_get_drvdata(&ctrl->dev);
--	u32 chnl_ofst = SPMI_CHANNEL_OFFSET * spmi_controller->channel;
--	const u8 *buf = __buf;
--	unsigned long flags;
--	u32 cmd, data;
--	int rc;
--	u8 op_code, i;
--
--	if (bc > SPMI_CONTROLLER_MAX_TRANS_BYTES) {
--		dev_err(&ctrl->dev,
--			"spmi_controller supports 1..%d bytes per trans, but:%zu requested\n",
--			SPMI_CONTROLLER_MAX_TRANS_BYTES, bc);
--		return  -EINVAL;
--	}
--
--	switch (opc) {
--	case SPMI_CMD_WRITE:
--		op_code = SPMI_CMD_REG_WRITE;
--		break;
--	case SPMI_CMD_EXT_WRITE:
--		op_code = SPMI_CMD_EXT_REG_WRITE;
--		break;
--	case SPMI_CMD_EXT_WRITEL:
--		op_code = SPMI_CMD_EXT_REG_WRITE_L;
--		break;
--	default:
--		dev_err(&ctrl->dev, "invalid write cmd 0x%x\n", opc);
--		return -EINVAL;
--	}
--
--	cmd = SPMI_APB_SPMI_CMD_EN |
--	      (op_code << SPMI_APB_SPMI_CMD_TYPE_OFFSET) |
--	      ((bc - 1) << SPMI_APB_SPMI_CMD_LENGTH_OFFSET) |
--	      ((slave_id & 0xf) << SPMI_APB_SPMI_CMD_SLAVEID_OFFSET) |
--	      ((slave_addr & 0xffff)  << SPMI_APB_SPMI_CMD_ADDR_OFFSET);
--
--	/* Write data to FIFOs */
--	spin_lock_irqsave(&spmi_controller->lock, flags);
--
--	for (i = 0; bc > i * SPMI_PER_DATAREG_BYTE; i++) {
--		data = 0;
--		if ((bc - i * SPMI_PER_DATAREG_BYTE) >> 2) {
--			memcpy(&data, buf, sizeof(data));
--			buf += sizeof(data);
--		} else {
--			memcpy(&data, buf, bc % SPMI_PER_DATAREG_BYTE);
--			buf += (bc % SPMI_PER_DATAREG_BYTE);
--		}
--
--		writel((u32)cpu_to_be32(data),
--		       spmi_controller->base + chnl_ofst +
--		       SPMI_APB_SPMI_WDATA0_BASE_ADDR +
--		       SPMI_PER_DATAREG_BYTE * i);
--	}
--
--	/* Start the transaction */
--	writel(cmd, spmi_controller->base + chnl_ofst + SPMI_APB_SPMI_CMD_BASE_ADDR);
--
--	rc = spmi_controller_wait_for_done(&ctrl->dev, spmi_controller,
--					   spmi_controller->base, slave_id,
--					   slave_addr);
--	spin_unlock_irqrestore(&spmi_controller->lock, flags);
--
--	if (rc)
--		dev_err(&ctrl->dev, "spmi write wait timeout op:0x%x slave_id:%d slave_addr:0x%x bc:%zu\n",
--			opc, slave_id, slave_addr, bc);
--	else
--		dev_dbg(&ctrl->dev, "%s: id:%d slave_addr:0x%x, wrote value: %*ph\n",
--			__func__, slave_id, slave_addr, (int)bc, __buf);
--
--	return rc;
--}
--
--static int spmi_controller_probe(struct platform_device *pdev)
--{
--	struct spmi_controller_dev *spmi_controller;
--	struct spmi_controller *ctrl;
--	struct resource *iores;
--	int ret;
--
--	ctrl = spmi_controller_alloc(&pdev->dev, sizeof(*spmi_controller));
--	if (!ctrl) {
--		dev_err(&pdev->dev, "can not allocate spmi_controller data\n");
--		return -ENOMEM;
--	}
--	spmi_controller = spmi_controller_get_drvdata(ctrl);
--	spmi_controller->controller = ctrl;
--
--	iores = platform_get_resource(pdev, IORESOURCE_MEM, 0);
--	if (!iores) {
--		dev_err(&pdev->dev, "can not get resource!\n");
--		return -EINVAL;
--	}
--
--	spmi_controller->base = devm_ioremap(&pdev->dev, iores->start,
--					     resource_size(iores));
--	if (!spmi_controller->base) {
--		dev_err(&pdev->dev, "can not remap base addr!\n");
--		return -EADDRNOTAVAIL;
--	}
--
--	ret = of_property_read_u32(pdev->dev.of_node, "spmi-channel",
--				   &spmi_controller->channel);
--	if (ret) {
--		dev_err(&pdev->dev, "can not get channel\n");
--		return -ENODEV;
--	}
--
--	platform_set_drvdata(pdev, spmi_controller);
--	dev_set_drvdata(&ctrl->dev, spmi_controller);
--
--	spin_lock_init(&spmi_controller->lock);
--
--	ctrl->nr = spmi_controller->channel;
--	ctrl->dev.parent = pdev->dev.parent;
--	ctrl->dev.of_node = of_node_get(pdev->dev.of_node);
--
--	/* Callbacks */
--	ctrl->read_cmd = spmi_read_cmd;
--	ctrl->write_cmd = spmi_write_cmd;
--
--	ret = spmi_controller_add(ctrl);
--	if (ret)
--		dev_err(&pdev->dev, "spmi_add_controller failed with error %d!\n", ret);
--
--	return ret;
--}
--
--static int spmi_del_controller(struct platform_device *pdev)
--{
--	struct spmi_controller *ctrl = platform_get_drvdata(pdev);
--
--	spmi_controller_remove(ctrl);
--	kfree(ctrl);
--	return 0;
--}
--
--static const struct of_device_id spmi_controller_match_table[] = {
--	{
--		.compatible = "hisilicon,kirin970-spmi-controller",
--	},
--	{}
--};
--MODULE_DEVICE_TABLE(of, spmi_controller_match_table);
--
--static struct platform_driver spmi_controller_driver = {
--	.probe		= spmi_controller_probe,
--	.remove		= spmi_del_controller,
--	.driver		= {
--		.name	= "hisi_spmi_controller",
--		.of_match_table = spmi_controller_match_table,
--	},
--};
--
--static int __init spmi_controller_init(void)
--{
--	return platform_driver_register(&spmi_controller_driver);
--}
--postcore_initcall(spmi_controller_init);
--
--static void __exit spmi_controller_exit(void)
--{
--	platform_driver_unregister(&spmi_controller_driver);
--}
--module_exit(spmi_controller_exit);
--
--MODULE_LICENSE("GPL v2");
--MODULE_VERSION("1.0");
--MODULE_ALIAS("platform:spmi_controller");
-diff --git a/drivers/staging/hikey9xx/hisilicon,hisi-spmi-controller.yaml b/drivers/staging/hikey9xx/hisilicon,hisi-spmi-controller.yaml
-deleted file mode 100644
-index f2a56fa4e78e..000000000000
---- a/drivers/staging/hikey9xx/hisilicon,hisi-spmi-controller.yaml
-+++ /dev/null
-@@ -1,62 +0,0 @@
--# SPDX-License-Identifier: GPL-2.0
--%YAML 1.2
-----
--$id: http://devicetree.org/schemas/spmi/hisilicon,hisi-spmi-controller.yaml#
--$schema: http://devicetree.org/meta-schemas/core.yaml#
--
--title: HiSilicon SPMI controller
--
--maintainers:
--  - Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
--
--description: |
--  The HiSilicon SPMI BUS controller is found on some Kirin-based designs.
--  It is a MIPI System Power Management (SPMI) controller.
--
--  The PMIC part is provided by
--  drivers/staging/hikey9xx/hisilicon,hi6421-spmi-pmic.yaml.
--
--properties:
--  $nodename:
--    pattern: "spmi@[0-9a-f]"
--
--  compatible:
--    const: hisilicon,kirin970-spmi-controller
--
--  reg:
--    maxItems: 1
--
--  spmi-channel:
--    description: |
--      number of the Kirin 970 SPMI channel where the SPMI devices are connected.
--
--required:
-- - compatible
-- - reg
-- - spmi-channel
--
--patternProperties:
--  "^pmic@[0-9a-f]$":
--    description: |
--      PMIC properties, which are specific to the used SPMI PMIC device(s).
--      When used in combination with HiSilicon 6421v600, the properties
--      are documented at
--      drivers/staging/hikey9xx/hisilicon,hi6421-spmi-pmic.yaml.
--
--examples:
--  - |
--    bus {
--      #address-cells = <2>;
--      #size-cells = <2>;
--
--      spmi: spmi@fff24000 {
--        compatible = "hisilicon,kirin970-spmi-controller";
--        status = "ok";
--        reg = <0x0 0xfff24000 0x0 0x1000>;
--        spmi-channel = <2>;
--
--        pmic@0 {
--          /* pmic properties */
--        };
--      };
--    };
--- 
-2.28.0
+-Akhil.
+>> +	struct nvmem_cell *cell;
+>> +	u32 bin, i;
+>> +	u32 val = 0;
+>> +	void *buf, *opp_table;
+>> +
+>> +	cell = nvmem_cell_get(dev, "speed_bin");
+>> +	/*
+>> +	 * -ENOENT means that the platform doesn't support speedbin which is
+>> +	 * fine
+>> +	 */
+>> +	if (PTR_ERR(cell) == -ENOENT)
+>> +		return 0;
+>> +	else if (IS_ERR(cell))
+>> +		return PTR_ERR(cell);
+>> +
+>> +	/* A speedbin table is must if the platform supports speedbin */
+>> +	if (!speedbins) {
+>> +		DRM_DEV_ERROR(dev, "speed-bin table is missing\n");
+>> +		return -ENOENT;
+>> +	}
+>> +
+>> +	buf = nvmem_cell_read(cell, NULL);
+>> +	if (IS_ERR(buf)) {
+>> +		nvmem_cell_put(cell);
+>> +		return PTR_ERR(buf);
+>> +	}
+>> +
+>> +	bin = *((u32 *) buf);
+>> +
+>> +	for (i = 0; i < speedbins_count; i++) {
+>> +		if (bin == speedbins[i]) {
+>> +			val = (1 << i);
+>> +			break;
+>> +		}
+>> +	}
+>> +
+>> +	kfree(buf);
+>> +	nvmem_cell_put(cell);
+>> +
+>> +	if (!val) {
+>> +		DRM_DEV_ERROR(dev, "missing support for speed-bin: %u\n", bin);
+>> +		return -ENOENT;
+>> +	}
+>> +
+>> +	opp_table = dev_pm_opp_set_supported_hw(dev, &val, 1);
+>> +	if (IS_ERR(opp_table))
+>> +		return PTR_ERR(opp_table);
+>> +
+>> +	adreno_gpu->opp_table = opp_table;
+>> +	return 0;
+>> +}
+>> +
+>> +static void adreno_put_supported_hw(struct opp_table *opp_table)
+>> +{
+>> +	if (opp_table)
+>> +		dev_pm_opp_put_supported_hw(opp_table);
+>> +}
+>> +
+>>   int adreno_gpu_init(struct drm_device *drm, struct platform_device *pdev,
+>>   		struct adreno_gpu *adreno_gpu,
+>>   		const struct adreno_gpu_funcs *funcs, int nr_rings)
+>> @@ -899,6 +963,7 @@ int adreno_gpu_init(struct drm_device *drm, struct platform_device *pdev,
+>>   	struct adreno_platform_config *config = dev->platform_data;
+>>   	struct msm_gpu_config adreno_gpu_config  = { 0 };
+>>   	struct msm_gpu *gpu = &adreno_gpu->base;
+>> +	int ret;
+>>   
+>>   	adreno_gpu->funcs = funcs;
+>>   	adreno_gpu->info = adreno_info(config->rev);
+>> @@ -910,6 +975,10 @@ int adreno_gpu_init(struct drm_device *drm, struct platform_device *pdev,
+>>   
+>>   	adreno_gpu_config.nr_rings = nr_rings;
+>>   
+>> +	ret = adreno_set_supported_hw(dev, adreno_gpu);
+>> +	if (ret)
+>> +		return ret;
+> 
+> This bit should be in the target specific code
+>> +
+>>   	adreno_get_pwrlevels(dev, gpu);
+>>   
+>>   	pm_runtime_set_autosuspend_delay(dev,
+>> @@ -936,4 +1005,6 @@ void adreno_gpu_cleanup(struct adreno_gpu *adreno_gpu)
+>>   
+>>   	icc_put(gpu->icc_path);
+>>   	icc_put(gpu->ocmem_icc_path);
+>> +
+>> +	adreno_put_supported_hw(adreno_gpu->opp_table);
+> 
+> And this bit too, though it would be easier to just call the put function
+> directly without having a intermediate function.  Also the OPP function should
+> be NULL aware but thats a different story.
+> 
+> Jordan
+>>   }
+>> diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.h b/drivers/gpu/drm/msm/adreno/adreno_gpu.h
+>> index c3775f7..a756ad7 100644
+>> --- a/drivers/gpu/drm/msm/adreno/adreno_gpu.h
+>> +++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.h
+>> @@ -55,6 +55,7 @@ struct adreno_reglist {
+>>   };
+>>   
+>>   extern const struct adreno_reglist a630_hwcg[], a640_hwcg[], a650_hwcg[];
+>> +extern const u32 a618_speedbins[];
+>>   
+>>   struct adreno_info {
+>>   	struct adreno_rev rev;
+>> @@ -67,6 +68,8 @@ struct adreno_info {
+>>   	const char *zapfw;
+>>   	u32 inactive_period;
+>>   	const struct adreno_reglist *hwcg;
+>> +	const u32 *speedbins;
+>> +	const u8 speedbins_count;
+>>   };
+>>   
+>>   const struct adreno_info *adreno_info(struct adreno_rev rev);
+>> @@ -112,6 +115,8 @@ struct adreno_gpu {
+>>   	 * code (a3xx_gpu.c) and stored in this common location.
+>>   	 */
+>>   	const unsigned int *reg_offsets;
+>> +
+>> +	struct opp_table *opp_table;
+>>   };
+>>   #define to_adreno_gpu(x) container_of(x, struct adreno_gpu, base)
+>>   
+>> -- 
+>> 2.7.4
+>>
+> 
 
