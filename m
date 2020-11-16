@@ -2,283 +2,290 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 4A8122B4CE4
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Nov 2020 18:32:08 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id DEA232B4D1B
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Nov 2020 18:36:05 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732886AbgKPR32 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 16 Nov 2020 12:29:28 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44436 "EHLO
+        id S1733030AbgKPReF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 16 Nov 2020 12:34:05 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45172 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1732885AbgKPR32 (ORCPT
+        with ESMTP id S1730530AbgKPReE (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 16 Nov 2020 12:29:28 -0500
-Received: from mail-wr1-x442.google.com (mail-wr1-x442.google.com [IPv6:2a00:1450:4864:20::442])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BB500C0613CF;
-        Mon, 16 Nov 2020 09:29:27 -0800 (PST)
-Received: by mail-wr1-x442.google.com with SMTP id o15so19605251wru.6;
-        Mon, 16 Nov 2020 09:29:27 -0800 (PST)
+        Mon, 16 Nov 2020 12:34:04 -0500
+Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E0EE1C0613CF
+        for <linux-arm-msm@vger.kernel.org>; Mon, 16 Nov 2020 09:34:03 -0800 (PST)
+Received: by mail-wr1-x430.google.com with SMTP id l1so19607262wrb.9
+        for <linux-arm-msm@vger.kernel.org>; Mon, 16 Nov 2020 09:34:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
-        bh=2rzUiv+O2rB515tRcTF7zhCppOCZFIZQrBJWwGnbzuU=;
-        b=mVzVKyONwuMQFJtbj/4JuJL6V7wxm6Vg7YAtegkarbZFXHd/g0xiJ8hw/4b0DIo/2y
-         t2CqJbv0pt3LmRoq378LjDtUn+7qoCUIYP66ev6Ph6+KQal+jN56jX6n13AwxrlTqGvf
-         6jB3lvGGUXrCpnvT3W0MOvtqdDtGLSRllhCd5F9XxgjyNAOJM1bVhlpNOAbKQo+thkG/
-         rxK5ouAWxt7M99j5pZ2NoMbEBW1JFPUscCo9wA3TFh5JUfs5b2FESETRwdl5n0eL/xW9
-         cJjeJeNS9lMsZT0WETVig3q0dDt+2XmzI9kDf88WP8ES8YmB5hF7xogrRKSSrWA7/nur
-         lK/Q==
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=2rD08UjkD5sCRxYS0F4REDAlR1ogAYBAyad+KWz2GEw=;
+        b=K3MiO7nmCnXKxJcjVRzgh23znPiMhQF02r4EEB7ilazh6Q3typAKfns3W275i/uPwe
+         6ki3g+RVNhc0vrXZq3g/NjcHDWs+0dIiR9hbHYjXkWaHA19vmEOkeiL3NWGUAzyrgJkN
+         tHQKXYzaVPK1Y726mGhFToAlmQJnLR0vrjWl/G6HFa2g8W8po3DfiLJSh4w3r3xm1/1J
+         4iKvoDgtchsphx/S761VXUii48yJOE65It3vRJ8WDhCFz/WQHdhzXpPzR3iG+qQI4OXV
+         Kn62IC/EEYXRvvO5sxXlSmdibfJONlvMFe2LSYETrMbq3r5KirnOZfjBqtRLpviug9+T
+         jXxA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to;
-        bh=2rzUiv+O2rB515tRcTF7zhCppOCZFIZQrBJWwGnbzuU=;
-        b=Vpn7R8gN9UddXf8HSGOeTYBspQX9shcJj1ps43NyccCa6SvWetK+jXUNZfxNvpShzG
-         e80kIX6HC9HIOCQ/1XDHx2+/IrxBrax6Hh4fMZp1bLeV09S+/LrNC5PZ+kgmd478KuUQ
-         JXgzD+0qrLn98mxlSKCXwZwWAb3xG67PNH7DpDmmZBqrCFt6LZ9QG/0uQuzcUU3R7NMv
-         feWyW9fTcEdS9cfGVxnHugNf4dS/Nhi+Hn3gDwkMZo3t8GRg7CBTu37WytULXxkqFgtA
-         7UBB0ZCn3T875tJmjefx8fuWs0N9TfjK0gGtgl3XsUKoKYhJLsLozBdpUjzpBeARx54a
-         ClBQ==
-X-Gm-Message-State: AOAM533v6VQJQC1Gj13ijbOZJdS2iL0KLKRvkuw5mcZpTWR5Om6WcBi8
-        O/M0QefvMzY7qkvRLb/BzBeduiqKDunzBOj8DNU=
-X-Google-Smtp-Source: ABdhPJz26d2TFer1YuHgeDiv7jIpz6y2liL6qKnq49RRjBLmZE9f9dKqTC2tEZ5KHgA9Ih6frQMkdGezlTEtCkC516U=
-X-Received: by 2002:adf:a54d:: with SMTP id j13mr21501811wrb.132.1605547766379;
- Mon, 16 Nov 2020 09:29:26 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=2rD08UjkD5sCRxYS0F4REDAlR1ogAYBAyad+KWz2GEw=;
+        b=i/8+9fxXBVs0IEYU4+x9qswyY2LjIkzzZPtWa3W3/QFn24zwPASriRIVMKDSnczDKw
+         P2YYc8EKl3djF6z96YliZYFFFMFs+5qUrKS4oAxfuuCLuIlgD1OuyczSpsEtLOTI0ikk
+         7pSZNG6qqV7oV85lN9kgJnLSn0nxOl5zFBixtJIACscTmK8spNhiHKzRcI2hnzmC/y0U
+         ca+iGjl9PW8uanAAhuuG19EGE7/iirz+Ptvyo3q6Eb115PPkkU6hhZZLVAi/eIgjexTA
+         ICGohgbW3X7RImV9NFUG3AN8MLz1ntn1Bmu7MCCiPJdvChkosDXF/BX89MR0pp31hj4Y
+         0wKg==
+X-Gm-Message-State: AOAM533dUEcyZNj0Rdlvi3tqANuAC65s/xkM4P/a+55YkBbedpyGaG0w
+        6YSTffhO1lQz2n2SXJj0grJzzw==
+X-Google-Smtp-Source: ABdhPJynz1SYzcQjLU7vxkWKnYKhsXRdyUFjnGlTNdA6hFZ/AU7rgprYiT7u0t+B4P+Sd63V1F7+RA==
+X-Received: by 2002:adf:de12:: with SMTP id b18mr21161496wrm.187.1605548042617;
+        Mon, 16 Nov 2020 09:34:02 -0800 (PST)
+Received: from dell.default ([91.110.221.159])
+        by smtp.gmail.com with ESMTPSA id k22sm20178562wmi.34.2020.11.16.09.34.00
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 16 Nov 2020 09:34:01 -0800 (PST)
+From:   Lee Jones <lee.jones@linaro.org>
+To:     lee.jones@linaro.org
+Cc:     linux-kernel@vger.kernel.org,
+        Ajay Kumar <ajaykumar.rs@samsung.com>,
+        Akshu Agarwal <akshua@gmail.com>,
+        Alex Deucher <alexander.deucher@amd.com>,
+        amd-gfx@lists.freedesktop.org, Ben Skeggs <bskeggs@redhat.com>,
+        Christian Koenig <christian.koenig@amd.com>,
+        Chris Zhong <zyw@rock-chips.com>,
+        Chun-Kuang Hu <chunkuang.hu@kernel.org>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        David Airlie <airlied@linux.ie>,
+        David Francis <David.Francis@amd.com>,
+        dri-devel@lists.freedesktop.org, Eric Anholt <eric@anholt.net>,
+        Eunchul Kim <chulspro.kim@samsung.com>,
+        Fabio Estevam <festevam@gmail.com>,
+        freedreno@lists.freedesktop.org,
+        =?UTF-8?q?Heiko=20St=C3=BCbner?= <heiko@sntech.de>,
+        Huang Rui <ray.huang@amd.com>, Inki Dae <inki.dae@samsung.com>,
+        Jerome Brunet <jbrunet@baylibre.com>,
+        Jie Qiu <jie.qiu@mediatek.com>,
+        Jinyoung Jeon <jy0.jeon@samsung.com>,
+        Joonyoung Shim <jy0922.shim@samsung.com>,
+        Kalyan Thota <kalyan_t@codeaurora.org>,
+        Kevin Hilman <khilman@baylibre.com>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        Kyungmin Park <kyungmin.park@samsung.com>,
+        linaro-mm-sig@lists.linaro.org, linux-amlogic@lists.infradead.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, linux-mediatek@lists.infradead.org,
+        linux-media@vger.kernel.org, linux-rockchip@lists.infradead.org,
+        linux-samsung-soc@vger.kernel.org,
+        Luben Tuikov <luben.tuikov@amd.com>,
+        Lyude Paul <lyude@redhat.com>,
+        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Mark Yao <mark.yao@rock-chips.com>,
+        Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        Maxime Ripard <mripard@kernel.org>,
+        Neil Armstrong <narmstrong@baylibre.com>,
+        Nickey Yang <nickey.yang@rock-chips.com>,
+        Nirmoy Das <nirmoy.aiemd@gmail.com>,
+        nouveau@lists.freedesktop.org, NXP Linux Team <linux-imx@nxp.com>,
+        Pengutronix Kernel Team <kernel@pengutronix.de>,
+        Philipp Zabel <p.zabel@pengutronix.de>,
+        Rob Clark <robdclark@gmail.com>,
+        Russell King <linux@armlinux.org.uk>,
+        Sandy Huang <hjc@rock-chips.com>,
+        Sangmin Lee <lsmin.lee@samsung.com>,
+        Sascha Hauer <s.hauer@pengutronix.de>,
+        Sean Paul <sean@poorly.run>,
+        Seung-Woo Kim <sw0312.kim@samsung.com>,
+        Shawn Guo <shawnguo@kernel.org>,
+        Sumit Semwal <sumit.semwal@linaro.org>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        YT SHEN <yt.shen@mediatek.com>
+Subject: [RESEND 00/42] Rid W=1 warnings from GPU (non-Radeon)
+Date:   Mon, 16 Nov 2020 17:33:14 +0000
+Message-Id: <20201116173356.1828478-1-lee.jones@linaro.org>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-References: <20201114193010.753355-1-robdclark@gmail.com> <20201114193010.753355-4-robdclark@gmail.com>
- <20201116172009.GB16856@jcrouse1-lnx.qualcomm.com>
-In-Reply-To: <20201116172009.GB16856@jcrouse1-lnx.qualcomm.com>
-From:   Rob Clark <robdclark@gmail.com>
-Date:   Mon, 16 Nov 2020 09:31:12 -0800
-Message-ID: <CAF6AEGswje8kYBo=8b4+BCciooTgj0ims_2LQJHXZK=n2XG9aw@mail.gmail.com>
-Subject: Re: [Freedreno] [PATCH 3/3] drm/msm/shrinker: Only iterate dontneed objs
-To:     Rob Clark <robdclark@gmail.com>,
-        dri-devel <dri-devel@lists.freedesktop.org>,
-        Rob Clark <robdclark@chromium.org>,
-        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
-        <freedreno@lists.freedesktop.org>, David Airlie <airlied@linux.ie>,
-        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
-        <linux-arm-msm@vger.kernel.org>,
-        open list <linux-kernel@vger.kernel.org>,
-        Sean Paul <sean@poorly.run>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Nov 16, 2020 at 9:20 AM Jordan Crouse <jcrouse@codeaurora.org> wrote:
->
-> On Sat, Nov 14, 2020 at 11:30:10AM -0800, Rob Clark wrote:
-> > From: Rob Clark <robdclark@chromium.org>
-> >
-> > In situations where the GPU is mostly idle, all or nearly all buffer
-> > objects will be in the inactive list.  But if the system is under memory
-> > pressure (from something other than GPU), we could still get a lot of
-> > shrinker calls.  Which results in traversing a list of thousands of objs
-> > and in the end finding nothing to shrink.  Which isn't so efficient.
-> >
-> > Instead split the inactive_list into two lists, one inactive objs which
-> > are shrinkable, and a second one for those that are not.  This way we
-> > can avoid traversing objs which we know are not shrinker candidates.
-> >
-> > Signed-off-by: Rob Clark <robdclark@chromium.org>
-> > ---
-> >  drivers/gpu/drm/msm/msm_debugfs.c      |  3 ++-
-> >  drivers/gpu/drm/msm/msm_drv.c          |  3 ++-
-> >  drivers/gpu/drm/msm/msm_drv.h          |  8 +++---
-> >  drivers/gpu/drm/msm/msm_gem.c          | 34 ++++++++++++++++++++------
-> >  drivers/gpu/drm/msm/msm_gem_shrinker.c |  7 +++---
-> >  5 files changed, 40 insertions(+), 15 deletions(-)
-> >
-> > diff --git a/drivers/gpu/drm/msm/msm_debugfs.c b/drivers/gpu/drm/msm/msm_debugfs.c
-> > index 64afbed89821..85ad0babc326 100644
-> > --- a/drivers/gpu/drm/msm/msm_debugfs.c
-> > +++ b/drivers/gpu/drm/msm/msm_debugfs.c
-> > @@ -124,7 +124,8 @@ static int msm_gem_show(struct drm_device *dev, struct seq_file *m)
-> >       }
-> >
-> >       seq_printf(m, "Inactive Objects:\n");
-> > -     msm_gem_describe_objects(&priv->inactive_list, m);
-> > +     msm_gem_describe_objects(&priv->inactive_dontneed, m);
-> > +     msm_gem_describe_objects(&priv->inactive_willneed, m);
-> >
-> >       mutex_unlock(&priv->mm_lock);
-> >
-> > diff --git a/drivers/gpu/drm/msm/msm_drv.c b/drivers/gpu/drm/msm/msm_drv.c
-> > index 4d808769e6ed..39a54f364aa8 100644
-> > --- a/drivers/gpu/drm/msm/msm_drv.c
-> > +++ b/drivers/gpu/drm/msm/msm_drv.c
-> > @@ -465,7 +465,8 @@ static int msm_drm_init(struct device *dev, struct drm_driver *drv)
-> >
-> >       priv->wq = alloc_ordered_workqueue("msm", 0);
-> >
-> > -     INIT_LIST_HEAD(&priv->inactive_list);
-> > +     INIT_LIST_HEAD(&priv->inactive_willneed);
-> > +     INIT_LIST_HEAD(&priv->inactive_dontneed);
-> >       mutex_init(&priv->mm_lock);
-> >
-> >       /* Teach lockdep about lock ordering wrt. shrinker: */
-> > diff --git a/drivers/gpu/drm/msm/msm_drv.h b/drivers/gpu/drm/msm/msm_drv.h
-> > index f869ed67b5da..ed18c5bed10f 100644
-> > --- a/drivers/gpu/drm/msm/msm_drv.h
-> > +++ b/drivers/gpu/drm/msm/msm_drv.h
-> > @@ -175,8 +175,9 @@ struct msm_drm_private {
-> >       struct msm_perf_state *perf;
-> >
-> >       /*
-> > -      * List of inactive GEM objects.  Every bo is either in the inactive_list
-> > -      * or gpu->active_list (for the gpu it is active on[1])
-> > +      * Lists of inactive GEM objects.  Every bo is either in one of the
-> > +      * inactive lists (depending on whether or not it is shrinkable) or
-> > +      * gpu->active_list (for the gpu it is active on[1])
-> >        *
-> >        * These lists are protected by mm_lock.  If struct_mutex is involved, it
-> >        * should be aquired prior to mm_lock.  One should *not* hold mm_lock in
-> > @@ -185,7 +186,8 @@ struct msm_drm_private {
-> >        * [1] if someone ever added support for the old 2d cores, there could be
-> >        *     more than one gpu object
-> >        */
-> > -     struct list_head inactive_list;
-> > +     struct list_head inactive_willneed;  /* inactive + !shrinkable */
-> > +     struct list_head inactive_dontneed;  /* inactive +  shrinkable */
-> >       struct mutex mm_lock;
-> >
-> >       struct workqueue_struct *wq;
-> > diff --git a/drivers/gpu/drm/msm/msm_gem.c b/drivers/gpu/drm/msm/msm_gem.c
-> > index 2795288b0a95..de8d2cfada24 100644
-> > --- a/drivers/gpu/drm/msm/msm_gem.c
-> > +++ b/drivers/gpu/drm/msm/msm_gem.c
-> > @@ -17,6 +17,7 @@
-> >  #include "msm_gpu.h"
-> >  #include "msm_mmu.h"
-> >
-> > +static void update_inactive(struct msm_gem_object *msm_obj);
-> >
-> >  static dma_addr_t physaddr(struct drm_gem_object *obj)
-> >  {
-> > @@ -678,6 +679,12 @@ int msm_gem_madvise(struct drm_gem_object *obj, unsigned madv)
-> >
-> >       madv = msm_obj->madv;
-> >
-> > +     /* If the obj is inactive, we might need to move it
-> > +      * between inactive lists
-> > +      */
-> > +     if (msm_obj->active_count == 0)
-> > +             update_inactive(msm_obj);
-> > +
-> >       msm_gem_unlock(obj);
-> >
-> >       return (madv != __MSM_MADV_PURGED);
-> > @@ -781,19 +788,31 @@ void msm_gem_active_get(struct drm_gem_object *obj, struct msm_gpu *gpu)
-> >  void msm_gem_active_put(struct drm_gem_object *obj)
-> >  {
-> >       struct msm_gem_object *msm_obj = to_msm_bo(obj);
-> > -     struct msm_drm_private *priv = obj->dev->dev_private;
-> >
-> >       might_sleep();
-> >       WARN_ON(!msm_gem_is_locked(obj));
-> >
-> >       if (--msm_obj->active_count == 0) {
-> > -             mutex_lock(&priv->mm_lock);
-> > -             list_del_init(&msm_obj->mm_list);
-> > -             list_add_tail(&msm_obj->mm_list, &priv->inactive_list);
-> > -             mutex_unlock(&priv->mm_lock);
-> > +             update_inactive(msm_obj);
-> >       }
-> >  }
-> >
-> > +static void update_inactive(struct msm_gem_object *msm_obj)
-> > +{
-> > +     struct msm_drm_private *priv = msm_obj->base.dev->dev_private;
-> > +
-> > +     mutex_lock(&priv->mm_lock);
-> > +     WARN_ON(msm_obj->active_count != 0);
-> > +
-> > +     list_del_init(&msm_obj->mm_list);
-> > +     if (msm_obj->madv == MSM_MADV_DONTNEED)
-> > +             list_add_tail(&msm_obj->mm_list, &priv->inactive_willneed);
-> > +     else
-> > +             list_add_tail(&msm_obj->mm_list, &priv->inactive_dontneed);
->
-> Is the logic here inverted or is this just really confusing nomenclature? If it
-> is correct a comment might help remind us whats happening.
+This set contains fixes for some "wouldn't it be nice if" issues,
+however most of the patches seen here have been on the MLs, but
+were left unreviewed.
 
-Oh, whoops, yeah that is inverted
+Lee Jones (42):
+  drm/amd/amdgpu/atombios_encoders: Remove set but unused variable
+    'backlight_level'
+  drm/armada/armada_overlay: Staticify local function
+    'armada_overlay_duplicate_state'
+  drm/drm_dp_mst_topology: Remove set but never used variable 'len'
+  drm/exynos/exynos7_drm_decon: Supply missing description for  param
+    'ctx'
+  drm/exynos/exynos_drm_fimd: Add missing description for param 'ctx'
+  drm/exynos/exynos_drm_gsc: Supply missing description for 'num_limits'
+  drm/mediatek/mtk_dpi: Remove unused struct definition
+    'mtk_dpi_encoder_funcs'
+  drm/mediatek/mtk_disp_color: Fix formatting and provide missing member
+    description
+  drm/mediatek/mtk_disp_ovl: Fix formatting and provide missing member
+    description
+  drm/mediatek/mtk_disp_rdma: Fix formatting and supply missing struct
+    member description
+  drm/mediatek/mtk_drm_crtc: Demote seriously out-of-date struct header
+  drm/mediatek/mtk_drm_drv: Staticise local function invoked by
+    reference
+  drm/meson/meson_venc: Make local function
+    'meson_venc_hdmi_get_dmt_vmode' static
+  drm/meson/meson_vclk: Make two local functions static
+  drm/msm/adreno/a6xx_gpu: Staticise local function 'a6xx_idle'
+  drm/msm/disp/mdp5/mdp5_crtc: Make local function
+    'mdp5_crtc_setup_pipeline()' static
+  drm/msm/disp/mdp5/mdp5_ctl: Demote non-conformant kernel-doc headers
+  drm/msm/disp/mdp5/mdp5_kms: Make local functions 'mdp5_{en,dis}able()'
+    static
+  drm/msm/disp/dpu1/dpu_core_perf: Remove set but unused variable
+    'dpu_cstate'
+  drm/msm/disp/dpu1/dpu_encoder: Remove a bunch of unused variables
+  drm/nouveau/nvkm/core/firmware: Fix formatting, provide missing param
+    description
+  drm/pl111/pl111_display: Make local function static
+  drm/pl111/pl111_debugfs: Make local function 'pl111_debugfs_regs()'
+    static
+  drm/rockchip/dw-mipi-dsi-rockchip: Demote non-conformant kernel-doc
+    headers
+  drm/rockchip/rockchip_rgb: Consume our own header
+  drm/rockchip/rockchip_lvds: Fix struct document formatting
+  drm/selftests/test-drm_mm: Mark 'hole_end' as always_unused
+  drm/selftests/test-drm_framebuffer: Remove set but unused variable
+    'fb'
+  drm/selftests/test-drm_dp_mst_helper: Place 'struct
+    drm_dp_sideband_msg_req_body' onto the heap
+  drm/selftests/test-drm_dp_mst_helper: Move
+    'sideband_msg_req_encode_decode' onto the heap
+  drm/ttm/ttm_bo: Fix one function header - demote lots of kernel-doc
+    abuses
+  drm/ttm/ttm_tt: Demote kernel-doc header format abuses
+  drm/ttm/ttm_range_manager: Demote non-conformant kernel-doc header
+  drm/v3d/v3d_drv: Remove unused static variable 'v3d_v3d_pm_ops'
+  drm/v3d/v3d_gem: Provide descriptions for 'v3d_lookup_bos's params
+  drm/v3d/v3d_sched: Demote non-conformant kernel-doc header
+  drm/vc4/vc4_hdmi_regs: Mark some data sets as __maybe_unused
+  drm/vc4/vc4_hdmi: Remove set but unused variable 'ret'
+  drm/vc4/vc4_v3d: Demote non-conformant kernel-doc headers
+  drm/vc4/vc4_debugfs: Demote non-conformant kernel-doc headers
+  gpu/ipu-v3/ipu-di: Strip out 2 unused 'di_sync_config' entries
+  include/drm/drm_atomic: Make use of 'new_crtc_state'
 
-BR,
--R
+ .../gpu/drm/amd/amdgpu/atombios_encoders.c    |  3 --
+ drivers/gpu/drm/armada/armada_overlay.c       |  2 +-
+ drivers/gpu/drm/drm_dp_mst_topology.c         |  4 +-
+ drivers/gpu/drm/exynos/exynos7_drm_decon.c    |  1 +
+ drivers/gpu/drm/exynos/exynos_drm_fimd.c      |  1 +
+ drivers/gpu/drm/exynos/exynos_drm_gsc.c       |  1 +
+ drivers/gpu/drm/mediatek/mtk_disp_color.c     |  5 ++-
+ drivers/gpu/drm/mediatek/mtk_disp_ovl.c       |  5 ++-
+ drivers/gpu/drm/mediatek/mtk_disp_rdma.c      |  5 ++-
+ drivers/gpu/drm/mediatek/mtk_dpi.c            |  9 -----
+ drivers/gpu/drm/mediatek/mtk_drm_crtc.c       |  4 +-
+ drivers/gpu/drm/mediatek/mtk_drm_drv.c        |  4 +-
+ drivers/gpu/drm/meson/meson_vclk.c            |  8 ++--
+ drivers/gpu/drm/meson/meson_venc.c            |  4 +-
+ drivers/gpu/drm/msm/adreno/a6xx_gpu.c         |  2 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c |  3 --
+ drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c   | 12 +-----
+ drivers/gpu/drm/msm/disp/mdp5/mdp5_crtc.c     |  6 +--
+ drivers/gpu/drm/msm/disp/mdp5/mdp5_ctl.c      |  6 +--
+ drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c      |  4 +-
+ drivers/gpu/drm/nouveau/nvkm/core/firmware.c  |  9 +++--
+ drivers/gpu/drm/pl111/pl111_debugfs.c         |  2 +-
+ drivers/gpu/drm/pl111/pl111_display.c         |  2 +-
+ .../gpu/drm/rockchip/dw-mipi-dsi-rockchip.c   |  4 +-
+ drivers/gpu/drm/rockchip/rockchip_lvds.c      |  2 +-
+ drivers/gpu/drm/rockchip/rockchip_rgb.c       |  1 +
+ .../drm/selftests/test-drm_dp_mst_helper.c    | 40 +++++++++++++------
+ .../gpu/drm/selftests/test-drm_framebuffer.c  |  3 +-
+ drivers/gpu/drm/selftests/test-drm_mm.c       |  2 +-
+ drivers/gpu/drm/ttm/ttm_bo.c                  | 23 ++++++-----
+ drivers/gpu/drm/ttm/ttm_range_manager.c       |  2 +-
+ drivers/gpu/drm/ttm/ttm_tt.c                  |  4 +-
+ drivers/gpu/drm/v3d/v3d_drv.c                 | 36 -----------------
+ drivers/gpu/drm/v3d/v3d_gem.c                 |  2 +
+ drivers/gpu/drm/v3d/v3d_sched.c               |  2 +-
+ drivers/gpu/drm/vc4/vc4_debugfs.c             |  4 +-
+ drivers/gpu/drm/vc4/vc4_hdmi.c                |  3 +-
+ drivers/gpu/drm/vc4/vc4_hdmi_regs.h           |  6 +--
+ drivers/gpu/drm/vc4/vc4_v3d.c                 |  4 +-
+ drivers/gpu/ipu-v3/ipu-di.c                   |  4 --
+ include/drm/drm_atomic.h                      |  3 +-
+ 41 files changed, 105 insertions(+), 142 deletions(-)
 
-> Jordan
->
-> > +
-> > +     mutex_unlock(&priv->mm_lock);
-> > +}
-> > +
-> >  int msm_gem_cpu_prep(struct drm_gem_object *obj, uint32_t op, ktime_t *timeout)
-> >  {
-> >       bool write = !!(op & MSM_PREP_WRITE);
-> > @@ -1099,7 +1118,8 @@ static struct drm_gem_object *_msm_gem_new(struct drm_device *dev,
-> >       }
-> >
-> >       mutex_lock(&priv->mm_lock);
-> > -     list_add_tail(&msm_obj->mm_list, &priv->inactive_list);
-> > +     /* Initially obj is idle, obj->madv == WILLNEED: */
-> > +     list_add_tail(&msm_obj->mm_list, &priv->inactive_willneed);
-> >       mutex_unlock(&priv->mm_lock);
-> >
-> >       return obj;
-> > @@ -1169,7 +1189,7 @@ struct drm_gem_object *msm_gem_import(struct drm_device *dev,
-> >       msm_gem_unlock(obj);
-> >
-> >       mutex_lock(&priv->mm_lock);
-> > -     list_add_tail(&msm_obj->mm_list, &priv->inactive_list);
-> > +     list_add_tail(&msm_obj->mm_list, &priv->inactive_willneed);
-> >       mutex_unlock(&priv->mm_lock);
-> >
-> >       return obj;
-> > diff --git a/drivers/gpu/drm/msm/msm_gem_shrinker.c b/drivers/gpu/drm/msm/msm_gem_shrinker.c
-> > index 9d51c1eb808d..81dfa57b6a0d 100644
-> > --- a/drivers/gpu/drm/msm/msm_gem_shrinker.c
-> > +++ b/drivers/gpu/drm/msm/msm_gem_shrinker.c
-> > @@ -19,7 +19,7 @@ msm_gem_shrinker_count(struct shrinker *shrinker, struct shrink_control *sc)
-> >
-> >       mutex_lock(&priv->mm_lock);
-> >
-> > -     list_for_each_entry(msm_obj, &priv->inactive_list, mm_list) {
-> > +     list_for_each_entry(msm_obj, &priv->inactive_dontneed, mm_list) {
-> >               if (!msm_gem_trylock(&msm_obj->base))
-> >                       continue;
-> >               if (is_purgeable(msm_obj))
-> > @@ -42,7 +42,7 @@ msm_gem_shrinker_scan(struct shrinker *shrinker, struct shrink_control *sc)
-> >
-> >       mutex_lock(&priv->mm_lock);
-> >
-> > -     list_for_each_entry(msm_obj, &priv->inactive_list, mm_list) {
-> > +     list_for_each_entry(msm_obj, &priv->inactive_dontneed, mm_list) {
-> >               if (freed >= sc->nr_to_scan)
-> >                       break;
-> >               if (!msm_gem_trylock(&msm_obj->base))
-> > @@ -96,7 +96,8 @@ msm_gem_shrinker_vmap(struct notifier_block *nb, unsigned long event, void *ptr)
-> >       struct msm_drm_private *priv =
-> >               container_of(nb, struct msm_drm_private, vmap_notifier);
-> >       struct list_head *mm_lists[] = {
-> > -             &priv->inactive_list,
-> > +             &priv->inactive_dontneed,
-> > +             &priv->inactive_willneed,
-> >               priv->gpu ? &priv->gpu->active_list : NULL,
-> >               NULL,
-> >       };
-> > --
-> > 2.28.0
-> >
-> > _______________________________________________
-> > dri-devel mailing list
-> > dri-devel@lists.freedesktop.org
-> > https://lists.freedesktop.org/mailman/listinfo/dri-devel
->
-> --
-> The Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum,
-> a Linux Foundation Collaborative Project
-> _______________________________________________
-> Freedreno mailing list
-> Freedreno@lists.freedesktop.org
-> https://lists.freedesktop.org/mailman/listinfo/freedreno
+Cc: Ajay Kumar <ajaykumar.rs@samsung.com>
+Cc: Akshu Agarwal <akshua@gmail.com>
+Cc: Alex Deucher <alexander.deucher@amd.com>
+Cc: amd-gfx@lists.freedesktop.org
+Cc: Ben Skeggs <bskeggs@redhat.com>
+Cc: Christian Koenig <christian.koenig@amd.com>
+Cc: "Christian König" <christian.koenig@amd.com>
+Cc: Chris Zhong <zyw@rock-chips.com>
+Cc: Chun-Kuang Hu <chunkuang.hu@kernel.org>
+Cc: Daniel Vetter <daniel@ffwll.ch>
+Cc: David Airlie <airlied@linux.ie>
+Cc: David Francis <David.Francis@amd.com>
+Cc: dri-devel@lists.freedesktop.org
+Cc: Eric Anholt <eric@anholt.net>
+Cc: Eunchul Kim <chulspro.kim@samsung.com>
+Cc: Fabio Estevam <festevam@gmail.com>
+Cc: freedreno@lists.freedesktop.org
+Cc: "Heiko Stübner" <heiko@sntech.de>
+Cc: Huang Rui <ray.huang@amd.com>
+Cc: Inki Dae <inki.dae@samsung.com>
+Cc: Jerome Brunet <jbrunet@baylibre.com>
+Cc: Jie Qiu <jie.qiu@mediatek.com>
+Cc: Jinyoung Jeon <jy0.jeon@samsung.com>
+Cc: Joonyoung Shim <jy0922.shim@samsung.com>
+Cc: Kalyan Thota <kalyan_t@codeaurora.org>
+Cc: Kevin Hilman <khilman@baylibre.com>
+Cc: Krzysztof Kozlowski <krzk@kernel.org>
+Cc: Kyungmin Park <kyungmin.park@samsung.com>
+Cc: linaro-mm-sig@lists.linaro.org
+Cc: linux-amlogic@lists.infradead.org
+Cc: linux-arm-kernel@lists.infradead.org
+Cc: linux-arm-msm@vger.kernel.org
+Cc: linux-mediatek@lists.infradead.org
+Cc: linux-media@vger.kernel.org
+Cc: linux-rockchip@lists.infradead.org
+Cc: linux-samsung-soc@vger.kernel.org
+Cc: Luben Tuikov <luben.tuikov@amd.com>
+Cc: Lyude Paul <lyude@redhat.com>
+Cc: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>
+Cc: Mark Yao <mark.yao@rock-chips.com>
+Cc: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
+Cc: Matthias Brugger <matthias.bgg@gmail.com>
+Cc: Maxime Ripard <mripard@kernel.org>
+Cc: Neil Armstrong <narmstrong@baylibre.com>
+Cc: Nickey Yang <nickey.yang@rock-chips.com>
+Cc: Nirmoy Das <nirmoy.aiemd@gmail.com>
+Cc: nouveau@lists.freedesktop.org
+Cc: NXP Linux Team <linux-imx@nxp.com>
+Cc: Pengutronix Kernel Team <kernel@pengutronix.de>
+Cc: Philipp Zabel <p.zabel@pengutronix.de>
+Cc: Rob Clark <robdclark@gmail.com>
+Cc: Russell King <linux@armlinux.org.uk>
+Cc: Sandy Huang <hjc@rock-chips.com>
+Cc: Sangmin Lee <lsmin.lee@samsung.com>
+Cc: Sascha Hauer <s.hauer@pengutronix.de>
+Cc: Sean Paul <sean@poorly.run>
+Cc: Seung-Woo Kim <sw0312.kim@samsung.com>
+Cc: Shawn Guo <shawnguo@kernel.org>
+Cc: Sumit Semwal <sumit.semwal@linaro.org>
+Cc: Thomas Zimmermann <tzimmermann@suse.de>
+Cc: YT SHEN <yt.shen@mediatek.com>
+-- 
+2.25.1
+
