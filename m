@@ -2,89 +2,114 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B9AA02B467C
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Nov 2020 15:58:51 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B03712B4969
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Nov 2020 16:35:27 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730292AbgKPO54 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 16 Nov 2020 09:57:56 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48800 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730612AbgKPO5z (ORCPT
+        id S1730646AbgKPPcH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 16 Nov 2020 10:32:07 -0500
+Received: from mail-ot1-f65.google.com ([209.85.210.65]:46109 "EHLO
+        mail-ot1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730309AbgKPPcF (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 16 Nov 2020 09:57:55 -0500
-Received: from mail-vs1-xe43.google.com (mail-vs1-xe43.google.com [IPv6:2607:f8b0:4864:20::e43])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 520DFC0613D1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 16 Nov 2020 06:57:55 -0800 (PST)
-Received: by mail-vs1-xe43.google.com with SMTP id m16so9277651vsl.8
-        for <linux-arm-msm@vger.kernel.org>; Mon, 16 Nov 2020 06:57:55 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=sg3eMzSsvsFQKF9WYrus0kI2hc/riBKKXYCgRDx0GaI=;
-        b=cDYymRXmY7cN1YqBVrDKxLtgp3HsW+XjlleSpOJL3ZvY+i5aDFQlDVe1bvmxNoormg
-         F+/Yv/XabrzCe9u7fiBvT6VQg3Ose4LHuY8wcFNuSr/SS0roJaLvBKDbwBnVfeMDVVym
-         srYMs68PWUkfmH5asG++lDq8nFRWyh5eNMQ/w=
+        Mon, 16 Nov 2020 10:32:05 -0500
+Received: by mail-ot1-f65.google.com with SMTP id g19so16336289otp.13;
+        Mon, 16 Nov 2020 07:32:04 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=sg3eMzSsvsFQKF9WYrus0kI2hc/riBKKXYCgRDx0GaI=;
-        b=D/MEeNzizZl2BVhFI3YbjvWSf83kaGgAY5wdM2ZZPvv+g5PRrnBYtE4f03ErOJP7JU
-         n/Dy9fmnaDW+f/dVFaOt+jHZqT3VUjm24cGD90QXLRItw3Nul+NsamoGhDQh7rWgdQg7
-         E6YnB6I/9kficl+PsA9O5SvHrbvWz6j4Q2OdN9mgy7I7Dp3EsXj/XqSYEwDJ3xhPRcO3
-         iQCC21vr7apokG3EVOXedMTwCOewBhOhc8Me7FreKPaOoaUFqwS1+r7QU1vrw12zE+Dv
-         4XHVB+oEvBqKccKOsz6QepM2a0NEcyQLMtLiq40Rg0tQL0JRuNmFZbgEOtGIIXRm2Bnc
-         aMGw==
-X-Gm-Message-State: AOAM532ll8C/7Mvd4xFVs3qhra+Tr/uy22x/puPSR6SFgCoCudbDCeKb
-        UESvjLSobtebHHSfpoZHA1CloURLhTxLBA==
-X-Google-Smtp-Source: ABdhPJw/Tl9FhWiXVmxM/MFVLJm2/d6W5zJNusFmTbR3arahVCaJdI91e0jctADX5M0Dfn9Ft7J8Qg==
-X-Received: by 2002:a05:6102:22ef:: with SMTP id b15mr8930848vsh.35.1605538674053;
-        Mon, 16 Nov 2020 06:57:54 -0800 (PST)
-Received: from mail-vs1-f43.google.com (mail-vs1-f43.google.com. [209.85.217.43])
-        by smtp.gmail.com with ESMTPSA id f1sm2076764vsj.33.2020.11.16.06.57.52
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 16 Nov 2020 06:57:53 -0800 (PST)
-Received: by mail-vs1-f43.google.com with SMTP id x11so9247780vsx.12
-        for <linux-arm-msm@vger.kernel.org>; Mon, 16 Nov 2020 06:57:52 -0800 (PST)
-X-Received: by 2002:a67:ef98:: with SMTP id r24mr7638617vsp.37.1605538672446;
- Mon, 16 Nov 2020 06:57:52 -0800 (PST)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=wixeaOXGt4VS5H1X/I4umvvniIQSQv3LBR9erOlmCDg=;
+        b=ZK/9QBLL0dWF4IxjL0B6v3H6UswXUiWPDSGiT4UXbWKH2lNyaeWYyWv7qypmbCiEhb
+         pR88/NpU1NZTuer/jGYxkkNBHIwOmt43v7twfOV4a8i+Bw779jQ2QKSNb18JMdKZJI3n
+         5jw+TaYvwJih7OTGV+cBAwzF04MUy7jFTBZ6bGqNdJAQ0kUE9zvKxrNJ8hjHhlhPjr1y
+         tbUlgjqvM0JkuWLtsQsh9jjzI4+t7LGaIHEqCkkarHoL5pmn7ZO49N3JBDVP0q7HWZiH
+         F+4iaQMEPNhuu8Zu4t2WQSHjMMwQE1h0U5qnYgMWSIJ8OjQ7C5+6lnz4C7TQ7/a7880x
+         MjSg==
+X-Gm-Message-State: AOAM531CoTV0IOFIfgn8cqOcPu1cvh7w8j67DFTt6bO9b+wnTkClyira
+        WHb9KYHZ4y+H9AlPo4IN7A==
+X-Google-Smtp-Source: ABdhPJxGhcMJL/DOYks58mO9JJMSpwwlGx6zJQaXkutaB4fNQpZUlOZri1r+ZjQNCziItAYEQLnZQA==
+X-Received: by 2002:a9d:470c:: with SMTP id a12mr11470030otf.161.1605540724371;
+        Mon, 16 Nov 2020 07:32:04 -0800 (PST)
+Received: from xps15 (24-155-109-49.dyn.grandenetworks.net. [24.155.109.49])
+        by smtp.gmail.com with ESMTPSA id t19sm4730619otp.51.2020.11.16.07.32.03
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 16 Nov 2020 07:32:03 -0800 (PST)
+Received: (nullmailer pid 1685415 invoked by uid 1000);
+        Mon, 16 Nov 2020 15:32:02 -0000
+Date:   Mon, 16 Nov 2020 09:32:02 -0600
+From:   Rob Herring <robh@kernel.org>
+To:     Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+Cc:     Rob Herring <robh+dt@kernel.org>,
+        YueHaibing <yuehaibing@huawei.com>, mauro.chehab@huawei.com,
+        Dan Carpenter <dan.carpenter@oracle.com>,
+        linux-kernel@vger.kernel.org, linuxarm@huawei.com,
+        devicetree@vger.kernel.org, John Stultz <john.stultz@linaro.org>,
+        linux-arm-msm@vger.kernel.org,
+        Colin Ian King <colin.king@canonical.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Mayulong <mayulong1@huawei.com>,
+        Manivannan Sadhasivam <mani@kernel.org>,
+        Stephen Boyd <sboyd@kernel.org>, devel@driverdev.osuosl.org
+Subject: Re: [PATCH 2/8] spmi: hi6421-spmi-pmic: move driver from staging
+Message-ID: <20201116153202.GA1685169@bogus>
+References: <cover.1605530560.git.mchehab+huawei@kernel.org>
+ <7e01d84b31d561fa4df1d42369e4222f4a41a8d3.1605530560.git.mchehab+huawei@kernel.org>
 MIME-Version: 1.0
-References: <20201116083014.547-1-terry_hsiao@compal.corp-partner.google.com>
-In-Reply-To: <20201116083014.547-1-terry_hsiao@compal.corp-partner.google.com>
-From:   Doug Anderson <dianders@chromium.org>
-Date:   Mon, 16 Nov 2020 06:57:40 -0800
-X-Gmail-Original-Message-ID: <CAD=FV=UetS0P++02rRfkxuxAau6i6pHDyc_9iz_OwZ5h_T_Fug@mail.gmail.com>
-Message-ID: <CAD=FV=UetS0P++02rRfkxuxAau6i6pHDyc_9iz_OwZ5h_T_Fug@mail.gmail.com>
-Subject: Re: [PATCH] arm64: dts: qcom: sc7180-trogdor: add "pen-insert" label
- for trogdor
-To:     Terry Hsiao <a804335@gmail.com>
-Cc:     LKML <linux-kernel@vger.kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>,
-        terry_hsiao@compal.corp-partner.google.com,
-        danny_kuo@compal.corp-partner.google.com,
-        jasper_lee@compal.corp-partner.google.com,
-        van_chen@compal.corp-partner.google.com
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <7e01d84b31d561fa4df1d42369e4222f4a41a8d3.1605530560.git.mchehab+huawei@kernel.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
-
-On Mon, Nov 16, 2020 at 12:30 AM Terry Hsiao <a804335@gmail.com> wrote:
->
-> Add a label to the "pen-insert" node in sc7180-trogdor.dtsi
->
-> Signed-off-by: Terry Hsiao <terry_hsiao@compal.corp-partner.google.com>
+On Mon, 16 Nov 2020 13:59:28 +0100, Mauro Carvalho Chehab wrote:
+> The Hisilicon 6421v600 SPMI driver is ready for mainstream.
+> 
+> So, move it from staging.
+> 
+> Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 > ---
->  arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+>  .../spmi/hisilicon,hisi-spmi-controller.yaml  |  62 +++
+>  MAINTAINERS                                   |   7 +
+>  drivers/spmi/Kconfig                          |   9 +
+>  drivers/spmi/Makefile                         |   1 +
+>  drivers/spmi/hisi-spmi-controller.c           | 358 ++++++++++++++++++
+>  drivers/staging/hikey9xx/Kconfig              |  11 -
+>  drivers/staging/hikey9xx/Makefile             |   1 -
+>  .../staging/hikey9xx/hisi-spmi-controller.c   | 358 ------------------
+>  .../hisilicon,hisi-spmi-controller.yaml       |  62 ---
+>  9 files changed, 437 insertions(+), 432 deletions(-)
+>  create mode 100644 Documentation/devicetree/bindings/spmi/hisilicon,hisi-spmi-controller.yaml
+>  create mode 100644 drivers/spmi/hisi-spmi-controller.c
+>  delete mode 100644 drivers/staging/hikey9xx/hisi-spmi-controller.c
+>  delete mode 100644 drivers/staging/hikey9xx/hisilicon,hisi-spmi-controller.yaml
+> 
 
-Reviewed-by: Douglas Anderson <dianders@chromium.org>
+
+My bot found errors running 'make dt_binding_check' on your patch:
+
+yamllint warnings/errors:
+./Documentation/devicetree/bindings/spmi/hisilicon,hisi-spmi-controller.yaml:34:2: [warning] wrong indentation: expected 2 but found 1 (indentation)
+
+dtschema/dtc warnings/errors:
+/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/spmi/hisilicon,hisi-spmi-controller.yaml: 'additionalProperties' is a required property
+/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/spmi/hisilicon,hisi-spmi-controller.yaml: ignoring, error in schema: 
+warning: no schema found in file: ./Documentation/devicetree/bindings/spmi/hisilicon,hisi-spmi-controller.yaml
+Documentation/devicetree/bindings/spmi/hisilicon,hisi-spmi-controller.example.dts:29.20-31.15: Warning (unit_address_vs_reg): /example-0/bus/spmi@fff24000/pmic@0: node has a unit name, but no reg or ranges property
+/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/spmi/hisilicon,hisi-spmi-controller.example.dt.yaml: spmi@fff24000: pmic@0: 'reg' is a required property
+	From schema: /builds/robherring/linux-dt-review/Documentation/devicetree/bindings/spmi/spmi.yaml
+
+
+See https://patchwork.ozlabs.org/patch/1400897
+
+The base for the patch is generally the last rc1. Any dependencies
+should be noted.
+
+If you already ran 'make dt_binding_check' and didn't see the above
+error(s), then make sure 'yamllint' is installed and dt-schema is up to
+date:
+
+pip3 install dtschema --upgrade
+
+Please check and re-submit.
+
