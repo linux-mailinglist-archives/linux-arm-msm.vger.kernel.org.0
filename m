@@ -2,222 +2,271 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C50B32B4A22
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Nov 2020 16:58:40 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 6560A2B4A30
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Nov 2020 17:01:15 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731049AbgKPP5q (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 16 Nov 2020 10:57:46 -0500
-Received: from m42-4.mailgun.net ([69.72.42.4]:30429 "EHLO m42-4.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1730473AbgKPP5p (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 16 Nov 2020 10:57:45 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1605542265; h=In-Reply-To: Content-Type: MIME-Version:
- References: Message-ID: Subject: Cc: To: From: Date: Sender;
- bh=6HGCSwDZVKueqqM2Nkc4f/P4EM4pfAA4O5tQ+/Y0P5Q=; b=nN1GhM4p83KM+tNklZGxLY2DIW6FV65vVb+dzXzEEepXQDbClItAX9v2WQKHVS82iEc0lGVj
- sL99inV1wKMq05tD1XKFKE9EV89UpYgY2CNtDNZkk165eDNvvwjVtGaEwXIYSGC2FGfYSiAK
- Cw19g7w6oZ7ARyX+DlCYwlaJi2o=
-X-Mailgun-Sending-Ip: 69.72.42.4
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n08.prod.us-west-2.postgun.com with SMTP id
- 5fb2a1738bd2e3c2227600c8 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 16 Nov 2020 15:57:39
- GMT
-Sender: ilina=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id E51F4C43461; Mon, 16 Nov 2020 15:57:38 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
-        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
-Received: from localhost (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: ilina)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 86AE9C433C6;
-        Mon, 16 Nov 2020 15:57:37 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 86AE9C433C6
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=ilina@codeaurora.org
-Date:   Mon, 16 Nov 2020 08:57:36 -0700
-From:   Lina Iyer <ilina@codeaurora.org>
-To:     Ulf Hansson <ulf.hansson@linaro.org>
-Cc:     "Rafael J. Wysocki" <rjw@rjwysocki.net>,
-        Linux PM <linux-pm@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>
-Subject: Re: [PATCH v5 2/2] PM / Domains: use device's next wakeup to
- determine domain idle state
-Message-ID: <X7KhcItlnS+uuqK2@codeaurora.org>
-References: <20201106164811.3698-1-ilina@codeaurora.org>
- <20201106164811.3698-3-ilina@codeaurora.org>
- <CAPDyKFrv-3USmNLR3gjgaTEuTrWuYZjs3qCtnjxSOWqrxv5qsA@mail.gmail.com>
- <X6l/OcHG37HzgFL8@codeaurora.org>
- <CAPDyKFr8fdbMM1nsx-RZcMVtveJUP3p38z=HkL1T2C=QgM3gkQ@mail.gmail.com>
- <X6wRBLmvzztNai4y@codeaurora.org>
- <CAPDyKFr9gpH9Kh9=W4D7DRG8OuqBvkaWHvk8i47SToES=338cA@mail.gmail.com>
+        id S1730473AbgKPP7l (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 16 Nov 2020 10:59:41 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58710 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730176AbgKPP7l (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 16 Nov 2020 10:59:41 -0500
+Received: from mail-wr1-x444.google.com (mail-wr1-x444.google.com [IPv6:2a00:1450:4864:20::444])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8CF58C0613CF;
+        Mon, 16 Nov 2020 07:59:40 -0800 (PST)
+Received: by mail-wr1-x444.google.com with SMTP id o15so19233982wru.6;
+        Mon, 16 Nov 2020 07:59:40 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=z5ur65gLeEENNkFOpp7pfGnPUJSHbI8yD0TwgMdNv0Y=;
+        b=ek5b06i+kiObeO8ER7rtiAmRtiIHnS7ck1QByi8fBldniHgRqNyS+s9hpOHu4AgMPo
+         TiCdS683L4b4WEVKFg8q/lKravN6yX8EnGW+11FuJIODvmeoV3nQaS5s2CsJn6WJVSI2
+         xrAKcjGgZaYED7tvzsaa8W+J1+7iKDQwEW848C22xMg4kB1BuuGAs7ajjSgbBc2eRPXt
+         wFBqY2n6mnVxQOFVbKCR2PkUiVxYhaBGJlyAgvOQboY1szy7LcpV0aQ5CwFwKipTyvHi
+         rVxgqTU63TVh//y8wwVKARX48Q5hafdQz/Nr/ro2sHxhU3KjzQAXgjps1wqHH9dJ/VHu
+         0h0Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=z5ur65gLeEENNkFOpp7pfGnPUJSHbI8yD0TwgMdNv0Y=;
+        b=CkuBv1A8PdUeqmL6rfUiJi9SyhobWBCgBDYMMoxWXomLxUwd+SDQbY1SP5PCVZML+L
+         gB/Z8LqGwf4Cq1bb/Ue+Iz4j6CIQUigCAMNNRdWgTa1TPcaCWdceClhSuBChVBjSumhH
+         NZCN202xijsWB1NKHBxoRK2vpD4Zm4S1Lpj1G6VQ1aaDWgcEyR5lae6bUE9/QALCkBbV
+         PWb9eoz503kIPl9qkOqwwKAX6G2hqszsBmBrn2CQ/jkdnkwpuVkCEVfhf8cyKaqxPVj9
+         ypOjt+5r/aM0UEfKaWUoZeJY5op1BCBv1edyeYGr7uNhwQoHWZuY2jszgboDdCnFP5ia
+         7mBg==
+X-Gm-Message-State: AOAM5333WHJvUrMqLGxT6qv6Om1F3WJ3KMtwBK1DrOFZkUPI51JX9hVk
+        /9foyXmoiAz8it9t4fSpTuM=
+X-Google-Smtp-Source: ABdhPJwLmovywBzsrJ1BE+ohK9taILO9CTOyD86991/89fhQXG/wjeb9riDdYI5Owzd2IacBnREkdg==
+X-Received: by 2002:adf:f7ce:: with SMTP id a14mr20297381wrq.294.1605542379314;
+        Mon, 16 Nov 2020 07:59:39 -0800 (PST)
+Received: from localhost ([217.111.27.204])
+        by smtp.gmail.com with ESMTPSA id g20sm20089864wmh.20.2020.11.16.07.59.37
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 16 Nov 2020 07:59:37 -0800 (PST)
+Date:   Mon, 16 Nov 2020 16:59:36 +0100
+From:   Thierry Reding <thierry.reding@gmail.com>
+To:     John Stultz <john.stultz@linaro.org>
+Cc:     lkml <linux-kernel@vger.kernel.org>,
+        Catalin Marinas <catalin.marinas@arm.com>,
+        Will Deacon <will@kernel.org>, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Joerg Roedel <joro@8bytes.org>,
+        Thomas Gleixner <tglx@linutronix.de>,
+        Jason Cooper <jason@lakedaemon.net>,
+        Marc Zyngier <maz@kernel.org>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Vinod Koul <vkoul@kernel.org>,
+        Kalle Valo <kvalo@codeaurora.org>,
+        Maulik Shah <mkshah@codeaurora.org>,
+        Lina Iyer <ilina@codeaurora.org>,
+        Saravana Kannan <saravanak@google.com>,
+        Todd Kjos <tkjos@google.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Jon Hunter <jonathanh@nvidia.com>,
+        linux-arm-msm@vger.kernel.org, iommu@lists.linux-foundation.org,
+        linux-gpio@vger.kernel.org
+Subject: Re: [PATCH v6 3/3] firmware: QCOM_SCM: Allow qcom_scm driver to be
+ loadable as a permenent module
+Message-ID: <20201116155936.GE2224373@ulmo>
+References: <20201106042710.55979-1-john.stultz@linaro.org>
+ <20201106042710.55979-3-john.stultz@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Type: multipart/signed; micalg=pgp-sha256;
+        protocol="application/pgp-signature"; boundary="Ns7jmDPpOpCD+GE/"
 Content-Disposition: inline
-In-Reply-To: <CAPDyKFr9gpH9Kh9=W4D7DRG8OuqBvkaWHvk8i47SToES=338cA@mail.gmail.com>
+In-Reply-To: <20201106042710.55979-3-john.stultz@linaro.org>
+User-Agent: Mutt/1.14.7 (2020-08-29)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Nov 13 2020 at 03:34 -0700, Ulf Hansson wrote:
->On Wed, 11 Nov 2020 at 17:51, Lina Iyer <ilina@codeaurora.org> wrote:
->>
->> On Tue, Nov 10 2020 at 03:02 -0700, Ulf Hansson wrote:
->> >On Mon, 9 Nov 2020 at 18:41, Lina Iyer <ilina@codeaurora.org> wrote:
->> >>
->> >> On Mon, Nov 09 2020 at 08:27 -0700, Ulf Hansson wrote:
->> >> >On Fri, 6 Nov 2020 at 17:48, Lina Iyer <ilina@codeaurora.org> wrote:
->> >> >>
->> >> [...]
->> >> >> +static void update_domain_next_wakeup(struct generic_pm_domain *genpd, ktime_t now)
->> >> >> +{
->> >> >> +       ktime_t domain_wakeup = KTIME_MAX;
->> >> >> +       ktime_t next_wakeup;
->> >> >> +       struct pm_domain_data *pdd;
->> >> >> +       struct gpd_link *link;
->> >> >> +
->> >> >> +       /* Find the earliest wakeup for all devices in the domain */
->> >> >> +       list_for_each_entry(pdd, &genpd->dev_list, list_node) {
->> >> >> +               next_wakeup = to_gpd_data(pdd)->next_wakeup;
->> >> >> +               if (next_wakeup != KTIME_MAX && !ktime_before(next_wakeup, now))
->> >> >> +                       if (ktime_before(next_wakeup, domain_wakeup))
->> >> >> +                               domain_wakeup = next_wakeup;
->> >> >
->> >> >If it turns out that one of the device's next_wakeup is before "now",
->> >> >leading to ktime_before() above returns true - then I think you should
->> >> >bail out, no?
->> >> >
->> >> >At least, we shouldn't just continue and ignore this case, right?
->> >> >
->> >> No, that could be a very common case. Drivers are not expected to clean
->> >> up the next wakeup by setting it to KTIME_MAX. The best we can do is
->> >> to make a choice with the valid information we have. This will also map
->> >> to the current behavior. Say if all next wakeup information provided to
->> >> the devices were in the past, we would be no worse (or better) than what
->> >> we do without this change.
->> >
->> >Well, I don't quite agree (at least not yet), but let me elaborate, as
->> >I think we can do better without having to add complexity.
->> >
->> >Normally, I don't think a driver needs to clean up its device's next
->> >wakeup in between the remote wakeups, instead it should just set a new
->> >value.
->> >
->> >That's because, even if the driver acts to a remote wakeup or deals
->> >with a request entering a queue, the driver needs to runtime resume
->> >its device during this period. This prevents genpd from power off the
->> >PM domain, hence also the genpd governor from potentially looking at
->> >"invalid" wakeup information for its attached devices.
->> >
->> Could you elaborate a bit? Why would a remote wakeup affect the next
->> wakeup. I'm afraid that I'm not getting the situation correctly.
->
->Let me try :-)
->
->A remote wakeup is a wakeup irq that is triggered when the device is
->in runtime suspended state.
->
->I was expecting that you would be arming a remote wakeup for the
->corresponding device that is attached to a genpd, when the use case
->becomes enabled. Additionally, to allow the driver to consume the
->wakeup irq, it needs to runtime resume its device (which means its PM
->domain via genpd must be powered on as well, if it's not on already).
->
->Therefore, during the period of when the driver consumes the wakeup
->irq, its device's PM domain remains powered on. When this is
->completed, the driver allows its device to become runtime suspended
->again. At some point before the device becomes runtime suspended, the
->driver should set a new value of the "next wakeup" for its device.
->
-Okay, that is clear. Thanks :)
 
-Yes, we would expect the device to set up its next_wakeup before doing
-runtime suspend and if the next wakeup is in the past, we would possibly
-not have runtime suspended the device. That would keep the domain ON and
-we would not come to this governor at all. And if we still are doing it,
-then the device has not set the next wakeup correctly.
+--Ns7jmDPpOpCD+GE/
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-What you are suggesting is that, we should not power down the domain in
-such a case. This would be a really hard problem to debug when a device
-leaves a stale wakeup behind and we no longer power off the domain
-because of that. Tracking that back to the device will be a monumental
-effort. Ignoring the next wakeup though might involve a power/perf 
-penalty (no worse than today), but we would not have a difficult problem
-to solve.
+On Fri, Nov 06, 2020 at 04:27:10AM +0000, John Stultz wrote:
+> Allow the qcom_scm driver to be loadable as a permenent module.
+>=20
+> This still uses the "depends on QCOM_SCM || !QCOM_SCM" bit to
+> ensure that drivers that call into the qcom_scm driver are
+> also built as modules. While not ideal in some cases its the
+> only safe way I can find to avoid build errors without having
+> those drivers select QCOM_SCM and have to force it on (as
+> QCOM_SCM=3Dn can be valid for those drivers).
+>=20
+> Cc: Catalin Marinas <catalin.marinas@arm.com>
+> Cc: Will Deacon <will@kernel.org>
+> Cc: Andy Gross <agross@kernel.org>
+> Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
+> Cc: Joerg Roedel <joro@8bytes.org>
+> Cc: Thomas Gleixner <tglx@linutronix.de>
+> Cc: Jason Cooper <jason@lakedaemon.net>
+> Cc: Marc Zyngier <maz@kernel.org>
+> Cc: Linus Walleij <linus.walleij@linaro.org>
+> Cc: Vinod Koul <vkoul@kernel.org>
+> Cc: Kalle Valo <kvalo@codeaurora.org>
+> Cc: Maulik Shah <mkshah@codeaurora.org>
+> Cc: Lina Iyer <ilina@codeaurora.org>
+> Cc: Saravana Kannan <saravanak@google.com>
+> Cc: Todd Kjos <tkjos@google.com>
+> Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+> Cc: linux-arm-msm@vger.kernel.org
+> Cc: iommu@lists.linux-foundation.org
+> Cc: linux-gpio@vger.kernel.org
+> Acked-by: Kalle Valo <kvalo@codeaurora.org>
+> Acked-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+> Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> Signed-off-by: John Stultz <john.stultz@linaro.org>
+> ---
+> v3:
+> * Fix __arm_smccc_smc build issue reported by
+>   kernel test robot <lkp@intel.com>
+> v4:
+> * Add "depends on QCOM_SCM || !QCOM_SCM" bit to ath10k
+>   config that requires it.
+> v5:
+> * Fix QCOM_QCM typo in Kconfig, it should be QCOM_SCM
+> ---
+>  drivers/firmware/Kconfig                | 4 ++--
+>  drivers/firmware/Makefile               | 3 ++-
+>  drivers/firmware/qcom_scm.c             | 4 ++++
+>  drivers/iommu/Kconfig                   | 2 ++
+>  drivers/net/wireless/ath/ath10k/Kconfig | 1 +
+>  5 files changed, 11 insertions(+), 3 deletions(-)
+>=20
+> diff --git a/drivers/firmware/Kconfig b/drivers/firmware/Kconfig
+> index 3315e3c215864..5e369928bc567 100644
+> --- a/drivers/firmware/Kconfig
+> +++ b/drivers/firmware/Kconfig
+> @@ -235,8 +235,8 @@ config INTEL_STRATIX10_RSU
+>  	  Say Y here if you want Intel RSU support.
+> =20
+>  config QCOM_SCM
+> -	bool
+> -	depends on ARM || ARM64
+> +	tristate "Qcom SCM driver"
+> +	depends on (ARM && HAVE_ARM_SMCCC) || ARM64
+>  	select RESET_CONTROLLER
+> =20
+>  config QCOM_SCM_DOWNLOAD_MODE_DEFAULT
+> diff --git a/drivers/firmware/Makefile b/drivers/firmware/Makefile
+> index 5e013b6a3692e..523173cbff335 100644
+> --- a/drivers/firmware/Makefile
+> +++ b/drivers/firmware/Makefile
+> @@ -17,7 +17,8 @@ obj-$(CONFIG_ISCSI_IBFT)	+=3D iscsi_ibft.o
+>  obj-$(CONFIG_FIRMWARE_MEMMAP)	+=3D memmap.o
+>  obj-$(CONFIG_RASPBERRYPI_FIRMWARE) +=3D raspberrypi.o
+>  obj-$(CONFIG_FW_CFG_SYSFS)	+=3D qemu_fw_cfg.o
+> -obj-$(CONFIG_QCOM_SCM)		+=3D qcom_scm.o qcom_scm-smc.o qcom_scm-legacy.o
+> +obj-$(CONFIG_QCOM_SCM)		+=3D qcom-scm.o
+> +qcom-scm-objs +=3D qcom_scm.o qcom_scm-smc.o qcom_scm-legacy.o
+>  obj-$(CONFIG_TI_SCI_PROTOCOL)	+=3D ti_sci.o
+>  obj-$(CONFIG_TRUSTED_FOUNDATIONS) +=3D trusted_foundations.o
+>  obj-$(CONFIG_TURRIS_MOX_RWTM)	+=3D turris-mox-rwtm.o
+> diff --git a/drivers/firmware/qcom_scm.c b/drivers/firmware/qcom_scm.c
+> index 7be48c1bec96d..6f431b73e617d 100644
+> --- a/drivers/firmware/qcom_scm.c
+> +++ b/drivers/firmware/qcom_scm.c
+> @@ -1280,6 +1280,7 @@ static const struct of_device_id qcom_scm_dt_match[=
+] =3D {
+>  	{ .compatible =3D "qcom,scm" },
+>  	{}
+>  };
+> +MODULE_DEVICE_TABLE(of, qcom_scm_dt_match);
+> =20
+>  static struct platform_driver qcom_scm_driver =3D {
+>  	.driver =3D {
+> @@ -1295,3 +1296,6 @@ static int __init qcom_scm_init(void)
+>  	return platform_driver_register(&qcom_scm_driver);
+>  }
+>  subsys_initcall(qcom_scm_init);
+> +
+> +MODULE_DESCRIPTION("Qualcomm Technologies, Inc. SCM driver");
+> +MODULE_LICENSE("GPL v2");
+> diff --git a/drivers/iommu/Kconfig b/drivers/iommu/Kconfig
+> index 04878caf6da49..c64d7a2b65134 100644
+> --- a/drivers/iommu/Kconfig
+> +++ b/drivers/iommu/Kconfig
+> @@ -248,6 +248,7 @@ config SPAPR_TCE_IOMMU
+>  config ARM_SMMU
+>  	tristate "ARM Ltd. System MMU (SMMU) Support"
+>  	depends on ARM64 || ARM || (COMPILE_TEST && !GENERIC_ATOMIC64)
+> +	depends on QCOM_SCM || !QCOM_SCM #if QCOM_SCM=3Dm this can't be =3Dy
+>  	select IOMMU_API
+>  	select IOMMU_IO_PGTABLE_LPAE
+>  	select ARM_DMA_USE_IOMMU if ARM
 
->>
->> >Of course, I assume there are situations, where a driver actually
->> >needs to do a clean up of its device's next wakeup, but that should be
->> >less frequent and likely when a remote wakeup is disabled (for
->> >whatever reason).
->> >
->> A common case would be that the driver does not know when the usecase is
->> being turned off and therefore may not be able to set the next wakeup to
->> max. If the stale value continues to exist then we may never power off
->> the domain.
->
->Right.
->
->But, how do you know that the use case starts and what prevents us
->from knowing that the use case has stopped?
->
-Usually, the device is made aware of the usecase when it starts, but
-stopping the usecase might be something the device may or may not be
-aware of.
+This, in conjunction with deferred probe timeout, causes mayhem on
+Tegra186. The problem, as far as I can tell, is that there are various
+devices that are hooked up to the ARM SMMU, but if ARM SMMU ends up
+being built as a loadable module, then those devices will initialize
+without IOMMU support (because deferred probe will timeout before the
+ARM SMMU module can be loaded from the root filesystem).
 
->Maybe if you add a user of the new APIs, this would help me to
->understand better?
->
-I have been asking some folks, but let's see.
+Unfortunately, the ARM SMMU module will eventually end up being loaded
+once the root filesystem has been mounted (for example via SDHCI or
+Ethernet, both with using just plain, non-IOMMU-backed DMA API) and then
+initialize, configuring as "fault by default", which then results from a
+slew of SMMU faults from all the devices that have previously configured
+themselves without IOMMU support.
 
-[...]
+One way to work around this is to just disable all QCOM-related drivers
+for the build so that ARM SMMU will be built-in again. I'm going to
+guess that distributions aren't going to be too happy about having to
+make that kind of choice.
 
->> >> >For example, there's no point doing the above, if the domain doesn't
->> >> >specify residency values for its idle states.
->> >> >
->> >> We would still need to ensure that the next wakeup is after the
->> >> power_off_latency, if specified.
->> >
->> >Good point! Although, I would rather avoid adding the overhead, unless
->> >the residency is specified. Do you see a problem with this approach?
->> >
->> Hmmm, no strong objections. However, we still need to run through the
->> states to make sure the residency is not set and have a variable track
->> that.
->
->Right.
->
->The important part is that we can do that once and not for every call
->to the governor.
->
->> The devices wouldn't know that and would still continue to set the
->> next wakeup, unless we find a way to let them know we are not using this
->> feature for the domain.
->
->Right.
->
->To allow the driver to know, we could respond with an error code from
->the new dev_pm_genpd_set_performance_state() API (from patch1), in
->case the genpd+governor doesn't support it.
->
-It would an unnecessary work everytime a next wakeup is being set to
-iterate through the available states and figure out if the residency has
-been set or not. We could probably hold that result in a variable when
-we setup the genpd states. Expect the next_wake to be set from a
-critical path or an interrupt handler, so we have to be quick.
+Another way would be for the ARM SMMU module to be included in the
+initial ramdisk, which /should/ solve this as well, though I haven't
+actually tested that yet. That's not ideal, because it means that users
+will have to use an initial ramdisk in order to make this work, and not
+all of them may want to.
 
->Would that be okay? Otherwise we will have to add a separate genpd
->API, asking explicitly if the "next wakeup" feature is supported.
->
-Would like to avoid that as much as possible.
+Perhaps a better solution for now would be to make QCOM_SCM always
+built-in, so that ARM SMMU can also always be built-in? I suspect that
+this will be a problem not only on Tegra but on any platform that uses
+an ARM SMMU. I think this is also not directly related to the QCOM_SCM
+code because this would also happen if ARM SMMU were built as a module
+for a kernel that doesn't have any QCOM drivers enabled. So in general
+any configuration that builds ARM SMMU as a module seems like it would
+currently be broken (if it also keeps the "fault by default" default).
+Is this something that people have extensively tested? I can't see how
+that would currently work, since there's no way for an ARM SMMU master
+to somehow recover and switch to IOMMU-backed DMA API dynamically once
+the ARM SMMU becomes available.
 
-Thanks,
-Lina
+I guess yet another possibility would be for the ARM SMMU driver to
+detect whether it was loaded after all of its consumers and switch to
+"bypass by default" automatically in such a situation. That should allow
+any driver probed after the ARM SMMU to still take advantage of IOVA
+translation, but will not impact the devices probed before the ARM SMMU.
 
+Thierry
+
+--Ns7jmDPpOpCD+GE/
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCAAdFiEEiOrDCAFJzPfAjcif3SOs138+s6EFAl+yoeQACgkQ3SOs138+
+s6EeIw/+Jkiy34v/1TaxUz5pLZYHnJwmKT1lGYDf9KdRC9vO87BZVqj5/lNO5IXa
++dyBEeU5axJ6Iyohml966Ry57AnSRjtMjeuqJCEwK0bZFZxwGe9oq9NnHmSuYPVa
+MX8qpw9npa2QUFnNs3w+YE2cxcndyR6kcl3LPNNpFJ9zdAeD7S1wc9kgC69P+mV3
+ZWN7koQ5I5WLfwRkOLEpV2NyuyREYw2u2KboLNt4Sy7+M5ZaGQDDsrQ6hUXT9BkF
+NmaYl/ao4ukTocxLoe3Ol/mcrM8PExy4kPSnw1FAYIO5g4sXUjpzY/Ks1ajZymM6
+jqeCVC+pTnSVI9E34lj01CdiZODV7Wl6cgO6GEmey7YXwf6AN2D61WPMXaA3Pryj
+KSngHp099W9E7wyUj9TQlXXDWzmmiDrk2GNaxvjiU08V0ADCV+aP7I7S5723MySN
+43PqFETM/omI+WWMRbdZ/pNqQENzsOhRfCo1PVyIdlfYMfu57QpP7eqXNyhvIu30
+JSzz9G6TPVMtMeOlE1n9v8xHYm1jF8kb3itX1966++MniHV5SwP5MQwMfHCXk7ER
+SDue3dleku/Yb0WCPGCRF3oMzHV/cELFtsQmRUerXHSgvmc0Auq3YMhqfzoTVb1s
+quggJ16RzZOdPqMecJoPOeJPTlpjGER1HNvwiLPAY2+U0GAPZcM=
+=oQiu
+-----END PGP SIGNATURE-----
+
+--Ns7jmDPpOpCD+GE/--
