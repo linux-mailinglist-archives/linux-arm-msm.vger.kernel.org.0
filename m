@@ -2,88 +2,169 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 0C9A42B540B
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Nov 2020 23:03:13 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 03AFC2B548A
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Nov 2020 23:48:27 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727240AbgKPWCC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 16 Nov 2020 17:02:02 -0500
-Received: from jabberwock.ucw.cz ([46.255.230.98]:54682 "EHLO
-        jabberwock.ucw.cz" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726791AbgKPWCC (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 16 Nov 2020 17:02:02 -0500
-Received: by jabberwock.ucw.cz (Postfix, from userid 1017)
-        id 328C91C0BA1; Mon, 16 Nov 2020 23:01:55 +0100 (CET)
-Date:   Mon, 16 Nov 2020 23:01:53 +0100
-From:   Pavel Machek <pavel@ucw.cz>
-To:     Caleb Connolly <caleb@connolly.tech>
-Cc:     linux-arm-msm@vger.kernel.org, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Kees Cook <keescook@chromium.org>,
-        Anton Vorontsov <anton@enomsg.org>,
-        Colin Cross <ccross@android.com>,
-        Tony Luck <tony.luck@intel.com>, phone-devel@vger.kernel.org,
-        ~postmarketos/upstreaming@lists.sr.ht, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 3/5] arm64: dts: sdm845: add oneplus 6/t devices
-Message-ID: <20201116220153.GA1003@bug>
-References: <20201112161920.2671430-1-caleb@connolly.tech>
- <20201112161920.2671430-4-caleb@connolly.tech>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20201112161920.2671430-4-caleb@connolly.tech>
-User-Agent: Mutt/1.5.23 (2014-03-12)
+        id S1730630AbgKPWqj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 16 Nov 2020 17:46:39 -0500
+Received: from z5.mailgun.us ([104.130.96.5]:59792 "EHLO z5.mailgun.us"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1730571AbgKPWqj (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 16 Nov 2020 17:46:39 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1605566798; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=iQ+2cr97ThrSA88BQaBRRuQ/qmltdrjpMFmedsejmHY=; b=Q/mKbh/sN9lZFv+XgqGInrHZiOWLsZbuXGELHoh/AxUQcNFa/715a3riknJFrwtJA98yoDe4
+ Syx20ZFJbiE3ijoIIQwwXwMdPKg9rJ6ajzHySDF6MFvxBp+W1eP7O/gO6E9SbJMGnnpHdoxw
+ xP4nvjHxWu0WTKUK/eZT0DXxGPA=
+X-Mailgun-Sending-Ip: 104.130.96.5
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n10.prod.us-east-1.postgun.com with SMTP id
+ 5fb30147c3c3b09004bd476b (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 16 Nov 2020 22:46:31
+ GMT
+Sender: hemantk=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id C8D9AC433ED; Mon, 16 Nov 2020 22:46:30 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL
+        autolearn=no autolearn_force=no version=3.4.0
+Received: from codeaurora.org (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: hemantk)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 765EEC433ED;
+        Mon, 16 Nov 2020 22:46:29 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 765EEC433ED
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=hemantk@codeaurora.org
+From:   Hemant Kumar <hemantk@codeaurora.org>
+To:     manivannan.sadhasivam@linaro.org, gregkh@linuxfoundation.org
+Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        jhugo@codeaurora.org, bbhatt@codeaurora.org,
+        loic.poulain@linaro.org, netdev@vger.kernel.org,
+        skhan@linuxfoundation.org, Hemant Kumar <hemantk@codeaurora.org>
+Subject: [PATCH v12 0/5] userspace MHI client interface driver
+Date:   Mon, 16 Nov 2020 14:46:17 -0800
+Message-Id: <1605566782-38013-1-git-send-email-hemantk@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi!
+This patch series adds support for UCI driver. UCI driver enables userspace
+clients to communicate to external MHI devices like modem and WLAN. UCI driver
+probe creates standard character device file nodes for userspace clients to
+perform open, read, write, poll and release file operations. These file
+operations call MHI core layer APIs to perform data transfer using MHI bus
+to communicate with MHI device. It also adds a loopback test application to
+verify the UCI LOOPBACK channel. Patch is tested using arm64 based platform.
 
-> Add initial support for the OnePlus 6 (enchilada) and 6T (fajita) based
-> on the sdm845-mtp DT. Support includes:
-> 
-> * Display panels and Adreno 630
-> * Touch screen support with synaptics rmi4
-> * All remoteprocs start correctly
-> * WLAN / Bluetooth
-> * Volume / power buttons and OnePlus Tri-State switch are functional
->     The tri-state switch is a 3 state mute slider on the side of the phone * USB 
-> support, currently forced to peripheral as type C detection isn't functional.
+V12:
+- Added loopback test driver under selftest/drivers/mhi. Updated kernel
+  documentation for the usage of the loopback test application.
+- Addressed review comments for renaming variable names, updated inline
+  comments and removed two redundant dev_dbg.
 
-I have similar switches on my joystick... but I don't believe modelling it as 3 separate
-keys with "macro" keysym is the right way to go.
+V11:
+- Fixed review comments for UCI documentation by expanding TLAs and rewording
+  some sentences.
 
-> +		state-top {
-> +			label = "Tri-state key top";
-> +			linux,code = <KEY_MACRO1>;
-> +			interrupt-parent = <&tlmm>;
-> +			interrupts = <24 IRQ_TYPE_EDGE_FALLING>;
-> +			debounce-interval = <500>;
-> +			linux,can-disable;
-> +		};
-> +
-> +		state-middle {
-> +			label = "Tri-state key middle";
-> +			linux,code = <KEY_MACRO2>;
-> +			interrupt-parent = <&tlmm>;
-> +			interrupts = <52 IRQ_TYPE_EDGE_FALLING>;
-> +			debounce-interval = <500>;
-> +			linux,can-disable;
-> +		};
-> +
-> +		state-bottom {
-> +			label = "Tri-state key bottom";
-> +			linux,code = <KEY_MACRO3>;
-> +			interrupt-parent = <&tlmm>;
-> +			interrupts = <126 IRQ_TYPE_EDGE_FALLING>;
-> +			debounce-interval = <500>;
-> +			linux,can-disable;
-> +		};
+V10:
+- Replaced mutex_lock with mutex_lock_interruptible in read() and write() file
+  ops call back.
 
-Best regards,
-									Pavel
+V9:
+- Renamed dl_lock to dl_pending _lock and pending list to dl_pending for
+  clarity.
+- Used read lock to protect cur_buf.
+- Change transfer status check logic and only consider 0 and -EOVERFLOW as
+  only success.
+- Added __int to module init function.
+- Print channel name instead of minor number upon successful probe.
+
+V8:
+- Fixed kernel test robot compilation error by changing %lu to %zu for
+  size_t.
+- Replaced uci with UCI in Kconfig, commit text, and comments in driver
+  code.
+- Fixed minor style related comments.
+
+V7:
+- Decoupled uci device and uci channel objects. uci device is
+  associated with device file node. uci channel is associated
+  with MHI channels. uci device refers to uci channel to perform
+  MHI channel operations for device file operations like read()
+  and write(). uci device increments its reference count for
+  every open(). uci device calls mhi_uci_dev_start_chan() to start
+  the MHI channel. uci channel object is tracking number of times
+  MHI channel is referred. This allows to keep the MHI channel in
+  start state until last release() is called. After that uci channel
+  reference count goes to 0 and uci channel clean up is performed
+  which stops the MHI channel. After the last call to release() if
+  driver is removed uci reference count becomes 0 and uci object is
+  cleaned up.
+- Use separate uci channel read and write lock to fine grain locking
+  between reader and writer.
+- Use uci device lock to synchronize open, release and driver remove.
+- Optimize for downlink only or uplink only UCI device.
+
+V6:
+- Moved uci.c to mhi directory.
+- Updated Kconfig to add module information.
+- Updated Makefile to rename uci object file name as mhi_uci
+- Removed kref for open count
+
+V5:
+- Removed mhi_uci_drv structure.
+- Used idr instead of creating global list of uci devices.
+- Used kref instead of local ref counting for uci device and
+  open count.
+- Removed unlikely macro.
+
+V4:
+- Fix locking to protect proper struct members.
+- Updated documentation describing uci client driver use cases.
+- Fixed uci ref counting in mhi_uci_open for error case.
+- Addressed style related review comments.
+
+V3: Added documentation for MHI UCI driver.
+
+V2:
+- Added mutex lock to prevent multiple readers to access same
+- mhi buffer which can result into use after free.
+
+Hemant Kumar (5):
+  bus: mhi: core: Add helper API to return number of free TREs
+  bus: mhi: core: Move MHI_MAX_MTU to external header file
+  docs: Add documentation for userspace client interface
+  bus: mhi: Add userspace client interface driver
+  selftest: mhi: Add support to test MHI LOOPBACK channel
+
+ Documentation/mhi/index.rst                        |   1 +
+ Documentation/mhi/uci.rst                          | 109 +++
+ drivers/bus/mhi/Kconfig                            |  13 +
+ drivers/bus/mhi/Makefile                           |   3 +
+ drivers/bus/mhi/core/internal.h                    |   1 -
+ drivers/bus/mhi/core/main.c                        |  12 +
+ drivers/bus/mhi/uci.c                              | 667 +++++++++++++++++
+ include/linux/mhi.h                                |  12 +
+ tools/testing/selftests/Makefile                   |   1 +
+ tools/testing/selftests/drivers/.gitignore         |   1 +
+ tools/testing/selftests/drivers/mhi/Makefile       |   8 +
+ tools/testing/selftests/drivers/mhi/config         |   2 +
+ .../testing/selftests/drivers/mhi/loopback_test.c  | 789 +++++++++++++++++++++
+ 13 files changed, 1618 insertions(+), 1 deletion(-)
+ create mode 100644 Documentation/mhi/uci.rst
+ create mode 100644 drivers/bus/mhi/uci.c
+ create mode 100644 tools/testing/selftests/drivers/mhi/Makefile
+ create mode 100644 tools/testing/selftests/drivers/mhi/config
+ create mode 100644 tools/testing/selftests/drivers/mhi/loopback_test.c
+
 -- 
-(english) http://www.livejournal.com/~pavelmachek
-(cesky, pictures) http://atrey.karlin.mff.cuni.cz/~pavel/picture/horses/blog.html
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
+
