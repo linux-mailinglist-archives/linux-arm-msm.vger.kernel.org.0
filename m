@@ -2,271 +2,326 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 6560A2B4A30
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Nov 2020 17:01:15 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 95D902B4AD4
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Nov 2020 17:24:52 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730473AbgKPP7l (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 16 Nov 2020 10:59:41 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58710 "EHLO
+        id S1731878AbgKPQWb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 16 Nov 2020 11:22:31 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34028 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730176AbgKPP7l (ORCPT
+        with ESMTP id S1731874AbgKPQWa (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 16 Nov 2020 10:59:41 -0500
-Received: from mail-wr1-x444.google.com (mail-wr1-x444.google.com [IPv6:2a00:1450:4864:20::444])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8CF58C0613CF;
-        Mon, 16 Nov 2020 07:59:40 -0800 (PST)
-Received: by mail-wr1-x444.google.com with SMTP id o15so19233982wru.6;
-        Mon, 16 Nov 2020 07:59:40 -0800 (PST)
+        Mon, 16 Nov 2020 11:22:30 -0500
+Received: from mail-wr1-x442.google.com (mail-wr1-x442.google.com [IPv6:2a00:1450:4864:20::442])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 03BE4C0613CF;
+        Mon, 16 Nov 2020 08:22:30 -0800 (PST)
+Received: by mail-wr1-x442.google.com with SMTP id j7so19316924wrp.3;
+        Mon, 16 Nov 2020 08:22:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=z5ur65gLeEENNkFOpp7pfGnPUJSHbI8yD0TwgMdNv0Y=;
-        b=ek5b06i+kiObeO8ER7rtiAmRtiIHnS7ck1QByi8fBldniHgRqNyS+s9hpOHu4AgMPo
-         TiCdS683L4b4WEVKFg8q/lKravN6yX8EnGW+11FuJIODvmeoV3nQaS5s2CsJn6WJVSI2
-         xrAKcjGgZaYED7tvzsaa8W+J1+7iKDQwEW848C22xMg4kB1BuuGAs7ajjSgbBc2eRPXt
-         wFBqY2n6mnVxQOFVbKCR2PkUiVxYhaBGJlyAgvOQboY1szy7LcpV0aQ5CwFwKipTyvHi
-         rVxgqTU63TVh//y8wwVKARX48Q5hafdQz/Nr/ro2sHxhU3KjzQAXgjps1wqHH9dJ/VHu
-         0h0Q==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=27B/z7ecHug/NOPj3+EmOeHAQ0G+MSNmKH5jQjoCjsw=;
+        b=AGMRUfJYts6+ZcpHSbV7iXKub0ruhz7ruVbTPza3Qo/ahFNRu1HhaBRV2v5ab6cmdt
+         DiGtvxjignlOiTriIVwBOYWGvNGNgeqq2Rl91vcQlNn6XwfbUHq4Y1dsygTs6nDdurvk
+         /n/YI6pkcjdPH3KPXPIBPP/cD8JpGD1qEDNmu+ZW+XsBZhOr2VtxzTJR+EKE7cPA7r3I
+         UDJg/c3bVBFcNWeeSOvK7T6NzFZNe7xleqmVAFY6jz19aaEGUcWtmnX49zprb3Ib2e/b
+         Tw1Vvl5N0V3jBGmkPReeFpaQIgkFmcDbAIBVD5/iZBRvcPSO2iVS34PfZBHAkbd1siyS
+         gu2g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=z5ur65gLeEENNkFOpp7pfGnPUJSHbI8yD0TwgMdNv0Y=;
-        b=CkuBv1A8PdUeqmL6rfUiJi9SyhobWBCgBDYMMoxWXomLxUwd+SDQbY1SP5PCVZML+L
-         gB/Z8LqGwf4Cq1bb/Ue+Iz4j6CIQUigCAMNNRdWgTa1TPcaCWdceClhSuBChVBjSumhH
-         NZCN202xijsWB1NKHBxoRK2vpD4Zm4S1Lpj1G6VQ1aaDWgcEyR5lae6bUE9/QALCkBbV
-         PWb9eoz503kIPl9qkOqwwKAX6G2hqszsBmBrn2CQ/jkdnkwpuVkCEVfhf8cyKaqxPVj9
-         ypOjt+5r/aM0UEfKaWUoZeJY5op1BCBv1edyeYGr7uNhwQoHWZuY2jszgboDdCnFP5ia
-         7mBg==
-X-Gm-Message-State: AOAM5333WHJvUrMqLGxT6qv6Om1F3WJ3KMtwBK1DrOFZkUPI51JX9hVk
-        /9foyXmoiAz8it9t4fSpTuM=
-X-Google-Smtp-Source: ABdhPJwLmovywBzsrJ1BE+ohK9taILO9CTOyD86991/89fhQXG/wjeb9riDdYI5Owzd2IacBnREkdg==
-X-Received: by 2002:adf:f7ce:: with SMTP id a14mr20297381wrq.294.1605542379314;
-        Mon, 16 Nov 2020 07:59:39 -0800 (PST)
-Received: from localhost ([217.111.27.204])
-        by smtp.gmail.com with ESMTPSA id g20sm20089864wmh.20.2020.11.16.07.59.37
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 16 Nov 2020 07:59:37 -0800 (PST)
-Date:   Mon, 16 Nov 2020 16:59:36 +0100
-From:   Thierry Reding <thierry.reding@gmail.com>
-To:     John Stultz <john.stultz@linaro.org>
-Cc:     lkml <linux-kernel@vger.kernel.org>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        Will Deacon <will@kernel.org>, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Joerg Roedel <joro@8bytes.org>,
-        Thomas Gleixner <tglx@linutronix.de>,
-        Jason Cooper <jason@lakedaemon.net>,
-        Marc Zyngier <maz@kernel.org>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>,
-        Kalle Valo <kvalo@codeaurora.org>,
-        Maulik Shah <mkshah@codeaurora.org>,
-        Lina Iyer <ilina@codeaurora.org>,
-        Saravana Kannan <saravanak@google.com>,
-        Todd Kjos <tkjos@google.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Jon Hunter <jonathanh@nvidia.com>,
-        linux-arm-msm@vger.kernel.org, iommu@lists.linux-foundation.org,
-        linux-gpio@vger.kernel.org
-Subject: Re: [PATCH v6 3/3] firmware: QCOM_SCM: Allow qcom_scm driver to be
- loadable as a permenent module
-Message-ID: <20201116155936.GE2224373@ulmo>
-References: <20201106042710.55979-1-john.stultz@linaro.org>
- <20201106042710.55979-3-john.stultz@linaro.org>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=27B/z7ecHug/NOPj3+EmOeHAQ0G+MSNmKH5jQjoCjsw=;
+        b=PdtuXDHWciUsBrLwXsd0F0kIdUlzuzuuSGhofNbj8zdug8zZ31PEhYRUloRcydSbZU
+         MrsfIBJc2BjjwBKrXMvTZNmywTocbaFien2+q1Xl3hVKVPPTgdcSVYjl3tOvZT00nGgC
+         ui+qMkI32CMXxtnvbwkU+md0ewi23WJBxueO51Ubg6fVSbDbC2Z+Rd2Y46RpTXIP4KMP
+         XuudCp2sw3I2kgu7zvFY9SVGW1d8+jLTQyzdO5rluFDo4yGARSHiAbT6CgyhH90V0k+I
+         k4MjJEntdCWf/i2l8NaB3mDxT/++RoHOYUxRtL+FWcgs1ylcNv3wTBFEnhz8oxzwZfBq
+         hb/g==
+X-Gm-Message-State: AOAM5325VYIyz1lZeeSTieQqPLJI/MV2GCHqr7l0y0yvyBHB6/XLuiae
+        7/uW27ERjTXVofpuRJUXrKqdHjJCXLb0q156hRQ=
+X-Google-Smtp-Source: ABdhPJzk8ENudQ8LQ655SjK55pl2buTE8lmQR0ImkjpybO2pKZIkMBMrjqovp/o5fn1y+rN/CziHoG9D+Hj3J40DagY=
+X-Received: by 2002:adf:a3c1:: with SMTP id m1mr19747707wrb.28.1605543748618;
+ Mon, 16 Nov 2020 08:22:28 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-        protocol="application/pgp-signature"; boundary="Ns7jmDPpOpCD+GE/"
-Content-Disposition: inline
-In-Reply-To: <20201106042710.55979-3-john.stultz@linaro.org>
-User-Agent: Mutt/1.14.7 (2020-08-29)
+References: <1605196144-23516-1-git-send-email-akhilpo@codeaurora.org>
+ <CAF6AEGutT0M9mu2NhUnqnvrqSNEUEqYJKS6Mt0vXwV+mPyQGMw@mail.gmail.com> <0c872e78-0f2c-5771-979d-862c7c30b281@codeaurora.org>
+In-Reply-To: <0c872e78-0f2c-5771-979d-862c7c30b281@codeaurora.org>
+From:   Rob Clark <robdclark@gmail.com>
+Date:   Mon, 16 Nov 2020 08:22:16 -0800
+Message-ID: <CAF6AEGtysKTSdX_HmHs_fdvGLYYkQn4XmM_NWgSdBLK3JMF_zQ@mail.gmail.com>
+Subject: Re: [PATCH] drm/msm: adreno: Make speed-bin support generic
+To:     Akhil P Oommen <akhilpo@codeaurora.org>
+Cc:     freedreno <freedreno@lists.freedesktop.org>,
+        dri-devel@freedesktop.org,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        Jordan Crouse <jcrouse@codeaurora.org>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        Douglas Anderson <dianders@chromium.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Mon, Nov 16, 2020 at 6:34 AM Akhil P Oommen <akhilpo@codeaurora.org> wrote:
+>
+> On 11/12/2020 10:07 PM, Rob Clark wrote:
+> > On Thu, Nov 12, 2020 at 7:49 AM Akhil P Oommen <akhilpo@codeaurora.org> wrote:
+> >>
+> >> So far a530v2 gpu has support for detecting its supported opps
+> >> based on a fuse value called speed-bin. This patch makes this
+> >> support generic across gpu families. This is in preparation to
+> >> extend speed-bin support to a6x family.
+> >>
+> >> Signed-off-by: Akhil P Oommen <akhilpo@codeaurora.org>
+> >> ---
+> >> This patch is rebased on top of msm-next-staging branch in rob's tree.
+> >>
+> >>   drivers/gpu/drm/msm/adreno/a5xx_gpu.c      | 34 --------------
+> >>   drivers/gpu/drm/msm/adreno/adreno_device.c |  4 ++
+> >>   drivers/gpu/drm/msm/adreno/adreno_gpu.c    | 71 ++++++++++++++++++++++++++++++
+> >>   drivers/gpu/drm/msm/adreno/adreno_gpu.h    |  5 +++
+> >>   4 files changed, 80 insertions(+), 34 deletions(-)
+> >>
+> >> diff --git a/drivers/gpu/drm/msm/adreno/a5xx_gpu.c b/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
+> >> index 8fa5c91..7d42321 100644
+> >> --- a/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
+> >> +++ b/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
+> >> @@ -1531,38 +1531,6 @@ static const struct adreno_gpu_funcs funcs = {
+> >>          .get_timestamp = a5xx_get_timestamp,
+> >>   };
+> >>
+> >> -static void check_speed_bin(struct device *dev)
+> >> -{
+> >> -       struct nvmem_cell *cell;
+> >> -       u32 val;
+> >> -
+> >> -       /*
+> >> -        * If the OPP table specifies a opp-supported-hw property then we have
+> >> -        * to set something with dev_pm_opp_set_supported_hw() or the table
+> >> -        * doesn't get populated so pick an arbitrary value that should
+> >> -        * ensure the default frequencies are selected but not conflict with any
+> >> -        * actual bins
+> >> -        */
+> >> -       val = 0x80;
+> >> -
+> >> -       cell = nvmem_cell_get(dev, "speed_bin");
+> >> -
+> >> -       if (!IS_ERR(cell)) {
+> >> -               void *buf = nvmem_cell_read(cell, NULL);
+> >> -
+> >> -               if (!IS_ERR(buf)) {
+> >> -                       u8 bin = *((u8 *) buf);
+> >> -
+> >> -                       val = (1 << bin);
+> >> -                       kfree(buf);
+> >> -               }
+> >> -
+> >> -               nvmem_cell_put(cell);
+> >> -       }
+> >> -
+> >> -       dev_pm_opp_set_supported_hw(dev, &val, 1);
+> >> -}
+> >> -
+> >>   struct msm_gpu *a5xx_gpu_init(struct drm_device *dev)
+> >>   {
+> >>          struct msm_drm_private *priv = dev->dev_private;
+> >> @@ -1588,8 +1556,6 @@ struct msm_gpu *a5xx_gpu_init(struct drm_device *dev)
+> >>
+> >>          a5xx_gpu->lm_leakage = 0x4E001A;
+> >>
+> >> -       check_speed_bin(&pdev->dev);
+> >> -
+> >>          ret = adreno_gpu_init(dev, pdev, adreno_gpu, &funcs, 4);
+> >>          if (ret) {
+> >>                  a5xx_destroy(&(a5xx_gpu->base.base));
+> >> diff --git a/drivers/gpu/drm/msm/adreno/adreno_device.c b/drivers/gpu/drm/msm/adreno/adreno_device.c
+> >> index 87c8b03..e0ff16c 100644
+> >> --- a/drivers/gpu/drm/msm/adreno/adreno_device.c
+> >> +++ b/drivers/gpu/drm/msm/adreno/adreno_device.c
+> >> @@ -18,6 +18,8 @@ bool snapshot_debugbus = false;
+> >>   MODULE_PARM_DESC(snapshot_debugbus, "Include debugbus sections in GPU devcoredump (if not fused off)");
+> >>   module_param_named(snapshot_debugbus, snapshot_debugbus, bool, 0600);
+> >>
+> >> +const u32 a530v2_speedbins[] = {0, 1, 2, 3, 4, 5, 6, 7};
+> >> +
+> >>   static const struct adreno_info gpulist[] = {
+> >>          {
+> >>                  .rev   = ADRENO_REV(2, 0, 0, 0),
+> >> @@ -163,6 +165,8 @@ static const struct adreno_info gpulist[] = {
+> >>                          ADRENO_QUIRK_FAULT_DETECT_MASK,
+> >>                  .init = a5xx_gpu_init,
+> >>                  .zapfw = "a530_zap.mdt",
+> >> +               .speedbins = a530v2_speedbins,
+> >> +               .speedbins_count = ARRAY_SIZE(a530v2_speedbins),
+> >>          }, {
+> >>                  .rev = ADRENO_REV(5, 4, 0, 2),
+> >>                  .revn = 540,
+> >> diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.c b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
+> >> index f21561d..cdd0c11 100644
+> >> --- a/drivers/gpu/drm/msm/adreno/adreno_gpu.c
+> >> +++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
+> >> @@ -14,6 +14,7 @@
+> >>   #include <linux/pm_opp.h>
+> >>   #include <linux/slab.h>
+> >>   #include <linux/soc/qcom/mdt_loader.h>
+> >> +#include <linux/nvmem-consumer.h>
+> >>   #include <soc/qcom/ocmem.h>
+> >>   #include "adreno_gpu.h"
+> >>   #include "msm_gem.h"
+> >> @@ -891,6 +892,69 @@ void adreno_gpu_ocmem_cleanup(struct adreno_ocmem *adreno_ocmem)
+> >>                             adreno_ocmem->hdl);
+> >>   }
+> >>
+> >> +static int adreno_set_supported_hw(struct device *dev,
+> >> +               struct adreno_gpu *adreno_gpu)
+> >> +{
+> >> +       u8 speedbins_count = adreno_gpu->info->speedbins_count;
+> >> +       const u32 *speedbins = adreno_gpu->info->speedbins;
+> >> +       struct nvmem_cell *cell;
+> >> +       u32 bin, i;
+> >> +       u32 val = 0;
+> >> +       void *buf, *opp_table;
+> >> +
+> >> +       cell = nvmem_cell_get(dev, "speed_bin");
+> >> +       /*
+> >> +        * -ENOENT means that the platform doesn't support speedbin which is
+> >> +        * fine
+> >> +        */
+> >> +       if (PTR_ERR(cell) == -ENOENT)
+> >> +               return 0;
+> >> +       else if (IS_ERR(cell))
+> >> +               return PTR_ERR(cell);
+> >> +
+> >> +       /* A speedbin table is must if the platform supports speedbin */
+> >> +       if (!speedbins) {
+> >> +               DRM_DEV_ERROR(dev, "speed-bin table is missing\n");
+> >> +               return -ENOENT;
+> >
+> > Hmm, this means that hw which supports speed-bin, but for which we
+> > haven't yet added a speedbin table, will start failing.  Which seems
+> > not great.  Maybe it would be better to keep the DRM_DEV_ERROR() (so
+> > people realize something is missing), but return 0?
+> We can't because if the gpu opp table has "opp-supported-hw" property,
+> opp driver expects us to call dev_pm_opp_set_supported_hw() to select
+> the supported hardware. I think we can just pick a default one and also
+> print a detailed warning, will that work for you?
 
---Ns7jmDPpOpCD+GE/
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+That seems like it could work.. or maybe just skip all this if there
+is no opp table?
 
-On Fri, Nov 06, 2020 at 04:27:10AM +0000, John Stultz wrote:
-> Allow the qcom_scm driver to be loadable as a permenent module.
->=20
-> This still uses the "depends on QCOM_SCM || !QCOM_SCM" bit to
-> ensure that drivers that call into the qcom_scm driver are
-> also built as modules. While not ideal in some cases its the
-> only safe way I can find to avoid build errors without having
-> those drivers select QCOM_SCM and have to force it on (as
-> QCOM_SCM=3Dn can be valid for those drivers).
->=20
-> Cc: Catalin Marinas <catalin.marinas@arm.com>
-> Cc: Will Deacon <will@kernel.org>
-> Cc: Andy Gross <agross@kernel.org>
-> Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
-> Cc: Joerg Roedel <joro@8bytes.org>
-> Cc: Thomas Gleixner <tglx@linutronix.de>
-> Cc: Jason Cooper <jason@lakedaemon.net>
-> Cc: Marc Zyngier <maz@kernel.org>
-> Cc: Linus Walleij <linus.walleij@linaro.org>
-> Cc: Vinod Koul <vkoul@kernel.org>
-> Cc: Kalle Valo <kvalo@codeaurora.org>
-> Cc: Maulik Shah <mkshah@codeaurora.org>
-> Cc: Lina Iyer <ilina@codeaurora.org>
-> Cc: Saravana Kannan <saravanak@google.com>
-> Cc: Todd Kjos <tkjos@google.com>
-> Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-> Cc: linux-arm-msm@vger.kernel.org
-> Cc: iommu@lists.linux-foundation.org
-> Cc: linux-gpio@vger.kernel.org
-> Acked-by: Kalle Valo <kvalo@codeaurora.org>
-> Acked-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-> Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-> Signed-off-by: John Stultz <john.stultz@linaro.org>
-> ---
-> v3:
-> * Fix __arm_smccc_smc build issue reported by
->   kernel test robot <lkp@intel.com>
-> v4:
-> * Add "depends on QCOM_SCM || !QCOM_SCM" bit to ath10k
->   config that requires it.
-> v5:
-> * Fix QCOM_QCM typo in Kconfig, it should be QCOM_SCM
-> ---
->  drivers/firmware/Kconfig                | 4 ++--
->  drivers/firmware/Makefile               | 3 ++-
->  drivers/firmware/qcom_scm.c             | 4 ++++
->  drivers/iommu/Kconfig                   | 2 ++
->  drivers/net/wireless/ath/ath10k/Kconfig | 1 +
->  5 files changed, 11 insertions(+), 3 deletions(-)
->=20
-> diff --git a/drivers/firmware/Kconfig b/drivers/firmware/Kconfig
-> index 3315e3c215864..5e369928bc567 100644
-> --- a/drivers/firmware/Kconfig
-> +++ b/drivers/firmware/Kconfig
-> @@ -235,8 +235,8 @@ config INTEL_STRATIX10_RSU
->  	  Say Y here if you want Intel RSU support.
-> =20
->  config QCOM_SCM
-> -	bool
-> -	depends on ARM || ARM64
-> +	tristate "Qcom SCM driver"
-> +	depends on (ARM && HAVE_ARM_SMCCC) || ARM64
->  	select RESET_CONTROLLER
-> =20
->  config QCOM_SCM_DOWNLOAD_MODE_DEFAULT
-> diff --git a/drivers/firmware/Makefile b/drivers/firmware/Makefile
-> index 5e013b6a3692e..523173cbff335 100644
-> --- a/drivers/firmware/Makefile
-> +++ b/drivers/firmware/Makefile
-> @@ -17,7 +17,8 @@ obj-$(CONFIG_ISCSI_IBFT)	+=3D iscsi_ibft.o
->  obj-$(CONFIG_FIRMWARE_MEMMAP)	+=3D memmap.o
->  obj-$(CONFIG_RASPBERRYPI_FIRMWARE) +=3D raspberrypi.o
->  obj-$(CONFIG_FW_CFG_SYSFS)	+=3D qemu_fw_cfg.o
-> -obj-$(CONFIG_QCOM_SCM)		+=3D qcom_scm.o qcom_scm-smc.o qcom_scm-legacy.o
-> +obj-$(CONFIG_QCOM_SCM)		+=3D qcom-scm.o
-> +qcom-scm-objs +=3D qcom_scm.o qcom_scm-smc.o qcom_scm-legacy.o
->  obj-$(CONFIG_TI_SCI_PROTOCOL)	+=3D ti_sci.o
->  obj-$(CONFIG_TRUSTED_FOUNDATIONS) +=3D trusted_foundations.o
->  obj-$(CONFIG_TURRIS_MOX_RWTM)	+=3D turris-mox-rwtm.o
-> diff --git a/drivers/firmware/qcom_scm.c b/drivers/firmware/qcom_scm.c
-> index 7be48c1bec96d..6f431b73e617d 100644
-> --- a/drivers/firmware/qcom_scm.c
-> +++ b/drivers/firmware/qcom_scm.c
-> @@ -1280,6 +1280,7 @@ static const struct of_device_id qcom_scm_dt_match[=
-] =3D {
->  	{ .compatible =3D "qcom,scm" },
->  	{}
->  };
-> +MODULE_DEVICE_TABLE(of, qcom_scm_dt_match);
-> =20
->  static struct platform_driver qcom_scm_driver =3D {
->  	.driver =3D {
-> @@ -1295,3 +1296,6 @@ static int __init qcom_scm_init(void)
->  	return platform_driver_register(&qcom_scm_driver);
->  }
->  subsys_initcall(qcom_scm_init);
-> +
-> +MODULE_DESCRIPTION("Qualcomm Technologies, Inc. SCM driver");
-> +MODULE_LICENSE("GPL v2");
-> diff --git a/drivers/iommu/Kconfig b/drivers/iommu/Kconfig
-> index 04878caf6da49..c64d7a2b65134 100644
-> --- a/drivers/iommu/Kconfig
-> +++ b/drivers/iommu/Kconfig
-> @@ -248,6 +248,7 @@ config SPAPR_TCE_IOMMU
->  config ARM_SMMU
->  	tristate "ARM Ltd. System MMU (SMMU) Support"
->  	depends on ARM64 || ARM || (COMPILE_TEST && !GENERIC_ATOMIC64)
-> +	depends on QCOM_SCM || !QCOM_SCM #if QCOM_SCM=3Dm this can't be =3Dy
->  	select IOMMU_API
->  	select IOMMU_IO_PGTABLE_LPAE
->  	select ARM_DMA_USE_IOMMU if ARM
+BR,
+-R
 
-This, in conjunction with deferred probe timeout, causes mayhem on
-Tegra186. The problem, as far as I can tell, is that there are various
-devices that are hooked up to the ARM SMMU, but if ARM SMMU ends up
-being built as a loadable module, then those devices will initialize
-without IOMMU support (because deferred probe will timeout before the
-ARM SMMU module can be loaded from the root filesystem).
-
-Unfortunately, the ARM SMMU module will eventually end up being loaded
-once the root filesystem has been mounted (for example via SDHCI or
-Ethernet, both with using just plain, non-IOMMU-backed DMA API) and then
-initialize, configuring as "fault by default", which then results from a
-slew of SMMU faults from all the devices that have previously configured
-themselves without IOMMU support.
-
-One way to work around this is to just disable all QCOM-related drivers
-for the build so that ARM SMMU will be built-in again. I'm going to
-guess that distributions aren't going to be too happy about having to
-make that kind of choice.
-
-Another way would be for the ARM SMMU module to be included in the
-initial ramdisk, which /should/ solve this as well, though I haven't
-actually tested that yet. That's not ideal, because it means that users
-will have to use an initial ramdisk in order to make this work, and not
-all of them may want to.
-
-Perhaps a better solution for now would be to make QCOM_SCM always
-built-in, so that ARM SMMU can also always be built-in? I suspect that
-this will be a problem not only on Tegra but on any platform that uses
-an ARM SMMU. I think this is also not directly related to the QCOM_SCM
-code because this would also happen if ARM SMMU were built as a module
-for a kernel that doesn't have any QCOM drivers enabled. So in general
-any configuration that builds ARM SMMU as a module seems like it would
-currently be broken (if it also keeps the "fault by default" default).
-Is this something that people have extensively tested? I can't see how
-that would currently work, since there's no way for an ARM SMMU master
-to somehow recover and switch to IOMMU-backed DMA API dynamically once
-the ARM SMMU becomes available.
-
-I guess yet another possibility would be for the ARM SMMU driver to
-detect whether it was loaded after all of its consumers and switch to
-"bypass by default" automatically in such a situation. That should allow
-any driver probed after the ARM SMMU to still take advantage of IOVA
-translation, but will not impact the devices probed before the ARM SMMU.
-
-Thierry
-
---Ns7jmDPpOpCD+GE/
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCAAdFiEEiOrDCAFJzPfAjcif3SOs138+s6EFAl+yoeQACgkQ3SOs138+
-s6EeIw/+Jkiy34v/1TaxUz5pLZYHnJwmKT1lGYDf9KdRC9vO87BZVqj5/lNO5IXa
-+dyBEeU5axJ6Iyohml966Ry57AnSRjtMjeuqJCEwK0bZFZxwGe9oq9NnHmSuYPVa
-MX8qpw9npa2QUFnNs3w+YE2cxcndyR6kcl3LPNNpFJ9zdAeD7S1wc9kgC69P+mV3
-ZWN7koQ5I5WLfwRkOLEpV2NyuyREYw2u2KboLNt4Sy7+M5ZaGQDDsrQ6hUXT9BkF
-NmaYl/ao4ukTocxLoe3Ol/mcrM8PExy4kPSnw1FAYIO5g4sXUjpzY/Ks1ajZymM6
-jqeCVC+pTnSVI9E34lj01CdiZODV7Wl6cgO6GEmey7YXwf6AN2D61WPMXaA3Pryj
-KSngHp099W9E7wyUj9TQlXXDWzmmiDrk2GNaxvjiU08V0ADCV+aP7I7S5723MySN
-43PqFETM/omI+WWMRbdZ/pNqQENzsOhRfCo1PVyIdlfYMfu57QpP7eqXNyhvIu30
-JSzz9G6TPVMtMeOlE1n9v8xHYm1jF8kb3itX1966++MniHV5SwP5MQwMfHCXk7ER
-SDue3dleku/Yb0WCPGCRF3oMzHV/cELFtsQmRUerXHSgvmc0Auq3YMhqfzoTVb1s
-quggJ16RzZOdPqMecJoPOeJPTlpjGER1HNvwiLPAY2+U0GAPZcM=
-=oQiu
------END PGP SIGNATURE-----
-
---Ns7jmDPpOpCD+GE/--
+> -Akhil.
+> >
+> > Or do you think we could add the speed-bin tables for all supported hw
+> > immediately?
+> >
+> > BR,
+> > -R
+> >
+> >> +       }
+> >> +
+> >> +       buf = nvmem_cell_read(cell, NULL);
+> >> +       if (IS_ERR(buf)) {
+> >> +               nvmem_cell_put(cell);
+> >> +               return PTR_ERR(buf);
+> >> +       }
+> >> +
+> >> +       bin = *((u32 *) buf);
+> >> +
+> >> +       for (i = 0; i < speedbins_count; i++) {
+> >> +               if (bin == speedbins[i]) {
+> >> +                       val = (1 << i);
+> >> +                       break;
+> >> +               }
+> >> +       }
+> >> +
+> >> +       kfree(buf);
+> >> +       nvmem_cell_put(cell);
+> >> +
+> >> +       if (!val) {
+> >> +               DRM_DEV_ERROR(dev, "missing support for speed-bin: %u\n", bin);
+> >> +               return -ENOENT;
+> >> +       }
+> >> +
+> >> +       opp_table = dev_pm_opp_set_supported_hw(dev, &val, 1);
+> >> +       if (IS_ERR(opp_table))
+> >> +               return PTR_ERR(opp_table);
+> >> +
+> >> +       adreno_gpu->opp_table = opp_table;
+> >> +       return 0;
+> >> +}
+> >> +
+> >> +static void adreno_put_supported_hw(struct opp_table *opp_table)
+> >> +{
+> >> +       if (opp_table)
+> >> +               dev_pm_opp_put_supported_hw(opp_table);
+> >> +}
+> >> +
+> >>   int adreno_gpu_init(struct drm_device *drm, struct platform_device *pdev,
+> >>                  struct adreno_gpu *adreno_gpu,
+> >>                  const struct adreno_gpu_funcs *funcs, int nr_rings)
+> >> @@ -899,6 +963,7 @@ int adreno_gpu_init(struct drm_device *drm, struct platform_device *pdev,
+> >>          struct adreno_platform_config *config = dev->platform_data;
+> >>          struct msm_gpu_config adreno_gpu_config  = { 0 };
+> >>          struct msm_gpu *gpu = &adreno_gpu->base;
+> >> +       int ret;
+> >>
+> >>          adreno_gpu->funcs = funcs;
+> >>          adreno_gpu->info = adreno_info(config->rev);
+> >> @@ -910,6 +975,10 @@ int adreno_gpu_init(struct drm_device *drm, struct platform_device *pdev,
+> >>
+> >>          adreno_gpu_config.nr_rings = nr_rings;
+> >>
+> >> +       ret = adreno_set_supported_hw(dev, adreno_gpu);
+> >> +       if (ret)
+> >> +               return ret;
+> >> +
+> >>          adreno_get_pwrlevels(dev, gpu);
+> >>
+> >>          pm_runtime_set_autosuspend_delay(dev,
+> >> @@ -936,4 +1005,6 @@ void adreno_gpu_cleanup(struct adreno_gpu *adreno_gpu)
+> >>
+> >>          icc_put(gpu->icc_path);
+> >>          icc_put(gpu->ocmem_icc_path);
+> >> +
+> >> +       adreno_put_supported_hw(adreno_gpu->opp_table);
+> >>   }
+> >> diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.h b/drivers/gpu/drm/msm/adreno/adreno_gpu.h
+> >> index c3775f7..a756ad7 100644
+> >> --- a/drivers/gpu/drm/msm/adreno/adreno_gpu.h
+> >> +++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.h
+> >> @@ -55,6 +55,7 @@ struct adreno_reglist {
+> >>   };
+> >>
+> >>   extern const struct adreno_reglist a630_hwcg[], a640_hwcg[], a650_hwcg[];
+> >> +extern const u32 a618_speedbins[];
+> >>
+> >>   struct adreno_info {
+> >>          struct adreno_rev rev;
+> >> @@ -67,6 +68,8 @@ struct adreno_info {
+> >>          const char *zapfw;
+> >>          u32 inactive_period;
+> >>          const struct adreno_reglist *hwcg;
+> >> +       const u32 *speedbins;
+> >> +       const u8 speedbins_count;
+> >>   };
+> >>
+> >>   const struct adreno_info *adreno_info(struct adreno_rev rev);
+> >> @@ -112,6 +115,8 @@ struct adreno_gpu {
+> >>           * code (a3xx_gpu.c) and stored in this common location.
+> >>           */
+> >>          const unsigned int *reg_offsets;
+> >> +
+> >> +       struct opp_table *opp_table;
+> >>   };
+> >>   #define to_adreno_gpu(x) container_of(x, struct adreno_gpu, base)
+> >>
+> >> --
+> >> 2.7.4
+> >>
+>
