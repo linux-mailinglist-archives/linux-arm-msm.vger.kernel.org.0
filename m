@@ -2,164 +2,90 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 4419C2B4E10
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Nov 2020 18:49:01 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1962F2B4E67
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Nov 2020 18:49:40 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2387767AbgKPRlx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 16 Nov 2020 12:41:53 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46574 "EHLO
+        id S2387453AbgKPRrA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 16 Nov 2020 12:47:00 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47426 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2387759AbgKPRlv (ORCPT
+        with ESMTP id S1733124AbgKPRq7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 16 Nov 2020 12:41:51 -0500
-Received: from mail-wr1-x441.google.com (mail-wr1-x441.google.com [IPv6:2a00:1450:4864:20::441])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F0D3DC0613D3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 16 Nov 2020 09:41:50 -0800 (PST)
-Received: by mail-wr1-x441.google.com with SMTP id l1so19645885wrb.9
-        for <linux-arm-msm@vger.kernel.org>; Mon, 16 Nov 2020 09:41:50 -0800 (PST)
+        Mon, 16 Nov 2020 12:46:59 -0500
+Received: from mail-pf1-x442.google.com (mail-pf1-x442.google.com [IPv6:2607:f8b0:4864:20::442])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C4546C0613CF;
+        Mon, 16 Nov 2020 09:46:59 -0800 (PST)
+Received: by mail-pf1-x442.google.com with SMTP id 131so4309698pfb.9;
+        Mon, 16 Nov 2020 09:46:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=W1MHY4aaGFabv01eWFz4IHQEmJmgXDktxmU/mwniRQM=;
-        b=mpqKiv0z8EhJ1hkWKiD4s3yFbia9Nq2ccdMY5wK4NY+1NhTHbISUM0ZH3ZCHS26yIY
-         6O92czvRbWnbgPQe9WAFU9K/ifLShQgqoCdc7wLL0GhgXqzaJijOqVfYbvzNe6LIIrEV
-         npClTG9jo/n4w5RaShICj+fD7GkqO5I7mu+U0V9gizrF3eBSNbo4+XqLYYmIaqdgUX9Q
-         XQhvG0ntpPs8mW8I2RcJcfkUebZtEbvrmRX8nwIuOSrjkDv5t30hRk4VdnTEpzExNK9u
-         h7JAg3+m/h/EUMPZYwgmbeUUW31PgTukkL+KomU9Y91HNvhWS1dYAqQp0E8FWX/P9HJ7
-         1nQQ==
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=AFQ+O37FNhcW/Av1cdzRedXy1kVAe5xo2SMJ3+HW4OM=;
+        b=vWXDOTfl59qP9fxCS19SyQrfmBfDGuSxJsaVaz5eSMb86AZtFklN7A6Zn5DpU2O62M
+         z/o81vZvXnRjoqLaklfBDjXWvMIsqijdjhliiP2DH/mnlR1dIhxQBNMgQFl307oQroa7
+         qrlWZqgHXNh56cfEOdscvePSzck8kpS4ztlZ/YQ3D9p08q5dIKSqy9Zw4SkM5jZtk2NX
+         gfJHMH1DSX/xkJgW0u64M+jdPEvSTEbt6+9VfLD3iOjhFPI7qilId9+q03ZqIQxuVnD7
+         lphI90AKiQvVDsX+mRf+DTegxdafRYX6l6nHIQ2p7rxYfLyiMa8bP+5CXzbkxidlTk+g
+         k7kA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=W1MHY4aaGFabv01eWFz4IHQEmJmgXDktxmU/mwniRQM=;
-        b=Wd7OxwwVUtmbQl7LCFRHDzENCZ45jojxqkaZQ3J/AjFBJzAhmxsFO96sxK9F6GN8Bx
-         duXNJ0P+1LRcuFMAMWNEEolM8RZXzsTC+7FrT5Vn5NnZ5KLq0l2yO9psE1Vg8KYorXi5
-         0CUG9icMXhTc8UT2Q8vYkSVBykS36ri4uW3b7HpOdb307y0A/DEnQHp0Mx2GZvsc+LQR
-         i+RrYKlzveKBgivLrFNped83L2G28lU7C9BvOzAPUZzvDlNvVQTpbXrNen6YS8Upvpn3
-         M+/UihWzdXyJ3hmnpMILbx28zOmw4+slETVlTREbeEIzlJ0uCP5NzItE/Vuh2BrYfKfA
-         AnWQ==
-X-Gm-Message-State: AOAM53171dvD9vFS2vxOJV3BDRviyP7r2I54f4ZR/c2ALePPL0/tolMt
-        QpHV8Ef0gu8OwU9AiwTHooq8Dg==
-X-Google-Smtp-Source: ABdhPJwZ0jSj+/r94Ojpe6Rg7ZSUOee9IJj4lYLdYAt/Xz4U6G4d3Gz4HVMuhx4NAwzNQfjCx3+8NA==
-X-Received: by 2002:adf:dc4b:: with SMTP id m11mr19844677wrj.328.1605548509721;
-        Mon, 16 Nov 2020 09:41:49 -0800 (PST)
-Received: from dell.default ([91.110.221.159])
-        by smtp.gmail.com with ESMTPSA id n10sm24667224wrx.9.2020.11.16.09.41.48
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=AFQ+O37FNhcW/Av1cdzRedXy1kVAe5xo2SMJ3+HW4OM=;
+        b=SOfK2c1C1WzBRXJDqw79y90VnIgn1eoXOBONzVrtAgjXWXpf6qRm2FumdQ7sm21s9h
+         MXskBOKBjz+RJEBkLbtru/BmeNe1+RxoWtu5CgqZDfar0ZSt+zBUBmidiRQxKnuDtACF
+         m2jR4dbegACrsEgWEmzhcWyRFSkg/4sJ1l/rBy7R0plp1jTVuamESGTfFITQoe1/XHNh
+         v7DNk1SNdZGp6M4qg7lSMxdPxdqQYiTUbi7TsggiwJqVKOgcaL3U/t37Hny0eiGVJoWJ
+         TmJo0Fs7rFDWrJD5qkiTDjytfBut/oKzasMRAJX2K6ushy9vFXN6RDOdzsZhlIWqttHU
+         Cg/w==
+X-Gm-Message-State: AOAM532cpu7UQ4j4T2Tasn5E7rVKktddW30xYcgT9aMGtFRjZCsJnON7
+        RVfIn4L7geMu+xkbBnpITwg=
+X-Google-Smtp-Source: ABdhPJyeKY5m4SY+1T9gII+E3Bldj7+ODf6BYWuyVbLF75IPQWTx0NuLpLWGPvG4nF8DXKpCoWoR0A==
+X-Received: by 2002:a63:5421:: with SMTP id i33mr317880pgb.316.1605548819123;
+        Mon, 16 Nov 2020 09:46:59 -0800 (PST)
+Received: from localhost (c-73-25-156-94.hsd1.or.comcast.net. [73.25.156.94])
+        by smtp.gmail.com with ESMTPSA id q16sm18422605pff.114.2020.11.16.09.46.57
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 16 Nov 2020 09:41:49 -0800 (PST)
-From:   Lee Jones <lee.jones@linaro.org>
-To:     lee.jones@linaro.org
-Cc:     linux-kernel@vger.kernel.org, Rob Clark <robdclark@gmail.com>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        Abhinav Kumar <abhinavk@codeaurora.org>
-Subject: [PATCH 20/42] drm/msm/disp/dpu1/dpu_encoder: Remove a bunch of unused variables
-Date:   Mon, 16 Nov 2020 17:40:50 +0000
-Message-Id: <20201116174112.1833368-21-lee.jones@linaro.org>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20201116174112.1833368-1-lee.jones@linaro.org>
-References: <20201116174112.1833368-1-lee.jones@linaro.org>
+        Mon, 16 Nov 2020 09:46:57 -0800 (PST)
+From:   Rob Clark <robdclark@gmail.com>
+To:     dri-devel@lists.freedesktop.org
+Cc:     Rob Clark <robdclark@chromium.org>,
+        freedreno@lists.freedesktop.org (open list:DRM DRIVER FOR MSM ADRENO
+        GPU), Jordan Crouse <jcrouse@codeaurora.org>,
+        "Kristian H. Kristensen" <hoegsberg@google.com>,
+        linux-arm-msm@vger.kernel.org (open list:DRM DRIVER FOR MSM ADRENO GPU),
+        linux-kernel@vger.kernel.org (open list)
+Subject: [PATCH v2 0/3] drm/msm: Shrinker fixes and opts
+Date:   Mon, 16 Nov 2020 09:48:48 -0800
+Message-Id: <20201116174851.878426-1-robdclark@gmail.com>
+X-Mailer: git-send-email 2.28.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Fixes the following W=1 kernel build warning(s):
+From: Rob Clark <robdclark@chromium.org>
 
- drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c: In function ‘dpu_encoder_virt_mode_set’:
- drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c:981:31: warning: variable ‘num_dspp’ set but not used [-Wunused-but-set-variable]
- drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c:976:30: warning: variable ‘topology’ set but not used [-Wunused-but-set-variable]
- drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c: In function ‘_dpu_encoder_virt_enable_helper’:
- drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c:1099:26: warning: variable ‘priv’ set but not used [-Wunused-but-set-variable]
- drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c: In function ‘dpu_encoder_virt_disable’:
- drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c:1210:18: warning: variable ‘dpu_kms’ set but not used [-Wunused-but-set-variable]
+The last patch is the main thing, motivated by some cases where we would
+spend a lot of time in msm_gem_shrinker_count().  First two are fixes I
+noticed along the way.
 
-Cc: Rob Clark <robdclark@gmail.com>
-Cc: Sean Paul <sean@poorly.run>
-Cc: David Airlie <airlied@linux.ie>
-Cc: Daniel Vetter <daniel@ffwll.ch>
-Cc: linux-arm-msm@vger.kernel.org
-Cc: dri-devel@lists.freedesktop.org
-Cc: freedreno@lists.freedesktop.org
-Signed-off-by: Lee Jones <lee.jones@linaro.org>
-Reviewed-by: Abhinav Kumar <abhinavk@codeaurora.org>
----
- drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c | 12 ++----------
- 1 file changed, 2 insertions(+), 10 deletions(-)
+Rob Clark (3):
+  drm/msm: Protect obj->active_count under obj lock
+  drm/msm/shrinker: We can vmap shrink active_list too
+  drm/msm/shrinker: Only iterate dontneed objs
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-index f7f5c258b5537..289bfb6f1861c 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-@@ -973,12 +973,11 @@ static void dpu_encoder_virt_mode_set(struct drm_encoder *drm_enc,
- 	struct drm_crtc *drm_crtc;
- 	struct dpu_crtc_state *cstate;
- 	struct dpu_global_state *global_state;
--	struct msm_display_topology topology;
- 	struct dpu_hw_blk *hw_pp[MAX_CHANNELS_PER_ENC];
- 	struct dpu_hw_blk *hw_ctl[MAX_CHANNELS_PER_ENC];
- 	struct dpu_hw_blk *hw_lm[MAX_CHANNELS_PER_ENC];
- 	struct dpu_hw_blk *hw_dspp[MAX_CHANNELS_PER_ENC] = { NULL };
--	int num_lm, num_ctl, num_pp, num_dspp;
-+	int num_lm, num_ctl, num_pp;
- 	int i, j;
- 
- 	if (!drm_enc) {
-@@ -1020,8 +1019,6 @@ static void dpu_encoder_virt_mode_set(struct drm_encoder *drm_enc,
- 		if (drm_crtc->state->encoder_mask & drm_encoder_mask(drm_enc))
- 			break;
- 
--	topology = dpu_encoder_get_topology(dpu_enc, dpu_kms, adj_mode);
--
- 	/* Query resource that have been reserved in atomic check step. */
- 	num_pp = dpu_rm_get_assigned_resources(&dpu_kms->rm, global_state,
- 		drm_enc->base.id, DPU_HW_BLK_PINGPONG, hw_pp,
-@@ -1030,7 +1027,7 @@ static void dpu_encoder_virt_mode_set(struct drm_encoder *drm_enc,
- 		drm_enc->base.id, DPU_HW_BLK_CTL, hw_ctl, ARRAY_SIZE(hw_ctl));
- 	num_lm = dpu_rm_get_assigned_resources(&dpu_kms->rm, global_state,
- 		drm_enc->base.id, DPU_HW_BLK_LM, hw_lm, ARRAY_SIZE(hw_lm));
--	num_dspp = dpu_rm_get_assigned_resources(&dpu_kms->rm, global_state,
-+	dpu_rm_get_assigned_resources(&dpu_kms->rm, global_state,
- 		drm_enc->base.id, DPU_HW_BLK_DSPP, hw_dspp,
- 		ARRAY_SIZE(hw_dspp));
- 
-@@ -1096,7 +1093,6 @@ static void dpu_encoder_virt_mode_set(struct drm_encoder *drm_enc,
- static void _dpu_encoder_virt_enable_helper(struct drm_encoder *drm_enc)
- {
- 	struct dpu_encoder_virt *dpu_enc = NULL;
--	struct msm_drm_private *priv;
- 	int i;
- 
- 	if (!drm_enc || !drm_enc->dev) {
-@@ -1104,8 +1100,6 @@ static void _dpu_encoder_virt_enable_helper(struct drm_encoder *drm_enc)
- 		return;
- 	}
- 
--	priv = drm_enc->dev->dev_private;
--
- 	dpu_enc = to_dpu_encoder_virt(drm_enc);
- 	if (!dpu_enc || !dpu_enc->cur_master) {
- 		DPU_ERROR("invalid dpu encoder/master\n");
-@@ -1207,7 +1201,6 @@ static void dpu_encoder_virt_disable(struct drm_encoder *drm_enc)
- {
- 	struct dpu_encoder_virt *dpu_enc = NULL;
- 	struct msm_drm_private *priv;
--	struct dpu_kms *dpu_kms;
- 	int i = 0;
- 
- 	if (!drm_enc) {
-@@ -1225,7 +1218,6 @@ static void dpu_encoder_virt_disable(struct drm_encoder *drm_enc)
- 	dpu_enc->enabled = false;
- 
- 	priv = drm_enc->dev->dev_private;
--	dpu_kms = to_dpu_kms(priv->kms);
- 
- 	trace_dpu_enc_disable(DRMID(drm_enc));
- 
+ drivers/gpu/drm/msm/msm_debugfs.c      |  3 +-
+ drivers/gpu/drm/msm/msm_drv.c          |  3 +-
+ drivers/gpu/drm/msm/msm_drv.h          |  8 ++--
+ drivers/gpu/drm/msm/msm_gem.c          | 45 ++++++++++++++++------
+ drivers/gpu/drm/msm/msm_gem.h          |  5 ++-
+ drivers/gpu/drm/msm/msm_gem_shrinker.c | 52 +++++++++++++++++++-------
+ drivers/gpu/drm/msm/msm_gpu.c          | 10 +++--
+ 7 files changed, 89 insertions(+), 37 deletions(-)
+
 -- 
-2.25.1
+2.28.0
 
