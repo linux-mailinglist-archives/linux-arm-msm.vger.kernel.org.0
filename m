@@ -2,62 +2,58 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 984172B4E71
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Nov 2020 18:49:44 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 883472B4EA8
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Nov 2020 18:59:00 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1733271AbgKPRsp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 16 Nov 2020 12:48:45 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47694 "EHLO
+        id S2387687AbgKPRz7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 16 Nov 2020 12:55:59 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48818 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1733190AbgKPRsp (ORCPT
+        with ESMTP id S1733119AbgKPRz6 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 16 Nov 2020 12:48:45 -0500
-Received: from mail-wr1-x444.google.com (mail-wr1-x444.google.com [IPv6:2a00:1450:4864:20::444])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CCBC7C0613CF;
-        Mon, 16 Nov 2020 09:48:43 -0800 (PST)
-Received: by mail-wr1-x444.google.com with SMTP id r17so19728850wrw.1;
-        Mon, 16 Nov 2020 09:48:43 -0800 (PST)
+        Mon, 16 Nov 2020 12:55:58 -0500
+Received: from mail-qv1-xf41.google.com (mail-qv1-xf41.google.com [IPv6:2607:f8b0:4864:20::f41])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CA373C0613CF
+        for <linux-arm-msm@vger.kernel.org>; Mon, 16 Nov 2020 09:55:58 -0800 (PST)
+Received: by mail-qv1-xf41.google.com with SMTP id v20so5902428qvx.4
+        for <linux-arm-msm@vger.kernel.org>; Mon, 16 Nov 2020 09:55:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=oo28y8CwbarIIHt9QVICKSL/cPf2jBzgOsxS9+pjqV4=;
-        b=Xo+6RoUKW5EPAQ5AfiLMX2ZOBP3YtaRXNtMeaOx5Kz6LQeDbTNdN8Tn1drGDcfrXbC
-         mPk13Xv0teQZptYrVKdoX4Wo9+81F0IAhppDl0rbxUZYifSBDn25uao5eQeQo1F2qh2o
-         oDFsFeLhHS524Vtqx1v5iCCJ0CKyCSNVG917jK5sS0i0nGSSY43ASsqSX+k+7zleqUwP
-         m2J84Jhrk0YOxQ22Cg7UdO7tOgwcWJJBKfgbfpM6wwxzC4Q2UsWXPFW+TpnUHVet2yv/
-         91PQg079/9WnamlCea28HYMTRO6Pt3f6splsJ4ecRed2px63Gik6CAV0aQZU1XnWjgeZ
-         gUJA==
+        d=marek-ca.20150623.gappssmtp.com; s=20150623;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=E8dVzLq70NYkCDseFzmbLwa/urvtTDPkDdBtFGGN6D0=;
+        b=M4o0yAJtuwdwVHCFv76S5VG1YfEGJmnNrFwmo84W1XR7pfDC3QibdJzFpH5AeaIykv
+         JeFMb9H78yvKh5jtpNNG/SpXGgI0QOy93BAJNetXtXZuQMUhdUwfqBUFqt0vEyVb6ZB0
+         4DR+OG3iowahd0NLee2pdnSouzWtomf5UY91th9YTb3ik0jqNjGGq15pL+7bwdf3/oUb
+         EJ9swCP2IfQ8Ec9smzzKfsMfj20TxlfhwB3xALmxlLiiPd20ayVVJCPFfPlLIwm2MJnR
+         GrrZx/ZjLa1E+yYmu/Gf3HfimSIaTOl23XtyAwyxQtQuM6lrg7EfrvpfzKzwx6bGvHda
+         lHHw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=oo28y8CwbarIIHt9QVICKSL/cPf2jBzgOsxS9+pjqV4=;
-        b=AtRqJJlwNgVMOtmwuXDmik7Tf8n7zLzf58XyqNOjDaAi2KtgQv4dKTAYR83iaD1mHf
-         gchDHncf5Ohu3x9KS42GsIGMjD5raSnUMRqfxSj44dwYMnT7y3hqhdcp5a3cqe3Nrayn
-         vkh1IfQdE81jZ1NUjk8N9Rutp1txVesj9w8LIbVKmIbUXXTP35dWGNqiiex/EiyDgkBH
-         GcX08sYZeUDYe0hvnpr6tsDLhTKgAOekfWcn+vYPCQ5xXROE6tbAZnA2to9jcWnu3F/a
-         KkUC0OUsSU0aR4krxuEH4kOqf5FO38Y7I2MeXUfDpOkmfmVfsRpB/RedBVYQbsEud4dx
-         p/nQ==
-X-Gm-Message-State: AOAM530hIOtCgPr5H0EIyrnK15wBxL+GIDMRH+x+ieRrlMO1GEBMu1Fl
-        dnWCWwcLlpanX6dDfXAJHY4zAyjmMzBuGtRo739mmIgX99c=
-X-Google-Smtp-Source: ABdhPJwLUHRCNxP780S9wB4HTWCUx9z/UF/ZjtKuXyrKptvA/sOlIX/C0TT7KCOFIw7oMBBwToUFga8s7TvJdYI0jDU=
-X-Received: by 2002:adf:f04b:: with SMTP id t11mr19535784wro.147.1605548922581;
- Mon, 16 Nov 2020 09:48:42 -0800 (PST)
-MIME-Version: 1.0
-References: <20201114151717.5369-1-jonathan@marek.ca> <20201114151717.5369-5-jonathan@marek.ca>
- <20201114162406.GC24411@lst.de> <CAF6AEGvujttEkFuRqtt7i+0o7-=2spKXfAvJZrj96uWAFRLYuA@mail.gmail.com>
- <50ddcadb-c630-2ef6-cdc4-724d9823fba7@marek.ca> <CAF6AEGsH5Wk=J+HxHnRqTMLZscjErjKq2v0Rms7Td=W7icZ3sw@mail.gmail.com>
- <b6e4f167-871a-5f26-46bd-d914476af519@marek.ca> <20201116173346.GA24173@lst.de>
-In-Reply-To: <20201116173346.GA24173@lst.de>
-From:   Rob Clark <robdclark@gmail.com>
-Date:   Mon, 16 Nov 2020 09:50:28 -0800
-Message-ID: <CAF6AEGuFzsurd4n6G-nUmCusTJ8vMo9Kqjzs3JRS_d6n+qHgEA@mail.gmail.com>
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=E8dVzLq70NYkCDseFzmbLwa/urvtTDPkDdBtFGGN6D0=;
+        b=BREhwXYTyM82xs+llbYMJiDdVHf98LkbNHfb4OhJbcg+co17UVUxexo7Num3oOA41e
+         Qz3YO0d1/2VrPJLFllBeCrRcA620RHCSH+ivN4WmMAfBDzI3rzjEtzIlA1//2xIwdz8j
+         opvMhpV92QUAbcMopUkxleZBb34SJHyoQfkDa5zR3rNAPEUSnIuFfWJinhsElI4PXSoN
+         BxjamZpYkthqx8R1i+ZrcSrVCzbEuBqilvGNIZBRl3QbLsl3Wd+HoODKcj2ZGjf8qK2k
+         Y48rM1SHt0VuHV7SF5QNj+RzNIjk/2VJ9kOnpUg3+ZiGCKwsQJwEjJJ7DSVhAjQEOWpe
+         b8Mg==
+X-Gm-Message-State: AOAM533fkc0UZMnN+MxpaExzebfS9q2bym51JVdi8Y8sivsTdffao48X
+        n4OMxYflVhBK0tRHbchuNti4Ng==
+X-Google-Smtp-Source: ABdhPJzaZqMKn8xovkF8P6M/eGyZjGXaTO9LqPdsEfmRScwlIiXF508R9sNXAXVwP+ldTfKElwlGOg==
+X-Received: by 2002:a0c:b65b:: with SMTP id q27mr15592022qvf.8.1605549357940;
+        Mon, 16 Nov 2020 09:55:57 -0800 (PST)
+Received: from [192.168.0.189] (modemcable068.184-131-66.mc.videotron.ca. [66.131.184.68])
+        by smtp.gmail.com with ESMTPSA id q123sm12890805qke.28.2020.11.16.09.55.56
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 16 Nov 2020 09:55:57 -0800 (PST)
 Subject: Re: [RESEND PATCH v2 4/5] drm/msm: add DRM_MSM_GEM_SYNC_CACHE for
  non-coherent cache maintenance
-To:     Christoph Hellwig <hch@lst.de>
-Cc:     Jonathan Marek <jonathan@marek.ca>,
-        freedreno <freedreno@lists.freedesktop.org>,
+To:     Rob Clark <robdclark@gmail.com>, Christoph Hellwig <hch@lst.de>,
+        Jordan Crouse <jcrouse@codeaurora.org>
+Cc:     freedreno <freedreno@lists.freedesktop.org>,
         Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
         Daniel Vetter <daniel@ffwll.ch>,
         "open list:DRM DRIVER FOR MSM ADRENO GPU" 
@@ -65,23 +61,47 @@ Cc:     Jonathan Marek <jonathan@marek.ca>,
         "open list:DRM DRIVER FOR MSM ADRENO GPU" 
         <dri-devel@lists.freedesktop.org>,
         open list <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+References: <20201114151717.5369-1-jonathan@marek.ca>
+ <20201114151717.5369-5-jonathan@marek.ca> <20201114162406.GC24411@lst.de>
+ <CAF6AEGvujttEkFuRqtt7i+0o7-=2spKXfAvJZrj96uWAFRLYuA@mail.gmail.com>
+ <50ddcadb-c630-2ef6-cdc4-724d9823fba7@marek.ca>
+ <CAF6AEGsH5Wk=J+HxHnRqTMLZscjErjKq2v0Rms7Td=W7icZ3sw@mail.gmail.com>
+ <b6e4f167-871a-5f26-46bd-d914476af519@marek.ca>
+ <20201116173346.GA24173@lst.de>
+ <CAF6AEGuFzsurd4n6G-nUmCusTJ8vMo9Kqjzs3JRS_d6n+qHgEA@mail.gmail.com>
+From:   Jonathan Marek <jonathan@marek.ca>
+Message-ID: <b798d954-d0b5-d968-f03c-b3fe9ffd08fc@marek.ca>
+Date:   Mon, 16 Nov 2020 12:52:41 -0500
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.2.2
+MIME-Version: 1.0
+In-Reply-To: <CAF6AEGuFzsurd4n6G-nUmCusTJ8vMo9Kqjzs3JRS_d6n+qHgEA@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Nov 16, 2020 at 9:33 AM Christoph Hellwig <hch@lst.de> wrote:
->
-> On Sat, Nov 14, 2020 at 03:07:20PM -0500, Jonathan Marek wrote:
-> > qcom's vulkan driver has nonCoherentAtomSize=1, and it looks like
-> > dma_sync_single_for_cpu() does deal in some way with the partial cache line
-> > case, although I'm not sure that means we can have a nonCoherentAtomSize=1.
->
-> No, it doesn't.  You need to ensure ownership is managed at
-> dma_get_cache_alignment() granularity.
+On 11/16/20 12:50 PM, Rob Clark wrote:
+> On Mon, Nov 16, 2020 at 9:33 AM Christoph Hellwig <hch@lst.de> wrote:
+>>
+>> On Sat, Nov 14, 2020 at 03:07:20PM -0500, Jonathan Marek wrote:
+>>> qcom's vulkan driver has nonCoherentAtomSize=1, and it looks like
+>>> dma_sync_single_for_cpu() does deal in some way with the partial cache line
+>>> case, although I'm not sure that means we can have a nonCoherentAtomSize=1.
+>>
+>> No, it doesn't.  You need to ensure ownership is managed at
+>> dma_get_cache_alignment() granularity.
+> 
+> my guess is nonCoherentAtomSize=1 only works in the case of cache
+> coherent buffers
+> 
 
-my guess is nonCoherentAtomSize=1 only works in the case of cache
-coherent buffers
+nonCoherentAtomSize doesn't apply to coherent memory (as the name 
+implies), I guess qcom's driver is just wrong about having 
+nonCoherentAtomSize=1.
 
-BR,
--R
+Jordan just mentioned there is at least one conformance test for this, I 
+wonder if it just doesn't test it well enough, or just doesn't test the 
+non-coherent memory type?
