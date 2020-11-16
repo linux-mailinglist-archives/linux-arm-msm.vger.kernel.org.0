@@ -2,123 +2,89 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 57B252B466B
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Nov 2020 15:53:59 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B9AA02B467C
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Nov 2020 15:58:51 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730091AbgKPOxz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 16 Nov 2020 09:53:55 -0500
-Received: from mail-oi1-f194.google.com ([209.85.167.194]:42163 "EHLO
-        mail-oi1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728396AbgKPOxz (ORCPT
+        id S1730292AbgKPO54 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 16 Nov 2020 09:57:56 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48800 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730612AbgKPO5z (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 16 Nov 2020 09:53:55 -0500
-Received: by mail-oi1-f194.google.com with SMTP id w145so19052521oie.9;
-        Mon, 16 Nov 2020 06:53:54 -0800 (PST)
+        Mon, 16 Nov 2020 09:57:55 -0500
+Received: from mail-vs1-xe43.google.com (mail-vs1-xe43.google.com [IPv6:2607:f8b0:4864:20::e43])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 520DFC0613D1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 16 Nov 2020 06:57:55 -0800 (PST)
+Received: by mail-vs1-xe43.google.com with SMTP id m16so9277651vsl.8
+        for <linux-arm-msm@vger.kernel.org>; Mon, 16 Nov 2020 06:57:55 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=sg3eMzSsvsFQKF9WYrus0kI2hc/riBKKXYCgRDx0GaI=;
+        b=cDYymRXmY7cN1YqBVrDKxLtgp3HsW+XjlleSpOJL3ZvY+i5aDFQlDVe1bvmxNoormg
+         F+/Yv/XabrzCe9u7fiBvT6VQg3Ose4LHuY8wcFNuSr/SS0roJaLvBKDbwBnVfeMDVVym
+         srYMs68PWUkfmH5asG++lDq8nFRWyh5eNMQ/w=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=YlpjPvTQYT+rqdni5qJzLiGhROd+f/379cy54KdKCm0=;
-        b=UdOkcRVeKkKulfhfAgp40GpUXlbmHBzCKUguCuO95nYxA9ASiDUEYr5CPA89WxW7cQ
-         +x/J/dZKZgjB2EW/GDwWBuJUDYK52ndSDmdS/xv43ypAUIcJIWe/UM+eTMjkCtZJusIT
-         Tzz4PIXxThWvx5YTrXOGE2kcgoF2YZ0rCEEOhx5SLQfXGb3bjkRrF7ORhO/i58pXwOH5
-         n5ICp68r0HYnFk+A0QQLe4US9qUiBJhb1F10Sll5VId95k5PrYnk9fvC/PNOM2GOMXAs
-         8HNhVKgOx5AQZciY0lljJ4N1de+Q/vnPRs4UCKR4pf/Tg4yCmn5UdnLpSFbQw5TuYANv
-         DOyA==
-X-Gm-Message-State: AOAM532EYrqPmk8ImgS/XBsRfzZyXEsCFT+TCQbhuPZgFfHJN6wpdKdY
-        b/b3ebLFT26YTc1L4RTxTXUY/Q+HNw==
-X-Google-Smtp-Source: ABdhPJysYAvyeMCmUOQIRzey6h9TQ6Yjr9KAi3Sw8KNdrUru374RMQwgv+i8cZ3MEKgNmhT2nujfMg==
-X-Received: by 2002:aca:1e13:: with SMTP id m19mr4492399oic.176.1605538434197;
-        Mon, 16 Nov 2020 06:53:54 -0800 (PST)
-Received: from xps15 (24-155-109-49.dyn.grandenetworks.net. [24.155.109.49])
-        by smtp.gmail.com with ESMTPSA id 64sm4702013otq.26.2020.11.16.06.53.53
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 16 Nov 2020 06:53:53 -0800 (PST)
-Received: (nullmailer pid 1634415 invoked by uid 1000);
-        Mon, 16 Nov 2020 14:53:52 -0000
-Date:   Mon, 16 Nov 2020 08:53:52 -0600
-From:   Rob Herring <robh@kernel.org>
-To:     Caleb Connolly <caleb@connolly.tech>
-Cc:     linux-arm-msm@vger.kernel.org, phone-devel@vger.kernel.org,
-        ~postmarketos/upstreaming@lists.sr.ht, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 4/5] dt-bindings: add vendor bindings for OnePlus
-Message-ID: <20201116145352.GB1625774@bogus>
-References: <20201112161920.2671430-1-caleb@connolly.tech>
- <20201112161920.2671430-5-caleb@connolly.tech>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=sg3eMzSsvsFQKF9WYrus0kI2hc/riBKKXYCgRDx0GaI=;
+        b=D/MEeNzizZl2BVhFI3YbjvWSf83kaGgAY5wdM2ZZPvv+g5PRrnBYtE4f03ErOJP7JU
+         n/Dy9fmnaDW+f/dVFaOt+jHZqT3VUjm24cGD90QXLRItw3Nul+NsamoGhDQh7rWgdQg7
+         E6YnB6I/9kficl+PsA9O5SvHrbvWz6j4Q2OdN9mgy7I7Dp3EsXj/XqSYEwDJ3xhPRcO3
+         iQCC21vr7apokG3EVOXedMTwCOewBhOhc8Me7FreKPaOoaUFqwS1+r7QU1vrw12zE+Dv
+         4XHVB+oEvBqKccKOsz6QepM2a0NEcyQLMtLiq40Rg0tQL0JRuNmFZbgEOtGIIXRm2Bnc
+         aMGw==
+X-Gm-Message-State: AOAM532ll8C/7Mvd4xFVs3qhra+Tr/uy22x/puPSR6SFgCoCudbDCeKb
+        UESvjLSobtebHHSfpoZHA1CloURLhTxLBA==
+X-Google-Smtp-Source: ABdhPJw/Tl9FhWiXVmxM/MFVLJm2/d6W5zJNusFmTbR3arahVCaJdI91e0jctADX5M0Dfn9Ft7J8Qg==
+X-Received: by 2002:a05:6102:22ef:: with SMTP id b15mr8930848vsh.35.1605538674053;
+        Mon, 16 Nov 2020 06:57:54 -0800 (PST)
+Received: from mail-vs1-f43.google.com (mail-vs1-f43.google.com. [209.85.217.43])
+        by smtp.gmail.com with ESMTPSA id f1sm2076764vsj.33.2020.11.16.06.57.52
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 16 Nov 2020 06:57:53 -0800 (PST)
+Received: by mail-vs1-f43.google.com with SMTP id x11so9247780vsx.12
+        for <linux-arm-msm@vger.kernel.org>; Mon, 16 Nov 2020 06:57:52 -0800 (PST)
+X-Received: by 2002:a67:ef98:: with SMTP id r24mr7638617vsp.37.1605538672446;
+ Mon, 16 Nov 2020 06:57:52 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20201112161920.2671430-5-caleb@connolly.tech>
+References: <20201116083014.547-1-terry_hsiao@compal.corp-partner.google.com>
+In-Reply-To: <20201116083014.547-1-terry_hsiao@compal.corp-partner.google.com>
+From:   Doug Anderson <dianders@chromium.org>
+Date:   Mon, 16 Nov 2020 06:57:40 -0800
+X-Gmail-Original-Message-ID: <CAD=FV=UetS0P++02rRfkxuxAau6i6pHDyc_9iz_OwZ5h_T_Fug@mail.gmail.com>
+Message-ID: <CAD=FV=UetS0P++02rRfkxuxAau6i6pHDyc_9iz_OwZ5h_T_Fug@mail.gmail.com>
+Subject: Re: [PATCH] arm64: dts: qcom: sc7180-trogdor: add "pen-insert" label
+ for trogdor
+To:     Terry Hsiao <a804335@gmail.com>
+Cc:     LKML <linux-kernel@vger.kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>,
+        terry_hsiao@compal.corp-partner.google.com,
+        danny_kuo@compal.corp-partner.google.com,
+        jasper_lee@compal.corp-partner.google.com,
+        van_chen@compal.corp-partner.google.com
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Nov 12, 2020 at 04:21:54PM +0000, Caleb Connolly wrote:
-> Used by the OnePlus 6/T device trees
-> 
-> Signed-off-by: Caleb Connolly <caleb@connolly.tech>
+Hi,
+
+On Mon, Nov 16, 2020 at 12:30 AM Terry Hsiao <a804335@gmail.com> wrote:
+>
+> Add a label to the "pen-insert" node in sc7180-trogdor.dtsi
+>
+> Signed-off-by: Terry Hsiao <terry_hsiao@compal.corp-partner.google.com>
 > ---
->  .../bindings/arm/oneplus/oneplus-boards.yaml  | 25 +++++++++++++++++++
->  .../devicetree/bindings/vendor-prefixes.yaml  |  2 ++
->  2 files changed, 27 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/arm/oneplus/oneplus-boards.yaml
-> 
-> diff --git a/Documentation/devicetree/bindings/arm/oneplus/oneplus-boards.yaml b/Documentation/devicetree/bindings/arm/oneplus/oneplus-boards.yaml
-> new file mode 100644
-> index 000000000000..a4d9bbd5681f
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/arm/oneplus/oneplus-boards.yaml
-> @@ -0,0 +1,25 @@
-> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/arm/oneplus/oneplus-boards.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> +
-> +title: OnePlus based boards
-> +
-> +maintainers:
-> +  - Caleb Connolly <caleb@connolly.tech>
-> +
-> +properties:
-> +  $nodename:
-> +    const: '/'
-> +  compatible:
-> +    oneOf:
-> +      - description: SDM845 based boards
+>  arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 
-There should be a sdm845 fallback compatible. Also, board level 
-compatibles are documented in a per SoC family schema (qcom.yaml) which 
-should already define the fallback.
-
-> +        items:
-> +          - enum:
-> +              - oneplus,enchilada               # OnePlus 6
-> +              - oneplus,fajita                  # OnePlus 6T
-> +          - const: oneplus,oneplus6             # OnePlus 6 and derivatives
-
-With a SoC fallback, having this as a 3rd compatible probably isn't too 
-useful. 3 levels of compatible is mainly done when there's a SoM plus 
-baseboard.
-
-> +
-> +required:
-> +  - compatible
-> diff --git a/Documentation/devicetree/bindings/vendor-prefixes.yaml b/Documentation/devicetree/bindings/vendor-prefixes.yaml
-> index 2735be1a8470..372c1136081e 100644
-> --- a/Documentation/devicetree/bindings/vendor-prefixes.yaml
-> +++ b/Documentation/devicetree/bindings/vendor-prefixes.yaml
-> @@ -768,6 +768,8 @@ patternProperties:
->      description: OLIMEX Ltd.
->    "^olpc,.*":
->      description: One Laptop Per Child
-> +  "^oneplus,.*":
-> +    description: One Plus Technology (Shenzhen) Co., Ltd.
->    "^onion,.*":
->      description: Onion Corporation
->    "^onnn,.*":
-> -- 
-> 2.29.2
-> 
-> 
+Reviewed-by: Douglas Anderson <dianders@chromium.org>
