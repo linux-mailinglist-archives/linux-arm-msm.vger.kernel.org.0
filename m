@@ -2,89 +2,93 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 437142B3DEA
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Nov 2020 08:50:55 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3967B2B3EA9
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Nov 2020 09:32:29 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727893AbgKPHtp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 16 Nov 2020 02:49:45 -0500
-Received: from m42-4.mailgun.net ([69.72.42.4]:23003 "EHLO m42-4.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727590AbgKPHtp (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 16 Nov 2020 02:49:45 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1605512985; h=Message-Id: Date: Subject: Cc: To: From:
- Sender; bh=uyOlTM80iUIKUo0V/zn7BpuxDHK919VWbhuQkHHN89w=; b=AzKL2k3DSxPjTCxWtnLCccHt+JVebZYB5u3SV3y4yhYRc+IMXaS8r41QGZEVpE1/uBjebhYJ
- FzG/o0x992sR7G4kZpvVgvJAC9QCeG7ZGPPDOJy7caeO4kJDYt+ITrtkYdyuQJkHwFsNyrFI
- +f8YqM+57gGoaGg/3sf30UVc2Rw=
-X-Mailgun-Sending-Ip: 69.72.42.4
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n04.prod.us-west-2.postgun.com with SMTP id
- 5fb22f0ed3e05bb6db631e03 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 16 Nov 2020 07:49:34
- GMT
-Sender: srivasam=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 4A0BAC433ED; Mon, 16 Nov 2020 07:49:34 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
-        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
-Received: from hyd-lnxbld210.qualcomm.com (unknown [202.46.22.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: srivasam)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 7A5D0C433ED;
-        Mon, 16 Nov 2020 07:49:28 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 7A5D0C433ED
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=srivasam@codeaurora.org
-From:   Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
-To:     agross@kernel.org, bjorn.andersson@linaro.org, lgirdwood@gmail.com,
-        broonie@kernel.org, robh+dt@kernel.org, plai@codeaurora.org,
-        bgoswami@codeaurora.org, perex@perex.cz, tiwai@suse.com,
-        srinivas.kandagatla@linaro.org, rohitkr@codeaurora.org,
-        linux-arm-msm@vger.kernel.org, alsa-devel@alsa-project.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Cc:     V Sujith Kumar Reddy <vsujithk@codeaurora.org>,
-        Srinivasa Rao Manidadapu <srivasam@codeaurora.org>
-Subject: [PATCH] Asoc: qcom: lpass-sc7180: Add 32 bit format support for capture
-Date:   Mon, 16 Nov 2020 13:19:15 +0530
-Message-Id: <1605512955-7017-1-git-send-email-srivasam@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
+        id S1726527AbgKPIa0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 16 Nov 2020 03:30:26 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45230 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726249AbgKPIa0 (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 16 Nov 2020 03:30:26 -0500
+Received: from mail-pg1-x544.google.com (mail-pg1-x544.google.com [IPv6:2607:f8b0:4864:20::544])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ED2EFC0613CF;
+        Mon, 16 Nov 2020 00:30:25 -0800 (PST)
+Received: by mail-pg1-x544.google.com with SMTP id q28so2051749pgk.1;
+        Mon, 16 Nov 2020 00:30:25 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=Jbxb2khKyk+y1AIZPk4FBSYKN7b5uI6tHI8Glj/80TI=;
+        b=j3C6TsHguxy5f0E3VtIWwOguLdPZIgBg8t4CjhQ5USXn5KqLieGRowZEm7QXOLJ59I
+         znx1HI8DTuJNyNhmP2yMF39R9LdgSTvwRvemjHhG5sUX0hzUqgoAt+ug5VH+1kGEbjtB
+         vGkp7FzJZTLeOfwsa3KJsaYvF8dwUvLK9b1yj67ma85xraIWscXzS+Bwl9YtVovWrfbj
+         zkqzGpWdFqNs3mqsPHDWNaFsHJZta9g1FS2iydseCbpsj+cDOGIcRwC7MVSFGwdCMB0e
+         41EXO2S5Q5bzu0FbbTiChgyRGPvhq6/ZL8LvMND4CYAsV+7lG5sF0GjXAfDCdltpIM5G
+         EvKA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=Jbxb2khKyk+y1AIZPk4FBSYKN7b5uI6tHI8Glj/80TI=;
+        b=PYyFvMt6YukC4+2JSS6Atjcl4G8dCq2+gMbfWYz425PakP7mFWV50/vTnSwirSn6Pe
+         6hnlJBnztkljE2eAV/YHo7Y+TrJbwqLPKAlYCdzXg4D9P34GVH4YbMluxAUHF3RrFaRY
+         AYoA3hVTIvnmzItDL00ymmKSJhskgvPe1VwZDVe0QiaKvceRa/x332zHpRoca87lKCHu
+         k7GmuGKPR3DwKWjpTqfN+GSgnYg1TR5ib+Lc005BJEcI3o5eUa8Bp3kqyAOZfEzwkP6N
+         LMdKAnMqZnvobt6XRGWTVlj6I9wS/HW7KeXs3JADTAGSe11fdnrcIPtLJiz033mUIhXu
+         ymHQ==
+X-Gm-Message-State: AOAM533X2rsjkaiSRpJDGj8Dbz8LPqyfG6YaBE/mzh1iFrZ3PD4DgB0/
+        jTk9dWIcr0kJg2T80r4Ni93Bt4cYQyhYYA==
+X-Google-Smtp-Source: ABdhPJxY/3Z8cTJir3PLkDclrLS7OiU3jKitrjkL9BdBne7cOV2nK+cNaz1FVUP18aqclkLPkANHww==
+X-Received: by 2002:a17:90a:609:: with SMTP id j9mr14754476pjj.121.1605515425129;
+        Mon, 16 Nov 2020 00:30:25 -0800 (PST)
+Received: from localhost.localdomain (59-125-183-19.HINET-IP.hinet.net. [59.125.183.19])
+        by smtp.gmail.com with ESMTPSA id ce19sm19670079pjb.53.2020.11.16.00.30.22
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 16 Nov 2020 00:30:24 -0800 (PST)
+From:   Terry Hsiao <a804335@gmail.com>
+X-Google-Original-From: Terry Hsiao <terry_hsiao@compal.corp-partner.google.com>
+To:     linux-kernel@vger.kernel.org
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        dianders@chromium.org, terry_hsiao@compal.corp-partner.google.com,
+        danny_kuo@compal.corp-partner.google.com,
+        jasper_lee@compal.corp-partner.google.com,
+        van_chen@compal.corp-partner.google.com
+Subject: [PATCH] arm64: dts: qcom: sc7180-trogdor: add "pen-insert" label for trogdor
+Date:   Mon, 16 Nov 2020 16:30:14 +0800
+Message-Id: <20201116083014.547-1-terry_hsiao@compal.corp-partner.google.com>
+X-Mailer: git-send-email 2.26.2
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: V Sujith Kumar Reddy <vsujithk@codeaurora.org>
+Add a label to the "pen-insert" node in sc7180-trogdor.dtsi
 
-Add 32 bit format support for capture in lpass-sc7180
-snd_soc_dai_driver capabilities. Need to add contstraints
-in machine driver so that only specific format allowed.
-
-Signed-off-by: V Sujith Kumar Reddy <vsujithk@codeaurora.org>
-Signed-off-by: Srinivasa Rao Manidadapu <srivasam@codeaurora.org>
+Signed-off-by: Terry Hsiao <terry_hsiao@compal.corp-partner.google.com>
 ---
- sound/soc/qcom/lpass-sc7180.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/sound/soc/qcom/lpass-sc7180.c b/sound/soc/qcom/lpass-sc7180.c
-index 61b51b5..3dc80fc 100644
---- a/sound/soc/qcom/lpass-sc7180.c
-+++ b/sound/soc/qcom/lpass-sc7180.c
-@@ -34,7 +34,8 @@ static struct snd_soc_dai_driver sc7180_lpass_cpu_dai_driver[] = {
- 		},
- 		.capture = {
- 			.stream_name = "Primary Capture",
--			.formats = SNDRV_PCM_FMTBIT_S16,
-+			.formats = SNDRV_PCM_FMTBIT_S16 |
-+				SNDRV_PCM_FMTBIT_S32,
- 			.rates = SNDRV_PCM_RATE_48000,
- 			.rate_min	= 48000,
- 			.rate_max	= 48000,
+diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
+index 781e61ad75a61..9de95493ed902 100644
+--- a/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
+@@ -201,7 +201,7 @@ gpio_keys: gpio-keys {
+ 		pinctrl-names = "default";
+ 		pinctrl-0 = <&pen_pdct_l>;
+ 
+-		pen-insert {
++		pen_insert: pen-insert {
+ 			label = "Pen Insert";
+ 
+ 			/* Insert = low, eject = high */
 -- 
-Qualcomm India Private Limited, on behalf of Qualcomm Innovation Center, Inc.,
-is a member of Code Aurora Forum, a Linux Foundation Collaborative Project.
+2.26.2
 
