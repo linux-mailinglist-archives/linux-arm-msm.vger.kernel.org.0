@@ -2,185 +2,130 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 34A1E2B43E6
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Nov 2020 13:44:02 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E38A62B43F8
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Nov 2020 13:50:21 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726988AbgKPMnm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 16 Nov 2020 07:43:42 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56382 "EHLO
+        id S1726352AbgKPMrO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 16 Nov 2020 07:47:14 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56924 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726598AbgKPMnm (ORCPT
+        with ESMTP id S1726287AbgKPMrO (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 16 Nov 2020 07:43:42 -0500
-Received: from mail-pl1-x644.google.com (mail-pl1-x644.google.com [IPv6:2607:f8b0:4864:20::644])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 43747C0613D1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 16 Nov 2020 04:43:42 -0800 (PST)
-Received: by mail-pl1-x644.google.com with SMTP id d17so6804643plr.5
-        for <linux-arm-msm@vger.kernel.org>; Mon, 16 Nov 2020 04:43:42 -0800 (PST)
+        Mon, 16 Nov 2020 07:47:14 -0500
+Received: from mail-pf1-x442.google.com (mail-pf1-x442.google.com [IPv6:2607:f8b0:4864:20::442])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8A578C0613CF
+        for <linux-arm-msm@vger.kernel.org>; Mon, 16 Nov 2020 04:47:14 -0800 (PST)
+Received: by mail-pf1-x442.google.com with SMTP id i8so284124pfk.10
+        for <linux-arm-msm@vger.kernel.org>; Mon, 16 Nov 2020 04:47:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=hzIkr1PGmJSmnpkluYdeJ6kws69fWOgunLbcgLydCjE=;
-        b=XEzs8XNgzzcBbve6IQ4WR5Lmi9aKtzMhCzKZQ6tYPgJZvLOfR9TctZEaxyOCtiKyPZ
-         3J4bPWTXrvCF3KIv72nfYLIe4ICJX22xQsmDgvCCkQfYddezdMT6zw3iu9QYVYAf2d7U
-         UqTnr5+qLXHtE6zqsBQJ3sP761SrKPYmow88+HcFGwQykMG1lQcsVDKqVCFRFeSoEmbs
-         aoPeUoqzc3TdJo+E9ykLWIyySzS+Zidhp0Cvng9BAhxrxTTGUiyDba3OIl6YcR/9Y1Ls
-         6gA8CBf2+zisHicZNjqqsFz4rc/gMB6aggmHuBr7JeLn5D9Jo++Jgi/fZzdrSTNYL5fA
-         waZA==
+        bh=Hjz/pG1FXMNclKUbGQCgRGQRnKutMZdz2lW6yKssubA=;
+        b=KooEXHpP9BPJzYOzg3A0MdhsS2deEHUEnnFU3BBIn+0iw+BBuocqupBgv382HXDzjQ
+         Gg87WkmhmkusvAh1YDUCUAk4UKju5y3dFS+RrWOhAzfItdLmyTyQ2bOyKz9Zhy9iSsjA
+         Tutdr1BfzWdNXAWkP6e3Z4xqdC+VmrUiaq0SS8aSk1VbRYpzIC+iId9moBFFc5z32NL8
+         QGTJlU+LHD+hcWPOW5IYU1hVAViqVK2CGXOCXdMzPwQzMMtRidfgLL0YTzWQqlyqXrUR
+         S8xFhXQufNm4Ck6TGCOoGwHylxrggHoXjkD2dr6vxHVuU/mxeh96WLMwAjoIz732k2Mh
+         ICkw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=hzIkr1PGmJSmnpkluYdeJ6kws69fWOgunLbcgLydCjE=;
-        b=SwGmQ7FEjOx6EF1+atHkGoDn84aJAKHjeHFLYcfV8mwf6J0QCOeCV05dVDmEZ/0fZN
-         61ZQJw13sPD8/4892hUsAaYwr0Spu5rw9v2ttaeh5kiqBOXz8B8viqaU+ZSkZCXK11GU
-         QMM97S8dtfSYhXcQi3bWph5NMtQ+LYeY5fsDnx+mLX2AvAB/W+4pWc+HhtmfRxTUYPVk
-         OMvIG0a/cxYFKTKtFqhhPqQH8YjdOKb1skT9hhuVA2wjlKCUwtGDZNrlURbOpn2jrcA8
-         WOHJVbTFqQIjYUptqBmZIDLTaK1C8EFwT8RV8DZvK1xLPgmc0sTDeNOUBWpJETjj/ATR
-         eIeQ==
-X-Gm-Message-State: AOAM5310G8hd1QKUUSljhXHCQ+j2vQ5VbFQrm9LnrY77nMwzdXGMs2VN
-        7DktG7KtOGytzTtzA2nYgGMNC0pO8k6M
-X-Google-Smtp-Source: ABdhPJyMR162mCy3sZjRcJn/62V15QusACXsYwb2psjiIMeW3J/hiLOBLe1xLn3PHDH3ccCwsmeTnA==
-X-Received: by 2002:a17:902:e788:b029:d6:dc69:80a8 with SMTP id cp8-20020a170902e788b02900d6dc6980a8mr12967315plb.59.1605530621700;
-        Mon, 16 Nov 2020 04:43:41 -0800 (PST)
+        bh=Hjz/pG1FXMNclKUbGQCgRGQRnKutMZdz2lW6yKssubA=;
+        b=hVaelZXG2e0GM7/762Hiy469KZr0HovgINFmc1ySNO0dXE4DqwKGGix2O2iBVH0rwG
+         YbVYkHvEYxv/2VvA0BwnSkxrB/BF01fE8UibTQP22rmOE6eMLUJ63/7Nnhb2NWfDsQJU
+         1lV2v+YcgbZAPeIJt7DSiCKj+jyzoIt5XO76YTa5X5LPeZDZz669TeK5WKxBX87rUl72
+         P76OkQpgjT4AquUpng1qE0WFFD64WdufElmSOKDFUOj0QCYhi0Xvz0w9s8SgPZUGNtb3
+         KsYUi0fp+Sm4oUda5/Fk0JOJdzNVs67XzNx/0iaXjhegLR/rszVR9AmC+FROFiVTMBRZ
+         FUsw==
+X-Gm-Message-State: AOAM53293AvQCns48uYGOo6ItU+Y3NND5VY43o/++aCvAFl3PniNhNU7
+        Ef4zuwRa4C0sNupJvSQOnhDw
+X-Google-Smtp-Source: ABdhPJxNw7SIpur2I8+FwPob3ZbSh0X23uAMFBndfW4XT94TUoy9uKQOmg+GNcS1lrfV8yUbuD/fvA==
+X-Received: by 2002:a63:2cc3:: with SMTP id s186mr4008863pgs.230.1605530834088;
+        Mon, 16 Nov 2020 04:47:14 -0800 (PST)
 Received: from Mani-XPS-13-9360 ([2409:4072:618e:9b0a:75fd:1290:bf5c:a350])
-        by smtp.gmail.com with ESMTPSA id t9sm20526789pje.1.2020.11.16.04.43.36
+        by smtp.gmail.com with ESMTPSA id gx24sm18002561pjb.38.2020.11.16.04.47.09
         (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 16 Nov 2020 04:43:40 -0800 (PST)
-Date:   Mon, 16 Nov 2020 18:13:32 +0530
+        Mon, 16 Nov 2020 04:47:13 -0800 (PST)
+Date:   Mon, 16 Nov 2020 18:17:06 +0530
 From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 To:     Bhaumik Bhatt <bbhatt@codeaurora.org>
 Cc:     linux-arm-msm@vger.kernel.org, hemantk@codeaurora.org,
         jhugo@codeaurora.org, loic.poulain@linaro.org,
         kvalo@codeaurora.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2 3/6] bus: mhi: core: Add support to stop or start
- channel data transfers
-Message-ID: <20201116124332.GK3926@Mani-XPS-13-9360>
+Subject: Re: [PATCH v2 5/6] bus: mhi: core: Remove __ prefix for MHI channel
+ unprepare function
+Message-ID: <20201116124706.GL3926@Mani-XPS-13-9360>
 References: <1605122473-12179-1-git-send-email-bbhatt@codeaurora.org>
- <1605122473-12179-4-git-send-email-bbhatt@codeaurora.org>
+ <1605122473-12179-6-git-send-email-bbhatt@codeaurora.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <1605122473-12179-4-git-send-email-bbhatt@codeaurora.org>
+In-Reply-To: <1605122473-12179-6-git-send-email-bbhatt@codeaurora.org>
 User-Agent: Mutt/1.9.4 (2018-02-28)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Nov 11, 2020 at 11:21:10AM -0800, Bhaumik Bhatt wrote:
-> Some MHI client drivers may want to request a pause or halt of
-> data transfer activity on their channels. Support for this does
-> not exist and must be introduced, wherein the channel context is
-> not reset or cleared but only the STOP channel command is issued.
-> This would need to be paired with an API that allows resuming the
-> data transfer activity on channels by use of the START channel
-> command. This API assumes that the context information is already
-> setup. Enable this using two new APIs, mhi_start_transfer() and
-> mhi_stop_transfer().
+On Wed, Nov 11, 2020 at 11:21:12AM -0800, Bhaumik Bhatt wrote:
+> The __mhi_unprepare_channel() API does not require the __ prefix.
+> Get rid of it and make the internal function consistent with the
+> other function names.
 > 
 > Signed-off-by: Bhaumik Bhatt <bbhatt@codeaurora.org>
-> ---
->  drivers/bus/mhi/core/main.c | 41 +++++++++++++++++++++++++++++++++++++++++
->  include/linux/mhi.h         | 19 +++++++++++++++++++
->  2 files changed, 60 insertions(+)
-> 
-> diff --git a/drivers/bus/mhi/core/main.c b/drivers/bus/mhi/core/main.c
-> index 1226933..1a969f4 100644
-> --- a/drivers/bus/mhi/core/main.c
-> +++ b/drivers/bus/mhi/core/main.c
-> @@ -1560,6 +1560,47 @@ void mhi_unprepare_from_transfer(struct mhi_device *mhi_dev)
->  }
->  EXPORT_SYMBOL_GPL(mhi_unprepare_from_transfer);
->  
-> +static int mhi_update_transfer_state(struct mhi_device *mhi_dev,
-> +				     enum mhi_ch_state_type to_state)
-> +{
-> +	struct mhi_controller *mhi_cntrl = mhi_dev->mhi_cntrl;
-> +	struct mhi_chan *mhi_chan;
-> +	int dir, ret;
-> +
-> +	for (dir = 0; dir < 2; dir++) {
-> +		mhi_chan = dir ? mhi_dev->ul_chan : mhi_dev->dl_chan;
-> +
-> +		if (!mhi_chan)
-> +			continue;
-> +
-> +		/*
-> +		 * Bail out if one of the channels fail as client will reset
-> +		 * both upon failure
-> +		 */
-> +		mutex_lock(&mhi_chan->mutex);
 
-Hmm. The documentation about wait_for_completion*() used in
-mhi_update_channel_state()says below,
-
-"As all variants of wait_for_completion() can (obviously) block for a long
-time depending on the nature of the activity they are waiting for, so in
-most cases you probably don't want to call this with held mutexes."
-
-> +		ret = mhi_update_channel_state(mhi_cntrl, mhi_chan, to_state);
-> +		if (ret) {
-> +			mutex_unlock(&mhi_chan->mutex);
-> +			return ret;
-> +		}
-> +		mutex_unlock(&mhi_chan->mutex);
-> +	}
-> +
-> +	return 0;
-> +}
-> +
-> +int mhi_stop_transfer(struct mhi_device *mhi_dev)
-> +{
-> +	return mhi_update_transfer_state(mhi_dev, MHI_CH_STATE_TYPE_STOP);
-> +}
-> +EXPORT_SYMBOL_GPL(mhi_stop_transfer);
-> +
-> +int mhi_start_transfer(struct mhi_device *mhi_dev)
-> +{
-> +	return mhi_update_transfer_state(mhi_dev, MHI_CH_STATE_TYPE_START);
-> +}
-> +EXPORT_SYMBOL_GPL(mhi_start_transfer);
-> +
->  int mhi_poll(struct mhi_device *mhi_dev, u32 budget)
->  {
->  	struct mhi_controller *mhi_cntrl = mhi_dev->mhi_cntrl;
-> diff --git a/include/linux/mhi.h b/include/linux/mhi.h
-> index 52b3c60..aee8494 100644
-> --- a/include/linux/mhi.h
-> +++ b/include/linux/mhi.h
-> @@ -702,6 +702,25 @@ int mhi_prepare_for_transfer(struct mhi_device *mhi_dev);
->  void mhi_unprepare_from_transfer(struct mhi_device *mhi_dev);
->  
->  /**
-> + * mhi_stop_transfer - Pauses ongoing channel activity by issuing the STOP
-> + *                     channel command to both UL and DL channels. This command
-> + *                     does not reset the channel context and the client drivers
-> + *                     can issue mhi_start_transfer to resume activity.
-> + * @mhi_dev: Device associated with the channels
-> + */
-> +int mhi_stop_transfer(struct mhi_device *mhi_dev);
-> +
-> +/**
-> + * mhi_start_transfer - Resumes channel activity by issuing the START channel
-> + *                      command to both UL and DL channels. This command assumes
-> + *                      the channel context is already setup and the client
-> + *                      drivers can issue mhi_stop_transfer to pause activity if
-> + *                      required.
-> + * @mhi_dev: Device associated with the channels
-> + */
-> +int mhi_start_transfer(struct mhi_device *mhi_dev);
-> +
-> +/**
-
-Align the comment header properly.
+Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 
 Thanks,
 Mani
 
->   * mhi_poll - Poll for any available data in DL direction
->   * @mhi_dev: Device associated with the channels
->   * @budget: # of events to process
+> ---
+>  drivers/bus/mhi/core/main.c | 10 +++++-----
+>  1 file changed, 5 insertions(+), 5 deletions(-)
+> 
+> diff --git a/drivers/bus/mhi/core/main.c b/drivers/bus/mhi/core/main.c
+> index e8af85a..19156d4 100644
+> --- a/drivers/bus/mhi/core/main.c
+> +++ b/drivers/bus/mhi/core/main.c
+> @@ -1312,8 +1312,8 @@ static int mhi_update_channel_state(struct mhi_controller *mhi_cntrl,
+>  	return -EINVAL;
+>  }
+>  
+> -static void __mhi_unprepare_channel(struct mhi_controller *mhi_cntrl,
+> -				    struct mhi_chan *mhi_chan)
+> +static void mhi_unprepare_channel(struct mhi_controller *mhi_cntrl,
+> +				  struct mhi_chan *mhi_chan)
+>  {
+>  	int ret;
+>  	struct device *dev = &mhi_cntrl->mhi_dev->dev;
+> @@ -1433,7 +1433,7 @@ int mhi_prepare_channel(struct mhi_controller *mhi_cntrl,
+>  
+>  error_pre_alloc:
+>  	mutex_unlock(&mhi_chan->mutex);
+> -	__mhi_unprepare_channel(mhi_cntrl, mhi_chan);
+> +	mhi_unprepare_channel(mhi_cntrl, mhi_chan);
+>  
+>  	return ret;
+>  }
+> @@ -1550,7 +1550,7 @@ int mhi_prepare_for_transfer(struct mhi_device *mhi_dev)
+>  		if (!mhi_chan)
+>  			continue;
+>  
+> -		__mhi_unprepare_channel(mhi_cntrl, mhi_chan);
+> +		mhi_unprepare_channel(mhi_cntrl, mhi_chan);
+>  	}
+>  
+>  	return ret;
+> @@ -1568,7 +1568,7 @@ void mhi_unprepare_from_transfer(struct mhi_device *mhi_dev)
+>  		if (!mhi_chan)
+>  			continue;
+>  
+> -		__mhi_unprepare_channel(mhi_cntrl, mhi_chan);
+> +		mhi_unprepare_channel(mhi_cntrl, mhi_chan);
+>  	}
+>  }
+>  EXPORT_SYMBOL_GPL(mhi_unprepare_from_transfer);
 > -- 
 > The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
 > a Linux Foundation Collaborative Project
