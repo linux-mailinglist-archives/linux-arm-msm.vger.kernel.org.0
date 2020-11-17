@@ -2,206 +2,187 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 77BFB2B67C5
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Nov 2020 15:49:17 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 734CE2B67BB
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Nov 2020 15:46:47 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728908AbgKQOrt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 17 Nov 2020 09:47:49 -0500
-Received: from lb2-smtp-cloud9.xs4all.net ([194.109.24.26]:41923 "EHLO
-        lb2-smtp-cloud9.xs4all.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1728198AbgKQOrs (ORCPT
+        id S1728740AbgKQOqZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 17 Nov 2020 09:46:25 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44374 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728940AbgKQOqY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 17 Nov 2020 09:47:48 -0500
-Received: from cust-b5b5937f ([IPv6:fc0c:c16d:66b8:757f:c639:739b:9d66:799d])
-        by smtp-cloud9.xs4all.net with ESMTPA
-        id f2Ggkp8TI6LFvf2GkkVOGC; Tue, 17 Nov 2020 15:47:42 +0100
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=xs4all.nl; s=s2;
-        t=1605624462; bh=ZNewCv5yw7gPIQ0uSlqYOilU68r1FGtpMr8cSacnusU=;
-        h=Subject:To:From:Message-ID:Date:MIME-Version:Content-Type:From:
-         Subject;
-        b=YgwZqsD4HRTVnQ0dDtiFdaAHBn/AZYQ0MzW0blpykx7khRlBuH3HTQBsSKlRvOrI+
-         TltB8HjGLGEaupxoOwBJO1g6gGocrv+KmVganiMhEJClYzuncAOTj/n3rzMw68vhtu
-         W9pp/JHXiIJMDENvXRN+iSlodeId5YqZABkunaZYoJFkG+IrePCgapoM/zHqNF0hkz
-         oVXouPdIwOk+C2HOGKYQwy3AIELZIAECuz6ViT9LLr8hz0MITGU1FsJHSfoGx5qt4B
-         5iGk7iXRH0Y5QKhpmasGX6aQRPewxwoInk5kRMsurXEOoEPLeF3xVihhnCIWXNTe2n
-         b2QLEjqbzxbiA==
-Subject: Re: [PATCH v3] media: v4l2-ctrl: add control for long term reference.
-To:     Dikshita Agarwal <dikshita@codeaurora.org>,
-        linux-media@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-Cc:     mchehab@kernel.org, ezequiel@collabora.com,
-        stanimir.varbanov@linaro.org, vgarodia@codeaurora.org,
-        majja@codeaurora.org
-References: <1602759716-7584-1-git-send-email-dikshita@codeaurora.org>
-From:   Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Message-ID: <395c52eb-e100-7d10-646d-c77b4238d392@xs4all.nl>
-Date:   Tue, 17 Nov 2020 15:47:38 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.12.0
+        Tue, 17 Nov 2020 09:46:24 -0500
+Received: from mail-ej1-x644.google.com (mail-ej1-x644.google.com [IPv6:2a00:1450:4864:20::644])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9A176C0617A7
+        for <linux-arm-msm@vger.kernel.org>; Tue, 17 Nov 2020 06:46:23 -0800 (PST)
+Received: by mail-ej1-x644.google.com with SMTP id 7so29767838ejm.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 17 Nov 2020 06:46:23 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=nUFmOPi5skT4JC7mVv7TNvucfOIONF/gHEhYfaXJH1M=;
+        b=NoKA3kUONbuZIUgKOVWKS8dCL1VZkpljGtCtauLbsLBIiUIdEb/ELujIJbi17fgBut
+         vybuW15lEfuNRrz9hynfcYE/kTBUCDJwarB3qbn3VzCdU8yI+JsQzbjoWofwwiosmFCB
+         W1MlYpKoPdoAY74fxK/Hr/qSkI6e6ha3RMSbB87O7ashYzPwMIKwAuOaA1klC2iEDcpT
+         ohm8sCpWVF0ICVPkIJX05VRldFuMBJXYVsWUsMXtsAPsLYxuO/OI4bBKGwQyHAq5OiNd
+         19HK6AOGS5BZfotpWGVYIdg5scp9aDp8wfnXNgKY7lDnRxEgah3/oREu5H3Hp7IZUhl+
+         +RdA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=nUFmOPi5skT4JC7mVv7TNvucfOIONF/gHEhYfaXJH1M=;
+        b=Mzzomoi1WXeVYYFLC7ZHUlgFcbr1mJ5GURT7XkHGjj1E3oE3si5zt6Ftgkm46QLePz
+         l8fihursp8awgPSBzNpBHo69nOuPRE7QRiRGIUl7WW5jBLGyzS80XDzvxOsAix/1A+Qp
+         QsGVqDFA/uQiZASZO5qv5srV5WqF5jx+1uwkc/FATrApqAh2YAmwZ8JK/mut/SdifeKx
+         4XBlEeA/MAsiuWHjOyPPR40gUfzGDMZM1bmGyBdFrlIBcJNolcd4r/TJCb28sY4UoQ4t
+         P2cG8+3CWdynq+4uPo1UiLzwbX3xF2oeqZ9qOsGqkmcSUelnlPwX6AEcdJL5WbxTAfkt
+         uYIQ==
+X-Gm-Message-State: AOAM533O6O6BmeLSvISep+7pksSKFYcag/DiKHKDgZC5yMaYQWF4DoY6
+        BUZqRFVOyZhQdq0Au9owBjTOIYUX1vlr1MMg3YcD4g==
+X-Google-Smtp-Source: ABdhPJyiVkfHFhAAxAZZiTRGrwjQmEDbhgKr2ktKTE/BN7GVBW6gFKGf4Ui6WDTgcMVMKb60A5idBUeCBH2o+kgOpI4=
+X-Received: by 2002:a17:906:f247:: with SMTP id gy7mr19805291ejb.48.1605624382219;
+ Tue, 17 Nov 2020 06:46:22 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <1602759716-7584-1-git-send-email-dikshita@codeaurora.org>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-X-CMAE-Envelope: MS4xfL6qFHQvvhBxkrpgoWbOTgBrqfhbdzDJxG7Y122FjkFOBE9216LMW/M0l8YUYCPrCxnFLny6loWGM7LHAbNmf4VLvIEI+mxse7JokFxDEd39WOSyxgZZ
- u0flTXt0mUmHmJXlyowdAPamoWqc6tcM8f6WLyUZAOviVR5Vb6JuZ+GkOMudb2TjHz3wj8z5NCLqY6uqvEY7vmEStoIQRpOjSPBEYkwMjMVH2WvhkeEuDxzm
- sMdh5FAL/1SRJ6Na8wEUIgq0kaKJqxzMyVAFxdeVXTWyRV49ujChLzZq4BZl/92WroLL+lyOg63qBRhn0lFYmyzJqsFbR3pjRpKio1YMg0cmqGDeLh+C4qXQ
- 7mI1kqxXdBySoDlRaEpaXi2+dU2cPtH5LQVnwigiKk/IrL1IEF/bwkIqhJMrtpS/I4cerzVA/jd+26a01zBnECzz0nNfxEHQT1FFjfmLjXA/dq/yCuqwVS7n
- ZVwtaYTfNwjwn8mos1yrsR6jdkWjW78IrBWNwg==
+References: <1605566782-38013-1-git-send-email-hemantk@codeaurora.org> <1605566782-38013-6-git-send-email-hemantk@codeaurora.org>
+In-Reply-To: <1605566782-38013-6-git-send-email-hemantk@codeaurora.org>
+From:   Loic Poulain <loic.poulain@linaro.org>
+Date:   Tue, 17 Nov 2020 15:52:25 +0100
+Message-ID: <CAMZdPi_yFtEtquGpfAUh0ULL8bFdDGuoHrpt1EHFz+puGu1T2A@mail.gmail.com>
+Subject: Re: [PATCH v12 5/5] selftest: mhi: Add support to test MHI LOOPBACK channel
+To:     Hemant Kumar <hemantk@codeaurora.org>
+Cc:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        open list <linux-kernel@vger.kernel.org>,
+        Jeffrey Hugo <jhugo@codeaurora.org>,
+        Bhaumik Bhatt <bbhatt@codeaurora.org>,
+        Network Development <netdev@vger.kernel.org>,
+        skhan@linuxfoundation.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Dikshita,
-
-I'm happy with the controls themselves, but the documentation needs more work:
-
-On 15/10/2020 13:01, Dikshita Agarwal wrote:
-> LTR (Long Term Reference) frames are the frames that are encoded
-> sometime in the past and stored in the DPB buffer list to be used
-> as reference to encode future frames.
-> This change adds controls to enable this feature.
-> 
-> Signed-off-by: Dikshita Agarwal <dikshita@codeaurora.org>
+On Mon, 16 Nov 2020 at 23:46, Hemant Kumar <hemantk@codeaurora.org> wrote:
+>
+> Loopback test opens the MHI device file node and writes
+> a data buffer to it. MHI UCI kernel space driver copies
+> the data and sends it to MHI uplink (Tx) LOOPBACK channel.
+> MHI device loops back the same data to MHI downlink (Rx)
+> LOOPBACK channel. This data is read by test application
+> and compared against the data sent. Test passes if data
+> buffer matches between Tx and Rx. Test application performs
+> open(), poll(), write(), read() and close() file operations.
+>
+> Signed-off-by: Hemant Kumar <hemantk@codeaurora.org>
 > ---
->  .../userspace-api/media/v4l/ext-ctrls-codec.rst    | 25 ++++++++++++++++++++++
->  drivers/media/v4l2-core/v4l2-ctrls.c               | 12 +++++++++++
->  include/uapi/linux/v4l2-controls.h                 |  3 +++
->  3 files changed, 40 insertions(+)
-> 
-> diff --git a/Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst b/Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst
-> index ce728c75..6e9240a 100644
-> --- a/Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst
-> +++ b/Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst
-> @@ -4382,3 +4382,28 @@ enum v4l2_mpeg_video_hevc_size_of_length_field -
->        - Selecting this value specifies that HEVC slices are expected
->          to be prefixed by Annex B start codes. According to :ref:`hevc`
->          valid start codes can be 3-bytes 0x000001 or 4-bytes 0x00000001.
+>  Documentation/mhi/uci.rst                          |  32 +
+>  tools/testing/selftests/Makefile                   |   1 +
+>  tools/testing/selftests/drivers/.gitignore         |   1 +
+>  tools/testing/selftests/drivers/mhi/Makefile       |   8 +
+>  tools/testing/selftests/drivers/mhi/config         |   2 +
+>  .../testing/selftests/drivers/mhi/loopback_test.c  | 802 +++++++++++++++++++++
+>  6 files changed, 846 insertions(+)
+>  create mode 100644 tools/testing/selftests/drivers/mhi/Makefile
+>  create mode 100644 tools/testing/selftests/drivers/mhi/config
+>  create mode 100644 tools/testing/selftests/drivers/mhi/loopback_test.c
+>
+> diff --git a/Documentation/mhi/uci.rst b/Documentation/mhi/uci.rst
+> index ce8740e..0a04afe 100644
+> --- a/Documentation/mhi/uci.rst
+> +++ b/Documentation/mhi/uci.rst
+> @@ -79,6 +79,38 @@ MHI client driver performs read operation, same data gets looped back to MHI
+>  host using LOOPBACK channel 1. LOOPBACK channel is used to verify data path
+>  and data integrity between MHI Host and MHI device.
+>
+> +Loopback Test
+> +~~~~~~~~~~~~~
 > +
-> +``V4L2_CID_MPEG_VIDEO_LTR_COUNT (integer)``
-> +       Specifies the number of LTR frames encoder needs to generate or keep.
-
-The term "LTR" isn't explained at all in this and the next two controls.
-
-It is better to replace the first occurrence of "LTR" by:
-"Long Term Reference (LTR)".
-
-> +       This control is used to query or configure the number of LTR frames.
-> +       If LTR Count is more than max supported LTR count by driver,
-> +       it will be rejected.
-
-You can drop this sentence: the driver will specify the maximum value, so you
-can't set it to a value larger than the maximum.
-
-> +       This is applicable to H264 and HEVC encoder and can be applied using
-> +       request api.
-
-request API -> Request API.
-
-Does this control require the Request API? The next two control do need it, but
-is it needed for this one?
-
-Do you have a reference to the section of the H264 and HEVC documentation where
-LTR is discussed? It is useful to refer to those sections to help the reader.
-
+> +Loopback test application is used to verify data integrity between MHI host and
+> +MHI device over LOOPBACK channel. This also confirms that basic MHI data path
+> +is working properly. Test performs write() to send tx buffer to MHI device file
+> +node for LOOPBACK uplink channel. MHI LOOPBACK downlink channel loops back
+> +transmit data to MHI Host. Test application receives data in receive buffer as
+> +part of read(). It verifies if tx buffer matches rx buffer. Test application
+> +performs poll() before making write() and read() system calls. Test passes if
+> +match is found.
 > +
-> +``V4L2_CID_MPEG_VIDEO_FRAME_LTR_INDEX (integer)``
-> +       This control is used to mark current frame as LTR frame.
-> +       this provides a LTR index that ranges from 0 to LTR count-1 and
-> +       then the particular frame will be marked with that LTR index.
-
-Rephrase this as:
-
-"The current frame is marked as a Long Term Reference (LTR) frame and given this
- LTR index which ranges from 0 to LTR_COUNT-1."
-
-> +       This is applicable to H264 and HEVC encoder and can be applied using
-> +       request api.
-
-Request API.
-
+> +Test is present under tools/testing/selftests/drivers/mhi. It is compiled using
+> +following command in same dir:-
 > +
-> +``V4L2_CID_MPEG_VIDEO_USE_LTR_FRAME (bitmask)``
+> +make loopback_test
+> +
+> +Test is run using following command arguments:-
+> +
+> +loopback_test -c <device_node> -b <transmit buffer size> -l <log level> -i
+> +<number of iterations>
+> +
+> +Required argument:
+> +-c : loopback chardev node
+> +
+> +Optional argument:
+> +-b : transmit buffer size. If not present 1024 bytes size transmit buffer
+> +     is sent.
+> +-i : Number of iterations to perform, If not present only one transmit buffer
+> +     is sent.
+> +-l : Log level. If not present defaults to DBG_LVL_INFO.
+> +
+>  Other Use Cases
+>  ---------------
+>
+> diff --git a/tools/testing/selftests/Makefile b/tools/testing/selftests/Makefile
+> index d9c2835..084bc1e 100644
+> --- a/tools/testing/selftests/Makefile
+> +++ b/tools/testing/selftests/Makefile
+> @@ -10,6 +10,7 @@ TARGETS += core
+>  TARGETS += cpufreq
+>  TARGETS += cpu-hotplug
+>  TARGETS += drivers/dma-buf
+> +TARGETS += drivers/mhi
+>  TARGETS += efivarfs
+>  TARGETS += exec
+>  TARGETS += filesystems
+> diff --git a/tools/testing/selftests/drivers/.gitignore b/tools/testing/selftests/drivers/.gitignore
+> index ca74f2e..e4806d5 100644
+> --- a/tools/testing/selftests/drivers/.gitignore
+> +++ b/tools/testing/selftests/drivers/.gitignore
+> @@ -1,2 +1,3 @@
+>  # SPDX-License-Identifier: GPL-2.0-only
+>  /dma-buf/udmabuf
+> +/mhi/loopback_test
+> diff --git a/tools/testing/selftests/drivers/mhi/Makefile b/tools/testing/selftests/drivers/mhi/Makefile
+> new file mode 100644
+> index 0000000..c06c925
+> --- /dev/null
+> +++ b/tools/testing/selftests/drivers/mhi/Makefile
+> @@ -0,0 +1,8 @@
+> +# SPDX-License-Identifier: GPL-2.0-only
+> +CFLAGS += -I../../../../../usr/include/ -g -Wall
+> +
+> +LDLIBS = -lpthread
+> +TEST_GEN_PROGS := loopback_test
+> +
+> +include ../../lib.mk
+> +
+> diff --git a/tools/testing/selftests/drivers/mhi/config b/tools/testing/selftests/drivers/mhi/config
+> new file mode 100644
+> index 0000000..471dc92
+> --- /dev/null
+> +++ b/tools/testing/selftests/drivers/mhi/config
+> @@ -0,0 +1,2 @@
+> +CONFIG_MHI_BUS=y
+> +CONFIG_MHi_UCI=y
 
-I'd rename this control to V4L2_CID_MPEG_VIDEO_USE_LTR_FRAMES since you can select
-multiple frames.
+CONFIG_MHI_UCI
 
-> +       Specifies the LTR frame(s) to be used for encoding the current frame.
-> +       This provides a bitmask which consists of bits [0, 15]. A total of N
+> diff --git a/tools/testing/selftests/drivers/mhi/loopback_test.c b/tools/testing/selftests/drivers/mhi/loopback_test.c
+> new file mode 100644
+> index 0000000..99b7712
+> --- /dev/null
+> +++ b/tools/testing/selftests/drivers/mhi/loopback_test.c
+> @@ -0,0 +1,802 @@
+> +// SPDX-License-Identifier: GPL-2.0
 
-Actually, I expect that the bits range from [0, LTR_COUNT-1], right?
-
-> +       LSB bits of this field are valid, where N is the maximum number of
-> +       LTRs supported. All the other bits are invalid and should be rejected.
-
-I'd drop these two lines. This too is implicit in the control range information,
-i.e. it is simply impossible to select bits outside the range.
-
-> +       The LSB corresponds to the LTR index 0. Bit N-1 from the LSB corresponds
-> +       to the LTR index max LTR count-1.
-
-I would rephrase this to simply: "Bit N corresponds to LTR index N."
-
-> +       This is applicable to H264 and HEVC encoder and can be applied using
-> +       request api.
-
-Request API.
-
-> diff --git a/drivers/media/v4l2-core/v4l2-ctrls.c b/drivers/media/v4l2-core/v4l2-ctrls.c
-> index bd7f330..046198f 100644
-> --- a/drivers/media/v4l2-core/v4l2-ctrls.c
-> +++ b/drivers/media/v4l2-core/v4l2-ctrls.c
-> @@ -949,6 +949,9 @@ const char *v4l2_ctrl_get_name(u32 id)
->  	case V4L2_CID_MPEG_VIDEO_MV_V_SEARCH_RANGE:		return "Vertical MV Search Range";
->  	case V4L2_CID_MPEG_VIDEO_REPEAT_SEQ_HEADER:		return "Repeat Sequence Header";
->  	case V4L2_CID_MPEG_VIDEO_FORCE_KEY_FRAME:		return "Force Key Frame";
-> +	case V4L2_CID_MPEG_VIDEO_LTR_COUNT:			return "LTR Count";
-> +	case V4L2_CID_MPEG_VIDEO_FRAME_LTR_INDEX:		return "Mark LTR frame index";
-
-Wouldn't "Frame LTR Index" be a better name?
-
-> +	case V4L2_CID_MPEG_VIDEO_USE_LTR_FRAME:			return "Use LTR Frame";
-
-If USE_LTR_FRAME is renamed to USE_LTR_FRAMES, then so should the description.
-
->  	case V4L2_CID_MPEG_VIDEO_MPEG2_SLICE_PARAMS:		return "MPEG-2 Slice Parameters";
->  	case V4L2_CID_MPEG_VIDEO_MPEG2_QUANTIZATION:		return "MPEG-2 Quantization Matrices";
->  	case V4L2_CID_MPEG_VIDEO_FWHT_PARAMS:			return "FWHT Stateless Parameters";
-> @@ -1258,6 +1261,15 @@ void v4l2_ctrl_fill(u32 id, const char **name, enum v4l2_ctrl_type *type,
->  	case V4L2_CID_MPEG_VIDEO_MV_V_SEARCH_RANGE:
->  		*type = V4L2_CTRL_TYPE_INTEGER;
->  		break;
-> +	case V4L2_CID_MPEG_VIDEO_LTR_COUNT:
-
-Does this need the V4L2_CTRL_FLAG_EXECUTE_ON_WRITE flag?
-
-> +	case V4L2_CID_MPEG_VIDEO_FRAME_LTR_INDEX:
-> +		*type = V4L2_CTRL_TYPE_INTEGER;
-> +		*flags |= V4L2_CTRL_FLAG_EXECUTE_ON_WRITE;
-> +		break;
-> +	case V4L2_CID_MPEG_VIDEO_USE_LTR_FRAME:
-> +		*type = V4L2_CTRL_TYPE_BITMASK;
-> +		*flags |= V4L2_CTRL_FLAG_EXECUTE_ON_WRITE;
-> +		break;
->  	case V4L2_CID_MPEG_VIDEO_FORCE_KEY_FRAME:
->  	case V4L2_CID_PAN_RESET:
->  	case V4L2_CID_TILT_RESET:
-> diff --git a/include/uapi/linux/v4l2-controls.h b/include/uapi/linux/v4l2-controls.h
-> index a184c49..3801372 100644
-> --- a/include/uapi/linux/v4l2-controls.h
-> +++ b/include/uapi/linux/v4l2-controls.h
-> @@ -415,6 +415,9 @@ enum v4l2_mpeg_video_multi_slice_mode {
->  #define V4L2_CID_MPEG_VIDEO_MV_H_SEARCH_RANGE		(V4L2_CID_MPEG_BASE+227)
->  #define V4L2_CID_MPEG_VIDEO_MV_V_SEARCH_RANGE		(V4L2_CID_MPEG_BASE+228)
->  #define V4L2_CID_MPEG_VIDEO_FORCE_KEY_FRAME		(V4L2_CID_MPEG_BASE+229)
-> +#define V4L2_CID_MPEG_VIDEO_LTR_COUNT                  (V4L2_CID_MPEG_BASE+230)
-> +#define V4L2_CID_MPEG_VIDEO_FRAME_LTR_INDEX            (V4L2_CID_MPEG_BASE+231)
-> +#define V4L2_CID_MPEG_VIDEO_USE_LTR_FRAME              (V4L2_CID_MPEG_BASE+232)
->  
->  /* CIDs for the MPEG-2 Part 2 (H.262) codec */
->  #define V4L2_CID_MPEG_VIDEO_MPEG2_LEVEL			(V4L2_CID_MPEG_BASE+270)
-> 
-
-Regards,
-
-	Hans
+[...]
