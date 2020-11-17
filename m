@@ -2,108 +2,93 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id CAFBB2B6BCC
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Nov 2020 18:35:12 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0D7AE2B6BF9
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Nov 2020 18:41:11 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727527AbgKQReE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 17 Nov 2020 12:34:04 -0500
-Received: from m42-4.mailgun.net ([69.72.42.4]:35925 "EHLO m42-4.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726584AbgKQReE (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 17 Nov 2020 12:34:04 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1605634443; h=Message-Id: Date: Subject: Cc: To: From:
- Sender; bh=hbYPURUy4rEsO3NS33AYuYsnQqkoBPXfFip0tDNVbE8=; b=Iz6hOIvBt9xjt8AmyB9OT4KyxwwSFLNeuGq6KhqP7W2gF7NttESD/FFpAEEaxSBFpnVj9LS1
- iJAi6uMevWKA6WUoUT8TxvU2oilCtR8cq57o6WfXjnNfxz2OK0NUGcm2jOfYWdUYAEpVeOWJ
- CtpCAs51p1w77rRSTu3+gga87ZY=
-X-Mailgun-Sending-Ip: 69.72.42.4
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n04.prod.us-west-2.postgun.com with SMTP id
- 5fb4098a40d44461258d4a5d (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 17 Nov 2020 17:34:02
- GMT
-Sender: bbhatt=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 8D1EAC433C6; Tue, 17 Nov 2020 17:34:02 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
-        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
-Received: from malabar-linux.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: bbhatt)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id B622BC43460;
-        Tue, 17 Nov 2020 17:34:01 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org B622BC43460
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=bbhatt@codeaurora.org
-From:   Bhaumik Bhatt <bbhatt@codeaurora.org>
-To:     kvalo@codeaurora.org, linux-wireless@vger.kernel.org
-Cc:     manivannan.sadhasivam@linaro.org, linux-arm-msm@vger.kernel.org,
-        hemantk@codeaurora.org, linux-kernel@vger.kernel.org,
-        ath11k@lists.infradead.org, Bhaumik Bhatt <bbhatt@codeaurora.org>
-Subject: [RESEND PATCH] ath11k: use MHI provided APIs to allocate and free MHI controller
-Date:   Tue, 17 Nov 2020 09:33:56 -0800
-Message-Id: <1605634436-36506-1-git-send-email-bbhatt@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
+        id S1728440AbgKQRjc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 17 Nov 2020 12:39:32 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42994 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726768AbgKQRjb (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 17 Nov 2020 12:39:31 -0500
+Received: from mail-pj1-x1044.google.com (mail-pj1-x1044.google.com [IPv6:2607:f8b0:4864:20::1044])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3EA14C0613CF
+        for <linux-arm-msm@vger.kernel.org>; Tue, 17 Nov 2020 09:39:31 -0800 (PST)
+Received: by mail-pj1-x1044.google.com with SMTP id oc3so895498pjb.4
+        for <linux-arm-msm@vger.kernel.org>; Tue, 17 Nov 2020 09:39:31 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id;
+        bh=a081+5sEtLZdxVjnEsgO/mWDD8NzqZQtkeB5cfYLH30=;
+        b=kCPiliRHIVUfr3L65ip40e8uAZiZ43JMLQyUgVBVtUA29OXaMwbzaSiamP11wt0nLi
+         YVa3Qf38eA5gN/+rNsQ2yM+7QDY/yuP/UdK8t7jLdm57RGM4czTgeq4kP1cVpogmijvV
+         wVjnFT8FXE1vJP4YXScEOzp/B9Pef8KcRULWWV4OzUD2rdL3nK/eh3z2bTvZw7qs9an7
+         5QQE5YXAMymBZT4ZOuhJAS7VyRoE8JXOX2V/jyfYemcIdNu/N3KtrbCHfJ/sb+LCu0/B
+         4xh1S+Bz4jEDDhMyHZgJGwX6DIIZ2Gr9XIAgLvexRPm71kwn/sfBOs90yUGokUHCxsoU
+         E3Ig==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=a081+5sEtLZdxVjnEsgO/mWDD8NzqZQtkeB5cfYLH30=;
+        b=QazI6Sk2zNMRsSeWgn42ZcIo3I0hJ4J5Ba+eTqPvkmT4GaRTOJ55/hwmwJMUCCpDOa
+         yHnXcDI8nxEyS26K6akRsg/kyZ799yUDEDq1A/5/TqfpSZKh+IbNly1zQwwngoMgw1Kq
+         sY5VfoHqjPYA1ToWQdabNhoj4FKFlHuuWzIndqRHMYko9uQA3mmg166Cb7Mm6mQEHbSd
+         V2cch/+ERiCAYqhfaAElyacZx+a4q8cr+2mcbOCQ+kn7nwccZL4G4Sg7C5Fx8+H1m3r2
+         pqYPCF5P2HpzsOpqr5I0DqePfH8/Tan6ZitT98nhixb4803kvVVP3jmc3HOY+GHfv3/v
+         9dDQ==
+X-Gm-Message-State: AOAM531kCIXICqmElSDFR1nJizRYqM51SqV0MkCMxMQ1YY6W+IF0i18S
+        YSQm+/10jUYc2OEjmsziCwo7
+X-Google-Smtp-Source: ABdhPJzen4z1mH9hBVGR9pVV33DpCmvTAdG0rBun1a5GKDaehYXQ3z704Mh6UStGa5Zhwit7VNd1Xw==
+X-Received: by 2002:a17:90b:a02:: with SMTP id gg2mr149355pjb.225.1605634770702;
+        Tue, 17 Nov 2020 09:39:30 -0800 (PST)
+Received: from localhost.localdomain ([103.59.133.81])
+        by smtp.googlemail.com with ESMTPSA id a21sm1751330pjq.37.2020.11.17.09.39.26
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 17 Nov 2020 09:39:29 -0800 (PST)
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     miquel.raynal@bootlin.com, richard@nod.at, vigneshr@ti.com,
+        robh+dt@kernel.org
+Cc:     bjorn.andersson@linaro.org, linux-mtd@lists.infradead.org,
+        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Subject: [PATCH 0/4] Add support for Qcom SMEM based NAND parser
+Date:   Tue, 17 Nov 2020 23:09:05 +0530
+Message-Id: <20201117173909.23585-1-manivannan.sadhasivam@linaro.org>
+X-Mailer: git-send-email 2.17.1
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Use MHI provided APIs to allocate and free MHI controller to
-improve MHI host driver handling. This also fixes a memory leak
-as the MHI controller was allocated but never freed.
+Hello,
 
-Signed-off-by: Bhaumik Bhatt <bbhatt@codeaurora.org>
-Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
----
- drivers/net/wireless/ath/ath11k/mhi.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+This series adds support for parsing the partitions defined in Shared
+Memory (SMEM) of the Qualcomm platforms supporting NAND interface.
+Current parser only supports V3 and V4 of the partition tables.
 
-diff --git a/drivers/net/wireless/ath/ath11k/mhi.c b/drivers/net/wireless/ath/ath11k/mhi.c
-index aded9a7..1c9d9dc 100644
---- a/drivers/net/wireless/ath/ath11k/mhi.c
-+++ b/drivers/net/wireless/ath/ath11k/mhi.c
-@@ -218,7 +218,7 @@ int ath11k_mhi_register(struct ath11k_pci *ab_pci)
- 	struct mhi_controller *mhi_ctrl;
- 	int ret;
- 
--	mhi_ctrl = kzalloc(sizeof(*mhi_ctrl), GFP_KERNEL);
-+	mhi_ctrl = mhi_alloc_controller();
- 	if (!mhi_ctrl)
- 		return -ENOMEM;
- 
-@@ -234,7 +234,7 @@ int ath11k_mhi_register(struct ath11k_pci *ab_pci)
- 	ret = ath11k_mhi_get_msi(ab_pci);
- 	if (ret) {
- 		ath11k_err(ab, "failed to get msi for mhi\n");
--		kfree(mhi_ctrl);
-+		mhi_free_controller(mhi_ctrl);
- 		return ret;
- 	}
- 
-@@ -252,7 +252,7 @@ int ath11k_mhi_register(struct ath11k_pci *ab_pci)
- 	ret = mhi_register_controller(mhi_ctrl, &ath11k_mhi_config);
- 	if (ret) {
- 		ath11k_err(ab, "failed to register to mhi bus, err = %d\n", ret);
--		kfree(mhi_ctrl);
-+		mhi_free_controller(mhi_ctrl);
- 		return ret;
- 	}
- 
-@@ -265,6 +265,7 @@ void ath11k_mhi_unregister(struct ath11k_pci *ab_pci)
- 
- 	mhi_unregister_controller(mhi_ctrl);
- 	kfree(mhi_ctrl->irq);
-+	mhi_free_controller(mhi_ctrl);
- }
- 
- static char *ath11k_mhi_state_to_str(enum ath11k_mhi_state mhi_state)
+This series has been tested on SDX55 MTP board which has an onboard NAND
+device.
+
+Thanks,
+Mani
+
+Manivannan Sadhasivam (4):
+  dt-bindings: mtd: partitions: Add binding for Qcom SMEM parser
+  mtd: parsers: Add Qcom SMEM parser
+  mtd: rawnand: qcom: Add support for Qcom SMEM parser
+  mtd: parsers: afs: Fix freeing the part name memory in failure
+
+ .../mtd/partitions/qcom,smem-part.yaml        |  31 ++++
+ drivers/mtd/nand/raw/qcom_nandc.c             |   4 +-
+ drivers/mtd/parsers/Kconfig                   |   8 +
+ drivers/mtd/parsers/Makefile                  |   1 +
+ drivers/mtd/parsers/afs.c                     |   4 +-
+ drivers/mtd/parsers/qcomsmempart.c            | 169 ++++++++++++++++++
+ 6 files changed, 213 insertions(+), 4 deletions(-)
+ create mode 100644 Documentation/devicetree/bindings/mtd/partitions/qcom,smem-part.yaml
+ create mode 100644 drivers/mtd/parsers/qcomsmempart.c
+
 -- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project
+2.17.1
 
