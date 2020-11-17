@@ -2,113 +2,107 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E87CB2B5557
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Nov 2020 00:50:03 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 241C12B557D
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Nov 2020 01:02:37 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726487AbgKPXti (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 16 Nov 2020 18:49:38 -0500
-Received: from mail1.protonmail.ch ([185.70.40.18]:37271 "EHLO
-        mail1.protonmail.ch" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726287AbgKPXti (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 16 Nov 2020 18:49:38 -0500
-Date:   Mon, 16 Nov 2020 23:49:32 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=connolly.tech;
-        s=protonmail; t=1605570576;
-        bh=CJNL1D7Vyb/1gRN55OqVYcG4Y4k6wH1TamA2FlX7qmA=;
-        h=Date:To:From:Cc:Reply-To:Subject:In-Reply-To:References:From;
-        b=DdL1gEWN0Zi5e+tBQtIO9kJyjCo14VqPl+yb8SAsX9qn0W6Th/WAq2fgt98LlZDgs
-         UyeZuNVpsQ/EHUvEWZiXTkHo2GrI9sILYdKvvHgP9Dks5zbaJXccctp0E9txr1T4vf
-         g6ZVYtqkg8DM5ZFKjEgIAZxJ0bEUcHWkNgdrV/yI=
-To:     Pavel Machek <pavel@ucw.cz>
-From:   Caleb Connolly <caleb@connolly.tech>
-Cc:     linux-arm-msm@vger.kernel.org, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Kees Cook <keescook@chromium.org>,
-        Anton Vorontsov <anton@enomsg.org>,
-        Colin Cross <ccross@android.com>,
-        Tony Luck <tony.luck@intel.com>, phone-devel@vger.kernel.org,
-        ~postmarketos/upstreaming@lists.sr.ht, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Reply-To: Caleb Connolly <caleb@connolly.tech>
-Subject: Re: [PATCH 3/5] arm64: dts: sdm845: add oneplus 6/t devices
-Message-ID: <a20145ef-31a1-a72d-2d60-87a5282ace87@connolly.tech>
-In-Reply-To: <20201116220153.GA1003@bug>
-References: <20201112161920.2671430-1-caleb@connolly.tech> <20201112161920.2671430-4-caleb@connolly.tech> <20201116220153.GA1003@bug>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=-1.2 required=10.0 tests=ALL_TRUSTED,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF shortcircuit=no
-        autolearn=disabled version=3.4.4
-X-Spam-Checker-Version: SpamAssassin 3.4.4 (2020-01-24) on
-        mailout.protonmail.ch
+        id S1730772AbgKQAC0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 16 Nov 2020 19:02:26 -0500
+Received: from z5.mailgun.us ([104.130.96.5]:36509 "EHLO z5.mailgun.us"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1730322AbgKQAC0 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 16 Nov 2020 19:02:26 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1605571346; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=rMqrd9bN3U/F6oR7C3Q9Rgk6zXcCW8Cf85L9usMdYJU=; b=YRxUK7nkE0zAryKFpv0unE8YanWyGPW5vo4rMRtWf6fXfxY9pVAWfb2K9b94tM3FFCyaxZd/
+ SYrdowqNK0/O8I/CcSdEgP0EiP3+0An2UbLj9NIzWwPHMvGOGlXm7qIXtw1y74OtcMULgGki
+ hVhlekEphNCoNYkL02+oSUZVuSE=
+X-Mailgun-Sending-Ip: 104.130.96.5
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n05.prod.us-west-2.postgun.com with SMTP id
+ 5fb312ebe9dd187f53905090 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 17 Nov 2020 00:01:47
+ GMT
+Sender: bbhatt=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id C3768C43460; Tue, 17 Nov 2020 00:01:47 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
+        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+Received: from malabar-linux.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: bbhatt)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id B459DC433C6;
+        Tue, 17 Nov 2020 00:01:46 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org B459DC433C6
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=bbhatt@codeaurora.org
+From:   Bhaumik Bhatt <bbhatt@codeaurora.org>
+To:     manivannan.sadhasivam@linaro.org, kvalo@codeaurora.org
+Cc:     linux-arm-msm@vger.kernel.org, hemantk@codeaurora.org,
+        jhugo@codeaurora.org, linux-kernel@vger.kernel.org,
+        Bhaumik Bhatt <bbhatt@codeaurora.org>
+Subject: [PATCH] ath11k: use MHI provided APIs to allocate and free MHI controller
+Date:   Mon, 16 Nov 2020 16:01:40 -0800
+Message-Id: <1605571300-4438-1-git-send-email-bbhatt@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2020-11-16 22:01, Pavel Machek wrote:
-> Hi!
->
->> Add initial support for the OnePlus 6 (enchilada) and 6T (fajita) based
->> on the sdm845-mtp DT. Support includes:
->>
->> * Display panels and Adreno 630
->> * Touch screen support with synaptics rmi4
->> * All remoteprocs start correctly
->> * WLAN / Bluetooth
->> * Volume / power buttons and OnePlus Tri-State switch are functional
->>      The tri-state switch is a 3 state mute slider on the side of the ph=
-one * USB
->> support, currently forced to peripheral as type C detection isn't functi=
-onal.
-> I have similar switches on my joystick... but I don't believe modelling i=
-t as 3 separate
-> keys with "macro" keysym is the right way to go.
+Use MHI provided APIs to allocate and free MHI controller to
+improve MHI host driver handling. This also fixes a memory leak
+as the MHI controller was allocated but never freed.
 
-Hi! I agree that this is a bit of a weird way to model the switch, do=20
-you have any ideas for a better solution?
+Signed-off-by: Bhaumik Bhatt <bbhatt@codeaurora.org>
+---
+ drivers/net/wireless/ath/ath11k/mhi.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-I'm happy to drop this from the patch for now and come up with a better=20
-method down the line.
-
-Regards,
-
-Caleb
-
->> +=09=09state-top {
->> +=09=09=09label =3D "Tri-state key top";
->> +=09=09=09linux,code =3D <KEY_MACRO1>;
->> +=09=09=09interrupt-parent =3D <&tlmm>;
->> +=09=09=09interrupts =3D <24 IRQ_TYPE_EDGE_FALLING>;
->> +=09=09=09debounce-interval =3D <500>;
->> +=09=09=09linux,can-disable;
->> +=09=09};
->> +
->> +=09=09state-middle {
->> +=09=09=09label =3D "Tri-state key middle";
->> +=09=09=09linux,code =3D <KEY_MACRO2>;
->> +=09=09=09interrupt-parent =3D <&tlmm>;
->> +=09=09=09interrupts =3D <52 IRQ_TYPE_EDGE_FALLING>;
->> +=09=09=09debounce-interval =3D <500>;
->> +=09=09=09linux,can-disable;
->> +=09=09};
->> +
->> +=09=09state-bottom {
->> +=09=09=09label =3D "Tri-state key bottom";
->> +=09=09=09linux,code =3D <KEY_MACRO3>;
->> +=09=09=09interrupt-parent =3D <&tlmm>;
->> +=09=09=09interrupts =3D <126 IRQ_TYPE_EDGE_FALLING>;
->> +=09=09=09debounce-interval =3D <500>;
->> +=09=09=09linux,can-disable;
->> +=09=09};
-> Best regards,
-> =09=09=09=09=09=09=09=09=09Pavel
-> --
-> (english) http://www.livejournal.com/~pavelmachek
-> (cesky, pictures) http://atrey.karlin.mff.cuni.cz/~pavel/picture/horses/b=
-log.html
-
-
+diff --git a/drivers/net/wireless/ath/ath11k/mhi.c b/drivers/net/wireless/ath/ath11k/mhi.c
+index aded9a7..1c9d9dc 100644
+--- a/drivers/net/wireless/ath/ath11k/mhi.c
++++ b/drivers/net/wireless/ath/ath11k/mhi.c
+@@ -218,7 +218,7 @@ int ath11k_mhi_register(struct ath11k_pci *ab_pci)
+ 	struct mhi_controller *mhi_ctrl;
+ 	int ret;
+ 
+-	mhi_ctrl = kzalloc(sizeof(*mhi_ctrl), GFP_KERNEL);
++	mhi_ctrl = mhi_alloc_controller();
+ 	if (!mhi_ctrl)
+ 		return -ENOMEM;
+ 
+@@ -234,7 +234,7 @@ int ath11k_mhi_register(struct ath11k_pci *ab_pci)
+ 	ret = ath11k_mhi_get_msi(ab_pci);
+ 	if (ret) {
+ 		ath11k_err(ab, "failed to get msi for mhi\n");
+-		kfree(mhi_ctrl);
++		mhi_free_controller(mhi_ctrl);
+ 		return ret;
+ 	}
+ 
+@@ -252,7 +252,7 @@ int ath11k_mhi_register(struct ath11k_pci *ab_pci)
+ 	ret = mhi_register_controller(mhi_ctrl, &ath11k_mhi_config);
+ 	if (ret) {
+ 		ath11k_err(ab, "failed to register to mhi bus, err = %d\n", ret);
+-		kfree(mhi_ctrl);
++		mhi_free_controller(mhi_ctrl);
+ 		return ret;
+ 	}
+ 
+@@ -265,6 +265,7 @@ void ath11k_mhi_unregister(struct ath11k_pci *ab_pci)
+ 
+ 	mhi_unregister_controller(mhi_ctrl);
+ 	kfree(mhi_ctrl->irq);
++	mhi_free_controller(mhi_ctrl);
+ }
+ 
+ static char *ath11k_mhi_state_to_str(enum ath11k_mhi_state mhi_state)
+-- 
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
 
