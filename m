@@ -2,96 +2,81 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D994A2B5D03
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Nov 2020 11:37:49 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C72162B5E99
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Nov 2020 12:48:59 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726594AbgKQKhf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 17 Nov 2020 05:37:35 -0500
-Received: from mail-ot1-f65.google.com ([209.85.210.65]:47049 "EHLO
-        mail-ot1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725770AbgKQKhf (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 17 Nov 2020 05:37:35 -0500
-Received: by mail-ot1-f65.google.com with SMTP id g19so18885614otp.13;
-        Tue, 17 Nov 2020 02:37:34 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=xlpCdbdwdgiAHLJ6o3j80s/A4tWrQRJFEA4CoHh+SMQ=;
-        b=lWyeL40SYRWaaQ0rOX80mEl3n9CH4mVMQvaiDT7zG5c0wplXgelM9COEIWiR9qJrKo
-         4M5cIRRya2nuOj+rkr7dfitxQPhdWpw2c1MwrYlQDzSz61Ky/WHsK9IqNUNhOAXSIrgx
-         yqFLckwLPSoXMsDpxViraJgvMlp0aKdmwMsvTQU30xLeQL8A9XSQpgAqLlwmJXOIJY8g
-         t+ODtM71CDdfJc6gOvwdzuwKvrQ/VzyDo8OYLn8zzxLxh2SYpQw2QZ62ASw9PbWgHIvc
-         1PZJyGkEv2LspiMc/aevZygaax2gbb6j0t4I+nqQvcbLCiUPR8yaBumgapxTr6j3QeK0
-         FcJw==
-X-Gm-Message-State: AOAM5305487CT7c845SG/CcdHTjzb225hmEiEjoxmFvF/DnCXSZ+xxpm
-        8yPM9WwnDBW6toRIf1Q5gFhTzCSWcFzd6p75wxI=
-X-Google-Smtp-Source: ABdhPJwdmx7r6I5zj8jodkYho7XnaytzF+QMp1QBc/itOa9ld+ji3I3oUftzlTM4p0M68kkeI24eiE8vpMn7CYfNO3c=
-X-Received: by 2002:a9d:5e14:: with SMTP id d20mr2362156oti.107.1605609454288;
- Tue, 17 Nov 2020 02:37:34 -0800 (PST)
+        id S1728101AbgKQLsf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 17 Nov 2020 06:48:35 -0500
+Received: from z5.mailgun.us ([104.130.96.5]:63191 "EHLO z5.mailgun.us"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727669AbgKQLsf (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 17 Nov 2020 06:48:35 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1605613714; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
+ Subject: Sender; bh=y77pDpdpA1QJXyGxlUezRqTrE7WX88fLNB+ZhRzRIWw=; b=VA0VVBIxzokrKzIKMdZFTKM+qCMNkw+NuMTuacu951x7DdEJWwQJjXjolVbbMLaYTEGC13NK
+ jYkYSTsXZwL1/NYT4g2aIastaUZOwT8M8pIupPZyq75RE5pbU7XelsHelZRdJmmkA5iCmvB5
+ JH1XtLVmXCAklUAFvsH/Qw4+hk0=
+X-Mailgun-Sending-Ip: 104.130.96.5
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n03.prod.us-east-1.postgun.com with SMTP id
+ 5fb3b88f25da3a0fa9083272 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 17 Nov 2020 11:48:31
+ GMT
+Sender: akashast=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id E4DD2C433ED; Tue, 17 Nov 2020 11:48:30 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        NICE_REPLY_A,SPF_FAIL,URIBL_BLOCKED autolearn=no autolearn_force=no
+        version=3.4.0
+Received: from [192.168.43.98] (unknown [47.9.117.149])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: akashast)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 19D65C433ED;
+        Tue, 17 Nov 2020 11:48:25 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 19D65C433ED
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=akashast@codeaurora.org
+Subject: Re: [PATCH 5/5] i2c: geni: sdm845: dont perform DMA for OnePlus 6
+ devices
+To:     Caleb Connolly <caleb@connolly.tech>,
+        linux-arm-msm@vger.kernel.org, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Mukesh Savaliya <msavaliy@codeaurora.org>
+Cc:     phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
+        linux-i2c@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20201112161920.2671430-1-caleb@connolly.tech>
+ <20201112161920.2671430-6-caleb@connolly.tech>
+From:   Akash Asthana <akashast@codeaurora.org>
+Message-ID: <6efdfe22-ed27-c659-0800-38f6a65813f2@codeaurora.org>
+Date:   Tue, 17 Nov 2020 17:17:54 +0530
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
+ Thunderbird/68.12.1
 MIME-Version: 1.0
-References: <20201117103123.3938-1-chunfeng.yun@mediatek.com>
-In-Reply-To: <20201117103123.3938-1-chunfeng.yun@mediatek.com>
-From:   Geert Uytterhoeven <geert@linux-m68k.org>
-Date:   Tue, 17 Nov 2020 11:37:23 +0100
-Message-ID: <CAMuHMdXVXqj9k4FMFH5aiqKwNrWocJpjahYKA8k2e3Z2ji2hvQ@mail.gmail.com>
-Subject: Re: [PATCH] dt-bindings: arm: add additionalProperties
-To:     Chunfeng Yun <chunfeng.yun@mediatek.com>
-Cc:     Rob Herring <robh+dt@kernel.org>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        Linux ARM <linux-arm-kernel@lists.infradead.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        linux-rpi-kernel <linux-rpi-kernel@lists.infradead.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        linux-unisoc@lists.infradead.org,
-        linux-realtek-soc@lists.infradead.org,
-        Linux-Renesas <linux-renesas-soc@vger.kernel.org>,
-        "open list:ARM/Rockchip SoC..." <linux-rockchip@lists.infradead.org>,
-        linux-samsung-soc <linux-samsung-soc@vger.kernel.org>,
-        linux-stm32@st-md-mailman.stormreply.com,
-        linux-tegra <linux-tegra@vger.kernel.org>,
-        linux-mediatek@lists.infradead.org
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <20201112161920.2671430-6-caleb@connolly.tech>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Chunfeng,
 
-On Tue, Nov 17, 2020 at 11:32 AM Chunfeng Yun <chunfeng.yun@mediatek.com> wrote:
-> Add an explicit "additionalProperties: true" to avoid
-> dt_binding_check error caused by:
-> 'additionalProperties' is a required property
+On 11/12/2020 9:52 PM, Caleb Connolly wrote:
+> The OnePlus 6/T has the same issue as the Yoga c630 causing a crash when DMA
+> is used for i2c, so disable it.
 >
-> This will not change function, due to additionalProperties
-> is true by default.
+> https://patchwork.kernel.org/patch/11133827/
 >
-> Signed-off-by: Chunfeng Yun <chunfeng.yun@mediatek.com>
-
-Thanks for your patch!
-
-> --- a/Documentation/devicetree/bindings/arm/actions.yaml
-> +++ b/Documentation/devicetree/bindings/arm/actions.yaml
-> @@ -49,3 +49,5 @@ properties:
->            - enum:
->                - ucrobotics,bubblegum-96 # uCRobotics Bubblegum-96
->            - const: actions,s900
-> +
-> +additionalProperties: true
-
-Looks very similar to commit 62298364bd489b06 ("dt-bindings: Explicitly
-allow additional properties in board/SoC schemas") in v5.10-rc2?
-
-Gr{oetje,eeting}s,
-
-                        Geert
+> Signed-off-by: Caleb Connolly <caleb@connolly.tech>
+Reviewed-by : Akash Asthana <akashast@codeaurora.org>
 
 -- 
-Geert Uytterhoeven -- There's lots of Linux beyond ia32 -- geert@linux-m68k.org
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,\na Linux Foundation Collaborative Project
 
-In personal conversations with technical people, I call myself a hacker. But
-when I'm talking to journalists I just say "programmer" or something like that.
-                                -- Linus Torvalds
