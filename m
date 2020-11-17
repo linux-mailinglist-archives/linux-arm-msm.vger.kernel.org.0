@@ -2,187 +2,131 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 734CE2B67BB
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Nov 2020 15:46:47 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 423022B67EE
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Nov 2020 15:53:53 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728740AbgKQOqZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 17 Nov 2020 09:46:25 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44374 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728940AbgKQOqY (ORCPT
+        id S1728699AbgKQOxL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 17 Nov 2020 09:53:11 -0500
+Received: from lb1-smtp-cloud9.xs4all.net ([194.109.24.22]:44825 "EHLO
+        lb1-smtp-cloud9.xs4all.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1728718AbgKQOxL (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 17 Nov 2020 09:46:24 -0500
-Received: from mail-ej1-x644.google.com (mail-ej1-x644.google.com [IPv6:2a00:1450:4864:20::644])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9A176C0617A7
-        for <linux-arm-msm@vger.kernel.org>; Tue, 17 Nov 2020 06:46:23 -0800 (PST)
-Received: by mail-ej1-x644.google.com with SMTP id 7so29767838ejm.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 17 Nov 2020 06:46:23 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=nUFmOPi5skT4JC7mVv7TNvucfOIONF/gHEhYfaXJH1M=;
-        b=NoKA3kUONbuZIUgKOVWKS8dCL1VZkpljGtCtauLbsLBIiUIdEb/ELujIJbi17fgBut
-         vybuW15lEfuNRrz9hynfcYE/kTBUCDJwarB3qbn3VzCdU8yI+JsQzbjoWofwwiosmFCB
-         W1MlYpKoPdoAY74fxK/Hr/qSkI6e6ha3RMSbB87O7ashYzPwMIKwAuOaA1klC2iEDcpT
-         ohm8sCpWVF0ICVPkIJX05VRldFuMBJXYVsWUsMXtsAPsLYxuO/OI4bBKGwQyHAq5OiNd
-         19HK6AOGS5BZfotpWGVYIdg5scp9aDp8wfnXNgKY7lDnRxEgah3/oREu5H3Hp7IZUhl+
-         +RdA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=nUFmOPi5skT4JC7mVv7TNvucfOIONF/gHEhYfaXJH1M=;
-        b=Mzzomoi1WXeVYYFLC7ZHUlgFcbr1mJ5GURT7XkHGjj1E3oE3si5zt6Ftgkm46QLePz
-         l8fihursp8awgPSBzNpBHo69nOuPRE7QRiRGIUl7WW5jBLGyzS80XDzvxOsAix/1A+Qp
-         QsGVqDFA/uQiZASZO5qv5srV5WqF5jx+1uwkc/FATrApqAh2YAmwZ8JK/mut/SdifeKx
-         4XBlEeA/MAsiuWHjOyPPR40gUfzGDMZM1bmGyBdFrlIBcJNolcd4r/TJCb28sY4UoQ4t
-         P2cG8+3CWdynq+4uPo1UiLzwbX3xF2oeqZ9qOsGqkmcSUelnlPwX6AEcdJL5WbxTAfkt
-         uYIQ==
-X-Gm-Message-State: AOAM533O6O6BmeLSvISep+7pksSKFYcag/DiKHKDgZC5yMaYQWF4DoY6
-        BUZqRFVOyZhQdq0Au9owBjTOIYUX1vlr1MMg3YcD4g==
-X-Google-Smtp-Source: ABdhPJyiVkfHFhAAxAZZiTRGrwjQmEDbhgKr2ktKTE/BN7GVBW6gFKGf4Ui6WDTgcMVMKb60A5idBUeCBH2o+kgOpI4=
-X-Received: by 2002:a17:906:f247:: with SMTP id gy7mr19805291ejb.48.1605624382219;
- Tue, 17 Nov 2020 06:46:22 -0800 (PST)
+        Tue, 17 Nov 2020 09:53:11 -0500
+Received: from cust-b5b5937f ([IPv6:fc0c:c16d:66b8:757f:c639:739b:9d66:799d])
+        by smtp-cloud9.xs4all.net with ESMTPA
+        id f2LvkpAwd6LFvf2LzkVPo0; Tue, 17 Nov 2020 15:53:07 +0100
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=xs4all.nl; s=s2;
+        t=1605624787; bh=FgYMdJ0sPBUZnT5EFt4WPhZomwazgiq6pKDnyizwbWw=;
+        h=Subject:To:From:Message-ID:Date:MIME-Version:Content-Type:From:
+         Subject;
+        b=NBm0whW/kc5GpOJmNqSIiRoogyGGYzzS4p17k5rF7dENQ/iz8jMeuoz85+k2Jpszc
+         CMApivFhzox7UC3J7FeIr4f8EFd/JglSzCd7keIebk/jLYWflbSjlDIkpnrBht/c1c
+         webkXYrq68LczZAz2XmkLhrJhHhlcO8LYdmN3gLIXHrdgmPeX3ft9dBoKE9TNOrIjd
+         opehsw/9H2H9f8ZP9aNLXsd2W23BylNXyZ72WNOO2GWczUl5bzsNYJLpAZov8ixq0S
+         3U2BD6wv6yDGZAo9l6MqwjL6qubh3ZKXBBsYNNpsfqhgyDIxjLh8AhlV/GrXKV8Nmc
+         CaglER5RyjjTQ==
+Subject: Re: [PATCH v2] media: v4l2-ctrl: Add base layer priority id control.
+To:     Dikshita Agarwal <dikshita@codeaurora.org>,
+        linux-media@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+Cc:     mchehab@kernel.org, ezequiel@collabora.com,
+        stanimir.varbanov@linaro.org, vgarodia@codeaurora.org,
+        majja@codeaurora.org, Nicolas Dufresne <nicolas@ndufresne.ca>
+References: <1602759935-12965-1-git-send-email-dikshita@codeaurora.org>
+From:   Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Message-ID: <35f31a15-25b2-73d5-4bdd-c57431070d9b@xs4all.nl>
+Date:   Tue, 17 Nov 2020 15:53:03 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.12.0
 MIME-Version: 1.0
-References: <1605566782-38013-1-git-send-email-hemantk@codeaurora.org> <1605566782-38013-6-git-send-email-hemantk@codeaurora.org>
-In-Reply-To: <1605566782-38013-6-git-send-email-hemantk@codeaurora.org>
-From:   Loic Poulain <loic.poulain@linaro.org>
-Date:   Tue, 17 Nov 2020 15:52:25 +0100
-Message-ID: <CAMZdPi_yFtEtquGpfAUh0ULL8bFdDGuoHrpt1EHFz+puGu1T2A@mail.gmail.com>
-Subject: Re: [PATCH v12 5/5] selftest: mhi: Add support to test MHI LOOPBACK channel
-To:     Hemant Kumar <hemantk@codeaurora.org>
-Cc:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        open list <linux-kernel@vger.kernel.org>,
-        Jeffrey Hugo <jhugo@codeaurora.org>,
-        Bhaumik Bhatt <bbhatt@codeaurora.org>,
-        Network Development <netdev@vger.kernel.org>,
-        skhan@linuxfoundation.org
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <1602759935-12965-1-git-send-email-dikshita@codeaurora.org>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+X-CMAE-Envelope: MS4xfLGsgaswyYUn9GhQmIgEUIQgNBuz6FvlDktq1vY0YsDOHMm4pDkhV3HppSazUBCypsvvC7RiO2wAnxy6wKE2d8oZ9GD63rJQZ6s9AFVTkGG1DVg4ECd3
+ u3X8HeY9T/d9k9SW9/Y1+k4/k2t4ApXTCtA708whIa/auv3qeuJswm0i9DJhMPqoUyOAWVdFhHvxeF+TXXwqoh1uKpka7a0O5jpFm0w17VRXfZq/tLQAZ8fC
+ OZj0IHwNY4CAmJEJaj7Pj0r7dO7NxLECD3CDW022LGE4dk7RZFVWm+sV82kxDhAhThQ9eUaIB19zuIR46rP1u6XGCS9wbafC2ylIxfzwdcBwGMFEcpo3M9uN
+ gBue7J4mGNsq6GJ8XxcVbi43i3rcBfwFZsNxWaCT+SjEGkrxHz//OrbRA2K+gNi7PC4r/GUixZ60EV6LZ9p5uHIH9zHppybOOLrxHhxiD3enFwb4YfBgoGWo
+ ijbEmNSaOhq4NCBuXip20NBKwTkRG9zUEV3OI7NRCd0lsjTjg6SCm/S9gbs=
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, 16 Nov 2020 at 23:46, Hemant Kumar <hemantk@codeaurora.org> wrote:
->
-> Loopback test opens the MHI device file node and writes
-> a data buffer to it. MHI UCI kernel space driver copies
-> the data and sends it to MHI uplink (Tx) LOOPBACK channel.
-> MHI device loops back the same data to MHI downlink (Rx)
-> LOOPBACK channel. This data is read by test application
-> and compared against the data sent. Test passes if data
-> buffer matches between Tx and Rx. Test application performs
-> open(), poll(), write(), read() and close() file operations.
->
-> Signed-off-by: Hemant Kumar <hemantk@codeaurora.org>
+Nicolas, can you take a look at this with your codec knowledge?
+
+Some other review comments below:
+
+On 15/10/2020 13:05, Dikshita Agarwal wrote:
+> This control indicates the priority id to be applied
+> to base layer.
+> 
+> Signed-off-by: Dikshita Agarwal <dikshita@codeaurora.org>
 > ---
->  Documentation/mhi/uci.rst                          |  32 +
->  tools/testing/selftests/Makefile                   |   1 +
->  tools/testing/selftests/drivers/.gitignore         |   1 +
->  tools/testing/selftests/drivers/mhi/Makefile       |   8 +
->  tools/testing/selftests/drivers/mhi/config         |   2 +
->  .../testing/selftests/drivers/mhi/loopback_test.c  | 802 +++++++++++++++++++++
->  6 files changed, 846 insertions(+)
->  create mode 100644 tools/testing/selftests/drivers/mhi/Makefile
->  create mode 100644 tools/testing/selftests/drivers/mhi/config
->  create mode 100644 tools/testing/selftests/drivers/mhi/loopback_test.c
->
-> diff --git a/Documentation/mhi/uci.rst b/Documentation/mhi/uci.rst
-> index ce8740e..0a04afe 100644
-> --- a/Documentation/mhi/uci.rst
-> +++ b/Documentation/mhi/uci.rst
-> @@ -79,6 +79,38 @@ MHI client driver performs read operation, same data gets looped back to MHI
->  host using LOOPBACK channel 1. LOOPBACK channel is used to verify data path
->  and data integrity between MHI Host and MHI device.
->
-> +Loopback Test
-> +~~~~~~~~~~~~~
+>  Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst | 9 +++++++++
+>  drivers/media/v4l2-core/v4l2-ctrls.c                      | 1 +
+>  include/uapi/linux/v4l2-controls.h                        | 1 +
+>  3 files changed, 11 insertions(+)
+> 
+> diff --git a/Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst b/Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst
+> index 6e9240a..aac1ea3 100644
+> --- a/Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst
+> +++ b/Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst
+> @@ -4407,3 +4407,12 @@ enum v4l2_mpeg_video_hevc_size_of_length_field -
+>         to the LTR index max LTR count-1.
+>         This is applicable to H264 and HEVC encoder and can be applied using
+>         request api.
 > +
-> +Loopback test application is used to verify data integrity between MHI host and
-> +MHI device over LOOPBACK channel. This also confirms that basic MHI data path
-> +is working properly. Test performs write() to send tx buffer to MHI device file
-> +node for LOOPBACK uplink channel. MHI LOOPBACK downlink channel loops back
-> +transmit data to MHI Host. Test application receives data in receive buffer as
-> +part of read(). It verifies if tx buffer matches rx buffer. Test application
-> +performs poll() before making write() and read() system calls. Test passes if
-> +match is found.
-> +
-> +Test is present under tools/testing/selftests/drivers/mhi. It is compiled using
-> +following command in same dir:-
-> +
-> +make loopback_test
-> +
-> +Test is run using following command arguments:-
-> +
-> +loopback_test -c <device_node> -b <transmit buffer size> -l <log level> -i
-> +<number of iterations>
-> +
-> +Required argument:
-> +-c : loopback chardev node
-> +
-> +Optional argument:
-> +-b : transmit buffer size. If not present 1024 bytes size transmit buffer
-> +     is sent.
-> +-i : Number of iterations to perform, If not present only one transmit buffer
-> +     is sent.
-> +-l : Log level. If not present defaults to DBG_LVL_INFO.
-> +
->  Other Use Cases
->  ---------------
->
-> diff --git a/tools/testing/selftests/Makefile b/tools/testing/selftests/Makefile
-> index d9c2835..084bc1e 100644
-> --- a/tools/testing/selftests/Makefile
-> +++ b/tools/testing/selftests/Makefile
-> @@ -10,6 +10,7 @@ TARGETS += core
->  TARGETS += cpufreq
->  TARGETS += cpu-hotplug
->  TARGETS += drivers/dma-buf
-> +TARGETS += drivers/mhi
->  TARGETS += efivarfs
->  TARGETS += exec
->  TARGETS += filesystems
-> diff --git a/tools/testing/selftests/drivers/.gitignore b/tools/testing/selftests/drivers/.gitignore
-> index ca74f2e..e4806d5 100644
-> --- a/tools/testing/selftests/drivers/.gitignore
-> +++ b/tools/testing/selftests/drivers/.gitignore
-> @@ -1,2 +1,3 @@
->  # SPDX-License-Identifier: GPL-2.0-only
->  /dma-buf/udmabuf
-> +/mhi/loopback_test
-> diff --git a/tools/testing/selftests/drivers/mhi/Makefile b/tools/testing/selftests/drivers/mhi/Makefile
-> new file mode 100644
-> index 0000000..c06c925
-> --- /dev/null
-> +++ b/tools/testing/selftests/drivers/mhi/Makefile
-> @@ -0,0 +1,8 @@
-> +# SPDX-License-Identifier: GPL-2.0-only
-> +CFLAGS += -I../../../../../usr/include/ -g -Wall
-> +
-> +LDLIBS = -lpthread
-> +TEST_GEN_PROGS := loopback_test
-> +
-> +include ../../lib.mk
-> +
-> diff --git a/tools/testing/selftests/drivers/mhi/config b/tools/testing/selftests/drivers/mhi/config
-> new file mode 100644
-> index 0000000..471dc92
-> --- /dev/null
-> +++ b/tools/testing/selftests/drivers/mhi/config
-> @@ -0,0 +1,2 @@
-> +CONFIG_MHI_BUS=y
-> +CONFIG_MHi_UCI=y
+> +``V4L2_CID_MPEG_VIDEO_BASELAYER_PRIORITYID (integer)``
 
-CONFIG_MHI_UCI
+I'd add a_ before the ID, so: V4L2_CID_MPEG_VIDEO_BASELAYER_PRIORITY_ID.
 
-> diff --git a/tools/testing/selftests/drivers/mhi/loopback_test.c b/tools/testing/selftests/drivers/mhi/loopback_test.c
-> new file mode 100644
-> index 0000000..99b7712
-> --- /dev/null
-> +++ b/tools/testing/selftests/drivers/mhi/loopback_test.c
-> @@ -0,0 +1,802 @@
-> +// SPDX-License-Identifier: GPL-2.0
+> +       Specifies a priority identifier for the NAL unit,
+> +       which will be applied to base layer.
+> +       By default this value is set to 0 for base layer.
+> +       And the next layer will have priority ID assigned as 1,2,3 and so on.
+> +       Video encode can't decide the priority id to be applied to a layer
+> +       so this has to come from client.
+> +       Valid Range: from 0 to 63
 
-[...]
+I'm slightly rephrasing the text above:
+
+       Specifies a priority identifier for the NAL unit, which will be applied to
+       the base layer. By default this value is set to 0 for the base layer,
+       and the next layer will have the priority ID assigned as 1, 2, 3 and so on.
+       The video encoder can't decide the priority id to be applied to a layer,
+       so this has to come from client.
+       Valid Range: from 0 to 63.
+
+For which codecs is this applicable? H264 and HEVC? That should be stated. If you
+have a reference to the corresponding sections that describe this, then that would
+be nice to add.
+
+> diff --git a/drivers/media/v4l2-core/v4l2-ctrls.c b/drivers/media/v4l2-core/v4l2-ctrls.c
+> index 046198f..c973058 100644
+> --- a/drivers/media/v4l2-core/v4l2-ctrls.c
+> +++ b/drivers/media/v4l2-core/v4l2-ctrls.c
+> @@ -952,6 +952,7 @@ const char *v4l2_ctrl_get_name(u32 id)
+>  	case V4L2_CID_MPEG_VIDEO_LTR_COUNT:			return "LTR Count";
+>  	case V4L2_CID_MPEG_VIDEO_FRAME_LTR_INDEX:		return "Mark LTR frame index";
+>  	case V4L2_CID_MPEG_VIDEO_USE_LTR_FRAME:			return "Use LTR Frame";
+> +	case V4L2_CID_MPEG_VIDEO_BASELAYER_PRIORITYID:		return "Base Layer Priority ID";
+>  	case V4L2_CID_MPEG_VIDEO_MPEG2_SLICE_PARAMS:		return "MPEG-2 Slice Parameters";
+>  	case V4L2_CID_MPEG_VIDEO_MPEG2_QUANTIZATION:		return "MPEG-2 Quantization Matrices";
+>  	case V4L2_CID_MPEG_VIDEO_FWHT_PARAMS:			return "FWHT Stateless Parameters";
+> diff --git a/include/uapi/linux/v4l2-controls.h b/include/uapi/linux/v4l2-controls.h
+> index 3801372..433e119 100644
+> --- a/include/uapi/linux/v4l2-controls.h
+> +++ b/include/uapi/linux/v4l2-controls.h
+> @@ -418,6 +418,7 @@ enum v4l2_mpeg_video_multi_slice_mode {
+>  #define V4L2_CID_MPEG_VIDEO_LTR_COUNT                  (V4L2_CID_MPEG_BASE+230)
+>  #define V4L2_CID_MPEG_VIDEO_FRAME_LTR_INDEX            (V4L2_CID_MPEG_BASE+231)
+>  #define V4L2_CID_MPEG_VIDEO_USE_LTR_FRAME              (V4L2_CID_MPEG_BASE+232)
+> +#define V4L2_CID_MPEG_VIDEO_BASELAYER_PRIORITYID       (V4L2_CID_MPEG_BASE+233)
+>  
+>  /* CIDs for the MPEG-2 Part 2 (H.262) codec */
+>  #define V4L2_CID_MPEG_VIDEO_MPEG2_LEVEL			(V4L2_CID_MPEG_BASE+270)
+> 
+
+Regards,
+
+	Hans
