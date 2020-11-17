@@ -2,186 +2,147 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 550472B64A7
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Nov 2020 14:50:38 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E04082B677C
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Nov 2020 15:34:07 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732892AbgKQNsA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 17 Nov 2020 08:48:00 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35304 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1732727AbgKQNr7 (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 17 Nov 2020 08:47:59 -0500
-Received: from mail-wm1-x342.google.com (mail-wm1-x342.google.com [IPv6:2a00:1450:4864:20::342])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1D7C3C0613CF;
-        Tue, 17 Nov 2020 05:47:59 -0800 (PST)
-Received: by mail-wm1-x342.google.com with SMTP id p22so3305900wmg.3;
-        Tue, 17 Nov 2020 05:47:59 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=wtRPmHgnz5X1Kb5wQe988YxeBIzauGayM+LxupkV9hU=;
-        b=K6exzerX/Go7V6Q+x7FHPm4xpHTN9zwV+3KNS3M8AkytQWvrn4uJce020n04UP9PTm
-         i0FZdnDeBf2cuK0V+XzlQAfuhjjTLm9YN/aX/rUNM6D7fib+zH7fQ0lGkpj6C6qlEbsX
-         LPttGJve39Wv0RoocN4UDfCbrY/LD+h+BdGnLoDBfU/fHmKk5IsPJTBFFpUBps3BzouI
-         o6lxWGoSMlFMEl00AapPCLUvp7x4YHvur3Q8dENYXw0rq2E6sTCbS1F9lg8RbqPSULOR
-         iRN+JP4uUCyM7+96Sh7ST3EuEU+HWtlvYTV+mdFXf4TIVyaITFD+/OgR1FRwc87NnLN6
-         R+fA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=wtRPmHgnz5X1Kb5wQe988YxeBIzauGayM+LxupkV9hU=;
-        b=Wm8b3UOy7DQqgB5hGZaY6xCmYVdyQLTNP8ELJ11ZkaIPhi2oHpI8pQaw7mkykXdIhX
-         gQ3ooD+lUezGN+ndPfk9YyZ3TxHL47GU0ZzTgvXVtkOwDExhJ4zNQrtC26M8yVw2rnes
-         0glr9o06ePwZJT3ZGOMXvVHdaZp9AJgQzFlnscTaDcoXn9iOsn08wtRwuhivczp3RI/F
-         bOqAT2xt7JvfZlpghe8PaNpLZSq8O7VFzeF5BgwOcD8rva8Uj2kIPYK4nyfvoab3O/ZI
-         Ex6k3GMYsURLAOep9S2ep7XLRa2c97H8vRiaTyCOGxeqbroiGrOFf7og9FdIBMdAydHS
-         vSQg==
-X-Gm-Message-State: AOAM531oh66/rXuIKcVK6Pn5Zw8XmVlW+uryo+6kWJV37rYzrhBpZG1t
-        un5MFs9wk1/ek+DYBd5sDzQ=
-X-Google-Smtp-Source: ABdhPJxUkbY+s0j/Ih+dPCP6czx7rsv21c1tFlLFkPICYayWqEzmgqz4lJIWMofYOMOBJQktU1rlHQ==
-X-Received: by 2002:a1c:ddc4:: with SMTP id u187mr4693503wmg.55.1605620877837;
-        Tue, 17 Nov 2020 05:47:57 -0800 (PST)
-Received: from localhost ([217.111.27.204])
-        by smtp.gmail.com with ESMTPSA id 30sm20901859wrd.88.2020.11.17.05.47.56
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 17 Nov 2020 05:47:56 -0800 (PST)
-Date:   Tue, 17 Nov 2020 14:47:54 +0100
-From:   Thierry Reding <thierry.reding@gmail.com>
-To:     John Stultz <john.stultz@linaro.org>
-Cc:     Will Deacon <will@kernel.org>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        lkml <linux-kernel@vger.kernel.org>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        id S1729680AbgKQObr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 17 Nov 2020 09:31:47 -0500
+Received: from z5.mailgun.us ([104.130.96.5]:39703 "EHLO z5.mailgun.us"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1729335AbgKQObr (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 17 Nov 2020 09:31:47 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1605623506; h=Content-Transfer-Encoding: MIME-Version:
+ Message-Id: Date: Subject: Cc: To: From: Sender;
+ bh=zRoDPun0Hsjef4OG9w+Y5KQ464Gj4PbP2e/Lna4lmPQ=; b=DwNIO4+W9rXCheo0XA+0wa9XU71Wk6Nqs3U1WUhf9EQ2eca4YANGVOFLAEaa6SDGo2XQI144
+ Y6ApU5mT+XWCJUO1pa6iVZ09MoNlt/3/HonrTKzDjAXsNQMNLJNTpO6ZBFwoUdBKVYpxMWIC
+ w8u5gKswDPD1n5Am5MaYpDSkqxw=
+X-Mailgun-Sending-Ip: 104.130.96.5
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n03.prod.us-east-1.postgun.com with SMTP id
+ 5fb3deae07fe4e8a182418ae (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 17 Nov 2020 14:31:10
+ GMT
+Sender: saiprakash.ranjan=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id C91AFC43465; Tue, 17 Nov 2020 14:31:09 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
+        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+Received: from blr-ubuntu-253.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: saiprakash.ranjan)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 289D5C433C6;
+        Tue, 17 Nov 2020 14:31:03 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 289D5C433C6
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=saiprakash.ranjan@codeaurora.org
+From:   Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+To:     Will Deacon <will@kernel.org>, Robin Murphy <robin.murphy@arm.com>,
         Joerg Roedel <joro@8bytes.org>,
-        Thomas Gleixner <tglx@linutronix.de>,
-        Jason Cooper <jason@lakedaemon.net>,
-        Marc Zyngier <maz@kernel.org>, Vinod Koul <vkoul@kernel.org>,
-        Kalle Valo <kvalo@codeaurora.org>,
-        Maulik Shah <mkshah@codeaurora.org>,
-        Lina Iyer <ilina@codeaurora.org>,
-        Saravana Kannan <saravanak@google.com>,
-        Todd Kjos <tkjos@google.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Jon Hunter <jonathanh@nvidia.com>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        "list@263.net:IOMMU DRIVERS <iommu@lists.linux-foundation.org>, Joerg
-        Roedel <joro@8bytes.org>," <iommu@lists.linux-foundation.org>,
-        "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>
-Subject: Re: [PATCH v6 3/3] firmware: QCOM_SCM: Allow qcom_scm driver to be
- loadable as a permenent module
-Message-ID: <20201117134754.GB2589875@ulmo>
-References: <20201106042710.55979-1-john.stultz@linaro.org>
- <20201106042710.55979-3-john.stultz@linaro.org>
- <20201116155936.GE2224373@ulmo>
- <20201116163603.GA30507@willie-the-truck>
- <CALAqxLVDm923WRSB+DVxFacmEtmEPS7Qeq+rW_jbCDMNMWw9PQ@mail.gmail.com>
+        Jordan Crouse <jcrouse@codeaurora.org>,
+        Rob Clark <robdclark@gmail.com>
+Cc:     Akhil P Oommen <akhilpo@codeaurora.org>,
+        freedreno@lists.freedesktop.org,
+        "Kristian H . Kristensen" <hoegsberg@google.com>,
+        dri-devel@lists.freedesktop.org, iommu@lists.linux-foundation.org,
+        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org,
+        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+Subject: [PATCHv8 0/8] System Cache support for GPU and required SMMU support
+Date:   Tue, 17 Nov 2020 20:00:39 +0530
+Message-Id: <cover.1605621785.git.saiprakash.ranjan@codeaurora.org>
+X-Mailer: git-send-email 2.27.0
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-        protocol="application/pgp-signature"; boundary="H+4ONPRPur6+Ovig"
-Content-Disposition: inline
-In-Reply-To: <CALAqxLVDm923WRSB+DVxFacmEtmEPS7Qeq+rW_jbCDMNMWw9PQ@mail.gmail.com>
-User-Agent: Mutt/1.14.7 (2020-08-29)
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Some hardware variants contain a system cache or the last level
+cache(llc). This cache is typically a large block which is shared
+by multiple clients on the SOC. GPU uses the system cache to cache
+both the GPU data buffers(like textures) as well the SMMU pagetables.
+This helps with improved render performance as well as lower power
+consumption by reducing the bus traffic to the system memory.
 
---H+4ONPRPur6+Ovig
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+The system cache architecture allows the cache to be split into slices
+which then be used by multiple SOC clients. This patch series is an
+effort to enable and use two of those slices preallocated for the GPU,
+one for the GPU data buffers and another for the GPU SMMU hardware
+pagetables.
 
-On Mon, Nov 16, 2020 at 11:48:39AM -0800, John Stultz wrote:
-> On Mon, Nov 16, 2020 at 8:36 AM Will Deacon <will@kernel.org> wrote:
-> > On Mon, Nov 16, 2020 at 04:59:36PM +0100, Thierry Reding wrote:
-> > > On Fri, Nov 06, 2020 at 04:27:10AM +0000, John Stultz wrote:
-> > > Unfortunately, the ARM SMMU module will eventually end up being loaded
-> > > once the root filesystem has been mounted (for example via SDHCI or
-> > > Ethernet, both with using just plain, non-IOMMU-backed DMA API) and t=
-hen
-> > > initialize, configuring as "fault by default", which then results fro=
-m a
-> > > slew of SMMU faults from all the devices that have previously configu=
-red
-> > > themselves without IOMMU support.
-> >
-> > I wonder if fw_devlink=3Don would help here?
-> >
-> > But either way, I'd be more inclined to revert this change if it's caus=
-ing
-> > problems for !QCOM devices.
-> >
-> > Linus -- please can you drop this one (patch 3/3) for now, given that i=
-t's
-> > causing problems?
->=20
-> Agreed. Apologies again for the trouble.
->=20
-> I do feel like the probe timeout to handle optional links is causing a
-> lot of the trouble here. I expect fw_devlink would solve this, but it
-> may be awhile before it can be always enabled.  I may see about
-> pushing the default probe timeout value to be a little further out
-> than init (I backed away from my last attempt as I didn't want to
-> cause long (30 second) delays for cases like NFS root, but maybe 2-5
-> seconds would be enough to make things work better for everyone).
+Patch 1 - Patch 6 adds system cache support in SMMU and GPU driver.
+Patch 7 and 8 are minor cleanups for arm-smmu impl.
 
-I think there are two problems here: 1) the deferred probe timeout can
-cause a mismatch between what SMMU masters and the SMMU think is going
-on and 2) a logistical problem of dealing with the SMMU driver being a
-loadable module.
+Changes in v8:
+ * Introduce a generic domain attribute for pagetable config (Will)
+ * Rename quirk to more generic IO_PGTABLE_QUIRK_ARM_OUTER_WBWA (Will)
+ * Move non-strict mode to use new struct domain_attr_io_pgtbl_config (Will)
 
-The second problem can be dealt with by shipping the module in the
-initial ramdisk. That's a bit annoying, but perhaps the right thing to
-do. At least on Tegra we need this because all the devices that carry
-the root filesystem (Ethernet for NFS and SDHCI/USB/SATA/PCI for disk
-boot) are SMMU masters and will start to fault once the SMMU driver is
-loaded.
+Changes in v7:
+ * Squash Jordan's patch to support MMU500 targets
+ * Rebase on top of for-joerg/arm-smmu/updates and Jordan's short series for adreno-smmu impl
 
-The first problem is trickier, but if the ARM SMMU driver is built as a
-module and shipped in the initial ramdisk it should work. Like I said,
-this is annoying because it makes the development a bit more complicated
-than just rebuilding a kernel image and flashing it (or boot it straight
-=66rom TFTP) because now everytime the ARM SMMU module is built the
-initial ramdisk needs to be updated (and potentially flashed) as well.
+Changes in v6:
+ * Move table to arm-smmu-qcom (Robin)
 
-Thierry
+Changes in v5:
+ * Drop cleanup of blank lines since it was intentional (Robin)
+ * Rebase again on top of msm-next-pgtables as it moves pretty fast
 
-P.S.: Interestingly this is very similar to the problem that I've been
-trying to address for display hardware that's left on by the bootloader.
-Given that, one potential solution would be to somehow retrieve memory
-allocations done by these devices and create identity mappings in the
-ARM SMMU address spaces for such devices, much like we plan to do for
-devices left on by the bootloader (like the display controller for
-showing a boot splash). I suspect that it's not really worth doing this
-for devices that are only initialized by the kernel because we have a
-bit of control over when we enable them, so I'd prefer if we just kept
-things reasonably simple and made sure the SMMU was either always used
-by a device from the start or not at all. Dynamically switching between
-SMMU and no-SMMU seems a bit eccentric.
+Changes in v4:
+ * Drop IOMMU_SYS_CACHE prot flag
+ * Rebase on top of https://gitlab.freedesktop.org/drm/msm/-/tree/msm-next-pgtables
 
---H+4ONPRPur6+Ovig
-Content-Type: application/pgp-signature; name="signature.asc"
+Changes in v3:
+ * Fix domain attribute setting to before iommu_attach_device()
+ * Fix few code style and checkpatch warnings
+ * Rebase on top of Jordan's latest split pagetables and per-instance
+   pagetables support
 
------BEGIN PGP SIGNATURE-----
+Changes in v2:
+ * Addressed review comments and rebased on top of Jordan's split
+   pagetables series
 
-iQIzBAABCAAdFiEEiOrDCAFJzPfAjcif3SOs138+s6EFAl+z1IgACgkQ3SOs138+
-s6F6ohAAneS0yFFBHoNDyOBvzWz0HOfTqXdo3x/QX0dAfVKc6bJ0Qe/RLBWwNpSY
-UjiqerKccBGe8l7Bf+b6Bj6/vKDLeMfI6hUawI51x3w4pf3u8HPsVEvsTOtPuVrX
-IEmw4B24/OCZCaYLlVB8a23JXGV8zSleTvHCUehX2eqCmhVF1/UAz2ZqVKt1WVNw
-BoIejtEgEvUkAgC+K2xlEXkKwhQCwc1ZyT3O98Ckc0oBmQm9PjxDL+TvUsWJWPNY
-Bu0TVlQCrq6arWhuu78Bo+IhayrMcCiHKSW5UHpmAYK+8nMSjQx7G2pz6iu11TTk
-LOeUemfODzr38DlHswfFdaDhWnTs6e5bA/4To719EoVai89kld+Ch4vcC9LXunp5
-ZPBmeX/pOBtcqt62YzkGFMMhMsD5+4ufGKK1rXZANisp9DMBThO7OKcCh/vXtE1T
-INGW040P33ZB6rNT3cEziha7AUMO/MsbcvMM78cy79jzp6rKwhHM5JNJtQ6vKaOn
-pXjCt8cRQH7OY+BmyDEBJQFqTAd8rmrvtRxr6lNEMpxea3fy3u0BP9FjTf2EgF6S
-FVQ1suGBvbYueWsjSDOML9C/CYZHojAmUNyadmYmBwEKyd9NNHi9RRTteZpWESPS
-/Psgw2xKXBu2mxWo1v+lv6lEH4m/aVlM0a8iMJT6yWL4SSPN6Bo=
-=oG/d
------END PGP SIGNATURE-----
+Jordan Crouse (1):
+  drm/msm/a6xx: Add support for using system cache on MMU500 based
+    targets
 
---H+4ONPRPur6+Ovig--
+Sai Prakash Ranjan (5):
+  iommu/io-pgtable-arm: Add support to use system cache
+  iommu/arm-smmu: Add domain attribute for pagetable configuration
+  iommu/arm-smmu: Move non-strict mode to use domain_attr_io_pgtbl_cfg
+  iommu: arm-smmu-impl: Use table to list QCOM implementations
+  iommu: arm-smmu-impl: Add a space before open parenthesis
+
+Sharat Masetty (2):
+  drm/msm: rearrange the gpu_rmw() function
+  drm/msm/a6xx: Add support for using system cache(LLC)
+
+ drivers/gpu/drm/msm/adreno/a6xx_gpu.c      | 109 +++++++++++++++++++++
+ drivers/gpu/drm/msm/adreno/a6xx_gpu.h      |   5 +
+ drivers/gpu/drm/msm/adreno/adreno_gpu.c    |  17 ++++
+ drivers/gpu/drm/msm/msm_drv.c              |   8 ++
+ drivers/gpu/drm/msm/msm_drv.h              |   1 +
+ drivers/gpu/drm/msm/msm_gpu.h              |   5 +-
+ drivers/iommu/arm/arm-smmu/arm-smmu-impl.c |  11 +--
+ drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c |  21 +++-
+ drivers/iommu/arm/arm-smmu/arm-smmu.c      |  30 +++++-
+ drivers/iommu/arm/arm-smmu/arm-smmu.h      |   3 +-
+ drivers/iommu/io-pgtable-arm.c             |  10 +-
+ include/linux/io-pgtable.h                 |   8 ++
+ include/linux/iommu.h                      |   1 +
+ 13 files changed, 203 insertions(+), 26 deletions(-)
+
+
+base-commit: a29bbb0861f487a5e144dc997a9f71a36c7a2404
+-- 
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
+of Code Aurora Forum, hosted by The Linux Foundation
+
