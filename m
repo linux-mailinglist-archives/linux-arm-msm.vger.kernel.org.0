@@ -2,108 +2,173 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 894C92B702C
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Nov 2020 21:36:02 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2C3C62B7137
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Nov 2020 23:06:08 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728245AbgKQUe7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 17 Nov 2020 15:34:59 -0500
-Received: from m42-4.mailgun.net ([69.72.42.4]:64006 "EHLO m42-4.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726156AbgKQUe7 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 17 Nov 2020 15:34:59 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1605645298; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=B5UuYlGm/Tc1iL48YeEinA+NtRG1i1qyUD8YV4GrWcw=;
- b=s9mx6bjLC1HasZuUZJ+wnLW8k3proxMOpni+YbiI8Wj1Af+Pr2O+PqHG44RmKtJI3kTDaYaZ
- pUKkGe1RwBaJiC9E9MQWI78ARO77Zma5jHbFSZ/6ZlSSAaihQY3NkhAAsND1P1d244h9PO0T
- i/iRUbh4AZvzC/8qJXn0nKnSL8k=
-X-Mailgun-Sending-Ip: 69.72.42.4
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n03.prod.us-west-2.postgun.com with SMTP id
- 5fb433f137ede2253bc89c39 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 17 Nov 2020 20:34:57
- GMT
-Sender: abhinavk=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id A0DE6C43464; Tue, 17 Nov 2020 20:34:57 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: abhinavk)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id DCB1BC433C6;
-        Tue, 17 Nov 2020 20:34:56 +0000 (UTC)
+        id S1727439AbgKQWFd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 17 Nov 2020 17:05:33 -0500
+Received: from mailout1.w1.samsung.com ([210.118.77.11]:46976 "EHLO
+        mailout1.w1.samsung.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728709AbgKQWFd (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 17 Nov 2020 17:05:33 -0500
+Received: from eucas1p2.samsung.com (unknown [182.198.249.207])
+        by mailout1.w1.samsung.com (KnoxPortal) with ESMTP id 20201117220504euoutp0171bcafe9a3ca7da6e72b3d7fe5dad0aa~Ias77RrNu0982609826euoutp01W
+        for <linux-arm-msm@vger.kernel.org>; Tue, 17 Nov 2020 22:05:04 +0000 (GMT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout1.w1.samsung.com 20201117220504euoutp0171bcafe9a3ca7da6e72b3d7fe5dad0aa~Ias77RrNu0982609826euoutp01W
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
+        s=mail20170921; t=1605650704;
+        bh=s1acGkiU17hKCSykFbk+G0PZnrQvq6K5WtZ7m735Qk4=;
+        h=Subject:To:Cc:From:Date:In-Reply-To:References:From;
+        b=uPnY9zgvWX3SXlXpu0DrqA2i6wirurS/CLoj3rhWtOg6MWhOmHtWBLlrvHXH09kY3
+         99r5wUCJD1Qx4dBcsWmjoJMW6fQiLbmv4WJJbpUdJ+v75Vsnj2LJNG4cV5/2yTznSh
+         yj40anWvIY2SwAz3PFAj3tmEzxKA0/fIZNoq/mfk=
+Received: from eusmges2new.samsung.com (unknown [203.254.199.244]) by
+        eucas1p2.samsung.com (KnoxPortal) with ESMTP id
+        20201117220456eucas1p2d38f386cfb73eceaef043c7c1881f22e~Ias0TZXvL1657516575eucas1p27;
+        Tue, 17 Nov 2020 22:04:56 +0000 (GMT)
+Received: from eucas1p1.samsung.com ( [182.198.249.206]) by
+        eusmges2new.samsung.com (EUCPMTA) with SMTP id EB.09.44805.80944BF5; Tue, 17
+        Nov 2020 22:04:56 +0000 (GMT)
+Received: from eusmtrp2.samsung.com (unknown [182.198.249.139]) by
+        eucas1p2.samsung.com (KnoxPortal) with ESMTPA id
+        20201117220455eucas1p20293e57fd8be5d19ed9bccdb43475e6e~Iasz_Cp7U1656816568eucas1p2h;
+        Tue, 17 Nov 2020 22:04:55 +0000 (GMT)
+Received: from eusmgms1.samsung.com (unknown [182.198.249.179]) by
+        eusmtrp2.samsung.com (KnoxPortal) with ESMTP id
+        20201117220455eusmtrp2be865bee49aead0b4f8643917761cd33~Iasz9ZTr61350513505eusmtrp2Q;
+        Tue, 17 Nov 2020 22:04:55 +0000 (GMT)
+X-AuditID: cbfec7f4-b4fff7000000af05-f0-5fb449089c67
+Received: from eusmtip1.samsung.com ( [203.254.199.221]) by
+        eusmgms1.samsung.com (EUCPMTA) with SMTP id 3E.9E.21957.70944BF5; Tue, 17
+        Nov 2020 22:04:55 +0000 (GMT)
+Received: from [106.210.88.143] (unknown [106.210.88.143]) by
+        eusmtip1.samsung.com (KnoxPortal) with ESMTPA id
+        20201117220455eusmtip13a53a59ab9300e1cd452fa0bc734bc0e~IaszXe3Kw1885918859eusmtip1y;
+        Tue, 17 Nov 2020 22:04:55 +0000 (GMT)
+Subject: Re: [PATCH 3/4] s5p-mfc: Use display delay and display enable std
+ controls
+To:     Stanimir Varbanov <stanimir.varbanov@linaro.org>,
+        linux-media@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org
+Cc:     Kyungmin Park <kyungmin.park@samsung.com>,
+        Kamil Debski <kamil@wypas.org>,
+        Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+        Ezequiel Garcia <ezequiel@collabora.com>,
+        Nicolas Dufresne <nicolas.dufresne@collabora.com>
+From:   Marek Szyprowski <m.szyprowski@samsung.com>
+Message-ID: <5d3f86a5-7fc5-bbcb-bb26-560abd364ad8@samsung.com>
+Date:   Tue, 17 Nov 2020 23:04:55 +0100
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0)
+        Gecko/20100101 Thunderbird/78.4.3
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
+In-Reply-To: <20201109173541.10016-4-stanimir.varbanov@linaro.org>
 Content-Transfer-Encoding: 7bit
-Date:   Tue, 17 Nov 2020 12:34:56 -0800
-From:   abhinavk@codeaurora.org
-To:     Stephen Boyd <swboyd@chromium.org>
-Cc:     Rob Clark <robdclark@gmail.com>, freedreno@lists.freedesktop.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, Sean Paul <sean@poorly.run>,
-        kalyan_t@codeaurora.org
-Subject: Re: [Freedreno] [PATCH] drm/msm/dpu: Remove chatty vbif debug print
-In-Reply-To: <20201117172608.2091648-1-swboyd@chromium.org>
-References: <20201117172608.2091648-1-swboyd@chromium.org>
-Message-ID: <71aebca216babf4010c92d4d1ce9a9b4@codeaurora.org>
-X-Sender: abhinavk@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+Content-Language: en-US
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFtrGKsWRmVeSWpSXmKPExsWy7djPc7ocnlviDZbvYrXYueELu8XFmXdZ
+        LGaeaGe1ONv0ht1i0+NrrBYT959lt7i8aw6bRc+GrawWu77cY7NoaTvC5MDlsePuEkaPO9f2
+        sHlsXlLv0bdlFaPH501yHleONLJ7nPr6mT2APYrLJiU1J7MstUjfLoErY9GptUwFlwQqjkxd
+        wNLAeIK3i5GTQ0LAROL/joeMILaQwApGibb5ml2MXED2F0aJLcvvs0A4nxkljrTOYoHpWP14
+        NhNEYjmjxIJjFxghnPdAzv3drCBVwgKhEtdeLwBLiAjsYJT4tHQOmMMscJ1RomXzAjaQKjYB
+        Q4mut11gNq+AncSeyY3MIDaLgKrEt5YfYLaoQJLE9i3bWSFqBCVOznwCdAcHB6eAk8Sny3wg
+        YWYBeYntb+cwQ9jiEreezAc7T0KgnVNi1r5JTBB3u0i8b13BCmELS7w6voUdwpaR+L8TpqGZ
+        UeLhubXsEE4Po8TlphmMEFXWEnfO/WID2cwsoCmxfpc+iCkh4CixaVUWhMknceOtIMQNfBKT
+        tk1nhgjzSnS0CUHMUJOYdXwd3NaDFy4xT2BUmoXksVlIvpmF5JtZCGsXMLKsYhRPLS3OTU8t
+        NspLLdcrTswtLs1L10vOz93ECExap/8d/7KDcfmrj3qHGJk4GA8xSnAwK4nwuphsjBfiTUms
+        rEotyo8vKs1JLT7EKM3BoiTOm7RlTbyQQHpiSWp2ampBahFMlomDU6qBKc+Sof5d/IZH9/8d
+        MXSxUV51uLsz5sO2nuCj7ondr+IdmJRMSp4LH3At6sjf8vS96Lau1pijHqt5XY9kXGtmy9D4
+        dv2I+wzeGgWjL6VbZld9+3SzQ2d6056ABU+nfH9/1G+T8k/WDJVd1yJ91PS97UyjJSOTrW2n
+        cHgKaM2ew71G7VSiSl+wQci5yVUr+nbcdNYtO112XKY7euk95rs/9q5kveUwZ0JoWUDJxnaH
+        e8JW3DaLK/YkBPssnObxWT6lgOfk4a/8Z7pS9277Mb3V+GRd5v1Ff/qO/L+376laWbZSftkZ
+        n+B4g7qivvgi1xVuR6Njj/4VsOw9O2vm9FdN/7NjD3wOMDywtsfT6wanEktxRqKhFnNRcSIA
+        bRToaMkDAAA=
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFjrJIsWRmVeSWpSXmKPExsVy+t/xu7rsnlviDV5N0bbYueELu8XFmXdZ
+        LGaeaGe1ONv0ht1i0+NrrBYT959lt7i8aw6bRc+GrawWu77cY7NoaTvC5MDlsePuEkaPO9f2
+        sHlsXlLv0bdlFaPH501yHleONLJ7nPr6mT2APUrPpii/tCRVISO/uMRWKdrQwkjP0NJCz8jE
+        Us/Q2DzWyshUSd/OJiU1J7MstUjfLkEvY9GptUwFlwQqjkxdwNLAeIK3i5GTQ0LARGL149lM
+        XYxcHEICSxklTm8+xg6RkJE4Oa2BFcIWlvhzrYsNxBYSeMsose6QJogtLBAqce31AkaQZhGB
+        HYwSz7f2MYM4zAI3GSXmXZ3ECDH2LKPEnX2bwUaxCRhKdL2FGMUrYCexZ3IjM4jNIqAq8a3l
+        B5gtKpAkMfP4WXaIGkGJkzOfsHQxcnBwCjhJfLrMBxJmFjCTmLf5ITOELS+x/e0cKFtc4taT
+        +UwTGIVmIemehaRlFpKWWUhaFjCyrGIUSS0tzk3PLTbUK07MLS7NS9dLzs/dxAiM023Hfm7e
+        wTjv1Ue9Q4xMHIyHGCU4mJVEeF1MNsYL8aYkVlalFuXHF5XmpBYfYjQFemcis5Rocj4wUeSV
+        xBuaGZgamphZGphamhkrifNunbsmXkggPbEkNTs1tSC1CKaPiYNTqoEpsYDTpapY4sKvRfos
+        N3xm/b6+38vn3bmpe+wVnTddEz8Zdi7vpKWHivaErzU3lA0OXc+b4LBwxrJfwtvbvovNTlnI
+        zBO0R8wgd8Wl2db/AkznfxIR84k+a77MoeSAoqicSlDOntlryz5enHLB6PGlWZmTH/D3Pdnk
+        wrBgU4nCetmD9d+9K7S297ZVm4p48Vi9ald/98T9Ru3Gdxe2X2rUeSKx+I8r+5JPAm0/t5vc
+        ODpvQr+Kivv1az5xL6O65XsnrT42/yzrv42mtw8HLfxx3nn7nz9W9lqcIrc9vXx3vHA6GKK9
+        98fKX9dfu7lOrr740ETme4lZ+FSpEznnpqQV+hf/sfsjFX5p2QchxvqkdCWW4oxEQy3mouJE
+        AEiAzEFcAwAA
+X-CMS-MailID: 20201117220455eucas1p20293e57fd8be5d19ed9bccdb43475e6e
+X-Msg-Generator: CA
+Content-Type: text/plain; charset="utf-8"
+X-RootMTR: 20201109173610eucas1p224a00875f3768b16661171ee1c2c27dd
+X-EPHeader: CA
+CMS-TYPE: 201P
+X-CMS-RootMailID: 20201109173610eucas1p224a00875f3768b16661171ee1c2c27dd
+References: <20201109173541.10016-1-stanimir.varbanov@linaro.org>
+        <CGME20201109173610eucas1p224a00875f3768b16661171ee1c2c27dd@eucas1p2.samsung.com>
+        <20201109173541.10016-4-stanimir.varbanov@linaro.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2020-11-17 09:26, Stephen Boyd wrote:
-> I don't know what this debug print is for but it is super chatty,
-> throwing 8 lines of debug prints in the logs every time we update a
-> plane. It looks like it has no value. Let's nuke it so we can get
-> better logs.
-> 
-> Cc: Sean Paul <sean@poorly.run>
-> Cc: Abhinav Kumar <abhinavk@codeaurora.org>
-> Signed-off-by: Stephen Boyd <swboyd@chromium.org>
-
+On 09.11.2020 18:35, Stanimir Varbanov wrote:
+> Use the standard display_delay and display_delay_enable controls,
+> the legacy private MFC controls are kept for backward compatibility.
+>
+> Signed-off-by: Stanimir Varbanov <stanimir.varbanov@linaro.org>
+Acked-by: Marek Szyprowski <m.szyprowski@samsung.com>
 > ---
->  drivers/gpu/drm/msm/disp/dpu1/dpu_vbif.c | 3 ---
->  1 file changed, 3 deletions(-)
-> 
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_vbif.c
-> b/drivers/gpu/drm/msm/disp/dpu1/dpu_vbif.c
-> index 5e8c3f3e6625..5eb2b2ee09f5 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_vbif.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_vbif.c
-> @@ -245,9 +245,6 @@ void dpu_vbif_set_qos_remap(struct dpu_kms 
-> *dpu_kms,
->  	forced_on = mdp->ops.setup_clk_force_ctrl(mdp, params->clk_ctrl, 
-> true);
-> 
->  	for (i = 0; i < qos_tbl->npriority_lvl; i++) {
-> -		DPU_DEBUG("vbif:%d xin:%d lvl:%d/%d\n",
-> -				params->vbif_idx, params->xin_id, i,
-> -				qos_tbl->priority_lvl[i]);
+>   drivers/media/platform/s5p-mfc/s5p_mfc_dec.c | 16 ++++++++++++++++
+>   1 file changed, 16 insertions(+)
+>
+> diff --git a/drivers/media/platform/s5p-mfc/s5p_mfc_dec.c b/drivers/media/platform/s5p-mfc/s5p_mfc_dec.c
+> index 61e144a35201..4a3e8e9bbff2 100644
+> --- a/drivers/media/platform/s5p-mfc/s5p_mfc_dec.c
+> +++ b/drivers/media/platform/s5p-mfc/s5p_mfc_dec.c
+> @@ -167,6 +167,13 @@ static struct mfc_control controls[] = {
+>   		.step = 1,
+>   		.default_value = 0,
+>   	},
+> +	{
+> +		.id = V4L2_CID_MPEG_VIDEO_DECODER_DISPLAY_DELAY,
+> +		.type = V4L2_CTRL_TYPE_INTEGER,
+> +		.minimum = 0,
+> +		.maximum = 16383,
+> +		.default_value = 0,
+> +	},
+>   	{
+>   		.id = V4L2_CID_MPEG_MFC51_VIDEO_DECODER_H264_DISPLAY_DELAY_ENABLE,
+>   		.type = V4L2_CTRL_TYPE_BOOLEAN,
+> @@ -176,6 +183,13 @@ static struct mfc_control controls[] = {
+>   		.step = 1,
+>   		.default_value = 0,
+>   	},
+> +	{
+> +		.id = V4L2_CID_MPEG_VIDEO_DECODER_DISPLAY_DELAY_ENABLE,
+> +		.type = V4L2_CTRL_TYPE_BOOLEAN,
+> +		.minimum = 0,
+> +		.maximum = 1,
+> +		.default_value = 0,
+> +	},
+>   	{
+>   		.id = V4L2_CID_MPEG_VIDEO_DECODER_MPEG4_DEBLOCK_FILTER,
+>   		.type = V4L2_CTRL_TYPE_BOOLEAN,
+> @@ -690,9 +704,11 @@ static int s5p_mfc_dec_s_ctrl(struct v4l2_ctrl *ctrl)
+>   
+>   	switch (ctrl->id) {
+>   	case V4L2_CID_MPEG_MFC51_VIDEO_DECODER_H264_DISPLAY_DELAY:
+> +	case V4L2_CID_MPEG_VIDEO_DECODER_DISPLAY_DELAY:
+>   		ctx->display_delay = ctrl->val;
+>   		break;
+>   	case V4L2_CID_MPEG_MFC51_VIDEO_DECODER_H264_DISPLAY_DELAY_ENABLE:
+> +	case V4L2_CID_MPEG_VIDEO_DECODER_DISPLAY_DELAY_ENABLE:
+>   		ctx->display_delay_enable = ctrl->val;
+>   		break;
+>   	case V4L2_CID_MPEG_VIDEO_DECODER_MPEG4_DEBLOCK_FILTER:
 
-Instead of getting rid of this print, we should optimize the caller of 
-this. This is what
-we are doing in downstream. So we need to update the property only if we 
-are switching from a RT client
-to non-RT client for the plane and vice-versa. So we should try to do 
-the same thing here.
-
-  	is_rt = sde_crtc_is_rt_client(crtc, crtc->state);
-  	if (is_rt != psde->is_rt_pipe) {
-  		psde->is_rt_pipe = is_rt;
-  		pstate->dirty |= SDE_PLANE_DIRTY_QOS;
-  	}
-
-
-  	if (pstate->dirty & DPU_PLANE_DIRTY_QOS)
-  		_dpu_plane_set_qos_remap(plane);
+Best regards
+-- 
+Marek Szyprowski, PhD
+Samsung R&D Institute Poland
 
