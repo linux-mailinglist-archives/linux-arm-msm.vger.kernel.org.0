@@ -2,173 +2,130 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 8F7962B829D
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Nov 2020 18:06:59 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 247972B8352
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Nov 2020 18:48:11 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727935AbgKRRD1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 18 Nov 2020 12:03:27 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34700 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727934AbgKRRDV (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 18 Nov 2020 12:03:21 -0500
-Received: from mail-wm1-x341.google.com (mail-wm1-x341.google.com [IPv6:2a00:1450:4864:20::341])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9FDFFC061A4D
-        for <linux-arm-msm@vger.kernel.org>; Wed, 18 Nov 2020 09:03:20 -0800 (PST)
-Received: by mail-wm1-x341.google.com with SMTP id a65so3398081wme.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 18 Nov 2020 09:03:20 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=/woKeC5KGNH7T/xAX1AxjALkVqvprR8gaAK4xA3oo5s=;
-        b=Cwomn+wxk4TpP9Q1CovJ8LXgrq/XaZVqHwkTs9e7Z2XG4LL1ZV0Kg96ssuPfZh3SqJ
-         8hObLgj8AAoBhJ4FEC4GOsShwySqBDt74C2VOoZ/QjgpJAjZejaCAbk7U1AXU7ma4kQH
-         Rsfi+e855GEX30rE0v73w1djExqiYkNukF9x7s0+yg2CG7l2KXAOuM0rFhkOP0ZRrHng
-         v3YVM2X96ucTKh57Za3qXcvbnRTg+IVPw6oGmkPA2P5Jx5fDMppED3eRR3DIS6G06xaY
-         MaR2b+Ylcsz9WgIthC8vwt2I6CbTeupO3lZ3bwKtlldOHE01e4u1bnSXy9mwYhqXwqVu
-         VVdQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=/woKeC5KGNH7T/xAX1AxjALkVqvprR8gaAK4xA3oo5s=;
-        b=X6+7S4aSCJioycHUMflkVbntdrc4wlcCEg9vEyTl/RYKHb6t7fhtXG4ETups+cGfVN
-         5oNmt9OtI6qM9w3zOundKdZzO8/gBqjyqf6Vun538IW4E+eSCAQfVbpuW+DSTIRXTojm
-         WRauIDU8JaZtI8o7r+SnVylD8P4NfG3XDeSlan4xdMNlX1CqDSu1AL7+TxJOnI4+kK2A
-         CBWmVSdZl22KdDCCcFeAJkD5mbz9TWy8hqjKShCmxvQLh2gJCbU1gjEHe6BMfC2v8Wqf
-         36J/jRbbWCOhEnpUTds3/xmeiDGN7HgeMR+yceAU/P9cq01HVPI6mnlWc4nBiBe08Bmv
-         Zamg==
-X-Gm-Message-State: AOAM533x7AUPN3gXiDtI7UG9nLYSpeZk4MAL3BGBs3dgkWahso+98jpn
-        IJrXY6HXvLvtmEhLK9FNuX8hpA==
-X-Google-Smtp-Source: ABdhPJxpYksQa3n/Yd7hzS4PjipFts8SYkUlPiPMNc5G3xr8yEGbze95pQFeIwLcQmIPZBYri1H/ow==
-X-Received: by 2002:a05:600c:290a:: with SMTP id i10mr1035685wmd.187.1605718999252;
-        Wed, 18 Nov 2020 09:03:19 -0800 (PST)
-Received: from srini-hackbox.lan (cpc86377-aztw32-2-0-cust226.18-1.cable.virginm.net. [92.233.226.227])
-        by smtp.gmail.com with ESMTPSA id x13sm44233wmi.20.2020.11.18.09.03.17
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 18 Nov 2020 09:03:17 -0800 (PST)
-From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-To:     srinivas.kandagatla@linaro.org, srini@kernel.org
-Cc:     bjorn.andersson@linaro.org, alsa-devel@alsa-project.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Subject: [PATCH 2/2] slimbus: qcom-ngd-ctrl: add Protection Domain Restart Support
-Date:   Wed, 18 Nov 2020 17:02:46 +0000
-Message-Id: <20201118170246.16588-3-srinivas.kandagatla@linaro.org>
-X-Mailer: git-send-email 2.21.0
-In-Reply-To: <20201118170246.16588-1-srinivas.kandagatla@linaro.org>
-References: <20201118170246.16588-1-srinivas.kandagatla@linaro.org>
+        id S1728125AbgKRRqI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 18 Nov 2020 12:46:08 -0500
+Received: from m42-4.mailgun.net ([69.72.42.4]:26838 "EHLO m42-4.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726504AbgKRRqH (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 18 Nov 2020 12:46:07 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1605721567; h=Message-ID: References: In-Reply-To: Reply-To:
+ Subject: Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=CqQUjWS47OeGeZxznxTVUF9IHKIsAQr1JXT3ZOCJz8Y=;
+ b=gX33FjW5pLp9UwBLZmxRQdiCf27MaUJWt/o8Gpr4u2hrtwsJbipPLbirHXx3yBwGybPOLdw8
+ PS3W6Z3o2r4/FO4zWjgpgSgogxtJ1ZTaRQKjRdNgKcjMWSBG+0peeA0KPVFqYUgP8VuO8+Jn
+ BdWMnQCz5vQjKX/ogq+/n+pf1BE=
+X-Mailgun-Sending-Ip: 69.72.42.4
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n03.prod.us-west-2.postgun.com with SMTP id
+ 5fb55ddd1dba509aaebd5e93 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 18 Nov 2020 17:46:05
+ GMT
+Sender: bbhatt=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 8040EC43463; Wed, 18 Nov 2020 17:46:05 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: bbhatt)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id EE012C433ED;
+        Wed, 18 Nov 2020 17:46:04 +0000 (UTC)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Wed, 18 Nov 2020 09:46:04 -0800
+From:   Bhaumik Bhatt <bbhatt@codeaurora.org>
+To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc:     Carl Huang <cjhuang@codeaurora.org>,
+        Kalle Valo <kvalo@codeaurora.org>,
+        Loic Poulain <loic.poulain@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-wireless@vger.kernel.org,
+        netdev@vger.kernel.org, hemantk@codeaurora.org,
+        ath11k@lists.infradead.org
+Subject: Re: [PATCH] bus: mhi: Remove auto-start option
+Organization: Qualcomm Innovation Center, Inc.
+Reply-To: bbhatt@codeaurora.org
+Mail-Reply-To: bbhatt@codeaurora.org
+In-Reply-To: <20201118115757.GA5680@thinkpad>
+References: <20201118053102.13119-1-manivannan.sadhasivam@linaro.org>
+ <877dqjz0bv.fsf@codeaurora.org> <20201118093107.GC3286@work>
+ <16c430bbd5117a35496f85f4454095b9@codeaurora.org>
+ <20201118115757.GA5680@thinkpad>
+Message-ID: <1b5eb02e78b3b68b88dd3d12e3f8c60c@codeaurora.org>
+X-Sender: bbhatt@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add support to protection domain restart. Protection domain restart
-would also restart the service just like SSR.
+On 2020-11-18 03:57 AM, Manivannan Sadhasivam wrote:
+> On Wed, Nov 18, 2020 at 07:55:19PM +0800, Carl Huang wrote:
+>> On 2020-11-18 17:31, Manivannan Sadhasivam wrote:
+>> > On Wed, Nov 18, 2020 at 07:43:48AM +0200, Kalle Valo wrote:
+>> > > Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org> writes:
+>> > >
+>> > > > From: Loic Poulain <loic.poulain@linaro.org>
+>> > > >
+>> > > > There is really no point having an auto-start for channels.
+>> > > > This is confusing for the device drivers, some have to enable the
+>> > > > channels, others don't have... and waste resources (e.g. pre allocated
+>> > > > buffers) that may never be used.
+>> > > >
+>> > > > This is really up to the MHI device(channel) driver to manage the state
+>> > > > of its channels.
+>> > > >
+>> > > > While at it, let's also remove the auto-start option from ath11k mhi
+>> > > > controller.
+>> > > >
+>> > > > Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
+>> > > > Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+>> > > > [mani: clubbed ath11k change]
+>> > > > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+>> > >
+>> > > Thanks and feel free to take this to the immutable branch:
+>> > >
+>> > > Acked-by: Kalle Valo <kvalo@codeaurora.org>
+>> >
+>> > Patch applied to mhi-ath11k-immutable branch and merged into mhi-next.
+>> >
+>> > Thanks,
+>> > Mani
+>> >
+>> Does net/qrtr/mhi.c need changes? I guess now net/qrtr/mhi.c needs to 
+>> call
+>> mhi_prepare_for_transfer() before transfer.
+>> 
+> 
+> Yes and the patch is also applied:
+> https://git.kernel.org/pub/scm/linux/kernel/git/mani/mhi.git/commit/?h=mhi-ath11k-immutable&id=a2e2cc0dbb1121dfa875da1c04f3dff966fec162
+> 
+> Thanks,
+> Mani
+> 
+>> > >
+>> > > --
+>> > > https://patchwork.kernel.org/project/linux-wireless/list/
+>> > >
+>> > > https://wireless.wiki.kernel.org/en/developers/documentation/submittingpatches
+It looks we forgot to add the mhi_unprepare_from_transfer() equivalent 
+in the remove().
 
-Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Will send a patch for it today.
+
+Thanks,
+Bhaumik
 ---
- drivers/slimbus/Kconfig         |  1 +
- drivers/slimbus/qcom-ngd-ctrl.c | 24 ++++++++++++++++++++++++
- 2 files changed, 25 insertions(+)
-
-diff --git a/drivers/slimbus/Kconfig b/drivers/slimbus/Kconfig
-index 7c950948a9ec..060a2c65978a 100644
---- a/drivers/slimbus/Kconfig
-+++ b/drivers/slimbus/Kconfig
-@@ -26,6 +26,7 @@ config SLIM_QCOM_NGD_CTRL
- 	depends on ARCH_QCOM || COMPILE_TEST
- 	select QCOM_QMI_HELPERS
- 	select QCOM_RPROC_COMMON
-+	select QCOM_PDR_HELPERS
- 	help
- 	  Select driver if Qualcomm's SLIMbus Satellite Non-Generic Device
- 	  Component is programmed using Linux kernel.
-diff --git a/drivers/slimbus/qcom-ngd-ctrl.c b/drivers/slimbus/qcom-ngd-ctrl.c
-index f62693653d2b..d8decb345e9d 100644
---- a/drivers/slimbus/qcom-ngd-ctrl.c
-+++ b/drivers/slimbus/qcom-ngd-ctrl.c
-@@ -19,6 +19,7 @@
- #include <linux/of.h>
- #include <linux/io.h>
- #include <linux/soc/qcom/qmi.h>
-+#include <linux/soc/qcom/pdr.h>
- #include <net/sock.h>
- #include "slimbus.h"
- 
-@@ -166,6 +167,7 @@ struct qcom_slim_ngd_ctrl {
- 	struct mutex ssr_lock;
- 	struct notifier_block nb;
- 	void *notifier;
-+	struct pdr_handle *pdr;
- 	enum qcom_slim_ngd_state state;
- 	dma_addr_t rx_phys_base;
- 	dma_addr_t tx_phys_base;
-@@ -1382,6 +1384,7 @@ static int qcom_slim_ngd_ssr_pdr_notify(struct qcom_slim_ngd_ctrl *ctrl,
- {
- 	switch (action) {
-         case QCOM_SSR_BEFORE_SHUTDOWN:
-+	case SERVREG_SERVICE_STATE_DOWN:
- 		/* Make sure the last dma xfer is finished */
- 		mutex_lock(&ctrl->tx_lock);
- 		if (ctrl->state != QCOM_SLIM_NGD_CTRL_DOWN) {
-@@ -1393,6 +1396,7 @@ static int qcom_slim_ngd_ssr_pdr_notify(struct qcom_slim_ngd_ctrl *ctrl,
- 		mutex_unlock(&ctrl->tx_lock);
-                 break;
-         case QCOM_SSR_AFTER_POWERUP:
-+	case SERVREG_SERVICE_STATE_UP:
- 		schedule_work(&ctrl->ngd_up_work);
- 		break;
-         default:
-@@ -1412,6 +1416,12 @@ static int qcom_slim_ngd_ssr_notify(struct notifier_block *nb,
- 	return qcom_slim_ngd_ssr_pdr_notify(ctrl, action);
- }
- 
-+static void slim_pd_status(int state, char *svc_path, void *priv)
-+{
-+	struct qcom_slim_ngd_ctrl *ctrl = (struct qcom_slim_ngd_ctrl *)priv;
-+
-+	qcom_slim_ngd_ssr_pdr_notify(ctrl, state);
-+}
- static int of_qcom_slim_ngd_register(struct device *parent,
- 				     struct qcom_slim_ngd_ctrl *ctrl)
- {
-@@ -1499,6 +1509,7 @@ static int qcom_slim_ngd_ctrl_probe(struct platform_device *pdev)
- 	struct qcom_slim_ngd_ctrl *ctrl;
- 	struct resource *res;
- 	int ret;
-+	struct pdr_service *pds;
- 
- 	ctrl = devm_kzalloc(dev, sizeof(*ctrl), GFP_KERNEL);
- 	if (!ctrl)
-@@ -1549,6 +1560,18 @@ static int qcom_slim_ngd_ctrl_probe(struct platform_device *pdev)
- 	init_completion(&ctrl->qmi.qmi_comp);
- 	init_completion(&ctrl->qmi_up);
- 
-+	ctrl->pdr = pdr_handle_alloc(slim_pd_status, ctrl);
-+	if (IS_ERR(ctrl->pdr)) {
-+		dev_err(dev, "Failed to init PDR handle\n");
-+		return PTR_ERR(ctrl->pdr);
-+	}
-+
-+	pds = pdr_add_lookup(ctrl->pdr, "avs/audio", "msm/adsp/audio_pd");
-+	if (IS_ERR(pds) && PTR_ERR(pds) != -EALREADY) {
-+		dev_err(dev, "pdr add lookup failed: %d\n", ret);
-+		return PTR_ERR(pds);
-+	}
-+
- 	platform_driver_register(&qcom_slim_ngd_driver);
- 	return of_qcom_slim_ngd_register(dev, ctrl);
- }
-@@ -1565,6 +1588,7 @@ static int qcom_slim_ngd_remove(struct platform_device *pdev)
- 	struct qcom_slim_ngd_ctrl *ctrl = platform_get_drvdata(pdev);
- 
- 	pm_runtime_disable(&pdev->dev);
-+	pdr_handle_release(ctrl->pdr);
- 	qcom_unregister_ssr_notifier(ctrl->notifier, &ctrl->nb);
- 	qcom_slim_ngd_enable(ctrl, false);
- 	qcom_slim_ngd_exit_dma(ctrl);
--- 
-2.21.0
-
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora 
+Forum,
+a Linux Foundation Collaborative Project
