@@ -2,130 +2,146 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 247972B8352
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Nov 2020 18:48:11 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 94ACB2B8372
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Nov 2020 18:59:19 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728125AbgKRRqI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 18 Nov 2020 12:46:08 -0500
-Received: from m42-4.mailgun.net ([69.72.42.4]:26838 "EHLO m42-4.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726504AbgKRRqH (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 18 Nov 2020 12:46:07 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1605721567; h=Message-ID: References: In-Reply-To: Reply-To:
- Subject: Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=CqQUjWS47OeGeZxznxTVUF9IHKIsAQr1JXT3ZOCJz8Y=;
- b=gX33FjW5pLp9UwBLZmxRQdiCf27MaUJWt/o8Gpr4u2hrtwsJbipPLbirHXx3yBwGybPOLdw8
- PS3W6Z3o2r4/FO4zWjgpgSgogxtJ1ZTaRQKjRdNgKcjMWSBG+0peeA0KPVFqYUgP8VuO8+Jn
- BdWMnQCz5vQjKX/ogq+/n+pf1BE=
-X-Mailgun-Sending-Ip: 69.72.42.4
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n03.prod.us-west-2.postgun.com with SMTP id
- 5fb55ddd1dba509aaebd5e93 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 18 Nov 2020 17:46:05
- GMT
-Sender: bbhatt=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 8040EC43463; Wed, 18 Nov 2020 17:46:05 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: bbhatt)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id EE012C433ED;
-        Wed, 18 Nov 2020 17:46:04 +0000 (UTC)
+        id S1726295AbgKRR6U (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 18 Nov 2020 12:58:20 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43164 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725970AbgKRR6T (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 18 Nov 2020 12:58:19 -0500
+Received: from mail-oo1-xc44.google.com (mail-oo1-xc44.google.com [IPv6:2607:f8b0:4864:20::c44])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 70826C061A48
+        for <linux-arm-msm@vger.kernel.org>; Wed, 18 Nov 2020 09:58:18 -0800 (PST)
+Received: by mail-oo1-xc44.google.com with SMTP id 123so648298ooi.8
+        for <linux-arm-msm@vger.kernel.org>; Wed, 18 Nov 2020 09:58:18 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=ype8c0rhDFgZ75ftBGay9s36wJiNcNYG5bOFvh9dHc8=;
+        b=bRZdlXx5hBOzDd132mrm/QxucR8+0v+UBvSaXStZNTg6EWimeL6IFua12EeoiEwndp
+         L8yTZWpP5ydWcqCsOm8BpWwIUoL/ZympVQQXXgGLW0prlhycx99+BVzZq5dWveiRlIxk
+         SFoZZ7+b1UdgOD1z0o/6sw5i+0RQVYLcQyjvcYinlEzbyC22gYGmD6F8xU4gKxwvo+tl
+         b6sdSPXoetLaFlXC0Ipsk0Upi8F2ghO4w6OAQwzvHE7bcxHz6qlwTqQkGCMCUWtrKCf6
+         vYMPZfVjIYJV+ZYXYpDVySRZ6lP96MLigaT7rgHQNMyC9+VQyT1SC0Jo+MR3PQNCtLiM
+         qUTQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=ype8c0rhDFgZ75ftBGay9s36wJiNcNYG5bOFvh9dHc8=;
+        b=Z3ya3t1M6L2pKjCv0zGSZ57xSrURQZ6HjLHFMVQm6xX82Rzs6Tji5xOkLKYdRbxFL7
+         e832qjdh7NzuEKMokEX8hXcMPmoaTstwZWkLrG3t8K+aaC4lfLLS5O9DUkIK4fOu7hY5
+         5BC8DpElrpGnLNUIP+RA8AXNaZBjDXhllpWkjmg9R/sAxlGUVkCf8D5lcaoGTNYoj8Da
+         XkzWdSgWHWD/KqF2P5IcuoRV0XJ0ik+e+y3QtJwG/ISGfKbnh8EWwHBKkQtRrVvbCuqW
+         hb11yNS+smFXNcgrOeTJGYw0eE3Od046Dtl+O3U3tBg0NXBpaWabJnGIO5Ddi17WxqMo
+         2ehQ==
+X-Gm-Message-State: AOAM5307bKrxPH+GHBlJ9Oe8exW5Q+usfOTJAFgrx2Ar97o0a5qcDO5g
+        RpD5MdUXbefmMVn9QXjaEhohkg==
+X-Google-Smtp-Source: ABdhPJyPQg27yiEWaOCyMrK+70i4GG+36VSaQ/+Nl4DzQ6kXvkBpetR7ZAG5EVjcqS0Yg1YaJv/ZbA==
+X-Received: by 2002:a4a:c4c7:: with SMTP id g7mr7122549ooq.50.1605722297630;
+        Wed, 18 Nov 2020 09:58:17 -0800 (PST)
+Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
+        by smtp.gmail.com with ESMTPSA id c6sm58938oif.48.2020.11.18.09.58.16
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 18 Nov 2020 09:58:16 -0800 (PST)
+Date:   Wed, 18 Nov 2020 11:58:15 -0600
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Sibi Sankar <sibis@codeaurora.org>
+Cc:     ohad@wizery.com, linux-arm-msm@vger.kernel.org,
+        linux-remoteproc@vger.kernel.org, linux-kernel@vger.kernel.org,
+        agross@kernel.org, evgreen@chromium.org
+Subject: Re: [PATCH 1/2] remoteproc: qcom_q6v5_mss: Replace ioremap with
+ memremap
+Message-ID: <20201118175815.GE9177@builder.lan>
+References: <1604473422-29639-1-git-send-email-sibis@codeaurora.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Wed, 18 Nov 2020 09:46:04 -0800
-From:   Bhaumik Bhatt <bbhatt@codeaurora.org>
-To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc:     Carl Huang <cjhuang@codeaurora.org>,
-        Kalle Valo <kvalo@codeaurora.org>,
-        Loic Poulain <loic.poulain@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-wireless@vger.kernel.org,
-        netdev@vger.kernel.org, hemantk@codeaurora.org,
-        ath11k@lists.infradead.org
-Subject: Re: [PATCH] bus: mhi: Remove auto-start option
-Organization: Qualcomm Innovation Center, Inc.
-Reply-To: bbhatt@codeaurora.org
-Mail-Reply-To: bbhatt@codeaurora.org
-In-Reply-To: <20201118115757.GA5680@thinkpad>
-References: <20201118053102.13119-1-manivannan.sadhasivam@linaro.org>
- <877dqjz0bv.fsf@codeaurora.org> <20201118093107.GC3286@work>
- <16c430bbd5117a35496f85f4454095b9@codeaurora.org>
- <20201118115757.GA5680@thinkpad>
-Message-ID: <1b5eb02e78b3b68b88dd3d12e3f8c60c@codeaurora.org>
-X-Sender: bbhatt@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1604473422-29639-1-git-send-email-sibis@codeaurora.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2020-11-18 03:57 AM, Manivannan Sadhasivam wrote:
-> On Wed, Nov 18, 2020 at 07:55:19PM +0800, Carl Huang wrote:
->> On 2020-11-18 17:31, Manivannan Sadhasivam wrote:
->> > On Wed, Nov 18, 2020 at 07:43:48AM +0200, Kalle Valo wrote:
->> > > Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org> writes:
->> > >
->> > > > From: Loic Poulain <loic.poulain@linaro.org>
->> > > >
->> > > > There is really no point having an auto-start for channels.
->> > > > This is confusing for the device drivers, some have to enable the
->> > > > channels, others don't have... and waste resources (e.g. pre allocated
->> > > > buffers) that may never be used.
->> > > >
->> > > > This is really up to the MHI device(channel) driver to manage the state
->> > > > of its channels.
->> > > >
->> > > > While at it, let's also remove the auto-start option from ath11k mhi
->> > > > controller.
->> > > >
->> > > > Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
->> > > > Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
->> > > > [mani: clubbed ath11k change]
->> > > > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
->> > >
->> > > Thanks and feel free to take this to the immutable branch:
->> > >
->> > > Acked-by: Kalle Valo <kvalo@codeaurora.org>
->> >
->> > Patch applied to mhi-ath11k-immutable branch and merged into mhi-next.
->> >
->> > Thanks,
->> > Mani
->> >
->> Does net/qrtr/mhi.c need changes? I guess now net/qrtr/mhi.c needs to 
->> call
->> mhi_prepare_for_transfer() before transfer.
->> 
-> 
-> Yes and the patch is also applied:
-> https://git.kernel.org/pub/scm/linux/kernel/git/mani/mhi.git/commit/?h=mhi-ath11k-immutable&id=a2e2cc0dbb1121dfa875da1c04f3dff966fec162
-> 
-> Thanks,
-> Mani
-> 
->> > >
->> > > --
->> > > https://patchwork.kernel.org/project/linux-wireless/list/
->> > >
->> > > https://wireless.wiki.kernel.org/en/developers/documentation/submittingpatches
-It looks we forgot to add the mhi_unprepare_from_transfer() equivalent 
-in the remove().
+On Wed 04 Nov 01:03 CST 2020, Sibi Sankar wrote:
 
-Will send a patch for it today.
+> Fix the sparse warnings reported by the kernel test bot by replacing
+> ioremap calls with memremap.
+> 
+> Reported-by: kernel test robot <lkp@intel.com>
 
-Thanks,
-Bhaumik
----
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora 
-Forum,
-a Linux Foundation Collaborative Project
+Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+
+Regards,
+Bjorn
+
+> Signed-off-by: Sibi Sankar <sibis@codeaurora.org>
+> ---
+> 
+> I'll send out the patches to convert ioremap to memremap on other
+> qc remoteproc drivers once I get a chance to test them.
+> 
+>  drivers/remoteproc/qcom_q6v5_mss.c | 12 ++++++------
+>  1 file changed, 6 insertions(+), 6 deletions(-)
+> 
+> diff --git a/drivers/remoteproc/qcom_q6v5_mss.c b/drivers/remoteproc/qcom_q6v5_mss.c
+> index 9a473cfef758..2c866b6da23c 100644
+> --- a/drivers/remoteproc/qcom_q6v5_mss.c
+> +++ b/drivers/remoteproc/qcom_q6v5_mss.c
+> @@ -1194,7 +1194,7 @@ static int q6v5_mpss_load(struct q6v5 *qproc)
+>  			goto release_firmware;
+>  		}
+>  
+> -		ptr = ioremap_wc(qproc->mpss_phys + offset, phdr->p_memsz);
+> +		ptr = memremap(qproc->mpss_phys + offset, phdr->p_memsz, MEMREMAP_WC);
+>  		if (!ptr) {
+>  			dev_err(qproc->dev,
+>  				"unable to map memory region: %pa+%zx-%x\n",
+> @@ -1209,7 +1209,7 @@ static int q6v5_mpss_load(struct q6v5 *qproc)
+>  					"failed to load segment %d from truncated file %s\n",
+>  					i, fw_name);
+>  				ret = -EINVAL;
+> -				iounmap(ptr);
+> +				memunmap(ptr);
+>  				goto release_firmware;
+>  			}
+>  
+> @@ -1221,7 +1221,7 @@ static int q6v5_mpss_load(struct q6v5 *qproc)
+>  							ptr, phdr->p_filesz);
+>  			if (ret) {
+>  				dev_err(qproc->dev, "failed to load %s\n", fw_name);
+> -				iounmap(ptr);
+> +				memunmap(ptr);
+>  				goto release_firmware;
+>  			}
+>  
+> @@ -1232,7 +1232,7 @@ static int q6v5_mpss_load(struct q6v5 *qproc)
+>  			memset(ptr + phdr->p_filesz, 0,
+>  			       phdr->p_memsz - phdr->p_filesz);
+>  		}
+> -		iounmap(ptr);
+> +		memunmap(ptr);
+>  		size += phdr->p_memsz;
+>  
+>  		code_length = readl(qproc->rmb_base + RMB_PMI_CODE_LENGTH_REG);
+> @@ -1299,11 +1299,11 @@ static void qcom_q6v5_dump_segment(struct rproc *rproc,
+>  	}
+>  
+>  	if (!ret)
+> -		ptr = ioremap_wc(qproc->mpss_phys + offset + cp_offset, size);
+> +		ptr = memremap(qproc->mpss_phys + offset + cp_offset, size, MEMREMAP_WC);
+>  
+>  	if (ptr) {
+>  		memcpy(dest, ptr, size);
+> -		iounmap(ptr);
+> +		memunmap(ptr);
+>  	} else {
+>  		memset(dest, 0xff, size);
+>  	}
+> -- 
+> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+> a Linux Foundation Collaborative Project
+> 
