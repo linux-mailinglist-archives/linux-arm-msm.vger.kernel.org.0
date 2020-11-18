@@ -2,104 +2,99 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C91A92B7A66
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Nov 2020 10:31:29 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id CC60E2B7C1D
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Nov 2020 12:11:45 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726915AbgKRJbO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 18 Nov 2020 04:31:14 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49464 "EHLO
+        id S1726571AbgKRLKr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 18 Nov 2020 06:10:47 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36550 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726742AbgKRJbO (ORCPT
+        with ESMTP id S1726156AbgKRLKr (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 18 Nov 2020 04:31:14 -0500
-Received: from mail-pg1-x544.google.com (mail-pg1-x544.google.com [IPv6:2607:f8b0:4864:20::544])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6FD25C0613D4
-        for <linux-arm-msm@vger.kernel.org>; Wed, 18 Nov 2020 01:31:14 -0800 (PST)
-Received: by mail-pg1-x544.google.com with SMTP id 34so785770pgp.10
-        for <linux-arm-msm@vger.kernel.org>; Wed, 18 Nov 2020 01:31:14 -0800 (PST)
+        Wed, 18 Nov 2020 06:10:47 -0500
+Received: from mail-wr1-x441.google.com (mail-wr1-x441.google.com [IPv6:2a00:1450:4864:20::441])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 335B6C0613D6
+        for <linux-arm-msm@vger.kernel.org>; Wed, 18 Nov 2020 03:10:47 -0800 (PST)
+Received: by mail-wr1-x441.google.com with SMTP id o15so1785139wru.6
+        for <linux-arm-msm@vger.kernel.org>; Wed, 18 Nov 2020 03:10:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=3sJzfKF/R19+n7PGEC3QRVimnx1Uc5u5uS3V7+K9BfQ=;
-        b=bZgdEXR/ZaFKvebScHH5Q+qFcMi57gsN5z7s7219zIyuxSGzasUsRk2r7B7hRaglln
-         YiohFI/K1wOpgG31niCZsznljJxwYO+DBV2Ayxq+w/C84M1hhGNRlzKOwsrPsfMiKUNC
-         1MCKmduruXMCVzfgREmGV3W4KYsbCddAYbJ4xC19oIC1kzgBtwSuqo9pcJPqicBTS0kV
-         cnBmJqU0BD1oNWGleKPkAVXYKldCyL6XaNMmrSfXZxYXp4O1RhIBigf0oBJAbQcQCGur
-         jggCRzuWcIWDI+GGKsZiST0t8WSQEd1eXIAodlAR5e1Flbpyy/rfrusG9VlZXe7OtMyB
-         oDzw==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=TM4xeCFqhqNPAzGhqi5+938j8jku7K9Wdryn7CNC1ME=;
+        b=TGKY7RuGO77gVB241XAL+NVsGYh6cpT3uiYRDighw58NflqbuQwh4EgaEI1KNxQw4u
+         AVZDvR2dW4sSylM2M3u6W8H6J9UUYMSOLQDgh6KDFVC6WMK3Ca2u10xzRHcX5uJcuLoK
+         3UW/d1KZDCiXpUiBeIBvYHc2ytxZz36QrLFVTj8scTWc6QTc1mHzudSjX5eZBUFh0WRd
+         sh43ebAsXf4lHZKAvX5hUPqPxkOzQHRdtJZ9oZl0Ih/RgtR7Q7ItPfnt2NevujJLlheD
+         HaqWSPHZZ05bI/Ikq49gWx7R9daA/ZPBc4FxhZM1a3m6DfSFcRhCCjvYx4dvHRHSdAfm
+         grEg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=3sJzfKF/R19+n7PGEC3QRVimnx1Uc5u5uS3V7+K9BfQ=;
-        b=Aea3edI7UBnZcsdp5IiDjPJwHrZHUkGlEQtbUUMdrdp19TVRfT7jYmna9HvKBGh3HW
-         kMmua5z0VNLY31BOnWRlSBWgqmimkKcBpm7L7oJEJCWs0Yye+SZYvZ0Cb4ckRXUSQ3Fv
-         wWLPu6GB2cN1quvaM9XvlVeq2uuHhEtV16pd8/lzpHlWorjW+7bAbajFw1PV3fVjGiyR
-         bqb7pxAMO4GjKVdJ24Awj9B9zuBK/XAv7UMjNIcsqpL3oCaB2lV4PGe/KyZ2GzDBvcwg
-         nCMjG3q+r+lEl2QaowkM/eTNwfssI3brFoL4Zdv3L6IfjebBna+A8J/Y5Fh0YqZrHCuw
-         xO1g==
-X-Gm-Message-State: AOAM530VLMXUK1uN4XgAyI+MlGvukwHIOUySkp1q4skzlSTQm9N5iYsY
-        iBnMWQMJMhero+ft0D6y1Jr5
-X-Google-Smtp-Source: ABdhPJxAF8PiFAPcEZMU3zhIYbaiwpiUccynZBojEL8AfE7wj3u2OpnHQb8iaXndOTzPDiqyA//knQ==
-X-Received: by 2002:aa7:8154:0:b029:156:4b89:8072 with SMTP id d20-20020aa781540000b02901564b898072mr3879432pfn.51.1605691873922;
-        Wed, 18 Nov 2020 01:31:13 -0800 (PST)
-Received: from work ([103.59.133.81])
-        by smtp.gmail.com with ESMTPSA id h8sm2219525pjc.54.2020.11.18.01.31.10
-        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 18 Nov 2020 01:31:13 -0800 (PST)
-Date:   Wed, 18 Nov 2020 15:01:07 +0530
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     Kalle Valo <kvalo@codeaurora.org>
-Cc:     linux-arm-msm@vger.kernel.org,
-        Loic Poulain <loic.poulain@linaro.org>, netdev@vger.kernel.org,
-        linux-wireless@vger.kernel.org, bbhatt@codeaurora.org,
-        hemantk@codeaurora.org, ath11k@lists.infradead.org
-Subject: Re: [PATCH] bus: mhi: Remove auto-start option
-Message-ID: <20201118093107.GC3286@work>
-References: <20201118053102.13119-1-manivannan.sadhasivam@linaro.org>
- <877dqjz0bv.fsf@codeaurora.org>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=TM4xeCFqhqNPAzGhqi5+938j8jku7K9Wdryn7CNC1ME=;
+        b=OfTX3vkCX9hLOsomBRiJlVUM7ORYmoFdzpgiZzEmNpBJYzH0UYj4nyhloDmThhwCSM
+         9z13CJJ/sn4iN+atGApmIxGRga2VcsFqngieGm2h/KeIuWNRahUjtrYK9u1Zb126NsRe
+         RZ2wb16ZnIfujTpvfGxbUa3eJBjDbllvuX0mbmosuHdBN1CLi1/uiaWy9TauKXExBcb4
+         UQEHFzVcprFSXncm7pyl8LBWMmhKS1cdbAgHKt7vXUk5JKnek2BNnOf9rm2kuhUtUTaL
+         MSJE94Z7XZJvktYP/00SPGxKFPSew8NuDmo3LWWJBT7qjrW3SqsyC3uVDESB/GCntqEv
+         ZdgA==
+X-Gm-Message-State: AOAM532EiWUF6uGxkn6m2VBysqnVP+qp/cd7jVD2QH8eW/KZ02PvgGQF
+        czjtyRtoCJfFrxIll0vw5smkAdjo/CnnWw==
+X-Google-Smtp-Source: ABdhPJxKcSpP5PNEgdsLExRl9hVOtWk9A08Woie5Y8ZNqZYsH2v8ah7p0jFQnFfCdZxkJt8he/I4dA==
+X-Received: by 2002:a5d:4802:: with SMTP id l2mr4149899wrq.424.1605697845849;
+        Wed, 18 Nov 2020 03:10:45 -0800 (PST)
+Received: from localhost.localdomain ([212.45.67.2])
+        by smtp.googlemail.com with ESMTPSA id y203sm3649174wmg.9.2020.11.18.03.10.44
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 18 Nov 2020 03:10:45 -0800 (PST)
+From:   Georgi Djakov <georgi.djakov@linaro.org>
+To:     mdtipton@codeaurora.org, bjorn.andersson@linaro.org,
+        linux-pm@vger.kernel.org
+Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        georgi.djakov@linaro.org
+Subject: [PATCH v2] interconnect: qcom: qcs404: Remove GPU and display RPM IDs
+Date:   Wed, 18 Nov 2020 13:10:44 +0200
+Message-Id: <20201118111044.26056-1-georgi.djakov@linaro.org>
+X-Mailer: git-send-email 2.29.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <877dqjz0bv.fsf@codeaurora.org>
-User-Agent: Mutt/1.9.4 (2018-02-28)
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Nov 18, 2020 at 07:43:48AM +0200, Kalle Valo wrote:
-> Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org> writes:
-> 
-> > From: Loic Poulain <loic.poulain@linaro.org>
-> >
-> > There is really no point having an auto-start for channels.
-> > This is confusing for the device drivers, some have to enable the
-> > channels, others don't have... and waste resources (e.g. pre allocated
-> > buffers) that may never be used.
-> >
-> > This is really up to the MHI device(channel) driver to manage the state
-> > of its channels.
-> >
-> > While at it, let's also remove the auto-start option from ath11k mhi
-> > controller.
-> >
-> > Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
-> > Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> > [mani: clubbed ath11k change]
-> > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> 
-> Thanks and feel free to take this to the immutable branch:
-> 
-> Acked-by: Kalle Valo <kvalo@codeaurora.org>
+The following errors are noticed during boot on a QCS404 board:
+[    2.926647] qcom_icc_rpm_smd_send mas 6 error -6
+[    2.934573] qcom_icc_rpm_smd_send mas 8 error -6
 
-Patch applied to mhi-ath11k-immutable branch and merged into mhi-next.
+These errors show when we try to configure the GPU and display nodes.
+Since these particular nodes aren't supported on RPM and are purely
+local, we should just change their mas_rpm_id to -1 to avoid any
+requests being sent for these master IDs.
 
-Thanks,
-Mani
+Signed-off-by: Georgi Djakov <georgi.djakov@linaro.org>
+---
 
-> 
-> -- 
-> https://patchwork.kernel.org/project/linux-wireless/list/
-> 
-> https://wireless.wiki.kernel.org/en/developers/documentation/submittingpatches
+v2:
+* Keep the nodes and just set the IDs to -1, as suggested by Mike.
+
+v1: http://lore.kernel.org/r/20201111100734.307-1-georgi.djakov@linaro.org
+
+ drivers/interconnect/qcom/qcs404.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/drivers/interconnect/qcom/qcs404.c b/drivers/interconnect/qcom/qcs404.c
+index d4769a5ea182..9820709b43db 100644
+--- a/drivers/interconnect/qcom/qcs404.c
++++ b/drivers/interconnect/qcom/qcs404.c
+@@ -157,8 +157,8 @@ struct qcom_icc_desc {
+ 	}
+ 
+ DEFINE_QNODE(mas_apps_proc, QCS404_MASTER_AMPSS_M0, 8, 0, -1, QCS404_SLAVE_EBI_CH0, QCS404_BIMC_SNOC_SLV);
+-DEFINE_QNODE(mas_oxili, QCS404_MASTER_GRAPHICS_3D, 8, 6, -1, QCS404_SLAVE_EBI_CH0, QCS404_BIMC_SNOC_SLV);
+-DEFINE_QNODE(mas_mdp, QCS404_MASTER_MDP_PORT0, 8, 8, -1, QCS404_SLAVE_EBI_CH0, QCS404_BIMC_SNOC_SLV);
++DEFINE_QNODE(mas_oxili, QCS404_MASTER_GRAPHICS_3D, 8, -1, -1, QCS404_SLAVE_EBI_CH0, QCS404_BIMC_SNOC_SLV);
++DEFINE_QNODE(mas_mdp, QCS404_MASTER_MDP_PORT0, 8, -1, -1, QCS404_SLAVE_EBI_CH0, QCS404_BIMC_SNOC_SLV);
+ DEFINE_QNODE(mas_snoc_bimc_1, QCS404_SNOC_BIMC_1_MAS, 8, 76, -1, QCS404_SLAVE_EBI_CH0);
+ DEFINE_QNODE(mas_tcu_0, QCS404_MASTER_TCU_0, 8, -1, -1, QCS404_SLAVE_EBI_CH0, QCS404_BIMC_SNOC_SLV);
+ DEFINE_QNODE(mas_spdm, QCS404_MASTER_SPDM, 4, -1, -1, QCS404_PNOC_INT_3);
