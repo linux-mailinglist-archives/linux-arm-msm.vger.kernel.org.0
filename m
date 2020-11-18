@@ -2,90 +2,59 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id CB3E32B75FC
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Nov 2020 06:44:41 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id CAFD92B7695
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Nov 2020 07:59:13 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726077AbgKRFn4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 18 Nov 2020 00:43:56 -0500
-Received: from z5.mailgun.us ([104.130.96.5]:48768 "EHLO z5.mailgun.us"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726068AbgKRFnz (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 18 Nov 2020 00:43:55 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1605678235; h=Content-Type: MIME-Version: Message-ID:
- In-Reply-To: Date: References: Subject: Cc: To: From: Sender;
- bh=oiBYyN4u0AsOxj8RbLoWgBRf+OoGnfrCBodEqxw5nMk=; b=Gti/k2DRz82dj9TiPzT+L8oGGNYwmLzuu42Vn8rD4e47qdHkeqfe1D7GepnBkEx8igwCrKua
- NHQgaYAF/Hbcgi263WR3/nTpDM+NAfAwdbpBgjPKGP3/OhXbjjPypMpGOJS5HNHsY/3w4+9E
- 6FIRplNNhAzufTHlqlGyuEn7kpg=
-X-Mailgun-Sending-Ip: 104.130.96.5
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n09.prod.us-east-1.postgun.com with SMTP id
- 5fb4b49a309342b914610d38 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 18 Nov 2020 05:43:54
- GMT
-Sender: kvalo=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id D0DF4C433ED; Wed, 18 Nov 2020 05:43:53 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
-        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
-Received: from potku.adurom.net (88-114-240-156.elisa-laajakaista.fi [88.114.240.156])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: kvalo)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 0E41CC433ED;
-        Wed, 18 Nov 2020 05:43:50 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 0E41CC433ED
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=kvalo@codeaurora.org
-From:   Kalle Valo <kvalo@codeaurora.org>
-To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org,
-        Loic Poulain <loic.poulain@linaro.org>, netdev@vger.kernel.org,
-        linux-wireless@vger.kernel.org, bbhatt@codeaurora.org,
-        hemantk@codeaurora.org, ath11k@lists.infradead.org
-Subject: Re: [PATCH] bus: mhi: Remove auto-start option
-References: <20201118053102.13119-1-manivannan.sadhasivam@linaro.org>
-Date:   Wed, 18 Nov 2020 07:43:48 +0200
-In-Reply-To: <20201118053102.13119-1-manivannan.sadhasivam@linaro.org>
-        (Manivannan Sadhasivam's message of "Wed, 18 Nov 2020 11:01:02 +0530")
-Message-ID: <877dqjz0bv.fsf@codeaurora.org>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.5 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
+        id S1726602AbgKRGz3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 18 Nov 2020 01:55:29 -0500
+Received: from alexa-out.qualcomm.com ([129.46.98.28]:48123 "EHLO
+        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725794AbgKRGz2 (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 18 Nov 2020 01:55:28 -0500
+Received: from ironmsg08-lv.qualcomm.com ([10.47.202.152])
+  by alexa-out.qualcomm.com with ESMTP; 17 Nov 2020 22:55:28 -0800
+X-QCInternal: smtphost
+Received: from ironmsg01-blr.qualcomm.com ([10.86.208.130])
+  by ironmsg08-lv.qualcomm.com with ESMTP/TLS/AES256-SHA; 17 Nov 2020 22:55:26 -0800
+X-QCInternal: smtphost
+Received: from dikshita-linux.qualcomm.com ([10.204.65.237])
+  by ironmsg01-blr.qualcomm.com with ESMTP; 18 Nov 2020 12:25:10 +0530
+Received: by dikshita-linux.qualcomm.com (Postfix, from userid 347544)
+        id 5EEB0212C6; Wed, 18 Nov 2020 12:25:09 +0530 (IST)
+From:   Dikshita Agarwal <dikshita@codeaurora.org>
+To:     linux-media@vger.kernel.org, hverkuil-cisco@xs4all.nl,
+        nicolas@ndufresne.ca, stanimir.varbanov@linaro.org
+Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        vgarodia@codeaurora.org, Dikshita Agarwal <dikshita@codeaurora.org>
+Subject: [PATCH v3 0/3] Add new controls for QP and layer bitrate
+Date:   Wed, 18 Nov 2020 12:24:54 +0530
+Message-Id: <1605682497-29273-1-git-send-email-dikshita@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org> writes:
+This series adds frame specific min/max qp controls for hevc and layer
+wise bitrate control for h264.
 
-> From: Loic Poulain <loic.poulain@linaro.org>
->
-> There is really no point having an auto-start for channels.
-> This is confusing for the device drivers, some have to enable the
-> channels, others don't have... and waste resources (e.g. pre allocated
-> buffers) that may never be used.
->
-> This is really up to the MHI device(channel) driver to manage the state
-> of its channels.
->
-> While at it, let's also remove the auto-start option from ath11k mhi
-> controller.
->
-> Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
-> Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> [mani: clubbed ath11k change]
-> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Chnages since v2:
+ - addressed comments.
+ - added driver side implementation for new controls.
 
-Thanks and feel free to take this to the immutable branch:
+Dikshita Agarwal (3):
+  media: v4l2-ctrl: Add frame-specific min/max qp controls for hevc
+  media: v4l2-ctrl: Add layer wise bitrate controls for h264
+  venus: venc: Add support for frame-specific min/max qp controls
 
-Acked-by: Kalle Valo <kvalo@codeaurora.org>
+ .../userspace-api/media/v4l/ext-ctrls-codec.rst    | 72 +++++++++++++++++++++-
+ drivers/media/platform/qcom/venus/core.h           | 18 ++++++
+ drivers/media/platform/qcom/venus/venc.c           | 21 +++++--
+ drivers/media/platform/qcom/venus/venc_ctrls.c     | 51 +++++++++++++++
+ drivers/media/v4l2-core/v4l2-ctrls.c               | 15 +++++
+ include/uapi/linux/v4l2-controls.h                 | 17 +++++
+ 6 files changed, 187 insertions(+), 7 deletions(-)
 
 -- 
-https://patchwork.kernel.org/project/linux-wireless/list/
+2.7.4
 
-https://wireless.wiki.kernel.org/en/developers/documentation/submittingpatches
