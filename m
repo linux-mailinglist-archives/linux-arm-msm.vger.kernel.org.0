@@ -2,57 +2,104 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 4D8372B7CB8
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Nov 2020 12:33:42 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7A7F02B7D15
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Nov 2020 12:56:09 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725970AbgKRLbh convert rfc822-to-8bit (ORCPT
-        <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 18 Nov 2020 06:31:37 -0500
-Received: from tigeramira.ro ([88.158.78.30]:45340 "EHLO mail.tigeramira.ro"
-        rhost-flags-OK-FAIL-OK-OK) by vger.kernel.org with ESMTP
-        id S1726156AbgKRLbh (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 18 Nov 2020 06:31:37 -0500
-Received: from localhost (localhost [127.0.0.1])
-        by mail.tigeramira.ro (Postfix) with ESMTP id 1AA24CA1AD9
-        for <linux-arm-msm@vger.kernel.org>; Mon, 16 Nov 2020 17:33:34 +0200 (EET)
-Received: from mail.tigeramira.ro ([127.0.0.1])
-        by localhost (mail.tigeramira.ro [127.0.0.1]) (amavisd-new, port 10032)
-        with ESMTP id P3qxM0tDRX4M for <linux-arm-msm@vger.kernel.org>;
-        Mon, 16 Nov 2020 17:33:31 +0200 (EET)
-Received: from mail.tigeramira.ro (localhost [127.0.0.1])
-        by mail.tigeramira.ro (Postfix) with ESMTP id 2100CC4EBE9
-        for <linux-arm-msm@vger.kernel.org>; Sun, 15 Nov 2020 15:31:40 +0200 (EET)
-Received: from [156.96.44.214] (unknown [192.168.12.254])
-        by mail.tigeramira.ro (Postfix) with ESMTP id 48D9C9141AC
-        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Nov 2020 13:31:06 +0200 (EET)
-Content-Type: text/plain; charset="iso-8859-1"
+        id S1725446AbgKRLzZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 18 Nov 2020 06:55:25 -0500
+Received: from m42-4.mailgun.net ([69.72.42.4]:46665 "EHLO m42-4.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726044AbgKRLzW (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 18 Nov 2020 06:55:22 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1605700521; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=7b0+e3ujnFnLFUYK1WadxMsLN+fWS1azqjsjnkke520=;
+ b=Va/a0uGYwMWZXvX2RouxeHm5TswdI3+YG2GB+NAHnYX4gkZngGOFf3EBN3AE8FvoWUW8M7Ir
+ w+LAGe9fzOvfLmb5fnFkA1q+xrpqQjNw/uL60QTNbQ5ducrwf741CWIZ6N9I3BxEyqVE88AL
+ D8+O5ll4EKgYdWUbb6J33jHyiq8=
+X-Mailgun-Sending-Ip: 69.72.42.4
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n03.prod.us-west-2.postgun.com with SMTP id
+ 5fb50ba8ba0e43f355d55336 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 18 Nov 2020 11:55:20
+ GMT
+Sender: cjhuang=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 7277CC43461; Wed, 18 Nov 2020 11:55:20 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: cjhuang)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id B476CC433C6;
+        Wed, 18 Nov 2020 11:55:19 +0000 (UTC)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8BIT
-Content-Description: Mail message body
-Subject: Corporate and Personal Loan::,
-To:     linux-arm-msm@vger.kernel.org
-From:   "Investment  Corporate" <financialcapability6@gmail.com>
-Date:   Fri, 13 Nov 2020 02:31:20 -0800
-Reply-To: hmurrah39@gmail.com
-Message-Id: <20201113113106.48D9C9141AC@mail.tigeramira.ro>
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Wed, 18 Nov 2020 19:55:19 +0800
+From:   Carl Huang <cjhuang@codeaurora.org>
+To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc:     Kalle Valo <kvalo@codeaurora.org>,
+        Loic Poulain <loic.poulain@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-wireless@vger.kernel.org,
+        bbhatt@codeaurora.org, netdev@vger.kernel.org,
+        hemantk@codeaurora.org, ath11k@lists.infradead.org
+Subject: Re: [PATCH] bus: mhi: Remove auto-start option
+In-Reply-To: <20201118093107.GC3286@work>
+References: <20201118053102.13119-1-manivannan.sadhasivam@linaro.org>
+ <877dqjz0bv.fsf@codeaurora.org> <20201118093107.GC3286@work>
+Message-ID: <16c430bbd5117a35496f85f4454095b9@codeaurora.org>
+X-Sender: cjhuang@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hello linux-arm-msm@vger.kernel.org
+On 2020-11-18 17:31, Manivannan Sadhasivam wrote:
+> On Wed, Nov 18, 2020 at 07:43:48AM +0200, Kalle Valo wrote:
+>> Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org> writes:
+>> 
+>> > From: Loic Poulain <loic.poulain@linaro.org>
+>> >
+>> > There is really no point having an auto-start for channels.
+>> > This is confusing for the device drivers, some have to enable the
+>> > channels, others don't have... and waste resources (e.g. pre allocated
+>> > buffers) that may never be used.
+>> >
+>> > This is really up to the MHI device(channel) driver to manage the state
+>> > of its channels.
+>> >
+>> > While at it, let's also remove the auto-start option from ath11k mhi
+>> > controller.
+>> >
+>> > Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
+>> > Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+>> > [mani: clubbed ath11k change]
+>> > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+>> 
+>> Thanks and feel free to take this to the immutable branch:
+>> 
+>> Acked-by: Kalle Valo <kvalo@codeaurora.org>
+> 
+> Patch applied to mhi-ath11k-immutable branch and merged into mhi-next.
+> 
+> Thanks,
+> Mani
+> 
+Does net/qrtr/mhi.c need changes? I guess now net/qrtr/mhi.c needs to 
+call
+mhi_prepare_for_transfer() before transfer.
 
-
-We are Base Investment Company offering Corporate and Personal Loan at 3% Interest Rate for a duration of 10Years.
-
-
-We also pay 1% commission to brokers, who introduce project owners for finance or other opportunities.
-
-
-Please get back to me if you are interested for more
-
-details.
-
-
-Yours faithfully,
-
-Hashim Murrah
+>> 
+>> --
+>> https://patchwork.kernel.org/project/linux-wireless/list/
+>> 
+>> https://wireless.wiki.kernel.org/en/developers/documentation/submittingpatches
