@@ -2,75 +2,95 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 7D3D22B7227
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Nov 2020 00:24:41 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D2AB82B7369
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Nov 2020 02:00:46 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728922AbgKQXUk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 17 Nov 2020 18:20:40 -0500
-Received: from z5.mailgun.us ([104.130.96.5]:29958 "EHLO z5.mailgun.us"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728908AbgKQXUj (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 17 Nov 2020 18:20:39 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1605655239; h=Content-Transfer-Encoding: Content-Type:
- In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
- Subject: Sender; bh=ufiN9D5Lb1H49QBc8k/W6RawzE8C0ln882pK4OmpGXE=; b=jdRF2KOqaCZLAoVHKSGNwsHvQ1SRsm25q8rYgmrMQHtHGsYTRQRjKbUwoqiKMU1I/eaSRDrF
- NvfyR9QF7F9tWMjA9XD0/jdaz9nlqg6k/DFZzXbTd1utpFLvFl7GZPDY4QuU6Dpeu5f0lfNF
- SrC9m2EpY95ng1ZSfRrj46C5zDs=
-X-Mailgun-Sending-Ip: 104.130.96.5
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n03.prod.us-east-1.postgun.com with SMTP id
- 5fb45ac607fe4e8a188420b0 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 17 Nov 2020 23:20:38
- GMT
-Sender: mdtipton=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 283B9C433ED; Tue, 17 Nov 2020 23:20:38 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        NICE_REPLY_A,SPF_FAIL,URIBL_BLOCKED autolearn=no autolearn_force=no
-        version=3.4.0
-Received: from [192.168.1.159] (ip70-179-20-127.sd.sd.cox.net [70.179.20.127])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: mdtipton)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id AE633C433C6;
-        Tue, 17 Nov 2020 23:20:36 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org AE633C433C6
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=mdtipton@codeaurora.org
-Subject: Re: [PATCH] interconnect: qcom: msm8916: Remove rpm-ids from non-RPM
- nodes
-To:     Georgi Djakov <georgi.djakov@linaro.org>, linux-pm@vger.kernel.org
-Cc:     bjorn.andersson@linaro.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20201112105140.10092-1-georgi.djakov@linaro.org>
-From:   Mike Tipton <mdtipton@codeaurora.org>
-Message-ID: <b60ad0c1-ec99-7771-ba98-356d484db39d@codeaurora.org>
-Date:   Tue, 17 Nov 2020 15:20:35 -0800
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.4.3
+        id S1726854AbgKRA7I (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 17 Nov 2020 19:59:08 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55286 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725767AbgKRA7I (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 17 Nov 2020 19:59:08 -0500
+Received: from mail-pf1-x441.google.com (mail-pf1-x441.google.com [IPv6:2607:f8b0:4864:20::441])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F194DC061A48
+        for <linux-arm-msm@vger.kernel.org>; Tue, 17 Nov 2020 16:59:07 -0800 (PST)
+Received: by mail-pf1-x441.google.com with SMTP id c66so333496pfa.4
+        for <linux-arm-msm@vger.kernel.org>; Tue, 17 Nov 2020 16:59:07 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=huaqin-corp-partner-google-com.20150623.gappssmtp.com; s=20150623;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=fZiwxZqojFgPo5SsCHfj9x1Lcm6wX0ajQ1bLVVWx3jU=;
+        b=ugCJDASvWGrjrU1UVd1kTuc8cB+gPeGsAKwTgHP8RzvZ0d6D/Pxx21h1wZ9Mp+0KsG
+         +uWpI2aJ60/fEeEzI+J6ACWHKv2MbSBk8jalOWRY/q8erFFlS6t7zHdBkrLQqSxjJCzW
+         +aOPdyQdKTLx3ry0J5m9p7c1Hb2If/PjwgPfdGCfbRJpREBw77df27MpbwuZWgjGYjIX
+         I1WE5Aizi+Y5PSrmbANDMgyPT4JZAPKN65HApfP3EoAVN13k72QCGLAKFMyIgfW07Npf
+         iAUfHAwR1boa5U8/DNAVA0dgBWGkdosCBjIdo4RjOrUovlQviOl2XLY+0xHLgRBf6Ffi
+         RfPw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=fZiwxZqojFgPo5SsCHfj9x1Lcm6wX0ajQ1bLVVWx3jU=;
+        b=dbgyt7Ct3nTtQtCZKMp+N6WnWk3bB7ri43l/kogCZxzvz3eVxmq73tDCiPL+Y7sHMA
+         WPQTixwNAy1AIPPLcTN9GyHYPoevZn8Zp32mh0E4A6Dab7BNDpl383eo9/uYewwVoFfp
+         O8KAlxDPV7kzdJHZCy4tCsa2Gmeexa5PZmIBYilc5OqkYjDAss9Ep+1lHsRVSexD+ERd
+         lWpMaiXpOVTssDhC6fPGLj4TssjH121efH/f5GDO1X0Thlva+lAUfcokaYw212P+fLt8
+         RNEKOFizRewrJhN6G4rCdRejHc180lP5BRVP0dyc5yQBclGyesTNPgfJ5pgvjDksDaJd
+         kVMA==
+X-Gm-Message-State: AOAM531g7ApBleKSyg0qnZAJMACkaES8gNLXXHLqYPEOVAMRFDvEaJFE
+        9id0xjvVYrVrD9Yd+8uW/ScP
+X-Google-Smtp-Source: ABdhPJxdQinxTZFO5n5EZ6IWDpmbfN2LzGmaJN6gn2i345FWRsV2HD3cz7OaPvnK63UNxoAFSui30Q==
+X-Received: by 2002:a05:6a00:78d:b029:18b:f46:5262 with SMTP id g13-20020a056a00078db029018b0f465262mr2266304pfu.74.1605661147582;
+        Tue, 17 Nov 2020 16:59:07 -0800 (PST)
+Received: from xuyuqing-ZenBook-UX425JA-UX425JA.huaqin.com ([101.78.151.194])
+        by smtp.gmail.com with ESMTPSA id y10sm307159pjm.34.2020.11.17.16.59.02
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 17 Nov 2020 16:59:07 -0800 (PST)
+From:   xuyuqing <xuyuqing@huaqin.corp-partner.google.com>
+To:     linux-kernel@vger.kernel.org
+Cc:     Mark Brown <broonie@kernel.org>, Taniya Das <tdas@codeaurora.org>,
+        Rohit kumar <rohitkr@codeaurora.org>,
+        Banajit Goswami <bgoswami@codeaurora.org>,
+        Patrick Lai <plai@codeaurora.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Jaroslav Kysela <perex@perex.cz>,
+        Takashi Iwai <tiwai@suse.com>,
+        Srini Kandagatla <srinivas.kandagatla@linaro.org>,
+        Stephan Gerhold <stephan@gerhold.net>, dianders@chromium.org,
+        dgreid@chromium.org, tzungbi@chromium.org, cychiang@chromium.org,
+        judyhsiao@chromium.org, linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        alsa-devel@alsa-project.org,
+        zhouguohui@huaqin.corp-partner.google.com,
+        xuyuqing@huaqin.corp-partner.google.com
+Subject: [PATCH v1 0/1] Fix 32 bit format for adau7002
+Date:   Wed, 18 Nov 2020 08:58:57 +0800
+Message-Id: <20201118005858.123013-1-xuyuqing@huaqin.corp-partner.google.com>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-In-Reply-To: <20201112105140.10092-1-georgi.djakov@linaro.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 11/12/2020 2:51 AM, Georgi Djakov wrote:
-> Some nodes are incorrectly marked as RPM-controlled (they have RPM
-> master and slave ids assigned), but are actually controlled by the
-> application CPU instead. The RPM complains when we send requests for
-> resources that it can't control. Let's fix this by replacing the IDs,
-> with the default "-1" in which case no requests are sent.
-> 
-> Signed-off-by: Georgi Djakov <georgi.djakov@linaro.org>
+the microphone is attached to external codec(adau7002)
+instead of rt5682.We need to always use 32 bit format on sc7180
+to meet the clock requirement of adau7002:
+The ADAU7002 requires a BCLK rate 
+that is a minimum of 64× the LRCLK sample rate
 
-Reviewed-by: Mike Tipton <mdtipton@codeaurora.org>
+xuyuqing (1):
+  ASoC: qcom: sc7180: fix 32 bit format for adau7002
+
+ sound/soc/qcom/sc7180.c | 3 +++
+ 1 file changed, 3 insertions(+)
+
+-- 
+2.25.1
 
