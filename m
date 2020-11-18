@@ -2,142 +2,125 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id ACDFB2B84F5
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Nov 2020 20:35:09 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0AF5F2B852E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Nov 2020 20:59:48 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726574AbgKRTej (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 18 Nov 2020 14:34:39 -0500
-Received: from z5.mailgun.us ([104.130.96.5]:56853 "EHLO z5.mailgun.us"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726546AbgKRTei (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 18 Nov 2020 14:34:38 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1605728078; h=Content-Transfer-Encoding: Content-Type:
- In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
- Subject: Sender; bh=uGAvDjrAALRHrKRcKvLfwMGG8vXZ1b/VTGv+N6uE5Uo=; b=aviuk8Jjz1zdvq1cnTUM6loI6Epp+Oe9nlEL6lRiU1D6MMIpx9aBvdbjGS99VACczUF8woHd
- jSsLnAnU1KSNHVPhHv5pPHqNa+j+w4X6oARAD8S+vxTw25KS5HCHx67Ledgg2T4X2phaWzHg
- L6/CLoqJgYs+lKXKsP8Lxv6hPFk=
-X-Mailgun-Sending-Ip: 104.130.96.5
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n09.prod.us-west-2.postgun.com with SMTP id
- 5fb57746a5a29b56a173f4e1 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 18 Nov 2020 19:34:30
- GMT
-Sender: jhugo=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id EC261C43460; Wed, 18 Nov 2020 19:34:29 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        NICE_REPLY_A,SPF_FAIL,URIBL_BLOCKED autolearn=no autolearn_force=no
-        version=3.4.0
-Received: from [10.226.59.216] (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: jhugo)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 637DFC433C6;
-        Wed, 18 Nov 2020 19:34:28 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 637DFC433C6
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=jhugo@codeaurora.org
-Subject: Re: [PATCH] net: qrtr: Unprepare MHI channels during remove
-To:     Loic Poulain <loic.poulain@linaro.org>
-Cc:     Bhaumik Bhatt <bbhatt@codeaurora.org>, ath11k@lists.infradead.org,
-        cjhuang@codeaurora.org, clew@codeaurora.org,
-        hemantk@codeaurora.org, kvalo@codeaurora.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-wireless@vger.kernel.org, manivannan.sadhasivam@linaro.org,
-        netdev@vger.kernel.org
-References: <1605723625-11206-1-git-send-email-bbhatt@codeaurora.org>
- <5e94c0be-9402-7309-5d65-857a27d1f491@codeaurora.org>
- <CAMZdPi_b0=qFNGi1yUke3Dip2bi-zW4ULTg8W4nbyPyEsE3D4w@mail.gmail.com>
-From:   Jeffrey Hugo <jhugo@codeaurora.org>
-Message-ID: <2019fe3c-55c5-61fe-758c-1e9952e1cb33@codeaurora.org>
-Date:   Wed, 18 Nov 2020 12:34:27 -0700
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.4.0
+        id S1726683AbgKRT6W (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 18 Nov 2020 14:58:22 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33714 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726619AbgKRT6V (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 18 Nov 2020 14:58:21 -0500
+Received: from mail-qk1-x743.google.com (mail-qk1-x743.google.com [IPv6:2607:f8b0:4864:20::743])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A55E1C061A4D
+        for <linux-arm-msm@vger.kernel.org>; Wed, 18 Nov 2020 11:58:21 -0800 (PST)
+Received: by mail-qk1-x743.google.com with SMTP id u4so3055769qkk.10
+        for <linux-arm-msm@vger.kernel.org>; Wed, 18 Nov 2020 11:58:21 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=VjaM+f+QFZwLQKDZ4ZTmgMDJ8f9Az2SK5T/knBnywXY=;
+        b=jnFgYG5gVAJ2oms8z2m6ffdBRZV6U9odnUVxDlqLkvQyQKuTkBCManYKf5qOsmXaiZ
+         ImN2Ps4AJtf/Twj313+ljstfydDjPN27wPf/9SXYD2XRPbdGRvYr+Im9fT0cfBHqI3wY
+         cxx4b6qPUN4b9eE8RXxYkRkTD8BsO02dTTJkAbsJ7zkuD2RFDHXUjAPjkCNlYEaO1A16
+         tAIITkoK+kceH+xz/NwU12Cje4zz7POeYTJJyrZ7NDVmlfLJH7naXO4jT8j6shlt2Dn5
+         O+3oZcejWMrWsYbPkT/KCAXT6+UoUbADMXlpBhWHD//VTQ8EwzWlmJcOQDpLvhkoT06O
+         1IcQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=VjaM+f+QFZwLQKDZ4ZTmgMDJ8f9Az2SK5T/knBnywXY=;
+        b=JOajelSqqTVZ89ZGYuB8ipGSRkTm1Q8B/sG8f2K001vOCpjSt1tC65Y3+3QMitF5zq
+         KRcaQcYmxNKomScKBMQaLu3y464FVbO/Wjj3Tzfggx99/JXYwDfqsDOvIJYWswLPx7zU
+         OI6HGZfUHorrIIiUcTkpvsW+OSj0RfZH6Nfe7jOaDdcJEpTIqrftgwJwCEYcavlzKQA4
+         h0mo6EskrAMXQa1vtHTpnmNbtxXhYIwE4GTCznzpuZymAcm93laXJo4vB+gjA31B7VrA
+         ivPGPoDvA50T4dhmXsxRLEoPdmISZAoD22D2LtplRmhLtxi8Ul01JuR1+x+7n1TayTez
+         nopQ==
+X-Gm-Message-State: AOAM530AT7PFmJS5zdmBzeiG2VPY02gTyCnUkDpN+LoRjepYHYiWGane
+        T/QqkpBfgNtlrci0YIEN7JEqcA==
+X-Google-Smtp-Source: ABdhPJzAyijtIgkU8ysmO8Yu8ExUdE14ZVR8R9jKKJNAARHrhWd4xaNIouNLKbqBAPiV4QUesrvZbQ==
+X-Received: by 2002:a05:620a:62b:: with SMTP id 11mr7020809qkv.229.1605729500701;
+        Wed, 18 Nov 2020 11:58:20 -0800 (PST)
+Received: from [192.168.1.93] (pool-71-163-245-5.washdc.fios.verizon.net. [71.163.245.5])
+        by smtp.gmail.com with ESMTPSA id m204sm7745048qke.117.2020.11.18.11.58.19
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 18 Nov 2020 11:58:19 -0800 (PST)
+Subject: Re: [PATCH 5/6] dts:qcom:sdm845: Add dt entries to support crypto
+ engine.
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     agross@kernel.org, herbert@gondor.apana.org.au,
+        davem@davemloft.net, robh+dt@kernel.org, sboyd@kernel.org,
+        mturquette@baylibre.com, linux-arm-msm@vger.kernel.org,
+        linux-crypto@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org
+References: <20201117134714.3456446-1-thara.gopinath@linaro.org>
+ <20201117134714.3456446-6-thara.gopinath@linaro.org>
+ <20201118041051.GF8532@builder.lan>
+From:   Thara Gopinath <thara.gopinath@linaro.org>
+Message-ID: <36532dfd-4e13-79b2-d29f-d7684f638b22@linaro.org>
+Date:   Wed, 18 Nov 2020 14:58:19 -0500
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.10.0
 MIME-Version: 1.0
-In-Reply-To: <CAMZdPi_b0=qFNGi1yUke3Dip2bi-zW4ULTg8W4nbyPyEsE3D4w@mail.gmail.com>
+In-Reply-To: <20201118041051.GF8532@builder.lan>
 Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 11/18/2020 12:14 PM, Loic Poulain wrote:
-> 
-> 
-> Le mer. 18 nov. 2020 à 19:34, Jeffrey Hugo <jhugo@codeaurora.org 
-> <mailto:jhugo@codeaurora.org>> a écrit :
-> 
->     On 11/18/2020 11:20 AM, Bhaumik Bhatt wrote:
->      > Reset MHI device channels when driver remove is called due to
->      > module unload or any crash scenario. This will make sure that
->      > MHI channels no longer remain enabled for transfers since the
->      > MHI stack does not take care of this anymore after the auto-start
->      > channels feature was removed.
->      >
->      > Signed-off-by: Bhaumik Bhatt <bbhatt@codeaurora.org
->     <mailto:bbhatt@codeaurora.org>>
->      > ---
->      >   net/qrtr/mhi.c | 1 +
->      >   1 file changed, 1 insertion(+)
->      >
->      > diff --git a/net/qrtr/mhi.c b/net/qrtr/mhi.c
->      > index 7100f0b..2bf2b19 100644
->      > --- a/net/qrtr/mhi.c
->      > +++ b/net/qrtr/mhi.c
->      > @@ -104,6 +104,7 @@ static void qcom_mhi_qrtr_remove(struct
->     mhi_device *mhi_dev)
->      >       struct qrtr_mhi_dev *qdev = dev_get_drvdata(&mhi_dev->dev);
->      >
->      >       qrtr_endpoint_unregister(&qdev->ep);
->      > +     mhi_unprepare_from_transfer(mhi_dev);
->      >       dev_set_drvdata(&mhi_dev->dev, NULL);
->      >   }
->      >
->      >
-> 
->     I admit, I didn't pay much attention to the auto-start being removed,
->     but this seems odd to me.
-> 
->     As a client, the MHI device is being removed, likely because of some
->     factor outside of my control, but I still need to clean it up?  This
->     really feels like something MHI should be handling.
-> 
-> 
-> I think this is just about balancing operations, what is done in probe 
-> should be undone in remove, so here channels are started in probe and 
-> stopped/reset in remove.
 
-I understand that perspective, but that doesn't quite match what is 
-going on here.  Regardless of if the channel was started (prepared) in 
-probe, it now needs to be stopped in remove.  That not balanced in all cases
 
-Lets assume, in response to probe(), my client driver goes and creates 
-some other object, maybe a socket.  In response to that socket being 
-opened/activated by the client of my driver, I go and start the mhi 
-channel.  Now, normally, when the socket is closed/deactivated, I stop 
-the MHI channel.  In this case, stopping the MHI channel in remove() is 
-unbalanced with respect to probe(), but is now a requirement.
+On 11/17/20 11:10 PM, Bjorn Andersson wrote:
+> On Tue 17 Nov 07:47 CST 2020, Thara Gopinath wrote:
+> 
+>> Add crypto engine (CE) and CE BAM related nodes and definitions to
+>> "sdm845.dtsi".
+>>
+>> Signed-off-by: Thara Gopinath <thara.gopinath@linaro.org>
+>> ---
+>>   arch/arm64/boot/dts/qcom/sdm845.dtsi | 30 ++++++++++++++++++++++++++++
+>>   1 file changed, 30 insertions(+)
+>>
+>> diff --git a/arch/arm64/boot/dts/qcom/sdm845.dtsi b/arch/arm64/boot/dts/qcom/sdm845.dtsi
+>> index 40e8c11f23ab..b5b2ea97681f 100644
+>> --- a/arch/arm64/boot/dts/qcom/sdm845.dtsi
+>> +++ b/arch/arm64/boot/dts/qcom/sdm845.dtsi
+>> @@ -2138,6 +2138,36 @@ ufs_mem_phy_lanes: lanes@1d87400 {
+>>   			};
+>>   		};
+>>   
+>> +		cryptobam: dma@1dc4000 {
+>> +			compatible = "qcom,bam-v1.7.0";
+>> +			reg = <0 0x01dc4000 0 0x24000>;
+>> +			interrupts = <GIC_SPI 272 IRQ_TYPE_LEVEL_HIGH>;
+>> +			clocks = <&rpmhcc RPMH_CE_CLK>;
+>> +			clock-names = "bam_clk";
+>> +			#dma-cells = <1>;
+>> +			qcom,ee = <0>;
+>> +			qcom,controlled-remotely = <1>;
+>> +			iommus = <&apps_smmu 0x704 0x1>,
+>> +				 <&apps_smmu 0x706 0x1>,
+>> +				 <&apps_smmu 0x714 0x1>,
+>> +				 <&apps_smmu 0x716 0x1>;
+> 
+> Can you confirm that this can't be written as:
+> 
+> iommus = <&apps_smmu 0x704 0x3>,
+> 	 <&apps_smmu 0x714 0x3>;
+> 
+> (and same below).
 
-Now you may argue, I should close the object in response to remove, 
-which will then trigger the stop on the channel.  That doesn't apply to 
-everything.  For example, you cannot close an open file in the kernel. 
-You need to wait for userspace to close it.  By the time that happens, 
-the mhi_dev is long gone I expect.
+Hi Bjorn,
 
-So if, somehow, the client driver is the one causing the remove to 
-occur, then yes it should probably be the one doing the stop, but that's 
-a narrow set of conditions, and I think having that requirement for all 
-scenarios is limiting.
-
+Thanks for the reviews. Yes, I can confirm that the above does not work.
+The tests hang. I will fix rest of your comments and post v2.
 
 -- 
-Jeffrey Hugo
-Qualcomm Technologies, Inc. is a member of the
-Code Aurora Forum, a Linux Foundation Collaborative Project.
+Warm Regards
+Thara
