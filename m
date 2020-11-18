@@ -2,136 +2,103 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D1E792B757F
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Nov 2020 05:58:36 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id EA6C12B75E9
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Nov 2020 06:28:50 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725613AbgKREy5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 17 Nov 2020 23:54:57 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35178 "EHLO
+        id S1726269AbgKRF2d (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 18 Nov 2020 00:28:33 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40344 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725446AbgKREy4 (ORCPT
+        with ESMTP id S1726068AbgKRF2d (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 17 Nov 2020 23:54:56 -0500
+        Wed, 18 Nov 2020 00:28:33 -0500
 Received: from mail-pj1-x1043.google.com (mail-pj1-x1043.google.com [IPv6:2607:f8b0:4864:20::1043])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B2C0EC0613D4
-        for <linux-arm-msm@vger.kernel.org>; Tue, 17 Nov 2020 20:54:56 -0800 (PST)
-Received: by mail-pj1-x1043.google.com with SMTP id mn12so1352606pjb.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 17 Nov 2020 20:54:56 -0800 (PST)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 146FEC061A4D
+        for <linux-arm-msm@vger.kernel.org>; Tue, 17 Nov 2020 21:28:33 -0800 (PST)
+Received: by mail-pj1-x1043.google.com with SMTP id gv24so444769pjb.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 17 Nov 2020 21:28:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=moO2QhNnqIGWOkMHd95f/PelXhTS60oiUOB6MIxsOtY=;
-        b=KJgiM8UwlUWQO8p9WhLRYJs69GRYY7ASWc7B+IKX2wDbM/9TGHQ2DMAK2lMze3on5t
-         VLc1ukbdFUes3cGxqq1273FEdH7V2rrO/p+mhtgOa24whGVgIIbSBWFkZ5j4lmPC/Z0v
-         jrndjRGxl1zmKY74hYID/A9wMDZ6ppnbCiQk8=
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=i7NQcmg0sYY8A0xlzCx+NZowN/eNGNUoVY/o8X/i+jY=;
+        b=HVHOpkt/qqNt9sE6chv3U7ohVXbszeie0CQi5JUw5PUCYb4Q8G/UdR3X+kkmQ45kKt
+         Em/Cnv12xCd9dU5raew3gzyMlRZ1vSpv2v5EJ2ubv3k25i7cQWfuyJojAKDsfus2pQAw
+         L07ZygsSRdwZthKV63A0oOgdzRd7y6vebdXXytZPb+YoVKKa/BR8DxngpQTYRcrGLqcm
+         6e31dz04CuMnlD9QbqCaMqbWP3aACS5ya1bCz7VeFlQWY/w2/qJXSGX8O7PywPyTB63R
+         iM/93VxE9HYXfTZvbaB+w4XthiYuzpDSk/lxJhpdZ/hCCVoxlEYIGf7DocxfiyqduRJI
+         PDlA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=moO2QhNnqIGWOkMHd95f/PelXhTS60oiUOB6MIxsOtY=;
-        b=oK5qqi2GlZQTTkesGVqx2TusJfTwI/E6uqvx/Qi3TeIw/vNLZxX1zAzwaMpJIobY/K
-         Ou4h89CtDwZE0fw7RY9/WeNtaC5/xEY+ujx3NLcmyCwO0kZ/rHFpRV95m0F4kl1oNpyw
-         ZtxySQnQFisfTjkmgsnHywlTHAdrAkwEcEoxBU3jk49hFKnXvEGt6lC1z3MzYxcl8Vyx
-         catKBdpMSPyG+eIiayrqnDKM0G1tsAWPFpx6sv/xx41uq7PhGTPV96HHe3GsptXNXeIw
-         ltGKF7Nqb17BH7vs6Kfx4tMuCv4HLd/eE1/R7Rr87GqqkXtB/dnfoDKMMxsz08FKz7GH
-         Fo+Q==
-X-Gm-Message-State: AOAM533Ydl2Z6DFd6Q+g9P5Gqv1C4C7Oiio3yDeqb5PO5ceV+hEM6d7o
-        8OepngULKM846KIseCjlg8GY6Q==
-X-Google-Smtp-Source: ABdhPJyWsv8OrsRh/Xsuzi+ygcgvXgaBBy4c00ZRCo1S3sE7OOLuluGTBnUcbOZ77IlCgpDNJgIUYg==
-X-Received: by 2002:a17:90a:8543:: with SMTP id a3mr2408228pjw.13.1605675296251;
-        Tue, 17 Nov 2020 20:54:56 -0800 (PST)
-Received: from smtp.gmail.com ([100.99.132.239])
-        by smtp.gmail.com with ESMTPSA id mt2sm834690pjb.7.2020.11.17.20.54.55
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 17 Nov 2020 20:54:55 -0800 (PST)
-From:   Stephen Boyd <swboyd@chromium.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        Douglas Anderson <dianders@chromium.org>,
-        Matthias Kaehlcke <mka@chromium.org>
-Subject: [PATCH] arm64: dts: qcom: sc7180: Add prox sensor to LTE SKU Lazor boards
-Date:   Tue, 17 Nov 2020 20:54:54 -0800
-Message-Id: <20201118045454.2503325-1-swboyd@chromium.org>
-X-Mailer: git-send-email 2.29.2.299.gdc1121823c-goog
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=i7NQcmg0sYY8A0xlzCx+NZowN/eNGNUoVY/o8X/i+jY=;
+        b=eqTHau8zPbBBygjQBpPK48emva1jRCJBgKmmfjsgWaUoNSP40ikPIkjo6EoKeokjME
+         +0UUdVHs399J3kjvBE2N9oy92PgImeFzoiRm9EO9+/ozV/T/6vgIiVUzkFmkGeIJSjis
+         aKjP9gHPp7PsTl8jhOhC4r5HgNnxK+EnMEToT/Hi4zj+Qlfle05TA7G/kAsJJSd4uGos
+         VStbWP2In48ORUGphDRaPiYkPxtLRjLz2MsDTeSe62chufKoj71+3hCaxlRqIhfJmKvA
+         Vi8kdoLb1TWl946Uo3Bmpv28c6f7/ArYOa/5QQUCg0xY3klzXOmmQoK6d9wXwmirGwYW
+         VRPw==
+X-Gm-Message-State: AOAM5326Kb+nLBahSMZOrNo0gDcb+qI8WviqRhTLMUtIjOJbmCs1/b0A
+        5lw9AnHhARieIi3ifKr+RDXXAw==
+X-Google-Smtp-Source: ABdhPJwE3hBbeNtRV7Zgs+1PM2OnxpXYUaUyaPcW0+rjSjJgGdij1UAnuyebd9b/G+OtrU4TJCHdpA==
+X-Received: by 2002:a17:902:8d82:b029:d8:c5e8:9785 with SMTP id v2-20020a1709028d82b02900d8c5e89785mr2704949plo.5.1605677312497;
+        Tue, 17 Nov 2020 21:28:32 -0800 (PST)
+Received: from localhost ([122.172.12.172])
+        by smtp.gmail.com with ESMTPSA id w127sm23328945pfc.172.2020.11.17.21.28.30
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 17 Nov 2020 21:28:31 -0800 (PST)
+Date:   Wed, 18 Nov 2020 10:58:29 +0530
+From:   Viresh Kumar <viresh.kumar@linaro.org>
+To:     Rob Clark <robdclark@gmail.com>
+Cc:     Daniel Vetter <daniel@ffwll.ch>,
+        dri-devel <dri-devel@lists.freedesktop.org>,
+        Rob Clark <robdclark@chromium.org>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
+        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
+        <linux-arm-msm@vger.kernel.org>,
+        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
+        <freedreno@lists.freedesktop.org>,
+        open list <linux-kernel@vger.kernel.org>,
+        "Menon, Nishanth" <nm@ti.com>
+Subject: Re: [PATCH v2 07/22] drm/msm: Do rpm get sooner in the submit path
+Message-ID: <20201118052829.ugt7i7ac6eqsj4l6@vireshk-i7>
+References: <CAF6AEGsCj-AtFozn8d1xiNNFNbuMJ0UxS-eMhBVXiQ7rKahKnQ@mail.gmail.com>
+ <20201022080644.2ck4okrxygmkuatn@vireshk-i7>
+ <CAF6AEGv6RMCsK4yp-W2d1mVTMcEiiwFGAb+V8rYLhDdMhqP80Q@mail.gmail.com>
+ <20201027113532.nriqqws7gdcu5su6@vireshk-i7>
+ <20201103054715.4l5j57pyjz6zd6ed@vireshk-i7>
+ <CAF6AEGtgUVXm6Wwod0FC38g91Q8CotLFSoC4NmXx7GzcA=1mOA@mail.gmail.com>
+ <20201104030353.ny7zvakgb4fsye6r@vireshk-i7>
+ <CAF6AEGv215ixcAWmaOWs7UKAqmbMs=aFyTBBYLU-bt8XBnWb7g@mail.gmail.com>
+ <20201106071621.j732gt4nqifjrccd@vireshk-i7>
+ <CAF6AEGt_wbWuQA7gBw4yn4f2x0SVbfub4eRDX59PCvnd_0uFxg@mail.gmail.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAF6AEGt_wbWuQA7gBw4yn4f2x0SVbfub4eRDX59PCvnd_0uFxg@mail.gmail.com>
+User-Agent: NeoMutt/20180716-391-311a52
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-There's a proximity sensor on Lazor devices, but only for LTE SKUs.
-Enable it only on the LTE SKUs and also configure it properly so it
-works.
+On 17-11-20, 09:02, Rob Clark wrote:
+> With that on top of the previous patch,
 
-Cc: Douglas Anderson <dianders@chromium.org>
-Cc: Matthias Kaehlcke <mka@chromium.org>
-Signed-off-by: Stephen Boyd <swboyd@chromium.org>
----
- arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r1-lte.dts | 8 ++++++++
- arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r3-lte.dts | 8 ++++++++
- arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor.dtsi       | 7 ++++++-
- 3 files changed, 22 insertions(+), 1 deletion(-)
+Don't you still have this ? Which fixed the lockdep in the remove path.
 
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r1-lte.dts b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r1-lte.dts
-index 5a67e5baafec..e16ba7b01f25 100644
---- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r1-lte.dts
-+++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r1-lte.dts
-@@ -13,6 +13,14 @@ / {
- 	compatible = "google,lazor-rev1-sku0", "google,lazor-rev2-sku0", "qcom,sc7180";
- };
- 
-+&ap_sar_sensor {
-+	status = "okay";
-+};
-+
-+&ap_sar_sensor_i2c {
-+	status = "okay";
-+};
-+
- &keyboard_backlight {
- 	status = "okay";
- };
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r3-lte.dts b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r3-lte.dts
-index 43836fc4d403..0881f8dd02c9 100644
---- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r3-lte.dts
-+++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r3-lte.dts
-@@ -13,6 +13,14 @@ / {
- 	compatible = "google,lazor-sku0", "qcom,sc7180";
- };
- 
-+&ap_sar_sensor {
-+	status = "okay";
-+};
-+
-+&ap_sar_sensor_i2c {
-+	status = "okay";
-+};
-+
- &keyboard_backlight {
- 	status = "okay";
- };
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor.dtsi
-index 180ef9e04306..89de69b60609 100644
---- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor.dtsi
-@@ -30,7 +30,12 @@ panel_in_edp: endpoint {
- };
- 
- &ap_sar_sensor {
--	status = "okay";
-+	semtech,cs0-ground;
-+	semtech,combined-sensors = <3>;
-+	semtech,resolution = "fine";
-+	semtech,startup-sensor = <1>;
-+	semtech,proxraw-strength = <2>;
-+	semtech,avg-pos-strength = <64>;
- };
- 
- ap_ts_pen_1v8: &i2c4 {
+https://lore.kernel.org/lkml/20201022080644.2ck4okrxygmkuatn@vireshk-i7/
 
-base-commit: ead9f7d7ea9e20843e29e688b53859cea20044ee
+To make it clear you need these patches to fix the OPP stuff:
+
+//From 5.10-rc3 (the one from the above link).
+commit e0df59de670b ("opp: Reduce the size of critical section in _opp_table_kref_release()")
+
+//Below two from linux-next
+commit ef43f01ac069 ("opp: Always add entries in dev_list with opp_table->lock held")
+commit 27c09484dd3d ("opp: Allocate the OPP table outside of opp_table_lock")
+
+This matches the diff I gave you earlier.
+
 -- 
-Sent by a computer, using git, on the internet
-
+viresh
