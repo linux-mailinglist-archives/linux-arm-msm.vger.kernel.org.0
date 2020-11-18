@@ -2,118 +2,147 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 8EA0E2B7D21
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Nov 2020 12:59:24 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 22FC62B7DE5
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Nov 2020 13:54:39 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727879AbgKRL6N (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 18 Nov 2020 06:58:13 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43908 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726985AbgKRL6N (ORCPT
+        id S1726321AbgKRMwx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 18 Nov 2020 07:52:53 -0500
+Received: from alexa-out.qualcomm.com ([129.46.98.28]:23005 "EHLO
+        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725767AbgKRMwx (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 18 Nov 2020 06:58:13 -0500
-Received: from mail-pj1-x1043.google.com (mail-pj1-x1043.google.com [IPv6:2607:f8b0:4864:20::1043])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 84E75C061A48
-        for <linux-arm-msm@vger.kernel.org>; Wed, 18 Nov 2020 03:58:11 -0800 (PST)
-Received: by mail-pj1-x1043.google.com with SMTP id kk16so395215pjb.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 18 Nov 2020 03:58:11 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=e06oOc4RuN9P/VUU47/az/twPX9Nm/1HhyjblwKfkfc=;
-        b=rJ4WRtKjq35dZeXZ/KnjA5BgQRm9ykoN8E9JxwoLFc1PPL6QTX2bGTMnj2B18gDS9s
-         X08ShvHS6cm0MdphMq4GiPidBOkeripf4zvRohtAE0TwAPAwXL9cxhp27ZglYNtcwma1
-         erzKG8P7y3FnE60LdVZDQfT7Titled2vLawqr0Nb/fHKHJq8PMgcaYm/Xu7HvT+G6qZ9
-         CwdDPy4fn1wGdRQgEhuknnaiLT4fDTpEK5eaLmcBAL42jbVPt9TfrsLd+jKfpETs4Hat
-         S0Cd9ftNEC5FmwoaDojbNqRwdJXvfF+xSTu5H4omygtP/vOyVANprxUVKQG4S9+JIArW
-         dzFQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=e06oOc4RuN9P/VUU47/az/twPX9Nm/1HhyjblwKfkfc=;
-        b=bxLijQgvlf3l8NHn4v24ZVIXclz3CJAVzXiRqipYaKUrusMTZhhe7rbw+es5LFJj1R
-         bu9DEdUd1AMY12rT8gMXV3AmXT3OUP8Al/kfzDtxmhEP2yFR8xkKpYeiOKo2UV183ifM
-         J8O6gtv6/ZNXSbkS0tX4SqtIo6ku4t3+ABCDQ+3QMSwLJs1y/HjmkSB+2BX4Bo5TWQGq
-         CJJuujHuPGxRmxsI3unfZeKBCDNlCledbbrcyYVxjhyu7paww1vQEeINo9tYUa4Cjw+o
-         xlBbMw0DXi3UDUUvdGVsaHWeUqZh4HpN36SvMg8lZ7ndB+xqusTkaUqSEc1XukysaPaX
-         xY+g==
-X-Gm-Message-State: AOAM53382y+8WPwehS0s3JRwrDWJPkEvhnApveuLwJVV370gk98DN32b
-        VcCDMdhQll1b0s4CELJ183Pg
-X-Google-Smtp-Source: ABdhPJzPbm+WpLJrhor1bhcpiLpWMeJs6GI8+XTAXmGwyaJPfgNUpD3nptdMl8hGGNk/ULnzpQ9ovA==
-X-Received: by 2002:a17:90a:7e94:: with SMTP id j20mr3572429pjl.187.1605700690813;
-        Wed, 18 Nov 2020 03:58:10 -0800 (PST)
-Received: from thinkpad ([2409:4072:6e00:1c8c:4ce:9ec5:283d:8090])
-        by smtp.gmail.com with ESMTPSA id x18sm24230235pfi.206.2020.11.18.03.58.05
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 18 Nov 2020 03:58:10 -0800 (PST)
-Date:   Wed, 18 Nov 2020 17:27:57 +0530
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     Carl Huang <cjhuang@codeaurora.org>
-Cc:     Kalle Valo <kvalo@codeaurora.org>,
-        Loic Poulain <loic.poulain@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-wireless@vger.kernel.org,
-        bbhatt@codeaurora.org, netdev@vger.kernel.org,
-        hemantk@codeaurora.org, ath11k@lists.infradead.org
-Subject: Re: [PATCH] bus: mhi: Remove auto-start option
-Message-ID: <20201118115757.GA5680@thinkpad>
-References: <20201118053102.13119-1-manivannan.sadhasivam@linaro.org>
- <877dqjz0bv.fsf@codeaurora.org>
- <20201118093107.GC3286@work>
- <16c430bbd5117a35496f85f4454095b9@codeaurora.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <16c430bbd5117a35496f85f4454095b9@codeaurora.org>
+        Wed, 18 Nov 2020 07:52:53 -0500
+Received: from ironmsg07-lv.qualcomm.com (HELO ironmsg07-lv.qulacomm.com) ([10.47.202.151])
+  by alexa-out.qualcomm.com with ESMTP; 18 Nov 2020 04:52:52 -0800
+X-QCInternal: smtphost
+Received: from ironmsg01-blr.qualcomm.com ([10.86.208.130])
+  by ironmsg07-lv.qulacomm.com with ESMTP/TLS/AES256-SHA; 18 Nov 2020 04:52:50 -0800
+X-QCInternal: smtphost
+Received: from gubbaven-linux.qualcomm.com ([10.206.64.32])
+  by ironmsg01-blr.qualcomm.com with ESMTP; 18 Nov 2020 18:22:26 +0530
+Received: by gubbaven-linux.qualcomm.com (Postfix, from userid 2365015)
+        id 4184A21D6E; Wed, 18 Nov 2020 18:22:25 +0530 (IST)
+From:   Venkata Lakshmi Narayana Gubba <gubbaven@codeaurora.org>
+To:     marcel@holtmann.org, johan.hedberg@gmail.com
+Cc:     mka@chromium.org, linux-kernel@vger.kernel.org,
+        linux-bluetooth@vger.kernel.org, hemantg@codeaurora.org,
+        linux-arm-msm@vger.kernel.org, bgodavar@codeaurora.org,
+        rjliao@codeaurora.org, hbandi@codeaurora.org,
+        abhishekpandit@chromium.org,
+        Venkata Lakshmi Narayana Gubba <gubbaven@codeaurora.org>
+Subject: [PATCH v2] Bluetooth: btqca: Add support to read FW build version for WCN3991 BTSoC
+Date:   Wed, 18 Nov 2020 18:22:23 +0530
+Message-Id: <1605703943-25980-1-git-send-email-gubbaven@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Nov 18, 2020 at 07:55:19PM +0800, Carl Huang wrote:
-> On 2020-11-18 17:31, Manivannan Sadhasivam wrote:
-> > On Wed, Nov 18, 2020 at 07:43:48AM +0200, Kalle Valo wrote:
-> > > Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org> writes:
-> > > 
-> > > > From: Loic Poulain <loic.poulain@linaro.org>
-> > > >
-> > > > There is really no point having an auto-start for channels.
-> > > > This is confusing for the device drivers, some have to enable the
-> > > > channels, others don't have... and waste resources (e.g. pre allocated
-> > > > buffers) that may never be used.
-> > > >
-> > > > This is really up to the MHI device(channel) driver to manage the state
-> > > > of its channels.
-> > > >
-> > > > While at it, let's also remove the auto-start option from ath11k mhi
-> > > > controller.
-> > > >
-> > > > Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
-> > > > Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> > > > [mani: clubbed ath11k change]
-> > > > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> > > 
-> > > Thanks and feel free to take this to the immutable branch:
-> > > 
-> > > Acked-by: Kalle Valo <kvalo@codeaurora.org>
-> > 
-> > Patch applied to mhi-ath11k-immutable branch and merged into mhi-next.
-> > 
-> > Thanks,
-> > Mani
-> > 
-> Does net/qrtr/mhi.c need changes? I guess now net/qrtr/mhi.c needs to call
-> mhi_prepare_for_transfer() before transfer.
-> 
+Add support to read FW build version for WCN3991 BTSoC
 
-Yes and the patch is also applied:
-https://git.kernel.org/pub/scm/linux/kernel/git/mani/mhi.git/commit/?h=mhi-ath11k-immutable&id=a2e2cc0dbb1121dfa875da1c04f3dff966fec162
+Signed-off-by: Venkata Lakshmi Narayana Gubba <gubbaven@codeaurora.org>
+---
+ drivers/bluetooth/btqca.c | 57 +++++++++++++++++++++++++++++++++++++++++++++++
+ drivers/bluetooth/btqca.h |  3 +++
+ 2 files changed, 60 insertions(+)
 
-Thanks,
-Mani
+diff --git a/drivers/bluetooth/btqca.c b/drivers/bluetooth/btqca.c
+index ce9dcff..dfd7ff7 100644
+--- a/drivers/bluetooth/btqca.c
++++ b/drivers/bluetooth/btqca.c
+@@ -101,6 +101,56 @@ int qca_read_soc_version(struct hci_dev *hdev, u32 *soc_version,
+ }
+ EXPORT_SYMBOL_GPL(qca_read_soc_version);
+ 
++static int qca_read_fw_build_info(struct hci_dev *hdev)
++{
++	struct sk_buff *skb;
++	struct edl_event_hdr *edl;
++	char cmd;
++	int err = 0;
++	char build_label[QCA_FW_BUILD_VER_LEN];
++	int build_lbl_len;
++
++	bt_dev_dbg(hdev, "QCA read fw build info");
++
++	cmd = EDL_GET_BUILD_INFO_CMD;
++	skb = __hci_cmd_sync_ev(hdev, EDL_PATCH_CMD_OPCODE, EDL_PATCH_CMD_LEN,
++				&cmd, HCI_EV_VENDOR, HCI_INIT_TIMEOUT);
++	if (IS_ERR(skb)) {
++		err = PTR_ERR(skb);
++		bt_dev_err(hdev, "Reading QCA fw build info failed (%d)",
++			   err);
++		return err;
++	}
++
++	edl = (struct edl_event_hdr *)(skb->data);
++	if (!edl) {
++		bt_dev_err(hdev, "QCA read fw build info with no header");
++		err = -EILSEQ;
++		goto out;
++	}
++
++	if (edl->cresp != EDL_CMD_REQ_RES_EVT ||
++	    edl->rtype != EDL_GET_BUILD_INFO_CMD) {
++		bt_dev_err(hdev, "QCA Wrong packet received %d %d", edl->cresp,
++			   edl->rtype);
++		err = -EIO;
++		goto out;
++	}
++
++	build_lbl_len = edl->data[0];
++	memcpy(build_label, &edl->data[1], build_lbl_len);
++	*(build_label + build_lbl_len) = '\0';
++
++	bt_dev_info(hdev, "BT SoC FW Build info: %s", build_label);
++
++out:
++	kfree_skb(skb);
++	if (err)
++		bt_dev_err(hdev, "QCA read fw build info failed (%d)", err);
++
++	return err;
++}
++
+ static int qca_send_reset(struct hci_dev *hdev)
+ {
+ 	struct sk_buff *skb;
+@@ -520,6 +570,13 @@ int qca_uart_setup(struct hci_dev *hdev, uint8_t baudrate,
+ 		return err;
+ 	}
+ 
++	if (soc_type == QCA_WCN3991) {
++		/* get fw build info */
++		err = qca_read_fw_build_info(hdev);
++		if (err < 0)
++			return err;
++	}
++
+ 	bt_dev_info(hdev, "QCA setup on UART is completed");
+ 
+ 	return 0;
+diff --git a/drivers/bluetooth/btqca.h b/drivers/bluetooth/btqca.h
+index d81b74c..375c7fc 100644
+--- a/drivers/bluetooth/btqca.h
++++ b/drivers/bluetooth/btqca.h
+@@ -11,6 +11,7 @@
+ #define EDL_PATCH_CMD_LEN		(1)
+ #define EDL_PATCH_VER_REQ_CMD		(0x19)
+ #define EDL_PATCH_TLV_REQ_CMD		(0x1E)
++#define EDL_GET_BUILD_INFO_CMD		(0x20)
+ #define EDL_NVM_ACCESS_SET_REQ_CMD	(0x01)
+ #define MAX_SIZE_PER_TLV_SEGMENT	(243)
+ #define QCA_PRE_SHUTDOWN_CMD		(0xFC08)
+@@ -34,6 +35,8 @@
+ #define QCA_HCI_CC_OPCODE		0xFC00
+ #define QCA_HCI_CC_SUCCESS		0x00
+ 
++#define QCA_FW_BUILD_VER_LEN		255
++
+ enum qca_baudrate {
+ 	QCA_BAUDRATE_115200 	= 0,
+ 	QCA_BAUDRATE_57600,
+-- 
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member 
+of Code Aurora Forum, hosted by The Linux Foundation
 
-> > > 
-> > > --
-> > > https://patchwork.kernel.org/project/linux-wireless/list/
-> > > 
-> > > https://wireless.wiki.kernel.org/en/developers/documentation/submittingpatches
