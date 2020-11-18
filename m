@@ -2,103 +2,190 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id EA6C12B75E9
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Nov 2020 06:28:50 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4CDA82B75F2
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Nov 2020 06:35:49 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726269AbgKRF2d (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 18 Nov 2020 00:28:33 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40344 "EHLO
+        id S1725446AbgKRFb3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 18 Nov 2020 00:31:29 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40788 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726068AbgKRF2d (ORCPT
+        with ESMTP id S1725832AbgKRFb3 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 18 Nov 2020 00:28:33 -0500
-Received: from mail-pj1-x1043.google.com (mail-pj1-x1043.google.com [IPv6:2607:f8b0:4864:20::1043])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 146FEC061A4D
-        for <linux-arm-msm@vger.kernel.org>; Tue, 17 Nov 2020 21:28:33 -0800 (PST)
-Received: by mail-pj1-x1043.google.com with SMTP id gv24so444769pjb.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 17 Nov 2020 21:28:33 -0800 (PST)
+        Wed, 18 Nov 2020 00:31:29 -0500
+Received: from mail-pf1-x444.google.com (mail-pf1-x444.google.com [IPv6:2607:f8b0:4864:20::444])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0BA80C0613D4
+        for <linux-arm-msm@vger.kernel.org>; Tue, 17 Nov 2020 21:31:29 -0800 (PST)
+Received: by mail-pf1-x444.google.com with SMTP id t8so681633pfg.8
+        for <linux-arm-msm@vger.kernel.org>; Tue, 17 Nov 2020 21:31:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=i7NQcmg0sYY8A0xlzCx+NZowN/eNGNUoVY/o8X/i+jY=;
-        b=HVHOpkt/qqNt9sE6chv3U7ohVXbszeie0CQi5JUw5PUCYb4Q8G/UdR3X+kkmQ45kKt
-         Em/Cnv12xCd9dU5raew3gzyMlRZ1vSpv2v5EJ2ubv3k25i7cQWfuyJojAKDsfus2pQAw
-         L07ZygsSRdwZthKV63A0oOgdzRd7y6vebdXXytZPb+YoVKKa/BR8DxngpQTYRcrGLqcm
-         6e31dz04CuMnlD9QbqCaMqbWP3aACS5ya1bCz7VeFlQWY/w2/qJXSGX8O7PywPyTB63R
-         iM/93VxE9HYXfTZvbaB+w4XthiYuzpDSk/lxJhpdZ/hCCVoxlEYIGf7DocxfiyqduRJI
-         PDlA==
+        h=from:to:cc:subject:date:message-id;
+        bh=PZ0QCIA20El2MRacEHi3Dqx2l9Pt/uOvrOyEb5RrjSo=;
+        b=AaFcyCjTYhbv/RYh1tMspvU5/0QozZMYg1ooVrllJBMTa1+jSZGiznQKhWZ7ys7P3Z
+         Tc+mA2Lfte79zKHM47RyGj2wBfdWGsBJAz+SKSEOt39ii9G39WpTWr/8C2qb/gG6bLl1
+         nHQNITgmxxh6D3eKPeAOitgKCQTkyPlfoFQUXNZ+09yQ5wlBPAllnDDCPqrQoJGoOb/f
+         NjT06Ry3Q6sygRaNGxC4InIdxfx55IAPayvLesc6AyRIgEaO6hGgXJ7JKqzf/czcxUTW
+         bfgMfT6wGW+XgkroENEOmet6YysJtm7a4tFY7I8wVWIkIUk4Y5ZqI85baHKcxC5oQTka
+         aksw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=i7NQcmg0sYY8A0xlzCx+NZowN/eNGNUoVY/o8X/i+jY=;
-        b=eqTHau8zPbBBygjQBpPK48emva1jRCJBgKmmfjsgWaUoNSP40ikPIkjo6EoKeokjME
-         +0UUdVHs399J3kjvBE2N9oy92PgImeFzoiRm9EO9+/ozV/T/6vgIiVUzkFmkGeIJSjis
-         aKjP9gHPp7PsTl8jhOhC4r5HgNnxK+EnMEToT/Hi4zj+Qlfle05TA7G/kAsJJSd4uGos
-         VStbWP2In48ORUGphDRaPiYkPxtLRjLz2MsDTeSe62chufKoj71+3hCaxlRqIhfJmKvA
-         Vi8kdoLb1TWl946Uo3Bmpv28c6f7/ArYOa/5QQUCg0xY3klzXOmmQoK6d9wXwmirGwYW
-         VRPw==
-X-Gm-Message-State: AOAM5326Kb+nLBahSMZOrNo0gDcb+qI8WviqRhTLMUtIjOJbmCs1/b0A
-        5lw9AnHhARieIi3ifKr+RDXXAw==
-X-Google-Smtp-Source: ABdhPJwE3hBbeNtRV7Zgs+1PM2OnxpXYUaUyaPcW0+rjSjJgGdij1UAnuyebd9b/G+OtrU4TJCHdpA==
-X-Received: by 2002:a17:902:8d82:b029:d8:c5e8:9785 with SMTP id v2-20020a1709028d82b02900d8c5e89785mr2704949plo.5.1605677312497;
-        Tue, 17 Nov 2020 21:28:32 -0800 (PST)
-Received: from localhost ([122.172.12.172])
-        by smtp.gmail.com with ESMTPSA id w127sm23328945pfc.172.2020.11.17.21.28.30
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 17 Nov 2020 21:28:31 -0800 (PST)
-Date:   Wed, 18 Nov 2020 10:58:29 +0530
-From:   Viresh Kumar <viresh.kumar@linaro.org>
-To:     Rob Clark <robdclark@gmail.com>
-Cc:     Daniel Vetter <daniel@ffwll.ch>,
-        dri-devel <dri-devel@lists.freedesktop.org>,
-        Rob Clark <robdclark@chromium.org>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
-        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
-        <linux-arm-msm@vger.kernel.org>,
-        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
-        <freedreno@lists.freedesktop.org>,
-        open list <linux-kernel@vger.kernel.org>,
-        "Menon, Nishanth" <nm@ti.com>
-Subject: Re: [PATCH v2 07/22] drm/msm: Do rpm get sooner in the submit path
-Message-ID: <20201118052829.ugt7i7ac6eqsj4l6@vireshk-i7>
-References: <CAF6AEGsCj-AtFozn8d1xiNNFNbuMJ0UxS-eMhBVXiQ7rKahKnQ@mail.gmail.com>
- <20201022080644.2ck4okrxygmkuatn@vireshk-i7>
- <CAF6AEGv6RMCsK4yp-W2d1mVTMcEiiwFGAb+V8rYLhDdMhqP80Q@mail.gmail.com>
- <20201027113532.nriqqws7gdcu5su6@vireshk-i7>
- <20201103054715.4l5j57pyjz6zd6ed@vireshk-i7>
- <CAF6AEGtgUVXm6Wwod0FC38g91Q8CotLFSoC4NmXx7GzcA=1mOA@mail.gmail.com>
- <20201104030353.ny7zvakgb4fsye6r@vireshk-i7>
- <CAF6AEGv215ixcAWmaOWs7UKAqmbMs=aFyTBBYLU-bt8XBnWb7g@mail.gmail.com>
- <20201106071621.j732gt4nqifjrccd@vireshk-i7>
- <CAF6AEGt_wbWuQA7gBw4yn4f2x0SVbfub4eRDX59PCvnd_0uFxg@mail.gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAF6AEGt_wbWuQA7gBw4yn4f2x0SVbfub4eRDX59PCvnd_0uFxg@mail.gmail.com>
-User-Agent: NeoMutt/20180716-391-311a52
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=PZ0QCIA20El2MRacEHi3Dqx2l9Pt/uOvrOyEb5RrjSo=;
+        b=dqFEBPrnFdYUevG8gGMAxzZqukAqXhJusQotwBvXN1MxPLHvaeGhRdi+7HCpM5tmyi
+         tqGvUe7+XlFEqwFF84CruFMHcIlV1rbBG2+Tr5FMsqOwWGbEYBuU/7Gexh1WSecTJVMU
+         dGAnfrsjUWEDin1oBfDvDzxgml2zkbdvOMs/af0vmshW6RI0CJnu9x5Gx8Y6En2CTdFa
+         YnlaCG+c1nKCEtAFo7zr4Znl1E7TQNI9V3yrguRermWi87n6K5GjIexrwPDWxRVXlqFU
+         43ba0bHjBN2AeJJdxN/W9jKOnTIursjAeZImTcL/H+xjAhFCAZy38pi59vkR7QIBYwKe
+         wgvg==
+X-Gm-Message-State: AOAM530e8+BEdcPJ5cdOhxHQPfqXV2DLuassuTMQrLoRwQCLyDx/GXfG
+        i6++5553i7/PFZTbUgskLtrB7tNjpPjT
+X-Google-Smtp-Source: ABdhPJwIt85VuGYkAYwIONU1QZz0EJr0pWl3K7c3zyf5cYzD/Oemr/56MOALtp48rzS5wxhCQzdrSg==
+X-Received: by 2002:a05:6a00:134d:b029:18b:2cde:d747 with SMTP id k13-20020a056a00134db029018b2cded747mr2736391pfu.60.1605677488054;
+        Tue, 17 Nov 2020 21:31:28 -0800 (PST)
+Received: from localhost.localdomain ([103.59.133.81])
+        by smtp.googlemail.com with ESMTPSA id h11sm23114572pfo.69.2020.11.17.21.31.24
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 17 Nov 2020 21:31:27 -0800 (PST)
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     linux-arm-msm@vger.kernel.org, kvalo@codeaurora.org
+Cc:     linux-wireless@vger.kernel.org, ath11k@lists.infradead.org,
+        netdev@vger.kernel.org, hemantk@codeaurora.org,
+        bbhatt@codeaurora.org, Loic Poulain <loic.poulain@linaro.org>,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Subject: [PATCH] bus: mhi: Remove auto-start option
+Date:   Wed, 18 Nov 2020 11:01:02 +0530
+Message-Id: <20201118053102.13119-1-manivannan.sadhasivam@linaro.org>
+X-Mailer: git-send-email 2.17.1
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 17-11-20, 09:02, Rob Clark wrote:
-> With that on top of the previous patch,
+From: Loic Poulain <loic.poulain@linaro.org>
 
-Don't you still have this ? Which fixed the lockdep in the remove path.
+There is really no point having an auto-start for channels.
+This is confusing for the device drivers, some have to enable the
+channels, others don't have... and waste resources (e.g. pre allocated
+buffers) that may never be used.
 
-https://lore.kernel.org/lkml/20201022080644.2ck4okrxygmkuatn@vireshk-i7/
+This is really up to the MHI device(channel) driver to manage the state
+of its channels.
 
-To make it clear you need these patches to fix the OPP stuff:
+While at it, let's also remove the auto-start option from ath11k mhi
+controller.
 
-//From 5.10-rc3 (the one from the above link).
-commit e0df59de670b ("opp: Reduce the size of critical section in _opp_table_kref_release()")
+Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
+Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+[mani: clubbed ath11k change]
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+---
+ drivers/bus/mhi/core/init.c           | 9 ---------
+ drivers/bus/mhi/core/internal.h       | 1 -
+ drivers/net/wireless/ath/ath11k/mhi.c | 4 ----
+ include/linux/mhi.h                   | 2 --
+ 4 files changed, 16 deletions(-)
 
-//Below two from linux-next
-commit ef43f01ac069 ("opp: Always add entries in dev_list with opp_table->lock held")
-commit 27c09484dd3d ("opp: Allocate the OPP table outside of opp_table_lock")
-
-This matches the diff I gave you earlier.
-
+diff --git a/drivers/bus/mhi/core/init.c b/drivers/bus/mhi/core/init.c
+index 0ffdebde8265..381fdea2eb9f 100644
+--- a/drivers/bus/mhi/core/init.c
++++ b/drivers/bus/mhi/core/init.c
+@@ -758,7 +758,6 @@ static int parse_ch_cfg(struct mhi_controller *mhi_cntrl,
+ 		mhi_chan->offload_ch = ch_cfg->offload_channel;
+ 		mhi_chan->db_cfg.reset_req = ch_cfg->doorbell_mode_switch;
+ 		mhi_chan->pre_alloc = ch_cfg->auto_queue;
+-		mhi_chan->auto_start = ch_cfg->auto_start;
+ 
+ 		/*
+ 		 * If MHI host allocates buffers, then the channel direction
+@@ -1160,11 +1159,6 @@ static int mhi_driver_probe(struct device *dev)
+ 			goto exit_probe;
+ 
+ 		ul_chan->xfer_cb = mhi_drv->ul_xfer_cb;
+-		if (ul_chan->auto_start) {
+-			ret = mhi_prepare_channel(mhi_cntrl, ul_chan);
+-			if (ret)
+-				goto exit_probe;
+-		}
+ 	}
+ 
+ 	ret = -EINVAL;
+@@ -1198,9 +1192,6 @@ static int mhi_driver_probe(struct device *dev)
+ 	if (ret)
+ 		goto exit_probe;
+ 
+-	if (dl_chan && dl_chan->auto_start)
+-		mhi_prepare_channel(mhi_cntrl, dl_chan);
+-
+ 	mhi_device_put(mhi_dev);
+ 
+ 	return ret;
+diff --git a/drivers/bus/mhi/core/internal.h b/drivers/bus/mhi/core/internal.h
+index 7989269ddd96..33c23203c531 100644
+--- a/drivers/bus/mhi/core/internal.h
++++ b/drivers/bus/mhi/core/internal.h
+@@ -563,7 +563,6 @@ struct mhi_chan {
+ 	bool configured;
+ 	bool offload_ch;
+ 	bool pre_alloc;
+-	bool auto_start;
+ 	bool wake_capable;
+ };
+ 
+diff --git a/drivers/net/wireless/ath/ath11k/mhi.c b/drivers/net/wireless/ath/ath11k/mhi.c
+index aded9a719d51..47a1ce1bee4f 100644
+--- a/drivers/net/wireless/ath/ath11k/mhi.c
++++ b/drivers/net/wireless/ath/ath11k/mhi.c
+@@ -24,7 +24,6 @@ static struct mhi_channel_config ath11k_mhi_channels[] = {
+ 		.offload_channel = false,
+ 		.doorbell_mode_switch = false,
+ 		.auto_queue = false,
+-		.auto_start = false,
+ 	},
+ 	{
+ 		.num = 1,
+@@ -39,7 +38,6 @@ static struct mhi_channel_config ath11k_mhi_channels[] = {
+ 		.offload_channel = false,
+ 		.doorbell_mode_switch = false,
+ 		.auto_queue = false,
+-		.auto_start = false,
+ 	},
+ 	{
+ 		.num = 20,
+@@ -54,7 +52,6 @@ static struct mhi_channel_config ath11k_mhi_channels[] = {
+ 		.offload_channel = false,
+ 		.doorbell_mode_switch = false,
+ 		.auto_queue = false,
+-		.auto_start = true,
+ 	},
+ 	{
+ 		.num = 21,
+@@ -69,7 +66,6 @@ static struct mhi_channel_config ath11k_mhi_channels[] = {
+ 		.offload_channel = false,
+ 		.doorbell_mode_switch = false,
+ 		.auto_queue = true,
+-		.auto_start = true,
+ 	},
+ };
+ 
+diff --git a/include/linux/mhi.h b/include/linux/mhi.h
+index d4841e5a5f45..6522a4adc794 100644
+--- a/include/linux/mhi.h
++++ b/include/linux/mhi.h
+@@ -214,7 +214,6 @@ enum mhi_db_brst_mode {
+  * @offload_channel: The client manages the channel completely
+  * @doorbell_mode_switch: Channel switches to doorbell mode on M0 transition
+  * @auto_queue: Framework will automatically queue buffers for DL traffic
+- * @auto_start: Automatically start (open) this channel
+  * @wake-capable: Channel capable of waking up the system
+  */
+ struct mhi_channel_config {
+@@ -232,7 +231,6 @@ struct mhi_channel_config {
+ 	bool offload_channel;
+ 	bool doorbell_mode_switch;
+ 	bool auto_queue;
+-	bool auto_start;
+ 	bool wake_capable;
+ };
+ 
 -- 
-viresh
+2.17.1
+
