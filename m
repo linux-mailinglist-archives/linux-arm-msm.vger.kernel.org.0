@@ -2,147 +2,95 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 22FC62B7DE5
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Nov 2020 13:54:39 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 6F2602B7FA3
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Nov 2020 15:46:44 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726321AbgKRMwx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 18 Nov 2020 07:52:53 -0500
-Received: from alexa-out.qualcomm.com ([129.46.98.28]:23005 "EHLO
-        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725767AbgKRMwx (ORCPT
+        id S1726948AbgKROoL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 18 Nov 2020 09:44:11 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41206 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726869AbgKROoK (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 18 Nov 2020 07:52:53 -0500
-Received: from ironmsg07-lv.qualcomm.com (HELO ironmsg07-lv.qulacomm.com) ([10.47.202.151])
-  by alexa-out.qualcomm.com with ESMTP; 18 Nov 2020 04:52:52 -0800
-X-QCInternal: smtphost
-Received: from ironmsg01-blr.qualcomm.com ([10.86.208.130])
-  by ironmsg07-lv.qulacomm.com with ESMTP/TLS/AES256-SHA; 18 Nov 2020 04:52:50 -0800
-X-QCInternal: smtphost
-Received: from gubbaven-linux.qualcomm.com ([10.206.64.32])
-  by ironmsg01-blr.qualcomm.com with ESMTP; 18 Nov 2020 18:22:26 +0530
-Received: by gubbaven-linux.qualcomm.com (Postfix, from userid 2365015)
-        id 4184A21D6E; Wed, 18 Nov 2020 18:22:25 +0530 (IST)
-From:   Venkata Lakshmi Narayana Gubba <gubbaven@codeaurora.org>
-To:     marcel@holtmann.org, johan.hedberg@gmail.com
-Cc:     mka@chromium.org, linux-kernel@vger.kernel.org,
-        linux-bluetooth@vger.kernel.org, hemantg@codeaurora.org,
-        linux-arm-msm@vger.kernel.org, bgodavar@codeaurora.org,
-        rjliao@codeaurora.org, hbandi@codeaurora.org,
-        abhishekpandit@chromium.org,
-        Venkata Lakshmi Narayana Gubba <gubbaven@codeaurora.org>
-Subject: [PATCH v2] Bluetooth: btqca: Add support to read FW build version for WCN3991 BTSoC
-Date:   Wed, 18 Nov 2020 18:22:23 +0530
-Message-Id: <1605703943-25980-1-git-send-email-gubbaven@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
+        Wed, 18 Nov 2020 09:44:10 -0500
+Received: from mail-pj1-x102c.google.com (mail-pj1-x102c.google.com [IPv6:2607:f8b0:4864:20::102c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CF5A0C061A48
+        for <linux-arm-msm@vger.kernel.org>; Wed, 18 Nov 2020 06:44:10 -0800 (PST)
+Received: by mail-pj1-x102c.google.com with SMTP id gv24so1152928pjb.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 18 Nov 2020 06:44:10 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=wi1tklYoU+4Q/BdD+it/ualPtR5EztUZa56jdKuDyDs=;
+        b=TqMS4BiprOHGkvbm/xiKQnITqSoHYZ4NlIRjexMJPgoTxMgGkRIO4ZIkXsqT6jTAbf
+         9uCdIBAwl77/nhCg9xDQOrdS3cjiZkRQYE/oWWEfdlgG2TNLf2CgfhUwMdSlM4Q7XlNl
+         gtFXIK1an9xUvq1LQ9tXIVZFfb+rrXB50yllQ1J5kKFcIcc5nn0sAuk1BVCHZktzR75W
+         1sBd6t4dYif6KYW8R69NpBs6I1MmSz1Nng+dmMoIMuRWVp+R4lNqPGjCPYvplZDV5fy7
+         +2iiuOL6ERlQo6qcIMNYqafp/lZtIHQIrfDWNLUaT2uvjhAGNVv65Fys5u5WHpD3nYJn
+         VvpA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=wi1tklYoU+4Q/BdD+it/ualPtR5EztUZa56jdKuDyDs=;
+        b=nffVm1gTQUH0ZcHiSwPrk6yw3vNDdTiNdIgLx4cLl5+S0/BEz2Bh0DUc91Luyd0GZk
+         /VS3LH1dIVz8eptZ0l59Ui437z9OiVuEol6v0zxBpI0LvlYu/VevFlKyLCVGIKzJIF5m
+         5zS9WHoh4O2n+1x0rQ5j6n2VKwJpBg9QOFphmdCuUd/V4D7WYU/UL1pqiiQN5YEuQ/OZ
+         GGRYngDWuzPz5dWemWf6giEG95in/MSyX53aSOHuoRN77g+uTWE7FgPe7qPdiwq206O1
+         YFp7kX7jlsYwdPYuY7Jigb2+9tU4X3U7fZdbpFwXQQFw5tjFp3ixHWSZRc9NGJIvAwqH
+         jdJw==
+X-Gm-Message-State: AOAM5332Zu/vRb3O6AlFa1LhJ0wmIRpQUNwXHcbpXJfP9aQkOptPeT9A
+        3a5vShgY5s9Izd0iv24yEW+5
+X-Google-Smtp-Source: ABdhPJx3dbWXij883VJ/7IaBRRF9jyjwMBK0HE9oi+np7RYbL45jFvE/U6ijF9mdN63vfRKK9SEGaw==
+X-Received: by 2002:a17:90b:11d3:: with SMTP id gv19mr288958pjb.232.1605710650071;
+        Wed, 18 Nov 2020 06:44:10 -0800 (PST)
+Received: from thinkpad ([2409:4072:400:708e:ac67:2882:f617:a8ff])
+        by smtp.gmail.com with ESMTPSA id y5sm2833325pjr.50.2020.11.18.06.44.04
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 18 Nov 2020 06:44:09 -0800 (PST)
+Date:   Wed, 18 Nov 2020 20:14:01 +0530
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     Stephen Boyd <sboyd@kernel.org>
+Cc:     Vinod Koul <vkoul@kernel.org>, mturquette@baylibre.com,
+        robh+dt@kernel.org, bjorn.andersson@linaro.org,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Naveen Yadav <naveenky@codeaurora.org>
+Subject: Re: [PATCH v2 2/4] clk: qcom: Add SDX55 GCC support
+Message-ID: <20201118144401.GA8942@thinkpad>
+References: <20201105104817.15715-1-manivannan.sadhasivam@linaro.org>
+ <20201105104817.15715-3-manivannan.sadhasivam@linaro.org>
+ <20201106093819.GE2621@vkoul-mobl>
+ <160538612750.60232.17440819605514427384@swboyd.mtv.corp.google.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <160538612750.60232.17440819605514427384@swboyd.mtv.corp.google.com>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add support to read FW build version for WCN3991 BTSoC
+On Sat, Nov 14, 2020 at 12:35:27PM -0800, Stephen Boyd wrote:
+> Quoting Vinod Koul (2020-11-06 01:38:19)
+> > On 05-11-20, 16:18, Manivannan Sadhasivam wrote:
+> > > +#include "reset.h"
+> > > +
+> > > +enum {
+> > > +     P_BI_TCXO,
+> > > +     P_CORE_BI_PLL_TEST_SE,
+> > 
+> > This is for test and we removed this for upstream, so can you do that as
+> > well (not parent will decrease for clks below)
+> > 
+> > With that updated:
+> > 
+> > Reviewed-by: Vinod Koul <vkoul@kernel.org>
+> > 
+> 
+> I half understood that. Just an FYI that I'm waiting for this update.
 
-Signed-off-by: Venkata Lakshmi Narayana Gubba <gubbaven@codeaurora.org>
----
- drivers/bluetooth/btqca.c | 57 +++++++++++++++++++++++++++++++++++++++++++++++
- drivers/bluetooth/btqca.h |  3 +++
- 2 files changed, 60 insertions(+)
+Looks like this change is not needed. Can you please consider merging
+this series?
 
-diff --git a/drivers/bluetooth/btqca.c b/drivers/bluetooth/btqca.c
-index ce9dcff..dfd7ff7 100644
---- a/drivers/bluetooth/btqca.c
-+++ b/drivers/bluetooth/btqca.c
-@@ -101,6 +101,56 @@ int qca_read_soc_version(struct hci_dev *hdev, u32 *soc_version,
- }
- EXPORT_SYMBOL_GPL(qca_read_soc_version);
- 
-+static int qca_read_fw_build_info(struct hci_dev *hdev)
-+{
-+	struct sk_buff *skb;
-+	struct edl_event_hdr *edl;
-+	char cmd;
-+	int err = 0;
-+	char build_label[QCA_FW_BUILD_VER_LEN];
-+	int build_lbl_len;
-+
-+	bt_dev_dbg(hdev, "QCA read fw build info");
-+
-+	cmd = EDL_GET_BUILD_INFO_CMD;
-+	skb = __hci_cmd_sync_ev(hdev, EDL_PATCH_CMD_OPCODE, EDL_PATCH_CMD_LEN,
-+				&cmd, HCI_EV_VENDOR, HCI_INIT_TIMEOUT);
-+	if (IS_ERR(skb)) {
-+		err = PTR_ERR(skb);
-+		bt_dev_err(hdev, "Reading QCA fw build info failed (%d)",
-+			   err);
-+		return err;
-+	}
-+
-+	edl = (struct edl_event_hdr *)(skb->data);
-+	if (!edl) {
-+		bt_dev_err(hdev, "QCA read fw build info with no header");
-+		err = -EILSEQ;
-+		goto out;
-+	}
-+
-+	if (edl->cresp != EDL_CMD_REQ_RES_EVT ||
-+	    edl->rtype != EDL_GET_BUILD_INFO_CMD) {
-+		bt_dev_err(hdev, "QCA Wrong packet received %d %d", edl->cresp,
-+			   edl->rtype);
-+		err = -EIO;
-+		goto out;
-+	}
-+
-+	build_lbl_len = edl->data[0];
-+	memcpy(build_label, &edl->data[1], build_lbl_len);
-+	*(build_label + build_lbl_len) = '\0';
-+
-+	bt_dev_info(hdev, "BT SoC FW Build info: %s", build_label);
-+
-+out:
-+	kfree_skb(skb);
-+	if (err)
-+		bt_dev_err(hdev, "QCA read fw build info failed (%d)", err);
-+
-+	return err;
-+}
-+
- static int qca_send_reset(struct hci_dev *hdev)
- {
- 	struct sk_buff *skb;
-@@ -520,6 +570,13 @@ int qca_uart_setup(struct hci_dev *hdev, uint8_t baudrate,
- 		return err;
- 	}
- 
-+	if (soc_type == QCA_WCN3991) {
-+		/* get fw build info */
-+		err = qca_read_fw_build_info(hdev);
-+		if (err < 0)
-+			return err;
-+	}
-+
- 	bt_dev_info(hdev, "QCA setup on UART is completed");
- 
- 	return 0;
-diff --git a/drivers/bluetooth/btqca.h b/drivers/bluetooth/btqca.h
-index d81b74c..375c7fc 100644
---- a/drivers/bluetooth/btqca.h
-+++ b/drivers/bluetooth/btqca.h
-@@ -11,6 +11,7 @@
- #define EDL_PATCH_CMD_LEN		(1)
- #define EDL_PATCH_VER_REQ_CMD		(0x19)
- #define EDL_PATCH_TLV_REQ_CMD		(0x1E)
-+#define EDL_GET_BUILD_INFO_CMD		(0x20)
- #define EDL_NVM_ACCESS_SET_REQ_CMD	(0x01)
- #define MAX_SIZE_PER_TLV_SEGMENT	(243)
- #define QCA_PRE_SHUTDOWN_CMD		(0xFC08)
-@@ -34,6 +35,8 @@
- #define QCA_HCI_CC_OPCODE		0xFC00
- #define QCA_HCI_CC_SUCCESS		0x00
- 
-+#define QCA_FW_BUILD_VER_LEN		255
-+
- enum qca_baudrate {
- 	QCA_BAUDRATE_115200 	= 0,
- 	QCA_BAUDRATE_57600,
--- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member 
-of Code Aurora Forum, hosted by The Linux Foundation
-
+Thanks,
+Mani
