@@ -2,114 +2,96 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 7AD0E2B96CF
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Nov 2020 16:53:54 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id EF0DE2B96E4
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Nov 2020 16:54:03 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727401AbgKSPr0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 19 Nov 2020 10:47:26 -0500
-Received: from z5.mailgun.us ([104.130.96.5]:35775 "EHLO z5.mailgun.us"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727935AbgKSPrZ (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 19 Nov 2020 10:47:25 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1605800844; h=In-Reply-To: Content-Type: MIME-Version:
- References: Message-ID: Subject: Cc: To: From: Date: Sender;
- bh=ELgx2uYswVqizONE6wXjsqFy6Y7WtmIS7nO1pn1KocE=; b=ODZzl8nfL7tJLm3k/6Vp8FrjkLVJ58isdeW/He+cjhmIsdKYuBLujphIKsRhTydrmLuWrlZG
- 9cRruwTlTsQy2pEbA9dfaX32nSfyzqXKP5pSoa/jSrVbk4ZJEONat9QA5Hv+pigHVuyL/Daz
- F/4sPvt5n63g2yWb8FoLexSjGJQ=
-X-Mailgun-Sending-Ip: 104.130.96.5
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n03.prod.us-west-2.postgun.com with SMTP id
- 5fb69384a5a29b56a17343ca (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 19 Nov 2020 15:47:16
- GMT
-Sender: ilina=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id F25F9C43464; Thu, 19 Nov 2020 15:47:15 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
-        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
-Received: from localhost (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: ilina)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id EF8D9C43465;
-        Thu, 19 Nov 2020 15:47:14 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org EF8D9C43465
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=ilina@codeaurora.org
-Date:   Thu, 19 Nov 2020 08:47:13 -0700
-From:   Lina Iyer <ilina@codeaurora.org>
-To:     Ulf Hansson <ulf.hansson@linaro.org>
-Cc:     "Rafael J. Wysocki" <rjw@rjwysocki.net>,
-        Linux PM <linux-pm@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>
-Subject: Re: [PATCH v5 2/2] PM / Domains: use device's next wakeup to
- determine domain idle state
-Message-ID: <X7aTgQrHQmClrEt3@codeaurora.org>
-References: <20201106164811.3698-1-ilina@codeaurora.org>
- <20201106164811.3698-3-ilina@codeaurora.org>
- <CAPDyKFrv-3USmNLR3gjgaTEuTrWuYZjs3qCtnjxSOWqrxv5qsA@mail.gmail.com>
- <X6l/OcHG37HzgFL8@codeaurora.org>
- <CAPDyKFr8fdbMM1nsx-RZcMVtveJUP3p38z=HkL1T2C=QgM3gkQ@mail.gmail.com>
- <X6wRBLmvzztNai4y@codeaurora.org>
- <CAPDyKFr9gpH9Kh9=W4D7DRG8OuqBvkaWHvk8i47SToES=338cA@mail.gmail.com>
- <X7KhcItlnS+uuqK2@codeaurora.org>
- <CAPDyKFpKookuX2ynBfy44kyfZq48JPaUrEHevetsyoc83=UnsA@mail.gmail.com>
+        id S1728885AbgKSPwj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 19 Nov 2020 10:52:39 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48574 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728862AbgKSPwg (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 19 Nov 2020 10:52:36 -0500
+Received: from mail-qt1-x844.google.com (mail-qt1-x844.google.com [IPv6:2607:f8b0:4864:20::844])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 32A03C061A48
+        for <linux-arm-msm@vger.kernel.org>; Thu, 19 Nov 2020 07:52:36 -0800 (PST)
+Received: by mail-qt1-x844.google.com with SMTP id g17so4680870qts.5
+        for <linux-arm-msm@vger.kernel.org>; Thu, 19 Nov 2020 07:52:36 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=bvhfCLHTYs7l5lsgLwNrBMAcXk6yVVYBXG3jF5cS+kE=;
+        b=MjOP4uTZ8G2drLy+R/RvDTmkhN1lqBygMFznKx7ziyTeTkXMBCOuGlBlydlYEhLWX7
+         ngUt75ThmQcdsQuf23omAO99hc0OHT4DMkNHzyw35nmR0qg0s6at9GgiN+un8UB0ZKyt
+         CN4stsYDR09rcHDLMSmGEJrVrd4zlDh1e4KeQIIWdH5+qDmKUYeCd//oeo/cqgs6nsdt
+         j8qQee8N+1vo5OCO9WkAZ4udArOify2tn9Nx90pk4hRlDz5UHBL6bXfaCzizk8pLV5yO
+         Hp4BsToydhApUMbA8R8RMc5zkYXqh6w6yNqGjPM5FdTUNrV2PYxa4yX/hHiDjNfprfqw
+         Yggg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=bvhfCLHTYs7l5lsgLwNrBMAcXk6yVVYBXG3jF5cS+kE=;
+        b=JuGB/xrkWPEUYqlf0x7Odn0X+hLTmYY5m8/czVqc34G9MUwLwm5BuH/AvS4aCSmIAf
+         u1kywDFK2KwUonQ/6zfu1LYaUEUl/ZVNrOEFYU3gQSuuIl6jF+PSKbcsg0cgDhoAsxlx
+         /6XiO3cSrBqNANl6gNt+2QnK77EREJ77jRyG6nhHWrvOAAutnabQwvnVESGlY9txFNQp
+         PcOfE2a9xaVfhb290Y9ewMP5hHFUPMm0FK0z1WsHOE0iBcVbClrpxNFOfqhI7MjkaDcc
+         syZA5vwRSkQuDfEBf7bh+mcUXFmb5DrLY7cyoG63oETWFsM3l5lF19EybLEj68n8Allp
+         zaAg==
+X-Gm-Message-State: AOAM533ipQZZgx4AEjnHs28u9xK1QahbT9BcWqMj3a3RCj87HdtbFW6n
+        4X6peyjSX6r80jDYmDAQTqey3w==
+X-Google-Smtp-Source: ABdhPJwnQTWrrSwIs3w5+5w6NPMKWMWsTkoh980avt1UnXUDjYSHhhrtOQyVDGTYO0PGKo4rz9f6pg==
+X-Received: by 2002:aed:2084:: with SMTP id 4mr10469682qtb.81.1605801155263;
+        Thu, 19 Nov 2020 07:52:35 -0800 (PST)
+Received: from pop-os.fios-router.home (pool-71-163-245-5.washdc.fios.verizon.net. [71.163.245.5])
+        by smtp.googlemail.com with ESMTPSA id g70sm127290qke.8.2020.11.19.07.52.34
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 19 Nov 2020 07:52:34 -0800 (PST)
+From:   Thara Gopinath <thara.gopinath@linaro.org>
+To:     agross@kernel.org, bjorn.andersson@linaro.org,
+        herbert@gondor.apana.org.au, davem@davemloft.net,
+        robh+dt@kernel.org, sboyd@kernel.org, mturquette@baylibre.com
+Cc:     linux-arm-msm@vger.kernel.org, linux-crypto@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-clk@vger.kernel.org
+Subject: [Patch v2 0/6] Enable Qualcomm Crypto Engine on sdm845
+Date:   Thu, 19 Nov 2020 10:52:27 -0500
+Message-Id: <20201119155233.3974286-1-thara.gopinath@linaro.org>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Disposition: inline
-In-Reply-To: <CAPDyKFpKookuX2ynBfy44kyfZq48JPaUrEHevetsyoc83=UnsA@mail.gmail.com>
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Nov 19 2020 at 02:57 -0700, Ulf Hansson wrote:
->On Mon, 16 Nov 2020 at 16:57, Lina Iyer <ilina@codeaurora.org> wrote:
->>
->> On Fri, Nov 13 2020 at 03:34 -0700, Ulf Hansson wrote:
->> >On Wed, 11 Nov 2020 at 17:51, Lina Iyer <ilina@codeaurora.org> wrote:
->> >>
->> >> On Tue, Nov 10 2020 at 03:02 -0700, Ulf Hansson wrote:
->> >> >On Mon, 9 Nov 2020 at 18:41, Lina Iyer <ilina@codeaurora.org> wrote:
->> >> >>
->> >> >> On Mon, Nov 09 2020 at 08:27 -0700, Ulf Hansson wrote:
->> >> >> >On Fri, 6 Nov 2020 at 17:48, Lina Iyer <ilina@codeaurora.org> wrote:
->> >> >> >>
->> >> >> [...]
+Qualcomm crypto engine supports hardware accelerated algorithms for
+encryption and authentication. Enable support for aes,des,3des encryption
+algorithms and sha1,sha256, hmac(sha1),hmac(sha256) authentication
+algorithms on sdm845.The patch series has been tested using the kernel
+crypto testing module tcrypto.ko.
 
->>
->> What you are suggesting is that, we should not power down the domain in
->> such a case. This would be a really hard problem to debug when a device
->> leaves a stale wakeup behind and we no longer power off the domain
->> because of that. Tracking that back to the device will be a monumental
->> effort. Ignoring the next wakeup though might involve a power/perf
->> penalty (no worse than today), but we would not have a difficult problem
->> to solve.
->
->Hmm, you have a good point!
->
->Additionally, I guess it should be a rather seldom situation, as in
->principle the wakeup irq should have been triggered already.
->
->That said, I am okay to stick with your suggested approach.
->
->Although, please add a comment in the code, to make it clear that the
->behaviour is deliberate. Perhaps we should also clarify the function
->description of dev_pm_genpd_set_next_wakeup() (in patch1) to make the
->behaviour more clear for the user.
->
-Sure, will update with comments.
->>
+v1->v2:
+- Rebased to linux-next v5.10-rc4.
+- Fixed subject line format in all patches as per Bjorn's feedback.
 
-Let's revisit the patch again after I repost, to make sure this is what
-we want, atleast for now.
+Thara Gopinath (6):
+  dt-binding:clock: Add entry for crypto engine RPMH clock resource
+  clk:qcom:rpmh: Add CE clock on sdm845.
+  drivers:crypto:qce: Enable support for crypto engine on sdm845.
+  drivers:crypto:qce: Fix SHA result buffer corruption issues.
+  dts:qcom:sdm845: Add dt entries to support crypto engine.
+  devicetree:bindings:crypto: Extend qcom-qce binding to add support for
+    crypto engine version 5.4
 
-Thanks for your review, Ulf.
+ .../devicetree/bindings/crypto/qcom-qce.txt   |  4 ++-
+ arch/arm64/boot/dts/qcom/sdm845.dtsi          | 30 +++++++++++++++++++
+ drivers/clk/qcom/clk-rpmh.c                   |  2 ++
+ drivers/crypto/qce/core.c                     | 17 ++++++++++-
+ drivers/crypto/qce/sha.c                      |  2 +-
+ include/dt-bindings/clock/qcom,rpmh.h         |  1 +
+ 6 files changed, 53 insertions(+), 3 deletions(-)
 
---Lina
+-- 
+2.25.1
 
