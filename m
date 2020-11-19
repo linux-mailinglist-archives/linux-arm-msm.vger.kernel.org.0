@@ -2,87 +2,125 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 95C7E2B8FF7
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Nov 2020 11:15:13 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7D2662B9090
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Nov 2020 12:04:25 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726549AbgKSKM4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 19 Nov 2020 05:12:56 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52510 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726511AbgKSKM4 (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 19 Nov 2020 05:12:56 -0500
-Received: from mail-wm1-x343.google.com (mail-wm1-x343.google.com [IPv6:2a00:1450:4864:20::343])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2923CC0613CF
-        for <linux-arm-msm@vger.kernel.org>; Thu, 19 Nov 2020 02:12:56 -0800 (PST)
-Received: by mail-wm1-x343.google.com with SMTP id c198so4710453wmd.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 19 Nov 2020 02:12:56 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id;
-        bh=BTvK4ua59BAOEk/Uuq1mlhXhvA7x+OAsYo9uIExTcMc=;
-        b=r9sixEbCK5+nDt9lay31hyYZuiHEM20a2Kvw5cezkUkmcLt3YdFBZLsPG1lO5ixbEZ
-         ujsgIeZHXvSjJCiUru2jfhFClI2dWD3YwC9YIvGc+/TaDiAmQRZ5724/lCsGqsFNItl6
-         shI8ehCh33E+Tn573b4M6HypYjJZsX54bugkCtlD2SNBm9KEDH6mPp2uDhExAoPXqHIS
-         d7mo+AZ3Oc0IIdYxHhV7fMC0beXUa7np+PESuOWtv2WS3GL2WOijN2qtziRYxyB5DD1g
-         AsmBqoXn/arRPdQeDi5f7bRH4BSsJ2nyec4hej8scbbOmxgGT1gcFq/ANmrhpUiN4s8/
-         yh2Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=BTvK4ua59BAOEk/Uuq1mlhXhvA7x+OAsYo9uIExTcMc=;
-        b=eGZtVgDUxUGKK8ZhErw++SeKEMcKe4A+pWkHrkMc6XZSyI7pR9WD0VbX4a5zft/k+v
-         BN3+8pRoO/U2mAHiklfP06MFLlGsCWme2FTYgoYLOG5+hphrZAlGRH+OBF9Jro0L9iSU
-         nsUneHbdIhd8V0b7d6chMRVDyLa8K3j3fFEPBKIzNPrtF6PoUTXWxEkYzvT0VQoxp0Hb
-         u/EJJmdb3/vrvu4UjRYLeyPugNk9O+Uh9RXVMUyIlZS+oqd2QHNGnOyrx228YTUl6IKr
-         aQHqYjvacflsLTC2RRfLUUn1baIimsSpKyHZlypN6Jrt/HAnowfA9IiRkC2rHvNGtHte
-         tX5w==
-X-Gm-Message-State: AOAM530kP48Ogkk+4q0+9HqtaiMKjd+WHwMHHIOP3gPj+aLq9Hg4vi83
-        6MxNFNgLKZnD9KjRo7k5Qw6uLz94UVlkBIIDEaM=
-X-Google-Smtp-Source: ABdhPJzvyr/wVTDn6lueQDDVNDXgP8v+zY+0QoJhrxfbkYHYIocqjNPp1cnJqQAxs2CHYRt3CYcc+g==
-X-Received: by 2002:a1c:63d7:: with SMTP id x206mr3796411wmb.34.1605780774760;
-        Thu, 19 Nov 2020 02:12:54 -0800 (PST)
-Received: from localhost.localdomain ([2a01:e0a:490:8730:7d55:3d93:6a7d:2684])
-        by smtp.gmail.com with ESMTPSA id a18sm8399579wme.18.2020.11.19.02.12.53
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 19 Nov 2020 02:12:53 -0800 (PST)
-From:   Loic Poulain <loic.poulain@linaro.org>
-To:     manivannan.sadhasivam@linaro.org, hemantk@codeaurora.org
-Cc:     linux-arm-msm@vger.kernel.org,
-        Loic Poulain <loic.poulain@linaro.org>
-Subject: [PATCH] mhi: pci_generic: Fix implicit conversion warning
-Date:   Thu, 19 Nov 2020 11:19:31 +0100
-Message-Id: <1605781171-29093-1-git-send-email-loic.poulain@linaro.org>
-X-Mailer: git-send-email 2.7.4
+        id S1726105AbgKSLCN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 19 Nov 2020 06:02:13 -0500
+Received: from foss.arm.com ([217.140.110.172]:53128 "EHLO foss.arm.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725843AbgKSLCM (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 19 Nov 2020 06:02:12 -0500
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 627981396;
+        Thu, 19 Nov 2020 03:02:11 -0800 (PST)
+Received: from red-moon.arm.com (unknown [10.57.61.203])
+        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 02D183F718;
+        Thu, 19 Nov 2020 03:02:03 -0800 (PST)
+From:   Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>
+To:     Rob Herring <robh@kernel.org>
+Cc:     Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
+        Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
+        linux-arm-msm@vger.kernel.org,
+        Murali Karicheri <m-karicheri2@ti.com>,
+        Jonathan Hunter <jonathanh@nvidia.com>,
+        Stanimir Varbanov <svarbanov@mm-sol.com>,
+        Kukjin Kim <kgene@kernel.org>,
+        Pengutronix Kernel Team <kernel@pengutronix.de>,
+        Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
+        linux-tegra@vger.kernel.org, Roy Zang <roy.zang@nxp.com>,
+        linux-amlogic@lists.infradead.org,
+        Marek Szyprowski <m.szyprowski@samsung.com>,
+        linux-arm-kernel@axis.com, Jerome Brunet <jbrunet@baylibre.com>,
+        Jingoo Han <jingoohan1@gmail.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        Lucas Stach <l.stach@pengutronix.de>,
+        Pratyush Anand <pratyush.anand@gmail.com>,
+        linuxppc-dev@lists.ozlabs.org, Shawn Guo <shawnguo@kernel.org>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        linux-pci@vger.kernel.org, Mingkai Hu <mingkai.hu@nxp.com>,
+        Jesper Nilsson <jesper.nilsson@axis.com>,
+        linux-omap@vger.kernel.org,
+        Thomas Petazzoni <thomas.petazzoni@bootlin.com>,
+        Fabio Estevam <festevam@gmail.com>,
+        Andy Gross <agross@kernel.org>,
+        Xiaowei Song <songxiaowei@hisilicon.com>,
+        Kevin Hilman <khilman@baylibre.com>,
+        Binghui Wang <wangbinghui@hisilicon.com>,
+        NXP Linux Team <linux-imx@nxp.com>,
+        linux-arm-kernel@lists.infradead.org,
+        Jonathan Chocron <jonnyc@amazon.com>,
+        Sascha Hauer <s.hauer@pengutronix.de>,
+        linux-samsung-soc@vger.kernel.org,
+        Neil Armstrong <narmstrong@baylibre.com>,
+        Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
+        Kishon Vijay Abraham I <kishon@ti.com>,
+        Minghuan Lian <minghuan.Lian@nxp.com>,
+        Yue Wang <yue.wang@Amlogic.com>,
+        Vidya Sagar <vidyas@nvidia.com>,
+        Richard Zhu <hongxing.zhu@nxp.com>,
+        Masahiro Yamada <yamada.masahiro@socionext.com>
+Subject: Re: [PATCH v2 00/16] PCI: dwc: Another round of clean-ups
+Date:   Thu, 19 Nov 2020 11:01:58 +0000
+Message-Id: <160578351748.1677.14217204071434748520.b4-ty@arm.com>
+X-Mailer: git-send-email 2.26.1
+In-Reply-To: <20201105211159.1814485-1-robh@kernel.org>
+References: <20201105211159.1814485-1-robh@kernel.org>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Fix the following warning with explicit cast:
+On Thu, 5 Nov 2020 15:11:43 -0600, Rob Herring wrote:
+> Here's another batch of DWC PCI host refactoring. This series primarily
+> moves more of the MSI, link up, and resource handling to the core
+> code. Beyond a couple of minor fixes, new in this version is runtime
+> detection of iATU regions instead of using DT properties.
+> 
+> No doubt I've probably broken something. Please test. I've run this thru
+> kernelci and checked boards with DWC PCI which currently is just
+> Layerscape boards (hint: add boards and/or enable PCI). A git branch is
+> here[1].
+> 
+> [...]
 
-warning: implicit conversion from 'unsigned long long' to
-'dma_addr_t' (aka 'unsigned int')
-mhi_cntrl->iova_stop = DMA_BIT_MASK(info->dma_data_width);
+Applied to pci/dwc, thanks!
 
-Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
-Reported-by: kernel test robot <lkp@intel.com>
----
- drivers/bus/mhi/pci_generic.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+[01/16] PCI: dwc: Support multiple ATU memory regions
+        https://git.kernel.org/lpieralisi/pci/c/9f9e59a480
+[02/16] PCI: dwc/intel-gw: Move ATU offset out of driver match data
+        https://git.kernel.org/lpieralisi/pci/c/1d567aac46
+[03/16] PCI: dwc: Move "dbi", "dbi2", and "addr_space" resource setup into common code
+        https://git.kernel.org/lpieralisi/pci/c/a0fd361db8
+[04/16] PCI: dwc/intel-gw: Remove some unneeded function wrappers
+        https://git.kernel.org/lpieralisi/pci/c/1cc9a55999
+[05/16] PCI: dwc: Ensure all outbound ATU windows are reset
+        https://git.kernel.org/lpieralisi/pci/c/458ad06c4c
+[06/16] PCI: dwc/dra7xx: Use the common MSI irq_chip
+        https://git.kernel.org/lpieralisi/pci/c/7f170d35f5
+[07/16] PCI: dwc: Drop the .set_num_vectors() host op
+        https://git.kernel.org/lpieralisi/pci/c/331e9bcead
+[08/16] PCI: dwc: Move MSI interrupt setup into DWC common code
+        https://git.kernel.org/lpieralisi/pci/c/5bcb1757e6
+[09/16] PCI: dwc: Rework MSI initialization
+        https://git.kernel.org/lpieralisi/pci/c/f78f02638a
+[10/16] PCI: dwc: Move link handling into common code
+        https://git.kernel.org/lpieralisi/pci/c/886a9c1347
+[11/16] PCI: dwc: Move dw_pcie_msi_init() into core
+        https://git.kernel.org/lpieralisi/pci/c/59fbab1ae4
+[12/16] PCI: dwc: Move dw_pcie_setup_rc() to DWC common code
+        https://git.kernel.org/lpieralisi/pci/c/b9ac0f9dc8
+[13/16] PCI: dwc: Remove unnecessary wrappers around dw_pcie_host_init()
+        https://git.kernel.org/lpieralisi/pci/c/60f5b73fa0
+[14/16] Revert "PCI: dwc/keystone: Drop duplicated 'num-viewport'"
+        https://git.kernel.org/lpieralisi/pci/c/fcde397422
+[15/16] PCI: dwc: Move inbound and outbound windows to common struct
+        https://git.kernel.org/lpieralisi/pci/c/9ca17af552
+[16/16] PCI: dwc: Detect number of iATU windows
+        https://git.kernel.org/lpieralisi/pci/c/281f1f99cf
 
-diff --git a/drivers/bus/mhi/pci_generic.c b/drivers/bus/mhi/pci_generic.c
-index 17c6448..3337c6d 100644
---- a/drivers/bus/mhi/pci_generic.c
-+++ b/drivers/bus/mhi/pci_generic.c
-@@ -411,7 +411,7 @@ static int mhi_pci_probe(struct pci_dev *pdev, const struct pci_device_id *id)
- 	mhi_cntrl = &mhi_pdev->mhi_cntrl;
- 	mhi_cntrl->cntrl_dev = &pdev->dev;
- 	mhi_cntrl->iova_start = 0;
--	mhi_cntrl->iova_stop = DMA_BIT_MASK(info->dma_data_width);
-+	mhi_cntrl->iova_stop = (dma_addr_t)DMA_BIT_MASK(info->dma_data_width);
- 	mhi_cntrl->fw_image = info->fw;
- 	mhi_cntrl->edl_image = info->edl;
- 
--- 
-2.7.4
-
+Thanks,
+Lorenzo
