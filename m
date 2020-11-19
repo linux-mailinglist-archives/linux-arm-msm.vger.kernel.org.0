@@ -2,132 +2,138 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 0599E2B9855
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Nov 2020 17:46:54 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 6DDCE2B99F4
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Nov 2020 18:52:12 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727880AbgKSQng (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 19 Nov 2020 11:43:36 -0500
-Received: from z5.mailgun.us ([104.130.96.5]:18779 "EHLO z5.mailgun.us"
+        id S1729344AbgKSRqp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 19 Nov 2020 12:46:45 -0500
+Received: from z5.mailgun.us ([104.130.96.5]:21778 "EHLO z5.mailgun.us"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725877AbgKSQng (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 19 Nov 2020 11:43:36 -0500
+        id S1729409AbgKSRqp (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 19 Nov 2020 12:46:45 -0500
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1605804215; h=Content-Transfer-Encoding: MIME-Version:
- Message-Id: Date: Subject: Cc: To: From: Sender;
- bh=xXWY11AkQl+qkoWNFqEm2VGxxmdvC3mfMPPJNFQ47Us=; b=mBrMx6l7E7RiLesUUBnOSmBsRVxTYX3GD52vpon5R7SZqL6nGQ54UoAhDoKosKb4aAlKOUoJ
- xVGFjIR5JzTmraut4kPWPAURRv+VhycTWBIxIq5pZLudo5e0R8l4GbsOP+0LV+/uYo3potWd
- ZT9HxigbkDIuKsK4DfwOoBWYeIY=
+ s=smtp; t=1605808004; h=In-Reply-To: Content-Type: MIME-Version:
+ References: Message-ID: Subject: Cc: To: From: Date: Sender;
+ bh=Rbk83JLyKBowqtyi3Q2SenfF02fWJYKIxfSgAfJdQos=; b=YCvra0UO7TZvRCYqJjkUhS60kyl4iJlhVt20DQQcrEJm674+Ua65aa8VIPIDJVs1Mxxy8M+s
+ gEsz71hHlQnEOHsJMediKFsoM16MXWEU/j9mBlaKW1/9bZ4Knm+XZq4Z7JWnuvK3MbFm8vcP
+ 88SIBu/0y/3D0ocdXY8RbIqJ6Rc=
 X-Mailgun-Sending-Ip: 104.130.96.5
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org
  (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n03.prod.us-east-1.postgun.com with SMTP id
- 5fb6a0b6b9b39088ed4688d7 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 19 Nov 2020 16:43:34
+ smtp-out-n05.prod.us-east-1.postgun.com with SMTP id
+ 5fb6af837f0cfa6a16e37590 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 19 Nov 2020 17:46:43
  GMT
 Sender: ilina=codeaurora.org@mg.codeaurora.org
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 228B2C43461; Thu, 19 Nov 2020 16:43:34 +0000 (UTC)
+        id 30969C43461; Thu, 19 Nov 2020 17:46:43 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
 X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
         URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
-Received: from codeaurora.org (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+Received: from localhost (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
         (Authenticated sender: ilina)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id F1D79C433ED;
-        Thu, 19 Nov 2020 16:43:32 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org F1D79C433ED
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 4A729C433C6;
+        Thu, 19 Nov 2020 17:46:42 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 4A729C433C6
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=ilina@codeaurora.org
+Date:   Thu, 19 Nov 2020 10:46:41 -0700
 From:   Lina Iyer <ilina@codeaurora.org>
-To:     rjw@rjwysocki.net, ulf.hansson@linaro.org
-Cc:     linux-pm@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        Lina Iyer <ilina@codeaurora.org>
-Subject: [PATCH v2] PM / Domains: replace -ENOTSUPP with -EOPNOTSUPP
-Date:   Thu, 19 Nov 2020 09:43:25 -0700
-Message-Id: <20201119164325.9536-1-ilina@codeaurora.org>
-X-Mailer: git-send-email 2.29.2
+To:     Ulf Hansson <ulf.hansson@linaro.org>
+Cc:     "Rafael J. Wysocki" <rjw@rjwysocki.net>,
+        Linux PM <linux-pm@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>
+Subject: Re: [PATCH v5 2/2] PM / Domains: use device's next wakeup to
+ determine domain idle state
+Message-ID: <X7avgbb2AWvgwm7G@codeaurora.org>
+References: <20201106164811.3698-1-ilina@codeaurora.org>
+ <20201106164811.3698-3-ilina@codeaurora.org>
+ <CAPDyKFrv-3USmNLR3gjgaTEuTrWuYZjs3qCtnjxSOWqrxv5qsA@mail.gmail.com>
+ <X6l/OcHG37HzgFL8@codeaurora.org>
+ <CAPDyKFr8fdbMM1nsx-RZcMVtveJUP3p38z=HkL1T2C=QgM3gkQ@mail.gmail.com>
+ <X6wRBLmvzztNai4y@codeaurora.org>
+ <CAPDyKFr9gpH9Kh9=W4D7DRG8OuqBvkaWHvk8i47SToES=338cA@mail.gmail.com>
+ <X7KhcItlnS+uuqK2@codeaurora.org>
+ <CAPDyKFpKookuX2ynBfy44kyfZq48JPaUrEHevetsyoc83=UnsA@mail.gmail.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Disposition: inline
+In-Reply-To: <CAPDyKFpKookuX2ynBfy44kyfZq48JPaUrEHevetsyoc83=UnsA@mail.gmail.com>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-While submitting a patch to add next_wakeup, checkpatch reported this -
+On Thu, Nov 19 2020 at 02:57 -0700, Ulf Hansson wrote:
+>On Mon, 16 Nov 2020 at 16:57, Lina Iyer <ilina@codeaurora.org> wrote:
+>>
+>> On Fri, Nov 13 2020 at 03:34 -0700, Ulf Hansson wrote:
+>> >On Wed, 11 Nov 2020 at 17:51, Lina Iyer <ilina@codeaurora.org> wrote:
+>> >>
+>> >> On Tue, Nov 10 2020 at 03:02 -0700, Ulf Hansson wrote:
+>> >> >On Mon, 9 Nov 2020 at 18:41, Lina Iyer <ilina@codeaurora.org> wrote:
+>> >> >>
+>> >> >> On Mon, Nov 09 2020 at 08:27 -0700, Ulf Hansson wrote:
+>> >> >> >On Fri, 6 Nov 2020 at 17:48, Lina Iyer <ilina@codeaurora.org> wrote:
+>> [...]
+>>
+>> >> >> >For example, there's no point doing the above, if the domain doesn't
+>> >> >> >specify residency values for its idle states.
+>> >> >> >
+>> >> >> We would still need to ensure that the next wakeup is after the
+>> >> >> power_off_latency, if specified.
+>> >> >
+>> >> >Good point! Although, I would rather avoid adding the overhead, unless
+>> >> >the residency is specified. Do you see a problem with this approach?
+>> >> >
+>> >> Hmmm, no strong objections. However, we still need to run through the
+>> >> states to make sure the residency is not set and have a variable track
+>> >> that.
+>> >
+>> >Right.
+>> >
+>> >The important part is that we can do that once and not for every call
+>> >to the governor.
+>> >
+>> >> The devices wouldn't know that and would still continue to set the
+>> >> next wakeup, unless we find a way to let them know we are not using this
+>> >> feature for the domain.
+>> >
+>> >Right.
+>> >
+>> >To allow the driver to know, we could respond with an error code from
+>> >the new dev_pm_genpd_set_performance_state() API (from patch1), in
+>> >case the genpd+governor doesn't support it.
+>> >
+>> It would an unnecessary work everytime a next wakeup is being set to
+>> iterate through the available states and figure out if the residency has
+>> been set or not. We could probably hold that result in a variable when
+>> we setup the genpd states. Expect the next_wake to be set from a
+>> critical path or an interrupt handler, so we have to be quick.
+>
+>Yes, that's the idea I had in mind.
+>
+>Maybe it's not feasible, let's see. However, for sure I am looking at
+>decreasing overhead, not to increase. :-)
+>
+Wondering what do you think about a genpd flag for this purpose? The
+flag may be set when the genpd is initialized with idle states that have
+residency specified. In the governor, we could skip this path
+completely, if the flag is not set.
 
-WARNING: ENOTSUPP is not a SUSV4 error code, prefer EOPNOTSUPP
-+       return -ENOTSUPP;
+--Lina
 
-Address the above warning in other functions in pm_domain.h.
-
-Reviewed-by: Ulf Hansson <ulf.hansson@linaro.org>
-Signed-off-by: Lina Iyer <ilina@codeaurora.org>
----
- include/linux/pm_domain.h | 14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
-
-diff --git a/include/linux/pm_domain.h b/include/linux/pm_domain.h
-index 34a8784b0ad4..e55781333695 100644
---- a/include/linux/pm_domain.h
-+++ b/include/linux/pm_domain.h
-@@ -259,24 +259,24 @@ static inline int pm_genpd_init(struct generic_pm_domain *genpd,
- }
- static inline int pm_genpd_remove(struct generic_pm_domain *genpd)
- {
--	return -ENOTSUPP;
-+	return -EOPNOTSUPP;
- }
- 
- static inline int dev_pm_genpd_set_performance_state(struct device *dev,
- 						     unsigned int state)
- {
--	return -ENOTSUPP;
-+	return -EOPNOTSUPP;
- }
- 
- static inline int dev_pm_genpd_add_notifier(struct device *dev,
- 					    struct notifier_block *nb)
- {
--	return -ENOTSUPP;
-+	return -EOPNOTSUPP;
- }
- 
- static inline int dev_pm_genpd_remove_notifier(struct device *dev)
- {
--	return -ENOTSUPP;
-+	return -EOPNOTSUPP;
- }
- 
- static inline int dev_pm_genpd_set_next_wakeup(struct device *dev, ktime_t next)
-@@ -334,13 +334,13 @@ struct device *genpd_dev_pm_attach_by_name(struct device *dev,
- static inline int of_genpd_add_provider_simple(struct device_node *np,
- 					struct generic_pm_domain *genpd)
- {
--	return -ENOTSUPP;
-+	return -EOPNOTSUPP;
- }
- 
- static inline int of_genpd_add_provider_onecell(struct device_node *np,
- 					struct genpd_onecell_data *data)
- {
--	return -ENOTSUPP;
-+	return -EOPNOTSUPP;
- }
- 
- static inline void of_genpd_del_provider(struct device_node *np) {}
-@@ -396,7 +396,7 @@ static inline struct device *genpd_dev_pm_attach_by_name(struct device *dev,
- static inline
- struct generic_pm_domain *of_genpd_remove_last(struct device_node *np)
- {
--	return ERR_PTR(-ENOTSUPP);
-+	return ERR_PTR(-EOPNOTSUPP);
- }
- #endif /* CONFIG_PM_GENERIC_DOMAINS_OF */
- 
--- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project
-
+>>
+>> >Would that be okay? Otherwise we will have to add a separate genpd
+>> >API, asking explicitly if the "next wakeup" feature is supported.
+>> >
+>> Would like to avoid that as much as possible.
+>
+>Okay, good.
+>
+>Kind regards
+>Uffe
