@@ -2,52 +2,52 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id EF0DE2B96E4
+	by mail.lfdr.de (Postfix) with ESMTP id 81D322B96E3
 	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Nov 2020 16:54:03 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728885AbgKSPwj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 19 Nov 2020 10:52:39 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48574 "EHLO
+        id S1728883AbgKSPwi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 19 Nov 2020 10:52:38 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48584 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728862AbgKSPwg (ORCPT
+        with ESMTP id S1728873AbgKSPwh (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 19 Nov 2020 10:52:36 -0500
-Received: from mail-qt1-x844.google.com (mail-qt1-x844.google.com [IPv6:2607:f8b0:4864:20::844])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 32A03C061A48
-        for <linux-arm-msm@vger.kernel.org>; Thu, 19 Nov 2020 07:52:36 -0800 (PST)
-Received: by mail-qt1-x844.google.com with SMTP id g17so4680870qts.5
-        for <linux-arm-msm@vger.kernel.org>; Thu, 19 Nov 2020 07:52:36 -0800 (PST)
+        Thu, 19 Nov 2020 10:52:37 -0500
+Received: from mail-qk1-x734.google.com (mail-qk1-x734.google.com [IPv6:2607:f8b0:4864:20::734])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2E5D3C061A4B
+        for <linux-arm-msm@vger.kernel.org>; Thu, 19 Nov 2020 07:52:37 -0800 (PST)
+Received: by mail-qk1-x734.google.com with SMTP id d28so5720042qka.11
+        for <linux-arm-msm@vger.kernel.org>; Thu, 19 Nov 2020 07:52:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=bvhfCLHTYs7l5lsgLwNrBMAcXk6yVVYBXG3jF5cS+kE=;
-        b=MjOP4uTZ8G2drLy+R/RvDTmkhN1lqBygMFznKx7ziyTeTkXMBCOuGlBlydlYEhLWX7
-         ngUt75ThmQcdsQuf23omAO99hc0OHT4DMkNHzyw35nmR0qg0s6at9GgiN+un8UB0ZKyt
-         CN4stsYDR09rcHDLMSmGEJrVrd4zlDh1e4KeQIIWdH5+qDmKUYeCd//oeo/cqgs6nsdt
-         j8qQee8N+1vo5OCO9WkAZ4udArOify2tn9Nx90pk4hRlDz5UHBL6bXfaCzizk8pLV5yO
-         Hp4BsToydhApUMbA8R8RMc5zkYXqh6w6yNqGjPM5FdTUNrV2PYxa4yX/hHiDjNfprfqw
-         Yggg==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=Npw6pndFeDGN1j2LCowh5jKLxcwFxW0ubJq0P0MtToo=;
+        b=tzSx5BzoSWa+UyX23Szfm8Za+2AUHXHyE1c/mT8Nff0Lu1w8kEyfDAAdP57DYKHkJO
+         oyfEj6ErpuYVuwv3FgF4lhNkvWwj4EJIs/hzwmU8+M6fasdS2y/UwZCbqx+8G7lfhqt1
+         ga1EqQZzUpNH8TaRzgVMMhtemfyvlFCLuFtfcuMmnl6YxwXLVjWUKYb0k2RKp/KEhVwR
+         aes6IhVH4Y1BRnGT2gIE2gVBpAz3GqTREs6T2yeYNWgTPwfvV3wvpNF69WaMgKRDk/Pd
+         BrUWYSc3kAfGV4NdD0cfhjsxBeQk6eAvvUbhH4OrZ4P+0FROL3rtlVXPT/GqPkG9PGZG
+         KYpg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=bvhfCLHTYs7l5lsgLwNrBMAcXk6yVVYBXG3jF5cS+kE=;
-        b=JuGB/xrkWPEUYqlf0x7Odn0X+hLTmYY5m8/czVqc34G9MUwLwm5BuH/AvS4aCSmIAf
-         u1kywDFK2KwUonQ/6zfu1LYaUEUl/ZVNrOEFYU3gQSuuIl6jF+PSKbcsg0cgDhoAsxlx
-         /6XiO3cSrBqNANl6gNt+2QnK77EREJ77jRyG6nhHWrvOAAutnabQwvnVESGlY9txFNQp
-         PcOfE2a9xaVfhb290Y9ewMP5hHFUPMm0FK0z1WsHOE0iBcVbClrpxNFOfqhI7MjkaDcc
-         syZA5vwRSkQuDfEBf7bh+mcUXFmb5DrLY7cyoG63oETWFsM3l5lF19EybLEj68n8Allp
-         zaAg==
-X-Gm-Message-State: AOAM533ipQZZgx4AEjnHs28u9xK1QahbT9BcWqMj3a3RCj87HdtbFW6n
-        4X6peyjSX6r80jDYmDAQTqey3w==
-X-Google-Smtp-Source: ABdhPJwnQTWrrSwIs3w5+5w6NPMKWMWsTkoh980avt1UnXUDjYSHhhrtOQyVDGTYO0PGKo4rz9f6pg==
-X-Received: by 2002:aed:2084:: with SMTP id 4mr10469682qtb.81.1605801155263;
-        Thu, 19 Nov 2020 07:52:35 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=Npw6pndFeDGN1j2LCowh5jKLxcwFxW0ubJq0P0MtToo=;
+        b=N6JMCVDn9YfgSmEtn7rpxVNzBbUgz+D+9s7PA5EIMx/gsUoPHAMAV735X+K5jc9nL8
+         qr37ELGYshwwVm/A1nBRn8rqY4yByFpxKMIHusW6+0Cf+W6xEQkPpXxibngmneFCTBtr
+         PslsPAk6MtNxAnoVGFqf0H5Kits77i0KhttXP5SWRqGX5SdzEwLR0FGMPJzi2dMNm7FQ
+         OXWb1b/iP3ur6MQMI6EG40buQI+xPIH9nq/As+yd58VpV9YrTNnGh19SFwzxWBmN/t3q
+         11F9enQL9IMwKDsvTwoOdhCtJSP8yRmyf3C5xix5Bt/Mj8gAXcudVc2TE51Fe8nik3Us
+         vD1Q==
+X-Gm-Message-State: AOAM532Ddm9hPNXib5582aXilZptF+S40TmlT7bwG5Ycv9w/VGA3k4+r
+        Ws3BUqkWg9OHztrSrVtdbMV5NA==
+X-Google-Smtp-Source: ABdhPJzE/cpIdffZF7GXTI12bMsYjzDIHtiepu5cxTYppLPpKsAIMXNtigSCwXOsudsnLdzUqij17g==
+X-Received: by 2002:a37:52c3:: with SMTP id g186mr11115468qkb.1.1605801156368;
+        Thu, 19 Nov 2020 07:52:36 -0800 (PST)
 Received: from pop-os.fios-router.home (pool-71-163-245-5.washdc.fios.verizon.net. [71.163.245.5])
-        by smtp.googlemail.com with ESMTPSA id g70sm127290qke.8.2020.11.19.07.52.34
+        by smtp.googlemail.com with ESMTPSA id g70sm127290qke.8.2020.11.19.07.52.35
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 19 Nov 2020 07:52:34 -0800 (PST)
+        Thu, 19 Nov 2020 07:52:35 -0800 (PST)
 From:   Thara Gopinath <thara.gopinath@linaro.org>
 To:     agross@kernel.org, bjorn.andersson@linaro.org,
         herbert@gondor.apana.org.au, davem@davemloft.net,
@@ -55,43 +55,38 @@ To:     agross@kernel.org, bjorn.andersson@linaro.org,
 Cc:     linux-arm-msm@vger.kernel.org, linux-crypto@vger.kernel.org,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
         linux-clk@vger.kernel.org
-Subject: [Patch v2 0/6] Enable Qualcomm Crypto Engine on sdm845
-Date:   Thu, 19 Nov 2020 10:52:27 -0500
-Message-Id: <20201119155233.3974286-1-thara.gopinath@linaro.org>
+Subject: [Patch v2 1/6] dt-bindings: clock: Add entry for crypto engine RPMH clock resource
+Date:   Thu, 19 Nov 2020 10:52:28 -0500
+Message-Id: <20201119155233.3974286-2-thara.gopinath@linaro.org>
 X-Mailer: git-send-email 2.25.1
+In-Reply-To: <20201119155233.3974286-1-thara.gopinath@linaro.org>
+References: <20201119155233.3974286-1-thara.gopinath@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Qualcomm crypto engine supports hardware accelerated algorithms for
-encryption and authentication. Enable support for aes,des,3des encryption
-algorithms and sha1,sha256, hmac(sha1),hmac(sha256) authentication
-algorithms on sdm845.The patch series has been tested using the kernel
-crypto testing module tcrypto.ko.
+Add clock id forc CE clock resource which is required to bring up the
+crypto engine on sdm845.
 
-v1->v2:
-- Rebased to linux-next v5.10-rc4.
-- Fixed subject line format in all patches as per Bjorn's feedback.
+Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+Signed-off-by: Thara Gopinath <thara.gopinath@linaro.org>
+---
+ include/dt-bindings/clock/qcom,rpmh.h | 1 +
+ 1 file changed, 1 insertion(+)
 
-Thara Gopinath (6):
-  dt-binding:clock: Add entry for crypto engine RPMH clock resource
-  clk:qcom:rpmh: Add CE clock on sdm845.
-  drivers:crypto:qce: Enable support for crypto engine on sdm845.
-  drivers:crypto:qce: Fix SHA result buffer corruption issues.
-  dts:qcom:sdm845: Add dt entries to support crypto engine.
-  devicetree:bindings:crypto: Extend qcom-qce binding to add support for
-    crypto engine version 5.4
-
- .../devicetree/bindings/crypto/qcom-qce.txt   |  4 ++-
- arch/arm64/boot/dts/qcom/sdm845.dtsi          | 30 +++++++++++++++++++
- drivers/clk/qcom/clk-rpmh.c                   |  2 ++
- drivers/crypto/qce/core.c                     | 17 ++++++++++-
- drivers/crypto/qce/sha.c                      |  2 +-
- include/dt-bindings/clock/qcom,rpmh.h         |  1 +
- 6 files changed, 53 insertions(+), 3 deletions(-)
-
+diff --git a/include/dt-bindings/clock/qcom,rpmh.h b/include/dt-bindings/clock/qcom,rpmh.h
+index 2e6c54e65455..30111c8f7fe9 100644
+--- a/include/dt-bindings/clock/qcom,rpmh.h
++++ b/include/dt-bindings/clock/qcom,rpmh.h
+@@ -21,5 +21,6 @@
+ #define RPMH_IPA_CLK				12
+ #define RPMH_LN_BB_CLK1				13
+ #define RPMH_LN_BB_CLK1_A			14
++#define RPMH_CE_CLK				15
+ 
+ #endif
 -- 
 2.25.1
 
