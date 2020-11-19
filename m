@@ -2,125 +2,106 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 7D2662B9090
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Nov 2020 12:04:25 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0D8352B929B
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Nov 2020 13:33:56 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726105AbgKSLCN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 19 Nov 2020 06:02:13 -0500
-Received: from foss.arm.com ([217.140.110.172]:53128 "EHLO foss.arm.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725843AbgKSLCM (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 19 Nov 2020 06:02:12 -0500
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 627981396;
-        Thu, 19 Nov 2020 03:02:11 -0800 (PST)
-Received: from red-moon.arm.com (unknown [10.57.61.203])
-        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 02D183F718;
-        Thu, 19 Nov 2020 03:02:03 -0800 (PST)
-From:   Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>
-To:     Rob Herring <robh@kernel.org>
-Cc:     Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
-        Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
-        linux-arm-msm@vger.kernel.org,
-        Murali Karicheri <m-karicheri2@ti.com>,
-        Jonathan Hunter <jonathanh@nvidia.com>,
-        Stanimir Varbanov <svarbanov@mm-sol.com>,
-        Kukjin Kim <kgene@kernel.org>,
-        Pengutronix Kernel Team <kernel@pengutronix.de>,
-        Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
-        linux-tegra@vger.kernel.org, Roy Zang <roy.zang@nxp.com>,
-        linux-amlogic@lists.infradead.org,
-        Marek Szyprowski <m.szyprowski@samsung.com>,
-        linux-arm-kernel@axis.com, Jerome Brunet <jbrunet@baylibre.com>,
-        Jingoo Han <jingoohan1@gmail.com>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        Lucas Stach <l.stach@pengutronix.de>,
-        Pratyush Anand <pratyush.anand@gmail.com>,
-        linuxppc-dev@lists.ozlabs.org, Shawn Guo <shawnguo@kernel.org>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        linux-pci@vger.kernel.org, Mingkai Hu <mingkai.hu@nxp.com>,
-        Jesper Nilsson <jesper.nilsson@axis.com>,
-        linux-omap@vger.kernel.org,
-        Thomas Petazzoni <thomas.petazzoni@bootlin.com>,
-        Fabio Estevam <festevam@gmail.com>,
-        Andy Gross <agross@kernel.org>,
-        Xiaowei Song <songxiaowei@hisilicon.com>,
-        Kevin Hilman <khilman@baylibre.com>,
-        Binghui Wang <wangbinghui@hisilicon.com>,
-        NXP Linux Team <linux-imx@nxp.com>,
-        linux-arm-kernel@lists.infradead.org,
-        Jonathan Chocron <jonnyc@amazon.com>,
-        Sascha Hauer <s.hauer@pengutronix.de>,
-        linux-samsung-soc@vger.kernel.org,
-        Neil Armstrong <narmstrong@baylibre.com>,
-        Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
-        Kishon Vijay Abraham I <kishon@ti.com>,
-        Minghuan Lian <minghuan.Lian@nxp.com>,
-        Yue Wang <yue.wang@Amlogic.com>,
-        Vidya Sagar <vidyas@nvidia.com>,
-        Richard Zhu <hongxing.zhu@nxp.com>,
-        Masahiro Yamada <yamada.masahiro@socionext.com>
-Subject: Re: [PATCH v2 00/16] PCI: dwc: Another round of clean-ups
-Date:   Thu, 19 Nov 2020 11:01:58 +0000
-Message-Id: <160578351748.1677.14217204071434748520.b4-ty@arm.com>
-X-Mailer: git-send-email 2.26.1
-In-Reply-To: <20201105211159.1814485-1-robh@kernel.org>
-References: <20201105211159.1814485-1-robh@kernel.org>
+        id S1726545AbgKSMbv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 19 Nov 2020 07:31:51 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45606 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725783AbgKSMbu (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 19 Nov 2020 07:31:50 -0500
+Received: from mail-lf1-x142.google.com (mail-lf1-x142.google.com [IPv6:2a00:1450:4864:20::142])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 76FEAC0613CF
+        for <linux-arm-msm@vger.kernel.org>; Thu, 19 Nov 2020 04:31:50 -0800 (PST)
+Received: by mail-lf1-x142.google.com with SMTP id a9so7998052lfh.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 19 Nov 2020 04:31:50 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=CzGCpiN8DDCXB/TDfvykQudKt+j67A7n1K8JxIu4JHI=;
+        b=B/MIgCpuCvn1TPuZ/1KshVQ/w0EICGlUb/sM/OzYnYXJBjKsxjOt9fXEw9fnJ9uBrj
+         0TjkQWyIUMem3xj7jg58MOdqi0GpFXBRuwDDiMdapcosnOtAVUF4Rw1kG4tvVyftokf2
+         6FPgQabmxCqduNSqKaigr9YoU5B+dU8oIOSNnqKvl5FZuaGwb4uaVIvIhir9xP2Fb2ji
+         cLVPJnbA/1G+kgGyndzwORq6FJ2NDL8pQOPue12/N4mR6Eh3aa7tojJArH3d6u6YojRG
+         giVxQuHwue5m3sjSm4hBNUtwJlBiyNkTYl3Q5xjwq5OZ9FjR6iqmPgklBCjZVR++1gh8
+         nM/A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=CzGCpiN8DDCXB/TDfvykQudKt+j67A7n1K8JxIu4JHI=;
+        b=m3g82LVDX0D9wIrQce+epvcAHOhVGKRyzGrUgqo2y9Sv8W9z+fodpmtSAj4hLbOAls
+         aivA6KYPQSfr9Uy3eQle4UOwyAD9WTX7fygx85p5Lgp1ZGDkNJal55MtYaWmOmn/KY2m
+         R5b3NbM0cLzQ58gfss83MpyjIF0nKGcVZvLtVQfQGJZ4SbU2pNOfbfUPP5GBXPj3Od/A
+         NMKDrTg5t5+IqHrq3ov4LE+PXLhgyU5PPPQYBHiqWJL0tEJ9OnNeL8UhBnHMt2OpJhWF
+         LS1PIOtx6YYPg4d472UoUR6heI4kd+anYJp/o8S6iimkN2/HuhFlbRZTM/bUI6hF8NPE
+         5aLg==
+X-Gm-Message-State: AOAM531Y7g5xf6JoYaiwW37mXuKBTZpoTwYclqaCvKNLlWHl8DB8xIRx
+        lMMJjw+qh0ohwts7HsZyygSS7BCqXKzRMg==
+X-Google-Smtp-Source: ABdhPJzgtIm/m55OCqiC93oYLiHLfdCfcgaiKk5l5vbCYmhMJIL2aGDS3Vp96XgOt/V/iqjKB1gj/Q==
+X-Received: by 2002:ac2:563a:: with SMTP id b26mr5462533lff.596.1605789108951;
+        Thu, 19 Nov 2020 04:31:48 -0800 (PST)
+Received: from eriador.lumag.spb.ru ([188.162.64.108])
+        by smtp.gmail.com with ESMTPSA id u28sm3962495lfn.102.2020.11.19.04.31.47
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 19 Nov 2020 04:31:48 -0800 (PST)
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To:     Patrick Lai <plai@codeaurora.org>,
+        Banajit Goswami <bgoswami@codeaurora.org>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Mark Brown <broonie@kernel.org>
+Cc:     alsa-devel@alsa-project.org, linux-arm-msm@vger.kernel.org,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Subject: [PATCH] ASoC: qcom: sm8250: fix HDMI audio playback
+Date:   Thu, 19 Nov 2020 15:31:45 +0300
+Message-Id: <20201119123145.709891-1-dmitry.baryshkov@linaro.org>
+X-Mailer: git-send-email 2.29.2
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 5 Nov 2020 15:11:43 -0600, Rob Herring wrote:
-> Here's another batch of DWC PCI host refactoring. This series primarily
-> moves more of the MSI, link up, and resource handling to the core
-> code. Beyond a couple of minor fixes, new in this version is runtime
-> detection of iATU regions instead of using DT properties.
-> 
-> No doubt I've probably broken something. Please test. I've run this thru
-> kernelci and checked boards with DWC PCI which currently is just
-> Layerscape boards (hint: add boards and/or enable PCI). A git branch is
-> here[1].
-> 
-> [...]
+Current code does not setup CPU dai (causing -EIO errors on playback)
+and does not pass SND_SOC_DAIFMT_I2S to codec fmt (causing i2s-hifi
+errors). Fix both errors to enable HDMI audio playback on SM8250. Tested
+on RB5 platform.
 
-Applied to pci/dwc, thanks!
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Fixes: aa2e2785545a ("ASoC: qcom: sm8250: add sound card qrb5165-rb5 support")
+Cc: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+---
+ sound/soc/qcom/sm8250.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-[01/16] PCI: dwc: Support multiple ATU memory regions
-        https://git.kernel.org/lpieralisi/pci/c/9f9e59a480
-[02/16] PCI: dwc/intel-gw: Move ATU offset out of driver match data
-        https://git.kernel.org/lpieralisi/pci/c/1d567aac46
-[03/16] PCI: dwc: Move "dbi", "dbi2", and "addr_space" resource setup into common code
-        https://git.kernel.org/lpieralisi/pci/c/a0fd361db8
-[04/16] PCI: dwc/intel-gw: Remove some unneeded function wrappers
-        https://git.kernel.org/lpieralisi/pci/c/1cc9a55999
-[05/16] PCI: dwc: Ensure all outbound ATU windows are reset
-        https://git.kernel.org/lpieralisi/pci/c/458ad06c4c
-[06/16] PCI: dwc/dra7xx: Use the common MSI irq_chip
-        https://git.kernel.org/lpieralisi/pci/c/7f170d35f5
-[07/16] PCI: dwc: Drop the .set_num_vectors() host op
-        https://git.kernel.org/lpieralisi/pci/c/331e9bcead
-[08/16] PCI: dwc: Move MSI interrupt setup into DWC common code
-        https://git.kernel.org/lpieralisi/pci/c/5bcb1757e6
-[09/16] PCI: dwc: Rework MSI initialization
-        https://git.kernel.org/lpieralisi/pci/c/f78f02638a
-[10/16] PCI: dwc: Move link handling into common code
-        https://git.kernel.org/lpieralisi/pci/c/886a9c1347
-[11/16] PCI: dwc: Move dw_pcie_msi_init() into core
-        https://git.kernel.org/lpieralisi/pci/c/59fbab1ae4
-[12/16] PCI: dwc: Move dw_pcie_setup_rc() to DWC common code
-        https://git.kernel.org/lpieralisi/pci/c/b9ac0f9dc8
-[13/16] PCI: dwc: Remove unnecessary wrappers around dw_pcie_host_init()
-        https://git.kernel.org/lpieralisi/pci/c/60f5b73fa0
-[14/16] Revert "PCI: dwc/keystone: Drop duplicated 'num-viewport'"
-        https://git.kernel.org/lpieralisi/pci/c/fcde397422
-[15/16] PCI: dwc: Move inbound and outbound windows to common struct
-        https://git.kernel.org/lpieralisi/pci/c/9ca17af552
-[16/16] PCI: dwc: Detect number of iATU windows
-        https://git.kernel.org/lpieralisi/pci/c/281f1f99cf
+diff --git a/sound/soc/qcom/sm8250.c b/sound/soc/qcom/sm8250.c
+index 35c9ad11edff..314e3e566d6d 100644
+--- a/sound/soc/qcom/sm8250.c
++++ b/sound/soc/qcom/sm8250.c
+@@ -36,6 +36,7 @@ static int sm8250_be_hw_params_fixup(struct snd_soc_pcm_runtime *rtd,
+ 
+ static int sm8250_snd_startup(struct snd_pcm_substream *substream)
+ {
++	unsigned int fmt = SND_SOC_DAIFMT_CBS_CFS;
+ 	unsigned int codec_dai_fmt = SND_SOC_DAIFMT_CBS_CFS;
+ 	struct snd_soc_pcm_runtime *rtd = substream->private_data;
+ 	struct snd_soc_dai *cpu_dai = asoc_rtd_to_cpu(rtd, 0);
+@@ -43,10 +44,11 @@ static int sm8250_snd_startup(struct snd_pcm_substream *substream)
+ 
+ 	switch (cpu_dai->id) {
+ 	case TERTIARY_MI2S_RX:
+-		codec_dai_fmt |= SND_SOC_DAIFMT_NB_NF;
++		codec_dai_fmt |= SND_SOC_DAIFMT_NB_NF | SND_SOC_DAIFMT_I2S;
+ 		snd_soc_dai_set_sysclk(cpu_dai,
+ 			Q6AFE_LPASS_CLK_ID_TER_MI2S_IBIT,
+ 			MI2S_BCLK_RATE, SNDRV_PCM_STREAM_PLAYBACK);
++		snd_soc_dai_set_fmt(cpu_dai, fmt);
+ 		snd_soc_dai_set_fmt(codec_dai, codec_dai_fmt);
+ 		break;
+ 	default:
+-- 
+2.29.2
 
-Thanks,
-Lorenzo
