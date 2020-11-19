@@ -2,94 +2,132 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id BE2062B96F6
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Nov 2020 16:54:11 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0599E2B9855
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Nov 2020 17:46:54 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728958AbgKSPwq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 19 Nov 2020 10:52:46 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48594 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728943AbgKSPwn (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 19 Nov 2020 10:52:43 -0500
-Received: from mail-qk1-x741.google.com (mail-qk1-x741.google.com [IPv6:2607:f8b0:4864:20::741])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 84EB1C0613CF
-        for <linux-arm-msm@vger.kernel.org>; Thu, 19 Nov 2020 07:52:43 -0800 (PST)
-Received: by mail-qk1-x741.google.com with SMTP id 199so5744781qkg.9
-        for <linux-arm-msm@vger.kernel.org>; Thu, 19 Nov 2020 07:52:43 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=iS4PFF4afNVE7r1m6FFtegXe9ReuZEWdknfJDOJxxsY=;
-        b=ogRs7aHVgPAe9BFPnptBBpgxHJY2yTOCZkeVo9BIdOoGrIr47GvR7a4/SOKPKeXlz7
-         N9hh27I3m3pqEEFW4SA/IirxvRS7+Uve3ZuaoQin3LNcceQO08qYMn92+YDYjVTybV7j
-         bSIzxWcAQQJ1XcUKoeRemnMcO4PLgEUPDhV6TrTxNcyUW4Sx/hMjOXHvB5Q29nxFjdw9
-         h+VnR8oEuBh5FV6QRfbJQuDhtwaatGpvwneia6taGDiJAMjegXWq5/MEPLinlC2OvfIS
-         5r7gJNdpUtLi22yEuDSs6g9KfyI47VLO44gBTSnbRlonevCZrbfqQxE+doXbWaAEobcX
-         ThBg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=iS4PFF4afNVE7r1m6FFtegXe9ReuZEWdknfJDOJxxsY=;
-        b=tgaMwbV94SBTMKUNak9OuJU9EK1sRzpSg1F6AnxRow3rtun3uqmO70Ac2YoZyIrd0C
-         GVyPloUYv5jM2DOGSomwUPSkUITebnwQFXR+omN2f01lxej9BhpTkYOWF2MWfxtYtaQK
-         glm3U7/dSI9GYwW57XLeE6AQm2Ha3/lPq2/hj7vxf/m+5O5XH/Tltn2S3M2UyR+zxoPl
-         mX7beR89wHW3x6nTvaJXqqLngVkrKqZcCak3UD8w0zPzbEGY88W2XmrQ+mK4a8DqhSRF
-         sakKRVJdXd7wTA6prXQ1twyzao8nXdWX+X3UDZc82W6Xcg1FajJhu7hwebrq6E0pBD0Z
-         UF/Q==
-X-Gm-Message-State: AOAM530zyjHbSyA2xIX4lGgrPG6wDOZZdIWcU3dMBXK4LQIX3f2Xaxlu
-        s+hE9/SzS5CCHXmeGfRkYVYWXg==
-X-Google-Smtp-Source: ABdhPJxHwH4v7FYWbrIIlnErpYmRYuzu4SdUpPCubL+H7hYfW1iAJvkBSx64ZORRUh7Hqwse028vQw==
-X-Received: by 2002:a37:e207:: with SMTP id g7mr11719107qki.44.1605801162795;
-        Thu, 19 Nov 2020 07:52:42 -0800 (PST)
-Received: from pop-os.fios-router.home (pool-71-163-245-5.washdc.fios.verizon.net. [71.163.245.5])
-        by smtp.googlemail.com with ESMTPSA id g70sm127290qke.8.2020.11.19.07.52.41
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 19 Nov 2020 07:52:42 -0800 (PST)
-From:   Thara Gopinath <thara.gopinath@linaro.org>
-To:     agross@kernel.org, bjorn.andersson@linaro.org,
-        herbert@gondor.apana.org.au, davem@davemloft.net,
-        robh+dt@kernel.org, sboyd@kernel.org, mturquette@baylibre.com
-Cc:     linux-arm-msm@vger.kernel.org, linux-crypto@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-clk@vger.kernel.org
-Subject: [Patch v2 6/6] dt-bindings: crypto: qcom-qce: Add v5.4 to binding
-Date:   Thu, 19 Nov 2020 10:52:33 -0500
-Message-Id: <20201119155233.3974286-7-thara.gopinath@linaro.org>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20201119155233.3974286-1-thara.gopinath@linaro.org>
-References: <20201119155233.3974286-1-thara.gopinath@linaro.org>
+        id S1727880AbgKSQng (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 19 Nov 2020 11:43:36 -0500
+Received: from z5.mailgun.us ([104.130.96.5]:18779 "EHLO z5.mailgun.us"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725877AbgKSQng (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 19 Nov 2020 11:43:36 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1605804215; h=Content-Transfer-Encoding: MIME-Version:
+ Message-Id: Date: Subject: Cc: To: From: Sender;
+ bh=xXWY11AkQl+qkoWNFqEm2VGxxmdvC3mfMPPJNFQ47Us=; b=mBrMx6l7E7RiLesUUBnOSmBsRVxTYX3GD52vpon5R7SZqL6nGQ54UoAhDoKosKb4aAlKOUoJ
+ xVGFjIR5JzTmraut4kPWPAURRv+VhycTWBIxIq5pZLudo5e0R8l4GbsOP+0LV+/uYo3potWd
+ ZT9HxigbkDIuKsK4DfwOoBWYeIY=
+X-Mailgun-Sending-Ip: 104.130.96.5
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n03.prod.us-east-1.postgun.com with SMTP id
+ 5fb6a0b6b9b39088ed4688d7 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 19 Nov 2020 16:43:34
+ GMT
+Sender: ilina=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 228B2C43461; Thu, 19 Nov 2020 16:43:34 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
+        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+Received: from codeaurora.org (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: ilina)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id F1D79C433ED;
+        Thu, 19 Nov 2020 16:43:32 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org F1D79C433ED
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=ilina@codeaurora.org
+From:   Lina Iyer <ilina@codeaurora.org>
+To:     rjw@rjwysocki.net, ulf.hansson@linaro.org
+Cc:     linux-pm@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        Lina Iyer <ilina@codeaurora.org>
+Subject: [PATCH v2] PM / Domains: replace -ENOTSUPP with -EOPNOTSUPP
+Date:   Thu, 19 Nov 2020 09:43:25 -0700
+Message-Id: <20201119164325.9536-1-ilina@codeaurora.org>
+X-Mailer: git-send-email 2.29.2
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add compatible string to support v5.4 crypto engine.
+While submitting a patch to add next_wakeup, checkpatch reported this -
 
-Signed-off-by: Thara Gopinath <thara.gopinath@linaro.org>
-Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+WARNING: ENOTSUPP is not a SUSV4 error code, prefer EOPNOTSUPP
++       return -ENOTSUPP;
+
+Address the above warning in other functions in pm_domain.h.
+
+Reviewed-by: Ulf Hansson <ulf.hansson@linaro.org>
+Signed-off-by: Lina Iyer <ilina@codeaurora.org>
 ---
- Documentation/devicetree/bindings/crypto/qcom-qce.txt | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ include/linux/pm_domain.h | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
-diff --git a/Documentation/devicetree/bindings/crypto/qcom-qce.txt b/Documentation/devicetree/bindings/crypto/qcom-qce.txt
-index fdd53b184ba8..ed1ede9c0acc 100644
---- a/Documentation/devicetree/bindings/crypto/qcom-qce.txt
-+++ b/Documentation/devicetree/bindings/crypto/qcom-qce.txt
-@@ -2,7 +2,9 @@ Qualcomm crypto engine driver
+diff --git a/include/linux/pm_domain.h b/include/linux/pm_domain.h
+index 34a8784b0ad4..e55781333695 100644
+--- a/include/linux/pm_domain.h
++++ b/include/linux/pm_domain.h
+@@ -259,24 +259,24 @@ static inline int pm_genpd_init(struct generic_pm_domain *genpd,
+ }
+ static inline int pm_genpd_remove(struct generic_pm_domain *genpd)
+ {
+-	return -ENOTSUPP;
++	return -EOPNOTSUPP;
+ }
  
- Required properties:
+ static inline int dev_pm_genpd_set_performance_state(struct device *dev,
+ 						     unsigned int state)
+ {
+-	return -ENOTSUPP;
++	return -EOPNOTSUPP;
+ }
  
--- compatible  : should be "qcom,crypto-v5.1"
-+- compatible  : should be
-+		"qcom,crypto-v5.1" for ipq6018
-+		"qcom,crypto-v5.4" for sdm845
- - reg         : specifies base physical address and size of the registers map
- - clocks      : phandle to clock-controller plus clock-specifier pair
- - clock-names : "iface" clocks register interface
+ static inline int dev_pm_genpd_add_notifier(struct device *dev,
+ 					    struct notifier_block *nb)
+ {
+-	return -ENOTSUPP;
++	return -EOPNOTSUPP;
+ }
+ 
+ static inline int dev_pm_genpd_remove_notifier(struct device *dev)
+ {
+-	return -ENOTSUPP;
++	return -EOPNOTSUPP;
+ }
+ 
+ static inline int dev_pm_genpd_set_next_wakeup(struct device *dev, ktime_t next)
+@@ -334,13 +334,13 @@ struct device *genpd_dev_pm_attach_by_name(struct device *dev,
+ static inline int of_genpd_add_provider_simple(struct device_node *np,
+ 					struct generic_pm_domain *genpd)
+ {
+-	return -ENOTSUPP;
++	return -EOPNOTSUPP;
+ }
+ 
+ static inline int of_genpd_add_provider_onecell(struct device_node *np,
+ 					struct genpd_onecell_data *data)
+ {
+-	return -ENOTSUPP;
++	return -EOPNOTSUPP;
+ }
+ 
+ static inline void of_genpd_del_provider(struct device_node *np) {}
+@@ -396,7 +396,7 @@ static inline struct device *genpd_dev_pm_attach_by_name(struct device *dev,
+ static inline
+ struct generic_pm_domain *of_genpd_remove_last(struct device_node *np)
+ {
+-	return ERR_PTR(-ENOTSUPP);
++	return ERR_PTR(-EOPNOTSUPP);
+ }
+ #endif /* CONFIG_PM_GENERIC_DOMAINS_OF */
+ 
 -- 
-2.25.1
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
 
