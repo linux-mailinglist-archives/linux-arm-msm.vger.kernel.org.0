@@ -2,98 +2,138 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 6C1992B9BCB
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Nov 2020 21:02:46 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 88C9D2B9C8D
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Nov 2020 22:11:35 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727366AbgKSUB1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 19 Nov 2020 15:01:27 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58718 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727267AbgKSUB0 (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 19 Nov 2020 15:01:26 -0500
-Received: from mail-qt1-x842.google.com (mail-qt1-x842.google.com [IPv6:2607:f8b0:4864:20::842])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 904E4C0613CF
-        for <linux-arm-msm@vger.kernel.org>; Thu, 19 Nov 2020 12:01:26 -0800 (PST)
-Received: by mail-qt1-x842.google.com with SMTP id f93so5321248qtb.10
-        for <linux-arm-msm@vger.kernel.org>; Thu, 19 Nov 2020 12:01:26 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=ckDTXWosyha6hrF9pw7rAgIp6P/f7Ug8SYe9JRHLr9Q=;
-        b=M/3TmxHzN/mVynLAC6dCAEXGvzmmTZ+pTxgKzrie1Q1H2pTf6NS2X+9MRMLvtAbJjv
-         TgwyRTTbo3VukQHt/JbXrvkma9PK5KdS9gIY6uKVLEWi+s9kRT5vIs0bKA7xijAxWaga
-         n20zJuYcr/gaXtsSVY7N595lwTp69q8S7E/HR3ovDIxLHkKTjalBfDw8viJ+Tf09ANb6
-         3SZATjN9kNotZzHfGkPWFZ2M4EZ8D7+XVPwxq2imeo229P6k/A6yfIGnbbB2qmy7/qKe
-         78kJItRTf/Ym6yqhdHDZCLmvHo16zEPdancYBfgZYBizge37SIN7V8MOtVJu1M8Qr1IF
-         kvwQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=ckDTXWosyha6hrF9pw7rAgIp6P/f7Ug8SYe9JRHLr9Q=;
-        b=GYI2n+tEK9RXoyZO62oyDq6SkMWSsuSo5blyjMd9+4IoSbwtYckg67D0u2QDHEdbH+
-         wBgPKvyjdOngAh8wfTdsx6lInjolKd4tOuowCbWO0EiaTLgp6bZ75jSedPFjeUUX6p4I
-         cVUALyg8CvNfSF54XlzQ35TnvCUAThV7mPFVNYvDAQf9Aum71yu3bn3vxGzgCU3Kvrtg
-         lZ4LJLqhfwzy6BMZWti5Y08LTBOHBfqBbKdgkTyZW3rsUIitUG6DIWOCIZ3twnf2QR6t
-         CsB2Kx9Agm7V8gaw6Lv9HRywXmKRCmFz2Yb20fRuemSPmeOOGkbvaMm2sGsCFcCreV35
-         2OFQ==
-X-Gm-Message-State: AOAM531Kue77vGkUvtxlvYB7mEjTDC+pOO9pa5R6YB2qaM1rlQyLp5PA
-        z2Rj/wj7EYtxjIUxoA8kS5an7oz7IJY=
-X-Google-Smtp-Source: ABdhPJxxeQnJzHsA5tmMJY4v5W05dHL0DvpHFDQTrqtITAyOdTOR3sOCkJ6yaIQLZI5U5MurKYBZZg==
-X-Received: by 2002:ac8:4748:: with SMTP id k8mr12909297qtp.336.1605816085705;
-        Thu, 19 Nov 2020 12:01:25 -0800 (PST)
-Received: from ubuntu-m3-large-x86 ([2604:1380:45f1:1d00::1])
-        by smtp.gmail.com with ESMTPSA id b197sm574229qkg.65.2020.11.19.12.01.24
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 19 Nov 2020 12:01:25 -0800 (PST)
-Date:   Thu, 19 Nov 2020 13:01:23 -0700
-From:   Nathan Chancellor <natechancellor@gmail.com>
-To:     Loic Poulain <loic.poulain@linaro.org>
-Cc:     manivannan.sadhasivam@linaro.org, bbhatt@codeaurora.org,
-        hemantk@codeaurora.org, linux-arm-msm@vger.kernel.org,
-        bjorn.andersson@linaro.org, jhugo@codeaurora.org
-Subject: Re: [PATCH v5] bus: mhi: Add MHI PCI support for WWAN modems
-Message-ID: <20201119200123.GA2360224@ubuntu-m3-large-x86>
-References: <1603300699-24481-1-git-send-email-loic.poulain@linaro.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1603300699-24481-1-git-send-email-loic.poulain@linaro.org>
+        id S1726440AbgKSVFz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 19 Nov 2020 16:05:55 -0500
+Received: from m42-4.mailgun.net ([69.72.42.4]:51536 "EHLO m42-4.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725907AbgKSVFz (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 19 Nov 2020 16:05:55 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1605819954; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=p02axMjNocUH+jqzcrSgerd2G87SR9mTMt14pK8m/ok=; b=QQVlsZsJwfzVf/w4A/RV8uixTchAwcL5IFMidN18pszg3KqOsRAnmu1qiLWQo7gsE/kf8K9s
+ eLm8XgszdhyUIk02ZRg2d7FrewBrfgysKNCbOQYgI1Dw1dyn7+Fu9X/RhHLDgAv5A7dj3I8j
+ dLEF0zZJ+EquuDmB/fmkjprnrzI=
+X-Mailgun-Sending-Ip: 69.72.42.4
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n08.prod.us-east-1.postgun.com with SMTP id
+ 5fb6de319e87e16352b13eec (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 19 Nov 2020 21:05:53
+ GMT
+Sender: sidgup=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 62AA2C43463; Thu, 19 Nov 2020 21:05:52 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
+        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+Received: from sidgup-linux.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: sidgup)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id ED978C433C6;
+        Thu, 19 Nov 2020 21:05:50 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org ED978C433C6
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=sidgup@codeaurora.org
+From:   Siddharth Gupta <sidgup@codeaurora.org>
+To:     agross@kernel.org, bjorn.andersson@linaro.org, ohad@wizery.com,
+        linux-remoteproc@vger.kernel.org
+Cc:     Siddharth Gupta <sidgup@codeaurora.org>,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org, tsoni@codeaurora.org,
+        psodagud@codeaurora.org, rishabhb@codeaurora.org,
+        linux-doc@vger.kernel.org
+Subject: [PATCH v8 0/4] Introduce mini-dump support for remoteproc
+Date:   Thu, 19 Nov 2020 13:05:31 -0800
+Message-Id: <1605819935-10726-1-git-send-email-sidgup@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Oct 21, 2020 at 07:18:19PM +0200, Loic Poulain wrote:
-> This is a generic MHI-over-PCI controller driver for MHI only devices
-> such as QCOM modems. For now it supports registering of Qualcomm SDX55
-> based PCIe modules. The MHI channels have been extracted from mhi
-> downstream driver.
-> 
-> This driver is for MHI-only devices which have all functionalities
-> exposed through MHI channels and accessed by the corresponding MHI
-> device drivers (no out-of-band communication).
-> 
-> Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
-> Reviewed-by: Bhaumik Bhatt <bbhatt@codeaurora.org>
+Sometimes firmware sizes can be in tens of MB's and reading all the memory
+during coredump can consume lot of time and memory.
 
-I see the following warning on 32-bit ARM with clang after this patch
-appeared in -next:
+Introducing support for mini-dumps. Mini-dump contains smallest amount of
+useful information, that could help to debug subsystem crashes.
 
-drivers/bus/mhi/pci_generic.c:276:25: warning: implicit conversion from
-'unsigned long long' to 'dma_addr_t' (aka 'unsigned int') changes value
-from 18446744073709551615 to 4294967295 [-Wconstant-conversion]
-        mhi_cntrl->iova_stop = DMA_BIT_MASK(info->dma_data_width);
-                             ~ ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-./include/linux/dma-mapping.h:76:40: note: expanded from macro
-'DMA_BIT_MASK'
-#define DMA_BIT_MASK(n) (((n) == 64) ? ~0ULL : ((1ULL<<(n))-1))
-                                       ^~~~~
-1 warning generated.
+During bootup memory is allocated in SMEM (Shared memory) in the form of a
+table that contains the physical addresses and sizes of the regions that
+are supposed to be collected during coredump. This memory is shared amongst
+all processors in a Qualcomm platform, so all remoteprocs fill in their
+entry in the global table once they are out of reset.
 
-An explicit cast to dma_addr_t would solve it but I am not sure if that
-is proper or not.
+This patch series adds support for parsing the global minidump table and
+uses the current coredump frameork to expose this memory to userspace
+during remoteproc's recovery.
 
-Cheers,
-Nathan
+This patch series also integrates the patch:
+https://patchwork.kernel.org/patch/11695541/ sent by Siddharth.
+
+Changelog:
+v7 -> v8:
+- Addressed all comments from Bjorn:
+    * Renamed set_section_name to elf_strtbl_add.
+    * Renamed rproc_minidump to rproc_coredump_using_sections.
+    * Removed qcom_minidump header and moved structures to qcom_common source files.
+    * Moved minidump specific functions to qcom_common source files.
+    * Other minor fixes.
+
+v6 -> v7:
+- The STR_TAB size is calculated dynamically now instead of a predefined size.
+- Added comments to indicate details about the reserved null section header. More
+  details can be found at https://refspecs.linuxfoundation.org/elf/elf.pdf.
+
+v5 -> v6:
+- Removed priv_cleanup operation from rproc_ops. The dump_segments list is
+  updated and cleaned up each time minidump is invoked.
+- Split patch #2 into 2 parts - one that adds the rproc_minidump function, and
+  the other that uses the new function in the qcom_q6v5_pas driver.
+- Updated structs in qcom_minidump to explicitly indicate the endianness of the
+  data stored in SMEM, also updated member names.
+- Read the global table of contents in SMEM each time adsp_minidump is invoked.
+
+v4 -> v5:
+- Fixed adsp_add_minidump_segments to read IO memory using appropriate functions.
+
+v3 -> v4:
+- Made adsp_priv_cleanup a static function.
+
+v2 -> v3:
+- Refactored code to remove dependency on Qualcomm configs.
+- Renamed do_rproc_minidump to rproc_minidump and marked as exported
+  symbol.
+
+v1 -> v2:
+- 3 kernel test robot warnings have been resolved.
+- Introduced priv_cleanup op in order to making the cleaning of
+  private elements used by the remoteproc more readable.
+- Removed rproc_cleanup_priv as it is no longer needed.
+- Switched to if/else format for rproc_alloc in order to keep 
+  the static const decalaration of adsp_minidump_ops.
+
+Siddharth Gupta (4):
+  remoteproc: core: Add ops to enable custom coredump functionality
+  remoteproc: coredump: Add minidump functionality
+  remoteproc: qcom: Add capability to collect minidumps
+  remoteproc: qcom: Add minidump id for sm8150 modem
+
+ drivers/remoteproc/qcom_common.c            | 147 ++++++++++++++++++++++++++++
+ drivers/remoteproc/qcom_common.h            |   2 +
+ drivers/remoteproc/qcom_q6v5_pas.c          |  28 +++++-
+ drivers/remoteproc/remoteproc_core.c        |   6 +-
+ drivers/remoteproc/remoteproc_coredump.c    | 140 ++++++++++++++++++++++++++
+ drivers/remoteproc/remoteproc_elf_helpers.h |  26 +++++
+ include/linux/remoteproc.h                  |   3 +
+ 7 files changed, 349 insertions(+), 3 deletions(-)
+
+-- 
+Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
+
