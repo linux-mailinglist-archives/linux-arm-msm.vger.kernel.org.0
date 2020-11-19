@@ -2,116 +2,106 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A49522B8EF9
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Nov 2020 10:35:20 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 551A42B8F1B
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Nov 2020 10:41:20 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726571AbgKSJd5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 19 Nov 2020 04:33:57 -0500
-Received: from mail.kernel.org ([198.145.29.99]:43618 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726574AbgKSJd5 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 19 Nov 2020 04:33:57 -0500
-Received: from willie-the-truck (236.31.169.217.in-addr.arpa [217.169.31.236])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 74D2422259;
-        Thu, 19 Nov 2020 09:33:52 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1605778436;
-        bh=qXHuW+5mvL0kkht9BzXP9H3dcimpEpohk7274SXiPt0=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=KuBYtJZnGXqY8JeIjLYwLEryyq/LFfBzf5DYNN5SW85VfI+kaKGbMGUzrSnqk2j0D
-         LUlfV5i8/QByFuaWLyF9oZn0/7DWUdcAK4bPIfrg8X5L33e2/vwHHXGGVNtNaL5FIZ
-         cPyAosIpV4VK+9atwS0PHWoHObpNFihK+s9u8lqY=
-Date:   Thu, 19 Nov 2020 09:33:48 +0000
-From:   Will Deacon <will@kernel.org>
-To:     Thierry Reding <thierry.reding@gmail.com>
-Cc:     John Stultz <john.stultz@linaro.org>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        lkml <linux-kernel@vger.kernel.org>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Joerg Roedel <joro@8bytes.org>,
-        Thomas Gleixner <tglx@linutronix.de>,
-        Jason Cooper <jason@lakedaemon.net>,
-        Marc Zyngier <maz@kernel.org>, Vinod Koul <vkoul@kernel.org>,
-        Kalle Valo <kvalo@codeaurora.org>,
-        Maulik Shah <mkshah@codeaurora.org>,
-        Lina Iyer <ilina@codeaurora.org>,
-        Saravana Kannan <saravanak@google.com>,
-        Todd Kjos <tkjos@google.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Jon Hunter <jonathanh@nvidia.com>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        "list@263.net:IOMMU DRIVERS <iommu@lists.linux-foundation.org>, Joerg
-        Roedel <joro@8bytes.org>," <iommu@lists.linux-foundation.org>,
-        "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>
-Subject: Re: [PATCH v6 3/3] firmware: QCOM_SCM: Allow qcom_scm driver to be
- loadable as a permenent module
-Message-ID: <20201119093348.GF3599@willie-the-truck>
-References: <20201106042710.55979-1-john.stultz@linaro.org>
- <20201106042710.55979-3-john.stultz@linaro.org>
- <20201116155936.GE2224373@ulmo>
- <20201116163603.GA30507@willie-the-truck>
- <CALAqxLVDm923WRSB+DVxFacmEtmEPS7Qeq+rW_jbCDMNMWw9PQ@mail.gmail.com>
- <20201117134754.GB2589875@ulmo>
+        id S1726788AbgKSJgv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 19 Nov 2020 04:36:51 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46920 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726920AbgKSJgv (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 19 Nov 2020 04:36:51 -0500
+Received: from mail-ej1-x643.google.com (mail-ej1-x643.google.com [IPv6:2a00:1450:4864:20::643])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 149D1C0613CF
+        for <linux-arm-msm@vger.kernel.org>; Thu, 19 Nov 2020 01:36:51 -0800 (PST)
+Received: by mail-ej1-x643.google.com with SMTP id f23so6979400ejk.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 19 Nov 2020 01:36:51 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=SEull2j6pe+OSY1/6fewJb3l7jXUXQXvziz6JvVkpHA=;
+        b=aPNvJcK2E+p3xzBVQ+5hbx4P7xC1o10OXleYqtcdpACCO9IjYvy4aZK9ijuVbBJCRc
+         ITWPxiGXyiC4DGjPJdZsBqClyXm38pjxSrKRkchwv515VGDB3Z0KD1WOs4xcIzL7Io9Y
+         dhkWt5wz/v+eCzhlkWhdlfpg1XSYRFO8Qy/Ph7qqe3DPDR05n3uGrRy333BsOLIUn/jm
+         UHHjspMP6gaOkBaaBSpO63cJehY8OJRKF4aCl2ymMOW+ExMvt2geV6VcsUErh18/R98a
+         JiTHvaCSXgTqiF+mRyKADj58AkN/1+ki9ZPta9hMkwLXcPpFudgBBaDFItJCrHBT1KlQ
+         cU3Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=SEull2j6pe+OSY1/6fewJb3l7jXUXQXvziz6JvVkpHA=;
+        b=sxOibHrrP8FzQuT67iLLJSivTzo/hWRAhrttl8ykW3Isjg/eX2JroYHtVypE791JWP
+         Ii8bK6Gj2LoQ6k+SwngGIlfIFEqiSME9AE+54ro3JqOnZKbifxqo0ZEHu1OgWg7RQpO/
+         nB13oytUBLYzoGPix4ihnA/WZc+QRF+4t+CoYg3QCIsXr6ArrUDXBTAV1Jc021MDDyOk
+         PQphfDzLIG3jeKzvWhFhR+VGkTxZol6j3Z8KKqB3cDDdCls1t1PvLldMgFJNiACKlSap
+         xFTjdUTYo7xtRT6UHX0WfXqdOPh1FX1Y6L/K64zTn4U7SrosBpnL9FRkxtlWNvS56fQx
+         i79w==
+X-Gm-Message-State: AOAM533K1vLB7qzYZ0FTk0VnIQV1Ko2aNe8KUNN0uQOYMzwWUjSHFG/z
+        Yhdt1WGPqByFafuE2rlx8HMuL71GOGJDB/zEfvvK0A==
+X-Google-Smtp-Source: ABdhPJxQbGGrOS2ihVGgBjHdgrC5Z4v+NVSAwbKTvmEj2p0/O06iYW38OgIFRHIR3fXKP95BYJLKqMG4FLlNYOtEiKE=
+X-Received: by 2002:a17:906:180b:: with SMTP id v11mr27317808eje.466.1605778609760;
+ Thu, 19 Nov 2020 01:36:49 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20201117134754.GB2589875@ulmo>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+References: <1605279602-18749-1-git-send-email-loic.poulain@linaro.org>
+ <1605279602-18749-2-git-send-email-loic.poulain@linaro.org>
+ <3e72e0fa-1bba-20af-1e2a-1b7981bfd39d@codeaurora.org> <CAMZdPi-BcjtF55DMJi60JsYNbOo+ypBmkqnq62NyeJ6G9X=w8w@mail.gmail.com>
+ <9fcb71a8-8b85-1572-ad1f-2e3e6d341e1b@codeaurora.org>
+In-Reply-To: <9fcb71a8-8b85-1572-ad1f-2e3e6d341e1b@codeaurora.org>
+From:   Loic Poulain <loic.poulain@linaro.org>
+Date:   Thu, 19 Nov 2020 10:42:52 +0100
+Message-ID: <CAMZdPi-Uhnicfb51GTprSDE8fOiSdK7VL+GZpN81zxzi-zpLmw@mail.gmail.com>
+Subject: Re: [PATCH 1/8] mhi: pci-generic: Increase number of hardware events
+To:     Hemant Kumar <hemantk@codeaurora.org>
+Cc:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Nov 17, 2020 at 02:47:54PM +0100, Thierry Reding wrote:
-> On Mon, Nov 16, 2020 at 11:48:39AM -0800, John Stultz wrote:
-> > On Mon, Nov 16, 2020 at 8:36 AM Will Deacon <will@kernel.org> wrote:
-> > > On Mon, Nov 16, 2020 at 04:59:36PM +0100, Thierry Reding wrote:
-> > > > On Fri, Nov 06, 2020 at 04:27:10AM +0000, John Stultz wrote:
-> > > > Unfortunately, the ARM SMMU module will eventually end up being loaded
-> > > > once the root filesystem has been mounted (for example via SDHCI or
-> > > > Ethernet, both with using just plain, non-IOMMU-backed DMA API) and then
-> > > > initialize, configuring as "fault by default", which then results from a
-> > > > slew of SMMU faults from all the devices that have previously configured
-> > > > themselves without IOMMU support.
-> > >
-> > > I wonder if fw_devlink=on would help here?
-> > >
-> > > But either way, I'd be more inclined to revert this change if it's causing
-> > > problems for !QCOM devices.
-> > >
-> > > Linus -- please can you drop this one (patch 3/3) for now, given that it's
-> > > causing problems?
-> > 
-> > Agreed. Apologies again for the trouble.
-> > 
-> > I do feel like the probe timeout to handle optional links is causing a
-> > lot of the trouble here. I expect fw_devlink would solve this, but it
-> > may be awhile before it can be always enabled.  I may see about
-> > pushing the default probe timeout value to be a little further out
-> > than init (I backed away from my last attempt as I didn't want to
-> > cause long (30 second) delays for cases like NFS root, but maybe 2-5
-> > seconds would be enough to make things work better for everyone).
-> 
-> I think there are two problems here: 1) the deferred probe timeout can
-> cause a mismatch between what SMMU masters and the SMMU think is going
-> on and 2) a logistical problem of dealing with the SMMU driver being a
-> loadable module.
-> 
-> The second problem can be dealt with by shipping the module in the
-> initial ramdisk. That's a bit annoying, but perhaps the right thing to
-> do. At least on Tegra we need this because all the devices that carry
-> the root filesystem (Ethernet for NFS and SDHCI/USB/SATA/PCI for disk
-> boot) are SMMU masters and will start to fault once the SMMU driver is
-> loaded.
+Hi Hemant,
 
-Realistically, if you're building an IOMMU driver as a module then it needs
-to be part of the initrd and fw_devlink needs to be enabled. Relying on
-timeouts and the phase of the moon is not going to be reliable.
+On Thu, 19 Nov 2020 at 02:50, Hemant Kumar <hemantk@codeaurora.org> wrote:
+>
+> Hi Loic,
+>
+> On 11/18/20 12:26 AM, Loic Poulain wrote:
+> > On Wed, 18 Nov 2020 at 04:54, Hemant Kumar <hemantk@codeaurora.org> wrote:
+> >>
+> >> Hi Loic,
+> >>
+> >> On 11/13/20 6:59 AM, Loic Poulain wrote:
+> >>> If the IPA (IP hardware accelerator) is starved of event ring elements,
+> >>> the modem is crashing (SDX55). That can be prevented by setting a
+> >> it is because of event processing is getting starved ?
+> >
+> > Yes, and hardware does not like that.
+> >
+> >> Event ring elements = 2 x xfer ring is good for HW channels. Do you think NAPI
+> >> polling would help when you start verifying higher data rates?
+> >
+> > That's a good question, I'll certainly test that. But we still need to
+> > ensure this will
+> > never ever happen with this higher event count.
+> Once you move to burst mode, if device is running out of credit, it
+> would send OOB and move to doorbell mode, and stop posting events until
+> MHI Host rings DB with a TRE.
 
-But back to the original issue, I think we should revert the Kconfig patch
-from Linus' tree. Please can you send a revert for that?
+That not something I observe with my device/hardware, and I end with
+the modem crashing:
 
-Will
+[   47.607340] ipa_mhi_client ipa_mhi_gsi_ev_err_cb:1121 channel
+id=100 client=42 state=2
+[   47.608337] ipa_mhi_client ipa_mhi_gsi_ev_err_cb:1133 Received
+GSI_EVT_EVT_RING_EMPTY_ERR
+[   47.609310] ipa_mhi_client ipa_mhi_gsi_ev_err_cb:1138 err_desc=0x5000
+[   47.610339] IPA: unrecoverable error has occurred, asserting
+
+It's triggered from here:
+https://source.codeaurora.org/quic/la/kernel/msm-4.14/tree/drivers/platform/msm/ipa/ipa_clients/ipa_mhi_client.c?h=APSS.FSM.7.6#n1134
+
+Regards,
+Loic
