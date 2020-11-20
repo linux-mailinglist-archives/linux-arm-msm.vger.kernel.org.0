@@ -2,85 +2,141 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 977192BA23B
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Nov 2020 07:24:24 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1E23F2BA3C6
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Nov 2020 08:46:02 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725805AbgKTGXh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 20 Nov 2020 01:23:37 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41376 "EHLO
+        id S1727257AbgKTHpL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 20 Nov 2020 02:45:11 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54086 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725788AbgKTGXh (ORCPT
+        with ESMTP id S1727256AbgKTHpK (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 20 Nov 2020 01:23:37 -0500
-Received: from mail-pl1-x642.google.com (mail-pl1-x642.google.com [IPv6:2607:f8b0:4864:20::642])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 30E89C0613CF
-        for <linux-arm-msm@vger.kernel.org>; Thu, 19 Nov 2020 22:23:37 -0800 (PST)
-Received: by mail-pl1-x642.google.com with SMTP id bj5so3530434plb.4
-        for <linux-arm-msm@vger.kernel.org>; Thu, 19 Nov 2020 22:23:37 -0800 (PST)
+        Fri, 20 Nov 2020 02:45:10 -0500
+Received: from mail-pg1-x542.google.com (mail-pg1-x542.google.com [IPv6:2607:f8b0:4864:20::542])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AA7F5C0617A7
+        for <linux-arm-msm@vger.kernel.org>; Thu, 19 Nov 2020 23:45:10 -0800 (PST)
+Received: by mail-pg1-x542.google.com with SMTP id j19so6597609pgg.5
+        for <linux-arm-msm@vger.kernel.org>; Thu, 19 Nov 2020 23:45:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=0/v7EN5qLaIP5deWAyiNGrCRTTWH3Pp/ZeqoRvM3lLY=;
-        b=d/vV7bH+XJ2qqI4hEaxWCb6e1Po5WzFE8t5dkiLGLX7AmAaAiNmv5IFN8ICbJEHLP7
-         IarMZt3oD7rsqRb8WDMtPJrJ5Doe9GrJYoygCOpvjYm5CvKyy/aPTUige0KhIANbKKQm
-         kxu1S18YVG7O5XLCRg0BVcaSdgYuO/3vvn2aVIxFe+YQoKun3xCsEDBui6d3v0cEdpxg
-         Lh+mGKnVrVxFzuA0Xsgeu9B9xoHxcw8tbHK2UcS2NHgy8Vok/LjT+VIGitrhWS/pI66V
-         G9PHvp1K9QEM2TLJx6o7oPfawWOzqFZ3Iq5meLYQmwQzmMr2azFrQhAYL38TGNYObgtk
-         19DA==
+        d=chromium.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=Pgm7gas/67hkSnZPKlx52N7rv2QBjwKGfrcg8IcGCds=;
+        b=gpAt9BQA9pI0gT8fyq9674Mg5U98TARENbE3Xmpl+WiX2dL76fsYEagSu0e9dgd7Nl
+         GK7PzKNMO67jiZ+8GM4wJVqbyxsRQAvHsO56u2PwnWQKPyouAvGBt11CJ2USMRoDRDHr
+         oWdk1JuwAjD35theA+o9fh5s8arm9fwDt3v7c=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=0/v7EN5qLaIP5deWAyiNGrCRTTWH3Pp/ZeqoRvM3lLY=;
-        b=thT2U8BiZdoy/xyaxFZ0kh4IfWz0FeFYnpcwns3aq6kCNGfQWWVq5rMhdY+CG+XZYF
-         bxgW65UjvFPyfTvRMq02A4cjNEkMmmgzDOpMRd7JjRGchs/GkyErWX1oyYfb1uame7kx
-         bRcNGyxswMcj2/j3kojp3ibnN+pjctOFU88mnR2nOorDQAarivRpQyhl23NmTLBq7wUh
-         /CytM3aTV3wXHNLw/i4LVq7I7BvkxH3Go9Fk5pO+eMa0lSyI5CmUDp+/Efb9n60fP1HD
-         ej7i4RTWznbRte4LOa26Y5bXlFsy3KIxVFSvZSvvSMk+uE3S6cBtP2tFpsLsQPWB0Vku
-         vfzA==
-X-Gm-Message-State: AOAM532ltDHVeQpcVYnYiJ4SDUdH7WINmxYz4dvP6jLpR5vAY+4Vc/Zw
-        LjPqOr4mjWhj5eqUO579hLUO
-X-Google-Smtp-Source: ABdhPJwm8SV5lH/8B7IplWqFGpNc4kgg3ooizZUecSGSH56XRviUfuh71/2I3k8gYpw4BQpnvs5hQw==
-X-Received: by 2002:a17:902:ba8b:b029:d7:e6da:cd21 with SMTP id k11-20020a170902ba8bb02900d7e6dacd21mr12352707pls.38.1605853416673;
-        Thu, 19 Nov 2020 22:23:36 -0800 (PST)
-Received: from work ([103.59.133.81])
-        by smtp.gmail.com with ESMTPSA id z17sm2168338pfq.121.2020.11.19.22.23.32
-        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 19 Nov 2020 22:23:36 -0800 (PST)
-Date:   Fri, 20 Nov 2020 11:53:29 +0530
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     Jakub Kicinski <kuba@kernel.org>
-Cc:     Bhaumik Bhatt <bbhatt@codeaurora.org>, kvalo@codeaurora.org,
-        linux-wireless@vger.kernel.org, cjhuang@codeaurora.org,
-        linux-arm-msm@vger.kernel.org, hemantk@codeaurora.org,
-        linux-kernel@vger.kernel.org, ath11k@lists.infradead.org,
-        clew@codeaurora.org, loic.poulain@linaro.org,
-        netdev@vger.kernel.org
-Subject: Re: [PATCH] net: qrtr: Unprepare MHI channels during remove
-Message-ID: <20201120062329.GC3909@work>
-References: <1605723625-11206-1-git-send-email-bbhatt@codeaurora.org>
- <20201119211046.64294cf6@kicinski-fedora-PC1C0HJN.hsd1.ca.comcast.net>
- <20201120061512.GB3909@work>
- <20201119221828.72ba151a@kicinski-fedora-PC1C0HJN.hsd1.ca.comcast.net>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=Pgm7gas/67hkSnZPKlx52N7rv2QBjwKGfrcg8IcGCds=;
+        b=LbFhuESeoKCVKZcnWGhH1tMLk7NmIAk0f5RJGK9wH/xtqFXWfwhMwaUvsw9hQ3y2ji
+         tCCP6AlTj7Gz9Kwt3SW3wqSJDe2I8RTKpUavuT37/9WpEVCIGVNGFcwJTaRMy/F0lEyu
+         Xs4/2o1G82o+xbcK1i90eTzDDqOQ53vNzDUwWoDY0h/IWEAa4qWfO5SKQtaJatoXWV0M
+         hmZMxoeakz71BX/9AXRoX0gJ+0/xRswoYS301yzE3igGU6pkBm9hz9HsjnLv52WZ9jzo
+         GAMqIgT3LPH66G1UYnZ/4iyKYzOlxnGsOuQ3vwLKRhUmY9D/wC/2LchVa7+hl+cmVDrw
+         aNEQ==
+X-Gm-Message-State: AOAM531wd5hgocE4ikYPkcUH0BKrKUqjlaYSocM30FS5edK4f0D9Qyi/
+        BwjYgXkYQmKSmA0pKpR8gcKHIA==
+X-Google-Smtp-Source: ABdhPJyW2AF7LFfGU/tgTvVphv+23N+iGTqWKgCwsWaCaIS1DeBH/FYO25HKYg4KwFN6QNh55BaHkw==
+X-Received: by 2002:a05:6a00:4d:b029:197:7198:fc37 with SMTP id i13-20020a056a00004db02901977198fc37mr12010023pfk.7.1605858310232;
+        Thu, 19 Nov 2020 23:45:10 -0800 (PST)
+Received: from smtp.gmail.com ([100.99.132.239])
+        by smtp.gmail.com with ESMTPSA id h8sm2660968pjc.54.2020.11.19.23.45.09
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 19 Nov 2020 23:45:09 -0800 (PST)
+From:   Stephen Boyd <swboyd@chromium.org>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        Douglas Anderson <dianders@chromium.org>,
+        Matthias Kaehlcke <mka@chromium.org>
+Subject: [PATCH v2] arm64: dts: qcom: sc7180: Add prox sensor to LTE sku Lazor boards
+Date:   Thu, 19 Nov 2020 23:45:08 -0800
+Message-Id: <20201120074508.3236616-1-swboyd@chromium.org>
+X-Mailer: git-send-email 2.29.2.454.gaff20da3a2-goog
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20201119221828.72ba151a@kicinski-fedora-PC1C0HJN.hsd1.ca.comcast.net>
-User-Agent: Mutt/1.9.4 (2018-02-28)
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Nov 19, 2020 at 10:18:28PM -0800, Jakub Kicinski wrote:
-> On Fri, 20 Nov 2020 11:45:12 +0530 Manivannan Sadhasivam wrote:
-> > Jakub, can you please provide your ack so that I can take it?
-> 
-> Sure:
-> 
-> Acked-by: Jakub Kicinski <kuba@kernel.org>
+There's a proximity sensor on Lazor devices, but only for LTE SKUs.
+Enable it only on the LTE SKUs and also configure it properly so it
+works.
 
-Patch applied to mhi-ath11k-immutable.
+Cc: Douglas Anderson <dianders@chromium.org>
+Cc: Matthias Kaehlcke <mka@chromium.org>
+Signed-off-by: Stephen Boyd <swboyd@chromium.org>
+---
 
-Thanks,
-Mani
+Changes from v1 (https://lore.kernel.org/r/20201118045454.2503325-1-swboyd@chromium.org):
+ * Fixed startup-sensor property to be 0 instead of 1
+ * Fixed proxraw-strength to be 8 instead of 2
+
+ arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r1-lte.dts | 8 ++++++++
+ arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r3-lte.dts | 8 ++++++++
+ arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor.dtsi       | 7 ++++++-
+ 3 files changed, 22 insertions(+), 1 deletion(-)
+
+diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r1-lte.dts b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r1-lte.dts
+index 5a67e5baafec..e16ba7b01f25 100644
+--- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r1-lte.dts
++++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r1-lte.dts
+@@ -13,6 +13,14 @@ / {
+ 	compatible = "google,lazor-rev1-sku0", "google,lazor-rev2-sku0", "qcom,sc7180";
+ };
+ 
++&ap_sar_sensor {
++	status = "okay";
++};
++
++&ap_sar_sensor_i2c {
++	status = "okay";
++};
++
+ &keyboard_backlight {
+ 	status = "okay";
+ };
+diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r3-lte.dts b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r3-lte.dts
+index 43836fc4d403..0881f8dd02c9 100644
+--- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r3-lte.dts
++++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r3-lte.dts
+@@ -13,6 +13,14 @@ / {
+ 	compatible = "google,lazor-sku0", "qcom,sc7180";
+ };
+ 
++&ap_sar_sensor {
++	status = "okay";
++};
++
++&ap_sar_sensor_i2c {
++	status = "okay";
++};
++
+ &keyboard_backlight {
+ 	status = "okay";
+ };
+diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor.dtsi
+index 180ef9e04306..89e5cd29ec09 100644
+--- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor.dtsi
+@@ -30,7 +30,12 @@ panel_in_edp: endpoint {
+ };
+ 
+ &ap_sar_sensor {
+-	status = "okay";
++	semtech,cs0-ground;
++	semtech,combined-sensors = <3>;
++	semtech,resolution = "fine";
++	semtech,startup-sensor = <0>;
++	semtech,proxraw-strength = <8>;
++	semtech,avg-pos-strength = <64>;
+ };
+ 
+ ap_ts_pen_1v8: &i2c4 {
+
+base-commit: ead9f7d7ea9e20843e29e688b53859cea20044ee
+-- 
+https://chromeos.dev
+
