@@ -2,371 +2,83 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id AEBA32B9F14
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Nov 2020 01:13:09 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3AEC62BA124
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Nov 2020 04:30:14 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727037AbgKTAK6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 19 Nov 2020 19:10:58 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40928 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726848AbgKTAK6 (ORCPT
+        id S1726417AbgKTD3x (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 19 Nov 2020 22:29:53 -0500
+Received: from userp2120.oracle.com ([156.151.31.85]:57978 "EHLO
+        userp2120.oracle.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725887AbgKTD3x (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 19 Nov 2020 19:10:58 -0500
-Received: from mail-ej1-x641.google.com (mail-ej1-x641.google.com [IPv6:2a00:1450:4864:20::641])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9BFA3C061A04
-        for <linux-arm-msm@vger.kernel.org>; Thu, 19 Nov 2020 16:10:57 -0800 (PST)
-Received: by mail-ej1-x641.google.com with SMTP id bo9so4702823ejb.13
-        for <linux-arm-msm@vger.kernel.org>; Thu, 19 Nov 2020 16:10:57 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=OVDKAEgKc07fjPVimTGuRqUwL4ug5893Az6X6hTx6dU=;
-        b=LCYHa3s5hi3LRcErlQShjRYaJz+doMQoLZo/p/mxG/uDc0nBMaivzrdthh743YA/YK
-         wYnJPhUcDX9UNY9tzp8cn9hTgZfQ5Ad973uZFITSvh+XnSLSfNJ4jAcufJZjZmyQfmjt
-         TNgbfpZUozKA8LIpL1fq2IT4cJJaq9B2HNkM1r1oR4fgvLwc3J2VPPa/7iOiFu4Zt4YS
-         +tg95Hs3fgn9LBMCcYpf/70Bi6QediQPEttewpM+3nuguBtAzP6fdgExsNjAdT2c6VSg
-         M8ExixvZdbs9mZWqMhkxWjyJNsiHKZeQxH/r5M3M7L8AXERUUi3inJYJRxog6id9uvLJ
-         OkHA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=OVDKAEgKc07fjPVimTGuRqUwL4ug5893Az6X6hTx6dU=;
-        b=bZdkjW/AhGaB9HCP29yU26oQ/k41ApPSlgymMhgE/6Hioy9y9yp/qPMEnSIXpfvScs
-         eWuluI8Op8Lcvrhgcc6e8UMSWr2WD8e81JWqzPabiNU9hf5It1NnVQItWu1HDlSUTF3d
-         DsFY3ydHwc5H4J4OSIfeO+7+XgXQGb4j4IxQc9LSCnujshU9bUn1w4BLBjfy9SS49L3v
-         i0mMkus1QSKchs10UiH6XGTwtWr/sSFD8PnKPO1LnQ01mEX9px+elnmYYkE+3zASwsqW
-         2j+LH9Q3bApXOZrbruLWfmUTZE8cQcTnwXXB0SLQQI4hPXMXTFDzUdLoPmfrzna5Tjgv
-         GqIw==
-X-Gm-Message-State: AOAM531vC0e25xPD+S7AY3E/q5Nor5pU1dz2MKUdS1a9DWRmSs2zl929
-        ngDSdFpMIom4swZtAaNCFht2Dw==
-X-Google-Smtp-Source: ABdhPJwQFayRCZGpMpZCwovuqE78e10+O/WHfOl3s+EUc12w/fpnX+AT8kYOWzPcpgGSTQhFBLNgHQ==
-X-Received: by 2002:a17:906:13d2:: with SMTP id g18mr12142510ejc.76.1605831056278;
-        Thu, 19 Nov 2020 16:10:56 -0800 (PST)
-Received: from localhost.localdomain (hst-221-4.medicom.bg. [84.238.221.4])
-        by smtp.gmail.com with ESMTPSA id k23sm383556edv.97.2020.11.19.16.10.55
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 19 Nov 2020 16:10:55 -0800 (PST)
-From:   Stanimir Varbanov <stanimir.varbanov@linaro.org>
-To:     linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Cc:     Vikash Garodia <vgarodia@codeaurora.org>,
-        Mansur Alisha Shaik <mansur@codeaurora.org>,
-        Dikshita Agarwal <dikshita@codeaurora.org>,
-        Stanimir Varbanov <stanimir.varbanov@linaro.org>
-Subject: [PATCH 3/3] media: hfi_venus: Request interrupt for sync cmds
-Date:   Fri, 20 Nov 2020 02:10:37 +0200
-Message-Id: <20201120001037.10032-4-stanimir.varbanov@linaro.org>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20201120001037.10032-1-stanimir.varbanov@linaro.org>
-References: <20201120001037.10032-1-stanimir.varbanov@linaro.org>
+        Thu, 19 Nov 2020 22:29:53 -0500
+Received: from pps.filterd (userp2120.oracle.com [127.0.0.1])
+        by userp2120.oracle.com (8.16.0.42/8.16.0.42) with SMTP id 0AK3NjDG154501;
+        Fri, 20 Nov 2020 03:29:49 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=from : to : cc :
+ subject : date : message-id : in-reply-to : references : mime-version :
+ content-type : content-transfer-encoding; s=corp-2020-01-29;
+ bh=7T+25RsczIG/AyB9xuQpsSbg+PK5T5XL21kHWE6wBO4=;
+ b=w7/Qru3pwCsJ00bIGYyFpHwkYvU5QlSO2hvo66v2fjoTuYDWjTtsAe3gFy207kJNxFTB
+ Bcl+3/lRfBRlj5miDMccsTidBVZgxSO2VBU82kEhiAmNvhXu/1EF+g2Y5zui/iDiolxt
+ dZ6HEN8xQ2H/dmLhFduYnqU09XJB+KLmZqVhlWwbEto4jaMn2dS4VnVP9eXHzxvjPY+L
+ cEFuexDQPiI8eP13BultpgJt99Z5abq8F3bvUcwzjXFQW6bOWJUjRbg3tEIA+8Aac3o+
+ ZiuNQSlbNU7BgUbOISZ0WYnv/m+kxmdB0IUWAtWV4d2b5sBSQ37awo/NV7cj5De8cVxC Yw== 
+Received: from aserp3030.oracle.com (aserp3030.oracle.com [141.146.126.71])
+        by userp2120.oracle.com with ESMTP id 34t7vngp1v-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=FAIL);
+        Fri, 20 Nov 2020 03:29:48 +0000
+Received: from pps.filterd (aserp3030.oracle.com [127.0.0.1])
+        by aserp3030.oracle.com (8.16.0.42/8.16.0.42) with SMTP id 0AK3Pjjb032583;
+        Fri, 20 Nov 2020 03:29:48 GMT
+Received: from aserv0122.oracle.com (aserv0122.oracle.com [141.146.126.236])
+        by aserp3030.oracle.com with ESMTP id 34uspx2g7k-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+        Fri, 20 Nov 2020 03:29:48 +0000
+Received: from abhmp0008.oracle.com (abhmp0008.oracle.com [141.146.116.14])
+        by aserv0122.oracle.com (8.14.4/8.14.4) with ESMTP id 0AK3Tls0029078;
+        Fri, 20 Nov 2020 03:29:47 GMT
+Received: from ca-mkp.ca.oracle.com (/10.156.108.201)
+        by default (Oracle Beehive Gateway v4.0)
+        with ESMTP ; Thu, 19 Nov 2020 19:29:47 -0800
+From:   "Martin K. Petersen" <martin.petersen@oracle.com>
+To:     Eric Biggers <ebiggers@kernel.org>, linux-scsi@vger.kernel.org
+Cc:     "Martin K . Petersen" <martin.petersen@oracle.com>,
+        linux-arm-msm@vger.kernel.org, Satya Tangirala <satyat@google.com>
+Subject: Re: [PATCH] scsi: ufs-qcom: only select QCOM_SCM if SCSI_UFS_CRYPTO
+Date:   Thu, 19 Nov 2020 22:29:34 -0500
+Message-Id: <160584262851.7157.18069892435697004008.b4-ty@oracle.com>
+X-Mailer: git-send-email 2.29.2
+In-Reply-To: <20201114004754.235378-1-ebiggers@kernel.org>
+References: <20201114004754.235378-1-ebiggers@kernel.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-Virus-Version: vendor=nai engine=6000 definitions=9810 signatures=668682
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 mlxlogscore=895 malwarescore=0
+ mlxscore=0 bulkscore=0 suspectscore=0 adultscore=0 spamscore=0
+ phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2009150000 definitions=main-2011200023
+X-Proofpoint-Virus-Version: vendor=nai engine=6000 definitions=9810 signatures=668682
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 mlxlogscore=923 suspectscore=0
+ malwarescore=0 bulkscore=0 impostorscore=0 lowpriorityscore=0 spamscore=0
+ adultscore=0 mlxscore=0 priorityscore=1501 phishscore=0 clxscore=1015
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2009150000
+ definitions=main-2011200023
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Vikash Garodia <vgarodia@codeaurora.org>
+On Fri, 13 Nov 2020 16:47:54 -0800, Eric Biggers wrote:
 
-For synchronous commands, update the message queue variable.
-This would inform video firmware to raise interrupt on host
-CPU whenever there is a response for such commands.
+> QCOM_SCM is only needed to make the qcom_scm_*() calls in
+> ufs-qcom-ice.c, which is only compiled when SCSI_UFS_CRYPTO=y.  So don't
+> unnecessarily enable QCOM_SCM when SCSI_UFS_CRYPTO=n.
 
-Signed-off-by: Vikash Garodia <vgarodia@codeaurora.org>
-Signed-off-by: Stanimir Varbanov <stanimir.varbanov@linaro.org>
----
- drivers/media/platform/qcom/venus/hfi_venus.c | 74 ++++++++++---------
- 1 file changed, 41 insertions(+), 33 deletions(-)
+Applied to 5.11/scsi-queue, thanks!
 
-diff --git a/drivers/media/platform/qcom/venus/hfi_venus.c b/drivers/media/platform/qcom/venus/hfi_venus.c
-index 4be4a75ddcb6..b8fdb464ba9c 100644
---- a/drivers/media/platform/qcom/venus/hfi_venus.c
-+++ b/drivers/media/platform/qcom/venus/hfi_venus.c
-@@ -372,7 +372,7 @@ static void venus_soft_int(struct venus_hfi_device *hdev)
- }
- 
- static int venus_iface_cmdq_write_nolock(struct venus_hfi_device *hdev,
--					 void *pkt)
-+					 void *pkt, bool sync)
- {
- 	struct device *dev = hdev->core->dev;
- 	struct hfi_pkt_hdr *cmd_packet;
-@@ -397,15 +397,23 @@ static int venus_iface_cmdq_write_nolock(struct venus_hfi_device *hdev,
- 	if (rx_req)
- 		venus_soft_int(hdev);
- 
-+	/* Inform video firmware to raise interrupt for synchronous commands */
-+	queue = &hdev->queues[IFACEQ_MSG_IDX];
-+	if (sync) {
-+		queue->qhdr->rx_req = 1;
-+		/* ensure rx_req is updated in memory */
-+		wmb();
-+	}
-+
- 	return 0;
- }
- 
--static int venus_iface_cmdq_write(struct venus_hfi_device *hdev, void *pkt)
-+static int venus_iface_cmdq_write(struct venus_hfi_device *hdev, void *pkt, bool sync)
- {
- 	int ret;
- 
- 	mutex_lock(&hdev->lock);
--	ret = venus_iface_cmdq_write_nolock(hdev, pkt);
-+	ret = venus_iface_cmdq_write_nolock(hdev, pkt, sync);
- 	mutex_unlock(&hdev->lock);
- 
- 	return ret;
-@@ -428,7 +436,7 @@ static int venus_hfi_core_set_resource(struct venus_core *core, u32 id,
- 	if (ret)
- 		return ret;
- 
--	ret = venus_iface_cmdq_write(hdev, pkt);
-+	ret = venus_iface_cmdq_write(hdev, pkt, false);
- 	if (ret)
- 		return ret;
- 
-@@ -778,7 +786,7 @@ static int venus_sys_set_debug(struct venus_hfi_device *hdev, u32 debug)
- 
- 	pkt_sys_debug_config(pkt, HFI_DEBUG_MODE_QUEUE, debug);
- 
--	ret = venus_iface_cmdq_write(hdev, pkt);
-+	ret = venus_iface_cmdq_write(hdev, pkt, false);
- 	if (ret)
- 		return ret;
- 
-@@ -795,7 +803,7 @@ static int venus_sys_set_coverage(struct venus_hfi_device *hdev, u32 mode)
- 
- 	pkt_sys_coverage_config(pkt, mode);
- 
--	ret = venus_iface_cmdq_write(hdev, pkt);
-+	ret = venus_iface_cmdq_write(hdev, pkt, false);
- 	if (ret)
- 		return ret;
- 
-@@ -816,7 +824,7 @@ static int venus_sys_set_idle_message(struct venus_hfi_device *hdev,
- 
- 	pkt_sys_idle_indicator(pkt, enable);
- 
--	ret = venus_iface_cmdq_write(hdev, pkt);
-+	ret = venus_iface_cmdq_write(hdev, pkt, false);
- 	if (ret)
- 		return ret;
- 
-@@ -834,7 +842,7 @@ static int venus_sys_set_power_control(struct venus_hfi_device *hdev,
- 
- 	pkt_sys_power_control(pkt, enable);
- 
--	ret = venus_iface_cmdq_write(hdev, pkt);
-+	ret = venus_iface_cmdq_write(hdev, pkt, false);
- 	if (ret)
- 		return ret;
- 
-@@ -885,14 +893,14 @@ static int venus_sys_set_default_properties(struct venus_hfi_device *hdev)
- 	return ret;
- }
- 
--static int venus_session_cmd(struct venus_inst *inst, u32 pkt_type)
-+static int venus_session_cmd(struct venus_inst *inst, u32 pkt_type, bool sync)
- {
- 	struct venus_hfi_device *hdev = to_hfi_priv(inst->core);
- 	struct hfi_session_pkt pkt;
- 
- 	pkt_session_cmd(&pkt, pkt_type, inst);
- 
--	return venus_iface_cmdq_write(hdev, &pkt);
-+	return venus_iface_cmdq_write(hdev, &pkt, sync);
- }
- 
- static void venus_flush_debug_queue(struct venus_hfi_device *hdev)
-@@ -922,7 +930,7 @@ static int venus_prepare_power_collapse(struct venus_hfi_device *hdev,
- 
- 	pkt_sys_pc_prep(&pkt);
- 
--	ret = venus_iface_cmdq_write(hdev, &pkt);
-+	ret = venus_iface_cmdq_write(hdev, &pkt, false);
- 	if (ret)
- 		return ret;
- 
-@@ -1064,13 +1072,13 @@ static int venus_core_init(struct venus_core *core)
- 
- 	venus_set_state(hdev, VENUS_STATE_INIT);
- 
--	ret = venus_iface_cmdq_write(hdev, &pkt);
-+	ret = venus_iface_cmdq_write(hdev, &pkt, false);
- 	if (ret)
- 		return ret;
- 
- 	pkt_sys_image_version(&version_pkt);
- 
--	ret = venus_iface_cmdq_write(hdev, &version_pkt);
-+	ret = venus_iface_cmdq_write(hdev, &version_pkt, false);
- 	if (ret)
- 		dev_warn(dev, "failed to send image version pkt to fw\n");
- 
-@@ -1099,7 +1107,7 @@ static int venus_core_ping(struct venus_core *core, u32 cookie)
- 
- 	pkt_sys_ping(&pkt, cookie);
- 
--	return venus_iface_cmdq_write(hdev, &pkt);
-+	return venus_iface_cmdq_write(hdev, &pkt, false);
- }
- 
- static int venus_core_trigger_ssr(struct venus_core *core, u32 trigger_type)
-@@ -1112,7 +1120,7 @@ static int venus_core_trigger_ssr(struct venus_core *core, u32 trigger_type)
- 	if (ret)
- 		return ret;
- 
--	return venus_iface_cmdq_write(hdev, &pkt);
-+	return venus_iface_cmdq_write(hdev, &pkt, false);
- }
- 
- static int venus_session_init(struct venus_inst *inst, u32 session_type,
-@@ -1130,7 +1138,7 @@ static int venus_session_init(struct venus_inst *inst, u32 session_type,
- 	if (ret)
- 		goto err;
- 
--	ret = venus_iface_cmdq_write(hdev, &pkt);
-+	ret = venus_iface_cmdq_write(hdev, &pkt, true);
- 	if (ret)
- 		goto err;
- 
-@@ -1151,7 +1159,7 @@ static int venus_session_end(struct venus_inst *inst)
- 			dev_warn(dev, "fw coverage msg ON failed\n");
- 	}
- 
--	return venus_session_cmd(inst, HFI_CMD_SYS_SESSION_END);
-+	return venus_session_cmd(inst, HFI_CMD_SYS_SESSION_END, true);
- }
- 
- static int venus_session_abort(struct venus_inst *inst)
-@@ -1160,7 +1168,7 @@ static int venus_session_abort(struct venus_inst *inst)
- 
- 	venus_flush_debug_queue(hdev);
- 
--	return venus_session_cmd(inst, HFI_CMD_SYS_SESSION_ABORT);
-+	return venus_session_cmd(inst, HFI_CMD_SYS_SESSION_ABORT, true);
- }
- 
- static int venus_session_flush(struct venus_inst *inst, u32 flush_mode)
-@@ -1173,22 +1181,22 @@ static int venus_session_flush(struct venus_inst *inst, u32 flush_mode)
- 	if (ret)
- 		return ret;
- 
--	return venus_iface_cmdq_write(hdev, &pkt);
-+	return venus_iface_cmdq_write(hdev, &pkt, true);
- }
- 
- static int venus_session_start(struct venus_inst *inst)
- {
--	return venus_session_cmd(inst, HFI_CMD_SESSION_START);
-+	return venus_session_cmd(inst, HFI_CMD_SESSION_START, true);
- }
- 
- static int venus_session_stop(struct venus_inst *inst)
- {
--	return venus_session_cmd(inst, HFI_CMD_SESSION_STOP);
-+	return venus_session_cmd(inst, HFI_CMD_SESSION_STOP, true);
- }
- 
- static int venus_session_continue(struct venus_inst *inst)
- {
--	return venus_session_cmd(inst, HFI_CMD_SESSION_CONTINUE);
-+	return venus_session_cmd(inst, HFI_CMD_SESSION_CONTINUE, false);
- }
- 
- static int venus_session_etb(struct venus_inst *inst,
-@@ -1205,7 +1213,7 @@ static int venus_session_etb(struct venus_inst *inst,
- 		if (ret)
- 			return ret;
- 
--		ret = venus_iface_cmdq_write(hdev, &pkt);
-+		ret = venus_iface_cmdq_write(hdev, &pkt, false);
- 	} else if (session_type == VIDC_SESSION_TYPE_ENC) {
- 		struct hfi_session_empty_buffer_uncompressed_plane0_pkt pkt;
- 
-@@ -1213,7 +1221,7 @@ static int venus_session_etb(struct venus_inst *inst,
- 		if (ret)
- 			return ret;
- 
--		ret = venus_iface_cmdq_write(hdev, &pkt);
-+		ret = venus_iface_cmdq_write(hdev, &pkt, false);
- 	} else {
- 		ret = -EINVAL;
- 	}
-@@ -1232,7 +1240,7 @@ static int venus_session_ftb(struct venus_inst *inst,
- 	if (ret)
- 		return ret;
- 
--	return venus_iface_cmdq_write(hdev, &pkt);
-+	return venus_iface_cmdq_write(hdev, &pkt, false);
- }
- 
- static int venus_session_set_buffers(struct venus_inst *inst,
-@@ -1252,7 +1260,7 @@ static int venus_session_set_buffers(struct venus_inst *inst,
- 	if (ret)
- 		return ret;
- 
--	return venus_iface_cmdq_write(hdev, pkt);
-+	return venus_iface_cmdq_write(hdev, pkt, false);
- }
- 
- static int venus_session_unset_buffers(struct venus_inst *inst,
-@@ -1272,17 +1280,17 @@ static int venus_session_unset_buffers(struct venus_inst *inst,
- 	if (ret)
- 		return ret;
- 
--	return venus_iface_cmdq_write(hdev, pkt);
-+	return venus_iface_cmdq_write(hdev, pkt, true);
- }
- 
- static int venus_session_load_res(struct venus_inst *inst)
- {
--	return venus_session_cmd(inst, HFI_CMD_SESSION_LOAD_RESOURCES);
-+	return venus_session_cmd(inst, HFI_CMD_SESSION_LOAD_RESOURCES, true);
- }
- 
- static int venus_session_release_res(struct venus_inst *inst)
- {
--	return venus_session_cmd(inst, HFI_CMD_SESSION_RELEASE_RESOURCES);
-+	return venus_session_cmd(inst, HFI_CMD_SESSION_RELEASE_RESOURCES, true);
- }
- 
- static int venus_session_parse_seq_hdr(struct venus_inst *inst, u32 seq_hdr,
-@@ -1299,7 +1307,7 @@ static int venus_session_parse_seq_hdr(struct venus_inst *inst, u32 seq_hdr,
- 	if (ret)
- 		return ret;
- 
--	ret = venus_iface_cmdq_write(hdev, pkt);
-+	ret = venus_iface_cmdq_write(hdev, pkt, false);
- 	if (ret)
- 		return ret;
- 
-@@ -1320,7 +1328,7 @@ static int venus_session_get_seq_hdr(struct venus_inst *inst, u32 seq_hdr,
- 	if (ret)
- 		return ret;
- 
--	return venus_iface_cmdq_write(hdev, pkt);
-+	return venus_iface_cmdq_write(hdev, pkt, false);
- }
- 
- static int venus_session_set_property(struct venus_inst *inst, u32 ptype,
-@@ -1339,7 +1347,7 @@ static int venus_session_set_property(struct venus_inst *inst, u32 ptype,
- 	if (ret)
- 		return ret;
- 
--	return venus_iface_cmdq_write(hdev, pkt);
-+	return venus_iface_cmdq_write(hdev, pkt, false);
- }
- 
- static int venus_session_get_property(struct venus_inst *inst, u32 ptype)
-@@ -1352,7 +1360,7 @@ static int venus_session_get_property(struct venus_inst *inst, u32 ptype)
- 	if (ret)
- 		return ret;
- 
--	return venus_iface_cmdq_write(hdev, &pkt);
-+	return venus_iface_cmdq_write(hdev, &pkt, true);
- }
- 
- static int venus_resume(struct venus_core *core)
+[1/1] scsi: ufs-qcom: Only select QCOM_SCM if SCSI_UFS_CRYPTO
+      https://git.kernel.org/mkp/scsi/c/6ac63216a7af
+
 -- 
-2.17.1
-
+Martin K. Petersen	Oracle Linux Engineering
