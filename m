@@ -2,83 +2,112 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 3AEC62BA124
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Nov 2020 04:30:14 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 543252BA170
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Nov 2020 05:26:40 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726417AbgKTD3x (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 19 Nov 2020 22:29:53 -0500
-Received: from userp2120.oracle.com ([156.151.31.85]:57978 "EHLO
-        userp2120.oracle.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725887AbgKTD3x (ORCPT
+        id S1725936AbgKTEYo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 19 Nov 2020 23:24:44 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51550 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726224AbgKTEYo (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 19 Nov 2020 22:29:53 -0500
-Received: from pps.filterd (userp2120.oracle.com [127.0.0.1])
-        by userp2120.oracle.com (8.16.0.42/8.16.0.42) with SMTP id 0AK3NjDG154501;
-        Fri, 20 Nov 2020 03:29:49 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references : mime-version :
- content-type : content-transfer-encoding; s=corp-2020-01-29;
- bh=7T+25RsczIG/AyB9xuQpsSbg+PK5T5XL21kHWE6wBO4=;
- b=w7/Qru3pwCsJ00bIGYyFpHwkYvU5QlSO2hvo66v2fjoTuYDWjTtsAe3gFy207kJNxFTB
- Bcl+3/lRfBRlj5miDMccsTidBVZgxSO2VBU82kEhiAmNvhXu/1EF+g2Y5zui/iDiolxt
- dZ6HEN8xQ2H/dmLhFduYnqU09XJB+KLmZqVhlWwbEto4jaMn2dS4VnVP9eXHzxvjPY+L
- cEFuexDQPiI8eP13BultpgJt99Z5abq8F3bvUcwzjXFQW6bOWJUjRbg3tEIA+8Aac3o+
- ZiuNQSlbNU7BgUbOISZ0WYnv/m+kxmdB0IUWAtWV4d2b5sBSQ37awo/NV7cj5De8cVxC Yw== 
-Received: from aserp3030.oracle.com (aserp3030.oracle.com [141.146.126.71])
-        by userp2120.oracle.com with ESMTP id 34t7vngp1v-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=FAIL);
-        Fri, 20 Nov 2020 03:29:48 +0000
-Received: from pps.filterd (aserp3030.oracle.com [127.0.0.1])
-        by aserp3030.oracle.com (8.16.0.42/8.16.0.42) with SMTP id 0AK3Pjjb032583;
-        Fri, 20 Nov 2020 03:29:48 GMT
-Received: from aserv0122.oracle.com (aserv0122.oracle.com [141.146.126.236])
-        by aserp3030.oracle.com with ESMTP id 34uspx2g7k-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-        Fri, 20 Nov 2020 03:29:48 +0000
-Received: from abhmp0008.oracle.com (abhmp0008.oracle.com [141.146.116.14])
-        by aserv0122.oracle.com (8.14.4/8.14.4) with ESMTP id 0AK3Tls0029078;
-        Fri, 20 Nov 2020 03:29:47 GMT
-Received: from ca-mkp.ca.oracle.com (/10.156.108.201)
-        by default (Oracle Beehive Gateway v4.0)
-        with ESMTP ; Thu, 19 Nov 2020 19:29:47 -0800
-From:   "Martin K. Petersen" <martin.petersen@oracle.com>
-To:     Eric Biggers <ebiggers@kernel.org>, linux-scsi@vger.kernel.org
-Cc:     "Martin K . Petersen" <martin.petersen@oracle.com>,
-        linux-arm-msm@vger.kernel.org, Satya Tangirala <satyat@google.com>
-Subject: Re: [PATCH] scsi: ufs-qcom: only select QCOM_SCM if SCSI_UFS_CRYPTO
-Date:   Thu, 19 Nov 2020 22:29:34 -0500
-Message-Id: <160584262851.7157.18069892435697004008.b4-ty@oracle.com>
-X-Mailer: git-send-email 2.29.2
-In-Reply-To: <20201114004754.235378-1-ebiggers@kernel.org>
-References: <20201114004754.235378-1-ebiggers@kernel.org>
+        Thu, 19 Nov 2020 23:24:44 -0500
+Received: from mail-ot1-x341.google.com (mail-ot1-x341.google.com [IPv6:2607:f8b0:4864:20::341])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DBEEDC0617A7
+        for <linux-arm-msm@vger.kernel.org>; Thu, 19 Nov 2020 20:24:43 -0800 (PST)
+Received: by mail-ot1-x341.google.com with SMTP id h16so7587737otq.9
+        for <linux-arm-msm@vger.kernel.org>; Thu, 19 Nov 2020 20:24:43 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=h7WuwHFiMngmuwO68KF9/HezTioINw/cSHUf/pGNYRU=;
+        b=lisRmeRhOXD4a8T6k2e6pfhp8n0joXPQ/mJYTlG0wjPzVC1NUMQ16JuhZx92CDkqa0
+         bVPO4tF+wVarxzjHw8LIwMHSvMie+uoBWP74YQEQK6Le57zEqgZ6xwAiPBRbWtZKQVtC
+         YCdQMT9ZblVhGznTJJwKWXsFKM0ErSiOKyQJoyQLg6yjoJU92Tm/VM8k9x559P3J5wn8
+         R+vE2/1VM3eLb8oHD/qhwgm1INFXLxP4QbzIrCE2sAZWxkd1WWvlDqtNdN0m99yUkalO
+         dnrMgIsarSnpjFr4B7mUCqEYMEdUOjrzCuE+d1rNAQLYI36CdrBLyrZdEABeBPsCIfnK
+         R83Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=h7WuwHFiMngmuwO68KF9/HezTioINw/cSHUf/pGNYRU=;
+        b=ZXBUSPCuovWyQXGKuEVFTMVlWG6Wvtqbhp1feleMVWWxCnR3B5RyRvvQzq7IaS6oOH
+         mpHp8c8RhNFwrutXOFeV74XWA7C3qNa43FNIh8LEI34obRaiin0Y3kNrZZlZ1HMY7anN
+         v/pr0HtYQnXd0tiFZHP1c4z5VTybgulT33ArRCu8Tu0g6bbEI0mAy6dRKuEBou9nZRAE
+         5kvM1M7ypGi7DbEfZ+Y1xq4GpbQ+USs248MVTy6rzC3WEYh67b9UFi7GeWdgi4RJ9O6+
+         rLjvpnaoYjwKLpVY3nFrUrsY5/pZHdg7+je0DMkRoUjkEiaJmr44nVRd36NI8QXQVUH1
+         bCUA==
+X-Gm-Message-State: AOAM530MextEr3aiEtHS6jIlpIeSr6SpbyTwET11EImfDxVl0V/Gf8OS
+        tpPH3pwa3SovAKXO9cb4tN7wajTOwQQBgg==
+X-Google-Smtp-Source: ABdhPJwByh8JFpQbDfuRz86C6Hsku5xHXImoqPiYlUIFt4m7uYcvwmMUfgdaC9OwVizRS/Zjm5ZZEA==
+X-Received: by 2002:a05:6830:1f11:: with SMTP id u17mr12860028otg.287.1605846282990;
+        Thu, 19 Nov 2020 20:24:42 -0800 (PST)
+Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
+        by smtp.gmail.com with ESMTPSA id v73sm677319oif.30.2020.11.19.20.24.41
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 19 Nov 2020 20:24:42 -0800 (PST)
+Date:   Thu, 19 Nov 2020 22:24:40 -0600
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Souradeep Chowdhury <schowdhu@codeaurora.org>
+Cc:     devicetree@vger.kernel.org, Andy Gross <agross@kernel.org>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Rajendra Nayak <rnayak@codeaurora.org>
+Subject: Re: [PATCH V1 3/3] arm64: dts: qcom: sm8150: Add LLC support for
+ sm8150
+Message-ID: <20201120042440.GL8532@builder.lan>
+References: <cover.1601452132.git.schowdhu@codeaurora.org>
+ <8f0e818485941076d62a8dc9f711b0fb868ba080.1601452132.git.schowdhu@codeaurora.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-Virus-Version: vendor=nai engine=6000 definitions=9810 signatures=668682
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 mlxlogscore=895 malwarescore=0
- mlxscore=0 bulkscore=0 suspectscore=0 adultscore=0 spamscore=0
- phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2009150000 definitions=main-2011200023
-X-Proofpoint-Virus-Version: vendor=nai engine=6000 definitions=9810 signatures=668682
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 mlxlogscore=923 suspectscore=0
- malwarescore=0 bulkscore=0 impostorscore=0 lowpriorityscore=0 spamscore=0
- adultscore=0 mlxscore=0 priorityscore=1501 phishscore=0 clxscore=1015
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2009150000
- definitions=main-2011200023
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <8f0e818485941076d62a8dc9f711b0fb868ba080.1601452132.git.schowdhu@codeaurora.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, 13 Nov 2020 16:47:54 -0800, Eric Biggers wrote:
+On Wed 30 Sep 03:14 CDT 2020, Souradeep Chowdhury wrote:
 
-> QCOM_SCM is only needed to make the qcom_scm_*() calls in
-> ufs-qcom-ice.c, which is only compiled when SCSI_UFS_CRYPTO=y.  So don't
-> unnecessarily enable QCOM_SCM when SCSI_UFS_CRYPTO=n.
+> Add LLCC system cache controller entry for sm8150 to support sm8150
+> for LLCC.
+> 
 
-Applied to 5.11/scsi-queue, thanks!
+Thank you for your patches Souradeep, unfortunately there where some
+indentation issues that you would have seen if you ran
+./scripts/checkpatch.pl --strict.
 
-[1/1] scsi: ufs-qcom: Only select QCOM_SCM if SCSI_UFS_CRYPTO
-      https://git.kernel.org/mkp/scsi/c/6ac63216a7af
+I fixed these issues up and applied the patches towards v5.11.
 
--- 
-Martin K. Petersen	Oracle Linux Engineering
+Thank you,
+Bjorn
+
+> Signed-off-by: Souradeep Chowdhury <schowdhu@codeaurora.org>
+> ---
+>  arch/arm64/boot/dts/qcom/sm8150.dtsi | 9 ++++++++-
+>  1 file changed, 8 insertions(+), 1 deletion(-)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/sm8150.dtsi b/arch/arm64/boot/dts/qcom/sm8150.dtsi
+> index f0a872e02686..71037a1bb217 100644
+> --- a/arch/arm64/boot/dts/qcom/sm8150.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sm8150.dtsi
+> @@ -490,7 +490,14 @@
+>  			qcom,bcm-voters = <&apps_bcm_voter>;
+>  		};
+>  
+> -		ufs_mem_hc: ufshc@1d84000 {
+> +	        system-cache-controller@9200000 {
+> +                        compatible = "qcom,sm8150-llcc";
+> +                        reg = <0 0x09200000 0 0x200000>, <0 0x09600000 0 0x50000>;
+> +                        reg-names = "llcc_base", "llcc_broadcast_base";
+> +                        interrupts = <GIC_SPI 582 IRQ_TYPE_LEVEL_HIGH>;
+> +                 };
+> +
+> +        	ufs_mem_hc: ufshc@1d84000 {
+>  			compatible = "qcom,sm8150-ufshc", "qcom,ufshc",
+>  				     "jedec,ufs-2.0";
+>  			reg = <0 0x01d84000 0 0x2500>;
+> -- 
+> QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
+> of Code Aurora Forum, hosted by The Linux Foundation
+> 
