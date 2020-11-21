@@ -2,66 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E0FCA2BBD01
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 21 Nov 2020 05:48:28 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 311D32BBD73
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 21 Nov 2020 06:56:44 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725944AbgKUEsI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 20 Nov 2020 23:48:08 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52458 "EHLO
+        id S1725958AbgKUF4B (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 21 Nov 2020 00:56:01 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34580 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725855AbgKUEsH (ORCPT
+        with ESMTP id S1725935AbgKUF4B (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 20 Nov 2020 23:48:07 -0500
-Received: from mail-oi1-x242.google.com (mail-oi1-x242.google.com [IPv6:2607:f8b0:4864:20::242])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9F4AFC061A48
-        for <linux-arm-msm@vger.kernel.org>; Fri, 20 Nov 2020 20:48:07 -0800 (PST)
-Received: by mail-oi1-x242.google.com with SMTP id m13so13001400oih.8
-        for <linux-arm-msm@vger.kernel.org>; Fri, 20 Nov 2020 20:48:07 -0800 (PST)
+        Sat, 21 Nov 2020 00:56:01 -0500
+Received: from mail-ot1-x341.google.com (mail-ot1-x341.google.com [IPv6:2607:f8b0:4864:20::341])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E9325C061A48
+        for <linux-arm-msm@vger.kernel.org>; Fri, 20 Nov 2020 21:56:00 -0800 (PST)
+Received: by mail-ot1-x341.google.com with SMTP id f16so10877787otl.11
+        for <linux-arm-msm@vger.kernel.org>; Fri, 20 Nov 2020 21:56:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=+5tuY8DghcZBvhcmNZ1QBUM0wOMXflva60dOunjBFlM=;
-        b=hEfpldQOix/WT+Po0WGDlXh6hu4sjFQXHsfMLWLFHo/G9OEdGqxAbZqPPQwYx1FZmx
-         I3ZjlJl21PCfzGVogb4UhgsLsAv+2qoreIvLIFQxX1IxPcsgbSw4lEZRBDls6WjhL/g/
-         6pOxExIBguvb0AgbjSaiHDd3Vyim10/H68RS/hcR9HzUMCA7kFYWxvKNEx/hZFcAQHwK
-         RdaGb3b2uBMVORGB1hPZ5MK9Dg2L2QV93WRtLG6Z1/p3TPyLir36KHYX9KtGLZ3tKKe2
-         8+qYQTzLc45hrb8ff0E7tqjlYjnb50Xmu2TKQWhTen/KFC8PYy72xNOI6Qrx0SH2+7Dm
-         ABqA==
+        bh=PLDb+5nAdKajf4l/1zcD0rDEOYP1mCUs5/dRLgZKCGI=;
+        b=NZnlHEf6Nvk6oZrtgCe2dT9fBwC9KA5VWSOvOnv5dZ+5z+7N/1RyUxgOpizqrRsY9Z
+         bHYEg9gEogKjMtVtuOx6pFkteWgW84O0MV9MGJ74YPoCeOovcyjjT9U8g8KLQXbW0C0v
+         OAE8iqv8BIUKxWn1sB3RRTObMsuuzhsc37MNhsZ4zK9E4mY1QCNatS5jUrpB3LeAhBVJ
+         hhBtlxXaiw6O3AxvMFOEL3f8a6cOHXqGFPq6ye5VyN2zvmXUVe8+8vClF60/0K95s3J+
+         aZ+D2a/qTyU9aD0DOiTvKPv9lZya55RtEIyeb+AZOM+jRsPu7SUuyZe4Jn4rEq0nm7yM
+         cafg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=+5tuY8DghcZBvhcmNZ1QBUM0wOMXflva60dOunjBFlM=;
-        b=n5ymJqjVUY+usGzH+t15O1CeESlo1ht69wtHqTG9397xcK1IyIgxD2ro4+7mWYJinv
-         TuDIK9AM5ZLYA7NlAdhk7yBEMeOPJBZJDPoMkMT9o+Em/MbCKucOc2oTOIsgI/6vb4wU
-         qFKf+atcwJ9wbijuRqmD1zt+ETK6fiIkKBsHFamndpv3frTApNVD0yrqe2vyjDiMhJdv
-         Bv9b+Zxzlm7GVn3FJa7gwLIVS0ecANppUb8i9QrUl1ITRGU5HqwroNqHRXFw0wMWh2ie
-         rtak4Y48Qr97IcUZo1L9jxKPNWq8NvJnkTqR8lwrULJsFX0cTn3hYFZzK4fU1LCFVpje
-         DSpQ==
-X-Gm-Message-State: AOAM530EczFKNrbAJdbkE/H1uL9+ey7OiRDN4t6U008TyADyWTKUUtfr
-        DGXYxoBxOwTkkDr1klHik9iCgQ==
-X-Google-Smtp-Source: ABdhPJzPZMaQkLsy6sCEJGtV7eRVF/ZWjoSa7tpvgaAqhe01hBeXktkYzZLQurCVbDvJibTDsCRJIg==
-X-Received: by 2002:a05:6808:301:: with SMTP id i1mr8853175oie.49.1605934086863;
-        Fri, 20 Nov 2020 20:48:06 -0800 (PST)
+        bh=PLDb+5nAdKajf4l/1zcD0rDEOYP1mCUs5/dRLgZKCGI=;
+        b=YnIs4EMYNUkAqnthn74NZa3bTBCM/Fs22RXC/q5B8d7Jt8xMp8cTyPgxxovH93iZMv
+         uYNeJJaM7z4j/+qWZlvE+RFKrh1lpgEVGy02TGMpB5L+qU42fNJ44y2cFTQPwHYdpZib
+         FnEtX9zsHK0Rl0z3rQYDWV8GiMIqUgPxZx5jxHRcE1HkuGY/tXDFSd7ar6tcTbALF72Z
+         5skipsZ5WjCMPRV4OBKacawFO0NuUuFc04H8G5yJzctFb2MeEu+y+x9mwkj/55331lLP
+         oVXlnwV1CWz2opop5EFzhBhJiL7BbTwRgoFFOmni5v6ClSxALGNHmXTD93/ZjiTbbvKd
+         FcXg==
+X-Gm-Message-State: AOAM53078KyT0qdCxLc73m/vhi3ArMgtmvdGEOUcI7QZlzyh631GYNIA
+        yFYwLmysoWAikmBr7XcwUFCHMw==
+X-Google-Smtp-Source: ABdhPJwb0XTpa7th7zsw5TR53cJFIRcFBnkozOSPV+njSyVd3rQDkbPa9TkVIeOdPLZs59uD1EAbMw==
+X-Received: by 2002:a9d:3dc6:: with SMTP id l64mr688627otc.331.1605938160222;
+        Fri, 20 Nov 2020 21:56:00 -0800 (PST)
 Received: from localhost.localdomain (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id g3sm2875800oif.26.2020.11.20.20.48.05
+        by smtp.gmail.com with ESMTPSA id 92sm437014ota.67.2020.11.20.21.55.59
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 20 Nov 2020 20:48:06 -0800 (PST)
+        Fri, 20 Nov 2020 21:55:59 -0800 (PST)
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Alim Akhtar <alim.akhtar@samsung.com>,
-        Avri Altman <avri.altman@wdc.com>,
-        "James E.J. Bottomley" <jejb@linux.ibm.com>,
-        "Martin K. Petersen" <martin.petersen@oracle.com>,
-        Stanley Chu <stanley.chu@mediatek.com>,
-        Can Guo <cang@codeaurora.org>,
-        Asutosh Das <asutoshd@codeaurora.org>,
-        Bean Huo <beanhuo@micron.com>
-Cc:     linux-scsi@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-Subject: [PATCH] scsi: ufs: Adjust logic in common ADAPT helper
-Date:   Fri, 20 Nov 2020 20:48:10 -0800
-Message-Id: <20201121044810.507288-1-bjorn.andersson@linaro.org>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH] arm64: dts: qcom: sm8150-mtp: Specify remoteproc firmware
+Date:   Fri, 20 Nov 2020 21:56:03 -0800
+Message-Id: <20201121055603.582281-1-bjorn.andersson@linaro.org>
 X-Mailer: git-send-email 2.28.0
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
@@ -69,39 +64,41 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The introduction of ufshcd_dme_configure_adapt() refactored out
-duplication from the Mediatek and Qualcomm drivers.
+Point the various remoteprocs of SM8150 MTP to a place with the platform
+specific firmware.
 
-Both these implementations had the logic of:
-    gear_tx == UFS_HS_G4 => PA_INITIAL_ADAPT
-    gear_tx != UFS_HS_G4 => PA_NO_ADAPT
-
-but now both implementations pass PA_INITIAL_ADAPT as "adapt_val" and if
-gear_tx is not UFS_HS_G4 that is replaced with PA_INITIAL_ADAPT. In
-other words, it's PA_INITIAL_ADAPT in both above cases.
-
-The result is that e.g. Qualcomm SM8150 has no longer functional UFS, so
-adjust the logic to match the previous implementation.
-
-Fixes: fc85a74e28fe ("scsi: ufs: Refactor ADAPT configuration function")
 Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 ---
- drivers/scsi/ufs/ufshcd.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm64/boot/dts/qcom/sm8150-mtp.dts | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/drivers/scsi/ufs/ufshcd.c b/drivers/scsi/ufs/ufshcd.c
-index 52e077aa3efe..13281c74cb4f 100644
---- a/drivers/scsi/ufs/ufshcd.c
-+++ b/drivers/scsi/ufs/ufshcd.c
-@@ -3618,7 +3618,7 @@ int ufshcd_dme_configure_adapt(struct ufs_hba *hba,
- 	int ret;
+diff --git a/arch/arm64/boot/dts/qcom/sm8150-mtp.dts b/arch/arm64/boot/dts/qcom/sm8150-mtp.dts
+index 7a64a2ed78c3..3774f8e63416 100644
+--- a/arch/arm64/boot/dts/qcom/sm8150-mtp.dts
++++ b/arch/arm64/boot/dts/qcom/sm8150-mtp.dts
+@@ -369,14 +369,22 @@ resin {
  
- 	if (agreed_gear != UFS_HS_G4)
--		adapt_val = PA_INITIAL_ADAPT;
-+		adapt_val = PA_NO_ADAPT;
+ &remoteproc_adsp {
+ 	status = "okay";
++	firmware-name = "qcom/sm8150/adsp.mdt";
+ };
  
- 	ret = ufshcd_dme_set(hba,
- 			     UIC_ARG_MIB(PA_TXHSADAPTTYPE),
+ &remoteproc_cdsp {
+ 	status = "okay";
++	firmware-name = "qcom/sm8150/cdsp.mdt";
++};
++
++&remoteproc_mpss {
++	status = "okay";
++	firmware-name = "qcom/sm8150/modem.mdt";
+ };
+ 
+ &remoteproc_slpi {
+ 	status = "okay";
++	firmware-name = "qcom/sm8150/slpi.mdt";
+ };
+ 
+ &tlmm {
 -- 
 2.28.0
 
