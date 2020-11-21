@@ -2,198 +2,139 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 39D532BBCC3
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 21 Nov 2020 04:45:58 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 798962BBCD9
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 21 Nov 2020 05:04:43 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727205AbgKUDol (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 20 Nov 2020 22:44:41 -0500
-Received: from m42-4.mailgun.net ([69.72.42.4]:34888 "EHLO m42-4.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727047AbgKUDol (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 20 Nov 2020 22:44:41 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1605930279; h=Content-Transfer-Encoding: Content-Type:
- In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
- Subject: Sender; bh=WUF9vNijxF2NrVfabfsan6qxRJo2BPnBDbY00KnZ4jg=; b=joU0YwbBn+wYairAMj/2nM7Nv0FrNNC1mTnevjw5lqFNzqU8YnYaM5sG0gBzFVzgWEx65Cc9
- zHsoVsYbKaGvVwtpuBwbK64bWN/urGc6Q81CCcCr0p9iSJN0H6n+y0C0G6mjwQ0E5F+0ZWNP
- pYJcifLnK1jnDFR0Y8a4za+C8Bo=
-X-Mailgun-Sending-Ip: 69.72.42.4
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n03.prod.us-east-1.postgun.com with SMTP id
- 5fb88d211b731a5d9c3511e2 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Sat, 21 Nov 2020 03:44:33
- GMT
-Sender: hemantk=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 7F44FC43464; Sat, 21 Nov 2020 03:44:32 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        NICE_REPLY_A,SPF_FAIL,URIBL_BLOCKED autolearn=no autolearn_force=no
-        version=3.4.0
-Received: from [10.46.162.249] (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: hemantk)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id CCE27C433ED;
-        Sat, 21 Nov 2020 03:44:30 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org CCE27C433ED
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=hemantk@codeaurora.org
-Subject: Re: [PATCH v12 5/5] selftest: mhi: Add support to test MHI LOOPBACK
- channel
-To:     Shuah Khan <skhan@linuxfoundation.org>,
-        manivannan.sadhasivam@linaro.org, gregkh@linuxfoundation.org
-Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        jhugo@codeaurora.org, bbhatt@codeaurora.org,
-        loic.poulain@linaro.org, netdev@vger.kernel.org
-References: <1605566782-38013-1-git-send-email-hemantk@codeaurora.org>
- <1605566782-38013-6-git-send-email-hemantk@codeaurora.org>
- <f337319e-d542-67b3-f31e-e4366d822d76@linuxfoundation.org>
-From:   Hemant Kumar <hemantk@codeaurora.org>
-Message-ID: <cfcbb987-89b9-dff2-bd88-abffb9c8cbc6@codeaurora.org>
-Date:   Fri, 20 Nov 2020 19:44:30 -0800
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.10.0
+        id S1727208AbgKUEDQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 20 Nov 2020 23:03:16 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45582 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725906AbgKUEDP (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 20 Nov 2020 23:03:15 -0500
+Received: from mail-oi1-x242.google.com (mail-oi1-x242.google.com [IPv6:2607:f8b0:4864:20::242])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8B75FC0613CF
+        for <linux-arm-msm@vger.kernel.org>; Fri, 20 Nov 2020 20:03:15 -0800 (PST)
+Received: by mail-oi1-x242.google.com with SMTP id t143so12924710oif.10
+        for <linux-arm-msm@vger.kernel.org>; Fri, 20 Nov 2020 20:03:15 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=d+Jt7Kw8tpbR0XZRec6xgDcNSJxFLJiVa/Gv05lalew=;
+        b=V3ft2O8JeSSLMy1nZsUqp23pVt9eilwqNNaJ56mAPY3c4Px4/iFl7M1t8ww4Ilfhru
+         4Sz1i4Rdgy9ormCWbNs36UPOAAZM7DbHZDP56Qth9Nxgqw6Zn1PGQygV4M3/kQcAx7RL
+         x9+f4zU1depG3fJ1LmEFunDbPTePXby+FCOl3YdEwfmA26Edtg0MuMiYJKUnrn+1HAZE
+         3u9nXxptvpeVxQ1adajzI/rH4xBMVKsMBte1uHGXMgBTa9ACOKW6FJ1S7zuV8s4wnc5Y
+         tKeHrudxFAgkhGD4XNQxf8+DEWvQdR+3/GoAw2ZgKng94WulU1km7lCF1ejtbJk02zB9
+         xF/A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=d+Jt7Kw8tpbR0XZRec6xgDcNSJxFLJiVa/Gv05lalew=;
+        b=FxbTgJN4eZuWcQAbUq6RB0coY0Xw2LwfsIy8ht0hz6jwE3TwC2i/g8ZqwiZjY3aBjp
+         dVCmR/GCHgjYrX7k6BAd+zIwVKbHhItwzkpEKxkiDWJ4L4hV04J296imakEX/RXnCH6t
+         kBTwlPWTkwKPuqSyus1twfFB1zuA3H1IqfOgN/oeBqDu10V6KyBPyT6sw/LfTQtC79lB
+         ONkDXAagPtA1AeFAlkGQw2/xgSJgkLm4XOo/5G1yt5udQW7yZP8RAdVjIU3dv1uhxxFs
+         0bo3kud173A+8IyaC865uWOxFY186n+wpP0f6NfnGV4qEsPxCNHNqP6xa6ANF2ktsf1u
+         d4MA==
+X-Gm-Message-State: AOAM530DS44I08K/B/PZ7OmSvbuLdPyUYZ0Sx7+1AdhU9CF5NFwpfJa0
+        +KlWlnswMaBLjNkclmVgrYVhPA==
+X-Google-Smtp-Source: ABdhPJxVDjWGCc5NwMV+giup5gCgzYtcJnesWwSzwDESxca8dWpFgXUfe5hC+9eX7BMITuhs6jJQIA==
+X-Received: by 2002:aca:a9c8:: with SMTP id s191mr8025691oie.11.1605931394890;
+        Fri, 20 Nov 2020 20:03:14 -0800 (PST)
+Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
+        by smtp.gmail.com with ESMTPSA id o63sm2781105ooa.10.2020.11.20.20.03.13
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 20 Nov 2020 20:03:14 -0800 (PST)
+Date:   Fri, 20 Nov 2020 22:03:12 -0600
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Siddharth Gupta <sidgup@codeaurora.org>
+Cc:     agross@kernel.org, ohad@wizery.com,
+        linux-remoteproc@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org, tsoni@codeaurora.org,
+        psodagud@codeaurora.org, rishabhb@codeaurora.org,
+        linux-doc@vger.kernel.org
+Subject: Re: [PATCH v8 1/4] remoteproc: core: Add ops to enable custom
+ coredump functionality
+Message-ID: <20201121040312.GJ9177@builder.lan>
+References: <1605819935-10726-1-git-send-email-sidgup@codeaurora.org>
+ <1605819935-10726-2-git-send-email-sidgup@codeaurora.org>
 MIME-Version: 1.0
-In-Reply-To: <f337319e-d542-67b3-f31e-e4366d822d76@linuxfoundation.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1605819935-10726-2-git-send-email-sidgup@codeaurora.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Shuah,
+On Thu 19 Nov 15:05 CST 2020, Siddharth Gupta wrote:
 
-On 11/20/20 7:26 AM, Shuah Khan wrote:
-> On 11/16/20 3:46 PM, Hemant Kumar wrote:
->> Loopback test opens the MHI device file node and writes
->> a data buffer to it. MHI UCI kernel space driver copies
->> the data and sends it to MHI uplink (Tx) LOOPBACK channel.
->> MHI device loops back the same data to MHI downlink (Rx)
->> LOOPBACK channel. This data is read by test application
->> and compared against the data sent. Test passes if data
->> buffer matches between Tx and Rx. Test application performs
->> open(), poll(), write(), read() and close() file operations.
->>
->> Signed-off-by: Hemant Kumar <hemantk@codeaurora.org>
->> ---
->>   Documentation/mhi/uci.rst                          |  32 +
->>   tools/testing/selftests/Makefile                   |   1 +
->>   tools/testing/selftests/drivers/.gitignore         |   1 +
->>   tools/testing/selftests/drivers/mhi/Makefile       |   8 +
->>   tools/testing/selftests/drivers/mhi/config         |   2 +
->>   .../testing/selftests/drivers/mhi/loopback_test.c  | 802 
->> +++++++++++++++++++++
->>   6 files changed, 846 insertions(+)
->>   create mode 100644 tools/testing/selftests/drivers/mhi/Makefile
->>   create mode 100644 tools/testing/selftests/drivers/mhi/config
->>   create mode 100644 tools/testing/selftests/drivers/mhi/loopback_test.c
->>
->> diff --git a/Documentation/mhi/uci.rst b/Documentation/mhi/uci.rst
->> index ce8740e..0a04afe 100644
->> --- a/Documentation/mhi/uci.rst
->> +++ b/Documentation/mhi/uci.rst
->> @@ -79,6 +79,38 @@ MHI client driver performs read operation, same 
->> data gets looped back to MHI
->>   host using LOOPBACK channel 1. LOOPBACK channel is used to verify 
->> data path
->>   and data integrity between MHI Host and MHI device.
+> Each remoteproc might have different requirements for coredumps and might
+> want to choose the type of dumps it wants to collect. This change allows
+> remoteproc drivers to specify their own custom dump function to be executed
+> in place of rproc_coredump. If the coredump op is not specified by the
+> remoteproc driver it will be set to rproc_coredump by default.
 > 
-> Nice.
-[..]
->> +
->> +enum debug_level {
->> +    DBG_LVL_VERBOSE,
->> +    DBG_LVL_INFO,
->> +    DBG_LVL_ERROR,
->> +};
->> +
->> +enum test_status {
->> +    TEST_STATUS_SUCCESS,
->> +    TEST_STATUS_ERROR,
->> +    TEST_STATUS_NO_DEV,
->> +};
->> +
-> 
-> Since you are running this test as part of kselftest, please use
-> ksft errors nd returns.
-Are you suggesting to use following macros instead of test_status enum ?
-#define KSFT_PASS  0
-#define KSFT_FAIL  1
 
-> 
->> +struct lb_test_ctx {
->> +    char dev_node[256];
->> +    unsigned char *tx_buff;
->> +    unsigned char *rx_buff;
->> +    unsigned int rx_pkt_count;
->> +    unsigned int tx_pkt_count;
->> +    int iterations;
->> +    bool iter_complete;
->> +    bool comp_complete;
->> +    bool test_complete;
->> +    bool all_complete;
->> +    unsigned long buff_size;
->> +    long byte_recvd;
->> +    long byte_sent;
->> +};
->> +
->> +bool force_exit;
->> +char write_data = 'a';
->> +int completed_iterations;
->> +
->> +struct lb_test_ctx test_ctxt;
->> +enum debug_level msg_lvl;
->> +struct pollfd read_fd;
->> +struct pollfd write_fd;
->> +enum test_status mhi_test_return_value;
->> +enum test_status tx_status;
->> +enum test_status rx_status;
->> +enum test_status cmp_rxtx_status;
->> +
->> +#define test_log(test_msg_lvl, format, ...) do { \
->> +        if (test_msg_lvl >= msg_lvl) \
->> +            fprintf(stderr, format, ##__VA_ARGS__); \
->> +} while (0)
->> +
->> +static void loopback_test_sleep_ms(int ms)
->> +{
->> +    usleep(1000 * ms);
->> +}
->> +
-> 
-> Have you run this as part of "make kselftest" run. How does this
-> sleep work in that env.?
-Looks like kselftest runs this test application by directly executing 
-the binary, but this test application requires a valid mhi device file 
-node as a required parameter. So considering that requirement, is this 
-test application qualifies to run using kselftest ? Without a valid 
-device file node test would fail. Is there an option to run this test as 
-standalone test which can only be run when a mhi device file node is 
-present ? Having said that i tested this driver by
-directly executing it using the test binary which is compiled using
-make loopback_test under mhi dir.
+Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 
-> Are there any cases where this test can't run and have to - those
-> cases need to be skips.
-Yes, as this test application can not run by itself it needs a valid mhi 
-device file node to write and test reads the same device node to get the 
-data back.
-So test can not be run without having a MHI device connected over a 
-transport (in my testing MHI device is connected over PCIe). Could you 
-please suggest an option to use this test application as a standalone 
-test instead of being part of kselftest?
-> 
-> thanks,
-> -- Shuah
+Regards,
+Bjorn
 
-Thanks,
-Hemant
--- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project
+> Signed-off-by: Siddharth Gupta <sidgup@codeaurora.org>
+> ---
+>  drivers/remoteproc/remoteproc_core.c | 6 +++++-
+>  include/linux/remoteproc.h           | 2 ++
+>  2 files changed, 7 insertions(+), 1 deletion(-)
+> 
+> diff --git a/drivers/remoteproc/remoteproc_core.c b/drivers/remoteproc/remoteproc_core.c
+> index dab2c0f..eba7543 100644
+> --- a/drivers/remoteproc/remoteproc_core.c
+> +++ b/drivers/remoteproc/remoteproc_core.c
+> @@ -1704,7 +1704,7 @@ int rproc_trigger_recovery(struct rproc *rproc)
+>  		goto unlock_mutex;
+>  
+>  	/* generate coredump */
+> -	rproc_coredump(rproc);
+> +	rproc->ops->coredump(rproc);
+>  
+>  	/* load firmware */
+>  	ret = request_firmware(&firmware_p, rproc->firmware, dev);
+> @@ -2126,6 +2126,10 @@ static int rproc_alloc_ops(struct rproc *rproc, const struct rproc_ops *ops)
+>  	if (!rproc->ops)
+>  		return -ENOMEM;
+>  
+> +	/* Default to rproc_coredump if no coredump function is specified */
+> +	if (!rproc->ops->coredump)
+> +		rproc->ops->coredump = rproc_coredump;
+> +
+>  	if (rproc->ops->load)
+>  		return 0;
+>  
+> diff --git a/include/linux/remoteproc.h b/include/linux/remoteproc.h
+> index 3fa3ba6..a419878 100644
+> --- a/include/linux/remoteproc.h
+> +++ b/include/linux/remoteproc.h
+> @@ -375,6 +375,7 @@ enum rsc_handling_status {
+>   * @get_boot_addr:	get boot address to entry point specified in firmware
+>   * @panic:	optional callback to react to system panic, core will delay
+>   *		panic at least the returned number of milliseconds
+> + * @coredump:	  collect firmware dump after the subsystem is shutdown
+>   */
+>  struct rproc_ops {
+>  	int (*prepare)(struct rproc *rproc);
+> @@ -393,6 +394,7 @@ struct rproc_ops {
+>  	int (*sanity_check)(struct rproc *rproc, const struct firmware *fw);
+>  	u64 (*get_boot_addr)(struct rproc *rproc, const struct firmware *fw);
+>  	unsigned long (*panic)(struct rproc *rproc);
+> +	void (*coredump)(struct rproc *rproc);
+>  };
+>  
+>  /**
+> -- 
+> Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+> a Linux Foundation Collaborative Project
+> 
