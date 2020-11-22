@@ -2,127 +2,189 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id DDC592BC3F1
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 22 Nov 2020 06:41:58 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A45CA2BC635
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 22 Nov 2020 15:51:55 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727423AbgKVFlm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 22 Nov 2020 00:41:42 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54640 "EHLO
+        id S1728001AbgKVOsM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 22 Nov 2020 09:48:12 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53928 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727387AbgKVFlj (ORCPT
+        with ESMTP id S1727567AbgKVOsL (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 22 Nov 2020 00:41:39 -0500
-Received: from mail-oi1-x241.google.com (mail-oi1-x241.google.com [IPv6:2607:f8b0:4864:20::241])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DC54AC0613D3
-        for <linux-arm-msm@vger.kernel.org>; Sat, 21 Nov 2020 21:41:37 -0800 (PST)
-Received: by mail-oi1-x241.google.com with SMTP id v202so12677764oia.9
-        for <linux-arm-msm@vger.kernel.org>; Sat, 21 Nov 2020 21:41:37 -0800 (PST)
+        Sun, 22 Nov 2020 09:48:11 -0500
+Received: from mail-ej1-x642.google.com (mail-ej1-x642.google.com [IPv6:2a00:1450:4864:20::642])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 83D49C0613D3
+        for <linux-arm-msm@vger.kernel.org>; Sun, 22 Nov 2020 06:48:11 -0800 (PST)
+Received: by mail-ej1-x642.google.com with SMTP id 7so19704715ejm.0
+        for <linux-arm-msm@vger.kernel.org>; Sun, 22 Nov 2020 06:48:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=qvpm8U35Wi5xW8cDlkOEMWm9u3v4oYij+TGxaJn+sgw=;
-        b=z0/F6IyZHUpoXEJ0ybXF0z+a2Xvsd86bf/HthIlSIfCqh4GOISDFivw9DlSAs43MUf
-         KIiKAlMN1RyUIf05KNffeRroYx2MlnXI6wiQw8MoSLsIF4Vy4C8rBBmsZTyBTVpfIgrY
-         1Qfoko5q9gxGU0WllYgLcIiywlvSd6LHUBv2z8VfFd8NtnwI9V0ihBcRW6jSIlYsplMQ
-         8BHhmWltd/2s7hODDaApsQpF0l6uK4mKJKg7AY2COhy7o+orKDBnSoGDH/nlU1qMn3uT
-         R5Xy6Ny3v4wBwutcyUM7HLDJCzXzVAni38fVw5XScvr1dca4ueAv2MG7Sz0ZxksNZZDD
-         U9JQ==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=ZDzM+WFxB6B4dYDN2InEoPdN/On7LdDZTygjQx7Z3HE=;
+        b=AoYJEnCWNGa4KeyI+NPaATo88wNu7HuVnrllcEhjCoSydwgnpCRxFrp/aEVpyCaZTP
+         kGVOmy+4vyQZ08oHkdu9sC6mpM8Rd9OwTuMVL6rpro9VrcuWzq1z6Gb0/9R29Fi5NcR2
+         ZqAf9XnKARayCGpsJV+xT0N6KlQQTHUtkVMfjZ+dgI9tImkVGo4/wpYt6leXP49Pxzvn
+         o+9XN2J5KlWBJ5vbgaG58iHYzrUUaIFNfk7S0UqGda/mhwtd1eS+6ApLwnuXRD6A/4R/
+         BD5xHRYYC4Pr+FzyvvqIeRz+MxYM5LRWkM1vgxliWC06wKnwPzA2fUwXJz+nVI2ytwYS
+         7DFQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=qvpm8U35Wi5xW8cDlkOEMWm9u3v4oYij+TGxaJn+sgw=;
-        b=O+HX4N3emdAScCuDiuP2zG8vYh21X/o1rK9rwX6w0+p7dNE+WrpOrFyWqwhD+AK594
-         dAf+2BrfWOWSgHmADblQJXZh70mmIVVk1z4Lll9c6XD06+AIaolUqt9Bq+g9oI0Z7jMi
-         uJdtC6bD8gp6g+mFJ3HIvi2fA661p5rHQ7G7LCL5XvVPahK3eAaCCYuCXm2JhMQYK3Vj
-         IiuT8gvd1YXThIHq/j/0/dWkIH+I7wHoL82Pnyjlzgk9noizbpFFCvhhNL26AN6dPrCG
-         nv/GZxPPuiW7yjrmvNA41OVUela8KA7X20TXt1EWl7/bLvE6k5SdrqZmlVmKRSQOPNFN
-         tmFA==
-X-Gm-Message-State: AOAM531p7uR5XZR2xhOuTUhuiJf/3TPG5ikFsj09inql4ok2IA38OpSa
-        RMSmJt1LgatwbLT5GHpcWhj5ZA==
-X-Google-Smtp-Source: ABdhPJxRJ6Pq2gDVZXh9XuwLH1m35Yf7+sfqi3oaKpZi2VQkh8xbuUn+pF/Kl/gQRDFRthtP79fiQA==
-X-Received: by 2002:aca:a8c8:: with SMTP id r191mr11456932oie.138.1606023697312;
-        Sat, 21 Nov 2020 21:41:37 -0800 (PST)
-Received: from localhost.localdomain (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id s28sm4303132otr.4.2020.11.21.21.41.36
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 21 Nov 2020 21:41:36 -0800 (PST)
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Ohad Ben-Cohen <ohad@wizery.com>,
-        Siddharth Gupta <sidgup@codeaurora.org>
-Cc:     Mathieu Poirier <mathieu.poirier@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Steev Klimaszewski <steev@kali.org>,
-        Rishabh Bhatnagar <rishabhb@codeaurora.org>
-Subject: [PATCH v3 4/4] remoteproc: sysmon: Improve error messages
-Date:   Sat, 21 Nov 2020 21:41:35 -0800
-Message-Id: <20201122054135.802935-5-bjorn.andersson@linaro.org>
-X-Mailer: git-send-email 2.28.0
-In-Reply-To: <20201122054135.802935-1-bjorn.andersson@linaro.org>
-References: <20201122054135.802935-1-bjorn.andersson@linaro.org>
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=ZDzM+WFxB6B4dYDN2InEoPdN/On7LdDZTygjQx7Z3HE=;
+        b=TsMVm2Yz7jLmWqMuvvrWlfO7w+xlyzzQa98o5jR4McvHCemM0f/U7Z8REXoKT31Tqo
+         /0CrNLJwlQ9iwytEf94L74pN1rUMkE11+v2WTjaLmd4clljctvLTCyVb4Vg6zMTfr9Wl
+         SAs1XDh4OFYsek5ynzo92dGsQxVsAN2df7hu3gkiNoaGiYmjF4LEdBVSPhfp3CMj7cv3
+         gl5L0KbZNY72UA1gmT60O15Z+ghCaHJi6axCG+2hVTz/o9I/u/aiuBJVYqB3LGj7QuSb
+         2MmcBzfYahij/iSxMfMt5HdOLiUI7jhZ4b7uPOzKPoyfS9A2UfG8RuvWtsBfaziQz3mO
+         fPiA==
+X-Gm-Message-State: AOAM533wm7Yz/qY3pABa9C/JPhf93/jcVXDzUHJy9ttzpvTxsWuR+HGG
+        5CSm+81FQTybxsrv49vbDuRFng==
+X-Google-Smtp-Source: ABdhPJyyZfJg2Mp2xz//lvIK1I7WQhOVkaRrzdSGyA7L5GU0Dlc7ddu/ECtee//fy6hevNa7Q/qVMQ==
+X-Received: by 2002:a17:906:60d4:: with SMTP id f20mr42394347ejk.156.1606056490114;
+        Sun, 22 Nov 2020 06:48:10 -0800 (PST)
+Received: from [192.168.1.9] (hst-221-20.medicom.bg. [84.238.221.20])
+        by smtp.googlemail.com with ESMTPSA id q15sm3629250edt.95.2020.11.22.06.48.08
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 22 Nov 2020 06:48:09 -0800 (PST)
+Subject: Re: [PATCH 2/3] venus: Limit HFI sessions to the maximum supported
+To:     Fritz Koenig <frkoenig@chromium.org>,
+        Stanimir Varbanov <stanimir.varbanov@linaro.org>
+Cc:     linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Vikash Garodia <vgarodia@codeaurora.org>,
+        Mansur Alisha Shaik <mansur@codeaurora.org>,
+        Dikshita Agarwal <dikshita@codeaurora.org>
+References: <20201120001037.10032-1-stanimir.varbanov@linaro.org>
+ <20201120001037.10032-3-stanimir.varbanov@linaro.org>
+ <CAMfZQbwjRTuF7_joa9sL0HLTkFC70FqymPOmtxmETt38qey+NA@mail.gmail.com>
+From:   Stanimir Varbanov <stanimir.varbanov@linaro.org>
+Message-ID: <88838aa8-9c25-3fae-86dd-35b2a3df83d9@linaro.org>
+Date:   Sun, 22 Nov 2020 16:48:08 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.10.0
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAMfZQbwjRTuF7_joa9sL0HLTkFC70FqymPOmtxmETt38qey+NA@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Improve the style of a few of the error messages printed by the sysmon
-implementation and fix the copy-pasted shutdown error in the send-event
-function.
 
-Tested-by: Steev Klimaszewski <steev@kali.org>
-Reviewed-by: Rishabh Bhatnagar <rishabhb@codeaurora.org>
-Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
----
 
-Change since v2:
-- None
+On 11/21/20 3:14 AM, Fritz Koenig wrote:
+> On Thu, Nov 19, 2020 at 4:12 PM Stanimir Varbanov
+> <stanimir.varbanov@linaro.org> wrote:
+>>
+>> Currently we rely on firmware to return error when we reach the maximum
+>> supported number of sessions. But this errors are happened at reqbuf
+>> time which is a bit later. The more reasonable way looks like is to
+>> return the error on driver open.
+>>
+>> To achieve that modify hfi_session_create to return error when we reach
+>> maximum count of sessions and thus refuse open.
+>>
+>> Signed-off-by: Stanimir Varbanov <stanimir.varbanov@linaro.org>
+>> ---
+>>  drivers/media/platform/qcom/venus/core.h      |  1 +
+>>  drivers/media/platform/qcom/venus/hfi.c       | 19 +++++++++++++++----
+>>  .../media/platform/qcom/venus/hfi_parser.c    |  3 +++
+>>  3 files changed, 19 insertions(+), 4 deletions(-)
+>>
+>> diff --git a/drivers/media/platform/qcom/venus/core.h b/drivers/media/platform/qcom/venus/core.h
+>> index db0e6738281e..3a477fcdd3a8 100644
+>> --- a/drivers/media/platform/qcom/venus/core.h
+>> +++ b/drivers/media/platform/qcom/venus/core.h
+>> @@ -96,6 +96,7 @@ struct venus_format {
+>>  #define MAX_CAP_ENTRIES                32
+>>  #define MAX_ALLOC_MODE_ENTRIES 16
+>>  #define MAX_CODEC_NUM          32
+>> +#define MAX_SESSIONS           16
+>>
+>>  struct raw_formats {
+>>         u32 buftype;
+>> diff --git a/drivers/media/platform/qcom/venus/hfi.c b/drivers/media/platform/qcom/venus/hfi.c
+>> index 638ed5cfe05e..8420be6d3991 100644
+>> --- a/drivers/media/platform/qcom/venus/hfi.c
+>> +++ b/drivers/media/platform/qcom/venus/hfi.c
+>> @@ -175,6 +175,7 @@ static int wait_session_msg(struct venus_inst *inst)
+>>  int hfi_session_create(struct venus_inst *inst, const struct hfi_inst_ops *ops)
+>>  {
+>>         struct venus_core *core = inst->core;
+>> +       int ret;
+>>
+>>         if (!ops)
+>>                 return -EINVAL;
+>> @@ -183,12 +184,22 @@ int hfi_session_create(struct venus_inst *inst, const struct hfi_inst_ops *ops)
+>>         init_completion(&inst->done);
+>>         inst->ops = ops;
+>>
+>> -       mutex_lock(&core->lock);
+>> -       list_add_tail(&inst->list, &core->instances);
+>> -       atomic_inc(&core->insts_count);
+>> +       ret = mutex_lock_interruptible(&core->lock);
+>> +       if (ret)
+>> +               return ret;
+>> +
+>> +       ret = atomic_read(&core->insts_count);
+>> +       if (ret + 1 > core->max_sessions_supported) {
+>> +               ret = -EAGAIN;
+>> +       } else {
+>> +               atomic_inc(&core->insts_count);
+>> +               list_add_tail(&inst->list, &core->instances);
+>> +               ret = 0;
+>> +       }
+>> +
+>>         mutex_unlock(&core->lock);
+>>
+>> -       return 0;
+>> +       return ret;
+>>  }
+>>  EXPORT_SYMBOL_GPL(hfi_session_create);
+>>
+>> diff --git a/drivers/media/platform/qcom/venus/hfi_parser.c b/drivers/media/platform/qcom/venus/hfi_parser.c
+>> index 363ee2a65453..52898633a8e6 100644
+>> --- a/drivers/media/platform/qcom/venus/hfi_parser.c
+>> +++ b/drivers/media/platform/qcom/venus/hfi_parser.c
+>> @@ -276,6 +276,9 @@ u32 hfi_parser(struct venus_core *core, struct venus_inst *inst, void *buf,
+>>                 words_count--;
+>>         }
+>>
+> 
+> My understanding of the hardware is that there is a max number of
+> macroblocks that can be worked on at a time.  That works out to
+> nominally 16 clips.  But large clips can take more resources.  Does
+> |max_sessions_supported| get updated with the amount that system can
+> use?  Or is it always a constant?
 
- drivers/remoteproc/qcom_sysmon.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+The number of max sessions supported is constant.
 
-diff --git a/drivers/remoteproc/qcom_sysmon.c b/drivers/remoteproc/qcom_sysmon.c
-index a428b707a6de..9fed11a2b4ba 100644
---- a/drivers/remoteproc/qcom_sysmon.c
-+++ b/drivers/remoteproc/qcom_sysmon.c
-@@ -352,9 +352,9 @@ static bool ssctl_request_shutdown(struct qcom_sysmon *sysmon)
- 
- 	ret = qmi_txn_wait(&txn, 5 * HZ);
- 	if (ret < 0) {
--		dev_err(sysmon->dev, "failed receiving QMI response\n");
-+		dev_err(sysmon->dev, "timeout waiting for shutdown response\n");
- 	} else if (resp.resp.result) {
--		dev_err(sysmon->dev, "shutdown request failed\n");
-+		dev_err(sysmon->dev, "shutdown request rejected\n");
- 	} else {
- 		dev_dbg(sysmon->dev, "shutdown request completed\n");
- 		acked = true;
-@@ -397,18 +397,18 @@ static void ssctl_send_event(struct qcom_sysmon *sysmon,
- 			       SSCTL_SUBSYS_EVENT_REQ, 40,
- 			       ssctl_subsys_event_req_ei, &req);
- 	if (ret < 0) {
--		dev_err(sysmon->dev, "failed to send shutdown request\n");
-+		dev_err(sysmon->dev, "failed to send subsystem event\n");
- 		qmi_txn_cancel(&txn);
- 		return;
- 	}
- 
- 	ret = qmi_txn_wait(&txn, 5 * HZ);
- 	if (ret < 0)
--		dev_err(sysmon->dev, "failed receiving QMI response\n");
-+		dev_err(sysmon->dev, "timeout waiting for subsystem event response\n");
- 	else if (resp.resp.result)
--		dev_err(sysmon->dev, "ssr event send failed\n");
-+		dev_err(sysmon->dev, "subsystem event rejected\n");
- 	else
--		dev_dbg(sysmon->dev, "ssr event send completed\n");
-+		dev_dbg(sysmon->dev, "subsystem event accepted\n");
- }
- 
- /**
+> 
+> If it changes depending on system load, then couldn't
+> |core->max_sessions_supported| be 0 if all of the resources have been
+> used up?  If that is the case then the below check would appear to be
+> incorrect.
+
+No, this is not the case. Changing dynamically the number of max
+sessions depending on session load is possible but it would be complex
+to implement. For example, think of decoder dynamic resolution change
+where we don't know in advance the new resolution (session load).
+
+> 
+>> +       if (!core->max_sessions_supported)
+>> +               core->max_sessions_supported = MAX_SESSIONS;
+>> +
+>>         parser_fini(inst, codecs, domain);
+>>
+>>         return HFI_ERR_NONE;
+>> --
+>> 2.17.1
+>>
+
 -- 
-2.28.0
-
+regards,
+Stan
