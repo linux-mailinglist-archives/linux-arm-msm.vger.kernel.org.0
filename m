@@ -2,108 +2,127 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 9F0E02BC37C
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 22 Nov 2020 05:09:15 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1C53C2BC385
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 22 Nov 2020 05:12:04 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727095AbgKVEIy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 21 Nov 2020 23:08:54 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40474 "EHLO
+        id S1727237AbgKVELD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 21 Nov 2020 23:11:03 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40810 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726693AbgKVEIw (ORCPT
+        with ESMTP id S1727261AbgKVELC (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 21 Nov 2020 23:08:52 -0500
-Received: from mail-ot1-x344.google.com (mail-ot1-x344.google.com [IPv6:2607:f8b0:4864:20::344])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EDFCDC0613D2
-        for <linux-arm-msm@vger.kernel.org>; Sat, 21 Nov 2020 20:08:51 -0800 (PST)
-Received: by mail-ot1-x344.google.com with SMTP id n11so12797478ota.2
-        for <linux-arm-msm@vger.kernel.org>; Sat, 21 Nov 2020 20:08:51 -0800 (PST)
+        Sat, 21 Nov 2020 23:11:02 -0500
+Received: from mail-ot1-x342.google.com (mail-ot1-x342.google.com [IPv6:2607:f8b0:4864:20::342])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 93046C0613D2
+        for <linux-arm-msm@vger.kernel.org>; Sat, 21 Nov 2020 20:11:00 -0800 (PST)
+Received: by mail-ot1-x342.google.com with SMTP id n11so12799868ota.2
+        for <linux-arm-msm@vger.kernel.org>; Sat, 21 Nov 2020 20:11:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=1+eyUtmtAjsxqioppn1au2QM1OrIpCppXp8wpa6NVJc=;
-        b=H9o3IDcPqHxIRAJk/VPIody7M0PPT3eLBVvvSPaCQvdyWMPnIl2LDupEvrIFRXDpT0
-         kkyVDf9AjK5fLIj8uPbM6V8RHgGMuk+N0mDcFUw8zwDDLtKGTtOFG69XSCO9QmDx6L8x
-         svlwlSTuZLuKn2AdfDZ8xA4M45AjfxyUNRaM0CpWeDSYhlbk5UfEukhVCGpcPeVpJN50
-         r9ZXOrs1DQWD2+4qaGmEG8xN3rEmKoBmBUhX2DetCfbUuVeO2QAyf90kixeKgfL6w57Q
-         Ol/VE7kqOzrj1n/0jYfc+TtivFdj5xpP/rXR6ojRrulonHqV2oQvs+ESVoAS7nrecfsN
-         6+Ag==
+        bh=Z5iasv0Tn+EAgqcCTW+28/WJrxDWlSK3B7pN57OlmRg=;
+        b=b5l7i4HfOFDcEGL1OPYUNQ49HaBHuvNwRdgP5IA11zLsYWI8Z/0MbyawwNBcqip2aj
+         Ytf2nfhNU07LE2CZpq9wyXUhDmj9l0+IfqPwXxq5jRmB9bczfpdo93BsvE9NQp/ZLpSW
+         Lk6fu0CvGnI3Vrg4crRAZ3F7qz/xEhZYpVeP8b01ClIvb+w7bQyaPNBfJFCHG84oOs+Y
+         ZaIljSE9jW9/lqMMxdEqPUn1MASCAcwl40/dUy7k69vZCXYhUi1s/DcgRirkm6SkysAK
+         kwX8KPtJFwts0J1sf/ykuAqAFJCsT/BuuYOj8c54NX/IOB8npe6QYT99WivdjsW7lRHg
+         Q16g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=1+eyUtmtAjsxqioppn1au2QM1OrIpCppXp8wpa6NVJc=;
-        b=L4teWpSZnC8dndGFZdQoMEuVz0vdnaUPf1SSX5OwvaNbTyqh4hDfpZhOhvPegQ7HBN
-         8vdY1RMbFoKRp27DoVbcAVCUAhK7D1DdhQkOWqj8vZtB6GzlOBk9d6MRj+EgEOBrmQCN
-         qMGh5ASuorA5ATIYsoI5Vmo8PaZBT8htGdoD4x1uRvWO0kHEjDfWU2Pge+QryPx3+M8H
-         gEr7/deeUw2aMWieyylw4sVpZk2zAAssbOu+vqMCkBvRbSVf0L8nNjXzKp699ung7yDZ
-         rVCqPv5WX9tfpLgFR+v9TsN5AUFxi2Z8tB3Ki18zbiO85FfOTePHDbT9S9Nmdl1UrVEV
-         ykmA==
-X-Gm-Message-State: AOAM532YqdNDbjTzJwQVm/8+rlR0YirOfxK1wfV6Rcy02Vu7K5zzq17z
-        LgF733Ppv/sT6FKaw6Um8JGiTw==
-X-Google-Smtp-Source: ABdhPJzDLfEkZxcFiWaLStMrxjN/UhXjzvllrqtvzx0fXPC+nCUgusgbAX6kKqGdHvA3LzoxEK2tgw==
-X-Received: by 2002:a9d:892:: with SMTP id 18mr11024273otf.9.1606018130559;
-        Sat, 21 Nov 2020 20:08:50 -0800 (PST)
+        bh=Z5iasv0Tn+EAgqcCTW+28/WJrxDWlSK3B7pN57OlmRg=;
+        b=QP3v4QIfDkLx2scfkknELQZVsKGyHgArRAdKvi6EwyYpXJJu7d4da0j48RTPz+m02s
+         HkmKa7pP1GEpAnHLigSCK4Ym/BLhOOnvCgCeBAlq4wIotwUlzp6CauqMADAmoPHmfpsW
+         56ofAJIei2RezOcC6gNpCsWqW5NTkSpuYTCRtsrSA23Thc0Pnld8ZpwAFLQi1K0H8iNU
+         fYJqAudcVK8JWmfXRZje1BHbhKST98xcAt1K1A3vMsIOvw5g1sEAKpru3BWZunrrLgq/
+         LWzha8Ma8H1TaHCc7co1L0BmRnQLEdEfysS2d6SCY7ne9Rxexx8jhffR/uBS6J6QVSaV
+         NLTQ==
+X-Gm-Message-State: AOAM531y7dyo5ukWFQZ8bROoGImnbgjJGXvXM9q6rJowicNV3RzCMX31
+        8S2bD4FcgrE8vdDjheQjyQyCUw==
+X-Google-Smtp-Source: ABdhPJz8F5yoRLWdQiuXZgXwodrkuPDhzHULObQCiPwxXX5bRQuDSrqRaao+RiP2JtvjvAjUvy4jsA==
+X-Received: by 2002:a9d:7855:: with SMTP id c21mr11213697otm.218.1606018259837;
+        Sat, 21 Nov 2020 20:10:59 -0800 (PST)
 Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id p12sm4131377oti.35.2020.11.21.20.08.49
+        by smtp.gmail.com with ESMTPSA id l184sm4720513oih.27.2020.11.21.20.10.58
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 21 Nov 2020 20:08:49 -0800 (PST)
-Date:   Sat, 21 Nov 2020 22:08:48 -0600
+        Sat, 21 Nov 2020 20:10:59 -0800 (PST)
+Date:   Sat, 21 Nov 2020 22:10:57 -0600
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Zhihao Cheng <chengzhihao1@huawei.com>
-Cc:     agross@kernel.org, wsa@kernel.org, sricharan@codeaurora.org,
-        linux-arm-msm@vger.kernel.org, linux-i2c@vger.kernel.org,
-        linux-kernel@vger.kernel.org, yi.zhang@huawei.com
-Subject: Re: [PATCH] i2c: qup: Fix error return code in
- qup_i2c_bam_schedule_desc()
-Message-ID: <20201122040848.GB95182@builder.lan>
-References: <20201116141058.2365043-1-chengzhihao1@huawei.com>
+To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc:     agross@kernel.org, kishon@ti.com, vkoul@kernel.org,
+        robh@kernel.org, svarbanov@mm-sol.com, bhelgaas@google.com,
+        lorenzo.pieralisi@arm.com, linux-arm-msm@vger.kernel.org,
+        linux-pci@vger.kernel.org, linux-kernel@vger.kernel.org,
+        mgautam@codeaurora.org, devicetree@vger.kernel.org,
+        truong@codeaurora.org
+Subject: Re: [PATCH v5 3/5] dt-bindings: pci: qcom: Document PCIe bindings
+ for SM8250 SoC
+Message-ID: <20201122041057.GC95182@builder.lan>
+References: <20201027170033.8475-1-manivannan.sadhasivam@linaro.org>
+ <20201027170033.8475-4-manivannan.sadhasivam@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20201116141058.2365043-1-chengzhihao1@huawei.com>
+In-Reply-To: <20201027170033.8475-4-manivannan.sadhasivam@linaro.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon 16 Nov 08:10 CST 2020, Zhihao Cheng wrote:
+On Tue 27 Oct 12:00 CDT 2020, Manivannan Sadhasivam wrote:
 
-> Fix to return the error code from qup_i2c_change_state()
-> instaed of 0 in qup_i2c_bam_schedule_desc().
+> Document the PCIe DT bindings for SM8250 SoC. The PCIe IP is similar to
+> the one used on SDM845, hence just add the compatible along with the
+> optional "atu" register region.
 > 
-> Fixes: fbf9921f8b35d9b2 ("i2c: qup: Fix error handling")
-> Reported-by: Hulk Robot <hulkci@huawei.com>
-> Signed-off-by: Zhihao Cheng <chengzhihao1@huawei.com>
-> ---
->  drivers/i2c/busses/i2c-qup.c | 3 ++-
->  1 file changed, 2 insertions(+), 1 deletion(-)
-> 
-> diff --git a/drivers/i2c/busses/i2c-qup.c b/drivers/i2c/busses/i2c-qup.c
-> index fbc04b60cfd1..5a47915869ae 100644
-> --- a/drivers/i2c/busses/i2c-qup.c
-> +++ b/drivers/i2c/busses/i2c-qup.c
-> @@ -801,7 +801,8 @@ static int qup_i2c_bam_schedule_desc(struct qup_i2c_dev *qup)
->  	if (ret || qup->bus_err || qup->qup_err) {
->  		reinit_completion(&qup->xfer);
->  
-> -		if (qup_i2c_change_state(qup, QUP_RUN_STATE)) {
-> +		ret = qup_i2c_change_state(qup, QUP_RUN_STATE);
-
-In the case that we entered this block because ret was -ETIMEDOUT then
-this will overwrite this and the function will return -EIO.
-
-But in the other paths out of this block ret is being overwritten
-anyways, so I think it's fine.
+> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> Acked-by: Rob Herring <robh@kernel.org>
 
 Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 
-Regards,
-Bjorn
-
-> +		if (ret) {
->  			dev_err(qup->dev, "change to run state timed out");
->  			goto desc_err;
->  		}
+> ---
+>  Documentation/devicetree/bindings/pci/qcom,pcie.txt | 6 ++++--
+>  1 file changed, 4 insertions(+), 2 deletions(-)
+> 
+> diff --git a/Documentation/devicetree/bindings/pci/qcom,pcie.txt b/Documentation/devicetree/bindings/pci/qcom,pcie.txt
+> index 02bc81bb8b2d..3b55310390a0 100644
+> --- a/Documentation/devicetree/bindings/pci/qcom,pcie.txt
+> +++ b/Documentation/devicetree/bindings/pci/qcom,pcie.txt
+> @@ -13,6 +13,7 @@
+>  			- "qcom,pcie-ipq8074" for ipq8074
+>  			- "qcom,pcie-qcs404" for qcs404
+>  			- "qcom,pcie-sdm845" for sdm845
+> +			- "qcom,pcie-sm8250" for sm8250
+>  
+>  - reg:
+>  	Usage: required
+> @@ -27,6 +28,7 @@
+>  			- "dbi"	   DesignWare PCIe registers
+>  			- "elbi"   External local bus interface registers
+>  			- "config" PCIe configuration space
+> +			- "atu"    ATU address space (optional)
+>  
+>  - device_type:
+>  	Usage: required
+> @@ -131,7 +133,7 @@
+>  			- "slave_bus"	AXI Slave clock
+>  
+>  -clock-names:
+> -	Usage: required for sdm845
+> +	Usage: required for sdm845 and sm8250
+>  	Value type: <stringlist>
+>  	Definition: Should contain the following entries
+>  			- "aux"		Auxiliary clock
+> @@ -206,7 +208,7 @@
+>  			- "ahb"			AHB reset
+>  
+>  - reset-names:
+> -	Usage: required for sdm845
+> +	Usage: required for sdm845 and sm8250
+>  	Value type: <stringlist>
+>  	Definition: Should contain the following entries
+>  			- "pci"			PCIe core reset
 > -- 
-> 2.25.4
+> 2.17.1
 > 
