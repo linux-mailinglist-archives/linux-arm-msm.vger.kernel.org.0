@@ -2,124 +2,108 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C363F2BC376
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 22 Nov 2020 04:48:16 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 9F0E02BC37C
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 22 Nov 2020 05:09:15 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727098AbgKVDrN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 21 Nov 2020 22:47:13 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37164 "EHLO
+        id S1727095AbgKVEIy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 21 Nov 2020 23:08:54 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40474 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726913AbgKVDrM (ORCPT
+        with ESMTP id S1726693AbgKVEIw (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 21 Nov 2020 22:47:12 -0500
-Received: from mail-oi1-x243.google.com (mail-oi1-x243.google.com [IPv6:2607:f8b0:4864:20::243])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8CAB8C061A4A
-        for <linux-arm-msm@vger.kernel.org>; Sat, 21 Nov 2020 19:47:12 -0800 (PST)
-Received: by mail-oi1-x243.google.com with SMTP id s18so14507875oih.1
-        for <linux-arm-msm@vger.kernel.org>; Sat, 21 Nov 2020 19:47:12 -0800 (PST)
+        Sat, 21 Nov 2020 23:08:52 -0500
+Received: from mail-ot1-x344.google.com (mail-ot1-x344.google.com [IPv6:2607:f8b0:4864:20::344])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EDFCDC0613D2
+        for <linux-arm-msm@vger.kernel.org>; Sat, 21 Nov 2020 20:08:51 -0800 (PST)
+Received: by mail-ot1-x344.google.com with SMTP id n11so12797478ota.2
+        for <linux-arm-msm@vger.kernel.org>; Sat, 21 Nov 2020 20:08:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=9bzkqkqMFaR/ganaOll7ayccgMCfPXmcey+XH9oBqhg=;
-        b=aa2/Rh+JjXLKi8OUwog4xO9t4g+KNYkAfuuj+e4dn2+GJUV22FxyxOP+W+aSsUQHJd
-         /J5tCHlSjhPU07SuSg/IaUNdNm9Sz9R5vdXBjLm0oEepLDdsguvbfbpTn+mquJgpJaGn
-         HRWye9BotTzdyGxQMmKCOKwbXLqWS4mbjal7C1UlQctSOS9OqSW3eeBtk1VQdlbiiwpe
-         fNC9p8EpUyyYsk9BCNZRaSyiGbc7P4Od3QuZbrn0OZYK7OTVDyfnyj3FdxF8YA6G8pf+
-         E9mFUn2m8kzTorSZ+pTa4jMAH7yv7hr1QCYLeh79trK/UrwnQMmsiolrATRkEnrcGK8c
-         LQfw==
+        bh=1+eyUtmtAjsxqioppn1au2QM1OrIpCppXp8wpa6NVJc=;
+        b=H9o3IDcPqHxIRAJk/VPIody7M0PPT3eLBVvvSPaCQvdyWMPnIl2LDupEvrIFRXDpT0
+         kkyVDf9AjK5fLIj8uPbM6V8RHgGMuk+N0mDcFUw8zwDDLtKGTtOFG69XSCO9QmDx6L8x
+         svlwlSTuZLuKn2AdfDZ8xA4M45AjfxyUNRaM0CpWeDSYhlbk5UfEukhVCGpcPeVpJN50
+         r9ZXOrs1DQWD2+4qaGmEG8xN3rEmKoBmBUhX2DetCfbUuVeO2QAyf90kixeKgfL6w57Q
+         Ol/VE7kqOzrj1n/0jYfc+TtivFdj5xpP/rXR6ojRrulonHqV2oQvs+ESVoAS7nrecfsN
+         6+Ag==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=9bzkqkqMFaR/ganaOll7ayccgMCfPXmcey+XH9oBqhg=;
-        b=YyyYOHyIY8aZJIcOJDLCWRX5ZSm2We2YJQENtPqjc6T3h88JM4dtZ74og+8U9bgEus
-         3fSsV8HCNGt9O/TFkaMCOx3bm69iVIeIQ2iOVckfOREhtp19RN+aMonKKw35dQrrU9Ij
-         YEcVHsnbx31/MWzBgtt/Yz2sqzZMCmaP+O6aVj1oSmbj5cWvmjAPb3PZ+2geBq5zEnEV
-         b2wQtKKihJcVPIrsJLj95zmV06YPHWJg9VD110mmutqc7kBhcstulWXJTn86jUJn30vZ
-         3zWB+1Wp1Oa76yBAl/6OXUw2XL6JE7vsTZ5Gkkc7wt5FFTsJueeBCkGqXW01As9h5uQj
-         7oDg==
-X-Gm-Message-State: AOAM531n0r76B4ZaRaE37mqWVDJpSq+9Skw6tor1/xRm0ieCnCCUWQQq
-        DIfL27+KK+7GRlgkR2I+mf1vLg==
-X-Google-Smtp-Source: ABdhPJyK8ijYdJrAvlJEIIfbU4CWi7ihqn3hpJ/dtK2uPElIoEjnF4OG5E6lHALphvX6ezKY3qBNZw==
-X-Received: by 2002:aca:ecca:: with SMTP id k193mr11308974oih.27.1606016831704;
-        Sat, 21 Nov 2020 19:47:11 -0800 (PST)
+        bh=1+eyUtmtAjsxqioppn1au2QM1OrIpCppXp8wpa6NVJc=;
+        b=L4teWpSZnC8dndGFZdQoMEuVz0vdnaUPf1SSX5OwvaNbTyqh4hDfpZhOhvPegQ7HBN
+         8vdY1RMbFoKRp27DoVbcAVCUAhK7D1DdhQkOWqj8vZtB6GzlOBk9d6MRj+EgEOBrmQCN
+         qMGh5ASuorA5ATIYsoI5Vmo8PaZBT8htGdoD4x1uRvWO0kHEjDfWU2Pge+QryPx3+M8H
+         gEr7/deeUw2aMWieyylw4sVpZk2zAAssbOu+vqMCkBvRbSVf0L8nNjXzKp699ung7yDZ
+         rVCqPv5WX9tfpLgFR+v9TsN5AUFxi2Z8tB3Ki18zbiO85FfOTePHDbT9S9Nmdl1UrVEV
+         ykmA==
+X-Gm-Message-State: AOAM532YqdNDbjTzJwQVm/8+rlR0YirOfxK1wfV6Rcy02Vu7K5zzq17z
+        LgF733Ppv/sT6FKaw6Um8JGiTw==
+X-Google-Smtp-Source: ABdhPJzDLfEkZxcFiWaLStMrxjN/UhXjzvllrqtvzx0fXPC+nCUgusgbAX6kKqGdHvA3LzoxEK2tgw==
+X-Received: by 2002:a9d:892:: with SMTP id 18mr11024273otf.9.1606018130559;
+        Sat, 21 Nov 2020 20:08:50 -0800 (PST)
 Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id 1sm4720133oig.16.2020.11.21.19.47.10
+        by smtp.gmail.com with ESMTPSA id p12sm4131377oti.35.2020.11.21.20.08.49
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 21 Nov 2020 19:47:10 -0800 (PST)
-Date:   Sat, 21 Nov 2020 21:47:09 -0600
+        Sat, 21 Nov 2020 20:08:49 -0800 (PST)
+Date:   Sat, 21 Nov 2020 22:08:48 -0600
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Caleb Connolly <caleb@connolly.tech>
-Cc:     linux-arm-msm@vger.kernel.org, Andy Gross <agross@kernel.org>,
-        Akash Asthana <akashast@codeaurora.org>,
-        Mukesh Savaliya <msavaliy@codeaurora.org>,
-        phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
-        linux-i2c@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 5/5] i2c: geni: sdm845: dont perform DMA for OnePlus 6
- devices
-Message-ID: <20201122034709.GA95182@builder.lan>
-References: <20201112161920.2671430-1-caleb@connolly.tech>
- <20201112161920.2671430-6-caleb@connolly.tech>
+To:     Zhihao Cheng <chengzhihao1@huawei.com>
+Cc:     agross@kernel.org, wsa@kernel.org, sricharan@codeaurora.org,
+        linux-arm-msm@vger.kernel.org, linux-i2c@vger.kernel.org,
+        linux-kernel@vger.kernel.org, yi.zhang@huawei.com
+Subject: Re: [PATCH] i2c: qup: Fix error return code in
+ qup_i2c_bam_schedule_desc()
+Message-ID: <20201122040848.GB95182@builder.lan>
+References: <20201116141058.2365043-1-chengzhihao1@huawei.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20201112161920.2671430-6-caleb@connolly.tech>
+In-Reply-To: <20201116141058.2365043-1-chengzhihao1@huawei.com>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu 12 Nov 10:22 CST 2020, Caleb Connolly wrote:
+On Mon 16 Nov 08:10 CST 2020, Zhihao Cheng wrote:
 
-> The OnePlus 6/T has the same issue as the Yoga c630 causing a crash when DMA
-> is used for i2c, so disable it.
+> Fix to return the error code from qup_i2c_change_state()
+> instaed of 0 in qup_i2c_bam_schedule_desc().
 > 
-> https://patchwork.kernel.org/patch/11133827/
-> 
-> Signed-off-by: Caleb Connolly <caleb@connolly.tech>
+> Fixes: fbf9921f8b35d9b2 ("i2c: qup: Fix error handling")
+> Reported-by: Hulk Robot <hulkci@huawei.com>
+> Signed-off-by: Zhihao Cheng <chengzhihao1@huawei.com>
 > ---
->  drivers/i2c/busses/i2c-qcom-geni.c | 6 ++++--
->  1 file changed, 4 insertions(+), 2 deletions(-)
+>  drivers/i2c/busses/i2c-qup.c | 3 ++-
+>  1 file changed, 2 insertions(+), 1 deletion(-)
 > 
-> diff --git a/drivers/i2c/busses/i2c-qcom-geni.c b/drivers/i2c/busses/i2c-qcom-geni.c
-> index 8b4c35f47a70..9acdcfe73be2 100644
-> --- a/drivers/i2c/busses/i2c-qcom-geni.c
-> +++ b/drivers/i2c/busses/i2c-qcom-geni.c
-> @@ -357,7 +357,8 @@ static int geni_i2c_rx_one_msg(struct geni_i2c_dev *gi2c, struct i2c_msg *msg,
->  	struct geni_se *se = &gi2c->se;
->  	size_t len = msg->len;
+> diff --git a/drivers/i2c/busses/i2c-qup.c b/drivers/i2c/busses/i2c-qup.c
+> index fbc04b60cfd1..5a47915869ae 100644
+> --- a/drivers/i2c/busses/i2c-qup.c
+> +++ b/drivers/i2c/busses/i2c-qup.c
+> @@ -801,7 +801,8 @@ static int qup_i2c_bam_schedule_desc(struct qup_i2c_dev *qup)
+>  	if (ret || qup->bus_err || qup->qup_err) {
+>  		reinit_completion(&qup->xfer);
 >  
-> -	if (!of_machine_is_compatible("lenovo,yoga-c630"))
-> +	if (!of_machine_is_compatible("lenovo,yoga-c630") &&
-> +	    !of_machine_is_compatible("oneplus,oneplus6"))
+> -		if (qup_i2c_change_state(qup, QUP_RUN_STATE)) {
+> +		ret = qup_i2c_change_state(qup, QUP_RUN_STATE);
 
-This hack seems to have been working around two separate issues. First
-with iommu active the GENI wrappers needs to have their stream mapping
-configured. Secondly there was a bug in the transaction setup that was
-recently fixed by Doug Anderson.
+In the case that we entered this block because ret was -ETIMEDOUT then
+this will overwrite this and the function will return -EIO.
 
-So can you please give the following patch a go? I've yet to test it on
-the Lenovo machine, but I think it allows us to remove the quirk.
+But in the other paths out of this block ret is being overwritten
+anyways, so I think it's fine.
 
-https://lore.kernel.org/lkml/20201122034149.626045-1-bjorn.andersson@linaro.org/T/#u
+Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 
 Regards,
 Bjorn
 
->  		dma_buf = i2c_get_dma_safe_msg_buf(msg, 32);
->  
->  	if (dma_buf)
-> @@ -399,7 +400,8 @@ static int geni_i2c_tx_one_msg(struct geni_i2c_dev *gi2c, struct i2c_msg *msg,
->  	struct geni_se *se = &gi2c->se;
->  	size_t len = msg->len;
->  
-> -	if (!of_machine_is_compatible("lenovo,yoga-c630"))
-> +	if (!of_machine_is_compatible("lenovo,yoga-c630") &&
-> +	    !of_machine_is_compatible("oneplus,oneplus6"))
->  		dma_buf = i2c_get_dma_safe_msg_buf(msg, 32);
->  
->  	if (dma_buf)
+> +		if (ret) {
+>  			dev_err(qup->dev, "change to run state timed out");
+>  			goto desc_err;
+>  		}
 > -- 
-> 2.29.2
-> 
+> 2.25.4
 > 
