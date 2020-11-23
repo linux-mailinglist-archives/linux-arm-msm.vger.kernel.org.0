@@ -2,232 +2,229 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id DA9232C1929
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Nov 2020 00:15:59 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1F7722C1955
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Nov 2020 00:21:51 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388199AbgKWXD0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 23 Nov 2020 18:03:26 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41150 "EHLO
+        id S1726610AbgKWXSo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 23 Nov 2020 18:18:44 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43500 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2388167AbgKWXD0 (ORCPT
+        with ESMTP id S1725308AbgKWXSn (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 23 Nov 2020 18:03:26 -0500
-Received: from mail-wr1-x444.google.com (mail-wr1-x444.google.com [IPv6:2a00:1450:4864:20::444])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 344FEC0613CF
-        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Nov 2020 15:03:24 -0800 (PST)
-Received: by mail-wr1-x444.google.com with SMTP id i2so1414670wrs.4
-        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Nov 2020 15:03:24 -0800 (PST)
+        Mon, 23 Nov 2020 18:18:43 -0500
+Received: from mail-wm1-x344.google.com (mail-wm1-x344.google.com [IPv6:2a00:1450:4864:20::344])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9F564C0613CF
+        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Nov 2020 15:18:42 -0800 (PST)
+Received: by mail-wm1-x344.google.com with SMTP id 1so1089835wme.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Nov 2020 15:18:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=Ig5qutKRJGU1yXjmQCggg+HJKA/iCr5AyEcACinSfrY=;
-        b=UpqUn136TPn1vBGfXQ9TvI3oBkyqkcEE6GJqfE2pgB0KAB5lkuSHgzxEy5V3hUdSzT
-         MKI1YZyMdpR6DEmEpgpI6sfJ9paUDEmAZHKrpnBC8KcjANSVDJSPrwapCUqZRsx1HHYs
-         zp1BMzdQBqINhyJrE7XHlA2KbDBo9XXAOm4YZAhYETz/HdeH0q6u3vpksjMgZLl9Jm/f
-         22MWOyw5c5ycdQwTFH3YXH+px8GMMYkVIo8qxKfr8OHnjJz5qFPOCmbyRzBfhaZYubuG
-         DLUp1VO7kR/wZSWD2m82MwY7CI8VHap8AnpXvVU0gQb1JoHxRwUXe1l3BHKANPfvOONd
-         LNSg==
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=Nj+gdTH1StHuONWnTSTyqwU/3oIYDEHaKWBrfK50CQA=;
+        b=hP1StnKqpISni3iYelCRXg4UuZ+DrTjSYEs2bKb91lI7/LrJtOp+gaKC9NPGLGuhy4
+         JUic4G2gogQszL1j8P/ea5bdXK/03RIg/mAde9/9qewvsLJTYpk8VnR3gc3xj28TtP1n
+         e8eQEobTa1QpfsFkdJ3H8cp8Lw2Xhjo7IO2PSCympH4es68QbYgMvuNWMXx5Is7PTZA+
+         8b6Y6IZTKWenvbYLm453/gviARCub4dwabSjN997hLWdcbDHc4Sal/h/tJ290Bu89I2E
+         ziJG78lXAn6iDgmZS+d+b9OebmPyDV1k2/0xtBE0//U0eoC7cE/R4OoaHwdPRKIqFH1+
+         UKpg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=Ig5qutKRJGU1yXjmQCggg+HJKA/iCr5AyEcACinSfrY=;
-        b=Yvuy7o+C37EJjrsgRftzCG/VVfTEbRhf7l3bWS3ZojVH1lEOqiyzYn6KRqhw9MmFH5
-         XEIY8yh9ebk0BHT/4byfpdRUw5g3zZFD6A9uAX1d8TLXHozbU/kaV+ZhFLZKLMUNTkZg
-         gLSBt6GYNz9Q4g0VaVnioSH7wIwHiWSGPKSgwt+CFufDuYvAJQ3du3MHEwJ/WKNIPRT6
-         Xx4SnDVMmxUOIkgn5JlhAKFgy/RPEImCw4Hw1LnKtiFLwaOa7Nk3AZGOzr11P3P77b6E
-         jcJdrerNETFTSdM5VRR8sqZ7HIgYSmHqw6UXOBGWfA24x3iuYjdozr3OCnyS01Nj8hTv
-         lvWg==
-X-Gm-Message-State: AOAM533Surmo2ZmODOqsdRuJUw2KRt44nU00wx0fwYdmOOghcseCO7mW
-        4R9zYa46R90wlI4SpiGW2JgSeA==
-X-Google-Smtp-Source: ABdhPJzP+4TrdLHqKkuXpQaBlPiMq0oU1TNFP4vuS9lGfoF7EYXhlAU8jknWpF9Jrczt3agiR0d2MQ==
-X-Received: by 2002:a5d:448b:: with SMTP id j11mr1965244wrq.236.1606172602975;
-        Mon, 23 Nov 2020 15:03:22 -0800 (PST)
-Received: from localhost.localdomain (hst-221-74.medicom.bg. [84.238.221.74])
-        by smtp.gmail.com with ESMTPSA id q66sm1501463wme.6.2020.11.23.15.03.22
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 23 Nov 2020 15:03:22 -0800 (PST)
-From:   Stanimir Varbanov <stanimir.varbanov@linaro.org>
-To:     linux-media@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-Cc:     Hans Verkuil <hverkuil-cisco@xs4all.nl>,
-        Ezequiel Garcia <ezequiel@collabora.com>,
-        Nicolas Dufresne <nicolas.dufresne@collabora.com>,
-        Stanimir Varbanov <stanimir.varbanov@linaro.org>
-Subject: [PATCH v2 3/3] venus: venc: Add support for CLL and Mastering display controls
-Date:   Tue, 24 Nov 2020 01:02:57 +0200
-Message-Id: <20201123230257.31690-4-stanimir.varbanov@linaro.org>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20201123230257.31690-1-stanimir.varbanov@linaro.org>
-References: <20201123230257.31690-1-stanimir.varbanov@linaro.org>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=Nj+gdTH1StHuONWnTSTyqwU/3oIYDEHaKWBrfK50CQA=;
+        b=gm1u6cUxMYweEjsSYZZCDrr5epIv1gmHtnA5FM6impmVlj+m6xD18vfZHvLP9gJN/v
+         Bhd/JulrPaH9YacYcLErBPIWahwitp1suPsIVdMDzwi7fLwKOXZpOxZJL8f78mQhntBP
+         ogwsvWAku0z+dDGELC9Gg4R/MDThNgG2MSHdizYI5EcLR4CqjL9T0OrFrleeYqHC2gcW
+         SmFjDzbE35IKFTkKVKtAFIrwO3jUoB5+4UXZgOOqrx2d9Y2AJKrH9Qo87rKu4C/OXOyM
+         yntlYi0v5HJmcX6PaAlEEJgYniZ03cm/xhMaKA9DHDInpDpqNmfXprpBWi4Tm7YCPoPa
+         juBg==
+X-Gm-Message-State: AOAM532bXiY7Pqq7qvbEFWFAbW6oEF1JqbyEd9khw39TPc7k5FG1RP/S
+        id+JtDzIwA9q0RnWrwMokLf9B+cv55l9Na14DME=
+X-Google-Smtp-Source: ABdhPJxbZx0kgnIaAnh7hLDsIUyOulsD+MqY+/sCRXSQRcguNLyZRSv25aU8ixwKqNHa0Tn7qKLMqza4GKhJ5RHw2jc=
+X-Received: by 2002:a7b:c145:: with SMTP id z5mr1168542wmi.164.1606173520987;
+ Mon, 23 Nov 2020 15:18:40 -0800 (PST)
+MIME-Version: 1.0
+References: <20201119214145.10182-1-abhinavk@codeaurora.org>
+In-Reply-To: <20201119214145.10182-1-abhinavk@codeaurora.org>
+From:   Rob Clark <robdclark@gmail.com>
+Date:   Mon, 23 Nov 2020 15:18:29 -0800
+Message-ID: <CAF6AEGsWVKCAE3CetZagbvRNZAU00FaoWSvaDxxOafNRY5dz1g@mail.gmail.com>
+Subject: Re: [PATCH] drm/msm/dpu: update the qos remap only if the client type changes
+To:     Abhinav Kumar <abhinavk@codeaurora.org>
+Cc:     dri-devel <dri-devel@lists.freedesktop.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        freedreno <freedreno@lists.freedesktop.org>,
+        Sean Paul <seanpaul@chromium.org>,
+        Stephen Boyd <swboyd@chromium.org>, nganji@codeaurora.org,
+        aravindh@codeaurora.org, Tanmay Shah <tanmay@codeaurora.org>,
+        Kuogee Hsieh <khsieh@codeaurora.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Create CLL and Mastering display colour volume v4l2 controls for
-encoder, add handling of HDR10 PQ SEI packet payloads for v4.
+On Thu, Nov 19, 2020 at 1:41 PM Abhinav Kumar <abhinavk@codeaurora.org> wrote:
+>
+> Update the qos remap only if the client type changes for the plane.
+> This will avoid unnecessary register programming and also avoid log
+> spam from the dpu_vbif_set_qos_remap() function.
+>
+> Signed-off-by: Abhinav Kumar <abhinavk@codeaurora.org>
+> ---
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c    | 17 +++++++++++++++++
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.h    |  7 +++++++
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c |  2 ++
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c   | 12 ++++++++++--
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_plane.h   |  5 +++++
+>  5 files changed, 41 insertions(+), 2 deletions(-)
+>
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
+> index d4662e8184cc..3867da47c683 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
+> @@ -1037,6 +1037,23 @@ static int dpu_crtc_atomic_check(struct drm_crtc *crtc,
+>         return rc;
+>  }
+>
+> +void dpu_crtc_set_qos_dirty(struct drm_crtc *crtc)
+> +{
+> +       struct drm_plane *plane;
+> +       struct drm_plane_state *state;
+> +       struct dpu_plane_state *pstate;
+> +
+> +       drm_atomic_crtc_for_each_plane(plane, crtc) {
+> +               state = plane->state;
+> +               if (!state)
+> +                       continue;
+> +
+> +               pstate = to_dpu_plane_state(state);
+> +
+> +               pstate->dirty |= DPU_PLANE_DIRTY_QOS;
+> +       }
+> +}
+> +
+>  int dpu_crtc_vblank(struct drm_crtc *crtc, bool en)
+>  {
+>         struct dpu_crtc *dpu_crtc = to_dpu_crtc(crtc);
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.h
+> index cec3474340e8..8ba11de605bc 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.h
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.h
+> @@ -231,6 +231,13 @@ static inline int dpu_crtc_frame_pending(struct drm_crtc *crtc)
+>   */
+>  int dpu_crtc_vblank(struct drm_crtc *crtc, bool en);
+>
+> +/**
+> + * dpu_crtc_set_qos_dirty - update plane dirty flag to include
+> + * QoS reprogramming
+> + * @crtc: Pointer to drm crtc structure
+> + */
+> +void dpu_crtc_set_qos_dirty(struct drm_crtc *crtc);
+> +
+>  /**
+>   * dpu_crtc_vblank_callback - called on vblank irq, issues completion events
+>   * @crtc: Pointer to drm crtc object
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+> index f7f5c258b553..c2db9dd6ec67 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+> @@ -1001,6 +1001,8 @@ static void dpu_encoder_virt_mode_set(struct drm_encoder *drm_enc,
+>
+>         trace_dpu_enc_mode_set(DRMID(drm_enc));
+>
+> +       dpu_crtc_set_qos_dirty(drm_enc->crtc);
+> +
+>         if (drm_enc->encoder_type == DRM_MODE_ENCODER_TMDS && priv->dp)
+>                 msm_dp_display_mode_set(priv->dp, drm_enc, mode, adj_mode);
+>
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+> index 7ea90d25a3b6..f91d31a31e14 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+> @@ -1066,6 +1066,7 @@ static void dpu_plane_sspp_atomic_update(struct drm_plane *plane)
+>         struct dpu_plane_state *pstate = to_dpu_plane_state(state);
+>         struct drm_crtc *crtc = state->crtc;
+>         struct drm_framebuffer *fb = state->fb;
+> +       bool is_rt_pipe;
+>         const struct dpu_format *fmt =
+>                 to_dpu_format(msm_framebuffer_format(fb));
+>
+> @@ -1075,7 +1076,7 @@ static void dpu_plane_sspp_atomic_update(struct drm_plane *plane)
+>
+>         pstate->pending = true;
+>
+> -       pdpu->is_rt_pipe = (dpu_crtc_get_client_type(crtc) != NRT_CLIENT);
+> +       is_rt_pipe = (dpu_crtc_get_client_type(crtc) != NRT_CLIENT);
+>         _dpu_plane_set_qos_ctrl(plane, false, DPU_PLANE_QOS_PANIC_CTRL);
+>
+>         DPU_DEBUG_PLANE(pdpu, "FB[%u] " DRM_RECT_FP_FMT "->crtc%u " DRM_RECT_FMT
+> @@ -1181,8 +1182,15 @@ static void dpu_plane_sspp_atomic_update(struct drm_plane *plane)
+>                 _dpu_plane_set_ot_limit(plane, crtc);
+>         }
+>
+> -       _dpu_plane_set_qos_remap(plane);
+> +       if (is_rt_pipe != pdpu->is_rt_pipe) {
+> +               pdpu->is_rt_pipe = is_rt_pipe;
+> +               pstate->dirty |= DPU_PLANE_DIRTY_QOS;
+> +       }
+>
+> +       if (pstate->dirty & DPU_PLANE_DIRTY_QOS) {
+> +               _dpu_plane_set_qos_remap(plane);
+> +               pstate->dirty = 0x0;
+> +       }
 
-Signed-off-by: Stanimir Varbanov <stanimir.varbanov@linaro.org>
----
- drivers/media/platform/qcom/venus/core.h      |  3 ++
- drivers/media/platform/qcom/venus/hfi_cmds.c  |  8 +++++
- .../media/platform/qcom/venus/hfi_helper.h    | 20 +++++++++++++
- drivers/media/platform/qcom/venus/venc.c      | 29 +++++++++++++++++++
- .../media/platform/qcom/venus/venc_ctrls.c    | 16 +++++++++-
- 5 files changed, 75 insertions(+), 1 deletion(-)
+So in the end, this looks roughly like "set qos remap on modesets or
+switching between right/left pipe"?  Couldn't this be simpler if in
+plane->atomic_check() you do something like:
 
-diff --git a/drivers/media/platform/qcom/venus/core.h b/drivers/media/platform/qcom/venus/core.h
-index 3bc129a4f817..3ae6cd2b8d31 100644
---- a/drivers/media/platform/qcom/venus/core.h
-+++ b/drivers/media/platform/qcom/venus/core.h
-@@ -245,6 +245,9 @@ struct venc_controls {
- 
- 	u32 profile;
- 	u32 level;
-+
-+	struct v4l2_ctrl_hdr10_cll_info cll;
-+	struct v4l2_ctrl_hdr10_mastering_display mastering;
- };
- 
- struct venus_buffer {
-diff --git a/drivers/media/platform/qcom/venus/hfi_cmds.c b/drivers/media/platform/qcom/venus/hfi_cmds.c
-index 7022368c1e63..081e5a816bca 100644
---- a/drivers/media/platform/qcom/venus/hfi_cmds.c
-+++ b/drivers/media/platform/qcom/venus/hfi_cmds.c
-@@ -1205,6 +1205,14 @@ pkt_session_set_property_4xx(struct hfi_session_set_property_pkt *pkt,
- 		pkt->shdr.hdr.size += sizeof(u32) + sizeof(*cu);
- 		break;
- 	}
-+	case HFI_PROPERTY_PARAM_VENC_HDR10_PQ_SEI: {
-+		struct hfi_hdr10_pq_sei *in = pdata, *hdr10 = prop_data;
-+
-+		memcpy(hdr10, in, sizeof(*hdr10));
-+		pkt->shdr.hdr.size += sizeof(u32) + sizeof(*hdr10);
-+		break;
-+	}
-+
- 	case HFI_PROPERTY_CONFIG_VENC_MAX_BITRATE:
- 	case HFI_PROPERTY_CONFIG_VDEC_POST_LOOP_DEBLOCKER:
- 	case HFI_PROPERTY_PARAM_BUFFER_ALLOC_MODE:
-diff --git a/drivers/media/platform/qcom/venus/hfi_helper.h b/drivers/media/platform/qcom/venus/hfi_helper.h
-index 60ee2479f7a6..8e8dc6b5c855 100644
---- a/drivers/media/platform/qcom/venus/hfi_helper.h
-+++ b/drivers/media/platform/qcom/venus/hfi_helper.h
-@@ -506,6 +506,7 @@
- #define HFI_PROPERTY_PARAM_VENC_VPX_ERROR_RESILIENCE_MODE	0x2005029
- #define HFI_PROPERTY_PARAM_VENC_HIER_B_MAX_NUM_ENH_LAYER	0x200502c
- #define HFI_PROPERTY_PARAM_VENC_HIER_P_HYBRID_MODE		0x200502f
-+#define HFI_PROPERTY_PARAM_VENC_HDR10_PQ_SEI			0x2005036
- 
- /*
-  * HFI_PROPERTY_CONFIG_VENC_COMMON_START
-@@ -791,6 +792,25 @@ struct hfi_ltr_mark {
- 	u32 mark_frame;
- };
- 
-+struct hfi_mastering_display_colour_sei_payload {
-+	u32 display_primaries_x[3];
-+	u32 display_primaries_y[3];
-+	u32 white_point_x;
-+	u32 white_point_y;
-+	u32 max_display_mastering_luminance;
-+	u32 min_display_mastering_luminance;
-+};
-+
-+struct hfi_content_light_level_sei_payload {
-+	u32 max_content_light;
-+	u32 max_pic_average_light;
-+};
-+
-+struct hfi_hdr10_pq_sei {
-+	struct hfi_mastering_display_colour_sei_payload mastering;
-+	struct hfi_content_light_level_sei_payload cll;
-+};
-+
- struct hfi_framesize {
- 	u32 buffer_type;
- 	u32 width;
-diff --git a/drivers/media/platform/qcom/venus/venc.c b/drivers/media/platform/qcom/venus/venc.c
-index 0bf92cc21f3a..daeaca30e9e3 100644
---- a/drivers/media/platform/qcom/venus/venc.c
-+++ b/drivers/media/platform/qcom/venus/venc.c
-@@ -587,6 +587,35 @@ static int venc_set_properties(struct venus_inst *inst)
- 			return ret;
- 	}
- 
-+	if (inst->fmt_cap->pixfmt == V4L2_PIX_FMT_HEVC) {
-+		struct hfi_hdr10_pq_sei hdr10;
-+		unsigned int c;
-+
-+		ptype = HFI_PROPERTY_PARAM_VENC_HDR10_PQ_SEI;
-+
-+		for (c = 0; c < 3; c++) {
-+			hdr10.mastering.display_primaries_x[c] =
-+				ctr->mastering.display_primaries_x[c];
-+			hdr10.mastering.display_primaries_y[c] =
-+				ctr->mastering.display_primaries_y[c];
-+		}
-+
-+		hdr10.mastering.white_point_x = ctr->mastering.white_point_x;
-+		hdr10.mastering.white_point_y = ctr->mastering.white_point_y;
-+		hdr10.mastering.max_display_mastering_luminance =
-+			ctr->mastering.max_luminance;
-+		hdr10.mastering.min_display_mastering_luminance =
-+			ctr->mastering.min_luminance;
-+
-+		hdr10.cll.max_content_light = ctr->cll.max_content_light_level;
-+		hdr10.cll.max_pic_average_light =
-+			ctr->cll.max_pic_average_light_level;
-+
-+		ret = hfi_session_set_property(inst, ptype, &hdr10);
-+		if (ret)
-+			return ret;
-+	}
-+
- 	/* IDR periodicity, n:
- 	 * n = 0 - only the first I-frame is IDR frame
- 	 * n = 1 - all I-frames will be IDR frames
-diff --git a/drivers/media/platform/qcom/venus/venc_ctrls.c b/drivers/media/platform/qcom/venus/venc_ctrls.c
-index 0708b3b89d0c..87ba0cf9f37e 100644
---- a/drivers/media/platform/qcom/venus/venc_ctrls.c
-+++ b/drivers/media/platform/qcom/venus/venc_ctrls.c
-@@ -198,6 +198,12 @@ static int venc_op_s_ctrl(struct v4l2_ctrl *ctrl)
- 	case V4L2_CID_MPEG_VIDEO_FRAME_SKIP_MODE:
- 		ctr->frame_skip_mode = ctrl->val;
- 		break;
-+	case V4L2_CID_MPEG_VIDEO_HDR10_CLL_INFO:
-+		ctr->cll = *ctrl->p_new.p_hdr10_cll;
-+		break;
-+	case V4L2_CID_MPEG_VIDEO_HDR10_MASTERING_DISPLAY:
-+		ctr->mastering = *ctrl->p_new.p_hdr10_mastering;
-+		break;
- 	default:
- 		return -EINVAL;
- 	}
-@@ -213,7 +219,7 @@ int venc_ctrl_init(struct venus_inst *inst)
- {
- 	int ret;
- 
--	ret = v4l2_ctrl_handler_init(&inst->ctrl_handler, 33);
-+	ret = v4l2_ctrl_handler_init(&inst->ctrl_handler, 35);
- 	if (ret)
- 		return ret;
- 
-@@ -364,6 +370,14 @@ int venc_ctrl_init(struct venus_inst *inst)
- 			       (1 << V4L2_MPEG_VIDEO_FRAME_SKIP_MODE_BUF_LIMIT)),
- 			       V4L2_MPEG_VIDEO_FRAME_SKIP_MODE_DISABLED);
- 
-+	v4l2_ctrl_new_std_compound(&inst->ctrl_handler, &venc_ctrl_ops,
-+				   V4L2_CID_MPEG_VIDEO_HDR10_CLL_INFO,
-+				   v4l2_ctrl_ptr_create(NULL));
-+
-+	v4l2_ctrl_new_std_compound(&inst->ctrl_handler, &venc_ctrl_ops,
-+				   V4L2_CID_MPEG_VIDEO_HDR10_MASTERING_DISPLAY,
-+				   v4l2_ctrl_ptr_create(NULL));
-+
- 	ret = inst->ctrl_handler.error;
- 	if (ret)
- 		goto err;
--- 
-2.17.1
+   dpu_plane_state->needs_qos_remap = atomic_state->allow_modeset;
 
+and then in plane->atomic_update:
+
+    if (pstate->needs_qos_remap || (is_rt_pipe != pdpu->is_rt_pipe) {
+         pdpu->is_rt_pipe = is_rt_pipe;
+         _dpu_plane_set_qos_remap(plane)
+    }
+
+?
+
+BR,
+-R
+
+
+>         _dpu_plane_calc_bw(plane, fb);
+>
+>         _dpu_plane_calc_clk(plane);
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.h
+> index ca83b8753d59..47abd3686a86 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.h
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.h
+> @@ -14,11 +14,15 @@
+>  #include "dpu_hw_mdss.h"
+>  #include "dpu_hw_sspp.h"
+>
+> +/* dirty bits to update QOS */
+> +#define DPU_PLANE_DIRTY_QOS 0x1
+> +
+>  /**
+>   * struct dpu_plane_state: Define dpu extension of drm plane state object
+>   * @base:      base drm plane state object
+>   * @aspace:    pointer to address space for input/output buffers
+>   * @stage:     assigned by crtc blender
+> + * @dirty:     bitmask for which pipe h/w config functions need to be updated
+>   * @multirect_index: index of the rectangle of SSPP
+>   * @multirect_mode: parallel or time multiplex multirect mode
+>   * @pending:   whether the current update is still pending
+> @@ -32,6 +36,7 @@ struct dpu_plane_state {
+>         struct drm_plane_state base;
+>         struct msm_gem_address_space *aspace;
+>         enum dpu_stage stage;
+> +       uint32_t dirty;
+>         uint32_t multirect_index;
+>         uint32_t multirect_mode;
+>         bool pending;
+> --
+> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+> a Linux Foundation Collaborative Project
+>
