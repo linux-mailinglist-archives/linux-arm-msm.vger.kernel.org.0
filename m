@@ -2,91 +2,152 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 3B3F72C0B59
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Nov 2020 14:56:21 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 9412C2C0CD1
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Nov 2020 15:14:43 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732263AbgKWNXZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 23 Nov 2020 08:23:25 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56590 "EHLO
+        id S1730474AbgKWOFs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 23 Nov 2020 09:05:48 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42406 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731523AbgKWMf1 (ORCPT
+        with ESMTP id S1730352AbgKWOFq (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 23 Nov 2020 07:35:27 -0500
-Received: from mail-lf1-x143.google.com (mail-lf1-x143.google.com [IPv6:2a00:1450:4864:20::143])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0A267C0613CF
-        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Nov 2020 04:35:27 -0800 (PST)
-Received: by mail-lf1-x143.google.com with SMTP id t6so7367263lfl.13
-        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Nov 2020 04:35:26 -0800 (PST)
+        Mon, 23 Nov 2020 09:05:46 -0500
+Received: from mail-yb1-xb43.google.com (mail-yb1-xb43.google.com [IPv6:2607:f8b0:4864:20::b43])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 15474C0613CF;
+        Mon, 23 Nov 2020 06:05:44 -0800 (PST)
+Received: by mail-yb1-xb43.google.com with SMTP id 10so16032864ybx.9;
+        Mon, 23 Nov 2020 06:05:44 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
+        d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=bIWsoLneay5Kl8XDCK10cRcYyCYPRUIRK+zSmVlUvos=;
-        b=ucPq/htyydn+9nClVGlZXYjYlkUMJiVSI6//s3K2lB127+Dttlcf30ubg2H0y6FtTe
-         0t0/uAcNyjks0BNC+Nc9WQM9twGuyQgzeJDmHOJCcuG+BPEgo4hZphWquRikKVGCaEDH
-         fZ9J0t0/u2VfMvu3ThtvvLpxoqAXFYzigtfxsm/UFO7lW8Qd2SlHVODvvjva2lUIv9Wh
-         C56U3YkqIoZLIrq/Q6mXCqbIVVZjrdUbXXTgF57i/vdQhFyGr1ys40XzGUOvAyMl6YSB
-         r9W3JHWAvhB32/0yGKToSVztgYnBmSn1zD2LDPjUKQH80SPA+8oNJEecXJ/c2Cat6vX+
-         DDsg==
+        bh=RhHqKgQbKUW77nc47JuvCnp+w8QNxENxQLSt6AHkTqQ=;
+        b=uc3VE1PZNnY/Z1NgZXLeWe/Nj5hsoBfQkeeHXaE+d0SDr9xNRMPYxU1o6fpuaiqkgi
+         yuFjhawxyOxFbziEfkWs4inb92LCIVTnNTVXAL7657JtY5jUPnHae9XC4JONvfltcDzK
+         9TpDS0ylXwfesoyru6or5tLuj2Wgq4fxc0XGG5evkxw7F5K63x1NbbMukm854FcfQLy0
+         gnTDe+NWIPcxyPxl6ZwlkcZY1OnasK1C98JFaIzSzrlrdcg6icgY2nCNokwGspTvBpMG
+         u0c2fJxhgJsKPBZAzgP85ZG8VhKJUulmNcJ8sZ+phgCZ9U4trQ3IF/NnqsJiuQ1qY+5Q
+         UH8Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=bIWsoLneay5Kl8XDCK10cRcYyCYPRUIRK+zSmVlUvos=;
-        b=pqqc2+u3RnTdo5985Az7niek0dp+8xI3o/AuESb17W7cZrfr8EEYkiXjDTFCIBmGDe
-         sOwijkXGQqWvmt0uoDSLrxx6kU79zSIjDmS+7OPaI7M8NsyqzQym4wwBhOVGNzul16n8
-         pRDYUHHuf+dcEsZkHy3oxUCIgRX3Nnb103f8+3c/3qTFhJ55BktOh7rEy0F99VwfL9SK
-         AykeVhg0CKQLyScwwtQw6PcGox+uhawgPbbbzvZLauWB/4TQrpKOeHrQP2n+pPj9iSlM
-         T4CSEgjdq+h+QIT0IqG/v2UdEA2E30nBOEfXJ9FYYbm90ggFzAjsmzpSkdGUybM6gDM0
-         yu2g==
-X-Gm-Message-State: AOAM530LA7rD6iFIRO/kcDN0xjWo0nI6nGubVG+4am7wRVDzylTTGRvU
-        A1/8Qk3rx7x6ma4vIfkE0abiwB5/q+6jbmh74IndKA==
-X-Google-Smtp-Source: ABdhPJyKTHrZB4S6+zJWCf7UD8YLgth7EXVZo1EcgOOYpBLPQaWWmzkLYbQnaZmrG7aYqRK3IZDf1ocx2qEm2ucjD18=
-X-Received: by 2002:a19:5f11:: with SMTP id t17mr1536573lfb.572.1606134925520;
- Mon, 23 Nov 2020 04:35:25 -0800 (PST)
+        bh=RhHqKgQbKUW77nc47JuvCnp+w8QNxENxQLSt6AHkTqQ=;
+        b=WedzhOTXaYjPvNaPhmohdRJ+58gonX0b+ZI3sjwFseX7aF5YDJk0KL0cBl/X1uVgsC
+         We1dczeA+a4BK//RvFHkRTxDc8BbTalyjcQ4gnkIU9cfPcqJg+tZC+68mMrkubh7AGNF
+         fvO9dxWcqQW+4jlWSA7EhFOjC+n4jFiOB8jUMl7Ex3eiIqW1poARTffV5jYeQBAu2OMK
+         sBygNg3BHt5eyDS5b2o48qFp8QnKJ2TYxM0fi6Wij1HP/cKim9lhpUlhBdCEtnnK+OjH
+         QzeyboGg6JxYcFDMMePMGw5mChseG7FQWM1KsCbS1BMq1YrycaQ3I+n+89mM8kqD+8Qa
+         Tamg==
+X-Gm-Message-State: AOAM5326FS91Tk/kyeYNAWweyK5tdCS3nYjJ+iR0xlt/wSuuwpjMlR9n
+        Xjc1+NNgNNNn3BpMzB57GgYvVZWxZhDGGINKkQk=
+X-Google-Smtp-Source: ABdhPJz9DsZ58e7OIIOr/VE9Xtax3PWaLuFuRyVLpjTsCzIYcuPGWJiVUhGusztX9v02ET+47HU3GtURC6oS5LfC9Lw=
+X-Received: by 2002:a5b:40e:: with SMTP id m14mr35121900ybp.33.1606140343388;
+ Mon, 23 Nov 2020 06:05:43 -0800 (PST)
 MIME-Version: 1.0
-References: <20201106042710.55979-1-john.stultz@linaro.org>
- <20201106042710.55979-3-john.stultz@linaro.org> <20201116155936.GE2224373@ulmo>
- <20201116163603.GA30507@willie-the-truck>
-In-Reply-To: <20201116163603.GA30507@willie-the-truck>
-From:   Linus Walleij <linus.walleij@linaro.org>
-Date:   Mon, 23 Nov 2020 13:35:14 +0100
-Message-ID: <CACRpkdZ9P0vG-deWmK8A-zRZbndq1gz_oaK_b128bu4NfUB+Nw@mail.gmail.com>
-Subject: Re: [PATCH v6 3/3] firmware: QCOM_SCM: Allow qcom_scm driver to be
- loadable as a permenent module
-To:     Will Deacon <will@kernel.org>
-Cc:     Thierry Reding <thierry.reding@gmail.com>,
-        John Stultz <john.stultz@linaro.org>,
-        lkml <linux-kernel@vger.kernel.org>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Joerg Roedel <joro@8bytes.org>,
-        Thomas Gleixner <tglx@linutronix.de>,
-        Jason Cooper <jason@lakedaemon.net>,
-        Marc Zyngier <maz@kernel.org>, Vinod Koul <vkoul@kernel.org>,
-        Kalle Valo <kvalo@codeaurora.org>,
-        Maulik Shah <mkshah@codeaurora.org>,
-        Lina Iyer <ilina@codeaurora.org>,
-        Saravana Kannan <saravanak@google.com>,
-        Todd Kjos <tkjos@google.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Jon Hunter <jonathanh@nvidia.com>,
-        MSM <linux-arm-msm@vger.kernel.org>,
-        "list@263.net:IOMMU DRIVERS <iommu@lists.linux-foundation.org>, Joerg
-        Roedel <joro@8bytes.org>," <iommu@lists.linux-foundation.org>,
-        "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>
+References: <cover.1605896059.git.gustavoars@kernel.org> <20201120105344.4345c14e@kicinski-fedora-pc1c0hjn.dhcp.thefacebook.com>
+ <202011201129.B13FDB3C@keescook> <20201120115142.292999b2@kicinski-fedora-pc1c0hjn.dhcp.thefacebook.com>
+ <202011220816.8B6591A@keescook> <9b57fd4914b46f38d54087d75e072d6e947cb56d.camel@HansenPartnership.com>
+ <CANiq72nZrHWTA4_Msg6MP9snTyenC6-eGfD27CyfNSu7QoVZbw@mail.gmail.com> <alpine.LNX.2.23.453.2011230938390.7@nippy.intranet>
+In-Reply-To: <alpine.LNX.2.23.453.2011230938390.7@nippy.intranet>
+From:   Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
+Date:   Mon, 23 Nov 2020 15:05:31 +0100
+Message-ID: <CANiq72=z+tmuey9wj3Kk7wX5s0hTHpsQdLhAqcOVNrHon6xn5Q@mail.gmail.com>
+Subject: Re: [PATCH 000/141] Fix fall-through warnings for Clang
+To:     Finn Thain <fthain@telegraphics.com.au>
+Cc:     James Bottomley <James.Bottomley@hansenpartnership.com>,
+        Kees Cook <keescook@chromium.org>,
+        Jakub Kicinski <kuba@kernel.org>,
+        "Gustavo A. R. Silva" <gustavoars@kernel.org>,
+        linux-kernel <linux-kernel@vger.kernel.org>,
+        alsa-devel@alsa-project.org, amd-gfx@lists.freedesktop.org,
+        bridge@lists.linux-foundation.org, ceph-devel@vger.kernel.org,
+        cluster-devel@redhat.com, coreteam@netfilter.org,
+        devel@driverdev.osuosl.org, dm-devel@redhat.com,
+        drbd-dev@lists.linbit.com, dri-devel@lists.freedesktop.org,
+        GR-everest-linux-l2@marvell.com, GR-Linux-NIC-Dev@marvell.com,
+        intel-gfx@lists.freedesktop.org, intel-wired-lan@lists.osuosl.org,
+        keyrings@vger.kernel.org, linux1394-devel@lists.sourceforge.net,
+        linux-acpi@vger.kernel.org, linux-afs@lists.infradead.org,
+        Linux ARM <linux-arm-kernel@lists.infradead.org>,
+        linux-arm-msm@vger.kernel.org,
+        linux-atm-general@lists.sourceforge.net,
+        linux-block@vger.kernel.org, linux-can@vger.kernel.org,
+        linux-cifs@vger.kernel.org,
+        Linux Crypto Mailing List <linux-crypto@vger.kernel.org>,
+        linux-decnet-user@lists.sourceforge.net,
+        Ext4 Developers List <linux-ext4@vger.kernel.org>,
+        linux-fbdev@vger.kernel.org, linux-geode@lists.infradead.org,
+        linux-gpio@vger.kernel.org, linux-hams@vger.kernel.org,
+        linux-hwmon@vger.kernel.org, linux-i3c@lists.infradead.org,
+        linux-ide@vger.kernel.org, linux-iio@vger.kernel.org,
+        linux-input <linux-input@vger.kernel.org>,
+        linux-integrity@vger.kernel.org,
+        linux-mediatek@lists.infradead.org,
+        Linux Media Mailing List <linux-media@vger.kernel.org>,
+        linux-mmc@vger.kernel.org, Linux-MM <linux-mm@kvack.org>,
+        linux-mtd@lists.infradead.org, linux-nfs@vger.kernel.org,
+        linux-rdma@vger.kernel.org, linux-renesas-soc@vger.kernel.org,
+        linux-scsi@vger.kernel.org, linux-sctp@vger.kernel.org,
+        linux-security-module@vger.kernel.org,
+        linux-stm32@st-md-mailman.stormreply.com,
+        linux-usb@vger.kernel.org, linux-watchdog@vger.kernel.org,
+        linux-wireless <linux-wireless@vger.kernel.org>,
+        Network Development <netdev@vger.kernel.org>,
+        netfilter-devel@vger.kernel.org, nouveau@lists.freedesktop.org,
+        op-tee@lists.trustedfirmware.org, oss-drivers@netronome.com,
+        patches@opensource.cirrus.com, rds-devel@oss.oracle.com,
+        reiserfs-devel@vger.kernel.org, samba-technical@lists.samba.org,
+        selinux@vger.kernel.org, target-devel@vger.kernel.org,
+        tipc-discussion@lists.sourceforge.net,
+        usb-storage@lists.one-eyed-alien.net,
+        virtualization@lists.linux-foundation.org,
+        wcn36xx@lists.infradead.org,
+        "maintainer:X86 ARCHITECTURE (32-BIT AND 64-BIT)" <x86@kernel.org>,
+        xen-devel@lists.xenproject.org, linux-hardening@vger.kernel.org,
+        Nick Desaulniers <ndesaulniers@google.com>,
+        Nathan Chancellor <natechancellor@gmail.com>,
+        Miguel Ojeda <ojeda@kernel.org>, Joe Perches <joe@perches.com>
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Nov 16, 2020 at 5:36 PM Will Deacon <will@kernel.org> wrote:
+On Sun, Nov 22, 2020 at 11:54 PM Finn Thain <fthain@telegraphics.com.au> wrote:
+>
+> We should also take into account optimisim about future improvements in
+> tooling.
 
-> Linus -- please can you drop this one (patch 3/3) for now, given that it's
-> causing problems?
+Not sure what you mean here. There is no reliable way to guess what
+the intention was with a missing fallthrough, even if you parsed
+whitespace and indentation.
 
-Reverted now, sorry for missing to do this earlier.
+> It is if you want to spin it that way.
 
-Yours,
-Linus Walleij
+How is that a "spin"? It is a fact that we won't get *implicit*
+fallthrough mistakes anymore (in particular if we make it a hard
+error).
+
+> But what we inevitably get is changes like this:
+>
+>  case 3:
+>         this();
+> +       break;
+>  case 4:
+>         hmmm();
+>
+> Why? Mainly to silence the compiler. Also because the patch author argued
+> successfully that they had found a theoretical bug, often in mature code.
+
+If someone changes control flow, that is on them. Every kernel
+developer knows what `break` does.
+
+> But is anyone keeping score of the regressions? If unreported bugs count,
+> what about unreported regressions?
+
+Introducing `fallthrough` does not change semantics. If you are really
+keen, you can always compare the objects because the generated code
+shouldn't change.
+
+Cheers,
+Miguel
