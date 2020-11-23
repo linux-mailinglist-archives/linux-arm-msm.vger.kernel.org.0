@@ -2,102 +2,56 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id BA05D2C0463
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Nov 2020 12:26:59 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id BB3E22C0490
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Nov 2020 12:32:10 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729124AbgKWLU2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 23 Nov 2020 06:20:28 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45052 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729099AbgKWLUS (ORCPT
+        id S1728524AbgKWLbV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 23 Nov 2020 06:31:21 -0500
+Received: from coyote.holtmann.net ([212.227.132.17]:54870 "EHLO
+        mail.holtmann.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726529AbgKWLbV (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 23 Nov 2020 06:20:18 -0500
-Received: from mail-wr1-x441.google.com (mail-wr1-x441.google.com [IPv6:2a00:1450:4864:20::441])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ADE9FC0613CF
-        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Nov 2020 03:20:16 -0800 (PST)
-Received: by mail-wr1-x441.google.com with SMTP id t4so5263248wrr.12
-        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Nov 2020 03:20:16 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=3XQiSvdHNX/l8zTX1wnsdbanAAcRSnCZFK2InbUgz80=;
-        b=ITMcw66kMNj6+a35t560vvLEJp9Qh3wX0OAmVSouJIPLLOsp/LcrYRXMqRiNL1IzWp
-         N88RAF/OA4LP2xGceSDMEdHSP4NCSNn2TSIa0J52t70m0+Cd5Jd5qhoE/KLjniNY96Du
-         CEvjpeHeTWD7XQHNXEmghRGM3nQKcrWOIa0NHPPChpU0y7QnN4rLW1ESzUI0kG2lNCsk
-         L/FNUM/285Cq7SZpdjddlkjFfHPPQV3ZKYnfwp4fh//vsODzAD4+0ePc8TkDFkGMZaPl
-         dpKkd1zjRHALp6PHoTEqjG2Nt7KRy4F4csBhN90NqRTLGFbhiEeIGjVPQO9wWpcoy6jh
-         eW7A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=3XQiSvdHNX/l8zTX1wnsdbanAAcRSnCZFK2InbUgz80=;
-        b=HtqfJkfpXLfwlhurc6cOLlEYP33HclIryrtdh5YM7Tr4JAjdq60uI1q8f6NR/BLldV
-         cftUmRaAGs60oNwVGyNZHsA59z4lAYmO0yr/MYxtkNn5DB58uQ82kDd4RTDlUib2xVDV
-         HzN7BBwHefKlHISHH2ABB0KA5W1zgqLIuYahIa/E9F254E313oxsS0SObJ7GB9EhFhCy
-         WyUEpXAEIyBcSEoWYAOaniF/O1MfsysxpuGljmZGAPCe081WL3SzjQ/pJGnV843BLjDb
-         vnowoS+6YgS0wL0Xun9oTkKyNvzno4usrQVa+IbPnDqUW/AmQ3mzJ8Mn+VEt/Zn9NVGn
-         bxSw==
-X-Gm-Message-State: AOAM5328HS0uzDLWUNYKEwd6odXY52p3JJrzd1UE0KpaqfYtdOEZBcvR
-        7YVsPchkdlE7fESVbRgDJEsydg==
-X-Google-Smtp-Source: ABdhPJxT9cxp1U8EXv22g8t43yc2F9riiqF+zpYFisUPqziMGnHw1PIj+Zfqh0lCo7aiBznqqCCdbw==
-X-Received: by 2002:adf:e80b:: with SMTP id o11mr30535225wrm.409.1606130415390;
-        Mon, 23 Nov 2020 03:20:15 -0800 (PST)
-Received: from dell.default ([91.110.221.218])
-        by smtp.gmail.com with ESMTPSA id n9sm16317290wmd.4.2020.11.23.03.20.14
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 23 Nov 2020 03:20:14 -0800 (PST)
-From:   Lee Jones <lee.jones@linaro.org>
-To:     lee.jones@linaro.org
-Cc:     linux-kernel@vger.kernel.org, Rob Clark <robdclark@gmail.com>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org
-Subject: [PATCH 38/40] drm/msm/msm_drv: Make '_msm_ioremap()' static
-Date:   Mon, 23 Nov 2020 11:19:17 +0000
-Message-Id: <20201123111919.233376-39-lee.jones@linaro.org>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20201123111919.233376-1-lee.jones@linaro.org>
-References: <20201123111919.233376-1-lee.jones@linaro.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+        Mon, 23 Nov 2020 06:31:21 -0500
+Received: from marcel-macbook.holtmann.net (unknown [37.83.193.87])
+        by mail.holtmann.org (Postfix) with ESMTPSA id 91E23CECCF;
+        Mon, 23 Nov 2020 12:38:28 +0100 (CET)
+Content-Type: text/plain;
+        charset=us-ascii
+Mime-Version: 1.0 (Mac OS X Mail 14.0 \(3654.20.0.2.21\))
+Subject: Re: [PATCH v2] Bluetooth: Use NVM files based on SoC ID for WCN3991
+From:   Marcel Holtmann <marcel@holtmann.org>
+In-Reply-To: <1605790449-7250-1-git-send-email-gubbaven@codeaurora.org>
+Date:   Mon, 23 Nov 2020 12:31:15 +0100
+Cc:     Johan Hedberg <johan.hedberg@gmail.com>, mka@chromium.org,
+        linux-kernel@vger.kernel.org, linux-bluetooth@vger.kernel.org,
+        hemantg@codeaurora.org, linux-arm-msm@vger.kernel.org,
+        bgodavar@codeaurora.org, rjliao@codeaurora.org,
+        hbandi@codeaurora.org, abhishekpandit@chromium.org
+Content-Transfer-Encoding: 7bit
+Message-Id: <E4A3BCAC-E6C1-4ED4-885B-FC2918ACC315@holtmann.org>
+References: <1605790449-7250-1-git-send-email-gubbaven@codeaurora.org>
+To:     Venkata Lakshmi Narayana Gubba <gubbaven@codeaurora.org>
+X-Mailer: Apple Mail (2.3654.20.0.2.21)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Fixes the following W=1 kernel build warning(s):
+Hi Venkata,
 
- drivers/gpu/drm/msm/msm_drv.c:124:15: warning: no previous prototype for ‘_msm_ioremap’ [-Wmissing-prototypes]
+> This change will allow to use different NVM file based
+> on WCN3991 BT SoC ID.Need to use different NVM file based on
+> fab location for WCN3991 BT SoC.
+> 
+> Signed-off-by: Venkata Lakshmi Narayana Gubba <gubbaven@codeaurora.org>
+> ---
+> drivers/bluetooth/btqca.c   | 36 ++++++++++++++++++++----------------
+> drivers/bluetooth/btqca.h   | 22 ++++++++++++++++++----
+> drivers/bluetooth/hci_qca.c |  9 ++++-----
+> 3 files changed, 42 insertions(+), 25 deletions(-)
 
-Cc: Rob Clark <robdclark@gmail.com>
-Cc: Sean Paul <sean@poorly.run>
-Cc: David Airlie <airlied@linux.ie>
-Cc: Daniel Vetter <daniel@ffwll.ch>
-Cc: linux-arm-msm@vger.kernel.org
-Cc: dri-devel@lists.freedesktop.org
-Cc: freedreno@lists.freedesktop.org
-Signed-off-by: Lee Jones <lee.jones@linaro.org>
----
- drivers/gpu/drm/msm/msm_drv.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+patch has been applied to bluetooth-next tree.
 
-diff --git a/drivers/gpu/drm/msm/msm_drv.c b/drivers/gpu/drm/msm/msm_drv.c
-index 4d58668b80853..edc99e3b0eca7 100644
---- a/drivers/gpu/drm/msm/msm_drv.c
-+++ b/drivers/gpu/drm/msm/msm_drv.c
-@@ -121,8 +121,8 @@ struct clk *msm_clk_get(struct platform_device *pdev, const char *name)
- 	return clk;
- }
- 
--void __iomem *_msm_ioremap(struct platform_device *pdev, const char *name,
--			   const char *dbgname, bool quiet)
-+static void __iomem *_msm_ioremap(struct platform_device *pdev, const char *name,
-+				  const char *dbgname, bool quiet)
- {
- 	struct resource *res;
- 	unsigned long size;
--- 
-2.25.1
+Regards
+
+Marcel
 
