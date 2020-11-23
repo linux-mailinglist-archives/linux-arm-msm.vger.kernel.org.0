@@ -2,32 +2,32 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 67BAC2C1195
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Nov 2020 18:08:45 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 814CE2C1193
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Nov 2020 18:08:44 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2390306AbgKWRG4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 23 Nov 2020 12:06:56 -0500
-Received: from z5.mailgun.us ([104.130.96.5]:21540 "EHLO z5.mailgun.us"
+        id S2390300AbgKWRGz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 23 Nov 2020 12:06:55 -0500
+Received: from z5.mailgun.us ([104.130.96.5]:38093 "EHLO z5.mailgun.us"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2390160AbgKWRG4 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 23 Nov 2020 12:06:56 -0500
+        id S2390297AbgKWRGz (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 23 Nov 2020 12:06:55 -0500
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
  s=smtp; t=1606151215; h=Content-Transfer-Encoding: MIME-Version:
  References: In-Reply-To: Message-Id: Date: Subject: Cc: To: From:
- Sender; bh=799A6+ZaYQkSrv/xSn1SdxT1I1wEW2HfwO6hBn15u3c=; b=AJB38a/8si2Qj/Ae294T/uJ/EEqoZrPB4RbH9lCq3Y/exZ57EzICDeARrUbpuFAJ+HUhRb3R
- cwwBNNTZ3srjhjpv/BlupR85U5+J4Di6585vD12BNFU6gomDTn6pY2h0241/oARQtWvsnbVg
- FNaYvBfG987TZy99XrWnWBlvyac=
+ Sender; bh=vrgQ8RVETWUH1hQjD/0ggJjHA8S6VTYAIs13Idv4bzY=; b=e066dAQeQrcXiJm7j+YW0dbeQWBJaqpeviRSgzt5V4gxf/ltBvPhVym61WE1Z+C/7fF1HHxl
+ 4cPhTibOh+pTRKXaq27n1vrPiPCAhHzP7OPbifprhcVeNUofJhPlMRGJOQ6u9Bjp3IMB8/uV
+ WsoWep0xjBbyScVvCOAXIygzY44=
 X-Mailgun-Sending-Ip: 104.130.96.5
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org
  (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n10.prod.us-west-2.postgun.com with SMTP id
- 5fbbec27a5a29b56a1e066d1 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 23 Nov 2020 17:06:47
+ smtp-out-n09.prod.us-west-2.postgun.com with SMTP id
+ 5fbbec2d7ef0a8d84346ca86 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 23 Nov 2020 17:06:53
  GMT
 Sender: saiprakash.ranjan=codeaurora.org@mg.codeaurora.org
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id BA0AFC4346B; Mon, 23 Nov 2020 17:06:46 +0000 (UTC)
+        id 77214C4346F; Mon, 23 Nov 2020 17:06:53 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
@@ -37,9 +37,9 @@ Received: from blr-ubuntu-253.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Out
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
         (No client certificate requested)
         (Authenticated sender: saiprakash.ranjan)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 06613C433C6;
-        Mon, 23 Nov 2020 17:06:40 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 06613C433C6
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id A54EFC43464;
+        Mon, 23 Nov 2020 17:06:47 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org A54EFC43464
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=saiprakash.ranjan@codeaurora.org
 From:   Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
@@ -53,10 +53,11 @@ Cc:     Akhil P Oommen <akhilpo@codeaurora.org>,
         dri-devel@lists.freedesktop.org, iommu@lists.linux-foundation.org,
         linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
         linux-arm-msm@vger.kernel.org,
+        Sharat Masetty <smasetty@codeaurora.org>,
         Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-Subject: [PATCHv9 3/8] iommu/arm-smmu: Move non-strict mode to use io_pgtable_domain_attr
-Date:   Mon, 23 Nov 2020 22:35:56 +0530
-Message-Id: <47f8e9760a7fba8b58ea89c9add96f5615f97014.1606150259.git.saiprakash.ranjan@codeaurora.org>
+Subject: [PATCHv9 4/8] drm/msm: rearrange the gpu_rmw() function
+Date:   Mon, 23 Nov 2020 22:35:57 +0530
+Message-Id: <ff76d93f358b910287300552e0c17575b72270cc.1606150259.git.saiprakash.ranjan@codeaurora.org>
 X-Mailer: git-send-email 2.27.0
 In-Reply-To: <cover.1606150259.git.saiprakash.ranjan@codeaurora.org>
 References: <cover.1606150259.git.saiprakash.ranjan@codeaurora.org>
@@ -66,61 +67,69 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Now that we have a struct io_pgtable_domain_attr with quirks,
-use that for non_strict mode as well thereby removing the need
-for more members of arm_smmu_domain in the future.
+From: Sharat Masetty <smasetty@codeaurora.org>
 
+The register read-modify-write construct is generic enough
+that it can be used by other subsystems as needed, create
+a more generic rmw() function and have the gpu_rmw() use
+this new function.
+
+Signed-off-by: Sharat Masetty <smasetty@codeaurora.org>
+Reviewed-by: Jordan Crouse <jcrouse@codeaurora.org>
 Signed-off-by: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
 ---
- drivers/iommu/arm/arm-smmu/arm-smmu.c | 8 +++-----
- drivers/iommu/arm/arm-smmu/arm-smmu.h | 1 -
- 2 files changed, 3 insertions(+), 6 deletions(-)
+ drivers/gpu/drm/msm/msm_drv.c | 8 ++++++++
+ drivers/gpu/drm/msm/msm_drv.h | 1 +
+ drivers/gpu/drm/msm/msm_gpu.h | 5 +----
+ 3 files changed, 10 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu.c b/drivers/iommu/arm/arm-smmu/arm-smmu.c
-index 4b9b10fe50ed..f56f266ebdf7 100644
---- a/drivers/iommu/arm/arm-smmu/arm-smmu.c
-+++ b/drivers/iommu/arm/arm-smmu/arm-smmu.c
-@@ -786,9 +786,6 @@ static int arm_smmu_init_domain_context(struct iommu_domain *domain,
- 			goto out_clear_smmu;
- 	}
+diff --git a/drivers/gpu/drm/msm/msm_drv.c b/drivers/gpu/drm/msm/msm_drv.c
+index 49685571dc0e..a1e22b974b77 100644
+--- a/drivers/gpu/drm/msm/msm_drv.c
++++ b/drivers/gpu/drm/msm/msm_drv.c
+@@ -180,6 +180,14 @@ u32 msm_readl(const void __iomem *addr)
+ 	return val;
+ }
  
--	if (smmu_domain->non_strict)
--		pgtbl_cfg.quirks |= IO_PGTABLE_QUIRK_NON_STRICT;
++void msm_rmw(void __iomem *addr, u32 mask, u32 or)
++{
++	u32 val = msm_readl(addr);
++
++	val &= ~mask;
++	msm_writel(val | or, addr);
++}
++
+ struct msm_vblank_work {
+ 	struct work_struct work;
+ 	int crtc_id;
+diff --git a/drivers/gpu/drm/msm/msm_drv.h b/drivers/gpu/drm/msm/msm_drv.h
+index b9dd8f8f4887..655b3b0424a1 100644
+--- a/drivers/gpu/drm/msm/msm_drv.h
++++ b/drivers/gpu/drm/msm/msm_drv.h
+@@ -478,6 +478,7 @@ void __iomem *msm_ioremap_quiet(struct platform_device *pdev, const char *name,
+ 		const char *dbgname);
+ void msm_writel(u32 data, void __iomem *addr);
+ u32 msm_readl(const void __iomem *addr);
++void msm_rmw(void __iomem *addr, u32 mask, u32 or);
+ 
+ struct msm_gpu_submitqueue;
+ int msm_submitqueue_init(struct drm_device *drm, struct msm_file_private *ctx);
+diff --git a/drivers/gpu/drm/msm/msm_gpu.h b/drivers/gpu/drm/msm/msm_gpu.h
+index 6c9e1fdc1a76..b2b419277953 100644
+--- a/drivers/gpu/drm/msm/msm_gpu.h
++++ b/drivers/gpu/drm/msm/msm_gpu.h
+@@ -246,10 +246,7 @@ static inline u32 gpu_read(struct msm_gpu *gpu, u32 reg)
+ 
+ static inline void gpu_rmw(struct msm_gpu *gpu, u32 reg, u32 mask, u32 or)
+ {
+-	uint32_t val = gpu_read(gpu, reg);
 -
- 	if (smmu_domain->pgtbl_cfg.quirks)
- 		pgtbl_cfg.quirks |= smmu_domain->pgtbl_cfg.quirks;
+-	val &= ~mask;
+-	gpu_write(gpu, reg, val | or);
++	msm_rmw(gpu->mmio + (reg << 2), mask, or);
+ }
  
-@@ -1527,7 +1524,8 @@ static int arm_smmu_domain_get_attr(struct iommu_domain *domain,
- 	case IOMMU_DOMAIN_DMA:
- 		switch (attr) {
- 		case DOMAIN_ATTR_DMA_USE_FLUSH_QUEUE:
--			*(int *)data = smmu_domain->non_strict;
-+			if (smmu_domain->pgtbl_cfg.quirks & IO_PGTABLE_QUIRK_NON_STRICT)
-+				*(int *)data = smmu_domain->pgtbl_cfg.quirks;
- 			return 0;
- 		default:
- 			return -ENODEV;
-@@ -1578,7 +1576,7 @@ static int arm_smmu_domain_set_attr(struct iommu_domain *domain,
- 	case IOMMU_DOMAIN_DMA:
- 		switch (attr) {
- 		case DOMAIN_ATTR_DMA_USE_FLUSH_QUEUE:
--			smmu_domain->non_strict = *(int *)data;
-+			smmu_domain->pgtbl_cfg.quirks |= IO_PGTABLE_QUIRK_NON_STRICT;
- 			break;
- 		default:
- 			ret = -ENODEV;
-diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu.h b/drivers/iommu/arm/arm-smmu/arm-smmu.h
-index bb5a419f240f..cb7ca3a444c9 100644
---- a/drivers/iommu/arm/arm-smmu/arm-smmu.h
-+++ b/drivers/iommu/arm/arm-smmu/arm-smmu.h
-@@ -368,7 +368,6 @@ struct arm_smmu_domain {
- 	const struct iommu_flush_ops	*flush_ops;
- 	struct arm_smmu_cfg		cfg;
- 	enum arm_smmu_domain_stage	stage;
--	bool				non_strict;
- 	struct mutex			init_mutex; /* Protects smmu pointer */
- 	spinlock_t			cb_lock; /* Serialises ATS1* ops and TLB syncs */
- 	struct iommu_domain		domain;
+ static inline u64 gpu_read64(struct msm_gpu *gpu, u32 lo, u32 hi)
 -- 
 QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
 of Code Aurora Forum, hosted by The Linux Foundation
