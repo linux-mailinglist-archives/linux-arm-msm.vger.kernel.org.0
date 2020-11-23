@@ -2,87 +2,80 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 715762C0473
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Nov 2020 12:27:07 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id AEA8D2C046B
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Nov 2020 12:27:03 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729188AbgKWLVW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 23 Nov 2020 06:21:22 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44910 "EHLO
+        id S1728953AbgKWLVA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 23 Nov 2020 06:21:00 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44934 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728900AbgKWLTm (ORCPT
+        with ESMTP id S1728944AbgKWLTs (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 23 Nov 2020 06:19:42 -0500
-Received: from mail-wr1-x441.google.com (mail-wr1-x441.google.com [IPv6:2a00:1450:4864:20::441])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0CDF0C061A4D
-        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Nov 2020 03:19:42 -0800 (PST)
-Received: by mail-wr1-x441.google.com with SMTP id p8so18211258wrx.5
-        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Nov 2020 03:19:41 -0800 (PST)
+        Mon, 23 Nov 2020 06:19:48 -0500
+Received: from mail-wm1-x344.google.com (mail-wm1-x344.google.com [IPv6:2a00:1450:4864:20::344])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E23C6C061A4F
+        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Nov 2020 03:19:46 -0800 (PST)
+Received: by mail-wm1-x344.google.com with SMTP id a3so16859160wmb.5
+        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Nov 2020 03:19:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=FCouInRUErRLohKUWgZ5Rh5LGuUuX53SkzhdYyO1Qd0=;
-        b=WITwZARmzl597oEYyJmeZtf/keRxKZyhTRuWl1mJR4gcvc8Z6HR6kWimUTc8NeVl2P
-         dg/AUfJrtW1uCMrPRzSENfLDfQEyk8XZ6SGAmKMuxmFaJQJm5/6xNl/fsKPFoID0ZSjF
-         npNOQ7GumEsDb2tI+GL2YC4/1jPxhic8iiWDKmLtnEZn5zejduqkH7XTfKQOVnmBFxrA
-         p7aRY4hduVmhmwQTSOSBKFvzGhZE7ESKJmfmBjbmVUZBxs/058qFR92RJy8seJeedXk+
-         mNYLKHoVnB5NyUN8MP8GaXzvIWJ+I2bIvC79FcXHl/ajfJXM2YbR98Wxk8SVkRs3hSVP
-         E+3g==
+        bh=32SVJ8mdRe/T7//SaLi21jO2sGQbGaZReyRM63Vrq+I=;
+        b=VbVyI7IwpSnGVD6+CoCln9D/YR1WicPAg51iH21SRVTcs6T3np9/gKs/xquUFHxAO3
+         QoWpNWkbIDo1GGgDdoUL2Ouhv1j/RwYN3ip3FCNoUak8Vvch4k5k52ucqtLnlablo/6u
+         SNgLtssab4dr7Xe3CduS5bFpNEzUabWliu1oFptjht18hpg9LcgHBDARGc6bpbkGB2wx
+         c3XVbpXolFeBxe576y3M9GKEslcK1dvNt+51/4ecuqHsc38M4oAAjILB13cUUnihUZ/8
+         xwpn4rcW6qYpfM+41YoeWtnhFdkileNG1g8UA8oLqOUrQ0H2wwQC/mG2vl0eIIySNpzS
+         TCdA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=FCouInRUErRLohKUWgZ5Rh5LGuUuX53SkzhdYyO1Qd0=;
-        b=bz8z1WTKxdkYiXuWVqmscV/ir/JWc7NjWFfyLoU5yIDFeHvmnyGLqlS66M1hp77S0t
-         iBdqOFAFaAE3p+cnXkh9Nst67kdPVdNrzzwTPtdz3D9gH2QYJd4FU0nmM3p2sTaK8VH5
-         Zc6dBSsGdyYChD4BFt5vMAZwasl8Y7WJtKTaSof21svIH1Yye1kJJxUKG34/BSnY9wPx
-         8j/duaR8XNKG/KgZVHBwCcV2wwX9gjO+AO03Vpj4aGJAq331u2kJFK61ISip5NlLTqo+
-         KeWcheO+mnBQlIVEzxU++mw77ZbjDtx06sbWK4lcRlEOJAkjAHQqBc/4TdKK1KUpPDc8
-         0XBQ==
-X-Gm-Message-State: AOAM533X6LFMt5jbsz8j8URZvQ6iM8V3+Mk+q8R/P38iV9dW4zgDMO/C
-        N0lFogNQYU3avrT0f8kW07SJ2VQNbMxSdkSZ
-X-Google-Smtp-Source: ABdhPJwRB/ivJcm9IasBeFeTCCH9XybuGLjGQUptEZrDvk/mQPa3TaDOEuCyEpAykvJXnNNQRSiIcA==
-X-Received: by 2002:adf:9cc6:: with SMTP id h6mr30900317wre.341.1606130380725;
-        Mon, 23 Nov 2020 03:19:40 -0800 (PST)
+        bh=32SVJ8mdRe/T7//SaLi21jO2sGQbGaZReyRM63Vrq+I=;
+        b=glRajpouM8RT7EM5Es9ofNBMdMEs+U9nOHfaCSbyZMtEdz0Caz8eCem++QZvJC2BZn
+         cjWSGzSEOzsJ31LSaWwqydE+1lZ3KXIxQAk2qZWjZ7U33Lmis7zLcN9p4q5uM+QPrare
+         Kd8qAUEKYqSTXN2JagPplLnkEP29vETFZjr0pupCNIl2hhhYNJTwRcH0F2aswaEmC6qN
+         aAaQjqAoOfrBiCgrGBR3F0DAZ82GPedpCSlQfEMdvh7tAFws7uck7CaYnjvM7XusqWTj
+         7E7XrUQotnvbUYg7m8O2WGrK0zcQECFla2KvmF8peh+dCtU911fBLoLi8Rrgub9/oAQS
+         swDw==
+X-Gm-Message-State: AOAM533dvw0o74bPwYVsH3lpuqGQnMXlVlZImD02M70lqwuChy0iBNxk
+        hrKT72rwqniePaT21PK/X5IAfA==
+X-Google-Smtp-Source: ABdhPJyX70CgmiRTAARTla7+IkR+i58bgsk4beDqZTn5Nf854m12NsA8sHd5AqoMGrO+Ci/I16J6Rg==
+X-Received: by 2002:a1c:6a16:: with SMTP id f22mr15232172wmc.86.1606130385644;
+        Mon, 23 Nov 2020 03:19:45 -0800 (PST)
 Received: from dell.default ([91.110.221.218])
-        by smtp.gmail.com with ESMTPSA id n9sm16317290wmd.4.2020.11.23.03.19.39
+        by smtp.gmail.com with ESMTPSA id n9sm16317290wmd.4.2020.11.23.03.19.44
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 23 Nov 2020 03:19:40 -0800 (PST)
+        Mon, 23 Nov 2020 03:19:45 -0800 (PST)
 From:   Lee Jones <lee.jones@linaro.org>
 To:     lee.jones@linaro.org
 Cc:     linux-kernel@vger.kernel.org, Rob Clark <robdclark@gmail.com>,
         Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
         Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
         dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org
-Subject: [PATCH 14/40] drm/msm/disp/dpu1/dpu_hw_catalog: Move definitions to the only place they are used
-Date:   Mon, 23 Nov 2020 11:18:53 +0000
-Message-Id: <20201123111919.233376-15-lee.jones@linaro.org>
+Subject: [PATCH 18/40] drm/msm/disp/dpu1/dpu_encoder: Fix a few parameter/member formatting issues
+Date:   Mon, 23 Nov 2020 11:18:57 +0000
+Message-Id: <20201123111919.233376-19-lee.jones@linaro.org>
 X-Mailer: git-send-email 2.25.1
 In-Reply-To: <20201123111919.233376-1-lee.jones@linaro.org>
 References: <20201123111919.233376-1-lee.jones@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-These tables are not large or overbearing, so moving them into the
-source file seems like the right thing to do.  The alternative is to
-use __maybe_unused, which is undesirable.
-
 Fixes the following W=1 kernel build warning(s):
 
- In file included from drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c:11:
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog_format.h:7:23: warning: ‘qcom_compressed_supported_formats’ defined but not used [-Wunused-const-variable=]
- 7 | static const uint32_t qcom_compressed_supported_formats[] = {
- | ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog_format.h:48:23: warning: ‘plane_formats_yuv’ defined but not used [-Wunused-const-variable=]
- 48 | static const uint32_t plane_formats_yuv[] = {
- | ^~~~~~~~~~~~~~~~~
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog_format.h:17:23: warning: ‘plane_formats’ defined but not used [-Wunused-const-variable=]
- 17 | static const uint32_t plane_formats[] = {
- | ^~~~~~~~~~~~~
+ drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c:207: warning: Function parameter or member 'cur_slave' not described in 'dpu_encoder_virt'
+ drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c:207: warning: Function parameter or member 'hw_pp' not described in 'dpu_encoder_virt'
+ drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c:207: warning: Function parameter or member 'intfs_swapped' not described in 'dpu_encoder_virt'
+ drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c:1445: warning: Function parameter or member 'drm_enc' not described in '_dpu_encoder_trigger_flush'
+ drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c:1445: warning: Function parameter or member 'phys' not described in '_dpu_encoder_trigger_flush'
+ drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c:1445: warning: Function parameter or member 'extra_flush_bits' not described in '_dpu_encoder_trigger_flush'
+ drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c:1481: warning: Function parameter or member 'phys' not described in '_dpu_encoder_trigger_start'
+ drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c:1564: warning: Function parameter or member 'dpu_enc' not described in '_dpu_encoder_kickoff_phys'
 
 Cc: Rob Clark <robdclark@gmail.com>
 Cc: Sean Paul <sean@poorly.run>
@@ -93,227 +86,57 @@ Cc: dri-devel@lists.freedesktop.org
 Cc: freedreno@lists.freedesktop.org
 Signed-off-by: Lee Jones <lee.jones@linaro.org>
 ---
- .../gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c    | 74 +++++++++++++++-
- .../drm/msm/disp/dpu1/dpu_hw_catalog_format.h | 88 -------------------
- drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c     | 11 ++-
- 3 files changed, 83 insertions(+), 90 deletions(-)
- delete mode 100644 drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog_format.h
+ drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c | 15 ++++++++-------
+ 1 file changed, 8 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-index a7004f18523b0..9ed6d0c6cd9b2 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-@@ -8,7 +8,6 @@
- #include <linux/platform_device.h>
- #include "dpu_hw_mdss.h"
- #include "dpu_hw_catalog.h"
--#include "dpu_hw_catalog_format.h"
- #include "dpu_kms.h"
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+index 289bfb6f1861c..288e95ee8e1d5 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+@@ -132,9 +132,10 @@ enum dpu_enc_rc_states {
+  * @phys_encs:		Container of physical encoders managed.
+  * @cur_master:		Pointer to the current master in this mode. Optimization
+  *			Only valid after enable. Cleared as disable.
+- * @hw_pp		Handle to the pingpong blocks used for the display. No.
++ * @cur_slave:		As above but for the slave encoder.
++ * @hw_pp:		Handle to the pingpong blocks used for the display. No.
+  *			pingpong blocks can be different than num_phys_encs.
+- * @intfs_swapped	Whether or not the phys_enc interfaces have been swapped
++ * @intfs_swapped:	Whether or not the phys_enc interfaces have been swapped
+  *			for partial update right-only cases, such as pingpong
+  *			split where virtual pingpong does not generate IRQs
+  * @crtc:		Pointer to the currently assigned crtc. Normally you
+@@ -1436,9 +1437,9 @@ static void dpu_encoder_off_work(struct work_struct *work)
  
- #define VIG_MASK \
-@@ -62,6 +61,79 @@
- 
- #define STRCAT(X, Y) (X Y)
- 
-+static const uint32_t plane_formats[] = {
-+	DRM_FORMAT_ARGB8888,
-+	DRM_FORMAT_ABGR8888,
-+	DRM_FORMAT_RGBA8888,
-+	DRM_FORMAT_BGRA8888,
-+	DRM_FORMAT_XRGB8888,
-+	DRM_FORMAT_RGBX8888,
-+	DRM_FORMAT_BGRX8888,
-+	DRM_FORMAT_XBGR8888,
-+	DRM_FORMAT_RGB888,
-+	DRM_FORMAT_BGR888,
-+	DRM_FORMAT_RGB565,
-+	DRM_FORMAT_BGR565,
-+	DRM_FORMAT_ARGB1555,
-+	DRM_FORMAT_ABGR1555,
-+	DRM_FORMAT_RGBA5551,
-+	DRM_FORMAT_BGRA5551,
-+	DRM_FORMAT_XRGB1555,
-+	DRM_FORMAT_XBGR1555,
-+	DRM_FORMAT_RGBX5551,
-+	DRM_FORMAT_BGRX5551,
-+	DRM_FORMAT_ARGB4444,
-+	DRM_FORMAT_ABGR4444,
-+	DRM_FORMAT_RGBA4444,
-+	DRM_FORMAT_BGRA4444,
-+	DRM_FORMAT_XRGB4444,
-+	DRM_FORMAT_XBGR4444,
-+	DRM_FORMAT_RGBX4444,
-+	DRM_FORMAT_BGRX4444,
-+};
-+
-+static const uint32_t plane_formats_yuv[] = {
-+	DRM_FORMAT_ARGB8888,
-+	DRM_FORMAT_ABGR8888,
-+	DRM_FORMAT_RGBA8888,
-+	DRM_FORMAT_BGRX8888,
-+	DRM_FORMAT_BGRA8888,
-+	DRM_FORMAT_XRGB8888,
-+	DRM_FORMAT_XBGR8888,
-+	DRM_FORMAT_RGBX8888,
-+	DRM_FORMAT_RGB888,
-+	DRM_FORMAT_BGR888,
-+	DRM_FORMAT_RGB565,
-+	DRM_FORMAT_BGR565,
-+	DRM_FORMAT_ARGB1555,
-+	DRM_FORMAT_ABGR1555,
-+	DRM_FORMAT_RGBA5551,
-+	DRM_FORMAT_BGRA5551,
-+	DRM_FORMAT_XRGB1555,
-+	DRM_FORMAT_XBGR1555,
-+	DRM_FORMAT_RGBX5551,
-+	DRM_FORMAT_BGRX5551,
-+	DRM_FORMAT_ARGB4444,
-+	DRM_FORMAT_ABGR4444,
-+	DRM_FORMAT_RGBA4444,
-+	DRM_FORMAT_BGRA4444,
-+	DRM_FORMAT_XRGB4444,
-+	DRM_FORMAT_XBGR4444,
-+	DRM_FORMAT_RGBX4444,
-+	DRM_FORMAT_BGRX4444,
-+
-+	DRM_FORMAT_NV12,
-+	DRM_FORMAT_NV21,
-+	DRM_FORMAT_NV16,
-+	DRM_FORMAT_NV61,
-+	DRM_FORMAT_VYUY,
-+	DRM_FORMAT_UYVY,
-+	DRM_FORMAT_YUYV,
-+	DRM_FORMAT_YVYU,
-+	DRM_FORMAT_YUV420,
-+	DRM_FORMAT_YVU420,
-+};
-+
- /*************************************************************
-  * DPU sub blocks config
-  *************************************************************/
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog_format.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog_format.h
-deleted file mode 100644
-index 3766f0fd0bf08..0000000000000
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog_format.h
-+++ /dev/null
-@@ -1,88 +0,0 @@
--/* SPDX-License-Identifier: GPL-2.0-only */
--/* Copyright (c) 2015-2018, The Linux Foundation. All rights reserved.
-- */
--
--#include "dpu_hw_mdss.h"
--
--static const uint32_t qcom_compressed_supported_formats[] = {
--	DRM_FORMAT_ABGR8888,
--	DRM_FORMAT_ARGB8888,
--	DRM_FORMAT_XBGR8888,
--	DRM_FORMAT_XRGB8888,
--	DRM_FORMAT_BGR565,
--
--	DRM_FORMAT_NV12,
--};
--
--static const uint32_t plane_formats[] = {
--	DRM_FORMAT_ARGB8888,
--	DRM_FORMAT_ABGR8888,
--	DRM_FORMAT_RGBA8888,
--	DRM_FORMAT_BGRA8888,
--	DRM_FORMAT_XRGB8888,
--	DRM_FORMAT_RGBX8888,
--	DRM_FORMAT_BGRX8888,
--	DRM_FORMAT_XBGR8888,
--	DRM_FORMAT_RGB888,
--	DRM_FORMAT_BGR888,
--	DRM_FORMAT_RGB565,
--	DRM_FORMAT_BGR565,
--	DRM_FORMAT_ARGB1555,
--	DRM_FORMAT_ABGR1555,
--	DRM_FORMAT_RGBA5551,
--	DRM_FORMAT_BGRA5551,
--	DRM_FORMAT_XRGB1555,
--	DRM_FORMAT_XBGR1555,
--	DRM_FORMAT_RGBX5551,
--	DRM_FORMAT_BGRX5551,
--	DRM_FORMAT_ARGB4444,
--	DRM_FORMAT_ABGR4444,
--	DRM_FORMAT_RGBA4444,
--	DRM_FORMAT_BGRA4444,
--	DRM_FORMAT_XRGB4444,
--	DRM_FORMAT_XBGR4444,
--	DRM_FORMAT_RGBX4444,
--	DRM_FORMAT_BGRX4444,
--};
--
--static const uint32_t plane_formats_yuv[] = {
--	DRM_FORMAT_ARGB8888,
--	DRM_FORMAT_ABGR8888,
--	DRM_FORMAT_RGBA8888,
--	DRM_FORMAT_BGRX8888,
--	DRM_FORMAT_BGRA8888,
--	DRM_FORMAT_XRGB8888,
--	DRM_FORMAT_XBGR8888,
--	DRM_FORMAT_RGBX8888,
--	DRM_FORMAT_RGB888,
--	DRM_FORMAT_BGR888,
--	DRM_FORMAT_RGB565,
--	DRM_FORMAT_BGR565,
--	DRM_FORMAT_ARGB1555,
--	DRM_FORMAT_ABGR1555,
--	DRM_FORMAT_RGBA5551,
--	DRM_FORMAT_BGRA5551,
--	DRM_FORMAT_XRGB1555,
--	DRM_FORMAT_XBGR1555,
--	DRM_FORMAT_RGBX5551,
--	DRM_FORMAT_BGRX5551,
--	DRM_FORMAT_ARGB4444,
--	DRM_FORMAT_ABGR4444,
--	DRM_FORMAT_RGBA4444,
--	DRM_FORMAT_BGRA4444,
--	DRM_FORMAT_XRGB4444,
--	DRM_FORMAT_XBGR4444,
--	DRM_FORMAT_RGBX4444,
--	DRM_FORMAT_BGRX4444,
--
--	DRM_FORMAT_NV12,
--	DRM_FORMAT_NV21,
--	DRM_FORMAT_NV16,
--	DRM_FORMAT_NV61,
--	DRM_FORMAT_VYUY,
--	DRM_FORMAT_UYVY,
--	DRM_FORMAT_YUYV,
--	DRM_FORMAT_YVYU,
--	DRM_FORMAT_YUV420,
--	DRM_FORMAT_YVU420,
--};
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-index 7ea90d25a3b69..c0b1d77369e53 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-@@ -19,7 +19,6 @@
- #include "dpu_kms.h"
- #include "dpu_formats.h"
- #include "dpu_hw_sspp.h"
--#include "dpu_hw_catalog_format.h"
- #include "dpu_trace.h"
- #include "dpu_crtc.h"
- #include "dpu_vbif.h"
-@@ -63,6 +62,16 @@ enum {
- 
- #define DEFAULT_REFRESH_RATE	60
- 
-+static const uint32_t qcom_compressed_supported_formats[] = {
-+	DRM_FORMAT_ABGR8888,
-+	DRM_FORMAT_ARGB8888,
-+	DRM_FORMAT_XBGR8888,
-+	DRM_FORMAT_XRGB8888,
-+	DRM_FORMAT_BGR565,
-+
-+	DRM_FORMAT_NV12,
-+};
-+
  /**
-  * enum dpu_plane_qos - Different qos configurations for each pipe
-  *
+  * _dpu_encoder_trigger_flush - trigger flush for a physical encoder
+- * drm_enc: Pointer to drm encoder structure
+- * phys: Pointer to physical encoder structure
+- * extra_flush_bits: Additional bit mask to include in flush trigger
++ * @drm_enc: Pointer to drm encoder structure
++ * @phys: Pointer to physical encoder structure
++ * @extra_flush_bits: Additional bit mask to include in flush trigger
+  */
+ static void _dpu_encoder_trigger_flush(struct drm_encoder *drm_enc,
+ 		struct dpu_encoder_phys *phys, uint32_t extra_flush_bits)
+@@ -1475,7 +1476,7 @@ static void _dpu_encoder_trigger_flush(struct drm_encoder *drm_enc,
+ 
+ /**
+  * _dpu_encoder_trigger_start - trigger start for a physical encoder
+- * phys: Pointer to physical encoder structure
++ * @phys: Pointer to physical encoder structure
+  */
+ static void _dpu_encoder_trigger_start(struct dpu_encoder_phys *phys)
+ {
+@@ -1558,7 +1559,7 @@ static void dpu_encoder_helper_hw_reset(struct dpu_encoder_phys *phys_enc)
+  *	encoder rather than the individual physical ones in order to handle
+  *	use cases that require visibility into multiple physical encoders at
+  *	a time.
+- * dpu_enc: Pointer to virtual encoder structure
++ * @dpu_enc: Pointer to virtual encoder structure
+  */
+ static void _dpu_encoder_kickoff_phys(struct dpu_encoder_virt *dpu_enc)
+ {
 -- 
 2.25.1
 
