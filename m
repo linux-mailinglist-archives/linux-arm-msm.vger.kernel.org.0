@@ -2,116 +2,98 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E52392C0320
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Nov 2020 11:22:40 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 5CE152C039F
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Nov 2020 11:51:25 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728158AbgKWKVr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 23 Nov 2020 05:21:47 -0500
-Received: from m42-4.mailgun.net ([69.72.42.4]:42569 "EHLO m42-4.mailgun.net"
+        id S1728717AbgKWKrE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 23 Nov 2020 05:47:04 -0500
+Received: from foss.arm.com ([217.140.110.172]:41544 "EHLO foss.arm.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727869AbgKWKVr (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 23 Nov 2020 05:21:47 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1606126906; h=Content-Transfer-Encoding: MIME-Version:
- Message-Id: Date: Subject: Cc: To: From: Sender;
- bh=ANmJoYuuswtZF1g4TGnjWKvS5jfl6v0C3i9XCSjNnmQ=; b=RxTJdyrGndI63zgtoBzzYMrBrk5tXSMYNJZ1twRP/jmGMk2X1faGe18g16HuJ4fK/71IfOFL
- EUnHvndmioBftyuIVfgDzEhU9m3T7B3w06P4Btz/vVT/ofPwGS0kx/1bkbY+916gQRwCNfOr
- vgFC16LS1AJRLmeYMVF0UXo5PMU=
-X-Mailgun-Sending-Ip: 69.72.42.4
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n04.prod.us-west-2.postgun.com with SMTP id
- 5fbb8d380c9500dc7bad62bc (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 23 Nov 2020 10:21:44
- GMT
-Sender: saiprakash.ranjan=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 3A547C43463; Mon, 23 Nov 2020 10:21:44 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
-        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
-Received: from blr-ubuntu-253.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: saiprakash.ranjan)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 20405C433C6;
-        Mon, 23 Nov 2020 10:21:39 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 20405C433C6
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=saiprakash.ranjan@codeaurora.org
-From:   Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-To:     Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Suzuki K Poulose <suzuki.poulose@arm.com>,
+        id S1728690AbgKWKrD (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 23 Nov 2020 05:47:03 -0500
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 0CE96101E;
+        Mon, 23 Nov 2020 02:47:03 -0800 (PST)
+Received: from [10.57.53.209] (unknown [10.57.53.209])
+        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 649513F70D;
+        Mon, 23 Nov 2020 02:47:01 -0800 (PST)
+Subject: Re: [PATCH] coresight: tmc-etr: Check if page is valid before
+ dma_map_page()
+To:     Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
         Mike Leach <mike.leach@linaro.org>
 Cc:     coresight@lists.linaro.org, Stephen Boyd <swboyd@chromium.org>,
         linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
         linux-arm-kernel@lists.infradead.org,
-        Mao Jinlong <jinlmao@codeaurora.org>, stable@vger.kernel.org,
-        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-Subject: [PATCH] coresight: tmc-etr: Check if page is valid before dma_map_page()
-Date:   Mon, 23 Nov 2020 15:51:33 +0530
-Message-Id: <20201123102133.18979-1-saiprakash.ranjan@codeaurora.org>
-X-Mailer: git-send-email 2.27.0
+        Mao Jinlong <jinlmao@codeaurora.org>, stable@vger.kernel.org
+References: <20201123102133.18979-1-saiprakash.ranjan@codeaurora.org>
+From:   Suzuki K Poulose <suzuki.poulose@arm.com>
+Message-ID: <ad83c4bd-dc24-c412-c5f7-b51ca1f22588@arm.com>
+Date:   Mon, 23 Nov 2020 10:46:56 +0000
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.5.0
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <20201123102133.18979-1-saiprakash.ranjan@codeaurora.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-GB
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Mao Jinlong <jinlmao@codeaurora.org>
+On 11/23/20 10:21 AM, Sai Prakash Ranjan wrote:
+> From: Mao Jinlong <jinlmao@codeaurora.org>
+> 
+> alloc_pages_node() return should be checked before calling
+> dma_map_page() to make sure that valid page is mapped or
+> else it can lead to aborts as below:
+> 
+>   Unable to handle kernel paging request at virtual address ffffffc008000000
+>   Mem abort info:
+>   <snip>...
+>   pc : __dma_inv_area+0x40/0x58
+>   lr : dma_direct_map_page+0xd8/0x1c8
+> 
+>   Call trace:
+>    __dma_inv_area
+>    tmc_pages_alloc
+>    tmc_alloc_data_pages
+>    tmc_alloc_sg_table
+>    tmc_init_etr_sg_table
+>    tmc_alloc_etr_buf
+>    tmc_enable_etr_sink_sysfs
+>    tmc_enable_etr_sink
+>    coresight_enable_path
+>    coresight_enable
+>    enable_source_store
+>    dev_attr_store
+>    sysfs_kf_write
+> 
+> Fixes: 99443ea19e8b ("coresight: Add generic TMC sg table framework")
+> Cc: stable@vger.kernel.org
+> Signed-off-by: Mao Jinlong <jinlmao@codeaurora.org>
+> Signed-off-by: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
 
-alloc_pages_node() return should be checked before calling
-dma_map_page() to make sure that valid page is mapped or
-else it can lead to aborts as below:
+Reviewed-by: Suzuki K Poulose <suzuki.poulose@arm.com>
 
- Unable to handle kernel paging request at virtual address ffffffc008000000
- Mem abort info:
- <snip>...
- pc : __dma_inv_area+0x40/0x58
- lr : dma_direct_map_page+0xd8/0x1c8
-
- Call trace:
-  __dma_inv_area
-  tmc_pages_alloc
-  tmc_alloc_data_pages
-  tmc_alloc_sg_table
-  tmc_init_etr_sg_table
-  tmc_alloc_etr_buf
-  tmc_enable_etr_sink_sysfs
-  tmc_enable_etr_sink
-  coresight_enable_path
-  coresight_enable
-  enable_source_store
-  dev_attr_store
-  sysfs_kf_write
-
-Fixes: 99443ea19e8b ("coresight: Add generic TMC sg table framework")
-Cc: stable@vger.kernel.org
-Signed-off-by: Mao Jinlong <jinlmao@codeaurora.org>
-Signed-off-by: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
----
- drivers/hwtracing/coresight/coresight-tmc-etr.c | 2 ++
- 1 file changed, 2 insertions(+)
-
-diff --git a/drivers/hwtracing/coresight/coresight-tmc-etr.c b/drivers/hwtracing/coresight/coresight-tmc-etr.c
-index 525f0ecc129c..a31a4d7ae25e 100644
---- a/drivers/hwtracing/coresight/coresight-tmc-etr.c
-+++ b/drivers/hwtracing/coresight/coresight-tmc-etr.c
-@@ -217,6 +217,8 @@ static int tmc_pages_alloc(struct tmc_pages *tmc_pages,
- 		} else {
- 			page = alloc_pages_node(node,
- 						GFP_KERNEL | __GFP_ZERO, 0);
-+			if (!page)
-+				goto err;
- 		}
- 		paddr = dma_map_page(real_dev, page, 0, PAGE_SIZE, dir);
- 		if (dma_mapping_error(real_dev, paddr))
-
-base-commit: c04e5d7bbf6f92a346d6b36770705e7f034df42d
--- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
-of Code Aurora Forum, hosted by The Linux Foundation
+> ---
+>   drivers/hwtracing/coresight/coresight-tmc-etr.c | 2 ++
+>   1 file changed, 2 insertions(+)
+> 
+> diff --git a/drivers/hwtracing/coresight/coresight-tmc-etr.c b/drivers/hwtracing/coresight/coresight-tmc-etr.c
+> index 525f0ecc129c..a31a4d7ae25e 100644
+> --- a/drivers/hwtracing/coresight/coresight-tmc-etr.c
+> +++ b/drivers/hwtracing/coresight/coresight-tmc-etr.c
+> @@ -217,6 +217,8 @@ static int tmc_pages_alloc(struct tmc_pages *tmc_pages,
+>   		} else {
+>   			page = alloc_pages_node(node,
+>   						GFP_KERNEL | __GFP_ZERO, 0);
+> +			if (!page)
+> +				goto err;
+>   		}
+>   		paddr = dma_map_page(real_dev, page, 0, PAGE_SIZE, dir);
+>   		if (dma_mapping_error(real_dev, paddr))
+> 
+> base-commit: c04e5d7bbf6f92a346d6b36770705e7f034df42d
+> 
 
