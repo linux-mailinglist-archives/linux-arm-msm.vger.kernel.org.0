@@ -2,90 +2,116 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 897972C01AB
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Nov 2020 09:51:22 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E52392C0320
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Nov 2020 11:22:40 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725847AbgKWIvN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 23 Nov 2020 03:51:13 -0500
-Received: from alexa-out.qualcomm.com ([129.46.98.28]:21293 "EHLO
-        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725275AbgKWIvN (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 23 Nov 2020 03:51:13 -0500
-Received: from ironmsg08-lv.qualcomm.com ([10.47.202.152])
-  by alexa-out.qualcomm.com with ESMTP; 23 Nov 2020 00:51:12 -0800
-X-QCInternal: smtphost
-Received: from ironmsg02-blr.qualcomm.com ([10.86.208.131])
-  by ironmsg08-lv.qualcomm.com with ESMTP/TLS/AES256-SHA; 23 Nov 2020 00:51:11 -0800
-X-QCInternal: smtphost
-Received: from dikshita-linux.qualcomm.com ([10.204.65.237])
-  by ironmsg02-blr.qualcomm.com with ESMTP; 23 Nov 2020 14:20:57 +0530
-Received: by dikshita-linux.qualcomm.com (Postfix, from userid 347544)
-        id 0020B21220; Mon, 23 Nov 2020 14:20:55 +0530 (IST)
-From:   Dikshita Agarwal <dikshita@codeaurora.org>
-To:     linux-media@vger.kernel.org, hverkuil-cisco@xs4all.nl,
-        nicolas@ndufresne.ca, stanimir.varbanov@linaro.org
-Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        vgarodia@codeaurora.org, Dikshita Agarwal <dikshita@codeaurora.org>
-Subject: [PATCH v3] media: v4l2-ctrl: Add base layer priority id control.
-Date:   Mon, 23 Nov 2020 14:20:42 +0530
-Message-Id: <1606121442-31074-1-git-send-email-dikshita@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
+        id S1728158AbgKWKVr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 23 Nov 2020 05:21:47 -0500
+Received: from m42-4.mailgun.net ([69.72.42.4]:42569 "EHLO m42-4.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727869AbgKWKVr (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 23 Nov 2020 05:21:47 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1606126906; h=Content-Transfer-Encoding: MIME-Version:
+ Message-Id: Date: Subject: Cc: To: From: Sender;
+ bh=ANmJoYuuswtZF1g4TGnjWKvS5jfl6v0C3i9XCSjNnmQ=; b=RxTJdyrGndI63zgtoBzzYMrBrk5tXSMYNJZ1twRP/jmGMk2X1faGe18g16HuJ4fK/71IfOFL
+ EUnHvndmioBftyuIVfgDzEhU9m3T7B3w06P4Btz/vVT/ofPwGS0kx/1bkbY+916gQRwCNfOr
+ vgFC16LS1AJRLmeYMVF0UXo5PMU=
+X-Mailgun-Sending-Ip: 69.72.42.4
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n04.prod.us-west-2.postgun.com with SMTP id
+ 5fbb8d380c9500dc7bad62bc (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 23 Nov 2020 10:21:44
+ GMT
+Sender: saiprakash.ranjan=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 3A547C43463; Mon, 23 Nov 2020 10:21:44 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
+        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+Received: from blr-ubuntu-253.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: saiprakash.ranjan)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 20405C433C6;
+        Mon, 23 Nov 2020 10:21:39 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 20405C433C6
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=saiprakash.ranjan@codeaurora.org
+From:   Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+To:     Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Suzuki K Poulose <suzuki.poulose@arm.com>,
+        Mike Leach <mike.leach@linaro.org>
+Cc:     coresight@lists.linaro.org, Stephen Boyd <swboyd@chromium.org>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org,
+        Mao Jinlong <jinlmao@codeaurora.org>, stable@vger.kernel.org,
+        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+Subject: [PATCH] coresight: tmc-etr: Check if page is valid before dma_map_page()
+Date:   Mon, 23 Nov 2020 15:51:33 +0530
+Message-Id: <20201123102133.18979-1-saiprakash.ranjan@codeaurora.org>
+X-Mailer: git-send-email 2.27.0
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This control indicates the priority id to be applied
-to base layer.
+From: Mao Jinlong <jinlmao@codeaurora.org>
 
-Signed-off-by: Dikshita Agarwal <dikshita@codeaurora.org>
+alloc_pages_node() return should be checked before calling
+dma_map_page() to make sure that valid page is mapped or
+else it can lead to aborts as below:
+
+ Unable to handle kernel paging request at virtual address ffffffc008000000
+ Mem abort info:
+ <snip>...
+ pc : __dma_inv_area+0x40/0x58
+ lr : dma_direct_map_page+0xd8/0x1c8
+
+ Call trace:
+  __dma_inv_area
+  tmc_pages_alloc
+  tmc_alloc_data_pages
+  tmc_alloc_sg_table
+  tmc_init_etr_sg_table
+  tmc_alloc_etr_buf
+  tmc_enable_etr_sink_sysfs
+  tmc_enable_etr_sink
+  coresight_enable_path
+  coresight_enable
+  enable_source_store
+  dev_attr_store
+  sysfs_kf_write
+
+Fixes: 99443ea19e8b ("coresight: Add generic TMC sg table framework")
+Cc: stable@vger.kernel.org
+Signed-off-by: Mao Jinlong <jinlmao@codeaurora.org>
+Signed-off-by: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
 ---
- Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst | 9 +++++++++
- drivers/media/v4l2-core/v4l2-ctrls.c                      | 1 +
- include/uapi/linux/v4l2-controls.h                        | 1 +
- 3 files changed, 11 insertions(+)
+ drivers/hwtracing/coresight/coresight-tmc-etr.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst b/Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst
-index 22222ce..a518d4f 100644
---- a/Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst
-+++ b/Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst
-@@ -4467,3 +4467,12 @@ enum v4l2_mpeg_video_hevc_size_of_length_field -
-        This provides a bitmask which consists of bits [0, LTR_COUNT-1].
-        This is applicable to H264 and HEVC encoder and can be applied using
-        Request Api.
-+
-+``V4L2_CID_MPEG_VIDEO_BASELAYER_PRIORITY_ID (integer)``
-+    Specifies a priority identifier for the NAL unit, which will be applied to
-+    the base layer. By default this value is set to 0 for the base layer,
-+    and the next layer will have the priority ID assigned as 1, 2, 3 and so on.
-+    The video encoder can't decide the priority id to be applied to a layer,
-+    so this has to come from client.
-+    This is applicable to H264 and valid Range is from 0 to 63.
-+    Source Rec. ITU-T H.264 (06/2019); G.7.4.1.1, G.8.8.1
-diff --git a/drivers/media/v4l2-core/v4l2-ctrls.c b/drivers/media/v4l2-core/v4l2-ctrls.c
-index 0b81b39..799ab85 100644
---- a/drivers/media/v4l2-core/v4l2-ctrls.c
-+++ b/drivers/media/v4l2-core/v4l2-ctrls.c
-@@ -961,6 +961,7 @@ const char *v4l2_ctrl_get_name(u32 id)
- 	case V4L2_CID_MPEG_VIDEO_LTR_COUNT:			return "LTR Count";
- 	case V4L2_CID_MPEG_VIDEO_FRAME_LTR_INDEX:		return "frame LTR index";
- 	case V4L2_CID_MPEG_VIDEO_USE_LTR_FRAMES:		return "Use LTR Frame(s)";
-+	case V4L2_CID_MPEG_VIDEO_BASELAYER_PRIORITY_ID:		return "Base Layer Priority ID";
- 	case V4L2_CID_MPEG_VIDEO_MPEG2_SLICE_PARAMS:		return "MPEG-2 Slice Parameters";
- 	case V4L2_CID_MPEG_VIDEO_MPEG2_QUANTIZATION:		return "MPEG-2 Quantization Matrices";
- 	case V4L2_CID_MPEG_VIDEO_FWHT_PARAMS:			return "FWHT Stateless Parameters";
-diff --git a/include/uapi/linux/v4l2-controls.h b/include/uapi/linux/v4l2-controls.h
-index b77fa7d..3c4fdc1 100644
---- a/include/uapi/linux/v4l2-controls.h
-+++ b/include/uapi/linux/v4l2-controls.h
-@@ -424,6 +424,7 @@ enum v4l2_mpeg_video_multi_slice_mode {
- #define V4L2_CID_MPEG_VIDEO_LTR_COUNT                  (V4L2_CID_MPEG_BASE+230)
- #define V4L2_CID_MPEG_VIDEO_FRAME_LTR_INDEX            (V4L2_CID_MPEG_BASE+231)
- #define V4L2_CID_MPEG_VIDEO_USE_LTR_FRAMES             (V4L2_CID_MPEG_BASE+232)
-+#define V4L2_CID_MPEG_VIDEO_BASELAYER_PRIORITY_ID      (V4L2_CID_MPEG_BASE + 233)
- 
- /* CIDs for the MPEG-2 Part 2 (H.262) codec */
- #define V4L2_CID_MPEG_VIDEO_MPEG2_LEVEL			(V4L2_CID_MPEG_BASE+270)
+diff --git a/drivers/hwtracing/coresight/coresight-tmc-etr.c b/drivers/hwtracing/coresight/coresight-tmc-etr.c
+index 525f0ecc129c..a31a4d7ae25e 100644
+--- a/drivers/hwtracing/coresight/coresight-tmc-etr.c
++++ b/drivers/hwtracing/coresight/coresight-tmc-etr.c
+@@ -217,6 +217,8 @@ static int tmc_pages_alloc(struct tmc_pages *tmc_pages,
+ 		} else {
+ 			page = alloc_pages_node(node,
+ 						GFP_KERNEL | __GFP_ZERO, 0);
++			if (!page)
++				goto err;
+ 		}
+ 		paddr = dma_map_page(real_dev, page, 0, PAGE_SIZE, dir);
+ 		if (dma_mapping_error(real_dev, paddr))
+
+base-commit: c04e5d7bbf6f92a346d6b36770705e7f034df42d
 -- 
-2.7.4
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
+of Code Aurora Forum, hosted by The Linux Foundation
 
