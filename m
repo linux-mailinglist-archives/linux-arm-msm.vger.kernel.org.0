@@ -2,171 +2,111 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 8FAB72C0E0F
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Nov 2020 15:51:45 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id CAF3F2C0E70
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Nov 2020 16:08:00 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726745AbgKWOny (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 23 Nov 2020 09:43:54 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48414 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726770AbgKWOny (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 23 Nov 2020 09:43:54 -0500
-Received: from mail-qk1-x742.google.com (mail-qk1-x742.google.com [IPv6:2607:f8b0:4864:20::742])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C1578C061A4E
-        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Nov 2020 06:43:53 -0800 (PST)
-Received: by mail-qk1-x742.google.com with SMTP id q22so17129402qkq.6
-        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Nov 2020 06:43:53 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=marek-ca.20150623.gappssmtp.com; s=20150623;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=/2SiZKMvHQFkM1/qhp0SkwrM9G5ksb+yQHB/8dCBmpo=;
-        b=K3Nt5+xJqLYboBaIUf6v7DHhvVskipIayCOt49/MD+Mej2rG2figrRBy0nUE9m+RP+
-         ibyGmjBhRWHQ78ZIyIWkda0X0PwJE5xqXi2/kw/Sd2ZG9x1c3AhI3VDEs2CazCs1I67E
-         UF1mRdWEHh2Fsa6X3UJfn18WRE7e93HV8MkNuUQJGblLHn7LUG7uWspoHammVZqbQ0do
-         FqZjvcm87K4umacN7xxh+4gMpGY9FnF2hXuUJz1qgW1Q84dPCJTEheO1y4ZPjXws2jLu
-         U2JCZUDVRWguDoyEXW4CgFZke40lv4IrYavN4SYqdCsaeEgtQWYbVTMAx1ixHxZJHyb4
-         h5xg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=/2SiZKMvHQFkM1/qhp0SkwrM9G5ksb+yQHB/8dCBmpo=;
-        b=UfBw7CfzhVl/Kowr4Yty18fkB4vhd221U7sTXSxc4D4OhON2DPDKM+blp/Kx1GIsT4
-         na1guUsXCEdeGHru1fCd4gg2hvfb0JVTZvyld2rVg1KDbqfubefhreVY+quH4QVL7fGs
-         rygN+lQfP1QLFDavgDvrCX04SHxFFShu6gr4AOg16HGMTv6k9Pea9g+vsVuGIyv4QP81
-         Szz0yqFaTEM1Yrb9b+VDlrnU+kQjVtcWQCCbExwBPMoQNRVY/0P1ykK1V1C1LPJIRKzR
-         8TVRH2ZYournmrycYy6FDSBERj1/1VQrcyHKl5TN15O+BEyhhFhLMmnNWn1OJIQ/EHQk
-         MYRA==
-X-Gm-Message-State: AOAM531rrXkknALWMrII9MDu/eLdCNdaI4kYHwtXGTz6ZVnNUDKSgNOP
-        v3AuIhpEHDvnRsOs7QaE/DlJDt3LOd9LUYjZ
-X-Google-Smtp-Source: ABdhPJziBlrkYgWxvRMWQZ5/O7T1FA7qXlbFM3WUYpNWrir2+EF/lFHiHTQOTbF21xBML/4YyEcMNA==
-X-Received: by 2002:a37:b046:: with SMTP id z67mr3777392qke.354.1606142632725;
-        Mon, 23 Nov 2020 06:43:52 -0800 (PST)
-Received: from localhost.localdomain (modemcable068.184-131-66.mc.videotron.ca. [66.131.184.68])
-        by smtp.gmail.com with ESMTPSA id 9sm9901381qkm.81.2020.11.23.06.43.51
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 23 Nov 2020 06:43:52 -0800 (PST)
-From:   Jonathan Marek <jonathan@marek.ca>
-To:     linux-arm-msm@vger.kernel.org
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        devicetree@vger.kernel.org (open list:OPEN FIRMWARE AND FLATTENED
-        DEVICE TREE BINDINGS), linux-kernel@vger.kernel.org (open list)
-Subject: [PATCH] arm64: dts: qcom: fix indentation error in sm8250 cpu nodes
-Date:   Mon, 23 Nov 2020 09:40:16 -0500
-Message-Id: <20201123144016.19596-1-jonathan@marek.ca>
-X-Mailer: git-send-email 2.26.1
+        id S1729602AbgKWPGY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 23 Nov 2020 10:06:24 -0500
+Received: from mail.kernel.org ([198.145.29.99]:58374 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1731153AbgKWPGY (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 23 Nov 2020 10:06:24 -0500
+Received: from willie-the-truck (236.31.169.217.in-addr.arpa [217.169.31.236])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id B9C382067C;
+        Mon, 23 Nov 2020 15:06:20 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1606143983;
+        bh=XD8rVd28+XoVE6Niy838CzRctkhXNnkgWMtq4ss4S6A=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=ZkN7pEpWrgc47kAtsM1YZxYjF7U4zxCaCMvaBrYkdn38WMmxqNq1bL0QllxbQ2OiI
+         HiVVgNoAN80zM6pFh8rptXYtwoSjorvo383HP4ZmKaNyKlLtUm4yYDEv7oHSU80qlV
+         JUo17ZMRS4dOVbS5+lSI0dfzFlfBTgeAD/kNhuHU=
+Date:   Mon, 23 Nov 2020 15:06:17 +0000
+From:   Will Deacon <will@kernel.org>
+To:     Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+Cc:     Robin Murphy <robin.murphy@arm.com>,
+        Joerg Roedel <joro@8bytes.org>,
+        Jordan Crouse <jcrouse@codeaurora.org>,
+        Rob Clark <robdclark@gmail.com>,
+        Akhil P Oommen <akhilpo@codeaurora.org>,
+        freedreno@lists.freedesktop.org,
+        "Kristian H . Kristensen" <hoegsberg@google.com>,
+        dri-devel@lists.freedesktop.org, iommu@lists.linux-foundation.org,
+        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCHv8 1/8] iommu/io-pgtable-arm: Add support to use system
+ cache
+Message-ID: <20201123150616.GB11033@willie-the-truck>
+References: <cover.1605621785.git.saiprakash.ranjan@codeaurora.org>
+ <699f30cd6b3d69cebbefd0e73850694b9852c5da.1605621785.git.saiprakash.ranjan@codeaurora.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <699f30cd6b3d69cebbefd0e73850694b9852c5da.1605621785.git.saiprakash.ranjan@codeaurora.org>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Use tabs instead of 6 spaces.
+On Tue, Nov 17, 2020 at 08:00:40PM +0530, Sai Prakash Ranjan wrote:
+> Add a quirk IO_PGTABLE_QUIRK_ARM_OUTER_WBWA to override
+> the attributes set in TCR for the page table walker when
+> using system cache.
+> 
+> Signed-off-by: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+> ---
+>  drivers/iommu/io-pgtable-arm.c | 10 ++++++++--
+>  include/linux/io-pgtable.h     |  4 ++++
+>  2 files changed, 12 insertions(+), 2 deletions(-)
+> 
+> diff --git a/drivers/iommu/io-pgtable-arm.c b/drivers/iommu/io-pgtable-arm.c
+> index a7a9bc08dcd1..7c9ea9d7874a 100644
+> --- a/drivers/iommu/io-pgtable-arm.c
+> +++ b/drivers/iommu/io-pgtable-arm.c
+> @@ -761,7 +761,8 @@ arm_64_lpae_alloc_pgtable_s1(struct io_pgtable_cfg *cfg, void *cookie)
+>  
+>  	if (cfg->quirks & ~(IO_PGTABLE_QUIRK_ARM_NS |
+>  			    IO_PGTABLE_QUIRK_NON_STRICT |
+> -			    IO_PGTABLE_QUIRK_ARM_TTBR1))
+> +			    IO_PGTABLE_QUIRK_ARM_TTBR1 |
+> +			    IO_PGTABLE_QUIRK_ARM_OUTER_WBWA))
+>  		return NULL;
+>  
+>  	data = arm_lpae_alloc_pgtable(cfg);
+> @@ -773,10 +774,15 @@ arm_64_lpae_alloc_pgtable_s1(struct io_pgtable_cfg *cfg, void *cookie)
+>  		tcr->sh = ARM_LPAE_TCR_SH_IS;
+>  		tcr->irgn = ARM_LPAE_TCR_RGN_WBWA;
+>  		tcr->orgn = ARM_LPAE_TCR_RGN_WBWA;
+> +		if (cfg->quirks & IO_PGTABLE_QUIRK_ARM_OUTER_WBWA)
+> +			goto out_free_data;
+>  	} else {
+>  		tcr->sh = ARM_LPAE_TCR_SH_OS;
+>  		tcr->irgn = ARM_LPAE_TCR_RGN_NC;
+> -		tcr->orgn = ARM_LPAE_TCR_RGN_NC;
+> +		if (!(cfg->quirks & IO_PGTABLE_QUIRK_ARM_OUTER_WBWA))
+> +			tcr->orgn = ARM_LPAE_TCR_RGN_NC;
+> +		else
+> +			tcr->orgn = ARM_LPAE_TCR_RGN_WBWA;
+>  	}
+>  
+>  	tg1 = cfg->quirks & IO_PGTABLE_QUIRK_ARM_TTBR1;
+> diff --git a/include/linux/io-pgtable.h b/include/linux/io-pgtable.h
+> index 4cde111e425b..a9a2c59fab37 100644
+> --- a/include/linux/io-pgtable.h
+> +++ b/include/linux/io-pgtable.h
+> @@ -86,6 +86,9 @@ struct io_pgtable_cfg {
+>  	 *
+>  	 * IO_PGTABLE_QUIRK_ARM_TTBR1: (ARM LPAE format) Configure the table
+>  	 *	for use in the upper half of a split address space.
+> +	 *
+> +	 * IO_PGTABLE_QUIRK_ARM_OUTER_WBWA: Override the attributes set in TCR for
+> +	 *	the page table walker when using system cache.
 
-Signed-off-by: Jonathan Marek <jonathan@marek.ca>
----
- arch/arm64/boot/dts/qcom/sm8250.dtsi | 34 ++++++++++++++--------------
- 1 file changed, 17 insertions(+), 17 deletions(-)
+Please can you reword this to say:
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8250.dtsi b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-index 468ba1d18751..e43a362f5e59 100644
---- a/arch/arm64/boot/dts/qcom/sm8250.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-@@ -93,10 +93,10 @@ CPU0: cpu@0 {
- 			qcom,freq-domain = <&cpufreq_hw 0>;
- 			#cooling-cells = <2>;
- 			L2_0: l2-cache {
--			      compatible = "cache";
--			      next-level-cache = <&L3_0>;
-+				compatible = "cache";
-+				next-level-cache = <&L3_0>;
- 				L3_0: l3-cache {
--				      compatible = "cache";
-+					compatible = "cache";
- 				};
- 			};
- 		};
-@@ -110,8 +110,8 @@ CPU1: cpu@100 {
- 			qcom,freq-domain = <&cpufreq_hw 0>;
- 			#cooling-cells = <2>;
- 			L2_100: l2-cache {
--			      compatible = "cache";
--			      next-level-cache = <&L3_0>;
-+				compatible = "cache";
-+				next-level-cache = <&L3_0>;
- 			};
- 		};
- 
-@@ -124,8 +124,8 @@ CPU2: cpu@200 {
- 			qcom,freq-domain = <&cpufreq_hw 0>;
- 			#cooling-cells = <2>;
- 			L2_200: l2-cache {
--			      compatible = "cache";
--			      next-level-cache = <&L3_0>;
-+				compatible = "cache";
-+				next-level-cache = <&L3_0>;
- 			};
- 		};
- 
-@@ -138,8 +138,8 @@ CPU3: cpu@300 {
- 			qcom,freq-domain = <&cpufreq_hw 0>;
- 			#cooling-cells = <2>;
- 			L2_300: l2-cache {
--			      compatible = "cache";
--			      next-level-cache = <&L3_0>;
-+				compatible = "cache";
-+				next-level-cache = <&L3_0>;
- 			};
- 		};
- 
-@@ -152,8 +152,8 @@ CPU4: cpu@400 {
- 			qcom,freq-domain = <&cpufreq_hw 1>;
- 			#cooling-cells = <2>;
- 			L2_400: l2-cache {
--			      compatible = "cache";
--			      next-level-cache = <&L3_0>;
-+				compatible = "cache";
-+				next-level-cache = <&L3_0>;
- 			};
- 		};
- 
-@@ -166,8 +166,8 @@ CPU5: cpu@500 {
- 			qcom,freq-domain = <&cpufreq_hw 1>;
- 			#cooling-cells = <2>;
- 			L2_500: l2-cache {
--			      compatible = "cache";
--			      next-level-cache = <&L3_0>;
-+				compatible = "cache";
-+				next-level-cache = <&L3_0>;
- 			};
- 
- 		};
-@@ -181,8 +181,8 @@ CPU6: cpu@600 {
- 			qcom,freq-domain = <&cpufreq_hw 1>;
- 			#cooling-cells = <2>;
- 			L2_600: l2-cache {
--			      compatible = "cache";
--			      next-level-cache = <&L3_0>;
-+				compatible = "cache";
-+				next-level-cache = <&L3_0>;
- 			};
- 		};
- 
-@@ -195,8 +195,8 @@ CPU7: cpu@700 {
- 			qcom,freq-domain = <&cpufreq_hw 2>;
- 			#cooling-cells = <2>;
- 			L2_700: l2-cache {
--			      compatible = "cache";
--			      next-level-cache = <&L3_0>;
-+				compatible = "cache";
-+				next-level-cache = <&L3_0>;
- 			};
- 		};
- 	};
--- 
-2.26.1
+  "Override the outer-cacheability attributes set in the TCR for a non-coherent
+   page-table walker."
 
+Will
