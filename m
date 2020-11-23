@@ -2,126 +2,98 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 6421C2C1857
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Nov 2020 23:25:01 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id DA4A82C1920
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Nov 2020 00:15:55 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730826AbgKWWYF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 23 Nov 2020 17:24:05 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35022 "EHLO
+        id S2388124AbgKWXDT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 23 Nov 2020 18:03:19 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41122 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728161AbgKWWYE (ORCPT
+        with ESMTP id S2388122AbgKWXDT (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 23 Nov 2020 17:24:04 -0500
-Received: from mail-pg1-x541.google.com (mail-pg1-x541.google.com [IPv6:2607:f8b0:4864:20::541])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 02516C0613CF
-        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Nov 2020 14:24:03 -0800 (PST)
-Received: by mail-pg1-x541.google.com with SMTP id f17so7048688pge.6
-        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Nov 2020 14:24:02 -0800 (PST)
+        Mon, 23 Nov 2020 18:03:19 -0500
+Received: from mail-wm1-x336.google.com (mail-wm1-x336.google.com [IPv6:2a00:1450:4864:20::336])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CFBBDC061A4D
+        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Nov 2020 15:03:18 -0800 (PST)
+Received: by mail-wm1-x336.google.com with SMTP id s13so1060813wmh.4
+        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Nov 2020 15:03:18 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id;
-        bh=sYmwP8t7TxHJ62xKzIUva7lVBCpyFaPUSVAcVVKAMoc=;
-        b=aOqJMx++sC+xT7/75CuI3FlV95QEjv3cRGoU1BWcQeShqdvzjNc2247deUlkdkBiMI
-         T6aLg5cjgySA5tL2TsTbeL1s+TZI1N8mSgTln4ta865ol7ARUbNv1KhJ5k2vZFyT+P8m
-         /fJbrBQXyLZBnkYrl9cgwJFVasnGS9EimQjWlhV7eoJ5tIh0xEYNFe6D2NFOmLVoLewO
-         gKM4RZZwvgHOOPcVRL/sR+WiE3TqPrNC4KylQKYWssg5Ng38C6mjUwAeIrcPedHqSAPo
-         RWKlGf40b80K7i3Vwza1VCY/kQxHwoaFCZgsiJNCzck/qbbp/MUBi5ygVeESoSXursQZ
-         LY1w==
+        bh=iQ5bInMQHEd3mry/pnJUmeAGZvhgJKRP74BEVfnU10U=;
+        b=OiNTiGSS5/LF9CfoR+WnFhenvR/4NniWfWQwswHpPxLxZUsQ0a+wRzk+uXc7J5dhHv
+         miy02vvzYop//5DKzFtHgqUXk1zfIDc0LZLyv6V8ftwzeFeWn+Fj12381zIe8g+Uku/X
+         V28evtG18FULftcR7O6FsssAaIf1OCBAd34IqsH3CnDcKV2smLRYfJThbE6esY/m0xvz
+         94ODSao14NPUcPJlq4sz39B3Td6i0OeeGqiVZ678J2FbXooJ0w46zMWXadEVCdxc9Kut
+         nfih8ajhVVBc9ebXJLNxTa5kr4xvjO/b+DGEsTVWklds95K4Z/XjD6lZlrMx8HSqR45j
+         8caQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=sYmwP8t7TxHJ62xKzIUva7lVBCpyFaPUSVAcVVKAMoc=;
-        b=B4Maof6G3rq8VLEeZ0xdmrQ3V5cN1UNZC0FdRAFAiIiou3mDmGEfUDGYY4e+LGz9Rs
-         yXphrDLh61XMeSS32B2Yak4VT1pa7rRo1+axEyz933nq0+S0hQQ4RDV1qmKNRr92DW/H
-         vQQAUIZwaUmHFHbv2K5OKYcwzIRYVAAY8QhpfUdhMkrFprrZT3CUc8TONIybzjo5N8x8
-         80MvrQfny1tmzxpJ1Qz7r64iz/SW5b025vg1IPkYc7W6+Y+QmukJ3LfG4imtgUJNGiUt
-         i6HXiUgt2k74A8EMnHdVcktXG4PGzC8MBdkQrKDR8ue9a17bjF5k+XwH2khuwaGqkcG8
-         lZIA==
-X-Gm-Message-State: AOAM5336zWzGqC71we6aTrZrOPdlH5QZutTZszXjnze0gVXUkQBY9I3/
-        06JvkNd4MFzMiZsaJCYXuAmnug==
-X-Google-Smtp-Source: ABdhPJyu9Uo9CrcFwMhgI4t9O9QAE3zTseSTSA2FM03Uq9woUurMxRBsbIeTJdDmDSwKdP+xMoWIQQ==
-X-Received: by 2002:a17:90a:ee8c:: with SMTP id i12mr1182810pjz.204.1606170242542;
-        Mon, 23 Nov 2020 14:24:02 -0800 (PST)
-Received: from localhost.localdomain ([2601:1c2:680:1319:692:26ff:feda:3a81])
-        by smtp.gmail.com with ESMTPSA id ge21sm416029pjb.5.2020.11.23.14.24.00
+        bh=iQ5bInMQHEd3mry/pnJUmeAGZvhgJKRP74BEVfnU10U=;
+        b=q7aLOHx/o2U4dweTq6L5dhZ6RJaI+3tqPUinMhQAzG9N4QdZ4o8QDD7rGgibUmtPHI
+         EnNB1rGMVpjpFrhS8EujgxPEpU+HIRo0RnccvIGSUbgEfiOmgxSFILwZtsbU20+dFZio
+         dPwU8aD8heAI+1EUz+B+fK2HtjxaEZ8zDo+R4j0peo8OomSEfxJRyCQB+gFf9EREh9CA
+         GHavaFweAzubQm1DouBaB4E1Q7eC96UwjzW3RbQeTy+OgYjadTL1VajpKM//SrUIo+dj
+         LmfFxFCIdUxPUGdLQRUxJvrCJWACmQlNs0Wv83PdvPvuyV18RSEI/CuH+pYggbyeLBec
+         Ku0Q==
+X-Gm-Message-State: AOAM531fSHKzZN6ihDoFY00T+FVFHS+CKy/Di6CPsbjIrkBxlbXIJJys
+        80Mg52LuEQkNPJG7lTiyiXZRoP7eFxQ71yS0
+X-Google-Smtp-Source: ABdhPJyA0nf7pxUIMJ28zOQAgOgSLORmK9/qdRewiPJ94F284kqUl1gm7GQIPWuJXSwKKzwLh9f0Ng==
+X-Received: by 2002:a1c:a986:: with SMTP id s128mr1158308wme.94.1606172597529;
+        Mon, 23 Nov 2020 15:03:17 -0800 (PST)
+Received: from localhost.localdomain (hst-221-74.medicom.bg. [84.238.221.74])
+        by smtp.gmail.com with ESMTPSA id q66sm1501463wme.6.2020.11.23.15.03.16
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 23 Nov 2020 14:24:01 -0800 (PST)
-From:   John Stultz <john.stultz@linaro.org>
-To:     lkml <linux-kernel@vger.kernel.org>
-Cc:     John Stultz <john.stultz@linaro.org>, Todd Kjos <tkjos@google.com>,
-        Saravana Kannan <saravanak@google.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rajendra Nayak <rnayak@codeaurora.org>,
-        Maulik Shah <mkshah@codeaurora.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        Mark Brown <broonie@kernel.org>, linux-arm-msm@vger.kernel.org
-Subject: [PATCH v2] regulator: Kconfig: Fix REGULATOR_QCOM_RPMH dependencies to avoid build error
-Date:   Mon, 23 Nov 2020 22:23:59 +0000
-Message-Id: <20201123222359.103822-1-john.stultz@linaro.org>
+        Mon, 23 Nov 2020 15:03:16 -0800 (PST)
+From:   Stanimir Varbanov <stanimir.varbanov@linaro.org>
+To:     linux-media@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+Cc:     Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+        Ezequiel Garcia <ezequiel@collabora.com>,
+        Nicolas Dufresne <nicolas.dufresne@collabora.com>,
+        Stanimir Varbanov <stanimir.varbanov@linaro.org>
+Subject: [PATCH v2 0/3] HDR10 static metadata
+Date:   Tue, 24 Nov 2020 01:02:54 +0200
+Message-Id: <20201123230257.31690-1-stanimir.varbanov@linaro.org>
 X-Mailer: git-send-email 2.17.1
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The kernel test robot reported the following build error:
+Hello,
 
-All errors (new ones prefixed by >>):
+Changes since v1:
+ * moved the controls in hdr10-ctrls.h header.
+ * the structure fields documentation clearer.
+ * fixed some typos.
 
-   xtensa-linux-ld: drivers/regulator/qcom-rpmh-regulator.o: in function `rpmh_regulator_vrm_get_voltage_sel':
-   qcom-rpmh-regulator.c:(.text+0x270): undefined reference to `rpmh_write'
-   xtensa-linux-ld: drivers/regulator/qcom-rpmh-regulator.o: in function `rpmh_regulator_send_request':
-   qcom-rpmh-regulator.c:(.text+0x2f2): undefined reference to `rpmh_write'
-   xtensa-linux-ld: drivers/regulator/qcom-rpmh-regulator.o: in function `rpmh_regulator_vrm_get_voltage_sel':
->> qcom-rpmh-regulator.c:(.text+0x274): undefined reference to `rpmh_write_async'
-   xtensa-linux-ld: drivers/regulator/qcom-rpmh-regulator.o: in function `rpmh_regulator_send_request':
-   qcom-rpmh-regulator.c:(.text+0x2fc): undefined reference to `rpmh_write_async'
+Some thoughts, because these two CLL and Mastering Display controls
+are borrowed from SEI messages we can introduce sei-ctrls.h instead
+of hdr10-ctrls.h. What you think?
 
-Which is due to REGULATOR_QCOM_RPMH depending on
-QCOM_RPMH || COMPILE_TEST. The problem is that QOM_RPMH can now
-be a module, which in that case requires REGULATOR_QCOM_RPMH=m
-to build.
+Comments are welcome!
 
-However, if COMPILE_TEST is enabled, REGULATOR_QCOM_RPMH can be
-set to =y while QCOM_RPMH=m which will cause build failures.
+regards,
+Stan
 
-The fix here is to add (QCOM_RPMH=n && COMPILE_TEST) to the
-dependency.
+Stanimir Varbanov (3):
+  v4l: Add HDR10 static metadata controls
+  docs: media: Document CLL and Mastering display
+  venus: venc: Add support for CLL and Mastering display controls
 
-Feedback would be appreciated!
+ .../media/v4l/ext-ctrls-codec.rst             | 71 +++++++++++++++++++
+ drivers/media/platform/qcom/venus/core.h      |  3 +
+ drivers/media/platform/qcom/venus/hfi_cmds.c  |  8 +++
+ .../media/platform/qcom/venus/hfi_helper.h    | 20 ++++++
+ drivers/media/platform/qcom/venus/venc.c      | 29 ++++++++
+ .../media/platform/qcom/venus/venc_ctrls.c    | 16 ++++-
+ drivers/media/v4l2-core/v4l2-ctrls.c          | 62 ++++++++++++++++
+ include/media/hdr10-ctrls.h                   | 55 ++++++++++++++
+ include/media/v4l2-ctrls.h                    |  3 +
+ 9 files changed, 266 insertions(+), 1 deletion(-)
+ create mode 100644 include/media/hdr10-ctrls.h
 
-Cc: Todd Kjos <tkjos@google.com>
-Cc: Saravana Kannan <saravanak@google.com>
-Cc: Andy Gross <agross@kernel.org>
-Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc: Rajendra Nayak <rnayak@codeaurora.org>
-Cc: Maulik Shah <mkshah@codeaurora.org>
-Cc: Stephen Boyd <swboyd@chromium.org>
-Cc: Liam Girdwood <lgirdwood@gmail.com>
-Cc: Mark Brown <broonie@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org
-Reported-by: kernel test robot <lkp@intel.com>
-Signed-off-by: John Stultz <john.stultz@linaro.org>
----
-v2: Switch dependency logic as suggested by MarkB
----
- drivers/regulator/Kconfig | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/drivers/regulator/Kconfig b/drivers/regulator/Kconfig
-index 020a00d6696b..481c7b10133b 100644
---- a/drivers/regulator/Kconfig
-+++ b/drivers/regulator/Kconfig
-@@ -843,7 +843,7 @@ config REGULATOR_QCOM_RPM
- 
- config REGULATOR_QCOM_RPMH
- 	tristate "Qualcomm Technologies, Inc. RPMh regulator driver"
--	depends on QCOM_RPMH || COMPILE_TEST
-+	depends on QCOM_RPMH || (QCOM_RPMH=n && COMPILE_TEST)
- 	help
- 	  This driver supports control of PMIC regulators via the RPMh hardware
- 	  block found on Qualcomm Technologies Inc. SoCs.  RPMh regulator
 -- 
 2.17.1
 
