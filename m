@@ -2,58 +2,58 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 8E2B02C0CB9
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Nov 2020 15:14:32 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 083E92C0CBA
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Nov 2020 15:14:33 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730217AbgKWOEY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 23 Nov 2020 09:04:24 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42178 "EHLO
+        id S1730224AbgKWOE0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 23 Nov 2020 09:04:26 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42186 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729293AbgKWOEX (ORCPT
+        with ESMTP id S1729293AbgKWOE0 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 23 Nov 2020 09:04:23 -0500
-Received: from mail-wm1-x343.google.com (mail-wm1-x343.google.com [IPv6:2a00:1450:4864:20::343])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5F71AC0613CF
-        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Nov 2020 06:04:23 -0800 (PST)
-Received: by mail-wm1-x343.google.com with SMTP id w24so17365142wmi.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Nov 2020 06:04:23 -0800 (PST)
+        Mon, 23 Nov 2020 09:04:26 -0500
+Received: from mail-wm1-x342.google.com (mail-wm1-x342.google.com [IPv6:2a00:1450:4864:20::342])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F0D6AC0613CF
+        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Nov 2020 06:04:25 -0800 (PST)
+Received: by mail-wm1-x342.google.com with SMTP id a3so17350106wmb.5
+        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Nov 2020 06:04:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=4dySM6ga3g1JccS9VpKiXH/tknJsBk9CHeAdOMBOgi8=;
-        b=wmQ/SWXhQATuAMF2bttR04zNFBN1ch30xgUQLiLKDGapsjUJjlydNZqj1hOAXTLR9T
-         TK6WyoZ5UAPbu5w1v24IKVZnXoCmaxTd6Gv+0+c6/f8slx0mDrkF34z4j+G1sg7Xs6x8
-         l/q1NGpZb1E4yDdliqUHlnrJt0prki1kSKs/ef8OEHYNEviX3C32rrdVJUJTQcLimEMd
-         lkiNuXGSpDsLOiR+t4DQ3FzzaKxigtAHnMovRHrwBU0QGG0gnBRnSgZiJJQfeRNI9GMh
-         6X7DRHSNjjDW4R+Fk+vf90VC9D3rsR0nASyBAaDSqOIYaYdFf+6PKqYrPRcFDIqOPE5E
-         jqqg==
+        bh=NI5nyGOY3ERNyQJVul1TRTO9hhACB1gWUuV76MrEk5M=;
+        b=dgYlI6LDqRVM7KThWpJ5+FLYQtBo6nuDZ7T8auGd3GHIhUqr4aNt6fZD3EA8sDfYf7
+         AV40fMfieMVo4HuusMAvw1inz+JrVX1eImql0wxwEMcp14i3hp/zZseb8kemlbTFZY3o
+         7Wc7caAus4zxyyaTtBmwq0DEnzQevquZ3mubraogrjQAnanKHG4sLlwvm2eZSiCxfrMU
+         EIJmL0/7O7ZkOcCmBCALW2/VRMSV1Rfjf8JYGW1EGA+uocIVDpDDXPX4qQGV2B78P+rZ
+         p7+AXV6rhqx6hKq9r00uu2IsfIDgOg95i2hJa9e85JP5MlkDP0L3pUEYwpC5Th1y2Bqf
+         FfXA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=4dySM6ga3g1JccS9VpKiXH/tknJsBk9CHeAdOMBOgi8=;
-        b=i7k+oURNJVcAkxzyzaU/wz7ubjLSwuW7mog5F8Dn6eD9RU6ub9/e031UfCDu7jiSXy
-         a3vAly49kFtssJHmex8WWmo3EnqhsDPuT6/cNAT0WPYwSLfNE8dzsBb0fXvdaLuuUgt8
-         gpa4paVIPTBS+CVfalLanBpvJfvK22p0hsv8YKldLMDymnG7eeUTmCWiF92njmpVm+xZ
-         ENGlQgoPnkyGeAXdFRCo0kuafGhcx6hq2rGbiTgwbbt39gVyYpvgPrplMX357QNWTqJc
-         JT1G4dwoLUbev3vzeKdGc4g6z/ZjutDRAbqPBEn1qdEkEF22SSw36wRO44wIwH3JhgsO
-         4q+A==
-X-Gm-Message-State: AOAM53042e60s1NgaQmiOfmqcKhEsismaAddquBioKiKLS8wjZwDcxL8
-        2cjRzELLZSs5P0wqiG5wrM6zXA==
-X-Google-Smtp-Source: ABdhPJwy9YsYUrAQkyBjMAo6v7cV3TIG9bAxmm1kSJC4wFGcE135LQno1aGtxNqLy5Fa7BPzgEWgIQ==
-X-Received: by 2002:a1c:4c16:: with SMTP id z22mr23467876wmf.14.1606140262059;
-        Mon, 23 Nov 2020 06:04:22 -0800 (PST)
+        bh=NI5nyGOY3ERNyQJVul1TRTO9hhACB1gWUuV76MrEk5M=;
+        b=Zrkg5E4MuAD+TDaIWhAvzmGY87NZJGiOaopEo24liHURPuu1wyIrWwBeLQkYcZ1c8t
+         qBgm8r09RGJmRb39AA0Ek/gU26KyZsOtL/Jj88SfgiXF9j3LsC/2Jb7BIEx0FJJ6p/av
+         ly3JbAxe7usg5CwtolPHoXk2xWK4Vqms3Y0erEoL2akONf5l+9nPirzkhf+TTnXkgn7R
+         dRtjD5oTVozjoBDZSk99KU7S3vbR8sAALPlEL/nrjB6qDyQc6I4SEEsqSoJA1EywmB4C
+         uIN4DY0zQHXqpXDirSkZqZIlGCOgloQxGhC1TZcpMFcQwcvDyFGaejPQjXexlN3RVBR1
+         FNXQ==
+X-Gm-Message-State: AOAM531NQRNx6hEuYFom/KdajGS26peT598+z3ahR7MgGyKqyar7xiBO
+        9faQT1geliuABpBlKjl0I5pxN6an9SDV/ceg86I=
+X-Google-Smtp-Source: ABdhPJxBVfXQ2g/OcfpC7PaWnINBheh7UFrDS8nx++8hHDijl9WIvux0NXyRxE5ad0DuSvHNStETAw==
+X-Received: by 2002:a7b:ce0e:: with SMTP id m14mr25154011wmc.17.1606140264658;
+        Mon, 23 Nov 2020 06:04:24 -0800 (PST)
 Received: from localhost.localdomain ([2a01:e0a:490:8730:f5cd:e791:e88b:e3b7])
-        by smtp.gmail.com with ESMTPSA id m9sm7102727wrx.59.2020.11.23.06.04.18
+        by smtp.gmail.com with ESMTPSA id m9sm7102727wrx.59.2020.11.23.06.04.22
         (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 23 Nov 2020 06:04:19 -0800 (PST)
+        Mon, 23 Nov 2020 06:04:23 -0800 (PST)
 From:   Loic Poulain <loic.poulain@linaro.org>
 To:     manivannan.sadhasivam@linaro.org, hemantk@codeaurora.org
 Cc:     linux-arm-msm@vger.kernel.org,
         Loic Poulain <loic.poulain@linaro.org>
-Subject: [PATCH v2 1/8] mhi: pci-generic: Increase number of hardware events
-Date:   Mon, 23 Nov 2020 15:10:59 +0100
-Message-Id: <1606140666-4986-2-git-send-email-loic.poulain@linaro.org>
+Subject: [PATCH v2 2/8] mhi: pci-generic: Perform hard reset on remove
+Date:   Mon, 23 Nov 2020 15:11:00 +0100
+Message-Id: <1606140666-4986-3-git-send-email-loic.poulain@linaro.org>
 X-Mailer: git-send-email 2.7.4
 In-Reply-To: <1606140666-4986-1-git-send-email-loic.poulain@linaro.org>
 References: <1606140666-4986-1-git-send-email-loic.poulain@linaro.org>
@@ -61,30 +61,52 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-If the IPA (IP hardware accelerator) is starved of event ring elements,
-the modem is crashing (SDX55). That can be prevented by setting a
-larger number of events (i.e 2 x number of channel ring elements).
+Ensure that the device is hard-reset on remove to restore its initial
+state and avoid further issues on subsequent probe.
 
-Tested with FN980m module.
+This has been tested with Telit FN980m module.
 
 Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
 ---
- drivers/bus/mhi/pci_generic.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/bus/mhi/pci_generic.c | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
 diff --git a/drivers/bus/mhi/pci_generic.c b/drivers/bus/mhi/pci_generic.c
-index e3df838..13a7e4f 100644
+index 13a7e4f..09c6b26 100644
 --- a/drivers/bus/mhi/pci_generic.c
 +++ b/drivers/bus/mhi/pci_generic.c
-@@ -91,7 +91,7 @@ struct mhi_pci_dev_info {
+@@ -15,6 +15,8 @@
  
- #define MHI_EVENT_CONFIG_HW_DATA(ev_ring, ch_num) \
- 	{					\
--		.num_elements = 128,		\
-+		.num_elements = 256,		\
- 		.irq_moderation_ms = 5,		\
- 		.irq = (ev_ring) + 1,		\
- 		.priority = 1,			\
+ #define MHI_PCI_DEFAULT_BAR_NUM 0
+ 
++#define DEV_RESET_REG (0xB0)
++
+ /**
+  * struct mhi_pci_dev_info - MHI PCI device specific information
+  * @config: MHI controller configuration
+@@ -166,6 +168,11 @@ static void mhi_pci_status_cb(struct mhi_controller *mhi_cntrl,
+ 	/* Nothing to do for now */
+ }
+ 
++static inline void mhi_pci_reset(struct mhi_controller *mhi_cntrl)
++{
++	writel(1, mhi_cntrl->regs + DEV_RESET_REG);
++}
++
+ static int mhi_pci_claim(struct mhi_controller *mhi_cntrl,
+ 			 unsigned int bar_num, u64 dma_mask)
+ {
+@@ -329,6 +336,10 @@ static void mhi_pci_remove(struct pci_dev *pdev)
+ 	mhi_power_down(mhi_cntrl, true);
+ 	mhi_unprepare_after_power_down(mhi_cntrl);
+ 	mhi_unregister_controller(mhi_cntrl);
++
++	/* MHI-layer reset could not be enough, always hard-reset the device */
++	mhi_pci_reset(mhi_cntrl);
++
+ 	mhi_free_controller(mhi_cntrl);
+ }
+ 
 -- 
 2.7.4
 
