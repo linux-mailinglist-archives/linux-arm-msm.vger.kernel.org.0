@@ -2,93 +2,95 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C840F2BFF9E
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Nov 2020 06:26:47 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id EE6AA2C0074
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Nov 2020 08:05:19 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727007AbgKWFXI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 23 Nov 2020 00:23:08 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46622 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726486AbgKWFXI (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 23 Nov 2020 00:23:08 -0500
-Received: from mail-ot1-x343.google.com (mail-ot1-x343.google.com [IPv6:2607:f8b0:4864:20::343])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F0ABFC0613CF
-        for <linux-arm-msm@vger.kernel.org>; Sun, 22 Nov 2020 21:23:07 -0800 (PST)
-Received: by mail-ot1-x343.google.com with SMTP id h19so2193627otr.1
-        for <linux-arm-msm@vger.kernel.org>; Sun, 22 Nov 2020 21:23:07 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=gPB8jyEvRTDll3+OFebcmdns8Pb9GVbTpzeshP877as=;
-        b=YRGdmwoRapBuPCrJ1O5mn0vg216dlKGkQAqpnvJtHLcVzMzXtUVqn85tId71tPDa1S
-         DDDjE23M9OdzOveEx5dsZjpquvgJojtGXD5lx4lGmBF3i7TRN6x9VqV9wAhL+FefKH0I
-         sI4g7pNTxJwIuKEJifJEo0ecyulEGf6USnhkAO2WYaNb3LXoAwbiDRA7aIvqn9R0F+H9
-         HY8zhE14Z7ziqCLUf+Et3UATq+DtmHXCpx+F/A25pNQ6TjQASn7PWN4kMIygJrDcZitr
-         TJtMaVqSHzYKi/F3MRz+rRDhmRUtj1qDtdv297CtCy4tRyY/WcA+tFQSE0ltG/4JfUSX
-         uh0w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=gPB8jyEvRTDll3+OFebcmdns8Pb9GVbTpzeshP877as=;
-        b=atDaGhQHJOpwWuYDJHudW4ySe1BhHylmUTCrFUVpN5g85R/67pvh3euWEJeCElWqH1
-         x7q0nsKVMU3g2rCj5W6BiZ6vorKsYgxVoyphLl4QiAi4im/xbDCCslEfXWCjC/1/lzi6
-         LFoOm9e080RLHGhbjfh1WX27x3YSmUX/9LM3o0TJoozBPmv0mlDzdiS4YPb65S/+EDJF
-         2LuPt7v118NqUGaiIW46k/8NecXU1Dtt1Wc1wsXVOgwGMbaJazULRG+6JGr4PBxj1olA
-         vwJTugAEh2+hY7l5TPoZ7lxeDuuvaAbP0diUQIZlLo0skEbmbicYmdT8jdTKEnCl3xLy
-         DeQA==
-X-Gm-Message-State: AOAM531pmlL+is551H0Jet2Dh6p71Ru7iKmLJ1j9nHuhyuTpKWcQsyVB
-        dha35EkwEsp7YhkGiwlwdbzsdg==
-X-Google-Smtp-Source: ABdhPJxSoWQnnis0JVovc038X7lf89ULCBchfIIeB7gvEtTKOVbx6s42eh5zn0EwBmmP/ifbdKV9zA==
-X-Received: by 2002:a9d:7cc1:: with SMTP id r1mr2414805otn.37.1606108987282;
-        Sun, 22 Nov 2020 21:23:07 -0800 (PST)
-Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id u10sm6412316otj.31.2020.11.22.21.23.06
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 22 Nov 2020 21:23:06 -0800 (PST)
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
+        id S1727088AbgKWHE7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 23 Nov 2020 02:04:59 -0500
+Received: from mga09.intel.com ([134.134.136.24]:54305 "EHLO mga09.intel.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726861AbgKWHE6 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 23 Nov 2020 02:04:58 -0500
+IronPort-SDR: eswpywBM+ziv7WMyYhncKA/dGbh8sb5TkRhufoxuB0tT0lRLDw6rhKomGO6ZTSyxUhtY1e04lk
+ ALEsxwy0vCJw==
+X-IronPort-AV: E=McAfee;i="6000,8403,9813"; a="171875377"
+X-IronPort-AV: E=Sophos;i="5.78,361,1599548400"; 
+   d="scan'208";a="171875377"
+X-Amp-Result: SKIPPED(no attachment in message)
+X-Amp-File-Uploaded: False
+Received: from orsmga003.jf.intel.com ([10.7.209.27])
+  by orsmga102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 22 Nov 2020 23:04:41 -0800
+IronPort-SDR: Qp6vNE+Kp14DbsXd3hs6+OEJ2ZFTg3BdgKZcqb/Zhp2InkvPwMD8tGF2FrBqmQ3LjiQkQ2LR0t
+ g39Ocph5fDYg==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.78,361,1599548400"; 
+   d="scan'208";a="327099501"
+Received: from ahunter-desktop.fi.intel.com (HELO [10.237.72.94]) ([10.237.72.94])
+  by orsmga003.jf.intel.com with ESMTP; 22 Nov 2020 23:04:33 -0800
+Subject: Re: [PATCH 0/8] eMMC inline encryption support
+To:     Eric Biggers <ebiggers@kernel.org>
+Cc:     linux-mmc@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-fscrypt@vger.kernel.org,
+        Satya Tangirala <satyat@google.com>,
+        Ulf Hansson <ulf.hansson@linaro.org>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>, Alex Elder <elder@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: [PATCH] arm64: dts: qcom: sdm845: Limit ipa iommu streams
-Date:   Sun, 22 Nov 2020 23:23:05 -0600
-Message-Id: <20201123052305.157686-1-bjorn.andersson@linaro.org>
-X-Mailer: git-send-email 2.29.2
+        Ritesh Harjani <riteshh@codeaurora.org>,
+        Asutosh Das <asutoshd@codeaurora.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Neeraj Soni <neersoni@codeaurora.org>,
+        Barani Muthukumaran <bmuthuku@codeaurora.org>,
+        Peng Zhou <peng.zhou@mediatek.com>,
+        Stanley Chu <stanley.chu@mediatek.com>,
+        Konrad Dybcio <konradybcio@gmail.com>
+References: <20201112194011.103774-1-ebiggers@kernel.org>
+ <X7gQ9Y44iIgkiM64@sol.localdomain>
+ <ea904bcc-3f01-d968-2a16-f9ff9f012968@intel.com>
+ <X7gcsC6IS80sUy4K@sol.localdomain>
+From:   Adrian Hunter <adrian.hunter@intel.com>
+Organization: Intel Finland Oy, Registered Address: PL 281, 00181 Helsinki,
+ Business Identity Code: 0357606 - 4, Domiciled in Helsinki
+Message-ID: <9010afea-1075-8f72-99c7-c471840685db@intel.com>
+Date:   Mon, 23 Nov 2020 09:04:12 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.12.0
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <X7gcsC6IS80sUy4K@sol.localdomain>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The Android and Windows firmware does not accept the use of 3 as a mask
-to cover the IPA streams. But with 0x721 being related to WiFi and 0x723
-being unsed the mapping can be reduced to just cover 0x720 and 0x722,
-which is accepted.
+On 20/11/20 9:44 pm, Eric Biggers wrote:
+> Hi Adrian,
+> 
+> On Fri, Nov 20, 2020 at 09:29:59PM +0200, Adrian Hunter wrote:
+>> I haven't had a chance to look at it properly, but I do have a couple of
+>> dumb questions.  How do you ensure the host controller is not runtime
+>> suspended when the key is programmed?
+> 
+> This is handled by the block layer, in block/keyslot-manager.c.  It ensures that
+> the device is resumed before calling blk_ksm_ll_ops::keyslot_program() or
+> blk_ksm_ll_ops::keyslot_evict().  See blk_ksm_hw_enter().
 
-Fixes: e9e89c45bfeb ("arm64: dts: sdm845: add IPA iommus property")
-Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
----
- arch/arm64/boot/dts/qcom/sdm845.dtsi | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+Cool, although cqhci is doing a lazy kind of resume, so maybe not be enabled
+when a key is programmed?  Would that be a problem?
 
-diff --git a/arch/arm64/boot/dts/qcom/sdm845.dtsi b/arch/arm64/boot/dts/qcom/sdm845.dtsi
-index 0da27b065761..a6147bd54cdf 100644
---- a/arch/arm64/boot/dts/qcom/sdm845.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sdm845.dtsi
-@@ -2136,7 +2136,8 @@ ufs_mem_phy_lanes: lanes@1d87400 {
- 		ipa: ipa@1e40000 {
- 			compatible = "qcom,sdm845-ipa";
- 
--			iommus = <&apps_smmu 0x720 0x3>;
-+			iommus = <&apps_smmu 0x720 0x0>,
-+				 <&apps_smmu 0x722 0x0>;
- 			reg = <0 0x1e40000 0 0x7000>,
- 			      <0 0x1e47000 0 0x2000>,
- 			      <0 0x1e04000 0 0x2c000>;
--- 
-2.29.2
+> 
+>> Are the keys lost when the host controller is reset, and then how do you know
+>> the host controller does not get reset after the key is programmed but before
+>> the I/O is submitted?
+> 
+> As with UFS, keys might be lost when the host controller is reset, so we're
+> reprogramming all the keys when that happens.  See patch 1:
+> 
+>     mmc_set_initial_state()
+>         mmc_crypto_set_initial_state()
+>             blk_ksm_reprogram_all_keys()
+> 
+> (That's the intent, at least.  For MMC, I'm not sure if resets were properly
+> covered by the testing I've done so far.  But the code looks right to me.)
 
+After reset, cqhci will not necessarily be enabled at this point.  Is that OK?
