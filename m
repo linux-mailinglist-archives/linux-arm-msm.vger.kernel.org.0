@@ -2,32 +2,32 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 13B742C1C8F
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Nov 2020 05:10:32 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 489D92C1C8B
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Nov 2020 05:10:30 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728664AbgKXEKL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 23 Nov 2020 23:10:11 -0500
-Received: from mail.kernel.org ([198.145.29.99]:46918 "EHLO mail.kernel.org"
+        id S1728696AbgKXEKK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 23 Nov 2020 23:10:10 -0500
+Received: from mail.kernel.org ([198.145.29.99]:46912 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728711AbgKXEKJ (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        id S1728714AbgKXEKJ (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
         Mon, 23 Nov 2020 23:10:09 -0500
 Content-Type: text/plain; charset="utf-8"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1606191009;
-        bh=R/pduMu6cLzjRrl0xAoRWImLmImMbDJ4SXUO8Y4w9c4=;
+        s=default; t=1606191008;
+        bh=bdr0Rn4DNYGASePK7w2gEshkqn2vvLVCGWk0lJMXuGI=;
         h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-        b=1PXGtRPvqdP62C5TLEAr45uhV5fK+3dB5AeP+v5iIZ/CigqHb+NBNRqIhFxYYF5fM
-         OhFf69DlJLVMv/moCaQ9dPZHTzAyZMMxR/uSCPER77ZqlvxE9F4VV06lBbqhCwQPLY
-         wzH7iiKWLk45BYdWbqtRFaniiO1Mu99teAQwR4Pg=
+        b=STouNkxJqq4fTx80PYM0lzVfJMvf75fqU9p4/UkvDQtoGSEupqNYD5O2jBUB8Z9n0
+         UKBRdwiuuUp8erWahMqsfDxBAOqSMD8DTFbTpSzW1OFjCy7duenpx7+WK7xKivhISM
+         JGLwIb8BO6rrI8S5/nB39LVHdMcqbeq97lF7vVv0=
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH] soc: qcom: initialize local variable
+Subject: Re: [PATCH] arm64: dts: qcom: fix serial output for sm8250-hdk
 From:   patchwork-bot+linux-arm-msm@kernel.org
-Message-Id: <160619100896.17117.7015506807433138925.git-patchwork-notify@kernel.org>
+Message-Id: <160619100884.17117.13251263021246929019.git-patchwork-notify@kernel.org>
 Date:   Tue, 24 Nov 2020 04:10:08 +0000
-References: <20200819184637.15648-1-trix@redhat.com>
-In-Reply-To: <20200819184637.15648-1-trix@redhat.com>
-To:     Tom Rix <trix@redhat.com>
+References: <20201123143538.14198-1-jonathan@marek.ca>
+In-Reply-To: <20201123143538.14198-1-jonathan@marek.ca>
+To:     Jonathan Marek <jonathan@marek.ca>
 Cc:     linux-arm-msm@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
@@ -37,21 +37,19 @@ Hello:
 
 This patch was applied to qcom/linux.git (refs/heads/for-next):
 
-On Wed, 19 Aug 2020 11:46:37 -0700 you wrote:
-> From: Tom Rix <trix@redhat.com>
+On Mon, 23 Nov 2020 09:35:38 -0500 you wrote:
+> The uart2 node has been renamed, apply the change to sm8250-hdk dts too so
+> that serial output works.
 > 
-> clang static analysis reports this problem
+> Fixes: 91ed0e90fc49 ("arm64: dts: qcom: add sm8250 hdk dts")
 > 
-> pdr_interface.c:596:6: warning: Branch condition evaluates
->   to a garbage value
->         if (!req.service_path[0])
->             ^~~~~~~~~~~~~~~~~~~~
+> Signed-off-by: Jonathan Marek <jonathan@marek.ca>
 > 
 > [...]
 
 Here is the summary with links:
-  - soc: qcom: initialize local variable
-    https://git.kernel.org/qcom/c/a161ffe4b877
+  - arm64: dts: qcom: fix serial output for sm8250-hdk
+    https://git.kernel.org/qcom/c/2802821a66f9
 
 You are awesome, thank you!
 --
