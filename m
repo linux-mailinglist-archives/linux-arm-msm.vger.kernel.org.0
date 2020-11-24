@@ -2,204 +2,133 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 91F1F2C2D92
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Nov 2020 17:59:38 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 618732C2D5A
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Nov 2020 17:55:44 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2390710AbgKXQ5U (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 24 Nov 2020 11:57:20 -0500
-Received: from z5.mailgun.us ([104.130.96.5]:45455 "EHLO z5.mailgun.us"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2390711AbgKXQ5T (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 24 Nov 2020 11:57:19 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1606237039; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=ZqaDzmaQdZPt9r/+HWJzSzMb1fb/lC/ceBW8DiHJrBk=;
- b=PlSwrnd4cANs0mAR7xU1I6z6QwmepiUL9cH3rWEQaoqTd/VGF9MfnWOVhyP3w8cGsdIu9WQ1
- DnFlGm1tRnjIEhE8LFFb2I4Pza+nJf9nLEsYXg21BfJAaW9lYvqx52UE29MK6pxpgiqqLMr+
- 1axuHdNH4quIgE0lH+PtVbo+ZqI=
-X-Mailgun-Sending-Ip: 104.130.96.5
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n02.prod.us-west-2.postgun.com with SMTP id
- 5fbd3b5cc6fdb18c63cc8c3c (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 24 Nov 2020 16:57:00
- GMT
-Sender: gubbaven=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 1C72EC433C6; Tue, 24 Nov 2020 16:57:00 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: gubbaven)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id ED6B0C433ED;
-        Tue, 24 Nov 2020 16:56:58 +0000 (UTC)
+        id S2390574AbgKXQvf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 24 Nov 2020 11:51:35 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37072 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2390479AbgKXQvc (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 24 Nov 2020 11:51:32 -0500
+Received: from mail-ej1-x643.google.com (mail-ej1-x643.google.com [IPv6:2a00:1450:4864:20::643])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 43D3EC0613D6
+        for <linux-arm-msm@vger.kernel.org>; Tue, 24 Nov 2020 08:51:31 -0800 (PST)
+Received: by mail-ej1-x643.google.com with SMTP id z5so9376506ejp.4
+        for <linux-arm-msm@vger.kernel.org>; Tue, 24 Nov 2020 08:51:31 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=3RQOPsic+9fUZ8cntWd3pHla3oBnbpt896XicZzUmCg=;
+        b=kdXyCxx1nIbKtIZ84wlfw1bPP7vXM97AMtabCqZLNgr3EVFLUjvc/4MfHEM6xuBjs1
+         73/Cbj0PbqOnAyvT0u8frpQum2TWPV0+kgh3DZzLdfnXcGnR8ygJMht111GnI3PqyPFG
+         +fD4UVsHEaz0mhlJ1wpoRuJbKKCtDXF2I4XzEOFKbIFwlhOCANIJ7DOXJWJPELWJjIIW
+         kkOb6V1vIyb17XnppkStZ4Aslz+RW9GgbUMwPPLyFzfPsRFWaZ294sgPvWdcNR0M0/M9
+         p202ZwoHXS070Z0jWPyPIuaTTfThNirtbygH5Uale5HcKgx8w7+4ARvjMI9X3323w3YE
+         4q8Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=3RQOPsic+9fUZ8cntWd3pHla3oBnbpt896XicZzUmCg=;
+        b=uUgkxExEThhes72JskZ+MT9qz5fLcFRFZOlhDiQjUxmEEt797u9yVU+3dpHFPeiW15
+         NwJTk5nl0mr4SWjHYGnxHiJ9+5TMWUTe6SqY4aoN/Kzq9ZnXV0bos3ymY2OkJD+TS5XS
+         20JfO8lR4yN91NGquGxIA6sNOjSClBnljQtk7hJX9PSBRd2G9lQts44KSXmw+3cEaTyX
+         nWuHjTTdfIyfMnyA/wca7B1xIPd26OHg7vEyNAiLTMju4fOKtaDCq91iaMTxEexPaAaB
+         uoqRkrQzWiZAM4z4NMhFC5YTl3PxjrRk3jUrz1VH3G8GXLZF+j3SlpwSn3xxMmvmYoRa
+         aOUw==
+X-Gm-Message-State: AOAM531otfhBFdfAiwy8auNmHr3zSyl0QZWXyjCOg1LXoHf0hP54kCcf
+        EEgH6ei1j/E3/x4xoIUWEYsxQYE0ivBy/Dpc1jcmrbEAu/7Dhg==
+X-Google-Smtp-Source: ABdhPJy1rTMbxN14rsCY1fUyZYG4HVhIEzHty2KPVHAkXjrjX1AhAVsEYs+/NINRKXI+fUqUpT+8J1x4zbzVhDGVizM=
+X-Received: by 2002:a17:906:14cd:: with SMTP id y13mr4819569ejc.510.1606236689978;
+ Tue, 24 Nov 2020 08:51:29 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Tue, 24 Nov 2020 22:26:58 +0530
-From:   gubbaven@codeaurora.org
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     marcel@holtmann.org, johan.hedberg@gmail.com, mka@chromium.org,
-        linux-kernel@vger.kernel.org, linux-bluetooth@vger.kernel.org,
-        hemantg@codeaurora.org, linux-arm-msm@vger.kernel.org,
-        bgodavar@codeaurora.org, rjliao@codeaurora.org,
-        hbandi@codeaurora.org, abhishekpandit@chromium.org
-Subject: Re: [PATCH v2] Bluetooth: btqca: Add support to read FW build version
- for WCN3991 BTSoC
-In-Reply-To: <20201118145725.GI8532@builder.lan>
-References: <1605703943-25980-1-git-send-email-gubbaven@codeaurora.org>
- <20201118145725.GI8532@builder.lan>
-Message-ID: <2366096dae31651769bfe1f7f3796a16@codeaurora.org>
-X-Sender: gubbaven@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+References: <1606234711-20125-1-git-send-email-loic.poulain@linaro.org> <b66d5f09-7560-3b82-84a3-b7cf40c9532e@codeaurora.org>
+In-Reply-To: <b66d5f09-7560-3b82-84a3-b7cf40c9532e@codeaurora.org>
+From:   Loic Poulain <loic.poulain@linaro.org>
+Date:   Tue, 24 Nov 2020 17:57:45 +0100
+Message-ID: <CAMZdPi_n0h_S3f7R6H0kZO7PhpKiDLm0k6Cfxusg2+qfv1BerQ@mail.gmail.com>
+Subject: Re: [PATCH v2] bus: mhi: core: Fix device hierarchy issue
+To:     Jeffrey Hugo <jhugo@codeaurora.org>
+Cc:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        Hemant Kumar <hemantk@codeaurora.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Bhaumik Bhatt <bbhatt@codeaurora.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Bjorn,
-On 2020-11-18 20:27, Bjorn Andersson wrote:
-> On Wed 18 Nov 06:52 CST 2020, Venkata Lakshmi Narayana Gubba wrote:
-> 
->> Add support to read FW build version for WCN3991 BTSoC
-> 
-> Your commit message doesn't describe why you need/want this? Is it
-> somehow required for BT to come up or is it simply 57 lines of code to
-> print a line of build info in the kernel log?
-> 
-> 
-> 
-> Note that most people reading the kernel log won't care about what
-> firmware version their BT chip is running, so if it's only for your own
-> debugging purpose I would prefer if you make this available in sysfs or
-> debugfs.
-> 
-> Regards,
-> Bjorn
-> 
-[Venkata] :
-Yes, this code is to print build info in kernel log for debugging 
-purpose.
-I will add this in debugfs and will post the updated patch.
->> 
->> Signed-off-by: Venkata Lakshmi Narayana Gubba 
->> <gubbaven@codeaurora.org>
->> ---
->>  drivers/bluetooth/btqca.c | 57 
->> +++++++++++++++++++++++++++++++++++++++++++++++
->>  drivers/bluetooth/btqca.h |  3 +++
->>  2 files changed, 60 insertions(+)
->> 
->> diff --git a/drivers/bluetooth/btqca.c b/drivers/bluetooth/btqca.c
->> index ce9dcff..dfd7ff7 100644
->> --- a/drivers/bluetooth/btqca.c
->> +++ b/drivers/bluetooth/btqca.c
->> @@ -101,6 +101,56 @@ int qca_read_soc_version(struct hci_dev *hdev, 
->> u32 *soc_version,
->>  }
->>  EXPORT_SYMBOL_GPL(qca_read_soc_version);
->> 
->> +static int qca_read_fw_build_info(struct hci_dev *hdev)
->> +{
->> +	struct sk_buff *skb;
->> +	struct edl_event_hdr *edl;
->> +	char cmd;
->> +	int err = 0;
->> +	char build_label[QCA_FW_BUILD_VER_LEN];
->> +	int build_lbl_len;
->> +
->> +	bt_dev_dbg(hdev, "QCA read fw build info");
->> +
->> +	cmd = EDL_GET_BUILD_INFO_CMD;
->> +	skb = __hci_cmd_sync_ev(hdev, EDL_PATCH_CMD_OPCODE, 
->> EDL_PATCH_CMD_LEN,
->> +				&cmd, HCI_EV_VENDOR, HCI_INIT_TIMEOUT);
->> +	if (IS_ERR(skb)) {
->> +		err = PTR_ERR(skb);
->> +		bt_dev_err(hdev, "Reading QCA fw build info failed (%d)",
->> +			   err);
->> +		return err;
->> +	}
->> +
->> +	edl = (struct edl_event_hdr *)(skb->data);
->> +	if (!edl) {
->> +		bt_dev_err(hdev, "QCA read fw build info with no header");
->> +		err = -EILSEQ;
->> +		goto out;
->> +	}
->> +
->> +	if (edl->cresp != EDL_CMD_REQ_RES_EVT ||
->> +	    edl->rtype != EDL_GET_BUILD_INFO_CMD) {
->> +		bt_dev_err(hdev, "QCA Wrong packet received %d %d", edl->cresp,
->> +			   edl->rtype);
->> +		err = -EIO;
->> +		goto out;
->> +	}
->> +
->> +	build_lbl_len = edl->data[0];
->> +	memcpy(build_label, &edl->data[1], build_lbl_len);
->> +	*(build_label + build_lbl_len) = '\0';
->> +
->> +	bt_dev_info(hdev, "BT SoC FW Build info: %s", build_label);
->> +
->> +out:
->> +	kfree_skb(skb);
->> +	if (err)
->> +		bt_dev_err(hdev, "QCA read fw build info failed (%d)", err);
->> +
->> +	return err;
->> +}
->> +
->>  static int qca_send_reset(struct hci_dev *hdev)
->>  {
->>  	struct sk_buff *skb;
->> @@ -520,6 +570,13 @@ int qca_uart_setup(struct hci_dev *hdev, uint8_t 
->> baudrate,
->>  		return err;
->>  	}
->> 
->> +	if (soc_type == QCA_WCN3991) {
->> +		/* get fw build info */
->> +		err = qca_read_fw_build_info(hdev);
->> +		if (err < 0)
->> +			return err;
->> +	}
->> +
->>  	bt_dev_info(hdev, "QCA setup on UART is completed");
->> 
->>  	return 0;
->> diff --git a/drivers/bluetooth/btqca.h b/drivers/bluetooth/btqca.h
->> index d81b74c..375c7fc 100644
->> --- a/drivers/bluetooth/btqca.h
->> +++ b/drivers/bluetooth/btqca.h
->> @@ -11,6 +11,7 @@
->>  #define EDL_PATCH_CMD_LEN		(1)
->>  #define EDL_PATCH_VER_REQ_CMD		(0x19)
->>  #define EDL_PATCH_TLV_REQ_CMD		(0x1E)
->> +#define EDL_GET_BUILD_INFO_CMD		(0x20)
->>  #define EDL_NVM_ACCESS_SET_REQ_CMD	(0x01)
->>  #define MAX_SIZE_PER_TLV_SEGMENT	(243)
->>  #define QCA_PRE_SHUTDOWN_CMD		(0xFC08)
->> @@ -34,6 +35,8 @@
->>  #define QCA_HCI_CC_OPCODE		0xFC00
->>  #define QCA_HCI_CC_SUCCESS		0x00
->> 
->> +#define QCA_FW_BUILD_VER_LEN		255
->> +
->>  enum qca_baudrate {
->>  	QCA_BAUDRATE_115200 	= 0,
->>  	QCA_BAUDRATE_57600,
->> --
->> QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a 
->> member
->> of Code Aurora Forum, hosted by The Linux Foundation
->> 
+On Tue, 24 Nov 2020 at 17:36, Jeffrey Hugo <jhugo@codeaurora.org> wrote:
+>
+> On 11/24/2020 9:18 AM, Loic Poulain wrote:
+> > A MHI client device should be child of the MHI controller device.
+> > Today both MHI controller and its MHI clients are direct children
+> > of the same bus device. This patch fixes the hierarchy.
+>
+> Why?
+>
+> I'm not particularly arguing for or against this change (I think it
+> affects me slightly, but not in a breaking way), but this commit text
+> seems pretty generic.  It doesn't really help me understand the
+> relevance of this change.  It seems to be only describing what you are
+> doing, but not the why.  How did you find this?  How does this affect
+> the client drivers?  Does it make something the client drivers care
+> about better?
+>
+> To put this another way, "should" is an opinion, and you've provided no
+> facts to assert why your opinion is superior to others.
+
+That's right I've not elaborate too much, but it's mainly to respect
+the hierarchy of devices, as it is done for other busses. The
+hierarchy is especially important for things like power management
+ordering (PM core must suspend devices before their controller, wakeup
+the controller before its devices...). Moreover it will also be useful
+for userspace (thanks to sysfs) to determine which devices are behind
+which controllers (and so determine if e.g. QMI and IP channels are
+part of the same device).
+
 Regards,
-Lakshmi Narayana.
+Loic
+
+
+
+>
+> >
+> > Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
+> > ---
+> >   v2: fix commit message
+> >
+> >   drivers/bus/mhi/core/init.c | 10 +++++++++-
+> >   1 file changed, 9 insertions(+), 1 deletion(-)
+> >
+> > diff --git a/drivers/bus/mhi/core/init.c b/drivers/bus/mhi/core/init.c
+> > index 436221c..c7a7354 100644
+> > --- a/drivers/bus/mhi/core/init.c
+> > +++ b/drivers/bus/mhi/core/init.c
+> > @@ -1137,7 +1137,15 @@ struct mhi_device *mhi_alloc_device(struct mhi_controller *mhi_cntrl)
+> >       device_initialize(dev);
+> >       dev->bus = &mhi_bus_type;
+> >       dev->release = mhi_release_device;
+> > -     dev->parent = mhi_cntrl->cntrl_dev;
+> > +
+> > +     if (mhi_cntrl->mhi_dev) {
+> > +             /* for MHI client devices, parent is the MHI controller device */
+> > +             dev->parent = &mhi_cntrl->mhi_dev->dev;
+> > +     } else {
+> > +             /* for MHI controller device, parent is the bus device (e.g. pci device) */
+> > +             dev->parent = mhi_cntrl->cntrl_dev;
+> > +     }
+> > +
+> >       mhi_dev->mhi_cntrl = mhi_cntrl;
+> >       mhi_dev->dev_wake = 0;
+> >
+> >
+>
+>
+> --
+> Jeffrey Hugo
+> Qualcomm Technologies, Inc. is a member of the
+> Code Aurora Forum, a Linux Foundation Collaborative Project.
