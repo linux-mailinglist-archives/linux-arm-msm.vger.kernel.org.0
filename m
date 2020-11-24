@@ -2,229 +2,152 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 1F7722C1955
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Nov 2020 00:21:51 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id EC2122C19BC
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Nov 2020 01:03:36 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726610AbgKWXSo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 23 Nov 2020 18:18:44 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43500 "EHLO
+        id S1728584AbgKXACU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 23 Nov 2020 19:02:20 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50258 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725308AbgKWXSn (ORCPT
+        with ESMTP id S1728577AbgKXACT (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 23 Nov 2020 18:18:43 -0500
-Received: from mail-wm1-x344.google.com (mail-wm1-x344.google.com [IPv6:2a00:1450:4864:20::344])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9F564C0613CF
-        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Nov 2020 15:18:42 -0800 (PST)
-Received: by mail-wm1-x344.google.com with SMTP id 1so1089835wme.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Nov 2020 15:18:42 -0800 (PST)
+        Mon, 23 Nov 2020 19:02:19 -0500
+Received: from mail-pf1-x441.google.com (mail-pf1-x441.google.com [IPv6:2607:f8b0:4864:20::441])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 45F39C061A4E
+        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Nov 2020 16:02:19 -0800 (PST)
+Received: by mail-pf1-x441.google.com with SMTP id n137so6563424pfd.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Nov 2020 16:02:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=Nj+gdTH1StHuONWnTSTyqwU/3oIYDEHaKWBrfK50CQA=;
-        b=hP1StnKqpISni3iYelCRXg4UuZ+DrTjSYEs2bKb91lI7/LrJtOp+gaKC9NPGLGuhy4
-         JUic4G2gogQszL1j8P/ea5bdXK/03RIg/mAde9/9qewvsLJTYpk8VnR3gc3xj28TtP1n
-         e8eQEobTa1QpfsFkdJ3H8cp8Lw2Xhjo7IO2PSCympH4es68QbYgMvuNWMXx5Is7PTZA+
-         8b6Y6IZTKWenvbYLm453/gviARCub4dwabSjN997hLWdcbDHc4Sal/h/tJ290Bu89I2E
-         ziJG78lXAn6iDgmZS+d+b9OebmPyDV1k2/0xtBE0//U0eoC7cE/R4OoaHwdPRKIqFH1+
-         UKpg==
+        d=chromium.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=dVZAZuhnHNDw7eBlpqaNTuLy1qB5NlqAynArFyBMzdU=;
+        b=oMy+quRSFEMEHuIZhuSvFxsJnohoLaGB1uP5Yc2aYTkic1+FuPSrNECJ/ysK1f6gWT
+         ers6BO0+t5vhO1N1mWWI/Weilyqpvb2RNRGU8ocpD7IWHTijus14RXUthJJlRX5ZiOt8
+         0wb18gTlJlXBwbt2oaLqZ9kgPv/QZWZlenQfM=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=Nj+gdTH1StHuONWnTSTyqwU/3oIYDEHaKWBrfK50CQA=;
-        b=gm1u6cUxMYweEjsSYZZCDrr5epIv1gmHtnA5FM6impmVlj+m6xD18vfZHvLP9gJN/v
-         Bhd/JulrPaH9YacYcLErBPIWahwitp1suPsIVdMDzwi7fLwKOXZpOxZJL8f78mQhntBP
-         ogwsvWAku0z+dDGELC9Gg4R/MDThNgG2MSHdizYI5EcLR4CqjL9T0OrFrleeYqHC2gcW
-         SmFjDzbE35IKFTkKVKtAFIrwO3jUoB5+4UXZgOOqrx2d9Y2AJKrH9Qo87rKu4C/OXOyM
-         yntlYi0v5HJmcX6PaAlEEJgYniZ03cm/xhMaKA9DHDInpDpqNmfXprpBWi4Tm7YCPoPa
-         juBg==
-X-Gm-Message-State: AOAM532bXiY7Pqq7qvbEFWFAbW6oEF1JqbyEd9khw39TPc7k5FG1RP/S
-        id+JtDzIwA9q0RnWrwMokLf9B+cv55l9Na14DME=
-X-Google-Smtp-Source: ABdhPJxbZx0kgnIaAnh7hLDsIUyOulsD+MqY+/sCRXSQRcguNLyZRSv25aU8ixwKqNHa0Tn7qKLMqza4GKhJ5RHw2jc=
-X-Received: by 2002:a7b:c145:: with SMTP id z5mr1168542wmi.164.1606173520987;
- Mon, 23 Nov 2020 15:18:40 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=dVZAZuhnHNDw7eBlpqaNTuLy1qB5NlqAynArFyBMzdU=;
+        b=hN7fl5fjoOJio5lKpOq3OYoekiPsefhrKagqbO8NiyKy24ttt+7UrjZf2xkWYSJsoq
+         pN1oZJlTL+EbGkqrjEXHdeLAj5s+6Eiz9lUMS2mVLhB+oOApy7XTqI/3b46NOmbkmGPb
+         fr1SoANcu71WzEFh/y9oqWa9TQNO3rX3HyKjSas+gztnw8b02c5WxSDka9ZYACYBAGzR
+         NYyGbnrVO7XetTpAObYAPQT/fX+wmrWkn2WfM86mVFuBtwAqXlNDtkhAU0pX9O5PU5Gc
+         0cm28rfob1n+XDpGSNoGLmXAnYsm46KzpZENYkJI2Fk8j3vP4GSRGIiWKI3oc9m5h4Sd
+         eKFw==
+X-Gm-Message-State: AOAM531N84Bf48FJV0zTUwiWYopFMHvyLPPGB68S7RFhy2ZdcP2qSDUt
+        R5qrJuVc4V0u3B6kbh0ck/ml+g==
+X-Google-Smtp-Source: ABdhPJyPk8xbY5YVwigff7KJFU/YiJcXqrjKKsxb1ubCLKovQVsaw+FkeVdl3VD2BcK+j4hLt4IA0Q==
+X-Received: by 2002:a63:215f:: with SMTP id s31mr1567453pgm.258.1606176138623;
+        Mon, 23 Nov 2020 16:02:18 -0800 (PST)
+Received: from tictac2.mtv.corp.google.com ([2620:15c:202:1:42b0:34ff:fe3d:58e6])
+        by smtp.gmail.com with ESMTPSA id l133sm13091945pfd.112.2020.11.23.16.02.17
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 23 Nov 2020 16:02:18 -0800 (PST)
+From:   Douglas Anderson <dianders@chromium.org>
+To:     Marc Zyngier <maz@kernel.org>,
+        Thomas Gleixner <tglx@linutronix.de>,
+        Jason Cooper <jason@lakedaemon.net>,
+        Linus Walleij <linus.walleij@linaro.org>
+Cc:     Maulik Shah <mkshah@codeaurora.org>,
+        Srinivas Ramana <sramana@codeaurora.org>,
+        Neeraj Upadhyay <neeraju@codeaurora.org>,
+        Rajendra Nayak <rnayak@codeaurora.org>,
+        linux-gpio@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Douglas Anderson <dianders@chromium.org>,
+        Andy Gross <agross@kernel.org>, linux-kernel@vger.kernel.org
+Subject: [PATCH 1/3] irqchip: qcom-pdc: Fix phantom irq when changing between rising/falling
+Date:   Mon, 23 Nov 2020 16:01:51 -0800
+Message-Id: <20201123160139.1.I2702919afc253e2a451bebc3b701b462b2d22344@changeid>
+X-Mailer: git-send-email 2.29.2.454.gaff20da3a2-goog
 MIME-Version: 1.0
-References: <20201119214145.10182-1-abhinavk@codeaurora.org>
-In-Reply-To: <20201119214145.10182-1-abhinavk@codeaurora.org>
-From:   Rob Clark <robdclark@gmail.com>
-Date:   Mon, 23 Nov 2020 15:18:29 -0800
-Message-ID: <CAF6AEGsWVKCAE3CetZagbvRNZAU00FaoWSvaDxxOafNRY5dz1g@mail.gmail.com>
-Subject: Re: [PATCH] drm/msm/dpu: update the qos remap only if the client type changes
-To:     Abhinav Kumar <abhinavk@codeaurora.org>
-Cc:     dri-devel <dri-devel@lists.freedesktop.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        freedreno <freedreno@lists.freedesktop.org>,
-        Sean Paul <seanpaul@chromium.org>,
-        Stephen Boyd <swboyd@chromium.org>, nganji@codeaurora.org,
-        aravindh@codeaurora.org, Tanmay Shah <tanmay@codeaurora.org>,
-        Kuogee Hsieh <khsieh@codeaurora.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Nov 19, 2020 at 1:41 PM Abhinav Kumar <abhinavk@codeaurora.org> wrote:
->
-> Update the qos remap only if the client type changes for the plane.
-> This will avoid unnecessary register programming and also avoid log
-> spam from the dpu_vbif_set_qos_remap() function.
->
-> Signed-off-by: Abhinav Kumar <abhinavk@codeaurora.org>
-> ---
->  drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c    | 17 +++++++++++++++++
->  drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.h    |  7 +++++++
->  drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c |  2 ++
->  drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c   | 12 ++++++++++--
->  drivers/gpu/drm/msm/disp/dpu1/dpu_plane.h   |  5 +++++
->  5 files changed, 41 insertions(+), 2 deletions(-)
->
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-> index d4662e8184cc..3867da47c683 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-> @@ -1037,6 +1037,23 @@ static int dpu_crtc_atomic_check(struct drm_crtc *crtc,
->         return rc;
->  }
->
-> +void dpu_crtc_set_qos_dirty(struct drm_crtc *crtc)
-> +{
-> +       struct drm_plane *plane;
-> +       struct drm_plane_state *state;
-> +       struct dpu_plane_state *pstate;
-> +
-> +       drm_atomic_crtc_for_each_plane(plane, crtc) {
-> +               state = plane->state;
-> +               if (!state)
-> +                       continue;
-> +
-> +               pstate = to_dpu_plane_state(state);
-> +
-> +               pstate->dirty |= DPU_PLANE_DIRTY_QOS;
-> +       }
-> +}
-> +
->  int dpu_crtc_vblank(struct drm_crtc *crtc, bool en)
->  {
->         struct dpu_crtc *dpu_crtc = to_dpu_crtc(crtc);
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.h
-> index cec3474340e8..8ba11de605bc 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.h
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.h
-> @@ -231,6 +231,13 @@ static inline int dpu_crtc_frame_pending(struct drm_crtc *crtc)
->   */
->  int dpu_crtc_vblank(struct drm_crtc *crtc, bool en);
->
-> +/**
-> + * dpu_crtc_set_qos_dirty - update plane dirty flag to include
-> + * QoS reprogramming
-> + * @crtc: Pointer to drm crtc structure
-> + */
-> +void dpu_crtc_set_qos_dirty(struct drm_crtc *crtc);
-> +
->  /**
->   * dpu_crtc_vblank_callback - called on vblank irq, issues completion events
->   * @crtc: Pointer to drm crtc object
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-> index f7f5c258b553..c2db9dd6ec67 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-> @@ -1001,6 +1001,8 @@ static void dpu_encoder_virt_mode_set(struct drm_encoder *drm_enc,
->
->         trace_dpu_enc_mode_set(DRMID(drm_enc));
->
-> +       dpu_crtc_set_qos_dirty(drm_enc->crtc);
-> +
->         if (drm_enc->encoder_type == DRM_MODE_ENCODER_TMDS && priv->dp)
->                 msm_dp_display_mode_set(priv->dp, drm_enc, mode, adj_mode);
->
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-> index 7ea90d25a3b6..f91d31a31e14 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-> @@ -1066,6 +1066,7 @@ static void dpu_plane_sspp_atomic_update(struct drm_plane *plane)
->         struct dpu_plane_state *pstate = to_dpu_plane_state(state);
->         struct drm_crtc *crtc = state->crtc;
->         struct drm_framebuffer *fb = state->fb;
-> +       bool is_rt_pipe;
->         const struct dpu_format *fmt =
->                 to_dpu_format(msm_framebuffer_format(fb));
->
-> @@ -1075,7 +1076,7 @@ static void dpu_plane_sspp_atomic_update(struct drm_plane *plane)
->
->         pstate->pending = true;
->
-> -       pdpu->is_rt_pipe = (dpu_crtc_get_client_type(crtc) != NRT_CLIENT);
-> +       is_rt_pipe = (dpu_crtc_get_client_type(crtc) != NRT_CLIENT);
->         _dpu_plane_set_qos_ctrl(plane, false, DPU_PLANE_QOS_PANIC_CTRL);
->
->         DPU_DEBUG_PLANE(pdpu, "FB[%u] " DRM_RECT_FP_FMT "->crtc%u " DRM_RECT_FMT
-> @@ -1181,8 +1182,15 @@ static void dpu_plane_sspp_atomic_update(struct drm_plane *plane)
->                 _dpu_plane_set_ot_limit(plane, crtc);
->         }
->
-> -       _dpu_plane_set_qos_remap(plane);
-> +       if (is_rt_pipe != pdpu->is_rt_pipe) {
-> +               pdpu->is_rt_pipe = is_rt_pipe;
-> +               pstate->dirty |= DPU_PLANE_DIRTY_QOS;
-> +       }
->
-> +       if (pstate->dirty & DPU_PLANE_DIRTY_QOS) {
-> +               _dpu_plane_set_qos_remap(plane);
-> +               pstate->dirty = 0x0;
-> +       }
+We have a problem if we use gpio-keys and configure wakeups such that
+we only want one edge to wake us up.  AKA:
+  wakeup-event-action = <EV_ACT_DEASSERTED>;
+  wakeup-source;
 
-So in the end, this looks roughly like "set qos remap on modesets or
-switching between right/left pipe"?  Couldn't this be simpler if in
-plane->atomic_check() you do something like:
+Specifically we end up with a phantom interrupt that blocks suspend if
+the line was already high and we want wakeups on rising edges (AKA we
+want the GPIO to go low and then high again before we wake up).  The
+opposite is also problematic.
 
-   dpu_plane_state->needs_qos_remap = atomic_state->allow_modeset;
+Specifically, here's what's happening today:
+1. Normally, gpio-keys configures to look for both edges.  Due to the
+   current workaround introduced in commit c3c0c2e18d94 ("pinctrl:
+   qcom: Handle broken/missing PDC dual edge IRQs on sc7180"), if the
+   line was high we'd configure for falling edges.
+2. At suspend time, we change to look for rising edges.
+3. After qcom_pdc_gic_set_type() runs, we get a phantom interrupt.
 
-and then in plane->atomic_update:
+We can solve this by just clearing the phantom interrupt.
 
-    if (pstate->needs_qos_remap || (is_rt_pipe != pdpu->is_rt_pipe) {
-         pdpu->is_rt_pipe = is_rt_pipe;
-         _dpu_plane_set_qos_remap(plane)
-    }
+NOTE: it is possible that this could cause problems for a client with
+very specific needs, but there's not much we can do with this
+hardware.  As an example, let's say the interrupt signal is currently
+high and the client is looking for falling edges.  The client now
+changes to look for rising edges.  The client could possibly expect
+that if the line has a short pulse low (and back high) that it would
+always be detected.  Specifically no matter when the pulse happened,
+it should either have tripped the (old) falling edge trigger or the
+(new) rising edge trigger.  We will simply not trip it.  We could
+narrow down the race a bit by polling our parent before changing
+types, but no matter what we do there will still be a period of time
+where we can't tell the difference between a real transition (or more
+than one transition) and the phantom.
 
-?
+Signed-off-by: Douglas Anderson <dianders@chromium.org>
+---
 
-BR,
--R
+ drivers/irqchip/qcom-pdc.c | 19 ++++++++++++++++++-
+ 1 file changed, 18 insertions(+), 1 deletion(-)
 
+diff --git a/drivers/irqchip/qcom-pdc.c b/drivers/irqchip/qcom-pdc.c
+index bd39e9de6ecf..7d097164aadc 100644
+--- a/drivers/irqchip/qcom-pdc.c
++++ b/drivers/irqchip/qcom-pdc.c
+@@ -159,6 +159,8 @@ static int qcom_pdc_gic_set_type(struct irq_data *d, unsigned int type)
+ {
+ 	int pin_out = d->hwirq;
+ 	enum pdc_irq_config_bits pdc_type;
++	enum pdc_irq_config_bits old_pdc_type;
++	int ret;
+ 
+ 	if (pin_out == GPIO_NO_WAKE_IRQ)
+ 		return 0;
+@@ -187,9 +189,24 @@ static int qcom_pdc_gic_set_type(struct irq_data *d, unsigned int type)
+ 		return -EINVAL;
+ 	}
+ 
++	old_pdc_type = pdc_reg_read(IRQ_i_CFG, pin_out);
+ 	pdc_reg_write(IRQ_i_CFG, pin_out, pdc_type);
+ 
+-	return irq_chip_set_type_parent(d, type);
++	ret = irq_chip_set_type_parent(d, type);
++
++	/*
++	 * When we change types the PDC can give a phantom interrupt.
++	 * Clear it.  Specifically the phantom shows up if a line is already
++	 * high and we change to rising or if a line is already low and we
++	 * change to falling but let's be consistent and clear it always.
++	 *
++	 * Doing this works because we have IRQCHIP_SET_TYPE_MASKED so the
++	 * interrupt will be cleared before the rest of the system sees it.
++	 */
++	if (old_pdc_type != pdc_type)
++		irq_chip_set_parent_state(d, IRQCHIP_STATE_PENDING, 0);
++
++	return ret;
+ }
+ 
+ static struct irq_chip qcom_pdc_gic_chip = {
+-- 
+2.29.2.454.gaff20da3a2-goog
 
->         _dpu_plane_calc_bw(plane, fb);
->
->         _dpu_plane_calc_clk(plane);
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.h
-> index ca83b8753d59..47abd3686a86 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.h
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.h
-> @@ -14,11 +14,15 @@
->  #include "dpu_hw_mdss.h"
->  #include "dpu_hw_sspp.h"
->
-> +/* dirty bits to update QOS */
-> +#define DPU_PLANE_DIRTY_QOS 0x1
-> +
->  /**
->   * struct dpu_plane_state: Define dpu extension of drm plane state object
->   * @base:      base drm plane state object
->   * @aspace:    pointer to address space for input/output buffers
->   * @stage:     assigned by crtc blender
-> + * @dirty:     bitmask for which pipe h/w config functions need to be updated
->   * @multirect_index: index of the rectangle of SSPP
->   * @multirect_mode: parallel or time multiplex multirect mode
->   * @pending:   whether the current update is still pending
-> @@ -32,6 +36,7 @@ struct dpu_plane_state {
->         struct drm_plane_state base;
->         struct msm_gem_address_space *aspace;
->         enum dpu_stage stage;
-> +       uint32_t dirty;
->         uint32_t multirect_index;
->         uint32_t multirect_mode;
->         bool pending;
-> --
-> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-> a Linux Foundation Collaborative Project
->
