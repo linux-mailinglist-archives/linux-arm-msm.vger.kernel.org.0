@@ -2,112 +2,160 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 9CBDD2C23EA
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Nov 2020 12:11:26 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 65ED62C23F8
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Nov 2020 12:15:43 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731911AbgKXLKf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 24 Nov 2020 06:10:35 -0500
-Received: from mail.kernel.org ([198.145.29.99]:35762 "EHLO mail.kernel.org"
+        id S1732486AbgKXLPT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 24 Nov 2020 06:15:19 -0500
+Received: from mail.kernel.org ([198.145.29.99]:36468 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1732536AbgKXLKe (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 24 Nov 2020 06:10:34 -0500
-Received: from willie-the-truck (236.31.169.217.in-addr.arpa [217.169.31.236])
+        id S1732485AbgKXLPS (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 24 Nov 2020 06:15:18 -0500
+Received: from disco-boy.misterjones.org (disco-boy.misterjones.org [51.254.78.96])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id E99E52073C;
-        Tue, 24 Nov 2020 11:10:31 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id AAFDD2073C;
+        Tue, 24 Nov 2020 11:15:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1606216234;
-        bh=2uK6gknCKN4AYaBsRSYNpCUpw9VdB72lt/njxbxA6GA=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=W2t4y8oN8c0g38vhBQq66MuAcmgMMFWcHRYuxyuRtuX8qaVsF+C1CKqA9RJfInMj1
-         qZff1xDjS64XFMDr0/sXiHg0S+ie8s1dELjmSWS9eDscf4ptO9IGUHDT3JkTNVJlbk
-         uKw/lXPS1M5h4yLJHyV+JPEHYysKkMbXjwvEYBvU=
-Date:   Tue, 24 Nov 2020 11:10:28 +0000
-From:   Will Deacon <will@kernel.org>
-To:     Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-Cc:     Rob Clark <robdclark@gmail.com>,
-        Robin Murphy <robin.murphy@arm.com>,
-        Joerg Roedel <joro@8bytes.org>,
-        Jordan Crouse <jcrouse@codeaurora.org>,
-        Akhil P Oommen <akhilpo@codeaurora.org>,
-        freedreno <freedreno@lists.freedesktop.org>,
-        "Kristian H . Kristensen" <hoegsberg@google.com>,
-        dri-devel <dri-devel@lists.freedesktop.org>,
-        "list@263.net:IOMMU DRIVERS , Joerg Roedel <joro@8bytes.org>," 
-        <iommu@lists.linux-foundation.org>,
-        "moderated list:ARM/FREESCALE IMX / MXC ARM ARCHITECTURE" 
-        <linux-arm-kernel@lists.infradead.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>
-Subject: Re: [PATCHv8 0/8] System Cache support for GPU and required SMMU
- support
-Message-ID: <20201124111027.GA13151@willie-the-truck>
-References: <cover.1605621785.git.saiprakash.ranjan@codeaurora.org>
- <20201123152146.GE11033@willie-the-truck>
- <50b68f2bdf9413b896fbe816ba4ddbc9@codeaurora.org>
- <CAF6AEGse=WBAC1WbTi6aD5_m1_NBg91f=veYm-7V=Uds7NA0Lw@mail.gmail.com>
- <1c665e33d1d27263fb5056c16d30b827@codeaurora.org>
+        s=default; t=1606216517;
+        bh=ht4YbbardGshSUpnL4Dh1pktl4Ih4xfh/e9s5T268xU=;
+        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+        b=d8WhWYHAj+QFHTBbt3uDR2tbxvk66wgiwQGCiXgQiR1QPDsvfcCG1h2NHzsZvpcOv
+         4k8z6o8p2kSFmiLNHaskxLRUD3O6Mpnyp0PwGU3K75TsRcgSN+0CGBqCrB5+A/dWRi
+         4v5FQPl4EI3PlKn3Opy0aOehkbyWi050+IkuicWQ=
+Received: from disco-boy.misterjones.org ([51.254.78.96] helo=www.loen.fr)
+        by disco-boy.misterjones.org with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
+        (Exim 4.94)
+        (envelope-from <maz@kernel.org>)
+        id 1khWHu-00DEMA-K1; Tue, 24 Nov 2020 11:15:10 +0000
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1c665e33d1d27263fb5056c16d30b827@codeaurora.org>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Tue, 24 Nov 2020 11:15:10 +0000
+From:   Marc Zyngier <maz@kernel.org>
+To:     Maulik Shah <mkshah@codeaurora.org>
+Cc:     Douglas Anderson <dianders@chromium.org>,
+        Thomas Gleixner <tglx@linutronix.de>,
+        Jason Cooper <jason@lakedaemon.net>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Srinivas Ramana <sramana@codeaurora.org>,
+        Neeraj Upadhyay <neeraju@codeaurora.org>,
+        Rajendra Nayak <rnayak@codeaurora.org>,
+        linux-gpio@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Andy Gross <agross@kernel.org>, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 3/3] pinctrl: qcom: Clear possible pending irq when
+ remuxing GPIOs
+In-Reply-To: <502b39f5-a2b3-5893-da18-47b034f4895d@codeaurora.org>
+References: <20201123160139.1.I2702919afc253e2a451bebc3b701b462b2d22344@changeid>
+ <20201123160139.3.I771b6594b2a4d5b7fe7e12a991a6640f46386e8d@changeid>
+ <502b39f5-a2b3-5893-da18-47b034f4895d@codeaurora.org>
+User-Agent: Roundcube Webmail/1.4.9
+Message-ID: <853f7419653122d2fd46e8d70202d25c@kernel.org>
+X-Sender: maz@kernel.org
+X-SA-Exim-Connect-IP: 51.254.78.96
+X-SA-Exim-Rcpt-To: mkshah@codeaurora.org, dianders@chromium.org, tglx@linutronix.de, jason@lakedaemon.net, linus.walleij@linaro.org, sramana@codeaurora.org, neeraju@codeaurora.org, rnayak@codeaurora.org, linux-gpio@vger.kernel.org, linux-arm-msm@vger.kernel.org, bjorn.andersson@linaro.org, swboyd@chromium.org, agross@kernel.org, linux-kernel@vger.kernel.org
+X-SA-Exim-Mail-From: maz@kernel.org
+X-SA-Exim-Scanned: No (on disco-boy.misterjones.org); SAEximRunCond expanded to false
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Nov 24, 2020 at 09:32:54AM +0530, Sai Prakash Ranjan wrote:
-> On 2020-11-24 00:52, Rob Clark wrote:
-> > On Mon, Nov 23, 2020 at 9:01 AM Sai Prakash Ranjan
-> > <saiprakash.ranjan@codeaurora.org> wrote:
-> > > 
-> > > On 2020-11-23 20:51, Will Deacon wrote:
-> > > > On Tue, Nov 17, 2020 at 08:00:39PM +0530, Sai Prakash Ranjan wrote:
-> > > >> Some hardware variants contain a system cache or the last level
-> > > >> cache(llc). This cache is typically a large block which is shared
-> > > >> by multiple clients on the SOC. GPU uses the system cache to cache
-> > > >> both the GPU data buffers(like textures) as well the SMMU pagetables.
-> > > >> This helps with improved render performance as well as lower power
-> > > >> consumption by reducing the bus traffic to the system memory.
-> > > >>
-> > > >> The system cache architecture allows the cache to be split into slices
-> > > >> which then be used by multiple SOC clients. This patch series is an
-> > > >> effort to enable and use two of those slices preallocated for the GPU,
-> > > >> one for the GPU data buffers and another for the GPU SMMU hardware
-> > > >> pagetables.
-> > > >>
-> > > >> Patch 1 - Patch 6 adds system cache support in SMMU and GPU driver.
-> > > >> Patch 7 and 8 are minor cleanups for arm-smmu impl.
-> > > >>
-> > > >> Changes in v8:
-> > > >>  * Introduce a generic domain attribute for pagetable config (Will)
-> > > >>  * Rename quirk to more generic IO_PGTABLE_QUIRK_ARM_OUTER_WBWA (Will)
-> > > >>  * Move non-strict mode to use new struct domain_attr_io_pgtbl_config
-> > > >> (Will)
-> > > >
-> > > > Modulo some minor comments I've made, this looks good to me. What is
-> > > > the
-> > > > plan for merging it? I can take the IOMMU parts, but patches 4-6 touch
-> > > > the
-> > > > MSM GPU driver and I'd like to avoid conflicts with that.
-> > > >
-> > > 
-> > > SMMU bits are pretty much independent and GPU relies on the domain
-> > > attribute
-> > > and the quirk exposed, so as long as SMMU changes go in first it
-> > > should
-> > > be good.
-> > > Rob?
-> > 
-> > I suppose one option would be to split out the patch that adds the
-> > attribute into it's own patch, and merge that both thru drm and iommu?
-> > 
+On 2020-11-24 10:37, Maulik Shah wrote:
+
+[...]
+
+>>   static int msm_pinmux_set_mux(struct pinctrl_dev *pctldev,
+>>   			      unsigned function,
+>>   			      unsigned group)
+>>   {
+>>   	struct msm_pinctrl *pctrl = pinctrl_dev_get_drvdata(pctldev);
+>> +	struct gpio_chip *gc = &pctrl->chip;
+>> +	unsigned int irq = irq_find_mapping(gc->irq.domain, group);
+>>   	const struct msm_pingroup *g;
+>>   	unsigned long flags;
+>>   	u32 val, mask;
+>> +	u32 oldval;
+>> +	u32 old_i;
+>>   	int i;
+>>     	g = &pctrl->soc->groups[group];
+>> @@ -187,15 +215,26 @@ static int msm_pinmux_set_mux(struct pinctrl_dev 
+>> *pctldev,
+>>   	if (WARN_ON(i == g->nfuncs))
+>>   		return -EINVAL;
+>>   -	raw_spin_lock_irqsave(&pctrl->lock, flags);
+>> +	disable_irq(irq);
+>>   -	val = msm_readl_ctl(pctrl, g);
+>> +	raw_spin_lock_irqsave(&pctrl->lock, flags);
+>> +	oldval = val = msm_readl_ctl(pctrl, g);
+>>   	val &= ~mask;
+>>   	val |= i << g->mux_bit;
+>>   	msm_writel_ctl(val, pctrl, g);
+>> -
+>>   	raw_spin_unlock_irqrestore(&pctrl->lock, flags);
+>>   +	/*
+>> +	 * Clear IRQs if switching to/from GPIO mode since muxing to/from
+>> +	 * the GPIO path can cause phantom edges.
+>> +	 */
+>> +	old_i = (oldval & mask) >> g->mux_bit;
+>> +	if (old_i != i &&
+>> +	    (i == pctrl->soc->gpio_func || old_i == pctrl->soc->gpio_func))
+>> +		msm_pinctrl_clear_pending_irq(pctrl, group, irq);
 > 
-> Ok I can split out domain attr and quirk into its own patch if Will is
-> fine with that approach.
+> disable_irq() and enable_irq() should be moved inside this if loop. as
+> only use for this is to mask the IRQ when switching back to gpio IRQ
+> mode?
+> 
+> i also don't think we should leave IRQ enabled at the end of this
+> function by default, probably need to check if IRQ was already
+> unmasked before disabling it, then only call enable_irq().
 
-Why don't I just queue the first two patches on their own branch and we
-both pull that?
+Why? It looks to me that this reproduces the behaviour of 
+IRQCHIP_SET_TYPE_MASKED, which is highly desirable. What
+problem are you trying to address with this?
 
-Will
+> 
+>> +
+>> +	enable_irq(irq);
+>> +
+>>   	return 0;
+>>   }
+>>   @@ -456,32 +495,45 @@ static const struct pinconf_ops 
+>> msm_pinconf_ops = {
+>>   static int msm_gpio_direction_input(struct gpio_chip *chip, unsigned 
+>> offset)
+>>   {
+>>   	const struct msm_pingroup *g;
+>> +	unsigned int irq = irq_find_mapping(chip->irq.domain, offset);
+>>   	struct msm_pinctrl *pctrl = gpiochip_get_data(chip);
+>>   	unsigned long flags;
+>> +	u32 oldval;
+>>   	u32 val;
+>>     	g = &pctrl->soc->groups[offset];
+>>   +	disable_irq(irq);
+>> +
+>>   	raw_spin_lock_irqsave(&pctrl->lock, flags);
+>>   -	val = msm_readl_ctl(pctrl, g);
+>> +	oldval = val = msm_readl_ctl(pctrl, g);
+>>   	val &= ~BIT(g->oe_bit);
+>>   	msm_writel_ctl(val, pctrl, g);
+>>     	raw_spin_unlock_irqrestore(&pctrl->lock, flags);
+>>   +	if (oldval != val)
+>> +		msm_pinctrl_clear_pending_irq(pctrl, offset, irq);
+>> +
+>> +	enable_irq(irq);
+> 
+> i do not think we need disable_irq() and enable_irq() here, changing
+> direction to input does not mean its being used for interrupt only, it
+> may be set to use something like Rx mode in UART.
+> 
+> the client driver should enable IRQ when needed.
+
+And the kernel doesn't expect random interrupts to fire. Again, what
+are you trying to fix by removing these?
+
+         M.
+-- 
+Jazz is not dead. It just smells funny...
