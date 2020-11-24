@@ -2,113 +2,164 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id BFF122C1AD4
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Nov 2020 02:31:48 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7F7A72C1AE5
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Nov 2020 02:34:20 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727554AbgKXBbI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 23 Nov 2020 20:31:08 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35712 "EHLO
+        id S1729350AbgKXBdH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 23 Nov 2020 20:33:07 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36032 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725952AbgKXBbH (ORCPT
+        with ESMTP id S1729417AbgKXBdG (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 23 Nov 2020 20:31:07 -0500
-Received: from merlin.infradead.org (merlin.infradead.org [IPv6:2001:8b0:10b:1231::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 66026C0613CF;
-        Mon, 23 Nov 2020 17:31:07 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-        d=infradead.org; s=merlin.20170209; h=Content-Transfer-Encoding:MIME-Version:
-        Message-Id:Date:Subject:Cc:To:From:Sender:Reply-To:Content-Type:Content-ID:
-        Content-Description:In-Reply-To:References;
-        bh=5eB7ObEwUQl2o1ItNTEpiPl8n5x4qWjBztHqstTMJ4c=; b=c6g0+9uSNQeYHtltK0I7LsS78G
-        tAA8AIZ6bk67fZ4D6gXZyb/BxVbphM5zm9Y99hmPSi/an2jqJeV4qXeKbQ1qm5VyIQZgmVnU0rE1j
-        7HRSfLOw+onqYnfmxOFwoKOH4JEDzqrXHxpSPVSeZHCvBigC6AaHZ7DIQDyrq+TA/QW29RantSwvT
-        a/UqhNl0Zxe1Yts5ACcmKxcA5dZKn1Y/r087WSwMP9t6CDwdn9SwFoOGE6PxGy1D4sfSFhC3V162+
-        ePHhgYFTOFELJ8yPSkxm6NcwOqRnyhysdtx8dShUk6b1vIiNJZfgjFwYUZd2DIGzIgwtJr+mDpclz
-        W1RKIR1Q==;
-Received: from [2601:1c0:6280:3f0::cc1f] (helo=smtpauth.infradead.org)
-        by merlin.infradead.org with esmtpsa (Exim 4.92.3 #3 (Red Hat Linux))
-        id 1khNAa-0000O8-AQ; Tue, 24 Nov 2020 01:31:00 +0000
-From:   Randy Dunlap <rdunlap@infradead.org>
-To:     linux-kernel@vger.kernel.org
-Cc:     Randy Dunlap <rdunlap@infradead.org>,
-        kernel test robot <lkp@intel.com>, linux-pm@vger.kernel.org,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        linux-arm-msm@vger.kernel.org,
-        "Rafael J. Wysocki" <rjw@rjwysocki.net>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>,
-        Stephan Gerhold <stephan@gerhold.net>,
-        Lina Iyer <ilina@codeaurora.org>,
-        Ulf Hansson <ulf.hansson@linaro.org>
-Subject: [PATCH] cpuidle: arm: qcom: fix Kconfig problems
-Date:   Mon, 23 Nov 2020 17:30:53 -0800
-Message-Id: <20201124013053.11502-1-rdunlap@infradead.org>
-X-Mailer: git-send-email 2.26.2
+        Mon, 23 Nov 2020 20:33:06 -0500
+Received: from mail-pf1-x441.google.com (mail-pf1-x441.google.com [IPv6:2607:f8b0:4864:20::441])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1C3F2C061A56
+        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Nov 2020 17:33:05 -0800 (PST)
+Received: by mail-pf1-x441.google.com with SMTP id y7so16789906pfq.11
+        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Nov 2020 17:33:05 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=1Fpt+3NGNjcuXPoKd+YKzvfWCCI+i2QS11ln4xb/K2c=;
+        b=mZ10EKN9Q6HwSmECmmsUHbUHF/oTLT4c/YpQVGCE0gPLnlz6SgHQW3ieQ7zeUHJnUi
+         XUPs+F1GoZaFLBKWU3CvMTPUTS8a5+RdM3NBjgdsJpNB5L7Gee8a5rDblh6bnWIWT9TK
+         uir+AjWjaGJnRAA0K84IM0yu+WQnaSePUaJNJPiE7LfLBhB3Pd0A4gWblql3Lao7defI
+         n9Uw15itvZVSId22hyle+f6GM1M4THjCwMgL7v1hyU5f7oNm+YC3/Fk6KnTIGBq7Lgby
+         +eM5Ju8Jh9l5BxBe3HwjA5bt+bnUjVm7e9zM9zQUlIbVcSVLiqKYS2m+arIIzBAIXu/j
+         s+uw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=1Fpt+3NGNjcuXPoKd+YKzvfWCCI+i2QS11ln4xb/K2c=;
+        b=BbPmhrUIlbYiPkxUOZjZWlEgj0bg7OS6H79cIxsB1b84weRiyGR6zyFdk174IkvA2Z
+         g8saFWXodbsy+V+fZnZUzZUT0uIVadSWYx88IpvejN4hgQLQuEfMeOO5ePqDmm5WYlZX
+         /2yHzdpAx/t+t9X6Mu4NbQG9QhAzkLGhtpq3BzwS6Ul/iV0K9YZtDC24pWWhOF2khHr9
+         68A673ZDZrEPFbKM52yR1z/8MVHIM5msCdX6ClFXuz3qoM6WGI8iQxKpqbezRO3He3ko
+         JMuNh0njtaaXHwP6tHprShC2a4aZ8NsK0Af/Ktz6/k+iNWOlK7swiGWfO34GGmF9dGF5
+         P6/Q==
+X-Gm-Message-State: AOAM530LrIl1q+fbNqQyNt1GyYIJHk8eUbPbvbAWHwIO2315LxnwTfPM
+        d5Zlbh+7qJ/1X4Hfd3wAKvUSQ5ULVxZfJYxEAMulRw==
+X-Google-Smtp-Source: ABdhPJwQDF2vxX46wbajF4ioOOwzM/J33jC4qlEIQ0nX0CJ8Ae2/iYNAtfiNkgC6UbM9BT3sKlieSNPFWrTquhIIwSk=
+X-Received: by 2002:a65:6a4e:: with SMTP id o14mr1859973pgu.263.1606181584110;
+ Mon, 23 Nov 2020 17:33:04 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <cover.1605896059.git.gustavoars@kernel.org> <20201120105344.4345c14e@kicinski-fedora-pc1c0hjn.dhcp.thefacebook.com>
+ <202011201129.B13FDB3C@keescook> <20201120115142.292999b2@kicinski-fedora-pc1c0hjn.dhcp.thefacebook.com>
+ <202011220816.8B6591A@keescook>
+In-Reply-To: <202011220816.8B6591A@keescook>
+From:   Nick Desaulniers <ndesaulniers@google.com>
+Date:   Mon, 23 Nov 2020 17:32:51 -0800
+Message-ID: <CAKwvOdntVfXj2WRR5n6Kw7BfG7FdKpTeHeh5nPu5AzwVMhOHTg@mail.gmail.com>
+Subject: Re: [PATCH 000/141] Fix fall-through warnings for Clang
+To:     Kees Cook <keescook@chromium.org>
+Cc:     Jakub Kicinski <kuba@kernel.org>,
+        "Gustavo A. R. Silva" <gustavoars@kernel.org>,
+        LKML <linux-kernel@vger.kernel.org>, alsa-devel@alsa-project.org,
+        amd-gfx list <amd-gfx@lists.freedesktop.org>,
+        bridge@lists.linux-foundation.org, ceph-devel@vger.kernel.org,
+        cluster-devel@redhat.com, coreteam@netfilter.org,
+        devel@driverdev.osuosl.org, dm-devel@redhat.com,
+        drbd-dev@lists.linbit.com,
+        dri-devel <dri-devel@lists.freedesktop.org>,
+        GR-everest-linux-l2@marvell.com, GR-Linux-NIC-Dev@marvell.com,
+        intel-gfx@lists.freedesktop.org, intel-wired-lan@lists.osuosl.org,
+        keyrings@vger.kernel.org, linux1394-devel@lists.sourceforge.net,
+        linux-acpi@vger.kernel.org, linux-afs@lists.infradead.org,
+        Linux ARM <linux-arm-kernel@lists.infradead.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        linux-atm-general@lists.sourceforge.net,
+        linux-block@vger.kernel.org, linux-can@vger.kernel.org,
+        linux-cifs@vger.kernel.org,
+        "open list:HARDWARE RANDOM NUMBER GENERATOR CORE" 
+        <linux-crypto@vger.kernel.org>,
+        linux-decnet-user@lists.sourceforge.net,
+        linux-ext4@vger.kernel.org, linux-fbdev@vger.kernel.org,
+        linux-geode@lists.infradead.org, linux-gpio@vger.kernel.org,
+        linux-hams@vger.kernel.org, linux-hwmon@vger.kernel.org,
+        linux-i3c@lists.infradead.org, linux-ide@vger.kernel.org,
+        linux-iio@vger.kernel.org, linux-input@vger.kernel.org,
+        linux-integrity@vger.kernel.org,
+        linux-mediatek@lists.infradead.org, linux-media@vger.kernel.org,
+        linux-mmc@vger.kernel.org,
+        Linux Memory Management List <linux-mm@kvack.org>,
+        linux-mtd@lists.infradead.org, linux-nfs@vger.kernel.org,
+        linux-rdma@vger.kernel.org,
+        Linux-Renesas <linux-renesas-soc@vger.kernel.org>,
+        linux-scsi@vger.kernel.org, linux-sctp@vger.kernel.org,
+        linux-security-module@vger.kernel.org,
+        linux-stm32@st-md-mailman.stormreply.com,
+        linux-usb@vger.kernel.org, linux-watchdog@vger.kernel.org,
+        linux-wireless <linux-wireless@vger.kernel.org>,
+        Network Development <netdev@vger.kernel.org>,
+        netfilter-devel@vger.kernel.org, nouveau@lists.freedesktop.org,
+        op-tee@lists.trustedfirmware.org, oss-drivers@netronome.com,
+        patches@opensource.cirrus.com, rds-devel@oss.oracle.com,
+        reiserfs-devel@vger.kernel.org, samba-technical@lists.samba.org,
+        selinux@vger.kernel.org, target-devel@vger.kernel.org,
+        tipc-discussion@lists.sourceforge.net,
+        usb-storage@lists.one-eyed-alien.net,
+        virtualization@lists.linux-foundation.org,
+        wcn36xx@lists.infradead.org,
+        "maintainer:X86 ARCHITECTURE (32-BIT AND 64-BIT)" <x86@kernel.org>,
+        xen-devel@lists.xenproject.org, linux-hardening@vger.kernel.org,
+        Nathan Chancellor <natechancellor@gmail.com>,
+        Miguel Ojeda <ojeda@kernel.org>, Joe Perches <joe@perches.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The Kconfig symbol ARM_QCOM_SPM_CPUIDLE wildly selects other
-Kconfig symbols when it should not.
-This causes kconfig warnings and subsequent build errors,
-as listed below, so modify this symbol's Kconfig entry to
-constrain and tame it.
+On Sun, Nov 22, 2020 at 8:17 AM Kees Cook <keescook@chromium.org> wrote:
+>
+> On Fri, Nov 20, 2020 at 11:51:42AM -0800, Jakub Kicinski wrote:
+> > If none of the 140 patches here fix a real bug, and there is no change
+> > to machine code then it sounds to me like a W=2 kind of a warning.
+>
+> FWIW, this series has found at least one bug so far:
+> https://lore.kernel.org/lkml/CAFCwf11izHF=g1mGry1fE5kvFFFrxzhPSM6qKAO8gxSp=Kr_CQ@mail.gmail.com/
 
-WARNING: unmet direct dependencies detected for QCOM_SCM
-  Depends on [n]: ARM [=y] && HAVE_ARM_SMCCC [=n] || ARM64
-  Selected by [y]:
-  - ARM_QCOM_SPM_CPUIDLE [=y] && CPU_IDLE [=y] && (ARM [=y] || ARM64) && (ARCH_QCOM [=n] || COMPILE_TEST [=y]) && !ARM64
+So looks like the bulk of these are:
+switch (x) {
+  case 0:
+    ++x;
+  default:
+    break;
+}
 
-WARNING: unmet direct dependencies detected for ARM_CPU_SUSPEND
-  Depends on [n]: ARCH_SUSPEND_POSSIBLE [=n]
-  Selected by [y]:
-  - ARM_QCOM_SPM_CPUIDLE [=y] && CPU_IDLE [=y] && (ARM [=y] || ARM64) && (ARCH_QCOM [=n] || COMPILE_TEST [=y]) && !ARM64
+I have a patch that fixes those up for clang:
+https://reviews.llvm.org/D91895
 
-and
+There's 3 other cases that don't quite match between GCC and Clang I
+observe in the kernel:
+switch (x) {
+  case 0:
+    ++x;
+  default:
+    goto y;
+}
+y:;
 
-arm-linux-gnueabi-ld: arch/arm/kernel/sleep.o: in function `__cpu_suspend':
-(.text+0x68): undefined reference to `cpu_sa110_suspend_size'
-arm-linux-gnueabi-ld: arch/arm/kernel/suspend.o: in function `__cpu_suspend_save':
-suspend.c:(.text+0x138): undefined reference to `cpu_sa110_do_suspend'
-arm-linux-gnueabi-ld: suspend.c:(.text+0x170): undefined reference to `cpu_sa110_do_resume'
-arm-linux-gnueabi-ld: drivers/firmware/qcom_scm-smc.o: in function `__scm_smc_do_quirk':
-qcom_scm-smc.c:(.text+0x54): undefined reference to `__arm_smccc_smc'
-arm-linux-gnueabi-ld: drivers/firmware/qcom_scm-legacy.o: in function `scm_legacy_call':
-qcom_scm-legacy.c:(.text+0x168): undefined reference to `__arm_smccc_smc'
-arm-linux-gnueabi-ld: drivers/firmware/qcom_scm-legacy.o: in function `scm_legacy_call_atomic':
-qcom_scm-legacy.c:(.text+0x2e0): undefined reference to `__arm_smccc_smc'
+switch (x) {
+  case 0:
+    ++x;
+  default:
+    return;
+}
 
-Fixes: a871be6b8eee ("cpuidle: Convert Qualcomm SPM driver to a generic CPUidle driver")
-Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
-Reported-by: kernel test robot <lkp@intel.com>
-Cc: linux-pm@vger.kernel.org
-Cc: Andy Gross <agross@kernel.org>
-Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc: linux-arm-msm@vger.kernel.org
-Cc: "Rafael J. Wysocki" <rjw@rjwysocki.net>
-Cc: Daniel Lezcano <daniel.lezcano@linaro.org>
-Cc: Stephan Gerhold <stephan@gerhold.net>
-Cc: Lina Iyer <ilina@codeaurora.org>
-Cc: Ulf Hansson <ulf.hansson@linaro.org>
-Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
----
- drivers/cpuidle/Kconfig.arm |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+switch (x) {
+  case 0:
+    ++x;
+  default:
+    ;
+}
 
---- linux-next-20201123.orig/drivers/cpuidle/Kconfig.arm
-+++ linux-next-20201123/drivers/cpuidle/Kconfig.arm
-@@ -108,10 +108,11 @@ config ARM_TEGRA_CPUIDLE
- config ARM_QCOM_SPM_CPUIDLE
- 	bool "CPU Idle Driver for Qualcomm Subsystem Power Manager (SPM)"
- 	depends on (ARCH_QCOM || COMPILE_TEST) && !ARM64
-+	depends on PM
- 	select ARM_CPU_SUSPEND
- 	select CPU_IDLE_MULTIPLE_DRIVERS
- 	select DT_IDLE_STATES
--	select QCOM_SCM
-+	select QCOM_SCM if HAVE_ARM_SMCCC
- 	help
- 	  Select this to enable cpuidle for Qualcomm processors.
- 	  The Subsystem Power Manager (SPM) controls low power modes for the
+Based on your link, and Nathan's comment on my patch, maybe Clang
+should continue to warn for the above (at least the `default: return;`
+case) and GCC should change?  While the last case looks harmless,
+there were only 1 or 2 across the tree in my limited configuration
+testing; I really think we should just add `break`s for those.
+-- 
+Thanks,
+~Nick Desaulniers
