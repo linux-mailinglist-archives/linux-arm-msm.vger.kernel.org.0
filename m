@@ -2,98 +2,165 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 0BC002C2BAC
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Nov 2020 16:46:16 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 78DBB2C2C17
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Nov 2020 16:56:50 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2387992AbgKXPpo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 24 Nov 2020 10:45:44 -0500
-Received: from m42-4.mailgun.net ([69.72.42.4]:17262 "EHLO m42-4.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2388502AbgKXPpn (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 24 Nov 2020 10:45:43 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1606232743; h=Content-Type: MIME-Version: Message-ID:
- In-Reply-To: Date: References: Subject: Cc: To: From: Sender;
- bh=v/Oe4s865T1a+g0gQ1U29DLdij5r77q2OiCX7XZuaoQ=; b=V6ysEwTBZCn8gsYGk2sZhB2aC94RzWIpBhLkOUAHVnT9YF0dAw/wMZq6SRalWw+sl/FHmlLg
- ykidcnfMTH5dw/WBUkasuGivb1sP38ZdbdLfkV3hS8t1xzLBsqn84F29LaaP5fChwRdhOqR7
- YFCQDah/Id0WQcUyAMlJGeead+A=
-X-Mailgun-Sending-Ip: 69.72.42.4
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n01.prod.us-west-2.postgun.com with SMTP id
- 5fbd2aa5a5a29b56a1aed31d (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 24 Nov 2020 15:45:41
- GMT
-Sender: kvalo=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 1CB68C43464; Tue, 24 Nov 2020 15:45:41 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
-        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
-Received: from potku.adurom.net (88-114-240-156.elisa-laajakaista.fi [88.114.240.156])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: kvalo)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 4F02EC433C6;
-        Tue, 24 Nov 2020 15:45:38 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 4F02EC433C6
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=kvalo@codeaurora.org
-From:   Kalle Valo <kvalo@codeaurora.org>
-To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc:     Loic Poulain <loic.poulain@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-wireless@vger.kernel.org,
-        bbhatt@codeaurora.org, netdev@vger.kernel.org,
-        hemantk@codeaurora.org, ath11k@lists.infradead.org
-Subject: Re: [PATCH] bus: mhi: Remove auto-start option
-References: <20201118053102.13119-1-manivannan.sadhasivam@linaro.org>
-        <877dqjz0bv.fsf@codeaurora.org> <20201118093107.GC3286@work>
-Date:   Tue, 24 Nov 2020 17:45:35 +0200
-In-Reply-To: <20201118093107.GC3286@work> (Manivannan Sadhasivam's message of
-        "Wed, 18 Nov 2020 15:01:07 +0530")
-Message-ID: <87a6v6rc68.fsf@codeaurora.org>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.5 (gnu/linux)
+        id S2389760AbgKXP4R (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 24 Nov 2020 10:56:17 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56704 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2389701AbgKXP4Q (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 24 Nov 2020 10:56:16 -0500
+Received: from mail-yb1-xb43.google.com (mail-yb1-xb43.google.com [IPv6:2607:f8b0:4864:20::b43])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8EFE9C0613D6
+        for <linux-arm-msm@vger.kernel.org>; Tue, 24 Nov 2020 07:56:16 -0800 (PST)
+Received: by mail-yb1-xb43.google.com with SMTP id g15so19690892ybq.6
+        for <linux-arm-msm@vger.kernel.org>; Tue, 24 Nov 2020 07:56:16 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=S2P83nucK526s4MeAO3ef03SmJgQO9NwAX+ho/0bpag=;
+        b=LEiwANAT5RKxUwb530+GU3ngUHfpY4CcH/7rZbALhW6cVviuWshxGFiHTP+cl0CdRW
+         Pls7iBNclidkQ5F04YYBuCVqnF9fohJH7zAu0kaOtMBIJaGPq3uPW6BUzQKgEOQoenUu
+         AbN7w68UNr6flX4vz+agTyomqgPJYU0EkrBkNjxOBnJ0oL2AnZ+ZnidxKLBmC1ranT4L
+         ooj3sv+Eh3pe8uy+14LYseKtBe+c91Kt1w+ZFoP8xebYef9yzUqJTcLf0qWZWX9gF6qt
+         rqKFYKccZtfNV818+JRRz/40qHqcMaDBfoET3sqoC2YeKIomy8e6vrAJ49mBQbNCS16V
+         XoSQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=S2P83nucK526s4MeAO3ef03SmJgQO9NwAX+ho/0bpag=;
+        b=aBeXodjbfArQgamTDC6WEVh2XugrmOB2CYlZtiUPlsI7NcEuigNoa4dBM2EcjLmZpJ
+         tZjq5Z91M5ThbDj7zteDctTxEjF54nYAgGPbfdbBW/5FL5vOn4yvDzyqbvL6KXkA4hLX
+         deyMCQX2FFD4TaWMX6dwxuAH2aCThPSREf/8uAgOtX6fq2GzZT382DmhjZUmHbIiXQR7
+         7yqf5uIpDF/sn5gxKnog5AJonTD29d1dDPWcdZTlWmqZsYERUN6p9lP7iQ/OFrNi8fgl
+         RRnbgDrDYMnLtqKBX/Sc5N+ITp/ptOd/QPAJYy9mqCblivltzxw5ymteuFT4QrfWZCJY
+         ZEYA==
+X-Gm-Message-State: AOAM531fBzz7INdh5Orh10ymlUwEqN0EK6nAeoOQ6lBAMhOWwmOFCQbD
+        azjApTSLVxjTASlzz/KzwCkL8u1VX8xqzzheZusvlQ==
+X-Google-Smtp-Source: ABdhPJw0wHy+GWOIUwTLlmESRTmLRZ/Jnp1OSuSOAtoxUCEZYv5ocbmTHY84rAlt1NUxwHAItTPdwVgoCeM1V0Ar0sY=
+X-Received: by 2002:a25:7481:: with SMTP id p123mr6036490ybc.167.1606233375845;
+ Tue, 24 Nov 2020 07:56:15 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <5b07a7be8d136392dc7f93933a7ee68e@codeaurora.org>
+In-Reply-To: <5b07a7be8d136392dc7f93933a7ee68e@codeaurora.org>
+From:   Amit Pundir <amit.pundir@linaro.org>
+Date:   Tue, 24 Nov 2020 21:25:40 +0530
+Message-ID: <CAMi1Hd2vY0OaD=_3E_JBTCPkLGHq9CFOrOQ=OM9eVg=dJ6hbZg@mail.gmail.com>
+Subject: Re: [Freedreno] [PATCH 3/3] drm/msm/dpu: add support for clk and bw
+ scaling for display
+To:     Kalyan Thota <kalyan_t@codeaurora.org>
+Cc:     Rob Clark <robdclark@gmail.com>,
+        Sumit Semwal <sumit.semwal@linaro.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>,
+        Krishna Manikandan <mkrishn@codeaurora.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Raviteja Tamatam <travitej@codeaurora.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        dri-devel <dri-devel@lists.freedesktop.org>,
+        Douglas Anderson <dianders@chromium.org>,
+        nganji@codeaurora.org, Sean Paul <seanpaul@chromium.org>,
+        John Stultz <john.stultz@linaro.org>,
+        "Kristian H. Kristensen" <hoegsberg@chromium.org>,
+        freedreno <freedreno@lists.freedesktop.org>,
+        Jeykumar Sankaran <jsanka@codeaurora.org>,
+        Georgi Djakov <georgi.djakov@linaro.org>,
+        abhinavk@codeaurora.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org> writes:
+Hi Kalyan,
 
-> On Wed, Nov 18, 2020 at 07:43:48AM +0200, Kalle Valo wrote:
->> Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org> writes:
->> 
->> > From: Loic Poulain <loic.poulain@linaro.org>
->> >
->> > There is really no point having an auto-start for channels.
->> > This is confusing for the device drivers, some have to enable the
->> > channels, others don't have... and waste resources (e.g. pre allocated
->> > buffers) that may never be used.
->> >
->> > This is really up to the MHI device(channel) driver to manage the state
->> > of its channels.
->> >
->> > While at it, let's also remove the auto-start option from ath11k mhi
->> > controller.
->> >
->> > Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
->> > Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
->> > [mani: clubbed ath11k change]
->> > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
->> 
->> Thanks and feel free to take this to the immutable branch:
->> 
->> Acked-by: Kalle Valo <kvalo@codeaurora.org>
+On Tue, 24 Nov 2020 at 18:27, <kalyan_t@codeaurora.org> wrote:
 >
-> Patch applied to mhi-ath11k-immutable branch and merged into mhi-next.
+> On 2020-11-08 23:25, Amit Pundir wrote:
+> > On Tue, 4 Aug 2020 at 21:09, Rob Clark <robdclark@gmail.com> wrote:
+> >>
+> >> On Thu, Jul 16, 2020 at 4:36 AM Kalyan Thota <kalyan_t@codeaurora.org>
+> >> wrote:
+> >> >
+> >> > This change adds support to scale src clk and bandwidth as
+> >> > per composition requirements.
+> >> >
+> >> > Interconnect registration for bw has been moved to mdp
+> >> > device node from mdss to facilitate the scaling.
+> >> >
+> >> > Changes in v1:
+> >> >  - Address armv7 compilation issues with the patch (Rob)
+> >> >
+> >> > Signed-off-by: Kalyan Thota <kalyan_t@codeaurora.org>
+> >>
+> >> Reviewed-by: Rob Clark <robdclark@chromium.org>
+> >>
+> >
+> > Hi Kalyan, Rob,
+> >
+> > This patch broke the display on the PocoF1 phone
+> > (sdm845-xiaomi-beryllium.dts) running AOSP.
+> > I can boot to UI but the display is frozen soon after that and
+> > dmesg is full of following errors:
+> >
+> > [drm:dpu_core_perf_crtc_update:397] [dpu error]crtc-65: failed to
+> > update bus bw vote
+> > [drm:dpu_core_perf_crtc_check:203] [dpu error]exceeds bandwidth:
+> > 7649746kb > 6800000kb
+> > [drm:dpu_crtc_atomic_check:969] [dpu error]crtc65 failed performance
+> > check -7
+> > [drm:dpu_core_perf_crtc_check:203] [dpu error]exceeds bandwidth:
+> > 7649746kb > 6800000kb
+> > [drm:dpu_crtc_atomic_check:969] [dpu error]crtc65 failed performance
+> > check -7
+> > [drm:dpu_core_perf_crtc_check:203] [dpu error]exceeds bandwidth:
+> > 7649746kb > 6800000kb
+> > [drm:dpu_crtc_atomic_check:969] [dpu error]crtc65 failed performance
+> > check -7
+> >
+> > Here is the full dmesg https://pastebin.ubuntu.com/p/PcSdNgMnYw/.
+> > Georgi pointed out following patch but it didn't help,
+> > https://lore.kernel.org/dri-devel/20201027102304.945424-1-dmitry.baryshkov@linaro.org/
+> > Am I missing any other followup fix?
+> >
+> > Regards,
+> > Amit Pundir
+> > __
+>
+> Hi Amit,
+>
+> Apologies for the delay.
 
-Tested on QCA6390 hw2.0 and pulled also to ath-next, thanks.
+No worries at all.
 
--- 
-https://patchwork.kernel.org/project/linux-wireless/list/
+>
+> I have gone through the logs and referred to the below panel file for
+> the timings.
+> https://github.com/Matheus-Garbelini/Kernel-Sphinx-Pocophone-F1/blob/master/arch/arm64/boot/dts/qcom/dsi-panel-tianma-fhd-nt36672a-video.dtsi
+>
+> if the above is correct file, then below could be the possible root
+> cause.
+>
+> The panel back porch and pw is less and it is causing the prefill bw
+> requirement to shoot up per layer as currently we are not considering
+> front porch in the calculation. can you please try the attached patch in
+> the email as a solution and provide me the feedback, i'll post it as a
+> formal change.
 
-https://wireless.wiki.kernel.org/en/developers/documentation/submittingpatches
+The attached patch worked for me. Thanks a lot for looking closely
+into this issue.
+
+Regards,
+Amit Pundir
+
+>
+> Thanks,
+> Kalyan
+>
+> _____________________________________________
+> > Freedreno mailing list
+> > Freedreno@lists.freedesktop.org
+> > https://lists.freedesktop.org/mailman/listinfo/freedreno
