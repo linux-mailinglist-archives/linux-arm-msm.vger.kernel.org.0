@@ -2,206 +2,95 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A4DFC2C26C9
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Nov 2020 14:08:26 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2AB782C28E3
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Nov 2020 15:02:24 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2387843AbgKXNGP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 24 Nov 2020 08:06:15 -0500
-Received: from mail.kernel.org ([198.145.29.99]:60342 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2387739AbgKXNGP (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 24 Nov 2020 08:06:15 -0500
-Received: from disco-boy.misterjones.org (disco-boy.misterjones.org [51.254.78.96])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id DCCF220782;
-        Tue, 24 Nov 2020 13:06:13 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1606223174;
-        bh=4uyAwNGYRq1c8nU0Ieb1KCXDCCdV4xWaL1ntzg6be5k=;
-        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-        b=u571IxytMGlmCVrdjRTGojqTNLB+iRuBqBFgAKNoDN3g/meB1WssV5OtbnX/tDmN9
-         +HOJa9BoURlforX4dNBjzpNWVRE5fJDuiOKZlWn1BiR9VDvIF0X9V6M4hw5zQT1qn5
-         D1RGo76Oj0ooUMB9naurskqIC/Hr6JGmsJZxKtrs=
-Received: from disco-boy.misterjones.org ([51.254.78.96] helo=www.loen.fr)
-        by disco-boy.misterjones.org with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
-        (Exim 4.94)
-        (envelope-from <maz@kernel.org>)
-        id 1khY1L-00DFiR-LE; Tue, 24 Nov 2020 13:06:11 +0000
+        id S1727368AbgKXOAk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 24 Nov 2020 09:00:40 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38596 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727207AbgKXOAZ (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 24 Nov 2020 09:00:25 -0500
+Received: from mail-pl1-x643.google.com (mail-pl1-x643.google.com [IPv6:2607:f8b0:4864:20::643])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D1CDFC061A4D
+        for <linux-arm-msm@vger.kernel.org>; Tue, 24 Nov 2020 06:00:24 -0800 (PST)
+Received: by mail-pl1-x643.google.com with SMTP id l1so2490131pld.5
+        for <linux-arm-msm@vger.kernel.org>; Tue, 24 Nov 2020 06:00:24 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=Wz1ZQP6uCXs7qi6a92QpxjDP7Q4q0QFNKJSTZ9GgIpg=;
+        b=q0CqFe/N2bHDouVmvXJg2CmcpDYcrYnxkM1ztr5yCcahDdIUfjLnGgHKnWG2TDWyAc
+         fdUsGj3V7+C5kDHWEpZwVD8/NnC637Q6qhmAnP4AutWWe/nntQaZc8Za6z4tEopzEzWZ
+         fY6UpUgja45Kra63EqPQnubeVN7Epco+2arAs0HnBcZ0PtuuzSKTCi94Nc0Dvx1cKcFs
+         8Cr9FYkiEy5BlwgShQj1NrDq4Bh6M49pbbjlcDe60oKaxvB0l9HJ58BS+Hp3oo1TPuVm
+         1I2G1UX3JSTXagfikS3p0pE/EFQtK2Y/ulIHiaC0CE2VTtOUxnwIaW2BoR6WhXGpKB7L
+         Yusw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=Wz1ZQP6uCXs7qi6a92QpxjDP7Q4q0QFNKJSTZ9GgIpg=;
+        b=frg1JTje9GnLWmQ8nVHZK7T/ZPOdddnT1fY1Ir+AlYkLa2zHhoiEQ/W0OizqdDPFI8
+         PJyHqC04CkXLt1gUcq8WRGn19Gmcg4cC8UwAzTsFZPLZ3/dcqXa1RxS8C/XFL7m4XTH4
+         Z9VgoacWBozL686tckMnEoUx3ksBqVHK4awgcPvAjQqF0m5BxK6Wtew9zUE/pQpZ0p0A
+         20aRc2/H5grVA3xwKUiM+DF8v33oJEFkccaq/Satc5foKJm1w0742qv22HRkHahoS+71
+         Zo2NenaWvi5Dl2hw/RklrQ4FbS2b9diJmT5hwiOIYnZbYGAvZ8fzua9710CPuw1yP7if
+         arQA==
+X-Gm-Message-State: AOAM533UFNginYBDNWz1NHTuTUI0vXI/RpRDwiNHwMPktaJV4OSUvc+G
+        YsjhHtBG5CtVPs99SDkdccr6
+X-Google-Smtp-Source: ABdhPJwV2ZxGORwQLjg9yXA/FyKYMbwb05bi9vAdwITsfIqHF0iNGwJo0RYYIzukOPIo7Mq0JBBtlQ==
+X-Received: by 2002:a17:902:8645:b029:da:1a78:1d16 with SMTP id y5-20020a1709028645b02900da1a781d16mr3005273plt.21.1606226423867;
+        Tue, 24 Nov 2020 06:00:23 -0800 (PST)
+Received: from localhost.localdomain ([103.59.133.81])
+        by smtp.gmail.com with ESMTPSA id u3sm14485937pfu.47.2020.11.24.06.00.19
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 24 Nov 2020 06:00:23 -0800 (PST)
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     agross@kernel.org, bjorn.andersson@linaro.org, robh+dt@kernel.org
+Cc:     vkoul@kernel.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Subject: [PATCH 0/2] Add devicetree support for SDX55 Modem and MTP
+Date:   Tue, 24 Nov 2020 19:30:09 +0530
+Message-Id: <20201124140011.134751-1-manivannan.sadhasivam@linaro.org>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8;
- format=flowed
 Content-Transfer-Encoding: 8bit
-Date:   Tue, 24 Nov 2020 13:06:11 +0000
-From:   Marc Zyngier <maz@kernel.org>
-To:     Maulik Shah <mkshah@codeaurora.org>
-Cc:     Douglas Anderson <dianders@chromium.org>,
-        Thomas Gleixner <tglx@linutronix.de>,
-        Jason Cooper <jason@lakedaemon.net>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Srinivas Ramana <sramana@codeaurora.org>,
-        Neeraj Upadhyay <neeraju@codeaurora.org>,
-        Rajendra Nayak <rnayak@codeaurora.org>,
-        linux-gpio@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Andy Gross <agross@kernel.org>, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 3/3] pinctrl: qcom: Clear possible pending irq when
- remuxing GPIOs
-In-Reply-To: <bc0337f1-4b8e-7a3a-22fd-ff6f8cbaffca@codeaurora.org>
-References: <20201123160139.1.I2702919afc253e2a451bebc3b701b462b2d22344@changeid>
- <20201123160139.3.I771b6594b2a4d5b7fe7e12a991a6640f46386e8d@changeid>
- <502b39f5-a2b3-5893-da18-47b034f4895d@codeaurora.org>
- <853f7419653122d2fd46e8d70202d25c@kernel.org>
- <bc0337f1-4b8e-7a3a-22fd-ff6f8cbaffca@codeaurora.org>
-User-Agent: Roundcube Webmail/1.4.9
-Message-ID: <a15efffeb81fc491bbb53a43ae3f8400@kernel.org>
-X-Sender: maz@kernel.org
-X-SA-Exim-Connect-IP: 51.254.78.96
-X-SA-Exim-Rcpt-To: mkshah@codeaurora.org, dianders@chromium.org, tglx@linutronix.de, jason@lakedaemon.net, linus.walleij@linaro.org, sramana@codeaurora.org, neeraju@codeaurora.org, rnayak@codeaurora.org, linux-gpio@vger.kernel.org, linux-arm-msm@vger.kernel.org, bjorn.andersson@linaro.org, swboyd@chromium.org, agross@kernel.org, linux-kernel@vger.kernel.org
-X-SA-Exim-Mail-From: maz@kernel.org
-X-SA-Exim-Scanned: No (on disco-boy.misterjones.org); SAEximRunCond expanded to false
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2020-11-24 12:43, Maulik Shah wrote:
-> Hi Marc,
-> 
-> On 11/24/2020 4:45 PM, Marc Zyngier wrote:
->> On 2020-11-24 10:37, Maulik Shah wrote:
->> 
->> [...]
->> 
->>>>   static int msm_pinmux_set_mux(struct pinctrl_dev *pctldev,
->>>>                     unsigned function,
->>>>                     unsigned group)
->>>>   {
->>>>       struct msm_pinctrl *pctrl = pinctrl_dev_get_drvdata(pctldev);
->>>> +    struct gpio_chip *gc = &pctrl->chip;
->>>> +    unsigned int irq = irq_find_mapping(gc->irq.domain, group);
->>>>       const struct msm_pingroup *g;
->>>>       unsigned long flags;
->>>>       u32 val, mask;
->>>> +    u32 oldval;
->>>> +    u32 old_i;
->>>>       int i;
->>>>         g = &pctrl->soc->groups[group];
->>>> @@ -187,15 +215,26 @@ static int msm_pinmux_set_mux(struct 
->>>> pinctrl_dev *pctldev,
->>>>       if (WARN_ON(i == g->nfuncs))
->>>>           return -EINVAL;
->>>>   -    raw_spin_lock_irqsave(&pctrl->lock, flags);
->>>> +    disable_irq(irq);
->>>>   -    val = msm_readl_ctl(pctrl, g);
->>>> +    raw_spin_lock_irqsave(&pctrl->lock, flags);
->>>> +    oldval = val = msm_readl_ctl(pctrl, g);
->>>>       val &= ~mask;
->>>>       val |= i << g->mux_bit;
->>>>       msm_writel_ctl(val, pctrl, g);
->>>> -
->>>>       raw_spin_unlock_irqrestore(&pctrl->lock, flags);
->>>>   +    /*
->>>> +     * Clear IRQs if switching to/from GPIO mode since muxing 
->>>> to/from
->>>> +     * the GPIO path can cause phantom edges.
->>>> +     */
->>>> +    old_i = (oldval & mask) >> g->mux_bit;
->>>> +    if (old_i != i &&
->>>> +        (i == pctrl->soc->gpio_func || old_i == 
->>>> pctrl->soc->gpio_func))
->>>> +        msm_pinctrl_clear_pending_irq(pctrl, group, irq);
->>> 
->>> disable_irq() and enable_irq() should be moved inside this if loop. 
->>> as
->>> only use for this is to mask the IRQ when switching back to gpio IRQ
->>> mode?
->>> 
->>> i also don't think we should leave IRQ enabled at the end of this
->>> function by default, probably need to check if IRQ was already
->>> unmasked before disabling it, then only call enable_irq().
->> 
->> Why? It looks to me that this reproduces the behaviour of 
->> IRQCHIP_SET_TYPE_MASKED, which is highly desirable. What
->> problem are you trying to address with this?
-> 
-> Correct, here trying to reproduce the behaviour of
-> IRQCHIP_SET_TYPE_MASKED which i guess is ok once its moved inside if
-> loop as this is the place its switching to IRQ mode.
-> 
-> but there is a problem to leave it enabled at the end of set_direction
-> callbacks, see below.
-> 
->> 
->>> 
->>>> +
->>>> +    enable_irq(irq);
->>>> +
->>>>       return 0;
->>>>   }
->>>>   @@ -456,32 +495,45 @@ static const struct pinconf_ops 
->>>> msm_pinconf_ops = {
->>>>   static int msm_gpio_direction_input(struct gpio_chip *chip, 
->>>> unsigned offset)
->>>>   {
->>>>       const struct msm_pingroup *g;
->>>> +    unsigned int irq = irq_find_mapping(chip->irq.domain, offset);
->>>>       struct msm_pinctrl *pctrl = gpiochip_get_data(chip);
->>>>       unsigned long flags;
->>>> +    u32 oldval;
->>>>       u32 val;
->>>>         g = &pctrl->soc->groups[offset];
->>>>   +    disable_irq(irq);
->>>> +
->>>>       raw_spin_lock_irqsave(&pctrl->lock, flags);
->>>>   -    val = msm_readl_ctl(pctrl, g);
->>>> +    oldval = val = msm_readl_ctl(pctrl, g);
->>>>       val &= ~BIT(g->oe_bit);
->>>>       msm_writel_ctl(val, pctrl, g);
->>>>         raw_spin_unlock_irqrestore(&pctrl->lock, flags);
->>>>   +    if (oldval != val)
->>>> +        msm_pinctrl_clear_pending_irq(pctrl, offset, irq);
->>>> +
->>>> +    enable_irq(irq);
->>> 
->>> i do not think we need disable_irq() and enable_irq() here, changing
->>> direction to input does not mean its being used for interrupt only, 
->>> it
->>> may be set to use something like Rx mode in UART.
->>> 
->>> the client driver should enable IRQ when needed.
->> 
->> And the kernel doesn't expect random interrupts to fire. Again, what
->> are you trying to fix by removing these?
-> 
-> I see leaving IRQ enabled here can cause problems. For example in
-> qcom_geni_serial.c driver before requesting IRQ, it sets the
-> IRQ_NOAUTOEN flag to not keep it enabled.
-> 
-> see the below snippet
->         irq_set_status_flags(uport->irq, IRQ_NOAUTOEN);
->         ret = devm_request_irq(uport->dev, uport->irq, 
-> qcom_geni_serial_isr,
->                         IRQF_TRIGGER_HIGH, port->name, uport);
-> 
-> later when this devm_request_irq() invokes .irq_request_resources
-> callback it will reach msm_gpio_irq_reqres() from
-> where msm_gpio_direction_input() is called which leaves the irq
-> enabled at the end with enable_irq() which was not expected by driver.
+Hello,
 
-No it doesn't. disable_irq()/enable_irq() are designed to nest.
-If the interrupt line was disabled before the disable/enable
-sequence, it will still be disabled after.
+This series adds devicetree support for Qualcomm SDX55 Modem and MTP
+board. This series functionally depends on Clock support series [1]
+which is under review.
 
-> It will cause is IRQ storm since the UART geni driver uses GPIO in Rx
-> mode when out of suspend. The IRQ mode in GPIO is enabled
-> with suspend entry only. During resume the IRQ will again be disabled
-> and GPIO will be switched to Rx mode.
+With the current devicetree support, the MTP can boot into initramfs
+shell.
 
-I don't see how this contradicts what is above. If the interrupt was
-disabled before hitting this sequence, it will still be disabled after.
-Am I missing something? Have you actually seen the problem on HW?
+Thanks,
+Mani
 
-         M.
+[1] https://lore.kernel.org/linux-arm-msm/20201119072714.14460-1-manivannan.sadhasivam@linaro.org/
+
+Manivannan Sadhasivam (1):
+  ARM: dts: qcom: Add SDX55 Modem and MTP board support
+
+Vinod Koul (1):
+  dt-bindings: arm: qcom: Document SDX55 Modem and boards
+
+ .../devicetree/bindings/arm/qcom.yaml         |   6 +
+ arch/arm/boot/dts/Makefile                    |   3 +-
+ arch/arm/boot/dts/qcom-sdx55-mtp.dts          |  27 +++
+ arch/arm/boot/dts/qcom-sdx55.dtsi             | 205 ++++++++++++++++++
+ 4 files changed, 240 insertions(+), 1 deletion(-)
+ create mode 100644 arch/arm/boot/dts/qcom-sdx55-mtp.dts
+ create mode 100644 arch/arm/boot/dts/qcom-sdx55.dtsi
+
 -- 
-Jazz is not dead. It just smells funny...
+2.25.1
+
