@@ -2,444 +2,176 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 1634F2C19C2
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Nov 2020 01:03:41 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id F3B272C19EA
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Nov 2020 01:24:08 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728613AbgKXAC3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 23 Nov 2020 19:02:29 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50276 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728567AbgKXAC0 (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 23 Nov 2020 19:02:26 -0500
-Received: from mail-pl1-x631.google.com (mail-pl1-x631.google.com [IPv6:2607:f8b0:4864:20::631])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AD971C061A4F
-        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Nov 2020 16:02:22 -0800 (PST)
-Received: by mail-pl1-x631.google.com with SMTP id bj5so8887299plb.4
-        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Nov 2020 16:02:22 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=L89oXQzcinW0XVkoPkY/8VBs+sljP+/OT5KD3oBT6VA=;
-        b=GEjSWduNUiOKDZ327Z36o6TRnl57q/Pg1X0VBsUprtQZqfRdsapmA6Lk8twZOVkLfc
-         SEkPZNNKosLv40o4esKxnKIchpxzAi0eiOdOMccM15oFCyZTgbnGmUyvzGJMZd0KbC/N
-         EvIInLSEhOQ6e0aor7r09MI5VVzzi9rzjjIZk=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=L89oXQzcinW0XVkoPkY/8VBs+sljP+/OT5KD3oBT6VA=;
-        b=BVvPZ0P+bsPo1zo39Ni2MdFRQ5cv1yj62r2lRqsm6mOeZwMOAX4rR2f6Vp/Ed0CuZM
-         7GFlBjeYAW3pIGzwot48MunrVfGadgnMlct5yXXKFqy/iJPs8VHh+7MN6Dqgcpl2SBgg
-         qt1V290Av9klEEXLtakuOOVancZmxxEc+8Rgol0niNj6IoSotdJQm+yE/BGQtWzzDJt5
-         2wUj2eIRwVkIs0/Iub0lRrcZyCPJpt9lIi1ld7Vai4tpwUYYs4gTwsDRZKdEiNCyguR6
-         /jz6My2o547XpGJ86ivypCTwEszToLfgtMf0NHKKY00xRwX3llZNsO1ttYLdZ+AGHR7p
-         8cow==
-X-Gm-Message-State: AOAM533haecFSmccXOE9jVaYEYlIDf8rmFE6xJrq/9bfK4qAe2yUI0zp
-        XYj2PGgnwRROcn1mCZxKL6LfeA==
-X-Google-Smtp-Source: ABdhPJzIt+OXu8ATXhk6OvopLSMTU2ebqBFoV4Yj2uiZ6Tqox41miFCS+XKNLgw9fFBY2CNgMRiecQ==
-X-Received: by 2002:a17:902:c393:b029:d9:6e7:6787 with SMTP id g19-20020a170902c393b02900d906e76787mr1531403plg.78.1606176142049;
-        Mon, 23 Nov 2020 16:02:22 -0800 (PST)
-Received: from tictac2.mtv.corp.google.com ([2620:15c:202:1:42b0:34ff:fe3d:58e6])
-        by smtp.gmail.com with ESMTPSA id l133sm13091945pfd.112.2020.11.23.16.02.20
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 23 Nov 2020 16:02:21 -0800 (PST)
-From:   Douglas Anderson <dianders@chromium.org>
-To:     Marc Zyngier <maz@kernel.org>,
-        Thomas Gleixner <tglx@linutronix.de>,
-        Jason Cooper <jason@lakedaemon.net>,
-        Linus Walleij <linus.walleij@linaro.org>
-Cc:     Maulik Shah <mkshah@codeaurora.org>,
-        Srinivas Ramana <sramana@codeaurora.org>,
-        Neeraj Upadhyay <neeraju@codeaurora.org>,
-        Rajendra Nayak <rnayak@codeaurora.org>,
-        linux-gpio@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Douglas Anderson <dianders@chromium.org>,
-        Andy Gross <agross@kernel.org>, linux-kernel@vger.kernel.org
-Subject: [PATCH 3/3] pinctrl: qcom: Clear possible pending irq when remuxing GPIOs
-Date:   Mon, 23 Nov 2020 16:01:53 -0800
-Message-Id: <20201123160139.3.I771b6594b2a4d5b7fe7e12a991a6640f46386e8d@changeid>
-X-Mailer: git-send-email 2.29.2.454.gaff20da3a2-goog
-In-Reply-To: <20201123160139.1.I2702919afc253e2a451bebc3b701b462b2d22344@changeid>
-References: <20201123160139.1.I2702919afc253e2a451bebc3b701b462b2d22344@changeid>
+        id S1728943AbgKXAXs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 23 Nov 2020 19:23:48 -0500
+Received: from z5.mailgun.us ([104.130.96.5]:35145 "EHLO z5.mailgun.us"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725287AbgKXAXr (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 23 Nov 2020 19:23:47 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1606177426; h=Message-ID: References: In-Reply-To: Reply-To:
+ Subject: Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=8kZ6VThnvEyb96id79L2a5PNzc6TuAKyvLGxKiWtyDs=;
+ b=Rb3nA+3Usu/Q9STW69/6/PsyzI7mCOSycfGYDIM4JaOBHaYrZ6bNNnLEtEIPAKgALYEJd7tb
+ 1goRZZLgKm9Ad15JcL6ytm02X6iQ6kcIQsziklhx7E+fLHWFfDl1ralerKFY3oLq5F9y9qv3
+ lLle5JgoCh7Jh0CnC8pcVHNpya4=
+X-Mailgun-Sending-Ip: 104.130.96.5
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n01.prod.us-east-1.postgun.com with SMTP id
+ 5fbc5292e9b70886223bc0c8 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 24 Nov 2020 00:23:46
+ GMT
+Sender: bbhatt=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id ABEBCC43465; Tue, 24 Nov 2020 00:23:45 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: bbhatt)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id C131AC433C6;
+        Tue, 24 Nov 2020 00:23:44 +0000 (UTC)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Mon, 23 Nov 2020 16:23:44 -0800
+From:   Bhaumik Bhatt <bbhatt@codeaurora.org>
+To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, hemantk@codeaurora.org,
+        jhugo@codeaurora.org, loic.poulain@linaro.org,
+        kvalo@codeaurora.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2 1/6] bus: mhi: core: Allow receiving a STOP channel
+ command response
+Organization: Qualcomm Innovation Center, Inc.
+Reply-To: bbhatt@codeaurora.org
+Mail-Reply-To: bbhatt@codeaurora.org
+In-Reply-To: <20201121171601.GB2343@thinkpad>
+References: <1605122473-12179-1-git-send-email-bbhatt@codeaurora.org>
+ <1605122473-12179-2-git-send-email-bbhatt@codeaurora.org>
+ <20201116071339.GI3926@Mani-XPS-13-9360>
+ <616fe76b6757e8d545cfaaba1ab3ab50@codeaurora.org>
+ <20201121171601.GB2343@thinkpad>
+Message-ID: <6430eeecf2e8b905d92e5208a8bf5f25@codeaurora.org>
+X-Sender: bbhatt@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Conceptually, we can envision the input on Qualcomm SoCs to pass
-through a bunch of blocks between coming into the chip and becoming a
-GPIO interrupt.  From guessing and running a handful of tests, I
-believe that we can represent the state of the world with a drawing
-that looks something like this:
+On 2020-11-21 09:16 AM, Manivannan Sadhasivam wrote:
+> On Mon, Nov 16, 2020 at 09:36:09AM -0800, Bhaumik Bhatt wrote:
+>> Hi Mani,
+>> 
+>> On 2020-11-15 23:13, Manivannan Sadhasivam wrote:
+>> > On Wed, Nov 11, 2020 at 11:21:08AM -0800, Bhaumik Bhatt wrote:
+>> > > Add support to receive the response to a STOP channel command to the
+>> > > MHI bus. If a client would like to STOP a channel instead of issuing
+>> > > a RESET to it, this would provide support for it.
+>> > >
+>> > > Signed-off-by: Bhaumik Bhatt <bbhatt@codeaurora.org>
+>> > > ---
+>> > >  drivers/bus/mhi/core/init.c | 5 +++--
+>> > >  drivers/bus/mhi/core/main.c | 5 +++++
+>> > >  2 files changed, 8 insertions(+), 2 deletions(-)
+>> > >
+>> > > diff --git a/drivers/bus/mhi/core/init.c b/drivers/bus/mhi/core/init.c
+>> > > index 8cefa35..4d34d62 100644
+>> > > --- a/drivers/bus/mhi/core/init.c
+>> > > +++ b/drivers/bus/mhi/core/init.c
+>> > > @@ -1267,8 +1267,9 @@ static int mhi_driver_remove(struct device *dev)
+>> > >
+>> > >  		mutex_lock(&mhi_chan->mutex);
+>> > >
+>> > > -		if (ch_state[dir] == MHI_CH_STATE_ENABLED &&
+>> > > -		    !mhi_chan->offload_ch)
+>> > > +		if ((ch_state[dir] == MHI_CH_STATE_ENABLED ||
+>> > > +		     ch_state[dir] == MHI_CH_STATE_STOP) &&
+>> >
+>> > This enum is not defined in this patch so it'll break. Please add a
+>> > separate
+>> > patch which introduces the new state enums alone and then have patches
+>> > 1/2
+>> > as a followup.
+>> >
+>> It is actually already defined and present in internal.h as enum
+>> mhi_ch_state.
+>> 
+>> The old set of enums has MHI_CH_STATE_STOP from enum mhi_ch_state and 
+>> the
+>> new
+>> enum I introduced is MHI_CH_STATE_TYPE_STOP from enum enum
+>> mhi_ch_state_type.
+>> 
+>> If it seems confusing, suggestions to renaming them are welcome.
+>> 
+> 
+> Ah, sorry. I got confused with MHI_CH_STATE_TYPE_STOP and 
+> MHI_CH_STATE_STOP.
+> Ignore my previous comment.
+> 
+> Thanks,
+> Mani
+> 
+No problem.
+>> > Also this change is not belonging to this commit I believe.
+>> >
+>> I included this change here because, a channel can be in "stopped" 
+>> state and
+>> a user module could be unloaded or a crash could force a driver remove
+>> leading
+>> us to come this check.
+>> 
+>> If you think I should move it as a separate patch, let me know.
+>> > Thanks,
+>> > Mani
+>> >
+>> > > +		     !mhi_chan->offload_ch)
+>> > >  			mhi_deinit_chan_ctxt(mhi_cntrl, mhi_chan);
+>> > >
+>> > >  		mhi_chan->ch_state = MHI_CH_STATE_DISABLED;
+>> > > diff --git a/drivers/bus/mhi/core/main.c b/drivers/bus/mhi/core/main.c
+>> > > index f953e2a..ad881a1 100644
+>> > > --- a/drivers/bus/mhi/core/main.c
+>> > > +++ b/drivers/bus/mhi/core/main.c
+>> > > @@ -1194,6 +1194,11 @@ int mhi_send_cmd(struct mhi_controller
+>> > > *mhi_cntrl,
+>> > >  		cmd_tre->dword[0] = MHI_TRE_CMD_RESET_DWORD0;
+>> > >  		cmd_tre->dword[1] = MHI_TRE_CMD_RESET_DWORD1(chan);
+>> > >  		break;
+>> > > +	case MHI_CMD_STOP_CHAN:
+>> > > +		cmd_tre->ptr = MHI_TRE_CMD_STOP_PTR;
+>> > > +		cmd_tre->dword[0] = MHI_TRE_CMD_STOP_DWORD0;
+>> > > +		cmd_tre->dword[1] = MHI_TRE_CMD_STOP_DWORD1(chan);
+>> > > +		break;
+>> > >  	case MHI_CMD_START_CHAN:
+>> > >  		cmd_tre->ptr = MHI_TRE_CMD_START_PTR;
+>> > >  		cmd_tre->dword[0] = MHI_TRE_CMD_START_DWORD0;
+>> > > --
+>> > > The Qualcomm Innovation Center, Inc. is a member of the Code Aurora
+>> > > Forum,
+>> > > a Linux Foundation Collaborative Project
+>> > >
+>> 
+>> Thanks,
+>> Bhaumik
+>> --
+>> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora 
+>> Forum,
+>> a Linux Foundation Collaborative Project
 
- +-----------------+       +-----------------+       +-----------------+
- |      INPUT      |  -->  |      PINMUX     |       |    IS_INPUT     |
- +-----------------+       |                 |  -->  |                 |
-                           | output bogus (?)|       | output bogus (?)|
-                           | if not muxed    |       | if input disab. |
-                           +-----------------+       +-----------------+
-                                                              |
-          +---------------------------------------------------+--> to PDC
-          |
-          V
- +-----------------+       +-----------------+       +-----------------+
- | INTR RAW ENABLE |       | DETECTION LOGIC |       | STATUS REGISTER |
- |                 |       |                 |       |                 |
- | output bogus (?)|  -->  | maybe handles   |       | latches inputs  |
- | if disabled     |       | polarity diffs  |  -->  | that are high   |
- +-----------------+       |                 |       |                 |
-                           | maybe debounces |       | write 1 to clr  |
-                           | level irqs      |       +-----------------+
-                           +-----------------+                |
-                                                              |
-          +---------------------------------------------------+
-          |
-          V
- +-----------------+
- |      ENABLE     |
- |                 |       +-----------------+
- | nothing passes  |  -->  |   SUMMARY IRQ   |
- | through if      |       +-----------------+
- | disabled        |
- +-----------------+
-
-The above might not be 100% exact, but for the purpose of this
-discussion, the point is that there are a whole bunch of gates and
-transformations on the input before it gets to the circuitry that
-generates interrupts.
-
-As you might guess, if you reconfigure one of the gates in the above
-diagram while the system is configured to detect interrupts things get
-a little wacky.  Specifically it appears that if you gate the input at
-any step it can cause various glitches in the later steps because they
-are still paying attention to their input but their input isn't really
-sane anymore.
-
-I did some poking and I found that I could generate bogus interrupts
-in the system both when muxing away from GPIO mode and also when
-muxing back to GPIO mode.  When configured to use the PDC path for
-generating interrupts I found that if the external input on the GPIO
-was low that I'd get what looked like a rising edge when unmuxing and
-a falling edge when muxing.  When configured away from the PDC path I
-got slightly different glitch interrupts when changing muxing.
-
-These glitches when remuxing matter in reality, not just in theory.
-To be concrete, let's take the special "wakeup_irq" in
-qcom_geni_serial.c as an example.  In sc7180-trogdor.dtsi we configure
-the uart3 to have two pinctrl states, sleep and default, and mux
-between the two during runtime PM and system suspend (see
-geni_se_resources_{on,off}() for more details).  The difference
-between the sleep and default state is that the RX pin is muxed to a
-GPIO during sleep and muxed to the UART otherwise.  When we switch
-between these two states we can generate the glitches talked about
-above because we're configured to look for edges but the transition
-from the gated input (which is bogus) to the real input can look like
-an edge.
-
-Historically the UART case above was handled by the fact that the
-"enable" function in the MSM GPIO driver did an "unmask and clear".
-This relied on the fact that the system happens to have the interrupt
-disabled until suspend time and that it would enable it after the
-pinmux change happened, thus clearing the interrupt.
-
-The historical solution, however, had a few problems.  The first
-problem (that nobody seemed to have tripped) is that we can still get
-bogus interrupts if we remux when the interrupt isn't disabled during
-the muxing and re-enabled after.  The second problem is that it
-violates how I believe that the interrupt enable path is supposed to
-work.
-
-In Linux, if a driver does disable_irq() and later does enable_irq()
-on its interrupt, I believe it's expecting these properties:
-* If an interrupt was pending when the driver disabled then it will
-  still be pending after the driver re-enables.
-* If an edge-triggered interrupt comes in while an interrupt is
-  disabled it should assert when the interrupt is re-enabled.
-
-If you think that the above sounds a lot like the disable_irq() and
-enable_irq() are supposed to be masking/unmasking the interrupt
-instead of disabling/enabling it then you've made an astute
-observation.  Specifically when talking about interrupts, "mask"
-usually means to stop posting interrupts but keep tracking them and
-"disable" means to fully shut off interrupt detection.  It's
-unfortunate that this is so confusing, but presumably this is all the
-way it is for historical reasons.
-
-Perhaps more confusing than the above is that, even though clients of
-IRQs themselves don't have a way to request mask/unmask
-vs. disable/enable calls, IRQ chips themselves can implement both.
-...and yet more confusing is that if an IRQ chip implements
-disable/enable then they will be called when a client driver calls
-disable_irq() / enable_irq().
-
-It does feel like some of the above could be cleared up.  However,
-without any other core interrupt changes it should be clear that when
-an IRQ chip gets a request to "disable" an IRQ that it has to treat it
-like a mask of that IRQ.
-
-In any case, after that long interlude you can see that the "unmask
-and clear" can break things.  Maulik tried to fix it so that we no
-longer did "unmask and clear" in commit 71266d9d3936 ("pinctrl: qcom:
-Move clearing pending IRQ to .irq_request_resources callback"), but it
-didn't work for two reasons:
-* It only tried to address the problem for interrupts that had parents
-  (like the PDC).
-* It regressed the problem that the original clearing was trying to
-  solve.
-
-I think we can safely assume that if someone muxes a pin to be
-something other than a GPIO and then muxes it back that we can clear
-any interrupts that were pending on it without violating any
-assumptions that client drivers are making.  Presumably the client
-drivers are intentionally remuxing the pin away from a dedicated
-purpose to be a plain GPIO so they don't care what the pin state was
-before the mux switch and they don't expect to see the pin change
-level during this switch.  Let's move the clearing of the IRQ to the
-pin muxing routine so that we'll clear a pending IRQ if we're muxing
-from some non-GPIO mode to a GPIO mode.
-
-Fixes: 71266d9d3936 ("pinctrl: qcom: Move clearing pending IRQ to .irq_request_resources callback")
-Signed-off-by: Douglas Anderson <dianders@chromium.org>
+Thanks,
+Bhaumik
 ---
-This is a pretty hairy little patch and presumably needs a good amount
-of testing / discussion before landing.  If this patch is totally
-broken / wrong feel free to consider it as an RFC and suggest how it
-should be better.
-
-Also note: I wanted to put this in the same series as patch #1, but
-IMO that patch can stand on its own.  If it looks Ok but we want to
-have lots of debate about this one, please land patch #1 on its own
-and we can split the series.
-
-I have done most of this patch testing on the Chrome OS 5.4 kernel
-tree (with many backports) but have sanity checked it on mainline.
-
- drivers/pinctrl/qcom/pinctrl-msm.c | 104 ++++++++++++++++++-----------
- 1 file changed, 64 insertions(+), 40 deletions(-)
-
-diff --git a/drivers/pinctrl/qcom/pinctrl-msm.c b/drivers/pinctrl/qcom/pinctrl-msm.c
-index 588df91274e2..e7c3927c7d54 100644
---- a/drivers/pinctrl/qcom/pinctrl-msm.c
-+++ b/drivers/pinctrl/qcom/pinctrl-msm.c
-@@ -166,14 +166,42 @@ static int msm_get_function_groups(struct pinctrl_dev *pctldev,
- 	return 0;
- }
- 
-+static void msm_pinctrl_clear_pending_irq(struct msm_pinctrl *pctrl,
-+					  unsigned int group,
-+					  unsigned int irq)
-+{
-+	struct irq_data *d = irq_get_irq_data(irq);
-+	const struct msm_pingroup *g;
-+	unsigned long flags;
-+	u32 val;
-+
-+	if (!d)
-+		return;
-+
-+	if (d->parent_data && test_bit(d->hwirq, pctrl->skip_wake_irqs))
-+		irq_chip_set_parent_state(d, IRQCHIP_STATE_PENDING, 0);
-+
-+	g = &pctrl->soc->groups[group];
-+
-+	raw_spin_lock_irqsave(&pctrl->lock, flags);
-+	val = msm_readl_intr_status(pctrl, g);
-+	val &= ~BIT(g->intr_status_bit);
-+	msm_writel_intr_status(val, pctrl, g);
-+	raw_spin_unlock_irqrestore(&pctrl->lock, flags);
-+}
-+
- static int msm_pinmux_set_mux(struct pinctrl_dev *pctldev,
- 			      unsigned function,
- 			      unsigned group)
- {
- 	struct msm_pinctrl *pctrl = pinctrl_dev_get_drvdata(pctldev);
-+	struct gpio_chip *gc = &pctrl->chip;
-+	unsigned int irq = irq_find_mapping(gc->irq.domain, group);
- 	const struct msm_pingroup *g;
- 	unsigned long flags;
- 	u32 val, mask;
-+	u32 oldval;
-+	u32 old_i;
- 	int i;
- 
- 	g = &pctrl->soc->groups[group];
-@@ -187,15 +215,26 @@ static int msm_pinmux_set_mux(struct pinctrl_dev *pctldev,
- 	if (WARN_ON(i == g->nfuncs))
- 		return -EINVAL;
- 
--	raw_spin_lock_irqsave(&pctrl->lock, flags);
-+	disable_irq(irq);
- 
--	val = msm_readl_ctl(pctrl, g);
-+	raw_spin_lock_irqsave(&pctrl->lock, flags);
-+	oldval = val = msm_readl_ctl(pctrl, g);
- 	val &= ~mask;
- 	val |= i << g->mux_bit;
- 	msm_writel_ctl(val, pctrl, g);
--
- 	raw_spin_unlock_irqrestore(&pctrl->lock, flags);
- 
-+	/*
-+	 * Clear IRQs if switching to/from GPIO mode since muxing to/from
-+	 * the GPIO path can cause phantom edges.
-+	 */
-+	old_i = (oldval & mask) >> g->mux_bit;
-+	if (old_i != i &&
-+	    (i == pctrl->soc->gpio_func || old_i == pctrl->soc->gpio_func))
-+		msm_pinctrl_clear_pending_irq(pctrl, group, irq);
-+
-+	enable_irq(irq);
-+
- 	return 0;
- }
- 
-@@ -456,32 +495,45 @@ static const struct pinconf_ops msm_pinconf_ops = {
- static int msm_gpio_direction_input(struct gpio_chip *chip, unsigned offset)
- {
- 	const struct msm_pingroup *g;
-+	unsigned int irq = irq_find_mapping(chip->irq.domain, offset);
- 	struct msm_pinctrl *pctrl = gpiochip_get_data(chip);
- 	unsigned long flags;
-+	u32 oldval;
- 	u32 val;
- 
- 	g = &pctrl->soc->groups[offset];
- 
-+	disable_irq(irq);
-+
- 	raw_spin_lock_irqsave(&pctrl->lock, flags);
- 
--	val = msm_readl_ctl(pctrl, g);
-+	oldval = val = msm_readl_ctl(pctrl, g);
- 	val &= ~BIT(g->oe_bit);
- 	msm_writel_ctl(val, pctrl, g);
- 
- 	raw_spin_unlock_irqrestore(&pctrl->lock, flags);
- 
-+	if (oldval != val)
-+		msm_pinctrl_clear_pending_irq(pctrl, offset, irq);
-+
-+	enable_irq(irq);
-+
- 	return 0;
- }
- 
- static int msm_gpio_direction_output(struct gpio_chip *chip, unsigned offset, int value)
- {
- 	const struct msm_pingroup *g;
-+	unsigned int irq = irq_find_mapping(chip->irq.domain, offset);
- 	struct msm_pinctrl *pctrl = gpiochip_get_data(chip);
- 	unsigned long flags;
-+	u32 oldval;
- 	u32 val;
- 
- 	g = &pctrl->soc->groups[offset];
- 
-+	disable_irq(irq);
-+
- 	raw_spin_lock_irqsave(&pctrl->lock, flags);
- 
- 	val = msm_readl_io(pctrl, g);
-@@ -491,12 +543,17 @@ static int msm_gpio_direction_output(struct gpio_chip *chip, unsigned offset, in
- 		val &= ~BIT(g->out_bit);
- 	msm_writel_io(val, pctrl, g);
- 
--	val = msm_readl_ctl(pctrl, g);
-+	oldval = msm_readl_ctl(pctrl, g);
- 	val |= BIT(g->oe_bit);
- 	msm_writel_ctl(val, pctrl, g);
- 
- 	raw_spin_unlock_irqrestore(&pctrl->lock, flags);
- 
-+	if (oldval != val)
-+		msm_pinctrl_clear_pending_irq(pctrl, offset, irq);
-+
-+	enable_irq(irq);
-+
- 	return 0;
- }
- 
-@@ -774,7 +831,7 @@ static void msm_gpio_irq_mask(struct irq_data *d)
- 	raw_spin_unlock_irqrestore(&pctrl->lock, flags);
- }
- 
--static void msm_gpio_irq_clear_unmask(struct irq_data *d, bool status_clear)
-+static void msm_gpio_irq_unmask(struct irq_data *d)
- {
- 	struct gpio_chip *gc = irq_data_get_irq_chip_data(d);
- 	struct msm_pinctrl *pctrl = gpiochip_get_data(gc);
-@@ -792,17 +849,6 @@ static void msm_gpio_irq_clear_unmask(struct irq_data *d, bool status_clear)
- 
- 	raw_spin_lock_irqsave(&pctrl->lock, flags);
- 
--	if (status_clear) {
--		/*
--		 * clear the interrupt status bit before unmask to avoid
--		 * any erroneous interrupts that would have got latched
--		 * when the interrupt is not in use.
--		 */
--		val = msm_readl_intr_status(pctrl, g);
--		val &= ~BIT(g->intr_status_bit);
--		msm_writel_intr_status(val, pctrl, g);
--	}
--
- 	val = msm_readl_intr_cfg(pctrl, g);
- 	val |= BIT(g->intr_raw_status_bit);
- 	val |= BIT(g->intr_enable_bit);
-@@ -815,14 +861,10 @@ static void msm_gpio_irq_clear_unmask(struct irq_data *d, bool status_clear)
- 
- static void msm_gpio_irq_enable(struct irq_data *d)
- {
--	struct gpio_chip *gc = irq_data_get_irq_chip_data(d);
--	struct msm_pinctrl *pctrl = gpiochip_get_data(gc);
--
- 	if (d->parent_data)
- 		irq_chip_enable_parent(d);
- 
--	if (!test_bit(d->hwirq, pctrl->skip_wake_irqs))
--		msm_gpio_irq_clear_unmask(d, true);
-+	msm_gpio_irq_unmask(d);
- }
- 
- static void msm_gpio_irq_disable(struct irq_data *d)
-@@ -837,11 +879,6 @@ static void msm_gpio_irq_disable(struct irq_data *d)
- 		msm_gpio_irq_mask(d);
- }
- 
--static void msm_gpio_irq_unmask(struct irq_data *d)
--{
--	msm_gpio_irq_clear_unmask(d, false);
--}
--
- /**
-  * msm_gpio_update_dual_edge_parent() - Prime next edge for IRQs handled by parent.
-  * @d: The irq dta.
-@@ -1097,19 +1134,6 @@ static int msm_gpio_irq_reqres(struct irq_data *d)
- 		ret = -EINVAL;
- 		goto out;
- 	}
--
--	/*
--	 * Clear the interrupt that may be pending before we enable
--	 * the line.
--	 * This is especially a problem with the GPIOs routed to the
--	 * PDC. These GPIOs are direct-connect interrupts to the GIC.
--	 * Disabling the interrupt line at the PDC does not prevent
--	 * the interrupt from being latched at the GIC. The state at
--	 * GIC needs to be cleared before enabling.
--	 */
--	if (d->parent_data && test_bit(d->hwirq, pctrl->skip_wake_irqs))
--		irq_chip_set_parent_state(d, IRQCHIP_STATE_PENDING, 0);
--
- 	return 0;
- out:
- 	module_put(gc->owner);
--- 
-2.29.2.454.gaff20da3a2-goog
-
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora 
+Forum,
+a Linux Foundation Collaborative Project
