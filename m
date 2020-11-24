@@ -2,145 +2,110 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E8BFA2C3318
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Nov 2020 22:33:42 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0208C2C3326
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Nov 2020 22:39:37 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732519AbgKXVdB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 24 Nov 2020 16:33:01 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52614 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1732553AbgKXVct (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 24 Nov 2020 16:32:49 -0500
-Received: from mail-pg1-x541.google.com (mail-pg1-x541.google.com [IPv6:2607:f8b0:4864:20::541])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B9A33C094240
-        for <linux-arm-msm@vger.kernel.org>; Tue, 24 Nov 2020 13:32:47 -0800 (PST)
-Received: by mail-pg1-x541.google.com with SMTP id v21so385241pgi.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 24 Nov 2020 13:32:47 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=nUebvx46WK355IC8BSYKhA86maU/C5TyOra9y/oS07E=;
-        b=lzAwh4po+9zegkg/2K9x7CHiUUthvj2PFJyxHwt1QdcZQIdrGCSiE3JgzWuDiv+VMN
-         KwBJ/6n/jsAIvSMb6eOJqvl2BVv6D2OMXP8giSKXaaH9JwLNdR2oULKAXe3g8bDVfAub
-         65Ll+320/JpDsvMBOWCFVSOrRLSDK1WOgK6ns=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=nUebvx46WK355IC8BSYKhA86maU/C5TyOra9y/oS07E=;
-        b=lzX9Ey64QGtZM6eyp0GRbZjBb3nm0E9iS9Z6bZgLCZyIOTH4+4toCpbPoczCwx2Ogo
-         CB8Ly0ldxf3OQRrLbdL9LlLPhRm5WVPje/OHpbL78DpDaGnUspBdjBhgMWWNLxyccGD0
-         o1EIzAgIGRiZOZlwu54py1YZ/S2s+dtqxzhCl0MyqzTrCI8C8TzBvpCkAmbNnvdPv07J
-         wqdofHmQrRGCvRWVfH68QAanLayc+L9soPyIia/M/kISa36yKWXWkjpkTymNWMNRYmIb
-         DeMI0Cc2+IEowF1WCJCSDS3Dfj+d5kI4X3xnOPBr0gXKjXIstfevGC5E6pRmOoLbQ+/s
-         ZB1Q==
-X-Gm-Message-State: AOAM532Cws/liMeJNqMPGL7oTfjSo6hHpePPXgf+8Q5FXwLTKo+e4tum
-        WyaIyWiRlBmGh1AJItZzglv8sg==
-X-Google-Smtp-Source: ABdhPJxq53hoH5g966jwbYjUDwfs6lHQ9KOfN5qCJ8fiAFBBjxy/+X2rEoTmF5zSw2rlwmYa8QmuBA==
-X-Received: by 2002:aa7:9af2:0:b029:198:273c:6be8 with SMTP id y18-20020aa79af20000b0290198273c6be8mr329847pfp.4.1606253566848;
-        Tue, 24 Nov 2020 13:32:46 -0800 (PST)
-Received: from www.outflux.net (smtp.outflux.net. [198.145.64.163])
-        by smtp.gmail.com with ESMTPSA id j74sm15845pfd.43.2020.11.24.13.32.45
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 24 Nov 2020 13:32:45 -0800 (PST)
-Date:   Tue, 24 Nov 2020 13:32:44 -0800
-From:   Kees Cook <keescook@chromium.org>
-To:     James Bottomley <James.Bottomley@HansenPartnership.com>
-Cc:     "Gustavo A. R. Silva" <gustavoars@kernel.org>,
-        Joe Perches <joe@perches.com>,
-        Jakub Kicinski <kuba@kernel.org>, alsa-devel@alsa-project.org,
-        linux-atm-general@lists.sourceforge.net,
-        reiserfs-devel@vger.kernel.org, linux-iio@vger.kernel.org,
-        linux-wireless@vger.kernel.org, linux-fbdev@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org,
-        Nathan Chancellor <natechancellor@gmail.com>,
-        linux-ide@vger.kernel.org, dm-devel@redhat.com,
-        keyrings@vger.kernel.org, linux-mtd@lists.infradead.org,
-        GR-everest-linux-l2@marvell.com, wcn36xx@lists.infradead.org,
-        samba-technical@lists.samba.org, linux-i3c@lists.infradead.org,
-        linux1394-devel@lists.sourceforge.net,
-        linux-afs@lists.infradead.org,
-        usb-storage@lists.one-eyed-alien.net, drbd-dev@lists.linbit.com,
-        devel@driverdev.osuosl.org, linux-cifs@vger.kernel.org,
-        rds-devel@oss.oracle.com,
-        Nick Desaulniers <ndesaulniers@google.com>,
-        linux-scsi@vger.kernel.org, linux-rdma@vger.kernel.org,
-        oss-drivers@netronome.com, bridge@lists.linux-foundation.org,
-        linux-security-module@vger.kernel.org,
-        amd-gfx@lists.freedesktop.org,
-        linux-stm32@st-md-mailman.stormreply.com, cluster-devel@redhat.com,
-        linux-acpi@vger.kernel.org, coreteam@netfilter.org,
-        intel-wired-lan@lists.osuosl.org, linux-input@vger.kernel.org,
-        Miguel Ojeda <ojeda@kernel.org>,
-        tipc-discussion@lists.sourceforge.net, linux-ext4@vger.kernel.org,
-        linux-media@vger.kernel.org, linux-watchdog@vger.kernel.org,
-        selinux@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        intel-gfx@lists.freedesktop.org, linux-geode@lists.infradead.org,
-        linux-can@vger.kernel.org, linux-block@vger.kernel.org,
-        linux-gpio@vger.kernel.org, op-tee@lists.trustedfirmware.org,
-        linux-mediatek@lists.infradead.org, xen-devel@lists.xenproject.org,
-        nouveau@lists.freedesktop.org, linux-hams@vger.kernel.org,
-        ceph-devel@vger.kernel.org,
-        virtualization@lists.linux-foundation.org,
-        linux-arm-kernel@lists.infradead.org, linux-hwmon@vger.kernel.org,
-        x86@kernel.org, linux-nfs@vger.kernel.org,
-        GR-Linux-NIC-Dev@marvell.com, linux-mm@kvack.org,
-        netdev@vger.kernel.org, linux-decnet-user@lists.sourceforge.net,
-        linux-mmc@vger.kernel.org, linux-renesas-soc@vger.kernel.org,
-        linux-sctp@vger.kernel.org, linux-usb@vger.kernel.org,
-        netfilter-devel@vger.kernel.org, linux-crypto@vger.kernel.org,
-        patches@opensource.cirrus.com, linux-integrity@vger.kernel.org,
-        target-devel@vger.kernel.org, linux-hardening@vger.kernel.org,
-        Jonathan Cameron <Jonathan.Cameron@huawei.com>,
-        Greg KH <gregkh@linuxfoundation.org>
-Subject: Re: [Intel-wired-lan] [PATCH 000/141] Fix fall-through warnings for
- Clang
-Message-ID: <202011241327.BB28F12F6@keescook>
-References: <202011201129.B13FDB3C@keescook>
- <20201120115142.292999b2@kicinski-fedora-pc1c0hjn.dhcp.thefacebook.com>
- <202011220816.8B6591A@keescook>
- <9b57fd4914b46f38d54087d75e072d6e947cb56d.camel@HansenPartnership.com>
- <ca071decb87cc7e905411423c05a48f9fd2f58d7.camel@perches.com>
- <0147972a72bc13f3629de8a32dee6f1f308994b5.camel@HansenPartnership.com>
- <d8d1e9add08cdd4158405e77762d4946037208f8.camel@perches.com>
- <dbd2cb703ed9eefa7dde9281ea26ab0f7acc8afe.camel@HansenPartnership.com>
- <20201123130348.GA3119@embeddedor>
- <8f5611bb015e044fa1c0a48147293923c2d904e4.camel@HansenPartnership.com>
+        id S1731512AbgKXVjZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 24 Nov 2020 16:39:25 -0500
+Received: from mail.kernel.org ([198.145.29.99]:42726 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1729196AbgKXVjZ (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 24 Nov 2020 16:39:25 -0500
+Received: from willie-the-truck (236.31.169.217.in-addr.arpa [217.169.31.236])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id F157A2083E;
+        Tue, 24 Nov 2020 21:39:21 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1606253964;
+        bh=BTK/WvWriIxnwavgHEbW5VAszssfpXosYOXxF+X6xRY=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=XerLvPVsvsKgeHuOc3H2w+A9dpR9WF2I/J/sOhvd4pEgfTaULs6Zka5HUR6sNO7C0
+         n0QTKF4Qcd7eAf9jC88hpOBV9Hx8GOSR13pwnXHJZ+pNd9rBN/gXcSWoXf4jfVS1yb
+         McYowqtP4ITtSgcwUpXu9MR9Ea0jgn67AngC4Bpw=
+Date:   Tue, 24 Nov 2020 21:39:18 +0000
+From:   Will Deacon <will@kernel.org>
+To:     Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+Cc:     Robin Murphy <robin.murphy@arm.com>,
+        Joerg Roedel <joro@8bytes.org>,
+        Jordan Crouse <jcrouse@codeaurora.org>,
+        Rob Clark <robdclark@gmail.com>,
+        Akhil P Oommen <akhilpo@codeaurora.org>,
+        freedreno@lists.freedesktop.org,
+        "Kristian H . Kristensen" <hoegsberg@google.com>,
+        dri-devel@lists.freedesktop.org, iommu@lists.linux-foundation.org,
+        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCHv9 3/8] iommu/arm-smmu: Move non-strict mode to use
+ io_pgtable_domain_attr
+Message-ID: <20201124213917.GA14252@willie-the-truck>
+References: <cover.1606150259.git.saiprakash.ranjan@codeaurora.org>
+ <47f8e9760a7fba8b58ea89c9add96f5615f97014.1606150259.git.saiprakash.ranjan@codeaurora.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <8f5611bb015e044fa1c0a48147293923c2d904e4.camel@HansenPartnership.com>
+In-Reply-To: <47f8e9760a7fba8b58ea89c9add96f5615f97014.1606150259.git.saiprakash.ranjan@codeaurora.org>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Nov 23, 2020 at 08:31:30AM -0800, James Bottomley wrote:
-> Really, no ... something which produces no improvement has no value at
-> all ... we really shouldn't be wasting maintainer time with it because
-> it has a cost to merge.  I'm not sure we understand where the balance
-> lies in value vs cost to merge but I am confident in the zero value
-> case.
+On Mon, Nov 23, 2020 at 10:35:56PM +0530, Sai Prakash Ranjan wrote:
+> Now that we have a struct io_pgtable_domain_attr with quirks,
+> use that for non_strict mode as well thereby removing the need
+> for more members of arm_smmu_domain in the future.
+> 
+> Signed-off-by: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+> ---
+>  drivers/iommu/arm/arm-smmu/arm-smmu.c | 8 +++-----
+>  drivers/iommu/arm/arm-smmu/arm-smmu.h | 1 -
+>  2 files changed, 3 insertions(+), 6 deletions(-)
+> 
+> diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu.c b/drivers/iommu/arm/arm-smmu/arm-smmu.c
+> index 4b9b10fe50ed..f56f266ebdf7 100644
+> --- a/drivers/iommu/arm/arm-smmu/arm-smmu.c
+> +++ b/drivers/iommu/arm/arm-smmu/arm-smmu.c
+> @@ -786,9 +786,6 @@ static int arm_smmu_init_domain_context(struct iommu_domain *domain,
+>  			goto out_clear_smmu;
+>  	}
+>  
+> -	if (smmu_domain->non_strict)
+> -		pgtbl_cfg.quirks |= IO_PGTABLE_QUIRK_NON_STRICT;
+> -
+>  	if (smmu_domain->pgtbl_cfg.quirks)
+>  		pgtbl_cfg.quirks |= smmu_domain->pgtbl_cfg.quirks;
+>  
+> @@ -1527,7 +1524,8 @@ static int arm_smmu_domain_get_attr(struct iommu_domain *domain,
+>  	case IOMMU_DOMAIN_DMA:
+>  		switch (attr) {
+>  		case DOMAIN_ATTR_DMA_USE_FLUSH_QUEUE:
+> -			*(int *)data = smmu_domain->non_strict;
+> +			if (smmu_domain->pgtbl_cfg.quirks & IO_PGTABLE_QUIRK_NON_STRICT)
+> +				*(int *)data = smmu_domain->pgtbl_cfg.quirks;
 
-What? We can't measure how many future bugs aren't introduced because the
-kernel requires explicit case flow-control statements for all new code.
+I still don't think this is right :(
+We need to set *data to 1 or 0 depending on whether or not the non-strict
+quirk is set, i.e:
 
-We already enable -Wimplicit-fallthrough globally, so that's not the
-discussion. The issue is that Clang is (correctly) even more strict
-than GCC for this, so these are the remaining ones to fix for full Clang
-coverage too.
+	bool non_strict = smmu_domain->pgtbl_cfg.quirks & IO_PGTABLE_QUIRK_NON_STRICT;
+	*(int *)data = non_strict;
 
-People have spent more time debating this already than it would have
-taken to apply the patches. :)
+Your code above leaves *data uninitialised if non_strict is not set.
 
-This is about robustness and language wrangling. It's a big code-base,
-and this is the price of our managing technical debt for permanent
-robustness improvements. (The numbers I ran from Gustavo's earlier
-patches were that about 10% of the places adjusted were identified as
-legitimate bugs being fixed. This final series may be lower, but there
-are still bugs being found from it -- we need to finish this and shut
-the door on it for good.)
+>  			return 0;
+>  		default:
+>  			return -ENODEV;
+> @@ -1578,7 +1576,7 @@ static int arm_smmu_domain_set_attr(struct iommu_domain *domain,
+>  	case IOMMU_DOMAIN_DMA:
+>  		switch (attr) {
+>  		case DOMAIN_ATTR_DMA_USE_FLUSH_QUEUE:
+> -			smmu_domain->non_strict = *(int *)data;
+> +			smmu_domain->pgtbl_cfg.quirks |= IO_PGTABLE_QUIRK_NON_STRICT;
 
--- 
-Kees Cook
+And this is broken because if *data is 0, then you _set_ the quirk, which is
+the opposite of what we should be doing.
+
+In other words, although the implementation has changed, the semantics have
+not.
+
+Will
