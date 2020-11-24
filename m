@@ -2,107 +2,116 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 400032C2A3A
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Nov 2020 15:48:33 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D518B2C2A89
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Nov 2020 15:58:02 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2389219AbgKXOrt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 24 Nov 2020 09:47:49 -0500
-Received: from mail.kernel.org ([198.145.29.99]:58484 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2388174AbgKXOrt (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 24 Nov 2020 09:47:49 -0500
-Received: from embeddedor (187-162-31-110.static.axtel.net [187.162.31.110])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id A5073206F9;
-        Tue, 24 Nov 2020 14:47:38 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1606229266;
-        bh=KHWIOvsVxIgxzJ3ANvrXr+IcifXvCH3d9eC+5p4MJwo=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=tWoPDQgvsKVPCfxibPNl9c0zBQ9NfBrnsDyv8UIAtPJxHLfF4o1CuP3vwUt19y/P8
-         Y66kkjj2Cim4kMyRQiiYzb1whNr+v/N+nMKfcHqv3RaX8mBnUDrFmNddDbw9/dIVnH
-         xirANyC4hb8bYXXRvxw8qG9eYp8JWf8UX9D38PQM=
-Date:   Tue, 24 Nov 2020 08:47:54 -0600
-From:   "Gustavo A. R. Silva" <gustavoars@kernel.org>
-To:     Mark Brown <broonie@kernel.org>
-Cc:     linux-kernel@vger.kernel.org, linux-crypto@vger.kernel.org,
-        linux-sctp@vger.kernel.org,
-        Nathan Chancellor <natechancellor@gmail.com>,
-        linux-hardening@vger.kernel.org,
-        usb-storage@lists.one-eyed-alien.net, linux-block@vger.kernel.org,
-        linux-security-module@vger.kernel.org,
-        bridge@lists.linux-foundation.org, GR-Linux-NIC-Dev@marvell.com,
-        rds-devel@oss.oracle.com, dri-devel@lists.freedesktop.org,
-        linux-media@vger.kernel.org, wcn36xx@lists.infradead.org,
-        linux-wireless@vger.kernel.org, linux-mediatek@lists.infradead.org,
-        reiserfs-devel@vger.kernel.org, oss-drivers@netronome.com,
-        linux-arm-kernel@lists.infradead.org, alsa-devel@alsa-project.org,
-        virtualization@lists.linux-foundation.org,
-        Joe Perches <joe@perches.com>, patches@opensource.cirrus.com,
-        linux-gpio@vger.kernel.org, linux-hwmon@vger.kernel.org,
-        linux-cifs@vger.kernel.org, coreteam@netfilter.org,
-        Kees Cook <keescook@chromium.org>,
-        Nick Desaulniers <ndesaulniers@google.com>,
-        linux-scsi@vger.kernel.org, linux-afs@lists.infradead.org,
-        netfilter-devel@vger.kernel.org, linux-geode@lists.infradead.org,
-        drbd-dev@lists.linbit.com, linux-ext4@vger.kernel.org,
-        linux-hams@vger.kernel.org, target-devel@vger.kernel.org,
-        samba-technical@lists.samba.org,
-        tipc-discussion@lists.sourceforge.net,
-        linux-stm32@st-md-mailman.stormreply.com,
-        linux-renesas-soc@vger.kernel.org, linux-input@vger.kernel.org,
-        amd-gfx@lists.freedesktop.org, linux-nfs@vger.kernel.org,
-        devel@driverdev.osuosl.org, selinux@vger.kernel.org,
-        linux-atm-general@lists.sourceforge.net, linux-iio@vger.kernel.org,
-        linux-i3c@lists.infradead.org, Miguel Ojeda <ojeda@kernel.org>,
-        linux-can@vger.kernel.org, linux-integrity@vger.kernel.org,
-        GR-everest-linux-l2@marvell.com, keyrings@vger.kernel.org,
-        intel-wired-lan@lists.osuosl.org, linux-usb@vger.kernel.org,
-        nouveau@lists.freedesktop.org, x86@kernel.org,
-        xen-devel@lists.xenproject.org, linux-mm@kvack.org,
-        cluster-devel@redhat.com, linux1394-devel@lists.sourceforge.net,
-        linux-decnet-user@lists.sourceforge.net,
-        op-tee@lists.trustedfirmware.org, linux-ide@vger.kernel.org,
-        intel-gfx@lists.freedesktop.org, linux-acpi@vger.kernel.org,
-        dm-devel@redhat.com, linux-watchdog@vger.kernel.org,
-        linux-rdma@vger.kernel.org, linux-mtd@lists.infradead.org,
-        ceph-devel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-mmc@vger.kernel.org, linux-fbdev@vger.kernel.org,
-        netdev@vger.kernel.org
-Subject: Re: [PATCH 000/141] Fix fall-through warnings for Clang
-Message-ID: <20201124144754.GL16084@embeddedor>
-References: <cover.1605896059.git.gustavoars@kernel.org>
- <160616392671.21180.16517492185091399884.b4-ty@kernel.org>
+        id S2389323AbgKXO51 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 24 Nov 2020 09:57:27 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47512 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728352AbgKXO51 (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 24 Nov 2020 09:57:27 -0500
+Received: from mail-oi1-x241.google.com (mail-oi1-x241.google.com [IPv6:2607:f8b0:4864:20::241])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F0F68C0617A6
+        for <linux-arm-msm@vger.kernel.org>; Tue, 24 Nov 2020 06:57:26 -0800 (PST)
+Received: by mail-oi1-x241.google.com with SMTP id j15so18738337oih.4
+        for <linux-arm-msm@vger.kernel.org>; Tue, 24 Nov 2020 06:57:26 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=sXzXgvLp4s+46JRUtzzV0/6Df/FZIX/XlFhg2++CJ7g=;
+        b=rvgO0ShYj3OMSlEin7VGkUn0IM+58ObeVh/TdWxzWTdOvl/seTdhKJCeGJb2aVxEOP
+         4mveIzPpcPBk+2ATDUftjhUVhK0DZlvF6jiSLo5Q9pbO10swOdOH8pxUsooaQpuIjfm6
+         w9PYIVZ70hsp6bcw23zxkMx2FRuv1cynkbn9co/6PvObOa4WVwO/ih8uP8svElI8NpWZ
+         IwVQ83vdU8w8SdOR/nbTfYQWOMPQf1BghyrUxELA1ObvUtzZalIkV+9d0D5tazrekRxY
+         u4eGRu3KesPfVPY+82kT9W/Jti1rsm4Xanmen3fBhkZdbvgSSFyD9E825RQroHApWEKy
+         vxEw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=sXzXgvLp4s+46JRUtzzV0/6Df/FZIX/XlFhg2++CJ7g=;
+        b=hwESrjwOz31bVQxPNpWVVN5D0FwSVio3YDEncVTU5FAtSEnJZ/NG2PfxvlRMuXKFMO
+         tKO7NSxcPNv427QmRbcfkLC8ShkTCJNxweZ8m9AfSMHyoVwqsYJR2YZwCk7isZ7kDX7e
+         Ht+4Fx3L//qaVi+UFsuij5Jztiajd7U4yuB6t9AwY1qg4QsZpMHkJKPSkbDaBpGeFLM7
+         BHf2g7uE3NACmvBWWEHyQZCrpyW4/glqJbp1+QiNHHDQvEUIS+aefXqQqzkRnr1sN0Lb
+         us0+iCMVhIOxweLQWrayXaAziq31peA7YpIPYPFjWprhpRSB1REnCy+WFRm1zNiD+b5o
+         MLAw==
+X-Gm-Message-State: AOAM532wbEgIkIq27VHxgHH4m2hMKqEh8voy+Cbe9E5MTQI7/U43DV+m
+        UMXHpFZvmyIUlzRJwzwbZ8v3Sw==
+X-Google-Smtp-Source: ABdhPJxa3NAVx1Cn2t+G3dKNxlpEbRiazZDjFN23ymWT/MGwtBTKGNQYqdxTJmVghDox3My4/lknJQ==
+X-Received: by 2002:aca:c3c4:: with SMTP id t187mr2783806oif.148.1606229846311;
+        Tue, 24 Nov 2020 06:57:26 -0800 (PST)
+Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
+        by smtp.gmail.com with ESMTPSA id k13sm2227901otl.72.2020.11.24.06.57.25
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 24 Nov 2020 06:57:25 -0800 (PST)
+Date:   Tue, 24 Nov 2020 08:57:23 -0600
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc:     agross@kernel.org, robh+dt@kernel.org, vkoul@kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 1/2] dt-bindings: arm: qcom: Document SDX55 Modem and
+ boards
+Message-ID: <20201124145723.GJ95182@builder.lan>
+References: <20201124140011.134751-1-manivannan.sadhasivam@linaro.org>
+ <20201124140011.134751-2-manivannan.sadhasivam@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <160616392671.21180.16517492185091399884.b4-ty@kernel.org>
-User-Agent: Mutt/1.9.4 (2018-02-28)
+In-Reply-To: <20201124140011.134751-2-manivannan.sadhasivam@linaro.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Nov 23, 2020 at 08:38:46PM +0000, Mark Brown wrote:
-> On Fri, 20 Nov 2020 12:21:39 -0600, Gustavo A. R. Silva wrote:
-> > This series aims to fix almost all remaining fall-through warnings in
-> > order to enable -Wimplicit-fallthrough for Clang.
-> > 
-> > In preparation to enable -Wimplicit-fallthrough for Clang, explicitly
-> > add multiple break/goto/return/fallthrough statements instead of just
-> > letting the code fall through to the next case.
-> > 
-> > [...]
-> 
-> Applied to
-> 
->    https://git.kernel.org/pub/scm/linux/kernel/git/broonie/regulator.git for-next
-> 
-> Thanks!
-> 
-> [1/1] regulator: as3722: Fix fall-through warnings for Clang
->       commit: b52b417ccac4fae5b1f2ec4f1d46eb91e4493dc5
+On Tue 24 Nov 08:00 CST 2020, Manivannan Sadhasivam wrote:
 
-Thank you, Mark.
---
-Gustavo
+> From: Vinod Koul <vkoul@kernel.org>
+> 
+> Document the SDX55 Modem binding and also the boards using it.
+
+It's not really the "SDX55 Modem", it's the "SDX55 platform". That way
+things become less confusing when we actually add the modem on SDX55
+later.
+
+> 
+> Signed-off-by: Vinod Koul <vkoul@kernel.org>
+> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> ---
+>  Documentation/devicetree/bindings/arm/qcom.yaml | 6 ++++++
+>  1 file changed, 6 insertions(+)
+> 
+> diff --git a/Documentation/devicetree/bindings/arm/qcom.yaml b/Documentation/devicetree/bindings/arm/qcom.yaml
+> index ad25deba4d86..4362e8f0d495 100644
+> --- a/Documentation/devicetree/bindings/arm/qcom.yaml
+> +++ b/Documentation/devicetree/bindings/arm/qcom.yaml
+> @@ -39,6 +39,7 @@ description: |
+>          sc7180
+>          sdm630
+>          sdm660
+> +        sdx55
+
+'x' > 'm', so this should go one line down.
+
+Regards,
+Bjorn
+
+>          sdm845
+>          sm8250
+>  
+> @@ -178,4 +179,9 @@ properties:
+>                - qcom,sm8250-mtp
+>            - const: qcom,sm8250
+>  
+> +      - items:
+> +          - enum:
+> +              - qcom,sdx55-mtp
+> +          - const: qcom,sdx55
+> +
+>  ...
+> -- 
+> 2.25.1
+> 
