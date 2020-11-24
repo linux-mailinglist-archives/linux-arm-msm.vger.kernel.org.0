@@ -2,148 +2,140 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id EFD252C1D20
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Nov 2020 05:53:13 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4DA1F2C1D23
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Nov 2020 05:53:15 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726371AbgKXEvP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 23 Nov 2020 23:51:15 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38200 "EHLO
+        id S1726955AbgKXEwA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 23 Nov 2020 23:52:00 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38322 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725797AbgKXEvP (ORCPT
+        with ESMTP id S1726932AbgKXEwA (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 23 Nov 2020 23:51:15 -0500
-Received: from mail-ot1-x342.google.com (mail-ot1-x342.google.com [IPv6:2607:f8b0:4864:20::342])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9475FC0613D6
-        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Nov 2020 20:51:13 -0800 (PST)
-Received: by mail-ot1-x342.google.com with SMTP id 11so5656500oty.9
-        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Nov 2020 20:51:13 -0800 (PST)
+        Mon, 23 Nov 2020 23:52:00 -0500
+Received: from mail-oi1-x243.google.com (mail-oi1-x243.google.com [IPv6:2607:f8b0:4864:20::243])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1254CC0613CF
+        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Nov 2020 20:52:00 -0800 (PST)
+Received: by mail-oi1-x243.google.com with SMTP id o25so22435849oie.5
+        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Nov 2020 20:52:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=IaPCaFCHuJQneePrqd68vBnsJF+MzsPrh4FvA+iHfzE=;
-        b=UpR50yOkEvNdKtEe2bzhgb4x84Cye79O1Rm1mO8+oJTdzz2XfFE2isfCJ+YRTV8U8H
-         L8PthdNJl+O1zDL68k06P0DmWk3xIt+5/YMjnL7pUlEIoiUeRLX1eiQK11qxqXbx28/a
-         OdW+4Zuq2hs70u0dgtxBdY6j5CtbDQfms2eyYV1iIP9eMBF3f6iZaZMmnsookYiXAvBa
-         SqJIiokjpkIc/l+gz2XVzK2NjH/iqpawKqHc7eGfv4JQ4MiLHA9m9DAISAgNwaxoOub7
-         VYyB0nlSfdmwTUcN01brAtYe2HY/Wce3mutxjn3KmYxgOQnzAvFnm2Y+8zZRRUm6TdD0
-         ZvTQ==
+        bh=21wh1RXrzLauQp1Zzrr3Pjj6ApJ/n51jC9LfHbkaKmY=;
+        b=n0+dYK2xtpTlFNg42XEHZZzZwOGGufij+bDtWnHViKF9yePzEKzPJrA1FFYEgwpPa5
+         oY1mB2mJngVy8JAvPrGAdkOOGYIWf0IpD+2BuGlz0nHYpDCJw0xT4yI3kVWay0HCieuC
+         Vi9+iI8TdGRY5o38rbNJsazX19zg4M4jH3+T4W4R/W3YRkHzEEEsArM2jb+1+7fKPaGs
+         iJR0NbItXQCxSoNLYm6SpOQWjRdb/T8PF0uJ7rvRD4Oeq9c6fiEQ01XrEOOV6F6jSGPl
+         YZEYxcgFqWpX+ran3veNjljAXBwO8jST/RrbsAHvIxoU+eHd30V5Rohtq2FErIWTq1xV
+         88EA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=IaPCaFCHuJQneePrqd68vBnsJF+MzsPrh4FvA+iHfzE=;
-        b=k6Bi/S3sV5zrZodIHQMV71QHEzwRLK3dORYLYJaTxgWctG7psCJgmH+8aKmtGWM5WA
-         A9wWfpIbZSeVqdUEBzBtN64044vH2YqSn2PqCUb2c9ggkCDqt2Tw5Z3sAp6WJPzfkXme
-         R8KVczhL8iOwo10KtPezq2Nu9Q3+lcMxTkq2785nCU5hWVEHqPqg3oVqJlXeq7cUQbCG
-         +yd9ghoFNVfFqYKJlyp46UhRQfmkgPhu6wDi8qbmPDMjH4kQeOAaVKRehFuz6i5myyx/
-         hMVhZk3oqFwbr89NbuZ4bIEXbwu7wokgi16D6ul/X/DfzfIJAslEoIJUMDtwc2eebDq7
-         IgLg==
-X-Gm-Message-State: AOAM531o6TSpDZKbiY/2l/2C3fNSVIgQ6o10Z1sJ+gP+vKLYiLGz9RKs
-        hfr3LpABTJocVqDKqpXtGYiWnZ86xIE/ow==
-X-Google-Smtp-Source: ABdhPJyMRIgFMVWRa72QLRCoypAvMPvF/ocxU/Mr/PZmNprFTp5JuOmTLGZWikWWLAMT7evse/AAcA==
-X-Received: by 2002:a9d:261:: with SMTP id 88mr2045432otb.202.1606193472833;
-        Mon, 23 Nov 2020 20:51:12 -0800 (PST)
+        bh=21wh1RXrzLauQp1Zzrr3Pjj6ApJ/n51jC9LfHbkaKmY=;
+        b=Tl+wbg6qIJ3BkTmOgMlKGfMSJwPyv8vwasqxmPe6AH0YsMgZKrqTmdHClNHIn8vFD+
+         ms+atRj5NQPa8Jg7KKsSMV7mQoMkAgQko4Jx9eNPY4kAG2kepvPDl3MJfMQqktSHPX8y
+         JboK0td8f6GutPfVCqE8luzR/TwtMDsv8BJPa90+m4MI8rbI8Tykt9CzJLoKLzynTxkI
+         iMpvC2iayw0w3KXGW1VdR0ASiIRRnl3W/Dqhaqo+PEzKGN3jTx316x5RVjDkywB7sx7z
+         ccfYJpnPx8QSL2eJ1gQhGaJ7r6Anjf7S7bjQhq2W7Agm/VM6FSzmDWxs5FCEyTAIl241
+         22kA==
+X-Gm-Message-State: AOAM532ay5z8pLlFhFDfeVM4eb2KBojutYz9g8Fk3At0iDZ4yKfea6Wp
+        q7rrkg9jrEjP2iE5m8d6CwV4cw==
+X-Google-Smtp-Source: ABdhPJxx8PNpFgul9bJq4f9P39PTOZ4UQOaHXVAQ3uMenmz0FcS/8UhRicJEaacMk+6aPMiKDvqJRg==
+X-Received: by 2002:aca:f5c8:: with SMTP id t191mr1678894oih.40.1606193519483;
+        Mon, 23 Nov 2020 20:51:59 -0800 (PST)
 Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id w6sm7845466otj.12.2020.11.23.20.51.11
+        by smtp.gmail.com with ESMTPSA id z77sm8670400ooa.37.2020.11.23.20.51.58
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 23 Nov 2020 20:51:12 -0800 (PST)
-Date:   Mon, 23 Nov 2020 22:51:10 -0600
+        Mon, 23 Nov 2020 20:51:58 -0800 (PST)
+Date:   Mon, 23 Nov 2020 22:51:56 -0600
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Randy Dunlap <rdunlap@infradead.org>
-Cc:     linux-kernel@vger.kernel.org, kernel test robot <lkp@intel.com>,
-        linux-pm@vger.kernel.org, Andy Gross <agross@kernel.org>,
-        linux-arm-msm@vger.kernel.org,
-        "Rafael J. Wysocki" <rjw@rjwysocki.net>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>,
-        Stephan Gerhold <stephan@gerhold.net>,
-        Lina Iyer <ilina@codeaurora.org>,
-        Ulf Hansson <ulf.hansson@linaro.org>
-Subject: Re: [PATCH] cpuidle: arm: qcom: fix Kconfig problems
-Message-ID: <20201124045110.GH95182@builder.lan>
-References: <20201124013053.11502-1-rdunlap@infradead.org>
+To:     John Stultz <john.stultz@linaro.org>
+Cc:     lkml <linux-kernel@vger.kernel.org>, Todd Kjos <tkjos@google.com>,
+        Saravana Kannan <saravanak@google.com>,
+        Andy Gross <agross@kernel.org>,
+        Rajendra Nayak <rnayak@codeaurora.org>,
+        Maulik Shah <mkshah@codeaurora.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Mark Brown <broonie@kernel.org>, linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH v2] regulator: Kconfig: Fix REGULATOR_QCOM_RPMH
+ dependencies to avoid build error
+Message-ID: <20201124045156.GI95182@builder.lan>
+References: <20201123222359.103822-1-john.stultz@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20201124013053.11502-1-rdunlap@infradead.org>
+In-Reply-To: <20201123222359.103822-1-john.stultz@linaro.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon 23 Nov 19:30 CST 2020, Randy Dunlap wrote:
+On Mon 23 Nov 16:23 CST 2020, John Stultz wrote:
 
-> The Kconfig symbol ARM_QCOM_SPM_CPUIDLE wildly selects other
-> Kconfig symbols when it should not.
-> This causes kconfig warnings and subsequent build errors,
-> as listed below, so modify this symbol's Kconfig entry to
-> constrain and tame it.
+> The kernel test robot reported the following build error:
 > 
-> WARNING: unmet direct dependencies detected for QCOM_SCM
->   Depends on [n]: ARM [=y] && HAVE_ARM_SMCCC [=n] || ARM64
->   Selected by [y]:
->   - ARM_QCOM_SPM_CPUIDLE [=y] && CPU_IDLE [=y] && (ARM [=y] || ARM64) && (ARCH_QCOM [=n] || COMPILE_TEST [=y]) && !ARM64
+> All errors (new ones prefixed by >>):
 > 
-> WARNING: unmet direct dependencies detected for ARM_CPU_SUSPEND
->   Depends on [n]: ARCH_SUSPEND_POSSIBLE [=n]
->   Selected by [y]:
->   - ARM_QCOM_SPM_CPUIDLE [=y] && CPU_IDLE [=y] && (ARM [=y] || ARM64) && (ARCH_QCOM [=n] || COMPILE_TEST [=y]) && !ARM64
+>    xtensa-linux-ld: drivers/regulator/qcom-rpmh-regulator.o: in function `rpmh_regulator_vrm_get_voltage_sel':
+>    qcom-rpmh-regulator.c:(.text+0x270): undefined reference to `rpmh_write'
+>    xtensa-linux-ld: drivers/regulator/qcom-rpmh-regulator.o: in function `rpmh_regulator_send_request':
+>    qcom-rpmh-regulator.c:(.text+0x2f2): undefined reference to `rpmh_write'
+>    xtensa-linux-ld: drivers/regulator/qcom-rpmh-regulator.o: in function `rpmh_regulator_vrm_get_voltage_sel':
+> >> qcom-rpmh-regulator.c:(.text+0x274): undefined reference to `rpmh_write_async'
+>    xtensa-linux-ld: drivers/regulator/qcom-rpmh-regulator.o: in function `rpmh_regulator_send_request':
+>    qcom-rpmh-regulator.c:(.text+0x2fc): undefined reference to `rpmh_write_async'
 > 
-> and
+> Which is due to REGULATOR_QCOM_RPMH depending on
+> QCOM_RPMH || COMPILE_TEST. The problem is that QOM_RPMH can now
+> be a module, which in that case requires REGULATOR_QCOM_RPMH=m
+> to build.
 > 
-> arm-linux-gnueabi-ld: arch/arm/kernel/sleep.o: in function `__cpu_suspend':
-> (.text+0x68): undefined reference to `cpu_sa110_suspend_size'
-> arm-linux-gnueabi-ld: arch/arm/kernel/suspend.o: in function `__cpu_suspend_save':
-> suspend.c:(.text+0x138): undefined reference to `cpu_sa110_do_suspend'
-> arm-linux-gnueabi-ld: suspend.c:(.text+0x170): undefined reference to `cpu_sa110_do_resume'
-> arm-linux-gnueabi-ld: drivers/firmware/qcom_scm-smc.o: in function `__scm_smc_do_quirk':
-> qcom_scm-smc.c:(.text+0x54): undefined reference to `__arm_smccc_smc'
-> arm-linux-gnueabi-ld: drivers/firmware/qcom_scm-legacy.o: in function `scm_legacy_call':
-> qcom_scm-legacy.c:(.text+0x168): undefined reference to `__arm_smccc_smc'
-> arm-linux-gnueabi-ld: drivers/firmware/qcom_scm-legacy.o: in function `scm_legacy_call_atomic':
-> qcom_scm-legacy.c:(.text+0x2e0): undefined reference to `__arm_smccc_smc'
+> However, if COMPILE_TEST is enabled, REGULATOR_QCOM_RPMH can be
+> set to =y while QCOM_RPMH=m which will cause build failures.
 > 
-> Fixes: a871be6b8eee ("cpuidle: Convert Qualcomm SPM driver to a generic CPUidle driver")
-> Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
-> Reported-by: kernel test robot <lkp@intel.com>
-> Cc: linux-pm@vger.kernel.org
-> Cc: Andy Gross <agross@kernel.org>
-> Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
-> Cc: linux-arm-msm@vger.kernel.org
-> Cc: "Rafael J. Wysocki" <rjw@rjwysocki.net>
-> Cc: Daniel Lezcano <daniel.lezcano@linaro.org>
-> Cc: Stephan Gerhold <stephan@gerhold.net>
-> Cc: Lina Iyer <ilina@codeaurora.org>
-> Cc: Ulf Hansson <ulf.hansson@linaro.org>
-> Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
-> ---
->  drivers/cpuidle/Kconfig.arm |    3 ++-
->  1 file changed, 2 insertions(+), 1 deletion(-)
+> The fix here is to add (QCOM_RPMH=n && COMPILE_TEST) to the
+> dependency.
 > 
-> --- linux-next-20201123.orig/drivers/cpuidle/Kconfig.arm
-> +++ linux-next-20201123/drivers/cpuidle/Kconfig.arm
-> @@ -108,10 +108,11 @@ config ARM_TEGRA_CPUIDLE
->  config ARM_QCOM_SPM_CPUIDLE
->  	bool "CPU Idle Driver for Qualcomm Subsystem Power Manager (SPM)"
->  	depends on (ARCH_QCOM || COMPILE_TEST) && !ARM64
-> +	depends on PM
->  	select ARM_CPU_SUSPEND
->  	select CPU_IDLE_MULTIPLE_DRIVERS
->  	select DT_IDLE_STATES
-> -	select QCOM_SCM
-> +	select QCOM_SCM if HAVE_ARM_SMCCC
+> Feedback would be appreciated!
 
-I presume the trigger for this error is that 'd0511b5496c0 ("firmware:
-QCOM_SCM: Allow qcom_scm driver to be loadable as a permenent module")'
-made QCOM_SCM user selectable and described the dependency on
-HAVE_ARM_SMCCC..
-
-So given that, and the fact that this driver doesn't do anything without
-QCOM_SCM, can we instead make it "depends on QCOM_SCM"? I believe it
-would inherit the dependency of HAVE_ARM_SMCCC in this case?
+Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 
 Regards,
 Bjorn
 
+> 
+> Cc: Todd Kjos <tkjos@google.com>
+> Cc: Saravana Kannan <saravanak@google.com>
+> Cc: Andy Gross <agross@kernel.org>
+> Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
+> Cc: Rajendra Nayak <rnayak@codeaurora.org>
+> Cc: Maulik Shah <mkshah@codeaurora.org>
+> Cc: Stephen Boyd <swboyd@chromium.org>
+> Cc: Liam Girdwood <lgirdwood@gmail.com>
+> Cc: Mark Brown <broonie@kernel.org>
+> Cc: linux-arm-msm@vger.kernel.org
+> Reported-by: kernel test robot <lkp@intel.com>
+> Signed-off-by: John Stultz <john.stultz@linaro.org>
+> ---
+> v2: Switch dependency logic as suggested by MarkB
+> ---
+>  drivers/regulator/Kconfig | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/drivers/regulator/Kconfig b/drivers/regulator/Kconfig
+> index 020a00d6696b..481c7b10133b 100644
+> --- a/drivers/regulator/Kconfig
+> +++ b/drivers/regulator/Kconfig
+> @@ -843,7 +843,7 @@ config REGULATOR_QCOM_RPM
+>  
+>  config REGULATOR_QCOM_RPMH
+>  	tristate "Qualcomm Technologies, Inc. RPMh regulator driver"
+> -	depends on QCOM_RPMH || COMPILE_TEST
+> +	depends on QCOM_RPMH || (QCOM_RPMH=n && COMPILE_TEST)
 >  	help
->  	  Select this to enable cpuidle for Qualcomm processors.
->  	  The Subsystem Power Manager (SPM) controls low power modes for the
+>  	  This driver supports control of PMIC regulators via the RPMh hardware
+>  	  block found on Qualcomm Technologies Inc. SoCs.  RPMh regulator
+> -- 
+> 2.17.1
+> 
