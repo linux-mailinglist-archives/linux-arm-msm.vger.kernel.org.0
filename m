@@ -2,102 +2,98 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 586D12C2F0E
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Nov 2020 18:46:22 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1823A2C2F63
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Nov 2020 18:56:27 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2403899AbgKXRnr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 24 Nov 2020 12:43:47 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45214 "EHLO
+        id S2404006AbgKXRzs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 24 Nov 2020 12:55:48 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47092 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2403887AbgKXRnq (ORCPT
+        with ESMTP id S2404001AbgKXRzs (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 24 Nov 2020 12:43:46 -0500
-Received: from mail-qk1-x743.google.com (mail-qk1-x743.google.com [IPv6:2607:f8b0:4864:20::743])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 645D4C0613D6
-        for <linux-arm-msm@vger.kernel.org>; Tue, 24 Nov 2020 09:43:45 -0800 (PST)
-Received: by mail-qk1-x743.google.com with SMTP id l2so21592703qkf.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 24 Nov 2020 09:43:45 -0800 (PST)
+        Tue, 24 Nov 2020 12:55:48 -0500
+Received: from mail-vs1-xe42.google.com (mail-vs1-xe42.google.com [IPv6:2607:f8b0:4864:20::e42])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4686DC0613D6
+        for <linux-arm-msm@vger.kernel.org>; Tue, 24 Nov 2020 09:55:48 -0800 (PST)
+Received: by mail-vs1-xe42.google.com with SMTP id m16so11559130vsl.8
+        for <linux-arm-msm@vger.kernel.org>; Tue, 24 Nov 2020 09:55:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
+        d=chromium.org; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=IlPh1lRjPNIWAoYTXgAgpaQnzX2qrOqt4PzLNzteUsc=;
-        b=ff4erDuuZxHUo25qDyPnCe8AQM+wRSSv9P75WS3u42fdD3ZIn0BQHAPgUf9UQUHFbL
-         g+oHoYmbrfrgeIrWpWZrgov5l74ZEEKpmSJaf/YZxa6uVGkgLuznzNIseXPJ5VHDj/PL
-         NFC46jFQL6qp8dLqGv81ybhFBwrGjuinEkTdBGVQ9eNXVX9PZWvI7e7xKuKF27hL87+4
-         Bcd/+rCMZ0Ofc8y8yDL5LF8LlbXuJXogniso9ug8LOgL8SxVm0A7CqW39CGhUXvEnX9f
-         ByHwhQAbTLE7j8L3dprjqOGb7RhsFNm69SmnuBlrVkiGL9GFNOWeHzNKyZuUYLR6Lucm
-         eUtw==
+        bh=ASb49GMgEQk5JUxUZFVOUivC69eYey0JM4nqNA/W1FQ=;
+        b=SJ82uvGUhVyRpvlEm0DW8ZjBfkucQNAdh1ODVXCMTEVB/n47PNRWRkHissZ34gBQLZ
+         IVFdQU4/UbVOnKnxxklVwVwyewiOXGlngAWBsqPCyo/lpxZf+ANvLWHkXwG06EzXKj4M
+         7XTCjcAIaUtH/njdxeUlzGEAUqHkm3CSUVrxc=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=IlPh1lRjPNIWAoYTXgAgpaQnzX2qrOqt4PzLNzteUsc=;
-        b=kCoKiXx8KNYn4CXrm9c4Zuw1M3SVbXnCdLtWI3Fbxqw+RnNpxsnz00VahKr0EPlV7i
-         iC8DwIeLypll6H7UjSVQ0HshctWeLfwC7xaHa80AOXEGC0+zX+bGyxFMiAuvz97bn6pg
-         67/zPWsFZC/cel6i94CTlKLALO2xJ9MWm67BGyCqcvje5gDojjB20RMY31fNhN+xAPgk
-         giDUTMBtLO7wO7MhJI5qi7kniJ6VQ1gcYj8JPRzGhLMJKY8tO0/40Fz/2EbAnLdgftFR
-         fYUnjLp13vim6NXClDpcbuaA2nW4Zl5EgvAw5awNohFry0wGUCg4I6eUDOV9/PSgfSje
-         DcjQ==
-X-Gm-Message-State: AOAM530nmuqPDsZc3w3U9lMyIWJPuTTb/UONrCC/uKaiImRCKeMbZ2u+
-        5FWyK986l8w0+FlSOqAyACXgjEj4R6IjZ0lnlbbxnQLFxIhyhg==
-X-Google-Smtp-Source: ABdhPJxnVZWYH3kH8j83SpW2UoKMwEZ6B4y4J7qubRs5Bbg+n35lbVK0782XQQ/nldNFsvAfUNkgY7Et6NY0bFI51aU=
-X-Received: by 2002:a25:d983:: with SMTP id q125mr9775018ybg.78.1606239824617;
- Tue, 24 Nov 2020 09:43:44 -0800 (PST)
+        bh=ASb49GMgEQk5JUxUZFVOUivC69eYey0JM4nqNA/W1FQ=;
+        b=bYy9oK9pjhrHOwxkWmRH0bOU9+xZX8m20mPXhUbgeC1C+OCwrLc6LQ5V1MwnOI+im/
+         +kAoQ8fDKpJbSi2LbhhuEbjcA+UyuWJcS0nwykkutwHclw9AeG+0V8fDIMbsnUEIAvO2
+         1H69gXcd47Oa9DUJFN7EGD1dAsJjbj5KAmRAqcL/Qg94luaT4lO0j7wXDLlHTUKIUE4x
+         j4qUp6sKn2bWOilGbvXZhRfX1IlQfGiUdIzc06KhCuvowN5mRNUN0ksGx/PlCS6IZKNj
+         vPzP5X9SdDJh5sUUm7YhU8PteOFFySA/pMqHrPRllteckil7s1r4UKLvKikgT6EDTEd1
+         qKMg==
+X-Gm-Message-State: AOAM532KqJ8IbM5a3rAjLsij6xs+CrGprFkln7tgNvtRRRedUu9qwvTd
+        kHsg5F20ic887eFI4mrCWJUn3+yu8Ird8w==
+X-Google-Smtp-Source: ABdhPJwzIQc/ffjWG0r7xFvRCS47f89iXFqGIhSkImvS5B5nu7gTeh9GkvTq/6H+M+bgZaDRoOUcLA==
+X-Received: by 2002:a05:6102:51:: with SMTP id k17mr4782635vsp.47.1606240547156;
+        Tue, 24 Nov 2020 09:55:47 -0800 (PST)
+Received: from mail-ua1-f48.google.com (mail-ua1-f48.google.com. [209.85.222.48])
+        by smtp.gmail.com with ESMTPSA id l76sm1726905vkl.26.2020.11.24.09.55.46
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 24 Nov 2020 09:55:46 -0800 (PST)
+Received: by mail-ua1-f48.google.com with SMTP id g3so7080041uae.7
+        for <linux-arm-msm@vger.kernel.org>; Tue, 24 Nov 2020 09:55:46 -0800 (PST)
+X-Received: by 2002:a9f:36a1:: with SMTP id p30mr4817290uap.64.1606240546042;
+ Tue, 24 Nov 2020 09:55:46 -0800 (PST)
 MIME-Version: 1.0
-References: <1606234711-20125-1-git-send-email-loic.poulain@linaro.org>
- <b66d5f09-7560-3b82-84a3-b7cf40c9532e@codeaurora.org> <CAMZdPi_n0h_S3f7R6H0kZO7PhpKiDLm0k6Cfxusg2+qfv1BerQ@mail.gmail.com>
- <a57f713e-db3e-c974-46b6-6e86f4882e46@codeaurora.org>
-In-Reply-To: <a57f713e-db3e-c974-46b6-6e86f4882e46@codeaurora.org>
-From:   Loic Poulain <loic.poulain@linaro.org>
-Date:   Tue, 24 Nov 2020 18:50:02 +0100
-Message-ID: <CAMZdPi-EuT4ksMEDSsSz7kvto6vTpefaikDPnYo4UTBfmNL4fQ@mail.gmail.com>
-Subject: Re: [PATCH v2] bus: mhi: core: Fix device hierarchy issue
-To:     Jeffrey Hugo <jhugo@codeaurora.org>
-Cc:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        Hemant Kumar <hemantk@codeaurora.org>,
+References: <1606198876-3515-1-git-send-email-sibis@codeaurora.org>
+In-Reply-To: <1606198876-3515-1-git-send-email-sibis@codeaurora.org>
+From:   Doug Anderson <dianders@chromium.org>
+Date:   Tue, 24 Nov 2020 09:55:34 -0800
+X-Gmail-Original-Message-ID: <CAD=FV=XpX3zq-rzMNE8f7mZEWBqD1aOrCekzwzugdG7ANW9j-A@mail.gmail.com>
+Message-ID: <CAD=FV=XpX3zq-rzMNE8f7mZEWBqD1aOrCekzwzugdG7ANW9j-A@mail.gmail.com>
+Subject: Re: [PATCH v2 1/2] arm64: dts: qcom: sc7180-lite: Tweak DDR/L3
+ scaling on SC7180-lite
+To:     Sibi Sankar <sibis@codeaurora.org>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Andy Gross <agross@kernel.org>,
         linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Bhaumik Bhatt <bbhatt@codeaurora.org>
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>, LKML <linux-kernel@vger.kernel.org>,
+        Evan Green <evgreen@chromium.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Matthias Kaehlcke <mka@chromium.org>
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, 24 Nov 2020 at 18:37, Jeffrey Hugo <jhugo@codeaurora.org> wrote:
->
-> On 11/24/2020 9:57 AM, Loic Poulain wrote:
-> > On Tue, 24 Nov 2020 at 17:36, Jeffrey Hugo <jhugo@codeaurora.org> wrote:
-> >>
-> >> On 11/24/2020 9:18 AM, Loic Poulain wrote:
-> >>> A MHI client device should be child of the MHI controller device.
-> >>> Today both MHI controller and its MHI clients are direct children
-> >>> of the same bus device. This patch fixes the hierarchy.
-> >>
-> >> Why?
-> >>
-> >> I'm not particularly arguing for or against this change (I think it
-> >> affects me slightly, but not in a breaking way), but this commit text
-> >> seems pretty generic.  It doesn't really help me understand the
-> >> relevance of this change.  It seems to be only describing what you are
-> >> doing, but not the why.  How did you find this?  How does this affect
-> >> the client drivers?  Does it make something the client drivers care
-> >> about better?
-> >>
-> >> To put this another way, "should" is an opinion, and you've provided no
-> >> facts to assert why your opinion is superior to others.
-> >
-> > That's right I've not elaborate too much, but it's mainly to respect
-> > the hierarchy of devices, as it is done for other busses. The
-> > hierarchy is especially important for things like power management
-> > ordering (PM core must suspend devices before their controller, wakeup
-> > the controller before its devices...). Moreover it will also be useful
-> > for userspace (thanks to sysfs) to determine which devices are behind
-> > which controllers (and so determine if e.g. QMI and IP channels are
-> > part of the same device).
->
-> This sounds like two relevant usecases which should be mentioned in the
-> commit text.
+Hi,
 
-Yes, thanks, going to reword the commit message.
+On Mon, Nov 23, 2020 at 10:21 PM Sibi Sankar <sibis@codeaurora.org> wrote:
+>
+> Tweak the DDR/L3 bandwidth votes on the lite variant of the SC7180 SoC
+> since the gold cores only support frequencies upto 2.1 GHz.
+>
+> Signed-off-by: Sibi Sankar <sibis@codeaurora.org>
+> ---
+>
+> V2:
+>  * Updated the lite ddr/l3 cpufreq map to have better power numbers with
+>    similar perf.
+>
+>  arch/arm64/boot/dts/qcom/sc7180-lite.dtsi | 18 ++++++++++++++++++
+>  1 file changed, 18 insertions(+)
 
-Loic
+I certainly don't love the way that this works but it does match the
+way folks have agreed that DDR bandwidth votes should work.  Long term
+it feels like we should re-think how this is working, but it seems
+fine for now.
+
+Reviewed-by: Douglas Anderson <dianders@chromium.org>
