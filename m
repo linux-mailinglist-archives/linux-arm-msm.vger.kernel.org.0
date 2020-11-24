@@ -2,219 +2,111 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 2FA9D2C3101
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Nov 2020 20:45:45 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C73A72C3158
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Nov 2020 20:50:07 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726579AbgKXToD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 24 Nov 2020 14:44:03 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35600 "EHLO
+        id S1726027AbgKXTsJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 24 Nov 2020 14:48:09 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35606 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726556AbgKXToB (ORCPT
+        with ESMTP id S1726560AbgKXToC (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 24 Nov 2020 14:44:01 -0500
-Received: from mail-wr1-x443.google.com (mail-wr1-x443.google.com [IPv6:2a00:1450:4864:20::443])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 06B1EC061A4E
-        for <linux-arm-msm@vger.kernel.org>; Tue, 24 Nov 2020 11:44:00 -0800 (PST)
-Received: by mail-wr1-x443.google.com with SMTP id r17so23603132wrw.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 24 Nov 2020 11:44:00 -0800 (PST)
+        Tue, 24 Nov 2020 14:44:02 -0500
+Received: from mail-wm1-x343.google.com (mail-wm1-x343.google.com [IPv6:2a00:1450:4864:20::343])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F0233C061A52
+        for <linux-arm-msm@vger.kernel.org>; Tue, 24 Nov 2020 11:44:01 -0800 (PST)
+Received: by mail-wm1-x343.google.com with SMTP id d142so77236wmd.4
+        for <linux-arm-msm@vger.kernel.org>; Tue, 24 Nov 2020 11:44:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=+qzn/zwustkhPmm6CPPvaOjBdBZotgdBHz7Gg1/2/58=;
-        b=B9SSFTWYkJpiwdzRTlbdHtktygIWmK53ASYuVZxUzuQ/n1vdExE4t/Iq2OQHpgTdWM
-         YlKwnbJKP5QefHzbj/myTyinENyhQsB7HoOOfzDWAp9aUzPFBBw0yI80nn/3vqXq5DVJ
-         ZobyMQYvz80ZlKbkAjM6KAwcpej9zSG6WeFQ0mKpsNjL0MZ7A+ScztanbQvNq36BAcFw
-         xIyC43sKRK8Vu7yEZdARdFcS7JjbTz8FDyCyw7Y1z02y7eDNahEd7L3cyWfRusNmXTI6
-         OQY8lpGqKcIfvMyPrWMx0AMt3UOBnf7ZmQBWnETACGzEEucHC04NgO66a6oIEu6A5zIY
-         ql4g==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=JwMzTHpk7XI6dg2CwYCxfUcJLWNO9chsHiaVHLyGBfo=;
+        b=zEbr7Ie0juCosDDUMsYHBJ5/J0q8CwkxEN4KosAPheneL90V7ZjGXHhrG+nXobFpYY
+         jYaSnWMkl4OwkgcwqGU7WhRI01sdKPKoxu+AXz/HhpilIXeYZeBJ6WJO4pq7hgCojSu3
+         ljDryijIsewMpHCmf/RA/YCwPkDZHcRWXbe6gkcKK73lBmu7W3r+IBuVJ0LblcnE8cz/
+         Z1lxGr6RnUuSwo0Kk2Mt69/tT+ijOYmrhCwDpsO6lWisOUa0K2JbBUePz/XLLuJLIfVy
+         2PhiDpl+H2UoO6v6BQ0Cp/CbuFgNJqH/bEj4g2kzVDbSCesxOX1zk6zSLhMRaACpmXJe
+         kwgw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=+qzn/zwustkhPmm6CPPvaOjBdBZotgdBHz7Gg1/2/58=;
-        b=T+7ZZ1Lpsj522DsoZdk9WvQglQcmcVO40fBlcu3taEEo6sNoRltzTU6rb1CaceHb/L
-         01Ut64ZqHFfdyA577Ir1oaaBHSiVo0LAZKT7AB92AQWx+X91zysGMhktP+cCGgg5hf35
-         LpqFwpMJps9xNGTJVO0L9jR+d3WoASnTNspEDyTIux+QkY5mQqEGKKq6kT4s47Cos/hz
-         DfpQ4MAPedrGm9ve0m1DDh1TVDYnkV0e+l2PD89mdNBi6cJaqVvn99EplnWOciBby2O6
-         TcGH3IFutNyO4lAfAjW3uaH4kE9jyDt+RnwW1cFk6JZT+6gPrJQGYVoNSAWUSoS3PYHt
-         0JPA==
-X-Gm-Message-State: AOAM533KrE0kR/gIcIWvGTbsfzYGWpUGttK3yVVWwdIAYU/5dnsmc0NC
-        jHr+SwBHKASlb4ajouh0vwPcww==
-X-Google-Smtp-Source: ABdhPJxB3v/xbdSNDArOvs4rF9XodhyOQmc1MFnk/hbl5FOT2va6rX0FYDMtWYy+dDvrd7wwREzh8w==
-X-Received: by 2002:a5d:51c2:: with SMTP id n2mr92041wrv.326.1606247039596;
-        Tue, 24 Nov 2020 11:43:59 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=JwMzTHpk7XI6dg2CwYCxfUcJLWNO9chsHiaVHLyGBfo=;
+        b=K1Prr37VuFIc6D25WYU9M7Km4JNblDmzt2oHCi0ASlJi05CxPHe3H3UHEGNi32GOC0
+         swq+QJNQHVvFT3OG5fgECEn9BerCiDnG10d/e1F4BG3xvkwEeP75Z4dv59uMYXitbCmm
+         /QoHugcJ1cDRl+b/HojErE66ziUFdTnKB79e5ajBGFravJfdq+F8VJ53UDBdS8Wa+ShU
+         F562CfRRY/W1A/Zgk3RUUXcvakCrDGTi2GgAWHJVdJtWg0yaACQB3NtXCAkQYdVSKOep
+         VFE2YbQynCtqoqi3J6ogw44F1GS+Yr3Q7Nw9a5UUiDS0lvNAEexjndlAl3qVPWl+dSmE
+         JZZg==
+X-Gm-Message-State: AOAM532squrTtQxIsZ7lC2J5QlNiybjSjTvCRL+wIedXWE2PfBplh+GF
+        eNohPXPxlkj8CCX9CjCiOGWYhg==
+X-Google-Smtp-Source: ABdhPJyDoOCPHG72jMUWYjVqVYPJywuRT7oeySl5WJow/24UWTk9rV3wClijPpWtjtWY0EN2Oa/1EA==
+X-Received: by 2002:a1c:a986:: with SMTP id s128mr7419wme.94.1606247040667;
+        Tue, 24 Nov 2020 11:44:00 -0800 (PST)
 Received: from dell.default ([91.110.221.235])
-        by smtp.gmail.com with ESMTPSA id d134sm200511wmd.8.2020.11.24.11.43.57
+        by smtp.gmail.com with ESMTPSA id d134sm200511wmd.8.2020.11.24.11.43.59
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 24 Nov 2020 11:43:58 -0800 (PST)
+        Tue, 24 Nov 2020 11:44:00 -0800 (PST)
 From:   Lee Jones <lee.jones@linaro.org>
 To:     lee.jones@linaro.org
-Cc:     linux-kernel@vger.kernel.org,
-        Alex Deucher <alexander.deucher@amd.com>,
-        Alex Sierra <alex.sierra@amd.com>,
-        amd-gfx@lists.freedesktop.org,
-        Chandan Uddaraju <chandanu@codeaurora.org>,
-        =?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        David Airlie <airlied@linux.ie>,
-        dri-devel@lists.freedesktop.org, Evan Quan <evan.quan@amd.com>,
-        freedreno@lists.freedesktop.org,
-        Hawking Zhang <Hawking.Zhang@amd.com>,
-        Kuogee Hsieh <khsieh@codeaurora.org>,
-        linaro-mm-sig@lists.linaro.org, linux-arm-msm@vger.kernel.org,
-        linux-media@vger.kernel.org, Luben Tuikov <luben.tuikov@amd.com>,
-        Nirmoy Das <nirmoy.das@amd.com>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Sumit Semwal <sumit.semwal@linaro.org>,
-        Veerabadhran G <vegopala@amd.com>,
-        Xiaojian Du <Xiaojian.Du@amd.com>,
-        Zhigang Luo <zhigang.luo@amd.com>
-Subject: [PATCH 00/40] [Set 9] Rid W=1 warnings from GPU
-Date:   Tue, 24 Nov 2020 19:37:44 +0000
-Message-Id: <20201124193824.1118741-1-lee.jones@linaro.org>
+Cc:     linux-kernel@vger.kernel.org, Rob Clark <robdclark@gmail.com>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org
+Subject: [PATCH 01/40] drm/msm/msm_gem_shrinker: Fix descriptions for 'drm_device'
+Date:   Tue, 24 Nov 2020 19:37:45 +0000
+Message-Id: <20201124193824.1118741-2-lee.jones@linaro.org>
 X-Mailer: git-send-email 2.25.1
+In-Reply-To: <20201124193824.1118741-1-lee.jones@linaro.org>
+References: <20201124193824.1118741-1-lee.jones@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This set is part of a larger effort attempting to clean-up W=1
-kernel builds, which are currently overwhelmingly riddled with
-niggly little warnings.
+Fixes the following W=1 kernel build warning(s):
 
-730 out of 5000 left.
+ drivers/gpu/drm/msm/msm_gem_shrinker.c:108: warning: Function parameter or member 'dev' not described in 'msm_gem_shrinker_init'
+ drivers/gpu/drm/msm/msm_gem_shrinker.c:108: warning: Excess function parameter 'dev_priv' description in 'msm_gem_shrinker_init'
+ drivers/gpu/drm/msm/msm_gem_shrinker.c:126: warning: Function parameter or member 'dev' not described in 'msm_gem_shrinker_cleanup'
+ drivers/gpu/drm/msm/msm_gem_shrinker.c:126: warning: Excess function parameter 'dev_priv' description in 'msm_gem_shrinker_cleanup'
 
-Lee Jones (40):
-  drm/msm/msm_gem_shrinker: Fix descriptions for 'drm_device'
-  drm/amd/amdgpu/gmc_v10_0: Suppy some missing function doc descriptions
-  drm/msm/adreno/a6xx_gpu_state: Make some local functions static
-  drm/amd/amdgpu/iceland_ih: Add missing function param descriptions for
-    'ih' and 'entry'
-  drm/amd/amdgpu/tonga_ih: Provide some missing descriptions for 'ih'
-    and 'entry'
-  drm/amd/amdgpu/cz_ih: Add missing function param descriptions for 'ih'
-    and 'entry'
-  drm/amd/amdgpu/amdgpu_psp: Make local function
-    'parse_ta_bin_descriptor' static
-  drm/msm/dp/dp_ctrl: Move 'tu' from the stack to the heap
-  drm/amd/amdgpu/vega10_ih: Add descriptions for 'ih' and 'entry'
-  drm/amd/amdgpu/navi10_ih: Add descriptions for 'ih' and 'entry'
-  drm/amd/amdgpu/psp_v11_0: Make local function
-    'psp_v11_0_wait_for_bootloader()' static
-  drm/amd/amdgpu/dce_v10_0: Supply description for function param
-    'async'
-  drm/amd/amdgpu/dce_v11_0: Supply description for function param
-    'async'
-  drm/amd/amdgpu/gfx_v9_0: Make called-by-reference only function static
-  drm/amd/amdgpu/gfx_v8_0: Functions must follow directly after their
-    headers
-  drm/amd/amdgpu/gfx_v10_0: Remove a bunch of set but unused variables
-  drm/amd/amdgpu/sdma_v2_4: Fix a bunch of kernel-doc function
-    documentation issues
-  drm/amd/amdgpu/sdma_v3_0: Fix a bunch of kernel-doc function
-    documentation issues
-  drm/amd/amdgpu/sdma_v3_0: Fix incorrect param doc-rot issue
-  drm/amd/amdgpu/uvd_v5_0: Fix a bunch of kernel-doc function
-    documentation issues
-  drm/amd/amdgpu/sdma_v4_0: Repair a bunch of kernel-doc problems
-  drm/amd/amdgpu/amdgpu_uvd: Fix some function documentation headers
-  drm/amd/amdgpu/sdma_v5_0: Provide some missing and repair other
-    function params
-  drm/amd/amdgpu/sdma_v5_2: Provide some missing and repair other
-    function params
-  drm/amd/amdgpu/amdgpu_vce: Provide some missing and repair other
-    function params
-  drm/amd/amdgpu/uvd_v6_0: Fix a bunch of kernel-doc function
-    documentation issues
-  drm/amd/amdgpu/uvd_v7_0: Fix a bunch of kernel-doc function
-    documentation issues
-  drm/amd/amdgpu/gfx_v10_0: Make local function 'gfx_v10_0_rlc_stop()'
-    static
-  drm/amd/amdgpu/vcn_v1_0: Fix a few kernel-doc misdemeanours
-  drm/amd/amdgpu/jpeg_v1_0: Add some missing function param descriptions
-  drm/amd/amdgpu/jpeg_v2_0: Add some missing kernel-doc descriptions
-  drm/amd/amdgpu/vcn_v2_0: Fix a few kernel-doc misdemeanours
-  drm/amd/amdgpu/vcn_v3_0: Remove unused variable 'direct_poll' from
-    'vcn_v3_0_start_sriov()'
-  drm/amd/amdgpu/amdgpu_acp: Fix doc-rot issues pertaining to a couple
-    of 'handle' params
-  drm/amd/pm/swsmu/smu11/vangogh_ppt: Make local function
-    'vangogh_set_default_dpm_tables()' static
-  drm/amd/pm/inc/smu_v11_0: Mark 'smu11_thermal_policy' as
-    __maybe_unused
-  drm/amd/pm/swsmu/smu12/renoir_ppt: Demote kernel-doc formatting abuse
-  drm/amd/pm/swsmu/smu11/navi10_ppt: Remove unused 'struct i2c_algorithm
-    navi10_i2c_algo'
-  drm/amd/pm/powerplay/smumgr/fiji_smumgr: Remove unused variable
-    'result'
-  drm/amd/amdgpu/amdgpu_uvd: Add description for
-    amdgpu_uvd_cs_msg_decode()'s 'buf_sizes' param
-
- drivers/gpu/drm/amd/amdgpu/amdgpu_acp.c       |   4 +-
- drivers/gpu/drm/amd/amdgpu/amdgpu_psp.c       |   6 +-
- drivers/gpu/drm/amd/amdgpu/amdgpu_uvd.c       |   7 +-
- drivers/gpu/drm/amd/amdgpu/amdgpu_vce.c       |  19 +-
- drivers/gpu/drm/amd/amdgpu/cz_ih.c            |   4 +
- drivers/gpu/drm/amd/amdgpu/dce_v10_0.c        |   1 +
- drivers/gpu/drm/amd/amdgpu/dce_v11_0.c        |   1 +
- drivers/gpu/drm/amd/amdgpu/gfx_v10_0.c        |  11 +-
- drivers/gpu/drm/amd/amdgpu/gfx_v8_0.c         |   2 +-
- drivers/gpu/drm/amd/amdgpu/gfx_v9_0.c         |   2 +-
- drivers/gpu/drm/amd/amdgpu/gmc_v10_0.c        |   4 +
- drivers/gpu/drm/amd/amdgpu/iceland_ih.c       |   4 +
- drivers/gpu/drm/amd/amdgpu/jpeg_v1_0.c        |   7 +-
- drivers/gpu/drm/amd/amdgpu/jpeg_v2_0.c        |   6 +-
- drivers/gpu/drm/amd/amdgpu/navi10_ih.c        |   5 +
- drivers/gpu/drm/amd/amdgpu/psp_v11_0.c        |   2 +-
- drivers/gpu/drm/amd/amdgpu/sdma_v2_4.c        |  16 +-
- drivers/gpu/drm/amd/amdgpu/sdma_v3_0.c        |  16 +-
- drivers/gpu/drm/amd/amdgpu/sdma_v4_0.c        |  22 +-
- drivers/gpu/drm/amd/amdgpu/sdma_v5_0.c        |  19 +-
- drivers/gpu/drm/amd/amdgpu/sdma_v5_2.c        |  19 +-
- drivers/gpu/drm/amd/amdgpu/tonga_ih.c         |   4 +
- drivers/gpu/drm/amd/amdgpu/uvd_v5_0.c         |  10 +-
- drivers/gpu/drm/amd/amdgpu/uvd_v6_0.c         |  21 +-
- drivers/gpu/drm/amd/amdgpu/uvd_v7_0.c         |  21 +-
- drivers/gpu/drm/amd/amdgpu/vcn_v1_0.c         |  14 +-
- drivers/gpu/drm/amd/amdgpu/vcn_v2_0.c         |  15 +-
- drivers/gpu/drm/amd/amdgpu/vcn_v3_0.c         |   4 -
- drivers/gpu/drm/amd/amdgpu/vega10_ih.c        |   5 +
- drivers/gpu/drm/amd/pm/inc/smu_v11_0.h        |   3 +-
- .../drm/amd/pm/powerplay/smumgr/fiji_smumgr.c |  13 +-
- .../gpu/drm/amd/pm/swsmu/smu11/navi10_ppt.c   | 204 -----------
- .../gpu/drm/amd/pm/swsmu/smu11/vangogh_ppt.c  |   9 +-
- .../gpu/drm/amd/pm/swsmu/smu12/renoir_ppt.c   |   4 +-
- drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c   |   6 +-
- drivers/gpu/drm/msm/dp/dp_ctrl.c              | 338 +++++++++---------
- drivers/gpu/drm/msm/msm_gem_shrinker.c        |   4 +-
- 37 files changed, 378 insertions(+), 474 deletions(-)
-
-Cc: Alex Deucher <alexander.deucher@amd.com>
-Cc: Alex Sierra <alex.sierra@amd.com>
-Cc: amd-gfx@lists.freedesktop.org
-Cc: Chandan Uddaraju <chandanu@codeaurora.org>
-Cc: "Christian König" <christian.koenig@amd.com>
-Cc: Daniel Vetter <daniel@ffwll.ch>
-Cc: David Airlie <airlied@linux.ie>
-Cc: dri-devel@lists.freedesktop.org
-Cc: Evan Quan <evan.quan@amd.com>
-Cc: freedreno@lists.freedesktop.org
-Cc: Hawking Zhang <Hawking.Zhang@amd.com>
-Cc: Kuogee Hsieh <khsieh@codeaurora.org>
-Cc: linaro-mm-sig@lists.linaro.org
-Cc: linux-arm-msm@vger.kernel.org
-Cc: linux-media@vger.kernel.org
-Cc: Luben Tuikov <luben.tuikov@amd.com>
-Cc: Nirmoy Das <nirmoy.das@amd.com>
 Cc: Rob Clark <robdclark@gmail.com>
 Cc: Sean Paul <sean@poorly.run>
-Cc: Sumit Semwal <sumit.semwal@linaro.org>
-Cc: Veerabadhran G <vegopala@amd.com>
-Cc: Xiaojian Du <Xiaojian.Du@amd.com>
-Cc: Zhigang Luo <zhigang.luo@amd.com>
+Cc: David Airlie <airlied@linux.ie>
+Cc: Daniel Vetter <daniel@ffwll.ch>
+Cc: linux-arm-msm@vger.kernel.org
+Cc: dri-devel@lists.freedesktop.org
+Cc: freedreno@lists.freedesktop.org
+Signed-off-by: Lee Jones <lee.jones@linaro.org>
+---
+ drivers/gpu/drm/msm/msm_gem_shrinker.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/drivers/gpu/drm/msm/msm_gem_shrinker.c b/drivers/gpu/drm/msm/msm_gem_shrinker.c
+index 6f4b1355725f4..caf032e5bf2f1 100644
+--- a/drivers/gpu/drm/msm/msm_gem_shrinker.c
++++ b/drivers/gpu/drm/msm/msm_gem_shrinker.c
+@@ -100,7 +100,7 @@ msm_gem_shrinker_vmap(struct notifier_block *nb, unsigned long event, void *ptr)
+ 
+ /**
+  * msm_gem_shrinker_init - Initialize msm shrinker
+- * @dev_priv: msm device
++ * @dev: drm device
+  *
+  * This function registers and sets up the msm shrinker.
+  */
+@@ -118,7 +118,7 @@ void msm_gem_shrinker_init(struct drm_device *dev)
+ 
+ /**
+  * msm_gem_shrinker_cleanup - Clean up msm shrinker
+- * @dev_priv: msm device
++ * @dev: drm device
+  *
+  * This function unregisters the msm shrinker.
+  */
 -- 
 2.25.1
 
