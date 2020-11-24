@@ -2,107 +2,105 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 3149E2C1B87
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Nov 2020 03:43:50 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 74EFE2C1BBC
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Nov 2020 03:49:16 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728533AbgKXCnD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 23 Nov 2020 21:43:03 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46792 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728531AbgKXCnC (ORCPT
+        id S1728609AbgKXCsm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 23 Nov 2020 21:48:42 -0500
+Received: from kvm5.telegraphics.com.au ([98.124.60.144]:53350 "EHLO
+        kvm5.telegraphics.com.au" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725907AbgKXCsl (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 23 Nov 2020 21:43:02 -0500
-Received: from mail-qk1-x743.google.com (mail-qk1-x743.google.com [IPv6:2607:f8b0:4864:20::743])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5C2A0C0613D6
-        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Nov 2020 18:43:02 -0800 (PST)
-Received: by mail-qk1-x743.google.com with SMTP id d9so19193369qke.8
-        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Nov 2020 18:43:02 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=tNsYBLHLT9rrNvfsGBebo2tQKLhppSv7kANHpJdP/lI=;
-        b=s4JDUqbrpI3rYJL0OWcii5UkUUD8CaKQ66QI8UxdC5zm5henEoV2h3SKIcT4USD8Is
-         BxPdNoWkR8tYRTfFXFBrnAi9psiWgUpOSQtB5jKqoJ1ccx56LTdolESBS+vmRsjSWx4G
-         i4BbhFoZcKXAwPiSThUFIHzJh1QRHIRUxL+p1EHCXYhWJQSP6TdJ6A4ZqOAky7qrcpZ9
-         8DZgMnuEVlHYJO6X+foxpndqNcWTx+q0Eb0UgEyJH3PmA+VGF83fQsQn6QOnCW68PI+P
-         S+WqPKCnOUae2/UAyZEw6u3s+avVSwxCtkDbvuQWnID2rVyk35nz4hP5h/dTsPPMB00O
-         6I6Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=tNsYBLHLT9rrNvfsGBebo2tQKLhppSv7kANHpJdP/lI=;
-        b=cUflp5XupOeESIWQenv/Bn60nYE+GDOJSG1QmND9GJ1Qvxdsli88fQ+BSlQJcHIeyA
-         d6M24F+inNV8UzWqNIbtiFbrSBoQl1bKxAHnlq39Qr7l0/w0X0LguEdaXccuSZZyUesg
-         E0+iL34AZcZiRTy6PA7jCDaeVBjoGrcOv35JcS9i+l+uhHd8tvLzHNCMPYChs3Dwy4sS
-         Zmgn0Miqikh2URMf4dOotjs3DwX/HhFgOznv6RhEpZF+WLXzcRG0uecPKeXMo/uF7CXO
-         4slPoNnt65UqNaMWMYkbO+SWdC13oW0B99Mzd956og1DoxADH17C7fuJngoMHLEj/Wur
-         dqdA==
-X-Gm-Message-State: AOAM5335/mgY1YTfDJqVsRbL9EQpwPQSvYjFMYI32MEFdadwQ42JcKe5
-        XtR7smXAF/2MxdgGA7gks2m1HA==
-X-Google-Smtp-Source: ABdhPJw/2B3Xvuv7XA3fOYRpcJIpddnZFsIHjVXs8JpTBEDrceEvtKqoaAZU37k5M9FR5+uSqtg6wA==
-X-Received: by 2002:a37:a249:: with SMTP id l70mr2545611qke.79.1606185781595;
-        Mon, 23 Nov 2020 18:43:01 -0800 (PST)
-Received: from [192.168.1.93] (pool-71-163-245-5.washdc.fios.verizon.net. [71.163.245.5])
-        by smtp.gmail.com with ESMTPSA id 68sm5412251qkf.97.2020.11.23.18.43.00
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 23 Nov 2020 18:43:00 -0800 (PST)
-Subject: Re: [Patch v2 0/6] Enable Qualcomm Crypto Engine on sdm845
-To:     Eric Biggers <ebiggers@kernel.org>
-Cc:     agross@kernel.org, bjorn.andersson@linaro.org,
-        herbert@gondor.apana.org.au, davem@davemloft.net,
-        robh+dt@kernel.org, sboyd@kernel.org, mturquette@baylibre.com,
-        linux-arm-msm@vger.kernel.org, linux-crypto@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-clk@vger.kernel.org
-References: <20201119155233.3974286-1-thara.gopinath@linaro.org>
- <X7b1ZX5SEMq1PbVN@sol.localdomain>
-From:   Thara Gopinath <thara.gopinath@linaro.org>
-Message-ID: <48ea0a56-397e-5345-d693-cdc73b20875d@linaro.org>
-Date:   Mon, 23 Nov 2020 21:42:59 -0500
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.10.0
+        Mon, 23 Nov 2020 21:48:41 -0500
+Received: from localhost (localhost.localdomain [127.0.0.1])
+        by kvm5.telegraphics.com.au (Postfix) with ESMTP id EF15F2AA0D;
+        Mon, 23 Nov 2020 21:48:35 -0500 (EST)
+Date:   Tue, 24 Nov 2020 13:48:34 +1100 (AEDT)
+From:   Finn Thain <fthain@telegraphics.com.au>
+To:     Joe Perches <joe@perches.com>
+cc:     Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>,
+        James Bottomley <James.Bottomley@hansenpartnership.com>,
+        Kees Cook <keescook@chromium.org>,
+        Jakub Kicinski <kuba@kernel.org>,
+        "Gustavo A. R. Silva" <gustavoars@kernel.org>,
+        linux-kernel <linux-kernel@vger.kernel.org>,
+        alsa-devel@alsa-project.org, amd-gfx@lists.freedesktop.org,
+        bridge@lists.linux-foundation.org, ceph-devel@vger.kernel.org,
+        cluster-devel@redhat.com, coreteam@netfilter.org,
+        devel@driverdev.osuosl.org, dm-devel@redhat.com,
+        drbd-dev@lists.linbit.com, dri-devel@lists.freedesktop.org,
+        GR-everest-linux-l2@marvell.com, GR-Linux-NIC-Dev@marvell.com,
+        intel-gfx@lists.freedesktop.org, intel-wired-lan@lists.osuosl.org,
+        keyrings@vger.kernel.org, linux1394-devel@lists.sourceforge.net,
+        linux-acpi@vger.kernel.org, linux-afs@lists.infradead.org,
+        Linux ARM <linux-arm-kernel@lists.infradead.org>,
+        linux-arm-msm@vger.kernel.org,
+        linux-atm-general@lists.sourceforge.net,
+        linux-block@vger.kernel.org, linux-can@vger.kernel.org,
+        linux-cifs@vger.kernel.org,
+        Linux Crypto Mailing List <linux-crypto@vger.kernel.org>,
+        linux-decnet-user@lists.sourceforge.net,
+        Ext4 Developers List <linux-ext4@vger.kernel.org>,
+        linux-fbdev@vger.kernel.org, linux-geode@lists.infradead.org,
+        linux-gpio@vger.kernel.org, linux-hams@vger.kernel.org,
+        linux-hwmon@vger.kernel.org, linux-i3c@lists.infradead.org,
+        linux-ide@vger.kernel.org, linux-iio@vger.kernel.org,
+        linux-input <linux-input@vger.kernel.org>,
+        linux-integrity@vger.kernel.org,
+        linux-mediatek@lists.infradead.org,
+        Linux Media Mailing List <linux-media@vger.kernel.org>,
+        linux-mmc@vger.kernel.org, Linux-MM <linux-mm@kvack.org>,
+        linux-mtd@lists.infradead.org, linux-nfs@vger.kernel.org,
+        linux-rdma@vger.kernel.org, linux-renesas-soc@vger.kernel.org,
+        linux-scsi@vger.kernel.org, linux-sctp@vger.kernel.org,
+        linux-security-module@vger.kernel.org,
+        linux-stm32@st-md-mailman.stormreply.com,
+        linux-usb@vger.kernel.org, linux-watchdog@vger.kernel.org,
+        linux-wireless <linux-wireless@vger.kernel.org>,
+        Network Development <netdev@vger.kernel.org>,
+        netfilter-devel@vger.kernel.org, nouveau@lists.freedesktop.org,
+        op-tee@lists.trustedfirmware.org, oss-drivers@netronome.com,
+        patches@opensource.cirrus.com, rds-devel@oss.oracle.com,
+        reiserfs-devel@vger.kernel.org, samba-technical@lists.samba.org,
+        selinux@vger.kernel.org, target-devel@vger.kernel.org,
+        tipc-discussion@lists.sourceforge.net,
+        usb-storage@lists.one-eyed-alien.net,
+        virtualization@lists.linux-foundation.org,
+        wcn36xx@lists.infradead.org,
+        "maintainer:X86 ARCHITECTURE (32-BIT AND 64-BIT)" <x86@kernel.org>,
+        xen-devel@lists.xenproject.org, linux-hardening@vger.kernel.org,
+        Nick Desaulniers <ndesaulniers@google.com>,
+        Nathan Chancellor <natechancellor@gmail.com>,
+        Miguel Ojeda <ojeda@kernel.org>
+Subject: Re: [PATCH 000/141] Fix fall-through warnings for Clang
+In-Reply-To: <e72a1aaef8673553a3ee9dfa033d6e893e00abcd.camel@perches.com>
+Message-ID: <alpine.LNX.2.23.453.2011241210310.7@nippy.intranet>
+References: <cover.1605896059.git.gustavoars@kernel.org>  <20201120105344.4345c14e@kicinski-fedora-pc1c0hjn.dhcp.thefacebook.com>  <202011201129.B13FDB3C@keescook>  <20201120115142.292999b2@kicinski-fedora-pc1c0hjn.dhcp.thefacebook.com>  <202011220816.8B6591A@keescook>
+  <9b57fd4914b46f38d54087d75e072d6e947cb56d.camel@HansenPartnership.com>  <CANiq72nZrHWTA4_Msg6MP9snTyenC6-eGfD27CyfNSu7QoVZbw@mail.gmail.com>  <alpine.LNX.2.23.453.2011230938390.7@nippy.intranet>  <CANiq72=z+tmuey9wj3Kk7wX5s0hTHpsQdLhAqcOVNrHon6xn5Q@mail.gmail.com>
+  <alpine.LNX.2.23.453.2011241036520.7@nippy.intranet> <e72a1aaef8673553a3ee9dfa033d6e893e00abcd.camel@perches.com>
 MIME-Version: 1.0
-In-Reply-To: <X7b1ZX5SEMq1PbVN@sol.localdomain>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=US-ASCII
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
+On Mon, 23 Nov 2020, Joe Perches wrote:
 
-On 11/19/20 5:44 PM, Eric Biggers wrote:
-> On Thu, Nov 19, 2020 at 10:52:27AM -0500, Thara Gopinath wrote:
->> Qualcomm crypto engine supports hardware accelerated algorithms for
->> encryption and authentication. Enable support for aes,des,3des encryption
->> algorithms and sha1,sha256, hmac(sha1),hmac(sha256) authentication
->> algorithms on sdm845.The patch series has been tested using the kernel
->> crypto testing module tcrypto.ko.
+> On Tue, 2020-11-24 at 11:58 +1100, Finn Thain wrote:
+> > it's not for me to prove that such patches don't affect code 
+> > generation. That's for the patch author and (unfortunately) for 
+> > reviewers.
 > 
-> Can you please test CONFIG_CRYPTO_MANAGER_EXTRA_TESTS=y too?  Implementations of
-> crypto algorithms shouldn't be enabled unless they are passing all tests.
-
-Hi Eric,
-Yes. I will get around to this probably next week.
-
+> Ideally, that proof would be provided by the compilation system itself 
+> and not patch authors nor reviewers nor maintainers.
 > 
-> Also, did you compare the performance of this hardware to ARMv8 CE?  I thought
-> that QCE (at least on other SoCs) isn't very useful because ARMv8 CE is faster.
-
-That is surprising. No I did not compare performance. But I see the 
-Qualcomm crypto engine driver enabled and used in the downstream tree 
-for this platform. I see no reason for it not to be in mainline and to 
-be maintained as an out of tree solution. I will try to run some 
-performance benchmarks soon.
-
-> 
-> - Eric
+> Unfortunately gcc does not guarantee repeatability or deterministic 
+> output. To my knowledge, neither does clang.
 > 
 
--- 
-Warm Regards
-Thara
+Yes, I've said the same thing myself. But having attempted it, I now think 
+this is a hard problem. YMMV.
+
+https://lore.kernel.org/linux-scsi/alpine.LNX.2.22.394.2004281017310.12@nippy.intranet/
+https://lore.kernel.org/linux-scsi/alpine.LNX.2.22.394.2005211358460.8@nippy.intranet/
