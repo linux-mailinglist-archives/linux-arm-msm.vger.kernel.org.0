@@ -2,140 +2,138 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 4DA1F2C1D23
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Nov 2020 05:53:15 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 573C22C1D58
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Nov 2020 06:24:39 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726955AbgKXEwA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 23 Nov 2020 23:52:00 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38322 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726932AbgKXEwA (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 23 Nov 2020 23:52:00 -0500
-Received: from mail-oi1-x243.google.com (mail-oi1-x243.google.com [IPv6:2607:f8b0:4864:20::243])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1254CC0613CF
-        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Nov 2020 20:52:00 -0800 (PST)
-Received: by mail-oi1-x243.google.com with SMTP id o25so22435849oie.5
-        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Nov 2020 20:52:00 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=21wh1RXrzLauQp1Zzrr3Pjj6ApJ/n51jC9LfHbkaKmY=;
-        b=n0+dYK2xtpTlFNg42XEHZZzZwOGGufij+bDtWnHViKF9yePzEKzPJrA1FFYEgwpPa5
-         oY1mB2mJngVy8JAvPrGAdkOOGYIWf0IpD+2BuGlz0nHYpDCJw0xT4yI3kVWay0HCieuC
-         Vi9+iI8TdGRY5o38rbNJsazX19zg4M4jH3+T4W4R/W3YRkHzEEEsArM2jb+1+7fKPaGs
-         iJR0NbItXQCxSoNLYm6SpOQWjRdb/T8PF0uJ7rvRD4Oeq9c6fiEQ01XrEOOV6F6jSGPl
-         YZEYxcgFqWpX+ran3veNjljAXBwO8jST/RrbsAHvIxoU+eHd30V5Rohtq2FErIWTq1xV
-         88EA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=21wh1RXrzLauQp1Zzrr3Pjj6ApJ/n51jC9LfHbkaKmY=;
-        b=Tl+wbg6qIJ3BkTmOgMlKGfMSJwPyv8vwasqxmPe6AH0YsMgZKrqTmdHClNHIn8vFD+
-         ms+atRj5NQPa8Jg7KKsSMV7mQoMkAgQko4Jx9eNPY4kAG2kepvPDl3MJfMQqktSHPX8y
-         JboK0td8f6GutPfVCqE8luzR/TwtMDsv8BJPa90+m4MI8rbI8Tykt9CzJLoKLzynTxkI
-         iMpvC2iayw0w3KXGW1VdR0ASiIRRnl3W/Dqhaqo+PEzKGN3jTx316x5RVjDkywB7sx7z
-         ccfYJpnPx8QSL2eJ1gQhGaJ7r6Anjf7S7bjQhq2W7Agm/VM6FSzmDWxs5FCEyTAIl241
-         22kA==
-X-Gm-Message-State: AOAM532ay5z8pLlFhFDfeVM4eb2KBojutYz9g8Fk3At0iDZ4yKfea6Wp
-        q7rrkg9jrEjP2iE5m8d6CwV4cw==
-X-Google-Smtp-Source: ABdhPJxx8PNpFgul9bJq4f9P39PTOZ4UQOaHXVAQ3uMenmz0FcS/8UhRicJEaacMk+6aPMiKDvqJRg==
-X-Received: by 2002:aca:f5c8:: with SMTP id t191mr1678894oih.40.1606193519483;
-        Mon, 23 Nov 2020 20:51:59 -0800 (PST)
-Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id z77sm8670400ooa.37.2020.11.23.20.51.58
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 23 Nov 2020 20:51:58 -0800 (PST)
-Date:   Mon, 23 Nov 2020 22:51:56 -0600
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     John Stultz <john.stultz@linaro.org>
-Cc:     lkml <linux-kernel@vger.kernel.org>, Todd Kjos <tkjos@google.com>,
-        Saravana Kannan <saravanak@google.com>,
-        Andy Gross <agross@kernel.org>,
-        Rajendra Nayak <rnayak@codeaurora.org>,
-        Maulik Shah <mkshah@codeaurora.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        Mark Brown <broonie@kernel.org>, linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH v2] regulator: Kconfig: Fix REGULATOR_QCOM_RPMH
- dependencies to avoid build error
-Message-ID: <20201124045156.GI95182@builder.lan>
-References: <20201123222359.103822-1-john.stultz@linaro.org>
+        id S1726708AbgKXFWn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 24 Nov 2020 00:22:43 -0500
+Received: from z5.mailgun.us ([104.130.96.5]:27339 "EHLO z5.mailgun.us"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1728661AbgKXFWn (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 24 Nov 2020 00:22:43 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1606195362; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
+ Subject: Sender; bh=QCEbPZ+4NCyW03THEzwjMRu8R88TrrAsdg0fQA0QrN4=; b=pRdmKjEZ04lPifEFwga+yrfdiPLnFBjuqLcICJKEFFyu4GU4P0J4fH449sPWg6tvDpj2OJma
+ g3QqCtDea/iTeoRbwBe0GBinBrfLcCjCUwdFMaiCRSGe1QJMnfFs67w4hxGIt0/jpaWyZ+yI
+ 6xWjAnRRTyXgoclcAtrcslHs5nA=
+X-Mailgun-Sending-Ip: 104.130.96.5
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n10.prod.us-west-2.postgun.com with SMTP id
+ 5fbc988e7e9d874dfc3d7caa (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 24 Nov 2020 05:22:22
+ GMT
+Sender: neeraju=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id C0C24C433ED; Tue, 24 Nov 2020 05:22:22 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        NICE_REPLY_A,SPF_FAIL autolearn=no autolearn_force=no version=3.4.0
+Received: from [192.168.0.101] (unknown [49.206.49.183])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: neeraju)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 4CEA9C433ED;
+        Tue, 24 Nov 2020 05:22:17 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 4CEA9C433ED
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=neeraju@codeaurora.org
+Subject: Re: AMU extension v1 support for cortex A76, A77, A78 CPUs
+To:     Mark Rutland <mark.rutland@arm.com>,
+        Vladimir Murzin <vladimir.murzin@arm.com>,
+        Marc Zyngier <maz@kernel.org>, sudeep.holla@arm.com
+Cc:     suzuki.poulose@arm.com, ionela.voinescu@arm.com,
+        MSM <linux-arm-msm@vger.kernel.org>,
+        lkml <linux-kernel@vger.kernel.org>, catalin.marinas@arm.com,
+        Will Deacon <will@kernel.org>, valentin.schneider@arm.com,
+        linux-arm-kernel@lists.infradead.org
+References: <2cc9dd44-0b4b-94a8-155a-7a2446a1b892@codeaurora.org>
+ <1712842eb0767e51155a5396d282102c@kernel.org>
+ <e15de351-63c1-2599-82bf-22c95e8a6a62@arm.com>
+ <20201120101249.GA2328@C02TD0UTHF1T.local>
+From:   Neeraj Upadhyay <neeraju@codeaurora.org>
+Message-ID: <8606d7f9-bd3d-c825-3f38-d48879be59f9@codeaurora.org>
+Date:   Tue, 24 Nov 2020 10:52:15 +0530
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.5.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20201123222359.103822-1-john.stultz@linaro.org>
+In-Reply-To: <20201120101249.GA2328@C02TD0UTHF1T.local>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-GB
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon 23 Nov 16:23 CST 2020, John Stultz wrote:
+Thanks Marc, Vladimir, Mark, Sudeep for your inputs!
 
-> The kernel test robot reported the following build error:
-> 
-> All errors (new ones prefixed by >>):
-> 
->    xtensa-linux-ld: drivers/regulator/qcom-rpmh-regulator.o: in function `rpmh_regulator_vrm_get_voltage_sel':
->    qcom-rpmh-regulator.c:(.text+0x270): undefined reference to `rpmh_write'
->    xtensa-linux-ld: drivers/regulator/qcom-rpmh-regulator.o: in function `rpmh_regulator_send_request':
->    qcom-rpmh-regulator.c:(.text+0x2f2): undefined reference to `rpmh_write'
->    xtensa-linux-ld: drivers/regulator/qcom-rpmh-regulator.o: in function `rpmh_regulator_vrm_get_voltage_sel':
-> >> qcom-rpmh-regulator.c:(.text+0x274): undefined reference to `rpmh_write_async'
->    xtensa-linux-ld: drivers/regulator/qcom-rpmh-regulator.o: in function `rpmh_regulator_send_request':
->    qcom-rpmh-regulator.c:(.text+0x2fc): undefined reference to `rpmh_write_async'
-> 
-> Which is due to REGULATOR_QCOM_RPMH depending on
-> QCOM_RPMH || COMPILE_TEST. The problem is that QOM_RPMH can now
-> be a module, which in that case requires REGULATOR_QCOM_RPMH=m
-> to build.
-> 
-> However, if COMPILE_TEST is enabled, REGULATOR_QCOM_RPMH can be
-> set to =y while QCOM_RPMH=m which will cause build failures.
-> 
-> The fix here is to add (QCOM_RPMH=n && COMPILE_TEST) to the
-> dependency.
-> 
-> Feedback would be appreciated!
 
-Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+Thanks
+Neeraj
 
-Regards,
-Bjorn
 
+On 11/20/2020 3:43 PM, Mark Rutland wrote:
+> On Fri, Nov 20, 2020 at 09:09:00AM +0000, Vladimir Murzin wrote:
+>> On 11/20/20 8:56 AM, Marc Zyngier wrote:
+>>> On 2020-11-20 04:30, Neeraj Upadhyay wrote:
+>>>> Hi,
+>>>>
+>>>> For ARM cortex A76, A77, A78 cores (which as per TRM, support AMU)
+>>>> AA64PFR0[47:44] field is not set, and AMU does not get enabled for
+>>>> them.
+>>>> Can you please provide support for these CPUs in cpufeature.c?
+>>>
+>>> If that was the case, that'd be an erratum, and it would need to be
+>>> documented as such. It could also be that this is an optional feature
+>>> for these cores (though the TRM doesn't suggest that).
+>>>
+>>> Can someone at ARM confirm what is the expected behaviour of these CPUs?
+>>
+>> Not a confirmation, but IIRC, these are imp def features, while our cpufeatures
+>> catches architected one.
 > 
-> Cc: Todd Kjos <tkjos@google.com>
-> Cc: Saravana Kannan <saravanak@google.com>
-> Cc: Andy Gross <agross@kernel.org>
-> Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
-> Cc: Rajendra Nayak <rnayak@codeaurora.org>
-> Cc: Maulik Shah <mkshah@codeaurora.org>
-> Cc: Stephen Boyd <swboyd@chromium.org>
-> Cc: Liam Girdwood <lgirdwood@gmail.com>
-> Cc: Mark Brown <broonie@kernel.org>
-> Cc: linux-arm-msm@vger.kernel.org
-> Reported-by: kernel test robot <lkp@intel.com>
-> Signed-off-by: John Stultz <john.stultz@linaro.org>
-> ---
-> v2: Switch dependency logic as suggested by MarkB
-> ---
->  drivers/regulator/Kconfig | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+> We generally don't make use of IMP-DEF featurees because of all the pain
+> it brings.
 > 
-> diff --git a/drivers/regulator/Kconfig b/drivers/regulator/Kconfig
-> index 020a00d6696b..481c7b10133b 100644
-> --- a/drivers/regulator/Kconfig
-> +++ b/drivers/regulator/Kconfig
-> @@ -843,7 +843,7 @@ config REGULATOR_QCOM_RPM
->  
->  config REGULATOR_QCOM_RPMH
->  	tristate "Qualcomm Technologies, Inc. RPMh regulator driver"
-> -	depends on QCOM_RPMH || COMPILE_TEST
-> +	depends on QCOM_RPMH || (QCOM_RPMH=n && COMPILE_TEST)
->  	help
->  	  This driver supports control of PMIC regulators via the RPMh hardware
->  	  block found on Qualcomm Technologies Inc. SoCs.  RPMh regulator
-> -- 
-> 2.17.1
+> Looking at the Cortex-A76 TRM, the encoding for AMCNTENCLR is:
 > 
+>   Op0: 3  (0b11)
+>   Op1: 3  (0b011)
+>   CRn: 15 (0b1111)
+>   CRm: 9  (0b1001)
+>   Op2: 7  (0b111)
+> 
+> ... whereas the architected encoding (from our sysreg.h) is:
+> 
+>   Op0: 3
+>   Op1: 3
+>   CRn: 13
+>   CRm: 2
+>   Op2: 4
+> 
+> ... so that's a different register with the same name, which is
+> confusing and unfortunate.
+> 
+> The encodings are different (and I haven't checked whether the fields /
+> semantics are the same), so it's not just a matter of wiring up new
+> detection code. There are also IMP-DEF traps in ACTLR_EL3 and ACTLR_EL2
+> which we can't be certain of the configuration of, and as the registers
+> are in the IMP-DEF encoding space they'll be trapped by HCR_EL2.TIDCP
+> and emulated as UNDEFINED by a hypervisor. All of that means that going
+> by the MIDR alone is not sufficient to know we can safely access the
+> registers.
+> 
+> So as usual for IMP-DEF stuff I don't think we can or should make use of
+> this.
+> 
+> Thanks,
+> Mark.
+> 
+
+-- 
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a 
+member of the Code Aurora Forum, hosted by The Linux Foundation
