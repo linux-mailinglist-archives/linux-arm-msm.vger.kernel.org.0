@@ -2,264 +2,161 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id EB0932C1A24
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Nov 2020 01:41:36 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id BBAB02C1A3E
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Nov 2020 01:53:40 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729399AbgKXAjD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 23 Nov 2020 19:39:03 -0500
-Received: from z5.mailgun.us ([104.130.96.5]:41546 "EHLO z5.mailgun.us"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728093AbgKXAjD (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 23 Nov 2020 19:39:03 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1606178341; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=hs8EW7bPfuYiy2WlNq9IsOrwvJXuF+szh5J2TAIP5RM=;
- b=b44BGUWtspTMcKiqWnb+AioKPvCplUut03LPFL+E4HpZ40bYPbe0NEk+ju3zyNMw3iEhIhrM
- Ghrm1W3mqhXc4jvRso9d3jxdJIqwhJuIxoYtaOZtOgMT7RmvorqiqKLYr+rq6FfmjnDgcvh2
- +vYk98mufi6TbgZdGjgMVnCnbD4=
-X-Mailgun-Sending-Ip: 104.130.96.5
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n05.prod.us-west-2.postgun.com with SMTP id
- 5fbc561722377520ee256f0b (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 24 Nov 2020 00:38:47
- GMT
-Sender: abhinavk=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 458FAC433ED; Tue, 24 Nov 2020 00:38:47 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: abhinavk)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id BE2BDC433C6;
-        Tue, 24 Nov 2020 00:38:44 +0000 (UTC)
+        id S1727550AbgKXAu1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 23 Nov 2020 19:50:27 -0500
+Received: from mail-oi1-f196.google.com ([209.85.167.196]:46382 "EHLO
+        mail-oi1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727498AbgKXAu0 (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 23 Nov 2020 19:50:26 -0500
+Received: by mail-oi1-f196.google.com with SMTP id q206so21832565oif.13;
+        Mon, 23 Nov 2020 16:50:25 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=gI7zhBhIP0+6Xsp8/COOViVeUh5gtUo2CsgJ6HRlj/M=;
+        b=U3KYKXzLKSRpowRZ44/7lM+eVbTnJ/e/+EQxQn8Tt7Y7eH/CDFvLc61ST67JgfsMpx
+         T5Y7YI+NdiVH23ZagCwDs+BlqW0qivMIp4z82xOrEXo35nqZz9fLKcNfM9Ex6R8aTres
+         ir8iHLbmEMIo+DvV9VcMUSnNXA7qis4iLXC+DTWCR1Ox4lxN7JHaPtekoVl/IWDlh78r
+         RcCjgp9B0/b4mDDLb/lRekyMMl4eNA0mWWKCrh+9AUQAxDDbkCeZS13eLXlWvqalJyBH
+         3lUJz52yFnRwnpMQbzMvSm4iJBjPySGQnHq1bU1MfzdlvVh/87Opa32Xz1C8Wi5vtu+n
+         cCWg==
+X-Gm-Message-State: AOAM533bpRXZuj/oyUo6+XCEqnIaKYyswf8AEXtjA1+1V9uX4q+P9Xqs
+        SsNlf755KMq6p0LhXckBfLOf+RkUbPavHw==
+X-Google-Smtp-Source: ABdhPJwJWyBDfbJ4UWMzCUO8Aw1qkmKHgxsqLfkxp072xhp3wemr1BTakI+3GYQ7JEeJp1ZvZfsTQA==
+X-Received: by 2002:aca:af88:: with SMTP id y130mr1150530oie.81.1606179024831;
+        Mon, 23 Nov 2020 16:50:24 -0800 (PST)
+Received: from mail-oi1-f174.google.com (mail-oi1-f174.google.com. [209.85.167.174])
+        by smtp.gmail.com with ESMTPSA id j23sm7796970otr.80.2020.11.23.16.50.24
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 23 Nov 2020 16:50:24 -0800 (PST)
+Received: by mail-oi1-f174.google.com with SMTP id q206so21832522oif.13;
+        Mon, 23 Nov 2020 16:50:24 -0800 (PST)
+X-Received: by 2002:aca:4cf:: with SMTP id 198mr1036440oie.175.1606178695336;
+ Mon, 23 Nov 2020 16:44:55 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Mon, 23 Nov 2020 16:38:44 -0800
-From:   abhinavk@codeaurora.org
-To:     Rob Clark <robdclark@gmail.com>
-Cc:     dri-devel <dri-devel@lists.freedesktop.org>,
+References: <20201103152838.1290217-1-lee.jones@linaro.org>
+In-Reply-To: <20201103152838.1290217-1-lee.jones@linaro.org>
+From:   Li Yang <leoyang.li@nxp.com>
+Date:   Mon, 23 Nov 2020 18:44:43 -0600
+X-Gmail-Original-Message-ID: <CADRPPNQx2=f46EQOvYLZUMbL+4qyDXUyvzjsKqFLC-iuQFRAQQ@mail.gmail.com>
+Message-ID: <CADRPPNQx2=f46EQOvYLZUMbL+4qyDXUyvzjsKqFLC-iuQFRAQQ@mail.gmail.com>
+Subject: Re: [PATCH 00/25] Rid W=1 warnings in SoC
+To:     Lee Jones <lee.jones@linaro.org>
+Cc:     "moderated list:ARM/FREESCALE IMX / MXC ARM ARCHITECTURE" 
+        <linux-arm-kernel@lists.infradead.org>,
+        lkml <linux-kernel@vger.kernel.org>, act <dmalek@jlc.net>,
+        Andy Gross <agross@kernel.org>,
+        bcm-kernel-feedback-list@broadcom.com,
+        Ben Dooks <ben@simtec.co.uk>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Cyril Chemparathy <cyril@ti.com>,
+        Dan Malek <dan@embeddedalley.com>,
+        Dave Gerlach <d-gerlach@ti.com>,
+        Doug Anderson <dianders@chromium.org>,
+        Florian Fainelli <f.fainelli@gmail.com>,
+        Heiko Stuebner <heiko@sntech.de>,
+        Jonathan Hunter <jonathanh@nvidia.com>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        Liam Girdwood <lgirdwood@gmail.com>,
         linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        freedreno <freedreno@lists.freedesktop.org>,
-        Sean Paul <seanpaul@chromium.org>,
-        Stephen Boyd <swboyd@chromium.org>, nganji@codeaurora.org,
-        aravindh@codeaurora.org, Tanmay Shah <tanmay@codeaurora.org>,
-        Kuogee Hsieh <khsieh@codeaurora.org>
-Subject: Re: [PATCH] drm/msm/dpu: update the qos remap only if the client type
- changes
-In-Reply-To: <CAF6AEGsWVKCAE3CetZagbvRNZAU00FaoWSvaDxxOafNRY5dz1g@mail.gmail.com>
-References: <20201119214145.10182-1-abhinavk@codeaurora.org>
- <CAF6AEGsWVKCAE3CetZagbvRNZAU00FaoWSvaDxxOafNRY5dz1g@mail.gmail.com>
-Message-ID: <71e2d86b935fe043eb1203045783439d@codeaurora.org>
-X-Sender: abhinavk@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+        linuxppc-dev <linuxppc-dev@lists.ozlabs.org>,
+        linux-rockchip@lists.infradead.org,
+        linux-samsung-soc@vger.kernel.org, linux-tegra@vger.kernel.org,
+        Mark Brown <broonie@kernel.org>,
+        Qiang Zhao <qiang.zhao@nxp.com>,
+        "Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+        Roy Pledge <Roy.Pledge@nxp.com>,
+        Sandeep Nair <sandeep_n@ti.com>,
+        Santosh Shilimkar <ssantosh@kernel.org>,
+        Scott Wood <scottwood@freescale.com>,
+        "Software, Inc" <source@mvista.com>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Vitaly Bordug <vbordug@ru.mvista.com>,
+        YueHaibing <yuehaibing@huawei.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Rob
+On Tue, Nov 3, 2020 at 9:29 AM Lee Jones <lee.jones@linaro.org> wrote:
+>
+> This set is part of a larger effort attempting to clean-up W=1
+> kernel builds, which are currently overwhelmingly riddled with
+> niggly little warnings.
+>
+> Lee Jones (25):
 
-On 2020-11-23 15:18, Rob Clark wrote:
-> On Thu, Nov 19, 2020 at 1:41 PM Abhinav Kumar <abhinavk@codeaurora.org> 
-> wrote:
->> 
->> Update the qos remap only if the client type changes for the plane.
->> This will avoid unnecessary register programming and also avoid log
->> spam from the dpu_vbif_set_qos_remap() function.
->> 
->> Signed-off-by: Abhinav Kumar <abhinavk@codeaurora.org>
->> ---
->>  drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c    | 17 +++++++++++++++++
->>  drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.h    |  7 +++++++
->>  drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c |  2 ++
->>  drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c   | 12 ++++++++++--
->>  drivers/gpu/drm/msm/disp/dpu1/dpu_plane.h   |  5 +++++
->>  5 files changed, 41 insertions(+), 2 deletions(-)
->> 
->> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c 
->> b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
->> index d4662e8184cc..3867da47c683 100644
->> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
->> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
->> @@ -1037,6 +1037,23 @@ static int dpu_crtc_atomic_check(struct 
->> drm_crtc *crtc,
->>         return rc;
->>  }
->> 
->> +void dpu_crtc_set_qos_dirty(struct drm_crtc *crtc)
->> +{
->> +       struct drm_plane *plane;
->> +       struct drm_plane_state *state;
->> +       struct dpu_plane_state *pstate;
->> +
->> +       drm_atomic_crtc_for_each_plane(plane, crtc) {
->> +               state = plane->state;
->> +               if (!state)
->> +                       continue;
->> +
->> +               pstate = to_dpu_plane_state(state);
->> +
->> +               pstate->dirty |= DPU_PLANE_DIRTY_QOS;
->> +       }
->> +}
->> +
->>  int dpu_crtc_vblank(struct drm_crtc *crtc, bool en)
->>  {
->>         struct dpu_crtc *dpu_crtc = to_dpu_crtc(crtc);
->> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.h 
->> b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.h
->> index cec3474340e8..8ba11de605bc 100644
->> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.h
->> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.h
->> @@ -231,6 +231,13 @@ static inline int dpu_crtc_frame_pending(struct 
->> drm_crtc *crtc)
->>   */
->>  int dpu_crtc_vblank(struct drm_crtc *crtc, bool en);
->> 
->> +/**
->> + * dpu_crtc_set_qos_dirty - update plane dirty flag to include
->> + * QoS reprogramming
->> + * @crtc: Pointer to drm crtc structure
->> + */
->> +void dpu_crtc_set_qos_dirty(struct drm_crtc *crtc);
->> +
->>  /**
->>   * dpu_crtc_vblank_callback - called on vblank irq, issues completion 
->> events
->>   * @crtc: Pointer to drm crtc object
->> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c 
->> b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
->> index f7f5c258b553..c2db9dd6ec67 100644
->> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
->> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
->> @@ -1001,6 +1001,8 @@ static void dpu_encoder_virt_mode_set(struct 
->> drm_encoder *drm_enc,
->> 
->>         trace_dpu_enc_mode_set(DRMID(drm_enc));
->> 
->> +       dpu_crtc_set_qos_dirty(drm_enc->crtc);
->> +
->>         if (drm_enc->encoder_type == DRM_MODE_ENCODER_TMDS && 
->> priv->dp)
->>                 msm_dp_display_mode_set(priv->dp, drm_enc, mode, 
->> adj_mode);
->> 
->> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c 
->> b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
->> index 7ea90d25a3b6..f91d31a31e14 100644
->> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
->> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
->> @@ -1066,6 +1066,7 @@ static void dpu_plane_sspp_atomic_update(struct 
->> drm_plane *plane)
->>         struct dpu_plane_state *pstate = to_dpu_plane_state(state);
->>         struct drm_crtc *crtc = state->crtc;
->>         struct drm_framebuffer *fb = state->fb;
->> +       bool is_rt_pipe;
->>         const struct dpu_format *fmt =
->>                 to_dpu_format(msm_framebuffer_format(fb));
->> 
->> @@ -1075,7 +1076,7 @@ static void dpu_plane_sspp_atomic_update(struct 
->> drm_plane *plane)
->> 
->>         pstate->pending = true;
->> 
->> -       pdpu->is_rt_pipe = (dpu_crtc_get_client_type(crtc) != 
->> NRT_CLIENT);
->> +       is_rt_pipe = (dpu_crtc_get_client_type(crtc) != NRT_CLIENT);
->>         _dpu_plane_set_qos_ctrl(plane, false, 
->> DPU_PLANE_QOS_PANIC_CTRL);
->> 
->>         DPU_DEBUG_PLANE(pdpu, "FB[%u] " DRM_RECT_FP_FMT "->crtc%u " 
->> DRM_RECT_FMT
->> @@ -1181,8 +1182,15 @@ static void dpu_plane_sspp_atomic_update(struct 
->> drm_plane *plane)
->>                 _dpu_plane_set_ot_limit(plane, crtc);
->>         }
->> 
->> -       _dpu_plane_set_qos_remap(plane);
->> +       if (is_rt_pipe != pdpu->is_rt_pipe) {
->> +               pdpu->is_rt_pipe = is_rt_pipe;
->> +               pstate->dirty |= DPU_PLANE_DIRTY_QOS;
->> +       }
->> 
->> +       if (pstate->dirty & DPU_PLANE_DIRTY_QOS) {
->> +               _dpu_plane_set_qos_remap(plane);
->> +               pstate->dirty = 0x0;
->> +       }
-> 
-> So in the end, this looks roughly like "set qos remap on modesets or
-> switching between right/left pipe"?  Couldn't this be simpler if in
-> plane->atomic_check() you do something like:
-> 
->    dpu_plane_state->needs_qos_remap = atomic_state->allow_modeset;
-> 
-> and then in plane->atomic_update:
-> 
->     if (pstate->needs_qos_remap || (is_rt_pipe != pdpu->is_rt_pipe) {
->          pdpu->is_rt_pipe = is_rt_pipe;
->          _dpu_plane_set_qos_remap(plane)
->     }
-> 
-> ?
-> 
-> BR,
-> -R
-Thanks for the suggestion, Yes this will make it much simpler. Let me 
-update it.
+>   soc: fsl: dpio: qbman-portal: Fix a bunch of kernel-doc misdemeanours
+>   soc: fsl: qe: qe_common: Fix misnamed function attribute 'addr'
+>   soc: fsl: qbman: qman: Remove unused variable 'dequeue_wq'
 
-Just one clarification, I believe you meant that
-dpu_plane_state->needs_qos_remap = 
-drm_atomic_crtc_needs_modeset(crtc_state)
+The above are applied for next.  Thanks.
 
-and then the rest of it looks fine to me.
-
-> 
-> 
->>         _dpu_plane_calc_bw(plane, fb);
->> 
->>         _dpu_plane_calc_clk(plane);
->> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.h 
->> b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.h
->> index ca83b8753d59..47abd3686a86 100644
->> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.h
->> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.h
->> @@ -14,11 +14,15 @@
->>  #include "dpu_hw_mdss.h"
->>  #include "dpu_hw_sspp.h"
->> 
->> +/* dirty bits to update QOS */
->> +#define DPU_PLANE_DIRTY_QOS 0x1
->> +
->>  /**
->>   * struct dpu_plane_state: Define dpu extension of drm plane state 
->> object
->>   * @base:      base drm plane state object
->>   * @aspace:    pointer to address space for input/output buffers
->>   * @stage:     assigned by crtc blender
->> + * @dirty:     bitmask for which pipe h/w config functions need to be 
->> updated
->>   * @multirect_index: index of the rectangle of SSPP
->>   * @multirect_mode: parallel or time multiplex multirect mode
->>   * @pending:   whether the current update is still pending
->> @@ -32,6 +36,7 @@ struct dpu_plane_state {
->>         struct drm_plane_state base;
->>         struct msm_gem_address_space *aspace;
->>         enum dpu_stage stage;
->> +       uint32_t dirty;
->>         uint32_t multirect_index;
->>         uint32_t multirect_mode;
->>         bool pending;
->> --
->> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora 
->> Forum,
->> a Linux Foundation Collaborative Project
->> 
+Regards,
+Leo
+>
+>  drivers/soc/bcm/brcmstb/pm/pm-arm.c      |  2 +
+>  drivers/soc/fsl/dpio/qbman-portal.c      | 18 +++++--
+>  drivers/soc/fsl/qbman/qman.c             |  8 +--
+>  drivers/soc/fsl/qe/qe_common.c           |  2 +-
+>  drivers/soc/qcom/kryo-l2-accessors.c     |  2 +-
+>  drivers/soc/qcom/llcc-qcom.c             |  2 +-
+>  drivers/soc/qcom/qcom-geni-se.c          |  5 +-
+>  drivers/soc/qcom/qcom_aoss.c             |  4 +-
+>  drivers/soc/qcom/rpmh.c                  |  2 +-
+>  drivers/soc/qcom/rpmhpd.c                |  3 ++
+>  drivers/soc/qcom/smem.c                  |  3 +-
+>  drivers/soc/qcom/smp2p.c                 |  3 +-
+>  drivers/soc/qcom/smsm.c                  |  4 +-
+>  drivers/soc/qcom/wcnss_ctrl.c            |  8 +--
+>  drivers/soc/rockchip/io-domain.c         |  3 --
+>  drivers/soc/samsung/s3c-pm-check.c       |  2 +-
+>  drivers/soc/tegra/fuse/speedo-tegra124.c |  7 ++-
+>  drivers/soc/tegra/fuse/speedo-tegra210.c |  8 +--
+>  drivers/soc/ti/k3-ringacc.c              |  1 +
+>  drivers/soc/ti/knav_dma.c                |  2 +-
+>  drivers/soc/ti/knav_qmss_queue.c         | 62 ++++++++++++------------
+>  drivers/soc/ti/pm33xx.c                  |  4 +-
+>  drivers/soc/ti/wkup_m3_ipc.c             |  8 ++-
+>  23 files changed, 86 insertions(+), 77 deletions(-)
+>
+> Cc: act <dmalek@jlc.net>
+> Cc: Andy Gross <agross@kernel.org>
+> Cc: bcm-kernel-feedback-list@broadcom.com
+> Cc: Ben Dooks <ben@simtec.co.uk>
+> Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
+> Cc: Cyril Chemparathy <cyril@ti.com>
+> Cc: Dan Malek <dan@embeddedalley.com>
+> Cc: Dave Gerlach <d-gerlach@ti.com>
+> Cc: Doug Anderson <dianders@chromium.org>
+> Cc: Florian Fainelli <f.fainelli@gmail.com>
+> Cc: Heiko Stuebner <heiko@sntech.de>
+> Cc: Jonathan Hunter <jonathanh@nvidia.com>
+> Cc: Krzysztof Kozlowski <krzk@kernel.org>
+> Cc: Liam Girdwood <lgirdwood@gmail.com>
+> Cc: linux-arm-msm@vger.kernel.org
+> Cc: linuxppc-dev@lists.ozlabs.org
+> Cc: linux-rockchip@lists.infradead.org
+> Cc: linux-samsung-soc@vger.kernel.org
+> Cc: linux-tegra@vger.kernel.org
+> Cc: Li Yang <leoyang.li@nxp.com>
+> Cc: Mark Brown <broonie@kernel.org>
+> Cc: Qiang Zhao <qiang.zhao@nxp.com>
+> Cc: "Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
+> Cc: Roy Pledge <Roy.Pledge@nxp.com>
+> Cc: Sandeep Nair <sandeep_n@ti.com>
+> Cc: Santosh Shilimkar <ssantosh@kernel.org>
+> Cc: Scott Wood <scottwood@freescale.com>
+> Cc: "Software, Inc" <source@mvista.com>
+> Cc: Thierry Reding <thierry.reding@gmail.com>
+> Cc: Vitaly Bordug <vbordug@ru.mvista.com>
+> Cc: YueHaibing <yuehaibing@huawei.com>
+>
+> --
+> 2.25.1
+>
