@@ -2,145 +2,108 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 46C312C1C75
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Nov 2020 05:05:43 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 856F72C1C96
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Nov 2020 05:15:40 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727466AbgKXEC4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 23 Nov 2020 23:02:56 -0500
-Received: from z5.mailgun.us ([104.130.96.5]:25234 "EHLO z5.mailgun.us"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725308AbgKXEC4 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 23 Nov 2020 23:02:56 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1606190576; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=FoFdssz2mmWQah99fW3jkhC1o+yA5snIRe1I3agQdNA=;
- b=iyfizJcYh9Qxw6k07RHXTW1oqe5vATSFvdAbpHUgrGa5lnyQtIkmw8UsGtXFqljsWsGgREnL
- /gdhyRfb8EBzALhziS4LdVHTDkPlNW0DzkKBzciZWb4Ln1ow51oSP/1dk39UdTHdxbrAQan1
- 8vCDI9BfHRBTMWtJva8X+nycKw0=
-X-Mailgun-Sending-Ip: 104.130.96.5
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n07.prod.us-west-2.postgun.com with SMTP id
- 5fbc85ef7e9d874dfc25cbff (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 24 Nov 2020 04:02:55
- GMT
-Sender: saiprakash.ranjan=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 37898C43468; Tue, 24 Nov 2020 04:02:55 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: saiprakash.ranjan)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 19B4BC433ED;
-        Tue, 24 Nov 2020 04:02:54 +0000 (UTC)
+        id S1728724AbgKXENm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 23 Nov 2020 23:13:42 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60648 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728638AbgKXENl (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 23 Nov 2020 23:13:41 -0500
+Received: from mail-qk1-x730.google.com (mail-qk1-x730.google.com [IPv6:2607:f8b0:4864:20::730])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 86EA7C061A4D
+        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Nov 2020 20:13:41 -0800 (PST)
+Received: by mail-qk1-x730.google.com with SMTP id y197so19337629qkb.7
+        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Nov 2020 20:13:41 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=marek-ca.20150623.gappssmtp.com; s=20150623;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=bt8cy62Sf+1LUo2jKUqU0KxiS+qrKJvOn13RlpIH/MQ=;
+        b=wu48yA9TTPD76JwDzPncANkDH1fK+/BHkitmGHbazn3yE7LrmD+JFRxIJHrRUWxEIq
+         EhFyZjaENTKgLC89lqGDuVmO6yfzsw6Qn0F0sE0I0J5meb29w5yeAZJCojzeA7JIs2Yo
+         7DU3UmFX2SaChbrN9jzSD7vPSPI0J1HME/zhzHHsKv6PWL6aUAi/oNHg2KcUJU9NYqOz
+         2Nf+z3Gi2f84yMbENijAe3r+PyqUBVV2WrxV4a++e0m+25reBu6RkfeKFD02mzNIaR7Z
+         gcZoqG1KatNkEyipkuKoljWf4TQuK4c26bf6vOth2LvXCp9lvvt1rWEjtoPm8J/1+USW
+         lNqA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=bt8cy62Sf+1LUo2jKUqU0KxiS+qrKJvOn13RlpIH/MQ=;
+        b=uSfFvmO3v7wEznPVESoLwuIdQnvLCdHFJJm5X3uhOXAO90iSjyS52kZfeIxo9uys1y
+         2aKQSMMD8+H8n7U48bxPC1W4iLT/8CVI3f7lkBp3jqJFvqx8itrJDHi5APncX183N9Va
+         V7kHXBhia8XqymqNhltJnGBSDPPEvFpChGmEbfEyzCMO+J7Jm/S43dNf08QNR2jq04Lt
+         3R/i1GcUFBX/bTm9pPUnsqjyN5751y9sUF9fdZG8Sv+F4uy9kBjBEyOEaNYfgASrz2kd
+         qtmfcdboKnVdGegOYdrU7tdqteLRVfvifJ+tDemARW7F9siRhxhQrcfnCzHoyfkcFYQw
+         GtWw==
+X-Gm-Message-State: AOAM533hFTkPYpVoJkb2Ce1jeJsOpGmVfoa2j3xtidMt26sC5wX5s/T1
+        iO89MpvcJvZFIUArGDrOQoPRJxz3CDK8L8fr
+X-Google-Smtp-Source: ABdhPJz7ZNezBZGA9buuHdIjN+4aarJihl6kEXxbuZw+b8D54bKloFI81/adeHUq4f7fVUpTCEXTSQ==
+X-Received: by 2002:a37:6805:: with SMTP id d5mr2986582qkc.66.1606191220466;
+        Mon, 23 Nov 2020 20:13:40 -0800 (PST)
+Received: from localhost.localdomain (modemcable068.184-131-66.mc.videotron.ca. [66.131.184.68])
+        by smtp.gmail.com with ESMTPSA id o8sm11841553qtm.9.2020.11.23.20.13.39
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 23 Nov 2020 20:13:39 -0800 (PST)
+From:   Jonathan Marek <jonathan@marek.ca>
+To:     linux-arm-msm@vger.kernel.org
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        devicetree@vger.kernel.org (open list:OPEN FIRMWARE AND FLATTENED
+        DEVICE TREE BINDINGS), linux-kernel@vger.kernel.org (open list)
+Subject: [PATCH] arm64: dts: qcom: sort sm8150 usb_2 node
+Date:   Mon, 23 Nov 2020 23:10:03 -0500
+Message-Id: <20201124041003.3600-1-jonathan@marek.ca>
+X-Mailer: git-send-email 2.26.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Tue, 24 Nov 2020 09:32:54 +0530
-From:   Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-To:     Rob Clark <robdclark@gmail.com>, Will Deacon <will@kernel.org>
-Cc:     Robin Murphy <robin.murphy@arm.com>,
-        Joerg Roedel <joro@8bytes.org>,
-        Jordan Crouse <jcrouse@codeaurora.org>,
-        Akhil P Oommen <akhilpo@codeaurora.org>,
-        freedreno <freedreno@lists.freedesktop.org>,
-        "Kristian H . Kristensen" <hoegsberg@google.com>,
-        dri-devel <dri-devel@lists.freedesktop.org>,
-        "list@263.net:IOMMU DRIVERS , Joerg Roedel <joro@8bytes.org>," 
-        <iommu@lists.linux-foundation.org>,
-        "moderated list:ARM/FREESCALE IMX / MXC ARM ARCHITECTURE" 
-        <linux-arm-kernel@lists.infradead.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>
-Subject: Re: [PATCHv8 0/8] System Cache support for GPU and required SMMU
- support
-In-Reply-To: <CAF6AEGse=WBAC1WbTi6aD5_m1_NBg91f=veYm-7V=Uds7NA0Lw@mail.gmail.com>
-References: <cover.1605621785.git.saiprakash.ranjan@codeaurora.org>
- <20201123152146.GE11033@willie-the-truck>
- <50b68f2bdf9413b896fbe816ba4ddbc9@codeaurora.org>
- <CAF6AEGse=WBAC1WbTi6aD5_m1_NBg91f=veYm-7V=Uds7NA0Lw@mail.gmail.com>
-Message-ID: <1c665e33d1d27263fb5056c16d30b827@codeaurora.org>
-X-Sender: saiprakash.ranjan@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2020-11-24 00:52, Rob Clark wrote:
-> On Mon, Nov 23, 2020 at 9:01 AM Sai Prakash Ranjan
-> <saiprakash.ranjan@codeaurora.org> wrote:
->> 
->> On 2020-11-23 20:51, Will Deacon wrote:
->> > On Tue, Nov 17, 2020 at 08:00:39PM +0530, Sai Prakash Ranjan wrote:
->> >> Some hardware variants contain a system cache or the last level
->> >> cache(llc). This cache is typically a large block which is shared
->> >> by multiple clients on the SOC. GPU uses the system cache to cache
->> >> both the GPU data buffers(like textures) as well the SMMU pagetables.
->> >> This helps with improved render performance as well as lower power
->> >> consumption by reducing the bus traffic to the system memory.
->> >>
->> >> The system cache architecture allows the cache to be split into slices
->> >> which then be used by multiple SOC clients. This patch series is an
->> >> effort to enable and use two of those slices preallocated for the GPU,
->> >> one for the GPU data buffers and another for the GPU SMMU hardware
->> >> pagetables.
->> >>
->> >> Patch 1 - Patch 6 adds system cache support in SMMU and GPU driver.
->> >> Patch 7 and 8 are minor cleanups for arm-smmu impl.
->> >>
->> >> Changes in v8:
->> >>  * Introduce a generic domain attribute for pagetable config (Will)
->> >>  * Rename quirk to more generic IO_PGTABLE_QUIRK_ARM_OUTER_WBWA (Will)
->> >>  * Move non-strict mode to use new struct domain_attr_io_pgtbl_config
->> >> (Will)
->> >
->> > Modulo some minor comments I've made, this looks good to me. What is
->> > the
->> > plan for merging it? I can take the IOMMU parts, but patches 4-6 touch
->> > the
->> > MSM GPU driver and I'd like to avoid conflicts with that.
->> >
->> 
->> SMMU bits are pretty much independent and GPU relies on the domain
->> attribute
->> and the quirk exposed, so as long as SMMU changes go in first it 
->> should
->> be good.
->> Rob?
-> 
-> I suppose one option would be to split out the patch that adds the
-> attribute into it's own patch, and merge that both thru drm and iommu?
-> 
+Fix an error introduced resolving conflicts with camnoc_virt node.
 
-Ok I can split out domain attr and quirk into its own patch if Will is
-fine with that approach.
+Fixes: 0c9dde0d2015 ("arm64: dts: qcom: sm8150: Add secondary USB and PHY nodes")
+---
+ arch/arm64/boot/dts/qcom/sm8150.dtsi | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
-> If Will/Robin dislike that approach, I'll pick up the parts of the drm
-> patches which don't depend on the new attribute for v5.11 and the rest
-> for v5.12.. or possibly a second late v5.11 pull req if airlied
-> doesn't hate me too much for it.
-> 
-> Going forward, I think we will have one or two more co-dependent
-> series, like the smmu iova fault handler improvements that Jordan
-> posted.  So I would like to hear how Will and Robin prefer to handle
-> those.
-> 
-> BR,
-> -R
-> 
-
-Thanks,
-Sai
-
+diff --git a/arch/arm64/boot/dts/qcom/sm8150.dtsi b/arch/arm64/boot/dts/qcom/sm8150.dtsi
+index bcfb06f5bebe..743228ba148f 100644
+--- a/arch/arm64/boot/dts/qcom/sm8150.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm8150.dtsi
+@@ -976,13 +976,6 @@ usb_1_dwc3: dwc3@a600000 {
+ 			};
+ 		};
+ 
+-		camnoc_virt: interconnect@ac00000 {
+-			compatible = "qcom,sm8150-camnoc-virt";
+-			reg = <0 0x0ac00000 0 0x1000>;
+-			#interconnect-cells = <1>;
+-			qcom,bcm-voters = <&apps_bcm_voter>;
+-		};
+-
+ 		usb_2: usb@a8f8800 {
+ 			compatible = "qcom,sm8150-dwc3", "qcom,dwc3";
+ 			reg = <0 0x0a8f8800 0 0x400>;
+@@ -1028,6 +1021,13 @@ usb_2_dwc3: dwc3@a800000 {
+ 			};
+ 		};
+ 
++		camnoc_virt: interconnect@ac00000 {
++			compatible = "qcom,sm8150-camnoc-virt";
++			reg = <0 0x0ac00000 0 0x1000>;
++			#interconnect-cells = <1>;
++			qcom,bcm-voters = <&apps_bcm_voter>;
++		};
++
+ 		aoss_qmp: power-controller@c300000 {
+ 			compatible = "qcom,sm8150-aoss-qmp";
+ 			reg = <0x0 0x0c300000 0x0 0x100000>;
 -- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a 
-member
-of Code Aurora Forum, hosted by The Linux Foundation
+2.26.1
+
