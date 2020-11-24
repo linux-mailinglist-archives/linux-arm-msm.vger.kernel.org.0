@@ -2,98 +2,100 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 8C1962C2CF8
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Nov 2020 17:32:25 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1A4982C2D0A
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Nov 2020 17:38:27 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2390099AbgKXQb6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 24 Nov 2020 11:31:58 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34036 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2390017AbgKXQb6 (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 24 Nov 2020 11:31:58 -0500
-Received: from mail-ot1-x344.google.com (mail-ot1-x344.google.com [IPv6:2607:f8b0:4864:20::344])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 16F2AC0613D6
-        for <linux-arm-msm@vger.kernel.org>; Tue, 24 Nov 2020 08:31:58 -0800 (PST)
-Received: by mail-ot1-x344.google.com with SMTP id 11so7361185oty.9
-        for <linux-arm-msm@vger.kernel.org>; Tue, 24 Nov 2020 08:31:58 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=O1ba/f2z4FniBZjfqbUKsu3JvZQwwQqF9zir1Omgmjw=;
-        b=GPK6roWoya5lyy2gbTplpznOoGUsaYM2Ffqph9CG2f3VniFMlfnA3ducEifA7cjdMs
-         3BKYjWQ6nFq9O8qoyxCykx0LVu1JU6DrxH4poyftRgsqXhFDl9HqDxao34s08MMr0wzK
-         iYuXaerjTxiheGRB/M7BfWPPZqoND/1NdsiLc5IeZHziBoCjHpKmaBXY50Gfkw8QZjFU
-         k7h6aN24fkCT7SNDyVY6WufvxMq4cb+GcJpwwtRqegfL360WgLiZ/RddpMJyXaWrYF7N
-         WflzHApk7h4lIX1Q8JDvEtDQ4MgpfM+47SUEhczZ5BW+PuV1T2vUT2kxugGfS4eq0Jdc
-         elIA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=O1ba/f2z4FniBZjfqbUKsu3JvZQwwQqF9zir1Omgmjw=;
-        b=RlD8PunMG1sCioRJNzdepVU2XQ1ioA4EozXcsZLEFufxcMGe+iaRNHWbStlm5Q5FIX
-         wu+YirTcIcM7wXS/GjixAYyK3MRvjqyyv7EnAmzst3h/njZ0bGMglCs21Kna1UkL8Ios
-         JH6siF8ZI7fBqgjKmPiDh3BVXImkkbpKIE7dPV3pOpX8MEJP98OGLcfU1AqKQF6TE/8v
-         L/poS/ngjA52NvQvgrNbtJhS3ZL0wZQ8V3GAfy2oaoeZ/s4Q0kAOfmRuu1+ALOee1juL
-         FdCvmhphiaTfVI0XNAajCFWXewrG7g/rs41Ix+IXuvvb5VklSuLN/pomI3sFf75azgQV
-         js6A==
-X-Gm-Message-State: AOAM530CSRoYFLMyfiJw3txceXWJr3XFbCZmTuXbeyOtgXVEOiSmIlZw
-        zJ6tnOb5F5RxDkD6Zk5MOM0Vcw==
-X-Google-Smtp-Source: ABdhPJwggyZl8L8g2b9hR43GvCNlab5dHHsODCrifU8R6VNY8s8rLLkIRxx3/EbDQehqsvMsG0iMxg==
-X-Received: by 2002:a9d:3e85:: with SMTP id b5mr3767632otc.354.1606235517411;
-        Tue, 24 Nov 2020 08:31:57 -0800 (PST)
-Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id c190sm9548303oig.34.2020.11.24.08.31.56
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 24 Nov 2020 08:31:56 -0800 (PST)
-Date:   Tue, 24 Nov 2020 10:31:55 -0600
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Loic Poulain <loic.poulain@linaro.org>
-Cc:     manivannan.sadhasivam@linaro.org, hemantk@codeaurora.org,
-        linux-arm-msm@vger.kernel.org, bbhatt@codeaurora.org
+        id S2390452AbgKXQgl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 24 Nov 2020 11:36:41 -0500
+Received: from z5.mailgun.us ([104.130.96.5]:22779 "EHLO z5.mailgun.us"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S2390374AbgKXQgl (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 24 Nov 2020 11:36:41 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1606235801; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
+ Subject: Sender; bh=gCBKOXdqtAx4+AXKdvyMKYwidXGV5tKBLcl5wBj6jAQ=; b=FFlN1IDwcVrLk5mwr3ABpPIEuJa9blS47F6O/IMKVPniUtr1I2xngc3j6Qx9H7dYlCTT9zsh
+ oj1vJqc45PWzYeegcYVa9b9dmlGHdk/TWCEkHRWjwC9jY+U3JuX/hic0NclprkZBqzT9J13e
+ uo7WbQUWsjw5WjG4zDdsluTwbDg=
+X-Mailgun-Sending-Ip: 104.130.96.5
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n05.prod.us-west-2.postgun.com with SMTP id
+ 5fbd3690e714ea65012c4034 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 24 Nov 2020 16:36:32
+ GMT
+Sender: jhugo=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 2BDF6C43462; Tue, 24 Nov 2020 16:36:32 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        NICE_REPLY_A,SPF_FAIL,URIBL_BLOCKED autolearn=no autolearn_force=no
+        version=3.4.0
+Received: from [10.226.59.216] (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: jhugo)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id D9551C433C6;
+        Tue, 24 Nov 2020 16:36:30 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org D9551C433C6
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=jhugo@codeaurora.org
 Subject: Re: [PATCH v2] bus: mhi: core: Fix device hierarchy issue
-Message-ID: <20201124163155.GM95182@builder.lan>
+To:     Loic Poulain <loic.poulain@linaro.org>,
+        manivannan.sadhasivam@linaro.org, hemantk@codeaurora.org
+Cc:     linux-arm-msm@vger.kernel.org, bbhatt@codeaurora.org
 References: <1606234711-20125-1-git-send-email-loic.poulain@linaro.org>
+From:   Jeffrey Hugo <jhugo@codeaurora.org>
+Message-ID: <b66d5f09-7560-3b82-84a3-b7cf40c9532e@codeaurora.org>
+Date:   Tue, 24 Nov 2020 09:36:30 -0700
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.4.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
 In-Reply-To: <1606234711-20125-1-git-send-email-loic.poulain@linaro.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue 24 Nov 10:18 CST 2020, Loic Poulain wrote:
-
+On 11/24/2020 9:18 AM, Loic Poulain wrote:
 > A MHI client device should be child of the MHI controller device.
 > Today both MHI controller and its MHI clients are direct children
 > of the same bus device. This patch fixes the hierarchy.
+
+Why?
+
+I'm not particularly arguing for or against this change (I think it 
+affects me slightly, but not in a breaking way), but this commit text 
+seems pretty generic.  It doesn't really help me understand the 
+relevance of this change.  It seems to be only describing what you are 
+doing, but not the why.  How did you find this?  How does this affect 
+the client drivers?  Does it make something the client drivers care 
+about better?
+
+To put this another way, "should" is an opinion, and you've provided no 
+facts to assert why your opinion is superior to others.
+
 > 
 > Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
-
-I like this, but have a nagging feeling that we discussed this during
-the upstreaming of MHI. Mani, do you remember?
-
-Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-
-Regards,
-Bjorn
-
 > ---
->  v2: fix commit message
+>   v2: fix commit message
 > 
->  drivers/bus/mhi/core/init.c | 10 +++++++++-
->  1 file changed, 9 insertions(+), 1 deletion(-)
+>   drivers/bus/mhi/core/init.c | 10 +++++++++-
+>   1 file changed, 9 insertions(+), 1 deletion(-)
 > 
 > diff --git a/drivers/bus/mhi/core/init.c b/drivers/bus/mhi/core/init.c
 > index 436221c..c7a7354 100644
 > --- a/drivers/bus/mhi/core/init.c
 > +++ b/drivers/bus/mhi/core/init.c
 > @@ -1137,7 +1137,15 @@ struct mhi_device *mhi_alloc_device(struct mhi_controller *mhi_cntrl)
->  	device_initialize(dev);
->  	dev->bus = &mhi_bus_type;
->  	dev->release = mhi_release_device;
+>   	device_initialize(dev);
+>   	dev->bus = &mhi_bus_type;
+>   	dev->release = mhi_release_device;
 > -	dev->parent = mhi_cntrl->cntrl_dev;
 > +
 > +	if (mhi_cntrl->mhi_dev) {
@@ -104,9 +106,13 @@ Bjorn
 > +		dev->parent = mhi_cntrl->cntrl_dev;
 > +	}
 > +
->  	mhi_dev->mhi_cntrl = mhi_cntrl;
->  	mhi_dev->dev_wake = 0;
->  
-> -- 
-> 2.7.4
+>   	mhi_dev->mhi_cntrl = mhi_cntrl;
+>   	mhi_dev->dev_wake = 0;
+>   
 > 
+
+
+-- 
+Jeffrey Hugo
+Qualcomm Technologies, Inc. is a member of the
+Code Aurora Forum, a Linux Foundation Collaborative Project.
