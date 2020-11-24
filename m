@@ -2,208 +2,203 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D63C52C25E2
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Nov 2020 13:44:53 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4CFEF2C26A4
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Nov 2020 13:58:05 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1733265AbgKXMng (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 24 Nov 2020 07:43:36 -0500
-Received: from z5.mailgun.us ([104.130.96.5]:16938 "EHLO z5.mailgun.us"
+        id S1733262AbgKXM54 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 24 Nov 2020 07:57:56 -0500
+Received: from z5.mailgun.us ([104.130.96.5]:48396 "EHLO z5.mailgun.us"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1730792AbgKXMng (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 24 Nov 2020 07:43:36 -0500
+        id S1732512AbgKXM54 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 24 Nov 2020 07:57:56 -0500
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1606221815; h=Content-Transfer-Encoding: Content-Type:
- In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
- Subject: Sender; bh=KPH+uh7Q002+AMdNTwne1i7ICbqTjCHDwyjsOxu6Krw=; b=v4bTs3kresKIL1QenuHOGs08rBTEsE0lW6PYpEB12Anj92PE7zDuBwTlxSBokxWzK+5FkdiU
- Y53hwrxCm5FhO6bpD9y1WzDWPc//TrHytYFtrwfJSg+P2h6KvwnYxp2t/jtACrF1xrB6Ix8a
- CVHiF5b/nWwD6RKLCPykm0Swr9I=
+ s=smtp; t=1606222675; h=Message-ID: Subject: Cc: To: From: Date:
+ Content-Type: MIME-Version: Sender;
+ bh=p3o5O2rDOoKz7JnE/QmTS9ZiRoVNLotQeymZMjfvd8Y=; b=AX44xxKgbXglZVsSB8IYM3YtpEIrHts7L8zP1MDxzUxUKaJx9f+6sDd83UGjfVOuQw+3n8CE
+ f8N7t+kFgKAOPLCx1S0DN8O0eBRr8CQ7oFyOsF0gM/ACptUC5e9UVXhDU7lNF7s/9pEQ43rw
+ dDZicC/zotoa+9HCpUA+4lTP9XU=
 X-Mailgun-Sending-Ip: 104.130.96.5
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org
  (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n08.prod.us-east-1.postgun.com with SMTP id
- 5fbcfff3fa67d9becf1a6ba5 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 24 Nov 2020 12:43:31
+ smtp-out-n05.prod.us-east-1.postgun.com with SMTP id
+ 5fbd03477f0cfa6a16006a1a (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 24 Nov 2020 12:57:43
  GMT
-Sender: mkshah=codeaurora.org@mg.codeaurora.org
+Sender: kalyan_t=codeaurora.org@mg.codeaurora.org
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 66711C43462; Tue, 24 Nov 2020 12:43:30 +0000 (UTC)
+        id 902ABC43460; Tue, 24 Nov 2020 12:57:42 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
 X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        NICE_REPLY_A,SPF_FAIL autolearn=no autolearn_force=no version=3.4.0
-Received: from [192.168.29.129] (unknown [49.36.77.145])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
         (No client certificate requested)
-        (Authenticated sender: mkshah)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id B7EBFC433C6;
-        Tue, 24 Nov 2020 12:43:24 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org B7EBFC433C6
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=mkshah@codeaurora.org
-Subject: Re: [PATCH 3/3] pinctrl: qcom: Clear possible pending irq when
- remuxing GPIOs
-To:     Marc Zyngier <maz@kernel.org>
-Cc:     Douglas Anderson <dianders@chromium.org>,
-        Thomas Gleixner <tglx@linutronix.de>,
-        Jason Cooper <jason@lakedaemon.net>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Srinivas Ramana <sramana@codeaurora.org>,
-        Neeraj Upadhyay <neeraju@codeaurora.org>,
-        Rajendra Nayak <rnayak@codeaurora.org>,
-        linux-gpio@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Andy Gross <agross@kernel.org>, linux-kernel@vger.kernel.org
-References: <20201123160139.1.I2702919afc253e2a451bebc3b701b462b2d22344@changeid>
- <20201123160139.3.I771b6594b2a4d5b7fe7e12a991a6640f46386e8d@changeid>
- <502b39f5-a2b3-5893-da18-47b034f4895d@codeaurora.org>
- <853f7419653122d2fd46e8d70202d25c@kernel.org>
-From:   Maulik Shah <mkshah@codeaurora.org>
-Message-ID: <bc0337f1-4b8e-7a3a-22fd-ff6f8cbaffca@codeaurora.org>
-Date:   Tue, 24 Nov 2020 18:13:21 +0530
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.5.0
+        (Authenticated sender: kalyan_t)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 366ACC433ED;
+        Tue, 24 Nov 2020 12:57:41 +0000 (UTC)
 MIME-Version: 1.0
-In-Reply-To: <853f7419653122d2fd46e8d70202d25c@kernel.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Content-Language: en-GB
+Content-Type: multipart/mixed;
+ boundary="=_b2b938fb10d812d8faa8fd415ac40fd7"
+Date:   Tue, 24 Nov 2020 18:27:41 +0530
+From:   kalyan_t@codeaurora.org
+To:     Amit Pundir <amit.pundir@linaro.org>
+Cc:     Rob Clark <robdclark@gmail.com>,
+        Sumit Semwal <sumit.semwal@linaro.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>,
+        Krishna Manikandan <mkrishn@codeaurora.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Raviteja Tamatam <travitej@codeaurora.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        dri-devel <dri-devel@lists.freedesktop.org>,
+        Douglas Anderson <dianders@chromium.org>,
+        nganji@codeaurora.org, Sean Paul <seanpaul@chromium.org>,
+        John Stultz <john.stultz@linaro.org>,
+        "Kristian H. Kristensen" <hoegsberg@chromium.org>,
+        freedreno <freedreno@lists.freedesktop.org>,
+        Jeykumar Sankaran <jsanka@codeaurora.org>,
+        Georgi Djakov <georgi.djakov@linaro.org>,
+        abhinavk@codeaurora.org
+Subject: Re: [Freedreno] [PATCH 3/3] drm/msm/dpu: add support for clk and bw
+ scaling for display
+Message-ID: <5b07a7be8d136392dc7f93933a7ee68e@codeaurora.org>
+X-Sender: kalyan_t@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Marc,
+--=_b2b938fb10d812d8faa8fd415ac40fd7
+Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
 
-On 11/24/2020 4:45 PM, Marc Zyngier wrote:
-> On 2020-11-24 10:37, Maulik Shah wrote:
->
-> [...]
->
->>>   static int msm_pinmux_set_mux(struct pinctrl_dev *pctldev,
->>>                     unsigned function,
->>>                     unsigned group)
->>>   {
->>>       struct msm_pinctrl *pctrl = pinctrl_dev_get_drvdata(pctldev);
->>> +    struct gpio_chip *gc = &pctrl->chip;
->>> +    unsigned int irq = irq_find_mapping(gc->irq.domain, group);
->>>       const struct msm_pingroup *g;
->>>       unsigned long flags;
->>>       u32 val, mask;
->>> +    u32 oldval;
->>> +    u32 old_i;
->>>       int i;
->>>         g = &pctrl->soc->groups[group];
->>> @@ -187,15 +215,26 @@ static int msm_pinmux_set_mux(struct 
->>> pinctrl_dev *pctldev,
->>>       if (WARN_ON(i == g->nfuncs))
->>>           return -EINVAL;
->>>   -    raw_spin_lock_irqsave(&pctrl->lock, flags);
->>> +    disable_irq(irq);
->>>   -    val = msm_readl_ctl(pctrl, g);
->>> +    raw_spin_lock_irqsave(&pctrl->lock, flags);
->>> +    oldval = val = msm_readl_ctl(pctrl, g);
->>>       val &= ~mask;
->>>       val |= i << g->mux_bit;
->>>       msm_writel_ctl(val, pctrl, g);
->>> -
->>>       raw_spin_unlock_irqrestore(&pctrl->lock, flags);
->>>   +    /*
->>> +     * Clear IRQs if switching to/from GPIO mode since muxing to/from
->>> +     * the GPIO path can cause phantom edges.
->>> +     */
->>> +    old_i = (oldval & mask) >> g->mux_bit;
->>> +    if (old_i != i &&
->>> +        (i == pctrl->soc->gpio_func || old_i == 
->>> pctrl->soc->gpio_func))
->>> +        msm_pinctrl_clear_pending_irq(pctrl, group, irq);
->>
->> disable_irq() and enable_irq() should be moved inside this if loop. as
->> only use for this is to mask the IRQ when switching back to gpio IRQ
->> mode?
->>
->> i also don't think we should leave IRQ enabled at the end of this
->> function by default, probably need to check if IRQ was already
->> unmasked before disabling it, then only call enable_irq().
->
-> Why? It looks to me that this reproduces the behaviour of 
-> IRQCHIP_SET_TYPE_MASKED, which is highly desirable. What
-> problem are you trying to address with this?
+On 2020-11-08 23:25, Amit Pundir wrote:
+> On Tue, 4 Aug 2020 at 21:09, Rob Clark <robdclark@gmail.com> wrote:
+>> 
+>> On Thu, Jul 16, 2020 at 4:36 AM Kalyan Thota <kalyan_t@codeaurora.org> 
+>> wrote:
+>> >
+>> > This change adds support to scale src clk and bandwidth as
+>> > per composition requirements.
+>> >
+>> > Interconnect registration for bw has been moved to mdp
+>> > device node from mdss to facilitate the scaling.
+>> >
+>> > Changes in v1:
+>> >  - Address armv7 compilation issues with the patch (Rob)
+>> >
+>> > Signed-off-by: Kalyan Thota <kalyan_t@codeaurora.org>
+>> 
+>> Reviewed-by: Rob Clark <robdclark@chromium.org>
+>> 
+> 
+> Hi Kalyan, Rob,
+> 
+> This patch broke the display on the PocoF1 phone
+> (sdm845-xiaomi-beryllium.dts) running AOSP.
+> I can boot to UI but the display is frozen soon after that and
+> dmesg is full of following errors:
+> 
+> [drm:dpu_core_perf_crtc_update:397] [dpu error]crtc-65: failed to
+> update bus bw vote
+> [drm:dpu_core_perf_crtc_check:203] [dpu error]exceeds bandwidth:
+> 7649746kb > 6800000kb
+> [drm:dpu_crtc_atomic_check:969] [dpu error]crtc65 failed performance 
+> check -7
+> [drm:dpu_core_perf_crtc_check:203] [dpu error]exceeds bandwidth:
+> 7649746kb > 6800000kb
+> [drm:dpu_crtc_atomic_check:969] [dpu error]crtc65 failed performance 
+> check -7
+> [drm:dpu_core_perf_crtc_check:203] [dpu error]exceeds bandwidth:
+> 7649746kb > 6800000kb
+> [drm:dpu_crtc_atomic_check:969] [dpu error]crtc65 failed performance 
+> check -7
+> 
+> Here is the full dmesg https://pastebin.ubuntu.com/p/PcSdNgMnYw/.
+> Georgi pointed out following patch but it didn't help,
+> https://lore.kernel.org/dri-devel/20201027102304.945424-1-dmitry.baryshkov@linaro.org/
+> Am I missing any other followup fix?
+> 
+> Regards,
+> Amit Pundir
+> __
 
-Correct, here trying to reproduce the behaviour of 
-IRQCHIP_SET_TYPE_MASKED which i guess is ok once its moved inside if 
-loop as this is the place its switching to IRQ mode.
+Hi Amit,
 
-but there is a problem to leave it enabled at the end of set_direction 
-callbacks, see below.
+Apologies for the delay.
 
->
->>
->>> +
->>> +    enable_irq(irq);
->>> +
->>>       return 0;
->>>   }
->>>   @@ -456,32 +495,45 @@ static const struct pinconf_ops 
->>> msm_pinconf_ops = {
->>>   static int msm_gpio_direction_input(struct gpio_chip *chip, 
->>> unsigned offset)
->>>   {
->>>       const struct msm_pingroup *g;
->>> +    unsigned int irq = irq_find_mapping(chip->irq.domain, offset);
->>>       struct msm_pinctrl *pctrl = gpiochip_get_data(chip);
->>>       unsigned long flags;
->>> +    u32 oldval;
->>>       u32 val;
->>>         g = &pctrl->soc->groups[offset];
->>>   +    disable_irq(irq);
->>> +
->>>       raw_spin_lock_irqsave(&pctrl->lock, flags);
->>>   -    val = msm_readl_ctl(pctrl, g);
->>> +    oldval = val = msm_readl_ctl(pctrl, g);
->>>       val &= ~BIT(g->oe_bit);
->>>       msm_writel_ctl(val, pctrl, g);
->>>         raw_spin_unlock_irqrestore(&pctrl->lock, flags);
->>>   +    if (oldval != val)
->>> +        msm_pinctrl_clear_pending_irq(pctrl, offset, irq);
->>> +
->>> +    enable_irq(irq);
->>
->> i do not think we need disable_irq() and enable_irq() here, changing
->> direction to input does not mean its being used for interrupt only, it
->> may be set to use something like Rx mode in UART.
->>
->> the client driver should enable IRQ when needed.
->
-> And the kernel doesn't expect random interrupts to fire. Again, what
-> are you trying to fix by removing these?
+I have gone through the logs and referred to the below panel file for 
+the timings.
+https://github.com/Matheus-Garbelini/Kernel-Sphinx-Pocophone-F1/blob/master/arch/arm64/boot/dts/qcom/dsi-panel-tianma-fhd-nt36672a-video.dtsi
 
-I see leaving IRQ enabled here can cause problems. For example in 
-qcom_geni_serial.c driver before requesting IRQ, it sets the 
-IRQ_NOAUTOEN flag to not keep it enabled.
+if the above is correct file, then below could be the possible root 
+cause.
 
-see the below snippet
-         irq_set_status_flags(uport->irq, IRQ_NOAUTOEN);
-         ret = devm_request_irq(uport->dev, uport->irq, 
-qcom_geni_serial_isr,
-                         IRQF_TRIGGER_HIGH, port->name, uport);
-
-later when this devm_request_irq() invokes .irq_request_resources 
-callback it will reach msm_gpio_irq_reqres() from
-where msm_gpio_direction_input() is called which leaves the irq enabled 
-at the end with enable_irq() which was not expected by driver.
-
-It will cause is IRQ storm since the UART geni driver uses GPIO in Rx 
-mode when out of suspend. The IRQ mode in GPIO is enabled
-with suspend entry only. During resume the IRQ will again be disabled 
-and GPIO will be switched to Rx mode.
+The panel back porch and pw is less and it is causing the prefill bw 
+requirement to shoot up per layer as currently we are not considering 
+front porch in the calculation. can you please try the attached patch in 
+the email as a solution and provide me the feedback, i'll post it as a 
+formal change.
 
 Thanks,
-Maulik
->
->         M.
+Kalyan
 
--- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum, hosted by The Linux Foundation
+_____________________________________________
+> Freedreno mailing list
+> Freedreno@lists.freedesktop.org
+> https://lists.freedesktop.org/mailman/listinfo/freedreno
 
+--=_b2b938fb10d812d8faa8fd415ac40fd7
+Content-Transfer-Encoding: base64
+Content-Type: text/x-diff;
+ name=0001-drm-msm-dpu-consider-front-porch-in-the-prefill-calc.patch
+Content-Disposition: attachment;
+ filename=0001-drm-msm-dpu-consider-front-porch-in-the-prefill-calc.patch;
+ size=2297
+
+RnJvbSAwMjhmYjQ3Y2NjNWEzZjhmOGU1MTUxM2JkMjcxOWFhMTRjNjhhYzA5IE1vbiBTZXAgMTcg
+MDA6MDA6MDAgMjAwMQpGcm9tOiBLYWx5YW4gVGhvdGEgPGthbHlhbl90QGNvZGVhdXJvcmEub3Jn
+PgpEYXRlOiBUdWUsIDI0IE5vdiAyMDIwIDAyOjM5OjUyIC0wODAwClN1YmplY3Q6IFtQQVRDSF0g
+ZHJtOiBtc206IGRwdTogY29uc2lkZXIgZnJvbnQgcG9yY2ggaW4gdGhlIHByZWZpbGwKIGNhbGN1
+bGF0aW9uCgpJbiBjYXNlIG9mIHBhbmVscyB3aXRoIGxvdyB2ZXJ0aWNhbCBiYWNrIHBvcmNoIGFu
+ZCBwdywKdGhlIHByZWZpbGwgYncgd2lsbCBpbmNyZWFzZSBhcyB3ZSB3aWxsIGhhdmUgbGVzcyB0
+aW1lIHRvIGZldGNoCmFuZCBmaWxsIGFsbCB0aGUgaHcgbGF0ZW5jeSBidWZmZXJzLgoKZm9yIGV4
+OiBod19sYXRuZWN5X2xpbmVzID0gMjQsIGFuZCBpZiB2YnArcHcgPSAxMCB0aGVuIHdlIG5lZWQg
+dG8KZmV0Y2ggMjQgbGluZXMgb2YgZGF0YSBpbiAxMCBsaW5lIHRpbWVzLiBUaGlzIHdpbGwgaW5j
+cmVhc2UgcHJlZmlsbApidyByZXF1aXJlbWVudC4KCkRQVSBodyBjYW4gZmV0Y2ggZGF0YSBkdXJp
+bmcgZnJvbnQgcG9yY2ggYWxzbyBwcm92aWRlZCBwcmVmZXRjaCBpcwplbmFibGVkLiBVc2UgZnJv
+bnQgcG9yY2ggYWxzbyBpbnRvIHRoZSBwcmVmaWxsIGNhbHVjdWxhdGlvbiBhcwpkcml2ZXIgZW5h
+YmxlcyBwcmVmZXRjaCBpZiB0aGUgYmxhbmtpbmcgaXMgbm90IHN1ZmZpY2llbnQgdG8gZmlsbAp0
+aGUgbGF0ZW5jeSBsaW5lcy4KClNpZ25lZC1vZmYtYnk6IEthbHlhbiBUaG90YSA8a2FseWFuX3RA
+Y29kZWF1cm9yYS5vcmc+Ci0tLQogZHJpdmVycy9ncHUvZHJtL21zbS9kaXNwL2RwdTEvZHB1X3Bs
+YW5lLmMgfCAxMSArKysrKysrKystLQogMSBmaWxlIGNoYW5nZWQsIDkgaW5zZXJ0aW9ucygrKSwg
+MiBkZWxldGlvbnMoLSkKCmRpZmYgLS1naXQgYS9kcml2ZXJzL2dwdS9kcm0vbXNtL2Rpc3AvZHB1
+MS9kcHVfcGxhbmUuYyBiL2RyaXZlcnMvZ3B1L2RybS9tc20vZGlzcC9kcHUxL2RwdV9wbGFuZS5j
+CmluZGV4IDdlYTkwZDIuLjMxNWI5OTkgMTAwNjQ0Ci0tLSBhL2RyaXZlcnMvZ3B1L2RybS9tc20v
+ZGlzcC9kcHUxL2RwdV9wbGFuZS5jCisrKyBiL2RyaXZlcnMvZ3B1L2RybS9tc20vZGlzcC9kcHUx
+L2RwdV9wbGFuZS5jCkBAIC0xNTEsNyArMTUxLDcgQEAgc3RhdGljIHZvaWQgX2RwdV9wbGFuZV9j
+YWxjX2J3KHN0cnVjdCBkcm1fcGxhbmUgKnBsYW5lLAogCXU2NCBwbGFuZV9idzsKIAl1MzIgaHdf
+bGF0ZW5jeV9saW5lczsKIAl1NjQgc2NhbGVfZmFjdG9yOwotCWludCB2YnAsIHZwdzsKKwlpbnQg
+dmJwLCB2cHcsIHZmcDsKIAogCXBzdGF0ZSA9IHRvX2RwdV9wbGFuZV9zdGF0ZShwbGFuZS0+c3Rh
+dGUpOwogCW1vZGUgPSAmcGxhbmUtPnN0YXRlLT5jcnRjLT5tb2RlOwpAQCAtMTY0LDYgKzE2NCw3
+IEBAIHN0YXRpYyB2b2lkIF9kcHVfcGxhbmVfY2FsY19idyhzdHJ1Y3QgZHJtX3BsYW5lICpwbGFu
+ZSwKIAlmcHMgPSBkcm1fbW9kZV92cmVmcmVzaChtb2RlKTsKIAl2YnAgPSBtb2RlLT52dG90YWwg
+LSBtb2RlLT52c3luY19lbmQ7CiAJdnB3ID0gbW9kZS0+dnN5bmNfZW5kIC0gbW9kZS0+dnN5bmNf
+c3RhcnQ7CisJdmZwID0gbW9kZS0+dnN5bmNfc3RhcnQgLSBtb2RlLT52ZGlzcGxheTsKIAlod19s
+YXRlbmN5X2xpbmVzID0gIGRwdV9rbXMtPmNhdGFsb2ctPnBlcmYubWluX3ByZWZpbGxfbGluZXM7
+CiAJc2NhbGVfZmFjdG9yID0gc3JjX2hlaWdodCA+IGRzdF9oZWlnaHQgPwogCQltdWx0X2ZyYWMo
+c3JjX2hlaWdodCwgMSwgZHN0X2hlaWdodCkgOiAxOwpAQCAtMTc2LDcgKzE3NywxMyBAQCBzdGF0
+aWMgdm9pZCBfZHB1X3BsYW5lX2NhbGNfYncoc3RydWN0IGRybV9wbGFuZSAqcGxhbmUsCiAJCXNy
+Y193aWR0aCAqIGh3X2xhdGVuY3lfbGluZXMgKiBmcHMgKiBmbXQtPmJwcCAqCiAJCXNjYWxlX2Zh
+Y3RvciAqIG1vZGUtPnZ0b3RhbDsKIAotCWRvX2RpdihwbGFuZV9wcmVmaWxsX2J3LCAodmJwK3Zw
+dykpOworCWlmICgodmJwK3ZwdykgPiBod19sYXRlbmN5X2xpbmVzKQorCQlkb19kaXYocGxhbmVf
+cHJlZmlsbF9idywgKHZicCt2cHcpKTsKKwllbHNlIGlmICgodmJwK3Zwdyt2ZnApIDwgaHdfbGF0
+ZW5jeV9saW5lcykKKwkJZG9fZGl2KHBsYW5lX3ByZWZpbGxfYncsICh2YnArdnB3K3ZmcCkpOwor
+CWVsc2UKKwkJZG9fZGl2KHBsYW5lX3ByZWZpbGxfYncsIGh3X2xhdGVuY3lfbGluZXMpOworCiAK
+IAlwc3RhdGUtPnBsYW5lX2ZldGNoX2J3ID0gbWF4KHBsYW5lX2J3LCBwbGFuZV9wcmVmaWxsX2J3
+KTsKIH0KLS0gCjIuNy40Cgo=
+--=_b2b938fb10d812d8faa8fd415ac40fd7--
