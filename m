@@ -2,32 +2,32 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 6342E2C1C89
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Nov 2020 05:10:29 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 113112C1C86
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Nov 2020 05:10:28 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728695AbgKXEKK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        id S1728669AbgKXEKK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
         Mon, 23 Nov 2020 23:10:10 -0500
-Received: from mail.kernel.org ([198.145.29.99]:46906 "EHLO mail.kernel.org"
+Received: from mail.kernel.org ([198.145.29.99]:46878 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728696AbgKXEKJ (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        id S1728671AbgKXEKJ (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
         Mon, 23 Nov 2020 23:10:09 -0500
 Content-Type: text/plain; charset="utf-8"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
         s=default; t=1606191008;
-        bh=KTxBNVg358H7S7oflmYB3o2QEhhJj0LlHNEyEUPsh+U=;
+        bh=wbw7RU/GrTrnhArVVT+ZvlQeZ5f4RaWBUr4dAxUfDIU=;
         h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-        b=oWGPgNBAsnxUjzBz7eJAzJmQIhie+v/fPN2ypFeXK674eEfMdMInbCGoxnrm7aUFw
-         tu3NYvIEgWNt6n00bUhejz1E/VoX9F8lfEfhwWhmSSZMxloHY1Y+Lj54IubmSkucwI
-         fGWKZ1x60siiUu7lIOQ06gH/Yt3s+lEsASf9LkWg=
+        b=P+Jcdbl46Sy1imlQ+W9y/C+SZAKPC1n80R5ynOODjItWY4Q2VkKVDewoVPkMBGSd6
+         fX7csaHXzNuWMqWTNik9n1BNXAvAkeiIkgMA0Vcww25D0Jo3kfOPvLvQdrWEGc91Yl
+         uuIK9TZshwz7f60AcE1penoSt/OT5ttEn5Ebyulw=
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH] arm64: dts: sm8250: add iommus entry to QUP nodes
+Subject: Re: [PATCH] soc: qcom: pdr: Constify static qmi structs
 From:   patchwork-bot+linux-arm-msm@kernel.org
-Message-Id: <160619100872.17117.6785195991555131344.git-patchwork-notify@kernel.org>
+Message-Id: <160619100855.17117.9886693842567494132.git-patchwork-notify@kernel.org>
 Date:   Tue, 24 Nov 2020 04:10:08 +0000
-References: <20201010132125.416064-1-dmitry.baryshkov@linaro.org>
-In-Reply-To: <20201010132125.416064-1-dmitry.baryshkov@linaro.org>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+References: <20201122232818.32072-1-rikard.falkeborn@gmail.com>
+In-Reply-To: <20201122232818.32072-1-rikard.falkeborn@gmail.com>
+To:     Rikard Falkeborn <rikard.falkeborn@gmail.com>
 Cc:     linux-arm-msm@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
@@ -37,18 +37,19 @@ Hello:
 
 This patch was applied to qcom/linux.git (refs/heads/for-next):
 
-On Sat, 10 Oct 2020 16:21:25 +0300 you wrote:
-> Enable IOMMUs configuration for QUP nodes to stop SM8250 boards from
-> rebooting when using I2C DMA transfers.
+On Mon, 23 Nov 2020 00:28:18 +0100 you wrote:
+> Their only usage is to pass their address to qmi_handle_init() which
+> accepts const pointers to both qmi_ops and qmi_msg_handler. Make them
+> const to allow the compiler to put them in read-only memory.
 > 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> Signed-off-by: Rikard Falkeborn <rikard.falkeborn@gmail.com>
 > ---
->  arch/arm64/boot/dts/qcom/sm8250.dtsi | 3 +++
->  1 file changed, 3 insertions(+)
+>  drivers/soc/qcom/pdr_interface.c | 6 +++---
+>  1 file changed, 3 insertions(+), 3 deletions(-)
 
 Here is the summary with links:
-  - arm64: dts: sm8250: add iommus entry to QUP nodes
-    https://git.kernel.org/qcom/c/8530939383f5
+  - soc: qcom: pdr: Constify static qmi structs
+    https://git.kernel.org/qcom/c/0af104d72961
 
 You are awesome, thank you!
 --
