@@ -2,165 +2,92 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 78DBB2C2C17
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Nov 2020 16:56:50 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id BC9562C2C58
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Nov 2020 17:10:08 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2389760AbgKXP4R (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 24 Nov 2020 10:56:17 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56704 "EHLO
+        id S1728352AbgKXQIg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 24 Nov 2020 11:08:36 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58628 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2389701AbgKXP4Q (ORCPT
+        with ESMTP id S1728249AbgKXQIg (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 24 Nov 2020 10:56:16 -0500
-Received: from mail-yb1-xb43.google.com (mail-yb1-xb43.google.com [IPv6:2607:f8b0:4864:20::b43])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8EFE9C0613D6
-        for <linux-arm-msm@vger.kernel.org>; Tue, 24 Nov 2020 07:56:16 -0800 (PST)
-Received: by mail-yb1-xb43.google.com with SMTP id g15so19690892ybq.6
-        for <linux-arm-msm@vger.kernel.org>; Tue, 24 Nov 2020 07:56:16 -0800 (PST)
+        Tue, 24 Nov 2020 11:08:36 -0500
+Received: from mail-wr1-x444.google.com (mail-wr1-x444.google.com [IPv6:2a00:1450:4864:20::444])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D52D3C0613D6
+        for <linux-arm-msm@vger.kernel.org>; Tue, 24 Nov 2020 08:08:35 -0800 (PST)
+Received: by mail-wr1-x444.google.com with SMTP id i2so3827955wrs.4
+        for <linux-arm-msm@vger.kernel.org>; Tue, 24 Nov 2020 08:08:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=S2P83nucK526s4MeAO3ef03SmJgQO9NwAX+ho/0bpag=;
-        b=LEiwANAT5RKxUwb530+GU3ngUHfpY4CcH/7rZbALhW6cVviuWshxGFiHTP+cl0CdRW
-         Pls7iBNclidkQ5F04YYBuCVqnF9fohJH7zAu0kaOtMBIJaGPq3uPW6BUzQKgEOQoenUu
-         AbN7w68UNr6flX4vz+agTyomqgPJYU0EkrBkNjxOBnJ0oL2AnZ+ZnidxKLBmC1ranT4L
-         ooj3sv+Eh3pe8uy+14LYseKtBe+c91Kt1w+ZFoP8xebYef9yzUqJTcLf0qWZWX9gF6qt
-         rqKFYKccZtfNV818+JRRz/40qHqcMaDBfoET3sqoC2YeKIomy8e6vrAJ49mBQbNCS16V
-         XoSQ==
+        h=from:to:cc:subject:date:message-id;
+        bh=iVG5LeW2N6+S6Mby+fwbRgeDnGzBrkEwJlmP3LrxfHI=;
+        b=idg5uZhHh1SkMl3ce9XjEHBD5Vq08mvMTygdT9HfMYm7/ybKpnO4Eh5OdWbUMAMctj
+         1mFMED6vLtLskBTieEcsX/EbYP9LXfEcjrKnhBZFQ5z05d9p+mFrOkKysglUNb82JpRC
+         msE/U6HnurUuufDwHWLgSWipolQIGdztL6lYJLcB7JObcbzq8x8t71Rsow8zH7DfMhKJ
+         pYpicfmOyhtCtTEyKrPkSxsWc2DfV75KEIw+Qg65XxeFTlw9cCnx7HoD03/TPU6c+vcx
+         WooV5jcB8nkue90Vz2XeMpzBZZr9QZVJvuOvVrZv++3lBTruPLzjAFWkLKtRucLDqjVp
+         awdQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=S2P83nucK526s4MeAO3ef03SmJgQO9NwAX+ho/0bpag=;
-        b=aBeXodjbfArQgamTDC6WEVh2XugrmOB2CYlZtiUPlsI7NcEuigNoa4dBM2EcjLmZpJ
-         tZjq5Z91M5ThbDj7zteDctTxEjF54nYAgGPbfdbBW/5FL5vOn4yvDzyqbvL6KXkA4hLX
-         deyMCQX2FFD4TaWMX6dwxuAH2aCThPSREf/8uAgOtX6fq2GzZT382DmhjZUmHbIiXQR7
-         7yqf5uIpDF/sn5gxKnog5AJonTD29d1dDPWcdZTlWmqZsYERUN6p9lP7iQ/OFrNi8fgl
-         RRnbgDrDYMnLtqKBX/Sc5N+ITp/ptOd/QPAJYy9mqCblivltzxw5ymteuFT4QrfWZCJY
-         ZEYA==
-X-Gm-Message-State: AOAM531fBzz7INdh5Orh10ymlUwEqN0EK6nAeoOQ6lBAMhOWwmOFCQbD
-        azjApTSLVxjTASlzz/KzwCkL8u1VX8xqzzheZusvlQ==
-X-Google-Smtp-Source: ABdhPJw0wHy+GWOIUwTLlmESRTmLRZ/Jnp1OSuSOAtoxUCEZYv5ocbmTHY84rAlt1NUxwHAItTPdwVgoCeM1V0Ar0sY=
-X-Received: by 2002:a25:7481:: with SMTP id p123mr6036490ybc.167.1606233375845;
- Tue, 24 Nov 2020 07:56:15 -0800 (PST)
-MIME-Version: 1.0
-References: <5b07a7be8d136392dc7f93933a7ee68e@codeaurora.org>
-In-Reply-To: <5b07a7be8d136392dc7f93933a7ee68e@codeaurora.org>
-From:   Amit Pundir <amit.pundir@linaro.org>
-Date:   Tue, 24 Nov 2020 21:25:40 +0530
-Message-ID: <CAMi1Hd2vY0OaD=_3E_JBTCPkLGHq9CFOrOQ=OM9eVg=dJ6hbZg@mail.gmail.com>
-Subject: Re: [Freedreno] [PATCH 3/3] drm/msm/dpu: add support for clk and bw
- scaling for display
-To:     Kalyan Thota <kalyan_t@codeaurora.org>
-Cc:     Rob Clark <robdclark@gmail.com>,
-        Sumit Semwal <sumit.semwal@linaro.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>,
-        Krishna Manikandan <mkrishn@codeaurora.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Raviteja Tamatam <travitej@codeaurora.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        dri-devel <dri-devel@lists.freedesktop.org>,
-        Douglas Anderson <dianders@chromium.org>,
-        nganji@codeaurora.org, Sean Paul <seanpaul@chromium.org>,
-        John Stultz <john.stultz@linaro.org>,
-        "Kristian H. Kristensen" <hoegsberg@chromium.org>,
-        freedreno <freedreno@lists.freedesktop.org>,
-        Jeykumar Sankaran <jsanka@codeaurora.org>,
-        Georgi Djakov <georgi.djakov@linaro.org>,
-        abhinavk@codeaurora.org
-Content-Type: text/plain; charset="UTF-8"
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=iVG5LeW2N6+S6Mby+fwbRgeDnGzBrkEwJlmP3LrxfHI=;
+        b=VuKHnNB9gK/Gyw9q11OrABfX2G2teEy8FwUJcZBjCENP4znlwY96HIi2hTeiAoJ/nJ
+         sKJGiqPURZ48//r3zvowPK+GE+20Zgn36jKCOChLyeXIVL4TvjwVzsT/FyqPAEiw4el6
+         24xD67LH9FlWa6BEBOe/iw2ASAVbjwPjKRH5hn10294U0ObDi3jCtA1ofkV0eJTSXF7r
+         GYdZRQFeAIxqW3DweE0aaNEBEgFl1gljEpQJJhOS3NeDSwdzvTC7qhNp13jxB1BRpdb1
+         t/0RTvvcji3FeZusXy7vCXjG1O/Og9U4owXv0Hdluwfv3/djKADEJDniJmzuWw+/69Dx
+         Opag==
+X-Gm-Message-State: AOAM532myhdV4CpPizs8aIM60AEJc+d/2jqQhB2ZOJmVYcWiDhfpEr3c
+        6GpA1Yrdu/+eGQfF/VwidW4tLxqjNdNfD4eg
+X-Google-Smtp-Source: ABdhPJzRMmcjJHqiVISlVd8v4VxQ+d6vWDJWK0Vw+PZ/CIX08r78w/n1f/VJ0xpM5NY06r8+7H2B7g==
+X-Received: by 2002:adf:f88c:: with SMTP id u12mr6126418wrp.209.1606234114544;
+        Tue, 24 Nov 2020 08:08:34 -0800 (PST)
+Received: from localhost.localdomain ([2a01:e0a:490:8730:f5cd:e791:e88b:e3b7])
+        by smtp.gmail.com with ESMTPSA id b73sm6671383wmb.0.2020.11.24.08.08.32
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 24 Nov 2020 08:08:33 -0800 (PST)
+From:   Loic Poulain <loic.poulain@linaro.org>
+To:     manivannan.sadhasivam@linaro.org, hemantk@codeaurora.org
+Cc:     linux-arm-msm@vger.kernel.org, bbhatt@codeaurora.org,
+        Loic Poulain <loic.poulain@linaro.org>
+Subject: [PATCH] bus: mhi: core: Fix device hierarchy issue
+Date:   Tue, 24 Nov 2020 17:15:22 +0100
+Message-Id: <1606234522-19889-1-git-send-email-loic.poulain@linaro.org>
+X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Kalyan,
+A MHI client device should be child as the MHI controller device.
+Today both MHI controller and its MHI clients are child of the same
+bus device. This patch fixes the hierarchy.
 
-On Tue, 24 Nov 2020 at 18:27, <kalyan_t@codeaurora.org> wrote:
->
-> On 2020-11-08 23:25, Amit Pundir wrote:
-> > On Tue, 4 Aug 2020 at 21:09, Rob Clark <robdclark@gmail.com> wrote:
-> >>
-> >> On Thu, Jul 16, 2020 at 4:36 AM Kalyan Thota <kalyan_t@codeaurora.org>
-> >> wrote:
-> >> >
-> >> > This change adds support to scale src clk and bandwidth as
-> >> > per composition requirements.
-> >> >
-> >> > Interconnect registration for bw has been moved to mdp
-> >> > device node from mdss to facilitate the scaling.
-> >> >
-> >> > Changes in v1:
-> >> >  - Address armv7 compilation issues with the patch (Rob)
-> >> >
-> >> > Signed-off-by: Kalyan Thota <kalyan_t@codeaurora.org>
-> >>
-> >> Reviewed-by: Rob Clark <robdclark@chromium.org>
-> >>
-> >
-> > Hi Kalyan, Rob,
-> >
-> > This patch broke the display on the PocoF1 phone
-> > (sdm845-xiaomi-beryllium.dts) running AOSP.
-> > I can boot to UI but the display is frozen soon after that and
-> > dmesg is full of following errors:
-> >
-> > [drm:dpu_core_perf_crtc_update:397] [dpu error]crtc-65: failed to
-> > update bus bw vote
-> > [drm:dpu_core_perf_crtc_check:203] [dpu error]exceeds bandwidth:
-> > 7649746kb > 6800000kb
-> > [drm:dpu_crtc_atomic_check:969] [dpu error]crtc65 failed performance
-> > check -7
-> > [drm:dpu_core_perf_crtc_check:203] [dpu error]exceeds bandwidth:
-> > 7649746kb > 6800000kb
-> > [drm:dpu_crtc_atomic_check:969] [dpu error]crtc65 failed performance
-> > check -7
-> > [drm:dpu_core_perf_crtc_check:203] [dpu error]exceeds bandwidth:
-> > 7649746kb > 6800000kb
-> > [drm:dpu_crtc_atomic_check:969] [dpu error]crtc65 failed performance
-> > check -7
-> >
-> > Here is the full dmesg https://pastebin.ubuntu.com/p/PcSdNgMnYw/.
-> > Georgi pointed out following patch but it didn't help,
-> > https://lore.kernel.org/dri-devel/20201027102304.945424-1-dmitry.baryshkov@linaro.org/
-> > Am I missing any other followup fix?
-> >
-> > Regards,
-> > Amit Pundir
-> > __
->
-> Hi Amit,
->
-> Apologies for the delay.
+Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
+---
+ drivers/bus/mhi/core/init.c | 10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
 
-No worries at all.
+diff --git a/drivers/bus/mhi/core/init.c b/drivers/bus/mhi/core/init.c
+index 436221c..c7a7354 100644
+--- a/drivers/bus/mhi/core/init.c
++++ b/drivers/bus/mhi/core/init.c
+@@ -1137,7 +1137,15 @@ struct mhi_device *mhi_alloc_device(struct mhi_controller *mhi_cntrl)
+ 	device_initialize(dev);
+ 	dev->bus = &mhi_bus_type;
+ 	dev->release = mhi_release_device;
+-	dev->parent = mhi_cntrl->cntrl_dev;
++
++	if (mhi_cntrl->mhi_dev) {
++		/* for MHI client devices, parent is the MHI controller device */
++		dev->parent = &mhi_cntrl->mhi_dev->dev;
++	} else {
++		/* for MHI controller device, parent is the bus device (e.g. pci device) */
++		dev->parent = mhi_cntrl->cntrl_dev;
++	}
++
+ 	mhi_dev->mhi_cntrl = mhi_cntrl;
+ 	mhi_dev->dev_wake = 0;
+ 
+-- 
+2.7.4
 
->
-> I have gone through the logs and referred to the below panel file for
-> the timings.
-> https://github.com/Matheus-Garbelini/Kernel-Sphinx-Pocophone-F1/blob/master/arch/arm64/boot/dts/qcom/dsi-panel-tianma-fhd-nt36672a-video.dtsi
->
-> if the above is correct file, then below could be the possible root
-> cause.
->
-> The panel back porch and pw is less and it is causing the prefill bw
-> requirement to shoot up per layer as currently we are not considering
-> front porch in the calculation. can you please try the attached patch in
-> the email as a solution and provide me the feedback, i'll post it as a
-> formal change.
-
-The attached patch worked for me. Thanks a lot for looking closely
-into this issue.
-
-Regards,
-Amit Pundir
-
->
-> Thanks,
-> Kalyan
->
-> _____________________________________________
-> > Freedreno mailing list
-> > Freedreno@lists.freedesktop.org
-> > https://lists.freedesktop.org/mailman/listinfo/freedreno
