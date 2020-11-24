@@ -2,191 +2,111 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id ACE4B2C2CBB
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Nov 2020 17:22:54 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 8C1962C2CF8
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Nov 2020 17:32:25 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2390284AbgKXQWY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 24 Nov 2020 11:22:24 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60784 "EHLO
+        id S2390099AbgKXQb6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 24 Nov 2020 11:31:58 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34036 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2387694AbgKXQWY (ORCPT
+        with ESMTP id S2390017AbgKXQb6 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 24 Nov 2020 11:22:24 -0500
-Received: from mail-ot1-x341.google.com (mail-ot1-x341.google.com [IPv6:2607:f8b0:4864:20::341])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E1002C0613D6
-        for <linux-arm-msm@vger.kernel.org>; Tue, 24 Nov 2020 08:22:23 -0800 (PST)
-Received: by mail-ot1-x341.google.com with SMTP id k3so19855246otp.12
-        for <linux-arm-msm@vger.kernel.org>; Tue, 24 Nov 2020 08:22:23 -0800 (PST)
+        Tue, 24 Nov 2020 11:31:58 -0500
+Received: from mail-ot1-x344.google.com (mail-ot1-x344.google.com [IPv6:2607:f8b0:4864:20::344])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 16F2AC0613D6
+        for <linux-arm-msm@vger.kernel.org>; Tue, 24 Nov 2020 08:31:58 -0800 (PST)
+Received: by mail-ot1-x344.google.com with SMTP id 11so7361185oty.9
+        for <linux-arm-msm@vger.kernel.org>; Tue, 24 Nov 2020 08:31:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=yAx0bZUynwPp6ieRFwBxeKJxMhDlw8QUeMjYHWg4GQU=;
-        b=s9F3mzNow1EmxBZlldMkYWyr9UjLbpyDCzrSEych7mauy1jw8KniN+3GJUb6ET7ULT
-         nZyyf4DwpxVQc5rwbcLYj/Ii5/Km/DPMcTb/njkImGsDDZPpOX1mSM2vpN9YeE/dbLBi
-         vnFZ9lP7TKYuKelnmOfxotdTGyjOtE4fPqGuCq8bmlMAi4lrZU/ozSjO5gREOd7AVQJ1
-         Tca3033U0LaLHKoOfynk3kmmpymUpBEupJIqNlQiuqG6cYI4atLY+w7h3lF2Y6KkTIjW
-         spF53e0p2UBEHHh/Yu9x4anaqC45GChVTdf4zJYbkm7U5OM1libzhMnxOoOnW89Bkuoy
-         qkFQ==
+        bh=O1ba/f2z4FniBZjfqbUKsu3JvZQwwQqF9zir1Omgmjw=;
+        b=GPK6roWoya5lyy2gbTplpznOoGUsaYM2Ffqph9CG2f3VniFMlfnA3ducEifA7cjdMs
+         3BKYjWQ6nFq9O8qoyxCykx0LVu1JU6DrxH4poyftRgsqXhFDl9HqDxao34s08MMr0wzK
+         iYuXaerjTxiheGRB/M7BfWPPZqoND/1NdsiLc5IeZHziBoCjHpKmaBXY50Gfkw8QZjFU
+         k7h6aN24fkCT7SNDyVY6WufvxMq4cb+GcJpwwtRqegfL360WgLiZ/RddpMJyXaWrYF7N
+         WflzHApk7h4lIX1Q8JDvEtDQ4MgpfM+47SUEhczZ5BW+PuV1T2vUT2kxugGfS4eq0Jdc
+         elIA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=yAx0bZUynwPp6ieRFwBxeKJxMhDlw8QUeMjYHWg4GQU=;
-        b=RERdV25QyhDYTaey1VKW8u9zLg+q+UcsesavojlJwwGy8kr+npp9PTzD0EM2y6BrZ3
-         GQQSdWCA3c8owyqnLYTb7yNtj1RZs/paUzo1q+QV5hLPXWqwk+k5Nl5pt2MufSyKRNsg
-         gr8bCMvp9CN7LEzP8qtx/sMv0py4ncrxHsNIOzq4TU7lJm1uw0mZvvJX8h7dqXnA2hHY
-         Rqn1MIuZIq1erbT/aY+6DiFaY6yWZQPhp2CGM3exnpVzxBnkAWdTk3qJLG82Tczge8D9
-         FlvgE8RlEjVNQylfWUhmVdudeEOdO7VZgmoV5RkLxvIwPAWkhLQLwJfbUB42w4PZibIf
-         DLjw==
-X-Gm-Message-State: AOAM53254vd31Rdee4wCbiQq0WnamA1YKeLMEsfnCDiOqJ4SMNHHDRrv
-        5zkxtc1i7LNwPoeYmUmqqF4mgg==
-X-Google-Smtp-Source: ABdhPJwFSa8qQqQZZjQ4qPOcjBm6mGcsgXICH2unaCUf/0gU4cAxQgWN3P+36aQCMEblPR5qqpBJ6Q==
-X-Received: by 2002:a9d:7b48:: with SMTP id f8mr4113940oto.135.1606234943223;
-        Tue, 24 Nov 2020 08:22:23 -0800 (PST)
+        bh=O1ba/f2z4FniBZjfqbUKsu3JvZQwwQqF9zir1Omgmjw=;
+        b=RlD8PunMG1sCioRJNzdepVU2XQ1ioA4EozXcsZLEFufxcMGe+iaRNHWbStlm5Q5FIX
+         wu+YirTcIcM7wXS/GjixAYyK3MRvjqyyv7EnAmzst3h/njZ0bGMglCs21Kna1UkL8Ios
+         JH6siF8ZI7fBqgjKmPiDh3BVXImkkbpKIE7dPV3pOpX8MEJP98OGLcfU1AqKQF6TE/8v
+         L/poS/ngjA52NvQvgrNbtJhS3ZL0wZQ8V3GAfy2oaoeZ/s4Q0kAOfmRuu1+ALOee1juL
+         FdCvmhphiaTfVI0XNAajCFWXewrG7g/rs41Ix+IXuvvb5VklSuLN/pomI3sFf75azgQV
+         js6A==
+X-Gm-Message-State: AOAM530CSRoYFLMyfiJw3txceXWJr3XFbCZmTuXbeyOtgXVEOiSmIlZw
+        zJ6tnOb5F5RxDkD6Zk5MOM0Vcw==
+X-Google-Smtp-Source: ABdhPJwggyZl8L8g2b9hR43GvCNlab5dHHsODCrifU8R6VNY8s8rLLkIRxx3/EbDQehqsvMsG0iMxg==
+X-Received: by 2002:a9d:3e85:: with SMTP id b5mr3767632otc.354.1606235517411;
+        Tue, 24 Nov 2020 08:31:57 -0800 (PST)
 Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id c18sm9795000oob.45.2020.11.24.08.22.22
+        by smtp.gmail.com with ESMTPSA id c190sm9548303oig.34.2020.11.24.08.31.56
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 24 Nov 2020 08:22:22 -0800 (PST)
-Date:   Tue, 24 Nov 2020 10:22:20 -0600
+        Tue, 24 Nov 2020 08:31:56 -0800 (PST)
+Date:   Tue, 24 Nov 2020 10:31:55 -0600
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Sibi Sankar <sibis@codeaurora.org>
-Cc:     ohad@wizery.com, linux-arm-msm@vger.kernel.org,
-        linux-remoteproc@vger.kernel.org, linux-kernel@vger.kernel.org,
-        agross@kernel.org, evgreen@chromium.org
-Subject: Re: [PATCH 2/2] remoteproc: qcom_q6v5_mss: map/unmap MBA region
- before/after use
-Message-ID: <20201124162220.GN9177@builder.lan>
-References: <1604473422-29639-1-git-send-email-sibis@codeaurora.org>
- <1604473422-29639-2-git-send-email-sibis@codeaurora.org>
+To:     Loic Poulain <loic.poulain@linaro.org>
+Cc:     manivannan.sadhasivam@linaro.org, hemantk@codeaurora.org,
+        linux-arm-msm@vger.kernel.org, bbhatt@codeaurora.org
+Subject: Re: [PATCH v2] bus: mhi: core: Fix device hierarchy issue
+Message-ID: <20201124163155.GM95182@builder.lan>
+References: <1606234711-20125-1-git-send-email-loic.poulain@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <1604473422-29639-2-git-send-email-sibis@codeaurora.org>
+In-Reply-To: <1606234711-20125-1-git-send-email-loic.poulain@linaro.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed 04 Nov 01:03 CST 2020, Sibi Sankar wrote:
+On Tue 24 Nov 10:18 CST 2020, Loic Poulain wrote:
 
-> The application processor accessing the MBA region after assigning it to
-> the remote Q6 would lead to an XPU violation. Fix this by un-mapping the
-> MBA region post firmware copy and MBA text log dumps.
+> A MHI client device should be child of the MHI controller device.
+> Today both MHI controller and its MHI clients are direct children
+> of the same bus device. This patch fixes the hierarchy.
 > 
-> Signed-off-by: Sibi Sankar <sibis@codeaurora.org>
+> Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
+
+I like this, but have a nagging feeling that we discussed this during
+the upstreaming of MHI. Mani, do you remember?
 
 Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 
-I renamed "ptr" to "mba_region" throughout the patch and applied the
-pair.
-
-Thanks,
+Regards,
 Bjorn
 
 > ---
->  drivers/remoteproc/qcom_q6v5_mss.c | 37 ++++++++++++++++++++++---------------
->  1 file changed, 22 insertions(+), 15 deletions(-)
+>  v2: fix commit message
 > 
-> diff --git a/drivers/remoteproc/qcom_q6v5_mss.c b/drivers/remoteproc/qcom_q6v5_mss.c
-> index 2c866b6da23c..1b4a34325788 100644
-> --- a/drivers/remoteproc/qcom_q6v5_mss.c
-> +++ b/drivers/remoteproc/qcom_q6v5_mss.c
-> @@ -189,7 +189,6 @@ struct q6v5 {
->  	size_t total_dump_size;
->  
->  	phys_addr_t mba_phys;
-> -	void *mba_region;
->  	size_t mba_size;
->  	size_t dp_size;
->  
-> @@ -408,7 +407,7 @@ static int q6v5_xfer_mem_ownership(struct q6v5 *qproc, int *current_perm,
->  				   current_perm, next, perms);
->  }
->  
-> -static void q6v5_debug_policy_load(struct q6v5 *qproc)
-> +static void q6v5_debug_policy_load(struct q6v5 *qproc, void *ptr)
->  {
->  	const struct firmware *dp_fw;
->  
-> @@ -416,7 +415,7 @@ static void q6v5_debug_policy_load(struct q6v5 *qproc)
->  		return;
->  
->  	if (SZ_1M + dp_fw->size <= qproc->mba_size) {
-> -		memcpy(qproc->mba_region + SZ_1M, dp_fw->data, dp_fw->size);
-> +		memcpy(ptr + SZ_1M, dp_fw->data, dp_fw->size);
->  		qproc->dp_size = dp_fw->size;
->  	}
->  
-> @@ -426,6 +425,7 @@ static void q6v5_debug_policy_load(struct q6v5 *qproc)
->  static int q6v5_load(struct rproc *rproc, const struct firmware *fw)
->  {
->  	struct q6v5 *qproc = rproc->priv;
-> +	void *ptr;
->  
->  	/* MBA is restricted to a maximum size of 1M */
->  	if (fw->size > qproc->mba_size || fw->size > SZ_1M) {
-> @@ -433,8 +433,16 @@ static int q6v5_load(struct rproc *rproc, const struct firmware *fw)
->  		return -EINVAL;
->  	}
->  
-> -	memcpy(qproc->mba_region, fw->data, fw->size);
-> -	q6v5_debug_policy_load(qproc);
-> +	ptr = memremap(qproc->mba_phys, qproc->mba_size, MEMREMAP_WC);
-> +	if (!ptr) {
-> +		dev_err(qproc->dev, "unable to map memory region: %pa+%zx\n",
-> +			&qproc->mba_phys, qproc->mba_size);
-> +		return -EBUSY;
+>  drivers/bus/mhi/core/init.c | 10 +++++++++-
+>  1 file changed, 9 insertions(+), 1 deletion(-)
+> 
+> diff --git a/drivers/bus/mhi/core/init.c b/drivers/bus/mhi/core/init.c
+> index 436221c..c7a7354 100644
+> --- a/drivers/bus/mhi/core/init.c
+> +++ b/drivers/bus/mhi/core/init.c
+> @@ -1137,7 +1137,15 @@ struct mhi_device *mhi_alloc_device(struct mhi_controller *mhi_cntrl)
+>  	device_initialize(dev);
+>  	dev->bus = &mhi_bus_type;
+>  	dev->release = mhi_release_device;
+> -	dev->parent = mhi_cntrl->cntrl_dev;
+> +
+> +	if (mhi_cntrl->mhi_dev) {
+> +		/* for MHI client devices, parent is the MHI controller device */
+> +		dev->parent = &mhi_cntrl->mhi_dev->dev;
+> +	} else {
+> +		/* for MHI controller device, parent is the bus device (e.g. pci device) */
+> +		dev->parent = mhi_cntrl->cntrl_dev;
 > +	}
 > +
-> +	memcpy(ptr, fw->data, fw->size);
-> +	q6v5_debug_policy_load(qproc, ptr);
-> +	memunmap(ptr);
+>  	mhi_dev->mhi_cntrl = mhi_cntrl;
+>  	mhi_dev->dev_wake = 0;
 >  
->  	return 0;
->  }
-> @@ -541,6 +549,7 @@ static void q6v5_dump_mba_logs(struct q6v5 *qproc)
->  {
->  	struct rproc *rproc = qproc->rproc;
->  	void *data;
-> +	void *ptr;
->  
->  	if (!qproc->has_mba_logs)
->  		return;
-> @@ -549,12 +558,16 @@ static void q6v5_dump_mba_logs(struct q6v5 *qproc)
->  				    qproc->mba_size))
->  		return;
->  
-> -	data = vmalloc(MBA_LOG_SIZE);
-> -	if (!data)
-> +	ptr = memremap(qproc->mba_phys, qproc->mba_size, MEMREMAP_WC);
-> +	if (!ptr)
->  		return;
->  
-> -	memcpy(data, qproc->mba_region, MBA_LOG_SIZE);
-> -	dev_coredumpv(&rproc->dev, data, MBA_LOG_SIZE, GFP_KERNEL);
-> +	data = vmalloc(MBA_LOG_SIZE);
-> +	if (data) {
-> +		memcpy(data, ptr, MBA_LOG_SIZE);
-> +		dev_coredumpv(&rproc->dev, data, MBA_LOG_SIZE, GFP_KERNEL);
-> +	}
-> +	memunmap(ptr);
->  }
->  
->  static int q6v5proc_reset(struct q6v5 *qproc)
-> @@ -1605,12 +1618,6 @@ static int q6v5_alloc_memory_region(struct q6v5 *qproc)
->  
->  	qproc->mba_phys = r.start;
->  	qproc->mba_size = resource_size(&r);
-> -	qproc->mba_region = devm_ioremap_wc(qproc->dev, qproc->mba_phys, qproc->mba_size);
-> -	if (!qproc->mba_region) {
-> -		dev_err(qproc->dev, "unable to map memory region: %pa+%zx\n",
-> -			&r.start, qproc->mba_size);
-> -		return -EBUSY;
-> -	}
->  
->  	if (!child) {
->  		node = of_parse_phandle(qproc->dev->of_node,
 > -- 
-> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-> a Linux Foundation Collaborative Project
+> 2.7.4
 > 
