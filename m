@@ -2,57 +2,56 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C0EA52C1FE0
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Nov 2020 09:29:20 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 96FAD2C1FED
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Nov 2020 09:29:26 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730537AbgKXI1V (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 24 Nov 2020 03:27:21 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43128 "EHLO
+        id S1730608AbgKXI2m (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 24 Nov 2020 03:28:42 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43346 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730500AbgKXI1U (ORCPT
+        with ESMTP id S1730603AbgKXI2l (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 24 Nov 2020 03:27:20 -0500
-Received: from mail-lf1-x144.google.com (mail-lf1-x144.google.com [IPv6:2a00:1450:4864:20::144])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 309C2C0613D6
-        for <linux-arm-msm@vger.kernel.org>; Tue, 24 Nov 2020 00:27:20 -0800 (PST)
-Received: by mail-lf1-x144.google.com with SMTP id s30so27684633lfc.4
-        for <linux-arm-msm@vger.kernel.org>; Tue, 24 Nov 2020 00:27:20 -0800 (PST)
+        Tue, 24 Nov 2020 03:28:41 -0500
+Received: from mail-lf1-x143.google.com (mail-lf1-x143.google.com [IPv6:2a00:1450:4864:20::143])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 65C6CC0617A6
+        for <linux-arm-msm@vger.kernel.org>; Tue, 24 Nov 2020 00:28:41 -0800 (PST)
+Received: by mail-lf1-x143.google.com with SMTP id s30so27689836lfc.4
+        for <linux-arm-msm@vger.kernel.org>; Tue, 24 Nov 2020 00:28:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=BBG2wuxnRkC9gcLJv65Hd93EbCvk6yLiiTuCJFuSKhA=;
-        b=v3LtVA2V7vd+LPwQ55XgnwBWrfofD+uJMR3lP30KYtdZOmmzoekDfsQAx5cocCjoE8
-         1XuKNd05AYCLpk+nsqRuAxJksdfqhv0oQC0GArcAPAsWyy2XEbNRTSyWe9KVGtBND6Cf
-         VGa8BfXKSjpG6HR8O6lx2efo3b1YnQp3HbgxH/o/WCzqdt1Cm7xJDdI7UvWqEgREJjBE
-         R8dXJ99mbCA4emz7f9imBOH0YHPv3sX9L554J9B+JqxxvyrEOd/sS6oVUBSrAvZKAR5u
-         Sr2oozJafHUpClT3La3xARkFRdCdius0zpYQLOh5Xbxg2/1qn7NNG+Py6uigLm27+55T
-         PIjQ==
+        bh=76ixO5CUxxnke5hcHoMKuBGHklO16fYsnp2OoEmVY9I=;
+        b=G8leHYlsEU5n6pd6cInmCXAoFm6XND5O4pdrrsippB2b/hSgqZUq13wmCTOGN2pDLy
+         0ZvAYGUIfc4uyHL34B8QqHnISCrh8M70dupuPPWYAtGfvXMBw/1cf6zpWHCFw6O+OK2G
+         krv1FyneNA3Y0jR2u/1rVEJcAu/ld4TMQwCgD7hJskxey0PEeUh6uR+2oiI3uEeYU4sL
+         ZmkzsW9ZR7D/e1RjV2b4sXysHEpEFI0pkKwruTz9hbSKYN5nJbbKaxOj97sjf7PMBB4+
+         +jQlRVnus2nmkTYuiJdr9WAEMqesS9FihYhzQrkemhiK3zU/mSBggEyBs6/1uAwu9NeR
+         CaMg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=BBG2wuxnRkC9gcLJv65Hd93EbCvk6yLiiTuCJFuSKhA=;
-        b=JoKCcJ+mh8gTghxiJPhFDDYpknicFaWXltyjjMtPJ8ETUSj9htC/Q7/yPRKZ47Xypc
-         qhnSxisymvoOlAOB8uRuO43zyp4uClrU2Dnb3HyCjyFoytmGUB0XdRryDi9xOD0ZwOBr
-         b0P4H0UlCkP0Z0mHN8oHrREtGgxAO3ECaHwEHKhuybBCtM2yy9/kxXn2WAle2Ki4q7D0
-         oQe0wRu8ZP93Ee9PM3i3UOimDUoewNat+u3FzVkV0g9DE4xqy+0UXQ0KIkccX8RivgsP
-         1zhyBSbvAtqxJAsC0G7LHvM0kCX9/yAM6VI/+9AzCaslo++xY7mrAv5KbQ8zKfDPiGLA
-         gr6w==
-X-Gm-Message-State: AOAM531l3OEKwoPTOe34S+7k27LbK39Gh9YX1Jwe+KAN0XrVLWkGKtC/
-        QuSeQYRIvQUAKLRfL6Taxdn9tuHRTsGDHOKe3e7yrA==
-X-Google-Smtp-Source: ABdhPJyhticdWKrjDkzF+0slKKn4WLxmhg8anIrWRKz+5xkruyZ3CncU+SLWT7saZibhsIMQAsaWX795xF2f1l30hZY=
-X-Received: by 2002:a19:7b06:: with SMTP id w6mr1407528lfc.260.1606206438621;
- Tue, 24 Nov 2020 00:27:18 -0800 (PST)
+        bh=76ixO5CUxxnke5hcHoMKuBGHklO16fYsnp2OoEmVY9I=;
+        b=jat8LbF2OgoNxaN/fa3ORbXCqtULiAhprF89g+XZglIP8k8WXdKS1DxWjrA1UDqdfN
+         xZiDmPCVwvaTMPPYzh1nIDjWacy9La9FSOlx1W9x+3Sp/yCYpiGNep5yjThbfIYbxc4t
+         B4XkopSBZ4UM6madgyKB9QXMSQLbNDkoxycF/H7R4DiRcGfUGiPNK9I27sL4ONak0DT1
+         6FhTGuwC369OnqxNuCI9Vd/QNUR8S1/DHeCHkbR2cAZ7DkM9KmySC3PaKVcIc6SiOTDS
+         zgGhlkLn9jN151JO/MIcovLXSJLwKROi44pvuW6iAbTl+yA9AqGccqF5lHQPPlnzKjBI
+         puuw==
+X-Gm-Message-State: AOAM5326Ua56ilZtpBGj7rL7YnCgw+1EyU4xLv/xCKBb7JCnhDq4amyQ
+        mclck6YXXELUVDhSP/MJYT2eLjQxK5nS9fjP4ZsyZQ==
+X-Google-Smtp-Source: ABdhPJz3m9CR00BmIKNF6LAsWT4dz49Cwq7LJkOtP9XV8CKRYiYZYBE3k32TMZ0OuYePMZmd6DcgVibwKqVVmoHDgEQ=
+X-Received: by 2002:a19:7b06:: with SMTP id w6mr1409605lfc.260.1606206519702;
+ Tue, 24 Nov 2020 00:28:39 -0800 (PST)
 MIME-Version: 1.0
 References: <20201123160139.1.I2702919afc253e2a451bebc3b701b462b2d22344@changeid>
- <20201123160139.3.I771b6594b2a4d5b7fe7e12a991a6640f46386e8d@changeid>
-In-Reply-To: <20201123160139.3.I771b6594b2a4d5b7fe7e12a991a6640f46386e8d@changeid>
+In-Reply-To: <20201123160139.1.I2702919afc253e2a451bebc3b701b462b2d22344@changeid>
 From:   Linus Walleij <linus.walleij@linaro.org>
-Date:   Tue, 24 Nov 2020 09:27:07 +0100
-Message-ID: <CACRpkdZA2od6NfNczeVh4v1D4_UBHrErQLHjyGRXWOVPh9f8hQ@mail.gmail.com>
-Subject: Re: [PATCH 3/3] pinctrl: qcom: Clear possible pending irq when
- remuxing GPIOs
+Date:   Tue, 24 Nov 2020 09:28:28 +0100
+Message-ID: <CACRpkdamdXCqZa4=qb5MsJtQMw1v53z5HZVv5SHJv84dtVACqQ@mail.gmail.com>
+Subject: Re: [PATCH 1/3] irqchip: qcom-pdc: Fix phantom irq when changing
+ between rising/falling
 To:     Douglas Anderson <dianders@chromium.org>
 Cc:     Marc Zyngier <maz@kernel.org>,
         Thomas Gleixner <tglx@linutronix.de>,
@@ -74,17 +73,17 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On Tue, Nov 24, 2020 at 1:02 AM Douglas Anderson <dianders@chromium.org> wrote:
 
-> Conceptually, we can envision the input on Qualcomm SoCs to pass
-> through a bunch of blocks between coming into the chip and becoming a
-> GPIO interrupt.
+> We have a problem if we use gpio-keys and configure wakeups such that
+> we only want one edge to wake us up.  AKA:
+>   wakeup-event-action = <EV_ACT_DEASSERTED>;
+>   wakeup-source;
 
-This looks like really good detective engineering, something
-I do myself from time to time.
+I would need Marc's ACK to apply this with the other patches
+to the pinctrl tree, but I can't really see if maybe it is OK to
+apply it separately?
 
-Bjorn does this look OK to you?
-
-I'm wondering about patch 1/3, does it need to be applied
-with the rest?
+Also are these patches supposed to all go in as fixes or
+for v5.11?
 
 Yours,
 Linus Walleij
