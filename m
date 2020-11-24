@@ -2,133 +2,135 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 618732C2D5A
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Nov 2020 17:55:44 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4CC7B2C2DB1
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Nov 2020 18:04:58 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2390574AbgKXQvf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 24 Nov 2020 11:51:35 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37072 "EHLO
+        id S2389898AbgKXRB6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 24 Nov 2020 12:01:58 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38742 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2390479AbgKXQvc (ORCPT
+        with ESMTP id S1726105AbgKXRB6 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 24 Nov 2020 11:51:32 -0500
-Received: from mail-ej1-x643.google.com (mail-ej1-x643.google.com [IPv6:2a00:1450:4864:20::643])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 43D3EC0613D6
-        for <linux-arm-msm@vger.kernel.org>; Tue, 24 Nov 2020 08:51:31 -0800 (PST)
-Received: by mail-ej1-x643.google.com with SMTP id z5so9376506ejp.4
-        for <linux-arm-msm@vger.kernel.org>; Tue, 24 Nov 2020 08:51:31 -0800 (PST)
+        Tue, 24 Nov 2020 12:01:58 -0500
+Received: from mail-vs1-xe43.google.com (mail-vs1-xe43.google.com [IPv6:2607:f8b0:4864:20::e43])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 84595C0613D6
+        for <linux-arm-msm@vger.kernel.org>; Tue, 24 Nov 2020 09:01:58 -0800 (PST)
+Received: by mail-vs1-xe43.google.com with SMTP id f7so11452350vsh.10
+        for <linux-arm-msm@vger.kernel.org>; Tue, 24 Nov 2020 09:01:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
+        d=chromium.org; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=3RQOPsic+9fUZ8cntWd3pHla3oBnbpt896XicZzUmCg=;
-        b=kdXyCxx1nIbKtIZ84wlfw1bPP7vXM97AMtabCqZLNgr3EVFLUjvc/4MfHEM6xuBjs1
-         73/Cbj0PbqOnAyvT0u8frpQum2TWPV0+kgh3DZzLdfnXcGnR8ygJMht111GnI3PqyPFG
-         +fD4UVsHEaz0mhlJ1wpoRuJbKKCtDXF2I4XzEOFKbIFwlhOCANIJ7DOXJWJPELWJjIIW
-         kkOb6V1vIyb17XnppkStZ4Aslz+RW9GgbUMwPPLyFzfPsRFWaZ294sgPvWdcNR0M0/M9
-         p202ZwoHXS070Z0jWPyPIuaTTfThNirtbygH5Uale5HcKgx8w7+4ARvjMI9X3323w3YE
-         4q8Q==
+        bh=2wb1JgcU2epWYb7iN5+zCGTz6bLzovtrxzJoMWboNp4=;
+        b=JJsfMe7GQA2lWJ0cihNe47ChOBzthFMJbdQ/5Jdt/2W2oowgdw3noFz6OOeW7f9PBA
+         4lfBZxE6+7Ac9/BlN0h/LGcgBBV0nq9NHDAifj01wsEZJM3OZlHKkg01el7x1d6bf1ut
+         NzyX8qSUtdgM0DsGslTetF7Lwf//NH68JDbE8=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=3RQOPsic+9fUZ8cntWd3pHla3oBnbpt896XicZzUmCg=;
-        b=uUgkxExEThhes72JskZ+MT9qz5fLcFRFZOlhDiQjUxmEEt797u9yVU+3dpHFPeiW15
-         NwJTk5nl0mr4SWjHYGnxHiJ9+5TMWUTe6SqY4aoN/Kzq9ZnXV0bos3ymY2OkJD+TS5XS
-         20JfO8lR4yN91NGquGxIA6sNOjSClBnljQtk7hJX9PSBRd2G9lQts44KSXmw+3cEaTyX
-         nWuHjTTdfIyfMnyA/wca7B1xIPd26OHg7vEyNAiLTMju4fOKtaDCq91iaMTxEexPaAaB
-         uoqRkrQzWiZAM4z4NMhFC5YTl3PxjrRk3jUrz1VH3G8GXLZF+j3SlpwSn3xxMmvmYoRa
-         aOUw==
-X-Gm-Message-State: AOAM531otfhBFdfAiwy8auNmHr3zSyl0QZWXyjCOg1LXoHf0hP54kCcf
-        EEgH6ei1j/E3/x4xoIUWEYsxQYE0ivBy/Dpc1jcmrbEAu/7Dhg==
-X-Google-Smtp-Source: ABdhPJy1rTMbxN14rsCY1fUyZYG4HVhIEzHty2KPVHAkXjrjX1AhAVsEYs+/NINRKXI+fUqUpT+8J1x4zbzVhDGVizM=
-X-Received: by 2002:a17:906:14cd:: with SMTP id y13mr4819569ejc.510.1606236689978;
- Tue, 24 Nov 2020 08:51:29 -0800 (PST)
+        bh=2wb1JgcU2epWYb7iN5+zCGTz6bLzovtrxzJoMWboNp4=;
+        b=sQz1NkNmn2Ekuimd508y3WoAa66Fo4DgrhPtA0n2yGTuJF0EHbZQncCsRaJ1dpF2EF
+         xv6/KLqLuIg/157r9oEMuFZfJKZtKX6n3zpAZvyBck47r7jsCqIMUe/D02yfu0io5d3B
+         sj+hO6UCogp8Zs/vdByTb1LCOe+ELO9zVHMOWf4vRmZ5Uui7Xj1pLW93K7KK+vkpY+DF
+         l3xsiSSRJY1NpgiPmCuIZcsNnI7iOD2c1ujR2HMjdihVzoc67nmPw9NPzGLkVYPvWoN0
+         +LyOQpDPYSPvnfJHip2BUcqVRCERhEdwTUdEcEJwytau6B/4eyqNjlW/lPJEqyskLbPI
+         5v/w==
+X-Gm-Message-State: AOAM531fmPz6V8t/MhwA+Y4UJm3SknKBMq2xrv+tsq2dyMoE2Br5Bw7r
+        wccWGBUonKgH9cvh8qBrCAfp55D61LV+lA==
+X-Google-Smtp-Source: ABdhPJyrsjY00cN4V8n/3An6ZY27FN0Xzog0TdSQPdWcMIAtkHMYjDJRQudAclcwthoYvJ4rpPRXSw==
+X-Received: by 2002:a67:3095:: with SMTP id w143mr4624732vsw.35.1606237317817;
+        Tue, 24 Nov 2020 09:01:57 -0800 (PST)
+Received: from mail-vk1-f180.google.com (mail-vk1-f180.google.com. [209.85.221.180])
+        by smtp.gmail.com with ESMTPSA id r139sm1725103vkd.47.2020.11.24.09.01.57
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 24 Nov 2020 09:01:57 -0800 (PST)
+Received: by mail-vk1-f180.google.com with SMTP id s135so4918569vkh.6
+        for <linux-arm-msm@vger.kernel.org>; Tue, 24 Nov 2020 09:01:57 -0800 (PST)
+X-Received: by 2002:a1f:1b92:: with SMTP id b140mr4748486vkb.7.1606237316598;
+ Tue, 24 Nov 2020 09:01:56 -0800 (PST)
 MIME-Version: 1.0
-References: <1606234711-20125-1-git-send-email-loic.poulain@linaro.org> <b66d5f09-7560-3b82-84a3-b7cf40c9532e@codeaurora.org>
-In-Reply-To: <b66d5f09-7560-3b82-84a3-b7cf40c9532e@codeaurora.org>
-From:   Loic Poulain <loic.poulain@linaro.org>
-Date:   Tue, 24 Nov 2020 17:57:45 +0100
-Message-ID: <CAMZdPi_n0h_S3f7R6H0kZO7PhpKiDLm0k6Cfxusg2+qfv1BerQ@mail.gmail.com>
-Subject: Re: [PATCH v2] bus: mhi: core: Fix device hierarchy issue
-To:     Jeffrey Hugo <jhugo@codeaurora.org>
-Cc:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        Hemant Kumar <hemantk@codeaurora.org>,
+References: <20201123160139.1.I2702919afc253e2a451bebc3b701b462b2d22344@changeid>
+ <d65e2be33a218751e7be3342e490e076@kernel.org>
+In-Reply-To: <d65e2be33a218751e7be3342e490e076@kernel.org>
+From:   Doug Anderson <dianders@chromium.org>
+Date:   Tue, 24 Nov 2020 09:01:44 -0800
+X-Gmail-Original-Message-ID: <CAD=FV=Wg-gdry1a-LjJhuKgHRr=DXq4Hu0P8nJGAzf5viEcthA@mail.gmail.com>
+Message-ID: <CAD=FV=Wg-gdry1a-LjJhuKgHRr=DXq4Hu0P8nJGAzf5viEcthA@mail.gmail.com>
+Subject: Re: [PATCH 1/3] irqchip: qcom-pdc: Fix phantom irq when changing
+ between rising/falling
+To:     Marc Zyngier <maz@kernel.org>
+Cc:     Thomas Gleixner <tglx@linutronix.de>,
+        Jason Cooper <jason@lakedaemon.net>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Maulik Shah <mkshah@codeaurora.org>,
+        Srinivas Ramana <sramana@codeaurora.org>,
+        Neeraj Upadhyay <neeraju@codeaurora.org>,
+        Rajendra Nayak <rnayak@codeaurora.org>,
+        "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
         linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Bhaumik Bhatt <bbhatt@codeaurora.org>
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Andy Gross <agross@kernel.org>,
+        LKML <linux-kernel@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, 24 Nov 2020 at 17:36, Jeffrey Hugo <jhugo@codeaurora.org> wrote:
->
-> On 11/24/2020 9:18 AM, Loic Poulain wrote:
-> > A MHI client device should be child of the MHI controller device.
-> > Today both MHI controller and its MHI clients are direct children
-> > of the same bus device. This patch fixes the hierarchy.
->
-> Why?
->
-> I'm not particularly arguing for or against this change (I think it
-> affects me slightly, but not in a breaking way), but this commit text
-> seems pretty generic.  It doesn't really help me understand the
-> relevance of this change.  It seems to be only describing what you are
-> doing, but not the why.  How did you find this?  How does this affect
-> the client drivers?  Does it make something the client drivers care
-> about better?
->
-> To put this another way, "should" is an opinion, and you've provided no
-> facts to assert why your opinion is superior to others.
+Hi,
 
-That's right I've not elaborate too much, but it's mainly to respect
-the hierarchy of devices, as it is done for other busses. The
-hierarchy is especially important for things like power management
-ordering (PM core must suspend devices before their controller, wakeup
-the controller before its devices...). Moreover it will also be useful
-for userspace (thanks to sysfs) to determine which devices are behind
-which controllers (and so determine if e.g. QMI and IP channels are
-part of the same device).
-
-Regards,
-Loic
-
-
-
+On Tue, Nov 24, 2020 at 1:00 AM Marc Zyngier <maz@kernel.org> wrote:
 >
+> > @@ -187,9 +189,24 @@ static int qcom_pdc_gic_set_type(struct irq_data
+> > *d, unsigned int type)
+> >               return -EINVAL;
+> >       }
 > >
-> > Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
-> > ---
-> >   v2: fix commit message
+> > +     old_pdc_type = pdc_reg_read(IRQ_i_CFG, pin_out);
+> >       pdc_reg_write(IRQ_i_CFG, pin_out, pdc_type);
 > >
-> >   drivers/bus/mhi/core/init.c | 10 +++++++++-
-> >   1 file changed, 9 insertions(+), 1 deletion(-)
-> >
-> > diff --git a/drivers/bus/mhi/core/init.c b/drivers/bus/mhi/core/init.c
-> > index 436221c..c7a7354 100644
-> > --- a/drivers/bus/mhi/core/init.c
-> > +++ b/drivers/bus/mhi/core/init.c
-> > @@ -1137,7 +1137,15 @@ struct mhi_device *mhi_alloc_device(struct mhi_controller *mhi_cntrl)
-> >       device_initialize(dev);
-> >       dev->bus = &mhi_bus_type;
-> >       dev->release = mhi_release_device;
-> > -     dev->parent = mhi_cntrl->cntrl_dev;
+> > -     return irq_chip_set_type_parent(d, type);
+> > +     ret = irq_chip_set_type_parent(d, type);
 > > +
-> > +     if (mhi_cntrl->mhi_dev) {
-> > +             /* for MHI client devices, parent is the MHI controller device */
-> > +             dev->parent = &mhi_cntrl->mhi_dev->dev;
-> > +     } else {
-> > +             /* for MHI controller device, parent is the bus device (e.g. pci device) */
-> > +             dev->parent = mhi_cntrl->cntrl_dev;
-> > +     }
-> > +
-> >       mhi_dev->mhi_cntrl = mhi_cntrl;
-> >       mhi_dev->dev_wake = 0;
-> >
-> >
+> > +     /*
+> > +      * When we change types the PDC can give a phantom interrupt.
+> > +      * Clear it.  Specifically the phantom shows up if a line is already
+> > +      * high and we change to rising or if a line is already low and we
+> > +      * change to falling but let's be consistent and clear it always.
+> > +      *
+> > +      * Doing this works because we have IRQCHIP_SET_TYPE_MASKED so the
+> > +      * interrupt will be cleared before the rest of the system sees it.
+> > +      */
+> > +     if (old_pdc_type != pdc_type)
+> > +             irq_chip_set_parent_state(d, IRQCHIP_STATE_PENDING, 0);
 >
->
-> --
-> Jeffrey Hugo
-> Qualcomm Technologies, Inc. is a member of the
-> Code Aurora Forum, a Linux Foundation Collaborative Project.
+> nit: s/0/false/.
+
+I'll fix this.
+
+
+> You could also make it conditional on the parent side having been
+> successful.
+
+Good idea.
+
+
+> And while we're looking at this: do you need to rollback the PDC state
+> if the GIC side has failed? It's all very hypothetical, but just in
+> case...
+
+I'm going to go ahead and say "no", but I'll make this change if you
+insist.  Specifically:
+
+* We're still leaving things in a self-consistent state if we fail to
+clear the parent, we'll just get a spurious interrupt.  It won't cause
+any crashes / hangs / whatever.
+
+* Since it seems very unlikely we'd ever trip this and if we ever do
+it's not the end of the world, I'd rather not add extra code.
+
+Hopefully that's OK.
+
+-Doug
