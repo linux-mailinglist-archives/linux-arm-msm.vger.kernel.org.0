@@ -2,90 +2,159 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id DE37F2C2031
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Nov 2020 09:40:38 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C050B2C209E
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Nov 2020 10:01:43 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730509AbgKXIjL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 24 Nov 2020 03:39:11 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44982 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726326AbgKXIjJ (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 24 Nov 2020 03:39:09 -0500
-Received: from mail-lf1-x142.google.com (mail-lf1-x142.google.com [IPv6:2a00:1450:4864:20::142])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CE4CBC0613CF
-        for <linux-arm-msm@vger.kernel.org>; Tue, 24 Nov 2020 00:39:07 -0800 (PST)
-Received: by mail-lf1-x142.google.com with SMTP id d20so11812032lfe.11
-        for <linux-arm-msm@vger.kernel.org>; Tue, 24 Nov 2020 00:39:07 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=i8+bYCeKuOJvnepjKUXd1bAXp/xtxeuCkyy0njL/NAA=;
-        b=pM2yYux2OW5DIOxHgUVmKI58b7pM94gtzpow1fv7nhugyA1ylNk6yTjvTfL6Isdxa0
-         RL/fpFvBHQmjRmSqhc9JPxpgv4Hh8ZdWdWI/E3jRb8mDsuIlEa8niLuk/MPJrYGDbpC1
-         ADKmWNH3/BnBsyr72JUrUNzFnzVK/KfPZEgi72Q5YZ4KCmMlzZ47dgHY6QO2za5gPKB5
-         VTGRXum+qhzFRudFxIXNExPBbDtNE8JkFI04gjlMrBOsyvWtsD4l6S422YBS7glv9aTv
-         GVrFYKXL+T7T05X0vlLfSlmzxYxqNnh7dO0mGfiJzBO5zM6/1XhzLSL3OAJaHlc2kx3c
-         9TCA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=i8+bYCeKuOJvnepjKUXd1bAXp/xtxeuCkyy0njL/NAA=;
-        b=VSgWQN51ovWOIJjN3Ljc6T+S3TpsGnoyRDHLKJ+1kjc6VJ1RL1bS65BgYah7JyN6Aw
-         zPWUHy9wsebSVrkigO1i1F2j2d70DCxFysf5fnbWSMDjjGk03tGI6CAOKBUUNJ5yIYLn
-         0AKe7bEI4898oXIxBuhdR4U70h3cK5GMhXeL9yR7EqWL1ZbOnI6M2Gr8QOprP2wYrNkO
-         1K5Zb2wBMtrwwMfmWw9cRhMAG+rAG+kkwifA7/slUeTH8x1KUiBSUnnYGV/aeMsikYsT
-         XPIea8VTWWBPVWml8KTeH8TEOEHu6vW6Tepg/lMecAQUq5qJT8LMqbQCqg3zuPDEKanA
-         3JAg==
-X-Gm-Message-State: AOAM533ckySQ/YiZeaH1xZ9DeOx9CuBac9bLSwJsQEL86r/y6t/4k6VM
-        RmGa2gkOGs3s8QzdVDNs+hDjMV1H3a51VwaMihA+Mg==
-X-Google-Smtp-Source: ABdhPJzQT4fDtfKY20ncG9HETAsp8RdTF79Jyc6mRKyoBEhhdyG1qtyOY5kKpTCHvD7v0L+Hn6wSYsEYEGC2qtveh2Q=
-X-Received: by 2002:a19:5f11:: with SMTP id t17mr1212354lfb.572.1606207146303;
- Tue, 24 Nov 2020 00:39:06 -0800 (PST)
+        id S1730831AbgKXJAg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 24 Nov 2020 04:00:36 -0500
+Received: from mail.kernel.org ([198.145.29.99]:59748 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1730494AbgKXJAf (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 24 Nov 2020 04:00:35 -0500
+Received: from disco-boy.misterjones.org (disco-boy.misterjones.org [51.254.78.96])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id 376A22073C;
+        Tue, 24 Nov 2020 09:00:34 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1606208434;
+        bh=B5gJW4XvFdpPY/O6e4RLIzbmqA6f65X+LK9jOXetPDM=;
+        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+        b=O13LgKM21EYul5Nyeb9e3zdf0MHo0HOJkQSitIC2VxewKdjNpSLqhNn/V6JOTglhP
+         8D7CMDvl1dN4B3/E+KxCcw5WRzX3gVN0g76RNh9I69SQjB2eIYBdMNR/jF1RAAn809
+         jlsLTw8j05xd13qVdYoFRPcwwsZOAthuGHYRcj5s=
+Received: from disco-boy.misterjones.org ([51.254.78.96] helo=www.loen.fr)
+        by disco-boy.misterjones.org with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
+        (Exim 4.94)
+        (envelope-from <maz@kernel.org>)
+        id 1khUBc-00DC4U-0h; Tue, 24 Nov 2020 09:00:32 +0000
 MIME-Version: 1.0
-References: <1604570192-15057-1-git-send-email-rnayak@codeaurora.org> <1604570192-15057-2-git-send-email-rnayak@codeaurora.org>
-In-Reply-To: <1604570192-15057-2-git-send-email-rnayak@codeaurora.org>
-From:   Linus Walleij <linus.walleij@linaro.org>
-Date:   Tue, 24 Nov 2020 09:38:55 +0100
-Message-ID: <CACRpkdbrOKct5v2YY6L8G5fweP=eOFpcS9=Z6nUyA2E4Of+h7Q@mail.gmail.com>
-Subject: Re: [PATCH v2 2/2] pinctrl: qcom: Add sc7280 pinctrl driver
-To:     Rajendra Nayak <rnayak@codeaurora.org>,
-        John Stultz <john.stultz@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Tue, 24 Nov 2020 09:00:31 +0000
+From:   Marc Zyngier <maz@kernel.org>
+To:     Douglas Anderson <dianders@chromium.org>
+Cc:     Thomas Gleixner <tglx@linutronix.de>,
+        Jason Cooper <jason@lakedaemon.net>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Maulik Shah <mkshah@codeaurora.org>,
+        Srinivas Ramana <sramana@codeaurora.org>,
+        Neeraj Upadhyay <neeraju@codeaurora.org>,
+        Rajendra Nayak <rnayak@codeaurora.org>,
+        linux-gpio@vger.kernel.org, linux-arm-msm@vger.kernel.org,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        MSM <linux-arm-msm@vger.kernel.org>,
-        "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+        Stephen Boyd <swboyd@chromium.org>,
+        Andy Gross <agross@kernel.org>, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 1/3] irqchip: qcom-pdc: Fix phantom irq when changing
+ between rising/falling
+In-Reply-To: <20201123160139.1.I2702919afc253e2a451bebc3b701b462b2d22344@changeid>
+References: <20201123160139.1.I2702919afc253e2a451bebc3b701b462b2d22344@changeid>
+User-Agent: Roundcube Webmail/1.4.9
+Message-ID: <d65e2be33a218751e7be3342e490e076@kernel.org>
+X-Sender: maz@kernel.org
+X-SA-Exim-Connect-IP: 51.254.78.96
+X-SA-Exim-Rcpt-To: dianders@chromium.org, tglx@linutronix.de, jason@lakedaemon.net, linus.walleij@linaro.org, mkshah@codeaurora.org, sramana@codeaurora.org, neeraju@codeaurora.org, rnayak@codeaurora.org, linux-gpio@vger.kernel.org, linux-arm-msm@vger.kernel.org, bjorn.andersson@linaro.org, swboyd@chromium.org, agross@kernel.org, linux-kernel@vger.kernel.org
+X-SA-Exim-Mail-From: maz@kernel.org
+X-SA-Exim-Scanned: No (on disco-boy.misterjones.org); SAEximRunCond expanded to false
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Nov 5, 2020 at 10:56 AM Rajendra Nayak <rnayak@codeaurora.org> wrote:
-
-> Add initial pinctrl driver to support pin configuration with
-> pinctrl framework for SC7280 SoC
->
-> Signed-off-by: Rajendra Nayak <rnayak@codeaurora.org>
+On 2020-11-24 00:01, Douglas Anderson wrote:
+> We have a problem if we use gpio-keys and configure wakeups such that
+> we only want one edge to wake us up.  AKA:
+>   wakeup-event-action = <EV_ACT_DEASSERTED>;
+>   wakeup-source;
+> 
+> Specifically we end up with a phantom interrupt that blocks suspend if
+> the line was already high and we want wakeups on rising edges (AKA we
+> want the GPIO to go low and then high again before we wake up).  The
+> opposite is also problematic.
+> 
+> Specifically, here's what's happening today:
+> 1. Normally, gpio-keys configures to look for both edges.  Due to the
+>    current workaround introduced in commit c3c0c2e18d94 ("pinctrl:
+>    qcom: Handle broken/missing PDC dual edge IRQs on sc7180"), if the
+>    line was high we'd configure for falling edges.
+> 2. At suspend time, we change to look for rising edges.
+> 3. After qcom_pdc_gic_set_type() runs, we get a phantom interrupt.
+> 
+> We can solve this by just clearing the phantom interrupt.
+> 
+> NOTE: it is possible that this could cause problems for a client with
+> very specific needs, but there's not much we can do with this
+> hardware.  As an example, let's say the interrupt signal is currently
+> high and the client is looking for falling edges.  The client now
+> changes to look for rising edges.  The client could possibly expect
+> that if the line has a short pulse low (and back high) that it would
+> always be detected.  Specifically no matter when the pulse happened,
+> it should either have tripped the (old) falling edge trigger or the
+> (new) rising edge trigger.  We will simply not trip it.  We could
+> narrow down the race a bit by polling our parent before changing
+> types, but no matter what we do there will still be a period of time
+> where we can't tell the difference between a real transition (or more
+> than one transition) and the phantom.
+> 
+> Signed-off-by: Douglas Anderson <dianders@chromium.org>
 > ---
-> v2: Consolidated functions under phase_flag and qdss
->     Moved ufs reset pin to pin175 so its exposed as a gpio
->     npios updated from 175 to 176
+> 
+>  drivers/irqchip/qcom-pdc.c | 19 ++++++++++++++++++-
+>  1 file changed, 18 insertions(+), 1 deletion(-)
+> 
+> diff --git a/drivers/irqchip/qcom-pdc.c b/drivers/irqchip/qcom-pdc.c
+> index bd39e9de6ecf..7d097164aadc 100644
+> --- a/drivers/irqchip/qcom-pdc.c
+> +++ b/drivers/irqchip/qcom-pdc.c
+> @@ -159,6 +159,8 @@ static int qcom_pdc_gic_set_type(struct irq_data
+> *d, unsigned int type)
+>  {
+>  	int pin_out = d->hwirq;
+>  	enum pdc_irq_config_bits pdc_type;
+> +	enum pdc_irq_config_bits old_pdc_type;
+> +	int ret;
+> 
+>  	if (pin_out == GPIO_NO_WAKE_IRQ)
+>  		return 0;
+> @@ -187,9 +189,24 @@ static int qcom_pdc_gic_set_type(struct irq_data
+> *d, unsigned int type)
+>  		return -EINVAL;
+>  	}
+> 
+> +	old_pdc_type = pdc_reg_read(IRQ_i_CFG, pin_out);
+>  	pdc_reg_write(IRQ_i_CFG, pin_out, pdc_type);
+> 
+> -	return irq_chip_set_type_parent(d, type);
+> +	ret = irq_chip_set_type_parent(d, type);
+> +
+> +	/*
+> +	 * When we change types the PDC can give a phantom interrupt.
+> +	 * Clear it.  Specifically the phantom shows up if a line is already
+> +	 * high and we change to rising or if a line is already low and we
+> +	 * change to falling but let's be consistent and clear it always.
+> +	 *
+> +	 * Doing this works because we have IRQCHIP_SET_TYPE_MASKED so the
+> +	 * interrupt will be cleared before the rest of the system sees it.
+> +	 */
+> +	if (old_pdc_type != pdc_type)
+> +		irq_chip_set_parent_state(d, IRQCHIP_STATE_PENDING, 0);
 
-Patch applied.
+nit: s/0/false/.
 
-> +config PINCTRL_SC7280
-> +       tristate "Qualcomm Technologies Inc SC7280 pin controller driver"
-> +       depends on GPIOLIB && OF
-> +       select PINCTRL_MSM
+You could also make it conditional on the parent side having been 
+successful.
+And while we're looking at this: do you need to rollback the PDC state
+if the GIC side has failed? It's all very hypothetical, but just in 
+case...
 
-I changed this to depends on PINCTRL_MSM in the process to stay
-consistent with John's changes to modularize the pin controllers.
+> +
+> +	return ret;
+>  }
+> 
+>  static struct irq_chip qcom_pdc_gic_chip = {
 
-Yours,
-Linus Walleij
+It otherwise looks sensible. Is that a fix for 5.10?
+
+         M.
+-- 
+Jazz is not dead. It just smells funny...
