@@ -2,128 +2,138 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 9EB0C2C3EDF
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Nov 2020 12:18:22 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 586B82C3F0A
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Nov 2020 12:25:40 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725792AbgKYLQc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 25 Nov 2020 06:16:32 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38116 "EHLO
+        id S1727425AbgKYLYu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 25 Nov 2020 06:24:50 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39420 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725616AbgKYLQb (ORCPT
+        with ESMTP id S1726595AbgKYLYu (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 25 Nov 2020 06:16:31 -0500
-Received: from mail-wm1-x343.google.com (mail-wm1-x343.google.com [IPv6:2a00:1450:4864:20::343])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 03DE5C061A4D
-        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Nov 2020 03:16:27 -0800 (PST)
-Received: by mail-wm1-x343.google.com with SMTP id 1so1782874wme.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Nov 2020 03:16:26 -0800 (PST)
+        Wed, 25 Nov 2020 06:24:50 -0500
+Received: from mail-qk1-x741.google.com (mail-qk1-x741.google.com [IPv6:2607:f8b0:4864:20::741])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4601DC061A4D
+        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Nov 2020 03:24:50 -0800 (PST)
+Received: by mail-qk1-x741.google.com with SMTP id u4so3678176qkk.10
+        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Nov 2020 03:24:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id;
-        bh=bUWAz+7oC4r88ijrzPoeEe5nNVdgzuIo0a9R1/WrO0E=;
-        b=okwqCZ1JJCP0WvyT8T/guMksh+4YoHfEjpOnUupzS7eW7qnWyIThSxmP4yHONvYLst
-         7WMEJsgzbSBXgySQxzXvo4Iw1nBYIjPNaAEBLUBH2BOpIB4EeO/GC2ighL08GLG/fq7L
-         BIiKUk/ekdSMXDQo1SGdq9+bbyMY8A0ez2XTU+dUz3h6LXG+L7qRPovEmM4MUxAYyg/C
-         aLiKkF6xdfLY6blJqIWfkRMB3VUdEbv48aLh3Dgpbar0Pn84ykXbX6yKbcSX1rQ08S1s
-         fTTe4hnxvAaa0E1ePQSkO4xV6MEEF6YkOqh+9KxyZ84Z8ztGo74g4Ef0zONjTEWzxEKs
-         Im4A==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=agmpj2HBmWrLN3MVuSVDvn8VNwMgC/NxRRqXNQElq+c=;
+        b=Xek41XwpQigUAOEeTJBGHWL790+lASvVIv15zxh3iAJ1zijkjfVfs9eVex27OfCuXA
+         kJdW59wrQn1P9fA1QwhwcZG8R3hzDh9VApTT6RicMbfuwQCmYi2DVJmFpe27824jWafL
+         Z+HcAq9jhCmUjGVHK+2nF2Y/jqCEFBtWVYC3vbbXALj0NjPLbNx1snXzCd9TOUOPyQPa
+         TsvhSX5+VzpEoHmFpb834YUk/5gmOhFG8ZSqrIOfyJ2NHQ/nf0TtsQsaTxmrSe24nIZS
+         OyTVn5zFIQ+IEXvHDeNaqtrmH18lXKQrB6Xafri4msJHpPoeH8lbmXm1OqF8yFBOBMB+
+         hrlw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=bUWAz+7oC4r88ijrzPoeEe5nNVdgzuIo0a9R1/WrO0E=;
-        b=Vf7XnbaoVekHkiZT/qz1bLs5EP95qfOzvSn0vxaUu9xlPnJSQYVPLiIG3/X5LbKCTY
-         tDZboWXSBflUFQpx4I8wfnHf+hDa9mfPrXkZylqaScN7P41xnr6NBnbrIiHrCX9t+bod
-         dwAzs/oKJtjx4ipt3jtMFZ3MxVoDqR3GnDD55MTNwsDHkkFmJtS0YM/WuXbMJ3wcy8RC
-         cQV98vVwVpXkVKsF7YusObtvgRVIgkB4v6wDfwBihoqHR24WjAVMQfqEE2NY2ZGGsx0s
-         SV+jJmIYfme7KRIxP1Y+uapnt1t7eicWYtZB/s4HQODvsQJwV8lhRy1laqNzXKPLwwue
-         ePNw==
-X-Gm-Message-State: AOAM531DvWzFRAg5U+cPw1/lMGxpuzkQmbFsKyRErhNW87hbmUdX6HjP
-        57PhIsJCOLq9E+5WAC4L3qYCgQ==
-X-Google-Smtp-Source: ABdhPJwJ5hY5iT/tvUiA1wHxErGlClp0/vD5c9IYjUlp2IneYug59d+jKwqu6Z1+wGHqjgXNnPUGww==
-X-Received: by 2002:a7b:c242:: with SMTP id b2mr3363365wmj.162.1606302985662;
-        Wed, 25 Nov 2020 03:16:25 -0800 (PST)
-Received: from localhost.localdomain ([88.122.66.28])
-        by smtp.gmail.com with ESMTPSA id n9sm3928166wmd.4.2020.11.25.03.16.24
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 25 Nov 2020 03:16:25 -0800 (PST)
-From:   Loic Poulain <loic.poulain@linaro.org>
-To:     manivannan.sadhasivam@linaro.org, hemantk@codeaurora.org
-Cc:     linux-arm-msm@vger.kernel.org, bbhatt@codeaurora.org,
-        jhugo@codeaurora.org, Loic Poulain <loic.poulain@linaro.org>
-Subject: [PATCH v4] bus: mhi: core: Fix device hierarchy
-Date:   Wed, 25 Nov 2020 12:23:16 +0100
-Message-Id: <1606303396-5588-1-git-send-email-loic.poulain@linaro.org>
-X-Mailer: git-send-email 2.7.4
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=agmpj2HBmWrLN3MVuSVDvn8VNwMgC/NxRRqXNQElq+c=;
+        b=JpzMk42Yhzzw+YPAj1F7O5JiN7OC77x9r5Dv+mpXGd63iwK96r6iZME8ajrjFkJiNH
+         99FV8hfIBLZjeE+9NGDPcgvR0fjXB8HAS9EVnlv5AoeMaiUh04jcjq6fKhwgyhUIEL46
+         rpzaOj3xzMcDMkNq0/dgzqrGUs4z5VHvjTBX5VO2PbKnfaQuZLJXjzm0+dqf3FekA3/V
+         x3qY7EzFUbavH2sKFIwZakFe4VLYsT9BLI1VBGxKPaNEL1p+mfeQ/uVr+qFD8NbBTTql
+         G6ulwD7fEI6je3BO8HZ16muDbZ2EfKM97EjehBJJ7x3cXIMSCq7A6j9O7WNIuYvB8Hoa
+         kPyQ==
+X-Gm-Message-State: AOAM532x1dLAdIcRogJQslU9ZXtDTICSoIjn9q5jMwkM4lLaU8uBrP0R
+        3VzvaPkOwZJxxcUwpnQkRDj8jjpBeParIj+n5v4rXQ==
+X-Google-Smtp-Source: ABdhPJwWhnzD0lDZFoqtnfER27VsEtm05heWcR/zUGhYgUn6H9hWU74Sr5XzjkLVg9dn0GVTJoyr0OxmFzYOq0n5cUA=
+X-Received: by 2002:a25:7481:: with SMTP id p123mr3005268ybc.167.1606303489272;
+ Wed, 25 Nov 2020 03:24:49 -0800 (PST)
+MIME-Version: 1.0
+References: <1606298560-3003-1-git-send-email-kalyan_t@codeaurora.org>
+In-Reply-To: <1606298560-3003-1-git-send-email-kalyan_t@codeaurora.org>
+From:   Amit Pundir <amit.pundir@linaro.org>
+Date:   Wed, 25 Nov 2020 16:54:13 +0530
+Message-ID: <CAMi1Hd3fjrJXJ1puZ6SCn0FXPNZdoJh19GALcVr_R93tZnxW_w@mail.gmail.com>
+Subject: Re: [v1] drm/msm/dpu: consider vertical front porch in the prefill bw calculation
+To:     Kalyan Thota <kalyan_t@codeaurora.org>
+Cc:     y@qualcomm.com, dri-devel <dri-devel@lists.freedesktop.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        freedreno <freedreno@lists.freedesktop.org>,
+        dt <devicetree@vger.kernel.org>,
+        lkml <linux-kernel@vger.kernel.org>,
+        Rob Clark <robdclark@gmail.com>,
+        Sean Paul <seanpaul@chromium.org>,
+        "Kristian H. Kristensen" <hoegsberg@chromium.org>,
+        Doug Anderson <dianders@chromium.org>,
+        Krishna Manikandan <mkrishn@codeaurora.org>,
+        Raviteja Tamatam <travitej@codeaurora.org>,
+        nganji@codeaurora.org, Stephen Boyd <swboyd@chromium.org>,
+        abhinavk@codeaurora.org, ddavenport@chromium.org,
+        Sumit Semwal <sumit.semwal@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This patch fixes the hierarchical structure of MHI devices. Indeed,
-MHI client devices are directly 'enumerated' from the mhi controller
-and therefore must be direct descendants/children of their mhi
-controller device, in accordance with the Linux Device Model.
+On Wed, 25 Nov 2020 at 15:33, Kalyan Thota <kalyan_t@codeaurora.org> wrote:
+>
+> In case of panels with low vertical back porch, the prefill bw
+> requirement will be high as we will have less time(vbp+pw) to
+> fetch and fill the hw latency buffers before start of first line
+> in active period.
+>
+> For ex:
+> Say hw_latency_line_buffers = 24, and if blanking vbp+pw = 10
+> Here we need to fetch 24 lines of data in 10 line times.
+> This will increase the bw to the ratio of linebuffers to blanking.
+>
+> DPU hw can also fetch data during vertical front porch provided
+> interface prefetch is enabled. Use vfp in the prefill calculation
+> as dpu driver enables prefetch if the blanking is not sufficient
+> to fill the latency lines.
 
-Today both MHI clients and controller devices are at the same level,
-this patch ensures that MHI controller is parent of its client devices.
+Tested on Xiaomi Poco F1 (sdm845).
 
-The hierarchy is especially important for power management (safe
-suspend/resume order). It is also useful for userspace to determine
-relationship between MHI client devices and controllers.
+Tested-by: Amit Pundir <amit.pundir@linaro.org>
 
-Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
-Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
----
- v2: fix commit message
- v3: reword commit message
- v4: fix device destroy
-
- drivers/bus/mhi/core/init.c | 10 +++++++++-
- drivers/bus/mhi/core/pm.c   |  4 ++--
- 2 files changed, 11 insertions(+), 3 deletions(-)
-
-diff --git a/drivers/bus/mhi/core/init.c b/drivers/bus/mhi/core/init.c
-index 436221c..c7a7354 100644
---- a/drivers/bus/mhi/core/init.c
-+++ b/drivers/bus/mhi/core/init.c
-@@ -1137,7 +1137,15 @@ struct mhi_device *mhi_alloc_device(struct mhi_controller *mhi_cntrl)
- 	device_initialize(dev);
- 	dev->bus = &mhi_bus_type;
- 	dev->release = mhi_release_device;
--	dev->parent = mhi_cntrl->cntrl_dev;
-+
-+	if (mhi_cntrl->mhi_dev) {
-+		/* for MHI client devices, parent is the MHI controller device */
-+		dev->parent = &mhi_cntrl->mhi_dev->dev;
-+	} else {
-+		/* for MHI controller device, parent is the bus device (e.g. pci device) */
-+		dev->parent = mhi_cntrl->cntrl_dev;
-+	}
-+
- 	mhi_dev->mhi_cntrl = mhi_cntrl;
- 	mhi_dev->dev_wake = 0;
- 
-diff --git a/drivers/bus/mhi/core/pm.c b/drivers/bus/mhi/core/pm.c
-index a671f58..681960c 100644
---- a/drivers/bus/mhi/core/pm.c
-+++ b/drivers/bus/mhi/core/pm.c
-@@ -504,7 +504,7 @@ static void mhi_pm_disable_transition(struct mhi_controller *mhi_cntrl)
- 	wake_up_all(&mhi_cntrl->state_event);
- 
- 	dev_dbg(dev, "Reset all active channels and remove MHI devices\n");
--	device_for_each_child(mhi_cntrl->cntrl_dev, NULL, mhi_destroy_device);
-+	device_for_each_child(&mhi_cntrl->mhi_dev->dev, NULL, mhi_destroy_device);
- 
- 	mutex_lock(&mhi_cntrl->pm_mutex);
- 
-@@ -637,7 +637,7 @@ static void mhi_pm_sys_error_transition(struct mhi_controller *mhi_cntrl)
- 	wake_up_all(&mhi_cntrl->state_event);
- 
- 	dev_dbg(dev, "Reset all active channels and remove MHI devices\n");
--	device_for_each_child(mhi_cntrl->cntrl_dev, NULL, mhi_destroy_device);
-+	device_for_each_child(&mhi_cntrl->mhi_dev->dev, NULL, mhi_destroy_device);
- 
- 	mutex_lock(&mhi_cntrl->pm_mutex);
- 
--- 
-2.7.4
-
+>
+> Signed-off-by: Kalyan Thota <kalyan_t@codeaurora.org>
+> ---
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c | 11 +++++++++--
+>  1 file changed, 9 insertions(+), 2 deletions(-)
+>
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+> index 7ea90d2..315b999 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+> @@ -151,7 +151,7 @@ static void _dpu_plane_calc_bw(struct drm_plane *plane,
+>         u64 plane_bw;
+>         u32 hw_latency_lines;
+>         u64 scale_factor;
+> -       int vbp, vpw;
+> +       int vbp, vpw, vfp;
+>
+>         pstate = to_dpu_plane_state(plane->state);
+>         mode = &plane->state->crtc->mode;
+> @@ -164,6 +164,7 @@ static void _dpu_plane_calc_bw(struct drm_plane *plane,
+>         fps = drm_mode_vrefresh(mode);
+>         vbp = mode->vtotal - mode->vsync_end;
+>         vpw = mode->vsync_end - mode->vsync_start;
+> +       vfp = mode->vsync_start - mode->vdisplay;
+>         hw_latency_lines =  dpu_kms->catalog->perf.min_prefill_lines;
+>         scale_factor = src_height > dst_height ?
+>                 mult_frac(src_height, 1, dst_height) : 1;
+> @@ -176,7 +177,13 @@ static void _dpu_plane_calc_bw(struct drm_plane *plane,
+>                 src_width * hw_latency_lines * fps * fmt->bpp *
+>                 scale_factor * mode->vtotal;
+>
+> -       do_div(plane_prefill_bw, (vbp+vpw));
+> +       if ((vbp+vpw) > hw_latency_lines)
+> +               do_div(plane_prefill_bw, (vbp+vpw));
+> +       else if ((vbp+vpw+vfp) < hw_latency_lines)
+> +               do_div(plane_prefill_bw, (vbp+vpw+vfp));
+> +       else
+> +               do_div(plane_prefill_bw, hw_latency_lines);
+> +
+>
+>         pstate->plane_fetch_bw = max(plane_bw, plane_prefill_bw);
+>  }
+> --
+> 2.7.4
+>
