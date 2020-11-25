@@ -2,86 +2,251 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 7A3632C491D
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Nov 2020 21:33:29 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id F2E7F2C49A6
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Nov 2020 22:11:15 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730016AbgKYUck (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 25 Nov 2020 15:32:40 -0500
-Received: from m42-4.mailgun.net ([69.72.42.4]:42609 "EHLO m42-4.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1729937AbgKYUcj (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 25 Nov 2020 15:32:39 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1606336359; h=Content-Transfer-Encoding: Content-Type:
- In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
- Subject: Sender; bh=T6tfjbXzjuiVmiiMnsXOIqV/fCW1WFmdP8ZbLczkG+A=; b=uQ5FpKHVyhrb60v/kifuLG0xAzSVyTOdFDGBh6k5R1kLX88uuW74crVb7NjsJ7ZdO6Ghjj2w
- FpM2zahAnzjzyHFw55FcM/7AghiDN0Ljpo1JHaz/heljP7WF4p3+bVNZKsuPGyshjED+q5TL
- 1SDM8vblLSSqU0JFTORUmoWc6zM=
-X-Mailgun-Sending-Ip: 69.72.42.4
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n08.prod.us-east-1.postgun.com with SMTP id
- 5fbebf659e87e163528d4a16 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 25 Nov 2020 20:32:37
- GMT
-Sender: hemantk=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 94EA7C433C6; Wed, 25 Nov 2020 20:32:36 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        NICE_REPLY_A,SPF_FAIL,URIBL_BLOCKED autolearn=no autolearn_force=no
-        version=3.4.0
-Received: from [10.46.162.249] (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: hemantk)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id DC503C433ED;
-        Wed, 25 Nov 2020 20:32:35 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org DC503C433ED
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=hemantk@codeaurora.org
-Subject: Re: [PATCH v5] bus: mhi: core: Fix device hierarchy
-To:     Loic Poulain <loic.poulain@linaro.org>,
-        manivannan.sadhasivam@linaro.org
-Cc:     linux-arm-msm@vger.kernel.org, bbhatt@codeaurora.org,
-        jhugo@codeaurora.org
-References: <1606310689-7189-1-git-send-email-loic.poulain@linaro.org>
-From:   Hemant Kumar <hemantk@codeaurora.org>
-Message-ID: <d8bae07b-f7f3-44e8-5d2a-7616f33d7c47@codeaurora.org>
-Date:   Wed, 25 Nov 2020 12:32:35 -0800
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.10.0
+        id S1731450AbgKYVKJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 25 Nov 2020 16:10:09 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46226 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1731411AbgKYVKI (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 25 Nov 2020 16:10:08 -0500
+Received: from mail-pf1-x443.google.com (mail-pf1-x443.google.com [IPv6:2607:f8b0:4864:20::443])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BF66EC08ED7E
+        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Nov 2020 13:10:03 -0800 (PST)
+Received: by mail-pf1-x443.google.com with SMTP id n137so3529249pfd.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Nov 2020 13:10:03 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=5kDOOuMOjwqEdI4fOY8lF/zJwxoesF7EbkKd66qXZt4=;
+        b=AWR/7M4mhE4fi43nRvdimsQoF0WR0/yRvzcmpbbdNnukQZ4s3FUnDOA4HlPrcfy1KL
+         TnDV3Sp7ib0l66wO1u9Qkihqc0ymqk7uAD73hLx1Hbj+4zgGkd46Av0r6N17g4aWHL9f
+         T52peLS6H3gWn2HtVm1n8SJNqsSbmk3lehF9k=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=5kDOOuMOjwqEdI4fOY8lF/zJwxoesF7EbkKd66qXZt4=;
+        b=tnqpCPFTXK01Cy4VUpgCnepQphBT6Xsb0fwSRrtDSXp4hLs8hE3/3Ph6ND48CbVaEH
+         mHIRc0KE1RRYTKSG0KOBUBRUQ2WaT6iHiYLLe3N5mcZWmSGdMicUuPiwvP99C54I5Ihw
+         B3ncO/ZuOkdLwN30luJZlGL48u7odEVxA8C0NS2cH69TIEW5fikiLGCUoVrkEFqlv2YI
+         0kdhXMaf+mWPx4rS06LN6rT+9yiqKmyepLI1QXbnhCidAjensUSXbNywZxMjRKg0a4kF
+         sMMP8hp/jFEZSXa1d3TSk4r/ySbT3kVU7XX37iXNWAA+NOkHI5s+g8SVvjU8niJmjoIn
+         ikgQ==
+X-Gm-Message-State: AOAM530UWAspRouMjnNSHlcHi/j5TYBKTa/lQRV5y36IjsUNSMSrSh2Z
+        a2i8qwGYmeBpeZH7/EHsI/UqHw==
+X-Google-Smtp-Source: ABdhPJxtOU3VPA7Y7ucN799oMICSzuh5uhFKuAq1LiQpUAr5IO1/6yxlbfPxSFBqrEGEx7Z+PADUmw==
+X-Received: by 2002:a17:90b:3505:: with SMTP id ls5mr6437623pjb.55.1606338602947;
+        Wed, 25 Nov 2020 13:10:02 -0800 (PST)
+Received: from www.outflux.net (smtp.outflux.net. [198.145.64.163])
+        by smtp.gmail.com with ESMTPSA id z68sm2599034pgb.37.2020.11.25.13.10.01
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 25 Nov 2020 13:10:01 -0800 (PST)
+Date:   Wed, 25 Nov 2020 13:10:00 -0800
+From:   Kees Cook <keescook@chromium.org>
+To:     James Bottomley <James.Bottomley@HansenPartnership.com>
+Cc:     "Gustavo A. R. Silva" <gustavoars@kernel.org>,
+        Joe Perches <joe@perches.com>,
+        Jakub Kicinski <kuba@kernel.org>, alsa-devel@alsa-project.org,
+        linux-atm-general@lists.sourceforge.net,
+        reiserfs-devel@vger.kernel.org, linux-iio@vger.kernel.org,
+        linux-wireless@vger.kernel.org, linux-fbdev@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+        Nathan Chancellor <natechancellor@gmail.com>,
+        linux-ide@vger.kernel.org, dm-devel@redhat.com,
+        keyrings@vger.kernel.org, linux-mtd@lists.infradead.org,
+        GR-everest-linux-l2@marvell.com, wcn36xx@lists.infradead.org,
+        samba-technical@lists.samba.org, linux-i3c@lists.infradead.org,
+        linux1394-devel@lists.sourceforge.net,
+        linux-afs@lists.infradead.org,
+        usb-storage@lists.one-eyed-alien.net, drbd-dev@lists.linbit.com,
+        devel@driverdev.osuosl.org, linux-cifs@vger.kernel.org,
+        rds-devel@oss.oracle.com,
+        Nick Desaulniers <ndesaulniers@google.com>,
+        linux-scsi@vger.kernel.org, linux-rdma@vger.kernel.org,
+        oss-drivers@netronome.com, bridge@lists.linux-foundation.org,
+        linux-security-module@vger.kernel.org,
+        amd-gfx@lists.freedesktop.org,
+        linux-stm32@st-md-mailman.stormreply.com, cluster-devel@redhat.com,
+        linux-acpi@vger.kernel.org, coreteam@netfilter.org,
+        intel-wired-lan@lists.osuosl.org, linux-input@vger.kernel.org,
+        Miguel Ojeda <ojeda@kernel.org>,
+        tipc-discussion@lists.sourceforge.net, linux-ext4@vger.kernel.org,
+        linux-media@vger.kernel.org, linux-watchdog@vger.kernel.org,
+        selinux@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        intel-gfx@lists.freedesktop.org, linux-geode@lists.infradead.org,
+        linux-can@vger.kernel.org, linux-block@vger.kernel.org,
+        linux-gpio@vger.kernel.org, op-tee@lists.trustedfirmware.org,
+        linux-mediatek@lists.infradead.org, xen-devel@lists.xenproject.org,
+        nouveau@lists.freedesktop.org, linux-hams@vger.kernel.org,
+        ceph-devel@vger.kernel.org,
+        virtualization@lists.linux-foundation.org,
+        linux-arm-kernel@lists.infradead.org, linux-hwmon@vger.kernel.org,
+        x86@kernel.org, linux-nfs@vger.kernel.org,
+        GR-Linux-NIC-Dev@marvell.com, linux-mm@kvack.org,
+        netdev@vger.kernel.org, linux-decnet-user@lists.sourceforge.net,
+        linux-mmc@vger.kernel.org, linux-renesas-soc@vger.kernel.org,
+        linux-sctp@vger.kernel.org, linux-usb@vger.kernel.org,
+        netfilter-devel@vger.kernel.org, linux-crypto@vger.kernel.org,
+        patches@opensource.cirrus.com, linux-integrity@vger.kernel.org,
+        target-devel@vger.kernel.org, linux-hardening@vger.kernel.org,
+        Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+        Greg KH <gregkh@linuxfoundation.org>
+Subject: Re: [Intel-wired-lan] [PATCH 000/141] Fix fall-through warnings for
+ Clang
+Message-ID: <202011251240.1E67BE900@keescook>
+References: <202011220816.8B6591A@keescook>
+ <9b57fd4914b46f38d54087d75e072d6e947cb56d.camel@HansenPartnership.com>
+ <ca071decb87cc7e905411423c05a48f9fd2f58d7.camel@perches.com>
+ <0147972a72bc13f3629de8a32dee6f1f308994b5.camel@HansenPartnership.com>
+ <d8d1e9add08cdd4158405e77762d4946037208f8.camel@perches.com>
+ <dbd2cb703ed9eefa7dde9281ea26ab0f7acc8afe.camel@HansenPartnership.com>
+ <20201123130348.GA3119@embeddedor>
+ <8f5611bb015e044fa1c0a48147293923c2d904e4.camel@HansenPartnership.com>
+ <202011241327.BB28F12F6@keescook>
+ <a841536fe65bb33f1c72ce2455a6eb47a0107565.camel@HansenPartnership.com>
 MIME-Version: 1.0
-In-Reply-To: <1606310689-7189-1-git-send-email-loic.poulain@linaro.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <a841536fe65bb33f1c72ce2455a6eb47a0107565.camel@HansenPartnership.com>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Tue, Nov 24, 2020 at 11:05:35PM -0800, James Bottomley wrote:
+> Now, what we have seems to be about 6 cases (at least what's been shown
+> in this thread) where a missing break would cause potentially user
+> visible issues.  That means the value of this isn't zero, but it's not
+> a no-brainer massive win either.  That's why I think asking what we've
+> invested vs the return isn't a useless exercise.
+
+The number is much higher[1]. If it were 6 in the entire history of the
+kernel, I would agree with you. :) Some were fixed _before_ Gustavo's
+effort too, which I also count towards the idea of "this is a dangerous
+weakness in C, and now we have stopped it forever."
+
+> But the broader point I'm making is just because the compiler people
+> come up with a shiny new warning doesn't necessarily mean the problem
+> it's detecting is one that causes us actual problems in the code base. 
+> I'd really be happier if we had a theory about what classes of CVE or
+> bug we could eliminate before we embrace the next new warning.
+
+But we did! It was long ago justified and documented[2], and even links to
+the CWE[3] for it. This wasn't random joy over discovering a new warning
+we could turn on, this was turning on a warning that the compiler folks
+finally gave us to handle an entire class of flaws. If we need to update
+the code-base to address it not a useful debate -- that was settled
+already, even if you're only discovering it now. :P. This last patch
+set is about finishing that work for Clang, which is correctly even
+more strict than GCC.
+
+-Kees
+
+[1] https://outflux.net/slides/2019/lss/kspp.pdf calls out specific
+    numbers (about 6.5% of the patches fixed missing breaks):
+	v4.19:  3 of 129
+	v4.20:  2 of  59
+	v5.0:   3 of  56
+	v5.1:  10 of 100
+	v5.2:   6 of  71
+	v5.3:   7 of  69
+
+    And in the history of the kernel, it's been an ongoing source of
+    flaws:
+
+    $ l --no-merges | grep -i 'missing break' | wc -l
+    185
+
+    The frequency of such errors being "naturally" found was pretty
+    steady until the static checkers started warning, and then it was
+    on the rise, but the full effort flushed the rest out, and now it's
+    dropped to almost zero:
+
+      1 v2.6.12
+      3 v2.6.16.28
+      1 v2.6.17
+      1 v2.6.19
+      2 v2.6.21
+      1 v2.6.22
+      3 v2.6.24
+      3 v2.6.29
+      1 v2.6.32
+      1 v2.6.33
+      1 v2.6.35
+      4 v2.6.36
+      3 v2.6.38
+      2 v2.6.39
+      7 v3.0
+      2 v3.1
+      2 v3.2
+      2 v3.3
+      3 v3.4
+      1 v3.5
+      8 v3.6
+      7 v3.7
+      3 v3.8
+      6 v3.9
+      3 v3.10
+      2 v3.11
+      5 v3.12
+      5 v3.13
+      2 v3.14
+      4 v3.15
+      2 v3.16
+      3 v3.17
+      2 v3.18
+      2 v3.19
+      1 v4.0
+      2 v4.1
+      5 v4.2
+      4 v4.5
+      5 v4.7
+      6 v4.8
+      1 v4.9
+      3 v4.10
+      2 v4.11
+      6 v4.12
+      3 v4.13
+      2 v4.14
+      5 v4.15
+      2 v4.16
+      7 v4.18
+      2 v4.19
+      6 v4.20
+      3 v5.0
+     12 v5.1
+      3 v5.2
+      4 v5.3
+      2 v5.4
+      1 v5.8
 
 
-On 11/25/20 5:24 AM, Loic Poulain wrote:
-> This patch fixes the hierarchical structure of MHI devices. Indeed,
-> MHI client devices are directly 'enumerated' from the mhi controller
-> and therefore must be direct descendants/children of their mhi
-> controller device, in accordance with the Linux Device Model.
-> 
-> Today both MHI clients and controller devices are at the same level,
-> this patch ensures that MHI controller is parent of its client devices.
-> 
-> The hierarchy is especially important for power management (safe
-> suspend/resume order). It is also useful for userspace to determine
-> relationship between MHI client devices and controllers.
-> 
-> Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
-> Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+    And the reason it's fully zero, is because we still have the cases we're
+    cleaning up right now. Even this last one from v5.8 is specifically of
+    the same type this series addresses:
 
-Reviewed-by: Hemant Kumar <hemantk@codeaurora.org>
+        case 4:
+                color_index = TrueCModeIndex;
++               break;
+        default:
+                return;
+        }
 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project
+
+[2] https://www.kernel.org/doc/html/latest/process/deprecated.html#implicit-switch-case-fall-through
+
+	All switch/case blocks must end in one of:
+
+	break;
+	fallthrough;
+	continue;
+	goto <label>;
+	return [expression];
+
+[3] https://cwe.mitre.org/data/definitions/484.html
+
+-- 
+Kees Cook
