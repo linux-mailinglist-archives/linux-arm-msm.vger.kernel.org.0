@@ -2,54 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 987CF2C40C5
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Nov 2020 14:03:09 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D15E82C40D8
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Nov 2020 14:05:11 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729482AbgKYNBF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 25 Nov 2020 08:01:05 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54354 "EHLO
+        id S1729501AbgKYNDw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 25 Nov 2020 08:03:52 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54780 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729465AbgKYNBE (ORCPT
+        with ESMTP id S1729446AbgKYNDv (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 25 Nov 2020 08:01:04 -0500
-Received: from mail-wm1-x342.google.com (mail-wm1-x342.google.com [IPv6:2a00:1450:4864:20::342])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7C32EC0613D6
-        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Nov 2020 05:01:04 -0800 (PST)
-Received: by mail-wm1-x342.google.com with SMTP id a3so2058772wmb.5
-        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Nov 2020 05:01:04 -0800 (PST)
+        Wed, 25 Nov 2020 08:03:51 -0500
+Received: from mail-wr1-x443.google.com (mail-wr1-x443.google.com [IPv6:2a00:1450:4864:20::443])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EC43FC0613D4
+        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Nov 2020 05:03:49 -0800 (PST)
+Received: by mail-wr1-x443.google.com with SMTP id p8so1842291wrx.5
+        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Nov 2020 05:03:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=subject:to:cc:references:from:message-id:date:user-agent
          :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=irbsSXjHImcSLHJ6uxXDu2MKDqhSUoJJSkeWgL8xBoA=;
-        b=AJCg3v4STEBBRZaHLAE53XA3KcnbyMQzjsoXOCVgOtQnPzop3nkbwp553x5xqFIMQd
-         wAz6sVvPFfpFQnS3UWtT5pbzYJCp/iLZQgo93d3RPzIX1uKyhzGCLaW1XPj8H5JMzljf
-         bTLjMOMhE6N3+93TUjcobXv7XZUMubFPnW//4CSD1mYMfIzl852OCu6bhFaZHCmpxv8n
-         3eEDa5Sq/XkMZi4ZwK5/K94LmZte8lZ20pq4CHr2JpYBO42voDoKFnglO/RopT3FFhox
-         la4/k7bEVHKdgIhEanahTj2Ms05JzrU+pv8jgMPxy2ZKKTJ6uOGdD/Iq+UY7g0vrXJk0
-         DV2w==
+        bh=BXaJmG+wTXtQ1LIgHLXOdZkWb3psJr3hG12v2PvvxlE=;
+        b=Tb1NODJpg8kwIwdN7oQj+EV58bHxyDFPIYQMJPF4FNz9of+yAPa2kYA92zKU+hq3Uy
+         zPV1ZmyDxYUqI5ymigRmZgnaFgok6chy6EymiPCZ5nzYcd5iQweT957e+FRN2j46+XR8
+         Po9Sl4pv+m1+8H9OwgBkx97tM4iOOmWHOlW9yYMtWte6kMOG3RMQxDxIoI4yuYbvv/OV
+         yGvNeg3TlqNi/bMSi4/Odx3euErYZww+yHDozaDO63ijUqjMKeP0ij1aygvjiW4odH+G
+         StSjnOnjf0KKV/Ir4BdTibLgYDocoeZFpmChDi33FrIFnyPazBstgFrUgprJktbqS52D
+         7UwA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:subject:to:cc:references:from:message-id:date
          :user-agent:mime-version:in-reply-to:content-language
          :content-transfer-encoding;
-        bh=irbsSXjHImcSLHJ6uxXDu2MKDqhSUoJJSkeWgL8xBoA=;
-        b=I7Q9DG2UEywpHLR2qwtvwDWOvMZcQAsYQF+To0O8EyrHShHXRrrP1lW9OV5guAMIWx
-         BgVdDoSsBsMFIKKoFpxdj2qatq/fpE8nYf4wLxtNkalv+5lNZAKSkSJZ5oy8kFdcuuf3
-         E2rDx5d8ajmXIRs6Tmgy1sdk/hY566dG95OBl7klMiMjTlXO2Ia69qVFY8VkzVqzPLZi
-         egHtd6VRSi3ODofZhTdqUry7Uu4kL3hbG62XrWtbqGH+d9CFk4Bx83BMJ2cR9B3gJ5Nm
-         eXpB/DfSyWBjrRtrWfV5fXcAK2Gb5zcU9FVL202Jty5ozWkXWk+2L4uk2FP6qPNqZE3j
-         SQ+w==
-X-Gm-Message-State: AOAM5300ryMJCUilj+isSZPJi0uTToq8JgCwNrMlExBaNsdlApJ+2kHG
-        foMAdgpWFsoxABQPHRvt4figEw==
-X-Google-Smtp-Source: ABdhPJxBT007KlVzudG3ay9wbN5BHrb/bBbDAzKTJNgH+sjzEYq3ALv1ftOsxPP19AsfdL/U339OQQ==
-X-Received: by 2002:a1c:e1c5:: with SMTP id y188mr3853828wmg.81.1606309263056;
-        Wed, 25 Nov 2020 05:01:03 -0800 (PST)
-Received: from [192.168.0.3] (hst-221-27.medicom.bg. [84.238.221.27])
-        by smtp.googlemail.com with ESMTPSA id f18sm4686733wru.42.2020.11.25.05.01.01
+        bh=BXaJmG+wTXtQ1LIgHLXOdZkWb3psJr3hG12v2PvvxlE=;
+        b=q4tJdjNioTLjKYabopjoJuMSqBKepkH61qlVrpyT8SyudTJtvM17Onf6XTqE9bkFPs
+         4vl/i9TOHDxMzckAAYc2Mh5eUh8M5DMWIKbgYXeEIAhXzlB7HwL95o0O+as/5UFeksgd
+         U1lQtpP2rUJoXrFRQ24buG9IDb96nlTV2uDwtKcXicChqsl77e6JBtnFJcSVJUCFMrrD
+         ey7vwt1Aj7KCgJ5L3+7JOpB8YOBJRWqhLbP/vtPDcgtyEqpgbLp2dhn5p5TTxP5Bepc7
+         Z7KVHg6yDxX8PLkkTh+G9ZumLtMKYU1kK6Zj+Ty3LUZZZC6lKDq2hmHdI1wibU5DH9bM
+         Lh2g==
+X-Gm-Message-State: AOAM530olG3NiLEkp6gRR+yZ3pRAU0gfL7ufY99aHeh66XUr6oncc3VI
+        XlZGkxQU1sg/8Q907F7uXZz4kQ==
+X-Google-Smtp-Source: ABdhPJxyygtdb4BfwuO8knoOC+REpXaIwuegyRa3gkpJ6Ld63hatAPSPzBPzrzXpMPFH7Ub8N0lgHg==
+X-Received: by 2002:adf:c702:: with SMTP id k2mr4175742wrg.156.1606309428614;
+        Wed, 25 Nov 2020 05:03:48 -0800 (PST)
+Received: from [192.168.0.3] (hst-221-112.medicom.bg. [84.238.221.112])
+        by smtp.googlemail.com with ESMTPSA id z6sm4628966wmi.1.2020.11.25.05.03.47
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 25 Nov 2020 05:01:02 -0800 (PST)
-Subject: Re: [PATCH 2/3] venus: Limit HFI sessions to the maximum supported
+        Wed, 25 Nov 2020 05:03:48 -0800 (PST)
+Subject: Re: [PATCH 3/3] media: hfi_venus: Request interrupt for sync cmds
 To:     Alexandre Courbot <acourbot@chromium.org>
 Cc:     linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
         linux-kernel@vger.kernel.org,
@@ -57,15 +57,15 @@ Cc:     linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
         Mansur Alisha Shaik <mansur@codeaurora.org>,
         Dikshita Agarwal <dikshita@codeaurora.org>
 References: <20201120001037.10032-1-stanimir.varbanov@linaro.org>
- <20201120001037.10032-3-stanimir.varbanov@linaro.org>
- <CAPBb6MUnXmtSKy9NwikYXjafgB+WM9TKEFjkYK16T2V7KRx=JQ@mail.gmail.com>
+ <20201120001037.10032-4-stanimir.varbanov@linaro.org>
+ <CAPBb6MWsaHQtQYh8tQnGjwPCrCXeCnf08jL+yxM9ZkCBFNW5mg@mail.gmail.com>
 From:   Stanimir Varbanov <stanimir.varbanov@linaro.org>
-Message-ID: <8c6231b2-61c2-d432-aa47-ddc29de8da19@linaro.org>
-Date:   Wed, 25 Nov 2020 15:01:01 +0200
+Message-ID: <595f8e22-0616-ff8f-78f3-991ef94ebf65@linaro.org>
+Date:   Wed, 25 Nov 2020 15:03:46 +0200
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
  Thunderbird/68.10.0
 MIME-Version: 1.0
-In-Reply-To: <CAPBb6MUnXmtSKy9NwikYXjafgB+WM9TKEFjkYK16T2V7KRx=JQ@mail.gmail.com>
+In-Reply-To: <CAPBb6MWsaHQtQYh8tQnGjwPCrCXeCnf08jL+yxM9ZkCBFNW5mg@mail.gmail.com>
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
 Content-Transfer-Encoding: 7bit
@@ -75,110 +75,55 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-On 11/25/20 5:46 AM, Alexandre Courbot wrote:
+On 11/25/20 10:08 AM, Alexandre Courbot wrote:
 > On Fri, Nov 20, 2020 at 9:12 AM Stanimir Varbanov
 > <stanimir.varbanov@linaro.org> wrote:
 >>
->> Currently we rely on firmware to return error when we reach the maximum
->> supported number of sessions. But this errors are happened at reqbuf
->> time which is a bit later. The more reasonable way looks like is to
->> return the error on driver open.
+>> From: Vikash Garodia <vgarodia@codeaurora.org>
 >>
->> To achieve that modify hfi_session_create to return error when we reach
->> maximum count of sessions and thus refuse open.
+>> For synchronous commands, update the message queue variable.
+>> This would inform video firmware to raise interrupt on host
+>> CPU whenever there is a response for such commands.
 >>
+>> Signed-off-by: Vikash Garodia <vgarodia@codeaurora.org>
 >> Signed-off-by: Stanimir Varbanov <stanimir.varbanov@linaro.org>
 >> ---
->>  drivers/media/platform/qcom/venus/core.h      |  1 +
->>  drivers/media/platform/qcom/venus/hfi.c       | 19 +++++++++++++++----
->>  .../media/platform/qcom/venus/hfi_parser.c    |  3 +++
->>  3 files changed, 19 insertions(+), 4 deletions(-)
+>>  drivers/media/platform/qcom/venus/hfi_venus.c | 74 ++++++++++---------
+>>  1 file changed, 41 insertions(+), 33 deletions(-)
 >>
->> diff --git a/drivers/media/platform/qcom/venus/core.h b/drivers/media/platform/qcom/venus/core.h
->> index db0e6738281e..3a477fcdd3a8 100644
->> --- a/drivers/media/platform/qcom/venus/core.h
->> +++ b/drivers/media/platform/qcom/venus/core.h
->> @@ -96,6 +96,7 @@ struct venus_format {
->>  #define MAX_CAP_ENTRIES                32
->>  #define MAX_ALLOC_MODE_ENTRIES 16
->>  #define MAX_CODEC_NUM          32
->> +#define MAX_SESSIONS           16
->>
->>  struct raw_formats {
->>         u32 buftype;
->> diff --git a/drivers/media/platform/qcom/venus/hfi.c b/drivers/media/platform/qcom/venus/hfi.c
->> index 638ed5cfe05e..8420be6d3991 100644
->> --- a/drivers/media/platform/qcom/venus/hfi.c
->> +++ b/drivers/media/platform/qcom/venus/hfi.c
->> @@ -175,6 +175,7 @@ static int wait_session_msg(struct venus_inst *inst)
->>  int hfi_session_create(struct venus_inst *inst, const struct hfi_inst_ops *ops)
->>  {
->>         struct venus_core *core = inst->core;
->> +       int ret;
->>
->>         if (!ops)
->>                 return -EINVAL;
->> @@ -183,12 +184,22 @@ int hfi_session_create(struct venus_inst *inst, const struct hfi_inst_ops *ops)
->>         init_completion(&inst->done);
->>         inst->ops = ops;
->>
->> -       mutex_lock(&core->lock);
->> -       list_add_tail(&inst->list, &core->instances);
->> -       atomic_inc(&core->insts_count);
->> +       ret = mutex_lock_interruptible(&core->lock);
->> +       if (ret)
->> +               return ret;
-> 
-> Why do we change to mutex_lock_interruptible() here? This makes this
-
-Because mutex_lock_interruptible is preferable in kernel docs, but I
-agree that changing mutex_lock with mutex_lock_interruptible should be
-subject of another lock related patches. I will drop this in next patch
-version.
-
-> function return an error even though we could obtain the lock just by
-> trying a bit harder.
-
-I didn't get that. The behavior of mutex_lock_interruptible is that same
-as mutex_lock, i.e. the it will sleep to acquire the lock. The
-difference is that the sleep could be interrupted by a signal. You might
-think about mutex_trylock?
-
-> 
->> +
->> +       ret = atomic_read(&core->insts_count);
->> +       if (ret + 1 > core->max_sessions_supported) {
->> +               ret = -EAGAIN;
->> +       } else {
->> +               atomic_inc(&core->insts_count);
->> +               list_add_tail(&inst->list, &core->instances);
->> +               ret = 0;
->> +       }
->> +
->>         mutex_unlock(&core->lock);
->>
->> -       return 0;
->> +       return ret;
+>> diff --git a/drivers/media/platform/qcom/venus/hfi_venus.c b/drivers/media/platform/qcom/venus/hfi_venus.c
+>> index 4be4a75ddcb6..b8fdb464ba9c 100644
+>> --- a/drivers/media/platform/qcom/venus/hfi_venus.c
+>> +++ b/drivers/media/platform/qcom/venus/hfi_venus.c
+>> @@ -372,7 +372,7 @@ static void venus_soft_int(struct venus_hfi_device *hdev)
 >>  }
->>  EXPORT_SYMBOL_GPL(hfi_session_create);
 >>
->> diff --git a/drivers/media/platform/qcom/venus/hfi_parser.c b/drivers/media/platform/qcom/venus/hfi_parser.c
->> index 363ee2a65453..52898633a8e6 100644
->> --- a/drivers/media/platform/qcom/venus/hfi_parser.c
->> +++ b/drivers/media/platform/qcom/venus/hfi_parser.c
->> @@ -276,6 +276,9 @@ u32 hfi_parser(struct venus_core *core, struct venus_inst *inst, void *buf,
->>                 words_count--;
->>         }
+>>  static int venus_iface_cmdq_write_nolock(struct venus_hfi_device *hdev,
+>> -                                        void *pkt)
+>> +                                        void *pkt, bool sync)
+>>  {
+>>         struct device *dev = hdev->core->dev;
+>>         struct hfi_pkt_hdr *cmd_packet;
+>> @@ -397,15 +397,23 @@ static int venus_iface_cmdq_write_nolock(struct venus_hfi_device *hdev,
+>>         if (rx_req)
+>>                 venus_soft_int(hdev);
 >>
->> +       if (!core->max_sessions_supported)
->> +               core->max_sessions_supported = MAX_SESSIONS;
->> +
->>         parser_fini(inst, codecs, domain);
->>
->>         return HFI_ERR_NONE;
->> --
->> 2.17.1
->>
+>> +       /* Inform video firmware to raise interrupt for synchronous commands */
+>> +       queue = &hdev->queues[IFACEQ_MSG_IDX];
+>> +       if (sync) {
+>> +               queue->qhdr->rx_req = 1;
+>> +               /* ensure rx_req is updated in memory */
+>> +               wmb();
+>> +       }
+> 
+> Wouldn't it be safer to do this before calling venus_soft_int()? I
+> don't know what the firmware is supposed to do with rx_req but
+> intuitively it looks like it should be set before we signal it.
+> 
+
+I'll leave Vikash to comment. IMO this is a good suggestion.
+
+<cut>
 
 -- 
 regards,
