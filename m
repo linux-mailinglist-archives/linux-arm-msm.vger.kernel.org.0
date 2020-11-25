@@ -2,62 +2,62 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 273482C3792
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Nov 2020 04:41:30 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D089C2C37C2
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Nov 2020 05:02:36 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727194AbgKYDN6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 24 Nov 2020 22:13:58 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48614 "EHLO
+        id S1727123AbgKYDq0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 24 Nov 2020 22:46:26 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53582 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726165AbgKYDN6 (ORCPT
+        with ESMTP id S1726954AbgKYDqZ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 24 Nov 2020 22:13:58 -0500
-Received: from mail-lf1-x142.google.com (mail-lf1-x142.google.com [IPv6:2a00:1450:4864:20::142])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EA682C061A4D
-        for <linux-arm-msm@vger.kernel.org>; Tue, 24 Nov 2020 19:13:57 -0800 (PST)
-Received: by mail-lf1-x142.google.com with SMTP id t6so1034270lfl.13
-        for <linux-arm-msm@vger.kernel.org>; Tue, 24 Nov 2020 19:13:57 -0800 (PST)
+        Tue, 24 Nov 2020 22:46:25 -0500
+Received: from mail-lf1-x143.google.com (mail-lf1-x143.google.com [IPv6:2a00:1450:4864:20::143])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 49223C0613D4
+        for <linux-arm-msm@vger.kernel.org>; Tue, 24 Nov 2020 19:46:25 -0800 (PST)
+Received: by mail-lf1-x143.google.com with SMTP id d20so1117174lfe.11
+        for <linux-arm-msm@vger.kernel.org>; Tue, 24 Nov 2020 19:46:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=Ysd39sL59vWxn88DsaTCAx9qkWuB5Qt0Fwsya+HXsDg=;
-        b=Snd231rj7hC01uO8wYhpl81Hr3v0uOm83AACN8G8ordUgLhcXb7v6whzogOdcvsvyE
-         7dgtcGo5YVe2vYNZqnb4tDuPnSBa0B1shocKkBkwtX/ssO41e49GneChLi3m679rGfiv
-         ZHnRvQ1gKhNIrLMoBy9+5OK9GUxW9mO0b2g/I=
+        bh=iWJ2PxSKNZHDS2Ua2u1Wmpd29m5i/L9+HSOLkHwMbCk=;
+        b=R0WuyVaMjH2QJ8CY+HC7ldiC5un9Mr0EBkLuwvsaTOX2MsnoMgajoV5Op/CJH5/9V6
+         OZymeQPRIlFeetVrKQ3UY5Sjf5VnmiB2ajiZhgBieJVEEhF2h9AwSx14a4KwKaR0hAwt
+         gIs2lW9lFP6QTawQYIAxuG+q2MzLh2U4kzOSY=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=Ysd39sL59vWxn88DsaTCAx9qkWuB5Qt0Fwsya+HXsDg=;
-        b=e9+f9u5RjVTuf0sWHzlrnzDOj7S3NeuRGlYZ/5Bx4iMwz8ReVagqkkOD3d+c1F5lp9
-         7o1a3fB/z7Lk20r8/xov5tbu8jZqpXW6xv0Lqvsj+fn5U7gOyj5wNyJziOxfLVHg4xET
-         LtzE7D0C6OHu02Vbp3b1ddGrSuYxJyRBi9xIOLJ4B0u5lytomQ5A/C3sqEmIGVq2xr+y
-         8RQ2hgCeXBYn5J/lUMVKe5Uc22B4VrOPqYOCXOaaOwa75kpBUqmx2HanetqVmIpcYcfZ
-         BIzWkYXrm7bZW+TdHMBF4Po3AJM6Ma+2cWQ/8iYM6wm0mmxOBXoVn3TVPwU08VTk1b30
-         tV5A==
-X-Gm-Message-State: AOAM53261Cd1vvrMwJnw6CY81IuubIRSaRML86ZPk5IRW40lZK19/zuf
-        +0EJn/JA4nMRtzlanOBg8iUYhroI44keiw==
-X-Google-Smtp-Source: ABdhPJzX5AfnX3e8g2LWT8DoNy5lfltAGYwN1FJoDEZzy1sE4eN0r8F5GZQnCUod49MvsUZXe34pJg==
-X-Received: by 2002:a19:ca49:: with SMTP id h9mr453130lfj.602.1606274035457;
-        Tue, 24 Nov 2020 19:13:55 -0800 (PST)
-Received: from mail-lf1-f50.google.com (mail-lf1-f50.google.com. [209.85.167.50])
-        by smtp.gmail.com with ESMTPSA id i4sm91812lfl.131.2020.11.24.19.13.54
+        bh=iWJ2PxSKNZHDS2Ua2u1Wmpd29m5i/L9+HSOLkHwMbCk=;
+        b=LeZhgoeh8t5o11bStyDo+sdi2WlrCQcN1XXgKGPYan1WTYw/doiZiHZ3htoYQZoIUQ
+         px+7SEstPJW4uJkILPRgHiN5YDxivvvkO9pR10QI+XA0I9BWBv+Otn9xCfLk5iyIhdKT
+         42MGKASRqRq99S2LvWyMPp5ArXRg/pdiggpL3tSnGV8eFDprf2DPML4tf6rDWuCOYtRJ
+         lWZs1ZyfWJrSz8BvT5kZRfT7hoBBnwzfzNLi0s4uY4BgYycNIHn//aUJG79+ORny4uaO
+         lcweEe07MAkdkpa99YSH1yvp3DJInJoU8XUIKtAL3fF6kX/9verhsB3GHMMRUYhTiN0U
+         L32w==
+X-Gm-Message-State: AOAM531yzQuGxZ4hiNTVmyCp/uMV6CniXUOyB8eGfwQ+8HvMdogTPm0J
+        ipuHXXErwzWZ3IxELqiifWh2Kdc+3htn6Q==
+X-Google-Smtp-Source: ABdhPJwbBY1tthO199NAgfIav8wC2DTnff5DVMrjb9M59awP5ilX1le/EGGFhQww4BBctfCJRNed/w==
+X-Received: by 2002:a19:8347:: with SMTP id f68mr514247lfd.83.1606275983552;
+        Tue, 24 Nov 2020 19:46:23 -0800 (PST)
+Received: from mail-lf1-f47.google.com (mail-lf1-f47.google.com. [209.85.167.47])
+        by smtp.gmail.com with ESMTPSA id n16sm98719ljo.86.2020.11.24.19.46.22
         for <linux-arm-msm@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 24 Nov 2020 19:13:55 -0800 (PST)
-Received: by mail-lf1-f50.google.com with SMTP id u19so1071486lfr.7
-        for <linux-arm-msm@vger.kernel.org>; Tue, 24 Nov 2020 19:13:54 -0800 (PST)
-X-Received: by 2002:a05:6512:5d7:: with SMTP id o23mr480237lfo.272.1606274033807;
- Tue, 24 Nov 2020 19:13:53 -0800 (PST)
+        Tue, 24 Nov 2020 19:46:22 -0800 (PST)
+Received: by mail-lf1-f47.google.com with SMTP id d8so1187571lfa.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 24 Nov 2020 19:46:22 -0800 (PST)
+X-Received: by 2002:a19:7e16:: with SMTP id z22mr480929lfc.73.1606275982178;
+ Tue, 24 Nov 2020 19:46:22 -0800 (PST)
 MIME-Version: 1.0
-References: <20201120001037.10032-1-stanimir.varbanov@linaro.org> <20201120001037.10032-2-stanimir.varbanov@linaro.org>
-In-Reply-To: <20201120001037.10032-2-stanimir.varbanov@linaro.org>
+References: <20201120001037.10032-1-stanimir.varbanov@linaro.org> <20201120001037.10032-3-stanimir.varbanov@linaro.org>
+In-Reply-To: <20201120001037.10032-3-stanimir.varbanov@linaro.org>
 From:   Alexandre Courbot <acourbot@chromium.org>
-Date:   Wed, 25 Nov 2020 12:13:43 +0900
-X-Gmail-Original-Message-ID: <CAPBb6MUU2tKUarrdPennSQ0NVnOUp+jwS3DN3Qye-wiq-aT5_Q@mail.gmail.com>
-Message-ID: <CAPBb6MUU2tKUarrdPennSQ0NVnOUp+jwS3DN3Qye-wiq-aT5_Q@mail.gmail.com>
-Subject: Re: [PATCH 1/3] venus: venc: Init the session only once in queue_setup
+Date:   Wed, 25 Nov 2020 12:46:11 +0900
+X-Gmail-Original-Message-ID: <CAPBb6MUnXmtSKy9NwikYXjafgB+WM9TKEFjkYK16T2V7KRx=JQ@mail.gmail.com>
+Message-ID: <CAPBb6MUnXmtSKy9NwikYXjafgB+WM9TKEFjkYK16T2V7KRx=JQ@mail.gmail.com>
+Subject: Re: [PATCH 2/3] venus: Limit HFI sessions to the maximum supported
 To:     Stanimir Varbanov <stanimir.varbanov@linaro.org>
 Cc:     linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
         linux-kernel@vger.kernel.org,
@@ -69,207 +69,94 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Stan,
-
 On Fri, Nov 20, 2020 at 9:12 AM Stanimir Varbanov
 <stanimir.varbanov@linaro.org> wrote:
 >
-> Init the hfi session only once in queue_setup and also cover that
-> with inst->lock.
+> Currently we rely on firmware to return error when we reach the maximum
+> supported number of sessions. But this errors are happened at reqbuf
+> time which is a bit later. The more reasonable way looks like is to
+> return the error on driver open.
+>
+> To achieve that modify hfi_session_create to return error when we reach
+> maximum count of sessions and thus refuse open.
 >
 > Signed-off-by: Stanimir Varbanov <stanimir.varbanov@linaro.org>
 > ---
->  drivers/media/platform/qcom/venus/venc.c | 98 ++++++++++++++++++------
->  1 file changed, 73 insertions(+), 25 deletions(-)
+>  drivers/media/platform/qcom/venus/core.h      |  1 +
+>  drivers/media/platform/qcom/venus/hfi.c       | 19 +++++++++++++++----
+>  .../media/platform/qcom/venus/hfi_parser.c    |  3 +++
+>  3 files changed, 19 insertions(+), 4 deletions(-)
 >
-> diff --git a/drivers/media/platform/qcom/venus/venc.c b/drivers/media/platform/qcom/venus/venc.c
-> index 4ecf78e30b59..3a2e449663d8 100644
-> --- a/drivers/media/platform/qcom/venus/venc.c
-> +++ b/drivers/media/platform/qcom/venus/venc.c
-> @@ -725,8 +725,10 @@ static int venc_init_session(struct venus_inst *inst)
->         int ret;
+> diff --git a/drivers/media/platform/qcom/venus/core.h b/drivers/media/platform/qcom/venus/core.h
+> index db0e6738281e..3a477fcdd3a8 100644
+> --- a/drivers/media/platform/qcom/venus/core.h
+> +++ b/drivers/media/platform/qcom/venus/core.h
+> @@ -96,6 +96,7 @@ struct venus_format {
+>  #define MAX_CAP_ENTRIES                32
+>  #define MAX_ALLOC_MODE_ENTRIES 16
+>  #define MAX_CODEC_NUM          32
+> +#define MAX_SESSIONS           16
 >
->         ret = hfi_session_init(inst, inst->fmt_cap->pixfmt);
-> -       if (ret)
-> -               return ret;
-> +       if (ret == -EINVAL)
-> +               return 0;
-
-Why is it safe to ignore EINVAL here?
-
-> +       else if (ret)
-> +               goto deinit;
->
->         ret = venus_helper_set_input_resolution(inst, inst->width,
->                                                 inst->height);
-> @@ -762,17 +764,13 @@ static int venc_out_num_buffers(struct venus_inst *inst, unsigned int *num)
->         struct hfi_buffer_requirements bufreq;
->         int ret;
->
-> -       ret = venc_init_session(inst);
-> +       ret = venus_helper_get_bufreq(inst, HFI_BUFFER_INPUT, &bufreq);
->         if (ret)
->                 return ret;
->
-> -       ret = venus_helper_get_bufreq(inst, HFI_BUFFER_INPUT, &bufreq);
-> -
->         *num = bufreq.count_actual;
->
-> -       hfi_session_deinit(inst);
-> -
-> -       return ret;
-> +       return 0;
->  }
->
->  static int venc_queue_setup(struct vb2_queue *q,
-> @@ -781,7 +779,7 @@ static int venc_queue_setup(struct vb2_queue *q,
+>  struct raw_formats {
+>         u32 buftype;
+> diff --git a/drivers/media/platform/qcom/venus/hfi.c b/drivers/media/platform/qcom/venus/hfi.c
+> index 638ed5cfe05e..8420be6d3991 100644
+> --- a/drivers/media/platform/qcom/venus/hfi.c
+> +++ b/drivers/media/platform/qcom/venus/hfi.c
+> @@ -175,6 +175,7 @@ static int wait_session_msg(struct venus_inst *inst)
+>  int hfi_session_create(struct venus_inst *inst, const struct hfi_inst_ops *ops)
 >  {
->         struct venus_inst *inst = vb2_get_drv_priv(q);
->         unsigned int num, min = 4;
-> -       int ret = 0;
+>         struct venus_core *core = inst->core;
 > +       int ret;
 >
->         if (*num_planes) {
->                 if (q->type == V4L2_BUF_TYPE_VIDEO_OUTPUT_MPLANE &&
-> @@ -803,6 +801,17 @@ static int venc_queue_setup(struct vb2_queue *q,
->                 return 0;
+>         if (!ops)
+>                 return -EINVAL;
+> @@ -183,12 +184,22 @@ int hfi_session_create(struct venus_inst *inst, const struct hfi_inst_ops *ops)
+>         init_completion(&inst->done);
+>         inst->ops = ops;
+>
+> -       mutex_lock(&core->lock);
+> -       list_add_tail(&inst->list, &core->instances);
+> -       atomic_inc(&core->insts_count);
+> +       ret = mutex_lock_interruptible(&core->lock);
+> +       if (ret)
+> +               return ret;
+
+Why do we change to mutex_lock_interruptible() here? This makes this
+function return an error even though we could obtain the lock just by
+trying a bit harder.
+
+> +
+> +       ret = atomic_read(&core->insts_count);
+> +       if (ret + 1 > core->max_sessions_supported) {
+> +               ret = -EAGAIN;
+> +       } else {
+> +               atomic_inc(&core->insts_count);
+> +               list_add_tail(&inst->list, &core->instances);
+> +               ret = 0;
+> +       }
+> +
+>         mutex_unlock(&core->lock);
+>
+> -       return 0;
+> +       return ret;
+>  }
+>  EXPORT_SYMBOL_GPL(hfi_session_create);
+>
+> diff --git a/drivers/media/platform/qcom/venus/hfi_parser.c b/drivers/media/platform/qcom/venus/hfi_parser.c
+> index 363ee2a65453..52898633a8e6 100644
+> --- a/drivers/media/platform/qcom/venus/hfi_parser.c
+> +++ b/drivers/media/platform/qcom/venus/hfi_parser.c
+> @@ -276,6 +276,9 @@ u32 hfi_parser(struct venus_core *core, struct venus_inst *inst, void *buf,
+>                 words_count--;
 >         }
 >
-> +       ret = mutex_lock_interruptible(&inst->lock);
-> +       if (ret)
-> +               return ret;
+> +       if (!core->max_sessions_supported)
+> +               core->max_sessions_supported = MAX_SESSIONS;
 > +
-> +       ret = venc_init_session(inst);
-> +
-> +       mutex_unlock(&inst->lock);
-> +
-> +       if (ret)
-> +               return ret;
-> +
->         switch (q->type) {
->         case V4L2_BUF_TYPE_VIDEO_OUTPUT_MPLANE:
->                 *num_planes = inst->fmt_out->num_planes;
-> @@ -838,6 +847,54 @@ static int venc_queue_setup(struct vb2_queue *q,
->         return ret;
->  }
+>         parser_fini(inst, codecs, domain);
 >
-> +static int venc_buf_init(struct vb2_buffer *vb)
-> +{
-> +       struct venus_inst *inst = vb2_get_drv_priv(vb->vb2_queue);
-> +
-> +       inst->buf_count++;
-> +
-> +       return venus_helper_vb2_buf_init(vb);
-> +}
-> +
-> +static void venc_release_session(struct venus_inst *inst)
-> +{
-> +       int ret, abort = 0;
-> +
-> +       mutex_lock(&inst->lock);
-> +
-> +       ret = hfi_session_deinit(inst);
-> +       abort = (ret && ret != -EINVAL) ? 1 : 0;
-
-Here as well, I think a comment is warranted to explain why we can
-ignore EINVAL.
-
-> +
-> +       if (inst->session_error)
-> +               abort = 1;
-> +
-> +       if (abort)
-> +               hfi_session_abort(inst);
-> +
-> +       mutex_unlock(&inst->lock);
-> +
-> +       venus_pm_load_scale(inst);
-> +       INIT_LIST_HEAD(&inst->registeredbufs);
-> +       venus_pm_release_core(inst);
-> +}
-> +
-> +static void venc_buf_cleanup(struct vb2_buffer *vb)
-> +{
-> +       struct venus_inst *inst = vb2_get_drv_priv(vb->vb2_queue);
-> +       struct vb2_v4l2_buffer *vbuf = to_vb2_v4l2_buffer(vb);
-> +       struct venus_buffer *buf = to_venus_buffer(vbuf);
-> +
-> +       mutex_lock(&inst->lock);
-> +       if (vb->type == V4L2_BUF_TYPE_VIDEO_CAPTURE_MPLANE)
-> +               if (!list_empty(&inst->registeredbufs))
-> +                       list_del_init(&buf->reg_list);
-> +       mutex_unlock(&inst->lock);
-> +
-> +       inst->buf_count--;
-> +       if (!inst->buf_count)
-> +               venc_release_session(inst);
-
-We are calling venc_init_session() during the queue setup but
-venc_release_session() when the last buffer is cleaned up. For
-symmetry, wouldn't it make sense to call venc_init_session() when the
-first buffer is initialized by venc_buf_init()? Otherwise we can
-potentially have a scenario where the queue is set up, but no buffer
-is ever created, leading to the session never being released.
-
-> +}
-> +
->  static int venc_verify_conf(struct venus_inst *inst)
->  {
->         enum hfi_version ver = inst->core->res->hfi_version;
-> @@ -888,38 +945,28 @@ static int venc_start_streaming(struct vb2_queue *q, unsigned int count)
->         inst->sequence_cap = 0;
->         inst->sequence_out = 0;
->
-> -       ret = venc_init_session(inst);
-> -       if (ret)
-> -               goto bufs_done;
-> -
->         ret = venus_pm_acquire_core(inst);
->         if (ret)
-> -               goto deinit_sess;
-> -
-> -       ret = venc_set_properties(inst);
-> -       if (ret)
-> -               goto deinit_sess;
-> +               goto error;
->
->         ret = venc_verify_conf(inst);
->         if (ret)
-> -               goto deinit_sess;
-> +               goto error;
->
->         ret = venus_helper_set_num_bufs(inst, inst->num_input_bufs,
->                                         inst->num_output_bufs, 0);
->         if (ret)
-> -               goto deinit_sess;
-> +               goto error;
->
->         ret = venus_helper_vb2_start_streaming(inst);
->         if (ret)
-> -               goto deinit_sess;
-> +               goto error;
->
->         mutex_unlock(&inst->lock);
->
->         return 0;
->
-> -deinit_sess:
-> -       hfi_session_deinit(inst);
-> -bufs_done:
-> +error:
->         venus_helper_buffers_done(inst, q->type, VB2_BUF_STATE_QUEUED);
->         if (q->type == V4L2_BUF_TYPE_VIDEO_OUTPUT_MPLANE)
->                 inst->streamon_out = 0;
-> @@ -940,7 +987,8 @@ static void venc_vb2_buf_queue(struct vb2_buffer *vb)
->
->  static const struct vb2_ops venc_vb2_ops = {
->         .queue_setup = venc_queue_setup,
-> -       .buf_init = venus_helper_vb2_buf_init,
-> +       .buf_init = venc_buf_init,
-> +       .buf_cleanup = venc_buf_cleanup,
->         .buf_prepare = venus_helper_vb2_buf_prepare,
->         .start_streaming = venc_start_streaming,
->         .stop_streaming = venus_helper_vb2_stop_streaming,
+>         return HFI_ERR_NONE;
 > --
 > 2.17.1
 >
