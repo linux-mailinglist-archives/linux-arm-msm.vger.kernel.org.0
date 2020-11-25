@@ -2,116 +2,93 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 47A6C2C4053
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Nov 2020 13:38:50 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id EBF5E2C4088
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Nov 2020 13:50:15 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729237AbgKYMhn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 25 Nov 2020 07:37:43 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50728 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728558AbgKYMhm (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 25 Nov 2020 07:37:42 -0500
-Received: from mail-lj1-x241.google.com (mail-lj1-x241.google.com [IPv6:2a00:1450:4864:20::241])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A0E86C0613D6
-        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Nov 2020 04:37:40 -0800 (PST)
-Received: by mail-lj1-x241.google.com with SMTP id o24so2108940ljj.6
-        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Nov 2020 04:37:40 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=52E/kGckX47/YFVLHUCD+7iLeZo5CiFQYz7tFvrv0pM=;
-        b=ZZIbH44H1Bk5JfpCWGFPENkd779/Q0CUuAmhZGycRsJVw0N+Kk6HOsq3EnffMgwBJk
-         9WBvN0E8LMcpSxfmzJHURfuGjK9nsF2iZ2IsiTCNEWc9X/cIw6Tzbsl0Pnqj6tcp+MAA
-         MShDBOPG7gjdIpvBD0NkcazqCSsIsgNaKIUUBUajLohuIYcJCy/3leIJjGa+wEeX4ZyE
-         vwjs+NTxG7KQjZSmE4t1LicMVfbQq7xgJ4IvW0c8ZU7gBboHg9Ng8/iCiDsBH3VrlTXH
-         2NB4+7vc9xa8sKZT8szL/Z4EMKGVjPNsdjx2UFSQmKu8mlUJYvdk7TqIkI8U0yao1hAp
-         J34Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=52E/kGckX47/YFVLHUCD+7iLeZo5CiFQYz7tFvrv0pM=;
-        b=SH9Dx1mCsdRQLlWFNKj2YmnXYhnxviAJ4mdzBlHeVBVI52/BXH7O6L3vd7c8ySRI2W
-         ye/Jm7SRsQPPMSZaSsium+q93O7AzhRQGNaTBfANsM92cjzZpKsJBp+OOp2E/13vbwPO
-         eo9C6x9pSnAlTmj2q6/laGa/hTFHGKOEgpIZ0m2p3d2QROhpUWICk7wp//bCqv9PZVoF
-         1bHj+zEyOFZ6PORDDWd70XxF9sy7yoWKnfqbmhMlDjf0cmTdluqPAd9WbDvR/cQymFsf
-         ztk5q3RY3zov6IFuBSOBWNvKzlRrsFtSKou4Zz/VuKGXxJmEB6azIJ/ftkmJ0h8avPuq
-         qtUA==
-X-Gm-Message-State: AOAM530lNDc7E8SVig9bUmoobXkOvcNLhTjhjpgkzPV4dzzgO3zgLQrE
-        byOMtIhte9ltiBhIa4FBGCt5Lg==
-X-Google-Smtp-Source: ABdhPJwxt3kMo26KgOWuDlpVa0JPk367ybLv9TNo6pT3rAqQEvZFy/fcEeojmZLMIpRdz48kLb3vYA==
-X-Received: by 2002:a2e:9550:: with SMTP id t16mr1224617ljh.117.1606307859184;
-        Wed, 25 Nov 2020 04:37:39 -0800 (PST)
-Received: from localhost.localdomain ([85.249.45.205])
-        by smtp.googlemail.com with ESMTPSA id z8sm230261ljh.74.2020.11.25.04.37.38
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 25 Nov 2020 04:37:38 -0800 (PST)
-From:   Andrey Konovalov <andrey.konovalov@linaro.org>
-To:     mchehab@kernel.org, robert.foss@linaro.org
-Cc:     linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        peter.griffin@linaro.org,
-        Andrey Konovalov <andrey.konovalov@linaro.org>
-Subject: [PATCH 2/2] media: camss: Make use of V4L2_CAP_IO_MC
-Date:   Wed, 25 Nov 2020 15:37:10 +0300
-Message-Id: <20201125123710.28491-2-andrey.konovalov@linaro.org>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20201125123710.28491-1-andrey.konovalov@linaro.org>
-References: <20201125123710.28491-1-andrey.konovalov@linaro.org>
+        id S1728404AbgKYMty (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 25 Nov 2020 07:49:54 -0500
+Received: from mail.kernel.org ([198.145.29.99]:49672 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1728237AbgKYMty (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 25 Nov 2020 07:49:54 -0500
+Received: from localhost (cpc102334-sgyl38-2-0-cust884.18-2.cable.virginm.net [92.233.91.117])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id 2B894206E5;
+        Wed, 25 Nov 2020 12:49:53 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1606308593;
+        bh=TG3UpeiHbWC57NXnHtKT6Q7HjbmbKGepoMAsuPbYhgg=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=qA6Yjnk0W6zCUTsY9ibqshuDQiyuMajOgBuOizLAck5E9ZE5L+x+V2bYY6fA0yzhP
+         xrJyA9k5kSg27ql/IPPknP/v+4uxJ4vosi4p2FhH49/Imm/qZUyNXz/o2apsCdUSEv
+         3nynnNaoFfMST3otOGu54i2pO5tWIalKvxy47vR8=
+Date:   Wed, 25 Nov 2020 12:49:28 +0000
+From:   Mark Brown <broonie@kernel.org>
+To:     xuyuqing <xuyuqing@huaqin.corp-partner.google.com>
+Cc:     linux-kernel@vger.kernel.org, Taniya Das <tdas@codeaurora.org>,
+        Rohit kumar <rohitkr@codeaurora.org>,
+        Banajit Goswami <bgoswami@codeaurora.org>,
+        Patrick Lai <plai@codeaurora.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Jaroslav Kysela <perex@perex.cz>,
+        Takashi Iwai <tiwai@suse.com>,
+        Srini Kandagatla <srinivas.kandagatla@linaro.org>,
+        Stephan Gerhold <stephan@gerhold.net>, dianders@chromium.org,
+        dgreid@chromium.org, tzungbi@chromium.org, cychiang@chromium.org,
+        judyhsiao@chromium.org, linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        alsa-devel@alsa-project.org,
+        zhouguohui@huaqin.corp-partner.google.com
+Subject: Re: [PATCH v1 0/1] Fix 32 bit format for adau7002
+Message-ID: <20201125124928.GA4489@sirena.org.uk>
+References: <20201118005858.123013-1-xuyuqing@huaqin.corp-partner.google.com>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="gKMricLos+KVdGMg"
+Content-Disposition: inline
+In-Reply-To: <20201118005858.123013-1-xuyuqing@huaqin.corp-partner.google.com>
+X-Cookie: No foreign coins.
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Implement mbus_code filtering for format enumeration.
 
-Without this patch libcamera errors out with:
-"ERROR V4L2 v4l2_videodevice.cpp:982 /dev/video0[cap]: Media bus code
-filtering not supported by the device"
+--gKMricLos+KVdGMg
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-This is the second version of this change which handles the case of
-several pixel formats corresponding to one media bus format correctly.
+On Wed, Nov 18, 2020 at 08:58:57AM +0800, xuyuqing wrote:
+> the microphone is attached to external codec(adau7002)
+> instead of rt5682.We need to always use 32 bit format on sc7180
+> to meet the clock requirement of adau7002:
+> The ADAU7002 requires a BCLK rate=20
+> that is a minimum of 64=D7 the LRCLK sample rate
 
-Signed-off-by: Andrey Konovalov <andrey.konovalov@linaro.org>
----
- drivers/media/platform/qcom/camss/camss-video.c | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+Please don't send cover letters for single patches, if there is anything
+that needs saying put it in the changelog of the patch or after the ---
+if it's administrative stuff.  This reduces mail volume and ensures that=20
+any important information is recorded in the changelog rather than being
+lost.=20
 
-diff --git a/drivers/media/platform/qcom/camss/camss-video.c b/drivers/media/platform/qcom/camss/camss-video.c
-index 20673de9020e..60737b771d52 100644
---- a/drivers/media/platform/qcom/camss/camss-video.c
-+++ b/drivers/media/platform/qcom/camss/camss-video.c
-@@ -539,6 +539,7 @@ static int video_enum_fmt(struct file *file, void *fh, struct v4l2_fmtdesc *f)
- {
- 	struct camss_video *video = video_drvdata(file);
- 	int i, j, k;
-+	u32 mcode = f->mbus_code;
- 
- 	if (f->type != video->type)
- 		return -EINVAL;
-@@ -549,7 +550,12 @@ static int video_enum_fmt(struct file *file, void *fh, struct v4l2_fmtdesc *f)
- 	/* find index "i" of "k"th unique pixelformat in formats array */
- 	k = -1;
- 	for (i = 0; i < video->nformats; i++) {
-+		if (mcode != 0 && video->formats[i].code != mcode)
-+			continue;
-+
- 		for (j = 0; j < i; j++) {
-+			if (mcode != 0 && video->formats[j].code != mcode)
-+				continue;
- 			if (video->formats[i].pixelformat ==
- 					video->formats[j].pixelformat)
- 				break;
-@@ -948,8 +954,8 @@ int msm_video_register(struct camss_video *video, struct v4l2_device *v4l2_dev,
- 	}
- 
- 	vdev->fops = &msm_vid_fops;
--	vdev->device_caps = V4L2_CAP_VIDEO_CAPTURE_MPLANE | V4L2_CAP_STREAMING |
--							V4L2_CAP_READWRITE;
-+	vdev->device_caps = V4L2_CAP_VIDEO_CAPTURE_MPLANE | V4L2_CAP_STREAMING
-+			  | V4L2_CAP_READWRITE | V4L2_CAP_IO_MC;
- 	vdev->ioctl_ops = &msm_vid_ioctl_ops;
- 	vdev->release = msm_video_release;
- 	vdev->v4l2_dev = v4l2_dev;
--- 
-2.17.1
+--gKMricLos+KVdGMg
+Content-Type: application/pgp-signature; name="signature.asc"
 
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAl++UtcACgkQJNaLcl1U
+h9BXsAf+JbAuQvpTNdjb5/LUqRdyuTd2UQmI4XFbgJUpmVe1dh0IbCc5pqQg/DXU
+/Wl7kSPW1BB1dgiEpbf54AcEQedhpzJggccsH9tWbLyLvC6yVksQc+PU3dxf8FbC
+d+O/GzA4WlIomYE7szH8rvTLcBG8FE37F5qT7zADGhDFA4yjXNhmEOBFQQQsIzRR
+gemWP64PSv4ekoI7Kc9k8VXFutE67I7cPaL0uHEnaDzUcbgkompnweXA8AApxTTq
+PkxAlknTOCQQlkUQH+TgFi00oJlyriAJ9y1ua9le7GoFNRva07aIo9cehika7qTT
+CxonbnDUtgpR5DZnZ5cUXTBJkby3EA==
+=3C6x
+-----END PGP SIGNATURE-----
+
+--gKMricLos+KVdGMg--
