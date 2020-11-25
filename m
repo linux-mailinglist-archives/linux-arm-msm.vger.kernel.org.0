@@ -2,87 +2,104 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A7E202C3D16
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Nov 2020 10:58:25 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 8F1FD2C3D21
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Nov 2020 11:03:30 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725838AbgKYJ6J (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 25 Nov 2020 04:58:09 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54118 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725616AbgKYJ6J (ORCPT
+        id S1725842AbgKYKDY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 25 Nov 2020 05:03:24 -0500
+Received: from alexa-out.qualcomm.com ([129.46.98.28]:33505 "EHLO
+        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725815AbgKYKDY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 25 Nov 2020 04:58:09 -0500
-Received: from mail-wr1-x442.google.com (mail-wr1-x442.google.com [IPv6:2a00:1450:4864:20::442])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 28743C0613D4
-        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Nov 2020 01:58:09 -0800 (PST)
-Received: by mail-wr1-x442.google.com with SMTP id r17so1283562wrw.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Nov 2020 01:58:09 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=IGoyXBsorWkLQoXFObTVk+nYQCTZv7J02NxoMaKjTAY=;
-        b=Uj5LRdofKuT8+5FuGdVIteQYraSKJiu7/YfKp8bInFXi+d70QuXk1UUvcs117qs9DF
-         xpgv8U4MZw5rAFBG438njOVGOeDntbEyDls/bx+XrHV5ULhNCDI4UgkwmdFDrIk8s9vj
-         Owabze74c/NFpNRl7Etx2ax2UQEpeYmoTzfHGPzhipelcb2qTEhTWYRCC3UwDSIn2dOJ
-         ooxPjoN5/UBk4M1gPlKVDfX7Ncfb9rhsEdeXpSx8MKMWsAO1ygyClyaC1FjEK5DpiHBJ
-         Jrgbc375NF22Ti0GBpdVS6+g6n68qV2dKZBW9xws7yVXSvD+lC9zyH10RxCT5SezhjMS
-         8G5A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=IGoyXBsorWkLQoXFObTVk+nYQCTZv7J02NxoMaKjTAY=;
-        b=VwaLKnlOArKsUXGrRxa1FzeL7acIAhRxp5hf+jDa9DZA9Arklw2I2lkYI/1Au1ZWy6
-         6PYzh2HPcq2Hq8ByF1svGZN9UO2lTYKRYraNiDaFjoMrGcO3Ep/rDa94LMVnk2MGhv4Y
-         XEogEbgT/wHb2XPaazMzb4ORVw1kBER8oqnrUVh/krBLCs0Fl9VWT+2suEzHUfCpKqvJ
-         T1heoKmixKdGhHswV2RMbj/E+V2x5wepWpF3qbnm4nY3KVqaZn6eBR+0uOH8WixW2dnb
-         tzm/0rAmROTI35rf04n99zsRLSEwRDm0B/uBmFkHYxL/6gAtPAG+F7sy69334dD3sM3D
-         CfNQ==
-X-Gm-Message-State: AOAM533izoysN243ghYc0fRZAHYPjTMtPwddbzxVVHko7PCFVkQ7kqdE
-        XMsC9L6Hc6dvhkDXjZSOV1s4Zg==
-X-Google-Smtp-Source: ABdhPJwwJEoDVfiJEDcAdp12hLdqEk12t7E2J/3yeyUwAU16zYFlKjqpQdsIf/Z0BjD+fAhAB5dELA==
-X-Received: by 2002:adf:e5d0:: with SMTP id a16mr3269628wrn.340.1606298287868;
-        Wed, 25 Nov 2020 01:58:07 -0800 (PST)
-Received: from [192.168.86.34] (cpc86377-aztw32-2-0-cust226.18-1.cable.virginm.net. [92.233.226.227])
-        by smtp.googlemail.com with ESMTPSA id b4sm4153093wmc.1.2020.11.25.01.58.06
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 25 Nov 2020 01:58:07 -0800 (PST)
-Subject: Re: [PATCH] slimbus: qcom-ngd-ctrl: Avoid sending power requests
- without QMI
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Andy Gross <agross@kernel.org>
-Cc:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Vinod Koul <vkoul@kernel.org>, linux-arm-msm@vger.kernel.org,
-        alsa-devel@alsa-project.org, linux-kernel@vger.kernel.org
-References: <20201125054255.137067-1-bjorn.andersson@linaro.org>
-From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Message-ID: <a92ba901-283f-e0fb-54e0-af6c87bbd44a@linaro.org>
-Date:   Wed, 25 Nov 2020 09:58:06 +0000
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.8.0
-MIME-Version: 1.0
-In-Reply-To: <20201125054255.137067-1-bjorn.andersson@linaro.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+        Wed, 25 Nov 2020 05:03:24 -0500
+Received: from ironmsg07-lv.qualcomm.com (HELO ironmsg07-lv.qulacomm.com) ([10.47.202.151])
+  by alexa-out.qualcomm.com with ESMTP; 25 Nov 2020 02:03:23 -0800
+X-QCInternal: smtphost
+Received: from ironmsg02-blr.qualcomm.com ([10.86.208.131])
+  by ironmsg07-lv.qulacomm.com with ESMTP/TLS/AES256-SHA; 25 Nov 2020 02:03:21 -0800
+X-QCInternal: smtphost
+Received: from kalyant-linux.qualcomm.com ([10.204.66.210])
+  by ironmsg02-blr.qualcomm.com with ESMTP; 25 Nov 2020 15:32:46 +0530
+Received: by kalyant-linux.qualcomm.com (Postfix, from userid 94428)
+        id 2578917AA; Wed, 25 Nov 2020 02:02:45 -0800 (PST)
+From:   Kalyan Thota <kalyan_t@codeaurora.org>
+To:     y@qualcomm.com, dri-devel@lists.freedesktop.org,
+        linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
+        devicetree@vger.kernel.org
+Cc:     Kalyan Thota <kalyan_t@codeaurora.org>,
+        linux-kernel@vger.kernel.org, robdclark@gmail.com,
+        seanpaul@chromium.org, hoegsberg@chromium.org,
+        dianders@chromium.org, mkrishn@codeaurora.org,
+        travitej@codeaurora.org, nganji@codeaurora.org,
+        swboyd@chromium.org, abhinavk@codeaurora.org,
+        ddavenport@chromium.org, amit.pundir@linaro.org,
+        sumit.semwal@linaro.org
+Subject: [v1] drm/msm/dpu: consider vertical front porch in the prefill bw calculation
+Date:   Wed, 25 Nov 2020 02:02:40 -0800
+Message-Id: <1606298560-3003-1-git-send-email-kalyan_t@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
+In-Reply-To: <y>
+References: <y>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+In case of panels with low vertical back porch, the prefill bw
+requirement will be high as we will have less time(vbp+pw) to
+fetch and fill the hw latency buffers before start of first line
+in active period.
 
+For ex:
+Say hw_latency_line_buffers = 24, and if blanking vbp+pw = 10
+Here we need to fetch 24 lines of data in 10 line times.
+This will increase the bw to the ratio of linebuffers to blanking.
 
-On 25/11/2020 05:42, Bjorn Andersson wrote:
-> Attempting to send a power request during PM operations, when the QMI
-> handle isn't initialized results in a NULL pointer dereference. So check
-> if the QMI handle has been initialized before attempting to post the
-> power requests.
-> 
-> Fixes: 917809e2280b ("slimbus: ngd: Add qcom SLIMBus NGD driver")
-> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+DPU hw can also fetch data during vertical front porch provided
+interface prefetch is enabled. Use vfp in the prefill calculation
+as dpu driver enables prefetch if the blanking is not sufficient
+to fill the latency lines.
 
+Signed-off-by: Kalyan Thota <kalyan_t@codeaurora.org>
+---
+ drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c | 11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
 
-Applied thanks,
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+index 7ea90d2..315b999 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+@@ -151,7 +151,7 @@ static void _dpu_plane_calc_bw(struct drm_plane *plane,
+ 	u64 plane_bw;
+ 	u32 hw_latency_lines;
+ 	u64 scale_factor;
+-	int vbp, vpw;
++	int vbp, vpw, vfp;
+ 
+ 	pstate = to_dpu_plane_state(plane->state);
+ 	mode = &plane->state->crtc->mode;
+@@ -164,6 +164,7 @@ static void _dpu_plane_calc_bw(struct drm_plane *plane,
+ 	fps = drm_mode_vrefresh(mode);
+ 	vbp = mode->vtotal - mode->vsync_end;
+ 	vpw = mode->vsync_end - mode->vsync_start;
++	vfp = mode->vsync_start - mode->vdisplay;
+ 	hw_latency_lines =  dpu_kms->catalog->perf.min_prefill_lines;
+ 	scale_factor = src_height > dst_height ?
+ 		mult_frac(src_height, 1, dst_height) : 1;
+@@ -176,7 +177,13 @@ static void _dpu_plane_calc_bw(struct drm_plane *plane,
+ 		src_width * hw_latency_lines * fps * fmt->bpp *
+ 		scale_factor * mode->vtotal;
+ 
+-	do_div(plane_prefill_bw, (vbp+vpw));
++	if ((vbp+vpw) > hw_latency_lines)
++		do_div(plane_prefill_bw, (vbp+vpw));
++	else if ((vbp+vpw+vfp) < hw_latency_lines)
++		do_div(plane_prefill_bw, (vbp+vpw+vfp));
++	else
++		do_div(plane_prefill_bw, hw_latency_lines);
++
+ 
+ 	pstate->plane_fetch_bw = max(plane_bw, plane_prefill_bw);
+ }
+-- 
+2.7.4
 
---srini
