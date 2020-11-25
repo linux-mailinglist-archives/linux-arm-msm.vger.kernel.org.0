@@ -2,182 +2,200 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 68B162C4731
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Nov 2020 19:02:54 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3EDEF2C4744
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Nov 2020 19:10:18 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732930AbgKYSBy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 25 Nov 2020 13:01:54 -0500
-Received: from m42-4.mailgun.net ([69.72.42.4]:28740 "EHLO m42-4.mailgun.net"
+        id S1732551AbgKYSJV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 25 Nov 2020 13:09:21 -0500
+Received: from m42-4.mailgun.net ([69.72.42.4]:12692 "EHLO m42-4.mailgun.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1732908AbgKYSBy (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 25 Nov 2020 13:01:54 -0500
+        id S1731956AbgKYSJU (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 25 Nov 2020 13:09:20 -0500
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1606327312; h=Content-Transfer-Encoding: Content-Type:
- In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
- Subject: Sender; bh=7LPkOcaw/p1knQ5KtExLHuxB75BuhzPxHs8gh80hyuw=; b=Hfr9rcRpw2v4Tybcbmj3PAxRw57Dwx7wBAmJFAAELTgaJ0kCEC3bWMLo16FSCoEnvo6TB5Sn
- acYU0gdEkfQoG3bIbQ7OZ2nL9SGSvvGAnZ8kz/LfFCz4F1vFDn5INpc4oG9pSg5QyZ/ENYhx
- V0vqtw0bsLjdiwaaZPz82tMOYtc=
+ s=smtp; t=1606327759; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=TxzY5+TastQJ0o5m73NMH0KhCIllUkTh0uuclpIl/n4=;
+ b=dIbY+m+rlJmSlEBNU6XEgrhCH8zu4ZoIxTHANJl5ZCUFrPwxSAbSvGOVtWUCKoFG+aewLaA2
+ JDX0PKdP0OwA0hJwsjgQXNTexIbp4dcab3DtWzg24gJibstcWZiw602PrZwROnTqTwpErtTL
+ vgFCV6FqGtgPYRKQ1EzaGw6xGJ8=
 X-Mailgun-Sending-Ip: 69.72.42.4
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org
  (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n01.prod.us-east-1.postgun.com with SMTP id
- 5fbe9be6e9b7088622a3b232 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 25 Nov 2020 18:01:10
+ smtp-out-n01.prod.us-west-2.postgun.com with SMTP id
+ 5fbe9dc91dba509aaefb68e7 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 25 Nov 2020 18:09:13
  GMT
-Sender: jhugo=codeaurora.org@mg.codeaurora.org
+Sender: rishabhb=codeaurora.org@mg.codeaurora.org
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 38A88C43463; Wed, 25 Nov 2020 18:01:09 +0000 (UTC)
+        id C50ECC43461; Wed, 25 Nov 2020 18:09:12 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
 X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        NICE_REPLY_A,SPF_FAIL,URIBL_BLOCKED autolearn=no autolearn_force=no
-        version=3.4.0
-Received: from [10.226.59.216] (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
         (No client certificate requested)
-        (Authenticated sender: jhugo)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id EF425C433ED;
-        Wed, 25 Nov 2020 18:01:06 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org EF425C433ED
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=jhugo@codeaurora.org
-Subject: Re: [PATCH] net: qrtr: Unprepare MHI channels during remove
-To:     bbhatt@codeaurora.org
-Cc:     Loic Poulain <loic.poulain@linaro.org>, ath11k@lists.infradead.org,
-        cjhuang@codeaurora.org, clew@codeaurora.org,
-        hemantk@codeaurora.org, kvalo@codeaurora.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-wireless@vger.kernel.org, manivannan.sadhasivam@linaro.org,
-        netdev@vger.kernel.org, jhugo=codeaurora.org@codeaurora.org
-References: <1605723625-11206-1-git-send-email-bbhatt@codeaurora.org>
- <5e94c0be-9402-7309-5d65-857a27d1f491@codeaurora.org>
- <CAMZdPi_b0=qFNGi1yUke3Dip2bi-zW4ULTg8W4nbyPyEsE3D4w@mail.gmail.com>
- <2019fe3c-55c5-61fe-758c-1e9952e1cb33@codeaurora.org>
- <647d1520d0bcefa7ff02d2ef5ee81bd1@codeaurora.org>
-From:   Jeffrey Hugo <jhugo@codeaurora.org>
-Message-ID: <e8eb7b2b-bb25-cba9-f487-1a0889d8cd93@codeaurora.org>
-Date:   Wed, 25 Nov 2020 11:01:06 -0700
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.4.0
+        (Authenticated sender: rishabhb)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id D76AFC433C6;
+        Wed, 25 Nov 2020 18:09:11 +0000 (UTC)
 MIME-Version: 1.0
-In-Reply-To: <647d1520d0bcefa7ff02d2ef5ee81bd1@codeaurora.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Wed, 25 Nov 2020 10:09:11 -0800
+From:   rishabhb@codeaurora.org
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>, Ohad Ben-Cohen <ohad@wizery.com>,
+        Siddharth Gupta <sidgup@codeaurora.org>,
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
+        linux-kernel@vger.kernel.org, stable@vger.kernel.org
+Subject: Re: [PATCH v3 1/4] remoteproc: sysmon: Ensure remote notification
+ ordering
+In-Reply-To: <20201122054135.802935-2-bjorn.andersson@linaro.org>
+References: <20201122054135.802935-1-bjorn.andersson@linaro.org>
+ <20201122054135.802935-2-bjorn.andersson@linaro.org>
+Message-ID: <4a5b9e45d7f763fe73b02ca543012b25@codeaurora.org>
+X-Sender: rishabhb@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 11/19/2020 12:02 PM, Bhaumik Bhatt wrote:
-> On 2020-11-18 11:34 AM, Jeffrey Hugo wrote:
->> On 11/18/2020 12:14 PM, Loic Poulain wrote:
->>>
->>>
->>> Le mer. 18 nov. 2020 à 19:34, Jeffrey Hugo <jhugo@codeaurora.org 
->>> <mailto:jhugo@codeaurora.org>> a écrit :
->>>
->>>     On 11/18/2020 11:20 AM, Bhaumik Bhatt wrote:
->>>      > Reset MHI device channels when driver remove is called due to
->>>      > module unload or any crash scenario. This will make sure that
->>>      > MHI channels no longer remain enabled for transfers since the
->>>      > MHI stack does not take care of this anymore after the auto-start
->>>      > channels feature was removed.
->>>      >
->>>      > Signed-off-by: Bhaumik Bhatt <bbhatt@codeaurora.org
->>>     <mailto:bbhatt@codeaurora.org>>
->>>      > ---
->>>      >   net/qrtr/mhi.c | 1 +
->>>      >   1 file changed, 1 insertion(+)
->>>      >
->>>      > diff --git a/net/qrtr/mhi.c b/net/qrtr/mhi.c
->>>      > index 7100f0b..2bf2b19 100644
->>>      > --- a/net/qrtr/mhi.c
->>>      > +++ b/net/qrtr/mhi.c
->>>      > @@ -104,6 +104,7 @@ static void qcom_mhi_qrtr_remove(struct
->>>     mhi_device *mhi_dev)
->>>      >       struct qrtr_mhi_dev *qdev = dev_get_drvdata(&mhi_dev->dev);
->>>      >
->>>      >       qrtr_endpoint_unregister(&qdev->ep);
->>>      > +     mhi_unprepare_from_transfer(mhi_dev);
->>>      >       dev_set_drvdata(&mhi_dev->dev, NULL);
->>>      >   }
->>>      >
->>>      >
->>>
->>>     I admit, I didn't pay much attention to the auto-start being 
->>> removed,
->>>     but this seems odd to me.
->>>
->>>     As a client, the MHI device is being removed, likely because of some
->>>     factor outside of my control, but I still need to clean it up? This
->>>     really feels like something MHI should be handling.
->>>
->>>
->>> I think this is just about balancing operations, what is done in 
->>> probe should be undone in remove, so here channels are started in 
->>> probe and stopped/reset in remove.
->>
->> I understand that perspective, but that doesn't quite match what is
->> going on here.  Regardless of if the channel was started (prepared) in
->> probe, it now needs to be stopped in remove.  That not balanced in all
->> cases
->>
->> Lets assume, in response to probe(), my client driver goes and creates
->> some other object, maybe a socket.  In response to that socket being
->> opened/activated by the client of my driver, I go and start the mhi
->> channel.  Now, normally, when the socket is closed/deactivated, I stop
->> the MHI channel.  In this case, stopping the MHI channel in remove()
->> is unbalanced with respect to probe(), but is now a requirement.
->>
->> Now you may argue, I should close the object in response to remove,
->> which will then trigger the stop on the channel.  That doesn't apply
->> to everything.  For example, you cannot close an open file in the
->> kernel. You need to wait for userspace to close it.  By the time that
->> happens, the mhi_dev is long gone I expect.
->>
->> So if, somehow, the client driver is the one causing the remove to
->> occur, then yes it should probably be the one doing the stop, but
->> that's a narrow set of conditions, and I think having that requirement
->> for all scenarios is limiting.
-> It should be the client's responsibility to perform a clean-up though.
+On 2020-11-21 21:41, Bjorn Andersson wrote:
+> The reliance on the remoteproc's state for determining when to send
+> sysmon notifications to a remote processor is racy with regard to
+> concurrent remoteproc operations.
 > 
-> We cannot assume that the remove() call was due to factors outside of the
-> client's control at all times. You may not know if the remove() was due to
-> device actually crashing or just an unbind/module unload. So, it would be
-> better if you call it as the device should ideally not be left with a stale
-> channel context. >
-> We had an issue where a client was issuing a driver unbind without 
-> unpreparing
-> the MHI channels and without Loic's patch [1], we would not issue a channel
-> RESET to the device resulting in incoming data to the host on those 
-> channels
-> after host clean-up and an unmapped memory access and kernel panic.
-
-So the client drivers have to do the right thing, otherwise the kernel 
-could crash?  Sounds like you are choosing to not do defensive coding in 
-MHI and making your problems the client's problems.
-
-Before releasing the resources, why haven't you issued a MHI_RESET of 
-the state machine, and ensured the device has ack'd the reset?
-
-> If MHI dev will be gone that NULL/status check must be present in 
-> something that
-> userspace could potentially use.
+> Further more the advertisement of the state of other remote processor 
+> to
+> a newly started remote processor might not only send the wrong state,
+> but might result in a stream of state changes that are out of order.
 > 
-> [1] 
-> https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git/commit/drivers/bus/mhi?h=next-20201119&id=a7f422f2f89e7d48aa66e6488444a4c7f01269d5 
+> Address this by introducing state tracking within the sysmon instances
+> themselves and extend the locking to ensure that the notifications are
+> consistent with this state.
 > 
-> 
-> Thanks,
-> Bhaumik
+> Fixes: 1f36ab3f6e3b ("remoteproc: sysmon: Inform current rproc about
+> all active rprocs")
+> Fixes: 1877f54f75ad ("remoteproc: sysmon: Add notifications for 
+> events")
+> Fixes: 1fb82ee806d1 ("remoteproc: qcom: Introduce sysmon")
+> Cc: stable@vger.kernel.org
+> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 > ---
-> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-> a Linux Foundation Collaborative Project
+> 
+> Changes since v2:
+> - Hold sysmon_lock during traversal of sysmons in sysmon_start()
+> 
+>  drivers/remoteproc/qcom_sysmon.c | 25 +++++++++++++++++++++----
+>  1 file changed, 21 insertions(+), 4 deletions(-)
+> 
+> diff --git a/drivers/remoteproc/qcom_sysmon.c 
+> b/drivers/remoteproc/qcom_sysmon.c
+> index 9eb2f6bccea6..b37b111b15b3 100644
+> --- a/drivers/remoteproc/qcom_sysmon.c
+> +++ b/drivers/remoteproc/qcom_sysmon.c
+> @@ -22,6 +22,9 @@ struct qcom_sysmon {
+>  	struct rproc_subdev subdev;
+>  	struct rproc *rproc;
+> 
+> +	int state;
+> +	struct mutex state_lock;
+> +
+>  	struct list_head node;
+> 
+>  	const char *name;
+> @@ -448,7 +451,10 @@ static int sysmon_prepare(struct rproc_subdev 
+> *subdev)
+>  		.ssr_event = SSCTL_SSR_EVENT_BEFORE_POWERUP
+>  	};
+> 
+> +	mutex_lock(&sysmon->state_lock);
+> +	sysmon->state = SSCTL_SSR_EVENT_BEFORE_POWERUP;
+>  	blocking_notifier_call_chain(&sysmon_notifiers, 0, (void *)&event);
+> +	mutex_unlock(&sysmon->state_lock);
+> 
+>  	return 0;
+>  }
+> @@ -472,20 +478,25 @@ static int sysmon_start(struct rproc_subdev 
+> *subdev)
+>  		.ssr_event = SSCTL_SSR_EVENT_AFTER_POWERUP
+>  	};
+> 
+> +	mutex_lock(&sysmon->state_lock);
+> +	sysmon->state = SSCTL_SSR_EVENT_AFTER_POWERUP;
+>  	blocking_notifier_call_chain(&sysmon_notifiers, 0, (void *)&event);
+> +	mutex_unlock(&sysmon->state_lock);
+> 
+>  	mutex_lock(&sysmon_lock);
+>  	list_for_each_entry(target, &sysmon_list, node) {
+> -		if (target == sysmon ||
+> -		    target->rproc->state != RPROC_RUNNING)
+> +		if (target == sysmon)
+>  			continue;
+> 
+> +		mutex_lock(&target->state_lock);
+>  		event.subsys_name = target->name;
+> +		event.ssr_event = target->state;
+> 
+>  		if (sysmon->ssctl_version == 2)
+>  			ssctl_send_event(sysmon, &event);
+>  		else if (sysmon->ept)
+>  			sysmon_send_event(sysmon, &event);
+> +		mutex_unlock(&target->state_lock);
+>  	}
+>  	mutex_unlock(&sysmon_lock);
+> 
+> @@ -500,7 +511,10 @@ static void sysmon_stop(struct rproc_subdev
+> *subdev, bool crashed)
+>  		.ssr_event = SSCTL_SSR_EVENT_BEFORE_SHUTDOWN
+>  	};
+> 
+> +	mutex_lock(&sysmon->state_lock);
+> +	sysmon->state = SSCTL_SSR_EVENT_BEFORE_SHUTDOWN;
+>  	blocking_notifier_call_chain(&sysmon_notifiers, 0, (void *)&event);
+> +	mutex_unlock(&sysmon->state_lock);
+> 
+>  	/* Don't request graceful shutdown if we've crashed */
+>  	if (crashed)
+> @@ -521,7 +535,10 @@ static void sysmon_unprepare(struct rproc_subdev 
+> *subdev)
+>  		.ssr_event = SSCTL_SSR_EVENT_AFTER_SHUTDOWN
+>  	};
+> 
+> +	mutex_lock(&sysmon->state_lock);
+> +	sysmon->state = SSCTL_SSR_EVENT_AFTER_SHUTDOWN;
+>  	blocking_notifier_call_chain(&sysmon_notifiers, 0, (void *)&event);
+> +	mutex_unlock(&sysmon->state_lock);
+>  }
+> 
+>  /**
+> @@ -534,11 +551,10 @@ static int sysmon_notify(struct notifier_block
+> *nb, unsigned long event,
+>  			 void *data)
+>  {
+>  	struct qcom_sysmon *sysmon = container_of(nb, struct qcom_sysmon, 
+> nb);
+> -	struct rproc *rproc = sysmon->rproc;
+>  	struct sysmon_event *sysmon_event = data;
+> 
+>  	/* Skip non-running rprocs and the originating instance */
+> -	if (rproc->state != RPROC_RUNNING ||
+> +	if (sysmon->state != SSCTL_SSR_EVENT_AFTER_POWERUP ||
+>  	    !strcmp(sysmon_event->subsys_name, sysmon->name)) {
+>  		dev_dbg(sysmon->dev, "not notifying %s\n", sysmon->name);
+>  		return NOTIFY_DONE;
+> @@ -591,6 +607,7 @@ struct qcom_sysmon *qcom_add_sysmon_subdev(struct
+> rproc *rproc,
+>  	init_completion(&sysmon->ind_comp);
+>  	init_completion(&sysmon->shutdown_comp);
+>  	mutex_init(&sysmon->lock);
+> +	mutex_init(&sysmon->state_lock);
+> 
+>  	sysmon->shutdown_irq = of_irq_get_byname(sysmon->dev->of_node,
+>  						 "shutdown-ack");
 
-
--- 
-Jeffrey Hugo
-Qualcomm Technologies, Inc. is a member of the
-Code Aurora Forum, a Linux Foundation Collaborative Project.
+Reviewed-by: Rishabh Bhatnagar <rishabhb@codeaurora.org>
