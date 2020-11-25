@@ -2,93 +2,184 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id EBF5E2C4088
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Nov 2020 13:50:15 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 987CF2C40C5
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Nov 2020 14:03:09 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728404AbgKYMty (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 25 Nov 2020 07:49:54 -0500
-Received: from mail.kernel.org ([198.145.29.99]:49672 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728237AbgKYMty (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 25 Nov 2020 07:49:54 -0500
-Received: from localhost (cpc102334-sgyl38-2-0-cust884.18-2.cable.virginm.net [92.233.91.117])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 2B894206E5;
-        Wed, 25 Nov 2020 12:49:53 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1606308593;
-        bh=TG3UpeiHbWC57NXnHtKT6Q7HjbmbKGepoMAsuPbYhgg=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=qA6Yjnk0W6zCUTsY9ibqshuDQiyuMajOgBuOizLAck5E9ZE5L+x+V2bYY6fA0yzhP
-         xrJyA9k5kSg27ql/IPPknP/v+4uxJ4vosi4p2FhH49/Imm/qZUyNXz/o2apsCdUSEv
-         3nynnNaoFfMST3otOGu54i2pO5tWIalKvxy47vR8=
-Date:   Wed, 25 Nov 2020 12:49:28 +0000
-From:   Mark Brown <broonie@kernel.org>
-To:     xuyuqing <xuyuqing@huaqin.corp-partner.google.com>
-Cc:     linux-kernel@vger.kernel.org, Taniya Das <tdas@codeaurora.org>,
-        Rohit kumar <rohitkr@codeaurora.org>,
-        Banajit Goswami <bgoswami@codeaurora.org>,
-        Patrick Lai <plai@codeaurora.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Jaroslav Kysela <perex@perex.cz>,
-        Takashi Iwai <tiwai@suse.com>,
-        Srini Kandagatla <srinivas.kandagatla@linaro.org>,
-        Stephan Gerhold <stephan@gerhold.net>, dianders@chromium.org,
-        dgreid@chromium.org, tzungbi@chromium.org, cychiang@chromium.org,
-        judyhsiao@chromium.org, linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        alsa-devel@alsa-project.org,
-        zhouguohui@huaqin.corp-partner.google.com
-Subject: Re: [PATCH v1 0/1] Fix 32 bit format for adau7002
-Message-ID: <20201125124928.GA4489@sirena.org.uk>
-References: <20201118005858.123013-1-xuyuqing@huaqin.corp-partner.google.com>
+        id S1729482AbgKYNBF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 25 Nov 2020 08:01:05 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54354 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729465AbgKYNBE (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 25 Nov 2020 08:01:04 -0500
+Received: from mail-wm1-x342.google.com (mail-wm1-x342.google.com [IPv6:2a00:1450:4864:20::342])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7C32EC0613D6
+        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Nov 2020 05:01:04 -0800 (PST)
+Received: by mail-wm1-x342.google.com with SMTP id a3so2058772wmb.5
+        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Nov 2020 05:01:04 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=irbsSXjHImcSLHJ6uxXDu2MKDqhSUoJJSkeWgL8xBoA=;
+        b=AJCg3v4STEBBRZaHLAE53XA3KcnbyMQzjsoXOCVgOtQnPzop3nkbwp553x5xqFIMQd
+         wAz6sVvPFfpFQnS3UWtT5pbzYJCp/iLZQgo93d3RPzIX1uKyhzGCLaW1XPj8H5JMzljf
+         bTLjMOMhE6N3+93TUjcobXv7XZUMubFPnW//4CSD1mYMfIzl852OCu6bhFaZHCmpxv8n
+         3eEDa5Sq/XkMZi4ZwK5/K94LmZte8lZ20pq4CHr2JpYBO42voDoKFnglO/RopT3FFhox
+         la4/k7bEVHKdgIhEanahTj2Ms05JzrU+pv8jgMPxy2ZKKTJ6uOGdD/Iq+UY7g0vrXJk0
+         DV2w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=irbsSXjHImcSLHJ6uxXDu2MKDqhSUoJJSkeWgL8xBoA=;
+        b=I7Q9DG2UEywpHLR2qwtvwDWOvMZcQAsYQF+To0O8EyrHShHXRrrP1lW9OV5guAMIWx
+         BgVdDoSsBsMFIKKoFpxdj2qatq/fpE8nYf4wLxtNkalv+5lNZAKSkSJZ5oy8kFdcuuf3
+         E2rDx5d8ajmXIRs6Tmgy1sdk/hY566dG95OBl7klMiMjTlXO2Ia69qVFY8VkzVqzPLZi
+         egHtd6VRSi3ODofZhTdqUry7Uu4kL3hbG62XrWtbqGH+d9CFk4Bx83BMJ2cR9B3gJ5Nm
+         eXpB/DfSyWBjrRtrWfV5fXcAK2Gb5zcU9FVL202Jty5ozWkXWk+2L4uk2FP6qPNqZE3j
+         SQ+w==
+X-Gm-Message-State: AOAM5300ryMJCUilj+isSZPJi0uTToq8JgCwNrMlExBaNsdlApJ+2kHG
+        foMAdgpWFsoxABQPHRvt4figEw==
+X-Google-Smtp-Source: ABdhPJxBT007KlVzudG3ay9wbN5BHrb/bBbDAzKTJNgH+sjzEYq3ALv1ftOsxPP19AsfdL/U339OQQ==
+X-Received: by 2002:a1c:e1c5:: with SMTP id y188mr3853828wmg.81.1606309263056;
+        Wed, 25 Nov 2020 05:01:03 -0800 (PST)
+Received: from [192.168.0.3] (hst-221-27.medicom.bg. [84.238.221.27])
+        by smtp.googlemail.com with ESMTPSA id f18sm4686733wru.42.2020.11.25.05.01.01
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 25 Nov 2020 05:01:02 -0800 (PST)
+Subject: Re: [PATCH 2/3] venus: Limit HFI sessions to the maximum supported
+To:     Alexandre Courbot <acourbot@chromium.org>
+Cc:     linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Vikash Garodia <vgarodia@codeaurora.org>,
+        Mansur Alisha Shaik <mansur@codeaurora.org>,
+        Dikshita Agarwal <dikshita@codeaurora.org>
+References: <20201120001037.10032-1-stanimir.varbanov@linaro.org>
+ <20201120001037.10032-3-stanimir.varbanov@linaro.org>
+ <CAPBb6MUnXmtSKy9NwikYXjafgB+WM9TKEFjkYK16T2V7KRx=JQ@mail.gmail.com>
+From:   Stanimir Varbanov <stanimir.varbanov@linaro.org>
+Message-ID: <8c6231b2-61c2-d432-aa47-ddc29de8da19@linaro.org>
+Date:   Wed, 25 Nov 2020 15:01:01 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.10.0
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="gKMricLos+KVdGMg"
-Content-Disposition: inline
-In-Reply-To: <20201118005858.123013-1-xuyuqing@huaqin.corp-partner.google.com>
-X-Cookie: No foreign coins.
-User-Agent: Mutt/1.10.1 (2018-07-13)
+In-Reply-To: <CAPBb6MUnXmtSKy9NwikYXjafgB+WM9TKEFjkYK16T2V7KRx=JQ@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
---gKMricLos+KVdGMg
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
 
-On Wed, Nov 18, 2020 at 08:58:57AM +0800, xuyuqing wrote:
-> the microphone is attached to external codec(adau7002)
-> instead of rt5682.We need to always use 32 bit format on sc7180
-> to meet the clock requirement of adau7002:
-> The ADAU7002 requires a BCLK rate=20
-> that is a minimum of 64=D7 the LRCLK sample rate
+On 11/25/20 5:46 AM, Alexandre Courbot wrote:
+> On Fri, Nov 20, 2020 at 9:12 AM Stanimir Varbanov
+> <stanimir.varbanov@linaro.org> wrote:
+>>
+>> Currently we rely on firmware to return error when we reach the maximum
+>> supported number of sessions. But this errors are happened at reqbuf
+>> time which is a bit later. The more reasonable way looks like is to
+>> return the error on driver open.
+>>
+>> To achieve that modify hfi_session_create to return error when we reach
+>> maximum count of sessions and thus refuse open.
+>>
+>> Signed-off-by: Stanimir Varbanov <stanimir.varbanov@linaro.org>
+>> ---
+>>  drivers/media/platform/qcom/venus/core.h      |  1 +
+>>  drivers/media/platform/qcom/venus/hfi.c       | 19 +++++++++++++++----
+>>  .../media/platform/qcom/venus/hfi_parser.c    |  3 +++
+>>  3 files changed, 19 insertions(+), 4 deletions(-)
+>>
+>> diff --git a/drivers/media/platform/qcom/venus/core.h b/drivers/media/platform/qcom/venus/core.h
+>> index db0e6738281e..3a477fcdd3a8 100644
+>> --- a/drivers/media/platform/qcom/venus/core.h
+>> +++ b/drivers/media/platform/qcom/venus/core.h
+>> @@ -96,6 +96,7 @@ struct venus_format {
+>>  #define MAX_CAP_ENTRIES                32
+>>  #define MAX_ALLOC_MODE_ENTRIES 16
+>>  #define MAX_CODEC_NUM          32
+>> +#define MAX_SESSIONS           16
+>>
+>>  struct raw_formats {
+>>         u32 buftype;
+>> diff --git a/drivers/media/platform/qcom/venus/hfi.c b/drivers/media/platform/qcom/venus/hfi.c
+>> index 638ed5cfe05e..8420be6d3991 100644
+>> --- a/drivers/media/platform/qcom/venus/hfi.c
+>> +++ b/drivers/media/platform/qcom/venus/hfi.c
+>> @@ -175,6 +175,7 @@ static int wait_session_msg(struct venus_inst *inst)
+>>  int hfi_session_create(struct venus_inst *inst, const struct hfi_inst_ops *ops)
+>>  {
+>>         struct venus_core *core = inst->core;
+>> +       int ret;
+>>
+>>         if (!ops)
+>>                 return -EINVAL;
+>> @@ -183,12 +184,22 @@ int hfi_session_create(struct venus_inst *inst, const struct hfi_inst_ops *ops)
+>>         init_completion(&inst->done);
+>>         inst->ops = ops;
+>>
+>> -       mutex_lock(&core->lock);
+>> -       list_add_tail(&inst->list, &core->instances);
+>> -       atomic_inc(&core->insts_count);
+>> +       ret = mutex_lock_interruptible(&core->lock);
+>> +       if (ret)
+>> +               return ret;
+> 
+> Why do we change to mutex_lock_interruptible() here? This makes this
 
-Please don't send cover letters for single patches, if there is anything
-that needs saying put it in the changelog of the patch or after the ---
-if it's administrative stuff.  This reduces mail volume and ensures that=20
-any important information is recorded in the changelog rather than being
-lost.=20
+Because mutex_lock_interruptible is preferable in kernel docs, but I
+agree that changing mutex_lock with mutex_lock_interruptible should be
+subject of another lock related patches. I will drop this in next patch
+version.
 
---gKMricLos+KVdGMg
-Content-Type: application/pgp-signature; name="signature.asc"
+> function return an error even though we could obtain the lock just by
+> trying a bit harder.
 
------BEGIN PGP SIGNATURE-----
+I didn't get that. The behavior of mutex_lock_interruptible is that same
+as mutex_lock, i.e. the it will sleep to acquire the lock. The
+difference is that the sleep could be interrupted by a signal. You might
+think about mutex_trylock?
 
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAl++UtcACgkQJNaLcl1U
-h9BXsAf+JbAuQvpTNdjb5/LUqRdyuTd2UQmI4XFbgJUpmVe1dh0IbCc5pqQg/DXU
-/Wl7kSPW1BB1dgiEpbf54AcEQedhpzJggccsH9tWbLyLvC6yVksQc+PU3dxf8FbC
-d+O/GzA4WlIomYE7szH8rvTLcBG8FE37F5qT7zADGhDFA4yjXNhmEOBFQQQsIzRR
-gemWP64PSv4ekoI7Kc9k8VXFutE67I7cPaL0uHEnaDzUcbgkompnweXA8AApxTTq
-PkxAlknTOCQQlkUQH+TgFi00oJlyriAJ9y1ua9le7GoFNRva07aIo9cehika7qTT
-CxonbnDUtgpR5DZnZ5cUXTBJkby3EA==
-=3C6x
------END PGP SIGNATURE-----
+> 
+>> +
+>> +       ret = atomic_read(&core->insts_count);
+>> +       if (ret + 1 > core->max_sessions_supported) {
+>> +               ret = -EAGAIN;
+>> +       } else {
+>> +               atomic_inc(&core->insts_count);
+>> +               list_add_tail(&inst->list, &core->instances);
+>> +               ret = 0;
+>> +       }
+>> +
+>>         mutex_unlock(&core->lock);
+>>
+>> -       return 0;
+>> +       return ret;
+>>  }
+>>  EXPORT_SYMBOL_GPL(hfi_session_create);
+>>
+>> diff --git a/drivers/media/platform/qcom/venus/hfi_parser.c b/drivers/media/platform/qcom/venus/hfi_parser.c
+>> index 363ee2a65453..52898633a8e6 100644
+>> --- a/drivers/media/platform/qcom/venus/hfi_parser.c
+>> +++ b/drivers/media/platform/qcom/venus/hfi_parser.c
+>> @@ -276,6 +276,9 @@ u32 hfi_parser(struct venus_core *core, struct venus_inst *inst, void *buf,
+>>                 words_count--;
+>>         }
+>>
+>> +       if (!core->max_sessions_supported)
+>> +               core->max_sessions_supported = MAX_SESSIONS;
+>> +
+>>         parser_fini(inst, codecs, domain);
+>>
+>>         return HFI_ERR_NONE;
+>> --
+>> 2.17.1
+>>
 
---gKMricLos+KVdGMg--
+-- 
+regards,
+Stan
