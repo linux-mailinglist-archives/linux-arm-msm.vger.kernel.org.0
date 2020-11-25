@@ -2,200 +2,69 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 3EDEF2C4744
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Nov 2020 19:10:18 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 643432C4856
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Nov 2020 20:29:54 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732551AbgKYSJV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 25 Nov 2020 13:09:21 -0500
-Received: from m42-4.mailgun.net ([69.72.42.4]:12692 "EHLO m42-4.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1731956AbgKYSJU (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 25 Nov 2020 13:09:20 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1606327759; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=TxzY5+TastQJ0o5m73NMH0KhCIllUkTh0uuclpIl/n4=;
- b=dIbY+m+rlJmSlEBNU6XEgrhCH8zu4ZoIxTHANJl5ZCUFrPwxSAbSvGOVtWUCKoFG+aewLaA2
- JDX0PKdP0OwA0hJwsjgQXNTexIbp4dcab3DtWzg24gJibstcWZiw602PrZwROnTqTwpErtTL
- vgFCV6FqGtgPYRKQ1EzaGw6xGJ8=
-X-Mailgun-Sending-Ip: 69.72.42.4
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n01.prod.us-west-2.postgun.com with SMTP id
- 5fbe9dc91dba509aaefb68e7 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 25 Nov 2020 18:09:13
- GMT
-Sender: rishabhb=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id C50ECC43461; Wed, 25 Nov 2020 18:09:12 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: rishabhb)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id D76AFC433C6;
-        Wed, 25 Nov 2020 18:09:11 +0000 (UTC)
+        id S1728477AbgKYT2y (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 25 Nov 2020 14:28:54 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58638 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726970AbgKYT2y (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 25 Nov 2020 14:28:54 -0500
+Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 507B6C0613D4
+        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Nov 2020 11:28:54 -0800 (PST)
+Received: by mail-wr1-x431.google.com with SMTP id p8so3038689wrx.5
+        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Nov 2020 11:28:54 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=message-id:from:mime-version:content-transfer-encoding
+         :content-description:subject:to:date:reply-to;
+        bh=MT4M9SX2NqdNuOObXhIV8Gtkw+yoDX+gRyJnh+feBwM=;
+        b=G215ZvGeckDJDnroLPqbxZhAPeBGkzNxyDX0NnBeqEyzp1RFk+E7ChcVvIhxAaM1ug
+         g+VfyNdweXg+KkHs4N3Kpj/EH0Xik1SKCUFn9Vh1RVMrkinozGXL6weDp2vfk1ovrrlJ
+         FwhxDMQ78x/lcKL1D8FSNx5mKA8s33kHTwNA/M4uI89EM9dm77mE5HFO5cCc0UNLoUA/
+         Hl/rDPtfun1Qt7lISpXStPc1ooisPpP4SXK5WJfcbMjuGf4mBG1KXH68vlAlxbmPnOXg
+         wpRtoxNGzsIw8bsDP9FecpFTsbhAL3X3t+EYwvqWIMuwrPZD5inrRtFqo/eNJImSCWO8
+         MKGg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:message-id:from:mime-version
+         :content-transfer-encoding:content-description:subject:to:date
+         :reply-to;
+        bh=MT4M9SX2NqdNuOObXhIV8Gtkw+yoDX+gRyJnh+feBwM=;
+        b=mYiVbNXX/hkoRxXplDQob1Z1f/0FSO5MEx09S+O8B4S4p15UGPCwmwRpuwTZ9P6WR5
+         eY0NhrRdg9jSrUFKhzYEDB6eWQ1xvgOHQ/ynLwaOqN8cdon2M1EIsSDB/yks1Cs0mBTj
+         Rrciv5CzSWPvysQ8C4aVKjXnnQeP0EscjtT9tilDT7+UCehKcgCMoaaWWHyFBWEARir8
+         RzfMcJt0zci27ujqPtnVm1wgFUqViQ6FTN793c4LqGHkIndgOn6+Z2MGvzqz2LTSXTWg
+         +7iMc23q00B6Uox+jHqQltHdlBHvND3HHhX0r35SKQOhaoLOBaj1u56AuloAsv7XQCie
+         76Qg==
+X-Gm-Message-State: AOAM531bxDpCaBMwcBASnE6M29RmXLthJeIxBlDx6xfF0MuNFS3gT7zD
+        2r1BcNY3RnhyiLaw/UWb9Tk=
+X-Google-Smtp-Source: ABdhPJwb1s8h/YerASYvIu8oLpVw28R7SpamxWaBvDDE998QfDx4oEajXGOVRNHcLOrYglbfHA1blA==
+X-Received: by 2002:adf:d0c6:: with SMTP id z6mr5950147wrh.10.1606332533098;
+        Wed, 25 Nov 2020 11:28:53 -0800 (PST)
+Received: from [192.168.1.152] ([102.64.149.89])
+        by smtp.gmail.com with ESMTPSA id l16sm6067999wrx.5.2020.11.25.11.28.48
+        (version=TLS1 cipher=AES128-SHA bits=128/128);
+        Wed, 25 Nov 2020 11:28:52 -0800 (PST)
+Message-ID: <5fbeb074.1c69fb81.80257.d7df@mx.google.com>
+From:   "Dailborh R." <ritundailb111@gmail.com>
+X-Google-Original-From: Dailborh R.
+Content-Type: text/plain; charset="iso-8859-1"
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Wed, 25 Nov 2020 10:09:11 -0800
-From:   rishabhb@codeaurora.org
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>, Ohad Ben-Cohen <ohad@wizery.com>,
-        Siddharth Gupta <sidgup@codeaurora.org>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
-        linux-kernel@vger.kernel.org, stable@vger.kernel.org
-Subject: Re: [PATCH v3 1/4] remoteproc: sysmon: Ensure remote notification
- ordering
-In-Reply-To: <20201122054135.802935-2-bjorn.andersson@linaro.org>
-References: <20201122054135.802935-1-bjorn.andersson@linaro.org>
- <20201122054135.802935-2-bjorn.andersson@linaro.org>
-Message-ID: <4a5b9e45d7f763fe73b02ca543012b25@codeaurora.org>
-X-Sender: rishabhb@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+Content-Transfer-Encoding: quoted-printable
+Content-Description: Mail message body
+Subject: Please reply to me
+To:     Recipients <Dailborh@vger.kernel.org>
+Date:   Wed, 25 Nov 2020 19:28:36 +0000
+Reply-To: dailrrob.83@gmail.com
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2020-11-21 21:41, Bjorn Andersson wrote:
-> The reliance on the remoteproc's state for determining when to send
-> sysmon notifications to a remote processor is racy with regard to
-> concurrent remoteproc operations.
-> 
-> Further more the advertisement of the state of other remote processor 
-> to
-> a newly started remote processor might not only send the wrong state,
-> but might result in a stream of state changes that are out of order.
-> 
-> Address this by introducing state tracking within the sysmon instances
-> themselves and extend the locking to ensure that the notifications are
-> consistent with this state.
-> 
-> Fixes: 1f36ab3f6e3b ("remoteproc: sysmon: Inform current rproc about
-> all active rprocs")
-> Fixes: 1877f54f75ad ("remoteproc: sysmon: Add notifications for 
-> events")
-> Fixes: 1fb82ee806d1 ("remoteproc: qcom: Introduce sysmon")
-> Cc: stable@vger.kernel.org
-> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-> ---
-> 
-> Changes since v2:
-> - Hold sysmon_lock during traversal of sysmons in sysmon_start()
-> 
->  drivers/remoteproc/qcom_sysmon.c | 25 +++++++++++++++++++++----
->  1 file changed, 21 insertions(+), 4 deletions(-)
-> 
-> diff --git a/drivers/remoteproc/qcom_sysmon.c 
-> b/drivers/remoteproc/qcom_sysmon.c
-> index 9eb2f6bccea6..b37b111b15b3 100644
-> --- a/drivers/remoteproc/qcom_sysmon.c
-> +++ b/drivers/remoteproc/qcom_sysmon.c
-> @@ -22,6 +22,9 @@ struct qcom_sysmon {
->  	struct rproc_subdev subdev;
->  	struct rproc *rproc;
-> 
-> +	int state;
-> +	struct mutex state_lock;
-> +
->  	struct list_head node;
-> 
->  	const char *name;
-> @@ -448,7 +451,10 @@ static int sysmon_prepare(struct rproc_subdev 
-> *subdev)
->  		.ssr_event = SSCTL_SSR_EVENT_BEFORE_POWERUP
->  	};
-> 
-> +	mutex_lock(&sysmon->state_lock);
-> +	sysmon->state = SSCTL_SSR_EVENT_BEFORE_POWERUP;
->  	blocking_notifier_call_chain(&sysmon_notifiers, 0, (void *)&event);
-> +	mutex_unlock(&sysmon->state_lock);
-> 
->  	return 0;
->  }
-> @@ -472,20 +478,25 @@ static int sysmon_start(struct rproc_subdev 
-> *subdev)
->  		.ssr_event = SSCTL_SSR_EVENT_AFTER_POWERUP
->  	};
-> 
-> +	mutex_lock(&sysmon->state_lock);
-> +	sysmon->state = SSCTL_SSR_EVENT_AFTER_POWERUP;
->  	blocking_notifier_call_chain(&sysmon_notifiers, 0, (void *)&event);
-> +	mutex_unlock(&sysmon->state_lock);
-> 
->  	mutex_lock(&sysmon_lock);
->  	list_for_each_entry(target, &sysmon_list, node) {
-> -		if (target == sysmon ||
-> -		    target->rproc->state != RPROC_RUNNING)
-> +		if (target == sysmon)
->  			continue;
-> 
-> +		mutex_lock(&target->state_lock);
->  		event.subsys_name = target->name;
-> +		event.ssr_event = target->state;
-> 
->  		if (sysmon->ssctl_version == 2)
->  			ssctl_send_event(sysmon, &event);
->  		else if (sysmon->ept)
->  			sysmon_send_event(sysmon, &event);
-> +		mutex_unlock(&target->state_lock);
->  	}
->  	mutex_unlock(&sysmon_lock);
-> 
-> @@ -500,7 +511,10 @@ static void sysmon_stop(struct rproc_subdev
-> *subdev, bool crashed)
->  		.ssr_event = SSCTL_SSR_EVENT_BEFORE_SHUTDOWN
->  	};
-> 
-> +	mutex_lock(&sysmon->state_lock);
-> +	sysmon->state = SSCTL_SSR_EVENT_BEFORE_SHUTDOWN;
->  	blocking_notifier_call_chain(&sysmon_notifiers, 0, (void *)&event);
-> +	mutex_unlock(&sysmon->state_lock);
-> 
->  	/* Don't request graceful shutdown if we've crashed */
->  	if (crashed)
-> @@ -521,7 +535,10 @@ static void sysmon_unprepare(struct rproc_subdev 
-> *subdev)
->  		.ssr_event = SSCTL_SSR_EVENT_AFTER_SHUTDOWN
->  	};
-> 
-> +	mutex_lock(&sysmon->state_lock);
-> +	sysmon->state = SSCTL_SSR_EVENT_AFTER_SHUTDOWN;
->  	blocking_notifier_call_chain(&sysmon_notifiers, 0, (void *)&event);
-> +	mutex_unlock(&sysmon->state_lock);
->  }
-> 
->  /**
-> @@ -534,11 +551,10 @@ static int sysmon_notify(struct notifier_block
-> *nb, unsigned long event,
->  			 void *data)
->  {
->  	struct qcom_sysmon *sysmon = container_of(nb, struct qcom_sysmon, 
-> nb);
-> -	struct rproc *rproc = sysmon->rproc;
->  	struct sysmon_event *sysmon_event = data;
-> 
->  	/* Skip non-running rprocs and the originating instance */
-> -	if (rproc->state != RPROC_RUNNING ||
-> +	if (sysmon->state != SSCTL_SSR_EVENT_AFTER_POWERUP ||
->  	    !strcmp(sysmon_event->subsys_name, sysmon->name)) {
->  		dev_dbg(sysmon->dev, "not notifying %s\n", sysmon->name);
->  		return NOTIFY_DONE;
-> @@ -591,6 +607,7 @@ struct qcom_sysmon *qcom_add_sysmon_subdev(struct
-> rproc *rproc,
->  	init_completion(&sysmon->ind_comp);
->  	init_completion(&sysmon->shutdown_comp);
->  	mutex_init(&sysmon->lock);
-> +	mutex_init(&sysmon->state_lock);
-> 
->  	sysmon->shutdown_irq = of_irq_get_byname(sysmon->dev->of_node,
->  						 "shutdown-ack");
+I'm Dailborh R. from US. I picked interest in you and I would like to know
+more about you and establish relationship with you. i will wait for
+your response. thank you.
 
-Reviewed-by: Rishabh Bhatnagar <rishabhb@codeaurora.org>
