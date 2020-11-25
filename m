@@ -2,153 +2,104 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id F30712C38BD
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Nov 2020 06:36:44 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id DABFB2C38D0
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Nov 2020 06:42:00 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727285AbgKYFgP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 25 Nov 2020 00:36:15 -0500
-Received: from z5.mailgun.us ([104.130.96.5]:39775 "EHLO z5.mailgun.us"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726049AbgKYFgO (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 25 Nov 2020 00:36:14 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1606282574; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=Xc6AQ2BlPFKF4pdCQbur4GhZDY1bKsnq8i+dYz5snuw=;
- b=A4nh90sq7FZTqtsTiqMclebl0EvZU2vmFQk20D8oqhjvizDu4Ne80MuvaVC9z713qhMZQLyF
- arJXOHY/FU++Wk7CdFW5JpBMTjgyP98ZMY0sZuPKDuZBjK66q+ETgmDzFYA2Fu0dB0++vLJp
- R+lWo3DM2Vvsj1/IUQpH+KNFv9E=
-X-Mailgun-Sending-Ip: 104.130.96.5
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n04.prod.us-east-1.postgun.com with SMTP id
- 5fbded45d64ea0b70331d0f7 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 25 Nov 2020 05:36:05
- GMT
-Sender: saiprakash.ranjan=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 32448C43467; Wed, 25 Nov 2020 05:36:04 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: saiprakash.ranjan)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 208DCC433ED;
-        Wed, 25 Nov 2020 05:36:03 +0000 (UTC)
+        id S1727697AbgKYFlq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 25 Nov 2020 00:41:46 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43024 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727696AbgKYFlp (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 25 Nov 2020 00:41:45 -0500
+Received: from mail-ot1-x344.google.com (mail-ot1-x344.google.com [IPv6:2607:f8b0:4864:20::344])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B9BD6C0613D6
+        for <linux-arm-msm@vger.kernel.org>; Tue, 24 Nov 2020 21:41:45 -0800 (PST)
+Received: by mail-ot1-x344.google.com with SMTP id o3so1181548ota.8
+        for <linux-arm-msm@vger.kernel.org>; Tue, 24 Nov 2020 21:41:45 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=TrH5HMIZUxZ8p9ZVVV5Tv219hldD8kORSISX8v4WVrU=;
+        b=MUFNKhqQDCHQpfptt+YYZBTPRfTVUTXDGFfpo2K3QohChRAmOyh+drOOkBLeNSIYEi
+         /4Yl3ksYWaJFBB+6L8/ZFvFTL76G+Ufj6anX93pkeJBzRt8nlHPQRVcXXJOvGY+mf5+0
+         FIWPGvw/1phHPgvOn6jKCgCM4seP+1OlfZgMJSnz8niVSQQppkEGaQba96Oy32AdPJFm
+         Vs4+WGdCHlK1wwk2ECk3OsbV+2CyK4SDMB9Gs/DsC8CspVJKot8iJ1xYEGNYT1mIw6Ys
+         DK2LYih469xzjMLL5Eb+fL/JPadnt8dwuHdCrzm5ujqMxXYs8q7LDxh08vXDkxna4MSY
+         Il9g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=TrH5HMIZUxZ8p9ZVVV5Tv219hldD8kORSISX8v4WVrU=;
+        b=Vur+jnRb2uL5UzDwKgrKT+M1Dg0eV/37YRVNKUodZ8JGJVqi/KiBnLrMplhT/d5mlD
+         K5ECeQbAA22Lc7ZCv0Uk9L2yBfUYdZfxBMGFLgjwtUvSnr2CPqQi2vlFvYQgO/VPFRsT
+         exzMRm3+zxRO2fwxFwiQc4VB7QHNMyDLqIO1bNFN7GXdGAWxnUZjYX7tEvurNZIXt4Ab
+         3MMhBuYHwkGoK/MWuCvT0/mPPkw2qs7F8Xx16bNW15rqA5IgKQJBGAs6D34bnh4gi0ZB
+         hcbPCtf3PGxVAhpcE7u9GnHLxOWzPgYF/t/S+ZKBMLrOFg9CVEsJ17Bdv7ohd1BNepOc
+         WAtw==
+X-Gm-Message-State: AOAM533AnPcji/GYV/WtCtQhWZQrh03X1mq5L0OJgCVhupLWscbL+q7T
+        lFCGezz7UDtMUGpVigoAa423gA==
+X-Google-Smtp-Source: ABdhPJzzp6dtkH49iCowittR7nB8DAE9MRULxL7pHYpMrTkXIyuxqg5YqkKrKoEV/UUUXBoNAR4/jA==
+X-Received: by 2002:a9d:851:: with SMTP id 75mr1731327oty.102.1606282904926;
+        Tue, 24 Nov 2020 21:41:44 -0800 (PST)
+Received: from localhost.localdomain (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
+        by smtp.gmail.com with ESMTPSA id l12sm806802ooe.27.2020.11.24.21.41.43
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 24 Nov 2020 21:41:43 -0800 (PST)
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Cc:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Vinod Koul <vkoul@kernel.org>, linux-arm-msm@vger.kernel.org,
+        alsa-devel@alsa-project.org, linux-kernel@vger.kernel.org
+Subject: [PATCH] slimbus: qcom-ngd-ctrl: Avoid sending power requests without QMI
+Date:   Tue, 24 Nov 2020 21:42:55 -0800
+Message-Id: <20201125054255.137067-1-bjorn.andersson@linaro.org>
+X-Mailer: git-send-email 2.29.2
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Wed, 25 Nov 2020 11:06:02 +0530
-From:   Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-To:     Will Deacon <will@kernel.org>
-Cc:     Robin Murphy <robin.murphy@arm.com>,
-        Joerg Roedel <joro@8bytes.org>,
-        Jordan Crouse <jcrouse@codeaurora.org>,
-        Rob Clark <robdclark@gmail.com>,
-        Akhil P Oommen <akhilpo@codeaurora.org>,
-        freedreno@lists.freedesktop.org,
-        "Kristian H . Kristensen" <hoegsberg@google.com>,
-        dri-devel@lists.freedesktop.org, iommu@lists.linux-foundation.org,
-        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCHv9 3/8] iommu/arm-smmu: Move non-strict mode to use
- io_pgtable_domain_attr
-In-Reply-To: <20201124213917.GA14252@willie-the-truck>
-References: <cover.1606150259.git.saiprakash.ranjan@codeaurora.org>
- <47f8e9760a7fba8b58ea89c9add96f5615f97014.1606150259.git.saiprakash.ranjan@codeaurora.org>
- <20201124213917.GA14252@willie-the-truck>
-Message-ID: <d4c7f311fbea91bb63d3b0eb164cf0d3@codeaurora.org>
-X-Sender: saiprakash.ranjan@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2020-11-25 03:09, Will Deacon wrote:
-> On Mon, Nov 23, 2020 at 10:35:56PM +0530, Sai Prakash Ranjan wrote:
->> Now that we have a struct io_pgtable_domain_attr with quirks,
->> use that for non_strict mode as well thereby removing the need
->> for more members of arm_smmu_domain in the future.
->> 
->> Signed-off-by: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
->> ---
->>  drivers/iommu/arm/arm-smmu/arm-smmu.c | 8 +++-----
->>  drivers/iommu/arm/arm-smmu/arm-smmu.h | 1 -
->>  2 files changed, 3 insertions(+), 6 deletions(-)
->> 
->> diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu.c 
->> b/drivers/iommu/arm/arm-smmu/arm-smmu.c
->> index 4b9b10fe50ed..f56f266ebdf7 100644
->> --- a/drivers/iommu/arm/arm-smmu/arm-smmu.c
->> +++ b/drivers/iommu/arm/arm-smmu/arm-smmu.c
->> @@ -786,9 +786,6 @@ static int arm_smmu_init_domain_context(struct 
->> iommu_domain *domain,
->>  			goto out_clear_smmu;
->>  	}
->> 
->> -	if (smmu_domain->non_strict)
->> -		pgtbl_cfg.quirks |= IO_PGTABLE_QUIRK_NON_STRICT;
->> -
->>  	if (smmu_domain->pgtbl_cfg.quirks)
->>  		pgtbl_cfg.quirks |= smmu_domain->pgtbl_cfg.quirks;
->> 
->> @@ -1527,7 +1524,8 @@ static int arm_smmu_domain_get_attr(struct 
->> iommu_domain *domain,
->>  	case IOMMU_DOMAIN_DMA:
->>  		switch (attr) {
->>  		case DOMAIN_ATTR_DMA_USE_FLUSH_QUEUE:
->> -			*(int *)data = smmu_domain->non_strict;
->> +			if (smmu_domain->pgtbl_cfg.quirks & IO_PGTABLE_QUIRK_NON_STRICT)
->> +				*(int *)data = smmu_domain->pgtbl_cfg.quirks;
-> 
-> I still don't think this is right :(
-> We need to set *data to 1 or 0 depending on whether or not the 
-> non-strict
-> quirk is set, i.e:
-> 
-> 	bool non_strict = smmu_domain->pgtbl_cfg.quirks & 
-> IO_PGTABLE_QUIRK_NON_STRICT;
-> 	*(int *)data = non_strict;
-> 
-> Your code above leaves *data uninitialised if non_strict is not set.
+Attempting to send a power request during PM operations, when the QMI
+handle isn't initialized results in a NULL pointer dereference. So check
+if the QMI handle has been initialized before attempting to post the
+power requests.
 
-Ugh sorry, I should have looked at this some more before hurrying up
-to post, will fix it.
+Fixes: 917809e2280b ("slimbus: ngd: Add qcom SLIMBus NGD driver")
+Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+---
+ drivers/slimbus/qcom-ngd-ctrl.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-> 
->>  			return 0;
->>  		default:
->>  			return -ENODEV;
->> @@ -1578,7 +1576,7 @@ static int arm_smmu_domain_set_attr(struct 
->> iommu_domain *domain,
->>  	case IOMMU_DOMAIN_DMA:
->>  		switch (attr) {
->>  		case DOMAIN_ATTR_DMA_USE_FLUSH_QUEUE:
->> -			smmu_domain->non_strict = *(int *)data;
->> +			smmu_domain->pgtbl_cfg.quirks |= IO_PGTABLE_QUIRK_NON_STRICT;
-> 
-> And this is broken because if *data is 0, then you _set_ the quirk, 
-> which is
-> the opposite of what we should be doing.
-> 
-> In other words, although the implementation has changed, the semantics 
-> have
-> not.
-> 
-
-Will fix this to have quirk set only when *data = 1 and unset in case of 
-0.
-
-Thanks,
-Sai
-
+diff --git a/drivers/slimbus/qcom-ngd-ctrl.c b/drivers/slimbus/qcom-ngd-ctrl.c
+index d8decb345e9d..c502e9e93965 100644
+--- a/drivers/slimbus/qcom-ngd-ctrl.c
++++ b/drivers/slimbus/qcom-ngd-ctrl.c
+@@ -1229,6 +1229,9 @@ static int qcom_slim_ngd_runtime_resume(struct device *dev)
+ 	struct qcom_slim_ngd_ctrl *ctrl = dev_get_drvdata(dev);
+ 	int ret = 0;
+ 
++	if (!ctrl->qmi.handle)
++		return 0;
++
+ 	if (ctrl->state >= QCOM_SLIM_NGD_CTRL_ASLEEP)
+ 		ret = qcom_slim_ngd_power_up(ctrl);
+ 	if (ret) {
+@@ -1616,6 +1619,9 @@ static int __maybe_unused qcom_slim_ngd_runtime_suspend(struct device *dev)
+ 	struct qcom_slim_ngd_ctrl *ctrl = dev_get_drvdata(dev);
+ 	int ret = 0;
+ 
++	if (!ctrl->qmi.handle)
++		return 0;
++
+ 	ret = qcom_slim_qmi_power_request(ctrl, false);
+ 	if (ret && ret != -EBUSY)
+ 		dev_info(ctrl->dev, "slim resource not idle:%d\n", ret);
 -- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a 
-member
-of Code Aurora Forum, hosted by The Linux Foundation
+2.29.2
+
