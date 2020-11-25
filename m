@@ -2,173 +2,384 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 64C6D2C39A4
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Nov 2020 08:06:39 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D540B2C3A82
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Nov 2020 09:09:30 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726819AbgKYHFn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 25 Nov 2020 02:05:43 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55826 "EHLO
+        id S1727744AbgKYIJM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 25 Nov 2020 03:09:12 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37302 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725838AbgKYHFm (ORCPT
+        with ESMTP id S1726575AbgKYIJM (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 25 Nov 2020 02:05:42 -0500
-Received: from bedivere.hansenpartnership.com (bedivere.hansenpartnership.com [IPv6:2607:fcd0:100:8a00::2])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4FB3AC0613D4;
-        Tue, 24 Nov 2020 23:05:42 -0800 (PST)
-Received: from localhost (localhost [127.0.0.1])
-        by bedivere.hansenpartnership.com (Postfix) with ESMTP id 313DE1280408;
-        Tue, 24 Nov 2020 23:05:40 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-        d=hansenpartnership.com; s=20151216; t=1606287940;
-        bh=PpyvloC8ztllb7q8ndtGKJRs78ChiB3jg6tteM0zYL0=;
-        h=Message-ID:Subject:From:To:Date:In-Reply-To:References:From;
-        b=DUjk2u5mMxkvusJZ7TUknDmT+9jEkjAK5Du54VYrLnX3ZVAsqbXKInJF3+bjbWxe1
-         sPTOm9Jo8O4FiM37EcbSbGJ09Z6i3toRLj70BanOqmx/doOouqQw1ofRfirJ315HKN
-         ACp6UaCD/rMf1rqLOvr/v7W+FqOYQZREI5LkhaoU=
-Received: from bedivere.hansenpartnership.com ([127.0.0.1])
-        by localhost (bedivere.hansenpartnership.com [127.0.0.1]) (amavisd-new, port 10024)
-        with ESMTP id 8AuMCu2vLv9Z; Tue, 24 Nov 2020 23:05:40 -0800 (PST)
-Received: from jarvis.int.hansenpartnership.com (unknown [IPv6:2601:600:8280:66d1::527])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by bedivere.hansenpartnership.com (Postfix) with ESMTPSA id A873112803EC;
-        Tue, 24 Nov 2020 23:05:36 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-        d=hansenpartnership.com; s=20151216; t=1606287940;
-        bh=PpyvloC8ztllb7q8ndtGKJRs78ChiB3jg6tteM0zYL0=;
-        h=Message-ID:Subject:From:To:Date:In-Reply-To:References:From;
-        b=DUjk2u5mMxkvusJZ7TUknDmT+9jEkjAK5Du54VYrLnX3ZVAsqbXKInJF3+bjbWxe1
-         sPTOm9Jo8O4FiM37EcbSbGJ09Z6i3toRLj70BanOqmx/doOouqQw1ofRfirJ315HKN
-         ACp6UaCD/rMf1rqLOvr/v7W+FqOYQZREI5LkhaoU=
-Message-ID: <a841536fe65bb33f1c72ce2455a6eb47a0107565.camel@HansenPartnership.com>
-Subject: Re: [Intel-wired-lan] [PATCH 000/141] Fix fall-through warnings for
- Clang
-From:   James Bottomley <James.Bottomley@HansenPartnership.com>
-To:     Kees Cook <keescook@chromium.org>
-Cc:     "Gustavo A. R. Silva" <gustavoars@kernel.org>,
-        Joe Perches <joe@perches.com>,
-        Jakub Kicinski <kuba@kernel.org>, alsa-devel@alsa-project.org,
-        linux-atm-general@lists.sourceforge.net,
-        reiserfs-devel@vger.kernel.org, linux-iio@vger.kernel.org,
-        linux-wireless@vger.kernel.org, linux-fbdev@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org,
-        Nathan Chancellor <natechancellor@gmail.com>,
-        linux-ide@vger.kernel.org, dm-devel@redhat.com,
-        keyrings@vger.kernel.org, linux-mtd@lists.infradead.org,
-        GR-everest-linux-l2@marvell.com, wcn36xx@lists.infradead.org,
-        samba-technical@lists.samba.org, linux-i3c@lists.infradead.org,
-        linux1394-devel@lists.sourceforge.net,
-        linux-afs@lists.infradead.org,
-        usb-storage@lists.one-eyed-alien.net, drbd-dev@lists.linbit.com,
-        devel@driverdev.osuosl.org, linux-cifs@vger.kernel.org,
-        rds-devel@oss.oracle.com,
-        Nick Desaulniers <ndesaulniers@google.com>,
-        linux-scsi@vger.kernel.org, linux-rdma@vger.kernel.org,
-        oss-drivers@netronome.com, bridge@lists.linux-foundation.org,
-        linux-security-module@vger.kernel.org,
-        amd-gfx@lists.freedesktop.org,
-        linux-stm32@st-md-mailman.stormreply.com, cluster-devel@redhat.com,
-        linux-acpi@vger.kernel.org, coreteam@netfilter.org,
-        intel-wired-lan@lists.osuosl.org, linux-input@vger.kernel.org,
-        Miguel Ojeda <ojeda@kernel.org>,
-        tipc-discussion@lists.sourceforge.net, linux-ext4@vger.kernel.org,
-        linux-media@vger.kernel.org, linux-watchdog@vger.kernel.org,
-        selinux@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        intel-gfx@lists.freedesktop.org, linux-geode@lists.infradead.org,
-        linux-can@vger.kernel.org, linux-block@vger.kernel.org,
-        linux-gpio@vger.kernel.org, op-tee@lists.trustedfirmware.org,
-        linux-mediatek@lists.infradead.org, xen-devel@lists.xenproject.org,
-        nouveau@lists.freedesktop.org, linux-hams@vger.kernel.org,
-        ceph-devel@vger.kernel.org,
-        virtualization@lists.linux-foundation.org,
-        linux-arm-kernel@lists.infradead.org, linux-hwmon@vger.kernel.org,
-        x86@kernel.org, linux-nfs@vger.kernel.org,
-        GR-Linux-NIC-Dev@marvell.com, linux-mm@kvack.org,
-        netdev@vger.kernel.org, linux-decnet-user@lists.sourceforge.net,
-        linux-mmc@vger.kernel.org, linux-renesas-soc@vger.kernel.org,
-        linux-sctp@vger.kernel.org, linux-usb@vger.kernel.org,
-        netfilter-devel@vger.kernel.org, linux-crypto@vger.kernel.org,
-        patches@opensource.cirrus.com, linux-integrity@vger.kernel.org,
-        target-devel@vger.kernel.org, linux-hardening@vger.kernel.org,
-        Jonathan Cameron <Jonathan.Cameron@huawei.com>,
-        Greg KH <gregkh@linuxfoundation.org>
-Date:   Tue, 24 Nov 2020 23:05:35 -0800
-In-Reply-To: <202011241327.BB28F12F6@keescook>
-References: <202011201129.B13FDB3C@keescook>
-         <20201120115142.292999b2@kicinski-fedora-pc1c0hjn.dhcp.thefacebook.com>
-         <202011220816.8B6591A@keescook>
-         <9b57fd4914b46f38d54087d75e072d6e947cb56d.camel@HansenPartnership.com>
-         <ca071decb87cc7e905411423c05a48f9fd2f58d7.camel@perches.com>
-         <0147972a72bc13f3629de8a32dee6f1f308994b5.camel@HansenPartnership.com>
-         <d8d1e9add08cdd4158405e77762d4946037208f8.camel@perches.com>
-         <dbd2cb703ed9eefa7dde9281ea26ab0f7acc8afe.camel@HansenPartnership.com>
-         <20201123130348.GA3119@embeddedor>
-         <8f5611bb015e044fa1c0a48147293923c2d904e4.camel@HansenPartnership.com>
-         <202011241327.BB28F12F6@keescook>
-Content-Type: text/plain; charset="UTF-8"
-User-Agent: Evolution 3.34.4 
+        Wed, 25 Nov 2020 03:09:12 -0500
+Received: from mail-lf1-x141.google.com (mail-lf1-x141.google.com [IPv6:2a00:1450:4864:20::141])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C919CC0613D4
+        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Nov 2020 00:09:11 -0800 (PST)
+Received: by mail-lf1-x141.google.com with SMTP id v14so1884622lfo.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Nov 2020 00:09:11 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=NZnyawdNlTq6Y22Hl3rHzq60Mr9FD+1X9pwvV8wgyZk=;
+        b=nXuadlnTzJJdASYmGxPYiY2J+LvJpwl1tKtOboV+OydO5w5rO0WjmOszDNrQDfHjiw
+         +fTGzVWc4NRGkmPVfU1E0kwC+NhNveLYFkEI6ENbE6QT6VBdlkghEuHjB7HU7kQetRb5
+         YU8l0hMNPgF+cwfFz3AXrG4u4mg8+e/emNEkk=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=NZnyawdNlTq6Y22Hl3rHzq60Mr9FD+1X9pwvV8wgyZk=;
+        b=M94pfSyr+t7xqQUei0Dcgni2K6gLFvQj+j2w3XhXC2a6I+Y7g6mz4H+Hn0fKHrJ5Sh
+         bu2wYU9Vgwoa2FDgqNrBRNLvkQjRDkCkt3cwF61W5StI6NH7ZphPLmIJVTlH8iL5QO+v
+         1kF8MC2/gqD4npE0a6g/ZGStx0p4DEI5wRaa7et2jVqu7/VMkNN4nxKrDx/zG4DwMykU
+         fQ0GxO7I3PmiC+ofkQplt56d2TogYf15K5wpSZoAGoVUT/NeyFkAgpnAMneWpi90ajXs
+         NfZYFg1bAOIbiuZhQf+cxG3Pvu8JMzczDEF9GslL0VkojGHizvSLv/elDCX+MfAMkFuP
+         K1GQ==
+X-Gm-Message-State: AOAM533VzCP/qiVXPgKyyOiGLeOZEp5st2USjO8ASSvqgs/pFwIaBo7n
+        QYygrMYkPzcdWHKjRswWL6rHi5sjtr1m1gLB
+X-Google-Smtp-Source: ABdhPJw+50nSwX1ZlmfxKt/2Y0BJUmAs5pimeb97M8lXTK540tOD5EJ3y5Cvv6EaDig+WqQVC0Fcyg==
+X-Received: by 2002:a19:42d2:: with SMTP id p201mr875937lfa.273.1606291749641;
+        Wed, 25 Nov 2020 00:09:09 -0800 (PST)
+Received: from mail-lf1-f46.google.com (mail-lf1-f46.google.com. [209.85.167.46])
+        by smtp.gmail.com with ESMTPSA id x20sm163751lfq.86.2020.11.25.00.09.08
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 25 Nov 2020 00:09:08 -0800 (PST)
+Received: by mail-lf1-f46.google.com with SMTP id l11so1902053lfg.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Nov 2020 00:09:08 -0800 (PST)
+X-Received: by 2002:a19:7f55:: with SMTP id a82mr840705lfd.603.1606291747909;
+ Wed, 25 Nov 2020 00:09:07 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
+References: <20201120001037.10032-1-stanimir.varbanov@linaro.org> <20201120001037.10032-4-stanimir.varbanov@linaro.org>
+In-Reply-To: <20201120001037.10032-4-stanimir.varbanov@linaro.org>
+From:   Alexandre Courbot <acourbot@chromium.org>
+Date:   Wed, 25 Nov 2020 17:08:57 +0900
+X-Gmail-Original-Message-ID: <CAPBb6MWsaHQtQYh8tQnGjwPCrCXeCnf08jL+yxM9ZkCBFNW5mg@mail.gmail.com>
+Message-ID: <CAPBb6MWsaHQtQYh8tQnGjwPCrCXeCnf08jL+yxM9ZkCBFNW5mg@mail.gmail.com>
+Subject: Re: [PATCH 3/3] media: hfi_venus: Request interrupt for sync cmds
+To:     Stanimir Varbanov <stanimir.varbanov@linaro.org>
+Cc:     linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Vikash Garodia <vgarodia@codeaurora.org>,
+        Mansur Alisha Shaik <mansur@codeaurora.org>,
+        Dikshita Agarwal <dikshita@codeaurora.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, 2020-11-24 at 13:32 -0800, Kees Cook wrote:
-> On Mon, Nov 23, 2020 at 08:31:30AM -0800, James Bottomley wrote:
-> > Really, no ... something which produces no improvement has no value
-> > at all ... we really shouldn't be wasting maintainer time with it
-> > because it has a cost to merge.  I'm not sure we understand where
-> > the balance lies in value vs cost to merge but I am confident in
-> > the zero value case.
-> 
-> What? We can't measure how many future bugs aren't introduced because
-> the kernel requires explicit case flow-control statements for all new
-> code.
+On Fri, Nov 20, 2020 at 9:12 AM Stanimir Varbanov
+<stanimir.varbanov@linaro.org> wrote:
+>
+> From: Vikash Garodia <vgarodia@codeaurora.org>
+>
+> For synchronous commands, update the message queue variable.
+> This would inform video firmware to raise interrupt on host
+> CPU whenever there is a response for such commands.
+>
+> Signed-off-by: Vikash Garodia <vgarodia@codeaurora.org>
+> Signed-off-by: Stanimir Varbanov <stanimir.varbanov@linaro.org>
+> ---
+>  drivers/media/platform/qcom/venus/hfi_venus.c | 74 ++++++++++---------
+>  1 file changed, 41 insertions(+), 33 deletions(-)
+>
+> diff --git a/drivers/media/platform/qcom/venus/hfi_venus.c b/drivers/media/platform/qcom/venus/hfi_venus.c
+> index 4be4a75ddcb6..b8fdb464ba9c 100644
+> --- a/drivers/media/platform/qcom/venus/hfi_venus.c
+> +++ b/drivers/media/platform/qcom/venus/hfi_venus.c
+> @@ -372,7 +372,7 @@ static void venus_soft_int(struct venus_hfi_device *hdev)
+>  }
+>
+>  static int venus_iface_cmdq_write_nolock(struct venus_hfi_device *hdev,
+> -                                        void *pkt)
+> +                                        void *pkt, bool sync)
+>  {
+>         struct device *dev = hdev->core->dev;
+>         struct hfi_pkt_hdr *cmd_packet;
+> @@ -397,15 +397,23 @@ static int venus_iface_cmdq_write_nolock(struct venus_hfi_device *hdev,
+>         if (rx_req)
+>                 venus_soft_int(hdev);
+>
+> +       /* Inform video firmware to raise interrupt for synchronous commands */
+> +       queue = &hdev->queues[IFACEQ_MSG_IDX];
+> +       if (sync) {
+> +               queue->qhdr->rx_req = 1;
+> +               /* ensure rx_req is updated in memory */
+> +               wmb();
+> +       }
 
-No but we can measure how vulnerable our current coding habits are to
-the mistake this warning would potentially prevent.  I don't think it's
-wrong to extrapolate that if we had no instances at all of prior coding
-problems we likely wouldn't have any in future either making adopting
-the changes needed to enable the warning valueless ... that's the zero
-value case I was referring to above.
+Wouldn't it be safer to do this before calling venus_soft_int()? I
+don't know what the firmware is supposed to do with rx_req but
+intuitively it looks like it should be set before we signal it.
 
-Now, what we have seems to be about 6 cases (at least what's been shown
-in this thread) where a missing break would cause potentially user
-visible issues.  That means the value of this isn't zero, but it's not
-a no-brainer massive win either.  That's why I think asking what we've
-invested vs the return isn't a useless exercise.
-
-> We already enable -Wimplicit-fallthrough globally, so that's not the
-> discussion. The issue is that Clang is (correctly) even more strict
-> than GCC for this, so these are the remaining ones to fix for full
-> Clang coverage too.
-> 
-> People have spent more time debating this already than it would have
-> taken to apply the patches. :)
-
-You mean we've already spent 90% of the effort to come this far so we
-might as well go the remaining 10% because then at least we get some
-return? It's certainly a clinching argument in defence procurement ...
-
-> This is about robustness and language wrangling. It's a big code-
-> base, and this is the price of our managing technical debt for
-> permanent robustness improvements. (The numbers I ran from Gustavo's
-> earlier patches were that about 10% of the places adjusted were
-> identified as legitimate bugs being fixed. This final series may be
-> lower, but there are still bugs being found from it -- we need to
-> finish this and shut the door on it for good.)
-
-I got my six patches by analyzing the lwn.net report of the fixes that
-was cited which had 21 of which 50% didn't actually change the emitted
-code, and 25% didn't have a user visible effect.
-
-But the broader point I'm making is just because the compiler people
-come up with a shiny new warning doesn't necessarily mean the problem
-it's detecting is one that causes us actual problems in the code base. 
-I'd really be happier if we had a theory about what classes of CVE or
-bug we could eliminate before we embrace the next new warning.
-
-James
-
-
-
+> +
+>         return 0;
+>  }
+>
+> -static int venus_iface_cmdq_write(struct venus_hfi_device *hdev, void *pkt)
+> +static int venus_iface_cmdq_write(struct venus_hfi_device *hdev, void *pkt, bool sync)
+>  {
+>         int ret;
+>
+>         mutex_lock(&hdev->lock);
+> -       ret = venus_iface_cmdq_write_nolock(hdev, pkt);
+> +       ret = venus_iface_cmdq_write_nolock(hdev, pkt, sync);
+>         mutex_unlock(&hdev->lock);
+>
+>         return ret;
+> @@ -428,7 +436,7 @@ static int venus_hfi_core_set_resource(struct venus_core *core, u32 id,
+>         if (ret)
+>                 return ret;
+>
+> -       ret = venus_iface_cmdq_write(hdev, pkt);
+> +       ret = venus_iface_cmdq_write(hdev, pkt, false);
+>         if (ret)
+>                 return ret;
+>
+> @@ -778,7 +786,7 @@ static int venus_sys_set_debug(struct venus_hfi_device *hdev, u32 debug)
+>
+>         pkt_sys_debug_config(pkt, HFI_DEBUG_MODE_QUEUE, debug);
+>
+> -       ret = venus_iface_cmdq_write(hdev, pkt);
+> +       ret = venus_iface_cmdq_write(hdev, pkt, false);
+>         if (ret)
+>                 return ret;
+>
+> @@ -795,7 +803,7 @@ static int venus_sys_set_coverage(struct venus_hfi_device *hdev, u32 mode)
+>
+>         pkt_sys_coverage_config(pkt, mode);
+>
+> -       ret = venus_iface_cmdq_write(hdev, pkt);
+> +       ret = venus_iface_cmdq_write(hdev, pkt, false);
+>         if (ret)
+>                 return ret;
+>
+> @@ -816,7 +824,7 @@ static int venus_sys_set_idle_message(struct venus_hfi_device *hdev,
+>
+>         pkt_sys_idle_indicator(pkt, enable);
+>
+> -       ret = venus_iface_cmdq_write(hdev, pkt);
+> +       ret = venus_iface_cmdq_write(hdev, pkt, false);
+>         if (ret)
+>                 return ret;
+>
+> @@ -834,7 +842,7 @@ static int venus_sys_set_power_control(struct venus_hfi_device *hdev,
+>
+>         pkt_sys_power_control(pkt, enable);
+>
+> -       ret = venus_iface_cmdq_write(hdev, pkt);
+> +       ret = venus_iface_cmdq_write(hdev, pkt, false);
+>         if (ret)
+>                 return ret;
+>
+> @@ -885,14 +893,14 @@ static int venus_sys_set_default_properties(struct venus_hfi_device *hdev)
+>         return ret;
+>  }
+>
+> -static int venus_session_cmd(struct venus_inst *inst, u32 pkt_type)
+> +static int venus_session_cmd(struct venus_inst *inst, u32 pkt_type, bool sync)
+>  {
+>         struct venus_hfi_device *hdev = to_hfi_priv(inst->core);
+>         struct hfi_session_pkt pkt;
+>
+>         pkt_session_cmd(&pkt, pkt_type, inst);
+>
+> -       return venus_iface_cmdq_write(hdev, &pkt);
+> +       return venus_iface_cmdq_write(hdev, &pkt, sync);
+>  }
+>
+>  static void venus_flush_debug_queue(struct venus_hfi_device *hdev)
+> @@ -922,7 +930,7 @@ static int venus_prepare_power_collapse(struct venus_hfi_device *hdev,
+>
+>         pkt_sys_pc_prep(&pkt);
+>
+> -       ret = venus_iface_cmdq_write(hdev, &pkt);
+> +       ret = venus_iface_cmdq_write(hdev, &pkt, false);
+>         if (ret)
+>                 return ret;
+>
+> @@ -1064,13 +1072,13 @@ static int venus_core_init(struct venus_core *core)
+>
+>         venus_set_state(hdev, VENUS_STATE_INIT);
+>
+> -       ret = venus_iface_cmdq_write(hdev, &pkt);
+> +       ret = venus_iface_cmdq_write(hdev, &pkt, false);
+>         if (ret)
+>                 return ret;
+>
+>         pkt_sys_image_version(&version_pkt);
+>
+> -       ret = venus_iface_cmdq_write(hdev, &version_pkt);
+> +       ret = venus_iface_cmdq_write(hdev, &version_pkt, false);
+>         if (ret)
+>                 dev_warn(dev, "failed to send image version pkt to fw\n");
+>
+> @@ -1099,7 +1107,7 @@ static int venus_core_ping(struct venus_core *core, u32 cookie)
+>
+>         pkt_sys_ping(&pkt, cookie);
+>
+> -       return venus_iface_cmdq_write(hdev, &pkt);
+> +       return venus_iface_cmdq_write(hdev, &pkt, false);
+>  }
+>
+>  static int venus_core_trigger_ssr(struct venus_core *core, u32 trigger_type)
+> @@ -1112,7 +1120,7 @@ static int venus_core_trigger_ssr(struct venus_core *core, u32 trigger_type)
+>         if (ret)
+>                 return ret;
+>
+> -       return venus_iface_cmdq_write(hdev, &pkt);
+> +       return venus_iface_cmdq_write(hdev, &pkt, false);
+>  }
+>
+>  static int venus_session_init(struct venus_inst *inst, u32 session_type,
+> @@ -1130,7 +1138,7 @@ static int venus_session_init(struct venus_inst *inst, u32 session_type,
+>         if (ret)
+>                 goto err;
+>
+> -       ret = venus_iface_cmdq_write(hdev, &pkt);
+> +       ret = venus_iface_cmdq_write(hdev, &pkt, true);
+>         if (ret)
+>                 goto err;
+>
+> @@ -1151,7 +1159,7 @@ static int venus_session_end(struct venus_inst *inst)
+>                         dev_warn(dev, "fw coverage msg ON failed\n");
+>         }
+>
+> -       return venus_session_cmd(inst, HFI_CMD_SYS_SESSION_END);
+> +       return venus_session_cmd(inst, HFI_CMD_SYS_SESSION_END, true);
+>  }
+>
+>  static int venus_session_abort(struct venus_inst *inst)
+> @@ -1160,7 +1168,7 @@ static int venus_session_abort(struct venus_inst *inst)
+>
+>         venus_flush_debug_queue(hdev);
+>
+> -       return venus_session_cmd(inst, HFI_CMD_SYS_SESSION_ABORT);
+> +       return venus_session_cmd(inst, HFI_CMD_SYS_SESSION_ABORT, true);
+>  }
+>
+>  static int venus_session_flush(struct venus_inst *inst, u32 flush_mode)
+> @@ -1173,22 +1181,22 @@ static int venus_session_flush(struct venus_inst *inst, u32 flush_mode)
+>         if (ret)
+>                 return ret;
+>
+> -       return venus_iface_cmdq_write(hdev, &pkt);
+> +       return venus_iface_cmdq_write(hdev, &pkt, true);
+>  }
+>
+>  static int venus_session_start(struct venus_inst *inst)
+>  {
+> -       return venus_session_cmd(inst, HFI_CMD_SESSION_START);
+> +       return venus_session_cmd(inst, HFI_CMD_SESSION_START, true);
+>  }
+>
+>  static int venus_session_stop(struct venus_inst *inst)
+>  {
+> -       return venus_session_cmd(inst, HFI_CMD_SESSION_STOP);
+> +       return venus_session_cmd(inst, HFI_CMD_SESSION_STOP, true);
+>  }
+>
+>  static int venus_session_continue(struct venus_inst *inst)
+>  {
+> -       return venus_session_cmd(inst, HFI_CMD_SESSION_CONTINUE);
+> +       return venus_session_cmd(inst, HFI_CMD_SESSION_CONTINUE, false);
+>  }
+>
+>  static int venus_session_etb(struct venus_inst *inst,
+> @@ -1205,7 +1213,7 @@ static int venus_session_etb(struct venus_inst *inst,
+>                 if (ret)
+>                         return ret;
+>
+> -               ret = venus_iface_cmdq_write(hdev, &pkt);
+> +               ret = venus_iface_cmdq_write(hdev, &pkt, false);
+>         } else if (session_type == VIDC_SESSION_TYPE_ENC) {
+>                 struct hfi_session_empty_buffer_uncompressed_plane0_pkt pkt;
+>
+> @@ -1213,7 +1221,7 @@ static int venus_session_etb(struct venus_inst *inst,
+>                 if (ret)
+>                         return ret;
+>
+> -               ret = venus_iface_cmdq_write(hdev, &pkt);
+> +               ret = venus_iface_cmdq_write(hdev, &pkt, false);
+>         } else {
+>                 ret = -EINVAL;
+>         }
+> @@ -1232,7 +1240,7 @@ static int venus_session_ftb(struct venus_inst *inst,
+>         if (ret)
+>                 return ret;
+>
+> -       return venus_iface_cmdq_write(hdev, &pkt);
+> +       return venus_iface_cmdq_write(hdev, &pkt, false);
+>  }
+>
+>  static int venus_session_set_buffers(struct venus_inst *inst,
+> @@ -1252,7 +1260,7 @@ static int venus_session_set_buffers(struct venus_inst *inst,
+>         if (ret)
+>                 return ret;
+>
+> -       return venus_iface_cmdq_write(hdev, pkt);
+> +       return venus_iface_cmdq_write(hdev, pkt, false);
+>  }
+>
+>  static int venus_session_unset_buffers(struct venus_inst *inst,
+> @@ -1272,17 +1280,17 @@ static int venus_session_unset_buffers(struct venus_inst *inst,
+>         if (ret)
+>                 return ret;
+>
+> -       return venus_iface_cmdq_write(hdev, pkt);
+> +       return venus_iface_cmdq_write(hdev, pkt, true);
+>  }
+>
+>  static int venus_session_load_res(struct venus_inst *inst)
+>  {
+> -       return venus_session_cmd(inst, HFI_CMD_SESSION_LOAD_RESOURCES);
+> +       return venus_session_cmd(inst, HFI_CMD_SESSION_LOAD_RESOURCES, true);
+>  }
+>
+>  static int venus_session_release_res(struct venus_inst *inst)
+>  {
+> -       return venus_session_cmd(inst, HFI_CMD_SESSION_RELEASE_RESOURCES);
+> +       return venus_session_cmd(inst, HFI_CMD_SESSION_RELEASE_RESOURCES, true);
+>  }
+>
+>  static int venus_session_parse_seq_hdr(struct venus_inst *inst, u32 seq_hdr,
+> @@ -1299,7 +1307,7 @@ static int venus_session_parse_seq_hdr(struct venus_inst *inst, u32 seq_hdr,
+>         if (ret)
+>                 return ret;
+>
+> -       ret = venus_iface_cmdq_write(hdev, pkt);
+> +       ret = venus_iface_cmdq_write(hdev, pkt, false);
+>         if (ret)
+>                 return ret;
+>
+> @@ -1320,7 +1328,7 @@ static int venus_session_get_seq_hdr(struct venus_inst *inst, u32 seq_hdr,
+>         if (ret)
+>                 return ret;
+>
+> -       return venus_iface_cmdq_write(hdev, pkt);
+> +       return venus_iface_cmdq_write(hdev, pkt, false);
+>  }
+>
+>  static int venus_session_set_property(struct venus_inst *inst, u32 ptype,
+> @@ -1339,7 +1347,7 @@ static int venus_session_set_property(struct venus_inst *inst, u32 ptype,
+>         if (ret)
+>                 return ret;
+>
+> -       return venus_iface_cmdq_write(hdev, pkt);
+> +       return venus_iface_cmdq_write(hdev, pkt, false);
+>  }
+>
+>  static int venus_session_get_property(struct venus_inst *inst, u32 ptype)
+> @@ -1352,7 +1360,7 @@ static int venus_session_get_property(struct venus_inst *inst, u32 ptype)
+>         if (ret)
+>                 return ret;
+>
+> -       return venus_iface_cmdq_write(hdev, &pkt);
+> +       return venus_iface_cmdq_write(hdev, &pkt, true);
+>  }
+>
+>  static int venus_resume(struct venus_core *core)
+> --
+> 2.17.1
+>
