@@ -2,62 +2,63 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id DABFB2C38D0
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Nov 2020 06:42:00 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E7F432C38F2
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Nov 2020 07:09:56 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727697AbgKYFlq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 25 Nov 2020 00:41:46 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43024 "EHLO
+        id S1727611AbgKYGIl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 25 Nov 2020 01:08:41 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47118 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727696AbgKYFlp (ORCPT
+        with ESMTP id S1727474AbgKYGIl (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 25 Nov 2020 00:41:45 -0500
-Received: from mail-ot1-x344.google.com (mail-ot1-x344.google.com [IPv6:2607:f8b0:4864:20::344])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B9BD6C0613D6
-        for <linux-arm-msm@vger.kernel.org>; Tue, 24 Nov 2020 21:41:45 -0800 (PST)
-Received: by mail-ot1-x344.google.com with SMTP id o3so1181548ota.8
-        for <linux-arm-msm@vger.kernel.org>; Tue, 24 Nov 2020 21:41:45 -0800 (PST)
+        Wed, 25 Nov 2020 01:08:41 -0500
+Received: from mail-ot1-x341.google.com (mail-ot1-x341.google.com [IPv6:2607:f8b0:4864:20::341])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 432B0C0613D6
+        for <linux-arm-msm@vger.kernel.org>; Tue, 24 Nov 2020 22:08:41 -0800 (PST)
+Received: by mail-ot1-x341.google.com with SMTP id f12so1214230oto.10
+        for <linux-arm-msm@vger.kernel.org>; Tue, 24 Nov 2020 22:08:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=TrH5HMIZUxZ8p9ZVVV5Tv219hldD8kORSISX8v4WVrU=;
-        b=MUFNKhqQDCHQpfptt+YYZBTPRfTVUTXDGFfpo2K3QohChRAmOyh+drOOkBLeNSIYEi
-         /4Yl3ksYWaJFBB+6L8/ZFvFTL76G+Ufj6anX93pkeJBzRt8nlHPQRVcXXJOvGY+mf5+0
-         FIWPGvw/1phHPgvOn6jKCgCM4seP+1OlfZgMJSnz8niVSQQppkEGaQba96Oy32AdPJFm
-         Vs4+WGdCHlK1wwk2ECk3OsbV+2CyK4SDMB9Gs/DsC8CspVJKot8iJ1xYEGNYT1mIw6Ys
-         DK2LYih469xzjMLL5Eb+fL/JPadnt8dwuHdCrzm5ujqMxXYs8q7LDxh08vXDkxna4MSY
-         Il9g==
+        bh=VaBKKtVpxSZ3Ss3dI1KLi4Zn07ADzR3ErIEYv2rzINA=;
+        b=ZPWNeabsa3es0f5hvmx5rpmvmadljn1fx39W2nxEFiM6S1awRNFuoojfNdTjaXefcx
+         qdlVfthusC/ycUW1ZAt4iwkKKweZOwN9uNKXrMlpNR/68vbZCsifsgwdjjvChJ39QxBt
+         7nmpFeV+pRmJrNPi0GsuseRXiiepBWPrlyTPRkUz+eKzn90HVvd/6Qx2UQZW241R+ZWU
+         SMnuvCO4V4FwJbAMlfr2GVEuMpNIqJ/91m8erkPv2wXks6m+BOk1SnBWBJfdXKTkj+2Z
+         ByERmMqbyE7hFS+PU4aIHFss8Dw+MvLG5Lxl2hoaKNhFvphZQxJ8YAj2JerX8Z7tNTU+
+         p5oA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=TrH5HMIZUxZ8p9ZVVV5Tv219hldD8kORSISX8v4WVrU=;
-        b=Vur+jnRb2uL5UzDwKgrKT+M1Dg0eV/37YRVNKUodZ8JGJVqi/KiBnLrMplhT/d5mlD
-         K5ECeQbAA22Lc7ZCv0Uk9L2yBfUYdZfxBMGFLgjwtUvSnr2CPqQi2vlFvYQgO/VPFRsT
-         exzMRm3+zxRO2fwxFwiQc4VB7QHNMyDLqIO1bNFN7GXdGAWxnUZjYX7tEvurNZIXt4Ab
-         3MMhBuYHwkGoK/MWuCvT0/mPPkw2qs7F8Xx16bNW15rqA5IgKQJBGAs6D34bnh4gi0ZB
-         hcbPCtf3PGxVAhpcE7u9GnHLxOWzPgYF/t/S+ZKBMLrOFg9CVEsJ17Bdv7ohd1BNepOc
-         WAtw==
-X-Gm-Message-State: AOAM533AnPcji/GYV/WtCtQhWZQrh03X1mq5L0OJgCVhupLWscbL+q7T
-        lFCGezz7UDtMUGpVigoAa423gA==
-X-Google-Smtp-Source: ABdhPJzzp6dtkH49iCowittR7nB8DAE9MRULxL7pHYpMrTkXIyuxqg5YqkKrKoEV/UUUXBoNAR4/jA==
-X-Received: by 2002:a9d:851:: with SMTP id 75mr1731327oty.102.1606282904926;
-        Tue, 24 Nov 2020 21:41:44 -0800 (PST)
-Received: from localhost.localdomain (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id l12sm806802ooe.27.2020.11.24.21.41.43
+        bh=VaBKKtVpxSZ3Ss3dI1KLi4Zn07ADzR3ErIEYv2rzINA=;
+        b=iVvYXUNYHSp+87TmJKUgvyuyKI47xAcHLObaahauiGSbFSuTNpolxlgiyPLYHj/9gG
+         ymiHYS9HMldC7WukCcxlJTuMWAItnJB1SlvEWmFpfoYdowviwx4ZueZTdZwPbgNBV39b
+         TLibod+/zhBWAph9yXyTrRFU1pSZvZGfWNhIz/qHYoDsBRJBzoEZwTVzo2HruRIBfHRA
+         LntvgXIQutvbqOKQb8ZBl0A7i7gL35CckK/1c5By8H3AgmL1vFUD7AliPt1v0g8M0P0I
+         3lVuRjgMhTWLp9g/f28TIznWkOIBnJNrMW8fYJV+tmEKJ14f21hI79bghWNbyaMB1ccQ
+         1JEA==
+X-Gm-Message-State: AOAM531Wh6Dtw1+x99mY4dMHWzaydPqNvMlt71nZtbm3+re5nfoOeBkj
+        nyqE0kKS06xG5MEfDexwXXFifg==
+X-Google-Smtp-Source: ABdhPJyXMGNAdk0LYHAP1IoQUMUGQadeLXFzjB2mODbIHaVopvUFo1lp+iWoI4MvfkZqkOuLblhkCQ==
+X-Received: by 2002:a9d:6212:: with SMTP id g18mr1704768otj.89.1606284520272;
+        Tue, 24 Nov 2020 22:08:40 -0800 (PST)
+Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
+        by smtp.gmail.com with ESMTPSA id x9sm765968otk.9.2020.11.24.22.08.39
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 24 Nov 2020 21:41:43 -0800 (PST)
+        Tue, 24 Nov 2020 22:08:39 -0800 (PST)
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Cc:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Vinod Koul <vkoul@kernel.org>, linux-arm-msm@vger.kernel.org,
-        alsa-devel@alsa-project.org, linux-kernel@vger.kernel.org
-Subject: [PATCH] slimbus: qcom-ngd-ctrl: Avoid sending power requests without QMI
-Date:   Tue, 24 Nov 2020 21:42:55 -0800
-Message-Id: <20201125054255.137067-1-bjorn.andersson@linaro.org>
+        Rob Herring <robh+dt@kernel.org>,
+        Steev Klimaszewski <steev@kali.org>,
+        Shawn Guo <shawn.guo@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH] arm64: dts: qcom: c630: Expose LID events
+Date:   Wed, 25 Nov 2020 00:08:38 -0600
+Message-Id: <20201125060838.165576-1-bjorn.andersson@linaro.org>
 X-Mailer: git-send-email 2.29.2
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
@@ -65,41 +66,79 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Attempting to send a power request during PM operations, when the QMI
-handle isn't initialized results in a NULL pointer dereference. So check
-if the QMI handle has been initialized before attempting to post the
-power requests.
+The LID state can be read from GPIO 124 and the "tablet mode" from GPIO
+95, expose these to the system using gpio-keys and mark the falling edge
+of the LID state as a wakeup-source - to wake the system from suspend.
 
-Fixes: 917809e2280b ("slimbus: ngd: Add qcom SLIMBus NGD driver")
 Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 ---
- drivers/slimbus/qcom-ngd-ctrl.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ .../boot/dts/qcom/sdm850-lenovo-yoga-c630.dts | 39 +++++++++++++++++++
+ 1 file changed, 39 insertions(+)
 
-diff --git a/drivers/slimbus/qcom-ngd-ctrl.c b/drivers/slimbus/qcom-ngd-ctrl.c
-index d8decb345e9d..c502e9e93965 100644
---- a/drivers/slimbus/qcom-ngd-ctrl.c
-+++ b/drivers/slimbus/qcom-ngd-ctrl.c
-@@ -1229,6 +1229,9 @@ static int qcom_slim_ngd_runtime_resume(struct device *dev)
- 	struct qcom_slim_ngd_ctrl *ctrl = dev_get_drvdata(dev);
- 	int ret = 0;
+diff --git a/arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts b/arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts
+index bb314973eb0c..f956dbf664c1 100644
+--- a/arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts
++++ b/arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts
+@@ -8,6 +8,8 @@
+ /dts-v1/;
  
-+	if (!ctrl->qmi.handle)
-+		return 0;
+ #include <dt-bindings/gpio/gpio.h>
++#include <dt-bindings/input/gpio-keys.h>
++#include <dt-bindings/input/input.h>
+ #include <dt-bindings/regulator/qcom,rpmh-regulator.h>
+ #include <dt-bindings/sound/qcom,q6afe.h>
+ #include <dt-bindings/sound/qcom,q6asm.h>
+@@ -21,6 +23,27 @@ / {
+ 	aliases {
+ 		hsuart0 = &uart6;
+ 	};
 +
- 	if (ctrl->state >= QCOM_SLIM_NGD_CTRL_ASLEEP)
- 		ret = qcom_slim_ngd_power_up(ctrl);
- 	if (ret) {
-@@ -1616,6 +1619,9 @@ static int __maybe_unused qcom_slim_ngd_runtime_suspend(struct device *dev)
- 	struct qcom_slim_ngd_ctrl *ctrl = dev_get_drvdata(dev);
- 	int ret = 0;
++	gpio-keys {
++		compatible = "gpio-keys";
++
++		pinctrl-names = "default";
++		pinctrl-0 = <&lid_pin_active>, <&mode_pin_active>;
++
++		lid {
++			gpios = <&tlmm 124 GPIO_ACTIVE_HIGH>;
++			linux,input-type = <EV_SW>;
++			linux,code = <SW_LID>;
++			wakeup-source;
++			wakeup-event-action = <EV_ACT_DEASSERTED>;
++		};
++
++		mode {
++			gpios = <&tlmm 95 GPIO_ACTIVE_HIGH>;
++			linux,input-type = <EV_SW>;
++			linux,code = <SW_TABLET_MODE>;
++		};
++	};
+ };
  
-+	if (!ctrl->qmi.handle)
-+		return 0;
+ &adsp_pas {
+@@ -466,6 +489,22 @@ wcd_intr_default: wcd_intr_default {
+ 		bias-pull-down;
+ 		drive-strength = <2>;
+ 	};
 +
- 	ret = qcom_slim_qmi_power_request(ctrl, false);
- 	if (ret && ret != -EBUSY)
- 		dev_info(ctrl->dev, "slim resource not idle:%d\n", ret);
++	lid_pin_active: lid-pin {
++		pins = "gpio124";
++		function = "gpio";
++
++		input-enable;
++		bias-disable;
++	};
++
++	mode_pin_active: mode-pin {
++		pins = "gpio95";
++		function = "gpio";
++
++		input-enable;
++		bias-disable;
++	};
+ };
+ 
+ &uart6 {
 -- 
 2.29.2
 
