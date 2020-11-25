@@ -2,143 +2,62 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E7F432C38F2
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Nov 2020 07:09:56 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 385922C3946
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Nov 2020 07:47:10 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727611AbgKYGIl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 25 Nov 2020 01:08:41 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47118 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727474AbgKYGIl (ORCPT
+        id S1725838AbgKYGq3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 25 Nov 2020 01:46:29 -0500
+Received: from szxga06-in.huawei.com ([45.249.212.32]:7985 "EHLO
+        szxga06-in.huawei.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726859AbgKYGq2 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 25 Nov 2020 01:08:41 -0500
-Received: from mail-ot1-x341.google.com (mail-ot1-x341.google.com [IPv6:2607:f8b0:4864:20::341])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 432B0C0613D6
-        for <linux-arm-msm@vger.kernel.org>; Tue, 24 Nov 2020 22:08:41 -0800 (PST)
-Received: by mail-ot1-x341.google.com with SMTP id f12so1214230oto.10
-        for <linux-arm-msm@vger.kernel.org>; Tue, 24 Nov 2020 22:08:41 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=VaBKKtVpxSZ3Ss3dI1KLi4Zn07ADzR3ErIEYv2rzINA=;
-        b=ZPWNeabsa3es0f5hvmx5rpmvmadljn1fx39W2nxEFiM6S1awRNFuoojfNdTjaXefcx
-         qdlVfthusC/ycUW1ZAt4iwkKKweZOwN9uNKXrMlpNR/68vbZCsifsgwdjjvChJ39QxBt
-         7nmpFeV+pRmJrNPi0GsuseRXiiepBWPrlyTPRkUz+eKzn90HVvd/6Qx2UQZW241R+ZWU
-         SMnuvCO4V4FwJbAMlfr2GVEuMpNIqJ/91m8erkPv2wXks6m+BOk1SnBWBJfdXKTkj+2Z
-         ByERmMqbyE7hFS+PU4aIHFss8Dw+MvLG5Lxl2hoaKNhFvphZQxJ8YAj2JerX8Z7tNTU+
-         p5oA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=VaBKKtVpxSZ3Ss3dI1KLi4Zn07ADzR3ErIEYv2rzINA=;
-        b=iVvYXUNYHSp+87TmJKUgvyuyKI47xAcHLObaahauiGSbFSuTNpolxlgiyPLYHj/9gG
-         ymiHYS9HMldC7WukCcxlJTuMWAItnJB1SlvEWmFpfoYdowviwx4ZueZTdZwPbgNBV39b
-         TLibod+/zhBWAph9yXyTrRFU1pSZvZGfWNhIz/qHYoDsBRJBzoEZwTVzo2HruRIBfHRA
-         LntvgXIQutvbqOKQb8ZBl0A7i7gL35CckK/1c5By8H3AgmL1vFUD7AliPt1v0g8M0P0I
-         3lVuRjgMhTWLp9g/f28TIznWkOIBnJNrMW8fYJV+tmEKJ14f21hI79bghWNbyaMB1ccQ
-         1JEA==
-X-Gm-Message-State: AOAM531Wh6Dtw1+x99mY4dMHWzaydPqNvMlt71nZtbm3+re5nfoOeBkj
-        nyqE0kKS06xG5MEfDexwXXFifg==
-X-Google-Smtp-Source: ABdhPJyXMGNAdk0LYHAP1IoQUMUGQadeLXFzjB2mODbIHaVopvUFo1lp+iWoI4MvfkZqkOuLblhkCQ==
-X-Received: by 2002:a9d:6212:: with SMTP id g18mr1704768otj.89.1606284520272;
-        Tue, 24 Nov 2020 22:08:40 -0800 (PST)
-Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id x9sm765968otk.9.2020.11.24.22.08.39
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 24 Nov 2020 22:08:39 -0800 (PST)
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+        Wed, 25 Nov 2020 01:46:28 -0500
+Received: from DGGEMS408-HUB.china.huawei.com (unknown [172.30.72.60])
+        by szxga06-in.huawei.com (SkyGuard) with ESMTP id 4Cgry53RQJzhh9Q;
+        Wed, 25 Nov 2020 14:46:05 +0800 (CST)
+Received: from localhost.localdomain.localdomain (10.175.113.25) by
+ DGGEMS408-HUB.china.huawei.com (10.3.19.208) with Microsoft SMTP Server id
+ 14.3.487.0; Wed, 25 Nov 2020 14:46:11 +0800
+From:   Qinglang Miao <miaoqinglang@huawei.com>
 To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Steev Klimaszewski <steev@kali.org>,
-        Shawn Guo <shawn.guo@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: [PATCH] arm64: dts: qcom: c630: Expose LID events
-Date:   Wed, 25 Nov 2020 00:08:38 -0600
-Message-Id: <20201125060838.165576-1-bjorn.andersson@linaro.org>
-X-Mailer: git-send-email 2.29.2
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+CC:     <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        "Qinglang Miao" <miaoqinglang@huawei.com>
+Subject: [PATCH] soc: qcom: pdr: Fix error return code in pdr_register_listener
+Date:   Wed, 25 Nov 2020 14:50:34 +0800
+Message-ID: <20201125065034.154217-1-miaoqinglang@huawei.com>
+X-Mailer: git-send-email 2.20.1
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7BIT
+Content-Type:   text/plain; charset=US-ASCII
+X-Originating-IP: [10.175.113.25]
+X-CFilter-Loop: Reflected
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The LID state can be read from GPIO 124 and the "tablet mode" from GPIO
-95, expose these to the system using gpio-keys and mark the falling edge
-of the LID state as a wakeup-source - to wake the system from suspend.
+Fix to return the error code -EREMOTEIO from pdr_register_listener
+rather than 0.
 
-Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+Fixes: fbe639b44a82 ("soc: qcom: Introduce Protection Domain Restart helpers")
+Reported-by: Hulk Robot <hulkci@huawei.com>
+Signed-off-by: Qinglang Miao <miaoqinglang@huawei.com>
 ---
- .../boot/dts/qcom/sdm850-lenovo-yoga-c630.dts | 39 +++++++++++++++++++
- 1 file changed, 39 insertions(+)
+ drivers/soc/qcom/pdr_interface.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts b/arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts
-index bb314973eb0c..f956dbf664c1 100644
---- a/arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts
-+++ b/arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts
-@@ -8,6 +8,8 @@
- /dts-v1/;
+diff --git a/drivers/soc/qcom/pdr_interface.c b/drivers/soc/qcom/pdr_interface.c
+index 088dc99f7..3da12ec2a 100644
+--- a/drivers/soc/qcom/pdr_interface.c
++++ b/drivers/soc/qcom/pdr_interface.c
+@@ -153,6 +153,7 @@ static int pdr_register_listener(struct pdr_handle *pdr,
+ 	if (resp.resp.result != QMI_RESULT_SUCCESS_V01) {
+ 		pr_err("PDR: %s register listener failed: 0x%x\n",
+ 		       pds->service_path, resp.resp.error);
++		ret = -EREMOTEIO;
+ 		return ret;
+ 	}
  
- #include <dt-bindings/gpio/gpio.h>
-+#include <dt-bindings/input/gpio-keys.h>
-+#include <dt-bindings/input/input.h>
- #include <dt-bindings/regulator/qcom,rpmh-regulator.h>
- #include <dt-bindings/sound/qcom,q6afe.h>
- #include <dt-bindings/sound/qcom,q6asm.h>
-@@ -21,6 +23,27 @@ / {
- 	aliases {
- 		hsuart0 = &uart6;
- 	};
-+
-+	gpio-keys {
-+		compatible = "gpio-keys";
-+
-+		pinctrl-names = "default";
-+		pinctrl-0 = <&lid_pin_active>, <&mode_pin_active>;
-+
-+		lid {
-+			gpios = <&tlmm 124 GPIO_ACTIVE_HIGH>;
-+			linux,input-type = <EV_SW>;
-+			linux,code = <SW_LID>;
-+			wakeup-source;
-+			wakeup-event-action = <EV_ACT_DEASSERTED>;
-+		};
-+
-+		mode {
-+			gpios = <&tlmm 95 GPIO_ACTIVE_HIGH>;
-+			linux,input-type = <EV_SW>;
-+			linux,code = <SW_TABLET_MODE>;
-+		};
-+	};
- };
- 
- &adsp_pas {
-@@ -466,6 +489,22 @@ wcd_intr_default: wcd_intr_default {
- 		bias-pull-down;
- 		drive-strength = <2>;
- 	};
-+
-+	lid_pin_active: lid-pin {
-+		pins = "gpio124";
-+		function = "gpio";
-+
-+		input-enable;
-+		bias-disable;
-+	};
-+
-+	mode_pin_active: mode-pin {
-+		pins = "gpio95";
-+		function = "gpio";
-+
-+		input-enable;
-+		bias-disable;
-+	};
- };
- 
- &uart6 {
 -- 
-2.29.2
+2.23.0
 
