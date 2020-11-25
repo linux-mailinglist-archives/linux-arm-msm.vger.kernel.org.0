@@ -2,180 +2,238 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 41A6F2C3588
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Nov 2020 01:33:52 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A70D32C35BD
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Nov 2020 01:50:12 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727251AbgKYAca (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 24 Nov 2020 19:32:30 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52114 "EHLO
+        id S1727938AbgKYAsV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 24 Nov 2020 19:48:21 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54532 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726805AbgKYAca (ORCPT
+        with ESMTP id S1727883AbgKYAsU (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 24 Nov 2020 19:32:30 -0500
-Received: from mail-qk1-x742.google.com (mail-qk1-x742.google.com [IPv6:2607:f8b0:4864:20::742])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CDA17C0613D6;
-        Tue, 24 Nov 2020 16:32:29 -0800 (PST)
-Received: by mail-qk1-x742.google.com with SMTP id x25so81283qkj.3;
-        Tue, 24 Nov 2020 16:32:29 -0800 (PST)
+        Tue, 24 Nov 2020 19:48:20 -0500
+Received: from mail-pf1-x432.google.com (mail-pf1-x432.google.com [IPv6:2607:f8b0:4864:20::432])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6C07DC061A4D
+        for <linux-arm-msm@vger.kernel.org>; Tue, 24 Nov 2020 16:48:18 -0800 (PST)
+Received: by mail-pf1-x432.google.com with SMTP id 131so694621pfb.9
+        for <linux-arm-msm@vger.kernel.org>; Tue, 24 Nov 2020 16:48:18 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=QqqubA90NyDjnD5SH+OxnZbso0TzlLiuZ5gzRUm0zsY=;
-        b=DYdo15DH5n4eMCA51W2vXZfybVLPbTpwO6CR+j1CET94cx9FmUQEkAzz4OadVdmrht
-         /5QscdfYh1sAKLvu6dkrheNjvEoR4Mdvvl3diWkBzFiGJNP9BCqxLhr4zTkKEaaVMxi5
-         qUA6kNkUTJzI9KEPxIujLpbBVVOhJKSQSAf+FeTM6jY84RGcXl9jGks4AfD2ojo1GxQQ
-         uEwHm9wuAxdOf70IRL+AXs8sujZOQd+kSEI1eU2QAsFia5W6QaIddZOITngYX9DSKM5R
-         mNvBJUTqyzODtQONxErP8O8dRkCcVm25oDOfEuyrse782pSy0gFJjFFgzHOgMIi8mZem
-         jSGA==
+        d=chromium.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=zIJ5sPJ4vLlu5jw+88lTkiZ9z4ChIp0VSe8hT9RWXJQ=;
+        b=dhl0netW67zWzO+8NhZw+ZdDd7uW21uy9Ym3D2YUpHqscxgFjuxhGU9cUz4AS5GjDs
+         KTewJv+haivcWzks9l8jdjT30vWnbw7vhbok7Uem82rNq8f8XxIrQYF+zztW1GPGPBog
+         hDqPuuXkb9dhG6xNvuiMQ/DmvmNIlAg5FgLK0=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=QqqubA90NyDjnD5SH+OxnZbso0TzlLiuZ5gzRUm0zsY=;
-        b=snqjE+pgbH+a6/A7jPlUdXy2whhW302EjrjCMPv8wi67+5UYB1mcpxLsEMa2AwWdgE
-         Z3ogb3mnS6cm39pBmugB8Yyu3qPz760xuqoEdTA1d8tmPLlwAVAV87k5lE6QwmJQRd9e
-         bUxQIDg/Aaoiuj5RrObJi3RhJzwmp+x9jUs2l/R/QX5GALJ5ha3cBth6BWrqbsnY+SlQ
-         9oM5wRkqwL45XieMtADalKIGCusgMlLWbdZl9/yyhUjSbsPmZba8gE28h7YJsD1zRePl
-         9PJZy42UDve6Tl95p/M8loj5o0/C+9jo+P8wdQPCB7Hs234mYNhFWxcaapjdhHr5aCdM
-         iBSQ==
-X-Gm-Message-State: AOAM532bS9JGxvfssjcio/Twt5CRLZKuxDtn69ZFpXhjuvaRA8Ki9on5
-        /J2Dw0UU4S5F0wRU7qA4z43bOMQibjftG4sZpvQ=
-X-Google-Smtp-Source: ABdhPJwwVKQFQuxzNO/2Mi/lJ3RUII3vPq9FIwhq+sZ6y3vyBbFPDKm/uCaEGwo9LU3j1fjBVCpYTO563lD14rGXSok=
-X-Received: by 2002:a25:5f0f:: with SMTP id t15mr779915ybb.26.1606264348932;
- Tue, 24 Nov 2020 16:32:28 -0800 (PST)
-MIME-Version: 1.0
-References: <cover.1605896059.git.gustavoars@kernel.org> <20201120105344.4345c14e@kicinski-fedora-pc1c0hjn.dhcp.thefacebook.com>
- <202011201129.B13FDB3C@keescook> <20201120115142.292999b2@kicinski-fedora-pc1c0hjn.dhcp.thefacebook.com>
- <202011220816.8B6591A@keescook> <9b57fd4914b46f38d54087d75e072d6e947cb56d.camel@HansenPartnership.com>
- <CANiq72nZrHWTA4_Msg6MP9snTyenC6-eGfD27CyfNSu7QoVZbw@mail.gmail.com>
- <1c7d7fde126bc0acf825766de64bf2f9b888f216.camel@HansenPartnership.com>
- <CANiq72m22Jb5_+62NnwX8xds2iUdWDMAqD8PZw9cuxdHd95W0A@mail.gmail.com>
- <fc45750b6d0277c401015b7aa11e16cd15f32ab2.camel@HansenPartnership.com>
- <CANiq72k5tpDoDPmJ0ZWc1DGqm+81Gi-uEENAtvEs9v3SZcx6_Q@mail.gmail.com> <4993259d01a0064f8bb22770503490f9252f3659.camel@HansenPartnership.com>
-In-Reply-To: <4993259d01a0064f8bb22770503490f9252f3659.camel@HansenPartnership.com>
-From:   Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
-Date:   Wed, 25 Nov 2020 01:32:17 +0100
-Message-ID: <CANiq72kqO=bYMJnFS2uYRpgWATJ=uXxZuNUsTXT+3aLtrpnzvQ@mail.gmail.com>
-Subject: Re: [PATCH 000/141] Fix fall-through warnings for Clang
-To:     James Bottomley <James.Bottomley@hansenpartnership.com>
-Cc:     Kees Cook <keescook@chromium.org>,
-        Jakub Kicinski <kuba@kernel.org>,
-        "Gustavo A. R. Silva" <gustavoars@kernel.org>,
-        linux-kernel <linux-kernel@vger.kernel.org>,
-        alsa-devel@alsa-project.org, amd-gfx@lists.freedesktop.org,
-        bridge@lists.linux-foundation.org, ceph-devel@vger.kernel.org,
-        cluster-devel@redhat.com, coreteam@netfilter.org,
-        devel@driverdev.osuosl.org, dm-devel@redhat.com,
-        drbd-dev@lists.linbit.com, dri-devel@lists.freedesktop.org,
-        GR-everest-linux-l2@marvell.com, GR-Linux-NIC-Dev@marvell.com,
-        intel-gfx@lists.freedesktop.org, intel-wired-lan@lists.osuosl.org,
-        keyrings@vger.kernel.org, linux1394-devel@lists.sourceforge.net,
-        linux-acpi@vger.kernel.org, linux-afs@lists.infradead.org,
-        Linux ARM <linux-arm-kernel@lists.infradead.org>,
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=zIJ5sPJ4vLlu5jw+88lTkiZ9z4ChIp0VSe8hT9RWXJQ=;
+        b=TIdZ5LBOXzL1Y3q2uvFSy4VWud3b3IQBpsZVyOax6QpLbPzwj3W3vhLLwLHZHSD7l0
+         M/weHBKHclaVzQiVf3tzDesQfwsa/p7YGYUSalVWTHkOVW5Y7OtEiL+V1Jd0CqHgkZgZ
+         JJI4ovgpeEyw2YuAQC8m9D+Z0+5talr9mzjVLfugZaTEbj1zANglt9Pns8dr4hBGB1we
+         qmy6xHzJfoQW48QtQSDtn0tXimqUR9speYBQjPxRCmYY63HbWeKcmO2srfMv1g6xjstq
+         qaqUC9k0iSYqyKeUObqWGfKjIWtD3ApfZAI4e2BT9OtDwueXobJIcCX1YNoObJK8Srdr
+         NlKw==
+X-Gm-Message-State: AOAM533laOCCkiBvdR9DFjElztlTZOxibYeLT483pvEbhfIPnHY9tkBV
+        Cc1yNRsh6nUrZdY0MyhYMRIEMg==
+X-Google-Smtp-Source: ABdhPJzGts/jVMfPOVVQ2h+jli/wC/GeZyWR5FG6ltFqvuQZUbXeZk4ws5HG6x+Nn29S10lgrv89sA==
+X-Received: by 2002:a17:90a:fd02:: with SMTP id cv2mr1013215pjb.176.1606265297868;
+        Tue, 24 Nov 2020 16:48:17 -0800 (PST)
+Received: from localhost ([2620:15c:202:1:f693:9fff:fef4:e70a])
+        by smtp.gmail.com with ESMTPSA id b21sm388190pji.24.2020.11.24.16.48.16
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 24 Nov 2020 16:48:17 -0800 (PST)
+From:   Matthias Kaehlcke <mka@chromium.org>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>
+Cc:     linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
         linux-arm-msm@vger.kernel.org,
-        linux-atm-general@lists.sourceforge.net,
-        linux-block@vger.kernel.org, linux-can@vger.kernel.org,
-        linux-cifs@vger.kernel.org,
-        Linux Crypto Mailing List <linux-crypto@vger.kernel.org>,
-        linux-decnet-user@lists.sourceforge.net,
-        Ext4 Developers List <linux-ext4@vger.kernel.org>,
-        linux-fbdev@vger.kernel.org, linux-geode@lists.infradead.org,
-        linux-gpio@vger.kernel.org, linux-hams@vger.kernel.org,
-        linux-hwmon@vger.kernel.org, linux-i3c@lists.infradead.org,
-        linux-ide@vger.kernel.org, linux-iio@vger.kernel.org,
-        linux-input <linux-input@vger.kernel.org>,
-        linux-integrity@vger.kernel.org,
-        linux-mediatek@lists.infradead.org,
-        Linux Media Mailing List <linux-media@vger.kernel.org>,
-        linux-mmc@vger.kernel.org, Linux-MM <linux-mm@kvack.org>,
-        linux-mtd@lists.infradead.org, linux-nfs@vger.kernel.org,
-        linux-rdma@vger.kernel.org, linux-renesas-soc@vger.kernel.org,
-        linux-scsi@vger.kernel.org, linux-sctp@vger.kernel.org,
-        linux-security-module@vger.kernel.org,
-        linux-stm32@st-md-mailman.stormreply.com,
-        linux-usb@vger.kernel.org, linux-watchdog@vger.kernel.org,
-        linux-wireless <linux-wireless@vger.kernel.org>,
-        Network Development <netdev@vger.kernel.org>,
-        netfilter-devel@vger.kernel.org, nouveau@lists.freedesktop.org,
-        op-tee@lists.trustedfirmware.org, oss-drivers@netronome.com,
-        patches@opensource.cirrus.com, rds-devel@oss.oracle.com,
-        reiserfs-devel@vger.kernel.org, samba-technical@lists.samba.org,
-        selinux@vger.kernel.org, target-devel@vger.kernel.org,
-        tipc-discussion@lists.sourceforge.net,
-        usb-storage@lists.one-eyed-alien.net,
-        virtualization@lists.linux-foundation.org,
-        wcn36xx@lists.infradead.org,
-        "maintainer:X86 ARCHITECTURE (32-BIT AND 64-BIT)" <x86@kernel.org>,
-        xen-devel@lists.xenproject.org, linux-hardening@vger.kernel.org,
-        Nick Desaulniers <ndesaulniers@google.com>,
-        Nathan Chancellor <natechancellor@gmail.com>,
-        Miguel Ojeda <ojeda@kernel.org>, Joe Perches <joe@perches.com>
-Content-Type: text/plain; charset="UTF-8"
+        Douglas Anderson <dianders@chromium.org>,
+        Matthias Kaehlcke <mka@chromium.org>
+Subject: [PATCH v4] arm64: dts: qcom: sc7180-trogdor: Make pp3300_a the default supply for pp3300_hub
+Date:   Tue, 24 Nov 2020 16:48:13 -0800
+Message-Id: <20201124164714.v4.1.I0ed4abdd2b2916fbedf76be254bc3457fb8b9655@changeid>
+X-Mailer: git-send-email 2.29.2.454.gaff20da3a2-goog
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Nov 23, 2020 at 9:38 PM James Bottomley
-<James.Bottomley@hansenpartnership.com> wrote:
->
-> So you think a one line patch should take one minute to produce ... I
-> really don't think that's grounded in reality.
+The trogdor design has two options for supplying the 'pp3300_hub' power
+rail, it can be supplied by 'pp3300_l7c' or 'pp3300_a'. The 'pp3300_a'
+path includes a load switch that can be controlled through GPIO84.
+Initially trogdor boards used 'pp3300_l7c' to power the USB hub, newer
+revisions (will) use 'pp3300_a' as supply for 'pp3300_hub'.
 
-No, I have not said that. Please don't put words in my mouth (again).
+Add a DT node for the 'pp3300_a' path and a pinctrl entry for the GPIO.
+Make this path the default and keep trogdor rev1, lazor rev0 and rev1
+on 'pp3300_l7c'. These earlier revisions also allocated the GPIO to the
+purpose of controlling the power switch, so there is no need to limit
+the pinctrl config to newer revisions. Remove the platform-wide
+'always/boot-on' properties from 'pp3300_l7c' and add them to the
+boards that use this supply. Also delete the 'always/boot-on'
+properties of 'pp3300_hub' for these boards.
 
-I have said *authoring* lines of *this* kind takes a minute per line.
-Specifically: lines fixing the fallthrough warning mechanically and
-repeatedly where the compiler tells you to, and doing so full-time for
-a month.
+Signed-off-by: Matthias Kaehlcke <mka@chromium.org>
+Reviewed-by: Douglas Anderson <dianders@chromium.org>
+---
 
-For instance, take the following one from Gustavo. Are you really
-saying it takes 12 minutes (your number) to write that `break;`?
+Changes in v4:
+- removed references to the 'usb_hub' node, which currently doesn't
+  exist upstream
 
-diff --git a/drivers/gpu/drm/via/via_irq.c b/drivers/gpu/drm/via/via_irq.c
-index 24cc445169e2..a3e0fb5b8671 100644
---- a/drivers/gpu/drm/via/via_irq.c
-+++ b/drivers/gpu/drm/via/via_irq.c
-@@ -364,6 +364,7 @@ int via_wait_irq(struct drm_device *dev, void
-*data, struct drm_file *file_priv)
-                irqwait->request.sequence +=
-                        atomic_read(&cur_irq->irq_received);
-                irqwait->request.type &= ~_DRM_VBLANK_RELATIVE;
-+               break;
-        case VIA_IRQ_ABSOLUTE:
-                break;
-        default:
+Changes in v3:
+- removed 'always-on' and 'boot-on' from 'pp3300_l7c'
+- always pair 'always-on' and 'boot-on' properties
+- removed comment for 'pp3300_hub' 'always-on' and 'boot-on' properties
 
->  I suppose a one line
-> patch only takes a minute to merge with b4 if no-one reviews or tests
-> it, but that's not really desirable.
+Changes in v2:
+- added 'always-on' and 'boot-on' properties for new 'pp3300_hub'
+- removed platform-wide 'always-on' property for 'pp3300_l7c'
+- added 'always-on' property to 'pp3300_l7c'  for boards that still
+  use 'pp3300_l7c'
+- delete 'always-on' property of 'pp3300_hub' for boards that still
+  use 'pp3300_l7c'
+- got rid of 'pp3300_hub_7c' label, just use 'pp3300_l7c'
+- fixed position of 'en_pp3300_hub' node to respect ordering
+- updated commit message
 
-I have not said that either. I said reviewing and merging those are
-noise compared to any complex patch. Testing should be done by the
-author comparing codegen.
+ .../boot/dts/qcom/sc7180-trogdor-lazor-r0.dts | 11 ++++++
+ .../boot/dts/qcom/sc7180-trogdor-lazor-r1.dts | 11 ++++++
+ .../arm64/boot/dts/qcom/sc7180-trogdor-r1.dts | 11 ++++++
+ arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi  | 34 +++++++++++++++++--
+ 4 files changed, 64 insertions(+), 3 deletions(-)
 
-> Part of what I'm trying to measure is the "and useful" bit because
-> that's not a given.
+diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r0.dts b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r0.dts
+index ae4c23a4fe65..30e3e769d2b4 100644
+--- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r0.dts
++++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r0.dts
+@@ -14,6 +14,17 @@ / {
+ 	compatible = "google,lazor-rev0", "qcom,sc7180";
+ };
+ 
++&pp3300_hub {
++	/* pp3300_l7c is used to power the USB hub */
++	/delete-property/regulator-always-on;
++	/delete-property/regulator-boot-on;
++};
++
++&pp3300_l7c {
++	regulator-always-on;
++	regulator-boot-on;
++};
++
+ &sn65dsi86_out {
+ 	/*
+ 	 * Lane 0 was incorrectly mapped on the cable, but we've now decided
+diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r1.dts b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r1.dts
+index 9354d4c5ef7d..c2ef06367baf 100644
+--- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r1.dts
++++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r1.dts
+@@ -13,3 +13,14 @@ / {
+ 	model = "Google Lazor (rev1 - 2)";
+ 	compatible = "google,lazor-rev1", "google,lazor-rev2", "qcom,sc7180";
+ };
++
++&pp3300_hub {
++	/* pp3300_l7c is used to power the USB hub */
++	/delete-property/regulator-always-on;
++	/delete-property/regulator-boot-on;
++};
++
++&pp3300_l7c {
++	regulator-always-on;
++	regulator-boot-on;
++};
+diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-r1.dts b/arch/arm64/boot/dts/qcom/sc7180-trogdor-r1.dts
+index 59d67fb0efe8..2cb522d6962e 100644
+--- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-r1.dts
++++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-r1.dts
+@@ -53,6 +53,17 @@ ap_ts: touchscreen@10 {
+ 	};
+ };
+ 
++&pp3300_hub {
++	/* pp3300_l7c is used to power the USB hub */
++	/delete-property/regulator-always-on;
++	/delete-property/regulator-boot-on;
++};
++
++&pp3300_l7c {
++	regulator-always-on;
++	regulator-boot-on;
++};
++
+ &sdhc_2 {
+ 	status = "okay";
+ };
+diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
+index 3eb1ff2483be..28b0ad1ed157 100644
+--- a/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
+@@ -174,6 +174,24 @@ pp3300_fp_tp: pp3300-fp-tp-regulator {
+ 		vin-supply = <&pp3300_a>;
+ 	};
+ 
++	pp3300_hub: pp3300-hub {
++		compatible = "regulator-fixed";
++		regulator-name = "pp3300_hub";
++
++		regulator-min-microvolt = <3300000>;
++		regulator-max-microvolt = <3300000>;
++
++		gpio = <&tlmm 84 GPIO_ACTIVE_HIGH>;
++		enable-active-high;
++		pinctrl-names = "default";
++		pinctrl-0 = <&en_pp3300_hub>;
++
++		regulator-always-on;
++		regulator-boot-on;
++
++		vin-supply = <&pp3300_a>;
++	};
++
+ 	/* BOARD-SPECIFIC TOP LEVEL NODES */
+ 
+ 	backlight: backlight {
+@@ -478,13 +496,10 @@ ppvar_l6c: ldo6 {
+ 			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+ 		};
+ 
+-		pp3300_hub:
+ 		pp3300_l7c: ldo7 {
+ 			regulator-min-microvolt = <3304000>;
+ 			regulator-max-microvolt = <3304000>;
+ 			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+-			regulator-always-on;
+-			regulator-boot-on;
+ 		};
+ 
+ 		pp1800_brij_vccio:
+@@ -1185,6 +1200,19 @@ pinconf {
+ 		};
+ 	};
+ 
++	en_pp3300_hub: en-pp3300-hub {
++		pinmux {
++			pins = "gpio84";
++			function = "gpio";
++		};
++
++		pinconf {
++			pins = "gpio84";
++			drive-strength = <2>;
++			bias-disable;
++		};
++	};
++
+ 	fpmcu_boot0: fpmcu-boot0 {
+ 		pinmux {
+ 			pins = "gpio10";
+-- 
+2.29.2.454.gaff20da3a2-goog
 
-It is useful since it makes intent clear. It also catches actual bugs,
-which is even more valuable.
-
-> Well, you know, subsystems are very different in terms of the amount of
-> patches a maintainer has to process per release cycle of the kernel.
-> If a maintainer is close to capacity, additional patches, however
-> trivial, become a problem.  If a maintainer has spare cycles, trivial
-> patches may look easy.
-
-First of all, voluntary maintainers choose their own workload.
-Furthermore, we already measure capacity in the `MAINTAINERS` file:
-maintainers can state they can only handle a few patches. Finally, if
-someone does not have time for a trivial patch, they are very unlikely
-to have any time to review big ones.
-
-> You seem to be saying that because you find it easy to merge trivial
-> patches, everyone should.
-
-Again, I have not said anything of the sort.
-
-Cheers,
-Miguel
