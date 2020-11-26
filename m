@@ -2,58 +2,58 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 801C42C57FD
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Nov 2020 16:22:50 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E18A72C5801
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Nov 2020 16:22:59 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2391298AbgKZPWR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 26 Nov 2020 10:22:17 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46110 "EHLO
+        id S2391301AbgKZPWS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 26 Nov 2020 10:22:18 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46112 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2391286AbgKZPWR (ORCPT
+        with ESMTP id S2391296AbgKZPWS (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 26 Nov 2020 10:22:17 -0500
-Received: from mail-wr1-x444.google.com (mail-wr1-x444.google.com [IPv6:2a00:1450:4864:20::444])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 08890C0617A7
+        Thu, 26 Nov 2020 10:22:18 -0500
+Received: from mail-wm1-x341.google.com (mail-wm1-x341.google.com [IPv6:2a00:1450:4864:20::341])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D178FC0613D4
         for <linux-arm-msm@vger.kernel.org>; Thu, 26 Nov 2020 07:22:17 -0800 (PST)
-Received: by mail-wr1-x444.google.com with SMTP id l1so2525125wrb.9
-        for <linux-arm-msm@vger.kernel.org>; Thu, 26 Nov 2020 07:22:16 -0800 (PST)
+Received: by mail-wm1-x341.google.com with SMTP id a186so2479247wme.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 26 Nov 2020 07:22:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=aPLHqO7umAzH3uCMdx9gGdOu7TMdN7Har/HDHaaht+Q=;
-        b=B7EzWmQ7wLTrqyxGu3usr2kvgQTOaWPZGpQ8+fhOncJtMe7cDXl/Hbhd1OABZBsw64
-         0yofU2N5id5mGEaF2DPyWmc0OiuNL1eoGy29H4XwXwRN+OwaHSd3KNZdteeSb0pzbsI4
-         EJCUIlCizNVKboGJQRgHjneRG5kt1eCAeP/yGASSDRyKYTZ/WI081MCy/vwVrtEni8+d
-         XSyIuTqYjBzPSJLFukiUGn2VW3RJtZpQWQ87LtvUR+L2ilJ9QiQmz8H+RWXrbc1T4O8V
-         GCu2ftoesdxarygwLS0mHWXGGlq6y31zu0TwO77jDeYYg6IUnZBstaUsQmSxMAsJNpUq
-         ZrOA==
+        bh=ay1QH2bUvbOIA2ZUFWy+JbT8fUAqvJZs5kOEe6ZTqSo=;
+        b=wo0gu/9zo332X9pNE/Xl86tD89guuCPYF7oKdvaHvFQZZBjFYrg8BixU5BM4aUTtQU
+         SvFiSW85w2socjSZ/LtCE5HB+bt3ScXXioH/UIBYYLMpvfToNQYjAtxXpBwz4USCn98F
+         NK3oiWSbWTi+G974FE7/9R037C/cAexorqG0a++5Z0nw2ch4IFjkjKSjlsLpMCbA//Bz
+         LLLuPFnZ6BkQGEoHoWeKJtLJxXRMN9ZT6D7/1CVh3ZFnPeilBgj/vXQVUymP45pLbRKi
+         NiPsxI3Ak6bQGaFyxpj1urXXI0TCL0F3Q4c5tJgqzEs5Z1QlFJxHL7gG5KO3i1miCkIE
+         UUmw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=aPLHqO7umAzH3uCMdx9gGdOu7TMdN7Har/HDHaaht+Q=;
-        b=tpaBfOo26WoYB3zDsnxBm6dqZejHauQTGTC5Fxiko8I+ZaO1zqHyDRrMjkniisO3B7
-         LJbGcRh6BnZpN0vWqXUZAj8226wVOWc/MPRyF+fYPr3eWdppwAOrPf3unROy5rsmHR7L
-         WKt91BnODHJODzh0+/NY/Rg226vLBfq+pYFysGaDiSa5OdlUTCkkitHpLbFWiZ4n30vg
-         Bas/Hvbky9BvpUgApN80QtcRxDV8nqStX8efnsGxZlN2vLKPysi4qKL9BmqxcJu8yfgY
-         +cuMlvpKsiOrGUAM4LvJjA4dCGTXrp+bOQrgO5+4LoP98XUx/Qud5OydIDb9cP3wGj/f
-         etpQ==
-X-Gm-Message-State: AOAM53389XWn8bK5klAMXsy5D2FxwodbGqsPsSrlf6UxvaWjZQNQ7uo8
-        jgXw1ZmZvKI07I/PEBM0DqMy2g==
-X-Google-Smtp-Source: ABdhPJw/lkqzgwQ1spBI5lcBKZX5u57+tEcIkQst+Ze/IhKqszqkFh/Eroea0MWc7IOoLbMUuDtXSg==
-X-Received: by 2002:adf:f70b:: with SMTP id r11mr4428835wrp.133.1606404135707;
-        Thu, 26 Nov 2020 07:22:15 -0800 (PST)
+        bh=ay1QH2bUvbOIA2ZUFWy+JbT8fUAqvJZs5kOEe6ZTqSo=;
+        b=IUGvJ9iO+DporuA8Q9CXY9EHQKiLseknSSJ06Rn/W+agsfidyH+zLqFKPaQLzl/el2
+         1EGnhIwEfWOoUdw6wA4hA7a1JRYGhaf/tvhlGP54/MDF7KsF34mHqhmrUHLhWo1MsRek
+         TWnvANrQ33+iLra/9OFW1cU5qXJQIGMHOLWWEc6cUldjsglSj4fblGANKZJqqP9BQC/T
+         38uq5AgdwU5tnClJfkjzSCuOlF3h294sU0DCL0pX12C70bFW25eC6I4K8WnTjGKNueI9
+         F5Bml1YxC2T/J4IQuxzJnCaJh7/9KKWBkObACggbAj68qQ/ScekpgesawZUF5hfN4cO+
+         Cmcw==
+X-Gm-Message-State: AOAM531RGCNAIflDCYDgAdV3iI+5LbZugFjmwZUvmBdXj2fkkErBeK6q
+        1CKZKOY17IcUYbV6GyDG9EJotA==
+X-Google-Smtp-Source: ABdhPJw8M7sG3U/yCMcdx6aFj6Kx4N0Kg+dkwMBImDiENVEMPJuVE1xlaOZPDh4VX8VGOY2wzcJFEQ==
+X-Received: by 2002:a1c:750f:: with SMTP id o15mr3988494wmc.144.1606404136593;
+        Thu, 26 Nov 2020 07:22:16 -0800 (PST)
 Received: from localhost.localdomain ([88.122.66.28])
         by smtp.gmail.com with ESMTPSA id l10sm2756144wme.42.2020.11.26.07.22.15
         (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 26 Nov 2020 07:22:15 -0800 (PST)
+        Thu, 26 Nov 2020 07:22:16 -0800 (PST)
 From:   Loic Poulain <loic.poulain@linaro.org>
 To:     manivannan.sadhasivam@linaro.org, hemantk@codeaurora.org
 Cc:     linux-arm-msm@vger.kernel.org, bbhatt@codeaurora.org,
         Loic Poulain <loic.poulain@linaro.org>
-Subject: [PATCH v3 1/9] mhi: Add mhi_controller_initialize helper
-Date:   Thu, 26 Nov 2020 16:28:59 +0100
-Message-Id: <1606404547-10737-2-git-send-email-loic.poulain@linaro.org>
+Subject: [PATCH v3 2/9] mhi: pci-generic: Increase number of hardware events
+Date:   Thu, 26 Nov 2020 16:29:00 +0100
+Message-Id: <1606404547-10737-3-git-send-email-loic.poulain@linaro.org>
 X-Mailer: git-send-email 2.7.4
 In-Reply-To: <1606404547-10737-1-git-send-email-loic.poulain@linaro.org>
 References: <1606404547-10737-1-git-send-email-loic.poulain@linaro.org>
@@ -61,58 +61,30 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This function allows to initialize a mhi_controller structure.
-Today, it only zeroing the structure.
+If the IPA (IP hardware accelerator) is starved of event ring elements,
+the modem is crashing (SDX55). That can be prevented by setting a
+larger number of events (i.e 2 x number of channel ring elements).
 
-Use this function from mhi_alloc_controller so that any further
-initialization can be factorized in initalize function.
+Tested with FN980m module.
 
 Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
 ---
- drivers/bus/mhi/core/init.c | 7 +++++++
- include/linux/mhi.h         | 6 ++++++
- 2 files changed, 13 insertions(+)
+ drivers/bus/mhi/pci_generic.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/bus/mhi/core/init.c b/drivers/bus/mhi/core/init.c
-index 96cde9c..4acad28 100644
---- a/drivers/bus/mhi/core/init.c
-+++ b/drivers/bus/mhi/core/init.c
-@@ -1021,11 +1021,18 @@ void mhi_unregister_controller(struct mhi_controller *mhi_cntrl)
- }
- EXPORT_SYMBOL_GPL(mhi_unregister_controller);
+diff --git a/drivers/bus/mhi/pci_generic.c b/drivers/bus/mhi/pci_generic.c
+index f5bee76..d3896ef 100644
+--- a/drivers/bus/mhi/pci_generic.c
++++ b/drivers/bus/mhi/pci_generic.c
+@@ -91,7 +91,7 @@ struct mhi_pci_dev_info {
  
-+void mhi_initialize_controller(struct mhi_controller *mhi_cntrl)
-+{
-+	memset(mhi_cntrl, 0, sizeof(*mhi_cntrl));
-+}
-+EXPORT_SYMBOL_GPL(mhi_initialize_controller);
-+
- struct mhi_controller *mhi_alloc_controller(void)
- {
- 	struct mhi_controller *mhi_cntrl;
- 
- 	mhi_cntrl = kzalloc(sizeof(*mhi_cntrl), GFP_KERNEL);
-+	mhi_initialize_controller(mhi_cntrl);
- 
- 	return mhi_cntrl;
- }
-diff --git a/include/linux/mhi.h b/include/linux/mhi.h
-index 5721a0a..30c676d 100644
---- a/include/linux/mhi.h
-+++ b/include/linux/mhi.h
-@@ -537,6 +537,12 @@ struct mhi_driver {
- #define to_mhi_device(dev) container_of(dev, struct mhi_device, dev)
- 
- /**
-+ * mhi_initialize_controller - Initialize MHI Controller structure
-+ * @mhi_cntrl: MHI controller structure to initialize
-+ */
-+void mhi_initialize_controller(struct mhi_controller *mhi_cntrl);
-+
-+/**
-  * mhi_alloc_controller - Allocate the MHI Controller structure
-  * Allocate the mhi_controller structure using zero initialized memory
-  */
+ #define MHI_EVENT_CONFIG_HW_DATA(ev_ring, ch_num) \
+ 	{					\
+-		.num_elements = 128,		\
++		.num_elements = 256,		\
+ 		.irq_moderation_ms = 5,		\
+ 		.irq = (ev_ring) + 1,		\
+ 		.priority = 1,			\
 -- 
 2.7.4
 
