@@ -2,166 +2,93 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 3D8EE2C5826
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Nov 2020 16:29:37 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4EE222C5800
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Nov 2020 16:22:58 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2391266AbgKZP2a (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 26 Nov 2020 10:28:30 -0500
-Received: from mail-ot1-f65.google.com ([209.85.210.65]:39601 "EHLO
-        mail-ot1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730237AbgKZP21 (ORCPT
+        id S2391286AbgKZPWR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 26 Nov 2020 10:22:17 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46102 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2391296AbgKZPWR (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 26 Nov 2020 10:28:27 -0500
-Received: by mail-ot1-f65.google.com with SMTP id z24so2172944oto.6;
-        Thu, 26 Nov 2020 07:28:24 -0800 (PST)
+        Thu, 26 Nov 2020 10:22:17 -0500
+Received: from mail-wm1-x341.google.com (mail-wm1-x341.google.com [IPv6:2a00:1450:4864:20::341])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D0B05C0613D4
+        for <linux-arm-msm@vger.kernel.org>; Thu, 26 Nov 2020 07:22:15 -0800 (PST)
+Received: by mail-wm1-x341.google.com with SMTP id u10so56009wmm.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 26 Nov 2020 07:22:15 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id;
+        bh=c54FFjPu0e0YNMEh5GVJQPMw13jDChISThAKhkQ1MG8=;
+        b=QG1MQ1u6HkcqQSvjEvnx6QFxiEtpfl+YqdhmdnMhxr9/VydA57TMEm7BvEhONxGxoC
+         /1XL970BMCoTShMlTTIeI22w6znxI2o7Qy23nz/Lj36o897E3xNijxYU3gSHuZbuiKVL
+         N+eaGrCrLFFVu8+AFiWUChSNYdRiFXmiTgzzcKoKkeHnMjI3R5BAyf8Kj61LovOa63hG
+         XU321wdEbjgnd9zuk5f3CxWj1KFxai8V6Qp80SfvabvHaGvASh92UK5DADDosyMgi8ot
+         UaZyy+DB1hWKk+7kwINpFhP50SAMYJreJ8euDfExSiqOsA65VHLlJx5sPRSqSGaze2Ow
+         /kPw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=kP9MspVOPl/NnVl8oGn1EIC/+F8CcK5+OXo+jY56Nno=;
-        b=O5lB09TE7ZVoxFrz9jEzoB2CxBaKGu4DfPIKinbX7K3Z9YjWsAZuwpmZCb063hbcml
-         dK6VczxxuljyVvzYk+qi2g3J+dUAo/TP5DSIvXSrQzH4ZIWKpyJKV69WKVmUFQWGTk59
-         HyRyiaz1876USvHOZ7GaFoLxWcyv3avFWcLMFaTeGPv7olYKncnMLKuAAt3+0OJxxYPH
-         DQ25HwL4uMCDIv2MjSAHnWl//kshswom5NK5IvDfZJsIj1yf3jRSCD8P5C21dgNs/Nin
-         KmqrQIgPSTec2jqEzDtGzUMRKKqN0dEVt8W9sTXLxApcT9uMeXWDswIixp6PUrfvH6Cm
-         vXZg==
-X-Gm-Message-State: AOAM5330+/EQ2iKUbotH3l4ZJ+wA3zzJimNEYAc6ksGY5yzOLOtVINtM
-        celE5FwFxauIAoq+Eo6qiYHUpEL51OVNGgVS74k=
-X-Google-Smtp-Source: ABdhPJyYtol6dSfaI6WhgTcuunq7fhBuSULViECyA4Z+K27bCejCuaia55DZ/aziu9dD69JTQZlYwW/4z6Mu7Di+rU4=
-X-Received: by 2002:a05:6830:210a:: with SMTP id i10mr2551843otc.145.1606404504116;
- Thu, 26 Nov 2020 07:28:24 -0800 (PST)
-MIME-Version: 1.0
-References: <cover.1605896059.git.gustavoars@kernel.org> <20201120105344.4345c14e@kicinski-fedora-pc1c0hjn.dhcp.thefacebook.com>
- <202011201129.B13FDB3C@keescook> <20201120115142.292999b2@kicinski-fedora-pc1c0hjn.dhcp.thefacebook.com>
- <202011220816.8B6591A@keescook> <9b57fd4914b46f38d54087d75e072d6e947cb56d.camel@HansenPartnership.com>
- <CANiq72nZrHWTA4_Msg6MP9snTyenC6-eGfD27CyfNSu7QoVZbw@mail.gmail.com>
- <1c7d7fde126bc0acf825766de64bf2f9b888f216.camel@HansenPartnership.com>
- <CANiq72m22Jb5_+62NnwX8xds2iUdWDMAqD8PZw9cuxdHd95W0A@mail.gmail.com>
- <fc45750b6d0277c401015b7aa11e16cd15f32ab2.camel@HansenPartnership.com>
- <CANiq72k5tpDoDPmJ0ZWc1DGqm+81Gi-uEENAtvEs9v3SZcx6_Q@mail.gmail.com>
- <4993259d01a0064f8bb22770503490f9252f3659.camel@HansenPartnership.com>
- <CANiq72kqO=bYMJnFS2uYRpgWATJ=uXxZuNUsTXT+3aLtrpnzvQ@mail.gmail.com>
- <44005bde-f6d4-5eaa-39b8-1a5efeedb2d3@gmail.com> <CANiq72nobq=ptWK-qWxU91JHqkKhMcRtJNnw2XJd5-vSJWZd8Q@mail.gmail.com>
-In-Reply-To: <CANiq72nobq=ptWK-qWxU91JHqkKhMcRtJNnw2XJd5-vSJWZd8Q@mail.gmail.com>
-From:   Geert Uytterhoeven <geert@linux-m68k.org>
-Date:   Thu, 26 Nov 2020 16:28:12 +0100
-Message-ID: <CAMuHMdV5kOakvZJMWLxbpigFPS+Xuw6DVYsWCWZy7wGsv3idcw@mail.gmail.com>
-Subject: Re: [PATCH 000/141] Fix fall-through warnings for Clang
-To:     Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
-Cc:     Edward Cree <ecree.xilinx@gmail.com>,
-        ALSA Development Mailing List <alsa-devel@alsa-project.org>,
-        linux-atm-general@lists.sourceforge.net,
-        reiserfs-devel@vger.kernel.org, linux-iio@vger.kernel.org,
-        linux-wireless <linux-wireless@vger.kernel.org>,
-        Linux Fbdev development list <linux-fbdev@vger.kernel.org>,
-        dri-devel <dri-devel@lists.freedesktop.org>,
-        "Gustavo A. R. Silva" <gustavoars@kernel.org>,
-        James Bottomley <James.Bottomley@hansenpartnership.com>,
-        linux-ide@vger.kernel.org, dm-devel@redhat.com,
-        keyrings@vger.kernel.org,
-        MTD Maling List <linux-mtd@lists.infradead.org>,
-        GR-everest-linux-l2@marvell.com, wcn36xx@lists.infradead.org,
-        samba-technical@lists.samba.org, linux-i3c@lists.infradead.org,
-        linux1394-devel@lists.sourceforge.net,
-        linux-afs@lists.infradead.org,
-        usb-storage@lists.one-eyed-alien.net,
-        Lars Ellenberg <drbd-dev@lists.linbit.com>,
-        driverdevel <devel@driverdev.osuosl.org>,
-        linux-cifs@vger.kernel.org, rds-devel@oss.oracle.com,
-        Nick Desaulniers <ndesaulniers@google.com>,
-        scsi <linux-scsi@vger.kernel.org>,
-        Nathan Chancellor <natechancellor@gmail.com>,
-        linux-rdma <linux-rdma@vger.kernel.org>,
-        oss-drivers@netronome.com, bridge@lists.linux-foundation.org,
-        linux-security-module <linux-security-module@vger.kernel.org>,
-        amd-gfx list <amd-gfx@lists.freedesktop.org>,
-        linux-stm32@st-md-mailman.stormreply.com, cluster-devel@redhat.com,
-        ACPI Devel Maling List <linux-acpi@vger.kernel.org>,
-        coreteam@netfilter.org, intel-wired-lan@lists.osuosl.org,
-        linux-input <linux-input@vger.kernel.org>,
-        Miguel Ojeda <ojeda@kernel.org>,
-        Jakub Kicinski <kuba@kernel.org>,
-        Ext4 Developers List <linux-ext4@vger.kernel.org>,
-        Linux Media Mailing List <linux-media@vger.kernel.org>,
-        Kees Cook <keescook@chromium.org>, selinux@vger.kernel.org,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Intel Graphics Development <intel-gfx@lists.freedesktop.org>,
-        linux-geode@lists.infradead.org, linux-can@vger.kernel.org,
-        linux-block@vger.kernel.org,
-        "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
-        op-tee@lists.trustedfirmware.org,
-        linux-mediatek@lists.infradead.org, xen-devel@lists.xenproject.org,
-        Nouveau Dev <nouveau@lists.freedesktop.org>,
-        linux-hams@vger.kernel.org,
-        ceph-devel <ceph-devel@vger.kernel.org>,
-        virtualization@lists.linux-foundation.org,
-        Linux ARM <linux-arm-kernel@lists.infradead.org>,
-        linux-hwmon@vger.kernel.org,
-        Linux Watchdog Mailing List <linux-watchdog@vger.kernel.org>,
-        "open list:NFS, SUNRPC, AND..." <linux-nfs@vger.kernel.org>,
-        GR-Linux-NIC-Dev@marvell.com,
-        tipc-discussion@lists.sourceforge.net,
-        Linux-MM <linux-mm@kvack.org>,
-        Network Development <netdev@vger.kernel.org>,
-        linux-decnet-user@lists.sourceforge.net,
-        Linux MMC List <linux-mmc@vger.kernel.org>,
-        linux-kernel <linux-kernel@vger.kernel.org>,
-        "maintainer:X86 ARCHITECTURE (32-BIT AND 64-BIT)" <x86@kernel.org>,
-        Linux-Renesas <linux-renesas-soc@vger.kernel.org>,
-        linux-sctp@vger.kernel.org, USB list <linux-usb@vger.kernel.org>,
-        NetFilter <netfilter-devel@vger.kernel.org>,
-        Linux Crypto Mailing List <linux-crypto@vger.kernel.org>,
-        patches@opensource.cirrus.com, Joe Perches <joe@perches.com>,
-        linux-integrity <linux-integrity@vger.kernel.org>,
-        target-devel <target-devel@vger.kernel.org>,
-        linux-hardening@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=c54FFjPu0e0YNMEh5GVJQPMw13jDChISThAKhkQ1MG8=;
+        b=MYj7bPnkHWdHpPsO44j76A+KWUQka85rlq3r9WzMvCYHQEPhhgRcTBfZifr2typJAW
+         bHVI216n70YVS7x2O3TP6wIxT2MCw++U5W2p1H+Ul4JjprB4u8FvIhEQ1UShfdJzJEuu
+         R33nRH2P7dSpGtcA1XS4SduUlIgL1hgS4YJ1zIgvjgT1Vqfbfx7OO3mK7FNnBv68NwAp
+         +Z9zudy6K2+C8J//NaUThc/1MRCXquch95UvmtdmcW96hhIzPYsLGvGV8N4iQl1ZHq/C
+         Dxv1RHGHWMk3q5mTa9Jm0uCPz0/Lm/59/NT/sIhrhsF497BpXhzRBGXjt/3xG27DKXS6
+         tnmw==
+X-Gm-Message-State: AOAM532XdL/BhuJr8E36n5FImuTG2EvTHHNlOeZRfsR/jSZowe9V+HgP
+        t+24j9xJyDAluRxEU8tl/LZp7rbdnor+6AcP
+X-Google-Smtp-Source: ABdhPJyXWYUP20oVbdeedBcYlYOBvR08vvdd9GHuTFwpyrjBh8QUKZplcF74TIk0xdwKsnvev/+uuA==
+X-Received: by 2002:a1c:2dc8:: with SMTP id t191mr3975825wmt.73.1606404134298;
+        Thu, 26 Nov 2020 07:22:14 -0800 (PST)
+Received: from localhost.localdomain ([88.122.66.28])
+        by smtp.gmail.com with ESMTPSA id l10sm2756144wme.42.2020.11.26.07.22.13
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 26 Nov 2020 07:22:13 -0800 (PST)
+From:   Loic Poulain <loic.poulain@linaro.org>
+To:     manivannan.sadhasivam@linaro.org, hemantk@codeaurora.org
+Cc:     linux-arm-msm@vger.kernel.org, bbhatt@codeaurora.org,
+        Loic Poulain <loic.poulain@linaro.org>
+Subject: [PATCH v3 0/9] mhi: pci_generic: Misc improvements
+Date:   Thu, 26 Nov 2020 16:28:58 +0100
+Message-Id: <1606404547-10737-1-git-send-email-loic.poulain@linaro.org>
+X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Miguel,
+This series adjust some configuration values to ensure stability and
+robustness of mhi pci devices (timeout, number of events, burst mode).
 
-On Thu, Nov 26, 2020 at 3:54 PM Miguel Ojeda
-<miguel.ojeda.sandonis@gmail.com> wrote:
-> On Wed, Nov 25, 2020 at 11:44 PM Edward Cree <ecree.xilinx@gmail.com> wrote:
-> > To make the intent clear, you have to first be certain that you
-> >  understand the intent; otherwise by adding either a break or a
-> >  fallthrough to suppress the warning you are just destroying the
-> >  information that "the intent of this code is unknown".
->
-> If you don't know what the intent of your own code is, then you
-> *already* have a problem in your hands.
+It also includes support for system sleep as well as a recovery procedure
+that can be triggered when a PCI error is reported, either by PCI AER or by
+the new health-check mechanism.
 
-The maintainer is not necessarily the owner/author of the code, and
-thus may not know the intent of the code.
+All these changes have been tested with Telit FN980m module
 
-> > or does it flag up code
-> >  that can be mindlessly "fixed" (in which case the warning is
-> >  worthless)?  Proponents in this thread seem to be trying to
-> >  have it both ways.
->
-> A warning is not worthless just because you can mindlessly fix it.
-> There are many counterexamples, e.g. many
-> checkpatch/lint/lang-format/indentation warnings, functional ones like
-> the `if (a = b)` warning...
+v2: 
+  - Cancel recovery work on suspend
+v3:
+  - enable doorbell_mode_switch for burst channel (HW)
+  - Add mhi_initialize_controller helper patch
 
-BTW, you cannot mindlessly fix the latter, as you cannot know if
-"(a == b)" or "((a = b))" was intended, without understanding the code
-(and the (possibly unavailable) data sheet, and the hardware, ...).
+Loic Poulain (9):
+  mhi: Add mhi_controller_initialize helper
+  mhi: pci-generic: Increase number of hardware events
+  mhi: pci-generic: Perform hard reset on remove
+  mhi: pci_generic: Enable burst mode for hardware channels
+  mhi: pci_generic: Add support for reset
+  mhi: pci_generic: Add suspend/resume/recovery procedure
+  mhi: pci_generic: Add PCI error handlers
+  mhi: pci_generic: Add health-check
+  mhi: pci_generic: Increase controller timeout value
 
-P.S. So far I've stayed out of this thread, as I like it if the compiler
-     flags possible mistakes.  After all I was the one fixing new
-     "may be used uninitialized" warnings thrown up by gcc-4.1, until
-     (a bit later than) support for that compiler was removed...
-
-Gr{oetje,eeting}s,
-
-                        Geert
+ drivers/bus/mhi/core/init.c   |   7 +
+ drivers/bus/mhi/pci_generic.c | 354 ++++++++++++++++++++++++++++++++++++++++--
+ include/linux/mhi.h           |   6 +
+ 3 files changed, 350 insertions(+), 17 deletions(-)
 
 -- 
-Geert Uytterhoeven -- There's lots of Linux beyond ia32 -- geert@linux-m68k.org
+2.7.4
 
-In personal conversations with technical people, I call myself a hacker. But
-when I'm talking to journalists I just say "programmer" or something like that.
-                                -- Linus Torvalds
