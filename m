@@ -2,685 +2,195 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 06D452C4E41
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Nov 2020 06:25:02 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 540962C4EB5
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Nov 2020 07:28:41 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2387760AbgKZFYp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 26 Nov 2020 00:24:45 -0500
-Received: from z5.mailgun.us ([104.130.96.5]:50223 "EHLO z5.mailgun.us"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2387757AbgKZFYp (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 26 Nov 2020 00:24:45 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1606368283; h=Content-Transfer-Encoding: MIME-Version:
- Message-Id: Date: Subject: Cc: To: From: Sender;
- bh=OWzjBshBlQE5El5REVx1mM2joW+HZBD1QkehXTSsUh4=; b=w56y5MkNUDqWNQLN3VxO3QkaWZRwUygna9XkHflPpbSHpqmXd523OEkZ7myQk2rZkNWQMNB4
- 7By/z2HlKnXLods96EeQhwrOOtmqk5syr0Djc6iGFGQlPx2VlpgVOHGNbOUx7bBjRoAlU7yJ
- YVorWYuahG8FYu8UkQcoeZz4g50=
-X-Mailgun-Sending-Ip: 104.130.96.5
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n04.prod.us-west-2.postgun.com with SMTP id
- 5fbf3c15a5a29b56a1975c3d (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 26 Nov 2020 05:24:37
- GMT
-Sender: saiprakash.ranjan=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 4CC88C43462; Thu, 26 Nov 2020 05:24:37 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
-        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
-Received: from blr-ubuntu-253.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: saiprakash.ranjan)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 29DFFC43460;
-        Thu, 26 Nov 2020 05:24:31 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 29DFFC43460
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=saiprakash.ranjan@codeaurora.org
-From:   Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Suzuki K Poulose <suzuki.poulose@arm.com>,
-        coresight@lists.linaro.org,
-        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-Subject: [PATCHv2] arm64: dts: qcom: sm8150: Add Coresight support
-Date:   Thu, 26 Nov 2020 10:54:22 +0530
-Message-Id: <20201126052422.24869-1-saiprakash.ranjan@codeaurora.org>
-X-Mailer: git-send-email 2.29.0
+        id S2388009AbgKZG2j (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 26 Nov 2020 01:28:39 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47880 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726224AbgKZG2i (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 26 Nov 2020 01:28:38 -0500
+Received: from mail-lj1-x241.google.com (mail-lj1-x241.google.com [IPv6:2a00:1450:4864:20::241])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 29624C0613D4
+        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Nov 2020 22:28:37 -0800 (PST)
+Received: by mail-lj1-x241.google.com with SMTP id y7so1069590lji.8
+        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Nov 2020 22:28:37 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=BrCn0HK4581wnsppy1Np5qiOd8IF6a02wHXrju6sSj8=;
+        b=MT3ReyDA7GcUE3UEiRtFN8XqF1c4x/Bat1aEy7UvE3NUZIGQ7+0vGliiI6mLh18xy6
+         K+IMDFI98iJFuZ3KGhx+MiNbu0shWRW8oalOqLC7DHEvDfGX8c7QoiF+UOrxBcQ8Z8La
+         0/xjg/qnlzTzaVYJGEKY4DRpGqhPmkF5VKKKE=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=BrCn0HK4581wnsppy1Np5qiOd8IF6a02wHXrju6sSj8=;
+        b=c6ttQoKueAcuBTgGn6mWs5km8z4X2wKVqO/kisVEzyTb47wBCw2Uhfu6e2w9he/9Ij
+         yoV4+1t0hex9RenCmkS259h2pHn4MZhK7pZ/om+pnqEFSW/ye620s9nJ5mj294gJPc/D
+         Om2IKlpQe0vjnw7iRbNRPJI+FsxuPVolRGaSJXm37EebURYuvePydfFC+5QepXPfs1MD
+         7Ao0ba7x9l+dIE506tQhvaIqxjLNNveywa030aewapGssgW/xIulKmE0qdH+OywhUfi+
+         juIudsQu50/afjHVYPXWAbBflrZnF2NxE1pvmp2bWIVgV6M+1SF1EEAuEnHsKGKOuKFO
+         ThKg==
+X-Gm-Message-State: AOAM533usCFso8cNFXulsdiDBZOTCrQK+cOaxX1KmP7le1fdCx70uD7f
+        pKecKGjpSfuzEGdii8uOBAD60lgtHUqg7ysb
+X-Google-Smtp-Source: ABdhPJzBCF0qntNkYjzB87MJMTBOFSDdJQpAygHRmEpTprdrDHWWIWvUNgjRW2gItUwRFqyQS0+GRw==
+X-Received: by 2002:a2e:8910:: with SMTP id d16mr701593lji.295.1606372114958;
+        Wed, 25 Nov 2020 22:28:34 -0800 (PST)
+Received: from mail-lj1-f173.google.com (mail-lj1-f173.google.com. [209.85.208.173])
+        by smtp.gmail.com with ESMTPSA id u20sm187458lfo.297.2020.11.25.22.28.33
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 25 Nov 2020 22:28:34 -0800 (PST)
+Received: by mail-lj1-f173.google.com with SMTP id t22so1105647ljk.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Nov 2020 22:28:33 -0800 (PST)
+X-Received: by 2002:a2e:9bd2:: with SMTP id w18mr698548ljj.312.1606372113030;
+ Wed, 25 Nov 2020 22:28:33 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20201120001037.10032-1-stanimir.varbanov@linaro.org>
+ <20201120001037.10032-3-stanimir.varbanov@linaro.org> <CAPBb6MUnXmtSKy9NwikYXjafgB+WM9TKEFjkYK16T2V7KRx=JQ@mail.gmail.com>
+ <8c6231b2-61c2-d432-aa47-ddc29de8da19@linaro.org>
+In-Reply-To: <8c6231b2-61c2-d432-aa47-ddc29de8da19@linaro.org>
+From:   Alexandre Courbot <acourbot@chromium.org>
+Date:   Thu, 26 Nov 2020 15:28:20 +0900
+X-Gmail-Original-Message-ID: <CAPBb6MXRat0g_+d04eoOL9Vpbv-2iJfqdOkzGB17=yjRMeVWXQ@mail.gmail.com>
+Message-ID: <CAPBb6MXRat0g_+d04eoOL9Vpbv-2iJfqdOkzGB17=yjRMeVWXQ@mail.gmail.com>
+Subject: Re: [PATCH 2/3] venus: Limit HFI sessions to the maximum supported
+To:     Stanimir Varbanov <stanimir.varbanov@linaro.org>
+Cc:     linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Vikash Garodia <vgarodia@codeaurora.org>,
+        Mansur Alisha Shaik <mansur@codeaurora.org>,
+        Dikshita Agarwal <dikshita@codeaurora.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add coresight components found on Qualcomm Technologies,
-Inc. SM8150 SoC.
+On Wed, Nov 25, 2020 at 10:01 PM Stanimir Varbanov
+<stanimir.varbanov@linaro.org> wrote:
+>
+>
+>
+> On 11/25/20 5:46 AM, Alexandre Courbot wrote:
+> > On Fri, Nov 20, 2020 at 9:12 AM Stanimir Varbanov
+> > <stanimir.varbanov@linaro.org> wrote:
+> >>
+> >> Currently we rely on firmware to return error when we reach the maximum
+> >> supported number of sessions. But this errors are happened at reqbuf
+> >> time which is a bit later. The more reasonable way looks like is to
+> >> return the error on driver open.
+> >>
+> >> To achieve that modify hfi_session_create to return error when we reach
+> >> maximum count of sessions and thus refuse open.
+> >>
+> >> Signed-off-by: Stanimir Varbanov <stanimir.varbanov@linaro.org>
+> >> ---
+> >>  drivers/media/platform/qcom/venus/core.h      |  1 +
+> >>  drivers/media/platform/qcom/venus/hfi.c       | 19 +++++++++++++++----
+> >>  .../media/platform/qcom/venus/hfi_parser.c    |  3 +++
+> >>  3 files changed, 19 insertions(+), 4 deletions(-)
+> >>
+> >> diff --git a/drivers/media/platform/qcom/venus/core.h b/drivers/media/platform/qcom/venus/core.h
+> >> index db0e6738281e..3a477fcdd3a8 100644
+> >> --- a/drivers/media/platform/qcom/venus/core.h
+> >> +++ b/drivers/media/platform/qcom/venus/core.h
+> >> @@ -96,6 +96,7 @@ struct venus_format {
+> >>  #define MAX_CAP_ENTRIES                32
+> >>  #define MAX_ALLOC_MODE_ENTRIES 16
+> >>  #define MAX_CODEC_NUM          32
+> >> +#define MAX_SESSIONS           16
+> >>
+> >>  struct raw_formats {
+> >>         u32 buftype;
+> >> diff --git a/drivers/media/platform/qcom/venus/hfi.c b/drivers/media/platform/qcom/venus/hfi.c
+> >> index 638ed5cfe05e..8420be6d3991 100644
+> >> --- a/drivers/media/platform/qcom/venus/hfi.c
+> >> +++ b/drivers/media/platform/qcom/venus/hfi.c
+> >> @@ -175,6 +175,7 @@ static int wait_session_msg(struct venus_inst *inst)
+> >>  int hfi_session_create(struct venus_inst *inst, const struct hfi_inst_ops *ops)
+> >>  {
+> >>         struct venus_core *core = inst->core;
+> >> +       int ret;
+> >>
+> >>         if (!ops)
+> >>                 return -EINVAL;
+> >> @@ -183,12 +184,22 @@ int hfi_session_create(struct venus_inst *inst, const struct hfi_inst_ops *ops)
+> >>         init_completion(&inst->done);
+> >>         inst->ops = ops;
+> >>
+> >> -       mutex_lock(&core->lock);
+> >> -       list_add_tail(&inst->list, &core->instances);
+> >> -       atomic_inc(&core->insts_count);
+> >> +       ret = mutex_lock_interruptible(&core->lock);
+> >> +       if (ret)
+> >> +               return ret;
+> >
+> > Why do we change to mutex_lock_interruptible() here? This makes this
+>
+> Because mutex_lock_interruptible is preferable in kernel docs, but I
+> agree that changing mutex_lock with mutex_lock_interruptible should be
+> subject of another lock related patches. I will drop this in next patch
+> version.
+>
+> > function return an error even though we could obtain the lock just by
+> > trying a bit harder.
+>
+> I didn't get that. The behavior of mutex_lock_interruptible is that same
+> as mutex_lock, i.e. the it will sleep to acquire the lock. The
+> difference is that the sleep could be interrupted by a signal. You might
+> think about mutex_trylock?
 
-Signed-off-by: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-Reviewed-by: Mathieu Poirier <mathieu.poirier@linaro.org>
----
+Unless that mutex can be held by someone else for a rather long time
+(i.e. to the point where we may want to give priority to signals when
+userspace opens the device, since that's where hfi_session_create() is
+called), I am not convinced this change is necessary? It may confuse
+userspace into thinking there was a serious error while there is none.
+Granted, userspace should manage this case, and from what I can see
+this code is correct, but I'm not sure we would gain anything by
+adding this extra complexity.
 
-Changes in v2:
- * Rebase on top of qcom for-next branch
- * Add reviewed-by tag collected from previous version
-
----
- arch/arm64/boot/dts/qcom/sm8150.dtsi | 591 +++++++++++++++++++++++++++
- 1 file changed, 591 insertions(+)
-
-diff --git a/arch/arm64/boot/dts/qcom/sm8150.dtsi b/arch/arm64/boot/dts/qcom/sm8150.dtsi
-index 8dac11c6012e..5270bda7418f 100644
---- a/arch/arm64/boot/dts/qcom/sm8150.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8150.dtsi
-@@ -798,6 +798,597 @@ glink-edge {
- 			};
- 		};
- 
-+		stm@6002000 {
-+			compatible = "arm,coresight-stm", "arm,primecell";
-+			reg = <0 0x06002000 0 0x1000>,
-+			      <0 0x16280000 0 0x180000>;
-+			reg-names = "stm-base", "stm-stimulus-base";
-+
-+			clocks = <&aoss_qmp>;
-+			clock-names = "apb_pclk";
-+
-+			out-ports {
-+				port {
-+					stm_out: endpoint {
-+						remote-endpoint = <&funnel0_in7>;
-+					};
-+				};
-+			};
-+		};
-+
-+		funnel@6041000 {
-+			compatible = "arm,coresight-dynamic-funnel", "arm,primecell";
-+			reg = <0 0x06041000 0 0x1000>;
-+
-+			clocks = <&aoss_qmp>;
-+			clock-names = "apb_pclk";
-+
-+			out-ports {
-+				port {
-+					funnel0_out: endpoint {
-+						remote-endpoint = <&merge_funnel_in0>;
-+					};
-+				};
-+			};
-+
-+			in-ports {
-+				#address-cells = <1>;
-+				#size-cells = <0>;
-+
-+				port@7 {
-+					reg = <7>;
-+					funnel0_in7: endpoint {
-+						remote-endpoint = <&stm_out>;
-+					};
-+				};
-+			};
-+		};
-+
-+		funnel@6042000 {
-+			compatible = "arm,coresight-dynamic-funnel", "arm,primecell";
-+			reg = <0 0x06042000 0 0x1000>;
-+
-+			clocks = <&aoss_qmp>;
-+			clock-names = "apb_pclk";
-+
-+			out-ports {
-+				port {
-+					funnel1_out: endpoint {
-+						remote-endpoint = <&merge_funnel_in1>;
-+					};
-+				};
-+			};
-+
-+			in-ports {
-+				#address-cells = <1>;
-+				#size-cells = <0>;
-+
-+				port@4 {
-+					reg = <4>;
-+					funnel1_in4: endpoint {
-+						remote-endpoint = <&swao_replicator_out>;
-+					};
-+				};
-+			};
-+		};
-+
-+		funnel@6043000 {
-+			compatible = "arm,coresight-dynamic-funnel", "arm,primecell";
-+			reg = <0 0x06043000 0 0x1000>;
-+
-+			clocks = <&aoss_qmp>;
-+			clock-names = "apb_pclk";
-+
-+			out-ports {
-+				port {
-+					funnel2_out: endpoint {
-+						remote-endpoint = <&merge_funnel_in2>;
-+					};
-+				};
-+			};
-+
-+			in-ports {
-+				#address-cells = <1>;
-+				#size-cells = <0>;
-+
-+				port@2 {
-+					reg = <2>;
-+					funnel2_in2: endpoint {
-+						remote-endpoint = <&apss_merge_funnel_out>;
-+					};
-+				};
-+			};
-+		};
-+
-+		funnel@6045000 {
-+			compatible = "arm,coresight-dynamic-funnel", "arm,primecell";
-+			reg = <0 0x06045000 0 0x1000>;
-+
-+			clocks = <&aoss_qmp>;
-+			clock-names = "apb_pclk";
-+
-+			out-ports {
-+				port {
-+					merge_funnel_out: endpoint {
-+						remote-endpoint = <&etf_in>;
-+					};
-+				};
-+			};
-+
-+			in-ports {
-+				#address-cells = <1>;
-+				#size-cells = <0>;
-+
-+				port@0 {
-+					reg = <0>;
-+					merge_funnel_in0: endpoint {
-+						remote-endpoint = <&funnel0_out>;
-+					};
-+				};
-+
-+				port@1 {
-+					reg = <1>;
-+					merge_funnel_in1: endpoint {
-+						remote-endpoint = <&funnel1_out>;
-+					};
-+				};
-+
-+				port@2 {
-+					reg = <2>;
-+					merge_funnel_in2: endpoint {
-+						remote-endpoint = <&funnel2_out>;
-+					};
-+				};
-+			};
-+		};
-+
-+		replicator@6046000 {
-+			compatible = "arm,coresight-dynamic-replicator", "arm,primecell";
-+			reg = <0 0x06046000 0 0x1000>;
-+
-+			clocks = <&aoss_qmp>;
-+			clock-names = "apb_pclk";
-+
-+			out-ports {
-+				#address-cells = <1>;
-+				#size-cells = <0>;
-+
-+				port@0 {
-+					reg = <0>;
-+					replicator_out0: endpoint {
-+						remote-endpoint = <&etr_in>;
-+					};
-+				};
-+
-+				port@1 {
-+					reg = <1>;
-+					replicator_out1: endpoint {
-+						remote-endpoint = <&replicator1_in>;
-+					};
-+				};
-+			};
-+
-+			in-ports {
-+				port {
-+					replicator_in0: endpoint {
-+						remote-endpoint = <&etf_out>;
-+					};
-+				};
-+			};
-+		};
-+
-+		etf@6047000 {
-+			compatible = "arm,coresight-tmc", "arm,primecell";
-+			reg = <0 0x06047000 0 0x1000>;
-+
-+			clocks = <&aoss_qmp>;
-+			clock-names = "apb_pclk";
-+
-+			out-ports {
-+				port {
-+					etf_out: endpoint {
-+						remote-endpoint = <&replicator_in0>;
-+					};
-+				};
-+			};
-+
-+			in-ports {
-+				port {
-+					etf_in: endpoint {
-+						remote-endpoint = <&merge_funnel_out>;
-+					};
-+				};
-+			};
-+		};
-+
-+		etr@6048000 {
-+			compatible = "arm,coresight-tmc", "arm,primecell";
-+			reg = <0 0x06048000 0 0x1000>;
-+			iommus = <&apps_smmu 0x05e0 0x0>;
-+
-+			clocks = <&aoss_qmp>;
-+			clock-names = "apb_pclk";
-+			arm,scatter-gather;
-+
-+			in-ports {
-+				port {
-+					etr_in: endpoint {
-+						remote-endpoint = <&replicator_out0>;
-+					};
-+				};
-+			};
-+		};
-+
-+		replicator@604a000 {
-+			compatible = "arm,coresight-dynamic-replicator", "arm,primecell";
-+			reg = <0 0x0604a000 0 0x1000>;
-+
-+			clocks = <&aoss_qmp>;
-+			clock-names = "apb_pclk";
-+
-+			out-ports {
-+				#address-cells = <1>;
-+				#size-cells = <0>;
-+
-+				port@1 {
-+					reg = <1>;
-+					replicator1_out: endpoint {
-+						remote-endpoint = <&swao_funnel_in>;
-+					};
-+				};
-+			};
-+
-+			in-ports {
-+				#address-cells = <1>;
-+				#size-cells = <0>;
-+
-+				port@1 {
-+					reg = <1>;
-+					replicator1_in: endpoint {
-+						remote-endpoint = <&replicator_out1>;
-+					};
-+				};
-+			};
-+		};
-+
-+		funnel@6b08000 {
-+			compatible = "arm,coresight-dynamic-funnel", "arm,primecell";
-+			reg = <0 0x06b08000 0 0x1000>;
-+
-+			clocks = <&aoss_qmp>;
-+			clock-names = "apb_pclk";
-+
-+			out-ports {
-+				port {
-+					swao_funnel_out: endpoint {
-+						remote-endpoint = <&swao_etf_in>;
-+					};
-+				};
-+			};
-+
-+			in-ports {
-+				#address-cells = <1>;
-+				#size-cells = <0>;
-+
-+				port@6 {
-+					reg = <6>;
-+					swao_funnel_in: endpoint {
-+						remote-endpoint = <&replicator1_out>;
-+					};
-+				};
-+			};
-+		};
-+
-+		etf@6b09000 {
-+			compatible = "arm,coresight-tmc", "arm,primecell";
-+			reg = <0 0x06b09000 0 0x1000>;
-+
-+			clocks = <&aoss_qmp>;
-+			clock-names = "apb_pclk";
-+
-+			out-ports {
-+				port {
-+					swao_etf_out: endpoint {
-+						remote-endpoint = <&swao_replicator_in>;
-+					};
-+				};
-+			};
-+
-+			in-ports {
-+				port {
-+					swao_etf_in: endpoint {
-+						remote-endpoint = <&swao_funnel_out>;
-+					};
-+				};
-+			};
-+		};
-+
-+		replicator@6b0a000 {
-+			compatible = "arm,coresight-dynamic-replicator", "arm,primecell";
-+			reg = <0 0x06b0a000 0 0x1000>;
-+
-+			clocks = <&aoss_qmp>;
-+			clock-names = "apb_pclk";
-+			qcom,replicator-loses-context;
-+
-+			out-ports {
-+				port {
-+					swao_replicator_out: endpoint {
-+						remote-endpoint = <&funnel1_in4>;
-+					};
-+				};
-+			};
-+
-+			in-ports {
-+				port {
-+					swao_replicator_in: endpoint {
-+						remote-endpoint = <&swao_etf_out>;
-+					};
-+				};
-+			};
-+		};
-+
-+		etm@7040000 {
-+			compatible = "arm,coresight-etm4x", "arm,primecell";
-+			reg = <0 0x07040000 0 0x1000>;
-+
-+			cpu = <&CPU0>;
-+
-+			clocks = <&aoss_qmp>;
-+			clock-names = "apb_pclk";
-+			arm,coresight-loses-context-with-cpu;
-+			qcom,skip-power-up;
-+
-+			out-ports {
-+				port {
-+					etm0_out: endpoint {
-+						remote-endpoint = <&apss_funnel_in0>;
-+					};
-+				};
-+			};
-+		};
-+
-+		etm@7140000 {
-+			compatible = "arm,coresight-etm4x", "arm,primecell";
-+			reg = <0 0x07140000 0 0x1000>;
-+
-+			cpu = <&CPU1>;
-+
-+			clocks = <&aoss_qmp>;
-+			clock-names = "apb_pclk";
-+			arm,coresight-loses-context-with-cpu;
-+			qcom,skip-power-up;
-+
-+			out-ports {
-+				port {
-+					etm1_out: endpoint {
-+						remote-endpoint = <&apss_funnel_in1>;
-+					};
-+				};
-+			};
-+		};
-+
-+		etm@7240000 {
-+			compatible = "arm,coresight-etm4x", "arm,primecell";
-+			reg = <0 0x07240000 0 0x1000>;
-+
-+			cpu = <&CPU2>;
-+
-+			clocks = <&aoss_qmp>;
-+			clock-names = "apb_pclk";
-+			arm,coresight-loses-context-with-cpu;
-+			qcom,skip-power-up;
-+
-+			out-ports {
-+				port {
-+					etm2_out: endpoint {
-+						remote-endpoint = <&apss_funnel_in2>;
-+					};
-+				};
-+			};
-+		};
-+
-+		etm@7340000 {
-+			compatible = "arm,coresight-etm4x", "arm,primecell";
-+			reg = <0 0x07340000 0 0x1000>;
-+
-+			cpu = <&CPU3>;
-+
-+			clocks = <&aoss_qmp>;
-+			clock-names = "apb_pclk";
-+			arm,coresight-loses-context-with-cpu;
-+			qcom,skip-power-up;
-+
-+			out-ports {
-+				port {
-+					etm3_out: endpoint {
-+						remote-endpoint = <&apss_funnel_in3>;
-+					};
-+				};
-+			};
-+		};
-+
-+		etm@7440000 {
-+			compatible = "arm,coresight-etm4x", "arm,primecell";
-+			reg = <0 0x07440000 0 0x1000>;
-+
-+			cpu = <&CPU4>;
-+
-+			clocks = <&aoss_qmp>;
-+			clock-names = "apb_pclk";
-+			arm,coresight-loses-context-with-cpu;
-+			qcom,skip-power-up;
-+
-+			out-ports {
-+				port {
-+					etm4_out: endpoint {
-+						remote-endpoint = <&apss_funnel_in4>;
-+					};
-+				};
-+			};
-+		};
-+
-+		etm@7540000 {
-+			compatible = "arm,coresight-etm4x", "arm,primecell";
-+			reg = <0 0x07540000 0 0x1000>;
-+
-+			cpu = <&CPU5>;
-+
-+			clocks = <&aoss_qmp>;
-+			clock-names = "apb_pclk";
-+			arm,coresight-loses-context-with-cpu;
-+			qcom,skip-power-up;
-+
-+			out-ports {
-+				port {
-+					etm5_out: endpoint {
-+						remote-endpoint = <&apss_funnel_in5>;
-+					};
-+				};
-+			};
-+		};
-+
-+		etm@7640000 {
-+			compatible = "arm,coresight-etm4x", "arm,primecell";
-+			reg = <0 0x07640000 0 0x1000>;
-+
-+			cpu = <&CPU6>;
-+
-+			clocks = <&aoss_qmp>;
-+			clock-names = "apb_pclk";
-+			arm,coresight-loses-context-with-cpu;
-+			qcom,skip-power-up;
-+
-+			out-ports {
-+				port {
-+					etm6_out: endpoint {
-+						remote-endpoint = <&apss_funnel_in6>;
-+					};
-+				};
-+			};
-+		};
-+
-+		etm@7740000 {
-+			compatible = "arm,coresight-etm4x", "arm,primecell";
-+			reg = <0 0x07740000 0 0x1000>;
-+
-+			cpu = <&CPU7>;
-+
-+			clocks = <&aoss_qmp>;
-+			clock-names = "apb_pclk";
-+			arm,coresight-loses-context-with-cpu;
-+			qcom,skip-power-up;
-+
-+			out-ports {
-+				port {
-+					etm7_out: endpoint {
-+						remote-endpoint = <&apss_funnel_in7>;
-+					};
-+				};
-+			};
-+		};
-+
-+		funnel@7800000 { /* APSS Funnel */
-+			compatible = "arm,coresight-dynamic-funnel", "arm,primecell";
-+			reg = <0 0x07800000 0 0x1000>;
-+
-+			clocks = <&aoss_qmp>;
-+			clock-names = "apb_pclk";
-+
-+			out-ports {
-+				port {
-+					apss_funnel_out: endpoint {
-+						remote-endpoint = <&apss_merge_funnel_in>;
-+					};
-+				};
-+			};
-+
-+			in-ports {
-+				#address-cells = <1>;
-+				#size-cells = <0>;
-+
-+				port@0 {
-+					reg = <0>;
-+					apss_funnel_in0: endpoint {
-+						remote-endpoint = <&etm0_out>;
-+					};
-+				};
-+
-+				port@1 {
-+					reg = <1>;
-+					apss_funnel_in1: endpoint {
-+						remote-endpoint = <&etm1_out>;
-+					};
-+				};
-+
-+				port@2 {
-+					reg = <2>;
-+					apss_funnel_in2: endpoint {
-+						remote-endpoint = <&etm2_out>;
-+					};
-+				};
-+
-+				port@3 {
-+					reg = <3>;
-+					apss_funnel_in3: endpoint {
-+						remote-endpoint = <&etm3_out>;
-+					};
-+				};
-+
-+				port@4 {
-+					reg = <4>;
-+					apss_funnel_in4: endpoint {
-+						remote-endpoint = <&etm4_out>;
-+					};
-+				};
-+
-+				port@5 {
-+					reg = <5>;
-+					apss_funnel_in5: endpoint {
-+						remote-endpoint = <&etm5_out>;
-+					};
-+				};
-+
-+				port@6 {
-+					reg = <6>;
-+					apss_funnel_in6: endpoint {
-+						remote-endpoint = <&etm6_out>;
-+					};
-+				};
-+
-+				port@7 {
-+					reg = <7>;
-+					apss_funnel_in7: endpoint {
-+						remote-endpoint = <&etm7_out>;
-+					};
-+				};
-+			};
-+		};
-+
-+		funnel@7810000 {
-+			compatible = "arm,coresight-dynamic-funnel", "arm,primecell";
-+			reg = <0 0x07810000 0 0x1000>;
-+
-+			clocks = <&aoss_qmp>;
-+			clock-names = "apb_pclk";
-+
-+			out-ports {
-+				port {
-+					apss_merge_funnel_out: endpoint {
-+						remote-endpoint = <&funnel2_in2>;
-+					};
-+				};
-+			};
-+
-+			in-ports {
-+				port {
-+					apss_merge_funnel_in: endpoint {
-+						remote-endpoint = <&apss_funnel_out>;
-+					};
-+				};
-+			};
-+		};
-+
- 		remoteproc_cdsp: remoteproc@8300000 {
- 			compatible = "qcom,sm8150-cdsp-pas";
- 			reg = <0x0 0x08300000 0x0 0x4040>;
-
-base-commit: 04cb77f047655cfc1f53aa8e17f7df361ada2846
--- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
-of Code Aurora Forum, hosted by The Linux Foundation
-
+>
+> >
+> >> +
+> >> +       ret = atomic_read(&core->insts_count);
+> >> +       if (ret + 1 > core->max_sessions_supported) {
+> >> +               ret = -EAGAIN;
+> >> +       } else {
+> >> +               atomic_inc(&core->insts_count);
+> >> +               list_add_tail(&inst->list, &core->instances);
+> >> +               ret = 0;
+> >> +       }
+> >> +
+> >>         mutex_unlock(&core->lock);
+> >>
+> >> -       return 0;
+> >> +       return ret;
+> >>  }
+> >>  EXPORT_SYMBOL_GPL(hfi_session_create);
+> >>
+> >> diff --git a/drivers/media/platform/qcom/venus/hfi_parser.c b/drivers/media/platform/qcom/venus/hfi_parser.c
+> >> index 363ee2a65453..52898633a8e6 100644
+> >> --- a/drivers/media/platform/qcom/venus/hfi_parser.c
+> >> +++ b/drivers/media/platform/qcom/venus/hfi_parser.c
+> >> @@ -276,6 +276,9 @@ u32 hfi_parser(struct venus_core *core, struct venus_inst *inst, void *buf,
+> >>                 words_count--;
+> >>         }
+> >>
+> >> +       if (!core->max_sessions_supported)
+> >> +               core->max_sessions_supported = MAX_SESSIONS;
+> >> +
+> >>         parser_fini(inst, codecs, domain);
+> >>
+> >>         return HFI_ERR_NONE;
+> >> --
+> >> 2.17.1
+> >>
+>
+> --
+> regards,
+> Stan
