@@ -2,104 +2,87 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 3A29A2C5148
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Nov 2020 10:32:54 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 539DC2C51EA
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Nov 2020 11:20:28 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729371AbgKZJah (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 26 Nov 2020 04:30:37 -0500
-Received: from mail.kernel.org ([198.145.29.99]:41404 "EHLO mail.kernel.org"
+        id S2387757AbgKZKSv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 26 Nov 2020 05:18:51 -0500
+Received: from m42-4.mailgun.net ([69.72.42.4]:23180 "EHLO m42-4.mailgun.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726721AbgKZJah (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 26 Nov 2020 04:30:37 -0500
-Received: from localhost.localdomain (unknown [122.179.79.180])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        id S2387712AbgKZKSv (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 26 Nov 2020 05:18:51 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1606385930; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=VKrx5gufXyjy4Nmp0ZKHspcGqjryqi+Bhc7JcUiGBxQ=; b=EFVPbitEGBvCn/INStu2Vy7M4XqdBpVlegbkcJ2ZtPtBTwFSODwoAr2wr2GdZMiRDQMw53p4
+ 7qZje5nrGWo5geybmnqt9OektQEnGbTNbQHTDSYAnl1yv06pD6go3rTpY0glG2zYB0RONbyd
+ Mi4OIy5A5fs+yKLzn4xqB9YLpIM=
+X-Mailgun-Sending-Ip: 69.72.42.4
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n07.prod.us-east-1.postgun.com with SMTP id
+ 5fbf8104d64ea0b703fcd940 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 26 Nov 2020 10:18:44
+ GMT
+Sender: mkshah=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 5BA25C43463; Thu, 26 Nov 2020 10:18:43 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL
+        autolearn=no autolearn_force=no version=3.4.0
+Received: from mkshah-linux.qualcomm.com (unknown [202.46.22.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 2585021D91;
-        Thu, 26 Nov 2020 09:30:31 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1606383036;
-        bh=peoe6om42rZkZB7Dd7Y61MeWRKgrzoucjoFoKjpcn6s=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=am75Q/j0U7W2Q0z6GlSu3vTxnpq0UNAeKpIeTpeCzgD7ZHX6HNyLgb5yNriuo6/7s
-         1KhvHfLoERbZn8PKlu9vnaBBXKic+CsH1WaZPUlyAoBGiTadqlE1jUmu4A2+ZV+bCb
-         BfwVxl922/5mApbxufwsPzIH+YCw6bjj9IOo4ZM8=
-From:   Vinod Koul <vkoul@kernel.org>
-To:     Mark Brown <broonie@kernel.org>
-Cc:     linux-arm-msm@vger.kernel.org,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>, Andy Gross <agross@kernel.org>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org
-Subject: [PATCH 2/2] regulator: qcom-rpmh: Add support for SDX55
-Date:   Thu, 26 Nov 2020 15:00:18 +0530
-Message-Id: <20201126093018.1085594-2-vkoul@kernel.org>
-X-Mailer: git-send-email 2.26.2
-In-Reply-To: <20201126093018.1085594-1-vkoul@kernel.org>
-References: <20201126093018.1085594-1-vkoul@kernel.org>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+        (Authenticated sender: mkshah)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id D0F3CC43460;
+        Thu, 26 Nov 2020 10:18:39 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org D0F3CC43460
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=mkshah@codeaurora.org
+From:   Maulik Shah <mkshah@codeaurora.org>
+To:     bjorn.andersson@linaro.org, andy.gross@linaro.org
+Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        tkjos@google.com, dianders@chromium.org, ilina@codeaurora.org,
+        lsrao@codeaurora.org, Maulik Shah <mkshah@codeaurora.org>
+Subject: [PATCH 0/3] Add changes to support 'HW solver' mode in rpmh driver
+Date:   Thu, 26 Nov 2020 15:48:15 +0530
+Message-Id: <1606385898-8609-1-git-send-email-mkshah@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add support from RPMH regulators found in SDX55 platform
+RSC controllers may be in 'HW solver' state, where they could be in
+autonomous mode executing low power modes for their hardware and as
+such are not available for sending active votes.
 
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
----
- drivers/regulator/qcom-rpmh-regulator.c | 31 +++++++++++++++++++++++++
- 1 file changed, 31 insertions(+)
+This series adds changes to support the same in rpmh driver by disallowing
+active requests when in solver mode and allowing the drivers to write
+cached sleep and wake votes immediately.
 
-diff --git a/drivers/regulator/qcom-rpmh-regulator.c b/drivers/regulator/qcom-rpmh-regulator.c
-index d488325499a9..e673d48b31a1 100644
---- a/drivers/regulator/qcom-rpmh-regulator.c
-+++ b/drivers/regulator/qcom-rpmh-regulator.c
-@@ -930,6 +930,33 @@ static const struct rpmh_vreg_init_data pm6150l_vreg_data[] = {
- 	{},
- };
- 
-+static const struct rpmh_vreg_init_data pmx55_vreg_data[] = {
-+	RPMH_VREG("smps1",   "smp%s1",    &pmic5_ftsmps510, "vdd-s1"),
-+	RPMH_VREG("smps2",   "smp%s2",    &pmic5_hfsmps510, "vdd-s2"),
-+	RPMH_VREG("smps3",   "smp%s3",    &pmic5_hfsmps510, "vdd-s3"),
-+	RPMH_VREG("smps4",   "smp%s4",    &pmic5_hfsmps510, "vdd-s4"),
-+	RPMH_VREG("smps5",   "smp%s5",    &pmic5_hfsmps510, "vdd-s5"),
-+	RPMH_VREG("smps6",   "smp%s6",    &pmic5_ftsmps510, "vdd-s6"),
-+	RPMH_VREG("smps7",   "smp%s7",    &pmic5_hfsmps510, "vdd-s7"),
-+	RPMH_VREG("ldo1",    "ldo%s1",    &pmic5_nldo,      "vdd-l1-l2"),
-+	RPMH_VREG("ldo2",    "ldo%s2",    &pmic5_nldo,      "vdd-l1-l2"),
-+	RPMH_VREG("ldo3",    "ldo%s3",    &pmic5_nldo,      "vdd-l3-l9"),
-+	RPMH_VREG("ldo4",    "ldo%s4",    &pmic5_nldo,      "vdd-l4-l12"),
-+	RPMH_VREG("ldo5",    "ldo%s5",    &pmic5_pldo,      "vdd-l5-l6"),
-+	RPMH_VREG("ldo6",    "ldo%s6",    &pmic5_pldo,      "vdd-l5-l6"),
-+	RPMH_VREG("ldo7",    "ldo%s7",    &pmic5_nldo,      "vdd-l7-l8"),
-+	RPMH_VREG("ldo8",    "ldo%s8",    &pmic5_nldo,      "vdd-l7-l8"),
-+	RPMH_VREG("ldo9",    "ldo%s9",    &pmic5_nldo,      "vdd-l3-l9"),
-+	RPMH_VREG("ldo10",   "ldo%s10",   &pmic5_pldo,      "vdd-l10-l11-l13"),
-+	RPMH_VREG("ldo11",   "ldo%s11",   &pmic5_pldo,      "vdd-l10-l11-l13"),
-+	RPMH_VREG("ldo12",   "ldo%s12",   &pmic5_nldo,      "vdd-l4-l12"),
-+	RPMH_VREG("ldo13",   "ldo%s13",   &pmic5_pldo,      "vdd-l10-l11-l13"),
-+	RPMH_VREG("ldo14",   "ldo%s14",   &pmic5_nldo,      "vdd-l14"),
-+	RPMH_VREG("ldo15",   "ldo%s15",   &pmic5_nldo,      "vdd-l15"),
-+	RPMH_VREG("ldo16",   "ldo%s16",   &pmic5_pldo,      "vdd-l16"),
-+	{},
-+};
-+
- static int rpmh_regulator_probe(struct platform_device *pdev)
- {
- 	struct device *dev = &pdev->dev;
-@@ -1000,6 +1027,10 @@ static const struct of_device_id __maybe_unused rpmh_regulator_match_table[] = {
- 		.compatible = "qcom,pm6150l-rpmh-regulators",
- 		.data = pm6150l_vreg_data,
- 	},
-+	{
-+		.compatible = "qcom,pmx55-rpmh-regulators",
-+		.data = pmx55_vreg_data,
-+	},
- 	{}
- };
- MODULE_DEVICE_TABLE(of, rpmh_regulator_match_table);
+Note: The series can land on its own but to avoid conflicts with
+other change going in rpmh driver i have based changes on top of [1]
+which hopefully can land soon.
+
+[1] https://patchwork.kernel.org/project/linux-arm-msm/patch/1606379490-4052-1-git-send-email-mkshah@codeaurora.org
+
+Lina Iyer (1):
+  drivers: qcom: rpmh: Disallow active requests in solver mode
+
+Maulik Shah (2):
+  soc: qcom: rpmh: Add rpmh_write_sleep_and_wake() function
+  soc: qcom: rpmh: Conditionally check lockdep_assert_irqs_disabled()
+
+ drivers/soc/qcom/rpmh-internal.h | 10 ++++
+ drivers/soc/qcom/rpmh-rsc.c      | 34 ++++++++++++++
+ drivers/soc/qcom/rpmh.c          | 98 ++++++++++++++++++++++++++++++++++++++--
+ drivers/soc/qcom/trace-rpmh.h    | 20 ++++++++
+ include/soc/qcom/rpmh.h          | 10 ++++
+ 5 files changed, 168 insertions(+), 4 deletions(-)
+
 -- 
-2.26.2
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
+of Code Aurora Forum, hosted by The Linux Foundation
 
