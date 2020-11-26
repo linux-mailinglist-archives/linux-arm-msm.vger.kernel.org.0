@@ -2,118 +2,106 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 8CF4F2C5C46
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Nov 2020 19:55:27 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D97CC2C5C1E
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Nov 2020 19:48:30 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2404883AbgKZSzS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 26 Nov 2020 13:55:18 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50790 "EHLO
+        id S2404654AbgKZSqK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 26 Nov 2020 13:46:10 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49418 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2405053AbgKZSy6 (ORCPT
+        with ESMTP id S2403877AbgKZSqJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 26 Nov 2020 13:54:58 -0500
-Received: from relay08.th.seeweb.it (relay08.th.seeweb.it [IPv6:2001:4b7a:2000:18::169])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 67E1AC061A47
-        for <linux-arm-msm@vger.kernel.org>; Thu, 26 Nov 2020 10:54:58 -0800 (PST)
-Received: from IcarusMOD.eternityproject.eu (unknown [2.237.20.237])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id 2B91D4063F;
-        Thu, 26 Nov 2020 19:46:38 +0100 (CET)
-From:   AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>
-To:     linux-arm-msm@vger.kernel.org
-Cc:     linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-pm@vger.kernel.org, ulf.hansson@linaro.org,
-        jorge.ramirez-ortiz@linaro.org, broonie@kernel.org,
-        lgirdwood@gmail.com, daniel.lezcano@linaro.org, nks@flawful.org,
-        bjorn.andersson@linaro.org, agross@kernel.org, robh+dt@kernel.org,
-        viresh.kumar@linaro.org, rjw@rjwysocki.net,
-        konrad.dybcio@somainline.org, martin.botka@somainline.org,
-        marijn.suijten@somainline.org, phone-devel@vger.kernel.org,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>
-Subject: [PATCH 13/13] dt-bindings: cpufreq: qcom-hw: Add bindings for 8998
-Date:   Thu, 26 Nov 2020 19:45:59 +0100
-Message-Id: <20201126184559.3052375-14-angelogioacchino.delregno@somainline.org>
-X-Mailer: git-send-email 2.29.2
-In-Reply-To: <20201126184559.3052375-1-angelogioacchino.delregno@somainline.org>
-References: <20201126184559.3052375-1-angelogioacchino.delregno@somainline.org>
+        Thu, 26 Nov 2020 13:46:09 -0500
+Received: from the.earth.li (the.earth.li [IPv6:2a00:1098:86:4d:c0ff:ee:15:900d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 51B51C0613D4;
+        Thu, 26 Nov 2020 10:46:09 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=earth.li;
+         s=the; h=Content-Type:MIME-Version:Message-ID:Subject:To:From:Date:Sender:
+        Reply-To:Cc:Content-Transfer-Encoding:Content-ID:Content-Description:
+        Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:
+        In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
+        List-Post:List-Owner:List-Archive;
+        bh=Jm9WExEEGbZnOC+/zAJaeZ73Cvbu8YyRGJ7tUNH6vk0=; b=wfQmoh83XQfT54jh1iV8LauzzD
+        n/z69omMALivwYrURu1uC1lvMahX4fBJbr5KA8EH8Unhtw68sKPC4XSLrBEXOFAZKYdNQxdRXtIIN
+        2ztH/xnuenTCPwXK7T4OFXz4ODJtVMBVJPdaLJjJIdm63eGVfunBKgrFT1YTrDs0tiGq/G5KuVb0+
+        DXtVntH1sLNUE+iwNt6kBT2qtgPQ6oXF+wyzBy9wJNJHCGwsEnnEieSsLToXobr2rh9JWW53rVWRg
+        wjfNoNoqiNrlMYTdb/iwjuz5eLg4spQwTP81lDvYR9Fc/vO5FTzP6zkyEUjd9D5ZiNOUnmEe43uiZ
+        PWLS/B2A==;
+Received: from noodles by the.earth.li with local (Exim 4.92)
+        (envelope-from <noodles@earth.li>)
+        id 1kiMHK-0000KY-OU; Thu, 26 Nov 2020 18:46:02 +0000
+Date:   Thu, 26 Nov 2020 18:46:02 +0000
+From:   Jonathan McDowell <noodles@earth.li>
+To:     Vinod Koul <vkoul@kernel.org>, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Dan Williams <dan.j.williams@intel.com>,
+        Philipp Zabel <p.zabel@pengutronix.de>,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        dmaengine@vger.kernel.org
+Subject: [PATCH] dmaengine: qcom: Fix ADM driver kerneldoc markup
+Message-ID: <20201126184602.GA1008@earth.li>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The OSM programming addition has been done under the
-qcom,cpufreq-hw-8998 compatible name: specify the requirement
-of two additional register spaces for this functionality.
+Update the kerneldoc function headers to fix build warnings:
 
-Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
+drivers/dma/qcom/qcom_adm.c:180: warning: Function parameter or member 'chan' not described in 'adm_free_chan'
+drivers/dma/qcom/qcom_adm.c:190: warning: Function parameter or member 'burst' not described in 'adm_get_blksize'
+drivers/dma/qcom/qcom_adm.c:466: warning: Function parameter or member 'chan' not described in 'adm_terminate_all'
+drivers/dma/qcom/qcom_adm.c:466: warning: Excess function parameter 'achan' description in 'adm_terminate_all'
+drivers/dma/qcom/qcom_adm.c:503: warning: Function parameter or member 'achan' not described in 'adm_start_dma'
+
+Signed-off-by: Jonathan McDowell <noodles@earth.li>
 ---
- .../bindings/cpufreq/qcom,cpufreq-hw.yaml     | 31 ++++++++++++++++---
- 1 file changed, 27 insertions(+), 4 deletions(-)
+ drivers/dma/qcom/qcom_adm.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/Documentation/devicetree/bindings/cpufreq/qcom,cpufreq-hw.yaml b/Documentation/devicetree/bindings/cpufreq/qcom,cpufreq-hw.yaml
-index 94a56317b14b..f64cea73037e 100644
---- a/Documentation/devicetree/bindings/cpufreq/qcom,cpufreq-hw.yaml
-+++ b/Documentation/devicetree/bindings/cpufreq/qcom,cpufreq-hw.yaml
-@@ -23,17 +23,21 @@ properties:
-           - qcom,cpufreq-epss
+diff --git a/drivers/dma/qcom/qcom_adm.c b/drivers/dma/qcom/qcom_adm.c
+index 9b6f8e050ecc..ee78bed8d60d 100644
+--- a/drivers/dma/qcom/qcom_adm.c
++++ b/drivers/dma/qcom/qcom_adm.c
+@@ -173,8 +173,9 @@ struct adm_device {
+ /**
+  * adm_free_chan - Frees dma resources associated with the specific channel
+  *
+- * Free all allocated descriptors associated with this channel
++ * @chan: dma channel
+  *
++ * Free all allocated descriptors associated with this channel
+  */
+ static void adm_free_chan(struct dma_chan *chan)
+ {
+@@ -185,6 +186,7 @@ static void adm_free_chan(struct dma_chan *chan)
+ /**
+  * adm_get_blksize - Get block size from burst value
+  *
++ * @burst: Burst size of transaction
+  */
+ static int adm_get_blksize(unsigned int burst)
+ {
+@@ -456,7 +458,7 @@ static struct dma_async_tx_descriptor *adm_prep_slave_sg(struct dma_chan *chan,
  
-   reg:
-+    description: Base address and size of the RBCPR register region
-     minItems: 2
-     maxItems: 2
+ /**
+  * adm_terminate_all - terminate all transactions on a channel
+- * @achan: adm dma channel
++ * @chan: dma channel
+  *
+  * Dequeues and frees all transactions, aborts current transaction
+  * No callbacks are done
+@@ -497,7 +499,7 @@ static int adm_slave_config(struct dma_chan *chan, struct dma_slave_config *cfg)
  
-   reg-names:
-     description:
--      Frequency domain register region for each domain.
--    items:
--      - const: "freq-domain0"
--      - const: "freq-domain1"
-+      Frequency domain register region for each domain. If OSM programming
-+      does not happen in the bootloader and has to be done in this driver,
-+      then also the OSM domain region osm-domain[0-1] has to be provided.
-+    minItems: 2
-+    maxItems: 2
- 
-   clock-names:
-+    minItems: 2
-+    maxItems: 2
-     - const: xo
-     - const: ref
- 
-@@ -53,9 +57,28 @@ properties:
-       property with phandle to a cpufreq_hw followed by the Domain ID(0/1)
-       in the CPU DT node.
- 
-+allOf:
-+ - if:
-+     properties:
-+       reg-names:
-+         contains:
-+           const: qcom,cpufreq-hw-8998
-+   then:
-+     properties:
-+       reg:
-+         minItems: 4
-+         maxItems: 4
-+       reg-names:
-+         items:
-+           - const: "freq-domain0"
-+           - const: "freq-domain1"
-+           - const: "osm-domain0"
-+           - const: "osm-domain1"
-+
- required:
-   - compatible
-   - reg
-+  - reg-names
-   - clock-names
-   - clocks
-   - "#freq-domain-cells"
+ /**
+  * adm_start_dma - start next transaction
+- * @achan - ADM dma channel
++ * @achan: ADM dma channel
+  */
+ static void adm_start_dma(struct adm_chan *achan)
+ {
 -- 
-2.29.2
+2.20.1
 
