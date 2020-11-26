@@ -2,59 +2,59 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 2BAE82C4CEF
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Nov 2020 02:56:33 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7B3D52C4CF2
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Nov 2020 02:56:34 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731379AbgKZBzC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 25 Nov 2020 20:55:02 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34054 "EHLO
+        id S1732016AbgKZBzD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 25 Nov 2020 20:55:03 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34060 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730963AbgKZBzB (ORCPT
+        with ESMTP id S1731101AbgKZBzD (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 25 Nov 2020 20:55:01 -0500
-Received: from mail-io1-xd42.google.com (mail-io1-xd42.google.com [IPv6:2607:f8b0:4864:20::d42])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D398BC061A51
-        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Nov 2020 17:55:01 -0800 (PST)
-Received: by mail-io1-xd42.google.com with SMTP id u21so267820iol.12
-        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Nov 2020 17:55:01 -0800 (PST)
+        Wed, 25 Nov 2020 20:55:03 -0500
+Received: from mail-io1-xd44.google.com (mail-io1-xd44.google.com [IPv6:2607:f8b0:4864:20::d44])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EAC77C0613D4
+        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Nov 2020 17:55:02 -0800 (PST)
+Received: by mail-io1-xd44.google.com with SMTP id m13so278619ioq.9
+        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Nov 2020 17:55:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=GGWnzP3ted/k1YfU1Wv1gmCCa/vZ4JiGXqXyN0Z7WN8=;
-        b=g2jLMnqX5N9dFLYoZMYksdj94s+FaPOPKBetHiua6V6i83TbetwVJlm3B+C/ug4mrf
-         rC3uO6T0nTSSeZk1kRugYMEFfGpCgMU67/ZbADR92EgXJAduQ8BLdayrI76r41kkruIG
-         d1HJtbD9aLod13ic1jKhVu4Dr6Rg+VRFmZhsVRaRTBwbj43sFrl7WU4VbMzGPveSGKO0
-         amuQksGJcXn/5VIPBLNita5E7WmHNqrXbD3sVM1b8EHIVOOlqxTZ4dewYTjHrlgR8H7/
-         MT0udVwar5r4RPEH15Z+vMEECKAjGmmcP+XqhuuYoC/rr0+d8ao7gqzruLH/wT5H48c/
-         Uctw==
+        bh=kC4cX8QlAj/mV9DiPMHXGpd2mMsXbrJC4NkhdR19Ci0=;
+        b=U+/IrjHhDbN9b7zOOiWg7syuPWyzv4Q9/VPwxiNYSmG9XnrACcIrE3il1XsUw5kFI5
+         PvmlgGvPFD0e1F/g/XqFPt3G77M4O/39tlGxnLHn2FaOJAvh8tDoNxe20m7iresby8Y1
+         wjecL5BWJyisI8Yv4LU/Ozcmsurb75/Aa8xWrAGX38FgG4nmf3zcB/GlQOc9YllVGqEe
+         mPGsZ5T+1nbVCAcqehLo7hTXPPjHEzhywQv7OfSFJEuLqNtTQuiFGZqfe9o5U0kF8T5t
+         rgJC4xoNxtj1aJkvmymJywmT9tOYFU9aXihZw/rpia1sc6Xx4hItG/+jOQ5uB8TmI+6f
+         3dAg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=GGWnzP3ted/k1YfU1Wv1gmCCa/vZ4JiGXqXyN0Z7WN8=;
-        b=qzU5S0fYV/Nl2CMowgdQXhH3W7UiWaey+RWb614YxwAzhfF4iekPZ2WEvkMpkkV5Zf
-         mZoOhhk0+I9vzBcjLp7C0vxGDIHMHhavoRxuclrpG87bQk/N1uchTqunl1PFDyXXq/UZ
-         9D9j6btCkOe6nFhKS9bgCN6iAi4btjqNZsj5VluPYcPLBl2W+8J6LfaCoxbmBvK92HF7
-         sCbd3TxyWFzcrE2H7g/M0a5irhtq/RpoC2SHDnZGaejou04uWVBVkZt5uqUhZbIQhtzi
-         4r6nMsWBI9r7XCyahlAY6XgTnGzFgh+5FHFe9yPdgnxGzCqDVe1U/1FFc9WXaO5BSP7b
-         4Y4A==
-X-Gm-Message-State: AOAM5310Y2oxtH5sRmFSfxNzLH1Yzxoj+M2z0Yo44KeVBq76WNilkf3Z
-        V9/M2Ormv0ZrV/1QVBsWJeWAmA==
-X-Google-Smtp-Source: ABdhPJxp8IY0yK40iHL7IHTE7Xq7UnMg3tWMnS5UZVoXIwXRPPyIclWogeFYl8I2fFFOW4jOU8FReQ==
-X-Received: by 2002:a5d:91cf:: with SMTP id k15mr679354ior.161.1606355701259;
-        Wed, 25 Nov 2020 17:55:01 -0800 (PST)
+        bh=kC4cX8QlAj/mV9DiPMHXGpd2mMsXbrJC4NkhdR19Ci0=;
+        b=YnbrM6ZvhS/MmtrwhG3+Q14YfOeboh1rCzfndVpCBhNpIblPfsVeq9csjaaPKMB1E3
+         DoX2vIw01Q54cElUSjEKItop+IF3SeBwJOwqGtEa4WehD7q8lsEg6TVhURWMpIs2MhoL
+         I0o1WwbK4JiwvwGtKSB/GcocVaZdnjcSEC7XxYHvi07PgJ57UtI/OPyHguwWZl2yaxGe
+         dBoXNm1BL+wAoqXLVuat6jmuIuZ0JmOKjC/rOVjkaRFc7TV9rJ+esI2xN1exPmz0tnSb
+         wF9/6QiZLwYJXi8ew5s4vZZJDt22T3koeMlP3a8H33XXevy0tufO6L00C/gNAnjTSeKA
+         WFgw==
+X-Gm-Message-State: AOAM5307sQbr22lIUEJLnC7z11+vZsk81/5OuZyKk6Uq8yk2nbvC+2WD
+        EF1SP7o/brCMWxgUHbeUsRUY9Q==
+X-Google-Smtp-Source: ABdhPJycJ9c96dJI6sXobyQCW68aVZ++Ik9ZB+47DDelnTs+VZ1jCSjbxi81/XSCQ1gz4ISkgmho/w==
+X-Received: by 2002:a02:290e:: with SMTP id p14mr1135688jap.105.1606355702321;
+        Wed, 25 Nov 2020 17:55:02 -0800 (PST)
 Received: from beast.localdomain (c-73-185-129-58.hsd1.mn.comcast.net. [73.185.129.58])
-        by smtp.gmail.com with ESMTPSA id r17sm1714907ioj.5.2020.11.25.17.55.00
+        by smtp.gmail.com with ESMTPSA id r17sm1714907ioj.5.2020.11.25.17.55.01
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 25 Nov 2020 17:55:00 -0800 (PST)
+        Wed, 25 Nov 2020 17:55:01 -0800 (PST)
 From:   Alex Elder <elder@linaro.org>
 To:     bjorn.andersson@linaro.org, agross@kernel.org, robh+dt@kernel.org
 Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org
-Subject: [PATCH 1/3] arm64: dts: qcom: sc7180: limit IPA iommu streams
-Date:   Wed, 25 Nov 2020 19:54:55 -0600
-Message-Id: <20201126015457.6557-2-elder@linaro.org>
+Subject: [PATCH 2/3] arm64: dts: qcom: sc7180: use GIC_SPI for IPA interrupts
+Date:   Wed, 25 Nov 2020 19:54:56 -0600
+Message-Id: <20201126015457.6557-3-elder@linaro.org>
 X-Mailer: git-send-email 2.20.1
 In-Reply-To: <20201126015457.6557-1-elder@linaro.org>
 References: <20201126015457.6557-1-elder@linaro.org>
@@ -64,34 +64,29 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Recently we learned that Android and Windows firmware don't seem to
-like using 3 as an iommu mask value for IPA.  A simple fix was to
-specify exactly the streams needed explicitly, rather than implying
-a range with the mask.  Make the same change for the SC7180 platform.
+Use GIC_SPI rather than 0 in the specifiers for the two ARM GIC
+interrupts used by IPA.
 
-See also:
-  https://lore.kernel.org/linux-arm-msm/20201123052305.157686-1-bjorn.andersson@linaro.org/
-
-Fixes: d82fade846aa8 ("arm64: dts: qcom: sc7180: add IPA information")
 Signed-off-by: Alex Elder <elder@linaro.org>
 ---
- arch/arm64/boot/dts/qcom/sc7180.dtsi | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ arch/arm64/boot/dts/qcom/sc7180.dtsi | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-index c0efb101b0d61..eb66aadf360d7 100644
+index eb66aadf360d7..fa379bfaa443a 100644
 --- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
 +++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-@@ -1396,7 +1396,8 @@
- 		ipa: ipa@1e40000 {
- 			compatible = "qcom,sc7180-ipa";
+@@ -1405,8 +1405,8 @@
+ 				    "ipa-shared",
+ 				    "gsi";
  
--			iommus = <&apps_smmu 0x440 0x3>;
-+			iommus = <&apps_smmu 0x440 0x0>,
-+				 <&apps_smmu 0x442 0x0>;
- 			reg = <0 0x1e40000 0 0x7000>,
- 			      <0 0x1e47000 0 0x2000>,
- 			      <0 0x1e04000 0 0x2c000>;
+-			interrupts-extended = <&intc 0 311 IRQ_TYPE_EDGE_RISING>,
+-					      <&intc 0 432 IRQ_TYPE_LEVEL_HIGH>,
++			interrupts-extended = <&intc GIC_SPI 311 IRQ_TYPE_EDGE_RISING>,
++					      <&intc GIC_SPI 432 IRQ_TYPE_LEVEL_HIGH>,
+ 					      <&ipa_smp2p_in 0 IRQ_TYPE_EDGE_RISING>,
+ 					      <&ipa_smp2p_in 1 IRQ_TYPE_EDGE_RISING>;
+ 			interrupt-names = "ipa",
 -- 
 2.20.1
 
