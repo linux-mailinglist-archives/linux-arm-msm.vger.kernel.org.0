@@ -2,177 +2,187 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 03BD92C51F0
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Nov 2020 11:20:31 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id F1B852C51DC
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Nov 2020 11:15:12 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2387851AbgKZKTC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 26 Nov 2020 05:19:02 -0500
-Received: from m42-4.mailgun.net ([69.72.42.4]:10880 "EHLO m42-4.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2387692AbgKZKTC (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 26 Nov 2020 05:19:02 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1606385941; h=References: In-Reply-To: Message-Id: Date:
- Subject: Cc: To: From: Sender;
- bh=OjEE2fQz+mShxwnREioiMJDo4aCYGC1JU+LVyLbVZKI=; b=d5Vp1f5xgjjItJUuJ/OTYXBs1E06wr5toHJKoTZ+5W4t3FeXJkO/98Sv2eSp26UFQmR6dtlX
- MAn2ieV/tL+Dvdo11qVEB0Bf2b82TSqnBQXztrvyLcs4h8IRJNcPupflQAb0Q8Q+/P1DKOSo
- 4dCP/AU+c29ramtdyurRp+txeqs=
-X-Mailgun-Sending-Ip: 69.72.42.4
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n05.prod.us-east-1.postgun.com with SMTP id
- 5fbf810e4146c5eefd1be52e (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 26 Nov 2020 10:18:54
- GMT
-Sender: mkshah=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 36990C43461; Thu, 26 Nov 2020 10:18:54 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL
-        autolearn=no autolearn_force=no version=3.4.0
-Received: from mkshah-linux.qualcomm.com (unknown [202.46.22.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: mkshah)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 6C9A8C433ED;
-        Thu, 26 Nov 2020 10:18:50 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 6C9A8C433ED
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=mkshah@codeaurora.org
-From:   Maulik Shah <mkshah@codeaurora.org>
-To:     bjorn.andersson@linaro.org, andy.gross@linaro.org
-Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        tkjos@google.com, dianders@chromium.org, ilina@codeaurora.org,
-        lsrao@codeaurora.org, Maulik Shah <mkshah@codeaurora.org>
-Subject: [PATCH 3/3] soc: qcom: rpmh: Conditionally check lockdep_assert_irqs_disabled()
-Date:   Thu, 26 Nov 2020 15:48:18 +0530
-Message-Id: <1606385898-8609-4-git-send-email-mkshah@codeaurora.org>
+        id S2387673AbgKZKNs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 26 Nov 2020 05:13:48 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54502 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2387672AbgKZKNr (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 26 Nov 2020 05:13:47 -0500
+Received: from mail-wr1-x442.google.com (mail-wr1-x442.google.com [IPv6:2a00:1450:4864:20::442])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 321EEC0613D4
+        for <linux-arm-msm@vger.kernel.org>; Thu, 26 Nov 2020 02:13:46 -0800 (PST)
+Received: by mail-wr1-x442.google.com with SMTP id u12so1538471wrt.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 26 Nov 2020 02:13:46 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id;
+        bh=TcO2+V8Trb7q4awlpL7qSZ4Ba95y6l5NN7GUNtBcA18=;
+        b=ub6AU6c0u5M6XwLreQQgP9Z0j98QsfN38YuF9jLe6ywD60g+mZ7q0fsPfPTINS+jcT
+         xTW6B2Xvkc7sN/+F5Z/fdxySKIQzH0T/Ks2SUAireFCvKUAkDhbkBgA2xpZ+z+DsIh6U
+         cfqvYbc+gfu+oFGEocDJflVjcyROD2RPd7aS6g5sMs41dR/mKQvtqonp6qL3lz09bYO8
+         VGttUGHjmjQEXjByBlMs2A2dGYOV2RXYSuiDTWJdX0d7UrcT7zgX2p21uT1p9ALOrCsB
+         Bt1VEZv0raANT7Yw8NpUNHZ3+OhyidNO21fYVkjKR0/lwJWp1GP4/ZjzveXYQcmfS6GJ
+         jmhg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=TcO2+V8Trb7q4awlpL7qSZ4Ba95y6l5NN7GUNtBcA18=;
+        b=NHPXk4W/JnC+JOjNpF4tNFcVGYOW0u6KY8Qvb61LaDykIz3W2g7HC0fnYnqBHa4rvs
+         6R9QQI6aHUy64VoFeanqUO/9YVG2biAt4qb7THzoKOTBFzxDBhD/sdBf+cyP5dDCsjVf
+         9caAM0Vhx4C9nrhMf0TAjpV9tGCusAf0YqRrlNGuDQJSorImiQW/xzFTw8hnU1EjIy8Y
+         c+rZC8OMlwrUVZpETtiG5FktK0GWm389ta55vwsCXhhoIEI+Us+JqMn8ieYQnpuHtoN4
+         kNlE/CHC8z/3U/l+azV4Zy+3XuEPKZQNHU72HGMu5nUno5PL+PTb7Y1kqQqnnUfbFnpG
+         XJiQ==
+X-Gm-Message-State: AOAM531NCO++DzFSWrho3RJHa61MDWyt5r0CHUS3NQv6cvSSSZnLO91l
+        xQ6DpQKW9MIu8gaET1nfP0UCYg==
+X-Google-Smtp-Source: ABdhPJwExA4SroWEPwssH0uGRzQt5dQgk4ClHFZGYzxte05q4albRBcH8gNtDna2nSJDL0oPVYVJvA==
+X-Received: by 2002:adf:e544:: with SMTP id z4mr2973966wrm.83.1606385624740;
+        Thu, 26 Nov 2020 02:13:44 -0800 (PST)
+Received: from localhost.localdomain ([88.122.66.28])
+        by smtp.gmail.com with ESMTPSA id 34sm7784825wrh.78.2020.11.26.02.13.43
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 26 Nov 2020 02:13:44 -0800 (PST)
+From:   Loic Poulain <loic.poulain@linaro.org>
+To:     manivannan.sadhasivam@linaro.org, hemantk@codeaurora.org
+Cc:     linux-arm-msm@vger.kernel.org, jhugo@codeaurora.org,
+        Loic Poulain <loic.poulain@linaro.org>
+Subject: [PATCH v2] bus: mhi: core: Indexed MHI controller name
+Date:   Thu, 26 Nov 2020 11:20:35 +0100
+Message-Id: <1606386035-15982-1-git-send-email-loic.poulain@linaro.org>
 X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1606385898-8609-1-git-send-email-mkshah@codeaurora.org>
-References: <1606385898-8609-1-git-send-email-mkshah@codeaurora.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-lockdep_assert_irqs_disabled() was added to check rpmh_flush()
-can only be invoked when irqs are disabled, this is true for
-APPS RSC as the last CPU going to deepest low power mode is
-writing sleep and wake TCSes.
+Today the MHI controller name is simply cloned from the underlying
+bus device (its parent), that gives the following device structure
+for e.g. a MHI/PCI controller:
+devices/pci0000:00/0000:00:01.2/0000:02:00.0/0000:02:00.0
+devices/pci0000:00/0000:00:01.2/0000:02:00.0/0000:02:00.0/0000:02:00.0_IPCR
+...
 
-However for RSCs that support solver mode, drivers can invoke
-rpmh_write_sleep_and_wake() to immediately write cached sleep
-and wake sets to TCSes from any CPU. Conditionally check if RSC
-controller supports 'HW solver' mode then do not check for irqs
-disabled as such RSCs can write sleepand wake TCSes at any point.
+That's quite misleading/confusing and can cause device registering
+issues because of duplicate dev name (e.g. if a PCI device register
+two different MHI instances).
 
-Signed-off-by: Maulik Shah <mkshah@codeaurora.org>
+This patch changes MHI core to create indexed mhi controller names
+(mhi0, mhi1...) in the same way as other busses (i2c0, usb0...).
+
+The previous example becomes:
+devices/pci0000:00/0000:00:01.2/0000:02:00.0/mhi0
+devices/pci0000:00/0000:00:01.2/0000:02:00.0/mhi0/mhi0_IPCR
+...
+ v2: move index field at the end of mhi_controller struct (before bool)
+     to avoid breaking well packed alignment.
+
+Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
 ---
- drivers/soc/qcom/rpmh-internal.h |  5 +++++
- drivers/soc/qcom/rpmh-rsc.c      |  3 +++
- drivers/soc/qcom/rpmh.c          | 26 ++++++++++++++++++++++----
- 3 files changed, 30 insertions(+), 4 deletions(-)
+ drivers/bus/mhi/core/init.c | 18 ++++++++++++++++--
+ drivers/bus/mhi/core/main.c |  2 +-
+ include/linux/mhi.h         |  2 ++
+ 3 files changed, 19 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/soc/qcom/rpmh-internal.h b/drivers/soc/qcom/rpmh-internal.h
-index 79486d6..39fa3c5 100644
---- a/drivers/soc/qcom/rpmh-internal.h
-+++ b/drivers/soc/qcom/rpmh-internal.h
-@@ -17,6 +17,9 @@
- #define MAX_TCS_NR			(MAX_TCS_PER_TYPE * TCS_TYPE_NR)
- #define MAX_TCS_SLOTS			(MAX_CMDS_PER_TCS * MAX_TCS_PER_TYPE)
+diff --git a/drivers/bus/mhi/core/init.c b/drivers/bus/mhi/core/init.c
+index c7a7354..4acad28 100644
+--- a/drivers/bus/mhi/core/init.c
++++ b/drivers/bus/mhi/core/init.c
+@@ -8,6 +8,7 @@
+ #include <linux/device.h>
+ #include <linux/dma-direction.h>
+ #include <linux/dma-mapping.h>
++#include <linux/idr.h>
+ #include <linux/interrupt.h>
+ #include <linux/list.h>
+ #include <linux/mhi.h>
+@@ -18,6 +19,8 @@
+ #include <linux/wait.h>
+ #include "internal.h"
  
-+/* CTRLR specific flags */
-+#define SOLVER_PRESENT			1
++static DEFINE_IDA(mhi_controller_ida);
 +
- struct rsc_drv;
+ const char * const mhi_ee_str[MHI_EE_MAX] = {
+ 	[MHI_EE_PBL] = "PBL",
+ 	[MHI_EE_SBL] = "SBL",
+@@ -940,6 +943,12 @@ int mhi_register_controller(struct mhi_controller *mhi_cntrl,
+ 	mhi_cntrl->minor_version = (soc_info & SOC_HW_VERSION_MINOR_VER_BMSK) >>
+ 					SOC_HW_VERSION_MINOR_VER_SHFT;
  
- /**
-@@ -78,6 +81,7 @@ struct rpmh_request {
-  * @cache_lock: synchronize access to the cache data
-  * @dirty: was the cache updated since flush
-  * @in_solver_mode: Controller is busy in solver mode
-+ * @flags: Controller specific flags
-  * @batch_cache: Cache sleep and wake requests sent as batch
-  */
- struct rpmh_ctrlr {
-@@ -85,6 +89,7 @@ struct rpmh_ctrlr {
- 	spinlock_t cache_lock;
- 	bool dirty;
- 	bool in_solver_mode;
-+	u32 flags;
- 	struct list_head batch_cache;
- };
- 
-diff --git a/drivers/soc/qcom/rpmh-rsc.c b/drivers/soc/qcom/rpmh-rsc.c
-index ffb4ca7..4caaddf 100644
---- a/drivers/soc/qcom/rpmh-rsc.c
-+++ b/drivers/soc/qcom/rpmh-rsc.c
-@@ -1031,6 +1031,9 @@ static int rpmh_rsc_probe(struct platform_device *pdev)
- 	if (!solver_config) {
- 		drv->rsc_pm.notifier_call = rpmh_rsc_cpu_pm_callback;
- 		cpu_pm_register_notifier(&drv->rsc_pm);
-+		drv->client.flags &= ~SOLVER_PRESENT;
-+	} else {
-+		drv->client.flags |= SOLVER_PRESENT;
- 	}
- 
- 	/* Enable the active TCS to send requests immediately */
-diff --git a/drivers/soc/qcom/rpmh.c b/drivers/soc/qcom/rpmh.c
-index 725b8f0..604d511 100644
---- a/drivers/soc/qcom/rpmh.c
-+++ b/drivers/soc/qcom/rpmh.c
-@@ -83,6 +83,9 @@ static int check_ctrlr_state(struct rpmh_ctrlr *ctrlr, enum rpmh_state state)
- 	if (state != RPMH_ACTIVE_ONLY_STATE)
- 		return ret;
- 
-+	if (!(ctrlr->flags & SOLVER_PRESENT))
-+		return ret;
++	mhi_cntrl->index = ida_alloc(&mhi_controller_ida, GFP_KERNEL);
++	if (mhi_cntrl->index < 0) {
++		ret = mhi_cntrl->index;
++		goto error_ida_alloc;
++	}
 +
- 	/* Do not allow sending active votes when in solver mode */
- 	spin_lock(&ctrlr->cache_lock);
- 	if (ctrlr->in_solver_mode)
-@@ -468,12 +471,24 @@ int rpmh_flush(struct rpmh_ctrlr *ctrlr)
- 	struct cache_req *p;
- 	int ret = 0;
+ 	/* Register controller with MHI bus */
+ 	mhi_dev = mhi_alloc_device(mhi_cntrl);
+ 	if (IS_ERR(mhi_dev)) {
+@@ -950,8 +959,8 @@ int mhi_register_controller(struct mhi_controller *mhi_cntrl,
  
--	lockdep_assert_irqs_disabled();
-+	/*
-+	 * For RSC that don't have solver mode,
-+	 * rpmh_flush() is only called when we think we're running
-+	 * on the last CPU with irqs_disabled.
-+	 *
-+	 * For RSC that have solver mode,
-+	 * rpmh_flush() can be invoked with irqs enabled by any CPU.
-+	 *
-+	 * Conditionally check for irqs_disabled only when solver mode
-+	 * is not available.
-+	 */
+ 	mhi_dev->dev_type = MHI_DEVICE_CONTROLLER;
+ 	mhi_dev->mhi_cntrl = mhi_cntrl;
+-	dev_set_name(&mhi_dev->dev, "%s", dev_name(mhi_cntrl->cntrl_dev));
+-	mhi_dev->name = dev_name(mhi_cntrl->cntrl_dev);
++	dev_set_name(&mhi_dev->dev, "mhi%d", mhi_cntrl->index);
++	mhi_dev->name = dev_name(&mhi_dev->dev);
+ 
+ 	/* Init wakeup source */
+ 	device_init_wakeup(&mhi_dev->dev, true);
+@@ -970,6 +979,9 @@ int mhi_register_controller(struct mhi_controller *mhi_cntrl,
+ 	put_device(&mhi_dev->dev);
+ 
+ error_alloc_dev:
++	ida_free(&mhi_controller_ida, mhi_cntrl->index);
 +
-+	if (!(ctrlr->flags & SOLVER_PRESENT))
-+		lockdep_assert_irqs_disabled();
++error_ida_alloc:
+ 	kfree(mhi_cntrl->mhi_cmd);
  
- 	/*
--	 * Currently rpmh_flush() is only called when we think we're running
--	 * on the last processor.  If the lock is busy it means another
--	 * processor is up and it's better to abort than spin.
-+	 * If the lock is busy it means another transaction is on going,
-+	 * in such case it's better to abort than spin.
- 	 */
- 	if (!spin_trylock(&ctrlr->cache_lock))
- 		return -EBUSY;
-@@ -568,6 +583,9 @@ int rpmh_mode_solver_set(const struct device *dev, bool enable)
- 	int ret;
- 	struct rpmh_ctrlr *ctrlr = get_rpmh_ctrlr(dev);
+ error_alloc_cmd:
+@@ -1004,6 +1016,8 @@ void mhi_unregister_controller(struct mhi_controller *mhi_cntrl)
  
-+	if (!(ctrlr->flags & SOLVER_PRESENT))
-+		return -EINVAL;
+ 	device_del(&mhi_dev->dev);
+ 	put_device(&mhi_dev->dev);
 +
- 	spin_lock(&ctrlr->cache_lock);
- 	ret = rpmh_rsc_mode_solver_set(ctrlr_to_drv(ctrlr), enable);
- 	if (!ret)
++	ida_free(&mhi_controller_ida, mhi_cntrl->index);
+ }
+ EXPORT_SYMBOL_GPL(mhi_unregister_controller);
+ 
+diff --git a/drivers/bus/mhi/core/main.c b/drivers/bus/mhi/core/main.c
+index 188501c0..4818f42 100644
+--- a/drivers/bus/mhi/core/main.c
++++ b/drivers/bus/mhi/core/main.c
+@@ -349,7 +349,7 @@ void mhi_create_devices(struct mhi_controller *mhi_cntrl)
+ 		/* Channel name is same for both UL and DL */
+ 		mhi_dev->name = mhi_chan->name;
+ 		dev_set_name(&mhi_dev->dev, "%s_%s",
+-			     dev_name(mhi_cntrl->cntrl_dev),
++			     dev_name(&mhi_cntrl->mhi_dev->dev),
+ 			     mhi_dev->name);
+ 
+ 		/* Init wakeup source if available */
+diff --git a/include/linux/mhi.h b/include/linux/mhi.h
+index 27078db..30c676d 100644
+--- a/include/linux/mhi.h
++++ b/include/linux/mhi.h
+@@ -356,6 +356,7 @@ struct mhi_controller_config {
+  * @read_reg: Read a MHI register via the physical link (required)
+  * @write_reg: Write a MHI register via the physical link (required)
+  * @buffer_len: Bounce buffer length
++ * @index: Index of the MHI controller instance
+  * @bounce_buf: Use of bounce buffer
+  * @fbc_download: MHI host needs to do complete image transfer (optional)
+  * @pre_init: MHI host needs to do pre-initialization before power up
+@@ -446,6 +447,7 @@ struct mhi_controller {
+ 			  u32 val);
+ 
+ 	size_t buffer_len;
++	int index;
+ 	bool bounce_buf;
+ 	bool fbc_download;
+ 	bool pre_init;
 -- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
-of Code Aurora Forum, hosted by The Linux Foundation
+2.7.4
 
