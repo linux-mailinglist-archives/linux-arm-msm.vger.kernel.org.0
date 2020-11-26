@@ -2,61 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 660CA2C4F82
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Nov 2020 08:31:07 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 28A232C4F88
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Nov 2020 08:31:10 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729762AbgKZH3o (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 26 Nov 2020 02:29:44 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57350 "EHLO
+        id S2388548AbgKZH3w (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 26 Nov 2020 02:29:52 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57368 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729535AbgKZH3o (ORCPT
+        with ESMTP id S2388549AbgKZH3v (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 26 Nov 2020 02:29:44 -0500
-Received: from mail-pg1-x541.google.com (mail-pg1-x541.google.com [IPv6:2607:f8b0:4864:20::541])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3B485C061A04
-        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Nov 2020 23:29:44 -0800 (PST)
-Received: by mail-pg1-x541.google.com with SMTP id s63so974752pgc.8
-        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Nov 2020 23:29:44 -0800 (PST)
+        Thu, 26 Nov 2020 02:29:51 -0500
+Received: from mail-pf1-x442.google.com (mail-pf1-x442.google.com [IPv6:2607:f8b0:4864:20::442])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1ED1BC0613D4
+        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Nov 2020 23:29:50 -0800 (PST)
+Received: by mail-pf1-x442.google.com with SMTP id w6so884412pfu.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Nov 2020 23:29:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=R1hYq6kEbx0/AP4j3UyJLMHKTGWiCK0VeyCBcdhowVA=;
-        b=ygt7+G4kKglFCliP8ZfpW5V8hH1v0sFnfQm/pVy1b6Dl2V1HTgIo4/wE4oBcxfCoWM
-         NtELOWGzcjMJur/yKSByfTPVQ/H/lBBwA88sw0WQd1cbrDlTiBVDakDszLBEYWU2kybU
-         lk9/L0OqzHSY+8lbT3lG8Rc+3snhGu5hgDyqGoU/J3m8jBKuaWBk8raGpq6BuuJ69toH
-         TS9Kbi5WCtUfrixsYIUlFwNO1neKwqWXe4aghGiSYwdXCXMrcXrtHajghaxIJTSiyhqs
-         aq02sCJhWBOpND9vNzVF+kvvpXe1SMxqufZCFXMNPVgWv8dKSw6YzY+bJEdtwZHRqf2s
-         hvpw==
+        bh=DrIF8npwlrqxLr6Igah5Ek/omJmCk/eZLSe1ULAbqaY=;
+        b=vwjnecL7+HRvNcp2/QtOXgiS5f1StvfUiYod01dCOQllzXdtF9MY2EUZdSOnOd0zjg
+         rcyRDx080Fua0RfOcotAkNLHVETyneFv5Z4d2HiA48uJ46O09h5uJjkFPb4NvY5rsjoG
+         r15qsySIVo6wFxU/ZGZQ60SRKayEup6ZBr5J91mBimojS6VMXJmJWvor8lViSrW//ukZ
+         jKWtC1LLR+XrssnKeYTbKao98VHkmCCmVS0Mocb6jVtlnUqQkRG+CYnrsTcmfBoJ3ics
+         m37I0olDtj15mp9oW6G9/nROfyL9YA/G1a2cSZP46W6K4+iMMxTugZa66smHM+y1U33K
+         frzg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=R1hYq6kEbx0/AP4j3UyJLMHKTGWiCK0VeyCBcdhowVA=;
-        b=pifpxUwsOv09KTxcDyobHPtJHMb6CYaPUM05c4zFEN6sz9OUTbRDN0haDbTOPJIbiR
-         lKALC+vQd0vXZI2kAuV/e0/lq5E6MOUn6KdX2hVL5j1o0fPwk6Jh2lycA7AqUkOHucB+
-         Jid6NnlJkrCxNsULKkLsta1ReVsMuMqTAlLCF37lejuWykmeunCJtChLjxkZBDxYI/Jj
-         2gkeYhFknbiNXiYyyis7JMEkcrDqOx4Bz9JWdrJG+IwYs1mvwNWmD6bylOXZ0RV5uEq0
-         Cq2xx7i7oY4PnmD9H0ikH7YYN+lRI3frSF9BmGHDEJexmGWCWkWEC5jT2aO52IIJgEBG
-         v3FA==
-X-Gm-Message-State: AOAM530yeHmBju+ELoeqJL+ornm24/QpXjhvMoBSjXfkAbr+m+UHfCC/
-        derXjv2TzKpX5KTshKRDPgVW
-X-Google-Smtp-Source: ABdhPJw7r17cbxf4R8SKlh3cZAC8gWBb7QWKC8JFDeaznAWmjaizv+IJ9LKmnlcXuaBeMpnIvG2R4g==
-X-Received: by 2002:a17:90a:d307:: with SMTP id p7mr2229138pju.196.1606375783771;
-        Wed, 25 Nov 2020 23:29:43 -0800 (PST)
+        bh=DrIF8npwlrqxLr6Igah5Ek/omJmCk/eZLSe1ULAbqaY=;
+        b=XfFF8J35NY6hmY0M09neQyHUNk5A+RNSMI8mbJDnlaBR+WmheqGqZd/cjN4Y5wcUTg
+         RRcIhXNl65dMVCfTniqKAnmCXx0RL7cjXgJwbfJrwJZDXbRUfyk7CZ0NYdQZD9KZfm0V
+         KcU0TKX5enNwXR94lbLD4hXBUv1myS9pgHvXcTSmJgySrNONvLhJTqSIV2l1YONN00TW
+         ODYmu1HsEkIZNBGuOo0tTbtE+CwJQcr4nDgvVd9EgjXPheVra8ejPH0RxwqpURwFjXAI
+         caAEp1kGkyqOoz0p0zF0oyTPwAEL6a+LUOxCUBM2v7Uo25mexD4mRiuf06AbRZh+H51j
+         Slrw==
+X-Gm-Message-State: AOAM532aSEhLfGPLkU8fu1RGAXggChRbtuRLUYf9Si9H9VyaBj6a5QMx
+        rJOlgwLwAAdFQAPoX0vxdkNd
+X-Google-Smtp-Source: ABdhPJxnW6Di3Yy8aHSj3rGQbdFEbp6WxXhA9CofeXAnnQgscmsA6ITioMijAb8veJ08ST2oH7Ghjw==
+X-Received: by 2002:a17:90a:4a0f:: with SMTP id e15mr2162901pjh.182.1606375789668;
+        Wed, 25 Nov 2020 23:29:49 -0800 (PST)
 Received: from localhost.localdomain ([2409:4072:6e95:f2a:3996:9d7f:e389:7f7d])
-        by smtp.gmail.com with ESMTPSA id t9sm5508097pjq.46.2020.11.25.23.29.38
+        by smtp.gmail.com with ESMTPSA id t9sm5508097pjq.46.2020.11.25.23.29.44
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 25 Nov 2020 23:29:43 -0800 (PST)
+        Wed, 25 Nov 2020 23:29:49 -0800 (PST)
 From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 To:     sboyd@kernel.org, mturquette@baylibre.com, robh+dt@kernel.org
 Cc:     bjorn.andersson@linaro.org, vkoul@kernel.org,
         linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
         Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Subject: [RESEND PATCH v4 4/6] clk: qcom: Add support for SDX55 RPMh clocks
-Date:   Thu, 26 Nov 2020 12:58:42 +0530
-Message-Id: <20201126072844.35370-5-manivannan.sadhasivam@linaro.org>
+Subject: [RESEND PATCH v4 5/6] dt-bindings: clock: Add GDSC in SDX55 GCC
+Date:   Thu, 26 Nov 2020 12:58:43 +0530
+Message-Id: <20201126072844.35370-6-manivannan.sadhasivam@linaro.org>
 X-Mailer: git-send-email 2.25.1
 In-Reply-To: <20201126072844.35370-1-manivannan.sadhasivam@linaro.org>
 References: <20201126072844.35370-1-manivannan.sadhasivam@linaro.org>
@@ -66,60 +66,27 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add support for following clocks maintained by RPMh in SDX55 SoCs.
-
-* BI TCXO
-* RF_CLK1
-* RF_CLK1_AO
-* RF_CLK2
-* RF_CLK2_AO
-* QPIC (Qualcomm Technologies, Inc. Parallel Interface Controller)
+Add GDSC instances in SDX55 GCC block.
 
 Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Reviewed-by: Vinod Koul <vkoul@kernel.org>
-Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 ---
- drivers/clk/qcom/clk-rpmh.c | 20 ++++++++++++++++++++
- 1 file changed, 20 insertions(+)
+ include/dt-bindings/clock/qcom,gcc-sdx55.h | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/clk/qcom/clk-rpmh.c b/drivers/clk/qcom/clk-rpmh.c
-index e2c669b08aff..fb72db957721 100644
---- a/drivers/clk/qcom/clk-rpmh.c
-+++ b/drivers/clk/qcom/clk-rpmh.c
-@@ -432,6 +432,25 @@ static const struct clk_rpmh_desc clk_rpmh_sm8250 = {
- 	.num_clks = ARRAY_SIZE(sm8250_rpmh_clocks),
- };
+diff --git a/include/dt-bindings/clock/qcom,gcc-sdx55.h b/include/dt-bindings/clock/qcom,gcc-sdx55.h
+index c372451b3461..fb9a5942f793 100644
+--- a/include/dt-bindings/clock/qcom,gcc-sdx55.h
++++ b/include/dt-bindings/clock/qcom,gcc-sdx55.h
+@@ -109,4 +109,9 @@
+ #define GCC_USB3PHY_PHY_BCR					13
+ #define GCC_USB_PHY_CFG_AHB2PHY_BCR				14
  
-+DEFINE_CLK_RPMH_VRM(sdx55, rf_clk1, rf_clk1_ao, "rfclkd1", 1);
-+DEFINE_CLK_RPMH_VRM(sdx55, rf_clk2, rf_clk2_ao, "rfclkd2", 1);
-+DEFINE_CLK_RPMH_BCM(sdx55, qpic_clk, "QP0");
++/* GCC power domains */
++#define USB30_GDSC						0
++#define PCIE_GDSC						1
++#define EMAC_GDSC						2
 +
-+static struct clk_hw *sdx55_rpmh_clocks[] = {
-+	[RPMH_CXO_CLK]		= &sdm845_bi_tcxo.hw,
-+	[RPMH_CXO_CLK_A]	= &sdm845_bi_tcxo_ao.hw,
-+	[RPMH_RF_CLK1]		= &sdx55_rf_clk1.hw,
-+	[RPMH_RF_CLK1_A]	= &sdx55_rf_clk1_ao.hw,
-+	[RPMH_RF_CLK2]		= &sdx55_rf_clk2.hw,
-+	[RPMH_RF_CLK2_A]	= &sdx55_rf_clk2_ao.hw,
-+	[RPMH_QPIC_CLK]		= &sdx55_qpic_clk.hw,
-+};
-+
-+static const struct clk_rpmh_desc clk_rpmh_sdx55 = {
-+	.clks = sdx55_rpmh_clocks,
-+	.num_clks = ARRAY_SIZE(sdx55_rpmh_clocks),
-+};
-+
- static struct clk_hw *of_clk_rpmh_hw_get(struct of_phandle_args *clkspec,
- 					 void *data)
- {
-@@ -517,6 +536,7 @@ static int clk_rpmh_probe(struct platform_device *pdev)
- static const struct of_device_id clk_rpmh_match_table[] = {
- 	{ .compatible = "qcom,sc7180-rpmh-clk", .data = &clk_rpmh_sc7180},
- 	{ .compatible = "qcom,sdm845-rpmh-clk", .data = &clk_rpmh_sdm845},
-+	{ .compatible = "qcom,sdx55-rpmh-clk",  .data = &clk_rpmh_sdx55},
- 	{ .compatible = "qcom,sm8150-rpmh-clk", .data = &clk_rpmh_sm8150},
- 	{ .compatible = "qcom,sm8250-rpmh-clk", .data = &clk_rpmh_sm8250},
- 	{ }
+ #endif
 -- 
 2.25.1
 
