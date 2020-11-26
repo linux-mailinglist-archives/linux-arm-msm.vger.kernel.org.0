@@ -2,53 +2,53 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 1C3B02C5AB1
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Nov 2020 18:37:16 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 679C02C5AB4
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Nov 2020 18:37:18 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2391651AbgKZRfk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 26 Nov 2020 12:35:40 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38576 "EHLO
+        id S2404169AbgKZRfv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 26 Nov 2020 12:35:51 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38610 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2391674AbgKZRfj (ORCPT
+        with ESMTP id S2403842AbgKZRfv (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 26 Nov 2020 12:35:39 -0500
-Received: from mail-oi1-x241.google.com (mail-oi1-x241.google.com [IPv6:2607:f8b0:4864:20::241])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 061FFC0617A7
-        for <linux-arm-msm@vger.kernel.org>; Thu, 26 Nov 2020 09:35:37 -0800 (PST)
-Received: by mail-oi1-x241.google.com with SMTP id o25so3033252oie.5
-        for <linux-arm-msm@vger.kernel.org>; Thu, 26 Nov 2020 09:35:37 -0800 (PST)
+        Thu, 26 Nov 2020 12:35:51 -0500
+Received: from mail-oi1-x244.google.com (mail-oi1-x244.google.com [IPv6:2607:f8b0:4864:20::244])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 37CC4C0617A7
+        for <linux-arm-msm@vger.kernel.org>; Thu, 26 Nov 2020 09:35:51 -0800 (PST)
+Received: by mail-oi1-x244.google.com with SMTP id o25so3033824oie.5
+        for <linux-arm-msm@vger.kernel.org>; Thu, 26 Nov 2020 09:35:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=gOY/HezNek0HUVN6eUm3quDyWmYoOFo+0d2VCWNsFOQ=;
-        b=uyts//qgDq6NIdz41iSPmW0NCMxG4s7vPE2JLlimI8k9Dta7Lp8XN3VJlMbLFtrINE
-         ro3BRSTRMv8Umr3glOZq7WmCg6G9Mz1RUKqmM89Rmar/e78MeFdctXcDlc1ZAhFFjdLb
-         7Jpkw0WgJOjL9h0qCLWS3Q8yAnWkuFza2aGB86HqlDhpyMfFFen/5YzijCvoCFHHzAj9
-         RZ69xF5KjNsRdPkxSoNygXNdaYH/1Kfm9D7iozMjiT1iO4NflgDrIwbbUD5EHy43f8LP
-         hndzJaxF4dK4CfHiTWjBHhtT8KvAx3h6t9woa85EBeKLkVa1tyNeLy5aBve1xDhEtYo9
-         +yAw==
+        bh=jXRWgBkcCar10/HFUqu1XeMHw3BU4LMAJKWRFNlNPJE=;
+        b=QYWwF5bQ19HsdP7eN+nzWMeKGdRMZ3nIg9cIX6eqkbtKmoz2PQAsEItEuiAUJhFsj6
+         l3zsaj0YijlFdsXCTBsEkMuF0gn8RzcqGWxdicredRcBkcw208wBGKUJs1FUxw2FlmVb
+         6kJbVbWfmiFGSXJoRIGUa8pg+8qijHknZnK/xFLmLmAF124BJDw4pqVUKAiGuakO1xAg
+         5nKp6JHowbL2FjPd0/xso6d4mdZVDqOxS9N3ZMqMJnHZCZ9htFsrZ+Er3/oZjMUdx6lg
+         yQTEpxcmaNC3nfW0h5otmoa7rgumvizs+Y/JoRn5AF8J1D3e8UaIkaTsZMRM8ORLW3Vh
+         a5jA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=gOY/HezNek0HUVN6eUm3quDyWmYoOFo+0d2VCWNsFOQ=;
-        b=hw3JcOKUQbxvHut8HD5v7xCL9+kwPwAc0MOj1lbOyvDQdnXl3PHC2JCZi2aSikA8lp
-         lWgYlZAnndPIyZxVUyzvDwyGa/3b1m6NLQdD0i5sTm7V+auTBCh0kU/ETFNVZyulXSk9
-         ojGhtN4vp1zLjeLihJCaxnmLlzWkXaKW5n6Al9xNLsPSs3gkqh3XHNyIVD6VglSerciz
-         zDke6HuT6V2bwebtuO+oqxwwL08YrMkvagD6qm+kxp5X6Uw0yL+hVsmP9A2FUfsc21BI
-         4RWmF7GLz9LBQMZ+OsC9c/seyzgjFBWi4Qz0aK2FrswXvqj2hmv35zflpksDMPf9uVhV
-         OHHA==
-X-Gm-Message-State: AOAM530laHjSScsyhcIam4rI235w0Z6IKiexuZ8IkQeJCgrLComazkZb
-        gMuY1DPzPYnMTj/As6rYSPCnqQ==
-X-Google-Smtp-Source: ABdhPJx8msTvrsuwihO242PXv7u5F1/YsYDoAhSS6k0ZQZqFcGnBf3qEN5bVS8tSjAhdCenA2tCkyg==
-X-Received: by 2002:aca:5413:: with SMTP id i19mr2773415oib.87.1606412136991;
-        Thu, 26 Nov 2020 09:35:36 -0800 (PST)
+        bh=jXRWgBkcCar10/HFUqu1XeMHw3BU4LMAJKWRFNlNPJE=;
+        b=Dtl4NUfHs5K+Np+ShCJ3ZaVDcFMn51+yjCb2qeBu8z6r1ndBophbTUXLKp3iv9LEFf
+         KYXqDH6+HwOqp+3smy578j9P7PyviCnCwaL5S2NqfQAKiMBDs6TztAH1zQSGTDGuQ1gX
+         y8HFfWGEsIBlG/FX9tcmJMNKQzUUdL1CX5F+dkuM0BWSb4eON70EMuOXR7Ep9jSgbLi8
+         IaROYIJ6L/COIewf/u9/RfUqdIee+bWsYw2NgccJdJ/XvHOxSLRPnKjXAoNPuNvkyGvJ
+         R6ivmqFgEfCqxyHWfvNo0AWUWEzbecGGNwTtvTJxaC50Q8PUzdwmplTAeYn2gHuYOUD6
+         coYA==
+X-Gm-Message-State: AOAM532MunJ3gzi1fCPf9B3/MaWKl+t0+eJMt9DXFMm9J09FaxMOvvZ8
+        BUJXBzTfrROQA0oYTiiJ++NL47zghNAkxQ==
+X-Google-Smtp-Source: ABdhPJxX5a371w/DpR/MK/IFWBYEx1W6uSAqDhguLOSgJP4+ra58Jl9NPbHyu8Acw++1zzIsQ8cO5Q==
+X-Received: by 2002:aca:38c6:: with SMTP id f189mr2676928oia.61.1606412150567;
+        Thu, 26 Nov 2020 09:35:50 -0800 (PST)
 Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id s28sm3186106otd.2.2020.11.26.09.35.35
+        by smtp.gmail.com with ESMTPSA id 11sm3206406oty.65.2020.11.26.09.35.49
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 26 Nov 2020 09:35:35 -0800 (PST)
-Date:   Thu, 26 Nov 2020 11:35:34 -0600
+        Thu, 26 Nov 2020 09:35:49 -0800 (PST)
+Date:   Thu, 26 Nov 2020 11:35:48 -0600
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
 To:     Vinod Koul <vkoul@kernel.org>
 Cc:     Mark Brown <broonie@kernel.org>, linux-arm-msm@vger.kernel.org,
@@ -57,49 +57,79 @@ Cc:     Mark Brown <broonie@kernel.org>, linux-arm-msm@vger.kernel.org,
         Rob Herring <robh+dt@kernel.org>,
         Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
         linux-kernel@vger.kernel.org, devicetree@vger.kernel.org
-Subject: Re: [PATCH 1/2] regulator: dt-bindings: Add PMX55 compatibles
-Message-ID: <X7/nZg7tXb8F3rtk@builder.lan>
+Subject: Re: [PATCH 2/2] regulator: qcom-rpmh: Add support for SDX55
+Message-ID: <X7/ndJsUbRkdmQPq@builder.lan>
 References: <20201126093018.1085594-1-vkoul@kernel.org>
+ <20201126093018.1085594-2-vkoul@kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20201126093018.1085594-1-vkoul@kernel.org>
+In-Reply-To: <20201126093018.1085594-2-vkoul@kernel.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On Thu 26 Nov 03:30 CST 2020, Vinod Koul wrote:
 
-> Add PMX55 compatibles for PMIC found in SDX55 platform
+> Add support from RPMH regulators found in SDX55 platform
 > 
 > Signed-off-by: Vinod Koul <vkoul@kernel.org>
 
-Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+Acked-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 
 > ---
->  .../devicetree/bindings/regulator/qcom,rpmh-regulator.txt       | 2 ++
->  1 file changed, 2 insertions(+)
+>  drivers/regulator/qcom-rpmh-regulator.c | 31 +++++++++++++++++++++++++
+>  1 file changed, 31 insertions(+)
 > 
-> diff --git a/Documentation/devicetree/bindings/regulator/qcom,rpmh-regulator.txt b/Documentation/devicetree/bindings/regulator/qcom,rpmh-regulator.txt
-> index 97c3e0b7611c..bae558b87686 100644
-> --- a/Documentation/devicetree/bindings/regulator/qcom,rpmh-regulator.txt
-> +++ b/Documentation/devicetree/bindings/regulator/qcom,rpmh-regulator.txt
-> @@ -30,6 +30,7 @@ Supported regulator node names:
->  	PMI8998:	bob
->  	PM6150:         smps1 - smps5, ldo1 - ldo19
->  	PM6150L:        smps1 - smps8, ldo1 - ldo11, bob
-> +	PMX55:		smps1 - smps7, ldo1 - ldo16
+> diff --git a/drivers/regulator/qcom-rpmh-regulator.c b/drivers/regulator/qcom-rpmh-regulator.c
+> index d488325499a9..e673d48b31a1 100644
+> --- a/drivers/regulator/qcom-rpmh-regulator.c
+> +++ b/drivers/regulator/qcom-rpmh-regulator.c
+> @@ -930,6 +930,33 @@ static const struct rpmh_vreg_init_data pm6150l_vreg_data[] = {
+>  	{},
+>  };
 >  
->  ========================
->  First Level Nodes - PMIC
-> @@ -47,6 +48,7 @@ First Level Nodes - PMIC
->  		    "qcom,pmi8998-rpmh-regulators"
->  		    "qcom,pm6150-rpmh-regulators"
->  		    "qcom,pm6150l-rpmh-regulators"
-> +		    "qcom,pmx55-rpmh-regulators"
->  
->  - qcom,pmic-id
->  	Usage:      required
+> +static const struct rpmh_vreg_init_data pmx55_vreg_data[] = {
+> +	RPMH_VREG("smps1",   "smp%s1",    &pmic5_ftsmps510, "vdd-s1"),
+> +	RPMH_VREG("smps2",   "smp%s2",    &pmic5_hfsmps510, "vdd-s2"),
+> +	RPMH_VREG("smps3",   "smp%s3",    &pmic5_hfsmps510, "vdd-s3"),
+> +	RPMH_VREG("smps4",   "smp%s4",    &pmic5_hfsmps510, "vdd-s4"),
+> +	RPMH_VREG("smps5",   "smp%s5",    &pmic5_hfsmps510, "vdd-s5"),
+> +	RPMH_VREG("smps6",   "smp%s6",    &pmic5_ftsmps510, "vdd-s6"),
+> +	RPMH_VREG("smps7",   "smp%s7",    &pmic5_hfsmps510, "vdd-s7"),
+> +	RPMH_VREG("ldo1",    "ldo%s1",    &pmic5_nldo,      "vdd-l1-l2"),
+> +	RPMH_VREG("ldo2",    "ldo%s2",    &pmic5_nldo,      "vdd-l1-l2"),
+> +	RPMH_VREG("ldo3",    "ldo%s3",    &pmic5_nldo,      "vdd-l3-l9"),
+> +	RPMH_VREG("ldo4",    "ldo%s4",    &pmic5_nldo,      "vdd-l4-l12"),
+> +	RPMH_VREG("ldo5",    "ldo%s5",    &pmic5_pldo,      "vdd-l5-l6"),
+> +	RPMH_VREG("ldo6",    "ldo%s6",    &pmic5_pldo,      "vdd-l5-l6"),
+> +	RPMH_VREG("ldo7",    "ldo%s7",    &pmic5_nldo,      "vdd-l7-l8"),
+> +	RPMH_VREG("ldo8",    "ldo%s8",    &pmic5_nldo,      "vdd-l7-l8"),
+> +	RPMH_VREG("ldo9",    "ldo%s9",    &pmic5_nldo,      "vdd-l3-l9"),
+> +	RPMH_VREG("ldo10",   "ldo%s10",   &pmic5_pldo,      "vdd-l10-l11-l13"),
+> +	RPMH_VREG("ldo11",   "ldo%s11",   &pmic5_pldo,      "vdd-l10-l11-l13"),
+> +	RPMH_VREG("ldo12",   "ldo%s12",   &pmic5_nldo,      "vdd-l4-l12"),
+> +	RPMH_VREG("ldo13",   "ldo%s13",   &pmic5_pldo,      "vdd-l10-l11-l13"),
+> +	RPMH_VREG("ldo14",   "ldo%s14",   &pmic5_nldo,      "vdd-l14"),
+> +	RPMH_VREG("ldo15",   "ldo%s15",   &pmic5_nldo,      "vdd-l15"),
+> +	RPMH_VREG("ldo16",   "ldo%s16",   &pmic5_pldo,      "vdd-l16"),
+> +	{},
+> +};
+> +
+>  static int rpmh_regulator_probe(struct platform_device *pdev)
+>  {
+>  	struct device *dev = &pdev->dev;
+> @@ -1000,6 +1027,10 @@ static const struct of_device_id __maybe_unused rpmh_regulator_match_table[] = {
+>  		.compatible = "qcom,pm6150l-rpmh-regulators",
+>  		.data = pm6150l_vreg_data,
+>  	},
+> +	{
+> +		.compatible = "qcom,pmx55-rpmh-regulators",
+> +		.data = pmx55_vreg_data,
+> +	},
+>  	{}
+>  };
+>  MODULE_DEVICE_TABLE(of, rpmh_regulator_match_table);
 > -- 
 > 2.26.2
 > 
