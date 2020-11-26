@@ -2,112 +2,145 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 353FD2C563B
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Nov 2020 14:45:29 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7C6622C56BF
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Nov 2020 15:14:53 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2390854AbgKZNnK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 26 Nov 2020 08:43:10 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58902 "EHLO
+        id S2390011AbgKZONB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 26 Nov 2020 09:13:01 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35342 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2390836AbgKZNnJ (ORCPT
+        with ESMTP id S2390144AbgKZONB (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 26 Nov 2020 08:43:09 -0500
-Received: from mail-wr1-x443.google.com (mail-wr1-x443.google.com [IPv6:2a00:1450:4864:20::443])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0538AC0617A7
-        for <linux-arm-msm@vger.kernel.org>; Thu, 26 Nov 2020 05:43:09 -0800 (PST)
-Received: by mail-wr1-x443.google.com with SMTP id t4so2167788wrr.12
-        for <linux-arm-msm@vger.kernel.org>; Thu, 26 Nov 2020 05:43:08 -0800 (PST)
+        Thu, 26 Nov 2020 09:13:01 -0500
+Received: from mail-ej1-x643.google.com (mail-ej1-x643.google.com [IPv6:2a00:1450:4864:20::643])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B285FC0613D4;
+        Thu, 26 Nov 2020 06:12:59 -0800 (PST)
+Received: by mail-ej1-x643.google.com with SMTP id o9so3172470ejg.1;
+        Thu, 26 Nov 2020 06:12:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=jh3Zn1ResYGUShWTof3m2Q8rRwpV0wK8w2BTM5dDuqo=;
-        b=rk6rWnUC9jqDQyGdupgrLNKrRSul0EHQaNGK+50NcidJxDqAvVUj56R5RyfXPBaGcW
-         bSBgt/Ie1likRXGMHTQK+17lYRwCLYfSq3BJCLm2XxwMb8WXepCS7ge8/eZVo7gr/XGq
-         kCuJM1R00G7RuwWlRH578S74u+AFIcbgHv3NFW66QOirRez6hZequRYFtFmwdFbg4jMK
-         863oGkc9U1L7MDiHaIB9G4cRf6dOoqblbB/lUyg/otJbW4APSRCqt0ohAP2dgt2kagdA
-         XI8RlvPRmdMATCk3eqe/Xzypb6nIQ8pzFcx6S/gzizO08IQOCYIyaI3A+dQLX9ehNMoK
-         2wyA==
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=AY0reqhJ8LJfRYGSpAtGjhzLoCCsaBuOvKFqC/hE97I=;
+        b=fBXC5ElqASADFI/r2xA/CpSucv/W2kAgwYSPK3lfUIiSB6jyzBhBLIa1yzexVtRT0I
+         w6rifn8V4cnQSIbudonZH1aG8L0tBWne50lCi8LahzYZ/831wsHDBASbiRLJqpV+9hnE
+         tIOk5wWwyeRyOsB130DJoZpsNo2A+INyElCHxQJAUxhZN7HV47rrpJjq2V1289K5fybd
+         EWcaILkRwURyLGXvESICUaUI/yCB9iKrLwFfUikOrx80oIAkOn0hjzA/jIHbon/1jBqH
+         WuDPbg0/x569wf/OomFwlraA1RTylqMdIrjGSykk3LEzqgx7DSE2x+oujY+FLIi0c6X6
+         v9jA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=jh3Zn1ResYGUShWTof3m2Q8rRwpV0wK8w2BTM5dDuqo=;
-        b=L8BI78fJs/HQiyefiMmVmtoWKrJfHw4y6d76ghK234m4p/du95413bt7TTqCm9NII1
-         iOgUSO36lY1K6HjjoRrsJqHn2Xox+mlIy50KNDRy4P2Tjy7QJXgKGbJB2EP4NcO1bHLC
-         /X4f0eksKFBKBQKr8bzHkXurUlZ5CG1bwb8/NuRKo83qhoEw0y39g74EqW6ix4JLv14V
-         5XqVVOghyKFfRi+xLXGey7ICiVjEumzNDf5NSjRDTwY0/Ky4kcs3uWvcEPSlhZ9riU41
-         DkVPJ7iPVx2Yi/4lQo1/v/R9V8AHUPxIkS6uNV+YepPINR2BBMsUxy8d8hI0qWXKDEqg
-         1U9g==
-X-Gm-Message-State: AOAM531C6ixdRKajjYmHC60TTVjSuQsFJkPakA+oyh4EDhsr4BI8f/CN
-        J8+BWAc0t4C825lc1yvnSkn4XA==
-X-Google-Smtp-Source: ABdhPJyFeP+oHnYZ8ZhxN1ULaFwXRE6QX6gCCHEBKcQb558Ob57TmjG/rdCvrc4GTuL6sxomjXk/Zg==
-X-Received: by 2002:adf:ee51:: with SMTP id w17mr3923479wro.373.1606398187789;
-        Thu, 26 Nov 2020 05:43:07 -0800 (PST)
-Received: from dell.default ([91.110.221.235])
-        by smtp.gmail.com with ESMTPSA id k205sm9275738wmk.4.2020.11.26.05.43.06
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 26 Nov 2020 05:43:07 -0800 (PST)
-From:   Lee Jones <lee.jones@linaro.org>
-To:     lee.jones@linaro.org
-Cc:     linux-kernel@vger.kernel.org, Rob Clark <robdclark@gmail.com>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Shubhashree Dhar <dhar@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org
-Subject: [PATCH 15/40] drm/msm/disp/dpu1/dpu_hw_interrupts: Demote kernel-doc formatting misuse
-Date:   Thu, 26 Nov 2020 13:42:15 +0000
-Message-Id: <20201126134240.3214176-16-lee.jones@linaro.org>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20201126134240.3214176-1-lee.jones@linaro.org>
-References: <20201126134240.3214176-1-lee.jones@linaro.org>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=AY0reqhJ8LJfRYGSpAtGjhzLoCCsaBuOvKFqC/hE97I=;
+        b=ADu/7ml6GQx/e0oKjwAR5vo3elPUrXi/5wPVSGy/QO70RwvmXpuv142zR9mFv6xIIA
+         dp55ayAZJlP/QH6KtCpFCRFSzOFuchPC2ZjoDTpPUvEEve4eLlobJajHELVUa+HqHZXl
+         8Iyij+IjLR/3f6ihintAE6UsWIZO2coV0l9L2C44Y69nPL7nQvVwIEJnQ1C3EYMziHRn
+         OcWJRang10owDwpvJq+VS8Zfri+Ugzdi0oy7iHp9G9y1Y/C0T4BZjiIq4oN0YA+tvuJD
+         rBCWlKBZmNR1LzKdbcgQGUh9fJyKfQqpXE1NNXe0E86JR7YPSvIkmmlZ9/fjcrVSRSR2
+         iv+A==
+X-Gm-Message-State: AOAM530irgm/d8ujVpdhfZa12yhXTA4UBnrqcWVipySGCJodbwg7Xdk5
+        FsocJog9NQVi/NNucS9X1Zs=
+X-Google-Smtp-Source: ABdhPJwQ8D2xdY6pUDrtvCRzpa+vFbdwrFG1FFSgKzjU2kIrTiMF59RdJmhOIBFw47uAuzeumhkEgg==
+X-Received: by 2002:a17:906:3ecf:: with SMTP id d15mr2884222ejj.297.1606399978411;
+        Thu, 26 Nov 2020 06:12:58 -0800 (PST)
+Received: from localhost (178-169-161-196.razgrad.ddns.bulsat.com. [178.169.161.196])
+        by smtp.gmail.com with ESMTPSA id c4sm3201578ejx.9.2020.11.26.06.12.56
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 26 Nov 2020 06:12:57 -0800 (PST)
+From:   Iskren Chernev <iskren.chernev@gmail.com>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Rob Herring <robh+dt@kernel.org>, Andy Gross <agross@kernel.org>,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        ~postmarketos/upstreaming@lists.sr.ht,
+        linux-arm-msm@vger.kernel.org,
+        Iskren Chernev <iskren.chernev@gmail.com>
+Subject: [PATCH 1/2] ARM: dts: qcom: msm8974-klte: Add fuel gauge
+Date:   Thu, 26 Nov 2020 16:11:43 +0200
+Message-Id: <20201126141144.1763779-1-iskren.chernev@gmail.com>
+X-Mailer: git-send-email 2.29.2
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Fixes the following W=1 kernel build warning(s):
+The Samsung Galaxy S5 uses a maxim17048 fuelgauge. The maxim,rcomp value
+is taken from downstream kernel. Model data and temperature-based
+compensation are not yet supported in the mainline driver, but the
+readings seem fine nevertheless.
 
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c:246: error: Cannot parse struct or union!
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c:756: error: Cannot parse struct or union!
-
-Cc: Rob Clark <robdclark@gmail.com>
-Cc: Sean Paul <sean@poorly.run>
-Cc: David Airlie <airlied@linux.ie>
-Cc: Daniel Vetter <daniel@ffwll.ch>
-Cc: Shubhashree Dhar <dhar@codeaurora.org>
-Cc: linux-arm-msm@vger.kernel.org
-Cc: dri-devel@lists.freedesktop.org
-Cc: freedreno@lists.freedesktop.org
-Signed-off-by: Lee Jones <lee.jones@linaro.org>
+Signed-off-by: Iskren Chernev <iskren.chernev@gmail.com>
 ---
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ .../boot/dts/qcom-msm8974-samsung-klte.dts    | 39 +++++++++++++++++++
+ 1 file changed, 39 insertions(+)
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c
-index 38482b1047745..5c521de715670 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c
-@@ -189,7 +189,7 @@ struct dpu_irq_type {
- 	u32 reg_idx;
+diff --git a/arch/arm/boot/dts/qcom-msm8974-samsung-klte.dts b/arch/arm/boot/dts/qcom-msm8974-samsung-klte.dts
+index b0899107f3ced..97352de913142 100644
+--- a/arch/arm/boot/dts/qcom-msm8974-samsung-klte.dts
++++ b/arch/arm/boot/dts/qcom-msm8974-samsung-klte.dts
+@@ -406,6 +406,16 @@ mux {
+ 			};
+ 		};
+ 
++		i2c12_pins: i2c12 {
++			mux {
++				pins = "gpio87", "gpio88";
++				function = "blsp_i2c12";
++
++				drive-strength = <2>;
++				bias-disable;
++			};
++		};
++
+ 		i2c_touchkey_pins: i2c-touchkey {
+ 			mux {
+ 				pins = "gpio95", "gpio96";
+@@ -666,6 +676,27 @@ max77826_buckboost: BUCKBOOST {
+ 			};
+ 		};
+ 	};
++
++	i2c@f9968000 {
++		status = "okay";
++
++		pinctrl-names = "default";
++		pinctrl-0 = <&i2c12_pins>;
++
++		fuelgauge@36 {
++			compatible = "maxim,max17048";
++			reg = <0x36>;
++
++			maxim,double-soc;
++			maxim,rcomp = /bits/ 8 <0x56>;
++
++			interrupt-parent = <&pma8084_gpios>;
++			interrupts = <21 IRQ_TYPE_EDGE_FALLING>;
++
++			pinctrl-names = "default";
++			pinctrl-0 = <&fuelgauge_pin>;
++		};
++	};
  };
  
--/**
-+/*
-  * struct dpu_intr_reg -  List of DPU interrupt registers
-  */
- static const struct dpu_intr_reg dpu_intr_set[] = {
-@@ -245,7 +245,7 @@ static const struct dpu_intr_reg dpu_intr_set[] = {
- 	}
+ &spmi_bus {
+@@ -703,6 +734,14 @@ wlan_sleep_clk_pin: wlan-sleep-clk-pin {
+ 				power-source = <PMA8084_GPIO_S4>;
+ 				qcom,drive-strength = <PMIC_GPIO_STRENGTH_HIGH>;
+ 			};
++
++			fuelgauge_pin: fuelgauge-int-pin {
++				pins = "gpio21";
++				function = "normal";
++				bias-disable;
++				input-enable;
++				power-source = <PMA8084_GPIO_S4>;
++			};
+ 		};
+ 	};
  };
- 
--/**
-+/*
-  * struct dpu_irq_type - IRQ mapping table use for lookup an irq_idx in this
-  *			 table that have a matching interface type and
-  *			 instance index.
+
+base-commit: 6147c83fd749d19a0d3ccc2f64d12138ab010b47
 -- 
-2.25.1
+2.29.2
 
