@@ -2,58 +2,76 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id CFB8A2C5CBA
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Nov 2020 20:50:28 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E78B22C5CD6
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Nov 2020 21:08:26 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728224AbgKZTuH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 26 Nov 2020 14:50:07 -0500
-Received: from mail.kernel.org ([198.145.29.99]:38232 "EHLO mail.kernel.org"
+        id S2389794AbgKZUG1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 26 Nov 2020 15:06:27 -0500
+Received: from mail.kernel.org ([198.145.29.99]:36518 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728731AbgKZTuG (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 26 Nov 2020 14:50:06 -0500
-Content-Type: text/plain; charset="utf-8"
+        id S1728118AbgKZUG1 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 26 Nov 2020 15:06:27 -0500
+Received: from localhost (cpc102334-sgyl38-2-0-cust884.18-2.cable.virginm.net [92.233.91.117])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id 446BA20678;
+        Thu, 26 Nov 2020 20:06:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1606420206;
-        bh=yg4TjmyD+myEmJ191BFL9/rTlz28i9uIPTYRcpeuiGc=;
-        h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-        b=Oi0mJSZD5W1zaYAzAYlbwR0jIpk8scOECTaQ7l1Rea7DzEkN5KOVoh/Q+6II3uJsD
-         1FTZEWmXvoHEAaVZg7jQ41QHMcII2uT14OIVzBYS0a29bONKnpb5x60ihgR0VzWrxj
-         yB4Fj/hiGRYcPgCFl2lIuB6DI1x8eluXC1/KY8wc=
+        s=default; t=1606421186;
+        bh=adaS/dVFg+I2jIUyjCgMHXDFaVVNbAutXxzlBvgKO3I=;
+        h=Date:From:To:Cc:In-Reply-To:References:Subject:From;
+        b=wIR63Qa5lF2DvebM6pjM89Llu6MTZFL/1FDXqEmHKXwsrwlbdZVal6Ar6ifGB2rpJ
+         OzGuhypkehTrmzSOnPWiANWHij8DdaBOUKeSjCO2PBZaw5KDNbY+7nJAIlL0MBiD84
+         7TrZZGuVWlLDtgStnWvJ4rw6QColZz9UK+s/98Og=
+Date:   Thu, 26 Nov 2020 20:06:01 +0000
+From:   Mark Brown <broonie@kernel.org>
+To:     Vinod Koul <vkoul@kernel.org>
+Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org
+In-Reply-To: <20201126093018.1085594-1-vkoul@kernel.org>
+References: <20201126093018.1085594-1-vkoul@kernel.org>
+Subject: Re: [PATCH 1/2] regulator: dt-bindings: Add PMX55 compatibles
+Message-Id: <160642116161.9318.6557430942496411850.b4-ty@kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Subject: Re: [RESEND] soc: qcom: rpmh: Use __fill_rpmh_msg API during rpmh_write()
-From:   patchwork-bot+linux-arm-msm@kernel.org
-Message-Id: <160642020625.4652.11444970058921050173.git-patchwork-notify@kernel.org>
-Date:   Thu, 26 Nov 2020 19:50:06 +0000
-References: <1606379490-4052-1-git-send-email-mkshah@codeaurora.org>
-In-Reply-To: <1606379490-4052-1-git-send-email-mkshah@codeaurora.org>
-To:     Maulik Shah <mkshah@codeaurora.org>
-Cc:     linux-arm-msm@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hello:
+On Thu, 26 Nov 2020 15:00:17 +0530, Vinod Koul wrote:
+> Add PMX55 compatibles for PMIC found in SDX55 platform
 
-This patch was applied to qcom/linux.git (refs/heads/for-next):
+Applied to
 
-On Thu, 26 Nov 2020 14:01:30 +0530 you wrote:
-> Use __fill_rpmh_msg API during rpmh_write(). This allows to
-> remove duplication of code in error checking, copying commands
-> and setting message state.
-> 
-> Signed-off-by: Maulik Shah <mkshah@codeaurora.org>
-> ---
->  drivers/soc/qcom/rpmh.c | 12 +++---------
->  1 file changed, 3 insertions(+), 9 deletions(-)
+   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/regulator.git for-next
 
-Here is the summary with links:
-  - [RESEND] soc: qcom: rpmh: Use __fill_rpmh_msg API during rpmh_write()
-    https://git.kernel.org/qcom/c/0924dad5d458
+Thanks!
 
-You are awesome, thank you!
---
-Deet-doot-dot, I am a bot.
-https://korg.docs.kernel.org/patchwork/pwbot.html
+[1/2] regulator: dt-bindings: Add PMX55 compatibles
+      commit: 1008521b9b4f85d80ac1d80391ac39055c89f736
+[2/2] regulator: qcom-rpmh: Add support for SDX55
+      commit: 36dd70ceb4d955e6cd3ecd18e78169141aaa23b7
 
+All being well this means that it will be integrated into the linux-next
+tree (usually sometime in the next 24 hours) and sent to Linus during
+the next merge window (or sooner if it is a bug fix), however if
+problems are discovered then the patch may be dropped or reverted.
 
+You may get further e-mails resulting from automated or manual testing
+and review of the tree, please engage with people reporting problems and
+send followup patches addressing any issues that are reported if needed.
+
+If any updates are required or you are submitting further changes they
+should be sent as incremental updates against current git, existing
+patches will not be replaced.
+
+Please add any relevant lists and maintainers to the CCs when replying
+to this mail.
+
+Thanks,
+Mark
