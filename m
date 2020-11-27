@@ -2,98 +2,124 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B9AFA2C6704
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Nov 2020 14:40:21 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id CAFBD2C6824
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Nov 2020 15:49:00 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730517AbgK0Nj6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 27 Nov 2020 08:39:58 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53822 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729402AbgK0Nj5 (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 27 Nov 2020 08:39:57 -0500
-Received: from mail-ej1-x641.google.com (mail-ej1-x641.google.com [IPv6:2a00:1450:4864:20::641])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 47BBDC0613D1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 27 Nov 2020 05:39:56 -0800 (PST)
-Received: by mail-ej1-x641.google.com with SMTP id 7so7712470ejm.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 27 Nov 2020 05:39:56 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=ZTzYDGlssiWZrUEFT2+YAeEh5ntk2vBgSh5UR1iN5dM=;
-        b=ULNlQGsr3qUNzH/jaEfgFSgEyxt6P0XKTUnq1MIA+5i44yiv0m/KnfBsBRFM19+Y+D
-         RSScUObp4c25El6RzmLPoNg/JsufYS7LHJMAI8Oo+kbZBY1+ZE7komJ9u7CEfhmwBL2H
-         HWZ6/nn2XkCunJ8v5w4GQxlK92VT28h5Wbc4n58j+Fc5AhffjZAgrVJ29bgICVLg5aoS
-         aVC+WsED7UiDvLULIuqF4Duy778G+j1sR5X5VXB5v5owMwFLc0JYwo6JYhLowRBbuv0I
-         1780ULPOWodEfzXGZ1Pcy+rGSmYWLS8nhoLMTcoev+/wBAKySLxh4w8sVla71UFvlQ0U
-         vSgA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=ZTzYDGlssiWZrUEFT2+YAeEh5ntk2vBgSh5UR1iN5dM=;
-        b=D3NUawx84dh9ClQAEp3r6ZKpO5oqU/Kbv4pq+594rFoWcsZngv4qeNn28kcgOfqaXH
-         uGE4oMD64v+Gzb1GeoYgKI2LptMSebMCHzmAN4GjT84OYH6I1AWlQ5Fa8cTuf9k6oLTp
-         gPqlTvqcNgEcnioOj/L7FL7Hc6fdQRzeQaDbQVEjSnZTTVdRM09ckUyCHCh9rnD6ee8b
-         mZwhqJx3KGQ1cB5KBF3P+rtxmq0Yu3gOOQiq9nYNwc/EttJixdJbP7Aayo5V5RASqMHi
-         JPYUBtAUXFnQUd5bTgVT4kTr9kLM79eKyTMvVrnLBuTVZ4Zl3T/Nrx2veUjU3tHePbkN
-         r2nQ==
-X-Gm-Message-State: AOAM532rR3IJw9r52fpNVVCx1gVamrfvupxInadlFRYrPTQzRwsXZeIs
-        AwkHPDlCYuXbNmAXuZ2KzOA+Kw==
-X-Google-Smtp-Source: ABdhPJwfONJAi7YtCaCsi4iSGdldwFF46ZMraq6EoZJOiOLRQAkr6rj/+YjLyi/d50CKVVgwe/dX6w==
-X-Received: by 2002:a17:906:7a18:: with SMTP id d24mr5856719ejo.324.1606484394871;
-        Fri, 27 Nov 2020 05:39:54 -0800 (PST)
-Received: from localhost.localdomain ([2a02:2450:102f:d6a:a6a1:9dbe:c8e3:3524])
-        by smtp.gmail.com with ESMTPSA id z16sm4840092ejx.119.2020.11.27.05.39.53
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 27 Nov 2020 05:39:54 -0800 (PST)
-From:   Robert Foss <robert.foss@linaro.org>
-To:     loic.poulain@linaro.org, robert.foss@linaro.org,
-        bjorn.andersson@linaro.org, wsa@kernel.org, todor.too@gmail.com,
-        vkoul@kernel.org, linux-i2c@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Subject: [PATCH v2] i2c: qcom: Fix IRQ error misassignement
-Date:   Fri, 27 Nov 2020 14:39:37 +0100
-Message-Id: <20201127133937.93208-1-robert.foss@linaro.org>
-X-Mailer: git-send-email 2.27.0
+        id S1730920AbgK0Oro (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 27 Nov 2020 09:47:44 -0500
+Received: from z5.mailgun.us ([104.130.96.5]:31195 "EHLO z5.mailgun.us"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1730916AbgK0Orn (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 27 Nov 2020 09:47:43 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1606488463; h=Message-ID: Subject: Cc: To: From: Date:
+ Content-Transfer-Encoding: Content-Type: MIME-Version: Sender;
+ bh=HUJXvp284SgEwZROfQs9oj7GiVOC/2yMIUq8pK3JA5U=; b=EekN9MMhe1XylyED16a7HTPA2g+9KcsgfyVflkmfHxH3+QhFxreUmllaxMBPEHgibHY0Uw3V
+ Mtb9ggGun4MTuzCP8M5ydG+M6JAQNAnf/dI0Z5gQAN+cCXRDW3b+rror6w0bthzm8t1NyXCB
+ cW2/OI2Qqru8Rj7xpzBnlMMj4BY=
+X-Mailgun-Sending-Ip: 104.130.96.5
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n03.prod.us-east-1.postgun.com with SMTP id
+ 5fc1118c7f0cfa6a16f331c1 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 27 Nov 2020 14:47:40
+ GMT
+Sender: mdalam=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id C3C3BC43464; Fri, 27 Nov 2020 14:47:39 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: mdalam)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id CEDF3C433C6;
+        Fri, 27 Nov 2020 14:47:38 +0000 (UTC)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Fri, 27 Nov 2020 20:17:38 +0530
+From:   mdalam@codeaurora.org
+To:     Boris Brezillon <boris.brezillon@collabora.com>
+Cc:     Md Sadre Alam <mdalam@codeaurora.org>, agross@kernel.org,
+        bjorn.andersson@linaro.org, miquel.raynal@bootlin.com,
+        richard@nod.at, vigneshr@ti.com, robh+dt@kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-mtd@lists.infradead.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        sricharan@codeaurora.org
+Subject: Re: [PATCH 2/5] mtd: rawnand: qcom: Add initial support for qspi nand
+Message-ID: <885854a4765c302d86b0d482c2c45abc@codeaurora.org>
+X-Sender: mdalam@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-During cci_isr() errors read from register fields belonging to
-i2c master1 are currently assigned to the status field belonging to
-i2c master0. This patch corrects this error, and always assigns
-master1 errors to the status field of master1.
+On 2020-10-29 14:37, Boris Brezillon wrote:
+> Hello,
+> 
+> On Sat, 10 Oct 2020 11:01:39 +0530
+> Md Sadre Alam <mdalam@codeaurora.org> wrote:
+> 
+>> This change will add initial support for qspi (serial nand).
+>> 
+>> QPIC Version v.2.0 onwards supports serial nand as well so this
+>> change will initialize all required register to enable qspi (serial
+>> nand).
+>> 
+>> This change is supporting very basic functionality of qspi nand flash.
+>> 
+>> 1. Reset device (Reset QSPI NAND device).
+>> 
+>> 2. Device detection (Read id QSPI NAND device).
+> 
+> Unfortunately, that's not going to work in the long term. You're
+> basically hacking the raw NAND framework to make SPI NANDs fit. I do
+> understand the rationale behind this decision (re-using the code for
+> ECC and probably other things), but that's not going to work. So I'd
+> recommend doing the following instead:
+> 
+> 1/ implement a SPI-mem controller driver
+> 2/ implement an ECC engine driver so the ECC logic can be shared
+>    between the SPI controller and raw NAND controller drivers
+> 3/ convert the raw NAND driver to the exec_op() interface (none of
+>    this hack would have been possible if the driver was using the new
+>    API)
 
-Fixes: e517526195de ("i2c: Add Qualcomm CCI I2C driver")
+Sorry for late reply. I think I mixup the serial nand support and 
+QPIC_V2.0 support.
+Only patches [2/5] mtd: rawnand: qcom: Add initial support for qspi nand
+and [5/5] mtd: rawnand: qcom: Add support for serial training. are for 
+serial
+nand. Other patches [3/5] mtd: rawnand: qcom: Read QPIC version &
+[4/5] mtd: rawnand: qcom: Enable support for erase,read & write for 
+serial nand.
+are to support QPIC_V2.0. In QPIC_V2.0 onwards some additional registers 
+and features
+got added. QPIC_NAND_READ_LOCATION_LAST_CW_n register got added to read 
+last code word.
+Page scope read & multi page read feature got added to read single and 
+multiple
+pages. QPIC_NAND_AUTO_STATUS_EN register got added to read status in 
+page scope read
+& multi page read etc.
 
-Reported-by: Loic Poulain <loic.poulain@linaro.org>
-Suggested-by: Loic Poulain <loic.poulain@linaro.org>
-Signed-off-by: Robert Foss <robert.foss@linaro.org>
----
- drivers/i2c/busses/i2c-qcom-cci.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+I will take out QPIC_V2.0 support patches and will push it separately.
+For serial nand support few lines of codes are there around 50 lines
+to initalize QPIC serial block and serial training code. So can I put 
+this
+this as a separate file inside drivers/mtd/nand/raw/qpic_serial_nand.c. 
+Would it be ok ?
+Because there is no dedicated spi controller for serial nand. QPIC 
+controller having
+one serial interface block to deal with serial nand device.
 
-diff --git a/drivers/i2c/busses/i2c-qcom-cci.c b/drivers/i2c/busses/i2c-qcom-cci.c
-index f13735beca58..1c259b5188de 100644
---- a/drivers/i2c/busses/i2c-qcom-cci.c
-+++ b/drivers/i2c/busses/i2c-qcom-cci.c
-@@ -194,9 +194,9 @@ static irqreturn_t cci_isr(int irq, void *dev)
- 	if (unlikely(val & CCI_IRQ_STATUS_0_I2C_M1_ERROR)) {
- 		if (val & CCI_IRQ_STATUS_0_I2C_M1_Q0_NACK_ERR ||
- 			val & CCI_IRQ_STATUS_0_I2C_M1_Q1_NACK_ERR)
--			cci->master[0].status = -ENXIO;
-+			cci->master[1].status = -ENXIO;
- 		else
--			cci->master[0].status = -EIO;
-+			cci->master[1].status = -EIO;
- 
- 		writel(CCI_HALT_REQ_I2C_M1_Q0Q1, cci->base + CCI_HALT_REQ);
- 		ret = IRQ_HANDLED;
--- 
-2.27.0
-
+> 
+> Regards,
+> 
+> Boris
