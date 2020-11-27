@@ -2,126 +2,69 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 1DA652C5F29
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Nov 2020 05:13:51 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D333C2C600F
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Nov 2020 07:25:44 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2392395AbgK0EM2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 26 Nov 2020 23:12:28 -0500
-Received: from m42-4.mailgun.net ([69.72.42.4]:43925 "EHLO m42-4.mailgun.net"
+        id S2392570AbgK0GZW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 27 Nov 2020 01:25:22 -0500
+Received: from helcar.hmeau.com ([216.24.177.18]:33422 "EHLO fornost.hmeau.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726908AbgK0EM2 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 26 Nov 2020 23:12:28 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1606450347; h=Message-Id: Date: Subject: Cc: To: From:
- Sender; bh=X7Qb679WxuRp4Difwrjsn0t8m9dWVYkJod5nmfHLyEo=; b=fQPLnJtGwHhXrNJ9PcO1Gl3m71WT4N2TY5Qg5J46S9/qeRUhIYasYuzK6TSfklp43KVPYie/
- /fBeroHG5Y7Ele/3sjyNkHOGpEBMuZYYvsm0oi/wONefOMLcjMI3ZZr5Yk9CmeN+wwF6NfSZ
- h2LNj3v0lvOohhac7ZqZkNz20eU=
-X-Mailgun-Sending-Ip: 69.72.42.4
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n06.prod.us-east-1.postgun.com with SMTP id
- 5fc07caaba50d14f886d91d7 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 27 Nov 2020 04:12:26
- GMT
-Sender: srivasam=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id CDD8FC433ED; Fri, 27 Nov 2020 04:12:25 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
-        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
-Received: from hyd-lnxbld210.qualcomm.com (unknown [202.46.22.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: srivasam)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id CADB8C433C6;
-        Fri, 27 Nov 2020 04:12:19 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org CADB8C433C6
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=srivasam@codeaurora.org
-From:   Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
-To:     agross@kernel.org, bjorn.andersson@linaro.org, lgirdwood@gmail.com,
-        broonie@kernel.org, robh+dt@kernel.org, plai@codeaurora.org,
-        bgoswami@codeaurora.org, perex@perex.cz, tiwai@suse.com,
-        srinivas.kandagatla@linaro.org, rohitkr@codeaurora.org,
-        linux-arm-msm@vger.kernel.org, alsa-devel@alsa-project.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Cc:     Srinivasa Rao Mandadapu <srivasam@codeaurora.org>,
-        V Sujith Kumar Reddy <vsujithk@codeaurora.org>
-Subject: [PATCH] Asoc: qcom: Fix for problem in resume with CRAS
-Date:   Fri, 27 Nov 2020 09:42:03 +0530
-Message-Id: <1606450323-21641-1-git-send-email-srivasam@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
+        id S1728043AbgK0GZW (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 27 Nov 2020 01:25:22 -0500
+Received: from gwarestrin.arnor.me.apana.org.au ([192.168.0.7])
+        by fornost.hmeau.com with smtp (Exim 4.92 #5 (Debian))
+        id 1kiXBx-0000x6-0Y; Fri, 27 Nov 2020 17:25:14 +1100
+Received: by gwarestrin.arnor.me.apana.org.au (sSMTP sendmail emulation); Fri, 27 Nov 2020 17:25:12 +1100
+Date:   Fri, 27 Nov 2020 17:25:12 +1100
+From:   Herbert Xu <herbert@gondor.apana.org.au>
+To:     Thara Gopinath <thara.gopinath@linaro.org>
+Cc:     agross@kernel.org, bjorn.andersson@linaro.org, davem@davemloft.net,
+        robh+dt@kernel.org, sboyd@kernel.org, mturquette@baylibre.com,
+        linux-arm-msm@vger.kernel.org, linux-crypto@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-clk@vger.kernel.org
+Subject: Re: [Patch v2 0/6] Enable Qualcomm Crypto Engine on sdm845
+Message-ID: <20201127062512.GB11448@gondor.apana.org.au>
+References: <20201119155233.3974286-1-thara.gopinath@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20201119155233.3974286-1-thara.gopinath@linaro.org>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-To support playback continuation after resume problem in chrome
-audio server:
-Prepare device in  platform trigger callback.
-Make I2s and DMA control registers as non volatile.
+On Thu, Nov 19, 2020 at 10:52:27AM -0500, Thara Gopinath wrote:
+> Qualcomm crypto engine supports hardware accelerated algorithms for
+> encryption and authentication. Enable support for aes,des,3des encryption
+> algorithms and sha1,sha256, hmac(sha1),hmac(sha256) authentication
+> algorithms on sdm845.The patch series has been tested using the kernel
+> crypto testing module tcrypto.ko.
+> 
+> v1->v2:
+> - Rebased to linux-next v5.10-rc4.
+> - Fixed subject line format in all patches as per Bjorn's feedback.
+> 
+> Thara Gopinath (6):
+>   dt-binding:clock: Add entry for crypto engine RPMH clock resource
+>   clk:qcom:rpmh: Add CE clock on sdm845.
+>   drivers:crypto:qce: Enable support for crypto engine on sdm845.
+>   drivers:crypto:qce: Fix SHA result buffer corruption issues.
+>   dts:qcom:sdm845: Add dt entries to support crypto engine.
+>   devicetree:bindings:crypto: Extend qcom-qce binding to add support for
+>     crypto engine version 5.4
+> 
+>  .../devicetree/bindings/crypto/qcom-qce.txt   |  4 ++-
+>  arch/arm64/boot/dts/qcom/sdm845.dtsi          | 30 +++++++++++++++++++
+>  drivers/clk/qcom/clk-rpmh.c                   |  2 ++
+>  drivers/crypto/qce/core.c                     | 17 ++++++++++-
+>  drivers/crypto/qce/sha.c                      |  2 +-
+>  include/dt-bindings/clock/qcom,rpmh.h         |  1 +
+>  6 files changed, 53 insertions(+), 3 deletions(-)
 
-Signed-off-by: V Sujith Kumar Reddy <vsujithk@codeaurora.org>
-Signed-off-by: Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
----
- sound/soc/qcom/lpass-cpu.c      | 8 ++------
- sound/soc/qcom/lpass-platform.c | 5 +++--
- 2 files changed, 5 insertions(+), 8 deletions(-)
-
-diff --git a/sound/soc/qcom/lpass-cpu.c b/sound/soc/qcom/lpass-cpu.c
-index af684fd..c99be03 100644
---- a/sound/soc/qcom/lpass-cpu.c
-+++ b/sound/soc/qcom/lpass-cpu.c
-@@ -454,20 +454,16 @@ static bool lpass_cpu_regmap_volatile(struct device *dev, unsigned int reg)
- 	struct lpass_variant *v = drvdata->variant;
- 	int i;
- 
--	for (i = 0; i < v->i2s_ports; ++i)
--		if (reg == LPAIF_I2SCTL_REG(v, i))
--			return true;
- 	for (i = 0; i < v->irq_ports; ++i)
- 		if (reg == LPAIF_IRQSTAT_REG(v, i))
- 			return true;
- 
- 	for (i = 0; i < v->rdma_channels; ++i)
--		if (reg == LPAIF_RDMACURR_REG(v, i) || reg == LPAIF_RDMACTL_REG(v, i))
-+		if (reg == LPAIF_RDMACURR_REG(v, i))
- 			return true;
- 
- 	for (i = 0; i < v->wrdma_channels; ++i)
--		if (reg == LPAIF_WRDMACURR_REG(v, i + v->wrdma_channel_start) ||
--			reg == LPAIF_WRDMACTL_REG(v, i + v->wrdma_channel_start))
-+		if (reg == LPAIF_WRDMACURR_REG(v, i + v->wrdma_channel_start))
- 			return true;
- 
- 	return false;
-diff --git a/sound/soc/qcom/lpass-platform.c b/sound/soc/qcom/lpass-platform.c
-index 80b09de..2b0a7c1 100644
---- a/sound/soc/qcom/lpass-platform.c
-+++ b/sound/soc/qcom/lpass-platform.c
-@@ -481,8 +481,9 @@ static int lpass_platform_pcmops_trigger(struct snd_soc_component *component,
- 		return -ENOTRECOVERABLE;
- 	}
- 	switch (cmd) {
--	case SNDRV_PCM_TRIGGER_START:
- 	case SNDRV_PCM_TRIGGER_RESUME:
-+		lpass_platform_pcmops_prepare(component, substream);
-+	case SNDRV_PCM_TRIGGER_START:
- 	case SNDRV_PCM_TRIGGER_PAUSE_RELEASE:
- 		ret = regmap_fields_write(dmactl->enable, id,
- 						 LPAIF_DMACTL_ENABLE_ON);
-@@ -592,7 +593,7 @@ static int lpass_platform_pcmops_trigger(struct snd_soc_component *component,
- 		break;
- 	}
- 
--	return 0;
-+	return ret;
- }
- 
- static snd_pcm_uframes_t lpass_platform_pcmops_pointer(
+Patches 3-4 applied.  Thanks.
 -- 
-Qualcomm India Private Limited, on behalf of Qualcomm Innovation Center, Inc.,
-is a member of Code Aurora Forum, a Linux Foundation Collaborative Project.
-
+Email: Herbert Xu <herbert@gondor.apana.org.au>
+Home Page: http://gondor.apana.org.au/~herbert/
+PGP Key: http://gondor.apana.org.au/~herbert/pubkey.txt
