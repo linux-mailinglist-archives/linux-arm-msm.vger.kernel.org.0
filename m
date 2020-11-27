@@ -2,110 +2,105 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 54AE92C6AA4
+	by mail.lfdr.de (Postfix) with ESMTP id C11892C6AA5
 	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Nov 2020 18:34:23 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732175AbgK0Ra7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 27 Nov 2020 12:30:59 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33516 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1732164AbgK0Ra6 (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 27 Nov 2020 12:30:58 -0500
-Received: from mail-pf1-x442.google.com (mail-pf1-x442.google.com [IPv6:2607:f8b0:4864:20::442])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 864D5C0613D2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 27 Nov 2020 09:30:58 -0800 (PST)
-Received: by mail-pf1-x442.google.com with SMTP id b10so3735935pfo.4
-        for <linux-arm-msm@vger.kernel.org>; Fri, 27 Nov 2020 09:30:58 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=jRPKms8czRyZejPs/escCcopkjcFF901XVGwJamtDJM=;
-        b=CyR6dpR4c/4mgxkm4VQV7A/44VO1b41ki4UsBKPRL2o1PbTiDTDQFa15XdC9OWgXU3
-         wk9Jk8suxz2Xr5ZodttuyL+ujl0A6rG7cwN1PawFsn/WO9XyiIS7hsJF/f5SSUjQot+G
-         CAb5QAPJoNsRys41Cb20fsiopuvsGESc71r5Rxn+3NaRG9J/9saS62b1TG4yPF3z1iT1
-         K9lft/uUOKyGbhLx3N0aVpiue2EF5WFhZtTNvLY8GFLY5He0DcKBXcHz6yTCDcFmQ0Zs
-         /sw/IrMuEKqUpBmJYZqr5d2b0vpNTKwP+9f/wO5HdLHpw+dhsSFXfmxfYbvExaP/5h+q
-         Zyzg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=jRPKms8czRyZejPs/escCcopkjcFF901XVGwJamtDJM=;
-        b=k8WeHGuornOsw9484WwOy7ziLZOBjfr7mXV4hCiRHxCAlMVNaRbaX91eAcPu7Tvi+r
-         F9tFYZ5J1PiFIIb5Vub6WoHxRvIjOfDpezvwbVWr8igraAnwHmcfQwjyUonWf9xwCqVH
-         A6yBmAUIDqdWTBBMvmTzoNWX09NadPAJOQMtbNx+Aa0P4GGx2khfJ8QunN3nUxACDdsC
-         4yVzT9o13QvEQzTuusJh+CIxRW5wmtaBmzHZ7ngzx0yAWeMEBH8/puDz8FatT58afwN6
-         knOa79cOWH3BvGuosiDqlc8q9dld04+vhZ9yJWO77I6V2SOEoj600pM51ITVpcHTzfxi
-         tOZQ==
-X-Gm-Message-State: AOAM5338OL3lCm0VeziNRX0mRTQoreHdOIu9ITamMbLSdaGw5QzHSSlL
-        SHK/SBW/GnU+NYn1evzS2hir
-X-Google-Smtp-Source: ABdhPJwfLGmlIUKMw8ei/AYaI3sgaDIXBh/Qz4I2792/jWB4QCs3BU8vYLcAgylkImbpqUUucPO6Ow==
-X-Received: by 2002:a63:6f4c:: with SMTP id k73mr7354000pgc.319.1606498257787;
-        Fri, 27 Nov 2020 09:30:57 -0800 (PST)
-Received: from localhost.localdomain ([2409:4072:88d:6f0d:1941:b53e:6208:a8c9])
-        by smtp.gmail.com with ESMTPSA id j8sm7847014pgb.55.2020.11.27.09.30.53
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 27 Nov 2020 09:30:57 -0800 (PST)
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     agross@kernel.org, bjorn.andersson@linaro.org
-Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        dmitry.baryshkov@linaro.org,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Subject: [PATCH] arm64: dts: qcom: qrb5165-rb5: Add support for MCP2518FD
-Date:   Fri, 27 Nov 2020 23:00:44 +0530
-Message-Id: <20201127173044.55144-1-manivannan.sadhasivam@linaro.org>
-X-Mailer: git-send-email 2.25.1
+        id S1730985AbgK0RcT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 27 Nov 2020 12:32:19 -0500
+Received: from z5.mailgun.us ([104.130.96.5]:15723 "EHLO z5.mailgun.us"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1730603AbgK0RcT (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 27 Nov 2020 12:32:19 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1606498338; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
+ Subject: Sender; bh=3nkjgj4Pr4oWZ21yaFJgGjkvnF0x24CtZMWGJ14gROc=; b=WoNdL7heNIc9cSLQMnmG7TmOexhHlxVsW19hNvmO361TfCZcyNbO6GOtz+XfoPFT7b0rx0OF
+ YvjIjz6SAWiJeAkHy8HJw7vofJ550OO/QLpZ4Qpf5oGZMrn5H6NHKYkAyVosAP9bFwGLta5j
+ RcGTL3NudA5wjSh5V1KhhK9oCtk=
+X-Mailgun-Sending-Ip: 104.130.96.5
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n02.prod.us-east-1.postgun.com with SMTP id
+ 5fc1381b7f0cfa6a169333cb (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 27 Nov 2020 17:32:11
+ GMT
+Sender: jhugo=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 25AA3C433ED; Fri, 27 Nov 2020 17:32:11 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        NICE_REPLY_A,SPF_FAIL,URIBL_BLOCKED autolearn=no autolearn_force=no
+        version=3.4.0
+Received: from [10.226.59.216] (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: jhugo)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 4BDFFC433C6;
+        Fri, 27 Nov 2020 17:32:10 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 4BDFFC433C6
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=jhugo@codeaurora.org
+Subject: Re: [PATCH v2] bus: mhi: Ensure correct ring update ordering with
+ memory barrier
+To:     Loic Poulain <loic.poulain@linaro.org>,
+        manivannan.sadhasivam@linaro.org, hemantk@codeaurora.org
+Cc:     linux-arm-msm@vger.kernel.org
+References: <1606403201-5656-1-git-send-email-loic.poulain@linaro.org>
+From:   Jeffrey Hugo <jhugo@codeaurora.org>
+Message-ID: <ba8b657b-5f37-a85c-8b90-40b8b2261dac@codeaurora.org>
+Date:   Fri, 27 Nov 2020 10:32:09 -0700
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.4.0
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <1606403201-5656-1-git-send-email-loic.poulain@linaro.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add support for onboard MCP2518FD SPI CAN transceiver attached to SPI0
-of RB5.
+On 11/26/2020 8:06 AM, Loic Poulain wrote:
+> The ring element data, though being part of coherent memory, still need
+> to be performed before updating the ring context to point to this new
+> element. That can be guaranteed with a memory barrier (dma_wmb).
+> 
+> Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
+> ---
+>   v2: fix comment style
+> 
+>   drivers/bus/mhi/core/main.c | 7 +++++++
+>   1 file changed, 7 insertions(+)
+> 
+> diff --git a/drivers/bus/mhi/core/main.c b/drivers/bus/mhi/core/main.c
+> index 67188ea..ea39df0 100644
+> --- a/drivers/bus/mhi/core/main.c
+> +++ b/drivers/bus/mhi/core/main.c
+> @@ -111,7 +111,14 @@ void mhi_ring_chan_db(struct mhi_controller *mhi_cntrl,
+>   	dma_addr_t db;
+>   
+>   	db = ring->iommu_base + (ring->wp - ring->base);
+> +
+> +	/*
+> +	 * Writes to the new ring element must be visible to the hardware
+> +	 * before letting h/w know there is new element to fetch.
+> +	 */
+> +	dma_wmb();
+>   	*ring->ctxt_wp = db;
+> +
+>   	mhi_chan->db_cfg.process_db(mhi_cntrl, &mhi_chan->db_cfg,
+>   				    ring->db_addr, db);
+>   }
+> 
 
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
----
- arch/arm64/boot/dts/qcom/qrb5165-rb5.dts | 17 +++++++++++++++++
- 1 file changed, 17 insertions(+)
+Do we care about the ordering between updating ctxt_wp and the doorbell? 
+  As far as I am aware common device implementations only use the value 
+from the doorbell, but I wonder if that changes, could we run into issues?
 
-diff --git a/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts b/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts
-index d9f52703ba2a..ce22d4fa383e 100644
---- a/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts
-+++ b/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts
-@@ -25,6 +25,13 @@ chosen {
- 		stdout-path = "serial0:115200n8";
- 	};
- 
-+	/* Fixed crystal oscillator dedicated to MCP2518FD */
-+	clk40M: can_clock {
-+		compatible = "fixed-clock";
-+		#clock-cells = <0>;
-+		clock-frequency = <40000000>;
-+	};
-+
- 	dc12v: dc12v-regulator {
- 		compatible = "regulator-fixed";
- 		regulator-name = "DC12V";
-@@ -493,6 +500,16 @@ &sdhc_2 {
- /* CAN */
- &spi0 {
- 	status = "okay";
-+
-+	can@0 {
-+		compatible = "microchip,mcp2518fd";
-+		reg = <0>;
-+		clocks = <&clk40M>;
-+		interrupts-extended = <&tlmm 15 IRQ_TYPE_LEVEL_LOW>;
-+		spi-max-frequency = <10000000>;
-+		vdd-supply = <&vdc_5v>;
-+		xceiver-supply = <&vdc_5v>;
-+	};
- };
- 
- &tlmm {
 -- 
-2.25.1
-
+Jeffrey Hugo
+Qualcomm Technologies, Inc. is a member of the
+Code Aurora Forum, a Linux Foundation Collaborative Project.
