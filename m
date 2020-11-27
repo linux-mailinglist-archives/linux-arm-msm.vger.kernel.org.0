@@ -2,178 +2,126 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 8E58C2C5EB0
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Nov 2020 03:14:06 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1DA652C5F29
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Nov 2020 05:13:51 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2392196AbgK0CND (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 26 Nov 2020 21:13:03 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33066 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2392135AbgK0CNC (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 26 Nov 2020 21:13:02 -0500
-Received: from mail-lf1-x141.google.com (mail-lf1-x141.google.com [IPv6:2a00:1450:4864:20::141])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1AA21C0613D4
-        for <linux-arm-msm@vger.kernel.org>; Thu, 26 Nov 2020 18:13:02 -0800 (PST)
-Received: by mail-lf1-x141.google.com with SMTP id r24so4957021lfm.8
-        for <linux-arm-msm@vger.kernel.org>; Thu, 26 Nov 2020 18:13:01 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=/eNhfk0VtDd+YiJMUZkSRIS5osu6fNSDMA8H+TWC/zA=;
-        b=bl+HWiLDeGayMZKu/fKC/3E3juoTm3eppN83bqdNIvxclFQG1TNdsmEiIJ5lsByXj8
-         7ECHPRhbYKpI0etQGaucIO3dl7gxM0C4DyY7zeiU9rZNSnxrmI0YLnI1RyNDXAG8L7qz
-         EHYgENr+pRqO2Bu5ZO5Hn5/Cc44fMokfhCP/0=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=/eNhfk0VtDd+YiJMUZkSRIS5osu6fNSDMA8H+TWC/zA=;
-        b=Sp7QP+gkAAV0asWBozQVl+Pl95IJVIih03kskx3jQzMhXCXeyAewWXUdEBrseHiXiG
-         6282KWTjvDaCwIIr8IGDFyu8V/B+pD3XOCoWPZ5bGdNnBRHy6UQAs1A9tJDM7+Hri5ev
-         6N+D4dV/A1m82IpNJ0eK/O4XF0O0R1/9iB16lhGRO3uVm8972OuwkOLGss4ABIPJEr2Z
-         ABWD0cAc0Q8uPEnixk4koC/OdL7LoE+O9U2KYxtlU85JcynSmTkcn7apWKWDWAnkcycK
-         rAfvNrdZSR3AwFqfk4GhvlcV5hVD3ip7+PkWo9kTna4Lssr/U9pzGQtEB7gc+Nda4eVH
-         +vJA==
-X-Gm-Message-State: AOAM531wePcs8+b1PzKuWNtawA8rh9f8irDZddPrWuBMffayxneK1yAa
-        x94E8X8eYsgL6QlFHa74PTUTR78idmF5NSRE
-X-Google-Smtp-Source: ABdhPJwTuOxclkk+MKUxfDctTtEJyu3p3TNpPxj0lQaN3DZLPMCUVk6H/X8SAwSEwOah+NAZFDuGrw==
-X-Received: by 2002:ac2:4834:: with SMTP id 20mr2384937lft.598.1606443180047;
-        Thu, 26 Nov 2020 18:13:00 -0800 (PST)
-Received: from mail-lf1-f45.google.com (mail-lf1-f45.google.com. [209.85.167.45])
-        by smtp.gmail.com with ESMTPSA id q26sm526265lfd.260.2020.11.26.18.12.57
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 26 Nov 2020 18:12:58 -0800 (PST)
-Received: by mail-lf1-f45.google.com with SMTP id r24so4956919lfm.8
-        for <linux-arm-msm@vger.kernel.org>; Thu, 26 Nov 2020 18:12:57 -0800 (PST)
-X-Received: by 2002:a19:7f55:: with SMTP id a82mr2315035lfd.603.1606443177151;
- Thu, 26 Nov 2020 18:12:57 -0800 (PST)
-MIME-Version: 1.0
-References: <20201120001037.10032-1-stanimir.varbanov@linaro.org>
- <20201120001037.10032-3-stanimir.varbanov@linaro.org> <CAPBb6MUnXmtSKy9NwikYXjafgB+WM9TKEFjkYK16T2V7KRx=JQ@mail.gmail.com>
- <8c6231b2-61c2-d432-aa47-ddc29de8da19@linaro.org> <CAPBb6MXRat0g_+d04eoOL9Vpbv-2iJfqdOkzGB17=yjRMeVWXQ@mail.gmail.com>
- <59068381-43e4-559b-faa0-0e177de541f9@linaro.org>
-In-Reply-To: <59068381-43e4-559b-faa0-0e177de541f9@linaro.org>
-From:   Alexandre Courbot <acourbot@chromium.org>
-Date:   Fri, 27 Nov 2020 11:12:44 +0900
-X-Gmail-Original-Message-ID: <CAPBb6MVek8vSBTTdu0it2pk7XXdqxGvkf9C5viXxwAmaWeDi=A@mail.gmail.com>
-Message-ID: <CAPBb6MVek8vSBTTdu0it2pk7XXdqxGvkf9C5viXxwAmaWeDi=A@mail.gmail.com>
-Subject: Re: [PATCH 2/3] venus: Limit HFI sessions to the maximum supported
-To:     Stanimir Varbanov <stanimir.varbanov@linaro.org>
-Cc:     Linux Media Mailing List <linux-media@vger.kernel.org>,
-        linux-arm-msm@vger.kernel.org, LKML <linux-kernel@vger.kernel.org>,
-        Vikash Garodia <vgarodia@codeaurora.org>,
-        Mansur Alisha Shaik <mansur@codeaurora.org>,
-        Dikshita Agarwal <dikshita@codeaurora.org>
-Content-Type: text/plain; charset="UTF-8"
+        id S2392395AbgK0EM2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 26 Nov 2020 23:12:28 -0500
+Received: from m42-4.mailgun.net ([69.72.42.4]:43925 "EHLO m42-4.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726908AbgK0EM2 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 26 Nov 2020 23:12:28 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1606450347; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=X7Qb679WxuRp4Difwrjsn0t8m9dWVYkJod5nmfHLyEo=; b=fQPLnJtGwHhXrNJ9PcO1Gl3m71WT4N2TY5Qg5J46S9/qeRUhIYasYuzK6TSfklp43KVPYie/
+ /fBeroHG5Y7Ele/3sjyNkHOGpEBMuZYYvsm0oi/wONefOMLcjMI3ZZr5Yk9CmeN+wwF6NfSZ
+ h2LNj3v0lvOohhac7ZqZkNz20eU=
+X-Mailgun-Sending-Ip: 69.72.42.4
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n06.prod.us-east-1.postgun.com with SMTP id
+ 5fc07caaba50d14f886d91d7 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 27 Nov 2020 04:12:26
+ GMT
+Sender: srivasam=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id CDD8FC433ED; Fri, 27 Nov 2020 04:12:25 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
+        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+Received: from hyd-lnxbld210.qualcomm.com (unknown [202.46.22.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: srivasam)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id CADB8C433C6;
+        Fri, 27 Nov 2020 04:12:19 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org CADB8C433C6
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=srivasam@codeaurora.org
+From:   Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
+To:     agross@kernel.org, bjorn.andersson@linaro.org, lgirdwood@gmail.com,
+        broonie@kernel.org, robh+dt@kernel.org, plai@codeaurora.org,
+        bgoswami@codeaurora.org, perex@perex.cz, tiwai@suse.com,
+        srinivas.kandagatla@linaro.org, rohitkr@codeaurora.org,
+        linux-arm-msm@vger.kernel.org, alsa-devel@alsa-project.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Cc:     Srinivasa Rao Mandadapu <srivasam@codeaurora.org>,
+        V Sujith Kumar Reddy <vsujithk@codeaurora.org>
+Subject: [PATCH] Asoc: qcom: Fix for problem in resume with CRAS
+Date:   Fri, 27 Nov 2020 09:42:03 +0530
+Message-Id: <1606450323-21641-1-git-send-email-srivasam@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Nov 27, 2020 at 7:42 AM Stanimir Varbanov
-<stanimir.varbanov@linaro.org> wrote:
->
->
->
-> On 11/26/20 8:28 AM, Alexandre Courbot wrote:
-> > On Wed, Nov 25, 2020 at 10:01 PM Stanimir Varbanov
-> > <stanimir.varbanov@linaro.org> wrote:
-> >>
-> >>
-> >>
-> >> On 11/25/20 5:46 AM, Alexandre Courbot wrote:
-> >>> On Fri, Nov 20, 2020 at 9:12 AM Stanimir Varbanov
-> >>> <stanimir.varbanov@linaro.org> wrote:
-> >>>>
-> >>>> Currently we rely on firmware to return error when we reach the maximum
-> >>>> supported number of sessions. But this errors are happened at reqbuf
-> >>>> time which is a bit later. The more reasonable way looks like is to
-> >>>> return the error on driver open.
-> >>>>
-> >>>> To achieve that modify hfi_session_create to return error when we reach
-> >>>> maximum count of sessions and thus refuse open.
-> >>>>
-> >>>> Signed-off-by: Stanimir Varbanov <stanimir.varbanov@linaro.org>
-> >>>> ---
-> >>>>  drivers/media/platform/qcom/venus/core.h      |  1 +
-> >>>>  drivers/media/platform/qcom/venus/hfi.c       | 19 +++++++++++++++----
-> >>>>  .../media/platform/qcom/venus/hfi_parser.c    |  3 +++
-> >>>>  3 files changed, 19 insertions(+), 4 deletions(-)
-> >>>>
-> >>>> diff --git a/drivers/media/platform/qcom/venus/core.h b/drivers/media/platform/qcom/venus/core.h
-> >>>> index db0e6738281e..3a477fcdd3a8 100644
-> >>>> --- a/drivers/media/platform/qcom/venus/core.h
-> >>>> +++ b/drivers/media/platform/qcom/venus/core.h
-> >>>> @@ -96,6 +96,7 @@ struct venus_format {
-> >>>>  #define MAX_CAP_ENTRIES                32
-> >>>>  #define MAX_ALLOC_MODE_ENTRIES 16
-> >>>>  #define MAX_CODEC_NUM          32
-> >>>> +#define MAX_SESSIONS           16
-> >>>>
-> >>>>  struct raw_formats {
-> >>>>         u32 buftype;
-> >>>> diff --git a/drivers/media/platform/qcom/venus/hfi.c b/drivers/media/platform/qcom/venus/hfi.c
-> >>>> index 638ed5cfe05e..8420be6d3991 100644
-> >>>> --- a/drivers/media/platform/qcom/venus/hfi.c
-> >>>> +++ b/drivers/media/platform/qcom/venus/hfi.c
-> >>>> @@ -175,6 +175,7 @@ static int wait_session_msg(struct venus_inst *inst)
-> >>>>  int hfi_session_create(struct venus_inst *inst, const struct hfi_inst_ops *ops)
-> >>>>  {
-> >>>>         struct venus_core *core = inst->core;
-> >>>> +       int ret;
-> >>>>
-> >>>>         if (!ops)
-> >>>>                 return -EINVAL;
-> >>>> @@ -183,12 +184,22 @@ int hfi_session_create(struct venus_inst *inst, const struct hfi_inst_ops *ops)
-> >>>>         init_completion(&inst->done);
-> >>>>         inst->ops = ops;
-> >>>>
-> >>>> -       mutex_lock(&core->lock);
-> >>>> -       list_add_tail(&inst->list, &core->instances);
-> >>>> -       atomic_inc(&core->insts_count);
-> >>>> +       ret = mutex_lock_interruptible(&core->lock);
-> >>>> +       if (ret)
-> >>>> +               return ret;
-> >>>
-> >>> Why do we change to mutex_lock_interruptible() here? This makes this
-> >>
-> >> Because mutex_lock_interruptible is preferable in kernel docs, but I
-> >> agree that changing mutex_lock with mutex_lock_interruptible should be
-> >> subject of another lock related patches. I will drop this in next patch
-> >> version.
-> >>
-> >>> function return an error even though we could obtain the lock just by
-> >>> trying a bit harder.
-> >>
-> >> I didn't get that. The behavior of mutex_lock_interruptible is that same
-> >> as mutex_lock, i.e. the it will sleep to acquire the lock. The
-> >> difference is that the sleep could be interrupted by a signal. You might
-> >> think about mutex_trylock?
-> >
-> > Unless that mutex can be held by someone else for a rather long time
-> > (i.e. to the point where we may want to give priority to signals when
-> > userspace opens the device, since that's where hfi_session_create() is
-> > called), I am not convinced this change is necessary? It may confuse
->
-> Exactly, if there is a case where the core->lock is taken (firmware
-> recovery) and it is not unlocked for very long time (deadlock?) then
-> client process cannot be interrupted with a signal.
->
-> > userspace into thinking there was a serious error while there is none.
->
-> The client should be able to handle EINTR, right?
->
-> > Granted, userspace should manage this case, and from what I can see
-> > this code is correct, but I'm not sure we would gain anything by
-> > adding this extra complexity.
->
-> The benefit is that if something wrong is happening in the driver the
-> client process will be killable.
+To support playback continuation after resume problem in chrome
+audio server:
+Prepare device in  platform trigger callback.
+Make I2s and DMA control registers as non volatile.
 
-Ack, that definitely makes sense in that context, even though it
-should probably be done separately from this patch series. :)
+Signed-off-by: V Sujith Kumar Reddy <vsujithk@codeaurora.org>
+Signed-off-by: Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
+---
+ sound/soc/qcom/lpass-cpu.c      | 8 ++------
+ sound/soc/qcom/lpass-platform.c | 5 +++--
+ 2 files changed, 5 insertions(+), 8 deletions(-)
 
-Cheers,
-Alex.
+diff --git a/sound/soc/qcom/lpass-cpu.c b/sound/soc/qcom/lpass-cpu.c
+index af684fd..c99be03 100644
+--- a/sound/soc/qcom/lpass-cpu.c
++++ b/sound/soc/qcom/lpass-cpu.c
+@@ -454,20 +454,16 @@ static bool lpass_cpu_regmap_volatile(struct device *dev, unsigned int reg)
+ 	struct lpass_variant *v = drvdata->variant;
+ 	int i;
+ 
+-	for (i = 0; i < v->i2s_ports; ++i)
+-		if (reg == LPAIF_I2SCTL_REG(v, i))
+-			return true;
+ 	for (i = 0; i < v->irq_ports; ++i)
+ 		if (reg == LPAIF_IRQSTAT_REG(v, i))
+ 			return true;
+ 
+ 	for (i = 0; i < v->rdma_channels; ++i)
+-		if (reg == LPAIF_RDMACURR_REG(v, i) || reg == LPAIF_RDMACTL_REG(v, i))
++		if (reg == LPAIF_RDMACURR_REG(v, i))
+ 			return true;
+ 
+ 	for (i = 0; i < v->wrdma_channels; ++i)
+-		if (reg == LPAIF_WRDMACURR_REG(v, i + v->wrdma_channel_start) ||
+-			reg == LPAIF_WRDMACTL_REG(v, i + v->wrdma_channel_start))
++		if (reg == LPAIF_WRDMACURR_REG(v, i + v->wrdma_channel_start))
+ 			return true;
+ 
+ 	return false;
+diff --git a/sound/soc/qcom/lpass-platform.c b/sound/soc/qcom/lpass-platform.c
+index 80b09de..2b0a7c1 100644
+--- a/sound/soc/qcom/lpass-platform.c
++++ b/sound/soc/qcom/lpass-platform.c
+@@ -481,8 +481,9 @@ static int lpass_platform_pcmops_trigger(struct snd_soc_component *component,
+ 		return -ENOTRECOVERABLE;
+ 	}
+ 	switch (cmd) {
+-	case SNDRV_PCM_TRIGGER_START:
+ 	case SNDRV_PCM_TRIGGER_RESUME:
++		lpass_platform_pcmops_prepare(component, substream);
++	case SNDRV_PCM_TRIGGER_START:
+ 	case SNDRV_PCM_TRIGGER_PAUSE_RELEASE:
+ 		ret = regmap_fields_write(dmactl->enable, id,
+ 						 LPAIF_DMACTL_ENABLE_ON);
+@@ -592,7 +593,7 @@ static int lpass_platform_pcmops_trigger(struct snd_soc_component *component,
+ 		break;
+ 	}
+ 
+-	return 0;
++	return ret;
+ }
+ 
+ static snd_pcm_uframes_t lpass_platform_pcmops_pointer(
+-- 
+Qualcomm India Private Limited, on behalf of Qualcomm Innovation Center, Inc.,
+is a member of Code Aurora Forum, a Linux Foundation Collaborative Project.
+
