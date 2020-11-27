@@ -2,93 +2,110 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C907C2C6A9A
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Nov 2020 18:30:32 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 54AE92C6AA4
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Nov 2020 18:34:23 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730675AbgK0RaB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 27 Nov 2020 12:30:01 -0500
-Received: from z5.mailgun.us ([104.130.96.5]:15723 "EHLO z5.mailgun.us"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726889AbgK0RaB (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 27 Nov 2020 12:30:01 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1606498201; h=Content-Transfer-Encoding: Content-Type:
- In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
- Subject: Sender; bh=FjsPv1pzQMILNHpDUkKLwjF67fkZm88L0hUyYN/ogOk=; b=eiM6/myn0wG00k+NTCdGKroImP5GtFC3LIvcEXDBUnjFBbrR0F76aca91/W09d9Yufw4qBtn
- QqQ1eG3c79HLpQ4tC+EeOqTESPTGozw9fMH/KOmSKub9x1h8W8kbkJv3Hz7e3iP20W+SuULf
- wrA217yWGpKU7NLltDyCONqhJEs=
-X-Mailgun-Sending-Ip: 104.130.96.5
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n10.prod.us-west-2.postgun.com with SMTP id
- 5fc1378b22377520ee108379 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 27 Nov 2020 17:29:47
- GMT
-Sender: jhugo=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 653E3C43460; Fri, 27 Nov 2020 17:29:47 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        NICE_REPLY_A,SPF_FAIL,URIBL_BLOCKED autolearn=no autolearn_force=no
-        version=3.4.0
-Received: from [10.226.59.216] (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: jhugo)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 2821BC433ED;
-        Fri, 27 Nov 2020 17:29:46 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 2821BC433ED
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=jhugo@codeaurora.org
-Subject: Re: [PATCH v2] bus: mhi: core: Indexed MHI controller name
-To:     Loic Poulain <loic.poulain@linaro.org>,
-        manivannan.sadhasivam@linaro.org, hemantk@codeaurora.org
-Cc:     linux-arm-msm@vger.kernel.org
-References: <1606386035-15982-1-git-send-email-loic.poulain@linaro.org>
-From:   Jeffrey Hugo <jhugo@codeaurora.org>
-Message-ID: <e94da51c-6c13-152b-e7b3-843ada5165e7@codeaurora.org>
-Date:   Fri, 27 Nov 2020 10:29:45 -0700
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.4.0
+        id S1732175AbgK0Ra7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 27 Nov 2020 12:30:59 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33516 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1732164AbgK0Ra6 (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 27 Nov 2020 12:30:58 -0500
+Received: from mail-pf1-x442.google.com (mail-pf1-x442.google.com [IPv6:2607:f8b0:4864:20::442])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 864D5C0613D2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 27 Nov 2020 09:30:58 -0800 (PST)
+Received: by mail-pf1-x442.google.com with SMTP id b10so3735935pfo.4
+        for <linux-arm-msm@vger.kernel.org>; Fri, 27 Nov 2020 09:30:58 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=jRPKms8czRyZejPs/escCcopkjcFF901XVGwJamtDJM=;
+        b=CyR6dpR4c/4mgxkm4VQV7A/44VO1b41ki4UsBKPRL2o1PbTiDTDQFa15XdC9OWgXU3
+         wk9Jk8suxz2Xr5ZodttuyL+ujl0A6rG7cwN1PawFsn/WO9XyiIS7hsJF/f5SSUjQot+G
+         CAb5QAPJoNsRys41Cb20fsiopuvsGESc71r5Rxn+3NaRG9J/9saS62b1TG4yPF3z1iT1
+         K9lft/uUOKyGbhLx3N0aVpiue2EF5WFhZtTNvLY8GFLY5He0DcKBXcHz6yTCDcFmQ0Zs
+         /sw/IrMuEKqUpBmJYZqr5d2b0vpNTKwP+9f/wO5HdLHpw+dhsSFXfmxfYbvExaP/5h+q
+         Zyzg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=jRPKms8czRyZejPs/escCcopkjcFF901XVGwJamtDJM=;
+        b=k8WeHGuornOsw9484WwOy7ziLZOBjfr7mXV4hCiRHxCAlMVNaRbaX91eAcPu7Tvi+r
+         F9tFYZ5J1PiFIIb5Vub6WoHxRvIjOfDpezvwbVWr8igraAnwHmcfQwjyUonWf9xwCqVH
+         A6yBmAUIDqdWTBBMvmTzoNWX09NadPAJOQMtbNx+Aa0P4GGx2khfJ8QunN3nUxACDdsC
+         4yVzT9o13QvEQzTuusJh+CIxRW5wmtaBmzHZ7ngzx0yAWeMEBH8/puDz8FatT58afwN6
+         knOa79cOWH3BvGuosiDqlc8q9dld04+vhZ9yJWO77I6V2SOEoj600pM51ITVpcHTzfxi
+         tOZQ==
+X-Gm-Message-State: AOAM5338OL3lCm0VeziNRX0mRTQoreHdOIu9ITamMbLSdaGw5QzHSSlL
+        SHK/SBW/GnU+NYn1evzS2hir
+X-Google-Smtp-Source: ABdhPJwfLGmlIUKMw8ei/AYaI3sgaDIXBh/Qz4I2792/jWB4QCs3BU8vYLcAgylkImbpqUUucPO6Ow==
+X-Received: by 2002:a63:6f4c:: with SMTP id k73mr7354000pgc.319.1606498257787;
+        Fri, 27 Nov 2020 09:30:57 -0800 (PST)
+Received: from localhost.localdomain ([2409:4072:88d:6f0d:1941:b53e:6208:a8c9])
+        by smtp.gmail.com with ESMTPSA id j8sm7847014pgb.55.2020.11.27.09.30.53
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 27 Nov 2020 09:30:57 -0800 (PST)
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     agross@kernel.org, bjorn.andersson@linaro.org
+Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        dmitry.baryshkov@linaro.org,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Subject: [PATCH] arm64: dts: qcom: qrb5165-rb5: Add support for MCP2518FD
+Date:   Fri, 27 Nov 2020 23:00:44 +0530
+Message-Id: <20201127173044.55144-1-manivannan.sadhasivam@linaro.org>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-In-Reply-To: <1606386035-15982-1-git-send-email-loic.poulain@linaro.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 11/26/2020 3:20 AM, Loic Poulain wrote:
-> Today the MHI controller name is simply cloned from the underlying
-> bus device (its parent), that gives the following device structure
-> for e.g. a MHI/PCI controller:
-> devices/pci0000:00/0000:00:01.2/0000:02:00.0/0000:02:00.0
-> devices/pci0000:00/0000:00:01.2/0000:02:00.0/0000:02:00.0/0000:02:00.0_IPCR
-> ...
-> 
-> That's quite misleading/confusing and can cause device registering
-> issues because of duplicate dev name (e.g. if a PCI device register
-> two different MHI instances).
-> 
-> This patch changes MHI core to create indexed mhi controller names
-> (mhi0, mhi1...) in the same way as other busses (i2c0, usb0...).
-> 
-> The previous example becomes:
-> devices/pci0000:00/0000:00:01.2/0000:02:00.0/mhi0
-> devices/pci0000:00/0000:00:01.2/0000:02:00.0/mhi0/mhi0_IPCR
-> ...
->   v2: move index field at the end of mhi_controller struct (before bool)
->       to avoid breaking well packed alignment.
-> 
-> Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
+Add support for onboard MCP2518FD SPI CAN transceiver attached to SPI0
+of RB5.
 
-Reviewed-by: Jeffrey Hugo <jhugo@codeaurora.org>
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+---
+ arch/arm64/boot/dts/qcom/qrb5165-rb5.dts | 17 +++++++++++++++++
+ 1 file changed, 17 insertions(+)
 
+diff --git a/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts b/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts
+index d9f52703ba2a..ce22d4fa383e 100644
+--- a/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts
++++ b/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts
+@@ -25,6 +25,13 @@ chosen {
+ 		stdout-path = "serial0:115200n8";
+ 	};
+ 
++	/* Fixed crystal oscillator dedicated to MCP2518FD */
++	clk40M: can_clock {
++		compatible = "fixed-clock";
++		#clock-cells = <0>;
++		clock-frequency = <40000000>;
++	};
++
+ 	dc12v: dc12v-regulator {
+ 		compatible = "regulator-fixed";
+ 		regulator-name = "DC12V";
+@@ -493,6 +500,16 @@ &sdhc_2 {
+ /* CAN */
+ &spi0 {
+ 	status = "okay";
++
++	can@0 {
++		compatible = "microchip,mcp2518fd";
++		reg = <0>;
++		clocks = <&clk40M>;
++		interrupts-extended = <&tlmm 15 IRQ_TYPE_LEVEL_LOW>;
++		spi-max-frequency = <10000000>;
++		vdd-supply = <&vdc_5v>;
++		xceiver-supply = <&vdc_5v>;
++	};
+ };
+ 
+ &tlmm {
 -- 
-Jeffrey Hugo
-Qualcomm Technologies, Inc. is a member of the
-Code Aurora Forum, a Linux Foundation Collaborative Project.
+2.25.1
+
