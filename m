@@ -2,130 +2,182 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id EA94F2C6AC4
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Nov 2020 18:42:58 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 8CFCD2C6AE2
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Nov 2020 18:49:30 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731882AbgK0Rku (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 27 Nov 2020 12:40:50 -0500
-Received: from z5.mailgun.us ([104.130.96.5]:28878 "EHLO z5.mailgun.us"
+        id S1732348AbgK0RtP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 27 Nov 2020 12:49:15 -0500
+Received: from z5.mailgun.us ([104.130.96.5]:49679 "EHLO z5.mailgun.us"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1732165AbgK0Rku (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 27 Nov 2020 12:40:50 -0500
+        id S1730603AbgK0RtP (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 27 Nov 2020 12:49:15 -0500
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1606498849; h=Content-Transfer-Encoding: Content-Type:
- In-Reply-To: MIME-Version: Date: Message-ID: References: Cc: To: From:
- Subject: Sender; bh=K9ftcu2wJDTrdGgRfAD/Wr1raz6m+gpEWTUptY4UecM=; b=tddYybjC+cPOYmjVixMmryVVXOFbeZfSHEN8kY1HpbAkrKIzcN3KujJzWaBTexzNkLfHVhzw
- 1GMEvgFmA7TGYynM43D3LZhb1TCXdOdYJ951LAH6tAK16vPLw9azyPd3lTs0PLpxlbUuiJdJ
- lTpEw8lOeTtHiFoyUg5MwGYwuT0=
+ s=smtp; t=1606499353; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
+ Subject: Sender; bh=pUPCU+QayI1Qx+sBFoJcvK5sgEvyc418pyh2vbWzEQE=; b=n2A2o7QMJxm54VgTwu3eivobNjroD/6RqMNxPA32MkWUIj6V9AuERNK8Hv2KFX/q4d6X0PKW
+ q/AU0LdYmqS0z6Dn6M0vCuMM0sU0B9x+A+banNQzcE/VB6eDBW2K4ZSxe8Wy2EucHvA+eKNX
+ 5H3BK6mQgszNt/EACoRxdzBR9RY=
 X-Mailgun-Sending-Ip: 104.130.96.5
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org
  (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n07.prod.us-east-1.postgun.com with SMTP id
- 5fc13a1c1b731a5d9cdcd618 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 27 Nov 2020 17:40:44
+ smtp-out-n02.prod.us-west-2.postgun.com with SMTP id
+ 5fc13c0c22377520ee21a797 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 27 Nov 2020 17:49:00
  GMT
-Sender: jhugo=codeaurora.org@mg.codeaurora.org
+Sender: srivasam=codeaurora.org@mg.codeaurora.org
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 852F6C43462; Fri, 27 Nov 2020 17:40:43 +0000 (UTC)
+        id A0C85C433C6; Fri, 27 Nov 2020 17:49:00 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
 X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
         NICE_REPLY_A,SPF_FAIL,URIBL_BLOCKED autolearn=no autolearn_force=no
         version=3.4.0
-Received: from [10.226.59.216] (i-global254.qualcomm.com [199.106.103.254])
+Received: from [172.20.10.2] (unknown [27.59.128.68])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        (Authenticated sender: jhugo)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 5826CC433ED;
-        Fri, 27 Nov 2020 17:40:42 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 5826CC433ED
+        (Authenticated sender: srivasam)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id B9F65C433C6;
+        Fri, 27 Nov 2020 17:48:54 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org B9F65C433C6
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=jhugo@codeaurora.org
-Subject: Re: [PATCH v3 3/9] mhi: pci-generic: Perform hard reset on remove
-From:   Jeffrey Hugo <jhugo@codeaurora.org>
-To:     Loic Poulain <loic.poulain@linaro.org>,
-        manivannan.sadhasivam@linaro.org, hemantk@codeaurora.org
-Cc:     linux-arm-msm@vger.kernel.org, bbhatt@codeaurora.org
-References: <1606404547-10737-1-git-send-email-loic.poulain@linaro.org>
- <1606404547-10737-4-git-send-email-loic.poulain@linaro.org>
- <39fae2b9-cdde-1864-8ff3-55e3c07f4264@codeaurora.org>
-Message-ID: <afab13b8-e3aa-ac3e-fcd9-f7ee4b697499@codeaurora.org>
-Date:   Fri, 27 Nov 2020 10:40:41 -0700
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=srivasam@codeaurora.org
+Subject: Re: [PATCH v3] ASoC: qcom: Fix playback recover problem in suspend
+ resume
+To:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        agross@kernel.org, bjorn.andersson@linaro.org, lgirdwood@gmail.com,
+        broonie@kernel.org, robh+dt@kernel.org, plai@codeaurora.org,
+        bgoswami@codeaurora.org, perex@perex.cz, tiwai@suse.com,
+        rohitkr@codeaurora.org, linux-arm-msm@vger.kernel.org,
+        alsa-devel@alsa-project.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Cc:     V Sujith Kumar Reddy <vsujithk@codeaurora.org>
+References: <1606470988-26965-1-git-send-email-srivasam@codeaurora.org>
+ <1146040c-5559-f4bf-fafe-eb7468e577a0@linaro.org>
+From:   Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
+Organization: Qualcomm India Private Limited.
+Message-ID: <0055cc2e-87f1-bcc3-247b-8a4bd1bea883@codeaurora.org>
+Date:   Fri, 27 Nov 2020 23:18:52 +0530
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.4.0
+ Thunderbird/78.5.0
 MIME-Version: 1.0
-In-Reply-To: <39fae2b9-cdde-1864-8ff3-55e3c07f4264@codeaurora.org>
+In-Reply-To: <1146040c-5559-f4bf-fafe-eb7468e577a0@linaro.org>
 Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
 Content-Transfer-Encoding: 8bit
+Content-Language: en-US
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 11/27/2020 10:34 AM, Jeffrey Hugo wrote:
-> On 11/26/2020 8:29 AM, Loic Poulain wrote:
->> Ensure that the device is hard-reset on remove to restore its initial
->> state and avoid further issues on subsequent probe.
+Thanks a lot  Srinivas for your valuable review comments and for your 
+time!!!
+
+On 11/27/2020 5:39 PM, Srinivas Kandagatla wrote:
+>
+>
+> On 27/11/2020 09:56, Srinivasa Rao Mandadapu wrote:
+>> To support playback continuation after hard suspend(bypass powerd)
+>>   and resume:
+>> Prepare device in  platform trigger callback.
+>> Make I2s and DMA control registers as non volatile.
+> Looks like there are two changes here, One is fixing the volatile 
+> registers!
+>
+>
+> Other is preparing device after suspend!
+>
+> Consider splitting them!
+>
+Okay will split and share.
 >>
->> This has been tested with Telit FN980m module.
->>
->> Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
+>
+> Fixes tag is missing here?
+>
+Actually fixing volatile registers is just partial reversal of commit 
+b1824968221c ("ASoC: qcom: Fix enabling BCLK and LRCLK in LPAIF invalid 
+state")
+
+Will revert and share the patch separately.
+
+>> Signed-off-by: V Sujith Kumar Reddy <vsujithk@codeaurora.org>
+>> Signed-off-by: Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
 >> ---
->>   drivers/bus/mhi/pci_generic.c | 11 +++++++++++
->>   1 file changed, 11 insertions(+)
+>> Changes Since v1 and v2:
+>>    -- Subject lines changed
 >>
->> diff --git a/drivers/bus/mhi/pci_generic.c 
->> b/drivers/bus/mhi/pci_generic.c
->> index d3896ef..4363676 100644
->> --- a/drivers/bus/mhi/pci_generic.c
->> +++ b/drivers/bus/mhi/pci_generic.c
->> @@ -15,6 +15,8 @@
->>   #define MHI_PCI_DEFAULT_BAR_NUM 0
->> +#define DEV_RESET_REG (0xB0)
->> +
->>   /**
->>    * struct mhi_pci_dev_info - MHI PCI device specific information
->>    * @config: MHI controller configuration
->> @@ -166,6 +168,11 @@ static void mhi_pci_status_cb(struct 
->> mhi_controller *mhi_cntrl,
->>       /* Nothing to do for now */
->>   }
->> +static inline void mhi_pci_reset(struct mhi_controller *mhi_cntrl)
->> +{
->> +    writel(1, mhi_cntrl->regs + DEV_RESET_REG);
->> +}
->> +
->>   static int mhi_pci_claim(struct mhi_controller *mhi_cntrl,
->>                unsigned int bar_num, u64 dma_mask)
->>   {
->> @@ -329,6 +336,10 @@ static void mhi_pci_remove(struct pci_dev *pdev)
->>       mhi_power_down(mhi_cntrl, true);
->>       mhi_unprepare_after_power_down(mhi_cntrl);
->>       mhi_unregister_controller(mhi_cntrl);
->> +
->> +    /* MHI-layer reset could not be enough, always hard-reset the 
->> device */
->> +    mhi_pci_reset(mhi_cntrl);
->> +
->>       mhi_free_controller(mhi_cntrl);
->>   }
+>>   sound/soc/qcom/lpass-cpu.c      | 8 ++------
+>>   sound/soc/qcom/lpass-platform.c | 5 +++--
+>>   2 files changed, 5 insertions(+), 8 deletions(-)
 >>
-> 
-> Did you miss my eariler comment asking to make this functionality common?
-
-Sorry, I missed your reply to my reply.
-
-> 
-> Also, I caution you to think carefully about this.  Its possible doing 
-> this type of reset can take down the PCI link, and the host would need 
-> to have PCI hotplug to recover.  If not, the device will become 
-> inaccessable until the host reboots.
-> 
-
-
+>> diff --git a/sound/soc/qcom/lpass-cpu.c b/sound/soc/qcom/lpass-cpu.c
+>> index af684fd..c99be03 100644
+>> --- a/sound/soc/qcom/lpass-cpu.c
+>> +++ b/sound/soc/qcom/lpass-cpu.c
+>> @@ -454,20 +454,16 @@ static bool lpass_cpu_regmap_volatile(struct 
+>> device *dev, unsigned int reg)
+>>       struct lpass_variant *v = drvdata->variant;
+>>       int i;
+>>   -    for (i = 0; i < v->i2s_ports; ++i)
+>> -        if (reg == LPAIF_I2SCTL_REG(v, i))
+>> -            return true;
+>>       for (i = 0; i < v->irq_ports; ++i)
+>>           if (reg == LPAIF_IRQSTAT_REG(v, i))
+>>               return true;
+>>         for (i = 0; i < v->rdma_channels; ++i)
+>> -        if (reg == LPAIF_RDMACURR_REG(v, i) || reg == 
+>> LPAIF_RDMACTL_REG(v, i))
+>> +        if (reg == LPAIF_RDMACURR_REG(v, i))
+>>               return true;
+>>         for (i = 0; i < v->wrdma_channels; ++i)
+>> -        if (reg == LPAIF_WRDMACURR_REG(v, i + 
+>> v->wrdma_channel_start) ||
+>> -            reg == LPAIF_WRDMACTL_REG(v, i + v->wrdma_channel_start))
+>> +        if (reg == LPAIF_WRDMACURR_REG(v, i + v->wrdma_channel_start))
+>>               return true;
+>>         return false;
+>> diff --git a/sound/soc/qcom/lpass-platform.c 
+>> b/sound/soc/qcom/lpass-platform.c
+>> index 80b09de..2b0a7c1 100644
+>> --- a/sound/soc/qcom/lpass-platform.c
+>> +++ b/sound/soc/qcom/lpass-platform.c
+>> @@ -481,8 +481,9 @@ static int lpass_platform_pcmops_trigger(struct 
+>> snd_soc_component *component,
+>>           return -ENOTRECOVERABLE;
+>>       }
+>>       switch (cmd) {
+>> -    case SNDRV_PCM_TRIGGER_START:
+>>       case SNDRV_PCM_TRIGGER_RESUME:
+>> +        lpass_platform_pcmops_prepare(component, substream);
+>
+> Can you elaborate the actual issue here?
+>
+> Are any other registers needs to re-programmed??
+>
+> Does it make sense to use
+> regcache_mark_dirty()
+> regcache_sync() in pm suspend resume path,
+> instead of calling prepare explicitly?
+>
+>
+> --srini
+>
+Yes it's working fine with regcache APIs. will update the patch.
+>
+>> +    case SNDRV_PCM_TRIGGER_START:
+>>       case SNDRV_PCM_TRIGGER_PAUSE_RELEASE:
+>>           ret = regmap_fields_write(dmactl->enable, id,
+>>                            LPAIF_DMACTL_ENABLE_ON);
+>> @@ -592,7 +593,7 @@ static int lpass_platform_pcmops_trigger(struct 
+>> snd_soc_component *component,
+>>           break;
+>>       }
+>>   -    return 0;
+>> +    return ret;
+>>   }
+>>     static snd_pcm_uframes_t lpass_platform_pcmops_pointer(
+>>
 -- 
-Jeffrey Hugo
-Qualcomm Technologies, Inc. is a member of the
-Code Aurora Forum, a Linux Foundation Collaborative Project.
+Qualcomm India Private Limited, on behalf of Qualcomm Innovation Center, Inc.,
+is a member of Code Aurora Forum, a Linux Foundation Collaborative Project.
+
