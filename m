@@ -2,170 +2,222 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B02BF2C6EC8
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 28 Nov 2020 05:27:12 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 29EB52C6EC1
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 28 Nov 2020 05:10:24 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731374AbgK1EZ4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 27 Nov 2020 23:25:56 -0500
-Received: from z5.mailgun.us ([104.130.96.5]:25638 "EHLO z5.mailgun.us"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1731107AbgK1EYd (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 27 Nov 2020 23:24:33 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1606537473; h=Message-Id: Date: Subject: Cc: To: From:
- Sender; bh=SFCUp5f8CHLKiOLvv64/nYzMDo00/YTRM5OYAk3GCCg=; b=bQC5MEHXzozyFLRZ0jAsogIMVNmjh0NLFSKsDL8dppEBPgO2TzIT1pKUHTHwyvG+6n+uuCeN
- BfcxzpJZXJumhqKht7z6ZyZ/YQJbna0FHoC5VCZfhEO9jXVU1imbUl6b+qvja63OKj/uv3Bj
- c8zSu7/eTrS/b/Cdn0U8H/XkJbw=
-X-Mailgun-Sending-Ip: 104.130.96.5
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n02.prod.us-east-1.postgun.com with SMTP id
- 5fc1c357ba50d14f88303ca9 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Sat, 28 Nov 2020 03:26:15
- GMT
-Sender: hemantk=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 4B44CC43461; Sat, 28 Nov 2020 03:26:14 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL
-        autolearn=no autolearn_force=no version=3.4.0
-Received: from codeaurora.org (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: hemantk)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 9129EC433ED;
-        Sat, 28 Nov 2020 03:26:12 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 9129EC433ED
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=hemantk@codeaurora.org
-From:   Hemant Kumar <hemantk@codeaurora.org>
-To:     manivannan.sadhasivam@linaro.org, gregkh@linuxfoundation.org
-Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        jhugo@codeaurora.org, bbhatt@codeaurora.org,
-        loic.poulain@linaro.org, netdev@vger.kernel.org,
-        Hemant Kumar <hemantk@codeaurora.org>
-Subject: [PATCH v13 0/4] userspace MHI client interface driver
-Date:   Fri, 27 Nov 2020 19:26:02 -0800
-Message-Id: <1606533966-22821-1-git-send-email-hemantk@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
+        id S1731627AbgK1Dnp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 27 Nov 2020 22:43:45 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42894 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1731497AbgK1Dme (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 27 Nov 2020 22:42:34 -0500
+Received: from mail-oi1-x243.google.com (mail-oi1-x243.google.com [IPv6:2607:f8b0:4864:20::243])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C4272C0613D3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 27 Nov 2020 19:42:33 -0800 (PST)
+Received: by mail-oi1-x243.google.com with SMTP id k26so7997768oiw.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 27 Nov 2020 19:42:33 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=VLzI5Wn/zg0+hFTpN0tfFuoZOdepE3gNmagFCGpxFho=;
+        b=bsgMmnrdHRiS8lyAW0qKzwKxG7IRz0pyurV2KveZCcEjeBxdOlmGtxd/hBuyfNQxdk
+         RwbQWYud0LiVEAzDdapcxo62iiAF6Gy8kITq5elUQA8uzlDvaHxCzcMt0YjyoWXmdC61
+         VAl5S58kNSj6rTQvAUgOi0/Rew+c1jqVcR1dQHzUWixL+oEshV59MAxpLXMdxR+z77iY
+         gct/t/WuP52+IF2j1X3kfxCJ5jb/oPoq/GmwJIIuNCV7OOra8h58rtiwlO9wPjk+5J60
+         oDYCF0CjlhnNyPyK4dwLtMjud2fW7q4W0lw9vWEEEu2Zh7yU9lL17anVivo7Sz+vOtuG
+         lqMg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=VLzI5Wn/zg0+hFTpN0tfFuoZOdepE3gNmagFCGpxFho=;
+        b=O1wKok6GP7kCvv57dcsrXIaWvERs3ofNdtpBfCuNh7Uq319a059H2RGVb077ri+PPW
+         GdYdB4gG+nNbbQvmPmdzHMYQdQJLXUFaV4R+L8teaGZMHHGZYr5UzSJwcns50ytCOioq
+         PIjuCSfiKTyfMH4NfZJKJtSC43qIIV1JAhQB4ydWSOCUeSnYuXW5bGDasRqVUwJiZ2TR
+         8vrlzsJHHVuUmJXe3JQyD6PNTpXNJv9LRhYD0lollvxbB6Rj6g9ZfVDxj6B5hBlIrVpV
+         B3yV8h32e/iUC0XfPbSGu0N1LuUeF+9MbSQkLltXDJmckq3ojvIFYeg/VAv9NibNy4fi
+         Vdgg==
+X-Gm-Message-State: AOAM533+txbAljS+nrCb56Gt5CnYLpfuxr61h6dBZrAvTgLJmee5U6VK
+        jV7bGHnEFUjUUYMkYd2c+xymTg==
+X-Google-Smtp-Source: ABdhPJxYizHts0zDI4I57tR3Sgn1uC10yhK4HwAqDdm6kDXTWibGVghdEr4DZn0iT2eDvEOnDTVBZg==
+X-Received: by 2002:aca:570c:: with SMTP id l12mr7832632oib.105.1606534952912;
+        Fri, 27 Nov 2020 19:42:32 -0800 (PST)
+Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
+        by smtp.gmail.com with ESMTPSA id t17sm6279198oie.57.2020.11.27.19.42.31
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 27 Nov 2020 19:42:32 -0800 (PST)
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Steev Klimaszewski <steev@kali.org>,
+        Shawn Guo <shawn.guo@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH] arm64: dts: qcom: c630: Define eDP bridge and panel
+Date:   Fri, 27 Nov 2020 21:42:31 -0600
+Message-Id: <20201128034231.89750-1-bjorn.andersson@linaro.org>
+X-Mailer: git-send-email 2.29.2
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This patch series adds support for UCI driver. UCI driver enables userspace
-clients to communicate to external MHI devices like modem and WLAN. UCI driver
-probe creates standard character device file nodes for userspace clients to
-perform open, read, write, poll and release file operations. These file
-operations call MHI core layer APIs to perform data transfer using MHI bus
-to communicate with MHI device. Patch is tested using arm64 based platform.
+The Lenovo Yoga C630 drives the Boe NV133FHM-N61 eDP display from DSI
+using a TI SN65DSI86 bridge chip on I2C 10. Define the bridge and eDP
+panel and enable the display blocks.
 
-V13:
-- Removed LOOPBACK channel from mhi_device_id table from this patch series.
-Pushing a new patch series to add support for LOOPBACK channel and the user
-space test application. Also removed the description from kernel documentation.
-- Added QMI channel to mhi_device_id table. QMI channel has existing libqmi
-support from user space.
-- Updated kernel Documentation for QMI channel and provided external reference
-for libqmi.
-- Updated device file node name by appending mhi device name only, which already
-includes mhi controller device name.
+Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+---
+ .../boot/dts/qcom/sdm850-lenovo-yoga-c630.dts | 100 ++++++++++++++++++
+ 1 file changed, 100 insertions(+)
 
-V12:
-- Added loopback test driver under selftest/drivers/mhi. Updated kernel
-  documentation for the usage of the loopback test application.
-- Addressed review comments for renaming variable names, updated inline
-  comments and removed two redundant dev_dbg.
-
-V11:
-- Fixed review comments for UCI documentation by expanding TLAs and rewording
-  some sentences.
-
-V10:
-- Replaced mutex_lock with mutex_lock_interruptible in read() and write() file
-  ops call back.
-
-V9:
-- Renamed dl_lock to dl_pending _lock and pending list to dl_pending for
-  clarity.
-- Used read lock to protect cur_buf.
-- Change transfer status check logic and only consider 0 and -EOVERFLOW as
-  only success.
-- Added __int to module init function.
-- Print channel name instead of minor number upon successful probe.
-
-V8:
-- Fixed kernel test robot compilation error by changing %lu to %zu for
-  size_t.
-- Replaced uci with UCI in Kconfig, commit text, and comments in driver
-  code.
-- Fixed minor style related comments.
-
-V7:
-- Decoupled uci device and uci channel objects. uci device is
-  associated with device file node. uci channel is associated
-  with MHI channels. uci device refers to uci channel to perform
-  MHI channel operations for device file operations like read()
-  and write(). uci device increments its reference count for
-  every open(). uci device calls mhi_uci_dev_start_chan() to start
-  the MHI channel. uci channel object is tracking number of times
-  MHI channel is referred. This allows to keep the MHI channel in
-  start state until last release() is called. After that uci channel
-  reference count goes to 0 and uci channel clean up is performed
-  which stops the MHI channel. After the last call to release() if
-  driver is removed uci reference count becomes 0 and uci object is
-  cleaned up.
-- Use separate uci channel read and write lock to fine grain locking
-  between reader and writer.
-- Use uci device lock to synchronize open, release and driver remove.
-- Optimize for downlink only or uplink only UCI device.
-
-V6:
-- Moved uci.c to mhi directory.
-- Updated Kconfig to add module information.
-- Updated Makefile to rename uci object file name as mhi_uci
-- Removed kref for open count
-
-V5:
-- Removed mhi_uci_drv structure.
-- Used idr instead of creating global list of uci devices.
-- Used kref instead of local ref counting for uci device and
-  open count.
-- Removed unlikely macro.
-
-V4:
-- Fix locking to protect proper struct members.
-- Updated documentation describing uci client driver use cases.
-- Fixed uci ref counting in mhi_uci_open for error case.
-- Addressed style related review comments.
-
-V3: Added documentation for MHI UCI driver.
-
-V2:
-- Added mutex lock to prevent multiple readers to access same
-- mhi buffer which can result into use after free.
-
-Hemant Kumar (4):
-  bus: mhi: core: Add helper API to return number of free TREs
-  bus: mhi: core: Move MHI_MAX_MTU to external header file
-  docs: Add documentation for userspace client interface
-  bus: mhi: Add userspace client interface driver
-
- Documentation/mhi/index.rst     |   1 +
- Documentation/mhi/uci.rst       |  94 ++++++
- drivers/bus/mhi/Kconfig         |  13 +
- drivers/bus/mhi/Makefile        |   3 +
- drivers/bus/mhi/core/internal.h |   1 -
- drivers/bus/mhi/core/main.c     |  12 +
- drivers/bus/mhi/uci.c           | 665 ++++++++++++++++++++++++++++++++++++++++
- include/linux/mhi.h             |  12 +
- 8 files changed, 800 insertions(+), 1 deletion(-)
- create mode 100644 Documentation/mhi/uci.rst
- create mode 100644 drivers/bus/mhi/uci.c
-
+diff --git a/arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts b/arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts
+index f956dbf664c1..bdd5d92ee6c3 100644
+--- a/arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts
++++ b/arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts
+@@ -44,6 +44,26 @@ mode {
+ 			linux,code = <SW_TABLET_MODE>;
+ 		};
+ 	};
++
++	panel {
++		compatible = "boe,nv133fhm-n61";
++		no-hpd;
++
++		ports {
++			port {
++				panel_in_edp: endpoint {
++					remote-endpoint = <&sn65dsi86_out>;
++				};
++			};
++		};
++	};
++
++	sn65dsi86_refclk: sn65dsi86-refclk {
++		compatible = "fixed-clock";
++		#clock-cells = <0>;
++
++		clock-frequency = <19200000>;
++	};
+ };
+ 
+ &adsp_pas {
+@@ -260,6 +280,25 @@ &cdsp_pas {
+ 	status = "okay";
+ };
+ 
++&dsi0 {
++	status = "okay";
++	vdda-supply = <&vreg_l26a_1p2>;
++
++	ports {
++		port@1 {
++			endpoint {
++				remote-endpoint = <&sn65dsi86_in_a>;
++				data-lanes = <0 1 2 3>;
++			};
++		};
++	};
++};
++
++&dsi0_phy {
++	status = "okay";
++	vdds-supply = <&vreg_l1a_0p875>;
++};
++
+ &gcc {
+ 	protected-clocks = <GCC_QSPI_CORE_CLK>,
+ 			   <GCC_QSPI_CORE_CLK_SRC>,
+@@ -328,6 +367,45 @@ tsc1: hid@10 {
+ 	};
+ };
+ 
++&i2c10 {
++	status = "okay";
++	clock-frequency = <400000>;
++
++	sn65dsi86: bridge@2c {
++		compatible = "ti,sn65dsi86";
++		reg = <0x2c>;
++		pinctrl-names = "default";
++		pinctrl-0 = <&sn65dsi86_pin_active>;
++
++		enable-gpios = <&tlmm 96 GPIO_ACTIVE_HIGH>;
++
++		vpll-supply = <&vreg_l14a_1p88>;
++		vccio-supply = <&vreg_l14a_1p88>;
++
++		clocks = <&sn65dsi86_refclk>;
++		clock-names = "refclk";
++
++		ports {
++			#address-cells = <1>;
++			#size-cells = <0>;
++
++			port@0 {
++				reg = <0>;
++				sn65dsi86_in_a: endpoint {
++					remote-endpoint = <&dsi0_out>;
++				};
++			};
++
++			port@1 {
++				reg = <1>;
++				sn65dsi86_out: endpoint {
++					remote-endpoint = <&panel_in_edp>;
++				};
++			};
++		};
++	};
++};
++
+ &i2c11 {
+ 	status = "okay";
+ 	clock-frequency = <400000>;
+@@ -344,10 +422,26 @@ ecsh: hid@5c {
+ 	};
+ };
+ 
++&mdss {
++	status = "okay";
++};
++
++&mdss_mdp {
++	status = "okay";
++};
++
+ &mss_pil {
+ 	firmware-name = "qcom/LENOVO/81JL/qcdsp1v2850.mbn", "qcom/LENOVO/81JL/qcdsp2850.mbn";
+ };
+ 
++&qup_i2c10_default {
++	pinconf {
++		pins = "gpio55", "gpio56";
++		drive-strength = <2>;
++		bias-disable;
++	};
++};
++
+ &qup_i2c12_default {
+ 	drive-strength = <2>;
+ 	bias-disable;
+@@ -454,6 +548,12 @@ codec {
+ &tlmm {
+ 	gpio-reserved-ranges = <0 4>, <81 4>;
+ 
++	sn65dsi86_pin_active: sn65dsi86-enable {
++		pins = "gpio96";
++		drive-strength = <2>;
++		bias-disable;
++	};
++
+ 	i2c3_hid_active: i2c2-hid-active {
+ 		pins = "gpio37";
+ 		function = "gpio";
 -- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project
+2.29.2
 
