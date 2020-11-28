@@ -2,97 +2,157 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id AF7282C6ED9
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 28 Nov 2020 05:55:58 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id ED2302C703A
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 28 Nov 2020 18:57:22 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731565AbgK1EyY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 27 Nov 2020 23:54:24 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53674 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731499AbgK1Exb (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 27 Nov 2020 23:53:31 -0500
-Received: from mail-pl1-x642.google.com (mail-pl1-x642.google.com [IPv6:2607:f8b0:4864:20::642])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 34094C0613D1;
-        Fri, 27 Nov 2020 20:53:31 -0800 (PST)
-Received: by mail-pl1-x642.google.com with SMTP id b23so3592517pls.11;
-        Fri, 27 Nov 2020 20:53:31 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:subject:date:message-id:in-reply-to:references:mime-version
-         :content-transfer-encoding;
-        bh=MNLKIBMH7ybUpHig1eG9Mv/94KwRp5IA7CDnO20AI+I=;
-        b=eNDcQV7juXZXD+kS1/WHfMBrSFI1u9gs/e9hpZSCr1dbt9ZV1DBy7H/6qnKeRK+aYT
-         7ESboMUuzzboMsrMq+f0gXNFgtL5ZZ+yu54eer0dJQhxcUZU8AmpNHDqeN+nHibfyTgS
-         PnQehFaQaIVRDGuaAw70Z0ABGUMH5Og4wH3/yPUlAVPxSY9MBozg4IGO3XLwM7f7mRYr
-         9hQY63j5IiI+porBB01dROcojZ4nyd8jvIDNs4AZGBy06FvI7ZeHoo44tFGfTECIjS3n
-         bPhfJsdQbRTIcQmxdYvxNfrE097XLCUCcsC9IL3/VMswS90Mykfb4jUONNBr6LiEihxI
-         h/0w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=MNLKIBMH7ybUpHig1eG9Mv/94KwRp5IA7CDnO20AI+I=;
-        b=OSwt0SX04ONn2JnUoyfkdOPZIhvZJrmdBraRoiQjkFkkH/ElSr9wZn3nyhqU4LLPnp
-         MY9G5yOPuQRl90c7PnhScyeCz6UPCHmSADHqBAdrIsr5xQK2CGiYhwwxAaE+k84uGkq7
-         /MbxQWdxpQMlyAbkh8VGrNk02lPrrbl5DE/z77nreXTaYo+mrCbFMv8okRLpI2PeqL/L
-         yK7+OShd7RqLkuN+Kbz3ZgO2K/k016LdihhY/xcsnOrkLM1yX3bebRMMwENrhdaORlMk
-         /uizRLHytgssQMJpRFrmOkcztWYlRRNc5gHLbH5nwK45xzUVE19izah7L/JxNLmMWD3x
-         iVQQ==
-X-Gm-Message-State: AOAM531zgwadUTYsHi/3157B4DpBt7HWaYzz3TycvGZobK8xs7firuLp
-        V9kxB6eEZD/knw4eMajCN2vsAKZERPM=
-X-Google-Smtp-Source: ABdhPJzTtKXHxFliVYzhcmuN8zuZYmbZ0pQDhH5YpmjJJBcZ1CW1JyfHju0cgiP24fYhISGO6xQM4A==
-X-Received: by 2002:a17:902:bb92:b029:d9:e9bf:b775 with SMTP id m18-20020a170902bb92b02900d9e9bfb775mr9958801pls.24.1606539210764;
-        Fri, 27 Nov 2020 20:53:30 -0800 (PST)
-Received: from fainelli-desktop.igp.broadcom.net ([192.19.223.252])
-        by smtp.gmail.com with ESMTPSA id g16sm9190473pfb.201.2020.11.27.20.53.29
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 27 Nov 2020 20:53:30 -0800 (PST)
-From:   Florian Fainelli <f.fainelli@gmail.com>
-To:     bcm-kernel-feedback-list@broadcom.com,
-        Zhen Lei <thunder.leizhen@huawei.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Arnd Bergmann <arnd@arndb.de>, Ray Jui <rjui@broadcom.com>,
-        Scott Branden <sbranden@broadcom.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        devicetree <devicetree@vger.kernel.org>,
-        linux-arm-kernel <linux-arm-kernel@lists.infradead.org>,
-        linux-kernel <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH v2 1/2] arm64: dts: broadcom: clear the warnings caused by empty dma-ranges
-Date:   Fri, 27 Nov 2020 20:53:28 -0800
-Message-Id: <20201128045328.2411772-1-f.fainelli@gmail.com>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20201016090833.1892-2-thunder.leizhen@huawei.com>
-References: <20201016090833.1892-1-thunder.leizhen@huawei.com> <20201016090833.1892-2-thunder.leizhen@huawei.com>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+        id S1733112AbgK1Rzz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 28 Nov 2020 12:55:55 -0500
+Received: from z5.mailgun.us ([104.130.96.5]:53893 "EHLO z5.mailgun.us"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1732719AbgK1FAF (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Sat, 28 Nov 2020 00:00:05 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1606539590; h=References: In-Reply-To: Message-Id: Date:
+ Subject: Cc: To: From: Sender;
+ bh=3DD1BYpF+9SW/CAV4x8bQZJk2llp6RrwWAsrxopZpsw=; b=YsWg4m7TU3qZFcE053vUaWBxOIwO4rGfe1Wh4RW0K7BsAp95SKotAljgucWM08SEY0Rz0/lZ
+ m/HQIUaJCi77tCSVVPHpa03Hgnr69gRc2IYK39iPReHNo//EWCieoN1OZhvejQepciT2CJAp
+ KGv9geU5PZ1VA/uSkH78mrj+WdQ=
+X-Mailgun-Sending-Ip: 104.130.96.5
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n03.prod.us-west-2.postgun.com with SMTP id
+ 5fc1d93e1dba509aae478028 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Sat, 28 Nov 2020 04:59:42
+ GMT
+Sender: srivasam=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id E2511C43464; Sat, 28 Nov 2020 04:59:42 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
+        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+Received: from hyd-lnxbld210.qualcomm.com (unknown [202.46.22.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: srivasam)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 07451C433C6;
+        Sat, 28 Nov 2020 04:59:36 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 07451C433C6
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=srivasam@codeaurora.org
+From:   Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
+To:     agross@kernel.org, bjorn.andersson@linaro.org, lgirdwood@gmail.com,
+        broonie@kernel.org, robh+dt@kernel.org, plai@codeaurora.org,
+        bgoswami@codeaurora.org, perex@perex.cz, tiwai@suse.com,
+        srinivas.kandagatla@linaro.org, rohitkr@codeaurora.org,
+        linux-arm-msm@vger.kernel.org, alsa-devel@alsa-project.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Cc:     Srinivasa Rao Mandadapu <srivasam@codeaurora.org>,
+        V Sujith Kumar Reddy <vsujithk@codeaurora.org>
+Subject: [PATCH v4 1/2] Partially revert ASoC: qcom: Fix enabling BCLK and LRCLK in LPAIF invalid state
+Date:   Sat, 28 Nov 2020 10:29:18 +0530
+Message-Id: <1606539559-4277-2-git-send-email-srivasam@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
+In-Reply-To: <1606539559-4277-1-git-send-email-srivasam@codeaurora.org>
+References: <1606539559-4277-1-git-send-email-srivasam@codeaurora.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, 16 Oct 2020 17:08:32 +0800, Zhen Lei <thunder.leizhen@huawei.com> wrote:
-> The scripts/dtc/checks.c requires that the node have empty "dma-ranges"
-> property must have the same "#address-cells" and "#size-cells" values as
-> the parent node. Otherwise, the following warnings is reported:
-> 
-> arch/arm64/boot/dts/broadcom/stingray/stingray-usb.dtsi:7.3-14: Warning \
-> (dma_ranges_format): /usb:dma-ranges: empty "dma-ranges" property but \
-> its #address-cells (1) differs from / (2)
-> arch/arm64/boot/dts/broadcom/stingray/stingray-usb.dtsi:7.3-14: Warning \
-> (dma_ranges_format): /usb:dma-ranges: empty "dma-ranges" property but \
-> its #size-cells (1) differs from / (2)
-> 
-> Arnd Bergmann figured out why it's necessary:
-> Also note that the #address-cells=<1> means that any device under
-> this bus is assumed to only support 32-bit addressing, and DMA will
-> have to go through a slow swiotlb in the absence of an IOMMU.
-> 
-> Suggested-by: Arnd Bergmann <arnd@arndb.de>
-> Signed-off-by: Zhen Lei <thunder.leizhen@huawei.com>
-> ---
+This reverts part of commit b1824968221c
+("ASoC: qcom: Fix enabling BCLK and LRCLK in LPAIF invalid state")
 
-Applied to devicetree-arm64/next, thanks!
---
-Florian
+To identify LPAIF invalid state after device suspend and resume,
+made I2S and DMA control registers not volatile, which is not necessary.
+Instead invalid reg state can be handled with regcache APIs.
+The BCLK ref count is necessary to enable clock only it's in disable state.
+
+Signed-off-by: V Sujith Kumar Reddy <vsujithk@codeaurora.org>
+Signed-off-by: Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
+---
+ sound/soc/qcom/lpass-cpu.c      | 20 ++------------------
+ sound/soc/qcom/lpass-platform.c | 11 -----------
+ 2 files changed, 2 insertions(+), 29 deletions(-)
+
+diff --git a/sound/soc/qcom/lpass-cpu.c b/sound/soc/qcom/lpass-cpu.c
+index af684fd..c5e99c2 100644
+--- a/sound/soc/qcom/lpass-cpu.c
++++ b/sound/soc/qcom/lpass-cpu.c
+@@ -270,18 +270,6 @@ static int lpass_cpu_daiops_trigger(struct snd_pcm_substream *substream,
+ 	struct lpaif_i2sctl *i2sctl = drvdata->i2sctl;
+ 	unsigned int id = dai->driver->id;
+ 	int ret = -EINVAL;
+-	unsigned int val = 0;
+-
+-	ret = regmap_read(drvdata->lpaif_map,
+-				LPAIF_I2SCTL_REG(drvdata->variant, dai->driver->id), &val);
+-	if (ret) {
+-		dev_err(dai->dev, "error reading from i2sctl reg: %d\n", ret);
+-		return ret;
+-	}
+-	if (val == LPAIF_I2SCTL_RESET_STATE) {
+-		dev_err(dai->dev, "error in i2sctl register state\n");
+-		return -ENOTRECOVERABLE;
+-	}
+ 
+ 	switch (cmd) {
+ 	case SNDRV_PCM_TRIGGER_START:
+@@ -454,20 +442,16 @@ static bool lpass_cpu_regmap_volatile(struct device *dev, unsigned int reg)
+ 	struct lpass_variant *v = drvdata->variant;
+ 	int i;
+ 
+-	for (i = 0; i < v->i2s_ports; ++i)
+-		if (reg == LPAIF_I2SCTL_REG(v, i))
+-			return true;
+ 	for (i = 0; i < v->irq_ports; ++i)
+ 		if (reg == LPAIF_IRQSTAT_REG(v, i))
+ 			return true;
+ 
+ 	for (i = 0; i < v->rdma_channels; ++i)
+-		if (reg == LPAIF_RDMACURR_REG(v, i) || reg == LPAIF_RDMACTL_REG(v, i))
++		if (reg == LPAIF_RDMACURR_REG(v, i))
+ 			return true;
+ 
+ 	for (i = 0; i < v->wrdma_channels; ++i)
+-		if (reg == LPAIF_WRDMACURR_REG(v, i + v->wrdma_channel_start) ||
+-			reg == LPAIF_WRDMACTL_REG(v, i + v->wrdma_channel_start))
++		if (reg == LPAIF_WRDMACURR_REG(v, i + v->wrdma_channel_start))
+ 			return true;
+ 
+ 	return false;
+diff --git a/sound/soc/qcom/lpass-platform.c b/sound/soc/qcom/lpass-platform.c
+index 80b09de..0e71899 100644
+--- a/sound/soc/qcom/lpass-platform.c
++++ b/sound/soc/qcom/lpass-platform.c
+@@ -452,7 +452,6 @@ static int lpass_platform_pcmops_trigger(struct snd_soc_component *component,
+ 	unsigned int reg_irqclr = 0, val_irqclr = 0;
+ 	unsigned int  reg_irqen = 0, val_irqen = 0, val_mask = 0;
+ 	unsigned int dai_id = cpu_dai->driver->id;
+-	unsigned int dma_ctrl_reg = 0;
+ 
+ 	ch = pcm_data->dma_ch;
+ 	if (dir ==  SNDRV_PCM_STREAM_PLAYBACK) {
+@@ -469,17 +468,7 @@ static int lpass_platform_pcmops_trigger(struct snd_soc_component *component,
+ 		id = pcm_data->dma_ch - v->wrdma_channel_start;
+ 		map = drvdata->lpaif_map;
+ 	}
+-	ret = regmap_read(map, LPAIF_DMACTL_REG(v, ch, dir, dai_id), &dma_ctrl_reg);
+-	if (ret) {
+-		dev_err(soc_runtime->dev, "error reading from rdmactl reg: %d\n", ret);
+-		return ret;
+-	}
+ 
+-	if (dma_ctrl_reg == LPAIF_DMACTL_RESET_STATE ||
+-		dma_ctrl_reg == LPAIF_DMACTL_RESET_STATE + 1) {
+-		dev_err(soc_runtime->dev, "error in rdmactl register state\n");
+-		return -ENOTRECOVERABLE;
+-	}
+ 	switch (cmd) {
+ 	case SNDRV_PCM_TRIGGER_START:
+ 	case SNDRV_PCM_TRIGGER_RESUME:
+-- 
+Qualcomm India Private Limited, on behalf of Qualcomm Innovation Center, Inc.,
+is a member of Code Aurora Forum, a Linux Foundation Collaborative Project.
+
