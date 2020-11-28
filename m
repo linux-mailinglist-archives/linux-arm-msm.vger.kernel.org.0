@@ -2,77 +2,102 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 72C8A2C7059
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 28 Nov 2020 19:18:29 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 61C6B2C73DE
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 28 Nov 2020 23:15:26 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1733094AbgK1Rzy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 28 Nov 2020 12:55:54 -0500
-Received: from z5.mailgun.us ([104.130.96.5]:50063 "EHLO z5.mailgun.us"
+        id S1730189AbgK1Vtw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 28 Nov 2020 16:49:52 -0500
+Received: from m42-4.mailgun.net ([69.72.42.4]:15106 "EHLO m42-4.mailgun.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1732707AbgK1FAF (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 28 Nov 2020 00:00:05 -0500
+        id S1731098AbgK1D1F (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 27 Nov 2020 22:27:05 -0500
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1606539583; h=Message-Id: Date: Subject: Cc: To: From:
- Sender; bh=wcqjI/+rINfs3XtVEJAhIWB2xeJ2hiBW8kM8a+M17/w=; b=w3RgVVJcAw77gOAUSAhuD3lKzv/lcy3+uvAyCyIGzV85WDmELtrNM9RYPkMQSlC5q6tUCFSg
- jskDDQnJJlr9LfIx1UP+/Ok8+aoDvi+XC3bf8AfkaWrw/iGI4wD0cGI53D55O2DM3N4MPpDy
- QqiJT7cJrUlm+6yJ3I7XVjtELwk=
-X-Mailgun-Sending-Ip: 104.130.96.5
+ s=smtp; t=1606533985; h=References: In-Reply-To: Message-Id: Date:
+ Subject: Cc: To: From: Sender;
+ bh=Ul3sdJOhbR5MhmdCIpjJXQ9zPYU8fu4qGUttAl0RL0g=; b=B4BC7uMIKmqs1wgkMgvjiN6ZnJOmnMBiSYyAH6/ZO2+Gm+JABLYpsVeAHSt+uLaOQ92ouM6p
+ 8lg0UqqMZ6UdYVYl9Ha+gnbdBNb5GoAvzBxdvyIgu1+ptYDeDnqzy3s6AE5wPrw/4zgaCChZ
+ KemH+Yn3gQRQ4Ts+Ak4XQLhEbvg=
+X-Mailgun-Sending-Ip: 69.72.42.4
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org
  (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n05.prod.us-east-1.postgun.com with SMTP id
- 5fc1d9391b731a5d9c7e61df (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Sat, 28 Nov 2020 04:59:37
+ smtp-out-n09.prod.us-east-1.postgun.com with SMTP id
+ 5fc1c358fa67d9becfba08ab (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Sat, 28 Nov 2020 03:26:16
  GMT
-Sender: srivasam=codeaurora.org@mg.codeaurora.org
+Sender: hemantk=codeaurora.org@mg.codeaurora.org
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 0195EC43465; Sat, 28 Nov 2020 04:59:37 +0000 (UTC)
+        id 902D9C433ED; Sat, 28 Nov 2020 03:26:15 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
 X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL
         autolearn=no autolearn_force=no version=3.4.0
-Received: from hyd-lnxbld210.qualcomm.com (unknown [202.46.22.19])
+Received: from codeaurora.org (i-global254.qualcomm.com [199.106.103.254])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
         (No client certificate requested)
-        (Authenticated sender: srivasam)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 8F938C433C6;
-        Sat, 28 Nov 2020 04:59:31 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 8F938C433C6
+        (Authenticated sender: hemantk)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 6794DC43463;
+        Sat, 28 Nov 2020 03:26:14 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 6794DC43463
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=srivasam@codeaurora.org
-From:   Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
-To:     agross@kernel.org, bjorn.andersson@linaro.org, lgirdwood@gmail.com,
-        broonie@kernel.org, robh+dt@kernel.org, plai@codeaurora.org,
-        bgoswami@codeaurora.org, perex@perex.cz, tiwai@suse.com,
-        srinivas.kandagatla@linaro.org, rohitkr@codeaurora.org,
-        linux-arm-msm@vger.kernel.org, alsa-devel@alsa-project.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Cc:     Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
-Subject: [PATCH v4 0/2] Platform driver update to support playback recover after resume
-Date:   Sat, 28 Nov 2020 10:29:17 +0530
-Message-Id: <1606539559-4277-1-git-send-email-srivasam@codeaurora.org>
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=hemantk@codeaurora.org
+From:   Hemant Kumar <hemantk@codeaurora.org>
+To:     manivannan.sadhasivam@linaro.org, gregkh@linuxfoundation.org
+Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        jhugo@codeaurora.org, bbhatt@codeaurora.org,
+        loic.poulain@linaro.org, netdev@vger.kernel.org,
+        Hemant Kumar <hemantk@codeaurora.org>
+Subject: [PATCH v13 2/4] bus: mhi: core: Move MHI_MAX_MTU to external header file
+Date:   Fri, 27 Nov 2020 19:26:04 -0800
+Message-Id: <1606533966-22821-3-git-send-email-hemantk@codeaurora.org>
 X-Mailer: git-send-email 2.7.4
+In-Reply-To: <1606533966-22821-1-git-send-email-hemantk@codeaurora.org>
+References: <1606533966-22821-1-git-send-email-hemantk@codeaurora.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This patch set is to add support for playback recover after hard suspend and resume.
-It includes:
-1. Reverting part of previous commit, which is for handling registers invalid state
-after hard suspend.
-2. Adding pm ops in component driver and do regcache sync.
+Currently this macro is defined in internal MHI header as
+a TRE length mask. Moving it to external header allows MHI
+client drivers to set this upper bound for the transmit
+buffer size.
 
-Srinivasa Rao Mandadapu (2):
-  Partially revert ASoC: qcom: Fix enabling BCLK and LRCLK in LPAIF
-    invalid state
-  ASoC: qcom: Add support for playback recover after resume
+Signed-off-by: Hemant Kumar <hemantk@codeaurora.org>
+Reviewed-by: Jeffrey Hugo <jhugo@codeaurora.org>
+Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+---
+ drivers/bus/mhi/core/internal.h | 1 -
+ include/linux/mhi.h             | 3 +++
+ 2 files changed, 3 insertions(+), 1 deletion(-)
 
- sound/soc/qcom/lpass-cpu.c      | 20 ++----------------
- sound/soc/qcom/lpass-platform.c | 46 +++++++++++++++++++++++++++++++----------
- 2 files changed, 37 insertions(+), 29 deletions(-)
-
+diff --git a/drivers/bus/mhi/core/internal.h b/drivers/bus/mhi/core/internal.h
+index 6f80ec3..2b9c063 100644
+--- a/drivers/bus/mhi/core/internal.h
++++ b/drivers/bus/mhi/core/internal.h
+@@ -453,7 +453,6 @@ enum mhi_pm_state {
+ #define CMD_EL_PER_RING			128
+ #define PRIMARY_CMD_RING		0
+ #define MHI_DEV_WAKE_DB			127
+-#define MHI_MAX_MTU			0xffff
+ #define MHI_RANDOM_U32_NONZERO(bmsk)	(prandom_u32_max(bmsk) + 1)
+ 
+ enum mhi_er_type {
+diff --git a/include/linux/mhi.h b/include/linux/mhi.h
+index b3bc966..fc903b2 100644
+--- a/include/linux/mhi.h
++++ b/include/linux/mhi.h
+@@ -15,6 +15,9 @@
+ #include <linux/wait.h>
+ #include <linux/workqueue.h>
+ 
++/* MHI client drivers to set this upper bound for tx buffer */
++#define MHI_MAX_MTU 0xffff
++
+ #define MHI_MAX_OEM_PK_HASH_SEGMENTS 16
+ 
+ struct mhi_chan;
 -- 
-Qualcomm India Private Limited, on behalf of Qualcomm Innovation Center, Inc.,
-is a member of Code Aurora Forum, a Linux Foundation Collaborative Project.
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
 
