@@ -2,107 +2,121 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 70E592C7AC8
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 29 Nov 2020 19:50:15 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 774A62C7AEB
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 29 Nov 2020 20:19:47 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728008AbgK2St7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 29 Nov 2020 13:49:59 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35822 "EHLO
+        id S1728487AbgK2TSS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 29 Nov 2020 14:18:18 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40354 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727556AbgK2St6 (ORCPT
+        with ESMTP id S1725830AbgK2TSQ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 29 Nov 2020 13:49:58 -0500
-Received: from mail-wr1-x443.google.com (mail-wr1-x443.google.com [IPv6:2a00:1450:4864:20::443])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7E84DC0613CF;
-        Sun, 29 Nov 2020 10:49:18 -0800 (PST)
-Received: by mail-wr1-x443.google.com with SMTP id p8so12247736wrx.5;
-        Sun, 29 Nov 2020 10:49:18 -0800 (PST)
+        Sun, 29 Nov 2020 14:18:16 -0500
+Received: from mail-ej1-x642.google.com (mail-ej1-x642.google.com [IPv6:2a00:1450:4864:20::642])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A5D3DC0613D3
+        for <linux-arm-msm@vger.kernel.org>; Sun, 29 Nov 2020 11:17:30 -0800 (PST)
+Received: by mail-ej1-x642.google.com with SMTP id d17so14658457ejy.9
+        for <linux-arm-msm@vger.kernel.org>; Sun, 29 Nov 2020 11:17:30 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
+        d=chromium.org; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=petcPUQfIRyJlrRZlAI0FgPTCAYAYb5D8vFYqV6fJS4=;
-        b=ogjbEGaQGYFsXqlHh1P0WS0AU3ixlshfX58TVjLOx0LamwLoTVbtshlHNVbw88PewR
-         0bo1cboPkh3dSl/fn9jmjTBz9LaQZjdaLHTb6cbkok4u8mhDRZil1RA9YnYq6fKGwLct
-         fxy4OvmBZy/29dG2X2I8qT9qkAc+6B3rH6Gp4VhpWp5I72tTTPzcYjOfijM6ELMrHfV3
-         sNPsjpFXVy/0FhUk4/iM4KGBQtbZcZq2KRcUWto/4ie4pvK9rcNCTi0TZ6wzq560OBcC
-         ZBoc4nwXDh0jwmb/p/4n02rg0zg1YWwGU89FysHb08J1c9fYoan9VxoXZ29uTeU6927P
-         HLvg==
+        bh=LaYvdAUmRlNPKDBNivA2dWaWEk14e1Lfm+e5Aneve0s=;
+        b=eFNgnuYCzfxHavNAx16ydX/pGZuNUSjHBmDDCAWQDjln+KsANNy/Mic3CzXF8XpiXw
+         h+IkHwaqJ/Bw9x834JUlsp7aczAsHqvto+7uYv9Z9DYYLSO58eRtmRAeWaCIZdppZABj
+         rc2q0KaTb7GfoRrxY0IQcoQwLqTKJPYVRRogs=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=petcPUQfIRyJlrRZlAI0FgPTCAYAYb5D8vFYqV6fJS4=;
-        b=agexaCiYJq3QM++lYBOTzXhfho4x2UfR9mgURAn7mHTuSavXqTt8eJGNfVH2FGkMLJ
-         J2g46haFBb+28/lwMBGjpdCCGgkD3B4gbl6lAST44C7MoWRpUH/U38xSkDi2HvCBoZu9
-         sQ6Opr8sc4Z2Rf/PbA+vqn7zq8T9tOZLru8GzviM7FrjlM/2sTsNJBBROIqgv8uEFGcD
-         0CMmtQlxp713KCD6UzNmSInB26PAXKKlGqD/aeBtnt3XKRZP/gJ2dtuQYW30q6PDgHAT
-         T3XrHQsub9BLtwoBzyprqLtd40YHUp0M2eTEjXnQrbpNLpBy8GQZDOcqY/wDxofIFldG
-         LMxg==
-X-Gm-Message-State: AOAM531tT3EAxuCfvnFnDX8dnOxDOZYv8n7i4iN4ww5xKH3m+Z8f2EMq
-        rjO29+CQr8D15jG3FzhYYLLcV9LCMULx24QWuJg=
-X-Google-Smtp-Source: ABdhPJyOuT2gj5FAziXhvGtFCoN+ognobWPebwBRdsxnGLhMrvC+hM/WQ/37Typ/Qi4TI7PztNcR+hFxisQrw0A8pJI=
-X-Received: by 2002:adf:a3c1:: with SMTP id m1mr24450474wrb.28.1606675757086;
- Sun, 29 Nov 2020 10:49:17 -0800 (PST)
+        bh=LaYvdAUmRlNPKDBNivA2dWaWEk14e1Lfm+e5Aneve0s=;
+        b=cMUQQ5cIe+j7kPhHLsXBAGEJzkpuGE0j1Eu80K/CLFV8q+R/DlQXWQNuzW7CWgtmVn
+         5Jgc0z3HtMELyBnv2E4lBuOSQntPKUwnpmUtBrOt3BC88cDj3VSCiYE184S2xNUKZ2dg
+         9Q9blVmmnFcfWEtSpSRahfVKz7pxMAegwJ9p+xSj4fQRFdIMO5rS3CpoWujX3vR1LSzl
+         nW835UYaLVadUjz4Gvd1+wfdMu0PFBZvzwuI26+xFdtGY9JTAFU3YCEFdBCDn41+7lCp
+         VANydDa3C95r6Ys5gfxJ38nZrJ68cpniWzP/jh/9smyfli5aS/B5CuoaIgXh/Dw42rIa
+         7L/Q==
+X-Gm-Message-State: AOAM531cWy99YjqSOS6uksZ325kOCiewET/+S3qhxZ+5todpkj9apOW4
+        dJfJjivGd0HOWlCUfSfYqYCDrDMvlJn0Kw==
+X-Google-Smtp-Source: ABdhPJzqcfItZNWmKekakEhptysm6ejTmXIWymjVWS6qbCYFUp3Ah/ON4g3VJHtJHuVFp/mhl0CKsA==
+X-Received: by 2002:a17:906:180b:: with SMTP id v11mr17438330eje.466.1606677449087;
+        Sun, 29 Nov 2020 11:17:29 -0800 (PST)
+Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com. [209.85.128.50])
+        by smtp.gmail.com with ESMTPSA id q5sm7707089ejr.89.2020.11.29.11.17.27
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 29 Nov 2020 11:17:28 -0800 (PST)
+Received: by mail-wm1-f50.google.com with SMTP id w24so18468628wmi.0
+        for <linux-arm-msm@vger.kernel.org>; Sun, 29 Nov 2020 11:17:27 -0800 (PST)
+X-Received: by 2002:a7b:ca4c:: with SMTP id m12mr19952360wml.11.1606677447413;
+ Sun, 29 Nov 2020 11:17:27 -0800 (PST)
 MIME-Version: 1.0
-References: <20201114151717.5369-1-jonathan@marek.ca> <20201114151717.5369-5-jonathan@marek.ca>
- <20201114162406.GC24411@lst.de> <CAF6AEGvujttEkFuRqtt7i+0o7-=2spKXfAvJZrj96uWAFRLYuA@mail.gmail.com>
- <50ddcadb-c630-2ef6-cdc4-724d9823fba7@marek.ca> <CAF6AEGsH5Wk=J+HxHnRqTMLZscjErjKq2v0Rms7Td=W7icZ3sw@mail.gmail.com>
- <b6e4f167-871a-5f26-46bd-d914476af519@marek.ca> <20201116173346.GA24173@lst.de>
- <CAF6AEGuFzsurd4n6G-nUmCusTJ8vMo9Kqjzs3JRS_d6n+qHgEA@mail.gmail.com> <b798d954-d0b5-d968-f03c-b3fe9ffd08fc@marek.ca>
-In-Reply-To: <b798d954-d0b5-d968-f03c-b3fe9ffd08fc@marek.ca>
-From:   Rob Clark <robdclark@gmail.com>
-Date:   Sun, 29 Nov 2020 10:51:08 -0800
-Message-ID: <CAF6AEGs488Ju2jg6TpkkiH-7fBK8f-HgQ210jmGf-Oghb-Jv2g@mail.gmail.com>
-Subject: Re: [RESEND PATCH v2 4/5] drm/msm: add DRM_MSM_GEM_SYNC_CACHE for
- non-coherent cache maintenance
-To:     Jonathan Marek <jonathan@marek.ca>
-Cc:     Christoph Hellwig <hch@lst.de>,
-        Jordan Crouse <jcrouse@codeaurora.org>,
-        freedreno <freedreno@lists.freedesktop.org>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
-        <linux-arm-msm@vger.kernel.org>,
-        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
-        <dri-devel@lists.freedesktop.org>,
-        open list <linux-kernel@vger.kernel.org>
+References: <20201111143755.24541-1-stanimir.varbanov@linaro.org>
+In-Reply-To: <20201111143755.24541-1-stanimir.varbanov@linaro.org>
+From:   Fritz Koenig <frkoenig@chromium.org>
+Date:   Sun, 29 Nov 2020 11:17:14 -0800
+X-Gmail-Original-Message-ID: <CAMfZQbxV4CuZ57kv1Nu=VTdd-eK2opMqnduxGGa+KvptaFL7=A@mail.gmail.com>
+Message-ID: <CAMfZQbxV4CuZ57kv1Nu=VTdd-eK2opMqnduxGGa+KvptaFL7=A@mail.gmail.com>
+Subject: Re: [PATCH v2 0/8] Venus stateful encoder compliance
+To:     Stanimir Varbanov <stanimir.varbanov@linaro.org>
+Cc:     linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Vikash Garodia <vgarodia@codeaurora.org>,
+        Alexandre Courbot <acourbot@chromium.org>,
+        Fritz Koenig <frkoenig@chromium.org>
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Nov 16, 2020 at 9:55 AM Jonathan Marek <jonathan@marek.ca> wrote:
->
-> On 11/16/20 12:50 PM, Rob Clark wrote:
-> > On Mon, Nov 16, 2020 at 9:33 AM Christoph Hellwig <hch@lst.de> wrote:
-> >>
-> >> On Sat, Nov 14, 2020 at 03:07:20PM -0500, Jonathan Marek wrote:
-> >>> qcom's vulkan driver has nonCoherentAtomSize=1, and it looks like
-> >>> dma_sync_single_for_cpu() does deal in some way with the partial cache line
-> >>> case, although I'm not sure that means we can have a nonCoherentAtomSize=1.
-> >>
-> >> No, it doesn't.  You need to ensure ownership is managed at
-> >> dma_get_cache_alignment() granularity.
-> >
-> > my guess is nonCoherentAtomSize=1 only works in the case of cache
-> > coherent buffers
-> >
->
-> nonCoherentAtomSize doesn't apply to coherent memory (as the name
-> implies), I guess qcom's driver is just wrong about having
-> nonCoherentAtomSize=1.
->
-> Jordan just mentioned there is at least one conformance test for this, I
-> wonder if it just doesn't test it well enough, or just doesn't test the
-> non-coherent memory type?
+Since this patchset adds support for V4L2_ENC_CMD_STOP and
+VENUS_ENC_STATE_ENCODING it should also add support for
+VIDIOC_TRY_ENCODER_CMD so that those commands are discoverable.  I've
+made an attempt at that here:
+https://www.spinics.net/lists/linux-media/msg182319.html
 
-I was *assuming* (but could be wrong) that Jordan was referring to an
-opencl cts test?
-
-At any rate, it is sounding like you should add a
-`MSM_PARAM_CACHE_ALIGNMENT` type of param that returns
-dma_get_cache_alignment(), and then properly implement offset/end
-
-BR,
--R
+On Wed, Nov 11, 2020 at 6:38 AM Stanimir Varbanov
+<stanimir.varbanov@linaro.org> wrote:
+>
+> Hello,
+>
+> Here is v2 of the subject patchset.
+>
+> The patchset starts with few small preparation and fix patches, 1/8 to 5/8.
+> 6/8 is redesigned Dikshita's patch and 7/8 add Reset encoder state handling.
+> The last 8/8 just delete not needed helper function.
+>
+> The major changes are:
+>  * An attempt to reuse m2m helpers for drain and reset state in 6/8 and 7/8.
+>  * Use null encoder buffer to signal end-of-stream in 6/8.
+>
+> Comments are welcome!
+>
+> regards,
+> Stan
+>
+> Dikshita Agarwal (1):
+>   venus: venc: add handling for VIDIOC_ENCODER_CMD
+>
+> Stanimir Varbanov (7):
+>   venus: hfi: Use correct state in unload resources
+>   venus: helpers: Add a new helper for buffer processing
+>   venus: hfi_cmds: Allow null buffer address on encoder input
+>   venus: helpers: Calculate properly compressed buffer size
+>   venus: pm_helpers: Check instance state when calculate instance
+>     frequency
+>   venus: venc: Handle reset encoder state
+>   venus: helpers: Delete unused stop streaming helper
+>
+>  drivers/media/platform/qcom/venus/helpers.c   |  65 ++---
+>  drivers/media/platform/qcom/venus/helpers.h   |   2 +-
+>  drivers/media/platform/qcom/venus/hfi.c       |   2 +-
+>  drivers/media/platform/qcom/venus/hfi.h       |   1 -
+>  drivers/media/platform/qcom/venus/hfi_cmds.c  |   2 +-
+>  .../media/platform/qcom/venus/pm_helpers.c    |   3 +
+>  drivers/media/platform/qcom/venus/venc.c      | 232 +++++++++++++++---
+>  7 files changed, 226 insertions(+), 81 deletions(-)
+>
+> --
+> 2.17.1
+>
