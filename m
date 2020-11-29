@@ -2,81 +2,135 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 5BA232C7933
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 29 Nov 2020 13:59:12 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 61A692C7952
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 29 Nov 2020 14:19:55 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2387469AbgK2M6z (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 29 Nov 2020 07:58:55 -0500
-Received: from mail.kernel.org ([198.145.29.99]:49358 "EHLO mail.kernel.org"
+        id S1726462AbgK2NNU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 29 Nov 2020 08:13:20 -0500
+Received: from mail.kernel.org ([198.145.29.99]:56382 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727556AbgK2M6y (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 29 Nov 2020 07:58:54 -0500
-Received: from mail-vs1-f45.google.com (mail-vs1-f45.google.com [209.85.217.45])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        id S1725830AbgK2NNT (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Sun, 29 Nov 2020 08:13:19 -0500
+Received: from archlinux (cpc108967-cmbg20-2-0-cust86.5-4.cable.virginm.net [81.101.6.87])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 907C3208D5
-        for <linux-arm-msm@vger.kernel.org>; Sun, 29 Nov 2020 12:58:13 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id B0EDB20705;
+        Sun, 29 Nov 2020 13:12:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1606654693;
-        bh=ELHNBHt4EqshhUGNuAZ5/xfd1MTVG6aw9M7tUezJtcw=;
-        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-        b=lUSUlXk7ni4Qqk6/GO9uT9RLb9C5iar9YSvOCMP0dsEiOe4Y/pgDquhrtfDKXxuYK
-         /QrbLJEnAhyNpDv3JXiIf5sq0w5jq8QqwKvjvP4zwRa8hpG21qVSLkGxCle5Ebhw6j
-         Ldud0ctji2XFmdAof/2QF5pjW0PIkwMKE75WiLd0=
-Received: by mail-vs1-f45.google.com with SMTP id y186so1150880vsb.12
-        for <linux-arm-msm@vger.kernel.org>; Sun, 29 Nov 2020 04:58:13 -0800 (PST)
-X-Gm-Message-State: AOAM530CWYTKp9Ihs5d3imLQ7nKvJcj2Bn8tWeKaTuwwjmOLoNLF7vu1
-        BZYLrSx1deywcPx5o8h3hN+owBAYc9rWZBOsD+72ZA==
-X-Google-Smtp-Source: ABdhPJzhn1fsp9EHXvRGhpUoP1eGJoSFTv0W/yDjP/8SVVYy5I7YyO+aQKszItKWdNicTfimgy14oUOjpOK0S4oleTM=
-X-Received: by 2002:a67:ce1a:: with SMTP id s26mr12147763vsl.0.1606654692685;
- Sun, 29 Nov 2020 04:58:12 -0800 (PST)
+        s=default; t=1606655558;
+        bh=42tl3koUyyqokrSP5S2eg84mF3OI8bSpsuAy6HKa6a8=;
+        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+        b=LbkeA/fmtRf2s7BN4iMDZWsyCt3G7XkAOufVRa0mHHO85FRNr+12xIzjJ1FWLX5si
+         sSKOvWNIpkbYlcGw7C/MZAXHoCLjLSNSjOPVEaUCcJRxGofYdze8e0AZWppeXFaIQh
+         xhKklVlcSm9addi+psrtuNNjYevNiAHhnMaM5Dgg=
+Date:   Sun, 29 Nov 2020 13:12:33 +0000
+From:   Jonathan Cameron <jic23@kernel.org>
+To:     kholk11@gmail.com
+Cc:     agross@kernel.org, bjorn.andersson@linaro.org, robh+dt@kernel.org,
+        marijns95@gmail.com, konradybcio@gmail.com,
+        martin.botka1@gmail.com, linux-arm-msm@vger.kernel.org,
+        phone-devel@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-iio@vger.kernel.org
+Subject: Re: [RESEND] [PATCH 1/2] iio: adc: qcom-spmi-vadc: Use right
+ ratiometric range for 8998,660,845
+Message-ID: <20201129131233.4a8f7119@archlinux>
+In-Reply-To: <20200926171835.27154-1-kholk11@gmail.com>
+References: <20200926171835.27154-1-kholk11@gmail.com>
+X-Mailer: Claws Mail 3.17.8 (GTK+ 2.24.32; x86_64-pc-linux-gnu)
 MIME-Version: 1.0
-References: <20200814134123.14566-1-ansuelsmth@gmail.com> <20200814134123.14566-3-ansuelsmth@gmail.com>
- <CAHLCerMArOceCFQ1XFbsZCAnUdKVX3TVnAb502w+kxmO97bdJg@mail.gmail.com> <20201125122228.GB23592@ansuel-xps20.localdomain>
-In-Reply-To: <20201125122228.GB23592@ansuel-xps20.localdomain>
-From:   Amit Kucheria <amitk@kernel.org>
-Date:   Sun, 29 Nov 2020 18:28:01 +0530
-X-Gmail-Original-Message-ID: <CAHLCerNTNpEGiGT6Veroeh1b8pOCiYYFhpnj5YqZcFZxAXGB-A@mail.gmail.com>
-Message-ID: <CAHLCerNTNpEGiGT6Veroeh1b8pOCiYYFhpnj5YqZcFZxAXGB-A@mail.gmail.com>
-Subject: Re: [RFC PATCH v6 2/8] drivers: thermal: tsens: Add VER_0 tsens version
-To:     Ansuel Smith <ansuelsmth@gmail.com>
-Cc:     Amit Kucheria <amit.kucheria@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Zhang Rui <rui.zhang@intel.com>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Linux PM list <linux-pm@vger.kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>, LKML <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Nov 26, 2020 at 2:16 AM Ansuel Smith <ansuelsmth@gmail.com> wrote:
+On Sat, 26 Sep 2020 19:18:34 +0200
+kholk11@gmail.com wrote:
 
-> > >  };
-> > > @@ -441,6 +442,10 @@ enum regfield_ids {
-> > >         CRIT_THRESH_14,
-> > >         CRIT_THRESH_15,
-> > >
-> > > +       /* VER_0 MIN MAX THRESH */
-> > > +       MIN_THRESH_0,
-> > > +       MAX_THRESH_0,
-> > > +
-> >
-> > Consider reusing LOW_THRESH_0 and UP_THRESH_0 for these?
-> >
->
-> As we already have defined LOW_THRESH and UP how can we reuse that
-> regfield to define MIN and MAX?
->
+> From: AngeloGioacchino Del Regno <kholk11@gmail.com>
+> 
+> The ratiometric range for MSM8998, SDM630/636/660 and SDM845 is 1875mV
+> instead of the standard 1800mV: address this by adding a new compatible
+> "qcom,spmi-vadc-8998" and assigning the different range to the machines
+> declaring this one.
+> 
+> Signed-off-by: AngeloGioacchino Del Regno <kholk11@gmail.com>
 
-We are using MIN and MAX THRESH on the apq8064 to mean LOW and UP
-THRESOLD, isn't it? IIUC, It was just named differently earlier.
+@Bjorn
 
-When the driver is loaded on the apq8064, only that one field will be
-use since v0 has a single threshold for all sensors. When the driver
-is loaded on new IPs, all fields will be used.
+Could you take a quick look at this pair of patches.  It's been sat in
+my queue waiting for appropriate review for rather too long!
+(mainly because I've been rather lax in checking on status of older
+series really - sorry about that :(
+
+Thanks
+
+Jonathan
+
+> ---
+>  drivers/iio/adc/qcom-spmi-vadc.c   | 10 +++++++++-
+>  drivers/iio/adc/qcom-vadc-common.h |  1 +
+>  2 files changed, 10 insertions(+), 1 deletion(-)
+> 
+> diff --git a/drivers/iio/adc/qcom-spmi-vadc.c b/drivers/iio/adc/qcom-spmi-vadc.c
+> index b0388f8a69f4..59a94ea7bf78 100644
+> --- a/drivers/iio/adc/qcom-spmi-vadc.c
+> +++ b/drivers/iio/adc/qcom-spmi-vadc.c
+> @@ -101,6 +101,7 @@ struct vadc_channel_prop {
+>   * @dev: pointer to struct device.
+>   * @base: base address for the ADC peripheral.
+>   * @nchannels: number of VADC channels.
+> + * @ratio_range: ratiometric range for ref points.
+>   * @chan_props: array of VADC channel properties.
+>   * @iio_chans: array of IIO channels specification.
+>   * @are_ref_measured: are reference points measured.
+> @@ -114,6 +115,7 @@ struct vadc_priv {
+>  	struct device		 *dev;
+>  	u16			 base;
+>  	unsigned int		 nchannels;
+> +	unsigned int		 ratio_range;
+>  	struct vadc_channel_prop *chan_props;
+>  	struct iio_chan_spec	 *iio_chans;
+>  	bool			 are_ref_measured;
+> @@ -355,7 +357,7 @@ static int vadc_measure_ref_points(struct vadc_priv *vadc)
+>  	u16 read_1, read_2;
+>  	int ret;
+>  
+> -	vadc->graph[VADC_CALIB_RATIOMETRIC].dx = VADC_RATIOMETRIC_RANGE;
+> +	vadc->graph[VADC_CALIB_RATIOMETRIC].dx = vadc->ratio_range;
+>  	vadc->graph[VADC_CALIB_ABSOLUTE].dx = VADC_ABSOLUTE_RANGE_UV;
+>  
+>  	prop = vadc_get_channel(vadc, VADC_REF_1250MV);
+> @@ -885,6 +887,11 @@ static int vadc_probe(struct platform_device *pdev)
+>  	if (ret)
+>  		return ret;
+>  
+> +	if (of_device_is_compatible(node, "qcom,spmi-vadc-8998"))
+> +		vadc->ratio_range = VADC_RATIOMETRIC_RANGE_8998;
+> +	else
+> +		vadc->ratio_range = VADC_RATIOMETRIC_RANGE;
+> +
+>  	irq_eoc = platform_get_irq(pdev, 0);
+>  	if (irq_eoc < 0) {
+>  		if (irq_eoc == -EPROBE_DEFER || irq_eoc == -EINVAL)
+> @@ -918,6 +925,7 @@ static int vadc_probe(struct platform_device *pdev)
+>  
+>  static const struct of_device_id vadc_match_table[] = {
+>  	{ .compatible = "qcom,spmi-vadc" },
+> +	{ .compatible = "qcom-spmi-vadc-8998" },
+>  	{ }
+>  };
+>  MODULE_DEVICE_TABLE(of, vadc_match_table);
+> diff --git a/drivers/iio/adc/qcom-vadc-common.h b/drivers/iio/adc/qcom-vadc-common.h
+> index 17b2fc4d8bf2..b10d5fd59034 100644
+> --- a/drivers/iio/adc/qcom-vadc-common.h
+> +++ b/drivers/iio/adc/qcom-vadc-common.h
+> @@ -16,6 +16,7 @@
+>  
+>  #define VADC_ABSOLUTE_RANGE_UV			625000
+>  #define VADC_RATIOMETRIC_RANGE			1800
+> +#define VADC_RATIOMETRIC_RANGE_8998		1875
+>  
+>  #define VADC_DEF_PRESCALING			0 /* 1:1 */
+>  #define VADC_DEF_DECIMATION			0 /* 512 */
+
