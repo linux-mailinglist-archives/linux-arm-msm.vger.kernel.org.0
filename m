@@ -2,129 +2,120 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 9E4A52C79FE
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 29 Nov 2020 17:30:05 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id EA89F2C7A77
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 29 Nov 2020 19:11:43 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728015AbgK2Q3b (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 29 Nov 2020 11:29:31 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42550 "EHLO
+        id S1727739AbgK2SL2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 29 Nov 2020 13:11:28 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58162 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725830AbgK2Q3a (ORCPT
+        with ESMTP id S1727556AbgK2SL1 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 29 Nov 2020 11:29:30 -0500
-Received: from mail-wm1-x344.google.com (mail-wm1-x344.google.com [IPv6:2a00:1450:4864:20::344])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2CFC3C0613CF;
-        Sun, 29 Nov 2020 08:28:50 -0800 (PST)
-Received: by mail-wm1-x344.google.com with SMTP id v14so7724579wml.1;
-        Sun, 29 Nov 2020 08:28:50 -0800 (PST)
+        Sun, 29 Nov 2020 13:11:27 -0500
+Received: from mail-pg1-x543.google.com (mail-pg1-x543.google.com [IPv6:2607:f8b0:4864:20::543])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5EC16C0613CF;
+        Sun, 29 Nov 2020 10:10:47 -0800 (PST)
+Received: by mail-pg1-x543.google.com with SMTP id w4so8549579pgg.13;
+        Sun, 29 Nov 2020 10:10:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=TltC2PWtsn2vLklBGm2EarhUufc2HeBfxICO+b5w0hE=;
-        b=syxCMDtpjFxQe9C8gESgHY+NEuimyGDPhqsEJ9BtEpQL6venr72AQDbb8egNFH22O1
-         1aMSX7iZNBR67pMrgaKcePMhJ421U9pbRLIHJ6snTZTdhiKiXgDVFm/FZbivb+6Vg2+9
-         aGfgs+zU5VLmX7vINq1Pb9nwrN8lA4tSo6Xt2NBE4HVbp+okpN7s0Xn/BvEOEk5FR+nq
-         E6VVyOorMZ4oTFyRobY+tqsNLvwakjYTmDIXnqrbxrqRn2W3D2CF/uROA12hWiQlpZzv
-         ORj+XDD5ptSRbYR3L5uAJB1f+/aIgfTvi8Kry4C1tDV0Zs3hUsu/NN+71SxQEO23Ff2Z
-         0uGQ==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=EVR6Dei8Bnt3OCxC95LBwIuM/4G2sFcsm8vaAAg9zHw=;
+        b=pLbgtMYF6C4LhXbvtthI4VE4GeH7PSNJTDAReVjFExXzpHh9hosl9/odkNkV8cZcrw
+         h6VVppYcTosIljKdoD3kiKU0YX/qPgzuZfq7ZcDsj8bs7QE1RJngAiyvogjZ3sr7y0yL
+         xgWvv+MEQ/6UQGIrPoFDhBrqwtuGIJ1eAMWkrDMWc61qzy1vuYYyYU5tHe04T3jjSwER
+         kCBH5Ygx0/uKXWSKacL1u32RRU/DL4njb62ZAE7h5iX9tSeCjugKGn0/fsV4B1G89s+a
+         KMd0FnmXwMDszqCCl8iGZXB47Z6SQ6q9unAnX2/vRMolOwnjTD1W8BtTMxwimExAdjIe
+         LawQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=TltC2PWtsn2vLklBGm2EarhUufc2HeBfxICO+b5w0hE=;
-        b=Qi22JqX40ngFC0zouB5HwNouApi8RsBQqNQiaImz1MfOzDIGz8s1KwH6Bb7uZwSsQz
-         EmWJroTYJLdzVtdVpIMsUrkDsFrTUyqzlGiFe4mVHEsq2P6MwYb3CC7BtbjXEITtC+bV
-         xZYpbMRIa27Ohru3Dtqj9i0JFpX1YflTcioqBBsJHHfpMC8VgcCO6If+9tXieTQeavs5
-         JWGVgQ6xH3MNib4rZ2J7xJsFa9hNcV/1U33zg/LMUCOOcnxPb/WgqgBklIgp5UpLaB5x
-         qWdkUQmTikq84dc6anUGRGunfd/ecxwNMym8ToQpiHmlZeliMbUbG9Thae+L87GJRJjJ
-         MGsA==
-X-Gm-Message-State: AOAM531qLy8RB9o8xcKtulkF9F+A86H6vhD51VJ0RRCL33Tj3jREOjBz
-        5rLxME+4UVHlnUjJqNaCx/M=
-X-Google-Smtp-Source: ABdhPJyzGEHUzHmTeg3bViEWVcWLy5cWDNOx94VFuf6TUL03gPSEK4YitJDZgwj5/l9OPlU/WU0kBw==
-X-Received: by 2002:a05:600c:286:: with SMTP id 6mr18874664wmk.125.1606667328742;
-        Sun, 29 Nov 2020 08:28:48 -0800 (PST)
-Received: from ansuel-xps20.localdomain (host-82-53-191-46.retail.telecomitalia.it. [82.53.191.46])
-        by smtp.gmail.com with ESMTPSA id f17sm20197686wmh.10.2020.11.29.08.28.46
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=EVR6Dei8Bnt3OCxC95LBwIuM/4G2sFcsm8vaAAg9zHw=;
+        b=t47M1GwdEAuXojhjowQmI5xc1Q13ctf7K9G0bDfow8MkahULgavb7SVAcJrQHI9RYd
+         kbBYZqeJ6K6sT6oRNDk8+X0nqUyIGh+lbPYheInZ9PkQWGLW86emNAzr3HeD7CAo0W3P
+         5S300Z2EFne5BGiRmm5nx6Hyeo+aQPobpN3wkDykef74LM1+hLCR7C7B69m1M7y4XkSr
+         sJ5tss6DzdnScpReBoiduBxvtry1YTLpbejEiK/1dEs2JN1JUpOf2LceedNoVw8iQpbZ
+         WZC6dOUcNQn+o57fUj59eSeC0A7aqD8ZR696DM/0dUq/Q9Z+7k9Yr7Xv+iowKhrKP6X9
+         flTw==
+X-Gm-Message-State: AOAM53133h9xvNv2U43wmm8sI55QChkFVqNcd6CaIBI0OCJ2rJJq2Zh5
+        vOp3cBW2X2w2Fp7ToZsuZxc=
+X-Google-Smtp-Source: ABdhPJzn7CuP2SUe4fgH+BNUk3eUTnzgiUKfmd5REq9zmWNXr/V2XilbUSU9UY5tJ6B4x0F0B4Y7rg==
+X-Received: by 2002:a17:90a:5905:: with SMTP id k5mr21915670pji.198.1606673446893;
+        Sun, 29 Nov 2020 10:10:46 -0800 (PST)
+Received: from localhost (c-73-25-156-94.hsd1.or.comcast.net. [73.25.156.94])
+        by smtp.gmail.com with ESMTPSA id bf3sm5142567pjb.45.2020.11.29.10.10.44
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 29 Nov 2020 08:28:47 -0800 (PST)
-Date:   Sun, 29 Nov 2020 17:28:46 +0100
-From:   Ansuel Smith <ansuelsmth@gmail.com>
-To:     Amit Kucheria <amitk@kernel.org>
-Cc:     Amit Kucheria <amit.kucheria@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Zhang Rui <rui.zhang@intel.com>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Linux PM list <linux-pm@vger.kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>, LKML <linux-kernel@vger.kernel.org>
-Subject: Re: [RFC PATCH v6 2/8] drivers: thermal: tsens: Add VER_0 tsens
- version
-Message-ID: <X8PMPnx+RmjyZyrJ@ansuel-xps20.localdomain>
-References: <20200814134123.14566-1-ansuelsmth@gmail.com>
- <20200814134123.14566-3-ansuelsmth@gmail.com>
- <CAHLCerMArOceCFQ1XFbsZCAnUdKVX3TVnAb502w+kxmO97bdJg@mail.gmail.com>
- <20201125122228.GB23592@ansuel-xps20.localdomain>
- <CAHLCerNTNpEGiGT6Veroeh1b8pOCiYYFhpnj5YqZcFZxAXGB-A@mail.gmail.com>
+        Sun, 29 Nov 2020 10:10:45 -0800 (PST)
+From:   Rob Clark <robdclark@gmail.com>
+To:     dri-devel@lists.freedesktop.org
+Cc:     Rob Clark <robdclark@chromium.org>,
+        Lee Jones <lee.jones@linaro.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        linux-arm-msm@vger.kernel.org (open list:DRM DRIVER FOR MSM ADRENO GPU),
+        freedreno@lists.freedesktop.org (open list:DRM DRIVER FOR MSM ADRENO
+        GPU), linux-kernel@vger.kernel.org (open list)
+Subject: [PATCH] msm/mdp5: Fix some kernel-doc warnings
+Date:   Sun, 29 Nov 2020 10:12:40 -0800
+Message-Id: <20201129181243.1091742-1-robdclark@gmail.com>
+X-Mailer: git-send-email 2.28.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAHLCerNTNpEGiGT6Veroeh1b8pOCiYYFhpnj5YqZcFZxAXGB-A@mail.gmail.com>
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sun, Nov 29, 2020 at 06:28:01PM +0530, Amit Kucheria wrote:
-> On Thu, Nov 26, 2020 at 2:16 AM Ansuel Smith <ansuelsmth@gmail.com> wrote:
-> 
-> > > >  };
-> > > > @@ -441,6 +442,10 @@ enum regfield_ids {
-> > > >         CRIT_THRESH_14,
-> > > >         CRIT_THRESH_15,
-> > > >
-> > > > +       /* VER_0 MIN MAX THRESH */
-> > > > +       MIN_THRESH_0,
-> > > > +       MAX_THRESH_0,
-> > > > +
-> > >
-> > > Consider reusing LOW_THRESH_0 and UP_THRESH_0 for these?
-> > >
-> >
-> > As we already have defined LOW_THRESH and UP how can we reuse that
-> > regfield to define MIN and MAX?
-> >
-> 
-> We are using MIN and MAX THRESH on the apq8064 to mean LOW and UP
-> THRESOLD, isn't it? IIUC, It was just named differently earlier.
-> 
-> When the driver is loaded on the apq8064, only that one field will be
-> use since v0 has a single threshold for all sensors. When the driver
-> is loaded on new IPs, all fields will be used.
+From: Rob Clark <robdclark@chromium.org>
 
-Let's sum up things and take a decision about this. On V_0 the original
-driver have a special implementation that has a 4 trips point, one
-critical high (that should be MAX_THRESH), one critical low (that should
-be MIN_THRESH), one configurabile hi and one configurable low.
+Fixes the following W=1 kernel build warning(s):
 
-This is the regfiled
-[LOW_THRESH_0]   = REG_FIELD(THRESHOLD_ADDR,  0,  7),
-[UP_THRESH_0]    = REG_FIELD(THRESHOLD_ADDR,  8, 15),
-[MIN_THRESH_0]   = REG_FIELD(THRESHOLD_ADDR, 16, 23),
-[MAX_THRESH_0]   = REG_FIELD(THRESHOLD_ADDR, 24, 31),
-and we have the regfiled to check if the threshold is violated.
+ drivers/gpu/drm/msm/disp/mdp5/mdp5_ctl.c:227: warning: Function parameter or member 'ctl' not described in 'mdp5_ctl_set_encoder_state'
+ drivers/gpu/drm/msm/disp/mdp5/mdp5_ctl.c:227: warning: Function parameter or member 'pipeline' not described in 'mdp5_ctl_set_encoder_state'
+ drivers/gpu/drm/msm/disp/mdp5/mdp5_ctl.c:227: warning: Function parameter or member 'enabled' not described in 'mdp5_ctl_set_encoder_state'
+ drivers/gpu/drm/msm/disp/mdp5/mdp5_ctl.c:227: warning: Excess function parameter 'enable' description in 'mdp5_ctl_set_encoder_state'
+ drivers/gpu/drm/msm/disp/mdp5/mdp5_ctl.c:529: warning: Function parameter or member 'ctl' not described in 'mdp5_ctl_commit'
+ drivers/gpu/drm/msm/disp/mdp5/mdp5_ctl.c:529: warning: Function parameter or member 'pipeline' not described in 'mdp5_ctl_commit'
+ drivers/gpu/drm/msm/disp/mdp5/mdp5_ctl.c:529: warning: Function parameter or member 'flush_mask' not described in 'mdp5_ctl_commit'
+ drivers/gpu/drm/msm/disp/mdp5/mdp5_ctl.c:529: warning: Function parameter or member 'start' not described in 'mdp5_ctl_commit'
 
-Looking at the set trips code, since V_0 doesn't have critical
-interrupt, we only set the uplow interrupt. Now the current code only
-check the LOW and UP regfield and V_0. The original code also check MIN
-and MAX (that are set to 125 C and 0 C, that should be the critical trip
-point). Should we:
-1. drop the MIN and MAX THRESH and keep them unconfigured (and make the
-interrupt set only to the UP/LOW trips) or
-2. add the missing code to set_trips
+Cc: Lee Jones <lee.jones@linaro.org>
+Signed-off-by: Rob Clark <robdclark@chromium.org>
+---
+ drivers/gpu/drm/msm/disp/mdp5/mdp5_ctl.c | 11 ++++++++++-
+ 1 file changed, 10 insertions(+), 1 deletion(-)
 
-Honestrly I'm more with the first approach. I also sent v7 that should
-address all the other request. As always thanks for the attention.
+diff --git a/drivers/gpu/drm/msm/disp/mdp5/mdp5_ctl.c b/drivers/gpu/drm/msm/disp/mdp5/mdp5_ctl.c
+index 030279d7b64b..81b0c7cf954e 100644
+--- a/drivers/gpu/drm/msm/disp/mdp5/mdp5_ctl.c
++++ b/drivers/gpu/drm/msm/disp/mdp5/mdp5_ctl.c
+@@ -216,7 +216,9 @@ static void send_start_signal(struct mdp5_ctl *ctl)
+ /**
+  * mdp5_ctl_set_encoder_state() - set the encoder state
+  *
+- * @enable: true, when encoder is ready for data streaming; false, otherwise.
++ * @ctl:      the CTL instance
++ * @pipeline: the encoder's INTF + MIXER configuration
++ * @enabled:  true, when encoder is ready for data streaming; false, otherwise.
+  *
+  * Note:
+  * This encoder state is needed to trigger START signal (data path kickoff).
+@@ -510,6 +512,13 @@ static void fix_for_single_flush(struct mdp5_ctl *ctl, u32 *flush_mask,
+ /**
+  * mdp5_ctl_commit() - Register Flush
+  *
++ * @ctl:        the CTL instance
++ * @pipeline:   the encoder's INTF + MIXER configuration
++ * @flush_mask: bitmask of display controller hw blocks to flush
++ * @start:      if true, immediately update flush registers and set START
++ *              bit, otherwise accumulate flush_mask bits until we are
++ *              ready to START
++ *
+  * The flush register is used to indicate several registers are all
+  * programmed, and are safe to update to the back copy of the double
+  * buffered registers.
+-- 
+2.28.0
 
