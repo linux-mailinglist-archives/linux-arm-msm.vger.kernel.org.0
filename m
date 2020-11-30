@@ -2,120 +2,119 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D5F1C2C8A38
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Nov 2020 18:01:15 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 17CBD2C8A52
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Nov 2020 18:01:28 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729144AbgK3RAO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 30 Nov 2020 12:00:14 -0500
-Received: from mail-io1-f66.google.com ([209.85.166.66]:42501 "EHLO
-        mail-io1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729141AbgK3RAN (ORCPT
+        id S1728963AbgK3RBQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 30 Nov 2020 12:01:16 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43034 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729258AbgK3RBQ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 30 Nov 2020 12:00:13 -0500
-Received: by mail-io1-f66.google.com with SMTP id q137so8873448iod.9;
-        Mon, 30 Nov 2020 08:59:57 -0800 (PST)
+        Mon, 30 Nov 2020 12:01:16 -0500
+Received: from mail-ot1-x341.google.com (mail-ot1-x341.google.com [IPv6:2607:f8b0:4864:20::341])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AF5D7C0613CF
+        for <linux-arm-msm@vger.kernel.org>; Mon, 30 Nov 2020 09:00:30 -0800 (PST)
+Received: by mail-ot1-x341.google.com with SMTP id t18so3502859otk.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 30 Nov 2020 09:00:30 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=qYtC9M1bspDFOXZgZ8xo6XSnP8FNfyQGj+HdlUXi5ic=;
+        b=IABMGf9WrjddPqSaFG9QbmVHsAaSw8qcauxtUQ6cXcIPXN8G1K2SuaUeoXePjSaZlm
+         DZkOPqSvBnkFT05ytEvshm1Jxd8nKMz/Ez1dV1XthOtZxQjV4dV5GyWkkny6nYQRhq9M
+         vhdH76yVp47kyxEgU1dTjgaFb7R02c82BQnZhfk569gGPu+zkQ7Z4f8EvtGo6pwjnNaZ
+         X1+mkdhXO+EHQkSna9r7pgd2X4fovP/Eg54MW3Af6BrhuVdxDlj/T84nEhF18P7w/ZJg
+         EMpeMlRl7CGf8rtocAhHpK0pA+kAJL5a/38YaSViWI0xRIGLiT5Q/9HTmAcWTg9rcS6R
+         gFaQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=Hq1MJpvbDh7bba2e04fPTBnORo/SbAhyQcObblCnObs=;
-        b=e9nRknYpuq2gvfoe4HOKpeAZVgxHazGOwdFcyefos6U+sWdAlZcDHTwDLReNNOWGZ6
-         63OEyMBYK4F6QDkSsPBBz2SNwHwIrbeacllRsfsolPY1C1177xfCs4EZjHzYDHdQmzb7
-         1v/EyQBKdeXxRqmv/eoOQV+hnIsLQiWaVolCkIqcnQH4f1APhPP0thftpI+92KQT6fV3
-         NSwM++S7oJ1fka5RMy+Vow4dqMr0wF+XfXwlTgGWL5D3YWWNLVP+BA69c1hZSk9isfk7
-         ysaeGfHGSlO50qGY77GOVe880JwX/m4q4vXeNq+UGyV5L1w7FiCPLgAqmv3C9572koTa
-         BmJg==
-X-Gm-Message-State: AOAM532yaK3ix/uPji+Rt4DstH3KVGjghFVHQPfPDvatpjOBWzS0pRyo
-        BrEjL928AqRSut0R7anAMw==
-X-Google-Smtp-Source: ABdhPJzEFd02WNAYRRP4EaId0gS+QWu5Mv0Ty/p0+ar97FxggjqT8eC4thWRaa2uFkQA0ZhScIq8dg==
-X-Received: by 2002:a6b:ea0d:: with SMTP id m13mr15605478ioc.148.1606755571994;
-        Mon, 30 Nov 2020 08:59:31 -0800 (PST)
-Received: from xps15 ([64.188.179.253])
-        by smtp.gmail.com with ESMTPSA id f2sm8214670iow.4.2020.11.30.08.59.29
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=qYtC9M1bspDFOXZgZ8xo6XSnP8FNfyQGj+HdlUXi5ic=;
+        b=PunqFIGogTMDh2V/BsJVCpN5e3DKLbwe22ces2j6+CkoryrvSkVf/cCcYPP/CodZrU
+         1y5J0CufP3m14Vpyur7iRlEC9Nz+CEj4RvQ2+HQCjnVQecJ50/4HKP+yIZl6w5+lkOr1
+         bt9xDHRfxjfePB5B9I7S6c1kTRPIZIZ8Oj7j1hJzc4uB19bz8heNt/bxAjKtc8VDSDgz
+         NCeG6ViFuBBMy8Uoys8XbQE7LozTnTVSwOAh3KzR1KGP6uLHKeTghKX5Pzav/38Sg6zW
+         jATZHD7ROLbdc2nLNH9s695mVOO8VOF0Dx7FoLaQ+d4Q0s3oTlvwEd5mua7WM3lQdMqh
+         hKqg==
+X-Gm-Message-State: AOAM530c6IbnbaxRf8p2QI7H19cZlUcv+kAu+6NJoX/Ny4pG7iro2bAg
+        HUwG3N/8W9f8fhESXmNvWSx0KLLnGx2C5g==
+X-Google-Smtp-Source: ABdhPJw6EST3+EemQHFgvmqWIHQ0jHq/4hXRRphea3qDzv6XB92yP5K5TLaNUluAYKEfpnhQoltreA==
+X-Received: by 2002:a9d:694c:: with SMTP id p12mr18481707oto.236.1606755629679;
+        Mon, 30 Nov 2020 09:00:29 -0800 (PST)
+Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
+        by smtp.gmail.com with ESMTPSA id x131sm6373327oif.52.2020.11.30.09.00.28
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 30 Nov 2020 08:59:31 -0800 (PST)
-Received: (nullmailer pid 2625316 invoked by uid 1000);
-        Mon, 30 Nov 2020 16:59:28 -0000
-Date:   Mon, 30 Nov 2020 09:59:28 -0700
-From:   Rob Herring <robh@kernel.org>
-To:     Ansuel Smith <ansuelsmth@gmail.com>
-Cc:     Daniel Lezcano <daniel.lezcano@linaro.org>,
-        Amit Kucheria <amitk@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>, linux-pm@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, Zhang Rui <rui.zhang@intel.com>,
-        linux-kernel@vger.kernel.org,
+        Mon, 30 Nov 2020 09:00:28 -0800 (PST)
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Andy Gross <agross@kernel.org>, devicetree@vger.kernel.org
-Subject: Re: [PATCH v7 8/8] dt-bindings: thermal: tsens: Document ipq8064
- bindings
-Message-ID: <20201130165928.GA2624688@robh.at.kernel.org>
-References: <20201125174826.24462-1-ansuelsmth@gmail.com>
- <20201125174826.24462-9-ansuelsmth@gmail.com>
+        Steev Klimaszewski <steev@kali.org>,
+        Shawn Guo <shawn.guo@linaro.org>
+Cc:     Rob Herring <robh+dt@kernel.org>, Vinod Koul <vkoul@kernel.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH] arm64: dts: qcom: c630: Fix pinctrl pins properties
+Date:   Mon, 30 Nov 2020 11:00:28 -0600
+Message-Id: <20201130170028.319798-1-bjorn.andersson@linaro.org>
+X-Mailer: git-send-email 2.29.2
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20201125174826.24462-9-ansuelsmth@gmail.com>
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, 25 Nov 2020 18:48:25 +0100, Ansuel Smith wrote:
-> Document the use of bindings used for msm8960 tsens based devices.
-> msm8960 use the same gcc regs and is set as a child of the qcom gcc.
-> 
-> Signed-off-by: Ansuel Smith <ansuelsmth@gmail.com>
-> ---
->  .../bindings/thermal/qcom-tsens.yaml          | 103 ++++++++++++++----
->  1 file changed, 79 insertions(+), 24 deletions(-)
-> 
+The "pins" property takes an array of pin _names_, not pin numbers. Fix
+this.
 
+Fixes: 44acee207844 ("arm64: dts: qcom: Add Lenovo Yoga C630")
+Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+---
+ arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-My bot found errors running 'make dt_binding_check' on your patch:
-
-yamllint warnings/errors:
-./Documentation/devicetree/bindings/thermal/qcom-tsens.yaml:25:13: [warning] wrong indentation: expected 14 but found 12 (indentation)
-./Documentation/devicetree/bindings/thermal/qcom-tsens.yaml:121:8: [error] empty value in block mapping (empty-values)
-./Documentation/devicetree/bindings/thermal/qcom-tsens.yaml:133:3: [error] syntax error: expected <block end>, but found '?' (syntax)
-./Documentation/devicetree/bindings/thermal/qcom-tsens.yaml:134:5: [warning] wrong indentation: expected 6 but found 4 (indentation)
-./Documentation/devicetree/bindings/thermal/qcom-tsens.yaml:140:3: [warning] wrong indentation: expected 4 but found 2 (indentation)
-./Documentation/devicetree/bindings/thermal/qcom-tsens.yaml:141:5: [warning] wrong indentation: expected 6 but found 4 (indentation)
-
-dtschema/dtc warnings/errors:
-Traceback (most recent call last):
-  File "/usr/local/bin/dt-extract-example", line 45, in <module>
-    binding = yaml.load(open(args.yamlfile, encoding='utf-8').read())
-  File "/usr/local/lib/python3.8/dist-packages/ruamel/yaml/main.py", line 343, in load
-    return constructor.get_single_data()
-  File "/usr/local/lib/python3.8/dist-packages/ruamel/yaml/constructor.py", line 111, in get_single_data
-    node = self.composer.get_single_node()
-  File "_ruamel_yaml.pyx", line 706, in _ruamel_yaml.CParser.get_single_node
-  File "_ruamel_yaml.pyx", line 724, in _ruamel_yaml.CParser._compose_document
-  File "_ruamel_yaml.pyx", line 775, in _ruamel_yaml.CParser._compose_node
-  File "_ruamel_yaml.pyx", line 889, in _ruamel_yaml.CParser._compose_mapping_node
-  File "_ruamel_yaml.pyx", line 773, in _ruamel_yaml.CParser._compose_node
-  File "_ruamel_yaml.pyx", line 852, in _ruamel_yaml.CParser._compose_sequence_node
-  File "_ruamel_yaml.pyx", line 904, in _ruamel_yaml.CParser._parse_next_event
-ruamel.yaml.parser.ParserError: while parsing a block collection
-  in "<unicode string>", line 101, column 3
-did not find expected '-' indicator
-  in "<unicode string>", line 133, column 3
-make[1]: *** [Documentation/devicetree/bindings/Makefile:20: Documentation/devicetree/bindings/thermal/qcom-tsens.example.dts] Error 1
-make[1]: *** Deleting file 'Documentation/devicetree/bindings/thermal/qcom-tsens.example.dts'
-make[1]: *** Waiting for unfinished jobs....
-make[1]: *** [Documentation/devicetree/bindings/Makefile:59: Documentation/devicetree/bindings/processed-schema-examples.json] Error 123
-make: *** [Makefile:1364: dt_binding_check] Error 2
-
-
-See https://patchwork.ozlabs.org/patch/1406385
-
-The base for the patch is generally the last rc1. Any dependencies
-should be noted.
-
-If you already ran 'make dt_binding_check' and didn't see the above
-error(s), then make sure 'yamllint' is installed and dt-schema is up to
-date:
-
-pip3 install dtschema --upgrade
-
-Please check and re-submit.
+diff --git a/arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts b/arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts
+index 399aef2a0951..bb314973eb0c 100644
+--- a/arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts
++++ b/arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts
+@@ -432,7 +432,7 @@ &tlmm {
+ 	gpio-reserved-ranges = <0 4>, <81 4>;
+ 
+ 	i2c3_hid_active: i2c2-hid-active {
+-		pins = <37>;
++		pins = "gpio37";
+ 		function = "gpio";
+ 
+ 		input-enable;
+@@ -441,7 +441,7 @@ i2c3_hid_active: i2c2-hid-active {
+ 	};
+ 
+ 	i2c5_hid_active: i2c5-hid-active {
+-		pins = <125>;
++		pins = "gpio125";
+ 		function = "gpio";
+ 
+ 		input-enable;
+@@ -450,7 +450,7 @@ i2c5_hid_active: i2c5-hid-active {
+ 	};
+ 
+ 	i2c11_hid_active: i2c11-hid-active {
+-		pins = <92>;
++		pins = "gpio92";
+ 		function = "gpio";
+ 
+ 		input-enable;
+@@ -459,7 +459,7 @@ i2c11_hid_active: i2c11-hid-active {
+ 	};
+ 
+ 	wcd_intr_default: wcd_intr_default {
+-		pins = <54>;
++		pins = "gpio54";
+ 		function = "gpio";
+ 
+ 		input-enable;
+-- 
+2.29.2
 
