@@ -2,132 +2,111 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 3F3052C8FEE
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Nov 2020 22:23:51 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 93B722C8FF0
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Nov 2020 22:24:51 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729351AbgK3VX1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 30 Nov 2020 16:23:27 -0500
-Received: from m42-4.mailgun.net ([69.72.42.4]:37669 "EHLO m42-4.mailgun.net"
+        id S2388533AbgK3VYH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 30 Nov 2020 16:24:07 -0500
+Received: from m42-4.mailgun.net ([69.72.42.4]:61990 "EHLO m42-4.mailgun.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1729334AbgK3VX0 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 30 Nov 2020 16:23:26 -0500
+        id S2388531AbgK3VYG (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 30 Nov 2020 16:24:06 -0500
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1606771381; h=Message-ID: References: In-Reply-To: Subject:
+ s=smtp; t=1606771427; h=Message-ID: References: In-Reply-To: Subject:
  Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=jNW1t6Se5Ktv+ohrHgjF3LLGgAEq4iiGmKww3uVyBZQ=;
- b=l7akcEPm1UGFCIRMt/q3djL83H28GuOtco02iG8iWNFi8kFQWt1YYS+pp3lxZT0mvABOV0nV
- ofOEW/zeb7wv8mBV7q1bI76R2WMOM93XVOKJtVlWaJyzH4ciZC69O/3hjf8ozQ8lzuUnK2ZY
- gU41fxZOwPDGm+q4MtTftEwxLM4=
+ MIME-Version: Sender; bh=dbZGdUcFmNG53loMl2JmT/iUQISOLMxPK14YsDoFSQ4=;
+ b=Nhl8swbQcqmIF/eeP9F0eJ35cdGcje+wl0rgs1DtmVUemGF+zPDPeIcyUILOYWtpsavxoIjG
+ 2QDMwC4WHqwWOqtpXYqxpo9cggDipOC/dvCZf1bII4JaGMnRhoobWJCVZfG5dttx7Wm1Nlzy
+ ur64hyK8pMwq56B2UAOOIZTbsOA=
 X-Mailgun-Sending-Ip: 69.72.42.4
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org
  (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n04.prod.us-east-1.postgun.com with SMTP id
- 5fc5629951762b188667f332 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 30 Nov 2020 21:22:33
+ smtp-out-n06.prod.us-east-1.postgun.com with SMTP id
+ 5fc562c6f4482b01c4c5a4c6 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 30 Nov 2020 21:23:18
  GMT
 Sender: abhinavk=codeaurora.org@mg.codeaurora.org
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 85142C43463; Mon, 30 Nov 2020 21:22:32 +0000 (UTC)
+        id A839FC43460; Mon, 30 Nov 2020 21:23:17 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
 X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
+        URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
         (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
         (No client certificate requested)
         (Authenticated sender: abhinavk)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 81D48C433C6;
-        Mon, 30 Nov 2020 21:22:31 +0000 (UTC)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 1DE4BC433ED;
+        Mon, 30 Nov 2020 21:23:17 +0000 (UTC)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII;
  format=flowed
 Content-Transfer-Encoding: 7bit
-Date:   Mon, 30 Nov 2020 13:22:31 -0800
+Date:   Mon, 30 Nov 2020 13:23:17 -0800
 From:   abhinavk@codeaurora.org
-To:     Rob Clark <robdclark@gmail.com>
-Cc:     dri-devel@lists.freedesktop.org,
-        Rob Clark <robdclark@chromium.org>,
-        Lee Jones <lee.jones@linaro.org>, Sean Paul <sean@poorly.run>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
-        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] msm/mdp5: Fix some kernel-doc warnings
-In-Reply-To: <20201129181243.1091742-1-robdclark@gmail.com>
-References: <20201129181243.1091742-1-robdclark@gmail.com>
-Message-ID: <2a4ac82e8f904e2b8aeee0d6718a1ac0@codeaurora.org>
+To:     Lee Jones <lee.jones@linaro.org>
+Cc:     freedreno@lists.freedesktop.org,
+        Shubhashree Dhar <dhar@codeaurora.org>,
+        David Airlie <airlied@linux.ie>, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        Sean Paul <sean@poorly.run>
+Subject: Re: [PATCH 15/40] drm/msm/disp/dpu1/dpu_hw_interrupts: Demote
+ kernel-doc formatting misuse
+In-Reply-To: <20201126134240.3214176-16-lee.jones@linaro.org>
+References: <20201126134240.3214176-1-lee.jones@linaro.org>
+ <20201126134240.3214176-16-lee.jones@linaro.org>
+Message-ID: <7ecb21f6b65de4014b2bbe9dcc5762a0@codeaurora.org>
 X-Sender: abhinavk@codeaurora.org
 User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2020-11-29 10:12, Rob Clark wrote:
-> From: Rob Clark <robdclark@chromium.org>
-> 
+On 2020-11-26 05:42, Lee Jones wrote:
 > Fixes the following W=1 kernel build warning(s):
 > 
->  drivers/gpu/drm/msm/disp/mdp5/mdp5_ctl.c:227: warning: Function
-> parameter or member 'ctl' not described in
-> 'mdp5_ctl_set_encoder_state'
->  drivers/gpu/drm/msm/disp/mdp5/mdp5_ctl.c:227: warning: Function
-> parameter or member 'pipeline' not described in
-> 'mdp5_ctl_set_encoder_state'
->  drivers/gpu/drm/msm/disp/mdp5/mdp5_ctl.c:227: warning: Function
-> parameter or member 'enabled' not described in
-> 'mdp5_ctl_set_encoder_state'
->  drivers/gpu/drm/msm/disp/mdp5/mdp5_ctl.c:227: warning: Excess
-> function parameter 'enable' description in
-> 'mdp5_ctl_set_encoder_state'
->  drivers/gpu/drm/msm/disp/mdp5/mdp5_ctl.c:529: warning: Function
-> parameter or member 'ctl' not described in 'mdp5_ctl_commit'
->  drivers/gpu/drm/msm/disp/mdp5/mdp5_ctl.c:529: warning: Function
-> parameter or member 'pipeline' not described in 'mdp5_ctl_commit'
->  drivers/gpu/drm/msm/disp/mdp5/mdp5_ctl.c:529: warning: Function
-> parameter or member 'flush_mask' not described in 'mdp5_ctl_commit'
->  drivers/gpu/drm/msm/disp/mdp5/mdp5_ctl.c:529: warning: Function
-> parameter or member 'start' not described in 'mdp5_ctl_commit'
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c:246: error: Cannot
+> parse struct or union!
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c:756: error: Cannot
+> parse struct or union!
 > 
-> Cc: Lee Jones <lee.jones@linaro.org>
-> Signed-off-by: Rob Clark <robdclark@chromium.org>
+> Cc: Rob Clark <robdclark@gmail.com>
+> Cc: Sean Paul <sean@poorly.run>
+> Cc: David Airlie <airlied@linux.ie>
+> Cc: Daniel Vetter <daniel@ffwll.ch>
+> Cc: Shubhashree Dhar <dhar@codeaurora.org>
+> Cc: linux-arm-msm@vger.kernel.org
+> Cc: dri-devel@lists.freedesktop.org
+> Cc: freedreno@lists.freedesktop.org
+> Signed-off-by: Lee Jones <lee.jones@linaro.org>
 Reviewed-by: Abhinav Kumar <abhinavk@codeaurora.org>
 > ---
->  drivers/gpu/drm/msm/disp/mdp5/mdp5_ctl.c | 11 ++++++++++-
->  1 file changed, 10 insertions(+), 1 deletion(-)
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c | 4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
 > 
-> diff --git a/drivers/gpu/drm/msm/disp/mdp5/mdp5_ctl.c
-> b/drivers/gpu/drm/msm/disp/mdp5/mdp5_ctl.c
-> index 030279d7b64b..81b0c7cf954e 100644
-> --- a/drivers/gpu/drm/msm/disp/mdp5/mdp5_ctl.c
-> +++ b/drivers/gpu/drm/msm/disp/mdp5/mdp5_ctl.c
-> @@ -216,7 +216,9 @@ static void send_start_signal(struct mdp5_ctl *ctl)
->  /**
->   * mdp5_ctl_set_encoder_state() - set the encoder state
->   *
-> - * @enable: true, when encoder is ready for data streaming; false, 
-> otherwise.
-> + * @ctl:      the CTL instance
-> + * @pipeline: the encoder's INTF + MIXER configuration
-> + * @enabled:  true, when encoder is ready for data streaming; false, 
-> otherwise.
->   *
->   * Note:
->   * This encoder state is needed to trigger START signal (data path 
-> kickoff).
-> @@ -510,6 +512,13 @@ static void fix_for_single_flush(struct mdp5_ctl
-> *ctl, u32 *flush_mask,
->  /**
->   * mdp5_ctl_commit() - Register Flush
->   *
-> + * @ctl:        the CTL instance
-> + * @pipeline:   the encoder's INTF + MIXER configuration
-> + * @flush_mask: bitmask of display controller hw blocks to flush
-> + * @start:      if true, immediately update flush registers and set 
-> START
-> + *              bit, otherwise accumulate flush_mask bits until we are
-> + *              ready to START
-> + *
->   * The flush register is used to indicate several registers are all
->   * programmed, and are safe to update to the back copy of the double
->   * buffered registers.
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c
+> b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c
+> index 38482b1047745..5c521de715670 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c
+> @@ -189,7 +189,7 @@ struct dpu_irq_type {
+>  	u32 reg_idx;
+>  };
+> 
+> -/**
+> +/*
+>   * struct dpu_intr_reg -  List of DPU interrupt registers
+>   */
+>  static const struct dpu_intr_reg dpu_intr_set[] = {
+> @@ -245,7 +245,7 @@ static const struct dpu_intr_reg dpu_intr_set[] = {
+>  	}
+>  };
+> 
+> -/**
+> +/*
+>   * struct dpu_irq_type - IRQ mapping table use for lookup an irq_idx 
+> in this
+>   *			 table that have a matching interface type and
+>   *			 instance index.
