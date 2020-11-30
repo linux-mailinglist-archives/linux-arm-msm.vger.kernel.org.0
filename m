@@ -2,99 +2,175 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 22C8A2C89A0
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Nov 2020 17:35:11 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id CC4302C89F9
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Nov 2020 17:56:04 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728881AbgK3Qed (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 30 Nov 2020 11:34:33 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38860 "EHLO
+        id S1728527AbgK3QxK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 30 Nov 2020 11:53:10 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41766 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726213AbgK3Qed (ORCPT
+        with ESMTP id S1726670AbgK3QxK (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 30 Nov 2020 11:34:33 -0500
-Received: from mail-oo1-xc42.google.com (mail-oo1-xc42.google.com [IPv6:2607:f8b0:4864:20::c42])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 37197C0613D3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 30 Nov 2020 08:33:47 -0800 (PST)
-Received: by mail-oo1-xc42.google.com with SMTP id t142so2805912oot.7
-        for <linux-arm-msm@vger.kernel.org>; Mon, 30 Nov 2020 08:33:47 -0800 (PST)
+        Mon, 30 Nov 2020 11:53:10 -0500
+Received: from mail-ot1-x341.google.com (mail-ot1-x341.google.com [IPv6:2607:f8b0:4864:20::341])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E6073C0613CF
+        for <linux-arm-msm@vger.kernel.org>; Mon, 30 Nov 2020 08:52:29 -0800 (PST)
+Received: by mail-ot1-x341.google.com with SMTP id f16so11896770otl.11
+        for <linux-arm-msm@vger.kernel.org>; Mon, 30 Nov 2020 08:52:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=kali.org; s=google;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding:content-language;
-        bh=wF+KSfYEGboISQSOjgP2pMG62F3CaZKfxuQBmoNo6Lw=;
-        b=KHTeyW9YWN46J6zn8dWFKNKuyXTJ+ZrpFUSnUzALlVa3LlUBzHLbpISiFJjZ1IfJ7k
-         lmYm9BpYpbzpNaT18wPEzosYSmbPMUigfWbSTsVTNaUKkx4ADLwuL5b5cGJjwehHpIx9
-         VeUTVt7N9m0+Vas/3VvB9+G7Aaeb/gchfJWx6qdk97nVbzneF2ayiNP7574m16GbmKhY
-         noJvNMTrXNb/bWYP1DWIilgpjzEiWQT/kryKbeockUf/iKQAGqvqIGEg5PJQ/4zm81fE
-         9P8PfNgCxIGSBWbg28DNGG5JFACDOUWTA+QHYRV5/QtJuBA2D1WkQsGP39iVLzcb4YGo
-         Wzqg==
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=/XXlFUfvEmfiDn/MNxM4LtUq+eujOKOrXOcsUik59H8=;
+        b=vWn4k2e3hASoVqqW1KaPIjR/pt4eEcJvI6l+KWsXBNrwMF24HhuNGqikWKn2P+1hWU
+         4WDuhxfz9mZaoRkeusXue9+mpes6rEmF+vbRzNsbKnzb7On5VTc1adrWRTIoIwTdNoGn
+         Zp0Eysb6uyd6L8t3UjdkdLQBRjKzcDXmwOvkaOmEZ/sdD3buLcbRQd90KxK3I3LoA9i3
+         PH84klrCOC4fzBqNwc8jUxthxMMcAplNfccmZyQkDm6VdWq8iLeEpqsE+gNxCmOM1Kmd
+         Ex/bdXWLQfnCfJIfsJYhDQJy4Zd8D8qZc0KuiQrZBfaO0xQI8IPUOlhgAnMFriwwmTEB
+         iNtw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding
-         :content-language;
-        bh=wF+KSfYEGboISQSOjgP2pMG62F3CaZKfxuQBmoNo6Lw=;
-        b=rOsNVdYOmEZ46gm5kvrF6Ya0lWqneUrplDds0eftpHOLhdYOzYEF+LEMtYwyQcdn2d
-         9R+AvxyaMmKPnl/LS//9uJznrOJtIrnNnU2Oje24fQQycGDLS+r2Imapy+meGIf8PVl/
-         HRI6WA45irID/LHFjrAxhngOu6B66Ta24RddejxrufrQifb03HcgV8+ZlnANm/xB8jet
-         oMY8G444LI0fPt9GbDab+/qx5CCW2jcyW0j67gc9e/DPpmDepymkFoiBSh6n6gvLTtX4
-         +355V8Ndg8O7THo9DAJYvid172o/V1AXdUUws7CIY9A5MSjiBWqoVIMvQnFsVJ3wc5jB
-         +0kg==
-X-Gm-Message-State: AOAM533DTPQYM7/bEcOcV1kgvQPk7VjXRwH/ORKkFqsjXw1RN2JnCuro
-        hFO+ZQXg4SSRI60aOOA94fPEokR7AYrkBx/ZuQU=
-X-Google-Smtp-Source: ABdhPJyjcGTdWTupTqlH6YUBnBmz9KTU+QtA2cbbLviGxqtyXgjGbM05figv88/NJ1CLaX5YrSHz6A==
-X-Received: by 2002:a4a:9711:: with SMTP id u17mr15983851ooi.57.1606754026199;
-        Mon, 30 Nov 2020 08:33:46 -0800 (PST)
-Received: from Steevs-MBP.hackershack.net (cpe-173-175-113-3.satx.res.rr.com. [173.175.113.3])
-        by smtp.gmail.com with ESMTPSA id g82sm10031114oib.38.2020.11.30.08.33.45
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 30 Nov 2020 08:33:45 -0800 (PST)
-Subject: Re: [PATCH] arm64: defconfig: Enable Qualcomm PON driver
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>
-Cc:     Catalin Marinas <catalin.marinas@arm.com>,
-        Will Deacon <will@kernel.org>,
-        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-References: <20201125023831.99774-1-bjorn.andersson@linaro.org>
-From:   Steev Klimaszewski <steev@kali.org>
-Message-ID: <b4d23c05-60b5-d7f9-f116-702a7abcc988@kali.org>
-Date:   Mon, 30 Nov 2020 10:33:44 -0600
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.16; rv:78.0)
- Gecko/20100101 Thunderbird/78.4.3
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=/XXlFUfvEmfiDn/MNxM4LtUq+eujOKOrXOcsUik59H8=;
+        b=j8sw5aeFzAu4k4B5ZLK1q3pyftlHltzj/qTV3IXOXGy7CjTeUZAKscebHNZQYBHcri
+         IyvD1Eu7OdR3XUvRRNwbXgbvd6yG5YU9UJE/qyfiVCta0RtfEaZd+vF/DeEcliTnhMr/
+         hFqYXvP9/2E0SbMqcEqdcxLdwbuRy1qfRxInAAtXRDfZhEP5YwYD70dPo0Hj+GlALPp0
+         B2yvqBKLYwyOqgW7wPK2mA2FhGGUY7yYiWVCOPIjo7IMiDczW3AGnBovGsOnzTQW3EVu
+         Dd7+81/CDReSSjjZoa81cBaztW8EqB0ujbFCDvuxExM55Ve+A+upPSM7d2zg56dHai9q
+         6krA==
+X-Gm-Message-State: AOAM531glRQl24wRwlnjRgETL5Tum1y8tspWe5Kh4cU+pTtMxnB0Y49C
+        NCVKlpVL7uTd1kzAVjQFsVBgkFOnAwUWVw==
+X-Google-Smtp-Source: ABdhPJyf+HzoZY0JkxVZtejoP3tDH9NuzEFnXB3oRNpPA4uz7o2H3uqU/nSnUsKFXUwUMVl35e4z4Q==
+X-Received: by 2002:a05:6830:1199:: with SMTP id u25mr17849430otq.323.1606755149178;
+        Mon, 30 Nov 2020 08:52:29 -0800 (PST)
+Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
+        by smtp.gmail.com with ESMTPSA id t5sm9233268oth.16.2020.11.30.08.52.27
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 30 Nov 2020 08:52:28 -0800 (PST)
+Date:   Mon, 30 Nov 2020 10:52:26 -0600
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
+Cc:     agross@kernel.org, robh+dt@kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, rohitkr@codeaurora.org,
+        srinivas.kandagatla@linaro.org, Ajit Pandey <ajitp@codeaurora.org>,
+        V Sujith Kumar Reddy <vsujithk@codeaurora.org>
+Subject: Re: [PATCH] arm64: dts: qcom: sc7180-trogdor: Add lpass dai link for
+ I2S driver
+Message-ID: <X8UjShseQ0F7itZe@builder.lan>
+References: <1600440678-2137-1-git-send-email-srivasam@codeaurora.org>
 MIME-Version: 1.0
-In-Reply-To: <20201125023831.99774-1-bjorn.andersson@linaro.org>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1600440678-2137-1-git-send-email-srivasam@codeaurora.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Fri 18 Sep 09:51 CDT 2020, Srinivasa Rao Mandadapu wrote:
 
-On 11/24/20 8:38 PM, Bjorn Andersson wrote:
-> The PON block in the PMIC provides, among other things, support for
-> "reboot reason", power key and reset "key" handling. Let's enable the
-> driver for this block.
->
-> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> From: Ajit Pandey <ajitp@codeaurora.org>
+> 
+> Add dai link for supporting lpass I2S driver, which is used
+> for audio capture and playback.
+> Add lpass-cpu node with  pin controls and i2s primary
+> and secondary dai-links
+> 
+> Signed-off-by: Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
+> Signed-off-by: V Sujith Kumar Reddy <vsujithk@codeaurora.org>
+
+Ajit needs to certify the origin of the patch, with his signed-off-by
+and as you are the last to touch it your signed-off-by should be last.
+
+Also, please advice on the dependencies of this patch, because the tree
+doesn't build after applying this patch.
+
+Regards,
+Bjorn
+
 > ---
->  arch/arm64/configs/defconfig | 1 +
->  1 file changed, 1 insertion(+)
->
-> diff --git a/arch/arm64/configs/defconfig b/arch/arm64/configs/defconfig
-> index c9246f51085f..8e3ed05b655a 100644
-> --- a/arch/arm64/configs/defconfig
-> +++ b/arch/arm64/configs/defconfig
-> @@ -521,6 +521,7 @@ CONFIG_POWER_AVS=y
->  CONFIG_QCOM_CPR=y
->  CONFIG_ROCKCHIP_IODOMAIN=y
->  CONFIG_POWER_RESET_MSM=y
-> +CONFIG_POWER_RESET_QCOM_PON=m
->  CONFIG_POWER_RESET_XGENE=y
->  CONFIG_POWER_RESET_SYSCON=y
->  CONFIG_SYSCON_REBOOT_MODE=y
-
-Tested-by: Steev Klimaszewski <steev@kali.org>
-
-
+>  arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi | 59 ++++++++++++++++++++++++++++
+>  1 file changed, 59 insertions(+)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
+> index bf87558..5724982 100644
+> --- a/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
+> @@ -220,6 +220,44 @@
+>  			max-brightness = <1023>;
+>  		};
+>  	};
+> +
+> +	sound {
+> +		compatible = "qcom,sc7180-sndcard";
+> +		model = "sc7180-snd-card";
+> +
+> +		audio-routing =
+> +			"Headphone Jack", "HPOL",
+> +			"Headphone Jack", "HPOR";
+> +
+> +		audio-jack = <&alc5682>;
+> +
+> +		#address-cells = <1>;
+> +		#size-cells = <0>;
+> +
+> +		dai-link@0 {
+> +			link-name = "MultiMedia0";
+> +			reg = <0>;
+> +			cpu {
+> +				sound-dai = <&lpass_cpu 0>;
+> +			};
+> +
+> +			codec {
+> +				sound-dai = <&alc5682 0>;
+> +			};
+> +		};
+> +
+> +		dai-link@1 {
+> +			link-name = "MultiMedia1";
+> +			reg = <1>;
+> +			cpu {
+> +				sound-dai = <&lpass_cpu 1>;
+> +			};
+> +
+> +			codec {
+> +				sound-dai = <&max98357a>;
+> +			};
+> +		};
+> +	};
+>  };
+>  
+>  &qfprom {
+> @@ -725,6 +763,27 @@ hp_i2c: &i2c9 {
+>  	modem-init;
+>  };
+>  
+> +&lpass_cpu {
+> +	status = "okay";
+> +
+> +	pinctrl-names = "default";
+> +	pinctrl-0 = <&sec_mi2s_active &pri_mi2s_active &pri_mi2s_mclk_active>;
+> +
+> +	#address-cells = <1>;
+> +	#size-cells = <0>;
+> +
+> +	mi2s-primary@0 {
+> +		reg = <MI2S_PRIMARY>;
+> +		qcom,playback-sd-lines = <1>;
+> +		qcom,capture-sd-lines = <0>;
+> +	};
+> +
+> +	mi2s-secondary@1 {
+> +		reg = <MI2S_SECONDARY>;
+> +		qcom,playback-sd-lines = <0>;
+> +	};
+> +};
+> +
+>  &mdp {
+>  	status = "okay";
+>  };
+> -- 
+> Qualcomm India Private Limited, on behalf of Qualcomm Innovation Center, Inc.,
+> is a member of Code Aurora Forum, a Linux Foundation Collaborative Project.
+> 
