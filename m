@@ -2,89 +2,83 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 334BA2C8267
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Nov 2020 11:42:50 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id BCDEE2C82C8
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Nov 2020 12:03:39 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728550AbgK3Kln (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 30 Nov 2020 05:41:43 -0500
-Received: from ns.mm-sol.com ([37.157.136.199]:60963 "EHLO extserv.mm-sol.com"
+        id S2387455AbgK3LCv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 30 Nov 2020 06:02:51 -0500
+Received: from z5.mailgun.us ([104.130.96.5]:64820 "EHLO z5.mailgun.us"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728505AbgK3Kln (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 30 Nov 2020 05:41:43 -0500
-X-Greylist: delayed 403 seconds by postgrey-1.27 at vger.kernel.org; Mon, 30 Nov 2020 05:41:40 EST
-Received: from [192.168.0.3] (hst-221-92.medicom.bg [84.238.221.92])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (Client did not present a certificate)
-        (Authenticated sender: svarbanov@mm-sol.com)
-        by extserv.mm-sol.com (Postfix) with ESMTPSA id 05962D0A7;
-        Mon, 30 Nov 2020 12:34:16 +0200 (EET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=mm-sol.com; s=201706;
-        t=1606732456; bh=Y3kmBtJDunBAQtrIx3VvhZQtHBPVVJ1VC870yw0gzyE=;
-        h=Subject:To:Cc:From:Date:From;
-        b=cuSv8Ya70Tpk3tbAbiFda22GPoPTeR8sypm/zU/svTAex4ypO6zqO9pOsVo7oZQ9C
-         gkbpvE5WeoiNX5u/qDHssPE+hPerCkr7TCBjaDJIscN8m1RXCNxvzEqUFJteCTL22y
-         9OKScUyiQvMSmbT4VGdU9Kt8sba2KU5NCWdvVgr2PGjuU1gIM7GIZyKRL0XoTTy4DK
-         0twQ6PtjYiwNnY/07Chf/Yk+AR2weYBVjq3Z//rJ+y20ll2Lq04DStw/o8PcxTn5Bv
-         cOcZoNVCY6ytbJ8Ahfzu9GvDDqg+VN1jG/az9teP8mpkm2MAxnV3jVgOI5YKqJ6/5o
-         mddJSbHamstqQ==
-Subject: Re: [PATCH 15/17] arm64: dts: sdm845: Add interconnect properties for
- Venus
-To:     Georgi Djakov <georgi.djakov@linaro.org>,
-        Stanimir Varbanov <stanimir.varbanov@linaro.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org
-References: <20201102113529.16152-1-stanimir.varbanov@linaro.org>
- <04afbbe2-0e31-1ca1-8215-504e64186969@linaro.org>
-From:   Stanimir Varbanov <svarbanov@mm-sol.com>
-Message-ID: <cf5470a8-d810-6b08-9490-a9036eeef938@mm-sol.com>
-Date:   Mon, 30 Nov 2020 12:34:13 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.10.0
-MIME-Version: 1.0
-In-Reply-To: <04afbbe2-0e31-1ca1-8215-504e64186969@linaro.org>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+        id S2387445AbgK3LCv (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 30 Nov 2020 06:02:51 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1606734150; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=IGL15AAZU+PGlm+vPv6IhRcx7pud7hMHBeIih118egs=; b=sgLd2dq3LWyuYBSzNliUrLxL9/40zxRTv9S1dkNmjDJ/XTK0dpKi1tC0pMGN8Cjqxelmf4wg
+ Mi71jQzYKGCl/427IQUfU1SFNR99CvFTJFetGFBKz8ATHLhZpI85H5I44h6+rOLLO0pDhzrS
+ xLmu9d3AvFjqKpMz4+uvqFwXuhQ=
+X-Mailgun-Sending-Ip: 104.130.96.5
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n08.prod.us-east-1.postgun.com with SMTP id
+ 5fc4d1261b731a5d9c8e3e3c (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 30 Nov 2020 11:01:58
+ GMT
+Sender: kathirav=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 21D8FC43462; Mon, 30 Nov 2020 11:01:58 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL
+        autolearn=no autolearn_force=no version=3.4.0
+Received: from kathirav-linux.qualcomm.com (blr-c-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.19.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: kathirav)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 54AACC43460;
+        Mon, 30 Nov 2020 11:01:54 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 54AACC43460
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=kathirav@codeaurora.org
+From:   Kathiravan T <kathirav@codeaurora.org>
+To:     agross@kernel.org, bjorn.andersson@linaro.org, robh+dt@kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Cc:     kathirav@codeaurora.org
+Subject: [PATCH V3 0/1] Add QPIC NAND support for IPQ6018
+Date:   Mon, 30 Nov 2020 16:31:44 +0530
+Message-Id: <1606734105-12414-1-git-send-email-kathirav@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Bjorn, could you take this for v5.11.
+IPQ6018 has the QPIC NAND controller of version 1.5.0, which
+uses the BAM DMA. Add support for the QPIC BAM, QPIC NAND and
+enable the same in the board DTS file.
 
-On 11/2/20 2:07 PM, Georgi Djakov wrote:
-> Hi Stan,
-> 
-> On 11/2/20 13:35, Stanimir Varbanov wrote:
->> Populate Venus DT node with interconnect properties.
->>
->> Signed-off-by: Stanimir Varbanov <stanimir.varbanov@linaro.org>
-> 
-> Reviewed-by: Georgi Djakov <georgi.djakov@linaro.org>
-> 
-> Thanks!
-> Georgi
-> 
->> ---
->>  arch/arm64/boot/dts/qcom/sdm845.dtsi | 3 +++
->>  1 file changed, 3 insertions(+)
->>
->> diff --git a/arch/arm64/boot/dts/qcom/sdm845.dtsi b/arch/arm64/boot/dts/qcom/sdm845.dtsi
->> index 40e8c11f23ab..aca7e9c954e0 100644
->> --- a/arch/arm64/boot/dts/qcom/sdm845.dtsi
->> +++ b/arch/arm64/boot/dts/qcom/sdm845.dtsi
->> @@ -3661,6 +3661,9 @@
->>  			iommus = <&apps_smmu 0x10a0 0x8>,
->>  				 <&apps_smmu 0x10b0 0x0>;
->>  			memory-region = <&venus_mem>;
->> +			interconnects = <&mmss_noc MASTER_VIDEO_P0 0 &mem_noc SLAVE_EBI1 0>,
->> +					<&gladiator_noc MASTER_APPSS_PROC 0 &config_noc SLAVE_VENUS_CFG 0>;
->> +			interconnect-names = "video-mem", "cpu-cfg";
->>  
->>  			video-core0 {
->>  				compatible = "venus-decoder";
->>
+[V3]:
+	- Rebased on v5.10-rc6
+	- Renamed the qpic bam dma node name from 'dma' to 'dma-controller'
+	- Update the device register space to 64bit format
 
+	Above mentioned last two points based on the latest changes in the QCOM tree.
+
+[V2]:
+	- Rebased on v5.10-rc2
+	- Replaced "ok" with "okay" for status property
+	- Dropped the MTD and dt-bindings patch as they are already picked in MTD tree
+
+Kathiravan T (1):
+  arm64: dts: ipq6018: Add the QPIC peripheral nodes
+
+ arch/arm64/boot/dts/qcom/ipq6018-cp01-c1.dts | 16 ++++++++
+ arch/arm64/boot/dts/qcom/ipq6018.dtsi        | 41 ++++++++++++++++++++
+ 2 files changed, 57 insertions(+)
+
+
+base-commit: b65054597872ce3aefbc6a666385eabdf9e288da
 -- 
-regards,
-Stan
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum, hosted by The Linux Foundation
+
