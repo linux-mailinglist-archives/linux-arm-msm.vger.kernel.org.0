@@ -2,274 +2,142 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 42F0D2C9195
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Nov 2020 23:52:08 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id BCE982C9277
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Dec 2020 00:24:43 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388132AbgK3Wvt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 30 Nov 2020 17:51:49 -0500
-Received: from z5.mailgun.us ([104.130.96.5]:39949 "EHLO z5.mailgun.us"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2388131AbgK3Wvt (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 30 Nov 2020 17:51:49 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1606776684; h=Content-Transfer-Encoding: MIME-Version:
- References: In-Reply-To: Message-Id: Date: Subject: Cc: To: From:
- Sender; bh=o1gOQc1/5k0lLJLcqySyZp12dZ1eIOKFqUM9lM67l/M=; b=SuRMhebwyRez8qJC/MBFVfhhrBj9Xras9tLgCWZk3JF+NgYf10E2Des1URGPdw3fASUxrHz9
- 8pTqK/KPBgXCETGCxyDazq/Q002l9GAVz6GpKjApxjHsNd31i4tb/WRJMAmDAxYHthjpOn61
- TmDGOlVD1exuGnhZPBwKb+8mahY=
-X-Mailgun-Sending-Ip: 104.130.96.5
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n06.prod.us-east-1.postgun.com with SMTP id
- 5fc5774b51762b1886abfb16 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 30 Nov 2020 22:50:51
- GMT
-Sender: ilina=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 6A4A3C43460; Mon, 30 Nov 2020 22:50:50 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
-        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
-Received: from codeaurora.org (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: ilina)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 5360DC43462;
-        Mon, 30 Nov 2020 22:50:49 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 5360DC43462
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=ilina@codeaurora.org
-From:   Lina Iyer <ilina@codeaurora.org>
-To:     rjw@rjwysocki.net, ulf.hansson@linaro.org
-Cc:     linux-pm@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        Lina Iyer <ilina@codeaurora.org>
-Subject: [PATCH v6 3/3] PM / Domains: use device's next wakeup to determine domain idle state
-Date:   Mon, 30 Nov 2020 15:50:39 -0700
-Message-Id: <20201130225039.15981-4-ilina@codeaurora.org>
-X-Mailer: git-send-email 2.29.2
-In-Reply-To: <20201130225039.15981-1-ilina@codeaurora.org>
-References: <20201130225039.15981-1-ilina@codeaurora.org>
+        id S2387603AbgK3XYL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 30 Nov 2020 18:24:11 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46320 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730559AbgK3XYK (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 30 Nov 2020 18:24:10 -0500
+Received: from mail-oi1-x241.google.com (mail-oi1-x241.google.com [IPv6:2607:f8b0:4864:20::241])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AEA02C0613D2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 30 Nov 2020 15:23:24 -0800 (PST)
+Received: by mail-oi1-x241.google.com with SMTP id p126so5119968oif.7
+        for <linux-arm-msm@vger.kernel.org>; Mon, 30 Nov 2020 15:23:24 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=rfUvf+rulCtui//LVYbddkRCxkkehBqPZfURfP/eFrU=;
+        b=PLlgDqjlIOXdd/Vh6ZyHIldiZt4b9P6ZhswLdwihql1BqN7yFeP1lNtxsAVT1rs6bL
+         dPkQYsA2Is4Bz2IgCmjfIEu8Mq4MKHBjZXyiqaUng2qWixeMPRFCVYqdarz9g1iERotE
+         2L4uLbzKUilmsVLLHLS3XzQTjFOQ/y+VyWXZ3cVBJ0e1zUxDxdyeTXl31KAfnWcNfy1K
+         5MAKiaq4WryagQ722zzEIN6FuYOF8gYFjIWv6iyRN67OZanAAyNt1I/UOaS6dFwKiGIj
+         sShpOM7uj0txKhHPyJNMbjDU3uE5Wwf8f8OAm+fZBKWQRMA5tPJwhTpTwyUhgPeLNaiL
+         LL7w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=rfUvf+rulCtui//LVYbddkRCxkkehBqPZfURfP/eFrU=;
+        b=jt1kr+0djN3QcXIp7Q0bn4oA+yHK79uVeuqWGvtd+4sQ50TJzjo+HK1fO84y2tIujI
+         vLaaup7NR/vc1GdipE4NozG+1PrYB67CJbzZD1oKAhGU2JJpoK4MHPpgvA+gyM9apAbS
+         VstpxXqWEESpuQ48/qIftmdHQyzICF3Hq0UNgcw6kYkNF5QD3t5TTH3mz+DjPiWa1Q50
+         +fw2cCPFrboGD8B2jLRoKiiCYoK2UAey6CibRa3a+oSKj7AaBOn4BZFN0LMZWH2pbFih
+         hpGYJvc4Ze7DTOTSgxHpSOuDIw6ohVMrTeRzQnRxcW3u81jLkaAvpD1t6OS/AbfovN1m
+         wSWQ==
+X-Gm-Message-State: AOAM530e1P73uQviX967yhS34/d4zy5L1x93T/vhdaJKPKyDsWkmFOOk
+        Xz+3/w61V8eIvJqc6cbno8WoCw==
+X-Google-Smtp-Source: ABdhPJzGX1RWNM92e0MhKFBt9MTPM9po/BVR8gIfY+k+Xx/iYnr1iktm9hSHta+ZFKAF398T7h6JLA==
+X-Received: by 2002:a05:6808:b38:: with SMTP id t24mr114114oij.153.1606778604124;
+        Mon, 30 Nov 2020 15:23:24 -0800 (PST)
+Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
+        by smtp.gmail.com with ESMTPSA id 19sm9422012oth.63.2020.11.30.15.23.16
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 30 Nov 2020 15:23:16 -0800 (PST)
+Date:   Mon, 30 Nov 2020 17:23:15 -0600
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Robert Marko <robert.marko@sartura.hr>
+Cc:     agross@kernel.org, wim@linux-watchdog.org, linux@roeck-us.net,
+        linux-arm-msm@vger.kernel.org, linux-watchdog@vger.kernel.org,
+        linux-kernel@vger.kernel.org, Luka Perkov <luka.perkov@sartura.hr>
+Subject: Re: [PATCH v4] watchdog: qcom_wdt: set WDOG_HW_RUNNING bit when
+ appropriate
+Message-ID: <X8V+442lvcTpNmth@builder.lan>
+References: <20201031121115.542752-1-robert.marko@sartura.hr>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20201031121115.542752-1-robert.marko@sartura.hr>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Currently, a PM domain's idle state is determined based on whether the
-QoS requirements are met. This may not save power, if the idle state
-residency requirements are not met.
+On Sat 31 Oct 07:11 CDT 2020, Robert Marko wrote:
 
-CPU PM domains use the next timer wakeup for the CPUs in the domain to
-determine the sleep duration of the domain. This is compared with the
-idle state residencies to determine the optimal idle state. For other PM
-domains, determining the sleep length is not that straight forward. But
-if the device's next_event is available, we can use that to determine
-the sleep duration of the PM domain.
+> If the watchdog hardware is enabled/running during boot, e.g.
+> due to a boot loader configuring it, we must tell the
+> watchdog framework about this fact so that it can ping the
+> watchdog until userspace opens the device and takes over
+> control.
+> 
+> Do so using the WDOG_HW_RUNNING flag that exists for exactly
+> that use-case.
+> 
+> Signed-off-by: Robert Marko <robert.marko@sartura.hr>
+> Cc: Luka Perkov <luka.perkov@sartura.hr>
 
-Let's update the domain governor logic to check for idle state residency
-based on the next wakeup of devices as well as QoS constraints.
+Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 
-Signed-off-by: Lina Iyer <ilina@codeaurora.org>
----
-Changes in v6:
-	- Do not include power_on_latency_ns for next_wakeup
-	  determination.
-	- Re-organize code to avoid multiple ktime_get() reads.
-	- Check genpd flag if next_wakeup is useful for the domain.
-	- Document why we ignore stale data
-Changes in v5:
-	- Minor code changes suggested by Rafel
-Changes in v4:
-	- Update to use next_wakeup from struct generic_pm_domain_data.
-Changes in v3:
-	- None
-Changes in v2:
-	- Fix state_idx type to hold negative value.
-	- Update commit text.
----
- drivers/base/power/domain_governor.c | 102 ++++++++++++++++++++++++---
- include/linux/pm_domain.h            |   1 +
- 2 files changed, 94 insertions(+), 9 deletions(-)
+> ---
+> Changes in v4:
+> * Use QCOM_WDT_ENABLE macro
+> 
+> Changes in v3:
+> * Drop call to stop as start already does it
+> * Update commit message
+> 
+> Changes in v2:
+> * Correct authorship
+> 
+>  drivers/watchdog/qcom-wdt.c | 18 ++++++++++++++++++
+>  1 file changed, 18 insertions(+)
+> 
+> diff --git a/drivers/watchdog/qcom-wdt.c b/drivers/watchdog/qcom-wdt.c
+> index ab7465d186fd..07d399c4edc4 100644
+> --- a/drivers/watchdog/qcom-wdt.c
+> +++ b/drivers/watchdog/qcom-wdt.c
+> @@ -152,6 +152,13 @@ static int qcom_wdt_restart(struct watchdog_device *wdd, unsigned long action,
+>  	return 0;
+>  }
+>  
+> +static int qcom_wdt_is_running(struct watchdog_device *wdd)
+> +{
+> +	struct qcom_wdt *wdt = to_qcom_wdt(wdd);
+> +
+> +	return (readl(wdt_addr(wdt, WDT_EN)) & QCOM_WDT_ENABLE);
 
-diff --git a/drivers/base/power/domain_governor.c b/drivers/base/power/domain_governor.c
-index 490ed7deb99a..2afb7fa90d5d 100644
---- a/drivers/base/power/domain_governor.c
-+++ b/drivers/base/power/domain_governor.c
-@@ -117,6 +117,55 @@ static bool default_suspend_ok(struct device *dev)
- 	return td->cached_suspend_ok;
- }
- 
-+static void update_domain_next_wakeup(struct generic_pm_domain *genpd, ktime_t now)
-+{
-+	ktime_t domain_wakeup = KTIME_MAX;
-+	ktime_t next_wakeup;
-+	struct pm_domain_data *pdd;
-+	struct gpd_link *link;
-+
-+	if (!genpd_may_use_next_wakeup(genpd))
-+		return;
-+
-+	/*
-+	 * Devices that have a predictable wakeup pattern, may specify
-+	 * their next wakeup. Let's find the next wakeup from all the
-+	 * devices attached to this domain and from all the sub-domains.
-+	 * It is possible that component's a next wakeup may have become
-+	 * stale when we read that here. We will ignore to ensure the domain
-+	 * is able to enter its optimal idle state.
-+	 */
-+	list_for_each_entry(pdd, &genpd->dev_list, list_node) {
-+		next_wakeup = to_gpd_data(pdd)->next_wakeup;
-+		if (next_wakeup != KTIME_MAX && !ktime_before(next_wakeup, now))
-+			if (ktime_before(next_wakeup, domain_wakeup))
-+				domain_wakeup = next_wakeup;
-+	}
-+
-+	list_for_each_entry(link, &genpd->parent_links, parent_node) {
-+		next_wakeup = link->child->next_wakeup;
-+		if (next_wakeup != KTIME_MAX && !ktime_before(next_wakeup, now))
-+			if (ktime_before(next_wakeup, domain_wakeup))
-+				domain_wakeup = next_wakeup;
-+	}
-+
-+	genpd->next_wakeup = domain_wakeup;
-+}
-+
-+static bool next_wakeup_allows_state(struct generic_pm_domain *genpd,
-+				     unsigned int state, ktime_t now)
-+{
-+	ktime_t domain_wakeup = genpd->next_wakeup;
-+	s64 idle_time_ns, min_sleep_ns;
-+
-+	min_sleep_ns = genpd->states[state].power_off_latency_ns +
-+		       genpd->states[state].residency_ns;
-+
-+	idle_time_ns = ktime_to_ns(ktime_sub(domain_wakeup, now));
-+
-+	return idle_time_ns >= min_sleep_ns;
-+}
-+
- static bool __default_power_down_ok(struct dev_pm_domain *pd,
- 				     unsigned int state)
- {
-@@ -201,16 +250,41 @@ static bool __default_power_down_ok(struct dev_pm_domain *pd,
- }
- 
- /**
-- * default_power_down_ok - Default generic PM domain power off governor routine.
-+ * _default_power_down_ok - Default generic PM domain power off governor routine.
-  * @pd: PM domain to check.
-  *
-  * This routine must be executed under the PM domain's lock.
-  */
--static bool default_power_down_ok(struct dev_pm_domain *pd)
-+static bool _default_power_down_ok(struct dev_pm_domain *pd, ktime_t now)
- {
- 	struct generic_pm_domain *genpd = pd_to_genpd(pd);
-+	int state_idx = genpd->state_count - 1;
- 	struct gpd_link *link;
- 
-+	/*
-+	 * Find the next wakeup from devices that can determine their own wakeup
-+	 * to find when the domain would wakeup and do it for every device down
-+	 * the hierarchy. It is not worth while to sleep if the state's residency
-+	 * cannot be met.
-+	 */
-+	update_domain_next_wakeup(genpd, now);
-+	if (genpd->next_wakeup != KTIME_MAX) {
-+		/* Let's find out the deepest domain idle state, the devices prefer */
-+		while (state_idx >= 0) {
-+			if (next_wakeup_allows_state(genpd, state_idx, now)) {
-+				genpd->max_off_time_changed = true;
-+				break;
-+			}
-+			state_idx--;
-+		}
-+
-+		if (state_idx < 0) {
-+			state_idx = 0;
-+			genpd->cached_power_down_ok = false;
-+			goto done;
-+		}
-+	}
-+
- 	if (!genpd->max_off_time_changed) {
- 		genpd->state_idx = genpd->cached_power_down_state_idx;
- 		return genpd->cached_power_down_ok;
-@@ -228,21 +302,30 @@ static bool default_power_down_ok(struct dev_pm_domain *pd)
- 	genpd->max_off_time_ns = -1;
- 	genpd->max_off_time_changed = false;
- 	genpd->cached_power_down_ok = true;
--	genpd->state_idx = genpd->state_count - 1;
- 
--	/* Find a state to power down to, starting from the deepest. */
--	while (!__default_power_down_ok(pd, genpd->state_idx)) {
--		if (genpd->state_idx == 0) {
-+	/*
-+	 * Find a state to power down to, starting from the state
-+	 * determined by the next wakeup.
-+	 */
-+	while (!__default_power_down_ok(pd, state_idx)) {
-+		if (state_idx == 0) {
- 			genpd->cached_power_down_ok = false;
- 			break;
- 		}
--		genpd->state_idx--;
-+		state_idx--;
- 	}
- 
-+done:
-+	genpd->state_idx = state_idx;
- 	genpd->cached_power_down_state_idx = genpd->state_idx;
- 	return genpd->cached_power_down_ok;
- }
- 
-+static bool default_power_down_ok(struct dev_pm_domain *pd)
-+{
-+	return _default_power_down_ok(pd, ktime_get());
-+}
-+
- static bool always_on_power_down_ok(struct dev_pm_domain *domain)
- {
- 	return false;
-@@ -254,11 +337,12 @@ static bool cpu_power_down_ok(struct dev_pm_domain *pd)
- 	struct generic_pm_domain *genpd = pd_to_genpd(pd);
- 	struct cpuidle_device *dev;
- 	ktime_t domain_wakeup, next_hrtimer;
-+	ktime_t now = ktime_get();
- 	s64 idle_duration_ns;
- 	int cpu, i;
- 
- 	/* Validate dev PM QoS constraints. */
--	if (!default_power_down_ok(pd))
-+	if (!_default_power_down_ok(pd, now))
- 		return false;
- 
- 	if (!(genpd->flags & GENPD_FLAG_CPU_DOMAIN))
-@@ -280,7 +364,7 @@ static bool cpu_power_down_ok(struct dev_pm_domain *pd)
- 	}
- 
- 	/* The minimum idle duration is from now - until the next wakeup. */
--	idle_duration_ns = ktime_to_ns(ktime_sub(domain_wakeup, ktime_get()));
-+	idle_duration_ns = ktime_to_ns(ktime_sub(domain_wakeup, now));
- 	if (idle_duration_ns <= 0)
- 		return false;
- 
-diff --git a/include/linux/pm_domain.h b/include/linux/pm_domain.h
-index cc27d3d88849..a41aea9d1c06 100644
---- a/include/linux/pm_domain.h
-+++ b/include/linux/pm_domain.h
-@@ -136,6 +136,7 @@ struct generic_pm_domain {
- 				     unsigned int state);
- 	struct gpd_dev_ops dev_ops;
- 	s64 max_off_time_ns;	/* Maximum allowed "suspended" time. */
-+	ktime_t next_wakeup;	/* Maintained by the domain governor */
- 	bool max_off_time_changed;
- 	bool cached_power_down_ok;
- 	bool cached_power_down_state_idx;
--- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project
+Although, you don't need the outer () here.
 
+Regards,
+Bjorn
+
+> +}
+> +
+>  static const struct watchdog_ops qcom_wdt_ops = {
+>  	.start		= qcom_wdt_start,
+>  	.stop		= qcom_wdt_stop,
+> @@ -294,6 +301,17 @@ static int qcom_wdt_probe(struct platform_device *pdev)
+>  	wdt->wdd.timeout = min(wdt->wdd.max_timeout, 30U);
+>  	watchdog_init_timeout(&wdt->wdd, 0, dev);
+>  
+> +	/*
+> +	 * If WDT is already running, call WDT start which
+> +	 * will stop the WDT, set timeouts as bootloader
+> +	 * might use different ones and set running bit
+> +	 * to inform the WDT subsystem to ping the WDT
+> +	 */
+> +	if (qcom_wdt_is_running(&wdt->wdd)) {
+> +		qcom_wdt_start(&wdt->wdd);
+> +		set_bit(WDOG_HW_RUNNING, &wdt->wdd.status);
+> +	}
+> +
+>  	ret = devm_watchdog_register_device(dev, &wdt->wdd);
+>  	if (ret)
+>  		return ret;
+> -- 
+> 2.28.0
+> 
