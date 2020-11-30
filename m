@@ -2,60 +2,60 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B620A2C8136
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Nov 2020 10:42:45 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 39BC92C8137
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Nov 2020 10:42:46 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728166AbgK3Jk5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        id S1726614AbgK3Jk5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
         Mon, 30 Nov 2020 04:40:57 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58970 "EHLO
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58974 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726614AbgK3Jk5 (ORCPT
+        with ESMTP id S1728019AbgK3Jk5 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
         Mon, 30 Nov 2020 04:40:57 -0500
-Received: from mail-pg1-x544.google.com (mail-pg1-x544.google.com [IPv6:2607:f8b0:4864:20::544])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F02D2C061A04
-        for <linux-arm-msm@vger.kernel.org>; Mon, 30 Nov 2020 01:39:52 -0800 (PST)
-Received: by mail-pg1-x544.google.com with SMTP id o4so7477623pgj.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 30 Nov 2020 01:39:52 -0800 (PST)
+Received: from mail-pj1-x1043.google.com (mail-pj1-x1043.google.com [IPv6:2607:f8b0:4864:20::1043])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 99D33C061A48
+        for <linux-arm-msm@vger.kernel.org>; Mon, 30 Nov 2020 01:39:58 -0800 (PST)
+Received: by mail-pj1-x1043.google.com with SMTP id t12so1023892pjq.5
+        for <linux-arm-msm@vger.kernel.org>; Mon, 30 Nov 2020 01:39:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=wbIAyBk/aKDm2aOVZ9gMdgrzEY6OUn0PU2J1sb9nIlY=;
-        b=Ntfd2QysKsNiw7SqrBvTvDdGgzSjVIu7y4FtGSM0OcrDHO9Xcsq0vxOroC80FJtpqU
-         okeSzZ+Hj9N4uzQWiDiI053tXfghJwEWVjbdJLlfV2Uh7GHC6U9Ny0ABL3mhcLfoAvE8
-         OA7x0v+wLZJRCljpSTLOvQZXgRugpoWvwM/OZLWgrxTMjNK3EfcEJvqN9Ep9YlDVC3f6
-         7gTDZik5ZlnUSXA8HzHTob5rA0fvmWGibxYVAePJRNUEspHGcheYKukHdsrx26nmmgdk
-         Z8Lp8hPvl73HDv9JXXbyEqPs9ToupQ62ocQ/rjY6Thxckho1ztApBkIDs/atFSh7P7YG
-         47rA==
+        bh=Z9/sVIVJ9gHynZQM3T8+B+L6di5fUU2mQNFRrCieXIo=;
+        b=BFuY6eXMLe1zoh0gq3N62PNbmyRMWcg8FS3ufseZUcGqhGLAj6XhZ26cXqxaj5sPf5
+         08RvwH6MqMq2Cg1JQUV7SAoIZ4fjPLnb14dzfN9emzjF0rVbFAraWVZRQkQlgtEgGSMm
+         Si5C8/049UNjS+q6q1P9UYeYDoK5sFlk79Kuw+pzPs7QAXVA3cN5gODfyJUkWdC57D0W
+         9U6Vyoh1lDalGPO/MxENEjNxzWwLEW0+RkYuQa4my9xy1hpyi3nsYwwym543I8+jwr5+
+         c+VgMnXPYEriGN8omKsn7Pm2x8+4icBUXSAlzlKSTwb3KPwK4bgKWy1JBTkP91FthcFH
+         eWQQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=wbIAyBk/aKDm2aOVZ9gMdgrzEY6OUn0PU2J1sb9nIlY=;
-        b=gj7rg+1Ht7FUYcNpyv3FU1LszjzDacIm8Fub8Yl4tcIWQFAPalnkJ0g4qRK1QC0h0G
-         aCgVuuJBYICUnMfAdyK7on0jVv9Yp9MPSBP9Dvdw8+G5bNkUm0j4Kcl7pHFvxMtcW326
-         u+Xp9Oy+b2VWqcXzTF+TZJe54dx52p75SmHz9tm8xCl00EXvp8iSgYpd9BTcm568zu1t
-         wH7qL9KrnXWBIFFF+tr6NgZBDdt1kKWDKvc6+3Q9+tIGQFg13Pgt/dWFA0zWLGXSzKEc
-         CNLfksYiX8XDp4vBNS7IWgp1IcBtusIga2qreOfGBPhoBueyk5bVZ5lcMUadGt5OG8MK
-         J7gg==
-X-Gm-Message-State: AOAM531V0XPLS5STzKldm9Reg2+dLto0S7d9F8nefq0ir920U4cF6nRa
-        jU4sd+Q6v607nQyoDGXiJtVK
-X-Google-Smtp-Source: ABdhPJzwcwv1+0LuaTW8h0Jq2Ce0QMV07K2tpjOqW0UQEXLlM29dJjfyEKIhl8QgnbhbBM9sOadAAA==
-X-Received: by 2002:a63:b511:: with SMTP id y17mr8379504pge.345.1606729192528;
-        Mon, 30 Nov 2020 01:39:52 -0800 (PST)
+        bh=Z9/sVIVJ9gHynZQM3T8+B+L6di5fUU2mQNFRrCieXIo=;
+        b=WXwU+48mCKjjBiU25dd05NAOknwtid74RqL//OHick6RK6aOE+xSKk+luZs+l8K8oL
+         Bao1GdrIVA0uu3PwP+7pQIuKHHMF6TkPhaAaZQoHmezVE9R5YiFzSsox8FtelNmU9Aqz
+         iD8906hkHPKmBU/uB3iZUquge/auypUgfp49MbzYzx3KUuUWDhjy3s1WKFd2x9AbmK1q
+         YG2G7sBVQJLUR1+y4OnWTe9SjDkkD8sfBBMg813CCw4K546Klu6n1o0YZl2XgkU/eXP8
+         YotPfqJU4+9A2l8TWOCNaeRLN/UOoNgGPbu8x61EYLJsCLm59zG09MOaytcdKmiVp9z4
+         6GNg==
+X-Gm-Message-State: AOAM530GBU87lsYqWwaANH/C45KdBMRMENdTLHqwSZUqby/wmku6kzw8
+        PTjBnQoQO0cyurFOvwD1CkXF
+X-Google-Smtp-Source: ABdhPJw/SBMYM6pTUB4lrLGYDeZz1ABiBX173ADiCFGbCneqG0VSbk8u59gxWEzHFYn9XxKH3ipiHA==
+X-Received: by 2002:a17:90a:c588:: with SMTP id l8mr9991777pjt.147.1606729198107;
+        Mon, 30 Nov 2020 01:39:58 -0800 (PST)
 Received: from localhost.localdomain ([2409:4072:6c0d:98b:4016:605b:102d:cbb8])
-        by smtp.gmail.com with ESMTPSA id u14sm16348429pfc.87.2020.11.30.01.39.47
+        by smtp.gmail.com with ESMTPSA id u14sm16348429pfc.87.2020.11.30.01.39.52
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 30 Nov 2020 01:39:51 -0800 (PST)
+        Mon, 30 Nov 2020 01:39:57 -0800 (PST)
 From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 To:     agross@kernel.org, bjorn.andersson@linaro.org, robh+dt@kernel.org
 Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
         dmitry.baryshkov@linaro.org, saiprakash.ranjan@codeaurora.org,
         Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Subject: [PATCH v2 3/4] soc: qcom: llcc-qcom: Extract major hardware version
-Date:   Mon, 30 Nov 2020 15:09:23 +0530
-Message-Id: <20201130093924.45057-4-manivannan.sadhasivam@linaro.org>
+Subject: [PATCH v2 4/4] soc: qcom: llcc-qcom: Add support for SM8250 SoC
+Date:   Mon, 30 Nov 2020 15:09:24 +0530
+Message-Id: <20201130093924.45057-5-manivannan.sadhasivam@linaro.org>
 X-Mailer: git-send-email 2.25.1
 In-Reply-To: <20201130093924.45057-1-manivannan.sadhasivam@linaro.org>
 References: <20201130093924.45057-1-manivannan.sadhasivam@linaro.org>
@@ -65,85 +65,120 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+SM8250 SoC uses LLCC IP version 2. In this version, the WRSC_EN register
+needs to be written to enable the Write Sub Cache for each SCID. Hence,
+use a dedicated "write_scid_en" member with predefined values and write
+them for LLCC IP version 2.
 
-The major hardware version of the LLCC IP is encoded in its
-LLCC_COMMON_HW_INFO register. Extract the version and cache it in the
-driver data so that it can be used to implement version specific
-functionality like enabling Write sub cache for given SCID.
-
-Signed-off-by: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-[mani: splitted the version extract as a single patch and few cleanups]
 Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 ---
- drivers/soc/qcom/llcc-qcom.c       | 12 ++++++++++++
- include/linux/soc/qcom/llcc-qcom.h |  2 ++
- 2 files changed, 14 insertions(+)
+ drivers/soc/qcom/llcc-qcom.c       | 38 ++++++++++++++++++++++++++++++
+ include/linux/soc/qcom/llcc-qcom.h |  1 +
+ 2 files changed, 39 insertions(+)
 
 diff --git a/drivers/soc/qcom/llcc-qcom.c b/drivers/soc/qcom/llcc-qcom.c
-index 16b421608e9c..a559617ea7c0 100644
+index a559617ea7c0..8403a77b59fe 100644
 --- a/drivers/soc/qcom/llcc-qcom.c
 +++ b/drivers/soc/qcom/llcc-qcom.c
-@@ -4,6 +4,7 @@
-  *
+@@ -51,6 +51,7 @@
+ 
+ #define LLCC_TRP_SCID_DIS_CAP_ALLOC   0x21f00
+ #define LLCC_TRP_PCB_ACT              0x21f04
++#define LLCC_TRP_WRSC_EN              0x21f20
+ 
+ #define BANK_OFFSET_STRIDE	      0x80000
+ 
+@@ -77,6 +78,7 @@
+  *               then the ways assigned to this client are not flushed on power
+  *               collapse.
+  * @activate_on_init: Activate the slice immediately after it is programmed
++ * @write_scid_en: Bit enables write cache support for a given scid.
   */
- 
-+#include <linux/bitfield.h>
- #include <linux/bitmap.h>
- #include <linux/bitops.h>
- #include <linux/device.h>
-@@ -35,6 +36,9 @@
- 
- #define CACHE_LINE_SIZE_SHIFT         6
- 
-+#define LLCC_COMMON_HW_INFO           0x00030000
-+#define LLCC_MAJOR_VERSION_MASK       GENMASK(31, 24)
-+
- #define LLCC_COMMON_STATUS0           0x0003000c
- #define LLCC_LB_CNT_MASK              GENMASK(31, 28)
- #define LLCC_LB_CNT_SHIFT             28
-@@ -476,6 +480,7 @@ static int qcom_llcc_probe(struct platform_device *pdev)
- 	const struct qcom_llcc_config *cfg;
- 	const struct llcc_slice_config *llcc_cfg;
- 	u32 sz;
-+	u32 version;
- 
- 	drv_data = devm_kzalloc(dev, sizeof(*drv_data), GFP_KERNEL);
- 	if (!drv_data) {
-@@ -496,6 +501,13 @@ static int qcom_llcc_probe(struct platform_device *pdev)
- 		goto err;
- 	}
- 
-+	/* Extract major version of the IP */
-+	ret = regmap_read(drv_data->bcast_regmap, LLCC_COMMON_HW_INFO, &version);
-+	if (ret)
-+		goto err;
-+
-+	drv_data->major_version = FIELD_GET(LLCC_MAJOR_VERSION_MASK, version);
-+
- 	ret = regmap_read(drv_data->regmap, LLCC_COMMON_STATUS0,
- 						&num_banks);
- 	if (ret)
-diff --git a/include/linux/soc/qcom/llcc-qcom.h b/include/linux/soc/qcom/llcc-qcom.h
-index 3db6797ba6ff..d17a3de80510 100644
---- a/include/linux/soc/qcom/llcc-qcom.h
-+++ b/include/linux/soc/qcom/llcc-qcom.h
-@@ -79,6 +79,7 @@ struct llcc_edac_reg_data {
-  * @bitmap: Bit map to track the active slice ids
-  * @offsets: Pointer to the bank offsets array
-  * @ecc_irq: interrupt for llcc cache error detection and reporting
-+ * @major_version: Indicates the LLCC major version
-  */
- struct llcc_drv_data {
- 	struct regmap *regmap;
-@@ -91,6 +92,7 @@ struct llcc_drv_data {
- 	unsigned long *bitmap;
- 	u32 *offsets;
- 	int ecc_irq;
-+	u32 major_version;
+ struct llcc_slice_config {
+ 	u32 usecase_id;
+@@ -91,6 +93,7 @@ struct llcc_slice_config {
+ 	bool dis_cap_alloc;
+ 	bool retain_on_pc;
+ 	bool activate_on_init;
++	bool write_scid_en;
  };
  
- #if IS_ENABLED(CONFIG_QCOM_LLCC)
+ struct qcom_llcc_config {
+@@ -151,6 +154,25 @@ static const struct llcc_slice_config sm8150_data[] =  {
+ 	{  LLCC_WRCACHE, 31, 128,  1, 1, 0xFFF, 0x0,   0, 0, 0, 0, 0 },
+ };
+ 
++static const struct llcc_slice_config sm8250_data[] =  {
++	{ LLCC_CPUSS,    1, 3072, 1, 1, 0xfff, 0x0, 0, 0, 0, 1, 1, 0 },
++	{ LLCC_VIDSC0,   2, 512,  3, 1, 0xfff, 0x0, 0, 0, 0, 1, 0, 0 },
++	{ LLCC_AUDIO,    6, 1024, 1, 0, 0xfff, 0x0, 0, 0, 0, 0, 0, 0 },
++	{ LLCC_CMPT,    10, 1024, 1, 0, 0xfff, 0x0, 0, 0, 0, 0, 0, 0 },
++	{ LLCC_GPUHTW,  11, 1024, 1, 1, 0xfff, 0x0, 0, 0, 0, 1, 0, 0 },
++	{ LLCC_GPU,     12, 1024, 1, 0, 0xfff, 0x0, 0, 0, 0, 1, 0, 1 },
++	{ LLCC_MMUHWT,  13, 1024, 1, 1, 0xfff, 0x0, 0, 0, 0, 0, 1, 0 },
++	{ LLCC_CMPTDMA, 15, 1024, 1, 0, 0xfff, 0x0, 0, 0, 0, 1, 0, 0 },
++	{ LLCC_DISP,    16, 3072, 1, 1, 0xfff, 0x0, 0, 0, 0, 1, 0, 0 },
++	{ LLCC_VIDFW,   17, 512,  1, 0, 0xfff, 0x0, 0, 0, 0, 1, 0, 0 },
++	{ LLCC_AUDHW,   22, 1024, 1, 1, 0xfff, 0x0, 0, 0, 0, 1, 0, 0 },
++	{ LLCC_NPU,     23, 3072, 1, 1, 0xfff, 0x0, 0, 0, 0, 1, 0, 0 },
++	{ LLCC_WLHW,    24, 1024, 1, 0, 0xfff, 0x0, 0, 0, 0, 1, 0, 0 },
++	{ LLCC_CVP,     28, 256,  3, 1, 0xfff, 0x0, 0, 0, 0, 1, 0, 0 },
++	{ LLCC_APTCM,   30, 128,  3, 0, 0x0,   0x3, 1, 0, 0, 1, 0, 0 },
++	{ LLCC_WRCACHE, 31, 256,  1, 1, 0xfff, 0x0, 0, 0, 0, 0, 1, 0 },
++};
++
+ static const struct qcom_llcc_config sc7180_cfg = {
+ 	.sct_data	= sc7180_data,
+ 	.size		= ARRAY_SIZE(sc7180_data),
+@@ -168,6 +190,11 @@ static const struct qcom_llcc_config sm8150_cfg = {
+ 	.size           = ARRAY_SIZE(sm8150_data),
+ };
+ 
++static const struct qcom_llcc_config sm8250_cfg = {
++	.sct_data       = sm8250_data,
++	.size           = ARRAY_SIZE(sm8250_data),
++};
++
+ static struct llcc_drv_data *drv_data = (void *) -EPROBE_DEFER;
+ 
+ /**
+@@ -417,6 +444,16 @@ static int _qcom_llcc_cfg_program(const struct llcc_slice_config *config,
+ 			return ret;
+ 	}
+ 
++	if (drv_data->major_version == 2) {
++		u32 wren;
++
++		wren = config->write_scid_en << config->slice_id;
++		ret = regmap_update_bits(drv_data->bcast_regmap, LLCC_TRP_WRSC_EN,
++					 BIT(config->slice_id), wren);
++		if (ret)
++			return ret;
++	}
++
+ 	if (config->activate_on_init) {
+ 		desc.slice_id = config->slice_id;
+ 		ret = llcc_slice_activate(&desc);
+@@ -571,6 +608,7 @@ static const struct of_device_id qcom_llcc_of_match[] = {
+ 	{ .compatible = "qcom,sc7180-llcc", .data = &sc7180_cfg },
+ 	{ .compatible = "qcom,sdm845-llcc", .data = &sdm845_cfg },
+ 	{ .compatible = "qcom,sm8150-llcc", .data = &sm8150_cfg },
++	{ .compatible = "qcom,sm8250-llcc", .data = &sm8250_cfg },
+ 	{ }
+ };
+ 
+diff --git a/include/linux/soc/qcom/llcc-qcom.h b/include/linux/soc/qcom/llcc-qcom.h
+index d17a3de80510..64fc582ae415 100644
+--- a/include/linux/soc/qcom/llcc-qcom.h
++++ b/include/linux/soc/qcom/llcc-qcom.h
+@@ -29,6 +29,7 @@
+ #define LLCC_AUDHW       22
+ #define LLCC_NPU         23
+ #define LLCC_WLHW        24
++#define LLCC_CVP         28
+ #define LLCC_MODPE       29
+ #define LLCC_APTCM       30
+ #define LLCC_WRCACHE     31
 -- 
 2.25.1
 
