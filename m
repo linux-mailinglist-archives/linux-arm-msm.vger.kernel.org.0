@@ -2,310 +2,101 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A20CC2C8A5F
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Nov 2020 18:03:56 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 016F92C8A65
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Nov 2020 18:05:38 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727374AbgK3RDb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 30 Nov 2020 12:03:31 -0500
-Received: from m42-4.mailgun.net ([69.72.42.4]:57648 "EHLO m42-4.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727936AbgK3RD3 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 30 Nov 2020 12:03:29 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1606755788; h=In-Reply-To: Content-Type: MIME-Version:
- References: Message-ID: Subject: Cc: To: From: Date: Sender;
- bh=FWoCnMQpn+EN7Kb0WndDRw2hZMNnQ8f1GoHjiowRt6U=; b=BHsTr/i4n1F2FSoofm+Zf4U7iI7xE/aUMoayaG278GeBO22s6n+Oo4LShR4ASWR5U5/voUpc
- JWyAr9G2JXPcM6LYXeUXx9Ea6G/kb2PDVcLLn+lknEBiyzlM8uHKRAltOwnp9O4O5AT0Smpx
- OH3pVmbaXbk8GiAPos1rNgiEBnY=
-X-Mailgun-Sending-Ip: 69.72.42.4
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n05.prod.us-west-2.postgun.com with SMTP id
- 5fc525ad7463e149b4282a2c (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 30 Nov 2020 17:02:37
- GMT
-Sender: jcrouse=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 66A92C43467; Mon, 30 Nov 2020 17:02:37 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
-        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
-Received: from jcrouse1-lnx.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: jcrouse)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 30D5AC43461;
-        Mon, 30 Nov 2020 17:02:35 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 30D5AC43461
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=jcrouse@codeaurora.org
-Date:   Mon, 30 Nov 2020 10:02:32 -0700
-From:   Jordan Crouse <jcrouse@codeaurora.org>
-To:     Akhil P Oommen <akhilpo@codeaurora.org>
-Cc:     freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
-        robh@kernel.org, dri-devel@freedesktop.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        mka@chromium.org, robdclark@gmail.com, dianders@chromium.org
-Subject: Re: [PATCH v2 1/3] drm/msm: adreno: Make speed-bin support generic
-Message-ID: <20201130170231.GF16856@jcrouse1-lnx.qualcomm.com>
-Mail-Followup-To: Akhil P Oommen <akhilpo@codeaurora.org>,
-        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
-        robh@kernel.org, dri-devel@freedesktop.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        mka@chromium.org, robdclark@gmail.com, dianders@chromium.org
-References: <1606481386-22867-1-git-send-email-akhilpo@codeaurora.org>
+        id S1729130AbgK3RD4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 30 Nov 2020 12:03:56 -0500
+Received: from mail-io1-f65.google.com ([209.85.166.65]:38390 "EHLO
+        mail-io1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727936AbgK3RD4 (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 30 Nov 2020 12:03:56 -0500
+Received: by mail-io1-f65.google.com with SMTP id y5so11443257iow.5;
+        Mon, 30 Nov 2020 09:03:40 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=ZVRcg2DyYnY2T86oR8Te89KJ9jB7+OaNC7lMLPrhpP8=;
+        b=ahmXBkPUBEU9PzW+agYRUZ498p92yF8F3lYqdX9XwtbaVVkuEdalYc03l2nK+eKt9L
+         xJ2s14a/VuBPS7DsdSe3c1MCp6kXu9ITEEAIYfZh0KL74rjbgZrfN/h6IytLT36VybOs
+         7u4xMVLn9+vRBDMaltPyniZ89Qr3fH/IrWqjv+iXk3B+ZEClLJ96l1u5nnTlXAjJVCJQ
+         QTdVvLYftHt3UBo6w94BRuTcsZsdHAQcVer8eT9lEQ9blCDUw87dBbfKsHhT1JlN40OL
+         hO3KfGS4e6GVOvMFNzsKuqt6xG5Po1UBJfAic1ksh1hf342w+OK9nOSgoTGrdJopQ9yb
+         ADnQ==
+X-Gm-Message-State: AOAM530t0+PA0vKX/pCVj4Zu5ZGBPAiiPfuSR5RPBpB6qy96u8laYSgG
+        HyQqwERvHmOsBivEVsQq+w==
+X-Google-Smtp-Source: ABdhPJyjovkgkPmew9hFyzwW0sWCRJdcvlG4zeJ8246X7c+JB13zmvU3zgYWciFKeDBC2ZGXUfxVAQ==
+X-Received: by 2002:a5e:d717:: with SMTP id v23mr12204718iom.60.1606755794761;
+        Mon, 30 Nov 2020 09:03:14 -0800 (PST)
+Received: from xps15 ([64.188.179.253])
+        by smtp.gmail.com with ESMTPSA id t12sm8339755ilu.46.2020.11.30.09.03.12
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 30 Nov 2020 09:03:13 -0800 (PST)
+Received: (nullmailer pid 2631520 invoked by uid 1000);
+        Mon, 30 Nov 2020 17:03:11 -0000
+Date:   Mon, 30 Nov 2020 10:03:11 -0700
+From:   Rob Herring <robh@kernel.org>
+To:     AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>
+Cc:     linux-pm@vger.kernel.org, viresh.kumar@linaro.org,
+        linux-kernel@vger.kernel.org, martin.botka@somainline.org,
+        rjw@rjwysocki.net, phone-devel@vger.kernel.org,
+        ulf.hansson@linaro.org, linux-arm-msm@vger.kernel.org,
+        marijn.suijten@somainline.org, jorge.ramirez-ortiz@linaro.org,
+        agross@kernel.org, robh+dt@kernel.org, devicetree@vger.kernel.org,
+        lgirdwood@gmail.com, nks@flawful.org, konrad.dybcio@somainline.org,
+        daniel.lezcano@linaro.org, bjorn.andersson@linaro.org,
+        broonie@kernel.org
+Subject: Re: [PATCH 07/13] dt-bindings: avs: cpr: Convert binding to YAML
+ schema
+Message-ID: <20201130170311.GA2630904@robh.at.kernel.org>
+References: <20201126184559.3052375-1-angelogioacchino.delregno@somainline.org>
+ <20201126184559.3052375-8-angelogioacchino.delregno@somainline.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <1606481386-22867-1-git-send-email-akhilpo@codeaurora.org>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+In-Reply-To: <20201126184559.3052375-8-angelogioacchino.delregno@somainline.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Nov 27, 2020 at 06:19:44PM +0530, Akhil P Oommen wrote:
-> So far a530v2 gpu has support for detecting its supported opps
-> based on a fuse value called speed-bin. This patch makes this
-> support generic across gpu families. This is in preparation to
-> extend speed-bin support to a6x family.
+On Thu, 26 Nov 2020 19:45:53 +0100, AngeloGioacchino Del Regno wrote:
+> Convert the qcom,cpr.txt document to YAML schema and place it in the
+> appropriate directory, since commit a7305e684fc moves this driver
+> from power/avs to soc/qcom, but forgets to move the documentation.
 > 
-> Signed-off-by: Akhil P Oommen <akhilpo@codeaurora.org>
+> Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
 > ---
-> Changes from v1:
-> 	1. Added the changes to support a618 sku to the series.
-> 	2. Avoid failing probe in case of an unsupported sku. (Rob)
-> 
->  drivers/gpu/drm/msm/adreno/a5xx_gpu.c      | 34 --------------
->  drivers/gpu/drm/msm/adreno/adreno_device.c |  4 ++
->  drivers/gpu/drm/msm/adreno/adreno_gpu.c    | 71 ++++++++++++++++++++++++++++++
->  drivers/gpu/drm/msm/adreno/adreno_gpu.h    |  5 +++
->  4 files changed, 80 insertions(+), 34 deletions(-)
-> 
-> diff --git a/drivers/gpu/drm/msm/adreno/a5xx_gpu.c b/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
-> index 8fa5c91..7d42321 100644
-> --- a/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
-> +++ b/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
-> @@ -1531,38 +1531,6 @@ static const struct adreno_gpu_funcs funcs = {
->  	.get_timestamp = a5xx_get_timestamp,
->  };
->  
-> -static void check_speed_bin(struct device *dev)
-> -{
-> -	struct nvmem_cell *cell;
-> -	u32 val;
-> -
-> -	/*
-> -	 * If the OPP table specifies a opp-supported-hw property then we have
-> -	 * to set something with dev_pm_opp_set_supported_hw() or the table
-> -	 * doesn't get populated so pick an arbitrary value that should
-> -	 * ensure the default frequencies are selected but not conflict with any
-> -	 * actual bins
-> -	 */
-> -	val = 0x80;
-> -
-> -	cell = nvmem_cell_get(dev, "speed_bin");
-> -
-> -	if (!IS_ERR(cell)) {
-> -		void *buf = nvmem_cell_read(cell, NULL);
-> -
-> -		if (!IS_ERR(buf)) {
-> -			u8 bin = *((u8 *) buf);
-> -
-> -			val = (1 << bin);
-> -			kfree(buf);
-> -		}
-> -
-> -		nvmem_cell_put(cell);
-> -	}
-> -
-> -	dev_pm_opp_set_supported_hw(dev, &val, 1);
-> -}
-> -
->  struct msm_gpu *a5xx_gpu_init(struct drm_device *dev)
->  {
->  	struct msm_drm_private *priv = dev->dev_private;
-> @@ -1588,8 +1556,6 @@ struct msm_gpu *a5xx_gpu_init(struct drm_device *dev)
->  
->  	a5xx_gpu->lm_leakage = 0x4E001A;
->  
-> -	check_speed_bin(&pdev->dev);
-> -
->  	ret = adreno_gpu_init(dev, pdev, adreno_gpu, &funcs, 4);
->  	if (ret) {
->  		a5xx_destroy(&(a5xx_gpu->base.base));
-> diff --git a/drivers/gpu/drm/msm/adreno/adreno_device.c b/drivers/gpu/drm/msm/adreno/adreno_device.c
-> index 87c8b03..e0ff16c 100644
-> --- a/drivers/gpu/drm/msm/adreno/adreno_device.c
-> +++ b/drivers/gpu/drm/msm/adreno/adreno_device.c
-> @@ -18,6 +18,8 @@ bool snapshot_debugbus = false;
->  MODULE_PARM_DESC(snapshot_debugbus, "Include debugbus sections in GPU devcoredump (if not fused off)");
->  module_param_named(snapshot_debugbus, snapshot_debugbus, bool, 0600);
->  
-> +const u32 a530v2_speedbins[] = {0, 1, 2, 3, 4, 5, 6, 7};
-> +
->  static const struct adreno_info gpulist[] = {
->  	{
->  		.rev   = ADRENO_REV(2, 0, 0, 0),
-> @@ -163,6 +165,8 @@ static const struct adreno_info gpulist[] = {
->  			ADRENO_QUIRK_FAULT_DETECT_MASK,
->  		.init = a5xx_gpu_init,
->  		.zapfw = "a530_zap.mdt",
-> +		.speedbins = a530v2_speedbins,
-> +		.speedbins_count = ARRAY_SIZE(a530v2_speedbins),
->  	}, {
->  		.rev = ADRENO_REV(5, 4, 0, 2),
->  		.revn = 540,
-> diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.c b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
-> index f21561d..b342fa4 100644
-> --- a/drivers/gpu/drm/msm/adreno/adreno_gpu.c
-> +++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
-> @@ -14,6 +14,7 @@
->  #include <linux/pm_opp.h>
->  #include <linux/slab.h>
->  #include <linux/soc/qcom/mdt_loader.h>
-> +#include <linux/nvmem-consumer.h>
->  #include <soc/qcom/ocmem.h>
->  #include "adreno_gpu.h"
->  #include "msm_gem.h"
-> @@ -891,6 +892,69 @@ void adreno_gpu_ocmem_cleanup(struct adreno_ocmem *adreno_ocmem)
->  			   adreno_ocmem->hdl);
->  }
->  
-> +static int adreno_set_supported_hw(struct device *dev,
-> +		struct adreno_gpu *adreno_gpu)
-> +{
-> +	u8 speedbins_count = adreno_gpu->info->speedbins_count;
-> +	const u32 *speedbins = adreno_gpu->info->speedbins;
-> +	struct nvmem_cell *cell;
-> +	u32 bin, i;
-> +	u32 val = 0;
-> +	void *buf, *opp_table;
-> +
-> +	cell = nvmem_cell_get(dev, "speed_bin");
-> +	/*
-> +	 * -ENOENT means that the platform doesn't support speedbin which is
-> +	 * fine
-> +	 */
-> +	if (PTR_ERR(cell) == -ENOENT)
-> +		return 0;
-> +	else if (IS_ERR(cell))
-> +		return PTR_ERR(cell);
-> +
-> +	if (!speedbins)
-> +		goto done;
-> +
-> +	buf = nvmem_cell_read(cell, NULL);
-> +	if (IS_ERR(buf)) {
-> +		nvmem_cell_put(cell);
-> +		return PTR_ERR(buf);
-> +	}
-> +
-> +	bin = *((u32 *) buf);
-> +
-> +	for (i = 0; i < speedbins_count; i++) {
-> +		if (bin == speedbins[i]) {
-> +			val = (1 << i);
-> +			break;
-> +		}
-> +	}
-> +
-> +	kfree(buf);
-> +done:
-> +	nvmem_cell_put(cell);
-> +
-> +	if (!val) {
-> +		DRM_DEV_ERROR(dev,
-> +				"missing support for speed-bin: %u. Some OPPs may not be supported by hardware",
-> +				bin);
-> +		val = ~0U;
-> +	}
-> +
-> +	opp_table = dev_pm_opp_set_supported_hw(dev, &val, 1);
-> +	if (IS_ERR(opp_table))
-> +		return PTR_ERR(opp_table);
-> +
-> +	adreno_gpu->opp_table = opp_table;
-> +	return 0;
-> +}
-> +
-> +static void adreno_put_supported_hw(struct opp_table *opp_table)
-> +{
-> +	if (opp_table)
-> +		dev_pm_opp_put_supported_hw(opp_table);
-> +}
-> +
->  int adreno_gpu_init(struct drm_device *drm, struct platform_device *pdev,
->  		struct adreno_gpu *adreno_gpu,
->  		const struct adreno_gpu_funcs *funcs, int nr_rings)
-> @@ -899,6 +963,7 @@ int adreno_gpu_init(struct drm_device *drm, struct platform_device *pdev,
->  	struct adreno_platform_config *config = dev->platform_data;
->  	struct msm_gpu_config adreno_gpu_config  = { 0 };
->  	struct msm_gpu *gpu = &adreno_gpu->base;
-> +	int ret;
->  
->  	adreno_gpu->funcs = funcs;
->  	adreno_gpu->info = adreno_info(config->rev);
-> @@ -910,6 +975,10 @@ int adreno_gpu_init(struct drm_device *drm, struct platform_device *pdev,
->  
->  	adreno_gpu_config.nr_rings = nr_rings;
->  
-> +	ret = adreno_set_supported_hw(dev, adreno_gpu);
-> +	if (ret)
-> +		return ret;
-> +
-
-I still don't understand why we are doing this here instead of a5xx_gpu.c and
-a6xx_gpu.c.
-
-Jordan
-
->  	adreno_get_pwrlevels(dev, gpu);
->  
->  	pm_runtime_set_autosuspend_delay(dev,
-> @@ -936,4 +1005,6 @@ void adreno_gpu_cleanup(struct adreno_gpu *adreno_gpu)
->  
->  	icc_put(gpu->icc_path);
->  	icc_put(gpu->ocmem_icc_path);
-> +
-> +	adreno_put_supported_hw(adreno_gpu->opp_table);
->  }
-> diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.h b/drivers/gpu/drm/msm/adreno/adreno_gpu.h
-> index c3775f7..a756ad7 100644
-> --- a/drivers/gpu/drm/msm/adreno/adreno_gpu.h
-> +++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.h
-> @@ -55,6 +55,7 @@ struct adreno_reglist {
->  };
->  
->  extern const struct adreno_reglist a630_hwcg[], a640_hwcg[], a650_hwcg[];
-> +extern const u32 a618_speedbins[];
->  
->  struct adreno_info {
->  	struct adreno_rev rev;
-> @@ -67,6 +68,8 @@ struct adreno_info {
->  	const char *zapfw;
->  	u32 inactive_period;
->  	const struct adreno_reglist *hwcg;
-> +	const u32 *speedbins;
-> +	const u8 speedbins_count;
->  };
->  
->  const struct adreno_info *adreno_info(struct adreno_rev rev);
-> @@ -112,6 +115,8 @@ struct adreno_gpu {
->  	 * code (a3xx_gpu.c) and stored in this common location.
->  	 */
->  	const unsigned int *reg_offsets;
-> +
-> +	struct opp_table *opp_table;
->  };
->  #define to_adreno_gpu(x) container_of(x, struct adreno_gpu, base)
->  
-> -- 
-> 2.7.4
+>  .../bindings/power/avs/qcom,cpr.txt           | 131 +-----------------
+>  .../bindings/soc/qcom/qcom,cpr.yaml           | 115 +++++++++++++++
+>  MAINTAINERS                                   |   2 +-
+>  3 files changed, 117 insertions(+), 131 deletions(-)
+>  create mode 100644 Documentation/devicetree/bindings/soc/qcom/qcom,cpr.yaml
 > 
 
--- 
-The Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum,
-a Linux Foundation Collaborative Project
+
+My bot found errors running 'make dt_binding_check' on your patch:
+
+yamllint warnings/errors:
+
+dtschema/dtc warnings/errors:
+/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/soc/qcom/qcom,cpr.yaml: properties:clock-names: [{'const': 'ref'}] is not of type 'object', 'boolean'
+/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/soc/qcom/qcom,cpr.yaml: ignoring, error in schema: properties: clock-names
+warning: no schema found in file: ./Documentation/devicetree/bindings/soc/qcom/qcom,cpr.yaml
+
+
+See https://patchwork.ozlabs.org/patch/1406855
+
+The base for the patch is generally the last rc1. Any dependencies
+should be noted.
+
+If you already ran 'make dt_binding_check' and didn't see the above
+error(s), then make sure 'yamllint' is installed and dt-schema is up to
+date:
+
+pip3 install dtschema --upgrade
+
+Please check and re-submit.
+
