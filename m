@@ -2,95 +2,69 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 16FA32C8447
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Nov 2020 13:47:43 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D7BE42C86C6
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Nov 2020 15:32:05 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725902AbgK3Mr1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 30 Nov 2020 07:47:27 -0500
-Received: from mail.kernel.org ([198.145.29.99]:43172 "EHLO mail.kernel.org"
+        id S1727718AbgK3OaN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 30 Nov 2020 09:30:13 -0500
+Received: from mail.kernel.org ([198.145.29.99]:41788 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725849AbgK3Mr0 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 30 Nov 2020 07:47:26 -0500
-Received: from localhost (fw-tnat.cambridge.arm.com [217.140.96.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        id S1726736AbgK3OaM (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 30 Nov 2020 09:30:12 -0500
+Received: from mail-ed1-f41.google.com (mail-ed1-f41.google.com [209.85.208.41])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 5F6C820691;
-        Mon, 30 Nov 2020 12:46:45 +0000 (UTC)
+        by mail.kernel.org (Postfix) with ESMTPSA id 4D1D220705;
+        Mon, 30 Nov 2020 14:29:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1606740406;
-        bh=PoKaM+9VAqr74Km1DXBLBd3BN67RnM1YtLNRRtHIVdo=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=BFoB4OgHy31PKJuyUjNtKDRAhYEdTOV/gxVt7xwXLxzDqabs9/9WDyftYbpGzJQzK
-         Wzy6c/ZVYEBe6ig5983BnoFfIUJLsKLHoV0G2yjyM8TJPsIkRjXmzHvPDkQAd9w6Pl
-         jPvYmPyYVrze02gFfTa++62kzvpIbDSUXWu42Xrc=
-Date:   Mon, 30 Nov 2020 12:46:17 +0000
-From:   Mark Brown <broonie@kernel.org>
-To:     Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
-Cc:     agross@kernel.org, bjorn.andersson@linaro.org, lgirdwood@gmail.com,
-        robh+dt@kernel.org, plai@codeaurora.org, bgoswami@codeaurora.org,
-        perex@perex.cz, tiwai@suse.com, srinivas.kandagatla@linaro.org,
-        rohitkr@codeaurora.org, linux-arm-msm@vger.kernel.org,
-        alsa-devel@alsa-project.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        V Sujith Kumar Reddy <vsujithk@codeaurora.org>
-Subject: Re: [PATCH v4 1/2] Partially revert ASoC: qcom: Fix enabling BCLK
- and LRCLK in LPAIF invalid state
-Message-ID: <20201130124617.GC4756@sirena.org.uk>
-References: <1606539559-4277-1-git-send-email-srivasam@codeaurora.org>
- <1606539559-4277-2-git-send-email-srivasam@codeaurora.org>
+        s=default; t=1606746571;
+        bh=tz2tXXUVHDW/oupIcXQuwy8LaThl9KQ3jngCWB/BhoU=;
+        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+        b=rW4tNdAA4d+ZcXaEBOgTrjG0Oiu0DNqTcoynBx8N2qopqtxoJgBf4puiuVKXcI+zf
+         boOUk8mZaZVbwcthyPxCWOGX2MrxXYkwPWoYJa+S422R3GbYX+iCnCuPACGOIJc6aQ
+         6sNzvJ4uQVrs2O56bpfkoWakriMJE1/JTpnwv9iI=
+Received: by mail-ed1-f41.google.com with SMTP id v22so16354749edt.9;
+        Mon, 30 Nov 2020 06:29:31 -0800 (PST)
+X-Gm-Message-State: AOAM531wwTIy7ptpl6u9zUtiIWQAGEep6eM4+YQBzqnOn9Ay4Gi9Jjts
+        EtXujp9yeUPX0KFcMAhDJfE3owJR1ml7xisGTQ==
+X-Google-Smtp-Source: ABdhPJzeZ7cLk6PTmuaNZlIGi5vs6mibhKrj34FUCKMCv4s2hT6KQ3KjwX7ZdxA79u9HJ+DAh9LGDxfdM+WBXDmuXqk=
+X-Received: by 2002:a50:f404:: with SMTP id r4mr6920719edm.62.1606746569792;
+ Mon, 30 Nov 2020 06:29:29 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="Bu8it7iiRSEf40bY"
-Content-Disposition: inline
-In-Reply-To: <1606539559-4277-2-git-send-email-srivasam@codeaurora.org>
-X-Cookie: Space is limited.
-User-Agent: Mutt/1.10.1 (2018-07-13)
+References: <20201017133718.31327-1-kholk11@gmail.com> <20201017133718.31327-2-kholk11@gmail.com>
+ <20201019195807.GA3508546@bogus> <CADQ2G_HZ9nt88vW9MNiC-+Rdjzsu-hSHoqmqLC75vyiG2JKpQQ@mail.gmail.com>
+In-Reply-To: <CADQ2G_HZ9nt88vW9MNiC-+Rdjzsu-hSHoqmqLC75vyiG2JKpQQ@mail.gmail.com>
+From:   Rob Herring <robh@kernel.org>
+Date:   Mon, 30 Nov 2020 07:29:18 -0700
+X-Gmail-Original-Message-ID: <CAL_Jsq+ZsOP1=+N0yu1Dc+2ZpkJic8XSGhTf0H8yRzYfbk1T9g@mail.gmail.com>
+Message-ID: <CAL_Jsq+ZsOP1=+N0yu1Dc+2ZpkJic8XSGhTf0H8yRzYfbk1T9g@mail.gmail.com>
+Subject: Re: [PATCH v4 1/2] dt-bindings: interconnect: Add bindings for
+ Qualcomm SDM660 NoC
+To:     Martin Botka <martin.botka1@gmail.com>
+Cc:     AngeloGioacchino Del Regno <kholk11@gmail.com>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        devicetree <devicetree@vger.kernel.org>, marijns95@gmail.com,
+        Konrad Dybcio <konradybcio@gmail.com>,
+        phone-devel@vger.kernel.org,
+        "open list:THERMAL" <linux-pm@vger.kernel.org>,
+        Georgi Djakov <georgi.djakov@linaro.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Mon, Oct 19, 2020 at 2:45 PM Martin Botka <martin.botka1@gmail.com> wrote:
+>
+> > Documentation/devicetree/bindings/interconnect/qcom,sdm660.example.dts:20:18: fatal error: dt-bindings/clock/qcom,mmcc-sdm660.h: No such file or directory
+> >    20 |         #include <dt-bindings/clock/qcom,mmcc-sdm660.h>
+> >       |                  ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+>
+> This patch depends on my MMCC patch (sent by angelo).
 
---Bu8it7iiRSEf40bY
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Seems this landed in linux-next now and the dependency is not there.
+Revert, drop, or fix the dependency please.
 
-On Sat, Nov 28, 2020 at 10:29:18AM +0530, Srinivasa Rao Mandadapu wrote:
-> This reverts part of commit b1824968221c
-> ("ASoC: qcom: Fix enabling BCLK and LRCLK in LPAIF invalid state")
->=20
-> To identify LPAIF invalid state after device suspend and resume,
-> made I2S and DMA control registers not volatile, which is not necessary.
-> Instead invalid reg state can be handled with regcache APIs.
-> The BCLK ref count is necessary to enable clock only it's in disable stat=
-e.
-
-Part of this commit message says that the problem was making the registers
-non-volatile but both the change and the rest of the commit message say
-that the issue was that the registers were made volatile.  I'm also
-still unclear as to what the issue is either way - how does reading the
-state of the registers from the hardware instead of the cache affect
-things?
-
-Please submit patches using subject lines reflecting the style for the
-subsystem, this makes it easier for people to identify relevant patches.
-Look at what existing commits in the area you're changing are doing and
-make sure your subject lines visually resemble what they're doing.
-There's no need to resubmit to fix this alone.
-
---Bu8it7iiRSEf40bY
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAl/E6ZgACgkQJNaLcl1U
-h9CVJwf/cthAiDDzgCy+8jtekEtWgrAysykABOq/eTIZgtkirE582hD928n9uEGY
-RiAsvBOiEFRnm4nQn9xLuCRw4XEKolqJyKL5cOJiQUQcqXDvuB8nOEejzC0RWRte
-S88D2dEd4vm7X7MjyierwcwmuBHbT9WHKozi0e45bQJXjZCoSaEDw7Sq+h1kiUCy
-z0RKAWIPOFpRl7AmkMu2hjonp/cM8/GiH0C2bYNMS0LN+nGt2+rLer+sX5P+jlev
-gZuWWzTP7RCzaBub+xNVCZK2fmlIX/ePLDiXs0JAGFs0HFI+UMV1L0GVePlxsGgR
-7JxoFBFJ7hKNfy4Dsn5RlwqwawcyfA==
-=ueKi
------END PGP SIGNATURE-----
-
---Bu8it7iiRSEf40bY--
+Rob
