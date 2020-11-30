@@ -2,52 +2,52 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 21DF12C8D9F
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Nov 2020 20:02:39 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 066E62C8DA1
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Nov 2020 20:02:40 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725870AbgK3TCZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 30 Nov 2020 14:02:25 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33858 "EHLO
+        id S1727232AbgK3TCh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 30 Nov 2020 14:02:37 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33874 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2387693AbgK3TCY (ORCPT
+        with ESMTP id S1729797AbgK3TCg (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 30 Nov 2020 14:02:24 -0500
-Received: from mail-ot1-x32d.google.com (mail-ot1-x32d.google.com [IPv6:2607:f8b0:4864:20::32d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 66239C0613D2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 30 Nov 2020 11:01:44 -0800 (PST)
-Received: by mail-ot1-x32d.google.com with SMTP id k3so12334917otp.12
-        for <linux-arm-msm@vger.kernel.org>; Mon, 30 Nov 2020 11:01:44 -0800 (PST)
+        Mon, 30 Nov 2020 14:02:36 -0500
+Received: from mail-oi1-x234.google.com (mail-oi1-x234.google.com [IPv6:2607:f8b0:4864:20::234])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 92796C0617A7
+        for <linux-arm-msm@vger.kernel.org>; Mon, 30 Nov 2020 11:01:50 -0800 (PST)
+Received: by mail-oi1-x234.google.com with SMTP id h3so15324494oie.8
+        for <linux-arm-msm@vger.kernel.org>; Mon, 30 Nov 2020 11:01:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=u81Ska0R+CUYdnKTy+CfOIKLjODnyWA0F8zFjGBm5oI=;
-        b=VxBgtU2jEy5eAB+4/oCVI7S2GlqdZ9S4zFbzph8TyNUMuB9E+9c21h3EV4aaVUGCrz
-         KVLea1EzFvq8n8SrUvgBXUzH0bPrEoMVTWm5i7b9JgolXv6BgzHvYimP8dccfA1K33R8
-         z9py9+9KUeDV9p56ft0kP6qsmipRn/YOztonj6/PTOEfh8JiMvIGw32r1LEBt3jk/OI0
-         be5GdU8ZjXd1exSuukbmLYwSUqgjEQaGlpfoMjNvnq+SELrpr9JdfVwYJ0X3kZDzJFWX
-         zh+au+bWHV/X9CVymPltv1Gu+Bj9sX0zhszS0VXusPSpZt4Yqcd3CbV2ZgvFvwkscvJ9
-         cVgw==
+        bh=kFP3MCLy2EXZUBJtiDcAGWbpBsgwcvmKdFz2JF0dZBo=;
+        b=TFDs0G0dDo8pJvrVvUZgEZ6YWnppxEFXN1bNY3taZwE/f6cs12KRXZP5OM2KSMSQYB
+         kf6uXtYJmWM69CACQCv0+vzpgsKzGrwJBYRWeztj8CETIrCJ7ET7wjIZof+SsggZ0IoE
+         R1sSPqLf2lWSn5QWrPLKDRKInJdIT+3eY1kFQXNcPTmZr0enG8qUKSAiU6RN/n/jGvO+
+         vlrUKTIICxiNhkcZftLAgFPxx8T4uuKaHNwBvU6N+1hp21c5uBzCoJqRh2LnKv3fTgCi
+         aiXu2lppvwXFlHtTU+Br9Rz+bk5d+hRAPqHJNi5VSqlTrJQBe5SFI2Oy2pzYsb6UK5vg
+         iJVA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=u81Ska0R+CUYdnKTy+CfOIKLjODnyWA0F8zFjGBm5oI=;
-        b=MdS2WAOyIzr1v2D4YtJu13v71t5z0uv7oMmSFSOG1sns2xy5i8dbmZOfh61ccAYpZg
-         T2l8CQfpe3Tre0rivuPd+ehjTQeK4mwX/TPVYucEp+jgWS6iUNXgzfsQrwyNurvOouZf
-         LECl7SngGy7NP+HbzZzPNS9iJxjn7kocg7tuAdQb1sk/DYfyIaNcMtzxXwXgaKZyTikn
-         +m4jDGrPH/gXoLjE2nH7JGOl3We4gRM5Ql+70aRdNW9RiZWWxFkq1mH/04Q1FTNA3JYx
-         tr69NN5R0d0wdbi2KDhTEQy6PtLA2Z0yCTJaa2b+9qRdikRWQd/BoFgFwDJzeSdeNcm4
-         wBYQ==
-X-Gm-Message-State: AOAM531d3NdqBwUjsz2FteVaRw667CrPOpGJOEIu30sSWgHc31WkNA3p
-        nFrbDFdkV03TtPNlevbCe50TVQ==
-X-Google-Smtp-Source: ABdhPJxsd97RZ49muWOa9Fs75h7isj49j6gp/9d/SczbZf99DIP0w/Pl38H7q49Mkb6njY4qFIbRRQ==
-X-Received: by 2002:a9d:2967:: with SMTP id d94mr17306137otb.11.1606762903671;
-        Mon, 30 Nov 2020 11:01:43 -0800 (PST)
+        bh=kFP3MCLy2EXZUBJtiDcAGWbpBsgwcvmKdFz2JF0dZBo=;
+        b=bL9M78Gg1Ns3j+vJMgleOXLERzzJ34b2UIZMKxcJeNvXxPpDWEGo/X8BteGq1bAfNV
+         27jUJLUVr63tp2xVndcRIcLWsc/ie6a+gwLiGkJHdyJTvPgBqvK6vKA6eefq0aaKVY1H
+         XKMcEzzaTeMnz8XYV/gP/88TBit9/SDyDcMVnOTiZx3UP+JCYuidZdwcInlmjcKWVQhi
+         x2rxpBfbpXTFH68Ma08DBcbMIKjJC4tYqRWnhnBkVQ2nS6F1x0Qcpe/I5xmdnMW8NDB2
+         rk6hEE4W+X38uP3udf3vYCTbYU4ddEzGAGXTAAO1Xx8K6+zVDdCxHmS3cwXEvJ4csr2A
+         UCeA==
+X-Gm-Message-State: AOAM533ir/tWHpBqwhAM4PVxM2iYdpmMgYxvInPKJv7h15P9AfmTFUxs
+        pOZ+FGwOICBSHAxNj/GC4iZK5w==
+X-Google-Smtp-Source: ABdhPJzBrobmA5HZtxJaMUTaf8v8ARuqGjgOc7Dn7ZiIprGRmFJesvN/bfb+4ePcxWJc1r+u6UsK6A==
+X-Received: by 2002:a05:6808:a87:: with SMTP id q7mr205963oij.81.1606762909698;
+        Mon, 30 Nov 2020 11:01:49 -0800 (PST)
 Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id r4sm9241452otg.46.2020.11.30.11.01.42
+        by smtp.gmail.com with ESMTPSA id p12sm9098717oti.35.2020.11.30.11.01.48
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 30 Nov 2020 11:01:43 -0800 (PST)
+        Mon, 30 Nov 2020 11:01:49 -0800 (PST)
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
 To:     arm@kernel.org, soc@kernel.org
 Cc:     linux-arm-msm@vger.kernel.org,
@@ -55,26 +55,12 @@ Cc:     linux-arm-msm@vger.kernel.org,
         Andy Gross <agross@kernel.org>, Arnd Bergmann <arnd@arndb.de>,
         Olof Johansson <olof@lixom.net>,
         Kevin Hilman <khilman@baylibre.com>,
-        Lee Jones <lee.jones@linaro.org>,
-        Stephan Gerhold <stephan@gerhold.net>,
-        Jun Nie <jun.nie@linaro.org>,
-        Konrad Dybcio <konradybcio@gmail.com>,
-        Lina Iyer <ilina@codeaurora.org>,
-        Maulik Shah <mkshah@codeaurora.org>,
-        Rikard Falkeborn <rikard.falkeborn@gmail.com>,
-        Souradeep Chowdhury <schowdhu@codeaurora.org>,
-        Vinod Koul <vkoul@kernel.org>,
-        Evan Green <evgreen@chromium.org>,
-        "Isaac J . Manjarres" <isaacm@codeaurora.org>,
-        John Stultz <john.stultz@linaro.org>,
-        Roja Rani Yarubandi <rojay@codeaurora.org>,
-        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
-        Tom Rix <trix@redhat.com>,
-        Viresh Kumar <viresh.kumar@linaro.org>,
-        Vladimir Lypak <junak.pub@gmail.com>
-Subject: [GIT PULL] Qualcomm driver updates for v5.11
-Date:   Mon, 30 Nov 2020 13:01:42 -0600
-Message-Id: <20201130190142.345246-1-bjorn.andersson@linaro.org>
+        Iskren Chernev <iskren.chernev@gmail.com>,
+        Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+        Kathiravan T <kathirav@codeaurora.org>
+Subject: [GIT PULL] Qualcomm DT updates for 5.11
+Date:   Mon, 30 Nov 2020 13:01:48 -0600
+Message-Id: <20201130190148.345302-1-bjorn.andersson@linaro.org>
 X-Mailer: git-send-email 2.29.2
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
@@ -82,123 +68,48 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The following changes since commit 80e8eaab5e98fc013fd4afb4aab1fceeb049cbfd:
+The following changes since commit 3650b228f83adda7e5ee532e2b90429c03f7b9ec:
 
-  soc: qcom: geni: Optimize/comment select fifo/dma mode (2020-10-26 10:29:19 -0500)
+  Linux 5.10-rc1 (2020-10-25 15:14:11 -0700)
 
 are available in the Git repository at:
 
-  https://git.kernel.org/pub/scm/linux/kernel/git/qcom/linux.git tags/qcom-drivers-for-5.11
+  https://git.kernel.org/pub/scm/linux/kernel/git/qcom/linux.git tags/qcom-dts-for-5.11
 
-for you to fetch changes up to 9c45662675b38e80fff48397506cf9fd9936b6f3:
+for you to fetch changes up to 74ab8ccfb8f3133acf8b2a2a7bcfba9c1710960d:
 
-  soc: qcom: rpmhpd: Add SDX55 power domains (2020-11-26 11:50:31 -0600)
-
-----------------------------------------------------------------
-Qualcomm driver updates for v5.11
-
-This adds support for the core power domains on MSM8916, MSM8939, SDM660
-and SDX55. It adds SM8150 support to the last-level cache controller
-driver and it makes it possible to build the Command DB and RPMh drivers
-as modules.
-
-It also contains a slew of smaller cleanups, style and bug fixes
-throughout the various drivers.
+  arm64: dts: ipq6018: Add the QPIC peripheral nodes (2020-11-30 10:46:28 -0600)
 
 ----------------------------------------------------------------
-Bjorn Andersson (1):
-      Merge tag '20201013212531.428538-1-dianders@chromium.org' into drivers-for-5.11
+Qualcomm DT updates for 5.11
 
-Evan Green (1):
-      soc: qcom: smp2p: Safely acquire spinlock without IRQs
+This adds support for SD card, WiFi, LED, touchscreeni, touchkey and
+fuel gauge to the Samsung Galaxy S5. Nexus 5 also gains fuel gauge
+support.
 
-Isaac J. Manjarres (1):
-      soc: qcom: llcc: Support chipsets that can write to llcc
+Finally IPQ6016 gains support for the QPIC NAND controller.
 
-John Stultz (1):
-      soc: qcom: rpmh: Allow RPMH driver to be loaded as a module
+----------------------------------------------------------------
+Iskren Chernev (9):
+      ARM: dts: qcom: msm8974-klte: Merge pinctrl nodes
+      ARM: dts: qcom: msm8974-klte: Add support for touchkey
+      ARM: dts: qcom: msm8974-klte: Add support for touchscreen
+      ARM: dts: qcom: msm8974-klte: Add support for led
+      ARM: dts: qcom: msm8974-klte: Add gpio expander chip
+      ARM: dts: qcom: msm8974-klte: Add support for wifi
+      ARM: dts: qcom: msm8974-klte: Add support for SD card
+      ARM: dts: qcom: msm8974-klte: Add fuel gauge
+      ARM: dts: qcom: msm8974-lge-nexus5: Add fuel gauge
 
-Jun Nie (2):
-      dt-bindings: power: rpmpd: Add MSM8939 RPM power domains
-      soc: qcom: rpmpd: Add MSM8939 power-domains
+Jonathan Cameron (1):
+      ARM: dts: qcom-pma8084: Drop incorrect use of io-channel-ranges
 
-Konrad Dybcio (2):
-      dt-bindings: power: rpmpd: Add SDM660 power-domains bindings
-      soc: qcom: rpmpd: Add SDM660 power-domains
+Kathiravan T (1):
+      arm64: dts: ipq6018: Add the QPIC peripheral nodes
 
-Lee Jones (11):
-      soc: qcom: qcom_aoss: Remove set but unused variable 'tlen'
-      soc: qcom: qcom_aoss: Add missing description for 'cooling_devs'
-      soc: qcom: qcom-geni-se: Fix misnamed function parameter 'rx_rfr'
-      soc: qcom: smem: Fix formatting and missing documentation issues
-      soc: qcom: smsm: Fix some kernel-doc formatting and naming problems
-      soc: qcom: wcnss_ctrl: Demote non-conformant struct header and fix function headers
-      soc: qcom: smp2p: Remove unused struct attribute provide another
-      soc: qcom: llcc-qcom: Fix expected kernel-doc formatting
-      soc: qcom: rpmhpd: Provide some missing struct member descriptions
-      soc: qcom: kryo-l2-accessors: Fix misnaming of 'val'
-      soc: qcom: rpmh: Fix possible doc-rot in rpmh_write()'s header
-
-Lina Iyer (2):
-      soc: qcom: cmd-db: allow loading as a module
-      soc: qcom: Kconfig: make RPMH match Command DB setting
-
-Maulik Shah (2):
-      Revert "drivers: qcom: rpmh-rsc: Use rcuidle tracepoints for rpmh"
-      soc: qcom: rpmh: Use __fill_rpmh_msg API during rpmh_write()
-
-Rikard Falkeborn (2):
-      soc: qcom: pdr: Constify static qmi structs
-      samples: qmi: Constify static qmi ops
-
-Roja Rani Yarubandi (1):
-      soc: qcom: geni: Remove "iova" check
-
-Sai Prakash Ranjan (1):
-      soc: qcom: llcc: Move llcc configuration to its own function
-
-Souradeep Chowdhury (2):
-      dt-bindings: msm: Add LLCC for SM8150
-      soc: qcom: llcc: Add configuration data for SM8150
-
-Stephan Gerhold (3):
-      soc: qcom: rpmpd: Rename MAX_8996_RPMPD_STATE to MAX_CORNER_RPMPD_STATE
-      dt-bindings: power: rpmpd: Add MSM8916 RPM power domains
-      soc: qcom: rpmpd: Add MSM8916 power domains
-
-Tom Rix (1):
-      soc: qcom: initialize local variable
-
-Vinod Koul (2):
-      dt-bindings: power: Add rpm power domain bindings for sdx55
-      soc: qcom: rpmhpd: Add SDX55 power domains
-
-Viresh Kumar (1):
-      qcom-geni-se: remove has_opp_table
-
-Vladimir Lypak (1):
-      soc: qcom: socinfo: add soc ids for msm8953 variants
-
- .../devicetree/bindings/arm/msm/qcom,llcc.yaml     |   1 +
- .../devicetree/bindings/power/qcom,rpmpd.yaml      |   4 +
- drivers/soc/qcom/Kconfig                           |   5 +-
- drivers/soc/qcom/cmd-db.c                          |   8 +-
- drivers/soc/qcom/kryo-l2-accessors.c               |   2 +-
- drivers/soc/qcom/llcc-qcom.c                       | 147 +++++++++++++++------
- drivers/soc/qcom/pdr_interface.c                   |   8 +-
- drivers/soc/qcom/qcom-geni-se.c                    |   9 +-
- drivers/soc/qcom/qcom_aoss.c                       |   4 +-
- drivers/soc/qcom/rpmh-rsc.c                        |   7 +-
- drivers/soc/qcom/rpmh.c                            |  14 +-
- drivers/soc/qcom/rpmhpd.c                          |  16 +++
- drivers/soc/qcom/rpmpd.c                           |  85 +++++++++++-
- drivers/soc/qcom/smem.c                            |   3 +-
- drivers/soc/qcom/smp2p.c                           |   6 +-
- drivers/soc/qcom/smsm.c                            |   4 +-
- drivers/soc/qcom/socinfo.c                         |   6 +
- drivers/soc/qcom/wcnss_ctrl.c                      |   8 +-
- include/dt-bindings/power/qcom-rpmpd.h             |  34 +++++
- include/linux/qcom-geni-se.h                       |   2 -
- include/linux/soc/qcom/llcc-qcom.h                 |   6 +
- samples/qmi/qmi_sample_client.c                    |   4 +-
- 22 files changed, 302 insertions(+), 81 deletions(-)
+ .../dts/qcom-msm8974-lge-nexus5-hammerhead.dts     |  25 ++
+ arch/arm/boot/dts/qcom-msm8974-samsung-klte.dts    | 340 ++++++++++++++++++++-
+ arch/arm/boot/dts/qcom-pma8084.dtsi                |   1 -
+ arch/arm64/boot/dts/qcom/ipq6018-cp01-c1.dts       |  16 +
+ arch/arm64/boot/dts/qcom/ipq6018.dtsi              |  41 +++
+ 5 files changed, 413 insertions(+), 10 deletions(-)
