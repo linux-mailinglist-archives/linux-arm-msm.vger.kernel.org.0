@@ -2,181 +2,110 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 114EE2C8C7C
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Nov 2020 19:17:45 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 38EA32C8CAB
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Nov 2020 19:25:13 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388059AbgK3SRR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 30 Nov 2020 13:17:17 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55020 "EHLO
+        id S2388109AbgK3SYU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 30 Nov 2020 13:24:20 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56114 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2388057AbgK3SRR (ORCPT
+        with ESMTP id S2388108AbgK3SYU (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 30 Nov 2020 13:17:17 -0500
-Received: from mail-ed1-x542.google.com (mail-ed1-x542.google.com [IPv6:2a00:1450:4864:20::542])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1661BC0613D3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 30 Nov 2020 10:16:31 -0800 (PST)
-Received: by mail-ed1-x542.google.com with SMTP id c7so9685186edv.6
-        for <linux-arm-msm@vger.kernel.org>; Mon, 30 Nov 2020 10:16:30 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=2AKXanvK88R+UrndJ2+lfJo0jOvZRiWePigHL5MOrpQ=;
-        b=t+oYd2k8L4bXGdr4bOORSo2JgpR5uXWDVrx56F+4FY0EeuamLMDp1YW6JIH5sInuGT
-         rTtQHZ+qSZjUS9YTu5LGYXDH/CwUXJuHgVdcM1yCQto3Ahh9igxg3+ITRIiOgHGpDCJj
-         c59bFtLaWRLYYh2JDbgappg+NEZjyEZGr+/z2fboCh3SXTBDnK6syDMRhDLA8npvxTfS
-         V3oMTCVXoi9kMmsNTD82DGqL12LHuXk0zgHJYWHzPXC9vdYyBpb1Y95Bzz0QCC4YZax1
-         A98oOIB+j1krv9rUn5NtvQXBe9iCccCHcTRWMmQJ+ekRgUtEBsEgOqN+oz2dVRGzJb46
-         R34w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=2AKXanvK88R+UrndJ2+lfJo0jOvZRiWePigHL5MOrpQ=;
-        b=J7rJkyLMW+gxfrBQpJrwDcQRJk6fLDM4aPXN6OeX+EWrm7P9+sNm2YbnJ3LhLsqCXl
-         pGWvxHVyCM5BCLHYfgNDV6MHI7l6PciPSgUyE0JrQNPS4s/fDA7JIc2frWRM+SyUHij5
-         8rejiUrbsbpx5CRjAyBoj+3cK0RvkCGD5gTmzUVCDZ16bctoZUQKGUTkFH9Pn9z4hh16
-         UgQ/gi+8oCOdhMiISnXhH0gS66b30K/tWOyea/3L248BkHocqfcirqJVKIUMW7Ty4iXE
-         Ldb3iXdJrTVz8M/jT2lamNwS2m9DzrSZXcvBBSyGUxmMSNYde98pkTJYxwsICzh0rKFn
-         T33A==
-X-Gm-Message-State: AOAM530xxeLdtBgUu0RxIa/GHGc2gqBJlV1eljXkXAXRlLXp13edEJL9
-        +mwjSHcbtlxaabQuSmSu1BKAMgOI3K57eoS6d+hfBg==
-X-Google-Smtp-Source: ABdhPJyNpcC8uWln79NGtVmSKYKI6we/nKuaJntLarInFL3acHDquTAhyp/H0NYR0Mv1MEzHIFxCvl9ItBXpq6gBDKc=
-X-Received: by 2002:a05:6402:2373:: with SMTP id a19mr23118798eda.212.1606760189619;
- Mon, 30 Nov 2020 10:16:29 -0800 (PST)
+        Mon, 30 Nov 2020 13:24:20 -0500
+Received: from relay07.th.seeweb.it (relay07.th.seeweb.it [IPv6:2001:4b7a:2000:18::168])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DB35DC0613D3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 30 Nov 2020 10:23:24 -0800 (PST)
+Received: from IcarusMOD.eternityproject.eu (unknown [2.237.20.237])
+        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id 2858E40266;
+        Mon, 30 Nov 2020 19:23:21 +0100 (CET)
+Subject: Re: [PATCH 11/13] dt-bindings: cpufreq: Convert qcom-cpufreq-hw to
+ YAML binding
+To:     Rob Herring <robh@kernel.org>
+Cc:     viresh.kumar@linaro.org, rjw@rjwysocki.net,
+        jorge.ramirez-ortiz@linaro.org, robh+dt@kernel.org,
+        konrad.dybcio@somainline.org, linux-pm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, ulf.hansson@linaro.org,
+        nks@flawful.org, lgirdwood@gmail.com, daniel.lezcano@linaro.org,
+        devicetree@vger.kernel.org, bjorn.andersson@linaro.org,
+        phone-devel@vger.kernel.org, broonie@kernel.org,
+        linux-arm-msm@vger.kernel.org, agross@kernel.org,
+        marijn.suijten@somainline.org, martin.botka@somainline.org
+References: <20201126184559.3052375-1-angelogioacchino.delregno@somainline.org>
+ <20201126184559.3052375-12-angelogioacchino.delregno@somainline.org>
+ <20201130172305.GA2661895@robh.at.kernel.org>
+From:   AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>
+Message-ID: <9fc67c3f-4753-fe4f-ca1b-7faeee2abe7d@somainline.org>
+Date:   Mon, 30 Nov 2020 19:23:20 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.5.0
 MIME-Version: 1.0
-References: <1606533966-22821-1-git-send-email-hemantk@codeaurora.org> <1606533966-22821-5-git-send-email-hemantk@codeaurora.org>
-In-Reply-To: <1606533966-22821-5-git-send-email-hemantk@codeaurora.org>
-From:   Loic Poulain <loic.poulain@linaro.org>
-Date:   Mon, 30 Nov 2020 19:22:44 +0100
-Message-ID: <CAMZdPi8z+-qFqgZ7AFJcNAUMbDQtNN5Hz-geMBcp4azrUGm9iA@mail.gmail.com>
-Subject: Re: [PATCH v13 4/4] bus: mhi: Add userspace client interface driver
-To:     Hemant Kumar <hemantk@codeaurora.org>
-Cc:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        open list <linux-kernel@vger.kernel.org>,
-        Jeffrey Hugo <jhugo@codeaurora.org>,
-        Bhaumik Bhatt <bbhatt@codeaurora.org>,
-        Network Development <netdev@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <20201130172305.GA2661895@robh.at.kernel.org>
+Content-Type: text/plain; charset=iso-8859-15; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sat, 28 Nov 2020 at 04:26, Hemant Kumar <hemantk@codeaurora.org> wrote:
->
-> This MHI client driver allows userspace clients to transfer
-> raw data between MHI device and host using standard file operations.
-> Driver instantiates UCI device object which is associated to device
-> file node. UCI device object instantiates UCI channel object when device
-> file node is opened. UCI channel object is used to manage MHI channels
-> by calling MHI core APIs for read and write operations. MHI channels
-> are started as part of device open(). MHI channels remain in start
-> state until last release() is called on UCI device file node. Device
-> file node is created with format
+Il 30/11/20 18:23, Rob Herring ha scritto:
+> On Thu, 26 Nov 2020 19:45:57 +0100, AngeloGioacchino Del Regno wrote:
+>> Convert the qcom-cpufreq-hw documentation to YAML binding as
+>> qcom,cpufreq-hw.yaml.
+>>
+>> Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
+>> ---
+>>   .../bindings/cpufreq/cpufreq-qcom-hw.txt      | 173 +---------------
+>>   .../bindings/cpufreq/qcom,cpufreq-hw.yaml     | 196 ++++++++++++++++++
+>>   2 files changed, 197 insertions(+), 172 deletions(-)
+>>   create mode 100644 Documentation/devicetree/bindings/cpufreq/qcom,cpufreq-hw.yaml
+>>
+> 
+> 
+> My bot found errors running 'make dt_binding_check' on your patch:
+> 
+> yamllint warnings/errors:
+> 
+> dtschema/dtc warnings/errors:
+> /builds/robherring/linux-dt-review/Documentation/devicetree/bindings/cpufreq/qcom,cpufreq-hw.yaml: properties:clock-names: [{'const': 'xo'}, {'const': 'ref'}] is not of type 'object', 'boolean'
+> /builds/robherring/linux-dt-review/Documentation/devicetree/bindings/cpufreq/qcom,cpufreq-hw.yaml: maintainers:0: 'TBD' is not a 'email'
+> /builds/robherring/linux-dt-review/Documentation/devicetree/bindings/cpufreq/qcom,cpufreq-hw.yaml: ignoring, error in schema: properties: clock-names
+> warning: no schema found in file: ./Documentation/devicetree/bindings/cpufreq/qcom,cpufreq-hw.yaml
+> Error: Documentation/devicetree/bindings/cpufreq/qcom,cpufreq-hw.example.dts:150.3-151.1 syntax error
+> FATAL ERROR: Unable to parse input tree
+> make[1]: *** [scripts/Makefile.lib:342: Documentation/devicetree/bindings/cpufreq/qcom,cpufreq-hw.example.dt.yaml] Error 1
+> make[1]: *** Waiting for unfinished jobs....
+> make: *** [Makefile:1364: dt_binding_check] Error 2
+> 
+> 
+> See https://patchwork.ozlabs.org/patch/1406857
+> 
+> The base for the patch is generally the last rc1. Any dependencies
+> should be noted.
+> 
+> If you already ran 'make dt_binding_check' and didn't see the above
+> error(s), then make sure 'yamllint' is installed and dt-schema is up to
+> date:
+> 
+> pip3 install dtschema --upgrade
+> 
+> Please check and re-submit.
+> 
 
-[...]
+Hello!
+All the errors that you've pointed out have been fixed on both the CPR,
+CPR3 and cpufreq-hw, but before pushing a V2 of this patch series...
 
-> +struct uci_chan {
-> +       struct uci_dev *udev;
-> +       wait_queue_head_t ul_wq;
-> +
-> +       /* ul channel lock to synchronize multiple writes */
-> +       struct mutex write_lock;
-> +
-> +       wait_queue_head_t dl_wq;
-> +
-> +       /* dl channel lock to synchronize multiple reads */
-> +       struct mutex read_lock;
-> +
-> +       /*
-> +        * protects pending list in bh context, channel release, read and
-> +        * poll
-> +        */
-> +       spinlock_t dl_pending_lock;
-> +
-> +       struct list_head dl_pending;
-> +       struct uci_buf *cur_buf;
-> +       size_t dl_size;
-> +       struct kref ref_count;
-> +};
+Well, I have a question: the qcom-cpufreq-hw driver has no MAINTAINERS
+entry and there was no maintainer for this driver specified in the old
+txt format binding.
 
-[...]
+What should I write in the "maintainers" field of the YAML binding for
+this driver?
+Should I assign it to the subsystem maintainer?
 
-> + * struct uci_dev - MHI UCI device
-> + * @minor: UCI device node minor number
-> + * @mhi_dev: associated mhi device object
-> + * @uchan: UCI uplink and downlink channel object
-> + * @mtu: max TRE buffer length
-> + * @enabled: Flag to track the state of the UCI device
-> + * @lock: mutex lock to manage uchan object
-> + * @ref_count: uci_dev reference count
-> + */
-> +struct uci_dev {
-> +       unsigned int minor;
-> +       struct mhi_device *mhi_dev;
-> +       struct uci_chan *uchan;
-
-Why a pointer to uci_chan and not just plainly integrating the
-structure here, AFAIU uci_chan describes the channels and is just a
-subpart of uci_dev. That would reduce the number of dynamic
-allocations you manage and the extra kref. do you even need a separate
-structure for this?
-
-[...]
-
-> +static int mhi_uci_dev_start_chan(struct uci_dev *udev)
-> +{
-> +       int ret = 0;
-> +       struct uci_chan *uchan;
-> +
-> +       mutex_lock(&udev->lock);
-> +       if (!udev->uchan || !kref_get_unless_zero(&udev->uchan->ref_count)) {
-
-This test is suspicious,  kref_get_unless_zero should be enough to test, right?
-
-if (kref_get_unless_zero(&udev->ref))
-    goto skip_init;
-
-> +               uchan = kzalloc(sizeof(*uchan), GFP_KERNEL);
-> +               if (!uchan) {
-> +                       ret = -ENOMEM;
-> +                       goto error_chan_start;
-> +               }
-> +
-> +               udev->uchan = uchan;
-> +               uchan->udev = udev;
-> +               init_waitqueue_head(&uchan->ul_wq);
-> +               init_waitqueue_head(&uchan->dl_wq);
-> +               mutex_init(&uchan->write_lock);
-> +               mutex_init(&uchan->read_lock);
-> +               spin_lock_init(&uchan->dl_pending_lock);
-> +               INIT_LIST_HEAD(&uchan->dl_pending);
-> +
-> +               ret = mhi_prepare_for_transfer(udev->mhi_dev);
-> +               if (ret) {
-> +                       dev_err(&udev->mhi_dev->dev, "Error starting transfer channels\n");
-> +                       goto error_chan_cleanup;
-> +               }
-> +
-> +               ret = mhi_queue_inbound(udev);
-> +               if (ret)
-> +                       goto error_chan_cleanup;
-> +
-> +               kref_init(&uchan->ref_count);
-> +       }
-> +
-> +       mutex_unlock(&udev->lock);
-> +
-> +       return 0;
-> +
-> +error_chan_cleanup:
-> +       mhi_uci_dev_chan_release(&uchan->ref_count);
-> +error_chan_start:
-> +       mutex_unlock(&udev->lock);
-> +       return ret;
-> +}
-
-Regards,
-Loic
+Thanks,
+- Angelo
