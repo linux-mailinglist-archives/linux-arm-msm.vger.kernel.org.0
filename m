@@ -2,128 +2,107 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 3FB212C8760
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Nov 2020 16:07:02 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7185F2C877E
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Nov 2020 16:15:03 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726970AbgK3PEN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 30 Nov 2020 10:04:13 -0500
-Received: from bhuna.collabora.co.uk ([46.235.227.227]:56162 "EHLO
-        bhuna.collabora.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725899AbgK3PEN (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 30 Nov 2020 10:04:13 -0500
-Received: from [127.0.0.1] (localhost [127.0.0.1])
-        (Authenticated sender: nicolas)
-        with ESMTPSA id 540D11F450AB
-Message-ID: <67aa7f00ae2ea7d7e59720ce37d32ebd0de8a60a.camel@collabora.com>
-Subject: Re: [PATCH 4/4] venus: venc: Add support for AUD NALU control
-From:   Nicolas Dufresne <nicolas.dufresne@collabora.com>
-To:     Stanimir Varbanov <stanimir.varbanov@linaro.org>,
-        linux-media@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-Cc:     Ezequiel Garcia <ezequiel@collabora.com>,
-        Maheshwar Ajja <majja@codeaurora.org>,
-        Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Date:   Mon, 30 Nov 2020 10:03:21 -0500
-In-Reply-To: <20201130090859.25272-5-stanimir.varbanov@linaro.org>
-References: <20201130090859.25272-1-stanimir.varbanov@linaro.org>
-         <20201130090859.25272-5-stanimir.varbanov@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-User-Agent: Evolution 3.38.1 (3.38.1-1.fc33) 
+        id S1727605AbgK3POf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 30 Nov 2020 10:14:35 -0500
+Received: from m42-4.mailgun.net ([69.72.42.4]:37421 "EHLO m42-4.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727403AbgK3POf (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 30 Nov 2020 10:14:35 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1606749257; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
+ Subject: Sender; bh=Body0gWjoqiio7eBdzyl2WLR+Oz9ZP9reGVUm83l5ks=; b=ojQ4LEiQQkWmWrTKTo8TnMxjcldueyKx8Q6ueI+0rxDVr/RnSBGp8cg1Dzqc/hLl6NRKjsC5
+ 8xH/HOb4zyFwBP/d0uxKdAhaw/UnnmnMP9GIUwBuGlC3WyhcNi+ckucIqp7chg88/ky/icdC
+ 2mQNFrgu2xyRDqq/woCXwDrESbI=
+X-Mailgun-Sending-Ip: 69.72.42.4
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n02.prod.us-east-1.postgun.com with SMTP id
+ 5fc50c15ba50d14f888d33a4 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 30 Nov 2020 15:13:24
+ GMT
+Sender: jhugo=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 23F53C43461; Mon, 30 Nov 2020 15:13:24 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        NICE_REPLY_A,SPF_FAIL,URIBL_BLOCKED autolearn=no autolearn_force=no
+        version=3.4.0
+Received: from [10.226.59.216] (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: jhugo)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 01315C43460;
+        Mon, 30 Nov 2020 15:13:22 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 01315C43460
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=jhugo@codeaurora.org
+Subject: Re: [PATCH v2] bus: mhi: Ensure correct ring update ordering with
+ memory barrier
+To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        Loic Poulain <loic.poulain@linaro.org>
+Cc:     hemantk@codeaurora.org, linux-arm-msm@vger.kernel.org
+References: <1606403201-5656-1-git-send-email-loic.poulain@linaro.org>
+ <20201128060331.GH3077@thinkpad>
+From:   Jeffrey Hugo <jhugo@codeaurora.org>
+Message-ID: <39883c41-f525-4429-ba54-9905619889eb@codeaurora.org>
+Date:   Mon, 30 Nov 2020 08:13:22 -0700
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.4.0
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <20201128060331.GH3077@thinkpad>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Le lundi 30 novembre 2020 à 11:08 +0200, Stanimir Varbanov a écrit :
-> Add support for Access Unit Delimiter control into encoder.
+On 11/27/2020 11:03 PM, Manivannan Sadhasivam wrote:
+> On Thu, Nov 26, 2020 at 04:06:41PM +0100, Loic Poulain wrote:
+>> The ring element data, though being part of coherent memory, still need
+>> to be performed before updating the ring context to point to this new
+>> element. That can be guaranteed with a memory barrier (dma_wmb).
+>>
+>> Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
+>> ---
+>>   v2: fix comment style
+>>
+>>   drivers/bus/mhi/core/main.c | 7 +++++++
+>>   1 file changed, 7 insertions(+)
+>>
+>> diff --git a/drivers/bus/mhi/core/main.c b/drivers/bus/mhi/core/main.c
+>> index 67188ea..ea39df0 100644
+>> --- a/drivers/bus/mhi/core/main.c
+>> +++ b/drivers/bus/mhi/core/main.c
+>> @@ -111,7 +111,14 @@ void mhi_ring_chan_db(struct mhi_controller *mhi_cntrl,
+>>   	dma_addr_t db;
+>>   
+>>   	db = ring->iommu_base + (ring->wp - ring->base);
+>> +
+>> +	/*
+>> +	 * Writes to the new ring element must be visible to the hardware
+>> +	 * before letting h/w know there is new element to fetch.
+>> +	 */
+>> +	dma_wmb();
+>>   	*ring->ctxt_wp = db;
 > 
-> Signed-off-by: Stanimir Varbanov <stanimir.varbanov@linaro.org>
-> ---
->  drivers/media/platform/qcom/venus/core.h       |  1 +
->  drivers/media/platform/qcom/venus/venc.c       | 14 ++++++++++++++
->  drivers/media/platform/qcom/venus/venc_ctrls.c |  8 +++++++-
->  3 files changed, 22 insertions(+), 1 deletion(-)
-> 
-> diff --git a/drivers/media/platform/qcom/venus/core.h
-> b/drivers/media/platform/qcom/venus/core.h
-> index 52df8b3ea438..041d33ad7688 100644
-> --- a/drivers/media/platform/qcom/venus/core.h
-> +++ b/drivers/media/platform/qcom/venus/core.h
-> @@ -244,6 +244,7 @@ struct venc_controls {
->         u32 header_mode;
->         u32 intra_refresh_mode;
->         u32 intra_refresh_mbs;
-> +       bool aud_enable;
->  
->         u32 profile;
->         u32 level;
-> diff --git a/drivers/media/platform/qcom/venus/venc.c
-> b/drivers/media/platform/qcom/venus/venc.c
-> index 71b525099e45..986d33b633db 100644
-> --- a/drivers/media/platform/qcom/venus/venc.c
-> +++ b/drivers/media/platform/qcom/venus/venc.c
-> @@ -696,6 +696,20 @@ static int venc_set_properties(struct venus_inst *inst)
->                         return ret;
->         }
->  
-> +       if (inst->fmt_cap->pixfmt == V4L2_PIX_FMT_H264 ||
-> +           inst->fmt_cap->pixfmt == V4L2_PIX_FMT_HEVC) {
-> +               struct hfi_enable en = {};
-> +
-> +               ptype = HFI_PROPERTY_PARAM_VENC_H264_GENERATE_AUDNAL;
-> +
-> +               if (ctr->aud_enable)
-> +                       en.enable = 1;
-> +
-> +               ret = hfi_session_set_property(inst, ptype, &en);
-> +               if (ret)
-> +                       return ret;
-> +       }
-> +
->         ret = venus_helper_set_profile_level(inst, ctr->profile, ctr->level);
->         if (ret)
->                 return ret;
-> diff --git a/drivers/media/platform/qcom/venus/venc_ctrls.c
-> b/drivers/media/platform/qcom/venus/venc_ctrls.c
-> index 74b4269e2e9c..8d34a5396306 100644
-> --- a/drivers/media/platform/qcom/venus/venc_ctrls.c
-> +++ b/drivers/media/platform/qcom/venus/venc_ctrls.c
-> @@ -202,6 +202,9 @@ static int venc_op_s_ctrl(struct v4l2_ctrl *ctrl)
->                 ctr->intra_refresh_mbs = ctrl->val;
->                 ctr->intra_refresh_mode = HFI_INTRA_REFRESH_RANDOM;
->                 break;
-> +       case V4L2_CID_MPEG_VIDEO_AU_DELIMITER:
-> +               ctr->aud_enable = ctrl->val;
-> +               break;
->         default:
->                 return -EINVAL;
->         }
-> @@ -217,7 +220,7 @@ int venc_ctrl_init(struct venus_inst *inst)
->  {
->         int ret;
->  
-> -       ret = v4l2_ctrl_handler_init(&inst->ctrl_handler, 34);
-> +       ret = v4l2_ctrl_handler_init(&inst->ctrl_handler, 35);
->         if (ret)
->                 return ret;
->  
-> @@ -372,6 +375,9 @@ int venc_ctrl_init(struct venus_inst *inst)
->                           V4L2_CID_MPEG_VIDEO_RANDOM_INTRA_REFRESH_MB, 0,
->                           ((7680 * 4320) >> 8), 1, 0);
->  
-> +       v4l2_ctrl_new_std(&inst->ctrl_handler, &venc_ctrl_ops,
-> +                         V4L2_CID_MPEG_VIDEO_AU_DELIMITER, 0, 1, 1, 0);
-> +
+> As Jeff pointed out, the barrier should come after updating ctxt_wp.
 
-Any rationale not to make this the default ? AUD is optional in H264/HEVC but is
-mandatory when contained into MPEG TS. Not enabling it by default lead to bugs
-where invalid file are being produced. That would be my rationale to always
-enable this, I'd be curious to see what you and others think of this proposal.
+Actually, you potentially need both.  The write to the ring element 
+needs to hit the memory before the content write pointer is updated, 
+since the context write pointer is making the ring element "visible" to 
+the device.  Then the context write pointer needs to hit memory before 
+the doorbell is updated since the doorbell makes the pointer "visible" 
+to the device.
 
->         ret = inst->ctrl_handler.error;
->         if (ret)
->                 goto err;
-
-
+-- 
+Jeffrey Hugo
+Qualcomm Technologies, Inc. is a member of the
+Code Aurora Forum, a Linux Foundation Collaborative Project.
