@@ -2,86 +2,120 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 0D54F2C7C82
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Nov 2020 02:42:00 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id BBC062C7DD9
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Nov 2020 06:37:28 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727721AbgK3Bln (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 29 Nov 2020 20:41:43 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42244 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726520AbgK3Bln (ORCPT
+        id S1725880AbgK3FhM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 30 Nov 2020 00:37:12 -0500
+Received: from alexa-out.qualcomm.com ([129.46.98.28]:31683 "EHLO
+        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725860AbgK3FhM (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 29 Nov 2020 20:41:43 -0500
-Received: from mail-ej1-x644.google.com (mail-ej1-x644.google.com [IPv6:2a00:1450:4864:20::644])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2FAC1C0613CF
-        for <linux-arm-msm@vger.kernel.org>; Sun, 29 Nov 2020 17:41:03 -0800 (PST)
-Received: by mail-ej1-x644.google.com with SMTP id d17so16289240ejy.9
-        for <linux-arm-msm@vger.kernel.org>; Sun, 29 Nov 2020 17:41:03 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=YNYyQoH11Uy49BqvFcvhTDHG+XYaaGyowBqhzVBSUAY=;
-        b=WwNrl0Ybr20BSwcEyIynEsdNTjjydkiaOOK+8xaxlNamiVtWQDFg4dSjd7crFvEsFa
-         0hUWJGsxkcsFjLP18+Kcky7cgJGqLjlr/e1HCFaCSXVnMX3gNDW8vDsvNNbpM8YXCB6P
-         eKBamIGx4Oi7tF70nS13vGryycE4zosApoI4ZLqtutxVBbGt+1t4q5zfjkQrJWlTF86Q
-         e7PbXx5U6mpoMEl1gbMbd0o7wo8juA3U4/yO1goCXLEyaEan2jY+uYjt0tEaMwMSRuwo
-         S8NGrNH+N/A5k8yAKdnmicNWjDMCtR4/HbVPVQzcNmniBbtYNs9AagYYNd9f+F9Pgk1l
-         wQpA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=YNYyQoH11Uy49BqvFcvhTDHG+XYaaGyowBqhzVBSUAY=;
-        b=Cn2mkP4BtoAm3ucw7JhCE8rzDw/zonOkJZRrHZdaAnfVpKq9OGWBaR01bhZFLGMqgQ
-         bAjp6M9MOQz1JRVn8QbJXoqhds4sfanwYa1/8IS7uXQfoHJ4eA84Ac+YX0pwFvXxfJsG
-         3wjWIazo7JIbfRuEoudXNce5bzrkgMKlfE2UUEXUbDpLxt7rlo1M+JWRzxju4W6Py4cK
-         oY6os1OzWOf9PNfhM7qdgQ+XNHcEHzoLNG9aEfNbeRJ1UXNTQ9TT9ZB5lPAWxX7vqqqs
-         GGTmXtaDBSd7J55xpkbIIGbbhZLz3Bs74qYExFpdATYlwoOqjCMKst1mp+lCUROrb9zD
-         K11g==
-X-Gm-Message-State: AOAM530TJsXSEyMOQgmhN9ET+ObKOt3r8n9Sf8okKwB8eSsjiyZDAPTp
-        dG6s5moaUVhjhwsuJKwqO0K2mC5jqjoEW1jEVgstSQ==
-X-Google-Smtp-Source: ABdhPJyI8iq9Qcoh9z+BgQGsOaQVWGtfyNzvOoKL5oqxj8FOxSgc4pj2PZ1+KU9i112A2dmNHWlk9d0rgvij/Qc7bQE=
-X-Received: by 2002:a17:907:3f93:: with SMTP id hr19mr18726449ejc.235.1606700461879;
- Sun, 29 Nov 2020 17:41:01 -0800 (PST)
-MIME-Version: 1.0
-References: <20200930081645.3434-1-jun.nie@linaro.org> <43318c75-cfe2-d219-2ea4-7a130ea5883b@linaro.org>
-In-Reply-To: <43318c75-cfe2-d219-2ea4-7a130ea5883b@linaro.org>
-From:   Jun Nie <jun.nie@linaro.org>
-Date:   Mon, 30 Nov 2020 09:40:50 +0800
-Message-ID: <CABymUCOjh0BEwaZsFO6YzbMskeNnhPCDLAOhzU8Civ_3JM0yrw@mail.gmail.com>
-Subject: Re: [PATCH 0/5] Consolidate RPM interconnect and support to MSM8939
-To:     Georgi Djakov <georgi.djakov@linaro.org>
-Cc:     devicetree@vger.kernel.org,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        agross@kernel.org, linux-pm@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        Rob Herring <robh@kernel.org>, Shawn Guo <shawn.guo@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+        Mon, 30 Nov 2020 00:37:12 -0500
+Received: from ironmsg07-lv.qualcomm.com (HELO ironmsg07-lv.qulacomm.com) ([10.47.202.151])
+  by alexa-out.qualcomm.com with ESMTP; 29 Nov 2020 21:36:31 -0800
+X-QCInternal: smtphost
+Received: from ironmsg02-blr.qualcomm.com ([10.86.208.131])
+  by ironmsg07-lv.qulacomm.com with ESMTP/TLS/AES256-SHA; 29 Nov 2020 21:36:30 -0800
+X-QCInternal: smtphost
+Received: from dikshita-linux.qualcomm.com ([10.204.65.237])
+  by ironmsg02-blr.qualcomm.com with ESMTP; 30 Nov 2020 11:06:16 +0530
+Received: by dikshita-linux.qualcomm.com (Postfix, from userid 347544)
+        id B3AB62128A; Mon, 30 Nov 2020 11:06:15 +0530 (IST)
+From:   Dikshita Agarwal <dikshita@codeaurora.org>
+To:     linux-media@vger.kernel.org, stanimir.varbanov@linaro.org
+Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        vgarodia@codeaurora.org, Dikshita Agarwal <dikshita@codeaurora.org>
+Subject: [PATCH] venus: core: add support to dump FW region
+Date:   Mon, 30 Nov 2020 11:06:12 +0530
+Message-Id: <1606714572-1113-1-git-send-email-dikshita@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Georgi Djakov <georgi.djakov@linaro.org> =E4=BA=8E2020=E5=B9=B411=E6=9C=882=
-6=E6=97=A5=E5=91=A8=E5=9B=9B =E4=B8=8B=E5=8D=888:20=E5=86=99=E9=81=93=EF=BC=
-=9A
->
-> On 9/30/20 11:16, Jun Nie wrote:
-> > This patch set split shared RPM based interconnect operation code and a=
-dd
-> > support to MSM8939 interconnect.
-> >
->
-> Hi Jun,
->
-> Are you planning to refresh this patchset?
+Add support to dump video FW region during FW crash
+using devcoredump helpers.
 
-Yes. Just come back from a long vocation. Thanks for reminder!
+Signed-off-by: Dikshita Agarwal <dikshita@codeaurora.org>
+---
+ drivers/media/platform/qcom/venus/core.c | 47 ++++++++++++++++++++++++++++++++
+ 1 file changed, 47 insertions(+)
 
-Jun
+diff --git a/drivers/media/platform/qcom/venus/core.c b/drivers/media/platform/qcom/venus/core.c
+index 6103aaf..01a0cfe 100644
+--- a/drivers/media/platform/qcom/venus/core.c
++++ b/drivers/media/platform/qcom/venus/core.c
+@@ -7,8 +7,10 @@
+ #include <linux/interconnect.h>
+ #include <linux/ioctl.h>
+ #include <linux/delay.h>
++#include <linux/devcoredump.h>
+ #include <linux/list.h>
+ #include <linux/module.h>
++#include <linux/of_address.h>
+ #include <linux/of_device.h>
+ #include <linux/platform_device.h>
+ #include <linux/slab.h>
+@@ -22,6 +24,48 @@
+ #include "firmware.h"
+ #include "pm_helpers.h"
+ 
++static int subsystem_dump(struct venus_core *core)
++{
++	struct device_node *node;
++	struct device *dev;
++	struct resource r;
++	void *mem_va;
++	size_t mem_size;
++	void *data;
++	int ret;
++
++	dev = core->dev;
++	node = of_parse_phandle(dev->of_node, "memory-region", 0);
++	if (!node)
++		return -EINVAL;
++
++	ret = of_address_to_resource(node, 0, &r);
++	if (ret)
++		goto err_put_node;
++
++	mem_size = resource_size(&r);
++
++	mem_va = memremap(r.start, mem_size, MEMREMAP_WC);
++	if (!mem_va) {
++		ret = -ENOMEM;
++		goto err_put_node;
++	}
++
++	data = vmalloc(mem_size);
++	if (!data) {
++		ret = -EINVAL;
++		goto err_unmap;
++	}
++
++	memcpy(data, mem_va, mem_size);
++
++	dev_coredumpv(dev, data, mem_size, GFP_KERNEL);
++err_unmap:
++	memunmap(mem_va);
++err_put_node:
++	of_node_put(node);
++	return ret;
++}
+ static void venus_event_notify(struct venus_core *core, u32 event)
+ {
+ 	struct venus_inst *inst;
+@@ -67,6 +111,9 @@ static void venus_sys_error_handler(struct work_struct *work)
+ 
+ 	venus_shutdown(core);
+ 
++	dev_warn(core->dev, "dumping FW region!\n");
++	subsystem_dump(core);
++
+ 	pm_runtime_put_sync(core->dev);
+ 
+ 	while (core->pmdomains[0] && pm_runtime_active(core->pmdomains[0]))
+-- 
+2.7.4
 
->
-> Thanks,
-> Georgi
