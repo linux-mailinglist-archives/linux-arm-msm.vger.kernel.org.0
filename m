@@ -2,156 +2,270 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id DD9972C80A5
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Nov 2020 10:11:57 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 646B22C8081
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Nov 2020 10:03:50 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727868AbgK3JKy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 30 Nov 2020 04:10:54 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54280 "EHLO
+        id S1726667AbgK3JDe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 30 Nov 2020 04:03:34 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53112 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727890AbgK3JKx (ORCPT
+        with ESMTP id S1726596AbgK3JDd (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 30 Nov 2020 04:10:53 -0500
-Received: from mail-ej1-x62f.google.com (mail-ej1-x62f.google.com [IPv6:2a00:1450:4864:20::62f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BB386C061A47
-        for <linux-arm-msm@vger.kernel.org>; Mon, 30 Nov 2020 01:09:30 -0800 (PST)
-Received: by mail-ej1-x62f.google.com with SMTP id lt17so20301661ejb.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 30 Nov 2020 01:09:30 -0800 (PST)
+        Mon, 30 Nov 2020 04:03:33 -0500
+Received: from mail-ed1-x543.google.com (mail-ed1-x543.google.com [IPv6:2a00:1450:4864:20::543])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 07B26C0613CF
+        for <linux-arm-msm@vger.kernel.org>; Mon, 30 Nov 2020 01:02:47 -0800 (PST)
+Received: by mail-ed1-x543.google.com with SMTP id k4so14983672edl.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 30 Nov 2020 01:02:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=8QrjaTCkjPvuv3eCz5yZqJhYMQLwskQwM5C2/UPSspg=;
-        b=yvPkWucn4mJgXMlkP1ZbweBgcSxIvQjRbegvcrUQI+tritWaokvLG9R51WM+xK1Nar
-         ELIixBlaBoir/1LU7gYWJVaNm0H/7iEUXytw+gFaxGOqG0c2cv1IwBBZAzJiKQOmVj17
-         i/GmMMwRLOBq9G/OoxbaveAvm12HjC7aOMFtWTCHmoLByP+jsjyoK203Rs/FhfzhfbXO
-         uLxT4UdtVIiaHvL1XNbyv1lst0X0fd4cN96pAZViGalGcxJYk54J/HTMlOMKTmX9P08U
-         9/yWcQddYTlju41dGTSco1VMf3DCyOp1ZiqQgLFrn8H2kPmqvyICXtD6A1Izyi38j/4t
-         VzjQ==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=PABc/eBXJZCyGcSKYNfLd4juTqKxKphbp1a9rL66Ubc=;
+        b=JoZm3gfAwZw3kO4S6mrG2ywQZpq0A3iyNwb8Y7SrhdpkcROCAOH6wZAKkYgWI4clmP
+         SYPaOvAXjWXTB6bqSqr3ch2tAbvUfjaep7zlYB5nNbFD8svRekQLTKeGFg+weKBmAkvO
+         Jr2YIL7tns681yTj9QbTY2cT3Xh/O01TnzQEzUESTrwFmQdpVZQHZIyEpe/Q04+9qH1P
+         qSb3Ye0TRR4CARmy/P7JcS0N5xRbP6fvq2djOAJ/StTBCYyC+ndRK/yaGTuW/mh4AT77
+         FIbhc7XDWB9jF7cE+0j4K3mN0hwGr56fgmhlrnyEIvbedbvAillyKlp+go0WpLUGLHq0
+         oNNQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=8QrjaTCkjPvuv3eCz5yZqJhYMQLwskQwM5C2/UPSspg=;
-        b=o7HPng6QC/anSiinUx5h6GoVaOWHZ5wcwtHFwuVlltvBNr68VxT7MFLvRybyb3+zIn
-         iU9Pnz5q9EFjwOn1ofHQsaBR4xqwwH2V9mCxiHVPpvaRye5lE5IRJIoopftyKzOn1pAb
-         SSLwKgQY3bNQvSUGecO46v3ogkEGYY2O0nlKPoZniBLbflmO1bOf78yUHDsD+bGVc67r
-         qxaZ0c6VtJLeo+pMZUw2vqVu3IW1yIgU7itLJWNcNOrAQxjLhY1AgMcnN2z2Nwhufi0e
-         5Pq25OhK7vH7pPpgWDjg4mu+1r24k/c6IJCCFS4GcA8Vw7An2vpxOXAIRkZqAra7tnN1
-         27wg==
-X-Gm-Message-State: AOAM531J5gP8FWeyvUejh4UU8KUIc9Suxg1d/WRIOxGDW6/yQdPpf4B5
-        Y/HTRozEihGJallgu/xDXBtJMA==
-X-Google-Smtp-Source: ABdhPJzyaMm6dJcz+uPv2ZqV8DI4ArTq6Et2Wrq1S18xXNLzvErEQw43wjmjMQoDVoDWyE3GKDS1EA==
-X-Received: by 2002:a17:906:4982:: with SMTP id p2mr19980724eju.416.1606727369480;
-        Mon, 30 Nov 2020 01:09:29 -0800 (PST)
-Received: from localhost.localdomain (hst-221-92.medicom.bg. [84.238.221.92])
-        by smtp.gmail.com with ESMTPSA id t19sm8239101eje.86.2020.11.30.01.09.28
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 30 Nov 2020 01:09:28 -0800 (PST)
-From:   Stanimir Varbanov <stanimir.varbanov@linaro.org>
-To:     linux-media@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-Cc:     Ezequiel Garcia <ezequiel@collabora.com>,
-        Nicolas Dufresne <nicolas.dufresne@collabora.com>,
-        Maheshwar Ajja <majja@codeaurora.org>,
-        Hans Verkuil <hverkuil-cisco@xs4all.nl>,
-        Stanimir Varbanov <stanimir.varbanov@linaro.org>
-Subject: [PATCH 2/4] venus: venc: Add support for intra-refresh modes
-Date:   Mon, 30 Nov 2020 11:08:57 +0200
-Message-Id: <20201130090859.25272-3-stanimir.varbanov@linaro.org>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20201130090859.25272-1-stanimir.varbanov@linaro.org>
-References: <20201130090859.25272-1-stanimir.varbanov@linaro.org>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=PABc/eBXJZCyGcSKYNfLd4juTqKxKphbp1a9rL66Ubc=;
+        b=QPFR6FF8yC9SKd0QVRj2cQ2ZrBoPg7EF8HB6fIHyTqC9H/5IoYSjHaCbzxsiXn89Wy
+         qqh03JtQX1QveyOD1f7At/8BvfJuaXIOUphSOPwLjTDAUfnVxO+r/wOBO37r6TyF4H0H
+         XJeIzpuS9dicJdmo5EIuz5DvizlnAT2Wkg6sC2LV1JpDlz38Yvz/ZEE20gRiY614QUAC
+         o/oow4qnwov53BcRbRtggr05wM4ULXbYYeu4LZhleb4+7J22XCLCeK2MLOCyb0mdLPBO
+         UsOGhpT77DisyEOliHnPAniVdXWUjTP+AEhui5VXgLQCnQyRC429W53CS8To4IbjwSSc
+         8UwQ==
+X-Gm-Message-State: AOAM532CWZbQymXxarJiRw1qfzOLcHrYR8+99cy2lg/xBvbBGxhODVxR
+        TtRwqmgirR6EaIy6zeEWlN82nHWOg+BpnEOrRky4sw==
+X-Google-Smtp-Source: ABdhPJxPfDJwOgXMVZw4XWy+HZc0E1TEzmTNyilCqEw03AL9IrmbnXqRLPjlU9a9AmzkKwBeVMXPOGJA5vGjoRL2T9w=
+X-Received: by 2002:aa7:d883:: with SMTP id u3mr20537430edq.69.1606726965563;
+ Mon, 30 Nov 2020 01:02:45 -0800 (PST)
+MIME-Version: 1.0
+References: <1606404547-10737-1-git-send-email-loic.poulain@linaro.org>
+ <1606404547-10737-6-git-send-email-loic.poulain@linaro.org> <20201128054941.GD3077@thinkpad>
+In-Reply-To: <20201128054941.GD3077@thinkpad>
+From:   Loic Poulain <loic.poulain@linaro.org>
+Date:   Mon, 30 Nov 2020 10:08:57 +0100
+Message-ID: <CAMZdPi_VE5WBq50WcDfUvS6kc=Y9jyY6S5N82tOwx3TyZ2nwnw@mail.gmail.com>
+Subject: Re: [PATCH v3 5/9] mhi: pci_generic: Add support for reset
+To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc:     Hemant Kumar <hemantk@codeaurora.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Bhaumik Bhatt <bbhatt@codeaurora.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add support for random intra-refresh mode and number of macroblocks.
+Hi Mani, Bhaumik,
 
-Signed-off-by: Stanimir Varbanov <stanimir.varbanov@linaro.org>
----
- drivers/media/platform/qcom/venus/core.h       |  2 ++
- drivers/media/platform/qcom/venus/venc.c       | 12 ++++++++++++
- drivers/media/platform/qcom/venus/venc_ctrls.c | 10 +++++++++-
- 3 files changed, 23 insertions(+), 1 deletion(-)
+On Sat, 28 Nov 2020 at 06:49, Manivannan Sadhasivam
+<manivannan.sadhasivam@linaro.org> wrote:
+>
+> >  {
+> > @@ -298,16 +323,20 @@ static int mhi_pci_probe(struct pci_dev *pdev, const struct pci_device_id *id)
+> >  {
+> >       const struct mhi_pci_dev_info *info = (struct mhi_pci_dev_info *) id->driver_data;
+> >       const struct mhi_controller_config *mhi_cntrl_config;
+> > +     struct mhi_pci_device *mhi_pdev;
+> >       struct mhi_controller *mhi_cntrl;
+> >       int err;
+> >
+> >       dev_dbg(&pdev->dev, "MHI PCI device found: %s\n", info->name);
+> >
+> > -     mhi_cntrl = mhi_alloc_controller();
+> > -     if (!mhi_cntrl)
+> > +     mhi_pdev = devm_kzalloc(&pdev->dev, sizeof(*mhi_pdev), GFP_KERNEL);
+> > +     if (!mhi_pdev)
+> >               return -ENOMEM;
+>
+> Still not agreeing to use the alloc API? I know that it does only one
+> job but the reason for pushing this API is that the MHI stack will
+> misbehave terribly if a non-initialized structure is passed to it. And
+> the only way to ensure is to provide an API and recommend the users to
+> use it.
 
-diff --git a/drivers/media/platform/qcom/venus/core.h b/drivers/media/platform/qcom/venus/core.h
-index 3bc129a4f817..52df8b3ea438 100644
---- a/drivers/media/platform/qcom/venus/core.h
-+++ b/drivers/media/platform/qcom/venus/core.h
-@@ -242,6 +242,8 @@ struct venc_controls {
- 	u32 multi_slice_max_mb;
- 
- 	u32 header_mode;
-+	u32 intra_refresh_mode;
-+	u32 intra_refresh_mbs;
- 
- 	u32 profile;
- 	u32 level;
-diff --git a/drivers/media/platform/qcom/venus/venc.c b/drivers/media/platform/qcom/venus/venc.c
-index 0bf92cc21f3a..71b525099e45 100644
---- a/drivers/media/platform/qcom/venus/venc.c
-+++ b/drivers/media/platform/qcom/venus/venc.c
-@@ -536,6 +536,7 @@ static int venc_set_properties(struct venus_inst *inst)
- 	struct hfi_idr_period idrp;
- 	struct hfi_quantization quant;
- 	struct hfi_quantization_range quant_range;
-+	struct hfi_intra_refresh intra_refresh = {};
- 	u32 ptype, rate_control, bitrate;
- 	int ret;
- 
-@@ -684,6 +685,17 @@ static int venc_set_properties(struct venus_inst *inst)
- 	if (ret)
- 		return ret;
- 
-+	if (inst->fmt_cap->pixfmt == V4L2_PIX_FMT_H264 ||
-+	    inst->fmt_cap->pixfmt == V4L2_PIX_FMT_HEVC) {
-+		ptype = HFI_PROPERTY_PARAM_VENC_INTRA_REFRESH;
-+		intra_refresh.mode = ctr->intra_refresh_mode;
-+		intra_refresh.cir_mbs = ctr->intra_refresh_mbs;
-+
-+		ret = hfi_session_set_property(inst, ptype, &intra_refresh);
-+		if (ret)
-+			return ret;
-+	}
-+
- 	ret = venus_helper_set_profile_level(inst, ctr->profile, ctr->level);
- 	if (ret)
- 		return ret;
-diff --git a/drivers/media/platform/qcom/venus/venc_ctrls.c b/drivers/media/platform/qcom/venus/venc_ctrls.c
-index 0708b3b89d0c..74b4269e2e9c 100644
---- a/drivers/media/platform/qcom/venus/venc_ctrls.c
-+++ b/drivers/media/platform/qcom/venus/venc_ctrls.c
-@@ -198,6 +198,10 @@ static int venc_op_s_ctrl(struct v4l2_ctrl *ctrl)
- 	case V4L2_CID_MPEG_VIDEO_FRAME_SKIP_MODE:
- 		ctr->frame_skip_mode = ctrl->val;
- 		break;
-+	case V4L2_CID_MPEG_VIDEO_RANDOM_INTRA_REFRESH_MB:
-+		ctr->intra_refresh_mbs = ctrl->val;
-+		ctr->intra_refresh_mode = HFI_INTRA_REFRESH_RANDOM;
-+		break;
- 	default:
- 		return -EINVAL;
- 	}
-@@ -213,7 +217,7 @@ int venc_ctrl_init(struct venus_inst *inst)
- {
- 	int ret;
- 
--	ret = v4l2_ctrl_handler_init(&inst->ctrl_handler, 33);
-+	ret = v4l2_ctrl_handler_init(&inst->ctrl_handler, 34);
- 	if (ret)
- 		return ret;
- 
-@@ -364,6 +368,10 @@ int venc_ctrl_init(struct venus_inst *inst)
- 			       (1 << V4L2_MPEG_VIDEO_FRAME_SKIP_MODE_BUF_LIMIT)),
- 			       V4L2_MPEG_VIDEO_FRAME_SKIP_MODE_DISABLED);
- 
-+	v4l2_ctrl_new_std(&inst->ctrl_handler, &venc_ctrl_ops,
-+			  V4L2_CID_MPEG_VIDEO_RANDOM_INTRA_REFRESH_MB, 0,
-+			  ((7680 * 4320) >> 8), 1, 0);
-+
- 	ret = inst->ctrl_handler.error;
- 	if (ret)
- 		goto err;
--- 
-2.17.1
+I think there is a misunderstanding of my will here :-), actually, I'm
+not against using a specific API, but as you see here I'm not
+allocating a mhi_controller structure but a mhi_pci_device structure,
+which in turn includes (or inherit from) mhi_controller struct.
 
+If mhi_alloc_controller() is the only API allowing to
+create+initialize a mhi_controller object, that implies:
+a. Statically allocated mhi_controller is not possible
+b. non-standalone mhi_controller structure is not possible (my case)
+
+If you mandate this and do not allow a. and b. , then yes, I'll use
+mhi_controller_alloc, but that would mean having two nested dynamic
+allocations, one for mhi_pdev and one for mhi_pdev->mhi_cntrl,
+cross-referencing (for finding mhi_pdev from mhi_cntrl since no more
+container_of), and double freeing... that complicates a bit, is
+suboptimal and does not really make sense, since conceptually,
+mhi_pdev and its mhi_cntl member are the same 'object' (exactly like
+mhi_dev and mhi_dev->dev are the same object in MHI core).
+
+I understand we may have to perform some extra initialization and
+cannot just do zeroed allocation for the mhi_controller, but what I
+say is that this initialization should be do-able, regardless you want
+to (also) dynamically allocate the device or not. That why I proposed
+to introduce mhi_initialize_controller() as a solution to keep things
+simple, in the same way as other subsystems: device_initialize,
+snd_device_initialize, nand_controller_init...
+
+Regards,
+Loic
+
+
+>
+> >
+> >       mhi_cntrl_config = info->config;
+> > +     mhi_cntrl = &mhi_pdev->mhi_cntrl;
+> > +
+> > +     mhi_initialize_controller(mhi_cntrl);
+>
+> No, please just stick to alloc API.
+>
+> Thanks,
+> Mani
+>
+> >       mhi_cntrl->cntrl_dev = &pdev->dev;
+> >       mhi_cntrl->iova_start = 0;
+> >       mhi_cntrl->iova_stop = (dma_addr_t)DMA_BIT_MASK(info->dma_data_width);
+> > @@ -322,17 +351,21 @@ static int mhi_pci_probe(struct pci_dev *pdev, const struct pci_device_id *id)
+> >
+> >       err = mhi_pci_claim(mhi_cntrl, info->bar_num, DMA_BIT_MASK(info->dma_data_width));
+> >       if (err)
+> > -             goto err_release;
+> > +             return err;
+> >
+> >       err = mhi_pci_get_irqs(mhi_cntrl, mhi_cntrl_config);
+> >       if (err)
+> > -             goto err_release;
+> > +             return err;
+> > +
+> > +     pci_set_drvdata(pdev, mhi_pdev);
+> >
+> > -     pci_set_drvdata(pdev, mhi_cntrl);
+> > +     /* Have stored pci confspace at hand for restore in sudden PCI error */
+> > +     pci_save_state(pdev);
+> > +     mhi_pdev->pci_state = pci_store_saved_state(pdev);
+> >
+> >       err = mhi_register_controller(mhi_cntrl, mhi_cntrl_config);
+> >       if (err)
+> > -             goto err_release;
+> > +             return err;
+> >
+> >       /* MHI bus does not power up the controller by default */
+> >       err = mhi_prepare_for_power_up(mhi_cntrl);
+> > @@ -347,37 +380,97 @@ static int mhi_pci_probe(struct pci_dev *pdev, const struct pci_device_id *id)
+> >               goto err_unprepare;
+> >       }
+> >
+> > +     set_bit(MHI_PCI_DEV_STARTED, &mhi_pdev->status);
+> > +
+> >       return 0;
+> >
+> >  err_unprepare:
+> >       mhi_unprepare_after_power_down(mhi_cntrl);
+> >  err_unregister:
+> >       mhi_unregister_controller(mhi_cntrl);
+> > -err_release:
+> > -     mhi_free_controller(mhi_cntrl);
+> >
+> >       return err;
+> >  }
+> >
+> >  static void mhi_pci_remove(struct pci_dev *pdev)
+> >  {
+> > -     struct mhi_controller *mhi_cntrl = pci_get_drvdata(pdev);
+> > +     struct mhi_pci_device *mhi_pdev = pci_get_drvdata(pdev);
+> > +     struct mhi_controller *mhi_cntrl = &mhi_pdev->mhi_cntrl;
+> > +
+> > +     if (test_and_clear_bit(MHI_PCI_DEV_STARTED, &mhi_pdev->status)) {
+> > +             mhi_power_down(mhi_cntrl, true);
+> > +             mhi_unprepare_after_power_down(mhi_cntrl);
+> > +     }
+> >
+> > -     mhi_power_down(mhi_cntrl, true);
+> > -     mhi_unprepare_after_power_down(mhi_cntrl);
+> >       mhi_unregister_controller(mhi_cntrl);
+> >
+> >       /* MHI-layer reset could not be enough, always hard-reset the device */
+> >       mhi_pci_reset(mhi_cntrl);
+> > +}
+> > +
+> > +void mhi_pci_reset_prepare(struct pci_dev *pdev)
+> > +{
+> > +     struct mhi_pci_device *mhi_pdev = pci_get_drvdata(pdev);
+> > +     struct mhi_controller *mhi_cntrl = &mhi_pdev->mhi_cntrl;
+> > +
+> > +     dev_info(&pdev->dev, "reset\n");
+> > +
+> > +     /* Clean up MHI state */
+> > +     if (test_and_clear_bit(MHI_PCI_DEV_STARTED, &mhi_pdev->status)) {
+> > +             mhi_power_down(mhi_cntrl, false);
+> > +             mhi_unprepare_after_power_down(mhi_cntrl);
+> > +     }
+> > +
+> > +     /* cause internal device reset */
+> > +     mhi_pci_reset(mhi_cntrl);
+> > +
+> > +     /* Be sure device reset has been executed */
+> > +     msleep(500);
+> > +}
+> > +
+> > +void mhi_pci_reset_done(struct pci_dev *pdev)
+> > +{
+> > +     struct mhi_pci_device *mhi_pdev = pci_get_drvdata(pdev);
+> > +     struct mhi_controller *mhi_cntrl = &mhi_pdev->mhi_cntrl;
+> > +     int err;
+> > +
+> > +     /* Restore initial known working PCI state */
+> > +     pci_load_saved_state(pdev, mhi_pdev->pci_state);
+> > +     pci_restore_state(pdev);
+> > +
+> > +     /* Is device status available ? */
+> > +     if (!mhi_pci_is_alive(mhi_cntrl)) {
+> > +             dev_err(&pdev->dev, "reset failed\n");
+> > +             return;
+> > +     }
+> >
+> > -     mhi_free_controller(mhi_cntrl);
+> > +     err = mhi_prepare_for_power_up(mhi_cntrl);
+> > +     if (err) {
+> > +             dev_err(&pdev->dev, "failed to prepare MHI controller\n");
+> > +             return;
+> > +     }
+> > +
+> > +     err = mhi_sync_power_up(mhi_cntrl);
+> > +     if (err) {
+> > +             dev_err(&pdev->dev, "failed to power up MHI controller\n");
+> > +             mhi_unprepare_after_power_down(mhi_cntrl);
+> > +             return;
+> > +     }
+> > +
+> > +     set_bit(MHI_PCI_DEV_STARTED, &mhi_pdev->status);
+> >  }
+> >
+> > +static const struct pci_error_handlers mhi_pci_err_handler = {
+> > +     .reset_prepare = mhi_pci_reset_prepare,
+> > +     .reset_done = mhi_pci_reset_done,
+> > +};
+> > +
+> >  static struct pci_driver mhi_pci_driver = {
+> >       .name           = "mhi-pci-generic",
+> >       .id_table       = mhi_pci_id_table,
+> >       .probe          = mhi_pci_probe,
+> > -     .remove         = mhi_pci_remove
+> > +     .remove         = mhi_pci_remove,
+> > +     .err_handler    = &mhi_pci_err_handler,
+> >  };
+> >  module_pci_driver(mhi_pci_driver);
+> >
+> > --
+> > 2.7.4
+> >
