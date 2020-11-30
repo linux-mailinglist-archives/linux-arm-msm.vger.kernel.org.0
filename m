@@ -2,95 +2,128 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 5FD1F2C8728
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Nov 2020 15:53:46 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3FB212C8760
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Nov 2020 16:07:02 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726878AbgK3OxA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 30 Nov 2020 09:53:00 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51006 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727151AbgK3OxA (ORCPT
+        id S1726970AbgK3PEN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 30 Nov 2020 10:04:13 -0500
+Received: from bhuna.collabora.co.uk ([46.235.227.227]:56162 "EHLO
+        bhuna.collabora.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725899AbgK3PEN (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 30 Nov 2020 09:53:00 -0500
-Received: from mail-wm1-x342.google.com (mail-wm1-x342.google.com [IPv6:2a00:1450:4864:20::342])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 14F1AC0613D2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 30 Nov 2020 06:52:20 -0800 (PST)
-Received: by mail-wm1-x342.google.com with SMTP id x22so18713647wmc.5
-        for <linux-arm-msm@vger.kernel.org>; Mon, 30 Nov 2020 06:52:20 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=subject:to:cc:references:from:message-id:date:mime-version
-         :in-reply-to:content-language:content-transfer-encoding;
-        bh=xRnSTPJtYHlLo5f9Pcsa1HU4sAtrN1byx2aGSuuHdV8=;
-        b=KN3UUO6NsVuwUQVEDTZ2eiYecoqvNhR/NsquvyGZPENcBLAyo8q/C4dYMO+H+VQ96t
-         5h9oUwxaBfOaLvuQ0L6H5f+d+IFUQEoUu1ofoqdOG/b9fvX7vUCmEyny6PlmOwJSQW3v
-         AuI3AqTN2jX/dBo9wJwQMxb8MU8C63QRPm6wrG05BXMo4no3DMFCJosPhHrn+eKzznQO
-         HI9tXsU0w7Z69+PrGI3zDrz9SK8Co0CXu+NmXIifeWxOWSCVo8lgXrvezUV5WGTw6Y76
-         h80FhNNmb9WkXBX/jH2mGOv9iABOrVq11bdvGVIpU3ZsseaaIAt++1dt/x4ZgoaIFFgE
-         LLwg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=xRnSTPJtYHlLo5f9Pcsa1HU4sAtrN1byx2aGSuuHdV8=;
-        b=CSs17h4WPNeygvxdQoc2YbpeNXvoZpVySijfIzS6hIkqRiywgNUSI0yWOEGdeb3XTZ
-         W3GHn2TXwZcRjXapnWQlokC/IM+Z/BWgOdZ20tNE1t0PeOSiB2iqaRgI54Wg/Te36WR7
-         AKvf2rP3nJOoHngojdwXvgM7CpTxZF6OdxbbxXXJ1y4AnB9gtSK4oTsrsA4WiMFgnFiQ
-         7BG2ePjVVCd0xr04rLqFHyH8+InhJHlQTp2A47vYMYjkroTNX84X1tJMh+Q8YVRMb+q1
-         bB7kK9c+eFESaV9k3nRhfginhEv3+mSPIA5+QXZAZqYoLH6Jr1W659zj/FKbpTBQm+HU
-         bTbw==
-X-Gm-Message-State: AOAM531lZPnsroadML8Lo/R+V7ViE+R/R1h2m4XsVfSRy22Pxntb9FmN
-        h7kDKMx9SGxhyWvhm/Pn0Nn1Lmr/sCF59Q==
-X-Google-Smtp-Source: ABdhPJzh786ywQLuYKfZnHtZFKJOE4q0GObaoeKTiokZ7B8y0EIQtjGY+u9FB3q3p8aiNx3HcptlMg==
-X-Received: by 2002:a1c:a9cc:: with SMTP id s195mr1189482wme.97.1606747938163;
-        Mon, 30 Nov 2020 06:52:18 -0800 (PST)
-Received: from MacBook-Pro.local ([212.45.64.13])
-        by smtp.googlemail.com with ESMTPSA id n189sm1072983wmf.20.2020.11.30.06.52.16
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 30 Nov 2020 06:52:17 -0800 (PST)
-Subject: Re: [PATCH v4 1/2] dt-bindings: interconnect: Add bindings for
- Qualcomm SDM660 NoC
-To:     Rob Herring <robh@kernel.org>,
-        Martin Botka <martin.botka1@gmail.com>
-Cc:     AngeloGioacchino Del Regno <kholk11@gmail.com>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        devicetree <devicetree@vger.kernel.org>, marijns95@gmail.com,
-        Konrad Dybcio <konradybcio@gmail.com>,
-        phone-devel@vger.kernel.org,
-        "open list:THERMAL" <linux-pm@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>
-References: <20201017133718.31327-1-kholk11@gmail.com>
- <20201017133718.31327-2-kholk11@gmail.com> <20201019195807.GA3508546@bogus>
- <CADQ2G_HZ9nt88vW9MNiC-+Rdjzsu-hSHoqmqLC75vyiG2JKpQQ@mail.gmail.com>
- <CAL_Jsq+ZsOP1=+N0yu1Dc+2ZpkJic8XSGhTf0H8yRzYfbk1T9g@mail.gmail.com>
-From:   Georgi Djakov <georgi.djakov@linaro.org>
-Message-ID: <f9096036-b47a-bc0e-af32-041d800b19e1@linaro.org>
-Date:   Mon, 30 Nov 2020 16:52:15 +0200
+        Mon, 30 Nov 2020 10:04:13 -0500
+Received: from [127.0.0.1] (localhost [127.0.0.1])
+        (Authenticated sender: nicolas)
+        with ESMTPSA id 540D11F450AB
+Message-ID: <67aa7f00ae2ea7d7e59720ce37d32ebd0de8a60a.camel@collabora.com>
+Subject: Re: [PATCH 4/4] venus: venc: Add support for AUD NALU control
+From:   Nicolas Dufresne <nicolas.dufresne@collabora.com>
+To:     Stanimir Varbanov <stanimir.varbanov@linaro.org>,
+        linux-media@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+Cc:     Ezequiel Garcia <ezequiel@collabora.com>,
+        Maheshwar Ajja <majja@codeaurora.org>,
+        Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Date:   Mon, 30 Nov 2020 10:03:21 -0500
+In-Reply-To: <20201130090859.25272-5-stanimir.varbanov@linaro.org>
+References: <20201130090859.25272-1-stanimir.varbanov@linaro.org>
+         <20201130090859.25272-5-stanimir.varbanov@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+User-Agent: Evolution 3.38.1 (3.38.1-1.fc33) 
 MIME-Version: 1.0
-In-Reply-To: <CAL_Jsq+ZsOP1=+N0yu1Dc+2ZpkJic8XSGhTf0H8yRzYfbk1T9g@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 30.11.20 16:29, Rob Herring wrote:
-> On Mon, Oct 19, 2020 at 2:45 PM Martin Botka <martin.botka1@gmail.com> wrote:
->>
->>> Documentation/devicetree/bindings/interconnect/qcom,sdm660.example.dts:20:18: fatal error: dt-bindings/clock/qcom,mmcc-sdm660.h: No such file or directory
->>>     20 |         #include <dt-bindings/clock/qcom,mmcc-sdm660.h>
->>>        |                  ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
->>
->> This patch depends on my MMCC patch (sent by angelo).
+Le lundi 30 novembre 2020 à 11:08 +0200, Stanimir Varbanov a écrit :
+> Add support for Access Unit Delimiter control into encoder.
 > 
-> Seems this landed in linux-next now and the dependency is not there.
-> Revert, drop, or fix the dependency please.
+> Signed-off-by: Stanimir Varbanov <stanimir.varbanov@linaro.org>
+> ---
+>  drivers/media/platform/qcom/venus/core.h       |  1 +
+>  drivers/media/platform/qcom/venus/venc.c       | 14 ++++++++++++++
+>  drivers/media/platform/qcom/venus/venc_ctrls.c |  8 +++++++-
+>  3 files changed, 22 insertions(+), 1 deletion(-)
 > 
+> diff --git a/drivers/media/platform/qcom/venus/core.h
+> b/drivers/media/platform/qcom/venus/core.h
+> index 52df8b3ea438..041d33ad7688 100644
+> --- a/drivers/media/platform/qcom/venus/core.h
+> +++ b/drivers/media/platform/qcom/venus/core.h
+> @@ -244,6 +244,7 @@ struct venc_controls {
+>         u32 header_mode;
+>         u32 intra_refresh_mode;
+>         u32 intra_refresh_mbs;
+> +       bool aud_enable;
+>  
+>         u32 profile;
+>         u32 level;
+> diff --git a/drivers/media/platform/qcom/venus/venc.c
+> b/drivers/media/platform/qcom/venus/venc.c
+> index 71b525099e45..986d33b633db 100644
+> --- a/drivers/media/platform/qcom/venus/venc.c
+> +++ b/drivers/media/platform/qcom/venus/venc.c
+> @@ -696,6 +696,20 @@ static int venc_set_properties(struct venus_inst *inst)
+>                         return ret;
+>         }
+>  
+> +       if (inst->fmt_cap->pixfmt == V4L2_PIX_FMT_H264 ||
+> +           inst->fmt_cap->pixfmt == V4L2_PIX_FMT_HEVC) {
+> +               struct hfi_enable en = {};
+> +
+> +               ptype = HFI_PROPERTY_PARAM_VENC_H264_GENERATE_AUDNAL;
+> +
+> +               if (ctr->aud_enable)
+> +                       en.enable = 1;
+> +
+> +               ret = hfi_session_set_property(inst, ptype, &en);
+> +               if (ret)
+> +                       return ret;
+> +       }
+> +
+>         ret = venus_helper_set_profile_level(inst, ctr->profile, ctr->level);
+>         if (ret)
+>                 return ret;
+> diff --git a/drivers/media/platform/qcom/venus/venc_ctrls.c
+> b/drivers/media/platform/qcom/venus/venc_ctrls.c
+> index 74b4269e2e9c..8d34a5396306 100644
+> --- a/drivers/media/platform/qcom/venus/venc_ctrls.c
+> +++ b/drivers/media/platform/qcom/venus/venc_ctrls.c
+> @@ -202,6 +202,9 @@ static int venc_op_s_ctrl(struct v4l2_ctrl *ctrl)
+>                 ctr->intra_refresh_mbs = ctrl->val;
+>                 ctr->intra_refresh_mode = HFI_INTRA_REFRESH_RANDOM;
+>                 break;
+> +       case V4L2_CID_MPEG_VIDEO_AU_DELIMITER:
+> +               ctr->aud_enable = ctrl->val;
+> +               break;
+>         default:
+>                 return -EINVAL;
+>         }
+> @@ -217,7 +220,7 @@ int venc_ctrl_init(struct venus_inst *inst)
+>  {
+>         int ret;
+>  
+> -       ret = v4l2_ctrl_handler_init(&inst->ctrl_handler, 34);
+> +       ret = v4l2_ctrl_handler_init(&inst->ctrl_handler, 35);
+>         if (ret)
+>                 return ret;
+>  
+> @@ -372,6 +375,9 @@ int venc_ctrl_init(struct venus_inst *inst)
+>                           V4L2_CID_MPEG_VIDEO_RANDOM_INTRA_REFRESH_MB, 0,
+>                           ((7680 * 4320) >> 8), 1, 0);
+>  
+> +       v4l2_ctrl_new_std(&inst->ctrl_handler, &venc_ctrl_ops,
+> +                         V4L2_CID_MPEG_VIDEO_AU_DELIMITER, 0, 1, 1, 0);
+> +
 
-Thanks Rob. I'll drop it for now.
+Any rationale not to make this the default ? AUD is optional in H264/HEVC but is
+mandatory when contained into MPEG TS. Not enabling it by default lead to bugs
+where invalid file are being produced. That would be my rationale to always
+enable this, I'd be curious to see what you and others think of this proposal.
 
-BR,
-Georgi
+>         ret = inst->ctrl_handler.error;
+>         if (ret)
+>                 goto err;
+
+
