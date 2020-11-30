@@ -2,156 +2,189 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A117D2C82CA
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Nov 2020 12:03:40 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 5A61E2C82D0
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Nov 2020 12:03:43 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2387446AbgK3LC4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 30 Nov 2020 06:02:56 -0500
-Received: from m42-4.mailgun.net ([69.72.42.4]:26923 "EHLO m42-4.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728903AbgK3LCs (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 30 Nov 2020 06:02:48 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1606734152; h=References: In-Reply-To: Message-Id: Date:
- Subject: Cc: To: From: Sender;
- bh=OLXWNZc5h5uKDqDgsopyTd97mNlNgbDqil9da9/CCf8=; b=g/qKhfeO5Po/ftW4UUUTS9e6WC/8pkW0lISOjoeXUGT5vyK1Rdqw63dCIIHD8h5TICn5Ruji
- FqPWWlw4a5rN80oKYV18CLC28/pKTFgzQftIp3vEWNxCoeH7QktodIUtAsCc5wGwnIbnMRDX
- VrPMHXVDp/z5oCFkzmHOvZ27rqg=
-X-Mailgun-Sending-Ip: 69.72.42.4
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n08.prod.us-west-2.postgun.com with SMTP id
- 5fc4d12a22377520ee814210 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 30 Nov 2020 11:02:02
- GMT
-Sender: kathirav=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 1D495C43466; Mon, 30 Nov 2020 11:02:02 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
-        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
-Received: from kathirav-linux.qualcomm.com (blr-c-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.19.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: kathirav)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 6D996C43460;
-        Mon, 30 Nov 2020 11:01:58 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 6D996C43460
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=kathirav@codeaurora.org
-From:   Kathiravan T <kathirav@codeaurora.org>
-To:     agross@kernel.org, bjorn.andersson@linaro.org, robh+dt@kernel.org,
+        id S2387492AbgK3LDS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 30 Nov 2020 06:03:18 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43420 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728907AbgK3LDN (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 30 Nov 2020 06:03:13 -0500
+Received: from mail-wr1-x442.google.com (mail-wr1-x442.google.com [IPv6:2a00:1450:4864:20::442])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5B8C3C0613D2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 30 Nov 2020 03:02:27 -0800 (PST)
+Received: by mail-wr1-x442.google.com with SMTP id 64so15559184wra.11
+        for <linux-arm-msm@vger.kernel.org>; Mon, 30 Nov 2020 03:02:27 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=GVA/a06QRaXa5UUbFhiaFdgC4CC6v0BqUoUGNrRgXR0=;
+        b=gf1sV6Jdnp0Ez0iXo7JOX6AmaLUkjXUth37Aatk0rPwIpGbjGhb+gdzyAmT1/O/o0b
+         zBdyHSV8RmldNeao1x9pwHOvB++AzS/36BtDFchPtEClUHn8M/rbAyUGOP+oPAWlygju
+         hYK0HA7eH3VZZ02OXGyXdfLc/KKSdGavKVtWIloNPP7f7LMq0p0zMf81Rt1lEYmJ9EgU
+         xKox6cIwIz1J0T39Q9eSJrEsZTJc2dby/2cnnAwtKER8ArLLQOnNQu96zDtQLHnT6g6y
+         /MIiWTxTu56ylJE2LblOlk84zKjWwbgIL45Hf9Csk599Mk9hP72Xj18aLK2eevWpDxtg
+         102A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=GVA/a06QRaXa5UUbFhiaFdgC4CC6v0BqUoUGNrRgXR0=;
+        b=C0TNMJ5EXgDpJEI1c6G1NW0ku4Q6c9QHhwyWOqrGpvlKCRXqhWFxiJGK0P/tuf82yc
+         AJ8uCXFwC5Z4PzYmF4OKHpZcnyyReEjK7YDxf5WArw/zHiF2LGpEmRTCmPWE2Un8tzPC
+         8iDfAPeZtzyRhv244TvSIjD6SvnysK4fojExSslI8EO18G1ZbJUVDXVy328+W0CGTc6p
+         V55Drm5dpTz8hstZPIjGerR7MWN4Rw/UfrJ40Ulg1yoJInjvRzY/EeRAx1mWbAIqXc3t
+         iWvYnJ7KIyFL2aengR/o4wrHdEJYRIhYDNCMcGM8HIqclfvnDtFdE23p4vCY+njnAdkm
+         3OsQ==
+X-Gm-Message-State: AOAM5300Svrq5Ix+j1jEpkmKL6yAKMAZnpqf81nQNhi9uVcsrNP9t5So
+        02446yAGqW3+/7R/1VnQzFliSQ==
+X-Google-Smtp-Source: ABdhPJyOQndQGBHb3QQLR2sTHvtw5ItpuGumvBpM8L9ehU/q/yOgm2ar7QCzRgGCtmpw6POBrZEwyQ==
+X-Received: by 2002:adf:f888:: with SMTP id u8mr27083831wrp.381.1606734145961;
+        Mon, 30 Nov 2020 03:02:25 -0800 (PST)
+Received: from [192.168.86.34] (cpc86377-aztw32-2-0-cust226.18-1.cable.virginm.net. [92.233.226.227])
+        by smtp.googlemail.com with ESMTPSA id f16sm23036731wmh.7.2020.11.30.03.02.24
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 30 Nov 2020 03:02:25 -0800 (PST)
+Subject: Re: [PATCH v4] arm64: dts: qcom: sc7180: Add lpass cpu node for I2S
+ driver
+To:     Srinivasa Rao Mandadapu <srivasam@codeaurora.org>,
+        agross@kernel.org, bjorn.andersson@linaro.org, robh+dt@kernel.org,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Cc:     kathirav@codeaurora.org,
-        Anusha Canchi Ramachandra Rao <anusharao@codeaurora.org>
-Subject: [PATCH V3 1/1] arm64: dts: ipq6018: Add the QPIC peripheral nodes
-Date:   Mon, 30 Nov 2020 16:31:45 +0530
-Message-Id: <1606734105-12414-2-git-send-email-kathirav@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1606734105-12414-1-git-send-email-kathirav@codeaurora.org>
-References: <1606734105-12414-1-git-send-email-kathirav@codeaurora.org>
+        linux-kernel@vger.kernel.org, rohitkr@codeaurora.org
+Cc:     Ajit Pandey <ajitp@codeaurora.org>,
+        Cheng-Yi Chiang <cychiang@chromium.org>,
+        V Sujith Kumar Reddy <vsujithk@codeaurora.org>
+References: <1600450426-14063-1-git-send-email-srivasam@codeaurora.org>
+From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Message-ID: <ad3221fb-4148-6457-05dd-3fece2677b13@linaro.org>
+Date:   Mon, 30 Nov 2020 11:02:23 +0000
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.8.0
+MIME-Version: 1.0
+In-Reply-To: <1600450426-14063-1-git-send-email-srivasam@codeaurora.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add the QPIC BAM and QPIC NAND controller support and
-enable the same in board DTS file.
 
-Co-developed-by: Anusha Canchi Ramachandra Rao <anusharao@codeaurora.org>
-Signed-off-by: Anusha Canchi Ramachandra Rao <anusharao@codeaurora.org>
-Signed-off-by: Kathiravan T <kathirav@codeaurora.org>
----
- arch/arm64/boot/dts/qcom/ipq6018-cp01-c1.dts | 16 ++++++++
- arch/arm64/boot/dts/qcom/ipq6018.dtsi        | 41 ++++++++++++++++++++
- 2 files changed, 57 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/qcom/ipq6018-cp01-c1.dts b/arch/arm64/boot/dts/qcom/ipq6018-cp01-c1.dts
-index e8eaa958c199..99cefe88f6f2 100644
---- a/arch/arm64/boot/dts/qcom/ipq6018-cp01-c1.dts
-+++ b/arch/arm64/boot/dts/qcom/ipq6018-cp01-c1.dts
-@@ -62,3 +62,19 @@ spi_0_pins: spi-0-pins {
- 		bias-pull-down;
- 	};
- };
-+
-+&qpic_bam {
-+	status = "okay";
-+};
-+
-+&qpic_nand {
-+	status = "okay";
-+
-+	nand@0 {
-+		reg = <0>;
-+
-+		nand-ecc-strength = <4>;
-+		nand-ecc-step-size = <512>;
-+		nand-bus-width = <8>;
-+	};
-+};
-diff --git a/arch/arm64/boot/dts/qcom/ipq6018.dtsi b/arch/arm64/boot/dts/qcom/ipq6018.dtsi
-index cdc1e3d60c58..5372ec12cdad 100644
---- a/arch/arm64/boot/dts/qcom/ipq6018.dtsi
-+++ b/arch/arm64/boot/dts/qcom/ipq6018.dtsi
-@@ -231,6 +231,17 @@ serial_3_pins: serial3-pinmux {
- 				drive-strength = <8>;
- 				bias-pull-down;
- 			};
-+
-+			qpic_pins: qpic-pins {
-+				pins = "gpio1", "gpio3", "gpio4",
-+					"gpio5", "gpio6", "gpio7",
-+					"gpio8", "gpio10", "gpio11",
-+					"gpio12", "gpio13", "gpio14",
-+					"gpio15", "gpio17";
-+				function = "qpic_pad";
-+				drive-strength = <8>;
-+				bias-disable;
-+			};
- 		};
- 
- 		gcc: gcc@1800000 {
-@@ -332,6 +343,36 @@ i2c_1: i2c@78b7000 { /* BLSP1 QUP2 */
- 			status = "disabled";
- 		};
- 
-+		qpic_bam: dma-controller@7984000 {
-+			compatible = "qcom,bam-v1.7.0";
-+			reg = <0x0 0x07984000 0x0 0x1a000>;
-+			interrupts = <GIC_SPI 146 IRQ_TYPE_LEVEL_HIGH>;
-+			clocks = <&gcc GCC_QPIC_CLK>,
-+				 <&gcc GCC_QPIC_AHB_CLK>;
-+			clock-names = "iface_clk", "bam_clk";
-+			#dma-cells = <1>;
-+			qcom,ee = <0>;
-+			status = "disabled";
-+		};
-+
-+		qpic_nand: nand@79b0000 {
-+			compatible = "qcom,ipq6018-nand";
-+			reg = <0x0 0x079b0000 0x0 0x10000>;
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			clocks = <&gcc GCC_QPIC_CLK>,
-+				 <&gcc GCC_QPIC_AHB_CLK>;
-+			clock-names = "core", "aon";
-+
-+			dmas = <&qpic_bam 0>,
-+				<&qpic_bam 1>,
-+				<&qpic_bam 2>;
-+			dma-names = "tx", "rx", "cmd";
-+			pinctrl-0 = <&qpic_pins>;
-+			pinctrl-names = "default";
-+			status = "disabled";
-+		};
-+
- 		intc: interrupt-controller@b000000 {
- 			compatible = "qcom,msm-qgic2";
- 			interrupt-controller;
--- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum, hosted by The Linux Foundation
+On 18/09/2020 18:33, Srinivasa Rao Mandadapu wrote:
+> From: Ajit Pandey <ajitp@codeaurora.org>
+> 
+> Add the I2S controller node to sc7180 dtsi.
+> Add pinmux for primary and secondary I2S.
+> 
+> Signed-off-by: Ajit Pandey <ajitp@codeaurora.org>
+> Signed-off-by: Cheng-Yi Chiang <cychiang@chromium.org>
+> Signed-off-by: V Sujith Kumar Reddy <vsujithk@codeaurora.org>
+> Signed-off-by: Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
+> ---
 
+Reviewed-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+
+> Changes since v3:
+>     -- The typo error fix
+> Changes since v2:
+>     -- The plement of lpass_cpu node is changed
+> Changes since v1:
+>     -- Updated I2S pin control nodes  with grouping common pin controls
+>     -- Updated lpass_cpu node with proper control names
+> 
+>   arch/arm64/boot/dts/qcom/sc7180.dtsi | 69 ++++++++++++++++++++++++++++++++++++
+>   1 file changed, 69 insertions(+)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi b/arch/arm64/boot/dts/qcom/sc7180.dtsi
+> index 6678f1e..427a4bf 100644
+> --- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
+> @@ -1742,6 +1742,45 @@
+>   				};
+>   			};
+>   
+> +			sec_mi2s_active: sec-mi2s-active {
+> +				pinmux {
+> +					pins = "gpio49", "gpio50", "gpio51";
+> +					function = "mi2s_1";
+> +				};
+> +
+> +				pinconf {
+> +					pins = "gpio49", "gpio50", "gpio51";
+> +					drive-strength = <8>;
+> +					bias-pull-up;
+> +				};
+> +			};
+> +
+> +			pri_mi2s_active: pri-mi2s-active {
+> +				pinmux {
+> +					pins = "gpio53", "gpio54", "gpio55", "gpio56";
+> +					function = "mi2s_0";
+> +				};
+> +
+> +				pinconf {
+> +					pins = "gpio53", "gpio54", "gpio55", "gpio56";
+> +					drive-strength = <8>;
+> +					bias-pull-up;
+> +				};
+> +			};
+> +
+> +			pri_mi2s_mclk_active: pri-mi2s-mclk-active {
+> +				pinmux {
+> +					pins = "gpio57";
+> +					function = "lpass_ext";
+> +				};
+> +
+> +				pinconf {
+> +					pins = "gpio57";
+> +					drive-strength = <8>;
+> +					bias-pull-up;
+> +				};
+> +			};
+> +
+>   			sdc1_on: sdc1-on {
+>   				pinconf-clk {
+>   					pins = "sdc1_clk";
+> @@ -3389,6 +3428,36 @@
+>   			#power-domain-cells = <1>;
+>   		};
+>   
+> +		lpass_cpu: lpass@62f00000 {
+> +			compatible = "qcom,sc7180-lpass-cpu";
+> +
+> +			reg = <0 0x62f00000 0 0x29000>;
+> +			reg-names = "lpass-lpaif";
+> +
+> +			iommus = <&apps_smmu 0x1020 0>;
+> +
+> +			power-domains = <&lpass_hm LPASS_CORE_HM_GDSCR>;
+> +
+> +			clocks = <&gcc GCC_LPASS_CFG_NOC_SWAY_CLK>,
+> +				 <&lpasscc LPASS_AUDIO_CORE_CORE_CLK>,
+> +				 <&lpasscc LPASS_AUDIO_CORE_EXT_MCLK0_CLK>,
+> +				 <&lpasscc LPASS_AUDIO_CORE_SYSNOC_MPORT_CORE_CLK>,
+> +				 <&lpasscc LPASS_AUDIO_CORE_LPAIF_PRI_IBIT_CLK>,
+> +				 <&lpasscc LPASS_AUDIO_CORE_LPAIF_SEC_IBIT_CLK>;
+> +
+> +			clock-names = "pcnoc-sway-clk", "audio-core",
+> +					"mclk0", "pcnoc-mport-clk",
+> +					"mi2s-bit-clk0", "mi2s-bit-clk1";
+> +
+> +
+> +			#sound-dai-cells = <1>;
+> +			#address-cells = <1>;
+> +			#size-cells = <0>;
+> +
+> +			interrupts = <GIC_SPI 160 IRQ_TYPE_LEVEL_HIGH>;
+> +			interrupt-names = "lpass-irq-lpaif";
+> +		};
+> +
+>   		lpass_hm: clock-controller@63000000 {
+>   			compatible = "qcom,sc7180-lpasshm";
+>   			reg = <0 0x63000000 0 0x28>;
+> 
