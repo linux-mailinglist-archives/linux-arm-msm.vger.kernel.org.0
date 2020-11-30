@@ -2,139 +2,181 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 212A62C8AFD
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Nov 2020 18:30:05 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 114EE2C8C7C
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Nov 2020 19:17:45 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729361AbgK3R26 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 30 Nov 2020 12:28:58 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47330 "EHLO
+        id S2388059AbgK3SRR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 30 Nov 2020 13:17:17 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55020 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727522AbgK3R26 (ORCPT
+        with ESMTP id S2388057AbgK3SRR (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 30 Nov 2020 12:28:58 -0500
-Received: from mail-ej1-x644.google.com (mail-ej1-x644.google.com [IPv6:2a00:1450:4864:20::644])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 43116C0613D4
-        for <linux-arm-msm@vger.kernel.org>; Mon, 30 Nov 2020 09:28:18 -0800 (PST)
-Received: by mail-ej1-x644.google.com with SMTP id 7so23330777ejm.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 30 Nov 2020 09:28:18 -0800 (PST)
+        Mon, 30 Nov 2020 13:17:17 -0500
+Received: from mail-ed1-x542.google.com (mail-ed1-x542.google.com [IPv6:2a00:1450:4864:20::542])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1661BC0613D3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 30 Nov 2020 10:16:31 -0800 (PST)
+Received: by mail-ed1-x542.google.com with SMTP id c7so9685186edv.6
+        for <linux-arm-msm@vger.kernel.org>; Mon, 30 Nov 2020 10:16:30 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
+        d=linaro.org; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=PNJtXeIQ4f3R+VvAdqoPimuHtvgktQwuiAbQpV/HFWE=;
-        b=nnD8YalHuDD166RYZ7ZmNsq84+NXsmwg6T/7MDxEnhlfxG4rh9jUy4xcWgiSfZk27C
-         eB3r3mmzY+kwTQ8VYdoV/nHd6ek0ozoHWXqTEA+IcyUwzIBjoB5wud/vDD3i0SrNd+Wc
-         LuiYSF6xTNWIaexrVY7ur/r7WghcatYI1Wfsk=
+        bh=2AKXanvK88R+UrndJ2+lfJo0jOvZRiWePigHL5MOrpQ=;
+        b=t+oYd2k8L4bXGdr4bOORSo2JgpR5uXWDVrx56F+4FY0EeuamLMDp1YW6JIH5sInuGT
+         rTtQHZ+qSZjUS9YTu5LGYXDH/CwUXJuHgVdcM1yCQto3Ahh9igxg3+ITRIiOgHGpDCJj
+         c59bFtLaWRLYYh2JDbgappg+NEZjyEZGr+/z2fboCh3SXTBDnK6syDMRhDLA8npvxTfS
+         V3oMTCVXoi9kMmsNTD82DGqL12LHuXk0zgHJYWHzPXC9vdYyBpb1Y95Bzz0QCC4YZax1
+         A98oOIB+j1krv9rUn5NtvQXBe9iCccCHcTRWMmQJ+ekRgUtEBsEgOqN+oz2dVRGzJb46
+         R34w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=PNJtXeIQ4f3R+VvAdqoPimuHtvgktQwuiAbQpV/HFWE=;
-        b=IbRXtruyWiSSymnuwOD6SWsvdhkA603LStLgqM1I11km26HXOu717cdBJLukvljKVk
-         FExJMd8rDYNPIZ2SKgYoM2aMgZHP9rqAN1vXB+dYrKC/AH9+P45AyfQZ3vvukqHGJzEP
-         vbqPyVjwK2Qi8jmgmQyhNMbZX6MrBxGd88/lVuZ4OqoZKgy/T59O2NAXksA/7/Ixm3N5
-         hWCG7F8/cT5qrtG62KQkJc9901D8vL7YtDrTAEQM55nib/uZb6DJM4Xlo2xqSco40zcF
-         XzQDZbBJZ4VaV0I/7JWdkE+hTLrtpUdO6WaNR3qEqgAum9Z/FRqQU9vP5tmh1jRbasb/
-         woVQ==
-X-Gm-Message-State: AOAM530LwO/syUzpgRdN5HSoG4rfbobE9fGPGXQ0AfiqZDxmu0Z48LEC
-        vaCSttxuIxed4lQ8dbXpEzNofUfRaa05LQ==
-X-Google-Smtp-Source: ABdhPJysbgrm+IUWUONd0Bx1DuxTuygzb9Y//x51aLOACPt3BMwzwhTj28poPBbusFeSHTXdoVRDcQ==
-X-Received: by 2002:a17:906:4a47:: with SMTP id a7mr7298360ejv.345.1606757296698;
-        Mon, 30 Nov 2020 09:28:16 -0800 (PST)
-Received: from mail-wr1-f50.google.com (mail-wr1-f50.google.com. [209.85.221.50])
-        by smtp.gmail.com with ESMTPSA id y16sm2878079ejf.55.2020.11.30.09.28.16
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 30 Nov 2020 09:28:16 -0800 (PST)
-Received: by mail-wr1-f50.google.com with SMTP id s8so17232693wrw.10
-        for <linux-arm-msm@vger.kernel.org>; Mon, 30 Nov 2020 09:28:16 -0800 (PST)
-X-Received: by 2002:adf:e9cb:: with SMTP id l11mr28993514wrn.320.1606757293076;
- Mon, 30 Nov 2020 09:28:13 -0800 (PST)
+        bh=2AKXanvK88R+UrndJ2+lfJo0jOvZRiWePigHL5MOrpQ=;
+        b=J7rJkyLMW+gxfrBQpJrwDcQRJk6fLDM4aPXN6OeX+EWrm7P9+sNm2YbnJ3LhLsqCXl
+         pGWvxHVyCM5BCLHYfgNDV6MHI7l6PciPSgUyE0JrQNPS4s/fDA7JIc2frWRM+SyUHij5
+         8rejiUrbsbpx5CRjAyBoj+3cK0RvkCGD5gTmzUVCDZ16bctoZUQKGUTkFH9Pn9z4hh16
+         UgQ/gi+8oCOdhMiISnXhH0gS66b30K/tWOyea/3L248BkHocqfcirqJVKIUMW7Ty4iXE
+         Ldb3iXdJrTVz8M/jT2lamNwS2m9DzrSZXcvBBSyGUxmMSNYde98pkTJYxwsICzh0rKFn
+         T33A==
+X-Gm-Message-State: AOAM530xxeLdtBgUu0RxIa/GHGc2gqBJlV1eljXkXAXRlLXp13edEJL9
+        +mwjSHcbtlxaabQuSmSu1BKAMgOI3K57eoS6d+hfBg==
+X-Google-Smtp-Source: ABdhPJyNpcC8uWln79NGtVmSKYKI6we/nKuaJntLarInFL3acHDquTAhyp/H0NYR0Mv1MEzHIFxCvl9ItBXpq6gBDKc=
+X-Received: by 2002:a05:6402:2373:: with SMTP id a19mr23118798eda.212.1606760189619;
+ Mon, 30 Nov 2020 10:16:29 -0800 (PST)
 MIME-Version: 1.0
-References: <20201111143755.24541-1-stanimir.varbanov@linaro.org>
- <CAMfZQbxV4CuZ57kv1Nu=VTdd-eK2opMqnduxGGa+KvptaFL7=A@mail.gmail.com> <d539ab91-da28-e8b3-6b39-d5564eb6f22a@linaro.org>
-In-Reply-To: <d539ab91-da28-e8b3-6b39-d5564eb6f22a@linaro.org>
-From:   Fritz Koenig <frkoenig@chromium.org>
-Date:   Mon, 30 Nov 2020 09:28:00 -0800
-X-Gmail-Original-Message-ID: <CAMfZQbyZcS_fygWKBOr1xxUdfM-KsuTEt=VucPGf-JkM5+YzxA@mail.gmail.com>
-Message-ID: <CAMfZQbyZcS_fygWKBOr1xxUdfM-KsuTEt=VucPGf-JkM5+YzxA@mail.gmail.com>
-Subject: Re: [PATCH v2 0/8] Venus stateful encoder compliance
-To:     Stanimir Varbanov <stanimir.varbanov@linaro.org>
-Cc:     Fritz Koenig <frkoenig@chromium.org>, linux-media@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Vikash Garodia <vgarodia@codeaurora.org>,
-        Alexandre Courbot <acourbot@chromium.org>
+References: <1606533966-22821-1-git-send-email-hemantk@codeaurora.org> <1606533966-22821-5-git-send-email-hemantk@codeaurora.org>
+In-Reply-To: <1606533966-22821-5-git-send-email-hemantk@codeaurora.org>
+From:   Loic Poulain <loic.poulain@linaro.org>
+Date:   Mon, 30 Nov 2020 19:22:44 +0100
+Message-ID: <CAMZdPi8z+-qFqgZ7AFJcNAUMbDQtNN5Hz-geMBcp4azrUGm9iA@mail.gmail.com>
+Subject: Re: [PATCH v13 4/4] bus: mhi: Add userspace client interface driver
+To:     Hemant Kumar <hemantk@codeaurora.org>
+Cc:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        open list <linux-kernel@vger.kernel.org>,
+        Jeffrey Hugo <jhugo@codeaurora.org>,
+        Bhaumik Bhatt <bbhatt@codeaurora.org>,
+        Network Development <netdev@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sun, Nov 29, 2020 at 11:55 PM Stanimir Varbanov
-<stanimir.varbanov@linaro.org> wrote:
+On Sat, 28 Nov 2020 at 04:26, Hemant Kumar <hemantk@codeaurora.org> wrote:
 >
-> Hi Fritz,
->
-> On 11/29/20 9:17 PM, Fritz Koenig wrote:
-> > Since this patchset adds support for V4L2_ENC_CMD_STOP and
-> > VENUS_ENC_STATE_ENCODING it should also add support for
-> > VIDIOC_TRY_ENCODER_CMD so that those commands are discoverable.  I've
->
-> 6/8 is adding it:
->
-> +       .vidioc_try_encoder_cmd = v4l2_m2m_ioctl_try_encoder_cmd,
->
+> This MHI client driver allows userspace clients to transfer
+> raw data between MHI device and host using standard file operations.
+> Driver instantiates UCI device object which is associated to device
+> file node. UCI device object instantiates UCI channel object when device
+> file node is opened. UCI channel object is used to manage MHI channels
+> by calling MHI core APIs for read and write operations. MHI channels
+> are started as part of device open(). MHI channels remain in start
+> state until last release() is called on UCI device file node. Device
+> file node is created with format
 
-Ahh, thanks.  I need to work on my reading comprehension.
+[...]
 
-> > made an attempt at that here:
-> > https://www.spinics.net/lists/linux-media/msg182319.html
-> >
-> > On Wed, Nov 11, 2020 at 6:38 AM Stanimir Varbanov
-> > <stanimir.varbanov@linaro.org> wrote:
-> >>
-> >> Hello,
-> >>
-> >> Here is v2 of the subject patchset.
-> >>
-> >> The patchset starts with few small preparation and fix patches, 1/8 to 5/8.
-> >> 6/8 is redesigned Dikshita's patch and 7/8 add Reset encoder state handling.
-> >> The last 8/8 just delete not needed helper function.
-> >>
-> >> The major changes are:
-> >>  * An attempt to reuse m2m helpers for drain and reset state in 6/8 and 7/8.
-> >>  * Use null encoder buffer to signal end-of-stream in 6/8.
-> >>
-> >> Comments are welcome!
-> >>
-> >> regards,
-> >> Stan
-> >>
-> >> Dikshita Agarwal (1):
-> >>   venus: venc: add handling for VIDIOC_ENCODER_CMD
-> >>
-> >> Stanimir Varbanov (7):
-> >>   venus: hfi: Use correct state in unload resources
-> >>   venus: helpers: Add a new helper for buffer processing
-> >>   venus: hfi_cmds: Allow null buffer address on encoder input
-> >>   venus: helpers: Calculate properly compressed buffer size
-> >>   venus: pm_helpers: Check instance state when calculate instance
-> >>     frequency
-> >>   venus: venc: Handle reset encoder state
-> >>   venus: helpers: Delete unused stop streaming helper
-> >>
-> >>  drivers/media/platform/qcom/venus/helpers.c   |  65 ++---
-> >>  drivers/media/platform/qcom/venus/helpers.h   |   2 +-
-> >>  drivers/media/platform/qcom/venus/hfi.c       |   2 +-
-> >>  drivers/media/platform/qcom/venus/hfi.h       |   1 -
-> >>  drivers/media/platform/qcom/venus/hfi_cmds.c  |   2 +-
-> >>  .../media/platform/qcom/venus/pm_helpers.c    |   3 +
-> >>  drivers/media/platform/qcom/venus/venc.c      | 232 +++++++++++++++---
-> >>  7 files changed, 226 insertions(+), 81 deletions(-)
-> >>
-> >> --
-> >> 2.17.1
-> >>
->
-> --
-> regards,
-> Stan
+> +struct uci_chan {
+> +       struct uci_dev *udev;
+> +       wait_queue_head_t ul_wq;
+> +
+> +       /* ul channel lock to synchronize multiple writes */
+> +       struct mutex write_lock;
+> +
+> +       wait_queue_head_t dl_wq;
+> +
+> +       /* dl channel lock to synchronize multiple reads */
+> +       struct mutex read_lock;
+> +
+> +       /*
+> +        * protects pending list in bh context, channel release, read and
+> +        * poll
+> +        */
+> +       spinlock_t dl_pending_lock;
+> +
+> +       struct list_head dl_pending;
+> +       struct uci_buf *cur_buf;
+> +       size_t dl_size;
+> +       struct kref ref_count;
+> +};
+
+[...]
+
+> + * struct uci_dev - MHI UCI device
+> + * @minor: UCI device node minor number
+> + * @mhi_dev: associated mhi device object
+> + * @uchan: UCI uplink and downlink channel object
+> + * @mtu: max TRE buffer length
+> + * @enabled: Flag to track the state of the UCI device
+> + * @lock: mutex lock to manage uchan object
+> + * @ref_count: uci_dev reference count
+> + */
+> +struct uci_dev {
+> +       unsigned int minor;
+> +       struct mhi_device *mhi_dev;
+> +       struct uci_chan *uchan;
+
+Why a pointer to uci_chan and not just plainly integrating the
+structure here, AFAIU uci_chan describes the channels and is just a
+subpart of uci_dev. That would reduce the number of dynamic
+allocations you manage and the extra kref. do you even need a separate
+structure for this?
+
+[...]
+
+> +static int mhi_uci_dev_start_chan(struct uci_dev *udev)
+> +{
+> +       int ret = 0;
+> +       struct uci_chan *uchan;
+> +
+> +       mutex_lock(&udev->lock);
+> +       if (!udev->uchan || !kref_get_unless_zero(&udev->uchan->ref_count)) {
+
+This test is suspicious,  kref_get_unless_zero should be enough to test, right?
+
+if (kref_get_unless_zero(&udev->ref))
+    goto skip_init;
+
+> +               uchan = kzalloc(sizeof(*uchan), GFP_KERNEL);
+> +               if (!uchan) {
+> +                       ret = -ENOMEM;
+> +                       goto error_chan_start;
+> +               }
+> +
+> +               udev->uchan = uchan;
+> +               uchan->udev = udev;
+> +               init_waitqueue_head(&uchan->ul_wq);
+> +               init_waitqueue_head(&uchan->dl_wq);
+> +               mutex_init(&uchan->write_lock);
+> +               mutex_init(&uchan->read_lock);
+> +               spin_lock_init(&uchan->dl_pending_lock);
+> +               INIT_LIST_HEAD(&uchan->dl_pending);
+> +
+> +               ret = mhi_prepare_for_transfer(udev->mhi_dev);
+> +               if (ret) {
+> +                       dev_err(&udev->mhi_dev->dev, "Error starting transfer channels\n");
+> +                       goto error_chan_cleanup;
+> +               }
+> +
+> +               ret = mhi_queue_inbound(udev);
+> +               if (ret)
+> +                       goto error_chan_cleanup;
+> +
+> +               kref_init(&uchan->ref_count);
+> +       }
+> +
+> +       mutex_unlock(&udev->lock);
+> +
+> +       return 0;
+> +
+> +error_chan_cleanup:
+> +       mhi_uci_dev_chan_release(&uchan->ref_count);
+> +error_chan_start:
+> +       mutex_unlock(&udev->lock);
+> +       return ret;
+> +}
+
+Regards,
+Loic
