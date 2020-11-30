@@ -2,146 +2,91 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 0E28C2C8977
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Nov 2020 17:28:07 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B34912C8980
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Nov 2020 17:29:46 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728827AbgK3Q1P (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 30 Nov 2020 11:27:15 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37724 "EHLO
+        id S1728615AbgK3Q3R (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 30 Nov 2020 11:29:17 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38036 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728813AbgK3Q1O (ORCPT
+        with ESMTP id S1726995AbgK3Q3Q (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 30 Nov 2020 11:27:14 -0500
+        Mon, 30 Nov 2020 11:29:16 -0500
 Received: from mail-oi1-x243.google.com (mail-oi1-x243.google.com [IPv6:2607:f8b0:4864:20::243])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9B0FBC0613D2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 30 Nov 2020 08:26:34 -0800 (PST)
-Received: by mail-oi1-x243.google.com with SMTP id y74so14735391oia.11
-        for <linux-arm-msm@vger.kernel.org>; Mon, 30 Nov 2020 08:26:34 -0800 (PST)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B9D52C0613CF
+        for <linux-arm-msm@vger.kernel.org>; Mon, 30 Nov 2020 08:28:36 -0800 (PST)
+Received: by mail-oi1-x243.google.com with SMTP id s18so14796150oih.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 30 Nov 2020 08:28:36 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=kali.org; s=google;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding:content-language;
-        bh=F3m5K07V7x+E6f1xv0bjhonSW/caxdpgnGkGkW9b17E=;
-        b=HEpCq6mSJ3mx75Dyowg0APr/0vUer2HMBlpDXN++WEFjEUdN3Lz93+Usi89fYoxZYh
-         Lqbz3I6a+3be8GjWwmfBEPApIts95KtG+mGEz9VfibdGxVl+SWfW0xkMCCvJKr/W83mo
-         VYHuuwOX7pqEXHu0Mk27luH7nae8RBYwvnSmISW46O7toWLTPL/uclo5ntdlyLNRV48P
-         8a3EFNaLEYCMokVrBnEUQ9xmweYWad9LfXJizo/vZFGNQGbac36WPF40vLozwD5bRKsh
-         FdZRKHOEfKFjUrRr8Z7haphQLpyC9KProEMvthcMLxGy7mrcdb5lKEnzgaRD6v6AwXUy
-         wkhQ==
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=F0lbgp5okuFqa4v6AVBwCvjd204XDmam+ZlFn0h16Po=;
+        b=yCdb+pxB79NwwSGe3bqjrEfTaIMl+S7UFAYclT70TXMXj1tPmWJLnr2QgsOZl5sBPH
+         asZ38Yk50c6ZXYerptgEtyWFMFwh/e5qrIVnmlj4gL5X4SErYo8vjzT2QMziXku522Nl
+         7ipU6KpcRIfiI1UwZ8l4lg8mo8dPWQNMfQjm7ohJkHQCDlpF6jmwy1DPbhKqlR6tR0+Q
+         muWjYL30bWMu5IWmEAtEyWS5onvbiNSSeUiifU9qh91FKdnpzzwsZxnshlpp9G/TxQML
+         WgL7MWL7wmcjAZE8duTdI9Bdg+bVrMF2e7s657X82iHThGng81H1aAg4fVpS+bV20DhX
+         5X8w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding
-         :content-language;
-        bh=F3m5K07V7x+E6f1xv0bjhonSW/caxdpgnGkGkW9b17E=;
-        b=G0ONC92rg4IIP7UqvKNQINuw+IU26Q5BBL4PQKnL8DEKVnFd81TUffttVYFSbEWeoR
-         D1impGoID0I/O5eCjmDv0h4S1z66iNYSbJRmiT0D35u5lyTQ/2B6A3QyW2kkcECIwTj6
-         FJJaVn3ljUEQY/zd9WsHa8MCBjmxRQMTN5iJykvJI0RLCcS0eHQYn+ACjPiK4g4k48Sd
-         BZ6vDOfyQC7UmaFQm54sDYcHsy/nO4o1cUqjDkTsMrPoMXYylCU2fP+App+vXRh9FyWS
-         /ADTntZ5IXaxClxJPrk/UfLWmpm5Mzyo2y93sAvQquylRNRkli7FLt0suMbRDkc+0Ptb
-         q/5Q==
-X-Gm-Message-State: AOAM531f2A+hSJ5SY9iA4DrNMB0lTcVySmH9+3WYEx5UnOmfSOih/qjh
-        nI0sL7dFKVYrv/n/sc8YCrFzUg==
-X-Google-Smtp-Source: ABdhPJxPSZTF380ca194SwOsiCnSZzNZOgv1w0h1Evaq9a8BGsa3rk5/2aEqNLzVG1e3ZvHprG+kjA==
-X-Received: by 2002:aca:d706:: with SMTP id o6mr15162748oig.28.1606753593951;
-        Mon, 30 Nov 2020 08:26:33 -0800 (PST)
-Received: from Steevs-MBP.hackershack.net (cpe-173-175-113-3.satx.res.rr.com. [173.175.113.3])
-        by smtp.gmail.com with ESMTPSA id i1sm9854541ool.43.2020.11.30.08.26.32
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 30 Nov 2020 08:26:33 -0800 (PST)
-Subject: Re: [PATCH v4 2/2] ASoC: qcom: Add support for playback recover after
- resume
-To:     Srinivasa Rao Mandadapu <srivasam@codeaurora.org>,
-        agross@kernel.org, bjorn.andersson@linaro.org, lgirdwood@gmail.com,
-        broonie@kernel.org, robh+dt@kernel.org, plai@codeaurora.org,
-        bgoswami@codeaurora.org, perex@perex.cz, tiwai@suse.com,
-        srinivas.kandagatla@linaro.org, rohitkr@codeaurora.org,
-        linux-arm-msm@vger.kernel.org, alsa-devel@alsa-project.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Cc:     V Sujith Kumar Reddy <vsujithk@codeaurora.org>
-References: <1606539559-4277-1-git-send-email-srivasam@codeaurora.org>
- <1606539559-4277-3-git-send-email-srivasam@codeaurora.org>
-From:   Steev Klimaszewski <steev@kali.org>
-Message-ID: <938cb2c1-daed-e322-ca8a-06b54ebb35ff@kali.org>
-Date:   Mon, 30 Nov 2020 10:26:31 -0600
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.16; rv:78.0)
- Gecko/20100101 Thunderbird/78.4.3
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=F0lbgp5okuFqa4v6AVBwCvjd204XDmam+ZlFn0h16Po=;
+        b=KSqXgu+xZoiP+ZeHfROv+NeaUFmUfBl2PvsqF2DKCE9u72EtYxCr7+pMsqstXjHwR9
+         J36FSdEPoMV5qfRMkstP9Asu42hsQKkz7SwubwjauELHhQaoSJAwXZ/ifAtVJIuYJh43
+         q5EMUu5dBuflC8Ikyzr+RMRPUIGkTcZEH+bu+E32GkbZ4GYT6OUu9JXuihWkECbnFsep
+         YjZAN4TgfsOI1a/q3ka5k58SDSK/mep60qXrFRC+DlQCYxFCF2Sch/NDIhsYYP5ZQ+5Z
+         fYP0Zx5U8r2Mh/l1ffc+NOmLLyCL4XK9quLm3FKwm3V8cNo9yiYwUDjBONhgx+FB0jBG
+         w/oQ==
+X-Gm-Message-State: AOAM533rY8F44o8vOxoYi5hw5/KwhF5vdoz6vE8yLJ9jkUrbyQ3Y/lxj
+        X07F7bWNioL2hGsvvHVGkLAbLXzm34DdMw==
+X-Google-Smtp-Source: ABdhPJxSw9sP92TsSBqYlqaxDA1j+iOHEwsVmi/Z0qzRx3/1e5RDG541GqwZ4nIZAPUoZF1j6Bkv0A==
+X-Received: by 2002:aca:72d3:: with SMTP id p202mr15194163oic.162.1606753716064;
+        Mon, 30 Nov 2020 08:28:36 -0800 (PST)
+Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
+        by smtp.gmail.com with ESMTPSA id e19sm1135678oou.42.2020.11.30.08.28.35
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 30 Nov 2020 08:28:35 -0800 (PST)
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Catalin Marinas <catalin.marinas@arm.com>,
+        Will Deacon <will@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Steev Klimaszewski <steev@kali.org>
+Cc:     Shawn Guo <shawnguo@kernel.org>, Vinod Koul <vkoul@kernel.org>,
+        Olof Johansson <olof@lixom.net>,
+        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+Subject: [PATCH] arm64: defconfig: Enable HID multitouch
+Date:   Mon, 30 Nov 2020 10:28:34 -0600
+Message-Id: <20201130162834.310282-1-bjorn.andersson@linaro.org>
+X-Mailer: git-send-email 2.29.2
 MIME-Version: 1.0
-In-Reply-To: <1606539559-4277-3-git-send-email-srivasam@codeaurora.org>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+The Lenovo Yoga C630 relies on HID multitouch support for proper
+touchpad operation, so enable this.
 
-On 11/27/20 10:59 PM, Srinivasa Rao Mandadapu wrote:
-> To support playback continuation after hard suspend(bypass powerd)
-> and resume add component driver ops and do regcache sync.
->
-> Signed-off-by: V Sujith Kumar Reddy <vsujithk@codeaurora.org>
-> Signed-off-by: Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
-> ---
->  sound/soc/qcom/lpass-platform.c | 35 +++++++++++++++++++++++++++++++++++
->  1 file changed, 35 insertions(+)
->
-> diff --git a/sound/soc/qcom/lpass-platform.c b/sound/soc/qcom/lpass-platform.c
-> index 0e71899..12764a8 100644
-> --- a/sound/soc/qcom/lpass-platform.c
-> +++ b/sound/soc/qcom/lpass-platform.c
-> @@ -827,6 +827,39 @@ static void lpass_platform_pcm_free(struct snd_soc_component *component,
->  	}
->  }
->  
-> +static int lpass_platform_pcmops_suspend(struct snd_soc_component *component)
-> +{
-> +	struct lpass_data *drvdata = snd_soc_component_get_drvdata(component);
-> +	struct regmap *map;
-> +	unsigned int dai_id = component->id;
-> +
-> +	if (dai_id == LPASS_DP_RX)
-> +		map = drvdata->hdmiif_map;
-> +	else
-> +		map = drvdata->lpaif_map;
-> +
-> +	regcache_cache_only(map, true);
-> +	regcache_mark_dirty(map);
-> +
-> +	return 0;
-> +}
-> +
-> +static int lpass_platform_pcmops_resume(struct snd_soc_component *component)
-> +{
-> +	struct lpass_data *drvdata = snd_soc_component_get_drvdata(component);
-> +	struct regmap *map;
-> +	unsigned int dai_id = component->id;
-> +
-> +	if (dai_id == LPASS_DP_RX)
-> +		map = drvdata->hdmiif_map;
-> +	else
-> +		map = drvdata->lpaif_map;
-> +
-> +	regcache_cache_only(map, false);
-> +	return regcache_sync(map);
-> +}
-> +
-> +
->  static const struct snd_soc_component_driver lpass_component_driver = {
->  	.name		= DRV_NAME,
->  	.open		= lpass_platform_pcmops_open,
-> @@ -839,6 +872,8 @@ static const struct snd_soc_component_driver lpass_component_driver = {
->  	.mmap		= lpass_platform_pcmops_mmap,
->  	.pcm_construct	= lpass_platform_pcm_new,
->  	.pcm_destruct	= lpass_platform_pcm_free,
-> +	.suspend		= lpass_platform_pcmops_suspend,
-> +	.resume			= lpass_platform_pcmops_resume,
->  
->  };
->  
+Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+---
+ arch/arm64/configs/defconfig | 1 +
+ 1 file changed, 1 insertion(+)
 
-Tested this series on a Lenovo Yoga C630
-
-Tested-by: Steev Klimaszewski <steev@kali.org>
-
+diff --git a/arch/arm64/configs/defconfig b/arch/arm64/configs/defconfig
+index 8e3ed05b655a..f4d0b3a61e41 100644
+--- a/arch/arm64/configs/defconfig
++++ b/arch/arm64/configs/defconfig
+@@ -737,6 +737,7 @@ CONFIG_SND_SOC_WM8904=m
+ CONFIG_SND_SOC_WSA881X=m
+ CONFIG_SND_SIMPLE_CARD=m
+ CONFIG_SND_AUDIO_GRAPH_CARD=m
++CONFIG_HID_MULTITOUCH=m
+ CONFIG_I2C_HID=m
+ CONFIG_USB_CONN_GPIO=m
+ CONFIG_USB=y
+-- 
+2.29.2
 
