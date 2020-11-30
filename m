@@ -2,69 +2,72 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 866D42C82D6
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Nov 2020 12:04:45 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7046C2C82E7
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Nov 2020 12:11:10 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728978AbgK3LDy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 30 Nov 2020 06:03:54 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43536 "EHLO
+        id S1728531AbgK3LKf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 30 Nov 2020 06:10:35 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44734 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729014AbgK3LDy (ORCPT
+        with ESMTP id S1727656AbgK3LKf (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 30 Nov 2020 06:03:54 -0500
-Received: from mail-wr1-x442.google.com (mail-wr1-x442.google.com [IPv6:2a00:1450:4864:20::442])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4C79DC061A47
-        for <linux-arm-msm@vger.kernel.org>; Mon, 30 Nov 2020 03:02:44 -0800 (PST)
-Received: by mail-wr1-x442.google.com with SMTP id t4so15529027wrr.12
-        for <linux-arm-msm@vger.kernel.org>; Mon, 30 Nov 2020 03:02:44 -0800 (PST)
+        Mon, 30 Nov 2020 06:10:35 -0500
+Received: from mail-wm1-x344.google.com (mail-wm1-x344.google.com [IPv6:2a00:1450:4864:20::344])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1B001C0613D2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 30 Nov 2020 03:09:55 -0800 (PST)
+Received: by mail-wm1-x344.google.com with SMTP id k10so11657377wmi.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 30 Nov 2020 03:09:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=subject:to:cc:references:from:message-id:date:user-agent
          :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=8uQwF7bNbUvnTUbpsi6bUmw7b/9C+d+knKBrFDwWR54=;
-        b=aNsH/ks54Sn1PO+IHFwM8TTkfbEo8PnmZ+cqRSPByDtawAkF8K/9L/61+5z8MdZDCO
-         S2xTZXPOoyMZGeeuHQPcHCCyedoh5/FiiXsTQAw+FS/ZopYE6XYwfsRv4KlE8/Nxwumx
-         HZeB7HzOMNHtp+np0frgU40UGa1MsA6X4dbNCMn0sJxrZUpA5eepv4u0/1toeMl615nA
-         tkRcP0ic+4/Zi5v01bxzTePF/Wy28bJjUOFiY4hWahaEVyGZ59bxi86Zi488f7K8CKZr
-         eh3oc/L0wa95Gc4ZbBsayIV6AKs8Oa0hHTcnM0jwc5NuUKDVz/iPEouAGRxnAmREbhJQ
-         QLjA==
+        bh=og3JaCFKA1hxe7Er/aULg3U2LUsICgsDGCZfViXEnss=;
+        b=aFUJMrQqeG5iB9VwHdntb4vtkcGLRzJBFixJyb8WAuQ/TlJ2e2cypFJkIBARBnQw4j
+         ekg3X58hskXvhpwXY7gvmm7Ss21BowKL4WAxZ+gxShspWpZ5v6kk+AGF4OOL7vx+vpiv
+         Wd3frz3wCKf+GnU6JSWTxrl/vsckKrH4l7Jb6t2E70VF2G1KL658EwfVcaRLusuUyvJU
+         wOBo6l00x0Mk2EHjFl5AnNO9DtWV2L62fQ33vlhiWVvsZ7W7cxgxhjwR9pm4vWkuursA
+         WYDvxx/xfK9GsyMy3uX5SbUIdrCUkVJepUhRzR/4Y+Stz/W5rox9xDSMIuFjb8bS0Zk9
+         QGYg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:subject:to:cc:references:from:message-id:date
          :user-agent:mime-version:in-reply-to:content-language
          :content-transfer-encoding;
-        bh=8uQwF7bNbUvnTUbpsi6bUmw7b/9C+d+knKBrFDwWR54=;
-        b=DUJbvUXaCR3L+UrtvYSsERlyFflob9sGnxDUMen6D1GMdXZVLxk6+RFxafDdTsitq0
-         YeLnpmVsxiuGrqXOmwkyQv3ps6vzRlClQsUNPXRhlsw6RJQCGcQ5w9DndfUqKz9VEqrU
-         KJMiC+68ufdPz8urglKgx0WD2JhxA37DiVwsX5v5H/NZjeB5BFdy7MCuMwmzyAiWI2Ip
-         bo1Z/1gGaDBaqrz3Lcd6AWOrF9k1ul89TeMXP+bv9OKHb/73fg05JdKO+XEWklplHCjz
-         GLeK2PZpDemk0p09GSfV8s//yPGUuw9yhBLzGxrhn9I8hJpFJH9ddbfs1P85VRgehyne
-         Mdmw==
-X-Gm-Message-State: AOAM531xxKzgZWAUz/wtyj+Qeuf6JaVIPoIlcokXb0WYdKNPRi7rLTkg
-        IcQsBFTWdi1iVsIy9y+3JnTHkw==
-X-Google-Smtp-Source: ABdhPJxDwE0sPTaQTg1EIUlldlISZip+Srnq2ICjF3uN6UgGz2N24+63xoZEKNrPafL2Qq44CJkfIg==
-X-Received: by 2002:adf:f3d1:: with SMTP id g17mr27827306wrp.201.1606734163034;
-        Mon, 30 Nov 2020 03:02:43 -0800 (PST)
+        bh=og3JaCFKA1hxe7Er/aULg3U2LUsICgsDGCZfViXEnss=;
+        b=HzNWpCMvaY37/TXIV+ep+bIZpwWnwjWn92+Yf+tIkVzowSftRzOluecR8egLluAfCM
+         K4GqFz1G4yUqoxHQh1LLxSiyU6gFkSQ77rp9z33OC2UL5wxF+qNH2I9ccyUKNQdSeNpO
+         mRIq4YX2AuXoCLWtox8t3zVMuzVoP5T1jSCmbG3p+fzTbu2TOqwkVDtTSbuLxk+9XUuI
+         hDWt9NtbPbrCjpP8OYKZpa1LxNE7YtTa3kXNKjvQWgnKhKnAug8IgbzhTn2nGtZ7AGVV
+         GsZDSJnkHupRhnbJb855bT6E8fZO5xE9QFHXUNz6F5OwvlB9pVTVepaUSozZVZbaZMHn
+         2XmA==
+X-Gm-Message-State: AOAM5337CU9MFJWB1dfv/J+x7EXYJSe12Mv3T7jF9LmRg28Bzft50io4
+        xrScF4SnDf/GfZjpZvg3XP0bDw==
+X-Google-Smtp-Source: ABdhPJx6vvpCbL6tab1OUGiXTI002xSMilMhovTRPRdlcjtCL4zc3yZHcjJTAqw26ffLwV9N4Mz3yg==
+X-Received: by 2002:a05:600c:4101:: with SMTP id j1mr23115058wmi.35.1606734593807;
+        Mon, 30 Nov 2020 03:09:53 -0800 (PST)
 Received: from [192.168.86.34] (cpc86377-aztw32-2-0-cust226.18-1.cable.virginm.net. [92.233.226.227])
-        by smtp.googlemail.com with ESMTPSA id b73sm41400042wmb.0.2020.11.30.03.02.41
+        by smtp.googlemail.com with ESMTPSA id e3sm28205394wro.90.2020.11.30.03.09.52
         (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 30 Nov 2020 03:02:42 -0800 (PST)
-Subject: Re: [PATCH v3 1/2] arm64: dts: qcom: sc7180: Update lpass cpu node
- for audio over dp
+        Mon, 30 Nov 2020 03:09:53 -0800 (PST)
+Subject: Re: [PATCH v4 1/2] Partially revert ASoC: qcom: Fix enabling BCLK and
+ LRCLK in LPAIF invalid state
 To:     Srinivasa Rao Mandadapu <srivasam@codeaurora.org>,
-        agross@kernel.org, bjorn.andersson@linaro.org, robh+dt@kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, rohitkr@codeaurora.org
+        agross@kernel.org, bjorn.andersson@linaro.org, lgirdwood@gmail.com,
+        broonie@kernel.org, robh+dt@kernel.org, plai@codeaurora.org,
+        bgoswami@codeaurora.org, perex@perex.cz, tiwai@suse.com,
+        rohitkr@codeaurora.org, linux-arm-msm@vger.kernel.org,
+        alsa-devel@alsa-project.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
 Cc:     V Sujith Kumar Reddy <vsujithk@codeaurora.org>
-References: <1601448168-18396-1-git-send-email-srivasam@codeaurora.org>
- <1601448168-18396-2-git-send-email-srivasam@codeaurora.org>
+References: <1606539559-4277-1-git-send-email-srivasam@codeaurora.org>
+ <1606539559-4277-2-git-send-email-srivasam@codeaurora.org>
 From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Message-ID: <019306c9-8fcf-77c4-5f61-56c92bb8e973@linaro.org>
-Date:   Mon, 30 Nov 2020 11:02:41 +0000
+Message-ID: <4b680d9a-23eb-9746-e11e-1506d35e72c4@linaro.org>
+Date:   Mon, 30 Nov 2020 11:09:52 +0000
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
  Thunderbird/60.8.0
 MIME-Version: 1.0
-In-Reply-To: <1601448168-18396-2-git-send-email-srivasam@codeaurora.org>
+In-Reply-To: <1606539559-4277-2-git-send-email-srivasam@codeaurora.org>
 Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-US
 Content-Transfer-Encoding: 7bit
@@ -74,71 +77,109 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-On 30/09/2020 07:42, Srinivasa Rao Mandadapu wrote:
-> From: V Sujith Kumar Reddy <vsujithk@codeaurora.org>
+On 28/11/2020 04:59, Srinivasa Rao Mandadapu wrote:
+> This reverts part of commit b1824968221c
+> ("ASoC: qcom: Fix enabling BCLK and LRCLK in LPAIF invalid state")
+
+This should probably go to Fixes tag!
+
 > 
-> Updaate lpass dts node with HDMI reg, interrupt and iommu
-> for supporting audio over dp.
+
+> To identify LPAIF invalid state after device suspend and resume,
+> made I2S and DMA control registers not volatile, which is not necessary.
+This comment is bit confusing!
+
+Basically it should be something like
+"DMA control registers are not volatile, so remove these from volatile 
+registers list"
+
+--srini
+
+
+> Instead invalid reg state can be handled with regcache APIs.
+> The BCLK ref count is necessary to enable clock only it's in disable state.
 > 
-> Signed-off-by: Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
 > Signed-off-by: V Sujith Kumar Reddy <vsujithk@codeaurora.org>
-
-Reviewed-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-
+> Signed-off-by: Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
 > ---
->   arch/arm64/boot/dts/qcom/sc7180.dtsi | 17 ++++++++++-------
->   1 file changed, 10 insertions(+), 7 deletions(-)
+>   sound/soc/qcom/lpass-cpu.c      | 20 ++------------------
+>   sound/soc/qcom/lpass-platform.c | 11 -----------
+>   2 files changed, 2 insertions(+), 29 deletions(-)
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-> index 427a4bf..802ea0a 100644
-> --- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-> @@ -21,6 +21,7 @@
->   #include <dt-bindings/reset/qcom,sdm845-pdc.h>
->   #include <dt-bindings/soc/qcom,rpmh-rsc.h>
->   #include <dt-bindings/thermal/thermal.h>
-> +#include <dt-bindings/sound/sc7180-lpass.h>
->   
->   / {
->   	interrupt-parent = <&intc>;
-> @@ -3428,16 +3429,18 @@
->   			#power-domain-cells = <1>;
->   		};
->   
-> -		lpass_cpu: lpass@62f00000 {
-> +		lpass_cpu: lpass@62d87000 {
->   			compatible = "qcom,sc7180-lpass-cpu";
->   
-> -			reg = <0 0x62f00000 0 0x29000>;
-> -			reg-names = "lpass-lpaif";
-> +			reg = <0 0x62d87000 0 0x68000>, <0 0x62f00000 0 0x29000>;
-> +			reg-names =  "lpass-hdmiif", "lpass-lpaif";
->   
-> -			iommus = <&apps_smmu 0x1020 0>;
-> +			iommus = <&apps_smmu 0x1020 0>, <&apps_smmu 0x1032 0>;
->   
->   			power-domains = <&lpass_hm LPASS_CORE_HM_GDSCR>;
->   
-> +			status = "disabled";
-> +
->   			clocks = <&gcc GCC_LPASS_CFG_NOC_SWAY_CLK>,
->   				 <&lpasscc LPASS_AUDIO_CORE_CORE_CLK>,
->   				 <&lpasscc LPASS_AUDIO_CORE_EXT_MCLK0_CLK>,
-> @@ -3449,13 +3452,13 @@
->   					"mclk0", "pcnoc-mport-clk",
->   					"mi2s-bit-clk0", "mi2s-bit-clk1";
->   
+> diff --git a/sound/soc/qcom/lpass-cpu.c b/sound/soc/qcom/lpass-cpu.c
+> index af684fd..c5e99c2 100644
+> --- a/sound/soc/qcom/lpass-cpu.c
+> +++ b/sound/soc/qcom/lpass-cpu.c
+> @@ -270,18 +270,6 @@ static int lpass_cpu_daiops_trigger(struct snd_pcm_substream *substream,
+>   	struct lpaif_i2sctl *i2sctl = drvdata->i2sctl;
+>   	unsigned int id = dai->driver->id;
+>   	int ret = -EINVAL;
+> -	unsigned int val = 0;
 > -
->   			#sound-dai-cells = <1>;
->   			#address-cells = <1>;
->   			#size-cells = <0>;
+> -	ret = regmap_read(drvdata->lpaif_map,
+> -				LPAIF_I2SCTL_REG(drvdata->variant, dai->driver->id), &val);
+> -	if (ret) {
+> -		dev_err(dai->dev, "error reading from i2sctl reg: %d\n", ret);
+> -		return ret;
+> -	}
+> -	if (val == LPAIF_I2SCTL_RESET_STATE) {
+> -		dev_err(dai->dev, "error in i2sctl register state\n");
+> -		return -ENOTRECOVERABLE;
+> -	}
 >   
-> -			interrupts = <GIC_SPI 160 IRQ_TYPE_LEVEL_HIGH>;
-> -			interrupt-names = "lpass-irq-lpaif";
-> +			interrupts = <GIC_SPI 160 IRQ_TYPE_LEVEL_HIGH>,
-> +					<GIC_SPI 268 IRQ_TYPE_LEVEL_HIGH>;
-> +			interrupt-names = "lpass-irq-lpaif", "lpass-irq-hdmi";
->   		};
+>   	switch (cmd) {
+>   	case SNDRV_PCM_TRIGGER_START:
+> @@ -454,20 +442,16 @@ static bool lpass_cpu_regmap_volatile(struct device *dev, unsigned int reg)
+>   	struct lpass_variant *v = drvdata->variant;
+>   	int i;
 >   
->   		lpass_hm: clock-controller@63000000 {
+> -	for (i = 0; i < v->i2s_ports; ++i)
+> -		if (reg == LPAIF_I2SCTL_REG(v, i))
+> -			return true;
+>   	for (i = 0; i < v->irq_ports; ++i)
+>   		if (reg == LPAIF_IRQSTAT_REG(v, i))
+>   			return true;
+>   
+>   	for (i = 0; i < v->rdma_channels; ++i)
+> -		if (reg == LPAIF_RDMACURR_REG(v, i) || reg == LPAIF_RDMACTL_REG(v, i))
+> +		if (reg == LPAIF_RDMACURR_REG(v, i))
+>   			return true;
+>   
+>   	for (i = 0; i < v->wrdma_channels; ++i)
+> -		if (reg == LPAIF_WRDMACURR_REG(v, i + v->wrdma_channel_start) ||
+> -			reg == LPAIF_WRDMACTL_REG(v, i + v->wrdma_channel_start))
+> +		if (reg == LPAIF_WRDMACURR_REG(v, i + v->wrdma_channel_start))
+>   			return true;
+>   
+>   	return false;
+> diff --git a/sound/soc/qcom/lpass-platform.c b/sound/soc/qcom/lpass-platform.c
+> index 80b09de..0e71899 100644
+> --- a/sound/soc/qcom/lpass-platform.c
+> +++ b/sound/soc/qcom/lpass-platform.c
+> @@ -452,7 +452,6 @@ static int lpass_platform_pcmops_trigger(struct snd_soc_component *component,
+>   	unsigned int reg_irqclr = 0, val_irqclr = 0;
+>   	unsigned int  reg_irqen = 0, val_irqen = 0, val_mask = 0;
+>   	unsigned int dai_id = cpu_dai->driver->id;
+> -	unsigned int dma_ctrl_reg = 0;
+>   
+>   	ch = pcm_data->dma_ch;
+>   	if (dir ==  SNDRV_PCM_STREAM_PLAYBACK) {
+> @@ -469,17 +468,7 @@ static int lpass_platform_pcmops_trigger(struct snd_soc_component *component,
+>   		id = pcm_data->dma_ch - v->wrdma_channel_start;
+>   		map = drvdata->lpaif_map;
+>   	}
+> -	ret = regmap_read(map, LPAIF_DMACTL_REG(v, ch, dir, dai_id), &dma_ctrl_reg);
+> -	if (ret) {
+> -		dev_err(soc_runtime->dev, "error reading from rdmactl reg: %d\n", ret);
+> -		return ret;
+> -	}
+>   
+> -	if (dma_ctrl_reg == LPAIF_DMACTL_RESET_STATE ||
+> -		dma_ctrl_reg == LPAIF_DMACTL_RESET_STATE + 1) {
+> -		dev_err(soc_runtime->dev, "error in rdmactl register state\n");
+> -		return -ENOTRECOVERABLE;
+> -	}
+>   	switch (cmd) {
+>   	case SNDRV_PCM_TRIGGER_START:
+>   	case SNDRV_PCM_TRIGGER_RESUME:
 > 
