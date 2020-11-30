@@ -2,78 +2,77 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A089E2C9018
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Nov 2020 22:32:25 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 05F412C9032
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Nov 2020 22:46:30 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388534AbgK3VbE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 30 Nov 2020 16:31:04 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56946 "EHLO
+        id S1730257AbgK3Vp3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 30 Nov 2020 16:45:29 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59146 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2388662AbgK3VbE (ORCPT
+        with ESMTP id S1730238AbgK3Vp3 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 30 Nov 2020 16:31:04 -0500
-Received: from mail-ua1-x942.google.com (mail-ua1-x942.google.com [IPv6:2607:f8b0:4864:20::942])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 62D4FC0613D3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 30 Nov 2020 13:30:23 -0800 (PST)
-Received: by mail-ua1-x942.google.com with SMTP id q4so4240463ual.8
-        for <linux-arm-msm@vger.kernel.org>; Mon, 30 Nov 2020 13:30:23 -0800 (PST)
+        Mon, 30 Nov 2020 16:45:29 -0500
+Received: from mail-vs1-xe42.google.com (mail-vs1-xe42.google.com [IPv6:2607:f8b0:4864:20::e42])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5C37CC0613D2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 30 Nov 2020 13:44:49 -0800 (PST)
+Received: by mail-vs1-xe42.google.com with SMTP id z16so2790271vsp.5
+        for <linux-arm-msm@vger.kernel.org>; Mon, 30 Nov 2020 13:44:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=QQ7YTMSOgNJk6C7RFtbNrsBN7emJhZRffS3U/+z/bcI=;
-        b=OfdLooMYThRlS3Q3NaExYX7qtlWtVk0t6l+hSzWbh6ghggWL9W9qlE4XVrNF1x8AiV
-         y+JguKA1P5jRm86KlaQFMejQsu9qGvuQ7wwx5TVk0tj2AbEUcJ6HbBFOE8hp1Fy2MPK5
-         iVFp7rAJCDfvphXVA9M4fllvxAh72Vgr3RFJQ=
+        bh=IzzFMOQ2YRkMCxvmCHg5ti/PD9Utfx1/a9X+8+nAZS8=;
+        b=DiM9VTBpsGfF9Mg6DLeQBhQngC+yXQQoSTzGiVNcv2tsU3mDuzvVLjiOQgTRau2QLp
+         CD40nTcjniPdPwpqwJtj2FKR5bg6PWcyzSbPvWijZwXUe1nYzdZIO3WGYtPerKjIOqFz
+         zfWXVP1/W0A6/XDilEZ8xvQXeYPk2m7qV9QpY=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=QQ7YTMSOgNJk6C7RFtbNrsBN7emJhZRffS3U/+z/bcI=;
-        b=sOw5WpFut5ojUZPtTdr4pZW/G6qAp9BIkL3T9wEM7MMxQ0KcrSSGtQMPIORNL40fGg
-         AEirrw2Oq3vJ1r6omQ692SefbT6iJKQFrGFYtJC6FJ3mFNJGNf+pWr18OuokxxJN84/i
-         gL6HISkmScDTZrleuY8zY/Pmix37cwxqdp471g4gBi17BoLp/ZIk0ztaGE0oVR3V322O
-         A/VdwsFbP0b+zsmidsnRZlcPm75e3baIq0K8u4pZGgO4JN4ql3M2g+A+Ik5y868mBCxS
-         zhy/0vuXl9W/hs8nhpLKz7QORj8V0VFoClAu4TE7VTk1w51YpVo8xs7KCpRhBVkbhv15
-         nx7Q==
-X-Gm-Message-State: AOAM5321fnf7QQIagmPdSr8h5ZdrDN4p6Q/mhi/ERluIYXikwAADmi1U
-        J6FtumvnHUSpBYlXQ+PQKARnhwWARvBd2A==
-X-Google-Smtp-Source: ABdhPJzt7J9FnK9w3QUR16ECTCmUGIvFbhiZ979Og/BJlVoFzsktaGC0GSV8HEdZlc0IVRTJM2hoeQ==
-X-Received: by 2002:ab0:39cd:: with SMTP id g13mr19707116uaw.42.1606771822020;
-        Mon, 30 Nov 2020 13:30:22 -0800 (PST)
-Received: from mail-vs1-f54.google.com (mail-vs1-f54.google.com. [209.85.217.54])
-        by smtp.gmail.com with ESMTPSA id s6sm4210742vkk.20.2020.11.30.13.30.20
+        bh=IzzFMOQ2YRkMCxvmCHg5ti/PD9Utfx1/a9X+8+nAZS8=;
+        b=Ty4La0U7FZZkb6Mhyq37kVxvfhd8ncTSdeegrqv9nZgakL6zlOttdaSPeE28rztMuo
+         OCeva7F8u+oxlkpNVwTXhTTHJf6I3HdwWUMC/2D/gslebwesY5hnYAp6wTDeS+nGM/wf
+         wO3mX5BsqpLGuk7bp22+R1zm34RAcqWzxRpDkVWalgiD93jNpsBPTXNh+QfK11blJrdF
+         V5F6Pms7JelSub6QOu3pSAOj8Mnw61Beh8yg6N1jQPvdpYE3DaoEvj1tZtz7wFDiEo3G
+         lQtTtQzwqM6Eg/iKg+sxKa841oUyI/XSnSCoTvH5ohvPf2MUblKL42rzeArOsv3SG3Md
+         fbow==
+X-Gm-Message-State: AOAM5317yZJCXjhaytDmMb6atKFiFXoh8qbo8pWF4qGDnw/6SY13KpBz
+        iGAw81Tu9xbuQWdLe9cuIaemjjNb3P224A==
+X-Google-Smtp-Source: ABdhPJwq3hrhHNduzuk8lr+kKsd5NXwowjX1pIBO6LhZg7IwxjPQVTg9iaaZjx5IvY8orVVMInTuUw==
+X-Received: by 2002:a67:7956:: with SMTP id u83mr1777891vsc.28.1606772688099;
+        Mon, 30 Nov 2020 13:44:48 -0800 (PST)
+Received: from mail-ua1-f52.google.com (mail-ua1-f52.google.com. [209.85.222.52])
+        by smtp.gmail.com with ESMTPSA id r126sm5255553vsr.0.2020.11.30.13.44.47
         for <linux-arm-msm@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 30 Nov 2020 13:30:21 -0800 (PST)
-Received: by mail-vs1-f54.google.com with SMTP id 128so6879819vsw.10
-        for <linux-arm-msm@vger.kernel.org>; Mon, 30 Nov 2020 13:30:20 -0800 (PST)
-X-Received: by 2002:a67:4242:: with SMTP id p63mr18219636vsa.34.1606771820251;
- Mon, 30 Nov 2020 13:30:20 -0800 (PST)
+        Mon, 30 Nov 2020 13:44:47 -0800 (PST)
+Received: by mail-ua1-f52.google.com with SMTP id g3so4238406uae.7
+        for <linux-arm-msm@vger.kernel.org>; Mon, 30 Nov 2020 13:44:47 -0800 (PST)
+X-Received: by 2002:a9f:24eb:: with SMTP id 98mr14259940uar.90.1606772686598;
+ Mon, 30 Nov 2020 13:44:46 -0800 (PST)
 MIME-Version: 1.0
 References: <20201124094636.v2.1.I2702919afc253e2a451bebc3b701b462b2d22344@changeid>
-In-Reply-To: <20201124094636.v2.1.I2702919afc253e2a451bebc3b701b462b2d22344@changeid>
+ <20201124094636.v2.3.I771b6594b2a4d5b7fe7e12a991a6640f46386e8d@changeid> <d6c5dba9-bcc7-fac9-dd41-c989509c822b@codeaurora.org>
+In-Reply-To: <d6c5dba9-bcc7-fac9-dd41-c989509c822b@codeaurora.org>
 From:   Doug Anderson <dianders@chromium.org>
-Date:   Mon, 30 Nov 2020 13:30:09 -0800
-X-Gmail-Original-Message-ID: <CAD=FV=W2i7dfcg2J2a-EO8nBvwHU0AMp79Esoy1Y=H_hNc+jvw@mail.gmail.com>
-Message-ID: <CAD=FV=W2i7dfcg2J2a-EO8nBvwHU0AMp79Esoy1Y=H_hNc+jvw@mail.gmail.com>
-Subject: Re: [PATCH v2 1/3] irqchip: qcom-pdc: Fix phantom irq when changing
- between rising/falling
-To:     Marc Zyngier <maz@kernel.org>,
+Date:   Mon, 30 Nov 2020 13:44:35 -0800
+X-Gmail-Original-Message-ID: <CAD=FV=UOSkHQMcSV8Zq5qPfBoUu5xYzfNZqUPmymvD7PXUAN4w@mail.gmail.com>
+Message-ID: <CAD=FV=UOSkHQMcSV8Zq5qPfBoUu5xYzfNZqUPmymvD7PXUAN4w@mail.gmail.com>
+Subject: Re: [PATCH v2 3/3] pinctrl: qcom: Clear possible pending irq when
+ remuxing GPIOs
+To:     Maulik Shah <mkshah@codeaurora.org>,
+        Rajendra Nayak <rnayak@codeaurora.org>
+Cc:     Marc Zyngier <maz@kernel.org>,
         Thomas Gleixner <tglx@linutronix.de>,
         Jason Cooper <jason@lakedaemon.net>,
-        Linus Walleij <linus.walleij@linaro.org>
-Cc:     "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
         Neeraj Upadhyay <neeraju@codeaurora.org>,
         Stephen Boyd <swboyd@chromium.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
         Srinivas Ramana <sramana@codeaurora.org>,
         linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Maulik Shah <mkshah@codeaurora.org>,
-        Rajendra Nayak <rnayak@codeaurora.org>,
         Andy Gross <agross@kernel.org>,
-        Archana Sathyakumar <asathyak@codeaurora.org>,
-        Lina Iyer <ilina@codeaurora.org>,
         LKML <linux-kernel@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
@@ -82,51 +81,228 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 Hi,
 
-On Tue, Nov 24, 2020 at 9:47 AM Douglas Anderson <dianders@chromium.org> wrote:
+On Mon, Nov 30, 2020 at 2:33 AM Maulik Shah <mkshah@codeaurora.org> wrote:
 >
-> We have a problem if we use gpio-keys and configure wakeups such that
-> we only want one edge to wake us up.  AKA:
->   wakeup-event-action = <EV_ACT_DEASSERTED>;
->   wakeup-source;
->
-> Specifically we end up with a phantom interrupt that blocks suspend if
-> the line was already high and we want wakeups on rising edges (AKA we
-> want the GPIO to go low and then high again before we wake up).  The
-> opposite is also problematic.
->
-> Specifically, here's what's happening today:
-> 1. Normally, gpio-keys configures to look for both edges.  Due to the
->    current workaround introduced in commit c3c0c2e18d94 ("pinctrl:
->    qcom: Handle broken/missing PDC dual edge IRQs on sc7180"), if the
->    line was high we'd configure for falling edges.
-> 2. At suspend time, we change to look for rising edges.
-> 3. After qcom_pdc_gic_set_type() runs, we get a phantom interrupt.
->
-> We can solve this by just clearing the phantom interrupt.
->
-> NOTE: it is possible that this could cause problems for a client with
-> very specific needs, but there's not much we can do with this
-> hardware.  As an example, let's say the interrupt signal is currently
-> high and the client is looking for falling edges.  The client now
-> changes to look for rising edges.  The client could possibly expect
-> that if the line has a short pulse low (and back high) that it would
-> always be detected.  Specifically no matter when the pulse happened,
-> it should either have tripped the (old) falling edge trigger or the
-> (new) rising edge trigger.  We will simply not trip it.  We could
-> narrow down the race a bit by polling our parent before changing
-> types, but no matter what we do there will still be a period of time
-> where we can't tell the difference between a real transition (or more
-> than one transition) and the phantom.
->
-> Fixes: f55c73aef890 ("irqchip/pdc: Add PDC interrupt controller for QCOM SoCs")
-> Signed-off-by: Douglas Anderson <dianders@chromium.org>
-> Reviewed-by: Maulik Shah <mkshah@codeaurora.org>
-> Tested-by: Maulik Shah <mkshah@codeaurora.org>
+> > [1] https://lore.kernel.org/r/603c691f-3614-d87b-075a-0889e9ffc453@codeaurora.org
+> Please wait to land [1] before i confirm with HW team if this is indeed
+> valid case.
 
-NOTE: even though this has Maulik's tags, he has requested [1] that we
-should wait before landing while he talks with HW folks.
+Oh, oops.  Somehow I thought your reply was in response to patch #3 in
+the series, not #1.  I responded to patch #1 in the series now to make
+it clear to wait for you.
 
-[1] https://lore.kernel.org/linux-arm-msm/603c691f-3614-d87b-075a-0889e9ffc453@codeaurora.org/
 
+> > @@ -187,15 +217,26 @@ static int msm_pinmux_set_mux(struct pinctrl_dev *pctldev,
+> >       if (WARN_ON(i == g->nfuncs))
+> >               return -EINVAL;
+> >
+> > -     raw_spin_lock_irqsave(&pctrl->lock, flags);
+> > +     disable_irq(irq);
+> >
+> > -     val = msm_readl_ctl(pctrl, g);
+> > +     raw_spin_lock_irqsave(&pctrl->lock, flags);
+> > +     oldval = val = msm_readl_ctl(pctrl, g);
+> >       val &= ~mask;
+> >       val |= i << g->mux_bit;
+> >       msm_writel_ctl(val, pctrl, g);
+> > -
+> >       raw_spin_unlock_irqrestore(&pctrl->lock, flags);
+> >
+> > +     /*
+> > +      * Clear IRQs if switching to/from GPIO mode since muxing to/from
+> > +      * the GPIO path can cause phantom edges.
+> > +      */
+> > +     old_i = (oldval & mask) >> g->mux_bit;
+> > +     if (old_i != i &&
+> > +         (i == pctrl->soc->gpio_func || old_i == pctrl->soc->gpio_func))
+> > +             msm_pinctrl_clear_pending_irq(pctrl, group, irq);
+> > +
+>
+> The phantom irq can come when switching to GPIO irq mode. so may be only
+> check if (i == pctrl->soc->gpio_func) {
+
+Have you tested this experimentally?
+
+I have experimentally tested this and I can actually see an interrupt
+generated when I _leave_ GPIO as well as when I enter GPIO mode.  If
+you can't see this I can re-setup my test, but this was one of those
+things that convinced me that the _transition_ is what was causing the
+fake interrupt.
+
+I think my test CL <https://crrev.com/c/2556012/> can help you with
+testing if you wish.
+
+
+> even better if you can clear this unconditionally.
+
+Why?  It should only matter if we're going to/from GPIO mode.
+
+
+> > @@ -456,32 +497,49 @@ static const struct pinconf_ops msm_pinconf_ops = {
+> >   static int msm_gpio_direction_input(struct gpio_chip *chip, unsigned offset)
+> >   {
+> >       const struct msm_pingroup *g;
+> > +     unsigned int irq = irq_find_mapping(chip->irq.domain, offset);
+> >       struct msm_pinctrl *pctrl = gpiochip_get_data(chip);
+> >       unsigned long flags;
+> > +     u32 oldval;
+> >       u32 val;
+> >
+> >       g = &pctrl->soc->groups[offset];
+> >
+> > +     disable_irq(irq);
+> > +
+> >       raw_spin_lock_irqsave(&pctrl->lock, flags);
+> >
+> > -     val = msm_readl_ctl(pctrl, g);
+> > +     oldval = val = msm_readl_ctl(pctrl, g);
+> >       val &= ~BIT(g->oe_bit);
+> >       msm_writel_ctl(val, pctrl, g);
+> >
+> >       raw_spin_unlock_irqrestore(&pctrl->lock, flags);
+> >
+> > +     /*
+> > +      * Clear IRQs if switching to/from input mode since that can use
+> > +      * a phantom edge.
+> > +      */
+> > +     if (oldval != val)
+> > +             msm_pinctrl_clear_pending_irq(pctrl, offset, irq);
+> same as above, can you clear this unconditionally.
+
+Any reason why?  If we didn't change anything then there's no reason
+to go through all this extra code?
+
+
+> >   static int msm_gpio_direction_output(struct gpio_chip *chip, unsigned offset, int value)
+> >   {
+> >       const struct msm_pingroup *g;
+> > +     unsigned int irq = irq_find_mapping(chip->irq.domain, offset);
+> >       struct msm_pinctrl *pctrl = gpiochip_get_data(chip);
+> >       unsigned long flags;
+> > +     u32 oldval;
+> >       u32 val;
+> >
+> >       g = &pctrl->soc->groups[offset];
+> >
+> > +     disable_irq(irq);
+> > +
+> >       raw_spin_lock_irqsave(&pctrl->lock, flags);
+> >
+> >       val = msm_readl_io(pctrl, g);
+> > @@ -491,12 +549,21 @@ static int msm_gpio_direction_output(struct gpio_chip *chip, unsigned offset, in
+> >               val &= ~BIT(g->out_bit);
+> >       msm_writel_io(val, pctrl, g);
+> >
+> > -     val = msm_readl_ctl(pctrl, g);
+> > +     oldval = msm_readl_ctl(pctrl, g);
+>
+> should be, oldval = val = msm_readl_ctl(pctrl, g);
+>
+> otherwise val will carry invalid value.
+
+Whoa!  Good catch.  How did I miss that and how did it not fail?  I
+will fix in a v3 but will wait until other questions are resolved
+before sending.
+
+
+> >       val |= BIT(g->oe_bit);
+> >       msm_writel_ctl(val, pctrl, g);
+> >
+> >       raw_spin_unlock_irqrestore(&pctrl->lock, flags);
+> >
+> > +     /*
+> > +      * Clear IRQs if switching to/from input mode since that can use
+> > +      * a phantom edge.
+> > +      */
+> > +     if (oldval != val)
+> > +             msm_pinctrl_clear_pending_irq(pctrl, offset, irq);
+>
+> i don't see a reason to clear the edges when switching to output mode.
+>
+> can you remove the changes from .direction_output callback?
+
+I haven't confirmed that this can glitch, however I did confirm that I
+could glitch when muxing _away_ from GPIO mode.  This makes me believe
+that I could also glitch when muxing to an output.
+
+I can try to concoct a test for this if necessary.
+
+
+> > @@ -792,17 +859,6 @@ static void msm_gpio_irq_clear_unmask(struct irq_data *d, bool status_clear)
+> >
+> >       raw_spin_lock_irqsave(&pctrl->lock, flags);
+> >
+> > -     if (status_clear) {
+> > -             /*
+> > -              * clear the interrupt status bit before unmask to avoid
+> > -              * any erroneous interrupts that would have got latched
+> > -              * when the interrupt is not in use.
+> > -              */
+> > -             val = msm_readl_intr_status(pctrl, g);
+> > -             val &= ~BIT(g->intr_status_bit);
+> > -             msm_writel_intr_status(val, pctrl, g);
+> > -     }
+> > -
+> Above change was clearing irq in .irq_enable callback which will do
+> clear + unmask from irq_startup() at the very end.
+> With your change, The problem is we have cleared the phantom irq much
+> earlier in __setup_irq() phase and in below case its still latched as
+> pending.
+>
+> 1. The client driver calls request_irq() => __setup_irq()
+> 2. __setup_irq() then first invokes irq_request_resources() =>
+> msm_gpio_irq_reqres() => msm_pinmux_set_mux() =>
+> msm_pinctrl_clear_pending_irq()
+> 3. __setup_irq() goes ahead and invokes __irq_set_trigger() =>
+> msm_gpio_irq_set_type()
+> 4. __setup_irq() then invokes irq_startup() => gpiochip_irq_enable() =>
+> msm_gpio_irq_enable()
+>
+> The phantom irq gets cleared in step (2) here, but with step (3) it gets
+> latched again and at the end of step (4) still get phantom irq.
+> This seems because as per below comment in driver, pasting the part
+> which has info,
+> /*
+>   * The edge detection logic seems to have a problem where toggling the
+> RAW_STATUS_EN bit may
+>   * cause the status bit to latch spuriously when there isn't any edge
+>   */
+> In step (3) msm_gpio_irq_set_type() touches the RAW_STATUS_EN making the
+> phantom irq pending again.
+> To resolve this, you will need to invoke msm_pinctrl_clear_pending_irq()
+> at the end of the msm_gpio_irq_set_type().
+>
+> I would like Rajendra's (already in cc) review as well on above part.
+
+Ugh, so we need a clear in yet another place.  Joy.  OK, I will wait
+for Rajendra's comment but I can add similar code in
+msm_gpio_irq_enable().
+
+
+> >       val = msm_readl_intr_cfg(pctrl, g);
+> >       val |= BIT(g->intr_raw_status_bit);
+> >       val |= BIT(g->intr_enable_bit);
+> > @@ -815,14 +871,10 @@ static void msm_gpio_irq_clear_unmask(struct irq_data *d, bool status_clear)
+> >
+> >   static void msm_gpio_irq_enable(struct irq_data *d)
+> >   {
+> > -     struct gpio_chip *gc = irq_data_get_irq_chip_data(d);
+> > -     struct msm_pinctrl *pctrl = gpiochip_get_data(gc);
+> > -
+> >       if (d->parent_data)
+> >               irq_chip_enable_parent(d);
+> >
+> > -     if (!test_bit(d->hwirq, pctrl->skip_wake_irqs))
+> > -             msm_gpio_irq_clear_unmask(d, true);
+> > +     msm_gpio_irq_unmask(d);
+>
+> Still need the above if condition, the previous call
+> irq_chip_enable_parent() already enabled the IRQ at PDC and GIC, so only
+> go ahead to enable it at TLMM if there wasn't any parent.
+>
+> if (!test_bit(d->hwirq, pctrl->skip_wake_irqs))
+>          msm_gpio_irq_unmask(d);
+
+Right.  I'll fix it when I send the v3.  Thanks!
 
 -Doug
