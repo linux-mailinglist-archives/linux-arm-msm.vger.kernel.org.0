@@ -2,228 +2,127 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 542CB2CA9AF
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Dec 2020 18:32:29 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 9E54C2CA9BF
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Dec 2020 18:32:36 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2403771AbgLARaE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 1 Dec 2020 12:30:04 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46032 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2390737AbgLARaE (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 1 Dec 2020 12:30:04 -0500
-Received: from mail-ot1-x342.google.com (mail-ot1-x342.google.com [IPv6:2607:f8b0:4864:20::342])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3E8FBC0613D6
-        for <linux-arm-msm@vger.kernel.org>; Tue,  1 Dec 2020 09:29:24 -0800 (PST)
-Received: by mail-ot1-x342.google.com with SMTP id f12so2401824oto.10
-        for <linux-arm-msm@vger.kernel.org>; Tue, 01 Dec 2020 09:29:24 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=l8vvlkbHOcQOjYY/Opy47c8Dw9W68kDnh+apjcsK7jc=;
-        b=sxS/hByLKJEQs8SSpaMjUL2ervlOHphMtva39THckGzCiSJ0dC7d7ErfZ4WOlA2kdQ
-         waAcYJt22YVIySKlh/I2Pei/RI3PxprBd5kCcxd/5NNqSYnb272u6JuF21Dv2O59xsij
-         ToSgRLw6WbARZntnWaQmmn473GNz8dbbRXveK5bcQpGQ2SGc8VWCPutpwq+SicvIPe/P
-         3bTOExhjWNAFc+sLKYmF672WfQOtXkXCC7jR3gtRmztqHcuD3RfiWzkJ2esYGXfRdoJj
-         OKUTBXHYy+xrp1yxghCo7D3C66p7qhvU7lOC3un4nRiTdTedkhfk1SBpSa1r+Cm2yXH0
-         g33A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=l8vvlkbHOcQOjYY/Opy47c8Dw9W68kDnh+apjcsK7jc=;
-        b=UA3mbKjfSrFj4gCCSbFG/D8Z9n2IpWgBQ2swdmhvLnKSA995am3l5g+xeincx8aH6P
-         j01YK0n2SdxkBF1G82UGwvrMG/mLH3mSQHLdhOlp63dnOGNYpnqHlsyWG4N7HfE9+1AU
-         N1BnUzcvbWVvrnvX07N2HXo/w22cn3C4Z/GMx4O1p6LZcRfAH9wdu70XHNrAF5vNstzJ
-         deyKNZnFf2R6JJPfd9a4aLk4Bx3RRtERr2kUpNQrikseiJDbWk73+SmMFblJH92rBTV0
-         f7AtePLNkhS549yFQlbSsP8VxnPTW4UduaIwlIMcgUzrMKejPBTEpRcJYWtq/bvcAYWj
-         BMrg==
-X-Gm-Message-State: AOAM5325oqttK2ODUbmZIAi2ElUfOmAgSsb9xJd6bnqQazG8Oq2WW73J
-        Sw/eHbCVJYsjf9K3LPkFH+GB2Q==
-X-Google-Smtp-Source: ABdhPJz219+0deBZngPjxwfYWY8oaCEqmDmI14IiB4RoHGZbWyhwhfuH1sFxngCr18KnCvfhpECMww==
-X-Received: by 2002:a9d:5c04:: with SMTP id o4mr2564678otk.372.1606843763504;
-        Tue, 01 Dec 2020 09:29:23 -0800 (PST)
-Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id 60sm87238ott.32.2020.12.01.09.29.22
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 01 Dec 2020 09:29:22 -0800 (PST)
-Date:   Tue, 1 Dec 2020 11:29:21 -0600
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Cc:     linus.walleij@linaro.org, robh+dt@kernel.org, agross@kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Rob Herring <robh@kernel.org>
-Subject: Re: [PATCH v5 1/2] dt-bindings: pinctrl: qcom: Add sm8250 lpass lpi
- pinctrl bindings
-Message-ID: <X8Z9cUOmHQRNuvCD@builder.lan>
-References: <20201201142830.13152-1-srinivas.kandagatla@linaro.org>
- <20201201142830.13152-2-srinivas.kandagatla@linaro.org>
+        id S2391226AbgLARb5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 1 Dec 2020 12:31:57 -0500
+Received: from m42-5.mailgun.net ([69.72.42.5]:35714 "EHLO m42-5.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S2391170AbgLARb5 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 1 Dec 2020 12:31:57 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1606843891; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
+ Subject: Sender; bh=K1x8lx2ayye4/N0xNELnpa6CNM0J4yfcDBWhh1G+S30=; b=HU4NMe6GdV6EjCdkTpBQF4JRT/lgGkFQTEh+joUSqPwlWRvVl42YJ5juQv/71DqpLzWxS0NI
+ jp+Hh0LglLgUUDt20XcZBKcNyI/YFUaBmXdaBySiYPqcCe0O5NMoTItRcvSDoim5PIWHn9YR
+ v3xc8mxZ265gNixlEtpDA3vScEM=
+X-Mailgun-Sending-Ip: 69.72.42.5
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n10.prod.us-east-1.postgun.com with SMTP id
+ 5fc67df3edac2724d86d40e5 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 01 Dec 2020 17:31:31
+ GMT
+Sender: srivasam=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 0547DC43462; Tue,  1 Dec 2020 17:31:30 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        NICE_REPLY_A,SPF_FAIL autolearn=no autolearn_force=no version=3.4.0
+Received: from [172.20.10.2] (unknown [27.59.188.56])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: srivasam)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 47E31C43460;
+        Tue,  1 Dec 2020 17:31:23 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 47E31C43460
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=srivasam@codeaurora.org
+Subject: Re: [PATCH v4 1/2] Partially revert ASoC: qcom: Fix enabling BCLK and
+ LRCLK in LPAIF invalid state
+To:     Mark Brown <broonie@kernel.org>
+Cc:     agross@kernel.org, bjorn.andersson@linaro.org, lgirdwood@gmail.com,
+        robh+dt@kernel.org, plai@codeaurora.org, bgoswami@codeaurora.org,
+        perex@perex.cz, tiwai@suse.com, srinivas.kandagatla@linaro.org,
+        rohitkr@codeaurora.org, linux-arm-msm@vger.kernel.org,
+        alsa-devel@alsa-project.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        V Sujith Kumar Reddy <vsujithk@codeaurora.org>
+References: <1606539559-4277-1-git-send-email-srivasam@codeaurora.org>
+ <1606539559-4277-2-git-send-email-srivasam@codeaurora.org>
+ <20201130124617.GC4756@sirena.org.uk>
+From:   Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
+Organization: Qualcomm India Private Limited.
+Message-ID: <966993b7-4720-bdd2-cf4d-cf5a7c11a0c1@codeaurora.org>
+Date:   Tue, 1 Dec 2020 23:01:21 +0530
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.5.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20201201142830.13152-2-srinivas.kandagatla@linaro.org>
+In-Reply-To: <20201130124617.GC4756@sirena.org.uk>
+Content-Type: text/plain; charset=windows-1252; format=flowed
+Content-Transfer-Encoding: 8bit
+Content-Language: en-US
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue 01 Dec 08:28 CST 2020, Srinivas Kandagatla wrote:
+Thanks Mark for your time!!!
 
-> Add device tree binding Documentation details for Qualcomm SM8250
-> LPASS(Low Power Audio Sub System) LPI(Low Power Island) pinctrl driver.
-> 
-> Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-> Reviewed-by: Rob Herring <robh@kernel.org>
+On 11/30/2020 6:16 PM, Mark Brown wrote:
+> On Sat, Nov 28, 2020 at 10:29:18AM +0530, Srinivasa Rao Mandadapu wrote:
+>> This reverts part of commit b1824968221c
+>> ("ASoC: qcom: Fix enabling BCLK and LRCLK in LPAIF invalid state")
+>>
+>> To identify LPAIF invalid state after device suspend and resume,
+>> made I2S and DMA control registers not volatile, which is not necessary.
+>> Instead invalid reg state can be handled with regcache APIs.
+>> The BCLK ref count is necessary to enable clock only it's in disable state.
+> Part of this commit message says that the problem was making the registers
+> non-volatile but both the change and the rest of the commit message say
+> that the issue was that the registers were made volatile.  I'm also
+> still unclear as to what the issue is either way - how does reading the
+> state of the registers from the hardware instead of the cache affect
+> things?
 
-Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+Initial problem was, during playback if device suspended, I2S and DMA 
+control registers
 
-Regards,
-Bjorn
+are getting reset and unable to recover playback after resume.
 
-> ---
->  .../pinctrl/qcom,lpass-lpi-pinctrl.yaml       | 132 ++++++++++++++++++
->  1 file changed, 132 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/pinctrl/qcom,lpass-lpi-pinctrl.yaml
-> 
-> diff --git a/Documentation/devicetree/bindings/pinctrl/qcom,lpass-lpi-pinctrl.yaml b/Documentation/devicetree/bindings/pinctrl/qcom,lpass-lpi-pinctrl.yaml
-> new file mode 100644
-> index 000000000000..3543324d9194
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/pinctrl/qcom,lpass-lpi-pinctrl.yaml
-> @@ -0,0 +1,132 @@
-> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/pinctrl/qcom,lpass-lpi-pinctrl.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> +
-> +title: Qualcomm Technologies, Inc. Low Power Audio SubSystem (LPASS)
-> +  Low Power Island (LPI) TLMM block
-> +
-> +maintainers:
-> +  - Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-> +
-> +description: |
-> +  This binding describes the Top Level Mode Multiplexer block found in the
-> +  LPASS LPI IP on most Qualcomm SoCs
-> +
-> +properties:
-> +  compatible:
-> +    const: qcom,sm8250-lpass-lpi-pinctrl
-> +
-> +  reg:
-> +    minItems: 2
-> +    maxItems: 2
-> +
-> +  clocks:
-> +    items:
-> +      - description: LPASS Core voting clock
-> +      - description: LPASS Audio voting clock
-> +
-> +  clock-names:
-> +    items:
-> +      - const: core
-> +      - const: audio
-> +
-> +  gpio-controller: true
-> +
-> +  '#gpio-cells':
-> +    description: Specifying the pin number and flags, as defined in
-> +      include/dt-bindings/gpio/gpio.h
-> +    const: 2
-> +
-> +  gpio-ranges:
-> +    maxItems: 1
-> +
-> +#PIN CONFIGURATION NODES
-> +patternProperties:
-> +  '-pins$':
-> +    type: object
-> +    description:
-> +      Pinctrl node's client devices use subnodes for desired pin configuration.
-> +      Client device subnodes use below standard properties.
-> +    $ref: "/schemas/pinctrl/pincfg-node.yaml"
-> +
-> +    properties:
-> +      pins:
-> +        description:
-> +          List of gpio pins affected by the properties specified in this
-> +          subnode.
-> +        items:
-> +          oneOf:
-> +            - pattern: "^gpio([0-9]|[1-9][0-9])$"
-> +        minItems: 1
-> +        maxItems: 14
-> +
-> +      function:
-> +        enum: [ gpio, swr_tx_clk, qua_mi2s_sclk, swr_tx_data1, qua_mi2s_ws,
-> +                swr_tx_data2, qua_mi2s_data0, swr_rx_clk, qua_mi2s_data1,
-> +                swr_rx_data1, qua_mi2s_data2, swr_tx_data3, swr_rx_data2,
-> +                dmic1_clk, i2s1_clk, dmic1_data, i2s1_ws, dmic2_clk,
-> +                i2s1_data0, dmic2_data, i2s1_data1, i2s2_clk, wsa_swr_clk,
-> +                i2s2_ws, wsa_swr_data, dmic3_clk, i2s2_data0, dmic3_data,
-> +                i2s2_data1 ]
-> +        description:
-> +          Specify the alternative function to be configured for the specified
-> +          pins.
-> +
-> +      drive-strength:
-> +        enum: [2, 4, 6, 8, 10, 12, 14, 16]
-> +        default: 2
-> +        description:
-> +          Selects the drive strength for the specified pins, in mA.
-> +
-> +      slew-rate:
-> +        enum: [0, 1, 2, 3]
-> +        default: 0
-> +        description: |
-> +            0: No adjustments
-> +            1: Higher Slew rate (faster edges)
-> +            2: Lower Slew rate (slower edges)
-> +            3: Reserved (No adjustments)
-> +
-> +      bias-pull-down: true
-> +
-> +      bias-pull-up: true
-> +
-> +      bias-disable: true
-> +
-> +      output-high: true
-> +
-> +      output-low: true
-> +
-> +    required:
-> +      - pins
-> +      - function
-> +
-> +    additionalProperties: false
-> +
-> +required:
-> +  - compatible
-> +  - reg
-> +  - clocks
-> +  - clock-names
-> +  - gpio-controller
-> +  - '#gpio-cells'
-> +  - gpio-ranges
-> +
-> +additionalProperties: false
-> +
-> +examples:
-> +  - |
-> +    #include <dt-bindings/sound/qcom,q6afe.h>
-> +    lpi_tlmm: pinctrl@33c0000 {
-> +        compatible = "qcom,sm8250-lpass-lpi-pinctrl";
-> +        reg = <0x33c0000 0x20000>,
-> +              <0x3550000 0x10000>;
-> +        clocks = <&q6afecc LPASS_HW_MACRO_VOTE LPASS_CLK_ATTRIBUTE_COUPLE_NO>,
-> +                 <&q6afecc LPASS_HW_DCODEC_VOTE LPASS_CLK_ATTRIBUTE_COUPLE_NO>;
-> +        clock-names = "core", "audio";
-> +        gpio-controller;
-> +        #gpio-cells = <2>;
-> +        gpio-ranges = <&lpi_tlmm 0 0 14>;
-> +    };
-> -- 
-> 2.21.0
-> 
+As these registers were non volatile registers, driver is not getting 
+actual register value
+
+and unable to report error state to application. Due to this application
+
+keeps on polling for HW current pointer state and not exited from PCM 
+running state.
+
+To handle this scenario I made registers volatile and if they are in 
+reset state, reported error
+
+to application(commit b1824968221c).
+
+Later from review comments by Srinivas kandagatla, I got to know
+
+about regcache sync APIs, which can be used  to sync cache after resume and
+
+HW registers can be updated with  original values. With that playback 
+can be continued.
+
+So is the reason, I am reverting partial changes in the commit b1824968221c.
+
+
+> Please submit patches using subject lines reflecting the style for the
+> subsystem, this makes it easier for people to identify relevant patches.
+> Look at what existing commits in the area you're changing are doing and
+> make sure your subject lines visually resemble what they're doing.
+> There's no need to resubmit to fix this alone.
+
+-- 
+Qualcomm India Private Limited, on behalf of Qualcomm Innovation Center, Inc.,
+is a member of Code Aurora Forum, a Linux Foundation Collaborative Project.
+
