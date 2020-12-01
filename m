@@ -2,196 +2,182 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 5EB732C978F
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Dec 2020 07:30:58 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A2E8E2C97CE
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Dec 2020 08:06:54 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726405AbgLAGam (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 1 Dec 2020 01:30:42 -0500
-Received: from a2.mail.mailgun.net ([198.61.254.61]:57610 "EHLO
-        a2.mail.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726142AbgLAGam (ORCPT
+        id S1727219AbgLAHGC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 1 Dec 2020 02:06:02 -0500
+Received: from userp2130.oracle.com ([156.151.31.86]:57868 "EHLO
+        userp2130.oracle.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725859AbgLAHGC (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 1 Dec 2020 01:30:42 -0500
-X-Greylist: delayed 323 seconds by postgrey-1.27 at vger.kernel.org; Tue, 01 Dec 2020 01:30:41 EST
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1606804221; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=qjX5YWXQNyMIYh4ttlDr1yp5ks9fiVpqcINQz9NkRLU=;
- b=bqd1E0GnF2zpjzCbn96/PgF8zWA7VeuxU4BRiQd9IuxckO7N0rEEf5AGbEdeJL1BAURYurLH
- LKEzuggJffugkjUfINrS06VphQUh0dV0X+2eledxthUHjd1ZYV+lYJm8FZvdNNufXgSAEiHi
- KxME6Ocke8L/dg60EXic8FSb8dQ=
-X-Mailgun-Sending-Ip: 198.61.254.61
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n04.prod.us-west-2.postgun.com with SMTP id
- 5fc5e19ff653ea0cd80c3d99 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 01 Dec 2020 06:24:31
- GMT
-Sender: saiprakash.ranjan=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id A4FA5C43463; Tue,  1 Dec 2020 06:24:31 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: saiprakash.ranjan)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 9BDD8C43461;
-        Tue,  1 Dec 2020 06:24:30 +0000 (UTC)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Tue, 01 Dec 2020 11:54:30 +0530
-From:   Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc:     agross@kernel.org, bjorn.andersson@linaro.org, robh+dt@kernel.org,
+        Tue, 1 Dec 2020 02:06:02 -0500
+Received: from pps.filterd (userp2130.oracle.com [127.0.0.1])
+        by userp2130.oracle.com (8.16.0.42/8.16.0.42) with SMTP id 0B16xURN164535;
+        Tue, 1 Dec 2020 07:05:16 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=date : from : to : cc
+ : subject : message-id : mime-version : content-type; s=corp-2020-01-29;
+ bh=lxQhznWrhqttBj2GenegIUeidXIBtS/QO68pBLdlh1k=;
+ b=Y8a/OTslULivHgRs6t1k2yYCncddZtS16cudf69ceAh4O4dyJKBbfOvY0hFZa0T5omd6
+ XdRrXGKLW7fqzpDcdd7kmlk8ndE3Dp8dlcyMRN/kRLQe1/dFSnLlmKeLPUN4ttkRmaz7
+ MYFS46u2Kow98Cl7+/abFJTlSs5WdeAg3hcX9FIo6Yap+b9/xnWEW78BzZFjG17RzYWE
+ 7JTMYJvufS41GBSqRadVU2DQWGfcq0urS28uAIbvigkGmwTfCc5hkE/G01+M7KHCKGas
+ xrHbV86lelAf2kQ4eKOL0MY8l0oqc16bkehC99QEc+5l4+qJY14IQuvMw2Hjw+N/ZorP ig== 
+Received: from aserp3020.oracle.com (aserp3020.oracle.com [141.146.126.70])
+        by userp2130.oracle.com with ESMTP id 353dyqh03e-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=FAIL);
+        Tue, 01 Dec 2020 07:05:15 +0000
+Received: from pps.filterd (aserp3020.oracle.com [127.0.0.1])
+        by aserp3020.oracle.com (8.16.0.42/8.16.0.42) with SMTP id 0B1703wd040465;
+        Tue, 1 Dec 2020 07:03:15 GMT
+Received: from userv0122.oracle.com (userv0122.oracle.com [156.151.31.75])
+        by aserp3020.oracle.com with ESMTP id 3540exjs8n-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+        Tue, 01 Dec 2020 07:03:14 +0000
+Received: from abhmp0002.oracle.com (abhmp0002.oracle.com [141.146.116.8])
+        by userv0122.oracle.com (8.14.4/8.14.4) with ESMTP id 0B173CXY006362;
+        Tue, 1 Dec 2020 07:03:13 GMT
+Received: from mwanda (/41.210.145.16)
+        by default (Oracle Beehive Gateway v4.0)
+        with ESMTP ; Mon, 30 Nov 2020 23:03:08 -0800
+Date:   Tue, 1 Dec 2020 10:02:54 +0300
+From:   Dan Carpenter <dan.carpenter@oracle.com>
+To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        Bhaumik Bhatt <bbhatt@codeaurora.org>
+Cc:     Hemant Kumar <hemantk@codeaurora.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Jeffrey Hugo <jhugo@codeaurora.org>,
+        Siddartha Mohanadoss <smohanad@codeaurora.org>,
+        Loic Poulain <loic.poulain@linaro.org>,
         linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        dmitry.baryshkov@linaro.org
-Subject: Re: [PATCH v2 4/4] soc: qcom: llcc-qcom: Add support for SM8250 SoC
-In-Reply-To: <20201130093924.45057-5-manivannan.sadhasivam@linaro.org>
-References: <20201130093924.45057-1-manivannan.sadhasivam@linaro.org>
- <20201130093924.45057-5-manivannan.sadhasivam@linaro.org>
-Message-ID: <9fbb8e2e5d74e50d95c750724c4a64e7@codeaurora.org>
-X-Sender: saiprakash.ranjan@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+        kernel-janitors@vger.kernel.org
+Subject: [PATCH] bus: mhi: core: Fix error handling in
+ mhi_register_controller()
+Message-ID: <X8XqbtkPpEKSfFi2@mwanda>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+X-Mailer: git-send-email haha only kidding
+X-Proofpoint-Virus-Version: vendor=nai engine=6000 definitions=9821 signatures=668682
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 mlxscore=0 malwarescore=0 phishscore=0
+ suspectscore=2 bulkscore=0 spamscore=0 adultscore=0 mlxlogscore=999
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2009150000
+ definitions=main-2012010045
+X-Proofpoint-Virus-Version: vendor=nai engine=6000 definitions=9821 signatures=668682
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 malwarescore=0 bulkscore=0
+ clxscore=1011 mlxscore=0 spamscore=0 priorityscore=1501 mlxlogscore=999
+ suspectscore=2 lowpriorityscore=0 phishscore=0 adultscore=0
+ impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2009150000 definitions=main-2012010045
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2020-11-30 15:09, Manivannan Sadhasivam wrote:
-> SM8250 SoC uses LLCC IP version 2. In this version, the WRSC_EN 
-> register
-> needs to be written to enable the Write Sub Cache for each SCID. Hence,
-> use a dedicated "write_scid_en" member with predefined values and write
-> them for LLCC IP version 2.
-> 
-> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> ---
+There are a few problems with the error handling in this function.  They
+mostly center around the alloc_ordered_workqueue() allocation.
+1) If that allocation fails or if the kcalloc() prior to it fails then
+it leads to a NULL dereference when we call
+destroy_workqueue(mhi_cntrl->hiprio_wq).
+2) The error code is not set.
+3) The "mhi_cntrl->mhi_cmd" allocation is not freed.
 
-Reviewed-by: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+The error handling was slightly confusing and I re-ordered it to be in
+the exact mirror/reverse order of how things were allocated.  I changed
+the label names to say what the goto does instead of describing where
+the goto comes from.
 
->  drivers/soc/qcom/llcc-qcom.c       | 38 ++++++++++++++++++++++++++++++
->  include/linux/soc/qcom/llcc-qcom.h |  1 +
->  2 files changed, 39 insertions(+)
-> 
-> diff --git a/drivers/soc/qcom/llcc-qcom.c 
-> b/drivers/soc/qcom/llcc-qcom.c
-> index a559617ea7c0..8403a77b59fe 100644
-> --- a/drivers/soc/qcom/llcc-qcom.c
-> +++ b/drivers/soc/qcom/llcc-qcom.c
-> @@ -51,6 +51,7 @@
-> 
->  #define LLCC_TRP_SCID_DIS_CAP_ALLOC   0x21f00
->  #define LLCC_TRP_PCB_ACT              0x21f04
-> +#define LLCC_TRP_WRSC_EN              0x21f20
-> 
->  #define BANK_OFFSET_STRIDE	      0x80000
-> 
-> @@ -77,6 +78,7 @@
->   *               then the ways assigned to this client are not flushed 
-> on power
->   *               collapse.
->   * @activate_on_init: Activate the slice immediately after it is 
-> programmed
-> + * @write_scid_en: Bit enables write cache support for a given scid.
->   */
->  struct llcc_slice_config {
->  	u32 usecase_id;
-> @@ -91,6 +93,7 @@ struct llcc_slice_config {
->  	bool dis_cap_alloc;
->  	bool retain_on_pc;
->  	bool activate_on_init;
-> +	bool write_scid_en;
->  };
-> 
->  struct qcom_llcc_config {
-> @@ -151,6 +154,25 @@ static const struct llcc_slice_config 
-> sm8150_data[] =  {
->  	{  LLCC_WRCACHE, 31, 128,  1, 1, 0xFFF, 0x0,   0, 0, 0, 0, 0 },
->  };
-> 
-> +static const struct llcc_slice_config sm8250_data[] =  {
-> +	{ LLCC_CPUSS,    1, 3072, 1, 1, 0xfff, 0x0, 0, 0, 0, 1, 1, 0 },
-> +	{ LLCC_VIDSC0,   2, 512,  3, 1, 0xfff, 0x0, 0, 0, 0, 1, 0, 0 },
-> +	{ LLCC_AUDIO,    6, 1024, 1, 0, 0xfff, 0x0, 0, 0, 0, 0, 0, 0 },
-> +	{ LLCC_CMPT,    10, 1024, 1, 0, 0xfff, 0x0, 0, 0, 0, 0, 0, 0 },
-> +	{ LLCC_GPUHTW,  11, 1024, 1, 1, 0xfff, 0x0, 0, 0, 0, 1, 0, 0 },
-> +	{ LLCC_GPU,     12, 1024, 1, 0, 0xfff, 0x0, 0, 0, 0, 1, 0, 1 },
-> +	{ LLCC_MMUHWT,  13, 1024, 1, 1, 0xfff, 0x0, 0, 0, 0, 0, 1, 0 },
-> +	{ LLCC_CMPTDMA, 15, 1024, 1, 0, 0xfff, 0x0, 0, 0, 0, 1, 0, 0 },
-> +	{ LLCC_DISP,    16, 3072, 1, 1, 0xfff, 0x0, 0, 0, 0, 1, 0, 0 },
-> +	{ LLCC_VIDFW,   17, 512,  1, 0, 0xfff, 0x0, 0, 0, 0, 1, 0, 0 },
-> +	{ LLCC_AUDHW,   22, 1024, 1, 1, 0xfff, 0x0, 0, 0, 0, 1, 0, 0 },
-> +	{ LLCC_NPU,     23, 3072, 1, 1, 0xfff, 0x0, 0, 0, 0, 1, 0, 0 },
-> +	{ LLCC_WLHW,    24, 1024, 1, 0, 0xfff, 0x0, 0, 0, 0, 1, 0, 0 },
-> +	{ LLCC_CVP,     28, 256,  3, 1, 0xfff, 0x0, 0, 0, 0, 1, 0, 0 },
-> +	{ LLCC_APTCM,   30, 128,  3, 0, 0x0,   0x3, 1, 0, 0, 1, 0, 0 },
-> +	{ LLCC_WRCACHE, 31, 256,  1, 1, 0xfff, 0x0, 0, 0, 0, 0, 1, 0 },
-> +};
-> +
->  static const struct qcom_llcc_config sc7180_cfg = {
->  	.sct_data	= sc7180_data,
->  	.size		= ARRAY_SIZE(sc7180_data),
-> @@ -168,6 +190,11 @@ static const struct qcom_llcc_config sm8150_cfg = 
-> {
->  	.size           = ARRAY_SIZE(sm8150_data),
->  };
-> 
-> +static const struct qcom_llcc_config sm8250_cfg = {
-> +	.sct_data       = sm8250_data,
-> +	.size           = ARRAY_SIZE(sm8250_data),
-> +};
-> +
->  static struct llcc_drv_data *drv_data = (void *) -EPROBE_DEFER;
-> 
->  /**
-> @@ -417,6 +444,16 @@ static int _qcom_llcc_cfg_program(const struct
-> llcc_slice_config *config,
->  			return ret;
->  	}
-> 
-> +	if (drv_data->major_version == 2) {
-> +		u32 wren;
-> +
-> +		wren = config->write_scid_en << config->slice_id;
-> +		ret = regmap_update_bits(drv_data->bcast_regmap, LLCC_TRP_WRSC_EN,
-> +					 BIT(config->slice_id), wren);
-> +		if (ret)
-> +			return ret;
-> +	}
-> +
->  	if (config->activate_on_init) {
->  		desc.slice_id = config->slice_id;
->  		ret = llcc_slice_activate(&desc);
-> @@ -571,6 +608,7 @@ static const struct of_device_id 
-> qcom_llcc_of_match[] = {
->  	{ .compatible = "qcom,sc7180-llcc", .data = &sc7180_cfg },
->  	{ .compatible = "qcom,sdm845-llcc", .data = &sdm845_cfg },
->  	{ .compatible = "qcom,sm8150-llcc", .data = &sm8150_cfg },
-> +	{ .compatible = "qcom,sm8250-llcc", .data = &sm8250_cfg },
->  	{ }
->  };
-> 
-> diff --git a/include/linux/soc/qcom/llcc-qcom.h
-> b/include/linux/soc/qcom/llcc-qcom.h
-> index d17a3de80510..64fc582ae415 100644
-> --- a/include/linux/soc/qcom/llcc-qcom.h
-> +++ b/include/linux/soc/qcom/llcc-qcom.h
-> @@ -29,6 +29,7 @@
->  #define LLCC_AUDHW       22
->  #define LLCC_NPU         23
->  #define LLCC_WLHW        24
-> +#define LLCC_CVP         28
->  #define LLCC_MODPE       29
->  #define LLCC_APTCM       30
->  #define LLCC_WRCACHE     31
+Fixes: 8f7039787687 ("bus: mhi: core: Move to using high priority workqueue")
+Signed-off-by: Dan Carpenter <dan.carpenter@oracle.com>
+---
+ drivers/bus/mhi/core/init.c | 29 ++++++++++++++---------------
+ 1 file changed, 14 insertions(+), 15 deletions(-)
 
+diff --git a/drivers/bus/mhi/core/init.c b/drivers/bus/mhi/core/init.c
+index 96cde9c0034c..f0697f433c2f 100644
+--- a/drivers/bus/mhi/core/init.c
++++ b/drivers/bus/mhi/core/init.c
+@@ -871,7 +871,7 @@ int mhi_register_controller(struct mhi_controller *mhi_cntrl,
+ 				     sizeof(*mhi_cntrl->mhi_cmd), GFP_KERNEL);
+ 	if (!mhi_cntrl->mhi_cmd) {
+ 		ret = -ENOMEM;
+-		goto error_alloc_cmd;
++		goto err_free_event;
+ 	}
+ 
+ 	INIT_LIST_HEAD(&mhi_cntrl->transition_list);
+@@ -886,7 +886,8 @@ int mhi_register_controller(struct mhi_controller *mhi_cntrl,
+ 				("mhi_hiprio_wq", WQ_MEM_RECLAIM | WQ_HIGHPRI);
+ 	if (!mhi_cntrl->hiprio_wq) {
+ 		dev_err(mhi_cntrl->cntrl_dev, "Failed to allocate workqueue\n");
+-		goto error_alloc_cmd;
++		ret = -ENOMEM;
++		goto err_free_cmd;
+ 	}
+ 
+ 	mhi_cmd = mhi_cntrl->mhi_cmd;
+@@ -932,7 +933,7 @@ int mhi_register_controller(struct mhi_controller *mhi_cntrl,
+ 	ret = mhi_read_reg(mhi_cntrl, mhi_cntrl->regs,
+ 			   SOC_HW_VERSION_OFFS, &soc_info);
+ 	if (ret)
+-		goto error_alloc_dev;
++		goto err_destroy_wq;
+ 
+ 	mhi_cntrl->family_number = (soc_info & SOC_HW_VERSION_FAM_NUM_BMSK) >>
+ 					SOC_HW_VERSION_FAM_NUM_SHFT;
+@@ -946,7 +947,7 @@ int mhi_register_controller(struct mhi_controller *mhi_cntrl,
+ 	mhi_cntrl->index = ida_alloc(&mhi_controller_ida, GFP_KERNEL);
+ 	if (mhi_cntrl->index < 0) {
+ 		ret = mhi_cntrl->index;
+-		goto error_ida_alloc;
++		goto err_destroy_wq;
+ 	}
+ 
+ 	/* Register controller with MHI bus */
+@@ -954,7 +955,7 @@ int mhi_register_controller(struct mhi_controller *mhi_cntrl,
+ 	if (IS_ERR(mhi_dev)) {
+ 		dev_err(mhi_cntrl->cntrl_dev, "Failed to allocate MHI device\n");
+ 		ret = PTR_ERR(mhi_dev);
+-		goto error_alloc_dev;
++		goto err_ida_free;
+ 	}
+ 
+ 	mhi_dev->dev_type = MHI_DEVICE_CONTROLLER;
+@@ -967,7 +968,7 @@ int mhi_register_controller(struct mhi_controller *mhi_cntrl,
+ 
+ 	ret = device_add(&mhi_dev->dev);
+ 	if (ret)
+-		goto error_add_dev;
++		goto err_release_dev;
+ 
+ 	mhi_cntrl->mhi_dev = mhi_dev;
+ 
+@@ -975,19 +976,17 @@ int mhi_register_controller(struct mhi_controller *mhi_cntrl,
+ 
+ 	return 0;
+ 
+-error_add_dev:
++err_release_dev:
+ 	put_device(&mhi_dev->dev);
+-
+-error_alloc_dev:
++err_ida_free:
+ 	ida_free(&mhi_controller_ida, mhi_cntrl->index);
+-
+-error_ida_alloc:
++err_destroy_wq:
++	destroy_workqueue(mhi_cntrl->hiprio_wq);
++err_free_cmd:
+ 	kfree(mhi_cntrl->mhi_cmd);
+-
+-error_alloc_cmd:
+-	vfree(mhi_cntrl->mhi_chan);
++err_free_event:
+ 	kfree(mhi_cntrl->mhi_event);
+-	destroy_workqueue(mhi_cntrl->hiprio_wq);
++	vfree(mhi_cntrl->mhi_chan);
+ 
+ 	return ret;
+ }
 -- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a 
-member
-of Code Aurora Forum, hosted by The Linux Foundation
+2.29.2
+
