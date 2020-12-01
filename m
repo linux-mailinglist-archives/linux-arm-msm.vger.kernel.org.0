@@ -2,127 +2,167 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 9E54C2CA9BF
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Dec 2020 18:32:36 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 61FEA2CA9B8
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Dec 2020 18:32:33 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2391226AbgLARb5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 1 Dec 2020 12:31:57 -0500
-Received: from m42-5.mailgun.net ([69.72.42.5]:35714 "EHLO m42-5.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2391170AbgLARb5 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 1 Dec 2020 12:31:57 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1606843891; h=Content-Transfer-Encoding: Content-Type:
- In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
- Subject: Sender; bh=K1x8lx2ayye4/N0xNELnpa6CNM0J4yfcDBWhh1G+S30=; b=HU4NMe6GdV6EjCdkTpBQF4JRT/lgGkFQTEh+joUSqPwlWRvVl42YJ5juQv/71DqpLzWxS0NI
- jp+Hh0LglLgUUDt20XcZBKcNyI/YFUaBmXdaBySiYPqcCe0O5NMoTItRcvSDoim5PIWHn9YR
- v3xc8mxZ265gNixlEtpDA3vScEM=
-X-Mailgun-Sending-Ip: 69.72.42.5
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n10.prod.us-east-1.postgun.com with SMTP id
- 5fc67df3edac2724d86d40e5 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 01 Dec 2020 17:31:31
- GMT
-Sender: srivasam=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 0547DC43462; Tue,  1 Dec 2020 17:31:30 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        NICE_REPLY_A,SPF_FAIL autolearn=no autolearn_force=no version=3.4.0
-Received: from [172.20.10.2] (unknown [27.59.188.56])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: srivasam)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 47E31C43460;
-        Tue,  1 Dec 2020 17:31:23 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 47E31C43460
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=srivasam@codeaurora.org
-Subject: Re: [PATCH v4 1/2] Partially revert ASoC: qcom: Fix enabling BCLK and
- LRCLK in LPAIF invalid state
-To:     Mark Brown <broonie@kernel.org>
-Cc:     agross@kernel.org, bjorn.andersson@linaro.org, lgirdwood@gmail.com,
-        robh+dt@kernel.org, plai@codeaurora.org, bgoswami@codeaurora.org,
-        perex@perex.cz, tiwai@suse.com, srinivas.kandagatla@linaro.org,
-        rohitkr@codeaurora.org, linux-arm-msm@vger.kernel.org,
-        alsa-devel@alsa-project.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        V Sujith Kumar Reddy <vsujithk@codeaurora.org>
-References: <1606539559-4277-1-git-send-email-srivasam@codeaurora.org>
- <1606539559-4277-2-git-send-email-srivasam@codeaurora.org>
- <20201130124617.GC4756@sirena.org.uk>
-From:   Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
-Organization: Qualcomm India Private Limited.
-Message-ID: <966993b7-4720-bdd2-cf4d-cf5a7c11a0c1@codeaurora.org>
-Date:   Tue, 1 Dec 2020 23:01:21 +0530
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.5.0
+        id S2404136AbgLARaj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 1 Dec 2020 12:30:39 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46126 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2404120AbgLARai (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 1 Dec 2020 12:30:38 -0500
+Received: from mail-ej1-x641.google.com (mail-ej1-x641.google.com [IPv6:2a00:1450:4864:20::641])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E32E4C061A04
+        for <linux-arm-msm@vger.kernel.org>; Tue,  1 Dec 2020 09:29:55 -0800 (PST)
+Received: by mail-ej1-x641.google.com with SMTP id m19so5725903ejj.11
+        for <linux-arm-msm@vger.kernel.org>; Tue, 01 Dec 2020 09:29:55 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=3kgOHBtixErnriEtsg2lfKIcWc7GFIxP/NgjDBm37sI=;
+        b=z1hQQuuHgm+BjH29ILhlPeLmWwwCdZq4ZBQW4CzFPkSQebnGsozAhhN9l71quZlehJ
+         6ALc5hrDwb/hpuRn7V1XHQXfEGV18XQUXGdJD967uAxqJ1NrOWLQsDNPAKKJ3UkYc5QU
+         5HBUjG2fuiEv1J8DdDk/HNbBBfuB8cB4eoRZqktoKSXiipAMsEKBMqS76bk/CxpBYWUa
+         6DcWsCIkzMqD+W2pMjhQy38TZsJ6xrTDFPGBKVyr747VovFB1hD5NEzhHT5bP0sF6+is
+         OkjkJqJA7LZOA4bx2JoCiNVmFgUheXOIkMegvc+JUAlCgeesf8HQSsdiPxUTWyB2q5ZE
+         9zhg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=3kgOHBtixErnriEtsg2lfKIcWc7GFIxP/NgjDBm37sI=;
+        b=EvNLK7SWO3g75PXWm+LFaLeOgnqfPwqcrx1hXOSAbq2XCB9CFOIY/509fN2qExsIzB
+         oqH5Y/qB2xHJPrqMvmgbqTO/IP3oIQIACP4m/ryXeq4HjzjyMHz9fOyWpTHVHbk3AuIV
+         GbQaHg+UHZs4pvnhyQhAPKRVq/X/HH/kLfTcxL/BLr9J9DreerIIsbD9wZoUg9ExqgXl
+         89kdtGMwSBYr8f1HgYjN6SNBa+EMHKKOM37ISod/L3qEVKId3lg8z56gqnZZELTrLxXS
+         Qp06vJj+NS08ON+wf/PywDRIpP0Ot++SqHxyugjpCZav61GKFGrSOhNKXaH/3WO8BJ6P
+         nM3w==
+X-Gm-Message-State: AOAM531Kg9AsFuAJWqDUGGTkWts234O91RUN4HNYFGZyelUcPiWzaXsn
+        4k0c33SB9GO4IMVCvk5vd0IKhXisgQT6eIbtVonPqA==
+X-Google-Smtp-Source: ABdhPJy02S0PbdqT+IuCzCZMaQvDeZJBuyN6C6ly+NWkFyziycGrzVIIQyOTk0uFU37LCSPHtCmpSAU1JYK3zQ2D3Rc=
+X-Received: by 2002:a17:906:411b:: with SMTP id j27mr4045057ejk.466.1606843794518;
+ Tue, 01 Dec 2020 09:29:54 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <20201130124617.GC4756@sirena.org.uk>
-Content-Type: text/plain; charset=windows-1252; format=flowed
-Content-Transfer-Encoding: 8bit
-Content-Language: en-US
+References: <1606533966-22821-1-git-send-email-hemantk@codeaurora.org>
+ <1606533966-22821-5-git-send-email-hemantk@codeaurora.org>
+ <CAMZdPi8z+-qFqgZ7AFJcNAUMbDQtNN5Hz-geMBcp4azrUGm9iA@mail.gmail.com> <c47dcd57-7576-e03e-f70b-0c4d25f724b5@codeaurora.org>
+In-Reply-To: <c47dcd57-7576-e03e-f70b-0c4d25f724b5@codeaurora.org>
+From:   Loic Poulain <loic.poulain@linaro.org>
+Date:   Tue, 1 Dec 2020 18:36:09 +0100
+Message-ID: <CAMZdPi8mUV5cFs-76K3kg=hN8ht2SKjJwzbJH-+VH4Y8QabcHQ@mail.gmail.com>
+Subject: Re: [PATCH v13 4/4] bus: mhi: Add userspace client interface driver
+To:     Hemant Kumar <hemantk@codeaurora.org>
+Cc:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        open list <linux-kernel@vger.kernel.org>,
+        Jeffrey Hugo <jhugo@codeaurora.org>,
+        Bhaumik Bhatt <bbhatt@codeaurora.org>,
+        Network Development <netdev@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Thanks Mark for your time!!!
+On Tue, 1 Dec 2020 at 02:16, Hemant Kumar <hemantk@codeaurora.org> wrote:
+>
+> Hi Loic,
+>
+> On 11/30/20 10:22 AM, Loic Poulain wrote:
+> > On Sat, 28 Nov 2020 at 04:26, Hemant Kumar <hemantk@codeaurora.org> wrote:
+> >>
+> >> This MHI client driver allows userspace clients to transfer
+> >> raw data between MHI device and host using standard file operations.
+> >> Driver instantiates UCI device object which is associated to device
+> >> file node. UCI device object instantiates UCI channel object when device
+> >> file node is opened. UCI channel object is used to manage MHI channels
+> >> by calling MHI core APIs for read and write operations. MHI channels
+> >> are started as part of device open(). MHI channels remain in start
+> >> state until last release() is called on UCI device file node. Device
+> >> file node is created with format
+> >
+> > [...]
+> >
+> >> +struct uci_chan {
+> >> +       struct uci_dev *udev;
+> >> +       wait_queue_head_t ul_wq;
+> >> +
+> >> +       /* ul channel lock to synchronize multiple writes */
+> >> +       struct mutex write_lock;
+> >> +
+> >> +       wait_queue_head_t dl_wq;
+> >> +
+> >> +       /* dl channel lock to synchronize multiple reads */
+> >> +       struct mutex read_lock;
+> >> +
+> >> +       /*
+> >> +        * protects pending list in bh context, channel release, read and
+> >> +        * poll
+> >> +        */
+> >> +       spinlock_t dl_pending_lock;
+> >> +
+> >> +       struct list_head dl_pending;
+> >> +       struct uci_buf *cur_buf;
+> >> +       size_t dl_size;
+> >> +       struct kref ref_count;
+> >> +};
+> >
+> > [...]
+> >
+> >> + * struct uci_dev - MHI UCI device
+> >> + * @minor: UCI device node minor number
+> >> + * @mhi_dev: associated mhi device object
+> >> + * @uchan: UCI uplink and downlink channel object
+> >> + * @mtu: max TRE buffer length
+> >> + * @enabled: Flag to track the state of the UCI device
+> >> + * @lock: mutex lock to manage uchan object
+> >> + * @ref_count: uci_dev reference count
+> >> + */
+> >> +struct uci_dev {
+> >> +       unsigned int minor;
+> >> +       struct mhi_device *mhi_dev;
+> >> +       struct uci_chan *uchan;
+> >
+> > Why a pointer to uci_chan and not just plainly integrating the
+> > structure here, AFAIU uci_chan describes the channels and is just a
+> > subpart of uci_dev. That would reduce the number of dynamic
+> > allocations you manage and the extra kref. do you even need a separate
+> > structure for this?
+>
+> This goes back to one of my patch versions i tried to address concern
+> from Greg. Since we need to ref count the channel as well as the uci
+> device i decoupled the two objects and used two reference counts for two
+> different objects.
 
-On 11/30/2020 6:16 PM, Mark Brown wrote:
-> On Sat, Nov 28, 2020 at 10:29:18AM +0530, Srinivasa Rao Mandadapu wrote:
->> This reverts part of commit b1824968221c
->> ("ASoC: qcom: Fix enabling BCLK and LRCLK in LPAIF invalid state")
->>
->> To identify LPAIF invalid state after device suspend and resume,
->> made I2S and DMA control registers not volatile, which is not necessary.
->> Instead invalid reg state can be handled with regcache APIs.
->> The BCLK ref count is necessary to enable clock only it's in disable state.
-> Part of this commit message says that the problem was making the registers
-> non-volatile but both the change and the rest of the commit message say
-> that the issue was that the registers were made volatile.  I'm also
-> still unclear as to what the issue is either way - how does reading the
-> state of the registers from the hardware instead of the cache affect
-> things?
+What Greg complained about is the two kref in the same structure and
+that you were using kref as an open() counter. But splitting your
+struct in two in order to keep the two kref does not make the much
+code better (and simpler). I'm still a bit puzzled about the driver
+complexity, it's supposed to be just a passthrough interface to MHI
+after all.
 
-Initial problem was, during playback if device suspended, I2S and DMA 
-control registers
+I would suggest several changes, that IMHO would simplify reviewing:
+- Use only one structure representing the 'uci' context (uci_dev)
+- Keep the read path simple (mhi_uci_read), do no use an intermediate
+cur_buf pointer, only dequeue the buffer when it is fully consumed.
+- As I commented before, take care of the dl_pending list access
+concurrency, even in wait_event.
+- You don't need to count the number of open() calls, AFAIK,
+mhi_prepare_for_transfer() simply fails if channels are already
+started...
 
-are getting reset and unable to recover playback after resume.
+For testing purpose, I've implemented those changes on my side (based
+on your driver):
+https://git.linaro.org/landing-teams/working/telit/linux.git/commit/?h=mhi_uci_test&id=45ff60703cc26913061a26260e39cf3ab3e57c2b
 
-As these registers were non volatile registers, driver is not getting 
-actual register value
+Feel free to pick (or not), I'm not going to 'block' that series if
+others are fine with the current implementation.
 
-and unable to report error state to application. Due to this application
+Anyway, I've tested your series and it works on my side with
+libqmi/qmicli (controlling SDX55 modem):
+Tested-by: Loic Poulain <loic.poulain@linaro.org>
 
-keeps on polling for HW current pointer state and not exited from PCM 
-running state.
-
-To handle this scenario I made registers volatile and if they are in 
-reset state, reported error
-
-to application(commit b1824968221c).
-
-Later from review comments by Srinivas kandagatla, I got to know
-
-about regcache sync APIs, which can be used  to sync cache after resume and
-
-HW registers can be updated with  original values. With that playback 
-can be continued.
-
-So is the reason, I am reverting partial changes in the commit b1824968221c.
-
-
-> Please submit patches using subject lines reflecting the style for the
-> subsystem, this makes it easier for people to identify relevant patches.
-> Look at what existing commits in the area you're changing are doing and
-> make sure your subject lines visually resemble what they're doing.
-> There's no need to resubmit to fix this alone.
-
--- 
-Qualcomm India Private Limited, on behalf of Qualcomm Innovation Center, Inc.,
-is a member of Code Aurora Forum, a Linux Foundation Collaborative Project.
-
+Regards,
+Loic
