@@ -2,88 +2,262 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C28C22C9EAE
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Dec 2020 11:08:13 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id AD0F42CA29A
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Dec 2020 13:24:55 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729612AbgLAKEl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 1 Dec 2020 05:04:41 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60610 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729611AbgLAKEl (ORCPT
+        id S1726862AbgLAMW7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 1 Dec 2020 07:22:59 -0500
+Received: from a2.mail.mailgun.net ([198.61.254.61]:17341 "EHLO
+        a2.mail.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726390AbgLAMW7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 1 Dec 2020 05:04:41 -0500
-Received: from mail-wr1-x444.google.com (mail-wr1-x444.google.com [IPv6:2a00:1450:4864:20::444])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5B5D1C0617A7
-        for <linux-arm-msm@vger.kernel.org>; Tue,  1 Dec 2020 02:03:55 -0800 (PST)
-Received: by mail-wr1-x444.google.com with SMTP id 64so1689975wra.11
-        for <linux-arm-msm@vger.kernel.org>; Tue, 01 Dec 2020 02:03:55 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=SZblI69noqCIxbxUnirHkw2+VUSbNBwoSxJOwnbJg6k=;
-        b=e7/v6+d484mwVp6LE6Gy5b3szpQToRlhfo6Ls5Upj5t1DHTtyx8wLxFzJ/cxS1rGo3
-         UP+Bk1ImIIRpO7Fw8te4Bj6bR/lJFsYW+h7+2EB4BXuO/Qskaq3JZFVnd0u78pCCGEcS
-         DvB7R9KSICxd8BPQDhU8/awQVSe7w/FmxwcbzjK2Su4hcvF2cC9kbd7RBE1Q5GNbsyzD
-         zJYIkYH8lERdAwfnsWPjKGO1NAUtQBa2EhuoI3Fh7wyLtVvjyqvQo1XTPp/60WoqFUn1
-         tQqrY5bds4lCYEyqDqGuKP/32PyiJZ2NkFjpq2wVSdIoGQ3DPway9fzjGe+f/k1NLORK
-         HKTg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=SZblI69noqCIxbxUnirHkw2+VUSbNBwoSxJOwnbJg6k=;
-        b=OJhhVbMNfFRBJ7o9NZSmEVi7ixE9axCOIdZpNLJQz6s/OK69utms4GyKyfJbbSZagO
-         HKkr9RWr4SypO9yILP4u6m3ptA99uGarRDR/r3OAgBzWZBjzOFK6vQfVqeXVsDCElO3V
-         WkEcgj+KTVyiA/9OA41tfWZgwZfTSrXmCpKDRQmJ1nuRku1NLOAMTG3Dv78vVpyrZ4fY
-         0vNmip5lmM7BbHd2mxgfMc0YrQZpfRugKUuFOURcBq/nflYnz2vzRTRPKdv/zm8ZtqHp
-         KBE6PVEK3UN5IjQsJgltSEuBitoA5BPKBigvvrMQBb0W42R7tVMCCwJq2ixX6ofctQ9m
-         UV/w==
-X-Gm-Message-State: AOAM533k/ElgrHToCz7eUTMpx5y5R6Q1mHAeqV87OKHOuDN/DJ5UaFgh
-        FYV7v1jUa65Y1AkmLyh358+bPQ==
-X-Google-Smtp-Source: ABdhPJx6qbSJTb/eqIvCBhGL1M4EOUWs6PmV2s+4lMnl09dGnBpNV4YrmfnC3wK0UEVe4l95dDyTSw==
-X-Received: by 2002:adf:f542:: with SMTP id j2mr2823739wrp.32.1606817034117;
-        Tue, 01 Dec 2020 02:03:54 -0800 (PST)
-Received: from [192.168.86.34] (cpc86377-aztw32-2-0-cust226.18-1.cable.virginm.net. [92.233.226.227])
-        by smtp.googlemail.com with ESMTPSA id f17sm1937825wmh.10.2020.12.01.02.03.52
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 01 Dec 2020 02:03:53 -0800 (PST)
-Subject: Re: [PATCH v4 1/2] dt-bindings: pinctrl: qcom: Add sm8250 lpass lpi
- pinctrl bindings
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     linus.walleij@linaro.org, robh+dt@kernel.org, agross@kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20201116143432.15809-1-srinivas.kandagatla@linaro.org>
- <20201116143432.15809-2-srinivas.kandagatla@linaro.org>
- <X8WUi++JFLVvbXqj@builder.lan>
-From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Message-ID: <07c87714-ccd1-fa87-d55c-a9827e71a77a@linaro.org>
-Date:   Tue, 1 Dec 2020 10:03:52 +0000
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.8.0
+        Tue, 1 Dec 2020 07:22:59 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1606825354; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=lsXKf5QO/9xCz388NXoa/OlvnD4yuBrU2kS5uFs35Co=;
+ b=FljU67r4SWljFgX3TSf8Y4kNbJ4Tt2VTnVL5uEa/35hF2B+l2q+rheT9V35FaThHHQYeBEzz
+ pofwj5yaQTbJlZnI47sjQTB9UEXfP7Bshx+DM6ijfWJVS+Wm6+hkNQc7gXZeMrWWjGrb55+L
+ I3YCapYYBZvH6v71xBbRWmF8D6Q=
+X-Mailgun-Sending-Ip: 198.61.254.61
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n06.prod.us-east-1.postgun.com with SMTP id
+ 5fc6356e51762b188613d4b3 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 01 Dec 2020 12:22:06
+ GMT
+Sender: dikshita=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 139CFC43460; Tue,  1 Dec 2020 12:22:05 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: dikshita)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 865D7C433ED;
+        Tue,  1 Dec 2020 12:22:04 +0000 (UTC)
 MIME-Version: 1.0
-In-Reply-To: <X8WUi++JFLVvbXqj@builder.lan>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=UTF-8;
+ format=flowed
+Content-Transfer-Encoding: 8bit
+Date:   Tue, 01 Dec 2020 17:52:04 +0530
+From:   dikshita@codeaurora.org
+To:     Stanimir Varbanov <stanimir.varbanov@linaro.org>
+Cc:     linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Vikash Garodia <vgarodia@codeaurora.org>,
+        Mansur Alisha Shaik <mansur@codeaurora.org>
+Subject: Re: [PATCH 1/3] venus: venc: Init the session only once in
+ queue_setup
+In-Reply-To: <20201120001037.10032-2-stanimir.varbanov@linaro.org>
+References: <20201120001037.10032-1-stanimir.varbanov@linaro.org>
+ <20201120001037.10032-2-stanimir.varbanov@linaro.org>
+Message-ID: <1773b354a597bf3e485cf07fffca62de@codeaurora.org>
+X-Sender: dikshita@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Hi Stan,
 
-
-On 01/12/2020 00:55, Bjorn Andersson wrote:
->> +        reg = <0x33c0000 0x20000>,
->> +              <0x355a000 0x1000>;
-> We shouldn't reference parts of blocks, so this should be 16KB at
-
-yes, makes sense! Will change the example accordingly!
-
-> 0x35500000 and if we have multiple drivers that needs to poke in that
-> region we'd need to abstract that somehow (e.g. though a syscon).Yes!
+On 2020-11-20 05:40, Stanimir Varbanov wrote:
+> Init the hfi session only once in queue_setup and also cover that
+> with inst->lock.
 > 
-> Regards,
-> Bjorn
+> Signed-off-by: Stanimir Varbanov <stanimir.varbanov@linaro.org>
+> ---
+>  drivers/media/platform/qcom/venus/venc.c | 98 ++++++++++++++++++------
+>  1 file changed, 73 insertions(+), 25 deletions(-)
 > 
+> diff --git a/drivers/media/platform/qcom/venus/venc.c
+> b/drivers/media/platform/qcom/venus/venc.c
+> index 4ecf78e30b59..3a2e449663d8 100644
+> --- a/drivers/media/platform/qcom/venus/venc.c
+> +++ b/drivers/media/platform/qcom/venus/venc.c
+> @@ -725,8 +725,10 @@ static int venc_init_session(struct venus_inst 
+> *inst)
+>  	int ret;
+> 
+>  	ret = hfi_session_init(inst, inst->fmt_cap->pixfmt);
+> -	if (ret)
+> -		return ret;
+> +	if (ret == -EINVAL)
+> +		return 0;
+> +	else if (ret)
+> +		goto deinit;
+> 
+>  	ret = venus_helper_set_input_resolution(inst, inst->width,
+>  						inst->height);
+> @@ -762,17 +764,13 @@ static int venc_out_num_buffers(struct
+> venus_inst *inst, unsigned int *num)
+>  	struct hfi_buffer_requirements bufreq;
+>  	int ret;
+> 
+> -	ret = venc_init_session(inst);
+> +	ret = venus_helper_get_bufreq(inst, HFI_BUFFER_INPUT, &bufreq);
+>  	if (ret)
+>  		return ret;
+> 
+> -	ret = venus_helper_get_bufreq(inst, HFI_BUFFER_INPUT, &bufreq);
+> -
+>  	*num = bufreq.count_actual;
+> 
+> -	hfi_session_deinit(inst);
+> -
+> -	return ret;
+> +	return 0;
+>  }
+> 
+>  static int venc_queue_setup(struct vb2_queue *q,
+> @@ -781,7 +779,7 @@ static int venc_queue_setup(struct vb2_queue *q,
+>  {
+>  	struct venus_inst *inst = vb2_get_drv_priv(q);
+>  	unsigned int num, min = 4;
+> -	int ret = 0;
+> +	int ret;
+> 
+>  	if (*num_planes) {
+>  		if (q->type == V4L2_BUF_TYPE_VIDEO_OUTPUT_MPLANE &&
+> @@ -803,6 +801,17 @@ static int venc_queue_setup(struct vb2_queue *q,
+>  		return 0;
+>  	}
+> 
+> +	ret = mutex_lock_interruptible(&inst->lock);
+> +	if (ret)
+> +		return ret;
+> +
+> +	ret = venc_init_session(inst);
+> +
+> +	mutex_unlock(&inst->lock);
+> +
+> +	if (ret)
+> +		return ret;
+> +
+>  	switch (q->type) {
+>  	case V4L2_BUF_TYPE_VIDEO_OUTPUT_MPLANE:
+>  		*num_planes = inst->fmt_out->num_planes;
+> @@ -838,6 +847,54 @@ static int venc_queue_setup(struct vb2_queue *q,
+>  	return ret;
+>  }
+> 
+> +static int venc_buf_init(struct vb2_buffer *vb)
+> +{
+> +	struct venus_inst *inst = vb2_get_drv_priv(vb->vb2_queue);
+> +
+> +	inst->buf_count++;
+> +
+> +	return venus_helper_vb2_buf_init(vb);
+> +}
+> +
+> +static void venc_release_session(struct venus_inst *inst)
+> +{
+> +	int ret, abort = 0;
+> +
+> +	mutex_lock(&inst->lock);
+> +
+> +	ret = hfi_session_deinit(inst);
+> +	abort = (ret && ret != -EINVAL) ? 1 : 0;
+> +
+> +	if (inst->session_error)
+> +		abort = 1;
+> +
+> +	if (abort)
+> +		hfi_session_abort(inst);
+> +
+> +	mutex_unlock(&inst->lock);
+> +
+> +	venus_pm_load_scale(inst);
+> +	INIT_LIST_HEAD(&inst->registeredbufs);
+> +	venus_pm_release_core(inst);
+> +}
+> +
+> +static void venc_buf_cleanup(struct vb2_buffer *vb)
+> +{
+> +	struct venus_inst *inst = vb2_get_drv_priv(vb->vb2_queue);
+> +	struct vb2_v4l2_buffer *vbuf = to_vb2_v4l2_buffer(vb);
+> +	struct venus_buffer *buf = to_venus_buffer(vbuf);
+> +
+> +	mutex_lock(&inst->lock);
+> +	if (vb->type == V4L2_BUF_TYPE_VIDEO_CAPTURE_MPLANE)
+> +		if (!list_empty(&inst->registeredbufs))
+> +			list_del_init(&buf->reg_list);
+> +	mutex_unlock(&inst->lock);
+> +
+> +	inst->buf_count--;
+> +	if (!inst->buf_count)
+> +		venc_release_session(inst);
+> +}
+> +
+>  static int venc_verify_conf(struct venus_inst *inst)
+>  {
+>  	enum hfi_version ver = inst->core->res->hfi_version;
+> @@ -888,38 +945,28 @@ static int venc_start_streaming(struct vb2_queue
+> *q, unsigned int count)
+>  	inst->sequence_cap = 0;
+>  	inst->sequence_out = 0;
+> 
+> -	ret = venc_init_session(inst);
+> -	if (ret)
+> -		goto bufs_done;
+> -
+>  	ret = venus_pm_acquire_core(inst);
+>  	if (ret)
+> -		goto deinit_sess;
+> -
+> -	ret = venc_set_properties(inst);
+> -	if (ret)
+> -		goto deinit_sess;
+
+With this change, if set ctrl for target bitrate is called after queue 
+setup and before streaming,
+the new bitrate won’t be set to FW. which is not right and can cause 
+quality issues.
+The same might apply to other encoder parameters as well.
+Please fix this in the next version.
+
+> +		goto error;
+> 
+>  	ret = venc_verify_conf(inst);
+>  	if (ret)
+> -		goto deinit_sess;
+> +		goto error;
+> 
+>  	ret = venus_helper_set_num_bufs(inst, inst->num_input_bufs,
+>  					inst->num_output_bufs, 0);
+>  	if (ret)
+> -		goto deinit_sess;
+> +		goto error;
+> 
+>  	ret = venus_helper_vb2_start_streaming(inst);
+>  	if (ret)
+> -		goto deinit_sess;
+> +		goto error;
+> 
+>  	mutex_unlock(&inst->lock);
+> 
+>  	return 0;
+> 
+> -deinit_sess:
+> -	hfi_session_deinit(inst);
+> -bufs_done:
+> +error:
+>  	venus_helper_buffers_done(inst, q->type, VB2_BUF_STATE_QUEUED);
+>  	if (q->type == V4L2_BUF_TYPE_VIDEO_OUTPUT_MPLANE)
+>  		inst->streamon_out = 0;
+> @@ -940,7 +987,8 @@ static void venc_vb2_buf_queue(struct vb2_buffer 
+> *vb)
+> 
+>  static const struct vb2_ops venc_vb2_ops = {
+>  	.queue_setup = venc_queue_setup,
+> -	.buf_init = venus_helper_vb2_buf_init,
+> +	.buf_init = venc_buf_init,
+> +	.buf_cleanup = venc_buf_cleanup,
+>  	.buf_prepare = venus_helper_vb2_buf_prepare,
+>  	.start_streaming = venc_start_streaming,
+>  	.stop_streaming = venus_helper_vb2_stop_streaming,
