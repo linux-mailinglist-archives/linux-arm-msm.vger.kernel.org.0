@@ -2,155 +2,185 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 808A82C95BE
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Dec 2020 04:25:42 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D4BDD2C961C
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Dec 2020 04:54:34 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727561AbgLADYx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 30 Nov 2020 22:24:53 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55940 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726841AbgLADYw (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 30 Nov 2020 22:24:52 -0500
-Received: from mail-lf1-x144.google.com (mail-lf1-x144.google.com [IPv6:2a00:1450:4864:20::144])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 39BEDC0613D3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 30 Nov 2020 19:24:12 -0800 (PST)
-Received: by mail-lf1-x144.google.com with SMTP id a9so1108087lfh.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 30 Nov 2020 19:24:12 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=7+Idg3efY9PUSvZ7WAMegwUyYjeY1husLBEhQzx0RW4=;
-        b=eyARn/I6tSRyPIRz85iURN20GQQJ/cCVXjHBtH4ObUJEwoRJnuHd/2gQ18KpmnnXGa
-         pmRnly9JilsjkRYe2aJkg7c0P6CEbe8d87i6lfyrFhfraxlsLCIFKEDpZiOmDmArrOLz
-         o7NpFDpE5K0rICtv4AbACEl2fSLHesjRouwIo=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=7+Idg3efY9PUSvZ7WAMegwUyYjeY1husLBEhQzx0RW4=;
-        b=sjbBAg7SWmcNZBDCte9m6CgpR+zjn7vhUX8sXBacrQXIgOkM6OPBqZptFx0PQHlVvP
-         JTAbjwTZb5tfVMYNvaSROh3VDcZsYUFL6DM7cIsBZ6WMAe/xMkDbRSbarS7NQiMmdJ1P
-         6Mf4rtac3GeOrOvyDmQmdW1Md7OAgsH9at/aHKi5uXYLtm1k1qT1ru08b1BVARpu53tV
-         GptZRT9eDLi/xqxKq+8DNZeT2+edTJHudIiRS3xr2fUiTuxONfRiRSurTqglul8lLM3j
-         RGauJkVkNDMAW1H7861M/Tzg73FApbIrRq38S53DPHG4OI5iFCnVkOniVmgm4xMvFrbQ
-         9uQQ==
-X-Gm-Message-State: AOAM531F4EWBrpfR1WtUovEJBn8DwciXCjVoL/vRwb7Voq1DU31xeWd3
-        M0ubFt/dEHSa0mgWMFQ+GmTE2t/DLVUPuVKW
-X-Google-Smtp-Source: ABdhPJxCSD3cOAX+hHfxKFpPy+xbLhPdQbUU7TbRBkmLG9VW8tMQNpagQQ/o7VkqOJfyc31QEenk6g==
-X-Received: by 2002:a19:4a87:: with SMTP id x129mr337071lfa.104.1606793049891;
-        Mon, 30 Nov 2020 19:24:09 -0800 (PST)
-Received: from mail-lf1-f46.google.com (mail-lf1-f46.google.com. [209.85.167.46])
-        by smtp.gmail.com with ESMTPSA id i4sm53884lfl.131.2020.11.30.19.24.09
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 30 Nov 2020 19:24:09 -0800 (PST)
-Received: by mail-lf1-f46.google.com with SMTP id s27so1082046lfp.5
-        for <linux-arm-msm@vger.kernel.org>; Mon, 30 Nov 2020 19:24:09 -0800 (PST)
-X-Received: by 2002:ac2:5e8d:: with SMTP id b13mr279952lfq.246.1606793048600;
- Mon, 30 Nov 2020 19:24:08 -0800 (PST)
+        id S1727794AbgLADxh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 30 Nov 2020 22:53:37 -0500
+Received: from m42-4.mailgun.net ([69.72.42.4]:54932 "EHLO m42-4.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727812AbgLADxe (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 30 Nov 2020 22:53:34 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1606794793; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
+ Subject: Sender; bh=V2UGkaBqDPucsjeZLnmfHo44w9g/CfPcOzdSqBMZI7E=; b=w5X9/JcsfzQ6r7UOobX2lWQjEwqEBT3byKErTienPAMqsS8mJoYBPmBU6xxsYciJNUvpZycl
+ n6xVea7pZNFwF4cGWatsgU02TULfjI2Mmep6MrLhBVcpo/pZXt4nM++vPYNaggWMvBxmTYz6
+ VFk8I/XNRWY8TRNM08sPb+eARqM=
+X-Mailgun-Sending-Ip: 69.72.42.4
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n10.prod.us-west-2.postgun.com with SMTP id
+ 5fc5be0f4a918fcc077329e1 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 01 Dec 2020 03:52:47
+ GMT
+Sender: srivasam=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 1B264C43461; Tue,  1 Dec 2020 03:52:47 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        NICE_REPLY_A,SPF_FAIL,URIBL_BLOCKED autolearn=no autolearn_force=no
+        version=3.4.0
+Received: from [192.168.29.24] (unknown [49.37.158.106])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: srivasam)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 3B781C433ED;
+        Tue,  1 Dec 2020 03:52:42 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 3B781C433ED
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=srivasam@codeaurora.org
+Subject: Re: [PATCH] arm64: dts: qcom: sc7180-trogdor: Add lpass dai link for
+ I2S driver
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     agross@kernel.org, robh+dt@kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, rohitkr@codeaurora.org,
+        srinivas.kandagatla@linaro.org, Ajit Pandey <ajitp@codeaurora.org>,
+        V Sujith Kumar Reddy <vsujithk@codeaurora.org>
+References: <1600440678-2137-1-git-send-email-srivasam@codeaurora.org>
+ <X8UjShseQ0F7itZe@builder.lan>
+From:   Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
+Organization: Qualcomm India Private Limited.
+Message-ID: <838489a9-22df-0d1c-9b8c-30f9c35e8442@codeaurora.org>
+Date:   Tue, 1 Dec 2020 09:22:40 +0530
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.5.0
 MIME-Version: 1.0
-References: <20201129060517.2029659-1-frkoenig@chromium.org>
-In-Reply-To: <20201129060517.2029659-1-frkoenig@chromium.org>
-From:   Alexandre Courbot <acourbot@chromium.org>
-Date:   Tue, 1 Dec 2020 12:23:57 +0900
-X-Gmail-Original-Message-ID: <CAPBb6MUDUs2d+hDRnfg3-7jwqQX8jO1AwjbjyWppE8a64ovvCA@mail.gmail.com>
-Message-ID: <CAPBb6MUDUs2d+hDRnfg3-7jwqQX8jO1AwjbjyWppE8a64ovvCA@mail.gmail.com>
-Subject: Re: [PATCH] venus: venc: Add VIDIOC_TRY_ENCODER_CMD support
-To:     Fritz Koenig <frkoenig@chromium.org>
-Cc:     Linux Media Mailing List <linux-media@vger.kernel.org>,
-        linux-arm-msm@vger.kernel.org, LKML <linux-kernel@vger.kernel.org>,
-        Stanimir Varbanov <stanimir.varbanov@linaro.org>,
-        Vikash Garodia <vgarodia@codeaurora.org>,
-        Dikshita Agarwal <dikshita@codeaurora.org>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <X8UjShseQ0F7itZe@builder.lan>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sun, Nov 29, 2020 at 3:05 PM Fritz Koenig <frkoenig@chromium.org> wrote:
->
-> V4L2_ENC_CMD_STOP and V4L2_ENC_CMD_START are already
-> supported.  Add a way to query for support.
+Thanks Bjorn For your comments!!!
 
-I think your Signed-off-by is missing (checkpatch.pl should warn you
-about such problems).
-
+On 11/30/2020 10:22 PM, Bjorn Andersson wrote:
+> On Fri 18 Sep 09:51 CDT 2020, Srinivasa Rao Mandadapu wrote:
 >
-> ---
->  drivers/media/platform/qcom/venus/venc.c | 26 ++++++++++++++++++++++++
->  1 file changed, 26 insertions(+)
+>> From: Ajit Pandey <ajitp@codeaurora.org>
+>>
+>> Add dai link for supporting lpass I2S driver, which is used
+>> for audio capture and playback.
+>> Add lpass-cpu node with  pin controls and i2s primary
+>> and secondary dai-links
+>>
+>> Signed-off-by: Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
+>> Signed-off-by: V Sujith Kumar Reddy <vsujithk@codeaurora.org>
+> Ajit needs to certify the origin of the patch, with his signed-off-by
+> and as you are the last to touch it your signed-off-by should be last.
 >
-> diff --git a/drivers/media/platform/qcom/venus/venc.c b/drivers/media/platform/qcom/venus/venc.c
-> index 2ddfeddf98514..e05db3c4bfb24 100644
-> --- a/drivers/media/platform/qcom/venus/venc.c
-> +++ b/drivers/media/platform/qcom/venus/venc.c
-> @@ -507,6 +507,27 @@ static int venc_enum_frameintervals(struct file *file, void *fh,
->         return 0;
->  }
+> Also, please advice on the dependencies of this patch, because the tree
+> doesn't build after applying this patch.
 >
-> +static int
-> +venc_try_encoder_cmd(struct file *file, void *fh, struct v4l2_encoder_cmd *cmd)
-> +{
-> +       struct venus_inst *inst = to_inst(file);
-> +       struct device *dev = inst->core->dev_dec;
-> +
-> +       switch (cmd->cmd) {
-> +       case V4L2_ENC_CMD_STOP:
-> +       case V4L2_ENC_CMD_START:
-> +               if (cmd->flags != 0) {
-> +                       dev_dbg(dev, "flags=%u are not supported", cmd->flags);
-> +                       return -EINVAL;
-> +               }
-> +               break;
-> +       default:
-> +               return -EINVAL;
-> +       }
-> +
-> +       return 0;
-> +}
-> +
->  static int
->  venc_encoder_cmd(struct file *file, void *fh, struct v4l2_encoder_cmd *cmd)
+> Regards,
+> Bjorn
 
-I am not seeing venc_encoder_cmd() in the media tree, does this patch
-depend on others that are not yet merged? If so they should be
-submitted together as a series.
+After this patch v2 patch is posted.
 
->  {
-> @@ -514,6 +535,10 @@ venc_encoder_cmd(struct file *file, void *fh, struct v4l2_encoder_cmd *cmd)
->         struct hfi_frame_data fdata = {0};
->         int ret = 0;
->
-> +       ret = venc_try_encoder_cmd(file, fh, cmd);
-> +       if (ret < 0)
-> +               return ret;
-> +
+https://lore.kernel.org/patchwork/patch/1317796/
 
-v4l2_m2m_ioctl_try_encoder_cmd() is called right below, and AFAICT
-does the same thing as the newly-defined venc_try_encoder_cmd(). So
-IIUC this patch can be turned into a one-liner that does just the
-following:
+>> ---
+>>   arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi | 59 ++++++++++++++++++++++++++++
+>>   1 file changed, 59 insertions(+)
+>>
+>> diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
+>> index bf87558..5724982 100644
+>> --- a/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
+>> +++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
+>> @@ -220,6 +220,44 @@
+>>   			max-brightness = <1023>;
+>>   		};
+>>   	};
+>> +
+>> +	sound {
+>> +		compatible = "qcom,sc7180-sndcard";
+>> +		model = "sc7180-snd-card";
+>> +
+>> +		audio-routing =
+>> +			"Headphone Jack", "HPOL",
+>> +			"Headphone Jack", "HPOR";
+>> +
+>> +		audio-jack = <&alc5682>;
+>> +
+>> +		#address-cells = <1>;
+>> +		#size-cells = <0>;
+>> +
+>> +		dai-link@0 {
+>> +			link-name = "MultiMedia0";
+>> +			reg = <0>;
+>> +			cpu {
+>> +				sound-dai = <&lpass_cpu 0>;
+>> +			};
+>> +
+>> +			codec {
+>> +				sound-dai = <&alc5682 0>;
+>> +			};
+>> +		};
+>> +
+>> +		dai-link@1 {
+>> +			link-name = "MultiMedia1";
+>> +			reg = <1>;
+>> +			cpu {
+>> +				sound-dai = <&lpass_cpu 1>;
+>> +			};
+>> +
+>> +			codec {
+>> +				sound-dai = <&max98357a>;
+>> +			};
+>> +		};
+>> +	};
+>>   };
+>>   
+>>   &qfprom {
+>> @@ -725,6 +763,27 @@ hp_i2c: &i2c9 {
+>>   	modem-init;
+>>   };
+>>   
+>> +&lpass_cpu {
+>> +	status = "okay";
+>> +
+>> +	pinctrl-names = "default";
+>> +	pinctrl-0 = <&sec_mi2s_active &pri_mi2s_active &pri_mi2s_mclk_active>;
+>> +
+>> +	#address-cells = <1>;
+>> +	#size-cells = <0>;
+>> +
+>> +	mi2s-primary@0 {
+>> +		reg = <MI2S_PRIMARY>;
+>> +		qcom,playback-sd-lines = <1>;
+>> +		qcom,capture-sd-lines = <0>;
+>> +	};
+>> +
+>> +	mi2s-secondary@1 {
+>> +		reg = <MI2S_SECONDARY>;
+>> +		qcom,playback-sd-lines = <0>;
+>> +	};
+>> +};
+>> +
+>>   &mdp {
+>>   	status = "okay";
+>>   };
+>> -- 
+>> Qualcomm India Private Limited, on behalf of Qualcomm Innovation Center, Inc.,
+>> is a member of Code Aurora Forum, a Linux Foundation Collaborative Project.
+>>
+-- 
+Qualcomm India Private Limited, on behalf of Qualcomm Innovation Center, Inc.,
+is a member of Code Aurora Forum, a Linux Foundation Collaborative Project.
 
-@@ -575,6 +600,7 @@ static const struct v4l2_ioctl_ops venc_ioctl_ops = {
-        .vidioc_subscribe_event = v4l2_ctrl_subscribe_event,
-        .vidioc_unsubscribe_event = v4l2_event_unsubscribe,
-        .vidioc_encoder_cmd = venc_encoder_cmd,
-+       .vidioc_try_encoder_cmd = v4l2_m2m_ioctl_try_encoder_cmd,
- };
-
->         ret = v4l2_m2m_ioctl_try_encoder_cmd(file, fh, cmd);
->         if (ret)
->                 return ret;
-> @@ -575,6 +600,7 @@ static const struct v4l2_ioctl_ops venc_ioctl_ops = {
->         .vidioc_subscribe_event = v4l2_ctrl_subscribe_event,
->         .vidioc_unsubscribe_event = v4l2_event_unsubscribe,
->         .vidioc_encoder_cmd = venc_encoder_cmd,
-> +       .vidioc_try_encoder_cmd = venc_try_encoder_cmd,
->  };
->
->  static int venc_set_properties(struct venus_inst *inst)
-> --
-> 2.29.2.454.gaff20da3a2-goog
->
