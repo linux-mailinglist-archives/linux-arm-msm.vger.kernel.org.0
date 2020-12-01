@@ -2,99 +2,95 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 19AD52C9697
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Dec 2020 05:46:28 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E16792C96B2
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Dec 2020 06:06:48 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728202AbgLAEpe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 30 Nov 2020 23:45:34 -0500
-Received: from m42-5.mailgun.net ([69.72.42.5]:63318 "EHLO m42-5.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728229AbgLAEpd (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 30 Nov 2020 23:45:33 -0500
-X-Greylist: delayed 352 seconds by postgrey-1.27 at vger.kernel.org; Mon, 30 Nov 2020 23:45:33 EST
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1606797908; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=TLtwrpKiu92S9nqp5k7/JViYA+Gv4RHwKqws+WomKeI=;
- b=PxkT4mXcVMpOMU97bXW22hVIPAqxhUeqerZwaCzJ9Wx+uIeNvVfY1/mrfLPneuYbIF9S+B/8
- BlVqJR+/9370SAJCuRRulb/CBPGtPwm9DXplDwztkRf/SGsHNFReVtAEjqSMV1A3qLAGR+XS
- ELG12ITUvrYilO742ZGKB/1NomM=
-X-Mailgun-Sending-Ip: 69.72.42.5
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n02.prod.us-east-1.postgun.com with SMTP id
- 5fc5c8d51f6054cb8d7d1512 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 01 Dec 2020 04:38:45
- GMT
-Sender: saiprakash.ranjan=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 53D9FC43462; Tue,  1 Dec 2020 04:38:44 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: saiprakash.ranjan)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 7C3EBC433ED;
-        Tue,  1 Dec 2020 04:38:43 +0000 (UTC)
+        id S1726104AbgLAFFU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 1 Dec 2020 00:05:20 -0500
+Received: from aserp2130.oracle.com ([141.146.126.79]:55656 "EHLO
+        aserp2130.oracle.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726083AbgLAFFT (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 1 Dec 2020 00:05:19 -0500
+Received: from pps.filterd (aserp2130.oracle.com [127.0.0.1])
+        by aserp2130.oracle.com (8.16.0.42/8.16.0.42) with SMTP id 0B14nG8C008493;
+        Tue, 1 Dec 2020 05:04:28 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=from : to : cc :
+ subject : date : message-id : in-reply-to : references : mime-version :
+ content-type : content-transfer-encoding; s=corp-2020-01-29;
+ bh=vvL4IJ2G7NlSTfaTAS4JXtLo8kry4yfNip+qSJGDInY=;
+ b=DpKX57hKtv0Z6SiycceP2rThYUEKqHaJxjySUvdZhrKeidlfsHMrquLjYgMO1NwUcPhj
+ SMzNRtB7maMaMoLcl8JJMbhFJz8MWZmOebQShpgb2yIr01DaabycSOnJi4x2CeiHVmG7
+ d7h6yfrahdVwxahaChYIdHCfqCclzpyTapk5e8Ae9h/A/ACDrseTYsp6H+xUFwH/OCpx
+ zsUkIbdSE5MuWl6mOUR7OkL5tPHQkC4BfWmdBQ4ekahvK8CXP/4iBD9o0aA7Ov3dYxgC
+ /oUyT2wygaajla0wy7O2ZMkpYJG43UNuAc/M/TyOhhZtkt898sU0ociqlc2YjEYopZBT jw== 
+Received: from aserp3030.oracle.com (aserp3030.oracle.com [141.146.126.71])
+        by aserp2130.oracle.com with ESMTP id 353c2arqdc-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=FAIL);
+        Tue, 01 Dec 2020 05:04:28 +0000
+Received: from pps.filterd (aserp3030.oracle.com [127.0.0.1])
+        by aserp3030.oracle.com (8.16.0.42/8.16.0.42) with SMTP id 0B14oMqP134962;
+        Tue, 1 Dec 2020 05:04:27 GMT
+Received: from userv0121.oracle.com (userv0121.oracle.com [156.151.31.72])
+        by aserp3030.oracle.com with ESMTP id 35404mdvgn-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+        Tue, 01 Dec 2020 05:04:27 +0000
+Received: from abhmp0005.oracle.com (abhmp0005.oracle.com [141.146.116.11])
+        by userv0121.oracle.com (8.14.4/8.13.8) with ESMTP id 0B154PZf022129;
+        Tue, 1 Dec 2020 05:04:25 GMT
+Received: from ca-mkp.ca.oracle.com (/10.156.108.201)
+        by default (Oracle Beehive Gateway v4.0)
+        with ESMTP ; Mon, 30 Nov 2020 21:04:25 -0800
+From:   "Martin K. Petersen" <martin.petersen@oracle.com>
+To:     "James E.J. Bottomley" <jejb@linux.ibm.com>,
+        Asutosh Das <asutoshd@codeaurora.org>,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Avri Altman <avri.altman@wdc.com>,
+        Can Guo <cang@codeaurora.org>, Bean Huo <beanhuo@micron.com>,
+        Stanley Chu <stanley.chu@mediatek.com>
+Cc:     "Martin K . Petersen" <martin.petersen@oracle.com>,
+        linux-scsi@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH] scsi: ufs: Adjust logic in common ADAPT helper
+Date:   Tue,  1 Dec 2020 00:04:15 -0500
+Message-Id: <160636449893.25598.9433065109930517138.b4-ty@oracle.com>
+X-Mailer: git-send-email 2.29.2
+In-Reply-To: <20201121044810.507288-1-bjorn.andersson@linaro.org>
+References: <20201121044810.507288-1-bjorn.andersson@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Tue, 01 Dec 2020 10:08:43 +0530
-From:   Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc:     agross@kernel.org, bjorn.andersson@linaro.org, robh+dt@kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        dmitry.baryshkov@linaro.org
-Subject: Re: [PATCH v2 2/4] arm64: dts: qcom: sm8250: Add support for LLCC
- block
-In-Reply-To: <20201130093924.45057-3-manivannan.sadhasivam@linaro.org>
-References: <20201130093924.45057-1-manivannan.sadhasivam@linaro.org>
- <20201130093924.45057-3-manivannan.sadhasivam@linaro.org>
-Message-ID: <ffd62c419433562f1f61ddf0c4e145b3@codeaurora.org>
-X-Sender: saiprakash.ranjan@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-Virus-Version: vendor=nai engine=6000 definitions=9821 signatures=668682
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 suspectscore=0 bulkscore=0
+ malwarescore=0 mlxscore=0 mlxlogscore=999 phishscore=0 spamscore=0
+ adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2009150000 definitions=main-2012010033
+X-Proofpoint-Virus-Version: vendor=nai engine=6000 definitions=9821 signatures=668682
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 suspectscore=0 lowpriorityscore=0
+ clxscore=1015 bulkscore=0 mlxlogscore=999 phishscore=0 malwarescore=0
+ spamscore=0 adultscore=0 mlxscore=0 priorityscore=1501 impostorscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2009150000
+ definitions=main-2012010033
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2020-11-30 15:09, Manivannan Sadhasivam wrote:
-> Add support for Last Level Cache Controller (LLCC) in SM8250 SoC.
-> This LLCC is used to provide common cache memory pool for the cores in
-> the SM8250 SoC thereby minimizing the percore caches.
-> 
-> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> ---
->  arch/arm64/boot/dts/qcom/sm8250.dtsi | 6 ++++++
->  1 file changed, 6 insertions(+)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/sm8250.dtsi
-> b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-> index 65acd1f381eb..118b6bb29ebc 100644
-> --- a/arch/arm64/boot/dts/qcom/sm8250.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-> @@ -1758,6 +1758,12 @@ usb_1_dwc3: dwc3@a600000 {
->  			};
->  		};
-> 
-> +		system-cache-controller@9200000 {
-> +			compatible = "qcom,sm8250-llcc";
-> +			reg = <0 0x09200000 0 0x1d0000>, <0 0x09600000 0 0x50000>;
-> +			reg-names = "llcc_base", "llcc_broadcast_base";
-> +		};
-> +
->  		usb_2: usb@a8f8800 {
->  			compatible = "qcom,sm8250-dwc3", "qcom,dwc3";
->  			reg = <0 0x0a8f8800 0 0x400>;
+On Fri, 20 Nov 2020 20:48:10 -0800, Bjorn Andersson wrote:
 
-Reviewed-by: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+> The introduction of ufshcd_dme_configure_adapt() refactored out
+> duplication from the Mediatek and Qualcomm drivers.
+> 
+> Both these implementations had the logic of:
+>     gear_tx == UFS_HS_G4 => PA_INITIAL_ADAPT
+>     gear_tx != UFS_HS_G4 => PA_NO_ADAPT
+> 
+> [...]
+
+Applied to 5.11/scsi-queue, thanks!
+
+[1/1] scsi: ufs: Adjust logic in common ADAPT helper
+      https://git.kernel.org/mkp/scsi/c/66df79ccbc2f
 
 -- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a 
-member
-of Code Aurora Forum, hosted by The Linux Foundation
+Martin K. Petersen	Oracle Linux Engineering
