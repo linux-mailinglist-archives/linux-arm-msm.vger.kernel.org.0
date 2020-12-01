@@ -2,117 +2,112 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 2FEFC2C954E
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Dec 2020 03:38:15 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2A3AC2C957C
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Dec 2020 04:00:36 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727123AbgLAChg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 30 Nov 2020 21:37:36 -0500
-Received: from z5.mailgun.us ([104.130.96.5]:52572 "EHLO z5.mailgun.us"
+        id S1727135AbgLADAa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 30 Nov 2020 22:00:30 -0500
+Received: from m42-4.mailgun.net ([69.72.42.4]:14151 "EHLO m42-4.mailgun.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725995AbgLAChg (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 30 Nov 2020 21:37:36 -0500
+        id S1726566AbgLADAa (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 30 Nov 2020 22:00:30 -0500
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1606790232; h=Content-Transfer-Encoding: Content-Type:
- In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
- Subject: Sender; bh=LuLVx8v5T+nGwlZJeawR9A4EitazVOlcd9+XnWaPHcc=; b=nhbWs/PTHrMAbfG218dPQqOxfnKgkjH0/SNfPgO/E3pa0ScE0oNKs/I2M9Fu5Aj/lkKeXSb9
- d7VdZ8wA9u9Ts460fU8r3rfOIuvw3STZNj4DmH+FAcDYXb13r8DuBz0T5b88z4eXuriqzlJ9
- 6uqR+lRIgsfMpf4sJFFVSSTErRE=
-X-Mailgun-Sending-Ip: 104.130.96.5
+ s=smtp; t=1606791611; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=790Kdzyv5i3G4jCUOcNUEbwKkeQUdy1vngu7YiCwIFw=; b=b99bLQcl2AkyZYMKCCib73hLbUEsnZU5sTV0ovDXRRoRNs6mGIgwPuMoniMN0rWivtzwkYdC
+ t26DnzWr7qNvtvodrFq8Fo3s9Edy/rsnEpqp0K1R379fdaOB1FzRcXBy5vncG6n2xP9puq89
+ 0eRqrPWIi86iMjYzXkwHD5ilqvk=
+X-Mailgun-Sending-Ip: 69.72.42.4
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org
  (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n05.prod.us-west-2.postgun.com with SMTP id
- 5fc5ac3d07535c81ba453248 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 01 Dec 2020 02:36:45
+ smtp-out-n05.prod.us-east-1.postgun.com with SMTP id
+ 5fc5b19aedac2724d8a5aca7 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 01 Dec 2020 02:59:38
  GMT
-Sender: asutoshd=codeaurora.org@mg.codeaurora.org
+Sender: zijuhu=codeaurora.org@mg.codeaurora.org
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id F0EC4C43466; Tue,  1 Dec 2020 02:36:44 +0000 (UTC)
+        id BC7E2C43460; Tue,  1 Dec 2020 02:59:37 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        NICE_REPLY_A,SPF_FAIL,URIBL_BLOCKED autolearn=no autolearn_force=no
-        version=3.4.0
-Received: from [192.168.8.168] (cpe-70-95-149-85.san.res.rr.com [70.95.149.85])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
+        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+Received: from zijuhu-gv.qualcomm.com (unknown [180.166.53.21])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
         (No client certificate requested)
-        (Authenticated sender: asutoshd)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 01281C433ED;
-        Tue,  1 Dec 2020 02:36:42 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 01281C433ED
+        (Authenticated sender: zijuhu)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 499EEC433C6;
+        Tue,  1 Dec 2020 02:59:33 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 499EEC433C6
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=asutoshd@codeaurora.org
-Subject: Re: [PATCH v3 2/2] scsi: ufs-qcom: Keep core_clk_unipro ON while link
- is active
-To:     Can Guo <cang@codeaurora.org>, nguyenb@codeaurora.org,
-        hongwus@codeaurora.org, ziqichen@codeaurora.org,
-        rnayak@codeaurora.org, linux-scsi@vger.kernel.org,
-        kernel-team@android.com, saravanak@google.com, salyzyn@google.com
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        Avri Altman <avri.altman@wdc.com>,
-        "James E.J. Bottomley" <jejb@linux.ibm.com>,
-        "Martin K. Petersen" <martin.petersen@oracle.com>,
-        "open list:ARM/QUALCOMM SUPPORT" <linux-arm-msm@vger.kernel.org>,
-        open list <linux-kernel@vger.kernel.org>
-References: <1606356063-38380-1-git-send-email-cang@codeaurora.org>
- <1606356063-38380-3-git-send-email-cang@codeaurora.org>
-From:   "Asutosh Das (asd)" <asutoshd@codeaurora.org>
-Message-ID: <7ec66c17-2bb7-a472-6ebb-3151ba51df84@codeaurora.org>
-Date:   Mon, 30 Nov 2020 18:36:42 -0800
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.4.3
-MIME-Version: 1.0
-In-Reply-To: <1606356063-38380-3-git-send-email-cang@codeaurora.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=zijuhu@codeaurora.org
+From:   Zijun Hu <zijuhu@codeaurora.org>
+To:     marcel@holtmann.org, johan.hedberg@gmail.com
+Cc:     linux-kernel@vger.kernel.org, linux-bluetooth@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, bgodavar@codeaurora.org,
+        c-hbandi@codeaurora.org, hemantg@codeaurora.org, mka@chromium.org,
+        rjliao@codeaurora.org, zijuhu@codeaurora.org, tjiang@codeaurora.org
+Subject: [PATCH v1] Bluetooth: support download nvm with different board id for wcn6855
+Date:   Tue,  1 Dec 2020 10:59:24 +0800
+Message-Id: <1606791564-2443-1-git-send-email-zijuhu@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 11/25/2020 6:01 PM, Can Guo wrote:
-> If we want to disable clocks to save power but still keep the link active,
-> core_clk_unipro, as same as ref_clk, should not be the one being disabled.
-> 
-> Reviewed-by: Hongwu Su<hongwus@codeaurora.org>
-> Signed-off-by: Can Guo <cang@codeaurora.org>
-> ---
+From: Tim Jiang <tjiang@codeaurora.org>
 
-Reviewed-by: Asutosh Das <asutoshd@codeaurora.org>
+we define many nvm files for wcn6855 btsoc and host driver
+should find the correct nvm file based on board ID and then
+download it.
 
->   drivers/scsi/ufs/ufs-qcom.c | 6 ++++++
->   1 file changed, 6 insertions(+)
-> 
-> diff --git a/drivers/scsi/ufs/ufs-qcom.c b/drivers/scsi/ufs/ufs-qcom.c
-> index f9d6ef3..8a7fc62 100644
-> --- a/drivers/scsi/ufs/ufs-qcom.c
-> +++ b/drivers/scsi/ufs/ufs-qcom.c
-> @@ -977,6 +977,7 @@ static int ufs_qcom_init(struct ufs_hba *hba)
->   	struct platform_device *pdev = to_platform_device(dev);
->   	struct ufs_qcom_host *host;
->   	struct resource *res;
-> +	struct ufs_clk_info *clki;
->   
->   	if (strlen(android_boot_dev) && strcmp(android_boot_dev, dev_name(dev)))
->   		return -ENODEV;
-> @@ -1075,6 +1076,11 @@ static int ufs_qcom_init(struct ufs_hba *hba)
->   		}
->   	}
->   
-> +	list_for_each_entry(clki, &hba->clk_list_head, list) {
-> +		if (!strcmp(clki->name, "core_clk_unipro"))
-> +			clki->keep_link_active = true;
-> +	}
-> +
->   	err = ufs_qcom_init_lane_clks(host);
->   	if (err)
->   		goto out_variant_clear;
-> 
+Signed-off-by: Tim Jiang <tjiang@codeaurora.org>
+---
+ drivers/bluetooth/btusb.c | 17 ++++++++++++++---
+ 1 file changed, 14 insertions(+), 3 deletions(-)
 
-
+diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
+index 3bbe8f43e7fa..66e19085e0fa 100644
+--- a/drivers/bluetooth/btusb.c
++++ b/drivers/bluetooth/btusb.c
+@@ -3474,7 +3474,8 @@ struct qca_version {
+ 	__le32	rom_version;
+ 	__le32	patch_version;
+ 	__le32	ram_version;
+-	__le32	ref_clock;
++	__u16	board_id;
++	__u8	flag[2];
+ 	__u8	reserved[4];
+ } __packed;
+ 
+@@ -3657,8 +3658,13 @@ static int btusb_setup_qca_load_nvm(struct hci_dev *hdev,
+ 	char fwname[64];
+ 	int err;
+ 
+-	snprintf(fwname, sizeof(fwname), "qca/nvm_usb_%08x.bin",
+-		 le32_to_cpu(ver->rom_version));
++	if (ver->flag[1] == 0x80) { //check board id for wcn6855
++		snprintf(fwname, sizeof(fwname), "qca/nvm_usb_%08x_%04x.bin",
++			le32_to_cpu(ver->rom_version), le16_to_cpu(ver->board_id));
++	} else {
++		snprintf(fwname, sizeof(fwname), "qca/nvm_usb_%08x.bin",
++			le32_to_cpu(ver->rom_version));
++	}
+ 
+ 	err = request_firmware(&fw, fwname, &hdev->dev);
+ 	if (err) {
+@@ -3725,6 +3731,11 @@ static int btusb_setup_qca(struct hci_dev *hdev)
+ 			return err;
+ 	}
+ 
++	err = btusb_qca_send_vendor_req(udev, QCA_GET_TARGET_VERSION, &ver,
++					sizeof(ver));
++	if (err < 0)
++		return err;
++
+ 	if (!(status & QCA_SYSCFG_UPDATED)) {
+ 		err = btusb_setup_qca_load_nvm(hdev, &ver, info);
+ 		if (err < 0)
 -- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-Linux Foundation Collaborative Project
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum, a Linux Foundation Collaborative Project
+
