@@ -2,154 +2,155 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E0FD42C95B9
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Dec 2020 04:20:53 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 808A82C95BE
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Dec 2020 04:25:42 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727670AbgLADUr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 30 Nov 2020 22:20:47 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55310 "EHLO
+        id S1727561AbgLADYx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 30 Nov 2020 22:24:53 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55940 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727657AbgLADUr (ORCPT
+        with ESMTP id S1726841AbgLADYw (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 30 Nov 2020 22:20:47 -0500
-Received: from mail-oi1-x242.google.com (mail-oi1-x242.google.com [IPv6:2607:f8b0:4864:20::242])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DBCD7C0613D3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 30 Nov 2020 19:20:06 -0800 (PST)
-Received: by mail-oi1-x242.google.com with SMTP id k26so353035oiw.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 30 Nov 2020 19:20:06 -0800 (PST)
+        Mon, 30 Nov 2020 22:24:52 -0500
+Received: from mail-lf1-x144.google.com (mail-lf1-x144.google.com [IPv6:2a00:1450:4864:20::144])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 39BEDC0613D3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 30 Nov 2020 19:24:12 -0800 (PST)
+Received: by mail-lf1-x144.google.com with SMTP id a9so1108087lfh.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 30 Nov 2020 19:24:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=z0jYbSuM2A7vj2WRSnCHpCXmrIAzvssFmwAmhCHBSEo=;
-        b=XqI9UrtwtN+Xkgx9qqN1YpdIsr6BCmdt1rKQKFt7pEhILlu4Pj/Le6iJMF+WhAOETY
-         A1tu2xf189iKGMPNVQECBebYglBbJzmwEg+sSVVHfEoXAdTuiJjBe9Ir8z1j0+R0dVBm
-         HYQ00J7UwnYAqA1Nxdn9nw2wQRdbvPilvYXoE7ioGCITj7zVdzjB4ifT46aDZO0jpKmK
-         nS3jobLJsNm1kfK1FIG4FZQ3M2CMWM6OUMNT3Ltxazz9OI9PAPVgLsAfRYPIEfrWtVkL
-         1AK5TURlrwTkqXxpvOs46WIIvJFlzFF9U9DyBWq4I9GrSV/nrcJHHLPXazZ3kUH+TfqL
-         vtrw==
+        d=chromium.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=7+Idg3efY9PUSvZ7WAMegwUyYjeY1husLBEhQzx0RW4=;
+        b=eyARn/I6tSRyPIRz85iURN20GQQJ/cCVXjHBtH4ObUJEwoRJnuHd/2gQ18KpmnnXGa
+         pmRnly9JilsjkRYe2aJkg7c0P6CEbe8d87i6lfyrFhfraxlsLCIFKEDpZiOmDmArrOLz
+         o7NpFDpE5K0rICtv4AbACEl2fSLHesjRouwIo=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=z0jYbSuM2A7vj2WRSnCHpCXmrIAzvssFmwAmhCHBSEo=;
-        b=bBfVaarzYI3Pe/WivVL5sUEJlqt34zWY4LYtjjaJPfmKckVWT/srUJ13GYd6Rb+PQ4
-         bWe+/mkKI7u6Dy9g3UvNeTS7U0mqLw+m27OMqJbFeDRYmHy8/zZILgAKHm2akLkyD+7K
-         7TfwF59rEhSEuG7klJ8U6AaTGUFgMSxa/m+Q2vN7wGj4hNQw/ji6ba7aigwMJ0AiRPa3
-         iOrnVV/xcLg2Tagh4RCQWd+2UocOOwGOBIi9wYkrkrp/PhxzhgWG+rTivrogI1n7C/dM
-         4QHwD7s4STI5YbV+9cTgMcp918QJVnHPIlnbVr/UhqBY6bP25rGF4R+T6VC7ti/azZNh
-         X5DA==
-X-Gm-Message-State: AOAM531H1+kTa+iGYCwgPCKr6IKBmaGP/ayoOncJTDXqMF+PRXXvNwrE
-        tgxRA9y2qYkzZVhFmQ4GKctE7lcLvvXqJw==
-X-Google-Smtp-Source: ABdhPJyN6aZnDw4AEl91NWEpYuIybD/5h2IcygpeviYHF8UN9qRx/2maQBrEcAUtwwRmtlRlduj85Q==
-X-Received: by 2002:aca:fc92:: with SMTP id a140mr603776oii.4.1606792806105;
-        Mon, 30 Nov 2020 19:20:06 -0800 (PST)
-Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id 189sm127035oob.26.2020.11.30.19.20.05
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 30 Nov 2020 19:20:05 -0800 (PST)
-Date:   Mon, 30 Nov 2020 21:20:03 -0600
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Vinod Koul <vkoul@kernel.org>
-Cc:     linux-arm-msm@vger.kernel.org, Andy Gross <agross@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] arm64: dts: qcom: sdm845: Add gpi dma node
-Message-ID: <X8W2Y9gH7HBrx20v@builder.lan>
-References: <20201130063946.2060317-1-vkoul@kernel.org>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=7+Idg3efY9PUSvZ7WAMegwUyYjeY1husLBEhQzx0RW4=;
+        b=sjbBAg7SWmcNZBDCte9m6CgpR+zjn7vhUX8sXBacrQXIgOkM6OPBqZptFx0PQHlVvP
+         JTAbjwTZb5tfVMYNvaSROh3VDcZsYUFL6DM7cIsBZ6WMAe/xMkDbRSbarS7NQiMmdJ1P
+         6Mf4rtac3GeOrOvyDmQmdW1Md7OAgsH9at/aHKi5uXYLtm1k1qT1ru08b1BVARpu53tV
+         GptZRT9eDLi/xqxKq+8DNZeT2+edTJHudIiRS3xr2fUiTuxONfRiRSurTqglul8lLM3j
+         RGauJkVkNDMAW1H7861M/Tzg73FApbIrRq38S53DPHG4OI5iFCnVkOniVmgm4xMvFrbQ
+         9uQQ==
+X-Gm-Message-State: AOAM531F4EWBrpfR1WtUovEJBn8DwciXCjVoL/vRwb7Voq1DU31xeWd3
+        M0ubFt/dEHSa0mgWMFQ+GmTE2t/DLVUPuVKW
+X-Google-Smtp-Source: ABdhPJxCSD3cOAX+hHfxKFpPy+xbLhPdQbUU7TbRBkmLG9VW8tMQNpagQQ/o7VkqOJfyc31QEenk6g==
+X-Received: by 2002:a19:4a87:: with SMTP id x129mr337071lfa.104.1606793049891;
+        Mon, 30 Nov 2020 19:24:09 -0800 (PST)
+Received: from mail-lf1-f46.google.com (mail-lf1-f46.google.com. [209.85.167.46])
+        by smtp.gmail.com with ESMTPSA id i4sm53884lfl.131.2020.11.30.19.24.09
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 30 Nov 2020 19:24:09 -0800 (PST)
+Received: by mail-lf1-f46.google.com with SMTP id s27so1082046lfp.5
+        for <linux-arm-msm@vger.kernel.org>; Mon, 30 Nov 2020 19:24:09 -0800 (PST)
+X-Received: by 2002:ac2:5e8d:: with SMTP id b13mr279952lfq.246.1606793048600;
+ Mon, 30 Nov 2020 19:24:08 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20201130063946.2060317-1-vkoul@kernel.org>
+References: <20201129060517.2029659-1-frkoenig@chromium.org>
+In-Reply-To: <20201129060517.2029659-1-frkoenig@chromium.org>
+From:   Alexandre Courbot <acourbot@chromium.org>
+Date:   Tue, 1 Dec 2020 12:23:57 +0900
+X-Gmail-Original-Message-ID: <CAPBb6MUDUs2d+hDRnfg3-7jwqQX8jO1AwjbjyWppE8a64ovvCA@mail.gmail.com>
+Message-ID: <CAPBb6MUDUs2d+hDRnfg3-7jwqQX8jO1AwjbjyWppE8a64ovvCA@mail.gmail.com>
+Subject: Re: [PATCH] venus: venc: Add VIDIOC_TRY_ENCODER_CMD support
+To:     Fritz Koenig <frkoenig@chromium.org>
+Cc:     Linux Media Mailing List <linux-media@vger.kernel.org>,
+        linux-arm-msm@vger.kernel.org, LKML <linux-kernel@vger.kernel.org>,
+        Stanimir Varbanov <stanimir.varbanov@linaro.org>,
+        Vikash Garodia <vgarodia@codeaurora.org>,
+        Dikshita Agarwal <dikshita@codeaurora.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon 30 Nov 00:39 CST 2020, Vinod Koul wrote:
+On Sun, Nov 29, 2020 at 3:05 PM Fritz Koenig <frkoenig@chromium.org> wrote:
+>
+> V4L2_ENC_CMD_STOP and V4L2_ENC_CMD_START are already
+> supported.  Add a way to query for support.
 
-> This add the device node for gpi_dma0 and gpi_dma1 instances found in
-> sdm845.
-> 
-> Signed-off-by: Vinod Koul <vkoul@kernel.org>
+I think your Signed-off-by is missing (checkpatch.pl should warn you
+about such problems).
+
+>
 > ---
->  arch/arm64/boot/dts/qcom/sdm845.dtsi | 45 ++++++++++++++++++++++++++++
->  1 file changed, 45 insertions(+)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/sdm845.dtsi b/arch/arm64/boot/dts/qcom/sdm845.dtsi
-> index 6465a6653ad9..a6f41678794c 100644
-> --- a/arch/arm64/boot/dts/qcom/sdm845.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sdm845.dtsi
-> @@ -1114,6 +1114,28 @@ opp-128000000 {
->  			};
->  		};
->  
-> +		gpi_dma0: dma-controller@800000 {
-> +			#dma-cells = <3>;
-
-I know you like dma, but may I have the compatible etc first in the
-nodes? Perhaps move #dma-cells down by the other dma- properties?
-
-> +			compatible = "qcom,sdm845-gpi-dma";
-> +			reg = <0 0x00800000 0 0x60000>;
-> +			interrupts = <GIC_SPI 244 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 245 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 246 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 247 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 248 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 249 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 250 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 251 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 252 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 253 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 254 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 255 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 256 IRQ_TYPE_LEVEL_HIGH>;
-> +			dma-channels = <13>;
-> +			dma-channel-mask = <0xfa>;
-> +			iommus = <&apps_smmu 0x0016 0x0>;
-> +		};
+>  drivers/media/platform/qcom/venus/venc.c | 26 ++++++++++++++++++++++++
+>  1 file changed, 26 insertions(+)
+>
+> diff --git a/drivers/media/platform/qcom/venus/venc.c b/drivers/media/platform/qcom/venus/venc.c
+> index 2ddfeddf98514..e05db3c4bfb24 100644
+> --- a/drivers/media/platform/qcom/venus/venc.c
+> +++ b/drivers/media/platform/qcom/venus/venc.c
+> @@ -507,6 +507,27 @@ static int venc_enum_frameintervals(struct file *file, void *fh,
+>         return 0;
+>  }
+>
+> +static int
+> +venc_try_encoder_cmd(struct file *file, void *fh, struct v4l2_encoder_cmd *cmd)
+> +{
+> +       struct venus_inst *inst = to_inst(file);
+> +       struct device *dev = inst->core->dev_dec;
 > +
->  		qupv3_id_0: geniqup@8c0000 {
->  			compatible = "qcom,geni-se-qup";
->  			reg = <0 0x008c0000 0 0x6000>;
-> @@ -1454,6 +1476,29 @@ uart7: serial@89c000 {
->  			};
->  		};
->  
-> +		gpi_dma1: dma-controller@0xa00000 {
-> +			#dma-cells = <3>;
-> +			compatible = "qcom,sdm845-gpi-dma";
-> +			reg = <0 0x00a00000 0 0x60000>;
-> +			interrupts = <GIC_SPI 279 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 280 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 281 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 282 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 283 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 284 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 293 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 294 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 295 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 296 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 297 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 298 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 299 IRQ_TYPE_LEVEL_HIGH>;
-> +			dma-channels = <13>;
-> +			dma-channel-mask = <0xfa>;
-> +			iommus = <&apps_smmu 0x06d6 0x0>;
-> +			status = "disabled";
-
-I don't think it's nice to keep gpi_dma0 enabled and gpi_dma1 disabled.
-Either we do both enabled in sdm845.dtsi or we do both disabled and rely
-on the boards to enable what they need.
-
-Regards,
-Bjorn
-
-> +		};
+> +       switch (cmd->cmd) {
+> +       case V4L2_ENC_CMD_STOP:
+> +       case V4L2_ENC_CMD_START:
+> +               if (cmd->flags != 0) {
+> +                       dev_dbg(dev, "flags=%u are not supported", cmd->flags);
+> +                       return -EINVAL;
+> +               }
+> +               break;
+> +       default:
+> +               return -EINVAL;
+> +       }
 > +
->  		qupv3_id_1: geniqup@ac0000 {
->  			compatible = "qcom,geni-se-qup";
->  			reg = <0 0x00ac0000 0 0x6000>;
-> -- 
-> 2.26.2
-> 
+> +       return 0;
+> +}
+> +
+>  static int
+>  venc_encoder_cmd(struct file *file, void *fh, struct v4l2_encoder_cmd *cmd)
+
+I am not seeing venc_encoder_cmd() in the media tree, does this patch
+depend on others that are not yet merged? If so they should be
+submitted together as a series.
+
+>  {
+> @@ -514,6 +535,10 @@ venc_encoder_cmd(struct file *file, void *fh, struct v4l2_encoder_cmd *cmd)
+>         struct hfi_frame_data fdata = {0};
+>         int ret = 0;
+>
+> +       ret = venc_try_encoder_cmd(file, fh, cmd);
+> +       if (ret < 0)
+> +               return ret;
+> +
+
+v4l2_m2m_ioctl_try_encoder_cmd() is called right below, and AFAICT
+does the same thing as the newly-defined venc_try_encoder_cmd(). So
+IIUC this patch can be turned into a one-liner that does just the
+following:
+
+@@ -575,6 +600,7 @@ static const struct v4l2_ioctl_ops venc_ioctl_ops = {
+        .vidioc_subscribe_event = v4l2_ctrl_subscribe_event,
+        .vidioc_unsubscribe_event = v4l2_event_unsubscribe,
+        .vidioc_encoder_cmd = venc_encoder_cmd,
++       .vidioc_try_encoder_cmd = v4l2_m2m_ioctl_try_encoder_cmd,
+ };
+
+>         ret = v4l2_m2m_ioctl_try_encoder_cmd(file, fh, cmd);
+>         if (ret)
+>                 return ret;
+> @@ -575,6 +600,7 @@ static const struct v4l2_ioctl_ops venc_ioctl_ops = {
+>         .vidioc_subscribe_event = v4l2_ctrl_subscribe_event,
+>         .vidioc_unsubscribe_event = v4l2_event_unsubscribe,
+>         .vidioc_encoder_cmd = venc_encoder_cmd,
+> +       .vidioc_try_encoder_cmd = venc_try_encoder_cmd,
+>  };
+>
+>  static int venc_set_properties(struct venus_inst *inst)
+> --
+> 2.29.2.454.gaff20da3a2-goog
+>
