@@ -2,32 +2,32 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 1E67F2C946C
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Dec 2020 02:09:27 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 64CBB2C9483
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Dec 2020 02:18:22 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2389215AbgLABJM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 30 Nov 2020 20:09:12 -0500
-Received: from m42-4.mailgun.net ([69.72.42.4]:61117 "EHLO m42-4.mailgun.net"
+        id S1731072AbgLABRk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 30 Nov 2020 20:17:40 -0500
+Received: from m42-4.mailgun.net ([69.72.42.4]:60117 "EHLO m42-4.mailgun.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2389210AbgLABJM (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 30 Nov 2020 20:09:12 -0500
+        id S1726684AbgLABRk (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 30 Nov 2020 20:17:40 -0500
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1606784931; h=Content-Transfer-Encoding: Content-Type:
+ s=smtp; t=1606785434; h=Content-Transfer-Encoding: Content-Type:
  In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
- Subject: Sender; bh=pTKbiMBtrJ26sLvaoisUJXi2hC33groLwAZEMc865T4=; b=FoMrPqQnQn9fgOGkT2UkxTFLx080pe9S3P1MpRrLWGNPwIBG4V0RDR3bdF6iypWK4qcGQ9/4
- nvzH+r6Q3xROMTdY0FHbwmfqui+++/xSHCvL78wDpG85T4L329Rywwg9CHZlelZQvPNKfD+z
- oDc5lFgnTgtt+82MKIHg/5HXrno=
+ Subject: Sender; bh=b9xG0nohUwSnQ3pYpgsP+NV1uIFeQ16NwbRzsCQSzQg=; b=pZuz5JDYp9bTPL4WlnNRjd/pZMjeXg9yXFTUtG2lS3yhk5mKGQSfrBO+8nktxYg5TY9TkrRE
+ bTyBq0MyrrjKvkIGV1q2dawnYN1kjI5nZMxNSA3nFWFmx8S9F/TsyaXnu+prVlT4A329HSme
+ yVPUogx3CX5oGuB0hbKkADPjNcM=
 X-Mailgun-Sending-Ip: 69.72.42.4
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org
  (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n02.prod.us-east-1.postgun.com with SMTP id
- 5fc59789f4482b01c461eefd (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 01 Dec 2020 01:08:25
+ smtp-out-n08.prod.us-west-2.postgun.com with SMTP id
+ 5fc5997fe8c9bf49ad6bbcd0 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 01 Dec 2020 01:16:47
  GMT
 Sender: hemantk=codeaurora.org@mg.codeaurora.org
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 247ADC43464; Tue,  1 Dec 2020 01:08:25 +0000 (UTC)
+        id 61604C433ED; Tue,  1 Dec 2020 01:16:47 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
@@ -38,40 +38,42 @@ Received: from [10.46.162.249] (i-global254.qualcomm.com [199.106.103.254])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
         (Authenticated sender: hemantk)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id EC7CFC43460;
-        Tue,  1 Dec 2020 01:08:23 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org EC7CFC43460
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id C140EC433C6;
+        Tue,  1 Dec 2020 01:16:45 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org C140EC433C6
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=hemantk@codeaurora.org
 Subject: Re: [PATCH v13 4/4] bus: mhi: Add userspace client interface driver
-To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc:     gregkh@linuxfoundation.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, jhugo@codeaurora.org,
-        bbhatt@codeaurora.org, loic.poulain@linaro.org,
-        netdev@vger.kernel.org
+To:     Loic Poulain <loic.poulain@linaro.org>
+Cc:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        open list <linux-kernel@vger.kernel.org>,
+        Jeffrey Hugo <jhugo@codeaurora.org>,
+        Bhaumik Bhatt <bbhatt@codeaurora.org>,
+        Network Development <netdev@vger.kernel.org>
 References: <1606533966-22821-1-git-send-email-hemantk@codeaurora.org>
  <1606533966-22821-5-git-send-email-hemantk@codeaurora.org>
- <20201128061117.GJ3077@thinkpad>
+ <CAMZdPi8z+-qFqgZ7AFJcNAUMbDQtNN5Hz-geMBcp4azrUGm9iA@mail.gmail.com>
 From:   Hemant Kumar <hemantk@codeaurora.org>
-Message-ID: <becbd9ac-09a1-1ce7-7fdb-333a302601cb@codeaurora.org>
-Date:   Mon, 30 Nov 2020 17:08:23 -0800
+Message-ID: <c47dcd57-7576-e03e-f70b-0c4d25f724b5@codeaurora.org>
+Date:   Mon, 30 Nov 2020 17:16:45 -0800
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
  Thunderbird/68.10.0
 MIME-Version: 1.0
-In-Reply-To: <20201128061117.GJ3077@thinkpad>
+In-Reply-To: <CAMZdPi8z+-qFqgZ7AFJcNAUMbDQtNN5Hz-geMBcp4azrUGm9iA@mail.gmail.com>
 Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Mani,
+Hi Loic,
 
-On 11/27/20 10:11 PM, Manivannan Sadhasivam wrote:
-> Hi Hemant,
-> 
-> On Fri, Nov 27, 2020 at 07:26:06PM -0800, Hemant Kumar wrote:
+On 11/30/20 10:22 AM, Loic Poulain wrote:
+> On Sat, 28 Nov 2020 at 04:26, Hemant Kumar <hemantk@codeaurora.org> wrote:
+>>
 >> This MHI client driver allows userspace clients to transfer
 >> raw data between MHI device and host using standard file operations.
 >> Driver instantiates UCI device object which is associated to device
@@ -81,52 +83,140 @@ On 11/27/20 10:11 PM, Manivannan Sadhasivam wrote:
 >> are started as part of device open(). MHI channels remain in start
 >> state until last release() is called on UCI device file node. Device
 >> file node is created with format
->>
->> /dev/mhi_<mhi_device_name>
->>
->> Currently it supports QMI channel.
->>
 > 
-> Thanks for the update. This patch looks good to me. But as I'm going to
-> apply Loic's "bus: mhi: core: Indexed MHI controller name" patch, you
-> need to update the documentation accordingly.
+> [...]
+> 
+>> +struct uci_chan {
+>> +       struct uci_dev *udev;
+>> +       wait_queue_head_t ul_wq;
+>> +
+>> +       /* ul channel lock to synchronize multiple writes */
+>> +       struct mutex write_lock;
+>> +
+>> +       wait_queue_head_t dl_wq;
+>> +
+>> +       /* dl channel lock to synchronize multiple reads */
+>> +       struct mutex read_lock;
+>> +
+>> +       /*
+>> +        * protects pending list in bh context, channel release, read and
+>> +        * poll
+>> +        */
+>> +       spinlock_t dl_pending_lock;
+>> +
+>> +       struct list_head dl_pending;
+>> +       struct uci_buf *cur_buf;
+>> +       size_t dl_size;
+>> +       struct kref ref_count;
+>> +};
+> 
+> [...]
+> 
+>> + * struct uci_dev - MHI UCI device
+>> + * @minor: UCI device node minor number
+>> + * @mhi_dev: associated mhi device object
+>> + * @uchan: UCI uplink and downlink channel object
+>> + * @mtu: max TRE buffer length
+>> + * @enabled: Flag to track the state of the UCI device
+>> + * @lock: mutex lock to manage uchan object
+>> + * @ref_count: uci_dev reference count
+>> + */
+>> +struct uci_dev {
+>> +       unsigned int minor;
+>> +       struct mhi_device *mhi_dev;
+>> +       struct uci_chan *uchan;
+> 
+> Why a pointer to uci_chan and not just plainly integrating the
+> structure here, AFAIU uci_chan describes the channels and is just a
+> subpart of uci_dev. That would reduce the number of dynamic
+> allocations you manage and the extra kref. do you even need a separate
+> structure for this?
 
-This is what i added in documentation on v13
+This goes back to one of my patch versions i tried to address concern 
+from Greg. Since we need to ref count the channel as well as the uci 
+device i decoupled the two objects and used two reference counts for two 
+different objects.
 
+Copying from V7 patch history
 
-Device file node is created with format:-
+V7:
+- Decoupled uci device and uci channel objects. uci device is
+   associated with device file node. uci channel is associated
+   with MHI channels. uci device refers to uci channel to perform
+   MHI channel operations for device file operations like read()
+   and write(). uci device increments its reference count for
+   every open(). uci device calls mhi_uci_dev_start_chan() to start
+   the MHI channel. uci channel object is tracking number of times
+   MHI channel is referred. This allows to keep the MHI channel in
+   start state until last release() is called. After that uci channel
+   reference count goes to 0 and uci channel clean up is performed
+   which stops the MHI channel. After the last call to release() if
+   driver is removed uci reference count becomes 0 and uci object is
+   cleaned up.
 
-/dev/mhi_<mhi_device_name>
-
-mhi_device_name includes mhi controller name and the name of the MHI
-channel being used by MHI client in userspace to send or receive data
-using MHI protocol.
-
-​
-Loic's patch is going to update the controller name as indexed 
-controller name, which goes fine with or without his change going first.
-
-For example:   With Loic's change name of device node would be 
-/dev/mhi_mhi0_QMI
-
-Without Loic's change it would be
-
-/dev/mhi_0000:00:01.2_QMI
-
-Please let me know if i am missing something.
+> 
+> [...]
+> 
+>> +static int mhi_uci_dev_start_chan(struct uci_dev *udev)
+>> +{
+>> +       int ret = 0;
+>> +       struct uci_chan *uchan;
+>> +
+>> +       mutex_lock(&udev->lock);
+>> +       if (!udev->uchan || !kref_get_unless_zero(&udev->uchan->ref_count)) {
+> 
+> This test is suspicious,  kref_get_unless_zero should be enough to test, right?
+kref_get_unless_zero is de-referencing uchan->ref_count for the first 
+open uchan is set to NULL, for that NULL check is added for uchan.
+> 
+> if (kref_get_unless_zero(&udev->ref))
+>      goto skip_init;
+> 
+>> +               uchan = kzalloc(sizeof(*uchan), GFP_KERNEL);
+>> +               if (!uchan) {
+>> +                       ret = -ENOMEM;
+>> +                       goto error_chan_start;
+>> +               }
+>> +
+>> +               udev->uchan = uchan;
+>> +               uchan->udev = udev;
+>> +               init_waitqueue_head(&uchan->ul_wq);
+>> +               init_waitqueue_head(&uchan->dl_wq);
+>> +               mutex_init(&uchan->write_lock);
+>> +               mutex_init(&uchan->read_lock);
+>> +               spin_lock_init(&uchan->dl_pending_lock);
+>> +               INIT_LIST_HEAD(&uchan->dl_pending);
+>> +
+>> +               ret = mhi_prepare_for_transfer(udev->mhi_dev);
+>> +               if (ret) {
+>> +                       dev_err(&udev->mhi_dev->dev, "Error starting transfer channels\n");
+>> +                       goto error_chan_cleanup;
+>> +               }
+>> +
+>> +               ret = mhi_queue_inbound(udev);
+>> +               if (ret)
+>> +                       goto error_chan_cleanup;
+>> +
+>> +               kref_init(&uchan->ref_count);
+>> +       }
+>> +
+>> +       mutex_unlock(&udev->lock);
+>> +
+>> +       return 0;
+>> +
+>> +error_chan_cleanup:
+>> +       mhi_uci_dev_chan_release(&uchan->ref_count);
+>> +error_chan_start:
+>> +       mutex_unlock(&udev->lock);
+>> +       return ret;
+>> +}
+> 
+> Regards,
+> Loic
+> 
 
 Thanks,
 Hemant
-
-> 
->> Signed-off-by: Hemant Kumar <hemantk@codeaurora.org>
-> 
-> Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> 
-> Thanks,
-> Mani
-> 
-[..]
 -- 
 The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
 a Linux Foundation Collaborative Project
