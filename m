@@ -2,103 +2,93 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id BE0BB2CACD1
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Dec 2020 20:57:05 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B10F52CACF7
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Dec 2020 21:05:55 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2392431AbgLAT4Y (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 1 Dec 2020 14:56:24 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40482 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2388704AbgLAT4X (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 1 Dec 2020 14:56:23 -0500
-Received: from mail-lf1-x143.google.com (mail-lf1-x143.google.com [IPv6:2a00:1450:4864:20::143])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 644C9C0613CF
-        for <linux-arm-msm@vger.kernel.org>; Tue,  1 Dec 2020 11:55:37 -0800 (PST)
-Received: by mail-lf1-x143.google.com with SMTP id a9so6884623lfh.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 01 Dec 2020 11:55:37 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=uleOdIY2dPVjuzMxg8MkWbINrRuRor9z1336VqiWwIs=;
-        b=rjKwiAtdM07kxDIHbmBNBCSxxv7ZgDnJckuzF/SL50Bq4jMru817AZa80ptEQnwd24
-         o06MPFT8lKB7zvRmqAnQi118Sds0KWLGdi8VKFs/HMa4hMSGCUXOYIQRedXwwWLpRzYi
-         YZ9aAgc1lXBu7Pd1dwjW1V1ux/6kyMW8iDVz0yIbUm3rxd2AKqaWwxELG3jX+ggKR1Zo
-         Pjg8OGf0discQPX3aIVa4YjJB2gFb7m5nUpTVoRC0MivRjSBaaiHS9D2xFIMdTGjSqTo
-         uuhqVoMk0BO+1i3zMDGnmKaugdyYI+s2VJ1dnySGcxawHHCxJVdXsLOVnZxyS5Bt5Tf7
-         hAIg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=uleOdIY2dPVjuzMxg8MkWbINrRuRor9z1336VqiWwIs=;
-        b=q5IZjaMObFDee6kiogku0UGTFPKdrZce3c04NLekMcIqboiMFRG7bMwN8DeTSDKNOF
-         7pDfeyNb1Z5287hRA04N7/Uv8kHuN5uE0GiCUKBDGQKt7VqYY8D1fgQKq0Yrk3PcCz0Q
-         HAe1YxegKwfzE+UR6nO8buBXXrzU//fYBcqs01Uz/ZmiSI0rKAF6/OQYz8jD2K+vPeHJ
-         a4QS3whqvMeRh/xZTLn6ODmmqKoTVf6Puz841Wf+TjthSWeiGKw3gWMTGFbw71jp5kxK
-         f2ArH2ksTv4b9kKXYJJtOokQY72DlI/61TOXkb2gGRydby+TQSxdA30a7jsn9K/isZHd
-         HNdw==
-X-Gm-Message-State: AOAM533362M/0dbjdj89lF3fnUDSwZKVYv7KepPjKvRmtfM3OKEbjVXa
-        nGhdMn91BplGTFQsF4eNGQ5Hew==
-X-Google-Smtp-Source: ABdhPJxDo0Wz6SOFwxRNSZRtexgV/f1rIrUpMXsrSwVcg3iJQSPz3oTl/zUiVMQvOvX+kz+RkHI6QQ==
-X-Received: by 2002:a05:6512:20c9:: with SMTP id u9mr2062802lfr.280.1606852535838;
-        Tue, 01 Dec 2020 11:55:35 -0800 (PST)
-Received: from [192.168.0.150] ([188.162.65.76])
-        by smtp.gmail.com with ESMTPSA id x8sm64685lfq.143.2020.12.01.11.55.34
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 01 Dec 2020 11:55:35 -0800 (PST)
-Subject: Re: [PATCH 0/6] arm64: dts: qcom: qrb5165-rb5 audio support
-To:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        bjorn.andersson@linaro.org
-Cc:     linux-arm-msm@vger.kernel.org, agross@kernel.org,
-        robh+dt@kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20201201153706.13450-1-srinivas.kandagatla@linaro.org>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Message-ID: <3c880eaa-32bc-d3c4-d657-76c058601c49@linaro.org>
-Date:   Tue, 1 Dec 2020 22:55:33 +0300
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.5.0
+        id S1730450AbgLAUDv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 1 Dec 2020 15:03:51 -0500
+Received: from mail.kernel.org ([198.145.29.99]:58460 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726148AbgLAUDv (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 1 Dec 2020 15:03:51 -0500
+Received: from kicinski-fedora-pc1c0hjn.DHCP.thefacebook.com (c-67-180-217-166.hsd1.ca.comcast.net [67.180.217.166])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id 6A8CF20870;
+        Tue,  1 Dec 2020 20:03:09 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1606852990;
+        bh=R/5sRgPj5z1/r8MnP/GGJtHNIk5Okfj54rbhBybQYYw=;
+        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+        b=wm8LtrmndYrzGaYf94/+DlonpVKgx26OfaHM5v73wfNsCOQcjVEkodC3l2irf6GTt
+         /xu0gsPSCcAg9p8W4Q8qMd6t8rhCEkJZV+mngqny1Xa3SEQ/HodVl9xmcv1W04ZvUr
+         p2iwEij3JSC6fxxR8j2DgtsSSngTvn5Lh+UsBwB0=
+Date:   Tue, 1 Dec 2020 12:03:02 -0800
+From:   Jakub Kicinski <kuba@kernel.org>
+To:     Jeffrey Hugo <jhugo@codeaurora.org>
+Cc:     Hemant Kumar <hemantk@codeaurora.org>,
+        manivannan.sadhasivam@linaro.org, gregkh@linuxfoundation.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        bbhatt@codeaurora.org, loic.poulain@linaro.org,
+        netdev@vger.kernel.org, linux-wireless@vger.kernel.org,
+        Kalle Valo <kvalo@codeaurora.org>
+Subject: Re: [PATCH v13 0/4] userspace MHI client interface driver
+Message-ID: <20201201120302.474d4c9b@kicinski-fedora-pc1c0hjn.DHCP.thefacebook.com>
+In-Reply-To: <c6359962-a378-ed03-0fab-c2f6c8a1b8eb@codeaurora.org>
+References: <1606533966-22821-1-git-send-email-hemantk@codeaurora.org>
+        <20201201112901.7f13e26c@kicinski-fedora-pc1c0hjn.DHCP.thefacebook.com>
+        <c6359962-a378-ed03-0fab-c2f6c8a1b8eb@codeaurora.org>
 MIME-Version: 1.0
-In-Reply-To: <20201201153706.13450-1-srinivas.kandagatla@linaro.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-GB
+Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 01/12/2020 18:37, Srinivas Kandagatla wrote:
-> This patchset adds support to Qualcomm Robotics RB5 Development Kit based on
-> QRB5165 Robotics SoC. This board has 2 WSA881X smart speakers with onboard
-> DMIC connected to internal LPASS codec via WSA and VA macros respectively.
+On Tue, 1 Dec 2020 12:40:50 -0700 Jeffrey Hugo wrote:
+> On 12/1/2020 12:29 PM, Jakub Kicinski wrote:
+> > On Fri, 27 Nov 2020 19:26:02 -0800 Hemant Kumar wrote:  
+> >> This patch series adds support for UCI driver. UCI driver enables userspace
+> >> clients to communicate to external MHI devices like modem and WLAN. UCI driver
+> >> probe creates standard character device file nodes for userspace clients to
+> >> perform open, read, write, poll and release file operations. These file
+> >> operations call MHI core layer APIs to perform data transfer using MHI bus
+> >> to communicate with MHI device. Patch is tested using arm64 based platform.  
+> > 
+> > Wait, I thought this was for modems.
+> > 
+> > Why do WLAN devices need to communicate with user space?
+> >   
 > 
-> All the audio related driver patches are merged via respective maintainer trees
-> along with bindings. Only LPI pinctrl driver is not merged yet, however the
-> bindings are acked by Rob, so am guessing that the dt changes should be okay to go!
-> 
-> Thanks,
-> srini
-> 
-> Srinivas Kandagatla (6):
->    arm64: dts: qcom: sm8250: add apr and its services
->    arm64: dts: qcom: sm8250: add audio clock controllers
->    arm64: dts: qcom: sm8250: add lpass lpi pin controller node
->    arm64: dts: qcom: sm8250: add wsa and va codec macros
->    arm64: dts: qcom: sm8250: add mi2s pinconfs
->    arm64: dts: qcom: qrb5165-rb5: Add Audio support
+> Why does it matter what type of device it is?  Are modems somehow unique 
+> in that they are the only type of device that userspace is allowed to 
+> interact with?
 
-Tested-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Yes modems are traditionally highly weird and require some serial
+device dance I don't even know about.
 
+We have proper interfaces in Linux for configuring WiFi which work
+across vendors. Having char device access to WiFi would be a step 
+back.
+
+> However, I'll bite.  Once such usecase would be QMI.  QMI is a generic 
+> messaging protocol, and is not strictly limited to the unique operations 
+> of a modem.
 > 
->   arch/arm64/boot/dts/qcom/qrb5165-rb5.dts | 125 +++++++++
->   arch/arm64/boot/dts/qcom/sm8250.dtsi     | 327 +++++++++++++++++++++++
->   2 files changed, 452 insertions(+)
-> 
+> Another usecase would be Sahara - a custom file transfer protocol used 
+> for uploading firmware images, and downloading crashdumps.
 
+Thanks, I was asking for use cases, not which proprietary vendor
+protocol you can implement over it.
 
--- 
-With best wishes
-Dmitry
+None of the use cases you mention here should require a direct FW -
+user space backdoor for WLAN.
+
+> Off the top of my head, this driver is useful for modems, wlan, and AI 
+> accelerators.
+
+And other Qualcomm products are available as well :/
+
+Kernel is supposed to create abstract interfaces for user space to
+utilize. I will never understand why kernel is expected to be in
+business of shipping this sort of vendor backdoors :/
