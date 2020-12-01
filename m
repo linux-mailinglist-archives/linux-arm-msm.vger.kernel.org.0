@@ -2,53 +2,53 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 38A482CA3F1
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Dec 2020 14:36:29 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 554A42CA3FE
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Dec 2020 14:39:44 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728912AbgLANgO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 1 Dec 2020 08:36:14 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37712 "EHLO
+        id S1730106AbgLANim (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 1 Dec 2020 08:38:42 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38078 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726332AbgLANgN (ORCPT
+        with ESMTP id S1729213AbgLANil (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 1 Dec 2020 08:36:13 -0500
-Received: from mail-pf1-x442.google.com (mail-pf1-x442.google.com [IPv6:2607:f8b0:4864:20::442])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C1320C0613D4
-        for <linux-arm-msm@vger.kernel.org>; Tue,  1 Dec 2020 05:35:33 -0800 (PST)
-Received: by mail-pf1-x442.google.com with SMTP id q10so1141535pfn.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 01 Dec 2020 05:35:33 -0800 (PST)
+        Tue, 1 Dec 2020 08:38:41 -0500
+Received: from mail-pj1-x1042.google.com (mail-pj1-x1042.google.com [IPv6:2607:f8b0:4864:20::1042])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DE9FCC0613D4
+        for <linux-arm-msm@vger.kernel.org>; Tue,  1 Dec 2020 05:37:55 -0800 (PST)
+Received: by mail-pj1-x1042.google.com with SMTP id j13so1251291pjz.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 01 Dec 2020 05:37:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=BBMglAuoeC9LB7N8iSMjJ/7Ujai9U1R0eTjZYwHsXFI=;
-        b=qJuUYgWcDxFJl1k4awHDYPJ4WgIiWWsfMUuyGIjHvDpZabtzuowOpVxlGelJnRu+s/
-         ilUmn5XEdYeWwcdS7SpI8FgQTxAlSDXgw77GNhL/TlK+xsfAdEFm/Pl0Xyb9MtYD2GK8
-         Dupv4aV/k5Hi8Q0BGH0wF5bFx+eBJakdizWwzJTDbztMMefsTM+FAWiw8prGvL+FvUdK
-         /fPKuF9lBGOxb61JyTsWft40UiXvMO9s2ntykwx/QS4XHdrFP5vUbiAyxuHRVuQBe0fQ
-         4rQbQauibPk4+pQ/3IzgYYndAllcE0OwNTXTMRF0bgx9IWyIZzliv36uxzVs0Wtf8JKF
-         heYA==
+        bh=RY+mbu7Kl1ygpq4GVXoYJlYC5IXEp5grIuI4NfzAZkA=;
+        b=yiY4G7I7VbBsdfNgm4ThdpuEh7iRMyPgHeE8cpx3b+QI4tnRg1+qzMslmFCWtaOe2n
+         mgNNiTIKM7t5pl0KZWN5Mju2qP6U6sdQD0+Bkj0K/5vWF+anZbAW4tbKJEq5VbxR/2e2
+         xh+yqySkoEbVCxYcn8Wi3rZAGjqsUNaoOkwdHrDG1K8reIrZU6s4wzaTkWbnLUmP2s5w
+         +QfXYy37oqQLR+fFWPAwC/XEbq+OUV6qDcuTyH0Q3zpkWU2VJy2w/UitorGURWWUVZ1r
+         sPjya/NlGEVDLLrxJw/ggRmlOZvUT+FqHBRsoH0pb90glwkCpqcPNG9WQveg0pMJXfIO
+         hFVQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=BBMglAuoeC9LB7N8iSMjJ/7Ujai9U1R0eTjZYwHsXFI=;
-        b=UQSRx8GrT4lauJnDFJ4LzZn2M6mrpGHzsDXCI7xjl2dUUBQAMvqqtQ1Fqz4KfHphCQ
-         Xq5OngGRbLG5OYwApqffYzDymwrY3PAWlo0i4h0mazY/2eG05c2Bq8vZd4E8v4EnMXH9
-         pbReMNrZcJYe9gNrXadSd4c86J2J8LpuoITewnD3P3+U8BpzVLhmh9KLR9yEbQC0QB5y
-         OJ3JxrmiwwN6Fwk5YjaOJ//3pOvDxsuFzGln/fD30/dVtIrsq5Gff8rRDn1yHGMuBtUn
-         U1pQ+onx326YqV4L3nM0XVQiulyoEPkQ7eK6PuooxYYsXZVivb+5xE5JxNNy3y/0hH25
-         5iEg==
-X-Gm-Message-State: AOAM532XUkMUZbKchLmZfTBl8P3NKO6HeIvyKtYM4BmJ6LqNBZq6lpnx
-        FCs2THmy97AC9uTbctX+H6dp
-X-Google-Smtp-Source: ABdhPJy8KvKJrW64WsIXNHTRE0Wv0WKyujXpHkb/2ARFJmgzi91jhYm7tb2OYHu9qPk2PmXirDvlnQ==
-X-Received: by 2002:aa7:9e90:0:b029:18b:a94:3498 with SMTP id p16-20020aa79e900000b029018b0a943498mr2562143pfq.54.1606829733170;
-        Tue, 01 Dec 2020 05:35:33 -0800 (PST)
+        bh=RY+mbu7Kl1ygpq4GVXoYJlYC5IXEp5grIuI4NfzAZkA=;
+        b=FJA4plEf7crcst5JsX3nfwRUkj9kf7ETGNMD5zxZr9CGeQroIEQeTW7wU2BbJD+dOB
+         AjZ8E/XdsMKvceJ1rqfI1lIOEalAvi1UCCDNHvQX1LCK5w4X+SQXJ+CnvsN+8vdDfJVB
+         g1LO9JIUHAuNkhA1qikTYkSitEdu9J7eeYoIbvDBSVTpLKSRvisBvfzw0xmTMm8KyKr0
+         lsaF2tZZ31zSPIn9b5dqudWG0GhmWZ2JxgaXWaDz3E88x7hiu7PPD/islKDRna3EHYcJ
+         vI3rajV6YqNBuKbiM8DyqidRT152lqe1tDfvC0hrKUUNfZYBugwVgN5dlVqBVWAxS4Ex
+         U5hw==
+X-Gm-Message-State: AOAM532/o3T2K2rQtBfAFMylPDj8mJ5JlOS2DRfjwAm1is1AS8gS8e/6
+        YdkOs2BNIjikKI6wlFnHXxrW
+X-Google-Smtp-Source: ABdhPJz4OcKskL14b3zM4fgk2dwBWLoVO0nGRnJR4kzOMYJcKWHCEbt8/efyZqYdbRVT3VudMVuNNg==
+X-Received: by 2002:a17:90a:9381:: with SMTP id q1mr2744492pjo.127.1606829875346;
+        Tue, 01 Dec 2020 05:37:55 -0800 (PST)
 Received: from work ([103.59.133.81])
-        by smtp.gmail.com with ESMTPSA id x16sm2703229pjh.39.2020.12.01.05.35.29
+        by smtp.gmail.com with ESMTPSA id j19sm2796383pff.74.2020.12.01.05.37.51
         (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 01 Dec 2020 05:35:32 -0800 (PST)
-Date:   Tue, 1 Dec 2020 19:05:25 +0530
+        Tue, 01 Dec 2020 05:37:54 -0800 (PST)
+Date:   Tue, 1 Dec 2020 19:07:48 +0530
 From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 To:     Dan Carpenter <dan.carpenter@oracle.com>
 Cc:     Bhaumik Bhatt <bbhatt@codeaurora.org>,
@@ -61,7 +61,7 @@ Cc:     Bhaumik Bhatt <bbhatt@codeaurora.org>,
         kernel-janitors@vger.kernel.org
 Subject: Re: [PATCH] bus: mhi: core: Fix error handling in
  mhi_register_controller()
-Message-ID: <20201201133525.GB9748@work>
+Message-ID: <20201201133748.GC9748@work>
 References: <X8XqbtkPpEKSfFi2@mwanda>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -89,9 +89,7 @@ On Tue, Dec 01, 2020 at 10:02:54AM +0300, Dan Carpenter wrote:
 > Fixes: 8f7039787687 ("bus: mhi: core: Move to using high priority workqueue")
 > Signed-off-by: Dan Carpenter <dan.carpenter@oracle.com>
 
-Good find... Thanks for the patch, Dan!
-
-Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Applied to mhi-next!
 
 Thanks,
 Mani
