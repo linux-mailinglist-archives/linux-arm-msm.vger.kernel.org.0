@@ -2,115 +2,172 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 10B882CAA3B
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Dec 2020 18:53:58 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C14222CAA1A
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Dec 2020 18:49:10 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2404170AbgLARwq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 1 Dec 2020 12:52:46 -0500
-Received: from mail.kernel.org ([198.145.29.99]:54766 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2391855AbgLARwq (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 1 Dec 2020 12:52:46 -0500
-Received: from localhost (cpc102334-sgyl38-2-0-cust884.18-2.cable.virginm.net [92.233.91.117])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id CFCF620639;
-        Tue,  1 Dec 2020 17:52:03 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=default; t=1606845124;
-        bh=jUfmwSwFjkBDlJ2yKLucSJdrO2Do2GFfT2jP3rl2XF0=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=B6evOfVtPDO/lqPGI4YNEUtxLDjHbZ2Gn0Fo0LlZJhPXn5WYv1KHmWaBDtNZPQcnM
-         mjSeRMfZVph92b22w85+1sXGKO/sK9bLw4OSpTbJAZhnHNFFEl/kxxChQpoT1nfsYF
-         F/Qw+ItDxJumfTk/UJCa0IEZ6Tgyc4WhgJMslYxI=
-Date:   Tue, 1 Dec 2020 17:51:35 +0000
-From:   Mark Brown <broonie@kernel.org>
-To:     Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
-Cc:     agross@kernel.org, bjorn.andersson@linaro.org, lgirdwood@gmail.com,
-        robh+dt@kernel.org, plai@codeaurora.org, bgoswami@codeaurora.org,
-        perex@perex.cz, tiwai@suse.com, srinivas.kandagatla@linaro.org,
-        rohitkr@codeaurora.org, linux-arm-msm@vger.kernel.org,
-        alsa-devel@alsa-project.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        V Sujith Kumar Reddy <vsujithk@codeaurora.org>
-Subject: Re: [PATCH v4 1/2] Partially revert ASoC: qcom: Fix enabling BCLK
- and LRCLK in LPAIF invalid state
-Message-ID: <20201201175135.GO5239@sirena.org.uk>
-References: <1606539559-4277-1-git-send-email-srivasam@codeaurora.org>
- <1606539559-4277-2-git-send-email-srivasam@codeaurora.org>
- <20201130124617.GC4756@sirena.org.uk>
- <966993b7-4720-bdd2-cf4d-cf5a7c11a0c1@codeaurora.org>
+        id S1729663AbgLARrZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 1 Dec 2020 12:47:25 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48714 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729012AbgLARrZ (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 1 Dec 2020 12:47:25 -0500
+Received: from mail-ed1-x544.google.com (mail-ed1-x544.google.com [IPv6:2a00:1450:4864:20::544])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 72653C0613D4
+        for <linux-arm-msm@vger.kernel.org>; Tue,  1 Dec 2020 09:46:44 -0800 (PST)
+Received: by mail-ed1-x544.google.com with SMTP id d18so4531253edt.7
+        for <linux-arm-msm@vger.kernel.org>; Tue, 01 Dec 2020 09:46:44 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=VxdwyJsEqW1IFZ+wJlnqk+0jlPNFFTXeNogrQYB17Po=;
+        b=z5KgBOz6m3zJGbxmCYtcciYdsmGO5nwq6vLp++P5SLGrT+4ama0sk+fQfa3zVW5lJg
+         1V3BXsSc2kOF7bDFojVIIvTSnqpscsMFywVwEHnBekeZJYLyTZihwG0frVbwlDE6pkLx
+         aEq2EGjGKiwNic83a4TXRS//IyVTn5jZeEUlfOtcQz11Yu8w1VZb8iyTrrKfroVqKixZ
+         9ZA0r0lMJ/TPhZ3iM9N4o5byG6HALe7q/sGwemZOArDwRyN2CLprQLtASlr+Iyz8Mb5E
+         AIXIySdCk+BTOiOVUsNZpAauxQo6NEjkUkz7bVqamzo95YMsKMuHLyXTXqNHegmviRfR
+         F4/g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=VxdwyJsEqW1IFZ+wJlnqk+0jlPNFFTXeNogrQYB17Po=;
+        b=LvY+9exIv999OY+UJiguh7ARKJEo9U+Xpc2Qj1i5laELK3/OGfU3IM7ce+G5KPGYhe
+         QO3usJ3jtw61qByVnar/Zx5ZJ1i4xFdfZ3fZ3yKFnFOprhzuIoGIq9YHGA8nBpb6Og+L
+         b+ze2wlAhWXUUfPLA3GROAQGdZfkCcIpqefFbKbODZzAYWw33+IjIE4SfQ/H7xsiH62O
+         lVdN6co4PpgAal1Emn+7RtpF2414J4Ovx6K0sh6Vl+qWeyPiT6RJ+oTPVsr3+LowlTvV
+         KUTskOxoi9DyrB+8z2HhQe0k84vUOlZMAbHLMYTwE74WpN/J/eoFhB04Key5VcoxZqCV
+         r61w==
+X-Gm-Message-State: AOAM533VsFLmqQt+DbVA7/KcLc1psu4uH3PYo0pU0dUVmpQHG0PNeMJ/
+        eeiCi6sgL04mesy3OUqycQXCsMQGu02pU+rdabYtsw==
+X-Google-Smtp-Source: ABdhPJwi6ZAkxT/Dkmu36hwtj4BtismupXyyY4L1sjNGiIwLSjWY3p2nZonsfYxU7OinI5PtKwDEKsbZpLx4tG2Hxjc=
+X-Received: by 2002:a50:d886:: with SMTP id p6mr4386383edj.366.1606844803086;
+ Tue, 01 Dec 2020 09:46:43 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="2/+Vq7w28QOSGzSM"
-Content-Disposition: inline
-In-Reply-To: <966993b7-4720-bdd2-cf4d-cf5a7c11a0c1@codeaurora.org>
-X-Cookie: Who was that masked man?
-User-Agent: Mutt/1.10.1 (2018-07-13)
+References: <1606533966-22821-1-git-send-email-hemantk@codeaurora.org>
+ <1606533966-22821-5-git-send-email-hemantk@codeaurora.org>
+ <CAMZdPi8z+-qFqgZ7AFJcNAUMbDQtNN5Hz-geMBcp4azrUGm9iA@mail.gmail.com>
+ <c47dcd57-7576-e03e-f70b-0c4d25f724b5@codeaurora.org> <CAMZdPi8mUV5cFs-76K3kg=hN8ht2SKjJwzbJH-+VH4Y8QabcHQ@mail.gmail.com>
+ <1247e32e-ed67-de6b-81ec-3bde9ad93250@codeaurora.org>
+In-Reply-To: <1247e32e-ed67-de6b-81ec-3bde9ad93250@codeaurora.org>
+From:   Loic Poulain <loic.poulain@linaro.org>
+Date:   Tue, 1 Dec 2020 18:52:57 +0100
+Message-ID: <CAMZdPi-tjmXWAFzZJAg_6U5h2ZJv478E88T-Lmk=YA-B6=MzRA@mail.gmail.com>
+Subject: Re: [PATCH v13 4/4] bus: mhi: Add userspace client interface driver
+To:     Jeffrey Hugo <jhugo@codeaurora.org>
+Cc:     Hemant Kumar <hemantk@codeaurora.org>,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        open list <linux-kernel@vger.kernel.org>,
+        Bhaumik Bhatt <bbhatt@codeaurora.org>,
+        Network Development <netdev@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Tue, 1 Dec 2020 at 18:37, Jeffrey Hugo <jhugo@codeaurora.org> wrote:
+>
+> On 12/1/2020 10:36 AM, Loic Poulain wrote:
+> > On Tue, 1 Dec 2020 at 02:16, Hemant Kumar <hemantk@codeaurora.org> wrote:
+> >>
+> >> Hi Loic,
+> >>
+> >> On 11/30/20 10:22 AM, Loic Poulain wrote:
+> >>> On Sat, 28 Nov 2020 at 04:26, Hemant Kumar <hemantk@codeaurora.org> wrote:
+> >>>>
+> >>>> This MHI client driver allows userspace clients to transfer
+> >>>> raw data between MHI device and host using standard file operations.
+> >>>> Driver instantiates UCI device object which is associated to device
+> >>>> file node. UCI device object instantiates UCI channel object when device
+> >>>> file node is opened. UCI channel object is used to manage MHI channels
+> >>>> by calling MHI core APIs for read and write operations. MHI channels
+> >>>> are started as part of device open(). MHI channels remain in start
+> >>>> state until last release() is called on UCI device file node. Device
+> >>>> file node is created with format
+> >>>
+> >>> [...]
+> >>>
+> >>>> +struct uci_chan {
+> >>>> +       struct uci_dev *udev;
+> >>>> +       wait_queue_head_t ul_wq;
+> >>>> +
+> >>>> +       /* ul channel lock to synchronize multiple writes */
+> >>>> +       struct mutex write_lock;
+> >>>> +
+> >>>> +       wait_queue_head_t dl_wq;
+> >>>> +
+> >>>> +       /* dl channel lock to synchronize multiple reads */
+> >>>> +       struct mutex read_lock;
+> >>>> +
+> >>>> +       /*
+> >>>> +        * protects pending list in bh context, channel release, read and
+> >>>> +        * poll
+> >>>> +        */
+> >>>> +       spinlock_t dl_pending_lock;
+> >>>> +
+> >>>> +       struct list_head dl_pending;
+> >>>> +       struct uci_buf *cur_buf;
+> >>>> +       size_t dl_size;
+> >>>> +       struct kref ref_count;
+> >>>> +};
+> >>>
+> >>> [...]
+> >>>
+> >>>> + * struct uci_dev - MHI UCI device
+> >>>> + * @minor: UCI device node minor number
+> >>>> + * @mhi_dev: associated mhi device object
+> >>>> + * @uchan: UCI uplink and downlink channel object
+> >>>> + * @mtu: max TRE buffer length
+> >>>> + * @enabled: Flag to track the state of the UCI device
+> >>>> + * @lock: mutex lock to manage uchan object
+> >>>> + * @ref_count: uci_dev reference count
+> >>>> + */
+> >>>> +struct uci_dev {
+> >>>> +       unsigned int minor;
+> >>>> +       struct mhi_device *mhi_dev;
+> >>>> +       struct uci_chan *uchan;
+> >>>
+> >>> Why a pointer to uci_chan and not just plainly integrating the
+> >>> structure here, AFAIU uci_chan describes the channels and is just a
+> >>> subpart of uci_dev. That would reduce the number of dynamic
+> >>> allocations you manage and the extra kref. do you even need a separate
+> >>> structure for this?
+> >>
+> >> This goes back to one of my patch versions i tried to address concern
+> >> from Greg. Since we need to ref count the channel as well as the uci
+> >> device i decoupled the two objects and used two reference counts for two
+> >> different objects.
+> >
+> > What Greg complained about is the two kref in the same structure and
+> > that you were using kref as an open() counter. But splitting your
+> > struct in two in order to keep the two kref does not make the much
+> > code better (and simpler). I'm still a bit puzzled about the driver
+> > complexity, it's supposed to be just a passthrough interface to MHI
+> > after all.
+> >
+> > I would suggest several changes, that IMHO would simplify reviewing:
+> > - Use only one structure representing the 'uci' context (uci_dev)
+> > - Keep the read path simple (mhi_uci_read), do no use an intermediate
+> > cur_buf pointer, only dequeue the buffer when it is fully consumed.
+> > - As I commented before, take care of the dl_pending list access
+> > concurrency, even in wait_event.
+> > - You don't need to count the number of open() calls, AFAIK,
+> > mhi_prepare_for_transfer() simply fails if channels are already
+> > started...
+>
+> Unless I missed something, you seem to have ignored the root issue that
+> Hemant needs to solve, which is when to call
+> mhi_unprepare_for_transfer().  You can't just call that when close() is
+> called because there might be multiple users, and each one is going to
+> trigger a close(), so you need to know how many close() instances to
+> expect, and only call mhi_unprepare_for_transfer() for the last one.
 
---2/+Vq7w28QOSGzSM
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+That one part of his problem, yes, but if you unconditionally call
+mhi_prepare_for_transfer in open(), it should fail for subsequent
+users, and so only one user will successfully open the device.
 
-On Tue, Dec 01, 2020 at 11:01:21PM +0530, Srinivasa Rao Mandadapu wrote:
-> On 11/30/2020 6:16 PM, Mark Brown wrote:
-
-> > Part of this commit message says that the problem was making the regist=
-ers
-> > non-volatile but both the change and the rest of the commit message say
-> > that the issue was that the registers were made volatile.  I'm also
-> > still unclear as to what the issue is either way - how does reading the
-> > state of the registers from the hardware instead of the cache affect
-> > things?
-
-> Initial problem was, during playback if device suspended, I2S and DMA
-> control registers
-
-> are getting reset and unable to recover playback after resume.
-
-> As these registers were non volatile registers, driver is not getting act=
-ual
-> register value
-
-> and unable to report error state to application. Due to this application
-
-> keeps on polling for HW current pointer state and not exited from PCM
-> running state.
-
-> Later from review comments by Srinivas kandagatla, I got to know
->=20
-> about regcache sync APIs, which can be used=A0 to sync cache after resume=
- and
->=20
-> HW registers can be updated with=A0 original values. With that playback c=
-an be
-> continued.
->=20
-> So is the reason, I am reverting partial changes in the commit b182496822=
-1c.
-
-I don't understand why a fix for the register cache not being in sync
-with the hardware doesn't involve syncing the register cache with the
-hardware.
-
---2/+Vq7w28QOSGzSM
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAl/GgqYACgkQJNaLcl1U
-h9AADgf8CR0hjpkrydEc4Jmmddl9qFfQcl6Ce7ZzoFWbuXciX9c8pj+PPVgpoX/K
-jwlx1LwoYv/e+ods31XWXAdp2nRaCef93oB6iUPjUydd6LdsW40FFiBCB4fiT/v/
-6JqlND0PT2+PAgAkoz1sUM9Hn5U5ocdWfs02/3jICjdnfvHjDWtH6XWgNwt+CA1A
-1PpFFUv4RkRTYZFG/LHHNXPOOBc8jqJ1Z66ZjEd38AvpJXaWsDAAlF4hc2XUk15/
-hSoQ97rYQGjGUfQUB/K9qgkhzAj67DtXgif7iosAO+Th/hAkRwH189Z/lTZrkoOd
-Rp1dumAYfp+wg91tB7hho8TJxhmygg==
-=QxRn
------END PGP SIGNATURE-----
-
---2/+Vq7w28QOSGzSM--
+Regards,
+Loic
