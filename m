@@ -2,65 +2,65 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A85862CAD31
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Dec 2020 21:24:03 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D5CB62CADB9
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Dec 2020 21:51:07 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728216AbgLAUWl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 1 Dec 2020 15:22:41 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44554 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727771AbgLAUWk (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 1 Dec 2020 15:22:40 -0500
-Received: from mail-io1-xd44.google.com (mail-io1-xd44.google.com [IPv6:2607:f8b0:4864:20::d44])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B933BC0613CF
-        for <linux-arm-msm@vger.kernel.org>; Tue,  1 Dec 2020 12:22:00 -0800 (PST)
-Received: by mail-io1-xd44.google.com with SMTP id i9so3001513ioo.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 01 Dec 2020 12:22:00 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ieee.org; s=google;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=4gs7t9MjEYA5UWOLu3eX1LUX0CiZ69mOlK5lwM97vkI=;
-        b=Kit/biOu4sHqQEb5yzcx6x6d+9T6rLZbLjREZOUmKQG21dAFnBUUQtpUEwzhT4eODp
-         ifXpgMxqpgHPZLUfGuv+Pj5uTAhYrHz+T/opfsr4VxkoS1dIAncp29x7DrHdDhgvb3wL
-         JX8eWxJN9Zl2yu+KHsNfcml9Ae5agzS0GwCgU=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=4gs7t9MjEYA5UWOLu3eX1LUX0CiZ69mOlK5lwM97vkI=;
-        b=ffr+8LJYKoY4V3Y2PPRZ8C6oaN0JCMYpActLpj37GlpvW3208cBqPATZvw2RXNNxtz
-         EwytKiRSZ8HJyyVVQQi+0KGsaCay/4ns4mcAY9ltkmss4Ay1dI1B1ufOnA3QnnTjVzC3
-         NWTGgDkh2jAJNMpcYnf50TMVBzUATFmSf4kKhhXFoJdljySMq49NbV4ZNIg8TRN7fQfE
-         2hCh4CtIzgwV/Ren8gCn+2i7cdKAYhbP3NJRYJvKEqh8qXS62l17Tf2PnbeUeQrozvd1
-         w9dvVQK04/KMvdCjlBPrefbjVUbptM12oCmvL200PoCvgtNNBUFbc+Mcew0aPOhnBuMV
-         nzgA==
-X-Gm-Message-State: AOAM533WV+NdGGpPNUcSaARKAhJ0LcQZMQFiI5K+ZwStLyv/Ls4S60du
-        HWiWK12OIptG/kstfo+edA03Ow==
-X-Google-Smtp-Source: ABdhPJwgfKTuzX231iuOFh3HM2J+8+V8c7Ho5xKvWB5EHAHLg8Ugj3Bns3j9Y2oGfqRLOQK11r1igg==
-X-Received: by 2002:a5d:9049:: with SMTP id v9mr3846181ioq.199.1606854120097;
-        Tue, 01 Dec 2020 12:22:00 -0800 (PST)
-Received: from [172.22.22.4] (c-73-185-129-58.hsd1.mn.comcast.net. [73.185.129.58])
-        by smtp.googlemail.com with ESMTPSA id d5sm322949ios.25.2020.12.01.12.21.59
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 01 Dec 2020 12:21:59 -0800 (PST)
-Subject: Re: [PATCH v5 2/2] pinctrl: qcom: Add sm8250 lpass lpi pinctrl driver
-To:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        linus.walleij@linaro.org, bjorn.andersson@linaro.org
-Cc:     robh+dt@kernel.org, agross@kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20201201142830.13152-1-srinivas.kandagatla@linaro.org>
- <20201201142830.13152-3-srinivas.kandagatla@linaro.org>
-From:   Alex Elder <elder@ieee.org>
-Message-ID: <bf18cc63-77b2-7929-625a-1ea3d108916e@ieee.org>
-Date:   Tue, 1 Dec 2020 14:21:58 -0600
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.5.0
+        id S1728238AbgLAUt2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 1 Dec 2020 15:49:28 -0500
+Received: from m42-5.mailgun.net ([69.72.42.5]:47965 "EHLO m42-5.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727946AbgLAUtZ (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 1 Dec 2020 15:49:25 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1606855745; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
+ Subject: Sender; bh=Yo42yaq/01Dx0rVkGb727su6dur/zrnh3T7p2hY8vMQ=; b=jAXiL/7VeHoHor5AYsMVhP5ApsY2UtPRlV3RPDn4ePC5gToB7a7ZG481Q/plKcshNQJYITL0
+ Nke1wIX4TK3juyX8LuYcdqXE/oF7c03Mwh8tC9lSuhkWAXf4AF+MzFY8DxXAR+QhM9AKCvdS
+ bGXfKPwQ0atUf6AdHs6mQVNimMY=
+X-Mailgun-Sending-Ip: 69.72.42.5
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n08.prod.us-east-1.postgun.com with SMTP id
+ 5fc6ac28f4482b01c4fbdf7d (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 01 Dec 2020 20:48:40
+ GMT
+Sender: jhugo=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 3DC4CC43462; Tue,  1 Dec 2020 20:48:39 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        NICE_REPLY_A,SPF_FAIL autolearn=no autolearn_force=no version=3.4.0
+Received: from [10.226.59.216] (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: jhugo)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 91A89C433ED;
+        Tue,  1 Dec 2020 20:48:37 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 91A89C433ED
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=jhugo@codeaurora.org
+Subject: Re: [PATCH v13 0/4] userspace MHI client interface driver
+To:     Jakub Kicinski <kuba@kernel.org>
+Cc:     Hemant Kumar <hemantk@codeaurora.org>,
+        manivannan.sadhasivam@linaro.org, gregkh@linuxfoundation.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        bbhatt@codeaurora.org, loic.poulain@linaro.org,
+        netdev@vger.kernel.org, linux-wireless@vger.kernel.org,
+        Kalle Valo <kvalo@codeaurora.org>
+References: <1606533966-22821-1-git-send-email-hemantk@codeaurora.org>
+ <20201201112901.7f13e26c@kicinski-fedora-pc1c0hjn.DHCP.thefacebook.com>
+ <c6359962-a378-ed03-0fab-c2f6c8a1b8eb@codeaurora.org>
+ <20201201120302.474d4c9b@kicinski-fedora-pc1c0hjn.DHCP.thefacebook.com>
+From:   Jeffrey Hugo <jhugo@codeaurora.org>
+Message-ID: <817a4346-efb7-cfe5-0678-d1b60d06627d@codeaurora.org>
+Date:   Tue, 1 Dec 2020 13:48:36 -0700
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.4.0
 MIME-Version: 1.0
-In-Reply-To: <20201201142830.13152-3-srinivas.kandagatla@linaro.org>
+In-Reply-To: <20201201120302.474d4c9b@kicinski-fedora-pc1c0hjn.DHCP.thefacebook.com>
 Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-US
 Content-Transfer-Encoding: 7bit
@@ -68,130 +68,62 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 12/1/20 8:28 AM, Srinivas Kandagatla wrote:
-> Add initial pinctrl driver to support pin configuration for
-> LPASS (Low Power Audio SubSystem) LPI (Low Power Island) pinctrl
-> on SM8250.
+On 12/1/2020 1:03 PM, Jakub Kicinski wrote:
+> On Tue, 1 Dec 2020 12:40:50 -0700 Jeffrey Hugo wrote:
+>> On 12/1/2020 12:29 PM, Jakub Kicinski wrote:
+>>> On Fri, 27 Nov 2020 19:26:02 -0800 Hemant Kumar wrote:
+>>>> This patch series adds support for UCI driver. UCI driver enables userspace
+>>>> clients to communicate to external MHI devices like modem and WLAN. UCI driver
+>>>> probe creates standard character device file nodes for userspace clients to
+>>>> perform open, read, write, poll and release file operations. These file
+>>>> operations call MHI core layer APIs to perform data transfer using MHI bus
+>>>> to communicate with MHI device. Patch is tested using arm64 based platform.
+>>>
+>>> Wait, I thought this was for modems.
+>>>
+>>> Why do WLAN devices need to communicate with user space?
+>>>    
+>>
+>> Why does it matter what type of device it is?  Are modems somehow unique
+>> in that they are the only type of device that userspace is allowed to
+>> interact with?
 > 
-> This IP is an additional pin control block for Audio Pins on top the
-> existing SoC Top level pin-controller.
-> Hardware setup looks like:
+> Yes modems are traditionally highly weird and require some serial
+> device dance I don't even know about.
 > 
-> TLMM GPIO[146 - 159] --> LPASS LPI GPIO [0 - 13]
+> We have proper interfaces in Linux for configuring WiFi which work
+> across vendors. Having char device access to WiFi would be a step
+> back.
+
+So a WLAN device is only ever allowed to do Wi-Fi?  It can't also have 
+GPS functionality for example?
+
 > 
-> This pin controller has some similarities compared to Top level
-> msm SoC Pin controller like 'each pin belongs to a single group'
-> and so on. However this one is intended to control only audio
-> pins in particular, which can not be configured/touched by the
-> Top level SoC pin controller except setting them as gpios.
-> Apart from this, slew rate is also available in this block for
-> certain pins which are connected to SLIMbus or SoundWire Bus.
+>> However, I'll bite.  Once such usecase would be QMI.  QMI is a generic
+>> messaging protocol, and is not strictly limited to the unique operations
+>> of a modem.
+>>
+>> Another usecase would be Sahara - a custom file transfer protocol used
+>> for uploading firmware images, and downloading crashdumps.
 > 
-> Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-
-Bjorn called my attention to a comment he made on this patch.
-I'm not giving it a full review right now, but I have a
-general suggestion below.
-
-> ---
->   drivers/pinctrl/qcom/Kconfig             |   8 +
->   drivers/pinctrl/qcom/Makefile            |   1 +
->   drivers/pinctrl/qcom/pinctrl-lpass-lpi.c | 727 +++++++++++++++++++++++
->   3 files changed, 736 insertions(+)
->   create mode 100644 drivers/pinctrl/qcom/pinctrl-lpass-lpi.c
+> Thanks, I was asking for use cases, not which proprietary vendor
+> protocol you can implement over it.
 > 
-> diff --git a/drivers/pinctrl/qcom/Kconfig b/drivers/pinctrl/qcom/Kconfig
-> index 5fe7b8aaf69d..d3e4e89c2810 100644
-> --- a/drivers/pinctrl/qcom/Kconfig
-> +++ b/drivers/pinctrl/qcom/Kconfig
-> @@ -236,4 +236,12 @@ config PINCTRL_SM8250
->   	  Qualcomm Technologies Inc TLMM block found on the Qualcomm
->   	  Technologies Inc SM8250 platform.
->   
-> +config PINCTRL_LPASS_LPI
-> +	tristate "Qualcomm Technologies Inc LPASS LPI pin controller driver"
-> +	depends on GPIOLIB
-> +	help
-> +	  This is the pinctrl, pinmux, pinconf and gpiolib driver for the
-> +	  Qualcomm Technologies Inc LPASS (Low Power Audio SubSystem) LPI
-> +	  (Low Power Island) found on the Qualcomm Technologies Inc SoCs.
-> +
->   endif
-> diff --git a/drivers/pinctrl/qcom/Makefile b/drivers/pinctrl/qcom/Makefile
-> index 9e3d9c91a444..c8520155fb1b 100644
-> --- a/drivers/pinctrl/qcom/Makefile
-> +++ b/drivers/pinctrl/qcom/Makefile
-> @@ -28,3 +28,4 @@ obj-$(CONFIG_PINCTRL_SDM660)   += pinctrl-sdm660.o
->   obj-$(CONFIG_PINCTRL_SDM845) += pinctrl-sdm845.o
->   obj-$(CONFIG_PINCTRL_SM8150) += pinctrl-sm8150.o
->   obj-$(CONFIG_PINCTRL_SM8250) += pinctrl-sm8250.o
-> +obj-$(CONFIG_PINCTRL_LPASS_LPI) += pinctrl-lpass-lpi.o
-> diff --git a/drivers/pinctrl/qcom/pinctrl-lpass-lpi.c b/drivers/pinctrl/qcom/pinctrl-lpass-lpi.c
-> new file mode 100644
-> index 000000000000..96c63a33fc99
-> --- /dev/null
-> +++ b/drivers/pinctrl/qcom/pinctrl-lpass-lpi.c
-> @@ -0,0 +1,727 @@
-> +// SPDX-License-Identifier: GPL-2.0-only
-> +/*
-> + * Copyright (c) 2016-2019, The Linux Foundation. All rights reserved.
-> + * Copyright (c) 2020 Linaro Ltd.
-> + */
-> +
-> +#include <linux/bitops.h>
-> +#include <linux/bitfield.h>
-> +#include <linux/clk.h>
-> +#include <linux/gpio/driver.h>
-> +#include <linux/io.h>
-> +#include <linux/module.h>
-> +#include <linux/of_device.h>
-> +#include <linux/of.h>
-> +#include <linux/pinctrl/pinconf-generic.h>
-> +#include <linux/pinctrl/pinconf.h>
-> +#include <linux/pinctrl/pinmux.h>
-> +#include <linux/platform_device.h>
-> +#include <linux/slab.h>
-> +#include <linux/types.h>
-> +#include "../core.h"
-> +#include "../pinctrl-utils.h"
-> +
-> +#define LPI_GPIO_CFG_REG		0x00
-> +#define LPI_GPIO_VALUE_REG		0x04
-> +#define LPI_SLEW_RATE_CTL_REG		0xa000
-> +#define LPI_SLEW_RATE_MAX		0x03
-> +#define LPI_SLEW_BITS_SIZE		0x02
-> +#define LPI_GPIO_PULL_SHIFT		0x0
-> +#define LPI_GPIO_PULL_MASK		GENMASK(1, 0)
+> None of the use cases you mention here should require a direct FW -
+> user space backdoor for WLAN.
 
-. . .
+Uploading runtime firmware, with variations based on the runtime mode. 
+Flashing the onboard flash based on cryptographic keys.  Accessing 
+configuration data.  Accessing device logs.  Configuring device logs. 
+Synchronizing the device time reference to Linux local or remote time 
+sources.  Enabling debugging/performance hardware.  Getting software 
+diagnostic events.  Configuring redundancy hardware per workload. 
+Uploading new cryptographic keys.  Invalidating cryptographic keys. 
+Uploading factory test data and running factory tests.
 
-If you have a mask like this, you do not need the shift.
-The mask alone encodes both the position and the width
-of the field you are describing.  It is better to use
-just the one (mask) value and avoid even the possibility
-of the mask and shift being inconsistent.  You halve the
-number of symbols you need to describe fields too.
+Need more?
 
-For the macros and functions in <linux/bitfield.h> the
-mask values must be constant at compile time, but you
-have that here.
-
-For the LPI_GPIO_PULL, you use it below this way:
-     pull = (ctl_reg & LPI_GPIO_PULL_MASK) >> LPI_GPIO_PULL_SHIFT;
-Instead, use:
-     pull = u32_get_bits(ctl_reg, LPI_GPIO_PULL_MASK);
-
-I see you're using u32_replace_bits(), and what I see
-looks good.  But you can use u32_encode_bits() as well.
-For example, instead of:
-     lpi_gpio_write(pctrl, group, LPI_GPIO_VALUE_REG,
-                    value << LPI_GPIO_DIR_SHIFT);
-Use:
-     val = u32_encode_bits(value ? 1 : 0, LPI_GPIO_DIR_MASK);
-     lpi_gpio_write(pctrl, group, LPI_GPIO_VALUE_REG, val);
-(This one-bit mask might not be a great example.)
-
-In addition to getting rid of extra symbols, using these
-functions typically results in simpler-looking code.
-
-					-Alex
+-- 
+Jeffrey Hugo
+Qualcomm Technologies, Inc. is a member of the
+Code Aurora Forum, a Linux Foundation Collaborative Project.
