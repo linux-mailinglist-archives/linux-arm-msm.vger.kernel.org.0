@@ -2,224 +2,228 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 152432CAA74
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Dec 2020 19:06:13 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id DCA0D2CAB91
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Dec 2020 20:16:45 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726104AbgLASFS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 1 Dec 2020 13:05:18 -0500
-Received: from a2.mail.mailgun.net ([198.61.254.61]:50309 "EHLO
-        a2.mail.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726874AbgLASFS (ORCPT
+        id S1731335AbgLATPG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 1 Dec 2020 14:15:06 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34042 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1731333AbgLATPG (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 1 Dec 2020 13:05:18 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1606845893; h=Content-Transfer-Encoding: Content-Type:
- In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
- Subject: Sender; bh=/oR8KXQmnLjX9qnZyU23qyZOmE3cCrgpXd266+4nd4M=; b=oUrk9eEEqgQx8EWf0MyqQKSsVh3eoffBAbHHhi6kz+SOXUslCPyXADQiE4acb/hDwV2IjyTt
- TpP2BA/dPXddNfJsOmX/O9nsjVdLpbL8VkRlLSwB5635fYF7fnmtV+ZHH1nom/0pm4Zuxnfp
- ZMGhNTpS/kBb9A22cQLIk35fkQg=
-X-Mailgun-Sending-Ip: 198.61.254.61
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n04.prod.us-west-2.postgun.com with SMTP id
- 5fc685a84a918fcc076daa6d (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 01 Dec 2020 18:04:24
- GMT
-Sender: jhugo=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 62225C43461; Tue,  1 Dec 2020 18:04:24 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        NICE_REPLY_A,SPF_FAIL,URIBL_BLOCKED autolearn=no autolearn_force=no
-        version=3.4.0
-Received: from [10.226.59.216] (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: jhugo)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 88B98C433C6;
-        Tue,  1 Dec 2020 18:04:22 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 88B98C433C6
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=jhugo@codeaurora.org
-Subject: Re: [PATCH v13 4/4] bus: mhi: Add userspace client interface driver
-To:     Loic Poulain <loic.poulain@linaro.org>
-Cc:     Hemant Kumar <hemantk@codeaurora.org>,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        open list <linux-kernel@vger.kernel.org>,
-        Bhaumik Bhatt <bbhatt@codeaurora.org>,
-        Network Development <netdev@vger.kernel.org>
-References: <1606533966-22821-1-git-send-email-hemantk@codeaurora.org>
- <1606533966-22821-5-git-send-email-hemantk@codeaurora.org>
- <CAMZdPi8z+-qFqgZ7AFJcNAUMbDQtNN5Hz-geMBcp4azrUGm9iA@mail.gmail.com>
- <c47dcd57-7576-e03e-f70b-0c4d25f724b5@codeaurora.org>
- <CAMZdPi8mUV5cFs-76K3kg=hN8ht2SKjJwzbJH-+VH4Y8QabcHQ@mail.gmail.com>
- <1247e32e-ed67-de6b-81ec-3bde9ad93250@codeaurora.org>
- <CAMZdPi-tjmXWAFzZJAg_6U5h2ZJv478E88T-Lmk=YA-B6=MzRA@mail.gmail.com>
- <1a9f7ed5-7060-9146-47ff-087b9096ba3a@codeaurora.org>
- <CAMZdPi_=k95C0TTJDvRfYcFtqm6kSLfWHZ6CKpksAD=1P5vtfA@mail.gmail.com>
-From:   Jeffrey Hugo <jhugo@codeaurora.org>
-Message-ID: <73ca4025-47a1-ff5f-2d85-e8f524f819b3@codeaurora.org>
-Date:   Tue, 1 Dec 2020 11:04:21 -0700
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.4.0
+        Tue, 1 Dec 2020 14:15:06 -0500
+Received: from mail-ot1-x344.google.com (mail-ot1-x344.google.com [IPv6:2607:f8b0:4864:20::344])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2FA8BC0613D6
+        for <linux-arm-msm@vger.kernel.org>; Tue,  1 Dec 2020 11:14:26 -0800 (PST)
+Received: by mail-ot1-x344.google.com with SMTP id 79so2746072otc.7
+        for <linux-arm-msm@vger.kernel.org>; Tue, 01 Dec 2020 11:14:26 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=pLNjc1Dfn2oLUa5wbC/+KNLD5T+eEW1y3MmCWo+76rA=;
+        b=X/RNeZ1Z1apmBWG0Fup7Yc7lV2BKZh/oZwu070yNHUH6uIB8tgIn6+GpeQm3RS4LT/
+         PQOcDQigQmvbXWLtKgUK3hYyERwL7p+tltSvRldvGHH2FnL3+AGWmyOvh5z4/rV6B3ew
+         IcCTofd1bP2BvI6KcVwZWibs4raSgXYTvK6jOyCHuaRuZ5Z+b6AKLzrY+cyFTMMzvAPG
+         3k895rjfiQXiIdZDCkoCWSiJtR8jUvY4UYk3HFaE13oMrOA8JUhAN1gg+R1lIUxFw+cN
+         HQmG0gTsrw3A4AKssSRaVG8kQm7vUXVkCQGSGiK2Ita6P0P4e21N+39es4WyGRh8lDOv
+         dIzw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=pLNjc1Dfn2oLUa5wbC/+KNLD5T+eEW1y3MmCWo+76rA=;
+        b=WUqmqAWKW4Lygk6h9rBrlfg2gC4G1Y3CkeRbA+PizOla10emUfYwgxv4hburCbgoSR
+         5L45oNOK3U9HYK9OnZliz6onYjUH8O7IoCnAogH3RJuuMgQmVfopTlFd+rcwISvTqKqq
+         dYnDo/3QYCkmAyfp9djvA+nJUxaZBQERpodjWnaX0VPaqLNCwZjgNQllt6bgW1iYQU5S
+         Pb78wudhEn4K1yFyYKY8kIPxtsQRzM3CAya7+Y095D2i/KFEnA8TmBFoePa+7kuo8t+w
+         rkjIKmSyhRWiMHLsBAmDLzhfpnh4uEDEKEfDEgVbT3KZRlinkQCl5BaQkp77yXQZUdTZ
+         DyHw==
+X-Gm-Message-State: AOAM531xlGSKhd7mDv+A++4nx1z8rgRLgxMjeVuXjN5ZLKnnOYDzoN5/
+        x9O9EmhzfLsmW81Uty1te1O8cw==
+X-Google-Smtp-Source: ABdhPJwlsxqflDkcGw11vDOYfgkb6oV2LEWKtO1RAqu9en1tdBNns2IIR6E4FO8b82OIhqVpnx8SlQ==
+X-Received: by 2002:a9d:7a8a:: with SMTP id l10mr3004510otn.228.1606850065407;
+        Tue, 01 Dec 2020 11:14:25 -0800 (PST)
+Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
+        by smtp.gmail.com with ESMTPSA id r19sm158271ota.14.2020.12.01.11.14.23
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 01 Dec 2020 11:14:24 -0800 (PST)
+Date:   Tue, 1 Dec 2020 13:14:22 -0600
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, agross@kernel.org,
+        robh+dt@kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 3/6] arm64: dts: qcom: sm8250: add lpass lpi pin
+ controller node
+Message-ID: <X8aWDj1n6KTM5ma/@builder.lan>
+References: <20201201153706.13450-1-srinivas.kandagatla@linaro.org>
+ <20201201153706.13450-4-srinivas.kandagatla@linaro.org>
 MIME-Version: 1.0
-In-Reply-To: <CAMZdPi_=k95C0TTJDvRfYcFtqm6kSLfWHZ6CKpksAD=1P5vtfA@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20201201153706.13450-4-srinivas.kandagatla@linaro.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 12/1/2020 11:05 AM, Loic Poulain wrote:
-> On Tue, 1 Dec 2020 at 18:51, Jeffrey Hugo <jhugo@codeaurora.org> wrote:
->>
->> On 12/1/2020 10:52 AM, Loic Poulain wrote:
->>> On Tue, 1 Dec 2020 at 18:37, Jeffrey Hugo <jhugo@codeaurora.org> wrote:
->>>>
->>>> On 12/1/2020 10:36 AM, Loic Poulain wrote:
->>>>> On Tue, 1 Dec 2020 at 02:16, Hemant Kumar <hemantk@codeaurora.org> wrote:
->>>>>>
->>>>>> Hi Loic,
->>>>>>
->>>>>> On 11/30/20 10:22 AM, Loic Poulain wrote:
->>>>>>> On Sat, 28 Nov 2020 at 04:26, Hemant Kumar <hemantk@codeaurora.org> wrote:
->>>>>>>>
->>>>>>>> This MHI client driver allows userspace clients to transfer
->>>>>>>> raw data between MHI device and host using standard file operations.
->>>>>>>> Driver instantiates UCI device object which is associated to device
->>>>>>>> file node. UCI device object instantiates UCI channel object when device
->>>>>>>> file node is opened. UCI channel object is used to manage MHI channels
->>>>>>>> by calling MHI core APIs for read and write operations. MHI channels
->>>>>>>> are started as part of device open(). MHI channels remain in start
->>>>>>>> state until last release() is called on UCI device file node. Device
->>>>>>>> file node is created with format
->>>>>>>
->>>>>>> [...]
->>>>>>>
->>>>>>>> +struct uci_chan {
->>>>>>>> +       struct uci_dev *udev;
->>>>>>>> +       wait_queue_head_t ul_wq;
->>>>>>>> +
->>>>>>>> +       /* ul channel lock to synchronize multiple writes */
->>>>>>>> +       struct mutex write_lock;
->>>>>>>> +
->>>>>>>> +       wait_queue_head_t dl_wq;
->>>>>>>> +
->>>>>>>> +       /* dl channel lock to synchronize multiple reads */
->>>>>>>> +       struct mutex read_lock;
->>>>>>>> +
->>>>>>>> +       /*
->>>>>>>> +        * protects pending list in bh context, channel release, read and
->>>>>>>> +        * poll
->>>>>>>> +        */
->>>>>>>> +       spinlock_t dl_pending_lock;
->>>>>>>> +
->>>>>>>> +       struct list_head dl_pending;
->>>>>>>> +       struct uci_buf *cur_buf;
->>>>>>>> +       size_t dl_size;
->>>>>>>> +       struct kref ref_count;
->>>>>>>> +};
->>>>>>>
->>>>>>> [...]
->>>>>>>
->>>>>>>> + * struct uci_dev - MHI UCI device
->>>>>>>> + * @minor: UCI device node minor number
->>>>>>>> + * @mhi_dev: associated mhi device object
->>>>>>>> + * @uchan: UCI uplink and downlink channel object
->>>>>>>> + * @mtu: max TRE buffer length
->>>>>>>> + * @enabled: Flag to track the state of the UCI device
->>>>>>>> + * @lock: mutex lock to manage uchan object
->>>>>>>> + * @ref_count: uci_dev reference count
->>>>>>>> + */
->>>>>>>> +struct uci_dev {
->>>>>>>> +       unsigned int minor;
->>>>>>>> +       struct mhi_device *mhi_dev;
->>>>>>>> +       struct uci_chan *uchan;
->>>>>>>
->>>>>>> Why a pointer to uci_chan and not just plainly integrating the
->>>>>>> structure here, AFAIU uci_chan describes the channels and is just a
->>>>>>> subpart of uci_dev. That would reduce the number of dynamic
->>>>>>> allocations you manage and the extra kref. do you even need a separate
->>>>>>> structure for this?
->>>>>>
->>>>>> This goes back to one of my patch versions i tried to address concern
->>>>>> from Greg. Since we need to ref count the channel as well as the uci
->>>>>> device i decoupled the two objects and used two reference counts for two
->>>>>> different objects.
->>>>>
->>>>> What Greg complained about is the two kref in the same structure and
->>>>> that you were using kref as an open() counter. But splitting your
->>>>> struct in two in order to keep the two kref does not make the much
->>>>> code better (and simpler). I'm still a bit puzzled about the driver
->>>>> complexity, it's supposed to be just a passthrough interface to MHI
->>>>> after all.
->>>>>
->>>>> I would suggest several changes, that IMHO would simplify reviewing:
->>>>> - Use only one structure representing the 'uci' context (uci_dev)
->>>>> - Keep the read path simple (mhi_uci_read), do no use an intermediate
->>>>> cur_buf pointer, only dequeue the buffer when it is fully consumed.
->>>>> - As I commented before, take care of the dl_pending list access
->>>>> concurrency, even in wait_event.
->>>>> - You don't need to count the number of open() calls, AFAIK,
->>>>> mhi_prepare_for_transfer() simply fails if channels are already
->>>>> started...
->>>>
->>>> Unless I missed something, you seem to have ignored the root issue that
->>>> Hemant needs to solve, which is when to call
->>>> mhi_unprepare_for_transfer().  You can't just call that when close() is
->>>> called because there might be multiple users, and each one is going to
->>>> trigger a close(), so you need to know how many close() instances to
->>>> expect, and only call mhi_unprepare_for_transfer() for the last one.
->>>
->>> That one part of his problem, yes, but if you unconditionally call
->>> mhi_prepare_for_transfer in open(), it should fail for subsequent
->>> users, and so only one user will successfully open the device.
->>
->> I'm pretty sure that falls under "trying to prevent users from opening a
->> device" which Greg gave a pretty strong NACK to.  So, that's not a solution.
+On Tue 01 Dec 09:37 CST 2020, Srinivas Kandagatla wrote:
+
+> Add LPASS LPI pinctrl node required for Audio functionality on RB5.
 > 
-> That would deserve clarification since other drivers like
-> virtio_console clearly prevent that (guest_connected).
-
-Quoting Greg from the source - https://lkml.org/lkml/2020/9/17/873
-
-"
-I told you before, do not try to keep a device node from being opened
-multiple times, as it will always fail (think about passing file handles
-around between programs...)
-
-If userspace wants to do this, it will do it.  If your driver can't
-handle that, that's fine, userspace will learn not to do that.  But the
-kernel can not prevent this from happening.
-"
-
+> Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+> ---
+>  arch/arm64/boot/dts/qcom/sm8250.dtsi | 95 ++++++++++++++++++++++++++++
+>  1 file changed, 95 insertions(+)
 > 
->>
->> So, the complete problem is -
->>
->> N users need to be able to use the device (and by proxy, the channel)
->> concurrently, but prepare needs to be called on the first user coming
->> into the picture, and unprepare needs to be called on the last user
->> exiting the picture.
->>
->> Hemant has supported this usecase in every rev of this series I've
->> looked at, but apparently every solution he has proposed to handle this
->> has caused confusion.
-> 
-> Understood, but that can be done with a simple counter in that case.
-> 
-> Regards,
-> Loic
-> 
+> diff --git a/arch/arm64/boot/dts/qcom/sm8250.dtsi b/arch/arm64/boot/dts/qcom/sm8250.dtsi
+> index ec5b53b8f656..4e1309b6571e 100644
+> --- a/arch/arm64/boot/dts/qcom/sm8250.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sm8250.dtsi
+> @@ -2607,6 +2607,101 @@
+>  			clock-names = "core", "audio", "bus";
+>  		};
+>  
+> +		lpass_tlmm: pinctrl@33c0000{
+> +			compatible = "qcom,sm8250-lpass-lpi-pinctrl";
+> +			reg = <0 0x33c0000 0x0 0x20000>,
+> +				 <0 0x3550000 0x0 0x10000>;
+> +			gpio-controller;
+> +			#gpio-cells = <2>;
+> +			gpio-ranges = <&lpass_tlmm 0 0 14>;
+> +
+> +			clocks = <&q6afecc LPASS_HW_MACRO_VOTE LPASS_CLK_ATTRIBUTE_COUPLE_NO>,
+> +				<&q6afecc LPASS_HW_DCODEC_VOTE LPASS_CLK_ATTRIBUTE_COUPLE_NO>;
+> +			clock-names = "core", "audio";
+> +
+> +			wsa_swr_clk_pin {
+
+I prefer if you drop this outer "container" node.
+
+> +				wsa_swr_clk_sleep: wsa_swr_clk_sleep {
+
+Per the binding I think the name of this node should match '-pins$' and
+the node name may not contain '_' characters.
+
+> +					mux {
+
+The pinctrl state is a collection of all pins, function and pinconf
+properties of the phandle pointed to and its immediate child nodes. As
+such you can flatten this inner "mux" level.
 
 
--- 
-Jeffrey Hugo
-Qualcomm Technologies, Inc. is a member of the
-Code Aurora Forum, a Linux Foundation Collaborative Project.
+On the other hand, I'm assuming that you're always going to mux the
+clock and data pin together, so instead of designing this around the
+pins you could design it around the states and do:
+
+			wsa_swr_active: wsa-swr-active-pins {
+				clk {
+					pins = "gpio10";
+					function = "wsa_swr_clk";
+					drive-strength = <2>;
+					slew-rate = <1>;
+					bias-disable;
+				};
+
+				data {
+					pins = "gpio11";
+					function = "wsa_swr_data";
+					drive-strength = <2>;
+					slew-rate = <1>;
+					bias-bus-hold;
+
+				};
+			};
+
+This way the state describes the whole thing and you don't end up with a
+bunch of states for each part of the function.
+
+Regards,
+Bjorn
+
+> +						pins = "gpio10";
+> +						function = "wsa_swr_clk";
+> +						drive-strength = <2>;
+> +						input-enable;
+> +						bias-pull-down;
+> +					};
+> +				};
+> +
+> +				wsa_swr_clk_active: wsa_swr_clk_active {
+> +					mux {
+> +						pins = "gpio10";
+> +						function = "wsa_swr_clk";
+> +						drive-strength = <2>;
+> +						slew-rate = <1>;
+> +						bias-disable;
+> +					};
+> +				};
+> +			};
+> +
+> +			wsa_swr_data_pin {
+> +				wsa_swr_data_sleep: wsa_swr_data_sleep {
+> +					mux {
+> +						pins = "gpio11";
+> +						function = "wsa_swr_data";
+> +						drive-strength = <2>;
+> +						input-enable;
+> +						bias-pull-down;
+> +					};
+> +				};
+> +
+> +				wsa_swr_data_active: wsa_swr_data_active {
+> +					mux {
+> +						pins = "gpio11";
+> +						function = "wsa_swr_data";
+> +						drive-strength = <2>;
+> +						slew-rate = <1>;
+> +						bias-bus-hold;
+> +					};
+> +				};
+> +			};
+> +
+> +	                cdc_dmic01_data_active: dmic01_data_active {
+> +	                        mux {
+> +	                                pins = "gpio7";
+> +					function = "dmic1_data";
+> +	                                drive-strength = <8>;
+> +	                                input-enable;
+> +	                        };
+> +	                };
+> +
+> +	                cdc_dmic01_data_sleep: dmic01_data_sleep {
+> +	                        mux {
+> +	                                pins = "gpio7";
+> +					function = "dmic1_data";
+> +	                                drive-strength = <2>;
+> +	                                pull-down;
+> +	                                input-enable;
+> +	                        };
+> +	                };
+> +
+> +	                cdc_dmic01_clk_active: dmic01_clk_active {
+> +	                        mux {
+> +	                                pins = "gpio6";
+> +					function = "dmic1_clk";
+> +	                                drive-strength = <8>;
+> +	                                output-high;
+> +	                        };
+> +	                };
+> +
+> +	                cdc_dmic01_clk_sleep: dmic01_clk_sleep {
+> +	                        mux {
+> +	                                pins = "gpio6";
+> +					function = "dmic1_clk";
+> +	                                drive-strength = <2>;
+> +	                                bias-disable;
+> +	                                output-low;
+> +	                        };
+> +	                };
+> +		};
+> +
+>  		adsp: remoteproc@17300000 {
+>  			compatible = "qcom,sm8250-adsp-pas";
+>  			reg = <0 0x17300000 0 0x100>;
+> -- 
+> 2.21.0
+> 
