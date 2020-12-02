@@ -2,32 +2,33 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 4B02B2CC0BF
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Dec 2020 16:26:26 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 94A752CC0DD
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Dec 2020 16:31:33 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726342AbgLBPYv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 2 Dec 2020 10:24:51 -0500
-Received: from m42-5.mailgun.net ([69.72.42.5]:40330 "EHLO m42-5.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727889AbgLBPYu (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 2 Dec 2020 10:24:50 -0500
+        id S1728172AbgLBPbM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 2 Dec 2020 10:31:12 -0500
+Received: from a2.mail.mailgun.net ([198.61.254.61]:35280 "EHLO
+        a2.mail.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726367AbgLBPbM (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 2 Dec 2020 10:31:12 -0500
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1606922666; h=Content-Transfer-Encoding: Content-Type:
- In-Reply-To: MIME-Version: Date: Message-ID: From: References: To:
- Subject: Sender; bh=y1GfFfb2NADmN9/ynVFbfAXYeakeEn3izIGAhfXcrC4=; b=Mm4jPFGd6gKbLitM7D+E1A+aJElPs367pTjcamxGdCezArHIv34gOpOcRRc5YQozxr7klaYC
- sBE6yyDmtLfK2Ek/PnTci35sNbOTtFaG2xNV6EHdfsVQjr+2NpE/oPLo8yCBM2rQeLG/GkG0
- UkLEW2As706VrPAwVDUDa12YiIo=
-X-Mailgun-Sending-Ip: 69.72.42.5
+ s=smtp; t=1606923047; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: From: Cc: References: To:
+ Subject: Sender; bh=5rUeJ6LWlxgf2QHCG6p9Jcm7Xnd4H8U2FkW6B8MHO1E=; b=pON4NmfnjMTIHlya/buJam4nrp42YNMyG2cOMB1NhNbK+Vsc6wyrNEqm5vP7OQ5MzMZOAC7H
+ CF1wwwqOzroBh2FYCs233JqLSkufwE+sgDhfyIvn7fPgf6qYKbzfK+2oo9xJvx15Im2J2b5G
+ FiR3kaXCfUli3YyAzvB9K8tFb/U=
+X-Mailgun-Sending-Ip: 198.61.254.61
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org
  (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n03.prod.us-east-1.postgun.com with SMTP id
- 5fc7b18ef4482b01c4f74f6e (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 02 Dec 2020 15:23:58
+ smtp-out-n08.prod.us-east-1.postgun.com with SMTP id
+ 5fc7b309f2eedd9084bd27f7 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 02 Dec 2020 15:30:17
  GMT
 Sender: akhilpo=codeaurora.org@mg.codeaurora.org
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id DDC53C433C6; Wed,  2 Dec 2020 15:23:57 +0000 (UTC)
+        id 7806FC43462; Wed,  2 Dec 2020 15:30:16 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
@@ -38,21 +39,22 @@ Received: from [192.168.1.10] (unknown [117.217.239.80])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
         (Authenticated sender: akhilpo)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id F2513C433ED;
-        Wed,  2 Dec 2020 15:23:53 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org F2513C433ED
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 3958DC433ED;
+        Wed,  2 Dec 2020 15:30:11 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 3958DC433ED
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=akhilpo@codeaurora.org
 Subject: Re: [PATCH v2 1/3] drm/msm: adreno: Make speed-bin support generic
-To:     freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
+To:     Jordan Crouse <jcrouse@codeaurora.org>
+References: <1606481386-22867-1-git-send-email-akhilpo@codeaurora.org>
+ <20201130170231.GF16856@jcrouse1-lnx.qualcomm.com>
+Cc:     freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
         robh@kernel.org, dri-devel@freedesktop.org,
         linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
         mka@chromium.org, robdclark@gmail.com, dianders@chromium.org
-References: <1606481386-22867-1-git-send-email-akhilpo@codeaurora.org>
- <20201130170231.GF16856@jcrouse1-lnx.qualcomm.com>
 From:   Akhil P Oommen <akhilpo@codeaurora.org>
-Message-ID: <39ae4584-e935-363e-62af-17558781e913@codeaurora.org>
-Date:   Wed, 2 Dec 2020 20:53:51 +0530
+Message-ID: <1911b3dc-407d-01a0-e4f2-72c0e331236b@codeaurora.org>
+Date:   Wed, 2 Dec 2020 21:00:09 +0530
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
  Thunderbird/78.5.0
 MIME-Version: 1.0
@@ -63,6 +65,8 @@ Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
+
+<< Resending since Jordan wasn't in the CC list >>
 
 On 11/30/2020 10:32 PM, Jordan Crouse wrote:
 > On Fri, Nov 27, 2020 at 06:19:44PM +0530, Akhil P Oommen wrote:
