@@ -2,162 +2,376 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E3D712CBF25
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Dec 2020 15:10:55 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 51CD22CBF86
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Dec 2020 15:26:44 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388988AbgLBOKU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 2 Dec 2020 09:10:20 -0500
-Received: from lb1-smtp-cloud7.xs4all.net ([194.109.24.24]:59723 "EHLO
-        lb1-smtp-cloud7.xs4all.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S2389011AbgLBOKU (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 2 Dec 2020 09:10:20 -0500
-Received: from cust-b5b5937f ([IPv6:fc0c:c16d:66b8:757f:c639:739b:9d66:799d])
-        by smtp-cloud7.xs4all.net with ESMTPA
-        id kSp0kEZ3PN7XgkSp3ktOxl; Wed, 02 Dec 2020 15:09:34 +0100
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=xs4all.nl; s=s2;
-        t=1606918174; bh=8It+mUhWcNhF0vzprQdPV2Le0KNPLwCD1U2+v68bzUo=;
-        h=Subject:To:From:Message-ID:Date:MIME-Version:Content-Type:From:
-         Subject;
-        b=vXCSGQe7jYBcuWZBYxKr7+xUM8qqIvOPES4wii+Mj/wKErDcYpT98eOqP5nLVNl1F
-         +DPLfKDIsbHytSY0smL6jKSr0E9Um8Q0tf3SMHOQy+WApnrhuoB7tnMeLOr5CQkQkv
-         G4ixqlPOy2QOC9axIDZLYzyQrh4saIehyRU+uZHrATWOn0sBmB14MLJzPg9M+0ZSjU
-         9tr6uHCnRHH3kY7HMDeF5kLID3yPxpGGCh8R5Uxg1huU38zxnsUn80ja5tT7l3bztz
-         Lsgm3afZ2/t9H48AJh+Pcc2UpLiLZb11TNl0dyD2LIYYJqxvO1mipVJi7hQAILubld
-         W+FkKGe5cirpw==
-Subject: Re: [PATCH 1/4] v4l2-ctrl: Make display delay and display enable std
- controls
-To:     Stanimir Varbanov <stanimir.varbanov@linaro.org>,
-        linux-media@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org
-Cc:     Kyungmin Park <kyungmin.park@samsung.com>,
-        Kamil Debski <kamil@wypas.org>,
-        Ezequiel Garcia <ezequiel@collabora.com>,
-        Nicolas Dufresne <nicolas.dufresne@collabora.com>,
-        Marek Szyprowski <m.szyprowski@samsung.com>
-References: <20201109173541.10016-1-stanimir.varbanov@linaro.org>
- <20201109173541.10016-2-stanimir.varbanov@linaro.org>
-From:   Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Message-ID: <e0a49eb2-f4d0-0532-52e0-5bc58ce85ad9@xs4all.nl>
-Date:   Wed, 2 Dec 2020 15:09:30 +0100
+        id S1726206AbgLBO02 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 2 Dec 2020 09:26:28 -0500
+Received: from mga01.intel.com ([192.55.52.88]:49101 "EHLO mga01.intel.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726071AbgLBO01 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 2 Dec 2020 09:26:27 -0500
+IronPort-SDR: 1hpIvdlHpW1BTw6GVrGpWq7g2wI51YB4bt7B7i3c3PAthR/eqUSc/sQfw0SSHEBCU9gDmwIR5u
+ fEERB0OqQ5EQ==
+X-IronPort-AV: E=McAfee;i="6000,8403,9822"; a="191237422"
+X-IronPort-AV: E=Sophos;i="5.78,386,1599548400"; 
+   d="scan'208";a="191237422"
+X-Amp-Result: SKIPPED(no attachment in message)
+X-Amp-File-Uploaded: False
+Received: from fmsmga004.fm.intel.com ([10.253.24.48])
+  by fmsmga101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 02 Dec 2020 06:25:47 -0800
+IronPort-SDR: IIuCUpAxxh9v/TacCJhn1lbrrt0BlSo992la3KVuHURMewBbdNr+Sk3wMfOfeoDZyUZKsg4pPd
+ Bctc+3gk2bIg==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.78,386,1599548400"; 
+   d="scan'208";a="365318446"
+Received: from ahunter-desktop.fi.intel.com (HELO [10.237.72.94]) ([10.237.72.94])
+  by fmsmga004.fm.intel.com with ESMTP; 02 Dec 2020 06:25:38 -0800
+Subject: Re: [PATCH 1/8] mmc: add basic support for inline encryption
+To:     Eric Biggers <ebiggers@kernel.org>, linux-mmc@vger.kernel.org
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-fscrypt@vger.kernel.org, Satya Tangirala <satyat@google.com>,
+        Ulf Hansson <ulf.hansson@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Ritesh Harjani <riteshh@codeaurora.org>,
+        Asutosh Das <asutoshd@codeaurora.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Neeraj Soni <neersoni@codeaurora.org>,
+        Barani Muthukumaran <bmuthuku@codeaurora.org>,
+        Peng Zhou <peng.zhou@mediatek.com>,
+        Stanley Chu <stanley.chu@mediatek.com>,
+        Konrad Dybcio <konradybcio@gmail.com>
+References: <20201112194011.103774-1-ebiggers@kernel.org>
+ <20201112194011.103774-2-ebiggers@kernel.org>
+From:   Adrian Hunter <adrian.hunter@intel.com>
+Organization: Intel Finland Oy, Registered Address: PL 281, 00181 Helsinki,
+ Business Identity Code: 0357606 - 4, Domiciled in Helsinki
+Message-ID: <5074a294-58cb-0da8-fe82-36eef6d31b77@intel.com>
+Date:   Wed, 2 Dec 2020 16:25:14 +0200
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
  Thunderbird/68.12.0
 MIME-Version: 1.0
-In-Reply-To: <20201109173541.10016-2-stanimir.varbanov@linaro.org>
+In-Reply-To: <20201112194011.103774-2-ebiggers@kernel.org>
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
 Content-Transfer-Encoding: 7bit
-X-CMAE-Envelope: MS4xfH4z1F2rSCh2o7ovDglbE7I63h5pvR0H4mAQBXX/CsvJ5Ai4XMH7fKhDjKKSS6Wubw6B6axvK3MnaxI+Z5fYdTMVz8rVmsKZhmxMavbwNcupviDfc6vf
- 4bRzpJBgOGj8aH+6/9Tv/HpValbnVb/TjYR8ASRh2ejbVVLR/JGbrGmvVOaw1yVE8QQ8we3EJyBCzRgZqcAjiK7K22P1TcIWYgMw7epXSl7KW6o/PxVWYZ8F
- +yz70WxsT+0wgx2qLiQsRpeGOWjAU2FYvgyWcKsE550ZBXhqcdEwhonkJVg3btdO9h+ITaTvMnyfB2syuLBCbtyDho5Unvbh8jMyUxophvHTtjOB8Fffckyy
- ddhg+CqkQX/qTBR75JGikszM5/awJ4uh9aoGIPL2h1f4s/5X9GO/8dWPoPhLOPX1NOj+iFrEAGlDxxDKQGYOjcCdBzKSbKI71A91YW++Qs5SVoC0e5Nis09Z
- oDdsquDlsjYoeVRdqzg+1Ov/DgOvLMsfduopx5rZu7FApqHaJC74eairhQmCuws9nGzn8tCNP9wxPJsZUsSvgSWt3X++Pdb0JuvCQA==
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 09/11/2020 18:35, Stanimir Varbanov wrote:
-> Make display delay and display delay enable MFC controls standard v4l
-> controls. This will allow reuse of the controls for other decoder
-> drivers. Also the new proposed controls are now codec agnostic because
-> they could be used for any codec.
+On 12/11/20 9:40 pm, Eric Biggers wrote:
+> From: Eric Biggers <ebiggers@google.com>
 > 
-> Signed-off-by: Stanimir Varbanov <stanimir.varbanov@linaro.org>
+> In preparation for adding CQHCI crypto engine (inline encryption)
+> support, add the code required to make mmc_core and mmc_block aware of
+> inline encryption.  Specifically:
+> 
+> - Add a capability flag MMC_CAP2_CRYPTO to struct mmc_host.  Drivers
+>   will set this if the host and driver support inline encryption.
+> 
+> - Embed a blk_keyslot_manager in struct mmc_host.  Drivers will
+>   initialize this if the host and driver support inline encryption.
+>   mmc_block registers this keyslot manager with the request_queue of any
+>   MMC card attached to the host.  mmc_core destroys this keyslot manager
+>   when freeing the mmc_host.
+> 
+> - Make mmc_block copy the crypto keyslot and crypto data unit number
+>   from struct request to struct mmc_request, so that drivers will have
+>   access to them.
+> 
+> - If the MMC host is reset, reprogram all the keyslots to ensure that
+>   the software state stays in sync with the hardware state.
+> 
+> Co-developed-by: Satya Tangirala <satyat@google.com>
+> Signed-off-by: Satya Tangirala <satyat@google.com>
+> Signed-off-by: Eric Biggers <ebiggers@google.com>
+
+Acked-by: Adrian Hunter <adrian.hunter@intel.com>
+
 > ---
->  .../userspace-api/media/v4l/ext-ctrls-codec.rst   | 15 +++++++++++++++
->  drivers/media/v4l2-core/v4l2-ctrls.c              |  4 ++++
->  include/uapi/linux/v4l2-controls.h                |  2 ++
->  3 files changed, 21 insertions(+)
+>  drivers/mmc/core/Kconfig  |  8 ++++++
+>  drivers/mmc/core/Makefile |  1 +
+>  drivers/mmc/core/block.c  |  3 +++
+>  drivers/mmc/core/core.c   |  3 +++
+>  drivers/mmc/core/crypto.c | 54 +++++++++++++++++++++++++++++++++++++++
+>  drivers/mmc/core/crypto.h | 46 +++++++++++++++++++++++++++++++++
+>  drivers/mmc/core/host.c   |  2 ++
+>  drivers/mmc/core/queue.c  |  3 +++
+>  include/linux/mmc/core.h  |  6 +++++
+>  include/linux/mmc/host.h  |  7 +++++
+>  10 files changed, 133 insertions(+)
+>  create mode 100644 drivers/mmc/core/crypto.c
+>  create mode 100644 drivers/mmc/core/crypto.h
 > 
-> diff --git a/Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst b/Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst
-> index ce728c757eaf..82c9cda40270 100644
-> --- a/Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst
-> +++ b/Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst
-> @@ -679,6 +679,21 @@ enum v4l2_mpeg_video_frame_skip_mode -
->      otherwise the decoder expects a single frame in per buffer.
->      Applicable to the decoder, all codecs.
+> diff --git a/drivers/mmc/core/Kconfig b/drivers/mmc/core/Kconfig
+> index c12fe13e4b147..ae8b69aee6190 100644
+> --- a/drivers/mmc/core/Kconfig
+> +++ b/drivers/mmc/core/Kconfig
+> @@ -81,3 +81,11 @@ config MMC_TEST
+>  	  This driver is only of interest to those developing or
+>  	  testing a host driver. Most people should say N here.
 >  
-> +``V4L2_CID_MPEG_VIDEO_DECODER_DISPLAY_DELAY_ENABLE (boolean)``
-
-I'd use _DEC_ instead of _DECODER_.
-
-> +    If the display delay is enabled then the decoder is forced to return
-> +    a CAPTURE buffer (decoded frame) after processing a certain number
-> +    of OUTPUT buffers. The delay can be set through
-> +    ``V4L2_CID_MPEG_VIDEO_DECODER_DISPLAY_DELAY``. This
-> +    feature can be used for example for generating thumbnails of videos.
-> +    Applicable to the decoder.
-
-Hmm. Is this: "after processing the first 'display delay' number of OUTPUT buffers."
-Or is this: "every 'display delay' number of OUTPUT buffers."
-
-I.e., is it a one-shot thing or a periodical thing?
-
-If it is a one-shot thing, then this should probably be a button type, not
-a boolean.
-
+> +config MMC_CRYPTO
+> +	bool "MMC Crypto Engine Support"
+> +	depends on BLK_INLINE_ENCRYPTION
+> +	help
+> +	  Enable Crypto Engine Support in MMC.
+> +	  Enabling this makes it possible for the kernel to use the crypto
+> +	  capabilities of the MMC device (if present) to perform crypto
+> +	  operations on data being transferred to/from the device.
+> diff --git a/drivers/mmc/core/Makefile b/drivers/mmc/core/Makefile
+> index 95ffe008ebdf8..6a907736cd7a5 100644
+> --- a/drivers/mmc/core/Makefile
+> +++ b/drivers/mmc/core/Makefile
+> @@ -18,3 +18,4 @@ obj-$(CONFIG_MMC_BLOCK)		+= mmc_block.o
+>  mmc_block-objs			:= block.o queue.o
+>  obj-$(CONFIG_MMC_TEST)		+= mmc_test.o
+>  obj-$(CONFIG_SDIO_UART)		+= sdio_uart.o
+> +mmc_core-$(CONFIG_MMC_CRYPTO)	+= crypto.o
+> diff --git a/drivers/mmc/core/block.c b/drivers/mmc/core/block.c
+> index 8d3df0be0355c..eaf2f10743260 100644
+> --- a/drivers/mmc/core/block.c
+> +++ b/drivers/mmc/core/block.c
+> @@ -51,6 +51,7 @@
+>  #include "block.h"
+>  #include "core.h"
+>  #include "card.h"
+> +#include "crypto.h"
+>  #include "host.h"
+>  #include "bus.h"
+>  #include "mmc_ops.h"
+> @@ -1247,6 +1248,8 @@ static void mmc_blk_data_prep(struct mmc_queue *mq, struct mmc_queue_req *mqrq,
+>  
+>  	memset(brq, 0, sizeof(struct mmc_blk_request));
+>  
+> +	mmc_crypto_prepare_req(mqrq);
 > +
-> +``V4L2_CID_MPEG_VIDEO_DECODER_DISPLAY_DELAY (integer)``
-> +    Display delay value for decoder. The decoder is forced to
-> +    return a decoded frame after the set 'display delay' number of
-> +    frames. If this number is low it may result in frames returned out
-> +    of display order, in addition the hardware may still be using the
-> +    returned buffer as a reference picture for subsequent frames.
-
-Can this be 0? And if so, what does that mean?
-
+>  	brq->mrq.data = &brq->data;
+>  	brq->mrq.tag = req->tag;
+>  
+> diff --git a/drivers/mmc/core/core.c b/drivers/mmc/core/core.c
+> index d42037f0f10d7..275de270232b3 100644
+> --- a/drivers/mmc/core/core.c
+> +++ b/drivers/mmc/core/core.c
+> @@ -37,6 +37,7 @@
+>  
+>  #include "core.h"
+>  #include "card.h"
+> +#include "crypto.h"
+>  #include "bus.h"
+>  #include "host.h"
+>  #include "sdio_bus.h"
+> @@ -992,6 +993,8 @@ void mmc_set_initial_state(struct mmc_host *host)
+>  		host->ops->hs400_enhanced_strobe(host, &host->ios);
+>  
+>  	mmc_set_ios(host);
 > +
->  ``V4L2_CID_MPEG_VIDEO_H264_VUI_SAR_ENABLE (boolean)``
->      Enable writing sample aspect ratio in the Video Usability
->      Information. Applicable to the H264 encoder.
-> diff --git a/drivers/media/v4l2-core/v4l2-ctrls.c b/drivers/media/v4l2-core/v4l2-ctrls.c
-> index bd7f330c941c..4a21802e026b 100644
-> --- a/drivers/media/v4l2-core/v4l2-ctrls.c
-> +++ b/drivers/media/v4l2-core/v4l2-ctrls.c
-> @@ -874,6 +874,8 @@ const char *v4l2_ctrl_get_name(u32 id)
->  	case V4L2_CID_MPEG_VIDEO_HEADER_MODE:			return "Sequence Header Mode";
->  	case V4L2_CID_MPEG_VIDEO_MAX_REF_PIC:			return "Max Number of Reference Pics";
->  	case V4L2_CID_MPEG_VIDEO_FRAME_SKIP_MODE:		return "Frame Skip Mode";
-> +	case V4L2_CID_MPEG_VIDEO_DECODER_DISPLAY_DELAY:		return "Display Delay";
-> +	case V4L2_CID_MPEG_VIDEO_DECODER_DISPLAY_DELAY_ENABLE:	return "Display Delay Enable";
->  	case V4L2_CID_MPEG_VIDEO_H263_I_FRAME_QP:		return "H263 I-Frame QP Value";
->  	case V4L2_CID_MPEG_VIDEO_H263_P_FRAME_QP:		return "H263 P-Frame QP Value";
->  	case V4L2_CID_MPEG_VIDEO_H263_B_FRAME_QP:		return "H263 B-Frame QP Value";
-> @@ -1221,6 +1223,7 @@ void v4l2_ctrl_fill(u32 id, const char **name, enum v4l2_ctrl_type *type,
->  	case V4L2_CID_FLASH_READY:
->  	case V4L2_CID_MPEG_VIDEO_DECODER_MPEG4_DEBLOCK_FILTER:
->  	case V4L2_CID_MPEG_VIDEO_DECODER_SLICE_INTERFACE:
-> +	case V4L2_CID_MPEG_VIDEO_DECODER_DISPLAY_DELAY_ENABLE:
->  	case V4L2_CID_MPEG_VIDEO_FRAME_RC_ENABLE:
->  	case V4L2_CID_MPEG_VIDEO_MB_RC_ENABLE:
->  	case V4L2_CID_MPEG_VIDEO_H264_8X8_TRANSFORM:
-> @@ -1256,6 +1259,7 @@ void v4l2_ctrl_fill(u32 id, const char **name, enum v4l2_ctrl_type *type,
->  		break;
->  	case V4L2_CID_MPEG_VIDEO_MV_H_SEARCH_RANGE:
->  	case V4L2_CID_MPEG_VIDEO_MV_V_SEARCH_RANGE:
-> +	case V4L2_CID_MPEG_VIDEO_DECODER_DISPLAY_DELAY:
->  		*type = V4L2_CTRL_TYPE_INTEGER;
->  		break;
->  	case V4L2_CID_MPEG_VIDEO_FORCE_KEY_FRAME:
-> diff --git a/include/uapi/linux/v4l2-controls.h b/include/uapi/linux/v4l2-controls.h
-> index 7035f4fb182c..d6b19f8d0022 100644
-> --- a/include/uapi/linux/v4l2-controls.h
-> +++ b/include/uapi/linux/v4l2-controls.h
-> @@ -773,6 +773,8 @@ enum v4l2_mpeg_video_frame_skip_mode {
->  	V4L2_MPEG_VIDEO_FRAME_SKIP_MODE_LEVEL_LIMIT	= 1,
->  	V4L2_MPEG_VIDEO_FRAME_SKIP_MODE_BUF_LIMIT	= 2,
+> +	mmc_crypto_set_initial_state(host);
+>  }
+>  
+>  /**
+> diff --git a/drivers/mmc/core/crypto.c b/drivers/mmc/core/crypto.c
+> new file mode 100644
+> index 0000000000000..4f47eb4740db0
+> --- /dev/null
+> +++ b/drivers/mmc/core/crypto.c
+> @@ -0,0 +1,54 @@
+> +// SPDX-License-Identifier: GPL-2.0-only
+> +/*
+> + * MMC crypto engine (inline encryption) support
+> + *
+> + * Copyright 2020 Google LLC
+> + */
+> +
+> +#include <linux/blk-crypto.h>
+> +#include <linux/mmc/host.h>
+> +
+> +#include "core.h"
+> +#include "crypto.h"
+> +#include "queue.h"
+> +
+> +void mmc_crypto_set_initial_state(struct mmc_host *host)
+> +{
+> +	/* Reset might clear all keys, so reprogram all the keys. */
+> +	if (host->caps2 & MMC_CAP2_CRYPTO)
+> +		blk_ksm_reprogram_all_keys(&host->ksm);
+> +}
+> +
+> +void mmc_crypto_free_host(struct mmc_host *host)
+> +{
+> +	if (host->caps2 & MMC_CAP2_CRYPTO)
+> +		blk_ksm_destroy(&host->ksm);
+> +}
+> +
+> +void mmc_crypto_setup_queue(struct request_queue *q, struct mmc_host *host)
+> +{
+> +	if (host->caps2 & MMC_CAP2_CRYPTO)
+> +		blk_ksm_register(&host->ksm, q);
+> +}
+> +EXPORT_SYMBOL_GPL(mmc_crypto_setup_queue);
+> +
+> +void mmc_crypto_prepare_req(struct mmc_queue_req *mqrq)
+> +{
+> +	struct request *req = mmc_queue_req_to_req(mqrq);
+> +	struct mmc_request *mrq = &mqrq->brq.mrq;
+> +
+> +	if (!req->crypt_keyslot)
+> +		return;
+> +
+> +	mrq->crypto_enabled = true;
+> +	mrq->crypto_key_slot = blk_ksm_get_slot_idx(req->crypt_keyslot);
+> +
+> +	/*
+> +	 * For now we assume that all MMC drivers set max_dun_bytes_supported=4,
+> +	 * which is the limit for CQHCI crypto.  So all DUNs should be 32-bit.
+> +	 */
+> +	WARN_ON_ONCE(req->crypt_ctx->bc_dun[0] > U32_MAX);
+> +
+> +	mrq->data_unit_num = req->crypt_ctx->bc_dun[0];
+> +}
+> +EXPORT_SYMBOL_GPL(mmc_crypto_prepare_req);
+> diff --git a/drivers/mmc/core/crypto.h b/drivers/mmc/core/crypto.h
+> new file mode 100644
+> index 0000000000000..4780639b832f4
+> --- /dev/null
+> +++ b/drivers/mmc/core/crypto.h
+> @@ -0,0 +1,46 @@
+> +/* SPDX-License-Identifier: GPL-2.0-only */
+> +/*
+> + * MMC crypto engine (inline encryption) support
+> + *
+> + * Copyright 2020 Google LLC
+> + */
+> +
+> +#ifndef _MMC_CORE_CRYPTO_H
+> +#define _MMC_CORE_CRYPTO_H
+> +
+> +struct mmc_host;
+> +struct mmc_queue_req;
+> +struct request_queue;
+> +
+> +#ifdef CONFIG_MMC_CRYPTO
+> +
+> +void mmc_crypto_set_initial_state(struct mmc_host *host);
+> +
+> +void mmc_crypto_free_host(struct mmc_host *host);
+> +
+> +void mmc_crypto_setup_queue(struct request_queue *q, struct mmc_host *host);
+> +
+> +void mmc_crypto_prepare_req(struct mmc_queue_req *mqrq);
+> +
+> +#else /* CONFIG_MMC_CRYPTO */
+> +
+> +static inline void mmc_crypto_set_initial_state(struct mmc_host *host)
+> +{
+> +}
+> +
+> +static inline void mmc_crypto_free_host(struct mmc_host *host)
+> +{
+> +}
+> +
+> +static inline void mmc_crypto_setup_queue(struct request_queue *q,
+> +					  struct mmc_host *host)
+> +{
+> +}
+> +
+> +static inline void mmc_crypto_prepare_req(struct mmc_queue_req *mqrq)
+> +{
+> +}
+> +
+> +#endif /* !CONFIG_MMC_CRYPTO */
+> +
+> +#endif /* _MMC_CORE_CRYPTO_H */
+> diff --git a/drivers/mmc/core/host.c b/drivers/mmc/core/host.c
+> index 96b2ca1f1b06d..d962b9ca0e37a 100644
+> --- a/drivers/mmc/core/host.c
+> +++ b/drivers/mmc/core/host.c
+> @@ -25,6 +25,7 @@
+>  #include <linux/mmc/slot-gpio.h>
+>  
+>  #include "core.h"
+> +#include "crypto.h"
+>  #include "host.h"
+>  #include "slot-gpio.h"
+>  #include "pwrseq.h"
+> @@ -532,6 +533,7 @@ EXPORT_SYMBOL(mmc_remove_host);
+>   */
+>  void mmc_free_host(struct mmc_host *host)
+>  {
+> +	mmc_crypto_free_host(host);
+>  	mmc_pwrseq_free(host);
+>  	put_device(&host->class_dev);
+>  }
+> diff --git a/drivers/mmc/core/queue.c b/drivers/mmc/core/queue.c
+> index de7cb0369c308..d96db852bb91a 100644
+> --- a/drivers/mmc/core/queue.c
+> +++ b/drivers/mmc/core/queue.c
+> @@ -19,6 +19,7 @@
+>  #include "block.h"
+>  #include "core.h"
+>  #include "card.h"
+> +#include "crypto.h"
+>  #include "host.h"
+>  
+>  #define MMC_DMA_MAP_MERGE_SEGMENTS	512
+> @@ -405,6 +406,8 @@ static void mmc_setup_queue(struct mmc_queue *mq, struct mmc_card *card)
+>  	mutex_init(&mq->complete_lock);
+>  
+>  	init_waitqueue_head(&mq->wait);
+> +
+> +	mmc_crypto_setup_queue(mq->queue, host);
+>  }
+>  
+>  static inline bool mmc_merge_capable(struct mmc_host *host)
+> diff --git a/include/linux/mmc/core.h b/include/linux/mmc/core.h
+> index 29aa507116261..ab19245e99451 100644
+> --- a/include/linux/mmc/core.h
+> +++ b/include/linux/mmc/core.h
+> @@ -162,6 +162,12 @@ struct mmc_request {
+>  	bool			cap_cmd_during_tfr;
+>  
+>  	int			tag;
+> +
+> +#ifdef CONFIG_MMC_CRYPTO
+> +	bool			crypto_enabled;
+> +	int			crypto_key_slot;
+> +	u32			data_unit_num;
+> +#endif
 >  };
-> +#define V4L2_CID_MPEG_VIDEO_DECODER_DISPLAY_DELAY		(V4L2_CID_MPEG_BASE + 647)
-> +#define V4L2_CID_MPEG_VIDEO_DECODER_DISPLAY_DELAY_ENABLE	(V4L2_CID_MPEG_BASE + 648)
-
-This will need to be rebased once this PR is merged:
-https://patchwork.linuxtv.org/project/linux-media/patch/d68da172-b251-000f-653d-38a8a4c7b715@xs4all.nl/
-
 >  
->  /*  MPEG-class control IDs specific to the CX2341x driver as defined by V4L2 */
->  #define V4L2_CID_MPEG_CX2341X_BASE				(V4L2_CTRL_CLASS_MPEG | 0x1000)
+>  struct mmc_card;
+> diff --git a/include/linux/mmc/host.h b/include/linux/mmc/host.h
+> index c079b932330f2..550460bf1b37c 100644
+> --- a/include/linux/mmc/host.h
+> +++ b/include/linux/mmc/host.h
+> @@ -15,6 +15,7 @@
+>  #include <linux/mmc/card.h>
+>  #include <linux/mmc/pm.h>
+>  #include <linux/dma-direction.h>
+> +#include <linux/keyslot-manager.h>
+>  
+>  struct mmc_ios {
+>  	unsigned int	clock;			/* clock rate */
+> @@ -377,6 +378,7 @@ struct mmc_host {
+>  #define MMC_CAP2_CQE_DCMD	(1 << 24)	/* CQE can issue a direct command */
+>  #define MMC_CAP2_AVOID_3_3V	(1 << 25)	/* Host must negotiate down from 3.3V */
+>  #define MMC_CAP2_MERGE_CAPABLE	(1 << 26)	/* Host can merge a segment over the segment size */
+> +#define MMC_CAP2_CRYPTO		(1 << 27)	/* Host supports inline encryption */
+>  
+>  	int			fixed_drv_type;	/* fixed driver type for non-removable media */
+>  
+> @@ -471,6 +473,11 @@ struct mmc_host {
+>  	bool			cqe_enabled;
+>  	bool			cqe_on;
+>  
+> +	/* Inline encryption support */
+> +#ifdef CONFIG_MMC_CRYPTO
+> +	struct blk_keyslot_manager ksm;
+> +#endif
+> +
+>  	/* Host Software Queue support */
+>  	bool			hsq_enabled;
+>  
 > 
 
-Regards,
-
-	Hans
