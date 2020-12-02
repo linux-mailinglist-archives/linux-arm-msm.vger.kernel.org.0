@@ -2,150 +2,153 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 6B6952CBA91
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Dec 2020 11:29:25 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2A30E2CBB2E
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Dec 2020 12:02:44 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729476AbgLBK2r (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 2 Dec 2020 05:28:47 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33628 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728555AbgLBK2r (ORCPT
+        id S1726725AbgLBLCH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 2 Dec 2020 06:02:07 -0500
+Received: from lb1-smtp-cloud7.xs4all.net ([194.109.24.24]:46315 "EHLO
+        lb1-smtp-cloud7.xs4all.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726250AbgLBLCG (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 2 Dec 2020 05:28:47 -0500
-Received: from mail-ed1-x543.google.com (mail-ed1-x543.google.com [IPv6:2a00:1450:4864:20::543])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E7554C0613D4
-        for <linux-arm-msm@vger.kernel.org>; Wed,  2 Dec 2020 02:28:06 -0800 (PST)
-Received: by mail-ed1-x543.google.com with SMTP id c7so3116487edv.6
-        for <linux-arm-msm@vger.kernel.org>; Wed, 02 Dec 2020 02:28:06 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=pOIFH2c7aUrVRRVYvlUc1syo0njMuyaej3dxXHicsn4=;
-        b=ty5mGyimYDzNAdXwX4p0YYa/HTJwKSg39bxZcVdfLzO5uBXF7g9TAzd3ltuq7gSK57
-         K6XqMTxW3lF+x5bN6nQzDY/rURK4j2m1C/B/9uYhnIcTDWTw2UZIREILi5FF70l4jRSf
-         RVLsuwHSioHJJpwEBEeksk54zPu+K9N7FfpKw7FSizTGbP+ok45jdcyZQxk5FmT5Iwcv
-         tT7JoKoCuOBEEHlkPo+GPSc1oVJSIBItWQDNyJho0YrUzsmWJi8qdQ/NuvUFrB0U8wsI
-         Fos44l+j/d5kJR7oQaYPodtpXkEn1ze/wWbL73hIK4hv/ZiRZgcqaSd0nhuUN6i5E7UY
-         khxQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=pOIFH2c7aUrVRRVYvlUc1syo0njMuyaej3dxXHicsn4=;
-        b=Bx6whsGfLVvYdJkBfSRppWgZK+AawkjYWuZlZcBPoQRvhgJ7bcoXaS6qVMCQMXcGY2
-         bQFr1H64U8SkE6h4+Kftj0b/i0+HPQs7T2oQ9sJ8JF7itNK+ORxbm6KcfNfpS4+dKHqP
-         n4fJuDez29vYCml3zpftX/0AmL8WI/tkecETsG9Nx770lQ3wcE0LevvEAI/pnc8rMIg7
-         FMbMA+FOzNtVZE2uYEMVgmehA7/uZCqBESrrDYg9KhmQebJl6jpd511JUT3/caIewuq3
-         WL7rtR8BtZp/YDAYoptle48CI2gl0PU2dIgGpApGED2i9W4ZzpMe5nKLsdLwAfxSYoGQ
-         +T3g==
-X-Gm-Message-State: AOAM532dhZgJFWqSHSjuiFqiR1xn2zfousS6LP3eqe4Va/BaRnuz/qwi
-        ONBc/WPItwXSb38Phn9tDL4DXw==
-X-Google-Smtp-Source: ABdhPJzzpjIL5eskPImxD4ZAPuWyPJAyD6Vtl15araHbU4xgAdWPTaamVhoHl/cKP4dVI8Fl6aes+w==
-X-Received: by 2002:a50:d8c8:: with SMTP id y8mr1878914edj.82.1606904885590;
-        Wed, 02 Dec 2020 02:28:05 -0800 (PST)
-Received: from [192.168.0.3] (hst-221-33.medicom.bg. [84.238.221.33])
-        by smtp.googlemail.com with ESMTPSA id n17sm779483ejh.49.2020.12.02.02.28.04
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 02 Dec 2020 02:28:05 -0800 (PST)
-Subject: Re: [PATCH] media: venus: preserve DRC state across seeks
-To:     Alexandre Courbot <acourbot@chromium.org>
-Cc:     Linux Media Mailing List <linux-media@vger.kernel.org>,
-        linux-arm-msm@vger.kernel.org, LKML <linux-kernel@vger.kernel.org>
-References: <20201202053424.3286774-1-acourbot@chromium.org>
- <CAPBb6MXt4uL+VgxQs6ynf5LKae657QXmrjw6XYnL0vg_zuuDsw@mail.gmail.com>
-From:   Stanimir Varbanov <stanimir.varbanov@linaro.org>
-Message-ID: <89086086-c0d9-62b0-2819-a537fe92782f@linaro.org>
-Date:   Wed, 2 Dec 2020 12:28:03 +0200
+        Wed, 2 Dec 2020 06:02:06 -0500
+Received: from cust-b5b5937f ([IPv6:fc0c:c16d:66b8:757f:c639:739b:9d66:799d])
+        by smtp-cloud7.xs4all.net with ESMTPA
+        id kPsukDEjwN7XgkPsxksZ82; Wed, 02 Dec 2020 12:01:23 +0100
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=xs4all.nl; s=s2;
+        t=1606906883; bh=qt3ZG35zMOHZ30lMXbRyDBGMwzHfKhatMhIPX3hMudQ=;
+        h=Subject:To:From:Message-ID:Date:MIME-Version:Content-Type:From:
+         Subject;
+        b=GcEE67yL8bcq8lv9T4Gmxhf6dIBqvZmwLtIbM1tDZ5ClP6E5hCnQ/eUpSMTzPQM1/
+         fyDRaSObluGHOEtUJZf0S5s0CmitWg9BYSBK3LFMAqFr3hapGlF1nfBMzQ7+Q1Gqy0
+         IoFDaOUXguLlimVTm2bakVfA8MbeeOVjRKomVM4DxFdBxid6dt6oZDiLwC4xhuYV10
+         dR2djV09GbOK2ws8K6eN9bHFc/Yc+xSRiaZqvCse8elzrBQ+vFZumgpJwD1fo0RRWE
+         n/Cf0xPTXPy5+CzR4DjLoaQ8OreWqwKj4pRj/7lYL+N+988/aNFUgCI8tMdMzSKRS4
+         DAvij8VPufOCg==
+Subject: Re: [PATCH v2 2/3] docs: media: Document CLL and Mastering display
+To:     Stanimir Varbanov <stanimir.varbanov@linaro.org>,
+        linux-media@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+Cc:     Ezequiel Garcia <ezequiel@collabora.com>,
+        Nicolas Dufresne <nicolas.dufresne@collabora.com>
+References: <20201123230257.31690-1-stanimir.varbanov@linaro.org>
+ <20201123230257.31690-3-stanimir.varbanov@linaro.org>
+From:   Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Message-ID: <de469e16-80a6-9a2f-30b1-ddf04b314e61@xs4all.nl>
+Date:   Wed, 2 Dec 2020 12:01:20 +0100
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.10.0
+ Thunderbird/68.12.0
 MIME-Version: 1.0
-In-Reply-To: <CAPBb6MXt4uL+VgxQs6ynf5LKae657QXmrjw6XYnL0vg_zuuDsw@mail.gmail.com>
+In-Reply-To: <20201123230257.31690-3-stanimir.varbanov@linaro.org>
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
 Content-Transfer-Encoding: 7bit
+X-CMAE-Envelope: MS4xfHsf8jl5nk5NviNBzXEZ0TfpZ2rtQHdu6dfzrKh9Dr0FpC6CGQE9fOSrrLl0oqwf+dkDCOhnChbmOYdJbzexvG5GvV0sCDkLBCXhOt0As4qUYRPTsdGM
+ dSWeGAjqPQ4VqPaYe6WfOPxO1boxCrNdUD+hF/pW5H5JDYSB9zruy57REbj/M3HsIpTyqmRrE7yUOmb6BX7H7WDYqY2TxrH9u1zW7lPPHGRj4oLSXv9vlfTk
+ cq+sZHK8r8SzSp85klbqqo42sdurZ6iLXMysuALz4sKb/DROy8x1Y48P0bSsoV6B442Q8UiE7UMbFsWY0dbBO3cKhZwUPKF5RJXAPk8S31Y7XvXT65zusO94
+ SnOpNd4n5Qwf0764354CEQ3/cbJ49kPhJksLrg/LFrvxxZ76ATtzaQ9xgEt/UixPzjVW0ktI
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
-
-On 12/2/20 12:24 PM, Alexandre Courbot wrote:
-> On Wed, Dec 2, 2020 at 2:34 PM Alexandre Courbot <acourbot@chromium.org> wrote:
->>
->> DRC events can happen virtually at anytime, including when we are
->> starting a seek. Should this happen, we must make sure to return to the
->> DRC state, otherwise the firmware will expect buffers of the new
->> resolution whereas userspace will still work with the old one.
->>
->> Returning to the DRC state upon resume for seeking makes sure that the
->> client will get the DRC event and will reallocate the buffers to fit the
->> firmware's expectations.
+On 24/11/2020 00:02, Stanimir Varbanov wrote:
+> Document Content light level and Mastering display colour volume.
 > 
-> Oops, please ignore as this seems to depend on another patch... I will
-> repost once I can figure out the correct dependency chain, unless
-> Stanimir can find a better way to handle DRC during seek and flush.
-
-This patch depends on [1] series which is still under review.
-
-[1] https://www.spinics.net/lists/linux-media/msg177801.html
-
+> Signed-off-by: Stanimir Varbanov <stanimir.varbanov@linaro.org>
+> ---
+>  .../media/v4l/ext-ctrls-codec.rst             | 71 +++++++++++++++++++
+>  1 file changed, 71 insertions(+)
 > 
->>
->> Signed-off-by: Alexandre Courbot <acourbot@chromium.org>
->> ---
->>  drivers/media/platform/qcom/venus/vdec.c | 11 +++++++++--
->>  1 file changed, 9 insertions(+), 2 deletions(-)
->>
->> diff --git a/drivers/media/platform/qcom/venus/vdec.c b/drivers/media/platform/qcom/venus/vdec.c
->> index 8488411204c3..e3d0df7fd765 100644
->> --- a/drivers/media/platform/qcom/venus/vdec.c
->> +++ b/drivers/media/platform/qcom/venus/vdec.c
->> @@ -972,7 +972,10 @@ static int vdec_start_output(struct venus_inst *inst)
->>
->>         if (inst->codec_state == VENUS_DEC_STATE_SEEK) {
->>                 ret = venus_helper_process_initial_out_bufs(inst);
->> -               inst->codec_state = VENUS_DEC_STATE_DECODING;
->> +               if (inst->next_buf_last)
->> +                       inst->codec_state = VENUS_DEC_STATE_DRC;
->> +               else
->> +                       inst->codec_state = VENUS_DEC_STATE_DECODING;
->>                 goto done;
->>         }
->>
->> @@ -1077,8 +1080,10 @@ static int vdec_stop_capture(struct venus_inst *inst)
->>                 ret = hfi_session_flush(inst, HFI_FLUSH_ALL, true);
->>                 fallthrough;
->>         case VENUS_DEC_STATE_DRAIN:
->> -               vdec_cancel_dst_buffers(inst);
->>                 inst->codec_state = VENUS_DEC_STATE_STOPPED;
->> +               fallthrough;
->> +       case VENUS_DEC_STATE_SEEK:
->> +               vdec_cancel_dst_buffers(inst);
->>                 break;
->>         case VENUS_DEC_STATE_DRC:
->>                 WARN_ON(1);
->> @@ -1102,6 +1107,7 @@ static int vdec_stop_output(struct venus_inst *inst)
->>         case VENUS_DEC_STATE_DECODING:
->>         case VENUS_DEC_STATE_DRAIN:
->>         case VENUS_DEC_STATE_STOPPED:
->> +       case VENUS_DEC_STATE_DRC:
->>                 ret = hfi_session_flush(inst, HFI_FLUSH_ALL, true);
->>                 inst->codec_state = VENUS_DEC_STATE_SEEK;
->>                 break;
->> @@ -1371,6 +1377,7 @@ static void vdec_event_change(struct venus_inst *inst,
->>                         dev_dbg(dev, VDBGH "flush output error %d\n", ret);
->>         }
->>
->> +       inst->next_buf_last = true;
->>         inst->reconfig = true;
->>         v4l2_event_queue_fh(&inst->fh, &ev);
->>         wake_up(&inst->reconf_wait);
->> --
->> 2.29.2.454.gaff20da3a2-goog
->>
+> diff --git a/Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst b/Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst
+> index ce728c757eaf..1d26a5db07ef 100644
+> --- a/Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst
+> +++ b/Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst
+> @@ -4382,3 +4382,74 @@ enum v4l2_mpeg_video_hevc_size_of_length_field -
+>        - Selecting this value specifies that HEVC slices are expected
+>          to be prefixed by Annex B start codes. According to :ref:`hevc`
+>          valid start codes can be 3-bytes 0x000001 or 4-bytes 0x00000001.
+> +
+> +``V4L2_CID_MPEG_VIDEO_HDR10_CLL_INFO (struct)``
+> +    The Content Light Level defines upper bounds for the nominal target
+> +    brightness light level of the pictures.
+> +
+> +.. c:type:: v4l2_ctrl_hdr10_cll_info
+> +
+> +.. cssclass:: longtable
+> +
+> +.. flat-table:: struct v4l2_ctrl_hdr10_cll_info
+> +    :header-rows:  0
+> +    :stub-columns: 0
+> +    :widths:       1 1 2
+> +
+> +    * - __u16
+> +      - ``max_content_light_level``
+> +      - An upper bound on the maximum light level among all individual
+> +        samples for the pictures of coded video sequence, cd/m2. When
+> +        equal to 0 no such uppper bound is present.
+> +    * - __u16
+> +      - ``max_pic_average_light_level``
+> +      - An upper bound on the maximum average light level among the
+> +        samples for any individual picture of coded video sequence, cd/m2.
+> +        When equal to 0 no such uppper bound is present.
+> +
+> +``V4L2_CID_MPEG_VIDEO_HDR10_MASTERING_DISPLAY (struct)``
+> +    The mastering display defines the colour volume (the colour primaries,
+> +    white point and luminance range) of a display considered to be the
+> +    mastering display for current video content.
+> +
+> +.. c:type:: v4l2_ctrl_hdr10_mastering_display
+> +
+> +.. cssclass:: longtable
+> +
+> +.. flat-table:: struct v4l2_ctrl_hdr10_mastering_display
+> +    :header-rows:  0
+> +    :stub-columns: 0
+> +    :widths:       1 1 2
+> +
+> +    * - __u16
+> +      - ``display_primaries_x[3]``
+> +      - Specifies the normalized x chromaticity coordinate of the colour
+> +        primary component c of the mastering display in increments of 0.00002.
+> +        For describing mastering display that use Red, Green and  Blue colour
+> +        primaries, index value c equal to 0 correspond to Green primary, c
+> +        equal to 1 correspond to Blue primary and c equal to 2 correspond to
 
--- 
-regards,
-Stan
+correspond -> corresponds (3 times)
+
+> +        Red colour primary.
+> +    * - __u16
+> +      - ``display_primaries_y[3]``
+> +      - Specifies the normalized y chromaticity coordinate of the colour
+> +        primary component c of the mastering display in increments of 0.00002.
+> +        For describing mastering display that use Red, Green and  Blue colour
+> +        primaries, index value c equal to 0 correspond to Green primary, c
+> +        equal to 1 correspond to Blue primary and c equal to 2 correspond to
+
+Ditto.
+
+> +        Red colour primary.
+> +    * - __u16
+> +      - ``white_point_x``
+> +      - Specifies the normalized x chromaticity coordinate of the white
+> +        point of the mastering display in increments of 0.00002.
+> +    * - __u16
+> +      - ``white_point_y``
+> +      - Specifies the normalized y chromaticity coordinate of the white
+> +        point of the mastering display in increments of 0.00002.
+> +    * - __u32
+> +      - ``max_luminance``
+> +      - Specifies the nominal maximum display luminance of the mastering
+> +        display in units of 0.0001 cd/m2.
+> +    * - __u32
+> +      - ``min_luminance``
+> +      - specifies the nominal minimum display luminance of the mastering
+> +        display in units of 0.0001 cd/m2.
+> 
+
+I'd rename these last two fields to max/min_display_mastering_luminance to stay
+in sync with the H.265 spec.
+
+Regards,
+
+	Hans
