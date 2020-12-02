@@ -2,174 +2,96 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E014C2CC13B
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Dec 2020 16:48:26 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D2E5F2CC180
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Dec 2020 17:01:27 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728567AbgLBPsY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 2 Dec 2020 10:48:24 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54798 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728507AbgLBPsX (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 2 Dec 2020 10:48:23 -0500
-Received: from mail-wr1-x443.google.com (mail-wr1-x443.google.com [IPv6:2a00:1450:4864:20::443])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2F17BC0613CF
-        for <linux-arm-msm@vger.kernel.org>; Wed,  2 Dec 2020 07:47:43 -0800 (PST)
-Received: by mail-wr1-x443.google.com with SMTP id s8so4477074wrw.10
-        for <linux-arm-msm@vger.kernel.org>; Wed, 02 Dec 2020 07:47:43 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=hZCo1m8g7QPYnEX3m7SsmQm546vtQp+mN348j0Xkt6I=;
-        b=WozaPSMeOVI9euTVFOarywGpxKAPZvKOXOEWQtvyps7gdpv6liS1NZR50dH857phu2
-         Y1bMq0kgHUwjXNWnESQfr3PxIZEMqAohaQBnW3/nd5DWWL0S8YiX4k2whD+N+KHoeFop
-         17/44eB5Xm0ZftGesDSIUrNQbgxc63hr9WR9P18dHP2Yda+6R4cQEaB0jjNIxAR/g1W8
-         CXSxIStqcYpyTXP8aiLtE9H/hTG0YMbcil0gG63TyDzHxLfKpu8LoaL2NjmbWB8Bx3hS
-         YTce5kYBVLCHvO2X2wSEbN2x3JqL4Li+z851OEp0eKF9dELEArBV1erCImBwUK+G++v5
-         dmcA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=hZCo1m8g7QPYnEX3m7SsmQm546vtQp+mN348j0Xkt6I=;
-        b=iOb1SOwkqN0G43BSS2nm+CE9lLZ1VZOt45nb2Qditxw9/gXlRGWAEjMs3GBjghjBEu
-         e5JfArl0r6Axlr48CjH9Z+rhpB6VTWht2xdUhC99/srbve1Rd6UOx+oIGvj1gzadGwfs
-         /hHIQCSA0t+XUQhd7t95npOK/7AmqWGZ9ANqLDJnKee9JUKUbiTRRZZ5l3CIFyuubFKl
-         OGyy34Jy23KIc8M4/1ZGGmL1KO/9eu6BxRvPZL50IymiycjJxGFl9p/zkY8VwC7apdSk
-         TfkQEA5NI9i62MLg74DiWS8xwjbhBrvSPa1M0cnJu6oYNNezxuLyBVXa+Wf+o0BXCFOD
-         bf0A==
-X-Gm-Message-State: AOAM533SP0AJ1n4QnYvvEw3WrlG91zD3l8bnGSr+cWWHTVyNI1tguCQV
-        jq6PMEUrvs72rzCDYhnF4BcjLFzRWhwuu2+p
-X-Google-Smtp-Source: ABdhPJzPDRn6F8yI8MQnEqRIUcKoTyE96fFWrfcQlIjRGQGvsOzW1c+R+URB/NtEvglv2Rk0vXYh+w==
-X-Received: by 2002:adf:f102:: with SMTP id r2mr4198893wro.315.1606924061942;
-        Wed, 02 Dec 2020 07:47:41 -0800 (PST)
-Received: from [192.168.86.34] (cpc86377-aztw32-2-0-cust226.18-1.cable.virginm.net. [92.233.226.227])
-        by smtp.googlemail.com with ESMTPSA id r13sm2444950wrs.6.2020.12.02.07.47.40
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 02 Dec 2020 07:47:41 -0800 (PST)
-Subject: Re: [PATCH 1/6] arm64: dts: qcom: sm8250: add apr and its services
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, agross@kernel.org,
-        robh+dt@kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20201201153706.13450-1-srinivas.kandagatla@linaro.org>
- <20201201153706.13450-2-srinivas.kandagatla@linaro.org>
- <X8aYkxFMf+dzNRNt@builder.lan>
-From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Message-ID: <6cbf6754-56bc-c35a-038e-08903c2e09d2@linaro.org>
-Date:   Wed, 2 Dec 2020 15:47:40 +0000
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.8.0
+        id S1727937AbgLBQAj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 2 Dec 2020 11:00:39 -0500
+Received: from m42-5.mailgun.net ([69.72.42.5]:27958 "EHLO m42-5.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727824AbgLBQAj (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 2 Dec 2020 11:00:39 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1606924820; h=Content-Type: MIME-Version: Message-ID:
+ In-Reply-To: Date: References: Subject: Cc: To: From: Sender;
+ bh=6zFEAybXE2NmgA+iBFqhJLlMW/04xfBUq8tGuC59uxk=; b=BBE/4hRUEilmTlsUeFIJK+mhxrDAnOfXfRF1heWcPhxtaK7I3z8zPh3JwldyhVS/cND2T2iJ
+ WLV2DrnpFQwchenoSFTxoQF4Y5R1QRfS4TNGWu/rJW67scQm1/juePpfKSFryh6NApll5fi2
+ UJcWBKbcxBfU4faskKLncnA8Qn8=
+X-Mailgun-Sending-Ip: 69.72.42.5
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n09.prod.us-east-1.postgun.com with SMTP id
+ 5fc7ba0b51762b1886e1f96c (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 02 Dec 2020 16:00:11
+ GMT
+Sender: kvalo=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 34D8EC43463; Wed,  2 Dec 2020 16:00:10 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
+        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+Received: from potku.adurom.net (88-114-240-156.elisa-laajakaista.fi [88.114.240.156])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: kvalo)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 76FF4C433ED;
+        Wed,  2 Dec 2020 16:00:07 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 76FF4C433ED
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=kvalo@codeaurora.org
+From:   Kalle Valo <kvalo@codeaurora.org>
+To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc:     gregkh@linuxfoundation.org, hemantk@codeaurora.org,
+        bbhatt@codeaurora.org, linux-arm-msm@vger.kernel.org,
+        jhugo@codeaurora.org, linux-kernel@vger.kernel.org,
+        loic.poulain@linaro.org
+Subject: Re: [PATCH 01/29] bus: mhi: Remove auto-start option
+References: <20201202094159.107075-1-manivannan.sadhasivam@linaro.org>
+        <20201202094159.107075-2-manivannan.sadhasivam@linaro.org>
+Date:   Wed, 02 Dec 2020 18:00:05 +0200
+In-Reply-To: <20201202094159.107075-2-manivannan.sadhasivam@linaro.org>
+        (Manivannan Sadhasivam's message of "Wed, 2 Dec 2020 15:11:31 +0530")
+Message-ID: <87pn3si4fu.fsf@codeaurora.org>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.5 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <X8aYkxFMf+dzNRNt@builder.lan>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Many thanks Bjorn for review,
+Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org> writes:
 
-On 01/12/2020 19:25, Bjorn Andersson wrote:
-> On Tue 01 Dec 09:37 CST 2020, Srinivas Kandagatla wrote:
-> 
->> Add apr node and its associated services required for audio on RB5.
->>
->> Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
->> ---
->>   arch/arm64/boot/dts/qcom/sm8250.dtsi | 56 ++++++++++++++++++++++++++++
->>   1 file changed, 56 insertions(+)
->>
->> diff --git a/arch/arm64/boot/dts/qcom/sm8250.dtsi b/arch/arm64/boot/dts/qcom/sm8250.dtsi
->> index 65acd1f381eb..3b4e98b13d36 100644
->> --- a/arch/arm64/boot/dts/qcom/sm8250.dtsi
->> +++ b/arch/arm64/boot/dts/qcom/sm8250.dtsi
->> @@ -11,6 +11,8 @@
->>   #include <dt-bindings/mailbox/qcom-ipcc.h>
->>   #include <dt-bindings/power/qcom-aoss-qmp.h>
->>   #include <dt-bindings/power/qcom-rpmpd.h>
->> +#include <dt-bindings/soc/qcom,apr.h>
->> +#include <dt-bindings/sound/qcom,q6afe.h>
-> 
-> Please move this line one step down to maintain the alphabetical sort
-> order.
+> From: Loic Poulain <loic.poulain@linaro.org>
+>
+> There is really no point having an auto-start for channels.
+> This is confusing for the device drivers, some have to enable the
+> channels, others don't have... and waste resources (e.g. pre allocated
+> buffers) that may never be used.
+>
+> This is really up to the MHI device(channel) driver to manage the state
+> of its channels.
+>
+> While at it, let's also remove the auto-start option from ath11k mhi
+> controller.
+>
+> Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
+> Acked-by: Kalle Valo <kvalo@codeaurora.org>
+> Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> [mani: clubbed ath11k change]
+> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 
-I agree with all the comments on this patch as well as other patches, 
-will send v2 with those fixed!
+Hmm, didn't we apply this already? At least I pulled the immutable
+branch to my tree:
 
-Thanks,
-srini
-> 
-> Thanks,
-> Bjorn
-> 
->>   #include <dt-bindings/soc/qcom,rpmh-rsc.h>
->>   #include <dt-bindings/thermal/thermal.h>
->>   
->> @@ -2620,6 +2622,60 @@
->>   				label = "lpass";
->>   				qcom,remote-pid = <2>;
->>   
->> +				apr {
->> +					compatible = "qcom,apr-v2";
->> +					qcom,glink-channels = "apr_audio_svc";
->> +					qcom,apr-domain = <APR_DOMAIN_ADSP>;
->> +					#address-cells = <1>;
->> +					#size-cells = <0>;
->> +
->> +					apr-service@3 {
->> +						reg = <APR_SVC_ADSP_CORE>;
->> +						compatible = "qcom,q6core";
->> +						qcom,protection-domain = "avs/audio", "msm/adsp/audio_pd";
->> +					};
->> +
->> +					q6afe: apr-service@4 {
->> +						compatible = "qcom,q6afe";
->> +						reg = <APR_SVC_AFE>;
->> +						qcom,protection-domain = "avs/audio", "msm/adsp/audio_pd";
->> +						q6afedai: dais {
->> +							compatible = "qcom,q6afe-dais";
->> +							#address-cells = <1>;
->> +							#size-cells = <0>;
->> +							#sound-dai-cells = <1>;
->> +						};
->> +
->> +						q6afecc: cc {
->> +							compatible = "qcom,q6afe-clocks";
->> +							#clock-cells = <2>;
->> +						};
->> +					};
->> +
->> +					q6asm: apr-service@7 {
->> +						compatible = "qcom,q6asm";
->> +						reg = <APR_SVC_ASM>;
->> +						qcom,protection-domain = "avs/audio", "msm/adsp/audio_pd";
->> +						q6asmdai: dais {
->> +							compatible = "qcom,q6asm-dais";
->> +							#address-cells = <1>;
->> +							#size-cells = <0>;
->> +							#sound-dai-cells = <1>;
->> +							iommus = <&apps_smmu 0x1801 0x0>;
->> +						};
->> +					};
->> +
->> +					q6adm: apr-service@8 {
->> +						compatible = "qcom,q6adm";
->> +						reg = <APR_SVC_ADM>;
->> +						qcom,protection-domain = "avs/audio", "msm/adsp/audio_pd";
->> +						q6routing: routing {
->> +							compatible = "qcom,q6adm-routing";
->> +							#sound-dai-cells = <0>;
->> +						};
->> +					};
->> +				};
->> +
->>   				fastrpc {
->>   					compatible = "qcom,fastrpc";
->>   					qcom,glink-channels = "fastrpcglink-apps-dsp";
->> -- 
->> 2.21.0
->>
+https://git.kernel.org/pub/scm/linux/kernel/git/kvalo/ath.git/commit/?h=ath-next&id=526740b495059ebbc0c3c086dceca1263820fa4f
+
+So if there's a new version of this patch (and a new commit id) the
+immutable branch I pulled is not immutable anymore.
+
+-- 
+https://patchwork.kernel.org/project/linux-wireless/list/
+
+https://wireless.wiki.kernel.org/en/developers/documentation/submittingpatches
