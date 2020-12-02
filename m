@@ -2,138 +2,152 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 867132CB270
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Dec 2020 02:42:32 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id DFEB02CB286
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Dec 2020 02:53:30 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727533AbgLBBmQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 1 Dec 2020 20:42:16 -0500
-Received: from m42-5.mailgun.net ([69.72.42.5]:62614 "EHLO m42-5.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727455AbgLBBmQ (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 1 Dec 2020 20:42:16 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1606873314; h=Message-ID: References: In-Reply-To: Reply-To:
- Subject: Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=rOCYGl7gq4kPLvvbLxxonuW8om/DWdztwUEdA4lT/Fc=;
- b=dYCoL6obqakY5mf75J/9UKP+YQcCrSarCU+H0MoAyyNmqUqROe0HoFEJ1xR3FIfkOojR86VR
- 7yXu8SOW58qJQrm4SDKZaHPb+NypiKkTNgz1dYbCdiFs3C/6AqVszvaO3ylv/n7YBkSYtMK5
- MDjRE5nCLlZIrG9iOOiKwGb8RyA=
-X-Mailgun-Sending-Ip: 69.72.42.5
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n02.prod.us-west-2.postgun.com with SMTP id
- 5fc6f0bc2ef3e1355fc6ce89 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 02 Dec 2020 01:41:16
- GMT
-Sender: bbhatt=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 00011C43461; Wed,  2 Dec 2020 01:41:15 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: bbhatt)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 4F4EEC433ED;
-        Wed,  2 Dec 2020 01:41:15 +0000 (UTC)
+        id S1728019AbgLBBwi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 1 Dec 2020 20:52:38 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39040 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726023AbgLBBwh (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 1 Dec 2020 20:52:37 -0500
+Received: from mail-ot1-x344.google.com (mail-ot1-x344.google.com [IPv6:2607:f8b0:4864:20::344])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CA00DC0613D6
+        for <linux-arm-msm@vger.kernel.org>; Tue,  1 Dec 2020 17:51:51 -0800 (PST)
+Received: by mail-ot1-x344.google.com with SMTP id t18so261227otk.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 01 Dec 2020 17:51:51 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=go+Zj6KBSKu3isJZDuZUS24tND+F8EKuCP2NBgNIZY0=;
+        b=IOIotIjX+251wEpy3NPTYBGm7vBUvhcD3FDAI507n8SV97SELBJZ1ggWtMs2u096Ho
+         9vltOg2ZonZlM5tchrG9ksx7d4q7jgXy6+IgPC2MCnVwHtfNQrbtIhQk4TCtM4NY4EMV
+         0O1MPEIoLCjaays3Liqw7axnAkTOefJxgToNmNDSdUgK9KdllgR+QjytgzQ6/h2PGCFL
+         6EZOd+ykKB8oi8VN3Udn0ZfdXmtCJ1469q72TZ2tBAZ2z2mufXLYk+vOFdEkBzfAcaXq
+         +8fsOgm+xj248sDovcLBC6UnU3Ziunlw46eUXohbgiLAm/X10WOrx/XYk4PQqhVr/9Hi
+         UAug==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=go+Zj6KBSKu3isJZDuZUS24tND+F8EKuCP2NBgNIZY0=;
+        b=cKabWBu9foml67D0uErYnxsbP7kgOZef6532Hx3cahSPui8ZqlFBHEGy0nse5QDNkb
+         duJgMQg3iYGj/VQAxgm8ByNIl/n+ibBYQHOceQUWNiMaVHqTBiPnVmEn7wbay85xaQx3
+         Bh+Sqf7aGpwlWKmeM1COEjxD9wuuky5693TcdXvldlPKEO1rANl4BiYdx+LW6mBNvN8/
+         LiTQfKYa9/3C+mOg0dSPKiZl8pYIDXQFm1gYLCouH2IRgbq4D+ZCWFLNv6m7be1MX8j7
+         Kh7+s469C4K0CLlRme3NaXKpTLaH3rI3ZgxSFdVsmX76OfySxvXDgHTZEgEDTcRgUYzq
+         BOlw==
+X-Gm-Message-State: AOAM532k9FBE8XLea/VfdNl3uU2Ko0bCMsT2WjYJRHXEj/nRRURCtVHH
+        ST4Ow1lyLpjongQ7LKl2l7kpSQ==
+X-Google-Smtp-Source: ABdhPJy4YjB1CcwYbzGd/p39iuzI/uDlEtmNP17tPQjGv0Avef3iHVRa5D5B4cfDwnWHgyUh/Li7Jg==
+X-Received: by 2002:a9d:20a7:: with SMTP id x36mr205126ota.103.1606873910934;
+        Tue, 01 Dec 2020 17:51:50 -0800 (PST)
+Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
+        by smtp.gmail.com with ESMTPSA id y21sm53262oti.21.2020.12.01.17.51.49
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 01 Dec 2020 17:51:50 -0800 (PST)
+Date:   Tue, 1 Dec 2020 19:51:48 -0600
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Zijun Hu <zijuhu@codeaurora.org>
+Cc:     marcel@holtmann.org, johan.hedberg@gmail.com,
+        linux-kernel@vger.kernel.org, linux-bluetooth@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, bgodavar@codeaurora.org,
+        c-hbandi@codeaurora.org, hemantg@codeaurora.org, mka@chromium.org,
+        rjliao@codeaurora.org, tjiang@codeaurora.org
+Subject: Re: [PATCH v1] Bluetooth: support download nvm with different board
+ id for wcn6855
+Message-ID: <X8bzNMT3o0GWxz8A@builder.lan>
+References: <1606791564-2443-1-git-send-email-zijuhu@codeaurora.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Tue, 01 Dec 2020 17:41:15 -0800
-From:   Bhaumik Bhatt <bbhatt@codeaurora.org>
-To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc:     Loic Poulain <loic.poulain@linaro.org>, hemantk@codeaurora.org,
-        linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH v3 1/9] mhi: Add mhi_controller_initialize helper
-Organization: Qualcomm Innovation Center, Inc.
-Reply-To: bbhatt@codeaurora.org
-Mail-Reply-To: bbhatt@codeaurora.org
-In-Reply-To: <20201128054219.GA3077@thinkpad>
-References: <1606404547-10737-1-git-send-email-loic.poulain@linaro.org>
- <1606404547-10737-2-git-send-email-loic.poulain@linaro.org>
- <20201128054219.GA3077@thinkpad>
-Message-ID: <4688319b5b5aa3326f42fbc817bbddaf@codeaurora.org>
-X-Sender: bbhatt@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1606791564-2443-1-git-send-email-zijuhu@codeaurora.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2020-11-27 09:42 PM, Manivannan Sadhasivam wrote:
-> On Thu, Nov 26, 2020 at 04:28:59PM +0100, Loic Poulain wrote:
->> This function allows to initialize a mhi_controller structure.
->> Today, it only zeroing the structure.
->> 
-> 
-> That's what kzalloc is also doing, right?
-> 
-> Thanks,
-> Mani
-> 
->> Use this function from mhi_alloc_controller so that any further
->> initialization can be factorized in initalize function.
->> 
->> Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
->> ---
->>  drivers/bus/mhi/core/init.c | 7 +++++++
->>  include/linux/mhi.h         | 6 ++++++
->>  2 files changed, 13 insertions(+)
->> 
->> diff --git a/drivers/bus/mhi/core/init.c b/drivers/bus/mhi/core/init.c
->> index 96cde9c..4acad28 100644
->> --- a/drivers/bus/mhi/core/init.c
->> +++ b/drivers/bus/mhi/core/init.c
->> @@ -1021,11 +1021,18 @@ void mhi_unregister_controller(struct 
->> mhi_controller *mhi_cntrl)
->>  }
->>  EXPORT_SYMBOL_GPL(mhi_unregister_controller);
->> 
->> +void mhi_initialize_controller(struct mhi_controller *mhi_cntrl)
->> +{
->> +	memset(mhi_cntrl, 0, sizeof(*mhi_cntrl));
->> +}
->> +EXPORT_SYMBOL_GPL(mhi_initialize_controller);
->> +
->>  struct mhi_controller *mhi_alloc_controller(void)
->>  {
->>  	struct mhi_controller *mhi_cntrl;
->> 
->>  	mhi_cntrl = kzalloc(sizeof(*mhi_cntrl), GFP_KERNEL);
->> +	mhi_initialize_controller(mhi_cntrl);
-This line is not required here.
->> 
->>  	return mhi_cntrl;
->>  }
->> diff --git a/include/linux/mhi.h b/include/linux/mhi.h
->> index 5721a0a..30c676d 100644
->> --- a/include/linux/mhi.h
->> +++ b/include/linux/mhi.h
->> @@ -537,6 +537,12 @@ struct mhi_driver {
->>  #define to_mhi_device(dev) container_of(dev, struct mhi_device, dev)
->> 
->>  /**
->> + * mhi_initialize_controller - Initialize MHI Controller structure
->> + * @mhi_cntrl: MHI controller structure to initialize
->> + */
->> +void mhi_initialize_controller(struct mhi_controller *mhi_cntrl);
->> +
->> +/**
->>   * mhi_alloc_controller - Allocate the MHI Controller structure
->>   * Allocate the mhi_controller structure using zero initialized 
->> memory
->>   */
->> --
->> 2.7.4
->> 
+On Mon 30 Nov 20:59 CST 2020, Zijun Hu wrote:
 
-Thanks,
-Bhaumik
----
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora 
-Forum,
-a Linux Foundation Collaborative Project
+> From: Tim Jiang <tjiang@codeaurora.org>
+> 
+> we define many nvm files for wcn6855 btsoc and host driver
+> should find the correct nvm file based on board ID and then
+> download it.
+> 
+> Signed-off-by: Tim Jiang <tjiang@codeaurora.org>
+> ---
+>  drivers/bluetooth/btusb.c | 17 ++++++++++++++---
+>  1 file changed, 14 insertions(+), 3 deletions(-)
+> 
+> diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
+> index 3bbe8f43e7fa..66e19085e0fa 100644
+> --- a/drivers/bluetooth/btusb.c
+> +++ b/drivers/bluetooth/btusb.c
+> @@ -3474,7 +3474,8 @@ struct qca_version {
+>  	__le32	rom_version;
+>  	__le32	patch_version;
+>  	__le32	ram_version;
+> -	__le32	ref_clock;
+> +	__u16	board_id;
+
+You should follow the scheme of describing the endianess of the fields.
+
+> +	__u8	flag[2];
+
+It seems more reasonable to make this a 16-bit flags. And either way
+there are more than one of these, so plural "flags" seems appropriate.
+
+
+PS. Can you confirm that no firmware actually used these 16 bits of the
+"ref_clock"? Why wasn't the reserved bytes used to add the new
+properties?
+
+>  	__u8	reserved[4];
+>  } __packed;
+>  
+> @@ -3657,8 +3658,13 @@ static int btusb_setup_qca_load_nvm(struct hci_dev *hdev,
+>  	char fwname[64];
+>  	int err;
+>  
+> -	snprintf(fwname, sizeof(fwname), "qca/nvm_usb_%08x.bin",
+> -		 le32_to_cpu(ver->rom_version));
+> +	if (ver->flag[1] == 0x80) { //check board id for wcn6855
+
+Is this BIT(7) in the second byte of the flags, or is the second flag
+0x80?
+
+Based on the comment you should be able to provide a
+
+#define QCA_VERSION_SECOND_FLAG_IS_WCN6855 0x80
+
+to use instead of this magic number.
+
+Regards,
+Bjorn
+
+> +		snprintf(fwname, sizeof(fwname), "qca/nvm_usb_%08x_%04x.bin",
+> +			le32_to_cpu(ver->rom_version), le16_to_cpu(ver->board_id));
+> +	} else {
+> +		snprintf(fwname, sizeof(fwname), "qca/nvm_usb_%08x.bin",
+> +			le32_to_cpu(ver->rom_version));
+> +	}
+>  
+>  	err = request_firmware(&fw, fwname, &hdev->dev);
+>  	if (err) {
+> @@ -3725,6 +3731,11 @@ static int btusb_setup_qca(struct hci_dev *hdev)
+>  			return err;
+>  	}
+>  
+> +	err = btusb_qca_send_vendor_req(udev, QCA_GET_TARGET_VERSION, &ver,
+> +					sizeof(ver));
+> +	if (err < 0)
+> +		return err;
+> +
+>  	if (!(status & QCA_SYSCFG_UPDATED)) {
+>  		err = btusb_setup_qca_load_nvm(hdev, &ver, info);
+>  		if (err < 0)
+> -- 
+> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum, a Linux Foundation Collaborative Project
+> 
