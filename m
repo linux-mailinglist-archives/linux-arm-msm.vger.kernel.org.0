@@ -2,255 +2,101 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id DC0DC2CC404
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Dec 2020 18:44:43 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 47DC72CC439
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Dec 2020 18:51:11 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730867AbgLBRlA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 2 Dec 2020 12:41:00 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44284 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728903AbgLBRlA (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 2 Dec 2020 12:41:00 -0500
-Received: from mail-ej1-x642.google.com (mail-ej1-x642.google.com [IPv6:2a00:1450:4864:20::642])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 15906C0613CF
-        for <linux-arm-msm@vger.kernel.org>; Wed,  2 Dec 2020 09:40:20 -0800 (PST)
-Received: by mail-ej1-x642.google.com with SMTP id f23so5686372ejk.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 02 Dec 2020 09:40:20 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=ki/Hvlj0Gq76K0xpYXKuMz7BFER2JLX78INWgIFB0Tc=;
-        b=Xec8c/1/im8za540FjwT96wKz/EhCXa2kBp7zBDRiS/QSrDKRxAxSv+1pZWEjOl4es
-         WVZUInRPV5IiM5LlVI/+8ZznxKrKy+6gIM30X8UcfLb/o+PU5+rE30u8r/Y8P/miEQNt
-         7hRPh4vhlAwSldrX/sg4+/hAXJ1fhFzCj/N34=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=ki/Hvlj0Gq76K0xpYXKuMz7BFER2JLX78INWgIFB0Tc=;
-        b=P8dzULUo6Z2KIBfoKFB44601zdEZ48XQ/NJA3ZAaTVxi3BBDw5K6sTs6DFVlc03jnY
-         2uniEB3ozwFuzkdUIg4F1FUvX9lmXOt/XpMYpNFjplxrLZWGNF7FbeAkoceWn/6pcfPR
-         9vsgZtVRl7Qet715P6kD4YQoL0NQMfW68zLcFy9wRssTGLMQHPDw3XFkbSbagrfO0KXC
-         UMkAc3Iak5isW4leLRA3HM82QDmpHoSwchO8Y81wv52t30W4QdwQydQKjYLSjYC6hZw8
-         mLnXB0XY+jqpfZSGZBOnDGAsh8aSSO6c8Y9duGQdLoXyuwas0UcjtODQ7pGfrhuVHaaZ
-         rQyw==
-X-Gm-Message-State: AOAM530djrMupGfCQyx+DcxIkLqa7pHYSXaa/s3Q7ebd+v9/vKZkpKLb
-        TexiFiUIoDBHPEtFLpPZCatOQAColwYpfA==
-X-Google-Smtp-Source: ABdhPJyIHpV6RTSqbxCtuwFcz3Y41s59fTRy8fByTXL4M3KrFJRT77mZ6TAeJmv7SLLf4fDqZdsgZA==
-X-Received: by 2002:a17:906:40d3:: with SMTP id a19mr878769ejk.98.1606930818286;
-        Wed, 02 Dec 2020 09:40:18 -0800 (PST)
-Received: from mail-wr1-f44.google.com (mail-wr1-f44.google.com. [209.85.221.44])
-        by smtp.gmail.com with ESMTPSA id n1sm384697ejb.2.2020.12.02.09.40.16
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 02 Dec 2020 09:40:17 -0800 (PST)
-Received: by mail-wr1-f44.google.com with SMTP id r3so4965872wrt.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 02 Dec 2020 09:40:16 -0800 (PST)
-X-Received: by 2002:a5d:4388:: with SMTP id i8mr4929307wrq.262.1606930816557;
- Wed, 02 Dec 2020 09:40:16 -0800 (PST)
+        id S1728522AbgLBRsb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 2 Dec 2020 12:48:31 -0500
+Received: from mail.kernel.org ([198.145.29.99]:49646 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726104AbgLBRsb (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 2 Dec 2020 12:48:31 -0500
+Date:   Wed, 2 Dec 2020 18:48:59 +0100
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+        s=korg; t=1606931270;
+        bh=in9+HhrSHbUIazSnYyXaNQUMHBqliz2pSrRo7QJUi5g=;
+        h=From:To:Cc:Subject:References:In-Reply-To:From;
+        b=OMN9aGO9Ra9OWByl2hXXvMB9kPgOW3X3j7sPix+QfsKt8KL69sPoGbXbHwlfvf90q
+         /K3/1q9mUR4Lq7O2mNBZMwt6MWKIUYYXPGRyzLIfV+1cVidIXOV3th/+sZj2SRgI4i
+         dzi0vtvxOPYusI3U+teud2+Rx7oqJGJJTbId1KAE=
+From:   Greg KH <gregkh@linuxfoundation.org>
+To:     Kalle Valo <kvalo@codeaurora.org>
+Cc:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        hemantk@codeaurora.org, bbhatt@codeaurora.org,
+        linux-arm-msm@vger.kernel.org, jhugo@codeaurora.org,
+        linux-kernel@vger.kernel.org, loic.poulain@linaro.org
+Subject: Re: [PATCH 01/29] bus: mhi: Remove auto-start option
+Message-ID: <X8fTiyyp30uFU5Bd@kroah.com>
+References: <20201202094159.107075-1-manivannan.sadhasivam@linaro.org>
+ <20201202094159.107075-2-manivannan.sadhasivam@linaro.org>
+ <87pn3si4fu.fsf@codeaurora.org>
+ <20201202162716.GA3033@thinkpad>
+ <87eek8i1sk.fsf@codeaurora.org>
 MIME-Version: 1.0
-References: <20201201042322.3346817-1-frkoenig@chromium.org>
- <57cc5999-e54c-219c-812b-71b214dbe760@linaro.org> <CAPBb6MUU0TayGLq-Jifh1O2RfhoTjimY7GEQcqdoxQ6itybbfw@mail.gmail.com>
-In-Reply-To: <CAPBb6MUU0TayGLq-Jifh1O2RfhoTjimY7GEQcqdoxQ6itybbfw@mail.gmail.com>
-From:   Fritz Koenig <frkoenig@chromium.org>
-Date:   Wed, 2 Dec 2020 09:40:03 -0800
-X-Gmail-Original-Message-ID: <CAMfZQbye-KDtBG8UHUkyz3Fp0V=y0jJaD-CNLvXdZ-nAZUv7+w@mail.gmail.com>
-Message-ID: <CAMfZQbye-KDtBG8UHUkyz3Fp0V=y0jJaD-CNLvXdZ-nAZUv7+w@mail.gmail.com>
-Subject: Re: [PATCH v2] venus: vdec: Handle DRC after drain
-To:     Alexandre Courbot <acourbot@chromium.org>
-Cc:     Stanimir Varbanov <stanimir.varbanov@linaro.org>,
-        Fritz Koenig <frkoenig@chromium.org>,
-        Linux Media Mailing List <linux-media@vger.kernel.org>,
-        linux-arm-msm@vger.kernel.org, LKML <linux-kernel@vger.kernel.org>,
-        Vikash Garodia <vgarodia@codeaurora.org>,
-        Dikshita Agarwal <dikshita@codeaurora.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <87eek8i1sk.fsf@codeaurora.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Dec 1, 2020 at 9:58 PM Alexandre Courbot <acourbot@chromium.org> wrote:
->
-> On Wed, Dec 2, 2020 at 7:34 AM Stanimir Varbanov
-> <stanimir.varbanov@linaro.org> wrote:
+On Wed, Dec 02, 2020 at 06:57:15PM +0200, Kalle Valo wrote:
+> Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org> writes:
+> 
+> > On Wed, Dec 02, 2020 at 06:00:05PM +0200, Kalle Valo wrote:
+> >> Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org> writes:
+> >> 
+> >> > From: Loic Poulain <loic.poulain@linaro.org>
+> >> >
+> >> > There is really no point having an auto-start for channels.
+> >> > This is confusing for the device drivers, some have to enable the
+> >> > channels, others don't have... and waste resources (e.g. pre allocated
+> >> > buffers) that may never be used.
+> >> >
+> >> > This is really up to the MHI device(channel) driver to manage the state
+> >> > of its channels.
+> >> >
+> >> > While at it, let's also remove the auto-start option from ath11k mhi
+> >> > controller.
+> >> >
+> >> > Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
+> >> > Acked-by: Kalle Valo <kvalo@codeaurora.org>
+> >> > Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> >> > [mani: clubbed ath11k change]
+> >> > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> >> 
+> >> Hmm, didn't we apply this already? At least I pulled the immutable
+> >> branch to my tree:
+> >> 
+> >> https://git.kernel.org/pub/scm/linux/kernel/git/kvalo/ath.git/commit/?h=ath-next&id=526740b495059ebbc0c3c086dceca1263820fa4f
+> >> 
+> >> So if there's a new version of this patch (and a new commit id) the
+> >> immutable branch I pulled is not immutable anymore.
 > >
-> > Hi Fritz,
+> > This is not a new version of the patch. The commit SHA of this patch in
+> > immutable branch is ed5298c7d500abaf34ed7783969e953a1f028e5b and that is same
+> > in mhi-next as well.
 > >
-> > On 12/1/20 6:23 AM, Fritz Koenig wrote:
-> > > If the DRC is near the end of the stream the client
-> > > may send a V4L2_DEC_CMD_STOP before the DRC occurs.
-> > > V4L2_DEC_CMD_STOP puts the driver into the
-> > > VENUS_DEC_STATE_DRAIN state.  DRC must be aware so
-> > > that after the DRC event the state can be restored
-> > > correctly.
-> > >
-> > > Signed-off-by: Fritz Koenig <frkoenig@chromium.org>
-> > > ---
-> > >
-> > > v2: remove TODO
-> > >
-> > >  drivers/media/platform/qcom/venus/core.h |  1 +
-> > >  drivers/media/platform/qcom/venus/vdec.c | 17 +++++++++++++++--
-> > >  2 files changed, 16 insertions(+), 2 deletions(-)
-> > >
-> > > diff --git a/drivers/media/platform/qcom/venus/core.h b/drivers/media/platform/qcom/venus/core.h
-> > > index 2b0899bf5b05f..1680c936c06fb 100644
-> > > --- a/drivers/media/platform/qcom/venus/core.h
-> > > +++ b/drivers/media/platform/qcom/venus/core.h
-> > > @@ -406,6 +406,7 @@ struct venus_inst {
-> > >       unsigned int core_acquired: 1;
-> > >       unsigned int bit_depth;
-> > >       bool next_buf_last;
-> > > +     bool drain_active;
+> > Now I'm funneling all patches in mhi-next to mainline through Greg, so this
+> > patch is part of the (MHI changes for v5.11) patch series. Perhaps you might be
+> > dealing with pull requests to Dave/Jakub but since the MHI patch flow is usually
+> > fairly low, Greg is happy with patch series.
 > >
-> > Could you introduce a new codec state instead of adding a flag for such
-> > corner case.
-> >
-> > I think that we will need to handle at least one more corner case (DRC
-> > during seek operation),
->
-> Just happen to have posted a patch for that. :)
->
-> https://lkml.org/lkml/2020/12/2/24
->
-> > so then we have to introduce another flag, and
-> > this is not a good solution to me. These additional flags will
-> > complicate the state handling and will make the code readability worst
-> >
-> > I'd introduce: VENUS_DEC_STATE_DRC_DURING_DRAIN or something similar.
->
-> I'm wondering what is the best approach here. As you see in my patch,
-> I did not have to introduce a new state but relied instead on the
-> state of next_buf_last (which may or may not be correct - maybe we can
-> think of a way to merge both patches into one?). Flushes, either
-> explicit or implicitly triggered by a DRC, are more than a state by
-> themselves but rather an extra dimension from which other states can
-> still apply. I'm afraid we already have many states as it is and
-> adding more might add complexity.
->
-> A lot of the recent issues we had came from that number of states,
-> notably from the fact that not all states are always tested when they
-> should (and fall back to the default: branch of a switch case that
-> does nothing). I think we could improve the robustness of this driver
-> if we mandate that each state check must be done using a switch
-> statement without a default: branch. That would force us to ensure
-> that each newly introduced state is considered in every situation
-> where it might be relevant.
->
+> > But since we are dealing with immutable branch I should send the pull request
+> > to Greg now.
+> 
+> Yes, I very much prefer you send a pull request so that we can avoid
+> conflicts between ath11k and mhi. If Greg would apply this patch as is,
+> we would have two versions of the same commit (with different commit
+> ids) and git would get confused.
 
-I'm finding it hard to just add an extra state.
-The DRC nominally goes something like this:
-VENUS_DEC_STATE_DECODING
-received HFI_EVENT_DATA_SEQUENCE_CHANGED : transition to VENUS_DEC_STATE_DRAIN
-received stop_capture: transition to VENUS_DEC_STATE_STOPPED
-received start_capture: transition to VENUS_DEC_STATE_DECODING
+git wouldn't get confused, we do merges like this all the time.
 
+It would confuse developers, I get confused by this type of thing all
+the time :)
 
-The problematic one:
-VENUS_DEC_STATE_DECODING
-received V4L2_DEC_CMD_STOP : transition to VENUS_DEC_STATE_DRAIN
-received HFI_EVENT_DATA_SEQUENCE_CHANGED : transition to
-VENUS_DEC_STATE_DRC_DURING_DRAIN
-received stop_capture: transition to VENUS_DEC_STATE_DRC_DURING_DRAIN
-received start_capture: transition to VENUS_DEC_STATE_DECODING
+I'll just do the pull instead to keep my sanity, git is fine...
 
-So it looks like I would need to add another state
-VENUS_DEC_STATE_STOPPED_DURING_DRC_DURING_DRAIN so that transitioning
-back to VENUS_DEC_STATE_DECODING would be smooth.  Otherwise
-VENUS_DEC_STATE_DRC_DURING_DRAIN and VENUS_DEC_STATE_STOPPED will mean
-the same thing.
+thanks,
 
-This is why I had originally added the flag instead of states.  I'm
-still working on getting the states to work.  My first implementation
-only added VENUS_DEC_STATE_DRC_DURING_DRAIN state and I haven't
-totally gotten it working yet because of trying to work out the logic
-around VENUS_DEC_STATE_STOPPED.
-
-Please let me know if I have overlooked anything.  I'm going to try
-adding two states and see if the logic is clearer.
-
--Fritz
-
-> >
-> > >  };
-> > >
-> > >  #define IS_V1(core)  ((core)->res->hfi_version == HFI_VERSION_1XX)
-> > > diff --git a/drivers/media/platform/qcom/venus/vdec.c b/drivers/media/platform/qcom/venus/vdec.c
-> > > index 5671cf3458a68..1d551b4d651a8 100644
-> > > --- a/drivers/media/platform/qcom/venus/vdec.c
-> > > +++ b/drivers/media/platform/qcom/venus/vdec.c
-> > > @@ -523,8 +523,10 @@ vdec_decoder_cmd(struct file *file, void *fh, struct v4l2_decoder_cmd *cmd)
-> > >
-> > >               ret = hfi_session_process_buf(inst, &fdata);
-> > >
-> > > -             if (!ret && inst->codec_state == VENUS_DEC_STATE_DECODING)
-> > > +             if (!ret && inst->codec_state == VENUS_DEC_STATE_DECODING) {
-> > >                       inst->codec_state = VENUS_DEC_STATE_DRAIN;
-> > > +                     inst->drain_active = true;
-> > > +             }
-> > >       }
-> > >
-> > >  unlock:
-> > > @@ -976,10 +978,14 @@ static int vdec_start_capture(struct venus_inst *inst)
-> > >
-> > >       inst->codec_state = VENUS_DEC_STATE_DECODING;
-> > >
-> > > +     if (inst->drain_active)
-> > > +             inst->codec_state = VENUS_DEC_STATE_DRAIN;
-> > > +
-> > >       inst->streamon_cap = 1;
-> > >       inst->sequence_cap = 0;
-> > >       inst->reconfig = false;
-> > >       inst->next_buf_last = false;
-> > > +     inst->drain_active = false;
-> > >
-> > >       return 0;
-> > >
-> > > @@ -1105,6 +1111,7 @@ static int vdec_stop_capture(struct venus_inst *inst)
-> > >               /* fallthrough */
-> > >       case VENUS_DEC_STATE_DRAIN:
-> > >               inst->codec_state = VENUS_DEC_STATE_STOPPED;
-> > > +             inst->drain_active = false;
-> > >               /* fallthrough */
-> > >       case VENUS_DEC_STATE_SEEK:
-> > >               vdec_cancel_dst_buffers(inst);
-> > > @@ -1304,8 +1311,10 @@ static void vdec_buf_done(struct venus_inst *inst, unsigned int buf_type,
-> > >
-> > >                       v4l2_event_queue_fh(&inst->fh, &ev);
-> > >
-> > > -                     if (inst->codec_state == VENUS_DEC_STATE_DRAIN)
-> > > +                     if (inst->codec_state == VENUS_DEC_STATE_DRAIN) {
-> > > +                             inst->drain_active = false;
-> > >                               inst->codec_state = VENUS_DEC_STATE_STOPPED;
-> > > +                     }
-> > >               }
-> > >
-> > >               if (!bytesused)
-> > > @@ -1429,9 +1438,13 @@ static void vdec_event_notify(struct venus_inst *inst, u32 event,
-> > >       case EVT_SYS_EVENT_CHANGE:
-> > >               switch (data->event_type) {
-> > >               case HFI_EVENT_DATA_SEQUENCE_CHANGED_SUFFICIENT_BUF_RESOURCES:
-> > > +                     if (inst->codec_state == VENUS_DEC_STATE_DRAIN)
-> > > +                             inst->codec_state = VENUS_DEC_STATE_DECODING;
-> >
-> > Could you move this state transition into vdec_event_change(). That way
-> > we will do it only once.
-> >
-> > >                       vdec_event_change(inst, data, true);
-> > >                       break;
-> > >               case HFI_EVENT_DATA_SEQUENCE_CHANGED_INSUFFICIENT_BUF_RESOURCES:
-> > > +                     if (inst->codec_state == VENUS_DEC_STATE_DRAIN)
-> > > +                             inst->codec_state = VENUS_DEC_STATE_DECODING;
-> >
-> > ditto
-> >
-> > >                       vdec_event_change(inst, data, false);
-> > >                       break;
-> > >               case HFI_EVENT_RELEASE_BUFFER_REFERENCE:
-> > >
-> >
-> > --
-> > regards,
-> > Stan
+greg k-h
