@@ -2,86 +2,91 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 4243F2CB50E
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Dec 2020 07:33:49 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A51C22CB659
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Dec 2020 09:08:18 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726670AbgLBGbt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 2 Dec 2020 01:31:49 -0500
-Received: from a2.mail.mailgun.net ([198.61.254.61]:60715 "EHLO
-        a2.mail.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727175AbgLBGbt (ORCPT
+        id S2387863AbgLBIGY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 2 Dec 2020 03:06:24 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39782 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2387654AbgLBIGY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 2 Dec 2020 01:31:49 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1606890689; h=Content-Transfer-Encoding: Content-Type:
- In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
- Subject: Sender; bh=N5yCqs3Q0ix9g25K5caB+4a4wuk5yuJaeaiX1thxbUA=; b=UhMI+tXr6Z/ZUndc3aoMSDU74C2dSnzwGXmxY/mYtfrc0MdSCna5JsFsZTr1y1SD1WjiC5aq
- sRNiiw1nnjrfVGbAtRwpcb7BZiOs8BF5vOdCsBXXcmRpcjOWFcjorlZmrws8QTV5PQh/4eK/
- Uv76Shl7x8V9RJf4GncEOeR0JEk=
-X-Mailgun-Sending-Ip: 198.61.254.61
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n01.prod.us-east-1.postgun.com with SMTP id
- 5fc734a40f9adc18c7f5c79d (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 02 Dec 2020 06:31:00
- GMT
-Sender: akashast=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 61F79C43464; Wed,  2 Dec 2020 06:30:59 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        NICE_REPLY_A,SPF_FAIL,URIBL_BLOCKED autolearn=no autolearn_force=no
-        version=3.4.0
-Received: from [192.168.43.98] (unknown [47.9.70.25])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: akashast)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 33DE9C433C6;
-        Wed,  2 Dec 2020 06:30:50 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 33DE9C433C6
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=akashast@codeaurora.org
-Subject: Re: [PATCH] Revert "i2c: qcom-geni: Disable DMA processing on the
- Lenovo Yoga C630"
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Mukesh Savaliya <msavaliy@codeaurora.org>,
-        Sumit Semwal <sumit.semwal@linaro.org>,
-        =?UTF-8?Q?Christian_K=c3=b6nig?= <christian.koenig@amd.com>,
-        Wolfram Sang <wsa@kernel.org>,
-        Steev Klimaszewski <steev@kali.org>,
-        Shawn Guo <shawn.guo@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, linux-i2c@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-media@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, linaro-mm-sig@lists.linaro.org
-References: <20201124185743.401946-1-bjorn.andersson@linaro.org>
-From:   Akash Asthana <akashast@codeaurora.org>
-Message-ID: <6bcdfdc0-2e41-2eb5-0de3-04e68daaeab5@codeaurora.org>
-Date:   Wed, 2 Dec 2020 12:00:37 +0530
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.4.0
-MIME-Version: 1.0
-In-Reply-To: <20201124185743.401946-1-bjorn.andersson@linaro.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
+        Wed, 2 Dec 2020 03:06:24 -0500
+Received: from mail-wr1-x444.google.com (mail-wr1-x444.google.com [IPv6:2a00:1450:4864:20::444])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DB509C0613CF
+        for <linux-arm-msm@vger.kernel.org>; Wed,  2 Dec 2020 00:05:43 -0800 (PST)
+Received: by mail-wr1-x444.google.com with SMTP id s8so2184148wrw.10
+        for <linux-arm-msm@vger.kernel.org>; Wed, 02 Dec 2020 00:05:43 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id;
+        bh=3vkg3QCDYxxdBRRj9L2KE+6nqjT6vjcUV47jDZn4/Bo=;
+        b=R0lxUUCbZQo+jatgsZMTUYasLI5uz1TzNHpyAfzWZMqF71PUR1AspPOOuRo6y3uIFX
+         gPMH0Q1Fh5YO5KXxwUtpV511jkrW/nlA2DcHS52SStJMhGrQuNIWlQ6lYvEbXm1cHqDa
+         E8wGVw33su8SFvcmr+F+BDupx/ZmqzSFcoIutmPmUXnO7j1+FyInYYaNLLRD7AtU7BZL
+         rihKE4oC1EJVfbnd1UeA2D7R7W40p5L3zAMCyD9OguMqwGMY6fvaR2vi6w8pevHlCwH7
+         4xe05dWf/A/GXV7FCnTp5elYtnIeNxRqMcpfJS1ppcI+XkYO9gwTTExpmZuTaC5rv3sH
+         ppvQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=3vkg3QCDYxxdBRRj9L2KE+6nqjT6vjcUV47jDZn4/Bo=;
+        b=OX3Iany5QHSffK1W6jEr3HhQpH4l27gR/TomE2qhw/kob1sJPOaNSLXn3qv0Bplm3w
+         jYJtBBxdxQe7Y87KVpiFQcKoCquhKLNRSk19N+ImFIzy0lfJLfLwXWuZ5x8dbyAz0s8y
+         saWQEAeOPzQwG7LCoSWIiI2PBeyRkfYXoU4N8Mi+dxlIaKDfcUJPSgTq3sW/bZS80LNz
+         3z3LE3UBDUo/MsqFcQlenXBJiLm1EfKxFnI3FJy53a9jLGS3mZX1wMG0foNlvrDh0KLL
+         JkXZ1dklb6nfcEzstntrYnVR4CaWi+g1nhJl8yBVxrN2HLwD8K2wmLzkg2crZdmHkQQD
+         4l+A==
+X-Gm-Message-State: AOAM531uxVQO/6PYWr52rE88FJNHCUThbg9p8jE1vxhdjubmMOjRJE2m
+        tIdjjIK9lruJB3CcoLIyg29ITg==
+X-Google-Smtp-Source: ABdhPJztPAOMyXkdetRPopCmxaLCquYT5AhakWl+Zon20PoszfFB8njbchguQKWV/TV6TZIt6vBAeQ==
+X-Received: by 2002:adf:93e6:: with SMTP id 93mr1763826wrp.197.1606896342556;
+        Wed, 02 Dec 2020 00:05:42 -0800 (PST)
+Received: from localhost.localdomain ([88.122.66.28])
+        by smtp.gmail.com with ESMTPSA id d16sm1071640wrw.17.2020.12.02.00.05.41
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 02 Dec 2020 00:05:42 -0800 (PST)
+From:   Loic Poulain <loic.poulain@linaro.org>
+To:     manivannan.sadhasivam@linaro.org, hemantk@codeaurora.org
+Cc:     linux-arm-msm@vger.kernel.org,
+        Loic Poulain <loic.poulain@linaro.org>
+Subject: [PATCH v2] mhi: pci_generic: Fix implicit conversion warning
+Date:   Wed,  2 Dec 2020 09:12:30 +0100
+Message-Id: <1606896750-18198-1-git-send-email-loic.poulain@linaro.org>
+X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Fix the following warning with explicit cast:
 
-On 11/25/2020 12:27 AM, Bjorn Andersson wrote:
-> A combination of recent bug fixes by Doug Anderson and the proper
-> definition of iommu streams means that this hack is no longer needed.
-> Let's clean up the code by reverting '127068abe85b ("i2c: qcom-geni:
-> Disable DMA processing on the Lenovo Yoga C630")'.
->
-> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-Reviewed-by: Akash Asthana <akashast@codeaurora.org>
+warning: implicit conversion from 'unsigned long long' to
+'dma_addr_t' (aka 'unsigned int')
+mhi_cntrl->iova_stop = DMA_BIT_MASK(info->dma_data_width);
 
+Fixes: 855a70c12021 ("bus: mhi: Add MHI PCI support for WWAN modems")
+Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
+Reported-by: kernel test robot <lkp@intel.com>
+Reviewed-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ v2: Add fixes tag
+
+ drivers/bus/mhi/pci_generic.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/drivers/bus/mhi/pci_generic.c b/drivers/bus/mhi/pci_generic.c
+index cfee0db..0912885 100644
+--- a/drivers/bus/mhi/pci_generic.c
++++ b/drivers/bus/mhi/pci_generic.c
+@@ -406,7 +406,7 @@ static int mhi_pci_probe(struct pci_dev *pdev, const struct pci_device_id *id)
+ 	mhi_initialize_controller(mhi_cntrl);
+ 	mhi_cntrl->cntrl_dev = &pdev->dev;
+ 	mhi_cntrl->iova_start = 0;
+-	mhi_cntrl->iova_stop = DMA_BIT_MASK(info->dma_data_width);
++	mhi_cntrl->iova_stop = (dma_addr_t)DMA_BIT_MASK(info->dma_data_width);
+ 	mhi_cntrl->fw_image = info->fw;
+ 	mhi_cntrl->edl_image = info->edl;
+ 
 -- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,\na Linux Foundation Collaborative Project
+2.7.4
 
