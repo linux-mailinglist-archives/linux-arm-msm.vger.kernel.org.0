@@ -2,101 +2,97 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 47DC72CC439
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Dec 2020 18:51:11 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id DD19D2CC48D
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Dec 2020 19:08:48 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728522AbgLBRsb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 2 Dec 2020 12:48:31 -0500
-Received: from mail.kernel.org ([198.145.29.99]:49646 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726104AbgLBRsb (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 2 Dec 2020 12:48:31 -0500
-Date:   Wed, 2 Dec 2020 18:48:59 +0100
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-        s=korg; t=1606931270;
-        bh=in9+HhrSHbUIazSnYyXaNQUMHBqliz2pSrRo7QJUi5g=;
-        h=From:To:Cc:Subject:References:In-Reply-To:From;
-        b=OMN9aGO9Ra9OWByl2hXXvMB9kPgOW3X3j7sPix+QfsKt8KL69sPoGbXbHwlfvf90q
-         /K3/1q9mUR4Lq7O2mNBZMwt6MWKIUYYXPGRyzLIfV+1cVidIXOV3th/+sZj2SRgI4i
-         dzi0vtvxOPYusI3U+teud2+Rx7oqJGJJTbId1KAE=
-From:   Greg KH <gregkh@linuxfoundation.org>
-To:     Kalle Valo <kvalo@codeaurora.org>
-Cc:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        hemantk@codeaurora.org, bbhatt@codeaurora.org,
-        linux-arm-msm@vger.kernel.org, jhugo@codeaurora.org,
-        linux-kernel@vger.kernel.org, loic.poulain@linaro.org
-Subject: Re: [PATCH 01/29] bus: mhi: Remove auto-start option
-Message-ID: <X8fTiyyp30uFU5Bd@kroah.com>
-References: <20201202094159.107075-1-manivannan.sadhasivam@linaro.org>
- <20201202094159.107075-2-manivannan.sadhasivam@linaro.org>
- <87pn3si4fu.fsf@codeaurora.org>
- <20201202162716.GA3033@thinkpad>
- <87eek8i1sk.fsf@codeaurora.org>
+        id S2387782AbgLBSIj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 2 Dec 2020 13:08:39 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48578 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2387748AbgLBSIj (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 2 Dec 2020 13:08:39 -0500
+Received: from mail-wm1-x329.google.com (mail-wm1-x329.google.com [IPv6:2a00:1450:4864:20::329])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3D005C0613CF
+        for <linux-arm-msm@vger.kernel.org>; Wed,  2 Dec 2020 10:07:53 -0800 (PST)
+Received: by mail-wm1-x329.google.com with SMTP id c198so9881673wmd.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 02 Dec 2020 10:07:53 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=SsWlwI2/0ReQscJlT7sv5hrpnQn9P8/QKxp+kd8B4HA=;
+        b=ke+qbPwSgkrU1nv6oOE9KLUw43NcLqZDxNlRkgCpeuoumb/KRh7jBz39OAiWn60nii
+         Aorb/7kXEG9plrSeSjHe+WCatQYxteX/y7RA7OnYgl0VsGSC/5OIYe/KaAiGn1sRc6wH
+         cloAVv4a1NmviBwZjXC3tV3erji1cSESREVPu3kxxRAzT7rnDQUlWfJ3MWZidK3kclfy
+         dTlIDgv/SFoZe8J3qBmv8bk5ZYCV/WiwZkJkn0DZJ1fTQmAitWcWStNu7xjqBXPzlD0g
+         42SiAoHxE0ISYuG1VHqe29Y2xlwtjD21glFxBZpUS2stfHLGTIMibsF2EzcBy43ZOUGB
+         iSYQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=SsWlwI2/0ReQscJlT7sv5hrpnQn9P8/QKxp+kd8B4HA=;
+        b=oZyMWuiMgEgqvIEW4qwUjNQQ/PnACx5A6jjDOtzmA5n5gJ0MYX7XdSUY96EpH5W0RS
+         nqi/syYd4ob45DsQUOOn5zfoySD99DOVSQrU1pEvPFXla9aFBwFPPa2wRajYJoOAAs2e
+         9oVfRnZ6ABxlTatR2OipPO0hp2Uw18wdLEitYoZ142QjSEvvydw7iZlbsiCOckkVvKE/
+         GaO90oTl2NYbS7fTd6zWn0VKlC/R8ItoZNJ3p++DqmhsdRn+V8QrfmTXPoijoANNT8Vi
+         PE76SbzNwXGwrV1Ft6odqxIGInlERaZgjW3/pNdaw9Jg0XI122bxmgZOSud25LolT9Ze
+         pZGA==
+X-Gm-Message-State: AOAM532W9lvuGqVzd+HqoheXM8FK9mRmla7f9E/TEzUslhDBMsySjFlN
+        4aS19H2rIhPk4CTEi70GA8X9FA==
+X-Google-Smtp-Source: ABdhPJwlmtcWPmRdDokFICh8Ou0AfhCSZyvSV6GfXqU85c/QDiLDlg7K/9FQM6FJEC5VPH4rhf2hzg==
+X-Received: by 2002:a1c:4c07:: with SMTP id z7mr4338877wmf.142.1606932471819;
+        Wed, 02 Dec 2020 10:07:51 -0800 (PST)
+Received: from srini-hackbox.lan (cpc86377-aztw32-2-0-cust226.18-1.cable.virginm.net. [92.233.226.227])
+        by smtp.gmail.com with ESMTPSA id a18sm3004404wrr.20.2020.12.02.10.07.50
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 02 Dec 2020 10:07:51 -0800 (PST)
+From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+To:     bjorn.andersson@linaro.org
+Cc:     linux-arm-msm@vger.kernel.org, agross@kernel.org,
+        robh+dt@kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Subject: [PATCH v2 0/6] arm64: dts: qcom: qrb5165-rb5 audio support
+Date:   Wed,  2 Dec 2020 18:07:35 +0000
+Message-Id: <20201202180741.16386-1-srinivas.kandagatla@linaro.org>
+X-Mailer: git-send-email 2.21.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <87eek8i1sk.fsf@codeaurora.org>
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Dec 02, 2020 at 06:57:15PM +0200, Kalle Valo wrote:
-> Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org> writes:
-> 
-> > On Wed, Dec 02, 2020 at 06:00:05PM +0200, Kalle Valo wrote:
-> >> Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org> writes:
-> >> 
-> >> > From: Loic Poulain <loic.poulain@linaro.org>
-> >> >
-> >> > There is really no point having an auto-start for channels.
-> >> > This is confusing for the device drivers, some have to enable the
-> >> > channels, others don't have... and waste resources (e.g. pre allocated
-> >> > buffers) that may never be used.
-> >> >
-> >> > This is really up to the MHI device(channel) driver to manage the state
-> >> > of its channels.
-> >> >
-> >> > While at it, let's also remove the auto-start option from ath11k mhi
-> >> > controller.
-> >> >
-> >> > Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
-> >> > Acked-by: Kalle Valo <kvalo@codeaurora.org>
-> >> > Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> >> > [mani: clubbed ath11k change]
-> >> > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> >> 
-> >> Hmm, didn't we apply this already? At least I pulled the immutable
-> >> branch to my tree:
-> >> 
-> >> https://git.kernel.org/pub/scm/linux/kernel/git/kvalo/ath.git/commit/?h=ath-next&id=526740b495059ebbc0c3c086dceca1263820fa4f
-> >> 
-> >> So if there's a new version of this patch (and a new commit id) the
-> >> immutable branch I pulled is not immutable anymore.
-> >
-> > This is not a new version of the patch. The commit SHA of this patch in
-> > immutable branch is ed5298c7d500abaf34ed7783969e953a1f028e5b and that is same
-> > in mhi-next as well.
-> >
-> > Now I'm funneling all patches in mhi-next to mainline through Greg, so this
-> > patch is part of the (MHI changes for v5.11) patch series. Perhaps you might be
-> > dealing with pull requests to Dave/Jakub but since the MHI patch flow is usually
-> > fairly low, Greg is happy with patch series.
-> >
-> > But since we are dealing with immutable branch I should send the pull request
-> > to Greg now.
-> 
-> Yes, I very much prefer you send a pull request so that we can avoid
-> conflicts between ath11k and mhi. If Greg would apply this patch as is,
-> we would have two versions of the same commit (with different commit
-> ids) and git would get confused.
+This patchset adds support to Qualcomm Robotics RB5 Development Kit based on
+QRB5165 Robotics SoC. This board has 2 WSA881X smart speakers with onboard
+DMIC connected to internal LPASS codec via WSA and VA macros respectively.
 
-git wouldn't get confused, we do merges like this all the time.
+All the audio related driver patches are merged via respective maintainer trees
+along with bindings. Only LPI pinctrl driver is not merged yet, however the
+bindings are acked by Rob, so am guessing that the dt changes should be okay to go!
 
-It would confuse developers, I get confused by this type of thing all
-the time :)
+Thanks,
+srini
 
-I'll just do the pull instead to keep my sanity, git is fine...
+Changes since v1:
+	- updated pinctrl nodes as suggested by Bjorn
+	- reordered include files.
+	- removed unnecessary spaces
+	- used mbn instead of mdt for adsp firmware
 
-thanks,
+Srinivas Kandagatla (6):
+  arm64: dts: qcom: sm8250: add apr and its services
+  arm64: dts: qcom: sm8250: add audio clock controllers
+  arm64: dts: qcom: sm8250: add lpass lpi pin controller node
+  arm64: dts: qcom: sm8250: add wsa and va codec macros
+  arm64: dts: qcom: sm8250: add mi2s pinconfs
+  arm64: dts: qcom: qrb5165-rb5: Add Audio support
 
-greg k-h
+ arch/arm64/boot/dts/qcom/qrb5165-rb5.dts | 121 ++++++++++
+ arch/arm64/boot/dts/qcom/sm8250.dtsi     | 276 +++++++++++++++++++++++
+ 2 files changed, 397 insertions(+)
+
+-- 
+2.21.0
+
