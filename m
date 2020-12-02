@@ -2,110 +2,184 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 33BF92CC28A
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Dec 2020 17:38:58 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 666652CC2C7
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Dec 2020 17:53:02 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728294AbgLBQhE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 2 Dec 2020 11:37:04 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34162 "EHLO
+        id S1727848AbgLBQv3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 2 Dec 2020 11:51:29 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36366 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728276AbgLBQhD (ORCPT
+        with ESMTP id S1726332AbgLBQv3 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 2 Dec 2020 11:37:03 -0500
-Received: from mail-ot1-x342.google.com (mail-ot1-x342.google.com [IPv6:2607:f8b0:4864:20::342])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8140BC0613CF
-        for <linux-arm-msm@vger.kernel.org>; Wed,  2 Dec 2020 08:36:23 -0800 (PST)
-Received: by mail-ot1-x342.google.com with SMTP id t18so2211565otk.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 02 Dec 2020 08:36:23 -0800 (PST)
+        Wed, 2 Dec 2020 11:51:29 -0500
+Received: from mail-pg1-x533.google.com (mail-pg1-x533.google.com [IPv6:2607:f8b0:4864:20::533])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7700AC0613CF
+        for <linux-arm-msm@vger.kernel.org>; Wed,  2 Dec 2020 08:50:49 -0800 (PST)
+Received: by mail-pg1-x533.google.com with SMTP id e23so1405406pgk.12
+        for <linux-arm-msm@vger.kernel.org>; Wed, 02 Dec 2020 08:50:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=P7hmM1tissJj2yPjhe+PqhvR3xfSKGv9uE8kLqD386k=;
-        b=zozlhoiZY38HuWdwtw0EfFSCY/OnO0dJNjplv+Wu5YUiRfHnruVzxTVgzgN6nwkYP1
-         GB9YAV/5ZDbvc784xCjvRk06nPguoODsuKONeC0zl8MQ3VOhdkt7x3nLPpQ9s/SlS55h
-         qjBkoN8MEzGQ0Gxpz9Dag8mEaE5ezwrI89MCZRutQfwYH4VsUck5Cn2preFqChUCVULy
-         GJ1BZXwMHWWd5Flkhc7RZq9Kjm3WFA/rsXSgonGhWzsEnLK+hTV7kwhDZE3Aw7YvCVsS
-         zNdFsIcH0EEkIyh+M3I0nKba2VEYCG2VnwOvLewHB/OlJni9XoJOqeNrMgppGit/cjxk
-         wFkA==
+        h=date:from:to:cc:subject:message-id:mime-version:content-disposition;
+        bh=feImpssPWUbfU8stpcwf/DzW88O+SodsSpT27Ehwdio=;
+        b=qH5x5r1r40YrVG+ZBNQX1Rben9WTXlo9pDKQiloMce/rpeBLVkVcMYnmX5ZXJkgFuH
+         wrmyTXWuvbYiL87t3ER8fFlkgABtCBP6GgLUCFJKZSGR/2u0mPNMJ8TRb8VE7DKWu3yS
+         83ADppMlQOoJ5wimnz9XlLsRPPDzIL27Aaasp2wSOs18dFynGogSsjFZhTGE/iOU7YgI
+         /njB9XX31Xy/PL3D/GDdQaMQcp8xiQ35/7Y3fQYs1rmHJhqxlA5UPsNdLiASMwfyYG8n
+         7FdzON25IgKQkFX1wTr2t2pbA9yGDsI9BrXfRT29sW9HSS7fRzrw0k3K1naLIf+Q7hI2
+         nw1g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=P7hmM1tissJj2yPjhe+PqhvR3xfSKGv9uE8kLqD386k=;
-        b=aqr4qiqNyvMmh0qbfQ0MhxWXiWNRkCZzEt63vUBbriBTaIZUZ80IX/GYzo1fSXdVwh
-         QjUazpv1uG8PK+M4iHepi/dw869Mq+op/ThpBPKTUSf7/EdUxYJJFsqzPLO8P2GtHMfP
-         jJVKOZGrWDFkPlO9BL1Alt8dxWXzkycv3ml3ytxp1uJY1G6FE+Le1RIQoCwbW72zUN4q
-         haHWdx/oyPj9HIADz6Nd7mBIg/JZkzI3/jos3lyQlkSAssTdCra7rerSqDTLDhYrmKtV
-         GDDg6G9sD1vN8QEXzLH5gT2BJy8TdpajlL2GmbRi/rhiE/el6gJdVO8uQcaLB08eBUuF
-         WHyg==
-X-Gm-Message-State: AOAM530GmMH6AqS/UOJD5EHmluPmmQYfXsuJdvWv7Ib3CWMKvRoExT+V
-        oUmqAz6wlMtJCtdmS0A8sehCFA==
-X-Google-Smtp-Source: ABdhPJyoz7We9E/K/HbiLH7uRNCn/0K2tMkzPEZdiv92j8yFvsEWmTTv7jYaaRZvjzCCMQprxSC2sA==
-X-Received: by 2002:a9d:6752:: with SMTP id w18mr2554816otm.256.1606926982858;
-        Wed, 02 Dec 2020 08:36:22 -0800 (PST)
-Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id 186sm459554oof.16.2020.12.02.08.36.21
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:mime-version
+         :content-disposition;
+        bh=feImpssPWUbfU8stpcwf/DzW88O+SodsSpT27Ehwdio=;
+        b=b1K6ZBqXvorw8UVMSMdsFv4RP1+/nmb/cPA43ym+lbiGSGeujFg5WBsKM3ZPiXA5qP
+         HjnyvlUjssJthDOapOTe5qpXfdlZPvByX6EKjjCyLyFOTXph8Mj5YgGGyBse5YUpJiQO
+         0Sg1PHd5t5W2jV35DybHLEuRqu9WQFriwIP6uNTXLUxDHOLvFGYuPMhBB5gn+3ROpuYX
+         Cn0wl62Ue6Fp0JPqke00u9yG5UefoYOVIKh3lUtwfNaUJ3VJ85oIr8gW4Rkq26K4S7KI
+         xyhpzVr3QRs02Eg7eJAiQXBnUahusL/X3MYNg/UGVY/EhtCld6uXVAQldWyFDaGs2SSt
+         aGXA==
+X-Gm-Message-State: AOAM532t8AyKJPkYLsR4ZE8YYdKOvBhj9LHsT4jYWFc84BtInB8rKC7t
+        PQFW7gEQpTBZTf5JdRchBoRF
+X-Google-Smtp-Source: ABdhPJx/KDmjglpN+tKSiKunsMr0GeDS0d4s1yyJ9InNXBjN9oYGX8Q8Ku5skEWzm9GWmgj14/SHZA==
+X-Received: by 2002:a65:684d:: with SMTP id q13mr656279pgt.372.1606927848642;
+        Wed, 02 Dec 2020 08:50:48 -0800 (PST)
+Received: from thinkpad ([2409:4072:100:69b9:b5fe:d7f9:67a:4196])
+        by smtp.gmail.com with ESMTPSA id k4sm331423pfg.174.2020.12.02.08.50.44
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 02 Dec 2020 08:36:22 -0800 (PST)
-Date:   Wed, 2 Dec 2020 10:36:20 -0600
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Wolfram Sang <wsa@kernel.org>, Caleb Connolly <caleb@connolly.tech>
-Cc:     linux-arm-msm@vger.kernel.org, Andy Gross <agross@kernel.org>,
-        Akash Asthana <akashast@codeaurora.org>,
-        Mukesh Savaliya <msavaliy@codeaurora.org>,
-        phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
-        linux-i2c@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 5/5] i2c: geni: sdm845: dont perform DMA for OnePlus 6
- devices
-Message-ID: <X8fChCDbfLfdNoZL@builder.lan>
-References: <20201112161920.2671430-1-caleb@connolly.tech>
- <20201112161920.2671430-6-caleb@connolly.tech>
- <20201122034709.GA95182@builder.lan>
- <72a37c8c-12e4-eb51-2644-3436d19cf314@connolly.tech>
- <20201202153949.GI874@kunai>
+        Wed, 02 Dec 2020 08:50:47 -0800 (PST)
+Date:   Wed, 2 Dec 2020 22:20:40 +0530
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     gregkh@linuxfoundation.org
+Cc:     hemantk@codeaurora.org, bbhatt@codeaurora.org,
+        linux-arm-msm@vger.kernel.org, jhugo@codeaurora.org,
+        linux-kernel@vger.kernel.org, loic.poulain@linaro.org,
+        Kalle Valo <kvalo@codeaurora.org>
+Subject: [GIT PULL] MHI changes for v5.11
+Message-ID: <20201202165040.GC3033@thinkpad>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20201202153949.GI874@kunai>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed 02 Dec 09:39 CST 2020, Wolfram Sang wrote:
+Hi Greg,
 
-> 
-> > >> -	if (!of_machine_is_compatible("lenovo,yoga-c630"))
-> > >> +	if (!of_machine_is_compatible("lenovo,yoga-c630") &&
-> > >> +	    !of_machine_is_compatible("oneplus,oneplus6"))
-> > > This hack seems to have been working around two separate issues. First
-> > > with iommu active the GENI wrappers needs to have their stream mapping
-> > > configured. Secondly there was a bug in the transaction setup that was
-> > > recently fixed by Doug Anderson.
-> > >
-> > > So can you please give the following patch a go? I've yet to test it on
-> > > the Lenovo machine, but I think it allows us to remove the quirk.
-> > >
-> > > https://lore.kernel.org/lkml/20201122034149.626045-1-bjorn.andersson@linaro.org/T/#u
-> 
-> Please don't top-post. I fixed it this time.
-> 
-> > It looks like I still have the same issue even with this patch applied.
-> 
-> So we still need your patch, am I reading correctly?
-> 
+Here is the MHI pull request for v5.11 cycle. The reason for doing pull request
+this time is because of the immutable branch which gets merged for handling
+networking and MHI changes.
 
-With Doug's recent fixes in the DMA handling and the introduction of
-proper iommu configuration, which Caleb tested [1], I think we're good
-without this on the OnePlus. Caleb, please confirm.
+Details are in the signed tag, please consider merging!
 
-If I understood Caleb's report he saw exactly the same problem that Lee
-Jones did that lead to the workaround for the Lenovo Yoga C630, and with
-the two changes the i2c-hid keyboard came up nicely on my Yoga. So I
-posted [2].
+Thanks,
+Mani
 
-[1] https://lore.kernel.org/linux-arm-msm/3ba39a64-122b-ebe9-04b3-3a23478334a4@connolly.tech/
-[2] https://lore.kernel.org/linux-arm-msm/20201124185743.401946-1-bjorn.andersson@linaro.org/
+---
 
-Regards,
-Bjorn
+The following changes since commit 3650b228f83adda7e5ee532e2b90429c03f7b9ec:
+
+  Linux 5.10-rc1 (2020-10-25 15:14:11 -0700)
+
+are available in the Git repository at:
+
+  git://git.kernel.org/pub/scm/linux/kernel/git/mani/mhi.git tags/mhi-for-v5.11
+
+for you to fetch changes up to 4ea6fa2cb921cb17812501a27c3761037d64a217:
+
+  mhi: pci_generic: Fix implicit conversion warning (2020-12-02 14:29:17 +0530)
+
+----------------------------------------------------------------
+MHI patches for v5.11
+
+Here is the MHI patch set for v5.11. Most of the patches are cleanups and fixes
+but there are some noticeable changes too:
+
+1. Loic finally removed the auto-start option from the channel parameters of the
+MHI controller. It is the duty of the client drivers like qrtr to start/stop the
+channels when required, so we decided to remove this option. As a side effect,
+we changed the qrtr driver to start the channels during its probe and removed
+the auto-start option from ath11k controller.
+
+**NOTE** Since these changes spawns both MHI and networking trees, the patches
+are maintained in an immutable branch [1] and pulled into both mhi-next and
+ath11k-next branches. The networking patches got acks from ath11k and networking
+maintainers as well.
+
+2. Loic added a generic MHI pci controller driver. This driver will be used by
+the PCI based Qualcomm modems like SDX55 and exposes channels such as QMI,
+IP_HW0, IPCR etc...
+
+3. Loic fixed the MHI device hierarchy by maintaining the correct parent child
+relationships. Earlier all MHI devices lived in the same level under the parent
+device like PCIe. But now, the MHI devices belonging to channels will become the
+children of controller MHI device.
+
+4. Finally Loic also improved the MHI device naming by using indexed names such
+as mhi0, mhi1, etc... This will break the userspace applications depending on
+the old naming convention but since the only one user so far is Jeff Hugo's AI
+accelerator apps, we decided to make this change now itself with his agreement.
+
+5. Bhaumik fixed the qrtr driver by stopping the channels during remove. This
+patch also got ack from networking maintainer and we decided to take it through
+MHI tree (via immutable branch) since we already had a qrtr change.
+
+[1] https://git.kernel.org/pub/scm/linux/kernel/git/mani/mhi.git/log/?h=mhi-ath11k-immutable
+
+----------------------------------------------------------------
+Bhaumik Bhatt (20):
+      bus: mhi: core: Remove double locking from mhi_driver_remove()
+      bus: mhi: core: Remove unnecessary counter from mhi_firmware_copy()
+      bus: mhi: core: Add missing EXPORT_SYMBOL for mhi_get_mhi_state()
+      bus: mhi: core: Expose mhi_get_exec_env() API for controllers
+      bus: mhi: core: Remove unused mhi_fw_load_worker() declaration
+      bus: mhi: core: Rename RDDM download function to use proper words
+      bus: mhi: core: Skip RDDM download for unknown execution environment
+      bus: mhi: core: Use appropriate names for firmware load functions
+      bus: mhi: core: Move to using high priority workqueue
+      bus: mhi: core: Skip device wake in error or shutdown states
+      bus: mhi: core: Move to SYS_ERROR regardless of RDDM capability
+      bus: mhi: core: Prevent sending multiple RDDM entry callbacks
+      bus: mhi: core: Move to an error state on any firmware load failure
+      bus: mhi: core: Use appropriate label in firmware load handler API
+      bus: mhi: core: Move to an error state on mission mode failure
+      bus: mhi: core: Check for IRQ availability during registration
+      bus: mhi: core: Separate system error and power down handling
+      bus: mhi: core: Mark and maintain device states early on after power down
+      bus: mhi: core: Remove MHI event ring IRQ handlers when powering down
+      net: qrtr: Unprepare MHI channels during remove
+
+Carl Yin (1):
+      bus: mhi: core: Fix null pointer access when parsing MHI configuration
+
+Dan Carpenter (1):
+      bus: mhi: core: Fix error handling in mhi_register_controller()
+
+Jeffrey Hugo (1):
+      bus: mhi: core: fix potential operator-precedence with BHI macros
+
+Loic Poulain (7):
+      bus: mhi: Remove auto-start option
+      net: qrtr: Start MHI channels during init
+      bus: mhi: Add MHI PCI support for WWAN modems
+      bus: mhi: Fix channel close issue on driver remove
+      bus: mhi: core: Indexed MHI controller name
+      bus: mhi: core: Fix device hierarchy
+      mhi: pci_generic: Fix implicit conversion warning
+
+Manivannan Sadhasivam (1):
+      Merge branch 'mhi-ath11k-immutable' into mhi-next
+
+ drivers/bus/mhi/Kconfig               |   9 ++
+ drivers/bus/mhi/Makefile              |   4 +
+ drivers/bus/mhi/core/boot.c           |  75 ++++++++-------
+ drivers/bus/mhi/core/debugfs.c        |   4 +-
+ drivers/bus/mhi/core/init.c           |  73 +++++++++------
+ drivers/bus/mhi/core/internal.h       |   7 +-
+ drivers/bus/mhi/core/main.c           |  16 ++--
+ drivers/bus/mhi/core/pm.c             | 238 ++++++++++++++++++++++++++++++++++-------------
+ drivers/bus/mhi/pci_generic.c         | 345 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ drivers/net/wireless/ath/ath11k/mhi.c |   4 -
+ include/linux/mhi.h                   |  18 +++-
+ net/qrtr/mhi.c                        |   6 ++
+ 12 files changed, 653 insertions(+), 146 deletions(-)
+ create mode 100644 drivers/bus/mhi/pci_generic.c
