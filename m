@@ -2,45 +2,44 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 31E602CCA9E
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Dec 2020 00:42:02 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 181472CCAA0
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Dec 2020 00:42:03 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728364AbgLBXlv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 2 Dec 2020 18:41:51 -0500
-Received: from a2.mail.mailgun.net ([198.61.254.61]:57705 "EHLO
-        a2.mail.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728815AbgLBXlq (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 2 Dec 2020 18:41:46 -0500
+        id S1729159AbgLBXl6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 2 Dec 2020 18:41:58 -0500
+Received: from m42-5.mailgun.net ([69.72.42.5]:30048 "EHLO m42-5.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727566AbgLBXl6 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 2 Dec 2020 18:41:58 -0500
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1606952487; h=References: In-Reply-To: Message-Id: Date:
+ s=smtp; t=1606952495; h=References: In-Reply-To: Message-Id: Date:
  Subject: Cc: To: From: Sender;
- bh=/zZ9PrMUSfJKaZKhW4LSC93iI89BZsWElZ7hzgxB2dg=; b=pmF5DGReFPKiqSTobSRUQYwrz2GkyJKFZSZMuk0ea1I8Yh7Dj8U7pafHkY6aIWYc2FPjisH5
- DfOr95pXKEopck+iravv9LCkbDl8rXA9wLu3J74v9eeIR/OiFROEiWxu3ok/WReJX7dwULZR
- u8PcanH9FcHDiVUa6uqJd+ED9CM=
-X-Mailgun-Sending-Ip: 198.61.254.61
+ bh=+n8ckVIVw/JBsQq/htLf2DKF7mcizTpR/s2y/lQWJk8=; b=jPuh5nzQcFD7CTYgzM7m+IBN2t1Ap2MxsJ74nV5wX7uEhjCMLNu+YiH2hnq0clCiBWjqA3/c
+ 0+yTqbw9i0yCWg128XVQ5ve7XiR8YGDdZnSIfQw33HRDcx+Cm9vT14T+wThC2wCzdK2+10D9
+ dLizOCnK5cPo4GhmyXus31Nt5yQ=
+X-Mailgun-Sending-Ip: 69.72.42.5
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org
  (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n03.prod.us-east-1.postgun.com with SMTP id
- 5fc82602a5d4da3a6c5b027c (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 02 Dec 2020 23:40:50
+ smtp-out-n03.prod.us-west-2.postgun.com with SMTP id
+ 5fc82603f653ea0cd800ea2d (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 02 Dec 2020 23:40:51
  GMT
 Sender: bbhatt=codeaurora.org@mg.codeaurora.org
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 40543C433ED; Wed,  2 Dec 2020 23:40:50 +0000 (UTC)
+        id 26F2DC43462; Wed,  2 Dec 2020 23:40:51 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL
-        autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
+        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from malabar-linux.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
         (No client certificate requested)
         (Authenticated sender: bbhatt)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 8C24FC43464;
-        Wed,  2 Dec 2020 23:40:49 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 8C24FC43464
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 28F8EC433C6;
+        Wed,  2 Dec 2020 23:40:50 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 28F8EC433C6
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=bbhatt@codeaurora.org
 From:   Bhaumik Bhatt <bbhatt@codeaurora.org>
@@ -48,9 +47,9 @@ To:     manivannan.sadhasivam@linaro.org, hemantk@codeaurora.org
 Cc:     linux-arm-msm@vger.kernel.org, loic.poulain@linaro.org,
         jhugo@codeaurora.org, linux-kernel@vger.kernel.org,
         Bhaumik Bhatt <bbhatt@codeaurora.org>
-Subject: [PATCH v3 2/7] bus: mhi: core: Allow channel to be disabled from stopped state
-Date:   Wed,  2 Dec 2020 15:40:33 -0800
-Message-Id: <1606952438-15321-3-git-send-email-bbhatt@codeaurora.org>
+Subject: [PATCH v3 3/7] bus: mhi: core: Improvements to the channel handling state machine
+Date:   Wed,  2 Dec 2020 15:40:34 -0800
+Message-Id: <1606952438-15321-4-git-send-email-bbhatt@codeaurora.org>
 X-Mailer: git-send-email 2.7.4
 In-Reply-To: <1606952438-15321-1-git-send-email-bbhatt@codeaurora.org>
 References: <1606952438-15321-1-git-send-email-bbhatt@codeaurora.org>
@@ -58,31 +57,285 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-If a channel was explicitly stopped but not reset, allow it to
-move to a disabled state so the channel context can be cleaned
-up. As the channel remained in a stopped state, its context was
-not reset and cleared, which needs to be done if a client driver
-module is unloaded or a device crash occurs.
+Add support to enable sending the stop channel command and
+improve the channel handling state machine such that all commands
+go through a common function. This can help ensure that the state
+machine is not violated in any way and adheres to the MHI
+specification.
 
 Signed-off-by: Bhaumik Bhatt <bbhatt@codeaurora.org>
 ---
- drivers/bus/mhi/core/init.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/bus/mhi/core/init.c     |   6 ++
+ drivers/bus/mhi/core/internal.h |  12 +++
+ drivers/bus/mhi/core/main.c     | 166 +++++++++++++++++++++++-----------------
+ 3 files changed, 114 insertions(+), 70 deletions(-)
 
 diff --git a/drivers/bus/mhi/core/init.c b/drivers/bus/mhi/core/init.c
-index f0697f4..e7b9a90 100644
+index e7b9a90..4f6d69c 100644
 --- a/drivers/bus/mhi/core/init.c
 +++ b/drivers/bus/mhi/core/init.c
-@@ -1288,7 +1288,8 @@ static int mhi_driver_remove(struct device *dev)
+@@ -54,6 +54,12 @@ const char * const mhi_state_str[MHI_STATE_MAX] = {
+ 	[MHI_STATE_SYS_ERR] = "SYS_ERR",
+ };
  
- 		mutex_lock(&mhi_chan->mutex);
++const char * const mhi_ch_state_type_str[MHI_CH_STATE_TYPE_MAX] = {
++	[MHI_CH_STATE_TYPE_RESET] = "RESET",
++	[MHI_CH_STATE_TYPE_STOP] = "STOP",
++	[MHI_CH_STATE_TYPE_START] = "START",
++};
++
+ static const char * const mhi_pm_state_str[] = {
+ 	[MHI_PM_STATE_DISABLE] = "DISABLE",
+ 	[MHI_PM_STATE_POR] = "POR",
+diff --git a/drivers/bus/mhi/core/internal.h b/drivers/bus/mhi/core/internal.h
+index 6f80ec3..251d7d7 100644
+--- a/drivers/bus/mhi/core/internal.h
++++ b/drivers/bus/mhi/core/internal.h
+@@ -369,6 +369,18 @@ enum mhi_ch_state {
+ 	MHI_CH_STATE_ERROR = 0x5,
+ };
  
--		if (ch_state[dir] == MHI_CH_STATE_ENABLED &&
-+		if ((ch_state[dir] == MHI_CH_STATE_ENABLED ||
-+		    ch_state[dir] == MHI_CH_STATE_STOP) &&
- 		    !mhi_chan->offload_ch)
- 			mhi_deinit_chan_ctxt(mhi_cntrl, mhi_chan);
++enum mhi_ch_state_type {
++	MHI_CH_STATE_TYPE_RESET,
++	MHI_CH_STATE_TYPE_STOP,
++	MHI_CH_STATE_TYPE_START,
++	MHI_CH_STATE_TYPE_MAX,
++};
++
++extern const char * const mhi_ch_state_type_str[MHI_CH_STATE_TYPE_MAX];
++#define TO_CH_STATE_TYPE_STR(state) (((state) >= MHI_CH_STATE_TYPE_MAX) ? \
++				     "INVALID_STATE" : \
++				     mhi_ch_state_type_str[state])
++
+ #define MHI_INVALID_BRSTMODE(mode) (mode != MHI_DB_BRST_DISABLE && \
+ 				    mode != MHI_DB_BRST_ENABLE)
  
+diff --git a/drivers/bus/mhi/core/main.c b/drivers/bus/mhi/core/main.c
+index a7bb8a7..4cc5ced 100644
+--- a/drivers/bus/mhi/core/main.c
++++ b/drivers/bus/mhi/core/main.c
+@@ -1219,56 +1219,118 @@ int mhi_send_cmd(struct mhi_controller *mhi_cntrl,
+ 	return 0;
+ }
+ 
+-static void __mhi_unprepare_channel(struct mhi_controller *mhi_cntrl,
+-				    struct mhi_chan *mhi_chan)
++static int mhi_update_channel_state(struct mhi_controller *mhi_cntrl,
++				    struct mhi_chan *mhi_chan,
++				    enum mhi_ch_state_type to_state)
+ {
+-	int ret;
+ 	struct device *dev = &mhi_cntrl->mhi_dev->dev;
++	enum mhi_cmd_type cmd = MHI_CMD_NOP;
++	int ret = -EIO;
++
++	dev_dbg(dev, "Updating channel %s(%d) state to: %s\n", mhi_chan->name,
++		mhi_chan->chan, TO_CH_STATE_TYPE_STR(to_state));
++
++	switch (to_state) {
++	case MHI_CH_STATE_TYPE_RESET:
++		write_lock_irq(&mhi_chan->lock);
++		if (mhi_chan->ch_state != MHI_CH_STATE_STOP &&
++		    mhi_chan->ch_state != MHI_CH_STATE_ENABLED &&
++		    mhi_chan->ch_state != MHI_CH_STATE_SUSPENDED) {
++			write_unlock_irq(&mhi_chan->lock);
++			goto exit_invalid_state;
++		}
++		mhi_chan->ch_state = MHI_CH_STATE_DISABLED;
++		write_unlock_irq(&mhi_chan->lock);
+ 
+-	dev_dbg(dev, "Entered: unprepare channel:%d\n", mhi_chan->chan);
++		cmd = MHI_CMD_RESET_CHAN;
++		break;
++	case MHI_CH_STATE_TYPE_STOP:
++		if (mhi_chan->ch_state != MHI_CH_STATE_ENABLED)
++			goto exit_invalid_state;
+ 
+-	/* no more processing events for this channel */
+-	mutex_lock(&mhi_chan->mutex);
+-	write_lock_irq(&mhi_chan->lock);
+-	if (mhi_chan->ch_state != MHI_CH_STATE_ENABLED &&
+-	    mhi_chan->ch_state != MHI_CH_STATE_SUSPENDED) {
+-		write_unlock_irq(&mhi_chan->lock);
+-		mutex_unlock(&mhi_chan->mutex);
+-		return;
++		cmd = MHI_CMD_STOP_CHAN;
++		break;
++	case MHI_CH_STATE_TYPE_START:
++		if (mhi_chan->ch_state != MHI_CH_STATE_STOP &&
++		    mhi_chan->ch_state != MHI_CH_STATE_DISABLED)
++			goto exit_invalid_state;
++
++		cmd = MHI_CMD_START_CHAN;
++		break;
++	default:
++		goto exit_invalid_state;
+ 	}
+ 
+-	mhi_chan->ch_state = MHI_CH_STATE_DISABLED;
+-	write_unlock_irq(&mhi_chan->lock);
++	/* bring host and device out of suspended states */
++	ret = mhi_device_get_sync(mhi_cntrl->mhi_dev);
++	if (ret)
++		return ret;
++	mhi_cntrl->runtime_get(mhi_cntrl);
+ 
+ 	reinit_completion(&mhi_chan->completion);
+-	read_lock_bh(&mhi_cntrl->pm_lock);
+-	if (MHI_PM_IN_ERROR_STATE(mhi_cntrl->pm_state)) {
+-		read_unlock_bh(&mhi_cntrl->pm_lock);
+-		goto error_invalid_state;
++	ret = mhi_send_cmd(mhi_cntrl, mhi_chan, cmd);
++	if (ret) {
++		dev_err(dev, "Failed to send %s(%d) %s command\n",
++			mhi_chan->name, mhi_chan->chan,
++			TO_CH_STATE_TYPE_STR(to_state));
++		goto exit_command_failure;
+ 	}
+ 
+-	mhi_cntrl->wake_toggle(mhi_cntrl);
+-	read_unlock_bh(&mhi_cntrl->pm_lock);
++	ret = wait_for_completion_timeout(&mhi_chan->completion,
++				       msecs_to_jiffies(mhi_cntrl->timeout_ms));
++	if (!ret || mhi_chan->ccs != MHI_EV_CC_SUCCESS) {
++		dev_err(dev, "Failed to receive %s(%d) %s command completion\n",
++			mhi_chan->name, mhi_chan->chan,
++			TO_CH_STATE_TYPE_STR(to_state));
++		ret = -EIO;
++		goto exit_command_failure;
++	}
+ 
+-	mhi_cntrl->runtime_get(mhi_cntrl);
++	ret = 0;
++
++	if (to_state != MHI_CH_STATE_TYPE_RESET) {
++		write_lock_irq(&mhi_chan->lock);
++		mhi_chan->ch_state = (to_state == MHI_CH_STATE_TYPE_START) ?
++				      MHI_CH_STATE_ENABLED : MHI_CH_STATE_STOP;
++		write_unlock_irq(&mhi_chan->lock);
++	}
++
++	dev_dbg(dev, "Channel %s(%d) state change to %s successful\n",
++		mhi_chan->name, mhi_chan->chan, TO_CH_STATE_TYPE_STR(to_state));
++
++exit_command_failure:
+ 	mhi_cntrl->runtime_put(mhi_cntrl);
+-	ret = mhi_send_cmd(mhi_cntrl, mhi_chan, MHI_CMD_RESET_CHAN);
+-	if (ret)
+-		goto error_invalid_state;
++	mhi_device_put(mhi_cntrl->mhi_dev);
+ 
+-	/* even if it fails we will still reset */
+-	ret = wait_for_completion_timeout(&mhi_chan->completion,
+-				msecs_to_jiffies(mhi_cntrl->timeout_ms));
+-	if (!ret || mhi_chan->ccs != MHI_EV_CC_SUCCESS)
+-		dev_err(dev,
+-			"Failed to receive cmd completion, still resetting\n");
++	return ret;
++
++exit_invalid_state:
++	dev_err(dev, "Channel %s(%d) update to %s not allowed\n",
++		mhi_chan->name, mhi_chan->chan, TO_CH_STATE_TYPE_STR(to_state));
++
++	return -EINVAL;
++}
++
++static void __mhi_unprepare_channel(struct mhi_controller *mhi_cntrl,
++				    struct mhi_chan *mhi_chan)
++{
++	int ret;
++	struct device *dev = &mhi_cntrl->mhi_dev->dev;
++
++	/* no more processing events for this channel */
++	mutex_lock(&mhi_chan->mutex);
++
++	ret = mhi_update_channel_state(mhi_cntrl, mhi_chan,
++				       MHI_CH_STATE_TYPE_RESET);
++	if (ret)
++		dev_err(dev, "Failed to reset channel, still resetting\n");
+ 
+-error_invalid_state:
+ 	if (!mhi_chan->offload_ch) {
+ 		mhi_reset_chan(mhi_cntrl, mhi_chan);
+ 		mhi_deinit_chan_ctxt(mhi_cntrl, mhi_chan);
+ 	}
+-	dev_dbg(dev, "chan:%d successfully resetted\n", mhi_chan->chan);
++	dev_dbg(dev, "chan:%d successfully reset\n", mhi_chan->chan);
++
+ 	mutex_unlock(&mhi_chan->mutex);
+ }
+ 
+@@ -1278,8 +1340,6 @@ int mhi_prepare_channel(struct mhi_controller *mhi_cntrl,
+ 	int ret = 0;
+ 	struct device *dev = &mhi_cntrl->mhi_dev->dev;
+ 
+-	dev_dbg(dev, "Preparing channel: %d\n", mhi_chan->chan);
+-
+ 	if (!(BIT(mhi_cntrl->ee) & mhi_chan->ee_mask)) {
+ 		dev_err(dev,
+ 			"Current EE: %s Required EE Mask: 0x%x for chan: %s\n",
+@@ -1290,14 +1350,6 @@ int mhi_prepare_channel(struct mhi_controller *mhi_cntrl,
+ 
+ 	mutex_lock(&mhi_chan->mutex);
+ 
+-	/* If channel is not in disable state, do not allow it to start */
+-	if (mhi_chan->ch_state != MHI_CH_STATE_DISABLED) {
+-		ret = -EIO;
+-		dev_dbg(dev, "channel: %d is not in disabled state\n",
+-			mhi_chan->chan);
+-		goto error_init_chan;
+-	}
+-
+ 	/* Check of client manages channel context for offload channels */
+ 	if (!mhi_chan->offload_ch) {
+ 		ret = mhi_init_chan_ctxt(mhi_cntrl, mhi_chan);
+@@ -1305,34 +1357,11 @@ int mhi_prepare_channel(struct mhi_controller *mhi_cntrl,
+ 			goto error_init_chan;
+ 	}
+ 
+-	reinit_completion(&mhi_chan->completion);
+-	read_lock_bh(&mhi_cntrl->pm_lock);
+-	if (MHI_PM_IN_ERROR_STATE(mhi_cntrl->pm_state)) {
+-		read_unlock_bh(&mhi_cntrl->pm_lock);
+-		ret = -EIO;
+-		goto error_pm_state;
+-	}
+-
+-	mhi_cntrl->wake_toggle(mhi_cntrl);
+-	read_unlock_bh(&mhi_cntrl->pm_lock);
+-	mhi_cntrl->runtime_get(mhi_cntrl);
+-	mhi_cntrl->runtime_put(mhi_cntrl);
+-
+-	ret = mhi_send_cmd(mhi_cntrl, mhi_chan, MHI_CMD_START_CHAN);
++	ret = mhi_update_channel_state(mhi_cntrl, mhi_chan,
++				       MHI_CH_STATE_TYPE_START);
+ 	if (ret)
+ 		goto error_pm_state;
+ 
+-	ret = wait_for_completion_timeout(&mhi_chan->completion,
+-				msecs_to_jiffies(mhi_cntrl->timeout_ms));
+-	if (!ret || mhi_chan->ccs != MHI_EV_CC_SUCCESS) {
+-		ret = -EIO;
+-		goto error_pm_state;
+-	}
+-
+-	write_lock_irq(&mhi_chan->lock);
+-	mhi_chan->ch_state = MHI_CH_STATE_ENABLED;
+-	write_unlock_irq(&mhi_chan->lock);
+-
+ 	/* Pre-allocate buffer for xfer ring */
+ 	if (mhi_chan->pre_alloc) {
+ 		int nr_el = get_nr_avail_ring_elements(mhi_cntrl,
+@@ -1370,9 +1399,6 @@ int mhi_prepare_channel(struct mhi_controller *mhi_cntrl,
+ 
+ 	mutex_unlock(&mhi_chan->mutex);
+ 
+-	dev_dbg(dev, "Chan: %d successfully moved to start state\n",
+-		mhi_chan->chan);
+-
+ 	return 0;
+ 
+ error_pm_state:
 -- 
 The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
 a Linux Foundation Collaborative Project
