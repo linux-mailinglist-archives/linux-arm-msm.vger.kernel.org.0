@@ -2,96 +2,119 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D2E5F2CC180
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Dec 2020 17:01:27 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2323C2CC245
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Dec 2020 17:31:21 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727937AbgLBQAj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 2 Dec 2020 11:00:39 -0500
-Received: from m42-5.mailgun.net ([69.72.42.5]:27958 "EHLO m42-5.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727824AbgLBQAj (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 2 Dec 2020 11:00:39 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1606924820; h=Content-Type: MIME-Version: Message-ID:
- In-Reply-To: Date: References: Subject: Cc: To: From: Sender;
- bh=6zFEAybXE2NmgA+iBFqhJLlMW/04xfBUq8tGuC59uxk=; b=BBE/4hRUEilmTlsUeFIJK+mhxrDAnOfXfRF1heWcPhxtaK7I3z8zPh3JwldyhVS/cND2T2iJ
- WLV2DrnpFQwchenoSFTxoQF4Y5R1QRfS4TNGWu/rJW67scQm1/juePpfKSFryh6NApll5fi2
- UJcWBKbcxBfU4faskKLncnA8Qn8=
-X-Mailgun-Sending-Ip: 69.72.42.5
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n09.prod.us-east-1.postgun.com with SMTP id
- 5fc7ba0b51762b1886e1f96c (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 02 Dec 2020 16:00:11
- GMT
-Sender: kvalo=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 34D8EC43463; Wed,  2 Dec 2020 16:00:10 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
-        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
-Received: from potku.adurom.net (88-114-240-156.elisa-laajakaista.fi [88.114.240.156])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: kvalo)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 76FF4C433ED;
-        Wed,  2 Dec 2020 16:00:07 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 76FF4C433ED
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=kvalo@codeaurora.org
-From:   Kalle Valo <kvalo@codeaurora.org>
-To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+        id S1730692AbgLBQ2L (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 2 Dec 2020 11:28:11 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60968 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726307AbgLBQ2K (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 2 Dec 2020 11:28:10 -0500
+Received: from mail-pj1-x1044.google.com (mail-pj1-x1044.google.com [IPv6:2607:f8b0:4864:20::1044])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E5C81C0613CF
+        for <linux-arm-msm@vger.kernel.org>; Wed,  2 Dec 2020 08:27:24 -0800 (PST)
+Received: by mail-pj1-x1044.google.com with SMTP id e5so1307982pjt.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 02 Dec 2020 08:27:24 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=K3R13J9lr9BqACKYR74sxEfXdGFRf+uRv0uo4OMDycs=;
+        b=nUMQhvrlR5K/G5CyxXF57FkF9QNPSZHmzpZHKMaWtHDB5XsVpushnO/x09TW0eCabF
+         yd80g5N2RjQPDdEtorH8TSMtgBIkt52EqNz57pJr9EZeKd5/S+Uhph5hpZh42KMfpAI0
+         rxdB02ppSnjS4wgplOOlMAOJnQ0DG6/R6inB1EdqUqyMkznEWzeBCaSmdofdjLfQc1eu
+         yxZ/RHs/Tc0xgFynNGodFUTxXV8F3gQyP6IgYmVvzHnvUNnWpVRtNl2TRwiSPhxqOFsb
+         wjRCdypHs9t8MVuA3DScDVM6M1X7eUW7zxhmyAdLQLlGywcSYkXPUMql7HAIabECU+ux
+         P7mQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=K3R13J9lr9BqACKYR74sxEfXdGFRf+uRv0uo4OMDycs=;
+        b=YG6TzCAlp9WBjnfYTGauxCkWvCQBexU0x7q3QPtjB5ixhrzHxwHi6qJRaGUJYQZqAA
+         C8brmUqIJlGCCw2/gKQTAT81bwf+mEnrXKcY2EtxqTZIJbGxrmdOiqycR6Shix6AiKqi
+         wE10EN/L9P0fvTIMkEyxbGa8D+l/Bf525Us5MgPMATsTKvLR+T0ORmpzfpNd/HGqTGYY
+         NGoJwrXT+POj51kJsDEm6P42SZMR71xjzPae16fg6Go6yddR6YFp+WLd+i077MUtZii1
+         YMUnCTDgtK/hlo7VuNhELDFjjkWjTC+qp0/Z409/emJbeMGb156xKf+uK74Bc/vB6jxB
+         d0Ww==
+X-Gm-Message-State: AOAM5324MFDhF3T8rE5h3LxZlobZTu5J45yo3m6ImClBt1zfvGxwol0l
+        8TaEfeSNtssz8kvRICpdLg8v
+X-Google-Smtp-Source: ABdhPJyMEIwYQyoMgcxwVLmq9R1UT5SO+2peUyP8oYZBhuKL16cJBXEoMvWjEEP0km1WyWQsLD+arQ==
+X-Received: by 2002:a17:90a:4a90:: with SMTP id f16mr640535pjh.10.1606926444302;
+        Wed, 02 Dec 2020 08:27:24 -0800 (PST)
+Received: from thinkpad ([2409:4072:100:69b9:b5fe:d7f9:67a:4196])
+        by smtp.gmail.com with ESMTPSA id a21sm186283pjq.37.2020.12.02.08.27.19
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 02 Dec 2020 08:27:23 -0800 (PST)
+Date:   Wed, 2 Dec 2020 21:57:16 +0530
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     Kalle Valo <kvalo@codeaurora.org>
 Cc:     gregkh@linuxfoundation.org, hemantk@codeaurora.org,
         bbhatt@codeaurora.org, linux-arm-msm@vger.kernel.org,
         jhugo@codeaurora.org, linux-kernel@vger.kernel.org,
         loic.poulain@linaro.org
 Subject: Re: [PATCH 01/29] bus: mhi: Remove auto-start option
+Message-ID: <20201202162716.GA3033@thinkpad>
 References: <20201202094159.107075-1-manivannan.sadhasivam@linaro.org>
-        <20201202094159.107075-2-manivannan.sadhasivam@linaro.org>
-Date:   Wed, 02 Dec 2020 18:00:05 +0200
-In-Reply-To: <20201202094159.107075-2-manivannan.sadhasivam@linaro.org>
-        (Manivannan Sadhasivam's message of "Wed, 2 Dec 2020 15:11:31 +0530")
-Message-ID: <87pn3si4fu.fsf@codeaurora.org>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.5 (gnu/linux)
+ <20201202094159.107075-2-manivannan.sadhasivam@linaro.org>
+ <87pn3si4fu.fsf@codeaurora.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <87pn3si4fu.fsf@codeaurora.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org> writes:
+On Wed, Dec 02, 2020 at 06:00:05PM +0200, Kalle Valo wrote:
+> Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org> writes:
+> 
+> > From: Loic Poulain <loic.poulain@linaro.org>
+> >
+> > There is really no point having an auto-start for channels.
+> > This is confusing for the device drivers, some have to enable the
+> > channels, others don't have... and waste resources (e.g. pre allocated
+> > buffers) that may never be used.
+> >
+> > This is really up to the MHI device(channel) driver to manage the state
+> > of its channels.
+> >
+> > While at it, let's also remove the auto-start option from ath11k mhi
+> > controller.
+> >
+> > Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
+> > Acked-by: Kalle Valo <kvalo@codeaurora.org>
+> > Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> > [mani: clubbed ath11k change]
+> > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> 
+> Hmm, didn't we apply this already? At least I pulled the immutable
+> branch to my tree:
+> 
+> https://git.kernel.org/pub/scm/linux/kernel/git/kvalo/ath.git/commit/?h=ath-next&id=526740b495059ebbc0c3c086dceca1263820fa4f
+> 
+> So if there's a new version of this patch (and a new commit id) the
+> immutable branch I pulled is not immutable anymore.
 
-> From: Loic Poulain <loic.poulain@linaro.org>
->
-> There is really no point having an auto-start for channels.
-> This is confusing for the device drivers, some have to enable the
-> channels, others don't have... and waste resources (e.g. pre allocated
-> buffers) that may never be used.
->
-> This is really up to the MHI device(channel) driver to manage the state
-> of its channels.
->
-> While at it, let's also remove the auto-start option from ath11k mhi
-> controller.
->
-> Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
-> Acked-by: Kalle Valo <kvalo@codeaurora.org>
-> Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> [mani: clubbed ath11k change]
-> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+This is not a new version of the patch. The commit SHA of this patch in
+immutable branch is ed5298c7d500abaf34ed7783969e953a1f028e5b and that is same
+in mhi-next as well.
 
-Hmm, didn't we apply this already? At least I pulled the immutable
-branch to my tree:
+Now I'm funneling all patches in mhi-next to mainline through Greg, so this
+patch is part of the (MHI changes for v5.11) patch series. Perhaps you might be
+dealing with pull requests to Dave/Jakub but since the MHI patch flow is usually
+fairly low, Greg is happy with patch series.
 
-https://git.kernel.org/pub/scm/linux/kernel/git/kvalo/ath.git/commit/?h=ath-next&id=526740b495059ebbc0c3c086dceca1263820fa4f
+But since we are dealing with immutable branch I should send the pull request
+to Greg now.
 
-So if there's a new version of this patch (and a new commit id) the
-immutable branch I pulled is not immutable anymore.
+Thanks,
+Mani
 
--- 
-https://patchwork.kernel.org/project/linux-wireless/list/
-
-https://wireless.wiki.kernel.org/en/developers/documentation/submittingpatches
+> 
+> -- 
+> https://patchwork.kernel.org/project/linux-wireless/list/
+> 
+> https://wireless.wiki.kernel.org/en/developers/documentation/submittingpatches
