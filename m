@@ -2,319 +2,104 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D7FB62CC25E
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Dec 2020 17:36:09 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C5CF82CC279
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Dec 2020 17:36:21 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728707AbgLBQbl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 2 Dec 2020 11:31:41 -0500
-Received: from a2.mail.mailgun.net ([198.61.254.61]:33663 "EHLO
-        a2.mail.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728593AbgLBQbk (ORCPT
+        id S1730721AbgLBQfv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 2 Dec 2020 11:35:51 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33934 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727942AbgLBQfv (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 2 Dec 2020 11:31:40 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1606926675; h=In-Reply-To: Content-Type: MIME-Version:
- References: Message-ID: Subject: Cc: To: From: Date: Sender;
- bh=sMy8gO5DvcIbh6UYtsCbZXkbZah9sqvg9HcMCJ2Jq1o=; b=q3dE779z/IIx+3lQ+dAw+a+QeDNxUlUtxEeHP+8HceO3LsG6rj/UjFLUeF/gZb+QDQK3784V
- yQh5kwXQ/AfWJq70EdXhkwY/3gtEDqDzr8E1L3za6WO77VNyml403Czhk7D4tzBFu1N10vwQ
- 4ZfdAVaNp7BfThRhQvAWYvNiRhg=
-X-Mailgun-Sending-Ip: 198.61.254.61
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n05.prod.us-west-2.postgun.com with SMTP id
- 5fc7c12ee084c504782e8464 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 02 Dec 2020 16:30:38
- GMT
-Sender: jcrouse=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 4D16FC433ED; Wed,  2 Dec 2020 16:30:38 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
-        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
-Received: from jcrouse1-lnx.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: jcrouse)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 17113C433C6;
-        Wed,  2 Dec 2020 16:30:35 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 17113C433C6
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=jcrouse@codeaurora.org
-Date:   Wed, 2 Dec 2020 09:30:32 -0700
-From:   Jordan Crouse <jcrouse@codeaurora.org>
-To:     Akhil P Oommen <akhilpo@codeaurora.org>
-Cc:     freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
-        robh@kernel.org, dri-devel@freedesktop.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        mka@chromium.org, robdclark@gmail.com, dianders@chromium.org
-Subject: Re: [PATCH v2 1/3] drm/msm: adreno: Make speed-bin support generic
-Message-ID: <20201202163032.GG16856@jcrouse1-lnx.qualcomm.com>
-Mail-Followup-To: Akhil P Oommen <akhilpo@codeaurora.org>,
-        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
-        robh@kernel.org, dri-devel@freedesktop.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        mka@chromium.org, robdclark@gmail.com, dianders@chromium.org
-References: <1606481386-22867-1-git-send-email-akhilpo@codeaurora.org>
- <20201130170231.GF16856@jcrouse1-lnx.qualcomm.com>
- <39ae4584-e935-363e-62af-17558781e913@codeaurora.org>
+        Wed, 2 Dec 2020 11:35:51 -0500
+Received: from mail-wr1-x441.google.com (mail-wr1-x441.google.com [IPv6:2a00:1450:4864:20::441])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7DFEFC0613CF
+        for <linux-arm-msm@vger.kernel.org>; Wed,  2 Dec 2020 08:35:04 -0800 (PST)
+Received: by mail-wr1-x441.google.com with SMTP id r3so4717776wrt.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 02 Dec 2020 08:35:04 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=YxQYQF1LD7VCcsXVOlfezCcp9MbvQ1IvqiGH/jVfncA=;
+        b=AB7jwyDcIJ8WIoS9hG0XuOZSAJlwzKFGEGaHT7shjySdMSSlXXcg3EiM78CcGK/a7b
+         skCQQkUQUHxW05+5hR3TtT2QahmRmE9XrwLAqCnRSm7hUJ5fHUhD6H04epaMkb3Kic0/
+         589tMeIRGUZ2bw5yBOl5cnTxRubWR7IWwotD4FkULg60eNNncaiN6pZcSEL4/bdrbuGB
+         8B6XqOTluSYei6beJn1gfnp01kREIPfrA3dZ5ZQ05KbTtgIjsXpiGEQw/SJuqvrqHHyV
+         RO0YYAJcOF1uEIvmysCLW8d5ojbe/c2ClViOj7Wq6j3JpANGBcmY3hIor84BnM1uhU1J
+         j4fA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=YxQYQF1LD7VCcsXVOlfezCcp9MbvQ1IvqiGH/jVfncA=;
+        b=V9ValrR0mJQk9hJiZWqrnzges1+oRh1gYml0+/ZSkCmDZwX+Wjr5MqfGVIcGgE/Lfq
+         2KwtfgSNNjG+r1FkB8yX5EJRpGCo65duEJ7mA1o39hApKpQesxhaYLKZoGsQSBpMWwDN
+         HscnufrNnRs2dPKddq29bm8BHYYedcmjS81CYX+qIbO/OsCOW+9vBVzzb/3Y/50ELd6M
+         wfXCD6Gs46eSU7flqmpxLLcCja8yugxX7ZXddJYH9Uw2k4EMF+NEzx+fi2Hhr2x2hOWj
+         Bcw8rLcRzkNgRrGZh6gvXRakwGaQqXfFt3Ig3R1vftdswjWCU8LxLhvHnzq9cOUUN1ko
+         XIyw==
+X-Gm-Message-State: AOAM531oAspPaBCRBAjHX0LogIcLYaRm6VUndFZ74dr+buLhQWZVFAIp
+        HG1sSCK1UgGwTJbkDR8K7+UnsQ==
+X-Google-Smtp-Source: ABdhPJwpdk3b38oDk8xBk5tqbfTHdTdnAQk8e139jw0HXO9hDe5sXz3SQ/nKogQzYb81HO4winiL1g==
+X-Received: by 2002:a5d:4f0e:: with SMTP id c14mr4378035wru.422.1606926903076;
+        Wed, 02 Dec 2020 08:35:03 -0800 (PST)
+Received: from srini-hackbox.lan (cpc86377-aztw32-2-0-cust226.18-1.cable.virginm.net. [92.233.226.227])
+        by smtp.gmail.com with ESMTPSA id a21sm2443104wmb.38.2020.12.02.08.35.01
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 02 Dec 2020 08:35:02 -0800 (PST)
+From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+To:     linus.walleij@linaro.org, bjorn.andersson@linaro.org
+Cc:     robh+dt@kernel.org, agross@kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        srinivas.kandagatla@linaro.org
+Subject: [RESEND PATCH v6 0/2] pinctrl: qcom: Add sm8250 lpass lpi pinctrl support
+Date:   Wed,  2 Dec 2020 16:34:41 +0000
+Message-Id: <20201202163443.26499-1-srinivas.kandagatla@linaro.org>
+X-Mailer: git-send-email 2.21.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <39ae4584-e935-363e-62af-17558781e913@codeaurora.org>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Dec 02, 2020 at 08:53:51PM +0530, Akhil P Oommen wrote:
-> On 11/30/2020 10:32 PM, Jordan Crouse wrote:
-> >On Fri, Nov 27, 2020 at 06:19:44PM +0530, Akhil P Oommen wrote:
-> >>So far a530v2 gpu has support for detecting its supported opps
-> >>based on a fuse value called speed-bin. This patch makes this
-> >>support generic across gpu families. This is in preparation to
-> >>extend speed-bin support to a6x family.
-> >>
-> >>Signed-off-by: Akhil P Oommen <akhilpo@codeaurora.org>
-> >>---
-> >>Changes from v1:
-> >>	1. Added the changes to support a618 sku to the series.
-> >>	2. Avoid failing probe in case of an unsupported sku. (Rob)
-> >>
-> >>  drivers/gpu/drm/msm/adreno/a5xx_gpu.c      | 34 --------------
-> >>  drivers/gpu/drm/msm/adreno/adreno_device.c |  4 ++
-> >>  drivers/gpu/drm/msm/adreno/adreno_gpu.c    | 71 ++++++++++++++++++++++++++++++
-> >>  drivers/gpu/drm/msm/adreno/adreno_gpu.h    |  5 +++
-> >>  4 files changed, 80 insertions(+), 34 deletions(-)
-> >>
-> >>diff --git a/drivers/gpu/drm/msm/adreno/a5xx_gpu.c b/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
-> >>index 8fa5c91..7d42321 100644
-> >>--- a/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
-> >>+++ b/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
-> >>@@ -1531,38 +1531,6 @@ static const struct adreno_gpu_funcs funcs = {
-> >>  	.get_timestamp = a5xx_get_timestamp,
-> >>  };
-> >>-static void check_speed_bin(struct device *dev)
-> >>-{
-> >>-	struct nvmem_cell *cell;
-> >>-	u32 val;
-> >>-
-> >>-	/*
-> >>-	 * If the OPP table specifies a opp-supported-hw property then we have
-> >>-	 * to set something with dev_pm_opp_set_supported_hw() or the table
-> >>-	 * doesn't get populated so pick an arbitrary value that should
-> >>-	 * ensure the default frequencies are selected but not conflict with any
-> >>-	 * actual bins
-> >>-	 */
-> >>-	val = 0x80;
-> >>-
-> >>-	cell = nvmem_cell_get(dev, "speed_bin");
-> >>-
-> >>-	if (!IS_ERR(cell)) {
-> >>-		void *buf = nvmem_cell_read(cell, NULL);
-> >>-
-> >>-		if (!IS_ERR(buf)) {
-> >>-			u8 bin = *((u8 *) buf);
-> >>-
-> >>-			val = (1 << bin);
-> >>-			kfree(buf);
-> >>-		}
-> >>-
-> >>-		nvmem_cell_put(cell);
-> >>-	}
-> >>-
-> >>-	dev_pm_opp_set_supported_hw(dev, &val, 1);
-> >>-}
-> >>-
-> >>  struct msm_gpu *a5xx_gpu_init(struct drm_device *dev)
-> >>  {
-> >>  	struct msm_drm_private *priv = dev->dev_private;
-> >>@@ -1588,8 +1556,6 @@ struct msm_gpu *a5xx_gpu_init(struct drm_device *dev)
-> >>  	a5xx_gpu->lm_leakage = 0x4E001A;
-> >>-	check_speed_bin(&pdev->dev);
-> >>-
-> >>  	ret = adreno_gpu_init(dev, pdev, adreno_gpu, &funcs, 4);
-> >>  	if (ret) {
-> >>  		a5xx_destroy(&(a5xx_gpu->base.base));
-> >>diff --git a/drivers/gpu/drm/msm/adreno/adreno_device.c b/drivers/gpu/drm/msm/adreno/adreno_device.c
-> >>index 87c8b03..e0ff16c 100644
-> >>--- a/drivers/gpu/drm/msm/adreno/adreno_device.c
-> >>+++ b/drivers/gpu/drm/msm/adreno/adreno_device.c
-> >>@@ -18,6 +18,8 @@ bool snapshot_debugbus = false;
-> >>  MODULE_PARM_DESC(snapshot_debugbus, "Include debugbus sections in GPU devcoredump (if not fused off)");
-> >>  module_param_named(snapshot_debugbus, snapshot_debugbus, bool, 0600);
-> >>+const u32 a530v2_speedbins[] = {0, 1, 2, 3, 4, 5, 6, 7};
-> >>+
-> >>  static const struct adreno_info gpulist[] = {
-> >>  	{
-> >>  		.rev   = ADRENO_REV(2, 0, 0, 0),
-> >>@@ -163,6 +165,8 @@ static const struct adreno_info gpulist[] = {
-> >>  			ADRENO_QUIRK_FAULT_DETECT_MASK,
-> >>  		.init = a5xx_gpu_init,
-> >>  		.zapfw = "a530_zap.mdt",
-> >>+		.speedbins = a530v2_speedbins,
-> >>+		.speedbins_count = ARRAY_SIZE(a530v2_speedbins),
-> >>  	}, {
-> >>  		.rev = ADRENO_REV(5, 4, 0, 2),
-> >>  		.revn = 540,
-> >>diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.c b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
-> >>index f21561d..b342fa4 100644
-> >>--- a/drivers/gpu/drm/msm/adreno/adreno_gpu.c
-> >>+++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
-> >>@@ -14,6 +14,7 @@
-> >>  #include <linux/pm_opp.h>
-> >>  #include <linux/slab.h>
-> >>  #include <linux/soc/qcom/mdt_loader.h>
-> >>+#include <linux/nvmem-consumer.h>
-> >>  #include <soc/qcom/ocmem.h>
-> >>  #include "adreno_gpu.h"
-> >>  #include "msm_gem.h"
-> >>@@ -891,6 +892,69 @@ void adreno_gpu_ocmem_cleanup(struct adreno_ocmem *adreno_ocmem)
-> >>  			   adreno_ocmem->hdl);
-> >>  }
-> >>+static int adreno_set_supported_hw(struct device *dev,
-> >>+		struct adreno_gpu *adreno_gpu)
-> >>+{
-> >>+	u8 speedbins_count = adreno_gpu->info->speedbins_count;
-> >>+	const u32 *speedbins = adreno_gpu->info->speedbins;
-> >>+	struct nvmem_cell *cell;
-> >>+	u32 bin, i;
-> >>+	u32 val = 0;
-> >>+	void *buf, *opp_table;
-> >>+
-> >>+	cell = nvmem_cell_get(dev, "speed_bin");
-> >>+	/*
-> >>+	 * -ENOENT means that the platform doesn't support speedbin which is
-> >>+	 * fine
-> >>+	 */
-> >>+	if (PTR_ERR(cell) == -ENOENT)
-> >>+		return 0;
-> >>+	else if (IS_ERR(cell))
-> >>+		return PTR_ERR(cell);
-> >>+
-> >>+	if (!speedbins)
-> >>+		goto done;
-> >>+
-> >>+	buf = nvmem_cell_read(cell, NULL);
-> >>+	if (IS_ERR(buf)) {
-> >>+		nvmem_cell_put(cell);
-> >>+		return PTR_ERR(buf);
-> >>+	}
-> >>+
-> >>+	bin = *((u32 *) buf);
-> >>+
-> >>+	for (i = 0; i < speedbins_count; i++) {
-> >>+		if (bin == speedbins[i]) {
-> >>+			val = (1 << i);
-> >>+			break;
-> >>+		}
-> >>+	}
-> >>+
-> >>+	kfree(buf);
-> >>+done:
-> >>+	nvmem_cell_put(cell);
-> >>+
-> >>+	if (!val) {
-> >>+		DRM_DEV_ERROR(dev,
-> >>+				"missing support for speed-bin: %u. Some OPPs may not be supported by hardware",
-> >>+				bin);
-> >>+		val = ~0U;
-> >>+	}
-> >>+
-> >>+	opp_table = dev_pm_opp_set_supported_hw(dev, &val, 1);
-> >>+	if (IS_ERR(opp_table))
-> >>+		return PTR_ERR(opp_table);
-> >>+
-> >>+	adreno_gpu->opp_table = opp_table;
-> >>+	return 0;
-> >>+}
-> >>+
-> >>+static void adreno_put_supported_hw(struct opp_table *opp_table)
-> >>+{
-> >>+	if (opp_table)
-> >>+		dev_pm_opp_put_supported_hw(opp_table);
-> >>+}
-> >>+
-> >>  int adreno_gpu_init(struct drm_device *drm, struct platform_device *pdev,
-> >>  		struct adreno_gpu *adreno_gpu,
-> >>  		const struct adreno_gpu_funcs *funcs, int nr_rings)
-> >>@@ -899,6 +963,7 @@ int adreno_gpu_init(struct drm_device *drm, struct platform_device *pdev,
-> >>  	struct adreno_platform_config *config = dev->platform_data;
-> >>  	struct msm_gpu_config adreno_gpu_config  = { 0 };
-> >>  	struct msm_gpu *gpu = &adreno_gpu->base;
-> >>+	int ret;
-> >>  	adreno_gpu->funcs = funcs;
-> >>  	adreno_gpu->info = adreno_info(config->rev);
-> >>@@ -910,6 +975,10 @@ int adreno_gpu_init(struct drm_device *drm, struct platform_device *pdev,
-> >>  	adreno_gpu_config.nr_rings = nr_rings;
-> >>+	ret = adreno_set_supported_hw(dev, adreno_gpu);
-> >>+	if (ret)
-> >>+		return ret;
-> >>+
-> >
-> >I still don't understand why we are doing this here instead of a5xx_gpu.c and
-> >a6xx_gpu.c.
-> >
-> >Jordan
-> 
-> Could you please clarify why you prefer so?
+Sorry for the Noise, Resending this as previous one did not include Linus W email id!!
 
-Putting this support in the target specific code avoids declaring more global
-variables and skips a bit of extra code for the vast majority of targets that do
-not have speed bins. I don't mind sharing the common helper function but a5xx
-has shown that this can be safely done in the target specific code and I don't
-see any reason to deviate from that.
+This patch adds support for LPASS (Low Power Audio SubSystem)
+LPI (Low Power Island) pinctrl on SM8250.
 
-Jordan
-> 
-> -Akhil
-> >
-> >>  	adreno_get_pwrlevels(dev, gpu);
-> >>  	pm_runtime_set_autosuspend_delay(dev,
-> >>@@ -936,4 +1005,6 @@ void adreno_gpu_cleanup(struct adreno_gpu *adreno_gpu)
-> >>  	icc_put(gpu->icc_path);
-> >>  	icc_put(gpu->ocmem_icc_path);
-> >>+
-> >>+	adreno_put_supported_hw(adreno_gpu->opp_table);
-> >>  }
-> >>diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.h b/drivers/gpu/drm/msm/adreno/adreno_gpu.h
-> >>index c3775f7..a756ad7 100644
-> >>--- a/drivers/gpu/drm/msm/adreno/adreno_gpu.h
-> >>+++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.h
-> >>@@ -55,6 +55,7 @@ struct adreno_reglist {
-> >>  };
-> >>  extern const struct adreno_reglist a630_hwcg[], a640_hwcg[], a650_hwcg[];
-> >>+extern const u32 a618_speedbins[];
-> >>  struct adreno_info {
-> >>  	struct adreno_rev rev;
-> >>@@ -67,6 +68,8 @@ struct adreno_info {
-> >>  	const char *zapfw;
-> >>  	u32 inactive_period;
-> >>  	const struct adreno_reglist *hwcg;
-> >>+	const u32 *speedbins;
-> >>+	const u8 speedbins_count;
-> >>  };
-> >>  const struct adreno_info *adreno_info(struct adreno_rev rev);
-> >>@@ -112,6 +115,8 @@ struct adreno_gpu {
-> >>  	 * code (a3xx_gpu.c) and stored in this common location.
-> >>  	 */
-> >>  	const unsigned int *reg_offsets;
-> >>+
-> >>+	struct opp_table *opp_table;
-> >>  };
-> >>  #define to_adreno_gpu(x) container_of(x, struct adreno_gpu, base)
-> >>-- 
-> >>2.7.4
-> >>
-> >
-> 
-> _______________________________________________
-> dri-devel mailing list
-> dri-devel@lists.freedesktop.org
-> https://lists.freedesktop.org/mailman/listinfo/dri-devel
+This patch has been tested on support to Qualcomm Robotics RB5 Development
+Kit based on QRB5165 Robotics SoC. This board has 2 WSA881X smart speakers
+with onboard DMIC connected to internal LPASS codec via WSA  and VA macros
+respectively.
+
+Most of the work is derived from downstream Qualcomm kernels.
+Credits to various Qualcomm authors from Patrick Lai's team who have
+contributed to this code.
+
+Am guessing existing qcom folder should cover maintining this driver too!
+If not I can send additional patch to consolidate this along with other
+Audio related drivers in Maintainer file!
+
+Changes since v5:
+	- moved to use FIELD_* or u32_replace/encode apis where possible
+	- remove all the SHIFT constants
+	- updated function groups as suggested by Bjorn
+	- updated setting slew rate as suggested by Bjorn
+
+Srinivas Kandagatla (2):
+  dt-bindings: pinctrl: qcom: Add sm8250 lpass lpi pinctrl bindings
+  pinctrl: qcom: Add sm8250 lpass lpi pinctrl driver
+
+ .../pinctrl/qcom,lpass-lpi-pinctrl.yaml       | 130 ++++
+ drivers/pinctrl/qcom/Kconfig                  |   8 +
+ drivers/pinctrl/qcom/Makefile                 |   1 +
+ drivers/pinctrl/qcom/pinctrl-lpass-lpi.c      | 695 ++++++++++++++++++
+ 4 files changed, 834 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/pinctrl/qcom,lpass-lpi-pinctrl.yaml
+ create mode 100644 drivers/pinctrl/qcom/pinctrl-lpass-lpi.c
 
 -- 
-The Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum,
-a Linux Foundation Collaborative Project
+2.21.0
+
