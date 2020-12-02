@@ -2,130 +2,112 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 5AEED2CB28C
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Dec 2020 02:55:49 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1FB4D2CB2F8
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Dec 2020 03:56:26 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727924AbgLBBzd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 1 Dec 2020 20:55:33 -0500
-Received: from a2.mail.mailgun.net ([198.61.254.61]:48638 "EHLO
-        a2.mail.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727353AbgLBBzd (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 1 Dec 2020 20:55:33 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1606874112; h=Message-ID: References: In-Reply-To: Reply-To:
- Subject: Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=BnyxjXqEk5yk7KEKz1/03TQQUICAWWNCXj6MrCoyyxw=;
- b=Cb1IgFJ7HlObJ8TGa6GZLte+6vM8xUSa/le7cGn12mxlLJxNfosjsCMbY7xtOCrHBjy/CV+m
- P4jdoC2hSFF5FeKK06M7jJhvHl1vU109B0gSUx4agCI+yYAC6Wvbm6HNiZMCYwVew9vdMxhC
- e7EmRN8Q6ilka3TBizIRd1vR+tI=
-X-Mailgun-Sending-Ip: 198.61.254.61
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n05.prod.us-east-1.postgun.com with SMTP id
- 5fc6f3e17edc97d061147b90 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 02 Dec 2020 01:54:41
- GMT
-Sender: bbhatt=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 229BBC433C6; Wed,  2 Dec 2020 01:54:41 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: bbhatt)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 5CE3EC433ED;
-        Wed,  2 Dec 2020 01:54:40 +0000 (UTC)
+        id S1728036AbgLBCzu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 1 Dec 2020 21:55:50 -0500
+Received: from mail.kernel.org ([198.145.29.99]:57702 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727857AbgLBCzu (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 1 Dec 2020 21:55:50 -0500
+Date:   Tue, 1 Dec 2020 18:55:06 -0800
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1606877708;
+        bh=gnuyHfZmSA0ZkxwooTnVJl7oRNOkSdP6K7yegmAuHPo=;
+        h=From:To:Cc:Subject:In-Reply-To:References:From;
+        b=SV0b+Pzsf1R8xu8jF3GmXQmvZF36bjU5ixvj/gQBAwr7+cc63JWEKFczqX6A5aBmF
+         dVy45yewNIDq3qfv0zPZChRRW19qNR0gv36jxEpcPJWrQhGKZpLbVwq3qh/wGQo618
+         pJSQzdVHlYKacnhaAzRF2lPEQitxP6nfJhgS5nzA=
+From:   Jakub Kicinski <kuba@kernel.org>
+To:     Jeffrey Hugo <jhugo@codeaurora.org>
+Cc:     Hemant Kumar <hemantk@codeaurora.org>,
+        manivannan.sadhasivam@linaro.org, gregkh@linuxfoundation.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        bbhatt@codeaurora.org, loic.poulain@linaro.org,
+        netdev@vger.kernel.org, linux-wireless@vger.kernel.org,
+        Kalle Valo <kvalo@codeaurora.org>
+Subject: Re: [PATCH v13 0/4] userspace MHI client interface driver
+Message-ID: <20201201185506.77c4b3df@kicinski-fedora-pc1c0hjn.DHCP.thefacebook.com>
+In-Reply-To: <817a4346-efb7-cfe5-0678-d1b60d06627d@codeaurora.org>
+References: <1606533966-22821-1-git-send-email-hemantk@codeaurora.org>
+        <20201201112901.7f13e26c@kicinski-fedora-pc1c0hjn.DHCP.thefacebook.com>
+        <c6359962-a378-ed03-0fab-c2f6c8a1b8eb@codeaurora.org>
+        <20201201120302.474d4c9b@kicinski-fedora-pc1c0hjn.DHCP.thefacebook.com>
+        <817a4346-efb7-cfe5-0678-d1b60d06627d@codeaurora.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
+Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
-Date:   Tue, 01 Dec 2020 17:54:40 -0800
-From:   Bhaumik Bhatt <bbhatt@codeaurora.org>
-To:     Loic Poulain <loic.poulain@linaro.org>
-Cc:     Jeffrey Hugo <jhugo@codeaurora.org>,
-        Hemant Kumar <hemantk@codeaurora.org>,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>
-Subject: Re: [PATCH 2/8] mhi: pci-generic: Perform hard reset on remove
-Organization: Qualcomm Innovation Center, Inc.
-Reply-To: bbhatt@codeaurora.org
-Mail-Reply-To: bbhatt@codeaurora.org
-In-Reply-To: <CAMZdPi83hzkW7bpWddFsF6PeRqna6T8ye0QZ51NHz2r5AxpgHA@mail.gmail.com>
-References: <1605279602-18749-1-git-send-email-loic.poulain@linaro.org>
- <1605279602-18749-3-git-send-email-loic.poulain@linaro.org>
- <ad4fa874-163a-227b-3291-727b1ee27f06@codeaurora.org>
- <CAMZdPi8pOVB6rsERsbyLEkRuf4tjNaC-eZa1mFnyiTBws1K9=Q@mail.gmail.com>
- <f964e9ff-b2f3-dde4-13d8-9fc711b899da@codeaurora.org>
- <CAMZdPi83hzkW7bpWddFsF6PeRqna6T8ye0QZ51NHz2r5AxpgHA@mail.gmail.com>
-Message-ID: <41e6561d138ddc3a63c834a1f857bd09@codeaurora.org>
-X-Sender: bbhatt@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2020-11-27 08:21 AM, Loic Poulain wrote:
-> Hi Jeffrey,
+On Tue, 1 Dec 2020 13:48:36 -0700 Jeffrey Hugo wrote:
+> On 12/1/2020 1:03 PM, Jakub Kicinski wrote:
+> > On Tue, 1 Dec 2020 12:40:50 -0700 Jeffrey Hugo wrote:  
+> >> On 12/1/2020 12:29 PM, Jakub Kicinski wrote:  
+> >>> On Fri, 27 Nov 2020 19:26:02 -0800 Hemant Kumar wrote:  
+> >>>> This patch series adds support for UCI driver. UCI driver enables userspace
+> >>>> clients to communicate to external MHI devices like modem and WLAN. UCI driver
+> >>>> probe creates standard character device file nodes for userspace clients to
+> >>>> perform open, read, write, poll and release file operations. These file
+> >>>> operations call MHI core layer APIs to perform data transfer using MHI bus
+> >>>> to communicate with MHI device. Patch is tested using arm64 based platform.  
+> >>>
+> >>> Wait, I thought this was for modems.
+> >>>
+> >>> Why do WLAN devices need to communicate with user space?
+> >>>      
+> >>
+> >> Why does it matter what type of device it is?  Are modems somehow unique
+> >> in that they are the only type of device that userspace is allowed to
+> >> interact with?  
+> > 
+> > Yes modems are traditionally highly weird and require some serial
+> > device dance I don't even know about.
+> > 
+> > We have proper interfaces in Linux for configuring WiFi which work
+> > across vendors. Having char device access to WiFi would be a step
+> > back.  
 > 
-> On Wed, 25 Nov 2020 at 18:41, Jeffrey Hugo <jhugo@codeaurora.org> 
-> wrote:
->> >>> @@ -329,6 +336,10 @@ static void mhi_pci_remove(struct pci_dev *pdev)
->> >>>        mhi_power_down(mhi_cntrl, true);
->> >>>        mhi_unprepare_after_power_down(mhi_cntrl);
->> >>>        mhi_unregister_controller(mhi_cntrl);
->> >>> +
->> >>> +     /* MHI-layer reset could not be enough, always hard-reset the device */
->> >>> +     mhi_pci_reset(mhi_cntrl);
->> >>
->> >> Referring to MHI spec:
->> >> Hosts writes this register to trigger a reset. This can be used when the
->> >> host detects a timeout in the MHI protocol and can use the reset as a
->> >> last resort to recover the device. Host should first attempt an MHI
->> >> Reset procedure before resetting the entire device.
->> >>
->> >> What issue are you facing which requires you to do full device reset ?
->> >> Based on the spec recommendation, looks like this should be a last resort.
->> >
->> > On module unload/reload, the device does not go through cold reset and
->> > can be in error state on further reload, causing mhi power up to fail.
->> > This patch simply resets the device in remove so that it is in the
->> > exact same condition as before probing (not only MHI layer, but all
->> > the device context), I think it makes sense and prevents any
->> > unexpected state on further reloading. Note also that unloading the
->> > module (or unbinding the device) is not something that usually
->> > happens, except when the user does it explicitly for any reason.
->> 
->> This seems unnecessary to me.  Qaic has the same usecase, and the MHI
->> state machine reset is sufficient.  Perhaps you have a unique edge 
->> case
->> though.
->> 
->> However, you are implementing the soc_reset functionality in your
->> driver, when its a common MHI functionality, and is something I would
->> like to use.  If you dig back, I proposed a sysfs extension to expose
->> that to userspace, but I have a desire to use it from my driver, same 
->> as
->> you.
->> 
->> Would you please make MHI core changes to expose the soc_reset
->> functionality out so that multiple drivers can use a common 
->> implementation?
+> So a WLAN device is only ever allowed to do Wi-Fi?  It can't also have 
+> GPS functionality for example?
+
+No, but it's also not true that the only way to implement GPS is by
+opening a full on command/packet interface between fat proprietary
+firmware and custom user space (which may or may not be proprietary 
+as well).
+
+> >> However, I'll bite.  Once such usecase would be QMI.  QMI is a generic
+> >> messaging protocol, and is not strictly limited to the unique operations
+> >> of a modem.
+> >>
+> >> Another usecase would be Sahara - a custom file transfer protocol used
+> >> for uploading firmware images, and downloading crashdumps.  
+> > 
+> > Thanks, I was asking for use cases, not which proprietary vendor
+> > protocol you can implement over it.
+> > 
+> > None of the use cases you mention here should require a direct FW -
+> > user space backdoor for WLAN.  
 > 
-> I overlooked this reply, going to move that into MHI core, as you 
-> suggested.
+> Uploading runtime firmware, with variations based on the runtime mode. 
+> Flashing the onboard flash based on cryptographic keys.  Accessing 
+> configuration data.  Accessing device logs.  Configuring device logs. 
+> Synchronizing the device time reference to Linux local or remote time 
+> sources.  Enabling debugging/performance hardware.  Getting software 
+> diagnostic events.  Configuring redundancy hardware per workload. 
+> Uploading new cryptographic keys.  Invalidating cryptographic keys. 
+> Uploading factory test data and running factory tests.
 > 
-> Thanks,
-> Loic
-Yes, this makes sense to do as Jeff suggested.
-Thanks,
-Bhaumik
----
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora 
-Forum,
-a Linux Foundation Collaborative Project
+> Need more?
+
+This conversation is going nowhere. Are you trying to say that creating
+a common Linux API for those features is impossible and each vendor
+should be allowed to add their own proprietary way?
+
+This has been proven incorrect again and again, and Wi-Fi is a good
+example.
+
+You can do whatever you want for GPS etc. but don't come nowhere near
+networking with this attitude please.
