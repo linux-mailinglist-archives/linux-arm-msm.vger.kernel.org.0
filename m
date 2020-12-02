@@ -2,153 +2,269 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 2A30E2CBB2E
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Dec 2020 12:02:44 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 6A8412CBB50
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Dec 2020 12:14:57 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726725AbgLBLCH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 2 Dec 2020 06:02:07 -0500
-Received: from lb1-smtp-cloud7.xs4all.net ([194.109.24.24]:46315 "EHLO
-        lb1-smtp-cloud7.xs4all.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726250AbgLBLCG (ORCPT
+        id S1725929AbgLBLMz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 2 Dec 2020 06:12:55 -0500
+Received: from lb3-smtp-cloud7.xs4all.net ([194.109.24.31]:47877 "EHLO
+        lb3-smtp-cloud7.xs4all.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1725885AbgLBLMz (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 2 Dec 2020 06:02:06 -0500
+        Wed, 2 Dec 2020 06:12:55 -0500
 Received: from cust-b5b5937f ([IPv6:fc0c:c16d:66b8:757f:c639:739b:9d66:799d])
         by smtp-cloud7.xs4all.net with ESMTPA
-        id kPsukDEjwN7XgkPsxksZ82; Wed, 02 Dec 2020 12:01:23 +0100
+        id kQ3LkDJpNN7XgkQ3PksccV; Wed, 02 Dec 2020 12:12:11 +0100
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=xs4all.nl; s=s2;
-        t=1606906883; bh=qt3ZG35zMOHZ30lMXbRyDBGMwzHfKhatMhIPX3hMudQ=;
+        t=1606907531; bh=mKnJykdfJ9fVyVaxmBEJf57DbjlwINU3ARpiBnFa6nc=;
         h=Subject:To:From:Message-ID:Date:MIME-Version:Content-Type:From:
          Subject;
-        b=GcEE67yL8bcq8lv9T4Gmxhf6dIBqvZmwLtIbM1tDZ5ClP6E5hCnQ/eUpSMTzPQM1/
-         fyDRaSObluGHOEtUJZf0S5s0CmitWg9BYSBK3LFMAqFr3hapGlF1nfBMzQ7+Q1Gqy0
-         IoFDaOUXguLlimVTm2bakVfA8MbeeOVjRKomVM4DxFdBxid6dt6oZDiLwC4xhuYV10
-         dR2djV09GbOK2ws8K6eN9bHFc/Yc+xSRiaZqvCse8elzrBQ+vFZumgpJwD1fo0RRWE
-         n/Cf0xPTXPy5+CzR4DjLoaQ8OreWqwKj4pRj/7lYL+N+988/aNFUgCI8tMdMzSKRS4
-         DAvij8VPufOCg==
-Subject: Re: [PATCH v2 2/3] docs: media: Document CLL and Mastering display
+        b=mo32Mvlvtdz0cMpfDzhvnphRynxxmY0h3N6HeJSFyXwVzbOMZhpDknUPd9Vidradu
+         B/h3Vxyl/3LUEn2I7U0AR0y4jPYMD0v2/Y5zNsv9D5EgHjIKkO9Oq765DZYFZlQouv
+         Twt2hIS9YpR7P2fGV5R4d1XJkH256aXZK7+scftJZ9hHsRcgI7LZmB/Dysx5KYdkI4
+         KJ4kdhIL6p0HZ8PzIAbGh1NdjE3zKURfQz0an8/+e1iNCGp0dkQQsLEJ3msPvg1HRs
+         VHiod3LvaVNOnf/KZBzb1qti7XIAr7U7Mod138k07kkzu4cad6ASE/r/E69ExieKkj
+         cCt1kaSl4bcQw==
+Subject: Re: [PATCH v2 1/3] v4l: Add HDR10 static metadata controls
 To:     Stanimir Varbanov <stanimir.varbanov@linaro.org>,
         linux-media@vger.kernel.org, linux-kernel@vger.kernel.org,
         linux-arm-msm@vger.kernel.org
 Cc:     Ezequiel Garcia <ezequiel@collabora.com>,
         Nicolas Dufresne <nicolas.dufresne@collabora.com>
 References: <20201123230257.31690-1-stanimir.varbanov@linaro.org>
- <20201123230257.31690-3-stanimir.varbanov@linaro.org>
+ <20201123230257.31690-2-stanimir.varbanov@linaro.org>
 From:   Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Message-ID: <de469e16-80a6-9a2f-30b1-ddf04b314e61@xs4all.nl>
-Date:   Wed, 2 Dec 2020 12:01:20 +0100
+Message-ID: <17035750-c01e-1601-756b-6c2c87e6b828@xs4all.nl>
+Date:   Wed, 2 Dec 2020 12:12:07 +0100
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
  Thunderbird/68.12.0
 MIME-Version: 1.0
-In-Reply-To: <20201123230257.31690-3-stanimir.varbanov@linaro.org>
+In-Reply-To: <20201123230257.31690-2-stanimir.varbanov@linaro.org>
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
 Content-Transfer-Encoding: 7bit
-X-CMAE-Envelope: MS4xfHsf8jl5nk5NviNBzXEZ0TfpZ2rtQHdu6dfzrKh9Dr0FpC6CGQE9fOSrrLl0oqwf+dkDCOhnChbmOYdJbzexvG5GvV0sCDkLBCXhOt0As4qUYRPTsdGM
- dSWeGAjqPQ4VqPaYe6WfOPxO1boxCrNdUD+hF/pW5H5JDYSB9zruy57REbj/M3HsIpTyqmRrE7yUOmb6BX7H7WDYqY2TxrH9u1zW7lPPHGRj4oLSXv9vlfTk
- cq+sZHK8r8SzSp85klbqqo42sdurZ6iLXMysuALz4sKb/DROy8x1Y48P0bSsoV6B442Q8UiE7UMbFsWY0dbBO3cKhZwUPKF5RJXAPk8S31Y7XvXT65zusO94
- SnOpNd4n5Qwf0764354CEQ3/cbJ49kPhJksLrg/LFrvxxZ76ATtzaQ9xgEt/UixPzjVW0ktI
+X-CMAE-Envelope: MS4xfN7Cfj+y/PgBr6dFSUVY0yocs6ChXS10Geb7uCETi+JEargNlnqGpc0g5LI4n5eMGtN1HBZtZQkRml/zQU0s+RQ/c5bZTwTHyztVDRyz+72bHULmfrDl
+ nFR3qDrNVvZkJmr4SeD/v88NlW5kGaeYkfOjK/3r44rpn57hmir3reMzxeJ3jIvfzQDslIWMo4KzkSuqed+MBFeuyNLgYS1Ac0qRw7rF0bJgf6+XJNYYevB0
+ GNS+EBQPfCZcTBsZ7fzjgm7vrdzAr3qkGgE9XW3593u9DH7jGZ+6EjV+eH813Bjl+SgjvFyiZR3lQdzyk9p76LT4VjWrPFtiUNnyJMu7f8hQOUx0Dzhys+Fj
+ cOG5d6WayQgUgPIBc0eVEP6jEQbH2JajMZEwgUkIqOnxS5furIhs7yhZmV67BiJ2FhYWi3G9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On 24/11/2020 00:02, Stanimir Varbanov wrote:
-> Document Content light level and Mastering display colour volume.
+> Add Content light level and Mastering display colour volume v4l2
+> compounf controls, relevant payload structures and validation.
+
+compounf -> compound
+
 > 
 > Signed-off-by: Stanimir Varbanov <stanimir.varbanov@linaro.org>
 > ---
->  .../media/v4l/ext-ctrls-codec.rst             | 71 +++++++++++++++++++
->  1 file changed, 71 insertions(+)
+>  drivers/media/v4l2-core/v4l2-ctrls.c | 62 ++++++++++++++++++++++++++++
+>  include/media/hdr10-ctrls.h          | 55 ++++++++++++++++++++++++
+>  include/media/v4l2-ctrls.h           |  3 ++
+>  3 files changed, 120 insertions(+)
+>  create mode 100644 include/media/hdr10-ctrls.h
 > 
-> diff --git a/Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst b/Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst
-> index ce728c757eaf..1d26a5db07ef 100644
-> --- a/Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst
-> +++ b/Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst
-> @@ -4382,3 +4382,74 @@ enum v4l2_mpeg_video_hevc_size_of_length_field -
->        - Selecting this value specifies that HEVC slices are expected
->          to be prefixed by Annex B start codes. According to :ref:`hevc`
->          valid start codes can be 3-bytes 0x000001 or 4-bytes 0x00000001.
+> diff --git a/drivers/media/v4l2-core/v4l2-ctrls.c b/drivers/media/v4l2-core/v4l2-ctrls.c
+> index ad47d00e28d6..028630576401 100644
+> --- a/drivers/media/v4l2-core/v4l2-ctrls.c
+> +++ b/drivers/media/v4l2-core/v4l2-ctrls.c
+> @@ -1024,6 +1024,9 @@ const char *v4l2_ctrl_get_name(u32 id)
+>  	case V4L2_CID_MPEG_VIDEO_HEVC_DECODE_MODE:		return "HEVC Decode Mode";
+>  	case V4L2_CID_MPEG_VIDEO_HEVC_START_CODE:		return "HEVC Start Code";
+>  
+> +	case V4L2_CID_MPEG_VIDEO_HDR10_CLL_INFO:		return "HDR10 Content Light Info";
+> +	case V4L2_CID_MPEG_VIDEO_HDR10_MASTERING_DISPLAY:	return "HDR10 Mastering Display";
 > +
-> +``V4L2_CID_MPEG_VIDEO_HDR10_CLL_INFO (struct)``
-> +    The Content Light Level defines upper bounds for the nominal target
-> +    brightness light level of the pictures.
+>  	/* CAMERA controls */
+>  	/* Keep the order of the 'case's the same as in v4l2-controls.h! */
+>  	case V4L2_CID_CAMERA_CLASS:		return "Camera Controls";
+> @@ -1461,6 +1464,12 @@ void v4l2_ctrl_fill(u32 id, const char **name, enum v4l2_ctrl_type *type,
+>  	case V4L2_CID_MPEG_VIDEO_HEVC_SLICE_PARAMS:
+>  		*type = V4L2_CTRL_TYPE_HEVC_SLICE_PARAMS;
+>  		break;
+> +	case V4L2_CID_MPEG_VIDEO_HDR10_CLL_INFO:
+> +		*type = V4L2_CTRL_TYPE_HDR10_CLL_INFO;
+> +		break;
+> +	case V4L2_CID_MPEG_VIDEO_HDR10_MASTERING_DISPLAY:
+> +		*type = V4L2_CTRL_TYPE_HDR10_MASTERING_DISPLAY;
+> +		break;
+>  	case V4L2_CID_UNIT_CELL_SIZE:
+>  		*type = V4L2_CTRL_TYPE_AREA;
+>  		*flags |= V4L2_CTRL_FLAG_READ_ONLY;
+> @@ -1775,6 +1784,7 @@ static int std_validate_compound(const struct v4l2_ctrl *ctrl, u32 idx,
+>  	struct v4l2_ctrl_hevc_sps *p_hevc_sps;
+>  	struct v4l2_ctrl_hevc_pps *p_hevc_pps;
+>  	struct v4l2_ctrl_hevc_slice_params *p_hevc_slice_params;
+> +	struct v4l2_ctrl_hdr10_mastering_display *p_hdr10_mastering;
+>  	struct v4l2_area *area;
+>  	void *p = ptr.p + idx * ctrl->elem_size;
+>  	unsigned int i;
+> @@ -1934,6 +1944,52 @@ static int std_validate_compound(const struct v4l2_ctrl *ctrl, u32 idx,
+>  		zero_padding(*p_hevc_slice_params);
+>  		break;
+>  
+> +	case V4L2_CTRL_TYPE_HDR10_CLL_INFO:
+> +		break;
 > +
-> +.. c:type:: v4l2_ctrl_hdr10_cll_info
+> +	case V4L2_CTRL_TYPE_HDR10_MASTERING_DISPLAY:
+> +		p_hdr10_mastering = p;
 > +
-> +.. cssclass:: longtable
+> +		for (i = 0; i < 3; ++i) {
+> +			if (p_hdr10_mastering->display_primaries_x[i] <
+> +				V4L2_HDR10_MASTERING_PRIMARIES_X_LOW ||
+> +			    p_hdr10_mastering->display_primaries_x[i] >
+> +				V4L2_HDR10_MASTERING_PRIMARIES_X_HIGH ||
+> +			    p_hdr10_mastering->display_primaries_y[i] <
+> +				V4L2_HDR10_MASTERING_PRIMARIES_Y_LOW ||
+> +			    p_hdr10_mastering->display_primaries_y[i] >
+> +				V4L2_HDR10_MASTERING_PRIMARIES_Y_HIGH)
+> +				return -EINVAL;
+> +		}
 > +
-> +.. flat-table:: struct v4l2_ctrl_hdr10_cll_info
-> +    :header-rows:  0
-> +    :stub-columns: 0
-> +    :widths:       1 1 2
+> +		if (p_hdr10_mastering->white_point_x <
+> +			V4L2_HDR10_MASTERING_WHITE_POINT_X_LOW ||
+> +		    p_hdr10_mastering->white_point_x >
+> +			V4L2_HDR10_MASTERING_WHITE_POINT_X_HIGH ||
+> +		    p_hdr10_mastering->white_point_y <
+> +			V4L2_HDR10_MASTERING_WHITE_POINT_Y_LOW ||
+> +		    p_hdr10_mastering->white_point_y >
+> +			V4L2_HDR10_MASTERING_WHITE_POINT_Y_HIGH)
+> +			return -EINVAL;
 > +
-> +    * - __u16
-> +      - ``max_content_light_level``
-> +      - An upper bound on the maximum light level among all individual
-> +        samples for the pictures of coded video sequence, cd/m2. When
-> +        equal to 0 no such uppper bound is present.
-> +    * - __u16
-> +      - ``max_pic_average_light_level``
-> +      - An upper bound on the maximum average light level among the
-> +        samples for any individual picture of coded video sequence, cd/m2.
-> +        When equal to 0 no such uppper bound is present.
+> +		if (p_hdr10_mastering->max_luminance <
+> +			V4L2_HDR10_MASTERING_MAX_LUMA_LOW ||
+> +		    p_hdr10_mastering->max_luminance >
+> +			V4L2_HDR10_MASTERING_MAX_LUMA_HIGH ||
+> +		    p_hdr10_mastering->min_luminance <
+> +			V4L2_HDR10_MASTERING_MIN_LUMA_LOW ||
+> +		    p_hdr10_mastering->min_luminance >
+> +			V4L2_HDR10_MASTERING_MIN_LUMA_HIGH)
+> +			return -EINVAL;
 > +
-> +``V4L2_CID_MPEG_VIDEO_HDR10_MASTERING_DISPLAY (struct)``
-> +    The mastering display defines the colour volume (the colour primaries,
-> +    white point and luminance range) of a display considered to be the
-> +    mastering display for current video content.
+> +		if (p_hdr10_mastering->max_luminance ==
+> +			V4L2_HDR10_MASTERING_MAX_LUMA_LOW &&
+> +		    p_hdr10_mastering->min_luminance ==
+> +			V4L2_HDR10_MASTERING_MIN_LUMA_HIGH)
+> +			return -EINVAL;
 > +
-> +.. c:type:: v4l2_ctrl_hdr10_mastering_display
+> +		break;
 > +
-> +.. cssclass:: longtable
+>  	case V4L2_CTRL_TYPE_AREA:
+>  		area = p;
+>  		if (!area->width || !area->height)
+> @@ -2626,6 +2682,12 @@ static struct v4l2_ctrl *v4l2_ctrl_new(struct v4l2_ctrl_handler *hdl,
+>  	case V4L2_CTRL_TYPE_HEVC_SLICE_PARAMS:
+>  		elem_size = sizeof(struct v4l2_ctrl_hevc_slice_params);
+>  		break;
+> +	case V4L2_CTRL_TYPE_HDR10_CLL_INFO:
+> +		elem_size = sizeof(struct v4l2_ctrl_hdr10_cll_info);
+> +		break;
+> +	case V4L2_CTRL_TYPE_HDR10_MASTERING_DISPLAY:
+> +		elem_size = sizeof(struct v4l2_ctrl_hdr10_mastering_display);
+> +		break;
+>  	case V4L2_CTRL_TYPE_AREA:
+>  		elem_size = sizeof(struct v4l2_area);
+>  		break;
+> diff --git a/include/media/hdr10-ctrls.h b/include/media/hdr10-ctrls.h
+> new file mode 100644
+> index 000000000000..f6f77edc0b60
+> --- /dev/null
+> +++ b/include/media/hdr10-ctrls.h
+> @@ -0,0 +1,55 @@
+> +/* SPDX-License-Identifier: GPL-2.0 */
+> +/*
+> + * These are the HEVC state controls for use with stateless HEVC
+> + * codec drivers.
+> + *
+> + * It turns out that these structs are not stable yet and will undergo
+> + * more changes. So keep them private until they are stable and ready to
+> + * become part of the official public API.
+> + */
 > +
-> +.. flat-table:: struct v4l2_ctrl_hdr10_mastering_display
-> +    :header-rows:  0
-> +    :stub-columns: 0
-> +    :widths:       1 1 2
+> +#ifndef _HDR10_CTRLS_H_
+> +#define _HDR10_CTRLS_H_
 > +
-> +    * - __u16
-> +      - ``display_primaries_x[3]``
-> +      - Specifies the normalized x chromaticity coordinate of the colour
-> +        primary component c of the mastering display in increments of 0.00002.
-> +        For describing mastering display that use Red, Green and  Blue colour
-> +        primaries, index value c equal to 0 correspond to Green primary, c
-> +        equal to 1 correspond to Blue primary and c equal to 2 correspond to
+> +/*
+> + * Content light level information.
+> + * Source Rec. ITU-T H.265 v7 (11/2019) HEVC; D.2.35
+> + */
+> +#define V4L2_CID_MPEG_VIDEO_HDR10_CLL_INFO	(V4L2_CID_MPEG_BASE + 1017)
+> +#define V4L2_CTRL_TYPE_HDR10_CLL_INFO		0x0123
+> +
+> +struct v4l2_ctrl_hdr10_cll_info {
+> +	__u16 max_content_light_level;
+> +	__u16 max_pic_average_light_level;
+> +};
+> +
+> +/*
+> + * Mastering display colour volume.
+> + * Source Rec. ITU-T H.265 v7 (11/2019) HEVC; D.2.28
+> + */
+> +#define V4L2_CID_MPEG_VIDEO_HDR10_MASTERING_DISPLAY (V4L2_CID_MPEG_BASE + 1018)
 
-correspond -> corresponds (3 times)
+I don't think this should be part of the codec control class. It is also needed
+for HDMI receivers, for example.
 
-> +        Red colour primary.
-> +    * - __u16
-> +      - ``display_primaries_y[3]``
-> +      - Specifies the normalized y chromaticity coordinate of the colour
-> +        primary component c of the mastering display in increments of 0.00002.
-> +        For describing mastering display that use Red, Green and  Blue colour
-> +        primaries, index value c equal to 0 correspond to Green primary, c
-> +        equal to 1 correspond to Blue primary and c equal to 2 correspond to
+I think it is better to create a new "Colorimetry" control class for controls like
+this.
 
-Ditto.
+But I advise that you wait until this PR is merged:
+https://patchwork.linuxtv.org/project/linux-media/patch/d68da172-b251-000f-653d-38a8a4c7b715@xs4all.nl/
 
-> +        Red colour primary.
-> +    * - __u16
-> +      - ``white_point_x``
-> +      - Specifies the normalized x chromaticity coordinate of the white
-> +        point of the mastering display in increments of 0.00002.
-> +    * - __u16
-> +      - ``white_point_y``
-> +      - Specifies the normalized y chromaticity coordinate of the white
-> +        point of the mastering display in increments of 0.00002.
-> +    * - __u32
-> +      - ``max_luminance``
-> +      - Specifies the nominal maximum display luminance of the mastering
-> +        display in units of 0.0001 cd/m2.
-> +    * - __u32
-> +      - ``min_luminance``
-> +      - specifies the nominal minimum display luminance of the mastering
-> +        display in units of 0.0001 cd/m2.
-> 
-
-I'd rename these last two fields to max/min_display_mastering_luminance to stay
-in sync with the H.265 spec.
+Note that you also need to add validation support for this to std_validate_compound()
+and possibly add initialization to std_init_compound() is v4l2-ctrls.c.
 
 Regards,
 
 	Hans
+
+> +#define V4L2_CTRL_TYPE_HDR10_MASTERING_DISPLAY	0x0124
+> +
+> +#define V4L2_HDR10_MASTERING_PRIMARIES_X_LOW	5
+> +#define V4L2_HDR10_MASTERING_PRIMARIES_X_HIGH	37000
+> +#define V4L2_HDR10_MASTERING_PRIMARIES_Y_LOW	5
+> +#define V4L2_HDR10_MASTERING_PRIMARIES_Y_HIGH	42000
+> +#define V4L2_HDR10_MASTERING_WHITE_POINT_X_LOW	5
+> +#define V4L2_HDR10_MASTERING_WHITE_POINT_X_HIGH	37000
+> +#define V4L2_HDR10_MASTERING_WHITE_POINT_Y_LOW	5
+> +#define V4L2_HDR10_MASTERING_WHITE_POINT_Y_HIGH	42000
+> +#define V4L2_HDR10_MASTERING_MAX_LUMA_LOW	50000
+> +#define V4L2_HDR10_MASTERING_MAX_LUMA_HIGH	100000000
+> +#define V4L2_HDR10_MASTERING_MIN_LUMA_LOW	1
+> +#define V4L2_HDR10_MASTERING_MIN_LUMA_HIGH	50000
+> +
+> +struct v4l2_ctrl_hdr10_mastering_display {
+> +	__u16 display_primaries_x[3];
+> +	__u16 display_primaries_y[3];
+> +	__u16 white_point_x;
+> +	__u16 white_point_y;
+> +	__u32 max_luminance;
+> +	__u32 min_luminance;
+> +};
+> +
+> +#endif
+> diff --git a/include/media/v4l2-ctrls.h b/include/media/v4l2-ctrls.h
+> index 4fbace0fc7e5..81bd026fc1ea 100644
+> --- a/include/media/v4l2-ctrls.h
+> +++ b/include/media/v4l2-ctrls.h
+> @@ -19,6 +19,7 @@
+>   */
+>  #include <media/mpeg2-ctrls.h>
+>  #include <media/fwht-ctrls.h>
+> +#include <media/hdr10-ctrls.h>
+>  #include <media/h264-ctrls.h>
+>  #include <media/vp8-ctrls.h>
+>  #include <media/hevc-ctrls.h>
+> @@ -80,6 +81,8 @@ union v4l2_ctrl_ptr {
+>  	struct v4l2_ctrl_hevc_sps *p_hevc_sps;
+>  	struct v4l2_ctrl_hevc_pps *p_hevc_pps;
+>  	struct v4l2_ctrl_hevc_slice_params *p_hevc_slice_params;
+> +	struct v4l2_ctrl_hdr10_cll_info *p_hdr10_cll;
+> +	struct v4l2_ctrl_hdr10_mastering_display *p_hdr10_mastering;
+>  	struct v4l2_area *p_area;
+>  	void *p;
+>  	const void *p_const;
+> 
+
