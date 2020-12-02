@@ -2,32 +2,32 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B39FB2CCAA7
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Dec 2020 00:46:36 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 98EC22CCAA9
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Dec 2020 00:46:37 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2387547AbgLBXmJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 2 Dec 2020 18:42:09 -0500
-Received: from m42-5.mailgun.net ([69.72.42.5]:18552 "EHLO m42-5.mailgun.net"
+        id S2387566AbgLBXmM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 2 Dec 2020 18:42:12 -0500
+Received: from m42-5.mailgun.net ([69.72.42.5]:16951 "EHLO m42-5.mailgun.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1729191AbgLBXmI (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 2 Dec 2020 18:42:08 -0500
+        id S2387644AbgLBXmL (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 2 Dec 2020 18:42:11 -0500
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1606952509; h=References: In-Reply-To: Message-Id: Date:
+ s=smtp; t=1606952514; h=References: In-Reply-To: Message-Id: Date:
  Subject: Cc: To: From: Sender;
- bh=oy/aThwyI7egpnediO0HIoxBAAw1Dyjel8E7NnExrYY=; b=dNkWm1p79XN4fzStzYr/kQJwC9XcZckE1yM69Wc2w3lSas+LY1+S1iJ1QgnLlVpgCm3ZsCka
- f2pp7BMuhiNIcNpe+Q5ofNHqxC2I/E6wXP7CrF4sQ0WuLisLnekeQ2r/NnM80axMpGiryPSW
- 5vAYxs/EwpeKTKBjlzXSJvymDZI=
+ bh=DZXaikanm41KFQVGUsB6LrRiWWff5TixI1kkjmw4uWc=; b=DxJJJe99bb+QMKMAMAjsA6C9pRZ3ldE4SYKHxgCpsCWVcmfXxyZYHXfvcTjTLHsjQPxgE8Sh
+ i39IXlrgNZOxpfszlQh60kvXabhjOleyDywub6CPt64DiFthTsrQ3d79YziwwQzBcoccnlkX
+ qPaGVphzFjqE1qRYbqQ2D+o+eTM=
 X-Mailgun-Sending-Ip: 69.72.42.5
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org
  (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n10.prod.us-west-2.postgun.com with SMTP id
- 5fc826030b1f6587dd17d757 (version=TLS1.2,
+ smtp-out-n03.prod.us-west-2.postgun.com with SMTP id
+ 5fc826048d03b22a5a679b98 (version=TLS1.2,
  cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 02 Dec 2020 23:40:52
  GMT
 Sender: bbhatt=codeaurora.org@mg.codeaurora.org
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id D9C3AC43460; Wed,  2 Dec 2020 23:40:51 +0000 (UTC)
+        id 2AAACC43464; Wed,  2 Dec 2020 23:40:52 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
@@ -37,9 +37,9 @@ Received: from malabar-linux.qualcomm.com (i-global254.qualcomm.com [199.106.103
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
         (No client certificate requested)
         (Authenticated sender: bbhatt)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id BA524C43463;
-        Wed,  2 Dec 2020 23:40:50 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org BA524C43463
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 53A66C433ED;
+        Wed,  2 Dec 2020 23:40:51 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 53A66C433ED
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=bbhatt@codeaurora.org
 From:   Bhaumik Bhatt <bbhatt@codeaurora.org>
@@ -47,9 +47,9 @@ To:     manivannan.sadhasivam@linaro.org, hemantk@codeaurora.org
 Cc:     linux-arm-msm@vger.kernel.org, loic.poulain@linaro.org,
         jhugo@codeaurora.org, linux-kernel@vger.kernel.org,
         Bhaumik Bhatt <bbhatt@codeaurora.org>
-Subject: [PATCH v3 4/7] bus: mhi: core: Add support to stop or start channel data transfers
-Date:   Wed,  2 Dec 2020 15:40:35 -0800
-Message-Id: <1606952438-15321-5-git-send-email-bbhatt@codeaurora.org>
+Subject: [PATCH v3 5/7] bus: mhi: core: Check execution environment for channel before issuing reset
+Date:   Wed,  2 Dec 2020 15:40:36 -0800
+Message-Id: <1606952438-15321-6-git-send-email-bbhatt@codeaurora.org>
 X-Mailer: git-send-email 2.7.4
 In-Reply-To: <1606952438-15321-1-git-send-email-bbhatt@codeaurora.org>
 References: <1606952438-15321-1-git-send-email-bbhatt@codeaurora.org>
@@ -57,104 +57,46 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Some MHI client drivers may want to request a pause or halt of
-data transfer activity on their channels. Support for this does
-not exist and must be introduced, wherein the channel context is
-not reset or cleared but only the STOP channel command is issued.
-This would need to be paired with an API that allows resuming the
-data transfer activity on channels by use of the START channel
-command. This API assumes that the context information is already
-setup. Enable this using two new APIs, mhi_start_transfer() and
-mhi_stop_transfer().
+A client can attempt to unprepare certain channels for transfer even
+after the execution environment they are supposed to run in has changed.
+In the event that happens, the device need not be notified of the reset
+and the host can proceed with clean up for the channel context and
+memory allocated for it on the host.
 
 Signed-off-by: Bhaumik Bhatt <bbhatt@codeaurora.org>
 ---
- drivers/bus/mhi/core/main.c | 41 +++++++++++++++++++++++++++++++++++++++++
- include/linux/mhi.h         | 19 +++++++++++++++++++
- 2 files changed, 60 insertions(+)
+ drivers/bus/mhi/core/main.c | 13 +++++++++++++
+ 1 file changed, 13 insertions(+)
 
 diff --git a/drivers/bus/mhi/core/main.c b/drivers/bus/mhi/core/main.c
-index 4cc5ced..2e4b34a 100644
+index 2e4b34a..40d15ef 100644
 --- a/drivers/bus/mhi/core/main.c
 +++ b/drivers/bus/mhi/core/main.c
-@@ -1552,6 +1552,47 @@ void mhi_unprepare_from_transfer(struct mhi_device *mhi_dev)
- }
- EXPORT_SYMBOL_GPL(mhi_unprepare_from_transfer);
+@@ -1320,11 +1320,24 @@ static void __mhi_unprepare_channel(struct mhi_controller *mhi_cntrl,
+ 	/* no more processing events for this channel */
+ 	mutex_lock(&mhi_chan->mutex);
  
-+static int mhi_update_transfer_state(struct mhi_device *mhi_dev,
-+				     enum mhi_ch_state_type to_state)
-+{
-+	struct mhi_controller *mhi_cntrl = mhi_dev->mhi_cntrl;
-+	struct mhi_chan *mhi_chan;
-+	int dir, ret;
-+
-+	for (dir = 0; dir < 2; dir++) {
-+		mhi_chan = dir ? mhi_dev->ul_chan : mhi_dev->dl_chan;
-+
-+		if (!mhi_chan)
-+			continue;
-+
-+		/*
-+		 * Bail out if one of the channels fail as client will reset
-+		 * both upon failure
-+		 */
-+		mutex_lock(&mhi_chan->mutex);
-+		ret = mhi_update_channel_state(mhi_cntrl, mhi_chan, to_state);
-+		if (ret) {
-+			mutex_unlock(&mhi_chan->mutex);
-+			return ret;
-+		}
-+		mutex_unlock(&mhi_chan->mutex);
++	if (!(BIT(mhi_cntrl->ee) & mhi_chan->ee_mask)) {
++		dev_err(dev,
++			"Current EE: %s Required EE Mask: 0x%x for chan: %s\n",
++			TO_MHI_EXEC_STR(mhi_cntrl->ee), mhi_chan->ee_mask,
++			mhi_chan->name);
++		goto exit_unprepare_channel;
 +	}
 +
-+	return 0;
-+}
-+
-+int mhi_stop_transfer(struct mhi_device *mhi_dev)
-+{
-+	return mhi_update_transfer_state(mhi_dev, MHI_CH_STATE_TYPE_STOP);
-+}
-+EXPORT_SYMBOL_GPL(mhi_stop_transfer);
-+
-+int mhi_start_transfer(struct mhi_device *mhi_dev)
-+{
-+	return mhi_update_transfer_state(mhi_dev, MHI_CH_STATE_TYPE_START);
-+}
-+EXPORT_SYMBOL_GPL(mhi_start_transfer);
-+
- int mhi_poll(struct mhi_device *mhi_dev, u32 budget)
- {
- 	struct mhi_controller *mhi_cntrl = mhi_dev->mhi_cntrl;
-diff --git a/include/linux/mhi.h b/include/linux/mhi.h
-index aa9757e..35779a0 100644
---- a/include/linux/mhi.h
-+++ b/include/linux/mhi.h
-@@ -704,6 +704,25 @@ int mhi_prepare_for_transfer(struct mhi_device *mhi_dev);
- void mhi_unprepare_from_transfer(struct mhi_device *mhi_dev);
+ 	ret = mhi_update_channel_state(mhi_cntrl, mhi_chan,
+ 				       MHI_CH_STATE_TYPE_RESET);
+ 	if (ret)
+ 		dev_err(dev, "Failed to reset channel, still resetting\n");
  
- /**
-+ * mhi_stop_transfer - Pauses ongoing channel activity by issuing the STOP
-+ *                     channel command to both UL and DL channels. This command
-+ *                     does not reset the channel context and the client drivers
-+ *                     can issue mhi_start_transfer to resume activity.
-+ * @mhi_dev: Device associated with the channels
-+ */
-+int mhi_stop_transfer(struct mhi_device *mhi_dev);
++exit_unprepare_channel:
++	write_lock_irq(&mhi_chan->lock);
++	mhi_chan->ch_state = MHI_CH_STATE_DISABLED;
++	write_unlock_irq(&mhi_chan->lock);
 +
-+/**
-+ * mhi_start_transfer - Resumes channel activity by issuing the START channel
-+ *                      command to both UL and DL channels. This command assumes
-+ *                      the channel context is already setup and the client
-+ *                      drivers can issue mhi_stop_transfer to pause activity if
-+ *                      required.
-+ * @mhi_dev: Device associated with the channels
-+ */
-+int mhi_start_transfer(struct mhi_device *mhi_dev);
-+
-+/**
-  * mhi_poll - Poll for any available data in DL direction
-  * @mhi_dev: Device associated with the channels
-  * @budget: # of events to process
+ 	if (!mhi_chan->offload_ch) {
+ 		mhi_reset_chan(mhi_cntrl, mhi_chan);
+ 		mhi_deinit_chan_ctxt(mhi_cntrl, mhi_chan);
 -- 
 The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
 a Linux Foundation Collaborative Project
