@@ -2,163 +2,102 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 932112CC246
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Dec 2020 17:31:21 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E72A72CC249
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Dec 2020 17:31:22 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728674AbgLBQ36 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 2 Dec 2020 11:29:58 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33028 "EHLO
+        id S1727750AbgLBQa2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 2 Dec 2020 11:30:28 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33104 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728496AbgLBQ36 (ORCPT
+        with ESMTP id S1726307AbgLBQa2 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 2 Dec 2020 11:29:58 -0500
-Received: from mail-pl1-x641.google.com (mail-pl1-x641.google.com [IPv6:2607:f8b0:4864:20::641])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 26077C0613D4
-        for <linux-arm-msm@vger.kernel.org>; Wed,  2 Dec 2020 08:29:18 -0800 (PST)
-Received: by mail-pl1-x641.google.com with SMTP id x15so1420132pll.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 02 Dec 2020 08:29:18 -0800 (PST)
+        Wed, 2 Dec 2020 11:30:28 -0500
+Received: from mail-wm1-x343.google.com (mail-wm1-x343.google.com [IPv6:2a00:1450:4864:20::343])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B34C4C0613D6
+        for <linux-arm-msm@vger.kernel.org>; Wed,  2 Dec 2020 08:29:47 -0800 (PST)
+Received: by mail-wm1-x343.google.com with SMTP id x22so8812083wmc.5
+        for <linux-arm-msm@vger.kernel.org>; Wed, 02 Dec 2020 08:29:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=uXYlmVHYdw9bJqtaDtjoHGPwzeOmsZaC7koT0MCGsSw=;
-        b=lKF/G47kFnGsaMNRc04XrX3fP7tFGm0zi/9ZNVqqzTAUJAjuokW1/3Zp56Jsmlvont
-         Clh0j5zXiAg5muRILgWcaLxXXFnWXfs37VqmtIqw+zsKafNBbkHe9+C56yVJo1Op+afB
-         k6CMPKIuNoICWFWEKJQMo0XCt0xxde+gbfO7OCWp0Io2JQbgelhLa9C7kck+TPteo9JW
-         I4xYJxSZaBOQFR0ZDIpnzBrgnw0sMVpczxlGvBMe4RP+hDS3lT2ZAPU3J+y1ujTGvYcs
-         FNd0HcIdNcntkK+v04KQP5csQRvkpD/vVL9i4YD2nDIxaU+tGVqkc6wvTmTEdrW5M0Iz
-         ZcyA==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=Yn1Qjx2PGSJwTYYFgeQmMkhmsCI6fFdFchM0O3gSgpE=;
+        b=Oxja89kUQhtUU10zgOgezzL8wfe85VTysr6EuAyr3ZITywv6U/zP06BAt8iwyXzBur
+         G/19m3j+yK+GPCUjH2aEjE4xZNVypmD7J/pa4l2SXBwvSDwBK4omjjkKNl/XlbZsgsiU
+         OvyOGJhCHWiaK3pQ2lXBPYc0HP824uLHJ/7NjFc7GSdaB07USD1rq7p3+sY0xkhv1rRP
+         wPOLxyzx9d/Y1o5p4LaZ5Qf+EKrQiCD28wK6xsWbkc/g2eHz30MFkKAorYO/G4RIDQGA
+         LX9TCgLpsyAsle6yK2oR6/Njg6kbtL3xf4vPrRQooucym0FEBcFn6uuPPpdyC2ra6cL4
+         nJcg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=uXYlmVHYdw9bJqtaDtjoHGPwzeOmsZaC7koT0MCGsSw=;
-        b=isAQcGD+zVTEhCLT+E9XLYoNkQVpTWaxQYMpkPFLJYUocB9tUhtFBrQHekpQUQYL80
-         hFuxJGs2mg6k9ge3IJHp1rdV4LTfpl9CytKHBAyJlzgBtLgT6lYG+4XA/wuz2/rJcla9
-         vtSUDUk71nIUXDb9u2BlK3+C67SXe81Hxxk9DzNvVOqDCgfNXg7sF8JEKxOsKyxOF4zz
-         LDPCm/v3ZcPmoCt33N/mUb96gfNNFlGEpWqWRTCF6MIf87NRe9nouPr8U4ISA7/As22i
-         WYE0DUFc8PORgEYCviKqD6H2VPR40E1ZTiae3K1fmSJiF7m31K+BNGYIgXvx5z4lKifM
-         WLEg==
-X-Gm-Message-State: AOAM530D71wSyuY82fs+FwNmkC5COO0eVc6SckwfBEov6GwMZcCTiKAs
-        8cHSwvP7zK5/RyAw17TRGdpP
-X-Google-Smtp-Source: ABdhPJy2N9geEmBvYivnWSjBLUoBrwgqmFGFfgHnsJHlPVIJUL/jcLf1wDEiqNYLWLxktQ30IkIBsw==
-X-Received: by 2002:a17:902:9690:b029:d9:c94a:339 with SMTP id n16-20020a1709029690b02900d9c94a0339mr3248216plp.27.1606926557507;
-        Wed, 02 Dec 2020 08:29:17 -0800 (PST)
-Received: from thinkpad ([2409:4072:100:69b9:b5fe:d7f9:67a:4196])
-        by smtp.gmail.com with ESMTPSA id b13sm311787pfo.15.2020.12.02.08.29.13
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=Yn1Qjx2PGSJwTYYFgeQmMkhmsCI6fFdFchM0O3gSgpE=;
+        b=RY5Wt4qeqtM73rrX7Mf9/EhZxNGLT+BVdt6ag1f/N5pgi9vtAjrpwVmbP6AgqdhU9n
+         c+leT4Gzjoe3RFIzqRkwztXqOxB3HxJrFE+k3/qAedkaaMCrvtyzQ4zasvhLfBIO1AWS
+         Pwhbt5+Auc6OxrUg/3mYqBD0dnnGqzvPTQoAftXssg+Za0iuIn+JoHkVhGJ7P85N41BH
+         XFUgDRrm81EgNdUxzNNWOX2Wr0HfFKvLPh1HBgzWMkGPKv0juwKdlQKd0Q6HFpU878aA
+         rNYFuTDewcyTGkVrL+IyPlf/u/w4cQ5onR9KIEpPgqthbppvWyLAEtV3QVfAGqA49f4k
+         gTiw==
+X-Gm-Message-State: AOAM533vxuk1mC72GWshNh9FxsDAA5C8ZbrrVBTFE03KHHBJ/BXpo7Pm
+        Cu8p43oTg5kbUprLIk2k+bOtCQ==
+X-Google-Smtp-Source: ABdhPJynEg2l1j7vWObk8Q3evf1YLgj6cCwWzmxRb3T4RbYvxKeo6k/YteWX8f/91ZXhz3MiWrBMnw==
+X-Received: by 2002:a7b:ca47:: with SMTP id m7mr3946131wml.33.1606926586389;
+        Wed, 02 Dec 2020 08:29:46 -0800 (PST)
+Received: from srini-hackbox.lan (cpc86377-aztw32-2-0-cust226.18-1.cable.virginm.net. [92.233.226.227])
+        by smtp.gmail.com with ESMTPSA id o5sm2569882wmh.8.2020.12.02.08.29.45
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 02 Dec 2020 08:29:16 -0800 (PST)
-Date:   Wed, 2 Dec 2020 21:59:10 +0530
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     gregkh@linuxfoundation.org
-Cc:     hemantk@codeaurora.org, bbhatt@codeaurora.org,
-        linux-arm-msm@vger.kernel.org, jhugo@codeaurora.org,
-        linux-kernel@vger.kernel.org, loic.poulain@linaro.org
-Subject: Re: [PATCH 00/29] MHI changes for v5.11
-Message-ID: <20201202162910.GB3033@thinkpad>
-References: <20201202094159.107075-1-manivannan.sadhasivam@linaro.org>
+        Wed, 02 Dec 2020 08:29:45 -0800 (PST)
+From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+To:     bjorn.andersson@linaro.org
+Cc:     linux-arm-msm@vger.kernel.org, agross@kernel.org,
+        robh+dt@kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Subject: [PATCH v6 0/2] pinctrl: qcom: Add sm8250 lpass lpi pinctrl support
+Date:   Wed,  2 Dec 2020 16:29:41 +0000
+Message-Id: <20201202162943.15210-1-srinivas.kandagatla@linaro.org>
+X-Mailer: git-send-email 2.21.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20201202094159.107075-1-manivannan.sadhasivam@linaro.org>
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Greg,
+This patch adds support for LPASS (Low Power Audio SubSystem)
+LPI (Low Power Island) pinctrl on SM8250.
 
-On Wed, Dec 02, 2020 at 03:11:30PM +0530, Manivannan Sadhasivam wrote:
-> Hi Greg,
-> 
-> Here is the MHI patch series for v5.11. It was a busy cycle for us and so far we
-> have accumulated almost 29 patches. Most of the patches are cleanups and fixes
-> but there are some noticeable changes too:
-> 
-> 1. Loic finally removed the auto-start option from the channel parameters of the
-> MHI controller. It is the duty of the client drivers like qrtr to start/stop the
-> channels when required, so we decided to remove this option. As a side effect,
-> we changed the qrtr driver to start the channels during its probe and removed
-> the auto-start option from ath11k controller.
-> 
-> **NOTE** Since these changes spawns both MHI and networking trees, the patches
-> are maintained in an immutable branch [1] and pulled into both mhi-next and
-> ath11k-next branches. The networking patches got acks from ath11k and networking
-> maintainers as well.
-> 
+This patch has been tested on support to Qualcomm Robotics RB5 Development
+Kit based on QRB5165 Robotics SoC. This board has 2 WSA881X smart speakers
+with onboard DMIC connected to internal LPASS codec via WSA  and VA macros
+respectively.
 
-Sigh... this is not going to work for patches in email form due to the immutable
-branch. I will send a pull request this time.
+Most of the work is derived from downstream Qualcomm kernels.
+Credits to various Qualcomm authors from Patrick Lai's team who have
+contributed to this code.
 
-Please ignore this series.
+Am guessing existing qcom folder should cover maintining this driver too!
+If not I can send additional patch to consolidate this along with other
+Audio related drivers in Maintainer file!
 
-Thanks,
-Mani
+Changes since v5:
+	- moved to use FIELD_* or u32_replace/encode apis where possible
+	- remove all the SHIFT constants
+	- updated function groups as suggested by Bjorn
+	- updated setting slew rate as suggested by Bjorn
 
-> 2. Loic added a generic MHI pci controller driver. This driver will be used by
-> the PCI based Qualcomm modems like SDX55 and exposes channels such as QMI,
-> IP_HW0, IPCR etc...
-> 
-> 3. Loic fixed the MHI device hierarchy by maintaining the correct parent child
-> relationships. Earlier all MHI devices lived in the same level under the parent
-> device like PCIe. But now, the MHI devices belonging to channels will become the
-> children of controller MHI device.
-> 
-> 4. Finally Loic also improved the MHI device naming by using indexed names such
-> as mhi0, mhi1, etc... This will break the userspace applications depending on
-> the old naming convention but since the only one user so far is Jeff Hugo's AI
-> accelerator apps, we decided to make this change now itself with his agreement.
-> 
-> 5. Bhaumik fixed the qrtr driver by stopping the channels during remove. This
-> patch also got ack from networking maintainer and we decided to take it through
-> MHI tree (via immutable branch) since we already had a qrtr change.
-> 
-> Please consider applying!
-> 
-> Thanks,
-> Mani
-> 
-> [1] https://git.kernel.org/pub/scm/linux/kernel/git/mani/mhi.git/log/?h=mhi-ath11k-immutable
-> 
-> Bhaumik Bhatt (19):
->   bus: mhi: core: Remove unnecessary counter from mhi_firmware_copy()
->   bus: mhi: core: Add missing EXPORT_SYMBOL for mhi_get_mhi_state()
->   bus: mhi: core: Expose mhi_get_exec_env() API for controllers
->   bus: mhi: core: Remove unused mhi_fw_load_worker() declaration
->   bus: mhi: core: Rename RDDM download function to use proper words
->   bus: mhi: core: Skip RDDM download for unknown execution environment
->   bus: mhi: core: Use appropriate names for firmware load functions
->   bus: mhi: core: Move to using high priority workqueue
->   bus: mhi: core: Skip device wake in error or shutdown states
->   bus: mhi: core: Move to SYS_ERROR regardless of RDDM capability
->   bus: mhi: core: Prevent sending multiple RDDM entry callbacks
->   bus: mhi: core: Move to an error state on any firmware load failure
->   bus: mhi: core: Use appropriate label in firmware load handler API
->   bus: mhi: core: Move to an error state on mission mode failure
->   bus: mhi: core: Check for IRQ availability during registration
->   bus: mhi: core: Separate system error and power down handling
->   bus: mhi: core: Mark and maintain device states early on after power
->     down
->   bus: mhi: core: Remove MHI event ring IRQ handlers when powering down
->   net: qrtr: Unprepare MHI channels during remove
-> 
-> Carl Yin (1):
->   bus: mhi: core: Fix null pointer access when parsing MHI configuration
-> 
-> Dan Carpenter (1):
->   bus: mhi: core: Fix error handling in mhi_register_controller()
-> 
-> Jeffrey Hugo (1):
->   bus: mhi: core: fix potential operator-precedence with BHI macros
-> 
-> Loic Poulain (7):
->   bus: mhi: Remove auto-start option
->   net: qrtr: Start MHI channels during init
->   bus: mhi: Add MHI PCI support for WWAN modems
->   bus: mhi: Fix channel close issue on driver remove
->   bus: mhi: core: Indexed MHI controller name
->   bus: mhi: core: Fix device hierarchy
->   mhi: pci_generic: Fix implicit conversion warning
-> 
-> -- 
-> 2.25.1
-> 
+Srinivas Kandagatla (2):
+  dt-bindings: pinctrl: qcom: Add sm8250 lpass lpi pinctrl bindings
+  pinctrl: qcom: Add sm8250 lpass lpi pinctrl driver
+
+ .../pinctrl/qcom,lpass-lpi-pinctrl.yaml       | 130 ++++
+ drivers/pinctrl/qcom/Kconfig                  |   8 +
+ drivers/pinctrl/qcom/Makefile                 |   1 +
+ drivers/pinctrl/qcom/pinctrl-lpass-lpi.c      | 695 ++++++++++++++++++
+ 4 files changed, 834 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/pinctrl/qcom,lpass-lpi-pinctrl.yaml
+ create mode 100644 drivers/pinctrl/qcom/pinctrl-lpass-lpi.c
+
+-- 
+2.21.0
+
