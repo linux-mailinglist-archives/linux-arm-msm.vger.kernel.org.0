@@ -2,238 +2,218 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 4CDCA2CDFE3
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Dec 2020 21:47:01 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2E5E82CE067
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Dec 2020 22:13:23 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727639AbgLCUoz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 3 Dec 2020 15:44:55 -0500
-Received: from m43-15.mailgun.net ([69.72.43.15]:23865 "EHLO
-        m43-15.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725885AbgLCUoz (ORCPT
+        id S1729617AbgLCVMR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 3 Dec 2020 16:12:17 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46230 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728312AbgLCVMR (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 3 Dec 2020 15:44:55 -0500
-X-Greylist: delayed 353 seconds by postgrey-1.27 at vger.kernel.org; Thu, 03 Dec 2020 15:44:54 EST
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1607028273; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=NqqsioQp0zqO93CJ60s2PFPzD2BsY6xnwm43kA5jPVk=;
- b=i4H1phw88J1I5cgp7Tf10QOYSba9IldxWoV9Ftq9YY2cEoaw+DkUpJ1nAuyK9IaPYPvY+TdV
- 0RXVn0tdspbuPEaambbBSDr52Vp7LnxpEtdNQ6SEsACesS2g8xNVoXSdUXeqGwrWEfkNduvt
- CEuiFsgt46jRjox7ymDiSbm8vbE=
-X-Mailgun-Sending-Ip: 69.72.43.15
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n04.prod.us-west-2.postgun.com with SMTP id
- 5fc94cb396285165cddf8817 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 03 Dec 2020 20:38:11
- GMT
-Sender: jhugo=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id E3BAEC433ED; Thu,  3 Dec 2020 20:38:10 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: jhugo)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 76787C43461;
-        Thu,  3 Dec 2020 20:38:09 +0000 (UTC)
+        Thu, 3 Dec 2020 16:12:17 -0500
+Received: from mail-ot1-x342.google.com (mail-ot1-x342.google.com [IPv6:2607:f8b0:4864:20::342])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 69D10C061A4F
+        for <linux-arm-msm@vger.kernel.org>; Thu,  3 Dec 2020 13:11:31 -0800 (PST)
+Received: by mail-ot1-x342.google.com with SMTP id b62so3174883otc.5
+        for <linux-arm-msm@vger.kernel.org>; Thu, 03 Dec 2020 13:11:31 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=f9FfLi8Nl7FF4traG898yrie9ssHxyCW2fqoUTn0pwI=;
+        b=HD8E+QIOXUbv5qxbihazg3iQqaBW4ARO8iibzqKW/locEieSrh6fFZxam81Rd21TVA
+         6vii6LoQG8DDaDQVasrDD3sg4epdc7bJ12hTQMktaajIlNo/+W/pdDw6CL5FN7nNhXMI
+         NHWHMhVR+ZUrXeeOiAme3OlvBBOWRJbmI0yyA=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=f9FfLi8Nl7FF4traG898yrie9ssHxyCW2fqoUTn0pwI=;
+        b=SXaVXN4qdvZwgY+y9ONP6M553yL9CF5YYJEwMcOiaohNdkvk9i5LTPcc4fh02gbd7F
+         H9q3mhQD4WCsKzzC3Uq4lT7SrltyaFrTOjX9AtAjHhsHZTFAPbz71TUY3xs3iUBWX8Gx
+         8O5A5543wjzjuaGUo+nDN4c9xtiu/oZw2thMwIfB1DGB9zRVcD72/f6jDOPWJLOiIfCJ
+         GxyRgwiW923zJr1YPGL3nnbdnQPODJ47+ndEiErYsnvx8EOrd857MC9pbJv2mt0MY13K
+         l7fqiFq5CQaGywykX84tCKXiA+XIZ4L/oR4dTMHKpSl2+dRVogP0Z3F2XdXF91YP7jHN
+         +5cw==
+X-Gm-Message-State: AOAM532jD8UAGRHObiGtrc7aD2pUMGgOacy+FkYhj3ZYEamaQfKb0IMk
+        wdEeHG8MwHKL3u3tAeFTQCv+uXmdGK2neQ==
+X-Google-Smtp-Source: ABdhPJxjUfP2oMEzSvSs15R274L+/0pPRKIjxbnbFBuYTCfvT8K7d9JxneHzZKPRFlHgG9U6IzpUsw==
+X-Received: by 2002:a9d:62cb:: with SMTP id z11mr960184otk.191.1607029890410;
+        Thu, 03 Dec 2020 13:11:30 -0800 (PST)
+Received: from mail-ot1-f48.google.com (mail-ot1-f48.google.com. [209.85.210.48])
+        by smtp.gmail.com with ESMTPSA id l132sm131393oia.23.2020.12.03.13.11.30
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 03 Dec 2020 13:11:30 -0800 (PST)
+Received: by mail-ot1-f48.google.com with SMTP id z24so3169683oto.6
+        for <linux-arm-msm@vger.kernel.org>; Thu, 03 Dec 2020 13:11:30 -0800 (PST)
+X-Received: by 2002:ab0:6285:: with SMTP id z5mr964298uao.0.1607029473177;
+ Thu, 03 Dec 2020 13:04:33 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Thu, 03 Dec 2020 13:38:09 -0700
-From:   jhugo@codeaurora.org
-To:     Hemant Kumar <hemantk@codeaurora.org>
-Cc:     manivannan.sadhasivam@linaro.org, gregkh@linuxfoundation.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        bbhatt@codeaurora.org, loic.poulain@linaro.org,
-        netdev@vger.kernel.org, hemantk=codeaurora.org@codeaurora.org
-Subject: Re: [PATCH v14 3/4] docs: Add documentation for userspace client
- interface
-In-Reply-To: <1606877991-26368-4-git-send-email-hemantk@codeaurora.org>
-References: <1606877991-26368-1-git-send-email-hemantk@codeaurora.org>
- <1606877991-26368-4-git-send-email-hemantk@codeaurora.org>
-Message-ID: <86747d3a0e8555ee5369aaa3cb2ff947@codeaurora.org>
-X-Sender: jhugo@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+References: <20201124094636.v2.1.I2702919afc253e2a451bebc3b701b462b2d22344@changeid>
+ <20201124094636.v2.3.I771b6594b2a4d5b7fe7e12a991a6640f46386e8d@changeid>
+ <d6c5dba9-bcc7-fac9-dd41-c989509c822b@codeaurora.org> <CAD=FV=UOSkHQMcSV8Zq5qPfBoUu5xYzfNZqUPmymvD7PXUAN4w@mail.gmail.com>
+ <b84d5bb4-e413-ad20-a19a-c7420abd5d5d@codeaurora.org>
+In-Reply-To: <b84d5bb4-e413-ad20-a19a-c7420abd5d5d@codeaurora.org>
+From:   Doug Anderson <dianders@chromium.org>
+Date:   Thu, 3 Dec 2020 13:04:21 -0800
+X-Gmail-Original-Message-ID: <CAD=FV=UXo3RPuVSYwOrHJMxF38K-ynoaPv4ZVQ6N2ok_zcoOFw@mail.gmail.com>
+Message-ID: <CAD=FV=UXo3RPuVSYwOrHJMxF38K-ynoaPv4ZVQ6N2ok_zcoOFw@mail.gmail.com>
+Subject: Re: [PATCH v2 3/3] pinctrl: qcom: Clear possible pending irq when
+ remuxing GPIOs
+To:     Maulik Shah <mkshah@codeaurora.org>
+Cc:     Rajendra Nayak <rnayak@codeaurora.org>,
+        Marc Zyngier <maz@kernel.org>,
+        Thomas Gleixner <tglx@linutronix.de>,
+        Jason Cooper <jason@lakedaemon.net>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
+        Neeraj Upadhyay <neeraju@codeaurora.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Srinivas Ramana <sramana@codeaurora.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        LKML <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2020-12-01 19:59, Hemant Kumar wrote:
-> MHI userspace client driver is creating device file node
-> for user application to perform file operations. File
-> operations are handled by MHI core driver. Currently
-> QMI MHI channel is supported by this driver.
-> 
-> Signed-off-by: Hemant Kumar <hemantk@codeaurora.org>
+Hi,
 
-Two minor nits below.  With those -
-Reviewed-by: Jeffrey Hugo <jhugo@codeaurora.org>
+On Thu, Dec 3, 2020 at 3:22 AM Maulik Shah <mkshah@codeaurora.org> wrote:
+>
+> >>> +     /*
+> >>> +      * Clear IRQs if switching to/from GPIO mode since muxing to/from
+> >>> +      * the GPIO path can cause phantom edges.
+> >>> +      */
+> >>> +     old_i = (oldval & mask) >> g->mux_bit;
+> >>> +     if (old_i != i &&
+> >>> +         (i == pctrl->soc->gpio_func || old_i == pctrl->soc->gpio_func))
+> >>> +             msm_pinctrl_clear_pending_irq(pctrl, group, irq);
+> >>> +
+> >> The phantom irq can come when switching to GPIO irq mode. so may be only
+> >> check if (i == pctrl->soc->gpio_func) {
+> > Have you tested this experimentally?
+> Yes
 
-> ---
->  Documentation/mhi/index.rst |  1 +
->  Documentation/mhi/uci.rst   | 94 
-> +++++++++++++++++++++++++++++++++++++++++++++
->  2 files changed, 95 insertions(+)
->  create mode 100644 Documentation/mhi/uci.rst
-> 
-> diff --git a/Documentation/mhi/index.rst b/Documentation/mhi/index.rst
-> index 1d8dec3..c75a371 100644
-> --- a/Documentation/mhi/index.rst
-> +++ b/Documentation/mhi/index.rst
-> @@ -9,6 +9,7 @@ MHI
-> 
->     mhi
->     topology
-> +   uci
-> 
->  .. only::  subproject and html
-> 
-> diff --git a/Documentation/mhi/uci.rst b/Documentation/mhi/uci.rst
-> new file mode 100644
-> index 0000000..9603f92
-> --- /dev/null
-> +++ b/Documentation/mhi/uci.rst
-> @@ -0,0 +1,94 @@
-> +.. SPDX-License-Identifier: GPL-2.0
-> +
-> +=================================
-> +Userspace Client Interface (UCI)
-> +=================================
-> +
-> +UCI driver enables userspace clients to communicate to external MHI 
-> devices
-> +like modem and WLAN. UCI driver probe creates standard character 
-> device file
-> +nodes for userspace clients to perform open, read, write, poll and 
-> release file
-> +operations. UCI device object represents UCI device file node which 
-> gets
-> +instantiated as part of MHI UCI driver probe. UCI channel object 
-> represents
-> +MHI uplink or downlink channel.
-> +
-> +Operations
-> +==========
-> +
-> +open
-> +----
-> +
-> +Instantiates UCI channel object and starts MHI channels to move it to 
-> running
-> +state. Inbound buffers are queued to downlink channel transfer ring. 
-> Every
-> +subsequent open() increments UCI device reference count as well as UCI 
-> channel
-> +reference count.
-> +
-> +read
-> +----
-> +
-> +When data transfer is completed on downlink channel, transfer ring 
-> element
-> +buffer is copied to pending list. Reader is unblocked and data is 
-> copied to
-> +userspace buffer. Transfer ring element buffer is queued back to 
-> downlink
-> +channel transfer ring.
-> +
-> +write
-> +-----
-> +
-> +Write buffer is queued to uplink channel transfer ring if ring is not
-> full. Upon
-> +uplink transfer completion buffer is freed.
-> +
-> +poll
-> +----
-> +
-> +Returns EPOLLIN | EPOLLRDNORM mask if pending list has buffers to be 
-> read by
-> +userspace. Returns EPOLLOUT | EPOLLWRNORM mask if MHI uplink channel 
-> transfer
-> +ring is not empty. Returns EPOLLERR when UCI driver is removed.
+Yes means that you tried switching away from GPIO mode and you
+couldn't get a phantom interrupt?  OK, I'll re-test then.
 
-ring is not empty.  When the uplink channel transfer ring is non-empty, 
-more
-data may be sent to the device. Returns EPOLLERR when UCI driver is 
-removed.
+I'll test on the Chrome OS kernel tree since that's easiest for me,
+but I can test on mainline if you think it would make a difference...
 
-> +
-> +release
-> +-------
-> +
-> +Decrements UCI device reference count and UCI channel reference count 
-> upon last
-> +release(). UCI channel clean up is performed. MHI channel moves to 
-> disable
-> +state and inbound buffers are freed.
+1. Pick <https://crrev.com/c/2556012> and put that kernel on the device.
 
-Decrements UCI device reference count and UCI channel reference count. 
-Upon last
-release() UCI channel clean up is performed. MHI channel moves to 
-disable
-state and inbound buffers are freed.
+2. In Cr50 console, make the WP line low with:
+  wp enable
 
-> +
-> +Usage
-> +=====
-> +
-> +Device file node is created with format:-
-> +
-> +/dev/<mhi_device_name>
-> +
-> +mhi_device_name includes mhi controller name and the name of the MHI 
-> channel
-> +being used by MHI client in userspace to send or receive data using 
-> MHI
-> +protocol.
-> +
-> +There is a separate character device file node created for each 
-> channel
-> +specified in MHI device id table. MHI channels are statically defined 
-> by MHI
-> +specification. The list of supported channels is in the channel list 
-> variable
-> +of mhi_device_id table in UCI driver.
-> +
-> +Qualcomm MSM Interface(QMI) Channel
-> +-----------------------------------
-> +
-> +Qualcomm MSM Interface(QMI) is a modem control messaging protocol used 
-> to
-> +communicate between software components in the modem and other 
-> peripheral
-> +subsystems. QMI communication is of request/response type or an 
-> unsolicited
-> +event type. libqmi is userspace MHI client which communicates to a QMI 
-> service
-> +using UCI device. It sends a QMI request to a QMI service using MHI 
-> channel 14
-> +or 16. QMI response is received using MHI channel 15 or 17 
-> respectively. libqmi
-> +is a glib-based library for talking to WWAN modems and devices which 
-> speaks QMI
-> +protocol. For more information about libqmi please refer
-> +https://www.freedesktop.org/wiki/Software/libqmi/
-> +
-> +Usage Example
-> +~~~~~~~~~~~~~
-> +
-> +QMI command to retrieve device mode
-> +$ sudo qmicli -d /dev/mhi0_QMI --dms-get-model
-> +[/dev/mhi0_QMI] Device model retrieved:
-> +    Model: 'FN980m'
-> +
-> +Other Use Cases
-> +---------------
-> +
-> +Getting MHI device specific diagnostics information to userspace MHI 
-> diagnostic
-> +client using DIAG channel 4 (Host to device) and 5 (Device to Host).
+3. In AP console do:
+  echo bogus > /sys/module/gpio_keys/parameters/doug_test
+
+4. See bogus interrupt:
+
+localhost ~ # echo bogus > /sys/module/gpio_keys/parameters/doug_test
+[   62.006346] DOUG: selecting state bogus
+[   62.011813] DOUG: ret 0
+[   62.011875] DOUG: in dual edge parent: hwirq=66, type=1
+[   62.020300] DOUG: gpio_keys_gpio_isr
+
+Can you try replicating again?
+
+
+> > I have experimentally tested this and I can actually see an interrupt
+> > generated when I _leave_ GPIO as well as when I enter GPIO mode.  If
+> > you can't see this I can re-setup my test, but this was one of those
+> > things that convinced me that the _transition_ is what was causing the
+> > fake interrupt.
+> >
+> > I think my test CL <https://crrev.com/c/2556012/> can help you with
+> > testing if you wish.
+> >
+> >
+> >> even better if you can clear this unconditionally.
+> > Why?  It should only matter if we're going to/from GPIO mode.
+>
+> Probably i was not clear, the phantom irq should be cleared when
+> switching gpio to gpio IRQ mode.
+>
+> When GPIO was used as Rx line in example QUP/UART use case, it can latch
+> the phantom IRQ
+
+This is where I disagree with you.  I don't think the interrupt is
+latching while it's used as an Rx line.  I think it's the pinmux
+change that introduces an phantom interrupt.
+
+Specifically, with the same test patch above, AKA
+<https://crrev.com/c/2556012>, I can do this:
+
+1. On AP:
+  echo bogus > /sys/module/gpio_keys/parameters/doug_test
+
+2. On Cr50 console:
+  wp disable
+  wp enable
+  wp disable
+  wp enable
+  wp disable
+  wp enable
+
+3. Go back and check the AP and see that no interrupts fired.
+
+Said another way: when we're muxed away the interrupts aren't getting
+latched.  It's the act of changing the mux that causes the phantom
+interrupts.
+
+
+> but as long as its IRQ is in disabled/masked state it
+> doesn't matter.
+
+...but there's no requirement that someone would need to disable/mask
+an interrupt while switching the muxing, is there?  So it does matter.
+
+
+> its only when the GPIO is again set to IRQ mode with set_mux callback,
+> the phantom IRQ needs clear to start as clean.
+>
+> So we should check only for if (i == pctrl->soc->gpio_func) then clear
+> phantom IRQ.
+>
+> The same is case with .direction_output callback, when GPIO is used as
+> output say as clock, need not clear any phantom IRQ,
+>
+> The reason is with every pulse of clock it can latch as pending IRQ in
+> GIC_ISPEND as long as it stay as output mode/clock.
+>
+> its only when switching back GPIO from output direction to input & IRQ
+> function, need to clear the phantom IRQ.
+>
+> so we do not require clear phantom irq in .direction_output callback.
+
+I think all the above explanation is with the model that the interrupt
+detection logic is still happening even when muxed away.  I don't
+believe that's true.  Please run my test patch or code up something
+similar yourself.
+
+
+> >> In step (3) msm_gpio_irq_set_type() touches the RAW_STATUS_EN making the
+> >> phantom irq pending again.
+> >> To resolve this, you will need to invoke msm_pinctrl_clear_pending_irq()
+> >> at the end of the msm_gpio_irq_set_type().
+> >>
+> >> I would like Rajendra's (already in cc) review as well on above part.
+> > Ugh, so we need a clear in yet another place.  Joy.  OK, I will wait
+> > for Rajendra's comment but I can add similar code in
+> > msm_gpio_irq_enable().
+>
+> As the clearing phantom irq code in msm_gpio_irq_enable() is moved to
+> separate function msm_pinctrl_clear_pending_irq(), it needs invoke from
+> at the end of msm_gpio_irq_set_type() too.
+
+Seems reasonable to me.  I'll include this in my next spin.  Still
+waiting for us to agree on some of the points above before spinning,
+though.
+
+-Doug
