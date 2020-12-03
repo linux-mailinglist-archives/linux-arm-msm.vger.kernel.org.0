@@ -2,128 +2,334 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 941F02CD467
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Dec 2020 12:15:54 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B79F42CD494
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Dec 2020 12:30:18 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727007AbgLCLPg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 3 Dec 2020 06:15:36 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38108 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729231AbgLCLPg (ORCPT
+        id S1725902AbgLCL2x (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 3 Dec 2020 06:28:53 -0500
+Received: from so254-31.mailgun.net ([198.61.254.31]:32612 "EHLO
+        so254-31.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725985AbgLCL2x (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 3 Dec 2020 06:15:36 -0500
-Received: from mail-pj1-x1044.google.com (mail-pj1-x1044.google.com [IPv6:2607:f8b0:4864:20::1044])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D1582C061A54
-        for <linux-arm-msm@vger.kernel.org>; Thu,  3 Dec 2020 03:14:38 -0800 (PST)
-Received: by mail-pj1-x1044.google.com with SMTP id b12so936877pjl.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 03 Dec 2020 03:14:38 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=Vv+PloNNQCpQeJh5mFlRBld7Nz2wsk2oArN9hYJ1dLo=;
-        b=ruBol5EyD4z5iiIGmPi+XlFOYN1ub6mXaE7F8GUllBzOn6Jhvt4ZuwuKC+13Tg8c4R
-         n+nJ4+x3UdaiG81iS73wCh0IkRkui1qN1RE8ckGX65woLtuFmezqrqVFfTEJ3F1/zA3n
-         xKwq8rVxdvmoiwA7CUHhFDtVrhKjuKiDP8oByQRke7NhjPKnmKO4oleXatMMayIoi2lJ
-         475QXbxrjRPp+T+YYXZG/2xzxPz0PjApfn5VqrCeh+K1XyHvTq+o6YYD5l/Q0I56QKVJ
-         bhQwyTV8MRB2QxH5r+L5Fi+wsJu89dJO3SjLhtGEfTNfBfDF10sAyZYbvR/j8q9gl0Z8
-         7aCQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=Vv+PloNNQCpQeJh5mFlRBld7Nz2wsk2oArN9hYJ1dLo=;
-        b=Rs5GqOVM2fXQ7KMFbyMZAXQJmvln0bRXbXdtGgpep+oZLo85ExfJzJ6ktJlpBZwh5v
-         fdgcEoqKGTxnMQAQJVA6Y8qH9NSmn3YYZB3uqCgMJw/ewFfq7v2zaubcbKrSUPQKxTgB
-         maMZZ/EihUOpaoXwOhr8EM9CyD2kebIWVAYa7m5ZFCtz0Uytmj3A7o/EGWguarDvHK2A
-         SBOphxISkE7iKCpuyaDjws0wUQJTqd/DwdGe1eShNMUir9UuYu1Z0wei7QcqHeZBhJUk
-         WLs04YOK9LaPXeWiI2kH6Gu5l1NsIPf4gTFQ26p/KR+cmctFxUGVs1iU1y12K041BH8Y
-         j/ZQ==
-X-Gm-Message-State: AOAM532Zwvfpil2C1F2J/xMfaN6EZ6UOUd3dn9J/J3oC60YeeydhXCsd
-        XGxh1qXBBmFrmbIHxjHctZ4o
-X-Google-Smtp-Source: ABdhPJz0bSnP8i8XsXIdivewK4frG9Qqo3zypWeyXWVDp7r+odBj7xIPGfrU6DQ/4tiLnL9TQyrTTA==
-X-Received: by 2002:a17:902:820e:b029:d6:e802:75aa with SMTP id x14-20020a170902820eb02900d6e80275aamr2696962pln.51.1606994078204;
-        Thu, 03 Dec 2020 03:14:38 -0800 (PST)
-Received: from thinkpad ([103.59.133.81])
-        by smtp.gmail.com with ESMTPSA id u24sm1696870pfm.81.2020.12.03.03.14.31
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 03 Dec 2020 03:14:37 -0800 (PST)
-Date:   Thu, 3 Dec 2020 16:44:27 +0530
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     angelogioacchino.delregno@somainline.org
-Cc:     viresh.kumar@linaro.org, rjw@rjwysocki.net,
-        jorge.ramirez-ortiz@linaro.org, robh+dt@kernel.org,
-        konrad.dybcio@somainline.org, linux-pm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, ulf.hansson@linaro.org,
-        nks@flawful.org, lgirdwood@gmail.com, daniel.lezcano@linaro.org,
-        devicetree@vger.kernel.org, bjorn.andersson@linaro.org,
-        phone-devel@vger.kernel.org, broonie@kernel.org,
-        linux-arm-msm@vger.kernel.org, agross@kernel.org,
-        marijn.suijten@somainline.org, martin.botka@somainline.org,
-        robh@kernel.org
-Subject: Re: [PATCH 11/13] dt-bindings: cpufreq: Convert qcom-cpufreq-hw to
- YAML binding
-Message-ID: <20201203111427.GA3937@thinkpad>
-References: <20201126184559.3052375-1-angelogioacchino.delregno@somainline.org>
- <20201126184559.3052375-12-angelogioacchino.delregno@somainline.org>
- <20201130172305.GA2661895@robh.at.kernel.org>
+        Thu, 3 Dec 2020 06:28:53 -0500
+X-Greylist: delayed 321 seconds by postgrey-1.27 at vger.kernel.org; Thu, 03 Dec 2020 06:28:52 EST
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1606994912; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
+ Subject: Sender; bh=rB0mmHfWOBy9rR1CNJtBsCMHzAPJs2tJ1Xg5HDZ2iSA=; b=NZ611SRgH34uudzZM9kK5NI2xTw6xvCHCCDKNHWbQlya/Cv0vWCzde8Ly/Adh8dC6gmcA2H4
+ aljqTXAXE5tXe+3Og9dZJ7N474l6ZXUVsLt1Gs+gsjxPa2J5Hymt7E8R46uzHVc20u7K5g1N
+ ED+QXf1Mww6zzgLr7Wo/g9Qbn9I=
+X-Mailgun-Sending-Ip: 198.61.254.31
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n02.prod.us-west-2.postgun.com with SMTP id
+ 5fc8ca830ad88326311d4548 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 03 Dec 2020 11:22:43
+ GMT
+Sender: mkshah=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 1C8F8C43462; Thu,  3 Dec 2020 11:22:43 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        NICE_REPLY_A,SPF_FAIL,URIBL_BLOCKED autolearn=no autolearn_force=no
+        version=3.4.0
+Received: from [192.168.29.129] (unknown [49.36.79.175])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: mkshah)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 7B43FC43461;
+        Thu,  3 Dec 2020 11:22:36 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 7B43FC43461
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=mkshah@codeaurora.org
+Subject: Re: [PATCH v2 3/3] pinctrl: qcom: Clear possible pending irq when
+ remuxing GPIOs
+To:     Doug Anderson <dianders@chromium.org>,
+        Rajendra Nayak <rnayak@codeaurora.org>
+Cc:     Marc Zyngier <maz@kernel.org>,
+        Thomas Gleixner <tglx@linutronix.de>,
+        Jason Cooper <jason@lakedaemon.net>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
+        Neeraj Upadhyay <neeraju@codeaurora.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Srinivas Ramana <sramana@codeaurora.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        LKML <linux-kernel@vger.kernel.org>
+References: <20201124094636.v2.1.I2702919afc253e2a451bebc3b701b462b2d22344@changeid>
+ <20201124094636.v2.3.I771b6594b2a4d5b7fe7e12a991a6640f46386e8d@changeid>
+ <d6c5dba9-bcc7-fac9-dd41-c989509c822b@codeaurora.org>
+ <CAD=FV=UOSkHQMcSV8Zq5qPfBoUu5xYzfNZqUPmymvD7PXUAN4w@mail.gmail.com>
+From:   Maulik Shah <mkshah@codeaurora.org>
+Message-ID: <b84d5bb4-e413-ad20-a19a-c7420abd5d5d@codeaurora.org>
+Date:   Thu, 3 Dec 2020 16:52:33 +0530
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.5.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20201130172305.GA2661895@robh.at.kernel.org>
+In-Reply-To: <CAD=FV=UOSkHQMcSV8Zq5qPfBoUu5xYzfNZqUPmymvD7PXUAN4w@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-GB
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+Hi Doug,
 
-On Mon, Nov 30, 2020 at 10:23:05AM -0700, Rob Herring wrote:
-> On Thu, 26 Nov 2020 19:45:57 +0100, AngeloGioacchino Del Regno wrote:
-> > Convert the qcom-cpufreq-hw documentation to YAML binding as
-> > qcom,cpufreq-hw.yaml.
-> > 
-> > Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
+On 12/1/2020 3:14 AM, Doug Anderson wrote:
+> Hi,
+>
+> On Mon, Nov 30, 2020 at 2:33 AM Maulik Shah <mkshah@codeaurora.org> wrote:
+>>> [1] https://lore.kernel.org/r/603c691f-3614-d87b-075a-0889e9ffc453@codeaurora.org
+>> Please wait to land [1] before i confirm with HW team if this is indeed
+>> valid case.
+> Oh, oops.  Somehow I thought your reply was in response to patch #3 in
+> the series, not #1.  I responded to patch #1 in the series now to make
+> it clear to wait for you.
+>
+>
+>>> @@ -187,15 +217,26 @@ static int msm_pinmux_set_mux(struct pinctrl_dev *pctldev,
+>>>        if (WARN_ON(i == g->nfuncs))
+>>>                return -EINVAL;
+>>>
+>>> -     raw_spin_lock_irqsave(&pctrl->lock, flags);
+>>> +     disable_irq(irq);
+>>>
+>>> -     val = msm_readl_ctl(pctrl, g);
+>>> +     raw_spin_lock_irqsave(&pctrl->lock, flags);
+>>> +     oldval = val = msm_readl_ctl(pctrl, g);
+>>>        val &= ~mask;
+>>>        val |= i << g->mux_bit;
+>>>        msm_writel_ctl(val, pctrl, g);
+>>> -
+>>>        raw_spin_unlock_irqrestore(&pctrl->lock, flags);
+>>>
+>>> +     /*
+>>> +      * Clear IRQs if switching to/from GPIO mode since muxing to/from
+>>> +      * the GPIO path can cause phantom edges.
+>>> +      */
+>>> +     old_i = (oldval & mask) >> g->mux_bit;
+>>> +     if (old_i != i &&
+>>> +         (i == pctrl->soc->gpio_func || old_i == pctrl->soc->gpio_func))
+>>> +             msm_pinctrl_clear_pending_irq(pctrl, group, irq);
+>>> +
+>> The phantom irq can come when switching to GPIO irq mode. so may be only
+>> check if (i == pctrl->soc->gpio_func) {
+> Have you tested this experimentally?
+Yes
+>
+> I have experimentally tested this and I can actually see an interrupt
+> generated when I _leave_ GPIO as well as when I enter GPIO mode.  If
+> you can't see this I can re-setup my test, but this was one of those
+> things that convinced me that the _transition_ is what was causing the
+> fake interrupt.
+>
+> I think my test CL <https://crrev.com/c/2556012/> can help you with
+> testing if you wish.
+>
+>
+>> even better if you can clear this unconditionally.
+> Why?  It should only matter if we're going to/from GPIO mode.
 
-There is already a patch floating for this. Please see:
-https://lkml.org/lkml/2020/10/20/676
+Probably i was not clear, the phantom irq should be cleared when 
+switching gpio to gpio IRQ mode.
+
+When GPIO was used as Rx line in example QUP/UART use case, it can latch 
+the phantom IRQ but as long as its IRQ is in disabled/masked state it 
+doesn't matter.
+
+its only when the GPIO is again set to IRQ mode with set_mux callback, 
+the phantom IRQ needs clear to start as clean.
+
+So we should check only for if (i == pctrl->soc->gpio_func) then clear 
+phantom IRQ.
+
+The same is case with .direction_output callback, when GPIO is used as 
+output say as clock, need not clear any phantom IRQ,
+
+The reason is with every pulse of clock it can latch as pending IRQ in 
+GIC_ISPEND as long as it stay as output mode/clock.
+
+its only when switching back GPIO from output direction to input & IRQ 
+function, need to clear the phantom IRQ.
+
+so we do not require clear phantom irq in .direction_output callback.
+
+>
+>
+>>> @@ -456,32 +497,49 @@ static const struct pinconf_ops msm_pinconf_ops = {
+>>>    static int msm_gpio_direction_input(struct gpio_chip *chip, unsigned offset)
+>>>    {
+>>>        const struct msm_pingroup *g;
+>>> +     unsigned int irq = irq_find_mapping(chip->irq.domain, offset);
+>>>        struct msm_pinctrl *pctrl = gpiochip_get_data(chip);
+>>>        unsigned long flags;
+>>> +     u32 oldval;
+>>>        u32 val;
+>>>
+>>>        g = &pctrl->soc->groups[offset];
+>>>
+>>> +     disable_irq(irq);
+>>> +
+>>>        raw_spin_lock_irqsave(&pctrl->lock, flags);
+>>>
+>>> -     val = msm_readl_ctl(pctrl, g);
+>>> +     oldval = val = msm_readl_ctl(pctrl, g);
+>>>        val &= ~BIT(g->oe_bit);
+>>>        msm_writel_ctl(val, pctrl, g);
+>>>
+>>>        raw_spin_unlock_irqrestore(&pctrl->lock, flags);
+>>>
+>>> +     /*
+>>> +      * Clear IRQs if switching to/from input mode since that can use
+>>> +      * a phantom edge.
+>>> +      */
+>>> +     if (oldval != val)
+>>> +             msm_pinctrl_clear_pending_irq(pctrl, offset, irq);
+>> same as above, can you clear this unconditionally.
+> Any reason why?  If we didn't change anything then there's no reason
+> to go through all this extra code?
+>
+>
+>>>    static int msm_gpio_direction_output(struct gpio_chip *chip, unsigned offset, int value)
+>>>    {
+>>>        const struct msm_pingroup *g;
+>>> +     unsigned int irq = irq_find_mapping(chip->irq.domain, offset);
+>>>        struct msm_pinctrl *pctrl = gpiochip_get_data(chip);
+>>>        unsigned long flags;
+>>> +     u32 oldval;
+>>>        u32 val;
+>>>
+>>>        g = &pctrl->soc->groups[offset];
+>>>
+>>> +     disable_irq(irq);
+>>> +
+>>>        raw_spin_lock_irqsave(&pctrl->lock, flags);
+>>>
+>>>        val = msm_readl_io(pctrl, g);
+>>> @@ -491,12 +549,21 @@ static int msm_gpio_direction_output(struct gpio_chip *chip, unsigned offset, in
+>>>                val &= ~BIT(g->out_bit);
+>>>        msm_writel_io(val, pctrl, g);
+>>>
+>>> -     val = msm_readl_ctl(pctrl, g);
+>>> +     oldval = msm_readl_ctl(pctrl, g);
+>> should be, oldval = val = msm_readl_ctl(pctrl, g);
+>>
+>> otherwise val will carry invalid value.
+> Whoa!  Good catch.  How did I miss that and how did it not fail?  I
+> will fix in a v3 but will wait until other questions are resolved
+> before sending.
+>
+>
+>>>        val |= BIT(g->oe_bit);
+>>>        msm_writel_ctl(val, pctrl, g);
+>>>
+>>>        raw_spin_unlock_irqrestore(&pctrl->lock, flags);
+>>>
+>>> +     /*
+>>> +      * Clear IRQs if switching to/from input mode since that can use
+>>> +      * a phantom edge.
+>>> +      */
+>>> +     if (oldval != val)
+>>> +             msm_pinctrl_clear_pending_irq(pctrl, offset, irq);
+>> i don't see a reason to clear the edges when switching to output mode.
+>>
+>> can you remove the changes from .direction_output callback?
+> I haven't confirmed that this can glitch, however I did confirm that I
+> could glitch when muxing _away_ from GPIO mode.  This makes me believe
+> that I could also glitch when muxing to an output.
+>
+> I can try to concoct a test for this if necessary.
+>
+>
+>>> @@ -792,17 +859,6 @@ static void msm_gpio_irq_clear_unmask(struct irq_data *d, bool status_clear)
+>>>
+>>>        raw_spin_lock_irqsave(&pctrl->lock, flags);
+>>>
+>>> -     if (status_clear) {
+>>> -             /*
+>>> -              * clear the interrupt status bit before unmask to avoid
+>>> -              * any erroneous interrupts that would have got latched
+>>> -              * when the interrupt is not in use.
+>>> -              */
+>>> -             val = msm_readl_intr_status(pctrl, g);
+>>> -             val &= ~BIT(g->intr_status_bit);
+>>> -             msm_writel_intr_status(val, pctrl, g);
+>>> -     }
+>>> -
+>> Above change was clearing irq in .irq_enable callback which will do
+>> clear + unmask from irq_startup() at the very end.
+>> With your change, The problem is we have cleared the phantom irq much
+>> earlier in __setup_irq() phase and in below case its still latched as
+>> pending.
+>>
+>> 1. The client driver calls request_irq() => __setup_irq()
+>> 2. __setup_irq() then first invokes irq_request_resources() =>
+>> msm_gpio_irq_reqres() => msm_pinmux_set_mux() =>
+>> msm_pinctrl_clear_pending_irq()
+>> 3. __setup_irq() goes ahead and invokes __irq_set_trigger() =>
+>> msm_gpio_irq_set_type()
+>> 4. __setup_irq() then invokes irq_startup() => gpiochip_irq_enable() =>
+>> msm_gpio_irq_enable()
+>>
+>> The phantom irq gets cleared in step (2) here, but with step (3) it gets
+>> latched again and at the end of step (4) still get phantom irq.
+>> This seems because as per below comment in driver, pasting the part
+>> which has info,
+>> /*
+>>    * The edge detection logic seems to have a problem where toggling the
+>> RAW_STATUS_EN bit may
+>>    * cause the status bit to latch spuriously when there isn't any edge
+>>    */
+>> In step (3) msm_gpio_irq_set_type() touches the RAW_STATUS_EN making the
+>> phantom irq pending again.
+>> To resolve this, you will need to invoke msm_pinctrl_clear_pending_irq()
+>> at the end of the msm_gpio_irq_set_type().
+>>
+>> I would like Rajendra's (already in cc) review as well on above part.
+> Ugh, so we need a clear in yet another place.  Joy.  OK, I will wait
+> for Rajendra's comment but I can add similar code in
+> msm_gpio_irq_enable().
+
+As the clearing phantom irq code in msm_gpio_irq_enable() is moved to 
+separate function msm_pinctrl_clear_pending_irq(), it needs invoke from 
+at the end of msm_gpio_irq_set_type() too.
 
 Thanks,
-Mani
+Maulik
+>
+>
+>>>        val = msm_readl_intr_cfg(pctrl, g);
+>>>        val |= BIT(g->intr_raw_status_bit);
+>>>        val |= BIT(g->intr_enable_bit);
+>>> @@ -815,14 +871,10 @@ static void msm_gpio_irq_clear_unmask(struct irq_data *d, bool status_clear)
+>>>
+>>>    static void msm_gpio_irq_enable(struct irq_data *d)
+>>>    {
+>>> -     struct gpio_chip *gc = irq_data_get_irq_chip_data(d);
+>>> -     struct msm_pinctrl *pctrl = gpiochip_get_data(gc);
+>>> -
+>>>        if (d->parent_data)
+>>>                irq_chip_enable_parent(d);
+>>>
+>>> -     if (!test_bit(d->hwirq, pctrl->skip_wake_irqs))
+>>> -             msm_gpio_irq_clear_unmask(d, true);
+>>> +     msm_gpio_irq_unmask(d);
+>> Still need the above if condition, the previous call
+>> irq_chip_enable_parent() already enabled the IRQ at PDC and GIC, so only
+>> go ahead to enable it at TLMM if there wasn't any parent.
+>>
+>> if (!test_bit(d->hwirq, pctrl->skip_wake_irqs))
+>>           msm_gpio_irq_unmask(d);
+> Right.  I'll fix it when I send the v3.  Thanks!
+>
+> -Doug
 
-> > ---
-> >  .../bindings/cpufreq/cpufreq-qcom-hw.txt      | 173 +---------------
-> >  .../bindings/cpufreq/qcom,cpufreq-hw.yaml     | 196 ++++++++++++++++++
-> >  2 files changed, 197 insertions(+), 172 deletions(-)
-> >  create mode 100644 Documentation/devicetree/bindings/cpufreq/qcom,cpufreq-hw.yaml
-> > 
-> 
-> 
-> My bot found errors running 'make dt_binding_check' on your patch:
-> 
-> yamllint warnings/errors:
-> 
-> dtschema/dtc warnings/errors:
-> /builds/robherring/linux-dt-review/Documentation/devicetree/bindings/cpufreq/qcom,cpufreq-hw.yaml: properties:clock-names: [{'const': 'xo'}, {'const': 'ref'}] is not of type 'object', 'boolean'
-> /builds/robherring/linux-dt-review/Documentation/devicetree/bindings/cpufreq/qcom,cpufreq-hw.yaml: maintainers:0: 'TBD' is not a 'email'
-> /builds/robherring/linux-dt-review/Documentation/devicetree/bindings/cpufreq/qcom,cpufreq-hw.yaml: ignoring, error in schema: properties: clock-names
-> warning: no schema found in file: ./Documentation/devicetree/bindings/cpufreq/qcom,cpufreq-hw.yaml
-> Error: Documentation/devicetree/bindings/cpufreq/qcom,cpufreq-hw.example.dts:150.3-151.1 syntax error
-> FATAL ERROR: Unable to parse input tree
-> make[1]: *** [scripts/Makefile.lib:342: Documentation/devicetree/bindings/cpufreq/qcom,cpufreq-hw.example.dt.yaml] Error 1
-> make[1]: *** Waiting for unfinished jobs....
-> make: *** [Makefile:1364: dt_binding_check] Error 2
-> 
-> 
-> See https://patchwork.ozlabs.org/patch/1406857
-> 
-> The base for the patch is generally the last rc1. Any dependencies
-> should be noted.
-> 
-> If you already ran 'make dt_binding_check' and didn't see the above
-> error(s), then make sure 'yamllint' is installed and dt-schema is up to
-> date:
-> 
-> pip3 install dtschema --upgrade
-> 
-> Please check and re-submit.
-> 
+-- 
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum, hosted by The Linux Foundation
+
