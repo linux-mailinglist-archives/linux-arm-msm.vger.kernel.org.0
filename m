@@ -2,93 +2,250 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 3CAD82CE2E3
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Dec 2020 00:46:27 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 10E932CE311
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Dec 2020 00:51:16 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726063AbgLCXqW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 3 Dec 2020 18:46:22 -0500
-Received: from m43-15.mailgun.net ([69.72.43.15]:31593 "EHLO
-        m43-15.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729721AbgLCXqW (ORCPT
+        id S1728521AbgLCXuN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 3 Dec 2020 18:50:13 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42486 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728195AbgLCXuN (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 3 Dec 2020 18:46:22 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1607039156; h=Content-Transfer-Encoding: Content-Type:
- In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
- Subject: Sender; bh=JlX36sKBivxDBM8LHGzMecxeZx7IR6GkR5hJ7tvId/Y=; b=k7Lka6YihjAlrg0YM5wOLDM9hh/jigZ1+O3H/h9Z7tnJjGJyhNEegurhsFFFl71kI+eKf2px
- rWmMlHZXCTCPGNQrcW5EWZVMdZGS9mi4+upeCrLm5WPSbK9PEW97UAs6ewuDROcTeT87oHn4
- pclt7+Ki/seGE8p4GR8byAmHMn4=
-X-Mailgun-Sending-Ip: 69.72.43.15
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n10.prod.us-east-1.postgun.com with SMTP id
- 5fc97897aac9455097317380 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 03 Dec 2020 23:45:27
- GMT
-Sender: jhugo=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 6FB55C433ED; Thu,  3 Dec 2020 23:45:26 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        NICE_REPLY_A,SPF_FAIL,URIBL_BLOCKED autolearn=no autolearn_force=no
-        version=3.4.0
-Received: from [10.226.59.216] (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: jhugo)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id EBD82C433CA;
-        Thu,  3 Dec 2020 23:45:24 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org EBD82C433CA
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=jhugo@codeaurora.org
-Subject: Re: [PATCH v15 4/4] bus: mhi: Add userspace client interface driver
-To:     Hemant Kumar <hemantk@codeaurora.org>,
-        manivannan.sadhasivam@linaro.org, gregkh@linuxfoundation.org
-Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        bbhatt@codeaurora.org, loic.poulain@linaro.org,
-        netdev@vger.kernel.org
-References: <1607035516-3093-1-git-send-email-hemantk@codeaurora.org>
- <1607035516-3093-5-git-send-email-hemantk@codeaurora.org>
-From:   Jeffrey Hugo <jhugo@codeaurora.org>
-Message-ID: <1bcddc1c-e489-c867-77fb-f6893a101900@codeaurora.org>
-Date:   Thu, 3 Dec 2020 16:45:24 -0700
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.4.3
+        Thu, 3 Dec 2020 18:50:13 -0500
+Received: from mail-ot1-x343.google.com (mail-ot1-x343.google.com [IPv6:2607:f8b0:4864:20::343])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F3019C061A53
+        for <linux-arm-msm@vger.kernel.org>; Thu,  3 Dec 2020 15:49:32 -0800 (PST)
+Received: by mail-ot1-x343.google.com with SMTP id 11so3543745oty.9
+        for <linux-arm-msm@vger.kernel.org>; Thu, 03 Dec 2020 15:49:32 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=eYzpXn2E+PtsFrowgbtsizm+OigYiy9qJVDjZXkd4Gc=;
+        b=XX5+WOirgJ3HukulXrRv0Kl7iRXGwP+T1hhkDxHO7AKBpL2l1HG7cw30q5Bcwf/Rye
+         fhZ3JIaFK5lDysUQAWN74QGV8ivonjkDMuN3zjYyWFNBqqGCghs+tpEXI7z9CQmLeVQk
+         VIwX8t3pk2b7p0/9oQi3w6TmSU+f9Bz1BPGvwg3OBEb1uTukn7OBpOuWvcVOc/9WDQBs
+         b5MCPjfLRo+VVoqCXlVdDRrXPfh6wGtBSWY2z9C5RrNolCubHtHkpqPjSWM9Z3s/afus
+         VFNqx7qpc+6reHQcJ5U2Szr1o/s8s8jFdURtabgEdKFJclFRnQEPtKFFO3ZBszz4VGxJ
+         y9oA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=eYzpXn2E+PtsFrowgbtsizm+OigYiy9qJVDjZXkd4Gc=;
+        b=JaJTSSwSDbVXPyCSLROK+QTr9LyuVgS95XHZ5r3/DtHQwvdmhiH3bSbOAfHzSsDJgL
+         ZVz3jynoEIEblbL85aiOmYNHuO2K36MRCh/60ikQhXFoN7ny4N+ci2Pw45BiYisKmUNS
+         bC+swe1tt1cmoowri+X/lWtERVpvJyS//pbXws7CkZW7ELvB2EgFhi/b6BJtpPpJ8LPp
+         7El9U1kZN69WC0twdo6HlEneKEDedSj+FrHb4sZWnug/apLQ95nu7JipVFOtXvPuJfue
+         r40Jg40EayiANZD6oma/hNa6e4VyT0TBBjrkWnoWGDFgoBlHXqnuCbTr0XXKXrqKvcnW
+         IX/w==
+X-Gm-Message-State: AOAM5328YtCexBkjJcxqDZJwYkv6IFABWX8mBRKTb5vVgXRGDFbil2pZ
+        C2Kf8yH+VmtT6ovC0QL6zrhNOw==
+X-Google-Smtp-Source: ABdhPJwEasVdkAd5MYVhbnGuvDgFL/mC3QqZI/zcW1AUAbRLhIF3jsz0diJRK+YQxI76R5TLm6Z5Qg==
+X-Received: by 2002:a9d:ece:: with SMTP id 72mr1451657otj.358.1607039372217;
+        Thu, 03 Dec 2020 15:49:32 -0800 (PST)
+Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
+        by smtp.gmail.com with ESMTPSA id c6sm226867oif.48.2020.12.03.15.49.31
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 03 Dec 2020 15:49:31 -0800 (PST)
+Date:   Thu, 3 Dec 2020 17:49:29 -0600
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Vinod Koul <vkoul@kernel.org>
+Cc:     Linus Walleij <linus.walleij@linaro.org>,
+        linux-arm-msm@vger.kernel.org, Andy Gross <agross@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>, linux-gpio@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 1/2] dt-bindings: pinctrl: qcom: Add SM8350 pinctrl
+ bindings
+Message-ID: <X8l5ietmcGv/i7Vx@builder.lan>
+References: <20201203070900.2651127-1-vkoul@kernel.org>
 MIME-Version: 1.0
-In-Reply-To: <1607035516-3093-5-git-send-email-hemantk@codeaurora.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20201203070900.2651127-1-vkoul@kernel.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 12/3/2020 3:45 PM, Hemant Kumar wrote:
-> This MHI client driver allows userspace clients to transfer
-> raw data between MHI device and host using standard file operations.
-> Driver instantiates UCI device object which is associated to device
-> file node. UCI device object instantiates UCI channel object when device
-> file node is opened. UCI channel object is used to manage MHI channels
-> by calling MHI core APIs for read and write operations. MHI channels
-> are started as part of device open(). MHI channels remain in start
-> state until last release() is called on UCI device file node. Device
-> file node is created with format
-> 
-> /dev/<mhi_device_name>
-> 
-> Currently it supports QMI channel.
-> 
-> Signed-off-by: Hemant Kumar <hemantk@codeaurora.org>
-> Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> Reviewed-by: Jeffrey Hugo <jhugo@codeaurora.org>
+On Thu 03 Dec 01:08 CST 2020, Vinod Koul wrote:
 
-You dropped Loic's tested by.  Was that a mistake, or did something 
-actually change which would invalidate his testing?
+> Add device tree binding Documentation details for Qualcomm SM8350
+> pinctrl driver.
+> 
+> Signed-off-by: Vinod Koul <vkoul@kernel.org>
+> ---
+>  .../pinctrl/qcom,sdm8350-pinctrl.yaml         | 151 ++++++++++++++++++
+>  1 file changed, 151 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/pinctrl/qcom,sdm8350-pinctrl.yaml
+> 
+> diff --git a/Documentation/devicetree/bindings/pinctrl/qcom,sdm8350-pinctrl.yaml b/Documentation/devicetree/bindings/pinctrl/qcom,sdm8350-pinctrl.yaml
+> new file mode 100644
+> index 000000000000..a47d120a3fd0
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/pinctrl/qcom,sdm8350-pinctrl.yaml
+> @@ -0,0 +1,151 @@
+> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/pinctrl/qcom,sdm8350-pinctrl.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: Qualcomm Technologies, Inc. SM8350 TLMM block
+> +
+> +maintainers:
+> +  - Vinod Koul <vkoul@kernel.org>
+> +
+> +description: |
+> +  This binding describes the Top Level Mode Multiplexer block found in the
+> +  SM8350 platform.
+> +
+> +properties:
+> +  compatible:
+> +    const: qcom,sm8350-pinctrl
+> +
+> +  reg:
+> +    description: Specifies the base address and size of the TLMM register space
+> +    maxItems: 1
+> +
+> +  interrupts:
+> +    description: Specifies the TLMM summary IRQ
+> +    maxItems: 1
+> +
+> +  interrupt-controller: true
+> +
+> +  '#interrupt-cells':
+> +    description: Specifies the PIN numbers and Flags, as defined in
+> +      include/dt-bindings/interrupt-controller/irq.h
+> +    const: 2
+> +
+> +  gpio-controller: true
+> +
+> +  '#gpio-cells':
+> +    description: Specifying the pin number and flags, as defined in
+> +      include/dt-bindings/gpio/gpio.h
+> +    const: 2
+> +
+> +  gpio-ranges:
+> +    maxItems: 1
+> +
+> +  gpio-reserved-ranges:
+> +    maxItems: 1
+> +
+> +#PIN CONFIGURATION NODES
+> +patternProperties:
+> +  '-pins$':
+> +    type: object
+> +    description:
+> +      Pinctrl node's client devices use subnodes for desired pin configuration.
+> +      Client device subnodes use below standard properties.
+> +    $ref: "/schemas/pinctrl/pincfg-node.yaml"
+> +
+> +    properties:
+> +      pins:
+> +        description:
+> +          List of gpio pins affected by the properties specified in this subnode.
+> +        items:
+> +          oneOf:
+> +            - pattern: "^gpio([0-9]|[1-9][0-9]|1[0-1][0-6])$"
 
--- 
-Jeffrey Hugo
-Qualcomm Technologies, Inc. is a member of the
-Code Aurora Forum, a Linux Foundation Collaborative Project.
+That doesn't cover the entire pin space, I think should be:
+
+	"^gpio([0-9]|[1-9][0-9]|1[0-9][0-9]|20[0-3])$"
+
+> +            - enum: [ sdc1_clk, sdc1_cmd, sdc1_data, sdc2_clk, sdc2_cmd, sdc2_data ]
+> +        minItems: 1
+> +        maxItems: 36
+> +
+> +      function:
+> +        description:
+> +          Specify the alternative function to be configured for the specified
+> +          pins. Functions are only valid for gpio pins.
+> +        enum: [ atest_char, atest_usb, audio_ref, cam_mclk, cci_async,
+> +                cci_i2c, cci_timer, cmu_rng, coex_uart1, coex_uart2, cri_trng,
+> +                cri_trng0, cri_trng1, dbg_out, ddr_bist, ddr_pxi0, ddr_pxi1,
+> +                ddr_pxi2, ddr_pxi3, dp_hot, dp_lcd, gcc_gp1, gcc_gp2, gcc_gp3,
+> +                gpio, ibi_i3c, jitter_bist, lpass_slimbus, mdp_vsync, mdp_vsync0,
+> +                mdp_vsync1, mdp_vsync2, mdp_vsync3, mi2s0_data0, mi2s0_data1,
+> +                mi2s0_sck, mi2s0_ws, mi2s1_data0, mi2s1_data1, mi2s1_sck,
+> +                mi2s1_ws, mi2s2_data0, mi2s2_data1, mi2s2_sck, mi2s2_ws,
+> +                mss_grfc0, mss_grfc1, mss_grfc10, mss_grfc11, mss_grfc12,
+> +                mss_grfc2, mss_grfc3, mss_grfc4, mss_grfc5, mss_grfc6,
+> +                mss_grfc7, mss_grfc8, mss_grfc9, nav_gpio, pa_indicator,
+> +                pcie0_clkreqn, pcie1_clkreqn, phase_flag, pll_bist, pll_clk,
+> +                pri_mi2s, prng_rosc, qdss_cti, qdss_gpio, qlink0_enable,
+> +                qlink0_request, qlink0_wmss, qlink1_enable, qlink1_request,
+> +                qlink1_wmss, qlink2_enable, qlink2_request, qlink2_wmss, qspi0,
+> +                qspi1, qspi2, qspi3, qspi_clk, qspi_cs, qup0, qup1, qup10,
+> +                qup11, qup12, qup13, qup14, qup15, qup16, qup17, qup18, qup19,
+> +                qup2, qup3, qup4, qup5, qup6, qup7, qup8, qup9, qup_l4, qup_l5,
+> +                qup_l6, sd_write, sdc40, sdc41, sdc42, sdc43, sdc4_clk,
+> +                sdc4_cmd, sec_mi2s, tb_trig, tgu_ch0, tgu_ch1, tgu_ch2,
+> +                tgu_ch3, tsense_pwm1, tsense_pwm2, uim0_clk, uim0_data,
+> +                uim0_present, uim0_reset, uim1_clk, uim1_data, uim1_present,
+> +                uim1_reset, usb2phy_ac, usb_phy, vfr_0, vfr_1, vsense_trigger ]
+> +
+> +
+> +      drive-strength:
+> +        enum: [2, 4, 6, 8, 10, 12, 14, 16]
+> +        default: 2
+> +        description:
+> +          Selects the drive strength for the specified pins, in mA.
+> +
+> +      bias-pull-down: true
+> +
+> +      bias-pull-up: true
+> +
+> +      bias-disable: true
+> +
+> +      output-high: true
+> +
+> +      output-low: true
+> +
+> +    required:
+> +      - pins
+> +      - function
+> +
+> +    additionalProperties: false
+> +
+> +required:
+> +  - compatible
+> +  - reg
+> +  - interrupts
+> +  - interrupt-controller
+> +  - '#interrupt-cells'
+> +  - gpio-controller
+> +  - '#gpio-cells'
+> +  - gpio-ranges
+> +
+> +additionalProperties: false
+> +
+> +examples:
+> +  - |
+> +        #include <dt-bindings/interrupt-controller/arm-gic.h>
+> +        tlmm: pinctrl@f000000 {
+> +          compatible = "qcom,sm8350-pinctrl";
+> +          reg = <0x0f100000 0x300000>;
+> +          interrupts = <GIC_SPI 208 IRQ_TYPE_LEVEL_HIGH>;
+> +          gpio-controller;
+> +          #gpio-cells = <2>;
+> +          interrupt-controller;
+> +          #interrupt-cells = <2>;
+> +          gpio-ranges = <&tlmm 0 0 203>;
+> +          serial-pins {
+> +            pins = "gpio18", "gpio19";
+> +            function = "qup3";
+> +            drive-strength = <8>;
+> +            bias-disable;
+> +            };
+
+Indentation is slightly off here.
+
+Regards,
+Bjorn
+
+> +        };
+> +
+> +...
+> -- 
+> 2.26.2
+> 
