@@ -2,98 +2,81 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 4C4AF2CCB3A
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Dec 2020 01:49:19 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D59D12CCB46
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Dec 2020 01:52:46 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726498AbgLCAsK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 2 Dec 2020 19:48:10 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54176 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725916AbgLCAsK (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 2 Dec 2020 19:48:10 -0500
-Received: from mail-pl1-x643.google.com (mail-pl1-x643.google.com [IPv6:2607:f8b0:4864:20::643])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 40120C0617A6
-        for <linux-arm-msm@vger.kernel.org>; Wed,  2 Dec 2020 16:47:30 -0800 (PST)
-Received: by mail-pl1-x643.google.com with SMTP id s2so173499plr.9
-        for <linux-arm-msm@vger.kernel.org>; Wed, 02 Dec 2020 16:47:30 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:content-transfer-encoding:in-reply-to:references
-         :subject:from:cc:to:date:message-id:user-agent;
-        bh=0iSNRCsv4QiujIvck7LYjf+I2m3BZnqlwW9BXnXzbgg=;
-        b=fb/2kM6RvKx/QCzksjNVKwIbgLuaxVZ71SfRliwn9NTj2150eRm466siPuBe+587Hz
-         WUmeb3sK7JQ34RniAA6QgcIZWbKfNGx/KMMgttWuwU2PkKIHCdSYQOi9S7xQ3FZZ6mCp
-         qId5NR09c2AWb0Rr5vIXtkNA9Iy78eUUZby2Y=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:content-transfer-encoding
-         :in-reply-to:references:subject:from:cc:to:date:message-id
-         :user-agent;
-        bh=0iSNRCsv4QiujIvck7LYjf+I2m3BZnqlwW9BXnXzbgg=;
-        b=qOzpEKm2VEV2uBv5Yv3c4OwZnA5qO/G9ccYnC4/n7VbZCaBB7G0U0au4+RcKQHfJtZ
-         xZuRm/1i56YC4D8gvop/lg9QLrZbnBPJXjko13tZkigfZvC/etegrprNtw3ns7XMj8ZT
-         U/Q7bbZZx/N9gcj+cRhOMPG7kecKsBekD9X9y7XOP1kHeK6bB7xhFhs4HAI0k0B6giZH
-         pnTkScuQ47AVWKP85JWODtPHpVASsibMgaGp0jCEMQrwiVdkUJIeHt854vCPAbVfrd7p
-         wu6RoJBu13yImouJVSmoyj/C26ttuDZ8fP8rNJ+nCkI1RIZhjo1WAFiMbkinvXkd5zuX
-         YW9A==
-X-Gm-Message-State: AOAM5321qFgClOEBeYirKH5SOG2xABC3qLS2qdAIJvTZDSDsTp3soNfN
-        D4LU4P/5q9K+Fm1n6xpOhJ44xw==
-X-Google-Smtp-Source: ABdhPJyv6jlyr3LJAukcdyuq16gEaaYmf9e1YpSO8VOsuY9Xi/2YetHzz+4GVXUde2fs5UvNR5MaAQ==
-X-Received: by 2002:a17:902:b70f:b029:da:b944:f3b7 with SMTP id d15-20020a170902b70fb02900dab944f3b7mr746054pls.82.1606956449808;
-        Wed, 02 Dec 2020 16:47:29 -0800 (PST)
-Received: from chromium.org ([2620:15c:202:201:3e52:82ff:fe6c:83ab])
-        by smtp.gmail.com with ESMTPSA id l190sm227210pfl.205.2020.12.02.16.47.29
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 02 Dec 2020 16:47:29 -0800 (PST)
-Content-Type: text/plain; charset="utf-8"
+        id S1726737AbgLCAwj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 2 Dec 2020 19:52:39 -0500
+Received: from m42-5.mailgun.net ([69.72.42.5]:60164 "EHLO m42-5.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726602AbgLCAwi (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 2 Dec 2020 19:52:38 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1606956740; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
+ Subject: Sender; bh=H6YZ3NaO+MJKMY9fmHq6iHbhqKdy3ip3qFAi6DuLAgA=; b=j7PS5l28AExxXmlDHSX8P8/cDHi4oKmiYOUSSw0p0eh4VAHu20wKCPTBZRuS9L/Y+iAwKhGE
+ y2QNCnuxxKs8++vkTnj3wkH8LgJYsxkSPdq414AW6xQ0vVBsqPnRzrdpQ6jyNFt5XwOZlhlw
+ /3pYZ5+L+f1ykzIhcHVHhdo13qc=
+X-Mailgun-Sending-Ip: 69.72.42.5
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n01.prod.us-east-1.postgun.com with SMTP id
+ 5fc836a77e5eb22240154319 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 03 Dec 2020 00:51:51
+ GMT
+Sender: hemantk=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 56D7FC43460; Thu,  3 Dec 2020 00:51:50 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        NICE_REPLY_A,SPF_FAIL,URIBL_BLOCKED autolearn=no autolearn_force=no
+        version=3.4.0
+Received: from [10.46.162.249] (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: hemantk)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id A5897C433C6;
+        Thu,  3 Dec 2020 00:51:49 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org A5897C433C6
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=hemantk@codeaurora.org
+Subject: Re: [PATCH v3 3/7] bus: mhi: core: Improvements to the channel
+ handling state machine
+To:     Bhaumik Bhatt <bbhatt@codeaurora.org>,
+        manivannan.sadhasivam@linaro.org
+Cc:     linux-arm-msm@vger.kernel.org, loic.poulain@linaro.org,
+        jhugo@codeaurora.org, linux-kernel@vger.kernel.org
+References: <1606952438-15321-1-git-send-email-bbhatt@codeaurora.org>
+ <1606952438-15321-4-git-send-email-bbhatt@codeaurora.org>
+From:   Hemant Kumar <hemantk@codeaurora.org>
+Message-ID: <5fab9ef7-1c39-a84e-ee54-179820bf4520@codeaurora.org>
+Date:   Wed, 2 Dec 2020 16:51:49 -0800
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.10.0
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <160695172591.2717324.17788035024164242534@swboyd.mtv.corp.google.com>
-References: <20201202214935.1114381-1-swboyd@chromium.org> <CAHNYxRwMD4XahHXWW9z7b=VCOEsdPe5Df4CohNwmBy_ijWJ62g@mail.gmail.com> <160695172591.2717324.17788035024164242534@swboyd.mtv.corp.google.com>
-Subject: Re: [PATCH] spi: spi-geni-qcom: Use the new method of gpio CS control
-From:   Stephen Boyd <swboyd@chromium.org>
-Cc:     Mark Brown <broonie@kernel.org>,
-        linux-kernel <linux-kernel@vger.kernel.org>,
-        linux-arm-msm@vger.kernel.org, linux-spi@vger.kernel.org,
-        Akash Asthana <akashast@codeaurora.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Douglas Anderson <dianders@chromium.org>
-To:     Alexandru M Stan <amstan@chromium.org>
-Date:   Wed, 02 Dec 2020 16:47:27 -0800
-Message-ID: <160695644776.2717324.633265815704005177@swboyd.mtv.corp.google.com>
-User-Agent: alot/0.9.1
+In-Reply-To: <1606952438-15321-4-git-send-email-bbhatt@codeaurora.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Stephen Boyd (2020-12-02 15:28:45)
-> Quoting Alexandru M Stan (2020-12-02 14:18:20)
-> > Unfortunately this patch makes my cros-ec (the main EC that used to
-> > work even before my debugging) also fail to probe:
-> > [    0.839533] cros-ec-spi spi6.0: EC failed to respond in time
-> > [    1.040453] cros-ec-spi spi6.0: EC failed to respond in time
-> > [    1.040852] cros-ec-spi spi6.0: Cannot identify the EC: error -110
-> > [    1.040855] cros-ec-spi spi6.0: cannot register EC, fallback to spid=
-ev
-> > [    1.040942] cros-ec-spi: probe of spi6.0 failed with error -110
-> >=20
-> > I wasn't closely looking at this part closely when I was using my
-> > other spi port with spidev, so this is why I haven't noticed it
-> > before.
-> > Doug suggests this might be a polarity issue. More scoping to be had.
-> >=20
->=20
-> Ah I see. It looks like the cs-gpios polarity is wrong for the DTS on
-> sc7180. That's a patch that Doug has sent in for the qcom tree, commit
-> 37dd4b777942 ("arm64: dts: qcom: sc7180: Provide pinconf for SPI to use
-> GPIO for CS") and it is pending for the next release (v5.11). Doug says
-> he will send in a fix for the DTS side, but this patch is still "good"
-> as far as I can tell. It moves us to use gpio descriptors and also finds
-> bugs like this in the DTS file that we would have missed otherwise
-> because the legacy mode doesn't look at the polarity flags in DT.
 
-And that is wrong. With even more investigation and Doug's eagle eyes it
-seems that the cros-ec driver is overriding the spi::mode to clear out
-the SPI_CS_HIGH bit that the spi core sets in there when using the gpio
-descriptors. I'll send a patch for cros-ec-spi shortly.
+
+On 12/2/20 3:40 PM, Bhaumik Bhatt wrote:
+> Add support to enable sending the stop channel command and
+> improve the channel handling state machine such that all commands
+> go through a common function. This can help ensure that the state
+> machine is not violated in any way and adheres to the MHI
+> specification.
+> 
+> Signed-off-by: Bhaumik Bhatt <bbhatt@codeaurora.org>
+> ---
+Reviewed-by: Hemant Kumar <hemantk@codeaurora.org>
+-- 
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
