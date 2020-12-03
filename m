@@ -2,99 +2,238 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 2B6A12CDF91
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Dec 2020 21:16:45 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4CDCA2CDFE3
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Dec 2020 21:47:01 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731218AbgLCUQN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 3 Dec 2020 15:16:13 -0500
-Received: from mail.kernel.org ([198.145.29.99]:40130 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727352AbgLCUQN (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 3 Dec 2020 15:16:13 -0500
-Date:   Thu, 3 Dec 2020 21:15:23 +0100
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1607026532;
-        bh=sTLisENEUL1Kv4Gz8uUtUdHhZyPXG36W6EFw4wIEQvg=;
-        h=From:To:Cc:Subject:References:In-Reply-To:From;
-        b=ZSDST5lJb21dROcR57sKm7LwP0X3KrZicV4vjl4MnY8wyN/ah9rq2kHPfQb+7WGy/
-         373wjhiEnu4m+vYcKQYuHQsu1NoFon76VbN9Q4RUvwpTGVeffdni9evz0J92DUxqna
-         cU48ClV+lvqfmlPKcj3ZgaDxIoPeUZUqbUfCGolZlbnLaMG6HulC/UpYKpwVwW3os8
-         QoLUXffxYDxpOVED+mN/erN5qz5B0a307VbLVQUsY9ksJERlmuQSHTq9TY3NzZysD4
-         xs81xIrAFNVHnSMvYn08BD3hm8c7jpytk+QBXZGnJQVOhXc3R/bfu0+UZswvy/evtn
-         MDUw1MTOmB8aQ==
-From:   Wolfram Sang <wsa@kernel.org>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Akash Asthana <akashast@codeaurora.org>,
-        Mukesh Savaliya <msavaliy@codeaurora.org>,
-        Sumit Semwal <sumit.semwal@linaro.org>,
-        Christian =?utf-8?B?S8O2bmln?= <christian.koenig@amd.com>,
-        Steev Klimaszewski <steev@kali.org>,
-        Shawn Guo <shawn.guo@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-i2c@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-media@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, linaro-mm-sig@lists.linaro.org
-Subject: Re: [PATCH] Revert "i2c: qcom-geni: Disable DMA processing on the
- Lenovo Yoga C630"
-Message-ID: <20201203201523.GA3585@kunai>
-Mail-Followup-To: Wolfram Sang <wsa@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Akash Asthana <akashast@codeaurora.org>,
-        Mukesh Savaliya <msavaliy@codeaurora.org>,
-        Sumit Semwal <sumit.semwal@linaro.org>,
-        Christian =?utf-8?B?S8O2bmln?= <christian.koenig@amd.com>,
-        Steev Klimaszewski <steev@kali.org>,
-        Shawn Guo <shawn.guo@linaro.org>, linux-arm-msm@vger.kernel.org,
-        linux-i2c@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-media@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        linaro-mm-sig@lists.linaro.org
-References: <20201124185743.401946-1-bjorn.andersson@linaro.org>
+        id S1727639AbgLCUoz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 3 Dec 2020 15:44:55 -0500
+Received: from m43-15.mailgun.net ([69.72.43.15]:23865 "EHLO
+        m43-15.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725885AbgLCUoz (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 3 Dec 2020 15:44:55 -0500
+X-Greylist: delayed 353 seconds by postgrey-1.27 at vger.kernel.org; Thu, 03 Dec 2020 15:44:54 EST
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1607028273; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=NqqsioQp0zqO93CJ60s2PFPzD2BsY6xnwm43kA5jPVk=;
+ b=i4H1phw88J1I5cgp7Tf10QOYSba9IldxWoV9Ftq9YY2cEoaw+DkUpJ1nAuyK9IaPYPvY+TdV
+ 0RXVn0tdspbuPEaambbBSDr52Vp7LnxpEtdNQ6SEsACesS2g8xNVoXSdUXeqGwrWEfkNduvt
+ CEuiFsgt46jRjox7ymDiSbm8vbE=
+X-Mailgun-Sending-Ip: 69.72.43.15
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n04.prod.us-west-2.postgun.com with SMTP id
+ 5fc94cb396285165cddf8817 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 03 Dec 2020 20:38:11
+ GMT
+Sender: jhugo=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id E3BAEC433ED; Thu,  3 Dec 2020 20:38:10 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: jhugo)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 76787C43461;
+        Thu,  3 Dec 2020 20:38:09 +0000 (UTC)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="u3/rZRmxL6MmkK24"
-Content-Disposition: inline
-In-Reply-To: <20201124185743.401946-1-bjorn.andersson@linaro.org>
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Thu, 03 Dec 2020 13:38:09 -0700
+From:   jhugo@codeaurora.org
+To:     Hemant Kumar <hemantk@codeaurora.org>
+Cc:     manivannan.sadhasivam@linaro.org, gregkh@linuxfoundation.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        bbhatt@codeaurora.org, loic.poulain@linaro.org,
+        netdev@vger.kernel.org, hemantk=codeaurora.org@codeaurora.org
+Subject: Re: [PATCH v14 3/4] docs: Add documentation for userspace client
+ interface
+In-Reply-To: <1606877991-26368-4-git-send-email-hemantk@codeaurora.org>
+References: <1606877991-26368-1-git-send-email-hemantk@codeaurora.org>
+ <1606877991-26368-4-git-send-email-hemantk@codeaurora.org>
+Message-ID: <86747d3a0e8555ee5369aaa3cb2ff947@codeaurora.org>
+X-Sender: jhugo@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On 2020-12-01 19:59, Hemant Kumar wrote:
+> MHI userspace client driver is creating device file node
+> for user application to perform file operations. File
+> operations are handled by MHI core driver. Currently
+> QMI MHI channel is supported by this driver.
+> 
+> Signed-off-by: Hemant Kumar <hemantk@codeaurora.org>
 
---u3/rZRmxL6MmkK24
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Two minor nits below.  With those -
+Reviewed-by: Jeffrey Hugo <jhugo@codeaurora.org>
 
-On Tue, Nov 24, 2020 at 12:57:43PM -0600, Bjorn Andersson wrote:
-> A combination of recent bug fixes by Doug Anderson and the proper
-> definition of iommu streams means that this hack is no longer needed.
-> Let's clean up the code by reverting '127068abe85b ("i2c: qcom-geni:
-> Disable DMA processing on the Lenovo Yoga C630")'.
->=20
-> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 > ---
+>  Documentation/mhi/index.rst |  1 +
+>  Documentation/mhi/uci.rst   | 94 
+> +++++++++++++++++++++++++++++++++++++++++++++
+>  2 files changed, 95 insertions(+)
+>  create mode 100644 Documentation/mhi/uci.rst
+> 
+> diff --git a/Documentation/mhi/index.rst b/Documentation/mhi/index.rst
+> index 1d8dec3..c75a371 100644
+> --- a/Documentation/mhi/index.rst
+> +++ b/Documentation/mhi/index.rst
+> @@ -9,6 +9,7 @@ MHI
+> 
+>     mhi
+>     topology
+> +   uci
+> 
+>  .. only::  subproject and html
+> 
+> diff --git a/Documentation/mhi/uci.rst b/Documentation/mhi/uci.rst
+> new file mode 100644
+> index 0000000..9603f92
+> --- /dev/null
+> +++ b/Documentation/mhi/uci.rst
+> @@ -0,0 +1,94 @@
+> +.. SPDX-License-Identifier: GPL-2.0
+> +
+> +=================================
+> +Userspace Client Interface (UCI)
+> +=================================
+> +
+> +UCI driver enables userspace clients to communicate to external MHI 
+> devices
+> +like modem and WLAN. UCI driver probe creates standard character 
+> device file
+> +nodes for userspace clients to perform open, read, write, poll and 
+> release file
+> +operations. UCI device object represents UCI device file node which 
+> gets
+> +instantiated as part of MHI UCI driver probe. UCI channel object 
+> represents
+> +MHI uplink or downlink channel.
+> +
+> +Operations
+> +==========
+> +
+> +open
+> +----
+> +
+> +Instantiates UCI channel object and starts MHI channels to move it to 
+> running
+> +state. Inbound buffers are queued to downlink channel transfer ring. 
+> Every
+> +subsequent open() increments UCI device reference count as well as UCI 
+> channel
+> +reference count.
+> +
+> +read
+> +----
+> +
+> +When data transfer is completed on downlink channel, transfer ring 
+> element
+> +buffer is copied to pending list. Reader is unblocked and data is 
+> copied to
+> +userspace buffer. Transfer ring element buffer is queued back to 
+> downlink
+> +channel transfer ring.
+> +
+> +write
+> +-----
+> +
+> +Write buffer is queued to uplink channel transfer ring if ring is not
+> full. Upon
+> +uplink transfer completion buffer is freed.
+> +
+> +poll
+> +----
+> +
+> +Returns EPOLLIN | EPOLLRDNORM mask if pending list has buffers to be 
+> read by
+> +userspace. Returns EPOLLOUT | EPOLLWRNORM mask if MHI uplink channel 
+> transfer
+> +ring is not empty. Returns EPOLLERR when UCI driver is removed.
 
-Added another ack from Caleb and applied to for-next, thanks!
+ring is not empty.  When the uplink channel transfer ring is non-empty, 
+more
+data may be sent to the device. Returns EPOLLERR when UCI driver is 
+removed.
 
+> +
+> +release
+> +-------
+> +
+> +Decrements UCI device reference count and UCI channel reference count 
+> upon last
+> +release(). UCI channel clean up is performed. MHI channel moves to 
+> disable
+> +state and inbound buffers are freed.
 
---u3/rZRmxL6MmkK24
-Content-Type: application/pgp-signature; name="signature.asc"
+Decrements UCI device reference count and UCI channel reference count. 
+Upon last
+release() UCI channel clean up is performed. MHI channel moves to 
+disable
+state and inbound buffers are freed.
 
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEEOZGx6rniZ1Gk92RdFA3kzBSgKbYFAl/JR1cACgkQFA3kzBSg
-Kbb+gg//Uss4phLY7CH1vEfZhKbhoLdilPpKsolr8PnK/C8XLY2X7Os1NS88WNJp
-Y47uFbVlPeH03Y415omWj35uB9Rx95Oe1y5dwKcD/M8lBC6PZD0R9zXUswkuspZY
-u3TzNmlTZfh9N/i2A0S3zJibePIdpfXe1H1LlMND/oFik/Kfi66aM+nPAVOAER46
-y+I8peLv0fDKZ4moscpaZJQAGivsB75bNoB6II77Sit6Ip+Y8YR/RB7aOQ3rd572
-FbyTYcvxyjsGfsEIGzH/uxR+39tJv62jmnSK7n2CxBhEYKvjVv8Qm4tmhumjgYdm
-SXOZ+TeHhU/ecp6crtIT53KiGC//uMqry3hXnloZ0IOkMlPB92Mp6F5E32SwWvtY
-sEZjLDchVsDFcKoj6Ya7JuuT33736fW426BwKQEbUXpC3QMnLC1gDjwYotmRBEG1
-CxzSjsVzaRFsDY5fzmmggx74gHQ2Cat6HbrvpgensnHX46o3SsPt4vB0eKHvtDJ4
-oDCtKh2xURGJzq3CneR9qFSDtTvUmMrF/MxIpTw5GaWfp3O+GXgIAMkZsFQYR4YN
-rTJlLRmhyoJfxHDwJarGeI6A1RK+1RWJ8UpKItZ6C8aAZALpBKVDnaAEWnUxfiMh
-6CxWnINqceXPu9fo6mi5ZTwpuVMXautJ5Y2vr4bWkecXgOdJHMg=
-=Uqhs
------END PGP SIGNATURE-----
-
---u3/rZRmxL6MmkK24--
+> +
+> +Usage
+> +=====
+> +
+> +Device file node is created with format:-
+> +
+> +/dev/<mhi_device_name>
+> +
+> +mhi_device_name includes mhi controller name and the name of the MHI 
+> channel
+> +being used by MHI client in userspace to send or receive data using 
+> MHI
+> +protocol.
+> +
+> +There is a separate character device file node created for each 
+> channel
+> +specified in MHI device id table. MHI channels are statically defined 
+> by MHI
+> +specification. The list of supported channels is in the channel list 
+> variable
+> +of mhi_device_id table in UCI driver.
+> +
+> +Qualcomm MSM Interface(QMI) Channel
+> +-----------------------------------
+> +
+> +Qualcomm MSM Interface(QMI) is a modem control messaging protocol used 
+> to
+> +communicate between software components in the modem and other 
+> peripheral
+> +subsystems. QMI communication is of request/response type or an 
+> unsolicited
+> +event type. libqmi is userspace MHI client which communicates to a QMI 
+> service
+> +using UCI device. It sends a QMI request to a QMI service using MHI 
+> channel 14
+> +or 16. QMI response is received using MHI channel 15 or 17 
+> respectively. libqmi
+> +is a glib-based library for talking to WWAN modems and devices which 
+> speaks QMI
+> +protocol. For more information about libqmi please refer
+> +https://www.freedesktop.org/wiki/Software/libqmi/
+> +
+> +Usage Example
+> +~~~~~~~~~~~~~
+> +
+> +QMI command to retrieve device mode
+> +$ sudo qmicli -d /dev/mhi0_QMI --dms-get-model
+> +[/dev/mhi0_QMI] Device model retrieved:
+> +    Model: 'FN980m'
+> +
+> +Other Use Cases
+> +---------------
+> +
+> +Getting MHI device specific diagnostics information to userspace MHI 
+> diagnostic
+> +client using DIAG channel 4 (Host to device) and 5 (Device to Host).
