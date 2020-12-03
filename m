@@ -2,248 +2,129 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 283AE2CE0ED
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Dec 2020 22:38:30 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A69ED2CE100
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Dec 2020 22:45:22 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728625AbgLCVhw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 3 Dec 2020 16:37:52 -0500
-Received: from so254-31.mailgun.net ([198.61.254.31]:15465 "EHLO
-        so254-31.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728034AbgLCVhw (ORCPT
+        id S1728937AbgLCVpW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 3 Dec 2020 16:45:22 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51366 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728715AbgLCVpV (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 3 Dec 2020 16:37:52 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1607031451; h=Content-Transfer-Encoding: Content-Type:
- In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
- Subject: Sender; bh=l6TLyQXo1quzH/gtjsFtzBLUwLamNB1TD1fM+yfgs8A=; b=GXnhxWE2iLL9oDfPnL1w40TE/gfZbiVHxWzvRj+U11dbfpYJR+MXXiWHERoPIL5gCWyd2Tll
- GXtWsW8zHUJWvo95Wyn14SoLOFKpeW17fWlD43O3drxceTncvJoJGL66gxYqW24aICCXB4wv
- BNcbB5nkuVsfm6nQ8twSwOknf+Q=
-X-Mailgun-Sending-Ip: 198.61.254.31
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n02.prod.us-east-1.postgun.com with SMTP id
- 5fc95a8135e04c51ab0c2112 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 03 Dec 2020 21:37:05
- GMT
-Sender: hemantk=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 3C2CFC433CA; Thu,  3 Dec 2020 21:37:05 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        NICE_REPLY_A,SPF_FAIL,URIBL_BLOCKED autolearn=no autolearn_force=no
-        version=3.4.0
-Received: from [10.46.162.249] (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: hemantk)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 96B51C433C6;
-        Thu,  3 Dec 2020 21:37:03 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 96B51C433C6
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=hemantk@codeaurora.org
-Subject: Re: [PATCH v14 3/4] docs: Add documentation for userspace client
- interface
-To:     jhugo@codeaurora.org
-Cc:     manivannan.sadhasivam@linaro.org, gregkh@linuxfoundation.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        bbhatt@codeaurora.org, loic.poulain@linaro.org,
-        netdev@vger.kernel.org, hemantk=codeaurora.org@codeaurora.org
-References: <1606877991-26368-1-git-send-email-hemantk@codeaurora.org>
- <1606877991-26368-4-git-send-email-hemantk@codeaurora.org>
- <86747d3a0e8555ee5369aaa3cb2ff947@codeaurora.org>
-From:   Hemant Kumar <hemantk@codeaurora.org>
-Message-ID: <7debf28b-e8d1-aba2-ae23-e47fa09e4f46@codeaurora.org>
-Date:   Thu, 3 Dec 2020 13:37:03 -0800
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.10.0
+        Thu, 3 Dec 2020 16:45:21 -0500
+Received: from mail-vs1-xe44.google.com (mail-vs1-xe44.google.com [IPv6:2607:f8b0:4864:20::e44])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BDE1BC061A4F
+        for <linux-arm-msm@vger.kernel.org>; Thu,  3 Dec 2020 13:44:35 -0800 (PST)
+Received: by mail-vs1-xe44.google.com with SMTP id h6so2121217vsr.6
+        for <linux-arm-msm@vger.kernel.org>; Thu, 03 Dec 2020 13:44:35 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=6T24NQIEL2Q3npImIjb4SqD2n+RAY5kl9vQ1djFk73c=;
+        b=mqtjKFfBu9ozxPIpUO/HkMSeirSUBhvKgfZjs9Uy+d7ZgvenL68CH2T/ykAXUEWCvA
+         460kAUzJbfL+Hx2V4IrfVHPUPk0JC5zlH3Ut5YtXlmcmj/BqXX5Zr02UkezRB2LgJs35
+         Vw9LTmLVj8aXO3Ho5GZo0o7efANKakrcfoXHI=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=6T24NQIEL2Q3npImIjb4SqD2n+RAY5kl9vQ1djFk73c=;
+        b=cStIx5bZV16EQrMOUAodgGzOdB2+ETVXRZSj2T9uppf0jXIRfXdAvCFcqNS/SPespp
+         OhBQx3RabrAA0j94j9Zxc+LQL/blIN0vj6m4eBM1dM5N+VmFbgB7ULA2Epef6W7yn7x6
+         GlD/7kAuWw5kfZ3TWELHKYGHSiQy0yUS+oWRAMpLmpQLaNsBxjrZio3jeOPVMXz38FFx
+         3jwF5GXQ4OBPtJYL5IHLfX22TcDS03ZdWMU8UJ09iciOENtM1vINVRThzLlyUEveaUvG
+         xXpFWWByKsHVERgT65H3OavSnUJVd7+b5rUOvFsVODjYi1HtY/YTFjas+0jnc+DSx3Ks
+         yJCw==
+X-Gm-Message-State: AOAM532KM2qI+4ZPpUIW9wT6S/UQ5bK+oCYi5pTazwawL078wIli8n7c
+        bfrQTmNmWsiQgS0/I3drv2JwwfgH58uhlw==
+X-Google-Smtp-Source: ABdhPJzXKB7qBrbHwhSFpBgn+4HsDS+rR5XJnKkb9xtzwu6B/OwjS53ZSublsyzpyltMhLyQ06iB7w==
+X-Received: by 2002:a67:ee0a:: with SMTP id f10mr828766vsp.37.1607031874696;
+        Thu, 03 Dec 2020 13:44:34 -0800 (PST)
+Received: from mail-vk1-f177.google.com (mail-vk1-f177.google.com. [209.85.221.177])
+        by smtp.gmail.com with ESMTPSA id s4sm85908vsp.10.2020.12.03.13.44.33
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 03 Dec 2020 13:44:33 -0800 (PST)
+Received: by mail-vk1-f177.google.com with SMTP id a4so778739vko.11
+        for <linux-arm-msm@vger.kernel.org>; Thu, 03 Dec 2020 13:44:33 -0800 (PST)
+X-Received: by 2002:a1f:9f04:: with SMTP id i4mr1331869vke.7.1607031873197;
+ Thu, 03 Dec 2020 13:44:33 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <86747d3a0e8555ee5369aaa3cb2ff947@codeaurora.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+References: <1606203086-31218-1-git-send-email-mkshah@codeaurora.org>
+In-Reply-To: <1606203086-31218-1-git-send-email-mkshah@codeaurora.org>
+From:   Doug Anderson <dianders@chromium.org>
+Date:   Thu, 3 Dec 2020 13:44:21 -0800
+X-Gmail-Original-Message-ID: <CAD=FV=V60zVYkFGQvAu6qfpumBL6+fm_9ziRCSiN7Um7+ra6zw@mail.gmail.com>
+Message-ID: <CAD=FV=V60zVYkFGQvAu6qfpumBL6+fm_9ziRCSiN7Um7+ra6zw@mail.gmail.com>
+Subject: Re: [PATCH v2] soc: qcom: rpmh: Remove serialization of TCS commands
+To:     Maulik Shah <mkshah@codeaurora.org>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        LKML <linux-kernel@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Rajendra Nayak <rnayak@codeaurora.org>,
+        Lina Iyer <ilina@codeaurora.org>,
+        Srinivas Rao L <lsrao@codeaurora.org>,
+        Stephen Boyd <swboyd@chromium.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Jeff
+Hi,
 
-On 12/3/20 12:38 PM, jhugo@codeaurora.org wrote:
-> On 2020-12-01 19:59, Hemant Kumar wrote:
->> MHI userspace client driver is creating device file node
->> for user application to perform file operations. File
->> operations are handled by MHI core driver. Currently
->> QMI MHI channel is supported by this driver.
->>
->> Signed-off-by: Hemant Kumar <hemantk@codeaurora.org>
-> 
-> Two minor nits below.  With those -
-> Reviewed-by: Jeffrey Hugo <jhugo@codeaurora.org>
-> 
->> ---
->>  Documentation/mhi/index.rst |  1 +
->>  Documentation/mhi/uci.rst   | 94 
->> +++++++++++++++++++++++++++++++++++++++++++++
->>  2 files changed, 95 insertions(+)
->>  create mode 100644 Documentation/mhi/uci.rst
->>
->> diff --git a/Documentation/mhi/index.rst b/Documentation/mhi/index.rst
->> index 1d8dec3..c75a371 100644
->> --- a/Documentation/mhi/index.rst
->> +++ b/Documentation/mhi/index.rst
->> @@ -9,6 +9,7 @@ MHI
->>
->>     mhi
->>     topology
->> +   uci
->>
->>  .. only::  subproject and html
->>
->> diff --git a/Documentation/mhi/uci.rst b/Documentation/mhi/uci.rst
->> new file mode 100644
->> index 0000000..9603f92
->> --- /dev/null
->> +++ b/Documentation/mhi/uci.rst
->> @@ -0,0 +1,94 @@
->> +.. SPDX-License-Identifier: GPL-2.0
->> +
->> +=================================
->> +Userspace Client Interface (UCI)
->> +=================================
->> +
->> +UCI driver enables userspace clients to communicate to external MHI 
->> devices
->> +like modem and WLAN. UCI driver probe creates standard character 
->> device file
->> +nodes for userspace clients to perform open, read, write, poll and 
->> release file
->> +operations. UCI device object represents UCI device file node which gets
->> +instantiated as part of MHI UCI driver probe. UCI channel object 
->> represents
->> +MHI uplink or downlink channel.
->> +
->> +Operations
->> +==========
->> +
->> +open
->> +----
->> +
->> +Instantiates UCI channel object and starts MHI channels to move it to 
->> running
->> +state. Inbound buffers are queued to downlink channel transfer ring. 
->> Every
->> +subsequent open() increments UCI device reference count as well as 
->> UCI channel
->> +reference count.
->> +
->> +read
->> +----
->> +
->> +When data transfer is completed on downlink channel, transfer ring 
->> element
->> +buffer is copied to pending list. Reader is unblocked and data is 
->> copied to
->> +userspace buffer. Transfer ring element buffer is queued back to 
->> downlink
->> +channel transfer ring.
->> +
->> +write
->> +-----
->> +
->> +Write buffer is queued to uplink channel transfer ring if ring is not
->> full. Upon
->> +uplink transfer completion buffer is freed.
->> +
->> +poll
->> +----
->> +
->> +Returns EPOLLIN | EPOLLRDNORM mask if pending list has buffers to be 
->> read by
->> +userspace. Returns EPOLLOUT | EPOLLWRNORM mask if MHI uplink channel 
->> transfer
->> +ring is not empty. Returns EPOLLERR when UCI driver is removed.
-> 
-> ring is not empty.  When the uplink channel transfer ring is non-empty, 
-> more
-> data may be sent to the device. Returns EPOLLERR when UCI driver is 
-> removed.
-Done
-> 
->> +
->> +release
->> +-------
->> +
->> +Decrements UCI device reference count and UCI channel reference count 
->> upon last
->> +release(). UCI channel clean up is performed. MHI channel moves to 
->> disable
->> +state and inbound buffers are freed.
-> 
-> Decrements UCI device reference count and UCI channel reference count. 
-> Upon last
-> release() UCI channel clean up is performed. MHI channel moves to disable
-> state and inbound buffers are freed.
-Done.
-> 
->> +
->> +Usage
->> +=====
->> +
->> +Device file node is created with format:-
->> +
->> +/dev/<mhi_device_name>
->> +
->> +mhi_device_name includes mhi controller name and the name of the MHI 
->> channel
->> +being used by MHI client in userspace to send or receive data using MHI
->> +protocol.
->> +
->> +There is a separate character device file node created for each channel
->> +specified in MHI device id table. MHI channels are statically defined 
->> by MHI
->> +specification. The list of supported channels is in the channel list 
->> variable
->> +of mhi_device_id table in UCI driver.
->> +
->> +Qualcomm MSM Interface(QMI) Channel
->> +-----------------------------------
->> +
->> +Qualcomm MSM Interface(QMI) is a modem control messaging protocol 
->> used to
->> +communicate between software components in the modem and other 
->> peripheral
->> +subsystems. QMI communication is of request/response type or an 
->> unsolicited
->> +event type. libqmi is userspace MHI client which communicates to a 
->> QMI service
->> +using UCI device. It sends a QMI request to a QMI service using MHI 
->> channel 14
->> +or 16. QMI response is received using MHI channel 15 or 17 
->> respectively. libqmi
->> +is a glib-based library for talking to WWAN modems and devices which 
->> speaks QMI
->> +protocol. For more information about libqmi please refer
->> +https://www.freedesktop.org/wiki/Software/libqmi/
->> +
->> +Usage Example
->> +~~~~~~~~~~~~~
->> +
->> +QMI command to retrieve device mode
->> +$ sudo qmicli -d /dev/mhi0_QMI --dms-get-model
->> +[/dev/mhi0_QMI] Device model retrieved:
->> +    Model: 'FN980m'
->> +
->> +Other Use Cases
->> +---------------
->> +
->> +Getting MHI device specific diagnostics information to userspace MHI 
->> diagnostic
->> +client using DIAG channel 4 (Host to device) and 5 (Device to Host).
+On Mon, Nov 23, 2020 at 11:32 PM Maulik Shah <mkshah@codeaurora.org> wrote:
+>
+> @@ -423,8 +422,7 @@ static irqreturn_t tcs_tx_done(int irq, void *p)
+>                         cmd = &req->cmds[j];
+>                         sts = read_tcs_cmd(drv, RSC_DRV_CMD_STATUS, i, j);
+>                         if (!(sts & CMD_STATUS_ISSUED) ||
+> -                          ((req->wait_for_compl || cmd->wait) &&
+> -                          !(sts & CMD_STATUS_COMPL))) {
+> +                          (cmd->wait && !(sts & CMD_STATUS_COMPL))) {
+>                                 pr_err("Incomplete request: %s: addr=%#x data=%#x",
+>                                        drv->name, cmd->addr, cmd->data);
+>                                 err = -EIO;
 
-Thanks,
-Hemant
--- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project
+In my review of v1 all those months ago, the way we left things was
+that I disagreed with this part of the patch, and I still do.  I think
+you should leave things the way they were in tcs_tx_done().  Copying
+my un-responded-to comments from v1 here for you:
+
+In your patch in __tcs_buffer_write(), if "wait_for_compl" is set then
+"CMD_MSGID_RESP_REQ" will be added for every message in the request,
+right?  That's because you have this bit of code:
+
+/* Convert all commands to RR when the request has wait_for_compl set */
+cmd_msgid |= msg->wait_for_compl ? CMD_MSGID_RESP_REQ : 0;
+
+That means that if _either_ "cmd->wait" or "req->wait_for_compl" is
+set then you expect the "sts" to have "CMD_STATUS_COMPL", right?
+That's exactly the code that used to be there.
+
+Said another way, if "req->wait_for_compl" was set then it's an error
+if any of our commands are missing the "CMD_STATUS_COMPL" bit, right?
+
+
+> @@ -30,7 +30,7 @@ enum rpmh_state {
+>   *
+>   * @addr: the address of the resource slv_id:18:16 | offset:0:15
+>   * @data: the resource state request
+> - * @wait: wait for this request to be complete before sending the next
+> + * @wait: ensure that this command is complete before returning
+
+In my response to v1 I suggested that a comment would be nice here.
+Something akin to:
+
+Setting "wait" here only makes sense in the batch case for active-only
+transfers.
+
+This is because:
+* rpmh_write_async() - There's no callback and rpmh_write_async()
+doesn't set the "completion" to anything so there's nobody that cares
+at all
+
+* DEFINE_RPMH_MSG_ONSTACK - always sets wait_for_compl.
+
+-Doug
