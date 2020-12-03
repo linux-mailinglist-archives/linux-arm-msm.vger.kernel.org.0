@@ -2,53 +2,68 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 7BEA02CD0AF
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Dec 2020 09:03:14 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 9DAF32CD3BB
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Dec 2020 11:35:49 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729846AbgLCIBJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 3 Dec 2020 03:01:09 -0500
-Received: from mail.kernel.org ([198.145.29.99]:43392 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728786AbgLCIBI (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 3 Dec 2020 03:01:08 -0500
-Content-Type: text/plain; charset="utf-8"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1606982428;
-        bh=kfkeqlUyVw+jzcR1Ql+3AOPoXyKIsKn01IamWujdAxU=;
-        h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
-        b=fQyEyZNCVfkjZB4e1P7kbx7ajItzPCuSfTaPhLCtWdNQLYRlA5Qkzo/Xiw66AHgmN
-         mPMFvHzOZvkP3DhUBuKhcQzdNMh/KuLSwgFP0bj3uvgoGADNCAym1H9KhYXrCwaAm/
-         RM08NSCFLrVcqVLUR8h4lsbaWolJ2t1hO+4FpM1qEeLm+73r8iHY0pfmUc1MojMiKY
-         1iw5T66eIH1rOSbnQ2xprt0SLJUtpgfEmyNZIISpOi8nw7ejWcoIEVRRVGzj3DHIWJ
-         PK2zPY4+lmgMxWJnHMukojYbxRzY78KeSsJSKHqEBTzwqwnzTP0CQNTQ5U7vXBAce1
-         DED9IKrblwSuQ==
+        id S2388980AbgLCKdx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 3 Dec 2020 05:33:53 -0500
+Received: from alexa-out.qualcomm.com ([129.46.98.28]:36077 "EHLO
+        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2388701AbgLCKdw (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 3 Dec 2020 05:33:52 -0500
+Received: from ironmsg08-lv.qualcomm.com ([10.47.202.152])
+  by alexa-out.qualcomm.com with ESMTP; 03 Dec 2020 02:32:44 -0800
+X-QCInternal: smtphost
+Received: from ironmsg01-blr.qualcomm.com ([10.86.208.130])
+  by ironmsg08-lv.qualcomm.com with ESMTP/TLS/AES256-SHA; 03 Dec 2020 02:32:42 -0800
+X-QCInternal: smtphost
+Received: from c-rojay-linux.qualcomm.com ([10.206.21.80])
+  by ironmsg01-blr.qualcomm.com with ESMTP; 03 Dec 2020 16:01:59 +0530
+Received: by c-rojay-linux.qualcomm.com (Postfix, from userid 88981)
+        id 31E3F2819; Thu,  3 Dec 2020 16:01:58 +0530 (IST)
+From:   Roja Rani Yarubandi <rojay@codeaurora.org>
+To:     wsa@kernel.org
+Cc:     swboyd@chromium.org, dianders@chromium.org,
+        saiprakash.ranjan@codeaurora.org, gregkh@linuxfoundation.org,
+        mka@chromium.org, akashast@codeaurora.org,
+        msavaliy@qti.qualcomm.com, skakit@codeaurora.org,
+        vkaur@codeaurora.org, pyarlaga@codeaurora.org,
+        rnayak@codeaurora.org, agross@kernel.org,
+        bjorn.andersson@linaro.org, linux-arm-msm@vger.kernel.org,
+        linux-i2c@vger.kernel.org, linux-kernel@vger.kernel.org,
+        sumit.semwal@linaro.org, linux-media@vger.kernel.org,
+        Roja Rani Yarubandi <rojay@codeaurora.org>
+Subject: [RESEND PATCH V6 0/2] Implement Shutdown callback for geni-i2c
+Date:   Thu,  3 Dec 2020 16:01:54 +0530
+Message-Id: <20201203103156.32595-1-rojay@codeaurora.org>
+X-Mailer: git-send-email 2.29.0
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <1603187810-30481-2-git-send-email-hsin-hsiung.wang@mediatek.com>
-References: <1603187810-30481-1-git-send-email-hsin-hsiung.wang@mediatek.com> <1603187810-30481-2-git-send-email-hsin-hsiung.wang@mediatek.com>
-Subject: Re: [PATCH v2 1/3] spmi: Add driver shutdown support
-From:   Stephen Boyd <sboyd@kernel.org>
-Cc:     linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-        srv_heupstream@mediatek.com,
-        Hsin-Hsiung Wang <hsin-hsiung.wang@mediatek.com>
-To:     Hsin-Hsiung Wang <hsin-hsiung.wang@mediatek.com>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        Mark Brown <broonie@kernel.org>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        Rob Herring <robh+dt@kernel.org>
-Date:   Thu, 03 Dec 2020 00:00:26 -0800
-Message-ID: <160698242613.3428466.7587415157083415046@swboyd.mtv.corp.google.com>
-User-Agent: alot/0.9.1
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Hsin-Hsiung Wang (2020-10-20 02:56:48)
-> Add new shutdown() method.  Use it in the standard driver model style.
->=20
-> Signed-off-by: Hsin-Hsiung Wang <hsin-hsiung.wang@mediatek.com>
-> ---
+Hi,
 
-Applied to spmi-next. The line endings are all confused still though.
+Below patch is picked:
+[V6,1/3] soc: qcom: geni: Remove "iova" check
+
+Resending below patches for review:
+[V6,2/3] i2c: i2c-qcom-geni: Store DMA mapping data in geni_i2c_dev struct
+[V6,3/3] i2c: i2c-qcom-geni: Add shutdown callback for i2c
+
+Thanks,
+Roja
+
+Roja Rani Yarubandi (2):
+  i2c: i2c-qcom-geni: Store DMA mapping data in geni_i2c_dev struct
+  i2c: i2c-qcom-geni: Add shutdown callback for i2c
+
+ drivers/i2c/busses/i2c-qcom-geni.c | 104 ++++++++++++++++++++++++-----
+ 1 file changed, 88 insertions(+), 16 deletions(-)
+
+-- 
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member 
+of Code Aurora Forum, hosted by The Linux Foundation
+
