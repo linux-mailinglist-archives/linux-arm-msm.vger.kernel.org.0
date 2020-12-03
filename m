@@ -2,321 +2,183 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id EEA7E2CDAA2
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Dec 2020 17:05:47 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B417F2CDB71
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Dec 2020 17:42:12 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731144AbgLCQDE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 3 Dec 2020 11:03:04 -0500
-Received: from so254-31.mailgun.net ([198.61.254.31]:58220 "EHLO
-        so254-31.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726267AbgLCQDD (ORCPT
+        id S1729252AbgLCQlm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 3 Dec 2020 11:41:42 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60670 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726026AbgLCQll (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 3 Dec 2020 11:03:03 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1607011362; h=Content-Transfer-Encoding: Content-Type:
- In-Reply-To: MIME-Version: Date: Message-ID: From: Cc: References: To:
- Subject: Sender; bh=7ANFtGnf0oNJK5+hIiLtqzococFZCRezjE3zTlu+MFA=; b=aNsoiePGlpTDg4fXt7IvZqIDD3axv0ahkxJXqzNg0aKxUxR9nh+Yutf0Cdulu75AgsS0ubA0
- U0K96TphbxAed1/snTrA1QRcOSVR9FpT7CtBbG2Dml5pi1Fyr5zy5R6Tjex5luKkFWMT6hoy
- 5iD5+CNxlzbgDJNcN74BEWqIGzY=
-X-Mailgun-Sending-Ip: 198.61.254.31
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n09.prod.us-east-1.postgun.com with SMTP id
- 5fc90c057e5eb22240a4dcd3 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 03 Dec 2020 16:02:13
- GMT
-Sender: akhilpo=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id C180DC43461; Thu,  3 Dec 2020 16:02:12 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        NICE_REPLY_A,SPF_FAIL,URIBL_BLOCKED autolearn=no autolearn_force=no
-        version=3.4.0
-Received: from [192.168.1.10] (unknown [61.3.236.97])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: akhilpo)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 0BB72C433C6;
-        Thu,  3 Dec 2020 16:02:07 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 0BB72C433C6
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=akhilpo@codeaurora.org
-Subject: Re: [PATCH v2 1/3] drm/msm: adreno: Make speed-bin support generic
-To:     Jordan Crouse <jcrouse@codeaurora.org>
-References: <1606481386-22867-1-git-send-email-akhilpo@codeaurora.org>
- <20201130170231.GF16856@jcrouse1-lnx.qualcomm.com>
- <39ae4584-e935-363e-62af-17558781e913@codeaurora.org>
- <20201202163032.GG16856@jcrouse1-lnx.qualcomm.com>
-Cc:     freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
-        robh@kernel.org, dri-devel@freedesktop.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        mka@chromium.org, robdclark@gmail.com, dianders@chromium.org
-From:   Akhil P Oommen <akhilpo@codeaurora.org>
-Message-ID: <244772bd-bde1-ebb7-e3f7-e4af870d968c@codeaurora.org>
-Date:   Thu, 3 Dec 2020 21:32:05 +0530
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.5.0
+        Thu, 3 Dec 2020 11:41:41 -0500
+Received: from mail-vs1-xe42.google.com (mail-vs1-xe42.google.com [IPv6:2607:f8b0:4864:20::e42])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 532DAC061A4F
+        for <linux-arm-msm@vger.kernel.org>; Thu,  3 Dec 2020 08:41:01 -0800 (PST)
+Received: by mail-vs1-xe42.google.com with SMTP id v8so1603063vso.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 03 Dec 2020 08:41:01 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=c9nyCJC0nU38YlbMYoMuph+lAbm8n/7mX5kHqxu90WM=;
+        b=O/1ecWU1krq4Zyfr7gXEOH6hvEU6wxv6MvpnyIMYB+qdtNqfRb9R+XXB/WkF6DvLkz
+         Jd/LMUdnV85MKbmK/VPgE3LvueyKo4pMYW63veNYo6ClZno+xYKlNgEaXYGr7iYhNa7X
+         ey16YAzQcxCBDI07FrSKpbNSSSJ4u4LktI0jc=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=c9nyCJC0nU38YlbMYoMuph+lAbm8n/7mX5kHqxu90WM=;
+        b=rhhB6DQ1Q+yNlmzBdM6tOEyVmTXhNiwNlpDAcwIC//mHd9lUip3FX/fhP+mVqnnrh1
+         LKdo+Q1oU7q5BDeTZ9IpgN5oI5yOc9TWVGF05xoKKDVHZoWtkD3HbddEl6fXiBd3JNFR
+         J1O17cZhu6eM0WFp413AmMuMkROo0mk+qaX1lJo7HVZYSXQZxUPVAzbU4F0cZnDnbml5
+         IGqY60rW63hWbTqrJimHWjE6iAAyevKJCAR2lYwGo9xZR2VsSe2SZd89RBnC7K8kDQmE
+         8RZcduvM+yrd94Axnqx5irRijTXt1wqIdI6MXxDJ7f6576zXCO/DAHWDfKl5zmj5AjXz
+         HURw==
+X-Gm-Message-State: AOAM532QNrPR+ODL8YTLsZ8urpr2TR20ZGEkIgCdGmR13BVx5+sDvO1v
+        /SJ+8YyFvknjn1abaTIFZP0hzP+RxlIbFQ==
+X-Google-Smtp-Source: ABdhPJyRrNFBNoHSCjYmelzWUIsEG/HkNW2rCR0G6uOqhvgiq9wVNkE/HVa/nBydY5BTu5FAWcvjZg==
+X-Received: by 2002:a67:7983:: with SMTP id u125mr3069473vsc.41.1607013659960;
+        Thu, 03 Dec 2020 08:40:59 -0800 (PST)
+Received: from mail-ua1-f50.google.com (mail-ua1-f50.google.com. [209.85.222.50])
+        by smtp.gmail.com with ESMTPSA id k2sm237568vkn.36.2020.12.03.08.40.58
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 03 Dec 2020 08:40:58 -0800 (PST)
+Received: by mail-ua1-f50.google.com with SMTP id y26so877811uan.5
+        for <linux-arm-msm@vger.kernel.org>; Thu, 03 Dec 2020 08:40:58 -0800 (PST)
+X-Received: by 2002:ab0:35fa:: with SMTP id w26mr2918514uau.90.1607013658306;
+ Thu, 03 Dec 2020 08:40:58 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <20201202163032.GG16856@jcrouse1-lnx.qualcomm.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+References: <20201203074459.13078-1-rojay@codeaurora.org>
+In-Reply-To: <20201203074459.13078-1-rojay@codeaurora.org>
+From:   Doug Anderson <dianders@chromium.org>
+Date:   Thu, 3 Dec 2020 08:40:46 -0800
+X-Gmail-Original-Message-ID: <CAD=FV=XKyXnjsM4iS-ydRWBnmYMojPOaYAdYhOkxkPTCQf0RLQ@mail.gmail.com>
+Message-ID: <CAD=FV=XKyXnjsM4iS-ydRWBnmYMojPOaYAdYhOkxkPTCQf0RLQ@mail.gmail.com>
+Subject: Re: [PATCH] spi: spi-geni-qcom: Fix NULL pointer access in geni_spi_isr
+To:     Roja Rani Yarubandi <rojay@codeaurora.org>
+Cc:     Mark Brown <broonie@kernel.org>, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        linux-spi <linux-spi@vger.kernel.org>,
+        LKML <linux-kernel@vger.kernel.org>,
+        Akash Asthana <akashast@codeaurora.org>,
+        msavaliy@qti.qualcomm.com
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 12/2/2020 10:00 PM, Jordan Crouse wrote:
-> On Wed, Dec 02, 2020 at 08:53:51PM +0530, Akhil P Oommen wrote:
->> On 11/30/2020 10:32 PM, Jordan Crouse wrote:
->>> On Fri, Nov 27, 2020 at 06:19:44PM +0530, Akhil P Oommen wrote:
->>>> So far a530v2 gpu has support for detecting its supported opps
->>>> based on a fuse value called speed-bin. This patch makes this
->>>> support generic across gpu families. This is in preparation to
->>>> extend speed-bin support to a6x family.
->>>>
->>>> Signed-off-by: Akhil P Oommen <akhilpo@codeaurora.org>
->>>> ---
->>>> Changes from v1:
->>>> 	1. Added the changes to support a618 sku to the series.
->>>> 	2. Avoid failing probe in case of an unsupported sku. (Rob)
->>>>
->>>>   drivers/gpu/drm/msm/adreno/a5xx_gpu.c      | 34 --------------
->>>>   drivers/gpu/drm/msm/adreno/adreno_device.c |  4 ++
->>>>   drivers/gpu/drm/msm/adreno/adreno_gpu.c    | 71 ++++++++++++++++++++++++++++++
->>>>   drivers/gpu/drm/msm/adreno/adreno_gpu.h    |  5 +++
->>>>   4 files changed, 80 insertions(+), 34 deletions(-)
->>>>
->>>> diff --git a/drivers/gpu/drm/msm/adreno/a5xx_gpu.c b/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
->>>> index 8fa5c91..7d42321 100644
->>>> --- a/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
->>>> +++ b/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
->>>> @@ -1531,38 +1531,6 @@ static const struct adreno_gpu_funcs funcs = {
->>>>   	.get_timestamp = a5xx_get_timestamp,
->>>>   };
->>>> -static void check_speed_bin(struct device *dev)
->>>> -{
->>>> -	struct nvmem_cell *cell;
->>>> -	u32 val;
->>>> -
->>>> -	/*
->>>> -	 * If the OPP table specifies a opp-supported-hw property then we have
->>>> -	 * to set something with dev_pm_opp_set_supported_hw() or the table
->>>> -	 * doesn't get populated so pick an arbitrary value that should
->>>> -	 * ensure the default frequencies are selected but not conflict with any
->>>> -	 * actual bins
->>>> -	 */
->>>> -	val = 0x80;
->>>> -
->>>> -	cell = nvmem_cell_get(dev, "speed_bin");
->>>> -
->>>> -	if (!IS_ERR(cell)) {
->>>> -		void *buf = nvmem_cell_read(cell, NULL);
->>>> -
->>>> -		if (!IS_ERR(buf)) {
->>>> -			u8 bin = *((u8 *) buf);
->>>> -
->>>> -			val = (1 << bin);
->>>> -			kfree(buf);
->>>> -		}
->>>> -
->>>> -		nvmem_cell_put(cell);
->>>> -	}
->>>> -
->>>> -	dev_pm_opp_set_supported_hw(dev, &val, 1);
->>>> -}
->>>> -
->>>>   struct msm_gpu *a5xx_gpu_init(struct drm_device *dev)
->>>>   {
->>>>   	struct msm_drm_private *priv = dev->dev_private;
->>>> @@ -1588,8 +1556,6 @@ struct msm_gpu *a5xx_gpu_init(struct drm_device *dev)
->>>>   	a5xx_gpu->lm_leakage = 0x4E001A;
->>>> -	check_speed_bin(&pdev->dev);
->>>> -
->>>>   	ret = adreno_gpu_init(dev, pdev, adreno_gpu, &funcs, 4);
->>>>   	if (ret) {
->>>>   		a5xx_destroy(&(a5xx_gpu->base.base));
->>>> diff --git a/drivers/gpu/drm/msm/adreno/adreno_device.c b/drivers/gpu/drm/msm/adreno/adreno_device.c
->>>> index 87c8b03..e0ff16c 100644
->>>> --- a/drivers/gpu/drm/msm/adreno/adreno_device.c
->>>> +++ b/drivers/gpu/drm/msm/adreno/adreno_device.c
->>>> @@ -18,6 +18,8 @@ bool snapshot_debugbus = false;
->>>>   MODULE_PARM_DESC(snapshot_debugbus, "Include debugbus sections in GPU devcoredump (if not fused off)");
->>>>   module_param_named(snapshot_debugbus, snapshot_debugbus, bool, 0600);
->>>> +const u32 a530v2_speedbins[] = {0, 1, 2, 3, 4, 5, 6, 7};
->>>> +
->>>>   static const struct adreno_info gpulist[] = {
->>>>   	{
->>>>   		.rev   = ADRENO_REV(2, 0, 0, 0),
->>>> @@ -163,6 +165,8 @@ static const struct adreno_info gpulist[] = {
->>>>   			ADRENO_QUIRK_FAULT_DETECT_MASK,
->>>>   		.init = a5xx_gpu_init,
->>>>   		.zapfw = "a530_zap.mdt",
->>>> +		.speedbins = a530v2_speedbins,
->>>> +		.speedbins_count = ARRAY_SIZE(a530v2_speedbins),
->>>>   	}, {
->>>>   		.rev = ADRENO_REV(5, 4, 0, 2),
->>>>   		.revn = 540,
->>>> diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.c b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
->>>> index f21561d..b342fa4 100644
->>>> --- a/drivers/gpu/drm/msm/adreno/adreno_gpu.c
->>>> +++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
->>>> @@ -14,6 +14,7 @@
->>>>   #include <linux/pm_opp.h>
->>>>   #include <linux/slab.h>
->>>>   #include <linux/soc/qcom/mdt_loader.h>
->>>> +#include <linux/nvmem-consumer.h>
->>>>   #include <soc/qcom/ocmem.h>
->>>>   #include "adreno_gpu.h"
->>>>   #include "msm_gem.h"
->>>> @@ -891,6 +892,69 @@ void adreno_gpu_ocmem_cleanup(struct adreno_ocmem *adreno_ocmem)
->>>>   			   adreno_ocmem->hdl);
->>>>   }
->>>> +static int adreno_set_supported_hw(struct device *dev,
->>>> +		struct adreno_gpu *adreno_gpu)
->>>> +{
->>>> +	u8 speedbins_count = adreno_gpu->info->speedbins_count;
->>>> +	const u32 *speedbins = adreno_gpu->info->speedbins;
->>>> +	struct nvmem_cell *cell;
->>>> +	u32 bin, i;
->>>> +	u32 val = 0;
->>>> +	void *buf, *opp_table;
->>>> +
->>>> +	cell = nvmem_cell_get(dev, "speed_bin");
->>>> +	/*
->>>> +	 * -ENOENT means that the platform doesn't support speedbin which is
->>>> +	 * fine
->>>> +	 */
->>>> +	if (PTR_ERR(cell) == -ENOENT)
->>>> +		return 0;
->>>> +	else if (IS_ERR(cell))
->>>> +		return PTR_ERR(cell);
->>>> +
->>>> +	if (!speedbins)
->>>> +		goto done;
->>>> +
->>>> +	buf = nvmem_cell_read(cell, NULL);
->>>> +	if (IS_ERR(buf)) {
->>>> +		nvmem_cell_put(cell);
->>>> +		return PTR_ERR(buf);
->>>> +	}
->>>> +
->>>> +	bin = *((u32 *) buf);
->>>> +
->>>> +	for (i = 0; i < speedbins_count; i++) {
->>>> +		if (bin == speedbins[i]) {
->>>> +			val = (1 << i);
->>>> +			break;
->>>> +		}
->>>> +	}
->>>> +
->>>> +	kfree(buf);
->>>> +done:
->>>> +	nvmem_cell_put(cell);
->>>> +
->>>> +	if (!val) {
->>>> +		DRM_DEV_ERROR(dev,
->>>> +				"missing support for speed-bin: %u. Some OPPs may not be supported by hardware",
->>>> +				bin);
->>>> +		val = ~0U;
->>>> +	}
->>>> +
->>>> +	opp_table = dev_pm_opp_set_supported_hw(dev, &val, 1);
->>>> +	if (IS_ERR(opp_table))
->>>> +		return PTR_ERR(opp_table);
->>>> +
->>>> +	adreno_gpu->opp_table = opp_table;
->>>> +	return 0;
->>>> +}
->>>> +
->>>> +static void adreno_put_supported_hw(struct opp_table *opp_table)
->>>> +{
->>>> +	if (opp_table)
->>>> +		dev_pm_opp_put_supported_hw(opp_table);
->>>> +}
->>>> +
->>>>   int adreno_gpu_init(struct drm_device *drm, struct platform_device *pdev,
->>>>   		struct adreno_gpu *adreno_gpu,
->>>>   		const struct adreno_gpu_funcs *funcs, int nr_rings)
->>>> @@ -899,6 +963,7 @@ int adreno_gpu_init(struct drm_device *drm, struct platform_device *pdev,
->>>>   	struct adreno_platform_config *config = dev->platform_data;
->>>>   	struct msm_gpu_config adreno_gpu_config  = { 0 };
->>>>   	struct msm_gpu *gpu = &adreno_gpu->base;
->>>> +	int ret;
->>>>   	adreno_gpu->funcs = funcs;
->>>>   	adreno_gpu->info = adreno_info(config->rev);
->>>> @@ -910,6 +975,10 @@ int adreno_gpu_init(struct drm_device *drm, struct platform_device *pdev,
->>>>   	adreno_gpu_config.nr_rings = nr_rings;
->>>> +	ret = adreno_set_supported_hw(dev, adreno_gpu);
->>>> +	if (ret)
->>>> +		return ret;
->>>> +
->>>
->>> I still don't understand why we are doing this here instead of a5xx_gpu.c and
->>> a6xx_gpu.c.
->>>
->>> Jordan
->>
->> Could you please clarify why you prefer so?
-> 
-> Putting this support in the target specific code avoids declaring more global
-> variables and skips a bit of extra code for the vast majority of targets that do
-> not have speed bins. I don't mind sharing the common helper function but a5xx
-> has shown that this can be safely done in the target specific code and I don't
-> see any reason to deviate from that.
-> 
-> Jordan
-Alright. Then it seems better to move everything to target specific 
-code. Will post another patch shortly.
+Hi,
 
--Akhil.
->>
->> -Akhil
->>>
->>>>   	adreno_get_pwrlevels(dev, gpu);
->>>>   	pm_runtime_set_autosuspend_delay(dev,
->>>> @@ -936,4 +1005,6 @@ void adreno_gpu_cleanup(struct adreno_gpu *adreno_gpu)
->>>>   	icc_put(gpu->icc_path);
->>>>   	icc_put(gpu->ocmem_icc_path);
->>>> +
->>>> +	adreno_put_supported_hw(adreno_gpu->opp_table);
->>>>   }
->>>> diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.h b/drivers/gpu/drm/msm/adreno/adreno_gpu.h
->>>> index c3775f7..a756ad7 100644
->>>> --- a/drivers/gpu/drm/msm/adreno/adreno_gpu.h
->>>> +++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.h
->>>> @@ -55,6 +55,7 @@ struct adreno_reglist {
->>>>   };
->>>>   extern const struct adreno_reglist a630_hwcg[], a640_hwcg[], a650_hwcg[];
->>>> +extern const u32 a618_speedbins[];
->>>>   struct adreno_info {
->>>>   	struct adreno_rev rev;
->>>> @@ -67,6 +68,8 @@ struct adreno_info {
->>>>   	const char *zapfw;
->>>>   	u32 inactive_period;
->>>>   	const struct adreno_reglist *hwcg;
->>>> +	const u32 *speedbins;
->>>> +	const u8 speedbins_count;
->>>>   };
->>>>   const struct adreno_info *adreno_info(struct adreno_rev rev);
->>>> @@ -112,6 +115,8 @@ struct adreno_gpu {
->>>>   	 * code (a3xx_gpu.c) and stored in this common location.
->>>>   	 */
->>>>   	const unsigned int *reg_offsets;
->>>> +
->>>> +	struct opp_table *opp_table;
->>>>   };
->>>>   #define to_adreno_gpu(x) container_of(x, struct adreno_gpu, base)
->>>> -- 
->>>> 2.7.4
->>>>
->>>
->>
->> _______________________________________________
->> dri-devel mailing list
->> dri-devel@lists.freedesktop.org
->> https://lists.freedesktop.org/mailman/listinfo/dri-devel
-> 
+On Wed, Dec 2, 2020 at 11:45 PM Roja Rani Yarubandi
+<rojay@codeaurora.org> wrote:
+>
+> Here, there is a chance of race condition occurrence which leads to
+> NULL pointer dereference with struct spi_geni_master member 'cur_xfer'
+> between setup_fifo_xfer() and handle_fifo_timeout() functions.
+>
+> Fix this race condition with guarding the 'cur_xfer' where it gets updated,
+> with spin_lock_irq/spin_unlock_irq in setup_fifo_xfer() as we do in
+> handle_fifo_timeout() function.
+>
+> Call trace:
+>  geni_spi_isr+0x114/0x34c
+>  __handle_irq_event_percpu+0xe0/0x23c
+>  handle_irq_event_percpu+0x34/0x8c
+>  handle_irq_event+0x48/0x94
+>  handle_fasteoi_irq+0xd0/0x140
+>  __handle_domain_irq+0x8c/0xcc
+>  gic_handle_irq+0x114/0x1dc
+>  el1_irq+0xcc/0x180
+>  geni_spi a80000.spi: Failed to cancel/abort m_cmd
+>  dev_watchdog+0x348/0x354
+>  call_timer_fn+0xc4/0x220
+>  __run_timers+0x228/0x2d4
+>  spi_master spi6: failed to transfer one message from queue
+>  run_timer_softirq+0x24/0x44
+>  __do_softirq+0x16c/0x344
+>  irq_exit+0xa8/0xac
+>  __handle_domain_irq+0x94/0xcc
+>  gic_handle_irq+0x114/0x1dc
+>  el1_irq+0xcc/0x180
+>  cpuidle_enter_state+0xf8/0x204
+>  cpuidle_enter+0x38/0x4c
+>  cros-ec-spi spi6.0: spi transfer failed: -110
 
+Thanks for the patch!
+
+I'm not convinced about your explanation, though.
+
+The overall assumption in setup_fifo_xfer(), as indicated by the big
+comment at the start of the function, is that once the spin_lock_irq()
+/ spin_unlock_irq() dance happens at the start of that function that
+no more interrupts will come in until the later lock.  If that
+assumption is not true then we need to look at the whole function, not
+just bandaid where we're setting "cur_xfer".  Specifically if
+transfers are still happening all the other things that
+setup_fifo_xfer() is doing are also all bad ideas.
+
+I guess the first question is: why are you even getting a timeout?
+SPI is clocked by the master and there's nothing the slave can do to
+delay a transfer.  If you're getting a timeout in the first place it
+means there's something pretty wrong.  Maybe that would be the first
+thing to look at.  I guess the most likely case is that something else
+in the system is somehow blocking our interrupt handler from running?
+
+The second question is: what can we do about the "Failed to
+cancel/abort m_cmd" message above.  I guess if our interrupt handler
+is blocked that would explain why the cancel and abort didn't work.
+It's pretty hard to figure out what to do to recover at this point.
+When the function exits it assumes that the transfer has been canceled
+/ aborted, but it hasn't.  This seems like it has the ability to throw
+everything for a loop.  If an interrupt can come in for the previous
+transfer after handle_fifo_timeout() exits it could cause all sorts of
+problems, right?
+
+It seems like one thing that might help would be to add this to the
+start of handle_fifo_timeout():
+  dev_warn(mas->dev, "Timeout; synchronizing IRQ\n");
+  synchronize_irq(mas->irq);
+
+Maybe also add a synchronize_irq() at the end of the function too?  If
+my theory is correct and the whole problem here is that our interrupt
+is blocked, I think that will make us block, which is probably the
+best we can do and better than just returning and getting the
+interrupt later.
+
+
+That all being said, looking at all this makes me believe that the
+NULL dereference is because of commit 7ba9bdcb91f6 ("spi:
+spi-geni-qcom: Don't keep a local state variable").  There, I added
+"mas->cur_xfer = NULL" into handle_fifo_timeout().  That should be the
+right thing to do (without that we might have been reading bogus data
+/ writing to memory we shouldn't), but I think geni_spi_handle_rx()
+and geni_spi_handle_tx() don't handle it properly.  I think we'll
+dereference it without checking.  :(  It would probably be good to fix
+this too?  I would guess that if "mas->cur_xfer" is NULL then
+geni_spi_handle_rx() should read all data in the FIFO and throw it
+away and geni_spi_handle_tx() should set SE_GENI_TX_WATERMARK_REG to
+0.  NOTE: I _think_ that with the synchronize_irq() I'm suggesting
+above we'll avoid this case, but it never hurts to be defensive.
+
+
+Does that all make sense?  So the summary is that instead of your patch:
+
+1. Add synchronize_irq() at the start and end of
+handle_fifo_timeout().  Not under lock.
+
+2. In geni_spi_handle_rx(), check for NULL "mas->cur_xfer".  Read all
+data in the FIFO (don't cap at rx_rem_bytes), but throw it away.
+
+3. In geni_spi_handle_tx(), check for NULL "mas->cur_xfer".  Don't
+write any data.  Just write 0 to SE_GENI_TX_WATERMARK_REG.
+
+I think #1 is the real fix, but #2 and #3 will avoid crashes in case
+there's another bug somewhere.
+
+
+-Doug
