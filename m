@@ -2,129 +2,181 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A69ED2CE100
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Dec 2020 22:45:22 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id BE1EB2CE204
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Dec 2020 23:46:59 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728937AbgLCVpW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 3 Dec 2020 16:45:22 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51366 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728715AbgLCVpV (ORCPT
+        id S1728375AbgLCWqR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 3 Dec 2020 17:46:17 -0500
+Received: from so254-31.mailgun.net ([198.61.254.31]:17205 "EHLO
+        so254-31.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726208AbgLCWqR (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 3 Dec 2020 16:45:21 -0500
-Received: from mail-vs1-xe44.google.com (mail-vs1-xe44.google.com [IPv6:2607:f8b0:4864:20::e44])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BDE1BC061A4F
-        for <linux-arm-msm@vger.kernel.org>; Thu,  3 Dec 2020 13:44:35 -0800 (PST)
-Received: by mail-vs1-xe44.google.com with SMTP id h6so2121217vsr.6
-        for <linux-arm-msm@vger.kernel.org>; Thu, 03 Dec 2020 13:44:35 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=6T24NQIEL2Q3npImIjb4SqD2n+RAY5kl9vQ1djFk73c=;
-        b=mqtjKFfBu9ozxPIpUO/HkMSeirSUBhvKgfZjs9Uy+d7ZgvenL68CH2T/ykAXUEWCvA
-         460kAUzJbfL+Hx2V4IrfVHPUPk0JC5zlH3Ut5YtXlmcmj/BqXX5Zr02UkezRB2LgJs35
-         Vw9LTmLVj8aXO3Ho5GZo0o7efANKakrcfoXHI=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=6T24NQIEL2Q3npImIjb4SqD2n+RAY5kl9vQ1djFk73c=;
-        b=cStIx5bZV16EQrMOUAodgGzOdB2+ETVXRZSj2T9uppf0jXIRfXdAvCFcqNS/SPespp
-         OhBQx3RabrAA0j94j9Zxc+LQL/blIN0vj6m4eBM1dM5N+VmFbgB7ULA2Epef6W7yn7x6
-         GlD/7kAuWw5kfZ3TWELHKYGHSiQy0yUS+oWRAMpLmpQLaNsBxjrZio3jeOPVMXz38FFx
-         3jwF5GXQ4OBPtJYL5IHLfX22TcDS03ZdWMU8UJ09iciOENtM1vINVRThzLlyUEveaUvG
-         xXpFWWByKsHVERgT65H3OavSnUJVd7+b5rUOvFsVODjYi1HtY/YTFjas+0jnc+DSx3Ks
-         yJCw==
-X-Gm-Message-State: AOAM532KM2qI+4ZPpUIW9wT6S/UQ5bK+oCYi5pTazwawL078wIli8n7c
-        bfrQTmNmWsiQgS0/I3drv2JwwfgH58uhlw==
-X-Google-Smtp-Source: ABdhPJzXKB7qBrbHwhSFpBgn+4HsDS+rR5XJnKkb9xtzwu6B/OwjS53ZSublsyzpyltMhLyQ06iB7w==
-X-Received: by 2002:a67:ee0a:: with SMTP id f10mr828766vsp.37.1607031874696;
-        Thu, 03 Dec 2020 13:44:34 -0800 (PST)
-Received: from mail-vk1-f177.google.com (mail-vk1-f177.google.com. [209.85.221.177])
-        by smtp.gmail.com with ESMTPSA id s4sm85908vsp.10.2020.12.03.13.44.33
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 03 Dec 2020 13:44:33 -0800 (PST)
-Received: by mail-vk1-f177.google.com with SMTP id a4so778739vko.11
-        for <linux-arm-msm@vger.kernel.org>; Thu, 03 Dec 2020 13:44:33 -0800 (PST)
-X-Received: by 2002:a1f:9f04:: with SMTP id i4mr1331869vke.7.1607031873197;
- Thu, 03 Dec 2020 13:44:33 -0800 (PST)
-MIME-Version: 1.0
-References: <1606203086-31218-1-git-send-email-mkshah@codeaurora.org>
-In-Reply-To: <1606203086-31218-1-git-send-email-mkshah@codeaurora.org>
-From:   Doug Anderson <dianders@chromium.org>
-Date:   Thu, 3 Dec 2020 13:44:21 -0800
-X-Gmail-Original-Message-ID: <CAD=FV=V60zVYkFGQvAu6qfpumBL6+fm_9ziRCSiN7Um7+ra6zw@mail.gmail.com>
-Message-ID: <CAD=FV=V60zVYkFGQvAu6qfpumBL6+fm_9ziRCSiN7Um7+ra6zw@mail.gmail.com>
-Subject: Re: [PATCH v2] soc: qcom: rpmh: Remove serialization of TCS commands
-To:     Maulik Shah <mkshah@codeaurora.org>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        LKML <linux-kernel@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Rajendra Nayak <rnayak@codeaurora.org>,
-        Lina Iyer <ilina@codeaurora.org>,
-        Srinivas Rao L <lsrao@codeaurora.org>,
-        Stephen Boyd <swboyd@chromium.org>
-Content-Type: text/plain; charset="UTF-8"
+        Thu, 3 Dec 2020 17:46:17 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1607035551; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=UlnuFDZEr4coK9LP683YsaRoIhNC5rjOBPyID5rEGHQ=; b=WW9yFz5KhER0kd09uI9Kzm7cvRumgMmvH7qSGz/lwk+9MSqvdVIpurdD52cSJXEFQZQzCrl+
+ fFpRaK4TXxVKPKvpa3kxNv5BaQ8gdx2VrZZ4UaVPg/gWSnmIc29VVvSDoY1YN78aMNwYsImM
+ OPJgEgvE+GFCUzoXmjwASt4geoU=
+X-Mailgun-Sending-Ip: 198.61.254.31
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n10.prod.us-east-1.postgun.com with SMTP id
+ 5fc96a859c3ccbec633d6506 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 03 Dec 2020 22:45:25
+ GMT
+Sender: hemantk=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 952F7C43464; Thu,  3 Dec 2020 22:45:24 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL
+        autolearn=no autolearn_force=no version=3.4.0
+Received: from codeaurora.org (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: hemantk)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 0D36AC43462;
+        Thu,  3 Dec 2020 22:45:22 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 0D36AC43462
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=hemantk@codeaurora.org
+From:   Hemant Kumar <hemantk@codeaurora.org>
+To:     manivannan.sadhasivam@linaro.org, gregkh@linuxfoundation.org
+Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        jhugo@codeaurora.org, bbhatt@codeaurora.org,
+        loic.poulain@linaro.org, netdev@vger.kernel.org,
+        Hemant Kumar <hemantk@codeaurora.org>
+Subject: [PATCH v15 0/4] userspace MHI client interface driver
+Date:   Thu,  3 Dec 2020 14:45:12 -0800
+Message-Id: <1607035516-3093-1-git-send-email-hemantk@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+This patch series adds support for UCI driver. UCI driver enables userspace
+clients to communicate to external MHI devices like modem and WLAN. UCI driver
+probe creates standard character device file nodes for userspace clients to
+perform open, read, write, poll and release file operations. These file
+operations call MHI core layer APIs to perform data transfer using MHI bus
+to communicate with MHI device. Patch is tested using arm64 and x86 based
+platform.
 
-On Mon, Nov 23, 2020 at 11:32 PM Maulik Shah <mkshah@codeaurora.org> wrote:
->
-> @@ -423,8 +422,7 @@ static irqreturn_t tcs_tx_done(int irq, void *p)
->                         cmd = &req->cmds[j];
->                         sts = read_tcs_cmd(drv, RSC_DRV_CMD_STATUS, i, j);
->                         if (!(sts & CMD_STATUS_ISSUED) ||
-> -                          ((req->wait_for_compl || cmd->wait) &&
-> -                          !(sts & CMD_STATUS_COMPL))) {
-> +                          (cmd->wait && !(sts & CMD_STATUS_COMPL))) {
->                                 pr_err("Incomplete request: %s: addr=%#x data=%#x",
->                                        drv->name, cmd->addr, cmd->data);
->                                 err = -EIO;
+v15:
+- Updated documentation related to poll and release operations.
 
-In my review of v1 all those months ago, the way we left things was
-that I disagreed with this part of the patch, and I still do.  I think
-you should leave things the way they were in tcs_tx_done().  Copying
-my un-responded-to comments from v1 here for you:
+V14:
+- Fixed device file node format to /dev/<mhi_dev_name> instead of
+  /dev/mhi_<mhi_dev_name> because "mhi" is already part of mhi device name.
+  For example old format: /dev/mhi_mhi0_QMI new format: /dev/mhi0_QMI.
+- Updated MHI documentation to reflect index mhi controller name in
+  QMI usage example.
 
-In your patch in __tcs_buffer_write(), if "wait_for_compl" is set then
-"CMD_MSGID_RESP_REQ" will be added for every message in the request,
-right?  That's because you have this bit of code:
+V13:
+- Removed LOOPBACK channel from mhi_device_id table from this patch series.
+  Pushing a new patch series to add support for LOOPBACK channel and the user
+  space test application. Also removed the description from kernel documentation.
+- Added QMI channel to mhi_device_id table. QMI channel has existing libqmi
+  support from user space.
+- Updated kernel Documentation for QMI channel and provided external reference
+  for libqmi.
+- Updated device file node name by appending mhi device name only, which already
+  includes mhi controller device name.
 
-/* Convert all commands to RR when the request has wait_for_compl set */
-cmd_msgid |= msg->wait_for_compl ? CMD_MSGID_RESP_REQ : 0;
+V12:
+- Added loopback test driver under selftest/drivers/mhi. Updated kernel
+  documentation for the usage of the loopback test application.
+- Addressed review comments for renaming variable names, updated inline
+  comments and removed two redundant dev_dbg.
 
-That means that if _either_ "cmd->wait" or "req->wait_for_compl" is
-set then you expect the "sts" to have "CMD_STATUS_COMPL", right?
-That's exactly the code that used to be there.
+V11:
+- Fixed review comments for UCI documentation by expanding TLAs and rewording
+  some sentences.
 
-Said another way, if "req->wait_for_compl" was set then it's an error
-if any of our commands are missing the "CMD_STATUS_COMPL" bit, right?
+V10:
+- Replaced mutex_lock with mutex_lock_interruptible in read() and write() file
+  ops call back.
 
+V9:
+- Renamed dl_lock to dl_pending _lock and pending list to dl_pending for
+  clarity.
+- Used read lock to protect cur_buf.
+- Change transfer status check logic and only consider 0 and -EOVERFLOW as
+  only success.
+- Added __int to module init function.
+- Print channel name instead of minor number upon successful probe.
 
-> @@ -30,7 +30,7 @@ enum rpmh_state {
->   *
->   * @addr: the address of the resource slv_id:18:16 | offset:0:15
->   * @data: the resource state request
-> - * @wait: wait for this request to be complete before sending the next
-> + * @wait: ensure that this command is complete before returning
+V8:
+- Fixed kernel test robot compilation error by changing %lu to %zu for
+  size_t.
+- Replaced uci with UCI in Kconfig, commit text, and comments in driver
+  code.
+- Fixed minor style related comments.
 
-In my response to v1 I suggested that a comment would be nice here.
-Something akin to:
+V7:
+- Decoupled uci device and uci channel objects. uci device is
+  associated with device file node. uci channel is associated
+  with MHI channels. uci device refers to uci channel to perform
+  MHI channel operations for device file operations like read()
+  and write(). uci device increments its reference count for
+  every open(). uci device calls mhi_uci_dev_start_chan() to start
+  the MHI channel. uci channel object is tracking number of times
+  MHI channel is referred. This allows to keep the MHI channel in
+  start state until last release() is called. After that uci channel
+  reference count goes to 0 and uci channel clean up is performed
+  which stops the MHI channel. After the last call to release() if
+  driver is removed uci reference count becomes 0 and uci object is
+  cleaned up.
+- Use separate uci channel read and write lock to fine grain locking
+  between reader and writer.
+- Use uci device lock to synchronize open, release and driver remove.
+- Optimize for downlink only or uplink only UCI device.
 
-Setting "wait" here only makes sense in the batch case for active-only
-transfers.
+V6:
+- Moved uci.c to mhi directory.
+- Updated Kconfig to add module information.
+- Updated Makefile to rename uci object file name as mhi_uci
+- Removed kref for open count
 
-This is because:
-* rpmh_write_async() - There's no callback and rpmh_write_async()
-doesn't set the "completion" to anything so there's nobody that cares
-at all
+V5:
+- Removed mhi_uci_drv structure.
+- Used idr instead of creating global list of uci devices.
+- Used kref instead of local ref counting for uci device and
+  open count.
+- Removed unlikely macro.
 
-* DEFINE_RPMH_MSG_ONSTACK - always sets wait_for_compl.
+V4:
+- Fix locking to protect proper struct members.
+- Updated documentation describing uci client driver use cases.
+- Fixed uci ref counting in mhi_uci_open for error case.
+- Addressed style related review comments.
 
--Doug
+V3: Added documentation for MHI UCI driver.
+
+V2:
+- Added mutex lock to prevent multiple readers to access same
+- mhi buffer which can result into use after free.
+Hemant Kumar (4):
+  bus: mhi: core: Add helper API to return number of free TREs
+  bus: mhi: core: Move MHI_MAX_MTU to external header file
+  docs: Add documentation for userspace client interface
+  bus: mhi: Add userspace client interface driver
+
+ Documentation/mhi/index.rst     |   1 +
+ Documentation/mhi/uci.rst       |  95 ++++++
+ drivers/bus/mhi/Kconfig         |  13 +
+ drivers/bus/mhi/Makefile        |   3 +
+ drivers/bus/mhi/core/internal.h |   1 -
+ drivers/bus/mhi/core/main.c     |  12 +
+ drivers/bus/mhi/uci.c           | 664 ++++++++++++++++++++++++++++++++++++++++
+ include/linux/mhi.h             |  12 +
+ 8 files changed, 800 insertions(+), 1 deletion(-)
+ create mode 100644 Documentation/mhi/uci.rst
+ create mode 100644 drivers/bus/mhi/uci.c
+
+-- 
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
+
