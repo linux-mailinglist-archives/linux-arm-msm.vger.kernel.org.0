@@ -2,164 +2,93 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 677EE2CE2DF
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Dec 2020 00:46:25 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3CAD82CE2E3
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Dec 2020 00:46:27 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728148AbgLCXqB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 3 Dec 2020 18:46:01 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41820 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727900AbgLCXqA (ORCPT
+        id S1726063AbgLCXqW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 3 Dec 2020 18:46:22 -0500
+Received: from m43-15.mailgun.net ([69.72.43.15]:31593 "EHLO
+        m43-15.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729721AbgLCXqW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 3 Dec 2020 18:46:00 -0500
-Received: from mail-ot1-x344.google.com (mail-ot1-x344.google.com [IPv6:2607:f8b0:4864:20::344])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 498EDC061A51
-        for <linux-arm-msm@vger.kernel.org>; Thu,  3 Dec 2020 15:45:20 -0800 (PST)
-Received: by mail-ot1-x344.google.com with SMTP id h19so3564188otr.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 03 Dec 2020 15:45:20 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=uS7KQLK0U5gabPQdDiHHbCBP4og7myvp4pgL7QMqsmk=;
-        b=iQYjQ/3Cp+Bagku5Jo6rhYtUkaXeSP1S1/VBJjWvrSGgzBbeqV8ZoRpL6Olgx463EV
-         kUgp+jzxr0e7t57Q63kHX3gFR8TXs8et6vPaNeS4Yvdhxm8UhCx3Mo8DDbgF3Sf6nzuD
-         Yg2/ZecVWm/TEsBRws4neuIBL77pQikTa7MoMZqlCfYehCvUAAJETH+nIKVwRtR1His7
-         LZL43ITgi55guLkJ0iRx5EU9/9IQDKQCJPWtid353PXHYG4ddFqiUVn8Tz6h+mI0e57H
-         zbVezEHXap/vZLrXKBmEnPzmB34hVissh1U+UDNm+pfO/CgPDG3+Dt4KAAeFaPu6afRH
-         Nygg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=uS7KQLK0U5gabPQdDiHHbCBP4og7myvp4pgL7QMqsmk=;
-        b=bpkeuS+cRXPuyMLjLhYFBjhygOF+rmytzzRgm7Z+jc9hCyPi+66HodBGDica9OURcd
-         keqA6pSD35JsAALdtmfNbU0qlyd8mTMYzasNfVaxPPajt0uSi+zmr/ooPY+wv13Y8IK1
-         81GggCjmqP1C1uNx9GIKiut8jEZIMCJgmn4KZv8lp2oTYvLl3Q/vNqTC1fUnwIxkM/MI
-         fQntTml4EocMcsezXamXfEyHcAlYO7DIHRly+9TQRxth6SRE7rC+ISAToOPWvguTzYJP
-         zkoS9jaeROuQSKwNy/VrBB6jLoIHk9iO4PO5BpA8wB0ZMiMPLU5sGPTCcb+u1KLkSnkU
-         05Jw==
-X-Gm-Message-State: AOAM531O6iigISIzA+pK8XqitCb8aq90LI1nwxQAh7ouPbQ98Xq4Nd3E
-        72Nd+5jzb/K0N8Nn5J6clbGN1w==
-X-Google-Smtp-Source: ABdhPJywp8aHWzZXEymU0Z/dLtlfTIGsbKnetdQeOLD4UqK8xE0zsHXz6HBHWCdx7XcSX6tyfPNCIw==
-X-Received: by 2002:a9d:5388:: with SMTP id w8mr1435765otg.311.1607039119614;
-        Thu, 03 Dec 2020 15:45:19 -0800 (PST)
-Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id t21sm223571otr.77.2020.12.03.15.45.18
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 03 Dec 2020 15:45:18 -0800 (PST)
-Date:   Thu, 3 Dec 2020 17:45:17 -0600
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Vinod Koul <vkoul@kernel.org>
-Cc:     Mark Brown <broonie@kernel.org>, linux-arm-msm@vger.kernel.org,
-        Andy Gross <agross@kernel.org>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        Rob Herring <robh+dt@kernel.org>, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org
-Subject: Re: [PATCH 2/2] regulator: qcom-rpmh: Add support for PM8350/PM8350c
-Message-ID: <X8l4jThf8XlRnyjy@builder.lan>
-References: <20201203071244.2652297-1-vkoul@kernel.org>
- <20201203071244.2652297-2-vkoul@kernel.org>
+        Thu, 3 Dec 2020 18:46:22 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1607039156; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
+ Subject: Sender; bh=JlX36sKBivxDBM8LHGzMecxeZx7IR6GkR5hJ7tvId/Y=; b=k7Lka6YihjAlrg0YM5wOLDM9hh/jigZ1+O3H/h9Z7tnJjGJyhNEegurhsFFFl71kI+eKf2px
+ rWmMlHZXCTCPGNQrcW5EWZVMdZGS9mi4+upeCrLm5WPSbK9PEW97UAs6ewuDROcTeT87oHn4
+ pclt7+Ki/seGE8p4GR8byAmHMn4=
+X-Mailgun-Sending-Ip: 69.72.43.15
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n10.prod.us-east-1.postgun.com with SMTP id
+ 5fc97897aac9455097317380 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 03 Dec 2020 23:45:27
+ GMT
+Sender: jhugo=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 6FB55C433ED; Thu,  3 Dec 2020 23:45:26 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        NICE_REPLY_A,SPF_FAIL,URIBL_BLOCKED autolearn=no autolearn_force=no
+        version=3.4.0
+Received: from [10.226.59.216] (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: jhugo)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id EBD82C433CA;
+        Thu,  3 Dec 2020 23:45:24 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org EBD82C433CA
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=jhugo@codeaurora.org
+Subject: Re: [PATCH v15 4/4] bus: mhi: Add userspace client interface driver
+To:     Hemant Kumar <hemantk@codeaurora.org>,
+        manivannan.sadhasivam@linaro.org, gregkh@linuxfoundation.org
+Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        bbhatt@codeaurora.org, loic.poulain@linaro.org,
+        netdev@vger.kernel.org
+References: <1607035516-3093-1-git-send-email-hemantk@codeaurora.org>
+ <1607035516-3093-5-git-send-email-hemantk@codeaurora.org>
+From:   Jeffrey Hugo <jhugo@codeaurora.org>
+Message-ID: <1bcddc1c-e489-c867-77fb-f6893a101900@codeaurora.org>
+Date:   Thu, 3 Dec 2020 16:45:24 -0700
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.4.3
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20201203071244.2652297-2-vkoul@kernel.org>
+In-Reply-To: <1607035516-3093-5-git-send-email-hemantk@codeaurora.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu 03 Dec 01:12 CST 2020, Vinod Koul wrote:
-
-> Add support from RPMH regulators found in PM8350 and PM8350c PMICs
+On 12/3/2020 3:45 PM, Hemant Kumar wrote:
+> This MHI client driver allows userspace clients to transfer
+> raw data between MHI device and host using standard file operations.
+> Driver instantiates UCI device object which is associated to device
+> file node. UCI device object instantiates UCI channel object when device
+> file node is opened. UCI channel object is used to manage MHI channels
+> by calling MHI core APIs for read and write operations. MHI channels
+> are started as part of device open(). MHI channels remain in start
+> state until last release() is called on UCI device file node. Device
+> file node is created with format
 > 
-
-Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-
-> Signed-off-by: Vinod Koul <vkoul@kernel.org>
-> ---
->  drivers/regulator/qcom-rpmh-regulator.c | 62 +++++++++++++++++++++++++
->  1 file changed, 62 insertions(+)
+> /dev/<mhi_device_name>
 > 
-> diff --git a/drivers/regulator/qcom-rpmh-regulator.c b/drivers/regulator/qcom-rpmh-regulator.c
-> index d488325499a9..800072b90efd 100644
-> --- a/drivers/regulator/qcom-rpmh-regulator.c
-> +++ b/drivers/regulator/qcom-rpmh-regulator.c
-> @@ -865,6 +865,60 @@ static const struct rpmh_vreg_init_data pm8150l_vreg_data[] = {
->  	{},
->  };
->  
-> +static const struct rpmh_vreg_init_data pm8350_vreg_data[] = {
-> +	RPMH_VREG("smps1",  "smp%s1",  &pmic5_ftsmps510, "vdd-s1"),
-> +	RPMH_VREG("smps2",  "smp%s2",  &pmic5_ftsmps510, "vdd-s2"),
-> +	RPMH_VREG("smps3",  "smp%s3",  &pmic5_ftsmps510, "vdd-s3"),
-> +	RPMH_VREG("smps4",  "smp%s4",  &pmic5_ftsmps510, "vdd-s4"),
-> +	RPMH_VREG("smps5",  "smp%s5",  &pmic5_ftsmps510, "vdd-s5"),
-> +	RPMH_VREG("smps6",  "smp%s6",  &pmic5_ftsmps510, "vdd-s6"),
-> +	RPMH_VREG("smps7",  "smp%s7",  &pmic5_ftsmps510, "vdd-s7"),
-> +	RPMH_VREG("smps8",  "smp%s8",  &pmic5_ftsmps510, "vdd-s8"),
-> +	RPMH_VREG("smps9",  "smp%s9",  &pmic5_ftsmps510, "vdd-s9"),
-> +	RPMH_VREG("smps10", "smp%s10", &pmic5_hfsmps510, "vdd-s10"),
-> +	RPMH_VREG("smps11", "smp%s11", &pmic5_hfsmps510, "vdd-s11"),
-> +	RPMH_VREG("smps12", "smp%s12", &pmic5_hfsmps510, "vdd-s12"),
-> +	RPMH_VREG("ldo1",   "ldo%s1",  &pmic5_nldo,      "vdd-l1-l4"),
-> +	RPMH_VREG("ldo2",   "ldo%s2",  &pmic5_pldo,      "vdd-l2-l7"),
-> +	RPMH_VREG("ldo3",   "ldo%s3",  &pmic5_nldo,      "vdd-l3-l5"),
-> +	RPMH_VREG("ldo4",   "ldo%s4",  &pmic5_nldo,      "vdd-l1-l4"),
-> +	RPMH_VREG("ldo5",   "ldo%s5",  &pmic5_nldo,      "vdd-l3-l5"),
-> +	RPMH_VREG("ldo6",   "ldo%s6",  &pmic5_nldo,      "vdd-l6-l9-l10"),
-> +	RPMH_VREG("ldo7",   "ldo%s7",  &pmic5_pldo,      "vdd-l2-l7"),
-> +	RPMH_VREG("ldo8",   "ldo%s8",  &pmic5_nldo,      "vdd-l8"),
-> +	RPMH_VREG("ldo9",   "ldo%s9",  &pmic5_nldo,      "vdd-l6-l9-l10"),
-> +	RPMH_VREG("ldo10",  "ldo%s10", &pmic5_nldo,      "vdd-l6-l9-l10"),
-> +	{},
-> +};
-> +
-> +static const struct rpmh_vreg_init_data pm8350c_vreg_data[] = {
-> +	RPMH_VREG("smps1",  "smp%s1",  &pmic5_hfsmps510, "vdd-s1"),
-> +	RPMH_VREG("smps2",  "smp%s2",  &pmic5_ftsmps510, "vdd-s2"),
-> +	RPMH_VREG("smps3",  "smp%s3",  &pmic5_ftsmps510, "vdd-s3"),
-> +	RPMH_VREG("smps4",  "smp%s4",  &pmic5_ftsmps510, "vdd-s4"),
-> +	RPMH_VREG("smps5",  "smp%s5",  &pmic5_ftsmps510, "vdd-s5"),
-> +	RPMH_VREG("smps6",  "smp%s6",  &pmic5_ftsmps510, "vdd-s6"),
-> +	RPMH_VREG("smps7",  "smp%s7",  &pmic5_ftsmps510, "vdd-s7"),
-> +	RPMH_VREG("smps8",  "smp%s8",  &pmic5_ftsmps510, "vdd-s8"),
-> +	RPMH_VREG("smps9",  "smp%s9",  &pmic5_ftsmps510, "vdd-s9"),
-> +	RPMH_VREG("smps10", "smp%s10", &pmic5_ftsmps510, "vdd-s10"),
-> +	RPMH_VREG("ldo1",   "ldo%s1",  &pmic5_pldo_lv,   "vdd-l1-l12"),
-> +	RPMH_VREG("ldo2",   "ldo%s2",  &pmic5_pldo_lv,   "vdd-l2-l8"),
-> +	RPMH_VREG("ldo3",   "ldo%s3",  &pmic5_pldo,      "vdd-l3-l4-l5-l7-l13"),
-> +	RPMH_VREG("ldo4",   "ldo%s4",  &pmic5_pldo,      "vdd-l3-l4-l5-l7-l13"),
-> +	RPMH_VREG("ldo5",   "ldo%s5",  &pmic5_pldo,      "vdd-l3-l4-l5-l7-l13"),
-> +	RPMH_VREG("ldo6",   "ldo%s6",  &pmic5_pldo,      "vdd-l6-l9-l11"),
-> +	RPMH_VREG("ldo7",   "ldo%s7",  &pmic5_pldo,      "vdd-l3-l4-l5-l7-l13"),
-> +	RPMH_VREG("ldo8",   "ldo%s8",  &pmic5_pldo_lv,   "vdd-l2-l8"),
-> +	RPMH_VREG("ldo9",   "ldo%s9",  &pmic5_pldo,      "vdd-l6-l9-l11"),
-> +	RPMH_VREG("ldo10",  "ldo%s10", &pmic5_nldo,      "vdd-l10"),
-> +	RPMH_VREG("ldo11",  "ldo%s11", &pmic5_pldo,      "vdd-l6-l9-l11"),
-> +	RPMH_VREG("ldo12",  "ldo%s12", &pmic5_pldo_lv,   "vdd-l1-l12"),
-> +	RPMH_VREG("ldo13",  "ldo%s13", &pmic5_pldo,      "vdd-l3-l4-l5-l7-l13"),
-> +	RPMH_VREG("bob",    "bob%s1",  &pmic5_bob,       "vdd-bob"),
-> +	{},
-> +};
-> +
->  static const struct rpmh_vreg_init_data pm8009_vreg_data[] = {
->  	RPMH_VREG("smps1",  "smp%s1",  &pmic5_hfsmps510, "vdd-s1"),
->  	RPMH_VREG("smps2",  "smp%s2",  &pmic5_hfsmps515, "vdd-s2"),
-> @@ -984,6 +1038,14 @@ static const struct of_device_id __maybe_unused rpmh_regulator_match_table[] = {
->  		.compatible = "qcom,pm8150l-rpmh-regulators",
->  		.data = pm8150l_vreg_data,
->  	},
-> +	{
-> +		.compatible = "qcom,pm8350-rpmh-regulators",
-> +		.data = pm8350_vreg_data,
-> +	},
-> +	{
-> +		.compatible = "qcom,pm8350c-rpmh-regulators",
-> +		.data = pm8350c_vreg_data,
-> +	},
->  	{
->  		.compatible = "qcom,pm8998-rpmh-regulators",
->  		.data = pm8998_vreg_data,
-> -- 
-> 2.26.2
+> Currently it supports QMI channel.
 > 
+> Signed-off-by: Hemant Kumar <hemantk@codeaurora.org>
+> Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> Reviewed-by: Jeffrey Hugo <jhugo@codeaurora.org>
+
+You dropped Loic's tested by.  Was that a mistake, or did something 
+actually change which would invalidate his testing?
+
+-- 
+Jeffrey Hugo
+Qualcomm Technologies, Inc. is a member of the
+Code Aurora Forum, a Linux Foundation Collaborative Project.
