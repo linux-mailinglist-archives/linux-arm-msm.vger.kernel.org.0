@@ -2,307 +2,199 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D79BA2CD009
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Dec 2020 08:04:37 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 9D7652CD028
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Dec 2020 08:10:37 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2387996AbgLCHEb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 3 Dec 2020 02:04:31 -0500
-Received: from mail.kernel.org ([198.145.29.99]:51094 "EHLO mail.kernel.org"
+        id S2387740AbgLCHKF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 3 Dec 2020 02:10:05 -0500
+Received: from mail.kernel.org ([198.145.29.99]:56062 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2387420AbgLCHEb (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 3 Dec 2020 02:04:31 -0500
+        id S1728574AbgLCHKF (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 3 Dec 2020 02:10:05 -0500
 From:   Vinod Koul <vkoul@kernel.org>
 Authentication-Results: mail.kernel.org; dkim=permerror (bad message/signature format)
-To:     Stephen Boyd <sboyd@kernel.org>
-Cc:     Vivek Aknurwar <viveka@codeaurora.org>,
-        Andy Gross <agross@kernel.org>,
+To:     Linus Walleij <linus.walleij@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Taniya Das <tdas@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Jeevan Shriram <jshriram@codeaurora.org>,
-        Vinod Koul <vkoul@kernel.org>
-Subject: [PATCH 4/5] clk: qcom: clk-alpha-pll: Add support for Lucid 5LPE PLL
-Date:   Thu,  3 Dec 2020 12:32:40 +0530
-Message-Id: <20201203070241.2648874-5-vkoul@kernel.org>
+        Vinod Koul <vkoul@kernel.org>, Andy Gross <agross@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>, linux-gpio@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [PATCH 1/2] dt-bindings: pinctrl: qcom: Add SM8350 pinctrl bindings
+Date:   Thu,  3 Dec 2020 12:38:59 +0530
+Message-Id: <20201203070900.2651127-1-vkoul@kernel.org>
 X-Mailer: git-send-email 2.26.2
-In-Reply-To: <20201203070241.2648874-1-vkoul@kernel.org>
-References: <20201203070241.2648874-1-vkoul@kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Vivek Aknurwar <viveka@codeaurora.org>
+Add device tree binding Documentation details for Qualcomm SM8350
+pinctrl driver.
 
-Lucid 5LPE is a slightly different Lucid PLL with different offsets and
-porgramming sequence so add support for these
-
-Signed-off-by: Vivek Aknurwar <viveka@codeaurora.org>
-Signed-off-by: Jeevan Shriram <jshriram@codeaurora.org>
-[vkoul: rebase and tidy up for upstream]
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 ---
- drivers/clk/qcom/clk-alpha-pll.c | 223 +++++++++++++++++++++++++++++++
- drivers/clk/qcom/clk-alpha-pll.h |   4 +
- 2 files changed, 227 insertions(+)
+ .../pinctrl/qcom,sdm8350-pinctrl.yaml         | 151 ++++++++++++++++++
+ 1 file changed, 151 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/pinctrl/qcom,sdm8350-pinctrl.yaml
 
-diff --git a/drivers/clk/qcom/clk-alpha-pll.c b/drivers/clk/qcom/clk-alpha-pll.c
-index 564431130a76..31d86e5e55b7 100644
---- a/drivers/clk/qcom/clk-alpha-pll.c
-+++ b/drivers/clk/qcom/clk-alpha-pll.c
-@@ -146,6 +146,12 @@ EXPORT_SYMBOL_GPL(clk_alpha_pll_regs);
- /* LUCID PLL specific settings and offsets */
- #define LUCID_PCAL_DONE		BIT(27)
- 
-+/* LUCID 5LPE PLL specific settings and offsets */
-+#define LUCID_5LPE_PCAL_DONE		BIT(11)
-+#define LUCID_5LPE_ENABLE_VOTE_RUN	BIT(21)
-+#define LUCID_5LPE_PLL_LATCH_INPUT	BIT(14)
-+#define LUCID_5LPE_ALPHA_PLL_ACK_LATCH	BIT(13)
+diff --git a/Documentation/devicetree/bindings/pinctrl/qcom,sdm8350-pinctrl.yaml b/Documentation/devicetree/bindings/pinctrl/qcom,sdm8350-pinctrl.yaml
+new file mode 100644
+index 000000000000..a47d120a3fd0
+--- /dev/null
++++ b/Documentation/devicetree/bindings/pinctrl/qcom,sdm8350-pinctrl.yaml
+@@ -0,0 +1,151 @@
++# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
++%YAML 1.2
++---
++$id: http://devicetree.org/schemas/pinctrl/qcom,sdm8350-pinctrl.yaml#
++$schema: http://devicetree.org/meta-schemas/core.yaml#
 +
- #define pll_alpha_width(p)					\
- 		((PLL_ALPHA_VAL_U(p) - PLL_ALPHA_VAL(p) == 4) ?	\
- 				 ALPHA_REG_BITWIDTH : ALPHA_REG_16BIT_WIDTH)
-@@ -1561,3 +1567,220 @@ const struct clk_ops clk_alpha_pll_postdiv_lucid_ops = {
- 	.set_rate = clk_alpha_pll_postdiv_fabia_set_rate,
- };
- EXPORT_SYMBOL_GPL(clk_alpha_pll_postdiv_lucid_ops);
++title: Qualcomm Technologies, Inc. SM8350 TLMM block
 +
-+static int alpha_pll_lucid_5lpe_enable(struct clk_hw *hw)
-+{
-+	struct clk_alpha_pll *pll = to_clk_alpha_pll(hw);
-+	u32 val;
-+	int ret;
++maintainers:
++  - Vinod Koul <vkoul@kernel.org>
 +
-+	ret = regmap_read(pll->clkr.regmap, PLL_USER_CTL(pll), &val);
-+	if (ret)
-+		return ret;
++description: |
++  This binding describes the Top Level Mode Multiplexer block found in the
++  SM8350 platform.
 +
-+	/* If in FSM mode, just vote for it */
-+	if (val & LUCID_5LPE_ENABLE_VOTE_RUN) {
-+		ret = clk_enable_regmap(hw);
-+		if (ret)
-+			return ret;
-+		return wait_for_pll_enable_lock(pll);
-+	}
++properties:
++  compatible:
++    const: qcom,sm8350-pinctrl
 +
-+	/* Check if PLL is already enabled */
-+	ret = trion_pll_is_enabled(pll, pll->clkr.regmap);
-+	if (ret < 0)
-+		return ret;
++  reg:
++    description: Specifies the base address and size of the TLMM register space
++    maxItems: 1
 +
-+	ret = regmap_update_bits(pll->clkr.regmap, PLL_MODE(pll), PLL_RESET_N, PLL_RESET_N);
-+	if (ret)
-+		return ret;
++  interrupts:
++    description: Specifies the TLMM summary IRQ
++    maxItems: 1
 +
-+	/* Set operation mode to RUN */
-+	regmap_write(pll->clkr.regmap, PLL_OPMODE(pll), PLL_RUN);
++  interrupt-controller: true
 +
-+	ret = wait_for_pll_enable_lock(pll);
-+	if (ret)
-+		return ret;
++  '#interrupt-cells':
++    description: Specifies the PIN numbers and Flags, as defined in
++      include/dt-bindings/interrupt-controller/irq.h
++    const: 2
 +
-+	/* Enable the PLL outputs */
-+	ret = regmap_update_bits(pll->clkr.regmap, PLL_USER_CTL(pll), PLL_OUT_MASK, PLL_OUT_MASK);
-+	if (ret)
-+		return ret;
++  gpio-controller: true
 +
-+	/* Enable the global PLL outputs */
-+	ret = regmap_update_bits(pll->clkr.regmap, PLL_MODE(pll), PLL_OUTCTRL, PLL_OUTCTRL);
-+	if (ret)
-+		return ret;
++  '#gpio-cells':
++    description: Specifying the pin number and flags, as defined in
++      include/dt-bindings/gpio/gpio.h
++    const: 2
 +
-+	/* Ensure that the write above goes through before returning. */
-+	mb();
-+	return ret;
-+}
++  gpio-ranges:
++    maxItems: 1
 +
-+static void alpha_pll_lucid_5lpe_disable(struct clk_hw *hw)
-+{
-+	struct clk_alpha_pll *pll = to_clk_alpha_pll(hw);
-+	u32 val;
-+	int ret;
++  gpio-reserved-ranges:
++    maxItems: 1
 +
-+	ret = regmap_read(pll->clkr.regmap, PLL_USER_CTL(pll), &val);
-+	if (ret)
-+		return;
++#PIN CONFIGURATION NODES
++patternProperties:
++  '-pins$':
++    type: object
++    description:
++      Pinctrl node's client devices use subnodes for desired pin configuration.
++      Client device subnodes use below standard properties.
++    $ref: "/schemas/pinctrl/pincfg-node.yaml"
 +
-+	/* If in FSM mode, just unvote it */
-+	if (val & LUCID_5LPE_ENABLE_VOTE_RUN) {
-+		clk_disable_regmap(hw);
-+		return;
-+	}
++    properties:
++      pins:
++        description:
++          List of gpio pins affected by the properties specified in this subnode.
++        items:
++          oneOf:
++            - pattern: "^gpio([0-9]|[1-9][0-9]|1[0-1][0-6])$"
++            - enum: [ sdc1_clk, sdc1_cmd, sdc1_data, sdc2_clk, sdc2_cmd, sdc2_data ]
++        minItems: 1
++        maxItems: 36
 +
-+	/* Disable the global PLL output */
-+	ret = regmap_update_bits(pll->clkr.regmap, PLL_MODE(pll), PLL_OUTCTRL, 0);
-+	if (ret)
-+		return;
++      function:
++        description:
++          Specify the alternative function to be configured for the specified
++          pins. Functions are only valid for gpio pins.
++        enum: [ atest_char, atest_usb, audio_ref, cam_mclk, cci_async,
++                cci_i2c, cci_timer, cmu_rng, coex_uart1, coex_uart2, cri_trng,
++                cri_trng0, cri_trng1, dbg_out, ddr_bist, ddr_pxi0, ddr_pxi1,
++                ddr_pxi2, ddr_pxi3, dp_hot, dp_lcd, gcc_gp1, gcc_gp2, gcc_gp3,
++                gpio, ibi_i3c, jitter_bist, lpass_slimbus, mdp_vsync, mdp_vsync0,
++                mdp_vsync1, mdp_vsync2, mdp_vsync3, mi2s0_data0, mi2s0_data1,
++                mi2s0_sck, mi2s0_ws, mi2s1_data0, mi2s1_data1, mi2s1_sck,
++                mi2s1_ws, mi2s2_data0, mi2s2_data1, mi2s2_sck, mi2s2_ws,
++                mss_grfc0, mss_grfc1, mss_grfc10, mss_grfc11, mss_grfc12,
++                mss_grfc2, mss_grfc3, mss_grfc4, mss_grfc5, mss_grfc6,
++                mss_grfc7, mss_grfc8, mss_grfc9, nav_gpio, pa_indicator,
++                pcie0_clkreqn, pcie1_clkreqn, phase_flag, pll_bist, pll_clk,
++                pri_mi2s, prng_rosc, qdss_cti, qdss_gpio, qlink0_enable,
++                qlink0_request, qlink0_wmss, qlink1_enable, qlink1_request,
++                qlink1_wmss, qlink2_enable, qlink2_request, qlink2_wmss, qspi0,
++                qspi1, qspi2, qspi3, qspi_clk, qspi_cs, qup0, qup1, qup10,
++                qup11, qup12, qup13, qup14, qup15, qup16, qup17, qup18, qup19,
++                qup2, qup3, qup4, qup5, qup6, qup7, qup8, qup9, qup_l4, qup_l5,
++                qup_l6, sd_write, sdc40, sdc41, sdc42, sdc43, sdc4_clk,
++                sdc4_cmd, sec_mi2s, tb_trig, tgu_ch0, tgu_ch1, tgu_ch2,
++                tgu_ch3, tsense_pwm1, tsense_pwm2, uim0_clk, uim0_data,
++                uim0_present, uim0_reset, uim1_clk, uim1_data, uim1_present,
++                uim1_reset, usb2phy_ac, usb_phy, vfr_0, vfr_1, vsense_trigger ]
 +
-+	/* Disable the PLL outputs */
-+	ret = regmap_update_bits(pll->clkr.regmap, PLL_USER_CTL(pll), PLL_OUT_MASK, 0);
-+	if (ret)
-+		return;
 +
-+	/* Place the PLL mode in STANDBY */
-+	regmap_write(pll->clkr.regmap, PLL_OPMODE(pll), PLL_STANDBY);
-+}
++      drive-strength:
++        enum: [2, 4, 6, 8, 10, 12, 14, 16]
++        default: 2
++        description:
++          Selects the drive strength for the specified pins, in mA.
 +
-+/*
-+ * The Lucid 5LPE PLL requires a power-on self-calibration which happens
-+ * when the PLL comes out of reset. Calibrate in case it is not completed.
-+ */
-+static int alpha_pll_lucid_5lpe_prepare(struct clk_hw *hw)
-+{
-+	struct clk_alpha_pll *pll = to_clk_alpha_pll(hw);
-+	struct clk_hw *p;
-+	u32 regval;
-+	int ret;
++      bias-pull-down: true
 +
-+	/* Return early if calibration is not needed. */
-+	regmap_read(pll->clkr.regmap, PLL_MODE(pll), &regval);
-+	if (regval & LUCID_5LPE_PCAL_DONE)
-+		return 0;
++      bias-pull-up: true
 +
-+	p = clk_hw_get_parent(hw);
-+	if (!p)
-+		return -EINVAL;
++      bias-disable: true
 +
-+	ret = alpha_pll_lucid_5lpe_enable(hw);
-+	if (ret)
-+		return ret;
++      output-high: true
 +
-+	alpha_pll_lucid_5lpe_disable(hw);
++      output-low: true
 +
-+	return 0;
-+}
++    required:
++      - pins
++      - function
 +
-+static int alpha_pll_lucid_5lpe_set_rate(struct clk_hw *hw, unsigned long rate,
-+					 unsigned long prate)
-+{
-+	struct clk_alpha_pll *pll = to_clk_alpha_pll(hw);
-+	unsigned long rrate;
-+	u32 regval, l;
-+	u64 a;
-+	int ret;
++    additionalProperties: false
 +
-+	rrate = alpha_pll_round_rate(rate, prate, &l, &a, ALPHA_REG_16BIT_WIDTH);
++required:
++  - compatible
++  - reg
++  - interrupts
++  - interrupt-controller
++  - '#interrupt-cells'
++  - gpio-controller
++  - '#gpio-cells'
++  - gpio-ranges
 +
-+	/*
-+	 * Due to a limited number of bits for fractional rate programming, the
-+	 * rounded up rate could be marginally higher than the requested rate.
-+	 */
-+	if (rrate > (rate + PLL_RATE_MARGIN) || rrate < rate) {
-+		pr_err("Call set rate on the PLL with rounded rates!\n");
-+		return -EINVAL;
-+	}
++additionalProperties: false
 +
-+	regmap_write(pll->clkr.regmap, PLL_L_VAL(pll), l);
-+	regmap_write(pll->clkr.regmap, PLL_ALPHA_VAL(pll), a);
++examples:
++  - |
++        #include <dt-bindings/interrupt-controller/arm-gic.h>
++        tlmm: pinctrl@f000000 {
++          compatible = "qcom,sm8350-pinctrl";
++          reg = <0x0f100000 0x300000>;
++          interrupts = <GIC_SPI 208 IRQ_TYPE_LEVEL_HIGH>;
++          gpio-controller;
++          #gpio-cells = <2>;
++          interrupt-controller;
++          #interrupt-cells = <2>;
++          gpio-ranges = <&tlmm 0 0 203>;
++          serial-pins {
++            pins = "gpio18", "gpio19";
++            function = "qup3";
++            drive-strength = <8>;
++            bias-disable;
++            };
++        };
 +
-+	/* Latch the PLL input */
-+	ret = regmap_update_bits(pll->clkr.regmap, PLL_MODE(pll),
-+				 LUCID_5LPE_PLL_LATCH_INPUT, LUCID_5LPE_PLL_LATCH_INPUT);
-+	if (ret)
-+		return ret;
-+
-+	/* Wait for 2 reference cycles before checking the ACK bit. */
-+	udelay(1);
-+	regmap_read(pll->clkr.regmap, PLL_MODE(pll), &regval);
-+	if (!(regval & LUCID_5LPE_ALPHA_PLL_ACK_LATCH)) {
-+		pr_err("Lucid 5LPE PLL latch failed. Output may be unstable!\n");
-+		return -EINVAL;
-+	}
-+
-+	/* Return the latch input to 0 */
-+	ret = regmap_update_bits(pll->clkr.regmap, PLL_MODE(pll), LUCID_5LPE_PLL_LATCH_INPUT, 0);
-+	if (ret)
-+		return ret;
-+
-+	if (clk_hw_is_enabled(hw)) {
-+		ret = wait_for_pll_enable_lock(pll);
-+		if (ret)
-+			return ret;
-+	}
-+
-+	/* Wait for PLL output to stabilize */
-+	udelay(100);
-+	return 0;
-+}
-+
-+static int clk_lucid_5lpe_pll_postdiv_set_rate(struct clk_hw *hw, unsigned long rate,
-+					       unsigned long parent_rate)
-+{
-+	struct clk_alpha_pll_postdiv *pll = to_clk_alpha_pll_postdiv(hw);
-+	int i, val = 0, div, ret;
-+
-+	/*
-+	 * If the PLL is in FSM mode, then treat set_rate callback as a
-+	 * no-operation.
-+	 */
-+	ret = regmap_read(pll->clkr.regmap, PLL_USER_CTL(pll), &val);
-+	if (ret)
-+		return ret;
-+
-+	if (val & LUCID_5LPE_ENABLE_VOTE_RUN)
-+		return 0;
-+
-+	if (!pll->post_div_table) {
-+		pr_err("Missing the post_div_table for the PLL\n");
-+		return -EINVAL;
-+	}
-+
-+	div = DIV_ROUND_UP_ULL((u64)parent_rate, rate);
-+	for (i = 0; i < pll->num_post_div; i++) {
-+		if (pll->post_div_table[i].div == div) {
-+			val = pll->post_div_table[i].val;
-+			break;
-+		}
-+	}
-+
-+	return regmap_update_bits(pll->clkr.regmap, PLL_USER_CTL(pll),
-+				(BIT(pll->width) - 1) << pll->post_div_shift,
-+				val << pll->post_div_shift);
-+}
-+
-+const struct clk_ops clk_alpha_pll_lucid_5lpe_ops = {
-+	.prepare = alpha_pll_lucid_5lpe_prepare,
-+	.enable = alpha_pll_lucid_5lpe_enable,
-+	.disable = alpha_pll_lucid_5lpe_disable,
-+	.set_rate = alpha_pll_lucid_5lpe_set_rate,
-+};
-+EXPORT_SYMBOL(clk_alpha_pll_lucid_5lpe_ops);
-+
-+const struct clk_ops clk_alpha_pll_fixed_lucid_5lpe_ops = {
-+	.enable = alpha_pll_lucid_5lpe_enable,
-+	.disable = alpha_pll_lucid_5lpe_disable,
-+};
-+EXPORT_SYMBOL(clk_alpha_pll_fixed_lucid_5lpe_ops);
-+
-+const struct clk_ops clk_alpha_pll_postdiv_lucid_5lpe_ops = {
-+	.recalc_rate = clk_alpha_pll_postdiv_fabia_recalc_rate,
-+	.round_rate = clk_alpha_pll_postdiv_fabia_round_rate,
-+	.set_rate = clk_lucid_5lpe_pll_postdiv_set_rate,
-+};
-+EXPORT_SYMBOL(clk_alpha_pll_postdiv_lucid_5lpe_ops);
-diff --git a/drivers/clk/qcom/clk-alpha-pll.h b/drivers/clk/qcom/clk-alpha-pll.h
-index d3201b87c0cd..d983b1aab8c8 100644
---- a/drivers/clk/qcom/clk-alpha-pll.h
-+++ b/drivers/clk/qcom/clk-alpha-pll.h
-@@ -142,6 +142,10 @@ extern const struct clk_ops clk_alpha_pll_lucid_ops;
- #define clk_alpha_pll_fixed_lucid_ops clk_alpha_pll_fixed_trion_ops
- extern const struct clk_ops clk_alpha_pll_postdiv_lucid_ops;
- 
-+extern const struct clk_ops clk_alpha_pll_lucid_5lpe_ops;
-+extern const struct clk_ops clk_alpha_pll_fixed_lucid_5lpe_ops;
-+extern const struct clk_ops clk_alpha_pll_postdiv_lucid_5lpe_ops;
-+
- void clk_alpha_pll_configure(struct clk_alpha_pll *pll, struct regmap *regmap,
- 			     const struct alpha_pll_config *config);
- void clk_fabia_pll_configure(struct clk_alpha_pll *pll, struct regmap *regmap,
++...
 -- 
 2.26.2
 
