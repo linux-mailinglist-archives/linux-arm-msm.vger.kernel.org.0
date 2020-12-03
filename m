@@ -2,151 +2,103 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 55D952CD047
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Dec 2020 08:20:42 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 08AC32CD088
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Dec 2020 08:46:25 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2387944AbgLCHTO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 3 Dec 2020 02:19:14 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57866 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2387551AbgLCHTO (ORCPT
+        id S1727913AbgLCHqJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 3 Dec 2020 02:46:09 -0500
+Received: from alexa-out.qualcomm.com ([129.46.98.28]:30312 "EHLO
+        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725912AbgLCHqI (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 3 Dec 2020 02:19:14 -0500
-Received: from mail-pj1-x1041.google.com (mail-pj1-x1041.google.com [IPv6:2607:f8b0:4864:20::1041])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4B912C061A52
-        for <linux-arm-msm@vger.kernel.org>; Wed,  2 Dec 2020 23:18:28 -0800 (PST)
-Received: by mail-pj1-x1041.google.com with SMTP id o7so615273pjj.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 02 Dec 2020 23:18:28 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:content-transfer-encoding:in-reply-to:references
-         :subject:from:cc:to:date:message-id:user-agent;
-        bh=XboQBpa5SksH1iZ7g9IuRzqF6Oz1AM+DEQhjumRKkpU=;
-        b=gJeZZTf1TU9E/PphFzlCR3PhtxCTKrw85fe2boTXN2UfZUD5faSjo2MsqUodQrLjH5
-         zauS9CHw8F/p/nJKZEvy0o1GIbK1HBYkurUupjJCdn9Cdpw+zahjLVz7bvpPpXQVGqCq
-         +2KSkItg1JS0p2JCKMMdOrtIGd689aHsdj0H4=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:content-transfer-encoding
-         :in-reply-to:references:subject:from:cc:to:date:message-id
-         :user-agent;
-        bh=XboQBpa5SksH1iZ7g9IuRzqF6Oz1AM+DEQhjumRKkpU=;
-        b=FhOllbzdN71u+5UqFSFuPPmqNfm77FJAUtzzjaqp2E4QV1WVaer72R+NLWobaGl72K
-         y6UcVQepAAXhBcwk9gQDeaHg7X8so9giZqSbEW9RfpgO5KR34jHm+HE1fnZylRb8Gtlc
-         uxOVirfakaj8yttdwlx8ArKo4Vo+6jAoDVeKEEOgNYkCmWnQIjly7nF6BZVDDnmAUNsF
-         KRrJ62HnfWVyo9JZdbiNmgeFhtSbB5Bt8+PCt5NSq+3+/mtb1/NvKW/Yvpz1cG/QLnsU
-         FC+MaiyATAgGaTZq5KJSMjZbFU2gRihENPhRyvhgLRbof35MVDLGQ+pQM0VPJqOpckgP
-         dOxg==
-X-Gm-Message-State: AOAM533tQEs4cq6nGsKiZ9FNbYtTgTnfaM+nbN8MBqrRe+4CuWJRArF7
-        l19cLc7/2x+rUCrVSN6pFX6SBQ==
-X-Google-Smtp-Source: ABdhPJxkH2B4+N1724zMBChAGI+PsJEn6+Y/h5Paxsz4QrRHNnHMdmdONnH14euFPegHQKQ7TqzpZA==
-X-Received: by 2002:a17:90b:204d:: with SMTP id ji13mr1917017pjb.20.1606979907857;
-        Wed, 02 Dec 2020 23:18:27 -0800 (PST)
-Received: from chromium.org ([2620:15c:202:201:3e52:82ff:fe6c:83ab])
-        by smtp.gmail.com with ESMTPSA id y21sm745604pfr.90.2020.12.02.23.18.26
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 02 Dec 2020 23:18:27 -0800 (PST)
-Content-Type: text/plain; charset="utf-8"
+        Thu, 3 Dec 2020 02:46:08 -0500
+Received: from ironmsg07-lv.qualcomm.com (HELO ironmsg07-lv.qulacomm.com) ([10.47.202.151])
+  by alexa-out.qualcomm.com with ESMTP; 02 Dec 2020 23:45:27 -0800
+X-QCInternal: smtphost
+Received: from ironmsg01-blr.qualcomm.com ([10.86.208.130])
+  by ironmsg07-lv.qulacomm.com with ESMTP/TLS/AES256-SHA; 02 Dec 2020 23:45:26 -0800
+X-QCInternal: smtphost
+Received: from c-rojay-linux.qualcomm.com ([10.206.21.80])
+  by ironmsg01-blr.qualcomm.com with ESMTP; 03 Dec 2020 13:15:02 +0530
+Received: by c-rojay-linux.qualcomm.com (Postfix, from userid 88981)
+        id D45DF2819; Thu,  3 Dec 2020 13:15:01 +0530 (IST)
+From:   Roja Rani Yarubandi <rojay@codeaurora.org>
+To:     broonie@kernel.org
+Cc:     agross@kernel.org, bjorn.andersson@linaro.org, swboyd@chromium.org,
+        dianders@chromium.org, linux-arm-msm@vger.kernel.org,
+        linux-spi@vger.kernel.org, linux-kernel@vger.kernel.org,
+        akashast@codeaurora.org, msavaliy@qti.qualcomm.com,
+        Roja Rani Yarubandi <rojay@codeaurora.org>
+Subject: [PATCH] spi: spi-geni-qcom: Fix NULL pointer access in geni_spi_isr
+Date:   Thu,  3 Dec 2020 13:14:59 +0530
+Message-Id: <20201203074459.13078-1-rojay@codeaurora.org>
+X-Mailer: git-send-email 2.29.0
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <1606714572-1113-1-git-send-email-dikshita@codeaurora.org>
-References: <1606714572-1113-1-git-send-email-dikshita@codeaurora.org>
-Subject: Re: [PATCH] venus: core: add support to dump FW region
-From:   Stephen Boyd <swboyd@chromium.org>
-Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        vgarodia@codeaurora.org, Dikshita Agarwal <dikshita@codeaurora.org>
-To:     Dikshita Agarwal <dikshita@codeaurora.org>,
-        linux-media@vger.kernel.org, stanimir.varbanov@linaro.org
-Date:   Wed, 02 Dec 2020 23:18:25 -0800
-Message-ID: <160697990547.2717324.13284456705336253152@swboyd.mtv.corp.google.com>
-User-Agent: alot/0.9.1
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Dikshita Agarwal (2020-11-29 21:36:12)
-> diff --git a/drivers/media/platform/qcom/venus/core.c b/drivers/media/pla=
-tform/qcom/venus/core.c
-> index 6103aaf..01a0cfe 100644
-> --- a/drivers/media/platform/qcom/venus/core.c
-> +++ b/drivers/media/platform/qcom/venus/core.c
-> @@ -22,6 +24,48 @@
->  #include "firmware.h"
->  #include "pm_helpers.h"
-> =20
-> +static int subsystem_dump(struct venus_core *core)
-> +{
-> +       struct device_node *node;
-> +       struct device *dev;
-> +       struct resource r;
-> +       void *mem_va;
-> +       size_t mem_size;
-> +       void *data;
-> +       int ret;
-> +
-> +       dev =3D core->dev;
-> +       node =3D of_parse_phandle(dev->of_node, "memory-region", 0);
+Here, there is a chance of race condition occurrence which leads to
+NULL pointer dereference with struct spi_geni_master member 'cur_xfer'
+between setup_fifo_xfer() and handle_fifo_timeout() functions.
 
-Any chance this could be done at probe time and saved away as some sort
-of pointer?
+Fix this race condition with guarding the 'cur_xfer' where it gets updated,
+with spin_lock_irq/spin_unlock_irq in setup_fifo_xfer() as we do in
+handle_fifo_timeout() function.
 
-> +       if (!node)
-> +               return -EINVAL;
-> +
-> +       ret =3D of_address_to_resource(node, 0, &r);
+Call trace:
+ geni_spi_isr+0x114/0x34c
+ __handle_irq_event_percpu+0xe0/0x23c
+ handle_irq_event_percpu+0x34/0x8c
+ handle_irq_event+0x48/0x94
+ handle_fasteoi_irq+0xd0/0x140
+ __handle_domain_irq+0x8c/0xcc
+ gic_handle_irq+0x114/0x1dc
+ el1_irq+0xcc/0x180
+ geni_spi a80000.spi: Failed to cancel/abort m_cmd
+ dev_watchdog+0x348/0x354
+ call_timer_fn+0xc4/0x220
+ __run_timers+0x228/0x2d4
+ spi_master spi6: failed to transfer one message from queue
+ run_timer_softirq+0x24/0x44
+ __do_softirq+0x16c/0x344
+ irq_exit+0xa8/0xac
+ __handle_domain_irq+0x94/0xcc
+ gic_handle_irq+0x114/0x1dc
+ el1_irq+0xcc/0x180
+ cpuidle_enter_state+0xf8/0x204
+ cpuidle_enter+0x38/0x4c
+ cros-ec-spi spi6.0: spi transfer failed: -110
+ ...
 
-of_node_put(node);
+Fixes: 2ee471a1e28e ("spi: spi-geni-qcom: Mo' betta locking")
+Signed-off-by: Roja Rani Yarubandi <rojay@codeaurora.org>
+---
+ drivers/spi/spi-geni-qcom.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-> +       if (ret)
-> +               goto err_put_node;
+diff --git a/drivers/spi/spi-geni-qcom.c b/drivers/spi/spi-geni-qcom.c
+index 25810a7eef10..e65d6676602b 100644
+--- a/drivers/spi/spi-geni-qcom.c
++++ b/drivers/spi/spi-geni-qcom.c
+@@ -457,7 +457,6 @@ static void setup_fifo_xfer(struct spi_transfer *xfer,
+ 		len = xfer->len / (mas->cur_bits_per_word / BITS_PER_BYTE + 1);
+ 	len &= TRANS_LEN_MSK;
+ 
+-	mas->cur_xfer = xfer;
+ 	if (xfer->tx_buf) {
+ 		m_cmd |= SPI_TX_ONLY;
+ 		mas->tx_rem_bytes = xfer->len;
+@@ -475,6 +474,7 @@ static void setup_fifo_xfer(struct spi_transfer *xfer,
+ 	 * interrupt could come in at any time now.
+ 	 */
+ 	spin_lock_irq(&mas->lock);
++	mas->cur_xfer = xfer;
+ 	geni_se_setup_m_cmd(se, m_cmd, FRAGMENTATION);
+ 
+ 	/*
+-- 
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member 
+of Code Aurora Forum, hosted by The Linux Foundation
 
-And then just return ret;
-
-> +
-> +       mem_size =3D resource_size(&r);
-> +
-> +       mem_va =3D memremap(r.start, mem_size, MEMREMAP_WC);
-> +       if (!mem_va) {
-> +               ret =3D -ENOMEM;
-> +               goto err_put_node;
-
-And return -ENOMEM;
-
-> +       }
-> +
-> +       data =3D vmalloc(mem_size);
-> +       if (!data) {
-> +               ret =3D -EINVAL;
-> +               goto err_unmap;
-> +       }
-> +
-> +       memcpy(data, mem_va, mem_size);
-> +
-> +       dev_coredumpv(dev, data, mem_size, GFP_KERNEL);
-> +err_unmap:
-> +       memunmap(mem_va);
-> +err_put_node:
-> +       of_node_put(node);
-> +       return ret;
-> +}
->  static void venus_event_notify(struct venus_core *core, u32 event)
->  {
->         struct venus_inst *inst;
-> @@ -67,6 +111,9 @@ static void venus_sys_error_handler(struct work_struct=
- *work)
-> =20
->         venus_shutdown(core);
-> =20
-> +       dev_warn(core->dev, "dumping FW region!\n");
-
-Do we need this warning?
-
-> +       subsystem_dump(core);
-
-Maybe call it venus_do_coredump() so it isn't so generic.
-
-> +
->         pm_runtime_put_sync(core->dev);
-> =20
->         while (core->pmdomains[0] && pm_runtime_active(core->pmdomains[0]=
-))
