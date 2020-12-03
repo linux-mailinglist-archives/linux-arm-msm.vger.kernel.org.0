@@ -2,119 +2,157 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id EAC2A2CCE26
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Dec 2020 05:59:52 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id F12932CCFC1
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Dec 2020 07:47:04 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727397AbgLCE6O (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 2 Dec 2020 23:58:14 -0500
-Received: from m42-5.mailgun.net ([69.72.42.5]:49067 "EHLO m42-5.mailgun.net"
+        id S1729640AbgLCGqZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 3 Dec 2020 01:46:25 -0500
+Received: from mga02.intel.com ([134.134.136.20]:30235 "EHLO mga02.intel.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727023AbgLCE6N (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 2 Dec 2020 23:58:13 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1606971468; h=Message-Id: Date: Subject: Cc: To: From:
- Sender; bh=HWuXebYv12wNMeG1Ca/OcvuDX/u/4CvTfnBhCKp9NuU=; b=Ra0sK4y2K1wOZcuV28lqOKnl6kOT1985EsjLJFD+gKp/F/eSHiX3abcHo4009/AjTXCYB6dh
- uf3Qt2QMVgqXTR8lcyzWLAR1TiCNDqbNf1m7up7G773D5itFKMBXpWbD5KGRy6JxCLnijApl
- HpvW3JyB+AVbdqq5XLhCeiZeIRk=
-X-Mailgun-Sending-Ip: 69.72.42.5
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n08.prod.us-west-2.postgun.com with SMTP id
- 5fc8703235b60e964a8d86ab (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 03 Dec 2020 04:57:22
- GMT
-Sender: zijuhu=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 419ACC43463; Thu,  3 Dec 2020 04:57:22 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
-        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
-Received: from zijuhu-gv.qualcomm.com (unknown [180.166.53.21])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: zijuhu)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id E5688C43460;
-        Thu,  3 Dec 2020 04:57:18 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org E5688C43460
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=zijuhu@codeaurora.org
-From:   Zijun Hu <zijuhu@codeaurora.org>
-To:     marcel@holtmann.org, johan.hedberg@gmail.com
-Cc:     linux-kernel@vger.kernel.org, linux-bluetooth@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, bgodavar@codeaurora.org,
-        c-hbandi@codeaurora.org, hemantg@codeaurora.org, mka@chromium.org,
-        rjliao@codeaurora.org, zijuhu@codeaurora.org, tjiang@codeaurora.org
-Subject: [PATCH v1] Bluetooth: btusb: support download nvm with different board id for wcn6855
-Date:   Thu,  3 Dec 2020 12:57:14 +0800
-Message-Id: <1606971434-23709-1-git-send-email-zijuhu@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
+        id S1728515AbgLCGqY (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 3 Dec 2020 01:46:24 -0500
+IronPort-SDR: b/zlEpb9E24EOH6xhr6B0WUBwuxS4Mbs4sqIi0KsNSFKpUQRh3ynujpSNBWP3jcVnTlh6vHV8r
+ gOjxSD6Ag3PA==
+X-IronPort-AV: E=McAfee;i="6000,8403,9823"; a="160200587"
+X-IronPort-AV: E=Sophos;i="5.78,388,1599548400"; 
+   d="scan'208";a="160200587"
+X-Amp-Result: SKIPPED(no attachment in message)
+X-Amp-File-Uploaded: False
+Received: from orsmga003.jf.intel.com ([10.7.209.27])
+  by orsmga101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 02 Dec 2020 22:45:43 -0800
+IronPort-SDR: r2/8DskmGEjMpXiK/ddrQBRQe+S74yuHkvugcKQGVW6IHsMZwlLFKT6srJ04M6lP2Lrh6js1rY
+ FRSDOerJ701g==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.78,388,1599548400"; 
+   d="scan'208";a="330729008"
+Received: from ahunter-desktop.fi.intel.com (HELO [10.237.72.94]) ([10.237.72.94])
+  by orsmga003.jf.intel.com with ESMTP; 02 Dec 2020 22:45:40 -0800
+Subject: Re: [PATCH v2 3/9] mmc: cqhci: initialize upper 64 bits of 128-bit
+ task descriptors
+To:     Eric Biggers <ebiggers@kernel.org>, linux-mmc@vger.kernel.org
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-fscrypt@vger.kernel.org, Satya Tangirala <satyat@google.com>,
+        Ulf Hansson <ulf.hansson@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Asutosh Das <asutoshd@codeaurora.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Neeraj Soni <neersoni@codeaurora.org>,
+        Barani Muthukumaran <bmuthuku@codeaurora.org>,
+        Peng Zhou <peng.zhou@mediatek.com>,
+        Stanley Chu <stanley.chu@mediatek.com>,
+        Konrad Dybcio <konradybcio@gmail.com>
+References: <20201203020516.225701-1-ebiggers@kernel.org>
+ <20201203020516.225701-4-ebiggers@kernel.org>
+From:   Adrian Hunter <adrian.hunter@intel.com>
+Organization: Intel Finland Oy, Registered Address: PL 281, 00181 Helsinki,
+ Business Identity Code: 0357606 - 4, Domiciled in Helsinki
+Message-ID: <bf74d785-a88e-f621-24a3-4e68aeeee753@intel.com>
+Date:   Thu, 3 Dec 2020 08:45:15 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.12.0
+MIME-Version: 1.0
+In-Reply-To: <20201203020516.225701-4-ebiggers@kernel.org>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Tim Jiang <tjiang@codeaurora.org>
+On 3/12/20 4:05 am, Eric Biggers wrote:
+> From: Eric Biggers <ebiggers@google.com>
+> 
+> Move the task descriptor initialization into cqhci_prep_task_desc(), and
+> make it initialize all 128 bits of the task descriptor if the host
+> controller is using 128-bit task descriptors.
+> 
+> This is needed to prepare for CQHCI inline encryption support, which
+> requires 128-bit task descriptors and uses the upper 64 bits.
+> 
+> Note: since some host controllers already enable 128-bit task
+> descriptors, it's unclear why the previous code worked when it wasn't
+> initializing the upper 64 bits.  One possibility is that the bits are
+> being ignored because the features that use them aren't enabled yet.
+> In any case, setting them to 0 won't hurt.
 
-we define many nvm files for wcn6855 btsoc and host driver
-should find the correct nvm file based on board ID and then
-download it.
+Coherent allocations are zero-initialized.  So the upper 64-bits stay zero.
+People set 128-bit anyway because the hardware needs it.
 
-Signed-off-by: Tim Jiang <tjiang@codeaurora.org>
----
- drivers/bluetooth/btusb.c | 19 ++++++++++++++++---
- 1 file changed, 16 insertions(+), 3 deletions(-)
+> 
+> Signed-off-by: Eric Biggers <ebiggers@google.com>
 
-diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
-index 3bbe8f43e7fa..c5d4a3084282 100644
---- a/drivers/bluetooth/btusb.c
-+++ b/drivers/bluetooth/btusb.c
-@@ -3469,12 +3469,14 @@ static int btusb_set_bdaddr_wcn6855(struct hci_dev *hdev,
- #define QCA_SYSCFG_UPDATED	0x40
- #define QCA_PATCH_UPDATED	0x80
- #define QCA_DFU_TIMEOUT		3000
-+#define QCA_FLAG_MULTI_NVM      0x80
- 
- struct qca_version {
- 	__le32	rom_version;
- 	__le32	patch_version;
- 	__le32	ram_version;
--	__le32	ref_clock;
-+	__le16	board_id;
-+	__le16	flag;
- 	__u8	reserved[4];
- } __packed;
- 
-@@ -3657,8 +3659,14 @@ static int btusb_setup_qca_load_nvm(struct hci_dev *hdev,
- 	char fwname[64];
- 	int err;
- 
--	snprintf(fwname, sizeof(fwname), "qca/nvm_usb_%08x.bin",
--		 le32_to_cpu(ver->rom_version));
-+	if (((ver->flag >> 8) & 0xff) == QCA_FLAG_MULTI_NVM) {
-+		snprintf(fwname, sizeof(fwname), "qca/nvm_usb_%08x_%04x.bin",
-+			 le32_to_cpu(ver->rom_version),
-+			 le16_to_cpu(ver->board_id));
-+	} else {
-+		snprintf(fwname, sizeof(fwname), "qca/nvm_usb_%08x.bin",
-+			 le32_to_cpu(ver->rom_version));
-+	}
- 
- 	err = request_firmware(&fw, fwname, &hdev->dev);
- 	if (err) {
-@@ -3725,6 +3733,11 @@ static int btusb_setup_qca(struct hci_dev *hdev)
- 			return err;
- 	}
- 
-+	err = btusb_qca_send_vendor_req(udev, QCA_GET_TARGET_VERSION, &ver,
-+					sizeof(ver));
-+	if (err < 0)
-+		return err;
-+
- 	if (!(status & QCA_SYSCFG_UPDATED)) {
- 		err = btusb_setup_qca_load_nvm(hdev, &ver, info);
- 		if (err < 0)
--- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum, a Linux Foundation Collaborative Project
+Acked-by: Adrian Hunter <adrian.hunter@intel.com>
+
+> ---
+>  drivers/mmc/host/cqhci-core.c | 30 ++++++++++++++++++++----------
+>  1 file changed, 20 insertions(+), 10 deletions(-)
+> 
+> diff --git a/drivers/mmc/host/cqhci-core.c b/drivers/mmc/host/cqhci-core.c
+> index 697fe40756bf2..ad7c9acff1728 100644
+> --- a/drivers/mmc/host/cqhci-core.c
+> +++ b/drivers/mmc/host/cqhci-core.c
+> @@ -408,13 +408,15 @@ static void cqhci_disable(struct mmc_host *mmc)
+>  }
+>  
+>  static void cqhci_prep_task_desc(struct mmc_request *mrq,
+> -					u64 *data, bool intr)
+> +				 struct cqhci_host *cq_host, int tag)
+>  {
+> +	__le64 *task_desc = (__le64 __force *)get_desc(cq_host, tag);
+>  	u32 req_flags = mrq->data->flags;
+> +	u64 desc0;
+>  
+> -	*data = CQHCI_VALID(1) |
+> +	desc0 = CQHCI_VALID(1) |
+>  		CQHCI_END(1) |
+> -		CQHCI_INT(intr) |
+> +		CQHCI_INT(1) |
+>  		CQHCI_ACT(0x5) |
+>  		CQHCI_FORCED_PROG(!!(req_flags & MMC_DATA_FORCED_PRG)) |
+>  		CQHCI_DATA_TAG(!!(req_flags & MMC_DATA_DAT_TAG)) |
+> @@ -425,8 +427,19 @@ static void cqhci_prep_task_desc(struct mmc_request *mrq,
+>  		CQHCI_BLK_COUNT(mrq->data->blocks) |
+>  		CQHCI_BLK_ADDR((u64)mrq->data->blk_addr);
+>  
+> -	pr_debug("%s: cqhci: tag %d task descriptor 0x%016llx\n",
+> -		 mmc_hostname(mrq->host), mrq->tag, (unsigned long long)*data);
+> +	task_desc[0] = cpu_to_le64(desc0);
+> +
+> +	if (cq_host->caps & CQHCI_TASK_DESC_SZ_128) {
+> +		u64 desc1 = 0;
+> +
+> +		task_desc[1] = cpu_to_le64(desc1);
+> +
+> +		pr_debug("%s: cqhci: tag %d task descriptor 0x%016llx%016llx\n",
+> +			 mmc_hostname(mrq->host), mrq->tag, desc1, desc0);
+> +	} else {
+> +		pr_debug("%s: cqhci: tag %d task descriptor 0x%016llx\n",
+> +			 mmc_hostname(mrq->host), mrq->tag, desc0);
+> +	}
+>  }
+>  
+>  static int cqhci_dma_map(struct mmc_host *host, struct mmc_request *mrq)
+> @@ -567,8 +580,6 @@ static inline int cqhci_tag(struct mmc_request *mrq)
+>  static int cqhci_request(struct mmc_host *mmc, struct mmc_request *mrq)
+>  {
+>  	int err = 0;
+> -	u64 data = 0;
+> -	u64 *task_desc = NULL;
+>  	int tag = cqhci_tag(mrq);
+>  	struct cqhci_host *cq_host = mmc->cqe_private;
+>  	unsigned long flags;
+> @@ -598,9 +609,8 @@ static int cqhci_request(struct mmc_host *mmc, struct mmc_request *mrq)
+>  	}
+>  
+>  	if (mrq->data) {
+> -		task_desc = (__le64 __force *)get_desc(cq_host, tag);
+> -		cqhci_prep_task_desc(mrq, &data, 1);
+> -		*task_desc = cpu_to_le64(data);
+> +		cqhci_prep_task_desc(mrq, cq_host, tag);
+> +
+>  		err = cqhci_prep_tran_desc(mrq, cq_host, tag);
+>  		if (err) {
+>  			pr_err("%s: cqhci: failed to setup tx desc: %d\n",
+> 
 
