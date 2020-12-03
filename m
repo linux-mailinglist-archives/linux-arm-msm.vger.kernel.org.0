@@ -2,134 +2,159 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 41F392CE330
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Dec 2020 00:56:14 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 389822CE339
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Dec 2020 00:58:30 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727175AbgLCXzg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 3 Dec 2020 18:55:36 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43306 "EHLO
+        id S1731350AbgLCX4r (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 3 Dec 2020 18:56:47 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43496 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729534AbgLCXze (ORCPT
+        with ESMTP id S1727445AbgLCX4q (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 3 Dec 2020 18:55:34 -0500
+        Thu, 3 Dec 2020 18:56:46 -0500
 Received: from mail-ot1-x341.google.com (mail-ot1-x341.google.com [IPv6:2607:f8b0:4864:20::341])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E36E2C061A53
-        for <linux-arm-msm@vger.kernel.org>; Thu,  3 Dec 2020 15:54:48 -0800 (PST)
-Received: by mail-ot1-x341.google.com with SMTP id b18so3582915ots.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 03 Dec 2020 15:54:48 -0800 (PST)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BBAECC061A52
+        for <linux-arm-msm@vger.kernel.org>; Thu,  3 Dec 2020 15:56:00 -0800 (PST)
+Received: by mail-ot1-x341.google.com with SMTP id j12so3552387ota.7
+        for <linux-arm-msm@vger.kernel.org>; Thu, 03 Dec 2020 15:56:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=O0t18+kPcHS+KN1VyVdHDaXf4t7nULQ3xrxZwQbCCzw=;
-        b=kQ4vnpRQO4qOyQ5wpOc+IfiCZYJS58VHt9zAK7ukLD6MmJ0l2d9eVcVuAbnzgYEeez
-         BpGxRkZAD0XXo6ZdlSJ8vQgqJIrztyFW3HDfe2FY2xuDnDBpgJ0KeUl2u855Bkc/5xKF
-         tAmbaJVscN+USftunMuHx5T0Qqa7r2nCmEx1Gwy6Z7ws4Bei/Fp7Na5d/d0jAQ5Fv28X
-         o0bpD2W4OcC1Rs/i7zAQfoFsLbb08HNAHnloTgvMKm3aE95VThpVxHHavWKROk+VeFyR
-         OlagAMOCSsFDNsQQz4FLFZtfY+Oj5z3cYkX6Qa5qVfBImmgbfOQ7U/rMJyXAUwN1TEPk
-         yVhQ==
+        bh=FGwg7wF1Rp1zHJlnEU83DG1rFe1MHJXahft1afvfgkw=;
+        b=cFVS134cbJj6iMT6egtRO9fOue5xD08BfH8wU0s76o/HW63sIQ8i2R6Xw1Yz/ylzYw
+         Js+1KrBR5vOqtxPWph9qUZEFd4934TRmhuYWq+6UljiDZZJbXOZy29yGXbBMERH88Iei
+         ipVZkskQkP2Q6/dO9+DXGWmKrrQZLYMssa/P0ZiKlIKkrjIhVnKXExX3FNqlKG2X3eoQ
+         Zx3LwcYvwI54TqOLxv1mHc+oK1Vy/EtRqsSrgNSlfPyoVmth5PxoOIqoKeHngy0dPhMN
+         dFR0+R6/0PJ9r9qBMCwP3oCE0ruuV1JnFx5Lje0V4uJgxSadFbaSGyeiVsQp0wNUAb18
+         08sA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=O0t18+kPcHS+KN1VyVdHDaXf4t7nULQ3xrxZwQbCCzw=;
-        b=eKMWqyib0YJ7SwMTk8loxmhKx391J4HJJg9w/i91PUXDlqnXjhwsmpbGB/JIUXxdKd
-         4LOAIohY+AUjo4sFeLFw9dw9iwGiydL+32pRqNQTqbpIBRR2Yg2ohuBFrQW4L3ZaghNE
-         VJJwEU28cws6Uvqcn/qpYRcSh090B6/Txl+HL7GcEsF/R5w1PHrppuIIFE9JRtwlhEwe
-         kHAkiKBpF2DD825xXfs+AFQ/JufKExlmX+PL8LZ5SKfmBIEf/wCYZOlqtzBSmsc+taT4
-         PIV6UR9uZcqJEOb5ALyIrepL1UMI6rknKnlieA+dvkSc0TWbIvRJOLrKBc2RMZDr0bvs
-         8GKg==
-X-Gm-Message-State: AOAM530G1IkbEO2imwdIbmXdzDFUo1jPIx5Kp3NwXynHfCMho0exbL+j
-        vfSI3HrIa11xXs4kgXUD4YF0yTaiUxh2+Q==
-X-Google-Smtp-Source: ABdhPJwtqaM1Z35yqMak8X3fUccNxSyftaVhs/xTEEveV1TfKz8NGOGTNdfb7tHwRqfEjYrirmYx3w==
-X-Received: by 2002:a05:6830:2093:: with SMTP id y19mr1430276otq.219.1607039688168;
-        Thu, 03 Dec 2020 15:54:48 -0800 (PST)
+        bh=FGwg7wF1Rp1zHJlnEU83DG1rFe1MHJXahft1afvfgkw=;
+        b=dzAqOSeLYHtP1IhPMzfxXaFso1jOxkh1pEsbprmVTHdxV5DNf4QmXc7J6Q67dTdrvk
+         zPwG569WjYjzbAIGV4/zicK6ypy74YJ7TF6hVazPpO4FRV7u4RcrXlpss3FHGcfFf/5a
+         +2zcbHrDCqHACFYldHtvwZfaFU8gkFyVDEoMDLH/X5S/o5Y4qK6z8mdJ5/sZ0zzwEt1P
+         NGrCjnh1Pir2LyneRBpvFyKnHhz0qsKSa51QRUkV0cTDJJabhOm9XH6eiPCCus0WnVVH
+         /MCb/5cBTecUdRZ6MEabzLQB3cQyBH3ZxQLZ+IXo/J/oh2Zh8gFYYliuUaCXqtXLIJbC
+         mvIQ==
+X-Gm-Message-State: AOAM531jZcGFJFm6ijtI+TcTavPobVprXAFYAq/Z1Qjjg0jmbOxe9+rr
+        VHzjp5opLOUZFkfvaNrwxbGgzg==
+X-Google-Smtp-Source: ABdhPJxNE4tV1l6o8wRPF7g4RBllVxAK7UyVquN7DCEG+XPyOQKZd6cZFGN8ULFVQhynvMYxzcjOgA==
+X-Received: by 2002:a9d:5d15:: with SMTP id b21mr1472152oti.244.1607039760143;
+        Thu, 03 Dec 2020 15:56:00 -0800 (PST)
 Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id e19sm258810oou.42.2020.12.03.15.54.47
+        by smtp.gmail.com with ESMTPSA id j46sm269809oof.36.2020.12.03.15.55.59
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 03 Dec 2020 15:54:47 -0800 (PST)
-Date:   Thu, 3 Dec 2020 17:54:45 -0600
+        Thu, 03 Dec 2020 15:55:59 -0800 (PST)
+Date:   Thu, 3 Dec 2020 17:55:57 -0600
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
 To:     Vinod Koul <vkoul@kernel.org>
-Cc:     Linus Walleij <linus.walleij@linaro.org>,
-        linux-arm-msm@vger.kernel.org,
-        Raghavendra Rao Ananta <rananta@codeaurora.org>,
-        Andy Gross <agross@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>, linux-gpio@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Jeevan Shriram <jshriram@codeaurora.org>
-Subject: Re: [PATCH 2/2] pinctrl: qcom: Add SM8350 pinctrl driver
-Message-ID: <X8l6xU+sVJa/+5r1@builder.lan>
-References: <20201203070900.2651127-1-vkoul@kernel.org>
- <20201203070900.2651127-2-vkoul@kernel.org>
+Cc:     Stephen Boyd <sboyd@kernel.org>, Andy Gross <agross@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Taniya Das <tdas@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 2/5] clk: qcom: rpmh: add support for SM8350 rpmh clocks
+Message-ID: <X8l7DSGiQ69Tydzc@builder.lan>
+References: <20201203070241.2648874-1-vkoul@kernel.org>
+ <20201203070241.2648874-3-vkoul@kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20201203070900.2651127-2-vkoul@kernel.org>
+In-Reply-To: <20201203070241.2648874-3-vkoul@kernel.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu 03 Dec 01:09 CST 2020, Vinod Koul wrote:
-> diff --git a/drivers/pinctrl/qcom/pinctrl-sm8350.c b/drivers/pinctrl/qcom/pinctrl-sm8350.c
-[..]
-> +static const int sm8350_reserved_gpios[] = {
-> +	52, 53, 54, 55, 56, 57, 58, 59, -1
-> +};
+On Thu 03 Dec 01:02 CST 2020, Vinod Koul wrote:
 
-Reserving these gpios here instead of in the DT means that there can
-never be a platform configuration using these. Is there a good reason
-for this? Or should we just mark them reserved in DT?
+> This adds the RPMH clocks present in SM8350 SoC
+> 
+> Signed-off-by: Vinod Koul <vkoul@kernel.org>
+
+Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 
 Regards,
 Bjorn
 
+> ---
+>  drivers/clk/qcom/clk-rpmh.c           | 34 +++++++++++++++++++++++++++
+>  include/dt-bindings/clock/qcom,rpmh.h |  8 +++++++
+>  2 files changed, 42 insertions(+)
+> 
+> diff --git a/drivers/clk/qcom/clk-rpmh.c b/drivers/clk/qcom/clk-rpmh.c
+> index e2c669b08aff..64cab4403a17 100644
+> --- a/drivers/clk/qcom/clk-rpmh.c
+> +++ b/drivers/clk/qcom/clk-rpmh.c
+> @@ -432,6 +432,39 @@ static const struct clk_rpmh_desc clk_rpmh_sm8250 = {
+>  	.num_clks = ARRAY_SIZE(sm8250_rpmh_clocks),
+>  };
+>  
+> +DEFINE_CLK_RPMH_VRM(sm8350, div_clk1, div_clk1_ao, "divclka1", 2);
+> +DEFINE_CLK_RPMH_VRM(sm8350, rf_clk4, rf_clk4_ao, "rfclka4", 1);
+> +DEFINE_CLK_RPMH_VRM(sm8350, rf_clk5, rf_clk5_ao, "rfclka5", 1);
+> +DEFINE_CLK_RPMH_BCM(sm8350, pka, "PKA0");
+> +DEFINE_CLK_RPMH_BCM(sm8350, hwkm, "HK0");
 > +
-> +static const struct msm_pinctrl_soc_data sm8350_pinctrl = {
-> +	.pins = sm8350_pins,
-> +	.npins = ARRAY_SIZE(sm8350_pins),
-> +	.functions = sm8350_functions,
-> +	.nfunctions = ARRAY_SIZE(sm8350_functions),
-> +	.groups = sm8350_groups,
-> +	.ngroups = ARRAY_SIZE(sm8350_groups),
-> +	.reserved_gpios = sm8350_reserved_gpios,
-> +	.ngpios = 204,
+> +static struct clk_hw *sm8350_rpmh_clocks[] = {
+> +	[RPMH_CXO_CLK]		= &sdm845_bi_tcxo.hw,
+> +	[RPMH_CXO_CLK_A]	= &sdm845_bi_tcxo_ao.hw,
+> +	[RPMH_DIV_CLK1]		= &sm8350_div_clk1.hw,
+> +	[RPMH_DIV_CLK1_A]	= &sm8350_div_clk1_ao.hw,
+> +	[RPMH_LN_BB_CLK1]	= &sm8250_ln_bb_clk1.hw,
+> +	[RPMH_LN_BB_CLK1_A]	= &sm8250_ln_bb_clk1_ao.hw,
+> +	[RPMH_LN_BB_CLK2]	= &sdm845_ln_bb_clk2.hw,
+> +	[RPMH_LN_BB_CLK2_A]	= &sdm845_ln_bb_clk2_ao.hw,
+> +	[RPMH_RF_CLK1]		= &sdm845_rf_clk1.hw,
+> +	[RPMH_RF_CLK1_A]	= &sdm845_rf_clk1_ao.hw,
+> +	[RPMH_RF_CLK3]		= &sdm845_rf_clk3.hw,
+> +	[RPMH_RF_CLK3_A]	= &sdm845_rf_clk3_ao.hw,
+> +	[RPMH_RF_CLK4]		= &sm8350_rf_clk4.hw,
+> +	[RPMH_RF_CLK4_A]	= &sm8350_rf_clk4_ao.hw,
+> +	[RPMH_RF_CLK5]		= &sm8350_rf_clk5.hw,
+> +	[RPMH_RF_CLK5_A]	= &sm8350_rf_clk5_ao.hw,
+> +	[RPMH_IPA_CLK]		= &sdm845_ipa.hw,
+> +	[RPMH_PKA_CLK]		= &sm8350_pka.hw,
+> +	[RPMH_HWKM_CLK]		= &sm8350_hwkm.hw,
 > +};
 > +
-> +static int sm8350_pinctrl_probe(struct platform_device *pdev)
-> +{
-> +	return msm_pinctrl_probe(pdev, &sm8350_pinctrl);
-> +}
-> +
-> +static const struct of_device_id sm8350_pinctrl_of_match[] = {
-> +	{ .compatible = "qcom,sm8350-pinctrl", },
-> +	{ },
+> +static const struct clk_rpmh_desc clk_rpmh_sm8350 = {
+> +	.clks = sm8350_rpmh_clocks,
+> +	.num_clks = ARRAY_SIZE(sm8350_rpmh_clocks),
 > +};
 > +
-> +static struct platform_driver sm8350_pinctrl_driver = {
-> +	.driver = {
-> +		.name = "sm8350-pinctrl",
-> +		.of_match_table = sm8350_pinctrl_of_match,
-> +	},
-> +	.probe = sm8350_pinctrl_probe,
-> +	.remove = msm_pinctrl_remove,
-> +};
-> +
-> +static int __init sm8350_pinctrl_init(void)
-> +{
-> +	return platform_driver_register(&sm8350_pinctrl_driver);
-> +}
-> +arch_initcall(sm8350_pinctrl_init);
-> +
-> +static void __exit sm8350_pinctrl_exit(void)
-> +{
-> +	platform_driver_unregister(&sm8350_pinctrl_driver);
-> +}
-> +module_exit(sm8350_pinctrl_exit);
-> +
-> +MODULE_DESCRIPTION("QTI sm8350 pinctrl driver");
-> +MODULE_LICENSE("GPL v2");
-> +MODULE_DEVICE_TABLE(of, sm8350_pinctrl_of_match);
+>  static struct clk_hw *of_clk_rpmh_hw_get(struct of_phandle_args *clkspec,
+>  					 void *data)
+>  {
+> @@ -519,6 +552,7 @@ static const struct of_device_id clk_rpmh_match_table[] = {
+>  	{ .compatible = "qcom,sdm845-rpmh-clk", .data = &clk_rpmh_sdm845},
+>  	{ .compatible = "qcom,sm8150-rpmh-clk", .data = &clk_rpmh_sm8150},
+>  	{ .compatible = "qcom,sm8250-rpmh-clk", .data = &clk_rpmh_sm8250},
+> +	{ .compatible = "qcom,sm8350-rpmh-clk", .data = &clk_rpmh_sm8350},
+>  	{ }
+>  };
+>  MODULE_DEVICE_TABLE(of, clk_rpmh_match_table);
+> diff --git a/include/dt-bindings/clock/qcom,rpmh.h b/include/dt-bindings/clock/qcom,rpmh.h
+> index 2e6c54e65455..6dbe5d398bf0 100644
+> --- a/include/dt-bindings/clock/qcom,rpmh.h
+> +++ b/include/dt-bindings/clock/qcom,rpmh.h
+> @@ -21,5 +21,13 @@
+>  #define RPMH_IPA_CLK				12
+>  #define RPMH_LN_BB_CLK1				13
+>  #define RPMH_LN_BB_CLK1_A			14
+> +#define RPMH_DIV_CLK1				15
+> +#define RPMH_DIV_CLK1_A				16
+> +#define RPMH_RF_CLK4				17
+> +#define RPMH_RF_CLK4_A				18
+> +#define RPMH_RF_CLK5				19
+> +#define RPMH_RF_CLK5_A				20
+> +#define RPMH_PKA_CLK				21
+> +#define RPMH_HWKM_CLK				22
+>  
+>  #endif
 > -- 
 > 2.26.2
 > 
