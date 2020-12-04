@@ -2,89 +2,78 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 975532CEA97
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Dec 2020 10:15:43 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E3DEC2CEAC3
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Dec 2020 10:22:53 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2387542AbgLDJOi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 4 Dec 2020 04:14:38 -0500
-Received: from bhuna.collabora.co.uk ([46.235.227.227]:44962 "EHLO
-        bhuna.collabora.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2387531AbgLDJOh (ORCPT
+        id S1726471AbgLDJWS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 4 Dec 2020 04:22:18 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46398 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725969AbgLDJWR (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 4 Dec 2020 04:14:37 -0500
-Received: from [127.0.0.1] (localhost [127.0.0.1])
-        (Authenticated sender: eballetbo)
-        with ESMTPSA id 224221F45EF9
-Subject: Re: [PATCH] spi: spi-geni-qcom: Use the new method of gpio CS control
-To:     Stephen Boyd <swboyd@chromium.org>,
-        Doug Anderson <dianders@chromium.org>
-Cc:     Alexandru M Stan <amstan@chromium.org>,
-        Mark Brown <broonie@kernel.org>,
-        linux-kernel <linux-kernel@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        linux-spi <linux-spi@vger.kernel.org>,
-        Akash Asthana <akashast@codeaurora.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Benson Leung <bleung@chromium.org>
-References: <20201202214935.1114381-1-swboyd@chromium.org>
- <CAHNYxRwMD4XahHXWW9z7b=VCOEsdPe5Df4CohNwmBy_ijWJ62g@mail.gmail.com>
- <160695172591.2717324.17788035024164242534@swboyd.mtv.corp.google.com>
- <160695644776.2717324.633265815704005177@swboyd.mtv.corp.google.com>
- <CAD=FV=WDYdfURHWf8qGOSwT+7Y5i=9FMgRn5hYZA-oTfR6KoFQ@mail.gmail.com>
- <160704063968.1580929.17834773484656581141@swboyd.mtv.corp.google.com>
-From:   Enric Balletbo i Serra <enric.balletbo@collabora.com>
-Message-ID: <8d864844-11d8-0eae-d85c-29136f035c1b@collabora.com>
-Date:   Fri, 4 Dec 2020 10:13:52 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.12.0
+        Fri, 4 Dec 2020 04:22:17 -0500
+Received: from mail-lj1-x243.google.com (mail-lj1-x243.google.com [IPv6:2a00:1450:4864:20::243])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CD0B7C061A51
+        for <linux-arm-msm@vger.kernel.org>; Fri,  4 Dec 2020 01:21:36 -0800 (PST)
+Received: by mail-lj1-x243.google.com with SMTP id f24so5764195ljk.13
+        for <linux-arm-msm@vger.kernel.org>; Fri, 04 Dec 2020 01:21:36 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=+7c7BU0JWGvw/1iU2RP3wYOxQ5mghF++V/hmPW08QIk=;
+        b=ZbKrTvYpmd9CcLWv1GktzFzlYT4Te8gGA+ExBEAb34qKQIC2WOzuaM6ytUttKN/7Zu
+         hheA1wlZZjHqQG52/dRy6/yRRBRfANtKCMoUJLBu9p35WCEpblNc85ssiBfCpXE+qvy0
+         mkUq24G/oAacjihOIKrueJ/rlShi04hO+AekLTSoSUywxzqcy2BT593O9A9lohkMobQY
+         +scJZsUeUmEGTR8GL74MRd3Ey3X4cr4PltAKVRZ0yyDB34jhW6oNRX2LgLGECee2XiYk
+         594TL/cRFtDJLUmny/gL0Q4EoRocFSjXN8wPV+oVTdOjE7e7X/DOTV62NNLccA50wVTK
+         xPOQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=+7c7BU0JWGvw/1iU2RP3wYOxQ5mghF++V/hmPW08QIk=;
+        b=bFTpaiO1C7UIneHVkyVM6Rt44HlAAFu21D/CLC5jMe8LvSNZ83KE1gq1Tpy3uNV0JM
+         HGMtFXQ7MgIei1CBQzUk/qwrpVLoXvXRSvkl/M59WFNUXxyBz+s66xqKI5FDzE5IRJwQ
+         13FYxX8CDgX86AUaUgiLj+Bb37Lv0nvTJZH6vZOdmvYQTo6f616RyDkBQdFwpTxXjaIp
+         lqv8j7D2yG4m4Mcg7wPW9puwxKpZa1EP7GXUnOgI7BBiOUHjNAxzlYxeAxN9fkZRq0C8
+         w0PB/vMxVXqiIA4fPrOihd3THZeAvegxFp6buNgIrzwcxPoMVMuVwDlUu117tWAVcoxx
+         MeIQ==
+X-Gm-Message-State: AOAM533M3bwWwQfcdZ5FIQ8l8XY72U2isqfj24J4vHM0T+a8AfT5MFZk
+        WneXTG85yn6zpAzmTbjgoBC+AdTnJb0pSc7PKUszgg==
+X-Google-Smtp-Source: ABdhPJyC6+2xnmMqO0QAl+UYRME0EsLO05pXC1RTr6pP0keKZPXy9cYYa9MVYwFQ/NoezSQzsOpVSAZo7OqY+i6WGj0=
+X-Received: by 2002:a05:651c:111:: with SMTP id a17mr2910564ljb.286.1607073695266;
+ Fri, 04 Dec 2020 01:21:35 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <160704063968.1580929.17834773484656581141@swboyd.mtv.corp.google.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+References: <20201126092151.1082697-1-vkoul@kernel.org>
+In-Reply-To: <20201126092151.1082697-1-vkoul@kernel.org>
+From:   Linus Walleij <linus.walleij@linaro.org>
+Date:   Fri, 4 Dec 2020 10:21:23 +0100
+Message-ID: <CACRpkdasQ-5dqhG_KMgjTiUcCp_=A0TH7QyA3E_EgVci_TUM=w@mail.gmail.com>
+Subject: Re: [PATCH 1/2] dt-bindings: pinctrl: qcom-pmic-gpio: Add pmx55 support
+To:     Vinod Koul <vkoul@kernel.org>
+Cc:     MSM <linux-arm-msm@vger.kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+On Thu, Nov 26, 2020 at 10:22 AM Vinod Koul <vkoul@kernel.org> wrote:
 
-On 4/12/20 1:10, Stephen Boyd wrote:
-> Quoting Doug Anderson (2020-12-03 12:06:10)
->> On Wed, Dec 2, 2020 at 4:47 PM Stephen Boyd <swboyd@chromium.org> wrote:
->>>
->>> And that is wrong. With even more investigation and Doug's eagle eyes it
->>> seems that the cros-ec driver is overriding the spi::mode to clear out
->>> the SPI_CS_HIGH bit that the spi core sets in there when using the gpio
->>> descriptors. I'll send a patch for cros-ec-spi shortly.
->>
->> So do we need any coordinating here, are we OK w/ trogdor devices
->> being broken for a short period of time?
->>
->> I think the device tree changes switching to use GPIO for chip select
->> is already queued in linux-next.  That means if we land this patch
->> before the fix to cros_ec [1] then we'll end up in a broken state.
->> Would we be able to do some quick landing to get the cros-ec fix into
->> v5.10 and then target the SPI patch for 5.11?
-> 
-> I don't think it really matters if the two patches meet up in linux-next
-> or cros-ec is fast tracked, but it would be bad if this patch was merged
-> without the cros-ec one. One option would be to apply the cros-ec fix to
-> the spi tree along with this patch (or vice versa) so that a bisection
-> hole isn't created. Or this patch can wait for a while until cros-ec is
-> fixed. I'm not the maintainer here so it's really up to Mark and
-> Enric/Benson.
-> 
+> Add support for the PMX55 GPIO support to the Qualcomm PMIC GPIO
+> binding.
+>
+> Signed-off-by: Vinod Koul <vkoul@kernel.org>
 
-I am fine either way. I'm fine with pick all the patches and go through the
-chrome/platform tree if Mark is agree (I think this patch has no other
-dependencies and the patch applies cleanly to my tree) or all can go through the
-Mark's tree. If I need to an IB I can also do it without problems.
+Patch applied!
 
-I'll leave Mark to decide who has much experience solving this kind of problems.
-
-Thanks,
- Enric
-
-
->>
->> [1] https://lore.kernel.org/r/20201203011649.1405292-2-swboyd@chromium.org/
+Yours,
+Linus Walleij
