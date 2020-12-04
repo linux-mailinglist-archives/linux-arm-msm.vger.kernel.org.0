@@ -2,207 +2,123 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 236902CEEAC
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Dec 2020 14:14:57 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id F27552CF255
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Dec 2020 17:52:43 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729142AbgLDNOD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 4 Dec 2020 08:14:03 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53830 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727898AbgLDNOC (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 4 Dec 2020 08:14:02 -0500
-Received: from mail-wr1-x443.google.com (mail-wr1-x443.google.com [IPv6:2a00:1450:4864:20::443])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9AAD9C061A51
-        for <linux-arm-msm@vger.kernel.org>; Fri,  4 Dec 2020 05:13:16 -0800 (PST)
-Received: by mail-wr1-x443.google.com with SMTP id g14so5247094wrm.13
-        for <linux-arm-msm@vger.kernel.org>; Fri, 04 Dec 2020 05:13:16 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=qDVxeWwAmtWSrwk0fTKbdPJheQPR8KPP9UH9PnzM3Uk=;
-        b=IrjJE4DI4rUhKAe5PYTLHVxYbdvfYc1PuOLF45RzFc6Om5m3W2u4E8x8alvnbM0uf3
-         UmQ3PZkAxXH2680bEdcXb+s+NS03rMSFYz6yMW39zUVzUnd4Cnc9PUJLUH3kgaDxiFaK
-         dUyY2rEcXx3e88HL1P/5xtUUB+5FXZKcWqJjwColeKpgqDw5NPj1+RFiPkXlfuBtXQe8
-         kMTZQFTUjcOqqSIn6QY1kfq9tBi2NnKh0crA/Pw7ddZIUIUkB8IK1WRHVBUxrMH9Ks7i
-         cQKtKUQD8Cq3vWMHlgAicNBLqFWrNx5PQ/whSBJRQnAV9ZeZFNxyOv7jaNBbHqzJaaeO
-         f6dQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=qDVxeWwAmtWSrwk0fTKbdPJheQPR8KPP9UH9PnzM3Uk=;
-        b=uNO6/i0XQQwShODPFY2re+FB1Y7efA7pYFN02z7iaZTEDWHmBYvfrdjcgRf3NIAzgT
-         +8wf5tzS4ykoN3mFKvhf8JxUNivyWNtMK/0T8fH5jfEDPHPMfwJJKplLgzoEEX6xalkP
-         dVTHPNWlrB7qo87N7db0QD73ADNn0xsBqDw2Utndz0fSAi/6nHKabO0c+hzYfNHwNqeu
-         rtKLF7ht3+GYVi2t51fjJX5VdLEaKsnt9LDHfESHG4cjG8EtYXG6qLvL6YQ6IHVCuILL
-         vBp3Wtru82LqLpPttqnEK+zEQssTU5+glCZQLp3sJreQoONlv+RZhLHqpBfeiakIYV3G
-         VHaw==
-X-Gm-Message-State: AOAM531rhLbJxfD5Ma0C/uccAC/iXrKeyeaw8RkoBGkVGjbrtzZiF0Up
-        m+Oo1AmFPOIPu4ccl7Waa7pfRQ==
-X-Google-Smtp-Source: ABdhPJwkqCWM2TZ2CuesjaMX1RqD5Dv6PLd8YAbhhrKQrayUvZwKBaHKStV0cW7I7oBAmIhi9GmM5w==
-X-Received: by 2002:adf:dd11:: with SMTP id a17mr3246735wrm.360.1607087595196;
-        Fri, 04 Dec 2020 05:13:15 -0800 (PST)
-Received: from [192.168.0.3] ([84.238.208.216])
-        by smtp.googlemail.com with ESMTPSA id 2sm4329993wrq.87.2020.12.04.05.13.13
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 04 Dec 2020 05:13:14 -0800 (PST)
-Subject: Re: [PATCH 1/4] v4l2-ctrl: Make display delay and display enable std
- controls
-To:     Hans Verkuil <hverkuil-cisco@xs4all.nl>,
-        Stanimir Varbanov <stanimir.varbanov@linaro.org>,
-        linux-media@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org
-Cc:     Kyungmin Park <kyungmin.park@samsung.com>,
-        Kamil Debski <kamil@wypas.org>,
-        Ezequiel Garcia <ezequiel@collabora.com>,
-        Nicolas Dufresne <nicolas.dufresne@collabora.com>,
-        Marek Szyprowski <m.szyprowski@samsung.com>
-References: <20201109173541.10016-1-stanimir.varbanov@linaro.org>
- <20201109173541.10016-2-stanimir.varbanov@linaro.org>
- <e0a49eb2-f4d0-0532-52e0-5bc58ce85ad9@xs4all.nl>
-From:   Stanimir Varbanov <stanimir.varbanov@linaro.org>
-Message-ID: <f775e5cf-3361-e7ed-bd85-6d0ad06db48c@linaro.org>
-Date:   Fri, 4 Dec 2020 15:13:13 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.10.0
+        id S1727397AbgLDQvQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 4 Dec 2020 11:51:16 -0500
+Received: from mail.kernel.org ([198.145.29.99]:58132 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727125AbgLDQvQ (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 4 Dec 2020 11:51:16 -0500
+From:   Arnd Bergmann <arnd@kernel.org>
+Authentication-Results: mail.kernel.org; dkim=permerror (bad message/signature format)
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Georgi Djakov <georgi.djakov@linaro.org>
+Cc:     Arnd Bergmann <arnd@arndb.de>, Sibi Sankar <sibis@codeaurora.org>,
+        Evan Green <evgreen@chromium.org>,
+        Jonathan Marek <jonathan@marek.ca>,
+        Odelu Kukatla <okukatla@codeaurora.org>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        David Dai <daidavid1@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH] interconnect: qcom: fix rpmh link failures
+Date:   Fri,  4 Dec 2020 17:50:03 +0100
+Message-Id: <20201204165030.3747484-1-arnd@kernel.org>
+X-Mailer: git-send-email 2.27.0
 MIME-Version: 1.0
-In-Reply-To: <e0a49eb2-f4d0-0532-52e0-5bc58ce85ad9@xs4all.nl>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+From: Arnd Bergmann <arnd@arndb.de>
 
+When CONFIG_COMPILE_TEST is set, it is possible to build some
+of the interconnect drivers into the kernel while their dependencies
+are loadable modules, which is bad:
 
-On 12/2/20 4:09 PM, Hans Verkuil wrote:
-> On 09/11/2020 18:35, Stanimir Varbanov wrote:
->> Make display delay and display delay enable MFC controls standard v4l
->> controls. This will allow reuse of the controls for other decoder
->> drivers. Also the new proposed controls are now codec agnostic because
->> they could be used for any codec.
->>
->> Signed-off-by: Stanimir Varbanov <stanimir.varbanov@linaro.org>
->> ---
->>  .../userspace-api/media/v4l/ext-ctrls-codec.rst   | 15 +++++++++++++++
->>  drivers/media/v4l2-core/v4l2-ctrls.c              |  4 ++++
->>  include/uapi/linux/v4l2-controls.h                |  2 ++
->>  3 files changed, 21 insertions(+)
->>
->> diff --git a/Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst b/Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst
->> index ce728c757eaf..82c9cda40270 100644
->> --- a/Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst
->> +++ b/Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst
->> @@ -679,6 +679,21 @@ enum v4l2_mpeg_video_frame_skip_mode -
->>      otherwise the decoder expects a single frame in per buffer.
->>      Applicable to the decoder, all codecs.
->>  
->> +``V4L2_CID_MPEG_VIDEO_DECODER_DISPLAY_DELAY_ENABLE (boolean)``
-> 
-> I'd use _DEC_ instead of _DECODER_.
+arm-linux-gnueabi-ld: drivers/interconnect/qcom/bcm-voter.o: in function `qcom_icc_bcm_voter_commit':
+(.text+0x1f8): undefined reference to `rpmh_invalidate'
+arm-linux-gnueabi-ld: (.text+0x20c): undefined reference to `rpmh_write_batch'
+arm-linux-gnueabi-ld: (.text+0x2b0): undefined reference to `rpmh_write_batch'
+arm-linux-gnueabi-ld: (.text+0x2e8): undefined reference to `rpmh_write_batch'
+arm-linux-gnueabi-ld: drivers/interconnect/qcom/icc-rpmh.o: in function `qcom_icc_bcm_init':
+(.text+0x2ac): undefined reference to `cmd_db_read_addr'
+arm-linux-gnueabi-ld: (.text+0x2c8): undefined reference to `cmd_db_read_aux_data'
 
-OK.
+The exact dependencies are a bit complicated, so split them out into a
+hidden Kconfig symbol that all drivers can in turn depend on to get it
+right.
 
-> 
->> +    If the display delay is enabled then the decoder is forced to return
->> +    a CAPTURE buffer (decoded frame) after processing a certain number
->> +    of OUTPUT buffers. The delay can be set through
->> +    ``V4L2_CID_MPEG_VIDEO_DECODER_DISPLAY_DELAY``. This
->> +    feature can be used for example for generating thumbnails of videos.
->> +    Applicable to the decoder.
-> 
-> Hmm. Is this: "after processing the first 'display delay' number of OUTPUT buffers."
-> Or is this: "every 'display delay' number of OUTPUT buffers."
-> 
-> I.e., is it a one-shot thing or a periodical thing?
+Fixes: 976daac4a1c5 ("interconnect: qcom: Consolidate interconnect RPMh support")
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+---
+ drivers/interconnect/qcom/Kconfig | 23 +++++++++++++++--------
+ 1 file changed, 15 insertions(+), 8 deletions(-)
 
-It is periodical.
-
-> 
-> If it is a one-shot thing, then this should probably be a button type, not
-> a boolean.
-> 
->> +
->> +``V4L2_CID_MPEG_VIDEO_DECODER_DISPLAY_DELAY (integer)``
->> +    Display delay value for decoder. The decoder is forced to
->> +    return a decoded frame after the set 'display delay' number of
->> +    frames. If this number is low it may result in frames returned out
->> +    of display order, in addition the hardware may still be using the
->> +    returned buffer as a reference picture for subsequent frames.
-> 
-> Can this be 0? And if so, what does that mean?
-
-Yes, it can be 0 and I'm using this to change decoder decode order in
-Venus driver:
-
-V4L2_CID_MPEG_VIDEO_DECODER_DISPLAY_DELAY ctl->val = 0
-V4L2_CID_MPEG_VIDEO_DECODER_DISPLAY_DELAY_ENABLE ctl->val = true
-
-Then the decoder will produce output buffers in decode-order instead of
-default display-order.
-
-> 
->> +
->>  ``V4L2_CID_MPEG_VIDEO_H264_VUI_SAR_ENABLE (boolean)``
->>      Enable writing sample aspect ratio in the Video Usability
->>      Information. Applicable to the H264 encoder.
->> diff --git a/drivers/media/v4l2-core/v4l2-ctrls.c b/drivers/media/v4l2-core/v4l2-ctrls.c
->> index bd7f330c941c..4a21802e026b 100644
->> --- a/drivers/media/v4l2-core/v4l2-ctrls.c
->> +++ b/drivers/media/v4l2-core/v4l2-ctrls.c
->> @@ -874,6 +874,8 @@ const char *v4l2_ctrl_get_name(u32 id)
->>  	case V4L2_CID_MPEG_VIDEO_HEADER_MODE:			return "Sequence Header Mode";
->>  	case V4L2_CID_MPEG_VIDEO_MAX_REF_PIC:			return "Max Number of Reference Pics";
->>  	case V4L2_CID_MPEG_VIDEO_FRAME_SKIP_MODE:		return "Frame Skip Mode";
->> +	case V4L2_CID_MPEG_VIDEO_DECODER_DISPLAY_DELAY:		return "Display Delay";
->> +	case V4L2_CID_MPEG_VIDEO_DECODER_DISPLAY_DELAY_ENABLE:	return "Display Delay Enable";
->>  	case V4L2_CID_MPEG_VIDEO_H263_I_FRAME_QP:		return "H263 I-Frame QP Value";
->>  	case V4L2_CID_MPEG_VIDEO_H263_P_FRAME_QP:		return "H263 P-Frame QP Value";
->>  	case V4L2_CID_MPEG_VIDEO_H263_B_FRAME_QP:		return "H263 B-Frame QP Value";
->> @@ -1221,6 +1223,7 @@ void v4l2_ctrl_fill(u32 id, const char **name, enum v4l2_ctrl_type *type,
->>  	case V4L2_CID_FLASH_READY:
->>  	case V4L2_CID_MPEG_VIDEO_DECODER_MPEG4_DEBLOCK_FILTER:
->>  	case V4L2_CID_MPEG_VIDEO_DECODER_SLICE_INTERFACE:
->> +	case V4L2_CID_MPEG_VIDEO_DECODER_DISPLAY_DELAY_ENABLE:
->>  	case V4L2_CID_MPEG_VIDEO_FRAME_RC_ENABLE:
->>  	case V4L2_CID_MPEG_VIDEO_MB_RC_ENABLE:
->>  	case V4L2_CID_MPEG_VIDEO_H264_8X8_TRANSFORM:
->> @@ -1256,6 +1259,7 @@ void v4l2_ctrl_fill(u32 id, const char **name, enum v4l2_ctrl_type *type,
->>  		break;
->>  	case V4L2_CID_MPEG_VIDEO_MV_H_SEARCH_RANGE:
->>  	case V4L2_CID_MPEG_VIDEO_MV_V_SEARCH_RANGE:
->> +	case V4L2_CID_MPEG_VIDEO_DECODER_DISPLAY_DELAY:
->>  		*type = V4L2_CTRL_TYPE_INTEGER;
->>  		break;
->>  	case V4L2_CID_MPEG_VIDEO_FORCE_KEY_FRAME:
->> diff --git a/include/uapi/linux/v4l2-controls.h b/include/uapi/linux/v4l2-controls.h
->> index 7035f4fb182c..d6b19f8d0022 100644
->> --- a/include/uapi/linux/v4l2-controls.h
->> +++ b/include/uapi/linux/v4l2-controls.h
->> @@ -773,6 +773,8 @@ enum v4l2_mpeg_video_frame_skip_mode {
->>  	V4L2_MPEG_VIDEO_FRAME_SKIP_MODE_LEVEL_LIMIT	= 1,
->>  	V4L2_MPEG_VIDEO_FRAME_SKIP_MODE_BUF_LIMIT	= 2,
->>  };
->> +#define V4L2_CID_MPEG_VIDEO_DECODER_DISPLAY_DELAY		(V4L2_CID_MPEG_BASE + 647)
->> +#define V4L2_CID_MPEG_VIDEO_DECODER_DISPLAY_DELAY_ENABLE	(V4L2_CID_MPEG_BASE + 648)
-> 
-> This will need to be rebased once this PR is merged:
-> https://patchwork.linuxtv.org/project/linux-media/patch/d68da172-b251-000f-653d-38a8a4c7b715@xs4all.nl/
-> 
->>  
->>  /*  MPEG-class control IDs specific to the CX2341x driver as defined by V4L2 */
->>  #define V4L2_CID_MPEG_CX2341X_BASE				(V4L2_CTRL_CLASS_MPEG | 0x1000)
->>
-> 
-> Regards,
-> 
-> 	Hans
-> 
-
+diff --git a/drivers/interconnect/qcom/Kconfig b/drivers/interconnect/qcom/Kconfig
+index a8f93ba265f8..b3fb5b02bcf1 100644
+--- a/drivers/interconnect/qcom/Kconfig
++++ b/drivers/interconnect/qcom/Kconfig
+@@ -42,13 +42,23 @@ config INTERCONNECT_QCOM_QCS404
+ 	  This is a driver for the Qualcomm Network-on-Chip on qcs404-based
+ 	  platforms.
+ 
++config INTERCONNECT_QCOM_RPMH_POSSIBLE
++	tristate
++	default INTERCONNECT_QCOM
++	depends on QCOM_RPMH || (COMPILE_TEST && !QCOM_RPMH)
++	depends on QCOM_COMMAND_DB || (COMPILE_TEST && !QCOM_COMMAND_DB)
++	depends on OF || COMPILE_TEST
++	help
++	  Compile-testing RPMH drivers is possible on other platforms,
++	  but in order to avoid link failures, drivers must not be built-in
++	  when QCOM_RPMH or QCOM_COMMAND_DB are loadable modules
++
+ config INTERCONNECT_QCOM_RPMH
+ 	tristate
+ 
+ config INTERCONNECT_QCOM_SC7180
+ 	tristate "Qualcomm SC7180 interconnect driver"
+-	depends on INTERCONNECT_QCOM
+-	depends on (QCOM_RPMH && QCOM_COMMAND_DB && OF) || COMPILE_TEST
++	depends on INTERCONNECT_QCOM_RPMH_POSSIBLE
+ 	select INTERCONNECT_QCOM_RPMH
+ 	select INTERCONNECT_QCOM_BCM_VOTER
+ 	help
+@@ -57,8 +67,7 @@ config INTERCONNECT_QCOM_SC7180
+ 
+ config INTERCONNECT_QCOM_SDM845
+ 	tristate "Qualcomm SDM845 interconnect driver"
+-	depends on INTERCONNECT_QCOM
+-	depends on (QCOM_RPMH && QCOM_COMMAND_DB && OF) || COMPILE_TEST
++	depends on INTERCONNECT_QCOM_RPMH_POSSIBLE
+ 	select INTERCONNECT_QCOM_RPMH
+ 	select INTERCONNECT_QCOM_BCM_VOTER
+ 	help
+@@ -67,8 +76,7 @@ config INTERCONNECT_QCOM_SDM845
+ 
+ config INTERCONNECT_QCOM_SM8150
+ 	tristate "Qualcomm SM8150 interconnect driver"
+-	depends on INTERCONNECT_QCOM
+-	depends on (QCOM_RPMH && QCOM_COMMAND_DB && OF) || COMPILE_TEST
++	depends on INTERCONNECT_QCOM_RPMH_POSSIBLE
+ 	select INTERCONNECT_QCOM_RPMH
+ 	select INTERCONNECT_QCOM_BCM_VOTER
+ 	help
+@@ -77,8 +85,7 @@ config INTERCONNECT_QCOM_SM8150
+ 
+ config INTERCONNECT_QCOM_SM8250
+ 	tristate "Qualcomm SM8250 interconnect driver"
+-	depends on INTERCONNECT_QCOM
+-	depends on (QCOM_RPMH && QCOM_COMMAND_DB && OF) || COMPILE_TEST
++	depends on INTERCONNECT_QCOM_RPMH_POSSIBLE
+ 	select INTERCONNECT_QCOM_RPMH
+ 	select INTERCONNECT_QCOM_BCM_VOTER
+ 	help
 -- 
-regards,
-Stan
+2.27.0
+
