@@ -2,91 +2,98 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 60BEE2CEAD2
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Dec 2020 10:26:17 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B8EBC2CEB9A
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Dec 2020 11:03:06 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725969AbgLDJZe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 4 Dec 2020 04:25:34 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46914 "EHLO
+        id S2387710AbgLDKCw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 4 Dec 2020 05:02:52 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52648 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729386AbgLDJZd (ORCPT
+        with ESMTP id S2387709AbgLDKCv (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 4 Dec 2020 04:25:33 -0500
-Received: from mail-lf1-x144.google.com (mail-lf1-x144.google.com [IPv6:2a00:1450:4864:20::144])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 847E9C061A53
-        for <linux-arm-msm@vger.kernel.org>; Fri,  4 Dec 2020 01:24:53 -0800 (PST)
-Received: by mail-lf1-x144.google.com with SMTP id z21so6715978lfe.12
-        for <linux-arm-msm@vger.kernel.org>; Fri, 04 Dec 2020 01:24:53 -0800 (PST)
+        Fri, 4 Dec 2020 05:02:51 -0500
+Received: from mail-ej1-x632.google.com (mail-ej1-x632.google.com [IPv6:2a00:1450:4864:20::632])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 56B40C061A4F
+        for <linux-arm-msm@vger.kernel.org>; Fri,  4 Dec 2020 02:02:05 -0800 (PST)
+Received: by mail-ej1-x632.google.com with SMTP id f23so7856919ejk.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 04 Dec 2020 02:02:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=QfA2Deg/Hoczex9GFJ2Tve/iNGFtxx0X+vAgQ/KFFmU=;
-        b=sxbK6ICnhtU2iZIIm+T8C1Te3ugLfCMvzllg3hITnc97hX0ozFqvsMw2hTfvuqrIJb
-         Edv1v7nUodKmq7N37lBQN76EE9BW5pyN9FQwsyZ0e9ROMoKLgmpv8lznQhrB8fci8c6q
-         Ixdn2ZfQU3yuSZzPAkaXD9uU1dhOZ4kcRUFHGtoyY05qk+ogwt5TCqEhDEJNMM87Ai2p
-         DwlGKOlGIPT5NjBTaqMqWMzgoep/7oqCvO4edCRwySaIip0MEU9V/fRtGKhnql0PzOs+
-         RGGGd3rKLV9mS5u0IVF8sQAr5LUn8Ie9a55F44FmW66QceFzV1SZfagOsT/VLUzmBtQt
-         OZOQ==
+        h=from:to:cc:subject:date:message-id;
+        bh=++IltyY+m+4yKbR7UfN2/Vuk9NOT6dGaxBYrXiv56uE=;
+        b=o5EIhWkQaGJbqel6RrK8cy2sadIRCrcnAYY1avee7tk6Sk8xUMWcf1rK/l7JdGQxZr
+         /CUHgVogmoM/N3O/lCbep9M6Zkud0YxRYyNQFPkuqO/A6KRxgHpLacxbXz3QFa+pwtq0
+         x/1/ajHblq4b7qsX7As4ddmDiK4akAVcaHXkZKdYNvFxW2KVG55eMziw1hu4LbYTFoJ3
+         /WAdePA8PY+Bm1pH/OOb8cgjCp4MT+0Po9NTNZw5e3ql7d935/3AT574Fx1uut8d5F9d
+         Y2sN9YPAWI7ZcdnvDeHOb9aGIKg3H4GsE9INcWwXe0Fs6/xr9jMSZnLeahrory9GOQuq
+         w5iQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=QfA2Deg/Hoczex9GFJ2Tve/iNGFtxx0X+vAgQ/KFFmU=;
-        b=qDqmB0i8f+HPyvxooBCh0rhADKNHBmlVIiJ1lTJBc26Ex4izYc2wfakdV1n4ydnXdx
-         +gmlOjQV4x68nGUQsUyAQpTT8PV44V579L4lCCN2KGcFwuUnKiA4mqv95I7jSWVs3f+H
-         6oaVMIcubjsIhUMOzpeJhlgTNP3bTbSD8x/1tVRzr6bmJJNqIjloUYFJxovhLdpdqmMj
-         g75U7g/FXDyJBKx0TGC/JtZ9ZevfWsxKCskjEDXAXgADrURcpjIJInTHlm3liPsEXSnG
-         OtDflwpt4JNGpOYlWxQaKG26Qmw2Y7UT4wT+98DDYs2fMy5xWuIis0/RpzZP1WS/PFFQ
-         z5kw==
-X-Gm-Message-State: AOAM531EnMBKC93Rmptwv2njGzaGbITAPBW5uIUOFbdiNubPKU6vHbp3
-        U823Y7w59o4VKmbPaz47q4mbPSldHgSqr3FFWjYsOQ==
-X-Google-Smtp-Source: ABdhPJwld5FPJyOQr+2N2zHsMoJkzskFljGisFmdIuFc8iFudOBUnCzHohy+kvKJ8IppYePCa9/K6MvPyM8eZ2hBb1g=
-X-Received: by 2002:a19:8686:: with SMTP id i128mr2935037lfd.333.1607073891967;
- Fri, 04 Dec 2020 01:24:51 -0800 (PST)
-MIME-Version: 1.0
-References: <20201203070900.2651127-1-vkoul@kernel.org> <20201203070900.2651127-2-vkoul@kernel.org>
-In-Reply-To: <20201203070900.2651127-2-vkoul@kernel.org>
-From:   Linus Walleij <linus.walleij@linaro.org>
-Date:   Fri, 4 Dec 2020 10:24:41 +0100
-Message-ID: <CACRpkdaX2=F_AgWniXGJXO2hE2itg=ENMBOROaY+Lrk7CxdNUw@mail.gmail.com>
-Subject: Re: [PATCH 2/2] pinctrl: qcom: Add SM8350 pinctrl driver
-To:     Vinod Koul <vkoul@kernel.org>, John Stultz <john.stultz@linaro.org>
-Cc:     MSM <linux-arm-msm@vger.kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Raghavendra Rao Ananta <rananta@codeaurora.org>,
-        Andy Gross <agross@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-        Jeevan Shriram <jshriram@codeaurora.org>
-Content-Type: text/plain; charset="UTF-8"
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=++IltyY+m+4yKbR7UfN2/Vuk9NOT6dGaxBYrXiv56uE=;
+        b=WDOxrjoSbYH+jg+18tPhUX5HFPed1esmv2VxBaTaPFn5IwKZXYVecl605Lrt9/gWnZ
+         7J5h23wJrKxJGzIVyND7WlbToLJY1GJu7QB9raJpWoT7I8xH+Y1djJLHKEybLLcB5rtK
+         8EJmyNaTywf64ll+d/eSbQUEw0JElEdA8tOmlff0qJaYiJfIUHtmK4KUm99hjhiJ0I7S
+         AnewZCie/jaX+DrMAh66yKvbfdGFFNOFgCFOIazKJ4HwnhhQHrzGQ2nEo7aRB04BACBO
+         +bTKonh1RLecrfEH0M56Sr0UPKCh4FOJHY3f70QraZGhJI7e6l6cxLC1pYNR40FDE+f7
+         lCoQ==
+X-Gm-Message-State: AOAM531eN5Ivelxhm6tJMuFMUDIza0AWjbg+y/PoOvo42Jx53+Egiosb
+        R+b0aweJvvbyrZwy3BP33xRsvA==
+X-Google-Smtp-Source: ABdhPJyht7qkOJKWnkXNSY3BjrtshQwuVw/XNG6XyOCd/JAMlt2ZGRgMACbRNdWPbFXAYuCEJP4F+g==
+X-Received: by 2002:a17:907:2718:: with SMTP id w24mr6038881ejk.525.1607076123943;
+        Fri, 04 Dec 2020 02:02:03 -0800 (PST)
+Received: from localhost.localdomain (hst-221-106.medicom.bg. [84.238.221.106])
+        by smtp.gmail.com with ESMTPSA id p35sm3238242edd.58.2020.12.04.02.02.02
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 04 Dec 2020 02:02:02 -0800 (PST)
+From:   Stanimir Varbanov <stanimir.varbanov@linaro.org>
+To:     linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Cc:     dikshita@codeaurora.org, Alexandre Courbot <acourbot@chromium.org>,
+        Vikash Garodia <vgarodia@codeaurora.org>,
+        Stanimir Varbanov <stanimir.varbanov@linaro.org>
+Subject: [PATCH v2 0/4] Venus encoder improvements
+Date:   Fri,  4 Dec 2020 12:01:35 +0200
+Message-Id: <20201204100139.6216-1-stanimir.varbanov@linaro.org>
+X-Mailer: git-send-email 2.17.1
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Dec 3, 2020 at 8:09 AM Vinod Koul <vkoul@kernel.org> wrote:
+Hello,
 
-> From: Raghavendra Rao Ananta <rananta@codeaurora.org>
->
-> This adds pincontrol driver for tlmm block found in SM8350 SoC
->
-> Signed-off-by: Raghavendra Rao Ananta <rananta@codeaurora.org>
-> Signed-off-by: Jeevan Shriram <jshriram@codeaurora.org>
-> [vkoul: rebase and tidy up for upstream]
-> Signed-off-by: Vinod Koul <vkoul@kernel.org>
-(...)
+Changes since v1:
+  * 1/4 - fixed error handling in hfi_session_deinit (Alex)
+        - keep venc_set_properties invocation from start_streaming (Dikshita) 
+  * 2/4 - keep original mutex_lock (Alex)
+  * 3/4 - move msg queue inside if statement (Fritz)
+        - move rx_req setting before triggering soft interrupt (Alex)
+  * Add one more patch 4/4 to address comments for hfi_session_init
+    EINVAL return error code (Alex)
 
-> +config PINCTRL_SM8350
-> +       tristate "Qualcomm Technologies Inc SM8350 pin controller driver"
-> +       depends on GPIOLIB && OF
-> +       select PINCTRL_MSM
+The v1 can be found at [1].
 
-This needs to be
-depends on PINCTRL_MSM
-due to the recent changes to allow modularization.
+regards,
+Stan
 
-Yours,
-Linus Walleij
+[1] https://www.spinics.net/lists/linux-media/msg181634.html
+
+Stanimir Varbanov (3):
+  venus: venc: Init the session only once in queue_setup
+  venus: Limit HFI sessions to the maximum supported
+  venus: hfi: Correct session init return error
+
+Vikash Garodia (1):
+  media: venus: request for interrupt from venus
+
+ drivers/media/platform/qcom/venus/core.h      |  1 +
+ drivers/media/platform/qcom/venus/hfi.c       | 18 +++-
+ .../media/platform/qcom/venus/hfi_parser.c    |  3 +
+ drivers/media/platform/qcom/venus/hfi_venus.c | 77 ++++++++++-------
+ drivers/media/platform/qcom/venus/vdec.c      |  2 +-
+ drivers/media/platform/qcom/venus/venc.c      | 85 ++++++++++++++-----
+ 6 files changed, 127 insertions(+), 59 deletions(-)
+
+-- 
+2.17.1
+
