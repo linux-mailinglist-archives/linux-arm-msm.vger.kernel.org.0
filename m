@@ -2,219 +2,96 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 0E5E42CE5AB
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Dec 2020 03:25:30 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3B2002CE5BB
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Dec 2020 03:33:39 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726740AbgLDCYr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 3 Dec 2020 21:24:47 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38308 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726332AbgLDCYq (ORCPT
+        id S1727042AbgLDCco (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 3 Dec 2020 21:32:44 -0500
+Received: from so254-31.mailgun.net ([198.61.254.31]:14281 "EHLO
+        so254-31.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726863AbgLDCcn (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 3 Dec 2020 21:24:46 -0500
-Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4AB9AC061A4F
-        for <linux-arm-msm@vger.kernel.org>; Thu,  3 Dec 2020 18:24:05 -0800 (PST)
-Received: by mail-lf1-x130.google.com with SMTP id u18so5627521lfd.9
-        for <linux-arm-msm@vger.kernel.org>; Thu, 03 Dec 2020 18:24:05 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=s4u4b45a8ETNbHAbxtaaDiyY6Pkn4TPDLXT1pEb3qYw=;
-        b=WBm42TQzCuibOmA79Uc0/Bn6AJUtpOgB7hKkz835mW8u6304nBbfXYnSF27Zz2AqFi
-         Xk9D2C+CKu3OJ9LSCgp0HvxaDyM2g5wmZsfrYfWUo44b8QeLR+xx29irk2L+k+gprikd
-         B8S435lj6Kg6DbILI9lfWozClyZbgj6Wa55tvNtyzWU9z/MFpHOELq1fN94pNgfIy2Ox
-         JeWulLfw0mMgcudf1EcZUzNNuzLrZ4X8dgbp8R16mEdDmjd+CVFnuT5ohLdRp6EC9XVv
-         xe7G7wRhS3mgtE7LwOGU9JhXoJ6ZMGWuIJh7iMij8iI7L7o93j58V90jthP2WFeaD+/g
-         0roQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=s4u4b45a8ETNbHAbxtaaDiyY6Pkn4TPDLXT1pEb3qYw=;
-        b=h2ihdE3zbd5zXKM2KCA4+eQb1ZDrE4TJJKw/S74PKREVdyQOWrv6ahLrfUwOY+YYif
-         g4EZs5bT9GLBLKclhaGjlt9MgfOlJC1zchRfaoluYvaSUauHxgy84gQQFFTK2SApQfva
-         dp9CXLHzOhY2Mj0EjCqVu6fqSXN6SMVWWD298u1PtW5Z9oKdph2eVUB204bL4q00Oo5a
-         XxGoVtdwGn426iTC9pGKqA8L0Ad7tboavCVgSx1bGbxEjK31PkZI3x+gzHfV87LrnL2G
-         O4GcLwePeorLl33i7f5ajtZ4942MzgHYXxM1Sxu5sgnHqzktfEKrN9B5jZ3GZV+ZuKWD
-         v5Pg==
-X-Gm-Message-State: AOAM533tF1YZbm0Q2n37eYQvQm/t5uzbBUBF2CbYb1VYHDgmlU/EDMTT
-        FzxDSwPnGWnVfJGQA6rP8rmy+g==
-X-Google-Smtp-Source: ABdhPJwv3Ghgdzxbv2YOauXTWvW0fSmH/eSiGTyZ9eAoedSXNILNPJHOyTRLG3gbrzc8dBX2knyfcQ==
-X-Received: by 2002:a19:c21a:: with SMTP id l26mr2657579lfc.590.1607048643764;
-        Thu, 03 Dec 2020 18:24:03 -0800 (PST)
-Received: from eriador.lumag.spb.ru ([188.162.64.117])
-        by smtp.gmail.com with ESMTPSA id u13sm145569lji.12.2020.12.03.18.24.02
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 03 Dec 2020 18:24:03 -0800 (PST)
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
-Subject: [PATCH v2] dt-bindings: soc: qcom: convert qcom,smem bindings to yaml
-Date:   Fri,  4 Dec 2020 05:24:01 +0300
-Message-Id: <20201204022401.1054122-1-dmitry.baryshkov@linaro.org>
-X-Mailer: git-send-email 2.29.2
+        Thu, 3 Dec 2020 21:32:43 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1607049142; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
+ Subject: Sender; bh=UKUWIiLYmiHVJsPhpECnnECxvIOzzUiBoKnbeHMlQxc=; b=EPqoE2mBq8GoYvaSEVPjd+G/5NXqParLqiYf7CjtCEdE/qsfnkFIqFsDqcbpPiXyaxRRth7F
+ vDVxb3/XEKRH2oTPy+Av92JUuR+ZUOr10SlVf9auuXWab7DCvgQ0vxXBc/FG2OoAlTs8X9ek
+ Ee+eJUYqfFa8hYXILTY6JKhjdBc=
+X-Mailgun-Sending-Ip: 198.61.254.31
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n07.prod.us-east-1.postgun.com with SMTP id
+ 5fc99f989c3ccbec63a92af8 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 04 Dec 2020 02:31:52
+ GMT
+Sender: hemantk=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 52046C43466; Fri,  4 Dec 2020 02:31:51 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        NICE_REPLY_A,SPF_FAIL,URIBL_BLOCKED autolearn=no autolearn_force=no
+        version=3.4.0
+Received: from [10.46.162.249] (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: hemantk)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 088C3C43461;
+        Fri,  4 Dec 2020 02:31:49 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 088C3C43461
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=hemantk@codeaurora.org
+Subject: Re: [PATCH v15 4/4] bus: mhi: Add userspace client interface driver
+To:     Jeffrey Hugo <jhugo@codeaurora.org>,
+        manivannan.sadhasivam@linaro.org, gregkh@linuxfoundation.org
+Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        bbhatt@codeaurora.org, loic.poulain@linaro.org,
+        netdev@vger.kernel.org
+References: <1607035516-3093-1-git-send-email-hemantk@codeaurora.org>
+ <1607035516-3093-5-git-send-email-hemantk@codeaurora.org>
+ <1bcddc1c-e489-c867-77fb-f6893a101900@codeaurora.org>
+From:   Hemant Kumar <hemantk@codeaurora.org>
+Message-ID: <d1af1eac-f9bd-7a8e-586b-5c2a76445145@codeaurora.org>
+Date:   Thu, 3 Dec 2020 18:31:48 -0800
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.10.0
 MIME-Version: 1.0
+In-Reply-To: <1bcddc1c-e489-c867-77fb-f6893a101900@codeaurora.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Convert soc/qcom/qcom,smem.txt bindings to YAML format.
 
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
----
- .../bindings/soc/qcom/qcom,smem.txt           | 57 ---------------
- .../bindings/soc/qcom/qcom,smem.yaml          | 73 +++++++++++++++++++
- 2 files changed, 73 insertions(+), 57 deletions(-)
- delete mode 100644 Documentation/devicetree/bindings/soc/qcom/qcom,smem.txt
- create mode 100644 Documentation/devicetree/bindings/soc/qcom/qcom,smem.yaml
-
-diff --git a/Documentation/devicetree/bindings/soc/qcom/qcom,smem.txt b/Documentation/devicetree/bindings/soc/qcom/qcom,smem.txt
-deleted file mode 100644
-index 9326cdf6e1b1..000000000000
---- a/Documentation/devicetree/bindings/soc/qcom/qcom,smem.txt
-+++ /dev/null
-@@ -1,57 +0,0 @@
--Qualcomm Shared Memory Manager binding
--
--This binding describes the Qualcomm Shared Memory Manager, used to share data
--between various subsystems and OSes in Qualcomm platforms.
--
--- compatible:
--	Usage: required
--	Value type: <stringlist>
--	Definition: must be:
--		    "qcom,smem"
--
--- memory-region:
--	Usage: required
--	Value type: <prop-encoded-array>
--	Definition: handle to memory reservation for main SMEM memory region.
--
--- qcom,rpm-msg-ram:
--	Usage: required
--	Value type: <prop-encoded-array>
--	Definition: handle to RPM message memory resource
--
--- hwlocks:
--	Usage: required
--	Value type: <prop-encoded-array>
--	Definition: reference to a hwspinlock used to protect allocations from
--		    the shared memory
--
--= EXAMPLE
--The following example shows the SMEM setup for MSM8974, with a main SMEM region
--at 0xfa00000 and the RPM message ram at 0xfc428000:
--
--	reserved-memory {
--		#address-cells = <1>;
--		#size-cells = <1>;
--		ranges;
--
--		smem_region: smem@fa00000 {
--			reg = <0xfa00000 0x200000>;
--			no-map;
--		};
--	};
--
--	smem@fa00000 {
--		compatible = "qcom,smem";
--
--		memory-region = <&smem_region>;
--		qcom,rpm-msg-ram = <&rpm_msg_ram>;
--
--		hwlocks = <&tcsr_mutex 3>;
--	};
--
--	soc {
--		rpm_msg_ram: memory@fc428000 {
--			compatible = "qcom,rpm-msg-ram";
--			reg = <0xfc428000 0x4000>;
--		};
--	};
-diff --git a/Documentation/devicetree/bindings/soc/qcom/qcom,smem.yaml b/Documentation/devicetree/bindings/soc/qcom/qcom,smem.yaml
-new file mode 100644
-index 000000000000..867640c09932
---- /dev/null
-+++ b/Documentation/devicetree/bindings/soc/qcom/qcom,smem.yaml
-@@ -0,0 +1,73 @@
-+# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
-+%YAML 1.2
-+---
-+$id: "http://devicetree.org/schemas/soc/qcom/qcom,smem.yaml#"
-+$schema: "http://devicetree.org/meta-schemas/core.yaml#"
-+
-+title: Qualcomm Shared Memory Manager binding
-+
-+maintainers:
-+  - Andy Gross <agross@kernel.org>
-+  - Bjorn Andersson <bjorn.andersson@linaro.org>
-+
-+description: |
-+  This binding describes the Qualcomm Shared Memory Manager, used to share data
-+  between various subsystems and OSes in Qualcomm platforms.
-+
-+properties:
-+  compatible:
-+    const: "qcom-smem"
-+
-+  memory-region:
-+    maxItems: 1
-+    description: handle to memory reservation for main SMEM memory region.
-+
-+  hwlocks:
-+    $ref: /schemas/types.yaml#/definitions/phandle
-+    description: reference to a hwspinlock used to protect allocations from the shared memory
-+
-+  qcom,rpm-msg-ram:
-+    $ref: /schemas/types.yaml#/definitions/phandle
-+    description: handle to RPM message memory resource
-+
-+required:
-+  - compatible
-+  - memory-region
-+  - hwlocks
-+
-+additionalProperties: false
-+
-+examples:
-+  - |
-+    reserved-memory {
-+        #address-cells = <1>;
-+        #size-cells = <1>;
-+        ranges;
-+
-+        smem_region: smem@fa00000 {
-+            reg = <0xfa00000 0x200000>;
-+            no-map;
-+        };
-+    };
-+
-+    smem {
-+        compatible = "qcom,smem";
-+
-+        memory-region = <&smem_region>;
-+        qcom,rpm-msg-ram = <&rpm_msg_ram>;
-+
-+        hwlocks = <&tcsr_mutex 3>;
-+    };
-+
-+    soc {
-+        #address-cells = <1>;
-+        #size-cells = <1>;
-+        ranges;
-+
-+        rpm_msg_ram: memory@fc428000 {
-+            compatible = "qcom,rpm-msg-ram";
-+            reg = <0xfc428000 0x4000>;
-+        };
-+    };
-+
-+...
+On 12/3/20 3:45 PM, Jeffrey Hugo wrote:
+> On 12/3/2020 3:45 PM, Hemant Kumar wrote:
+>> This MHI client driver allows userspace clients to transfer
+>> raw data between MHI device and host using standard file operations.
+>> Driver instantiates UCI device object which is associated to device
+>> file node. UCI device object instantiates UCI channel object when device
+>> file node is opened. UCI channel object is used to manage MHI channels
+>> by calling MHI core APIs for read and write operations. MHI channels
+>> are started as part of device open(). MHI channels remain in start
+>> state until last release() is called on UCI device file node. Device
+>> file node is created with format
+>>
+>> /dev/<mhi_device_name>
+>>
+>> Currently it supports QMI channel.
+>>
+>> Signed-off-by: Hemant Kumar <hemantk@codeaurora.org>
+>> Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+>> Reviewed-by: Jeffrey Hugo <jhugo@codeaurora.org>
+> 
+> You dropped Loic's tested by.  Was that a mistake, or did something 
+> actually change which would invalidate his testing?
+> 
+Thanks for pointing this out, it was my bad. Re-sending the patch.
 -- 
-2.29.2
-
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
