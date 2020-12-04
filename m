@@ -2,49 +2,49 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 0F4682CF4DB
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Dec 2020 20:37:52 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 9CA102CF4E5
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Dec 2020 20:37:56 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730564AbgLDTgZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 4 Dec 2020 14:36:25 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56924 "EHLO
+        id S1727913AbgLDThK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 4 Dec 2020 14:37:10 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57032 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725923AbgLDTgY (ORCPT
+        with ESMTP id S1730705AbgLDThJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 4 Dec 2020 14:36:24 -0500
-Received: from mail-pj1-x1042.google.com (mail-pj1-x1042.google.com [IPv6:2607:f8b0:4864:20::1042])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9FDBBC061A53
-        for <linux-arm-msm@vger.kernel.org>; Fri,  4 Dec 2020 11:35:44 -0800 (PST)
-Received: by mail-pj1-x1042.google.com with SMTP id o7so3767990pjj.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 04 Dec 2020 11:35:44 -0800 (PST)
+        Fri, 4 Dec 2020 14:37:09 -0500
+Received: from mail-pj1-x1041.google.com (mail-pj1-x1041.google.com [IPv6:2607:f8b0:4864:20::1041])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EBB12C08C5F2
+        for <linux-arm-msm@vger.kernel.org>; Fri,  4 Dec 2020 11:35:45 -0800 (PST)
+Received: by mail-pj1-x1041.google.com with SMTP id h7so4230771pjk.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 04 Dec 2020 11:35:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=xIokUz/0OVF9KG6gBm+1eG1ys/IbCXUboIQpNSvv5NM=;
-        b=equO24iQTqLTdvV7288zmDksfFX6JcjVKYoJr9Nky72wptFmzZ8Kb2wzGtP1fOujRn
-         /o4mCZyYqLCna+CENya0y2C/NxKg27vQt/41XLQ50xrLH/zmUx3GYflCr/s1j7aXKkxf
-         JFFDx9Y/+wNSK9vki5W7ZDbbGVb99w5Z10qtw=
+        bh=OLsx5vVuUCPRsEhZl6FaNYVhvrSnAx3P4TPwOM+YKjI=;
+        b=EIj5KpgF9tseDgO+Vv6rRaCFuZLSRi9JZbJm4JZSurBPJ+8A2N9qHkTQ9q2eNsk8uo
+         i2fm+pGhYslCHJoEqkv2Km4XZFq095EU+0QlmnLYOi5CDRXxecQ1WeHnFDX/Mb5MR2hS
+         abrArIEdHM3VcxdsG8L3q/i8V8HFEGxMHWZO4=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=xIokUz/0OVF9KG6gBm+1eG1ys/IbCXUboIQpNSvv5NM=;
-        b=pQpUX86i6VGRnc+/xZm7iKXM1N4epOeyD+JRkIJv3gh3Jump4+ZuA0KqSs6Pl7icBN
-         MRVxMOdFMFJ4cKejCjhfCxaXhP7R+XiyqD1eIIjXryxlF2g5+eAaOXdDOP6kL7QbrUtO
-         7080Lg/95q+SVtBEHVnA1aBk8Ztk72GIEU4kVwFcYoX1DDYfQwPuJd4Ww9d4mDzH3Sy4
-         b3AYjUFGH4BgkH/Xt2lfk8r9vpceVlio6rZntXkAW2P3z/PIwxtSZnRBrSrN5GrRE/WY
-         Egvti0W2bMRpOLlIXU2pqz9dZ3PT3QMBvIJqyW/5EpqDO/mW7s+Vh5G3hLT75t4S4sMM
-         AmYg==
-X-Gm-Message-State: AOAM531+gcOElGTOWAAaiEo1KIcLidPkDl+hULf6F9Ery1zXbMtveXUL
-        f+ZfK/mst7LdHVMTuoeFzwUyUQ==
-X-Google-Smtp-Source: ABdhPJzPajPzoNsIkmyEDPn/62aoVLG6vuuhIl7/F6eaFy7j8d/eu/NHkUMP9N9glp/CYLfh+ZlFdQ==
-X-Received: by 2002:a17:902:ff03:b029:da:6fca:7422 with SMTP id f3-20020a170902ff03b02900da6fca7422mr5153919plj.13.1607110544242;
-        Fri, 04 Dec 2020 11:35:44 -0800 (PST)
+        bh=OLsx5vVuUCPRsEhZl6FaNYVhvrSnAx3P4TPwOM+YKjI=;
+        b=WQeO9iip70zyGPBtdwv3yJ9MVsumHGE4qNNhOfqZOA1S9OhffngJroTtijtwj/L3UH
+         aWcdRU1Ixhd4jUaNVSd6yYFYInJZnl/ETnEC3KNWGZm+dM/8DTMiBf9Hw1OVzf1j/gw9
+         ssvgCdmYsd7u8gAqTh91hoHAoR0ioMfNweIaQAG5vUQjXjnyWkv+eTG84y6sxv7YqfSH
+         /8FmyNfb+Yzhv2Cm81A55p05DJCnGhnmdW0yG3NukYsO1icnit6I+CpPzKb+97/vyIxg
+         UsTVXvqkFI14KVA3Da75U+aLYGTfAIa0oUBggVaUZOq2FS9YtTiJCeRoDdEeNsvwpWKf
+         5Z2w==
+X-Gm-Message-State: AOAM533ifyN6tQYL2QGQMqxAju9IrcvIcOl2KKsRRcGXz8+pPFRH9UkP
+        GTA9mmjHgRZAusIu6MCIz6/3VQ==
+X-Google-Smtp-Source: ABdhPJyLxHobwqXis3U8gHN9sAqxP1e9stcIpd/P4vWXMjWVB05VxeGgscZGw83QTCfowLd+/lvpAQ==
+X-Received: by 2002:a17:90b:2285:: with SMTP id kx5mr5596316pjb.104.1607110545594;
+        Fri, 04 Dec 2020 11:35:45 -0800 (PST)
 Received: from smtp.gmail.com ([2620:15c:202:201:3e52:82ff:fe6c:83ab])
-        by smtp.gmail.com with ESMTPSA id g8sm4576548pgn.47.2020.12.04.11.35.43
+        by smtp.gmail.com with ESMTPSA id g8sm4576548pgn.47.2020.12.04.11.35.44
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 04 Dec 2020 11:35:43 -0800 (PST)
+        Fri, 04 Dec 2020 11:35:45 -0800 (PST)
 From:   Stephen Boyd <swboyd@chromium.org>
 To:     Mark Brown <broonie@kernel.org>
 Cc:     linux-kernel@vger.kernel.org, linux-spi@vger.kernel.org,
@@ -55,9 +55,9 @@ Cc:     linux-kernel@vger.kernel.org, linux-spi@vger.kernel.org,
         Gwendal Grignou <gwendal@chromium.org>,
         Douglas Anderson <dianders@chromium.org>,
         Alexandru M Stan <amstan@chromium.org>
-Subject: [PATCH 1/3] platform/chrome: cros_ec_spi: Don't overwrite spi::mode
-Date:   Fri,  4 Dec 2020 11:35:38 -0800
-Message-Id: <20201204193540.3047030-2-swboyd@chromium.org>
+Subject: [PATCH 2/3] platform/chrome: cros_ec_spi: Drop bits_per_word assignment
+Date:   Fri,  4 Dec 2020 11:35:39 -0800
+Message-Id: <20201204193540.3047030-3-swboyd@chromium.org>
 X-Mailer: git-send-email 2.29.2.576.ga3fc446d84-goog
 In-Reply-To: <20201204193540.3047030-1-swboyd@chromium.org>
 References: <20201204193540.3047030-1-swboyd@chromium.org>
@@ -67,16 +67,9 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-There isn't any need to overwrite the mode here in the driver with what
-has been detected by the firmware, such as DT or ACPI. In fact, if we
-use the SPI CS gpio descriptor feature we will overwrite the mode with
-SPI_MODE_0 where it already contains SPI_MODE_0 and more importantly
-SPI_CS_HIGH. Clearing the SPI_CS_HIGH bit causes the CS line to toggle
-when the device is probed when it shouldn't change, confusing the driver
-and making it fail to probe. Drop the assignment and let the spi core
-take care of it.
+This is already handed by default in spi_setup() if the bits_per_word is
+0, so just drop it to shave off a line.
 
-Fixes: a17d94f0b6e1 ("mfd: Add ChromeOS EC SPI driver")
 Cc: Simon Glass <sjg@chromium.org>
 Cc: Gwendal Grignou <gwendal@chromium.org>
 Reviewed-by: Douglas Anderson <dianders@chromium.org>
@@ -89,14 +82,14 @@ Signed-off-by: Stephen Boyd <swboyd@chromium.org>
  1 file changed, 1 deletion(-)
 
 diff --git a/drivers/platform/chrome/cros_ec_spi.c b/drivers/platform/chrome/cros_ec_spi.c
-index dfa1f816a45f..f9df218fc2bb 100644
+index f9df218fc2bb..14c4046fa04d 100644
 --- a/drivers/platform/chrome/cros_ec_spi.c
 +++ b/drivers/platform/chrome/cros_ec_spi.c
-@@ -742,7 +742,6 @@ static int cros_ec_spi_probe(struct spi_device *spi)
+@@ -741,7 +741,6 @@ static int cros_ec_spi_probe(struct spi_device *spi)
+ 	struct cros_ec_spi *ec_spi;
  	int err;
  
- 	spi->bits_per_word = 8;
--	spi->mode = SPI_MODE_0;
+-	spi->bits_per_word = 8;
  	spi->rt = true;
  	err = spi_setup(spi);
  	if (err < 0)
