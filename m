@@ -2,52 +2,52 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 163972CE621
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Dec 2020 03:58:09 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 9E4F42CE620
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Dec 2020 03:58:08 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727289AbgLDC50 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        id S1727293AbgLDC50 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
         Thu, 3 Dec 2020 21:57:26 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43504 "EHLO
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43506 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727281AbgLDC5Z (ORCPT
+        with ESMTP id S1727289AbgLDC5Z (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
         Thu, 3 Dec 2020 21:57:25 -0500
-Received: from mail-lf1-x142.google.com (mail-lf1-x142.google.com [IPv6:2a00:1450:4864:20::142])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 565EFC094250
-        for <linux-arm-msm@vger.kernel.org>; Thu,  3 Dec 2020 18:55:31 -0800 (PST)
-Received: by mail-lf1-x142.google.com with SMTP id j205so5713240lfj.6
-        for <linux-arm-msm@vger.kernel.org>; Thu, 03 Dec 2020 18:55:31 -0800 (PST)
+Received: from mail-lf1-x141.google.com (mail-lf1-x141.google.com [IPv6:2a00:1450:4864:20::141])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DDAF2C094251
+        for <linux-arm-msm@vger.kernel.org>; Thu,  3 Dec 2020 18:55:33 -0800 (PST)
+Received: by mail-lf1-x141.google.com with SMTP id d20so5688338lfe.11
+        for <linux-arm-msm@vger.kernel.org>; Thu, 03 Dec 2020 18:55:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=fdozn1iYzMMjpKJN5NGb/8zh5XeUDLh4+Oq5oqMMC8M=;
-        b=EslvcfVFhIoT8ToCVYKz+uQhuz/c8/KnM+blwcA//rp3dw3yN/roLaQUDSPgPidE+E
-         Yyy3tJya3ErmFZ9HepOkzjnx+XDr1pcI3daP/6TYz4VvGuO8m6cjJt2Onn3GsfI0hTzt
-         2BU1Jd5E7xywiLvEouXzIkw/cA9PsFNIJqqFM9pwKGFk0ihe01/cxUEIFE41LhK3Hw/k
-         n0SB05zqrt4U+x04VzT/v3or9kGSmR/6HeQVx3bfPo+HGEVnSyOKrU8M7VoCf7UAj6cc
-         FPIGRt/1EERCOH1IEvcPoslslcXzf7P/Jwcg6FG30AJenUzgAFyBI1dZsKHT8xAZ15Gv
-         I7vA==
+        bh=yZ4iPpipCPmIC98KwnHmu0HBMhLM5DajEgFPBqEDqrw=;
+        b=YHHzThAwSrziZyFl3HhqHAwgpxZeVirTbWrxm4vYvgVg5DaCmus2Et1+u6I92pmOly
+         a+6UJotJ9hyB7WW+fDlMnOT2FPyABsPfdRAsRtN5BbMY2Vz9lrEzST7AIVkTCVESOnHg
+         HAWc/Mgc389NJQJszZ3dnRmOEWmkIW9i62OlQKySp2ejnXorUJB3zqYzy2tB6LjMbWAf
+         akBJwgejIi9huB4zk2f89CQmV1Cvp3K6VQjF+4ymssy4Qr6nS0/h0HF8Q12ePof2VNhk
+         WyqvJRBc0M5bAkqr3ZlF4cSjO1AnO1cDZPQ8l5g8RyzuNzAK9PF8SjBz3OJBHz/CLkOl
+         eZ4w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=fdozn1iYzMMjpKJN5NGb/8zh5XeUDLh4+Oq5oqMMC8M=;
-        b=fk0+p3JL49kZtYeVSsU7tEOAjuBb3o7WtuDXbaUKxN4RaTnTYwZEVc+0k0u1X7MeXU
-         XKQ5jqJMHfItgQODK0ON5EFeq4g10xMZjAuC1mBVbNHIs+9h3Y0lxavzsGRUj/KbNY/y
-         EcPRu9Kjd3VLzogd1G5yUssvOoF1YnC6d2jlEHE0AWHU6lZKT60wY6jwGn4txSluLLBu
-         yz0grtE3Wb//FTthc0CYqsoXh2YrRFUhH/VG+6QG4xnE5NYaSR1Nka7gimgh+oQ/kMaw
-         HKfv9TxzsEbDM5eFOqkww46DtJtQkFqsZb0JTOIzgsGOPe+61NvNU4X5kwmwsoA4qgzL
-         AZ3A==
-X-Gm-Message-State: AOAM531ww5Y1vXHLTmSTYTwpqwTVPHvvpEquBcO7AnZhjTXfwluZEWNW
-        akhCt4CqRe8qbZVJ6a20To9exg==
-X-Google-Smtp-Source: ABdhPJzBKx0pLSJ0JkkNh2NCIHdRv4eFyd9aBQD8FA4/EDr8ikvHrc5/6jx2c3FHEpEHR6a7FQugkg==
-X-Received: by 2002:a19:cd6:: with SMTP id 205mr2380277lfm.117.1607050529867;
-        Thu, 03 Dec 2020 18:55:29 -0800 (PST)
+        bh=yZ4iPpipCPmIC98KwnHmu0HBMhLM5DajEgFPBqEDqrw=;
+        b=CHHhs/G9Pq2V8IPGzXYJox/0GnHjyZQnovn3BMiuwSIP/HoeF468zRv6tBT3SFUCjv
+         Wu0UWDnP/ViPoQiN8xbaZjbZu785wiU5mytudZrooa0zsl04zhZR9mhoOnZwF3b+FX50
+         PYcbzrRWBMOJN6OSWRx13BeL9Zep+V3kezK6ZfjGT/pB2GdfsbUj9Y00XwxZMmLldzHu
+         /Anm2R26mjQHqfWbHANvGnpdgVGb1/OhQVlpd4kAR+E0n+308kxa28xIbW7Z/4hSvk6/
+         yHLgmiHGmB1Yp+mjl3w3QRDE77R2MGvkI6GHFjCsogIo4qy+mGBcbMhbeMlKHwwfeQ9t
+         CEIQ==
+X-Gm-Message-State: AOAM531bbjs8m7UWHgi9OdLb7faHuxKA1qD8r4u/w4CqGhoJf5K4debR
+        iU86Ru5m2jy9xXMSJXfJsXwURg==
+X-Google-Smtp-Source: ABdhPJwP3ZKl4y6f9/uf6rrygITl3Oyc93Cw+WvoK7uQhd4vwrCBkjdEXBoAr5wAO3Mu6+mxqjfOSw==
+X-Received: by 2002:a05:6512:2ee:: with SMTP id m14mr194038lfq.318.1607050532407;
+        Thu, 03 Dec 2020 18:55:32 -0800 (PST)
 Received: from eriador.lumag.spb.ru ([188.162.64.117])
-        by smtp.gmail.com with ESMTPSA id b8sm1131667ljo.68.2020.12.03.18.55.27
+        by smtp.gmail.com with ESMTPSA id b8sm1131667ljo.68.2020.12.03.18.55.30
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 03 Dec 2020 18:55:29 -0800 (PST)
+        Thu, 03 Dec 2020 18:55:31 -0800 (PST)
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
@@ -64,9 +64,9 @@ Cc:     linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
         Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
         Jishnu Prakash <jprakash@qti.qualcomm.com>,
         Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH v10 06/15] iio: adc: qcom-spmi-adc5: use of_device_get_match_data
-Date:   Fri,  4 Dec 2020 05:55:00 +0300
-Message-Id: <20201204025509.1075506-7-dmitry.baryshkov@linaro.org>
+Subject: [PATCH v10 07/15] iio: provide of_iio_channel_get_by_name() and devm_ version it
+Date:   Fri,  4 Dec 2020 05:55:01 +0300
+Message-Id: <20201204025509.1075506-8-dmitry.baryshkov@linaro.org>
 X-Mailer: git-send-email 2.29.2
 In-Reply-To: <20201204025509.1075506-1-dmitry.baryshkov@linaro.org>
 References: <20201204025509.1075506-1-dmitry.baryshkov@linaro.org>
@@ -76,67 +76,137 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Use of_device_get_match_data() instead of hand-coding it manually.
+There might be cases when the IIO channel is attached to the device
+subnode instead of being attached to the main device node. Allow drivers
+to query IIO channels by using device tree nodes.
 
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Acked-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Acked-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 ---
- drivers/iio/adc/qcom-spmi-adc5.c | 18 +++++++-----------
- 1 file changed, 7 insertions(+), 11 deletions(-)
+ drivers/iio/inkern.c         | 34 ++++++++++++++++++++++++++--------
+ include/linux/iio/consumer.h | 36 ++++++++++++++++++++++++++++++++++++
+ 2 files changed, 62 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/iio/adc/qcom-spmi-adc5.c b/drivers/iio/adc/qcom-spmi-adc5.c
-index b10a0fcf09dc..87438d1e5c0b 100644
---- a/drivers/iio/adc/qcom-spmi-adc5.c
-+++ b/drivers/iio/adc/qcom-spmi-adc5.c
-@@ -15,6 +15,7 @@
- #include <linux/math64.h>
- #include <linux/module.h>
- #include <linux/of.h>
-+#include <linux/of_device.h>
- #include <linux/platform_device.h>
- #include <linux/regmap.h>
- #include <linux/slab.h>
-@@ -807,8 +808,6 @@ static int adc5_get_dt_data(struct adc5_chip *adc, struct device_node *node)
- 	struct adc5_channel_prop prop, *chan_props;
- 	struct device_node *child;
- 	unsigned int index = 0;
--	const struct of_device_id *id;
--	const struct adc5_data *data;
- 	int ret;
+diff --git a/drivers/iio/inkern.c b/drivers/iio/inkern.c
+index ede99e0d5371..8ff0ac472de3 100644
+--- a/drivers/iio/inkern.c
++++ b/drivers/iio/inkern.c
+@@ -180,8 +180,8 @@ static struct iio_channel *of_iio_channel_get(struct device_node *np, int index)
+ 	return ERR_PTR(err);
+ }
  
- 	adc->nchannels = of_get_available_child_count(node);
-@@ -827,24 +826,21 @@ static int adc5_get_dt_data(struct adc5_chip *adc, struct device_node *node)
+-static struct iio_channel *of_iio_channel_get_by_name(struct device_node *np,
+-						      const char *name)
++struct iio_channel *of_iio_channel_get_by_name(struct device_node *np,
++					       const char *name)
+ {
+ 	struct iio_channel *chan = NULL;
  
- 	chan_props = adc->chan_props;
- 	iio_chan = adc->iio_chans;
--	id = of_match_node(adc5_match_table, node);
--	if (id)
--		data = id->data;
--	else
--		data = &adc5_data_pmic;
--	adc->data = data;
-+	adc->data = of_device_get_match_data(adc->dev);
-+	if (!adc->data)
-+		adc->data = &adc5_data_pmic;
+@@ -219,6 +219,7 @@ static struct iio_channel *of_iio_channel_get_by_name(struct device_node *np,
  
- 	for_each_available_child_of_node(node, child) {
--		ret = adc5_get_dt_channel_data(adc, &prop, child, data);
-+		ret = adc5_get_dt_channel_data(adc, &prop, child, adc->data);
- 		if (ret) {
- 			of_node_put(child);
- 			return ret;
- 		}
+ 	return chan;
+ }
++EXPORT_SYMBOL_GPL(of_iio_channel_get_by_name);
  
- 		prop.scale_fn_type =
--			data->adc_chans[prop.channel].scale_fn_type;
-+			adc->data->adc_chans[prop.channel].scale_fn_type;
- 		*chan_props = prop;
--		adc_chan = &data->adc_chans[prop.channel];
-+		adc_chan = &adc->data->adc_chans[prop.channel];
+ static struct iio_channel *of_iio_channel_get_all(struct device *dev)
+ {
+@@ -261,12 +262,6 @@ static struct iio_channel *of_iio_channel_get_all(struct device *dev)
  
- 		iio_chan->channel = prop.channel;
- 		iio_chan->datasheet_name = prop.datasheet_name;
+ #else /* CONFIG_OF */
+ 
+-static inline struct iio_channel *
+-of_iio_channel_get_by_name(struct device_node *np, const char *name)
+-{
+-	return NULL;
+-}
+-
+ static inline struct iio_channel *of_iio_channel_get_all(struct device *dev)
+ {
+ 	return NULL;
+@@ -382,6 +377,29 @@ struct iio_channel *devm_iio_channel_get(struct device *dev,
+ }
+ EXPORT_SYMBOL_GPL(devm_iio_channel_get);
+ 
++struct iio_channel *devm_of_iio_channel_get_by_name(struct device *dev,
++						    struct device_node *np,
++						    const char *channel_name)
++{
++	struct iio_channel **ptr, *channel;
++
++	ptr = devres_alloc(devm_iio_channel_free, sizeof(*ptr), GFP_KERNEL);
++	if (!ptr)
++		return ERR_PTR(-ENOMEM);
++
++	channel = of_iio_channel_get_by_name(np, channel_name);
++	if (IS_ERR(channel)) {
++		devres_free(ptr);
++		return channel;
++	}
++
++	*ptr = channel;
++	devres_add(dev, ptr);
++
++	return channel;
++}
++EXPORT_SYMBOL_GPL(devm_of_iio_channel_get_by_name);
++
+ struct iio_channel *iio_channel_get_all(struct device *dev)
+ {
+ 	const char *name;
+diff --git a/include/linux/iio/consumer.h b/include/linux/iio/consumer.h
+index c4118dcb8e05..0a90ba8fa1bb 100644
+--- a/include/linux/iio/consumer.h
++++ b/include/linux/iio/consumer.h
+@@ -13,6 +13,7 @@
+ struct iio_dev;
+ struct iio_chan_spec;
+ struct device;
++struct device_node;
+ 
+ /**
+  * struct iio_channel - everything needed for a consumer to use a channel
+@@ -97,6 +98,41 @@ void iio_channel_release_all(struct iio_channel *chan);
+  */
+ struct iio_channel *devm_iio_channel_get_all(struct device *dev);
+ 
++/**
++ * of_iio_channel_get_by_name() - get description of all that is needed to access channel.
++ * @np:			Pointer to consumer device tree node
++ * @consumer_channel:	Unique name to identify the channel on the consumer
++ *			side. This typically describes the channels use within
++ *			the consumer. E.g. 'battery_voltage'
++ */
++#ifdef CONFIG_OF
++struct iio_channel *of_iio_channel_get_by_name(struct device_node *np, const char *name);
++#else
++static inline struct iio_channel *
++of_iio_channel_get_by_name(struct device_node *np, const char *name)
++{
++	return NULL;
++}
++#endif
++
++/**
++ * devm_of_iio_channel_get_by_name() - Resource managed version of of_iio_channel_get_by_name().
++ * @dev:		Pointer to consumer device.
++ * @np:			Pointer to consumer device tree node
++ * @consumer_channel:	Unique name to identify the channel on the consumer
++ *			side. This typically describes the channels use within
++ *			the consumer. E.g. 'battery_voltage'
++ *
++ * Returns a pointer to negative errno if it is not able to get the iio channel
++ * otherwise returns valid pointer for iio channel.
++ *
++ * The allocated iio channel is automatically released when the device is
++ * unbound.
++ */
++struct iio_channel *devm_of_iio_channel_get_by_name(struct device *dev,
++						    struct device_node *np,
++						    const char *consumer_channel);
++
+ struct iio_cb_buffer;
+ /**
+  * iio_channel_get_all_cb() - register callback for triggered capture
 -- 
 2.29.2
 
