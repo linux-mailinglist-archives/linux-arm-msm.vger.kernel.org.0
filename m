@@ -2,100 +2,207 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 8A4B92CEC0A
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Dec 2020 11:21:10 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 236902CEEAC
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Dec 2020 14:14:57 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729802AbgLDKUA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 4 Dec 2020 05:20:00 -0500
-Received: from mail.kernel.org ([198.145.29.99]:39020 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1729282AbgLDKUA (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 4 Dec 2020 05:20:00 -0500
-Date:   Fri, 4 Dec 2020 15:49:14 +0530
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1607077159;
-        bh=hNPxyUmSTItskXGbatM3qf8oZU1dgUwfiUVEC5qpV9c=;
-        h=From:To:Cc:Subject:References:In-Reply-To:From;
-        b=l5D36wcebTAZH7I+6HRLCp809Uqqs1+EVpWXwjwvHBwYu6HYG2vzsMvi2kAjSQXBJ
-         6e8u3ZP/Gvt5+s+pnMFlyNALEmx4ZLApMKlAtPQ6L73DWGlzZpe28wqfajovYbhJiZ
-         dJBuzxBIsqFf1LsD0uurRFbaQCWVrVIxif8DU2Qwlm5mP8YNwdfcn/9kaqoiQmtkiD
-         9SpmjMu7XEnPI0ZrhWWMLdjMXnRGge3PEPNEFzwRC32BCgJAZEQzathkRE4Df3n0iY
-         0tcRdNFGM0ZxnZ0bEghZagPLkw7xjgzRAR9OX4jhmHNyiNz1UE/uP2il9qQnTFH11u
-         ljqESjB6VSiew==
-From:   Vinod Koul <vkoul@kernel.org>
-To:     Taniya Das <tdas@codeaurora.org>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Vivek Aknurwar <viveka@codeaurora.org>,
-        Andy Gross <agross@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Jeevan Shriram <jshriram@codeaurora.org>
-Subject: Re: [PATCH 5/5] clk: qcom: gcc: Add clock driver for SM8350
-Message-ID: <20201204101914.GO8403@vkoul-mobl>
-References: <20201203070241.2648874-1-vkoul@kernel.org>
- <20201203070241.2648874-6-vkoul@kernel.org>
- <X8l9dRfo7qdRTAMe@builder.lan>
- <20201204043502.GJ8403@vkoul-mobl>
- <302cf18a-080d-a521-8c7a-39c265fbceb8@codeaurora.org>
+        id S1729142AbgLDNOD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 4 Dec 2020 08:14:03 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53830 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727898AbgLDNOC (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 4 Dec 2020 08:14:02 -0500
+Received: from mail-wr1-x443.google.com (mail-wr1-x443.google.com [IPv6:2a00:1450:4864:20::443])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9AAD9C061A51
+        for <linux-arm-msm@vger.kernel.org>; Fri,  4 Dec 2020 05:13:16 -0800 (PST)
+Received: by mail-wr1-x443.google.com with SMTP id g14so5247094wrm.13
+        for <linux-arm-msm@vger.kernel.org>; Fri, 04 Dec 2020 05:13:16 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=qDVxeWwAmtWSrwk0fTKbdPJheQPR8KPP9UH9PnzM3Uk=;
+        b=IrjJE4DI4rUhKAe5PYTLHVxYbdvfYc1PuOLF45RzFc6Om5m3W2u4E8x8alvnbM0uf3
+         UmQ3PZkAxXH2680bEdcXb+s+NS03rMSFYz6yMW39zUVzUnd4Cnc9PUJLUH3kgaDxiFaK
+         dUyY2rEcXx3e88HL1P/5xtUUB+5FXZKcWqJjwColeKpgqDw5NPj1+RFiPkXlfuBtXQe8
+         kMTZQFTUjcOqqSIn6QY1kfq9tBi2NnKh0crA/Pw7ddZIUIUkB8IK1WRHVBUxrMH9Ks7i
+         cQKtKUQD8Cq3vWMHlgAicNBLqFWrNx5PQ/whSBJRQnAV9ZeZFNxyOv7jaNBbHqzJaaeO
+         f6dQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=qDVxeWwAmtWSrwk0fTKbdPJheQPR8KPP9UH9PnzM3Uk=;
+        b=uNO6/i0XQQwShODPFY2re+FB1Y7efA7pYFN02z7iaZTEDWHmBYvfrdjcgRf3NIAzgT
+         +8wf5tzS4ykoN3mFKvhf8JxUNivyWNtMK/0T8fH5jfEDPHPMfwJJKplLgzoEEX6xalkP
+         dVTHPNWlrB7qo87N7db0QD73ADNn0xsBqDw2Utndz0fSAi/6nHKabO0c+hzYfNHwNqeu
+         rtKLF7ht3+GYVi2t51fjJX5VdLEaKsnt9LDHfESHG4cjG8EtYXG6qLvL6YQ6IHVCuILL
+         vBp3Wtru82LqLpPttqnEK+zEQssTU5+glCZQLp3sJreQoONlv+RZhLHqpBfeiakIYV3G
+         VHaw==
+X-Gm-Message-State: AOAM531rhLbJxfD5Ma0C/uccAC/iXrKeyeaw8RkoBGkVGjbrtzZiF0Up
+        m+Oo1AmFPOIPu4ccl7Waa7pfRQ==
+X-Google-Smtp-Source: ABdhPJwkqCWM2TZ2CuesjaMX1RqD5Dv6PLd8YAbhhrKQrayUvZwKBaHKStV0cW7I7oBAmIhi9GmM5w==
+X-Received: by 2002:adf:dd11:: with SMTP id a17mr3246735wrm.360.1607087595196;
+        Fri, 04 Dec 2020 05:13:15 -0800 (PST)
+Received: from [192.168.0.3] ([84.238.208.216])
+        by smtp.googlemail.com with ESMTPSA id 2sm4329993wrq.87.2020.12.04.05.13.13
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 04 Dec 2020 05:13:14 -0800 (PST)
+Subject: Re: [PATCH 1/4] v4l2-ctrl: Make display delay and display enable std
+ controls
+To:     Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+        Stanimir Varbanov <stanimir.varbanov@linaro.org>,
+        linux-media@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org
+Cc:     Kyungmin Park <kyungmin.park@samsung.com>,
+        Kamil Debski <kamil@wypas.org>,
+        Ezequiel Garcia <ezequiel@collabora.com>,
+        Nicolas Dufresne <nicolas.dufresne@collabora.com>,
+        Marek Szyprowski <m.szyprowski@samsung.com>
+References: <20201109173541.10016-1-stanimir.varbanov@linaro.org>
+ <20201109173541.10016-2-stanimir.varbanov@linaro.org>
+ <e0a49eb2-f4d0-0532-52e0-5bc58ce85ad9@xs4all.nl>
+From:   Stanimir Varbanov <stanimir.varbanov@linaro.org>
+Message-ID: <f775e5cf-3361-e7ed-bd85-6d0ad06db48c@linaro.org>
+Date:   Fri, 4 Dec 2020 15:13:13 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.10.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <302cf18a-080d-a521-8c7a-39c265fbceb8@codeaurora.org>
+In-Reply-To: <e0a49eb2-f4d0-0532-52e0-5bc58ce85ad9@xs4all.nl>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Taniya,
 
-On 04-12-20, 14:20, Taniya Das wrote:
-> On 12/4/2020 10:05 AM, Vinod Koul wrote:
-> > On 03-12-20, 18:06, Bjorn Andersson wrote:
-> > > On Thu 03 Dec 01:02 CST 2020, Vinod Koul wrote:
-> > > > diff --git a/drivers/clk/qcom/gcc-sm8350.c b/drivers/clk/qcom/gcc-sm8350.c
-> > > [..]
-> > > > +static int gcc_sm8350_probe(struct platform_device *pdev)
-> > > > +{
-> > > > +	struct regmap *regmap;
-> > > > +	int ret;
-> > > > +
-> > > > +	regmap = qcom_cc_map(pdev, &gcc_sm8350_desc);
-> > > > +	if (IS_ERR(regmap)) {
-> > > > +		dev_err(&pdev->dev, "Failed to map gcc registers\n");
-> > > > +		return PTR_ERR(regmap);
-> > > > +	}
-> > > > +
-> > > > +	ret = qcom_cc_register_rcg_dfs(regmap, gcc_dfs_clocks, ARRAY_SIZE(gcc_dfs_clocks));
-> > > > +	if (ret)
-> > > > +		return ret;
-> > > > +
-> > > > +	/* FORCE_MEM_CORE_ON for ufs phy ice core clocks */
-> > > > +	regmap_update_bits(regmap, gcc_ufs_phy_ice_core_clk.halt_reg, BIT(14), BIT(14));
-> > > > +
-> > > > +	/*
-> > > > +	 * Enable clocks required by the i2c-connected pm8008 regulators. Don't
-> > > > +	 * register them with the clock framework so that client requests are
-> > > > +	 * short-circuited before grabbing the enable/prepare locks. This
-> > > > +	 * prevents deadlocks between the clk/regulator frameworks.
-> > > > +	 *
-> > > > +	 *	gcc_qupv3_wrap_1_m_ahb_clk
-> > > > +	 *	gcc_qupv3_wrap_1_s_ahb_clk
-> > > > +	 *	gcc_qupv3_wrap1_s5_clk
-> > > > +	 */
-> > > 
-> > > Isn't this a workaround inherited from the downstream control of
-> > > regulators from within the clock core? Does this still apply upstream?
-> > 
-> > Let me check on this bit...
-> > 
-> > Thanks
-> > 
+
+On 12/2/20 4:09 PM, Hans Verkuil wrote:
+> On 09/11/2020 18:35, Stanimir Varbanov wrote:
+>> Make display delay and display delay enable MFC controls standard v4l
+>> controls. This will allow reuse of the controls for other decoder
+>> drivers. Also the new proposed controls are now codec agnostic because
+>> they could be used for any codec.
+>>
+>> Signed-off-by: Stanimir Varbanov <stanimir.varbanov@linaro.org>
+>> ---
+>>  .../userspace-api/media/v4l/ext-ctrls-codec.rst   | 15 +++++++++++++++
+>>  drivers/media/v4l2-core/v4l2-ctrls.c              |  4 ++++
+>>  include/uapi/linux/v4l2-controls.h                |  2 ++
+>>  3 files changed, 21 insertions(+)
+>>
+>> diff --git a/Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst b/Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst
+>> index ce728c757eaf..82c9cda40270 100644
+>> --- a/Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst
+>> +++ b/Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst
+>> @@ -679,6 +679,21 @@ enum v4l2_mpeg_video_frame_skip_mode -
+>>      otherwise the decoder expects a single frame in per buffer.
+>>      Applicable to the decoder, all codecs.
+>>  
+>> +``V4L2_CID_MPEG_VIDEO_DECODER_DISPLAY_DELAY_ENABLE (boolean)``
 > 
-> No it should not apply.
+> I'd use _DEC_ instead of _DECODER_.
 
-Thanks for confirmation, removed now. Will send v2
+OK.
+
+> 
+>> +    If the display delay is enabled then the decoder is forced to return
+>> +    a CAPTURE buffer (decoded frame) after processing a certain number
+>> +    of OUTPUT buffers. The delay can be set through
+>> +    ``V4L2_CID_MPEG_VIDEO_DECODER_DISPLAY_DELAY``. This
+>> +    feature can be used for example for generating thumbnails of videos.
+>> +    Applicable to the decoder.
+> 
+> Hmm. Is this: "after processing the first 'display delay' number of OUTPUT buffers."
+> Or is this: "every 'display delay' number of OUTPUT buffers."
+> 
+> I.e., is it a one-shot thing or a periodical thing?
+
+It is periodical.
+
+> 
+> If it is a one-shot thing, then this should probably be a button type, not
+> a boolean.
+> 
+>> +
+>> +``V4L2_CID_MPEG_VIDEO_DECODER_DISPLAY_DELAY (integer)``
+>> +    Display delay value for decoder. The decoder is forced to
+>> +    return a decoded frame after the set 'display delay' number of
+>> +    frames. If this number is low it may result in frames returned out
+>> +    of display order, in addition the hardware may still be using the
+>> +    returned buffer as a reference picture for subsequent frames.
+> 
+> Can this be 0? And if so, what does that mean?
+
+Yes, it can be 0 and I'm using this to change decoder decode order in
+Venus driver:
+
+V4L2_CID_MPEG_VIDEO_DECODER_DISPLAY_DELAY ctl->val = 0
+V4L2_CID_MPEG_VIDEO_DECODER_DISPLAY_DELAY_ENABLE ctl->val = true
+
+Then the decoder will produce output buffers in decode-order instead of
+default display-order.
+
+> 
+>> +
+>>  ``V4L2_CID_MPEG_VIDEO_H264_VUI_SAR_ENABLE (boolean)``
+>>      Enable writing sample aspect ratio in the Video Usability
+>>      Information. Applicable to the H264 encoder.
+>> diff --git a/drivers/media/v4l2-core/v4l2-ctrls.c b/drivers/media/v4l2-core/v4l2-ctrls.c
+>> index bd7f330c941c..4a21802e026b 100644
+>> --- a/drivers/media/v4l2-core/v4l2-ctrls.c
+>> +++ b/drivers/media/v4l2-core/v4l2-ctrls.c
+>> @@ -874,6 +874,8 @@ const char *v4l2_ctrl_get_name(u32 id)
+>>  	case V4L2_CID_MPEG_VIDEO_HEADER_MODE:			return "Sequence Header Mode";
+>>  	case V4L2_CID_MPEG_VIDEO_MAX_REF_PIC:			return "Max Number of Reference Pics";
+>>  	case V4L2_CID_MPEG_VIDEO_FRAME_SKIP_MODE:		return "Frame Skip Mode";
+>> +	case V4L2_CID_MPEG_VIDEO_DECODER_DISPLAY_DELAY:		return "Display Delay";
+>> +	case V4L2_CID_MPEG_VIDEO_DECODER_DISPLAY_DELAY_ENABLE:	return "Display Delay Enable";
+>>  	case V4L2_CID_MPEG_VIDEO_H263_I_FRAME_QP:		return "H263 I-Frame QP Value";
+>>  	case V4L2_CID_MPEG_VIDEO_H263_P_FRAME_QP:		return "H263 P-Frame QP Value";
+>>  	case V4L2_CID_MPEG_VIDEO_H263_B_FRAME_QP:		return "H263 B-Frame QP Value";
+>> @@ -1221,6 +1223,7 @@ void v4l2_ctrl_fill(u32 id, const char **name, enum v4l2_ctrl_type *type,
+>>  	case V4L2_CID_FLASH_READY:
+>>  	case V4L2_CID_MPEG_VIDEO_DECODER_MPEG4_DEBLOCK_FILTER:
+>>  	case V4L2_CID_MPEG_VIDEO_DECODER_SLICE_INTERFACE:
+>> +	case V4L2_CID_MPEG_VIDEO_DECODER_DISPLAY_DELAY_ENABLE:
+>>  	case V4L2_CID_MPEG_VIDEO_FRAME_RC_ENABLE:
+>>  	case V4L2_CID_MPEG_VIDEO_MB_RC_ENABLE:
+>>  	case V4L2_CID_MPEG_VIDEO_H264_8X8_TRANSFORM:
+>> @@ -1256,6 +1259,7 @@ void v4l2_ctrl_fill(u32 id, const char **name, enum v4l2_ctrl_type *type,
+>>  		break;
+>>  	case V4L2_CID_MPEG_VIDEO_MV_H_SEARCH_RANGE:
+>>  	case V4L2_CID_MPEG_VIDEO_MV_V_SEARCH_RANGE:
+>> +	case V4L2_CID_MPEG_VIDEO_DECODER_DISPLAY_DELAY:
+>>  		*type = V4L2_CTRL_TYPE_INTEGER;
+>>  		break;
+>>  	case V4L2_CID_MPEG_VIDEO_FORCE_KEY_FRAME:
+>> diff --git a/include/uapi/linux/v4l2-controls.h b/include/uapi/linux/v4l2-controls.h
+>> index 7035f4fb182c..d6b19f8d0022 100644
+>> --- a/include/uapi/linux/v4l2-controls.h
+>> +++ b/include/uapi/linux/v4l2-controls.h
+>> @@ -773,6 +773,8 @@ enum v4l2_mpeg_video_frame_skip_mode {
+>>  	V4L2_MPEG_VIDEO_FRAME_SKIP_MODE_LEVEL_LIMIT	= 1,
+>>  	V4L2_MPEG_VIDEO_FRAME_SKIP_MODE_BUF_LIMIT	= 2,
+>>  };
+>> +#define V4L2_CID_MPEG_VIDEO_DECODER_DISPLAY_DELAY		(V4L2_CID_MPEG_BASE + 647)
+>> +#define V4L2_CID_MPEG_VIDEO_DECODER_DISPLAY_DELAY_ENABLE	(V4L2_CID_MPEG_BASE + 648)
+> 
+> This will need to be rebased once this PR is merged:
+> https://patchwork.linuxtv.org/project/linux-media/patch/d68da172-b251-000f-653d-38a8a4c7b715@xs4all.nl/
+> 
+>>  
+>>  /*  MPEG-class control IDs specific to the CX2341x driver as defined by V4L2 */
+>>  #define V4L2_CID_MPEG_CX2341X_BASE				(V4L2_CTRL_CLASS_MPEG | 0x1000)
+>>
+> 
+> Regards,
+> 
+> 	Hans
+> 
 
 -- 
-~Vinod
+regards,
+Stan
