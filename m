@@ -2,86 +2,89 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id ACC242CEA49
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Dec 2020 09:54:03 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 975532CEA97
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Dec 2020 10:15:43 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729357AbgLDIxr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 4 Dec 2020 03:53:47 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41998 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729342AbgLDIxp (ORCPT
+        id S2387542AbgLDJOi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 4 Dec 2020 04:14:38 -0500
+Received: from bhuna.collabora.co.uk ([46.235.227.227]:44962 "EHLO
+        bhuna.collabora.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2387531AbgLDJOh (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 4 Dec 2020 03:53:45 -0500
-Received: from mail-lf1-x143.google.com (mail-lf1-x143.google.com [IPv6:2a00:1450:4864:20::143])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5386AC061A53
-        for <linux-arm-msm@vger.kernel.org>; Fri,  4 Dec 2020 00:53:05 -0800 (PST)
-Received: by mail-lf1-x143.google.com with SMTP id z21so6603793lfe.12
-        for <linux-arm-msm@vger.kernel.org>; Fri, 04 Dec 2020 00:53:05 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=OvnhVAvJ+aVTGs3i380olP2vILDpA1stTISjjteIyyo=;
-        b=kHXlscX2tTXD1z5Yaey7v8lWrMbkzDRF0BdDvZi4O0qBqBXhAZBG0lXBM9zWaP0/dZ
-         1hFDdJ07vxlyRg4S/rtMjfsFZvjygoy+PEwX4/8snWeMhDs2AbgBZ+0q6hc7e+93SUiA
-         U74hpS93K7ZZhJoA5dXo/roez9nkDFmOHRq+eBYg6lnGXbAtAFrUnF6AnnitgoQVYgMv
-         YVx/jriftYzolvI41VMMclIT8HhXQBcmmCnTFYIakSVlbiIBKfjTBNmsBI7Umy9yqxZ2
-         6r2vVeE29nTQgcxiB1HGf7diQpk6QSQASqOcoX3evpdcTeSaPi/YwW8nZPfsfdRLvZHc
-         k+Wg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=OvnhVAvJ+aVTGs3i380olP2vILDpA1stTISjjteIyyo=;
-        b=V89mszyWJ+J4uqu36M48azb4KVWb/Zxh6e8i1zyMqcAg/goZAFNRDO31Sl32Gk/jsC
-         qw0i72jCdz99jbgpYL8v7Hnm3j6CCljJ0xDTjD1ixiz80ujyPKMnZlkHaWoTtj/GZiOl
-         4WUJR6XncSmbaiSf+PyGVam/eXTxM3SFUilYVuQ59o9y0wJWnYlPNxr5M45Z8nF8zcTn
-         CRz5pzefn/f0Cv0quMWe6Sdd6K+JswGMEmRsTy5AXthylOvsfVKuU0WiwBWtbw+vwfry
-         j04xjPGiDqX3BETzRxFZHJ+6/q/Zgwi9jmanFBlzHh6rcI6wr5gmZKid1CqECy6kh+cZ
-         oaSg==
-X-Gm-Message-State: AOAM531AOABHq4Q64JNwfpqTqJCbZVUw/n+EPefGXQapuqGKshd4Qiar
-        sncG82LoHbjuL5eT3oDce+29DYPPSZXI8z5ltQ/zhA==
-X-Google-Smtp-Source: ABdhPJwuilOTB0n9qQh2b7zD4iD8K4vY/jP5i3QcM9ws3a1L8Gv28Ri/VitZSRGz8yfhbh6HJpnyAk7clI8dOhuPLPk=
-X-Received: by 2002:ac2:4308:: with SMTP id l8mr2780465lfh.260.1607071983809;
- Fri, 04 Dec 2020 00:53:03 -0800 (PST)
-MIME-Version: 1.0
-References: <20201124094636.v2.1.I2702919afc253e2a451bebc3b701b462b2d22344@changeid>
- <CAD=FV=W2i7dfcg2J2a-EO8nBvwHU0AMp79Esoy1Y=H_hNc+jvw@mail.gmail.com>
-In-Reply-To: <CAD=FV=W2i7dfcg2J2a-EO8nBvwHU0AMp79Esoy1Y=H_hNc+jvw@mail.gmail.com>
-From:   Linus Walleij <linus.walleij@linaro.org>
-Date:   Fri, 4 Dec 2020 09:52:53 +0100
-Message-ID: <CACRpkdb_v0f-D6arQbUL_F2z7ZkQ5SUn+AOKSzyWVaBpC-9Q=g@mail.gmail.com>
-Subject: Re: [PATCH v2 1/3] irqchip: qcom-pdc: Fix phantom irq when changing
- between rising/falling
-To:     Doug Anderson <dianders@chromium.org>
-Cc:     Marc Zyngier <maz@kernel.org>,
-        Thomas Gleixner <tglx@linutronix.de>,
-        Jason Cooper <jason@lakedaemon.net>,
-        "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
-        Neeraj Upadhyay <neeraju@codeaurora.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Srinivas Ramana <sramana@codeaurora.org>,
+        Fri, 4 Dec 2020 04:14:37 -0500
+Received: from [127.0.0.1] (localhost [127.0.0.1])
+        (Authenticated sender: eballetbo)
+        with ESMTPSA id 224221F45EF9
+Subject: Re: [PATCH] spi: spi-geni-qcom: Use the new method of gpio CS control
+To:     Stephen Boyd <swboyd@chromium.org>,
+        Doug Anderson <dianders@chromium.org>
+Cc:     Alexandru M Stan <amstan@chromium.org>,
+        Mark Brown <broonie@kernel.org>,
+        linux-kernel <linux-kernel@vger.kernel.org>,
         linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Maulik Shah <mkshah@codeaurora.org>,
-        Rajendra Nayak <rnayak@codeaurora.org>,
-        Andy Gross <agross@kernel.org>,
-        Archana Sathyakumar <asathyak@codeaurora.org>,
-        Lina Iyer <ilina@codeaurora.org>,
-        LKML <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+        linux-spi <linux-spi@vger.kernel.org>,
+        Akash Asthana <akashast@codeaurora.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Benson Leung <bleung@chromium.org>
+References: <20201202214935.1114381-1-swboyd@chromium.org>
+ <CAHNYxRwMD4XahHXWW9z7b=VCOEsdPe5Df4CohNwmBy_ijWJ62g@mail.gmail.com>
+ <160695172591.2717324.17788035024164242534@swboyd.mtv.corp.google.com>
+ <160695644776.2717324.633265815704005177@swboyd.mtv.corp.google.com>
+ <CAD=FV=WDYdfURHWf8qGOSwT+7Y5i=9FMgRn5hYZA-oTfR6KoFQ@mail.gmail.com>
+ <160704063968.1580929.17834773484656581141@swboyd.mtv.corp.google.com>
+From:   Enric Balletbo i Serra <enric.balletbo@collabora.com>
+Message-ID: <8d864844-11d8-0eae-d85c-29136f035c1b@collabora.com>
+Date:   Fri, 4 Dec 2020 10:13:52 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.12.0
+MIME-Version: 1.0
+In-Reply-To: <160704063968.1580929.17834773484656581141@swboyd.mtv.corp.google.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Nov 30, 2020 at 10:32 PM Doug Anderson <dianders@chromium.org> wrote:
+Hi,
 
-> NOTE: even though this has Maulik's tags, he has requested [1] that we
-> should wait before landing while he talks with HW folks.
+On 4/12/20 1:10, Stephen Boyd wrote:
+> Quoting Doug Anderson (2020-12-03 12:06:10)
+>> On Wed, Dec 2, 2020 at 4:47 PM Stephen Boyd <swboyd@chromium.org> wrote:
+>>>
+>>> And that is wrong. With even more investigation and Doug's eagle eyes it
+>>> seems that the cros-ec driver is overriding the spi::mode to clear out
+>>> the SPI_CS_HIGH bit that the spi core sets in there when using the gpio
+>>> descriptors. I'll send a patch for cros-ec-spi shortly.
+>>
+>> So do we need any coordinating here, are we OK w/ trogdor devices
+>> being broken for a short period of time?
+>>
+>> I think the device tree changes switching to use GPIO for chip select
+>> is already queued in linux-next.  That means if we land this patch
+>> before the fix to cros_ec [1] then we'll end up in a broken state.
+>> Would we be able to do some quick landing to get the cros-ec fix into
+>> v5.10 and then target the SPI patch for 5.11?
+> 
+> I don't think it really matters if the two patches meet up in linux-next
+> or cros-ec is fast tracked, but it would be bad if this patch was merged
+> without the cros-ec one. One option would be to apply the cros-ec fix to
+> the spi tree along with this patch (or vice versa) so that a bisection
+> hole isn't created. Or this patch can wait for a while until cros-ec is
+> fixed. I'm not the maintainer here so it's really up to Mark and
+> Enric/Benson.
+> 
 
-OK I'm holding this series back until you have confirmation.
-When you know you want it applied, poke me (or send a new
-iteration).
+I am fine either way. I'm fine with pick all the patches and go through the
+chrome/platform tree if Mark is agree (I think this patch has no other
+dependencies and the patch applies cleanly to my tree) or all can go through the
+Mark's tree. If I need to an IB I can also do it without problems.
 
-Yours,
-Linus Walleij
+I'll leave Mark to decide who has much experience solving this kind of problems.
+
+Thanks,
+ Enric
+
+
+>>
+>> [1] https://lore.kernel.org/r/20201203011649.1405292-2-swboyd@chromium.org/
