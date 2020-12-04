@@ -2,97 +2,85 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 86E432CF4E7
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Dec 2020 20:37:57 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2F6CD2CF4F0
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Dec 2020 20:39:29 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730530AbgLDThQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 4 Dec 2020 14:37:16 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57050 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727661AbgLDThP (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 4 Dec 2020 14:37:15 -0500
-Received: from mail-pl1-x641.google.com (mail-pl1-x641.google.com [IPv6:2607:f8b0:4864:20::641])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 65F76C08E861
-        for <linux-arm-msm@vger.kernel.org>; Fri,  4 Dec 2020 11:35:47 -0800 (PST)
-Received: by mail-pl1-x641.google.com with SMTP id x15so3700002pll.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 04 Dec 2020 11:35:47 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=z02bYpW+7Mv3ChAgiAsPawwOKuNxCdLfLFsK6QR3N2g=;
-        b=Vs++OpkolBidQ0q+Ilza0Lha2VWjdSfRUa0ZzyaK0DdwopqPCGjYsRuljefTYyN41n
-         SMbziRk4cUbUTZSxJGFsasYy+OuGga4sEI/YuO+UYsdrtDxNFg3bzdS01K0AMf1PNPgy
-         XqWplByD5XICWPph7gUl2ablIZ35/fL5KvA5g=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=z02bYpW+7Mv3ChAgiAsPawwOKuNxCdLfLFsK6QR3N2g=;
-        b=mW4c8/vBxJZCBaampyHekYX2Ad2c1V8KC3/Akcrq0586iLBUbOW2zTMNoTQA8HYGRH
-         s3FVUDiTVCZMDFfqZLdWZpGvW3Wpp6DUmTY0OyeZHidI8dPMrO0WAtPLJKaqbnu721OC
-         kck5glJq7p/n4uO/VVShfI+FpxRbGJdY6cwSTUiNoQTk5ftalp1fw+BfDTJEPJAkYan7
-         zGtNDLnJHqEnPK0ApjSgwoSgjLAUJkZ3YKW6bUSQDlq7BWgXiv93mB9G9juKKHW/I34w
-         V6sdXz4bPvbMXHozzTvCkDe5ghKflhRrJDdO+eMjO/7wLmdIkBgVJjLrJ4VShCe7zFB5
-         vjDg==
-X-Gm-Message-State: AOAM530riAHEpgAIQnoggd1lJoVvzFq7wvLkbOn5Lo+zYR1niqB7sf2p
-        042cOW5/K6ZsQonAxnEVqRdVR3kf424fDw==
-X-Google-Smtp-Source: ABdhPJyziCeNS5BAMuYMAdrbPbkMe9VU91eJnl2PsGv9X03ZA9VevMGtTFXoltaP7nkzPeYtn8UPzw==
-X-Received: by 2002:a17:902:aa4b:b029:d8:f87e:1f3c with SMTP id c11-20020a170902aa4bb02900d8f87e1f3cmr5331771plr.23.1607110546995;
-        Fri, 04 Dec 2020 11:35:46 -0800 (PST)
-Received: from smtp.gmail.com ([2620:15c:202:201:3e52:82ff:fe6c:83ab])
-        by smtp.gmail.com with ESMTPSA id g8sm4576548pgn.47.2020.12.04.11.35.45
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 04 Dec 2020 11:35:46 -0800 (PST)
-From:   Stephen Boyd <swboyd@chromium.org>
-To:     Mark Brown <broonie@kernel.org>
-Cc:     linux-kernel@vger.kernel.org, linux-spi@vger.kernel.org,
-        Benson Leung <bleung@chromium.org>,
-        linux-arm-msm@vger.kernel.org,
-        Enric Balletbo i Serra <enric.balletbo@collabora.com>,
-        Akash Asthana <akashast@codeaurora.org>,
+        id S1730810AbgLDTi0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 4 Dec 2020 14:38:26 -0500
+Received: from mail.kernel.org ([198.145.29.99]:60484 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727661AbgLDTi0 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 4 Dec 2020 14:38:26 -0500
+From:   Arnd Bergmann <arnd@kernel.org>
+Authentication-Results: mail.kernel.org; dkim=permerror (bad message/signature format)
+To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Douglas Anderson <dianders@chromium.org>,
-        Alexandru M Stan <amstan@chromium.org>
-Subject: [PATCH 3/3] spi: spi-geni-qcom: Use the new method of gpio CS control
-Date:   Fri,  4 Dec 2020 11:35:40 -0800
-Message-Id: <20201204193540.3047030-4-swboyd@chromium.org>
-X-Mailer: git-send-email 2.29.2.576.ga3fc446d84-goog
-In-Reply-To: <20201204193540.3047030-1-swboyd@chromium.org>
-References: <20201204193540.3047030-1-swboyd@chromium.org>
+        Ohad Ben-Cohen <ohad@wizery.com>,
+        Rishabh Bhatnagar <rishabhb@codeaurora.org>
+Cc:     Arnd Bergmann <arnd@arndb.de>,
+        Siddharth Gupta <sidgup@codeaurora.org>,
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Ma Feng <mafeng.ma@huawei.com>,
+        Rikard Falkeborn <rikard.falkeborn@gmail.com>,
+        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH] remoteproc: sysmon: fix shutdown_acked state
+Date:   Fri,  4 Dec 2020 20:37:35 +0100
+Message-Id: <20201204193740.3162065-1-arnd@kernel.org>
+X-Mailer: git-send-email 2.27.0
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Let's set the 'use_gpio_descriptors' field so that we use the new way of
-requesting the CS GPIOs in the core. This allows us to avoid having to
-configure the CS pins in "output" mode with an 'output-enable' pinctrl
-setting.
+From: Arnd Bergmann <arnd@arndb.de>
 
-Cc: Akash Asthana <akashast@codeaurora.org>
-Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
-Reviewed-by: Douglas Anderson <dianders@chromium.org>
-Cc: Alexandru M Stan <amstan@chromium.org>
-Signed-off-by: Stephen Boyd <swboyd@chromium.org>
+The latest version of sysmon_stop() starts by initializing
+the sysmon->shutdown_acked variable, but then overwrites it
+with an uninitialized variable later:
+
+drivers/remoteproc/qcom_sysmon.c:551:11: error: variable 'acked' is used uninitialized whenever 'if' condition is false [-Werror,-Wsometimes-uninitialized]
+        else if (sysmon->ept)
+                 ^~~~~~~~~~~
+drivers/remoteproc/qcom_sysmon.c:554:27: note: uninitialized use occurs here
+        sysmon->shutdown_acked = acked;
+                                 ^~~~~
+
+Remove the local 'acked' variable again and set the state directly.
+
+Fixes: 5c212aaf5457 ("remoteproc: sysmon: Expose the shutdown result")
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
 ---
- drivers/spi/spi-geni-qcom.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/remoteproc/qcom_sysmon.c | 7 ++-----
+ 1 file changed, 2 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/spi/spi-geni-qcom.c b/drivers/spi/spi-geni-qcom.c
-index 25810a7eef10..c4c88984abc9 100644
---- a/drivers/spi/spi-geni-qcom.c
-+++ b/drivers/spi/spi-geni-qcom.c
-@@ -636,6 +636,7 @@ static int spi_geni_probe(struct platform_device *pdev)
- 	spi->auto_runtime_pm = true;
- 	spi->handle_err = handle_fifo_timeout;
- 	spi->set_cs = spi_geni_set_cs;
-+	spi->use_gpio_descriptors = true;
+diff --git a/drivers/remoteproc/qcom_sysmon.c b/drivers/remoteproc/qcom_sysmon.c
+index d01bc4bda7bf..9fca81492863 100644
+--- a/drivers/remoteproc/qcom_sysmon.c
++++ b/drivers/remoteproc/qcom_sysmon.c
+@@ -533,7 +533,6 @@ static void sysmon_stop(struct rproc_subdev *subdev, bool crashed)
+ 		.subsys_name = sysmon->name,
+ 		.ssr_event = SSCTL_SSR_EVENT_BEFORE_SHUTDOWN
+ 	};
+-	bool acked;
  
- 	init_completion(&mas->cs_done);
- 	init_completion(&mas->cancel_done);
+ 	sysmon->shutdown_acked = false;
+ 
+@@ -547,11 +546,9 @@ static void sysmon_stop(struct rproc_subdev *subdev, bool crashed)
+ 		return;
+ 
+ 	if (sysmon->ssctl_version)
+-		acked = ssctl_request_shutdown(sysmon);
++		sysmon->shutdown_acked = ssctl_request_shutdown(sysmon);
+ 	else if (sysmon->ept)
+-		acked = sysmon_request_shutdown(sysmon);
+-
+-	sysmon->shutdown_acked = acked;
++		sysmon->shutdown_acked = sysmon_request_shutdown(sysmon);
+ }
+ 
+ static void sysmon_unprepare(struct rproc_subdev *subdev)
 -- 
-https://chromeos.dev
+2.27.0
 
