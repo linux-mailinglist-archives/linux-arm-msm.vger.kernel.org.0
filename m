@@ -2,99 +2,115 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 5C6002CE42A
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Dec 2020 01:13:16 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id CD0B92CE459
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Dec 2020 01:15:34 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731933AbgLDALW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 3 Dec 2020 19:11:22 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45826 "EHLO
+        id S1729961AbgLDAOw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 3 Dec 2020 19:14:52 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46330 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731926AbgLDALW (ORCPT
+        with ESMTP id S1728154AbgLDAOw (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 3 Dec 2020 19:11:22 -0500
-Received: from mail-pf1-x441.google.com (mail-pf1-x441.google.com [IPv6:2607:f8b0:4864:20::441])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 349ABC061A53
-        for <linux-arm-msm@vger.kernel.org>; Thu,  3 Dec 2020 16:10:42 -0800 (PST)
-Received: by mail-pf1-x441.google.com with SMTP id s21so2440672pfu.13
-        for <linux-arm-msm@vger.kernel.org>; Thu, 03 Dec 2020 16:10:42 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:content-transfer-encoding:in-reply-to:references
-         :subject:from:cc:to:date:message-id:user-agent;
-        bh=4pKKFMfBLZOZ3sCLtJOcZ0LC1q6FIsFGdOapn0cj/sE=;
-        b=YG7/BFHde8GeX7lx42RuXxFWd4/scS9eXfgkysdXbOefnXw2jtYTo0cjwW5BMdR3vC
-         O21bBPedVmXiNUpaNTxJddYGeP9WwdxcU6KGBVuHmiI8IrVsOls5xwOUsBLE6vQYzpT2
-         hmydIfUrXeWnOUEU6hg2VZUGZeybW15x1AiZU=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:content-transfer-encoding
-         :in-reply-to:references:subject:from:cc:to:date:message-id
-         :user-agent;
-        bh=4pKKFMfBLZOZ3sCLtJOcZ0LC1q6FIsFGdOapn0cj/sE=;
-        b=X0CebnVdGhZ0aa0o5hMiC7IVpPO3km1Q18AGMz7gMXnTgMwNVWsRW1eudjgTW0j7BO
-         ubIhZ+nBfrfY81GSd7M91sXGWNdIOuTCC5ukL1FoUco4VIpJGXjQh1gq3IZGmEdRVzDZ
-         ROepVbSVXViNj2K2iVxuGHzrSWTmGqRnBcrbbB/hC+UIs1BJVBnLL3Jir/V+u8NGS6oU
-         LQDt9+sveR+wwbsb5htTuxIYwq5YxISF+SD+WvaPX3SOzamVjrSd63JSMVF5bfcV3TIh
-         wZIMMiEFkTaBlgqy0Q+6RLrKWdr/88ccCW/bO/QDgB/M5MjaQ8ZtTV3RjYsS6CnRQvSB
-         Icng==
-X-Gm-Message-State: AOAM533Bd027HElR6ijMLuicMrEaTgcxs7DsYMHIGvzgT3qsvWJ5ZME1
-        bEvvsWorjHFuTFg6Z7gXSYoYkQ==
-X-Google-Smtp-Source: ABdhPJzo+9IuXUxApVeZPjc5IJqLxvJ4174bUZ83s3C19rp5kB62KNuYaLGRvpAX8A2Cz1FJTbbEIw==
-X-Received: by 2002:a63:6683:: with SMTP id a125mr5175488pgc.272.1607040641735;
-        Thu, 03 Dec 2020 16:10:41 -0800 (PST)
-Received: from chromium.org ([2620:15c:202:201:3e52:82ff:fe6c:83ab])
-        by smtp.gmail.com with ESMTPSA id m26sm2802715pfo.123.2020.12.03.16.10.40
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 03 Dec 2020 16:10:41 -0800 (PST)
-Content-Type: text/plain; charset="utf-8"
+        Thu, 3 Dec 2020 19:14:52 -0500
+Received: from relay07.th.seeweb.it (relay07.th.seeweb.it [IPv6:2001:4b7a:2000:18::168])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 127E7C061A51;
+        Thu,  3 Dec 2020 16:13:57 -0800 (PST)
+Received: from IcarusMOD.eternityproject.eu (unknown [2.237.20.237])
+        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id 9B0F640548;
+        Fri,  4 Dec 2020 01:13:52 +0100 (CET)
+Subject: Re: [PATCH 11/13] dt-bindings: cpufreq: Convert qcom-cpufreq-hw to
+ YAML binding
+To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc:     viresh.kumar@linaro.org, rjw@rjwysocki.net,
+        jorge.ramirez-ortiz@linaro.org, robh+dt@kernel.org,
+        konrad.dybcio@somainline.org, linux-pm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, ulf.hansson@linaro.org,
+        nks@flawful.org, lgirdwood@gmail.com, daniel.lezcano@linaro.org,
+        devicetree@vger.kernel.org, bjorn.andersson@linaro.org,
+        phone-devel@vger.kernel.org, broonie@kernel.org,
+        linux-arm-msm@vger.kernel.org, agross@kernel.org,
+        marijn.suijten@somainline.org, martin.botka@somainline.org,
+        robh@kernel.org
+References: <20201126184559.3052375-1-angelogioacchino.delregno@somainline.org>
+ <20201126184559.3052375-12-angelogioacchino.delregno@somainline.org>
+ <20201130172305.GA2661895@robh.at.kernel.org>
+ <20201203111427.GA3937@thinkpad>
+From:   AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>
+Message-ID: <d66e05be-4ea1-dfb7-40ee-bfe417ab1a77@somainline.org>
+Date:   Fri, 4 Dec 2020 01:13:52 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.5.0
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <CAD=FV=WDYdfURHWf8qGOSwT+7Y5i=9FMgRn5hYZA-oTfR6KoFQ@mail.gmail.com>
-References: <20201202214935.1114381-1-swboyd@chromium.org> <CAHNYxRwMD4XahHXWW9z7b=VCOEsdPe5Df4CohNwmBy_ijWJ62g@mail.gmail.com> <160695172591.2717324.17788035024164242534@swboyd.mtv.corp.google.com> <160695644776.2717324.633265815704005177@swboyd.mtv.corp.google.com> <CAD=FV=WDYdfURHWf8qGOSwT+7Y5i=9FMgRn5hYZA-oTfR6KoFQ@mail.gmail.com>
-Subject: Re: [PATCH] spi: spi-geni-qcom: Use the new method of gpio CS control
-From:   Stephen Boyd <swboyd@chromium.org>
-Cc:     Alexandru M Stan <amstan@chromium.org>,
-        Mark Brown <broonie@kernel.org>,
-        linux-kernel <linux-kernel@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        linux-spi <linux-spi@vger.kernel.org>,
-        Akash Asthana <akashast@codeaurora.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Benson Leung <bleung@chromium.org>,
-        Enric Balletbo i Serra <enric.balletbo@collabora.com>
-To:     Doug Anderson <dianders@chromium.org>
-Date:   Thu, 03 Dec 2020 16:10:39 -0800
-Message-ID: <160704063968.1580929.17834773484656581141@swboyd.mtv.corp.google.com>
-User-Agent: alot/0.9.1
+In-Reply-To: <20201203111427.GA3937@thinkpad>
+Content-Type: text/plain; charset=iso-8859-15; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Doug Anderson (2020-12-03 12:06:10)
-> On Wed, Dec 2, 2020 at 4:47 PM Stephen Boyd <swboyd@chromium.org> wrote:
-> >
-> > And that is wrong. With even more investigation and Doug's eagle eyes it
-> > seems that the cros-ec driver is overriding the spi::mode to clear out
-> > the SPI_CS_HIGH bit that the spi core sets in there when using the gpio
-> > descriptors. I'll send a patch for cros-ec-spi shortly.
->=20
-> So do we need any coordinating here, are we OK w/ trogdor devices
-> being broken for a short period of time?
->=20
-> I think the device tree changes switching to use GPIO for chip select
-> is already queued in linux-next.  That means if we land this patch
-> before the fix to cros_ec [1] then we'll end up in a broken state.
-> Would we be able to do some quick landing to get the cros-ec fix into
-> v5.10 and then target the SPI patch for 5.11?
+Il 03/12/20 12:14, Manivannan Sadhasivam ha scritto:
+> Hi,
+> 
+> On Mon, Nov 30, 2020 at 10:23:05AM -0700, Rob Herring wrote:
+>> On Thu, 26 Nov 2020 19:45:57 +0100, AngeloGioacchino Del Regno wrote:
+>>> Convert the qcom-cpufreq-hw documentation to YAML binding as
+>>> qcom,cpufreq-hw.yaml.
+>>>
+>>> Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
+> 
+> There is already a patch floating for this. Please see:
+> https://lkml.org/lkml/2020/10/20/676
+> 
+> Thanks,
+> Mani
+> 
+Oh, I'm sorry, I wasn't aware of that, didn't want to step on you.
 
-I don't think it really matters if the two patches meet up in linux-next
-or cros-ec is fast tracked, but it would be bad if this patch was merged
-without the cros-ec one. One option would be to apply the cros-ec fix to
-the spi tree along with this patch (or vice versa) so that a bisection
-hole isn't created. Or this patch can wait for a while until cros-ec is
-fixed. I'm not the maintainer here so it's really up to Mark and
-Enric/Benson.
+Should I rebase patch 1345789 (patch 13/13 of this series) on top of
+the one that you pointed out and drop this one?
 
->=20
-> [1] https://lore.kernel.org/r/20201203011649.1405292-2-swboyd@chromium.or=
-g/
+- Angelo
+
+>>> ---
+>>>   .../bindings/cpufreq/cpufreq-qcom-hw.txt      | 173 +---------------
+>>>   .../bindings/cpufreq/qcom,cpufreq-hw.yaml     | 196 ++++++++++++++++++
+>>>   2 files changed, 197 insertions(+), 172 deletions(-)
+>>>   create mode 100644 Documentation/devicetree/bindings/cpufreq/qcom,cpufreq-hw.yaml
+>>>
+>>
+>>
+>> My bot found errors running 'make dt_binding_check' on your patch:
+>>
+>> yamllint warnings/errors:
+>>
+>> dtschema/dtc warnings/errors:
+>> /builds/robherring/linux-dt-review/Documentation/devicetree/bindings/cpufreq/qcom,cpufreq-hw.yaml: properties:clock-names: [{'const': 'xo'}, {'const': 'ref'}] is not of type 'object', 'boolean'
+>> /builds/robherring/linux-dt-review/Documentation/devicetree/bindings/cpufreq/qcom,cpufreq-hw.yaml: maintainers:0: 'TBD' is not a 'email'
+>> /builds/robherring/linux-dt-review/Documentation/devicetree/bindings/cpufreq/qcom,cpufreq-hw.yaml: ignoring, error in schema: properties: clock-names
+>> warning: no schema found in file: ./Documentation/devicetree/bindings/cpufreq/qcom,cpufreq-hw.yaml
+>> Error: Documentation/devicetree/bindings/cpufreq/qcom,cpufreq-hw.example.dts:150.3-151.1 syntax error
+>> FATAL ERROR: Unable to parse input tree
+>> make[1]: *** [scripts/Makefile.lib:342: Documentation/devicetree/bindings/cpufreq/qcom,cpufreq-hw.example.dt.yaml] Error 1
+>> make[1]: *** Waiting for unfinished jobs....
+>> make: *** [Makefile:1364: dt_binding_check] Error 2
+>>
+>>
+>> See https://patchwork.ozlabs.org/patch/1406857
+>>
+>> The base for the patch is generally the last rc1. Any dependencies
+>> should be noted.
+>>
+>> If you already ran 'make dt_binding_check' and didn't see the above
+>> error(s), then make sure 'yamllint' is installed and dt-schema is up to
+>> date:
+>>
+>> pip3 install dtschema --upgrade
+>>
+>> Please check and re-submit.
+>>
+
