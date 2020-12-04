@@ -2,85 +2,185 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 2F6CD2CF4F0
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Dec 2020 20:39:29 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 253E12CF771
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  5 Dec 2020 00:28:53 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730810AbgLDTi0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 4 Dec 2020 14:38:26 -0500
-Received: from mail.kernel.org ([198.145.29.99]:60484 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727661AbgLDTi0 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 4 Dec 2020 14:38:26 -0500
-From:   Arnd Bergmann <arnd@kernel.org>
-Authentication-Results: mail.kernel.org; dkim=permerror (bad message/signature format)
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Ohad Ben-Cohen <ohad@wizery.com>,
-        Rishabh Bhatnagar <rishabhb@codeaurora.org>
-Cc:     Arnd Bergmann <arnd@arndb.de>,
-        Siddharth Gupta <sidgup@codeaurora.org>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Ma Feng <mafeng.ma@huawei.com>,
-        Rikard Falkeborn <rikard.falkeborn@gmail.com>,
-        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
+        id S1725885AbgLDX2T (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 4 Dec 2020 18:28:19 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36064 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726877AbgLDX1y (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 4 Dec 2020 18:27:54 -0500
+Received: from mail-ot1-x344.google.com (mail-ot1-x344.google.com [IPv6:2607:f8b0:4864:20::344])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BC525C061A4F
+        for <linux-arm-msm@vger.kernel.org>; Fri,  4 Dec 2020 15:27:13 -0800 (PST)
+Received: by mail-ot1-x344.google.com with SMTP id j21so6893513otp.8
+        for <linux-arm-msm@vger.kernel.org>; Fri, 04 Dec 2020 15:27:13 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=zLc7/3okPvFxP0Z5cS+hPwJjhxGd6v5dEl0jnqjK1K0=;
+        b=xQwJageZbIycG4kTT8ShqMD3nUbwD7r8wUnxsVIIr+DgCBye6qng9WoGeVERzlid29
+         k/ObBybIk//OMjj5X5o6YZ0k0F4YAbF832KqRuemDPxAcGvpXGz4INpWkjsvJ/5BU8zJ
+         Qf7/ZZlvvJbUKw/nn1qkD3DgSqL7BZqwgj4xqzlmiG/PCX2A4z4QX3GYSWBzdNtfezVv
+         hbrkMNgU0Ogaga1hWbEu58REJxvLrJ/YyXTVkcispMWDJKH07SatPkBvKuiG1UyvjT6f
+         uRrkVoAcABjtKNGxhr6n3YqlTzMBrQLIw1cXMB8i991kgSJJhcPVqWsPcFOQd3eQ+uR4
+         TsIw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=zLc7/3okPvFxP0Z5cS+hPwJjhxGd6v5dEl0jnqjK1K0=;
+        b=UWvySA8RkrDLvyeFObKlR9XYzkunAKgrMR1BacWBZOat3y3qTB3ZI8gn4XnJVO6HaW
+         eIc8XWz3oEi8/wVcGAoBwaOswCfyhxupq0Id/SODaWjaIZgkXXnyJYgj3rgJavonVpWT
+         /+lE/gbtIc95JEjUXky6Kl/7mc2ZIWhCfTEHQt0OicHoMWR4MCNSTHI0nhynTpUVsbvB
+         dJI2+iIxUJGGVIzORiHQDQZtbKDrTT2csc94xfm/Uaz6rt65FVvZZmiDL0DA0nq0Xjn1
+         tPTHs83OPCd+OTdK9aO+IyhYRIdeAv2NhkbJy7sy+u3Jd7AcRAK7twHGERBQdE5sKuqV
+         kl6g==
+X-Gm-Message-State: AOAM532YZqdwZekN0avJj6eFtckDF828Za0oWD6JcjZAHHzEFruc+7th
+        SYQHNkLmozWGogMD/VHwmOSQ9g==
+X-Google-Smtp-Source: ABdhPJx/5ojyUAiGu0IYqd4XJaPj3ZSo9l52l1eGs5DI9MrJXP8DByhPu8SeKg2BBP6DoIR4XpMftA==
+X-Received: by 2002:a9d:7401:: with SMTP id n1mr5323426otk.21.1607124433014;
+        Fri, 04 Dec 2020 15:27:13 -0800 (PST)
+Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
+        by smtp.gmail.com with ESMTPSA id k1sm949788ood.4.2020.12.04.15.27.11
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 04 Dec 2020 15:27:12 -0800 (PST)
+Date:   Fri, 4 Dec 2020 17:27:10 -0600
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Arnd Bergmann <arnd@kernel.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Georgi Djakov <georgi.djakov@linaro.org>,
+        Arnd Bergmann <arnd@arndb.de>,
+        Sibi Sankar <sibis@codeaurora.org>,
+        Evan Green <evgreen@chromium.org>,
+        Jonathan Marek <jonathan@marek.ca>,
+        Odelu Kukatla <okukatla@codeaurora.org>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        David Dai <daidavid1@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
         linux-kernel@vger.kernel.org
-Subject: [PATCH] remoteproc: sysmon: fix shutdown_acked state
-Date:   Fri,  4 Dec 2020 20:37:35 +0100
-Message-Id: <20201204193740.3162065-1-arnd@kernel.org>
-X-Mailer: git-send-email 2.27.0
+Subject: Re: [PATCH] interconnect: qcom: fix rpmh link failures
+Message-ID: <X8rFzqURIVHeH4SL@builder.lan>
+References: <20201204165030.3747484-1-arnd@kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20201204165030.3747484-1-arnd@kernel.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Arnd Bergmann <arnd@arndb.de>
+On Fri 04 Dec 10:50 CST 2020, Arnd Bergmann wrote:
 
-The latest version of sysmon_stop() starts by initializing
-the sysmon->shutdown_acked variable, but then overwrites it
-with an uninitialized variable later:
+> From: Arnd Bergmann <arnd@arndb.de>
+> 
+> When CONFIG_COMPILE_TEST is set, it is possible to build some
+> of the interconnect drivers into the kernel while their dependencies
+> are loadable modules, which is bad:
+> 
+> arm-linux-gnueabi-ld: drivers/interconnect/qcom/bcm-voter.o: in function `qcom_icc_bcm_voter_commit':
+> (.text+0x1f8): undefined reference to `rpmh_invalidate'
+> arm-linux-gnueabi-ld: (.text+0x20c): undefined reference to `rpmh_write_batch'
+> arm-linux-gnueabi-ld: (.text+0x2b0): undefined reference to `rpmh_write_batch'
+> arm-linux-gnueabi-ld: (.text+0x2e8): undefined reference to `rpmh_write_batch'
+> arm-linux-gnueabi-ld: drivers/interconnect/qcom/icc-rpmh.o: in function `qcom_icc_bcm_init':
+> (.text+0x2ac): undefined reference to `cmd_db_read_addr'
+> arm-linux-gnueabi-ld: (.text+0x2c8): undefined reference to `cmd_db_read_aux_data'
+> 
+> The exact dependencies are a bit complicated, so split them out into a
+> hidden Kconfig symbol that all drivers can in turn depend on to get it
+> right.
+> 
+> Fixes: 976daac4a1c5 ("interconnect: qcom: Consolidate interconnect RPMh support")
+> Signed-off-by: Arnd Bergmann <arnd@arndb.de>
 
-drivers/remoteproc/qcom_sysmon.c:551:11: error: variable 'acked' is used uninitialized whenever 'if' condition is false [-Werror,-Wsometimes-uninitialized]
-        else if (sysmon->ept)
-                 ^~~~~~~~~~~
-drivers/remoteproc/qcom_sysmon.c:554:27: note: uninitialized use occurs here
-        sysmon->shutdown_acked = acked;
-                                 ^~~~~
+Your patch looks correct to me, so:
+Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 
-Remove the local 'acked' variable again and set the state directly.
 
-Fixes: 5c212aaf5457 ("remoteproc: sysmon: Expose the shutdown result")
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
----
- drivers/remoteproc/qcom_sysmon.c | 7 ++-----
- 1 file changed, 2 insertions(+), 5 deletions(-)
+But we're going to have to sprinkle a handful of these throughout the
+tree and we're not a lot of people who "understand" what it does (and at
+least I keep getting them wrong...)
 
-diff --git a/drivers/remoteproc/qcom_sysmon.c b/drivers/remoteproc/qcom_sysmon.c
-index d01bc4bda7bf..9fca81492863 100644
---- a/drivers/remoteproc/qcom_sysmon.c
-+++ b/drivers/remoteproc/qcom_sysmon.c
-@@ -533,7 +533,6 @@ static void sysmon_stop(struct rproc_subdev *subdev, bool crashed)
- 		.subsys_name = sysmon->name,
- 		.ssr_event = SSCTL_SSR_EVENT_BEFORE_SHUTDOWN
- 	};
--	bool acked;
- 
- 	sysmon->shutdown_acked = false;
- 
-@@ -547,11 +546,9 @@ static void sysmon_stop(struct rproc_subdev *subdev, bool crashed)
- 		return;
- 
- 	if (sysmon->ssctl_version)
--		acked = ssctl_request_shutdown(sysmon);
-+		sysmon->shutdown_acked = ssctl_request_shutdown(sysmon);
- 	else if (sysmon->ept)
--		acked = sysmon_request_shutdown(sysmon);
--
--	sysmon->shutdown_acked = acked;
-+		sysmon->shutdown_acked = sysmon_request_shutdown(sysmon);
- }
- 
- static void sysmon_unprepare(struct rproc_subdev *subdev)
--- 
-2.27.0
+Perhaps it would be more reasonable to maintain this long term if we
+drop the possibility of compile testing these drivers independently of
+rpmh and command db? (I.e. drop the function stubs and rely on
+RPMH/COMMAND_DB to enable building under COMPILE_TEST)?
 
+
+And just to make it clear, I think we should merge your patch to fix
+v5.11; then consider to simplify this past that.
+
+Regards,
+Bjorn
+
+> ---
+>  drivers/interconnect/qcom/Kconfig | 23 +++++++++++++++--------
+>  1 file changed, 15 insertions(+), 8 deletions(-)
+> 
+> diff --git a/drivers/interconnect/qcom/Kconfig b/drivers/interconnect/qcom/Kconfig
+> index a8f93ba265f8..b3fb5b02bcf1 100644
+> --- a/drivers/interconnect/qcom/Kconfig
+> +++ b/drivers/interconnect/qcom/Kconfig
+> @@ -42,13 +42,23 @@ config INTERCONNECT_QCOM_QCS404
+>  	  This is a driver for the Qualcomm Network-on-Chip on qcs404-based
+>  	  platforms.
+>  
+> +config INTERCONNECT_QCOM_RPMH_POSSIBLE
+> +	tristate
+> +	default INTERCONNECT_QCOM
+> +	depends on QCOM_RPMH || (COMPILE_TEST && !QCOM_RPMH)
+> +	depends on QCOM_COMMAND_DB || (COMPILE_TEST && !QCOM_COMMAND_DB)
+> +	depends on OF || COMPILE_TEST
+> +	help
+> +	  Compile-testing RPMH drivers is possible on other platforms,
+> +	  but in order to avoid link failures, drivers must not be built-in
+> +	  when QCOM_RPMH or QCOM_COMMAND_DB are loadable modules
+> +
+>  config INTERCONNECT_QCOM_RPMH
+>  	tristate
+>  
+>  config INTERCONNECT_QCOM_SC7180
+>  	tristate "Qualcomm SC7180 interconnect driver"
+> -	depends on INTERCONNECT_QCOM
+> -	depends on (QCOM_RPMH && QCOM_COMMAND_DB && OF) || COMPILE_TEST
+> +	depends on INTERCONNECT_QCOM_RPMH_POSSIBLE
+>  	select INTERCONNECT_QCOM_RPMH
+>  	select INTERCONNECT_QCOM_BCM_VOTER
+>  	help
+> @@ -57,8 +67,7 @@ config INTERCONNECT_QCOM_SC7180
+>  
+>  config INTERCONNECT_QCOM_SDM845
+>  	tristate "Qualcomm SDM845 interconnect driver"
+> -	depends on INTERCONNECT_QCOM
+> -	depends on (QCOM_RPMH && QCOM_COMMAND_DB && OF) || COMPILE_TEST
+> +	depends on INTERCONNECT_QCOM_RPMH_POSSIBLE
+>  	select INTERCONNECT_QCOM_RPMH
+>  	select INTERCONNECT_QCOM_BCM_VOTER
+>  	help
+> @@ -67,8 +76,7 @@ config INTERCONNECT_QCOM_SDM845
+>  
+>  config INTERCONNECT_QCOM_SM8150
+>  	tristate "Qualcomm SM8150 interconnect driver"
+> -	depends on INTERCONNECT_QCOM
+> -	depends on (QCOM_RPMH && QCOM_COMMAND_DB && OF) || COMPILE_TEST
+> +	depends on INTERCONNECT_QCOM_RPMH_POSSIBLE
+>  	select INTERCONNECT_QCOM_RPMH
+>  	select INTERCONNECT_QCOM_BCM_VOTER
+>  	help
+> @@ -77,8 +85,7 @@ config INTERCONNECT_QCOM_SM8150
+>  
+>  config INTERCONNECT_QCOM_SM8250
+>  	tristate "Qualcomm SM8250 interconnect driver"
+> -	depends on INTERCONNECT_QCOM
+> -	depends on (QCOM_RPMH && QCOM_COMMAND_DB && OF) || COMPILE_TEST
+> +	depends on INTERCONNECT_QCOM_RPMH_POSSIBLE
+>  	select INTERCONNECT_QCOM_RPMH
+>  	select INTERCONNECT_QCOM_BCM_VOTER
+>  	help
+> -- 
+> 2.27.0
+> 
