@@ -2,125 +2,173 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 777412CFE86
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  5 Dec 2020 20:44:24 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 487F02CFF11
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  5 Dec 2020 22:06:23 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726056AbgLEToF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 5 Dec 2020 14:44:05 -0500
-Received: from mail.kernel.org ([198.145.29.99]:60496 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725902AbgLEToE (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 5 Dec 2020 14:44:04 -0500
-Date:   Sat, 5 Dec 2020 11:43:21 -0800
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1607197404;
-        bh=mZONoqc0lPkPL1MqQfLfD5mq8tRoa7RCx26VR0bTPLM=;
-        h=From:To:Cc:Subject:References:In-Reply-To:From;
-        b=fQvGzIhTTUGbkL6jYDGNClM6hQ5l1BZUfKbZlzX7pFdus/V2YmkITn3CrN+D52RQZ
-         xYu4fqO7ISikguNZTYu2PKTqGI5/mTtkApg+nZ0ch8JWgaHiWZIQmAlrEAF4s57TZ9
-         bGJfy0zhllaA+0ARlSaEzCQJhi7Z12fPpYzpkSR/XpKV18W+vrb1HhM+jSx4wlJWWC
-         4JzFMgUjNmNo5381W3v1aukbHVB+j33lYvrybsmHQa6c08e0DWFSn2aOItSNeIxZ1j
-         wq8KvBXZ50EZWHoT5poGDcSwYIj07TbSVSEYvqHCUNj721xlGsuk7kTWSvdvmw7SId
-         YzPkW9W27nkOQ==
-From:   Eric Biggers <ebiggers@kernel.org>
-To:     Satya Tangirala <satyat@google.com>
-Cc:     linux-mmc@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-fscrypt@vger.kernel.org,
-        Ulf Hansson <ulf.hansson@linaro.org>,
-        Andy Gross <agross@kernel.org>,
+        id S1726871AbgLEVGV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 5 Dec 2020 16:06:21 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37928 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725270AbgLEVGV (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Sat, 5 Dec 2020 16:06:21 -0500
+Received: from mail-lj1-x242.google.com (mail-lj1-x242.google.com [IPv6:2a00:1450:4864:20::242])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A4426C0613CF
+        for <linux-arm-msm@vger.kernel.org>; Sat,  5 Dec 2020 13:05:34 -0800 (PST)
+Received: by mail-lj1-x242.google.com with SMTP id s11so1982438ljp.4
+        for <linux-arm-msm@vger.kernel.org>; Sat, 05 Dec 2020 13:05:34 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=l7PcuRvH2lvNTCeViNhB8nA3QkFXJkV9Gl2IRDNWkAw=;
+        b=VKbz9r/11ppxewhAL3MRcb/GtaNpPtPYglYTdQDNmV0TCXIFdrgcgMtkArIqGTjpK7
+         UejGaSzbAOJ2VsO+HniC52RRbh3zRcocpAwHidbbQL+lV4MhGXb21C5vgNi7NbjWhihv
+         RKpFyCje/tVLzFokQhPrO3m7BfSWIMANQusS6nsfGqZkdfo5fF5ruIq5Yv8a4TDAJmx3
+         L9d1POmHfSKtCXYfWHc8XBxvBoLAJ+lvUQOVFOlYDR4146NiO5CIFUUI3FU/jTjV8AIF
+         k5pBy0Z+4wbfCFxYZXA30GpXUXDLRZzyQ8kiqdL4kW9dfMHcc0gf9wvq7mEuMlxkjLN9
+         kSfg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=l7PcuRvH2lvNTCeViNhB8nA3QkFXJkV9Gl2IRDNWkAw=;
+        b=UuA/kGPTXfk0OLi+lGJsyOWHGEbjC3hIm/zUmcTjxHAAZxC27Gg7MLwUEy1GFsZeHG
+         4asytFR1IE/bybzyyudVsceuJ2oB8v64UPOGa2ajjjNvSXLHxgi9M29WmJQTt7vLlNY8
+         yS5e+ObWlCf8AQ/+58Uo/bmxtAAnobQKuAmNIEoRHfsuSMezoBYleiFkKW/ouiQDqRHK
+         QMo8DMIV7cvnnWzLFU2BUQAgtQpOsr/kKXL0SbeAQ2A+vuvZ/D6BZU2Uyc+fjcbaM1lE
+         4d6/IaAyX9tHUgCo+RGxqH9J0D4df8H1unMx/7/W+B44Giy/maLQelHbTk+hlaG2YJnb
+         idzw==
+X-Gm-Message-State: AOAM531mePXxl+c7HO3h25WCg88m6Kf0+Hkeuzk//VVIirxq2VFNNH6V
+        4SEvVA0jeHsCB6qbP7pM7yqbKA==
+X-Google-Smtp-Source: ABdhPJxUfR3PGDS+RKxcbacmYSpIPDJpurEtbRQcNlhGoXkpPQ40eJomWsVIVOXgu0j4y+sfskWZFw==
+X-Received: by 2002:a2e:720c:: with SMTP id n12mr6257982ljc.424.1607202333043;
+        Sat, 05 Dec 2020 13:05:33 -0800 (PST)
+Received: from [192.168.0.150] ([94.25.229.141])
+        by smtp.gmail.com with ESMTPSA id j27sm146451lfm.178.2020.12.05.13.05.30
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 05 Dec 2020 13:05:32 -0800 (PST)
+Subject: Re: [PATCH v10 00/15] qcom: pm8150: add support for thermal
+ monitoring
+To:     Jonathan Cameron <jic23@kernel.org>
+Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Adrian Hunter <adrian.hunter@intel.com>,
-        Asutosh Das <asutoshd@codeaurora.org>,
         Rob Herring <robh+dt@kernel.org>,
-        Neeraj Soni <neersoni@codeaurora.org>,
-        Barani Muthukumaran <bmuthuku@codeaurora.org>,
-        Peng Zhou <peng.zhou@mediatek.com>,
-        Stanley Chu <stanley.chu@mediatek.com>,
-        Konrad Dybcio <konradybcio@gmail.com>
-Subject: Re: [PATCH v2 9/9] mmc: sdhci-msm: add Inline Crypto Engine support
-Message-ID: <X8vi2R0DYd74VCXr@sol.localdomain>
-References: <20201203020516.225701-1-ebiggers@kernel.org>
- <20201203020516.225701-10-ebiggers@kernel.org>
- <X8t4bLOc3vRbDSo5@google.com>
+        Zhang Rui <rui.zhang@intel.com>,
+        Daniel Lezcano <daniel.lezcano@linaro.org>,
+        Amit Kucheria <amitk@kernel.org>,
+        Hartmut Knaack <knaack.h@gmx.de>,
+        Lars-Peter Clausen <lars@metafoo.de>,
+        Peter Meerwald-Stadler <pmeerw@pmeerw.net>,
+        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-iio@vger.kernel.org,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        Jishnu Prakash <jprakash@qti.qualcomm.com>
+References: <20201204025509.1075506-1-dmitry.baryshkov@linaro.org>
+ <20201205170830.4d56ecb7@archlinux>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Message-ID: <4de94396-54c7-e741-b288-3a3868515f7b@linaro.org>
+Date:   Sun, 6 Dec 2020 00:05:29 +0300
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.5.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <X8t4bLOc3vRbDSo5@google.com>
+In-Reply-To: <20201205170830.4d56ecb7@archlinux>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-GB
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sat, Dec 05, 2020 at 12:09:16PM +0000, Satya Tangirala wrote:
-> > +static void sdhci_msm_ice_enable(struct sdhci_msm_host *msm_host)
-> > +{
-> > +	if (!(msm_host->mmc->caps2 & MMC_CAP2_CRYPTO))
-> > +		return;
-> > +	sdhci_msm_ice_low_power_mode_enable(msm_host);
-> > +	sdhci_msm_ice_optimization_enable(msm_host);
-> > +	sdhci_msm_ice_wait_bist_status(msm_host);
-> If sdhci_msm_ice_wait_bist_status() fails, should we really ignore the
-> error and continue en/decrypting with ICE? I'm not sure what the BIST
-> failing might really mean, but if it means it's possible that the ICE
-> en/decrypts incorrectly it would be bad to continue to use it.....
+On 05/12/2020 20:08, Jonathan Cameron wrote:
+> On Fri,  4 Dec 2020 05:54:54 +0300
+> Dmitry Baryshkov <dmitry.baryshkov@linaro.org> wrote:
+> 
+>> This patch serie adds support for thermal monitoring block on Qualcomm's
+>> PMIC5 chips. PM8150{,b,l} and sm8250-mtp board device trees are extended
+>> to support thermal zones provided by this thermal monitoring block.
+>> Unlike the rest of PMIC thermal senses, these thermal zones describe
+>> particular thermistors, which differ between from board to board.
+> 
+> I've just taken another look through the various IIO parts in here and
+> I think they are fine.
+> 
+> My assumption is that given the timing this isn't going to make the merge
+> window now.  Hence I'll be looking to do an immutable branch based on rc1
+> once it's available (assuming everyone else is fine with this version).
 
-The "built-in self-test" that the ICE hardware does seems to be a FIPS
-compliance thing which never actually fails in practice.
+Thank you! Another option might be to merge all iio changes this cycle 
+(if it's fine with you) and have all the rest go via respective trees in 
+the next merge window. I'm fine with either of the options.
 
-If it does fail, then according to
-https://csrc.nist.gov/CSRC/media/projects/cryptographic-module-validation-program/documents/security-policies/140sp2588.pdf
-(which is the closest thing I have to any documentation for ICE, other than the
-eMMC standard), then the hardware itself will reject any crypto requests.  So
-rejecting them in software too should be redundant.
+> 
+> Thanks,
+> 
+> Jonathan
+> 
+>>
+>> Changes since v9:
+>>   - In patch 12 add comments to the code as requested by Daniel Lezcano.
+>>   - Change copyright comment in qcom-spmi-adc-tm5.c to clearly note
+>>     driver history.
+>>
+>> Changes since v8:
+>>   - Simplified qcom_vadc_map_voltage_temp() code by removing ascending
+>>     tables support
+>>   - Simplified qcom-vadc-common volt/temp mapping code
+>>   - Implement suggestions by Matthias Kaehlcke: message formatting,
+>>     rewrite comments, remove unused variable initialization.
+>>
+>> Changes since v7:
+>>   - Move qcom-vadc-common.h header to include/linux/iio/adc/ dir.
+>>   - Use explicit sizeof(var) instead of hand-coding 1 when accessing
+>>     adc-tm registers.
+>>   - Remove buffer read from adc_tm5_init().
+>>   - Remove extra on-stack var from adc_tm5_get_temp().
+>>   - Minor formatting changes as suggested Daniel.
+>>
+>> Changes since v6:
+>>   - Added include <linux/bitfield.h> as noted by Jishnu Prakash.
+>>
+>> Changes since v5:
+>>   - Reworked DT bindings:
+>>     * Removed qcom,adc-channel, instead it is parsed from io-channels
+>>     * Renamed qcom,hw-settle-time to include -us suffix
+>>   - Re-added monitor enabling which got lost during refactored. Noted by
+>>     Jishnu Prakash.
+>>   - Use threaded IRQ handler as susggested by Jishnu.
+>>
+>> Changes since v4:
+>>   - Added kernel-doc comments to ADC-TM structures
+>>   - Used several sizeof(buf) instead of hand-conding register size
+>>
+>> Changes since v3:
+>>   - Fix DT description to spell "thermal monitoring" instead of just TM
+>>   - Fix warnings in DT example
+>>   - Add EXPORT_SYMBOL_GPL(of_iio_channel_get_by_name)
+>>   - Fixed whitespace chanes in qcom-vadc-common.c
+>>   - Removed error message if IIO chanel get returns -EPROBE_DEFER
+>>
+>> Changes since v2:
+>>   - IIO: export of_iio_channel_get_by_name() function
+>>   - dt-bindings: move individual io-channels to each thermal monitoring
+>>     channel rather than listing them all in device node
+>>   - added fallback defaults to of_device_get_match_data calls in
+>>     qcom-spmi-adc5 and qcom-spmi-adc-tm5 drivers
+>>   - minor typo fixes
+>>
+>> Changes since v1:
+>>   - Introduce fixp_linear_interpolate() by Craig Tatlor
+>>   - Lots of syntax/whitespace changes
+>>   - Cleaned up register definitions per Jonathan's suggestion
+>>   - Implemented most of the suggestions from Bjorn's and Jonathan's
+>>     review
+>>
+>>
+> 
 
-It's also worth noting that just because a hardware-level self-test passes
-doesn't mean that the actual end-to-end storage encryption is working correctly.
-To verify that you need to run something like Android's
-vts_kernel_encryption_test, or the ciphertext verification tests in xfstests.
-The hardware itself is really the wrong place to be testing the encryption.
 
-It would be possible to add some code that sets a flag in the cqhci_host if the
-ICE hardware test fails, and make cqhci_request() fail any crypto-enabled
-requests if that flag is set.  It just doesn't seem necessary, and I think we
-should error on the side of less complexity for now.
-
-What I was actually worried about is what happens if ICE needs to be used but
-its self-test is still running, so it doesn't want to accept requests yet.  I'm
-not sure that's really a thing or not (one might hope the MMC host doesn't say
-it's done resetting until the ICE tests are done), but that's why I left in the
-code that waits for the tests to complete, which the downstream driver had.
-
-Neeraj and Barani, if you have any additional insight or suggestions on this, or
-know of anything I may be overlooking, that would be greatly appreciated.
-
-Otherwise I just plan to add a comment that summarizes what I said above.
-
-> > @@ -2531,12 +2785,15 @@ static __maybe_unused int sdhci_msm_runtime_resume(struct device *dev)
-> >  	 * Whenever core-clock is gated dynamically, it's needed to
-> >  	 * restore the SDR DLL settings when the clock is ungated.
-> >  	 */
-> > -	if (msm_host->restore_dll_config && msm_host->clk_rate)
-> > +	if (msm_host->restore_dll_config && msm_host->clk_rate) {
-> >  		ret = sdhci_msm_restore_sdr_dll_config(host);
-> > +		if (ret)
-> > +			return ret;
-> > +	}
-> >  
-> >  	dev_pm_opp_set_rate(dev, msm_host->clk_rate);
-> >  
-> > -	return ret;
-> > +	return sdhci_msm_ice_resume(msm_host);
-> >  }
-> Doesn't this modify existing behaviour if
-> sdhci_msm_restore_sdr_dll_config() returns a non-zero value? Previously,
-> dev_pm_opp_set_rate() would always be called regardless of ret, but now
-> it's not called on non-zero ret value.
-
-Yes but I don't think it matters.  IIUC, if a device's ->runtime_resume()
-callback fails, then Linux's runtime power management framework keeps the device
-in an error state and doesn't consider it to be resumed.
-
-So if resuming a device involves N different things, and one of them fails, I
-don't think we need to worry about trying to still do the other N-1 things; we
-can just return an error on the first failure.
-
-- Eric
+-- 
+With best wishes
+Dmitry
