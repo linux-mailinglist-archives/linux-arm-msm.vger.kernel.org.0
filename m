@@ -2,126 +2,80 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 3EE402CFCEC
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  5 Dec 2020 19:51:51 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id DB1B02CFD93
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  5 Dec 2020 19:53:15 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729152AbgLEST0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 5 Dec 2020 13:19:26 -0500
-Received: from mail.kernel.org ([198.145.29.99]:43214 "EHLO mail.kernel.org"
+        id S1726736AbgLESjT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 5 Dec 2020 13:39:19 -0500
+Received: from mail.kernel.org ([198.145.29.99]:52254 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728037AbgLERyc (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 5 Dec 2020 12:54:32 -0500
-Received: from archlinux (cpc108967-cmbg20-2-0-cust86.5-4.cable.virginm.net [81.101.6.87])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 4D63A22D72;
-        Sat,  5 Dec 2020 17:08:34 +0000 (UTC)
-Date:   Sat, 5 Dec 2020 17:08:30 +0000
-From:   Jonathan Cameron <jic23@kernel.org>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
+        id S1729032AbgLEST0 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Sat, 5 Dec 2020 13:19:26 -0500
+Date:   Sat, 5 Dec 2020 10:07:32 -0800
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1607191654;
+        bh=JSA57+wXVj3H6++cCmUu4KQ3n2g1dHCJ+HE2fOPCu7k=;
+        h=From:To:Cc:Subject:References:In-Reply-To:From;
+        b=Ate+WiDGkniHDrd4oMP+wlyQRLsHcNcrjsCTSY4NyGAkh0BtMKxzACsMMFDEi1IBz
+         ONc/ZdIiSFS1hInll8vjr0iR53fB56WaqPzTZWTGzQ8Z4M04nDzjYcQLn/klyapKRG
+         X9tQk107SKfswxa6sVVQ2oP+BQfG3TqoU1WZEVeQn6I5lDnWHa7XkKf+hY0mOEbMiZ
+         ZBGxbHtMq5OAygyCBBzfuPy3oBbsizI1rTVm1AMVCp594Svj2VUitx/XkO4Ftfz1Qg
+         3qzxIZf7yELgBbq3mszSLFltYBNTJlBdLWRxHCw7Yo54TAicatAsbb5quwbQd5D+1e
+         hsFKjcH6s736g==
+From:   Eric Biggers <ebiggers@kernel.org>
+To:     Satya Tangirala <satyat@google.com>
+Cc:     linux-mmc@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-fscrypt@vger.kernel.org,
+        Ulf Hansson <ulf.hansson@linaro.org>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Adrian Hunter <adrian.hunter@intel.com>,
+        Asutosh Das <asutoshd@codeaurora.org>,
         Rob Herring <robh+dt@kernel.org>,
-        Zhang Rui <rui.zhang@intel.com>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>,
-        Amit Kucheria <amitk@kernel.org>,
-        Hartmut Knaack <knaack.h@gmx.de>,
-        Lars-Peter Clausen <lars@metafoo.de>,
-        Peter Meerwald-Stadler <pmeerw@pmeerw.net>,
-        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-iio@vger.kernel.org,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        Jishnu Prakash <jprakash@qti.qualcomm.com>
-Subject: Re: [PATCH v10 00/15] qcom: pm8150: add support for thermal
- monitoring
-Message-ID: <20201205170830.4d56ecb7@archlinux>
-In-Reply-To: <20201204025509.1075506-1-dmitry.baryshkov@linaro.org>
-References: <20201204025509.1075506-1-dmitry.baryshkov@linaro.org>
-X-Mailer: Claws Mail 3.17.8 (GTK+ 2.24.32; x86_64-pc-linux-gnu)
+        Neeraj Soni <neersoni@codeaurora.org>,
+        Barani Muthukumaran <bmuthuku@codeaurora.org>,
+        Peng Zhou <peng.zhou@mediatek.com>,
+        Stanley Chu <stanley.chu@mediatek.com>,
+        Konrad Dybcio <konradybcio@gmail.com>
+Subject: Re: [PATCH v2 4/9] mmc: cqhci: add support for inline encryption
+Message-ID: <X8vMZBSP0hQSOqlA@sol.localdomain>
+References: <20201203020516.225701-1-ebiggers@kernel.org>
+ <20201203020516.225701-5-ebiggers@kernel.org>
+ <X8t82HijJtbHVyLM@google.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <X8t82HijJtbHVyLM@google.com>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri,  4 Dec 2020 05:54:54 +0300
-Dmitry Baryshkov <dmitry.baryshkov@linaro.org> wrote:
+On Sat, Dec 05, 2020 at 12:28:08PM +0000, Satya Tangirala wrote:
+> > +#define CQHCI_CRYPTO_CONFIGURATION_ENABLE (1 << 7)
+> > +#define CQHCI_CRYPTO_KEY_MAX_SIZE 64
+> > +/* x-CRYPTOCFG - Crypto Configuration X */
+> > +union cqhci_crypto_cfg_entry {
+> > +	__le32 reg_val[32];
+> > +	struct {
+> > +		u8 crypto_key[CQHCI_CRYPTO_KEY_MAX_SIZE];
+> > +		/* 4KB/512 = 8 */
+> I'm not sure what this comment is for (admittedly, it seems I introduced
+> this line into AOSP, and that seems to have made it here haha) - I think
+> we should just remove it.
+> > +		u8 data_unit_size;
+> > +		u8 crypto_cap_idx;
+> > +		u8 reserved_1;
+> > +		u8 config_enable;
+> > +		u8 reserved_multi_host;
+> > +		u8 reserved_2;
+> > +		u8 vsb[2];
+> > +		u8 reserved_3[56];
+> > +	};
+> > +};
 
-> This patch serie adds support for thermal monitoring block on Qualcomm's
-> PMIC5 chips. PM8150{,b,l} and sm8250-mtp board device trees are extended
-> to support thermal zones provided by this thermal monitoring block.
-> Unlike the rest of PMIC thermal senses, these thermal zones describe
-> particular thermistors, which differ between from board to board.
+(Please quote just the part that you're actually replying to -- thanks!)
 
-I've just taken another look through the various IIO parts in here and 
-I think they are fine.
+The comment gives the typical value that is stored in data_unit_size,
+but yeah it's a bad comment.  I'll just remove it.
 
-My assumption is that given the timing this isn't going to make the merge
-window now.  Hence I'll be looking to do an immutable branch based on rc1
-once it's available (assuming everyone else is fine with this version).
-
-Thanks,
-
-Jonathan
-
-> 
-> Changes since v9:
->  - In patch 12 add comments to the code as requested by Daniel Lezcano.
->  - Change copyright comment in qcom-spmi-adc-tm5.c to clearly note
->    driver history.
-> 
-> Changes since v8:
->  - Simplified qcom_vadc_map_voltage_temp() code by removing ascending
->    tables support
->  - Simplified qcom-vadc-common volt/temp mapping code
->  - Implement suggestions by Matthias Kaehlcke: message formatting,
->    rewrite comments, remove unused variable initialization.
-> 
-> Changes since v7:
->  - Move qcom-vadc-common.h header to include/linux/iio/adc/ dir.
->  - Use explicit sizeof(var) instead of hand-coding 1 when accessing
->    adc-tm registers.
->  - Remove buffer read from adc_tm5_init().
->  - Remove extra on-stack var from adc_tm5_get_temp().
->  - Minor formatting changes as suggested Daniel.
-> 
-> Changes since v6:
->  - Added include <linux/bitfield.h> as noted by Jishnu Prakash.
-> 
-> Changes since v5:
->  - Reworked DT bindings:
->    * Removed qcom,adc-channel, instead it is parsed from io-channels
->    * Renamed qcom,hw-settle-time to include -us suffix
->  - Re-added monitor enabling which got lost during refactored. Noted by
->    Jishnu Prakash.
->  - Use threaded IRQ handler as susggested by Jishnu.
-> 
-> Changes since v4:
->  - Added kernel-doc comments to ADC-TM structures
->  - Used several sizeof(buf) instead of hand-conding register size
-> 
-> Changes since v3:
->  - Fix DT description to spell "thermal monitoring" instead of just TM
->  - Fix warnings in DT example
->  - Add EXPORT_SYMBOL_GPL(of_iio_channel_get_by_name)
->  - Fixed whitespace chanes in qcom-vadc-common.c
->  - Removed error message if IIO chanel get returns -EPROBE_DEFER
-> 
-> Changes since v2:
->  - IIO: export of_iio_channel_get_by_name() function
->  - dt-bindings: move individual io-channels to each thermal monitoring
->    channel rather than listing them all in device node
->  - added fallback defaults to of_device_get_match_data calls in
->    qcom-spmi-adc5 and qcom-spmi-adc-tm5 drivers
->  - minor typo fixes
-> 
-> Changes since v1:
->  - Introduce fixp_linear_interpolate() by Craig Tatlor
->  - Lots of syntax/whitespace changes
->  - Cleaned up register definitions per Jonathan's suggestion
->  - Implemented most of the suggestions from Bjorn's and Jonathan's
->    review
-> 
-> 
-
+- Eric
