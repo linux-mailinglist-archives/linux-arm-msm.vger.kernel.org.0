@@ -2,224 +2,126 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 3179A2CFD82
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  5 Dec 2020 19:53:08 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3EE402CFCEC
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  5 Dec 2020 19:51:51 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726488AbgLESfZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 5 Dec 2020 13:35:25 -0500
-Received: from ns2.baikalelectronics.ru ([94.125.187.42]:53352 "EHLO
-        mail.baikalelectronics.ru" rhost-flags-OK-OK-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1729599AbgLESTk (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 5 Dec 2020 13:19:40 -0500
-From:   Serge Semin <Sergey.Semin@baikalelectronics.ru>
-To:     Felipe Balbi <balbi@kernel.org>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        Florian Fainelli <f.fainelli@gmail.com>,
+        id S1729152AbgLEST0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 5 Dec 2020 13:19:26 -0500
+Received: from mail.kernel.org ([198.145.29.99]:43214 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1728037AbgLERyc (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Sat, 5 Dec 2020 12:54:32 -0500
+Received: from archlinux (cpc108967-cmbg20-2-0-cust86.5-4.cable.virginm.net [81.101.6.87])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id 4D63A22D72;
+        Sat,  5 Dec 2020 17:08:34 +0000 (UTC)
+Date:   Sat, 5 Dec 2020 17:08:30 +0000
+From:   Jonathan Cameron <jic23@kernel.org>
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-CC:     Serge Semin <Sergey.Semin@baikalelectronics.ru>,
-        Serge Semin <fancer.lancer@gmail.com>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-Subject: [PATCH v3 10/10] arm64: dts: qcom: Harmonize DWC USB3 DT nodes name
-Date:   Sat, 5 Dec 2020 18:56:21 +0300
-Message-ID: <20201205155621.3045-11-Sergey.Semin@baikalelectronics.ru>
-In-Reply-To: <20201205155621.3045-1-Sergey.Semin@baikalelectronics.ru>
-References: <20201205155621.3045-1-Sergey.Semin@baikalelectronics.ru>
+        Zhang Rui <rui.zhang@intel.com>,
+        Daniel Lezcano <daniel.lezcano@linaro.org>,
+        Amit Kucheria <amitk@kernel.org>,
+        Hartmut Knaack <knaack.h@gmx.de>,
+        Lars-Peter Clausen <lars@metafoo.de>,
+        Peter Meerwald-Stadler <pmeerw@pmeerw.net>,
+        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-iio@vger.kernel.org,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        Jishnu Prakash <jprakash@qti.qualcomm.com>
+Subject: Re: [PATCH v10 00/15] qcom: pm8150: add support for thermal
+ monitoring
+Message-ID: <20201205170830.4d56ecb7@archlinux>
+In-Reply-To: <20201204025509.1075506-1-dmitry.baryshkov@linaro.org>
+References: <20201204025509.1075506-1-dmitry.baryshkov@linaro.org>
+X-Mailer: Claws Mail 3.17.8 (GTK+ 2.24.32; x86_64-pc-linux-gnu)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7BIT
-Content-Type:   text/plain; charset=US-ASCII
-X-ClientProxiedBy: MAIL.baikal.int (192.168.51.25) To mail (192.168.51.25)
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-In accordance with the DWC USB3 bindings the corresponding node
-name is suppose to comply with the Generic USB HCD DT schema, which
-requires the USB nodes to have the name acceptable by the regexp:
-"^usb(@.*)?" . Make sure the "snps,dwc3"-compatible nodes are correctly
-named.
+On Fri,  4 Dec 2020 05:54:54 +0300
+Dmitry Baryshkov <dmitry.baryshkov@linaro.org> wrote:
 
-Signed-off-by: Serge Semin <Sergey.Semin@baikalelectronics.ru>
-Acked-by: Krzysztof Kozlowski <krzk@kernel.org>
-Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
----
- arch/arm64/boot/dts/qcom/apq8096-db820c.dtsi | 4 ++--
- arch/arm64/boot/dts/qcom/ipq8074.dtsi        | 4 ++--
- arch/arm64/boot/dts/qcom/msm8996.dtsi        | 4 ++--
- arch/arm64/boot/dts/qcom/msm8998.dtsi        | 2 +-
- arch/arm64/boot/dts/qcom/qcs404-evb.dtsi     | 2 +-
- arch/arm64/boot/dts/qcom/qcs404.dtsi         | 4 ++--
- arch/arm64/boot/dts/qcom/sc7180.dtsi         | 2 +-
- arch/arm64/boot/dts/qcom/sdm845.dtsi         | 4 ++--
- arch/arm64/boot/dts/qcom/sm8150.dtsi         | 2 +-
- 9 files changed, 14 insertions(+), 14 deletions(-)
+> This patch serie adds support for thermal monitoring block on Qualcomm's
+> PMIC5 chips. PM8150{,b,l} and sm8250-mtp board device trees are extended
+> to support thermal zones provided by this thermal monitoring block.
+> Unlike the rest of PMIC thermal senses, these thermal zones describe
+> particular thermistors, which differ between from board to board.
 
-diff --git a/arch/arm64/boot/dts/qcom/apq8096-db820c.dtsi b/arch/arm64/boot/dts/qcom/apq8096-db820c.dtsi
-index defcbd15edf9..34e97da98270 100644
---- a/arch/arm64/boot/dts/qcom/apq8096-db820c.dtsi
-+++ b/arch/arm64/boot/dts/qcom/apq8096-db820c.dtsi
-@@ -1064,7 +1064,7 @@ &usb2 {
- 	status = "okay";
- 	extcon = <&usb2_id>;
- 
--	dwc3@7600000 {
-+	usb@7600000 {
- 		extcon = <&usb2_id>;
- 		dr_mode = "otg";
- 		maximum-speed = "high-speed";
-@@ -1075,7 +1075,7 @@ &usb3 {
- 	status = "okay";
- 	extcon = <&usb3_id>;
- 
--	dwc3@6a00000 {
-+	usb@6a00000 {
- 		extcon = <&usb3_id>;
- 		dr_mode = "otg";
- 	};
-diff --git a/arch/arm64/boot/dts/qcom/ipq8074.dtsi b/arch/arm64/boot/dts/qcom/ipq8074.dtsi
-index 829e37ac82f6..984e855bd8fd 100644
---- a/arch/arm64/boot/dts/qcom/ipq8074.dtsi
-+++ b/arch/arm64/boot/dts/qcom/ipq8074.dtsi
-@@ -427,7 +427,7 @@ usb_0: usb@8af8800 {
- 			resets = <&gcc GCC_USB0_BCR>;
- 			status = "disabled";
- 
--			dwc_0: dwc3@8a00000 {
-+			dwc_0: usb@8a00000 {
- 				compatible = "snps,dwc3";
- 				reg = <0x8a00000 0xcd00>;
- 				interrupts = <GIC_SPI 140 IRQ_TYPE_LEVEL_HIGH>;
-@@ -468,7 +468,7 @@ usb_1: usb@8cf8800 {
- 			resets = <&gcc GCC_USB1_BCR>;
- 			status = "disabled";
- 
--			dwc_1: dwc3@8c00000 {
-+			dwc_1: usb@8c00000 {
- 				compatible = "snps,dwc3";
- 				reg = <0x8c00000 0xcd00>;
- 				interrupts = <GIC_SPI 99 IRQ_TYPE_LEVEL_HIGH>;
-diff --git a/arch/arm64/boot/dts/qcom/msm8996.dtsi b/arch/arm64/boot/dts/qcom/msm8996.dtsi
-index fd6ae5464dea..4b073b8584de 100644
---- a/arch/arm64/boot/dts/qcom/msm8996.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8996.dtsi
-@@ -1768,7 +1768,7 @@ usb3: usb@6af8800 {
- 			power-domains = <&gcc USB30_GDSC>;
- 			status = "disabled";
- 
--			dwc3@6a00000 {
-+			usb@6a00000 {
- 				compatible = "snps,dwc3";
- 				reg = <0x06a00000 0xcc00>;
- 				interrupts = <0 131 IRQ_TYPE_LEVEL_HIGH>;
-@@ -1979,7 +1979,7 @@ usb2: usb@76f8800 {
- 			power-domains = <&gcc USB30_GDSC>;
- 			status = "disabled";
- 
--			dwc3@7600000 {
-+			usb@7600000 {
- 				compatible = "snps,dwc3";
- 				reg = <0x07600000 0xcc00>;
- 				interrupts = <0 138 IRQ_TYPE_LEVEL_HIGH>;
-diff --git a/arch/arm64/boot/dts/qcom/msm8998.dtsi b/arch/arm64/boot/dts/qcom/msm8998.dtsi
-index c45870600909..7cc7897e7b83 100644
---- a/arch/arm64/boot/dts/qcom/msm8998.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8998.dtsi
-@@ -1678,7 +1678,7 @@ usb3: usb@a8f8800 {
- 
- 			resets = <&gcc GCC_USB_30_BCR>;
- 
--			usb3_dwc3: dwc3@a800000 {
-+			usb3_dwc3: usb@a800000 {
- 				compatible = "snps,dwc3";
- 				reg = <0x0a800000 0xcd00>;
- 				interrupts = <GIC_SPI 131 IRQ_TYPE_LEVEL_HIGH>;
-diff --git a/arch/arm64/boot/dts/qcom/qcs404-evb.dtsi b/arch/arm64/boot/dts/qcom/qcs404-evb.dtsi
-index a80c578484ba..f8a55307b855 100644
---- a/arch/arm64/boot/dts/qcom/qcs404-evb.dtsi
-+++ b/arch/arm64/boot/dts/qcom/qcs404-evb.dtsi
-@@ -337,7 +337,7 @@ &usb2_phy_sec {
- &usb3 {
- 	status = "okay";
- 
--	dwc3@7580000 {
-+	usb@7580000 {
- 		dr_mode = "host";
- 	};
- };
-diff --git a/arch/arm64/boot/dts/qcom/qcs404.dtsi b/arch/arm64/boot/dts/qcom/qcs404.dtsi
-index b654b802e95c..f6ef17553064 100644
---- a/arch/arm64/boot/dts/qcom/qcs404.dtsi
-+++ b/arch/arm64/boot/dts/qcom/qcs404.dtsi
-@@ -544,7 +544,7 @@ usb3: usb@7678800 {
- 			assigned-clock-rates = <19200000>, <200000000>;
- 			status = "disabled";
- 
--			dwc3@7580000 {
-+			usb@7580000 {
- 				compatible = "snps,dwc3";
- 				reg = <0x07580000 0xcd00>;
- 				interrupts = <GIC_SPI 26 IRQ_TYPE_LEVEL_HIGH>;
-@@ -573,7 +573,7 @@ usb2: usb@79b8800 {
- 			assigned-clock-rates = <19200000>, <133333333>;
- 			status = "disabled";
- 
--			dwc3@78c0000 {
-+			usb@78c0000 {
- 				compatible = "snps,dwc3";
- 				reg = <0x078c0000 0xcc00>;
- 				interrupts = <GIC_SPI 44 IRQ_TYPE_LEVEL_HIGH>;
-diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-index 6678f1e8e395..6af40e0c5423 100644
---- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-@@ -2702,7 +2702,7 @@ usb_1: usb@a6f8800 {
- 					<&gem_noc MASTER_APPSS_PROC 0 &config_noc SLAVE_USB3 0>;
- 			interconnect-names = "usb-ddr", "apps-usb";
- 
--			usb_1_dwc3: dwc3@a600000 {
-+			usb_1_dwc3: usb@a600000 {
- 				compatible = "snps,dwc3";
- 				reg = <0 0x0a600000 0 0xe000>;
- 				interrupts = <GIC_SPI 133 IRQ_TYPE_LEVEL_HIGH>;
-diff --git a/arch/arm64/boot/dts/qcom/sdm845.dtsi b/arch/arm64/boot/dts/qcom/sdm845.dtsi
-index 40e8c11f23ab..5d2376a60950 100644
---- a/arch/arm64/boot/dts/qcom/sdm845.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sdm845.dtsi
-@@ -3578,7 +3578,7 @@ usb_1: usb@a6f8800 {
- 					<&gladiator_noc MASTER_APPSS_PROC 0 &config_noc SLAVE_USB3_0 0>;
- 			interconnect-names = "usb-ddr", "apps-usb";
- 
--			usb_1_dwc3: dwc3@a600000 {
-+			usb_1_dwc3: usb@a600000 {
- 				compatible = "snps,dwc3";
- 				reg = <0 0x0a600000 0 0xcd00>;
- 				interrupts = <GIC_SPI 133 IRQ_TYPE_LEVEL_HIGH>;
-@@ -3626,7 +3626,7 @@ usb_2: usb@a8f8800 {
- 					<&gladiator_noc MASTER_APPSS_PROC 0 &config_noc SLAVE_USB3_1 0>;
- 			interconnect-names = "usb-ddr", "apps-usb";
- 
--			usb_2_dwc3: dwc3@a800000 {
-+			usb_2_dwc3: usb@a800000 {
- 				compatible = "snps,dwc3";
- 				reg = <0 0x0a800000 0 0xcd00>;
- 				interrupts = <GIC_SPI 138 IRQ_TYPE_LEVEL_HIGH>;
-diff --git a/arch/arm64/boot/dts/qcom/sm8150.dtsi b/arch/arm64/boot/dts/qcom/sm8150.dtsi
-index f0a872e02686..638199f57708 100644
---- a/arch/arm64/boot/dts/qcom/sm8150.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8150.dtsi
-@@ -918,7 +918,7 @@ usb_1: usb@a6f8800 {
- 
- 			resets = <&gcc GCC_USB30_PRIM_BCR>;
- 
--			usb_1_dwc3: dwc3@a600000 {
-+			usb_1_dwc3: usb@a600000 {
- 				compatible = "snps,dwc3";
- 				reg = <0 0x0a600000 0 0xcd00>;
- 				interrupts = <GIC_SPI 133 IRQ_TYPE_LEVEL_HIGH>;
--- 
-2.29.2
+I've just taken another look through the various IIO parts in here and 
+I think they are fine.
+
+My assumption is that given the timing this isn't going to make the merge
+window now.  Hence I'll be looking to do an immutable branch based on rc1
+once it's available (assuming everyone else is fine with this version).
+
+Thanks,
+
+Jonathan
+
+> 
+> Changes since v9:
+>  - In patch 12 add comments to the code as requested by Daniel Lezcano.
+>  - Change copyright comment in qcom-spmi-adc-tm5.c to clearly note
+>    driver history.
+> 
+> Changes since v8:
+>  - Simplified qcom_vadc_map_voltage_temp() code by removing ascending
+>    tables support
+>  - Simplified qcom-vadc-common volt/temp mapping code
+>  - Implement suggestions by Matthias Kaehlcke: message formatting,
+>    rewrite comments, remove unused variable initialization.
+> 
+> Changes since v7:
+>  - Move qcom-vadc-common.h header to include/linux/iio/adc/ dir.
+>  - Use explicit sizeof(var) instead of hand-coding 1 when accessing
+>    adc-tm registers.
+>  - Remove buffer read from adc_tm5_init().
+>  - Remove extra on-stack var from adc_tm5_get_temp().
+>  - Minor formatting changes as suggested Daniel.
+> 
+> Changes since v6:
+>  - Added include <linux/bitfield.h> as noted by Jishnu Prakash.
+> 
+> Changes since v5:
+>  - Reworked DT bindings:
+>    * Removed qcom,adc-channel, instead it is parsed from io-channels
+>    * Renamed qcom,hw-settle-time to include -us suffix
+>  - Re-added monitor enabling which got lost during refactored. Noted by
+>    Jishnu Prakash.
+>  - Use threaded IRQ handler as susggested by Jishnu.
+> 
+> Changes since v4:
+>  - Added kernel-doc comments to ADC-TM structures
+>  - Used several sizeof(buf) instead of hand-conding register size
+> 
+> Changes since v3:
+>  - Fix DT description to spell "thermal monitoring" instead of just TM
+>  - Fix warnings in DT example
+>  - Add EXPORT_SYMBOL_GPL(of_iio_channel_get_by_name)
+>  - Fixed whitespace chanes in qcom-vadc-common.c
+>  - Removed error message if IIO chanel get returns -EPROBE_DEFER
+> 
+> Changes since v2:
+>  - IIO: export of_iio_channel_get_by_name() function
+>  - dt-bindings: move individual io-channels to each thermal monitoring
+>    channel rather than listing them all in device node
+>  - added fallback defaults to of_device_get_match_data calls in
+>    qcom-spmi-adc5 and qcom-spmi-adc-tm5 drivers
+>  - minor typo fixes
+> 
+> Changes since v1:
+>  - Introduce fixp_linear_interpolate() by Craig Tatlor
+>  - Lots of syntax/whitespace changes
+>  - Cleaned up register definitions per Jonathan's suggestion
+>  - Implemented most of the suggestions from Bjorn's and Jonathan's
+>    review
+> 
+> 
 
