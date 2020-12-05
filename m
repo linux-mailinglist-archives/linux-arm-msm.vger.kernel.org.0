@@ -2,523 +2,663 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 060002CF981
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  5 Dec 2020 06:18:21 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1842E2CFB47
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  5 Dec 2020 13:25:10 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725536AbgLEFRn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 5 Dec 2020 00:17:43 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33024 "EHLO
+        id S1726417AbgLEMXI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 5 Dec 2020 07:23:08 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58292 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727475AbgLEFRn (ORCPT
+        with ESMTP id S1729523AbgLELIY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 5 Dec 2020 00:17:43 -0500
-Received: from mail-ot1-x343.google.com (mail-ot1-x343.google.com [IPv6:2607:f8b0:4864:20::343])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1993AC061A4F
-        for <linux-arm-msm@vger.kernel.org>; Fri,  4 Dec 2020 21:16:57 -0800 (PST)
-Received: by mail-ot1-x343.google.com with SMTP id w3so6791377otp.13
-        for <linux-arm-msm@vger.kernel.org>; Fri, 04 Dec 2020 21:16:57 -0800 (PST)
+        Sat, 5 Dec 2020 06:08:24 -0500
+Received: from mail-pj1-x1043.google.com (mail-pj1-x1043.google.com [IPv6:2607:f8b0:4864:20::1043])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CEA21C061A53
+        for <linux-arm-msm@vger.kernel.org>; Sat,  5 Dec 2020 02:59:32 -0800 (PST)
+Received: by mail-pj1-x1043.google.com with SMTP id l23so4678457pjg.1
+        for <linux-arm-msm@vger.kernel.org>; Sat, 05 Dec 2020 02:59:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
+        d=google.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=+k5imID4pJdYPaCTSu2iHrLa4kwBXlF4fkZWGcgxwPE=;
-        b=jlhacWtAu7dAzD/ecxQ7AOaU8gDPkRUdk2Sk7ccJ2XMHfciLWnUtAAL/Karjb2XXQ1
-         gZPUcRK579Fxoy+bfBOnuX9FNrjUHQw0jVCvw+ryRUNY58Rh0fmH+Az3qd1raWILFZOr
-         gExlXzpAnga7lc/cYPrhCWbM9assKT0ruS2XQ9TStsD6Smd6iiJTykb0rwE3cIbVyLPT
-         arJy6kFgAVvzWc7T+EvIsVVu3WzbMTOXjBwAj78x3lwEjjq5KjuuQ5P0PFaV8b6+nFk1
-         Q396411aerY3+nV76l5UW3WdMPN7UbQABme/jWpZBOOs/OtFSCFHyMbYmRAOBP8x7Up4
-         3oVw==
+        bh=k8uhbhM0jPQEk1scdGF1vyJWWb58otXHWZWtrmeT+jo=;
+        b=JKafiUTPFdpuEpmQXPmeuSYhIK0zQQIXyJSI/laLGR37baVzq9pycJzmHEWr0fSx+C
+         4HirYgnlzDIV1/IKY01dMGjYdOPRY04ovKXeEqKFSzqp/AHmzXF0ulYlufZXtWg1Gtoz
+         wnwU7Rqf8ZahCLsvE8VBSpcTSVgWMNOpLDil37QdZHv2Xn1TthLiJkdOipdNWDEaAdyE
+         +Tvt4FgUEjbKgaWluWgFaKYWTpnzA64fFMvi+uIMFoeJl89Wom7ga+zKM+YAHZ+7caof
+         0NOYMTt4rN73ICCmFSOmXbODy4iSa0OlaF6R6rOt1g/gPe5rUbRYTa5qTPD3TbgHmeTG
+         XuoA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=+k5imID4pJdYPaCTSu2iHrLa4kwBXlF4fkZWGcgxwPE=;
-        b=MTPibVtEjDRwNrvgQ4Fqgvz3FWBQ1t/s7hp6W7g1Z/FIfoUaplbz46Kj9Y9mfT4o5+
-         7Mm6mP1yjt0TO2GqH0yVGDOVkkQ5rBIiEjJDNrEJa+JJEdWWhzBSeW6Yyt6/7wRPf4vA
-         JSjyW+cDTO2wcW8z9NgphfF3xxw5KxTtNIhVe+B67c6Y9WvQAmEEt3JnqnLHMB6FCXVb
-         1a8FQALuNy7qPFsqSgBYsZrIfyPy4lc+wp8BF3hmpjBMbGF2byTfBDEeoZzXw6PR467K
-         cCudN6MnTc7JvYRPs5AIzhoitbYcuqrtCvjPrfHMUBUceLjJJbNRsSLXANcEi88mUZDo
-         YbTg==
-X-Gm-Message-State: AOAM533myTB4QX40L4OtcoNiZqOzdX2peVRCoLN+naUF12y68pDX302l
-        OfZ83a7nv/iTDUVBBQYjUAat2w==
-X-Google-Smtp-Source: ABdhPJwFBFLRZSYfV29wAuronN4FVFNa+UzOnQdVmCXVnqzHHbbSwSY2LoE03WigbqG7atJP9YOWCg==
-X-Received: by 2002:a05:6830:1396:: with SMTP id d22mr6071723otq.242.1607145416387;
-        Fri, 04 Dec 2020 21:16:56 -0800 (PST)
-Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id 30sm521954oth.7.2020.12.04.21.16.55
+        bh=k8uhbhM0jPQEk1scdGF1vyJWWb58otXHWZWtrmeT+jo=;
+        b=GfqWmttlgYinMTyeVRgf1m+wgFxzq1i+IAf/dU6fotTftt1VQ05NQHX7cbUPq90F6R
+         RcoTwfo/q25MKmz3b6Pfw1xMnyhYlMnLld6wz9uoROMX4Bd1VH3HTGfDIgxf/n7K+nFi
+         /HxTZjV2BTISTLx6PR8NRrQcn0dwGqmTtYS5cq39T82cZvjwFLXeOLJHP+2rwvcP4CsO
+         ix4G9wbA8+Od2YYPdms7qlmaZBozyKpTrkq/zLGmLpMPNIMUEtIuzFQRuujvI9E3qXmW
+         XicwRgNerzCvTMS/Kq79rExlBcsRlYF+47xkiGo7BtZEf1r8OhzzfSaQLOJE3ALZ16Kx
+         2x0g==
+X-Gm-Message-State: AOAM5313SiOz6MKvM9EgLzrDG5Mc0R+TDH1UeMfjdu12pT9b7c02UXPq
+        x4T/NYiSc7fYVsJ6Yf9GTnbYIA==
+X-Google-Smtp-Source: ABdhPJy27uTroi4Wod0/cT5bsNNiPdIZUceJ2a8UKiFWFC7/7fN/lLDFNEMkqo3fw/la5XZwjckz9w==
+X-Received: by 2002:a17:90a:8c4:: with SMTP id 4mr8142199pjn.204.1607165971908;
+        Sat, 05 Dec 2020 02:59:31 -0800 (PST)
+Received: from google.com (154.137.233.35.bc.googleusercontent.com. [35.233.137.154])
+        by smtp.gmail.com with ESMTPSA id y188sm7947514pfy.98.2020.12.05.02.59.30
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 04 Dec 2020 21:16:55 -0800 (PST)
-Date:   Fri, 4 Dec 2020 23:16:53 -0600
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     kholk11@gmail.com
-Cc:     agross@kernel.org, sboyd@kernel.org, marijns95@gmail.com,
-        konradybcio@gmail.com, martin.botka1@gmail.com,
-        linux-arm-msm@vger.kernel.org, phone-devel@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 4/5] clk: qcom: Add SDM660 GPU Clock Controller (GPUCC)
- driver
-Message-ID: <X8sXxc8rAXaj8zCa@builder.lan>
-References: <20200926130306.13843-1-kholk11@gmail.com>
- <20200926130306.13843-5-kholk11@gmail.com>
+        Sat, 05 Dec 2020 02:59:31 -0800 (PST)
+Date:   Sat, 5 Dec 2020 10:59:27 +0000
+From:   Satya Tangirala <satyat@google.com>
+To:     Eric Biggers <ebiggers@kernel.org>
+Cc:     linux-mmc@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-fscrypt@vger.kernel.org,
+        Ulf Hansson <ulf.hansson@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Adrian Hunter <adrian.hunter@intel.com>,
+        Asutosh Das <asutoshd@codeaurora.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Neeraj Soni <neersoni@codeaurora.org>,
+        Barani Muthukumaran <bmuthuku@codeaurora.org>,
+        Peng Zhou <peng.zhou@mediatek.com>,
+        Stanley Chu <stanley.chu@mediatek.com>,
+        Konrad Dybcio <konradybcio@gmail.com>
+Subject: Re: [PATCH v2 4/9] mmc: cqhci: add support for inline encryption
+Message-ID: <X8toD7QtwCnzK5Ly@google.com>
+References: <20201203020516.225701-1-ebiggers@kernel.org>
+ <20201203020516.225701-5-ebiggers@kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20200926130306.13843-5-kholk11@gmail.com>
+In-Reply-To: <20201203020516.225701-5-ebiggers@kernel.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sat 26 Sep 08:03 CDT 2020, kholk11@gmail.com wrote:
-
-> From: AngeloGioacchino Del Regno <kholk11@gmail.com>
+On Wed, Dec 02, 2020 at 06:05:11PM -0800, Eric Biggers wrote:
+> From: Eric Biggers <ebiggers@google.com>
 > 
-> The GPUCC manages the clocks for the Adreno GPU found on the
-> SDM630, SDM636, SDM660 SoCs.
+> Add support for eMMC inline encryption using the blk-crypto framework
+> (Documentation/block/inline-encryption.rst).
 > 
-> Signed-off-by: AngeloGioacchino Del Regno <kholk11@gmail.com>
+> eMMC inline encryption support is specified by the upcoming JEDEC eMMC
+> v5.2 specification.  It is only specified for the CQ interface, not the
+> non-CQ interface.  Although the eMMC v5.2 specification hasn't been
+> officially released yet, the crypto support was already agreed on
+> several years ago, and it was already implemented by at least two major
+> hardware vendors.  Lots of hardware in the field already supports and
+> uses it, e.g. Snapdragon 630 to give one example.
+> 
+> eMMC inline encryption support is very similar to the UFS inline
+> encryption support which was standardized in the UFS v2.1 specification
+> and was already upstreamed.  The only major difference is that eMMC
+> limits data unit numbers to 32 bits, unlike UFS's 64 bits.
+> 
+> Like we did with UFS, make the crypto support opt-in by individual
+> drivers; don't enable it automatically whenever the hardware declares
+> crypto support.  This is necessary because in every case we've seen,
+> some extra vendor-specific logic is needed to use the crypto support.
+> 
+> Co-developed-by: Satya Tangirala <satyat@google.com>
+> Signed-off-by: Satya Tangirala <satyat@google.com>
+> Signed-off-by: Eric Biggers <ebiggers@google.com>
 > ---
->  drivers/clk/qcom/Kconfig                      |   9 +
->  drivers/clk/qcom/Makefile                     |   1 +
->  drivers/clk/qcom/gpucc-sdm660.c               | 349 ++++++++++++++++++
->  include/dt-bindings/clock/qcom,gpucc-sdm660.h |  28 ++
->  4 files changed, 387 insertions(+)
->  create mode 100644 drivers/clk/qcom/gpucc-sdm660.c
->  create mode 100644 include/dt-bindings/clock/qcom,gpucc-sdm660.h
+>  drivers/mmc/host/Makefile       |   1 +
+>  drivers/mmc/host/cqhci-core.c   |  41 +++++-
+>  drivers/mmc/host/cqhci-crypto.c | 241 ++++++++++++++++++++++++++++++++
+>  drivers/mmc/host/cqhci-crypto.h |  47 +++++++
+>  drivers/mmc/host/cqhci.h        |  81 ++++++++++-
+>  5 files changed, 408 insertions(+), 3 deletions(-)
+>  create mode 100644 drivers/mmc/host/cqhci-crypto.c
+>  create mode 100644 drivers/mmc/host/cqhci-crypto.h
 > 
-> diff --git a/drivers/clk/qcom/Kconfig b/drivers/clk/qcom/Kconfig
-> index a12d37a4d729..377fba33d041 100644
-> --- a/drivers/clk/qcom/Kconfig
-> +++ b/drivers/clk/qcom/Kconfig
-> @@ -366,6 +366,15 @@ config SDM_MMCC_660
->  	  Say Y if you want to support multimedia devices such as display,
->  	  graphics, video encode/decode, camera, etc.
+> diff --git a/drivers/mmc/host/Makefile b/drivers/mmc/host/Makefile
+> index 20c2f9463d0dc..35158508ab63d 100644
+> --- a/drivers/mmc/host/Makefile
+> +++ b/drivers/mmc/host/Makefile
+> @@ -105,6 +105,7 @@ obj-$(CONFIG_MMC_SDHCI_OMAP)		+= sdhci-omap.o
+>  obj-$(CONFIG_MMC_SDHCI_SPRD)		+= sdhci-sprd.o
+>  obj-$(CONFIG_MMC_CQHCI)			+= cqhci.o
+>  cqhci-y					+= cqhci-core.o
+> +cqhci-$(CONFIG_MMC_CRYPTO)		+= cqhci-crypto.o
+>  obj-$(CONFIG_MMC_HSQ)			+= mmc_hsq.o
 >  
-> +config SDM_GPUCC_660
-> +	tristate "SDM660 Graphics Clock Controller"
-> +	select SDM_GCC_660
-> +	select QCOM_GDSC
-> +	help
-> +	  Support for the graphics clock controller on SDM630/636/660 devices.
-> +	  Say Y if you want to support graphics controller devices and
-> +	  functionality such as 3D graphics
+>  ifeq ($(CONFIG_CB710_DEBUG),y)
+> diff --git a/drivers/mmc/host/cqhci-core.c b/drivers/mmc/host/cqhci-core.c
+> index ad7c9acff1728..93b0432bb6011 100644
+> --- a/drivers/mmc/host/cqhci-core.c
+> +++ b/drivers/mmc/host/cqhci-core.c
+> @@ -18,6 +18,7 @@
+>  #include <linux/mmc/card.h>
+>  
+>  #include "cqhci.h"
+> +#include "cqhci-crypto.h"
+>  
+>  #define DCMD_SLOT 31
+>  #define NUM_SLOTS 32
+> @@ -258,6 +259,9 @@ static void __cqhci_enable(struct cqhci_host *cq_host)
+>  	if (cq_host->caps & CQHCI_TASK_DESC_SZ_128)
+>  		cqcfg |= CQHCI_TASK_DESC_SZ;
+>  
+> +	if (mmc->caps2 & MMC_CAP2_CRYPTO)
+> +		cqcfg |= CQHCI_CRYPTO_GENERAL_ENABLE;
 > +
->  config QCS_TURING_404
->  	tristate "QCS404 Turing Clock Controller"
->  	help
-> diff --git a/drivers/clk/qcom/Makefile b/drivers/clk/qcom/Makefile
-> index ada4f1bbe203..6a6906a62f96 100644
-> --- a/drivers/clk/qcom/Makefile
-> +++ b/drivers/clk/qcom/Makefile
-> @@ -61,6 +61,7 @@ obj-$(CONFIG_SDM_CAMCC_845) += camcc-sdm845.o
->  obj-$(CONFIG_SDM_DISPCC_845) += dispcc-sdm845.o
->  obj-$(CONFIG_SDM_GCC_660) += gcc-sdm660.o
->  obj-$(CONFIG_SDM_MMCC_660) += mmcc-sdm660.o
-> +obj-$(CONFIG_SDM_GPUCC_660) += gpucc-sdm660.o
->  obj-$(CONFIG_SDM_GCC_845) += gcc-sdm845.o
->  obj-$(CONFIG_SDM_GPUCC_845) += gpucc-sdm845.o
->  obj-$(CONFIG_SDM_LPASSCC_845) += lpasscc-sdm845.o
-> diff --git a/drivers/clk/qcom/gpucc-sdm660.c b/drivers/clk/qcom/gpucc-sdm660.c
+>  	cqhci_writel(cq_host, cqcfg, CQHCI_CFG);
+>  
+>  	cqhci_writel(cq_host, lower_32_bits(cq_host->desc_dma_base),
+> @@ -430,7 +434,7 @@ static void cqhci_prep_task_desc(struct mmc_request *mrq,
+>  	task_desc[0] = cpu_to_le64(desc0);
+>  
+>  	if (cq_host->caps & CQHCI_TASK_DESC_SZ_128) {
+> -		u64 desc1 = 0;
+> +		u64 desc1 = cqhci_crypto_prep_task_desc(mrq);
+>  
+>  		task_desc[1] = cpu_to_le64(desc1);
+>  
+> @@ -681,6 +685,7 @@ static void cqhci_error_irq(struct mmc_host *mmc, u32 status, int cmd_error,
+>  	struct cqhci_host *cq_host = mmc->cqe_private;
+>  	struct cqhci_slot *slot;
+>  	u32 terri;
+> +	u32 tdpe;
+>  	int tag;
+>  
+>  	spin_lock(&cq_host->lock);
+> @@ -719,6 +724,30 @@ static void cqhci_error_irq(struct mmc_host *mmc, u32 status, int cmd_error,
+>  		}
+>  	}
+>  
+> +	/*
+> +	 * Handle ICCE ("Invalid Crypto Configuration Error").  This should
+> +	 * never happen, since the block layer ensures that all crypto-enabled
+> +	 * I/O requests have a valid keyslot before they reach the driver.
+> +	 *
+> +	 * Note that GCE ("General Crypto Error") is different; it already got
+> +	 * handled above by checking TERRI.
+> +	 */
+> +	if (status & CQHCI_IS_ICCE) {
+> +		tdpe = cqhci_readl(cq_host, CQHCI_TDPE);
+> +		WARN_ONCE(1,
+> +			  "%s: cqhci: invalid crypto configuration error. IRQ status: 0x%08x TDPE: 0x%08x\n",
+> +			  mmc_hostname(mmc), status, tdpe);
+> +		while (tdpe != 0) {
+> +			tag = __ffs(tdpe);
+> +			tdpe &= ~(1 << tag);
+> +			slot = &cq_host->slot[tag];
+> +			if (!slot->mrq)
+> +				continue;
+> +			slot->flags = cqhci_error_flags(data_error, cmd_error);
+> +			cqhci_recovery_needed(mmc, slot->mrq, true);
+> +		}
+> +	}
+> +
+>  	if (!cq_host->recovery_halt) {
+>  		/*
+>  		 * The only way to guarantee forward progress is to mark at
+> @@ -784,7 +813,8 @@ irqreturn_t cqhci_irq(struct mmc_host *mmc, u32 intmask, int cmd_error,
+>  
+>  	pr_debug("%s: cqhci: IRQ status: 0x%08x\n", mmc_hostname(mmc), status);
+>  
+> -	if ((status & CQHCI_IS_RED) || cmd_error || data_error)
+> +	if ((status & (CQHCI_IS_RED | CQHCI_IS_GCE | CQHCI_IS_ICCE)) ||
+> +	    cmd_error || data_error)
+>  		cqhci_error_irq(mmc, status, cmd_error, data_error);
+>  
+>  	if (status & CQHCI_IS_TCC) {
+> @@ -1151,6 +1181,13 @@ int cqhci_init(struct cqhci_host *cq_host, struct mmc_host *mmc,
+>  		goto out_err;
+>  	}
+>  
+> +	err = cqhci_crypto_init(cq_host);
+> +	if (err) {
+> +		pr_err("%s: CQHCI crypto initialization failed\n",
+> +		       mmc_hostname(mmc));
+> +		goto out_err;
+> +	}
+> +
+>  	spin_lock_init(&cq_host->lock);
+>  
+>  	init_completion(&cq_host->halt_comp);
+> diff --git a/drivers/mmc/host/cqhci-crypto.c b/drivers/mmc/host/cqhci-crypto.c
 > new file mode 100644
-> index 000000000000..447a34aaa21f
+> index 0000000000000..98f141c8480ce
 > --- /dev/null
-> +++ b/drivers/clk/qcom/gpucc-sdm660.c
-> @@ -0,0 +1,349 @@
+> +++ b/drivers/mmc/host/cqhci-crypto.c
+> @@ -0,0 +1,241 @@
 > +// SPDX-License-Identifier: GPL-2.0-only
 > +/*
-> + * Copyright (c) 2020, The Linux Foundation. All rights reserved.
-> + * Copyright (c) 2020, AngeloGioacchino Del Regno <kholk11@gmail.com>
+> + * CQHCI crypto engine (inline encryption) support
+> + *
+> + * Copyright 2020 Google LLC
 > + */
 > +
-> +#include <linux/bitops.h>
-> +#include <linux/clk.h>
-> +#include <linux/clk-provider.h>
-> +#include <linux/err.h>
-> +#include <linux/kernel.h>
-> +#include <linux/module.h>
-> +#include <linux/platform_device.h>
-> +#include <linux/of.h>
-> +#include <linux/of_device.h>
-> +#include <linux/regmap.h>
-> +#include <linux/reset-controller.h>
-> +#include <dt-bindings/clock/qcom,gpucc-sdm660.h>
+> +#include <linux/blk-crypto.h>
+> +#include <linux/keyslot-manager.h>
+> +#include <linux/mmc/host.h>
 > +
-> +#include "clk-alpha-pll.h"
-> +#include "common.h"
-> +#include "clk-regmap.h"
-> +#include "clk-pll.h"
-> +#include "clk-rcg.h"
-> +#include "clk-branch.h"
-> +#include "gdsc.h"
-> +#include "reset.h"
+> +#include "cqhci-crypto.h"
 > +
-> +enum {
-> +	P_GPU_XO,
-> +	P_CORE_BI_PLL_TEST_SE,
-> +	P_GPLL0_OUT_MAIN,
-> +	P_GPLL0_OUT_MAIN_DIV,
-> +	P_GPU_PLL0_PLL_OUT_MAIN,
-> +	P_GPU_PLL1_PLL_OUT_MAIN,
-> +};
-> +
-> +static struct clk_branch gpucc_cxo_clk = {
-> +	.halt_reg = 0x1020,
-> +	.clkr = {
-> +		.enable_reg = 0x1020,
-> +		.enable_mask = BIT(0),
-> +		.hw.init = &(struct clk_init_data){
-> +			.name = "gpucc_cxo_clk",
-> +			.parent_data = &(const struct clk_parent_data){
-> +				.fw_name = "xo",
-> +				.name = "xo"
-> +			},
-> +			.num_parents = 1,
-> +			.ops = &clk_branch2_ops,
-> +			.flags = CLK_IS_CRITICAL,
-> +		},
+> +/* Map from blk-crypto modes to CQHCI crypto algorithm IDs and key sizes */
+> +static const struct cqhci_crypto_alg_entry {
+> +	enum cqhci_crypto_alg alg;
+> +	enum cqhci_crypto_key_size key_size;
+> +} cqhci_crypto_algs[BLK_ENCRYPTION_MODE_MAX] = {
+> +	[BLK_ENCRYPTION_MODE_AES_256_XTS] = {
+> +		.alg = CQHCI_CRYPTO_ALG_AES_XTS,
+> +		.key_size = CQHCI_CRYPTO_KEY_SIZE_256,
 > +	},
 > +};
 > +
-> +static struct pll_vco gpu_vco[] = {
-> +	{ 1000000000, 2000000000, 0 },
-> +	{ 500000000,  1000000000, 2 },
-> +	{ 250000000,   500000000, 3 },
-> +};
-> +
-> +static struct clk_alpha_pll gpu_pll0_pll_out_main = {
-> +	.offset = 0x0,
-> +	.regs = clk_alpha_pll_regs[CLK_ALPHA_PLL_TYPE_DEFAULT],
-> +	.vco_table = gpu_vco,
-> +	.num_vco = ARRAY_SIZE(gpu_vco),
-> +	.clkr.hw.init = &(struct clk_init_data){
-> +		.name = "gpu_pll0_pll_out_main",
-> +		.parent_data =  &(const struct clk_parent_data){
-> +			.hw = &gpucc_cxo_clk.clkr.hw,
-> +		},
-> +		.num_parents = 1,
-> +		.ops = &clk_alpha_pll_ops,
-> +	},
-> +};
-> +
-> +static struct clk_alpha_pll gpu_pll1_pll_out_main = {
-> +	.offset = 0x40,
-> +	.regs = clk_alpha_pll_regs[CLK_ALPHA_PLL_TYPE_DEFAULT],
-> +	.vco_table = gpu_vco,
-> +	.num_vco = ARRAY_SIZE(gpu_vco),
-> +	.clkr.hw.init = &(struct clk_init_data){
-> +		.name = "gpu_pll1_pll_out_main",
-> +		.parent_data = &(const struct clk_parent_data){
-> +			.hw = &gpucc_cxo_clk.clkr.hw,
-> +		},
-> +		.num_parents = 1,
-> +		.ops = &clk_alpha_pll_ops,
-> +	},
-> +};
-> +
-> +static const struct parent_map gpucc_parent_map_1[] = {
-> +	{ P_GPU_XO, 0 },
-> +	{ P_GPU_PLL0_PLL_OUT_MAIN, 1 },
-> +	{ P_GPU_PLL1_PLL_OUT_MAIN, 3 },
-> +	{ P_GPLL0_OUT_MAIN, 5 },
-> +};
-> +
-> +static const struct clk_parent_data gpucc_parent_data_1[] = {
-> +	{ .hw = &gpucc_cxo_clk.clkr.hw },
-> +	{ .hw = &gpu_pll0_pll_out_main.clkr.hw },
-> +	{ .hw = &gpu_pll1_pll_out_main.clkr.hw },
-> +	{ .fw_name = "gcc_gpu_gpll0_clk", .name = "gcc_gpu_gpll0_clk" },
-> +};
-> +
-> +static struct clk_rcg2_gfx3d gfx3d_clk_src = {
-> +	.div = 2,
-> +	.rcg = {
-> +		.cmd_rcgr = 0x1070,
-> +		.mnd_width = 0,
-> +		.hid_width = 5,
-> +		.parent_map = gpucc_parent_map_1,
-> +		.clkr.hw.init = &(struct clk_init_data){
-> +			.name = "gfx3d_clk_src",
-> +			.parent_data = gpucc_parent_data_1,
-> +			.num_parents = 4,
-> +			.ops = &clk_gfx3d_ops,
-> +			.flags = CLK_SET_RATE_PARENT | CLK_OPS_PARENT_ENABLE,
-> +		},
-> +	},
-> +	.hws = (struct clk_hw*[]){
-> +		&gpucc_cxo_clk.clkr.hw,
-> +		&gpu_pll0_pll_out_main.clkr.hw,
-> +		&gpu_pll1_pll_out_main.clkr.hw,
-> +	}
-> +};
-> +
-> +static struct clk_branch gpucc_gfx3d_clk = {
-> +	.halt_reg = 0x1098,
-> +	.halt_check = BRANCH_HALT,
-> +	.hwcg_reg = 0x1098,
-> +	.hwcg_bit = 1,
-> +	.clkr = {
-> +		.enable_reg = 0x1098,
-> +		.enable_mask = BIT(0),
-> +		.hw.init = &(struct clk_init_data){
-> +			.name = "gpucc_gfx3d_clk",
-> +			.parent_data = &(const struct clk_parent_data){
-> +				.hw = &gfx3d_clk_src.rcg.clkr.hw,
-> +			},
-> +			.num_parents = 1,
-> +			.ops = &clk_branch2_ops,
-> +			.flags = CLK_SET_RATE_PARENT,
-> +		},
-> +	},
-> +};
-> +
-> +static const struct parent_map gpucc_parent_map_0[] = {
-> +	{ P_GPU_XO, 0 },
-> +	{ P_GPLL0_OUT_MAIN, 5 },
-> +	{ P_GPLL0_OUT_MAIN_DIV, 6 },
-> +};
-> +
-> +static const struct clk_parent_data gpucc_parent_data_0[] = {
-> +	{ .hw = &gpucc_cxo_clk.clkr.hw },
-> +	{ .fw_name = "gcc_gpu_gpll0_clk", .name = "gcc_gpu_gpll0_clk" },
-> +	{ .fw_name = "gcc_gpu_gpll0_div_clk", .name = "gcc_gpu_gpll0_div_clk" },
-> +};
-> +
-> +static const struct freq_tbl ftbl_rbbmtimer_clk_src[] = {
-> +	F(19200000, P_GPU_XO, 1, 0, 0),
-> +	{ }
-> +};
-> +
-> +static struct clk_rcg2 rbbmtimer_clk_src = {
-> +	.cmd_rcgr = 0x10b0,
-> +	.mnd_width = 0,
-> +	.hid_width = 5,
-> +	.parent_map = gpucc_parent_map_0,
-> +	.freq_tbl = ftbl_rbbmtimer_clk_src,
-> +	.clkr.hw.init = &(struct clk_init_data){
-> +		.name = "rbbmtimer_clk_src",
-> +		.parent_data = gpucc_parent_data_0,
-> +		.num_parents = 3,
-> +		.ops = &clk_rcg2_ops,
-> +	},
-> +};
-> +
-> +static const struct freq_tbl ftbl_rbcpr_clk_src[] = {
-> +	F(19200000, P_GPU_XO, 1, 0, 0),
-> +	F(50000000, P_GPLL0_OUT_MAIN_DIV, 6, 0, 0),
-> +	{ }
-> +};
-> +
-> +static struct clk_rcg2 rbcpr_clk_src = {
-> +	.cmd_rcgr = 0x1030,
-> +	.mnd_width = 0,
-> +	.hid_width = 5,
-> +	.parent_map = gpucc_parent_map_0,
-> +	.freq_tbl = ftbl_rbcpr_clk_src,
-> +	.clkr.hw.init = &(struct clk_init_data){
-> +		.name = "rbcpr_clk_src",
-> +		.parent_data = gpucc_parent_data_0,
-> +		.num_parents = 3,
-> +		.ops = &clk_rcg2_ops,
-> +	},
-> +};
-> +
-> +static struct clk_branch gpucc_rbbmtimer_clk = {
-> +	.halt_reg = 0x10d0,
-> +	.halt_check = BRANCH_HALT,
-> +	.clkr = {
-> +		.enable_reg = 0x10d0,
-> +		.enable_mask = BIT(0),
-> +		.hw.init = &(struct clk_init_data){
-> +			.name = "gpucc_rbbmtimer_clk",
-> +			.parent_names = (const char *[]){
-> +				"rbbmtimer_clk_src",
-> +			},
-> +			.num_parents = 1,
-> +			.flags = CLK_SET_RATE_PARENT,
-> +			.ops = &clk_branch2_ops,
-> +		},
-> +	},
-> +};
-> +
-> +static struct clk_branch gpucc_rbcpr_clk = {
-> +	.halt_reg = 0x1054,
-> +	.halt_check = BRANCH_HALT,
-> +	.clkr = {
-> +		.enable_reg = 0x1054,
-> +		.enable_mask = BIT(0),
-> +		.hw.init = &(struct clk_init_data){
-> +			.name = "gpucc_rbcpr_clk",
-> +			.parent_names = (const char *[]){
-> +				"rbcpr_clk_src",
-> +			},
-> +			.num_parents = 1,
-> +			.flags = CLK_SET_RATE_PARENT,
-> +			.ops = &clk_branch2_ops,
-> +		},
-> +	},
-> +};
-> +
-> +static struct gdsc gpu_cx_gdsc = {
-> +	.gdscr = 0x1004,
-> +	.gds_hw_ctrl = 0x1008,
-> +	.pd = {
-> +		.name = "gpu_cx",
-> +	},
-> +	.pwrsts = PWRSTS_OFF_ON,
-> +	.flags = VOTABLE,
-> +};
-> +
-> +static struct gdsc gpu_gx_gdsc = {
-> +	.gdscr = 0x1094,
-> +	.clamp_io_ctrl = 0x130,
-> +	.resets = (unsigned int []){ GPU_GX_BCR },
-> +	.reset_count = 1,
-> +	.cxcs = (unsigned int []){ 0x1098 },
-> +	.cxc_count = 1,
-> +	.pd = {
-> +		.name = "gpu_gx",
-> +	},
-> +	.parent = &gpu_cx_gdsc.pd,
-> +	.pwrsts = PWRSTS_OFF | PWRSTS_ON | PWRSTS_RET,
-> +	.flags = CLAMP_IO | SW_RESET | AON_RESET | NO_RET_PERIPH,
-> +	//.supply = "vdd-gx";
-> +};
-> +
-> +static struct gdsc *gpucc_sdm660_gdscs[] = {
-> +	[GPU_CX_GDSC] = &gpu_cx_gdsc,
-> +	[GPU_GX_GDSC] = &gpu_gx_gdsc,
-> +};
-> +
-> +static const struct qcom_reset_map gpucc_sdm660_resets[] = {
-> +	[GPU_CX_BCR] = { 0x1000 },
-> +	[RBCPR_BCR] = { 0x1050 },
-> +	[GPU_GX_BCR] = { 0x1090 },
-> +	[SPDM_BCR] = { 0x10E0 },
-> +};
-> +
-> +static struct clk_regmap *gpucc_sdm660_clocks[] = {
-> +	[GPUCC_CXO_CLK] = &gpucc_cxo_clk.clkr,
-> +	[GPU_PLL0_PLL] = &gpu_pll0_pll_out_main.clkr,
-> +	[GPU_PLL1_PLL] = &gpu_pll1_pll_out_main.clkr,
-> +	[GFX3D_CLK_SRC] = &gfx3d_clk_src.rcg.clkr,
-> +	[RBCPR_CLK_SRC] = &rbcpr_clk_src.clkr,
-> +	[RBBMTIMER_CLK_SRC] = &rbbmtimer_clk_src.clkr,
-> +	[GPUCC_RBCPR_CLK] = &gpucc_rbcpr_clk.clkr,
-> +	[GPUCC_GFX3D_CLK] = &gpucc_gfx3d_clk.clkr,
-> +	[GPUCC_RBBMTIMER_CLK] = &gpucc_rbbmtimer_clk.clkr,
-> +};
-> +
-> +static const struct regmap_config gpucc_660_regmap_config = {
-> +	.reg_bits	= 32,
-> +	.reg_stride	= 4,
-> +	.val_bits	= 32,
-> +	.max_register	= 0x9034,
-> +	.fast_io	= true,
-> +};
-> +
-> +static const struct qcom_cc_desc gpucc_sdm660_desc = {
-> +	.config = &gpucc_660_regmap_config,
-> +	.clks = gpucc_sdm660_clocks,
-> +	.num_clks = ARRAY_SIZE(gpucc_sdm660_clocks),
-> +	.resets = gpucc_sdm660_resets,
-> +	.num_resets = ARRAY_SIZE(gpucc_sdm660_resets),
-> +	.gdscs = gpucc_sdm660_gdscs,
-> +	.num_gdscs = ARRAY_SIZE(gpucc_sdm660_gdscs),
-> +};
-> +
-> +static const struct of_device_id gpucc_sdm660_match_table[] = {
-> +	{ .compatible = "qcom,gpucc-sdm660" },
-> +	{ .compatible = "qcom,gpucc-sdm630" },
-> +	{ }
-> +};
-> +MODULE_DEVICE_TABLE(of, gpucc_sdm660_match_table);
-> +
-> +static int gpucc_sdm660_probe(struct platform_device *pdev)
+> +static inline struct cqhci_host *
+> +cqhci_host_from_ksm(struct blk_keyslot_manager *ksm)
 > +{
-> +	struct regmap *regmap;
-> +	struct alpha_pll_config gpu_pll_config = {
-> +		.config_ctl_val = 0x4001055b,
-> +		.alpha = 0xaaaaab00,
-> +		.alpha_en_mask = BIT(24),
-> +		.vco_val = 0x2 << 20,
-> +		.vco_mask = 0x3 << 20,
-> +		.main_output_mask = 0x1,
-> +	};
+> +	struct mmc_host *mmc = container_of(ksm, struct mmc_host, ksm);
 > +
-> +	regmap = qcom_cc_map(pdev, &gpucc_sdm660_desc);
-> +	if (IS_ERR(regmap))
-> +		return PTR_ERR(regmap);
-> +
-> +	/* 800MHz configuration for GPU PLL0 */
-> +	gpu_pll_config.l = 0x29;
-> +	gpu_pll_config.alpha_hi = 0xaa;
-> +	clk_alpha_pll_configure(&gpu_pll0_pll_out_main, regmap, &gpu_pll_config);
-> +
-> +	/* 740MHz configuration for GPU PLL1 */
-> +	gpu_pll_config.l = 0x26;
-> +	gpu_pll_config.alpha_hi = 0x8a;
-> +	clk_alpha_pll_configure(&gpu_pll1_pll_out_main, regmap, &gpu_pll_config);
-> +
-> +	return qcom_cc_really_probe(pdev, &gpucc_sdm660_desc, regmap);
+> +	return mmc->cqe_private;
 > +}
 > +
-> +static struct platform_driver gpucc_sdm660_driver = {
-> +	.probe		= gpucc_sdm660_probe,
-> +	.driver		= {
-> +		.name	= "gpucc-sdm660",
-> +		.of_match_table = gpucc_sdm660_match_table,
-> +	},
-> +};
-> +module_platform_driver(gpucc_sdm660_driver);
+> +static void cqhci_crypto_program_key(struct cqhci_host *cq_host,
+> +				     const union cqhci_crypto_cfg_entry *cfg,
+> +				     int slot)
+> +{
+> +	u32 slot_offset = cq_host->crypto_cfg_register + slot * sizeof(*cfg);
+> +	int i;
 > +
-> +MODULE_DESCRIPTION("QCOM GPUCC SDM660/630 Driver");
-> +MODULE_LICENSE("GPL v2");
-
-I think this part looks good. So for this part you have my:
-
-Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-
-
-> diff --git a/include/dt-bindings/clock/qcom,gpucc-sdm660.h b/include/dt-bindings/clock/qcom,gpucc-sdm660.h
-> new file mode 100644
-> index 000000000000..680eaabd838d
-> --- /dev/null
-> +++ b/include/dt-bindings/clock/qcom,gpucc-sdm660.h
-> @@ -0,0 +1,28 @@
-> +/* SPDX-License-Identifier: GPL-2.0 */
-
-But please move this to the binding, reorder them and please update the
-license to "GPL-2.0-only OR BSD-2-Clause".
-
-Regards,
-Bjorn
-
+> +	/* Clear CFGE */
+> +	cqhci_writel(cq_host, 0, slot_offset + 16 * sizeof(cfg->reg_val[0]));
+> +
+> +	/* Write the key */
+> +	for (i = 0; i < 16; i++) {
+> +		cqhci_writel(cq_host, le32_to_cpu(cfg->reg_val[i]),
+> +			     slot_offset + i * sizeof(cfg->reg_val[0]));
+> +	}
+> +	/* Write dword 17 */
+> +	cqhci_writel(cq_host, le32_to_cpu(cfg->reg_val[17]),
+> +		     slot_offset + 17 * sizeof(cfg->reg_val[0]));
+> +	/* Write dword 16, which includes the new value of CFGE */
+> +	cqhci_writel(cq_host, le32_to_cpu(cfg->reg_val[16]),
+> +		     slot_offset + 16 * sizeof(cfg->reg_val[0]));
+> +}
+> +
+> +static int cqhci_crypto_keyslot_program(struct blk_keyslot_manager *ksm,
+> +					const struct blk_crypto_key *key,
+> +					unsigned int slot)
+> +
+> +{
+> +	struct cqhci_host *cq_host = cqhci_host_from_ksm(ksm);
+> +	const union cqhci_crypto_cap_entry *ccap_array =
+> +		cq_host->crypto_cap_array;
+> +	const struct cqhci_crypto_alg_entry *alg =
+> +			&cqhci_crypto_algs[key->crypto_cfg.crypto_mode];
+> +	u8 data_unit_mask = key->crypto_cfg.data_unit_size / 512;
+> +	int i;
+> +	int cap_idx = -1;
+> +	union cqhci_crypto_cfg_entry cfg = {};
+> +
+> +	BUILD_BUG_ON(CQHCI_CRYPTO_KEY_SIZE_INVALID != 0);
+> +	for (i = 0; i < cq_host->crypto_capabilities.num_crypto_cap; i++) {
+> +		if (ccap_array[i].algorithm_id == alg->alg &&
+> +		    ccap_array[i].key_size == alg->key_size &&
+> +		    (ccap_array[i].sdus_mask & data_unit_mask)) {
+> +			cap_idx = i;
+> +			break;
+> +		}
+> +	}
+> +	if (WARN_ON(cap_idx < 0))
+> +		return -EOPNOTSUPP;
+> +
+> +	cfg.data_unit_size = data_unit_mask;
+> +	cfg.crypto_cap_idx = cap_idx;
+> +	cfg.config_enable = CQHCI_CRYPTO_CONFIGURATION_ENABLE;
+> +
+> +	if (ccap_array[cap_idx].algorithm_id == CQHCI_CRYPTO_ALG_AES_XTS) {
+> +		/* In XTS mode, the blk_crypto_key's size is already doubled */
+> +		memcpy(cfg.crypto_key, key->raw, key->size/2);
+> +		memcpy(cfg.crypto_key + CQHCI_CRYPTO_KEY_MAX_SIZE/2,
+> +		       key->raw + key->size/2, key->size/2);
+> +	} else {
+> +		memcpy(cfg.crypto_key, key->raw, key->size);
+> +	}
+> +
+> +	cqhci_crypto_program_key(cq_host, &cfg, slot);
+> +
+> +	memzero_explicit(&cfg, sizeof(cfg));
+> +	return 0;
+> +}
+> +
+> +static void cqhci_crypto_clear_keyslot(struct cqhci_host *cq_host, int slot)
+> +{
+> +	/*
+> +	 * Clear the crypto cfg on the device. Clearing CFGE
+> +	 * might not be sufficient, so just clear the entire cfg.
+> +	 */
+> +	union cqhci_crypto_cfg_entry cfg = {};
+> +
+> +	cqhci_crypto_program_key(cq_host, &cfg, slot);
+> +}
+> +
+> +static int cqhci_crypto_keyslot_evict(struct blk_keyslot_manager *ksm,
+> +				      const struct blk_crypto_key *key,
+> +				      unsigned int slot)
+> +{
+> +	struct cqhci_host *cq_host = cqhci_host_from_ksm(ksm);
+> +
+> +	cqhci_crypto_clear_keyslot(cq_host, slot);
+> +	return 0;
+> +}
+> +
 > +/*
-> + * Copyright (c) 2020, The Linux Foundation. All rights reserved.
-> + * Copyright (c) 2020, AngeloGioacchino Del Regno <kholk11@gmail.com>
+> + * The keyslot management operations for CQHCI crypto.
+> + *
+> + * Note that the block layer ensures that these are never called while the host
+> + * controller is runtime-suspended.  However, the CQE won't necessarily be
+> + * "enabled" when these are called, i.e. CQHCI_ENABLE might not be set in the
+> + * CQHCI_CFG register.  But the hardware allows that.
+> + */
+> +static const struct blk_ksm_ll_ops cqhci_ksm_ops = {
+> +	.keyslot_program	= cqhci_crypto_keyslot_program,
+> +	.keyslot_evict		= cqhci_crypto_keyslot_evict,
+> +};
+> +
+> +static enum blk_crypto_mode_num
+> +cqhci_find_blk_crypto_mode(union cqhci_crypto_cap_entry cap)
+> +{
+> +	int i;
+> +
+> +	for (i = 0; i < ARRAY_SIZE(cqhci_crypto_algs); i++) {
+> +		BUILD_BUG_ON(CQHCI_CRYPTO_KEY_SIZE_INVALID != 0);
+> +		if (cqhci_crypto_algs[i].alg == cap.algorithm_id &&
+> +		    cqhci_crypto_algs[i].key_size == cap.key_size)
+> +			return i;
+> +	}
+> +	return BLK_ENCRYPTION_MODE_INVALID;
+> +}
+> +
+> +/**
+> + * cqhci_crypto_init - initialize CQHCI crypto support
+> + * @cq_host: a cqhci host
+> + *
+> + * If the driver previously set MMC_CAP2_CRYPTO and the CQE declares
+> + * CQHCI_CAP_CS, initialize the crypto support.  This involves reading the
+> + * crypto capability registers, initializing the keyslot manager, clearing all
+> + * keyslots, and enabling 128-bit task descriptors.
+> + *
+> + * Return: 0 if crypto was initialized or isn't supported; whether
+> + *	   MMC_CAP2_CRYPTO remains set indicates which one of those cases it is.
+> + *	   Also can return a negative errno value on unexpected error.
+> + */
+> +int cqhci_crypto_init(struct cqhci_host *cq_host)
+> +{
+> +	struct mmc_host *mmc = cq_host->mmc;
+> +	struct device *dev = mmc_dev(mmc);
+> +	struct blk_keyslot_manager *ksm = &mmc->ksm;
+> +	unsigned int num_keyslots;
+> +	unsigned int cap_idx;
+> +	enum blk_crypto_mode_num blk_mode_num;
+> +	unsigned int slot;
+> +	int err = 0;
+> +
+> +	if (!(mmc->caps2 & MMC_CAP2_CRYPTO) ||
+> +	    !(cqhci_readl(cq_host, CQHCI_CAP) & CQHCI_CAP_CS))
+> +		goto out;
+> +
+> +	cq_host->crypto_capabilities.reg_val =
+> +			cpu_to_le32(cqhci_readl(cq_host, CQHCI_CCAP));
+> +
+> +	cq_host->crypto_cfg_register =
+> +		(u32)cq_host->crypto_capabilities.config_array_ptr * 0x100;
+> +
+> +	cq_host->crypto_cap_array =
+> +		devm_kcalloc(dev, cq_host->crypto_capabilities.num_crypto_cap,
+> +			     sizeof(cq_host->crypto_cap_array[0]), GFP_KERNEL);
+> +	if (!cq_host->crypto_cap_array) {
+> +		err = -ENOMEM;
+> +		goto out;
+> +	}
+> +
+> +	/*
+> +	 * CCAP.CFGC is off by one, so the actual number of crypto
+> +	 * configurations (a.k.a. keyslots) is CCAP.CFGC + 1.
+> +	 */
+> +	num_keyslots = cq_host->crypto_capabilities.config_count + 1;
+> +
+> +	err = blk_ksm_init(ksm, num_keyslots);
+> +	if (err)
+> +		goto out_free_caps;
+> +
+> +	ksm->ksm_ll_ops = cqhci_ksm_ops;
+> +	ksm->dev = dev;
+> +
+> +	/* Unfortunately, CQHCI crypto only supports 32 DUN bits. */
+> +	ksm->max_dun_bytes_supported = 4;
+> +
+> +	/*
+> +	 * Cache all the crypto capabilities and advertise the supported crypto
+> +	 * modes and data unit sizes to the block layer.
+> +	 */
+> +	for (cap_idx = 0; cap_idx < cq_host->crypto_capabilities.num_crypto_cap;
+> +	     cap_idx++) {
+> +		cq_host->crypto_cap_array[cap_idx].reg_val =
+> +			cpu_to_le32(cqhci_readl(cq_host,
+> +						CQHCI_CRYPTOCAP +
+> +						cap_idx * sizeof(__le32)));
+> +		blk_mode_num = cqhci_find_blk_crypto_mode(
+> +					cq_host->crypto_cap_array[cap_idx]);
+> +		if (blk_mode_num == BLK_ENCRYPTION_MODE_INVALID)
+> +			continue;
+> +		ksm->crypto_modes_supported[blk_mode_num] |=
+> +			cq_host->crypto_cap_array[cap_idx].sdus_mask * 512;
+> +	}
+> +
+> +	/* Clear all the keyslots so that we start in a known state. */
+> +	for (slot = 0; slot < num_keyslots; slot++)
+> +		cqhci_crypto_clear_keyslot(cq_host, slot);
+> +
+> +	/* CQHCI crypto requires the use of 128-bit task descriptors. */
+> +	cq_host->caps |= CQHCI_TASK_DESC_SZ_128;
+> +
+> +	return 0;
+> +
+> +out_free_caps:
+> +	devm_kfree(dev, cq_host->crypto_cap_array);
+> +	cq_host->crypto_cap_array = NULL;
+> +out:
+> +	mmc->caps2 &= ~MMC_CAP2_CRYPTO;
+> +	return err;
+> +}
+> diff --git a/drivers/mmc/host/cqhci-crypto.h b/drivers/mmc/host/cqhci-crypto.h
+> new file mode 100644
+> index 0000000000000..60b58ee0e6256
+> --- /dev/null
+> +++ b/drivers/mmc/host/cqhci-crypto.h
+> @@ -0,0 +1,47 @@
+> +/* SPDX-License-Identifier: GPL-2.0-only */
+> +/*
+> + * CQHCI crypto engine (inline encryption) support
+> + *
+> + * Copyright 2020 Google LLC
 > + */
 > +
-> +#ifndef _DT_BINDINGS_CLK_SDM_GPUCC_660_H
-> +#define _DT_BINDINGS_CLK_SDM_GPUCC_660_H
+> +#ifndef LINUX_MMC_CQHCI_CRYPTO_H
+> +#define LINUX_MMC_CQHCI_CRYPTO_H
 > +
-> +#define GPUCC_CXO_CLK			0
-> +#define GPU_PLL0_PLL			1
-> +#define GPU_PLL1_PLL			2
-> +#define GFX3D_CLK_SRC			3
-> +#define RBCPR_CLK_SRC			4
-> +#define RBBMTIMER_CLK_SRC		5
-> +#define GPUCC_RBCPR_CLK			6
-> +#define GPUCC_GFX3D_CLK			7
-> +#define GPUCC_RBBMTIMER_CLK		8
+> +#include <linux/mmc/host.h>
 > +
-> +#define GPU_CX_GDSC			0
-> +#define GPU_GX_GDSC			1
+> +#include "cqhci.h"
 > +
-> +#define GPU_CX_BCR			0
-> +#define GPU_GX_BCR			1
-> +#define RBCPR_BCR			2
-> +#define SPDM_BCR			3
+> +#ifdef CONFIG_MMC_CRYPTO
 > +
+> +int cqhci_crypto_init(struct cqhci_host *host);
+> +
+> +/*
+> + * Returns the crypto bits that should be set in bits 64-127 of the
+> + * task descriptor.
+> + */
+> +static inline u64 cqhci_crypto_prep_task_desc(struct mmc_request *mrq)
+> +{
+> +	if (!mrq->crypto_enabled)
+> +		return 0;
+> +
+> +	return CQHCI_CRYPTO_ENABLE_BIT |
+> +	       CQHCI_CRYPTO_KEYSLOT(mrq->crypto_key_slot) |
+> +	       mrq->data_unit_num;
+> +}
+> +
+> +#else /* CONFIG_MMC_CRYPTO */
+> +
+> +static inline int cqhci_crypto_init(struct cqhci_host *host)
+> +{
+> +	return 0;
+> +}
+> +
+> +static inline u64 cqhci_crypto_prep_task_desc(struct mmc_request *mrq)
+> +{
+> +	return 0;
+> +}
+> +
+> +#endif /* !CONFIG_MMC_CRYPTO */
+> +
+> +#endif /* LINUX_MMC_CQHCI_CRYPTO_H */
+> diff --git a/drivers/mmc/host/cqhci.h b/drivers/mmc/host/cqhci.h
+> index 89bf6adbce8ca..5c18734624fea 100644
+> --- a/drivers/mmc/host/cqhci.h
+> +++ b/drivers/mmc/host/cqhci.h
+> @@ -22,10 +22,13 @@
+>  
+>  /* capabilities */
+>  #define CQHCI_CAP			0x04
+> +#define CQHCI_CAP_CS			0x10000000 /* Crypto Support */
+> +
+>  /* configuration */
+>  #define CQHCI_CFG			0x08
+>  #define CQHCI_DCMD			0x00001000
+>  #define CQHCI_TASK_DESC_SZ		0x00000100
+> +#define CQHCI_CRYPTO_GENERAL_ENABLE	0x00000002
+>  #define CQHCI_ENABLE			0x00000001
+>  
+>  /* control */
+> @@ -39,8 +42,11 @@
+>  #define CQHCI_IS_TCC			BIT(1)
+>  #define CQHCI_IS_RED			BIT(2)
+>  #define CQHCI_IS_TCL			BIT(3)
+> +#define CQHCI_IS_GCE			BIT(4) /* General Crypto Error */
+> +#define CQHCI_IS_ICCE			BIT(5) /* Invalid Crypto Config Error */
+>  
+> -#define CQHCI_IS_MASK (CQHCI_IS_TCC | CQHCI_IS_RED)
+> +#define CQHCI_IS_MASK (CQHCI_IS_TCC | CQHCI_IS_RED | \
+> +		       CQHCI_IS_GCE | CQHCI_IS_ICCE)
+>  
+>  /* interrupt status enable */
+>  #define CQHCI_ISTE			0x14
+> @@ -78,6 +84,9 @@
+>  /* task clear */
+>  #define CQHCI_TCLR			0x38
+>  
+> +/* task descriptor processing error */
+> +#define CQHCI_TDPE			0x3c
+> +
+>  /* send status config 1 */
+>  #define CQHCI_SSC1			0x40
+>  #define CQHCI_SSC1_CBC_MASK		GENMASK(19, 16)
+> @@ -107,6 +116,10 @@
+>  /* command response argument */
+>  #define CQHCI_CRA			0x5C
+>  
+> +/* crypto capabilities */
+> +#define CQHCI_CCAP			0x100
+> +#define CQHCI_CRYPTOCAP			0x104
+> +
+>  #define CQHCI_INT_ALL			0xF
+>  #define CQHCI_IC_DEFAULT_ICCTH		31
+>  #define CQHCI_IC_DEFAULT_ICTOVAL	1
+> @@ -133,11 +146,71 @@
+>  #define CQHCI_CMD_TIMING(x)		(((x) & 1) << 22)
+>  #define CQHCI_RESP_TYPE(x)		(((x) & 0x3) << 23)
+>  
+> +/* crypto task descriptor fields (for bits 64-127 of task descriptor) */
+> +#define CQHCI_CRYPTO_ENABLE_BIT		(1ULL << 47)
+> +#define CQHCI_CRYPTO_KEYSLOT(x)		((u64)(x) << 32)
+> +
+>  /* transfer descriptor fields */
+>  #define CQHCI_DAT_LENGTH(x)		(((x) & 0xFFFF) << 16)
+>  #define CQHCI_DAT_ADDR_LO(x)		(((x) & 0xFFFFFFFF) << 32)
+>  #define CQHCI_DAT_ADDR_HI(x)		(((x) & 0xFFFFFFFF) << 0)
+>  
+> +/* CCAP - Crypto Capability 100h */
+> +union cqhci_crypto_capabilities {
+> +	__le32 reg_val;
+> +	struct {
+> +		u8 num_crypto_cap;
+> +		u8 config_count;
+> +		u8 reserved;
+> +		u8 config_array_ptr;
+> +	};
+> +};
+> +
+> +enum cqhci_crypto_key_size {
+> +	CQHCI_CRYPTO_KEY_SIZE_INVALID	= 0,
+> +	CQHCI_CRYPTO_KEY_SIZE_128	= 1,
+> +	CQHCI_CRYPTO_KEY_SIZE_192	= 2,
+> +	CQHCI_CRYPTO_KEY_SIZE_256	= 3,
+> +	CQHCI_CRYPTO_KEY_SIZE_512	= 4,
+> +};
+> +
+> +enum cqhci_crypto_alg {
+> +	CQHCI_CRYPTO_ALG_AES_XTS		= 0,
+> +	CQHCI_CRYPTO_ALG_BITLOCKER_AES_CBC	= 1,
+> +	CQHCI_CRYPTO_ALG_AES_ECB		= 2,
+> +	CQHCI_CRYPTO_ALG_ESSIV_AES_CBC		= 3,
+> +};
+> +
+> +/* x-CRYPTOCAP - Crypto Capability X */
+> +union cqhci_crypto_cap_entry {
+> +	__le32 reg_val;
+> +	struct {
+> +		u8 algorithm_id;
+> +		u8 sdus_mask; /* Supported data unit size mask */
+> +		u8 key_size;
+> +		u8 reserved;
+> +	};
+> +};
+> +
+> +#define CQHCI_CRYPTO_CONFIGURATION_ENABLE (1 << 7)
+> +#define CQHCI_CRYPTO_KEY_MAX_SIZE 64
+> +/* x-CRYPTOCFG - Crypto Configuration X */
+> +union cqhci_crypto_cfg_entry {
+> +	__le32 reg_val[32];
+> +	struct {
+> +		u8 crypto_key[CQHCI_CRYPTO_KEY_MAX_SIZE];
+> +		/* 4KB/512 = 8 */
+> +		u8 data_unit_size;
+> +		u8 crypto_cap_idx;
+> +		u8 reserved_1;
+> +		u8 config_enable;
+> +		u8 reserved_multi_host;
+> +		u8 reserved_2;
+> +		u8 vsb[2];
+> +		u8 reserved_3[56];
+> +	};
+> +};
+> +
+>  struct cqhci_host_ops;
+>  struct mmc_host;
+>  struct mmc_request;
+> @@ -196,6 +269,12 @@ struct cqhci_host {
+>  	struct completion halt_comp;
+>  	wait_queue_head_t wait_queue;
+>  	struct cqhci_slot *slot;
+> +
+> +#ifdef CONFIG_MMC_CRYPTO
+> +	union cqhci_crypto_capabilities crypto_capabilities;
+> +	union cqhci_crypto_cap_entry *crypto_cap_array;
+> +	u32 crypto_cfg_register;
 > +#endif
+>  };
+>  
+>  struct cqhci_host_ops {
 > -- 
-> 2.28.0
+> 2.29.2
 > 
+The version of code from Qualcomm on AOSP reprogrammed all keyslots from
+cqhci_recovery_finish(). I notice that this patch drops that - I'm guessing
+that was intentional? Other than that, this patch looks good to me :).
