@@ -2,173 +2,91 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 487F02CFF11
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  5 Dec 2020 22:06:23 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7475E2CFF8B
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  5 Dec 2020 23:37:10 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726871AbgLEVGV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 5 Dec 2020 16:06:21 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37928 "EHLO
+        id S1726218AbgLEWgx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 5 Dec 2020 17:36:53 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51822 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725270AbgLEVGV (ORCPT
+        with ESMTP id S1726120AbgLEWgx (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 5 Dec 2020 16:06:21 -0500
-Received: from mail-lj1-x242.google.com (mail-lj1-x242.google.com [IPv6:2a00:1450:4864:20::242])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A4426C0613CF
-        for <linux-arm-msm@vger.kernel.org>; Sat,  5 Dec 2020 13:05:34 -0800 (PST)
-Received: by mail-lj1-x242.google.com with SMTP id s11so1982438ljp.4
-        for <linux-arm-msm@vger.kernel.org>; Sat, 05 Dec 2020 13:05:34 -0800 (PST)
+        Sat, 5 Dec 2020 17:36:53 -0500
+Received: from mail-lf1-x142.google.com (mail-lf1-x142.google.com [IPv6:2a00:1450:4864:20::142])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 95841C0613CF
+        for <linux-arm-msm@vger.kernel.org>; Sat,  5 Dec 2020 14:36:12 -0800 (PST)
+Received: by mail-lf1-x142.google.com with SMTP id l11so12768244lfg.0
+        for <linux-arm-msm@vger.kernel.org>; Sat, 05 Dec 2020 14:36:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=l7PcuRvH2lvNTCeViNhB8nA3QkFXJkV9Gl2IRDNWkAw=;
-        b=VKbz9r/11ppxewhAL3MRcb/GtaNpPtPYglYTdQDNmV0TCXIFdrgcgMtkArIqGTjpK7
-         UejGaSzbAOJ2VsO+HniC52RRbh3zRcocpAwHidbbQL+lV4MhGXb21C5vgNi7NbjWhihv
-         RKpFyCje/tVLzFokQhPrO3m7BfSWIMANQusS6nsfGqZkdfo5fF5ruIq5Yv8a4TDAJmx3
-         L9d1POmHfSKtCXYfWHc8XBxvBoLAJ+lvUQOVFOlYDR4146NiO5CIFUUI3FU/jTjV8AIF
-         k5pBy0Z+4wbfCFxYZXA30GpXUXDLRZzyQ8kiqdL4kW9dfMHcc0gf9wvq7mEuMlxkjLN9
-         kSfg==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=98/MstnJqZxw65t8jmHQ0ippOkTKpuxcEvb3zk0y3Z4=;
+        b=jy6szEVCLds/Yg9OxwGE13hDrjf22xHnP5ig2343dm0XsQwN0nUxcRCpCs0r9DNIbS
+         W3lY9qkUBv7tInfZyAkkZO5VKRys4CWgAqZvWOhG8gAn0d9KEY6qfDTcuAWiF7gTYaeC
+         /ltv7ueALdD2HWoLQ8Q+KgaCyjXrp+z4BoGH2Yp8JBYfv9P0HayeYWoZB95LhaFfqFFQ
+         lKrplAt55pfQ+b5Dl4p0fSzAVyWQEt0m1kvLDZj79LsNyLxKBlWYiomP57suz/myH/P7
+         MWcPURUlumDheFJhSDnQG7N0WKPt2G4TKFbUWhhNiLN3Ryqn+k4M1Nsq6KrR1ZKGAOUQ
+         xN6A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=l7PcuRvH2lvNTCeViNhB8nA3QkFXJkV9Gl2IRDNWkAw=;
-        b=UuA/kGPTXfk0OLi+lGJsyOWHGEbjC3hIm/zUmcTjxHAAZxC27Gg7MLwUEy1GFsZeHG
-         4asytFR1IE/bybzyyudVsceuJ2oB8v64UPOGa2ajjjNvSXLHxgi9M29WmJQTt7vLlNY8
-         yS5e+ObWlCf8AQ/+58Uo/bmxtAAnobQKuAmNIEoRHfsuSMezoBYleiFkKW/ouiQDqRHK
-         QMo8DMIV7cvnnWzLFU2BUQAgtQpOsr/kKXL0SbeAQ2A+vuvZ/D6BZU2Uyc+fjcbaM1lE
-         4d6/IaAyX9tHUgCo+RGxqH9J0D4df8H1unMx/7/W+B44Giy/maLQelHbTk+hlaG2YJnb
-         idzw==
-X-Gm-Message-State: AOAM531mePXxl+c7HO3h25WCg88m6Kf0+Hkeuzk//VVIirxq2VFNNH6V
-        4SEvVA0jeHsCB6qbP7pM7yqbKA==
-X-Google-Smtp-Source: ABdhPJxUfR3PGDS+RKxcbacmYSpIPDJpurEtbRQcNlhGoXkpPQ40eJomWsVIVOXgu0j4y+sfskWZFw==
-X-Received: by 2002:a2e:720c:: with SMTP id n12mr6257982ljc.424.1607202333043;
-        Sat, 05 Dec 2020 13:05:33 -0800 (PST)
-Received: from [192.168.0.150] ([94.25.229.141])
-        by smtp.gmail.com with ESMTPSA id j27sm146451lfm.178.2020.12.05.13.05.30
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 05 Dec 2020 13:05:32 -0800 (PST)
-Subject: Re: [PATCH v10 00/15] qcom: pm8150: add support for thermal
- monitoring
-To:     Jonathan Cameron <jic23@kernel.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Zhang Rui <rui.zhang@intel.com>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>,
-        Amit Kucheria <amitk@kernel.org>,
-        Hartmut Knaack <knaack.h@gmx.de>,
-        Lars-Peter Clausen <lars@metafoo.de>,
-        Peter Meerwald-Stadler <pmeerw@pmeerw.net>,
-        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-iio@vger.kernel.org,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        Jishnu Prakash <jprakash@qti.qualcomm.com>
-References: <20201204025509.1075506-1-dmitry.baryshkov@linaro.org>
- <20201205170830.4d56ecb7@archlinux>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Message-ID: <4de94396-54c7-e741-b288-3a3868515f7b@linaro.org>
-Date:   Sun, 6 Dec 2020 00:05:29 +0300
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.5.0
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=98/MstnJqZxw65t8jmHQ0ippOkTKpuxcEvb3zk0y3Z4=;
+        b=Pa+tnwoJPscx4q4mgk8klSxsbKuglHXTuvFpOh1ux5rmG9r7OwvMcuN3mZ0bpCID1x
+         zAmyZWNLbZlEX/jVHR07T8A4aflUWPTXx2c+IuR+J8u42HCLmV40O9Hgf+v1H97TytoY
+         9A3vckUQK1AXQvvQDeAHnooIp6UdpemMTJYJ9AIeFO2rUj7Dy4adX+ZK/BBdhS7l0nUs
+         7MkkE6JsiXatb6jPFXbg2uOHtAm/+oZDHTdGGID4ice4+04vc2aPmiaJzOfgym91wLJ4
+         dMqzcLepst2C2piJa6T4iuhIOf6NvdRJDlAFp7Xu+PVvLL4naqCFFqTzcwLHYJP1NRHS
+         kTcQ==
+X-Gm-Message-State: AOAM530TSj29K8N5+WQHfDlT6lZ7CN2BLlDnRzkeBDEYGzhzM3d7BrNa
+        0vlQjrT1XVxzazgdpefKAs91COy2MGz0nLp4G0Ko2p1UvcRC/pOG
+X-Google-Smtp-Source: ABdhPJzzsCc4rL9lN6ah8nXKuIds8BCeYVyLpkhHW9HL1ismhbC9zdOlB0A/w+xFWb4xfQqxpguiH2gfF+LS+frM7s0=
+X-Received: by 2002:a19:5f11:: with SMTP id t17mr5388052lfb.572.1607207771145;
+ Sat, 05 Dec 2020 14:36:11 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <20201205170830.4d56ecb7@archlinux>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-GB
-Content-Transfer-Encoding: 7bit
+References: <20201202163443.26499-1-srinivas.kandagatla@linaro.org> <20201202163443.26499-3-srinivas.kandagatla@linaro.org>
+In-Reply-To: <20201202163443.26499-3-srinivas.kandagatla@linaro.org>
+From:   Linus Walleij <linus.walleij@linaro.org>
+Date:   Sat, 5 Dec 2020 23:36:00 +0100
+Message-ID: <CACRpkdabPygUmZXT6FMT4fEU6D638Y3XRwvODy8ucUAbuQ4kvg@mail.gmail.com>
+Subject: Re: [RESEND PATCH v6 2/2] pinctrl: qcom: Add sm8250 lpass lpi pinctrl driver
+To:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        MSM <linux-arm-msm@vger.kernel.org>,
+        "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 05/12/2020 20:08, Jonathan Cameron wrote:
-> On Fri,  4 Dec 2020 05:54:54 +0300
-> Dmitry Baryshkov <dmitry.baryshkov@linaro.org> wrote:
-> 
->> This patch serie adds support for thermal monitoring block on Qualcomm's
->> PMIC5 chips. PM8150{,b,l} and sm8250-mtp board device trees are extended
->> to support thermal zones provided by this thermal monitoring block.
->> Unlike the rest of PMIC thermal senses, these thermal zones describe
->> particular thermistors, which differ between from board to board.
-> 
-> I've just taken another look through the various IIO parts in here and
-> I think they are fine.
-> 
-> My assumption is that given the timing this isn't going to make the merge
-> window now.  Hence I'll be looking to do an immutable branch based on rc1
-> once it's available (assuming everyone else is fine with this version).
+On Wed, Dec 2, 2020 at 5:35 PM Srinivas Kandagatla
+<srinivas.kandagatla@linaro.org> wrote:
 
-Thank you! Another option might be to merge all iio changes this cycle 
-(if it's fine with you) and have all the rest go via respective trees in 
-the next merge window. I'm fine with either of the options.
+> Add initial pinctrl driver to support pin configuration for
+> LPASS (Low Power Audio SubSystem) LPI (Low Power Island) pinctrl
+> on SM8250.
 
-> 
-> Thanks,
-> 
-> Jonathan
-> 
->>
->> Changes since v9:
->>   - In patch 12 add comments to the code as requested by Daniel Lezcano.
->>   - Change copyright comment in qcom-spmi-adc-tm5.c to clearly note
->>     driver history.
->>
->> Changes since v8:
->>   - Simplified qcom_vadc_map_voltage_temp() code by removing ascending
->>     tables support
->>   - Simplified qcom-vadc-common volt/temp mapping code
->>   - Implement suggestions by Matthias Kaehlcke: message formatting,
->>     rewrite comments, remove unused variable initialization.
->>
->> Changes since v7:
->>   - Move qcom-vadc-common.h header to include/linux/iio/adc/ dir.
->>   - Use explicit sizeof(var) instead of hand-coding 1 when accessing
->>     adc-tm registers.
->>   - Remove buffer read from adc_tm5_init().
->>   - Remove extra on-stack var from adc_tm5_get_temp().
->>   - Minor formatting changes as suggested Daniel.
->>
->> Changes since v6:
->>   - Added include <linux/bitfield.h> as noted by Jishnu Prakash.
->>
->> Changes since v5:
->>   - Reworked DT bindings:
->>     * Removed qcom,adc-channel, instead it is parsed from io-channels
->>     * Renamed qcom,hw-settle-time to include -us suffix
->>   - Re-added monitor enabling which got lost during refactored. Noted by
->>     Jishnu Prakash.
->>   - Use threaded IRQ handler as susggested by Jishnu.
->>
->> Changes since v4:
->>   - Added kernel-doc comments to ADC-TM structures
->>   - Used several sizeof(buf) instead of hand-conding register size
->>
->> Changes since v3:
->>   - Fix DT description to spell "thermal monitoring" instead of just TM
->>   - Fix warnings in DT example
->>   - Add EXPORT_SYMBOL_GPL(of_iio_channel_get_by_name)
->>   - Fixed whitespace chanes in qcom-vadc-common.c
->>   - Removed error message if IIO chanel get returns -EPROBE_DEFER
->>
->> Changes since v2:
->>   - IIO: export of_iio_channel_get_by_name() function
->>   - dt-bindings: move individual io-channels to each thermal monitoring
->>     channel rather than listing them all in device node
->>   - added fallback defaults to of_device_get_match_data calls in
->>     qcom-spmi-adc5 and qcom-spmi-adc-tm5 drivers
->>   - minor typo fixes
->>
->> Changes since v1:
->>   - Introduce fixp_linear_interpolate() by Craig Tatlor
->>   - Lots of syntax/whitespace changes
->>   - Cleaned up register definitions per Jonathan's suggestion
->>   - Implemented most of the suggestions from Bjorn's and Jonathan's
->>     review
->>
->>
-> 
+Patch applied!
 
+> +config PINCTRL_LPASS_LPI
+> +       tristate "Qualcomm Technologies Inc LPASS LPI pin controller driver"
+> +       depends on GPIOLIB
 
--- 
-With best wishes
-Dmitry
+I added:
+
+    select PINMUX
+    select PINCONF
+    select GENERIC_PINCONF
+
+When applying. You need these I think, your code is working because
+other drivers are selecting these for you, right? The build robot would
+hack this to pieces though.
+
+Yours,
+Linus Walleij
