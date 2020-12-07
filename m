@@ -2,110 +2,199 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 40C3C2D0ABF
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Dec 2020 07:36:22 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0A8ED2D0AC5
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Dec 2020 07:36:25 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725918AbgLGGe7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 7 Dec 2020 01:34:59 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51188 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725681AbgLGGe6 (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 7 Dec 2020 01:34:58 -0500
-Received: from mail-pg1-x542.google.com (mail-pg1-x542.google.com [IPv6:2607:f8b0:4864:20::542])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8DF34C0613D4;
-        Sun,  6 Dec 2020 22:34:18 -0800 (PST)
-Received: by mail-pg1-x542.google.com with SMTP id i38so8062712pgb.5;
-        Sun, 06 Dec 2020 22:34:18 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id;
-        bh=5q1YhPjhi7857jfqqjPqEtMBVeFBPU6hgI2ckukTgPs=;
-        b=TqgqXvQv9OFnZAsRrBCwKfwrdZn2KHcmTkOSjcBzhiZz3J887eVyNns+7SKUvQSgUU
-         u0eJn5yPABA6QjK3Ovbt5FlbFwpV7bL/1o+HigXoQvI1J+LuG+nDZm4ZkRN/Oie+Rb0Y
-         y2murPpzP79jGnsTohdSGMOllYfgAIE972JO30in3N7gLftmFbAis/eDL2UeK+OAtg/g
-         rd5J/Fk4l3TK4MXlXmrBl7Szc5u0tAtJRutMV2R8FsEJEy11OucFTi818nVsFTZAnUrm
-         dWXt1n93TOCUdk4DEJPB2XqoXcvPMl8JoVSwwJHUznKp54aZhbL1FPpzFhoxjflzD+Cu
-         t0NQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=5q1YhPjhi7857jfqqjPqEtMBVeFBPU6hgI2ckukTgPs=;
-        b=etzUDVWUXbWeREmkTx2SguDg/5gN00rhjQ6TZQF7W2m0sCmdJGYzW20biBrJBFKWKV
-         Fi9FoiltZzX955l+/nxRd41APIki/1K++YYe2BHB+PtfFBTr5OndoA471y1b5WieQ4ou
-         0ykLaY0LSMGmWTDCIceKWAUX1IKV9G+LIiPJdVDKewn+/DcI8clOENbhCtlprhXQWh2h
-         HnS9i/czASzunOJwy1USMZS0cwA8YDx6F3J5OFx7z2RcZXTrtyCvStWreUH7HTfi2lUv
-         7Wot93WfAG+pjU/VGP/LTAxlg0UyX27zNYNliK+HkOhvd++Bjqvr90oL3b3qIBse6xpM
-         DzvA==
-X-Gm-Message-State: AOAM530pFdYPIBWfIOmSV/qsr/dcT5iBTWVRvRxbsA8OYcMeBKuEoTkK
-        wHItrnrqEntdIJjmQjRdgoA=
-X-Google-Smtp-Source: ABdhPJyo8hLLPix4fD3YGOUOwNDxD4XD8JygNu7LqBeXssUBABQtI8TVDWF7dpXKHtSrgFYO/NzOhA==
-X-Received: by 2002:a63:f02:: with SMTP id e2mr1945774pgl.148.1607322858140;
-        Sun, 06 Dec 2020 22:34:18 -0800 (PST)
-Received: from AHMLPT1827.ap.corp.arrow.com ([103.85.10.190])
-        by smtp.googlemail.com with ESMTPSA id w2sm1854273pfj.110.2020.12.06.22.34.14
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 06 Dec 2020 22:34:17 -0800 (PST)
-From:   Parth Y Shah <sparth1292@gmail.com>
-To:     agross@kernel.org, bjorn.andersson@linaro.org
-Cc:     vkoul@kernel.org, dan.j.williams@intel.com,
-        linux-arm-msm@vger.kernel.org, dmaengine@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Parth Y Shah <sparth1292@gmail.com>
-Subject: [PATCH] dmaengine: bam_dma: fix return of bam_dma_irq()
-Date:   Mon,  7 Dec 2020 12:03:40 +0530
-Message-Id: <1607322820-7450-1-git-send-email-sparth1292@gmail.com>
-X-Mailer: git-send-email 2.7.4
+        id S1725971AbgLGGgJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 7 Dec 2020 01:36:09 -0500
+Received: from mail.kernel.org ([198.145.29.99]:33522 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725783AbgLGGgJ (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 7 Dec 2020 01:36:09 -0500
+From:   Vinod Koul <vkoul@kernel.org>
+Authentication-Results: mail.kernel.org; dkim=permerror (bad message/signature format)
+To:     Linus Walleij <linus.walleij@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Vinod Koul <vkoul@kernel.org>, Andy Gross <agross@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>, linux-gpio@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [PATCH v2 1/2] dt-bindings: pinctrl: qcom: Add SM8350 pinctrl bindings
+Date:   Mon,  7 Dec 2020 12:05:18 +0530
+Message-Id: <20201207063519.3413720-1-vkoul@kernel.org>
+X-Mailer: git-send-email 2.26.2
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-While performing suspend/resume, we were getting below kernel crash.
+Add device tree binding Documentation details for Qualcomm SM8350
+pinctrl driver.
 
-[   54.541672] [FTS][Info]gesture suspend...
-[   54.605256] [FTS][Error][GESTURE]Enter into gesture(suspend) failed!
-[   54.605256]
-[   58.345850] irq event 10: bogus return value fffffff3
-......
-
-[   58.345966] [<ffff0000080830f0>] el1_irq+0xb0/0x124
-[   58.345971] [<ffff000008085360>] arch_cpu_idle+0x10/0x18
-[   58.345975] [<ffff0000081077f4>] do_idle+0x1ac/0x1e0
-[   58.345979] [<ffff0000081079c8>] cpu_startup_entry+0x20/0x28
-[   58.345983] [<ffff000008a80ed0>] rest_init+0xd0/0xdc
-[   58.345988] [<ffff0000091c0b48>] start_kernel+0x390/0x3a4
-[   58.345990] handlers:
-[   58.345994] [<ffff0000085120d0>] bam_dma_irq
-
-The reason for the crash we found is, bam_dma_irq() was returning
-negative value when the device resumes in some conditions.
-
-In addition, the irq handler should have one of the below return values.
-
-IRQ_NONE            interrupt was not from this device or was not handled
-IRQ_HANDLED         interrupt was handled by this device
-IRQ_WAKE_THREAD     handler requests to wake the handler thread
-
-Therefore, to resolve this crash, we have changed the return value to
-IRQ_NONE.
-
-Signed-off-by: Parth Y Shah <sparth1292@gmail.com>
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 ---
- drivers/dma/qcom/bam_dma.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ .../bindings/pinctrl/qcom,sm8350-pinctrl.yaml | 151 ++++++++++++++++++
+ 1 file changed, 151 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/pinctrl/qcom,sm8350-pinctrl.yaml
 
-diff --git a/drivers/dma/qcom/bam_dma.c b/drivers/dma/qcom/bam_dma.c
-index 4eeb8bb..d5773d4 100644
---- a/drivers/dma/qcom/bam_dma.c
-+++ b/drivers/dma/qcom/bam_dma.c
-@@ -875,7 +875,7 @@ static irqreturn_t bam_dma_irq(int irq, void *data)
- 
- 	ret = bam_pm_runtime_get_sync(bdev->dev);
- 	if (ret < 0)
--		return ret;
-+		return IRQ_NONE;
- 
- 	if (srcs & BAM_IRQ) {
- 		clr_mask = readl_relaxed(bam_addr(bdev, 0, BAM_IRQ_STTS));
+diff --git a/Documentation/devicetree/bindings/pinctrl/qcom,sm8350-pinctrl.yaml b/Documentation/devicetree/bindings/pinctrl/qcom,sm8350-pinctrl.yaml
+new file mode 100644
+index 000000000000..8ddb347c43da
+--- /dev/null
++++ b/Documentation/devicetree/bindings/pinctrl/qcom,sm8350-pinctrl.yaml
+@@ -0,0 +1,151 @@
++# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
++%YAML 1.2
++---
++$id: http://devicetree.org/schemas/pinctrl/qcom,sm8350-pinctrl.yaml#
++$schema: http://devicetree.org/meta-schemas/core.yaml#
++
++title: Qualcomm Technologies, Inc. SM8350 TLMM block
++
++maintainers:
++  - Vinod Koul <vkoul@kernel.org>
++
++description: |
++  This binding describes the Top Level Mode Multiplexer block found in the
++  SM8350 platform.
++
++properties:
++  compatible:
++    const: qcom,sm8350-pinctrl
++
++  reg:
++    description: Specifies the base address and size of the TLMM register space
++    maxItems: 1
++
++  interrupts:
++    description: Specifies the TLMM summary IRQ
++    maxItems: 1
++
++  interrupt-controller: true
++
++  '#interrupt-cells':
++    description: Specifies the PIN numbers and Flags, as defined in
++      include/dt-bindings/interrupt-controller/irq.h
++    const: 2
++
++  gpio-controller: true
++
++  '#gpio-cells':
++    description: Specifying the pin number and flags, as defined in
++      include/dt-bindings/gpio/gpio.h
++    const: 2
++
++  gpio-ranges:
++    maxItems: 1
++
++  gpio-reserved-ranges:
++    maxItems: 1
++
++#PIN CONFIGURATION NODES
++patternProperties:
++  '-pins$':
++    type: object
++    description:
++      Pinctrl node's client devices use subnodes for desired pin configuration.
++      Client device subnodes use below standard properties.
++    $ref: "/schemas/pinctrl/pincfg-node.yaml"
++
++    properties:
++      pins:
++        description:
++          List of gpio pins affected by the properties specified in this subnode.
++        items:
++          oneOf:
++            - pattern: "^gpio([0-9]|[1-9][0-9]|1[0-9][0-9]|20[0-3])$"
++            - enum: [ sdc1_clk, sdc1_cmd, sdc1_data, sdc2_clk, sdc2_cmd, sdc2_data ]
++        minItems: 1
++        maxItems: 36
++
++      function:
++        description:
++          Specify the alternative function to be configured for the specified
++          pins. Functions are only valid for gpio pins.
++        enum: [ atest_char, atest_usb, audio_ref, cam_mclk, cci_async,
++                cci_i2c, cci_timer, cmu_rng, coex_uart1, coex_uart2, cri_trng,
++                cri_trng0, cri_trng1, dbg_out, ddr_bist, ddr_pxi0, ddr_pxi1,
++                ddr_pxi2, ddr_pxi3, dp_hot, dp_lcd, gcc_gp1, gcc_gp2, gcc_gp3,
++                gpio, ibi_i3c, jitter_bist, lpass_slimbus, mdp_vsync, mdp_vsync0,
++                mdp_vsync1, mdp_vsync2, mdp_vsync3, mi2s0_data0, mi2s0_data1,
++                mi2s0_sck, mi2s0_ws, mi2s1_data0, mi2s1_data1, mi2s1_sck,
++                mi2s1_ws, mi2s2_data0, mi2s2_data1, mi2s2_sck, mi2s2_ws,
++                mss_grfc0, mss_grfc1, mss_grfc10, mss_grfc11, mss_grfc12,
++                mss_grfc2, mss_grfc3, mss_grfc4, mss_grfc5, mss_grfc6,
++                mss_grfc7, mss_grfc8, mss_grfc9, nav_gpio, pa_indicator,
++                pcie0_clkreqn, pcie1_clkreqn, phase_flag, pll_bist, pll_clk,
++                pri_mi2s, prng_rosc, qdss_cti, qdss_gpio, qlink0_enable,
++                qlink0_request, qlink0_wmss, qlink1_enable, qlink1_request,
++                qlink1_wmss, qlink2_enable, qlink2_request, qlink2_wmss, qspi0,
++                qspi1, qspi2, qspi3, qspi_clk, qspi_cs, qup0, qup1, qup10,
++                qup11, qup12, qup13, qup14, qup15, qup16, qup17, qup18, qup19,
++                qup2, qup3, qup4, qup5, qup6, qup7, qup8, qup9, qup_l4, qup_l5,
++                qup_l6, sd_write, sdc40, sdc41, sdc42, sdc43, sdc4_clk,
++                sdc4_cmd, sec_mi2s, tb_trig, tgu_ch0, tgu_ch1, tgu_ch2,
++                tgu_ch3, tsense_pwm1, tsense_pwm2, uim0_clk, uim0_data,
++                uim0_present, uim0_reset, uim1_clk, uim1_data, uim1_present,
++                uim1_reset, usb2phy_ac, usb_phy, vfr_0, vfr_1, vsense_trigger ]
++
++
++      drive-strength:
++        enum: [2, 4, 6, 8, 10, 12, 14, 16]
++        default: 2
++        description:
++          Selects the drive strength for the specified pins, in mA.
++
++      bias-pull-down: true
++
++      bias-pull-up: true
++
++      bias-disable: true
++
++      output-high: true
++
++      output-low: true
++
++    required:
++      - pins
++      - function
++
++    additionalProperties: false
++
++required:
++  - compatible
++  - reg
++  - interrupts
++  - interrupt-controller
++  - '#interrupt-cells'
++  - gpio-controller
++  - '#gpio-cells'
++  - gpio-ranges
++
++additionalProperties: false
++
++examples:
++  - |
++        #include <dt-bindings/interrupt-controller/arm-gic.h>
++        tlmm: pinctrl@f000000 {
++          compatible = "qcom,sm8350-pinctrl";
++          reg = <0x0f100000 0x300000>;
++          interrupts = <GIC_SPI 208 IRQ_TYPE_LEVEL_HIGH>;
++          gpio-controller;
++          #gpio-cells = <2>;
++          interrupt-controller;
++          #interrupt-cells = <2>;
++          gpio-ranges = <&tlmm 0 0 203>;
++          serial-pins {
++            pins = "gpio18", "gpio19";
++            function = "qup3";
++            drive-strength = <8>;
++            bias-disable;
++          };
++        };
++
++...
 -- 
-2.7.4
+2.26.2
 
