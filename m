@@ -2,122 +2,128 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id BDA682D16F2
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Dec 2020 17:58:38 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 32A312D1842
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Dec 2020 19:14:03 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726278AbgLGQ4q (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 7 Dec 2020 11:56:46 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34894 "EHLO
+        id S1725915AbgLGSNr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 7 Dec 2020 13:13:47 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46878 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726270AbgLGQ4q (ORCPT
+        with ESMTP id S1725816AbgLGSNr (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 7 Dec 2020 11:56:46 -0500
-Received: from mail-ej1-x62c.google.com (mail-ej1-x62c.google.com [IPv6:2a00:1450:4864:20::62c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 03B83C061749
-        for <linux-arm-msm@vger.kernel.org>; Mon,  7 Dec 2020 08:56:00 -0800 (PST)
-Received: by mail-ej1-x62c.google.com with SMTP id d17so20454549ejy.9
-        for <linux-arm-msm@vger.kernel.org>; Mon, 07 Dec 2020 08:55:59 -0800 (PST)
+        Mon, 7 Dec 2020 13:13:47 -0500
+Received: from mail-pj1-x1044.google.com (mail-pj1-x1044.google.com [IPv6:2607:f8b0:4864:20::1044])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0B61AC061793
+        for <linux-arm-msm@vger.kernel.org>; Mon,  7 Dec 2020 10:13:07 -0800 (PST)
+Received: by mail-pj1-x1044.google.com with SMTP id o7so66445pjj.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 07 Dec 2020 10:13:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=LcqO+z1JPPtH4Twp/f6gw/uNW8YPIYEnTi+b5iaGIJc=;
-        b=qHjB1vc7lxlDp9TAyANze9YSaYU9Mrd4qg1sLdlXXghlB0j2axQ0RcYHEMm8JqYRQj
-         MpSyWcNkLKvdM6g6uX9v64A+iHHSu4sy/7nV+GgDPgfuBw457WHH0VFvaK4uByH91u5U
-         6jEvVPUVZ5eGZaF8vHSITuVNwyncOSk33IrRy6Zq38qGV/2MQ9grsxwHA4yissf0VEw2
-         i6PSY7LCyHaL2ooO2DeZhrU6tTWH1quPtUNh3FhxKmVAMU5NXP6RF7HrtLcF4kMu3e6c
-         7NbmC8OKUMa5c6WGAPbx+jDbpwcDc6/uUykxh1kHq3qKVEVmaHsQbZeg5lPEldEtHJpZ
-         CCyQ==
+        d=chromium.org; s=google;
+        h=mime-version:content-transfer-encoding:in-reply-to:references
+         :subject:from:cc:to:date:message-id:user-agent;
+        bh=GM5JYOH/FKUqpm98Q4LGzAP9NniGeon6h7FY522+ZHE=;
+        b=lmBK9f4Db/klpOOK6amKYfXRwn0Bhpc2Qm6wRLS1PvYzYV82J6FTgGehulFBGauUkt
+         r6YKp5PGmjxfI7quSk43Vai27uXbE/l+RVQ3Ai6DRRPq1Uo1QEk2XC17EtUzfkRuO1Ez
+         cj7s35KNXA+MGglkf47ugdLxZrfI17LUkXtic=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=LcqO+z1JPPtH4Twp/f6gw/uNW8YPIYEnTi+b5iaGIJc=;
-        b=NmYDy/zj2OwAtJQijV5xc0O8oe0L3x6OrG9tQUj6rfD9IWWEPihiY6ZMwqrCV5SPp7
-         h8MqCgDCM+Mhp6ff6Y93d/o6SumB5T7yvF4CN3vRIC78QXliwnEqb4+WLiZifq2R4YeQ
-         qhVdVvH2Klg3Se6rCfBgYYTiySAVl3o/4dGBE+nZEx3wvg90aJEy5kpmiKFfAJHAG9sD
-         XfzhLEBC+7JTJ0YKC9+gAvxR6166jbgUEGdh7Ww8hl1K+PNzN1yC+83O4q6jP0xybvnV
-         wXZcB0xijXtoFHTv5kFX0oykMwmFXcgFBunEJDZCvdW7Ry7T4R5LWqi4LaiqskmybtG9
-         u9sA==
-X-Gm-Message-State: AOAM530JYNWZq7NfD1+zIQeHUCZSmK4ttiz2WM4s4e2W5azYUfSbo48C
-        6mvk8RsBFmRCpf0msRWU9TUw5HX2QgXlOdKYDPhBog==
-X-Google-Smtp-Source: ABdhPJyxSaYsCEnR/C/QJS+K1Op8A0GvaY++nSjI2vZTlKP5B7OLDH7nbjeaEOTPg8yILzjS9Ke/02a6y3Skwmzz+6k=
-X-Received: by 2002:a17:906:e093:: with SMTP id gh19mr19876397ejb.510.1607360158602;
- Mon, 07 Dec 2020 08:55:58 -0800 (PST)
+        h=x-gm-message-state:mime-version:content-transfer-encoding
+         :in-reply-to:references:subject:from:cc:to:date:message-id
+         :user-agent;
+        bh=GM5JYOH/FKUqpm98Q4LGzAP9NniGeon6h7FY522+ZHE=;
+        b=YKb9I40R6Kh8M+YiDKkFvYXw8vOwoq1au0P9ZkU3beqfVsBkNh9QtQvji8ZbtuIcCv
+         NERLiIVwQdLAMGa8RCZJ9C8y1P12dNB+aiN9HlsdJjunuOYHD3WLIGhwc0sfU7fUw9M3
+         LruZ9cjH1ce0642XOmqFVQJ2zHt+UTP9G4sl52+DnQE7tTjrfSFbo1f/wxk1jXssVR1K
+         3eU1NOvEWPsuOFRD5wjE0sVo2wHpiNvb/yUwSHse6QhxMYLDODhE/P4IrGafq+XBH629
+         6cW+gCV4/TPRJJmgabueKOcOceUXpSZqRj+ypeHtYvicGjK1kFuWWkNZ/GUgjD5A7swV
+         Kzqg==
+X-Gm-Message-State: AOAM532/6pOqs32NpjHMdakMAdaSDBZFctZTXFUhZJooxBtPQf1R0zVz
+        pVqncQVmLlyiMofCYGmRMbhgQQ==
+X-Google-Smtp-Source: ABdhPJzd5Je4bxNJ+cnyglthmWtlK4int+10tmndI3nRk6ab536UNAuZdrKN4mFmGgawc8EuG59U2w==
+X-Received: by 2002:a17:90a:a393:: with SMTP id x19mr80366pjp.68.1607364786560;
+        Mon, 07 Dec 2020 10:13:06 -0800 (PST)
+Received: from chromium.org ([2620:15c:202:201:3e52:82ff:fe6c:83ab])
+        by smtp.gmail.com with ESMTPSA id c133sm3671543pfb.8.2020.12.07.10.13.05
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 07 Dec 2020 10:13:05 -0800 (PST)
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-References: <CAMZdPi-LHmeLXGDjsb3kEhXrrv2do5eJ=HrHOnS5r+DqtAwKcQ@mail.gmail.com>
- <4098d0e6-4cb7-32ba-3b40-cfb0412bac6d@codeaurora.org>
-In-Reply-To: <4098d0e6-4cb7-32ba-3b40-cfb0412bac6d@codeaurora.org>
-From:   Loic Poulain <loic.poulain@linaro.org>
-Date:   Mon, 7 Dec 2020 18:02:21 +0100
-Message-ID: <CAMZdPi9oxXhry94HmnSsBqa6oP3GvTWTmy9CSLUphYjR3e+-ew@mail.gmail.com>
-Subject: Re: The MHI interrupt handling issue
-To:     Jeffrey Hugo <jhugo@codeaurora.org>
-Cc:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        Hemant Kumar <hemantk@codeaurora.org>,
-        Bhaumik Bhatt <bbhatt@codeaurora.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <1607321610-25052-1-git-send-email-dikshita@codeaurora.org>
+References: <1607321610-25052-1-git-send-email-dikshita@codeaurora.org>
+Subject: Re: [PATCH v3] venus: core: add support to dump FW region
+From:   Stephen Boyd <swboyd@chromium.org>
+Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        vgarodia@codeaurora.org, Dikshita Agarwal <dikshita@codeaurora.org>
+To:     dikshita@codeaurora.org, linux-media@vger.kernel.org,
+        stanimir.varbanov@linaro.org
+Date:   Mon, 07 Dec 2020 10:13:03 -0800
+Message-ID: <160736478377.1580929.9110917864533891175@swboyd.mtv.corp.google.com>
+User-Agent: alot/0.9.1
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Jeffrey,
+Quoting dikshita@codeaurora.org (2020-12-06 22:13:30)
+> From: Dikshita Agarwal <dikshita@codeaurora.org>
+>=20
+> Add support to dump video FW region during FW crash
+> using devcoredump helpers.
+>=20
+> Signed-off-by: Dikshita Agarwal <dikshita@codeaurora.org>
+> ---
 
-On Mon, 7 Dec 2020 at 16:48, Jeffrey Hugo <jhugo@codeaurora.org> wrote:
->
-> On 12/7/2020 6:20 AM, Loic Poulain wrote:
-> > Hi folks,
-> >
-> > Before putting my hands into that, I wanted to expose a MHI interrupt
-> > problem, comments are welcome.
-> >
-> > Currently, the hard IRQ handler for event rings do nothing except
-> > triggering a tasklet as bottom half that in turn will take care of
-> > retrieving buffer(s). That leads to have an unexpected high amount of
-> > interrupts when I perform throughput testing with mhi-net (though it
-> > applies for any mhi client driver).
-> >
-> > The point is that usually, an hard interrupt handler is responsible
-> > for triggering the bottom half handler but also for
-> > clearing/suspending interrupt on device side. However, AFAIK, there is
-> > no such possibility in the MHI protocol. Since the interrupt is not
->
-> I think Linux side improvements would always be welcome, but have you
-> looked at BEI and INTMODT?  They are features defined in the MHI spec
-> for addressing interrupt storms.
+One nit below.
 
-Yes, that interrupt coalescing feature is working well, and I use it
-in that context. But Actually the problem is not really that the
-device generates too many interrupts, but that the driver does not
-mask the interrupt while handling it, causing replicated interrupts,
-and so useless hard interrupt handler executions. I need to
-investigate how bad it impact the system/transfers though.
+Reviewed-by: Stephen Boyd <swboyd@chromium.org>
 
+Usually this contains a "Changes from v1" section. What changed?
 
->
->
-> > handled in the hard irq handler, it is triggered again once interrupt
-> > are re-enabled, and even during the tasklet execution... at the end,
-> > that makes a lot of unnecessary interrupts, that introduce latency and
-> > participate to system load...
-> >
-> > I added some printk to highlight that issue:
-> > [11564.689202] mhi_irq_handler 55d32b8
-> > [11564.689485] mhi_irq_handler 55d32b8
-> > [11564.690011] mhi_irq_handler 55d32b8
-> > [11564.690397] [55d32b8] mhi_process_data_event_ring start
-> > [11564.690667] mhi_irq_handler 55d32b8
-> > [11564.690937] mhi_irq_handler 55d32b8
-> > [11564.691207] mhi_irq_handler 55d32b8
-> > [11564.691475] mhi_irq_handler 55d32b8
-> > [11564.692076] [55d32b8] mhi_process_data_event_ring done
-> > [...]
-> >
-> > I see two solutions to fix that problem:
-> > - Manage events directly in the hard-irq handler (no more tasklet)
-> > - Use threaded IRQ with IRQF_ONESHOT flag, to keep interrupt masked
-> > until threaded handler has completed.
-> >
-> > Regards,
-> > Loic
+>  drivers/media/platform/qcom/venus/core.c     | 31 ++++++++++++++++++++++=
+++++++
+>  drivers/media/platform/qcom/venus/core.h     |  2 ++
+>  drivers/media/platform/qcom/venus/firmware.c |  3 +++
+>  3 files changed, 36 insertions(+)
+>=20
+> diff --git a/drivers/media/platform/qcom/venus/core.c b/drivers/media/pla=
+tform/qcom/venus/core.c
+> index 5102403..f23923d 100644
+> --- a/drivers/media/platform/qcom/venus/core.c
+> +++ b/drivers/media/platform/qcom/venus/core.c
+> @@ -22,6 +24,33 @@
+>  #include "firmware.h"
+>  #include "pm_helpers.h"
+> =20
+> +static void venus_coredump(struct venus_core *core)
+> +{
+> +       struct device *dev;
+> +       phys_addr_t mem_phys;
+> +       size_t mem_size;
+> +       void *mem_va;
+> +       void *data;
+> +
+> +       dev =3D core->dev;
+> +       mem_phys =3D core->fw.mem_phys;
+> +       mem_size =3D core->fw.mem_size;
+> +
+> +       mem_va =3D memremap(mem_phys, mem_size, MEMREMAP_WC);
+> +       if (!mem_va)
+> +               return;
+> +
+> +       data =3D vmalloc(mem_size);
+> +       if (!data) {
+> +               memunmap(mem_va);
+> +               return;
+> +       }
+> +
+> +       memcpy(data, mem_va, mem_size);
+> +       dev_coredumpv(dev, data, mem_size, GFP_KERNEL);
+> +       memunmap(mem_va);
+
+Technically we could unmap right after memcpy() so that the mapping only
+exists for the memcpy() and then mem_va isn't "alive" for the
+dev_coredumpv() call.
+
+> +}
+> +
+>  static void venus_event_notify(struct venus_core *core, u32 event)
