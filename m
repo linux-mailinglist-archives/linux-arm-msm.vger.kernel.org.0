@@ -2,156 +2,114 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id BBDA62D0E50
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Dec 2020 11:44:42 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 76AFF2D1085
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Dec 2020 13:24:11 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726149AbgLGKnJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 7 Dec 2020 05:43:09 -0500
-Received: from so254-31.mailgun.net ([198.61.254.31]:45784 "EHLO
-        so254-31.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726207AbgLGKnJ (ORCPT
+        id S1727484AbgLGMXr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 7 Dec 2020 07:23:47 -0500
+Received: from m43-15.mailgun.net ([69.72.43.15]:37258 "EHLO
+        m43-15.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727182AbgLGMXr (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 7 Dec 2020 05:43:09 -0500
+        Mon, 7 Dec 2020 07:23:47 -0500
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1607337768; h=References: In-Reply-To: Message-Id: Date:
- Subject: Cc: To: From: Sender;
- bh=Wvgu5LNknKKtzh44u0u14MyyrMp6TkmWb5YLGVhgF2s=; b=Q3GS2yo3eQMWlD7sJn7+t+ioW2ZHPbsOFFG/1j0Ap3GKWU9AIPTHvsYtrE9i/8GKF/ixMA3H
- M9IUI/156Kd43kVQ314ttC4ZvekeIt80hEFeCLlrHe7VxtZiLfBxu5S6vG8GUqdNXzi7shi6
- 9oyZUn+sa2TweWuUCyC74LFMilA=
-X-Mailgun-Sending-Ip: 198.61.254.31
+ s=smtp; t=1607343803; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
+ Subject: Sender; bh=1SikiSOLDWxZ6yMf43VC0ekizit3Ea0q7Thf5whM7Ok=; b=KAIeYPrMBUZQUG+UYJjmcEV9aMMnGPMEJt66Q64SpXRQxwyO0XCk/TgDNjqXEpfZY1SkBJw3
+ PH4z7JYUQzCwKJsDRm+BTihjCFgmzoxtA+nEuHlME+r9abyhTn4ZT99XpKL4st/ecPvX+tEr
+ FpLTXqim8mk4Mx48YiK3+IHQx7c=
+X-Mailgun-Sending-Ip: 69.72.43.15
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org
  (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n03.prod.us-east-1.postgun.com with SMTP id
- 5fce070eb50fb3818a6de8b4 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 07 Dec 2020 10:42:22
+ smtp-out-n09.prod.us-west-2.postgun.com with SMTP id
+ 5fce1e9896285165cdc18dfe (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 07 Dec 2020 12:22:48
  GMT
-Sender: akhilpo=codeaurora.org@mg.codeaurora.org
+Sender: akashast=codeaurora.org@mg.codeaurora.org
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 17633C43461; Mon,  7 Dec 2020 10:42:22 +0000 (UTC)
+        id 11A68C433ED; Mon,  7 Dec 2020 12:22:48 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
-        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
-Received: from akhilpo-linux.qualcomm.com (unknown [202.46.22.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        NICE_REPLY_A,SPF_FAIL,URIBL_BLOCKED autolearn=no autolearn_force=no
+        version=3.4.0
+Received: from [192.168.43.89] (unknown [106.205.31.177])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        (Authenticated sender: akhilpo)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id D27ADC433ED;
-        Mon,  7 Dec 2020 10:42:17 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org D27ADC433ED
+        (Authenticated sender: akashast)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id C2072C433CA;
+        Mon,  7 Dec 2020 12:22:43 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org C2072C433CA
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=akhilpo@codeaurora.org
-From:   Akhil P Oommen <akhilpo@codeaurora.org>
-To:     freedreno@lists.freedesktop.org, devicetree@vger.kernel.org
-Cc:     robh@kernel.org, dri-devel@freedesktop.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        jcrouse@codeaurora.org, mka@chromium.org, robdclark@gmail.com,
-        dianders@chromium.org
-Subject: [PATCH v3 2/2] arm: dts: sc7180: Add support for gpu fuse
-Date:   Mon,  7 Dec 2020 16:12:08 +0530
-Message-Id: <1607337728-11398-2-git-send-email-akhilpo@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1607337728-11398-1-git-send-email-akhilpo@codeaurora.org>
-References: <1607337728-11398-1-git-send-email-akhilpo@codeaurora.org>
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=akashast@codeaurora.org
+Subject: Re: [PATCH 3/3] Serial: Separate out earlycon support
+To:     Greg KH <gregkh@linuxfoundation.org>
+Cc:     bjorn.andersson@linaro.org, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-serial@vger.kernel.org,
+        mka@chromium.org, dianders@chromium.org,
+        linux-kernel@vger.kernel.org, saravanak@google.com
+References: <1607330847-15522-1-git-send-email-akashast@codeaurora.org>
+ <1607330847-15522-4-git-send-email-akashast@codeaurora.org>
+ <X83x0BZmGYtQSMUU@kroah.com>
+From:   Akash Asthana <akashast@codeaurora.org>
+Message-ID: <ab693e13-0478-5301-5ccb-9d8b1191afa1@codeaurora.org>
+Date:   Mon, 7 Dec 2020 17:52:32 +0530
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.5.1
+MIME-Version: 1.0
+In-Reply-To: <X83x0BZmGYtQSMUU@kroah.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add support for gpu fuse to help identify the supported opps.
+Hi Greg,
 
-Signed-off-by: Akhil P Oommen <akhilpo@codeaurora.org>
----
- arch/arm64/boot/dts/qcom/sc7180.dtsi | 22 ++++++++++++++++++++++
- 1 file changed, 22 insertions(+)
+On 12/7/2020 2:41 PM, Greg KH wrote:
+> On Mon, Dec 07, 2020 at 02:17:27PM +0530, Akash Asthana wrote:
+>> Separate out earlycon support from serial driver and remove it's
+>> dependency on QUP wrapper driver.
+>>
+>> This enable us to manage earlycon independently and we can re-use the
+>> same earlycon driver for android project which currently uses
+>> downstream version of QUP drivers.
+> What do you mean by "downstream" here?
+>
+>> Signed-off-by: Akash Asthana <akashast@codeaurora.org>
+>> ---
+>>   drivers/tty/serial/Kconfig              |   9 +
+>>   drivers/tty/serial/Makefile             |   1 +
+>>   drivers/tty/serial/qcom_geni_earlycon.c | 649 ++++++++++++++++++++++++++++++++
+>>   drivers/tty/serial/qcom_geni_serial.c   |  97 -----
+> So you are replacing 97 lines of code with 649 lines?  How is this
+> benefiting anyone?
+>
+> confused,
 
-diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-index 6678f1e..8cae3eb 100644
---- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-@@ -675,6 +675,11 @@
- 				reg = <0x25b 0x1>;
- 				bits = <1 3>;
- 			};
-+
-+			gpu_speed_bin: gpu_speed_bin@1d2 {
-+				reg = <0x1d2 0x2>;
-+				bits = <5 8>;
-+			};
- 		};
- 
- 		sdhc_1: sdhci@7c4000 {
-@@ -1907,52 +1912,69 @@
- 			operating-points-v2 = <&gpu_opp_table>;
- 			qcom,gmu = <&gmu>;
- 
-+			nvmem-cells = <&gpu_speed_bin>;
-+			nvmem-cell-names = "speed_bin";
-+
- 			interconnects = <&gem_noc MASTER_GFX3D 0 &mc_virt SLAVE_EBI1 0>;
- 			interconnect-names = "gfx-mem";
- 
- 			gpu_opp_table: opp-table {
- 				compatible = "operating-points-v2";
- 
-+				opp-825000000 {
-+					opp-hz = /bits/ 64 <825000000>;
-+					opp-level = <RPMH_REGULATOR_LEVEL_TURBO_L1>;
-+					opp-peak-kBps = <8532000>;
-+					opp-supported-hw = <0x04>;
-+				};
-+
- 				opp-800000000 {
- 					opp-hz = /bits/ 64 <800000000>;
- 					opp-level = <RPMH_REGULATOR_LEVEL_TURBO>;
- 					opp-peak-kBps = <8532000>;
-+					opp-supported-hw = <0x07>;
- 				};
- 
- 				opp-650000000 {
- 					opp-hz = /bits/ 64 <650000000>;
- 					opp-level = <RPMH_REGULATOR_LEVEL_NOM_L1>;
- 					opp-peak-kBps = <7216000>;
-+					opp-supported-hw = <0x07>;
- 				};
- 
- 				opp-565000000 {
- 					opp-hz = /bits/ 64 <565000000>;
- 					opp-level = <RPMH_REGULATOR_LEVEL_NOM>;
- 					opp-peak-kBps = <5412000>;
-+					opp-supported-hw = <0x07>;
- 				};
- 
- 				opp-430000000 {
- 					opp-hz = /bits/ 64 <430000000>;
- 					opp-level = <RPMH_REGULATOR_LEVEL_SVS_L1>;
- 					opp-peak-kBps = <5412000>;
-+					opp-supported-hw = <0x07>;
- 				};
- 
- 				opp-355000000 {
- 					opp-hz = /bits/ 64 <355000000>;
- 					opp-level = <RPMH_REGULATOR_LEVEL_SVS>;
- 					opp-peak-kBps = <3072000>;
-+					opp-supported-hw = <0x07>;
- 				};
- 
- 				opp-267000000 {
- 					opp-hz = /bits/ 64 <267000000>;
- 					opp-level = <RPMH_REGULATOR_LEVEL_LOW_SVS>;
- 					opp-peak-kBps = <3072000>;
-+					opp-supported-hw = <0x07>;
- 				};
- 
- 				opp-180000000 {
- 					opp-hz = /bits/ 64 <180000000>;
- 					opp-level = <RPMH_REGULATOR_LEVEL_MIN_SVS>;
- 					opp-peak-kBps = <1804000>;
-+					opp-supported-hw = <0x07>;
- 				};
- 			};
- 		};
+We have 2 versions of QUP driver, upstream version(Present in linus 
+tree, mostly used for chromium project) and downstream version(belong to 
+vendor part of code in GKI design, used for all the other project).
+
+There is need to enable geni earlycon in Google provided boot image for 
+GKI to facilitate the debug until real console(belong to vendor code) is up.
+
+Currently it won't be possible because geni earlycon cannot be enabled 
+independently, it depends on upstream QUP wrapper driver 
+(soc/qcom/qcom-geni-se.c) and upstream serial 
+driver(serial/qcom_geni_serial.c).
+
+With this patch I am trying to break any dependency btw earlycon hook 
+and QUP kernel drivers, so it can be managed independently.
+
+Regards,
+
+Akash
+
+
 -- 
-2.7.4
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,\na Linux Foundation Collaborative Project
 
