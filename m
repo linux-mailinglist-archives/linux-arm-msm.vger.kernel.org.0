@@ -2,88 +2,253 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 53F252D1CD4
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Dec 2020 23:10:51 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id F0DE82D1D63
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Dec 2020 23:35:42 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726250AbgLGWJ6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 7 Dec 2020 17:09:58 -0500
-Received: from mail-ot1-f67.google.com ([209.85.210.67]:37552 "EHLO
-        mail-ot1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726007AbgLGWJ6 (ORCPT
+        id S1727834AbgLGWeI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 7 Dec 2020 17:34:08 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59518 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727841AbgLGWeI (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 7 Dec 2020 17:09:58 -0500
-Received: by mail-ot1-f67.google.com with SMTP id o11so11364944ote.4;
-        Mon, 07 Dec 2020 14:09:37 -0800 (PST)
+        Mon, 7 Dec 2020 17:34:08 -0500
+Received: from mail-pf1-x441.google.com (mail-pf1-x441.google.com [IPv6:2607:f8b0:4864:20::441])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 260C6C061794
+        for <linux-arm-msm@vger.kernel.org>; Mon,  7 Dec 2020 14:33:28 -0800 (PST)
+Received: by mail-pf1-x441.google.com with SMTP id 131so11755393pfb.9
+        for <linux-arm-msm@vger.kernel.org>; Mon, 07 Dec 2020 14:33:28 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=SSueuYRotanQ+4QEeXW+wZzLoOCXQ+Ue8RORUX/gw+g=;
+        b=TusZ6D48JsMvbJMh6adALUVYfDQpM5r9xWc4GdtwICJDZbUAz3Nc4XDtaHyv0g03It
+         RwGI2RvlvZWageXVdhukQcY9rrtAXvEQiOhr+Nys+ksevuEm98N7JCfAunJtMd+U+EGp
+         Ro7nPYxr5llsrFCze9a5hJ/axy2PyZ8dQGakc=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=eEyuCq0orrK+zaG7y0s2/donzkzWcAZFmgt/A1f//Yk=;
-        b=oQsNqxXWeRo9cSnUQ1BDDThk5nzLZokrl0l3E6wJk1l7Isgb23jBPUqKDmn0XmJg0I
-         GUV5yeg3egcEr/putvp8O2wSco/x1UuFxlt/RP0dTOPLaqSZbqHsvRd8nBWla3PFlzeW
-         XbVIofLTwm6vOzd01ozmZRpo8JsYocHwYxdNuxQ2tAQ/sUE05l5HSwghgevZw3LAJ4wu
-         GmOeIlBzGWNbTM3JIMwPXAUUd6B8eg5h6ubVncj7wcA4nBgolV+uF/ddR5pBY8bpgaZL
-         8alYtpSafJxnhgPp5FWaGOA82JluVmg8r6zFj2a7A8Bch6Giw9t17wwL3zWLwqs3npnz
-         1lmg==
-X-Gm-Message-State: AOAM531fVdSW2LXCGX06xVkgYYWvIPVYQPfzKISCE7bOdrcN0qzbb6cQ
-        JiplwqnubwisgxG4vKuS9Q==
-X-Google-Smtp-Source: ABdhPJy+Zvpma0/n7ijbAgsnojTNissbUFf8+kWdcn9VvzvovXHlQI/qIhixgouaF2p/sDJ9KdZNsg==
-X-Received: by 2002:a9d:5f03:: with SMTP id f3mr14573953oti.91.1607378951694;
-        Mon, 07 Dec 2020 14:09:11 -0800 (PST)
-Received: from xps15 (24-155-109-49.dyn.grandenetworks.net. [24.155.109.49])
-        by smtp.gmail.com with ESMTPSA id 60sm2928735ott.32.2020.12.07.14.09.10
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=SSueuYRotanQ+4QEeXW+wZzLoOCXQ+Ue8RORUX/gw+g=;
+        b=tu9dX/HXCuY59POmuJ3D6ThMRE3ljbfyjPVZ2CSdGk6IcShefhAV6cfiwuglqIV0J1
+         hdoyfgoXFqRO3FmGAyuACrUHZg4i2RS77uRUG8z/YxcFqgo7U3mt1YYg//TDaojoDL5r
+         IGcFvtlc9y4pNIXD/6Za3fi5q2uH/uwwHHrctBSid+lk/Gr2S+grptGBwtB2cl3VA4ed
+         ZTCaLuDeYicRxdsqLHIQucNqecIU+u1LAJy7zC/LoalR8KN6yBszS5lqFZf3rqtxC7Gt
+         VD3Y4XhX5CHcN38TJY2uuNw0Kof0ez+1QODjb9kaX0nI8ikpu+DRGHKi4hXQv785RA15
+         aX1w==
+X-Gm-Message-State: AOAM532RYf6lfez0Ka6RaqpsDrDycHSZ5ceta4LcWDahIDwqJnzCtvug
+        8V5wRrwCUTJQoUS22yu/uodALQ==
+X-Google-Smtp-Source: ABdhPJw24QVjDXqKPHzwoO6HdHtTL9yb5ELsQe0CSaTIiT8/fzGgxQO7TR0EepZYhckS/IZ1YghRXw==
+X-Received: by 2002:a17:90a:7844:: with SMTP id y4mr970089pjl.68.1607380407551;
+        Mon, 07 Dec 2020 14:33:27 -0800 (PST)
+Received: from tictac2.mtv.corp.google.com ([2620:15c:202:1:42b0:34ff:fe3d:58e6])
+        by smtp.gmail.com with ESMTPSA id y24sm15199468pfn.176.2020.12.07.14.33.26
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 07 Dec 2020 14:09:10 -0800 (PST)
-Received: (nullmailer pid 923974 invoked by uid 1000);
-        Mon, 07 Dec 2020 22:09:09 -0000
-Date:   Mon, 7 Dec 2020 16:09:09 -0600
-From:   Rob Herring <robh@kernel.org>
-To:     Thara Gopinath <thara.gopinath@linaro.org>
-Cc:     agross@kernel.org, bjorn.andersson@linaro.org,
-        herbert@gondor.apana.org.au, davem@davemloft.net, sboyd@kernel.org,
-        mturquette@baylibre.com, linux-arm-msm@vger.kernel.org,
-        linux-crypto@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org
-Subject: Re: [Patch v2 6/6] dt-bindings: crypto: qcom-qce: Add v5.4 to binding
-Message-ID: <20201207220909.GA918596@robh.at.kernel.org>
-References: <20201119155233.3974286-1-thara.gopinath@linaro.org>
- <20201119155233.3974286-7-thara.gopinath@linaro.org>
+        Mon, 07 Dec 2020 14:33:27 -0800 (PST)
+From:   Douglas Anderson <dianders@chromium.org>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     mka@chromium.org, kgunda@codeaurora.org, amstan@chromium.org,
+        swboyd@chromium.org, Douglas Anderson <dianders@chromium.org>,
+        Andy Gross <agross@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [PATCH] arm64: dts: qcom: Clean up sc7180-trogdor voltage rails
+Date:   Mon,  7 Dec 2020 14:33:02 -0800
+Message-Id: <20201207143255.1.Ib92ec35163682dec4b2fbb4bde0785cb6e6dde27@changeid>
+X-Mailer: git-send-email 2.29.2.576.ga3fc446d84-goog
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20201119155233.3974286-7-thara.gopinath@linaro.org>
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Nov 19, 2020 at 10:52:33AM -0500, Thara Gopinath wrote:
-> Add compatible string to support v5.4 crypto engine.
-> 
-> Signed-off-by: Thara Gopinath <thara.gopinath@linaro.org>
-> Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-> ---
->  Documentation/devicetree/bindings/crypto/qcom-qce.txt | 4 +++-
->  1 file changed, 3 insertions(+), 1 deletion(-)
-> 
-> diff --git a/Documentation/devicetree/bindings/crypto/qcom-qce.txt b/Documentation/devicetree/bindings/crypto/qcom-qce.txt
-> index fdd53b184ba8..ed1ede9c0acc 100644
-> --- a/Documentation/devicetree/bindings/crypto/qcom-qce.txt
-> +++ b/Documentation/devicetree/bindings/crypto/qcom-qce.txt
-> @@ -2,7 +2,9 @@ Qualcomm crypto engine driver
->  
->  Required properties:
->  
-> -- compatible  : should be "qcom,crypto-v5.1"
-> +- compatible  : should be
-> +		"qcom,crypto-v5.1" for ipq6018
-> +		"qcom,crypto-v5.4" for sdm845
+For a bunch of rails we really don't do anything with them in Linux.
+These are things like modem voltage rails that the modem manages these
+itself and core rails (like IO rails) that are setup to just
+automagically do the right thing by the firmware.
 
-An outstanding example of why to use SoC specific compatibles rather 
-than versions. Keep v5.1, but use SoC compatibles going forward.
+Let's stop even listing those rails in our device tree.
 
->  - reg         : specifies base physical address and size of the registers map
->  - clocks      : phandle to clock-controller plus clock-specifier pair
->  - clock-names : "iface" clocks register interface
-> -- 
-> 2.25.1
-> 
+The net result of this is that some of these rails might be able to go
+down to a lower voltage or perhaps transition to LPM (low power mode)
+sometimes.
+
+Here's a list of what we're doing and why:
+
+* L1A - only goes to SoC and doesn't seem associated with any
+  particular peripheral. Kernel isn't doing anything with
+  this. Removing from dts. NET IMPACT: rail might drop from 1.2V to
+  1.178V and switch to LPM in some cases depending on firmware.
+* L2A - only goes to SoC and doesn't seem associated with any
+  particular peripheral. Kernel isn't doing anything with
+  this. Removing from dts. NET IMPACT: rail might switch to LPM in
+  some cases depending on firmware.
+* L3A - only goes to SoC and doesn't seem associated with any
+  particular peripheral. Kernel isn't doing anything with
+  this. Removing from dts. NET IMPACT: rail might switch to LPM in
+  some cases depending on firmware.
+* L5A - seems to be totally unused as far as I can tell and doesn't
+  even come off QSIP. Removing from dts.
+* L6A - only goes to SoC and doesn't seem associated with any
+  particular peripheral (I think?). Kernel isn't doing anything with
+  this. Removing from dts. NET IMPACT: rail might switch to LPM in
+  some cases depending on firmware.
+* L16A - Looks like this is only used for internal RF stuff. Removing
+  from dts. NET IMPACT: rail might switch to LPM in some cases
+  depending on firmware.
+* L1C - Just goes to WiFi / Bluetooth. Trust how IDP has this set and
+  put this back at 1.616V min.
+* L4C - This goes out to the eSIM among other places. This looks like
+  it's intended to be for SIM card and modem manages. NET IMPACT:
+  rail might switch to LPM in some cases depending on firmware.
+* L5C - This goes to the physical SIM.  This looks like it's intended
+  to be for SIM card and modem manages. NET IMPACT: rail might drop
+  from 1.8V to 1.648V and switch to LPM in some cases depending on
+  firmware.
+
+NOTE: in general for anything which is supposed to be managed by Linux
+I still left it all forced to HPM since I'm not 100% sure that all the
+needed calls to regulator_set_load() are in place and HPM is safer.
+Switching more things to LPM can happen in a future patch.
+
+ALSO NOTE: Power measurements showed no measurable difference after
+applying this patch, so perhaps it should be viewed more as a cleanup
+than any power savings.
+
+Signed-off-by: Douglas Anderson <dianders@chromium.org>
+---
+
+ arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi | 82 ++------------------
+ 1 file changed, 7 insertions(+), 75 deletions(-)
+
+diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
+index 8ed7dd39f6e3..43dfe7833ad9 100644
+--- a/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
+@@ -298,40 +298,6 @@ pp1125_s1a: smps1 {
+ 			regulator-max-microvolt = <1128000>;
+ 		};
+ 
+-		/*
+-		 * pp2040_s5a (smps5) and pp1056_s4a (smps4) are just
+-		 * inputs to other rails on AOP-managed PMICs on trogdor.
+-		 * The system is already configured to manage these rails
+-		 * automatically (enable when needed, adjust voltage for
+-		 * headroom) so we won't specify anything here.
+-		 *
+-		 * NOTE: though the rails have a voltage implied by their
+-		 * name, the automatic headroom calculation might not result
+-		 * in them being that voltage.  ...and that's OK.
+-		 * Specifically the only point of these rails is to provide
+-		 * an input source for other rails and if we can satisify the
+-		 * needs of those other rails with a lower source voltage then
+-		 * we save power.
+-		 */
+-
+-		pp1200_l1a: ldo1 {
+-			regulator-min-microvolt = <1200000>;
+-			regulator-max-microvolt = <1200000>;
+-			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+-		};
+-
+-		pp1000_l2a: ldo2 {
+-			regulator-min-microvolt = <944000>;
+-			regulator-max-microvolt = <1056000>;
+-			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+-		};
+-
+-		pp1000_l3a: ldo3 {
+-			regulator-min-microvolt = <968000>;
+-			regulator-max-microvolt = <1064000>;
+-			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+-		};
+-
+ 		vdd_qlink_lv:
+ 		vdd_qlink_lv_ck:
+ 		vdd_qusb_hs0_core:
+@@ -350,24 +316,6 @@ pp900_l4a: ldo4 {
+ 			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+ 		};
+ 
+-		pp2700_l5a: ldo5 {
+-			regulator-min-microvolt = <2704000>;
+-			regulator-max-microvolt = <2704000>;
+-			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+-		};
+-
+-		ebi0_cal:
+-		ebi1_cal:
+-		vddio_ck_ebi0:
+-		vddio_ck_ebi1:
+-		vddio_ebi0:
+-		vddq:
+-		pp600_l6a: ldo6 {
+-			regulator-min-microvolt = <568000>;
+-			regulator-max-microvolt = <648000>;
+-			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+-		};
+-
+ 		vdd_cx_wlan:
+ 		pp800_l9a: ldo9 {
+ 			regulator-min-microvolt = <488000>;
+@@ -404,6 +352,11 @@ pp1800_l12a_r: ldo12 {
+ 			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+ 		};
+ 
++		/*
++		 * On trogdor this needs to match l10a since we use it to
++		 * give power to things like SPI flash which communicate back
++		 * on lines powered by l10a.  Thus we force to 1.8V.
++		 */
+ 		pp1800_l13a: ldo13 {
+ 			regulator-min-microvolt = <1800000>;
+ 			regulator-max-microvolt = <1800000>;
+@@ -424,12 +377,6 @@ pp1800_l15a: ldo15 {
+ 			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+ 		};
+ 
+-		pp2700_l16a: ldo16 {
+-			regulator-min-microvolt = <2496000>;
+-			regulator-max-microvolt = <3304000>;
+-			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+-		};
+-
+ 		vdda_qusb_hs0_3p1:
+ 		vdd_pdphy:
+ 		pp3100_l17a: ldo17 {
+@@ -463,8 +410,8 @@ pp1300_s8c: smps8 {
+ 		};
+ 
+ 		pp1800_l1c: ldo1 {
+-			regulator-min-microvolt = <1800000>;
+-			regulator-max-microvolt = <1800000>;
++			regulator-min-microvolt = <1616000>;
++			regulator-max-microvolt = <1984000>;
+ 			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+ 		};
+ 
+@@ -491,21 +438,6 @@ pp1200_l3c: ldo3 {
+ 			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+ 		};
+ 
+-		ld_pp1800_esim_l4c:
+-		vddpx_5:
+-		pp1800_l4c: ldo4 {
+-			regulator-min-microvolt = <1648000>;
+-			regulator-max-microvolt = <3304000>;
+-			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+-		};
+-
+-		vddpx_6:
+-		pp1800_l5c: ldo5 {
+-			regulator-min-microvolt = <1800000>;
+-			regulator-max-microvolt = <1800000>;
+-			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+-		};
+-
+ 		vddpx_2:
+ 		ppvar_l6c: ldo6 {
+ 			regulator-min-microvolt = <1800000>;
+-- 
+2.29.2.576.ga3fc446d84-goog
+
