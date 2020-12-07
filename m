@@ -2,32 +2,33 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 4BFA92D0E4F
+	by mail.lfdr.de (Postfix) with ESMTP id BBDA62D0E50
 	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Dec 2020 11:44:42 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726275AbgLGKnJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        id S1726149AbgLGKnJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
         Mon, 7 Dec 2020 05:43:09 -0500
-Received: from m43-15.mailgun.net ([69.72.43.15]:22860 "EHLO
-        m43-15.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726149AbgLGKnI (ORCPT
+Received: from so254-31.mailgun.net ([198.61.254.31]:45784 "EHLO
+        so254-31.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726207AbgLGKnJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 7 Dec 2020 05:43:08 -0500
+        Mon, 7 Dec 2020 05:43:09 -0500
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1607337767; h=Message-Id: Date: Subject: Cc: To: From:
- Sender; bh=BGNdc2vD2EMhLU2qHKPdKYLk6stKVPG2SBXK5CBPJB4=; b=pgMmhxtzKpGCZl+sxoGpGlFhOP9QR9gcAe6yVRIdKb97nxR+VJaKqWHKcOM2QfJPixakjq1c
- mHfmFgDdChHDsBbCemzPWc2iinblkqTu/bj/XjJmrO+lm6DpaMjXEzgVs8n08CoNcPVR1iRO
- VJaWUxyNWurfR9gW1lkhjIN96X0=
-X-Mailgun-Sending-Ip: 69.72.43.15
+ s=smtp; t=1607337768; h=References: In-Reply-To: Message-Id: Date:
+ Subject: Cc: To: From: Sender;
+ bh=Wvgu5LNknKKtzh44u0u14MyyrMp6TkmWb5YLGVhgF2s=; b=Q3GS2yo3eQMWlD7sJn7+t+ioW2ZHPbsOFFG/1j0Ap3GKWU9AIPTHvsYtrE9i/8GKF/ixMA3H
+ M9IUI/156Kd43kVQ314ttC4ZvekeIt80hEFeCLlrHe7VxtZiLfBxu5S6vG8GUqdNXzi7shi6
+ 9oyZUn+sa2TweWuUCyC74LFMilA=
+X-Mailgun-Sending-Ip: 198.61.254.31
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org
  (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n04.prod.us-east-1.postgun.com with SMTP id
- 5fce070b0ce450987a973765 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 07 Dec 2020 10:42:19
+ smtp-out-n03.prod.us-east-1.postgun.com with SMTP id
+ 5fce070eb50fb3818a6de8b4 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 07 Dec 2020 10:42:22
  GMT
 Sender: akhilpo=codeaurora.org@mg.codeaurora.org
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 46471C43466; Mon,  7 Dec 2020 10:42:18 +0000 (UTC)
+        id 17633C43461; Mon,  7 Dec 2020 10:42:22 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
@@ -37,9 +38,9 @@ Received: from akhilpo-linux.qualcomm.com (unknown [202.46.22.19])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
         (No client certificate requested)
         (Authenticated sender: akhilpo)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 2D6F4C433CA;
-        Mon,  7 Dec 2020 10:42:13 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 2D6F4C433CA
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id D27ADC433ED;
+        Mon,  7 Dec 2020 10:42:17 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org D27ADC433ED
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=akhilpo@codeaurora.org
 From:   Akhil P Oommen <akhilpo@codeaurora.org>
@@ -48,154 +49,109 @@ Cc:     robh@kernel.org, dri-devel@freedesktop.org,
         linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
         jcrouse@codeaurora.org, mka@chromium.org, robdclark@gmail.com,
         dianders@chromium.org
-Subject: [PATCH v3 1/2] drm/msm: Add speed-bin support to a618 gpu
-Date:   Mon,  7 Dec 2020 16:12:07 +0530
-Message-Id: <1607337728-11398-1-git-send-email-akhilpo@codeaurora.org>
+Subject: [PATCH v3 2/2] arm: dts: sc7180: Add support for gpu fuse
+Date:   Mon,  7 Dec 2020 16:12:08 +0530
+Message-Id: <1607337728-11398-2-git-send-email-akhilpo@codeaurora.org>
 X-Mailer: git-send-email 2.7.4
+In-Reply-To: <1607337728-11398-1-git-send-email-akhilpo@codeaurora.org>
+References: <1607337728-11398-1-git-send-email-akhilpo@codeaurora.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Some GPUs support different max frequencies depending on the platform.
-To identify the correct variant, we should check the gpu speedbin
-fuse value. Add support for this speedbin detection to a6xx family
-along with the required fuse details for a618 gpu.
+Add support for gpu fuse to help identify the supported opps.
 
 Signed-off-by: Akhil P Oommen <akhilpo@codeaurora.org>
 ---
-Changes from v2:
-	1. Made the changes a6xx specific to save space.
-Changes from v1:
-	1. Added the changes to support a618 sku to the series.
-	2. Avoid failing probe in case of an unsupported sku. (Rob)
+ arch/arm64/boot/dts/qcom/sc7180.dtsi | 22 ++++++++++++++++++++++
+ 1 file changed, 22 insertions(+)
 
- drivers/gpu/drm/msm/adreno/a6xx_gpu.c | 74 +++++++++++++++++++++++++++++++++++
- drivers/gpu/drm/msm/adreno/a6xx_gpu.h |  2 +
- 2 files changed, 76 insertions(+)
-
-diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-index 1306618..6304578 100644
---- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-+++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-@@ -10,10 +10,13 @@
+diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi b/arch/arm64/boot/dts/qcom/sc7180.dtsi
+index 6678f1e..8cae3eb 100644
+--- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
+@@ -675,6 +675,11 @@
+ 				reg = <0x25b 0x1>;
+ 				bits = <1 3>;
+ 			};
++
++			gpu_speed_bin: gpu_speed_bin@1d2 {
++				reg = <0x1d2 0x2>;
++				bits = <5 8>;
++			};
+ 		};
  
- #include <linux/bitfield.h>
- #include <linux/devfreq.h>
-+#include <linux/nvmem-consumer.h>
- #include <linux/soc/qcom/llcc-qcom.h>
+ 		sdhc_1: sdhci@7c4000 {
+@@ -1907,52 +1912,69 @@
+ 			operating-points-v2 = <&gpu_opp_table>;
+ 			qcom,gmu = <&gmu>;
  
- #define GPU_PAS_ID 13
++			nvmem-cells = <&gpu_speed_bin>;
++			nvmem-cell-names = "speed_bin";
++
+ 			interconnects = <&gem_noc MASTER_GFX3D 0 &mc_virt SLAVE_EBI1 0>;
+ 			interconnect-names = "gfx-mem";
  
-+const u32 a618_speedbins[] = {0, 169, 174};
-+
- static inline bool _a6xx_check_idle(struct msm_gpu *gpu)
- {
- 	struct adreno_gpu *adreno_gpu = to_adreno_gpu(gpu);
-@@ -1208,6 +1211,10 @@ static void a6xx_destroy(struct msm_gpu *gpu)
- 	a6xx_gmu_remove(a6xx_gpu);
+ 			gpu_opp_table: opp-table {
+ 				compatible = "operating-points-v2";
  
- 	adreno_gpu_cleanup(adreno_gpu);
++				opp-825000000 {
++					opp-hz = /bits/ 64 <825000000>;
++					opp-level = <RPMH_REGULATOR_LEVEL_TURBO_L1>;
++					opp-peak-kBps = <8532000>;
++					opp-supported-hw = <0x04>;
++				};
 +
-+	if (a6xx_gpu->opp_table)
-+		dev_pm_opp_put_supported_hw(a6xx_gpu->opp_table);
-+
- 	kfree(a6xx_gpu);
- }
+ 				opp-800000000 {
+ 					opp-hz = /bits/ 64 <800000000>;
+ 					opp-level = <RPMH_REGULATOR_LEVEL_TURBO>;
+ 					opp-peak-kBps = <8532000>;
++					opp-supported-hw = <0x07>;
+ 				};
  
-@@ -1264,6 +1271,67 @@ static uint32_t a6xx_get_rptr(struct msm_gpu *gpu, struct msm_ringbuffer *ring)
- 	return ring->memptrs->rptr = gpu_read(gpu, REG_A6XX_CP_RB_RPTR);
- }
+ 				opp-650000000 {
+ 					opp-hz = /bits/ 64 <650000000>;
+ 					opp-level = <RPMH_REGULATOR_LEVEL_NOM_L1>;
+ 					opp-peak-kBps = <7216000>;
++					opp-supported-hw = <0x07>;
+ 				};
  
-+static u32 fuse_to_supp_hw(struct device *dev, u32 revn, u32 fuse)
-+{
-+	int i;
-+
-+	if (revn == 618) {
-+		for (i = 0; i < ARRAY_SIZE(a618_speedbins); i++) {
-+			if (fuse == a618_speedbins[i])
-+				return  (1 << i);
-+		}
-+	}
-+
-+	DRM_DEV_ERROR(dev,
-+			"missing support for speed-bin: %u. Some OPPs may not be supported by hardware",
-+			fuse);
-+	return ~0U;
-+}
-+
-+static int a6xx_set_supported_hw(struct device *dev, struct a6xx_gpu *a6xx_gpu,
-+		u32 revn)
-+{
-+
-+	struct opp_table *opp_table;
-+	struct nvmem_cell *cell;
-+	u32 supp_hw = ~0U;
-+	void *buf;
-+
-+	cell = nvmem_cell_get(dev, "speed_bin");
-+	/*
-+	 * -ENOENT means that the platform doesn't support speedbin which is
-+	 * fine
-+	 */
-+	if (PTR_ERR(cell) == -ENOENT)
-+		return 0;
-+	else if (IS_ERR(cell)) {
-+		DRM_DEV_ERROR(dev,
-+				"failed to read speed-bin. Some OPPs may not be supported by hardware");
-+		goto done;
-+	}
-+
-+	buf = nvmem_cell_read(cell, NULL);
-+	if (IS_ERR(buf)) {
-+		nvmem_cell_put(cell);
-+		DRM_DEV_ERROR(dev,
-+				"failed to read speed-bin. Some OPPs may not be supported by hardware");
-+		goto done;
-+	}
-+
-+	supp_hw = fuse_to_supp_hw(dev, revn, *((u32 *) buf));
-+
-+	kfree(buf);
-+	nvmem_cell_put(cell);
-+
-+done:
-+	opp_table = dev_pm_opp_set_supported_hw(dev, &supp_hw, 1);
-+	if (IS_ERR(opp_table))
-+		return PTR_ERR(opp_table);
-+
-+	a6xx_gpu->opp_table = opp_table;
-+	return 0;
-+}
-+
- static const struct adreno_gpu_funcs funcs = {
- 	.base = {
- 		.get_param = adreno_get_param,
-@@ -1325,6 +1393,12 @@ struct msm_gpu *a6xx_gpu_init(struct drm_device *dev)
+ 				opp-565000000 {
+ 					opp-hz = /bits/ 64 <565000000>;
+ 					opp-level = <RPMH_REGULATOR_LEVEL_NOM>;
+ 					opp-peak-kBps = <5412000>;
++					opp-supported-hw = <0x07>;
+ 				};
  
- 	a6xx_llc_slices_init(pdev, a6xx_gpu);
+ 				opp-430000000 {
+ 					opp-hz = /bits/ 64 <430000000>;
+ 					opp-level = <RPMH_REGULATOR_LEVEL_SVS_L1>;
+ 					opp-peak-kBps = <5412000>;
++					opp-supported-hw = <0x07>;
+ 				};
  
-+	ret = a6xx_set_supported_hw(&pdev->dev, a6xx_gpu, info->revn);
-+	if (ret) {
-+		a6xx_destroy(&(a6xx_gpu->base.base));
-+		return ERR_PTR(ret);
-+	}
-+
- 	ret = adreno_gpu_init(dev, pdev, adreno_gpu, &funcs, 1);
- 	if (ret) {
- 		a6xx_destroy(&(a6xx_gpu->base.base));
-diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.h b/drivers/gpu/drm/msm/adreno/a6xx_gpu.h
-index e793d32..ce0610c 100644
---- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.h
-+++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.h
-@@ -33,6 +33,8 @@ struct a6xx_gpu {
- 	void *llc_slice;
- 	void *htw_llc_slice;
- 	bool have_mmu500;
-+
-+	struct opp_table *opp_table;
- };
+ 				opp-355000000 {
+ 					opp-hz = /bits/ 64 <355000000>;
+ 					opp-level = <RPMH_REGULATOR_LEVEL_SVS>;
+ 					opp-peak-kBps = <3072000>;
++					opp-supported-hw = <0x07>;
+ 				};
  
- #define to_a6xx_gpu(x) container_of(x, struct a6xx_gpu, base)
+ 				opp-267000000 {
+ 					opp-hz = /bits/ 64 <267000000>;
+ 					opp-level = <RPMH_REGULATOR_LEVEL_LOW_SVS>;
+ 					opp-peak-kBps = <3072000>;
++					opp-supported-hw = <0x07>;
+ 				};
+ 
+ 				opp-180000000 {
+ 					opp-hz = /bits/ 64 <180000000>;
+ 					opp-level = <RPMH_REGULATOR_LEVEL_MIN_SVS>;
+ 					opp-peak-kBps = <1804000>;
++					opp-supported-hw = <0x07>;
+ 				};
+ 			};
+ 		};
 -- 
 2.7.4
 
