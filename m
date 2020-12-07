@@ -2,287 +2,148 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 9F93D2D1A42
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Dec 2020 21:07:47 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 80E462D1BAD
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Dec 2020 22:08:52 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726626AbgLGUHg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 7 Dec 2020 15:07:36 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36530 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726338AbgLGUHf (ORCPT
+        id S1727653AbgLGVIH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 7 Dec 2020 16:08:07 -0500
+Received: from m43-15.mailgun.net ([69.72.43.15]:20060 "EHLO
+        m43-15.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727599AbgLGVIG (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 7 Dec 2020 15:07:35 -0500
-Received: from mail-ej1-x644.google.com (mail-ej1-x644.google.com [IPv6:2a00:1450:4864:20::644])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5D1EEC0617B0
-        for <linux-arm-msm@vger.kernel.org>; Mon,  7 Dec 2020 12:06:55 -0800 (PST)
-Received: by mail-ej1-x644.google.com with SMTP id m19so21264298ejj.11
-        for <linux-arm-msm@vger.kernel.org>; Mon, 07 Dec 2020 12:06:55 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=0ux7RJ2Q3HzjdM2uVsV87B7RYcyHrDaubc3tAQHm7I8=;
-        b=EqQgQHyUpXx9rPAPJBYLVVpR//Ru++8KXGV0GycNLsFaH4mmQJsrU4zfJMOorbZo61
-         dB4sVUgiv2vQZ8CM/nLsHZdqrEUR5EOhegc0GZ1g/epXuzabl5e7p/MiLOWPphPeQKzS
-         GwoGBvQ+KI9sTEHHa0JOcHKAMwJUBoE76fnFCPSdWhu6enGp9EfQw9xIkfOXYOqC2llV
-         1wf6ZX5f+6A42hh2tLUqr7z1pBI2T1VpNUgDUUAT217U13qDpMhF/W3JZ8Hv3/U6sIL/
-         4P3TMF5EWbKO19jYGwu8Z7qdm9PBVU1/JgT9tm+OZ4Rwv0i6kXNYEB+Z/BC24UljvHV8
-         ZOXw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=0ux7RJ2Q3HzjdM2uVsV87B7RYcyHrDaubc3tAQHm7I8=;
-        b=HUDk70lNtRFMFAPcaObSefwlXOuPxZav8DYYVMsKdzzrHjgoQWtYxsFIsRs9OqHN1+
-         Mi7YpjVSFd5PtmqOBsKcQWe9FH2PJyDM1/GTB13iOEw/Dos5q2kbFG+xbUbbvkoOfBCj
-         y40DX++HtoEDiRhKEHRKns68R8CmFIBtbmDRBz6xXOsujcJ8XRWrklKheNlt4PevXsSp
-         gXhdajNaGI0B3vadltXpj6W2/5X0kC5WqpUwgZToPHXT1d7uJVmWBYBXeXQIC92lbNJq
-         m67CMePaPdh95CGU7LMg7uDfwfJHvqdfbbXe82OJ95qJtig0OjbLvmzqRhxDtAbWaCQD
-         lYzQ==
-X-Gm-Message-State: AOAM530UsnkIJmznSce1d9nixViv8sPNscOsWafI1mNlH3YoNj55USfg
-        aczVatBPffOoMMIwS/eHofTPXn7+sObP/K5d+jfVOw==
-X-Google-Smtp-Source: ABdhPJxS8+oRMlH17EFd4VlvYcnnkGHapk+hhv2ITfA54FexnBdgu0q0J2s6oeZdRN0PAKx1RNBXeDF4ANYFxGv+0DE=
-X-Received: by 2002:a17:906:f9d7:: with SMTP id lj23mr11919678ejb.550.1607371613989;
- Mon, 07 Dec 2020 12:06:53 -0800 (PST)
+        Mon, 7 Dec 2020 16:08:06 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1607375268; h=Message-ID: References: In-Reply-To: Reply-To:
+ Subject: Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=PmbWDaJG2mv+6tH9TC93HycSG+bcbHfVywi/l52q+fo=;
+ b=O6b2KsWVvlemC/Evf4QlKPaV0ve77EzYGR615jlbtLMPaF0FZXEfLk/NuRjtT2CiyLbNmcRw
+ ToEikfRi4ZOsmnysF2Jk4M2XNiGEgv4vCgf6JBhItyMNS3WmaKxOaJ9nnDZ249HCJP115YtC
+ GSOEsmA9w893Uvcdc28E7zzq+6k=
+X-Mailgun-Sending-Ip: 69.72.43.15
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n08.prod.us-west-2.postgun.com with SMTP id
+ 5fce997eeb348d1ba26aac1c (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 07 Dec 2020 21:07:10
+ GMT
+Sender: bbhatt=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 432CCC433ED; Mon,  7 Dec 2020 21:07:10 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: bbhatt)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 51619C433CA;
+        Mon,  7 Dec 2020 21:07:08 +0000 (UTC)
 MIME-Version: 1.0
-References: <20201122054135.802935-1-bjorn.andersson@linaro.org>
- <20201122054135.802935-3-bjorn.andersson@linaro.org> <CAE=gft4P+kuAFfZEZz7nGoWEr9ZzDFtDZgtA7vCt5wFfnghuWQ@mail.gmail.com>
-In-Reply-To: <CAE=gft4P+kuAFfZEZz7nGoWEr9ZzDFtDZgtA7vCt5wFfnghuWQ@mail.gmail.com>
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-Date:   Mon, 7 Dec 2020 14:06:43 -0600
-Message-ID: <CAOCOHw5aZ1mMJ7ozyFUoXkgAU20k_zfHg6euWjLXmFUGDeyvNw@mail.gmail.com>
-Subject: Re: [PATCH v3 2/4] remoteproc: sysmon: Expose the shutdown result
-To:     Evan Green <evgreen@chromium.org>
-Cc:     Andy Gross <agross@kernel.org>, Ohad Ben-Cohen <ohad@wizery.com>,
-        Siddharth Gupta <sidgup@codeaurora.org>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        "open list:REMOTE PROCESSOR (REMOTEPROC) SUBSYSTEM" 
-        <linux-remoteproc@vger.kernel.org>,
-        LKML <linux-kernel@vger.kernel.org>,
-        Steev Klimaszewski <steev@kali.org>,
-        Rishabh Bhatnagar <rishabhb@codeaurora.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Mon, 07 Dec 2020 13:07:08 -0800
+From:   Bhaumik Bhatt <bbhatt@codeaurora.org>
+To:     Loic Poulain <loic.poulain@linaro.org>
+Cc:     Jeffrey Hugo <jhugo@codeaurora.org>,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        Hemant Kumar <hemantk@codeaurora.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>
+Subject: Re: The MHI interrupt handling issue
+Organization: Qualcomm Innovation Center, Inc.
+Reply-To: bbhatt@codeaurora.org
+Mail-Reply-To: bbhatt@codeaurora.org
+In-Reply-To: <CAMZdPi9oxXhry94HmnSsBqa6oP3GvTWTmy9CSLUphYjR3e+-ew@mail.gmail.com>
+References: <CAMZdPi-LHmeLXGDjsb3kEhXrrv2do5eJ=HrHOnS5r+DqtAwKcQ@mail.gmail.com>
+ <4098d0e6-4cb7-32ba-3b40-cfb0412bac6d@codeaurora.org>
+ <CAMZdPi9oxXhry94HmnSsBqa6oP3GvTWTmy9CSLUphYjR3e+-ew@mail.gmail.com>
+Message-ID: <c93eb868cf7ddb5678c99af1f7da8fe8@codeaurora.org>
+X-Sender: bbhatt@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Dec 7, 2020 at 2:00 PM Evan Green <evgreen@chromium.org> wrote:
->
-> On Sat, Nov 21, 2020 at 9:43 PM Bjorn Andersson
-> <bjorn.andersson@linaro.org> wrote:
-> >
-> > A graceful shutdown of the Qualcomm remote processors where
-> > traditionally performed by invoking a shared memory state signal and
-> > waiting for the associated ack.
-> >
-> > This was later superseded by the "sysmon" mechanism, where some form of
-> > shared memory bus is used to send a "graceful shutdown request" message
-> > and one of more signals comes back to indicate its success.
-> >
-> > But when this newer mechanism is in effect the firmware is shut down by
-> > the time the older mechanism, implemented in the remoteproc drivers,
-> > attempts to perform a graceful shutdown - and as such it will never
-> > receive an ack back.
-> >
-> > This patch therefor track the success of the latest shutdown attempt in
-> > sysmon and exposes a new function in the API that the remoteproc driver
-> > can use to query the success and the necessity of invoking the older
-> > mechanism.
-> >
-> > Tested-by: Steev Klimaszewski <steev@kali.org>
-> > Reviewed-by: Rishabh Bhatnagar <rishabhb@codeaurora.org>
-> > Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-> > ---
-> >
-> > Change since v2:
-> > - None
-> >
-> >  drivers/remoteproc/qcom_common.h |  6 +++
-> >  drivers/remoteproc/qcom_sysmon.c | 82 ++++++++++++++++++++++++--------
-> >  2 files changed, 69 insertions(+), 19 deletions(-)
-> >
-> > diff --git a/drivers/remoteproc/qcom_common.h b/drivers/remoteproc/qcom_common.h
-> > index dfc641c3a98b..8ba9052955bd 100644
-> > --- a/drivers/remoteproc/qcom_common.h
-> > +++ b/drivers/remoteproc/qcom_common.h
-> > @@ -51,6 +51,7 @@ struct qcom_sysmon *qcom_add_sysmon_subdev(struct rproc *rproc,
-> >                                            const char *name,
-> >                                            int ssctl_instance);
-> >  void qcom_remove_sysmon_subdev(struct qcom_sysmon *sysmon);
-> > +bool qcom_sysmon_shutdown_acked(struct qcom_sysmon *sysmon);
-> >  #else
-> >  static inline struct qcom_sysmon *qcom_add_sysmon_subdev(struct rproc *rproc,
-> >                                                          const char *name,
-> > @@ -62,6 +63,11 @@ static inline struct qcom_sysmon *qcom_add_sysmon_subdev(struct rproc *rproc,
-> >  static inline void qcom_remove_sysmon_subdev(struct qcom_sysmon *sysmon)
-> >  {
-> >  }
-> > +
-> > +static inline bool qcom_sysmon_shutdown_acked(struct qcom_sysmon *sysmon)
-> > +{
-> > +       return false;
-> > +}
-> >  #endif
-> >
-> >  #endif
-> > diff --git a/drivers/remoteproc/qcom_sysmon.c b/drivers/remoteproc/qcom_sysmon.c
-> > index b37b111b15b3..a428b707a6de 100644
-> > --- a/drivers/remoteproc/qcom_sysmon.c
-> > +++ b/drivers/remoteproc/qcom_sysmon.c
-> > @@ -44,6 +44,7 @@ struct qcom_sysmon {
-> >         struct mutex lock;
-> >
-> >         bool ssr_ack;
-> > +       bool shutdown_acked;
-> >
-> >         struct qmi_handle qmi;
-> >         struct sockaddr_qrtr ssctl;
-> > @@ -115,10 +116,13 @@ static void sysmon_send_event(struct qcom_sysmon *sysmon,
-> >  /**
-> >   * sysmon_request_shutdown() - request graceful shutdown of remote
-> >   * @sysmon:    sysmon context
-> > + *
-> > + * Return: boolean indicator of the remote processor acking the request
-> >   */
-> > -static void sysmon_request_shutdown(struct qcom_sysmon *sysmon)
-> > +static bool sysmon_request_shutdown(struct qcom_sysmon *sysmon)
-> >  {
-> >         char *req = "ssr:shutdown";
-> > +       bool acked = false;
-> >         int ret;
-> >
-> >         mutex_lock(&sysmon->lock);
-> > @@ -141,9 +145,13 @@ static void sysmon_request_shutdown(struct qcom_sysmon *sysmon)
-> >         if (!sysmon->ssr_ack)
-> >                 dev_err(sysmon->dev,
-> >                         "unexpected response to sysmon shutdown request\n");
-> > +       else
-> > +               acked = true;
-> >
-> >  out_unlock:
-> >         mutex_unlock(&sysmon->lock);
-> > +
-> > +       return acked;
-> >  }
-> >
-> >  static int sysmon_callback(struct rpmsg_device *rpdev, void *data, int count,
-> > @@ -297,14 +305,33 @@ static struct qmi_msg_handler qmi_indication_handler[] = {
-> >         {}
-> >  };
-> >
-> > +static bool ssctl_request_shutdown_wait(struct qcom_sysmon *sysmon)
-> > +{
-> > +       int ret;
-> > +
-> > +       ret = wait_for_completion_timeout(&sysmon->shutdown_comp, 10 * HZ);
-> > +       if (ret)
-> > +               return true;
-> > +
-> > +       ret = try_wait_for_completion(&sysmon->ind_comp);
-> > +       if (ret)
-> > +               return true;
-> > +
-> > +       dev_err(sysmon->dev, "timeout waiting for shutdown ack\n");
-> > +       return false;
-> > +}
-> > +
-> >  /**
-> >   * ssctl_request_shutdown() - request shutdown via SSCTL QMI service
-> >   * @sysmon:    sysmon context
-> > + *
-> > + * Return: boolean indicator of the remote processor acking the request
-> >   */
-> > -static void ssctl_request_shutdown(struct qcom_sysmon *sysmon)
-> > +static bool ssctl_request_shutdown(struct qcom_sysmon *sysmon)
-> >  {
-> >         struct ssctl_shutdown_resp resp;
-> >         struct qmi_txn txn;
-> > +       bool acked = false;
-> >         int ret;
-> >
-> >         reinit_completion(&sysmon->ind_comp);
-> > @@ -312,7 +339,7 @@ static void ssctl_request_shutdown(struct qcom_sysmon *sysmon)
-> >         ret = qmi_txn_init(&sysmon->qmi, &txn, ssctl_shutdown_resp_ei, &resp);
-> >         if (ret < 0) {
-> >                 dev_err(sysmon->dev, "failed to allocate QMI txn\n");
-> > -               return;
-> > +               return false;
-> >         }
-> >
-> >         ret = qmi_send_request(&sysmon->qmi, &sysmon->ssctl, &txn,
-> > @@ -320,27 +347,23 @@ static void ssctl_request_shutdown(struct qcom_sysmon *sysmon)
-> >         if (ret < 0) {
-> >                 dev_err(sysmon->dev, "failed to send shutdown request\n");
-> >                 qmi_txn_cancel(&txn);
-> > -               return;
-> > +               return false;
-> >         }
-> >
-> >         ret = qmi_txn_wait(&txn, 5 * HZ);
-> > -       if (ret < 0)
-> > +       if (ret < 0) {
-> >                 dev_err(sysmon->dev, "failed receiving QMI response\n");
-> > -       else if (resp.resp.result)
-> > +       } else if (resp.resp.result) {
-> >                 dev_err(sysmon->dev, "shutdown request failed\n");
-> > -       else
-> > +       } else {
-> >                 dev_dbg(sysmon->dev, "shutdown request completed\n");
-> > -
-> > -       if (sysmon->shutdown_irq > 0) {
-> > -               ret = wait_for_completion_timeout(&sysmon->shutdown_comp,
-> > -                                                 10 * HZ);
-> > -               if (!ret) {
-> > -                       ret = try_wait_for_completion(&sysmon->ind_comp);
-> > -                       if (!ret)
-> > -                               dev_err(sysmon->dev,
-> > -                                       "timeout waiting for shutdown ack\n");
-> > -               }
-> > +               acked = true;
-> >         }
-> > +
-> > +       if (sysmon->shutdown_irq > 0)
-> > +               return ssctl_request_shutdown_wait(sysmon);
-> > +
-> > +       return acked;
-> >  }
-> >
-> >  /**
-> > @@ -510,6 +533,9 @@ static void sysmon_stop(struct rproc_subdev *subdev, bool crashed)
-> >                 .subsys_name = sysmon->name,
-> >                 .ssr_event = SSCTL_SSR_EVENT_BEFORE_SHUTDOWN
-> >         };
-> > +       bool acked;
-> > +
-> > +       sysmon->shutdown_acked = false;
-> >
-> >         mutex_lock(&sysmon->state_lock);
-> >         sysmon->state = SSCTL_SSR_EVENT_BEFORE_SHUTDOWN;
-> > @@ -521,9 +547,11 @@ static void sysmon_stop(struct rproc_subdev *subdev, bool crashed)
-> >                 return;
-> >
-> >         if (sysmon->ssctl_version)
->
-> > -               ssctl_request_shutdown(sysmon);
-> > +               acked = ssctl_request_shutdown(sysmon);
-> >         else if (sysmon->ept)
-> > -               sysmon_request_shutdown(sysmon);
-> > +               acked = sysmon_request_shutdown(sysmon);
-> > +
-> > +       sysmon->shutdown_acked = acked;
->
-> Guenter noticed that the 0-day bot complains about acked being
-> potentially uninitialized here. He put a fix for us into Chrome OS:
->
-> https://chromium-review.googlesource.com/c/chromiumos/third_party/kernel/+/2577656
->
-> Bjorn, do you want to tweak the patch in your tree?
+On 2020-12-07 09:02 AM, Loic Poulain wrote:
+> Hi Jeffrey,
+> 
+> On Mon, 7 Dec 2020 at 16:48, Jeffrey Hugo <jhugo@codeaurora.org> wrote:
+>> 
+>> On 12/7/2020 6:20 AM, Loic Poulain wrote:
+>> > Hi folks,
+>> >
+>> > Before putting my hands into that, I wanted to expose a MHI interrupt
+>> > problem, comments are welcome.
+>> >
+>> > Currently, the hard IRQ handler for event rings do nothing except
+>> > triggering a tasklet as bottom half that in turn will take care of
+>> > retrieving buffer(s). That leads to have an unexpected high amount of
+>> > interrupts when I perform throughput testing with mhi-net (though it
+>> > applies for any mhi client driver).
+>> >
+>> > The point is that usually, an hard interrupt handler is responsible
+>> > for triggering the bottom half handler but also for
+>> > clearing/suspending interrupt on device side. However, AFAIK, there is
+>> > no such possibility in the MHI protocol. Since the interrupt is not
+>> 
+>> I think Linux side improvements would always be welcome, but have you
+>> looked at BEI and INTMODT?  They are features defined in the MHI spec
+>> for addressing interrupt storms.
+> 
+> Yes, that interrupt coalescing feature is working well, and I use it
+> in that context. But Actually the problem is not really that the
+> device generates too many interrupts, but that the driver does not
+> mask the interrupt while handling it, causing replicated interrupts,
+> and so useless hard interrupt handler executions. I need to
+> investigate how bad it impact the system/transfers though.
+> 
+> 
+>> 
+>> 
+>> > handled in the hard irq handler, it is triggered again once interrupt
+>> > are re-enabled, and even during the tasklet execution... at the end,
+>> > that makes a lot of unnecessary interrupts, that introduce latency and
+>> > participate to system load...
+>> >
+>> > I added some printk to highlight that issue:
+>> > [11564.689202] mhi_irq_handler 55d32b8
+>> > [11564.689485] mhi_irq_handler 55d32b8
+>> > [11564.690011] mhi_irq_handler 55d32b8
+>> > [11564.690397] [55d32b8] mhi_process_data_event_ring start
+>> > [11564.690667] mhi_irq_handler 55d32b8
+>> > [11564.690937] mhi_irq_handler 55d32b8
+>> > [11564.691207] mhi_irq_handler 55d32b8
+>> > [11564.691475] mhi_irq_handler 55d32b8
+>> > [11564.692076] [55d32b8] mhi_process_data_event_ring done
+>> > [...]
+>> >
+>> > I see two solutions to fix that problem:
+>> > - Manage events directly in the hard-irq handler (no more tasklet)
+>> > - Use threaded IRQ with IRQF_ONESHOT flag, to keep interrupt masked
+>> > until threaded handler has completed.
+>> >
+>> > Regards,
+>> > Loic
 
-No, I prefer not to force push to the tree. I did however merge and
-push out Arnd's fixup to this. You can find it here:
+I remember from an earlier conversation with Jeff and Mani that 
+IRQF_ONESHOT
+cannot be used when a IRQF_SHARED flag is also present when we have a 
+single
+shared IRQ line.
 
-https://git.kernel.org/pub/scm/linux/kernel/git/andersson/remoteproc.git/commit/?h=for-next&id=9d7b4a40387d0f91512a74caed6654ffa23d5ce4
+Jeff has this use case where BHI intvec and rest of the MHI event rings 
+are
+sharing the same IRQ line.
 
-Regards,
-Bjorn
+We have been using napi_poll() with 5msec INTMODT for high TPUT data 
+transfers.
+
+Thanks,
+Bhaumik
+---
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora 
+Forum,
+a Linux Foundation Collaborative Project
