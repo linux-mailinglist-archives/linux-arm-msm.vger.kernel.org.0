@@ -2,118 +2,90 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D541F2D150F
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Dec 2020 16:49:45 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A7DFB2D16B0
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Dec 2020 17:45:55 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726508AbgLGPtO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 7 Dec 2020 10:49:14 -0500
-Received: from so254-31.mailgun.net ([198.61.254.31]:59403 "EHLO
-        so254-31.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726035AbgLGPtN (ORCPT
+        id S1727457AbgLGQoZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 7 Dec 2020 11:44:25 -0500
+Received: from mail-oi1-f194.google.com ([209.85.167.194]:46730 "EHLO
+        mail-oi1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725804AbgLGQoZ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 7 Dec 2020 10:49:13 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1607356133; h=Content-Transfer-Encoding: Content-Type:
- In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
- Subject: Sender; bh=yfIr29znjaxl/Kon6uEhEZYUTVt+9GV1gRFOj+VtQN0=; b=TEDePMSzgHOipona1dabqFZdW6nh5tjxroi+drPY3JHcE1N5eBIKgKAJJNFRORG0WpAlUY0b
- fykx+q1nUjscgXqkN1OQANVaiBHhwlGeUgq/ZjoXgbw5i69qPQFJ0nXdj8Ksaq4qsKEfntfN
- QO3R9rblxIE/Lo4p4nHmk+0coLw=
-X-Mailgun-Sending-Ip: 198.61.254.31
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n09.prod.us-east-1.postgun.com with SMTP id
- 5fce4ec76d3da25fa52de28d (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 07 Dec 2020 15:48:23
- GMT
-Sender: jhugo=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 8742DC43461; Mon,  7 Dec 2020 15:48:22 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        NICE_REPLY_A,SPF_FAIL autolearn=no autolearn_force=no version=3.4.0
-Received: from [10.226.59.216] (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: jhugo)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id A8EC1C433ED;
-        Mon,  7 Dec 2020 15:48:21 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org A8EC1C433ED
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=jhugo@codeaurora.org
-Subject: Re: The MHI interrupt handling issue
-To:     Loic Poulain <loic.poulain@linaro.org>,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        Hemant Kumar <hemantk@codeaurora.org>,
-        Bhaumik Bhatt <bbhatt@codeaurora.org>
-Cc:     linux-arm-msm <linux-arm-msm@vger.kernel.org>
-References: <CAMZdPi-LHmeLXGDjsb3kEhXrrv2do5eJ=HrHOnS5r+DqtAwKcQ@mail.gmail.com>
-From:   Jeffrey Hugo <jhugo@codeaurora.org>
-Message-ID: <4098d0e6-4cb7-32ba-3b40-cfb0412bac6d@codeaurora.org>
-Date:   Mon, 7 Dec 2020 08:48:20 -0700
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.5.0
+        Mon, 7 Dec 2020 11:44:25 -0500
+Received: by mail-oi1-f194.google.com with SMTP id k2so16040690oic.13;
+        Mon, 07 Dec 2020 08:44:09 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=b6XhvrHIi+pjk7bRVugtQTc187KpUcA9mIMEEtjrx48=;
+        b=oZcFcbRGRhOnKxmUhF8TPLmuJiHAws/Z+7FtzFRZ4PeqCH9XSzQu9AYll25Urpdz18
+         xfIT7lykmMb2saa6e/0leVTu3oOscixj72KE3pHhpii+HcprJ+H+vcjER8tuwOfZVCCe
+         /5ze+kUw8dZTwFIX/kvqjpSxvOM3QV6C/BQxLVjc0Ypsi8c6WI5Yu3zHCNOdwx/BGzcS
+         wvXbOsqPVVdK3uqxxxfKR2fRPOUkh2MpLforPik9qdJRUlXZJFhIlPSuczotKSIcYctl
+         nROxpRWYF1Yb+T7a//whwpWHt3o3NJfs6Poz9AgXfCUEE6aomyJdYLBNgNzyvsK1W/+1
+         bwnA==
+X-Gm-Message-State: AOAM530+wxYD7HaLioStFnUFpFYrF6nelLTlGo1fAvun1OLEBN1e+xGB
+        zT9FjCv+LDWlNYgxdZsbPg==
+X-Google-Smtp-Source: ABdhPJzuzVSeTTNxwS3CHq11xvFm3hbEmOhvcV9OYo8qaQElMgLwSM/7gKSnAuICa/eSPh2p8Sf5jQ==
+X-Received: by 2002:aca:e082:: with SMTP id x124mr1537651oig.3.1607359423865;
+        Mon, 07 Dec 2020 08:43:43 -0800 (PST)
+Received: from xps15 (24-155-109-49.dyn.grandenetworks.net. [24.155.109.49])
+        by smtp.gmail.com with ESMTPSA id y18sm2686861ooj.20.2020.12.07.08.43.42
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 07 Dec 2020 08:43:42 -0800 (PST)
+Received: (nullmailer pid 412520 invoked by uid 1000);
+        Mon, 07 Dec 2020 16:43:42 -0000
+Date:   Mon, 7 Dec 2020 10:43:42 -0600
+From:   Rob Herring <robh@kernel.org>
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, Rob Herring <robh+dt@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+Subject: Re: [PATCH v2] dt-bindings: soc: qcom: convert qcom,smem bindings to
+ yaml
+Message-ID: <20201207164342.GA411695@robh.at.kernel.org>
+References: <20201204022401.1054122-1-dmitry.baryshkov@linaro.org>
 MIME-Version: 1.0
-In-Reply-To: <CAMZdPi-LHmeLXGDjsb3kEhXrrv2do5eJ=HrHOnS5r+DqtAwKcQ@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20201204022401.1054122-1-dmitry.baryshkov@linaro.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 12/7/2020 6:20 AM, Loic Poulain wrote:
-> Hi folks,
+On Fri, 04 Dec 2020 05:24:01 +0300, Dmitry Baryshkov wrote:
+> Convert soc/qcom/qcom,smem.txt bindings to YAML format.
 > 
-> Before putting my hands into that, I wanted to expose a MHI interrupt
-> problem, comments are welcome.
-> 
-> Currently, the hard IRQ handler for event rings do nothing except
-> triggering a tasklet as bottom half that in turn will take care of
-> retrieving buffer(s). That leads to have an unexpected high amount of
-> interrupts when I perform throughput testing with mhi-net (though it
-> applies for any mhi client driver).
-> 
-> The point is that usually, an hard interrupt handler is responsible
-> for triggering the bottom half handler but also for
-> clearing/suspending interrupt on device side. However, AFAIK, there is
-> no such possibility in the MHI protocol. Since the interrupt is not
-
-I think Linux side improvements would always be welcome, but have you 
-looked at BEI and INTMODT?  They are features defined in the MHI spec 
-for addressing interrupt storms.
-
-
-> handled in the hard irq handler, it is triggered again once interrupt
-> are re-enabled, and even during the tasklet execution... at the end,
-> that makes a lot of unnecessary interrupts, that introduce latency and
-> participate to system load...
-> 
-> I added some printk to highlight that issue:
-> [11564.689202] mhi_irq_handler 55d32b8
-> [11564.689485] mhi_irq_handler 55d32b8
-> [11564.690011] mhi_irq_handler 55d32b8
-> [11564.690397] [55d32b8] mhi_process_data_event_ring start
-> [11564.690667] mhi_irq_handler 55d32b8
-> [11564.690937] mhi_irq_handler 55d32b8
-> [11564.691207] mhi_irq_handler 55d32b8
-> [11564.691475] mhi_irq_handler 55d32b8
-> [11564.692076] [55d32b8] mhi_process_data_event_ring done
-> [...]
-> 
-> I see two solutions to fix that problem:
-> - Manage events directly in the hard-irq handler (no more tasklet)
-> - Use threaded IRQ with IRQF_ONESHOT flag, to keep interrupt masked
-> until threaded handler has completed.
-> 
-> Regards,
-> Loic
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> ---
+>  .../bindings/soc/qcom/qcom,smem.txt           | 57 ---------------
+>  .../bindings/soc/qcom/qcom,smem.yaml          | 73 +++++++++++++++++++
+>  2 files changed, 73 insertions(+), 57 deletions(-)
+>  delete mode 100644 Documentation/devicetree/bindings/soc/qcom/qcom,smem.txt
+>  create mode 100644 Documentation/devicetree/bindings/soc/qcom/qcom,smem.yaml
 > 
 
 
--- 
-Jeffrey Hugo
-Qualcomm Technologies, Inc. is a member of the
-Code Aurora Forum, a Linux Foundation Collaborative Project.
+My bot found errors running 'make dt_binding_check' on your patch:
+
+yamllint warnings/errors:
+
+dtschema/dtc warnings/errors:
+/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/soc/qcom/qcom,smem.example.dt.yaml: memory@fc428000: 'device_type' is a required property
+	From schema: /usr/local/lib/python3.8/dist-packages/dtschema/schemas/memory.yaml
+
+
+See https://patchwork.ozlabs.org/patch/1410768
+
+The base for the patch is generally the last rc1. Any dependencies
+should be noted.
+
+If you already ran 'make dt_binding_check' and didn't see the above
+error(s), then make sure 'yamllint' is installed and dt-schema is up to
+date:
+
+pip3 install dtschema --upgrade
+
+Please check and re-submit.
+
