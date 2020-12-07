@@ -2,105 +2,108 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 699B32D08D1
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Dec 2020 02:22:09 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7A4F52D0A2C
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Dec 2020 06:26:10 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728703AbgLGBVK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 6 Dec 2020 20:21:10 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59746 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728444AbgLGBVK (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 6 Dec 2020 20:21:10 -0500
-Received: from mail-ed1-x541.google.com (mail-ed1-x541.google.com [IPv6:2a00:1450:4864:20::541])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DEF5DC0613D2
-        for <linux-arm-msm@vger.kernel.org>; Sun,  6 Dec 2020 17:20:23 -0800 (PST)
-Received: by mail-ed1-x541.google.com with SMTP id i24so4102699edj.8
-        for <linux-arm-msm@vger.kernel.org>; Sun, 06 Dec 2020 17:20:23 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=bSpze0Ktx1a78HhY8N3JUw4+cmElw0CnjsvykxTs3x0=;
-        b=iGKrqSZX3YAWdjC/ijOceS289SqjnC7RjMIpww70orwiNX3bdmHHiOwsx6de1viBoa
-         NyKzhTyb8lHRisvObhjgqnGJqazeTpH52EWtk262VV5dk1vugJXeelcYLUlXJ1l3fxAr
-         88FTIOV334hX/Z/9Xq9GzdhQXFvsCfM8C1o8tl/acgcdj0TM4IsRFe7Ay79uTgbY5SxS
-         4utTXfsF2rczDIooGdCWppIudduMvgEir/1+3XRCaNAwJYs7aZCY44TG/EBaP1qmJzd+
-         kZa3oFvQX8vhhxPt7hKBSh4xgi/jXdnMFmLxjqkfkS+5+GfBc2tzw0o5eC8y+K/vDKN6
-         uM4A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=bSpze0Ktx1a78HhY8N3JUw4+cmElw0CnjsvykxTs3x0=;
-        b=oy6aPW+sHFvv9CAqtRNcpCsmjtAZb1dq9Exz32tAG/jYZ5CDm6lt5b5g+ruBuSmJHs
-         lhMSVj3efZVkHzTLAY7rIJg/glmGfv0a4ULE7RY/PsoDxI8IQhGaH1UOlYByYFfns+KJ
-         QKdfBV8G3Exb1clx5YWH7zOn1WWmBJSqqvJjfTAPBSmiXZ8FwKUNQ+A7COQUvryMbcs6
-         9RMi8jpaLl32pzsKW1gU1VYISdgPCVyygTKtbkrOQ6iPJjt5sneVRWOJpF8EG27MyPGO
-         itNwYx23wL4/AppziueAGQKoFyvN0h6ccQXU1cr3YUhLVdx+Kb17YyCFH+BeoZRQqz74
-         3tLA==
-X-Gm-Message-State: AOAM531t1HqitiRtfqjB0XbPGRhVcwJW6Yqdj08VJ7DVYT2lhbJ4JEuu
-        9PFMpvX7ZTHeP0pWRSvjG0ZQC4VZTetMVhnc5Ah9rw==
-X-Google-Smtp-Source: ABdhPJzobOYaAtrz0mVYekXANYxF4WBTuwyn5F+FgBpi+a+Bzggk4+NE2lxXKPn9ry9YRiXfW0QavF3RQSOdrXNudxE=
-X-Received: by 2002:aa7:c652:: with SMTP id z18mr17190457edr.60.1607304022539;
- Sun, 06 Dec 2020 17:20:22 -0800 (PST)
+        id S1725887AbgLGFYH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 7 Dec 2020 00:24:07 -0500
+Received: from mail.kernel.org ([198.145.29.99]:36950 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725803AbgLGFYH (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 7 Dec 2020 00:24:07 -0500
+Date:   Mon, 7 Dec 2020 10:53:22 +0530
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1607318606;
+        bh=mCUznOjbXqYI2bND5qpnl271aklxnGqHkYPfhMN+B1s=;
+        h=From:To:Cc:Subject:References:In-Reply-To:From;
+        b=hhFX7cv2zmKRTlDhCb5OIbP4nfCjPilnplR1u15Jpz+3PvyQv5mOl7qloz1ycRUTW
+         GGleRxw5AvzUDEvYYG/ToPRIm/I5SWTsf3iSRBlKvwTnBOtr9OYPW7hHRtiGdih5vP
+         RWIuCxO1+Rj5GXeFH9DZk1IaX1zoEegPe5yQ0RvbarDnIuLiKyX8Wg5VPLVwTzeYN2
+         URd7GoN10EoQ+1F3+WrOyZ1iOoBrjysumZgsbvmoj5jjudTtxdiWyRCWki3G9UxB/6
+         ialwfa1X0B654Cs/2SOUAumrx9oUIQMu8jOVzzN5AQV66TknztO3U7cSmhmllxLZrA
+         zee/2uVE/N+gA==
+From:   Vinod Koul <vkoul@kernel.org>
+To:     Parth Y Shah <sparth1292@gmail.com>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Cc:     agross@kernel.org, bjorn.andersson@linaro.org,
+        dan.j.williams@intel.com, linux-arm-msm@vger.kernel.org,
+        dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] Fixes kernel crash generating from bam_dma_irq()
+Message-ID: <20201207052322.GD8403@vkoul-mobl>
+References: <1607250094-21571-1-git-send-email-sparth1292@gmail.com>
 MIME-Version: 1.0
-References: <20201204075345.5161-1-jun.nie@linaro.org> <20201204075345.5161-2-jun.nie@linaro.org>
- <022b3f66-ae19-79f5-c59b-0cc703a29f15@somainline.org>
-In-Reply-To: <022b3f66-ae19-79f5-c59b-0cc703a29f15@somainline.org>
-From:   Jun Nie <jun.nie@linaro.org>
-Date:   Mon, 7 Dec 2020 09:20:11 +0800
-Message-ID: <CABymUCOOMdR6EJyc96pVsxKF_hwf96-09NkvW8ftec9Ez63tRQ@mail.gmail.com>
-Subject: Re: [PATCH v2 1/5] interconnect: qcom: Consolidate interconnect RPM support
-To:     AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>
-Cc:     devicetree@vger.kernel.org,
-        Georgi Djakov <georgi.djakov@linaro.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        agross@kernel.org, linux-pm@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        Rob Herring <robh@kernel.org>,
-        Vincent Knecht <vincent.knecht@mailoo.org>,
-        Shawn Guo <shawn.guo@linaro.org>, martin.botka@somainline.org,
-        marijn.suijten@somainline.org, konrad.dybcio@somainline.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1607250094-21571-1-git-send-email-sparth1292@gmail.com>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
-=E4=BA=8E2020=E5=B9=B412=E6=9C=885=E6=97=A5=E5=91=A8=E5=85=AD =E4=B8=8A=E5=
-=8D=882:04=E5=86=99=E9=81=93=EF=BC=9A
->
-> Il 04/12/20 08:53, Jun Nie ha scritto:
-> > Add RPM based interconnect driver implements the set and aggregate
-> > functionalities that translates bandwidth requests into RPM messages.
-> > These modules provide a common set of functionalities for all
-> > Qualcomm RPM based interconnect providers and should help reduce code
-> > duplication when adding new providers.
-> >
-> > Signed-off-by: Jun Nie <jun.nie@linaro.org>
-> Hello!
-> I agree, the RPM based ICC should be commonized... in any case, I think
-> that you should rebase your patch series over mine, where I am adding
-> support for SDM660 and also introducing a mechanism to set QoS, which
-> can actually be used by most platforms managing the ICC over RPM.
->
-> Please, check it out: https://lore.kernel.org/patchwork/patch/1322131/
->
-> Thanks,
-> Angelo
->
+Hi Parth,
 
-Angelo,
+On 06-12-20, 15:51, Parth Y Shah wrote:
+> While performing suspend/resume, we were getting below kernel crash.
+> 
+> [   54.541672] [FTS][Info]gesture suspend...
+> [   54.605256] [FTS][Error][GESTURE]Enter into gesture(suspend) failed!
+> [   54.605256]
+> [   58.345850] irq event 10: bogus return value fffffff3
+> ......
+> 
+> [   58.345966] [<ffff0000080830f0>] el1_irq+0xb0/0x124
+> [   58.345971] [<ffff000008085360>] arch_cpu_idle+0x10/0x18
+> [   58.345975] [<ffff0000081077f4>] do_idle+0x1ac/0x1e0
+> [   58.345979] [<ffff0000081079c8>] cpu_startup_entry+0x20/0x28
+> [   58.345983] [<ffff000008a80ed0>] rest_init+0xd0/0xdc
+> [   58.345988] [<ffff0000091c0b48>] start_kernel+0x390/0x3a4
+> [   58.345990] handlers:
+> [   58.345994] [<ffff0000085120d0>] bam_dma_irq
+> 
+> The reason for the crash we found is, bam_dma_irq() was returning
+> negative value when the device resumes in some conditions.
+> 
+> In addition, the irq handler should have one of the below return values.
+> 
+> IRQ_NONE            interrupt was not from this device or was not handled
+> IRQ_HANDLED         interrupt was handled by this device
+> IRQ_WAKE_THREAD     handler requests to wake the handler thread
+> 
+> Therefore, to resolve this crash, we have changed the return value to
+> IRQ_NONE.
 
-Thanks for your contribution! It looks like a great new feature. But
-they are not
-ready for other qnoc icc drivers yet. It should not be included in
-this commonization
-patch set until someone add and test the feature for all qnoc drivers.
+The change and explanation look good to me, unfortunately the patch
+title is incorrect. It describes the fix it does and not the change in
+this patch. Also do add subsystem and driver tags to the patch! git log
+would tell you this information
 
-Regards,
-Jun
+Consider: "dmaengine: bam_dma: fix return of bam_dma_irq()" as a
+suggestion.
+
+> 
+> Signed-off-by: Parth Y Shah <sparth1292@gmail.com>
+> ---
+>  drivers/dma/qcom/bam_dma.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/drivers/dma/qcom/bam_dma.c b/drivers/dma/qcom/bam_dma.c
+> index 4eeb8bb..d5773d4 100644
+> --- a/drivers/dma/qcom/bam_dma.c
+> +++ b/drivers/dma/qcom/bam_dma.c
+> @@ -875,7 +875,7 @@ static irqreturn_t bam_dma_irq(int irq, void *data)
+>  
+>  	ret = bam_pm_runtime_get_sync(bdev->dev);
+
+Also this looks wrong to me. get_sync() can sleep and we cant invoke
+that in an irq. Srini have you seen this issue
+
+>  	if (ret < 0)
+> -		return ret;
+> +		return IRQ_NONE;
+>  
+>  	if (srcs & BAM_IRQ) {
+>  		clr_mask = readl_relaxed(bam_addr(bdev, 0, BAM_IRQ_STTS));
+> -- 
+> 2.7.4
+
+-- 
+~Vinod
