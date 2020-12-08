@@ -2,342 +2,148 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 7B8BD2D2DC0
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Dec 2020 16:03:21 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 6C65E2D2E80
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Dec 2020 16:43:06 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729334AbgLHPBZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 8 Dec 2020 10:01:25 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42488 "EHLO
+        id S1730179AbgLHPmx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 8 Dec 2020 10:42:53 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48862 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729386AbgLHPBZ (ORCPT
+        with ESMTP id S1730167AbgLHPmw (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 8 Dec 2020 10:01:25 -0500
-Received: from mail-ej1-x643.google.com (mail-ej1-x643.google.com [IPv6:2a00:1450:4864:20::643])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 66853C061749
-        for <linux-arm-msm@vger.kernel.org>; Tue,  8 Dec 2020 07:00:32 -0800 (PST)
-Received: by mail-ej1-x643.google.com with SMTP id bo9so24925997ejb.13
-        for <linux-arm-msm@vger.kernel.org>; Tue, 08 Dec 2020 07:00:32 -0800 (PST)
+        Tue, 8 Dec 2020 10:42:52 -0500
+Received: from mail-pg1-x542.google.com (mail-pg1-x542.google.com [IPv6:2607:f8b0:4864:20::542])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AAFC5C0613D6
+        for <linux-arm-msm@vger.kernel.org>; Tue,  8 Dec 2020 07:42:06 -0800 (PST)
+Received: by mail-pg1-x542.google.com with SMTP id o4so12503095pgj.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 08 Dec 2020 07:42:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=EwLGS2M7y7kAQoWd9CP/FtUXOvPaPRZho3I3VBDdvSE=;
-        b=mh4HWibLr/WMMNOUtj568Jf2f5UknXO+4WtgQnrWBt/nMR44C2d5d7/UyNG5IDZ/xM
-         SF3OBmS9HyGRKgJpxN3Dxoz9PSPPAK4AwvbYsSB6L6ju4uj4kgzwByolft4z4Nl5RgIF
-         wJFKIb46oEAJ9yL5nNtS/4zvxL4qfQWMs5IeSDxNyqKawyW7c1PRuuy6NmENffy1wBF9
-         /vHk9c7ZxLV94bRpDGGW/m+uXHE6f2nsLmct1OsWGTjXdUcVav9QDLjdXvWWJRHmrZDO
-         Sf8bRbFEo9TYtvDgpyO1JB8HtDRalk/d+fI+Pv7CsKqh4U/xREDDK7Bs7AsjcH4Hi2nF
-         5eWw==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=jmDvSPRVcyFiUTh9P/9tgxR63Fy7Ex8sd1a89ZzSMyc=;
+        b=d6sGHdDKnkJinKcYD9aW5HuYKEFF3OfjEUqAtYD5wc6upJs5m5wpSzwGzVpVxBgzA8
+         /PSxlxqYS/Bzj04qXWkVIoxjj67Y81tl/oWZbDECCLvYS8kd7bE75u/yzA+ioVIBzJLB
+         snBKRKoHWVzQ2Rl/6CG5GA0OANMhp6YSB0tXM9+wP+O/DCezuqoXEGczNczF9NtkjQCk
+         1fsQGReKEPEJm2+8+1bo0eOYZaafbstyt+SrGP3Vw/aCP0Mn87SqUOvYQLkH9xdEzi4Q
+         Gc732c3U7Xk7FoMpa2ZHBFWWdN4BsocaYjbfElOkDxhhbzrNkXawJnbQIcbJarlIHCW2
+         GIlg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=EwLGS2M7y7kAQoWd9CP/FtUXOvPaPRZho3I3VBDdvSE=;
-        b=YN+rR/utAiupEFz70WoUXxtVx+RfRuLf5FzapHcZ1uIIwfTe2vVP9ddnSXwkLLg/xm
-         PSnaoxnYYwVNv2CCQx7QV/6WZ+qfTT14hrblawMQNg6uFZgt517W+Zq9/8580qkJNQ9Y
-         H26YISpTwT6ffX410Th3sC1k6EsjqToug7f8zvE5K8TzduHYjfHbGXtpv2a7vaYgUGtO
-         EuHFnFPyCgtq35tDpyf+zdxdq0pR7X8Jg3iCeNOQEdBiT5tVdF33LR0tAvVww51/pM6C
-         ZJrVRbHEGZBXHet3sP3raMtqG3Y0QvM77hl9/p4BvadqBUrJCs+kSJoPNEL4pTceefQX
-         vAGg==
-X-Gm-Message-State: AOAM533qEFkFkP4izquAk+kUNdX5zVEJKNozxRzccZVnawPLoWGtxOeH
-        nNB3fNnYl3+Ob4A3nntrN4TXmWOtAlA3AwfU
-X-Google-Smtp-Source: ABdhPJwak8sUz3xv3qH0vNk5T/u+IokUT+RE1bbpNw6/No1+dlQHNjDcl/oAuNU4+D+u2oAHmTQfzg==
-X-Received: by 2002:a17:906:e18:: with SMTP id l24mr22630567eji.434.1607439630987;
-        Tue, 08 Dec 2020 07:00:30 -0800 (PST)
-Received: from [192.168.1.9] (hst-221-93.medicom.bg. [84.238.221.93])
-        by smtp.googlemail.com with ESMTPSA id ot18sm15822687ejb.54.2020.12.08.07.00.29
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 08 Dec 2020 07:00:30 -0800 (PST)
-Subject: Re: [PATCH v2 1/3] v4l: Add HDR10 static metadata controls
-To:     Hans Verkuil <hverkuil-cisco@xs4all.nl>,
-        Stanimir Varbanov <stanimir.varbanov@linaro.org>,
-        linux-media@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-Cc:     Ezequiel Garcia <ezequiel@collabora.com>,
-        Nicolas Dufresne <nicolas.dufresne@collabora.com>
-References: <20201123230257.31690-1-stanimir.varbanov@linaro.org>
- <20201123230257.31690-2-stanimir.varbanov@linaro.org>
- <17035750-c01e-1601-756b-6c2c87e6b828@xs4all.nl>
- <c0346859-91b2-90b9-16b6-f0c364351562@linaro.org>
- <3d6a99b2-5467-d6ce-f602-f81da615c912@xs4all.nl>
-From:   Stanimir Varbanov <stanimir.varbanov@linaro.org>
-Message-ID: <2c5559f3-c88f-d2d0-b369-e2947564b3b6@linaro.org>
-Date:   Tue, 8 Dec 2020 17:00:29 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.10.0
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=jmDvSPRVcyFiUTh9P/9tgxR63Fy7Ex8sd1a89ZzSMyc=;
+        b=V9HGvrYHJFNQSY7aRY/l7hsvsFRuqB9vyeKCWRRDASaAwymsTS9hndIvf9ussEGaZY
+         gCvfEDrWxLddHwcXJCm9Ph2q4EbkAdEv4vrHz0jR5OjCvLE43oAeLQMFIZeWlK0SqQg1
+         IFzWegy87Bkp2ZQkfnidc5g+VfUN/4aQ9hV6DL905KVtzrvMKADCUrV6CjwB2dlwnAFm
+         93KLknWaoxVCTcqSNRLW5MF8LRnbpXuLh0FElVB7R70gC3lwV686grfWeaE6O95R8Lmf
+         doeurWDzK0xZb2Yw2VQ/RRChbA2vwzfg7xrFZg5+xpNYvcMBngUcvfaEmKJf+FQVFJCf
+         gyqQ==
+X-Gm-Message-State: AOAM530RZ9Z6jb4FuZWs+uJpB/UYVambcxgCwt1SW4Q05as9I82swwFW
+        E2il2YsnyePCtHPXh8nKpSQl
+X-Google-Smtp-Source: ABdhPJy583cwUkBWFf5ggCavTrTu465iNtib6m3+T2n3nlybT7JEEZweJdzcPVW4TJ9udxotaMWd4Q==
+X-Received: by 2002:a17:90a:178b:: with SMTP id q11mr4791029pja.132.1607442126108;
+        Tue, 08 Dec 2020 07:42:06 -0800 (PST)
+Received: from work ([103.59.133.81])
+        by smtp.gmail.com with ESMTPSA id f7sm3680833pjs.25.2020.12.08.07.41.59
+        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 08 Dec 2020 07:42:05 -0800 (PST)
+Date:   Tue, 8 Dec 2020 21:11:55 +0530
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>
+Cc:     viresh.kumar@linaro.org, rjw@rjwysocki.net,
+        jorge.ramirez-ortiz@linaro.org, robh+dt@kernel.org,
+        konrad.dybcio@somainline.org, linux-pm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, ulf.hansson@linaro.org,
+        nks@flawful.org, lgirdwood@gmail.com, daniel.lezcano@linaro.org,
+        devicetree@vger.kernel.org, bjorn.andersson@linaro.org,
+        phone-devel@vger.kernel.org, broonie@kernel.org,
+        linux-arm-msm@vger.kernel.org, agross@kernel.org,
+        marijn.suijten@somainline.org, martin.botka@somainline.org,
+        robh@kernel.org
+Subject: Re: [PATCH 11/13] dt-bindings: cpufreq: Convert qcom-cpufreq-hw to
+ YAML binding
+Message-ID: <20201208154155.GC9925@work>
+References: <20201126184559.3052375-1-angelogioacchino.delregno@somainline.org>
+ <20201126184559.3052375-12-angelogioacchino.delregno@somainline.org>
+ <20201130172305.GA2661895@robh.at.kernel.org>
+ <20201203111427.GA3937@thinkpad>
+ <d66e05be-4ea1-dfb7-40ee-bfe417ab1a77@somainline.org>
 MIME-Version: 1.0
-In-Reply-To: <3d6a99b2-5467-d6ce-f602-f81da615c912@xs4all.nl>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <d66e05be-4ea1-dfb7-40ee-bfe417ab1a77@somainline.org>
+User-Agent: Mutt/1.9.4 (2018-02-28)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Hans,
+On Fri, Dec 04, 2020 at 01:13:52AM +0100, AngeloGioacchino Del Regno wrote:
+> Il 03/12/20 12:14, Manivannan Sadhasivam ha scritto:
+> > Hi,
+> > 
+> > On Mon, Nov 30, 2020 at 10:23:05AM -0700, Rob Herring wrote:
+> > > On Thu, 26 Nov 2020 19:45:57 +0100, AngeloGioacchino Del Regno wrote:
+> > > > Convert the qcom-cpufreq-hw documentation to YAML binding as
+> > > > qcom,cpufreq-hw.yaml.
+> > > > 
+> > > > Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
+> > 
+> > There is already a patch floating for this. Please see:
+> > https://lkml.org/lkml/2020/10/20/676
+> > 
+> > Thanks,
+> > Mani
+> > 
+> Oh, I'm sorry, I wasn't aware of that, didn't want to step on you.
+> 
+> Should I rebase patch 1345789 (patch 13/13 of this series) on top of
+> the one that you pointed out and drop this one?
 
-On 12/7/20 11:21 AM, Hans Verkuil wrote:
-> On 07/12/2020 10:06, Stanimir Varbanov wrote:
->>
->>
->> On 12/2/20 1:12 PM, Hans Verkuil wrote:
->>> On 24/11/2020 00:02, Stanimir Varbanov wrote:
->>>> Add Content light level and Mastering display colour volume v4l2
->>>> compounf controls, relevant payload structures and validation.
->>>
->>> compounf -> compound
->>>
->>>>
->>>> Signed-off-by: Stanimir Varbanov <stanimir.varbanov@linaro.org>
->>>> ---
->>>>  drivers/media/v4l2-core/v4l2-ctrls.c | 62 ++++++++++++++++++++++++++++
->>>>  include/media/hdr10-ctrls.h          | 55 ++++++++++++++++++++++++
->>>>  include/media/v4l2-ctrls.h           |  3 ++
->>>>  3 files changed, 120 insertions(+)
->>>>  create mode 100644 include/media/hdr10-ctrls.h
->>>>
->>>> diff --git a/drivers/media/v4l2-core/v4l2-ctrls.c b/drivers/media/v4l2-core/v4l2-ctrls.c
->>>> index ad47d00e28d6..028630576401 100644
->>>> --- a/drivers/media/v4l2-core/v4l2-ctrls.c
->>>> +++ b/drivers/media/v4l2-core/v4l2-ctrls.c
->>>> @@ -1024,6 +1024,9 @@ const char *v4l2_ctrl_get_name(u32 id)
->>>>  	case V4L2_CID_MPEG_VIDEO_HEVC_DECODE_MODE:		return "HEVC Decode Mode";
->>>>  	case V4L2_CID_MPEG_VIDEO_HEVC_START_CODE:		return "HEVC Start Code";
->>>>  
->>>> +	case V4L2_CID_MPEG_VIDEO_HDR10_CLL_INFO:		return "HDR10 Content Light Info";
->>>> +	case V4L2_CID_MPEG_VIDEO_HDR10_MASTERING_DISPLAY:	return "HDR10 Mastering Display";
->>>> +
->>>>  	/* CAMERA controls */
->>>>  	/* Keep the order of the 'case's the same as in v4l2-controls.h! */
->>>>  	case V4L2_CID_CAMERA_CLASS:		return "Camera Controls";
->>>> @@ -1461,6 +1464,12 @@ void v4l2_ctrl_fill(u32 id, const char **name, enum v4l2_ctrl_type *type,
->>>>  	case V4L2_CID_MPEG_VIDEO_HEVC_SLICE_PARAMS:
->>>>  		*type = V4L2_CTRL_TYPE_HEVC_SLICE_PARAMS;
->>>>  		break;
->>>> +	case V4L2_CID_MPEG_VIDEO_HDR10_CLL_INFO:
->>>> +		*type = V4L2_CTRL_TYPE_HDR10_CLL_INFO;
->>>> +		break;
->>>> +	case V4L2_CID_MPEG_VIDEO_HDR10_MASTERING_DISPLAY:
->>>> +		*type = V4L2_CTRL_TYPE_HDR10_MASTERING_DISPLAY;
->>>> +		break;
->>>>  	case V4L2_CID_UNIT_CELL_SIZE:
->>>>  		*type = V4L2_CTRL_TYPE_AREA;
->>>>  		*flags |= V4L2_CTRL_FLAG_READ_ONLY;
->>>> @@ -1775,6 +1784,7 @@ static int std_validate_compound(const struct v4l2_ctrl *ctrl, u32 idx,
->>>>  	struct v4l2_ctrl_hevc_sps *p_hevc_sps;
->>>>  	struct v4l2_ctrl_hevc_pps *p_hevc_pps;
->>>>  	struct v4l2_ctrl_hevc_slice_params *p_hevc_slice_params;
->>>> +	struct v4l2_ctrl_hdr10_mastering_display *p_hdr10_mastering;
->>>>  	struct v4l2_area *area;
->>>>  	void *p = ptr.p + idx * ctrl->elem_size;
->>>>  	unsigned int i;
->>>> @@ -1934,6 +1944,52 @@ static int std_validate_compound(const struct v4l2_ctrl *ctrl, u32 idx,
->>>>  		zero_padding(*p_hevc_slice_params);
->>>>  		break;
->>>>  
->>>> +	case V4L2_CTRL_TYPE_HDR10_CLL_INFO:
->>>> +		break;
->>>> +
->>>> +	case V4L2_CTRL_TYPE_HDR10_MASTERING_DISPLAY:
->>>> +		p_hdr10_mastering = p;
->>>> +
->>>> +		for (i = 0; i < 3; ++i) {
->>>> +			if (p_hdr10_mastering->display_primaries_x[i] <
->>>> +				V4L2_HDR10_MASTERING_PRIMARIES_X_LOW ||
->>>> +			    p_hdr10_mastering->display_primaries_x[i] >
->>>> +				V4L2_HDR10_MASTERING_PRIMARIES_X_HIGH ||
->>>> +			    p_hdr10_mastering->display_primaries_y[i] <
->>>> +				V4L2_HDR10_MASTERING_PRIMARIES_Y_LOW ||
->>>> +			    p_hdr10_mastering->display_primaries_y[i] >
->>>> +				V4L2_HDR10_MASTERING_PRIMARIES_Y_HIGH)
->>>> +				return -EINVAL;
->>>> +		}
->>>> +
->>>> +		if (p_hdr10_mastering->white_point_x <
->>>> +			V4L2_HDR10_MASTERING_WHITE_POINT_X_LOW ||
->>>> +		    p_hdr10_mastering->white_point_x >
->>>> +			V4L2_HDR10_MASTERING_WHITE_POINT_X_HIGH ||
->>>> +		    p_hdr10_mastering->white_point_y <
->>>> +			V4L2_HDR10_MASTERING_WHITE_POINT_Y_LOW ||
->>>> +		    p_hdr10_mastering->white_point_y >
->>>> +			V4L2_HDR10_MASTERING_WHITE_POINT_Y_HIGH)
->>>> +			return -EINVAL;
->>>> +
->>>> +		if (p_hdr10_mastering->max_luminance <
->>>> +			V4L2_HDR10_MASTERING_MAX_LUMA_LOW ||
->>>> +		    p_hdr10_mastering->max_luminance >
->>>> +			V4L2_HDR10_MASTERING_MAX_LUMA_HIGH ||
->>>> +		    p_hdr10_mastering->min_luminance <
->>>> +			V4L2_HDR10_MASTERING_MIN_LUMA_LOW ||
->>>> +		    p_hdr10_mastering->min_luminance >
->>>> +			V4L2_HDR10_MASTERING_MIN_LUMA_HIGH)
->>>> +			return -EINVAL;
->>>> +
->>>> +		if (p_hdr10_mastering->max_luminance ==
->>>> +			V4L2_HDR10_MASTERING_MAX_LUMA_LOW &&
->>>> +		    p_hdr10_mastering->min_luminance ==
->>>> +			V4L2_HDR10_MASTERING_MIN_LUMA_HIGH)
->>>> +			return -EINVAL;
->>>> +
->>>> +		break;
->>>> +
->>>>  	case V4L2_CTRL_TYPE_AREA:
->>>>  		area = p;
->>>>  		if (!area->width || !area->height)
->>>> @@ -2626,6 +2682,12 @@ static struct v4l2_ctrl *v4l2_ctrl_new(struct v4l2_ctrl_handler *hdl,
->>>>  	case V4L2_CTRL_TYPE_HEVC_SLICE_PARAMS:
->>>>  		elem_size = sizeof(struct v4l2_ctrl_hevc_slice_params);
->>>>  		break;
->>>> +	case V4L2_CTRL_TYPE_HDR10_CLL_INFO:
->>>> +		elem_size = sizeof(struct v4l2_ctrl_hdr10_cll_info);
->>>> +		break;
->>>> +	case V4L2_CTRL_TYPE_HDR10_MASTERING_DISPLAY:
->>>> +		elem_size = sizeof(struct v4l2_ctrl_hdr10_mastering_display);
->>>> +		break;
->>>>  	case V4L2_CTRL_TYPE_AREA:
->>>>  		elem_size = sizeof(struct v4l2_area);
->>>>  		break;
->>>> diff --git a/include/media/hdr10-ctrls.h b/include/media/hdr10-ctrls.h
->>>> new file mode 100644
->>>> index 000000000000..f6f77edc0b60
->>>> --- /dev/null
->>>> +++ b/include/media/hdr10-ctrls.h
->>>> @@ -0,0 +1,55 @@
->>>> +/* SPDX-License-Identifier: GPL-2.0 */
->>>> +/*
->>>> + * These are the HEVC state controls for use with stateless HEVC
->>>> + * codec drivers.
->>>> + *
->>>> + * It turns out that these structs are not stable yet and will undergo
->>>> + * more changes. So keep them private until they are stable and ready to
->>>> + * become part of the official public API.
->>>> + */
->>>> +
->>>> +#ifndef _HDR10_CTRLS_H_
->>>> +#define _HDR10_CTRLS_H_
->>>> +
->>>> +/*
->>>> + * Content light level information.
->>>> + * Source Rec. ITU-T H.265 v7 (11/2019) HEVC; D.2.35
->>>> + */
->>>> +#define V4L2_CID_MPEG_VIDEO_HDR10_CLL_INFO	(V4L2_CID_MPEG_BASE + 1017)
->>>> +#define V4L2_CTRL_TYPE_HDR10_CLL_INFO		0x0123
->>>> +
->>>> +struct v4l2_ctrl_hdr10_cll_info {
->>>> +	__u16 max_content_light_level;
->>>> +	__u16 max_pic_average_light_level;
->>>> +};
->>>> +
->>>> +/*
->>>> + * Mastering display colour volume.
->>>> + * Source Rec. ITU-T H.265 v7 (11/2019) HEVC; D.2.28
->>>> + */
->>>> +#define V4L2_CID_MPEG_VIDEO_HDR10_MASTERING_DISPLAY (V4L2_CID_MPEG_BASE + 1018)
->>>
->>> I don't think this should be part of the codec control class. It is also needed
->>> for HDMI receivers, for example.
->>>
->>> I think it is better to create a new "Colorimetry" control class for controls like
->>> this.
->>
->> I guess in this case I need to create a new ext-ctrls-colorimetry.rst,
->> right?
-> 
-> Yes.
-> 
->>
->>>
->>> But I advise that you wait until this PR is merged:
->>> https://patchwork.linuxtv.org/project/linux-media/patch/d68da172-b251-000f-653d-38a8a4c7b715@xs4all.nl/
->>>
->>> Note that you also need to add validation support for this to std_validate_compound()
->>> and possibly add initialization to std_init_compound() is v4l2-ctrls.c.
->>
->> The patch has validation for mastering display already. But I wonder do
->> we really need this validation because CTA-861-G is more liberal about
->> the values comparing with Rec. ITU-T H.265. Or the other option is to
->> combine both of them?
-> 
-> After thinking about this a bit more, validation makes no sense for decoders
-> or HDMI/DP receivers: you have no control over the contents of this data in
-> those cases, it should just contain what you receive as-is, and if you receive
-> buggy data, then userspace has to decide what to do with that.
-> 
-> This is something that should be documented, I think. You have to be aware as
-> userspace that the data needs to be checked for validity.
-> 
-> For encoders and HDMI/DP output validation would make sense, but I think that
-> for now we should just drop validation altogether.
+Yes please.
 
-Well, my doubts expressed above wasn't do we need validation or not but
-for the ranges of the parameters CTA-861-G vs Rec. ITU-T H.265.
-
-In that regard I think it is better to have validation for encoders
-because out of spec ranges could be dangerous for display panels.
+Thanks,
+Mani
 
 > 
-> Regards,
+> - Angelo
 > 
-> 	Hans
+> > > > ---
+> > > >   .../bindings/cpufreq/cpufreq-qcom-hw.txt      | 173 +---------------
+> > > >   .../bindings/cpufreq/qcom,cpufreq-hw.yaml     | 196 ++++++++++++++++++
+> > > >   2 files changed, 197 insertions(+), 172 deletions(-)
+> > > >   create mode 100644 Documentation/devicetree/bindings/cpufreq/qcom,cpufreq-hw.yaml
+> > > > 
+> > > 
+> > > 
+> > > My bot found errors running 'make dt_binding_check' on your patch:
+> > > 
+> > > yamllint warnings/errors:
+> > > 
+> > > dtschema/dtc warnings/errors:
+> > > /builds/robherring/linux-dt-review/Documentation/devicetree/bindings/cpufreq/qcom,cpufreq-hw.yaml: properties:clock-names: [{'const': 'xo'}, {'const': 'ref'}] is not of type 'object', 'boolean'
+> > > /builds/robherring/linux-dt-review/Documentation/devicetree/bindings/cpufreq/qcom,cpufreq-hw.yaml: maintainers:0: 'TBD' is not a 'email'
+> > > /builds/robherring/linux-dt-review/Documentation/devicetree/bindings/cpufreq/qcom,cpufreq-hw.yaml: ignoring, error in schema: properties: clock-names
+> > > warning: no schema found in file: ./Documentation/devicetree/bindings/cpufreq/qcom,cpufreq-hw.yaml
+> > > Error: Documentation/devicetree/bindings/cpufreq/qcom,cpufreq-hw.example.dts:150.3-151.1 syntax error
+> > > FATAL ERROR: Unable to parse input tree
+> > > make[1]: *** [scripts/Makefile.lib:342: Documentation/devicetree/bindings/cpufreq/qcom,cpufreq-hw.example.dt.yaml] Error 1
+> > > make[1]: *** Waiting for unfinished jobs....
+> > > make: *** [Makefile:1364: dt_binding_check] Error 2
+> > > 
+> > > 
+> > > See https://patchwork.ozlabs.org/patch/1406857
+> > > 
+> > > The base for the patch is generally the last rc1. Any dependencies
+> > > should be noted.
+> > > 
+> > > If you already ran 'make dt_binding_check' and didn't see the above
+> > > error(s), then make sure 'yamllint' is installed and dt-schema is up to
+> > > date:
+> > > 
+> > > pip3 install dtschema --upgrade
+> > > 
+> > > Please check and re-submit.
+> > > 
 > 
->>
->>>
->>> Regards,
->>>
->>> 	Hans
->>>
->>>> +#define V4L2_CTRL_TYPE_HDR10_MASTERING_DISPLAY	0x0124
->>>> +
->>>> +#define V4L2_HDR10_MASTERING_PRIMARIES_X_LOW	5
->>>> +#define V4L2_HDR10_MASTERING_PRIMARIES_X_HIGH	37000
->>>> +#define V4L2_HDR10_MASTERING_PRIMARIES_Y_LOW	5
->>>> +#define V4L2_HDR10_MASTERING_PRIMARIES_Y_HIGH	42000
->>>> +#define V4L2_HDR10_MASTERING_WHITE_POINT_X_LOW	5
->>>> +#define V4L2_HDR10_MASTERING_WHITE_POINT_X_HIGH	37000
->>>> +#define V4L2_HDR10_MASTERING_WHITE_POINT_Y_LOW	5
->>>> +#define V4L2_HDR10_MASTERING_WHITE_POINT_Y_HIGH	42000
->>>> +#define V4L2_HDR10_MASTERING_MAX_LUMA_LOW	50000
->>>> +#define V4L2_HDR10_MASTERING_MAX_LUMA_HIGH	100000000
->>>> +#define V4L2_HDR10_MASTERING_MIN_LUMA_LOW	1
->>>> +#define V4L2_HDR10_MASTERING_MIN_LUMA_HIGH	50000
->>>> +
->>>> +struct v4l2_ctrl_hdr10_mastering_display {
->>>> +	__u16 display_primaries_x[3];
->>>> +	__u16 display_primaries_y[3];
->>>> +	__u16 white_point_x;
->>>> +	__u16 white_point_y;
->>>> +	__u32 max_luminance;
->>>> +	__u32 min_luminance;
->>>> +};
->>>> +
->>>> +#endif
->>>> diff --git a/include/media/v4l2-ctrls.h b/include/media/v4l2-ctrls.h
->>>> index 4fbace0fc7e5..81bd026fc1ea 100644
->>>> --- a/include/media/v4l2-ctrls.h
->>>> +++ b/include/media/v4l2-ctrls.h
->>>> @@ -19,6 +19,7 @@
->>>>   */
->>>>  #include <media/mpeg2-ctrls.h>
->>>>  #include <media/fwht-ctrls.h>
->>>> +#include <media/hdr10-ctrls.h>
->>>>  #include <media/h264-ctrls.h>
->>>>  #include <media/vp8-ctrls.h>
->>>>  #include <media/hevc-ctrls.h>
->>>> @@ -80,6 +81,8 @@ union v4l2_ctrl_ptr {
->>>>  	struct v4l2_ctrl_hevc_sps *p_hevc_sps;
->>>>  	struct v4l2_ctrl_hevc_pps *p_hevc_pps;
->>>>  	struct v4l2_ctrl_hevc_slice_params *p_hevc_slice_params;
->>>> +	struct v4l2_ctrl_hdr10_cll_info *p_hdr10_cll;
->>>> +	struct v4l2_ctrl_hdr10_mastering_display *p_hdr10_mastering;
->>>>  	struct v4l2_area *p_area;
->>>>  	void *p;
->>>>  	const void *p_const;
->>>>
->>>
->>
-> 
-
--- 
-regards,
-Stan
