@@ -2,69 +2,231 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 4451D2D2F2B
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Dec 2020 17:11:02 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 13E012D2FDF
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Dec 2020 17:38:32 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730438AbgLHQJl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 8 Dec 2020 11:09:41 -0500
-Received: from mail-oi1-f193.google.com ([209.85.167.193]:38489 "EHLO
-        mail-oi1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730357AbgLHQJl (ORCPT
+        id S1730261AbgLHQi2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 8 Dec 2020 11:38:28 -0500
+Received: from m43-15.mailgun.net ([69.72.43.15]:29195 "EHLO
+        m43-15.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730013AbgLHQi2 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 8 Dec 2020 11:09:41 -0500
-Received: by mail-oi1-f193.google.com with SMTP id o25so19921557oie.5;
-        Tue, 08 Dec 2020 08:09:25 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=gqy913jTNhiXuHNwdA8EIGtb2jTtxvgeV3/C5GrEFO0=;
-        b=pRdmE/sFQO/XAJoSuKx8IIxcyXYk2Dg3xhGcjK/iZmzB1z62aXrdhxieOysifQFs4l
-         bwxJGSwk1sv5INCLfdrezvyuUWKjgOD+cHetO6H8FF7Ze1rai1pV085mMNm6t6ku8YY8
-         kR+m7L0Ca4w1j3enHMZVWXm3zGGNyw/jC/9RhpUMPJr8uzW5aBBRsBgrL5AISuEit5N9
-         WpRUDwj1WKuDekin1ze+2HNI0ihHko1ENCScUIL6eobv+0bTDRKRJTVkTY9eX7wwU/or
-         XZjzYftGWtdiWcFBaPionSo05oQineaKK/u9kcy11UjCl/7/+dy54Z3X6fPLVKZFeZVh
-         N62Q==
-X-Gm-Message-State: AOAM531Wg3XTbGba+wbWNB+K8YwE3+dXE0exNPbws+a9zBkVqdIBJYtC
-        ArQIs94Me8OHWBleQXI/Vg==
-X-Google-Smtp-Source: ABdhPJzn7QrM9vfH8+GNIiMEKD9w8Pwo/4nyIwLzsfka0xW5ft6dCLEL2uW4pfBb0Z4tl84Z/reaiQ==
-X-Received: by 2002:aca:cc89:: with SMTP id c131mr3140565oig.2.1607443740607;
-        Tue, 08 Dec 2020 08:09:00 -0800 (PST)
-Received: from xps15 (24-155-109-49.dyn.grandenetworks.net. [24.155.109.49])
-        by smtp.gmail.com with ESMTPSA id q184sm2003598oic.41.2020.12.08.08.08.57
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 08 Dec 2020 08:08:58 -0800 (PST)
-Received: (nullmailer pid 2620220 invoked by uid 1000);
-        Tue, 08 Dec 2020 16:08:57 -0000
-Date:   Tue, 8 Dec 2020 10:08:57 -0600
-From:   Rob Herring <robh@kernel.org>
-To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc:     vigneshr@ti.com, miquel.raynal@bootlin.com,
-        sivaprak@codeaurora.org, bjorn.andersson@linaro.org,
-        linux-mtd@lists.infradead.org, linux-kernel@vger.kernel.org,
-        robh+dt@kernel.org, richard@nod.at, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH 1/2] dt-bindings: qcom_nandc: Add SDX55 QPIC NAND
- documentation
-Message-ID: <20201208160857.GA2620163@robh.at.kernel.org>
-References: <20201126085705.48399-1-manivannan.sadhasivam@linaro.org>
- <20201126085705.48399-2-manivannan.sadhasivam@linaro.org>
+        Tue, 8 Dec 2020 11:38:28 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1607445490; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=GKqaNR8RoeApXAKL255ad/JnOHss3+Y2agk82fIqQWU=;
+ b=aMh9es93W4ndVGYyYH9utFfqqWkXJTZeKKORemH195Ybmf2/ahUCP8ji5kLTe569l4cgD0E/
+ DAtM4tT3szDWgWkhRKszkYLt3dfzYVwN/mjnVBup9b7m6FpCcQanB9m/RkJw+C3EajwmTMd9
+ p1oNYLfKPmi6ithHMYmxWjBjjC0=
+X-Mailgun-Sending-Ip: 69.72.43.15
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n07.prod.us-west-2.postgun.com with SMTP id
+ 5fcfabd0233278a213c9b40b (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 08 Dec 2020 16:37:36
+ GMT
+Sender: dikshita=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 5007BC43461; Tue,  8 Dec 2020 16:37:36 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: dikshita)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 5D934C433C6;
+        Tue,  8 Dec 2020 16:37:35 +0000 (UTC)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20201126085705.48399-2-manivannan.sadhasivam@linaro.org>
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Tue, 08 Dec 2020 22:07:35 +0530
+From:   dikshita@codeaurora.org
+To:     Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Cc:     linux-media@vger.kernel.org, nicolas@ndufresne.ca,
+        stanimir.varbanov@linaro.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, vgarodia@codeaurora.org
+Subject: Re: [PATCH v3 3/3] venus: venc: Add support for frame-specific
+ min/max qp controls
+In-Reply-To: <a5f99684-54ff-6d09-eeb7-4748ed3c3271@xs4all.nl>
+References: <1605682497-29273-1-git-send-email-dikshita@codeaurora.org>
+ <1605682497-29273-4-git-send-email-dikshita@codeaurora.org>
+ <a5f99684-54ff-6d09-eeb7-4748ed3c3271@xs4all.nl>
+Message-ID: <445dd26796e2242666e5256e7e36bcbe@codeaurora.org>
+X-Sender: dikshita@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 26 Nov 2020 14:27:04 +0530, Manivannan Sadhasivam wrote:
-> Qualcomm SDX55 uses QPIC NAND controller version 2.0.0 with BAM DMA
-> Engine.
+On 2020-12-02 19:06, Hans Verkuil wrote:
+> On 18/11/2020 07:54, Dikshita Agarwal wrote:
+>> Add support for frame type specific min and max qp controls
+>> for encoder.
+>> 
+>> Signed-off-by: Dikshita Agarwal <dikshita@codeaurora.org>
+>> ---
+>>  drivers/media/platform/qcom/venus/core.h       | 18 +++++++++
+>>  drivers/media/platform/qcom/venus/venc.c       | 21 ++++++++---
+>>  drivers/media/platform/qcom/venus/venc_ctrls.c | 51 
+>> ++++++++++++++++++++++++++
+>>  3 files changed, 85 insertions(+), 5 deletions(-)
+>> 
+>> diff --git a/drivers/media/platform/qcom/venus/core.h 
+>> b/drivers/media/platform/qcom/venus/core.h
+>> index 3bc129a..6a764c9 100644
+>> --- a/drivers/media/platform/qcom/venus/core.h
+>> +++ b/drivers/media/platform/qcom/venus/core.h
+>> @@ -230,10 +230,28 @@ struct venc_controls {
+>>  	u32 h264_b_qp;
+>>  	u32 h264_min_qp;
+>>  	u32 h264_max_qp;
+>> +	u32 h264_i_min_qp;
+>> +	u32 h264_i_max_qp;
+>> +	u32 h264_p_min_qp;
+>> +	u32 h264_p_max_qp;
+>> +	u32 h264_b_min_qp;
+>> +	u32 h264_b_max_qp;
+>>  	u32 h264_loop_filter_mode;
+>>  	s32 h264_loop_filter_alpha;
+>>  	s32 h264_loop_filter_beta;
+>> 
+>> +	u32 hevc_i_qp;
+>> +	u32 hevc_p_qp;
+>> +	u32 hevc_b_qp;
+>> +	u32 hevc_min_qp;
+>> +	u32 hevc_max_qp;
+>> +	u32 hevc_i_min_qp;
+>> +	u32 hevc_i_max_qp;
+>> +	u32 hevc_p_min_qp;
+>> +	u32 hevc_p_max_qp;
+>> +	u32 hevc_b_min_qp;
+>> +	u32 hevc_b_max_qp;
+>> +
+>>  	u32 vp8_min_qp;
+>>  	u32 vp8_max_qp;
+>> 
+>> diff --git a/drivers/media/platform/qcom/venus/venc.c 
+>> b/drivers/media/platform/qcom/venus/venc.c
+>> index 0bf92cc..f2f5a85 100644
+>> --- a/drivers/media/platform/qcom/venus/venc.c
+>> +++ b/drivers/media/platform/qcom/venus/venc.c
+>> @@ -668,17 +668,28 @@ static int venc_set_properties(struct venus_inst 
+>> *inst)
+>>  		return ret;
+>> 
+>>  	ptype = HFI_PROPERTY_PARAM_VENC_SESSION_QP;
+>> -	quant.qp_i = ctr->h264_i_qp;
+>> -	quant.qp_p = ctr->h264_p_qp;
+>> -	quant.qp_b = ctr->h264_b_qp;
+>> +	if (inst->fmt_cap->pixfmt == V4L2_PIX_FMT_HEVC) {
+>> +		quant.qp_i = ctr->hevc_i_qp;
+>> +		quant.qp_p = ctr->hevc_p_qp;
+>> +		quant.qp_b = ctr->hevc_b_qp;
+>> +	} else {
+>> +		quant.qp_i = ctr->h264_i_qp;
+>> +		quant.qp_p = ctr->h264_p_qp;
+>> +		quant.qp_b = ctr->h264_b_qp;
+>> +	}
+>>  	quant.layer_id = 0;
+>>  	ret = hfi_session_set_property(inst, ptype, &quant);
+>>  	if (ret)
+>>  		return ret;
+>> 
+>>  	ptype = HFI_PROPERTY_PARAM_VENC_SESSION_QP_RANGE;
+>> -	quant_range.min_qp = ctr->h264_min_qp;
+>> -	quant_range.max_qp = ctr->h264_max_qp;
+>> +	if (inst->fmt_cap->pixfmt == V4L2_PIX_FMT_HEVC) {
+>> +		quant_range.min_qp = ctr->hevc_min_qp;
+>> +		quant_range.max_qp = ctr->hevc_max_qp;
+>> +	} else {
+>> +		quant_range.min_qp = ctr->h264_min_qp;
+>> +		quant_range.max_qp = ctr->h264_max_qp;
+>> +	}
+>>  	quant_range.layer_id = 0;
+>>  	ret = hfi_session_set_property(inst, ptype, &quant_range);
+>>  	if (ret)
+>> diff --git a/drivers/media/platform/qcom/venus/venc_ctrls.c 
+>> b/drivers/media/platform/qcom/venus/venc_ctrls.c
+>> index 0708b3b..cd131e3 100644
+>> --- a/drivers/media/platform/qcom/venus/venc_ctrls.c
+>> +++ b/drivers/media/platform/qcom/venus/venc_ctrls.c
+>> @@ -125,9 +125,60 @@ static int venc_op_s_ctrl(struct v4l2_ctrl *ctrl)
+>>  	case V4L2_CID_MPEG_VIDEO_H264_MIN_QP:
+>>  		ctr->h264_min_qp = ctrl->val;
+>>  		break;
+>> +	case V4L2_CID_MPEG_VIDEO_H264_I_FRAME_MIN_QP:
+>> +		ctr->h264_i_min_qp = ctrl->val;
+>> +		break;
+>> +	case V4L2_CID_MPEG_VIDEO_H264_P_FRAME_MIN_QP:
+>> +		ctr->h264_p_min_qp = ctrl->val;
+>> +		break;
+>> +	case V4L2_CID_MPEG_VIDEO_H264_B_FRAME_MIN_QP:
+>> +		ctr->h264_b_min_qp = ctrl->val;
+>> +		break;
+>>  	case V4L2_CID_MPEG_VIDEO_H264_MAX_QP:
+>>  		ctr->h264_max_qp = ctrl->val;
+>>  		break;
+>> +	case V4L2_CID_MPEG_VIDEO_H264_I_FRAME_MAX_QP:
+>> +		ctr->h264_i_max_qp = ctrl->val;
+>> +		break;
+>> +	case V4L2_CID_MPEG_VIDEO_H264_P_FRAME_MAX_QP:
+>> +		ctr->h264_p_max_qp = ctrl->val;
+>> +		break;
+>> +	case V4L2_CID_MPEG_VIDEO_H264_B_FRAME_MAX_QP:
+>> +		ctr->h264_b_max_qp = ctrl->val;
+>> +		break;
+>> +	case V4L2_CID_MPEG_VIDEO_HEVC_I_FRAME_QP:
+>> +		ctr->hevc_i_qp = ctrl->val;
+>> +		break;
+>> +	case V4L2_CID_MPEG_VIDEO_HEVC_P_FRAME_QP:
+>> +		ctr->hevc_p_qp = ctrl->val;
+>> +		break;
+>> +	case V4L2_CID_MPEG_VIDEO_HEVC_B_FRAME_QP:
+>> +		ctr->hevc_b_qp = ctrl->val;
+>> +		break;
+>> +	case V4L2_CID_MPEG_VIDEO_HEVC_MIN_QP:
+>> +		ctr->hevc_min_qp = ctrl->val;
+>> +		break;
+>> +	case V4L2_CID_MPEG_VIDEO_HEVC_I_FRAME_MIN_QP:
+>> +		ctr->hevc_i_min_qp = ctrl->val;
+>> +		break;
+>> +	case V4L2_CID_MPEG_VIDEO_HEVC_P_FRAME_MIN_QP:
+>> +		ctr->hevc_p_min_qp = ctrl->val;
+>> +		break;
+>> +	case V4L2_CID_MPEG_VIDEO_HEVC_B_FRAME_MIN_QP:
+>> +		ctr->hevc_b_min_qp = ctrl->val;
+>> +		break;
+>> +	case V4L2_CID_MPEG_VIDEO_HEVC_MAX_QP:
+>> +		ctr->hevc_max_qp = ctrl->val;
+>> +		break;
+>> +	case V4L2_CID_MPEG_VIDEO_HEVC_I_FRAME_MAX_QP:
+>> +		ctr->hevc_i_max_qp = ctrl->val;
+>> +		break;
+>> +	case V4L2_CID_MPEG_VIDEO_HEVC_P_FRAME_MAX_QP:
+>> +		ctr->hevc_p_max_qp = ctrl->val;
+>> +		break;
+>> +	case V4L2_CID_MPEG_VIDEO_HEVC_B_FRAME_MAX_QP:
+>> +		ctr->hevc_b_max_qp = ctrl->val;
+>> +		break;
+>>  	case V4L2_CID_MPEG_VIDEO_MULTI_SLICE_MODE:
+>>  		ctr->multi_slice_mode = ctrl->val;
+>>  		break;
+>> 
 > 
-> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> ---
->  Documentation/devicetree/bindings/mtd/qcom_nandc.txt | 2 ++
->  1 file changed, 2 insertions(+)
-> 
+> This looks incomplete: the new controls aren't actually added to the
+> driver with v4l2_ctrl_new_std(). Did you test this?
+Oh, Sorry. Looks like I forgot to add some changes.
+will send a new patch.
 
-Acked-by: Rob Herring <robh@kernel.org>
+Thanks,
+Dikshita
+> 
+> Regards,
+> 
+> 	Hans
