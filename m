@@ -2,117 +2,75 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 4B5D62D30C4
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Dec 2020 18:15:46 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0CCC12D30F9
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Dec 2020 18:27:25 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730698AbgLHROx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 8 Dec 2020 12:14:53 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35052 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730695AbgLHROx (ORCPT
+        id S1730571AbgLHR1G (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 8 Dec 2020 12:27:06 -0500
+Received: from mail-oi1-f194.google.com ([209.85.167.194]:34075 "EHLO
+        mail-oi1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730389AbgLHR1F (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 8 Dec 2020 12:14:53 -0500
-Received: from mail-oi1-x244.google.com (mail-oi1-x244.google.com [IPv6:2607:f8b0:4864:20::244])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 32918C0613D6
-        for <linux-arm-msm@vger.kernel.org>; Tue,  8 Dec 2020 09:14:13 -0800 (PST)
-Received: by mail-oi1-x244.google.com with SMTP id k2so20127423oic.13
-        for <linux-arm-msm@vger.kernel.org>; Tue, 08 Dec 2020 09:14:13 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=OrTk1JTf0Tk8H0Dkw70rR48Y70ZzNOZd9pRYyN3l7qc=;
-        b=tIQ2524GlK0nHCX0ZYY0xdFCCrAMuJvFo2H0VIs9BGVY4NsN35gc+MsKDaPkEq1dN6
-         lYhMbk+hQ0saLb8M6/C5CMmksatLa1RBH1jo471y79kwSJ4rLffV4IS8Pagtp06Cbunu
-         H8NRsJxFvr0mRaGl1iXvuBE+5dlYOVyU0EbNbdeBI9LJ5MzVCozNUqoTCm4o4rQkoDjo
-         bLonRVugPYPsPdq1yb0HnL3MXaTy47jnb71Q/OuiX78f9Ab0ReLpPtDp8JUn9BngD7Qs
-         ZEsfkjH37qA+CftGSdOllMWOlKBDqe9i8QsKzeg5kR2eQq0R8ciOQkp0xGWgTCoYlA/B
-         NFCQ==
+        Tue, 8 Dec 2020 12:27:05 -0500
+Received: by mail-oi1-f194.google.com with SMTP id s75so17107881oih.1;
+        Tue, 08 Dec 2020 09:26:50 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=OrTk1JTf0Tk8H0Dkw70rR48Y70ZzNOZd9pRYyN3l7qc=;
-        b=ayF/jleVhjkjfS0TqoGk5pa3lUmBoY4PrNZkN6DKNh3EhWBtLQbqLyy16GuQPdOg1i
-         KK7DtWGhWA2/GWVv1hLHfhKU46U2wT5mZgup6z9jXstRJLHTXESHbzHRgIU60nEMe+PU
-         0mO+H8uBQX+4x4TyfxFItPG6GhspejqqdaBUwjmNmyiW02p1HQ+vgLak/6NczSVmaNvj
-         y8DKfUt1sgL4Z8yovaoypSabZonz092r/xvwoDENCgFKiazsEKIf0l6W4fL0wBaBBZjc
-         Qul1yj1PtlZLf+YzaBUD+9won7ovC91jZBBE20HGe9idUPQFf1StU/cOl9IVZB+TjXFj
-         p/DA==
-X-Gm-Message-State: AOAM530ZKQ7nWDeFHhj1hwXP7XZyRG75D9RauheLHXZFNozK/7ujMwDv
-        OvyNp3RvHQNl2PXBbwp3rrL135o/0kUJrwkJaFWygA==
-X-Google-Smtp-Source: ABdhPJyTkuAAJ9aQVeM1oHOof95mLBcg/6CIM2sK7D91vZhxK+467RxQ2PT2rU6DtPBiIt1uiUZ+osvJh/KOHqtISAo=
-X-Received: by 2002:aca:b605:: with SMTP id g5mr3525309oif.177.1607447652630;
- Tue, 08 Dec 2020 09:14:12 -0800 (PST)
+        bh=D1zY1oOe+Ope2G0rrLvuUis2arfGoeooX6HiAv2WBqI=;
+        b=Wm+ya7MAk3qEt9ujQlH5MRWqpYljU5K/ozzMBn9SMOtou+vbzeuLghCJQPXXJb/Uvk
+         flzYpX68FmXPMADjv3ukQNBClXjdQN8uLmNAZ4krWJxsPvrAODYHOkhLgl3nDY6Y7kXs
+         axHZbGcMqv6tmuNlgTihgeOkMagfkI7PAMoa5NF+lj5zJTpd4WS1SGCpx9ElVomGSsuS
+         vIoFqQCCOUf4U96lij0kopiyI8sCcOuzmKeOz/FFC79Nmu0IQpUB3sqYng8dTX8pNFPO
+         XOhs4LHn59zw9clXFB/9+kAkl9bBdOOspeAc5YGN9xe7meP0yGamOeMFBHDncWafVBBU
+         S3JA==
+X-Gm-Message-State: AOAM530tAbLKy8gEjqa1Q+AUm5fZqyMXBfGznGH+iJ9L+GNZ7EmLlMNS
+        zKzX+zqG1TLIyRt24dYl38phEDVyNfGt7fYM11kKyOuj
+X-Google-Smtp-Source: ABdhPJxg9HbnfWdauC/RJjIIJGlde2STMRuIqZ3LyhZZF8m45HG/HbQeMjc46sISzCcT+Jq1dMdHq9Un0w8YH3eeNHg=
+X-Received: by 2002:aca:5a42:: with SMTP id o63mr3375148oib.69.1607448384809;
+ Tue, 08 Dec 2020 09:26:24 -0800 (PST)
 MIME-Version: 1.0
-References: <20201204025509.1075506-1-dmitry.baryshkov@linaro.org>
- <20201205170830.4d56ecb7@archlinux> <4de94396-54c7-e741-b288-3a3868515f7b@linaro.org>
- <20201208103951.00003b3a@Huawei.com>
-In-Reply-To: <20201208103951.00003b3a@Huawei.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Tue, 8 Dec 2020 20:14:01 +0300
-Message-ID: <CAA8EJprS_Oa08xsGepeowqmrpmRH8pOYRd9yX2KEqZRsnetkzw@mail.gmail.com>
-Subject: Re: [PATCH v10 00/15] qcom: pm8150: add support for thermal monitoring
-To:     Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Cc:     Jonathan Cameron <jic23@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Zhang Rui <rui.zhang@intel.com>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>,
-        Amit Kucheria <amitk@kernel.org>,
-        Hartmut Knaack <knaack.h@gmx.de>,
-        Lars-Peter Clausen <lars@metafoo.de>,
-        Peter Meerwald-Stadler <pmeerw@pmeerw.net>,
-        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
-        <linux-arm-msm@vger.kernel.org>, linux-pm@vger.kernel.org,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>, linux-iio@vger.kernel.org,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        Jishnu Prakash <jprakash@qti.qualcomm.com>
+References: <20201130225039.15981-1-ilina@codeaurora.org>
+In-Reply-To: <20201130225039.15981-1-ilina@codeaurora.org>
+From:   "Rafael J. Wysocki" <rafael@kernel.org>
+Date:   Tue, 8 Dec 2020 18:26:13 +0100
+Message-ID: <CAJZ5v0g+nK+jV+Gy+BKEALRtsXDK0HnDbz07Nv3KPK5L3V3OKg@mail.gmail.com>
+Subject: Re: [PATCH v6 0/3] Better domain idle from device wakeup patterns
+To:     Lina Iyer <ilina@codeaurora.org>
+Cc:     "Rafael J. Wysocki" <rjw@rjwysocki.net>,
+        Ulf Hansson <ulf.hansson@linaro.org>,
+        Linux PM <linux-pm@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, 8 Dec 2020 at 13:40, Jonathan Cameron
-<Jonathan.Cameron@huawei.com> wrote:
+On Mon, Nov 30, 2020 at 11:51 PM Lina Iyer <ilina@codeaurora.org> wrote:
 >
-> On Sun, 6 Dec 2020 00:05:29 +0300
-> Dmitry Baryshkov <dmitry.baryshkov@linaro.org> wrote:
+> Hi,
 >
-> > On 05/12/2020 20:08, Jonathan Cameron wrote:
-> > > On Fri,  4 Dec 2020 05:54:54 +0300
-> > > Dmitry Baryshkov <dmitry.baryshkov@linaro.org> wrote:
-> > >
-> > >> This patch serie adds support for thermal monitoring block on Qualcomm's
-> > >> PMIC5 chips. PM8150{,b,l} and sm8250-mtp board device trees are extended
-> > >> to support thermal zones provided by this thermal monitoring block.
-> > >> Unlike the rest of PMIC thermal senses, these thermal zones describe
-> > >> particular thermistors, which differ between from board to board.
-> > >
-> > > I've just taken another look through the various IIO parts in here and
-> > > I think they are fine.
-> > >
-> > > My assumption is that given the timing this isn't going to make the merge
-> > > window now.  Hence I'll be looking to do an immutable branch based on rc1
-> > > once it's available (assuming everyone else is fine with this version).
-> >
-> > Thank you! Another option might be to merge all iio changes this cycle
-> > (if it's fine with you) and have all the rest go via respective trees in
-> > the next merge window. I'm fine with either of the options.
+> The v5[1] of the series brought out some interesting discussions. The
+> most important being is it worth adding the additional expense to all PM
+> domains even if no wakeup pattern is available. It seems like
+> maintaining a domain specific flag that the governor could check is a
+> generic enough option. That should disable additional overhead for
+> domains that do not need this feature.
 >
-> Too late unfortunately. IIO routes through staging for historical reasons
-> (plus we still have about 15 drivers to move out of there - it's only been
-> about 10 years :)  Staging closes a week before merge window so IIO closes a few
-> days before staging.
+> Ulf suggested that we could allow wakeups only if any of the domain idle
+> state specifies a residency. However, we don't want to check for next
+> wakeup everytime the domain enters idle just because the domain
+> specifies an idle state with residency. This is also not desired.
 >
-> So lets stick to the immutable branch method.  Tends to make more sense in
-> the git history anyway as brings relevant code together (even if it travels
-> via multiple routes :)
+> Also, if the domain checks for next wakeup, should the parent domains of
+> the domain also check for next wakeup? And when do we set that up? These
+> are questions that we don't know the answers yet. So, let's enable the
+> domain governor only if the domain sets up the flag or when the device
+> in the domain specifies the next wakeup.
+>
+> The previous post of the series explaining why this is a useful feature
+> is v5[1]. Please let me know what you think.
 
-Thank you for the explanation, the immutable branch approach works for me.
-
--- 
-With best wishes
-Dmitry
+Ulf had comments on the previous versions, so waiting for him to
+respond here, thanks!
