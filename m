@@ -2,65 +2,88 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 0B6CB2D335A
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Dec 2020 21:27:35 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 5FC712D3443
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Dec 2020 21:51:51 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731388AbgLHUQN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 8 Dec 2020 15:16:13 -0500
-Received: from mail-oi1-f196.google.com ([209.85.167.196]:35803 "EHLO
-        mail-oi1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731140AbgLHUPG (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 8 Dec 2020 15:15:06 -0500
-Received: by mail-oi1-f196.google.com with SMTP id s2so11302089oij.2;
-        Tue, 08 Dec 2020 12:14:51 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=Xxaopq3so+D3VgiVyFhrugWDVelEOkAwYhk9HecWERM=;
-        b=suQoDPXB9xzFXcAQlrci3kaz72g5ZC2IA9wOs49eeRS/Vm1N3rcDEe5By3i3VlNZcY
-         uhMJDIZwF2vc7ZUe604BGUCuICgMocxYK5LWKNg0YqY3p1qruvHW5YB9w8H0fLrtmCd1
-         PcU+6RrvE6P3PaW5He4MsMnExSMZAiuAfFDmOULTjPLRC9mDhEtae7tW9T69x4O7BADj
-         Z9DOXnbpQWaEO8brYb//ntdBDCmwSQ6ZvmlPEB4JTrtOCKJOpEdaEJCqdtsjrB4SIyZB
-         FrO3K64G7FbczIp7DFCH7gU1kMQculNalU/F04ib6xlujUURTKvWkpPg/MKwb/DOS1In
-         1Vdg==
-X-Gm-Message-State: AOAM5309fWn9RYDX7Vc3qW8mtuh8TLoux2g3tKSFEy0YqVe1//ktNvwB
-        KWIm56LrThVlhJ53XKXqKj6mBN/eYA==
-X-Google-Smtp-Source: ABdhPJwPiRJXvyQF1/uDFMVO3nnTcFVq7zOJMUKs5BJ00h1kTQOwmGFlxY0X6AskgTdAadrOgEBJQA==
-X-Received: by 2002:aca:b587:: with SMTP id e129mr4029751oif.90.1607456787229;
-        Tue, 08 Dec 2020 11:46:27 -0800 (PST)
-Received: from xps15 (24-155-109-49.dyn.grandenetworks.net. [24.155.109.49])
-        by smtp.gmail.com with ESMTPSA id n3sm3625589otj.46.2020.12.08.11.46.25
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 08 Dec 2020 11:46:26 -0800 (PST)
-Received: (nullmailer pid 2962943 invoked by uid 1000);
-        Tue, 08 Dec 2020 19:46:25 -0000
-Date:   Tue, 8 Dec 2020 13:46:25 -0600
-From:   Rob Herring <robh@kernel.org>
+        id S1730339AbgLHUe1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 8 Dec 2020 15:34:27 -0500
+Received: from mail.kernel.org ([198.145.29.99]:42922 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1730338AbgLHUe0 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 8 Dec 2020 15:34:26 -0500
+Date:   Tue, 8 Dec 2020 21:16:03 +0200
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1607454968;
+        bh=4YSWBy4Ze2XZ3O8tBftNKde9EUBuyuIjWyN2ZrpIxvM=;
+        h=From:To:Cc:Subject:References:In-Reply-To:From;
+        b=nVhOppfF7il/vCHcMJCm1p+Lwcwkzojx2RGNhEPtG1Dv+YTRJ9vEAXICqnFy8m/7l
+         LczP4xd8OmolrTxvA4gv1axoL84PJcFJTd+onQ5SPme9rVbXItlpxzqx9I5AS6bBpp
+         o/mwtf7F3RUk4qEJdpqfyF/zgb23zfEHFOArRlYM4g9XygiZ3iVKm0dM+4QiR1tQDY
+         WqnO+lsDOfT4jkJl7dQFu3aqsF0XEUg6K2V8+0BV1L8iN4st3b7HlAa0xmzKjIen+A
+         7NirlgEudHRNsUeIXfl+9ta6Kl5XgiNWnlVBYgFmM01AcncsTQMbWvOuRPDcyERUEx
+         ezwxmXxjQUxCg==
+From:   Leon Romanovsky <leon@kernel.org>
 To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc:     devicetree@vger.kernel.org, bjorn.andersson@linaro.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        agross@kernel.org, robh+dt@kernel.org
-Subject: Re: [PATCH 1/3] dt-bindings: msm: Add LLCC for SM8250
-Message-ID: <20201208194625.GA2962884@robh.at.kernel.org>
-References: <20201127121127.158082-1-manivannan.sadhasivam@linaro.org>
- <20201127121127.158082-2-manivannan.sadhasivam@linaro.org>
+Cc:     Jeffrey Hugo <jhugo@codeaurora.org>,
+        Jakub Kicinski <kuba@kernel.org>,
+        Hemant Kumar <hemantk@codeaurora.org>,
+        gregkh@linuxfoundation.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, bbhatt@codeaurora.org,
+        loic.poulain@linaro.org, netdev@vger.kernel.org,
+        linux-wireless@vger.kernel.org, Kalle Valo <kvalo@codeaurora.org>
+Subject: Re: [PATCH v13 0/4] userspace MHI client interface driver
+Message-ID: <20201208191603.GJ4430@unreal>
+References: <1606533966-22821-1-git-send-email-hemantk@codeaurora.org>
+ <20201201112901.7f13e26c@kicinski-fedora-pc1c0hjn.DHCP.thefacebook.com>
+ <c6359962-a378-ed03-0fab-c2f6c8a1b8eb@codeaurora.org>
+ <20201201120302.474d4c9b@kicinski-fedora-pc1c0hjn.DHCP.thefacebook.com>
+ <817a4346-efb7-cfe5-0678-d1b60d06627d@codeaurora.org>
+ <20201201185506.77c4b3df@kicinski-fedora-pc1c0hjn.DHCP.thefacebook.com>
+ <f22eaead-fd25-8b20-7ca1-ae3f535347d4@codeaurora.org>
+ <20201206083302.GA691268@unreal>
+ <20201208165927.GE9925@work>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20201127121127.158082-2-manivannan.sadhasivam@linaro.org>
+In-Reply-To: <20201208165927.GE9925@work>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, 27 Nov 2020 17:41:25 +0530, Manivannan Sadhasivam wrote:
-> Add LLCC compatible for SM8250 SoC.
-> 
-> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> ---
->  Documentation/devicetree/bindings/arm/msm/qcom,llcc.yaml | 1 +
->  1 file changed, 1 insertion(+)
-> 
+On Tue, Dec 08, 2020 at 10:29:27PM +0530, Manivannan Sadhasivam wrote:
+> On Sun, Dec 06, 2020 at 10:33:02AM +0200, Leon Romanovsky wrote:
+> > On Tue, Dec 01, 2020 at 09:59:53PM -0700, Jeffrey Hugo wrote:
+> > > On 12/1/2020 7:55 PM, Jakub Kicinski wrote:
+> > > > On Tue, 1 Dec 2020 13:48:36 -0700 Jeffrey Hugo wrote:
+> > > > > On 12/1/2020 1:03 PM, Jakub Kicinski wrote:
+> > > > > > On Tue, 1 Dec 2020 12:40:50 -0700 Jeffrey Hugo wrote:
+> > > > > > > On 12/1/2020 12:29 PM, Jakub Kicinski wrote:
+> > > > > > > > On Fri, 27 Nov 2020 19:26:02 -0800 Hemant Kumar wrote:
+> > > > > > > > > This patch series adds support for UCI driver. UCI driver enables userspace
+> > > > > > > > > clients to communicate to external MHI devices like modem and WLAN. UCI driver
+> > > > > > > > > probe creates standard character device file nodes for userspace clients to
+> > > > > > > > > perform open, read, write, poll and release file operations. These file
+> > > > > > > > > operations call MHI core layer APIs to perform data transfer using MHI bus
+> > > > > > > > > to communicate with MHI device. Patch is tested using arm64 based platform.
+> > > > > > > >
+> > > > > > > > Wait, I thought this was for modems.
+> > > > > > > >
+>
+> [...]
+>
+> > Like it or not, but Jakub is absolutely right with his claim that
+> > providing user-visible interfaces without any standardization is proven
+> > as wrong.
+> >
+>
+> Everybody agrees with standardizing things but the problem is, the
+> standardization will only happen when more than one person implements the
+> same functionality.
 
-Acked-by: Rob Herring <robh@kernel.org>
+From my experience in RDMA and netdev, I can't agree with both of your
+statements. There are a lot of people who see standardization as a bad
+thing. Also we are pushing even one person to make user visible interfaces
+right from the beginning without relation to how wide it will be adopted
+later.
+
+Thanks
