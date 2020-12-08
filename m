@@ -2,34 +2,34 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 13E012D2FDF
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Dec 2020 17:38:32 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id DAC602D3018
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Dec 2020 17:45:52 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730261AbgLHQi2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 8 Dec 2020 11:38:28 -0500
-Received: from m43-15.mailgun.net ([69.72.43.15]:29195 "EHLO
-        m43-15.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730013AbgLHQi2 (ORCPT
+        id S1730283AbgLHQpS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 8 Dec 2020 11:45:18 -0500
+Received: from so254-31.mailgun.net ([198.61.254.31]:52565 "EHLO
+        so254-31.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729679AbgLHQpR (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 8 Dec 2020 11:38:28 -0500
+        Tue, 8 Dec 2020 11:45:17 -0500
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1607445490; h=Message-ID: References: In-Reply-To: Subject:
+ s=smtp; t=1607445891; h=Message-ID: References: In-Reply-To: Subject:
  Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=GKqaNR8RoeApXAKL255ad/JnOHss3+Y2agk82fIqQWU=;
- b=aMh9es93W4ndVGYyYH9utFfqqWkXJTZeKKORemH195Ybmf2/ahUCP8ji5kLTe569l4cgD0E/
- DAtM4tT3szDWgWkhRKszkYLt3dfzYVwN/mjnVBup9b7m6FpCcQanB9m/RkJw+C3EajwmTMd9
- p1oNYLfKPmi6ithHMYmxWjBjjC0=
-X-Mailgun-Sending-Ip: 69.72.43.15
+ MIME-Version: Sender; bh=2Y6Ur3rzE9mIuUPhbTq3y+SNHTRJlb8/T4C2ETc6d68=;
+ b=GoPZRq1H3Vz6EQXKViOA5hU/VK/ksTpq52z85mlO+d4rZMM5V7/mbKB55Cm9H8D15kWIeuY3
+ e+EuLzKA2zs1tcWByE6GIEEG9YqFfAwlbyoziGz3XGWr3C4ORUxaBdSeEL3msgCH31+P4mar
+ xtnVQJQwwB2YR4P5vXpDeo2ynyc=
+X-Mailgun-Sending-Ip: 198.61.254.31
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org
  (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n07.prod.us-west-2.postgun.com with SMTP id
- 5fcfabd0233278a213c9b40b (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 08 Dec 2020 16:37:36
+ smtp-out-n10.prod.us-east-1.postgun.com with SMTP id
+ 5fcfad68fab0cd4073e6ba67 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 08 Dec 2020 16:44:24
  GMT
 Sender: dikshita=codeaurora.org@mg.codeaurora.org
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 5007BC43461; Tue,  8 Dec 2020 16:37:36 +0000 (UTC)
+        id 082B8C43463; Tue,  8 Dec 2020 16:44:24 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
@@ -39,194 +39,180 @@ Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
         (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
         (No client certificate requested)
         (Authenticated sender: dikshita)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 5D934C433C6;
-        Tue,  8 Dec 2020 16:37:35 +0000 (UTC)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 5D772C433C6;
+        Tue,  8 Dec 2020 16:44:22 +0000 (UTC)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII;
  format=flowed
 Content-Transfer-Encoding: 7bit
-Date:   Tue, 08 Dec 2020 22:07:35 +0530
+Date:   Tue, 08 Dec 2020 22:14:22 +0530
 From:   dikshita@codeaurora.org
 To:     Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Cc:     linux-media@vger.kernel.org, nicolas@ndufresne.ca,
         stanimir.varbanov@linaro.org, linux-kernel@vger.kernel.org,
         linux-arm-msm@vger.kernel.org, vgarodia@codeaurora.org
-Subject: Re: [PATCH v3 3/3] venus: venc: Add support for frame-specific
- min/max qp controls
-In-Reply-To: <a5f99684-54ff-6d09-eeb7-4748ed3c3271@xs4all.nl>
-References: <1605682497-29273-1-git-send-email-dikshita@codeaurora.org>
- <1605682497-29273-4-git-send-email-dikshita@codeaurora.org>
- <a5f99684-54ff-6d09-eeb7-4748ed3c3271@xs4all.nl>
-Message-ID: <445dd26796e2242666e5256e7e36bcbe@codeaurora.org>
+Subject: Re: [PATCH v4] media: v4l2-ctrl: add control for long term reference.
+In-Reply-To: <47ac36cf-3931-ed68-62e9-821a669378f8@xs4all.nl>
+References: <1606810437-2797-1-git-send-email-dikshita@codeaurora.org>
+ <47ac36cf-3931-ed68-62e9-821a669378f8@xs4all.nl>
+Message-ID: <6b044c9be4a99adc18dd76765b089760@codeaurora.org>
 X-Sender: dikshita@codeaurora.org
 User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2020-12-02 19:06, Hans Verkuil wrote:
-> On 18/11/2020 07:54, Dikshita Agarwal wrote:
->> Add support for frame type specific min and max qp controls
->> for encoder.
+Hi Hans,
+
+On 2020-12-02 19:18, Hans Verkuil wrote:
+> On 01/12/2020 09:13, Dikshita Agarwal wrote:
+>> Long Term Reference (LTR) frames are the frames that are encoded
+>> sometime in the past and stored in the DPB buffer list to be used
+>> as reference to encode future frames.
+>> This change adds controls to enable this feature.
 >> 
 >> Signed-off-by: Dikshita Agarwal <dikshita@codeaurora.org>
 >> ---
->>  drivers/media/platform/qcom/venus/core.h       | 18 +++++++++
->>  drivers/media/platform/qcom/venus/venc.c       | 21 ++++++++---
->>  drivers/media/platform/qcom/venus/venc_ctrls.c | 51 
->> ++++++++++++++++++++++++++
->>  3 files changed, 85 insertions(+), 5 deletions(-)
+>>  .../userspace-api/media/v4l/ext-ctrls-codec.rst        | 18 
+>> ++++++++++++++++++
+>>  drivers/media/v4l2-core/v4l2-ctrls.c                   | 14 
+>> ++++++++++++++
+>>  include/uapi/linux/v4l2-controls.h                     |  3 +++
+>>  3 files changed, 35 insertions(+)
 >> 
->> diff --git a/drivers/media/platform/qcom/venus/core.h 
->> b/drivers/media/platform/qcom/venus/core.h
->> index 3bc129a..6a764c9 100644
->> --- a/drivers/media/platform/qcom/venus/core.h
->> +++ b/drivers/media/platform/qcom/venus/core.h
->> @@ -230,10 +230,28 @@ struct venc_controls {
->>  	u32 h264_b_qp;
->>  	u32 h264_min_qp;
->>  	u32 h264_max_qp;
->> +	u32 h264_i_min_qp;
->> +	u32 h264_i_max_qp;
->> +	u32 h264_p_min_qp;
->> +	u32 h264_p_max_qp;
->> +	u32 h264_b_min_qp;
->> +	u32 h264_b_max_qp;
->>  	u32 h264_loop_filter_mode;
->>  	s32 h264_loop_filter_alpha;
->>  	s32 h264_loop_filter_beta;
->> 
->> +	u32 hevc_i_qp;
->> +	u32 hevc_p_qp;
->> +	u32 hevc_b_qp;
->> +	u32 hevc_min_qp;
->> +	u32 hevc_max_qp;
->> +	u32 hevc_i_min_qp;
->> +	u32 hevc_i_max_qp;
->> +	u32 hevc_p_min_qp;
->> +	u32 hevc_p_max_qp;
->> +	u32 hevc_b_min_qp;
->> +	u32 hevc_b_max_qp;
+>> diff --git a/Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst 
+>> b/Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst
+>> index 3b86959..40634f8 100644
+>> --- a/Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst
+>> +++ b/Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst
+>> @@ -4450,3 +4450,21 @@ enum v4l2_mpeg_video_hevc_size_of_length_field 
+>> -
+>>        - Selecting this value specifies that HEVC slices are expected
+>>          to be prefixed by Annex B start codes. According to 
+>> :ref:`hevc`
+>>          valid start codes can be 3-bytes 0x000001 or 4-bytes 
+>> 0x00000001.
 >> +
->>  	u32 vp8_min_qp;
->>  	u32 vp8_max_qp;
->> 
->> diff --git a/drivers/media/platform/qcom/venus/venc.c 
->> b/drivers/media/platform/qcom/venus/venc.c
->> index 0bf92cc..f2f5a85 100644
->> --- a/drivers/media/platform/qcom/venus/venc.c
->> +++ b/drivers/media/platform/qcom/venus/venc.c
->> @@ -668,17 +668,28 @@ static int venc_set_properties(struct venus_inst 
->> *inst)
->>  		return ret;
->> 
->>  	ptype = HFI_PROPERTY_PARAM_VENC_SESSION_QP;
->> -	quant.qp_i = ctr->h264_i_qp;
->> -	quant.qp_p = ctr->h264_p_qp;
->> -	quant.qp_b = ctr->h264_b_qp;
->> +	if (inst->fmt_cap->pixfmt == V4L2_PIX_FMT_HEVC) {
->> +		quant.qp_i = ctr->hevc_i_qp;
->> +		quant.qp_p = ctr->hevc_p_qp;
->> +		quant.qp_b = ctr->hevc_b_qp;
->> +	} else {
->> +		quant.qp_i = ctr->h264_i_qp;
->> +		quant.qp_p = ctr->h264_p_qp;
->> +		quant.qp_b = ctr->h264_b_qp;
->> +	}
->>  	quant.layer_id = 0;
->>  	ret = hfi_session_set_property(inst, ptype, &quant);
->>  	if (ret)
->>  		return ret;
->> 
->>  	ptype = HFI_PROPERTY_PARAM_VENC_SESSION_QP_RANGE;
->> -	quant_range.min_qp = ctr->h264_min_qp;
->> -	quant_range.max_qp = ctr->h264_max_qp;
->> +	if (inst->fmt_cap->pixfmt == V4L2_PIX_FMT_HEVC) {
->> +		quant_range.min_qp = ctr->hevc_min_qp;
->> +		quant_range.max_qp = ctr->hevc_max_qp;
->> +	} else {
->> +		quant_range.min_qp = ctr->h264_min_qp;
->> +		quant_range.max_qp = ctr->h264_max_qp;
->> +	}
->>  	quant_range.layer_id = 0;
->>  	ret = hfi_session_set_property(inst, ptype, &quant_range);
->>  	if (ret)
->> diff --git a/drivers/media/platform/qcom/venus/venc_ctrls.c 
->> b/drivers/media/platform/qcom/venus/venc_ctrls.c
->> index 0708b3b..cd131e3 100644
->> --- a/drivers/media/platform/qcom/venus/venc_ctrls.c
->> +++ b/drivers/media/platform/qcom/venus/venc_ctrls.c
->> @@ -125,9 +125,60 @@ static int venc_op_s_ctrl(struct v4l2_ctrl *ctrl)
->>  	case V4L2_CID_MPEG_VIDEO_H264_MIN_QP:
->>  		ctr->h264_min_qp = ctrl->val;
+>> +``V4L2_CID_MPEG_VIDEO_LTR_COUNT (integer)``
+>> +       Specifies the number of Long Term Reference (LTR) frames 
+>> encoder needs
+>> +       to generate or keep. This is applicable to H264 and HEVC 
+>> encoder.
+>> +
+>> +``V4L2_CID_MPEG_VIDEO_FRAME_LTR_INDEX (integer)``
+>> +       The current frame is marked as a Long Term Reference (LTR) 
+>> frame
+>> +       and given this LTR index which ranges from 0 to LTR_COUNT-1.
+>> +       This is applicable to H264 and HEVC encoder and can be applied 
+>> using
+>> +       Request Api.
+>> +       Source Rec. ITU-T H.264 (06/2019); Table 7.9
+>> +
+>> +``V4L2_CID_MPEG_VIDEO_USE_LTR_FRAMES (bitmask)``
+>> +       Specifies the Long Term Reference (LTR) frame(s) to be used 
+>> for
+>> +       encoding the current frame.
+>> +       This provides a bitmask which consists of bits [0, 
+>> LTR_COUNT-1].
+>> +       This is applicable to H264 and HEVC encoder and can be applied 
+>> using
+>> +       Request Api.
+>> diff --git a/drivers/media/v4l2-core/v4l2-ctrls.c 
+>> b/drivers/media/v4l2-core/v4l2-ctrls.c
+>> index e5b726f..0b81b39 100644
+>> --- a/drivers/media/v4l2-core/v4l2-ctrls.c
+>> +++ b/drivers/media/v4l2-core/v4l2-ctrls.c
+>> @@ -958,6 +958,9 @@ const char *v4l2_ctrl_get_name(u32 id)
+>>  	case V4L2_CID_MPEG_VIDEO_MV_V_SEARCH_RANGE:		return "Vertical MV 
+>> Search Range";
+>>  	case V4L2_CID_MPEG_VIDEO_REPEAT_SEQ_HEADER:		return "Repeat Sequence 
+>> Header";
+>>  	case V4L2_CID_MPEG_VIDEO_FORCE_KEY_FRAME:		return "Force Key Frame";
+>> +	case V4L2_CID_MPEG_VIDEO_LTR_COUNT:			return "LTR Count";
+>> +	case V4L2_CID_MPEG_VIDEO_FRAME_LTR_INDEX:		return "frame LTR index";
+> 
+> "Frame LTR Index"
+> 
+>> +	case V4L2_CID_MPEG_VIDEO_USE_LTR_FRAMES:		return "Use LTR Frame(s)";
+> 
+> Just: "Use LTR Frames". No '(s)'.
+> 
+>>  	case V4L2_CID_MPEG_VIDEO_MPEG2_SLICE_PARAMS:		return "MPEG-2 Slice 
+>> Parameters";
+>>  	case V4L2_CID_MPEG_VIDEO_MPEG2_QUANTIZATION:		return "MPEG-2 
+>> Quantization Matrices";
+>>  	case V4L2_CID_MPEG_VIDEO_FWHT_PARAMS:			return "FWHT Stateless 
+>> Parameters";
+>> @@ -1273,6 +1276,17 @@ void v4l2_ctrl_fill(u32 id, const char **name, 
+>> enum v4l2_ctrl_type *type,
+>>  	case V4L2_CID_MPEG_VIDEO_MV_V_SEARCH_RANGE:
+>>  		*type = V4L2_CTRL_TYPE_INTEGER;
 >>  		break;
->> +	case V4L2_CID_MPEG_VIDEO_H264_I_FRAME_MIN_QP:
->> +		ctr->h264_i_min_qp = ctrl->val;
+>> +	case V4L2_CID_MPEG_VIDEO_LTR_COUNT:
+>> +		*type = V4L2_CTRL_TYPE_INTEGER;
 >> +		break;
->> +	case V4L2_CID_MPEG_VIDEO_H264_P_FRAME_MIN_QP:
->> +		ctr->h264_p_min_qp = ctrl->val;
+>> +	case V4L2_CID_MPEG_VIDEO_FRAME_LTR_INDEX:
+>> +		*type = V4L2_CTRL_TYPE_INTEGER;
+>> +		*flags |= V4L2_CTRL_FLAG_EXECUTE_ON_WRITE;
 >> +		break;
->> +	case V4L2_CID_MPEG_VIDEO_H264_B_FRAME_MIN_QP:
->> +		ctr->h264_b_min_qp = ctrl->val;
+>> +	case V4L2_CID_MPEG_VIDEO_USE_LTR_FRAMES:
+>> +		*type = V4L2_CTRL_TYPE_BITMASK;
+>> +		*flags |= V4L2_CTRL_FLAG_EXECUTE_ON_WRITE;
 >> +		break;
->>  	case V4L2_CID_MPEG_VIDEO_H264_MAX_QP:
->>  		ctr->h264_max_qp = ctrl->val;
->>  		break;
->> +	case V4L2_CID_MPEG_VIDEO_H264_I_FRAME_MAX_QP:
->> +		ctr->h264_i_max_qp = ctrl->val;
->> +		break;
->> +	case V4L2_CID_MPEG_VIDEO_H264_P_FRAME_MAX_QP:
->> +		ctr->h264_p_max_qp = ctrl->val;
->> +		break;
->> +	case V4L2_CID_MPEG_VIDEO_H264_B_FRAME_MAX_QP:
->> +		ctr->h264_b_max_qp = ctrl->val;
->> +		break;
->> +	case V4L2_CID_MPEG_VIDEO_HEVC_I_FRAME_QP:
->> +		ctr->hevc_i_qp = ctrl->val;
->> +		break;
->> +	case V4L2_CID_MPEG_VIDEO_HEVC_P_FRAME_QP:
->> +		ctr->hevc_p_qp = ctrl->val;
->> +		break;
->> +	case V4L2_CID_MPEG_VIDEO_HEVC_B_FRAME_QP:
->> +		ctr->hevc_b_qp = ctrl->val;
->> +		break;
->> +	case V4L2_CID_MPEG_VIDEO_HEVC_MIN_QP:
->> +		ctr->hevc_min_qp = ctrl->val;
->> +		break;
->> +	case V4L2_CID_MPEG_VIDEO_HEVC_I_FRAME_MIN_QP:
->> +		ctr->hevc_i_min_qp = ctrl->val;
->> +		break;
->> +	case V4L2_CID_MPEG_VIDEO_HEVC_P_FRAME_MIN_QP:
->> +		ctr->hevc_p_min_qp = ctrl->val;
->> +		break;
->> +	case V4L2_CID_MPEG_VIDEO_HEVC_B_FRAME_MIN_QP:
->> +		ctr->hevc_b_min_qp = ctrl->val;
->> +		break;
->> +	case V4L2_CID_MPEG_VIDEO_HEVC_MAX_QP:
->> +		ctr->hevc_max_qp = ctrl->val;
->> +		break;
->> +	case V4L2_CID_MPEG_VIDEO_HEVC_I_FRAME_MAX_QP:
->> +		ctr->hevc_i_max_qp = ctrl->val;
->> +		break;
->> +	case V4L2_CID_MPEG_VIDEO_HEVC_P_FRAME_MAX_QP:
->> +		ctr->hevc_p_max_qp = ctrl->val;
->> +		break;
->> +	case V4L2_CID_MPEG_VIDEO_HEVC_B_FRAME_MAX_QP:
->> +		ctr->hevc_b_max_qp = ctrl->val;
->> +		break;
->>  	case V4L2_CID_MPEG_VIDEO_MULTI_SLICE_MODE:
->>  		ctr->multi_slice_mode = ctrl->val;
->>  		break;
+>>  	case V4L2_CID_MPEG_VIDEO_FORCE_KEY_FRAME:
+>>  	case V4L2_CID_PAN_RESET:
+>>  	case V4L2_CID_TILT_RESET:
+>> diff --git a/include/uapi/linux/v4l2-controls.h 
+>> b/include/uapi/linux/v4l2-controls.h
+>> index e37b85f..710bc53 100644
+>> --- a/include/uapi/linux/v4l2-controls.h
+>> +++ b/include/uapi/linux/v4l2-controls.h
+>> @@ -421,6 +421,9 @@ enum v4l2_mpeg_video_multi_slice_mode {
+>>  #define 
+>> V4L2_CID_MPEG_VIDEO_MV_H_SEARCH_RANGE		(V4L2_CID_MPEG_BASE+227)
+>>  #define 
+>> V4L2_CID_MPEG_VIDEO_MV_V_SEARCH_RANGE		(V4L2_CID_MPEG_BASE+228)
+>>  #define V4L2_CID_MPEG_VIDEO_FORCE_KEY_FRAME		(V4L2_CID_MPEG_BASE+229)
+>> +#define V4L2_CID_MPEG_VIDEO_LTR_COUNT                  
+>> (V4L2_CID_MPEG_BASE + 230)
+>> +#define V4L2_CID_MPEG_VIDEO_FRAME_LTR_INDEX            
+>> (V4L2_CID_MPEG_BASE + 231)
+>> +#define V4L2_CID_MPEG_VIDEO_USE_LTR_FRAMES             
+>> (V4L2_CID_MPEG_BASE + 232)
+>> 
+>>  /* CIDs for the MPEG-2 Part 2 (H.262) codec */
+>>  #define V4L2_CID_MPEG_VIDEO_MPEG2_LEVEL			(V4L2_CID_MPEG_BASE+270)
 >> 
 > 
-> This looks incomplete: the new controls aren't actually added to the
-> driver with v4l2_ctrl_new_std(). Did you test this?
-Oh, Sorry. Looks like I forgot to add some changes.
-will send a new patch.
+> Note that this and the other patches from you that add
+> V4L2_CID_MPEG_VIDEO controls
+> will need to be rebased as soon as this PR is merged:
+> 
+> https://patchwork.linuxtv.org/project/linux-media/patch/d68da172-b251-000f-653d-38a8a4c7b715@xs4all.nl/
+> 
+> I recommend waiting until that's in.
+> 
+> I currently have the following patches from you adding new controls
+> besides this one:
+> 
+> https://patchwork.linuxtv.org/project/linux-media/patch/1606121442-31074-1-git-send-email-dikshita@codeaurora.org/
+> https://patchwork.linuxtv.org/project/linux-media/patch/1605682497-29273-2-git-send-email-dikshita@codeaurora.org/
+> https://patchwork.linuxtv.org/project/linux-media/patch/1605682497-29273-3-git-send-email-dikshita@codeaurora.org/
+> 
+> What is missing is driver support for these new controls. I recommend 
+> that, once
+> the PR mentioned above is merged, you make a new series combining all 
+> three
+> patches + patches that add support for this to the venus driver.
+> 
+I will address all comments in the next version and will include driver 
+implementation as well.
+Once all the driver changes are reviewed, I will make a series with all 
+final patches, Hope that's fine.
 
 Thanks,
 Dikshita
-> 
+
 > Regards,
 > 
 > 	Hans
