@@ -2,101 +2,68 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id F37932D4538
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Dec 2020 16:21:03 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id BBA122D4592
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Dec 2020 16:40:13 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728874AbgLIPTZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 9 Dec 2020 10:19:25 -0500
-Received: from so254-31.mailgun.net ([198.61.254.31]:36265 "EHLO
-        so254-31.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726101AbgLIPTV (ORCPT
+        id S1727059AbgLIPiq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 9 Dec 2020 10:38:46 -0500
+Received: from mail-oi1-f194.google.com ([209.85.167.194]:43905 "EHLO
+        mail-oi1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726278AbgLIPiq (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 9 Dec 2020 10:19:21 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1607527135; h=In-Reply-To: Content-Type: MIME-Version:
- References: Message-ID: Subject: Cc: To: From: Date: Sender;
- bh=nk2LdvOUPXoWK1/EktFM/brqUSemntfMxA6Fzq9tCOE=; b=Qn+kE6QCGXSiM8ha5fd9mIbvT749uPiZ34gFQvmmv1E4DsF3PCHnLm5H9Esvb4r9QU0aq6cx
- nXSCBkyM790jU2iunM5XJ2ExravQzU868jV7rABNcQbY4AVh+V5wPC6X8xesu7PvXmOQTjSx
- 81o1zZ3kldeSVlMjDmc/qxMKJx8=
-X-Mailgun-Sending-Ip: 198.61.254.31
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n03.prod.us-west-2.postgun.com with SMTP id
- 5fd0eabed5b4c78a8ff87ee9 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 09 Dec 2020 15:18:22
- GMT
-Sender: ilina=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 8E2C5C43462; Wed,  9 Dec 2020 15:18:22 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
-        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
-Received: from localhost (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: ilina)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id DA69FC433C6;
-        Wed,  9 Dec 2020 15:18:20 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org DA69FC433C6
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=ilina@codeaurora.org
-Date:   Wed, 9 Dec 2020 08:18:19 -0700
-From:   Lina Iyer <ilina@codeaurora.org>
-To:     Ulf Hansson <ulf.hansson@linaro.org>
-Cc:     "Rafael J. Wysocki" <rafael@kernel.org>,
-        "Rafael J. Wysocki" <rjw@rjwysocki.net>,
-        Linux PM <linux-pm@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>
-Subject: Re: [PATCH v6 0/3] Better domain idle from device wakeup patterns
-Message-ID: <X9Dqu1QjURikO3jM@codeaurora.org>
-References: <20201130225039.15981-1-ilina@codeaurora.org>
- <CAJZ5v0g+nK+jV+Gy+BKEALRtsXDK0HnDbz07Nv3KPK5L3V3OKg@mail.gmail.com>
- <CAPDyKFpD6L0r=YBEEjfjc85gx_7p5cVw20fwUxecpQp2dNU-0g@mail.gmail.com>
+        Wed, 9 Dec 2020 10:38:46 -0500
+Received: by mail-oi1-f194.google.com with SMTP id q25so2105775oij.10;
+        Wed, 09 Dec 2020 07:38:30 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=wVhLWCywNbWI0H/GiKYo0zz2L9PGx0dVA5c51bASIyw=;
+        b=syNCe86C3S9civGcUT1E1qyi1O/7Udt/+I+Fxw/aD6xsz9WiH11+hOsFdT4WNlklve
+         zmFaH+JlBROpkmIiFFzd2Jq8Hm9+W9Rp9Ftl2VK6WzsyaRkWWipwAc4R2FBDS42sckyb
+         SjyQLu4TYI1OsfA2I4eroiDUG9tsbjMd0nPZnA5FPuFhp8IjdAbr9DJUdfkEi7ii6XDi
+         zzSxUQdh/QnMRP4bcMRRLuNaRGxh0rpm7ne0np8Wb1l7TuwC/f19nE+4JNRWXgpD0Dec
+         WPi05a/qM8bnfu8oPEkxwv92JEpHTGiQFTSakIr9jxNILNgRP2APt96hHpfx3eCk/JCl
+         r55A==
+X-Gm-Message-State: AOAM531u3jjQ4KvZg6fU/9e0HchBOOogjph4p7VqbAwbU8Gg8nrtkP1w
+        0ovE6A9QmDsT59p/AdsJ5w==
+X-Google-Smtp-Source: ABdhPJyk4nlvC4/cpNox4CgcwSixjr8L/4JQEndQLX/f5MWrDHdpXmdfehztc8032azHMs/gTGdZMA==
+X-Received: by 2002:aca:4006:: with SMTP id n6mr2120641oia.22.1607528285074;
+        Wed, 09 Dec 2020 07:38:05 -0800 (PST)
+Received: from xps15 (24-155-109-49.dyn.grandenetworks.net. [24.155.109.49])
+        by smtp.gmail.com with ESMTPSA id f67sm441795otb.60.2020.12.09.07.38.03
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 09 Dec 2020 07:38:03 -0800 (PST)
+Received: (nullmailer pid 493431 invoked by uid 1000);
+        Wed, 09 Dec 2020 15:38:02 -0000
+Date:   Wed, 9 Dec 2020 09:38:02 -0600
+From:   Rob Herring <robh@kernel.org>
+To:     Vinod Koul <vkoul@kernel.org>
+Cc:     Thomas Gleixner <tglx@linutronix.de>,
+        linux-arm-msm@vger.kernel.org, Rob Herring <robh+dt@kernel.org>,
+        Jason Cooper <jason@lakedaemon.net>,
+        devicetree@vger.kernel.org, Andy Gross <agross@kernel.org>,
+        Marc Zyngier <maz@kernel.org>, linux-kernel@vger.kernel.org,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+Subject: Re: [PATCH] dt-bindings: qcom,pdc: Add compatible for SM8250
+Message-ID: <20201209153802.GA493340@robh.at.kernel.org>
+References: <20201201053537.2134991-1-vkoul@kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <CAPDyKFpD6L0r=YBEEjfjc85gx_7p5cVw20fwUxecpQp2dNU-0g@mail.gmail.com>
+In-Reply-To: <20201201053537.2134991-1-vkoul@kernel.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Dec 09 2020 at 03:37 -0700, Ulf Hansson wrote:
->On Tue, 8 Dec 2020 at 18:26, Rafael J. Wysocki <rafael@kernel.org> wrote:
->>
->> On Mon, Nov 30, 2020 at 11:51 PM Lina Iyer <ilina@codeaurora.org> wrote:
->> >
->> > Hi,
->> >
->> > The v5[1] of the series brought out some interesting discussions. The
->> > most important being is it worth adding the additional expense to all PM
->> > domains even if no wakeup pattern is available. It seems like
->> > maintaining a domain specific flag that the governor could check is a
->> > generic enough option. That should disable additional overhead for
->> > domains that do not need this feature.
->> >
->> > Ulf suggested that we could allow wakeups only if any of the domain idle
->> > state specifies a residency. However, we don't want to check for next
->> > wakeup everytime the domain enters idle just because the domain
->> > specifies an idle state with residency. This is also not desired.
->> >
->> > Also, if the domain checks for next wakeup, should the parent domains of
->> > the domain also check for next wakeup? And when do we set that up? These
->> > are questions that we don't know the answers yet. So, let's enable the
->> > domain governor only if the domain sets up the flag or when the device
->> > in the domain specifies the next wakeup.
->> >
->> > The previous post of the series explaining why this is a useful feature
->> > is v5[1]. Please let me know what you think.
->>
->> Ulf had comments on the previous versions, so waiting for him to
->> respond here, thanks!
->
->Yes, I will have a look, but please allow me some more time - it's a
->busy period for me.
->
-Thank you.
+On Tue, 01 Dec 2020 11:05:37 +0530, Vinod Koul wrote:
+> Add the compatible string for SM8250 SoC from Qualcomm. This compatible
+> is used already in DTS files but not documented yet
+> 
+> Signed-off-by: Vinod Koul <vkoul@kernel.org>
+> ---
+>  .../devicetree/bindings/interrupt-controller/qcom,pdc.txt        | 1 +
+>  1 file changed, 1 insertion(+)
+> 
 
--- Lina
+Acked-by: Rob Herring <robh@kernel.org>
