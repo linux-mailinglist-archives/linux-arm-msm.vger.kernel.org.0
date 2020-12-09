@@ -2,251 +2,302 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 827312D428A
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Dec 2020 14:03:11 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 73EA12D448E
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Dec 2020 15:42:05 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731919AbgLINBB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 9 Dec 2020 08:01:01 -0500
-Received: from m43-15.mailgun.net ([69.72.43.15]:43185 "EHLO
-        m43-15.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731916AbgLINBB (ORCPT
+        id S1733043AbgLIOlx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 9 Dec 2020 09:41:53 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38328 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1733041AbgLIOlv (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 9 Dec 2020 08:01:01 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1607518837; h=Content-Transfer-Encoding: Content-Type:
- In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
- Subject: Sender; bh=nSQphrYg7w8tR3QtwtHPM2DKr3CV/Y5ctP15BpmQc6Q=; b=uSQ8ftrrvuhqdHvWkO7Nm7TkfttZBrn4QNftiPi3Z9TUeAANBfkwFSX4fek55iCzwa0t6bZi
- dcAT4AEmextrKZD2gyfqX7s+b5nvpZ4OcszJllI1HDFuAJWSRmE73YHyge+rvJmZYcaPMtfq
- ItHmrf74fYHYtLA5tjAU+zMNttA=
-X-Mailgun-Sending-Ip: 69.72.43.15
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n10.prod.us-west-2.postgun.com with SMTP id
- 5fd0ca50d5b4c78a8f7c05a5 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 09 Dec 2020 13:00:00
- GMT
-Sender: akashast=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id A4433C433C6; Wed,  9 Dec 2020 13:00:00 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        NICE_REPLY_A,SPF_FAIL,URIBL_BLOCKED autolearn=no autolearn_force=no
-        version=3.4.0
-Received: from [192.168.43.89] (unknown [223.180.186.155])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: akashast)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 43872C433C6;
-        Wed,  9 Dec 2020 12:59:50 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 43872C433C6
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=akashast@codeaurora.org
-Subject: Re: [RESEND PATCH V6 1/2] i2c: i2c-qcom-geni: Store DMA mapping data
- in geni_i2c_dev struct
-To:     Roja Rani Yarubandi <rojay@codeaurora.org>, wsa@kernel.org
-Cc:     swboyd@chromium.org, dianders@chromium.org,
-        saiprakash.ranjan@codeaurora.org, gregkh@linuxfoundation.org,
-        mka@chromium.org, msavaliy@qti.qualcomm.com, skakit@codeaurora.org,
-        vkaur@codeaurora.org, pyarlaga@codeaurora.org,
-        rnayak@codeaurora.org, agross@kernel.org,
-        bjorn.andersson@linaro.org, linux-arm-msm@vger.kernel.org,
-        linux-i2c@vger.kernel.org, linux-kernel@vger.kernel.org,
-        sumit.semwal@linaro.org, linux-media@vger.kernel.org
-References: <20201203103156.32595-1-rojay@codeaurora.org>
- <20201203103156.32595-2-rojay@codeaurora.org>
-From:   Akash Asthana <akashast@codeaurora.org>
-Message-ID: <049c28e9-1211-377f-941d-ba169645dd24@codeaurora.org>
-Date:   Wed, 9 Dec 2020 18:29:10 +0530
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.5.1
+        Wed, 9 Dec 2020 09:41:51 -0500
+Received: from mail-pl1-x62e.google.com (mail-pl1-x62e.google.com [IPv6:2607:f8b0:4864:20::62e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 339C1C0613CF
+        for <linux-arm-msm@vger.kernel.org>; Wed,  9 Dec 2020 06:41:11 -0800 (PST)
+Received: by mail-pl1-x62e.google.com with SMTP id s2so1026017plr.9
+        for <linux-arm-msm@vger.kernel.org>; Wed, 09 Dec 2020 06:41:11 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=73X2CuRUpRA37yWB8Fa6iuSxWZoiMyfWXmcQ5R+EahQ=;
+        b=IUICo7vE4xF3XuP8hxebaHzfHR45vwnryrykiMCV+pb3Eb6wAuyb27WKCssLOLlWVt
+         i7TXJQdJmIMkzcRgOCgfyYk61x8cgHcuORK67Od3XM5NhKvqsFynqstL6sVbesiiCeit
+         1v/gghSGRVUh4TDyZEgOdU8pkONNsPUeQttbZ7+mzAphZk+cOmDQHfACyXQpg6yFdvf4
+         X/66tsGxXO9TM5y5qmzWiqMy4MPaVFky4wzLaVMfwpki1Gcy5IFC3wtqmXY+Blueo/QA
+         fDCI+MqxZngjEXhybTqhXRPYnvKevWvX2BcHSx44vxGmPa2IHxdTtgckxO9z7cnap3qJ
+         2f8A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=73X2CuRUpRA37yWB8Fa6iuSxWZoiMyfWXmcQ5R+EahQ=;
+        b=KDesCiFleU5gWngBK/fiUWUMQmZZGPYWMD1rMd0MhKzComnBiyObyKdekQcdn1uPFG
+         iiyFP0gMHElxdMbt0OucwAfjIdUoRmMBo3xhSACUhz1+IUohhhGAcilXdo3+Uu69GMdG
+         JuSgSKZbQsiQINBGK+EkO7/LAXx8RkDM29wmEvOdMtjkliwGfwwM7pLBINQ8n3vTr8v7
+         +b8muQgjz4e4DbiFekAddPOeoF48V51y4cjLVD/lO95yY3BtOLGDifVocfaVwf/amMBr
+         EVMPkv1imgUXkAyM0xANnTuzch7Ay1giTeDw4rbT/osiQIppSSrIb00ba4Acsz+h95vG
+         VGhw==
+X-Gm-Message-State: AOAM5339/snzIDMYmqV9bES5fzcXhi4fB/sOMI/+1fAsxS81arGIHpvh
+        +r35sBMW7E792g9KZg85UXY=
+X-Google-Smtp-Source: ABdhPJz1bOThm7C2MLK9ge3VbAUlRvpxCxHr5QDpGJulc7Pei90bPQTXtiK91gwD39SSjbqKItEeTQ==
+X-Received: by 2002:a17:90a:520e:: with SMTP id v14mr2525529pjh.9.1607524870791;
+        Wed, 09 Dec 2020 06:41:10 -0800 (PST)
+Received: from localhost.localdomain ([117.242.203.227])
+        by smtp.googlemail.com with ESMTPSA id l70sm2871267pgd.79.2020.12.09.06.41.08
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 09 Dec 2020 06:41:10 -0800 (PST)
+From:   "J.R. Divya Antony" <d.antony.jr@gmail.com>
+To:     bjorn.andersson@linaro.org
+Cc:     linux-arm-msm@vger.kernel.org,
+        "J.R. Divya Antony" <d.antony.jr@gmail.com>
+Subject: [PATCH v2] arm64: dts: qcom: Add device tree for ASUS Zenfone 2 Laser
+Date:   Wed,  9 Dec 2020 20:07:44 +0530
+Message-Id: <20201209143743.7383-1-d.antony.jr@gmail.com>
+X-Mailer: git-send-email 2.29.2
+In-Reply-To: <X8/7x2uSE4/6MGNM@builder.lan>
+References: <X8/7x2uSE4/6MGNM@builder.lan>
 MIME-Version: 1.0
-In-Reply-To: <20201203103156.32595-2-rojay@codeaurora.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Roja,
+ASUS Zenfone 2 Laser Z00L is a smartphone based on MSM8916 SoC
+released on 2015.
 
-On 12/3/2020 4:01 PM, Roja Rani Yarubandi wrote:
-> Store DMA mapping data in geni_i2c_dev struct to enhance DMA mapping
-> data scope. For example during shutdown callback to unmap DMA mapping,
-> this stored DMA mapping data can be used to call geni_se_tx_dma_unprep
-> and geni_se_rx_dma_unprep functions.
->
-> Add two helper functions geni_i2c_rx_msg_cleanup and
-> geni_i2c_tx_msg_cleanup to unwrap the things after rx/tx FIFO/DMA
-> transfers, so that the same can be used in geni_i2c_stop_xfer()
-> function during shutdown callback.
->
-> Signed-off-by: Roja Rani Yarubandi <rojay@codeaurora.org>
-> ---
-> Changes in V5:
->   - As per Stephen's comments separated this patch from shutdown
->     callback patch, gi2c->cur = NULL is not removed from
->     geni_i2c_abort_xfer(), and made a copy of gi2c->cur and passed
->     to cleanup functions.
->
-> Changes in V6:
->   - Added spin_lock/unlock in geni_i2c_rx_msg_cleanup() and
->     geni_i2c_tx_msg_cleanup() functions.
->
->   drivers/i2c/busses/i2c-qcom-geni.c | 69 +++++++++++++++++++++++-------
->   1 file changed, 53 insertions(+), 16 deletions(-)
->
-> diff --git a/drivers/i2c/busses/i2c-qcom-geni.c b/drivers/i2c/busses/i2c-qcom-geni.c
-> index dce75b85253c..bfbc80f65006 100644
-> --- a/drivers/i2c/busses/i2c-qcom-geni.c
-> +++ b/drivers/i2c/busses/i2c-qcom-geni.c
-> @@ -86,6 +86,9 @@ struct geni_i2c_dev {
->   	u32 clk_freq_out;
->   	const struct geni_i2c_clk_fld *clk_fld;
->   	int suspended;
-> +	void *dma_buf;
-> +	size_t xfer_len;
-> +	dma_addr_t dma_addr;
->   };
->   
->   struct geni_i2c_err_log {
-> @@ -348,14 +351,49 @@ static void geni_i2c_tx_fsm_rst(struct geni_i2c_dev *gi2c)
->   		dev_err(gi2c->se.dev, "Timeout resetting TX_FSM\n");
->   }
->   
-> +static void geni_i2c_rx_msg_cleanup(struct geni_i2c_dev *gi2c,
-> +				     struct i2c_msg *cur)
-> +{
-> +	struct geni_se *se = &gi2c->se;
-> +	unsigned long flags;
-> +
-> +	spin_lock_irqsave(&gi2c->lock, flags);
-> +	gi2c->cur_rd = 0;
-> +	if (gi2c->dma_buf) {
-> +		if (gi2c->err)
-> +			geni_i2c_rx_fsm_rst(gi2c);
+Add a device tree for Z00L with initial support for:
+  - SDHCI (internal storage)
+  - USB Device Mode
+  - UART
+  - Regulators
 
-Which race we are trying to avoid here by holding spinlock?
+Signed-off-by: J.R. Divya Antony <d.antony.jr@gmail.com>
+---
+ Changes in v2:
+  - Arrange nodes in alphabetical order
+  - Add Wifi node
+  - Add GPIO Keys
+---
+ arch/arm64/boot/dts/qcom/Makefile             |   1 +
+ .../arm64/boot/dts/qcom/msm8916-asus-z00l.dts | 195 ++++++++++++++++++
+ 2 files changed, 196 insertions(+)
+ create mode 100644 arch/arm64/boot/dts/qcom/msm8916-asus-z00l.dts
 
-We cannot call any sleeping API by holding spinlock, geni_i2c_rx_fsm_rst 
-calls *wait-for-completion*, which is a sleeping call.
-
-> +		geni_se_rx_dma_unprep(se, gi2c->dma_addr, gi2c->xfer_len);
-> +		i2c_put_dma_safe_msg_buf(gi2c->dma_buf, cur, !gi2c->err);
-> +	}
-> +	spin_unlock_irqrestore(&gi2c->lock, flags);
-> +}
-> +
-> +static void geni_i2c_tx_msg_cleanup(struct geni_i2c_dev *gi2c,
-> +				     struct i2c_msg *cur)
-> +{
-> +	struct geni_se *se = &gi2c->se;
-> +	unsigned long flags;
-> +
-> +	spin_lock_irqsave(&gi2c->lock, flags);
-> +	gi2c->cur_wr = 0;
-> +	if (gi2c->dma_buf) {
-> +		if (gi2c->err)
-> +			geni_i2c_tx_fsm_rst(gi2c);
-
-Same here
-
-Regards,
-
-Akash
-
-> +		geni_se_tx_dma_unprep(se, gi2c->dma_addr, gi2c->xfer_len);
-> +		i2c_put_dma_safe_msg_buf(gi2c->dma_buf, cur, !gi2c->err);
-> +	}
-> +	spin_unlock_irqrestore(&gi2c->lock, flags);
-> +}
-> +
->   static int geni_i2c_rx_one_msg(struct geni_i2c_dev *gi2c, struct i2c_msg *msg,
->   				u32 m_param)
->   {
-> -	dma_addr_t rx_dma;
-> +	dma_addr_t rx_dma = 0;
->   	unsigned long time_left;
->   	void *dma_buf = NULL;
->   	struct geni_se *se = &gi2c->se;
->   	size_t len = msg->len;
-> +	struct i2c_msg *cur;
->   
->   	if (!of_machine_is_compatible("lenovo,yoga-c630"))
->   		dma_buf = i2c_get_dma_safe_msg_buf(msg, 32);
-> @@ -372,19 +410,18 @@ static int geni_i2c_rx_one_msg(struct geni_i2c_dev *gi2c, struct i2c_msg *msg,
->   		geni_se_select_mode(se, GENI_SE_FIFO);
->   		i2c_put_dma_safe_msg_buf(dma_buf, msg, false);
->   		dma_buf = NULL;
-> +	} else {
-> +		gi2c->xfer_len = len;
-> +		gi2c->dma_addr = rx_dma;
-> +		gi2c->dma_buf = dma_buf;
->   	}
->   
-> +	cur = gi2c->cur;
->   	time_left = wait_for_completion_timeout(&gi2c->done, XFER_TIMEOUT);
->   	if (!time_left)
->   		geni_i2c_abort_xfer(gi2c);
->   
-> -	gi2c->cur_rd = 0;
-> -	if (dma_buf) {
-> -		if (gi2c->err)
-> -			geni_i2c_rx_fsm_rst(gi2c);
-> -		geni_se_rx_dma_unprep(se, rx_dma, len);
-> -		i2c_put_dma_safe_msg_buf(dma_buf, msg, !gi2c->err);
-> -	}
-> +	geni_i2c_rx_msg_cleanup(gi2c, cur);
->   
->   	return gi2c->err;
->   }
-> @@ -392,11 +429,12 @@ static int geni_i2c_rx_one_msg(struct geni_i2c_dev *gi2c, struct i2c_msg *msg,
->   static int geni_i2c_tx_one_msg(struct geni_i2c_dev *gi2c, struct i2c_msg *msg,
->   				u32 m_param)
->   {
-> -	dma_addr_t tx_dma;
-> +	dma_addr_t tx_dma = 0;
->   	unsigned long time_left;
->   	void *dma_buf = NULL;
->   	struct geni_se *se = &gi2c->se;
->   	size_t len = msg->len;
-> +	struct i2c_msg *cur;
->   
->   	if (!of_machine_is_compatible("lenovo,yoga-c630"))
->   		dma_buf = i2c_get_dma_safe_msg_buf(msg, 32);
-> @@ -413,22 +451,21 @@ static int geni_i2c_tx_one_msg(struct geni_i2c_dev *gi2c, struct i2c_msg *msg,
->   		geni_se_select_mode(se, GENI_SE_FIFO);
->   		i2c_put_dma_safe_msg_buf(dma_buf, msg, false);
->   		dma_buf = NULL;
-> +	} else {
-> +		gi2c->xfer_len = len;
-> +		gi2c->dma_addr = tx_dma;
-> +		gi2c->dma_buf = dma_buf;
->   	}
->   
->   	if (!dma_buf) /* Get FIFO IRQ */
->   		writel_relaxed(1, se->base + SE_GENI_TX_WATERMARK_REG);
->   
-> +	cur = gi2c->cur;
->   	time_left = wait_for_completion_timeout(&gi2c->done, XFER_TIMEOUT);
->   	if (!time_left)
->   		geni_i2c_abort_xfer(gi2c);
->   
-> -	gi2c->cur_wr = 0;
-> -	if (dma_buf) {
-> -		if (gi2c->err)
-> -			geni_i2c_tx_fsm_rst(gi2c);
-> -		geni_se_tx_dma_unprep(se, tx_dma, len);
-> -		i2c_put_dma_safe_msg_buf(dma_buf, msg, !gi2c->err);
-> -	}
-> +	geni_i2c_tx_msg_cleanup(gi2c, cur);
->   
->   	return gi2c->err;
->   }
-
+diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
+index 5113fac80b7a..6a4be237f344 100644
+--- a/arch/arm64/boot/dts/qcom/Makefile
++++ b/arch/arm64/boot/dts/qcom/Makefile
+@@ -4,6 +4,7 @@ dtb-$(CONFIG_ARCH_QCOM)	+= apq8096-db820c.dtb
+ dtb-$(CONFIG_ARCH_QCOM)	+= apq8096-ifc6640.dtb
+ dtb-$(CONFIG_ARCH_QCOM)	+= ipq6018-cp01-c1.dtb
+ dtb-$(CONFIG_ARCH_QCOM)	+= ipq8074-hk01.dtb
++dtb-$(CONFIG_ARCH_QCOM)	+= msm8916-asus-z00l.dtb
+ dtb-$(CONFIG_ARCH_QCOM)	+= msm8916-longcheer-l8150.dtb
+ dtb-$(CONFIG_ARCH_QCOM)	+= msm8916-mtp.dtb
+ dtb-$(CONFIG_ARCH_QCOM)	+= msm8916-samsung-a3u-eur.dtb
+diff --git a/arch/arm64/boot/dts/qcom/msm8916-asus-z00l.dts b/arch/arm64/boot/dts/qcom/msm8916-asus-z00l.dts
+new file mode 100644
+index 000000000000..cee451e59385
+--- /dev/null
++++ b/arch/arm64/boot/dts/qcom/msm8916-asus-z00l.dts
+@@ -0,0 +1,195 @@
++// SPDX-License-Identifier: GPL-2.0-only
++
++/dts-v1/;
++
++#include "msm8916-pm8916.dtsi"
++#include <dt-bindings/gpio/gpio.h>
++
++/ {
++	model = "Asus Zenfone 2 Laser";
++	compatible = "asus,z00l", "qcom,msm8916";
++
++	aliases {
++		serial0 = &blsp1_uart2;
++	};
++
++	chosen {
++		stdout-path = "serial0";
++	};
++
++	gpio-keys {
++		compatible = "gpio-keys";
++
++		pinctrl-names = "default";
++		pinctrl-0 = <&gpio_keys_default>;
++
++		label = "GPIO Buttons";
++
++		volume-up {
++			label = "Volume Up";
++			gpios = <&msmgpio 107 GPIO_ACTIVE_LOW>;
++			linux,code = <KEY_VOLUMEUP>;
++			debounce-interval = <15>;
++		};
++
++		volume-down {
++			label = "Volume Down";
++			gpios = <&msmgpio 117 GPIO_ACTIVE_LOW>;
++			linux,code = <KEY_VOLUMEDOWN>;
++			debounce-interval = <15>;
++		};
++	};
++
++	usb_id: usb-id {
++		compatible = "linux,extcon-usb-gpio";
++		id-gpios = <&msmgpio 110 GPIO_ACTIVE_HIGH>;
++		pinctrl-names = "default";
++		pinctrl-0 = <&usb_id_default>;
++	};
++};
++
++&blsp1_uart2 {
++	status = "okay";
++};
++
++&pronto {
++	status = "okay";
++};
++
++&sdhc_1 {
++	status = "okay";
++
++	pinctrl-names = "default", "sleep";
++	pinctrl-0 = <&sdc1_clk_on &sdc1_cmd_on &sdc1_data_on>;
++	pinctrl-1 = <&sdc1_clk_off &sdc1_cmd_off &sdc1_data_off>;
++};
++
++&usb {
++	status = "okay";
++	extcon = <&usb_id>, <&usb_id>;
++};
++
++&usb_hs_phy {
++	extcon = <&usb_id>;
++};
++
++&smd_rpm_regulators {
++	vdd_l1_l2_l3-supply = <&pm8916_s3>;
++	vdd_l4_l5_l6-supply = <&pm8916_s4>;
++	vdd_l7-supply = <&pm8916_s4>;
++
++	s3 {
++		regulator-min-microvolt = <1200000>;
++		regulator-max-microvolt = <1300000>;
++	};
++
++	s4 {
++		regulator-min-microvolt = <1800000>;
++		regulator-max-microvolt = <2100000>;
++	};
++
++	l1 {
++		regulator-min-microvolt = <1225000>;
++		regulator-max-microvolt = <1225000>;
++	};
++
++	l2 {
++		regulator-min-microvolt = <1200000>;
++		regulator-max-microvolt = <1200000>;
++	};
++
++	l4 {
++		regulator-min-microvolt = <2050000>;
++		regulator-max-microvolt = <2050000>;
++	};
++
++	l5 {
++		regulator-min-microvolt = <1800000>;
++		regulator-max-microvolt = <1800000>;
++	};
++
++	l6 {
++		regulator-min-microvolt = <1800000>;
++		regulator-max-microvolt = <1800000>;
++	};
++
++	l7 {
++		regulator-min-microvolt = <1800000>;
++		regulator-max-microvolt = <1800000>;
++	};
++
++	l8 {
++		regulator-min-microvolt = <2850000>;
++		regulator-max-microvolt = <2900000>;
++	};
++
++	l9 {
++		regulator-min-microvolt = <3300000>;
++		regulator-max-microvolt = <3300000>;
++	};
++
++	l10 {
++		regulator-min-microvolt = <2700000>;
++		regulator-max-microvolt = <2800000>;
++	};
++
++	l11 {
++		regulator-min-microvolt = <1800000>;
++		regulator-max-microvolt = <2950000>;
++		regulator-allow-set-load;
++		regulator-system-load = <200000>;
++	};
++
++	l12 {
++		regulator-min-microvolt = <1800000>;
++		regulator-max-microvolt = <2950000>;
++	};
++
++	l13 {
++		regulator-min-microvolt = <3075000>;
++		regulator-max-microvolt = <3075000>;
++	};
++
++	l14 {
++		regulator-min-microvolt = <1800000>;
++		regulator-max-microvolt = <3300000>;
++	};
++
++	l15 {
++		regulator-min-microvolt = <1800000>;
++		regulator-max-microvolt = <3300000>;
++	};
++
++	l16 {
++		regulator-min-microvolt = <1800000>;
++		regulator-max-microvolt = <3300000>;
++	};
++
++	l17 {
++		regulator-min-microvolt = <2850000>;
++		regulator-max-microvolt = <2850000>;
++	};
++
++	l18 {
++		regulator-min-microvolt = <2700000>;
++		regulator-max-microvolt = <2700000>;
++	};
++};
++
++&msmgpio {
++	gpio_keys_default: gpio-keys-default {
++		pins = "gpio107", "gpio117";
++		function = "gpio";
++
++		drive-strength = <2>;
++		bias-pull-up;
++	};
++
++	usb_id_default: usb-id-default {
++		pins = "gpio110";
++		function = "gpio";
++
++		drive-strength = <8>;
++		bias-pull-up;
++	};
++};
 -- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,\na Linux Foundation Collaborative Project
+2.29.2
 
