@@ -2,266 +2,95 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C15D42D381C
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Dec 2020 02:09:35 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 01C5C2D3899
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Dec 2020 03:11:18 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726370AbgLIBJM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 8 Dec 2020 20:09:12 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54654 "EHLO
+        id S1726316AbgLICJU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 8 Dec 2020 21:09:20 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35580 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725804AbgLIBJM (ORCPT
+        with ESMTP id S1725283AbgLICJR (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 8 Dec 2020 20:09:12 -0500
-Received: from mail-ed1-x541.google.com (mail-ed1-x541.google.com [IPv6:2a00:1450:4864:20::541])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D0460C061793
-        for <linux-arm-msm@vger.kernel.org>; Tue,  8 Dec 2020 17:08:31 -0800 (PST)
-Received: by mail-ed1-x541.google.com with SMTP id v22so207230edt.9
-        for <linux-arm-msm@vger.kernel.org>; Tue, 08 Dec 2020 17:08:31 -0800 (PST)
+        Tue, 8 Dec 2020 21:09:17 -0500
+Received: from mail-pl1-x643.google.com (mail-pl1-x643.google.com [IPv6:2607:f8b0:4864:20::643])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 14230C0613CF
+        for <linux-arm-msm@vger.kernel.org>; Tue,  8 Dec 2020 18:08:31 -0800 (PST)
+Received: by mail-pl1-x643.google.com with SMTP id y8so119287plp.8
+        for <linux-arm-msm@vger.kernel.org>; Tue, 08 Dec 2020 18:08:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=ruGd4q6KZWpDS78RJXrsrDqLWluPTOTGxDVaHIvkab0=;
-        b=ELpsixt222Vh6on/xzaMrMmCvM0mHYZmtUKJkTcHWLdV9vedreDoKtyOarP46BodW7
-         0ZfxImwRCmIIqyrx88p/RTINm/JUTaqCdm4FTpQsT+UXA49s0jJWwnMQvkL8EppzbohB
-         ZVOUagGdN9Ehk3H8UrYPpznh+OLwT6tjnCqEw=
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=KsToaui+c4tLuJA6o1UPV0Iqu/q3rNtPcLmVbxkIOGw=;
+        b=RJ6lMMlQN9Q0FB0pHRGZ64OYsdGDDdSVADApCttmcfF4htYVJMxmSAltyG/V8saCKc
+         QZGbx/qM+zInZxM71xW/sodC3WFVd282yqUZ0AZFwoGVeI54E7D4RkLla/BLmi6wAzKX
+         T9pQPPOiiqP60jUIFqzTuHr+qr3XldiH7LuIDlEOJ2J2u4f1utR2dzNrj7FMIhErpXiS
+         X2TqHZs6xuGapmX4P8hKkYrpkATpftIHcnCdZUx4q2oQGUbQZffjtkecO/uC4L/bwS0Q
+         W2Yq4uCnuV5i2w7yUu5nP45E/IL6UyDn6TQyhxpqV+PAVoDkCTwUnvx5fffUqvibou2P
+         aGsw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=ruGd4q6KZWpDS78RJXrsrDqLWluPTOTGxDVaHIvkab0=;
-        b=dkMgNLcay05FpJBxwRFIVFwp7lMFqXBSGcaqGFC01xKmNJFaWzcaXOJhVRHgV4aelX
-         PpnkPg1gaaSL3OgllXpuPJo6qThPywSNTaIa8e3k85QY7DJIU4g7wDx3BsTu5QmEVEgU
-         KIzPZFJ+hye5+9NSenBWUhRpeSOckwBqnu4kN95I/Bp8r9IIPuc0D1gqcjWr9JxXWZX2
-         z7NjlB2omr/MVERh1wkXQGBvNLEGbhsLpPcuAVzr+VGqbQEnR4z5x3vLauWqM4unRdd9
-         tjZ4iy3dUWZ7yoabV0Y/BepEQzuJPlqHBGK0YxfuW3TtDgwPINIXBam0Kaa87vC9CgAB
-         xFeA==
-X-Gm-Message-State: AOAM532JsM8rN3yjh8ZBuwOXNflXUEvTyrohQaY+5Xuf+okgD+xqlS1Y
-        RgLYPH/7zAJmmkbZt7QoD1JmR1ct3bPJtw==
-X-Google-Smtp-Source: ABdhPJxvOAyZHKm0G5eiuduotEo2wbspVpNGpY63I+NpeXVNB2oOszNEJfi0UQuEdoJQQloKCqDdhw==
-X-Received: by 2002:a50:d5c4:: with SMTP id g4mr575576edj.334.1607476109898;
-        Tue, 08 Dec 2020 17:08:29 -0800 (PST)
-Received: from mail-ej1-f52.google.com (mail-ej1-f52.google.com. [209.85.218.52])
-        by smtp.gmail.com with ESMTPSA id dx7sm272711ejb.120.2020.12.08.17.08.28
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 08 Dec 2020 17:08:28 -0800 (PST)
-Received: by mail-ej1-f52.google.com with SMTP id x16so579760ejj.7
-        for <linux-arm-msm@vger.kernel.org>; Tue, 08 Dec 2020 17:08:28 -0800 (PST)
-X-Received: by 2002:a17:906:4304:: with SMTP id j4mr60872ejm.304.1607476108105;
- Tue, 08 Dec 2020 17:08:28 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=KsToaui+c4tLuJA6o1UPV0Iqu/q3rNtPcLmVbxkIOGw=;
+        b=f+3bCq45TUyXF9JafwC7G/9oVvhs+bn2fEZ/fxxEazjGZ30/VQrQ+Nm/nm78YHhhWV
+         piaZCP6bRunykqhCUb3Cqb6oxSlQdqjBSBri6oB99xC9KLKv0GpB+3i6jU6P5MmNHlna
+         p4+htNFXN+3NvU0mHZb9XU6NQ929+nYbS5yFpRb9hfBaeg2ACWZYWzz6m0/mT1KaiB1R
+         AVRhYSF4DGICvotigwHOTk/dTWcFvdbALqUbO1pDUev7+MXRP//GyuY/MRo6KdseOsvG
+         WH6m1FjUnamyrrMjpft1xZnbH9A2xhhr6mJV2cs+f8saMqczakr2nu1Dx+EvR0w93D93
+         WmWA==
+X-Gm-Message-State: AOAM531oJToVv7d9tbWNCOCnXM8lmS/ds+DJUwVyT/rgxhl1ARaPqljN
+        BLo7rKirNgXqCB3cmEbUsoWJ
+X-Google-Smtp-Source: ABdhPJxj0eU9WE1ZTHGb/qUkwS/+6BVHvEAcCmVgSiHdqU6TtAIpJiZarmMQ4W509vuXhJi9mV3w0A==
+X-Received: by 2002:a17:90b:350b:: with SMTP id ls11mr82922pjb.193.1607479710395;
+        Tue, 08 Dec 2020 18:08:30 -0800 (PST)
+Received: from localhost.localdomain ([103.59.133.81])
+        by smtp.gmail.com with ESMTPSA id az19sm89046pjb.24.2020.12.08.18.08.25
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 08 Dec 2020 18:08:29 -0800 (PST)
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+X-Google-Original-From: Manivannan Sadhasivam <mani@kernel.org>
+To:     lorenzo.pieralisi@arm.com
+Cc:     agross@kernel.org, bjorn.andersson@linaro.org,
+        svarbanov@mm-sol.com, bhelgaas@google.com,
+        linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
+        linux-kernel@vger.kernel.org, mgautam@codeaurora.org,
+        truong@codeaurora.org, Manivannan Sadhasivam <mani@kernel.org>,
+        kernel test robot <lkp@intel.com>
+Subject: [PATCH] PCI: qcom: Fix using uninitialized smmu_sid_base variable
+Date:   Wed,  9 Dec 2020 07:38:17 +0530
+Message-Id: <20201209020817.12776-1-mani@kernel.org>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-References: <20201207143255.1.Ib92ec35163682dec4b2fbb4bde0785cb6e6dde27@changeid>
-In-Reply-To: <20201207143255.1.Ib92ec35163682dec4b2fbb4bde0785cb6e6dde27@changeid>
-From:   Alexandru M Stan <amstan@chromium.org>
-Date:   Tue, 8 Dec 2020 17:07:51 -0800
-X-Gmail-Original-Message-ID: <CAHNYxRxNHtRL9XjHu=cyrn75YvMH5-BYWR6CLPKa1X+azFckeQ@mail.gmail.com>
-Message-ID: <CAHNYxRxNHtRL9XjHu=cyrn75YvMH5-BYWR6CLPKa1X+azFckeQ@mail.gmail.com>
-Subject: Re: [PATCH] arm64: dts: qcom: Clean up sc7180-trogdor voltage rails
-To:     Douglas Anderson <dianders@chromium.org>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Matthias Kaehlcke <mka@chromium.org>, kgunda@codeaurora.org,
-        Stephen Boyd <swboyd@chromium.org>,
-        Andy Gross <agross@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org,
-        linux-kernel <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Dec 7, 2020 at 2:33 PM Douglas Anderson <dianders@chromium.org> wrote:
->
-> For a bunch of rails we really don't do anything with them in Linux.
-> These are things like modem voltage rails that the modem manages these
-> itself and core rails (like IO rails) that are setup to just
-> automagically do the right thing by the firmware.
->
-> Let's stop even listing those rails in our device tree.
->
-> The net result of this is that some of these rails might be able to go
-> down to a lower voltage or perhaps transition to LPM (low power mode)
-> sometimes.
->
-> Here's a list of what we're doing and why:
->
-> * L1A - only goes to SoC and doesn't seem associated with any
->   particular peripheral. Kernel isn't doing anything with
->   this. Removing from dts. NET IMPACT: rail might drop from 1.2V to
->   1.178V and switch to LPM in some cases depending on firmware.
-> * L2A - only goes to SoC and doesn't seem associated with any
->   particular peripheral. Kernel isn't doing anything with
->   this. Removing from dts. NET IMPACT: rail might switch to LPM in
->   some cases depending on firmware.
-> * L3A - only goes to SoC and doesn't seem associated with any
->   particular peripheral. Kernel isn't doing anything with
->   this. Removing from dts. NET IMPACT: rail might switch to LPM in
->   some cases depending on firmware.
-> * L5A - seems to be totally unused as far as I can tell and doesn't
->   even come off QSIP. Removing from dts.
-> * L6A - only goes to SoC and doesn't seem associated with any
->   particular peripheral (I think?). Kernel isn't doing anything with
->   this. Removing from dts. NET IMPACT: rail might switch to LPM in
->   some cases depending on firmware.
-> * L16A - Looks like this is only used for internal RF stuff. Removing
->   from dts. NET IMPACT: rail might switch to LPM in some cases
->   depending on firmware.
-> * L1C - Just goes to WiFi / Bluetooth. Trust how IDP has this set and
->   put this back at 1.616V min.
-> * L4C - This goes out to the eSIM among other places. This looks like
->   it's intended to be for SIM card and modem manages. NET IMPACT:
->   rail might switch to LPM in some cases depending on firmware.
-> * L5C - This goes to the physical SIM.  This looks like it's intended
->   to be for SIM card and modem manages. NET IMPACT: rail might drop
->   from 1.8V to 1.648V and switch to LPM in some cases depending on
->   firmware.
->
-> NOTE: in general for anything which is supposed to be managed by Linux
-> I still left it all forced to HPM since I'm not 100% sure that all the
-> needed calls to regulator_set_load() are in place and HPM is safer.
-> Switching more things to LPM can happen in a future patch.
->
-> ALSO NOTE: Power measurements showed no measurable difference after
-> applying this patch, so perhaps it should be viewed more as a cleanup
-> than any power savings.
->
-> Signed-off-by: Douglas Anderson <dianders@chromium.org>
-> ---
->
->  arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi | 82 ++------------------
->  1 file changed, 7 insertions(+), 75 deletions(-)
->
-> diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
-> index 8ed7dd39f6e3..43dfe7833ad9 100644
-> --- a/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
-> @@ -298,40 +298,6 @@ pp1125_s1a: smps1 {
->                         regulator-max-microvolt = <1128000>;
->                 };
->
-> -               /*
-> -                * pp2040_s5a (smps5) and pp1056_s4a (smps4) are just
-> -                * inputs to other rails on AOP-managed PMICs on trogdor.
-> -                * The system is already configured to manage these rails
-> -                * automatically (enable when needed, adjust voltage for
-> -                * headroom) so we won't specify anything here.
-> -                *
-> -                * NOTE: though the rails have a voltage implied by their
-> -                * name, the automatic headroom calculation might not result
-> -                * in them being that voltage.  ...and that's OK.
-> -                * Specifically the only point of these rails is to provide
-> -                * an input source for other rails and if we can satisify the
-> -                * needs of those other rails with a lower source voltage then
-> -                * we save power.
-> -                */
-> -
-> -               pp1200_l1a: ldo1 {
-> -                       regulator-min-microvolt = <1200000>;
-> -                       regulator-max-microvolt = <1200000>;
-> -                       regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> -               };
-> -
-> -               pp1000_l2a: ldo2 {
-> -                       regulator-min-microvolt = <944000>;
-> -                       regulator-max-microvolt = <1056000>;
-> -                       regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> -               };
-> -
-> -               pp1000_l3a: ldo3 {
-> -                       regulator-min-microvolt = <968000>;
-> -                       regulator-max-microvolt = <1064000>;
-> -                       regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> -               };
-> -
->                 vdd_qlink_lv:
->                 vdd_qlink_lv_ck:
->                 vdd_qusb_hs0_core:
-> @@ -350,24 +316,6 @@ pp900_l4a: ldo4 {
->                         regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
->                 };
->
-> -               pp2700_l5a: ldo5 {
-> -                       regulator-min-microvolt = <2704000>;
-> -                       regulator-max-microvolt = <2704000>;
-> -                       regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> -               };
-> -
-> -               ebi0_cal:
-> -               ebi1_cal:
-> -               vddio_ck_ebi0:
-> -               vddio_ck_ebi1:
-> -               vddio_ebi0:
-> -               vddq:
-> -               pp600_l6a: ldo6 {
-> -                       regulator-min-microvolt = <568000>;
-> -                       regulator-max-microvolt = <648000>;
-> -                       regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> -               };
-> -
->                 vdd_cx_wlan:
->                 pp800_l9a: ldo9 {
->                         regulator-min-microvolt = <488000>;
-> @@ -404,6 +352,11 @@ pp1800_l12a_r: ldo12 {
->                         regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
->                 };
->
-> +               /*
-> +                * On trogdor this needs to match l10a since we use it to
-> +                * give power to things like SPI flash which communicate back
-> +                * on lines powered by l10a.  Thus we force to 1.8V.
-> +                */
->                 pp1800_l13a: ldo13 {
->                         regulator-min-microvolt = <1800000>;
->                         regulator-max-microvolt = <1800000>;
-> @@ -424,12 +377,6 @@ pp1800_l15a: ldo15 {
->                         regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
->                 };
->
-> -               pp2700_l16a: ldo16 {
-> -                       regulator-min-microvolt = <2496000>;
-> -                       regulator-max-microvolt = <3304000>;
-> -                       regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> -               };
-> -
->                 vdda_qusb_hs0_3p1:
->                 vdd_pdphy:
->                 pp3100_l17a: ldo17 {
-> @@ -463,8 +410,8 @@ pp1300_s8c: smps8 {
->                 };
->
->                 pp1800_l1c: ldo1 {
-> -                       regulator-min-microvolt = <1800000>;
-> -                       regulator-max-microvolt = <1800000>;
-> +                       regulator-min-microvolt = <1616000>;
-> +                       regulator-max-microvolt = <1984000>;
->                         regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
->                 };
->
-> @@ -491,21 +438,6 @@ pp1200_l3c: ldo3 {
->                         regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
->                 };
->
-> -               ld_pp1800_esim_l4c:
-> -               vddpx_5:
-> -               pp1800_l4c: ldo4 {
-> -                       regulator-min-microvolt = <1648000>;
-> -                       regulator-max-microvolt = <3304000>;
-> -                       regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> -               };
-> -
-> -               vddpx_6:
-> -               pp1800_l5c: ldo5 {
-> -                       regulator-min-microvolt = <1800000>;
-> -                       regulator-max-microvolt = <1800000>;
-> -                       regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> -               };
-> -
->                 vddpx_2:
->                 ppvar_l6c: ldo6 {
->                         regulator-min-microvolt = <1800000>;
-> --
-> 2.29.2.576.ga3fc446d84-goog
->
+smmu_sid_base should hold the base of SMMU SID extracted from the first
+entry of iommu-map. This value will be used to extract the successive SMMU
+SID values. Fix it by assigning the first SMMU SID base before for loop.
 
-Reviewed-by: Alexandru M Stan <amstan@google.com>
+Reported-by: kernel test robot <lkp@intel.com>
+Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
+---
+ drivers/pci/controller/dwc/pcie-qcom.c | 3 +++
+ 1 file changed, 3 insertions(+)
+
+diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
+index 8ba3e6b29196..affa2713bf80 100644
+--- a/drivers/pci/controller/dwc/pcie-qcom.c
++++ b/drivers/pci/controller/dwc/pcie-qcom.c
+@@ -1297,6 +1297,9 @@ static int qcom_pcie_config_sid_sm8250(struct qcom_pcie *pcie)
+ 	/* Registers need to be zero out first */
+ 	memset_io(bdf_to_sid_base, 0, CRC8_TABLE_SIZE * sizeof(u32));
+ 
++	/* Extract the SMMU SID base from the first entry of iommu-map */
++	smmu_sid_base = map[0].smmu_sid;
++
+ 	/* Look for an available entry to hold the mapping */
+ 	for (i = 0; i < nr_map; i++) {
+ 		u16 bdf_be = cpu_to_be16(map[i].bdf);
+-- 
+2.25.1
+
