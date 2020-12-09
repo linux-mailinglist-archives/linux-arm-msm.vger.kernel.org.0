@@ -2,68 +2,108 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id BBA122D4592
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Dec 2020 16:40:13 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id AF04D2D45C4
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Dec 2020 16:48:25 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727059AbgLIPiq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 9 Dec 2020 10:38:46 -0500
-Received: from mail-oi1-f194.google.com ([209.85.167.194]:43905 "EHLO
-        mail-oi1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726278AbgLIPiq (ORCPT
+        id S1727059AbgLIPrR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 9 Dec 2020 10:47:17 -0500
+Received: from so254-31.mailgun.net ([198.61.254.31]:13053 "EHLO
+        so254-31.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727183AbgLIPrJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 9 Dec 2020 10:38:46 -0500
-Received: by mail-oi1-f194.google.com with SMTP id q25so2105775oij.10;
-        Wed, 09 Dec 2020 07:38:30 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=wVhLWCywNbWI0H/GiKYo0zz2L9PGx0dVA5c51bASIyw=;
-        b=syNCe86C3S9civGcUT1E1qyi1O/7Udt/+I+Fxw/aD6xsz9WiH11+hOsFdT4WNlklve
-         zmFaH+JlBROpkmIiFFzd2Jq8Hm9+W9Rp9Ftl2VK6WzsyaRkWWipwAc4R2FBDS42sckyb
-         SjyQLu4TYI1OsfA2I4eroiDUG9tsbjMd0nPZnA5FPuFhp8IjdAbr9DJUdfkEi7ii6XDi
-         zzSxUQdh/QnMRP4bcMRRLuNaRGxh0rpm7ne0np8Wb1l7TuwC/f19nE+4JNRWXgpD0Dec
-         WPi05a/qM8bnfu8oPEkxwv92JEpHTGiQFTSakIr9jxNILNgRP2APt96hHpfx3eCk/JCl
-         r55A==
-X-Gm-Message-State: AOAM531u3jjQ4KvZg6fU/9e0HchBOOogjph4p7VqbAwbU8Gg8nrtkP1w
-        0ovE6A9QmDsT59p/AdsJ5w==
-X-Google-Smtp-Source: ABdhPJyk4nlvC4/cpNox4CgcwSixjr8L/4JQEndQLX/f5MWrDHdpXmdfehztc8032azHMs/gTGdZMA==
-X-Received: by 2002:aca:4006:: with SMTP id n6mr2120641oia.22.1607528285074;
-        Wed, 09 Dec 2020 07:38:05 -0800 (PST)
-Received: from xps15 (24-155-109-49.dyn.grandenetworks.net. [24.155.109.49])
-        by smtp.gmail.com with ESMTPSA id f67sm441795otb.60.2020.12.09.07.38.03
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 09 Dec 2020 07:38:03 -0800 (PST)
-Received: (nullmailer pid 493431 invoked by uid 1000);
-        Wed, 09 Dec 2020 15:38:02 -0000
-Date:   Wed, 9 Dec 2020 09:38:02 -0600
-From:   Rob Herring <robh@kernel.org>
-To:     Vinod Koul <vkoul@kernel.org>
-Cc:     Thomas Gleixner <tglx@linutronix.de>,
-        linux-arm-msm@vger.kernel.org, Rob Herring <robh+dt@kernel.org>,
-        Jason Cooper <jason@lakedaemon.net>,
-        devicetree@vger.kernel.org, Andy Gross <agross@kernel.org>,
-        Marc Zyngier <maz@kernel.org>, linux-kernel@vger.kernel.org,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-Subject: Re: [PATCH] dt-bindings: qcom,pdc: Add compatible for SM8250
-Message-ID: <20201209153802.GA493340@robh.at.kernel.org>
-References: <20201201053537.2134991-1-vkoul@kernel.org>
+        Wed, 9 Dec 2020 10:47:09 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1607528805; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
+ Subject: Sender; bh=y1Wmae3WtsmaxXmUIENiy1KGHxXjyeq1imlrpIn8Kmg=; b=MhXCjk+ggjeyFojCTBkfOL9/1b1Hf3pKnDaWPG1QuGOImF+UHtbYiskbw8+wUIdfTAmjr0hG
+ Mbkfu3HB79J6v/CA1PlbH07B1IW0yEDsopVa1kUhPnpebu2F1vRyihwGyvybF6IwcfUXiA1q
+ Dc4KZvg4ii0jSBE81OGaICbESS0=
+X-Mailgun-Sending-Ip: 198.61.254.31
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n05.prod.us-west-2.postgun.com with SMTP id
+ 5fd0f15cce88b59ab8f41e9a (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 09 Dec 2020 15:46:36
+ GMT
+Sender: jhugo=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id C216DC433ED; Wed,  9 Dec 2020 15:46:35 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        NICE_REPLY_A,SPF_FAIL,URIBL_BLOCKED autolearn=no autolearn_force=no
+        version=3.4.0
+Received: from [10.226.59.216] (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: jhugo)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id BBB3AC433C6;
+        Wed,  9 Dec 2020 15:46:34 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org BBB3AC433C6
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=jhugo@codeaurora.org
+Subject: Re: [PATCH 2/3] net: mhi: Get RX queue size from MHI core
+To:     Loic Poulain <loic.poulain@linaro.org>, kuba@kernel.org
+Cc:     manivannan.sadhasivam@linaro.org, linux-arm-msm@vger.kernel.org,
+        netdev@vger.kernel.org, davem@davemloft.net
+References: <1607526183-25652-1-git-send-email-loic.poulain@linaro.org>
+ <1607526183-25652-2-git-send-email-loic.poulain@linaro.org>
+From:   Jeffrey Hugo <jhugo@codeaurora.org>
+Message-ID: <dba2d62f-ff2a-8925-e2e5-20c951d230c5@codeaurora.org>
+Date:   Wed, 9 Dec 2020 08:46:34 -0700
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.5.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20201201053537.2134991-1-vkoul@kernel.org>
+In-Reply-To: <1607526183-25652-2-git-send-email-loic.poulain@linaro.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, 01 Dec 2020 11:05:37 +0530, Vinod Koul wrote:
-> Add the compatible string for SM8250 SoC from Qualcomm. This compatible
-> is used already in DTS files but not documented yet
+On 12/9/2020 8:03 AM, Loic Poulain wrote:
+> The RX queue size can be determined at runtime by retrieveing the
+
+retrieving
+
+> number of available transfer descriptors
 > 
-> Signed-off-by: Vinod Koul <vkoul@kernel.org>
+> Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
 > ---
->  .../devicetree/bindings/interrupt-controller/qcom,pdc.txt        | 1 +
->  1 file changed, 1 insertion(+)
+>   drivers/net/mhi_net.c | 6 +++---
+>   1 file changed, 3 insertions(+), 3 deletions(-)
+> 
+> diff --git a/drivers/net/mhi_net.c b/drivers/net/mhi_net.c
+> index 8e72d94..0333e07 100644
+> --- a/drivers/net/mhi_net.c
+> +++ b/drivers/net/mhi_net.c
+> @@ -256,9 +256,6 @@ static int mhi_net_probe(struct mhi_device *mhi_dev,
+>   	mhi_netdev->mdev = mhi_dev;
+>   	SET_NETDEV_DEV(ndev, &mhi_dev->dev);
+>   
+> -	/* All MHI net channels have 128 ring elements (at least for now) */
+> -	mhi_netdev->rx_queue_sz = 128;
+> -
+>   	INIT_DELAYED_WORK(&mhi_netdev->rx_refill, mhi_net_rx_refill_work);
+>   	u64_stats_init(&mhi_netdev->stats.rx_syncp);
+>   	u64_stats_init(&mhi_netdev->stats.tx_syncp);
+> @@ -268,6 +265,9 @@ static int mhi_net_probe(struct mhi_device *mhi_dev,
+>   	if (err)
+>   		goto out_err;
+>   
+> +	/* Number of transfer descriptors determines size of the queue */
+> +	mhi_netdev->rx_queue_sz = mhi_get_free_desc_count(mhi_dev, DMA_FROM_DEVICE);
+> +
+>   	err = register_netdev(ndev);
+>   	if (err)
+>   		goto out_err;
 > 
 
-Acked-by: Rob Herring <robh@kernel.org>
+
+-- 
+Jeffrey Hugo
+Qualcomm Technologies, Inc. is a member of the
+Code Aurora Forum, a Linux Foundation Collaborative Project.
