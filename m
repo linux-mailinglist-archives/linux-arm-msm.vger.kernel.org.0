@@ -2,34 +2,34 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 209A92D3C10
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Dec 2020 08:20:42 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 64E152D3C2C
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Dec 2020 08:29:24 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727248AbgLIHUX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 9 Dec 2020 02:20:23 -0500
-Received: from m43-15.mailgun.net ([69.72.43.15]:26761 "EHLO
+        id S1726500AbgLIH2y (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 9 Dec 2020 02:28:54 -0500
+Received: from m43-15.mailgun.net ([69.72.43.15]:43730 "EHLO
         m43-15.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727095AbgLIHUS (ORCPT
+        with ESMTP id S1725283AbgLIH2x (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 9 Dec 2020 02:20:18 -0500
+        Wed, 9 Dec 2020 02:28:53 -0500
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1607498392; h=Message-ID: References: In-Reply-To: Subject:
+ s=smtp; t=1607498907; h=Message-ID: References: In-Reply-To: Subject:
  Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=s68NHSJvbVinLfG0/qDwfxIMBut6yGgbGjhYWHzmhgg=;
- b=ZUQbkit1xtqN1Emp1FghxdMIyi2gemi9moEnFpO2ZwehXQ30vGeTnYzriSIPFfM4jIgW1gdl
- pSiWxV97sNJi9mvauY/kHhrGX06LbC/3TcJ7ZMt0dcUKh2qpvHxVD5Gm1bY33lxUXFRojJ5b
- J6zEe6KMiDJTvIE8+7DzDcbQNcM=
+ MIME-Version: Sender; bh=Za3/3s0IT9nTkiYYrm8GewkVHrUptsStzqDVs8Ae4Uc=;
+ b=bkJCa7qxAYmibAm/OmdpcHnK2AwLidGkJJUwEjzBy5jHgTHsNR9c8d8cQ9fLuWCuor4IUD8L
+ GWwl9fK+hSGq7dNSp7H9XN1zSRtLTeyYzfp+uYPNdQRCY5ft1OSQhwDcmTAd5UcpR2Lkzin3
+ nEW5CkXuIVcrmHgn2rKswHmJpUo=
 X-Mailgun-Sending-Ip: 69.72.43.15
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org
  (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n01.prod.us-east-1.postgun.com with SMTP id
- 5fd07a788b2b89531839063c (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 09 Dec 2020 07:19:20
+ smtp-out-n02.prod.us-east-1.postgun.com with SMTP id
+ 5fd07c7cd8cf5d213ff60a41 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 09 Dec 2020 07:27:56
  GMT
 Sender: cang=codeaurora.org@mg.codeaurora.org
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id C3909C4346D; Wed,  9 Dec 2020 07:19:19 +0000 (UTC)
+        id 7B866C433CA; Wed,  9 Dec 2020 07:27:55 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
@@ -39,13 +39,13 @@ Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
         (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
         (No client certificate requested)
         (Authenticated sender: cang)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id B8368C433CA;
-        Wed,  9 Dec 2020 07:19:17 +0000 (UTC)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 1C9C4C433C6;
+        Wed,  9 Dec 2020 07:27:53 +0000 (UTC)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII;
  format=flowed
 Content-Transfer-Encoding: 7bit
-Date:   Wed, 09 Dec 2020 15:19:17 +0800
+Date:   Wed, 09 Dec 2020 15:27:53 +0800
 From:   Can Guo <cang@codeaurora.org>
 To:     Ziqi Chen <ziqichen@codeaurora.org>
 Cc:     asutoshd@codeaurora.org, nguyenb@codeaurora.org,
@@ -67,7 +67,7 @@ Cc:     asutoshd@codeaurora.org, nguyenb@codeaurora.org,
 Subject: Re: [PATCH v1 1/1] scsi: ufs: Fix ufs power down/on specs violation
 In-Reply-To: <1607497774-76579-1-git-send-email-ziqichen@codeaurora.org>
 References: <1607497774-76579-1-git-send-email-ziqichen@codeaurora.org>
-Message-ID: <46b9dda714deb3fe178b066277a432f0@codeaurora.org>
+Message-ID: <00c4aee20f54448e93792387b598730b@codeaurora.org>
 X-Sender: cang@codeaurora.org
 User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
@@ -110,8 +110,9 @@ On 2020-12-09 15:09, Ziqi Chen wrote:
 > +			hba->vops->device_reset(hba, false);
 > +
 
-Can you make a new wrapper func to do this? ufs-qcom.c is the vendor
-driver, why call hba->vops->func() in vendor driver?
+Instead of doing the pull-down in ufshcd_vops_suspend(), can we do
+it in ufshcd_suspend()? Since it is a common problem for all soc
+vendors.
 
 >  	} else if (!ufs_qcom_is_link_active(hba)) {
 >  		ufs_qcom_disable_lane_clks(host);
@@ -168,6 +169,9 @@ driver, why call hba->vops->func() in vendor driver?
 >  	/* Put the host controller in low power mode if possible */
 >  	ufshcd_hba_vreg_set_lpm(hba);
 > +	ufshcd_vreg_set_lpm(hba);
+
+Can you put ufshcd_vreg_set_lpm() before ufshcd_hba_vreg_set_lpm()?
+
 >  	goto out;
 > 
 >  set_link_active:
