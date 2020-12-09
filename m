@@ -2,295 +2,101 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 397A82D4503
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Dec 2020 16:06:01 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id F37932D4538
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Dec 2020 16:21:03 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731958AbgLIPFo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 9 Dec 2020 10:05:44 -0500
-Received: from mo4-p00-ob.smtp.rzone.de ([81.169.146.221]:29047 "EHLO
-        mo4-p00-ob.smtp.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1732073AbgLIPFo (ORCPT
+        id S1728874AbgLIPTZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 9 Dec 2020 10:19:25 -0500
+Received: from so254-31.mailgun.net ([198.61.254.31]:36265 "EHLO
+        so254-31.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726101AbgLIPTV (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 9 Dec 2020 10:05:44 -0500
-X-Greylist: delayed 470 seconds by postgrey-1.27 at vger.kernel.org; Wed, 09 Dec 2020 10:05:40 EST
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1607526108;
-        s=strato-dkim-0002; d=gerhold.net;
-        h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:From:
-        Subject:Sender;
-        bh=rOqbTijE0b+OrzKKV/nlphewN262uShFtKge0RpOchw=;
-        b=QBXz4JeQvPI908LQryqSMTvIPjSDY3QlVLeYap9IUc36jOxKp+x+UJ5KAAIWksiIQs
-        ra1e/U3c+NSLtl/VkftX+tphS03X544MFHyEWmOudBbhAwDUTS2SQL3YqF3DM4CTRy2Z
-        FAKNdnk1gVZzd9fneMKjq0ek4Qfwh4bu9ArojxepOmbA8AWv0xGKk1cGm5EC8v2g09Vm
-        NaVncuFaYXaa/ai9BHR/VaZW+mRTizuJUOv2gJzfhKxNPHNViscu0qKRqMG4CyY0ica7
-        du7/OiT/2I4B+Q+6hW9Elq07XT13KqsLY97Zow5YftHBxGb29oJXfnPxHUXpcHijwaIy
-        o6Lg==
-X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVOQ/OcYgojyw4j34+u26zEodhPgRDZ8j/IczFYoo="
-X-RZG-CLASS-ID: mo00
-Received: from gerhold.net
-        by smtp.strato.de (RZmta 47.6.2 DYNA|AUTH)
-        with ESMTPSA id K00e5fwB9EruMwv
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
-        (Client did not present a certificate);
-        Wed, 9 Dec 2020 15:53:56 +0100 (CET)
-Date:   Wed, 9 Dec 2020 15:53:50 +0100
-From:   Stephan Gerhold <stephan@gerhold.net>
-To:     "J.R. Divya Antony" <d.antony.jr@gmail.com>
-Cc:     bjorn.andersson@linaro.org, linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH v2] arm64: dts: qcom: Add device tree for ASUS Zenfone 2
- Laser
-Message-ID: <X9Dk/pkLkcOKA0n7@gerhold.net>
-References: <X8/7x2uSE4/6MGNM@builder.lan>
- <20201209143743.7383-1-d.antony.jr@gmail.com>
+        Wed, 9 Dec 2020 10:19:21 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1607527135; h=In-Reply-To: Content-Type: MIME-Version:
+ References: Message-ID: Subject: Cc: To: From: Date: Sender;
+ bh=nk2LdvOUPXoWK1/EktFM/brqUSemntfMxA6Fzq9tCOE=; b=Qn+kE6QCGXSiM8ha5fd9mIbvT749uPiZ34gFQvmmv1E4DsF3PCHnLm5H9Esvb4r9QU0aq6cx
+ nXSCBkyM790jU2iunM5XJ2ExravQzU868jV7rABNcQbY4AVh+V5wPC6X8xesu7PvXmOQTjSx
+ 81o1zZ3kldeSVlMjDmc/qxMKJx8=
+X-Mailgun-Sending-Ip: 198.61.254.31
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n03.prod.us-west-2.postgun.com with SMTP id
+ 5fd0eabed5b4c78a8ff87ee9 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 09 Dec 2020 15:18:22
+ GMT
+Sender: ilina=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 8E2C5C43462; Wed,  9 Dec 2020 15:18:22 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
+        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+Received: from localhost (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: ilina)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id DA69FC433C6;
+        Wed,  9 Dec 2020 15:18:20 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org DA69FC433C6
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=ilina@codeaurora.org
+Date:   Wed, 9 Dec 2020 08:18:19 -0700
+From:   Lina Iyer <ilina@codeaurora.org>
+To:     Ulf Hansson <ulf.hansson@linaro.org>
+Cc:     "Rafael J. Wysocki" <rafael@kernel.org>,
+        "Rafael J. Wysocki" <rjw@rjwysocki.net>,
+        Linux PM <linux-pm@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>
+Subject: Re: [PATCH v6 0/3] Better domain idle from device wakeup patterns
+Message-ID: <X9Dqu1QjURikO3jM@codeaurora.org>
+References: <20201130225039.15981-1-ilina@codeaurora.org>
+ <CAJZ5v0g+nK+jV+Gy+BKEALRtsXDK0HnDbz07Nv3KPK5L3V3OKg@mail.gmail.com>
+ <CAPDyKFpD6L0r=YBEEjfjc85gx_7p5cVw20fwUxecpQp2dNU-0g@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=us-ascii; format=flowed
 Content-Disposition: inline
-In-Reply-To: <20201209143743.7383-1-d.antony.jr@gmail.com>
+In-Reply-To: <CAPDyKFpD6L0r=YBEEjfjc85gx_7p5cVw20fwUxecpQp2dNU-0g@mail.gmail.com>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+On Wed, Dec 09 2020 at 03:37 -0700, Ulf Hansson wrote:
+>On Tue, 8 Dec 2020 at 18:26, Rafael J. Wysocki <rafael@kernel.org> wrote:
+>>
+>> On Mon, Nov 30, 2020 at 11:51 PM Lina Iyer <ilina@codeaurora.org> wrote:
+>> >
+>> > Hi,
+>> >
+>> > The v5[1] of the series brought out some interesting discussions. The
+>> > most important being is it worth adding the additional expense to all PM
+>> > domains even if no wakeup pattern is available. It seems like
+>> > maintaining a domain specific flag that the governor could check is a
+>> > generic enough option. That should disable additional overhead for
+>> > domains that do not need this feature.
+>> >
+>> > Ulf suggested that we could allow wakeups only if any of the domain idle
+>> > state specifies a residency. However, we don't want to check for next
+>> > wakeup everytime the domain enters idle just because the domain
+>> > specifies an idle state with residency. This is also not desired.
+>> >
+>> > Also, if the domain checks for next wakeup, should the parent domains of
+>> > the domain also check for next wakeup? And when do we set that up? These
+>> > are questions that we don't know the answers yet. So, let's enable the
+>> > domain governor only if the domain sets up the flag or when the device
+>> > in the domain specifies the next wakeup.
+>> >
+>> > The previous post of the series explaining why this is a useful feature
+>> > is v5[1]. Please let me know what you think.
+>>
+>> Ulf had comments on the previous versions, so waiting for him to
+>> respond here, thanks!
+>
+>Yes, I will have a look, but please allow me some more time - it's a
+>busy period for me.
+>
+Thank you.
 
-On Wed, Dec 09, 2020 at 08:07:44PM +0530, J.R. Divya Antony wrote:
-> ASUS Zenfone 2 Laser Z00L is a smartphone based on MSM8916 SoC
-> released on 2015.
-> 
-> Add a device tree for Z00L with initial support for:
->   - SDHCI (internal storage)
->   - USB Device Mode
->   - UART
->   - Regulators
-> 
-> Signed-off-by: J.R. Divya Antony <d.antony.jr@gmail.com>
-
-Thanks for sending this upstream. FWIW:
-
-Reviewed-by: Stephan Gerhold <stephan@gerhold.net>
-
-> ---
->  Changes in v2:
->   - Arrange nodes in alphabetical order
->   - Add Wifi node
->   - Add GPIO Keys
-> ---
->  arch/arm64/boot/dts/qcom/Makefile             |   1 +
->  .../arm64/boot/dts/qcom/msm8916-asus-z00l.dts | 195 ++++++++++++++++++
->  2 files changed, 196 insertions(+)
->  create mode 100644 arch/arm64/boot/dts/qcom/msm8916-asus-z00l.dts
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
-> index 5113fac80b7a..6a4be237f344 100644
-> --- a/arch/arm64/boot/dts/qcom/Makefile
-> +++ b/arch/arm64/boot/dts/qcom/Makefile
-> @@ -4,6 +4,7 @@ dtb-$(CONFIG_ARCH_QCOM)	+= apq8096-db820c.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= apq8096-ifc6640.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= ipq6018-cp01-c1.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= ipq8074-hk01.dtb
-> +dtb-$(CONFIG_ARCH_QCOM)	+= msm8916-asus-z00l.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= msm8916-longcheer-l8150.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= msm8916-mtp.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= msm8916-samsung-a3u-eur.dtb
-> diff --git a/arch/arm64/boot/dts/qcom/msm8916-asus-z00l.dts b/arch/arm64/boot/dts/qcom/msm8916-asus-z00l.dts
-> new file mode 100644
-> index 000000000000..cee451e59385
-> --- /dev/null
-> +++ b/arch/arm64/boot/dts/qcom/msm8916-asus-z00l.dts
-> @@ -0,0 +1,195 @@
-> +// SPDX-License-Identifier: GPL-2.0-only
-> +
-> +/dts-v1/;
-> +
-> +#include "msm8916-pm8916.dtsi"
-> +#include <dt-bindings/gpio/gpio.h>
-> +
-> +/ {
-> +	model = "Asus Zenfone 2 Laser";
-> +	compatible = "asus,z00l", "qcom,msm8916";
-> +
-> +	aliases {
-> +		serial0 = &blsp1_uart2;
-> +	};
-> +
-> +	chosen {
-> +		stdout-path = "serial0";
-> +	};
-> +
-> +	gpio-keys {
-> +		compatible = "gpio-keys";
-> +
-> +		pinctrl-names = "default";
-> +		pinctrl-0 = <&gpio_keys_default>;
-> +
-> +		label = "GPIO Buttons";
-> +
-> +		volume-up {
-> +			label = "Volume Up";
-> +			gpios = <&msmgpio 107 GPIO_ACTIVE_LOW>;
-> +			linux,code = <KEY_VOLUMEUP>;
-> +			debounce-interval = <15>;
-> +		};
-> +
-> +		volume-down {
-> +			label = "Volume Down";
-> +			gpios = <&msmgpio 117 GPIO_ACTIVE_LOW>;
-> +			linux,code = <KEY_VOLUMEDOWN>;
-> +			debounce-interval = <15>;
-> +		};
-> +	};
-> +
-> +	usb_id: usb-id {
-> +		compatible = "linux,extcon-usb-gpio";
-> +		id-gpios = <&msmgpio 110 GPIO_ACTIVE_HIGH>;
-> +		pinctrl-names = "default";
-> +		pinctrl-0 = <&usb_id_default>;
-> +	};
-> +};
-> +
-> +&blsp1_uart2 {
-> +	status = "okay";
-> +};
-> +
-> +&pronto {
-> +	status = "okay";
-> +};
-> +
-> +&sdhc_1 {
-> +	status = "okay";
-> +
-> +	pinctrl-names = "default", "sleep";
-> +	pinctrl-0 = <&sdc1_clk_on &sdc1_cmd_on &sdc1_data_on>;
-> +	pinctrl-1 = <&sdc1_clk_off &sdc1_cmd_off &sdc1_data_off>;
-> +};
-> +
-> +&usb {
-> +	status = "okay";
-> +	extcon = <&usb_id>, <&usb_id>;
-> +};
-> +
-> +&usb_hs_phy {
-> +	extcon = <&usb_id>;
-> +};
-> +
-> +&smd_rpm_regulators {
-> +	vdd_l1_l2_l3-supply = <&pm8916_s3>;
-> +	vdd_l4_l5_l6-supply = <&pm8916_s4>;
-> +	vdd_l7-supply = <&pm8916_s4>;
-> +
-> +	s3 {
-> +		regulator-min-microvolt = <1200000>;
-> +		regulator-max-microvolt = <1300000>;
-> +	};
-> +
-> +	s4 {
-> +		regulator-min-microvolt = <1800000>;
-> +		regulator-max-microvolt = <2100000>;
-> +	};
-> +
-> +	l1 {
-> +		regulator-min-microvolt = <1225000>;
-> +		regulator-max-microvolt = <1225000>;
-> +	};
-> +
-> +	l2 {
-> +		regulator-min-microvolt = <1200000>;
-> +		regulator-max-microvolt = <1200000>;
-> +	};
-> +
-> +	l4 {
-> +		regulator-min-microvolt = <2050000>;
-> +		regulator-max-microvolt = <2050000>;
-> +	};
-> +
-> +	l5 {
-> +		regulator-min-microvolt = <1800000>;
-> +		regulator-max-microvolt = <1800000>;
-> +	};
-> +
-> +	l6 {
-> +		regulator-min-microvolt = <1800000>;
-> +		regulator-max-microvolt = <1800000>;
-> +	};
-> +
-> +	l7 {
-> +		regulator-min-microvolt = <1800000>;
-> +		regulator-max-microvolt = <1800000>;
-> +	};
-> +
-> +	l8 {
-> +		regulator-min-microvolt = <2850000>;
-> +		regulator-max-microvolt = <2900000>;
-> +	};
-> +
-> +	l9 {
-> +		regulator-min-microvolt = <3300000>;
-> +		regulator-max-microvolt = <3300000>;
-> +	};
-> +
-> +	l10 {
-> +		regulator-min-microvolt = <2700000>;
-> +		regulator-max-microvolt = <2800000>;
-> +	};
-> +
-> +	l11 {
-> +		regulator-min-microvolt = <1800000>;
-> +		regulator-max-microvolt = <2950000>;
-> +		regulator-allow-set-load;
-> +		regulator-system-load = <200000>;
-> +	};
-> +
-> +	l12 {
-> +		regulator-min-microvolt = <1800000>;
-> +		regulator-max-microvolt = <2950000>;
-> +	};
-> +
-> +	l13 {
-> +		regulator-min-microvolt = <3075000>;
-> +		regulator-max-microvolt = <3075000>;
-> +	};
-> +
-> +	l14 {
-> +		regulator-min-microvolt = <1800000>;
-> +		regulator-max-microvolt = <3300000>;
-> +	};
-> +
-> +	l15 {
-> +		regulator-min-microvolt = <1800000>;
-> +		regulator-max-microvolt = <3300000>;
-> +	};
-> +
-> +	l16 {
-> +		regulator-min-microvolt = <1800000>;
-> +		regulator-max-microvolt = <3300000>;
-> +	};
-> +
-> +	l17 {
-> +		regulator-min-microvolt = <2850000>;
-> +		regulator-max-microvolt = <2850000>;
-> +	};
-> +
-> +	l18 {
-> +		regulator-min-microvolt = <2700000>;
-> +		regulator-max-microvolt = <2700000>;
-> +	};
-> +};
-> +
-> +&msmgpio {
-> +	gpio_keys_default: gpio-keys-default {
-> +		pins = "gpio107", "gpio117";
-> +		function = "gpio";
-> +
-> +		drive-strength = <2>;
-> +		bias-pull-up;
-> +	};
-> +
-> +	usb_id_default: usb-id-default {
-> +		pins = "gpio110";
-> +		function = "gpio";
-> +
-> +		drive-strength = <8>;
-> +		bias-pull-up;
-> +	};
-> +};
-> -- 
-> 2.29.2
-> 
+-- Lina
