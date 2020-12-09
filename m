@@ -2,98 +2,130 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 6BA7B2D38F0
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Dec 2020 03:47:38 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B88752D39B4
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Dec 2020 05:44:39 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726883AbgLICqr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 8 Dec 2020 21:46:47 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41306 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725871AbgLICqr (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 8 Dec 2020 21:46:47 -0500
-Received: from mail-pj1-x1041.google.com (mail-pj1-x1041.google.com [IPv6:2607:f8b0:4864:20::1041])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 23822C0613D6
-        for <linux-arm-msm@vger.kernel.org>; Tue,  8 Dec 2020 18:46:07 -0800 (PST)
-Received: by mail-pj1-x1041.google.com with SMTP id o7so86514pjj.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 08 Dec 2020 18:46:07 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=H6CXkt7XQRmTS6IAY9O5gfocreD0xWeDQV3rSfuBX9s=;
-        b=ZmQLEKebxKoEzpOQ5dtdNbqyYMje7zhUcl4A10rmbCj9PLztJjRVGh1NCkZCEkgTUr
-         5oNf4qFvCFAu7IIyLLNE3a90NlHM8l1HLqSo0pnPLzxKYqj9PxJQ6P41mruqRcVP1HTe
-         kz2enxAdoqoOS3YG3EMdqlh1YwcjjbUqPDRmlKr6bFSkKhGBgHSPfqjWR2N17JliKQkz
-         Bd+gzgzXUQl1rkJRpry3GU/pD9rsBfVCsN1B4hzlxF3k0JHmt1iSRNXgAbQ1+ZVdKAuR
-         uoY7ifPnoawTWlmTn+obZqxsexwBpqVA4qrLOVDv101gD67qBEoIdSvlFPD7QUJ/OZR+
-         pcdw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=H6CXkt7XQRmTS6IAY9O5gfocreD0xWeDQV3rSfuBX9s=;
-        b=s5I4KMPXT3OLW0FNz2GjLDW2LvIPM5yL7wzJvR/2R4hE1monl2DYN8rkYVSPF4fie4
-         fnTXDiYUGxI0R7dxg7hEp85KLh3UGU8F3YjdloIpLapw4rVAZZu9hvOktc8Y+Pw6r2uL
-         DYDFUCmqDYYGyO2vHq4txytAXG7sk6SffNinUHGmYr4mOxCI+7nXXNEnnzL1pZueqcyR
-         UX7aim0iI/UZrgRvg0W8g9aLU2V5YPGB65jjDwHNAF5ceWgRbPlvhHX9+Lz8d57V2Bfo
-         XdpONdRjal5jCcXwtZ+X4/I0oc0Dvi5oHRqF1h948sysOJOE57OmCV7ZdgOjO6R2dtVe
-         sKDA==
-X-Gm-Message-State: AOAM531I2MWA4Cr8UM2uaEfPl17PEDiUjnb75f36XtH+UjPxx1kJudB+
-        ObQIoFPUb8wDbAptnRTcYypC
-X-Google-Smtp-Source: ABdhPJzy1SqEGEEhxTxwxsIHKQ3i0BzmQlinwG3xVRlxXN43akFhhVqe3xY9+CTUv3oRrfcwqy3Zrw==
-X-Received: by 2002:a17:90a:bb91:: with SMTP id v17mr196846pjr.231.1607481966568;
-        Tue, 08 Dec 2020 18:46:06 -0800 (PST)
-Received: from localhost.localdomain ([103.59.133.81])
-        by smtp.gmail.com with ESMTPSA id g34sm155678pgb.33.2020.12.08.18.46.01
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 08 Dec 2020 18:46:05 -0800 (PST)
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-X-Google-Original-From: Manivannan Sadhasivam <mani@kernel.org>
-To:     lorenzo.pieralisi@arm.com
-Cc:     agross@kernel.org, bjorn.andersson@linaro.org,
-        svarbanov@mm-sol.com, bhelgaas@google.com,
-        linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
-        linux-kernel@vger.kernel.org, mgautam@codeaurora.org,
-        truong@codeaurora.org,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        kernel test robot <lkp@intel.com>
-Subject: [RESEND PATCH] PCI: qcom: Fix using uninitialized smmu_sid_base variable
-Date:   Wed,  9 Dec 2020 08:15:55 +0530
-Message-Id: <20201209024555.14116-1-mani@kernel.org>
-X-Mailer: git-send-email 2.25.1
+        id S1727368AbgLIEoX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 8 Dec 2020 23:44:23 -0500
+Received: from mail.kernel.org ([198.145.29.99]:45122 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726943AbgLIEoX (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 8 Dec 2020 23:44:23 -0500
+From:   Eric Biggers <ebiggers@kernel.org>
+Authentication-Results: mail.kernel.org; dkim=permerror (bad message/signature format)
+To:     linux-mmc@vger.kernel.org
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-fscrypt@vger.kernel.org, Satya Tangirala <satyat@google.com>,
+        Ulf Hansson <ulf.hansson@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Adrian Hunter <adrian.hunter@intel.com>,
+        Asutosh Das <asutoshd@codeaurora.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Neeraj Soni <neersoni@codeaurora.org>,
+        Barani Muthukumaran <bmuthuku@codeaurora.org>,
+        Peng Zhou <peng.zhou@mediatek.com>,
+        Stanley Chu <stanley.chu@mediatek.com>,
+        Konrad Dybcio <konradybcio@gmail.com>
+Subject: [PATCH v3 0/9] eMMC inline encryption support
+Date:   Tue,  8 Dec 2020 20:42:29 -0800
+Message-Id: <20201209044238.78659-1-ebiggers@kernel.org>
+X-Mailer: git-send-email 2.29.2
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Hello,
 
-smmu_sid_base should hold the base of SMMU SID extracted from the first
-entry of iommu-map. This value will be used to extract the successive SMMU
-SID values. Fix it by assigning the first SMMU SID base before for loop.
+This patchset adds support for eMMC inline encryption, as specified by
+the upcoming version of the eMMC specification and as already
+implemented and used on many devices.  Building on that, it then adds
+Qualcomm ICE support and wires it up for the Snapdragon 630 SoC.
 
-Reported-by: kernel test robot <lkp@intel.com>
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
----
- drivers/pci/controller/dwc/pcie-qcom.c | 3 +++
- 1 file changed, 3 insertions(+)
+Inline encryption hardware improves the performance of storage
+encryption and reduces power usage.  See
+Documentation/block/inline-encryption.rst for more information about
+inline encryption and the blk-crypto framework (upstreamed in v5.8)
+which supports it.  Most mobile devices already use UFS or eMMC inline
+encryption hardware; UFS support was already upstreamed in v5.9.
 
-diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
-index 8ba3e6b29196..affa2713bf80 100644
---- a/drivers/pci/controller/dwc/pcie-qcom.c
-+++ b/drivers/pci/controller/dwc/pcie-qcom.c
-@@ -1297,6 +1297,9 @@ static int qcom_pcie_config_sid_sm8250(struct qcom_pcie *pcie)
- 	/* Registers need to be zero out first */
- 	memset_io(bdf_to_sid_base, 0, CRC8_TABLE_SIZE * sizeof(u32));
- 
-+	/* Extract the SMMU SID base from the first entry of iommu-map */
-+	smmu_sid_base = map[0].smmu_sid;
-+
- 	/* Look for an available entry to hold the mapping */
- 	for (i = 0; i < nr_map; i++) {
- 		u16 bdf_be = cpu_to_be16(map[i].bdf);
+Patches 1-4 add support for the standard eMMC inline encryption.
+
+However, as with UFS, host controller-specific patches are needed on top
+of the standard support.  Therefore, patches 5-9 add Qualcomm ICE
+(Inline Crypto Engine) support and wire it up on the Snapdragon 630 SoC.
+
+To test this I took advantage of the recently upstreamed support for the
+Snapdragon 630 SoC, plus work-in-progress patches from the SoMainline
+project (https://github.com/SoMainline/linux/tree/konrad/v5.10-rc3).  In
+particular, I was able to run the fscrypt xfstests for ext4 and f2fs in
+a Debian chroot.  Among other things, these tests verified that the
+correct ciphertext is written to disk (the same as software encryption).
+
+It will also be possible to add support for Mediatek eMMC inline
+encryption hardware in mtk-sd, and it should be easier than the Qualcomm
+hardware since the Mediatek hardware follows the standard more closely.
+I.e., patches 1-4 should be almost enough for the Mediatek hardware.
+However, I don't have the hardware to do this yet.
+
+This patchset is based on v5.10-rc6, and it can also be retrieved from
+tag "mmc-crypto-v3" of
+https://git.kernel.org/pub/scm/linux/kernel/git/ebiggers/linux.git
+
+Changed since v2:
+  - Improved comment for sdhci_msm_ice_wait_bist_status()
+  - Removed an unhelpful comment in union cqhci_crypto_cfg_entry.
+  - Fixed the commit message of "mmc: cqhci: initialize upper 64 bits of
+    128-bit task descriptors".
+  - Added Reviewed-by's and Acked-by's.
+
+Changed since v1:
+  - Only select QCOM_SCM if ARCH_QCOM.  (Fixes a build break.)
+  - Split most of the cqhci_prep_task_desc() change into its own patch.
+  - Made sdhci_msm_ice_wait_bist_status() use readl_poll_timeout().
+  - Added a couple more comments.
+  - Added some Acked-by's.
+
+Eric Biggers (9):
+  mmc: add basic support for inline encryption
+  mmc: cqhci: rename cqhci.c to cqhci-core.c
+  mmc: cqhci: initialize upper 64 bits of 128-bit task descriptors
+  mmc: cqhci: add support for inline encryption
+  mmc: cqhci: add cqhci_host_ops::program_key
+  firmware: qcom_scm: update comment for ICE-related functions
+  dt-bindings: mmc: sdhci-msm: add ICE registers and clock
+  arm64: dts: qcom: sdm630: add ICE registers and clocks
+  mmc: sdhci-msm: add Inline Crypto Engine support
+
+ .../devicetree/bindings/mmc/sdhci-msm.txt     |   3 +
+ arch/arm64/boot/dts/qcom/sdm630.dtsi          |  10 +-
+ drivers/firmware/qcom_scm.c                   |  16 +-
+ drivers/mmc/core/Kconfig                      |   8 +
+ drivers/mmc/core/Makefile                     |   1 +
+ drivers/mmc/core/block.c                      |   3 +
+ drivers/mmc/core/core.c                       |   3 +
+ drivers/mmc/core/crypto.c                     |  54 ++++
+ drivers/mmc/core/crypto.h                     |  46 +++
+ drivers/mmc/core/host.c                       |   2 +
+ drivers/mmc/core/queue.c                      |   3 +
+ drivers/mmc/host/Kconfig                      |   1 +
+ drivers/mmc/host/Makefile                     |   2 +
+ drivers/mmc/host/{cqhci.c => cqhci-core.c}    |  69 ++++-
+ drivers/mmc/host/cqhci-crypto.c               | 245 ++++++++++++++++
+ drivers/mmc/host/cqhci-crypto.h               |  47 +++
+ drivers/mmc/host/cqhci.h                      |  84 +++++-
+ drivers/mmc/host/sdhci-msm.c                  | 276 +++++++++++++++++-
+ include/linux/mmc/core.h                      |   6 +
+ include/linux/mmc/host.h                      |   7 +
+ 20 files changed, 861 insertions(+), 25 deletions(-)
+ create mode 100644 drivers/mmc/core/crypto.c
+ create mode 100644 drivers/mmc/core/crypto.h
+ rename drivers/mmc/host/{cqhci.c => cqhci-core.c} (94%)
+ create mode 100644 drivers/mmc/host/cqhci-crypto.c
+ create mode 100644 drivers/mmc/host/cqhci-crypto.h
+
 -- 
-2.25.1
+2.29.2
 
