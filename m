@@ -2,289 +2,170 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 6AE272D49B5
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Dec 2020 20:03:09 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1AEAF2D4AED
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Dec 2020 20:49:42 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732638AbgLITCI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 9 Dec 2020 14:02:08 -0500
-Received: from m43-15.mailgun.net ([69.72.43.15]:22058 "EHLO
+        id S2387994AbgLITtT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 9 Dec 2020 14:49:19 -0500
+Received: from m43-15.mailgun.net ([69.72.43.15]:42798 "EHLO
         m43-15.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2387531AbgLITBz (ORCPT
+        with ESMTP id S1733111AbgLITtK (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 9 Dec 2020 14:01:55 -0500
+        Wed, 9 Dec 2020 14:49:10 -0500
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1607540488; h=Content-Transfer-Encoding: Content-Type:
+ s=smtp; t=1607543323; h=Content-Transfer-Encoding: Content-Type:
  In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
- Subject: Sender; bh=5GfzdzbB+fwsvf0AVai9LJH91I0i8wyoAJ2b7YZ6u9M=; b=Fob5eiRJrrRcXR6UakO/5Io7x2b78h1mD9ouiVMVqYMt3oN4CVgzjFv/79Vd5JJurEszghfk
- SaIgCXqvCfpJkQdBpeZjsqIWRMXQRvFqlY2hbAWfbfJiHPzUPiOHFVac/IGrglyRkBDl9tfS
- 1GocVqmQhSYY3DG/aG0mebuHBxE=
+ Subject: Sender; bh=BDsqBtsR+tJlXw/x5FPrFdURybZlwARsyz23aASsQNI=; b=Q+UdnsqxtsE9NgXbzDQLQ7EzPDxoigS6USwHAGrvkQIh3dilHEqi6lwYuZ1b6zcdgRiUfA4G
+ dih/V7Frm3Bl6iJaMIsbr8NDXNoI3WG3JRHUyni5B6dt/Daf6nPLTRGpRupJFph6ty07/SCQ
+ ns4MKOA2yDEiF9wtknAJ4qRGExg=
 X-Mailgun-Sending-Ip: 69.72.43.15
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org
  (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n09.prod.us-west-2.postgun.com with SMTP id
- 5fd11ee7395c822bfe0d6faa (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 09 Dec 2020 19:00:55
+ smtp-out-n04.prod.us-east-1.postgun.com with SMTP id
+ 5fd129f8c62570206cbbf4d2 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 09 Dec 2020 19:48:08
  GMT
-Sender: hemantk=codeaurora.org@mg.codeaurora.org
+Sender: jhugo=codeaurora.org@mg.codeaurora.org
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id C0180C43462; Wed,  9 Dec 2020 19:00:55 +0000 (UTC)
+        id DCAECC43463; Wed,  9 Dec 2020 19:48:07 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
 X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        NICE_REPLY_A,SPF_FAIL autolearn=no autolearn_force=no version=3.4.0
-Received: from [10.46.162.249] (i-global254.qualcomm.com [199.106.103.254])
+        NICE_REPLY_A,SPF_FAIL,URIBL_BLOCKED autolearn=no autolearn_force=no
+        version=3.4.0
+Received: from [10.226.59.216] (i-global254.qualcomm.com [199.106.103.254])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        (Authenticated sender: hemantk)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 1A861C433C6;
-        Wed,  9 Dec 2020 19:00:53 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 1A861C433C6
+        (Authenticated sender: jhugo)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id A2874C433C6;
+        Wed,  9 Dec 2020 19:48:06 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org A2874C433C6
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=hemantk@codeaurora.org
-Subject: Re: [PATCH 3/3] net: mhi: Add dedicated alloc thread
-To:     Loic Poulain <loic.poulain@linaro.org>, kuba@kernel.org
-Cc:     manivannan.sadhasivam@linaro.org, linux-arm-msm@vger.kernel.org,
-        netdev@vger.kernel.org, davem@davemloft.net
-References: <1607526183-25652-1-git-send-email-loic.poulain@linaro.org>
- <1607526183-25652-3-git-send-email-loic.poulain@linaro.org>
-From:   Hemant Kumar <hemantk@codeaurora.org>
-Message-ID: <9b4aa706-ce32-0dff-f6d6-28e2e394783e@codeaurora.org>
-Date:   Wed, 9 Dec 2020 11:00:53 -0800
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.10.0
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=jhugo@codeaurora.org
+Subject: Re: [PATCH] mhi: use irq_flags if client driver configures it
+To:     Hemant Kumar <hemantk@codeaurora.org>,
+        Carl Huang <cjhuang@codeaurora.org>,
+        manivannan.sadhasivam@linaro.org
+Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20201208035500.30581-1-cjhuang@codeaurora.org>
+ <fad48bcd-df5d-40e3-9d63-b45adb998445@codeaurora.org>
+From:   Jeffrey Hugo <jhugo@codeaurora.org>
+Message-ID: <bf5409bb-adaf-d2ad-8606-cd8a3df8bc5b@codeaurora.org>
+Date:   Wed, 9 Dec 2020 12:48:05 -0700
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.5.0
 MIME-Version: 1.0
-In-Reply-To: <1607526183-25652-3-git-send-email-loic.poulain@linaro.org>
+In-Reply-To: <fad48bcd-df5d-40e3-9d63-b45adb998445@codeaurora.org>
 Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On 12/9/2020 11:34 AM, Hemant Kumar wrote:
+> 
+> 
+> On 12/7/20 7:55 PM, Carl Huang wrote:
+>> If client driver has specified the irq_flags, mhi uses this specified
+>> irq_flags. Otherwise, mhi uses default irq_flags.
+>>
+>> The purpose of this change is to support one MSI vector for QCA6390.
+>> MHI will use one same MSI vector too in this scenario.
+>>
+>> In case of one MSI vector, IRQ_NO_BALANCING is needed when irq handler
+>> is requested. The reason is if irq migration happens, the msi_data may
+>> change too. However, the msi_data is already programmed to QCA6390
+>> hardware during initialization phase. This msi_data inconsistence will
+>> result in crash in kernel.
+
+I'm confused as to how this happens.
+
+>>
+>> Another issue is in case of one MSI vector, IRQF_NO_SUSPEND will trigger
+>> WARNINGS because QCA6390 wants to disable the IRQ during the suspend.
+>>
+>> To avoid above two issues, QCA6390 driver specifies the irq_flags in case
+>> of one MSI vector when mhi_register_controller is called.
+
+Surely this change should be in a series where there is a following 
+change which updates the QCA6390 driver?
+
+>>
+>> Signed-off-by: Carl Huang <cjhuang@codeaurora.org>
+>> ---
+>>   drivers/bus/mhi/core/init.c | 9 +++++++--
+>>   include/linux/mhi.h         | 1 +
+>>   2 files changed, 8 insertions(+), 2 deletions(-)
+>>
+>> diff --git a/drivers/bus/mhi/core/init.c b/drivers/bus/mhi/core/init.c
+>> index 0ffdebd..5f74e1e 100644
+>> --- a/drivers/bus/mhi/core/init.c
+>> +++ b/drivers/bus/mhi/core/init.c
+>> @@ -148,12 +148,17 @@ int mhi_init_irq_setup(struct mhi_controller 
+>> *mhi_cntrl)
+>>   {
+>>       struct mhi_event *mhi_event = mhi_cntrl->mhi_event;
+>>       struct device *dev = &mhi_cntrl->mhi_dev->dev;
+>> +    unsigned long irq_flags = IRQF_SHARED | IRQF_NO_SUSPEND;
+>>       int i, ret;
+>> +    /* if client driver has set irq_flags, use it */
+>> +    if (mhi_cntrl->irq_flags)
+>> +        irq_flags = mhi_cntrl->irq_flags;
+> Jeff if i remember correctly your use case also have one dedicated irq 
+> line for all the MSIs, just want to confirm if you are fine with this 
+> change ? i was wondering if any input check is required for irq_flags 
+> passed by controller, or responsibility is on controller for any 
+> undesired behavior. Like passing IRQF_SHARED and IRQF_ONESHOT when one 
+> irq line is shared among multiple MSIs.
+
+This feels a bit weird to me, but I don't think it'll cause a problem.
+
+If we are allowing the controller to specify flags, should they be in a 
+per irq manner?
+
+>> +
+>>       /* Setup BHI_INTVEC IRQ */
+>>       ret = request_threaded_irq(mhi_cntrl->irq[0], mhi_intvec_handler,
+>>                      mhi_intvec_threaded_handler,
+>> -                   IRQF_SHARED | IRQF_NO_SUSPEND,
+>> +                   irq_flags,
+>>                      "bhi", mhi_cntrl);
+>>       if (ret)
+>>           return ret;
+>> @@ -171,7 +176,7 @@ int mhi_init_irq_setup(struct mhi_controller 
+>> *mhi_cntrl)
+>>           ret = request_irq(mhi_cntrl->irq[mhi_event->irq],
+>>                     mhi_irq_handler,
+>> -                  IRQF_SHARED | IRQF_NO_SUSPEND,
+>> +                  irq_flags,
+>>                     "mhi", mhi_event);
+>>           if (ret) {
+>>               dev_err(dev, "Error requesting irq:%d for ev:%d\n",
+>> diff --git a/include/linux/mhi.h b/include/linux/mhi.h
+>> index d4841e5..f039e58 100644
+>> --- a/include/linux/mhi.h
+>> +++ b/include/linux/mhi.h
+>> @@ -442,6 +442,7 @@ struct mhi_controller {
+>>       bool fbc_download;
+>>       bool pre_init;
+>>       bool wake_set;
+>> +    unsigned long irq_flags;
+
+You don't document this.  That gets a NACK from me.
+
+>>   };
+>>   /**
+>>
+> 
+> Thanks,
+> Hemant
+> 
 
 
-On 12/9/20 7:03 AM, Loic Poulain wrote:
-> The buffer allocation for RX path is currently done by a work executed
-> in the system workqueue. The work to do is quite simple and consists
-> mostly in allocating and queueing as much as possible buffers to the MHI
-queuing
-> RX channel.
-> 
-> It appears that using a dedicated kthread would be more appropriate to
-> prevent
-> 1. RX allocation latency introduced by the system queue
-> 2. Unbounded work execution, the work only returning when queue is
-> full, it can possibly monopolise the workqueue thread on slower systems.
-> 
-> This patch replaces the system work with a simple kthread that loops on
-> buffer allocation and sleeps when queue is full. Moreover it gets rid
-> of the local rx_queued variable (to track buffer count), and instead,
-> relies on the new mhi_get_free_desc_count helper.
-> 
-> After pratical testing on a x86_64 machine, this change improves
-practical ?
-> - Peek throughput (slightly, by few mbps)
-> - Throughput stability when concurrent loads are running (stress)
-> - CPU usage, less CPU cycles dedicated to the task
-> 
-> Below is the powertop output for RX allocation task before and after
-> this change, when performing UDP download at 6Gbps. Mostly to highlight
-> the improvement in term of CPU usage.
-> 
-> older (system workqueue):
-> Usage       Events/s    Category       Description
-> 63,2 ms/s     134,0        kWork          mhi_net_rx_refill_work
-> 62,8 ms/s     134,3        kWork          mhi_net_rx_refill_work
-> 60,8 ms/s     141,4        kWork          mhi_net_rx_refill_work
-> 
-> newer (dedicated kthread):
-> Usage       Events/s    Category       Description
-> 20,7 ms/s     155,6        Process        [PID 3360] [mhi-net-rx]
-> 22,2 ms/s     169,6        Process        [PID 3360] [mhi-net-rx]
-> 22,3 ms/s     150,2        Process        [PID 3360] [mhi-net-rx]
-> 
-> Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
-> ---
->   drivers/net/mhi_net.c | 98 ++++++++++++++++++++++++++-------------------------
->   1 file changed, 50 insertions(+), 48 deletions(-)
-> 
-> diff --git a/drivers/net/mhi_net.c b/drivers/net/mhi_net.c
-> index 0333e07..eef40f5 100644
-> --- a/drivers/net/mhi_net.c
-> +++ b/drivers/net/mhi_net.c
-> @@ -5,6 +5,7 @@
->    */
->   
->   #include <linux/if_arp.h>
-> +#include <linux/kthread.h>
->   #include <linux/mhi.h>
->   #include <linux/mod_devicetable.h>
->   #include <linux/module.h>
-> @@ -25,7 +26,6 @@ struct mhi_net_stats {
->   	u64_stats_t tx_bytes;
->   	u64_stats_t tx_errors;
->   	u64_stats_t tx_dropped;
-> -	atomic_t rx_queued;
->   	struct u64_stats_sync tx_syncp;
->   	struct u64_stats_sync rx_syncp;
->   };
-> @@ -33,17 +33,59 @@ struct mhi_net_stats {
->   struct mhi_net_dev {
->   	struct mhi_device *mdev;
->   	struct net_device *ndev;
-> -	struct delayed_work rx_refill;
-> +	struct task_struct *refill_task;
-> +	wait_queue_head_t refill_wq;
->   	struct mhi_net_stats stats;
->   	u32 rx_queue_sz;
->   };
->   
-> +static int mhi_net_refill_thread(void *data)
-> +{
-> +	struct mhi_net_dev *mhi_netdev = data;
-> +	struct net_device *ndev = mhi_netdev->ndev;
-> +	struct mhi_device *mdev = mhi_netdev->mdev;
-> +	int size = READ_ONCE(ndev->mtu);
-> +	struct sk_buff *skb;
-> +	int err;
-> +
-> +	while (1) {
-> +		err = wait_event_interruptible(mhi_netdev->refill_wq,
-> +					       !mhi_queue_is_full(mdev, DMA_FROM_DEVICE)
-> +					       || kthread_should_stop());
-> +		if (err || kthread_should_stop())
-> +			break;
-> +
-> +		skb = netdev_alloc_skb(ndev, size);
-> +		if (unlikely(!skb)) {
-> +			/* No memory, retry later */
-> +			schedule_timeout_interruptible(msecs_to_jiffies(250));
-> +			continue;
-> +		}
-> +
-> +		err = mhi_queue_skb(mdev, DMA_FROM_DEVICE, skb, size, MHI_EOT);
-> +		if (unlikely(err)) {
-> +			net_err_ratelimited("%s: Failed to queue RX buf (%d)\n",
-> +					    ndev->name, err);
-> +			kfree_skb(skb);
-> +			break;
-> +		}
-> +
-> +		/* Do not hog the CPU */
-> +		cond_resched();
-> +	}
-> +
-> +	return 0;
-> +}
-> +
->   static int mhi_ndo_open(struct net_device *ndev)
->   {
->   	struct mhi_net_dev *mhi_netdev = netdev_priv(ndev);
->   
-> -	/* Feed the rx buffer pool */
-> -	schedule_delayed_work(&mhi_netdev->rx_refill, 0);
-> +	mhi_netdev->refill_task = kthread_run(mhi_net_refill_thread, mhi_netdev,
-> +					      "mhi-net-rx");
-> +	if (IS_ERR(mhi_netdev->refill_task)) {
-nit: you can remove curly brace for single statement
-> +		return PTR_ERR(mhi_netdev->refill_task);
-> +	}
->   
->   	/* Carrier is established via out-of-band channel (e.g. qmi) */
->   	netif_carrier_on(ndev);
-> @@ -57,9 +99,9 @@ static int mhi_ndo_stop(struct net_device *ndev)
->   {
->   	struct mhi_net_dev *mhi_netdev = netdev_priv(ndev);
->   
-> +	kthread_stop(mhi_netdev->refill_task);
->   	netif_stop_queue(ndev);
->   	netif_carrier_off(ndev);
-> -	cancel_delayed_work_sync(&mhi_netdev->rx_refill);
->   
->   	return 0;
->   }
-> @@ -138,9 +180,6 @@ static void mhi_net_dl_callback(struct mhi_device *mhi_dev,
->   {
->   	struct mhi_net_dev *mhi_netdev = dev_get_drvdata(&mhi_dev->dev);
->   	struct sk_buff *skb = mhi_res->buf_addr;
-> -	int remaining;
-> -
-> -	remaining = atomic_dec_return(&mhi_netdev->stats.rx_queued);
->   
->   	if (unlikely(mhi_res->transaction_status)) {
->   		dev_kfree_skb_any(skb);
-> @@ -163,9 +202,8 @@ static void mhi_net_dl_callback(struct mhi_device *mhi_dev,
->   		netif_rx(skb);
->   	}
->   
-> -	/* Refill if RX buffers queue becomes low */
-> -	if (remaining <= mhi_netdev->rx_queue_sz / 2)
-> -		schedule_delayed_work(&mhi_netdev->rx_refill, 0);
-> +	if (mhi_get_free_desc_count(mhi_dev, DMA_FROM_DEVICE) >= mhi_netdev->rx_queue_sz / 3)
-would it be helpful to add a module param instead of rx_queue_sz/3, 
-which can help to fine tune when you wake up kthread at run time. 
-Comparing to the value used last used now you are dividing by 3.
-> +		wake_up_interruptible(&mhi_netdev->refill_wq);
->   }
->   
->   static void mhi_net_ul_callback(struct mhi_device *mhi_dev,
-> @@ -200,42 +238,6 @@ static void mhi_net_ul_callback(struct mhi_device *mhi_dev,
->   		netif_wake_queue(ndev);
->   }
->   
-> -static void mhi_net_rx_refill_work(struct work_struct *work)
-> -{
-> -	struct mhi_net_dev *mhi_netdev = container_of(work, struct mhi_net_dev,
-> -						      rx_refill.work);
-> -	struct net_device *ndev = mhi_netdev->ndev;
-> -	struct mhi_device *mdev = mhi_netdev->mdev;
-> -	int size = READ_ONCE(ndev->mtu);
-> -	struct sk_buff *skb;
-> -	int err;
-> -
-> -	while (atomic_read(&mhi_netdev->stats.rx_queued) < mhi_netdev->rx_queue_sz) {
-> -		skb = netdev_alloc_skb(ndev, size);
-> -		if (unlikely(!skb))
-> -			break;
-> -
-> -		err = mhi_queue_skb(mdev, DMA_FROM_DEVICE, skb, size, MHI_EOT);
-> -		if (unlikely(err)) {
-> -			net_err_ratelimited("%s: Failed to queue RX buf (%d)\n",
-> -					    ndev->name, err);
-> -			kfree_skb(skb);
-> -			break;
-> -		}
-> -
-> -		atomic_inc(&mhi_netdev->stats.rx_queued);
-> -
-> -		/* Do not hog the CPU if rx buffers are consumed faster than
-> -		 * queued (unlikely).
-> -		 */
-> -		cond_resched();
-> -	}
-> -
-> -	/* If we're still starved of rx buffers, reschedule later */
-> -	if (unlikely(!atomic_read(&mhi_netdev->stats.rx_queued)))
-> -		schedule_delayed_work(&mhi_netdev->rx_refill, HZ / 2);
-> -}
-> -
->   static int mhi_net_probe(struct mhi_device *mhi_dev,
->   			 const struct mhi_device_id *id)
->   {
-> @@ -256,7 +258,7 @@ static int mhi_net_probe(struct mhi_device *mhi_dev,
->   	mhi_netdev->mdev = mhi_dev;
->   	SET_NETDEV_DEV(ndev, &mhi_dev->dev);
->   
-> -	INIT_DELAYED_WORK(&mhi_netdev->rx_refill, mhi_net_rx_refill_work);
-> +	init_waitqueue_head(&mhi_netdev->refill_wq);
->   	u64_stats_init(&mhi_netdev->stats.rx_syncp);
->   	u64_stats_init(&mhi_netdev->stats.tx_syncp);
->   
-> 
-Thanks,
-Hemant
 -- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project
+Jeffrey Hugo
+Qualcomm Technologies, Inc. is a member of the
+Code Aurora Forum, a Linux Foundation Collaborative Project.
