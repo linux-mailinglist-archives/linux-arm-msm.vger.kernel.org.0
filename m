@@ -2,23 +2,23 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 0BE5E2D56ED
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Dec 2020 10:22:33 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 905582D56EC
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Dec 2020 10:22:32 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388969AbgLJJVp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 10 Dec 2020 04:21:45 -0500
-Received: from mail.kernel.org ([198.145.29.99]:35358 "EHLO mail.kernel.org"
+        id S1729990AbgLJJVt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 10 Dec 2020 04:21:49 -0500
+Received: from mail.kernel.org ([198.145.29.99]:35366 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1729990AbgLJJVo (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 10 Dec 2020 04:21:44 -0500
+        id S2388813AbgLJJVp (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 10 Dec 2020 04:21:45 -0500
 Subject: patch "MAINTAINERS: Mark SPMI as maintained" added to char-misc-next
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-        s=korg; t=1607592063;
+        s=korg; t=1607592064;
         bh=afHat727pnCxEqTx7ErMXv6kdND16OnvYkat//+FwBw=;
         h=To:From:Date:From;
-        b=IPyY1VNoeLj9IrkFpirPpnKNSBwAC3yze35BQPflv7QD7UuVJTvHFUyrNv9lCFdPn
-         WGAALp3J+6e+4MBLALuRKNC9AgWKtnZD3Rpees+iDB+Og1hNj5e/Fn3O6r1EN6zsj0
-         pSM9fNA9n/kQJlxRDZji9QQMbpuYjycFnPKkc7YQ=
+        b=CHF9hHh5il88nyDyrbzLUpa1O1b+NEEmlAYxPob6wz7E8aVH7HqNLND2IzFHCnHsh
+         Q/TPgu8MvXyizB27/kiwvKKahaGsRkfSo1ewHOIeellUL/fqZRaurj0kAqKQt/k38A
+         wwjsDW3nRTAsIbIPkknhW1Qj+DJkF8834cuLUilw=
 To:     sboyd@kernel.org, gregkh@linuxfoundation.org,
         linux-arm-msm@vger.kernel.org
 From:   <gregkh@linuxfoundation.org>
