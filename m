@@ -2,214 +2,399 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 62F3D2D4FD0
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Dec 2020 01:49:04 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 66FDF2D5084
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Dec 2020 02:54:59 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729668AbgLJAoF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 9 Dec 2020 19:44:05 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46778 "EHLO
+        id S1726794AbgLJBw1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 9 Dec 2020 20:52:27 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57262 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729330AbgLJAn7 (ORCPT
+        with ESMTP id S1726559AbgLJBw1 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 9 Dec 2020 19:43:59 -0500
-Received: from mail-ua1-x933.google.com (mail-ua1-x933.google.com [IPv6:2607:f8b0:4864:20::933])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6B5A3C0613D6
-        for <linux-arm-msm@vger.kernel.org>; Wed,  9 Dec 2020 16:43:19 -0800 (PST)
-Received: by mail-ua1-x933.google.com with SMTP id n18so1145399ual.9
-        for <linux-arm-msm@vger.kernel.org>; Wed, 09 Dec 2020 16:43:19 -0800 (PST)
+        Wed, 9 Dec 2020 20:52:27 -0500
+Received: from mail-pg1-x544.google.com (mail-pg1-x544.google.com [IPv6:2607:f8b0:4864:20::544])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D16ADC0613D6
+        for <linux-arm-msm@vger.kernel.org>; Wed,  9 Dec 2020 17:51:46 -0800 (PST)
+Received: by mail-pg1-x544.google.com with SMTP id f17so2702070pge.6
+        for <linux-arm-msm@vger.kernel.org>; Wed, 09 Dec 2020 17:51:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=KQorzTW27QOsMWD3KHq+FAGOyijZWBp7eao6c1glD1g=;
-        b=L2LlsWZYF4pVW8WTWhpUR0IO6rkyLZZ+EBTHXkv0Gmk9+l/0n30L23wN5nChAj5tQQ
-         ZVZxE9/QTq9fGZYLoDk5uWOofg/7bC+O0ACiA1Zgp1k4vENkUvV8yk/kZq/1OpaCgCC1
-         W4ODAzrUJ/zkEXgLVeyc2BUBA9vh+hEriVW6g=
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=GqSDAgHKmBSSSDBPuxfcpZpLppjcHRC0OOR6fYwtWzA=;
+        b=JzBGiXKNsodJlLYKw4fRA2GAbu2s/1/BZm0ba23CDK9uVKecD9MM4xxfEq6sBZooGN
+         bcCJ72I3RbCzt/Aw627wYSX70atH1ZtjJDH5Z9yQXb++BYjs7Rr+piwHDjj1lUcr80Xa
+         Lpa+wbjkFWGx/qPcW/z5qKbw8aQ9Rmpmj6cLSwPVOQDOhoJVV2KUKsGzolylkdkiMnYd
+         SctMWkOe42PocLqU5GN2UIjc0vBusg97+wiG0xW1jHS0ilnasJT96R6XgZek8IrfLCnD
+         KQQ9NO/lc2nRZitUoXYC6R9Ms44qQkYnNNk+euq0HaXGmD0J1xst3bhDE4k5AntWgdP7
+         fPjA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=KQorzTW27QOsMWD3KHq+FAGOyijZWBp7eao6c1glD1g=;
-        b=amKI85hiPi1bfIJtprelm+blpah+WHcV5tmObPYdx6CspkQm5sgijvYNp5LWLdpECz
-         LXk0VNf68XFQVETsalzceekFm1Xdy3K3NTXFJuHxeyF+cdwnyjRkIATg3JJGn+z2X0nP
-         d61Bm7rr3JArJWQ/dAc3bQq46UrXdchHbtHuI9Hxea1R0bHlQNiwFgCN8iWPiGE+/Js/
-         MYPxcdhZulf45g9s9IRayNg/xZelK8YS/RUzsj4Ejj5YjPkx6ow9dzAvU+S7SrhXE0A7
-         kYupBe0iglo/svaQdQXmu2lBPlPi++qD30VVZ9xTVd/WcXhvT+C0ZKhbvlZ0ruTl0Vl7
-         N4iw==
-X-Gm-Message-State: AOAM5304uaXcrI/TWvyyuTMBioZdr+Mb1DxsqsyEqMu+cKvCc9rCkE43
-        28crfnJ1hY4YO3D6guVlQW/iYY1EtwbSbA==
-X-Google-Smtp-Source: ABdhPJyXw4ihajXApAPigtpYcl69J+p7UDraKSjnanKXJYCKBQk2xE4tl4PI0ckFsk4+XiCHFHDSmg==
-X-Received: by 2002:ab0:b0f:: with SMTP id b15mr5015367uak.45.1607560998343;
-        Wed, 09 Dec 2020 16:43:18 -0800 (PST)
-Received: from mail-vk1-f178.google.com (mail-vk1-f178.google.com. [209.85.221.178])
-        by smtp.gmail.com with ESMTPSA id a10sm264651uaa.18.2020.12.09.16.43.17
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 09 Dec 2020 16:43:17 -0800 (PST)
-Received: by mail-vk1-f178.google.com with SMTP id a4so812571vko.11
-        for <linux-arm-msm@vger.kernel.org>; Wed, 09 Dec 2020 16:43:17 -0800 (PST)
-X-Received: by 2002:a1f:3fc9:: with SMTP id m192mr5293407vka.17.1607560996597;
- Wed, 09 Dec 2020 16:43:16 -0800 (PST)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=GqSDAgHKmBSSSDBPuxfcpZpLppjcHRC0OOR6fYwtWzA=;
+        b=iM4CdXwEkcVsHIQpM4ZASpVqK8PO6yRdXxNWOXgYMEMmmxoVOppYeyqeL0/wta0pW9
+         7HFKwXJ3weOuviV306ird9pVDVftCo7Bx2ohhWR75kYdfe+94q/WDKxtIGCLPlP7f5se
+         4awgZ7yvMeF+YDaagQN9hcbj6G2ur8Pah8F38e6HYNBfmBwerIGzCAw+1/kqGloljkiN
+         wNmKKfg3OpSlFRRBAYSJ2ccSGicjD+x+viuUfQ1WBkiF7CGV01L589FG22SjeHXl32sA
+         RdcE8NzFMDxLz/Oc3+5BI7t/Yn/kDxm3sHrQ9aV8roOH/m7AVXF95GefP6mba9Gg+TIb
+         CGkA==
+X-Gm-Message-State: AOAM5312im2NOtf9slSILkAzaGUnzxVE6sR+o5axAe9qEqopE8MV3DOe
+        QrEAzE6/pC+bqh23in0wYYXhoA==
+X-Google-Smtp-Source: ABdhPJzS6uIxKbgnue11HAiHltLb/Txj7dtDQWM5/ir8DRiWJxnMVqL8zNlFR/peMRgXDDH6haVJHg==
+X-Received: by 2002:a17:90b:4c51:: with SMTP id np17mr4895316pjb.180.1607565105994;
+        Wed, 09 Dec 2020 17:51:45 -0800 (PST)
+Received: from dragon (80.251.214.228.16clouds.com. [80.251.214.228])
+        by smtp.gmail.com with ESMTPSA id c62sm347865pfa.116.2020.12.09.17.51.41
+        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 09 Dec 2020 17:51:45 -0800 (PST)
+Date:   Thu, 10 Dec 2020 09:51:37 +0800
+From:   Shawn Guo <shawn.guo@linaro.org>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Andrzej Hajda <a.hajda@samsung.com>,
+        Neil Armstrong <narmstrong@baylibre.com>,
+        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
+        Jonas Karlman <jonas@kwiboo.se>,
+        Jernej Skrabec <jernej.skrabec@siol.net>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
+        <u.kleine-koenig@pengutronix.de>, Lee Jones <lee.jones@linaro.org>,
+        Doug Anderson <dianders@chromium.org>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        linux-kernel@vger.kernel.org, linux-pwm@vger.kernel.org
+Subject: Re: [PATCH] drm/bridge: ti-sn65dsi86: Implement the pwm_chip
+Message-ID: <20201210015136.GA18407@dragon>
+References: <20201208044022.972872-1-bjorn.andersson@linaro.org>
 MIME-Version: 1.0
-References: <20201124094636.v2.1.I2702919afc253e2a451bebc3b701b462b2d22344@changeid>
- <20201124094636.v2.3.I771b6594b2a4d5b7fe7e12a991a6640f46386e8d@changeid>
- <d6c5dba9-bcc7-fac9-dd41-c989509c822b@codeaurora.org> <CAD=FV=UOSkHQMcSV8Zq5qPfBoUu5xYzfNZqUPmymvD7PXUAN4w@mail.gmail.com>
- <b84d5bb4-e413-ad20-a19a-c7420abd5d5d@codeaurora.org> <CAD=FV=UXo3RPuVSYwOrHJMxF38K-ynoaPv4ZVQ6N2ok_zcoOFw@mail.gmail.com>
- <5f24ec87-6d91-dfd9-0f4f-6687f37c60ac@codeaurora.org>
-In-Reply-To: <5f24ec87-6d91-dfd9-0f4f-6687f37c60ac@codeaurora.org>
-From:   Doug Anderson <dianders@chromium.org>
-Date:   Wed, 9 Dec 2020 16:43:05 -0800
-X-Gmail-Original-Message-ID: <CAD=FV=Wm_q60w34LmbtC88BkfS0aKp_a=AjnuYFL=g-DX_-=yQ@mail.gmail.com>
-Message-ID: <CAD=FV=Wm_q60w34LmbtC88BkfS0aKp_a=AjnuYFL=g-DX_-=yQ@mail.gmail.com>
-Subject: Re: [PATCH v2 3/3] pinctrl: qcom: Clear possible pending irq when
- remuxing GPIOs
-To:     Maulik Shah <mkshah@codeaurora.org>
-Cc:     Rajendra Nayak <rnayak@codeaurora.org>,
-        Marc Zyngier <maz@kernel.org>,
-        Thomas Gleixner <tglx@linutronix.de>,
-        Jason Cooper <jason@lakedaemon.net>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
-        Neeraj Upadhyay <neeraju@codeaurora.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Srinivas Ramana <sramana@codeaurora.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        LKML <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20201208044022.972872-1-bjorn.andersson@linaro.org>
+User-Agent: Mutt/1.9.4 (2018-02-28)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+On Mon, Dec 07, 2020 at 10:40:22PM -0600, Bjorn Andersson wrote:
+> The SN65DSI86 provides the ability to supply a PWM signal on GPIO 4,
+> with the primary purpose of controlling the backlight of the attached
+> panel. Add an implementation that exposes this using the standard PWM
+> framework, to allow e.g. pwm-backlight to expose this to the user.
+> 
+> Special thanks to Doug Anderson for suggestions related to the involved
+> math.
+> 
+> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> ---
+>  drivers/gpu/drm/bridge/ti-sn65dsi86.c | 202 ++++++++++++++++++++++++++
+>  1 file changed, 202 insertions(+)
+> 
+> diff --git a/drivers/gpu/drm/bridge/ti-sn65dsi86.c b/drivers/gpu/drm/bridge/ti-sn65dsi86.c
+> index f27306c51e4d..43c0acba57ab 100644
+> --- a/drivers/gpu/drm/bridge/ti-sn65dsi86.c
+> +++ b/drivers/gpu/drm/bridge/ti-sn65dsi86.c
+> @@ -4,6 +4,7 @@
+>   * datasheet: https://www.ti.com/lit/ds/symlink/sn65dsi86.pdf
+>   */
+>  
+> +#include <linux/atomic.h>
+>  #include <linux/bits.h>
+>  #include <linux/clk.h>
+>  #include <linux/debugfs.h>
+> @@ -14,6 +15,7 @@
+>  #include <linux/module.h>
+>  #include <linux/of_graph.h>
+>  #include <linux/pm_runtime.h>
+> +#include <linux/pwm.h>
+>  #include <linux/regmap.h>
+>  #include <linux/regulator/consumer.h>
+>  
+> @@ -89,6 +91,11 @@
+>  #define SN_ML_TX_MODE_REG			0x96
+>  #define  ML_TX_MAIN_LINK_OFF			0
+>  #define  ML_TX_NORMAL_MODE			BIT(0)
+> +#define SN_PWM_PRE_DIV_REG			0xA0
+> +#define SN_BACKLIGHT_SCALE_REG			0xA1
+> +#define  BACKLIGHT_SCALE_MAX			0xFFFF
+> +#define SN_BACKLIGHT_REG			0xA3
+> +#define SN_PWM_EN_INV_REG			0xA5
+>  #define SN_AUX_CMD_STATUS_REG			0xF4
+>  #define  AUX_IRQ_STATUS_AUX_RPLY_TOUT		BIT(3)
+>  #define  AUX_IRQ_STATUS_AUX_SHORT		BIT(5)
+> @@ -111,6 +118,8 @@
+>  
+>  #define SN_LINK_TRAINING_TRIES		10
+>  
+> +#define SN_PWM_GPIO			3
 
-On Tue, Dec 8, 2020 at 9:54 PM Maulik Shah <mkshah@codeaurora.org> wrote:
->
-> >> but as long as its IRQ is in disabled/masked state it
-> >> doesn't matter.
-> > ...but there's no requirement that someone would need to disable/mask
-> > an interrupt while switching the muxing, is there?  So it does matter.
-> >
-> >
-> >> its only when the GPIO is again set to IRQ mode with set_mux callback,
-> >> the phantom IRQ needs clear to start as clean.
-> >>
-> >> So we should check only for if (i == pctrl->soc->gpio_func) then clear
-> >> phantom IRQ.
-> >>
-> >> The same is case with .direction_output callback, when GPIO is used as
-> >> output say as clock, need not clear any phantom IRQ,
-> >>
-> >> The reason is with every pulse of clock it can latch as pending IRQ in
-> >> GIC_ISPEND as long as it stay as output mode/clock.
-> >>
-> >> its only when switching back GPIO from output direction to input & IRQ
-> >> function, need to clear the phantom IRQ.
-> >>
-> >> so we do not require clear phantom irq in .direction_output callback.
-> > I think all the above explanation is with the model that the interrupt
-> > detection logic is still happening even when muxed away.  I don't
-> > believe that's true.
-> Its not the interrupt detection logic that is still happening when muxed
-> away, but the GPIO line is routed to GIC from PDC.
-> The GPIO line get forwarded when the system is active/out of system
-> level low power mode to GIC irrespective of whether GPIO is used as
-> interrupt or not.
-> Due to this it can still latch the IRQ at GIC after switching to lets
-> say Rx mode, whenever the line has any data recive, the line state
-> toggles can be latched as error interrupt at GIC.
+So this maps to the GPIO4 described in sn65dsi86 datasheet.  I'm
+wondering if it's more readable to define the following SHIFT constants
+(your code), and use GPIO_MUX_GPIO4_SHIFT >> 2 where you need GPIO
+offset?
 
-From my tests, though, I strongly believe that the pin is only visible
-to the PDC if it's muxed as GPIO.  Specifically, in my tests I did
-this (with all my patches applied so there were no phantom interrupts
-when remuxing):
+#define  GPIO_MUX_GPIO1_SHIFT	0
+#define  GPIO_MUX_GPIO2_SHIFT	2
+#define  GPIO_MUX_GPIO3_SHIFT	4
+#define  GPIO_MUX_GPIO4_SHIFT	6
 
-a) Muxed the pin away from GPIO to special function, but _didn't_ mask
-the interrupt.
+If you agree, you may consider to integrate this patch beforehand:
 
-b) Toggled the line a whole bunch.  These caused no interrupts at all.
-
-c) Muxed back to GPIO.
-
-To me this is quite strong evidence that the muxing is "earlier" in
-the path than the connection to the PDC.  In other words, if you
-change the mux away from GPIO then the PDC stops seeing it and thus
-the GIC also stops seeing it.  The GIC can't latch what it can't see.
-This means while you're in "Rx mode" it can't be latched.
-
-
-OK, so just in case this somehow only happens in S3, I also tried this
-(with my patch from https://crrev.com/c/2556012):
-
-a) Muxed away from GPIO ("bogus" pinmux)
-
-b) Enter S3.
-
-c) Toggle the GPIO a whole bunch ("wp enable / wp disable" on Cr50).
-
-d) Wake from S3.
-
-e) Check to see if the interrupt fired a bunch.  It didn't fire at all
+https://github.com/shawnguo2/linux/commit/7cde887ffb3b27a36e77a08bee3666d14968b586
 
 
-In my test code the interrupt is not masked, only muxed away.  That
-means that if, somehow, the PDC was still observing it then we'd see
-the interrupt fire.  We don't.
+Shawn
 
-
-Unless I messed up in my tests (always possible, though by this point
-I've run them a number of times) then it still feels like your mental
-model is wrong, or it's always possible I'm still misunderstanding
-your model.  Regardless, rather than trying to re-explain your model
-can you please confirm that you've written test code to confirm your
-mental model?  If so, can you please provide this test code?  I've
-provided several test patches proving out my mental model.
-
-> As the interrupt is in disabled state it won't be sent to CPU.
-> Its only when the driver chooses to switch back to interrupt mode we
-> want to clear the error interrupt latched to start as clean. same is the
-> case when used as output direction.
->
-> Hope above is clear.
-
-Unfortunately, it's still not.  :(  Can I convince you to provide a
-test patch and a set of steps that will demonstrate the problem you're
-worried about?  Specifically:
-
-a) Maybe you're talking about the initial switch from a plain GPIO
-input to making it an interrupt for the first time?  Are you worried
-about a phantom interrupt in this case?  After patch #1 I think we're
-safe because pdc_gic_set_type() will always clear the interrupt,
-right?
-
-
-b) You say "switch back to interrupt mode".  Are you imagining that a
-driver does something like this:
-
-request_irq();
-...
-free_irq();
-...
-request_irq();
-
-If you're worried about that then we can implement irq_shutdown() for
-PDC and then make sure we clear on the first enable after a shutdown,
-I guess?
-
-
-c) Maybe when you say "switch back to interrupt mode" you mean
-something else?  If you are talking about muxing away and then muxing
-back then I think we already have this covered.  If you are talking
-about masking/unmasking then the whole point is that we _do_ want
-interrupts latched while masked, right?
-
-
-OK, I'm going to send out a v3 just to get the already-identified
-problems fixed and also to allow landing of patch #1 in the series,
-which I think is all agreed upon.  My request to you is that if you
-think my code misses a specific case to provide some test patches to
-demonstrate that case.
-
-
--Doug
+> +
+>  /**
+>   * struct ti_sn_bridge - Platform data for ti-sn65dsi86 driver.
+>   * @dev:          Pointer to our device.
+> @@ -162,6 +171,12 @@ struct ti_sn_bridge {
+>  	struct gpio_chip		gchip;
+>  	DECLARE_BITMAP(gchip_output, SN_NUM_GPIOS);
+>  #endif
+> +#if defined(CONFIG_PWM)
+> +	struct pwm_chip			pchip;
+> +	bool				pwm_enabled;
+> +	unsigned int			pwm_refclk;
+> +	atomic_t			pwm_pin_busy;
+> +#endif
+>  };
+>  
+>  static const struct regmap_range ti_sn_bridge_volatile_ranges[] = {
+> @@ -499,6 +514,14 @@ static void ti_sn_bridge_set_refclk_freq(struct ti_sn_bridge *pdata)
+>  
+>  	regmap_update_bits(pdata->regmap, SN_DPPLL_SRC_REG, REFCLK_FREQ_MASK,
+>  			   REFCLK_FREQ(i));
+> +
+> +#if defined(CONFIG_PWM)
+> +	/*
+> +	 * The PWM refclk is based on the value written to SN_DPPLL_SRC_REG,
+> +	 * regardless of its actual sourcing.
+> +	 */
+> +	pdata->pwm_refclk = ti_sn_bridge_refclk_lut[i];
+> +#endif
+>  }
+>  
+>  static void ti_sn_bridge_set_dsi_rate(struct ti_sn_bridge *pdata)
+> @@ -981,6 +1004,161 @@ static int ti_sn_bridge_parse_dsi_host(struct ti_sn_bridge *pdata)
+>  	return 0;
+>  }
+>  
+> +#if defined(CONFIG_PWM)
+> +static int ti_sn_pwm_pin_request(struct ti_sn_bridge *pdata)
+> +{
+> +	return atomic_xchg(&pdata->pwm_pin_busy, 1) ? -EBUSY : 0;
+> +}
+> +
+> +static void ti_sn_pwm_pin_release(struct ti_sn_bridge *pdata)
+> +{
+> +	atomic_set(&pdata->pwm_pin_busy, 0);
+> +}
+> +
+> +static struct ti_sn_bridge *
+> +pwm_chip_to_ti_sn_bridge(struct pwm_chip *chip)
+> +{
+> +	return container_of(chip, struct ti_sn_bridge, pchip);
+> +}
+> +
+> +static int ti_sn_pwm_request(struct pwm_chip *chip, struct pwm_device *pwm)
+> +{
+> +	struct ti_sn_bridge *pdata = pwm_chip_to_ti_sn_bridge(chip);
+> +
+> +	return ti_sn_pwm_pin_request(pdata);
+> +}
+> +
+> +static void ti_sn_pwm_free(struct pwm_chip *chip, struct pwm_device *pwm)
+> +{
+> +	struct ti_sn_bridge *pdata = pwm_chip_to_ti_sn_bridge(chip);
+> +
+> +	ti_sn_pwm_pin_release(pdata);
+> +}
+> +
+> +static int ti_sn_pwm_apply(struct pwm_chip *chip, struct pwm_device *pwm,
+> +			   const struct pwm_state *state)
+> +{
+> +	struct ti_sn_bridge *pdata = pwm_chip_to_ti_sn_bridge(chip);
+> +	unsigned int pwm_en_inv;
+> +	unsigned int backlight;
+> +	unsigned int pwm_freq;
+> +	unsigned int pre_div;
+> +	unsigned int scale;
+> +	int ret;
+> +
+> +	if (!pdata->pwm_enabled) {
+> +		ret = pm_runtime_get_sync(pdata->dev);
+> +		if (ret < 0)
+> +			return ret;
+> +
+> +		ret = regmap_update_bits(pdata->regmap, SN_GPIO_CTRL_REG,
+> +					 SN_GPIO_MUX_MASK << (2 * SN_PWM_GPIO),
+> +					 SN_GPIO_MUX_SPECIAL << (2 * SN_PWM_GPIO));
+> +		if (ret) {
+> +			dev_err(pdata->dev, "failed to mux in PWM function\n");
+> +			goto out;
+> +		}
+> +	}
+> +
+> +	if (state->enabled) {
+> +		/*
+> +		 * Per the datasheet the PWM frequency is given by:
+> +		 *
+> +		 * PWM_FREQ = REFCLK_FREQ / (PWM_PRE_DIV * BACKLIGHT_SCALE + 1)
+> +		 *
+> +		 * In order to find the PWM_FREQ that best suits the requested
+> +		 * state->period, the PWM_PRE_DIV is calculated with the
+> +		 * maximum possible number of steps (BACKLIGHT_SCALE_MAX). The
+> +		 * actual BACKLIGHT_SCALE is then adjusted down to match the
+> +		 * requested period.
+> +		 *
+> +		 * The BACKLIGHT value is then calculated against the
+> +		 * BACKLIGHT_SCALE, based on the requested duty_cycle and
+> +		 * period.
+> +		 */
+> +		pwm_freq = NSEC_PER_SEC / state->period;
+> +		pre_div = DIV_ROUND_UP(pdata->pwm_refclk / pwm_freq - 1, BACKLIGHT_SCALE_MAX);
+> +		scale = (pdata->pwm_refclk / pwm_freq - 1) / pre_div;
+> +
+> +		backlight = scale * state->duty_cycle / state->period;
+> +
+> +		ret = regmap_write(pdata->regmap, SN_PWM_PRE_DIV_REG, pre_div);
+> +		if (ret) {
+> +			dev_err(pdata->dev, "failed to update PWM_PRE_DIV\n");
+> +			goto out;
+> +		}
+> +
+> +		ti_sn_bridge_write_u16(pdata, SN_BACKLIGHT_SCALE_REG, scale);
+> +		ti_sn_bridge_write_u16(pdata, SN_BACKLIGHT_REG, backlight);
+> +	}
+> +
+> +	pwm_en_inv = FIELD_PREP(BIT(1), !!state->enabled) |
+> +		     FIELD_PREP(BIT(0), state->polarity == PWM_POLARITY_INVERSED);
+> +	ret = regmap_write(pdata->regmap, SN_PWM_EN_INV_REG, pwm_en_inv);
+> +	if (ret) {
+> +		dev_err(pdata->dev, "failed to update PWM_EN/PWM_INV\n");
+> +		goto out;
+> +	}
+> +
+> +	pdata->pwm_enabled = !!state->enabled;
+> +out:
+> +
+> +	if (!pdata->pwm_enabled)
+> +		pm_runtime_put_sync(pdata->dev);
+> +
+> +	return ret;
+> +}
+> +
+> +static const struct pwm_ops ti_sn_pwm_ops = {
+> +	.request = ti_sn_pwm_request,
+> +	.free = ti_sn_pwm_free,
+> +	.apply = ti_sn_pwm_apply,
+> +	.owner = THIS_MODULE,
+> +};
+> +
+> +static struct pwm_device *ti_sn_pwm_of_xlate(struct pwm_chip *pc,
+> +					     const struct of_phandle_args *args)
+> +{
+> +	struct pwm_device *pwm;
+> +
+> +	if (args->args_count != 1)
+> +		return ERR_PTR(-EINVAL);
+> +
+> +	pwm = pwm_request_from_chip(pc, 0, NULL);
+> +	if (IS_ERR(pwm))
+> +		return pwm;
+> +
+> +	pwm->args.period = args->args[0];
+> +
+> +	return pwm;
+> +}
+> +
+> +static int ti_sn_setup_pwmchip(struct ti_sn_bridge *pdata)
+> +{
+> +	pdata->pchip.dev = pdata->dev;
+> +	pdata->pchip.ops = &ti_sn_pwm_ops;
+> +	pdata->pchip.base = -1;
+> +	pdata->pchip.npwm = 1;
+> +	pdata->pchip.of_xlate = ti_sn_pwm_of_xlate;
+> +	pdata->pchip.of_pwm_n_cells = 1;
+> +
+> +	return pwmchip_add(&pdata->pchip);
+> +}
+> +
+> +static void ti_sn_remove_pwmchip(struct ti_sn_bridge *pdata)
+> +{
+> +	pwmchip_remove(&pdata->pchip);
+> +
+> +	if (pdata->pwm_enabled)
+> +		pm_runtime_put_sync(pdata->dev);
+> +}
+> +#else
+> +static int ti_sn_pwm_pin_request(struct ti_sn_bridge *pdata) { return 0; }
+> +static void ti_sn_pwm_pin_release(struct ti_sn_bridge *pdata) {}
+> +static int ti_sn_setup_pwmchip(struct ti_sn_bridge *pdata) { return 0; }
+> +static void ti_sn_remove_pwmchip(struct ti_sn_bridge *pdata) {}
+> +#endif
+> +
+>  #if defined(CONFIG_OF_GPIO)
+>  
+>  static int tn_sn_bridge_of_xlate(struct gpio_chip *chip,
+> @@ -1113,10 +1291,25 @@ static int ti_sn_bridge_gpio_direction_output(struct gpio_chip *chip,
+>  	return ret;
+>  }
+>  
+> +static int ti_sn_bridge_gpio_request(struct gpio_chip *chip, unsigned int offset)
+> +{
+> +	struct ti_sn_bridge *pdata = gpiochip_get_data(chip);
+> +
+> +	if (offset == SN_PWM_GPIO)
+> +		return ti_sn_pwm_pin_request(pdata);
+> +
+> +	return 0;
+> +}
+> +
+>  static void ti_sn_bridge_gpio_free(struct gpio_chip *chip, unsigned int offset)
+>  {
+> +	struct ti_sn_bridge *pdata = gpiochip_get_data(chip);
+> +
+>  	/* We won't keep pm_runtime if we're input, so switch there on free */
+>  	ti_sn_bridge_gpio_direction_input(chip, offset);
+> +
+> +	if (offset == SN_PWM_GPIO)
+> +		ti_sn_pwm_pin_release(pdata);
+>  }
+>  
+>  static const char * const ti_sn_bridge_gpio_names[SN_NUM_GPIOS] = {
+> @@ -1136,6 +1329,7 @@ static int ti_sn_setup_gpio_controller(struct ti_sn_bridge *pdata)
+>  	pdata->gchip.owner = THIS_MODULE;
+>  	pdata->gchip.of_xlate = tn_sn_bridge_of_xlate;
+>  	pdata->gchip.of_gpio_n_cells = 2;
+> +	pdata->gchip.request = ti_sn_bridge_gpio_request;
+>  	pdata->gchip.free = ti_sn_bridge_gpio_free;
+>  	pdata->gchip.get_direction = ti_sn_bridge_gpio_get_direction;
+>  	pdata->gchip.direction_input = ti_sn_bridge_gpio_direction_input;
+> @@ -1282,6 +1476,12 @@ static int ti_sn_bridge_probe(struct i2c_client *client,
+>  		return ret;
+>  	}
+>  
+> +	ret = ti_sn_setup_pwmchip(pdata);
+> +	if (ret)  {
+> +		pm_runtime_disable(pdata->dev);
+> +		return ret;
+> +	}
+> +
+>  	i2c_set_clientdata(client, pdata);
+>  
+>  	pdata->aux.name = "ti-sn65dsi86-aux";
+> @@ -1320,6 +1520,8 @@ static int ti_sn_bridge_remove(struct i2c_client *client)
+>  
+>  	drm_bridge_remove(&pdata->bridge);
+>  
+> +	ti_sn_remove_pwmchip(pdata);
+> +
+>  	return 0;
+>  }
+>  
+> -- 
+> 2.29.2
+> 
