@@ -2,66 +2,91 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D7FF32D55D1
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Dec 2020 09:56:50 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0BE5E2D56ED
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Dec 2020 10:22:33 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2387471AbgLJIy7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 10 Dec 2020 03:54:59 -0500
-Received: from mail.kernel.org ([198.145.29.99]:48826 "EHLO mail.kernel.org"
+        id S2388969AbgLJJVp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 10 Dec 2020 04:21:45 -0500
+Received: from mail.kernel.org ([198.145.29.99]:35358 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2388502AbgLJIyx (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 10 Dec 2020 03:54:53 -0500
-Date:   Thu, 10 Dec 2020 09:55:26 +0100
+        id S1729990AbgLJJVo (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 10 Dec 2020 04:21:44 -0500
+Subject: patch "MAINTAINERS: Mark SPMI as maintained" added to char-misc-next
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-        s=korg; t=1607590452;
-        bh=xIgVJvAlVCJKs4E82O3GqG7+LHjFNMuiHbinDzdeBfE=;
-        h=From:To:Cc:Subject:References:In-Reply-To:From;
-        b=12qGSl6F2u3dhjHpFyxAOrcmayyyL/HpeQol392+zZWqOLkpTNsbaxiH/TIagnEe5
-         c6ugbivK+7Afok7l+STVpiZmlJsQBMfTKPKKyuE+QvS2pitlakuFgWVMoGqxBzqN/v
-         VGHEWYrv+J/6rJvNx4uu7l9mI+Z1/1aVQkFfTFL8=
-From:   Greg KH <gregkh@linuxfoundation.org>
-To:     Hemant Kumar <hemantk@codeaurora.org>
-Cc:     manivannan.sadhasivam@linaro.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, jhugo@codeaurora.org,
-        bbhatt@codeaurora.org, loic.poulain@linaro.org,
-        netdev@vger.kernel.org
-Subject: Re: [PATCH v16 4/4] bus: mhi: Add userspace client interface driver
-Message-ID: <X9HifqAntBUBV0Ce@kroah.com>
-References: <1607584885-23824-1-git-send-email-hemantk@codeaurora.org>
- <1607584885-23824-5-git-send-email-hemantk@codeaurora.org>
+        s=korg; t=1607592063;
+        bh=afHat727pnCxEqTx7ErMXv6kdND16OnvYkat//+FwBw=;
+        h=To:From:Date:From;
+        b=IPyY1VNoeLj9IrkFpirPpnKNSBwAC3yze35BQPflv7QD7UuVJTvHFUyrNv9lCFdPn
+         WGAALp3J+6e+4MBLALuRKNC9AgWKtnZD3Rpees+iDB+Og1hNj5e/Fn3O6r1EN6zsj0
+         pSM9fNA9n/kQJlxRDZji9QQMbpuYjycFnPKkc7YQ=
+To:     sboyd@kernel.org, gregkh@linuxfoundation.org,
+        linux-arm-msm@vger.kernel.org
+From:   <gregkh@linuxfoundation.org>
+Date:   Thu, 10 Dec 2020 09:59:12 +0100
+Message-ID: <160759075294188@kroah.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1607584885-23824-5-git-send-email-hemantk@codeaurora.org>
+Content-Type: text/plain; charset=ANSI_X3.4-1968
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Dec 09, 2020 at 11:21:25PM -0800, Hemant Kumar wrote:
-> This MHI client driver allows userspace clients to transfer
-> raw data between MHI device and host using standard file operations.
-> Driver instantiates UCI device object which is associated to device
-> file node. UCI device object instantiates UCI channel object when device
-> file node is opened. UCI channel object is used to manage MHI channels
-> by calling MHI core APIs for read and write operations. MHI channels
-> are started as part of device open(). MHI channels remain in start
-> state until last release() is called on UCI device file node. Device
-> file node is created with format
-> 
-> /dev/<mhi_device_name>
-> 
-> Currently it supports QMI channel.
-> 
-> Signed-off-by: Hemant Kumar <hemantk@codeaurora.org>
-> Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> Reviewed-by: Jeffrey Hugo <jhugo@codeaurora.org>
-> Tested-by: Loic Poulain <loic.poulain@linaro.org>
-> ---
 
-Can you provide a pointer to the open-source userspace program that will
-be talking to this new kernel driver please?  That should be part of the
-changelog here.
+This is a note to let you know that I've just added the patch titled
 
-thanks,
+    MAINTAINERS: Mark SPMI as maintained
 
-greg k-h
+to my char-misc git tree which can be found at
+    git://git.kernel.org/pub/scm/linux/kernel/git/gregkh/char-misc.git
+in the char-misc-next branch.
+
+The patch will show up in the next release of the linux-next tree
+(usually sometime within the next 24 hours during the week.)
+
+The patch will also be merged in the next major kernel release
+during the merge window.
+
+If you have any questions about this process, please let me know.
+
+
+From aec273a3191e2931e7010dd7b83cd110c21bcc03 Mon Sep 17 00:00:00 2001
+From: Stephen Boyd <sboyd@kernel.org>
+Date: Mon, 7 Dec 2020 13:42:04 -0800
+Subject: MAINTAINERS: Mark SPMI as maintained
+
+I can do more than just review patches here. The plan is to pick up
+patches from the list and shuttle them up to gregkh. The korg tree will
+be used to hold the pending patches. Move the list away from
+linux-arm-msm to just be linux-kernel as SPMI isn't msm specific
+anymore.
+
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: <linux-arm-msm@vger.kernel.org>
+Signed-off-by: Stephen Boyd <sboyd@kernel.org>
+Link: https://lore.kernel.org/r/20201207214204.1284946-1-sboyd@kernel.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+---
+ MAINTAINERS | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
+
+diff --git a/MAINTAINERS b/MAINTAINERS
+index f3d86f1ea6cb..15840f98e55a 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -16525,8 +16525,10 @@ F:	Documentation/networking/device_drivers/ethernet/toshiba/spider_net.rst
+ F:	drivers/net/ethernet/toshiba/spider_net*
+ 
+ SPMI SUBSYSTEM
+-R:	Stephen Boyd <sboyd@kernel.org>
+-L:	linux-arm-msm@vger.kernel.org
++M:	Stephen Boyd <sboyd@kernel.org>
++L:	linux-kernel@vger.kernel.org
++S:	Maintained
++T:	git git://git.kernel.org/pub/scm/linux/kernel/git/sboyd/spmi.git
+ F:	Documentation/devicetree/bindings/spmi/
+ F:	drivers/spmi/
+ F:	include/dt-bindings/spmi/spmi.h
+-- 
+2.29.2
+
+
