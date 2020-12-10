@@ -2,88 +2,81 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 753A32D6BC2
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Dec 2020 00:39:24 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E7C182D6AF5
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Dec 2020 00:37:49 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2393125AbgLJXSs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 10 Dec 2020 18:18:48 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45630 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2391943AbgLJXSR (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 10 Dec 2020 18:18:17 -0500
-Received: from mail-pf1-x444.google.com (mail-pf1-x444.google.com [IPv6:2607:f8b0:4864:20::444])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E2DDAC061282
-        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Dec 2020 14:35:12 -0800 (PST)
-Received: by mail-pf1-x444.google.com with SMTP id d2so5542305pfq.5
-        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Dec 2020 14:35:12 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:content-transfer-encoding:in-reply-to:references
-         :subject:from:cc:to:date:message-id:user-agent;
-        bh=wAy9QWmSbAjP+1vzLoCprV0JhS6b3tOG3oKCIiePlHY=;
-        b=XoppR/t/VsHPixKkpY66yhU1MxaWjuDNxJNdhQnrk/nxTkfsAhaW3JhJt81/Ot9As2
-         zilGS/RGnAisEXNhWUIjdpLIYuVEqe4HKXpstyCJVhqHpKc8B6Ziox6EDo4MNLVJiDJ/
-         ut7zdSeJiDNd5LIpYZOXcteDS1idKVeUsbgMI=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:content-transfer-encoding
-         :in-reply-to:references:subject:from:cc:to:date:message-id
-         :user-agent;
-        bh=wAy9QWmSbAjP+1vzLoCprV0JhS6b3tOG3oKCIiePlHY=;
-        b=er3s5U/e5enEVJL1QN5Bc6eweiCXp0KkFzKTL5FQP0Q673fhIoNFa8BKVkOMrcyFe/
-         cVSFftBUGAOrQqnh6wTzbt1+OxYC9o2vK360KxAnLhdDUDqOw1rjAFSTGdxiiQBK4PWj
-         ZYgInWWz4l8v4Imoljlr+l2X1yyApjUUgUlz1OwJH55RSwYZoVk1oSPXg/v/qD6BUhFC
-         Eu0/iLrA4Zcn7hrpMpGyYDSEfSJ3ziFt9h4x9P58LRjLUzjhDCm0DwEI6LgoWGFMiM6D
-         uM5NZA7wfNj58FA8KWwCqImd7pBnl4O98QnSjfZpKt33tvxARap5m37jQcDeurK8fNvQ
-         6uvA==
-X-Gm-Message-State: AOAM531u1rV3G4EHmEnPLj2pT0Vvv2REdORtcetmg6jyB5qciPI/Ix4t
-        +upbTLC3QILc+85JNarmhRwkVvDembttpA==
-X-Google-Smtp-Source: ABdhPJyCchftowUz5XPIXXQ53pvevHKPmlYhW+5uT6/c1SRldRP+CzB/QN4Ty5ZkR8Vnub1SqvrbGA==
-X-Received: by 2002:a63:2406:: with SMTP id k6mr8556983pgk.453.1607637438657;
-        Thu, 10 Dec 2020 13:57:18 -0800 (PST)
-Received: from chromium.org ([2620:15c:202:201:3e52:82ff:fe6c:83ab])
-        by smtp.gmail.com with ESMTPSA id u124sm7831835pfb.171.2020.12.10.13.57.18
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 10 Dec 2020 13:57:18 -0800 (PST)
-Content-Type: text/plain; charset="utf-8"
+        id S2393022AbgLJWbB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 10 Dec 2020 17:31:01 -0500
+Received: from mail.kernel.org ([198.145.29.99]:58736 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S2405109AbgLJWXk (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 10 Dec 2020 17:23:40 -0500
+X-Gm-Message-State: AOAM5333XXc4mJ1s3oO3InQLQ4I6XSbXCt1JLOXLc3ahLhbvKSyrZePD
+        Z/+yIRhc1/dk7BM+WLU7tFuMHQkdaN0KuYsY1g==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1607638961;
+        bh=WkLH2bdTDY3/fxpmYYMTFPjoMSZGUGXQxTbS+OUKe18=;
+        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+        b=KybCF2S9+omEmoF7yJ0T5vdUIvBwvCuYiSEPT35UgDQhurpPhgJyusVwrsux8gfOJ
+         1kvbLOnPp/g/H/1XAeQRkP3cOLpbb5q3LiWC9hjJ+GJfbyVo10Vjq/YlYknpNt7wug
+         6a+sWuWoaHUGu9FaI4ggbhwmlPEpEctojkvQvzPv3fNRwxDQZ+Sq/qRO5MMe05TArt
+         JcLzlkdHtkjLEoL+V+clZK+b7w20N2AntcbTDeWgu508uL6xVkvHXoBDXfxfH1/+ZY
+         /YVzjOrF/CGF3Fxgu3IOZBDd1zbellMUQpJSd99AkBtPVcj4klpA38mlQoPmY2qdlR
+         UUAcPC/oxingw==
+X-Google-Smtp-Source: ABdhPJxv1kPCZ9CBXJfBEyq4u8SqUNggy/b6Tk7/bXFbP8eWAL3klQdkcIyJ9WP1Y7mohhgoZidkAxIZ1lQIIBVB4Ks=
+X-Received: by 2002:a17:907:2111:: with SMTP id qn17mr8077684ejb.525.1607638959301;
+ Thu, 10 Dec 2020 14:22:39 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <20201210132745.v3.1.Iec3430c7d3c2a29262695edef7b82a14aaa567e5@changeid>
-References: <20201210132745.v3.1.Iec3430c7d3c2a29262695edef7b82a14aaa567e5@changeid>
-Subject: Re: [PATCH v3] mmc: sdhci-msm: Warn about overclocking SD/MMC
-From:   Stephen Boyd <swboyd@chromium.org>
-Cc:     vbadigan@codeaurora.org, Taniya Das <tdas@codeaurora.org>,
-        Douglas Anderson <dianders@chromium.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-mmc@vger.kernel.org
-To:     Adrian Hunter <adrian.hunter@intel.com>,
-        Douglas Anderson <dianders@chromium.org>,
-        Ulf Hansson <ulf.hansson@linaro.org>
-Date:   Thu, 10 Dec 2020 13:57:16 -0800
-Message-ID: <160763743676.1580929.8043645391758481751@swboyd.mtv.corp.google.com>
-User-Agent: alot/0.9.1
+References: <20201204022401.1054122-1-dmitry.baryshkov@linaro.org>
+ <20201207164342.GA411695@robh.at.kernel.org> <CAA8EJpqA13ncpAvpzUa8igaDTmbJgjBzF-jFWf3Z8T+7MRgkWw@mail.gmail.com>
+In-Reply-To: <CAA8EJpqA13ncpAvpzUa8igaDTmbJgjBzF-jFWf3Z8T+7MRgkWw@mail.gmail.com>
+From:   Rob Herring <robh@kernel.org>
+Date:   Thu, 10 Dec 2020 16:22:27 -0600
+X-Gmail-Original-Message-ID: <CAL_JsqKp1FCAY1PRp84T+s+LAvV-6r3Y8z-d=a3a3=xn3iuKnQ@mail.gmail.com>
+Message-ID: <CAL_JsqKp1FCAY1PRp84T+s+LAvV-6r3Y8z-d=a3a3=xn3iuKnQ@mail.gmail.com>
+Subject: Re: [PATCH v2] dt-bindings: soc: qcom: convert qcom,smem bindings to yaml
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
+        <linux-arm-msm@vger.kernel.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Douglas Anderson (2020-12-10 13:27:52)
-> As talked about in commit 5e4b7e82d497 ("clk: qcom: gcc-sdm845: Use
-> floor ops for sdcc clks"), most clocks handled by the Qualcomm clock
-> drivers are rounded _up_ by default instead of down.  We should make
-> sure SD/MMC clocks are always rounded down in the clock drivers.
-> Let's add a warning in the Qualcomm SDHCI driver to help catch the
-> problem.
->=20
-> This would have saved a bunch of time [1].
->=20
-> [1] http://lore.kernel.org/r/20201210102234.1.I096779f219625148900fc984dd=
-0084ed1ba87c7f@changeid
->=20
-> Suggested-by: Stephen Boyd <swboyd@chromium.org>
-> Signed-off-by: Douglas Anderson <dianders@chromium.org>
-> ---
+On Thu, Dec 10, 2020 at 5:38 AM Dmitry Baryshkov
+<dmitry.baryshkov@linaro.org> wrote:
+>
+> On Mon, 7 Dec 2020 at 19:43, Rob Herring <robh@kernel.org> wrote:
+> >
+> > On Fri, 04 Dec 2020 05:24:01 +0300, Dmitry Baryshkov wrote:
+> > > Convert soc/qcom/qcom,smem.txt bindings to YAML format.
+> > >
+> > > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> > > ---
+> > >  .../bindings/soc/qcom/qcom,smem.txt           | 57 ---------------
+> > >  .../bindings/soc/qcom/qcom,smem.yaml          | 73 +++++++++++++++++++
+> > >  2 files changed, 73 insertions(+), 57 deletions(-)
+> > >  delete mode 100644 Documentation/devicetree/bindings/soc/qcom/qcom,smem.txt
+> > >  create mode 100644 Documentation/devicetree/bindings/soc/qcom/qcom,smem.yaml
+> > >
+> >
+> >
+> > My bot found errors running 'make dt_binding_check' on your patch:
+> >
+> > yamllint warnings/errors:
+> >
+> > dtschema/dtc warnings/errors:
+> > /builds/robherring/linux-dt-review/Documentation/devicetree/bindings/soc/qcom/qcom,smem.example.dt.yaml: memory@fc428000: 'device_type' is a required property
+> >         From schema: /usr/local/lib/python3.8/dist-packages/dtschema/schemas/memory.yaml
+>
+> Rob, Bjorn, this opens a question for me: do we have to specify
+> device_type for the following device node? Or is it a false positive?
 
-Reviewed-by: Stephen Boyd <swboyd@chromium.org>
+Well, 'memory' nodes should be 'main memory' that the OS manages. This
+looks more like onchip SRAM, so 'sram@fc428000' perhaps.
+
+Rob
