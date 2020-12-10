@@ -2,98 +2,65 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 7DB702D6A1E
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Dec 2020 22:40:30 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 779062D6AA5
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Dec 2020 23:55:33 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2404946AbgLJV15 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 10 Dec 2020 16:27:57 -0500
-Received: from mail.kernel.org ([198.145.29.99]:38460 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2404944AbgLJV1l (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 10 Dec 2020 16:27:41 -0500
-From:   Krzysztof Kozlowski <krzk@kernel.org>
-Authentication-Results: mail.kernel.org; dkim=permerror (bad message/signature format)
-To:     Chanwoo Choi <cw00.choi@samsung.com>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        Bartlomiej Zolnierkiewicz <b.zolnierkie@samsung.com>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Lee Jones <lee.jones@linaro.org>,
-        Sebastian Reichel <sre@kernel.org>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        Mark Brown <broonie@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Alessandro Zummo <a.zummo@towertech.it>,
-        Alexandre Belloni <alexandre.belloni@bootlin.com>,
-        linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-pm@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-samsung-soc@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-rtc@vger.kernel.org
-Cc:     Iskren Chernev <iskren.chernev@gmail.com>,
-        Matheus Castello <matheus@castello.eng.br>,
-        Sebastian Krzyszkowiak <sebastian.krzyszkowiak@puri.sm>,
-        Angus Ainslie <angus@akkea.ca>,
-        Hans de Goede <hdegoede@redhat.com>
-Subject: [RFC 18/18] power: supply: max17040: Do not enforce (incorrect) interrupt trigger type
-Date:   Thu, 10 Dec 2020 22:25:34 +0100
-Message-Id: <20201210212534.216197-18-krzk@kernel.org>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20201210212534.216197-1-krzk@kernel.org>
-References: <20201210212534.216197-1-krzk@kernel.org>
+        id S2404714AbgLJVZo convert rfc822-to-8bit (ORCPT
+        <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 10 Dec 2020 16:25:44 -0500
+Received: from relay10.mail.gandi.net ([217.70.178.230]:37157 "EHLO
+        relay10.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2404710AbgLJVZe (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 10 Dec 2020 16:25:34 -0500
+Received: from xps13 (lfbn-tou-1-1617-103.w109-220.abo.wanadoo.fr [109.220.208.103])
+        (Authenticated sender: miquel.raynal@bootlin.com)
+        by relay10.mail.gandi.net (Postfix) with ESMTPSA id B52EE240008;
+        Thu, 10 Dec 2020 21:24:48 +0000 (UTC)
+Date:   Thu, 10 Dec 2020 22:24:47 +0100
+From:   Miquel Raynal <miquel.raynal@bootlin.com>
+To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc:     richard@nod.at, vigneshr@ti.com, robh+dt@kernel.org,
+        bjorn.andersson@linaro.org, linux-mtd@lists.infradead.org,
+        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v3 0/4] Add support for Qcom SMEM based NAND parser
+Message-ID: <20201210222447.63f5dbcf@xps13>
+In-Reply-To: <20201210040942.GD6466@thinkpad>
+References: <20201119071308.9292-1-manivannan.sadhasivam@linaro.org>
+        <20201210040942.GD6466@thinkpad>
+Organization: Bootlin
+X-Mailer: Claws Mail 3.17.4 (GTK+ 2.24.32; x86_64-pc-linux-gnu)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8BIT
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Interrupt line can be configured on different hardware in different way,
-even inverted.  Therefore driver should not enforce specific trigger
-type - edge falling - but instead rely on Devicetree to configure it.
+Hi Manivannan,
 
-The Maxim 14577/77836 datasheets describe the interrupt line as active
-low with a requirement of acknowledge from the CPU therefore the edge
-falling is not correct.
+Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org> wrote on Thu,
+10 Dec 2020 09:39:42 +0530:
 
-Signed-off-by: Krzysztof Kozlowski <krzk@kernel.org>
+> Hi,
+> 
+> On Thu, Nov 19, 2020 at 12:43:04PM +0530, Manivannan Sadhasivam wrote:
+> > Hello,
+> > 
+> > This series adds support for parsing the partitions defined in Shared
+> > Memory (SMEM) of the Qualcomm platforms supporting NAND interface.
+> > Current parser only supports V3 and V4 of the partition tables.
+> > 
+> > This series has been tested on SDX55 MTP board which has an onboard NAND
+> > device.
+> >   
+> 
+> Any update on this series?
 
----
+Patches lgtm, I think Rob's Ack is still missing, let's wait for his
+review.
 
-This patch should wait till DTS changes are merged, as it relies on
-proper Devicetree.
----
- .../devicetree/bindings/power/supply/max17040_battery.txt       | 2 +-
- drivers/power/supply/max17040_battery.c                         | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/Documentation/devicetree/bindings/power/supply/max17040_battery.txt b/Documentation/devicetree/bindings/power/supply/max17040_battery.txt
-index c802f664b508..194eb9fe574d 100644
---- a/Documentation/devicetree/bindings/power/supply/max17040_battery.txt
-+++ b/Documentation/devicetree/bindings/power/supply/max17040_battery.txt
-@@ -39,7 +39,7 @@ Example:
- 		reg = <0x36>;
- 		maxim,alert-low-soc-level = <10>;
- 		interrupt-parent = <&gpio7>;
--		interrupts = <2 IRQ_TYPE_EDGE_FALLING>;
-+		interrupts = <2 IRQ_TYPE_LEVEL_LOW>;
- 		wakeup-source;
- 	};
- 
-diff --git a/drivers/power/supply/max17040_battery.c b/drivers/power/supply/max17040_battery.c
-index d956c67d5155..f737de0470de 100644
---- a/drivers/power/supply/max17040_battery.c
-+++ b/drivers/power/supply/max17040_battery.c
-@@ -367,7 +367,7 @@ static int max17040_enable_alert_irq(struct max17040_chip *chip)
- 
- 	flags = IRQF_TRIGGER_FALLING | IRQF_ONESHOT;
- 	ret = devm_request_threaded_irq(&client->dev, client->irq, NULL,
--					max17040_thread_handler, flags,
-+					max17040_thread_handler, IRQF_ONESHOT,
- 					chip->battery->desc->name, chip);
- 
- 	return ret;
--- 
-2.25.1
-
+Thanks,
+Miquèl
