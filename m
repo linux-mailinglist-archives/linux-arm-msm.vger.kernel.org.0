@@ -2,120 +2,126 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 13F722D697E
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Dec 2020 22:14:42 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2C7162D699D
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Dec 2020 22:21:25 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2393911AbgLJVMK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 10 Dec 2020 16:12:10 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38712 "EHLO
+        id S2404781AbgLJVUZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 10 Dec 2020 16:20:25 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39954 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2390135AbgLJVMG (ORCPT
+        with ESMTP id S2393970AbgLJVUR (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 10 Dec 2020 16:12:06 -0500
-Received: from mail-pl1-x643.google.com (mail-pl1-x643.google.com [IPv6:2607:f8b0:4864:20::643])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0A7EFC0613D6
-        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Dec 2020 13:11:15 -0800 (PST)
-Received: by mail-pl1-x643.google.com with SMTP id r4so3427839pls.11
-        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Dec 2020 13:11:15 -0800 (PST)
+        Thu, 10 Dec 2020 16:20:17 -0500
+Received: from mail-pf1-x441.google.com (mail-pf1-x441.google.com [IPv6:2607:f8b0:4864:20::441])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 67D9FC061793
+        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Dec 2020 13:19:38 -0800 (PST)
+Received: by mail-pf1-x441.google.com with SMTP id 11so5339538pfu.4
+        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Dec 2020 13:19:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
-        h=mime-version:content-transfer-encoding:in-reply-to:references
-         :subject:from:cc:to:date:message-id:user-agent;
-        bh=VwbWtl7I5SNOkqfVgZBMF+Ns0M8yx5wYS1SIU5pQb/U=;
-        b=ihZj7nSGjap4zuU1cvocTPMsVzAcVG+c8r27U7BIAQsJIhQGJHahvDA7mml1atoWOv
-         /6jBRBLriIzcyBSmYNt6aY8R8HPhAApld6H74D7uqotaqUmELwXOZ5NsIkMwUdOtee+f
-         wb0vVvm2PsSsJQL5NkYzczgswgPD46/5/lE4w=
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=l/9N8F/baelWHyQ98/UbLICQNRl8dd1pE69/xgFra+Y=;
+        b=bHaFvEJRJ2xp9m8QIhD3LaubM3ulV/G1lYWzxS6grlaX6/0d9NZfDfWU/je5LgU762
+         0LAC1KJ0Nhn3kpa/to64FRLMSm/n3DSLZGZlVf8GKI7A5D6IzkuSZH3ku8K5KrG1E/jg
+         5/xz+96lU74ssKGoFzUUCCXmUZY4OsFOaKhSc=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:content-transfer-encoding
-         :in-reply-to:references:subject:from:cc:to:date:message-id
-         :user-agent;
-        bh=VwbWtl7I5SNOkqfVgZBMF+Ns0M8yx5wYS1SIU5pQb/U=;
-        b=r8UIMzWjjqn+KeGDk1CpT0cDQ51/ScVIaMgfbiDQVTbJD5m6roKZ0QLLkG6906Y/t0
-         FQBuF+dojLqi+mRJ/hZ2fhdkt8g2xS7MjaNLwN4hZZ0hJp6QlawS/9bivfDr3OJjsjkh
-         NFyNOv4tAuuhTKwK6IOMXBTRk2jwG2bIQBJaEK/oX3mEODID2Ragbrv/tabwDD+4Y55R
-         w/9/2lvyQmFsP5jQc/ez2thT0G4ngu8L39J/7eCtAlxIfx1rv02PCvhaFSvb0QVg4PYr
-         IcB/sJ5SvpX5A8G9M8PnK+Dw6J+ASdy2Ec1FE9dYnvdAo23P7OOoLrdk9ZpRNs7LYa4J
-         tHBA==
-X-Gm-Message-State: AOAM531NDMOmWBo7TZaeawYM6CmjG8YrKzJc4CMwCogT0P0n8hHB9yaa
-        /sc20vMDKLNfiXJ9Ur2nRgNAXAv2J+Cx6Q==
-X-Google-Smtp-Source: ABdhPJzsLWN8oF/VACejoWTnJtiUEsk4HkfSyYbFZKn2e+Y4Twinla4wH0SCKzt/mRNZ986H55DXVQ==
-X-Received: by 2002:a17:902:aa84:b029:da:f114:6022 with SMTP id d4-20020a170902aa84b02900daf1146022mr8011396plr.46.1607634674333;
-        Thu, 10 Dec 2020 13:11:14 -0800 (PST)
-Received: from chromium.org ([2620:15c:202:201:3e52:82ff:fe6c:83ab])
-        by smtp.gmail.com with ESMTPSA id d4sm7171879pfo.127.2020.12.10.13.11.13
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=l/9N8F/baelWHyQ98/UbLICQNRl8dd1pE69/xgFra+Y=;
+        b=BQ16JhVt1PxcpIhilUB968CcvURtWYOoex56XA/inIuz2AHTd+ffm7JLLYzFSeDpfH
+         39mtQ1JavNk66jGv0/MYLnO7J7upQY4BJNHiKhilElPHJToTn58PSTtJ1IY948gZHPNu
+         50wLKgMgAKQLEsGqjkt04ZoRnpKYOyIL9PQOaKTqWJ8PFmW7IUVdR31TFXYClwdNI/i/
+         huzbGWnZ0Rtx8wJwDHiAk2KIY7FAKRfRlTWRniFjizrWDc9uBD2Q7YtbXJWvFUvz9Mhd
+         /AOCg92c2KCCb7KwhVq+slokW4eQBSbTFpUqbuP95O7NatGjci1hvpC/Jp38lXYGNm5u
+         yQfw==
+X-Gm-Message-State: AOAM532n7/MEFIqK9LSZ0TLf9flmWl11WaNTZnfXeqRd7wC+QOhU0QW3
+        G8qUkgGRh+k8Q6yIrjTbHDfAJA==
+X-Google-Smtp-Source: ABdhPJydDS8laqjW9+fNySNIQRDJRGOzgGjaM1FkRZAbeypxJ7tUTCXTdqspyYmRVya9TKAE9thJ1Q==
+X-Received: by 2002:a17:90a:4d84:: with SMTP id m4mr9680536pjh.145.1607635177687;
+        Thu, 10 Dec 2020 13:19:37 -0800 (PST)
+Received: from tictac2.mtv.corp.google.com ([2620:15c:202:1:42b0:34ff:fe3d:58e6])
+        by smtp.gmail.com with ESMTPSA id a141sm7320800pfa.189.2020.12.10.13.19.36
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 10 Dec 2020 13:11:13 -0800 (PST)
-Content-Type: text/plain; charset="utf-8"
-MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <20201209163818.v3.1.I2702919afc253e2a451bebc3b701b462b2d22344@changeid>
-References: <20201209163818.v3.1.I2702919afc253e2a451bebc3b701b462b2d22344@changeid>
-Subject: Re: [PATCH v3 1/3] irqchip: qcom-pdc: Fix phantom irq when changing between rising/falling
-From:   Stephen Boyd <swboyd@chromium.org>
-Cc:     linux-arm-msm@vger.kernel.org,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Srinivas Ramana <sramana@codeaurora.org>,
-        Maulik Shah <mkshah@codeaurora.org>,
-        Neeraj Upadhyay <neeraju@codeaurora.org>,
-        Rajendra Nayak <rnayak@codeaurora.org>,
-        linux-gpio@vger.kernel.org,
+        Thu, 10 Dec 2020 13:19:37 -0800 (PST)
+From:   Douglas Anderson <dianders@chromium.org>
+To:     Ulf Hansson <ulf.hansson@linaro.org>,
+        Adrian Hunter <adrian.hunter@intel.com>
+Cc:     vbadigan@codeaurora.org, Stephen Boyd <swboyd@chromium.org>,
+        Taniya Das <tdas@codeaurora.org>,
         Douglas Anderson <dianders@chromium.org>,
         Andy Gross <agross@kernel.org>,
-        Archana Sathyakumar <asathyak@codeaurora.org>,
-        Lina Iyer <ilina@codeaurora.org>, linux-kernel@vger.kernel.org
-To:     Douglas Anderson <dianders@chromium.org>,
-        Jason Cooper <jason@lakedaemon.net>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Marc Zyngier <maz@kernel.org>,
-        Thomas Gleixner <tglx@linutronix.de>
-Date:   Thu, 10 Dec 2020 13:11:12 -0800
-Message-ID: <160763467203.1580929.264104038298819006@swboyd.mtv.corp.google.com>
-User-Agent: alot/0.9.1
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-mmc@vger.kernel.org
+Subject: [PATCH v2] mmc: sdhci-msm: Warn about overclocking SD/MMC
+Date:   Thu, 10 Dec 2020 13:19:28 -0800
+Message-Id: <20201210131913.v2.1.Iec3430c7d3c2a29262695edef7b82a14aaa567e5@changeid>
+X-Mailer: git-send-email 2.29.2.576.ga3fc446d84-goog
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Douglas Anderson (2020-12-09 16:41:01)
-> We have a problem if we use gpio-keys and configure wakeups such that
-> we only want one edge to wake us up.  AKA:
->   wakeup-event-action =3D <EV_ACT_DEASSERTED>;
->   wakeup-source;
->=20
-> Specifically we end up with a phantom interrupt that blocks suspend if
-> the line was already high and we want wakeups on rising edges (AKA we
-> want the GPIO to go low and then high again before we wake up).  The
-> opposite is also problematic.
->=20
-> Specifically, here's what's happening today:
-> 1. Normally, gpio-keys configures to look for both edges.  Due to the
->    current workaround introduced in commit c3c0c2e18d94 ("pinctrl:
->    qcom: Handle broken/missing PDC dual edge IRQs on sc7180"), if the
->    line was high we'd configure for falling edges.
-> 2. At suspend time, we change to look for rising edges.
-> 3. After qcom_pdc_gic_set_type() runs, we get a phantom interrupt.
->=20
-> We can solve this by just clearing the phantom interrupt.
->=20
-> NOTE: it is possible that this could cause problems for a client with
-> very specific needs, but there's not much we can do with this
-> hardware.  As an example, let's say the interrupt signal is currently
-> high and the client is looking for falling edges.  The client now
-> changes to look for rising edges.  The client could possibly expect
-> that if the line has a short pulse low (and back high) that it would
-> always be detected.  Specifically no matter when the pulse happened,
-> it should either have tripped the (old) falling edge trigger or the
-> (new) rising edge trigger.  We will simply not trip it.  We could
-> narrow down the race a bit by polling our parent before changing
-> types, but no matter what we do there will still be a period of time
-> where we can't tell the difference between a real transition (or more
-> than one transition) and the phantom.
->=20
-> Fixes: f55c73aef890 ("irqchip/pdc: Add PDC interrupt controller for QCOM =
-SoCs")
-> Signed-off-by: Douglas Anderson <dianders@chromium.org>
-> Reviewed-by: Maulik Shah <mkshah@codeaurora.org>
-> Tested-by: Maulik Shah <mkshah@codeaurora.org>
-> ---
+As talked about in commit 5e4b7e82d497 ("clk: qcom: gcc-sdm845: Use
+floor ops for sdcc clks"), most clocks handled by the Qualcomm clock
+drivers are rounded _up_ by default instead of down.  We should make
+sure SD/MMC clocks are always rounded down in the clock drivers.
+Let's add a warning in the Qualcomm SDHCI driver to help catch the
+problem.
 
-Reviewed-by: Stephen Boyd <swboyd@chromium.org>
+This would have saved a bunch of time [1].
+
+[1] http://lore.kernel.org/r/20201210102234.1.I096779f219625148900fc984dd0084ed1ba87c7f@changeid
+
+Suggested-by: Stephen Boyd <swboyd@chromium.org>
+Signed-off-by: Douglas Anderson <dianders@chromium.org>
+---
+
+Changes in v2:
+- Store rate in unsigned long, not unsigned int.
+- Reuse the clk_get_rate() in the later print.
+
+ drivers/mmc/host/sdhci-msm.c | 15 +++++++++++++--
+ 1 file changed, 13 insertions(+), 2 deletions(-)
+
+diff --git a/drivers/mmc/host/sdhci-msm.c b/drivers/mmc/host/sdhci-msm.c
+index 3451eb325513..52824c6b2073 100644
+--- a/drivers/mmc/host/sdhci-msm.c
++++ b/drivers/mmc/host/sdhci-msm.c
+@@ -353,6 +353,7 @@ static void msm_set_clock_rate_for_bus_mode(struct sdhci_host *host,
+ 	struct sdhci_msm_host *msm_host = sdhci_pltfm_priv(pltfm_host);
+ 	struct mmc_ios curr_ios = host->mmc->ios;
+ 	struct clk *core_clk = msm_host->bulk_clks[0].clk;
++	unsigned long achieved_rate;
+ 	int rc;
+ 
+ 	clock = msm_get_clock_rate_for_bus_mode(host, clock);
+@@ -363,10 +364,20 @@ static void msm_set_clock_rate_for_bus_mode(struct sdhci_host *host,
+ 		       curr_ios.timing);
+ 		return;
+ 	}
++
++	/*
++	 * Qualcomm clock drivers by default round clock _up_ if they can't
++	 * make the requested rate.  This is not good for SD.  Yell if we
++	 * encounter it.
++	 */
++	achieved_rate = clk_get_rate(core_clk);
++	if (achieved_rate > clock)
++		pr_warn("%s: Card appears overclocked; req %u Hz, actual %d Hz\n",
++			mmc_hostname(host->mmc), clock, achieved_rate);
++
+ 	msm_host->clk_rate = clock;
+ 	pr_debug("%s: Setting clock at rate %lu at timing %d\n",
+-		 mmc_hostname(host->mmc), clk_get_rate(core_clk),
+-		 curr_ios.timing);
++		 mmc_hostname(host->mmc), achieved_rate, curr_ios.timing);
+ }
+ 
+ /* Platform specific tuning */
+-- 
+2.29.2.576.ga3fc446d84-goog
+
