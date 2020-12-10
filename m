@@ -2,118 +2,86 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B6B752D6957
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Dec 2020 22:05:17 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4A82C2D6972
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Dec 2020 22:08:12 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2393948AbgLJVEU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 10 Dec 2020 16:04:20 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37504 "EHLO
+        id S2393955AbgLJVHi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 10 Dec 2020 16:07:38 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38024 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2393942AbgLJVEI (ORCPT
+        with ESMTP id S2393937AbgLJVHY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 10 Dec 2020 16:04:08 -0500
-Received: from mail-pf1-x443.google.com (mail-pf1-x443.google.com [IPv6:2607:f8b0:4864:20::443])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6F9FEC061793
-        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Dec 2020 13:03:28 -0800 (PST)
-Received: by mail-pf1-x443.google.com with SMTP id 11so5300282pfu.4
-        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Dec 2020 13:03:28 -0800 (PST)
+        Thu, 10 Dec 2020 16:07:24 -0500
+Received: from mail-pf1-x442.google.com (mail-pf1-x442.google.com [IPv6:2607:f8b0:4864:20::442])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 743F1C061793
+        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Dec 2020 13:06:44 -0800 (PST)
+Received: by mail-pf1-x442.google.com with SMTP id t8so5305065pfg.8
+        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Dec 2020 13:06:44 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=mime-version:content-transfer-encoding:in-reply-to:references
          :subject:from:cc:to:date:message-id:user-agent;
-        bh=T2P3DlcWN55SD3X5e5s1IbMPU4HzdbItsvShaGGY6/8=;
-        b=O9dIcolmPk2h9eYxo2k94OieRWmIlIoAupo8FNGpGIY//eiN6t/yojHZwuXhowYVx+
-         DoLcn+ZhyqNXk3JhmVo0hmGVLJUxm2LipT2vykNFRxEnMmztGwmPd/CK7Nv9i3pV99ig
-         UbtHbe2Iq/eI7Vko3gAoVAZ3QrLGDV/M/+frs=
+        bh=sOXhUWYSO+7Ec2yrlVOKodV7VJPSDj5oaxzwn+tEHKw=;
+        b=b/OBsaxyIhb4UxzGUoqUGRgM9AhFLZKn6suNn+TyZmbe4lwHMV1RyxJjIKoh0TKBh7
+         k7begKjj3oAumNmQFzfJkxSXAkouZM9qkzHZUDXM4rBphWcr/DpgeasP5xdadHRiZl47
+         /VUuMAr3i4BvFUn9impJznb+b4pMXo5RHp1Bk=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:content-transfer-encoding
          :in-reply-to:references:subject:from:cc:to:date:message-id
          :user-agent;
-        bh=T2P3DlcWN55SD3X5e5s1IbMPU4HzdbItsvShaGGY6/8=;
-        b=FfMZmsaTyj572avDCRz+8jwtgM4q2St5d7bUg0CGiA8lROSX0uLalJQnBrhX4VCvXm
-         Fwbu3Yx475lxrUa4T8CQAWMI5DS07WFnpbQeZuAhZw1BwSsVYtGkXjKLKTAR4b9+IWvo
-         gFzrDTk6Hb6NiWSVlKrxD2woEXTXVMc1ULeyh1A4Vh13Mo9UiAjDz6mTJ00sErQCHx2N
-         dn2wg/4gAc2GYUNkVaKrHX/DPhvC+iTR8acp4SHJNPq3rE50NqdaPUaEreT8Y0tAxtNY
-         kphxtII4R/iuu8vRIsfVx+BqZtB1OJ4A4XvRSaOPaLkMgsGLj7DOPaYkMfO9p5+s+bhp
-         yRGw==
-X-Gm-Message-State: AOAM530MLwwDPwuPNZBWG0xCZWmjnGeBT6kMZXlAZWiTUwerX5WMRYDO
-        WaIL27l2SIAX2cr3rRS173HK2Q==
-X-Google-Smtp-Source: ABdhPJxx1i9bIXMbpjGRg9li1/UDCps7h6j1P9QtAEqOIDx19avmfbsKk8eDtvBC+zLKGBTQhutTTA==
-X-Received: by 2002:a63:ad4a:: with SMTP id y10mr8173837pgo.176.1607634207930;
-        Thu, 10 Dec 2020 13:03:27 -0800 (PST)
+        bh=sOXhUWYSO+7Ec2yrlVOKodV7VJPSDj5oaxzwn+tEHKw=;
+        b=mqnjewL4c5tYIuhtrTMvhDNlqPMQMyBNQ+gP/4FeQIgJSAHsQOxV/R/X3XLFWBSVsE
+         tmpnqTPv8c4pthvVUpabbYWMlE72XowA3gQFY7PdHkogXy3CmmIPIr+Wep8xoBx2qYgQ
+         5WgZW1InxsMQeMfbdjizHOmT8QNUbVmsPn1BhmgauSAeOP3xOD5hG9gVMQy6Q+S9Zxhc
+         dXnc68WNead9zTnarPcDKwYSjBdwUxc234SVQhrYHR2OyPK1E1o4YM/GdowpI4Q0g9sv
+         O89VeNbOLVn+1orp97pU77FVdNjS6h6MXJM9xXsJBEEcF1uG+4zCDVUz/+OPC0iVi3fy
+         YyuQ==
+X-Gm-Message-State: AOAM532f3M8H2imzdh2Frv8Zz1OymIc/72uFRaGOSH8kuysUsixnEIze
+        cTp8caYZ0p1MYbHT3PGWgS9uxp7Mfxnk7g==
+X-Google-Smtp-Source: ABdhPJxeBjsKUmXUisDH7bsUh2rRFNSNmUNxpcMeRJM44Tz2B1oI1xfP7Iz1ngC8AwIRiEaH3LOLxw==
+X-Received: by 2002:a17:90a:dac2:: with SMTP id g2mr5799573pjx.17.1607634403856;
+        Thu, 10 Dec 2020 13:06:43 -0800 (PST)
 Received: from chromium.org ([2620:15c:202:201:3e52:82ff:fe6c:83ab])
-        by smtp.gmail.com with ESMTPSA id e3sm6877068pfe.154.2020.12.10.13.03.27
+        by smtp.gmail.com with ESMTPSA id a19sm7097407pfi.130.2020.12.10.13.06.43
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 10 Dec 2020 13:03:27 -0800 (PST)
+        Thu, 10 Dec 2020 13:06:43 -0800 (PST)
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <20201210125709.1.Iec3430c7d3c2a29262695edef7b82a14aaa567e5@changeid>
-References: <20201210125709.1.Iec3430c7d3c2a29262695edef7b82a14aaa567e5@changeid>
-Subject: Re: [PATCH] mmc: sdhci-msm: Warn about overclocking SD/MMC
+In-Reply-To: <20201209163818.v3.2.I3ad184e3423d8e479bc3e86f5b393abb1704a1d1@changeid>
+References: <20201209163818.v3.1.I2702919afc253e2a451bebc3b701b462b2d22344@changeid> <20201209163818.v3.2.I3ad184e3423d8e479bc3e86f5b393abb1704a1d1@changeid>
+Subject: Re: [PATCH v3 2/3] pinctrl: qcom: Allow SoCs to specify a GPIO function that's not 0
 From:   Stephen Boyd <swboyd@chromium.org>
-Cc:     vbadigan@codeaurora.org, Taniya Das <tdas@codeaurora.org>,
-        Douglas Anderson <dianders@chromium.org>,
-        Andy Gross <agross@kernel.org>,
+Cc:     linux-arm-msm@vger.kernel.org,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-mmc@vger.kernel.org
-To:     Adrian Hunter <adrian.hunter@intel.com>,
+        Srinivas Ramana <sramana@codeaurora.org>,
+        Maulik Shah <mkshah@codeaurora.org>,
+        Neeraj Upadhyay <neeraju@codeaurora.org>,
+        Rajendra Nayak <rnayak@codeaurora.org>,
+        linux-gpio@vger.kernel.org,
         Douglas Anderson <dianders@chromium.org>,
-        Ulf Hansson <ulf.hansson@linaro.org>
-Date:   Thu, 10 Dec 2020 13:03:25 -0800
-Message-ID: <160763420585.1580929.9586717907613124743@swboyd.mtv.corp.google.com>
+        Andy Gross <agross@kernel.org>, linux-kernel@vger.kernel.org
+To:     Douglas Anderson <dianders@chromium.org>,
+        Jason Cooper <jason@lakedaemon.net>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Marc Zyngier <maz@kernel.org>,
+        Thomas Gleixner <tglx@linutronix.de>
+Date:   Thu, 10 Dec 2020 13:06:41 -0800
+Message-ID: <160763440177.1580929.656020512153968577@swboyd.mtv.corp.google.com>
 User-Agent: alot/0.9.1
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Douglas Anderson (2020-12-10 12:57:25)
-> diff --git a/drivers/mmc/host/sdhci-msm.c b/drivers/mmc/host/sdhci-msm.c
-> index 3451eb325513..dd41f6a4dbfb 100644
-> --- a/drivers/mmc/host/sdhci-msm.c
-> +++ b/drivers/mmc/host/sdhci-msm.c
-> @@ -353,6 +353,7 @@ static void msm_set_clock_rate_for_bus_mode(struct sd=
-hci_host *host,
->         struct sdhci_msm_host *msm_host =3D sdhci_pltfm_priv(pltfm_host);
->         struct mmc_ios curr_ios =3D host->mmc->ios;
->         struct clk *core_clk =3D msm_host->bulk_clks[0].clk;
-> +       unsigned int achieved_rate;
+Quoting Douglas Anderson (2020-12-09 16:41:02)
+> There's currently a comment in the code saying function 0 is GPIO.
+> Instead of hardcoding it, let's add a member where an SoC can specify
+> it.  No known SoCs use a number other than 0, but this just makes the
+> code clearer.  NOTE: no SoC code needs to be updated since we can rely
+> on zero-initialization.
+>=20
+> Signed-off-by: Douglas Anderson <dianders@chromium.org>
+> ---
 
-unsigned long?
-
->         int rc;
-> =20
->         clock =3D msm_get_clock_rate_for_bus_mode(host, clock);
-> @@ -363,6 +364,17 @@ static void msm_set_clock_rate_for_bus_mode(struct s=
-dhci_host *host,
->                        curr_ios.timing);
->                 return;
->         }
-> +
-> +       /*
-> +        * Qualcomm clock drivers by default round clock _up_ if they can=
-'t
-> +        * make the requested rate.  This is not good for SD.  Yell if we
-> +        * encounter it.
-> +        */
-> +       achieved_rate =3D clk_get_rate(core_clk);
-> +       if (achieved_rate > clock)
-> +               pr_warn("%s: Card appears overclocked; req %u Hz, actual =
-%d Hz\n",
-
-Can we use dev_warn?
-
-dev_warn(mmc_dev(mmc)
-dev_warn(&msm_host->pdev->dev
-
-?
-
-> +                       mmc_hostname(host->mmc), clock, achieved_rate);
-> +
->         msm_host->clk_rate =3D clock;
->         pr_debug("%s: Setting clock at rate %lu at timing %d\n",
->                  mmc_hostname(host->mmc), clk_get_rate(core_clk),
-
-This could use achieved_rate now.
+Reviewed-by: Stephen Boyd <swboyd@chromium.org>
