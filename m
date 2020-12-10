@@ -2,98 +2,97 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 70C1D2D64D7
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Dec 2020 19:25:01 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B66CB2D6595
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Dec 2020 19:55:06 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2393039AbgLJSYW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 10 Dec 2020 13:24:22 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40874 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2393033AbgLJSYD (ORCPT
+        id S2389213AbgLJSxg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 10 Dec 2020 13:53:36 -0500
+Received: from mail-oi1-f193.google.com ([209.85.167.193]:46226 "EHLO
+        mail-oi1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726075AbgLJSxY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 10 Dec 2020 13:24:03 -0500
-Received: from mail-pg1-x542.google.com (mail-pg1-x542.google.com [IPv6:2607:f8b0:4864:20::542])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0FEAFC0617A6
-        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Dec 2020 10:23:05 -0800 (PST)
-Received: by mail-pg1-x542.google.com with SMTP id w16so4972734pga.9
-        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Dec 2020 10:23:05 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=V8NX24ubqKWwH6xcjmH3A9pX91w8R968uRF5N8yhVWE=;
-        b=X1NfbcczKoiYmOYzwW198suAQMOFZglPRX7eTrZfPsVcAbxctN96ddIgRSk+VptxUW
-         rm/bjqHurs7HwEsywnBWkhhSNVsem3OCFjT4bN7/GOjLVJdoa4XEVqi5IlLd1L7CecD9
-         hEdbHq99Ys+fdrvB2QgmOmW30beJfWKf26cRM=
+        Thu, 10 Dec 2020 13:53:24 -0500
+Received: by mail-oi1-f193.google.com with SMTP id k2so6846899oic.13;
+        Thu, 10 Dec 2020 10:53:08 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=V8NX24ubqKWwH6xcjmH3A9pX91w8R968uRF5N8yhVWE=;
-        b=cX3BhylAIkHAtxkc7+8gRB6giaJXRiz6S2qhZrosiReRPxQtRtRo5GcT3K5JQcXxyy
-         aNijfd22bNg2kSEa28Me5B3zXxa5tqUjI9T+iWE2a6573cz5GYK+QauG07AnuOasF5aY
-         ZM7k1KHHbLECzSeKbLBKgSp+g3BG4Jp+3GVb038Nsg2r9PQ/ZmnC2lTw8KB/iT+3m7f0
-         QWOJY7CcIofy0Bk8aGXnJVjT54npUjrTHfMw/62IwFLqWw5c5wK0jDCjWKbNhBLIuDdY
-         hDDxCZn1rddf5spbjkNO85G0FPT+fRcUeZwWKTA0c8USfZUtVNQvLllILL6ql/vR9RJ3
-         rsbg==
-X-Gm-Message-State: AOAM532cMEdUBxPjFkYpOY9tuNa51JFp0nwm80rysEn5w91+mxX6YFLd
-        brfKdNdVvrFCfCzlasIf9rfjWA==
-X-Google-Smtp-Source: ABdhPJzc1Cqx+KcUzhvwKx11PppWAktpydpvH6zqRuG+56ah0c3TI6CMKpRwNO7UMWe+aI5oW56wPg==
-X-Received: by 2002:a17:90a:f412:: with SMTP id ch18mr9070061pjb.69.1607624584641;
-        Thu, 10 Dec 2020 10:23:04 -0800 (PST)
-Received: from tictac2.mtv.corp.google.com ([2620:15c:202:1:42b0:34ff:fe3d:58e6])
-        by smtp.gmail.com with ESMTPSA id a10sm6898376pfi.168.2020.12.10.10.23.03
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 10 Dec 2020 10:23:04 -0800 (PST)
-From:   Douglas Anderson <dianders@chromium.org>
-To:     Stephen Boyd <sboyd@kernel.org>
-Cc:     Taniya Das <tdas@codeaurora.org>, vbadigan@codeaurora.org,
-        Douglas Anderson <dianders@chromium.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: [PATCH 2/2] clk: qcom: gcc-sc7180: Add 50 MHz clock rate for SDC2
-Date:   Thu, 10 Dec 2020 10:22:39 -0800
-Message-Id: <20201210102234.2.I26dcc0cee374f5571d9929c9985f463773167e68@changeid>
-X-Mailer: git-send-email 2.29.2.576.ga3fc446d84-goog
-In-Reply-To: <20201210102234.1.I096779f219625148900fc984dd0084ed1ba87c7f@changeid>
-References: <20201210102234.1.I096779f219625148900fc984dd0084ed1ba87c7f@changeid>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=X+VtpZS1e75YA7Ec0/B1orp2GIzvdOi0H1A+93dXCqY=;
+        b=tRr8WrvVVvuL6YzhO305G5qrOTb6CBRKZJI36qTRxcycgWF9IQeSsJoUEuda1LlxZT
+         Du8diJ48SPmvgLE2EvFE+id3btQ/VTL8LDbYhy1bHfRuRpvJC3yeS+sx+NO8XoOHJRoj
+         fTl3HC6nJ51tqPeStkCOMvr5bB3vsoZ5biBJcQyX1zTMo7PDsCMY5GSDhbEEUZ5HOpqZ
+         OWJLVn+Afc55lkQQBDR6Etp5EnKMiw8Ps4RyRQPjhpBfz23J7c//Qq5/ftywVCiV8/ej
+         1Ig5BCYB6j36WcEw8bUpWcIsTqv7zBhL++93BvAk+Zd+hI7bhakjbjCTT6ejrADR+Ihn
+         5xHw==
+X-Gm-Message-State: AOAM532/Udu5lohHw3Oj8Vzv6rYWESylKQ/EhSoAF29iMIHo2+rUFttu
+        Z8HnoDQivdByd4XOsYEr6KNgcZ4AL8fxfJW8wC5xRV37
+X-Google-Smtp-Source: ABdhPJwwCUyiGYofyWRLE6tTBc1GNLHpjFHWlhRODc6u/IqEwfkcbl7SVMuOUg/07s5pM138CMDNPZtLNeeOhfSnlic=
+X-Received: by 2002:aca:4b16:: with SMTP id y22mr6398880oia.148.1607626363574;
+ Thu, 10 Dec 2020 10:52:43 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <X9JcUZCLh3WjV7Bw@manjaro>
+In-Reply-To: <X9JcUZCLh3WjV7Bw@manjaro>
+From:   Geert Uytterhoeven <geert@linux-m68k.org>
+Date:   Thu, 10 Dec 2020 19:52:32 +0100
+Message-ID: <CAMuHMdXbF_AVhx86xO9DJy1+MGwAHSJ3OpCn-DErj=+xAyxJUQ@mail.gmail.com>
+Subject: Re: [PATCH v2] pinctrl: remove empty lines in pinctrl subsystem
+To:     Zhaoyu Liu <zackary.liu.pro@gmail.com>
+Cc:     Linus Walleij <linus.walleij@linaro.org>,
+        =?UTF-8?Q?Andreas_F=C3=A4rber?= <afaerber@suse.de>,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        Dong Aisheng <aisheng.dong@nxp.com>,
+        Fabio Estevam <festevam@gmail.com>,
+        Shawn Guo <shawnguo@kernel.org>,
+        Stefan Agner <stefan@agner.ch>,
+        Sascha Hauer <kernel@pengutronix.de>,
+        Sascha Hauer <s.hauer@pengutronix.de>,
+        NXP Linux Team <linux-imx@nxp.com>,
+        Andrew Lunn <andrew@lunn.ch>,
+        Gregory Clement <gregory.clement@bootlin.com>,
+        Sebastian Hesselbarth <sebastian.hesselbarth@gmail.com>,
+        Ludovic Desroches <ludovic.desroches@microchip.com>,
+        Nicolas Ferre <nicolas.ferre@microchip.com>,
+        Alexandre Belloni <alexandre.belloni@bootlin.com>,
+        Patrice Chotard <patrice.chotard@st.com>,
+        Andy Gross <agross@kernel.org>,
+        =?UTF-8?Q?Bj=C3=B6rn_Andersson?= <bjorn.andersson@linaro.org>,
+        Geert Uytterhoeven <geert+renesas@glider.be>,
+        "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
+        Linux ARM <linux-arm-kernel@lists.infradead.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Linux-Renesas <linux-renesas-soc@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-50 MHz is an incredibly common clock rate for SD cards to run at.
-It's "high speed" mode in SD (not very fast these days, but it used to
-be) or:
-  #define HIGH_SPEED_MAX_DTR	50000000
+On Thu, Dec 10, 2020 at 6:35 PM Zhaoyu Liu <zackary.liu.pro@gmail.com> wrote:
+> Remove all empty lines at the end of functions in pinctrl subsystem,
+> make the code neat.
+> Target files: grep -nwR -B1 ^} drivers/pinctrl/* | grep '[0-9]-$' | less
+>
+> Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
+> Reviewed-by: Andy Shevchenko <andy.shevchenko@gmail.com>
+> Signed-off-by: Zhaoyu Liu <zackary.liu.pro@gmail.com>
 
-If we don't support this then older "high speed" cards can only run at
-25 MHz or at half their normal speed.  There doesn't seem to be any
-reason to skip this clock rate, so add it.
+Thanks for your patch!
 
-Fixes: 17269568f726 ("clk: qcom: Add Global Clock controller (GCC) driver for SC7180")
-Signed-off-by: Douglas Anderson <dianders@chromium.org>
----
+>  drivers/pinctrl/renesas/pfc-r8a77950.c        | 1 -
+>  drivers/pinctrl/renesas/pfc-r8a77951.c        | 3 ---
+>  drivers/pinctrl/renesas/pfc-r8a7796.c         | 1 -
+>  drivers/pinctrl/renesas/pfc-r8a77965.c        | 1 -
 
- drivers/clk/qcom/gcc-sc7180.c | 1 +
- 1 file changed, 1 insertion(+)
+Acked-by: Geert Uytterhoeven <geert+renesas@glider.be>
 
-diff --git a/drivers/clk/qcom/gcc-sc7180.c b/drivers/clk/qcom/gcc-sc7180.c
-index b080739ab0c3..d82d725ac231 100644
---- a/drivers/clk/qcom/gcc-sc7180.c
-+++ b/drivers/clk/qcom/gcc-sc7180.c
-@@ -651,6 +651,7 @@ static const struct freq_tbl ftbl_gcc_sdcc2_apps_clk_src[] = {
- 	F(9600000, P_BI_TCXO, 2, 0, 0),
- 	F(19200000, P_BI_TCXO, 1, 0, 0),
- 	F(25000000, P_GPLL0_OUT_EVEN, 12, 0, 0),
-+	F(50000000, P_GPLL0_OUT_EVEN, 6, 0, 0),
- 	F(100000000, P_GPLL0_OUT_EVEN, 3, 0, 0),
- 	F(202000000, P_GPLL7_OUT_MAIN, 4, 0, 0),
- 	{ }
+Gr{oetje,eeting}s,
+
+                        Geert
+
 -- 
-2.29.2.576.ga3fc446d84-goog
+Geert Uytterhoeven -- There's lots of Linux beyond ia32 -- geert@linux-m68k.org
 
+In personal conversations with technical people, I call myself a hacker. But
+when I'm talking to journalists I just say "programmer" or something like that.
+                                -- Linus Torvalds
