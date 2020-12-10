@@ -2,296 +2,289 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 226502D58F4
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Dec 2020 12:10:36 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id DAE502D5926
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Dec 2020 12:25:59 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1733048AbgLJLJy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 10 Dec 2020 06:09:54 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57964 "EHLO
+        id S1730470AbgLJLZW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 10 Dec 2020 06:25:22 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60416 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1733046AbgLJLJj (ORCPT
+        with ESMTP id S1727306AbgLJLZN (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 10 Dec 2020 06:09:39 -0500
-Received: from mail-wm1-x344.google.com (mail-wm1-x344.google.com [IPv6:2a00:1450:4864:20::344])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 32AFFC0617A7
-        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Dec 2020 03:08:53 -0800 (PST)
-Received: by mail-wm1-x344.google.com with SMTP id e25so4871298wme.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Dec 2020 03:08:53 -0800 (PST)
+        Thu, 10 Dec 2020 06:25:13 -0500
+Received: from mail-wm1-x342.google.com (mail-wm1-x342.google.com [IPv6:2a00:1450:4864:20::342])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6CF83C0613D6
+        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Dec 2020 03:24:33 -0800 (PST)
+Received: by mail-wm1-x342.google.com with SMTP id a3so4910301wmb.5
+        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Dec 2020 03:24:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=ItgTeuucSKI7xOPb/cgLQD69gw3sQiixlB2VotUPk5g=;
-        b=TEvsdZohROnaAdJ5/jhdwYd8eOhBsKhXm/k1RudoZ6tCL7rTmhURAa6S/9xJTKlS2E
-         r1ef6LiJiH6th7SwvGo04yV1gkoAjezvYSu7Ntog80GInGG4owGdAjJ28686ROWIpJd1
-         9YGmuUSZ4y23ykFLhj2pwW5aDkPyT99DSkwC/WxKyB+4T1ESOcJVgK0iaYTyT/Jw5rXT
-         MYdFWE09TWdmI+pxjTGNlZC5hRbMbXI7IBA0A/PO8LEAN2f0gX6gSEUU02zq0nqy/tpu
-         Ut/zZujKEOFizrynGx73NOqQ+hMI7i/yTtkxNqiWEMbV8S0DR1R1cbnjTdxJe4g2CtWD
-         2/HA==
+        h=from:to:cc:subject:date:message-id;
+        bh=rLIPwBgHZWqNGgtAxh4E7wuXHCAF5fzgocFXGE+ukF8=;
+        b=EzCK/IIx0OAxy1MAaetmfntJ2TcRGup0oBvGeFpMIxvml2eaCMel48yTgxXY/29UDs
+         yMYOtC+GMxAktV4sB5tF/2dxBl19JsBpzP8jP9wJBcGKD/6KDpSJrkQ02BPhp+3yjdmV
+         tNba7sIqBf0MnV0XVahnEVxOJ0R6Yx0ht0J32I5u4VaGY7z+sGso3ZXudNcSJbFgp9J5
+         TzBF3pEwJxlPijHgZerisvu0v6HCjxsA3aUqTMzwu3J6b7Zmr0XjcQWkGBqV2TUIB4h5
+         j+xD8Eki9jwlegeUsCx7lVWUkJqgCbJK/kzMn7n7uNpsbWfPMbsLl/N3+VujPnkUx6FC
+         KKBw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=ItgTeuucSKI7xOPb/cgLQD69gw3sQiixlB2VotUPk5g=;
-        b=SlgyDzErQZd8df8PSmRt0O+0mATm+QGKWwQ/7yfuWJfcwrB99xi29c6YacBnFJtNSA
-         Ul46tVPxgAKsPDik0SrnCh5hGMzmllbGXqMMjN2X7VUJIR+8KhoWKjeCoUm1fMLuywiX
-         mzBWltO6aji7qPajXe+fQOyETLu9qHFnRzq2yrdxyYxeyqnyilQRSmUbDa51zULvLZ/f
-         jBkp4eCTJsVSsBxzePpuF/e87VCVOoyV5/jwiv1UP7DD/ZnwaDksmQ0GF388Upf3iJ3+
-         KfqTdoYO+agEb9GREFQlWcjiFJecwb7Sro9SuuWDfO8mLRfZYG8hGeJioWzv64IkPDqh
-         e84A==
-X-Gm-Message-State: AOAM530v5PP168mwleNntxcQhy5CxOQMoNNsFNHzv/f+BQ8Zbrgte7EP
-        HtzT8oqmNHXDNYEw24MCPl05fg==
-X-Google-Smtp-Source: ABdhPJw8WjOOZgBLd6ZkveFOdwvNfNdsaML37vwAHz296xZNibxN1eti8URNh3s2lZNYttHsaDDbKw==
-X-Received: by 2002:a1c:6856:: with SMTP id d83mr7855877wmc.119.1607598531933;
-        Thu, 10 Dec 2020 03:08:51 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=rLIPwBgHZWqNGgtAxh4E7wuXHCAF5fzgocFXGE+ukF8=;
+        b=m7vPtBf5xYM5amOtRUNXvcgLiApr/qG0Ozd2PB6/wsW0JtFMNqszHbW7g7Js5Jis+Q
+         kJ6bQXwCnDx5JE6xcbZZmxxvQ+5SyYkoHginO9SmpYj43KwS3a1TP8WQZv9F/EXI+5Vk
+         LYMarJbmqNGIdR4WrdZyVtG8QFY8IbVikv9kodFDWUis95enOa4f/4HFhlwBK3oV6D4c
+         MrebcGRi9Iwc9/kJVliOH1q/RuSShtF27FZQq0S9oXnJO4+UePMe8KR7+7QDOG5il9gH
+         M/e4MeAZPnQiB9UaUsID8PoaJC+PQxLJ2ojDIsSv1aKvIHuhcKAedQYM8D6MsKQ0YrBJ
+         5/uQ==
+X-Gm-Message-State: AOAM533aJi2yf3kR69A1wwjSjhlYwXitwOoACCGHUB4Nn4duBUorEH4v
+        1jOyxSD7GUGOOw30dPwT31Si3Q==
+X-Google-Smtp-Source: ABdhPJzBhIwcJgUxChb1xj73+pxyXsi+e6HzxJF9hLPE6atDub5bpGeXFAFaGSak+zc03OkjRpYcYQ==
+X-Received: by 2002:a1c:35c2:: with SMTP id c185mr7793890wma.74.1607599472161;
+        Thu, 10 Dec 2020 03:24:32 -0800 (PST)
 Received: from localhost.localdomain ([2a01:e0a:490:8730:4468:1cc2:be0c:233f])
-        by smtp.gmail.com with ESMTPSA id n123sm8961809wmn.7.2020.12.10.03.08.51
+        by smtp.gmail.com with ESMTPSA id d3sm8985234wrr.2.2020.12.10.03.24.30
         (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 10 Dec 2020 03:08:51 -0800 (PST)
+        Thu, 10 Dec 2020 03:24:31 -0800 (PST)
 From:   Loic Poulain <loic.poulain@linaro.org>
-To:     kuba@kernel.org, davem@davemloft.net
-Cc:     manivannan.sadhasivam@linaro.org, linux-arm-msm@vger.kernel.org,
-        netdev@vger.kernel.org, jhugo@codeaurora.org,
+To:     manivannan.sadhasivam@linaro.org, hemantk@codeaurora.org
+Cc:     linux-arm-msm@vger.kernel.org,
         Loic Poulain <loic.poulain@linaro.org>
-Subject: [PATCH v2 3/3] net: mhi: Add dedicated alloc thread
-Date:   Thu, 10 Dec 2020 12:15:51 +0100
-Message-Id: <1607598951-2340-3-git-send-email-loic.poulain@linaro.org>
+Subject: [PATCH] mhi: core: Factorize mhi queuing
+Date:   Thu, 10 Dec 2020 12:31:32 +0100
+Message-Id: <1607599892-6229-1-git-send-email-loic.poulain@linaro.org>
 X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1607598951-2340-1-git-send-email-loic.poulain@linaro.org>
-References: <1607598951-2340-1-git-send-email-loic.poulain@linaro.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The buffer allocation for RX path is currently done by a work executed
-in the system workqueue. The work to do is quite simple and consists
-mostly in allocating and queueing as much as possible buffers to the MHI
-RX channel.
-
-It appears that using a dedicated kthread would be more appropriate to
-prevent
-1. RX allocation latency introduced by the system queue
-2. Unbounded work execution, the work only returning when queue is
-full, it can possibly monopolise the workqueue thread on slower systems.
-
-This patch replaces the system work with a simple kthread that loops on
-buffer allocation and sleeps when queue is full. Moreover it gets rid
-of the local rx_queued variable (to track buffer count), and instead,
-relies on the new mhi_get_free_desc_count helper.
-
-After pratical testing on a x86_64 machine, this change improves
-- Peek throughput (slightly, by few mbps)
-- Throughput stability when concurrent loads are running (stress)
-- CPU usage, less CPU cycles dedicated to the task
-
-Below is the powertop output for RX allocation task before and after
-this change, when performing UDP download at 6Gbps. Mostly to highlight
-the improvement in term of CPU usage.
-
-older (system workqueue):
-Usage       Events/s    Category       Description
-63,2 ms/s     134,0        kWork          mhi_net_rx_refill_work
-62,8 ms/s     134,3        kWork          mhi_net_rx_refill_work
-60,8 ms/s     141,4        kWork          mhi_net_rx_refill_work
-
-newer (dedicated kthread):
-Usage       Events/s    Category       Description
-20,7 ms/s     155,6        Process        [PID 3360] [mhi-net-rx]
-22,2 ms/s     169,6        Process        [PID 3360] [mhi-net-rx]
-22,3 ms/s     150,2        Process        [PID 3360] [mhi-net-rx]
+Instead of duplicating queuing procedure in mhi_queue_dma(),
+mhi_queue_buf() and mhi_queue_skb(), add a new generic mhi_queue()
+as common helper.
 
 Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
 ---
- v2: add module parameter for changing RX refill level
+ drivers/bus/mhi/core/main.c | 160 +++++++++++---------------------------------
+ 1 file changed, 38 insertions(+), 122 deletions(-)
 
- drivers/net/mhi_net.c | 110 ++++++++++++++++++++++++++++----------------------
- 1 file changed, 62 insertions(+), 48 deletions(-)
-
-diff --git a/drivers/net/mhi_net.c b/drivers/net/mhi_net.c
-index 0333e07..bd66d51 100644
---- a/drivers/net/mhi_net.c
-+++ b/drivers/net/mhi_net.c
-@@ -5,6 +5,7 @@
-  */
- 
- #include <linux/if_arp.h>
-+#include <linux/kthread.h>
- #include <linux/mhi.h>
- #include <linux/mod_devicetable.h>
- #include <linux/module.h>
-@@ -16,6 +17,11 @@
- #define MHI_NET_MAX_MTU		0xffff
- #define MHI_NET_DEFAULT_MTU	0x4000
- 
-+static unsigned int rx_refill_level = 70;
-+module_param(rx_refill_level, uint, 0600);
-+MODULE_PARM_DESC(rx_refill_level,
-+		 "The minimal RX queue level percentage (0 to 100) under which the RX queue must be refilled");
-+
- struct mhi_net_stats {
- 	u64_stats_t rx_packets;
- 	u64_stats_t rx_bytes;
-@@ -25,7 +31,6 @@ struct mhi_net_stats {
- 	u64_stats_t tx_bytes;
- 	u64_stats_t tx_errors;
- 	u64_stats_t tx_dropped;
--	atomic_t rx_queued;
- 	struct u64_stats_sync tx_syncp;
- 	struct u64_stats_sync rx_syncp;
- };
-@@ -33,17 +38,66 @@ struct mhi_net_stats {
- struct mhi_net_dev {
- 	struct mhi_device *mdev;
- 	struct net_device *ndev;
--	struct delayed_work rx_refill;
-+	struct task_struct *refill_task;
-+	wait_queue_head_t refill_wq;
- 	struct mhi_net_stats stats;
- 	u32 rx_queue_sz;
-+	u32 rx_refill_level;
- };
- 
-+static int mhi_net_refill_thread(void *data)
-+{
-+	struct mhi_net_dev *mhi_netdev = data;
-+	struct net_device *ndev = mhi_netdev->ndev;
-+	struct mhi_device *mdev = mhi_netdev->mdev;
-+	int size = READ_ONCE(ndev->mtu);
-+	struct sk_buff *skb;
-+	int err;
-+
-+	while (1) {
-+		err = wait_event_interruptible(mhi_netdev->refill_wq,
-+					       !mhi_queue_is_full(mdev, DMA_FROM_DEVICE)
-+					       || kthread_should_stop());
-+		if (err || kthread_should_stop())
-+			break;
-+
-+		skb = netdev_alloc_skb(ndev, size);
-+		if (unlikely(!skb)) {
-+			/* No memory, retry later */
-+			schedule_timeout_interruptible(msecs_to_jiffies(250));
-+			continue;
-+		}
-+
-+		err = mhi_queue_skb(mdev, DMA_FROM_DEVICE, skb, size, MHI_EOT);
-+		if (unlikely(err)) {
-+			net_err_ratelimited("%s: Failed to queue RX buf (%d)\n",
-+					    ndev->name, err);
-+			kfree_skb(skb);
-+			break;
-+		}
-+
-+		/* Do not hog the CPU */
-+		cond_resched();
-+	}
-+
-+	return 0;
-+}
-+
- static int mhi_ndo_open(struct net_device *ndev)
- {
- 	struct mhi_net_dev *mhi_netdev = netdev_priv(ndev);
-+	unsigned int qsz = mhi_netdev->rx_queue_sz;
- 
--	/* Feed the rx buffer pool */
--	schedule_delayed_work(&mhi_netdev->rx_refill, 0);
-+	if (rx_refill_level >= 100)
-+		mhi_netdev->rx_refill_level = 1;
-+	else
-+		mhi_netdev->rx_refill_level = qsz - qsz * rx_refill_level / 100;
-+
-+	mhi_netdev->refill_task = kthread_run(mhi_net_refill_thread, mhi_netdev,
-+					      "mhi-net-rx");
-+	if (IS_ERR(mhi_netdev->refill_task)) {
-+		return PTR_ERR(mhi_netdev->refill_task);
-+	}
- 
- 	/* Carrier is established via out-of-band channel (e.g. qmi) */
- 	netif_carrier_on(ndev);
-@@ -57,9 +111,9 @@ static int mhi_ndo_stop(struct net_device *ndev)
- {
- 	struct mhi_net_dev *mhi_netdev = netdev_priv(ndev);
- 
-+	kthread_stop(mhi_netdev->refill_task);
- 	netif_stop_queue(ndev);
- 	netif_carrier_off(ndev);
--	cancel_delayed_work_sync(&mhi_netdev->rx_refill);
- 
- 	return 0;
+diff --git a/drivers/bus/mhi/core/main.c b/drivers/bus/mhi/core/main.c
+index 3871ef0..4fa4c88 100644
+--- a/drivers/bus/mhi/core/main.c
++++ b/drivers/bus/mhi/core/main.c
+@@ -963,118 +963,78 @@ static bool mhi_is_ring_full(struct mhi_controller *mhi_cntrl,
+ 	return (tmp == ring->rp);
  }
-@@ -138,9 +192,6 @@ static void mhi_net_dl_callback(struct mhi_device *mhi_dev,
- {
- 	struct mhi_net_dev *mhi_netdev = dev_get_drvdata(&mhi_dev->dev);
- 	struct sk_buff *skb = mhi_res->buf_addr;
--	int remaining;
--
--	remaining = atomic_dec_return(&mhi_netdev->stats.rx_queued);
  
- 	if (unlikely(mhi_res->transaction_status)) {
- 		dev_kfree_skb_any(skb);
-@@ -163,9 +214,8 @@ static void mhi_net_dl_callback(struct mhi_device *mhi_dev,
- 		netif_rx(skb);
+-int mhi_queue_skb(struct mhi_device *mhi_dev, enum dma_data_direction dir,
+-		  struct sk_buff *skb, size_t len, enum mhi_flags mflags)
++static int mhi_queue(struct mhi_device *mhi_dev, struct mhi_buf_info *buf_info,
++		     enum dma_data_direction dir, enum mhi_flags mflags)
+ {
+ 	struct mhi_controller *mhi_cntrl = mhi_dev->mhi_cntrl;
+ 	struct mhi_chan *mhi_chan = (dir == DMA_TO_DEVICE) ? mhi_dev->ul_chan :
+ 							     mhi_dev->dl_chan;
+ 	struct mhi_ring *tre_ring = &mhi_chan->tre_ring;
+-	struct mhi_buf_info buf_info = { };
++	unsigned long flags;
+ 	int ret;
+ 
+-	/* If MHI host pre-allocates buffers then client drivers cannot queue */
+-	if (mhi_chan->pre_alloc)
+-		return -EINVAL;
++	if (unlikely(MHI_PM_IN_ERROR_STATE(mhi_cntrl->pm_state)))
++		return -EIO;
+ 
+-	if (mhi_is_ring_full(mhi_cntrl, tre_ring))
+-		return -ENOMEM;
++	read_lock_irqsave(&mhi_cntrl->pm_lock, flags);
+ 
+-	read_lock_bh(&mhi_cntrl->pm_lock);
+-	if (unlikely(MHI_PM_IN_ERROR_STATE(mhi_cntrl->pm_state))) {
+-		read_unlock_bh(&mhi_cntrl->pm_lock);
+-		return -EIO;
++	ret = mhi_is_ring_full(mhi_cntrl, tre_ring);
++	if (unlikely(ret)) {
++		ret = -ENOMEM;
++		goto exit_unlock;
  	}
  
--	/* Refill if RX buffers queue becomes low */
--	if (remaining <= mhi_netdev->rx_queue_sz / 2)
--		schedule_delayed_work(&mhi_netdev->rx_refill, 0);
-+	if (mhi_get_free_desc_count(mhi_dev, DMA_FROM_DEVICE) >= mhi_netdev->rx_refill_level)
-+		wake_up_interruptible(&mhi_netdev->refill_wq);
- }
+-	/* we're in M3 or transitioning to M3 */
++	ret = mhi_gen_tre(mhi_cntrl, mhi_chan, buf_info, mflags);
++	if (unlikely(ret))
++		goto exit_unlock;
++
++	/* trigger M3 exit if necessary */
+ 	if (MHI_PM_IN_SUSPEND_STATE(mhi_cntrl->pm_state))
+ 		mhi_trigger_resume(mhi_cntrl);
  
- static void mhi_net_ul_callback(struct mhi_device *mhi_dev,
-@@ -200,42 +250,6 @@ static void mhi_net_ul_callback(struct mhi_device *mhi_dev,
- 		netif_wake_queue(ndev);
- }
+-	/* Toggle wake to exit out of M2 */
++	/* Assert dev_wake (to exit/prevent M1/M2)*/
+ 	mhi_cntrl->wake_toggle(mhi_cntrl);
  
--static void mhi_net_rx_refill_work(struct work_struct *work)
--{
--	struct mhi_net_dev *mhi_netdev = container_of(work, struct mhi_net_dev,
--						      rx_refill.work);
--	struct net_device *ndev = mhi_netdev->ndev;
--	struct mhi_device *mdev = mhi_netdev->mdev;
--	int size = READ_ONCE(ndev->mtu);
--	struct sk_buff *skb;
--	int err;
+-	buf_info.v_addr = skb->data;
+-	buf_info.cb_buf = skb;
+-	buf_info.len = len;
 -
--	while (atomic_read(&mhi_netdev->stats.rx_queued) < mhi_netdev->rx_queue_sz) {
--		skb = netdev_alloc_skb(ndev, size);
--		if (unlikely(!skb))
--			break;
--
--		err = mhi_queue_skb(mdev, DMA_FROM_DEVICE, skb, size, MHI_EOT);
--		if (unlikely(err)) {
--			net_err_ratelimited("%s: Failed to queue RX buf (%d)\n",
--					    ndev->name, err);
--			kfree_skb(skb);
--			break;
--		}
--
--		atomic_inc(&mhi_netdev->stats.rx_queued);
--
--		/* Do not hog the CPU if rx buffers are consumed faster than
--		 * queued (unlikely).
--		 */
--		cond_resched();
+-	ret = mhi_gen_tre(mhi_cntrl, mhi_chan, &buf_info, mflags);
+-	if (unlikely(ret)) {
+-		read_unlock_bh(&mhi_cntrl->pm_lock);
+-		return ret;
 -	}
 -
--	/* If we're still starved of rx buffers, reschedule later */
--	if (unlikely(!atomic_read(&mhi_netdev->stats.rx_queued)))
--		schedule_delayed_work(&mhi_netdev->rx_refill, HZ / 2);
--}
--
- static int mhi_net_probe(struct mhi_device *mhi_dev,
- 			 const struct mhi_device_id *id)
- {
-@@ -256,7 +270,7 @@ static int mhi_net_probe(struct mhi_device *mhi_dev,
- 	mhi_netdev->mdev = mhi_dev;
- 	SET_NETDEV_DEV(ndev, &mhi_dev->dev);
+ 	if (mhi_chan->dir == DMA_TO_DEVICE)
+ 		atomic_inc(&mhi_cntrl->pending_pkts);
  
--	INIT_DELAYED_WORK(&mhi_netdev->rx_refill, mhi_net_rx_refill_work);
-+	init_waitqueue_head(&mhi_netdev->refill_wq);
- 	u64_stats_init(&mhi_netdev->stats.rx_syncp);
- 	u64_stats_init(&mhi_netdev->stats.tx_syncp);
+-	if (likely(MHI_DB_ACCESS_VALID(mhi_cntrl))) {
+-		read_lock_bh(&mhi_chan->lock);
+-		mhi_ring_chan_db(mhi_cntrl, mhi_chan);
+-		read_unlock_bh(&mhi_chan->lock);
++	if (unlikely(!MHI_DB_ACCESS_VALID(mhi_cntrl))) {
++		ret = -EIO;
++		goto exit_unlock;
+ 	}
+ 
+-	read_unlock_bh(&mhi_cntrl->pm_lock);
++	mhi_ring_chan_db(mhi_cntrl, mhi_chan);
+ 
+-	return 0;
++exit_unlock:
++	read_unlock_irqrestore(&mhi_cntrl->pm_lock, flags);
++
++	return ret;
+ }
+-EXPORT_SYMBOL_GPL(mhi_queue_skb);
+ 
+-int mhi_queue_dma(struct mhi_device *mhi_dev, enum dma_data_direction dir,
+-		  struct mhi_buf *mhi_buf, size_t len, enum mhi_flags mflags)
++int mhi_queue_skb(struct mhi_device *mhi_dev, enum dma_data_direction dir,
++		  struct sk_buff *skb, size_t len, enum mhi_flags mflags)
+ {
+-	struct mhi_controller *mhi_cntrl = mhi_dev->mhi_cntrl;
+-	struct mhi_chan *mhi_chan = (dir == DMA_TO_DEVICE) ? mhi_dev->ul_chan :
+-							     mhi_dev->dl_chan;
+-	struct device *dev = &mhi_cntrl->mhi_dev->dev;
+-	struct mhi_ring *tre_ring = &mhi_chan->tre_ring;
+ 	struct mhi_buf_info buf_info = { };
+-	int ret;
+ 
+-	/* If MHI host pre-allocates buffers then client drivers cannot queue */
+-	if (mhi_chan->pre_alloc)
+-		return -EINVAL;
+-
+-	if (mhi_is_ring_full(mhi_cntrl, tre_ring))
+-		return -ENOMEM;
+-
+-	read_lock_bh(&mhi_cntrl->pm_lock);
+-	if (unlikely(MHI_PM_IN_ERROR_STATE(mhi_cntrl->pm_state))) {
+-		dev_err(dev, "MHI is not in activate state, PM state: %s\n",
+-			to_mhi_pm_state_str(mhi_cntrl->pm_state));
+-		read_unlock_bh(&mhi_cntrl->pm_lock);
+-
+-		return -EIO;
+-	}
++	buf_info.v_addr = skb->data;
++	buf_info.cb_buf = skb;
++	buf_info.len = len;
+ 
+-	/* we're in M3 or transitioning to M3 */
+-	if (MHI_PM_IN_SUSPEND_STATE(mhi_cntrl->pm_state))
+-		mhi_trigger_resume(mhi_cntrl);
++	return mhi_queue(mhi_dev, &buf_info, dir, mflags);
++}
++EXPORT_SYMBOL_GPL(mhi_queue_skb);
+ 
+-	/* Toggle wake to exit out of M2 */
+-	mhi_cntrl->wake_toggle(mhi_cntrl);
++int mhi_queue_dma(struct mhi_device *mhi_dev, enum dma_data_direction dir,
++		  struct mhi_buf *mhi_buf, size_t len, enum mhi_flags mflags)
++{
++	struct mhi_buf_info buf_info = { };
+ 
+ 	buf_info.p_addr = mhi_buf->dma_addr;
+ 	buf_info.cb_buf = mhi_buf;
+ 	buf_info.pre_mapped = true;
+ 	buf_info.len = len;
+ 
+-	ret = mhi_gen_tre(mhi_cntrl, mhi_chan, &buf_info, mflags);
+-	if (unlikely(ret)) {
+-		read_unlock_bh(&mhi_cntrl->pm_lock);
+-		return ret;
+-	}
+-
+-	if (mhi_chan->dir == DMA_TO_DEVICE)
+-		atomic_inc(&mhi_cntrl->pending_pkts);
+-
+-	if (likely(MHI_DB_ACCESS_VALID(mhi_cntrl))) {
+-		read_lock_bh(&mhi_chan->lock);
+-		mhi_ring_chan_db(mhi_cntrl, mhi_chan);
+-		read_unlock_bh(&mhi_chan->lock);
+-	}
+-
+-	read_unlock_bh(&mhi_cntrl->pm_lock);
+-
+-	return 0;
++	return mhi_queue(mhi_dev, &buf_info, dir, mflags);
+ }
+ EXPORT_SYMBOL_GPL(mhi_queue_dma);
+ 
+@@ -1128,57 +1088,13 @@ int mhi_gen_tre(struct mhi_controller *mhi_cntrl, struct mhi_chan *mhi_chan,
+ int mhi_queue_buf(struct mhi_device *mhi_dev, enum dma_data_direction dir,
+ 		  void *buf, size_t len, enum mhi_flags mflags)
+ {
+-	struct mhi_controller *mhi_cntrl = mhi_dev->mhi_cntrl;
+-	struct mhi_chan *mhi_chan = (dir == DMA_TO_DEVICE) ? mhi_dev->ul_chan :
+-							     mhi_dev->dl_chan;
+-	struct mhi_ring *tre_ring;
+ 	struct mhi_buf_info buf_info = { };
+-	unsigned long flags;
+-	int ret;
+-
+-	/*
+-	 * this check here only as a guard, it's always
+-	 * possible mhi can enter error while executing rest of function,
+-	 * which is not fatal so we do not need to hold pm_lock
+-	 */
+-	if (unlikely(MHI_PM_IN_ERROR_STATE(mhi_cntrl->pm_state)))
+-		return -EIO;
+-
+-	tre_ring = &mhi_chan->tre_ring;
+-	if (mhi_is_ring_full(mhi_cntrl, tre_ring))
+-		return -ENOMEM;
+ 
+ 	buf_info.v_addr = buf;
+ 	buf_info.cb_buf = buf;
+ 	buf_info.len = len;
+ 
+-	ret = mhi_gen_tre(mhi_cntrl, mhi_chan, &buf_info, mflags);
+-	if (unlikely(ret))
+-		return ret;
+-
+-	read_lock_irqsave(&mhi_cntrl->pm_lock, flags);
+-
+-	/* we're in M3 or transitioning to M3 */
+-	if (MHI_PM_IN_SUSPEND_STATE(mhi_cntrl->pm_state))
+-		mhi_trigger_resume(mhi_cntrl);
+-
+-	/* Toggle wake to exit out of M2 */
+-	mhi_cntrl->wake_toggle(mhi_cntrl);
+-
+-	if (mhi_chan->dir == DMA_TO_DEVICE)
+-		atomic_inc(&mhi_cntrl->pending_pkts);
+-
+-	if (likely(MHI_DB_ACCESS_VALID(mhi_cntrl))) {
+-		unsigned long flags;
+-
+-		read_lock_irqsave(&mhi_chan->lock, flags);
+-		mhi_ring_chan_db(mhi_cntrl, mhi_chan);
+-		read_unlock_irqrestore(&mhi_chan->lock, flags);
+-	}
+-
+-	read_unlock_irqrestore(&mhi_cntrl->pm_lock, flags);
+-
+-	return 0;
++	return mhi_queue(mhi_dev, &buf_info, dir, mflags);
+ }
+ EXPORT_SYMBOL_GPL(mhi_queue_buf);
  
 -- 
 2.7.4
