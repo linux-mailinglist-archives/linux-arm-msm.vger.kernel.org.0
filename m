@@ -2,26 +2,26 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 10BB92D68A8
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Dec 2020 21:28:26 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 8760C2D68AF
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Dec 2020 21:29:29 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2390492AbgLJU2I (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 10 Dec 2020 15:28:08 -0500
-Received: from mail.kernel.org ([198.145.29.99]:44712 "EHLO mail.kernel.org"
+        id S2393054AbgLJU21 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 10 Dec 2020 15:28:27 -0500
+Received: from mail.kernel.org ([198.145.29.99]:44744 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2393768AbgLJU17 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 10 Dec 2020 15:27:59 -0500
+        id S2392561AbgLJU2U (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 10 Dec 2020 15:28:20 -0500
 Content-Type: text/plain; charset="utf-8"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1607632038;
-        bh=SgdDD9mWoOCfUdNeIuaP7KCamYt+qpwt+S9lZvjYQos=;
+        s=k20201202; t=1607632059;
+        bh=9y+3Nfm7lh5y4hDPA2A5Isn8m9DsaGNzmkaBAi4wo9c=;
         h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
-        b=eUHUJh03y3BE0COmzaRQ2vR5ul7IZk/ea7Te2y6A1n1/ReSvs+tUfvyjXm5inghJr
-         5iZpbreMADZPmthfOjxIcghOki8Q/w3IcD9qOW3MJ4DoqdqAcJRcEx7kALRwgsrkEP
-         tkJ1bDY7sARIUqkoO1p4H1jokf+A317OD2UDKAeONmJogz0mN8KEA7Bj0JYGmuT9AN
-         QT3zHlSUwKFq1tNwme8AxV+F+GK07wb9FKhnUvijoMheynzS/RzQvTxJnIEbCtD/9Z
-         LKM+yIH1Xr+j0X3tqtUlBWOXPJkkzigaAEOU+vKJ4vIEGrDjvmMz/lY5Hfr32YhSI9
-         IG+bvq5LQ724A==
+        b=Gg+/F3L2PQw8tjoClXbwNj3jH4z+nG8vSY6yrc8Yysg5Fk5SnUEPgCWDyRuxUkDAj
+         g2EPEvam2LYmIEMM/6pArgyAglyDj6X0ajnk5DO4UnyBNNMcuOTmWMsFhnLjQC8K8f
+         RB2EjwhUjtvPiHO6d47IKwvC7vdqasMURh6y/RzaoRTpajD7WzCVgnH5wYa/ym3kPw
+         Lo4u1P6730gJyeD/3NS22ocQw7upObeKn+aBRnpVaVFOY/X+YYs8IuZeVd+BusyyYa
+         UBnpr82NQCQzpDKUFMVt1Yn7JnDP1I2VW/am8gxEhpay8Nl6zeJ83Zb3zm9aL3tLw3
+         awmtoAyOf4aNg==
 MIME-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
 In-Reply-To: <20201210102234.1.I096779f219625148900fc984dd0084ed1ba87c7f@changeid>
@@ -36,8 +36,8 @@ Cc:     Taniya Das <tdas@codeaurora.org>, vbadigan@codeaurora.org,
         linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
         linux-kernel@vger.kernel.org
 To:     Douglas Anderson <dianders@chromium.org>
-Date:   Thu, 10 Dec 2020 12:27:17 -0800
-Message-ID: <160763203722.1580929.17813582697140984791@swboyd.mtv.corp.google.com>
+Date:   Thu, 10 Dec 2020 12:27:38 -0800
+Message-ID: <160763205823.1580929.3473607704954928540@swboyd.mtv.corp.google.com>
 User-Agent: alot/0.9.1
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
@@ -59,11 +59,5 @@ Quoting Douglas Anderson (2020-12-10 10:22:38)
 > Fixes: 17269568f726 ("clk: qcom: Add Global Clock controller (GCC) driver=
  for SC7180")
 > ---
-> Taniya: can you please update whatever process is used to generate
-> these clock files to use floor for SD card clocks.  I hope you can
-> also scour through these files looking for similar problems on other
-> SoCs and submit patches for them.
 
-Any chance the consumer of this clk can call clk_round_rate() and WARN()
-if the rate is not anywhere near what it wants it to be? I fear that
-this problem will just keep coming up otherwise.
+Applied to clk-next
