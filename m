@@ -2,67 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 5EB2E2D4EC6
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Dec 2020 00:28:51 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3715E2D4F7C
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Dec 2020 01:35:08 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388692AbgLIX1O (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 9 Dec 2020 18:27:14 -0500
-Received: from mail-oi1-f196.google.com ([209.85.167.196]:40105 "EHLO
-        mail-oi1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2388667AbgLIX1C (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 9 Dec 2020 18:27:02 -0500
-Received: by mail-oi1-f196.google.com with SMTP id p126so3660886oif.7;
-        Wed, 09 Dec 2020 15:26:45 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=uLFlJs2FE+ocrw9Dv6BSFdWGIuj2Br5zAsfaAYHbwbA=;
-        b=cYuLnRwVc+HzkJlRn+AC8FRIiFO+x76mQMmoKwsnJ+vQQEKgTw36eSKV6aeXQbHytR
-         BpMCvZmP/9YrQBOkotmWdnApkljq9p50hyd6gzaebJqI8jRY8Wpc1sTTXxRuyEQF4vQz
-         RvTAEy+SRkGnNJff9J3fqIbST9kCPJP6vnT5OYxK2SUvIEdL18h/xBo+DTJ+tAxDWmei
-         sg1JjHpruWRcMqQg2XdlsxdCQTjoUNsZ/1YE9sEnYm4knxrU31bBGoSrtgGQz6cpo3Z6
-         cWsxaq6AkhwgeXHn6/EY3Mdig6m2LviaoB10PMlVj8+LVBpC56MZtps7RcdRl9jQeBg6
-         c2UA==
-X-Gm-Message-State: AOAM531nURwedyti4GUscme3RLvh6yoN7i+6v4b20s0CuzjxuO95YFBU
-        DTSf8AJFKa24Om8c4eQQ/g==
-X-Google-Smtp-Source: ABdhPJwLUrO8MIRaROO7pYAHqmAL/npwl2rFlHtvRo9943n3TSSdApe8LYoJBOTgxoNm/CLfrILQew==
-X-Received: by 2002:aca:3987:: with SMTP id g129mr3445967oia.76.1607556379813;
-        Wed, 09 Dec 2020 15:26:19 -0800 (PST)
-Received: from xps15 (24-155-109-49.dyn.grandenetworks.net. [24.155.109.49])
-        by smtp.gmail.com with ESMTPSA id a18sm612327oia.29.2020.12.09.15.26.18
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 09 Dec 2020 15:26:18 -0800 (PST)
-Received: (nullmailer pid 1275839 invoked by uid 1000);
-        Wed, 09 Dec 2020 23:26:17 -0000
-Date:   Wed, 9 Dec 2020 17:26:17 -0600
-From:   Rob Herring <robh@kernel.org>
-To:     Vinod Koul <vkoul@kernel.org>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Andy Gross <agross@kernel.org>, linux-kernel@vger.kernel.org,
-        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH 2/4] soc: qcom: aoss: Add SM8350 compatible
-Message-ID: <20201209232617.GA1275791@robh.at.kernel.org>
-References: <20201204054347.2877857-1-vkoul@kernel.org>
- <20201204054347.2877857-3-vkoul@kernel.org>
+        id S1728457AbgLJAem (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 9 Dec 2020 19:34:42 -0500
+Received: from mail.kernel.org ([198.145.29.99]:55874 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1728448AbgLJAef (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 9 Dec 2020 19:34:35 -0500
+Content-Type: text/plain; charset="utf-8"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1607560435;
+        bh=F77ivtoe1JKtlcvXA6W2cjZqACGVyncVsGLs616kk5I=;
+        h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
+        b=aw72G4SrVbhwZGzpBRI38vpJuo96bViSqE91v/mO3c1xEmDN3K7eEvEvwtwR6bfzR
+         6+joBnTKQZ/h+xR1v7v3YSA8tmuU9XN8+8yCCysfCf5cGTo2a1JFGjjKmB9xWkeOBh
+         kE2V/ZqRkMqIjiGtKiirB7lqxRH4x74nFBPdKy8Vd8B1X2JpzkYEyrkEwBWHCJyQvX
+         JBW1rp6VOUxhYjdGLclkLXFyzkI+t8otqABRU8KlESNEyEjEmwrFLA0TAnAoOxibNO
+         ddS7AzTO1c3R1ojGWBABC4Tg9P3SVBuh5nIk+NamKDRTJGtPoMBFTNgsI91B8nvPj4
+         FZcgFWF7ulYKg==
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20201204054347.2877857-3-vkoul@kernel.org>
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <20201126072844.35370-2-manivannan.sadhasivam@linaro.org>
+References: <20201126072844.35370-1-manivannan.sadhasivam@linaro.org> <20201126072844.35370-2-manivannan.sadhasivam@linaro.org>
+Subject: Re: [RESEND PATCH v4 1/6] dt-bindings: clock: Add SDX55 GCC clock bindings
+From:   Stephen Boyd <sboyd@kernel.org>
+Cc:     bjorn.andersson@linaro.org, vkoul@kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        Rob Herring <robh@kernel.org>
+To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        mturquette@baylibre.com, robh+dt@kernel.org
+Date:   Wed, 09 Dec 2020 16:33:53 -0800
+Message-ID: <160756043374.1580929.2256356743862452282@swboyd.mtv.corp.google.com>
+User-Agent: alot/0.9.1
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, 04 Dec 2020 11:13:45 +0530, Vinod Koul wrote:
-> Add SM8350 compatible to the qcom_aoss binding and driver.
-> 
+Quoting Manivannan Sadhasivam (2020-11-25 23:28:39)
+> From: Vinod Koul <vkoul@kernel.org>
+>=20
+> Add device tree bindings for global clock controller on SDX55 SoCs.
+>=20
 > Signed-off-by: Vinod Koul <vkoul@kernel.org>
+> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> Reviewed-by: Rob Herring <robh@kernel.org>
 > ---
->  Documentation/devicetree/bindings/soc/qcom/qcom,aoss-qmp.txt | 1 +
->  drivers/soc/qcom/qcom_aoss.c                                 | 1 +
->  2 files changed, 2 insertions(+)
-> 
 
-Acked-by: Rob Herring <robh@kernel.org>
+Applied to clk-next
