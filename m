@@ -2,120 +2,194 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 0071A2D6FEC
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Dec 2020 06:59:10 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B15362D708E
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Dec 2020 08:07:26 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2395323AbgLKF5a (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 11 Dec 2020 00:57:30 -0500
-Received: from mga01.intel.com ([192.55.52.88]:14361 "EHLO mga01.intel.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2388912AbgLKF5B (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 11 Dec 2020 00:57:01 -0500
-IronPort-SDR: 37HFe2CfUNk+JbQ5n4T78ZwxpTQhJloq2TLBkx6U5/4MXk2hf8pCQdFdYWEl2rdgM4mCdPz2r0
- QvjkaQ3sttfw==
-X-IronPort-AV: E=McAfee;i="6000,8403,9831"; a="192719718"
-X-IronPort-AV: E=Sophos;i="5.78,410,1599548400"; 
-   d="scan'208";a="192719718"
-Received: from orsmga001.jf.intel.com ([10.7.209.18])
-  by fmsmga101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 10 Dec 2020 21:56:20 -0800
-IronPort-SDR: XeuqIRz9Woncf1RrMdNvjoMW/1Sn1Z8LQBzIQJlsAP1CW2l+x6QjRiHfo6PArtOnv3jBsVu9QB
- UvrBAP2rYUPg==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.78,410,1599548400"; 
-   d="scan'208";a="409008570"
-Received: from ahunter-desktop.fi.intel.com (HELO [10.237.72.94]) ([10.237.72.94])
-  by orsmga001.jf.intel.com with ESMTP; 10 Dec 2020 21:56:16 -0800
-Subject: Re: [PATCH v3] mmc: sdhci-msm: Warn about overclocking SD/MMC
-To:     Douglas Anderson <dianders@chromium.org>,
-        Ulf Hansson <ulf.hansson@linaro.org>
-Cc:     Stephen Boyd <swboyd@chromium.org>, vbadigan@codeaurora.org,
-        Taniya Das <tdas@codeaurora.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-mmc@vger.kernel.org
-References: <20201210132745.v3.1.Iec3430c7d3c2a29262695edef7b82a14aaa567e5@changeid>
-From:   Adrian Hunter <adrian.hunter@intel.com>
-Organization: Intel Finland Oy, Registered Address: PL 281, 00181 Helsinki,
- Business Identity Code: 0357606 - 4, Domiciled in Helsinki
-Message-ID: <757616c0-8111-c7db-893b-31931a9d4ed0@intel.com>
-Date:   Fri, 11 Dec 2020 07:56:11 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.12.0
-MIME-Version: 1.0
-In-Reply-To: <20201210132745.v3.1.Iec3430c7d3c2a29262695edef7b82a14aaa567e5@changeid>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+        id S2436693AbgLKHFX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 11 Dec 2020 02:05:23 -0500
+Received: from so254-31.mailgun.net ([198.61.254.31]:32350 "EHLO
+        so254-31.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2436676AbgLKHFU (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 11 Dec 2020 02:05:20 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1607670301; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=ju5OBo+runtqUk/l9MKW5YpXJEzAzqg6bjT8pbaB1jI=; b=bfE2kbAXqslV1ygTDylXkj+W3ieA5+uODXpsC4TEIcKw1+JWMeSIGNXu+tuMu0eowVhgMJTO
+ WAfknRsPpfCmAnys+EANwzKrT5+2a5tclu7GVl43PHxp5kDLWTdePWT3iazfss9hhe8dLcZo
+ 9vTD62Iwyprt+TJ7855ChrV22hU=
+X-Mailgun-Sending-Ip: 198.61.254.31
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n03.prod.us-east-1.postgun.com with SMTP id
+ 5fd319f4f81e894c55ad02ee (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 11 Dec 2020 07:04:20
+ GMT
+Sender: hemantk=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 164FFC43463; Fri, 11 Dec 2020 07:04:20 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
+        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+Received: from codeaurora.org (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: hemantk)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 638B8C433C6;
+        Fri, 11 Dec 2020 07:04:18 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 638B8C433C6
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=hemantk@codeaurora.org
+From:   Hemant Kumar <hemantk@codeaurora.org>
+To:     manivannan.sadhasivam@linaro.org, gregkh@linuxfoundation.org
+Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        jhugo@codeaurora.org, bbhatt@codeaurora.org,
+        loic.poulain@linaro.org, netdev@vger.kernel.org,
+        Hemant Kumar <hemantk@codeaurora.org>
+Subject: [PATCH v17 0/3] userspace MHI client interface driver
+Date:   Thu, 10 Dec 2020 23:04:08 -0800
+Message-Id: <1607670251-31733-1-git-send-email-hemantk@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 10/12/20 11:27 pm, Douglas Anderson wrote:
-> As talked about in commit 5e4b7e82d497 ("clk: qcom: gcc-sdm845: Use
-> floor ops for sdcc clks"), most clocks handled by the Qualcomm clock
-> drivers are rounded _up_ by default instead of down.  We should make
-> sure SD/MMC clocks are always rounded down in the clock drivers.
-> Let's add a warning in the Qualcomm SDHCI driver to help catch the
-> problem.
-> 
-> This would have saved a bunch of time [1].
-> 
-> [1] http://lore.kernel.org/r/20201210102234.1.I096779f219625148900fc984dd0084ed1ba87c7f@changeid
-> 
-> Suggested-by: Stephen Boyd <swboyd@chromium.org>
-> Signed-off-by: Douglas Anderson <dianders@chromium.org>
-> ---
-> 
-> Changes in v3:
-> - Proper printf format code.
-> 
-> Changes in v2:
-> - Store rate in unsigned long, not unsigned int.
-> - Reuse the clk_get_rate() in the later print.
-> 
->  drivers/mmc/host/sdhci-msm.c | 15 +++++++++++++--
->  1 file changed, 13 insertions(+), 2 deletions(-)
-> 
-> diff --git a/drivers/mmc/host/sdhci-msm.c b/drivers/mmc/host/sdhci-msm.c
-> index 3451eb325513..50beb407dbe9 100644
-> --- a/drivers/mmc/host/sdhci-msm.c
-> +++ b/drivers/mmc/host/sdhci-msm.c
-> @@ -353,6 +353,7 @@ static void msm_set_clock_rate_for_bus_mode(struct sdhci_host *host,
->  	struct sdhci_msm_host *msm_host = sdhci_pltfm_priv(pltfm_host);
->  	struct mmc_ios curr_ios = host->mmc->ios;
->  	struct clk *core_clk = msm_host->bulk_clks[0].clk;
-> +	unsigned long achieved_rate;
->  	int rc;
->  
->  	clock = msm_get_clock_rate_for_bus_mode(host, clock);
-> @@ -363,10 +364,20 @@ static void msm_set_clock_rate_for_bus_mode(struct sdhci_host *host,
->  		       curr_ios.timing);
->  		return;
->  	}
-> +
-> +	/*
-> +	 * Qualcomm clock drivers by default round clock _up_ if they can't
-> +	 * make the requested rate.  This is not good for SD.  Yell if we
-> +	 * encounter it.
-> +	 */
-> +	achieved_rate = clk_get_rate(core_clk);
-> +	if (achieved_rate > clock)
-> +		pr_warn("%s: Card appears overclocked; req %u Hz, actual %lu Hz\n",
-> +			mmc_hostname(host->mmc), clock, achieved_rate);
+This patch series adds support for UCI driver. UCI driver enables userspace
+clients to communicate to external MHI devices like modem. UCI driver probe
+creates standard character device file nodes for userspace clients to
+perform open, read, write, poll and release file operations. These file
+operations call MHI core layer APIs to perform data transfer using MHI bus
+to communicate with MHI device. Currently driver supports QMI channel. libqmi
+is userspace MHI client which communicates to a QMI service using QMI channel.
+libqmi is a glib-based library for talking to WWAN modems and devices which
+speaks QMI protocol. For more information about libqmi please refer
+https://www.freedesktop.org/wiki/Software/libqmi/. Patch is tested using arm64
+and x86 based platform.
 
-How does a warning help?
+v17:
+- Updated commit text for UCI driver by mentioning about libqmi open-source
+  userspace program that will be talking to this UCI kernel driver.
+- UCI driver depends upon patch "bus: mhi: core: Add helper API to return number
+  of free TREs".
 
-Also, did you consider setting host->mmc->actual_clock
+v16:
+- Removed reference of WLAN as an external MHI device in documentation and
+  cover letter.
 
-> +
->  	msm_host->clk_rate = clock;
->  	pr_debug("%s: Setting clock at rate %lu at timing %d\n",
-> -		 mmc_hostname(host->mmc), clk_get_rate(core_clk),
-> -		 curr_ios.timing);
-> +		 mmc_hostname(host->mmc), achieved_rate, curr_ios.timing);
->  }
->  
->  /* Platform specific tuning */
-> 
+v15:
+- Updated documentation related to poll and release operations.
+
+V14:
+- Fixed device file node format to /dev/<mhi_dev_name> instead of
+  /dev/mhi_<mhi_dev_name> because "mhi" is already part of mhi device name.
+  For example old format: /dev/mhi_mhi0_QMI new format: /dev/mhi0_QMI.
+- Updated MHI documentation to reflect index mhi controller name in
+  QMI usage example.
+
+V13:
+- Removed LOOPBACK channel from mhi_device_id table from this patch series.
+  Pushing a new patch series to add support for LOOPBACK channel and the user
+  space test application. Also removed the description from kernel documentation.
+- Added QMI channel to mhi_device_id table. QMI channel has existing libqmi
+  support from user space.
+- Updated kernel Documentation for QMI channel and provided external reference
+  for libqmi.
+- Updated device file node name by appending mhi device name only, which already
+  includes mhi controller device name.
+
+V12:
+- Added loopback test driver under selftest/drivers/mhi. Updated kernel
+  documentation for the usage of the loopback test application.
+- Addressed review comments for renaming variable names, updated inline
+  comments and removed two redundant dev_dbg.
+
+V11:
+- Fixed review comments for UCI documentation by expanding TLAs and rewording
+  some sentences.
+
+V10:
+- Replaced mutex_lock with mutex_lock_interruptible in read() and write() file
+  ops call back.
+
+V9:
+- Renamed dl_lock to dl_pending _lock and pending list to dl_pending for
+  clarity.
+- Used read lock to protect cur_buf.
+- Change transfer status check logic and only consider 0 and -EOVERFLOW as
+  only success.
+- Added __int to module init function.
+- Print channel name instead of minor number upon successful probe.
+
+V8:
+- Fixed kernel test robot compilation error by changing %lu to %zu for
+  size_t.
+- Replaced uci with UCI in Kconfig, commit text, and comments in driver
+  code.
+- Fixed minor style related comments.
+
+V7:
+- Decoupled uci device and uci channel objects. uci device is
+  associated with device file node. uci channel is associated
+  with MHI channels. uci device refers to uci channel to perform
+  MHI channel operations for device file operations like read()
+  and write(). uci device increments its reference count for
+  every open(). uci device calls mhi_uci_dev_start_chan() to start
+  the MHI channel. uci channel object is tracking number of times
+  MHI channel is referred. This allows to keep the MHI channel in
+  start state until last release() is called. After that uci channel
+  reference count goes to 0 and uci channel clean up is performed
+  which stops the MHI channel. After the last call to release() if
+  driver is removed uci reference count becomes 0 and uci object is
+  cleaned up.
+- Use separate uci channel read and write lock to fine grain locking
+  between reader and writer.
+- Use uci device lock to synchronize open, release and driver remove.
+- Optimize for downlink only or uplink only UCI device.
+
+V6:
+- Moved uci.c to mhi directory.
+- Updated Kconfig to add module information.
+- Updated Makefile to rename uci object file name as mhi_uci
+- Removed kref for open count
+
+V5:
+- Removed mhi_uci_drv structure.
+- Used idr instead of creating global list of uci devices.
+- Used kref instead of local ref counting for uci device and
+  open count.
+- Removed unlikely macro.
+
+V4:
+- Fix locking to protect proper struct members.
+- Updated documentation describing uci client driver use cases.
+- Fixed uci ref counting in mhi_uci_open for error case.
+- Addressed style related review comments.
+
+V3: Added documentation for MHI UCI driver.
+
+V2:
+- Added mutex lock to prevent multiple readers to access same
+- mhi buffer which can result into use after free.
+
+Hemant Kumar (3):
+  bus: mhi: core: Move MHI_MAX_MTU to external header file
+  docs: Add documentation for userspace client interface
+  bus: mhi: Add userspace client interface driver
+
+ Documentation/mhi/index.rst     |   1 +
+ Documentation/mhi/uci.rst       |  95 ++++++
+ drivers/bus/mhi/Kconfig         |  13 +
+ drivers/bus/mhi/Makefile        |   3 +
+ drivers/bus/mhi/core/internal.h |   1 -
+ drivers/bus/mhi/uci.c           | 664 ++++++++++++++++++++++++++++++++++++++++
+ include/linux/mhi.h             |   3 +
+ 7 files changed, 779 insertions(+), 1 deletion(-)
+ create mode 100644 Documentation/mhi/uci.rst
+ create mode 100644 drivers/bus/mhi/uci.c
+
+-- 
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
 
