@@ -2,229 +2,170 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 687092D6C77
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Dec 2020 01:29:02 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2FF2D2D6C7B
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Dec 2020 01:29:04 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2394109AbgLKAXw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 10 Dec 2020 19:23:52 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55776 "EHLO
+        id S2394229AbgLKA0c (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 10 Dec 2020 19:26:32 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56224 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2394075AbgLKAXb (ORCPT
+        with ESMTP id S2390562AbgLKA0Z (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 10 Dec 2020 19:23:31 -0500
-Received: from mail-ot1-x344.google.com (mail-ot1-x344.google.com [IPv6:2607:f8b0:4864:20::344])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5DDA8C0613CF
-        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Dec 2020 16:22:51 -0800 (PST)
-Received: by mail-ot1-x344.google.com with SMTP id a109so6739557otc.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Dec 2020 16:22:51 -0800 (PST)
+        Thu, 10 Dec 2020 19:26:25 -0500
+Received: from mail-pg1-x543.google.com (mail-pg1-x543.google.com [IPv6:2607:f8b0:4864:20::543])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 67D8CC0613CF
+        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Dec 2020 16:25:45 -0800 (PST)
+Received: by mail-pg1-x543.google.com with SMTP id t3so5887856pgi.11
+        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Dec 2020 16:25:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
+        d=chromium.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=vQ7QSFYNLCLOEOnLv/9TkXlgVCAm2zuGmJOBn9tuZDY=;
-        b=xQc71Lckt2wiiCW2pDmmwcuxJ6aWxMjsATWKuGXfBAmfMizx8S85unzP4EulEfysRO
-         6xUZ9LGnNu2Ovj7YFLYS79951kARhv6/mXpCcihuiZr2lEs7769hLLhDXelJqbWAWcFQ
-         Dwu/fCKQ8BzV0DJ+ZVST5/j3WWnhbun3OIgUEM+J+TND0mpD1zFrVW52XGJVJgr7212k
-         s1PbBIJ9lgacRNI0EwDtnc2fmLxKowIXW9WazlcsCHkUZec/Pe2Jag6ueQewP0UHJpCJ
-         c6zbCAe+tecdco4iOaEwuq1T0XePF4tyScPCjPt2hzu2imgDoDRxVj/EtZxQvmI+5IpP
-         NjZw==
+        bh=jsFAhpaoE3Fs09MPdxNqXe75al0gQVy1aKtmcbUC/60=;
+        b=S2T6qH6737POAJ3jUBBdUIcfLwvdsyulbZwI92sUnfd6OdFr4tBnU4TrUpUkqkdv5l
+         akcopsU/b6sltU5xNKQMFCxIC32jrDnJX4FhS/GIF2kJp5sHDro+QAyi4vLGWeASmgI6
+         BE4kIceEadyOAmEsuCjvw+1yLV3mvRQpDWVQg=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=vQ7QSFYNLCLOEOnLv/9TkXlgVCAm2zuGmJOBn9tuZDY=;
-        b=oQDJO1LTyOjVHVIYEbi8vWrQvxfmx9NzwvASO3Jkd/2UGR4mVE/AF39GQBTFnIkbqI
-         +WzjDwnKJfL7ZK/mT55kexXyIWCb8qTUdDGWI3yY6xfiGBozO1yan8+3J/9/FU/9YGlU
-         toJwbf+973Oh49xuGuLq1YO19ytBA3kVnHGjEaxIiNJjOO2/ySSzKJ+mTecipfLzfui+
-         BxhGqN4nsmFd4uJIiNPAGUjkj+G2qXU6PH8XJdOld+3U3KyCA3mjH4uPluJH8gdwxrEf
-         sUYk6gWRPUj3xl/ZLaidYTnwsbWyTGKI4vcSnfKhirP2bdOGfFV6MDZAf0mOJHoOIOlV
-         weqA==
-X-Gm-Message-State: AOAM533IjKfhHJ838I6JJsvIdOUT8rnNpLvfRYD+P882bpe9WvWpCChn
-        FyZZniAYWa0oFoKT2/x4QTkUGg==
-X-Google-Smtp-Source: ABdhPJycBxD0BPkclaW9jdzct3iZFmqc+y58ENNAGbLlaI/0tWYGHPRWwvekMCWWXiJveCxO+53LPg==
-X-Received: by 2002:a9d:5c04:: with SMTP id o4mr7745492otk.372.1607646170529;
-        Thu, 10 Dec 2020 16:22:50 -0800 (PST)
-Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id g2sm1361025ooh.39.2020.12.10.16.22.49
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 10 Dec 2020 16:22:49 -0800 (PST)
-Date:   Thu, 10 Dec 2020 18:22:48 -0600
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Rob Herring <robh+dt@kernel.org>, Andy Gross <agross@kernel.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
-Subject: Re: [PATCH v3] dt-bindings: soc: qcom: convert qcom,smem bindings to
- yaml
-Message-ID: <X9K72IwTGIIUIqT3@builder.lan>
-References: <20201211001057.3041604-1-dmitry.baryshkov@linaro.org>
+        bh=jsFAhpaoE3Fs09MPdxNqXe75al0gQVy1aKtmcbUC/60=;
+        b=IYyY69b5/Lz8Ode9bGI8bTvz+V9yugoIZNMcBa67J43+fbZfFSxL88/q8QSP7gVl0v
+         tGZ8CkmUMqrqzVWsFrOgxfelEZvlazxKamVcz/7fCt1R2MVTnKXyM0JUemPbLZ1bMMDC
+         DTVHtfUKdmYK5h10I6cEtk2KBk87YuF161pMendaC4UdjDgDbGK8Csf+1LmbU6J7TIyC
+         gPlJdjkIh0xYW7j5KwWcMrGOUHxJbMD2xOOIMdjsO4QVXwoI9XuIhP2TweBuaRlel6mx
+         QcQzkODOAfHAZaOqyGj0vkyisqYMRGgkOLfbiKtXNmgK0auYGviKUJ2WNd3W+WwhVpIu
+         ABwA==
+X-Gm-Message-State: AOAM533jcmYh8hu79wVBSIlF7bWbzetySF2FmOaDnwtWuk4TxfvjZtq6
+        CW+XkYmEgC2UdpHMnKZ481/jkQ==
+X-Google-Smtp-Source: ABdhPJwL02IzV5egzbEf8JQBW75Uk75CMT3Aar7snktYxpb8rjDlIC+4dsQIGdl5RPsyXJYqVztK3Q==
+X-Received: by 2002:a17:90a:c20b:: with SMTP id e11mr10158273pjt.43.1607646345032;
+        Thu, 10 Dec 2020 16:25:45 -0800 (PST)
+Received: from localhost ([2620:15c:202:1:f693:9fff:fef4:e70a])
+        by smtp.gmail.com with ESMTPSA id a14sm7796567pfl.141.2020.12.10.16.25.43
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 10 Dec 2020 16:25:44 -0800 (PST)
+Date:   Thu, 10 Dec 2020 16:25:42 -0800
+From:   Matthias Kaehlcke <mka@chromium.org>
+To:     Sandeep Maheswaram <sanm@codeaurora.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        Felipe Balbi <balbi@kernel.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Doug Anderson <dianders@chromium.org>,
+        linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Manu Gautam <mgautam@codeaurora.org>
+Subject: Re: [PATCH v4 2/5] usb: dwc3: host: Add suspend_quirk for dwc3 host
+Message-ID: <X9K8hmAgzoWyMS9q@google.com>
+References: <1603831083-2025-1-git-send-email-sanm@codeaurora.org>
+ <1603831083-2025-3-git-send-email-sanm@codeaurora.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20201211001057.3041604-1-dmitry.baryshkov@linaro.org>
+In-Reply-To: <1603831083-2025-3-git-send-email-sanm@codeaurora.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu 10 Dec 18:10 CST 2020, Dmitry Baryshkov wrote:
-
-> Convert soc/qcom/qcom,smem.txt bindings to YAML format.
+On Wed, Oct 28, 2020 at 02:08:00AM +0530, Sandeep Maheswaram wrote:
+> Adding suspend quirk function for dwc3 host which will be called
+> during xhci suspend.
+> Setting hs_phy_mode, ss_phy_mode flags and phy mode during host suspend.
 > 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-
-Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-
-Regards,
-Bjorn
-
+> Signed-off-by: Sandeep Maheswaram <sanm@codeaurora.org>
 > ---
->  .../bindings/soc/qcom/qcom,smem.txt           | 57 ---------------
->  .../bindings/soc/qcom/qcom,smem.yaml          | 73 +++++++++++++++++++
->  2 files changed, 73 insertions(+), 57 deletions(-)
->  delete mode 100644 Documentation/devicetree/bindings/soc/qcom/qcom,smem.txt
->  create mode 100644 Documentation/devicetree/bindings/soc/qcom/qcom,smem.yaml
+>  drivers/usb/dwc3/host.c | 51 +++++++++++++++++++++++++++++++++++++++++++++++++
+>  1 file changed, 51 insertions(+)
 > 
-> diff --git a/Documentation/devicetree/bindings/soc/qcom/qcom,smem.txt b/Documentation/devicetree/bindings/soc/qcom/qcom,smem.txt
-> deleted file mode 100644
-> index 9326cdf6e1b1..000000000000
-> --- a/Documentation/devicetree/bindings/soc/qcom/qcom,smem.txt
-> +++ /dev/null
-> @@ -1,57 +0,0 @@
-> -Qualcomm Shared Memory Manager binding
-> -
-> -This binding describes the Qualcomm Shared Memory Manager, used to share data
-> -between various subsystems and OSes in Qualcomm platforms.
-> -
-> -- compatible:
-> -	Usage: required
-> -	Value type: <stringlist>
-> -	Definition: must be:
-> -		    "qcom,smem"
-> -
-> -- memory-region:
-> -	Usage: required
-> -	Value type: <prop-encoded-array>
-> -	Definition: handle to memory reservation for main SMEM memory region.
-> -
-> -- qcom,rpm-msg-ram:
-> -	Usage: required
-> -	Value type: <prop-encoded-array>
-> -	Definition: handle to RPM message memory resource
-> -
-> -- hwlocks:
-> -	Usage: required
-> -	Value type: <prop-encoded-array>
-> -	Definition: reference to a hwspinlock used to protect allocations from
-> -		    the shared memory
-> -
-> -= EXAMPLE
-> -The following example shows the SMEM setup for MSM8974, with a main SMEM region
-> -at 0xfa00000 and the RPM message ram at 0xfc428000:
-> -
-> -	reserved-memory {
-> -		#address-cells = <1>;
-> -		#size-cells = <1>;
-> -		ranges;
-> -
-> -		smem_region: smem@fa00000 {
-> -			reg = <0xfa00000 0x200000>;
-> -			no-map;
-> -		};
-> -	};
-> -
-> -	smem@fa00000 {
-> -		compatible = "qcom,smem";
-> -
-> -		memory-region = <&smem_region>;
-> -		qcom,rpm-msg-ram = <&rpm_msg_ram>;
-> -
-> -		hwlocks = <&tcsr_mutex 3>;
-> -	};
-> -
-> -	soc {
-> -		rpm_msg_ram: memory@fc428000 {
-> -			compatible = "qcom,rpm-msg-ram";
-> -			reg = <0xfc428000 0x4000>;
-> -		};
-> -	};
-> diff --git a/Documentation/devicetree/bindings/soc/qcom/qcom,smem.yaml b/Documentation/devicetree/bindings/soc/qcom/qcom,smem.yaml
-> new file mode 100644
-> index 000000000000..832bf54239c8
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/soc/qcom/qcom,smem.yaml
-> @@ -0,0 +1,73 @@
-> +# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
-> +%YAML 1.2
-> +---
-> +$id: "http://devicetree.org/schemas/soc/qcom/qcom,smem.yaml#"
-> +$schema: "http://devicetree.org/meta-schemas/core.yaml#"
+> diff --git a/drivers/usb/dwc3/host.c b/drivers/usb/dwc3/host.c
+> index e195176..db03db8 100644
+> --- a/drivers/usb/dwc3/host.c
+> +++ b/drivers/usb/dwc3/host.c
+> @@ -11,6 +11,13 @@
+>  #include <linux/platform_device.h>
+>  
+>  #include "core.h"
+> +#include "../host/xhci.h"
+> +#include "../host/xhci-plat.h"
+> +int xhci_dwc3_suspend_quirk(struct usb_hcd *hcd);
 > +
-> +title: Qualcomm Shared Memory Manager binding
+> +static const struct xhci_plat_priv xhci_plat_dwc3_xhci = {
+> +	.suspend_quirk = xhci_dwc3_suspend_quirk,
+> +};
+>  
+>  static int dwc3_host_get_irq(struct dwc3 *dwc)
+>  {
+> @@ -115,6 +122,13 @@ int dwc3_host_init(struct dwc3 *dwc)
+>  		}
+>  	}
+>  
+> +	ret = platform_device_add_data(xhci, &xhci_plat_dwc3_xhci,
+> +			sizeof(struct xhci_plat_priv));
+> +	if (ret) {
+> +		dev_err(dwc->dev, "failed to add data to xHCI\n");
+> +		goto err;
+> +	}
 > +
-> +maintainers:
-> +  - Andy Gross <agross@kernel.org>
-> +  - Bjorn Andersson <bjorn.andersson@linaro.org>
+>  	ret = platform_device_add(xhci);
+>  	if (ret) {
+>  		dev_err(dwc->dev, "failed to register xHCI device\n");
+> @@ -127,6 +141,43 @@ int dwc3_host_init(struct dwc3 *dwc)
+>  	return ret;
+>  }
+>  
+> +static void dwc3_set_phy_mode(struct usb_hcd *hcd)
+> +{
 > +
-> +description: |
-> +  This binding describes the Qualcomm Shared Memory Manager, used to share data
-> +  between various subsystems and OSes in Qualcomm platforms.
+> +	int i, num_ports;
+> +	u32 reg;
+> +	unsigned int ss_phy_mode = 0;
+> +	struct device *dev = hcd->self.controller;
+> +	struct dwc3 *dwc = dev_get_drvdata(dev->parent);
+
+nit: the use of 'dev' seems misleading here. By convention 'dev' refers
+to the 'struct device' of the driver, here it refers to a child of that
+device. It's probably not super-important, but 'dev' is also not realy
+needed, you could omit it and change the assignment of 'dwc3' to:
+
+	struct dwc3 *dwc = dev_get_drvdata(hcd->self.controller->parent);
+
+> +	struct xhci_hcd	*xhci_hcd = hcd_to_xhci(hcd);
 > +
-> +properties:
-> +  compatible:
-> +    const: "qcom-smem"
+> +	dwc->hs_phy_mode = 0;
 > +
-> +  memory-region:
-> +    maxItems: 1
-> +    description: handle to memory reservation for main SMEM memory region.
+> +	reg = readl(&xhci_hcd->cap_regs->hcs_params1);
 > +
-> +  hwlocks:
-> +    $ref: /schemas/types.yaml#/definitions/phandle
-> +    description: reference to a hwspinlock used to protect allocations from the shared memory
+> +	num_ports = HCS_MAX_PORTS(reg);
+> +	for (i = 0; i < num_ports; i++) {
+> +		reg = readl(&xhci_hcd->op_regs->port_status_base + i * 0x04);
+> +		if (reg & PORT_PE) {
+> +			if (DEV_HIGHSPEED(reg) || DEV_FULLSPEED(reg))
+> +				dwc->hs_phy_mode |= PHY_MODE_USB_HOST_HS;
+> +			else if (DEV_LOWSPEED(reg))
+> +				dwc->hs_phy_mode |= PHY_MODE_USB_HOST_LS;
 > +
-> +  qcom,rpm-msg-ram:
-> +    $ref: /schemas/types.yaml#/definitions/phandle
-> +    description: handle to RPM message memory resource
+> +			if (DEV_SUPERSPEED(reg))
+> +				ss_phy_mode |= PHY_MODE_USB_HOST_SS;
+> +		}
+> +	}
+> +	phy_set_mode(dwc->usb2_generic_phy, dwc->hs_phy_mode);
+> +	phy_set_mode(dwc->usb3_generic_phy, ss_phy_mode);
+> +}
 > +
-> +required:
-> +  - compatible
-> +  - memory-region
-> +  - hwlocks
+> +int xhci_dwc3_suspend_quirk(struct usb_hcd *hcd)
+> +{
+> +	dwc3_set_phy_mode(hcd);
+> +	return 0;
+> +}
 > +
-> +additionalProperties: false
-> +
-> +examples:
-> +  - |
-> +    reserved-memory {
-> +        #address-cells = <1>;
-> +        #size-cells = <1>;
-> +        ranges;
-> +
-> +        smem_region: smem@fa00000 {
-> +            reg = <0xfa00000 0x200000>;
-> +            no-map;
-> +        };
-> +    };
-> +
-> +    smem {
-> +        compatible = "qcom,smem";
-> +
-> +        memory-region = <&smem_region>;
-> +        qcom,rpm-msg-ram = <&rpm_msg_ram>;
-> +
-> +        hwlocks = <&tcsr_mutex 3>;
-> +    };
-> +
-> +    soc {
-> +        #address-cells = <1>;
-> +        #size-cells = <1>;
-> +        ranges;
-> +
-> +        rpm_msg_ram: sram@fc428000 {
-> +            compatible = "qcom,rpm-msg-ram";
-> +            reg = <0xfc428000 0x4000>;
-> +        };
-> +    };
-> +
-> +...
-> -- 
-> 2.29.2
-> 
+>  void dwc3_host_exit(struct dwc3 *dwc)
+>  {
+>  	platform_device_unregister(dwc->xhci);
+
+Other than the nit:
+
+Reviewed-by: Matthias Kaehlcke <mka@chromium.org>
