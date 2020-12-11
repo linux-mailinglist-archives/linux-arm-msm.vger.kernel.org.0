@@ -2,128 +2,122 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 3919C2D80DB
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Dec 2020 22:17:07 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B72952D81C0
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Dec 2020 23:17:08 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2395392AbgLKVOY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 11 Dec 2020 16:14:24 -0500
-Received: from mail-ot1-f65.google.com ([209.85.210.65]:42075 "EHLO
-        mail-ot1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2395061AbgLKVNt (ORCPT
+        id S2406731AbgLKWPO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 11 Dec 2020 17:15:14 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59904 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2406729AbgLKWO4 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 11 Dec 2020 16:13:49 -0500
-Received: by mail-ot1-f65.google.com with SMTP id 11so9529589oty.9;
-        Fri, 11 Dec 2020 13:13:33 -0800 (PST)
+        Fri, 11 Dec 2020 17:14:56 -0500
+Received: from mail-vs1-xe2d.google.com (mail-vs1-xe2d.google.com [IPv6:2607:f8b0:4864:20::e2d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3ECFBC0613D6
+        for <linux-arm-msm@vger.kernel.org>; Fri, 11 Dec 2020 14:14:16 -0800 (PST)
+Received: by mail-vs1-xe2d.google.com with SMTP id r24so5618822vsg.10
+        for <linux-arm-msm@vger.kernel.org>; Fri, 11 Dec 2020 14:14:16 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=B+v8QnAZfVmqdM00Egj83ptDN3hTPJz74BI1U+QyDFM=;
+        b=g7q7BwyabpGEt1cdczJmqxzv2S6iTyT9mkFah7BKR4FKU5Dr3lxJHEJC0Rr50ihcQE
+         x1mkixFbjWFPbE0IiX/M08n2k7Qd6Hc7d6scCrDuqsa0QM/mQUpTbrYJPT9xoIGnPfRQ
+         ULTkk4v6bW1+d6xwlNbplePkS2/QY4dSfBP1s=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=qT7CCI1tZEGzvS2A0x9Rs75/poGHPdnJSJtxrhXJMz4=;
-        b=ipqkB5YtdkHg/J9QeIrmitRz6ldTuOc08YVbCTJ5bIa0/WQArmoNnJmo1aYusrwP9l
-         WsPNz6Lk+xZB4qhgdzxOL4yyJy3mQwpmCky1rjcHZXMffcYOAY1Mwg0SRomTY8KZzXaj
-         BMIqQ69F1zybEeMAjec/QwQkrm5Cf3xvtE44OshKy+Ys1oBPTzt1DG+9q1ziIN5iPGLf
-         /f9Ldd7zSCrGPs8P+Q5qYUZ7SwxkeAtSuLkg7oMNYn3EDewexMdO+0suVO+8qWBEqYj1
-         99TIkZhP9NuIvL3OtRa3sXbEO/eAVttRXGJj9OwuLCIPPD5lXYvTBQjNLeXRYUOpjNTQ
-         Bg4A==
-X-Gm-Message-State: AOAM530x6eCk4CZbo2f4vAaWSXuW3U7i3zfHDWSCpB8JS/5ylWM0JEIj
-        tecBjwm5rQMGQ6fZIeUAfAyxCIqhOA==
-X-Google-Smtp-Source: ABdhPJzadab1s51cOEGqHNNoMqzstzxiaT6kBUcKFKOA9xfhw3HsL7xzFL4OlizXiHn+skrGzvBcLQ==
-X-Received: by 2002:a9d:4c8d:: with SMTP id m13mr9135456otf.229.1607721187996;
-        Fri, 11 Dec 2020 13:13:07 -0800 (PST)
-Received: from xps15 (24-155-109-49.dyn.grandenetworks.net. [24.155.109.49])
-        by smtp.gmail.com with ESMTPSA id c18sm2090517oib.31.2020.12.11.13.13.06
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 11 Dec 2020 13:13:06 -0800 (PST)
-Received: (nullmailer pid 957502 invoked by uid 1000);
-        Fri, 11 Dec 2020 21:13:05 -0000
-Date:   Fri, 11 Dec 2020 15:13:05 -0600
-From:   Rob Herring <robh@kernel.org>
-To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc:     miquel.raynal@bootlin.com, richard@nod.at, vigneshr@ti.com,
-        bjorn.andersson@linaro.org, linux-mtd@lists.infradead.org,
-        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v3 1/4] dt-bindings: mtd: partitions: Add binding for
- Qcom SMEM parser
-Message-ID: <20201211211305.GA955193@robh.at.kernel.org>
-References: <20201119071308.9292-1-manivannan.sadhasivam@linaro.org>
- <20201119071308.9292-2-manivannan.sadhasivam@linaro.org>
- <20201207215236.GB892840@robh.at.kernel.org>
- <20201211033140.GA4222@work>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=B+v8QnAZfVmqdM00Egj83ptDN3hTPJz74BI1U+QyDFM=;
+        b=NA+qkEKLlpb0B7ie2P/viVJbSSBuIqqRCdEQNfaBsDxhPAaHqID3fFUCPAy8mxRCd9
+         e2vNOZmAjDC4hvhudAG9Ba9VP+FqSGYt/FhlhNS3R9cPYiT4yeLYeAB+mnOngotkpBYr
+         qTkUGouHAAPDMKHYnolMIUrO7zLSRJfM+g9JUQvlmIet1DPQkybkIKjkwc0h7otTQXAt
+         BnqmWkN2Bmfx1zHuXytlqCS0x7St3aSFs9y2t+erg0VtOM0xJ6hBBeLlYrpiLpHhM/CP
+         EMDELS7z79wQLlG9OLED3KK84FHM8CnStSFYerLupdxmQoiRsad8an7tKvPZ1mxcdYYv
+         dVEQ==
+X-Gm-Message-State: AOAM530L1q1EgHINIJnJcDkcDB2YizNxEOBVb0pYprzIIBj+/duUhfVU
+        uy/VFlddkNEIJ61svS2gLcFY2+MCmV8Wuw==
+X-Google-Smtp-Source: ABdhPJxF0INwwtUyZjpCQSNgWqADMARiFzmonAIJaW3nwsWwTnaXf5mSgKk7nInFbH8OP9DEteT6gQ==
+X-Received: by 2002:a05:6102:31a3:: with SMTP id d3mr14081723vsh.20.1607724855142;
+        Fri, 11 Dec 2020 14:14:15 -0800 (PST)
+Received: from mail-ua1-f46.google.com (mail-ua1-f46.google.com. [209.85.222.46])
+        by smtp.gmail.com with ESMTPSA id s6sm1220155vkk.20.2020.12.11.14.14.13
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 11 Dec 2020 14:14:13 -0800 (PST)
+Received: by mail-ua1-f46.google.com with SMTP id t19so3369539uaq.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 11 Dec 2020 14:14:13 -0800 (PST)
+X-Received: by 2002:ab0:6285:: with SMTP id z5mr14895918uao.0.1607724852718;
+ Fri, 11 Dec 2020 14:14:12 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20201211033140.GA4222@work>
+References: <20201124094636.v2.1.I2702919afc253e2a451bebc3b701b462b2d22344@changeid>
+ <20201124094636.v2.3.I771b6594b2a4d5b7fe7e12a991a6640f46386e8d@changeid>
+ <d6c5dba9-bcc7-fac9-dd41-c989509c822b@codeaurora.org> <CAD=FV=UOSkHQMcSV8Zq5qPfBoUu5xYzfNZqUPmymvD7PXUAN4w@mail.gmail.com>
+ <b84d5bb4-e413-ad20-a19a-c7420abd5d5d@codeaurora.org> <CAD=FV=UXo3RPuVSYwOrHJMxF38K-ynoaPv4ZVQ6N2ok_zcoOFw@mail.gmail.com>
+ <5f24ec87-6d91-dfd9-0f4f-6687f37c60ac@codeaurora.org> <CAD=FV=Wm_q60w34LmbtC88BkfS0aKp_a=AjnuYFL=g-DX_-=yQ@mail.gmail.com>
+ <92c61a18-0a1d-099e-4a11-b33a052b4ec2@codeaurora.org>
+In-Reply-To: <92c61a18-0a1d-099e-4a11-b33a052b4ec2@codeaurora.org>
+From:   Doug Anderson <dianders@chromium.org>
+Date:   Fri, 11 Dec 2020 14:14:01 -0800
+X-Gmail-Original-Message-ID: <CAD=FV=XvWFd84OxHmYgO8McV-ixe+ucMxhOdAWzHu4nLnnCtbQ@mail.gmail.com>
+Message-ID: <CAD=FV=XvWFd84OxHmYgO8McV-ixe+ucMxhOdAWzHu4nLnnCtbQ@mail.gmail.com>
+Subject: Re: [PATCH v2 3/3] pinctrl: qcom: Clear possible pending irq when
+ remuxing GPIOs
+To:     Maulik Shah <mkshah@codeaurora.org>
+Cc:     Rajendra Nayak <rnayak@codeaurora.org>,
+        Marc Zyngier <maz@kernel.org>,
+        Thomas Gleixner <tglx@linutronix.de>,
+        Jason Cooper <jason@lakedaemon.net>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
+        Neeraj Upadhyay <neeraju@codeaurora.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Srinivas Ramana <sramana@codeaurora.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        LKML <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Dec 11, 2020 at 09:01:40AM +0530, Manivannan Sadhasivam wrote:
-> On Mon, Dec 07, 2020 at 03:52:36PM -0600, Rob Herring wrote:
-> > On Thu, Nov 19, 2020 at 12:43:05PM +0530, Manivannan Sadhasivam wrote:
-> > > Add YAML binding for Qualcomm Shared Memory (SMEM) Flash partition
-> > > parser.
-> > > 
-> > > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> > > ---
-> > >  .../mtd/partitions/qcom,smem-part.yaml        | 33 +++++++++++++++++++
-> > >  1 file changed, 33 insertions(+)
-> > >  create mode 100644 Documentation/devicetree/bindings/mtd/partitions/qcom,smem-part.yaml
-> > > 
-> > > diff --git a/Documentation/devicetree/bindings/mtd/partitions/qcom,smem-part.yaml b/Documentation/devicetree/bindings/mtd/partitions/qcom,smem-part.yaml
-> > > new file mode 100644
-> > > index 000000000000..cf3f8c1e035d
-> > > --- /dev/null
-> > > +++ b/Documentation/devicetree/bindings/mtd/partitions/qcom,smem-part.yaml
-> > > @@ -0,0 +1,33 @@
-> > > +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-> > > +%YAML 1.2
-> > > +---
-> > > +$id: http://devicetree.org/schemas/mtd/partitions/qcom,smem-part.yaml#
-> > > +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> > > +
-> > > +title: Qualcomm SMEM NAND flash partition parser binding
-> > > +
-> > > +maintainers:
-> > > +  - Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> > > +
-> > > +description: |
-> > > +  The Qualcomm SoCs supporting the NAND controller interface features a Shared
-> > > +  Memory (SMEM) based partition table scheme. The maximum partitions supported
-> > > +  varies between partition table revisions. V3 supports maximum 16 partitions
-> > > +  and V4 supports 48 partitions.
-> > 
-> > V3 vs. V4 (and any other version for that matter) is discoverable?
-> > 
-> 
-> Yes, it is discoverable based on the partition header and we do that in
-> the parser.
+Hi,
 
-Okay,
+On Thu, Dec 10, 2020 at 11:07 PM Maulik Shah <mkshah@codeaurora.org> wrote:
+>
+> I have slightly modified your test case (see at
+> https://crrev.com/c/2584729) which is as per what i used in my testing.
+>
+> Here is what i am doing, setting GPIO to a fixed function (function 2 here)
+> Note that function 0 is the GPIO (interrupt mode).
+>
+> 1) Pull up the GPIO in function 2
+> 2) Pull down the GPIO in function 2
+>
+> Repeat above steps, and you will see fake interrupt every time pull down/up.
+> This proves that if you mux away from GPIO then still PDC sees the line
+> and can latch the interrupt at GIC.
 
-Reviewed-by: Rob Herring <robh@kernel.org>
+Ah, super useful example!  Thanks!  Yes, I can replicate your results.
 
-> 
-> Thanks,
-> Mani
-> 
-> > > +
-> > > +properties:
-> > > +  compatible:
-> > > +    const: qcom,smem-part
-> > > +
-> > > +required:
-> > > +  - compatible
-> > > +
-> > > +additionalProperties: false
-> > > +
-> > > +examples:
-> > > +  - |
-> > > +    flash {
-> > > +        partitions {
-> > > +            compatible = "qcom,smem-part";
-> > > +        };
-> > > +    };
-> > > -- 
-> > > 2.17.1
-> > > 
+...but this seems to contradict my other test.  Ah, dang, I think I
+see the problem with my original test.  The important difference is
+that in your test you used the alternate function "mi2s_2" and in mine
+I used "qspi_data".  When I selected "qspi_data" it must have been
+actively driving the pin and _that's_ why I couldn't affect it.
+
+When I change my test to use "mi2s_2" then my toggles via "wp enable"
+and "wp disable" cause phantom interrupts.  That confirms what you're
+saying: the PDC _can_ see the twiddles even when muxed away.
+Presumably the active driving my "qspi_data" is also what caused my
+phantom glitches.
+
+So, as you said, that means my mental model is totally wrong here.
+Wow, if I had known that earlier I would have saved a lot of time.
+That'll learn me...
+
+OK, v4 being posted and you can see if that handles all the cases?
+
+-Doug
