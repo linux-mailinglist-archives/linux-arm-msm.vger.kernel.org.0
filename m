@@ -2,325 +2,113 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id CE0F12D6F79
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Dec 2020 06:04:49 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id CEA762D6FCB
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Dec 2020 06:40:05 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725806AbgLKFEA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 11 Dec 2020 00:04:00 -0500
-Received: from mail.kernel.org ([198.145.29.99]:53310 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725275AbgLKFDo (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 11 Dec 2020 00:03:44 -0500
-Date:   Fri, 11 Dec 2020 10:32:57 +0530
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1607662982;
-        bh=QQIKlaSHAzzlCNnlzReVIWgF9fD4C+w50tUdyG7AbEA=;
-        h=From:To:Cc:Subject:References:In-Reply-To:From;
-        b=qMCSDaoSi0F006LA5/sc9mlXEOQR27i80+JL4JtBxEFf376GChmHzc3FRriiKWKEL
-         9Xy55+FJa0369IW3/LxWK2RmB5h2kaVFlDn/hoV8DR10f07Hfc8/IY0g26wXSmp4qJ
-         FTnkihXpo8xfVM8vEJw7M5XWdJpBitGKhxi96iHc/PTBkWY2Sw6kX+BM34WA2YZxHt
-         g9Lirw6MUPdKyHKwUdfdFYPcTj1KxfDO7zoiUAUXnD0M+pwsZr26g3uJANyTvns8GJ
-         pap24CPktKm+ymgqBPZhYWSBDe4NIRRR/ZMpUuLUpI7gnEKWg9DLCe3wjIDpN487Gb
-         CuWsDReqe1gZg==
-From:   Vinod Koul <vkoul@kernel.org>
-To:     Stephen Boyd <sboyd@kernel.org>
-Cc:     linux-arm-msm@vger.kernel.org,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Vivek Aknurwar <viveka@codeaurora.org>,
-        Andy Gross <agross@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Taniya Das <tdas@codeaurora.org>, linux-clk@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Jeevan Shriram <jshriram@codeaurora.org>
-Subject: Re: [PATCH v2 4/5] clk: qcom: clk-alpha-pll: Add support for Lucid
- 5LPE PLL
-Message-ID: <20201211050257.GR8403@vkoul-mobl>
-References: <20201208064702.3654324-1-vkoul@kernel.org>
- <20201208064702.3654324-5-vkoul@kernel.org>
- <160763259636.1580929.12912274485007017282@swboyd.mtv.corp.google.com>
+        id S2389700AbgLKFjS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 11 Dec 2020 00:39:18 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47722 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2389673AbgLKFiw (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 11 Dec 2020 00:38:52 -0500
+Received: from mail-pl1-x644.google.com (mail-pl1-x644.google.com [IPv6:2607:f8b0:4864:20::644])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8175AC0613CF
+        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Dec 2020 21:38:07 -0800 (PST)
+Received: by mail-pl1-x644.google.com with SMTP id t18so4056982plo.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Dec 2020 21:38:07 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=qA8KF79vkXZC4AdXOTeJaMxuesaV/kTVaSa9pBU9Owk=;
+        b=gL31Eo1QX8sqOP/b3a2qO1h4Xe2pN3Fg2GWOE1lEmfBOXYHfN3TZ87un+Nu7HMoS+j
+         bvDjJqvgKqiFFYa6DXn1qtn9oFesQyLhBuEQfpIDHvcx4N5ehjd89m4E738CdWRo1KRx
+         RXuBWxVYCLiNaXzoLivlPTbqFn1WX8l1ol/HqpMZteRQ6rrBDVLt8U9DL3KYulgPjoah
+         cAJtgCc5BcbgVy7KIFpxiG0RyiKKyMYFx8x0f+/zaMctfIPFT7rS/hV30P4ej7vrFNQV
+         TIL4X8JEyMC+8nTEK36t4ikUnQ2dzu81G9lmRNn2GJa4UZveHg9cM2Jd13OQDic0AK48
+         w7BA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=qA8KF79vkXZC4AdXOTeJaMxuesaV/kTVaSa9pBU9Owk=;
+        b=kXdm0qajKc0QnZrvNgznSkB3IQlYSIfW5/8UJ9NQNSLrxxNkb4XCLm4YOHRZA+lJAV
+         xaSz/EJb71OKaiRMXIwH3LKUWzyf/3n3g71Q/hn/NJjDgPvzgckclaGE2168ZexF6b0X
+         ljD6CcA+3PcQTDk/1K8U2WSTEHaQ3M1VwSIeaT+ZvQryRyucOVqXoVwxLphb8q71uCP4
+         Jwcnc6u0czkSQOjRdfvTp+St8KZ5wYr/vNcislOzkurun5hOlA6aavx1vFa6l7bzrgfY
+         5t1FApMOagh/tIyqqjXEcoW6Y6UBsuzcUf6yXeVOJmPbmbljR+55hMrNIrO6gwXyLkD3
+         ohZg==
+X-Gm-Message-State: AOAM531j/cADBOWowCapczXDLwxWJOXKvnP0OXSVHEF/EwyfTtN9/vEY
+        xWUMOJvTsXIsG1mIuR7ZjIPX
+X-Google-Smtp-Source: ABdhPJxKy68V+xykRB5MnwzQsoW8Fr+DN7ux+DyNcMHGQ3c0L5A6eWt/SHJWvBgj+KA/8eMML5e2bw==
+X-Received: by 2002:a17:90a:ae02:: with SMTP id t2mr11398308pjq.169.1607665086962;
+        Thu, 10 Dec 2020 21:38:06 -0800 (PST)
+Received: from work ([103.59.133.81])
+        by smtp.gmail.com with ESMTPSA id gp17sm8430308pjb.0.2020.12.10.21.38.04
+        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
+        Thu, 10 Dec 2020 21:38:06 -0800 (PST)
+Date:   Fri, 11 Dec 2020 11:08:00 +0530
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     Loic Poulain <loic.poulain@linaro.org>
+Cc:     kuba@kernel.org, davem@davemloft.net,
+        linux-arm-msm@vger.kernel.org, netdev@vger.kernel.org,
+        jhugo@codeaurora.org
+Subject: Re: [PATCH v2 2/3] net: mhi: Get RX queue size from MHI core
+Message-ID: <20201211053800.GC4222@work>
+References: <1607598951-2340-1-git-send-email-loic.poulain@linaro.org>
+ <1607598951-2340-2-git-send-email-loic.poulain@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <160763259636.1580929.12912274485007017282@swboyd.mtv.corp.google.com>
+In-Reply-To: <1607598951-2340-2-git-send-email-loic.poulain@linaro.org>
+User-Agent: Mutt/1.9.4 (2018-02-28)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 10-12-20, 12:36, Stephen Boyd wrote:
-> Quoting Vinod Koul (2020-12-07 22:47:01)
-> > diff --git a/drivers/clk/qcom/clk-alpha-pll.c b/drivers/clk/qcom/clk-alpha-pll.c
-> > index 564431130a76..6a399663d564 100644
-> > --- a/drivers/clk/qcom/clk-alpha-pll.c
-> > +++ b/drivers/clk/qcom/clk-alpha-pll.c
-> > @@ -146,6 +146,12 @@ EXPORT_SYMBOL_GPL(clk_alpha_pll_regs);
-> >  /* LUCID PLL specific settings and offsets */
-> >  #define LUCID_PCAL_DONE                BIT(27)
-> >  
-> > +/* LUCID 5LPE PLL specific settings and offsets */
-> > +#define LUCID_5LPE_PCAL_DONE           BIT(11)
-> > +#define LUCID_5LPE_ENABLE_VOTE_RUN     BIT(21)
-> > +#define LUCID_5LPE_PLL_LATCH_INPUT     BIT(14)
-> > +#define LUCID_5LPE_ALPHA_PLL_ACK_LATCH BIT(13)
+On Thu, Dec 10, 2020 at 12:15:50PM +0100, Loic Poulain wrote:
+> The RX queue size can be determined at runtime by retrieving the
+> number of available transfer descriptors.
 > 
-> Sort these by bit or define name?
-
-Okay will sort by bit
-
+> Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
+> ---
+>  v2: Fixed commit message typo
 > 
-> > +
-> >  #define pll_alpha_width(p)                                     \
-> >                 ((PLL_ALPHA_VAL_U(p) - PLL_ALPHA_VAL(p) == 4) ? \
-> >                                  ALPHA_REG_BITWIDTH : ALPHA_REG_16BIT_WIDTH)
-> > @@ -1561,3 +1567,220 @@ const struct clk_ops clk_alpha_pll_postdiv_lucid_ops = {
-> >         .set_rate = clk_alpha_pll_postdiv_fabia_set_rate,
-> >  };
-> >  EXPORT_SYMBOL_GPL(clk_alpha_pll_postdiv_lucid_ops);
-> > +
-> > +static int alpha_pll_lucid_5lpe_enable(struct clk_hw *hw)
-> > +{
-> > +       struct clk_alpha_pll *pll = to_clk_alpha_pll(hw);
-> > +       u32 val;
-> > +       int ret;
-> > +
-> > +       ret = regmap_read(pll->clkr.regmap, PLL_USER_CTL(pll), &val);
-> > +       if (ret)
-> > +               return ret;
-> > +
-> > +       /* If in FSM mode, just vote for it */
-> > +       if (val & LUCID_5LPE_ENABLE_VOTE_RUN) {
-> > +               ret = clk_enable_regmap(hw);
-> > +               if (ret)
-> > +                       return ret;
-> > +               return wait_for_pll_enable_lock(pll);
-> > +       }
-> > +
-> > +       /* Check if PLL is already enabled */
+>  drivers/net/mhi_net.c | 6 +++---
+>  1 file changed, 3 insertions(+), 3 deletions(-)
 > 
-> Yeah that's obvious, but then what?
+> diff --git a/drivers/net/mhi_net.c b/drivers/net/mhi_net.c
+> index 8e72d94..0333e07 100644
+> --- a/drivers/net/mhi_net.c
+> +++ b/drivers/net/mhi_net.c
+> @@ -256,9 +256,6 @@ static int mhi_net_probe(struct mhi_device *mhi_dev,
+>  	mhi_netdev->mdev = mhi_dev;
+>  	SET_NETDEV_DEV(ndev, &mhi_dev->dev);
+>  
+> -	/* All MHI net channels have 128 ring elements (at least for now) */
+> -	mhi_netdev->rx_queue_sz = 128;
+> -
+>  	INIT_DELAYED_WORK(&mhi_netdev->rx_refill, mhi_net_rx_refill_work);
+>  	u64_stats_init(&mhi_netdev->stats.rx_syncp);
+>  	u64_stats_init(&mhi_netdev->stats.tx_syncp);
+> @@ -268,6 +265,9 @@ static int mhi_net_probe(struct mhi_device *mhi_dev,
+>  	if (err)
+>  		goto out_err;
+>  
+> +	/* Number of transfer descriptors determines size of the queue */
+> +	mhi_netdev->rx_queue_sz = mhi_get_free_desc_count(mhi_dev, DMA_FROM_DEVICE);
+> +
 
-then dont proceed :) will update
+This value is not static right? You might need to fetch the count in
+mhi_net_rx_refill_work().
 
-> > +       ret = trion_pll_is_enabled(pll, pll->clkr.regmap);
-> > +       if (ret < 0)
-> > +               return ret;
-> > +
-> > +       ret = regmap_update_bits(pll->clkr.regmap, PLL_MODE(pll), PLL_RESET_N, PLL_RESET_N);
-> > +       if (ret)
-> > +               return ret;
-> > +
-> > +       /* Set operation mode to RUN */
+Thanks,
+Mani
+
+>  	err = register_netdev(ndev);
+>  	if (err)
+>  		goto out_err;
+> -- 
+> 2.7.4
 > 
-> This comment is worthless.
-
-Will drop
-
-> 
-> > +       regmap_write(pll->clkr.regmap, PLL_OPMODE(pll), PLL_RUN);
-> > +
-> > +       ret = wait_for_pll_enable_lock(pll);
-> > +       if (ret)
-> > +               return ret;
-> > +
-> > +       /* Enable the PLL outputs */
-> > +       ret = regmap_update_bits(pll->clkr.regmap, PLL_USER_CTL(pll), PLL_OUT_MASK, PLL_OUT_MASK);
-> > +       if (ret)
-> > +               return ret;
-> > +
-> > +       /* Enable the global PLL outputs */
-> > +       ret = regmap_update_bits(pll->clkr.regmap, PLL_MODE(pll), PLL_OUTCTRL, PLL_OUTCTRL);
-> > +       if (ret)
-> > +               return ret;
-> > +
-> > +       /* Ensure that the write above goes through before returning. */
-> > +       mb();
-> 
-> Regmap has a memory barrier in writel. Drop this.
-
-yes
-
-> 
-> > +       return ret;
-> > +}
-> > +
-> > +static void alpha_pll_lucid_5lpe_disable(struct clk_hw *hw)
-> > +{
-> > +       struct clk_alpha_pll *pll = to_clk_alpha_pll(hw);
-> > +       u32 val;
-> > +       int ret;
-> > +
-> > +       ret = regmap_read(pll->clkr.regmap, PLL_USER_CTL(pll), &val);
-> > +       if (ret)
-> > +               return;
-> > +
-> > +       /* If in FSM mode, just unvote it */
-> > +       if (val & LUCID_5LPE_ENABLE_VOTE_RUN) {
-> > +               clk_disable_regmap(hw);
-> > +               return;
-> > +       }
-> > +
-> > +       /* Disable the global PLL output */
-> > +       ret = regmap_update_bits(pll->clkr.regmap, PLL_MODE(pll), PLL_OUTCTRL, 0);
-> > +       if (ret)
-> > +               return;
-> > +
-> > +       /* Disable the PLL outputs */
-> > +       ret = regmap_update_bits(pll->clkr.regmap, PLL_USER_CTL(pll), PLL_OUT_MASK, 0);
-> > +       if (ret)
-> > +               return;
-> > +
-> > +       /* Place the PLL mode in STANDBY */
-> > +       regmap_write(pll->clkr.regmap, PLL_OPMODE(pll), PLL_STANDBY);
-> > +}
-> > +
-> > +/*
-> > + * The Lucid 5LPE PLL requires a power-on self-calibration which happens
-> > + * when the PLL comes out of reset. Calibrate in case it is not completed.
-> > + */
-> > +static int alpha_pll_lucid_5lpe_prepare(struct clk_hw *hw)
-> > +{
-> > +       struct clk_alpha_pll *pll = to_clk_alpha_pll(hw);
-> > +       struct clk_hw *p;
-> > +       u32 regval;
-> 
-> Can you use u32 val? And also include a patch to replace the couple
-> times where there is 'regval' in this file. The former is shorter and
-> used far more in qcom clk code.
-
-Will do
-
-> 
-> > +       int ret;
-> > +
-> > +       /* Return early if calibration is not needed. */
-> > +       regmap_read(pll->clkr.regmap, PLL_MODE(pll), &regval);
-> > +       if (regval & LUCID_5LPE_PCAL_DONE)
-> > +               return 0;
-> > +
-> > +       p = clk_hw_get_parent(hw);
-> > +       if (!p)
-> > +               return -EINVAL;
-> > +
-> > +       ret = alpha_pll_lucid_5lpe_enable(hw);
-> > +       if (ret)
-> > +               return ret;
-> > +
-> > +       alpha_pll_lucid_5lpe_disable(hw);
-> > +
-> > +       return 0;
-> > +}
-> > +
-> > +static int alpha_pll_lucid_5lpe_set_rate(struct clk_hw *hw, unsigned long rate,
-> > +                                        unsigned long prate)
-> > +{
-> > +       struct clk_alpha_pll *pll = to_clk_alpha_pll(hw);
-> > +       unsigned long rrate;
-> > +       u32 regval, l;
-> > +       u64 a;
-> > +       int ret;
-> > +
-> > +       rrate = alpha_pll_round_rate(rate, prate, &l, &a, ALPHA_REG_16BIT_WIDTH);
-> > +
-> > +       /*
-> > +        * Due to a limited number of bits for fractional rate programming, the
-> > +        * rounded up rate could be marginally higher than the requested rate.
-> > +        */
-> > +       if (rrate > (rate + PLL_RATE_MARGIN) || rrate < rate) {
-> > +               pr_err("Call set rate on the PLL with rounded rates!\n");
-> > +               return -EINVAL;
-> > +       }
-> 
-> Can we use alpha_pll_check_rate_margin()?
-
-Ah a shiny new helper, looking at it yes we should
-
-> 
-> > +
-> > +       regmap_write(pll->clkr.regmap, PLL_L_VAL(pll), l);
-> > +       regmap_write(pll->clkr.regmap, PLL_ALPHA_VAL(pll), a);
-> > +
-> > +       /* Latch the PLL input */
-> > +       ret = regmap_update_bits(pll->clkr.regmap, PLL_MODE(pll),
-> > +                                LUCID_5LPE_PLL_LATCH_INPUT, LUCID_5LPE_PLL_LATCH_INPUT);
-> > +       if (ret)
-> > +               return ret;
-> > +
-> > +       /* Wait for 2 reference cycles before checking the ACK bit. */
-> > +       udelay(1);
-> > +       regmap_read(pll->clkr.regmap, PLL_MODE(pll), &regval);
-> > +       if (!(regval & LUCID_5LPE_ALPHA_PLL_ACK_LATCH)) {
-> > +               pr_err("Lucid 5LPE PLL latch failed. Output may be unstable!\n");
-> > +               return -EINVAL;
-> > +       }
-> > +
-> > +       /* Return the latch input to 0 */
-> > +       ret = regmap_update_bits(pll->clkr.regmap, PLL_MODE(pll), LUCID_5LPE_PLL_LATCH_INPUT, 0);
-> > +       if (ret)
-> > +               return ret;
-> > +
-> > +       if (clk_hw_is_enabled(hw)) {
-> > +               ret = wait_for_pll_enable_lock(pll);
-> > +               if (ret)
-> > +                       return ret;
-> > +       }
-> > +
-> > +       /* Wait for PLL output to stabilize */
-> > +       udelay(100);
-> > +       return 0;
-> > +}
-> > +
-> > +static int clk_lucid_5lpe_pll_postdiv_set_rate(struct clk_hw *hw, unsigned long rate,
-> > +                                              unsigned long parent_rate)
-> > +{
-> > +       struct clk_alpha_pll_postdiv *pll = to_clk_alpha_pll_postdiv(hw);
-> > +       int i, val = 0, div, ret;
-> > +
-> > +       /*
-> > +        * If the PLL is in FSM mode, then treat set_rate callback as a
-> > +        * no-operation.
-> > +        */
-> > +       ret = regmap_read(pll->clkr.regmap, PLL_USER_CTL(pll), &val);
-> > +       if (ret)
-> > +               return ret;
-> > +
-> > +       if (val & LUCID_5LPE_ENABLE_VOTE_RUN)
-> > +               return 0;
-> > +
-> > +       if (!pll->post_div_table) {
-> > +               pr_err("Missing the post_div_table for the PLL\n");
-> 
-> Can this be rolled into the loop below?
-
-Yep
-
-> > +               return -EINVAL;
-> > +       }
-> > +
-> > +       div = DIV_ROUND_UP_ULL((u64)parent_rate, rate);
-> > +       for (i = 0; i < pll->num_post_div; i++) {
-> 
-> So that this finds nothing.
-> 
-> > +               if (pll->post_div_table[i].div == div) {
-> > +                       val = pll->post_div_table[i].val;
-> > +                       break;
-> > +               }
-> > +       }
-> 
-> and then if val == -1 we return -EINVAL?
-
-Correct, will update
-
-> > +
-> > +       return regmap_update_bits(pll->clkr.regmap, PLL_USER_CTL(pll),
-> > +                               (BIT(pll->width) - 1) << pll->post_div_shift,
-> 
-> Use GENMASK?
-
-Looks like this can be:
-                GENMASK(pll->width + pll->post_div_shift - 1, pll->post_div_shift)
-
-Not sure which one you like :)
-
--- 
-~Vinod
