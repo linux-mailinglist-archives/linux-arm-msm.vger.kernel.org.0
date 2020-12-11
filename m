@@ -2,795 +2,238 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 27CBD2D7087
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Dec 2020 08:07:23 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 687A72D7096
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Dec 2020 08:09:55 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2436689AbgLKHFW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 11 Dec 2020 02:05:22 -0500
-Received: from m43-15.mailgun.net ([69.72.43.15]:34244 "EHLO
+        id S1731651AbgLKHJG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 11 Dec 2020 02:09:06 -0500
+Received: from m43-15.mailgun.net ([69.72.43.15]:37917 "EHLO
         m43-15.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2436674AbgLKHFQ (ORCPT
+        with ESMTP id S1729675AbgLKHIm (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 11 Dec 2020 02:05:16 -0500
+        Fri, 11 Dec 2020 02:08:42 -0500
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1607670296; h=References: In-Reply-To: Message-Id: Date:
- Subject: Cc: To: From: Sender;
- bh=44n+uCXZQNkMZJoMP85m6KfVw43mwzS6iJZUvHnl7R8=; b=hl9Iwf1ThiMnOv/gTJiNFvI1X+nDS/ySMXZvQboJipCNpBZvIDQfBA4BjHJdKQ6yBjEBpRWY
- PMhmiAK3XWs2E4Nxj+DCzKxz4e7oHuxlIdU75zfuzJ2TIKEUbq5CxAjsTQvto2GmCsb7I0C8
- u/79dTHp9ZikDoZmW3HbtqrS3mk=
+ s=smtp; t=1607670520; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
+ Subject: Sender; bh=Z7mHPQnuYGiJE84GUdzV++hVWDsyC/pRvuOApR2yw0w=; b=pcOr3gOYBYSpEwexAKz1STTONff5juTUBejPaB+xnb14zoxaZM7miRGohSsLoPz1RneQgP3i
+ zfge/ezAu5mNEOVegcSRgoX213g2x/h550m0c2+NsHdgUIC7+ptPopBWQH2PxlXyUmpF0x6c
+ cDqgURg8TeBNZXFyVLeHbfCioWA=
 X-Mailgun-Sending-Ip: 69.72.43.15
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org
  (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n01.prod.us-east-1.postgun.com with SMTP id
- 5fd319f76752249c54bd56c5 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 11 Dec 2020 07:04:23
+ smtp-out-n07.prod.us-west-2.postgun.com with SMTP id
+ 5fd31abb3a8ba2142a955c7b (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 11 Dec 2020 07:07:39
  GMT
-Sender: hemantk=codeaurora.org@mg.codeaurora.org
+Sender: mkshah=codeaurora.org@mg.codeaurora.org
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 63E0FC433C6; Fri, 11 Dec 2020 07:04:22 +0000 (UTC)
+        id 752B3C43462; Fri, 11 Dec 2020 07:07:39 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
-        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
-Received: from codeaurora.org (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        NICE_REPLY_A,SPF_FAIL,URIBL_BLOCKED autolearn=no autolearn_force=no
+        version=3.4.0
+Received: from [192.168.29.129] (unknown [49.36.67.231])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        (Authenticated sender: hemantk)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 98375C43462;
-        Fri, 11 Dec 2020 07:04:20 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 98375C43462
+        (Authenticated sender: mkshah)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id AB76EC433C6;
+        Fri, 11 Dec 2020 07:07:33 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org AB76EC433C6
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=hemantk@codeaurora.org
-From:   Hemant Kumar <hemantk@codeaurora.org>
-To:     manivannan.sadhasivam@linaro.org, gregkh@linuxfoundation.org
-Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        jhugo@codeaurora.org, bbhatt@codeaurora.org,
-        loic.poulain@linaro.org, netdev@vger.kernel.org,
-        Hemant Kumar <hemantk@codeaurora.org>
-Subject: [PATCH v17 3/3] bus: mhi: Add userspace client interface driver
-Date:   Thu, 10 Dec 2020 23:04:11 -0800
-Message-Id: <1607670251-31733-4-git-send-email-hemantk@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1607670251-31733-1-git-send-email-hemantk@codeaurora.org>
-References: <1607670251-31733-1-git-send-email-hemantk@codeaurora.org>
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=mkshah@codeaurora.org
+Subject: Re: [PATCH v2 3/3] pinctrl: qcom: Clear possible pending irq when
+ remuxing GPIOs
+To:     Doug Anderson <dianders@chromium.org>
+Cc:     Rajendra Nayak <rnayak@codeaurora.org>,
+        Marc Zyngier <maz@kernel.org>,
+        Thomas Gleixner <tglx@linutronix.de>,
+        Jason Cooper <jason@lakedaemon.net>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
+        Neeraj Upadhyay <neeraju@codeaurora.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Srinivas Ramana <sramana@codeaurora.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        LKML <linux-kernel@vger.kernel.org>
+References: <20201124094636.v2.1.I2702919afc253e2a451bebc3b701b462b2d22344@changeid>
+ <20201124094636.v2.3.I771b6594b2a4d5b7fe7e12a991a6640f46386e8d@changeid>
+ <d6c5dba9-bcc7-fac9-dd41-c989509c822b@codeaurora.org>
+ <CAD=FV=UOSkHQMcSV8Zq5qPfBoUu5xYzfNZqUPmymvD7PXUAN4w@mail.gmail.com>
+ <b84d5bb4-e413-ad20-a19a-c7420abd5d5d@codeaurora.org>
+ <CAD=FV=UXo3RPuVSYwOrHJMxF38K-ynoaPv4ZVQ6N2ok_zcoOFw@mail.gmail.com>
+ <5f24ec87-6d91-dfd9-0f4f-6687f37c60ac@codeaurora.org>
+ <CAD=FV=Wm_q60w34LmbtC88BkfS0aKp_a=AjnuYFL=g-DX_-=yQ@mail.gmail.com>
+From:   Maulik Shah <mkshah@codeaurora.org>
+Message-ID: <92c61a18-0a1d-099e-4a11-b33a052b4ec2@codeaurora.org>
+Date:   Fri, 11 Dec 2020 12:37:30 +0530
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.5.1
+MIME-Version: 1.0
+In-Reply-To: <CAD=FV=Wm_q60w34LmbtC88BkfS0aKp_a=AjnuYFL=g-DX_-=yQ@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-GB
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This MHI client driver allows userspace clients to transfer
-raw data between MHI device and host using standard file operations.
-Driver instantiates UCI device object which is associated to device
-file node. UCI device object instantiates UCI channel object when device
-file node is opened. UCI channel object is used to manage MHI channels
-by calling MHI core APIs for read and write operations. MHI channels
-are started as part of device open(). MHI channels remain in start
-state until last release() is called on UCI device file node. Device
-file node is created with format
+Hi Doug,
 
-/dev/<mhi_device_name>
+On 12/10/2020 6:13 AM, Doug Anderson wrote:
+> Hi,
+>
+> On Tue, Dec 8, 2020 at 9:54 PM Maulik Shah <mkshah@codeaurora.org> wrote:
+>>>> but as long as its IRQ is in disabled/masked state it
+>>>> doesn't matter.
+>>> ...but there's no requirement that someone would need to disable/mask
+>>> an interrupt while switching the muxing, is there?  So it does matter.
+>>>
+>>>
+>>>> its only when the GPIO is again set to IRQ mode with set_mux callback,
+>>>> the phantom IRQ needs clear to start as clean.
+>>>>
+>>>> So we should check only for if (i == pctrl->soc->gpio_func) then clear
+>>>> phantom IRQ.
+>>>>
+>>>> The same is case with .direction_output callback, when GPIO is used as
+>>>> output say as clock, need not clear any phantom IRQ,
+>>>>
+>>>> The reason is with every pulse of clock it can latch as pending IRQ in
+>>>> GIC_ISPEND as long as it stay as output mode/clock.
+>>>>
+>>>> its only when switching back GPIO from output direction to input & IRQ
+>>>> function, need to clear the phantom IRQ.
+>>>>
+>>>> so we do not require clear phantom irq in .direction_output callback.
+>>> I think all the above explanation is with the model that the interrupt
+>>> detection logic is still happening even when muxed away.  I don't
+>>> believe that's true.
+>> Its not the interrupt detection logic that is still happening when muxed
+>> away, but the GPIO line is routed to GIC from PDC.
+>> The GPIO line get forwarded when the system is active/out of system
+>> level low power mode to GIC irrespective of whether GPIO is used as
+>> interrupt or not.
+>> Due to this it can still latch the IRQ at GIC after switching to lets
+>> say Rx mode, whenever the line has any data recive, the line state
+>> toggles can be latched as error interrupt at GIC.
+>  From my tests, though, I strongly believe that the pin is only visible
+> to the PDC if it's muxed as GPIO.  Specifically, in my tests I did
+> this (with all my patches applied so there were no phantom interrupts
+> when remuxing):
+>
+> a) Muxed the pin away from GPIO to special function, but _didn't_ mask
+> the interrupt.
+>
+> b) Toggled the line a whole bunch.  These caused no interrupts at all.
+>
+> c) Muxed back to GPIO.
+>
+> To me this is quite strong evidence that the muxing is "earlier" in
+> the path than the connection to the PDC.  In other words, if you
+> change the mux away from GPIO then the PDC stops seeing it and thus
+> the GIC also stops seeing it.  The GIC can't latch what it can't see.
+> This means while you're in "Rx mode" it can't be latched.
+>
+>
+> OK, so just in case this somehow only happens in S3, I also tried this
+> (with my patch from https://crrev.com/c/2556012):
+>
+> a) Muxed away from GPIO ("bogus" pinmux)
+>
+> b) Enter S3.
+>
+> c) Toggle the GPIO a whole bunch ("wp enable / wp disable" on Cr50).
+>
+> d) Wake from S3.
+>
+> e) Check to see if the interrupt fired a bunch.  It didn't fire at all
+>
+>
+> In my test code the interrupt is not masked, only muxed away.  That
+> means that if, somehow, the PDC was still observing it then we'd see
+> the interrupt fire.  We don't.
+>
+>
+> Unless I messed up in my tests (always possible, though by this point
+> I've run them a number of times) then it still feels like your mental
+> model is wrong, or it's always possible I'm still misunderstanding
+> your model.  Regardless, rather than trying to re-explain your model
+> can you please confirm that you've written test code to confirm your
+> mental model?  If so, can you please provide this test code?  I've
+> provided several test patches proving out my mental model.
+Its not a mental model, its how the line is connected to GIC.
+GPIO follows the path, TLMM to PDC to GIC.
+PDC donot know if the line is muxed away from GPIO to some other 
+function, so it can stop forwarding to GIC.
 
-Currently it supports QMI channel. libqmi is userspace MHI client which
-communicates to a QMI service using QMI channel. libqmi is a glib-based
-library for talking to WWAN modems and devices which speaks QMI protocol.
-For more information about libqmi please refer
-https://www.freedesktop.org/wiki/Software/libqmi/
+I have slightly modified your test case (see at 
+https://crrev.com/c/2584729) which is as per what i used in my testing.
 
-Signed-off-by: Hemant Kumar <hemantk@codeaurora.org>
-Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Reviewed-by: Jeffrey Hugo <jhugo@codeaurora.org>
-Tested-by: Loic Poulain <loic.poulain@linaro.org>
----
- drivers/bus/mhi/Kconfig  |  13 +
- drivers/bus/mhi/Makefile |   3 +
- drivers/bus/mhi/uci.c    | 664 +++++++++++++++++++++++++++++++++++++++++++++++
- 3 files changed, 680 insertions(+)
- create mode 100644 drivers/bus/mhi/uci.c
+Here is what i am doing, setting GPIO to a fixed function (function 2 here)
+Note that function 0 is the GPIO (interrupt mode).
 
-diff --git a/drivers/bus/mhi/Kconfig b/drivers/bus/mhi/Kconfig
-index da5cd0c..5194e8e 100644
---- a/drivers/bus/mhi/Kconfig
-+++ b/drivers/bus/mhi/Kconfig
-@@ -29,3 +29,16 @@ config MHI_BUS_PCI_GENERIC
- 	  This driver provides MHI PCI controller driver for devices such as
- 	  Qualcomm SDX55 based PCIe modems.
- 
-+config MHI_UCI
-+	tristate "MHI UCI"
-+	depends on MHI_BUS
-+	help
-+	  MHI based Userspace Client Interface (UCI) driver is used for
-+	  transferring raw data between host and device using standard file
-+	  operations from userspace. Open, read, write, poll and close
-+	  operations are supported by this driver. Please check
-+	  mhi_uci_match_table for all supported channels that are exposed to
-+	  userspace.
-+
-+	  To compile this driver as a module, choose M here: the module will be
-+	  called mhi_uci.
-diff --git a/drivers/bus/mhi/Makefile b/drivers/bus/mhi/Makefile
-index 0a2d778..69f2111 100644
---- a/drivers/bus/mhi/Makefile
-+++ b/drivers/bus/mhi/Makefile
-@@ -4,3 +4,6 @@ obj-y += core/
- obj-$(CONFIG_MHI_BUS_PCI_GENERIC) += mhi_pci_generic.o
- mhi_pci_generic-y += pci_generic.o
- 
-+# MHI client
-+mhi_uci-y := uci.o
-+obj-$(CONFIG_MHI_UCI) += mhi_uci.o
-diff --git a/drivers/bus/mhi/uci.c b/drivers/bus/mhi/uci.c
-new file mode 100644
-index 0000000..1df2377
---- /dev/null
-+++ b/drivers/bus/mhi/uci.c
-@@ -0,0 +1,664 @@
-+// SPDX-License-Identifier: GPL-2.0-only
-+/* Copyright (c) 2018-2020, The Linux Foundation. All rights reserved.*/
-+
-+#include <linux/kernel.h>
-+#include <linux/mhi.h>
-+#include <linux/mod_devicetable.h>
-+#include <linux/module.h>
-+#include <linux/poll.h>
-+
-+#define MHI_UCI_DRIVER_NAME "mhi_uci"
-+#define MHI_MAX_UCI_MINORS 128
-+
-+static DEFINE_IDR(uci_idr);
-+static DEFINE_MUTEX(uci_drv_mutex);
-+static struct class *uci_dev_class;
-+static int uci_dev_major;
-+
-+/**
-+ * struct uci_chan - MHI channel for a UCI device
-+ * @udev: associated UCI device object
-+ * @ul_wq: wait queue for writer
-+ * @write_lock: mutex write lock for ul channel
-+ * @dl_wq: wait queue for reader
-+ * @read_lock: mutex read lock for dl channel
-+ * @dl_pending_lock: spin lock for dl_pending list
-+ * @dl_pending: list of dl buffers userspace is waiting to read
-+ * @cur_buf: current buffer userspace is reading
-+ * @dl_size: size of the current dl buffer userspace is reading
-+ * @ref_count: uci_chan reference count
-+ */
-+struct uci_chan {
-+	struct uci_dev *udev;
-+	wait_queue_head_t ul_wq;
-+
-+	/* ul channel lock to synchronize multiple writes */
-+	struct mutex write_lock;
-+
-+	wait_queue_head_t dl_wq;
-+
-+	/* dl channel lock to synchronize multiple reads */
-+	struct mutex read_lock;
-+
-+	/*
-+	 * protects pending list in bh context, channel release, read and
-+	 * poll
-+	 */
-+	spinlock_t dl_pending_lock;
-+
-+	struct list_head dl_pending;
-+	struct uci_buf *cur_buf;
-+	size_t dl_size;
-+	struct kref ref_count;
-+};
-+
-+/**
-+ * struct uci_buf - UCI buffer
-+ * @data: data buffer
-+ * @len: length of data buffer
-+ * @node: list node of the UCI buffer
-+ */
-+struct uci_buf {
-+	void *data;
-+	size_t len;
-+	struct list_head node;
-+};
-+
-+/**
-+ * struct uci_dev - MHI UCI device
-+ * @minor: UCI device node minor number
-+ * @mhi_dev: associated mhi device object
-+ * @uchan: UCI uplink and downlink channel object
-+ * @mtu: max TRE buffer length
-+ * @enabled: Flag to track the state of the UCI device
-+ * @lock: mutex lock to manage uchan object
-+ * @ref_count: uci_dev reference count
-+ */
-+struct uci_dev {
-+	unsigned int minor;
-+	struct mhi_device *mhi_dev;
-+	struct uci_chan *uchan;
-+	size_t mtu;
-+	bool enabled;
-+
-+	/* synchronize open, release and driver remove */
-+	struct mutex lock;
-+	struct kref ref_count;
-+};
-+
-+static void mhi_uci_dev_chan_release(struct kref *ref)
-+{
-+	struct uci_buf *buf_itr, *tmp;
-+	struct uci_chan *uchan =
-+		container_of(ref, struct uci_chan, ref_count);
-+
-+	if (uchan->udev->enabled)
-+		mhi_unprepare_from_transfer(uchan->udev->mhi_dev);
-+
-+	spin_lock_bh(&uchan->dl_pending_lock);
-+	list_for_each_entry_safe(buf_itr, tmp, &uchan->dl_pending, node) {
-+		list_del(&buf_itr->node);
-+		kfree(buf_itr->data);
-+	}
-+	spin_unlock_bh(&uchan->dl_pending_lock);
-+
-+	wake_up(&uchan->ul_wq);
-+	wake_up(&uchan->dl_wq);
-+
-+	mutex_lock(&uchan->read_lock);
-+	if (uchan->cur_buf)
-+		kfree(uchan->cur_buf->data);
-+
-+	uchan->cur_buf = NULL;
-+	mutex_unlock(&uchan->read_lock);
-+
-+	mutex_destroy(&uchan->write_lock);
-+	mutex_destroy(&uchan->read_lock);
-+
-+	uchan->udev->uchan = NULL;
-+	kfree(uchan);
-+}
-+
-+static int mhi_queue_inbound(struct uci_dev *udev)
-+{
-+	struct mhi_device *mhi_dev = udev->mhi_dev;
-+	struct device *dev = &mhi_dev->dev;
-+	int nr_desc, i, ret = -EIO;
-+	size_t dl_buf_size;
-+	void *buf;
-+	struct uci_buf *ubuf;
-+
-+	/*
-+	 * skip queuing without error if dl channel is not supported. This
-+	 * allows open to succeed for udev, supporting ul only channel.
-+	 */
-+	if (!udev->mhi_dev->dl_chan)
-+		return 0;
-+
-+	nr_desc = mhi_get_free_desc_count(mhi_dev, DMA_FROM_DEVICE);
-+
-+	for (i = 0; i < nr_desc; i++) {
-+		buf = kmalloc(udev->mtu, GFP_KERNEL);
-+		if (!buf)
-+			return -ENOMEM;
-+
-+		dl_buf_size = udev->mtu - sizeof(*ubuf);
-+
-+		/* save uci_buf info at the end of buf */
-+		ubuf = buf + dl_buf_size;
-+		ubuf->data = buf;
-+
-+		dev_dbg(dev, "Allocated buf %d of %d size %zu\n", i, nr_desc,
-+			dl_buf_size);
-+
-+		ret = mhi_queue_buf(mhi_dev, DMA_FROM_DEVICE, buf, dl_buf_size,
-+				    MHI_EOT);
-+		if (ret) {
-+			kfree(buf);
-+			dev_err(dev, "Failed to queue buffer %d\n", i);
-+			return ret;
-+		}
-+	}
-+
-+	return ret;
-+}
-+
-+static int mhi_uci_dev_start_chan(struct uci_dev *udev)
-+{
-+	int ret = 0;
-+	struct uci_chan *uchan;
-+
-+	mutex_lock(&udev->lock);
-+	if (!udev->uchan || !kref_get_unless_zero(&udev->uchan->ref_count)) {
-+		uchan = kzalloc(sizeof(*uchan), GFP_KERNEL);
-+		if (!uchan) {
-+			ret = -ENOMEM;
-+			goto error_chan_start;
-+		}
-+
-+		udev->uchan = uchan;
-+		uchan->udev = udev;
-+		init_waitqueue_head(&uchan->ul_wq);
-+		init_waitqueue_head(&uchan->dl_wq);
-+		mutex_init(&uchan->write_lock);
-+		mutex_init(&uchan->read_lock);
-+		spin_lock_init(&uchan->dl_pending_lock);
-+		INIT_LIST_HEAD(&uchan->dl_pending);
-+
-+		ret = mhi_prepare_for_transfer(udev->mhi_dev);
-+		if (ret) {
-+			dev_err(&udev->mhi_dev->dev, "Error starting transfer channels\n");
-+			goto error_chan_cleanup;
-+		}
-+
-+		ret = mhi_queue_inbound(udev);
-+		if (ret)
-+			goto error_chan_cleanup;
-+
-+		kref_init(&uchan->ref_count);
-+	}
-+
-+	mutex_unlock(&udev->lock);
-+
-+	return 0;
-+
-+error_chan_cleanup:
-+	mhi_uci_dev_chan_release(&uchan->ref_count);
-+error_chan_start:
-+	mutex_unlock(&udev->lock);
-+	return ret;
-+}
-+
-+static void mhi_uci_dev_release(struct kref *ref)
-+{
-+	struct uci_dev *udev =
-+		container_of(ref, struct uci_dev, ref_count);
-+
-+	mutex_destroy(&udev->lock);
-+
-+	kfree(udev);
-+}
-+
-+static int mhi_uci_open(struct inode *inode, struct file *filp)
-+{
-+	unsigned int minor = iminor(inode);
-+	struct uci_dev *udev = NULL;
-+	int ret;
-+
-+	mutex_lock(&uci_drv_mutex);
-+	udev = idr_find(&uci_idr, minor);
-+	if (!udev) {
-+		pr_debug("uci dev: minor %d not found\n", minor);
-+		mutex_unlock(&uci_drv_mutex);
-+		return -ENODEV;
-+	}
-+
-+	kref_get(&udev->ref_count);
-+	mutex_unlock(&uci_drv_mutex);
-+
-+	ret = mhi_uci_dev_start_chan(udev);
-+	if (ret) {
-+		kref_put(&udev->ref_count, mhi_uci_dev_release);
-+		return ret;
-+	}
-+
-+	filp->private_data = udev;
-+
-+	return 0;
-+}
-+
-+static int mhi_uci_release(struct inode *inode, struct file *file)
-+{
-+	struct uci_dev *udev = file->private_data;
-+
-+	mutex_lock(&udev->lock);
-+	kref_put(&udev->uchan->ref_count, mhi_uci_dev_chan_release);
-+	mutex_unlock(&udev->lock);
-+
-+	kref_put(&udev->ref_count, mhi_uci_dev_release);
-+
-+	return 0;
-+}
-+
-+static __poll_t mhi_uci_poll(struct file *file, poll_table *wait)
-+{
-+	struct uci_dev *udev = file->private_data;
-+	struct mhi_device *mhi_dev = udev->mhi_dev;
-+	struct device *dev = &mhi_dev->dev;
-+	struct uci_chan *uchan = udev->uchan;
-+	__poll_t mask = 0;
-+
-+	poll_wait(file, &udev->uchan->ul_wq, wait);
-+	poll_wait(file, &udev->uchan->dl_wq, wait);
-+
-+	if (!udev->enabled) {
-+		mask = EPOLLERR;
-+		goto done;
-+	}
-+
-+	spin_lock_bh(&uchan->dl_pending_lock);
-+	if (!list_empty(&uchan->dl_pending) || uchan->cur_buf)
-+		mask |= EPOLLIN | EPOLLRDNORM;
-+	spin_unlock_bh(&uchan->dl_pending_lock);
-+
-+	if (mhi_get_free_desc_count(mhi_dev, DMA_TO_DEVICE) > 0)
-+		mask |= EPOLLOUT | EPOLLWRNORM;
-+
-+	dev_dbg(dev, "Client attempted to poll, returning mask 0x%x\n", mask);
-+
-+done:
-+	return mask;
-+}
-+
-+static ssize_t mhi_uci_write(struct file *file,
-+			     const char __user *buf,
-+			     size_t count,
-+			     loff_t *offp)
-+{
-+	struct uci_dev *udev = file->private_data;
-+	struct mhi_device *mhi_dev = udev->mhi_dev;
-+	struct device *dev = &mhi_dev->dev;
-+	struct uci_chan *uchan = udev->uchan;
-+	size_t bytes_xfered = 0;
-+	int ret, nr_desc = 0;
-+
-+	/* if ul channel is not supported return error */
-+	if (!mhi_dev->ul_chan)
-+		return -EOPNOTSUPP;
-+
-+	if (!buf || !count)
-+		return -EINVAL;
-+
-+	dev_dbg(dev, "%s: to xfer: %zu bytes\n", __func__, count);
-+
-+	if (mutex_lock_interruptible(&uchan->write_lock))
-+		return -EINTR;
-+
-+	while (count) {
-+		size_t xfer_size;
-+		void *kbuf;
-+		enum mhi_flags flags;
-+
-+		/* wait for free descriptors */
-+		ret = wait_event_interruptible(uchan->ul_wq,
-+					       (!udev->enabled) ||
-+				(nr_desc = mhi_get_free_desc_count(mhi_dev,
-+					       DMA_TO_DEVICE)) > 0);
-+
-+		if (ret == -ERESTARTSYS) {
-+			dev_dbg(dev, "Interrupted by a signal in %s, exiting\n",
-+				__func__);
-+			goto err_mtx_unlock;
-+		}
-+
-+		if (!udev->enabled) {
-+			ret = -ENODEV;
-+			goto err_mtx_unlock;
-+		}
-+
-+		xfer_size = min_t(size_t, count, udev->mtu);
-+		kbuf = kmalloc(xfer_size, GFP_KERNEL);
-+		if (!kbuf) {
-+			ret = -ENOMEM;
-+			goto err_mtx_unlock;
-+		}
-+
-+		ret = copy_from_user(kbuf, buf, xfer_size);
-+		if (ret) {
-+			kfree(kbuf);
-+			ret = -EFAULT;
-+			goto err_mtx_unlock;
-+		}
-+
-+		/* if ring is full after this force EOT */
-+		if (nr_desc > 1 && (count - xfer_size))
-+			flags = MHI_CHAIN;
-+		else
-+			flags = MHI_EOT;
-+
-+		ret = mhi_queue_buf(mhi_dev, DMA_TO_DEVICE, kbuf, xfer_size,
-+				    flags);
-+		if (ret) {
-+			kfree(kbuf);
-+			goto err_mtx_unlock;
-+		}
-+
-+		bytes_xfered += xfer_size;
-+		count -= xfer_size;
-+		buf += xfer_size;
-+	}
-+
-+	mutex_unlock(&uchan->write_lock);
-+	dev_dbg(dev, "%s: bytes xferred: %zu\n", __func__, bytes_xfered);
-+
-+	return bytes_xfered;
-+
-+err_mtx_unlock:
-+	mutex_unlock(&uchan->write_lock);
-+
-+	return ret;
-+}
-+
-+static ssize_t mhi_uci_read(struct file *file,
-+			    char __user *buf,
-+			    size_t count,
-+			    loff_t *ppos)
-+{
-+	struct uci_dev *udev = file->private_data;
-+	struct mhi_device *mhi_dev = udev->mhi_dev;
-+	struct uci_chan *uchan = udev->uchan;
-+	struct device *dev = &mhi_dev->dev;
-+	struct uci_buf *ubuf;
-+	size_t rx_buf_size;
-+	char *ptr;
-+	size_t to_copy;
-+	int ret = 0;
-+
-+	/* if dl channel is not supported return error */
-+	if (!mhi_dev->dl_chan)
-+		return -EOPNOTSUPP;
-+
-+	if (!buf)
-+		return -EINVAL;
-+
-+	if (mutex_lock_interruptible(&uchan->read_lock))
-+		return -EINTR;
-+
-+	spin_lock_bh(&uchan->dl_pending_lock);
-+	/* No data available to read, wait */
-+	if (!uchan->cur_buf && list_empty(&uchan->dl_pending)) {
-+		dev_dbg(dev, "No data available to read, waiting\n");
-+
-+		spin_unlock_bh(&uchan->dl_pending_lock);
-+		ret = wait_event_interruptible(uchan->dl_wq,
-+					       (!udev->enabled ||
-+					      !list_empty(&uchan->dl_pending)));
-+
-+		if (ret == -ERESTARTSYS) {
-+			dev_dbg(dev, "Interrupted by a signal in %s, exiting\n",
-+				__func__);
-+			goto err_mtx_unlock;
-+		}
-+
-+		if (!udev->enabled) {
-+			ret = -ENODEV;
-+			goto err_mtx_unlock;
-+		}
-+		spin_lock_bh(&uchan->dl_pending_lock);
-+	}
-+
-+	/* new read, get the next descriptor from the list */
-+	if (!uchan->cur_buf) {
-+		ubuf = list_first_entry_or_null(&uchan->dl_pending,
-+						struct uci_buf, node);
-+		if (!ubuf) {
-+			ret = -EIO;
-+			goto err_spin_unlock;
-+		}
-+
-+		list_del(&ubuf->node);
-+		uchan->cur_buf = ubuf;
-+		uchan->dl_size = ubuf->len;
-+		dev_dbg(dev, "Got pkt of size: %zu\n", uchan->dl_size);
-+	}
-+	spin_unlock_bh(&uchan->dl_pending_lock);
-+
-+	ubuf = uchan->cur_buf;
-+
-+	/* Copy the buffer to user space */
-+	to_copy = min_t(size_t, count, uchan->dl_size);
-+	ptr = ubuf->data + (ubuf->len - uchan->dl_size);
-+
-+	ret = copy_to_user(buf, ptr, to_copy);
-+	if (ret) {
-+		ret = -EFAULT;
-+		goto err_mtx_unlock;
-+	}
-+
-+	dev_dbg(dev, "Copied %zu of %zu bytes\n", to_copy, uchan->dl_size);
-+	uchan->dl_size -= to_copy;
-+
-+	/* we finished with this buffer, queue it back to hardware */
-+	if (!uchan->dl_size) {
-+		uchan->cur_buf = NULL;
-+
-+		rx_buf_size = udev->mtu - sizeof(*ubuf);
-+		ret = mhi_queue_buf(mhi_dev, DMA_FROM_DEVICE, ubuf->data,
-+				    rx_buf_size, MHI_EOT);
-+		if (ret) {
-+			dev_err(dev, "Failed to recycle element: %d\n", ret);
-+			kfree(ubuf->data);
-+			goto err_mtx_unlock;
-+		}
-+	}
-+	mutex_unlock(&uchan->read_lock);
-+
-+	dev_dbg(dev, "%s: Returning %zu bytes\n", __func__, to_copy);
-+
-+	return to_copy;
-+
-+err_spin_unlock:
-+	spin_unlock_bh(&uchan->dl_pending_lock);
-+err_mtx_unlock:
-+	mutex_unlock(&uchan->read_lock);
-+	return ret;
-+}
-+
-+static const struct file_operations mhidev_fops = {
-+	.owner = THIS_MODULE,
-+	.open = mhi_uci_open,
-+	.release = mhi_uci_release,
-+	.read = mhi_uci_read,
-+	.write = mhi_uci_write,
-+	.poll = mhi_uci_poll,
-+};
-+
-+static void mhi_ul_xfer_cb(struct mhi_device *mhi_dev,
-+			   struct mhi_result *mhi_result)
-+{
-+	struct uci_dev *udev = dev_get_drvdata(&mhi_dev->dev);
-+	struct uci_chan *uchan = udev->uchan;
-+	struct device *dev = &mhi_dev->dev;
-+
-+	dev_dbg(dev, "%s: status: %d xfer_len: %zu\n", __func__,
-+		mhi_result->transaction_status, mhi_result->bytes_xferd);
-+
-+	kfree(mhi_result->buf_addr);
-+
-+	if (!mhi_result->transaction_status)
-+		wake_up(&uchan->ul_wq);
-+}
-+
-+static void mhi_dl_xfer_cb(struct mhi_device *mhi_dev,
-+			   struct mhi_result *mhi_result)
-+{
-+	struct uci_dev *udev = dev_get_drvdata(&mhi_dev->dev);
-+	struct uci_chan *uchan = udev->uchan;
-+	struct device *dev = &mhi_dev->dev;
-+	struct uci_buf *ubuf;
-+	size_t dl_buf_size = udev->mtu - sizeof(*ubuf);
-+
-+	dev_dbg(dev, "%s: status: %d receive_len: %zu\n", __func__,
-+		mhi_result->transaction_status, mhi_result->bytes_xferd);
-+
-+	if (mhi_result->transaction_status &&
-+	    mhi_result->transaction_status != -EOVERFLOW) {
-+		kfree(mhi_result->buf_addr);
-+		return;
-+	}
-+
-+	ubuf = mhi_result->buf_addr + dl_buf_size;
-+	ubuf->data = mhi_result->buf_addr;
-+	ubuf->len = mhi_result->bytes_xferd;
-+	spin_lock_bh(&uchan->dl_pending_lock);
-+	list_add_tail(&ubuf->node, &uchan->dl_pending);
-+	spin_unlock_bh(&uchan->dl_pending_lock);
-+
-+	wake_up(&uchan->dl_wq);
-+}
-+
-+static int mhi_uci_probe(struct mhi_device *mhi_dev,
-+			 const struct mhi_device_id *id)
-+{
-+	struct uci_dev *udev;
-+	struct device *dev;
-+	int index;
-+
-+	udev = kzalloc(sizeof(*udev), GFP_KERNEL);
-+	if (!udev)
-+		return -ENOMEM;
-+
-+	kref_init(&udev->ref_count);
-+	mutex_init(&udev->lock);
-+	udev->mhi_dev = mhi_dev;
-+
-+	mutex_lock(&uci_drv_mutex);
-+	index = idr_alloc(&uci_idr, udev, 0, MHI_MAX_UCI_MINORS, GFP_KERNEL);
-+	mutex_unlock(&uci_drv_mutex);
-+	if (index < 0) {
-+		kfree(udev);
-+		return index;
-+	}
-+
-+	udev->minor = index;
-+
-+	udev->mtu = min_t(size_t, id->driver_data, MHI_MAX_MTU);
-+	dev_set_drvdata(&mhi_dev->dev, udev);
-+	udev->enabled = true;
-+
-+	/* create device file node /dev/<mhi_dev_name> */
-+	dev = device_create(uci_dev_class, &mhi_dev->dev,
-+			    MKDEV(uci_dev_major, index), udev, "%s",
-+			    dev_name(&mhi_dev->dev));
-+	if (IS_ERR(dev)) {
-+		mutex_lock(&uci_drv_mutex);
-+		idr_remove(&uci_idr, udev->minor);
-+		mutex_unlock(&uci_drv_mutex);
-+		dev_set_drvdata(&mhi_dev->dev, NULL);
-+		kfree(udev);
-+		return PTR_ERR(dev);
-+	}
-+
-+	dev_dbg(&mhi_dev->dev, "probed uci dev: %s\n", id->chan);
-+
-+	return 0;
-+};
-+
-+static void mhi_uci_remove(struct mhi_device *mhi_dev)
-+{
-+	struct uci_dev *udev = dev_get_drvdata(&mhi_dev->dev);
-+
-+	/* disable the node */
-+	mutex_lock(&udev->lock);
-+	udev->enabled = false;
-+
-+	/* delete the node to prevent new opens */
-+	device_destroy(uci_dev_class, MKDEV(uci_dev_major, udev->minor));
-+
-+	/* return error for any blocked read or write */
-+	if (udev->uchan) {
-+		wake_up(&udev->uchan->ul_wq);
-+		wake_up(&udev->uchan->dl_wq);
-+	}
-+	mutex_unlock(&udev->lock);
-+
-+	mutex_lock(&uci_drv_mutex);
-+	idr_remove(&uci_idr, udev->minor);
-+	kref_put(&udev->ref_count, mhi_uci_dev_release);
-+	mutex_unlock(&uci_drv_mutex);
-+}
-+
-+/* .driver_data stores max mtu */
-+static const struct mhi_device_id mhi_uci_match_table[] = {
-+	{ .chan = "QMI", .driver_data = 0x1000},
-+	{},
-+};
-+MODULE_DEVICE_TABLE(mhi, mhi_uci_match_table);
-+
-+static struct mhi_driver mhi_uci_driver = {
-+	.id_table = mhi_uci_match_table,
-+	.remove = mhi_uci_remove,
-+	.probe = mhi_uci_probe,
-+	.ul_xfer_cb = mhi_ul_xfer_cb,
-+	.dl_xfer_cb = mhi_dl_xfer_cb,
-+	.driver = {
-+		.name = MHI_UCI_DRIVER_NAME,
-+	},
-+};
-+
-+static int __init mhi_uci_init(void)
-+{
-+	int ret;
-+
-+	ret = register_chrdev(0, MHI_UCI_DRIVER_NAME, &mhidev_fops);
-+	if (ret < 0)
-+		return ret;
-+
-+	uci_dev_major = ret;
-+	uci_dev_class = class_create(THIS_MODULE, MHI_UCI_DRIVER_NAME);
-+	if (IS_ERR(uci_dev_class)) {
-+		unregister_chrdev(uci_dev_major, MHI_UCI_DRIVER_NAME);
-+		return PTR_ERR(uci_dev_class);
-+	}
-+
-+	ret = mhi_driver_register(&mhi_uci_driver);
-+	if (ret) {
-+		class_destroy(uci_dev_class);
-+		unregister_chrdev(uci_dev_major, MHI_UCI_DRIVER_NAME);
-+	}
-+
-+	return ret;
-+}
-+
-+static void __exit mhi_uci_exit(void)
-+{
-+	mhi_driver_unregister(&mhi_uci_driver);
-+	class_destroy(uci_dev_class);
-+	unregister_chrdev(uci_dev_major, MHI_UCI_DRIVER_NAME);
-+	idr_destroy(&uci_idr);
-+}
-+
-+module_init(mhi_uci_init);
-+module_exit(mhi_uci_exit);
-+MODULE_LICENSE("GPL v2");
-+MODULE_DESCRIPTION("MHI UCI Driver");
+1) Pull up the GPIO in function 2
+2) Pull down the GPIO in function 2
+
+Repeat above steps, and you will see fake interrupt every time pull down/up.
+This proves that if you mux away from GPIO then still PDC sees the line 
+and can latch the interrupt at GIC.
+
+Thanks,
+Maulik
+
+>> As the interrupt is in disabled state it won't be sent to CPU.
+>> Its only when the driver chooses to switch back to interrupt mode we
+>> want to clear the error interrupt latched to start as clean. same is the
+>> case when used as output direction.
+>>
+>> Hope above is clear.
+> Unfortunately, it's still not.  :(  Can I convince you to provide a
+> test patch and a set of steps that will demonstrate the problem you're
+> worried about?  Specifically:
+>
+> a) Maybe you're talking about the initial switch from a plain GPIO
+> input to making it an interrupt for the first time?  Are you worried
+> about a phantom interrupt in this case?  After patch #1 I think we're
+> safe because pdc_gic_set_type() will always clear the interrupt,
+> right?
+>
+>
+> b) You say "switch back to interrupt mode".  Are you imagining that a
+> driver does something like this:
+>
+> request_irq();
+> ...
+> free_irq();
+> ...
+> request_irq();
+>
+> If you're worried about that then we can implement irq_shutdown() for
+> PDC and then make sure we clear on the first enable after a shutdown,
+> I guess?
+>
+>
+> c) Maybe when you say "switch back to interrupt mode" you mean
+> something else?  If you are talking about muxing away and then muxing
+> back then I think we already have this covered.  If you are talking
+> about masking/unmasking then the whole point is that we _do_ want
+> interrupts latched while masked, right?
+>
+>
+> OK, I'm going to send out a v3 just to get the already-identified
+> problems fixed and also to allow landing of patch #1 in the series,
+> which I think is all agreed upon.  My request to you is that if you
+> think my code misses a specific case to provide some test patches to
+> demonstrate that case.
+>
+>
+> -Doug
+
 -- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum, hosted by The Linux Foundation
 
