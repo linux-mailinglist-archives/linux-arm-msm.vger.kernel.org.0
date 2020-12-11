@@ -2,161 +2,151 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 377DB2D6C32
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Dec 2020 01:28:31 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 447FF2D6C44
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Dec 2020 01:28:39 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725833AbgLJXvU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 10 Dec 2020 18:51:20 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50748 "EHLO
+        id S2390691AbgLKAFM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 10 Dec 2020 19:05:12 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52920 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725891AbgLJXu7 (ORCPT
+        with ESMTP id S2390921AbgLKAFB (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 10 Dec 2020 18:50:59 -0500
-Received: from mail-vs1-xe42.google.com (mail-vs1-xe42.google.com [IPv6:2607:f8b0:4864:20::e42])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3B4EBC0613D3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Dec 2020 15:50:19 -0800 (PST)
-Received: by mail-vs1-xe42.google.com with SMTP id s85so3859509vsc.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Dec 2020 15:50:19 -0800 (PST)
+        Thu, 10 Dec 2020 19:05:01 -0500
+Received: from mail-pl1-x644.google.com (mail-pl1-x644.google.com [IPv6:2607:f8b0:4864:20::644])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CA365C0613D6
+        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Dec 2020 16:04:21 -0800 (PST)
+Received: by mail-pl1-x644.google.com with SMTP id s2so3669585plr.9
+        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Dec 2020 16:04:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=pjYy5Bl3/aduddVWQ9MWnVeXMprhMcZYGBH0P+DQDBo=;
-        b=EXJ6gnsnrAQOJ/s129D2lg7EFMcZQkafhwpuLSAr5ElkjGMGSxKsTtraCwyE+l2N9c
-         kH1m1fc0icv2IdakS3e/47ZEU4ULSZXsJhQj6QfkrDpc7Sc/cxQrpe/uB6tjJuB5BYZO
-         KZDbNar5iD8fGfDvJNaWmDq0StcY/Z8b+Jrx8=
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=b2XTJ2x1R5xZ66SbR6h8AXcrLWdEHj5DcH/Iefxf3Q4=;
+        b=A6zhZ98vZGmItk5taUTdALx1iCQa4bkAu5yRxF7XMlMpPfaAl3DjI4p5UuQZmHIZ/D
+         WFSXBA8a8EBHTXa+lsbCQchI7YzHLz3FCzvkEjRJFxr15i1NpGIJKEyuv3Uw0Af2SSN3
+         sKdgmPz0mX5mFDX9mDh7g/YTP5R3OdXNL0v4E=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=pjYy5Bl3/aduddVWQ9MWnVeXMprhMcZYGBH0P+DQDBo=;
-        b=qbI422CHhDPDWVN433Cp3qa4+otEj0hHKBZ1Gg71QBSk64/JFVs9xJfQKVXHdx5AaR
-         MslvmRLnqkj+ZBzXEqV4HW30oQrSHCopOl3Bmb1p+8KHk5JevImgjV7WNly2VAqN/yvU
-         YtbYfvzfk+dmiwXpjcZ3KoFITtanPO2sf2oC4Rfc0iLAlM6Ui0NvDJkLxWspuQlFQ/zi
-         mfG2kTfgNtlvURIOyGfJbklJFa4uoihd743Xr1YTv3yMm3bvfQ+uggC4bvtB5F7kLw3j
-         BqVswrfWw+Vo52hZVDFWUNf0fWj0c9UopyF0M7msKnHEPMd9IPoDN6btzdPRKBSQWrJW
-         Hy+w==
-X-Gm-Message-State: AOAM533NZTsP1dY8fZtU/mMSGGKjaLzKUkFI+zV9faKPSYcJan8fAG0+
-        0+s1bMV1XnfzePOdaJLYnS0SQ57N70lnXA==
-X-Google-Smtp-Source: ABdhPJzCbYQG2hyW5nO92LI5fVC+IT1WHJiuyGJ606lEdOBpbMKzWnvfIz/4czUpflJ8hiLSJMdWaw==
-X-Received: by 2002:a67:32d4:: with SMTP id y203mr10789769vsy.30.1607644217960;
-        Thu, 10 Dec 2020 15:50:17 -0800 (PST)
-Received: from mail-ua1-f51.google.com (mail-ua1-f51.google.com. [209.85.222.51])
-        by smtp.gmail.com with ESMTPSA id g17sm749380vke.44.2020.12.10.15.50.17
-        for <linux-arm-msm@vger.kernel.org>
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=b2XTJ2x1R5xZ66SbR6h8AXcrLWdEHj5DcH/Iefxf3Q4=;
+        b=qrqqnZuwrOCaJhyS11RkS3jAh4SQ5gYlio7hmcDqkfp629XjKhKQTJbjSTfoL+7iF9
+         WRydkhzRVfDxU02n55ZTYScew0fA/7BXwnrg+MxPvMlLQubQ2zPaAm+DbY1UeDe5YZbs
+         NWhWg6Rj0VA2Z+oKa/dH6fjSZx8O1L11PtG/GMbh3t2YjBgZo5D3EtIKjAPuhD7NJo3U
+         wcBVJgF/VO1Ul2Koojim0TQX5vLwRJzhLaoNoHGDxkYv7ElMxBscTlROwMkUSfZdNtF7
+         H769NJP5DAvyvsX/JsSMnQPMxkCCFFK+5t/fNYSVfeDyRzPs0J1hDaougEeqb0aXZnrt
+         jZLw==
+X-Gm-Message-State: AOAM531pmP0DtTvGefBih8tsPitMI/IbLzXBLi5jaIyzWk0QRM9Pc29O
+        ZxzF0pyBrIcDqJ+VR0kyH+TyPOlzdstJTA==
+X-Google-Smtp-Source: ABdhPJxyhOBKJYPnjJ2YBaiGRbHpCYt2SPOTE6oOxM3QEzT7GA+QV4XtrAXTGw0GM3YW5kVkUAfTgw==
+X-Received: by 2002:a17:902:c584:b029:da:cc62:22f1 with SMTP id p4-20020a170902c584b02900dacc6222f1mr8466785plx.54.1607645060625;
+        Thu, 10 Dec 2020 16:04:20 -0800 (PST)
+Received: from localhost ([2620:15c:202:1:f693:9fff:fef4:e70a])
+        by smtp.gmail.com with ESMTPSA id er23sm7837321pjb.12.2020.12.10.16.04.19
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 10 Dec 2020 15:50:17 -0800 (PST)
-Received: by mail-ua1-f51.google.com with SMTP id f29so2302980uab.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Dec 2020 15:50:17 -0800 (PST)
-X-Received: by 2002:ab0:2e99:: with SMTP id f25mr10916179uaa.104.1607644216565;
- Thu, 10 Dec 2020 15:50:16 -0800 (PST)
-MIME-Version: 1.0
-References: <20201203074459.13078-1-rojay@codeaurora.org> <CAD=FV=XKyXnjsM4iS-ydRWBnmYMojPOaYAdYhOkxkPTCQf0RLQ@mail.gmail.com>
- <160757022002.1580929.8656750350166301192@swboyd.mtv.corp.google.com>
- <CAD=FV=WtU3cnRe6pDKFMA9_0cnQFtSOyohY_bJwZObK+KrbhVQ@mail.gmail.com>
- <160764107797.1580929.14768824290834396298@swboyd.mtv.corp.google.com>
- <CAD=FV=WuQjKC6GHy8d2nuqS-fgsUfxYrJosg3eyC9JU1FPCcjw@mail.gmail.com> <160764316821.1580929.18177257779550490986@swboyd.mtv.corp.google.com>
-In-Reply-To: <160764316821.1580929.18177257779550490986@swboyd.mtv.corp.google.com>
-From:   Doug Anderson <dianders@chromium.org>
-Date:   Thu, 10 Dec 2020 15:50:04 -0800
-X-Gmail-Original-Message-ID: <CAD=FV=WvG085orLqnvg9WUobL7iyxwgoxh-8RvOaRdi9rLeDUg@mail.gmail.com>
-Message-ID: <CAD=FV=WvG085orLqnvg9WUobL7iyxwgoxh-8RvOaRdi9rLeDUg@mail.gmail.com>
-Subject: Re: [PATCH] spi: spi-geni-qcom: Fix NULL pointer access in geni_spi_isr
-To:     Stephen Boyd <swboyd@chromium.org>
-Cc:     Roja Rani Yarubandi <rojay@codeaurora.org>,
-        Mark Brown <broonie@kernel.org>,
+        Thu, 10 Dec 2020 16:04:19 -0800 (PST)
+Date:   Thu, 10 Dec 2020 16:04:17 -0800
+From:   Matthias Kaehlcke <mka@chromium.org>
+To:     mgautam@codeaurora.org
+Cc:     Sandeep Maheswaram <sanm@codeaurora.org>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        linux-spi <linux-spi@vger.kernel.org>,
-        LKML <linux-kernel@vger.kernel.org>,
-        Akash Asthana <akashast@codeaurora.org>,
-        msavaliy@qti.qualcomm.com
-Content-Type: text/plain; charset="UTF-8"
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        Felipe Balbi <balbi@kernel.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Doug Anderson <dianders@chromium.org>,
+        linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v4 1/5] usb: dwc3: core: Host wake up support from system
+ suspend
+Message-ID: <X9K3gXAgUW/6o9dr@google.com>
+References: <1603831083-2025-1-git-send-email-sanm@codeaurora.org>
+ <1603831083-2025-2-git-send-email-sanm@codeaurora.org>
+ <bca7bd32710a118d3583dd4e740ef3e0@codeaurora.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <bca7bd32710a118d3583dd4e740ef3e0@codeaurora.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+On Sat, Nov 28, 2020 at 08:01:31AM +0530, mgautam@codeaurora.org wrote:
+> Hi,
+> 
+> 
+> On 2020-10-28 02:07, Sandeep Maheswaram wrote:
+> > Avoiding phy powerdown in host mode so that it can be woken up by
+> > devices.
+> > Added hs_phy_mode flag to check connection status and set phy mode
+> > and configure interrupts.
+> > 
+> > Signed-off-by: Sandeep Maheswaram <sanm@codeaurora.org>
+> > ---
+> >  drivers/usb/dwc3/core.c | 14 +++-----------
+> >  drivers/usb/dwc3/core.h |  2 ++
+> >  2 files changed, 5 insertions(+), 11 deletions(-)
+> > 
+> > diff --git a/drivers/usb/dwc3/core.c b/drivers/usb/dwc3/core.c
+> > index bdf0925..0e4bc1e 100644
+> > --- a/drivers/usb/dwc3/core.c
+> > +++ b/drivers/usb/dwc3/core.c
+> > @@ -1672,10 +1672,6 @@ static int dwc3_suspend_common(struct dwc3
+> > *dwc, pm_message_t msg)
+> >  		dwc3_core_exit(dwc);
+> >  		break;
+> >  	case DWC3_GCTL_PRTCAP_HOST:
+> > -		if (!PMSG_IS_AUTO(msg)) {
+> > -			dwc3_core_exit(dwc);
+> > -			break;
+> > -		}
+> 
+> 
+> This could be a problem for platforms that don't support runtime_suspend
+> and rely on dwc3_core_exit to power-down PHY.
+> IMO you can continue to do dwc3_core_exit() if runtime_pm isn't enabled
+> for the device.
 
-On Thu, Dec 10, 2020 at 3:32 PM Stephen Boyd <swboyd@chromium.org> wrote:
->
-> Quoting Doug Anderson (2020-12-10 15:07:39)
-> > Hi,
-> >
-> > On Thu, Dec 10, 2020 at 2:58 PM Stephen Boyd <swboyd@chromium.org> wrote:
-> > > right? It will only ensure that other irq handlers have completed, which
-> > > may be a problem, but not the only one.
-> > >
-> > > TL;DR: Peek at the irq status register in the timeout logic and skip it
-> > > if the irq is pending?
-> >
-> > I don't have tons of experience with synchronize_irq(), but the
-> > function comment seems to indicate that as long as the interrupt is
-> > pending synchronize_irq() will do what we want even if the CPU that
-> > should handle the interrupt is in an irqsoff section.  Digging a
-> > little bit I guess it relies upon the interrupt controller being able
-> > to read this state, but (hopefully) the GIC can?
->
-> I didn't read synchronize_irq() more than the single line summary. I
-> thought it would only make sure other irq handlers have finished, which
-> is beside the point of some long section of code that has disabled irqs
-> on CPU0 with local_irq_disable(). And further more, presumably the irq
-> handler could be threaded, and then we could put a sufficiently large
-> msleep() at the start of geni_spi_isr() and see the same problem?
+This would imply that USB wakeup isn't supported on such platforms, right?
 
-As I understand it synchronize_irq():
-1. If the interrupt is not running but is pending at a hardware level,
-it'll wait.
-2. If the interrupt is currently running it waits for it to finish.
+Could we have a flag that the dwc3-<glue> driver can set to indicate that
+wakeup is enabled for this suspend cycle to omit the PHY power-down?
 
-That should handle all the cases you're talking about including
-waiting for the threaded IRQ handler.  There's an explicit comment
-about the threaded IRQ being accounted for in synchronize_irq():
+> > 
+> >  		/* Let controller to suspend HSPHY before PHY driver suspends */
+> >  		if (dwc->dis_u2_susphy_quirk ||
+> > @@ -1733,13 +1729,9 @@ static int dwc3_resume_common(struct dwc3 *dwc,
+> > pm_message_t msg)
+> >  		spin_unlock_irqrestore(&dwc->lock, flags);
+> >  		break;
+> >  	case DWC3_GCTL_PRTCAP_HOST:
+> > -		if (!PMSG_IS_AUTO(msg)) {
+> > -			ret = dwc3_core_init_for_resume(dwc);
+> > -			if (ret)
+> > -				return ret;
+> > -			dwc3_set_prtcap(dwc, DWC3_GCTL_PRTCAP_HOST);
+> > -			break;
+> > -		}
+> > +
+> > +		dwc3_set_prtcap(dwc, DWC3_GCTL_PRTCAP_HOST);
+> > +
+> >  		/* Restore GUSB2PHYCFG bits that were modified in suspend */
+> >  		reg = dwc3_readl(dwc->regs, DWC3_GUSB2PHYCFG(0));
+> >  		if (dwc->dis_u2_susphy_quirk)
+> > diff --git a/drivers/usb/dwc3/core.h b/drivers/usb/dwc3/core.h
+> > index 74323b1..da63d4a3 100644
+> > --- a/drivers/usb/dwc3/core.h
+> > +++ b/drivers/usb/dwc3/core.h
+> > @@ -1101,6 +1101,8 @@ struct dwc3 {
+> > 
+> >  	bool			phys_ready;
+> > 
+> > +	unsigned int            hs_phy_mode;
+> > +
+> 
+> This change should instead be part of the other patch ?
+> "usb: dwc3: host: Add suspend_quirk for dwc3 host"
 
-https://elixir.bootlin.com/linux/v5.9/source/kernel/irq/manage.c#L134
-
-
-> > If it doesn't work like I think it does, I'd be OK with peeking in the
-> > IRQ status register, but we shouldn't _skip_ the logic IMO.  As long
-> > as we believe that an interrupt could happen in the future we
-> > shouldn't return from handle_fifo_timeout().  It's impossible to
-> > reason about how future transfers would work if the pending interrupt
-> > from the previous transfer could fire at any point.
->
-> Right. I just meant skip the timeout handling logic. We'd have to go
-> back to the timeout and keep waiting until the irq handler can run and
-> complete the completion variable.
->
-> I forgot that this is half handled in the spi core though. Peeking at
-> m_irq doesn't look very easy to implement. It certainly seems like this
-> means the timeout handler is busted and the diagram earlier could
-> indicate that spi core is driving this logic from
-> spi_transfer_one_message().
-
-My assumption was that it was still OK (even if not perfect) to still
-process it as a timeout.  I just want to really make sure a future
-interrupt isn't going to show up.
-
-If we want to try to do better, we can do timeout handling ourselves.
-The SPI core allows for that.
-
-
-> So why don't we check for cur_xfer being NULL in the rx/tx handling
-> paths too and bail out there? Does the FIFO need to be cleared out in
-> such a situation that spi core thinks a timeout happened but there's RX
-> data according to m_irq? Do we need to read it all and throw it away? Or
-> does the abort/cancel clear out the RX fifo?
-
-I don't know for sure, but IMO it's safest to read anything that's in
-the FIFO.  It's also important to adjust the watermark in the TX case.
-The suggestions I provided in my original reply (#2 and #3) handle
-this and are plenty simple.
-
-As per my original reply, though, anything we do in the ISR doesn't
-replace the changes we need to make to handle_fifo_timeout().  It is
-very important that when handle_fifo_timeout() finishes that no future
-interrupts for old transfers will fire.
-
-
--Doug
++1
