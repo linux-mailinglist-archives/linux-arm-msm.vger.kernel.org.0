@@ -2,49 +2,49 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 6E9742D81C9
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Dec 2020 23:18:13 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D40C32D81D4
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Dec 2020 23:19:24 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2406775AbgLKWQu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 11 Dec 2020 17:16:50 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60152 "EHLO
+        id S2406786AbgLKWRe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 11 Dec 2020 17:17:34 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60244 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2406769AbgLKWQ3 (ORCPT
+        with ESMTP id S2406791AbgLKWRF (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 11 Dec 2020 17:16:29 -0500
-Received: from mail-pl1-x641.google.com (mail-pl1-x641.google.com [IPv6:2607:f8b0:4864:20::641])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 86E10C0617A6
-        for <linux-arm-msm@vger.kernel.org>; Fri, 11 Dec 2020 14:15:45 -0800 (PST)
-Received: by mail-pl1-x641.google.com with SMTP id t6so5302521plq.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 11 Dec 2020 14:15:45 -0800 (PST)
+        Fri, 11 Dec 2020 17:17:05 -0500
+Received: from mail-pl1-x644.google.com (mail-pl1-x644.google.com [IPv6:2607:f8b0:4864:20::644])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4CA5DC061282
+        for <linux-arm-msm@vger.kernel.org>; Fri, 11 Dec 2020 14:15:47 -0800 (PST)
+Received: by mail-pl1-x644.google.com with SMTP id j1so5299109pld.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 11 Dec 2020 14:15:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=N3hybBp7EUYCA3vGL47ftPnar6+AkmdADxaaYRIyKZE=;
-        b=IqdIWdK3AZ7RmSWUrbjPiTZk4GWmPtRYtLtdE0Jsap6eA0nC323cZ2zPDMc5rybJWm
-         BWQHUnL3QHMdd6pRWBI7vqfgRxMNINHucXyUgMQd9GuK4QQ5etVIbLwsAQI5s6mrHnY1
-         3dTYROicSUrPOlBRkw2GYtIAARt4xkssKoB5M=
+        bh=SCtCEdisGnwJ/m/Si2p+dicRUYBBDnixrXm0wKTUER8=;
+        b=ZEW5iU4Fxh9N+lYYP0JBBAkU7IeYPA0hVyMVR63zKm8fhxD2mbwwvd1rQtQOXthW4L
+         olxC/jeh/INp5y1veB8q6jCktNIYK54dpVYvno7fBxw7/g2jM3d/V1Z95t0aBqbkLnz6
+         IgUegy8umBQamsjVkhgOpEN055Z9uFuAUvjbE=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=N3hybBp7EUYCA3vGL47ftPnar6+AkmdADxaaYRIyKZE=;
-        b=ZxYyBabX1yO7tsHMbOmb5m260+OrFZpdzzd4CZO34TlQT8TOe6KhKKIOFz9BUHg9XN
-         DR60liir85eGYZm8C4ZmV7+lH/pLiIrlPjP9y+XfkKYpktLVcfPUmt8ZTmzH5J5zIv35
-         +6L8Wli1jU7wxbtk7wbP1HJUwJeTS7GBa8pdkNpfgGG8K7jsj7HVjl/Jxr8zmqS9MrkW
-         v9ZXHCCOUq5DX7DVJWpvfoaEougRo14ZUt8tj4x6LT1HPkA6DBx3bNkUJkedrD127bgr
-         5fuQKeiHn4JOa3So97RJAlXM30EI7BT9qeHvryRe54iIYwEceO69gEZkhSJ1a1wH9o7P
-         bKCw==
-X-Gm-Message-State: AOAM531BhXV/lNfcRa48/zyyz83t3wCp+p4vrCq7vFfXpOOl/BgRefLj
-        qa3FOGKoligw1vgBCeyu4H7G5g==
-X-Google-Smtp-Source: ABdhPJwcduZHs4/bikaZX1IttJEerdlqSiW7Uwf3rjhmzSFcy5PFsOMxMelHaiFKZG0ZUXeAR3aDNw==
-X-Received: by 2002:a17:902:a504:b029:da:fbca:d49 with SMTP id s4-20020a170902a504b02900dafbca0d49mr6614064plq.72.1607724945117;
-        Fri, 11 Dec 2020 14:15:45 -0800 (PST)
+        bh=SCtCEdisGnwJ/m/Si2p+dicRUYBBDnixrXm0wKTUER8=;
+        b=eFWhg7qbU3Gvr5s7taBkzurH3xoKgBXXga4huWfeXWiKLIMzmxRm/a8K22y+LYaa4a
+         cpr9w/w2/pI+kum456zNNA3rCw549aMiuk0vq5WGhmGk0XIt5LdoJXCke8ein8E4Xjpw
+         vLI8BC70dWxtK2h6myPiczpkOY+kvpgi5xpju6i3IbrSIuSjAMzB+JtMAqt+LC5MXRDC
+         ZLTCnPQ5jOm98oj2T73nOahLMjbhPF3CUvUB9Yv2mmElBjswMQPzPQ3j329Xza44ZurX
+         IcbEi5RcbiHmBK44rXuL9wPka5WLXYkqGBvcgr9boGLvxNLy7f2CzWD4MVntLmqeWKZl
+         m5wQ==
+X-Gm-Message-State: AOAM532TC1eqB6bLvVUbUl8eC2tpDUTvZkb14ErF4bbGSDF7jg4ypVc/
+        vny0vt7BmlIiHgx7uHqiVtO8Mw==
+X-Google-Smtp-Source: ABdhPJx0nEWDmBvQpziG9Q3KncbTdZ0FTJoDcPmTQQweqDdXF16kPufiackPupAAHqo28Bb3OH9Edw==
+X-Received: by 2002:a17:902:654f:b029:da:347d:7af3 with SMTP id d15-20020a170902654fb02900da347d7af3mr12764004pln.18.1607724946834;
+        Fri, 11 Dec 2020 14:15:46 -0800 (PST)
 Received: from tictac2.mtv.corp.google.com ([2620:15c:202:1:42b0:34ff:fe3d:58e6])
-        by smtp.gmail.com with ESMTPSA id s21sm11832981pgk.52.2020.12.11.14.15.43
+        by smtp.gmail.com with ESMTPSA id s21sm11832981pgk.52.2020.12.11.14.15.45
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 11 Dec 2020 14:15:44 -0800 (PST)
+        Fri, 11 Dec 2020 14:15:46 -0800 (PST)
 From:   Douglas Anderson <dianders@chromium.org>
 To:     Marc Zyngier <maz@kernel.org>,
         Thomas Gleixner <tglx@linutronix.de>,
@@ -60,9 +60,9 @@ Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
         linux-gpio@vger.kernel.org,
         Douglas Anderson <dianders@chromium.org>,
         Andy Gross <agross@kernel.org>, linux-kernel@vger.kernel.org
-Subject: [PATCH v4 2/4] pinctrl: qcom: Allow SoCs to specify a GPIO function that's not 0
-Date:   Fri, 11 Dec 2020 14:15:36 -0800
-Message-Id: <20201211141514.v4.2.I3ad184e3423d8e479bc3e86f5b393abb1704a1d1@changeid>
+Subject: [PATCH v4 3/4] pinctrl: qcom: Don't clear pending interrupts when enabling
+Date:   Fri, 11 Dec 2020 14:15:37 -0800
+Message-Id: <20201211141514.v4.3.I7cf3019783720feb57b958c95c2b684940264cd1@changeid>
 X-Mailer: git-send-email 2.29.2.576.ga3fc446d84-goog
 In-Reply-To: <20201211141514.v4.1.I2702919afc253e2a451bebc3b701b462b2d22344@changeid>
 References: <20201211141514.v4.1.I2702919afc253e2a451bebc3b701b462b2d22344@changeid>
@@ -72,57 +72,144 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-There's currently a comment in the code saying function 0 is GPIO.
-Instead of hardcoding it, let's add a member where an SoC can specify
-it.  No known SoCs use a number other than 0, but this just makes the
-code clearer.  NOTE: no SoC code needs to be updated since we can rely
-on zero-initialization.
+In Linux, if a driver does disable_irq() and later does enable_irq()
+on its interrupt, I believe it's expecting these properties:
+* If an interrupt was pending when the driver disabled then it will
+  still be pending after the driver re-enables.
+* If an edge-triggered interrupt comes in while an interrupt is
+  disabled it should assert when the interrupt is re-enabled.
 
+If you think that the above sounds a lot like the disable_irq() and
+enable_irq() are supposed to be masking/unmasking the interrupt
+instead of disabling/enabling it then you've made an astute
+observation.  Specifically when talking about interrupts, "mask"
+usually means to stop posting interrupts but keep tracking them and
+"disable" means to fully shut off interrupt detection.  It's
+unfortunate that this is so confusing, but presumably this is all the
+way it is for historical reasons.
+
+Perhaps more confusing than the above is that, even though clients of
+IRQs themselves don't have a way to request mask/unmask
+vs. disable/enable calls, IRQ chips themselves can implement both.
+...and yet more confusing is that if an IRQ chip implements
+disable/enable then they will be called when a client driver calls
+disable_irq() / enable_irq().
+
+It does feel like some of the above could be cleared up.  However,
+without any other core interrupt changes it should be clear that when
+an IRQ chip gets a request to "disable" an IRQ that it has to treat it
+like a mask of that IRQ.
+
+In any case, after that long interlude you can see that the "unmask
+and clear" can break things.  Maulik tried to fix it so that we no
+longer did "unmask and clear" in commit 71266d9d3936 ("pinctrl: qcom:
+Move clearing pending IRQ to .irq_request_resources callback"), but it
+only handled the PDC case (it also had problems, but that's the
+subject of another patch).  Let's fix this for the non-PDC case.
+
+From my understanding the source of the phantom interrupt in the
+non-PDC case was the one that could have been introduced in
+msm_gpio_irq_set_type().  Let's handle that one and then get rid of
+the clear.
+
+Fixes: 4b7618fdc7e6 ("pinctrl: qcom: Add irq_enable callback for msm gpio")
 Signed-off-by: Douglas Anderson <dianders@chromium.org>
-Reviewed-by: Stephen Boyd <swboyd@chromium.org>
 ---
+I don't have lots of good test cases here, so hopefully someone from
+Qualcomm can confirm that this works well for them and there isn't
+some other phantom interrupt source that I'm not aware of.
 
-(no changes since v1)
+Changes in v4:
+- ("pinctrl: qcom: Don't clear pending interrupts when enabling") split for v4.
 
- drivers/pinctrl/qcom/pinctrl-msm.c | 4 ++--
- drivers/pinctrl/qcom/pinctrl-msm.h | 2 ++
- 2 files changed, 4 insertions(+), 2 deletions(-)
+ drivers/pinctrl/qcom/pinctrl-msm.c | 32 +++++++++++++-----------------
+ 1 file changed, 14 insertions(+), 18 deletions(-)
 
 diff --git a/drivers/pinctrl/qcom/pinctrl-msm.c b/drivers/pinctrl/qcom/pinctrl-msm.c
-index 77a25bdf0da7..588df91274e2 100644
+index 588df91274e2..f785646d1df7 100644
 --- a/drivers/pinctrl/qcom/pinctrl-msm.c
 +++ b/drivers/pinctrl/qcom/pinctrl-msm.c
-@@ -210,8 +210,8 @@ static int msm_pinmux_request_gpio(struct pinctrl_dev *pctldev,
- 	if (!g->nfuncs)
- 		return 0;
- 
--	/* For now assume function 0 is GPIO because it always is */
--	return msm_pinmux_set_mux(pctldev, g->funcs[0], offset);
-+	return msm_pinmux_set_mux(pctldev,
-+				  g->funcs[pctrl->soc->gpio_func], offset);
+@@ -774,7 +774,7 @@ static void msm_gpio_irq_mask(struct irq_data *d)
+ 	raw_spin_unlock_irqrestore(&pctrl->lock, flags);
  }
  
- static const struct pinmux_ops msm_pinmux_ops = {
-diff --git a/drivers/pinctrl/qcom/pinctrl-msm.h b/drivers/pinctrl/qcom/pinctrl-msm.h
-index 333f99243c43..e31a5167c91e 100644
---- a/drivers/pinctrl/qcom/pinctrl-msm.h
-+++ b/drivers/pinctrl/qcom/pinctrl-msm.h
-@@ -118,6 +118,7 @@ struct msm_gpio_wakeirq_map {
-  * @wakeirq_dual_edge_errata: If true then GPIOs using the wakeirq_map need
-  *                            to be aware that their parent can't handle dual
-  *                            edge interrupts.
-+ * @gpio_func: Which function number is GPIO (usually 0).
-  */
- struct msm_pinctrl_soc_data {
- 	const struct pinctrl_pin_desc *pins;
-@@ -134,6 +135,7 @@ struct msm_pinctrl_soc_data {
- 	const struct msm_gpio_wakeirq_map *wakeirq_map;
- 	unsigned int nwakeirq_map;
- 	bool wakeirq_dual_edge_errata;
-+	unsigned int gpio_func;
- };
+-static void msm_gpio_irq_clear_unmask(struct irq_data *d, bool status_clear)
++static void msm_gpio_irq_unmask(struct irq_data *d)
+ {
+ 	struct gpio_chip *gc = irq_data_get_irq_chip_data(d);
+ 	struct msm_pinctrl *pctrl = gpiochip_get_data(gc);
+@@ -792,17 +792,6 @@ static void msm_gpio_irq_clear_unmask(struct irq_data *d, bool status_clear)
  
- extern const struct dev_pm_ops msm_pinctrl_dev_pm_ops;
+ 	raw_spin_lock_irqsave(&pctrl->lock, flags);
+ 
+-	if (status_clear) {
+-		/*
+-		 * clear the interrupt status bit before unmask to avoid
+-		 * any erroneous interrupts that would have got latched
+-		 * when the interrupt is not in use.
+-		 */
+-		val = msm_readl_intr_status(pctrl, g);
+-		val &= ~BIT(g->intr_status_bit);
+-		msm_writel_intr_status(val, pctrl, g);
+-	}
+-
+ 	val = msm_readl_intr_cfg(pctrl, g);
+ 	val |= BIT(g->intr_raw_status_bit);
+ 	val |= BIT(g->intr_enable_bit);
+@@ -822,7 +811,7 @@ static void msm_gpio_irq_enable(struct irq_data *d)
+ 		irq_chip_enable_parent(d);
+ 
+ 	if (!test_bit(d->hwirq, pctrl->skip_wake_irqs))
+-		msm_gpio_irq_clear_unmask(d, true);
++		msm_gpio_irq_unmask(d);
+ }
+ 
+ static void msm_gpio_irq_disable(struct irq_data *d)
+@@ -837,11 +826,6 @@ static void msm_gpio_irq_disable(struct irq_data *d)
+ 		msm_gpio_irq_mask(d);
+ }
+ 
+-static void msm_gpio_irq_unmask(struct irq_data *d)
+-{
+-	msm_gpio_irq_clear_unmask(d, false);
+-}
+-
+ /**
+  * msm_gpio_update_dual_edge_parent() - Prime next edge for IRQs handled by parent.
+  * @d: The irq dta.
+@@ -936,6 +920,7 @@ static int msm_gpio_irq_set_type(struct irq_data *d, unsigned int type)
+ 	struct msm_pinctrl *pctrl = gpiochip_get_data(gc);
+ 	const struct msm_pingroup *g;
+ 	unsigned long flags;
++	bool was_enabled;
+ 	u32 val;
+ 
+ 	if (msm_gpio_needs_dual_edge_parent_workaround(d, type)) {
+@@ -997,6 +982,7 @@ static int msm_gpio_irq_set_type(struct irq_data *d, unsigned int type)
+ 	 * could cause the INTR_STATUS to be set for EDGE interrupts.
+ 	 */
+ 	val = msm_readl_intr_cfg(pctrl, g);
++	was_enabled = val & BIT(g->intr_raw_status_bit);
+ 	val |= BIT(g->intr_raw_status_bit);
+ 	if (g->intr_detection_width == 2) {
+ 		val &= ~(3 << g->intr_detection_bit);
+@@ -1046,6 +1032,16 @@ static int msm_gpio_irq_set_type(struct irq_data *d, unsigned int type)
+ 	}
+ 	msm_writel_intr_cfg(val, pctrl, g);
+ 
++	/*
++	 * The first time we set RAW_STATUS_EN it could trigger an interrupt.
++	 * Clear it.  This is safe because we have IRQCHIP_SET_TYPE_MASKED.
++	 */
++	if (!was_enabled) {
++		val = msm_readl_intr_status(pctrl, g);
++		val &= ~BIT(g->intr_status_bit);
++		msm_writel_intr_status(val, pctrl, g);
++	}
++
+ 	if (test_bit(d->hwirq, pctrl->dual_edge_irqs))
+ 		msm_gpio_update_dual_edge_pos(pctrl, g, d);
+ 
 -- 
 2.29.2.576.ga3fc446d84-goog
 
