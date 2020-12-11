@@ -2,160 +2,119 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A2B322D7C9D
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Dec 2020 18:18:14 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 242F82D7D1E
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Dec 2020 18:40:02 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2394954AbgLKRQ3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 11 Dec 2020 12:16:29 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42164 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2394967AbgLKRQO (ORCPT
+        id S2395459AbgLKRjV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 11 Dec 2020 12:39:21 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([63.128.21.124]:56845 "EHLO
+        us-smtp-delivery-124.mimecast.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S2395443AbgLKRjJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 11 Dec 2020 12:16:14 -0500
-Received: from mail-vk1-xa41.google.com (mail-vk1-xa41.google.com [IPv6:2607:f8b0:4864:20::a41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6D4C9C0613D3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 11 Dec 2020 09:15:34 -0800 (PST)
-Received: by mail-vk1-xa41.google.com with SMTP id u67so2238070vkb.5
-        for <linux-arm-msm@vger.kernel.org>; Fri, 11 Dec 2020 09:15:34 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=cUEgiLmSeI6Q1u1HNVZh1Cnm5uFnZ0d8AVhdmGbuyUU=;
-        b=ECZu43wU6hEpbMZX8fA/dHxJuqO3lcX10+RLeEn0tEt3xCAQ7+oLpuN6PqwjoogUlG
-         OXNXT4DvyqxtMkdyImXZGKOZQ6polk+7kMOLxZbxD2BDmWqLngo+XoQS9vD/1gLYHQJV
-         F2vbXzsOz2DmdZgAd+UrSrOjox8gABBuz8yEg=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=cUEgiLmSeI6Q1u1HNVZh1Cnm5uFnZ0d8AVhdmGbuyUU=;
-        b=uEgnjMflX0J5lmXN60468J32l+fub1S4RtXH9Sw82ZrG362JKam2axS6yEvMiCDaXH
-         VyOjHQzKW3+rgfg4VHT+sIKTJKzndaG0aGanzbaWZOEfZvKYNmnWU5GsFLQFm/S7kJEn
-         +8Pc6/jsrW3nAfhjfTUUsnJQ5v1HSKXuLTKR839SFhV5DfkJqL6e2PFwzHS5GnwX7eBn
-         7aChUYQjMuOHIHdvX8KQOPQQ1WINrGK81LNQ94zQIgoiRBvgQihpjGVESIGxV6TquN4W
-         c/qAqlSercn3CT9m1WGhSveClgBuKks0NE7P6/PKk1u0ukYNzREZwTARvAxbJdigLOpf
-         mMvg==
-X-Gm-Message-State: AOAM530PZWBeMTKNDfFM3YM7CBd6b6f6gA8iP/U8PdmMbzOGzSdUhEyw
-        Ax++cgmTGvoQoSM9SodcVe5K6t7saEgJpQ==
-X-Google-Smtp-Source: ABdhPJz2FOBR7Qvc5GFgmBO6ylzoTIaoYq9b1UXnohV/lJYTEt01d4On97Sh4Ns4T8kFzoPc3e5E5A==
-X-Received: by 2002:a1f:5ecf:: with SMTP id s198mr14950499vkb.12.1607706933400;
-        Fri, 11 Dec 2020 09:15:33 -0800 (PST)
-Received: from mail-vs1-f49.google.com (mail-vs1-f49.google.com. [209.85.217.49])
-        by smtp.gmail.com with ESMTPSA id q23sm1053197vsm.27.2020.12.11.09.15.32
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 11 Dec 2020 09:15:32 -0800 (PST)
-Received: by mail-vs1-f49.google.com with SMTP id h6so5156516vsr.6
-        for <linux-arm-msm@vger.kernel.org>; Fri, 11 Dec 2020 09:15:32 -0800 (PST)
-X-Received: by 2002:a67:bd01:: with SMTP id y1mr7561461vsq.49.1607706931955;
- Fri, 11 Dec 2020 09:15:31 -0800 (PST)
-MIME-Version: 1.0
-References: <20201210132745.v3.1.Iec3430c7d3c2a29262695edef7b82a14aaa567e5@changeid>
- <757616c0-8111-c7db-893b-31931a9d4ed0@intel.com>
-In-Reply-To: <757616c0-8111-c7db-893b-31931a9d4ed0@intel.com>
-From:   Doug Anderson <dianders@chromium.org>
-Date:   Fri, 11 Dec 2020 09:15:20 -0800
-X-Gmail-Original-Message-ID: <CAD=FV=VKmhqiP=spGm7McRL1tjFCKjXk8V91sKU1PvL7v_85KA@mail.gmail.com>
-Message-ID: <CAD=FV=VKmhqiP=spGm7McRL1tjFCKjXk8V91sKU1PvL7v_85KA@mail.gmail.com>
-Subject: Re: [PATCH v3] mmc: sdhci-msm: Warn about overclocking SD/MMC
-To:     Adrian Hunter <adrian.hunter@intel.com>
-Cc:     Ulf Hansson <ulf.hansson@linaro.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Veerabhadrarao Badiganti <vbadigan@codeaurora.org>,
-        Taniya Das <tdas@codeaurora.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        LKML <linux-kernel@vger.kernel.org>,
-        Linux MMC List <linux-mmc@vger.kernel.org>
+        Fri, 11 Dec 2020 12:39:09 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+        s=mimecast20190719; t=1607708262;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         content-transfer-encoding:content-transfer-encoding:
+         in-reply-to:in-reply-to:references:references;
+        bh=vOsykB63req6cE/5LoOyLCDL6IQs90px0MUJ01HwVJI=;
+        b=gYYJexBPQDBsAfUxcNxve9joKX1hnFLvKu6TKGtOyCcCHxubwPJWp6NRKQwIGvJVYYap3H
+        gCZ9KdPAMDbhww7LvIn9k0szfNji5O8GUVZZroigamqMX/wgKhduJqcHzqvC5+/at8Y1OR
+        1Y3FABdffn0sY9vsA5swBV9/S1QQGRc=
+Received: from mimecast-mx01.redhat.com (mimecast-mx01.redhat.com
+ [209.132.183.4]) (Using TLS) by relay.mimecast.com with ESMTP id
+ us-mta-492-oRLqvIbJPGWTWyZB_yPhDA-1; Fri, 11 Dec 2020 12:37:38 -0500
+X-MC-Unique: oRLqvIbJPGWTWyZB_yPhDA-1
+Received: from smtp.corp.redhat.com (int-mx01.intmail.prod.int.phx2.redhat.com [10.5.11.11])
+        (using TLSv1.2 with cipher AECDH-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        by mimecast-mx01.redhat.com (Postfix) with ESMTPS id EDC97107ACE4;
+        Fri, 11 Dec 2020 17:37:36 +0000 (UTC)
+Received: from localhost.localdomain (unknown [10.10.110.58])
+        by smtp.corp.redhat.com (Postfix) with ESMTP id 590E96F45B;
+        Fri, 11 Dec 2020 17:37:35 +0000 (UTC)
+Message-ID: <81dfd08b90f841194237e074aaa3d57cada7afad.camel@redhat.com>
+Subject: Re: [PATCH v17 3/3] bus: mhi: Add userspace client interface driver
+From:   Dan Williams <dcbw@redhat.com>
+To:     Greg KH <gregkh@linuxfoundation.org>,
+        Hemant Kumar <hemantk@codeaurora.org>
+Cc:     manivannan.sadhasivam@linaro.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, jhugo@codeaurora.org,
+        bbhatt@codeaurora.org, loic.poulain@linaro.org,
+        netdev@vger.kernel.org
+Date:   Fri, 11 Dec 2020 11:37:34 -0600
+In-Reply-To: <X9MjXWABgdJIpyIw@kroah.com>
+References: <1607670251-31733-1-git-send-email-hemantk@codeaurora.org>
+         <1607670251-31733-4-git-send-email-hemantk@codeaurora.org>
+         <X9MjXWABgdJIpyIw@kroah.com>
 Content-Type: text/plain; charset="UTF-8"
+User-Agent: Evolution 3.36.5 (3.36.5-1.fc32) 
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
+X-Scanned-By: MIMEDefang 2.79 on 10.5.11.11
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+On Fri, 2020-12-11 at 08:44 +0100, Greg KH wrote:
+> On Thu, Dec 10, 2020 at 11:04:11PM -0800, Hemant Kumar wrote:
+> > This MHI client driver allows userspace clients to transfer
+> > raw data between MHI device and host using standard file
+> > operations.
+> > Driver instantiates UCI device object which is associated to device
+> > file node. UCI device object instantiates UCI channel object when
+> > device
+> > file node is opened. UCI channel object is used to manage MHI
+> > channels
+> > by calling MHI core APIs for read and write operations. MHI
+> > channels
+> > are started as part of device open(). MHI channels remain in start
+> > state until last release() is called on UCI device file node.
+> > Device
+> > file node is created with format
+> > 
+> > /dev/<mhi_device_name>
+> > 
+> > Currently it supports QMI channel. libqmi is userspace MHI client
+> > which
+> > communicates to a QMI service using QMI channel. libqmi is a glib-
+> > based
+> > library for talking to WWAN modems and devices which speaks QMI
+> > protocol.
+> > For more information about libqmi please refer
+> > https://www.freedesktop.org/wiki/Software/libqmi/
+> 
+> This says _what_ this is doing, but not _why_.
+> 
+> Why do you want to circumvent the normal user/kernel apis for this
+> type
+> of device and move the normal network handling logic out to
+> userspace?
+> What does that help with?  What does the current in-kernel api lack
+> that
+> this userspace interface is going to solve, and why can't the in-
+> kernel
+> api solve it instead?
+> 
+> You are pushing a common user/kernel api out of the kernel here, to
+> become very device-specific, with no apparent justification as to why
+> this is happening.
+> 
+> Also, because you are going around the existing network api, I will
+> need
+> the networking maintainers to ack this type of patch.
 
-On Thu, Dec 10, 2020 at 9:56 PM Adrian Hunter <adrian.hunter@intel.com> wrote:
->
-> On 10/12/20 11:27 pm, Douglas Anderson wrote:
-> > As talked about in commit 5e4b7e82d497 ("clk: qcom: gcc-sdm845: Use
-> > floor ops for sdcc clks"), most clocks handled by the Qualcomm clock
-> > drivers are rounded _up_ by default instead of down.  We should make
-> > sure SD/MMC clocks are always rounded down in the clock drivers.
-> > Let's add a warning in the Qualcomm SDHCI driver to help catch the
-> > problem.
-> >
-> > This would have saved a bunch of time [1].
-> >
-> > [1] http://lore.kernel.org/r/20201210102234.1.I096779f219625148900fc984dd0084ed1ba87c7f@changeid
-> >
-> > Suggested-by: Stephen Boyd <swboyd@chromium.org>
-> > Signed-off-by: Douglas Anderson <dianders@chromium.org>
-> > ---
-> >
-> > Changes in v3:
-> > - Proper printf format code.
-> >
-> > Changes in v2:
-> > - Store rate in unsigned long, not unsigned int.
-> > - Reuse the clk_get_rate() in the later print.
-> >
-> >  drivers/mmc/host/sdhci-msm.c | 15 +++++++++++++--
-> >  1 file changed, 13 insertions(+), 2 deletions(-)
-> >
-> > diff --git a/drivers/mmc/host/sdhci-msm.c b/drivers/mmc/host/sdhci-msm.c
-> > index 3451eb325513..50beb407dbe9 100644
-> > --- a/drivers/mmc/host/sdhci-msm.c
-> > +++ b/drivers/mmc/host/sdhci-msm.c
-> > @@ -353,6 +353,7 @@ static void msm_set_clock_rate_for_bus_mode(struct sdhci_host *host,
-> >       struct sdhci_msm_host *msm_host = sdhci_pltfm_priv(pltfm_host);
-> >       struct mmc_ios curr_ios = host->mmc->ios;
-> >       struct clk *core_clk = msm_host->bulk_clks[0].clk;
-> > +     unsigned long achieved_rate;
-> >       int rc;
-> >
-> >       clock = msm_get_clock_rate_for_bus_mode(host, clock);
-> > @@ -363,10 +364,20 @@ static void msm_set_clock_rate_for_bus_mode(struct sdhci_host *host,
-> >                      curr_ios.timing);
-> >               return;
-> >       }
-> > +
-> > +     /*
-> > +      * Qualcomm clock drivers by default round clock _up_ if they can't
-> > +      * make the requested rate.  This is not good for SD.  Yell if we
-> > +      * encounter it.
-> > +      */
-> > +     achieved_rate = clk_get_rate(core_clk);
-> > +     if (achieved_rate > clock)
-> > +             pr_warn("%s: Card appears overclocked; req %u Hz, actual %lu Hz\n",
-> > +                     mmc_hostname(host->mmc), clock, achieved_rate);
->
-> How does a warning help?
+Just to re-iterate: QMI ~= AT commands ~= MBIM (not quite, but same
+level)
 
-The actual fixes are made in the clock drivers, but this seems to be a
-common problem in Qualcomm clock drivers.  ...so while this doesn't
-actually fix the problem, it hopefully calls enough attention that
-someone will know to fix it in the clock driver.
+We already do QMI-over-USB, or AT-over-CDC-ACM. This is QMI-over-MHI.
 
+It's not networking data plane. It's WWAN device configuration.
 
-> Also, did you consider setting host->mmc->actual_clock
+There are no current kernel APIs for this, and I really don't think we
+want there to be. The API surface is *huge* and we definitely don't
+want that in-kernel.
 
-That makes sense, though I think logically it's a separate change.
-I'll add it as patch #2 in the series.  It's not as trivial as I would
-have thought.  ;-)
+Dan
 
--Doug
-
->
-> > +
-> >       msm_host->clk_rate = clock;
-> >       pr_debug("%s: Setting clock at rate %lu at timing %d\n",
-> > -              mmc_hostname(host->mmc), clk_get_rate(core_clk),
-> > -              curr_ios.timing);
-> > +              mmc_hostname(host->mmc), achieved_rate, curr_ios.timing);
-> >  }
-> >
-> >  /* Platform specific tuning */
-> >
->
