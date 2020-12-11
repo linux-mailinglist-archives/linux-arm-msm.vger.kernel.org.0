@@ -2,73 +2,125 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 840EB2D78E9
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Dec 2020 16:15:59 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 68F482D7925
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Dec 2020 16:26:52 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2406588AbgLKPOu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 11 Dec 2020 10:14:50 -0500
-Received: from mail.kernel.org ([198.145.29.99]:39904 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2406549AbgLKPO1 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 11 Dec 2020 10:14:27 -0500
-Date:   Fri, 11 Dec 2020 19:48:41 +0530
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1607696329;
-        bh=AaWAHxLcS4HDS5ZqYcRul/fH6LvUc3a2LNed66cZd5I=;
-        h=From:To:Cc:Subject:References:In-Reply-To:From;
-        b=al9AwndRpsjir4HzS7G5z8/froC/N0nBPqiDCd0gqHQq/W4OiLEKWj7wIbGlBHvib
-         DjeIDWs1Nv04gROQFTR0XOY2dpn6P2AacCA7Ad4UKUdp/0CNyM6PPxncf6+lCDGPgN
-         T4sj7PcnEKMB7GKXMMudgSx378l6AZT/vSx8EkFQhQt/MK4p3lvp7m5hySv/rTU31k
-         roLRk6FIbzUxso8sga0NsBz7Gd2X+HG4hpobTK80FyQgWA1G3RMiHPppSBrAkECAnP
-         4SyXSArKU/g7ie1IAbnzg70eADoI/vbR/qrXkoRvOiRUyF0c+tTkdef5usoHLg5aBr
-         +cWEXtJlwqZqA==
-From:   Vinod Koul <vkoul@kernel.org>
-To:     Parth Y Shah <sparth1292@gmail.com>
-Cc:     agross@kernel.org, bjorn.andersson@linaro.org,
-        dan.j.williams@intel.com, linux-arm-msm@vger.kernel.org,
-        dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] dmaengine: bam_dma: fix return of bam_dma_irq()
-Message-ID: <20201211141841.GX8403@vkoul-mobl>
-References: <1607322820-7450-1-git-send-email-sparth1292@gmail.com>
+        id S2437844AbgLKP0B (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 11 Dec 2020 10:26:01 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53400 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2437886AbgLKPZx (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 11 Dec 2020 10:25:53 -0500
+Received: from mail-wm1-x343.google.com (mail-wm1-x343.google.com [IPv6:2a00:1450:4864:20::343])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BC564C0613CF;
+        Fri, 11 Dec 2020 07:25:12 -0800 (PST)
+Received: by mail-wm1-x343.google.com with SMTP id 3so8939154wmg.4;
+        Fri, 11 Dec 2020 07:25:12 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding:content-language;
+        bh=my0v3tsRd/Mz4EIypIj37zNMuhiMI5SF6h5TpgmxpB4=;
+        b=UrzvvXJ0cz0zGNOSqpro4dW33KOVtYPq4hM2Aw+imIHgxrPqJSXTEIZSc8GjmEZ6Cl
+         9ikTpG7cWdOnKFpctkZDvJbLYS13DDwDC4/Rar1X/To9YrL4IfK0q+UQpvTv6HklUzIz
+         fiRD3G772ooaDOM2lnJ8LdsAT9gF3DcWZMPrwT2b1cZgCG3vpzQiuVs7cX7NrRnjDMEt
+         9aPhBfxpqJ/D3DmxnJbBBH+ynO61KPPpZjRx+D99HTic9fG8e5v+KmQMrYNXdATGmArc
+         5FgPiAZhUOtPK6xTTWmsB2zrqZnhL9sJL6eVj6cIqgDM4evCIOmvqkgo7neeZK92bIze
+         bBsA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding
+         :content-language;
+        bh=my0v3tsRd/Mz4EIypIj37zNMuhiMI5SF6h5TpgmxpB4=;
+        b=DDtwJ2cwffE70QgpDP7+qBaZQUYfQSzDp2twg587gSMqH9/cah7tftmvxLp96Fhtl4
+         9SMiPGApIP3HRqlzrM1wlOBMmZxah4hFu2X1RyRUWQFSmAkpJilbikfo9JXF+50XA7gW
+         WW8FBS0VhO/BswrIY74vfSa9D3CMrdm0IuHVGe9/xUMNmMSXK19uAh65meVO1WYsAbG3
+         bYoFBLw/T0mQw/8UaAFPGPHET9fetXvAm8OPsaVFwPPhckd+f70/7zV8vvvHAX9oFQLZ
+         +pbYEUtmR4HCbViTaVfHl1XKZk/s9OEWvyo4Ar0ecplkq6M6GF8vNldXjdpOwfapFvHs
+         3fGw==
+X-Gm-Message-State: AOAM531URbv4WN7p0ZHusto26W6O80IlWVcZBY3k6ah3uOTpVYrG1AuF
+        2PzWoFRj6dN1IvipPvkMqq8=
+X-Google-Smtp-Source: ABdhPJxfnTaSUGMt3qD4TxCyZ9BhVYl6DKFHubfh7itAEtAANKosHG7tXoFwD4N88bBatphcZVq9qw==
+X-Received: by 2002:a1c:a344:: with SMTP id m65mr13965395wme.108.1607700311561;
+        Fri, 11 Dec 2020 07:25:11 -0800 (PST)
+Received: from [192.168.74.106] (178-169-161-196.razgrad.ddns.bulsat.com. [178.169.161.196])
+        by smtp.gmail.com with ESMTPSA id b14sm15403083wrx.77.2020.12.11.07.25.09
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 11 Dec 2020 07:25:10 -0800 (PST)
+Subject: Re: [PATCH 12/18] ARM: dts: qcom: msm8974-samsung-klte: correct fuel
+ gauge interrupt trigger level
+To:     Krzysztof Kozlowski <krzk@kernel.org>,
+        Chanwoo Choi <cw00.choi@samsung.com>,
+        Bartlomiej Zolnierkiewicz <b.zolnierkie@samsung.com>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Lee Jones <lee.jones@linaro.org>,
+        Sebastian Reichel <sre@kernel.org>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Mark Brown <broonie@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Alessandro Zummo <a.zummo@towertech.it>,
+        Alexandre Belloni <alexandre.belloni@bootlin.com>,
+        linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-pm@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-samsung-soc@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-rtc@vger.kernel.org
+Cc:     Matheus Castello <matheus@castello.eng.br>,
+        Sebastian Krzyszkowiak <sebastian.krzyszkowiak@puri.sm>,
+        Angus Ainslie <angus@akkea.ca>,
+        Hans de Goede <hdegoede@redhat.com>
+References: <20201210212534.216197-1-krzk@kernel.org>
+ <20201210212534.216197-12-krzk@kernel.org>
+From:   Iskren Chernev <iskren.chernev@gmail.com>
+Message-ID: <9a896342-cc0b-5cdf-aefd-6fe13c540c69@gmail.com>
+Date:   Fri, 11 Dec 2020 17:25:07 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.12.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1607322820-7450-1-git-send-email-sparth1292@gmail.com>
+In-Reply-To: <20201210212534.216197-12-krzk@kernel.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Content-Language: en-US
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 07-12-20, 12:03, Parth Y Shah wrote:
-> While performing suspend/resume, we were getting below kernel crash.
-> 
-> [   54.541672] [FTS][Info]gesture suspend...
-> [   54.605256] [FTS][Error][GESTURE]Enter into gesture(suspend) failed!
-> [   54.605256]
-> [   58.345850] irq event 10: bogus return value fffffff3
-> ......
-> 
-> [   58.345966] [<ffff0000080830f0>] el1_irq+0xb0/0x124
-> [   58.345971] [<ffff000008085360>] arch_cpu_idle+0x10/0x18
-> [   58.345975] [<ffff0000081077f4>] do_idle+0x1ac/0x1e0
-> [   58.345979] [<ffff0000081079c8>] cpu_startup_entry+0x20/0x28
-> [   58.345983] [<ffff000008a80ed0>] rest_init+0xd0/0xdc
-> [   58.345988] [<ffff0000091c0b48>] start_kernel+0x390/0x3a4
-> [   58.345990] handlers:
-> [   58.345994] [<ffff0000085120d0>] bam_dma_irq
-> 
-> The reason for the crash we found is, bam_dma_irq() was returning
-> negative value when the device resumes in some conditions.
-> 
-> In addition, the irq handler should have one of the below return values.
-> 
-> IRQ_NONE            interrupt was not from this device or was not handled
-> IRQ_HANDLED         interrupt was handled by this device
-> IRQ_WAKE_THREAD     handler requests to wake the handler thread
-> 
-> Therefore, to resolve this crash, we have changed the return value to
-> IRQ_NONE.
 
-Applied, thanks
+On 12/10/20 11:25 PM, Krzysztof Kozlowski wrote:
+ > The Maxim fuel gauge datasheets describe the interrupt line as active
+ > low with a requirement of acknowledge from the CPU.  The falling edge
+ > interrupt will mostly work but it's not correct.
+ >
+ > Fixes: da8d46992e67 ("ARM: dts: qcom: msm8974-klte: Add fuel gauge")
+ > Signed-off-by: Krzysztof Kozlowski <krzk@kernel.org>
+ > ---
+ >  arch/arm/boot/dts/qcom-msm8974-samsung-klte.dts | 2 +-
+ >  1 file changed, 1 insertion(+), 1 deletion(-)
+ >
+ > diff --git a/arch/arm/boot/dts/qcom-msm8974-samsung-klte.dts 
+b/arch/arm/boot/dts/qcom-msm8974-samsung-klte.dts
+ > index 97352de91314..64a3fdb79539 100644
+ > --- a/arch/arm/boot/dts/qcom-msm8974-samsung-klte.dts
+ > +++ b/arch/arm/boot/dts/qcom-msm8974-samsung-klte.dts
+ > @@ -691,7 +691,7 @@ fuelgauge@36 {
+ >              maxim,rcomp = /bits/ 8 <0x56>;
+ >
+ >              interrupt-parent = <&pma8084_gpios>;
+ > -            interrupts = <21 IRQ_TYPE_EDGE_FALLING>;
+ > +            interrupts = <21 IRQ_TYPE_LEVEL_LOW>;
+ >
+ >              pinctrl-names = "default";
+ >              pinctrl-0 = <&fuelgauge_pin>;
 
--- 
-~Vinod
+After testing this patch + the rfc modifying 17040 driver I can confirm it
+works on the klte. Also, according to the max17048 datasheet, the ALRT pin
+is active low, so everything is in order.
+
+Acked-By: Iskren Chernev <iskren.chernev@gmail.com>
+Tested-By: Iskren Chernev <iskren.chernev@gmail.com>
+
