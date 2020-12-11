@@ -2,33 +2,33 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 21F5A2D7FD4
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Dec 2020 21:18:07 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B5CF22D7FEC
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Dec 2020 21:24:55 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729593AbgLKURU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 11 Dec 2020 15:17:20 -0500
-Received: from m43-15.mailgun.net ([69.72.43.15]:45909 "EHLO
-        m43-15.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728337AbgLKUQv (ORCPT
+        id S2404117AbgLKUYQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 11 Dec 2020 15:24:16 -0500
+Received: from so254-31.mailgun.net ([198.61.254.31]:21028 "EHLO
+        so254-31.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2388109AbgLKUYA (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 11 Dec 2020 15:16:51 -0500
+        Fri, 11 Dec 2020 15:24:00 -0500
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1607717788; h=Content-Transfer-Encoding: Content-Type:
+ s=smtp; t=1607718216; h=Content-Transfer-Encoding: Content-Type:
  In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
- Subject: Sender; bh=sJ4VnYUri+EPbI48vwruplqhvQgDu3kPpD7R0zYj0bU=; b=g+ycPErlSsON/T1LVhm0aSnk6tAEV5+npxmy3xsuZcYS2NOyccacOQaxcN/CyHKy4kh4heRp
- zAHk0SDwNx69+np0lxu/2TV2jtmFjpzx/6+Vig2PI1Tl0qZK+ZAfdwnRLNyeqzyu5D0THGkX
- Mt/vZcKLmal1zj9aJOEMZO9Lgqs=
-X-Mailgun-Sending-Ip: 69.72.43.15
+ Subject: Sender; bh=TtDM/Jx0hiF1fch4Y0emxyouhcaWhCiI3ntEwBQTXN0=; b=hRiImgNi5gBDAd7ScCgNXR6HBm32V96KP9OtOs8zZrlPfOOhpKZr776XcNmOZawhH+0IGzCz
+ dP+z8si/MXts02TUChdxk44T/P0jJIUtAf6179G5mV8/P/o46tC0CGrq9CznbyBjLHKFw+8J
+ dvwMz6TI/nAJtj1afn2RYaFm0FI=
+X-Mailgun-Sending-Ip: 198.61.254.31
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org
  (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n02.prod.us-west-2.postgun.com with SMTP id
- 5fd3d36563480bb0d2340a47 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 11 Dec 2020 20:15:33
+ smtp-out-n04.prod.us-east-1.postgun.com with SMTP id
+ 5fd3d520f81e894c5511249c (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 11 Dec 2020 20:22:56
  GMT
 Sender: hemantk=codeaurora.org@mg.codeaurora.org
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 6789BC433ED; Fri, 11 Dec 2020 20:15:32 +0000 (UTC)
+        id 2FEA3C43461; Fri, 11 Dec 2020 20:22:56 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
@@ -39,25 +39,26 @@ Received: from [10.46.162.249] (i-global254.qualcomm.com [199.106.103.254])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
         (Authenticated sender: hemantk)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 1702BC433CA;
-        Fri, 11 Dec 2020 20:15:30 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 1702BC433CA
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 0CE57C433CA;
+        Fri, 11 Dec 2020 20:22:54 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 0CE57C433CA
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=hemantk@codeaurora.org
-Subject: Re: [PATCH v4 05/10] mhi: pci_generic: Add support for reset
+Subject: Re: [PATCH v4 06/10] mhi: pci_generic: Add suspend/resume/recovery
+ procedure
 To:     Loic Poulain <loic.poulain@linaro.org>,
         manivannan.sadhasivam@linaro.org
 Cc:     linux-arm-msm@vger.kernel.org, jhugo@codeaurora.org,
         bbhatt@codeaurora.org
 References: <1607594575-31590-1-git-send-email-loic.poulain@linaro.org>
- <1607594575-31590-6-git-send-email-loic.poulain@linaro.org>
+ <1607594575-31590-7-git-send-email-loic.poulain@linaro.org>
 From:   Hemant Kumar <hemantk@codeaurora.org>
-Message-ID: <35126c4f-fd60-9859-be8f-0529a0c392f5@codeaurora.org>
-Date:   Fri, 11 Dec 2020 12:15:30 -0800
+Message-ID: <3fd3f60c-777c-2710-92ae-1c89cda1aa38@codeaurora.org>
+Date:   Fri, 11 Dec 2020 12:22:54 -0800
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
  Thunderbird/68.10.0
 MIME-Version: 1.0
-In-Reply-To: <1607594575-31590-6-git-send-email-loic.poulain@linaro.org>
+In-Reply-To: <1607594575-31590-7-git-send-email-loic.poulain@linaro.org>
 Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-US
 Content-Transfer-Encoding: 7bit
@@ -65,224 +66,90 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
 Hi Loic,
+
 On 12/10/20 2:02 AM, Loic Poulain wrote:
-> Add support for resetting the device, reset can be triggered in case
-> of error or manually via sysfs (/sys/bus/pci/devices/*/reset).
+> Add support for system wide suspend/resume. During suspend, MHI
+> device controller must be put in M3 state and PCI bus in D3 state.
+> 
+> Add a recovery procedure allowing to reinitialize the device in case
+> of error during resume steps, which can happen if device loses power
+> (and so its context) while system suspend.
 > 
 > Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
 > ---
->   drivers/bus/mhi/pci_generic.c | 120 +++++++++++++++++++++++++++++++++++++-----
->   1 file changed, 107 insertions(+), 13 deletions(-)
-> 
-> diff --git a/drivers/bus/mhi/pci_generic.c b/drivers/bus/mhi/pci_generic.c
-> index 077595c..d70d3ea 100644
-> --- a/drivers/bus/mhi/pci_generic.c
-> +++ b/drivers/bus/mhi/pci_generic.c
-> @@ -8,6 +8,7 @@
->    * Copyright (C) 2020 Linaro Ltd <loic.poulain@linaro.org>
->    */
->   
-> +#include <linux/delay.h>
->   #include <linux/device.h>
->   #include <linux/mhi.h>
->   #include <linux/module.h>
-> @@ -177,6 +178,16 @@ static const struct pci_device_id mhi_pci_id_table[] = {
->   };
->   MODULE_DEVICE_TABLE(pci, mhi_pci_id_table);
->   
-> +enum mhi_pci_device_status {
-> +	MHI_PCI_DEV_STARTED,
-> +};
-> +
-> +struct mhi_pci_device {
-> +	struct mhi_controller mhi_cntrl;
-> +	struct pci_saved_state *pci_state;
-> +	unsigned long status;
-> +};
-> +
->   static int mhi_pci_read_reg(struct mhi_controller *mhi_cntrl,
->   			    void __iomem *addr, u32 *out)
->   {
-> @@ -196,6 +207,20 @@ static void mhi_pci_status_cb(struct mhi_controller *mhi_cntrl,
->   	/* Nothing to do for now */
->   }
->   
-> +static bool mhi_pci_is_alive(struct mhi_controller *mhi_cntrl)
+>[..]
+> +int  __maybe_unused mhi_pci_suspend(struct device *dev)
+suspend API is not static but resume is. Any reason for that ?
 > +{
-> +	struct pci_dev *pdev = to_pci_dev(mhi_cntrl->cntrl_dev);
-> +	u16 vendor = 0;
+> +	struct pci_dev *pdev = to_pci_dev(dev);
+> +	struct mhi_pci_device *mhi_pdev = dev_get_drvdata(dev);
+> +	struct mhi_controller *mhi_cntrl = &mhi_pdev->mhi_cntrl;
 > +
-> +	if (pci_read_config_word(pdev, PCI_VENDOR_ID, &vendor))
-> +		return false;
+> +	cancel_work_sync(&mhi_pdev->recovery_work);
 > +
-> +	if (vendor == (u16) ~0 || vendor == 0)
-> +		return false;
+> +	/* Transition to M3 state */
+> +	mhi_pm_suspend(mhi_cntrl);
 > +
-> +	return true;
-> +}
-> +
->   static int mhi_pci_claim(struct mhi_controller *mhi_cntrl,
->   			 unsigned int bar_num, u64 dma_mask)
->   {
-> @@ -291,16 +316,20 @@ static int mhi_pci_probe(struct pci_dev *pdev, const struct pci_device_id *id)
->   {
->   	const struct mhi_pci_dev_info *info = (struct mhi_pci_dev_info *) id->driver_data;
->   	const struct mhi_controller_config *mhi_cntrl_config;
-> +	struct mhi_pci_device *mhi_pdev;
->   	struct mhi_controller *mhi_cntrl;
->   	int err;
->   
->   	dev_dbg(&pdev->dev, "MHI PCI device found: %s\n", info->name);
->   
-> -	mhi_cntrl = mhi_alloc_controller();
-> -	if (!mhi_cntrl)
-> +	mhi_pdev = devm_kzalloc(&pdev->dev, sizeof(*mhi_pdev), GFP_KERNEL);
-> +	if (!mhi_pdev)
->   		return -ENOMEM;
->   
->   	mhi_cntrl_config = info->config;
-> +	mhi_cntrl = &mhi_pdev->mhi_cntrl;
-> +
-> +	mhi_initialize_controller(mhi_cntrl);
->   	mhi_cntrl->cntrl_dev = &pdev->dev;
->   	mhi_cntrl->iova_start = 0;
->   	mhi_cntrl->iova_stop = DMA_BIT_MASK(info->dma_data_width);
-> @@ -315,17 +344,21 @@ static int mhi_pci_probe(struct pci_dev *pdev, const struct pci_device_id *id)
->   
->   	err = mhi_pci_claim(mhi_cntrl, info->bar_num, DMA_BIT_MASK(info->dma_data_width));
->   	if (err)
-> -		goto err_release;
-> +		return err;
->   
->   	err = mhi_pci_get_irqs(mhi_cntrl, mhi_cntrl_config);
->   	if (err)
-> -		goto err_release;
-> +		return err;
-> +
-> +	pci_set_drvdata(pdev, mhi_pdev);
->   
-> -	pci_set_drvdata(pdev, mhi_cntrl);
-> +	/* Have stored pci confspace at hand for restore in sudden PCI error */
 > +	pci_save_state(pdev);
-> +	mhi_pdev->pci_state = pci_store_saved_state(pdev);
->   
->   	err = mhi_register_controller(mhi_cntrl, mhi_cntrl_config);
->   	if (err)
-> -		goto err_release;
-> +		return err;
->   
->   	/* MHI bus does not power up the controller by default */
->   	err = mhi_prepare_for_power_up(mhi_cntrl);
-> @@ -340,33 +373,94 @@ static int mhi_pci_probe(struct pci_dev *pdev, const struct pci_device_id *id)
->   		goto err_unprepare;
->   	}
->   
-> +	set_bit(MHI_PCI_DEV_STARTED, &mhi_pdev->status);
+> +	pci_disable_device(pdev);
+> +	pci_wake_from_d3(pdev, true);
+> +	pci_set_power_state(pdev, PCI_D3hot);
 > +
->   	return 0;
->   
->   err_unprepare:
->   	mhi_unprepare_after_power_down(mhi_cntrl);
->   err_unregister:
->   	mhi_unregister_controller(mhi_cntrl);
-> -err_release:
-> -	mhi_free_controller(mhi_cntrl);
->   
->   	return err;
->   }
->   
->   static void mhi_pci_remove(struct pci_dev *pdev)
->   {
-> -	struct mhi_controller *mhi_cntrl = pci_get_drvdata(pdev);
-> +	struct mhi_pci_device *mhi_pdev = pci_get_drvdata(pdev);
-> +	struct mhi_controller *mhi_cntrl = &mhi_pdev->mhi_cntrl;
-> +
-> +	if (test_and_clear_bit(MHI_PCI_DEV_STARTED, &mhi_pdev->status)) {
-> +		mhi_power_down(mhi_cntrl, true);
-> +		mhi_unprepare_after_power_down(mhi_cntrl);
-> +	}
->   
-> -	mhi_power_down(mhi_cntrl, true);
-> -	mhi_unprepare_after_power_down(mhi_cntrl);
->   	mhi_unregister_controller(mhi_cntrl);
-> -	mhi_free_controller(mhi_cntrl);
->   }
->   
-> +void mhi_pci_reset_prepare(struct pci_dev *pdev)
-any reason for not making it static ?
-> +{
-> +	struct mhi_pci_device *mhi_pdev = pci_get_drvdata(pdev);
-> +	struct mhi_controller *mhi_cntrl = &mhi_pdev->mhi_cntrl;
-> +
-> +	dev_info(&pdev->dev, "reset\n");
-> +
-> +	/* Clean up MHI state */
-> +	if (test_and_clear_bit(MHI_PCI_DEV_STARTED, &mhi_pdev->status)) {
-> +		mhi_power_down(mhi_cntrl, false);
-> +		mhi_unprepare_after_power_down(mhi_cntrl);
-> +	}
-> +
-> +	/* cause internal device reset */
-> +	mhi_reg_soc_reset(mhi_cntrl);
-> +
-> +	/* Be sure device reset has been executed */
-> +	msleep(500);
-one suggestion, since you are adding this support for any generic MHI 
-controller, would it be good to make this configurable in case some 
-devcices need mode time to complete reset?
+> +	return 0;
 > +}
 > +
-> +void mhi_pci_reset_done(struct pci_dev *pdev)
-any reason for not making it static ?
+> +static int __maybe_unused mhi_pci_resume(struct device *dev)
 > +{
-> +	struct mhi_pci_device *mhi_pdev = pci_get_drvdata(pdev);
+> +	struct pci_dev *pdev = to_pci_dev(dev);
+> +	struct mhi_pci_device *mhi_pdev = dev_get_drvdata(dev);
 > +	struct mhi_controller *mhi_cntrl = &mhi_pdev->mhi_cntrl;
 > +	int err;
 > +
-> +	/* Restore initial known working PCI state */
-> +	pci_load_saved_state(pdev, mhi_pdev->pci_state);
+> +	pci_set_power_state(pdev, PCI_D0);
 > +	pci_restore_state(pdev);
+> +	pci_set_master(pdev);
 > +
-> +	/* Is device status available ? */
-> +	if (!mhi_pci_is_alive(mhi_cntrl)) {
-> +		dev_err(&pdev->dev, "reset failed\n");
-> +		return;
-> +	}
+> +	err = pci_enable_device(pdev);
+> +	if (err)
+> +		goto err_recovery;
 > +
-> +	err = mhi_prepare_for_power_up(mhi_cntrl);
+> +	/* Exit M3, transition to M0 state */
+> +	err = mhi_pm_resume(mhi_cntrl);
 > +	if (err) {
-> +		dev_err(&pdev->dev, "failed to prepare MHI controller\n");
-> +		return;
+> +		dev_err(&pdev->dev, "failed to resume device: %d\n", err);
+> +		goto err_recovery;
 > +	}
 > +
-> +	err = mhi_sync_power_up(mhi_cntrl);
-> +	if (err) {
-> +		dev_err(&pdev->dev, "failed to power up MHI controller\n");
-> +		mhi_unprepare_after_power_down(mhi_cntrl);
-> +		return;
-> +	}
+> +	return 0;
 > +
-> +	set_bit(MHI_PCI_DEV_STARTED, &mhi_pdev->status);
+> +err_recovery:
+> +	/* The device may have loose power or crashed, try recovering it */
+> +	queue_work(system_long_wq, &mhi_pdev->recovery_work);
+> +	return 0;
 > +}
 > +
-> +static const struct pci_error_handlers mhi_pci_err_handler = {
-> +	.reset_prepare = mhi_pci_reset_prepare,
-> +	.reset_done = mhi_pci_reset_done,
+> +static const struct dev_pm_ops mhi_pci_pm_ops = {
+> +	SET_SYSTEM_SLEEP_PM_OPS(mhi_pci_suspend, mhi_pci_resume)
 > +};
 > +
 >   static struct pci_driver mhi_pci_driver = {
 >   	.name		= "mhi-pci-generic",
 >   	.id_table	= mhi_pci_id_table,
 >   	.probe		= mhi_pci_probe,
-> -	.remove		= mhi_pci_remove
-> +	.remove		= mhi_pci_remove,
-> +	.err_handler	= &mhi_pci_err_handler,
+>   	.remove		= mhi_pci_remove,
+>   	.err_handler	= &mhi_pci_err_handler,
+> +	.driver.pm	= &mhi_pci_pm_ops
 >   };
 >   module_pci_driver(mhi_pci_driver);
 >   
 > 
+
+Overall change looks good from my side. Once you address or answer my 
+query you can add my
+
+Reviewed-by: Hemant Kumar <hemantk@codeaurora.org>
+
 Thanks,
 Hemant
 -- 
