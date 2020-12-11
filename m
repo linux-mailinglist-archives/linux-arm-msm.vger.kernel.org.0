@@ -2,217 +2,69 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B49E92D70A7
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Dec 2020 08:13:34 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 9C50C2D70A9
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Dec 2020 08:13:35 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2436637AbgLKHLq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        id S2436597AbgLKHLq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
         Fri, 11 Dec 2020 02:11:46 -0500
-Received: from alexa-out.qualcomm.com ([129.46.98.28]:62829 "EHLO
-        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2436728AbgLKHLZ (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 11 Dec 2020 02:11:25 -0500
-Received: from ironmsg09-lv.qualcomm.com ([10.47.202.153])
-  by alexa-out.qualcomm.com with ESMTP; 10 Dec 2020 23:10:24 -0800
-X-QCInternal: smtphost
-Received: from ironmsg01-blr.qualcomm.com ([10.86.208.130])
-  by ironmsg09-lv.qualcomm.com with ESMTP/TLS/AES256-SHA; 10 Dec 2020 23:10:23 -0800
-X-QCInternal: smtphost
-Received: from mkrishn-linux.qualcomm.com ([10.204.66.35])
-  by ironmsg01-blr.qualcomm.com with ESMTP; 11 Dec 2020 12:39:58 +0530
-Received: by mkrishn-linux.qualcomm.com (Postfix, from userid 438394)
-        id 8C722216C4; Fri, 11 Dec 2020 12:39:57 +0530 (IST)
-From:   Krishna Manikandan <mkrishn@codeaurora.org>
-To:     linux-arm-msm@vger.kernel.org
-Cc:     Krishna Manikandan <mkrishn@codeaurora.org>,
-        kalyan_t@codeaurora.org, tanmay@codeaurora.org,
-        abhinavk@codeaurora.org, robdclark@gmail.com, swboyd@chromium.org,
-        bjorn.andersson@linaro.org, vinod.koul@linaro.org,
-        rnayak@codeaurora.org, dianders@chromium.org, sibis@codeaurora.org,
-        Chandan Uddaraju <chandanu@codeaurora.org>,
-        Vara Reddy <varar@codeaurora.org>
-Subject: [PATCH v9 2/2] dt-bindings: msm/dp: Add bindings of MSM DisplayPort controller
-Date:   Fri, 11 Dec 2020 12:39:45 +0530
-Message-Id: <1607670585-26438-2-git-send-email-mkrishn@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1607670585-26438-1-git-send-email-mkrishn@codeaurora.org>
-References: <1607670585-26438-1-git-send-email-mkrishn@codeaurora.org>
+Received: from mail.kernel.org ([198.145.29.99]:58124 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S2390203AbgLKHLK (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 11 Dec 2020 02:11:10 -0500
+Content-Type: text/plain; charset="utf-8"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1607670630;
+        bh=MGUXROce7wJw4hhD3KZgPZmZ4OzT5bDJNT+Pgi9c7SY=;
+        h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
+        b=awr7f6t6dc5jBE/GCZuvqFO0r83Pv0kF/xc49jBYWAss5UHpOU2OrhOON37mzUAnb
+         cnD6THNBI1fSAI8JdE/jA/t7KpYDTMk4PbP+fpAUS8uxHHO/WDX/GcOOX81u5kP3Zr
+         JDzby1YBEdoJXuqAjkwRN7ZSSKSQ4k5uHA7df4/LRotGrV0hjLq7/vbBgg4UJshN29
+         OygonCS83i7+FwFxsoHHnWgsg8FbvIqDoGkYFSEomQZl/OxgqP7KXSslHkdVBYfakX
+         6LRpZ9h3xqokwyDjhP2PrIRnHXnzj7XW9o7qE86Tdd6fQNC5hMtIKOIyPIECBhseVB
+         yjoYiiyvd75ZQ==
+MIME-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <20201211054349.GS8403@vkoul-mobl>
+References: <20201208064702.3654324-1-vkoul@kernel.org> <20201208064702.3654324-6-vkoul@kernel.org> <160763302790.1580929.10258660966995584297@swboyd.mtv.corp.google.com> <20201211054349.GS8403@vkoul-mobl>
+Subject: Re: [PATCH v2 5/5] clk: qcom: gcc: Add clock driver for SM8350
+From:   Stephen Boyd <sboyd@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Vivek Aknurwar <viveka@codeaurora.org>,
+        Andy Gross <agross@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Taniya Das <tdas@codeaurora.org>, linux-clk@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Jeevan Shriram <jshriram@codeaurora.org>
+To:     Vinod Koul <vkoul@kernel.org>
+Date:   Thu, 10 Dec 2020 23:10:28 -0800
+Message-ID: <160767062876.1580929.14564723998233527816@swboyd.mtv.corp.google.com>
+User-Agent: alot/0.9.1
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Changes in v10:
-- Change title of this patch as it does not contain PLL bindings anymore
-- Remove redundant properties
-- Remove use of IRQ flag
-- Fix ports property
+Quoting Vinod Koul (2020-12-10 21:43:49)
+> On 10-12-20, 12:43, Stephen Boyd wrote:
+> > > +static struct clk_branch gcc_camera_ahb_clk =3D {
+> > > +       .halt_reg =3D 0x26004,
+> > > +       .halt_check =3D BRANCH_HALT_DELAY,
+> > > +       .hwcg_reg =3D 0x26004,
+> > > +       .hwcg_bit =3D 1,
+> > > +       .clkr =3D {
+> > > +               .enable_reg =3D 0x26004,
+> > > +               .enable_mask =3D BIT(0),
+> > > +               .hw.init =3D &(struct clk_init_data){
+> > > +                       .name =3D "gcc_camera_ahb_clk",
+> > > +                       .flags =3D CLK_IS_CRITICAL,
+> >=20
+> > Why is it critical? Can we just enable it in driver probe and stop
+> > modeling it as a clk?
+>=20
+> it does not have a parent we control, yeah it would make sense to do
+> that. Tanya do you folks agree ..?
+>=20
 
-Previous Change log:
-https://lkml.kernel.org/lkml/1597066683-6044-2-git-send-email-mkrishn@codeaurora.org/
-
-Signed-off-by: Chandan Uddaraju <chandanu@codeaurora.org>
-Signed-off-by: Vara Reddy <varar@codeaurora.org>
-Signed-off-by: Tanmay Shah <tanmay@codeaurora.org>
----
- .../bindings/display/msm/dp-controller.yaml        | 120 +++++++++++++++++++++
- .../bindings/display/msm/dpu-sc7180.yaml           |  10 ++
- 2 files changed, 130 insertions(+)
- create mode 100644 Documentation/devicetree/bindings/display/msm/dp-controller.yaml
-
-diff --git a/Documentation/devicetree/bindings/display/msm/dp-controller.yaml b/Documentation/devicetree/bindings/display/msm/dp-controller.yaml
-new file mode 100644
-index 0000000..bc80632
---- /dev/null
-+++ b/Documentation/devicetree/bindings/display/msm/dp-controller.yaml
-@@ -0,0 +1,120 @@
-+# SPDX-License-Identifier: (GPL-2.0-only  OR BSD-2-Clause)
-+%YAML 1.2
-+---
-+$id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
-+$schema: http://devicetree.org/meta-schemas/core.yaml#
-+
-+title: MSM Display Port Controller.
-+
-+maintainers:
-+  - Chandan Uddaraju <chandanu@codeaurora.org>
-+  - Vara Reddy <varar@codeaurora.org>
-+  - Tanmay Shah <tanmay@codeaurora.org>
-+
-+description: |
-+  Device tree bindings for DisplayPort host controller for MSM targets
-+  that are compatible with VESA DisplayPort interface specification.
-+
-+properties:
-+  compatible:
-+    enum:
-+      - qcom,sc7180-dp
-+
-+  reg:
-+    maxItems: 1
-+
-+  interrupts:
-+    maxItems: 1
-+
-+  clocks:
-+    items:
-+      - description: AHB clock to enable register access
-+      - description: Display Port AUX clock
-+      - description: Display Port Link clock
-+      - description: Link interface clock between DP and PHY
-+      - description: Display Port Pixel clock
-+
-+  clock-names:
-+    items:
-+      - const: core_iface
-+      - const: core_aux
-+      - const: ctrl_link
-+      - const: ctrl_link_iface
-+      - const: stream_pixel
-+
-+  ports:
-+    type: object
-+    description: |
-+      A ports node with endpoint definitions as defined in
-+      Documentation/devicetree/bindings/media/video-interfaces.txt.
-+    properties:
-+      "#address-cells":
-+        const: 1
-+
-+      "#size-cells":
-+        const: 0
-+
-+      port@0:
-+        type: object
-+        description: Input endpoint of the controller.
-+
-+      port@1:
-+        type: object
-+        description: Output endpoint of the controller.
-+
-+    additionalProperties: false
-+
-+required:
-+  - compatible
-+  - reg
-+  - interrupts
-+  - clocks
-+  - clock-names
-+  - ports
-+
-+additionalProperties: false
-+
-+examples:
-+  - |
-+    #include <dt-bindings/interrupt-controller/arm-gic.h>
-+    #include <dt-bindings/clock/qcom,dispcc-sc7180.h>
-+
-+    mdss: mdss {
-+      #address-cells = <2>;
-+      #size-cells = <2>;
-+      interrupt-controller;
-+
-+      msm_dp: displayport-controller@ae90000 {
-+        compatible = "qcom,sc7180-dp";
-+        reg = <0 0xae90000 0 0x1400>;
-+        interrupt-parent = <&mdss>;
-+        interrupts = <12>;
-+        clocks = <&dispcc DISP_CC_MDSS_AHB_CLK>,
-+                 <&dispcc DISP_CC_MDSS_DP_AUX_CLK>,
-+                 <&dispcc DISP_CC_MDSS_DP_LINK_CLK>,
-+                 <&dispcc DISP_CC_MDSS_DP_LINK_INTF_CLK>,
-+                 <&dispcc DISP_CC_MDSS_DP_PIXEL_CLK>;
-+        clock-names = "core_iface", "core_aux",
-+                      "ctrl_link",
-+                      "ctrl_link_iface", "stream_pixel";
-+
-+        ports {
-+            #address-cells = <1>;
-+            #size-cells = <0>;
-+
-+            port@0 {
-+                reg = <0>;
-+                dp_in: endpoint {
-+                    remote-endpoint = <&dpu_intf0_out>;
-+                };
-+            };
-+
-+            port@1 {
-+                reg = <1>;
-+                dp_out: endpoint {
-+                };
-+            };
-+        };
-+      };
-+    };
-+...
-diff --git a/Documentation/devicetree/bindings/display/msm/dpu-sc7180.yaml b/Documentation/devicetree/bindings/display/msm/dpu-sc7180.yaml
-index 8397ea8..9549d8f 100644
---- a/Documentation/devicetree/bindings/display/msm/dpu-sc7180.yaml
-+++ b/Documentation/devicetree/bindings/display/msm/dpu-sc7180.yaml
-@@ -132,6 +132,9 @@ patternProperties:
-           port@1:
-             type: object
-             description: DPU_INTF2 (DSI2)
-+          port@2:
-+            type: object
-+            description: DPU_INTF0 (DP)
- 
-       assigned-clocks:
-         maxItems: 4
-@@ -228,6 +231,13 @@ examples:
-                                                   remote-endpoint = <&dsi0_in>;
-                                    };
-                            };
-+
-+                            port@2 {
-+                                    reg = <2>;
-+                                    dpu_intf0_out: endpoint {
-+                                                   remote-endpoint = <&dp_in>;
-+                                    };
-+                            };
-                    };
-          };
-       };
--- 
-2.7.4
-
+Maybe it is needed for camera clk controller? Have to check other SoCs
+and see if they're using it.
