@@ -2,151 +2,218 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 447FF2D6C44
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Dec 2020 01:28:39 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4A3DA2D6C63
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Dec 2020 01:28:53 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2390691AbgLKAFM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 10 Dec 2020 19:05:12 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52920 "EHLO
+        id S1728577AbgLKAMI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 10 Dec 2020 19:12:08 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53958 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2390921AbgLKAFB (ORCPT
+        with ESMTP id S1729992AbgLKALl (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 10 Dec 2020 19:05:01 -0500
-Received: from mail-pl1-x644.google.com (mail-pl1-x644.google.com [IPv6:2607:f8b0:4864:20::644])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CA365C0613D6
-        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Dec 2020 16:04:21 -0800 (PST)
-Received: by mail-pl1-x644.google.com with SMTP id s2so3669585plr.9
-        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Dec 2020 16:04:21 -0800 (PST)
+        Thu, 10 Dec 2020 19:11:41 -0500
+Received: from mail-lj1-x22d.google.com (mail-lj1-x22d.google.com [IPv6:2a00:1450:4864:20::22d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7085EC0613CF
+        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Dec 2020 16:11:01 -0800 (PST)
+Received: by mail-lj1-x22d.google.com with SMTP id s11so8839525ljp.4
+        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Dec 2020 16:11:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=b2XTJ2x1R5xZ66SbR6h8AXcrLWdEHj5DcH/Iefxf3Q4=;
-        b=A6zhZ98vZGmItk5taUTdALx1iCQa4bkAu5yRxF7XMlMpPfaAl3DjI4p5UuQZmHIZ/D
-         WFSXBA8a8EBHTXa+lsbCQchI7YzHLz3FCzvkEjRJFxr15i1NpGIJKEyuv3Uw0Af2SSN3
-         sKdgmPz0mX5mFDX9mDh7g/YTP5R3OdXNL0v4E=
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=+eTjMG6g5kysFviGDaQVeCwK/pz5fgQMRmsZivjOUoA=;
+        b=DShQbq+w2xzrX37+xiexraWF91Aeul3s241f7OjzGXRblPbHmqx0DKgqs6fcOh8deP
+         prgHsDatWHJn8La/kQmF7DMYVWK5+qLY1pBBh3aAgiM4ovl2Nv3sWanFq6HZKph+1N+q
+         wdlh2vlSZQKYmTEwrLedmeZm6upwpYp/fmRx2/7W4cq30xZTOExLG91uETOONeg5O6Pc
+         4E1XNge1lbRr8iBXMYWWBwT+FINQYlEff3U3VR3anF9ml7DNfaHrrJ+hlTVOj3cokN70
+         lJIfvAtg6v3eXHFMSRcsWhwM4oaU/KfcqNo5KnsNmIwKLDPh2j2wVZmj72AjNyHZ709R
+         yTHA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=b2XTJ2x1R5xZ66SbR6h8AXcrLWdEHj5DcH/Iefxf3Q4=;
-        b=qrqqnZuwrOCaJhyS11RkS3jAh4SQ5gYlio7hmcDqkfp629XjKhKQTJbjSTfoL+7iF9
-         WRydkhzRVfDxU02n55ZTYScew0fA/7BXwnrg+MxPvMlLQubQ2zPaAm+DbY1UeDe5YZbs
-         NWhWg6Rj0VA2Z+oKa/dH6fjSZx8O1L11PtG/GMbh3t2YjBgZo5D3EtIKjAPuhD7NJo3U
-         wcBVJgF/VO1Ul2Koojim0TQX5vLwRJzhLaoNoHGDxkYv7ElMxBscTlROwMkUSfZdNtF7
-         H769NJP5DAvyvsX/JsSMnQPMxkCCFFK+5t/fNYSVfeDyRzPs0J1hDaougEeqb0aXZnrt
-         jZLw==
-X-Gm-Message-State: AOAM531pmP0DtTvGefBih8tsPitMI/IbLzXBLi5jaIyzWk0QRM9Pc29O
-        ZxzF0pyBrIcDqJ+VR0kyH+TyPOlzdstJTA==
-X-Google-Smtp-Source: ABdhPJxyhOBKJYPnjJ2YBaiGRbHpCYt2SPOTE6oOxM3QEzT7GA+QV4XtrAXTGw0GM3YW5kVkUAfTgw==
-X-Received: by 2002:a17:902:c584:b029:da:cc62:22f1 with SMTP id p4-20020a170902c584b02900dacc6222f1mr8466785plx.54.1607645060625;
-        Thu, 10 Dec 2020 16:04:20 -0800 (PST)
-Received: from localhost ([2620:15c:202:1:f693:9fff:fef4:e70a])
-        by smtp.gmail.com with ESMTPSA id er23sm7837321pjb.12.2020.12.10.16.04.19
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 10 Dec 2020 16:04:19 -0800 (PST)
-Date:   Thu, 10 Dec 2020 16:04:17 -0800
-From:   Matthias Kaehlcke <mka@chromium.org>
-To:     mgautam@codeaurora.org
-Cc:     Sandeep Maheswaram <sanm@codeaurora.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Felipe Balbi <balbi@kernel.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Doug Anderson <dianders@chromium.org>,
-        linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v4 1/5] usb: dwc3: core: Host wake up support from system
- suspend
-Message-ID: <X9K3gXAgUW/6o9dr@google.com>
-References: <1603831083-2025-1-git-send-email-sanm@codeaurora.org>
- <1603831083-2025-2-git-send-email-sanm@codeaurora.org>
- <bca7bd32710a118d3583dd4e740ef3e0@codeaurora.org>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=+eTjMG6g5kysFviGDaQVeCwK/pz5fgQMRmsZivjOUoA=;
+        b=I1RFNFVXqidpY1z5UTAVL/hPhuF8bNrsNt2bEGJhzEYb/EYtMa/eY2MfHQVAFZ7jfi
+         k/LBwl2uAtqzBF8GwJbsBS0G+MzEeUgz+fPZwgaNvdDzmFpg8R0NeY0nsX4XVu9Uy78I
+         DtfAItBagDt6TQ0Soa5w9wKdwKH2xMTV76T/h3MoSSKVl3DxAzyweiIyn9hG7fwNpB3G
+         GgZL4NZJIWwqVfYVQOTKWKOi5HA0vRXrNIncVc4f7fyxVuu/PCe/HHraj+8HLEBM3/nJ
+         J1NM9erdWmuQ2inACXIpgBjHMIqKzjJSQYbAYgNwPnfMQv4UdjA7cCzzK2OSSfAx8uJP
+         hjnQ==
+X-Gm-Message-State: AOAM530YQsBgdqA/3+rRGwARJzHPRNzws9THCjM0wcJl1uQuBTF1K98g
+        a61S4zVQbqsEQj+sih8sWNprCg==
+X-Google-Smtp-Source: ABdhPJwsF4TNIYkpxGUAo1eiox+cRw5n6NDoDtJ+QRj/ceiJSV8pHXaK3WdZhc7LFvsN8p7YG9sm0A==
+X-Received: by 2002:a2e:b8d1:: with SMTP id s17mr4055048ljp.472.1607645459882;
+        Thu, 10 Dec 2020 16:10:59 -0800 (PST)
+Received: from eriador.lumag.spb.ru ([94.25.228.52])
+        by smtp.gmail.com with ESMTPSA id k21sm776424ljb.43.2020.12.10.16.10.58
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 10 Dec 2020 16:10:59 -0800 (PST)
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To:     Rob Herring <robh+dt@kernel.org>, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
+Subject: [PATCH v3] dt-bindings: soc: qcom: convert qcom,smem bindings to yaml
+Date:   Fri, 11 Dec 2020 03:10:56 +0300
+Message-Id: <20201211001057.3041604-1-dmitry.baryshkov@linaro.org>
+X-Mailer: git-send-email 2.29.2
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <bca7bd32710a118d3583dd4e740ef3e0@codeaurora.org>
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sat, Nov 28, 2020 at 08:01:31AM +0530, mgautam@codeaurora.org wrote:
-> Hi,
-> 
-> 
-> On 2020-10-28 02:07, Sandeep Maheswaram wrote:
-> > Avoiding phy powerdown in host mode so that it can be woken up by
-> > devices.
-> > Added hs_phy_mode flag to check connection status and set phy mode
-> > and configure interrupts.
-> > 
-> > Signed-off-by: Sandeep Maheswaram <sanm@codeaurora.org>
-> > ---
-> >  drivers/usb/dwc3/core.c | 14 +++-----------
-> >  drivers/usb/dwc3/core.h |  2 ++
-> >  2 files changed, 5 insertions(+), 11 deletions(-)
-> > 
-> > diff --git a/drivers/usb/dwc3/core.c b/drivers/usb/dwc3/core.c
-> > index bdf0925..0e4bc1e 100644
-> > --- a/drivers/usb/dwc3/core.c
-> > +++ b/drivers/usb/dwc3/core.c
-> > @@ -1672,10 +1672,6 @@ static int dwc3_suspend_common(struct dwc3
-> > *dwc, pm_message_t msg)
-> >  		dwc3_core_exit(dwc);
-> >  		break;
-> >  	case DWC3_GCTL_PRTCAP_HOST:
-> > -		if (!PMSG_IS_AUTO(msg)) {
-> > -			dwc3_core_exit(dwc);
-> > -			break;
-> > -		}
-> 
-> 
-> This could be a problem for platforms that don't support runtime_suspend
-> and rely on dwc3_core_exit to power-down PHY.
-> IMO you can continue to do dwc3_core_exit() if runtime_pm isn't enabled
-> for the device.
+Convert soc/qcom/qcom,smem.txt bindings to YAML format.
 
-This would imply that USB wakeup isn't supported on such platforms, right?
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+---
+ .../bindings/soc/qcom/qcom,smem.txt           | 57 ---------------
+ .../bindings/soc/qcom/qcom,smem.yaml          | 73 +++++++++++++++++++
+ 2 files changed, 73 insertions(+), 57 deletions(-)
+ delete mode 100644 Documentation/devicetree/bindings/soc/qcom/qcom,smem.txt
+ create mode 100644 Documentation/devicetree/bindings/soc/qcom/qcom,smem.yaml
 
-Could we have a flag that the dwc3-<glue> driver can set to indicate that
-wakeup is enabled for this suspend cycle to omit the PHY power-down?
+diff --git a/Documentation/devicetree/bindings/soc/qcom/qcom,smem.txt b/Documentation/devicetree/bindings/soc/qcom/qcom,smem.txt
+deleted file mode 100644
+index 9326cdf6e1b1..000000000000
+--- a/Documentation/devicetree/bindings/soc/qcom/qcom,smem.txt
++++ /dev/null
+@@ -1,57 +0,0 @@
+-Qualcomm Shared Memory Manager binding
+-
+-This binding describes the Qualcomm Shared Memory Manager, used to share data
+-between various subsystems and OSes in Qualcomm platforms.
+-
+-- compatible:
+-	Usage: required
+-	Value type: <stringlist>
+-	Definition: must be:
+-		    "qcom,smem"
+-
+-- memory-region:
+-	Usage: required
+-	Value type: <prop-encoded-array>
+-	Definition: handle to memory reservation for main SMEM memory region.
+-
+-- qcom,rpm-msg-ram:
+-	Usage: required
+-	Value type: <prop-encoded-array>
+-	Definition: handle to RPM message memory resource
+-
+-- hwlocks:
+-	Usage: required
+-	Value type: <prop-encoded-array>
+-	Definition: reference to a hwspinlock used to protect allocations from
+-		    the shared memory
+-
+-= EXAMPLE
+-The following example shows the SMEM setup for MSM8974, with a main SMEM region
+-at 0xfa00000 and the RPM message ram at 0xfc428000:
+-
+-	reserved-memory {
+-		#address-cells = <1>;
+-		#size-cells = <1>;
+-		ranges;
+-
+-		smem_region: smem@fa00000 {
+-			reg = <0xfa00000 0x200000>;
+-			no-map;
+-		};
+-	};
+-
+-	smem@fa00000 {
+-		compatible = "qcom,smem";
+-
+-		memory-region = <&smem_region>;
+-		qcom,rpm-msg-ram = <&rpm_msg_ram>;
+-
+-		hwlocks = <&tcsr_mutex 3>;
+-	};
+-
+-	soc {
+-		rpm_msg_ram: memory@fc428000 {
+-			compatible = "qcom,rpm-msg-ram";
+-			reg = <0xfc428000 0x4000>;
+-		};
+-	};
+diff --git a/Documentation/devicetree/bindings/soc/qcom/qcom,smem.yaml b/Documentation/devicetree/bindings/soc/qcom/qcom,smem.yaml
+new file mode 100644
+index 000000000000..832bf54239c8
+--- /dev/null
++++ b/Documentation/devicetree/bindings/soc/qcom/qcom,smem.yaml
+@@ -0,0 +1,73 @@
++# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
++%YAML 1.2
++---
++$id: "http://devicetree.org/schemas/soc/qcom/qcom,smem.yaml#"
++$schema: "http://devicetree.org/meta-schemas/core.yaml#"
++
++title: Qualcomm Shared Memory Manager binding
++
++maintainers:
++  - Andy Gross <agross@kernel.org>
++  - Bjorn Andersson <bjorn.andersson@linaro.org>
++
++description: |
++  This binding describes the Qualcomm Shared Memory Manager, used to share data
++  between various subsystems and OSes in Qualcomm platforms.
++
++properties:
++  compatible:
++    const: "qcom-smem"
++
++  memory-region:
++    maxItems: 1
++    description: handle to memory reservation for main SMEM memory region.
++
++  hwlocks:
++    $ref: /schemas/types.yaml#/definitions/phandle
++    description: reference to a hwspinlock used to protect allocations from the shared memory
++
++  qcom,rpm-msg-ram:
++    $ref: /schemas/types.yaml#/definitions/phandle
++    description: handle to RPM message memory resource
++
++required:
++  - compatible
++  - memory-region
++  - hwlocks
++
++additionalProperties: false
++
++examples:
++  - |
++    reserved-memory {
++        #address-cells = <1>;
++        #size-cells = <1>;
++        ranges;
++
++        smem_region: smem@fa00000 {
++            reg = <0xfa00000 0x200000>;
++            no-map;
++        };
++    };
++
++    smem {
++        compatible = "qcom,smem";
++
++        memory-region = <&smem_region>;
++        qcom,rpm-msg-ram = <&rpm_msg_ram>;
++
++        hwlocks = <&tcsr_mutex 3>;
++    };
++
++    soc {
++        #address-cells = <1>;
++        #size-cells = <1>;
++        ranges;
++
++        rpm_msg_ram: sram@fc428000 {
++            compatible = "qcom,rpm-msg-ram";
++            reg = <0xfc428000 0x4000>;
++        };
++    };
++
++...
+-- 
+2.29.2
 
-> > 
-> >  		/* Let controller to suspend HSPHY before PHY driver suspends */
-> >  		if (dwc->dis_u2_susphy_quirk ||
-> > @@ -1733,13 +1729,9 @@ static int dwc3_resume_common(struct dwc3 *dwc,
-> > pm_message_t msg)
-> >  		spin_unlock_irqrestore(&dwc->lock, flags);
-> >  		break;
-> >  	case DWC3_GCTL_PRTCAP_HOST:
-> > -		if (!PMSG_IS_AUTO(msg)) {
-> > -			ret = dwc3_core_init_for_resume(dwc);
-> > -			if (ret)
-> > -				return ret;
-> > -			dwc3_set_prtcap(dwc, DWC3_GCTL_PRTCAP_HOST);
-> > -			break;
-> > -		}
-> > +
-> > +		dwc3_set_prtcap(dwc, DWC3_GCTL_PRTCAP_HOST);
-> > +
-> >  		/* Restore GUSB2PHYCFG bits that were modified in suspend */
-> >  		reg = dwc3_readl(dwc->regs, DWC3_GUSB2PHYCFG(0));
-> >  		if (dwc->dis_u2_susphy_quirk)
-> > diff --git a/drivers/usb/dwc3/core.h b/drivers/usb/dwc3/core.h
-> > index 74323b1..da63d4a3 100644
-> > --- a/drivers/usb/dwc3/core.h
-> > +++ b/drivers/usb/dwc3/core.h
-> > @@ -1101,6 +1101,8 @@ struct dwc3 {
-> > 
-> >  	bool			phys_ready;
-> > 
-> > +	unsigned int            hs_phy_mode;
-> > +
-> 
-> This change should instead be part of the other patch ?
-> "usb: dwc3: host: Add suspend_quirk for dwc3 host"
-
-+1
