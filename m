@@ -2,70 +2,102 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 0D11D2D8583
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 12 Dec 2020 11:00:49 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id CF6722D8579
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 12 Dec 2020 10:58:15 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2438507AbgLLJ7m (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 12 Dec 2020 04:59:42 -0500
-Received: from mail.kernel.org ([198.145.29.99]:33072 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2438506AbgLLJ73 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 12 Dec 2020 04:59:29 -0500
-Date:   Sat, 12 Dec 2020 14:49:15 +0530
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1607764759;
-        bh=FLPkffs0ej+f6UCcn1abKFcBS9Sb8C3X+ml/Wh7LSKg=;
-        h=From:To:Cc:Subject:References:In-Reply-To:From;
-        b=a2rE/1Q3OvsOyoMapSairTv3GNJzZHGdK33c893iZRiIM3DlNs14xJTTxrk4qDsxs
-         etEGCLgXoAVXRblD+04q02rM0/sB5kod9FTQjRD/vrexvW3P4BwW2+KOavlmtCO3ah
-         scAIdOV1r43SxQddpXu2svwUBRUSsbpX5Odcby4RX1vYZEEFXX7rhdoReFnvWwyjLB
-         OnFb0dOr3OlX9xvABUIMH4GYLCUZaRb/X4IEOBhiC6mc2SgnR27B6vsx15wnDf+pRh
-         D5kW3uDrZBBFhwiLtcotRMUEdtSR8+yBzS55+kLj0qoW9aK2cdIPK9X0w6T2+xpPbM
-         Jd2nd5B+DlHIA==
-From:   Vinod Koul <vkoul@kernel.org>
-To:     Stephen Boyd <swboyd@chromium.org>
-Cc:     Krishna Manikandan <mkrishn@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org, kalyan_t@codeaurora.org,
-        tanmay@codeaurora.org, abhinavk@codeaurora.org,
-        robdclark@gmail.com, bjorn.andersson@linaro.org,
-        rnayak@codeaurora.org, dianders@chromium.org, sibis@codeaurora.org
-Subject: Re: [PATCH v9 1/2] dt-bindings: msm: disp: add yaml schemas for DPU
- and DSI bindings
-Message-ID: <20201212091915.GC8403@vkoul-mobl>
-References: <1607670585-26438-1-git-send-email-mkrishn@codeaurora.org>
- <160772823551.1580929.17011175154206191008@swboyd.mtv.corp.google.com>
+        id S2438360AbgLLJ6H (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 12 Dec 2020 04:58:07 -0500
+Received: from smtp03.smtpout.orange.fr ([80.12.242.125]:56882 "EHLO
+        smtp.smtpout.orange.fr" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2405462AbgLLJ43 (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Sat, 12 Dec 2020 04:56:29 -0500
+Received: from localhost.localdomain ([93.22.36.60])
+        by mwinf5d05 with ME
+        id 3Mmz2400z1HrHD103Mn0mg; Sat, 12 Dec 2020 10:47:01 +0100
+X-ME-Helo: localhost.localdomain
+X-ME-Auth: Y2hyaXN0b3BoZS5qYWlsbGV0QHdhbmFkb28uZnI=
+X-ME-Date: Sat, 12 Dec 2020 10:47:01 +0100
+X-ME-IP: 93.22.36.60
+From:   Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+To:     agross@kernel.org, bjorn.andersson@linaro.org, marcel@holtmann.org,
+        johan.hedberg@gmail.com
+Cc:     linux-arm-msm@vger.kernel.org, linux-bluetooth@vger.kernel.org,
+        linux-kernel@vger.kernel.org, kernel-janitors@vger.kernel.org,
+        Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+Subject: [PATCH] Bluetooth: btqcomsmd: Fix a resource leak in error handling paths in the probe function
+Date:   Sat, 12 Dec 2020 10:46:58 +0100
+Message-Id: <20201212094658.83861-1-christophe.jaillet@wanadoo.fr>
+X-Mailer: git-send-email 2.27.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <160772823551.1580929.17011175154206191008@swboyd.mtv.corp.google.com>
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 11-12-20, 15:10, Stephen Boyd wrote:
-> Quoting Krishna Manikandan (2020-12-10 23:09:44)
-> >  .../bindings/display/msm/dpu-sc7180.yaml           | 235 +++++++++++++++++++
-> >  .../bindings/display/msm/dpu-sdm845.yaml           | 216 ++++++++++++++++++
-> >  .../devicetree/bindings/display/msm/dpu.txt        | 141 ------------
-> >  .../display/msm/dsi-common-controller.yaml         | 235 +++++++++++++++++++
-> >  .../bindings/display/msm/dsi-controller-main.yaml  | 119 ++++++++++
-> >  .../bindings/display/msm/dsi-phy-10nm.yaml         |  64 ++++++
-> >  .../bindings/display/msm/dsi-phy-14nm.yaml         |  64 ++++++
-> >  .../bindings/display/msm/dsi-phy-20nm.yaml         |  68 ++++++
-> >  .../bindings/display/msm/dsi-phy-28nm.yaml         |  64 ++++++
-> >  .../devicetree/bindings/display/msm/dsi-phy.yaml   |  81 +++++++
-> >  .../devicetree/bindings/display/msm/dsi.txt        | 249 ---------------------
-> >  11 files changed, 1146 insertions(+), 390 deletions(-)
-> 
-> This is quite a bit to review. Any chance to split it up into different
-> patches? Looks like that could be: dpu, phy, and dsi to make this a bit
-> more reviewable.
+Some resource should be released in the error handling path of the probe
+function, as already done in the remove function.
 
-Yes that would certainly be very helpful for review.
+The remove function was fixed in commit 5052de8deff5 ("soc: qcom: smd:
+Transition client drivers from smd to rpmsg")
 
-Also I noticed that phy binding seem quite similar with few additions,
-can we add a single binding document which documents .. or maybe check
-with Rob.. what is the guidance, single doc or multiple..?
+Fixes: 1511cc750c3d ("Bluetooth: Introduce Qualcomm WCNSS SMD based HCI driver")
+Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+---
+ drivers/bluetooth/btqcomsmd.c | 27 +++++++++++++++++++--------
+ 1 file changed, 19 insertions(+), 8 deletions(-)
 
+diff --git a/drivers/bluetooth/btqcomsmd.c b/drivers/bluetooth/btqcomsmd.c
+index 98d53764871f..2acb719e596f 100644
+--- a/drivers/bluetooth/btqcomsmd.c
++++ b/drivers/bluetooth/btqcomsmd.c
+@@ -142,12 +142,16 @@ static int btqcomsmd_probe(struct platform_device *pdev)
+ 
+ 	btq->cmd_channel = qcom_wcnss_open_channel(wcnss, "APPS_RIVA_BT_CMD",
+ 						   btqcomsmd_cmd_callback, btq);
+-	if (IS_ERR(btq->cmd_channel))
+-		return PTR_ERR(btq->cmd_channel);
++	if (IS_ERR(btq->cmd_channel)) {
++		ret = PTR_ERR(btq->cmd_channel);
++		goto destroy_acl_channel;
++	}
+ 
+ 	hdev = hci_alloc_dev();
+-	if (!hdev)
+-		return -ENOMEM;
++	if (!hdev) {
++		ret = -ENOMEM;
++		goto destroy_cmd_channel;
++	}
+ 
+ 	hci_set_drvdata(hdev, btq);
+ 	btq->hdev = hdev;
+@@ -161,14 +165,21 @@ static int btqcomsmd_probe(struct platform_device *pdev)
+ 	hdev->set_bdaddr = qca_set_bdaddr_rome;
+ 
+ 	ret = hci_register_dev(hdev);
+-	if (ret < 0) {
+-		hci_free_dev(hdev);
+-		return ret;
+-	}
++	if (ret < 0)
++		goto hci_free_dev;
+ 
+ 	platform_set_drvdata(pdev, btq);
+ 
+ 	return 0;
++
++hci_free_dev:
++	hci_free_dev(hdev);
++destroy_cmd_channel:
++	rpmsg_destroy_ept(btq->cmd_channel);
++destroy_acl_channel:
++	rpmsg_destroy_ept(btq->acl_channel);
++
++	return ret;
+ }
+ 
+ static int btqcomsmd_remove(struct platform_device *pdev)
 -- 
-~Vinod
+2.27.0
+
