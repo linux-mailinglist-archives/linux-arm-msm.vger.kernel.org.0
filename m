@@ -2,85 +2,116 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 99C252D84A0
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 12 Dec 2020 06:13:31 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A2E6D2D8504
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 12 Dec 2020 07:09:54 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727138AbgLLFMn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 12 Dec 2020 00:12:43 -0500
-Received: from so254-31.mailgun.net ([198.61.254.31]:26795 "EHLO
-        so254-31.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727081AbgLLFMa (ORCPT
+        id S2436660AbgLLGJW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 12 Dec 2020 01:09:22 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47922 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2404022AbgLLGJK (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 12 Dec 2020 00:12:30 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1607749929; h=Content-Type: MIME-Version: Message-ID:
- In-Reply-To: Date: References: Subject: Cc: To: From: Sender;
- bh=RnmhzVf0N18QH7Gpf+Zs6kg6BKxPRoDjpSeAI7txg2E=; b=cRdJR9EVfp5wCUZ+NtKK2z3bFU86dBvlG9GRYrBuZveK/EEOEvAr8DkknxbH7ovZMMSJ5FMO
- ne9boqzX/g+qbAq74HFev7agO/LtPBdKw7XB+X+aDhXcvZ9lvVErApSl4MvqsPuH2wRgdD99
- olrm92FJfN7i2xsMXSpJq31OiFc=
-X-Mailgun-Sending-Ip: 198.61.254.31
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n06.prod.us-east-1.postgun.com with SMTP id
- 5fd45104ac06f8705342e6f3 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Sat, 12 Dec 2020 05:11:32
- GMT
-Sender: kvalo=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 2DC67C43462; Sat, 12 Dec 2020 05:11:32 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL
-        autolearn=no autolearn_force=no version=3.4.0
-Received: from potku.adurom.net (88-114-240-156.elisa-laajakaista.fi [88.114.240.156])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: kvalo)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 63CB1C433C6;
-        Sat, 12 Dec 2020 05:11:30 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 63CB1C433C6
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=kvalo@codeaurora.org
-From:   Kalle Valo <kvalo@codeaurora.org>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     ath11k@lists.infradead.org,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        "open list\:DRM DRIVER FOR MSM ADRENO GPU" 
-        <linux-arm-msm@vger.kernel.org>
-Subject: Re: ath11k/mhi backtraces on shutdown with linux-next
-References: <CAA8EJppRhRCVOrXT0=nxomCFonna3YHhNEv-YFLyjaQX4gRptw@mail.gmail.com>
-Date:   Sat, 12 Dec 2020 07:11:28 +0200
-In-Reply-To: <CAA8EJppRhRCVOrXT0=nxomCFonna3YHhNEv-YFLyjaQX4gRptw@mail.gmail.com>
-        (Dmitry Baryshkov's message of "Sat, 12 Dec 2020 04:23:25 +0300")
-Message-ID: <878sa34ni7.fsf@codeaurora.org>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.5 (gnu/linux)
+        Sat, 12 Dec 2020 01:09:10 -0500
+Received: from mail-pf1-x442.google.com (mail-pf1-x442.google.com [IPv6:2607:f8b0:4864:20::442])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 27033C0613CF
+        for <linux-arm-msm@vger.kernel.org>; Fri, 11 Dec 2020 22:08:30 -0800 (PST)
+Received: by mail-pf1-x442.google.com with SMTP id q22so8411941pfk.12
+        for <linux-arm-msm@vger.kernel.org>; Fri, 11 Dec 2020 22:08:30 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=KrrfqCz8fMnvHaHUpeYSii56XdL30O9rReJj2B9MO5Y=;
+        b=DH8VhTet2wSm66pWTT6sexa+GKrsgAa2RZ0lUe0rK0qB6wJxrl1bQr9rsi5lLJCzMP
+         t4nZHGk77JTx4s6KVuGSWBp1sslP+rME+kYcDZ6jWZ4jOKUEExRCWSSqvoQd7DFmElKq
+         L7aa3IubZ3zPnTuYWOMkG+DNfhzorJdgQ1LvqBmXTzDjBAODiZ4BBuPDRoNUoQw5mbew
+         PHHFQhRsdAGvATgjKIiOpzwEaYg5Mxq9Z2FVhVbYpcuoWTVpttRHH7fJ6fskxfhSECwb
+         hsbirvv+SPX74C9hR1ILC6yvK7KgeW60LUXWL3Cdq/dq1MMnTmn6VfgUenz//5bdoe64
+         tibQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=KrrfqCz8fMnvHaHUpeYSii56XdL30O9rReJj2B9MO5Y=;
+        b=uYf0PQ5kaOfKgfuxx//nTRjnTYriafid/12Y2RWJrqgoP9xjE/a4jAfimp8bh26UQG
+         vw54MWbZwTByk6bRboiTOwwQqflqNaBVKqPGP4Ums+WFVK2e6bXOq/HpdapcCPf/zgtb
+         Tf3obTUJxqbwFIJqYhj9vg1oVBjPzmAXpNX4O/mOcm4k/DJzjrpdgkELkvgKmGa2YN0B
+         AJQOzKvwzKDWE42U1DAdO2Bkgac7ikKrfMGT9Mz/779Wj+knd01L5/1dyl0pmVmbszI+
+         5hl54HyueZOOerB37DOzD/2xwW8i/+74N5kn2juQLDLYfyfUJAqN2tTcPpa+4XQQFoWD
+         TrXA==
+X-Gm-Message-State: AOAM532sKvBfBArMZniDmGY0wyqvXaF3gIZ7kjNQSVLNv8/5rlUwmcdw
+        WIUadN+y/6tGHw7tuHZPhom/
+X-Google-Smtp-Source: ABdhPJxwXDciFcLMkVrR5J7z51OStwNUkEuuN0hATLH7Py2x7sV4BQHTyoPurCogWeN5lfufW6Ht0Q==
+X-Received: by 2002:a63:7982:: with SMTP id u124mr15124116pgc.259.1607753309565;
+        Fri, 11 Dec 2020 22:08:29 -0800 (PST)
+Received: from thinkpad ([103.59.133.81])
+        by smtp.gmail.com with ESMTPSA id v19sm12299536pjg.50.2020.12.11.22.08.23
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 11 Dec 2020 22:08:28 -0800 (PST)
+Date:   Sat, 12 Dec 2020 11:38:18 +0530
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     Jakub Kicinski <kuba@kernel.org>
+Cc:     Dan Williams <dcbw@redhat.com>,
+        Greg KH <gregkh@linuxfoundation.org>,
+        Hemant Kumar <hemantk@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        jhugo@codeaurora.org, bbhatt@codeaurora.org,
+        loic.poulain@linaro.org, netdev@vger.kernel.org
+Subject: Re: [PATCH v17 3/3] bus: mhi: Add userspace client interface driver
+Message-ID: <20201212060818.GA10816@thinkpad>
+References: <1607670251-31733-1-git-send-email-hemantk@codeaurora.org>
+ <1607670251-31733-4-git-send-email-hemantk@codeaurora.org>
+ <X9MjXWABgdJIpyIw@kroah.com>
+ <81dfd08b90f841194237e074aaa3d57cada7afad.camel@redhat.com>
+ <20201211200816.7062c3f9@kicinski-fedora-pc1c0hjn.dhcp.thefacebook.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20201211200816.7062c3f9@kicinski-fedora-pc1c0hjn.dhcp.thefacebook.com>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Dmitry Baryshkov <dmitry.baryshkov@linaro.org> writes:
+On Fri, Dec 11, 2020 at 08:08:16PM -0800, Jakub Kicinski wrote:
+> On Fri, 11 Dec 2020 11:37:34 -0600 Dan Williams wrote:
+> > Just to re-iterate: QMI ~= AT commands ~= MBIM (not quite, but same
+> > level)
+> > 
+> > We already do QMI-over-USB, or AT-over-CDC-ACM. This is QMI-over-MHI.
+> 
+> Why do we need a different QMI-over-X for every X? If you say there 
+> are already chardev interfaces to configure WWAN why not provide one 
+> of those?
+> 
 
-> Hello,
->
-> I've noticed the following backtrace during shutdown stage when
-> rebooting RB5 board,
-> using linux-next/master:
->
-> [   31.060483] ath11k_pci 0000:01:00.0: shutdown
-> [   31.067844] ------------[ cut here ]------------
-> [   31.073111] WARNING: CPU: 4 PID: 101 at
-> drivers/iommu/io-pgtable-arm.c:583 __arm_lpae_unmap+0x39c/0x550
+Just because the underlying PHY is different and it offers more services than
+just configuring the modem (downloading crash dump, firmware download etc...)
 
-Do you have CONFIG_DMA_API_DEBUG disabled? There is one commit fixing a
-DMA API debug warning but that should be in linux-next already:
+The existing chardev nodes are closely tied to the physical interfaces. For
+instance, /dev/cdc_wdm is used by the USB based WWAN devices. So we really can't
+reuse it for MHI/PCIe.
 
-cd6181ff7e93 ath11k: dp_rx: fix monitor status dma unmap direction
+> > It's not networking data plane. It's WWAN device configuration.
+> 
+> Ack. Not that network config doesn't fall under networking, but eh.
+> I wonder - did DaveM ever ack this, or was it just out of his sight
+> enough, behind the cdev, to never trigger a nack?
+> 
+> > There are no current kernel APIs for this, and I really don't think we
+> > want there to be. The API surface is *huge* and we definitely don't
+> > want that in-kernel.
+> 
+> It is what it is today for WWAN. I don't think anyone in the
+> development community or among users is particularly happy about
+> the situation. Which makes it rather self evident why there is 
+> so much apprehension about this patch set. It's going to be 
+> a user space channel for everything Qualcomm - AI accelerator etc.
+> Widening the WWAN status quo to more device types.
 
--- 
-https://patchwork.kernel.org/project/linux-wireless/list/
+Well not everything Qualcomm but for just the subsystems where there is no
+standardization right now. I think we went too far ahead for standardizing
+the modems.
 
-https://wireless.wiki.kernel.org/en/developers/documentation/submittingpatches
+Thanks,
+Mani
+
