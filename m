@@ -2,71 +2,86 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id ECCA22D8441
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 12 Dec 2020 05:10:52 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 6DE892D8486
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 12 Dec 2020 05:40:27 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728672AbgLLEJN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 11 Dec 2020 23:09:13 -0500
-Received: from mail.kernel.org ([198.145.29.99]:42910 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2438099AbgLLEI6 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 11 Dec 2020 23:08:58 -0500
-Date:   Fri, 11 Dec 2020 20:08:16 -0800
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1607746098;
-        bh=Zhu1REojfchWeln1FozhS7doUfpd5aciMb98gfWrzEw=;
-        h=From:To:Cc:Subject:In-Reply-To:References:From;
-        b=JDpTABt8mCMa3alSU7t5Pd/zKfxQpvw8Uh5MES7wR/oedtimNk9/b90H8LzxEP/ec
-         O5RtHfroGOFrwD2ZiV+RgWqqg5LPJWcZuBslFkxrkcD6DbnVQQN36ONDseDP/se2/x
-         50b1buhlkpfE2P5JIsbtWUKN+XLaaomM5gYpH/MrrbxtJKxTv5f6oZyGt1rGVLFgTi
-         sHdDMZ63nIfJ6JbcgzIXxPbrzery/VyFqWzI+4nWI741FP0EzBiw/l7qsZ05jGf/zv
-         hg+T2tH6MFJI3A9hpGuOYk2r+tUWq05/W1c86GZREeIPa73Yro3/dq/rsSuEs092Y4
-         48wDBlfwWJjDQ==
-From:   Jakub Kicinski <kuba@kernel.org>
-To:     Dan Williams <dcbw@redhat.com>
-Cc:     Greg KH <gregkh@linuxfoundation.org>,
-        Hemant Kumar <hemantk@codeaurora.org>,
-        manivannan.sadhasivam@linaro.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, jhugo@codeaurora.org,
-        bbhatt@codeaurora.org, loic.poulain@linaro.org,
-        netdev@vger.kernel.org
-Subject: Re: [PATCH v17 3/3] bus: mhi: Add userspace client interface driver
-Message-ID: <20201211200816.7062c3f9@kicinski-fedora-pc1c0hjn.dhcp.thefacebook.com>
-In-Reply-To: <81dfd08b90f841194237e074aaa3d57cada7afad.camel@redhat.com>
-References: <1607670251-31733-1-git-send-email-hemantk@codeaurora.org>
-        <1607670251-31733-4-git-send-email-hemantk@codeaurora.org>
-        <X9MjXWABgdJIpyIw@kroah.com>
-        <81dfd08b90f841194237e074aaa3d57cada7afad.camel@redhat.com>
+        id S2438257AbgLLEjh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 11 Dec 2020 23:39:37 -0500
+Received: from m43-15.mailgun.net ([69.72.43.15]:59484 "EHLO
+        m43-15.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2392076AbgLLEj2 (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 11 Dec 2020 23:39:28 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1607747944; h=Date: Message-Id: Cc: To: References:
+ In-Reply-To: From: Subject: Content-Transfer-Encoding: MIME-Version:
+ Content-Type: Sender; bh=i8zqkVg2ktWijVXZg6xHLf1LawcHpSQx6Vhiil725vw=;
+ b=RmwkfSqfo1q/VaCUyPSKflBwhh40/nRXMjOplVOLi0E+KS3dMVqzChX9cdtf6BRR5tfRfifX
+ CjJWxW9WXIH6MUd43HpQ4EViwV9t8ei3aQTP+Pyh/0uMrj3OSP5bYpUPWoWUjEBN/lmmK/g2
+ Nx5ulIXKr8bc/uW7QGMzEnmNjzQ=
+X-Mailgun-Sending-Ip: 69.72.43.15
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n09.prod.us-west-2.postgun.com with SMTP id
+ 5fd44962fa3411972b72b0de (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Sat, 12 Dec 2020 04:38:58
+ GMT
+Sender: kvalo=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 90C84C433ED; Sat, 12 Dec 2020 04:38:58 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        MISSING_DATE,MISSING_MID,SPF_FAIL autolearn=no autolearn_force=no
+        version=3.4.0
+Received: from potku.adurom.net (88-114-240-156.elisa-laajakaista.fi [88.114.240.156])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: kvalo)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 16E90C433CA;
+        Sat, 12 Dec 2020 04:38:55 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 16E90C433CA
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=kvalo@codeaurora.org
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
+Subject: Re: [RESEND PATCH] ath11k: use MHI provided APIs to allocate and free
+ MHI
+ controller
+From:   Kalle Valo <kvalo@codeaurora.org>
+In-Reply-To: <1605634436-36506-1-git-send-email-bbhatt@codeaurora.org>
+References: <1605634436-36506-1-git-send-email-bbhatt@codeaurora.org>
+To:     Bhaumik Bhatt <bbhatt@codeaurora.org>
+Cc:     linux-wireless@vger.kernel.org, manivannan.sadhasivam@linaro.org,
+        linux-arm-msm@vger.kernel.org, hemantk@codeaurora.org,
+        linux-kernel@vger.kernel.org, ath11k@lists.infradead.org,
+        Bhaumik Bhatt <bbhatt@codeaurora.org>
+User-Agent: pwcli/0.1.0-git (https://github.com/kvalo/pwcli/) Python/3.5.2
+Message-Id: <20201212043858.90C84C433ED@smtp.codeaurora.org>
+Date:   Sat, 12 Dec 2020 04:38:58 +0000 (UTC)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, 11 Dec 2020 11:37:34 -0600 Dan Williams wrote:
-> Just to re-iterate: QMI ~= AT commands ~= MBIM (not quite, but same
-> level)
+Bhaumik Bhatt <bbhatt@codeaurora.org> wrote:
+
+> Use MHI provided APIs to allocate and free MHI controller to
+> improve MHI host driver handling. This also fixes a memory leak
+> as the MHI controller was allocated but never freed.
 > 
-> We already do QMI-over-USB, or AT-over-CDC-ACM. This is QMI-over-MHI.
+> Signed-off-by: Bhaumik Bhatt <bbhatt@codeaurora.org>
+> Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> Signed-off-by: Kalle Valo <kvalo@codeaurora.org>
 
-Why do we need a different QMI-over-X for every X? If you say there 
-are already chardev interfaces to configure WWAN why not provide one 
-of those?
+Patch applied to ath-next branch of ath.git, thanks.
 
-> It's not networking data plane. It's WWAN device configuration.
+57449b07eafc ath11k: use MHI provided APIs to allocate and free MHI controller
 
-Ack. Not that network config doesn't fall under networking, but eh.
-I wonder - did DaveM ever ack this, or was it just out of his sight
-enough, behind the cdev, to never trigger a nack?
+-- 
+https://patchwork.kernel.org/project/linux-wireless/patch/1605634436-36506-1-git-send-email-bbhatt@codeaurora.org/
 
-> There are no current kernel APIs for this, and I really don't think we
-> want there to be. The API surface is *huge* and we definitely don't
-> want that in-kernel.
+https://wireless.wiki.kernel.org/en/developers/documentation/submittingpatches
 
-It is what it is today for WWAN. I don't think anyone in the
-development community or among users is particularly happy about
-the situation. Which makes it rather self evident why there is 
-so much apprehension about this patch set. It's going to be 
-a user space channel for everything Qualcomm - AI accelerator etc.
-Widening the WWAN status quo to more device types.
