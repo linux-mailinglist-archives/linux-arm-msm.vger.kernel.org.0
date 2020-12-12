@@ -2,230 +2,91 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 98EFE2D8A11
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 12 Dec 2020 21:57:55 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B3C0D2D8A1A
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 12 Dec 2020 22:07:11 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2407926AbgLLU4e (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 12 Dec 2020 15:56:34 -0500
-Received: from mail.kernel.org ([198.145.29.99]:36758 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2407890AbgLLU41 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 12 Dec 2020 15:56:27 -0500
-Date:   Sat, 12 Dec 2020 12:55:44 -0800
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1607806545;
-        bh=jPDZXLHAE9lhjzp/ZIWzZzg4LLejXh0bczPZn/7JyiY=;
-        h=From:To:Cc:Subject:In-Reply-To:References:From;
-        b=MvSixJWo4Ckpz3dU1VaMKlsZjXqdRCEK57E73kaFvfj1DSu2NtaGBgkC7K9QLrSuM
-         fXRxNiRWp5V3Wlr57GpgunhL77Sy8ISGVOw60NwZM1l3xGkQ3lgnWbwQLDkNo8vKen
-         QXxRsfJeVOS/tLzEEsR3bgkYDL11DykVCbbVya6RxAOucK+949jzpkEQCfUHgKs9kS
-         LWsP3h4ZATrBWCF+KEN1iQ4qt5SrBTuTE4iLtHumtxzRuyCs0siZGJboCefnijfJtw
-         CP+FBQDQWY8T3EVuJahjUP7xHuWgZcQPaUoa2jlWUJ2zkHSAQipbqMzL3BB2Qdgi4O
-         WGHdjwH04QBzg==
-From:   Jakub Kicinski <kuba@kernel.org>
-To:     Loic Poulain <loic.poulain@linaro.org>
-Cc:     davem@davemloft.net, manivannan.sadhasivam@linaro.org,
-        linux-arm-msm@vger.kernel.org, netdev@vger.kernel.org,
-        jhugo@codeaurora.org
-Subject: Re: [PATCH v2 3/3] net: mhi: Add dedicated alloc thread
-Message-ID: <20201212125544.4857b1cd@kicinski-fedora-pc1c0hjn.dhcp.thefacebook.com>
-In-Reply-To: <1607598951-2340-3-git-send-email-loic.poulain@linaro.org>
-References: <1607598951-2340-1-git-send-email-loic.poulain@linaro.org>
-        <1607598951-2340-3-git-send-email-loic.poulain@linaro.org>
+        id S2392132AbgLLVFt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 12 Dec 2020 16:05:49 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32842 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726348AbgLLVFs (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Sat, 12 Dec 2020 16:05:48 -0500
+Received: from mail-oo1-xc30.google.com (mail-oo1-xc30.google.com [IPv6:2607:f8b0:4864:20::c30])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A13ADC0613CF
+        for <linux-arm-msm@vger.kernel.org>; Sat, 12 Dec 2020 13:05:08 -0800 (PST)
+Received: by mail-oo1-xc30.google.com with SMTP id j8so3048410oon.3
+        for <linux-arm-msm@vger.kernel.org>; Sat, 12 Dec 2020 13:05:08 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=XRv8Plx/7pDdPKDlBe6jPDL7gC3T0EbSicfemOr5zaU=;
+        b=bNJ98gGpQtmF0ki3byZippufFHeIpx7vz9hOun9y+FkUhxTLXsa+AdWIr5zATVVtdF
+         8qz3Ii1wk+4f43du6a6lOnmkyKQyRWW0SGpRLcAspale8orqdYf0cDx1oIx/94zuJHiy
+         x6Yrmx+eEEGvAb3NX0sE5XitXTEMJDCd14F60pc1l1YoEe+2/No4SdBgneJCA/i/29wJ
+         AYRZIs4dgnXEiwCaZFlIfMS2RAb7MhelIAoPYVxDfQWTWSO1R47SZo3qpQTixO2BkzGG
+         5hJVWM69+L63sWAzXzyT+FNOzya4Sk+7rvJMdawQLUqGiUQQstiVLFhqK0AgElvAZkJK
+         uf8A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=XRv8Plx/7pDdPKDlBe6jPDL7gC3T0EbSicfemOr5zaU=;
+        b=uMUsFQmVeNdYGDuDPlH5rbdyKlmegjxwhHtoW8EWIR5DGqcLQCPojf77ZS2RIvwR1u
+         nZP4DDqWZb+Cs/5eb21fZZCfax7KbGUP0WAfUMcMBxTTg++0+eysAWNOZIEdvV8XjFR1
+         eTbTvzDLJ8PGSBrXRAr+aGwH2h4+qcBxce3W8f3rPfQAObfb7HOn3tFUfnSgdX16Gsdr
+         lPMI8vPyDhxbso91NIaSnGxUE4hZHSzFTub6m6GhGs99ZbgGvWN3AsLANxiXPNgfRZnC
+         xKnKXiw1zdtr5HHmhrSwbtlo+GHIxkmXqQBmO/irvhGyMaIHXni4chmfD3CagbdVfz7Z
+         XRJQ==
+X-Gm-Message-State: AOAM530COmqcgos8KLo3UwuwGxGwlGGd4LTN28XwStYoSdNppc/gCa++
+        b7LJPXicQI/kZGQZykDGj8gZHxgfI+wdXN29TalX4Q==
+X-Google-Smtp-Source: ABdhPJwnzsnRieEaKt6HXl0i6LAYODZcatiuX8GWH0Ic+bVL94gUarVkzwnr6upUbsBSjcT8gQ0xXza5da/e3BdKU+g=
+X-Received: by 2002:a4a:d126:: with SMTP id n6mr1638273oor.47.1607807104886;
+ Sat, 12 Dec 2020 13:05:04 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+References: <CAA8EJppRhRCVOrXT0=nxomCFonna3YHhNEv-YFLyjaQX4gRptw@mail.gmail.com>
+ <878sa34ni7.fsf@codeaurora.org>
+In-Reply-To: <878sa34ni7.fsf@codeaurora.org>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Sun, 13 Dec 2020 00:04:45 +0300
+Message-ID: <CAA8EJppwnfy-Hi9pabGL-g9BgEcac6bs3jn8J1n=PPr9-y-d-A@mail.gmail.com>
+Subject: Re: ath11k/mhi backtraces on shutdown with linux-next
+To:     Kalle Valo <kvalo@codeaurora.org>
+Cc:     ath11k@lists.infradead.org,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
+        <linux-arm-msm@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 10 Dec 2020 12:15:51 +0100 Loic Poulain wrote:
-> The buffer allocation for RX path is currently done by a work executed
-> in the system workqueue. The work to do is quite simple and consists
-> mostly in allocating and queueing as much as possible buffers to the MHI
-> RX channel.
-> 
-> It appears that using a dedicated kthread would be more appropriate to
-> prevent
-> 1. RX allocation latency introduced by the system queue
+Hello,
 
-System work queue should not add much latency, you can also create your
-own workqueue. Did you intend to modify the priority of the thread you
-create?
+On Sat, 12 Dec 2020 at 08:11, Kalle Valo <kvalo@codeaurora.org> wrote:
+>
+> Dmitry Baryshkov <dmitry.baryshkov@linaro.org> writes:
+>
+> > Hello,
+> >
+> > I've noticed the following backtrace during shutdown stage when
+> > rebooting RB5 board,
+> > using linux-next/master:
+> >
+> > [   31.060483] ath11k_pci 0000:01:00.0: shutdown
+> > [   31.067844] ------------[ cut here ]------------
+> > [   31.073111] WARNING: CPU: 4 PID: 101 at
+> > drivers/iommu/io-pgtable-arm.c:583 __arm_lpae_unmap+0x39c/0x550
+>
+> Do you have CONFIG_DMA_API_DEBUG disabled? There is one commit fixing a
+> DMA API debug warning but that should be in linux-next already:
+>
+> cd6181ff7e93 ath11k: dp_rx: fix monitor status dma unmap direction
 
-> 2. Unbounded work execution, the work only returning when queue is
-> full, it can possibly monopolise the workqueue thread on slower systems.
+I have enabled CONFIG_DMA_API_DEBUG (and _SG too). Got no additional
+traces during boot and the same trace during reboot.
 
-Is this something you observed in practice?
-
-> This patch replaces the system work with a simple kthread that loops on
-> buffer allocation and sleeps when queue is full. Moreover it gets rid
-> of the local rx_queued variable (to track buffer count), and instead,
-> relies on the new mhi_get_free_desc_count helper.
-
-Seems unrelated, should probably be a separate patch.
-
-> After pratical testing on a x86_64 machine, this change improves
-> - Peek throughput (slightly, by few mbps)
-> - Throughput stability when concurrent loads are running (stress)
-> - CPU usage, less CPU cycles dedicated to the task
-
-Do you have an explanation why the CPU cycles are lower?
-
-> Below is the powertop output for RX allocation task before and after
-> this change, when performing UDP download at 6Gbps. Mostly to highlight
-> the improvement in term of CPU usage.
-> 
-> older (system workqueue):
-> Usage       Events/s    Category       Description
-> 63,2 ms/s     134,0        kWork          mhi_net_rx_refill_work
-> 62,8 ms/s     134,3        kWork          mhi_net_rx_refill_work
-> 60,8 ms/s     141,4        kWork          mhi_net_rx_refill_work
-> 
-> newer (dedicated kthread):
-> Usage       Events/s    Category       Description
-> 20,7 ms/s     155,6        Process        [PID 3360] [mhi-net-rx]
-> 22,2 ms/s     169,6        Process        [PID 3360] [mhi-net-rx]
-> 22,3 ms/s     150,2        Process        [PID 3360] [mhi-net-rx]
-> 
-> Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
-> ---
->  v2: add module parameter for changing RX refill level
-
-> @@ -16,6 +17,11 @@
->  #define MHI_NET_MAX_MTU		0xffff
->  #define MHI_NET_DEFAULT_MTU	0x4000
->  
-> +static unsigned int rx_refill_level = 70;
-> +module_param(rx_refill_level, uint, 0600);
-> +MODULE_PARM_DESC(rx_refill_level,
-> +		 "The minimal RX queue level percentage (0 to 100) under which the RX queue must be refilled");
-
-Sorry you got bad advice in v1 and I didn't catch it. Please avoid
-adding module parameters. Many drivers do bulk refill, and don't need
-and extra parametrization, I don't see why this one would be special -
-if it is please explain.
-
->  struct mhi_net_stats {
->  	u64_stats_t rx_packets;
->  	u64_stats_t rx_bytes;
-> @@ -25,7 +31,6 @@ struct mhi_net_stats {
->  	u64_stats_t tx_bytes;
->  	u64_stats_t tx_errors;
->  	u64_stats_t tx_dropped;
-> -	atomic_t rx_queued;
->  	struct u64_stats_sync tx_syncp;
->  	struct u64_stats_sync rx_syncp;
->  };
-> @@ -33,17 +38,66 @@ struct mhi_net_stats {
->  struct mhi_net_dev {
->  	struct mhi_device *mdev;
->  	struct net_device *ndev;
-> -	struct delayed_work rx_refill;
-> +	struct task_struct *refill_task;
-> +	wait_queue_head_t refill_wq;
->  	struct mhi_net_stats stats;
->  	u32 rx_queue_sz;
-> +	u32 rx_refill_level;
->  };
->  
-> +static int mhi_net_refill_thread(void *data)
-> +{
-> +	struct mhi_net_dev *mhi_netdev = data;
-> +	struct net_device *ndev = mhi_netdev->ndev;
-> +	struct mhi_device *mdev = mhi_netdev->mdev;
-> +	int size = READ_ONCE(ndev->mtu);
-> +	struct sk_buff *skb;
-> +	int err;
-> +
-> +	while (1) {
-> +		err = wait_event_interruptible(mhi_netdev->refill_wq,
-> +					       !mhi_queue_is_full(mdev, DMA_FROM_DEVICE)
-> +					       || kthread_should_stop());
-> +		if (err || kthread_should_stop())
-> +			break;
-> +
-> +		skb = netdev_alloc_skb(ndev, size);
-> +		if (unlikely(!skb)) {
-> +			/* No memory, retry later */
-> +			schedule_timeout_interruptible(msecs_to_jiffies(250));
-
-You should have a counter for this, at least for your testing. If this
-condition is hit it'll probably have a large impact on the performance.
-
-> +			continue;
-> +		}
-> +
-> +		err = mhi_queue_skb(mdev, DMA_FROM_DEVICE, skb, size, MHI_EOT);
-> +		if (unlikely(err)) {
-> +			net_err_ratelimited("%s: Failed to queue RX buf (%d)\n",
-> +					    ndev->name, err);
-> +			kfree_skb(skb);
-> +			break;
-> +		}
-> +
-> +		/* Do not hog the CPU */
-> +		cond_resched();
-> +	}
-> +
-> +	return 0;
-> +}
-> +
->  static int mhi_ndo_open(struct net_device *ndev)
->  {
->  	struct mhi_net_dev *mhi_netdev = netdev_priv(ndev);
-> +	unsigned int qsz = mhi_netdev->rx_queue_sz;
->  
-> -	/* Feed the rx buffer pool */
-> -	schedule_delayed_work(&mhi_netdev->rx_refill, 0);
-> +	if (rx_refill_level >= 100)
-> +		mhi_netdev->rx_refill_level = 1;
-> +	else
-> +		mhi_netdev->rx_refill_level = qsz - qsz * rx_refill_level / 100;
-
-So you're switching from 50% fill level to 70%. Are you sure that's not
-the reason the performance gets better? Did you experiments with higher
-fill levels?
-
-> +	mhi_netdev->refill_task = kthread_run(mhi_net_refill_thread, mhi_netdev,
-> +					      "mhi-net-rx");
-> +	if (IS_ERR(mhi_netdev->refill_task)) {
-> +		return PTR_ERR(mhi_netdev->refill_task);
-> +	}
->  
->  	/* Carrier is established via out-of-band channel (e.g. qmi) */
->  	netif_carrier_on(ndev);
-> @@ -57,9 +111,9 @@ static int mhi_ndo_stop(struct net_device *ndev)
->  {
->  	struct mhi_net_dev *mhi_netdev = netdev_priv(ndev);
->  
-> +	kthread_stop(mhi_netdev->refill_task);
->  	netif_stop_queue(ndev);
->  	netif_carrier_off(ndev);
-> -	cancel_delayed_work_sync(&mhi_netdev->rx_refill);
->  
->  	return 0;
->  }
-> @@ -138,9 +192,6 @@ static void mhi_net_dl_callback(struct mhi_device *mhi_dev,
->  {
->  	struct mhi_net_dev *mhi_netdev = dev_get_drvdata(&mhi_dev->dev);
->  	struct sk_buff *skb = mhi_res->buf_addr;
-> -	int remaining;
-> -
-> -	remaining = atomic_dec_return(&mhi_netdev->stats.rx_queued);
->  
->  	if (unlikely(mhi_res->transaction_status)) {
->  		dev_kfree_skb_any(skb);
-> @@ -163,9 +214,8 @@ static void mhi_net_dl_callback(struct mhi_device *mhi_dev,
->  		netif_rx(skb);
->  	}
->  
-> -	/* Refill if RX buffers queue becomes low */
-> -	if (remaining <= mhi_netdev->rx_queue_sz / 2)
-> -		schedule_delayed_work(&mhi_netdev->rx_refill, 0);
-> +	if (mhi_get_free_desc_count(mhi_dev, DMA_FROM_DEVICE) >= mhi_netdev->rx_refill_level)
-> +		wake_up_interruptible(&mhi_netdev->refill_wq);
->  }
->  
->  static void mhi_net_ul_callback(struct mhi_device *mhi_dev,
-
+-- 
+With best wishes
+Dmitry
