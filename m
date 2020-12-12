@@ -2,102 +2,78 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id CF6722D8579
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 12 Dec 2020 10:58:15 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3CBF82D860D
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 12 Dec 2020 11:52:32 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2438360AbgLLJ6H (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 12 Dec 2020 04:58:07 -0500
-Received: from smtp03.smtpout.orange.fr ([80.12.242.125]:56882 "EHLO
-        smtp.smtpout.orange.fr" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2405462AbgLLJ43 (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 12 Dec 2020 04:56:29 -0500
-Received: from localhost.localdomain ([93.22.36.60])
-        by mwinf5d05 with ME
-        id 3Mmz2400z1HrHD103Mn0mg; Sat, 12 Dec 2020 10:47:01 +0100
-X-ME-Helo: localhost.localdomain
-X-ME-Auth: Y2hyaXN0b3BoZS5qYWlsbGV0QHdhbmFkb28uZnI=
-X-ME-Date: Sat, 12 Dec 2020 10:47:01 +0100
-X-ME-IP: 93.22.36.60
-From:   Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-To:     agross@kernel.org, bjorn.andersson@linaro.org, marcel@holtmann.org,
-        johan.hedberg@gmail.com
-Cc:     linux-arm-msm@vger.kernel.org, linux-bluetooth@vger.kernel.org,
-        linux-kernel@vger.kernel.org, kernel-janitors@vger.kernel.org,
-        Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-Subject: [PATCH] Bluetooth: btqcomsmd: Fix a resource leak in error handling paths in the probe function
-Date:   Sat, 12 Dec 2020 10:46:58 +0100
-Message-Id: <20201212094658.83861-1-christophe.jaillet@wanadoo.fr>
-X-Mailer: git-send-email 2.27.0
+        id S2436470AbgLLKuH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 12 Dec 2020 05:50:07 -0500
+Received: from mail.kernel.org ([198.145.29.99]:53886 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S2405700AbgLLKty (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Sat, 12 Dec 2020 05:49:54 -0500
+Received: from disco-boy.misterjones.org (disco-boy.misterjones.org [51.254.78.96])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id 49B592184D;
+        Sat, 12 Dec 2020 10:49:13 +0000 (UTC)
+Received: from 78.163-31-62.static.virginmediabusiness.co.uk ([62.31.163.78] helo=localhost.localdomain)
+        by disco-boy.misterjones.org with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+        (Exim 4.94)
+        (envelope-from <maz@kernel.org>)
+        id 1ko2Sd-000gY5-1w; Sat, 12 Dec 2020 10:49:11 +0000
+From:   Marc Zyngier <maz@kernel.org>
+To:     Douglas Anderson <dianders@chromium.org>,
+        Thomas Gleixner <tglx@linutronix.de>,
+        Linus Walleij <linus.walleij@linaro.org>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Lina Iyer <ilina@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org,
+        Archana Sathyakumar <asathyak@codeaurora.org>,
+        Maulik Shah <mkshah@codeaurora.org>,
+        Neeraj Upadhyay <neeraju@codeaurora.org>,
+        Srinivas Ramana <sramana@codeaurora.org>,
+        Rajendra Nayak <rnayak@codeaurora.org>,
+        linux-kernel@vger.kernel.org, Stephen Boyd <swboyd@chromium.org>,
+        linux-gpio@vger.kernel.org, Andy Gross <agross@kernel.org>
+Subject: Re: (subset) [PATCH v4 1/4] irqchip: qcom-pdc: Fix phantom irq when changing between rising/falling
+Date:   Sat, 12 Dec 2020 10:48:55 +0000
+Message-Id: <160777008910.485613.16353166280006901459.b4-ty@kernel.org>
+X-Mailer: git-send-email 2.29.2
+In-Reply-To: <20201211141514.v4.1.I2702919afc253e2a451bebc3b701b462b2d22344@changeid>
+References: <20201211141514.v4.1.I2702919afc253e2a451bebc3b701b462b2d22344@changeid>
 MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
+X-SA-Exim-Connect-IP: 62.31.163.78
+X-SA-Exim-Rcpt-To: dianders@chromium.org, tglx@linutronix.de, linus.walleij@linaro.org, bjorn.andersson@linaro.org, ilina@codeaurora.org, linux-arm-msm@vger.kernel.org, asathyak@codeaurora.org, mkshah@codeaurora.org, neeraju@codeaurora.org, sramana@codeaurora.org, rnayak@codeaurora.org, linux-kernel@vger.kernel.org, swboyd@chromium.org, linux-gpio@vger.kernel.org, agross@kernel.org
+X-SA-Exim-Mail-From: maz@kernel.org
+X-SA-Exim-Scanned: No (on disco-boy.misterjones.org); SAEximRunCond expanded to false
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Some resource should be released in the error handling path of the probe
-function, as already done in the remove function.
+On Fri, 11 Dec 2020 14:15:35 -0800, Douglas Anderson wrote:
+> We have a problem if we use gpio-keys and configure wakeups such that
+> we only want one edge to wake us up.  AKA:
+>   wakeup-event-action = <EV_ACT_DEASSERTED>;
+>   wakeup-source;
+> 
+> Specifically we end up with a phantom interrupt that blocks suspend if
+> the line was already high and we want wakeups on rising edges (AKA we
+> want the GPIO to go low and then high again before we wake up).  The
+> opposite is also problematic.
+> 
+> [...]
 
-The remove function was fixed in commit 5052de8deff5 ("soc: qcom: smd:
-Transition client drivers from smd to rpmsg")
+Applied to irq/irqchip-next, thanks!
 
-Fixes: 1511cc750c3d ("Bluetooth: Introduce Qualcomm WCNSS SMD based HCI driver")
-Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
----
- drivers/bluetooth/btqcomsmd.c | 27 +++++++++++++++++++--------
- 1 file changed, 19 insertions(+), 8 deletions(-)
+[1/4] irqchip: qcom-pdc: Fix phantom irq when changing between rising/falling
+      commit: 2f5fbc4305d07725bfebaedb09e57271315691ef
 
-diff --git a/drivers/bluetooth/btqcomsmd.c b/drivers/bluetooth/btqcomsmd.c
-index 98d53764871f..2acb719e596f 100644
---- a/drivers/bluetooth/btqcomsmd.c
-+++ b/drivers/bluetooth/btqcomsmd.c
-@@ -142,12 +142,16 @@ static int btqcomsmd_probe(struct platform_device *pdev)
- 
- 	btq->cmd_channel = qcom_wcnss_open_channel(wcnss, "APPS_RIVA_BT_CMD",
- 						   btqcomsmd_cmd_callback, btq);
--	if (IS_ERR(btq->cmd_channel))
--		return PTR_ERR(btq->cmd_channel);
-+	if (IS_ERR(btq->cmd_channel)) {
-+		ret = PTR_ERR(btq->cmd_channel);
-+		goto destroy_acl_channel;
-+	}
- 
- 	hdev = hci_alloc_dev();
--	if (!hdev)
--		return -ENOMEM;
-+	if (!hdev) {
-+		ret = -ENOMEM;
-+		goto destroy_cmd_channel;
-+	}
- 
- 	hci_set_drvdata(hdev, btq);
- 	btq->hdev = hdev;
-@@ -161,14 +165,21 @@ static int btqcomsmd_probe(struct platform_device *pdev)
- 	hdev->set_bdaddr = qca_set_bdaddr_rome;
- 
- 	ret = hci_register_dev(hdev);
--	if (ret < 0) {
--		hci_free_dev(hdev);
--		return ret;
--	}
-+	if (ret < 0)
-+		goto hci_free_dev;
- 
- 	platform_set_drvdata(pdev, btq);
- 
- 	return 0;
-+
-+hci_free_dev:
-+	hci_free_dev(hdev);
-+destroy_cmd_channel:
-+	rpmsg_destroy_ept(btq->cmd_channel);
-+destroy_acl_channel:
-+	rpmsg_destroy_ept(btq->acl_channel);
-+
-+	return ret;
- }
- 
- static int btqcomsmd_remove(struct platform_device *pdev)
+Cheers,
+
+	M.
 -- 
-2.27.0
+Without deviation from the norm, progress is not possible.
+
 
