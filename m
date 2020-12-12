@@ -2,134 +2,71 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 0DDA02D83DD
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 12 Dec 2020 02:35:01 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id ECCA22D8441
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 12 Dec 2020 05:10:52 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2406847AbgLLBc5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 11 Dec 2020 20:32:57 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34068 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728578AbgLLBcn (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 11 Dec 2020 20:32:43 -0500
-Received: from mail-pg1-x544.google.com (mail-pg1-x544.google.com [IPv6:2607:f8b0:4864:20::544])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 680FBC0613CF
-        for <linux-arm-msm@vger.kernel.org>; Fri, 11 Dec 2020 17:32:03 -0800 (PST)
-Received: by mail-pg1-x544.google.com with SMTP id f17so8380133pge.6
-        for <linux-arm-msm@vger.kernel.org>; Fri, 11 Dec 2020 17:32:03 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:content-transfer-encoding:in-reply-to:references
-         :subject:from:cc:to:date:message-id:user-agent;
-        bh=89PR1XJOQ3AXJnqqfEc8vjhhdDtUcMjkmWKDCFEBDfA=;
-        b=KziBoxlqrygnMqkQZIsOH1IqWRTRks0E0laPSHjpnzDIsngRIIM4b/UeleALrKa3YJ
-         4GKyhns8nOMvfT+0LrReca3YXhaHbbqyo2LOdX7LTMywJWPTkNzg2sgUkdhM0M7sved4
-         soStHWAioS20Du7cAwmgPNc8A/femXn/+xkGo=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:content-transfer-encoding
-         :in-reply-to:references:subject:from:cc:to:date:message-id
-         :user-agent;
-        bh=89PR1XJOQ3AXJnqqfEc8vjhhdDtUcMjkmWKDCFEBDfA=;
-        b=awUkm9vw5OsWVnmTNNRgQLe5NCTcFVZEwUdNsafJ+A1AGdC1FpxfgpvIqtJ9eah8fm
-         j1MAiLAKCg2lLxNj/h1xwB6twkXM8IIBNyIOnXhjGFz1VLiOU7TlmqtMZZABsF/VWRA9
-         lNA5AAV5djV7Om365V8YsdITnRlerIpdjpQdDFcU9XyZcZ2Nla8rlPg6lwxZBXSU7edy
-         Ct8pw1szVfU2Js9HDjgRziD662aDG+oTXIM7dQsjdwGLEgiT0f3123ISofKtxjenkDJf
-         uDoLw2rW4JQcUZ/jJZ4nxPI5XIPCP/NKYLR+Xaec6AM4ZknUKrgGHQankXuuEh8FSFr+
-         pcMg==
-X-Gm-Message-State: AOAM532AzIJ6zAXDxf4K5Px32IDsid3W+oTabxIxG2tEYWGHKl8gefU6
-        E6q2hoIJTV6NWozH4dtmGk3zaQ==
-X-Google-Smtp-Source: ABdhPJwMnvGRsZafrjgyMGtbAW3djZ4NDokRc5FKyg0KgrMLwX3pTXAWpcwmCaUsX1DAFXwRttktEg==
-X-Received: by 2002:a63:4e58:: with SMTP id o24mr14318396pgl.322.1607736722938;
-        Fri, 11 Dec 2020 17:32:02 -0800 (PST)
-Received: from chromium.org ([2620:15c:202:201:3e52:82ff:fe6c:83ab])
-        by smtp.gmail.com with ESMTPSA id ci2sm10838684pjb.40.2020.12.11.17.32.01
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 11 Dec 2020 17:32:02 -0800 (PST)
-Content-Type: text/plain; charset="utf-8"
+        id S1728672AbgLLEJN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 11 Dec 2020 23:09:13 -0500
+Received: from mail.kernel.org ([198.145.29.99]:42910 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S2438099AbgLLEI6 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 11 Dec 2020 23:08:58 -0500
+Date:   Fri, 11 Dec 2020 20:08:16 -0800
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1607746098;
+        bh=Zhu1REojfchWeln1FozhS7doUfpd5aciMb98gfWrzEw=;
+        h=From:To:Cc:Subject:In-Reply-To:References:From;
+        b=JDpTABt8mCMa3alSU7t5Pd/zKfxQpvw8Uh5MES7wR/oedtimNk9/b90H8LzxEP/ec
+         O5RtHfroGOFrwD2ZiV+RgWqqg5LPJWcZuBslFkxrkcD6DbnVQQN36ONDseDP/se2/x
+         50b1buhlkpfE2P5JIsbtWUKN+XLaaomM5gYpH/MrrbxtJKxTv5f6oZyGt1rGVLFgTi
+         sHdDMZ63nIfJ6JbcgzIXxPbrzery/VyFqWzI+4nWI741FP0EzBiw/l7qsZ05jGf/zv
+         hg+T2tH6MFJI3A9hpGuOYk2r+tUWq05/W1c86GZREeIPa73Yro3/dq/rsSuEs092Y4
+         48wDBlfwWJjDQ==
+From:   Jakub Kicinski <kuba@kernel.org>
+To:     Dan Williams <dcbw@redhat.com>
+Cc:     Greg KH <gregkh@linuxfoundation.org>,
+        Hemant Kumar <hemantk@codeaurora.org>,
+        manivannan.sadhasivam@linaro.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, jhugo@codeaurora.org,
+        bbhatt@codeaurora.org, loic.poulain@linaro.org,
+        netdev@vger.kernel.org
+Subject: Re: [PATCH v17 3/3] bus: mhi: Add userspace client interface driver
+Message-ID: <20201211200816.7062c3f9@kicinski-fedora-pc1c0hjn.dhcp.thefacebook.com>
+In-Reply-To: <81dfd08b90f841194237e074aaa3d57cada7afad.camel@redhat.com>
+References: <1607670251-31733-1-git-send-email-hemantk@codeaurora.org>
+        <1607670251-31733-4-git-send-email-hemantk@codeaurora.org>
+        <X9MjXWABgdJIpyIw@kroah.com>
+        <81dfd08b90f841194237e074aaa3d57cada7afad.camel@redhat.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <CAD=FV=WuyuF-PL2PMnLjWCyWGzOqn8beTVP3ZXWvfLdLhPh8=A@mail.gmail.com>
-References: <20201203074459.13078-1-rojay@codeaurora.org> <CAD=FV=WuQjKC6GHy8d2nuqS-fgsUfxYrJosg3eyC9JU1FPCcjw@mail.gmail.com> <160764316821.1580929.18177257779550490986@swboyd.mtv.corp.google.com> <CAD=FV=WvG085orLqnvg9WUobL7iyxwgoxh-8RvOaRdi9rLeDUg@mail.gmail.com> <160764785500.1580929.4255309510717807485@swboyd.mtv.corp.google.com> <CAD=FV=VD78fmSRciFf38AbZG=EFPzDiT_e7QkEC08zA9iL1vTw@mail.gmail.com> <160764967649.1580929.3992720095789306793@swboyd.mtv.corp.google.com> <CAD=FV=Xgw+33pCycHyaMPsk64Qs+oh8e-RtJaM1yn0F27qZRVQ@mail.gmail.com> <160765077856.1580929.643282739071441296@swboyd.mtv.corp.google.com> <CAD=FV=WuyuF-PL2PMnLjWCyWGzOqn8beTVP3ZXWvfLdLhPh8=A@mail.gmail.com>
-Subject: Re: [PATCH] spi: spi-geni-qcom: Fix NULL pointer access in geni_spi_isr
-From:   Stephen Boyd <swboyd@chromium.org>
-Cc:     Roja Rani Yarubandi <rojay@codeaurora.org>,
-        Mark Brown <broonie@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        linux-spi <linux-spi@vger.kernel.org>,
-        LKML <linux-kernel@vger.kernel.org>,
-        Akash Asthana <akashast@codeaurora.org>,
-        msavaliy@qti.qualcomm.com
-To:     Doug Anderson <dianders@chromium.org>
-Date:   Fri, 11 Dec 2020 17:32:00 -0800
-Message-ID: <160773672053.1580929.15441111796129112926@swboyd.mtv.corp.google.com>
-User-Agent: alot/0.9.1
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Doug Anderson (2020-12-10 17:51:53)
-> Hi,
->=20
-> On Thu, Dec 10, 2020 at 5:39 PM Stephen Boyd <swboyd@chromium.org> wrote:
-> >
-> > Quoting Doug Anderson (2020-12-10 17:30:17)
-> > > On Thu, Dec 10, 2020 at 5:21 PM Stephen Boyd <swboyd@chromium.org> wr=
-ote:
-> > > >
-> > > > Yeah and so if it comes way later because it timed out then what's =
-the
-> > > > point of calling synchronize_irq() again? To make the completion
-> > > > variable set when it won't be tested again until it is reinitialize=
-d?
-> > >
-> > > Presumably the idea is to try to recover to a somewhat usable state
-> > > again?  We're not rebooting the machine so, even though this transfer
-> > > failed, we will undoubtedly do another transfer later.  If that
-> > > "abort" interrupt comes way later while we're setting up the next
-> > > transfer we'll really confuse ourselves.
-> >
-> > The interrupt handler just sets a completion variable. What does that
-> > confuse?
->=20
-> The interrupt handler sees a "DONE" interrupt.  If we've made it far
-> enough into setting up the next transfer that "cur_xfer" has been set
-> then it might do more, no?
+On Fri, 11 Dec 2020 11:37:34 -0600 Dan Williams wrote:
+> Just to re-iterate: QMI ~= AT commands ~= MBIM (not quite, but same
+> level)
+> 
+> We already do QMI-over-USB, or AT-over-CDC-ACM. This is QMI-over-MHI.
 
-I thought it saw a cancel/abort EN bit?
+Why do we need a different QMI-over-X for every X? If you say there 
+are already chardev interfaces to configure WWAN why not provide one 
+of those?
 
-        if (m_irq & M_CMD_CANCEL_EN)
-                complete(&mas->cancel_done);
-        if (m_irq & M_CMD_ABORT_EN)
-                complete(&mas->abort_done)
+> It's not networking data plane. It's WWAN device configuration.
 
-and only a DONE bit if a transfer happened.
+Ack. Not that network config doesn't fall under networking, but eh.
+I wonder - did DaveM ever ack this, or was it just out of his sight
+enough, behind the cdev, to never trigger a nack?
 
->=20
->=20
-> > > I guess you could go the route of adding a synchronize_irq() at the
-> > > start of the next transfer, but I'd rather add the overhead in the
-> > > exceptional case (the timeout) than the normal case.  In the normal
-> > > case we don't need to worry about random IRQs from the past transfer
-> > > suddenly showing up.
-> > >
-> >
-> > How does adding synchronize_irq() at the end guarantee that the abort is
-> > cleared out of the hardware though? It seems to assume that the abort is
-> > pending at the GIC when it could still be running through the hardware
-> > and not executed yet. It seems like a synchronize_irq() for that is
-> > wishful thinking that the irq is merely pending even though it timed
-> > out and possibly never ran. Maybe it's stuck in a write buffer in the
-> > CPU?
->=20
-> I guess I'm asserting that if a full second passed (because we timed
-> out) and after that full second no interrupts are pending then the
-> interrupt will never come.  That seems a reasonable assumption to me.
-> It seems hard to believe it'd be stuck in a write buffer for a full
-> second?
->=20
+> There are no current kernel APIs for this, and I really don't think we
+> want there to be. The API surface is *huge* and we definitely don't
+> want that in-kernel.
 
-Ok, so if we don't expect an irq to come in why are we calling
-synchronize_irq()? I'm lost.
+It is what it is today for WWAN. I don't think anyone in the
+development community or among users is particularly happy about
+the situation. Which makes it rather self evident why there is 
+so much apprehension about this patch set. It's going to be 
+a user space channel for everything Qualcomm - AI accelerator etc.
+Widening the WWAN status quo to more device types.
