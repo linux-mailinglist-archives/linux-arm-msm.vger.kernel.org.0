@@ -2,95 +2,111 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 272812D8B98
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 13 Dec 2020 06:30:49 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 14F8E2D8C65
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 13 Dec 2020 09:31:42 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725287AbgLMFab (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 13 Dec 2020 00:30:31 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53022 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727674AbgLMFab (ORCPT
+        id S2404802AbgLMIbV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 13 Dec 2020 03:31:21 -0500
+Received: from so254-31.mailgun.net ([198.61.254.31]:33129 "EHLO
+        so254-31.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2404695AbgLMIbU (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 13 Dec 2020 00:30:31 -0500
-Received: from mail-pg1-x541.google.com (mail-pg1-x541.google.com [IPv6:2607:f8b0:4864:20::541])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 48A96C0613D3
-        for <linux-arm-msm@vger.kernel.org>; Sat, 12 Dec 2020 21:29:51 -0800 (PST)
-Received: by mail-pg1-x541.google.com with SMTP id v29so10189964pgk.12
-        for <linux-arm-msm@vger.kernel.org>; Sat, 12 Dec 2020 21:29:51 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=RIRFinfbgbZO50AJSCxLN6fLNwVVOhGqRKpbkplO8ug=;
-        b=GdgXpGFH+jNsbOUFmm8A+ht+nCz00rdXqYsd+AUSbdipXdCw26nOkJKHb11QeQKAWs
-         DjO9KXWtR8dCEofzaRIg9CsTIZnm6HMUs/IR471Sm1tyBNm0/NGtEMARWk7HTxYsRlfB
-         8ewXopKQm4y7VM/axMqJDhV4ul5T/vhuwYas8=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=RIRFinfbgbZO50AJSCxLN6fLNwVVOhGqRKpbkplO8ug=;
-        b=qRrmQ8gO/2DdcS2wiimiWrizf6pbzSI0ZgcF7I1FCXhSA5tiPnC6y02U77JA6sapZP
-         rKUsX1Vh+Py9xRmBh16+RdFKO3WHJ/tA1Bqk5w8Hu4qyph8SMjTj/EIBDWpeDm9mT0h+
-         oj0HRZ3dXvcUWK8KNpNuH/PFBy+4cy7wdQTpUXmkLn4IEpTdWdPUshe0LTjwFm0QVEMa
-         2aIfVKNsj38QCjnpW39K0VqsHOQcGn57kDGdupokVESF6yHWfd0ZYJVi5QDOSEnqC0De
-         dbY3CZ0tRNdux4p3puuM6OxdmbneomojcfYxsMw5PMPa2L6XrxFbrdsqYY9HB+gaOSIB
-         ugDw==
-X-Gm-Message-State: AOAM5311FD/zO8E3owkRo6U9Ut68IvSxzMOoivdNBu5t7ZkELIifgwqi
-        yyuA6FMA0sF3ze5q2CpPOunriQ==
-X-Google-Smtp-Source: ABdhPJzzjIM+frmXipKHf8je8MLsddRzOudjIcl+IK083vh1hHszJcGuzYLOdc+NV9K198oULyFJNA==
-X-Received: by 2002:a63:cc4c:: with SMTP id q12mr18838228pgi.361.1607837390716;
-        Sat, 12 Dec 2020 21:29:50 -0800 (PST)
-Received: from smtp.gmail.com ([2620:15c:202:201:3e52:82ff:fe6c:83ab])
-        by smtp.gmail.com with ESMTPSA id w200sm15862917pfc.14.2020.12.12.21.29.49
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 12 Dec 2020 21:29:50 -0800 (PST)
-From:   Stephen Boyd <swboyd@chromium.org>
-To:     Mark Brown <broonie@kernel.org>
-Cc:     linux-kernel@vger.kernel.org, linux-spi@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org,
-        Douglas Anderson <dianders@chromium.org>,
-        Rajendra Nayak <rnayak@codeaurora.org>,
-        Mukesh Kumar Savaliya <msavaliy@codeaurora.org>,
-        Akash Asthana <akashast@codeaurora.org>
-Subject: [PATCH] spi: spi-qcom-qspi: Use irq trigger flags from firmware
-Date:   Sat, 12 Dec 2020 21:29:48 -0800
-Message-Id: <20201213052948.308263-1-swboyd@chromium.org>
-X-Mailer: git-send-email 2.29.2.576.ga3fc446d84-goog
+        Sun, 13 Dec 2020 03:31:20 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1607848262; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
+ Subject: Sender; bh=5YQx0yXiTWAxjyfN31qpBuzY18EzlpC4LhwwD9bSiY4=; b=rUHP/e+r2pFcDskXFH8KyrZO7vd7CHaOCuqgMUezQgTAGu8W+u6g47wtkfKgrqHKF9Kp8wXj
+ 7KMqashShOtJhrQoKNQ1iCqgBecV2DrS60YziRq4kY19mEoZt4TsPJCagfL95x4KSMcYOL3E
+ Gl4CdnsyeDrDBDqMF2SiMDGH5sY=
+X-Mailgun-Sending-Ip: 198.61.254.31
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n08.prod.us-east-1.postgun.com with SMTP id
+ 5fd5d12995aeb115f3c5125e (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Sun, 13 Dec 2020 08:30:33
+ GMT
+Sender: tdas=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 0A336C433ED; Sun, 13 Dec 2020 08:30:33 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        NICE_REPLY_A,SPF_FAIL autolearn=no autolearn_force=no version=3.4.0
+Received: from [192.168.0.104] (unknown [49.204.181.171])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: tdas)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id AD9C2C433C6;
+        Sun, 13 Dec 2020 08:30:28 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org AD9C2C433C6
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=tdas@codeaurora.org
+Subject: Re: [PATCH v2 5/5] clk: qcom: gcc: Add clock driver for SM8350
+To:     Stephen Boyd <sboyd@kernel.org>, Vinod Koul <vkoul@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Vivek Aknurwar <viveka@codeaurora.org>,
+        Andy Gross <agross@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Rob Herring <robh+dt@kernel.org>, linux-clk@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Jeevan Shriram <jshriram@codeaurora.org>
+References: <20201208064702.3654324-1-vkoul@kernel.org>
+ <20201208064702.3654324-6-vkoul@kernel.org>
+ <160763302790.1580929.10258660966995584297@swboyd.mtv.corp.google.com>
+ <20201211054349.GS8403@vkoul-mobl>
+ <160767062876.1580929.14564723998233527816@swboyd.mtv.corp.google.com>
+From:   Taniya Das <tdas@codeaurora.org>
+Message-ID: <a6cc3d1e-4a72-63be-bf1c-5d560ecef9aa@codeaurora.org>
+Date:   Sun, 13 Dec 2020 14:00:25 +0530
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.5.1
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <160767062876.1580929.14564723998233527816@swboyd.mtv.corp.google.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-We don't need to force this to be trigger high here, as the firmware
-properly configures the irq flags already. Drop it to save a line.
 
-Cc: Douglas Anderson <dianders@chromium.org>
-Cc: Rajendra Nayak <rnayak@codeaurora.org>
-Cc: Mukesh Kumar Savaliya <msavaliy@codeaurora.org>
-Cc: Akash Asthana <akashast@codeaurora.org>
-Signed-off-by: Stephen Boyd <swboyd@chromium.org>
----
- drivers/spi/spi-qcom-qspi.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/drivers/spi/spi-qcom-qspi.c b/drivers/spi/spi-qcom-qspi.c
-index 5eed88af6899..8e70f5e63e0b 100644
---- a/drivers/spi/spi-qcom-qspi.c
-+++ b/drivers/spi/spi-qcom-qspi.c
-@@ -516,8 +516,7 @@ static int qcom_qspi_probe(struct platform_device *pdev)
- 	ret = platform_get_irq(pdev, 0);
- 	if (ret < 0)
- 		goto exit_probe_master_put;
--	ret = devm_request_irq(dev, ret, qcom_qspi_irq,
--			IRQF_TRIGGER_HIGH, dev_name(dev), ctrl);
-+	ret = devm_request_irq(dev, ret, qcom_qspi_irq, 0, dev_name(dev), ctrl);
- 	if (ret) {
- 		dev_err(dev, "Failed to request irq %d\n", ret);
- 		goto exit_probe_master_put;
+On 12/11/2020 12:40 PM, Stephen Boyd wrote:
+> Quoting Vinod Koul (2020-12-10 21:43:49)
+>> On 10-12-20, 12:43, Stephen Boyd wrote:
+>>>> +static struct clk_branch gcc_camera_ahb_clk = {
+>>>> +       .halt_reg = 0x26004,
+>>>> +       .halt_check = BRANCH_HALT_DELAY,
+>>>> +       .hwcg_reg = 0x26004,
+>>>> +       .hwcg_bit = 1,
+>>>> +       .clkr = {
+>>>> +               .enable_reg = 0x26004,
+>>>> +               .enable_mask = BIT(0),
+>>>> +               .hw.init = &(struct clk_init_data){
+>>>> +                       .name = "gcc_camera_ahb_clk",
+>>>> +                       .flags = CLK_IS_CRITICAL,
+>>>
+>>> Why is it critical? Can we just enable it in driver probe and stop
+>>> modeling it as a clk?
+>>
+>> it does not have a parent we control, yeah it would make sense to do
+>> that. Tanya do you folks agree ..?
+>>
+> 
+> Maybe it is needed for camera clk controller? Have to check other SoCs
+> and see if they're using it.
+> 
 
-base-commit: b65054597872ce3aefbc6a666385eabdf9e288da
+Yes, they would have to be left enabled.
+
+Vinod, could you please move them to probe, similar to kona/sc7180 where 
+all the CRITICALs clocks are left enabled?
+
 -- 
-https://chromeos.dev
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
+of Code Aurora Forum, hosted by The Linux Foundation.
 
+--
