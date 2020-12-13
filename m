@@ -2,88 +2,95 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id BE58D2D8AEB
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 13 Dec 2020 03:31:52 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 272812D8B98
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 13 Dec 2020 06:30:49 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727285AbgLMCbd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 12 Dec 2020 21:31:33 -0500
-Received: from mail.cross.am ([81.89.209.7]:52084 "EHLO cross.am"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725924AbgLMCbc (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 12 Dec 2020 21:31:32 -0500
-X-Greylist: delayed 617 seconds by postgrey-1.27 at vger.kernel.org; Sat, 12 Dec 2020 21:31:31 EST
-Received: from cross.am (localhost [127.0.0.1])
-        by cross.am (Postfix) with ESMTP id E5B3E1233421;
-        Sun, 13 Dec 2020 06:15:27 +0400 (AMT)
-DKIM-Filter: OpenDKIM Filter v2.10.3 cross.am E5B3E1233421
-X-Virus-Scanned: amavisd-new at cross.am
-Received: from cross.am ([127.0.0.1])
-        by cross.am (cross.am [127.0.0.1]) (amavisd-new, port 10024) with LMTP
-        id ZnqthOKeYSBj; Sun, 13 Dec 2020 06:15:18 +0400 (AMT)
-Received: from webmail.cross.am (webmail.cross.am [81.89.209.7])
-        by cross.am (Postfix) with ESMTP id C72A61233404;
-        Sun, 13 Dec 2020 05:14:54 +0400 (AMT)
-DKIM-Filter: OpenDKIM Filter v2.10.3 cross.am C72A61233404
-Received: from 197.210.53.46
-        (SquirrelMail authenticated user maratuk)
-        by webmail.cross.am with HTTP;
-        Sun, 13 Dec 2020 05:14:55 +0400
-Message-ID: <9347039f28af22337a2e7516ae66233f.squirrel@webmail.cross.am>
-Date:   Sun, 13 Dec 2020 05:14:55 +0400
-Subject: Good day
-From:   "J.N.K Mamabolo" <mamabolo@mamabolo.com>
-Reply-To: paulall@163.com
-User-Agent: SquirrelMail/1.4.23 [SVN]
+        id S1725287AbgLMFab (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 13 Dec 2020 00:30:31 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53022 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727674AbgLMFab (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Sun, 13 Dec 2020 00:30:31 -0500
+Received: from mail-pg1-x541.google.com (mail-pg1-x541.google.com [IPv6:2607:f8b0:4864:20::541])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 48A96C0613D3
+        for <linux-arm-msm@vger.kernel.org>; Sat, 12 Dec 2020 21:29:51 -0800 (PST)
+Received: by mail-pg1-x541.google.com with SMTP id v29so10189964pgk.12
+        for <linux-arm-msm@vger.kernel.org>; Sat, 12 Dec 2020 21:29:51 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=RIRFinfbgbZO50AJSCxLN6fLNwVVOhGqRKpbkplO8ug=;
+        b=GdgXpGFH+jNsbOUFmm8A+ht+nCz00rdXqYsd+AUSbdipXdCw26nOkJKHb11QeQKAWs
+         DjO9KXWtR8dCEofzaRIg9CsTIZnm6HMUs/IR471Sm1tyBNm0/NGtEMARWk7HTxYsRlfB
+         8ewXopKQm4y7VM/axMqJDhV4ul5T/vhuwYas8=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=RIRFinfbgbZO50AJSCxLN6fLNwVVOhGqRKpbkplO8ug=;
+        b=qRrmQ8gO/2DdcS2wiimiWrizf6pbzSI0ZgcF7I1FCXhSA5tiPnC6y02U77JA6sapZP
+         rKUsX1Vh+Py9xRmBh16+RdFKO3WHJ/tA1Bqk5w8Hu4qyph8SMjTj/EIBDWpeDm9mT0h+
+         oj0HRZ3dXvcUWK8KNpNuH/PFBy+4cy7wdQTpUXmkLn4IEpTdWdPUshe0LTjwFm0QVEMa
+         2aIfVKNsj38QCjnpW39K0VqsHOQcGn57kDGdupokVESF6yHWfd0ZYJVi5QDOSEnqC0De
+         dbY3CZ0tRNdux4p3puuM6OxdmbneomojcfYxsMw5PMPa2L6XrxFbrdsqYY9HB+gaOSIB
+         ugDw==
+X-Gm-Message-State: AOAM5311FD/zO8E3owkRo6U9Ut68IvSxzMOoivdNBu5t7ZkELIifgwqi
+        yyuA6FMA0sF3ze5q2CpPOunriQ==
+X-Google-Smtp-Source: ABdhPJzzjIM+frmXipKHf8je8MLsddRzOudjIcl+IK083vh1hHszJcGuzYLOdc+NV9K198oULyFJNA==
+X-Received: by 2002:a63:cc4c:: with SMTP id q12mr18838228pgi.361.1607837390716;
+        Sat, 12 Dec 2020 21:29:50 -0800 (PST)
+Received: from smtp.gmail.com ([2620:15c:202:201:3e52:82ff:fe6c:83ab])
+        by smtp.gmail.com with ESMTPSA id w200sm15862917pfc.14.2020.12.12.21.29.49
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 12 Dec 2020 21:29:50 -0800 (PST)
+From:   Stephen Boyd <swboyd@chromium.org>
+To:     Mark Brown <broonie@kernel.org>
+Cc:     linux-kernel@vger.kernel.org, linux-spi@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org,
+        Douglas Anderson <dianders@chromium.org>,
+        Rajendra Nayak <rnayak@codeaurora.org>,
+        Mukesh Kumar Savaliya <msavaliy@codeaurora.org>,
+        Akash Asthana <akashast@codeaurora.org>
+Subject: [PATCH] spi: spi-qcom-qspi: Use irq trigger flags from firmware
+Date:   Sat, 12 Dec 2020 21:29:48 -0800
+Message-Id: <20201213052948.308263-1-swboyd@chromium.org>
+X-Mailer: git-send-email 2.29.2.576.ga3fc446d84-goog
 MIME-Version: 1.0
-Content-Type: text/plain;charset=utf-8
 Content-Transfer-Encoding: 8bit
-X-Priority: 3 (Normal)
-Importance: Normal
-To:     unlisted-recipients:; (no To-header on input)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+We don't need to force this to be trigger high here, as the firmware
+properly configures the irq flags already. Drop it to save a line.
 
+Cc: Douglas Anderson <dianders@chromium.org>
+Cc: Rajendra Nayak <rnayak@codeaurora.org>
+Cc: Mukesh Kumar Savaliya <msavaliy@codeaurora.org>
+Cc: Akash Asthana <akashast@codeaurora.org>
+Signed-off-by: Stephen Boyd <swboyd@chromium.org>
+---
+ drivers/spi/spi-qcom-qspi.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
+diff --git a/drivers/spi/spi-qcom-qspi.c b/drivers/spi/spi-qcom-qspi.c
+index 5eed88af6899..8e70f5e63e0b 100644
+--- a/drivers/spi/spi-qcom-qspi.c
++++ b/drivers/spi/spi-qcom-qspi.c
+@@ -516,8 +516,7 @@ static int qcom_qspi_probe(struct platform_device *pdev)
+ 	ret = platform_get_irq(pdev, 0);
+ 	if (ret < 0)
+ 		goto exit_probe_master_put;
+-	ret = devm_request_irq(dev, ret, qcom_qspi_irq,
+-			IRQF_TRIGGER_HIGH, dev_name(dev), ctrl);
++	ret = devm_request_irq(dev, ret, qcom_qspi_irq, 0, dev_name(dev), ctrl);
+ 	if (ret) {
+ 		dev_err(dev, "Failed to request irq %d\n", ret);
+ 		goto exit_probe_master_put;
 
-
-Dear friend,
-
-I am interested in establishing and operating a very viable business as a
-means of investment abroad but i do not know too well on how this is done
-in your country.So i will need you to help me in this regard.
-
-My preference is any good profitable yielding business and i would
-appreciate any viable ideas you could come up with. I will also need you
-to help me look for properties like homes and lands for sale as i am
-proposing to invest the sum eleven million United State Dollars
-($11,000,000 USD)for this. I do not know if you can or be of help to me.
-
-For a brief on my personality. My name is J.N.K Mamabolo of Saas deputy
-Joint Special Representative for Darfur Hybrid Operation. AMBASSADOR.
-JEREMIAH K.MAMABOLO. United Nation SPECIAL REPRESENTATIVE (UNAMID) SUDAN.
-
-http://lnx.sudafrica.it/article.html?id=368
-
-My need for this business proposition and to acquire these properties is
-very urgent as the amount was secured from the oppressive government of
-Sudan, personally secure it for the future of my four children before i
-was apprehended by his current administration as the trial proceeds in
-court,I want to quickly sent out this amount to secure valuable properties
-in UAE in other not to loose everything i suffer for all this years.
-
-Please i eexpect your good and prompt reply urgently so that we can
-proceed switfly. I will need your personal details such as names, WhatSapp
-number and location, if i am unable to access my emails due to government
-issues arising at this moment that lead me to search out your email
-adddress from email database.
-
-Best Regards.
-
-J.N.K Mamabolo
-
-
-
-
+base-commit: b65054597872ce3aefbc6a666385eabdf9e288da
+-- 
+https://chromeos.dev
 
