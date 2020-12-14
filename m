@@ -2,251 +2,214 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 53FE92D94C1
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Dec 2020 10:17:03 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id F2D3A2D9791
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Dec 2020 12:44:17 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2439604AbgLNJNQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 14 Dec 2020 04:13:16 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52730 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2439584AbgLNJNM (ORCPT
+        id S2407709AbgLNLmY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 14 Dec 2020 06:42:24 -0500
+Received: from alexa-out.qualcomm.com ([129.46.98.28]:14087 "EHLO
+        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730875AbgLNLmY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 14 Dec 2020 04:13:12 -0500
-Received: from mail-ed1-x542.google.com (mail-ed1-x542.google.com [IPv6:2a00:1450:4864:20::542])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 628BEC0617B0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Dec 2020 01:12:32 -0800 (PST)
-Received: by mail-ed1-x542.google.com with SMTP id i24so16338419edj.8
-        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Dec 2020 01:12:32 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=UvcJ/LZ7ZVgjhl8GiIurj7mRBj+nIYs+vN/MPLN/0dM=;
-        b=L4x1ROOiCcrVgjzt2EK2k1fqHrtmdmgQKsPLXEnaK+nZVzCEamzXG46bDeS137CMfH
-         zcofDq4nbtpbFyT9mHFn866TORvhhiEQ7Gego32qOcME22eyV2JPFkuANpVj8uhOgSS3
-         32h778J2TmR5U91ZYh6Odikkr8xYNaLzmxjezVlGICWu0VmSQHZMyh9rgCEkRdea3UsH
-         Nm78kpmEq4dhqlKHq9Lxek6SU6u4sp1l1B/nEAAiEKXUlK4mxqpzOistpHTJPTKwEC1M
-         uQQrUnNH9tf7EcCVxWOu0RH8391rmVFzP85pf+/kKiwe89DuJwvscdOmKYtzuZduuOdW
-         4+kg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=UvcJ/LZ7ZVgjhl8GiIurj7mRBj+nIYs+vN/MPLN/0dM=;
-        b=B+K9es6xzxsbkfVJ5AKV4e5VgydmOw4dUcchIu+QZrq6/HZQSrFzw66BpOY63BLz6A
-         Ky5iiLaHppZAhSYwm2XYSHi+V6+2orDRIPYZOXjS4hCtflMiB2Uyd+7JXGqgo4cibSww
-         agGUX1NqYt6h529s6JVmCHXZRF7ch+6FmTiS/of616dgaNMUsyCZiiBlF5REGlb1ffeM
-         HnoBveDuN7+4hzsqsRyzBeSZurQ6n+5muvtkENkzqqxUsWknRpdmLydXVYFz2GksYrhC
-         BNiLNKZRFyuXxrK+H1+KJsqVuIfrS3vtF+xoJTJG9jE0j8tNy5gA28sYUhJIG6qxjx2E
-         60qA==
-X-Gm-Message-State: AOAM531NWFDWAsXT5hC4cviNHvuqAS/cXVxCgencBGm2N3p9fVzSd5zp
-        Tfu5wnMlKx4OksL9p/D/KzgkMom5RFw2ZDiEZLmwbA==
-X-Google-Smtp-Source: ABdhPJxzGGimaYxdhkmLIADTbPTcw/eh4c6LIFlX3rb/qPo18qFlMzLU/wWeAbTPcxNP+TJBMU2jGxnEfk+FNB695Go=
-X-Received: by 2002:aa7:c3d3:: with SMTP id l19mr24446309edr.366.1607937150984;
- Mon, 14 Dec 2020 01:12:30 -0800 (PST)
-MIME-Version: 1.0
-References: <1607598951-2340-1-git-send-email-loic.poulain@linaro.org>
- <1607598951-2340-3-git-send-email-loic.poulain@linaro.org> <20201212125544.4857b1cd@kicinski-fedora-pc1c0hjn.dhcp.thefacebook.com>
-In-Reply-To: <20201212125544.4857b1cd@kicinski-fedora-pc1c0hjn.dhcp.thefacebook.com>
-From:   Loic Poulain <loic.poulain@linaro.org>
-Date:   Mon, 14 Dec 2020 10:19:07 +0100
-Message-ID: <CAMZdPi8JGnEn1BbsX2jP_bNAGPrSz=eL2ZJ5n_2ReqGP2jpdOg@mail.gmail.com>
-Subject: Re: [PATCH v2 3/3] net: mhi: Add dedicated alloc thread
-To:     Jakub Kicinski <kuba@kernel.org>
-Cc:     David Miller <davem@davemloft.net>,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Network Development <netdev@vger.kernel.org>,
-        Jeffrey Hugo <jhugo@codeaurora.org>
-Content-Type: text/plain; charset="UTF-8"
+        Mon, 14 Dec 2020 06:42:24 -0500
+Received: from ironmsg-lv-alpha.qualcomm.com ([10.47.202.13])
+  by alexa-out.qualcomm.com with ESMTP; 14 Dec 2020 03:41:43 -0800
+X-QCInternal: smtphost
+Received: from ironmsg02-blr.qualcomm.com ([10.86.208.131])
+  by ironmsg-lv-alpha.qualcomm.com with ESMTP/TLS/AES256-SHA; 14 Dec 2020 03:41:41 -0800
+X-QCInternal: smtphost
+Received: from kalyant-linux.qualcomm.com ([10.204.66.210])
+  by ironmsg02-blr.qualcomm.com with ESMTP; 14 Dec 2020 17:11:13 +0530
+Received: by kalyant-linux.qualcomm.com (Postfix, from userid 94428)
+        id 297D23F37; Mon, 14 Dec 2020 03:41:12 -0800 (PST)
+From:   Kalyan Thota <kalyan_t@codeaurora.org>
+To:     dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org
+Cc:     Kalyan Thota <kalyan_t@codeaurora.org>,
+        linux-kernel@vger.kernel.org, robdclark@gmail.com,
+        seanpaul@chromium.org, hoegsberg@chromium.org,
+        dianders@chromium.org, mkrishn@codeaurora.org, swboyd@chromium.org,
+        abhinavk@codeaurora.org, ddavenport@chromium.org
+Subject: [v1] drm/msm/disp/dpu1: turn off vblank irqs aggressively in dpu driver
+Date:   Mon, 14 Dec 2020 03:41:06 -0800
+Message-Id: <1607946066-16276-1-git-send-email-kalyan_t@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Jakub,
+Turn off vblank irqs immediately as soon as drm_vblank_put is
+requested so that there are no irqs triggered during idle state.
 
-On Sat, 12 Dec 2020 at 21:55, Jakub Kicinski <kuba@kernel.org> wrote:
->
-> On Thu, 10 Dec 2020 12:15:51 +0100 Loic Poulain wrote:
-> > The buffer allocation for RX path is currently done by a work executed
-> > in the system workqueue. The work to do is quite simple and consists
-> > mostly in allocating and queueing as much as possible buffers to the MHI
-> > RX channel.
-> >
-> > It appears that using a dedicated kthread would be more appropriate to
-> > prevent
-> > 1. RX allocation latency introduced by the system queue
->
-> System work queue should not add much latency, you can also create your
-> own workqueue. Did you intend to modify the priority of the thread you
-> create?
+This will reduce cpu wakeups and help in power saving. The change
+also enable driver timestamp for vblanks.
 
-No, and I don't, since I assume there is no reason to prioritize
-network over other loads. I've considered the dedicated workqueue, but
-since there is only one task to run as a while loop, I thought using a
-kthread was more appropriate (and slightly lighter), but I can move to
-that solution if you recommend it.
+Signed-off-by: Kalyan Thota <kalyan_t@codeaurora.org>
+---
+ drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c    | 69 +++++++++++++++++++++++++++++
+ drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c | 15 +++++++
+ drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h |  6 +++
+ drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c     |  4 ++
+ 4 files changed, 94 insertions(+)
 
->
-> > 2. Unbounded work execution, the work only returning when queue is
-> > full, it can possibly monopolise the workqueue thread on slower systems.
->
-> Is this something you observed in practice?
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
+index d4662e8..a4a5733 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
+@@ -65,6 +65,73 @@ static void dpu_crtc_destroy(struct drm_crtc *crtc)
+ 	kfree(dpu_crtc);
+ }
+ 
++static struct drm_encoder *get_encoder_from_crtc(struct drm_crtc *crtc)
++{
++	struct drm_device *dev = crtc->dev;
++	struct drm_encoder *encoder;
++
++	drm_for_each_encoder(encoder, dev)
++		if (encoder->crtc == crtc)
++			return encoder;
++
++	return NULL;
++}
++
++static bool dpu_crtc_get_scanout_position(struct drm_crtc *crtc,
++					   bool in_vblank_irq,
++					   int *vpos, int *hpos,
++					   ktime_t *stime, ktime_t *etime,
++					   const struct drm_display_mode *mode)
++{
++	unsigned int pipe = crtc->index;
++	struct drm_encoder *encoder;
++	int line, vsw, vbp, vactive_start, vactive_end, vfp_end;
++
++
++	encoder = get_encoder_from_crtc(crtc);
++	if (!encoder) {
++		DRM_ERROR("no encoder found for crtc %d\n", pipe);
++		return false;
++	}
++
++	vsw = mode->crtc_vsync_end - mode->crtc_vsync_start;
++	vbp = mode->crtc_vtotal - mode->crtc_vsync_end;
++
++	/*
++	 * the line counter is 1 at the start of the VSYNC pulse and VTOTAL at
++	 * the end of VFP. Translate the porch values relative to the line
++	 * counter positions.
++	 */
++
++	vactive_start = vsw + vbp + 1;
++
++	vactive_end = vactive_start + mode->crtc_vdisplay;
++
++	/* last scan line before VSYNC */
++	vfp_end = mode->crtc_vtotal;
++
++	if (stime)
++		*stime = ktime_get();
++
++	line = dpu_encoder_get_linecount(encoder);
++
++	if (line < vactive_start)
++		line -= vactive_start;
++	else if (line > vactive_end)
++		line = line - vfp_end - vactive_start;
++	else
++		line -= vactive_start;
++
++	*vpos = line;
++	*hpos = 0;
++
++	if (etime)
++		*etime = ktime_get();
++
++	return true;
++}
++
++
+ static void _dpu_crtc_setup_blend_cfg(struct dpu_crtc_mixer *mixer,
+ 		struct dpu_plane_state *pstate, struct dpu_format *format)
+ {
+@@ -1243,6 +1310,7 @@ static const struct drm_crtc_funcs dpu_crtc_funcs = {
+ 	.early_unregister = dpu_crtc_early_unregister,
+ 	.enable_vblank  = msm_crtc_enable_vblank,
+ 	.disable_vblank = msm_crtc_disable_vblank,
++	.get_vblank_timestamp = drm_crtc_vblank_helper_get_vblank_timestamp,
+ };
+ 
+ static const struct drm_crtc_helper_funcs dpu_crtc_helper_funcs = {
+@@ -1251,6 +1319,7 @@ static const struct drm_crtc_helper_funcs dpu_crtc_helper_funcs = {
+ 	.atomic_check = dpu_crtc_atomic_check,
+ 	.atomic_begin = dpu_crtc_atomic_begin,
+ 	.atomic_flush = dpu_crtc_atomic_flush,
++	.get_scanout_position = dpu_crtc_get_scanout_position,
+ };
+ 
+ /* initialize crtc */
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+index f7f5c25..6c7c7fd 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+@@ -425,6 +425,21 @@ int dpu_encoder_helper_unregister_irq(struct dpu_encoder_phys *phys_enc,
+ 	return 0;
+ }
+ 
++int dpu_encoder_get_linecount(struct drm_encoder *drm_enc)
++{
++	struct dpu_encoder_virt *dpu_enc = NULL;
++	struct dpu_encoder_phys *phys = NULL;
++	int linecount = 0;
++
++	dpu_enc = to_dpu_encoder_virt(drm_enc);
++	phys = dpu_enc ? dpu_enc->cur_master : NULL;
++
++	if (phys && phys->ops.get_line_count)
++		linecount = phys->ops.get_line_count(phys);
++
++	return linecount;
++}
++
+ void dpu_encoder_get_hw_resources(struct drm_encoder *drm_enc,
+ 				  struct dpu_encoder_hw_resources *hw_res)
+ {
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h
+index b491346..2c4804c 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h
+@@ -156,5 +156,11 @@ void dpu_encoder_prepare_commit(struct drm_encoder *drm_enc);
+  */
+ void dpu_encoder_set_idle_timeout(struct drm_encoder *drm_enc,
+ 							u32 idle_timeout);
++/**
++ * dpu_encoder_get_linecount - get interface line count for the encoder.
++ * @drm_enc:    Pointer to previously created drm encoder structure
++ */
++
++int dpu_encoder_get_linecount(struct drm_encoder *drm_enc);
+ 
+ #endif /* __DPU_ENCODER_H__ */
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+index 374b0e8..49bd0729 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+@@ -14,6 +14,7 @@
+ 
+ #include <drm/drm_crtc.h>
+ #include <drm/drm_file.h>
++#include <drm/drm_vblank.h>
+ 
+ #include "msm_drv.h"
+ #include "msm_mmu.h"
+@@ -1020,6 +1021,9 @@ static int dpu_kms_hw_init(struct msm_kms *kms)
+ 	 */
+ 	dev->mode_config.allow_fb_modifiers = true;
+ 
++	/* Disable vblank irqs aggressively for power-saving */
++	dev->vblank_disable_immediate = true;
++
+ 	/*
+ 	 * _dpu_kms_drm_obj_init should create the DRM related objects
+ 	 * i.e. CRTCs, planes, encoders, connectors and so forth
+-- 
+2.7.4
 
-No, I've just observed that work duration is inconstant , queuing from
-few buffers to several hundreeds. This unbounded behavior makes me
-feel that doing that in the shared sytem workqueue is probably not the
-right place. I've not tested on a slower machine though.
-
->
-> > This patch replaces the system work with a simple kthread that loops on
-> > buffer allocation and sleeps when queue is full. Moreover it gets rid
-> > of the local rx_queued variable (to track buffer count), and instead,
-> > relies on the new mhi_get_free_desc_count helper.
->
-> Seems unrelated, should probably be a separate patch.
-
-I can do that.
-
->
-> > After pratical testing on a x86_64 machine, this change improves
-> > - Peek throughput (slightly, by few mbps)
-> > - Throughput stability when concurrent loads are running (stress)
-> > - CPU usage, less CPU cycles dedicated to the task
->
-> Do you have an explanation why the CPU cycles are lower?
-
-For CPU cycles, TBH, not really, this is just observational. Regarding
-throughput stability, it's certainly because the work can consume all
-its dedicated kthread time.
-
->
-> > Below is the powertop output for RX allocation task before and after
-> > this change, when performing UDP download at 6Gbps. Mostly to highlight
-> > the improvement in term of CPU usage.
-> >
-> > older (system workqueue):
-> > Usage       Events/s    Category       Description
-> > 63,2 ms/s     134,0        kWork          mhi_net_rx_refill_work
-> > 62,8 ms/s     134,3        kWork          mhi_net_rx_refill_work
-> > 60,8 ms/s     141,4        kWork          mhi_net_rx_refill_work
-> >
-> > newer (dedicated kthread):
-> > Usage       Events/s    Category       Description
-> > 20,7 ms/s     155,6        Process        [PID 3360] [mhi-net-rx]
-> > 22,2 ms/s     169,6        Process        [PID 3360] [mhi-net-rx]
-> > 22,3 ms/s     150,2        Process        [PID 3360] [mhi-net-rx]
-> >
-> > Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
-> > ---
-> >  v2: add module parameter for changing RX refill level
->
-> > @@ -16,6 +17,11 @@
-> >  #define MHI_NET_MAX_MTU              0xffff
-> >  #define MHI_NET_DEFAULT_MTU  0x4000
-> >
-> > +static unsigned int rx_refill_level = 70;
-> > +module_param(rx_refill_level, uint, 0600);
-> > +MODULE_PARM_DESC(rx_refill_level,
-> > +              "The minimal RX queue level percentage (0 to 100) under which the RX queue must be refilled");
->
-> Sorry you got bad advice in v1 and I didn't catch it. Please avoid
-> adding module parameters. Many drivers do bulk refill, and don't need
-> and extra parametrization, I don't see why this one would be special -
-> if it is please explain.
-
-Ok, going to revert that.
-
->
-> >  struct mhi_net_stats {
-> >       u64_stats_t rx_packets;
-> >       u64_stats_t rx_bytes;
-> > @@ -25,7 +31,6 @@ struct mhi_net_stats {
-> >       u64_stats_t tx_bytes;
-> >       u64_stats_t tx_errors;
-> >       u64_stats_t tx_dropped;
-> > -     atomic_t rx_queued;
-> >       struct u64_stats_sync tx_syncp;
-> >       struct u64_stats_sync rx_syncp;
-> >  };
-> > @@ -33,17 +38,66 @@ struct mhi_net_stats {
-> >  struct mhi_net_dev {
-> >       struct mhi_device *mdev;
-> >       struct net_device *ndev;
-> > -     struct delayed_work rx_refill;
-> > +     struct task_struct *refill_task;
-> > +     wait_queue_head_t refill_wq;
-> >       struct mhi_net_stats stats;
-> >       u32 rx_queue_sz;
-> > +     u32 rx_refill_level;
-> >  };
-> >
-> > +static int mhi_net_refill_thread(void *data)
-> > +{
-> > +     struct mhi_net_dev *mhi_netdev = data;
-> > +     struct net_device *ndev = mhi_netdev->ndev;
-> > +     struct mhi_device *mdev = mhi_netdev->mdev;
-> > +     int size = READ_ONCE(ndev->mtu);
-> > +     struct sk_buff *skb;
-> > +     int err;
-> > +
-> > +     while (1) {
-> > +             err = wait_event_interruptible(mhi_netdev->refill_wq,
-> > +                                            !mhi_queue_is_full(mdev, DMA_FROM_DEVICE)
-> > +                                            || kthread_should_stop());
-> > +             if (err || kthread_should_stop())
-> > +                     break;
-> > +
-> > +             skb = netdev_alloc_skb(ndev, size);
-> > +             if (unlikely(!skb)) {
-> > +                     /* No memory, retry later */
-> > +                     schedule_timeout_interruptible(msecs_to_jiffies(250));
->
-> You should have a counter for this, at least for your testing. If this
-> condition is hit it'll probably have a large impact on the performance.
-
-Indeed, going to do that, what about a ratelimited error? I assume if
-it's happen, system is really in bad shape.
-
->
-> > +                     continue;
-> > +             }
-> > +
-> > +             err = mhi_queue_skb(mdev, DMA_FROM_DEVICE, skb, size, MHI_EOT);
-> > +             if (unlikely(err)) {
-> > +                     net_err_ratelimited("%s: Failed to queue RX buf (%d)\n",
-> > +                                         ndev->name, err);
-> > +                     kfree_skb(skb);
-> > +                     break;
-> > +             }
-> > +
-> > +             /* Do not hog the CPU */
-> > +             cond_resched();
-> > +     }
-> > +
-> > +     return 0;
-> > +}
-> > +
-> >  static int mhi_ndo_open(struct net_device *ndev)
-> >  {
-> >       struct mhi_net_dev *mhi_netdev = netdev_priv(ndev);
-> > +     unsigned int qsz = mhi_netdev->rx_queue_sz;
-> >
-> > -     /* Feed the rx buffer pool */
-> > -     schedule_delayed_work(&mhi_netdev->rx_refill, 0);
-> > +     if (rx_refill_level >= 100)
-> > +             mhi_netdev->rx_refill_level = 1;
-> > +     else
-> > +             mhi_netdev->rx_refill_level = qsz - qsz * rx_refill_level / 100;
->
-> So you're switching from 50% fill level to 70%. Are you sure that's not
-> the reason the performance gets better? Did you experiments with higher
-> fill levels?
-
-No, I've tested both levels with the two solutions, It's just that
-after experiment, high throughput is a bit more stable with 70%. So I
-can revert back to 50% to avoid confusion and keep that for a
-subsequent change.
-
-Thanks,
-Loic
