@@ -2,112 +2,105 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 521102D99B0
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Dec 2020 15:21:18 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0FDBC2D9C38
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Dec 2020 17:15:30 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2440047AbgLNOUC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 14 Dec 2020 09:20:02 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43520 "EHLO
+        id S2440082AbgLNQKF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 14 Dec 2020 11:10:05 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60584 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2440041AbgLNOUC (ORCPT
+        with ESMTP id S2439519AbgLNQJy (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 14 Dec 2020 09:20:02 -0500
-Received: from mail-wr1-x443.google.com (mail-wr1-x443.google.com [IPv6:2a00:1450:4864:20::443])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 156DFC061282
-        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Dec 2020 06:18:40 -0800 (PST)
-Received: by mail-wr1-x443.google.com with SMTP id r3so16607575wrt.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Dec 2020 06:18:40 -0800 (PST)
+        Mon, 14 Dec 2020 11:09:54 -0500
+Received: from mail-vk1-xa41.google.com (mail-vk1-xa41.google.com [IPv6:2607:f8b0:4864:20::a41])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 35669C0613D6
+        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Dec 2020 08:09:10 -0800 (PST)
+Received: by mail-vk1-xa41.google.com with SMTP id u67so4023012vkb.5
+        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Dec 2020 08:09:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=bY1msGoBjemRs4hKNt3WYSHnFeZbrWNtczzN7TWoXGM=;
-        b=dq8H++drKY8U9QCDle1q2vKZZ7TzhkpS8eNvBWbs+4WqseVFZvPKhMNV0rhiZLPpf2
-         HPmdqH1Z0pvQXNTYWA+vzTHCKOiiXD2aUCHSw8daZJecyvRcqhLI6WvJrflGFhtAq3x5
-         IfKaXDer0gxRX5LktrLiRCEAgeZFm52z3dskT1yPxFhJcrqNOOmyIiPfRNMo3HBTuesP
-         WhDXxav+iDlCMTuIY4mSYHVCg2rtsfv72dSEzfIsl67E8yObLGb0SKMIDFrjQcWqwlqk
-         j2O14hXe7sDiqq6ZOQQS8mQbkFpmL/RfAfltfrWm1ZgzRpNgTVq5qzjO47Ga42Xx5MIH
-         Uo0Q==
+        d=chromium.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=t2aQQjeTAClD8BnlUklr8QIojrz0VDK1/YhYYkZp+14=;
+        b=kIZlPMONz6lBq/gIOydcXGUjcQ0cvnJfuO8mypCn3kXK71AWGykGUryj8sLmqsAdFI
+         ZUJzP+cGLH/fV3IW7Je5UBQzqFi7Be020MjYizulu8XR/il87US8F0Cbs4ZPNqvxhzl1
+         oMJBu2XlH9E252F3Bb3qbUdtEo+LtrF9WOVHU=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=bY1msGoBjemRs4hKNt3WYSHnFeZbrWNtczzN7TWoXGM=;
-        b=CocTn/A6yZ57uWxlLc9AYiJdXOS2lqMXyMCI1bM3mg5QXVBI7c0hjOz7KHyQw4GXaA
-         KVseb/NCgvjrZVLUXNP18r+cqHqUO9kidZfuPCVBWLR9Is1R+01JUntgb3zSzqN7odJ3
-         JXtedVI10vZV29siWe5ItdZHaZHEynK2IKVHRRhh1pV1ar4JV/yVV9aCaUR39U5zMohJ
-         EQiujYzqNxWHYHf8hzGZljFekvsSRRK2UVdHpB/qgWRwPKiyja0pQPpmHrO5wFomUN+n
-         2Dz8DpfHGH87flgc5tehmT/J7a90jidgEGFmVhx7eBJWboh5EfrLiu5WbqM4yfatuziC
-         0d7w==
-X-Gm-Message-State: AOAM5335eDdVZxL4VfsMhV6zIRWOgcgYJpdFyANsKTZ6dzhpolQq04OY
-        2WB8W/FC/TODtlxt8Vxb04yzjg==
-X-Google-Smtp-Source: ABdhPJzRvjb4d20ffEupWoAljxUBMJmwUQoYdQo9D0UZg/CWZ0kP1SH5Av02WfH4HNforYnW19cxqw==
-X-Received: by 2002:adf:ee90:: with SMTP id b16mr3363358wro.221.1607955518828;
-        Mon, 14 Dec 2020 06:18:38 -0800 (PST)
-Received: from localhost.localdomain ([2a01:e0a:490:8730:f2e4:25b3:2b53:52cd])
-        by smtp.gmail.com with ESMTPSA id h5sm34126285wrp.56.2020.12.14.06.18.38
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 14 Dec 2020 06:18:38 -0800 (PST)
-From:   Loic Poulain <loic.poulain@linaro.org>
-To:     manivannan.sadhasivam@linaro.org, hemantk@codeaurora.org
-Cc:     linux-arm-msm@vger.kernel.org, bbhatt@codeaurora.org,
-        Loic Poulain <loic.poulain@linaro.org>
-Subject: [PATCH v5 10/10] mhi: pci_generic: Add diag channels
-Date:   Mon, 14 Dec 2020 15:25:37 +0100
-Message-Id: <1607955937-26951-11-git-send-email-loic.poulain@linaro.org>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1607955937-26951-1-git-send-email-loic.poulain@linaro.org>
-References: <1607955937-26951-1-git-send-email-loic.poulain@linaro.org>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=t2aQQjeTAClD8BnlUklr8QIojrz0VDK1/YhYYkZp+14=;
+        b=ZHPhXOE3afP5Q1UFjadLIGUM6M33knZue6ymrn9ygXjr86TfJ+QGhoZSnRyONbWbdR
+         CZK1M2Ggq5axd2gB2OhhvO9lZdbc4ViWGhWzWhm5eRQh51jkik1ekrk0v8LEennScnoW
+         688+EAxtpxQfFEexKnt0VFe0fijc/dlWEnSHVjT5Tnu3PM2HyCYDGKNQVhgl37TxtoG7
+         p49y96NyUW0Mg5J9etfOUl5acxyOLqm3T563GgLUH93q2WmEVJ8tP5UwPNLzeHiMEEtT
+         Fml9jRK23g1f35Z9uIGCgz78X6ukOQ1FWAW/DRxHatTWPaPldMQiGOSrXq0BzL7g21ml
+         6ZoQ==
+X-Gm-Message-State: AOAM5335l8bzLjqyGFJM5indAZbNGTR9aMAiUSsIa/uP1MEilXzf0k84
+        5PMKF/O3xSP/9eExQCDWfMBEC1X2n3M+Zw==
+X-Google-Smtp-Source: ABdhPJw7Py2+eVt9cRly6satm4a5amBtXiB8xVOaVV3LYFg/WlrdyE7bSgAJY8UDYFTtl99QyHZ6ZQ==
+X-Received: by 2002:ac5:cc75:: with SMTP id w21mr9207757vkm.14.1607962148878;
+        Mon, 14 Dec 2020 08:09:08 -0800 (PST)
+Received: from mail-ua1-f49.google.com (mail-ua1-f49.google.com. [209.85.222.49])
+        by smtp.gmail.com with ESMTPSA id h124sm567865vkg.49.2020.12.14.08.09.07
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 14 Dec 2020 08:09:07 -0800 (PST)
+Received: by mail-ua1-f49.google.com with SMTP id 4so5623631uap.8
+        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Dec 2020 08:09:07 -0800 (PST)
+X-Received: by 2002:ab0:2e99:: with SMTP id f25mr23719280uaa.104.1607962147154;
+ Mon, 14 Dec 2020 08:09:07 -0800 (PST)
+MIME-Version: 1.0
+References: <20201213052948.308263-1-swboyd@chromium.org>
+In-Reply-To: <20201213052948.308263-1-swboyd@chromium.org>
+From:   Doug Anderson <dianders@chromium.org>
+Date:   Mon, 14 Dec 2020 08:08:55 -0800
+X-Gmail-Original-Message-ID: <CAD=FV=WWe-0v1=kzw4XGQ9TFUkFcf2nAx0so6TFBg74JH6bVmw@mail.gmail.com>
+Message-ID: <CAD=FV=WWe-0v1=kzw4XGQ9TFUkFcf2nAx0so6TFBg74JH6bVmw@mail.gmail.com>
+Subject: Re: [PATCH] spi: spi-qcom-qspi: Use irq trigger flags from firmware
+To:     Stephen Boyd <swboyd@chromium.org>
+Cc:     Mark Brown <broonie@kernel.org>,
+        LKML <linux-kernel@vger.kernel.org>,
+        linux-spi <linux-spi@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Rajendra Nayak <rnayak@codeaurora.org>,
+        Mukesh Kumar Savaliya <msavaliy@codeaurora.org>,
+        Akash Asthana <akashast@codeaurora.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add support for Diag over MHI. Qualcomm Diag is the qualcomm
-diagnostics interface that can be used to collect modem logs,
-events, traces, etc. It can be used by tools such QPST or QXDM.
+Hi,
 
-This patch adds the DIAG channels and a dedicated event ring.
+On Sat, Dec 12, 2020 at 9:29 PM Stephen Boyd <swboyd@chromium.org> wrote:
+>
+> We don't need to force this to be trigger high here, as the firmware
+> properly configures the irq flags already. Drop it to save a line.
+>
+> Cc: Douglas Anderson <dianders@chromium.org>
+> Cc: Rajendra Nayak <rnayak@codeaurora.org>
+> Cc: Mukesh Kumar Savaliya <msavaliy@codeaurora.org>
+> Cc: Akash Asthana <akashast@codeaurora.org>
+> Signed-off-by: Stephen Boyd <swboyd@chromium.org>
+> ---
+>  drivers/spi/spi-qcom-qspi.c | 3 +--
+>  1 file changed, 1 insertion(+), 2 deletions(-)
+>
+> diff --git a/drivers/spi/spi-qcom-qspi.c b/drivers/spi/spi-qcom-qspi.c
+> index 5eed88af6899..8e70f5e63e0b 100644
+> --- a/drivers/spi/spi-qcom-qspi.c
+> +++ b/drivers/spi/spi-qcom-qspi.c
+> @@ -516,8 +516,7 @@ static int qcom_qspi_probe(struct platform_device *pdev)
+>         ret = platform_get_irq(pdev, 0);
+>         if (ret < 0)
+>                 goto exit_probe_master_put;
+> -       ret = devm_request_irq(dev, ret, qcom_qspi_irq,
+> -                       IRQF_TRIGGER_HIGH, dev_name(dev), ctrl);
+> +       ret = devm_request_irq(dev, ret, qcom_qspi_irq, 0, dev_name(dev), ctrl);
 
-Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
-Reviewed-by Hemant Kumar <hemantk@codeaurora.org>
----
- drivers/bus/mhi/pci_generic.c | 12 ++++++++----
- 1 file changed, 8 insertions(+), 4 deletions(-)
+I don't feel that the old code is really wrong, but I guess it is
+weird that it's double-specified (both in the code and in the dts).
+...so this is OK w/ me.
 
-diff --git a/drivers/bus/mhi/pci_generic.c b/drivers/bus/mhi/pci_generic.c
-index 156b5fe6..9567b75 100644
---- a/drivers/bus/mhi/pci_generic.c
-+++ b/drivers/bus/mhi/pci_generic.c
-@@ -142,22 +142,26 @@ struct mhi_pci_dev_info {
- 	}
- 
- static const struct mhi_channel_config modem_qcom_v1_mhi_channels[] = {
-+	MHI_CHANNEL_CONFIG_UL(4, "DIAG", 16, 1),
-+	MHI_CHANNEL_CONFIG_DL(5, "DIAG", 16, 1),
- 	MHI_CHANNEL_CONFIG_UL(12, "MBIM", 4, 0),
- 	MHI_CHANNEL_CONFIG_DL(13, "MBIM", 4, 0),
- 	MHI_CHANNEL_CONFIG_UL(14, "QMI", 4, 0),
- 	MHI_CHANNEL_CONFIG_DL(15, "QMI", 4, 0),
- 	MHI_CHANNEL_CONFIG_UL(20, "IPCR", 8, 0),
- 	MHI_CHANNEL_CONFIG_DL(21, "IPCR", 8, 0),
--	MHI_CHANNEL_CONFIG_HW_UL(100, "IP_HW0", 128, 1),
--	MHI_CHANNEL_CONFIG_HW_DL(101, "IP_HW0", 128, 2),
-+	MHI_CHANNEL_CONFIG_HW_UL(100, "IP_HW0", 128, 2),
-+	MHI_CHANNEL_CONFIG_HW_DL(101, "IP_HW0", 128, 3),
- };
- 
- static const struct mhi_event_config modem_qcom_v1_mhi_events[] = {
- 	/* first ring is control+data ring */
- 	MHI_EVENT_CONFIG_CTRL(0),
-+	/* DIAG dedicated event ring */
-+	MHI_EVENT_CONFIG_DATA(1),
- 	/* Hardware channels request dedicated hardware event rings */
--	MHI_EVENT_CONFIG_HW_DATA(1, 100),
--	MHI_EVENT_CONFIG_HW_DATA(2, 101)
-+	MHI_EVENT_CONFIG_HW_DATA(2, 100),
-+	MHI_EVENT_CONFIG_HW_DATA(3, 101)
- };
- 
- static const struct mhi_controller_config modem_qcom_v1_mhiv_config = {
--- 
-2.7.4
-
+Reviewed-by: Douglas Anderson <dianders@chromium.org>
