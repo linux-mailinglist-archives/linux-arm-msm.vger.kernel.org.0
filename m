@@ -2,104 +2,111 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 25CF82D99A7
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Dec 2020 15:21:14 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id AC5AE2D99A6
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Dec 2020 15:21:13 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2390284AbgLNOTY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 14 Dec 2020 09:19:24 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43370 "EHLO
+        id S1726063AbgLNOTV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 14 Dec 2020 09:19:21 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43374 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2439156AbgLNOTJ (ORCPT
+        with ESMTP id S2440020AbgLNOTK (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 14 Dec 2020 09:19:09 -0500
-Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EDEACC0613CF
-        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Dec 2020 06:18:28 -0800 (PST)
-Received: by mail-wr1-x42f.google.com with SMTP id 91so16571806wrj.7
-        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Dec 2020 06:18:28 -0800 (PST)
+        Mon, 14 Dec 2020 09:19:10 -0500
+Received: from mail-wr1-x442.google.com (mail-wr1-x442.google.com [IPv6:2a00:1450:4864:20::442])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 59189C0613D3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Dec 2020 06:18:30 -0800 (PST)
+Received: by mail-wr1-x442.google.com with SMTP id 91so16571886wrj.7
+        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Dec 2020 06:18:30 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id;
-        bh=xavHU57vKOrjMtue7GRYsWoOSdjY1ktr5LIlTj1Z3v4=;
-        b=LB0J9+8udi/Fq6GMSeOvMKoPM/q36luQ06uQ/mna5yXGtndPNEEylNCkW0LZCxL9j5
-         oUHXN6azdWnoYR7YVxKhiZ6yc39AwoH3aPcsC+TV+YgCJNj1fqdfCaUSCBPgeEljdKeK
-         9BCDTRGY7QEoNmlC+6JTCTXx/eWkZz/9mLr9uM7qsx7tBUZ63LK/Si/JR2PTNG8i9GmP
-         qfhGcSJbke+OZXJ0tM7xE6a8aziz+t4zsnLbDo2KA3H7pmZRgk/lUwShv9c6xJopjWYS
-         odqr5dU9A23Xr2iJx1TiP7wO/dFgrwgGN9b/2uf/XJdNgJnm3aa3qf6hbzwbl4tvBPKK
-         5JNg==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=geSRvMF6kCfgAVrxKSiIze0q0V64uiyFq2IRTDk+dkk=;
+        b=Qn+uQp/daOJFLGBxEn+Jxi+2wPnCbhJ1FFJRxvdIhbweAMhsbXLSCLB6/fqlg0Z/8P
+         MbUpEXd5hx16zzUB2ZZ8CYn6LHFaGfqy88rwSbfO952qInZj5ezYDKQeWMSZNyOhc4+n
+         iv6pxPv32McWuWyt6Ny9H1STnA3msDs/wdYYkBRBm9Z+hxgkfDKRhaNrigP21C2u0gEa
+         Tw5y5mtLe8oBad2cfXKRa7aCja/pF68rD3Kxab0wLZUwGIMx2obNhnXrD7KwXhpu+4jN
+         bliT5lwPB/rZXDHYjL6pNm4Izc8977zB/vAtqw9oQhK56a0Eq1DdtvRbuUaHsZhlI/vA
+         /rEw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=xavHU57vKOrjMtue7GRYsWoOSdjY1ktr5LIlTj1Z3v4=;
-        b=olJsufyRaDLbpyftk5JCXJYa6eBIKN0ZV3RluAiAQE07aczcEber7k9ueAllKcVk77
-         nlY+PqEBa/PSMrmt3YgBe8aBrHjxmQz4Ib96cTgI1Vefrqlo/Ea97KSTaGjl+ejQ5VlY
-         oul7DL0d2pOwuEWi1/IYuLC4hrhQE4gb4x2/RyfuFDVYUGEz88UmJ//qEQ2aYnVIDgap
-         qOU9bajtr1G/zl+mUoYR7/mwob76kmYwtv91XQBx39g6SPM/mz2bGP3qTiQ1rFsQYguJ
-         1nqn3SmkG6YOgw30NAxD8b2nKqTyap0ZfSIrRWXRHSh9HeU6o4BqNz1heGyquR2bRcn3
-         Wi1Q==
-X-Gm-Message-State: AOAM532h8PUboS7okllZXs24l4iZjh919I6P94hUB9vzEAXiVwzTmCha
-        yp/IRDCoSoSYwozHxEQpV09U2g==
-X-Google-Smtp-Source: ABdhPJz1G9CFXFgKAn7VzQk/h+Uw+Cy8VJfrSXNxPA4hFdQq7L7aLYkcNjOhN3lWaWzzj/odrQqOCw==
-X-Received: by 2002:adf:9b91:: with SMTP id d17mr28943453wrc.32.1607955507661;
-        Mon, 14 Dec 2020 06:18:27 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=geSRvMF6kCfgAVrxKSiIze0q0V64uiyFq2IRTDk+dkk=;
+        b=BcPfM65pqfyCIpcvoVuwowjibF+axug8h6Pf29n+pyDIyM3zdlYpqk9M4J7EY7MeBW
+         dA7S7Z5GVZly938pPLNvO4cSg24Yhe/ommg18TjlEnnoEphutWTId2J/ZQj158Bni6r1
+         ER7UInNky6eosTRr/AK6FJ0Tek4cVy7U3VDJopRB/RPn5GmVVDJ1+z+snhrJ0Wq3mITf
+         2HE4SeNOy02KgpQJbl4O4BQiLyCsglXsrMltZUEyz4L4cUHIPVtWj3xnn2mThjrS6GqN
+         8X54TPZoiCHY7c9qCQ1dKTzR7n7d7K9ZbWAOGnWItFqOrsBhs219XUouJKnzaeMel58T
+         V3nA==
+X-Gm-Message-State: AOAM530FnckByinzZwnta2ezfVvi3bm4SkgTw8iFW2BMi4ZsQ9b5NUQe
+        ktsONO6vUadV0vp4KNxCrEa9tw==
+X-Google-Smtp-Source: ABdhPJyOtBLS6bR005nwCuxoIITJbmXp7ksih4OtojkViLrFbefucVqpQ/OvUvwnWg1jwIHDWZXd3w==
+X-Received: by 2002:adf:ee4a:: with SMTP id w10mr27351982wro.81.1607955509003;
+        Mon, 14 Dec 2020 06:18:29 -0800 (PST)
 Received: from localhost.localdomain ([2a01:e0a:490:8730:f2e4:25b3:2b53:52cd])
-        by smtp.gmail.com with ESMTPSA id h5sm34126285wrp.56.2020.12.14.06.18.26
+        by smtp.gmail.com with ESMTPSA id h5sm34126285wrp.56.2020.12.14.06.18.28
         (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 14 Dec 2020 06:18:27 -0800 (PST)
+        Mon, 14 Dec 2020 06:18:28 -0800 (PST)
 From:   Loic Poulain <loic.poulain@linaro.org>
 To:     manivannan.sadhasivam@linaro.org, hemantk@codeaurora.org
 Cc:     linux-arm-msm@vger.kernel.org, bbhatt@codeaurora.org,
         Loic Poulain <loic.poulain@linaro.org>
-Subject: [PATCH v5 00/10] mhi: pci_generic: Misc improvements
-Date:   Mon, 14 Dec 2020 15:25:27 +0100
-Message-Id: <1607955937-26951-1-git-send-email-loic.poulain@linaro.org>
+Subject: [PATCH v5 01/10] mhi: Add mhi_controller_initialize helper
+Date:   Mon, 14 Dec 2020 15:25:28 +0100
+Message-Id: <1607955937-26951-2-git-send-email-loic.poulain@linaro.org>
 X-Mailer: git-send-email 2.7.4
+In-Reply-To: <1607955937-26951-1-git-send-email-loic.poulain@linaro.org>
+References: <1607955937-26951-1-git-send-email-loic.poulain@linaro.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This series adjust some configuration values to ensure stability and
-robustness of mhi pci devices (timeout, number of events, burst mode).
+This function allows to initialize a mhi_controller structure.
+Today, it only zeroing the structure.
 
-It also includes support for system sleep as well as a recovery procedure
-that can be triggered when a PCI error is reported, either by PCI AER or by
-the new health-check mechanism.
+Use this function from mhi_alloc_controller so that any further
+initialization can be factorized in initalize function.
 
-All these changes have been tested with Telit FN980m module
+Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
+---
+ drivers/bus/mhi/core/init.c | 6 ++++++
+ include/linux/mhi.h         | 6 ++++++
+ 2 files changed, 12 insertions(+)
 
-v2:
-  - Cancel recovery work on suspend
-v3:
-  - enable doorbell_mode_switch for burst channel (HW)
-  - Add mhi_initialize_controller helper patch
-v4:
-  - Delete hard reset on module unload, MHI reset is enough (Jeffrey)
-  - Move soc reset support in MHI core (Jeffrey)
-  - burst mode: enable doorbell_mode_switch for HW channels (Bhaumik)
-  - Add diag channels
-v5:
-  - Remove useless call to mhi_initialize_controller in alloc_controller (hemant)
-  - Add define for post reset timeout (hemant)
-  - Fix static misses (hemant)
-
-Loic Poulain (10):
-  mhi: Add mhi_controller_initialize helper
-  bus: mhi: core: Add device hardware reset support
-  mhi: pci-generic: Increase number of hardware events
-  mhi: pci_generic: Enable burst mode for hardware channels
-  mhi: pci_generic: Add support for reset
-  mhi: pci_generic: Add suspend/resume/recovery procedure
-  mhi: pci_generic: Add PCI error handlers
-  mhi: pci_generic: Add health-check
-  mhi: pci_generic: Increase controller timeout value
-  mhi: pci_generic: Add diag channels
-
- drivers/bus/mhi/core/init.c   |   6 +
- drivers/bus/mhi/core/main.c   |   7 +
- drivers/bus/mhi/pci_generic.c | 354 +++++++++++++++++++++++++++++++++++++++---
- include/linux/mhi.h           |  13 ++
- 4 files changed, 361 insertions(+), 19 deletions(-)
-
+diff --git a/drivers/bus/mhi/core/init.c b/drivers/bus/mhi/core/init.c
+index 96cde9c..a75ab8c 100644
+--- a/drivers/bus/mhi/core/init.c
++++ b/drivers/bus/mhi/core/init.c
+@@ -1021,6 +1021,12 @@ void mhi_unregister_controller(struct mhi_controller *mhi_cntrl)
+ }
+ EXPORT_SYMBOL_GPL(mhi_unregister_controller);
+ 
++void mhi_initialize_controller(struct mhi_controller *mhi_cntrl)
++{
++	memset(mhi_cntrl, 0, sizeof(*mhi_cntrl));
++}
++EXPORT_SYMBOL_GPL(mhi_initialize_controller);
++
+ struct mhi_controller *mhi_alloc_controller(void)
+ {
+ 	struct mhi_controller *mhi_cntrl;
+diff --git a/include/linux/mhi.h b/include/linux/mhi.h
+index 04cf7f3..2754742 100644
+--- a/include/linux/mhi.h
++++ b/include/linux/mhi.h
+@@ -537,6 +537,12 @@ struct mhi_driver {
+ #define to_mhi_device(dev) container_of(dev, struct mhi_device, dev)
+ 
+ /**
++ * mhi_initialize_controller - Initialize MHI Controller structure
++ * @mhi_cntrl: MHI controller structure to initialize
++ */
++void mhi_initialize_controller(struct mhi_controller *mhi_cntrl);
++
++/**
+  * mhi_alloc_controller - Allocate the MHI Controller structure
+  * Allocate the mhi_controller structure using zero initialized memory
+  */
 -- 
 2.7.4
 
