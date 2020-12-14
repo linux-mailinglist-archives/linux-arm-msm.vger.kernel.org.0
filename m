@@ -2,230 +2,132 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 8C6902D9D96
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Dec 2020 18:25:33 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 35FAB2D9EB2
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Dec 2020 19:18:01 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2440337AbgLNRZP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 14 Dec 2020 12:25:15 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43794 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2408507AbgLNRXy (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 14 Dec 2020 12:23:54 -0500
-Received: from mail-vs1-xe43.google.com (mail-vs1-xe43.google.com [IPv6:2607:f8b0:4864:20::e43])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 488E7C0613D6
-        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Dec 2020 09:23:14 -0800 (PST)
-Received: by mail-vs1-xe43.google.com with SMTP id x26so9407921vsq.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Dec 2020 09:23:14 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=B4/H5KkHplx6c8hRY9n/z1Ihm7wdVAC1WaMlKmQhNMg=;
-        b=heyEYswMrzq4NoyA2wH6PjiRH0I7R0Suukp6ZwO3UCTMXk9WkIHFqcti95Fo1+tPEx
-         nQZ7vvx3oFG6JMGgF3H3Lsm9Hi7reT7S0p0qkH2UnZYq9JwZL1BBlySy3Mcu5LTxkdA/
-         F59jc9Jhg9ADgh/gUlCuxhJ83aU8ov8PoI2T8=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=B4/H5KkHplx6c8hRY9n/z1Ihm7wdVAC1WaMlKmQhNMg=;
-        b=q0cpQHr1lgO3UtK4pBpo2qBRZx5Kpew3r196rWuAnH6eIfJFwMspFmOTdNQzPTkT4+
-         E9HZVbHA0GLNcaqUkCcQg0tfJc9D1z7+uLawSryIqPcnt6A1+shIqF9wbl3RJSxf0snA
-         NCESpuGi6b5oDNhip19F5INz/aBsvdrpbqjOtosAn9cJH3cfkzbu389QsQr2M5BWems4
-         b36Gupe4bqGJj3H6pxUW42OmkgERxU8aXHUQ7sCtMzaCSQ+uguIegonFXgkiwBkY1Z70
-         79xJcJcoRPzlb04mI6ZkLKnjBj4qMmujyM1xrs6fMi69bU4bYFogJ9diJIBmuM5hgCzX
-         tFlQ==
-X-Gm-Message-State: AOAM533m6J1D4j8m1aQ1ESar00nb8ntZhM2QkO27V05d65KPzHs8O6Zr
-        r1kmQTqfqlzNniANFEmz3hUWVhVN5P/WLA==
-X-Google-Smtp-Source: ABdhPJwfDZa08BqGM74MGjDaF7V8DZI2QMLNnnX9EtDALFE6CoQvzO05NaA5GT6pR1E33oJtPlzrrw==
-X-Received: by 2002:a67:a24e:: with SMTP id t14mr21458706vsh.36.1607966592999;
-        Mon, 14 Dec 2020 09:23:12 -0800 (PST)
-Received: from mail-ua1-f49.google.com (mail-ua1-f49.google.com. [209.85.222.49])
-        by smtp.gmail.com with ESMTPSA id v65sm2405234vkb.31.2020.12.14.09.23.11
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 14 Dec 2020 09:23:12 -0800 (PST)
-Received: by mail-ua1-f49.google.com with SMTP id 4so5706273uap.8
-        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Dec 2020 09:23:11 -0800 (PST)
-X-Received: by 2002:ab0:6285:: with SMTP id z5mr24231786uao.0.1607966591317;
- Mon, 14 Dec 2020 09:23:11 -0800 (PST)
-MIME-Version: 1.0
-References: <20201211091150.v4.1.Iec3430c7d3c2a29262695edef7b82a14aaa567e5@changeid>
- <20201211091150.v4.2.I7564620993acd4baa63fa0e3925ca879a86d3ee3@changeid> <e817284c-1ae9-7d3f-5195-7313651ef9da@codeaurora.org>
-In-Reply-To: <e817284c-1ae9-7d3f-5195-7313651ef9da@codeaurora.org>
-From:   Doug Anderson <dianders@chromium.org>
-Date:   Mon, 14 Dec 2020 09:22:59 -0800
-X-Gmail-Original-Message-ID: <CAD=FV=WpZn8kx+X+EtmRnrtdS2B88x4M9fwuxbtt06BvL76jJQ@mail.gmail.com>
-Message-ID: <CAD=FV=WpZn8kx+X+EtmRnrtdS2B88x4M9fwuxbtt06BvL76jJQ@mail.gmail.com>
-Subject: Re: [PATCH v4 2/2] mmc: sdhci-msm: Actually set the actual clock
-To:     Veerabhadrarao Badiganti <vbadigan@codeaurora.org>
-Cc:     Ulf Hansson <ulf.hansson@linaro.org>,
-        Adrian Hunter <adrian.hunter@intel.com>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Taniya Das <tdas@codeaurora.org>,
-        Andy Gross <agross@kernel.org>,
+        id S2502378AbgLNRjJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 14 Dec 2020 12:39:09 -0500
+Received: from mail.kernel.org ([198.145.29.99]:49352 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S2502354AbgLNRjA (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 14 Dec 2020 12:39:00 -0500
+From:   Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Authentication-Results: mail.kernel.org; dkim=permerror (bad message/signature format)
+To:     linux-kernel@vger.kernel.org
+Cc:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        stable@vger.kernel.org, Robin Murphy <robin.murphy@arm.com>,
+        John Stultz <john.stultz@linaro.org>,
+        Will Deacon <will@kernel.org>, Andy Gross <agross@kernel.org>,
+        Maulik Shah <mkshah@codeaurora.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Saravana Kannan <saravanak@google.com>,
+        Marc Zyngier <maz@kernel.org>,
+        Lina Iyer <ilina@codeaurora.org>,
+        iommu@lists.linux-foundation.org,
         linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        LKML <linux-kernel@vger.kernel.org>,
-        Linux MMC List <linux-mmc@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+        Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.9 057/105] arm-smmu-qcom: Ensure the qcom_scm driver has finished probing
+Date:   Mon, 14 Dec 2020 18:28:31 +0100
+Message-Id: <20201214172558.015053959@linuxfoundation.org>
+X-Mailer: git-send-email 2.29.2
+In-Reply-To: <20201214172555.280929671@linuxfoundation.org>
+References: <20201214172555.280929671@linuxfoundation.org>
+User-Agent: quilt/0.66
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+From: John Stultz <john.stultz@linaro.org>
 
-On Mon, Dec 14, 2020 at 4:44 AM Veerabhadrarao Badiganti
-<vbadigan@codeaurora.org> wrote:
->
->
-> On 12/11/2020 10:42 PM, Douglas Anderson wrote:
-> > The MSM SDHCI driver always set the "actual_clock" field to 0.  It had
-> > a comment about it not being needed because we weren't using the
-> > standard SDHCI divider mechanism and we'd just fallback to
-> > "host->clock".  However, it's still better to provide the actual
-> > clock.  Why?
-> >
-> > 1. It will make timeout calculations slightly better.  On one system I
-> >     have, the eMMC requets 200 MHz (for HS400-ES) but actually gets 192
-> >     MHz.  These are close, but why not get the more accurate one.
-> >
-> > 2. If things are seriously off in the clock driver and it's missing
-> >     rates or picking the wrong rate (maybe it's rounding up instead of
-> >     down), this will make it much more obvious what's going on.
-> >
-> > NOTE: we have to be a little careful here because the "actual_clock"
-> > field shouldn't include the multiplier that sdhci-msm needs
-> > internally.
-> >
-> > Signed-off-by: Douglas Anderson <dianders@chromium.org>
-> > ---
-> >
-> > Changes in v4:
-> > - ("mmc: sdhci-msm: Actually set the actual clock") new for v4.
-> >
-> >   drivers/mmc/host/sdhci-msm.c | 32 ++++++++++++++------------------
-> >   1 file changed, 14 insertions(+), 18 deletions(-)
-> >
-> > diff --git a/drivers/mmc/host/sdhci-msm.c b/drivers/mmc/host/sdhci-msm.c
-> > index 50beb407dbe9..08a3960001ad 100644
-> > --- a/drivers/mmc/host/sdhci-msm.c
-> > +++ b/drivers/mmc/host/sdhci-msm.c
-> > @@ -328,7 +328,7 @@ static void sdhci_msm_v5_variant_writel_relaxed(u32 val,
-> >       writel_relaxed(val, host->ioaddr + offset);
-> >   }
-> >
-> > -static unsigned int msm_get_clock_rate_for_bus_mode(struct sdhci_host *host,
-> > +static unsigned int msm_get_clock_mult_for_bus_mode(struct sdhci_host *host,
-> >                                                   unsigned int clock)
->
-> nit: clock variable not being used anymore. We can drop it.
+[ Upstream commit 72b55c96f3a5ae6e486c20b5dacf5114060ed042 ]
 
-Good point.  Sending out a v5 with this.
+Robin Murphy pointed out that if the arm-smmu driver probes before
+the qcom_scm driver, we may call qcom_scm_qsmmu500_wait_safe_toggle()
+before the __scm is initialized.
 
+Now, getting this to happen is a bit contrived, as in my efforts it
+required enabling asynchronous probing for both drivers, moving the
+firmware dts node to the end of the dtsi file, as well as forcing a
+long delay in the qcom_scm_probe function.
 
-> >   {
-> >       struct mmc_ios ios = host->mmc->ios;
-> > @@ -342,8 +342,8 @@ static unsigned int msm_get_clock_rate_for_bus_mode(struct sdhci_host *host,
-> >           ios.timing == MMC_TIMING_MMC_DDR52 ||
-> >           ios.timing == MMC_TIMING_MMC_HS400 ||
-> >           host->flags & SDHCI_HS400_TUNING)
-> > -             clock *= 2;
-> > -     return clock;
-> > +             return 2;
-> > +     return 1;
-> >   }
-> >
-> >   static void msm_set_clock_rate_for_bus_mode(struct sdhci_host *host,
-> > @@ -354,14 +354,16 @@ static void msm_set_clock_rate_for_bus_mode(struct sdhci_host *host,
-> >       struct mmc_ios curr_ios = host->mmc->ios;
-> >       struct clk *core_clk = msm_host->bulk_clks[0].clk;
-> >       unsigned long achieved_rate;
-> > +     unsigned int desired_rate;
-> > +     unsigned int mult;
-> >       int rc;
-> >
-> > -     clock = msm_get_clock_rate_for_bus_mode(host, clock);
-> > -     rc = dev_pm_opp_set_rate(mmc_dev(host->mmc), clock);
-> > +     mult = msm_get_clock_mult_for_bus_mode(host, clock);
-> > +     desired_rate = clock * mult;
-> > +     rc = dev_pm_opp_set_rate(mmc_dev(host->mmc), desired_rate);
-> >       if (rc) {
-> >               pr_err("%s: Failed to set clock at rate %u at timing %d\n",
-> > -                    mmc_hostname(host->mmc), clock,
-> > -                    curr_ios.timing);
-> > +                    mmc_hostname(host->mmc), desired_rate, curr_ios.timing);
-> >               return;
-> >       }
-> >
-> > @@ -371,11 +373,12 @@ static void msm_set_clock_rate_for_bus_mode(struct sdhci_host *host,
-> >        * encounter it.
-> >        */
-> >       achieved_rate = clk_get_rate(core_clk);
-> > -     if (achieved_rate > clock)
-> > +     if (achieved_rate > desired_rate)
-> >               pr_warn("%s: Card appears overclocked; req %u Hz, actual %lu Hz\n",
-> > -                     mmc_hostname(host->mmc), clock, achieved_rate);
-> > +                     mmc_hostname(host->mmc), desired_rate, achieved_rate);
-> > +     host->mmc->actual_clock = achieved_rate / mult;
-> >
-> > -     msm_host->clk_rate = clock;
-> > +     msm_host->clk_rate = desired_rate;
->
->
-> Can you set msm_host->clk_rate also to achieved_rate?
+With those tweaks we ran into the following crash:
+[    2.631040] arm-smmu 15000000.iommu:         Stage-1: 48-bit VA -> 48-bit IPA
+[    2.633372] Unable to handle kernel NULL pointer dereference at virtual address 0000000000000000
+...
+[    2.633402] [0000000000000000] user address but active_mm is swapper
+[    2.633409] Internal error: Oops: 96000005 [#1] PREEMPT SMP
+[    2.633415] Modules linked in:
+[    2.633427] CPU: 5 PID: 117 Comm: kworker/u16:2 Tainted: G        W         5.10.0-rc1-mainline-00025-g272a618fc36-dirty #3971
+[    2.633430] Hardware name: Thundercomm Dragonboard 845c (DT)
+[    2.633448] Workqueue: events_unbound async_run_entry_fn
+[    2.633456] pstate: 80c00005 (Nzcv daif +PAN +UAO -TCO BTYPE=--)
+[    2.633465] pc : qcom_scm_qsmmu500_wait_safe_toggle+0x78/0xb0
+[    2.633473] lr : qcom_smmu500_reset+0x58/0x78
+[    2.633476] sp : ffffffc0105a3b60
+...
+[    2.633567] Call trace:
+[    2.633572]  qcom_scm_qsmmu500_wait_safe_toggle+0x78/0xb0
+[    2.633576]  qcom_smmu500_reset+0x58/0x78
+[    2.633581]  arm_smmu_device_reset+0x194/0x270
+[    2.633585]  arm_smmu_device_probe+0xc94/0xeb8
+[    2.633592]  platform_drv_probe+0x58/0xa8
+[    2.633597]  really_probe+0xec/0x398
+[    2.633601]  driver_probe_device+0x5c/0xb8
+[    2.633606]  __driver_attach_async_helper+0x64/0x88
+[    2.633610]  async_run_entry_fn+0x4c/0x118
+[    2.633617]  process_one_work+0x20c/0x4b0
+[    2.633621]  worker_thread+0x48/0x460
+[    2.633628]  kthread+0x14c/0x158
+[    2.633634]  ret_from_fork+0x10/0x18
+[    2.633642] Code: a9034fa0 d0007f73 29107fa0 91342273 (f9400020)
 
-Personally I'd rather not, but if you are sure that's what you want I
-won't object to it too strongly.  Why do I feel this way?  The member
-"clk_rate" contains the value that we passed to dev_pm_opp_set_rate()
-the first time and I'd rather use that exact same value in
-sdhci_msm_runtime_resume().  Mostly I'm just being paranoid in case
-there is a bug and the operations aren't "stable".
+To avoid this, this patch adds a check on qcom_scm_is_available() in
+the qcom_smmu_impl_init() function, returning -EPROBE_DEFER if its
+not ready.
 
-For instance, let's imagine a fictional case where somewhere in the
-clock framework there is a transition to kHz (something like this
-_actually_ happens in the DRM subsystem):
+This allows the driver to try to probe again later after qcom_scm has
+finished probing.
 
-clk_set_rate(rate_hz):
-  rate_khz = rate_hz / 1000;
-  real_clk_set_rate(rate_khz);
+Reported-by: Robin Murphy <robin.murphy@arm.com>
+Signed-off-by: John Stultz <john.stultz@linaro.org>
+Reviewed-by: Robin Murphy <robin.murphy@arm.com>
+Cc: Robin Murphy <robin.murphy@arm.com>
+Cc: Will Deacon <will@kernel.org>
+Cc: Andy Gross <agross@kernel.org>
+Cc: Maulik Shah <mkshah@codeaurora.org>
+Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc: Saravana Kannan <saravanak@google.com>
+Cc: Marc Zyngier <maz@kernel.org>
+Cc: Lina Iyer <ilina@codeaurora.org>
+Cc: iommu@lists.linux-foundation.org
+Cc: linux-arm-msm <linux-arm-msm@vger.kernel.org>
+Link: https://lore.kernel.org/r/20201112220520.48159-1-john.stultz@linaro.org
+Signed-off-by: Will Deacon <will@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+---
+ drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-real_clk_set_rate(rate_khz)
-  rate_hz = rate_khz * 1000;
-  for each table_rate in table:
-    if table_rate <= rate_hz:
-      break;
-  set_hw_rate(table_rate);
-
-real_clk_get_rate()
-  rate_hz = get_hw_rate();
-  return rate_hz / 1000;
-
-clk_get_rate()
-  rate_khz = real_clk_get_rate()
-  return rate_khz * 1000;
-
-Now if your table has these rates:
-  { 111111111, 222222222, 333333333 }
-
-Calling clk_set_rate(400000000) will set your rate to 333333333 Hz.
-Now calling clk_get_rate() will return you 333333000.  Now calling
-clk_set_rate(333333000) will set your rate to 222222222 Hz!
-
-IMO the above would be a bug, but I have seen things like that happen.
-It's safer to stash the actual rate that we _requested_ and, if we
-need to request the rate again, we pass that same value.  That should
-always work.  I added a comment to at least make it look more explicit
-that we're stashing the requested value.
+diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
+index be4318044f96c..702fbaa6c9ada 100644
+--- a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
++++ b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
+@@ -69,6 +69,10 @@ struct arm_smmu_device *qcom_smmu_impl_init(struct arm_smmu_device *smmu)
+ {
+ 	struct qcom_smmu *qsmmu;
+ 
++	/* Check to make sure qcom_scm has finished probing */
++	if (!qcom_scm_is_available())
++		return ERR_PTR(-EPROBE_DEFER);
++
+ 	qsmmu = devm_kzalloc(smmu->dev, sizeof(*qsmmu), GFP_KERNEL);
+ 	if (!qsmmu)
+ 		return ERR_PTR(-ENOMEM);
+-- 
+2.27.0
 
 
-> At few places in this driver, host->clock is being used where
-> achieved_rate should be used ideally.
-> I will replace those instances with 'msm_host->clk_rate' in a separate
-> patch once this change merged.
 
-Sounds good, thanks!
-
-
--Doug
