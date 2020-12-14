@@ -2,214 +2,114 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id F2D3A2D9791
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Dec 2020 12:44:17 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B22822D9833
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Dec 2020 13:46:23 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2407709AbgLNLmY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 14 Dec 2020 06:42:24 -0500
-Received: from alexa-out.qualcomm.com ([129.46.98.28]:14087 "EHLO
-        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730875AbgLNLmY (ORCPT
+        id S2439070AbgLNMoc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 14 Dec 2020 07:44:32 -0500
+Received: from so254-31.mailgun.net ([198.61.254.31]:41129 "EHLO
+        so254-31.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2439073AbgLNMo1 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 14 Dec 2020 06:42:24 -0500
-Received: from ironmsg-lv-alpha.qualcomm.com ([10.47.202.13])
-  by alexa-out.qualcomm.com with ESMTP; 14 Dec 2020 03:41:43 -0800
-X-QCInternal: smtphost
-Received: from ironmsg02-blr.qualcomm.com ([10.86.208.131])
-  by ironmsg-lv-alpha.qualcomm.com with ESMTP/TLS/AES256-SHA; 14 Dec 2020 03:41:41 -0800
-X-QCInternal: smtphost
-Received: from kalyant-linux.qualcomm.com ([10.204.66.210])
-  by ironmsg02-blr.qualcomm.com with ESMTP; 14 Dec 2020 17:11:13 +0530
-Received: by kalyant-linux.qualcomm.com (Postfix, from userid 94428)
-        id 297D23F37; Mon, 14 Dec 2020 03:41:12 -0800 (PST)
-From:   Kalyan Thota <kalyan_t@codeaurora.org>
-To:     dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org
-Cc:     Kalyan Thota <kalyan_t@codeaurora.org>,
-        linux-kernel@vger.kernel.org, robdclark@gmail.com,
-        seanpaul@chromium.org, hoegsberg@chromium.org,
-        dianders@chromium.org, mkrishn@codeaurora.org, swboyd@chromium.org,
-        abhinavk@codeaurora.org, ddavenport@chromium.org
-Subject: [v1] drm/msm/disp/dpu1: turn off vblank irqs aggressively in dpu driver
-Date:   Mon, 14 Dec 2020 03:41:06 -0800
-Message-Id: <1607946066-16276-1-git-send-email-kalyan_t@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
+        Mon, 14 Dec 2020 07:44:27 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1607949846; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
+ Subject: Sender; bh=EtLiKOSmtdxM3lPu08opt0J1Uv63PkkfxPsuqDSZOg4=; b=rELoNDP+SZfNRBagkq/JpV9dhHcvFkwwHqTqANrFNNoBjcZgdm95Rytlatp4HFPcJC94dUiG
+ 56st+NjWA4ra/LgQLzn6L2rVlHMpXvN5cjxrBtU4bU+sH8BKutuKP/0cGX/uvREZh5jXr6OW
+ cTuCtpTkILtYMlDVJbas/PR6QDA=
+X-Mailgun-Sending-Ip: 198.61.254.31
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n10.prod.us-east-1.postgun.com with SMTP id
+ 5fd75df489d385446809c847 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 14 Dec 2020 12:43:32
+ GMT
+Sender: srivasam=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id AFC0AC43465; Mon, 14 Dec 2020 12:43:31 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        NICE_REPLY_A,SPF_FAIL autolearn=no autolearn_force=no version=3.4.0
+Received: from [10.242.141.31] (unknown [202.46.23.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: srivasam)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 72E11C433C6;
+        Mon, 14 Dec 2020 12:43:25 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 72E11C433C6
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=srivasam@codeaurora.org
+Subject: Re: [PATCH v4 1/2] Partially revert ASoC: qcom: Fix enabling BCLK and
+ LRCLK in LPAIF invalid state
+To:     Mark Brown <broonie@kernel.org>
+Cc:     agross@kernel.org, bjorn.andersson@linaro.org, lgirdwood@gmail.com,
+        robh+dt@kernel.org, plai@codeaurora.org, bgoswami@codeaurora.org,
+        perex@perex.cz, tiwai@suse.com, srinivas.kandagatla@linaro.org,
+        rohitkr@codeaurora.org, linux-arm-msm@vger.kernel.org,
+        alsa-devel@alsa-project.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        V Sujith Kumar Reddy <vsujithk@codeaurora.org>
+References: <1606539559-4277-1-git-send-email-srivasam@codeaurora.org>
+ <1606539559-4277-2-git-send-email-srivasam@codeaurora.org>
+ <20201130124617.GC4756@sirena.org.uk>
+ <966993b7-4720-bdd2-cf4d-cf5a7c11a0c1@codeaurora.org>
+ <20201201175135.GO5239@sirena.org.uk>
+From:   Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
+Organization: Qualcomm India Private Limited.
+Message-ID: <89456f01-aa02-7a7d-a47b-bf1f26e66d4c@codeaurora.org>
+Date:   Mon, 14 Dec 2020 18:13:22 +0530
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.5.1
+MIME-Version: 1.0
+In-Reply-To: <20201201175135.GO5239@sirena.org.uk>
+Content-Type: text/plain; charset=windows-1252; format=flowed
+Content-Transfer-Encoding: 8bit
+Content-Language: en-US
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Turn off vblank irqs immediately as soon as drm_vblank_put is
-requested so that there are no irqs triggered during idle state.
+Thanks Mark for Your time!!!
 
-This will reduce cpu wakeups and help in power saving. The change
-also enable driver timestamp for vblanks.
+On 12/1/2020 11:21 PM, Mark Brown wrote:
+> On Tue, Dec 01, 2020 at 11:01:21PM +0530, Srinivasa Rao Mandadapu wrote:
+>> On 11/30/2020 6:16 PM, Mark Brown wrote:
+>>> Part of this commit message says that the problem was making the registers
+>>> non-volatile but both the change and the rest of the commit message say
+>>> that the issue was that the registers were made volatile.  I'm also
+>>> still unclear as to what the issue is either way - how does reading the
+>>> state of the registers from the hardware instead of the cache affect
+>>> things?
+>> Initial problem was, during playback if device suspended, I2S and DMA
+>> control registers
+>> are getting reset and unable to recover playback after resume.
+>> As these registers were non volatile registers, driver is not getting actual
+>> register value
+>> and unable to report error state to application. Due to this application
+>> keeps on polling for HW current pointer state and not exited from PCM
+>> running state.
+>> Later from review comments by Srinivas kandagatla, I got to know
+>>
+>> about regcache sync APIs, which can be used  to sync cache after resume and
+>>
+>> HW registers can be updated with  original values. With that playback can be
+>> continued.
+>>
+>> So is the reason, I am reverting partial changes in the commit b1824968221c.
+> I don't understand why a fix for the register cache not being in sync
+> with the hardware doesn't involve syncing the register cache with the
+> hardware.
 
-Signed-off-by: Kalyan Thota <kalyan_t@codeaurora.org>
----
- drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c    | 69 +++++++++++++++++++++++++++++
- drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c | 15 +++++++
- drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h |  6 +++
- drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c     |  4 ++
- 4 files changed, 94 insertions(+)
+I am sorry I couldn't understand your point. Could you please elaborate 
+your query?
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-index d4662e8..a4a5733 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-@@ -65,6 +65,73 @@ static void dpu_crtc_destroy(struct drm_crtc *crtc)
- 	kfree(dpu_crtc);
- }
- 
-+static struct drm_encoder *get_encoder_from_crtc(struct drm_crtc *crtc)
-+{
-+	struct drm_device *dev = crtc->dev;
-+	struct drm_encoder *encoder;
-+
-+	drm_for_each_encoder(encoder, dev)
-+		if (encoder->crtc == crtc)
-+			return encoder;
-+
-+	return NULL;
-+}
-+
-+static bool dpu_crtc_get_scanout_position(struct drm_crtc *crtc,
-+					   bool in_vblank_irq,
-+					   int *vpos, int *hpos,
-+					   ktime_t *stime, ktime_t *etime,
-+					   const struct drm_display_mode *mode)
-+{
-+	unsigned int pipe = crtc->index;
-+	struct drm_encoder *encoder;
-+	int line, vsw, vbp, vactive_start, vactive_end, vfp_end;
-+
-+
-+	encoder = get_encoder_from_crtc(crtc);
-+	if (!encoder) {
-+		DRM_ERROR("no encoder found for crtc %d\n", pipe);
-+		return false;
-+	}
-+
-+	vsw = mode->crtc_vsync_end - mode->crtc_vsync_start;
-+	vbp = mode->crtc_vtotal - mode->crtc_vsync_end;
-+
-+	/*
-+	 * the line counter is 1 at the start of the VSYNC pulse and VTOTAL at
-+	 * the end of VFP. Translate the porch values relative to the line
-+	 * counter positions.
-+	 */
-+
-+	vactive_start = vsw + vbp + 1;
-+
-+	vactive_end = vactive_start + mode->crtc_vdisplay;
-+
-+	/* last scan line before VSYNC */
-+	vfp_end = mode->crtc_vtotal;
-+
-+	if (stime)
-+		*stime = ktime_get();
-+
-+	line = dpu_encoder_get_linecount(encoder);
-+
-+	if (line < vactive_start)
-+		line -= vactive_start;
-+	else if (line > vactive_end)
-+		line = line - vfp_end - vactive_start;
-+	else
-+		line -= vactive_start;
-+
-+	*vpos = line;
-+	*hpos = 0;
-+
-+	if (etime)
-+		*etime = ktime_get();
-+
-+	return true;
-+}
-+
-+
- static void _dpu_crtc_setup_blend_cfg(struct dpu_crtc_mixer *mixer,
- 		struct dpu_plane_state *pstate, struct dpu_format *format)
- {
-@@ -1243,6 +1310,7 @@ static const struct drm_crtc_funcs dpu_crtc_funcs = {
- 	.early_unregister = dpu_crtc_early_unregister,
- 	.enable_vblank  = msm_crtc_enable_vblank,
- 	.disable_vblank = msm_crtc_disable_vblank,
-+	.get_vblank_timestamp = drm_crtc_vblank_helper_get_vblank_timestamp,
- };
- 
- static const struct drm_crtc_helper_funcs dpu_crtc_helper_funcs = {
-@@ -1251,6 +1319,7 @@ static const struct drm_crtc_helper_funcs dpu_crtc_helper_funcs = {
- 	.atomic_check = dpu_crtc_atomic_check,
- 	.atomic_begin = dpu_crtc_atomic_begin,
- 	.atomic_flush = dpu_crtc_atomic_flush,
-+	.get_scanout_position = dpu_crtc_get_scanout_position,
- };
- 
- /* initialize crtc */
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-index f7f5c25..6c7c7fd 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-@@ -425,6 +425,21 @@ int dpu_encoder_helper_unregister_irq(struct dpu_encoder_phys *phys_enc,
- 	return 0;
- }
- 
-+int dpu_encoder_get_linecount(struct drm_encoder *drm_enc)
-+{
-+	struct dpu_encoder_virt *dpu_enc = NULL;
-+	struct dpu_encoder_phys *phys = NULL;
-+	int linecount = 0;
-+
-+	dpu_enc = to_dpu_encoder_virt(drm_enc);
-+	phys = dpu_enc ? dpu_enc->cur_master : NULL;
-+
-+	if (phys && phys->ops.get_line_count)
-+		linecount = phys->ops.get_line_count(phys);
-+
-+	return linecount;
-+}
-+
- void dpu_encoder_get_hw_resources(struct drm_encoder *drm_enc,
- 				  struct dpu_encoder_hw_resources *hw_res)
- {
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h
-index b491346..2c4804c 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h
-@@ -156,5 +156,11 @@ void dpu_encoder_prepare_commit(struct drm_encoder *drm_enc);
-  */
- void dpu_encoder_set_idle_timeout(struct drm_encoder *drm_enc,
- 							u32 idle_timeout);
-+/**
-+ * dpu_encoder_get_linecount - get interface line count for the encoder.
-+ * @drm_enc:    Pointer to previously created drm encoder structure
-+ */
-+
-+int dpu_encoder_get_linecount(struct drm_encoder *drm_enc);
- 
- #endif /* __DPU_ENCODER_H__ */
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-index 374b0e8..49bd0729 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-@@ -14,6 +14,7 @@
- 
- #include <drm/drm_crtc.h>
- #include <drm/drm_file.h>
-+#include <drm/drm_vblank.h>
- 
- #include "msm_drv.h"
- #include "msm_mmu.h"
-@@ -1020,6 +1021,9 @@ static int dpu_kms_hw_init(struct msm_kms *kms)
- 	 */
- 	dev->mode_config.allow_fb_modifiers = true;
- 
-+	/* Disable vblank irqs aggressively for power-saving */
-+	dev->vblank_disable_immediate = true;
-+
- 	/*
- 	 * _dpu_kms_drm_obj_init should create the DRM related objects
- 	 * i.e. CRTCs, planes, encoders, connectors and so forth
+Actually I posted V5 version based on review comments.
+
 -- 
-2.7.4
+Qualcomm India Private Limited, on behalf of Qualcomm Innovation Center, Inc.,
+is a member of Code Aurora Forum, a Linux Foundation Collaborative Project.
 
