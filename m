@@ -2,90 +2,129 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 2AF972D924C
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Dec 2020 05:41:33 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 38F102D94D4
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Dec 2020 10:18:47 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2438204AbgLNElQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 13 Dec 2020 23:41:16 -0500
-Received: from mail.kernel.org ([198.145.29.99]:58868 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727148AbgLNElQ (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 13 Dec 2020 23:41:16 -0500
-Date:   Mon, 14 Dec 2020 10:10:30 +0530
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1607920835;
-        bh=Lo6u48Day0mUO4h1+Mhp4AqyFlf4ohZTOz9CjtOwmFA=;
-        h=From:To:Cc:Subject:References:In-Reply-To:From;
-        b=UkJR+Y16cxoSSnofwarCElwnxfN8ODoAh1tnzUrfssp05SRHZl7AhFkfZEudLbt5X
-         TdpZhGSUWbaOjjoBBvbXyvVeIr91XdPjzXUS9gkLSpDWNyc7N/ncYKuGH+Nn0lyD/t
-         U2kkbUeStLelyRiiAqcZxSqvSDCjMrfe2rgshTnJqZdNXcFBuDslE3fVLko3Jm+oed
-         RpDPLK26h19Pf8g3TzjHOotff0AUYbRUCztBkCZOwoDlcHSvyghl5JSYebWSbYGLVF
-         /LHkaUC9YAZhMzzvF8jW/fy3u6x2bE8fb0GWKyYP5F3X4G27dILFvfAKU81zVEANr5
-         R+uxYe4i75NrA==
-From:   Vinod Koul <vkoul@kernel.org>
-To:     Taniya Das <tdas@codeaurora.org>
-Cc:     Stephen Boyd <sboyd@kernel.org>, linux-arm-msm@vger.kernel.org,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Vivek Aknurwar <viveka@codeaurora.org>,
-        Andy Gross <agross@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Rob Herring <robh+dt@kernel.org>, linux-clk@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Jeevan Shriram <jshriram@codeaurora.org>
-Subject: Re: [PATCH v2 5/5] clk: qcom: gcc: Add clock driver for SM8350
-Message-ID: <20201214044030.GD8403@vkoul-mobl>
-References: <20201208064702.3654324-1-vkoul@kernel.org>
- <20201208064702.3654324-6-vkoul@kernel.org>
- <160763302790.1580929.10258660966995584297@swboyd.mtv.corp.google.com>
- <20201211054349.GS8403@vkoul-mobl>
- <160767062876.1580929.14564723998233527816@swboyd.mtv.corp.google.com>
- <a6cc3d1e-4a72-63be-bf1c-5d560ecef9aa@codeaurora.org>
+        id S1729996AbgLNJRk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 14 Dec 2020 04:17:40 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53438 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729478AbgLNJRg (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 14 Dec 2020 04:17:36 -0500
+Received: from mail-qt1-x844.google.com (mail-qt1-x844.google.com [IPv6:2607:f8b0:4864:20::844])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8B672C0613CF;
+        Mon, 14 Dec 2020 01:16:56 -0800 (PST)
+Received: by mail-qt1-x844.google.com with SMTP id c14so11400462qtn.0;
+        Mon, 14 Dec 2020 01:16:56 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=T6srFUPhGMEYv25NnXpMUM6iBufFuKd/vtRKGzk+i5g=;
+        b=ZwVSGxCq8fvkgDL94jTt3KNBTC0+gtQA4d3asnr02hVS5DrXAaOxasRrw6tb/LeF1o
+         SvTejIMyvW7HJmpBkqyRegusAxSZml64Dq4p0TFgnChDxsbSlHcu9WfB7tuqwHbYELUH
+         nxL7puPwEm/6SXYdFJeJvq7cqHgvj0pDAX5NhIfRyH6PtUjHMgQ9KTillMMu+xFiHyai
+         euZ4WH3/vW8yFFD+7tmqXnNJ7ZSv+Zs513MAZVgM6FoXVCD5sAQoJANoz8IzPq2kjWF9
+         A/oOQ3D5eFM7Gb7/CMYZZdilWvqgIvheRrdHhlhYdxAgdTds7mcaY28y/qrhfMOegk4E
+         Fp1Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=T6srFUPhGMEYv25NnXpMUM6iBufFuKd/vtRKGzk+i5g=;
+        b=GOFtOx+fiqzVYxy1zj6pqKpJNDEcdfKzE81fba9zkdXx1FeeCgkqQF1fLW/xPzYaOR
+         qflBGqKOu3eKMSLNdbamvm54N4I7mqQvQIkZkbRpkqO8uHYiB/lgmj7wWMW7+0DiDlcD
+         7sZpmeVRwr2hJ1ZKLbdxuFnpJG6MBWUVB/Lyh1DXneck+LfNitoPiMKGPd5VEp2ePOgu
+         ZXufJ3V73vrTo2ezZfQyo2gXM/FGgCTb9YykszWm2gYp/9R4/hOyKgEtpfmfzB8bGVhF
+         S+87xTJS2aIC15ZcwVMvhczkG1KeFPe/RwBMUTIBokxt4VU9peiaTD4QYQAunxJsEjcM
+         DGNw==
+X-Gm-Message-State: AOAM531/5AilN7ApLOC4RUv0VmOS2Ag5JD1zBzv/71XFPknJmAeMSWm+
+        3bWiarh06OIDwBEy4jXS3XuqDL+tPpPjY4k8Uhk=
+X-Google-Smtp-Source: ABdhPJxkJcriH2TmNFqc3sqzZ0b+P5jhQdGJDptmDO6V4A+IoqGH+yOR6N7+WnLvsbbaDt6JInBGysq6yF3ACe8Y7mA=
+X-Received: by 2002:ac8:6f41:: with SMTP id n1mr29678010qtv.170.1607937415616;
+ Mon, 14 Dec 2020 01:16:55 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <a6cc3d1e-4a72-63be-bf1c-5d560ecef9aa@codeaurora.org>
+References: <1607670251-31733-1-git-send-email-hemantk@codeaurora.org>
+ <1607670251-31733-4-git-send-email-hemantk@codeaurora.org>
+ <X9MjXWABgdJIpyIw@kroah.com> <81dfd08b90f841194237e074aaa3d57cada7afad.camel@redhat.com>
+ <20201211200816.7062c3f9@kicinski-fedora-pc1c0hjn.dhcp.thefacebook.com> <20201212060818.GA10816@thinkpad>
+In-Reply-To: <20201212060818.GA10816@thinkpad>
+From:   Daniele Palmas <dnlplm@gmail.com>
+Date:   Mon, 14 Dec 2020 10:16:44 +0100
+Message-ID: <CAGRyCJG+5VNwz_OOCjeYM+G6c5cfLVD2wiMQtDubWigDmmWfLA@mail.gmail.com>
+Subject: Re: [PATCH v17 3/3] bus: mhi: Add userspace client interface driver
+To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc:     Jakub Kicinski <kuba@kernel.org>, Dan Williams <dcbw@redhat.com>,
+        Greg KH <gregkh@linuxfoundation.org>,
+        Hemant Kumar <hemantk@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        jhugo@codeaurora.org, bbhatt@codeaurora.org,
+        loic.poulain@linaro.org,
+        Network Development <netdev@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Taniya,
+Hello,
 
-On 13-12-20, 14:00, Taniya Das wrote:
-> 
-> 
-> On 12/11/2020 12:40 PM, Stephen Boyd wrote:
-> > Quoting Vinod Koul (2020-12-10 21:43:49)
-> > > On 10-12-20, 12:43, Stephen Boyd wrote:
-> > > > > +static struct clk_branch gcc_camera_ahb_clk = {
-> > > > > +       .halt_reg = 0x26004,
-> > > > > +       .halt_check = BRANCH_HALT_DELAY,
-> > > > > +       .hwcg_reg = 0x26004,
-> > > > > +       .hwcg_bit = 1,
-> > > > > +       .clkr = {
-> > > > > +               .enable_reg = 0x26004,
-> > > > > +               .enable_mask = BIT(0),
-> > > > > +               .hw.init = &(struct clk_init_data){
-> > > > > +                       .name = "gcc_camera_ahb_clk",
-> > > > > +                       .flags = CLK_IS_CRITICAL,
-> > > > 
-> > > > Why is it critical? Can we just enable it in driver probe and stop
-> > > > modeling it as a clk?
-> > > 
-> > > it does not have a parent we control, yeah it would make sense to do
-> > > that. Tanya do you folks agree ..?
-> > > 
-> > 
-> > Maybe it is needed for camera clk controller? Have to check other SoCs
-> > and see if they're using it.
-> > 
-> 
-> Yes, they would have to be left enabled.
-> 
-> Vinod, could you please move them to probe, similar to kona/sc7180 where all
-> the CRITICALs clocks are left enabled?
+Il giorno dom 13 dic 2020 alle ore 15:22 Manivannan Sadhasivam
+<manivannan.sadhasivam@linaro.org> ha scritto:
+>
+> On Fri, Dec 11, 2020 at 08:08:16PM -0800, Jakub Kicinski wrote:
+> > On Fri, 11 Dec 2020 11:37:34 -0600 Dan Williams wrote:
+> > > Just to re-iterate: QMI ~= AT commands ~= MBIM (not quite, but same
+> > > level)
+> > >
+> > > We already do QMI-over-USB, or AT-over-CDC-ACM. This is QMI-over-MHI.
+> >
+> > Why do we need a different QMI-over-X for every X? If you say there
+> > are already chardev interfaces to configure WWAN why not provide one
+> > of those?
+> >
+>
+> Just because the underlying PHY is different and it offers more services than
+> just configuring the modem (downloading crash dump, firmware download etc...)
+>
+> The existing chardev nodes are closely tied to the physical interfaces. For
+> instance, /dev/cdc_wdm is used by the USB based WWAN devices. So we really can't
+> reuse it for MHI/PCIe.
+>
 
-Thanks for the pointer, will do
+let me also add that the current MHI UCI approach makes sense because
+it makes the switch USB -> PCIe smooth, since all the current
+open-source userspace tools (e.g. libqmi and qmicli), according to my
+testing until now, properly works without any need for a change,
+behaving the UCI QMI char device like cdc-wdm.
 
-Thanks
--- 
-~Vinod
+While a different solution (which one?) would maybe cause to re-think
+the userspace side for having the same high-level behavior.
+
+Thanks,
+Daniele
+
+> > > It's not networking data plane. It's WWAN device configuration.
+> >
+> > Ack. Not that network config doesn't fall under networking, but eh.
+> > I wonder - did DaveM ever ack this, or was it just out of his sight
+> > enough, behind the cdev, to never trigger a nack?
+> >
+> > > There are no current kernel APIs for this, and I really don't think we
+> > > want there to be. The API surface is *huge* and we definitely don't
+> > > want that in-kernel.
+> >
+> > It is what it is today for WWAN. I don't think anyone in the
+> > development community or among users is particularly happy about
+> > the situation. Which makes it rather self evident why there is
+> > so much apprehension about this patch set. It's going to be
+> > a user space channel for everything Qualcomm - AI accelerator etc.
+> > Widening the WWAN status quo to more device types.
+>
+> Well not everything Qualcomm but for just the subsystems where there is no
+> standardization right now. I think we went too far ahead for standardizing
+> the modems.
+>
+> Thanks,
+> Mani
+>
