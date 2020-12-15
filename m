@@ -2,49 +2,49 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 613152DA4F0
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Dec 2020 01:32:43 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 50C492DA4F6
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Dec 2020 01:34:06 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726714AbgLOAcU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 14 Dec 2020 19:32:20 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54642 "EHLO
+        id S1726662AbgLOAdD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 14 Dec 2020 19:33:03 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54756 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726141AbgLOAcQ (ORCPT
+        with ESMTP id S1728822AbgLOAc7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 14 Dec 2020 19:32:16 -0500
-Received: from mail-pf1-x442.google.com (mail-pf1-x442.google.com [IPv6:2607:f8b0:4864:20::442])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6E057C0617A6
-        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Dec 2020 16:31:36 -0800 (PST)
-Received: by mail-pf1-x442.google.com with SMTP id t8so13375476pfg.8
-        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Dec 2020 16:31:36 -0800 (PST)
+        Mon, 14 Dec 2020 19:32:59 -0500
+Received: from mail-pl1-x643.google.com (mail-pl1-x643.google.com [IPv6:2607:f8b0:4864:20::643])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0FCEDC06138C
+        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Dec 2020 16:31:38 -0800 (PST)
+Received: by mail-pl1-x643.google.com with SMTP id r4so9981473pls.11
+        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Dec 2020 16:31:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=f7OsK3yyie83mFsyxOZLO7U5mEgOhtDjdGrqc4pskdY=;
-        b=JnvNAr6HasYZClYsYYu9MLeQeCjXeoPbPpVc46mqEhnAHt3uYnri6YD1gJbaIRgMdh
-         gz8XbvbAkQyyapKi24Hp1xZZaMI0FvmEbKBWXi7O/6gO2SNVQ4YIsF67pC83F0Rc4DQq
-         lZUEXHhXNi5FxihFuTrxm+EiltW5RkVv651xk=
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=iHZzN7QnB+fG/aCQ4IcntNNXDnPGesYQj+tjiQUFpFA=;
+        b=CyxCwbcjcgYxxChvTPAi4Cp5pUrrvQM8W8jYk9w0SgcMS9Mu5nM23VmqYtNpOyjz1r
+         ajrYVJhi/uNpr/lUZTIy4NOiz/FACFF5gN7B+BNHvw44rDZDjR2xziV6THm49b9sHcXY
+         4b8enF8zT0YBnQqG3ZBF3F3gXjDPSdAs2hu8k=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=f7OsK3yyie83mFsyxOZLO7U5mEgOhtDjdGrqc4pskdY=;
-        b=tsesWwOcdgoD+ZW3pk8Xj4EDMVkipQphsIOq+0XMkdo+TYRl8ZQ1f3bmUEI0HT5aaZ
-         1JnefQAzyT1D7ECAC/ifJUm5Fhg4SarNp+saU4/+vGOCpPPyMPCknode7pz5bRMsvwAc
-         RppMmuzApleQkodgiu8Ezfe/lAuVoGG5shZZ3TuirWSXfurPt7OcmyC1Opgxr+hSmPeG
-         ETRbup3nOk1Dn9yZ92GAeLGGqcAHggrdOrapQ2SEVNoEgH5A7jznH0yX8oMfb8fmLQWE
-         9y/G2/Gwg57ZAXM7vnGS1WFtBnZc5j8WZtYITvsbBh+Mbr2UHTk67dEcRkvYMkwgj0a1
-         4ycQ==
-X-Gm-Message-State: AOAM532efd7t79+mnc3F+dSmj/QTDXInLCFmvVdj8akk90jSOW7tmDAU
-        NmEvNG27GzfYb+GnyHuLXj8OuA==
-X-Google-Smtp-Source: ABdhPJxMxgfSijCu0l6b2bbht2ujt9jAUUdhAg1vdv1oL4+PPMHAhJCCJICFQvVUud5ShcBzteE3xg==
-X-Received: by 2002:a62:8895:0:b029:19e:92ec:6886 with SMTP id l143-20020a6288950000b029019e92ec6886mr15472290pfd.12.1607992295840;
-        Mon, 14 Dec 2020 16:31:35 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=iHZzN7QnB+fG/aCQ4IcntNNXDnPGesYQj+tjiQUFpFA=;
+        b=Dica0edvPvIWNE6+rTYL/cQx5mTK0Ni8SDARnpSrQFoydURoeoLTVqST89Kjmp369E
+         KkfUF8P3UEqPbbS77yzmn8cQHmfHzaUtg2ytQSrLr7EpmAjX/jAHXUGBqZQ2ORPlqmzH
+         XckfNF59Ta/28WC4QTg/WTSqRnwL12FW3xOoWlVNfctVr72rw+S1lK0/ifYKG8kmrvhL
+         VkSaFAraNfKt1chQTUs3Ef3BEH5ItiBo4AnNc7YS0ce2bu5w5KKnaJ4dJ4Ylj3g/nY8Q
+         7NGCPWwaplD4vz1lJ03hGZHaJAEtlDb1ls2giF6Q+1Zys24bLkYRk/04u5MtAPVLAtN8
+         jTnw==
+X-Gm-Message-State: AOAM532+ZEPPnwZvcBN6UjEgLuDZUZk5OiMNGygdfnjV5d7K8K6/Q0n/
+        9uhhjcQX2dlxy7E8CgeiQ10mSg==
+X-Google-Smtp-Source: ABdhPJxux+79KiPAWCaarQKpR+hNGV+g1cx4l3hLlPUGCsF7voj6qS4lOmQ2WyDroYZZt+r1Am+iEg==
+X-Received: by 2002:a17:90b:4a10:: with SMTP id kk16mr27776109pjb.30.1607992297548;
+        Mon, 14 Dec 2020 16:31:37 -0800 (PST)
 Received: from tictac2.mtv.corp.google.com ([2620:15c:202:1:42b0:34ff:fe3d:58e6])
-        by smtp.gmail.com with ESMTPSA id 77sm20412834pfx.156.2020.12.14.16.31.34
+        by smtp.gmail.com with ESMTPSA id 77sm20412834pfx.156.2020.12.14.16.31.36
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 14 Dec 2020 16:31:35 -0800 (PST)
+        Mon, 14 Dec 2020 16:31:37 -0800 (PST)
 From:   Douglas Anderson <dianders@chromium.org>
 To:     Mark Brown <broonie@kernel.org>
 Cc:     msavaliy@qti.qualcomm.com, akashast@codeaurora.org,
@@ -54,106 +54,156 @@ Cc:     msavaliy@qti.qualcomm.com, akashast@codeaurora.org,
         Alok Chauhan <alokc@codeaurora.org>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Dilip Kota <dkota@codeaurora.org>,
         Girish Mahadevan <girishm@codeaurora.org>,
         linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
         linux-spi@vger.kernel.org
-Subject: [PATCH 1/2] spi: spi-geni-qcom: Fix geni_spi_isr() NULL dereference in timeout case
-Date:   Mon, 14 Dec 2020 16:30:18 -0800
-Message-Id: <20201214162937.1.I99ee04f0cb823415df59bd4f550d6ff5756e43d6@changeid>
+Subject: [PATCH 2/2] spi: spi-geni-qcom: Really ensure the previous xfer is done before new one
+Date:   Mon, 14 Dec 2020 16:30:19 -0800
+Message-Id: <20201214162937.2.Ibade998ed587e070388b4bf58801f1107a40eb53@changeid>
 X-Mailer: git-send-email 2.29.2.684.gfbc64c5ab5-goog
+In-Reply-To: <20201214162937.1.I99ee04f0cb823415df59bd4f550d6ff5756e43d6@changeid>
+References: <20201214162937.1.I99ee04f0cb823415df59bd4f550d6ff5756e43d6@changeid>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-In commit 7ba9bdcb91f6 ("spi: spi-geni-qcom: Don't keep a local state
-variable") we changed handle_fifo_timeout() so that we set
-"mas->cur_xfer" to NULL to make absolutely sure that we don't mess
-with the buffers from the previous transfer in the timeout case.
+In commit 2ee471a1e28e ("spi: spi-geni-qcom: Mo' betta locking") we
+added a dance in setup_fifo_xfer() to make sure that the previous
+transfer was really done before we setup the next one.  However, it
+wasn't enough.  Specifically, if we had a timeout it's possible that
+the previous transfer could still be pending.  This could happen if
+our interrupt handler was blocked for a long while (interrupt storm or
+someone disablng IRQs for a while).  This pending interrupt could
+throw off our logic.
 
-Unfortunately, this caused the IRQ handler to dereference NULL in some
-cases.  One case:
-
- CPU0                           CPU1
- ----                           ----
-                                setup_fifo_xfer()
-                                 ...
-                                 geni_se_setup_m_cmd()
-                                 <hardware starts transfer>
- <unrelated interrupt storm>     spin_unlock_irq()
- <continued interrupt storm>    <time passes>
- <continued interrupt storm>    <transfer complets in hardware>
- <continued interrupt storm>    <hardware sets M_RX_FIFO_WATERMARK_EN>
- <continued interrupt storm>    <time passes>
- <continued interrupt storm>    handle_fifo_timeout()
- <continued interrupt storm>     spin_lock_irq()
- <continued interrupt storm>     mas->cur_xfer = NULL
- <continued interrupt storm>     geni_se_cancel_m_cmd()
- <continued interrupt storm>     spin_unlock_irq()
- <continued interrupt storm>     wait_for_completion_timeout() => timeout
- <continued interrupt storm>     spin_lock_irq()
- <continued interrupt storm>     geni_se_abort_m_cmd()
- <continued interrupt storm>     spin_unlock_irq()
- <continued interrupt storm>     wait_for_completion_timeout() => timeout
- <interrupt storm ends>
- geni_spi_isr()
-  spin_lock()
-  if (m_irq & M_RX_FIFO_WATERMARK_EN)
-   geni_spi_handle_rx()
-    mas->cur_xfer NULL derefrence
-
-Specifically it should be noted that the RX/TX interrupts are still
-shown asserted even when a CANCEL/ABORT interrupt has asserted.
-
-Let's check for the NULL transfer in the TX and RX cases.
-
-NOTE: things still could get confused if we get timeouts all the way
-through handle_fifo_timeout(), meaning that interrupts are still
-pending.  A future patch will help these corner cases.
+Let's really make sure that the previous interrupt isn't still pending
+before we start the next transfer.
 
 Fixes: 561de45f72bd ("spi: spi-geni-qcom: Add SPI driver support for GENI based QUP")
 Signed-off-by: Douglas Anderson <dianders@chromium.org>
 ---
 
- drivers/spi/spi-geni-qcom.c | 17 +++++++++++++++++
- 1 file changed, 17 insertions(+)
+ drivers/spi/spi-geni-qcom.c | 69 ++++++++++++++++++++++++++++---------
+ 1 file changed, 53 insertions(+), 16 deletions(-)
 
 diff --git a/drivers/spi/spi-geni-qcom.c b/drivers/spi/spi-geni-qcom.c
-index 25810a7eef10..6f736e94e9f4 100644
+index 6f736e94e9f4..5ef2e9f38ac9 100644
 --- a/drivers/spi/spi-geni-qcom.c
 +++ b/drivers/spi/spi-geni-qcom.c
-@@ -354,6 +354,12 @@ static bool geni_spi_handle_tx(struct spi_geni_master *mas)
- 	unsigned int bytes_per_fifo_word = geni_byte_per_fifo_word(mas);
- 	unsigned int i = 0;
+@@ -145,12 +145,49 @@ static void handle_fifo_timeout(struct spi_master *spi,
+ 		dev_err(mas->dev, "Failed to cancel/abort m_cmd\n");
+ }
  
-+	/* Stop the watermark IRQ if nothing to send */
-+	if (mas->cur_xfer == NULL) {
-+		writel(0, se->base + SE_GENI_TX_WATERMARK_REG);
-+		return false;
++static int spi_geni_check_busy(struct spi_geni_master *mas)
++{
++	struct geni_se *se = &mas->se;
++	u32 m_irq, m_irq_en;
++
++	/*
++	 * We grab the spinlock so that if we raced really fast and the IRQ
++	 * handler is still actually running we'll wait for it to exit.  This
++	 * can happen because the IRQ handler may signal in the middle of the
++	 * function and the next transfer can kick off right away.
++	 *
++	 * Once we have the spinlock, if we're starting a new transfer we
++	 * expect nothing is pending.  We check this to handle the case where
++	 * the previous transfer timed out and then handle_fifo_timeout() timed
++	 * out.  This can happen if the interrupt handler was blocked for
++	 * a long time and we don't want to start any new transfers until it's
++	 * all done.
++	 *
++	 * We are OK releasing the spinlock after we're done here since (if
++	 * we're returning 0 and going ahead with the transfer) we know that
++	 * the SPI controller must be in a quiet state.
++	 */
++	spin_lock_irq(&mas->lock);
++	m_irq = readl(se->base + SE_GENI_M_IRQ_STATUS);
++	m_irq_en = readl(se->base + SE_GENI_M_IRQ_EN);
++	spin_unlock_irq(&mas->lock);
++
++	if (m_irq & m_irq_en) {
++		dev_err(mas->dev, "Busy, IRQs pending %#010x\n",
++			m_irq & m_irq_en);
++		return -EBUSY;
 +	}
 +
- 	max_bytes = (mas->tx_fifo_depth - mas->tx_wm) * bytes_per_fifo_word;
- 	if (mas->tx_rem_bytes < max_bytes)
- 		max_bytes = mas->tx_rem_bytes;
-@@ -396,6 +402,17 @@ static void geni_spi_handle_rx(struct spi_geni_master *mas)
- 		if (rx_last_byte_valid && rx_last_byte_valid < 4)
- 			rx_bytes -= bytes_per_fifo_word - rx_last_byte_valid;
- 	}
++	return 0;
++}
 +
-+	/* Clear out the FIFO and bail if nowhere to put it */
-+	if (mas->cur_xfer == NULL) {
-+		unsigned int words = DIV_ROUND_UP(rx_bytes, bytes_per_fifo_word);
-+
-+		for (i = 0; i < words; i++)
-+			readl(se->base + SE_GENI_RX_FIFOn);
-+
+ static void spi_geni_set_cs(struct spi_device *slv, bool set_flag)
+ {
+ 	struct spi_geni_master *mas = spi_master_get_devdata(slv->master);
+ 	struct spi_master *spi = dev_get_drvdata(mas->dev);
+ 	struct geni_se *se = &mas->se;
+ 	unsigned long time_left;
++	int ret;
+ 
+ 	if (!(slv->mode & SPI_CS_HIGH))
+ 		set_flag = !set_flag;
+@@ -158,6 +195,12 @@ static void spi_geni_set_cs(struct spi_device *slv, bool set_flag)
+ 	if (set_flag == mas->cs_flag)
+ 		return;
+ 
++	ret = spi_geni_check_busy(mas);
++	if (ret) {
++		dev_err(mas->dev, "Can't set chip select\n");
 +		return;
 +	}
 +
- 	if (mas->rx_rem_bytes < rx_bytes)
- 		rx_bytes = mas->rx_rem_bytes;
+ 	mas->cs_flag = set_flag;
  
+ 	pm_runtime_get_sync(mas->dev);
+@@ -277,8 +320,12 @@ static int setup_fifo_params(struct spi_device *spi_slv,
+ static int spi_geni_prepare_message(struct spi_master *spi,
+ 					struct spi_message *spi_msg)
+ {
+-	int ret;
+ 	struct spi_geni_master *mas = spi_master_get_devdata(spi);
++	int ret;
++
++	ret = spi_geni_check_busy(mas);
++	if (ret)
++		return ret;
+ 
+ 	ret = setup_fifo_params(spi_msg->spi, spi);
+ 	if (ret)
+@@ -440,21 +487,6 @@ static void setup_fifo_xfer(struct spi_transfer *xfer,
+ 	struct geni_se *se = &mas->se;
+ 	int ret;
+ 
+-	/*
+-	 * Ensure that our interrupt handler isn't still running from some
+-	 * prior command before we start messing with the hardware behind
+-	 * its back.  We don't need to _keep_ the lock here since we're only
+-	 * worried about racing with out interrupt handler.  The SPI core
+-	 * already handles making sure that we're not trying to do two
+-	 * transfers at once or setting a chip select and doing a transfer
+-	 * concurrently.
+-	 *
+-	 * NOTE: we actually _can't_ hold the lock here because possibly we
+-	 * might call clk_set_rate() which needs to be able to sleep.
+-	 */
+-	spin_lock_irq(&mas->lock);
+-	spin_unlock_irq(&mas->lock);
+-
+ 	if (xfer->bits_per_word != mas->cur_bits_per_word) {
+ 		spi_setup_word_len(mas, mode, xfer->bits_per_word);
+ 		mas->cur_bits_per_word = xfer->bits_per_word;
+@@ -511,6 +543,11 @@ static int spi_geni_transfer_one(struct spi_master *spi,
+ 				struct spi_transfer *xfer)
+ {
+ 	struct spi_geni_master *mas = spi_master_get_devdata(spi);
++	int ret;
++
++	ret = spi_geni_check_busy(mas);
++	if (ret)
++		return ret;
+ 
+ 	/* Terminate and return success for 0 byte length transfer */
+ 	if (!xfer->len)
 -- 
 2.29.2.684.gfbc64c5ab5-goog
 
