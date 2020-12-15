@@ -2,137 +2,80 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 841B12DB353
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Dec 2020 19:12:01 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 339BA2DB40B
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Dec 2020 19:53:29 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728004AbgLOSJp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 15 Dec 2020 13:09:45 -0500
-Received: from alexa-out.qualcomm.com ([129.46.98.28]:44072 "EHLO
-        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727664AbgLOSJf (ORCPT
+        id S1731286AbgLOSvx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 15 Dec 2020 13:51:53 -0500
+Received: from so254-31.mailgun.net ([198.61.254.31]:35801 "EHLO
+        so254-31.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1731662AbgLOStv (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 15 Dec 2020 13:09:35 -0500
-Received: from ironmsg-lv-alpha.qualcomm.com ([10.47.202.13])
-  by alexa-out.qualcomm.com with ESMTP; 15 Dec 2020 10:08:54 -0800
-X-QCInternal: smtphost
-Received: from ironmsg01-blr.qualcomm.com ([10.86.208.130])
-  by ironmsg-lv-alpha.qualcomm.com with ESMTP/TLS/AES256-SHA; 15 Dec 2020 10:08:52 -0800
-X-QCInternal: smtphost
-Received: from dikshita-linux.qualcomm.com ([10.204.65.237])
-  by ironmsg01-blr.qualcomm.com with ESMTP; 15 Dec 2020 23:38:39 +0530
-Received: by dikshita-linux.qualcomm.com (Postfix, from userid 347544)
-        id 10A7421427; Tue, 15 Dec 2020 23:38:37 +0530 (IST)
-From:   Dikshita Agarwal <dikshita@codeaurora.org>
-To:     linux-media@vger.kernel.org, stanimir.varbanov@linaro.org
-Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        vgarodia@codeaurora.org, Dikshita Agarwal <dikshita@codeaurora.org>
-Subject: [PATCH v5] venus: core: add support to dump FW region
-Date:   Tue, 15 Dec 2020 23:38:36 +0530
-Message-Id: <1608055716-14796-1-git-send-email-dikshita@codeaurora.org>
+        Tue, 15 Dec 2020 13:49:51 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1608058163; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=gjXhSwXH130CypwYTgpPnsoVSha5jxJGBuVYFcoIQGU=; b=pT3Hf76BRrlDe06vXISBCSS0o0sUU0/rmfNzCN7GMsU45y+odFPfgCA9/IIUExabcZNPIvvN
+ 3lvbWtUEmKnktJTc5w+M6SKdInump8kueFvNacT/b4XgVPyC4AVUC8kRyY3IrmTH2+uZhrAY
+ G/y3Io3DcZMEmQYSQqju/RrS3b8=
+X-Mailgun-Sending-Ip: 198.61.254.31
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n04.prod.us-east-1.postgun.com with SMTP id
+ 5fd90511253011a4b869c92a (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 15 Dec 2020 18:48:49
+ GMT
+Sender: tdas=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 49F05C43462; Tue, 15 Dec 2020 18:48:48 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL
+        autolearn=no autolearn_force=no version=3.4.0
+Received: from tdas-linux.qualcomm.com (unknown [202.46.22.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: tdas)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id BA5E2C433CA;
+        Tue, 15 Dec 2020 18:48:43 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org BA5E2C433CA
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=tdas@codeaurora.org
+From:   Taniya Das <tdas@codeaurora.org>
+To:     Stephen Boyd <sboyd@kernel.org>,
+        =?UTF-8?q?Michael=20Turquette=20=C2=A0?= <mturquette@baylibre.com>
+Cc:     Rajendra Nayak <rnayak@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, linux-soc@vger.kernel.org,
+        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org, robh@kernel.org, robh+dt@kernel.org,
+        Taniya Das <tdas@codeaurora.org>
+Subject: [PATCH v1 0/2] Add Global Clock controller (GCC) driver for SC7280
+Date:   Wed, 16 Dec 2020 00:18:32 +0530
+Message-Id: <1608058114-29025-1-git-send-email-tdas@codeaurora.org>
 X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add support to dump video FW region during FW crash
-using devcoredump helpers.
+Add driver support for Global Clock controller for SC7280 and also update
+device tree bindings for the various clocks supported in the clock controller.
 
-Signed-off-by: Dikshita Agarwal <dikshita@codeaurora.org>
-Reviewed-by: Stephen Boyd <swboyd@chromium.org>
-Reviewed-by: Stanimir Varbanov <stanimir.varbanov@linaro.org>
+Taniya Das (2):
+  dt-bindings: clock: Add SC7280 GCC clock binding
+  clk: qcom: Add Global Clock controller (GCC) driver for SC7280
 
-Major changes since v1:
-- update the name of function (Stephen)
-- store start address and size in resource structure during
-  probe and reuse while dumping (Stephen, Stanimir)
----
- drivers/media/platform/qcom/venus/core.c     | 30 ++++++++++++++++++++++++++++
- drivers/media/platform/qcom/venus/core.h     |  2 ++
- drivers/media/platform/qcom/venus/firmware.c |  3 +++
- 3 files changed, 35 insertions(+)
+ .../devicetree/bindings/clock/qcom,gcc-sc7280.yaml |   85 +
+ drivers/clk/qcom/Kconfig                           |    9 +
+ drivers/clk/qcom/Makefile                          |    1 +
+ drivers/clk/qcom/gcc-sc7280.c                      | 3361 ++++++++++++++++++++
+ include/dt-bindings/clock/qcom,gcc-sc7280.h        |  215 ++
+ 5 files changed, 3671 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/clock/qcom,gcc-sc7280.yaml
+ create mode 100644 drivers/clk/qcom/gcc-sc7280.c
+ create mode 100644 include/dt-bindings/clock/qcom,gcc-sc7280.h
 
-diff --git a/drivers/media/platform/qcom/venus/core.c b/drivers/media/platform/qcom/venus/core.c
-index bdd293f..1cc57ee 100644
---- a/drivers/media/platform/qcom/venus/core.c
-+++ b/drivers/media/platform/qcom/venus/core.c
-@@ -7,6 +7,7 @@
- #include <linux/interconnect.h>
- #include <linux/ioctl.h>
- #include <linux/delay.h>
-+#include <linux/devcoredump.h>
- #include <linux/list.h>
- #include <linux/module.h>
- #include <linux/of_device.h>
-@@ -22,6 +23,33 @@
- #include "firmware.h"
- #include "pm_helpers.h"
- 
-+static void venus_coredump(struct venus_core *core)
-+{
-+	struct device *dev;
-+	phys_addr_t mem_phys;
-+	size_t mem_size;
-+	void *mem_va;
-+	void *data;
-+
-+	dev = core->dev;
-+	mem_phys = core->fw.mem_phys;
-+	mem_size = core->fw.mem_size;
-+
-+	mem_va = memremap(mem_phys, mem_size, MEMREMAP_WC);
-+	if (!mem_va)
-+		return;
-+
-+	data = vmalloc(mem_size);
-+	if (!data) {
-+		memunmap(mem_va);
-+		return;
-+	}
-+
-+	memcpy(data, mem_va, mem_size);
-+	memunmap(mem_va);
-+	dev_coredumpv(dev, data, mem_size, GFP_KERNEL);
-+}
-+
- static void venus_event_notify(struct venus_core *core, u32 event)
- {
- 	struct venus_inst *inst;
-@@ -67,6 +95,8 @@ static void venus_sys_error_handler(struct work_struct *work)
- 
- 	venus_shutdown(core);
- 
-+	venus_coredump(core);
-+
- 	pm_runtime_put_sync(core->dev);
- 
- 	while (core->pmdomains[0] && pm_runtime_active(core->pmdomains[0]))
-diff --git a/drivers/media/platform/qcom/venus/core.h b/drivers/media/platform/qcom/venus/core.h
-index 3a477fc..b37de95 100644
---- a/drivers/media/platform/qcom/venus/core.h
-+++ b/drivers/media/platform/qcom/venus/core.h
-@@ -178,6 +178,8 @@ struct venus_core {
- 		struct device *dev;
- 		struct iommu_domain *iommu_domain;
- 		size_t mapped_mem_size;
-+		phys_addr_t mem_phys;
-+		size_t mem_size;
- 	} fw;
- 	struct mutex lock;
- 	struct list_head instances;
-diff --git a/drivers/media/platform/qcom/venus/firmware.c b/drivers/media/platform/qcom/venus/firmware.c
-index d03e2dd..89defc2 100644
---- a/drivers/media/platform/qcom/venus/firmware.c
-+++ b/drivers/media/platform/qcom/venus/firmware.c
-@@ -201,6 +201,9 @@ int venus_boot(struct venus_core *core)
- 		return -EINVAL;
- 	}
- 
-+	core->fw.mem_size = mem_size;
-+	core->fw.mem_phys = mem_phys;
-+
- 	if (core->use_tz)
- 		ret = qcom_scm_pas_auth_and_reset(VENUS_PAS_ID);
- 	else
--- 
-2.7.4
+--
+Qualcomm INDIA, on behalf of Qualcomm Innovation Center, Inc.is a member
+of the Code Aurora Forum, hosted by the  Linux Foundation.
 
