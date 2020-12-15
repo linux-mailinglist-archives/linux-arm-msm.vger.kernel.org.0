@@ -2,103 +2,108 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E7C8F2DB053
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Dec 2020 16:45:35 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 9A4ED2DB05B
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Dec 2020 16:45:39 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728109AbgLOPnM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 15 Dec 2020 10:43:12 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53530 "EHLO
+        id S1728591AbgLOPo0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 15 Dec 2020 10:44:26 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53822 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729735AbgLOPlp (ORCPT
+        with ESMTP id S1730307AbgLOPnb (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 15 Dec 2020 10:41:45 -0500
-Received: from mail-pg1-x543.google.com (mail-pg1-x543.google.com [IPv6:2607:f8b0:4864:20::543])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D22A0C06179C;
-        Tue, 15 Dec 2020 07:41:04 -0800 (PST)
-Received: by mail-pg1-x543.google.com with SMTP id i7so3790766pgc.8;
-        Tue, 15 Dec 2020 07:41:04 -0800 (PST)
+        Tue, 15 Dec 2020 10:43:31 -0500
+Received: from mail-vs1-xe44.google.com (mail-vs1-xe44.google.com [IPv6:2607:f8b0:4864:20::e44])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 80738C06179C
+        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Dec 2020 07:42:51 -0800 (PST)
+Received: by mail-vs1-xe44.google.com with SMTP id u7so11195431vsg.11
+        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Dec 2020 07:42:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=80Mc7C15jdteQdkW+dQYgsQRU8zaIe7+K7tQO+Wn2Uo=;
-        b=UMXPSATLUcMYDaFa/nzhImtygo1tzlJtFDlArVQi6dkDKv3Rk9u3IpRMtQYea0FvWo
-         P3sLPlm79/m1f4ANvNak1mLcK9iHyRj1GXIp1yFimwccgXZbFAX9ZNfeSTj2uBzAGOwD
-         c1zSENzlgQ3Hob8dt4Wqqsh9qdkyKfEq7Q9g79Z97MQET2qjfgmnkoSYO9ITia6k9xYY
-         +nSbZ1VMP3hleX+wrap0Veuaz4j+q0wAxsUMtshyag3oi5ES9BWbbK3Lm2zNRyXr6SRs
-         tHGrF+LjB46+jJaX8yVVaF96rmcE2J+IepPIJlwX0Gb/PC1F8QQ1XJ+aBGgyur4f0Z3O
-         1eRQ==
+        d=chromium.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=CmsUX0s95ydXWZbyak8VMyE/dxsCO/YhYqW3BW3PGXY=;
+        b=EM+cWPNF7BpAlMNl5IqVB6YXP5Yt2mjNaCDGRnga6SX3e3b9pObq7FB/BmYN5yX48y
+         tCaYvUNte4AHGzcz7iLohWil9pKhgPiaALLYCjOYDLQ4slVmuwOuc/W2KyOyuZap0UPY
+         qKQ7htVixW9yVzOa6KqE/L420vQ4oBg9fmCM0=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=80Mc7C15jdteQdkW+dQYgsQRU8zaIe7+K7tQO+Wn2Uo=;
-        b=oDPaxykHbtZLQbQXku589lcjfm9/YQ2GU9+tGyEmGeGPsbwBhwPGtiklsenHlRN7ON
-         wS4kd3xj4kJYmCbGsiIgAnhL12xzIgUZIZswvYp0zr39nrX5nQmfwRHD/sJNg/7sfETJ
-         64HOzpPOvusk104qmrxZEhPQ75liYTooREwgMV3erpwo8scioG1lgJ571C0I/56jKL5X
-         3W5NcrVY4/6W3Ems2JtmvRbfFPecWlsN8InOYOGLvtFDo2ATpp1dMxTfMeSDkqwdsrVm
-         b4pOL/DNUTphlu6GPvkI4OIgZa3BKnAnYpF9NBPonRAcxh3SSo/fzdxCmlqcRXRiap/R
-         VnUw==
-X-Gm-Message-State: AOAM532mFt6YTT6emfE6X/4vNXiFQfTRfk/s2E7AhrTqZZDOaM3VzRt7
-        nFomjBkP1dht/wiSX/12iRs=
-X-Google-Smtp-Source: ABdhPJxcseeiq3CDrKpwSFVjn61QO89iMzEYpkd1btbDilDv+PAHvzJRTefOOg9lEPZM1k8L1T1L0Q==
-X-Received: by 2002:a62:7a91:0:b029:19e:55db:9ddc with SMTP id v139-20020a627a910000b029019e55db9ddcmr28779638pfc.68.1608046864434;
-        Tue, 15 Dec 2020 07:41:04 -0800 (PST)
-Received: from [10.230.29.166] ([192.19.223.252])
-        by smtp.gmail.com with ESMTPSA id q12sm8295591pgj.24.2020.12.15.07.41.01
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=CmsUX0s95ydXWZbyak8VMyE/dxsCO/YhYqW3BW3PGXY=;
+        b=Ej3jvtPEaaklhQkKFFzP32XB5rw/Hhq2dx48/2PvFsF5O5TUonRKBROp55X1QeJAG7
+         AlEIcT1kEBcaiJPBVnC6GZn5FS1rAFxeYbsZESbeisZSqMi9zti7wilxCrayb0gBPkEj
+         QHwJkclpqyjeOcLsRTUZl1/CxgnC5emFnGsCok4KvZPL1WM1hIrFMhHPVlO6/JfP7k0c
+         O97kJx9xMlg1+xSiX1gZu4S2j3ew6HwdzrocrdZ360zl5EHr463hhpDBoYIqJSEvQxEY
+         +IsD+MxdRk+lFN4nPvXtowNgwr6OQlnVOp4LOXKI9Iy11slaDaVC0VXyIaF1PhcwiQHE
+         16tA==
+X-Gm-Message-State: AOAM532vQwOhu2tFkeD2m4JtXyTL43k8TWgacU4ZbTXVZj1lBJUJDh57
+        zfySYZcnYOkdS6xCDmXg3/uYTm0fgtn1Mw==
+X-Google-Smtp-Source: ABdhPJzd4G1YICcSvkAbrmmooNZ5ldMt38DCRR+CM9xkBsRDgxfx34KfKCszNumgQQp6E/7Wq+v5TQ==
+X-Received: by 2002:a67:f14f:: with SMTP id t15mr28078878vsm.0.1608046970532;
+        Tue, 15 Dec 2020 07:42:50 -0800 (PST)
+Received: from mail-vs1-f53.google.com (mail-vs1-f53.google.com. [209.85.217.53])
+        by smtp.gmail.com with ESMTPSA id q23sm2659640vsm.27.2020.12.15.07.42.49
+        for <linux-arm-msm@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 15 Dec 2020 07:41:03 -0800 (PST)
-Subject: Re: [PATCH v2 1/2] arm64: dts: broadcom: clear the warnings caused by
- empty dma-ranges
-To:     Bharat Gooty <bharat.gooty@broadcom.com>,
-        Arnd Bergmann <arnd@kernel.org>
-Cc:     Ray Jui <ray.jui@broadcom.com>,
-        Florian Fainelli <f.fainelli@gmail.com>,
-        devicetree <devicetree@vger.kernel.org>,
-        linux-kernel <linux-kernel@vger.kernel.org>,
-        Arnd Bergmann <arnd@arndb.de>,
-        Scott Branden <sbranden@broadcom.com>,
-        Ray Jui <rjui@broadcom.com>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        bcm-kernel-feedback-list <bcm-kernel-feedback-list@broadcom.com>,
-        Zhen Lei <thunder.leizhen@huawei.com>,
-        linux-arm-kernel <linux-arm-kernel@lists.infradead.org>
-References: <20201016090833.1892-1-thunder.leizhen@huawei.com>
- <20201016090833.1892-2-thunder.leizhen@huawei.com>
- <20201128045328.2411772-1-f.fainelli@gmail.com>
- <CAK8P3a1_5RgcPz+bgo1bbUBk8NTJd=1-Y5-=CsQYkFgLfTE3_A@mail.gmail.com>
- <9c6c6b7e-8c39-8c49-5c87-9b560c027841@broadcom.com>
- <CAK8P3a2XYk8D80XARrpUSBHk1yye3KHXOdaQge4HNSZZOC=xKw@mail.gmail.com>
- <CACvutz9v+TBUbrCo3X-u5ebbs04nR0y0yQN3qWfSAyZVy9RM2g@mail.gmail.com>
-From:   Florian Fainelli <f.fainelli@gmail.com>
-Message-ID: <c38cf11a-ed1d-d150-52fb-e3b4a0a30712@gmail.com>
-Date:   Tue, 15 Dec 2020 07:41:00 -0800
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Firefox/78.0 Thunderbird/78.5.1
+        Tue, 15 Dec 2020 07:42:49 -0800 (PST)
+Received: by mail-vs1-f53.google.com with SMTP id e15so9699152vsa.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Dec 2020 07:42:49 -0800 (PST)
+X-Received: by 2002:a67:bd01:: with SMTP id y1mr21909045vsq.49.1608046969145;
+ Tue, 15 Dec 2020 07:42:49 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <CACvutz9v+TBUbrCo3X-u5ebbs04nR0y0yQN3qWfSAyZVy9RM2g@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+References: <1608025150-10779-1-git-send-email-manafm@codeaurora.org>
+In-Reply-To: <1608025150-10779-1-git-send-email-manafm@codeaurora.org>
+From:   Doug Anderson <dianders@chromium.org>
+Date:   Tue, 15 Dec 2020 07:42:37 -0800
+X-Gmail-Original-Message-ID: <CAD=FV=U0cVz6XgFnctGHcu1sNABAJsnBy8PPYjOSO5wKQGR7RQ@mail.gmail.com>
+Message-ID: <CAD=FV=U0cVz6XgFnctGHcu1sNABAJsnBy8PPYjOSO5wKQGR7RQ@mail.gmail.com>
+Subject: Re: [PATCH] arm64: dts: qcom: sc7180: Enable passive polling for cpu
+ thermal zones
+To:     Manaf Meethalavalappu Pallikunhi <manafm@codeaurora.org>
+Cc:     Andy Gross <agross@kernel.org>, Rob Herring <robh+dt@kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        Amit Kucheria <amit.kucheria@verdurent.com>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        LKML <linux-kernel@vger.kernel.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Hi,
 
+On Tue, Dec 15, 2020 at 1:39 AM Manaf Meethalavalappu Pallikunhi
+<manafm@codeaurora.org> wrote:
+>
+> Enable passive polling delay for cpu thermal zone for sc7180. It
+> enables periodic thermal zone re-evaluation on post first trip
+> temperature violation.
+>
+> Signed-off-by: Manaf Meethalavalappu Pallikunhi <manafm@codeaurora.org>
+> ---
+>  arch/arm64/boot/dts/qcom/sc7180.dtsi | 20 ++++++++++----------
+>  1 file changed, 10 insertions(+), 10 deletions(-)
+>
+> diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi b/arch/arm64/boot/dts/qcom/sc7180.dtsi
+> index 98050b3..79d0747 100644
+> --- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
+> @@ -4355,7 +4355,7 @@
+>
+>         thermal-zones {
+>                 cpu0-thermal {
+> -                       polling-delay-passive = <0>;
+> +                       polling-delay-passive = <50>;
 
-On 12/15/2020 5:19 AM, Bharat Gooty wrote:
-> Since the IOMMU is disabled and DMA engine is on 32-bit bus, We can not
-> give the complete DDR for the USB DMA.
-> So restricting the usable DAM size to 4GB.
+Matthias already landed a similar patch, see:
 
-Thanks, can you make this a proper patch submission along with a Fixes:
-tag that is:
+https://lore.kernel.org/r/20201111120334.1.Ifc04ea235c3c370e3b21ec3b4d5dead83cc403b4@changeid
 
-Fixes: 2013a4b684b6 ("arm64: dts: broadcom: clear the warnings caused by
-empty dma-ranges")
--- 
-Florian
+I guess the question is whether 50 is better or 250 is better.  Is
+this just a finger in the wind estimate or do you have data showing
+that 50 is better than 250?
+
+-Doug
