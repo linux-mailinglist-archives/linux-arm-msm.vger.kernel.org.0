@@ -2,114 +2,67 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 560AD2DB2E8
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Dec 2020 18:45:28 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2A09E2DB30C
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Dec 2020 18:55:23 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730399AbgLORna (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 15 Dec 2020 12:43:30 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44126 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729206AbgLORn3 (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 15 Dec 2020 12:43:29 -0500
-Received: from mail-ej1-x641.google.com (mail-ej1-x641.google.com [IPv6:2a00:1450:4864:20::641])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 34EBAC06179C
-        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Dec 2020 09:42:49 -0800 (PST)
-Received: by mail-ej1-x641.google.com with SMTP id j22so10922974eja.13
-        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Dec 2020 09:42:49 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=baylibre-com.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=OyPmNltZPbkGiq8ZU3o70mtt59kIUHa7iWyeMCJtAkM=;
-        b=Tufg4rnymzNGJ4FWuhTaQkgREaEC6hpftCK9k82W0d40B1tsKbE0xyv8fZgtbdoXi/
-         MERjB/URiKpEZ36bB0stcV3RDsxy6vIhlPAX683NQmqd+MXJ5XMBprfEXf3uXqcl/FM4
-         4IfPF9yxOwTN8PhFmAGDPGJMd6leaPwLsfO/zo+2cbce9YiCL17SFguxblJoXsbZp9k8
-         rmRsmaWOHgws7YnDAAEhQDpj4Kx1hx7ot2pCLO34Go6Qll51odyA3ZqdyqzlHHG5xZGv
-         u4iolhTaxS1r8A97MRe9/mtpPSSqvqnseyMuuRA4Vxx5W6PdInZQsJYFl+jMx6H+rMmS
-         ktGw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=OyPmNltZPbkGiq8ZU3o70mtt59kIUHa7iWyeMCJtAkM=;
-        b=CptU3V2NpaQUggRAd9DEs1sAgciOF6Ecn8IB01KsqJT3IR5egyc61AzS/feelx2gw6
-         gPFfttLotsRlINQdB1rXD4TskI1niHMtm3XqGmlXKCkV82UGh04hG3uFiX9pyBMozdcW
-         yH4HF9sVd2PyxutY+MHj5F3TzhDJTmbQ1hmzRnK0JLLFzNK8+Bv4Im08F5WIgzveNMPC
-         CFsgxohRyapfxX2VWoZQNSQLLUPjq2xxcMS9U+4WMkPLI5eBAtJVSjkqH2FXAgd50BRw
-         EhylR3ObdkTmEDlY+/6SuzTMzKr03AaqAEd2Y00T2dwsGAuhlLRQ59gg7SR1MLI+Mg/1
-         /z+Q==
-X-Gm-Message-State: AOAM531cjZPyYM5JmXKM8PTB1z6zFOCkRtM/pfTeKv1tS1085Ag6NcJa
-        1lPodEVWMoj2Hg0fBcbF20DUYUdLlG9xPq1G1bvvaA==
-X-Google-Smtp-Source: ABdhPJyVvqSTbNHHHW4kF1g4sRUiqfgJZk2qzLdhyM84F2Np4FiwE7Sa9FtzuZAZg2/pNwrNQjMts+ItUsNxXSIVUC4=
-X-Received: by 2002:a17:906:d8dc:: with SMTP id re28mr27995623ejb.168.1608054167838;
- Tue, 15 Dec 2020 09:42:47 -0800 (PST)
+        id S1730540AbgLORxh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 15 Dec 2020 12:53:37 -0500
+Received: from mail.kernel.org ([198.145.29.99]:37868 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1730154AbgLORxf (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 15 Dec 2020 12:53:35 -0500
+Date:   Tue, 15 Dec 2020 09:52:51 -0800
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1608054774;
+        bh=hXPUuO6IQOjzr+sj64k3SZ3Y/yxjs2z8ZppnJqErAEY=;
+        h=From:To:Cc:Subject:References:In-Reply-To:From;
+        b=AiwUOOqvaALNAa9kg0a9Xkvn6d23jW8jD9fP+LVg2rXai4DOh4cO3mjtIZ0IOVVr7
+         6ov6RTxQKV5w3EfPaJ9jv3zxQuPWUFenCJimYmHh5q1+HsK6Rj9XLwfy6FUnv2KEi8
+         FliGXAEN5tD/Yf36A/5PRI2uevdO+kniLNZl//xdR2mXZGcZcOTnf/1iDSfCVAZwjU
+         kRE/jkZHyAnnZMlzK3Ax92N/rltQZ+VOcKAEfTjtONe5No0igt14hYQVpVYG1ox1/w
+         IE8+oTUiTcWFs+8VHBO62il6badS9NyKNETNe+d9L3bdyxDubAaqvQyA8qPTIyir4y
+         aQ7iAiSlzMTVA==
+From:   Eric Biggers <ebiggers@kernel.org>
+To:     "Peng.Zhou" <peng.zhou@mediatek.com>
+Cc:     linux-mmc@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-fscrypt@vger.kernel.org,
+        Satya Tangirala <satyat@google.com>,
+        Ulf Hansson <ulf.hansson@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Adrian Hunter <adrian.hunter@intel.com>,
+        Asutosh Das <asutoshd@codeaurora.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Neeraj Soni <neersoni@codeaurora.org>,
+        Barani Muthukumaran <bmuthuku@codeaurora.org>,
+        Stanley Chu <stanley.chu@mediatek.com>,
+        Konrad Dybcio <konradybcio@gmail.com>
+Subject: Re: [PATCH v3 0/9] eMMC inline encryption support
+Message-ID: <X9j38+54HGOEK7C/@sol.localdomain>
+References: <20201209044238.78659-1-ebiggers@kernel.org>
+ <1608019654.31445.8.camel@mbjsdccf07>
 MIME-Version: 1.0
-References: <20201215170308.2037624-1-bjorn.andersson@linaro.org>
-In-Reply-To: <20201215170308.2037624-1-bjorn.andersson@linaro.org>
-From:   Bartosz Golaszewski <bgolaszewski@baylibre.com>
-Date:   Tue, 15 Dec 2020 18:42:36 +0100
-Message-ID: <CAMpxmJU0XWxiYr716MNGnORJJJ-czuBGWNnFTa5oBTUK4uVheQ@mail.gmail.com>
-Subject: Re: [PATCH] gpiolib: Allow name duplicates of "" and "NC"
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Linus Walleij <linus.walleij@linaro.org>,
-        linux-gpio <linux-gpio@vger.kernel.org>,
-        LKML <linux-kernel@vger.kernel.org>,
-        linux-arm-msm@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1608019654.31445.8.camel@mbjsdccf07>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Dec 15, 2020 at 6:02 PM Bjorn Andersson
-<bjorn.andersson@linaro.org> wrote:
->
-> Not all GPIO pins are exposed to the world and this is typically
-> described by not giving these lines particular names, commonly "" or
-> "NC".
->
-> With the recent introduction of '2cd64ae98f35 ("gpiolib: Disallow
-> identical line names in the same chip")' any gpiochip with multiple such
-> pins will refuse to probe.
->
-> Fix this by treating "" and "NC" as "no name specified" in
-> gpio_name_to_desc()
->
-> Fixes: 2cd64ae98f35 ("gpiolib: Disallow identical line names in the same chip")
-> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-> ---
->
-> The introduction of 2cd64ae98f35 breaks pretty much all Qualcomm boards and
-> grepping the DT tree indicates that other vendors will have the same problem.
->
-> In addition to this the am335x-* boards will also needs "[NC]", "[ethernet]",
-> "[emmc"], "[i2c0]", "[SYSBOOT]" and "[JTAG]" added to this list to allow
-> booting v5.11 with the past and present dtb/dts files.
->
->  drivers/gpio/gpiolib.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/drivers/gpio/gpiolib.c b/drivers/gpio/gpiolib.c
-> index b3340ba68471..407ba79ae571 100644
-> --- a/drivers/gpio/gpiolib.c
-> +++ b/drivers/gpio/gpiolib.c
-> @@ -302,7 +302,7 @@ static struct gpio_desc *gpio_name_to_desc(const char * const name)
->         struct gpio_device *gdev;
->         unsigned long flags;
->
-> -       if (!name)
-> +       if (!name || !strcmp(name, "") || !strcmp(name, "NC"))
->                 return NULL;
->
->         spin_lock_irqsave(&gpio_lock, flags);
-> --
-> 2.29.2
->
+On Tue, Dec 15, 2020 at 04:07:34PM +0800, Peng.Zhou wrote:
+> > 
+> I had verified this patchset in MT6853 (A 5G mobile smartphone platform
+> of Mediatek which meets eMMC v5.2 specification) and they work normally
+> in Android environment.
+> Reviewed and Tested by: Peng Zhou<peng.zhou@mediatek.com>
 
-I have a bad feeling about this. This opens the door for all kinds of
-exceptions: "N/A", "none" etc. Depending on whose boards are getting
-broken.
+Thanks Peng.  Is your Reviewed-and-tested-by for the whole patchset, or just for
+patches 1-5?  Patches 6-9 only affect Qualcomm hardware.
 
-If non-uniqueness of names is needed then let's better revert 2cd64ae98f35.
+Also, were many changes to mtk-sd.c required to get the crypto support working
+on your hardware, or was it just a matter of making a SMC call and setting the
+crypto capability flag, like it was for ufs-mediatek (commit 46426552e74f)?
+If you could send your patch for mtk-sd.c on top of this patchset, that would be
+helpful for people to see.
 
-Bartosz
+- Eric
