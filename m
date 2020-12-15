@@ -2,47 +2,81 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 1ED6B2DAE0C
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Dec 2020 14:34:43 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D5C922DAE59
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Dec 2020 14:57:06 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726819AbgLONdI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 15 Dec 2020 08:33:08 -0500
-Received: from foss.arm.com ([217.140.110.172]:41240 "EHLO foss.arm.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726266AbgLONdI (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 15 Dec 2020 08:33:08 -0500
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 05BE730E;
-        Tue, 15 Dec 2020 05:32:22 -0800 (PST)
-Received: from [10.57.34.90] (unknown [10.57.34.90])
-        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id B7AF73F66B;
-        Tue, 15 Dec 2020 05:32:20 -0800 (PST)
+        id S1728450AbgLONzi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 15 Dec 2020 08:55:38 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37076 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727925AbgLONzi (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 15 Dec 2020 08:55:38 -0500
+Received: from mail-ed1-x543.google.com (mail-ed1-x543.google.com [IPv6:2a00:1450:4864:20::543])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2E6C6C0617A7
+        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Dec 2020 05:54:58 -0800 (PST)
+Received: by mail-ed1-x543.google.com with SMTP id cw27so21095034edb.5
+        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Dec 2020 05:54:58 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=Knlqb6OOQw2zi+KcovzrGpZwjCJRJkZbq0wLi5bTDHM=;
+        b=EVqNNTQCcjKX0HoYeS1lg7rdfoNhLFQ4MNMKy6GO3B1wjKw2/Z123LAohB6SyL+FEZ
+         rQYP4bk1KhvpFaJx0KK+k3Qr/zjgTaC/UVoGcyaM1ozNb6/bLEG2SJRWy3Gy8Fk/TXZU
+         o4ATcINZ6KUYV/+ixCds1+Rwf4AEvLGpIWwo+VfrwPRKfemmH9kezNhuCndOC/6c8iQ4
+         yBVbWniJXoNk+b6V9I5f12s1nNOU+B2Q94VtzYsi1a5D4DmMUSJoTxCVxTGeS/l7GDIW
+         y1+c8Iadloi2RZZhVJ5WYnRViqe8fbqOkx6xrtU40M0gnGMiz3CFyCSaR9+vWaVE7/Bd
+         bOyQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=Knlqb6OOQw2zi+KcovzrGpZwjCJRJkZbq0wLi5bTDHM=;
+        b=VR7hH1LwBhwHNCqqt5ojbN2OdT44/GQAQL3D++J3Ug3XsAPsjRTAYbGQ5GY2F2ZeSS
+         4yTRdQLEz6cTHkCmx5ADsy+aU0fYFwG7nm3gWV54UWVfgN9gUms5rVR6t9vZJiH5EFUJ
+         yWQPuk9RYDo+9L1/HymxeVNXA1dRFbcdUHMoC+AuzBLN+ZMBlRz5P+6IFvnDl/JVVhrE
+         UjeYCneG2By+rEd0K9HY3HipWGzoCmhhKI6G7HvxZOjVeicXfuap2oimvN8AcyEf3M53
+         3Ib8TvHVSUvzgXqNZUTkgt2TxwUnr17EncfX5tUPyPLo+wa/B5D5oQLo+Ii+3rLcvXfz
+         jgjA==
+X-Gm-Message-State: AOAM532o/iHgIA/Scqt+v4/4ElLd/zmuewIXWCHymJ4NzC6QIkLvwzQ4
+        G1QTSgYA28dOIfX37ll4hdq3ow==
+X-Google-Smtp-Source: ABdhPJxaS7QgkDieWzhYpifhMmhTreAbAhSwAoMDKiX62Aid20agJF1zkFW50Dz5HG8u7Se18o/4+A==
+X-Received: by 2002:a05:6402:610:: with SMTP id n16mr29142223edv.172.1608040496642;
+        Tue, 15 Dec 2020 05:54:56 -0800 (PST)
+Received: from [192.168.0.3] (hst-221-39.medicom.bg. [84.238.221.39])
+        by smtp.googlemail.com with ESMTPSA id a20sm18840169edr.70.2020.12.15.05.54.55
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 15 Dec 2020 05:54:56 -0800 (PST)
 Subject: Re: [PATCH] media: venus: use contig vb2 ops
-To:     Tomasz Figa <tfiga@chromium.org>,
-        Stanimir Varbanov <stanimir.varbanov@linaro.org>
+To:     Tomasz Figa <tfiga@chromium.org>
 Cc:     Alexandre Courbot <acourbot@chromium.org>,
         Fritz Koenig <frkoenig@chromium.org>,
         Linux Media Mailing List <linux-media@vger.kernel.org>,
         Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Robin Murphy <robin.murphy@arm.com>
 References: <20201214125703.866998-1-acourbot@chromium.org>
  <5319c101-f4a4-9c99-b15d-4999366f7a63@linaro.org>
  <CAAFQd5AQ8VHiRYkzkd5ZJBPT5_5WO0tyQrwqBEfnMVKYiTugTA@mail.gmail.com>
-From:   Robin Murphy <robin.murphy@arm.com>
-Message-ID: <a5ff886b-34fc-7616-3f86-6aed3f5b7677@arm.com>
-Date:   Tue, 15 Dec 2020 13:32:16 +0000
-User-Agent: Mozilla/5.0 (Windows NT 10.0; rv:78.0) Gecko/20100101
- Thunderbird/78.5.1
+From:   Stanimir Varbanov <stanimir.varbanov@linaro.org>
+Message-ID: <b5d35bbd-ae50-7a09-9edf-ca23d1a4b168@linaro.org>
+Date:   Tue, 15 Dec 2020 15:54:55 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.10.0
 MIME-Version: 1.0
 In-Reply-To: <CAAFQd5AQ8VHiRYkzkd5ZJBPT5_5WO0tyQrwqBEfnMVKYiTugTA@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-GB
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
 Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2020-12-15 11:47, Tomasz Figa wrote:
+Hi Tomasz,
+
+On 12/15/20 1:47 PM, Tomasz Figa wrote:
 > On Tue, Dec 15, 2020 at 8:16 PM Stanimir Varbanov
 > <stanimir.varbanov@linaro.org> wrote:
 >>
@@ -65,6 +99,10 @@ On 2020-12-15 11:47, Tomasz Figa wrote:
 > It is exactly the opposite. The vb2-dma-contig allocator is "contig"
 > in terms of the DMA (aka IOVA) address space. In other words, it
 > guarantees that having one DMA address and length fully describes the
+
+Ahh, I missed that part. Looks like I misunderstood videobu2 contig
+allocator.
+
 > buffer. This seems to be the requirement of the hardware/firmware
 > handled by the venus driver. If the device is behind an IOMMU, which
 > is the case for the SoCs in question, the underlying DMA ops will
@@ -74,23 +112,14 @@ On 2020-12-15 11:47, Tomasz Figa wrote:
 > contiguous because of the hardware/firmware/driver expectation.
 > 
 > On the other hand, the vb2-dma-sg allocator doesn't have any
-> continuity guarantees for the DMA, or any other, address space.
-
-Yes, intuitively one would assume that the sg code was for devices with 
-native scatter-gather capability that can deal with an actual set of 
-buffer descriptors, rather than just a single pointer (which is the 
-original purpose of scatterlists, after all). I've always been slightly 
-puzzled why the two seem to be quite so similar.
-
-> The
+> continuity guarantees for the DMA, or any other, address space. The
 > current code works fine, because it calls dma_map_sg() on the whole
 > set of pages and that ends up mapping it contiguously in the IOVA
 > space, but that's just an implementation detail, not an API guarantee.
 
-Oh, the fun we've had over that implementation detail! :P
+It was good to know. Thanks for the explanation.
 
-Robin.
-
+> 
 > Best regards,
 > Tomasz
 > 
@@ -111,127 +140,131 @@ Robin.
 >>> I have tested this patch on Chrome OS and playback was just as fine as with
 >>> the SG ops.
 >>>
->>>   drivers/media/platform/Kconfig              | 2 +-
->>>   drivers/media/platform/qcom/venus/helpers.c | 9 ++-------
->>>   drivers/media/platform/qcom/venus/vdec.c    | 6 +++---
->>>   drivers/media/platform/qcom/venus/venc.c    | 6 +++---
->>>   4 files changed, 9 insertions(+), 14 deletions(-)
+>>>  drivers/media/platform/Kconfig              | 2 +-
+>>>  drivers/media/platform/qcom/venus/helpers.c | 9 ++-------
+>>>  drivers/media/platform/qcom/venus/vdec.c    | 6 +++---
+>>>  drivers/media/platform/qcom/venus/venc.c    | 6 +++---
+>>>  4 files changed, 9 insertions(+), 14 deletions(-)
 >>>
 >>> diff --git a/drivers/media/platform/Kconfig b/drivers/media/platform/Kconfig
 >>> index 35a18d388f3f..d9d7954111f2 100644
 >>> --- a/drivers/media/platform/Kconfig
 >>> +++ b/drivers/media/platform/Kconfig
 >>> @@ -533,7 +533,7 @@ config VIDEO_QCOM_VENUS
->>>        depends on INTERCONNECT || !INTERCONNECT
->>>        select QCOM_MDT_LOADER if ARCH_QCOM
->>>        select QCOM_SCM if ARCH_QCOM
+>>>       depends on INTERCONNECT || !INTERCONNECT
+>>>       select QCOM_MDT_LOADER if ARCH_QCOM
+>>>       select QCOM_SCM if ARCH_QCOM
 >>> -     select VIDEOBUF2_DMA_SG
 >>> +     select VIDEOBUF2_DMA_CONTIG
->>>        select V4L2_MEM2MEM_DEV
->>>        help
->>>          This is a V4L2 driver for Qualcomm Venus video accelerator
+>>>       select V4L2_MEM2MEM_DEV
+>>>       help
+>>>         This is a V4L2 driver for Qualcomm Venus video accelerator
 >>> diff --git a/drivers/media/platform/qcom/venus/helpers.c b/drivers/media/platform/qcom/venus/helpers.c
 >>> index 50439eb1ffea..859d260f002b 100644
 >>> --- a/drivers/media/platform/qcom/venus/helpers.c
 >>> +++ b/drivers/media/platform/qcom/venus/helpers.c
 >>> @@ -7,7 +7,7 @@
->>>   #include <linux/mutex.h>
->>>   #include <linux/slab.h>
->>>   #include <linux/kernel.h>
+>>>  #include <linux/mutex.h>
+>>>  #include <linux/slab.h>
+>>>  #include <linux/kernel.h>
 >>> -#include <media/videobuf2-dma-sg.h>
 >>> +#include <media/videobuf2-dma-contig.h>
->>>   #include <media/v4l2-mem2mem.h>
->>>   #include <asm/div64.h>
+>>>  #include <media/v4l2-mem2mem.h>
+>>>  #include <asm/div64.h>
 >>>
 >>> @@ -1284,14 +1284,9 @@ int venus_helper_vb2_buf_init(struct vb2_buffer *vb)
->>>        struct venus_inst *inst = vb2_get_drv_priv(vb->vb2_queue);
->>>        struct vb2_v4l2_buffer *vbuf = to_vb2_v4l2_buffer(vb);
->>>        struct venus_buffer *buf = to_venus_buffer(vbuf);
+>>>       struct venus_inst *inst = vb2_get_drv_priv(vb->vb2_queue);
+>>>       struct vb2_v4l2_buffer *vbuf = to_vb2_v4l2_buffer(vb);
+>>>       struct venus_buffer *buf = to_venus_buffer(vbuf);
 >>> -     struct sg_table *sgt;
 >>> -
 >>> -     sgt = vb2_dma_sg_plane_desc(vb, 0);
 >>> -     if (!sgt)
 >>> -             return -EFAULT;
 >>>
->>>        buf->size = vb2_plane_size(vb, 0);
+>>>       buf->size = vb2_plane_size(vb, 0);
 >>> -     buf->dma_addr = sg_dma_address(sgt->sgl);
 >>
 >> Can we do it:
 >>
->>          if (WARN_ON(sgt->nents > 1))
->>                  return -EFAULT;
+>>         if (WARN_ON(sgt->nents > 1))
+>>                 return -EFAULT;
 >>
 >> I understand that logically using dma-sg when the flat layout is
 >> expected by the hardware is wrong, but I haven't seen issues until now.
 >>
 >>> +     buf->dma_addr = vb2_dma_contig_plane_dma_addr(vb, 0);
 >>>
->>>        if (vb->type == V4L2_BUF_TYPE_VIDEO_CAPTURE_MPLANE)
->>>                list_add_tail(&buf->reg_list, &inst->registeredbufs);
+>>>       if (vb->type == V4L2_BUF_TYPE_VIDEO_CAPTURE_MPLANE)
+>>>               list_add_tail(&buf->reg_list, &inst->registeredbufs);
 >>> diff --git a/drivers/media/platform/qcom/venus/vdec.c b/drivers/media/platform/qcom/venus/vdec.c
 >>> index 8488411204c3..3fb277c81aca 100644
 >>> --- a/drivers/media/platform/qcom/venus/vdec.c
 >>> +++ b/drivers/media/platform/qcom/venus/vdec.c
 >>> @@ -13,7 +13,7 @@
->>>   #include <media/v4l2-event.h>
->>>   #include <media/v4l2-ctrls.h>
->>>   #include <media/v4l2-mem2mem.h>
+>>>  #include <media/v4l2-event.h>
+>>>  #include <media/v4l2-ctrls.h>
+>>>  #include <media/v4l2-mem2mem.h>
 >>> -#include <media/videobuf2-dma-sg.h>
 >>> +#include <media/videobuf2-dma-contig.h>
 >>>
->>>   #include "hfi_venus_io.h"
->>>   #include "hfi_parser.h"
+>>>  #include "hfi_venus_io.h"
+>>>  #include "hfi_parser.h"
 >>> @@ -1461,7 +1461,7 @@ static int m2m_queue_init(void *priv, struct vb2_queue *src_vq,
->>>        src_vq->io_modes = VB2_MMAP | VB2_DMABUF;
->>>        src_vq->timestamp_flags = V4L2_BUF_FLAG_TIMESTAMP_COPY;
->>>        src_vq->ops = &vdec_vb2_ops;
+>>>       src_vq->io_modes = VB2_MMAP | VB2_DMABUF;
+>>>       src_vq->timestamp_flags = V4L2_BUF_FLAG_TIMESTAMP_COPY;
+>>>       src_vq->ops = &vdec_vb2_ops;
 >>> -     src_vq->mem_ops = &vb2_dma_sg_memops;
 >>> +     src_vq->mem_ops = &vb2_dma_contig_memops;
->>>        src_vq->drv_priv = inst;
->>>        src_vq->buf_struct_size = sizeof(struct venus_buffer);
->>>        src_vq->allow_zero_bytesused = 1;
+>>>       src_vq->drv_priv = inst;
+>>>       src_vq->buf_struct_size = sizeof(struct venus_buffer);
+>>>       src_vq->allow_zero_bytesused = 1;
 >>> @@ -1475,7 +1475,7 @@ static int m2m_queue_init(void *priv, struct vb2_queue *src_vq,
->>>        dst_vq->io_modes = VB2_MMAP | VB2_DMABUF;
->>>        dst_vq->timestamp_flags = V4L2_BUF_FLAG_TIMESTAMP_COPY;
->>>        dst_vq->ops = &vdec_vb2_ops;
+>>>       dst_vq->io_modes = VB2_MMAP | VB2_DMABUF;
+>>>       dst_vq->timestamp_flags = V4L2_BUF_FLAG_TIMESTAMP_COPY;
+>>>       dst_vq->ops = &vdec_vb2_ops;
 >>> -     dst_vq->mem_ops = &vb2_dma_sg_memops;
 >>> +     dst_vq->mem_ops = &vb2_dma_contig_memops;
->>>        dst_vq->drv_priv = inst;
->>>        dst_vq->buf_struct_size = sizeof(struct venus_buffer);
->>>        dst_vq->allow_zero_bytesused = 1;
+>>>       dst_vq->drv_priv = inst;
+>>>       dst_vq->buf_struct_size = sizeof(struct venus_buffer);
+>>>       dst_vq->allow_zero_bytesused = 1;
 >>> diff --git a/drivers/media/platform/qcom/venus/venc.c b/drivers/media/platform/qcom/venus/venc.c
 >>> index 1c61602c5de1..a09550cd1dba 100644
 >>> --- a/drivers/media/platform/qcom/venus/venc.c
 >>> +++ b/drivers/media/platform/qcom/venus/venc.c
 >>> @@ -10,7 +10,7 @@
->>>   #include <linux/pm_runtime.h>
->>>   #include <linux/slab.h>
->>>   #include <media/v4l2-mem2mem.h>
+>>>  #include <linux/pm_runtime.h>
+>>>  #include <linux/slab.h>
+>>>  #include <media/v4l2-mem2mem.h>
 >>> -#include <media/videobuf2-dma-sg.h>
 >>> +#include <media/videobuf2-dma-contig.h>
->>>   #include <media/v4l2-ioctl.h>
->>>   #include <media/v4l2-event.h>
->>>   #include <media/v4l2-ctrls.h>
+>>>  #include <media/v4l2-ioctl.h>
+>>>  #include <media/v4l2-event.h>
+>>>  #include <media/v4l2-ctrls.h>
 >>> @@ -1001,7 +1001,7 @@ static int m2m_queue_init(void *priv, struct vb2_queue *src_vq,
->>>        src_vq->io_modes = VB2_MMAP | VB2_USERPTR | VB2_DMABUF;
->>>        src_vq->timestamp_flags = V4L2_BUF_FLAG_TIMESTAMP_COPY;
->>>        src_vq->ops = &venc_vb2_ops;
+>>>       src_vq->io_modes = VB2_MMAP | VB2_USERPTR | VB2_DMABUF;
+>>>       src_vq->timestamp_flags = V4L2_BUF_FLAG_TIMESTAMP_COPY;
+>>>       src_vq->ops = &venc_vb2_ops;
 >>> -     src_vq->mem_ops = &vb2_dma_sg_memops;
 >>> +     src_vq->mem_ops = &vb2_dma_contig_memops;
->>>        src_vq->drv_priv = inst;
->>>        src_vq->buf_struct_size = sizeof(struct venus_buffer);
->>>        src_vq->allow_zero_bytesused = 1;
+>>>       src_vq->drv_priv = inst;
+>>>       src_vq->buf_struct_size = sizeof(struct venus_buffer);
+>>>       src_vq->allow_zero_bytesused = 1;
 >>> @@ -1017,7 +1017,7 @@ static int m2m_queue_init(void *priv, struct vb2_queue *src_vq,
->>>        dst_vq->io_modes = VB2_MMAP | VB2_USERPTR | VB2_DMABUF;
->>>        dst_vq->timestamp_flags = V4L2_BUF_FLAG_TIMESTAMP_COPY;
->>>        dst_vq->ops = &venc_vb2_ops;
+>>>       dst_vq->io_modes = VB2_MMAP | VB2_USERPTR | VB2_DMABUF;
+>>>       dst_vq->timestamp_flags = V4L2_BUF_FLAG_TIMESTAMP_COPY;
+>>>       dst_vq->ops = &venc_vb2_ops;
 >>> -     dst_vq->mem_ops = &vb2_dma_sg_memops;
 >>> +     dst_vq->mem_ops = &vb2_dma_contig_memops;
->>>        dst_vq->drv_priv = inst;
->>>        dst_vq->buf_struct_size = sizeof(struct venus_buffer);
->>>        dst_vq->allow_zero_bytesused = 1;
+>>>       dst_vq->drv_priv = inst;
+>>>       dst_vq->buf_struct_size = sizeof(struct venus_buffer);
+>>>       dst_vq->allow_zero_bytesused = 1;
 >>>
 >>
 >> --
 >> regards,
 >> Stan
+
+-- 
+regards,
+Stan
