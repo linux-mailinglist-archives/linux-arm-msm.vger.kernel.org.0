@@ -2,159 +2,158 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 64B532DA3A2
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Dec 2020 23:49:09 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 613152DA4F0
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Dec 2020 01:32:43 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2441092AbgLNWsi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 14 Dec 2020 17:48:38 -0500
-Received: from mail-oi1-f196.google.com ([209.85.167.196]:46370 "EHLO
-        mail-oi1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2441017AbgLNWs3 (ORCPT
+        id S1726714AbgLOAcU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 14 Dec 2020 19:32:20 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54642 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726141AbgLOAcQ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 14 Dec 2020 17:48:29 -0500
-Received: by mail-oi1-f196.google.com with SMTP id q205so8385162oig.13;
-        Mon, 14 Dec 2020 14:48:13 -0800 (PST)
+        Mon, 14 Dec 2020 19:32:16 -0500
+Received: from mail-pf1-x442.google.com (mail-pf1-x442.google.com [IPv6:2607:f8b0:4864:20::442])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6E057C0617A6
+        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Dec 2020 16:31:36 -0800 (PST)
+Received: by mail-pf1-x442.google.com with SMTP id t8so13375476pfg.8
+        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Dec 2020 16:31:36 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=f7OsK3yyie83mFsyxOZLO7U5mEgOhtDjdGrqc4pskdY=;
+        b=JnvNAr6HasYZClYsYYu9MLeQeCjXeoPbPpVc46mqEhnAHt3uYnri6YD1gJbaIRgMdh
+         gz8XbvbAkQyyapKi24Hp1xZZaMI0FvmEbKBWXi7O/6gO2SNVQ4YIsF67pC83F0Rc4DQq
+         lZUEXHhXNi5FxihFuTrxm+EiltW5RkVv651xk=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=aEFjuWtqoM0ATTyLjOQNU3+GbAE81IYdrRjGkxStK9M=;
-        b=r8jqdkbRzuGFsCOI4apLGwspvO78R3JlDDiWnfB5Y/pNOQehR5SkaUym+k8XavNYhj
-         iiSlEI94T8o+FnNnx37OKXUNpAaAlc3RKc/omY0uCnKuwb6euve/pzGIR98xm3Rhg1bc
-         ECwSQD6D5R3JylOSAwrLaH1c9xnzudD4EstdmAhCd3JMZbdYp+QZGnPksYz7//3Zwmm1
-         se4sBeqVdG/l8NLIp1r0ugwEZXeE0mwinIvvRoi5Ao6uxyRILWel8XoG9dxrkD4n8UX6
-         /tS37mYBog7OABRos1gP3Xs45OG6rNvYSXlRNsb6Hx0ixQgnOio5Mk4c0HnpgvyyiMG2
-         p4VA==
-X-Gm-Message-State: AOAM531OXxCgUMlv22VeCqnTqkOv8lr159Abe84z4SR6xc0UuY2iQpI9
-        Tc36KS3Fpcy1U4fQ556S0qH11sCSww==
-X-Google-Smtp-Source: ABdhPJyL12CMyXO2v2moazJcNjZfHEabEtohBs2McYS3pbozlIuehtcnLOfH9NpDoIpVGaR8ugCJzQ==
-X-Received: by 2002:aca:d6c5:: with SMTP id n188mr19575852oig.131.1607986068360;
-        Mon, 14 Dec 2020 14:47:48 -0800 (PST)
-Received: from xps15 (24-155-109-49.dyn.grandenetworks.net. [24.155.109.49])
-        by smtp.gmail.com with ESMTPSA id x72sm4574161oia.16.2020.12.14.14.47.47
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=f7OsK3yyie83mFsyxOZLO7U5mEgOhtDjdGrqc4pskdY=;
+        b=tsesWwOcdgoD+ZW3pk8Xj4EDMVkipQphsIOq+0XMkdo+TYRl8ZQ1f3bmUEI0HT5aaZ
+         1JnefQAzyT1D7ECAC/ifJUm5Fhg4SarNp+saU4/+vGOCpPPyMPCknode7pz5bRMsvwAc
+         RppMmuzApleQkodgiu8Ezfe/lAuVoGG5shZZ3TuirWSXfurPt7OcmyC1Opgxr+hSmPeG
+         ETRbup3nOk1Dn9yZ92GAeLGGqcAHggrdOrapQ2SEVNoEgH5A7jznH0yX8oMfb8fmLQWE
+         9y/G2/Gwg57ZAXM7vnGS1WFtBnZc5j8WZtYITvsbBh+Mbr2UHTk67dEcRkvYMkwgj0a1
+         4ycQ==
+X-Gm-Message-State: AOAM532efd7t79+mnc3F+dSmj/QTDXInLCFmvVdj8akk90jSOW7tmDAU
+        NmEvNG27GzfYb+GnyHuLXj8OuA==
+X-Google-Smtp-Source: ABdhPJxMxgfSijCu0l6b2bbht2ujt9jAUUdhAg1vdv1oL4+PPMHAhJCCJICFQvVUud5ShcBzteE3xg==
+X-Received: by 2002:a62:8895:0:b029:19e:92ec:6886 with SMTP id l143-20020a6288950000b029019e92ec6886mr15472290pfd.12.1607992295840;
+        Mon, 14 Dec 2020 16:31:35 -0800 (PST)
+Received: from tictac2.mtv.corp.google.com ([2620:15c:202:1:42b0:34ff:fe3d:58e6])
+        by smtp.gmail.com with ESMTPSA id 77sm20412834pfx.156.2020.12.14.16.31.34
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 14 Dec 2020 14:47:47 -0800 (PST)
-Received: (nullmailer pid 2525029 invoked by uid 1000);
-        Mon, 14 Dec 2020 22:47:46 -0000
-Date:   Mon, 14 Dec 2020 16:47:46 -0600
-From:   Rob Herring <robh@kernel.org>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
+        Mon, 14 Dec 2020 16:31:35 -0800 (PST)
+From:   Douglas Anderson <dianders@chromium.org>
+To:     Mark Brown <broonie@kernel.org>
+Cc:     msavaliy@qti.qualcomm.com, akashast@codeaurora.org,
+        Stephen Boyd <swboyd@chromium.org>,
+        Roja Rani Yarubandi <rojay@codeaurora.org>,
+        Douglas Anderson <dianders@chromium.org>,
+        Alok Chauhan <alokc@codeaurora.org>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
-Subject: Re: [PATCH v3] dt-bindings: soc: qcom: convert qcom,smem bindings to
- yaml
-Message-ID: <20201214224746.GA2519699@robh.at.kernel.org>
-References: <20201211001057.3041604-1-dmitry.baryshkov@linaro.org>
+        Girish Mahadevan <girishm@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-spi@vger.kernel.org
+Subject: [PATCH 1/2] spi: spi-geni-qcom: Fix geni_spi_isr() NULL dereference in timeout case
+Date:   Mon, 14 Dec 2020 16:30:18 -0800
+Message-Id: <20201214162937.1.I99ee04f0cb823415df59bd4f550d6ff5756e43d6@changeid>
+X-Mailer: git-send-email 2.29.2.684.gfbc64c5ab5-goog
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20201211001057.3041604-1-dmitry.baryshkov@linaro.org>
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Dec 11, 2020 at 03:10:56AM +0300, Dmitry Baryshkov wrote:
-> Convert soc/qcom/qcom,smem.txt bindings to YAML format.
-> 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
->  .../bindings/soc/qcom/qcom,smem.txt           | 57 ---------------
->  .../bindings/soc/qcom/qcom,smem.yaml          | 73 +++++++++++++++++++
->  2 files changed, 73 insertions(+), 57 deletions(-)
->  delete mode 100644 Documentation/devicetree/bindings/soc/qcom/qcom,smem.txt
->  create mode 100644 Documentation/devicetree/bindings/soc/qcom/qcom,smem.yaml
+In commit 7ba9bdcb91f6 ("spi: spi-geni-qcom: Don't keep a local state
+variable") we changed handle_fifo_timeout() so that we set
+"mas->cur_xfer" to NULL to make absolutely sure that we don't mess
+with the buffers from the previous transfer in the timeout case.
 
+Unfortunately, this caused the IRQ handler to dereference NULL in some
+cases.  One case:
 
-> diff --git a/Documentation/devicetree/bindings/soc/qcom/qcom,smem.yaml b/Documentation/devicetree/bindings/soc/qcom/qcom,smem.yaml
-> new file mode 100644
-> index 000000000000..832bf54239c8
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/soc/qcom/qcom,smem.yaml
-> @@ -0,0 +1,73 @@
-> +# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
-> +%YAML 1.2
-> +---
-> +$id: "http://devicetree.org/schemas/soc/qcom/qcom,smem.yaml#"
-> +$schema: "http://devicetree.org/meta-schemas/core.yaml#"
-> +
-> +title: Qualcomm Shared Memory Manager binding
-> +
-> +maintainers:
-> +  - Andy Gross <agross@kernel.org>
-> +  - Bjorn Andersson <bjorn.andersson@linaro.org>
-> +
-> +description: |
-> +  This binding describes the Qualcomm Shared Memory Manager, used to share data
-> +  between various subsystems and OSes in Qualcomm platforms.
-> +
-> +properties:
-> +  compatible:
-> +    const: "qcom-smem"
+ CPU0                           CPU1
+ ----                           ----
+                                setup_fifo_xfer()
+                                 ...
+                                 geni_se_setup_m_cmd()
+                                 <hardware starts transfer>
+ <unrelated interrupt storm>     spin_unlock_irq()
+ <continued interrupt storm>    <time passes>
+ <continued interrupt storm>    <transfer complets in hardware>
+ <continued interrupt storm>    <hardware sets M_RX_FIFO_WATERMARK_EN>
+ <continued interrupt storm>    <time passes>
+ <continued interrupt storm>    handle_fifo_timeout()
+ <continued interrupt storm>     spin_lock_irq()
+ <continued interrupt storm>     mas->cur_xfer = NULL
+ <continued interrupt storm>     geni_se_cancel_m_cmd()
+ <continued interrupt storm>     spin_unlock_irq()
+ <continued interrupt storm>     wait_for_completion_timeout() => timeout
+ <continued interrupt storm>     spin_lock_irq()
+ <continued interrupt storm>     geni_se_abort_m_cmd()
+ <continued interrupt storm>     spin_unlock_irq()
+ <continued interrupt storm>     wait_for_completion_timeout() => timeout
+ <interrupt storm ends>
+ geni_spi_isr()
+  spin_lock()
+  if (m_irq & M_RX_FIFO_WATERMARK_EN)
+   geni_spi_handle_rx()
+    mas->cur_xfer NULL derefrence
 
-Don't need quotes and the the string is wrong. Makes validation easy to 
-pass because it never matches.
+Specifically it should be noted that the RX/TX interrupts are still
+shown asserted even when a CANCEL/ABORT interrupt has asserted.
 
-> +
-> +  memory-region:
-> +    maxItems: 1
-> +    description: handle to memory reservation for main SMEM memory region.
-> +
-> +  hwlocks:
-> +    $ref: /schemas/types.yaml#/definitions/phandle
+Let's check for the NULL transfer in the TX and RX cases.
 
-hwlocks has a type already. You just need to define how many.
+NOTE: things still could get confused if we get timeouts all the way
+through handle_fifo_timeout(), meaning that interrupts are still
+pending.  A future patch will help these corner cases.
 
-> +    description: reference to a hwspinlock used to protect allocations from the shared memory
+Fixes: 561de45f72bd ("spi: spi-geni-qcom: Add SPI driver support for GENI based QUP")
+Signed-off-by: Douglas Anderson <dianders@chromium.org>
+---
 
-Isn't that every hwlocks?
+ drivers/spi/spi-geni-qcom.c | 17 +++++++++++++++++
+ 1 file changed, 17 insertions(+)
 
-> +
-> +  qcom,rpm-msg-ram:
-> +    $ref: /schemas/types.yaml#/definitions/phandle
-> +    description: handle to RPM message memory resource
-> +
-> +required:
-> +  - compatible
-> +  - memory-region
-> +  - hwlocks
-> +
-> +additionalProperties: false
-> +
-> +examples:
-> +  - |
-> +    reserved-memory {
-> +        #address-cells = <1>;
-> +        #size-cells = <1>;
-> +        ranges;
-> +
-> +        smem_region: smem@fa00000 {
-> +            reg = <0xfa00000 0x200000>;
-> +            no-map;
-> +        };
-> +    };
-> +
-> +    smem {
-> +        compatible = "qcom,smem";
-> +
-> +        memory-region = <&smem_region>;
-> +        qcom,rpm-msg-ram = <&rpm_msg_ram>;
-> +
-> +        hwlocks = <&tcsr_mutex 3>;
-> +    };
-> +
-> +    soc {
-> +        #address-cells = <1>;
-> +        #size-cells = <1>;
-> +        ranges;
-> +
-> +        rpm_msg_ram: sram@fc428000 {
-> +            compatible = "qcom,rpm-msg-ram";
-> +            reg = <0xfc428000 0x4000>;
-> +        };
-> +    };
-> +
-> +...
-> -- 
-> 2.29.2
-> 
+diff --git a/drivers/spi/spi-geni-qcom.c b/drivers/spi/spi-geni-qcom.c
+index 25810a7eef10..6f736e94e9f4 100644
+--- a/drivers/spi/spi-geni-qcom.c
++++ b/drivers/spi/spi-geni-qcom.c
+@@ -354,6 +354,12 @@ static bool geni_spi_handle_tx(struct spi_geni_master *mas)
+ 	unsigned int bytes_per_fifo_word = geni_byte_per_fifo_word(mas);
+ 	unsigned int i = 0;
+ 
++	/* Stop the watermark IRQ if nothing to send */
++	if (mas->cur_xfer == NULL) {
++		writel(0, se->base + SE_GENI_TX_WATERMARK_REG);
++		return false;
++	}
++
+ 	max_bytes = (mas->tx_fifo_depth - mas->tx_wm) * bytes_per_fifo_word;
+ 	if (mas->tx_rem_bytes < max_bytes)
+ 		max_bytes = mas->tx_rem_bytes;
+@@ -396,6 +402,17 @@ static void geni_spi_handle_rx(struct spi_geni_master *mas)
+ 		if (rx_last_byte_valid && rx_last_byte_valid < 4)
+ 			rx_bytes -= bytes_per_fifo_word - rx_last_byte_valid;
+ 	}
++
++	/* Clear out the FIFO and bail if nowhere to put it */
++	if (mas->cur_xfer == NULL) {
++		unsigned int words = DIV_ROUND_UP(rx_bytes, bytes_per_fifo_word);
++
++		for (i = 0; i < words; i++)
++			readl(se->base + SE_GENI_RX_FIFOn);
++
++		return;
++	}
++
+ 	if (mas->rx_rem_bytes < rx_bytes)
+ 		rx_bytes = mas->rx_rem_bytes;
+ 
+-- 
+2.29.2.684.gfbc64c5ab5-goog
+
