@@ -2,269 +2,225 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D5C922DAE59
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Dec 2020 14:57:06 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id CE8DB2DB00C
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Dec 2020 16:29:36 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728450AbgLONzi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 15 Dec 2020 08:55:38 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37076 "EHLO
+        id S1730068AbgLOP2d (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 15 Dec 2020 10:28:33 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51460 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727925AbgLONzi (ORCPT
+        with ESMTP id S1730046AbgLOP20 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 15 Dec 2020 08:55:38 -0500
-Received: from mail-ed1-x543.google.com (mail-ed1-x543.google.com [IPv6:2a00:1450:4864:20::543])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2E6C6C0617A7
-        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Dec 2020 05:54:58 -0800 (PST)
-Received: by mail-ed1-x543.google.com with SMTP id cw27so21095034edb.5
-        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Dec 2020 05:54:58 -0800 (PST)
+        Tue, 15 Dec 2020 10:28:26 -0500
+Received: from mail-ot1-x341.google.com (mail-ot1-x341.google.com [IPv6:2607:f8b0:4864:20::341])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 367CEC0617A6
+        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Dec 2020 07:27:43 -0800 (PST)
+Received: by mail-ot1-x341.google.com with SMTP id f16so19680434otl.11
+        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Dec 2020 07:27:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=Knlqb6OOQw2zi+KcovzrGpZwjCJRJkZbq0wLi5bTDHM=;
-        b=EVqNNTQCcjKX0HoYeS1lg7rdfoNhLFQ4MNMKy6GO3B1wjKw2/Z123LAohB6SyL+FEZ
-         rQYP4bk1KhvpFaJx0KK+k3Qr/zjgTaC/UVoGcyaM1ozNb6/bLEG2SJRWy3Gy8Fk/TXZU
-         o4ATcINZ6KUYV/+ixCds1+Rwf4AEvLGpIWwo+VfrwPRKfemmH9kezNhuCndOC/6c8iQ4
-         yBVbWniJXoNk+b6V9I5f12s1nNOU+B2Q94VtzYsi1a5D4DmMUSJoTxCVxTGeS/l7GDIW
-         y1+c8Iadloi2RZZhVJ5WYnRViqe8fbqOkx6xrtU40M0gnGMiz3CFyCSaR9+vWaVE7/Bd
-         bOyQ==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=Ubj6GBiBWffrpQuRnjuSIK7sR8y1WNEeR6KmqeGc0/Y=;
+        b=YHd2k42KNWO7u7OdCWlSkeRk4DOkEfVl4V01vBj8t/uOXoFSMjuB+OJxYtt6ErIjVH
+         nPFXMhAAFPXKvjyHp6HarSa5M7uWfpLZeax2uxO+er1Ud6xNLYXiM/tJ/3BAKWYnRsb7
+         ZYHh8E3yzxyOuQ53CLXHBV389Ch3u4vRXpKaTBzyjSGRcSouGI7OkcFxkMBI0ZAV30rb
+         EhJKy0natDqjFkVSolIUjnyBaqmtctTKOHT2ZKPvLv9lEiL7EkEsrt8fOHnDbl8HOVhA
+         2YSZdRgPBftDq/3Tl7PF9cyVOHZV13kMcA0oljfhTLf1+kRjM/0riD1pMnlQnTmxcC9X
+         5dug==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=Knlqb6OOQw2zi+KcovzrGpZwjCJRJkZbq0wLi5bTDHM=;
-        b=VR7hH1LwBhwHNCqqt5ojbN2OdT44/GQAQL3D++J3Ug3XsAPsjRTAYbGQ5GY2F2ZeSS
-         4yTRdQLEz6cTHkCmx5ADsy+aU0fYFwG7nm3gWV54UWVfgN9gUms5rVR6t9vZJiH5EFUJ
-         yWQPuk9RYDo+9L1/HymxeVNXA1dRFbcdUHMoC+AuzBLN+ZMBlRz5P+6IFvnDl/JVVhrE
-         UjeYCneG2By+rEd0K9HY3HipWGzoCmhhKI6G7HvxZOjVeicXfuap2oimvN8AcyEf3M53
-         3Ib8TvHVSUvzgXqNZUTkgt2TxwUnr17EncfX5tUPyPLo+wa/B5D5oQLo+Ii+3rLcvXfz
-         jgjA==
-X-Gm-Message-State: AOAM532o/iHgIA/Scqt+v4/4ElLd/zmuewIXWCHymJ4NzC6QIkLvwzQ4
-        G1QTSgYA28dOIfX37ll4hdq3ow==
-X-Google-Smtp-Source: ABdhPJxaS7QgkDieWzhYpifhMmhTreAbAhSwAoMDKiX62Aid20agJF1zkFW50Dz5HG8u7Se18o/4+A==
-X-Received: by 2002:a05:6402:610:: with SMTP id n16mr29142223edv.172.1608040496642;
-        Tue, 15 Dec 2020 05:54:56 -0800 (PST)
-Received: from [192.168.0.3] (hst-221-39.medicom.bg. [84.238.221.39])
-        by smtp.googlemail.com with ESMTPSA id a20sm18840169edr.70.2020.12.15.05.54.55
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 15 Dec 2020 05:54:56 -0800 (PST)
-Subject: Re: [PATCH] media: venus: use contig vb2 ops
-To:     Tomasz Figa <tfiga@chromium.org>
-Cc:     Alexandre Courbot <acourbot@chromium.org>,
-        Fritz Koenig <frkoenig@chromium.org>,
-        Linux Media Mailing List <linux-media@vger.kernel.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Robin Murphy <robin.murphy@arm.com>
-References: <20201214125703.866998-1-acourbot@chromium.org>
- <5319c101-f4a4-9c99-b15d-4999366f7a63@linaro.org>
- <CAAFQd5AQ8VHiRYkzkd5ZJBPT5_5WO0tyQrwqBEfnMVKYiTugTA@mail.gmail.com>
-From:   Stanimir Varbanov <stanimir.varbanov@linaro.org>
-Message-ID: <b5d35bbd-ae50-7a09-9edf-ca23d1a4b168@linaro.org>
-Date:   Tue, 15 Dec 2020 15:54:55 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.10.0
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=Ubj6GBiBWffrpQuRnjuSIK7sR8y1WNEeR6KmqeGc0/Y=;
+        b=RxS+uKd4R/Y+PhueZjIRRzpHe/nYm8yQIO7pHm9CgaH2M7u/D6CWdBU0+wnnAt2Mzk
+         2/ImNA4m5TcZJ3XXxUl5IAzKmwzD5I9epOXzwwdRv5ylsOpxvnfDyZdxbhKtPwJ5Tl2f
+         9vIOrTLM3dwTpVyZGB9Y1RflgiZL9f2UVkpJAQj8IDAiM7lWEZXuX4y9T64fZ+TE1oJ5
+         pyInysaZta+ETA8KVKPuaRimPiliT5JcFMBma7DP3e9DPdNAgagzVbdvE/1aeoqAmr0J
+         pTH1TSpbIrgbgdbxfxlu0A48it4kATgSV8ZOvfY9I1lg52P4S9gGoYGio9Oh+m1u9gQc
+         OrKQ==
+X-Gm-Message-State: AOAM532zE5uYa6RDWGc8DsOWWgzfQqDKHDoxY2Aoi0u16F4zBFhgsE4R
+        cGrzOcVmaNJRYgCa+2ivsVlgmg==
+X-Google-Smtp-Source: ABdhPJzvvrIQivpab1olOGDXyCG3crfKnbQLP606OZxYPSqO9krT+cWip/YGPD1AoUU9kLbwKpQcTQ==
+X-Received: by 2002:a9d:3b82:: with SMTP id k2mr23791989otc.294.1608046062508;
+        Tue, 15 Dec 2020 07:27:42 -0800 (PST)
+Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
+        by smtp.gmail.com with ESMTPSA id f14sm5108995oib.40.2020.12.15.07.27.41
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 15 Dec 2020 07:27:41 -0800 (PST)
+Date:   Tue, 15 Dec 2020 09:27:40 -0600
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>, Rob Herring <robh+dt@kernel.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
+Subject: Re: [PATCH v4] dt-bindings: soc: qcom: convert qcom,smem bindings to
+ yaml
+Message-ID: <X9jV7IFR4w7jC3KB@builder.lan>
+References: <20201215104537.768914-1-dmitry.baryshkov@linaro.org>
 MIME-Version: 1.0
-In-Reply-To: <CAAFQd5AQ8VHiRYkzkd5ZJBPT5_5WO0tyQrwqBEfnMVKYiTugTA@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20201215104537.768914-1-dmitry.baryshkov@linaro.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Tomasz,
+On Tue 15 Dec 04:45 CST 2020, Dmitry Baryshkov wrote:
 
-On 12/15/20 1:47 PM, Tomasz Figa wrote:
-> On Tue, Dec 15, 2020 at 8:16 PM Stanimir Varbanov
-> <stanimir.varbanov@linaro.org> wrote:
->>
->> Hi,
->>
->> Cc: Robin
->>
->> On 12/14/20 2:57 PM, Alexandre Courbot wrote:
->>> This driver uses the SG vb2 ops, but effectively only ever accesses the
->>> first entry of the SG table, indicating that it expects a flat layout.
->>> Switch it to use the contiguous ops to make sure this expected invariant
->>
->> Under what circumstances the sg table will has nents > 1? I came down to
->> [1] but not sure I got it right.
->>
->> I'm afraid that for systems with low amount of system memory and when
->> the memory become fragmented, the driver will not work. That's why I
->> started with sg allocator.
+> Convert soc/qcom/qcom,smem.txt bindings to YAML format.
 > 
-> It is exactly the opposite. The vb2-dma-contig allocator is "contig"
-> in terms of the DMA (aka IOVA) address space. In other words, it
-> guarantees that having one DMA address and length fully describes the
 
-Ahh, I missed that part. Looks like I misunderstood videobu2 contig
-allocator.
+Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 
-> buffer. This seems to be the requirement of the hardware/firmware
-> handled by the venus driver. If the device is behind an IOMMU, which
-> is the case for the SoCs in question, the underlying DMA ops will
-> actually allocate a discontiguous set of pages, so it has nothing to
-> do to system memory amount or fragmentation. If for some reason the
-> IOMMU can't be used, there is no way around, the memory needs to be
-> contiguous because of the hardware/firmware/driver expectation.
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> ---
+>  .../bindings/soc/qcom/qcom,smem.txt           | 57 ---------------
+>  .../bindings/soc/qcom/qcom,smem.yaml          | 72 +++++++++++++++++++
+>  2 files changed, 72 insertions(+), 57 deletions(-)
+>  delete mode 100644 Documentation/devicetree/bindings/soc/qcom/qcom,smem.txt
+>  create mode 100644 Documentation/devicetree/bindings/soc/qcom/qcom,smem.yaml
 > 
-> On the other hand, the vb2-dma-sg allocator doesn't have any
-> continuity guarantees for the DMA, or any other, address space. The
-> current code works fine, because it calls dma_map_sg() on the whole
-> set of pages and that ends up mapping it contiguously in the IOVA
-> space, but that's just an implementation detail, not an API guarantee.
-
-It was good to know. Thanks for the explanation.
-
+> diff --git a/Documentation/devicetree/bindings/soc/qcom/qcom,smem.txt b/Documentation/devicetree/bindings/soc/qcom/qcom,smem.txt
+> deleted file mode 100644
+> index 9326cdf6e1b1..000000000000
+> --- a/Documentation/devicetree/bindings/soc/qcom/qcom,smem.txt
+> +++ /dev/null
+> @@ -1,57 +0,0 @@
+> -Qualcomm Shared Memory Manager binding
+> -
+> -This binding describes the Qualcomm Shared Memory Manager, used to share data
+> -between various subsystems and OSes in Qualcomm platforms.
+> -
+> -- compatible:
+> -	Usage: required
+> -	Value type: <stringlist>
+> -	Definition: must be:
+> -		    "qcom,smem"
+> -
+> -- memory-region:
+> -	Usage: required
+> -	Value type: <prop-encoded-array>
+> -	Definition: handle to memory reservation for main SMEM memory region.
+> -
+> -- qcom,rpm-msg-ram:
+> -	Usage: required
+> -	Value type: <prop-encoded-array>
+> -	Definition: handle to RPM message memory resource
+> -
+> -- hwlocks:
+> -	Usage: required
+> -	Value type: <prop-encoded-array>
+> -	Definition: reference to a hwspinlock used to protect allocations from
+> -		    the shared memory
+> -
+> -= EXAMPLE
+> -The following example shows the SMEM setup for MSM8974, with a main SMEM region
+> -at 0xfa00000 and the RPM message ram at 0xfc428000:
+> -
+> -	reserved-memory {
+> -		#address-cells = <1>;
+> -		#size-cells = <1>;
+> -		ranges;
+> -
+> -		smem_region: smem@fa00000 {
+> -			reg = <0xfa00000 0x200000>;
+> -			no-map;
+> -		};
+> -	};
+> -
+> -	smem@fa00000 {
+> -		compatible = "qcom,smem";
+> -
+> -		memory-region = <&smem_region>;
+> -		qcom,rpm-msg-ram = <&rpm_msg_ram>;
+> -
+> -		hwlocks = <&tcsr_mutex 3>;
+> -	};
+> -
+> -	soc {
+> -		rpm_msg_ram: memory@fc428000 {
+> -			compatible = "qcom,rpm-msg-ram";
+> -			reg = <0xfc428000 0x4000>;
+> -		};
+> -	};
+> diff --git a/Documentation/devicetree/bindings/soc/qcom/qcom,smem.yaml b/Documentation/devicetree/bindings/soc/qcom/qcom,smem.yaml
+> new file mode 100644
+> index 000000000000..f7e17713b3d8
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/soc/qcom/qcom,smem.yaml
+> @@ -0,0 +1,72 @@
+> +# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
+> +%YAML 1.2
+> +---
+> +$id: "http://devicetree.org/schemas/soc/qcom/qcom,smem.yaml#"
+> +$schema: "http://devicetree.org/meta-schemas/core.yaml#"
+> +
+> +title: Qualcomm Shared Memory Manager binding
+> +
+> +maintainers:
+> +  - Andy Gross <agross@kernel.org>
+> +  - Bjorn Andersson <bjorn.andersson@linaro.org>
+> +
+> +description: |
+> +  This binding describes the Qualcomm Shared Memory Manager, used to share data
+> +  between various subsystems and OSes in Qualcomm platforms.
+> +
+> +properties:
+> +  compatible:
+> +    const: qcom,smem
+> +
+> +  memory-region:
+> +    maxItems: 1
+> +    description: handle to memory reservation for main SMEM memory region.
+> +
+> +  hwlocks:
+> +    maxItems: 1
+> +
+> +  qcom,rpm-msg-ram:
+> +    $ref: /schemas/types.yaml#/definitions/phandle
+> +    description: handle to RPM message memory resource
+> +
+> +required:
+> +  - compatible
+> +  - memory-region
+> +  - hwlocks
+> +
+> +additionalProperties: false
+> +
+> +examples:
+> +  - |
+> +    reserved-memory {
+> +        #address-cells = <1>;
+> +        #size-cells = <1>;
+> +        ranges;
+> +
+> +        smem_region: smem@fa00000 {
+> +            reg = <0xfa00000 0x200000>;
+> +            no-map;
+> +        };
+> +    };
+> +
+> +    smem {
+> +        compatible = "qcom,smem";
+> +
+> +        memory-region = <&smem_region>;
+> +        qcom,rpm-msg-ram = <&rpm_msg_ram>;
+> +
+> +        hwlocks = <&tcsr_mutex 3>;
+> +    };
+> +
+> +    soc {
+> +        #address-cells = <1>;
+> +        #size-cells = <1>;
+> +        ranges;
+> +
+> +        rpm_msg_ram: sram@fc428000 {
+> +            compatible = "qcom,rpm-msg-ram";
+> +            reg = <0xfc428000 0x4000>;
+> +        };
+> +    };
+> +
+> +...
+> -- 
+> 2.29.2
 > 
-> Best regards,
-> Tomasz
-> 
->>
->> [1]
->> https://elixir.bootlin.com/linux/v5.10.1/source/drivers/iommu/dma-iommu.c#L782
->>
->>> is always enforced. Since the device is supposed to be behind an IOMMU
->>> this should have little to none practical consequences beyond making the
->>> driver not rely on a particular behavior of the SG implementation.
->>>
->>> Reported-by: Tomasz Figa <tfiga@chromium.org>
->>> Signed-off-by: Alexandre Courbot <acourbot@chromium.org>
->>> ---
->>> Hi everyone,
->>>
->>> It probably doesn't hurt to fix this issue before some actual issue happens.
->>> I have tested this patch on Chrome OS and playback was just as fine as with
->>> the SG ops.
->>>
->>>  drivers/media/platform/Kconfig              | 2 +-
->>>  drivers/media/platform/qcom/venus/helpers.c | 9 ++-------
->>>  drivers/media/platform/qcom/venus/vdec.c    | 6 +++---
->>>  drivers/media/platform/qcom/venus/venc.c    | 6 +++---
->>>  4 files changed, 9 insertions(+), 14 deletions(-)
->>>
->>> diff --git a/drivers/media/platform/Kconfig b/drivers/media/platform/Kconfig
->>> index 35a18d388f3f..d9d7954111f2 100644
->>> --- a/drivers/media/platform/Kconfig
->>> +++ b/drivers/media/platform/Kconfig
->>> @@ -533,7 +533,7 @@ config VIDEO_QCOM_VENUS
->>>       depends on INTERCONNECT || !INTERCONNECT
->>>       select QCOM_MDT_LOADER if ARCH_QCOM
->>>       select QCOM_SCM if ARCH_QCOM
->>> -     select VIDEOBUF2_DMA_SG
->>> +     select VIDEOBUF2_DMA_CONTIG
->>>       select V4L2_MEM2MEM_DEV
->>>       help
->>>         This is a V4L2 driver for Qualcomm Venus video accelerator
->>> diff --git a/drivers/media/platform/qcom/venus/helpers.c b/drivers/media/platform/qcom/venus/helpers.c
->>> index 50439eb1ffea..859d260f002b 100644
->>> --- a/drivers/media/platform/qcom/venus/helpers.c
->>> +++ b/drivers/media/platform/qcom/venus/helpers.c
->>> @@ -7,7 +7,7 @@
->>>  #include <linux/mutex.h>
->>>  #include <linux/slab.h>
->>>  #include <linux/kernel.h>
->>> -#include <media/videobuf2-dma-sg.h>
->>> +#include <media/videobuf2-dma-contig.h>
->>>  #include <media/v4l2-mem2mem.h>
->>>  #include <asm/div64.h>
->>>
->>> @@ -1284,14 +1284,9 @@ int venus_helper_vb2_buf_init(struct vb2_buffer *vb)
->>>       struct venus_inst *inst = vb2_get_drv_priv(vb->vb2_queue);
->>>       struct vb2_v4l2_buffer *vbuf = to_vb2_v4l2_buffer(vb);
->>>       struct venus_buffer *buf = to_venus_buffer(vbuf);
->>> -     struct sg_table *sgt;
->>> -
->>> -     sgt = vb2_dma_sg_plane_desc(vb, 0);
->>> -     if (!sgt)
->>> -             return -EFAULT;
->>>
->>>       buf->size = vb2_plane_size(vb, 0);
->>> -     buf->dma_addr = sg_dma_address(sgt->sgl);
->>
->> Can we do it:
->>
->>         if (WARN_ON(sgt->nents > 1))
->>                 return -EFAULT;
->>
->> I understand that logically using dma-sg when the flat layout is
->> expected by the hardware is wrong, but I haven't seen issues until now.
->>
->>> +     buf->dma_addr = vb2_dma_contig_plane_dma_addr(vb, 0);
->>>
->>>       if (vb->type == V4L2_BUF_TYPE_VIDEO_CAPTURE_MPLANE)
->>>               list_add_tail(&buf->reg_list, &inst->registeredbufs);
->>> diff --git a/drivers/media/platform/qcom/venus/vdec.c b/drivers/media/platform/qcom/venus/vdec.c
->>> index 8488411204c3..3fb277c81aca 100644
->>> --- a/drivers/media/platform/qcom/venus/vdec.c
->>> +++ b/drivers/media/platform/qcom/venus/vdec.c
->>> @@ -13,7 +13,7 @@
->>>  #include <media/v4l2-event.h>
->>>  #include <media/v4l2-ctrls.h>
->>>  #include <media/v4l2-mem2mem.h>
->>> -#include <media/videobuf2-dma-sg.h>
->>> +#include <media/videobuf2-dma-contig.h>
->>>
->>>  #include "hfi_venus_io.h"
->>>  #include "hfi_parser.h"
->>> @@ -1461,7 +1461,7 @@ static int m2m_queue_init(void *priv, struct vb2_queue *src_vq,
->>>       src_vq->io_modes = VB2_MMAP | VB2_DMABUF;
->>>       src_vq->timestamp_flags = V4L2_BUF_FLAG_TIMESTAMP_COPY;
->>>       src_vq->ops = &vdec_vb2_ops;
->>> -     src_vq->mem_ops = &vb2_dma_sg_memops;
->>> +     src_vq->mem_ops = &vb2_dma_contig_memops;
->>>       src_vq->drv_priv = inst;
->>>       src_vq->buf_struct_size = sizeof(struct venus_buffer);
->>>       src_vq->allow_zero_bytesused = 1;
->>> @@ -1475,7 +1475,7 @@ static int m2m_queue_init(void *priv, struct vb2_queue *src_vq,
->>>       dst_vq->io_modes = VB2_MMAP | VB2_DMABUF;
->>>       dst_vq->timestamp_flags = V4L2_BUF_FLAG_TIMESTAMP_COPY;
->>>       dst_vq->ops = &vdec_vb2_ops;
->>> -     dst_vq->mem_ops = &vb2_dma_sg_memops;
->>> +     dst_vq->mem_ops = &vb2_dma_contig_memops;
->>>       dst_vq->drv_priv = inst;
->>>       dst_vq->buf_struct_size = sizeof(struct venus_buffer);
->>>       dst_vq->allow_zero_bytesused = 1;
->>> diff --git a/drivers/media/platform/qcom/venus/venc.c b/drivers/media/platform/qcom/venus/venc.c
->>> index 1c61602c5de1..a09550cd1dba 100644
->>> --- a/drivers/media/platform/qcom/venus/venc.c
->>> +++ b/drivers/media/platform/qcom/venus/venc.c
->>> @@ -10,7 +10,7 @@
->>>  #include <linux/pm_runtime.h>
->>>  #include <linux/slab.h>
->>>  #include <media/v4l2-mem2mem.h>
->>> -#include <media/videobuf2-dma-sg.h>
->>> +#include <media/videobuf2-dma-contig.h>
->>>  #include <media/v4l2-ioctl.h>
->>>  #include <media/v4l2-event.h>
->>>  #include <media/v4l2-ctrls.h>
->>> @@ -1001,7 +1001,7 @@ static int m2m_queue_init(void *priv, struct vb2_queue *src_vq,
->>>       src_vq->io_modes = VB2_MMAP | VB2_USERPTR | VB2_DMABUF;
->>>       src_vq->timestamp_flags = V4L2_BUF_FLAG_TIMESTAMP_COPY;
->>>       src_vq->ops = &venc_vb2_ops;
->>> -     src_vq->mem_ops = &vb2_dma_sg_memops;
->>> +     src_vq->mem_ops = &vb2_dma_contig_memops;
->>>       src_vq->drv_priv = inst;
->>>       src_vq->buf_struct_size = sizeof(struct venus_buffer);
->>>       src_vq->allow_zero_bytesused = 1;
->>> @@ -1017,7 +1017,7 @@ static int m2m_queue_init(void *priv, struct vb2_queue *src_vq,
->>>       dst_vq->io_modes = VB2_MMAP | VB2_USERPTR | VB2_DMABUF;
->>>       dst_vq->timestamp_flags = V4L2_BUF_FLAG_TIMESTAMP_COPY;
->>>       dst_vq->ops = &venc_vb2_ops;
->>> -     dst_vq->mem_ops = &vb2_dma_sg_memops;
->>> +     dst_vq->mem_ops = &vb2_dma_contig_memops;
->>>       dst_vq->drv_priv = inst;
->>>       dst_vq->buf_struct_size = sizeof(struct venus_buffer);
->>>       dst_vq->allow_zero_bytesused = 1;
->>>
->>
->> --
->> regards,
->> Stan
-
--- 
-regards,
-Stan
