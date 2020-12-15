@@ -2,67 +2,136 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 2A09E2DB30C
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Dec 2020 18:55:23 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 05A762DB32C
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Dec 2020 19:01:03 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730540AbgLORxh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 15 Dec 2020 12:53:37 -0500
-Received: from mail.kernel.org ([198.145.29.99]:37868 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1730154AbgLORxf (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 15 Dec 2020 12:53:35 -0500
-Date:   Tue, 15 Dec 2020 09:52:51 -0800
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1608054774;
-        bh=hXPUuO6IQOjzr+sj64k3SZ3Y/yxjs2z8ZppnJqErAEY=;
-        h=From:To:Cc:Subject:References:In-Reply-To:From;
-        b=AiwUOOqvaALNAa9kg0a9Xkvn6d23jW8jD9fP+LVg2rXai4DOh4cO3mjtIZ0IOVVr7
-         6ov6RTxQKV5w3EfPaJ9jv3zxQuPWUFenCJimYmHh5q1+HsK6Rj9XLwfy6FUnv2KEi8
-         FliGXAEN5tD/Yf36A/5PRI2uevdO+kniLNZl//xdR2mXZGcZcOTnf/1iDSfCVAZwjU
-         kRE/jkZHyAnnZMlzK3Ax92N/rltQZ+VOcKAEfTjtONe5No0igt14hYQVpVYG1ox1/w
-         IE8+oTUiTcWFs+8VHBO62il6badS9NyKNETNe+d9L3bdyxDubAaqvQyA8qPTIyir4y
-         aQ7iAiSlzMTVA==
-From:   Eric Biggers <ebiggers@kernel.org>
-To:     "Peng.Zhou" <peng.zhou@mediatek.com>
-Cc:     linux-mmc@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-fscrypt@vger.kernel.org,
-        Satya Tangirala <satyat@google.com>,
-        Ulf Hansson <ulf.hansson@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Adrian Hunter <adrian.hunter@intel.com>,
-        Asutosh Das <asutoshd@codeaurora.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Neeraj Soni <neersoni@codeaurora.org>,
-        Barani Muthukumaran <bmuthuku@codeaurora.org>,
-        Stanley Chu <stanley.chu@mediatek.com>,
-        Konrad Dybcio <konradybcio@gmail.com>
-Subject: Re: [PATCH v3 0/9] eMMC inline encryption support
-Message-ID: <X9j38+54HGOEK7C/@sol.localdomain>
-References: <20201209044238.78659-1-ebiggers@kernel.org>
- <1608019654.31445.8.camel@mbjsdccf07>
+        id S1730804AbgLOSAM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 15 Dec 2020 13:00:12 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46724 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730449AbgLOSAM (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 15 Dec 2020 13:00:12 -0500
+Received: from mail-oi1-x244.google.com (mail-oi1-x244.google.com [IPv6:2607:f8b0:4864:20::244])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3AACBC06179C
+        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Dec 2020 09:59:32 -0800 (PST)
+Received: by mail-oi1-x244.google.com with SMTP id 15so24289929oix.8
+        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Dec 2020 09:59:32 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=5MPpRk8V3g6PWN9LNQ99IKoF0RLFmkUnchrMF5LPWbo=;
+        b=Eas/6BiUtdkrhL31amEw8ijnAI4oee8wsNUo7jn8A75pk6Yq5m5jj2tVBH9o+OlLAc
+         eXuvKCiMkTVNMLo+EuseRRGOABLWbahzG9r+91blEKtO58y0htpOwsD+ylK+hHmh5TDV
+         zqYfTr4AKyfgcR6gD+nX789LQGDPoWsVjnpISf+8cVu2WwpMChVfLUNHH5fUWmI3QnwW
+         Iqc9N3M2F0/JE9g0Lda9u36EA/FOS3TF9kt5pPf26lshyfQQ+1Yq5R1clWqUf0lVc6bR
+         Pm1axbJALfeTLFBpwKVXaiIcOjyk39B/AVPCKjYSZnsmwPVPzKA+w27/hfxLqTuWtqKk
+         ctzA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=5MPpRk8V3g6PWN9LNQ99IKoF0RLFmkUnchrMF5LPWbo=;
+        b=Yfxdu8ghTuseIyckoCI426aY5uYpdH+791zFkPYxMTpgdwBJQdJF+mHyAQ/VPXUORU
+         uYql0PmZuooXlCc7maVUiKCpRt4J1DI8uLgtPjHJIdfotfaRlx67JGKWGhkSKW5eQsyv
+         1ymy/ttQ5/ZJenazV0sl2k/KdyG/na1+z9xeImT8HVjGJ+jV1y46UvCksa+WELylx1M6
+         YOimt5UiZft0yuH/5BNal3FVOJx+u5XRicunpH+aq982Mxdaq8tWqGt+Ap7W77gK8yGv
+         NOrsjpFR+JOXNezjlXbKFYeja+t1ALAT8oiRNMIlq03nA+9y9kiDwDFW3gfs9yVE2401
+         9KlA==
+X-Gm-Message-State: AOAM530pwEUMLAGAh0NBo6iuKnPeIaRSblAz+I/qVZ/uL+ncuIghJBNP
+        cRx4Ej4TqslbfBAQodCtqEooVg==
+X-Google-Smtp-Source: ABdhPJyr33uHvrCPUXmIi1TsGv9BH5HYf4rv6arsFlEhjL5js8MmNi/6+1l9iBLmn8WpYlNaXVjEQg==
+X-Received: by 2002:a05:6808:1c1:: with SMTP id x1mr38015oic.126.1608055171539;
+        Tue, 15 Dec 2020 09:59:31 -0800 (PST)
+Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
+        by smtp.gmail.com with ESMTPSA id d124sm1018978oib.54.2020.12.15.09.59.30
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 15 Dec 2020 09:59:30 -0800 (PST)
+Date:   Tue, 15 Dec 2020 11:59:29 -0600
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Bartosz Golaszewski <bgolaszewski@baylibre.com>
+Cc:     Linus Walleij <linus.walleij@linaro.org>,
+        linux-gpio <linux-gpio@vger.kernel.org>,
+        LKML <linux-kernel@vger.kernel.org>,
+        linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH] gpiolib: Allow name duplicates of "" and "NC"
+Message-ID: <X9j5gdx1/WaCq54m@builder.lan>
+References: <20201215170308.2037624-1-bjorn.andersson@linaro.org>
+ <CAMpxmJU0XWxiYr716MNGnORJJJ-czuBGWNnFTa5oBTUK4uVheQ@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <1608019654.31445.8.camel@mbjsdccf07>
+In-Reply-To: <CAMpxmJU0XWxiYr716MNGnORJJJ-czuBGWNnFTa5oBTUK4uVheQ@mail.gmail.com>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Dec 15, 2020 at 04:07:34PM +0800, Peng.Zhou wrote:
-> > 
-> I had verified this patchset in MT6853 (A 5G mobile smartphone platform
-> of Mediatek which meets eMMC v5.2 specification) and they work normally
-> in Android environment.
-> Reviewed and Tested by: Peng Zhou<peng.zhou@mediatek.com>
+On Tue 15 Dec 11:42 CST 2020, Bartosz Golaszewski wrote:
 
-Thanks Peng.  Is your Reviewed-and-tested-by for the whole patchset, or just for
-patches 1-5?  Patches 6-9 only affect Qualcomm hardware.
+> On Tue, Dec 15, 2020 at 6:02 PM Bjorn Andersson
+> <bjorn.andersson@linaro.org> wrote:
+> >
+> > Not all GPIO pins are exposed to the world and this is typically
+> > described by not giving these lines particular names, commonly "" or
+> > "NC".
+> >
+> > With the recent introduction of '2cd64ae98f35 ("gpiolib: Disallow
+> > identical line names in the same chip")' any gpiochip with multiple such
+> > pins will refuse to probe.
+> >
+> > Fix this by treating "" and "NC" as "no name specified" in
+> > gpio_name_to_desc()
+> >
+> > Fixes: 2cd64ae98f35 ("gpiolib: Disallow identical line names in the same chip")
+> > Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> > ---
+> >
+> > The introduction of 2cd64ae98f35 breaks pretty much all Qualcomm boards and
+> > grepping the DT tree indicates that other vendors will have the same problem.
+> >
+> > In addition to this the am335x-* boards will also needs "[NC]", "[ethernet]",
+> > "[emmc"], "[i2c0]", "[SYSBOOT]" and "[JTAG]" added to this list to allow
+> > booting v5.11 with the past and present dtb/dts files.
+> >
+> >  drivers/gpio/gpiolib.c | 2 +-
+> >  1 file changed, 1 insertion(+), 1 deletion(-)
+> >
+> > diff --git a/drivers/gpio/gpiolib.c b/drivers/gpio/gpiolib.c
+> > index b3340ba68471..407ba79ae571 100644
+> > --- a/drivers/gpio/gpiolib.c
+> > +++ b/drivers/gpio/gpiolib.c
+> > @@ -302,7 +302,7 @@ static struct gpio_desc *gpio_name_to_desc(const char * const name)
+> >         struct gpio_device *gdev;
+> >         unsigned long flags;
+> >
+> > -       if (!name)
+> > +       if (!name || !strcmp(name, "") || !strcmp(name, "NC"))
+> >                 return NULL;
+> >
+> >         spin_lock_irqsave(&gpio_lock, flags);
+> > --
+> > 2.29.2
+> >
+> 
+> I have a bad feeling about this. This opens the door for all kinds of
+> exceptions: "N/A", "none" etc. Depending on whose boards are getting
+> broken.
+> 
+> If non-uniqueness of names is needed then let's better revert 2cd64ae98f35.
+> 
 
-Also, were many changes to mtk-sd.c required to get the crypto support working
-on your hardware, or was it just a matter of making a SMC call and setting the
-crypto capability flag, like it was for ufs-mediatek (commit 46426552e74f)?
-If you could send your patch for mtk-sd.c on top of this patchset, that would be
-helpful for people to see.
+I like the intent of 2cd64ae98f35, but even if we decide what the
+"unconnected" name should be we have a slew of boards that won't boot
+v5.11-rc1 (or with any pre-v5.11 DTBs).
 
-- Eric
+As such I think we need to revert the "return -EEXIST" part of the
+patch.
+
+
+Looking forward perhaps we should define "" to be the "not a gpio"-name,
+revise my patch and fix up the DTs accordingly? And keep the dev_err()
+as it currently is?
+
+Regards,
+Bjorn
