@@ -2,80 +2,87 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id ABC172DB082
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Dec 2020 16:52:27 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 37CB42DB1E2
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Dec 2020 17:51:11 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730467AbgLOPuX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 15 Dec 2020 10:50:23 -0500
-Received: from mail.kernel.org ([198.145.29.99]:40652 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1730417AbgLOPuI (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 15 Dec 2020 10:50:08 -0500
-X-Gm-Message-State: AOAM533VzvEKppX5x2bg6rGkw/aPGGWnFKdnwkM6FCP3kZPBlUG/IryM
-        g9pqRWC7GYUJdWUcPrKd8B0UM7ItKbqYFBJVHyA=
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1608047367;
-        bh=vk0DJ0JzWJlteCvdQrm7cTztN3kStbn7sC/CRkgubWQ=;
-        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-        b=CtFESZdADvAexjzxRDg0+RJDwS1bEU4mFWyL6SfeZ+2DucZbqnwUsNNCTL0oc4Qab
-         IqgBNcH7SzKOr0po7+b4Co03iExifNCD9cDg2BwBcBEtUDsaLGoky7j/WtlUYOzgkg
-         NqX7/GJCaXouRC2WodvKWPN/csUU/rsQ1Fwg82O6AasTIdQHC+wM+bCN8xX1GPASKn
-         GYIFblyDkCWPHK9niajlvfdRymaofA08J1nxCgngcoLV1DGwURIMCKz6tfXdJ9Ya8b
-         X0Hgew74mexMLfR0YW7R9jfyPwHyLIIN2tXasljBDeHoeuU9VdBFxxA2diiQal6Hhx
-         YsN06IKgUKPcA==
-X-Google-Smtp-Source: ABdhPJyJGtLwNlqBu0sFHqFIYVIxOoGixNWC7BzEOUK+bNoXIyTS4GJ1xdGFVspEYarTce2m30IYXyONWmLH5MOMFZU=
-X-Received: by 2002:a9d:be1:: with SMTP id 88mr23804391oth.210.1608047366643;
- Tue, 15 Dec 2020 07:49:26 -0800 (PST)
+        id S1729694AbgLOQtl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 15 Dec 2020 11:49:41 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35784 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728159AbgLOQtf (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 15 Dec 2020 11:49:35 -0500
+Received: from mail-vs1-xe42.google.com (mail-vs1-xe42.google.com [IPv6:2607:f8b0:4864:20::e42])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E38F7C0617A7
+        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Dec 2020 08:48:54 -0800 (PST)
+Received: by mail-vs1-xe42.google.com with SMTP id e15so9825151vsa.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Dec 2020 08:48:54 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=JpW7F2subR+onTiC3pv9jysqDXaZokb9fXlk0wC3Kt4=;
+        b=KeaM2gSSATPK/nSQ/NIlog5AhbFB86RIZ2XDIeCzVqXL3ISYPrIQnZ18VZZvNsLWVi
+         il3MyeyQqZ6bzYsYRujhbbFAkOT0KS01039QZIqVMQSdWRw/lL86EjRXHRmLvhe0fXC1
+         ITU27NRarj8bf4oQ3P2Jy5PssVv52K4I2SYiw=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=JpW7F2subR+onTiC3pv9jysqDXaZokb9fXlk0wC3Kt4=;
+        b=Ed1n4ao7m8wtGYPP5QLF+QIVMoP8r0b5BC+gkKnFm3BZnwskCrWFxQtZCNmThkdktJ
+         UtxFvW34aylkQtBgd3BSvzOenbBGXITfPgXBVRQfLIym5+ot8NPJl+r1WQ++EhMShTDq
+         ScfhEPF91MjHZBdrwnfhX7xrT6RPGCSADTE5zd1CCTLykbyFz/R7bmwmToAICH8KOQ80
+         14Nu1fTTmjO888hG4q3W4BvFTvJMpwbo1PafwAW7d9+KyS3QIuxKijFj3GafvM+QEAcj
+         WSYqngKqgVPUMQzSn4N6orkrmqmDc2SUIAQ9Ox/Ddxcihms8C1zkYzVQvVMSeS8YY2mZ
+         /gxg==
+X-Gm-Message-State: AOAM530nvBbOMw8Bz9N3zDL+hlb4MnHdGaJoz+qG9LJkB9YT+wevjs/C
+        04x3Dwcm6Tq8EBghc+9NFq2q9eFp7+Rz+A==
+X-Google-Smtp-Source: ABdhPJysg9C54nz+ViD59xexUZSCj4dwaRgACzbkXmaJM9L2dv71fyGLug5PPpY8hDAr0tXoKf+uTw==
+X-Received: by 2002:a67:ec4b:: with SMTP id z11mr28448401vso.26.1608050933713;
+        Tue, 15 Dec 2020 08:48:53 -0800 (PST)
+Received: from mail-vs1-f47.google.com (mail-vs1-f47.google.com. [209.85.217.47])
+        by smtp.gmail.com with ESMTPSA id f1sm2858146vkb.46.2020.12.15.08.48.52
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 15 Dec 2020 08:48:52 -0800 (PST)
+Received: by mail-vs1-f47.google.com with SMTP id b23so11309089vsp.9
+        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Dec 2020 08:48:52 -0800 (PST)
+X-Received: by 2002:a67:bd01:: with SMTP id y1mr22286877vsq.49.1608050932297;
+ Tue, 15 Dec 2020 08:48:52 -0800 (PST)
 MIME-Version: 1.0
-References: <20201016090833.1892-1-thunder.leizhen@huawei.com>
- <20201016090833.1892-2-thunder.leizhen@huawei.com> <20201128045328.2411772-1-f.fainelli@gmail.com>
- <CAK8P3a1_5RgcPz+bgo1bbUBk8NTJd=1-Y5-=CsQYkFgLfTE3_A@mail.gmail.com>
- <9c6c6b7e-8c39-8c49-5c87-9b560c027841@broadcom.com> <CAK8P3a2XYk8D80XARrpUSBHk1yye3KHXOdaQge4HNSZZOC=xKw@mail.gmail.com>
- <CACvutz9v+TBUbrCo3X-u5ebbs04nR0y0yQN3qWfSAyZVy9RM2g@mail.gmail.com> <c38cf11a-ed1d-d150-52fb-e3b4a0a30712@gmail.com>
-In-Reply-To: <c38cf11a-ed1d-d150-52fb-e3b4a0a30712@gmail.com>
-From:   Arnd Bergmann <arnd@kernel.org>
-Date:   Tue, 15 Dec 2020 16:49:10 +0100
-X-Gmail-Original-Message-ID: <CAK8P3a1TViQopQNFE4+Dtac0v2CneGiy22WYu5BuYv8HX2r8Lg@mail.gmail.com>
-Message-ID: <CAK8P3a1TViQopQNFE4+Dtac0v2CneGiy22WYu5BuYv8HX2r8Lg@mail.gmail.com>
-Subject: Re: [PATCH v2 1/2] arm64: dts: broadcom: clear the warnings caused by
- empty dma-ranges
-To:     Florian Fainelli <f.fainelli@gmail.com>
-Cc:     Bharat Gooty <bharat.gooty@broadcom.com>,
-        Ray Jui <ray.jui@broadcom.com>,
-        devicetree <devicetree@vger.kernel.org>,
-        linux-kernel <linux-kernel@vger.kernel.org>,
-        Arnd Bergmann <arnd@arndb.de>,
-        Scott Branden <sbranden@broadcom.com>,
-        Ray Jui <rjui@broadcom.com>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Andy Gross <agross@kernel.org>,
+References: <20201215020004.731239-1-swboyd@chromium.org>
+In-Reply-To: <20201215020004.731239-1-swboyd@chromium.org>
+From:   Doug Anderson <dianders@chromium.org>
+Date:   Tue, 15 Dec 2020 08:48:40 -0800
+X-Gmail-Original-Message-ID: <CAD=FV=UcpztEGVLoR5ivmP8wHX_V+nWReuL7Bb_rjbiz_F4S7Q@mail.gmail.com>
+Message-ID: <CAD=FV=UcpztEGVLoR5ivmP8wHX_V+nWReuL7Bb_rjbiz_F4S7Q@mail.gmail.com>
+Subject: Re: [PATCH] arm64: dts: qcom: sc7180: Drop pinconf on dp_hot_plug_det
+To:     Stephen Boyd <swboyd@chromium.org>
+Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        bcm-kernel-feedback-list <bcm-kernel-feedback-list@broadcom.com>,
-        Zhen Lei <thunder.leizhen@huawei.com>,
-        linux-arm-kernel <linux-arm-kernel@lists.infradead.org>
+        LKML <linux-kernel@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Tanmay Shah <tanmay@codeaurora.org>
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Dec 15, 2020 at 4:41 PM Florian Fainelli <f.fainelli@gmail.com> wrote:
->
-> On 12/15/2020 5:19 AM, Bharat Gooty wrote:
-> > Since the IOMMU is disabled and DMA engine is on 32-bit bus, We can not
-> > give the complete DDR for the USB DMA.
-> > So restricting the usable DAM size to 4GB.
->
-> Thanks, can you make this a proper patch submission along with a Fixes:
-> tag that is:
->
-> Fixes: 2013a4b684b6 ("arm64: dts: broadcom: clear the warnings caused by
-> empty dma-ranges")
+Hi,
 
-Yes, that would be helpful, though I would appreciate a better description
-that explains what is actually going on: is it the device or the bus that
-has the 32-bit limitation, and if it is indeed a bug in the device, why do
-you pretend that this is a 64-bit device on a 32-bit bus instead (this
-could also use a comment in the dts file)?
+On Mon, Dec 14, 2020 at 6:00 PM Stephen Boyd <swboyd@chromium.org> wrote:
+>
+> We shouldn't put any pinconf here in case someone decides to invert this
+> HPD signal or remove an external pull-down. It's better to leave that to
+> the board pinconf nodes, so drop it here.
+>
+> Reported-by: Douglas Anderson <dianders@chromium.org>
+> Cc: Tanmay Shah <tanmay@codeaurora.org>
+> Fixes: 681a607ad21a ("arm64: dts: qcom: sc7180: Add DisplayPort HPD pin dt node")
+> Signed-off-by: Stephen Boyd <swboyd@chromium.org>
+> ---
+>  arch/arm64/boot/dts/qcom/sc7180.dtsi | 6 ------
+>  1 file changed, 6 deletions(-)
 
-       Arnd
+Reviewed-by: Douglas Anderson <dianders@chromium.org>
