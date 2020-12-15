@@ -2,251 +2,229 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id DC3E22DAC5E
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Dec 2020 12:52:49 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3A59A2DACA9
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Dec 2020 13:06:38 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728540AbgLOLtE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 15 Dec 2020 06:49:04 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45626 "EHLO
+        id S1729115AbgLOMDl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 15 Dec 2020 07:03:41 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47882 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728580AbgLOLtA (ORCPT
+        with ESMTP id S1728861AbgLOMDd (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 15 Dec 2020 06:49:00 -0500
-Received: from mail-ed1-x542.google.com (mail-ed1-x542.google.com [IPv6:2a00:1450:4864:20::542])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6036BC06179C
-        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Dec 2020 03:48:14 -0800 (PST)
-Received: by mail-ed1-x542.google.com with SMTP id cm17so20698710edb.4
-        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Dec 2020 03:48:14 -0800 (PST)
+        Tue, 15 Dec 2020 07:03:33 -0500
+Received: from mail-ed1-x544.google.com (mail-ed1-x544.google.com [IPv6:2a00:1450:4864:20::544])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 70A83C0617A6
+        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Dec 2020 04:02:53 -0800 (PST)
+Received: by mail-ed1-x544.google.com with SMTP id p22so20681610edu.11
+        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Dec 2020 04:02:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
+        d=linaro.org; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=VY9C6dKzDaM57v3JdSf9JJx6SvlGxl+IBr0BX0RagYY=;
-        b=N9uyguSnGB+JUEvy3Zokm/wwWmOPeKisc2thcMEVjc8JqPOw4S+qpWc7TN43mrmb/R
-         atMsEGLUAf0pEj1yDu/bUT5OE9UTG3bwoMph8vSrfnTxCEKSqrfU2I8yHFt6MhZZpc8g
-         jeS5KYLTnisHoG+YLt8S3bJH5lgv8pMMa+MJU=
+        bh=It9ncx+4nnOvVpoms6IuHWD2LnlegCojyCguiVXj5es=;
+        b=K4GU/PPYRD7f5L+tQk1bh5QSRBHfDAvq195bwhP4qCT9PWKJCNQZL7jImmRTl6o/GM
+         e46WCSeVa06b9BhGAHat4uFY967EuhfC2BBlI6dlsFOCm9iVL27ErgfMaRAqe4KNQRBl
+         7nPhmey1InK412ySK5JoaFi3l+oNnp25hvllb/POEWkTzCZ6rq4PgE80RDW2pA5jjobd
+         /dj0z0O2jYYTlgLh5rOqeWIwa4KRdgusTSVAIvKJMXshfwUyL4KscuCGMJC/xfSfVkqH
+         L68nBnFV791Q8EEhIlT2VXqe9g4aE1ShwtiDvbys28GcPod+Na7OJbW18PTDK1rQQHoW
+         fXfg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=VY9C6dKzDaM57v3JdSf9JJx6SvlGxl+IBr0BX0RagYY=;
-        b=ZNvgsuN3EkSx7JpBg8uTdsEW0NOBYtqJ19e8CPk+SFy+vfRnL4XTlSOaW6az8R8TMl
-         2e82GIzQMvG8CzQcUv8ExutT+8fsUJX1DEJU3tjGHVSYH3UwZo1dVbsjQ/Gm9SdTu/DH
-         DPQQzrkUcvHHbLr2fFGP+XVBHPDY2xA1rMPFseC/oq62UZMjKq/PbghzVxXfqgJpqEn+
-         LF1SIvJFAhalEdAoo09I/ai//egFgLP5Kvp+Vp+LtBrzWWLnFtxUBuVR1V9iw2oBgNlG
-         xbtJcj7NqnxmNKKCl+KmqkIzD3Ss43gx9bxWsq6HhqX1NiWcCJVH69uueWa1YOOC96mA
-         D4eg==
-X-Gm-Message-State: AOAM532EkMFh9SwYIbXVYE3f7ueNQnIXWaCaXvtM5SXGjhnIJR0OsiHq
-        cgbhk8xAoxc5c6P5pfSHTqrBGPon/tslHQ==
-X-Google-Smtp-Source: ABdhPJwGFFyRXB4V4EnQ0sgSQcV+PPOZFs649pk9iSKizSWUrpHakz4yjbVheV7AESn2gD2b/1Faqg==
-X-Received: by 2002:aa7:c856:: with SMTP id g22mr28736479edt.85.1608032892802;
-        Tue, 15 Dec 2020 03:48:12 -0800 (PST)
-Received: from mail-wr1-f54.google.com (mail-wr1-f54.google.com. [209.85.221.54])
-        by smtp.gmail.com with ESMTPSA id n16sm18478974edq.62.2020.12.15.03.48.12
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 15 Dec 2020 03:48:12 -0800 (PST)
-Received: by mail-wr1-f54.google.com with SMTP id q18so12024063wrn.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Dec 2020 03:48:12 -0800 (PST)
-X-Received: by 2002:a5d:6209:: with SMTP id y9mr6274395wru.197.1608032891619;
- Tue, 15 Dec 2020 03:48:11 -0800 (PST)
+        bh=It9ncx+4nnOvVpoms6IuHWD2LnlegCojyCguiVXj5es=;
+        b=gQZ6otLQpo7tyc8mHOIJauI1nxlzSu5GHaKs7ghqFF4LqHLULuEYZITpuFBltbAgby
+         zF8X5cJE1IfDTZTVEaDhcAVp2c6PMfpwc39KvFwRcuv1QRh0ZXmPE6bXaz3siptU8D00
+         YWG+qHGR1D7c+dTnIfGRhouhPuNQ4rKeDUEnGeHmWgmKU8eFmjriG96xTkBcjz3RR6sZ
+         KageNX2QE93SC+GkSSonfwyAJ32YQWEEaW5w50Gs0fnQlkSY1P3b6rC/T5Zg71Ws3zlW
+         I/JXt7ZU3ItFMov/bCCG/TVOkDv/V+XSW4Hh8+5IIJf+wnMZjS7rn8RkCRQK+PjYMjCU
+         7GUw==
+X-Gm-Message-State: AOAM533YJ6eZKZ0ExufUGJKqxwoz6Bv3c2axqFd8gyi+mgREdThCqf9I
+        WE/UWXMXm7eivrxL1uuDF+XcCX+953MmQ1sUm02GOA==
+X-Google-Smtp-Source: ABdhPJzklsx5vOdjaOEntSe0/ugc4ud/RGowrQuAgPzeD2SQPrC/m4RkxzfbvaRqeG7ygXvUBcNCan/HsSRqXdEBNNM=
+X-Received: by 2002:a50:e78b:: with SMTP id b11mr28922626edn.165.1608033772033;
+ Tue, 15 Dec 2020 04:02:52 -0800 (PST)
 MIME-Version: 1.0
-References: <20201214125703.866998-1-acourbot@chromium.org> <5319c101-f4a4-9c99-b15d-4999366f7a63@linaro.org>
-In-Reply-To: <5319c101-f4a4-9c99-b15d-4999366f7a63@linaro.org>
-From:   Tomasz Figa <tfiga@chromium.org>
-Date:   Tue, 15 Dec 2020 20:47:59 +0900
-X-Gmail-Original-Message-ID: <CAAFQd5AQ8VHiRYkzkd5ZJBPT5_5WO0tyQrwqBEfnMVKYiTugTA@mail.gmail.com>
-Message-ID: <CAAFQd5AQ8VHiRYkzkd5ZJBPT5_5WO0tyQrwqBEfnMVKYiTugTA@mail.gmail.com>
-Subject: Re: [PATCH] media: venus: use contig vb2 ops
-To:     Stanimir Varbanov <stanimir.varbanov@linaro.org>
-Cc:     Alexandre Courbot <acourbot@chromium.org>,
-        Fritz Koenig <frkoenig@chromium.org>,
-        Linux Media Mailing List <linux-media@vger.kernel.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+References: <1607598951-2340-1-git-send-email-loic.poulain@linaro.org>
+ <1607598951-2340-3-git-send-email-loic.poulain@linaro.org>
+ <20201212125544.4857b1cd@kicinski-fedora-pc1c0hjn.dhcp.thefacebook.com>
+ <CAMZdPi8JGnEn1BbsX2jP_bNAGPrSz=eL2ZJ5n_2ReqGP2jpdOg@mail.gmail.com> <20201214114710.08346744@kicinski-fedora-pc1c0hjn.dhcp.thefacebook.com>
+In-Reply-To: <20201214114710.08346744@kicinski-fedora-pc1c0hjn.dhcp.thefacebook.com>
+From:   Loic Poulain <loic.poulain@linaro.org>
+Date:   Tue, 15 Dec 2020 13:09:27 +0100
+Message-ID: <CAMZdPi861aeMyWJnEXy0X2E-KPfCvn1Gy47HavqoO_XkrFwc-A@mail.gmail.com>
+Subject: Re: [PATCH v2 3/3] net: mhi: Add dedicated alloc thread
+To:     Jakub Kicinski <kuba@kernel.org>
+Cc:     David Miller <davem@davemloft.net>,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
         linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Robin Murphy <robin.murphy@arm.com>
+        Network Development <netdev@vger.kernel.org>,
+        Jeffrey Hugo <jhugo@codeaurora.org>
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Dec 15, 2020 at 8:16 PM Stanimir Varbanov
-<stanimir.varbanov@linaro.org> wrote:
->
-> Hi,
->
-> Cc: Robin
->
-> On 12/14/20 2:57 PM, Alexandre Courbot wrote:
-> > This driver uses the SG vb2 ops, but effectively only ever accesses the
-> > first entry of the SG table, indicating that it expects a flat layout.
-> > Switch it to use the contiguous ops to make sure this expected invariant
->
-> Under what circumstances the sg table will has nents > 1? I came down to
-> [1] but not sure I got it right.
->
-> I'm afraid that for systems with low amount of system memory and when
-> the memory become fragmented, the driver will not work. That's why I
-> started with sg allocator.
+Hi Jakub,
 
-It is exactly the opposite. The vb2-dma-contig allocator is "contig"
-in terms of the DMA (aka IOVA) address space. In other words, it
-guarantees that having one DMA address and length fully describes the
-buffer. This seems to be the requirement of the hardware/firmware
-handled by the venus driver. If the device is behind an IOMMU, which
-is the case for the SoCs in question, the underlying DMA ops will
-actually allocate a discontiguous set of pages, so it has nothing to
-do to system memory amount or fragmentation. If for some reason the
-IOMMU can't be used, there is no way around, the memory needs to be
-contiguous because of the hardware/firmware/driver expectation.
+On Mon, 14 Dec 2020 at 20:47, Jakub Kicinski <kuba@kernel.org> wrote:
+>
+> On Mon, 14 Dec 2020 10:19:07 +0100 Loic Poulain wrote:
+> > On Sat, 12 Dec 2020 at 21:55, Jakub Kicinski <kuba@kernel.org> wrote:
+> > > On Thu, 10 Dec 2020 12:15:51 +0100 Loic Poulain wrote:
+> > > > The buffer allocation for RX path is currently done by a work executed
+> > > > in the system workqueue. The work to do is quite simple and consists
+> > > > mostly in allocating and queueing as much as possible buffers to the MHI
+> > > > RX channel.
+> > > >
+> > > > It appears that using a dedicated kthread would be more appropriate to
+> > > > prevent
+> > > > 1. RX allocation latency introduced by the system queue
+> > >
+> > > System work queue should not add much latency, you can also create your
+> > > own workqueue. Did you intend to modify the priority of the thread you
+> > > create?
+> >
+> > No, and I don't, since I assume there is no reason to prioritize
+> > network over other loads. I've considered the dedicated workqueue, but
+> > since there is only one task to run as a while loop, I thought using a
+> > kthread was more appropriate (and slightly lighter), but I can move to
+> > that solution if you recommend it.
+>
+> Not sure what to recommend TBH, if thread works better for you that's
+> fine. I don't understand why the thread would work better, tho. I was
+> just checking if there is any extra tuning that happens.
+>
+> > > > 2. Unbounded work execution, the work only returning when queue is
+> > > > full, it can possibly monopolise the workqueue thread on slower systems.
+> > >
+> > > Is this something you observed in practice?
+> >
+> > No, I've just observed that work duration is inconstant , queuing from
+> > few buffers to several hundreeds. This unbounded behavior makes me
+> > feel that doing that in the shared sytem workqueue is probably not the
+> > right place. I've not tested on a slower machine though.
+>
+> I think long running work should not be an issue for the cmwq
+> implementation we have in the kernel.
+>
+> Several hundred buffers means it's running concurrently with RX, right?
+> Since the NIC queue is 128 buffers.
 
-On the other hand, the vb2-dma-sg allocator doesn't have any
-continuity guarantees for the DMA, or any other, address space. The
-current code works fine, because it calls dma_map_sg() on the whole
-set of pages and that ends up mapping it contiguously in the IOVA
-space, but that's just an implementation detail, not an API guarantee.
+Exactly, buffers can be completed by the hardware before we even
+finished to completely fill the MHI ring buffer, that why the loop can
+queue more than 128 buffers.
 
-Best regards,
-Tomasz
+> > > > This patch replaces the system work with a simple kthread that loops on
+> > > > buffer allocation and sleeps when queue is full. Moreover it gets rid
+> > > > of the local rx_queued variable (to track buffer count), and instead,
+> > > > relies on the new mhi_get_free_desc_count helper.
+> > >
+> > > Seems unrelated, should probably be a separate patch.
+> >
+> > I can do that.
+> >
+> > >
+> > > > After pratical testing on a x86_64 machine, this change improves
+> > > > - Peek throughput (slightly, by few mbps)
+> > > > - Throughput stability when concurrent loads are running (stress)
+> > > > - CPU usage, less CPU cycles dedicated to the task
+> > >
+> > > Do you have an explanation why the CPU cycles are lower?
+> >
+> > For CPU cycles, TBH, not really, this is just observational.
+>
+> Is the IRQ pinned? I wonder how often work runs on the same CPU as IRQ
+> processing and how often does the thread do.
+>
+> > Regarding throughput stability, it's certainly because the work can
+> > consume all its dedicated kthread time.
+>
+> Meaning workqueue implementation doesn't get enough CPU? Strange.
+>
+> > > > Below is the powertop output for RX allocation task before and
+> > > > after this change, when performing UDP download at 6Gbps. Mostly
+> > > > to highlight the improvement in term of CPU usage.
+> > > >
+> > > > older (system workqueue):
+> > > > Usage       Events/s    Category       Description
+> > > > 63,2 ms/s     134,0        kWork          mhi_net_rx_refill_work
+> > > > 62,8 ms/s     134,3        kWork          mhi_net_rx_refill_work
+> > > > 60,8 ms/s     141,4        kWork          mhi_net_rx_refill_work
+> > > >
+> > > > newer (dedicated kthread):
+> > > > Usage       Events/s    Category       Description
+> > > > 20,7 ms/s     155,6        Process        [PID 3360] [mhi-net-rx]
+> > > > 22,2 ms/s     169,6        Process        [PID 3360] [mhi-net-rx]
+> > > > 22,3 ms/s     150,2        Process        [PID 3360] [mhi-net-rx]
+> > > >
+> > > > Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
+>
+> > > > +             skb = netdev_alloc_skb(ndev, size);
+> > > > +             if (unlikely(!skb)) {
+> > > > +                     /* No memory, retry later */
+> > > > +
+> > > > schedule_timeout_interruptible(msecs_to_jiffies(250));
+> > >
+> > > You should have a counter for this, at least for your testing. If
+> > > this condition is hit it'll probably have a large impact on the
+> > > performance.
+> >
+> > Indeed, going to do that, what about a ratelimited error? I assume if
+> > it's happen, system is really in bad shape.
+>
+> It's not that uncommon to run out of memory for a 2k allocation in an
+> atomic context (note that netdev_alloc_skb() uses GFP_ATOMIC).
+> You can add a rate-limited print if you want, tho.
+>
+> > > > +                     continue;
+> > > > +             }
+> > > > +
+> > > > +             err = mhi_queue_skb(mdev, DMA_FROM_DEVICE, skb,
+> > > > size, MHI_EOT);
+> > > > +             if (unlikely(err)) {
+> > > > +                     net_err_ratelimited("%s: Failed to queue RX
+> > > > buf (%d)\n",
+> > > > +                                         ndev->name, err);
+> > > > +                     kfree_skb(skb);
+> > > > +                     break;
+> > > > +             }
+> > > > +
+> > > > +             /* Do not hog the CPU */
+> > > > +             cond_resched();
+> > > > +     }
+> > > > +
+> > > > +     return 0;
+> > > > +}
+> > > > +
+> > > >  static int mhi_ndo_open(struct net_device *ndev)
+> > > >  {
+> > > >       struct mhi_net_dev *mhi_netdev = netdev_priv(ndev);
+> > > > +     unsigned int qsz = mhi_netdev->rx_queue_sz;
+> > > >
+> > > > -     /* Feed the rx buffer pool */
+> > > > -     schedule_delayed_work(&mhi_netdev->rx_refill, 0);
+> > > > +     if (rx_refill_level >= 100)
+> > > > +             mhi_netdev->rx_refill_level = 1;
+> > > > +     else
+> > > > +             mhi_netdev->rx_refill_level = qsz - qsz *
+> > > > rx_refill_level / 100;
+> > >
+> > > So you're switching from 50% fill level to 70%. Are you sure that's
+> > > not the reason the performance gets better? Did you experiments
+> > > with higher fill levels?
+> >
+> > No, I've tested both levels with the two solutions, It's just that
+> > after experiment, high throughput is a bit more stable with 70%. So I
+> > can revert back to 50% to avoid confusion and keep that for a
+> > subsequent change.
+>
+> I'm not fussed about that - it would be good tho to have the numbers in
+> comparisons for the same fill levels. Otherwise comparing workq at 50%
+> vs thread at 70% is changing two variables at the same time.
 
->
-> [1]
-> https://elixir.bootlin.com/linux/v5.10.1/source/drivers/iommu/dma-iommu.c#L782
->
-> > is always enforced. Since the device is supposed to be behind an IOMMU
-> > this should have little to none practical consequences beyond making the
-> > driver not rely on a particular behavior of the SG implementation.
-> >
-> > Reported-by: Tomasz Figa <tfiga@chromium.org>
-> > Signed-off-by: Alexandre Courbot <acourbot@chromium.org>
-> > ---
-> > Hi everyone,
-> >
-> > It probably doesn't hurt to fix this issue before some actual issue happens.
-> > I have tested this patch on Chrome OS and playback was just as fine as with
-> > the SG ops.
-> >
-> >  drivers/media/platform/Kconfig              | 2 +-
-> >  drivers/media/platform/qcom/venus/helpers.c | 9 ++-------
-> >  drivers/media/platform/qcom/venus/vdec.c    | 6 +++---
-> >  drivers/media/platform/qcom/venus/venc.c    | 6 +++---
-> >  4 files changed, 9 insertions(+), 14 deletions(-)
-> >
-> > diff --git a/drivers/media/platform/Kconfig b/drivers/media/platform/Kconfig
-> > index 35a18d388f3f..d9d7954111f2 100644
-> > --- a/drivers/media/platform/Kconfig
-> > +++ b/drivers/media/platform/Kconfig
-> > @@ -533,7 +533,7 @@ config VIDEO_QCOM_VENUS
-> >       depends on INTERCONNECT || !INTERCONNECT
-> >       select QCOM_MDT_LOADER if ARCH_QCOM
-> >       select QCOM_SCM if ARCH_QCOM
-> > -     select VIDEOBUF2_DMA_SG
-> > +     select VIDEOBUF2_DMA_CONTIG
-> >       select V4L2_MEM2MEM_DEV
-> >       help
-> >         This is a V4L2 driver for Qualcomm Venus video accelerator
-> > diff --git a/drivers/media/platform/qcom/venus/helpers.c b/drivers/media/platform/qcom/venus/helpers.c
-> > index 50439eb1ffea..859d260f002b 100644
-> > --- a/drivers/media/platform/qcom/venus/helpers.c
-> > +++ b/drivers/media/platform/qcom/venus/helpers.c
-> > @@ -7,7 +7,7 @@
-> >  #include <linux/mutex.h>
-> >  #include <linux/slab.h>
-> >  #include <linux/kernel.h>
-> > -#include <media/videobuf2-dma-sg.h>
-> > +#include <media/videobuf2-dma-contig.h>
-> >  #include <media/v4l2-mem2mem.h>
-> >  #include <asm/div64.h>
-> >
-> > @@ -1284,14 +1284,9 @@ int venus_helper_vb2_buf_init(struct vb2_buffer *vb)
-> >       struct venus_inst *inst = vb2_get_drv_priv(vb->vb2_queue);
-> >       struct vb2_v4l2_buffer *vbuf = to_vb2_v4l2_buffer(vb);
-> >       struct venus_buffer *buf = to_venus_buffer(vbuf);
-> > -     struct sg_table *sgt;
-> > -
-> > -     sgt = vb2_dma_sg_plane_desc(vb, 0);
-> > -     if (!sgt)
-> > -             return -EFAULT;
-> >
-> >       buf->size = vb2_plane_size(vb, 0);
-> > -     buf->dma_addr = sg_dma_address(sgt->sgl);
->
-> Can we do it:
->
->         if (WARN_ON(sgt->nents > 1))
->                 return -EFAULT;
->
-> I understand that logically using dma-sg when the flat layout is
-> expected by the hardware is wrong, but I haven't seen issues until now.
->
-> > +     buf->dma_addr = vb2_dma_contig_plane_dma_addr(vb, 0);
-> >
-> >       if (vb->type == V4L2_BUF_TYPE_VIDEO_CAPTURE_MPLANE)
-> >               list_add_tail(&buf->reg_list, &inst->registeredbufs);
-> > diff --git a/drivers/media/platform/qcom/venus/vdec.c b/drivers/media/platform/qcom/venus/vdec.c
-> > index 8488411204c3..3fb277c81aca 100644
-> > --- a/drivers/media/platform/qcom/venus/vdec.c
-> > +++ b/drivers/media/platform/qcom/venus/vdec.c
-> > @@ -13,7 +13,7 @@
-> >  #include <media/v4l2-event.h>
-> >  #include <media/v4l2-ctrls.h>
-> >  #include <media/v4l2-mem2mem.h>
-> > -#include <media/videobuf2-dma-sg.h>
-> > +#include <media/videobuf2-dma-contig.h>
-> >
-> >  #include "hfi_venus_io.h"
-> >  #include "hfi_parser.h"
-> > @@ -1461,7 +1461,7 @@ static int m2m_queue_init(void *priv, struct vb2_queue *src_vq,
-> >       src_vq->io_modes = VB2_MMAP | VB2_DMABUF;
-> >       src_vq->timestamp_flags = V4L2_BUF_FLAG_TIMESTAMP_COPY;
-> >       src_vq->ops = &vdec_vb2_ops;
-> > -     src_vq->mem_ops = &vb2_dma_sg_memops;
-> > +     src_vq->mem_ops = &vb2_dma_contig_memops;
-> >       src_vq->drv_priv = inst;
-> >       src_vq->buf_struct_size = sizeof(struct venus_buffer);
-> >       src_vq->allow_zero_bytesused = 1;
-> > @@ -1475,7 +1475,7 @@ static int m2m_queue_init(void *priv, struct vb2_queue *src_vq,
-> >       dst_vq->io_modes = VB2_MMAP | VB2_DMABUF;
-> >       dst_vq->timestamp_flags = V4L2_BUF_FLAG_TIMESTAMP_COPY;
-> >       dst_vq->ops = &vdec_vb2_ops;
-> > -     dst_vq->mem_ops = &vb2_dma_sg_memops;
-> > +     dst_vq->mem_ops = &vb2_dma_contig_memops;
-> >       dst_vq->drv_priv = inst;
-> >       dst_vq->buf_struct_size = sizeof(struct venus_buffer);
-> >       dst_vq->allow_zero_bytesused = 1;
-> > diff --git a/drivers/media/platform/qcom/venus/venc.c b/drivers/media/platform/qcom/venus/venc.c
-> > index 1c61602c5de1..a09550cd1dba 100644
-> > --- a/drivers/media/platform/qcom/venus/venc.c
-> > +++ b/drivers/media/platform/qcom/venus/venc.c
-> > @@ -10,7 +10,7 @@
-> >  #include <linux/pm_runtime.h>
-> >  #include <linux/slab.h>
-> >  #include <media/v4l2-mem2mem.h>
-> > -#include <media/videobuf2-dma-sg.h>
-> > +#include <media/videobuf2-dma-contig.h>
-> >  #include <media/v4l2-ioctl.h>
-> >  #include <media/v4l2-event.h>
-> >  #include <media/v4l2-ctrls.h>
-> > @@ -1001,7 +1001,7 @@ static int m2m_queue_init(void *priv, struct vb2_queue *src_vq,
-> >       src_vq->io_modes = VB2_MMAP | VB2_USERPTR | VB2_DMABUF;
-> >       src_vq->timestamp_flags = V4L2_BUF_FLAG_TIMESTAMP_COPY;
-> >       src_vq->ops = &venc_vb2_ops;
-> > -     src_vq->mem_ops = &vb2_dma_sg_memops;
-> > +     src_vq->mem_ops = &vb2_dma_contig_memops;
-> >       src_vq->drv_priv = inst;
-> >       src_vq->buf_struct_size = sizeof(struct venus_buffer);
-> >       src_vq->allow_zero_bytesused = 1;
-> > @@ -1017,7 +1017,7 @@ static int m2m_queue_init(void *priv, struct vb2_queue *src_vq,
-> >       dst_vq->io_modes = VB2_MMAP | VB2_USERPTR | VB2_DMABUF;
-> >       dst_vq->timestamp_flags = V4L2_BUF_FLAG_TIMESTAMP_COPY;
-> >       dst_vq->ops = &venc_vb2_ops;
-> > -     dst_vq->mem_ops = &vb2_dma_sg_memops;
-> > +     dst_vq->mem_ops = &vb2_dma_contig_memops;
-> >       dst_vq->drv_priv = inst;
-> >       dst_vq->buf_struct_size = sizeof(struct venus_buffer);
-> >       dst_vq->allow_zero_bytesused = 1;
-> >
->
-> --
-> regards,
-> Stan
+Yes, anyway, I'm going to skip the new kthread from the series, and
+I'll resubmit once I get consolidated numbers with proper comparison.
+
+Thanks,
+Loic
