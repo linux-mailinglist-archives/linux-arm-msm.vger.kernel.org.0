@@ -2,148 +2,114 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 1F6532DB28B
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Dec 2020 18:29:05 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 560AD2DB2E8
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Dec 2020 18:45:28 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729584AbgLOR1D (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 15 Dec 2020 12:27:03 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41526 "EHLO
+        id S1730399AbgLORna (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 15 Dec 2020 12:43:30 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44126 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729673AbgLOR0r (ORCPT
+        with ESMTP id S1729206AbgLORn3 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 15 Dec 2020 12:26:47 -0500
-Received: from mail-vs1-xe41.google.com (mail-vs1-xe41.google.com [IPv6:2607:f8b0:4864:20::e41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 74A4EC06179C
-        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Dec 2020 09:26:07 -0800 (PST)
-Received: by mail-vs1-xe41.google.com with SMTP id p7so11405077vsf.8
-        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Dec 2020 09:26:07 -0800 (PST)
+        Tue, 15 Dec 2020 12:43:29 -0500
+Received: from mail-ej1-x641.google.com (mail-ej1-x641.google.com [IPv6:2a00:1450:4864:20::641])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 34EBAC06179C
+        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Dec 2020 09:42:49 -0800 (PST)
+Received: by mail-ej1-x641.google.com with SMTP id j22so10922974eja.13
+        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Dec 2020 09:42:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
+        d=baylibre-com.20150623.gappssmtp.com; s=20150623;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=sbuHr3bWDR9/2Yf2WWZApdlIvtrOaBHBHilDLviF1YE=;
-        b=GuxshamyJReJ1Dqcd9r8MK6EP8K6a9yduJcQYWq1oc3UIrRTq9pxC/k097zQJV4NiZ
-         VJrp2v9SAVdgug16WdUrxWDlfN96HKMz2nti01LtQV1oCOcq8j3Et80z61pq33bQ5dV9
-         aUIprRoDAg8SS51d/0PSFbJVuh+LR/sK9bkCs=
+        bh=OyPmNltZPbkGiq8ZU3o70mtt59kIUHa7iWyeMCJtAkM=;
+        b=Tufg4rnymzNGJ4FWuhTaQkgREaEC6hpftCK9k82W0d40B1tsKbE0xyv8fZgtbdoXi/
+         MERjB/URiKpEZ36bB0stcV3RDsxy6vIhlPAX683NQmqd+MXJ5XMBprfEXf3uXqcl/FM4
+         4IfPF9yxOwTN8PhFmAGDPGJMd6leaPwLsfO/zo+2cbce9YiCL17SFguxblJoXsbZp9k8
+         rmRsmaWOHgws7YnDAAEhQDpj4Kx1hx7ot2pCLO34Go6Qll51odyA3ZqdyqzlHHG5xZGv
+         u4iolhTaxS1r8A97MRe9/mtpPSSqvqnseyMuuRA4Vxx5W6PdInZQsJYFl+jMx6H+rMmS
+         ktGw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=sbuHr3bWDR9/2Yf2WWZApdlIvtrOaBHBHilDLviF1YE=;
-        b=haJq5JUVceozm2+21ivXOunQlmAYBD1pkajs+xP08A150veVMsq9EBl3YmQxSSZNFz
-         BUxPDP1SlSPHfYlhvIo49b7hNhraGvTOdudtMGqyokTqJqLv3nmBVhjTo8k7qCYMSNzu
-         GJaCaz9qvPIT+cgHk1A5mchQxqeJM8aOpyfxpKig/YJiSY8jSn1wDadLQVVVNSTbAEBf
-         2xzUkjhyBL/jkf8RHVSywxf0bixr08fvsXDxsJTIyevNbkaH7I/xIv4V++YSvEyReK1K
-         eS3H9wxZIZrpAdrnSV4fXGAVi3YtBzdySnRWvguQAuf4n5vVHAm9tpCbFGkIzjR0+8sO
-         9W0Q==
-X-Gm-Message-State: AOAM530qYry6GXF57yTyisVutoQ7JT/Uisym/c8Ryd0M1qMGJwnpFviU
-        Y0bnR2gnP67zxowehnXGJCFoJn+Miu/BCg==
-X-Google-Smtp-Source: ABdhPJxqmIqwJdW144wqdUlEMLke2YzXFodr5giqLPgyHjtst5I2XUR8YWd2g3o57DjeIS2uxZbv/Q==
-X-Received: by 2002:a05:6102:9c2:: with SMTP id g2mr27028577vsi.35.1608053165912;
-        Tue, 15 Dec 2020 09:26:05 -0800 (PST)
-Received: from mail-vs1-f48.google.com (mail-vs1-f48.google.com. [209.85.217.48])
-        by smtp.gmail.com with ESMTPSA id d84sm2903097vkd.29.2020.12.15.09.26.04
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 15 Dec 2020 09:26:04 -0800 (PST)
-Received: by mail-vs1-f48.google.com with SMTP id q10so11387244vsr.13
-        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Dec 2020 09:26:04 -0800 (PST)
-X-Received: by 2002:a67:70c6:: with SMTP id l189mr28486557vsc.34.1608053163642;
- Tue, 15 Dec 2020 09:26:03 -0800 (PST)
+        bh=OyPmNltZPbkGiq8ZU3o70mtt59kIUHa7iWyeMCJtAkM=;
+        b=CptU3V2NpaQUggRAd9DEs1sAgciOF6Ecn8IB01KsqJT3IR5egyc61AzS/feelx2gw6
+         gPFfttLotsRlINQdB1rXD4TskI1niHMtm3XqGmlXKCkV82UGh04hG3uFiX9pyBMozdcW
+         yH4HF9sVd2PyxutY+MHj5F3TzhDJTmbQ1hmzRnK0JLLFzNK8+Bv4Im08F5WIgzveNMPC
+         CFsgxohRyapfxX2VWoZQNSQLLUPjq2xxcMS9U+4WMkPLI5eBAtJVSjkqH2FXAgd50BRw
+         EhylR3ObdkTmEDlY+/6SuzTMzKr03AaqAEd2Y00T2dwsGAuhlLRQ59gg7SR1MLI+Mg/1
+         /z+Q==
+X-Gm-Message-State: AOAM531cjZPyYM5JmXKM8PTB1z6zFOCkRtM/pfTeKv1tS1085Ag6NcJa
+        1lPodEVWMoj2Hg0fBcbF20DUYUdLlG9xPq1G1bvvaA==
+X-Google-Smtp-Source: ABdhPJyVvqSTbNHHHW4kF1g4sRUiqfgJZk2qzLdhyM84F2Np4FiwE7Sa9FtzuZAZg2/pNwrNQjMts+ItUsNxXSIVUC4=
+X-Received: by 2002:a17:906:d8dc:: with SMTP id re28mr27995623ejb.168.1608054167838;
+ Tue, 15 Dec 2020 09:42:47 -0800 (PST)
 MIME-Version: 1.0
-References: <20201214162937.1.I99ee04f0cb823415df59bd4f550d6ff5756e43d6@changeid>
- <20201214162937.2.Ibade998ed587e070388b4bf58801f1107a40eb53@changeid> <160800104145.1580929.10562113130948868794@swboyd.mtv.corp.google.com>
-In-Reply-To: <160800104145.1580929.10562113130948868794@swboyd.mtv.corp.google.com>
-From:   Doug Anderson <dianders@chromium.org>
-Date:   Tue, 15 Dec 2020 09:25:51 -0800
-X-Gmail-Original-Message-ID: <CAD=FV=UT0+BKrUPbATGCbO1fmwwmrKbSy5c+mW-61wS1y6TtJw@mail.gmail.com>
-Message-ID: <CAD=FV=UT0+BKrUPbATGCbO1fmwwmrKbSy5c+mW-61wS1y6TtJw@mail.gmail.com>
-Subject: Re: [PATCH 2/2] spi: spi-geni-qcom: Really ensure the previous xfer
- is done before new one
-To:     Stephen Boyd <swboyd@chromium.org>
-Cc:     Mark Brown <broonie@kernel.org>, msavaliy@qti.qualcomm.com,
-        Akash Asthana <akashast@codeaurora.org>,
-        Roja Rani Yarubandi <rojay@codeaurora.org>,
-        Alok Chauhan <alokc@codeaurora.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Dilip Kota <dkota@codeaurora.org>,
-        Girish Mahadevan <girishm@codeaurora.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+References: <20201215170308.2037624-1-bjorn.andersson@linaro.org>
+In-Reply-To: <20201215170308.2037624-1-bjorn.andersson@linaro.org>
+From:   Bartosz Golaszewski <bgolaszewski@baylibre.com>
+Date:   Tue, 15 Dec 2020 18:42:36 +0100
+Message-ID: <CAMpxmJU0XWxiYr716MNGnORJJJ-czuBGWNnFTa5oBTUK4uVheQ@mail.gmail.com>
+Subject: Re: [PATCH] gpiolib: Allow name duplicates of "" and "NC"
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Linus Walleij <linus.walleij@linaro.org>,
+        linux-gpio <linux-gpio@vger.kernel.org>,
         LKML <linux-kernel@vger.kernel.org>,
-        linux-spi <linux-spi@vger.kernel.org>
+        linux-arm-msm@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
-
-On Mon, Dec 14, 2020 at 6:57 PM Stephen Boyd <swboyd@chromium.org> wrote:
+On Tue, Dec 15, 2020 at 6:02 PM Bjorn Andersson
+<bjorn.andersson@linaro.org> wrote:
 >
-> Quoting Douglas Anderson (2020-12-14 16:30:19)
-> > diff --git a/drivers/spi/spi-geni-qcom.c b/drivers/spi/spi-geni-qcom.c
-> > index 6f736e94e9f4..5ef2e9f38ac9 100644
-> > --- a/drivers/spi/spi-geni-qcom.c
-> > +++ b/drivers/spi/spi-geni-qcom.c
-> > @@ -145,12 +145,49 @@ static void handle_fifo_timeout(struct spi_master *spi,
-> >                 dev_err(mas->dev, "Failed to cancel/abort m_cmd\n");
-> >  }
-> >
-> > +static int spi_geni_check_busy(struct spi_geni_master *mas)
+> Not all GPIO pins are exposed to the world and this is typically
+> described by not giving these lines particular names, commonly "" or
+> "NC".
 >
-> Maybe spi_geni_is_busy() and return bool?
-
-Yeah, that's cleaner, thanks.
-
-
-> > +       spin_lock_irq(&mas->lock);
-> > +       m_irq = readl(se->base + SE_GENI_M_IRQ_STATUS);
-> > +       m_irq_en = readl(se->base + SE_GENI_M_IRQ_EN);
-> > +       spin_unlock_irq(&mas->lock);
-> > +
-> > +       if (m_irq & m_irq_en) {
+> With the recent introduction of '2cd64ae98f35 ("gpiolib: Disallow
+> identical line names in the same chip")' any gpiochip with multiple such
+> pins will refuse to probe.
 >
-> Is this really "busy" though? If we canceled something out then maybe
-> the irq has fired but what if it's to tell us that we have some
-> available space in the TX fifo? Does that really matter? It seems like
-> if we have an RX irq when we're starting a transfer that might be bad
-> too but we could forcibly clear that by acking it here and then setting
-> the fifo word count that we're expecting for rx?
+> Fix this by treating "" and "NC" as "no name specified" in
+> gpio_name_to_desc()
 >
-> Put another way, why isn't this driver looking at the TX and RX fifo
-> status registers more than in one place?
+> Fixes: 2cd64ae98f35 ("gpiolib: Disallow identical line names in the same chip")
+> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> ---
+>
+> The introduction of 2cd64ae98f35 breaks pretty much all Qualcomm boards and
+> grepping the DT tree indicates that other vendors will have the same problem.
+>
+> In addition to this the am335x-* boards will also needs "[NC]", "[ethernet]",
+> "[emmc"], "[i2c0]", "[SYSBOOT]" and "[JTAG]" added to this list to allow
+> booting v5.11 with the past and present dtb/dts files.
+>
+>  drivers/gpio/gpiolib.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/drivers/gpio/gpiolib.c b/drivers/gpio/gpiolib.c
+> index b3340ba68471..407ba79ae571 100644
+> --- a/drivers/gpio/gpiolib.c
+> +++ b/drivers/gpio/gpiolib.c
+> @@ -302,7 +302,7 @@ static struct gpio_desc *gpio_name_to_desc(const char * const name)
+>         struct gpio_device *gdev;
+>         unsigned long flags;
+>
+> -       if (!name)
+> +       if (!name || !strcmp(name, "") || !strcmp(name, "NC"))
+>                 return NULL;
+>
+>         spin_lock_irqsave(&gpio_lock, flags);
+> --
+> 2.29.2
+>
 
-I'm not sure I understand all your concerns.  Can you clarify?  In
-case it helps, I'll add a few thoughts here:
+I have a bad feeling about this. This opens the door for all kinds of
+exceptions: "N/A", "none" etc. Depending on whose boards are getting
+broken.
 
-1. SPI is a controller clocked protocol and this is the driver for the
-controller.  There is no way to get a RX IRQ unless we initiate it.
+If non-uniqueness of names is needed then let's better revert 2cd64ae98f35.
 
-2. The code always takes care to make sure that when we're done with a
-transfer that we disable the TX watermark.  This means we won't get
-any more interrupts.
-
-The only time an interrupt could still be pending when we start a new
-transfer is:
-
-a) If the interrupt handler is still running on another CPU.  In that
-case it will have the spinlock and won't release it until it clears
-the interrupts.
-
-b) If we had a timeout on the previous transfer and then got timeouts
-sending the cancel and abort.
-
-In general when we're starting a new transfer we assume that we can
-program the hardware willy-nilly.  If there's some chance something
-else is happening (or our interrupt could go off) then it breaks that
-whole model.
-
-I've addressed all your other concerns and I'm ready to send out v2,
-but I'll hold off until you confirm that the above explanation
-satisfies your questions.  If you can think of any extra comments
-somewhere that would help document that better I'm happy to add them
-into the commit or commit message.
-
-
--Doug
+Bartosz
