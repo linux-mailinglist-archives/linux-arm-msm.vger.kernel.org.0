@@ -2,225 +2,134 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id CE8DB2DB00C
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Dec 2020 16:29:36 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 788982DB040
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Dec 2020 16:42:38 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730068AbgLOP2d (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 15 Dec 2020 10:28:33 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51460 "EHLO
+        id S1730202AbgLOPkx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 15 Dec 2020 10:40:53 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53392 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730046AbgLOP20 (ORCPT
+        with ESMTP id S1726844AbgLOPkv (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 15 Dec 2020 10:28:26 -0500
-Received: from mail-ot1-x341.google.com (mail-ot1-x341.google.com [IPv6:2607:f8b0:4864:20::341])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 367CEC0617A6
-        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Dec 2020 07:27:43 -0800 (PST)
-Received: by mail-ot1-x341.google.com with SMTP id f16so19680434otl.11
-        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Dec 2020 07:27:43 -0800 (PST)
+        Tue, 15 Dec 2020 10:40:51 -0500
+Received: from mail-pl1-x641.google.com (mail-pl1-x641.google.com [IPv6:2607:f8b0:4864:20::641])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 375C2C0617B0;
+        Tue, 15 Dec 2020 07:40:11 -0800 (PST)
+Received: by mail-pl1-x641.google.com with SMTP id j1so11236717pld.3;
+        Tue, 15 Dec 2020 07:40:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=Ubj6GBiBWffrpQuRnjuSIK7sR8y1WNEeR6KmqeGc0/Y=;
-        b=YHd2k42KNWO7u7OdCWlSkeRk4DOkEfVl4V01vBj8t/uOXoFSMjuB+OJxYtt6ErIjVH
-         nPFXMhAAFPXKvjyHp6HarSa5M7uWfpLZeax2uxO+er1Ud6xNLYXiM/tJ/3BAKWYnRsb7
-         ZYHh8E3yzxyOuQ53CLXHBV389Ch3u4vRXpKaTBzyjSGRcSouGI7OkcFxkMBI0ZAV30rb
-         EhJKy0natDqjFkVSolIUjnyBaqmtctTKOHT2ZKPvLv9lEiL7EkEsrt8fOHnDbl8HOVhA
-         2YSZdRgPBftDq/3Tl7PF9cyVOHZV13kMcA0oljfhTLf1+kRjM/0riD1pMnlQnTmxcC9X
-         5dug==
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=CUUB0IoWATxzada4ikDi7RLq5JzMboA0EYEjnfSTamo=;
+        b=QPGOCcKZlmf1rjtVYZP9Smv6yPTlv0/rbiED5VUUf0XswRlwwB9NsinuplahUu1L8N
+         qDuQuWRfYJqaaam6KW45R53YuVIBOSNZF4M7gygz7R66yiDen/DMlNVqEz415ya5BwsI
+         z890OkTuLV9DQ05pNJP1X3mwAD5GyYFK7043xSZxIaj9rrS11oIKn6FNhuRPBFPQcc9T
+         AhHn3alnDhvjIOKoWb7Gd3t1XqPe9GeHnh3i3nB5jYYAfoJbMvkn9zpl4AndJXsfV/VO
+         fZqxH4VaTXiSplYYcPxM6p+8fJppYTyhMJ/1no1m/yrnODUBj3Mp0QVj+xVHadqlsZp+
+         6cPA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=Ubj6GBiBWffrpQuRnjuSIK7sR8y1WNEeR6KmqeGc0/Y=;
-        b=RxS+uKd4R/Y+PhueZjIRRzpHe/nYm8yQIO7pHm9CgaH2M7u/D6CWdBU0+wnnAt2Mzk
-         2/ImNA4m5TcZJ3XXxUl5IAzKmwzD5I9epOXzwwdRv5ylsOpxvnfDyZdxbhKtPwJ5Tl2f
-         9vIOrTLM3dwTpVyZGB9Y1RflgiZL9f2UVkpJAQj8IDAiM7lWEZXuX4y9T64fZ+TE1oJ5
-         pyInysaZta+ETA8KVKPuaRimPiliT5JcFMBma7DP3e9DPdNAgagzVbdvE/1aeoqAmr0J
-         pTH1TSpbIrgbgdbxfxlu0A48it4kATgSV8ZOvfY9I1lg52P4S9gGoYGio9Oh+m1u9gQc
-         OrKQ==
-X-Gm-Message-State: AOAM532zE5uYa6RDWGc8DsOWWgzfQqDKHDoxY2Aoi0u16F4zBFhgsE4R
-        cGrzOcVmaNJRYgCa+2ivsVlgmg==
-X-Google-Smtp-Source: ABdhPJzvvrIQivpab1olOGDXyCG3crfKnbQLP606OZxYPSqO9krT+cWip/YGPD1AoUU9kLbwKpQcTQ==
-X-Received: by 2002:a9d:3b82:: with SMTP id k2mr23791989otc.294.1608046062508;
-        Tue, 15 Dec 2020 07:27:42 -0800 (PST)
-Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id f14sm5108995oib.40.2020.12.15.07.27.41
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 15 Dec 2020 07:27:41 -0800 (PST)
-Date:   Tue, 15 Dec 2020 09:27:40 -0600
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>, Rob Herring <robh+dt@kernel.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
-Subject: Re: [PATCH v4] dt-bindings: soc: qcom: convert qcom,smem bindings to
- yaml
-Message-ID: <X9jV7IFR4w7jC3KB@builder.lan>
-References: <20201215104537.768914-1-dmitry.baryshkov@linaro.org>
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=CUUB0IoWATxzada4ikDi7RLq5JzMboA0EYEjnfSTamo=;
+        b=d063JZw/Qr6RrLH05g2iFK5zq+Icdft1uHsZFvjy6Ls4m4lMdlXHj87iOATBAX0oG2
+         oTcyA+8CiU3Hu5tF58OzFfn7CZ+s3wjc3uTtjwvOaYVZa9VkkUWkE9W6euBGGfVmokSl
+         PGf2tgtjH/h657EOZ11wXEhPkeb++L0vDlTVBzVEcyl9OiJpDjXrvqlR8dbvptQZHskH
+         Icq8YxRQTtaOn4vXktv0ojdM0vE8rbobqM2s2nGOV9nqWYOPGxx+UCUYZOfNFyZsOx/5
+         pZdpiyWDgjFInnspE7qcRrs7bMrbl8tQbaBQ5EE/9ZRJzru938EMjKqEEpV1rRqNwHn1
+         93MA==
+X-Gm-Message-State: AOAM530DxDb+cp/vvIQaL4tlQrkp6plwXZoQz7mRx6vKqItv96HMIpQR
+        ZeigtOQ2LOilTw7um2jSIA8=
+X-Google-Smtp-Source: ABdhPJzUgI0Cw5WRKLDrmzpd9lu/NDlzdUtIzzf+z0qjPuLoipMGmeqs6rslg7SawOncNujA6+kdHQ==
+X-Received: by 2002:a17:90a:dc18:: with SMTP id i24mr30737250pjv.118.1608046810646;
+        Tue, 15 Dec 2020 07:40:10 -0800 (PST)
+Received: from [10.230.29.166] ([192.19.223.252])
+        by smtp.gmail.com with ESMTPSA id w2sm25321830pfb.104.2020.12.15.07.40.08
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 15 Dec 2020 07:40:09 -0800 (PST)
+Subject: Re: [PATCH v2 1/2] arm64: dts: broadcom: clear the warnings caused by
+ empty dma-ranges
+To:     Arnd Bergmann <arnd@kernel.org>, Ray Jui <ray.jui@broadcom.com>
+Cc:     Florian Fainelli <f.fainelli@gmail.com>,
+        devicetree <devicetree@vger.kernel.org>,
+        linux-kernel <linux-kernel@vger.kernel.org>,
+        Arnd Bergmann <arnd@arndb.de>,
+        Scott Branden <sbranden@broadcom.com>,
+        Ray Jui <rjui@broadcom.com>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        bcm-kernel-feedback-list <bcm-kernel-feedback-list@broadcom.com>,
+        Zhen Lei <thunder.leizhen@huawei.com>,
+        linux-arm-kernel <linux-arm-kernel@lists.infradead.org>,
+        Bharat Gooty <bharat.gooty@broadcom.com>
+References: <20201016090833.1892-1-thunder.leizhen@huawei.com>
+ <20201016090833.1892-2-thunder.leizhen@huawei.com>
+ <20201128045328.2411772-1-f.fainelli@gmail.com>
+ <CAK8P3a1_5RgcPz+bgo1bbUBk8NTJd=1-Y5-=CsQYkFgLfTE3_A@mail.gmail.com>
+ <9c6c6b7e-8c39-8c49-5c87-9b560c027841@broadcom.com>
+ <CAK8P3a2XYk8D80XARrpUSBHk1yye3KHXOdaQge4HNSZZOC=xKw@mail.gmail.com>
+From:   Florian Fainelli <f.fainelli@gmail.com>
+Message-ID: <cd36cdd4-8cec-b688-9d65-3170e2943bf8@gmail.com>
+Date:   Tue, 15 Dec 2020 07:40:07 -0800
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Firefox/78.0 Thunderbird/78.5.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20201215104537.768914-1-dmitry.baryshkov@linaro.org>
+In-Reply-To: <CAK8P3a2XYk8D80XARrpUSBHk1yye3KHXOdaQge4HNSZZOC=xKw@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue 15 Dec 04:45 CST 2020, Dmitry Baryshkov wrote:
 
-> Convert soc/qcom/qcom,smem.txt bindings to YAML format.
-> 
 
-Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+On 12/14/2020 11:46 AM, Arnd Bergmann wrote:
+> On Mon, Dec 14, 2020 at 8:09 PM Ray Jui <ray.jui@broadcom.com> wrote:
+>> On 11/28/2020 1:58 AM, Arnd Bergmann wrote:
+>>> On Sat, Nov 28, 2020 at 5:53 AM Florian Fainelli <f.fainelli@gmail.com> wrote:
+>>>>
+>>>> On Fri, 16 Oct 2020 17:08:32 +0800, Zhen Lei <thunder.leizhen@huawei.com> wrote:
+>>>>> The scripts/dtc/checks.c requires that the node have empty "dma-ranges"
+>>>>> property must have the same "#address-cells" and "#size-cells" values as
+>>>>> the parent node. Otherwise, the following warnings is reported:
+>>>>>
+>>>>> arch/arm64/boot/dts/broadcom/stingray/stingray-usb.dtsi:7.3-14: Warning \
+>>>>> (dma_ranges_format): /usb:dma-ranges: empty "dma-ranges" property but \
+>>>>> its #address-cells (1) differs from / (2)
+>>>>> arch/arm64/boot/dts/broadcom/stingray/stingray-usb.dtsi:7.3-14: Warning \
+>>>>> (dma_ranges_format): /usb:dma-ranges: empty "dma-ranges" property but \
+>>>>> its #size-cells (1) differs from / (2)
+>>>>>
+>>>>> Arnd Bergmann figured out why it's necessary:
+>>>>> Also note that the #address-cells=<1> means that any device under
+>>>>> this bus is assumed to only support 32-bit addressing, and DMA will
+>>>>> have to go through a slow swiotlb in the absence of an IOMMU.
+>>>>>
+>>>>> Suggested-by: Arnd Bergmann <arnd@arndb.de>
+>>>>> Signed-off-by: Zhen Lei <thunder.leizhen@huawei.com>
+>>>>> ---
+>>>>
+>>>> Applied to devicetree-arm64/next, thanks!
+>>>
+>>> The notification may have gone missing, but I had merged it into v5.10-fixes
+>>> already, and as of today, it's in mainline, so you can drop it from your
+>>> next branch, or just leave it in if you want to avoid taking things out of
+>>> your tree.
+>>
+>> It looks like this patch might have caused a regression on Stingray USB.
+>> Bharat, could you please confirm?
+> 
+> Well, this is what I had asked about originally, I assumed that
+> Florian had asked someone with access to the datasheet.
 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
->  .../bindings/soc/qcom/qcom,smem.txt           | 57 ---------------
->  .../bindings/soc/qcom/qcom,smem.yaml          | 72 +++++++++++++++++++
->  2 files changed, 72 insertions(+), 57 deletions(-)
->  delete mode 100644 Documentation/devicetree/bindings/soc/qcom/qcom,smem.txt
->  create mode 100644 Documentation/devicetree/bindings/soc/qcom/qcom,smem.yaml
-> 
-> diff --git a/Documentation/devicetree/bindings/soc/qcom/qcom,smem.txt b/Documentation/devicetree/bindings/soc/qcom/qcom,smem.txt
-> deleted file mode 100644
-> index 9326cdf6e1b1..000000000000
-> --- a/Documentation/devicetree/bindings/soc/qcom/qcom,smem.txt
-> +++ /dev/null
-> @@ -1,57 +0,0 @@
-> -Qualcomm Shared Memory Manager binding
-> -
-> -This binding describes the Qualcomm Shared Memory Manager, used to share data
-> -between various subsystems and OSes in Qualcomm platforms.
-> -
-> -- compatible:
-> -	Usage: required
-> -	Value type: <stringlist>
-> -	Definition: must be:
-> -		    "qcom,smem"
-> -
-> -- memory-region:
-> -	Usage: required
-> -	Value type: <prop-encoded-array>
-> -	Definition: handle to memory reservation for main SMEM memory region.
-> -
-> -- qcom,rpm-msg-ram:
-> -	Usage: required
-> -	Value type: <prop-encoded-array>
-> -	Definition: handle to RPM message memory resource
-> -
-> -- hwlocks:
-> -	Usage: required
-> -	Value type: <prop-encoded-array>
-> -	Definition: reference to a hwspinlock used to protect allocations from
-> -		    the shared memory
-> -
-> -= EXAMPLE
-> -The following example shows the SMEM setup for MSM8974, with a main SMEM region
-> -at 0xfa00000 and the RPM message ram at 0xfc428000:
-> -
-> -	reserved-memory {
-> -		#address-cells = <1>;
-> -		#size-cells = <1>;
-> -		ranges;
-> -
-> -		smem_region: smem@fa00000 {
-> -			reg = <0xfa00000 0x200000>;
-> -			no-map;
-> -		};
-> -	};
-> -
-> -	smem@fa00000 {
-> -		compatible = "qcom,smem";
-> -
-> -		memory-region = <&smem_region>;
-> -		qcom,rpm-msg-ram = <&rpm_msg_ram>;
-> -
-> -		hwlocks = <&tcsr_mutex 3>;
-> -	};
-> -
-> -	soc {
-> -		rpm_msg_ram: memory@fc428000 {
-> -			compatible = "qcom,rpm-msg-ram";
-> -			reg = <0xfc428000 0x4000>;
-> -		};
-> -	};
-> diff --git a/Documentation/devicetree/bindings/soc/qcom/qcom,smem.yaml b/Documentation/devicetree/bindings/soc/qcom/qcom,smem.yaml
-> new file mode 100644
-> index 000000000000..f7e17713b3d8
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/soc/qcom/qcom,smem.yaml
-> @@ -0,0 +1,72 @@
-> +# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
-> +%YAML 1.2
-> +---
-> +$id: "http://devicetree.org/schemas/soc/qcom/qcom,smem.yaml#"
-> +$schema: "http://devicetree.org/meta-schemas/core.yaml#"
-> +
-> +title: Qualcomm Shared Memory Manager binding
-> +
-> +maintainers:
-> +  - Andy Gross <agross@kernel.org>
-> +  - Bjorn Andersson <bjorn.andersson@linaro.org>
-> +
-> +description: |
-> +  This binding describes the Qualcomm Shared Memory Manager, used to share data
-> +  between various subsystems and OSes in Qualcomm platforms.
-> +
-> +properties:
-> +  compatible:
-> +    const: qcom,smem
-> +
-> +  memory-region:
-> +    maxItems: 1
-> +    description: handle to memory reservation for main SMEM memory region.
-> +
-> +  hwlocks:
-> +    maxItems: 1
-> +
-> +  qcom,rpm-msg-ram:
-> +    $ref: /schemas/types.yaml#/definitions/phandle
-> +    description: handle to RPM message memory resource
-> +
-> +required:
-> +  - compatible
-> +  - memory-region
-> +  - hwlocks
-> +
-> +additionalProperties: false
-> +
-> +examples:
-> +  - |
-> +    reserved-memory {
-> +        #address-cells = <1>;
-> +        #size-cells = <1>;
-> +        ranges;
-> +
-> +        smem_region: smem@fa00000 {
-> +            reg = <0xfa00000 0x200000>;
-> +            no-map;
-> +        };
-> +    };
-> +
-> +    smem {
-> +        compatible = "qcom,smem";
-> +
-> +        memory-region = <&smem_region>;
-> +        qcom,rpm-msg-ram = <&rpm_msg_ram>;
-> +
-> +        hwlocks = <&tcsr_mutex 3>;
-> +    };
-> +
-> +    soc {
-> +        #address-cells = <1>;
-> +        #size-cells = <1>;
-> +        ranges;
-> +
-> +        rpm_msg_ram: sram@fc428000 {
-> +            compatible = "qcom,rpm-msg-ram";
-> +            reg = <0xfc428000 0x4000>;
-> +        };
-> +    };
-> +
-> +...
-> -- 
-> 2.29.2
-> 
+It looks like we had some bad communication here, the notification email
+indicating that you had applied the patch did not make it through, and I
+failed to make you aware that I was waiting for some testing from Scott
+and Ray.
+-- 
+Florian
