@@ -2,161 +2,106 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 7CAA12DC5BA
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Dec 2020 18:52:29 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7A9912DC68F
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Dec 2020 19:34:09 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728224AbgLPRwJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 16 Dec 2020 12:52:09 -0500
-Received: from m43-15.mailgun.net ([69.72.43.15]:39487 "EHLO
-        m43-15.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727278AbgLPRwJ (ORCPT
+        id S1731048AbgLPSdg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 16 Dec 2020 13:33:36 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49804 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1731043AbgLPSdg (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 16 Dec 2020 12:52:09 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1608141105; h=Content-Transfer-Encoding: MIME-Version:
- Message-Id: Date: Subject: Cc: To: From: Sender;
- bh=j5jhJprTObWGrrzO7bLScPsPeoAqEcdBaw0JRAlx5eU=; b=HieHD5fSax4dniaGjXZUSAWEhbKRBVKVqFBwMqRK5X3EGHKTrv0Qk9+WxyA5kHPQnJMxCqWZ
- iEHaWQqTaZ8OZTLvHhSbBN/0SJ6ge2q1sC+ypDym/RYHwKyvE4TUo712IMTna7bFKOTt+xMK
- d5ZxQkZULDceqkFNLirmQ9P/Y8k=
-X-Mailgun-Sending-Ip: 69.72.43.15
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n05.prod.us-west-2.postgun.com with SMTP id
- 5fda490df5e9af65f86cda5b (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 16 Dec 2020 17:51:09
- GMT
-Sender: ilina=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 08747C433C6; Wed, 16 Dec 2020 17:51:09 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
-        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
-Received: from codeaurora.org (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: ilina)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 99046C433C6;
-        Wed, 16 Dec 2020 17:51:07 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 99046C433C6
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=ilina@codeaurora.org
-From:   Lina Iyer <ilina@codeaurora.org>
-To:     ulf.hansson@linaro.org, rjw@rjwysocki.net
-Cc:     linux-pm@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        Lina Iyer <ilina@codeaurora.org>
-Subject: [PATCH] PM / Domains: allow domain idle states to be disabled
-Date:   Wed, 16 Dec 2020 10:50:56 -0700
-Message-Id: <20201216175056.19554-1-ilina@codeaurora.org>
-X-Mailer: git-send-email 2.29.2
+        Wed, 16 Dec 2020 13:33:36 -0500
+Received: from mail-oi1-x22d.google.com (mail-oi1-x22d.google.com [IPv6:2607:f8b0:4864:20::22d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4D934C061794
+        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Dec 2020 10:32:56 -0800 (PST)
+Received: by mail-oi1-x22d.google.com with SMTP id s2so28614738oij.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Dec 2020 10:32:56 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=TOKrfljSwb0iquFcwhx16t0mlmb8z327F7siyfgd+Io=;
+        b=yd2cqrPLfduV1Hea+fTiIe+/9IkIEb6MKlQIilXuDL4916KjY5zK/R3iTzbUDPdN6Y
+         LRpSlA9st56gL6Hpw+u8O3sPlKB3aPyOu+Tghlrzn7j/4DOYqGl04UCbHqdMK2uLSxT4
+         zyEt0D4fi6/beYoXjvEb/zDZxfQhTFOKvIvtowB7eJR5cdFUU58CN7uHi8VhlrTK2IwF
+         da7AZZCsYZajEZ1Q9gV1DS4TMYLt1MwuFWJ6MdTtovrbdDiJON9cJY8fEFdmQISS2mpL
+         2pHMd83p47SRJN0l95Nc3w6SFV76WZR9gnVQCx+IP1Thu++ADUU8fhlRCLtoxYZSa0bK
+         VOfQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=TOKrfljSwb0iquFcwhx16t0mlmb8z327F7siyfgd+Io=;
+        b=Y3aJHNAdz5p0DbL188B+tG8NrF3TO6HXD8mltILxYccBcvkiPFu+boZsomPtkxgcEK
+         FCrKlNSASuOEOCBXL+VDGBXnYGZl9t4qir3isS6RbzTL7UxUfMlumG9NC7II/va/e2I5
+         UzOi8mispvBrHVvD1Jk0g/5gIM5dZR9JwwyvzyjV0kvc+j2UdXutiJO6sAxQmYSAuW8p
+         sHUXoCgMAHRbvDlOjM6Vstl5uhoVkPgjMcEh1JWaRp3OQd99pvDFE1H41YVwpf4umBeR
+         c1qdwiAH4JrLIb3pTc1qvhDqd/zbD6hVsiqho/pIGLrm0/W5oiPblpa4C7fCSg8Jo737
+         NuQQ==
+X-Gm-Message-State: AOAM532/l3W2Z1fStqfoBn1uwkAeJAc/Oa4yisldfwwrm/mAl+SJPY7z
+        9TA0UGvy+1ZCEaEuN2c+ZzMyFg==
+X-Google-Smtp-Source: ABdhPJwRU+MItydmtpCEjuBcCjGgBaYAvNj1wCz3tWiuHYbakckuOaLYeu9+147ay8nGxmUWevswhQ==
+X-Received: by 2002:aca:c0c6:: with SMTP id q189mr2738473oif.178.1608143575260;
+        Wed, 16 Dec 2020 10:32:55 -0800 (PST)
+Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
+        by smtp.gmail.com with ESMTPSA id z63sm615486otb.20.2020.12.16.10.32.54
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 16 Dec 2020 10:32:54 -0800 (PST)
+Date:   Wed, 16 Dec 2020 12:32:52 -0600
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Zheng Yongjun <zhengyongjun3@huawei.com>
+Cc:     agross@kernel.org, dan.j.williams@intel.com, vkoul@kernel.org,
+        linux-arm-msm@vger.kernel.org, dmaengine@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH -next] qcom: bam_dma: Delete useless kfree code
+Message-ID: <X9pS1F91OxYMCMpI@builder.lan>
+References: <20201216130649.13979-1-zhengyongjun3@huawei.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20201216130649.13979-1-zhengyongjun3@huawei.com>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-In order to debug critical domain and device power issues, it may be
-necessary to disallow certain idle states at runtime. Let the device
-disallow a domain idle state before suspending.The domain governor shall
-check for the 'disabled' flag while determining the domain idle state.
+On Wed 16 Dec 07:06 CST 2020, Zheng Yongjun wrote:
 
-Signed-off-by: Lina Iyer <ilina@codeaurora.org>
----
- drivers/base/power/domain.c          | 30 ++++++++++++++++++++++++++++
- drivers/base/power/domain_governor.c |  3 +++
- include/linux/pm_domain.h            |  7 +++++++
- 3 files changed, 40 insertions(+)
+> The parameter of kfree function is NULL, so kfree code is useless, delete it.
+> Therefore, goto expression is no longer needed, so simplify it.
+> 
+> Signed-off-by: Zheng Yongjun <zhengyongjun3@huawei.com>
 
-diff --git a/drivers/base/power/domain.c b/drivers/base/power/domain.c
-index 191539a8e06d..e4e7ab75bdea 100644
---- a/drivers/base/power/domain.c
-+++ b/drivers/base/power/domain.c
-@@ -1926,6 +1926,36 @@ int pm_genpd_remove_subdomain(struct generic_pm_domain *genpd,
- }
- EXPORT_SYMBOL_GPL(pm_genpd_remove_subdomain);
- 
-+/**
-+ * dev_pm_genpd_disable_idle_state - Disallow a PM domain's idle state
-+ *
-+ * @dev: device attached to the PM domain
-+ * @idx: index of the PM domain's idle state to be disabled
-+ * @disable: enable/disable idle state
-+ *
-+ * Allow a PM domain's idle state to be disabled. Disabled idle states will
-+ * be ignored by the domain governor when entering idle. Devices would
-+ * invoke this before calling runtime suspend.
-+ */
-+int dev_pm_genpd_disable_idle_state(struct device *dev, unsigned int idx, bool disable)
-+{
-+	struct generic_pm_domain *genpd;
-+
-+	genpd = dev_to_genpd_safe(dev);
-+	if (!genpd)
-+		return -ENODEV;
-+
-+	if (idx >= genpd->state_count)
-+		return -EINVAL;
-+
-+	genpd_lock(genpd);
-+	genpd->states[idx].disabled = disable;
-+	genpd_unlock(genpd);
-+
-+	return 0;
-+}
-+EXPORT_SYMBOL_GPL(dev_pm_genpd_disable_idle_state);
-+
- static void genpd_free_default_power_state(struct genpd_power_state *states,
- 					   unsigned int state_count)
- {
-diff --git a/drivers/base/power/domain_governor.c b/drivers/base/power/domain_governor.c
-index 2afb7fa90d5d..8decd17c5a6a 100644
---- a/drivers/base/power/domain_governor.c
-+++ b/drivers/base/power/domain_governor.c
-@@ -175,6 +175,9 @@ static bool __default_power_down_ok(struct dev_pm_domain *pd,
- 	s64 min_off_time_ns;
- 	s64 off_on_time_ns;
- 
-+	if (genpd->states[state].disabled)
-+		return false;
-+
- 	off_on_time_ns = genpd->states[state].power_off_latency_ns +
- 		genpd->states[state].power_on_latency_ns;
- 
-diff --git a/include/linux/pm_domain.h b/include/linux/pm_domain.h
-index a41aea9d1c06..3d251b5b461a 100644
---- a/include/linux/pm_domain.h
-+++ b/include/linux/pm_domain.h
-@@ -101,6 +101,7 @@ struct genpd_power_state {
- 	struct fwnode_handle *fwnode;
- 	ktime_t idle_time;
- 	void *data;
-+	bool disabled;
- };
- 
- struct genpd_lock_ops;
-@@ -233,6 +234,7 @@ int dev_pm_genpd_add_notifier(struct device *dev, struct notifier_block *nb);
- int dev_pm_genpd_remove_notifier(struct device *dev);
- void genpd_enable_next_wakeup(struct generic_pm_domain *genpd, bool enable);
- int dev_pm_genpd_set_next_wakeup(struct device *dev, ktime_t next);
-+int dev_pm_genpd_disable_idle_state(struct device *dev, unsigned int idx, bool disable);
- 
- extern struct dev_power_governor simple_qos_governor;
- extern struct dev_power_governor pm_domain_always_on_gov;
-@@ -300,6 +302,11 @@ static inline int dev_pm_genpd_set_next_wakeup(struct device *dev, ktime_t next)
- 	return -EOPNOTSUPP;
- }
- 
-+static inline int dev_pm_genpd_disable_idle_state(struct device *dev, unsigned int idx, bool disable)
-+{
-+	return -EOPNOTSUPP;
-+}
-+
- #define simple_qos_governor		(*(struct dev_power_governor *)(NULL))
- #define pm_domain_always_on_gov		(*(struct dev_power_governor *)(NULL))
- #endif
--- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project
+Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 
+> ---
+>  drivers/dma/qcom/bam_dma.c | 6 +-----
+>  1 file changed, 1 insertion(+), 5 deletions(-)
+> 
+> diff --git a/drivers/dma/qcom/bam_dma.c b/drivers/dma/qcom/bam_dma.c
+> index 4eeb8bb27279..78df217b3f6c 100644
+> --- a/drivers/dma/qcom/bam_dma.c
+> +++ b/drivers/dma/qcom/bam_dma.c
+> @@ -630,7 +630,7 @@ static struct dma_async_tx_descriptor *bam_prep_slave_sg(struct dma_chan *chan,
+>  			     GFP_NOWAIT);
+>  
+>  	if (!async_desc)
+> -		goto err_out;
+> +		return NULL;
+>  
+>  	if (flags & DMA_PREP_FENCE)
+>  		async_desc->flags |= DESC_FLAG_NWD;
+> @@ -670,10 +670,6 @@ static struct dma_async_tx_descriptor *bam_prep_slave_sg(struct dma_chan *chan,
+>  	}
+>  
+>  	return vchan_tx_prep(&bchan->vc, &async_desc->vd, flags);
+> -
+> -err_out:
+> -	kfree(async_desc);
+> -	return NULL;
+>  }
+>  
+>  /**
+> -- 
+> 2.22.0
+> 
