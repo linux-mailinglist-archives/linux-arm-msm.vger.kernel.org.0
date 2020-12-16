@@ -2,106 +2,107 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 7A9912DC68F
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Dec 2020 19:34:09 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 60A952DC691
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Dec 2020 19:34:10 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731048AbgLPSdg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 16 Dec 2020 13:33:36 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49804 "EHLO
+        id S1730413AbgLPSd6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 16 Dec 2020 13:33:58 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49864 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731043AbgLPSdg (ORCPT
+        with ESMTP id S1727931AbgLPSd6 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 16 Dec 2020 13:33:36 -0500
-Received: from mail-oi1-x22d.google.com (mail-oi1-x22d.google.com [IPv6:2607:f8b0:4864:20::22d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4D934C061794
-        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Dec 2020 10:32:56 -0800 (PST)
-Received: by mail-oi1-x22d.google.com with SMTP id s2so28614738oij.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Dec 2020 10:32:56 -0800 (PST)
+        Wed, 16 Dec 2020 13:33:58 -0500
+Received: from mail-oi1-x22b.google.com (mail-oi1-x22b.google.com [IPv6:2607:f8b0:4864:20::22b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 074E7C0617A7
+        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Dec 2020 10:33:18 -0800 (PST)
+Received: by mail-oi1-x22b.google.com with SMTP id d203so7439724oia.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Dec 2020 10:33:18 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=TOKrfljSwb0iquFcwhx16t0mlmb8z327F7siyfgd+Io=;
-        b=yd2cqrPLfduV1Hea+fTiIe+/9IkIEb6MKlQIilXuDL4916KjY5zK/R3iTzbUDPdN6Y
-         LRpSlA9st56gL6Hpw+u8O3sPlKB3aPyOu+Tghlrzn7j/4DOYqGl04UCbHqdMK2uLSxT4
-         zyEt0D4fi6/beYoXjvEb/zDZxfQhTFOKvIvtowB7eJR5cdFUU58CN7uHi8VhlrTK2IwF
-         da7AZZCsYZajEZ1Q9gV1DS4TMYLt1MwuFWJ6MdTtovrbdDiJON9cJY8fEFdmQISS2mpL
-         2pHMd83p47SRJN0l95Nc3w6SFV76WZR9gnVQCx+IP1Thu++ADUU8fhlRCLtoxYZSa0bK
-         VOfQ==
+        bh=+cTCsx1PRpNw0/y5L+7memM86sfqPOprZgZnF6YfJtQ=;
+        b=UWBpb3riqV+q72tyfHr+ASdJQJL7f3veiDnR+vg6OCnHigq3SNSwbJSG2B0I+z+qRV
+         DexmZ5JwOzCqz8RVjLaSUOfI4uag7FfOBMLwObWS5kRBvORUPjqmjiSf3YSaRVL7TnIp
+         FUGD6mc4oif2+ZxZnhr5RU+YuEoJdmWYU85pJCunRSuB/1EZ44cNZcw0+CYczBFN6rS5
+         yuphpGHAmOUiUGh8wVNKYlyAYN9H7WsGEn+TNISCgB5s+/1RP0YfZrRes7VhBZHzzmkH
+         fklgEUAGiqUNIGl+YWEtL0wO1WZK0zZ5RD0cT3qfC/7B6k9KzR8zt00MJqOJLuRPHa/J
+         tPVw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=TOKrfljSwb0iquFcwhx16t0mlmb8z327F7siyfgd+Io=;
-        b=Y3aJHNAdz5p0DbL188B+tG8NrF3TO6HXD8mltILxYccBcvkiPFu+boZsomPtkxgcEK
-         FCrKlNSASuOEOCBXL+VDGBXnYGZl9t4qir3isS6RbzTL7UxUfMlumG9NC7II/va/e2I5
-         UzOi8mispvBrHVvD1Jk0g/5gIM5dZR9JwwyvzyjV0kvc+j2UdXutiJO6sAxQmYSAuW8p
-         sHUXoCgMAHRbvDlOjM6Vstl5uhoVkPgjMcEh1JWaRp3OQd99pvDFE1H41YVwpf4umBeR
-         c1qdwiAH4JrLIb3pTc1qvhDqd/zbD6hVsiqho/pIGLrm0/W5oiPblpa4C7fCSg8Jo737
-         NuQQ==
-X-Gm-Message-State: AOAM532/l3W2Z1fStqfoBn1uwkAeJAc/Oa4yisldfwwrm/mAl+SJPY7z
-        9TA0UGvy+1ZCEaEuN2c+ZzMyFg==
-X-Google-Smtp-Source: ABdhPJwRU+MItydmtpCEjuBcCjGgBaYAvNj1wCz3tWiuHYbakckuOaLYeu9+147ay8nGxmUWevswhQ==
-X-Received: by 2002:aca:c0c6:: with SMTP id q189mr2738473oif.178.1608143575260;
-        Wed, 16 Dec 2020 10:32:55 -0800 (PST)
+        bh=+cTCsx1PRpNw0/y5L+7memM86sfqPOprZgZnF6YfJtQ=;
+        b=YiRDV3zdYIzc8DVaqgFv7h3QHx5sDVSYAA4J7TKWgn5ct+yPdya6WdD37B/Xhe/V/n
+         btlaxzlFc6BFLefvjjly08NRkGfjgEz3JCnWvlivbj2TyqSBlGB0xJES5Wna8yVqUIVv
+         yUWhsBpymH9T4WZyITxM8sisiKl+Ob8dIsN1kGCGF/hNaZnJAOp6OOnhsNC3R3xzjcii
+         gCXzPqRlBjS2VaiDtHlEwdIFU/8Gs7BBWK5ecc534mLCKCEvzVakKWwLm9YLlfW2L4E6
+         YKshq3qKepFz2HcJFxSBzYwD9mYTuFVzX2dBmKmTajPthWCgfHxWrbYsdg2QG5QR3oS9
+         yObg==
+X-Gm-Message-State: AOAM532IcA/s5oZpXA+q0QrlP9RUN78niSmu3p1z7HNBa/OJTAimiRyQ
+        oxjsmJixDVJYtz3zNtgT5WgCSQ==
+X-Google-Smtp-Source: ABdhPJyxRrQh9eyAVb6narksTmtqA3k1ONdweCWNi6MZOkBslhdu3MC0n4a4YCOdUOlpeJ4Hi1IaKg==
+X-Received: by 2002:aca:568f:: with SMTP id k137mr2732141oib.138.1608143597429;
+        Wed, 16 Dec 2020 10:33:17 -0800 (PST)
 Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id z63sm615486otb.20.2020.12.16.10.32.54
+        by smtp.gmail.com with ESMTPSA id g200sm571303oib.19.2020.12.16.10.33.16
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 16 Dec 2020 10:32:54 -0800 (PST)
-Date:   Wed, 16 Dec 2020 12:32:52 -0600
+        Wed, 16 Dec 2020 10:33:16 -0800 (PST)
+Date:   Wed, 16 Dec 2020 12:33:14 -0600
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
 To:     Zheng Yongjun <zhengyongjun3@huawei.com>
-Cc:     agross@kernel.org, dan.j.williams@intel.com, vkoul@kernel.org,
-        linux-arm-msm@vger.kernel.org, dmaengine@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH -next] qcom: bam_dma: Delete useless kfree code
-Message-ID: <X9pS1F91OxYMCMpI@builder.lan>
-References: <20201216130649.13979-1-zhengyongjun3@huawei.com>
+Cc:     agross@kernel.org, srinivas.kandagatla@linaro.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH -next] nvmem: convert comma to semicolon
+Message-ID: <X9pS6kzKSWA5VxOK@builder.lan>
+References: <20201216132810.15688-1-zhengyongjun3@huawei.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20201216130649.13979-1-zhengyongjun3@huawei.com>
+In-Reply-To: <20201216132810.15688-1-zhengyongjun3@huawei.com>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed 16 Dec 07:06 CST 2020, Zheng Yongjun wrote:
+On Wed 16 Dec 07:28 CST 2020, Zheng Yongjun wrote:
 
-> The parameter of kfree function is NULL, so kfree code is useless, delete it.
-> Therefore, goto expression is no longer needed, so simplify it.
+> Replace a comma between expression statements by a semicolon.
 > 
-> Signed-off-by: Zheng Yongjun <zhengyongjun3@huawei.com>
 
 Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 
+> Signed-off-by: Zheng Yongjun <zhengyongjun3@huawei.com>
 > ---
->  drivers/dma/qcom/bam_dma.c | 6 +-----
->  1 file changed, 1 insertion(+), 5 deletions(-)
+>  drivers/nvmem/qcom-spmi-sdam.c | 2 +-
+>  drivers/nvmem/snvs_lpgpr.c     | 2 +-
+>  2 files changed, 2 insertions(+), 2 deletions(-)
 > 
-> diff --git a/drivers/dma/qcom/bam_dma.c b/drivers/dma/qcom/bam_dma.c
-> index 4eeb8bb27279..78df217b3f6c 100644
-> --- a/drivers/dma/qcom/bam_dma.c
-> +++ b/drivers/dma/qcom/bam_dma.c
-> @@ -630,7 +630,7 @@ static struct dma_async_tx_descriptor *bam_prep_slave_sg(struct dma_chan *chan,
->  			     GFP_NOWAIT);
->  
->  	if (!async_desc)
-> -		goto err_out;
-> +		return NULL;
->  
->  	if (flags & DMA_PREP_FENCE)
->  		async_desc->flags |= DESC_FLAG_NWD;
-> @@ -670,10 +670,6 @@ static struct dma_async_tx_descriptor *bam_prep_slave_sg(struct dma_chan *chan,
->  	}
->  
->  	return vchan_tx_prep(&bchan->vc, &async_desc->vd, flags);
-> -
-> -err_out:
-> -	kfree(async_desc);
-> -	return NULL;
->  }
->  
->  /**
+> diff --git a/drivers/nvmem/qcom-spmi-sdam.c b/drivers/nvmem/qcom-spmi-sdam.c
+> index a72704cd0468..b73783a04e22 100644
+> --- a/drivers/nvmem/qcom-spmi-sdam.c
+> +++ b/drivers/nvmem/qcom-spmi-sdam.c
+> @@ -142,7 +142,7 @@ static int sdam_probe(struct platform_device *pdev)
+>  	sdam->sdam_config.dev = &pdev->dev;
+>  	sdam->sdam_config.name = "spmi_sdam";
+>  	sdam->sdam_config.id = NVMEM_DEVID_AUTO;
+> -	sdam->sdam_config.owner = THIS_MODULE,
+> +	sdam->sdam_config.owner = THIS_MODULE;
+>  	sdam->sdam_config.stride = 1;
+>  	sdam->sdam_config.word_size = 1;
+>  	sdam->sdam_config.reg_read = sdam_read;
+> diff --git a/drivers/nvmem/snvs_lpgpr.c b/drivers/nvmem/snvs_lpgpr.c
+> index c527d26ca6ac..4692aa985bd6 100644
+> --- a/drivers/nvmem/snvs_lpgpr.c
+> +++ b/drivers/nvmem/snvs_lpgpr.c
+> @@ -123,7 +123,7 @@ static int snvs_lpgpr_probe(struct platform_device *pdev)
+>  	cfg->dev = dev;
+>  	cfg->stride = 4;
+>  	cfg->word_size = 4;
+> -	cfg->size = dcfg->size,
+> +	cfg->size = dcfg->size;
+>  	cfg->owner = THIS_MODULE;
+>  	cfg->reg_read  = snvs_lpgpr_read;
+>  	cfg->reg_write = snvs_lpgpr_write;
 > -- 
 > 2.22.0
 > 
