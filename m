@@ -2,103 +2,127 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 3E9392DC69B
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Dec 2020 19:36:50 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 603E72DC6A7
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Dec 2020 19:41:26 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731264AbgLPSfy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 16 Dec 2020 13:35:54 -0500
-Received: from m43-15.mailgun.net ([69.72.43.15]:56866 "EHLO
-        m43-15.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731259AbgLPSfy (ORCPT
+        id S1731227AbgLPSk5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 16 Dec 2020 13:40:57 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50932 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1731442AbgLPSk5 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 16 Dec 2020 13:35:54 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1608143730; h=Content-Type: MIME-Version: Message-ID:
- In-Reply-To: Date: References: Subject: Cc: To: From: Sender;
- bh=d+gh/fylH0hrmnaA52j5UKNxuzxbDoS81ggDzi83+Hw=; b=bTvtT3oN/nIE/ZHR3JuhMFYNUsPHK6ZW9OBrP0vC89M94UbZGVd2WfpZ8iOC3Q1IFcHbKG46
- tXOvRRK1dzFXko1dkdf4y1OMH7m8+LAFNB4LglCVcguVnG09OVVQY0ZF85OvgCEqmXCbeorf
- 2R9OFHW5U40I0aFuBHlqXswPOh4=
-X-Mailgun-Sending-Ip: 69.72.43.15
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n09.prod.us-west-2.postgun.com with SMTP id
- 5fda5353065be8d8351c39ab (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 16 Dec 2020 18:34:59
- GMT
-Sender: kvalo=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 2E63BC43461; Wed, 16 Dec 2020 18:34:59 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
-        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
-Received: from potku.adurom.net (88-114-240-156.elisa-laajakaista.fi [88.114.240.156])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: kvalo)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 74C5DC433C6;
-        Wed, 16 Dec 2020 18:34:57 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 74C5DC433C6
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=kvalo@codeaurora.org
-From:   Kalle Valo <kvalo@codeaurora.org>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     "open list\:DRM DRIVER FOR MSM ADRENO GPU" 
-        <linux-arm-msm@vger.kernel.org>, ath11k@lists.infradead.org,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Subject: Re: ath11k/mhi backtraces on shutdown with linux-next
-References: <CAA8EJppRhRCVOrXT0=nxomCFonna3YHhNEv-YFLyjaQX4gRptw@mail.gmail.com>
-        <878sa34ni7.fsf@codeaurora.org>
-        <CAA8EJppwnfy-Hi9pabGL-g9BgEcac6bs3jn8J1n=PPr9-y-d-A@mail.gmail.com>
-Date:   Wed, 16 Dec 2020 20:34:55 +0200
-In-Reply-To: <CAA8EJppwnfy-Hi9pabGL-g9BgEcac6bs3jn8J1n=PPr9-y-d-A@mail.gmail.com>
-        (Dmitry Baryshkov's message of "Sun, 13 Dec 2020 00:04:45 +0300")
-Message-ID: <87y2hxvbu8.fsf@codeaurora.org>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.5 (gnu/linux)
+        Wed, 16 Dec 2020 13:40:57 -0500
+Received: from mail-oi1-x22c.google.com (mail-oi1-x22c.google.com [IPv6:2607:f8b0:4864:20::22c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2D4E5C0617A6
+        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Dec 2020 10:40:16 -0800 (PST)
+Received: by mail-oi1-x22c.google.com with SMTP id p126so28615970oif.7
+        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Dec 2020 10:40:16 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=HX05UPZbfakFNT6esS7y3dkO3JZ1/EyRxqvrW/rwkR0=;
+        b=Id04pE4Gmxa9hBuBqHwF8Xbry18NqejeslL5cyHb6hce0goJ400yI9vdlvE+V15keZ
+         WP2j2syjVqDSpvFPkcpTd/GoAMxvp+MX9muiMBc2qb1qToKQl6ziCmkN0epXCUlM+Z1m
+         Z43Dc7XI1U9P9jrmJq1c0cAX7tSgbappxv4JzElnZMNXObJPhftw2tJWP1Qx2pqmgoj/
+         1ciRv2EY1s7O1OIzspukAox5chn9O3pNeCBtEjG/rhj9U/KLcE/DzJbJFjMV4fcZql04
+         C7IPfm+ZY8YPPfjhkTxMjvCqRlyvtMO10XjIKda/6cgDY/tG5nT3LMIQ9HOzzrBE6Plo
+         tjyg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=HX05UPZbfakFNT6esS7y3dkO3JZ1/EyRxqvrW/rwkR0=;
+        b=hjYeYDOkvPZbzwPLScqQB/I8a66TVRbIW3aYtODf/qn2gKDeJsujJGRMmE8i1jUbTK
+         /YRKGd2fDs0ACNsw+VlCRtkloaAq55+6IAouKWkQjhX7VZaTNNf0o/0AXfztMoxYN3iK
+         zbNWqu/VisGOk/R75haMvmY2RGzI2OE0nCzH/veBttiyULuFBYsylrD/+0Eys9HnPMvv
+         VnDFrx1h8yFs2RFbHxBAzRxOAi8mZAbSHy88oTnBzC0HpSKjZtj1UocAoBHvDFeAYpiW
+         BU55bluLTrLCvN/yfnIbQrtYAZkdiO/W86oG1wqGXbSYmewk50aJfiZEQZ/M7tXIXPuL
+         t7kg==
+X-Gm-Message-State: AOAM533vjf5Rno8WhrXeZBvjFwj+qvobeuMALt7vveA1e3Utqj4jrCjD
+        9G6QmALNEbQsVkF+kDTIDZy+XQ==
+X-Google-Smtp-Source: ABdhPJwCWVwMv4ymBqD9ZXT8j0l8JfNX+uns7F5dvspx+SMuq1kGfuY/gyqCID5dDV52iAV35xBF4w==
+X-Received: by 2002:aca:54d8:: with SMTP id i207mr2694795oib.101.1608144015474;
+        Wed, 16 Dec 2020 10:40:15 -0800 (PST)
+Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
+        by smtp.gmail.com with ESMTPSA id o135sm642714ooo.38.2020.12.16.10.40.14
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 16 Dec 2020 10:40:14 -0800 (PST)
+Date:   Wed, 16 Dec 2020 12:40:13 -0600
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Linus Walleij <linus.walleij@linaro.org>
+Cc:     Bartosz Golaszewski <bgolaszewski@baylibre.com>,
+        "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+        MSM <linux-arm-msm@vger.kernel.org>
+Subject: Re: [PATCH] gpiolib: Allow name duplicates of "" and "NC"
+Message-ID: <X9pUjU6hPI1cKS3H@builder.lan>
+References: <20201215170308.2037624-1-bjorn.andersson@linaro.org>
+ <CACRpkdZKKetFFm8AanVnzV9SyZhuurLHT_ZTak27-vGEdqVgEw@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CACRpkdZKKetFFm8AanVnzV9SyZhuurLHT_ZTak27-vGEdqVgEw@mail.gmail.com>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Dmitry Baryshkov <dmitry.baryshkov@linaro.org> writes:
+On Wed 16 Dec 06:46 CST 2020, Linus Walleij wrote:
 
-> On Sat, 12 Dec 2020 at 08:11, Kalle Valo <kvalo@codeaurora.org> wrote:
->>
->> Dmitry Baryshkov <dmitry.baryshkov@linaro.org> writes:
->>
->> > Hello,
->> >
->> > I've noticed the following backtrace during shutdown stage when
->> > rebooting RB5 board,
->> > using linux-next/master:
->> >
->> > [   31.060483] ath11k_pci 0000:01:00.0: shutdown
->> > [   31.067844] ------------[ cut here ]------------
->> > [   31.073111] WARNING: CPU: 4 PID: 101 at
->> > drivers/iommu/io-pgtable-arm.c:583 __arm_lpae_unmap+0x39c/0x550
->>
->> Do you have CONFIG_DMA_API_DEBUG disabled? There is one commit fixing a
->> DMA API debug warning but that should be in linux-next already:
->>
->> cd6181ff7e93 ath11k: dp_rx: fix monitor status dma unmap direction
->
-> I have enabled CONFIG_DMA_API_DEBUG (and _SG too). Got no additional
-> traces during boot and the same trace during reboot.
+> On Tue, Dec 15, 2020 at 6:02 PM Bjorn Andersson
+> <bjorn.andersson@linaro.org> wrote:
+> 
+> > Not all GPIO pins are exposed to the world and this is typically
+> > described by not giving these lines particular names, commonly "" or
+> > "NC".
+> >
+> > With the recent introduction of '2cd64ae98f35 ("gpiolib: Disallow
+> > identical line names in the same chip")' any gpiochip with multiple such
+> > pins will refuse to probe.
+> >
+> > Fix this by treating "" and "NC" as "no name specified" in
+> > gpio_name_to_desc()
+> >
+> > Fixes: 2cd64ae98f35 ("gpiolib: Disallow identical line names in the same chip")
+> > Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> > ---
+> >
+> > The introduction of 2cd64ae98f35 breaks pretty much all Qualcomm boards and
+> > grepping the DT tree indicates that other vendors will have the same problem.
+> >
+> > In addition to this the am335x-* boards will also needs "[NC]", "[ethernet]",
+> > "[emmc"], "[i2c0]", "[SYSBOOT]" and "[JTAG]" added to this list to allow
+> > booting v5.11 with the past and present dtb/dts files.
+> 
+> I pushed this patch yesterday that fixes the obvious "(empty string)" problem:
+> https://lore.kernel.org/linux-gpio/20201215123755.438369-1-linus.walleij@linaro.org/T/#u
+> 
 
-On x86 I see this during rmmod when iommu is enabled:
+Unfortunately we've almost consistently used "NC" for the Qualcomm
+platforms, so that seems to fix only a single platform :(
 
-[  +0.012066] DMAR: DRHD: handling fault status reg 2
-[  +0.000022] DMAR: [DMA Write] Request device [06:00.0] PASID ffffffff fault addr 0 [fault reason 05] PTE Write access is not set
-[  +0.014657] DMAR: DRHD: handling fault status reg 2
-[  +0.000017] DMAR: [DMA Write] Request device [06:00.0] PASID ffffffff fault addr 0 [fault reason 05] PTE Write access is not set
+> But I see this is for device tree line naming only, right?
+> 
 
-Is that the similar issue you are seeing, but just the printouts are
-different due to different iommu implementation?
+Yes.
 
--- 
-https://patchwork.kernel.org/project/linux-wireless/list/
+> I think I will conjure a patch allowing identical naming only for
+> device property naming (like from device tree) but emitting a
+> warning so that people fix it to something unique moving
+> forward.
+> 
 
-https://wireless.wiki.kernel.org/en/developers/documentation/submittingpatches
+I'm not against emitting a dev_err() when we hit duplicates, remove the
+return and then update the various dts files to use "" for things that
+doesn't have a name.
+
+Regarding special handling of the DT case, I think (beyond making all
+these boards boot again) it would be nice to make
+gpiochip_set_desc_names() take the list of names and a length and use
+the same function in both code paths...
+
+
+PS. strlen(names[i]) is O(N), strcmp(names[i], "") is O(1).
+
+Regards,
+Bjorn
