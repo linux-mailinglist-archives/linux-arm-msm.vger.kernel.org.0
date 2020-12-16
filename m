@@ -2,126 +2,357 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 9405F2DB85D
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Dec 2020 02:19:27 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1B9AF2DB995
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Dec 2020 04:17:04 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726329AbgLPBSj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 15 Dec 2020 20:18:39 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59522 "EHLO
+        id S1725768AbgLPDQ1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 15 Dec 2020 22:16:27 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49460 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725837AbgLPBSi (ORCPT
+        with ESMTP id S1725287AbgLPDQ1 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 15 Dec 2020 20:18:38 -0500
-Received: from mail-pf1-x442.google.com (mail-pf1-x442.google.com [IPv6:2607:f8b0:4864:20::442])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 21CF7C061793
-        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Dec 2020 17:17:58 -0800 (PST)
-Received: by mail-pf1-x442.google.com with SMTP id x126so6748728pfc.7
-        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Dec 2020 17:17:58 -0800 (PST)
+        Tue, 15 Dec 2020 22:16:27 -0500
+Received: from mail-ed1-x542.google.com (mail-ed1-x542.google.com [IPv6:2a00:1450:4864:20::542])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ACBFCC061793
+        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Dec 2020 19:15:46 -0800 (PST)
+Received: by mail-ed1-x542.google.com with SMTP id v22so23257278edt.9
+        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Dec 2020 19:15:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
-        h=mime-version:content-transfer-encoding:in-reply-to:references
-         :subject:from:cc:to:date:message-id:user-agent;
-        bh=9gQ8rHC/bTzmKtSLzhN4/DmZNBfAaJGJNaoibLypAoU=;
-        b=QigsSQbqE1PF4dZencpayPsN4OS7GNSPnGpcxyjJu5ahVdqBsHr/nGm9/ycJrCe8KS
-         4Lc6KM/1wh4Pj1qHZNoTyXOrda5O2PxK7A9kA0vNivJN1Lv7FDUK+A7K3S4vLXCIwpsH
-         Dqz8vGAqHWQq63qNvzh9IKKg7QJZ1DabNG9+E=
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=7YhBEvMLcraPjECfubD/zKXgMzKHmbovhHtVncgkxvk=;
+        b=acP7JO7driylDOCdRnDg3LIogbU7dIP7StVcnprwoo2FSoLOjlIdqrOFdpo6+IEIhd
+         5/tnad4OWBW6f/tw2U1pwjnWTYnwlIVpR1a1OWkb8l+PvC4yMWIIJ0wip5ieHjflnpAw
+         cRIdimpbqCZZqOr2uOZSrHO3uQylYoMfM+81w=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:content-transfer-encoding
-         :in-reply-to:references:subject:from:cc:to:date:message-id
-         :user-agent;
-        bh=9gQ8rHC/bTzmKtSLzhN4/DmZNBfAaJGJNaoibLypAoU=;
-        b=m1GvA3Fa1oHyuWQdXO9TPkGHo5euYgt+rsRjrUnwnik0Ykaws69aAIZO/2O6VWWWiO
-         EwWkqLFHoQrILMEzhjbS86uF1WuRw5gWz7NAx5cLRSPayfHO0p1GqEtGeqOJeEo/3mYO
-         RWjporjyZ3z+BCXsTbN6EDHk/QnJo+4T1aZFkFcqUl4Z4snK+G8vnlfy/apQew/c08zz
-         2DThygNkPr2UhxgDHGrCfQxsj5iW8hnR067zAeAEQja1VlaqKbcgOt+CT/Pd9Qg5tIRf
-         R4j7mbg1GmWLuQpZGC/dGKvRRvfEQ2MOa5HDKiNKA30QPupNEANSPJHesr42GqwnwfkH
-         z77g==
-X-Gm-Message-State: AOAM531qTnakeg9JiLBpjjumqPOEHnguboBmDOIVhrbqa1k0l+/2BWxH
-        7Eeg/n0aQZCGvVtvhvmzHiIGJg==
-X-Google-Smtp-Source: ABdhPJz/U+WbLMkQJ+D+MaXIlkWgTHNA6zgW9tPyw+ooD0QD3gl7bc/jZrZEHmL84jLP/mHEYHvCqw==
-X-Received: by 2002:a05:6a00:a91:b029:19d:9421:847 with SMTP id b17-20020a056a000a91b029019d94210847mr21362633pfl.72.1608081477348;
-        Tue, 15 Dec 2020 17:17:57 -0800 (PST)
-Received: from chromium.org ([2620:15c:202:201:3e52:82ff:fe6c:83ab])
-        by smtp.gmail.com with ESMTPSA id er23sm118141pjb.12.2020.12.15.17.17.56
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 15 Dec 2020 17:17:56 -0800 (PST)
-Content-Type: text/plain; charset="utf-8"
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=7YhBEvMLcraPjECfubD/zKXgMzKHmbovhHtVncgkxvk=;
+        b=N5KwLQNrgDeDwu+4yBbujROFgVPXMpwZRBiWBqP5Kah9HqqasoCzt2y8H3s7laKwWr
+         /RU2P4j/W34HaQPW2AMfLfZKtbKwqpni66FoJOybq5e+5RI9XJPVWUKdVvSgTGlxD+Bb
+         Xo69dp15JFUEdUIARbWj6/96D9c+LDoN0UxnacTSl+HPhPWMTCgprhM3UKsHit5l6+gV
+         LWas2Xy1SNojBetXtBeeL08QaVB1YYEI4NPCCf1Z9Iax1LfANHDvjlJmYJorKcFbwkW0
+         bgBIL8tpy8rEMDysbCvrV9Oq/0jtVYnJJycUc1USBzrOhTqAosCx/rMCUAv/6QZfH83G
+         iJ5w==
+X-Gm-Message-State: AOAM53030T+PohB5KhSQtcvNwxqwO6Nl0RIB+u5HHzIZndZERzvryVBW
+        CbAaix5cXzaWX+lD8lA0QaOBgJCLqXnJgQ==
+X-Google-Smtp-Source: ABdhPJxGXwZL0+FLKUenR0l5p6OTLWuD8LXslbrO0lJaxWdSYErYG2y+W8CQA3nt08KBCniP2tKnyA==
+X-Received: by 2002:a05:6402:310f:: with SMTP id dc15mr31964185edb.225.1608088544944;
+        Tue, 15 Dec 2020 19:15:44 -0800 (PST)
+Received: from mail-wm1-f46.google.com (mail-wm1-f46.google.com. [209.85.128.46])
+        by smtp.gmail.com with ESMTPSA id p22sm348867ejx.59.2020.12.15.19.15.44
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 15 Dec 2020 19:15:44 -0800 (PST)
+Received: by mail-wm1-f46.google.com with SMTP id q75so1042610wme.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Dec 2020 19:15:44 -0800 (PST)
+X-Received: by 2002:a7b:c773:: with SMTP id x19mr1184145wmk.127.1608088543507;
+ Tue, 15 Dec 2020 19:15:43 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <CAD=FV=XSrqzDFHGpW3b_Sx+bA8u8MMGqdfMJnXkKhkWL6H952A@mail.gmail.com>
-References: <20201214162937.1.I99ee04f0cb823415df59bd4f550d6ff5756e43d6@changeid> <20201214162937.2.Ibade998ed587e070388b4bf58801f1107a40eb53@changeid> <160800104145.1580929.10562113130948868794@swboyd.mtv.corp.google.com> <CAD=FV=UT0+BKrUPbATGCbO1fmwwmrKbSy5c+mW-61wS1y6TtJw@mail.gmail.com> <160807113302.1580929.9178584426202538854@swboyd.mtv.corp.google.com> <CAD=FV=XSrqzDFHGpW3b_Sx+bA8u8MMGqdfMJnXkKhkWL6H952A@mail.gmail.com>
-Subject: Re: [PATCH 2/2] spi: spi-geni-qcom: Really ensure the previous xfer is done before new one
-From:   Stephen Boyd <swboyd@chromium.org>
-Cc:     Mark Brown <broonie@kernel.org>, msavaliy@qti.qualcomm.com,
-        Akash Asthana <akashast@codeaurora.org>,
-        Roja Rani Yarubandi <rojay@codeaurora.org>,
-        Alok Chauhan <alokc@codeaurora.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
+References: <20201214125703.866998-1-acourbot@chromium.org>
+ <5319c101-f4a4-9c99-b15d-4999366f7a63@linaro.org> <CAAFQd5AQ8VHiRYkzkd5ZJBPT5_5WO0tyQrwqBEfnMVKYiTugTA@mail.gmail.com>
+ <b5d35bbd-ae50-7a09-9edf-ca23d1a4b168@linaro.org> <bc42c936d7a67609b9dc4212b5a34b0d761676ed.camel@ndufresne.ca>
+In-Reply-To: <bc42c936d7a67609b9dc4212b5a34b0d761676ed.camel@ndufresne.ca>
+From:   Tomasz Figa <tfiga@chromium.org>
+Date:   Wed, 16 Dec 2020 12:15:32 +0900
+X-Gmail-Original-Message-ID: <CAAFQd5BQv2vu_FSxJjVZLpgcuFi1WHVem_O-0x-vkG1KZJi0eA@mail.gmail.com>
+Message-ID: <CAAFQd5BQv2vu_FSxJjVZLpgcuFi1WHVem_O-0x-vkG1KZJi0eA@mail.gmail.com>
+Subject: Re: [PATCH] media: venus: use contig vb2 ops
+To:     Nicolas Dufresne <nicolas@ndufresne.ca>
+Cc:     Stanimir Varbanov <stanimir.varbanov@linaro.org>,
+        Alexandre Courbot <acourbot@chromium.org>,
+        Fritz Koenig <frkoenig@chromium.org>,
+        Linux Media Mailing List <linux-media@vger.kernel.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
         linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        LKML <linux-kernel@vger.kernel.org>,
-        linux-spi <linux-spi@vger.kernel.org>
-To:     Doug Anderson <dianders@chromium.org>
-Date:   Tue, 15 Dec 2020 17:17:55 -0800
-Message-ID: <160808147515.1580929.1688687061880694586@swboyd.mtv.corp.google.com>
-User-Agent: alot/0.9.1
+        Robin Murphy <robin.murphy@arm.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Doug Anderson (2020-12-15 15:34:59)
-> On Tue, Dec 15, 2020 at 2:25 PM Stephen Boyd <swboyd@chromium.org> wrote:
+On Wed, Dec 16, 2020 at 4:21 AM Nicolas Dufresne <nicolas@ndufresne.ca> wro=
+te:
+>
+> Le mardi 15 d=C3=A9cembre 2020 =C3=A0 15:54 +0200, Stanimir Varbanov a =
+=C3=A9crit :
+> > Hi Tomasz,
 > >
-> > Quoting Doug Anderson (2020-12-15 09:25:51)
-> > > In general when we're starting a new transfer we assume that we can
-> > > program the hardware willy-nilly.  If there's some chance something
-> > > else is happening (or our interrupt could go off) then it breaks that
-> > > whole model.
+> > On 12/15/20 1:47 PM, Tomasz Figa wrote:
+> > > On Tue, Dec 15, 2020 at 8:16 PM Stanimir Varbanov
+> > > <stanimir.varbanov@linaro.org> wrote:
+> > > >
+> > > > Hi,
+> > > >
+> > > > Cc: Robin
+> > > >
+> > > > On 12/14/20 2:57 PM, Alexandre Courbot wrote:
+> > > > > This driver uses the SG vb2 ops, but effectively only ever access=
+es the
+> > > > > first entry of the SG table, indicating that it expects a flat la=
+yout.
+> > > > > Switch it to use the contiguous ops to make sure this expected in=
+variant
+> > > >
+> > > > Under what circumstances the sg table will has nents > 1? I came do=
+wn to
+> > > > [1] but not sure I got it right.
+> > > >
+> > > > I'm afraid that for systems with low amount of system memory and wh=
+en
+> > > > the memory become fragmented, the driver will not work. That's why =
+I
+> > > > started with sg allocator.
+> > >
+> > > It is exactly the opposite. The vb2-dma-contig allocator is "contig"
+> > > in terms of the DMA (aka IOVA) address space. In other words, it
+> > > guarantees that having one DMA address and length fully describes the
 > >
-> > Right. I thought this patch was making sure that the hardware wasn't in
-> > the process of doing something else when we setup the transfer. I'm
-> > saying that only checking the irq misses the fact that maybe the
-> > transfer hasn't completed yet or a pending irq hasn't come in yet, but
-> > the fifo status would tell us that the fifo is transferring something or
-> > receiving something. If an RX can't happen, then the code should clearly
-> > show that an RX irq isn't expected, and mask out that bit so it is
-> > ignored or explicitly check for it and call WARN_ON() if the bit is set.
+> > Ahh, I missed that part. Looks like I misunderstood videobu2 contig
+> > allocator.
+>
+> I'm learning everyday too, but I'm surprised I don't see a call to
+> vb2_dma_contig_set_max_seg_size() in this driver (I could also just have =
+missed
+> a patch when overlooking this thread) ?
+>
+> The reason I'm asking, doc says it should be called by driver supporting =
+IOMMU,
+> which seems to be the case for such drivers (MFC, exynos4-is, exynos-gsc,=
+ mtk-
+> mdp, s5p-g2d, hantro, rkvdec, zoran, ti-vpe, ..). I posting it, worst cas=
+e it's
+> all covered and we are good, otherwise perhaps a downstream patch didn't =
+make it
+> ?
+>
+> /**
+>  * vb2_dma_contig_set_max_seg_size() - configure DMA max segment size
+>  * @dev:        device for configuring DMA parameters
+>  * @size:       size of DMA max segment size to set
+>  *
+>  * To allow mapping the scatter-list into a single chunk in the DMA
+>  * address space, the device is required to have the DMA max segment
+>  * size parameter set to a value larger than the buffer size. Otherwise,
+>  * the DMA-mapping subsystem will split the mapping into max segment
+>  * size chunks. This function sets the DMA max segment size
+>  * parameter to let DMA-mapping map a buffer as a single chunk in DMA
+>  * address space.
+>  * This code assumes that the DMA-mapping subsystem will merge all
+>  * scatterlist segments if this is really possible (for example when
+>  * an IOMMU is available and enabled).
+>  * Ideally, this parameter should be set by the generic bus code, but it
+>  * is left with the default 64KiB value due to historical litmiations in
+>  * other subsystems (like limited USB host drivers) and there no good
+>  * place to set it to the proper value.
+>  * This function should be called from the drivers, which are known to
+>  * operate on platforms with IOMMU and provide access to shared buffers
+>  * (either USERPTR or DMABUF). This should be done before initializing
+>  * videobuf2 queue.
+>  */
+
+It does call dma_set_max_seg_size() directly:
+https://elixir.bootlin.com/linux/latest/source/drivers/media/platform/qcom/=
+venus/core.c#L230
+
+Actually, why do we even need a vb2 helper for this?
+
+>
+> regards,
+> Nicolas
+>
 > >
-> > I'm wondering why we don't check the FIFO status and the irq bits to
-> > make sure that some previous cancelled operation isn't still pending
-> > either in the FIFO or as an irq. While this patch will fix the scenario
-> > where the irq is delayed but pending in the hardware it won't cover the
-> > case that the hardware itself is wedged, for example because the
-> > sequencer just decided to stop working entirely.
->=20
-> It also won't catch the case where the SoC decided that all GPIOs are
-> inverted and starts reporting highs for lows and lows for highs, nor
-> does it handle the case where the CPU suddenly switches to Big Endian
-> mode for no reason.  :-P
->=20
-> ...by that, I mean I'm not trying to catch the case where the hardware
-> itself is behaving in a totally unexpected way.  I have seen no
-> instances where the hardware wedges nor where the sequencer stops
-> working and until I see them happen I'm not inclined to add code for
-> them.  Without seeing them actually happen I'm not really sure what
-> the right way to recover would be.  We've already tried "cancel" and
-> "abort" and then waited at least 1 second.  If you know of some sort
-> of magic "unwedge" then we should add it into handle_fifo_timeout().
-
-I am not aware of an "unwedge" command. Presumably the cancel/abort
-stuff makes the FIFO state "sane" so there's nothing to see in the FIFO
-status registers. I wonder if we should keep around some "did we cancel
-last time?" flag and only check the isr if we canceled out and timed
-out to boot? That would be a cheap and easy check to make sure that we
-don't check this each transaction.
-
->=20
-> However, super delayed interrupts due to software not servicing the
-> interrupt in time is something that really happens, if rarely.  Adding
-> code to account for that seems worth it and is easy to test...
->=20
-
-Agreed. The function name is wrong then as the device is not "busy". So
-maybe spi_geni_isr_pending()? That would clearly describe what's being
-checked.
+> > > buffer. This seems to be the requirement of the hardware/firmware
+> > > handled by the venus driver. If the device is behind an IOMMU, which
+> > > is the case for the SoCs in question, the underlying DMA ops will
+> > > actually allocate a discontiguous set of pages, so it has nothing to
+> > > do to system memory amount or fragmentation. If for some reason the
+> > > IOMMU can't be used, there is no way around, the memory needs to be
+> > > contiguous because of the hardware/firmware/driver expectation.
+> > >
+> > > On the other hand, the vb2-dma-sg allocator doesn't have any
+> > > continuity guarantees for the DMA, or any other, address space. The
+> > > current code works fine, because it calls dma_map_sg() on the whole
+> > > set of pages and that ends up mapping it contiguously in the IOVA
+> > > space, but that's just an implementation detail, not an API guarantee=
+.
+> >
+> > It was good to know. Thanks for the explanation.
+> >
+> > >
+> > > Best regards,
+> > > Tomasz
+> > >
+> > > >
+> > > > [1]
+> > > > https://elixir.bootlin.com/linux/v5.10.1/source/drivers/iommu/dma-i=
+ommu.c#L782
+> > > >
+> > > > > is always enforced. Since the device is supposed to be behind an =
+IOMMU
+> > > > > this should have little to none practical consequences beyond mak=
+ing the
+> > > > > driver not rely on a particular behavior of the SG implementation=
+.
+> > > > >
+> > > > > Reported-by: Tomasz Figa <tfiga@chromium.org>
+> > > > > Signed-off-by: Alexandre Courbot <acourbot@chromium.org>
+> > > > > ---
+> > > > > Hi everyone,
+> > > > >
+> > > > > It probably doesn't hurt to fix this issue before some actual iss=
+ue
+> > > > > happens.
+> > > > > I have tested this patch on Chrome OS and playback was just as fi=
+ne as
+> > > > > with
+> > > > > the SG ops.
+> > > > >
+> > > > >  drivers/media/platform/Kconfig              | 2 +-
+> > > > >  drivers/media/platform/qcom/venus/helpers.c | 9 ++-------
+> > > > >  drivers/media/platform/qcom/venus/vdec.c    | 6 +++---
+> > > > >  drivers/media/platform/qcom/venus/venc.c    | 6 +++---
+> > > > >  4 files changed, 9 insertions(+), 14 deletions(-)
+> > > > >
+> > > > > diff --git a/drivers/media/platform/Kconfig
+> > > > > b/drivers/media/platform/Kconfig
+> > > > > index 35a18d388f3f..d9d7954111f2 100644
+> > > > > --- a/drivers/media/platform/Kconfig
+> > > > > +++ b/drivers/media/platform/Kconfig
+> > > > > @@ -533,7 +533,7 @@ config VIDEO_QCOM_VENUS
+> > > > >       depends on INTERCONNECT || !INTERCONNECT
+> > > > >       select QCOM_MDT_LOADER if ARCH_QCOM
+> > > > >       select QCOM_SCM if ARCH_QCOM
+> > > > > -     select VIDEOBUF2_DMA_SG
+> > > > > +     select VIDEOBUF2_DMA_CONTIG
+> > > > >       select V4L2_MEM2MEM_DEV
+> > > > >       help
+> > > > >         This is a V4L2 driver for Qualcomm Venus video accelerato=
+r
+> > > > > diff --git a/drivers/media/platform/qcom/venus/helpers.c
+> > > > > b/drivers/media/platform/qcom/venus/helpers.c
+> > > > > index 50439eb1ffea..859d260f002b 100644
+> > > > > --- a/drivers/media/platform/qcom/venus/helpers.c
+> > > > > +++ b/drivers/media/platform/qcom/venus/helpers.c
+> > > > > @@ -7,7 +7,7 @@
+> > > > >  #include <linux/mutex.h>
+> > > > >  #include <linux/slab.h>
+> > > > >  #include <linux/kernel.h>
+> > > > > -#include <media/videobuf2-dma-sg.h>
+> > > > > +#include <media/videobuf2-dma-contig.h>
+> > > > >  #include <media/v4l2-mem2mem.h>
+> > > > >  #include <asm/div64.h>
+> > > > >
+> > > > > @@ -1284,14 +1284,9 @@ int venus_helper_vb2_buf_init(struct vb2_b=
+uffer
+> > > > > *vb)
+> > > > >       struct venus_inst *inst =3D vb2_get_drv_priv(vb->vb2_queue)=
+;
+> > > > >       struct vb2_v4l2_buffer *vbuf =3D to_vb2_v4l2_buffer(vb);
+> > > > >       struct venus_buffer *buf =3D to_venus_buffer(vbuf);
+> > > > > -     struct sg_table *sgt;
+> > > > > -
+> > > > > -     sgt =3D vb2_dma_sg_plane_desc(vb, 0);
+> > > > > -     if (!sgt)
+> > > > > -             return -EFAULT;
+> > > > >
+> > > > >       buf->size =3D vb2_plane_size(vb, 0);
+> > > > > -     buf->dma_addr =3D sg_dma_address(sgt->sgl);
+> > > >
+> > > > Can we do it:
+> > > >
+> > > >         if (WARN_ON(sgt->nents > 1))
+> > > >                 return -EFAULT;
+> > > >
+> > > > I understand that logically using dma-sg when the flat layout is
+> > > > expected by the hardware is wrong, but I haven't seen issues until =
+now.
+> > > >
+> > > > > +     buf->dma_addr =3D vb2_dma_contig_plane_dma_addr(vb, 0);
+> > > > >
+> > > > >       if (vb->type =3D=3D V4L2_BUF_TYPE_VIDEO_CAPTURE_MPLANE)
+> > > > >               list_add_tail(&buf->reg_list, &inst->registeredbufs=
+);
+> > > > > diff --git a/drivers/media/platform/qcom/venus/vdec.c
+> > > > > b/drivers/media/platform/qcom/venus/vdec.c
+> > > > > index 8488411204c3..3fb277c81aca 100644
+> > > > > --- a/drivers/media/platform/qcom/venus/vdec.c
+> > > > > +++ b/drivers/media/platform/qcom/venus/vdec.c
+> > > > > @@ -13,7 +13,7 @@
+> > > > >  #include <media/v4l2-event.h>
+> > > > >  #include <media/v4l2-ctrls.h>
+> > > > >  #include <media/v4l2-mem2mem.h>
+> > > > > -#include <media/videobuf2-dma-sg.h>
+> > > > > +#include <media/videobuf2-dma-contig.h>
+> > > > >
+> > > > >  #include "hfi_venus_io.h"
+> > > > >  #include "hfi_parser.h"
+> > > > > @@ -1461,7 +1461,7 @@ static int m2m_queue_init(void *priv, struc=
+t
+> > > > > vb2_queue *src_vq,
+> > > > >       src_vq->io_modes =3D VB2_MMAP | VB2_DMABUF;
+> > > > >       src_vq->timestamp_flags =3D V4L2_BUF_FLAG_TIMESTAMP_COPY;
+> > > > >       src_vq->ops =3D &vdec_vb2_ops;
+> > > > > -     src_vq->mem_ops =3D &vb2_dma_sg_memops;
+> > > > > +     src_vq->mem_ops =3D &vb2_dma_contig_memops;
+> > > > >       src_vq->drv_priv =3D inst;
+> > > > >       src_vq->buf_struct_size =3D sizeof(struct venus_buffer);
+> > > > >       src_vq->allow_zero_bytesused =3D 1;
+> > > > > @@ -1475,7 +1475,7 @@ static int m2m_queue_init(void *priv, struc=
+t
+> > > > > vb2_queue *src_vq,
+> > > > >       dst_vq->io_modes =3D VB2_MMAP | VB2_DMABUF;
+> > > > >       dst_vq->timestamp_flags =3D V4L2_BUF_FLAG_TIMESTAMP_COPY;
+> > > > >       dst_vq->ops =3D &vdec_vb2_ops;
+> > > > > -     dst_vq->mem_ops =3D &vb2_dma_sg_memops;
+> > > > > +     dst_vq->mem_ops =3D &vb2_dma_contig_memops;
+> > > > >       dst_vq->drv_priv =3D inst;
+> > > > >       dst_vq->buf_struct_size =3D sizeof(struct venus_buffer);
+> > > > >       dst_vq->allow_zero_bytesused =3D 1;
+> > > > > diff --git a/drivers/media/platform/qcom/venus/venc.c
+> > > > > b/drivers/media/platform/qcom/venus/venc.c
+> > > > > index 1c61602c5de1..a09550cd1dba 100644
+> > > > > --- a/drivers/media/platform/qcom/venus/venc.c
+> > > > > +++ b/drivers/media/platform/qcom/venus/venc.c
+> > > > > @@ -10,7 +10,7 @@
+> > > > >  #include <linux/pm_runtime.h>
+> > > > >  #include <linux/slab.h>
+> > > > >  #include <media/v4l2-mem2mem.h>
+> > > > > -#include <media/videobuf2-dma-sg.h>
+> > > > > +#include <media/videobuf2-dma-contig.h>
+> > > > >  #include <media/v4l2-ioctl.h>
+> > > > >  #include <media/v4l2-event.h>
+> > > > >  #include <media/v4l2-ctrls.h>
+> > > > > @@ -1001,7 +1001,7 @@ static int m2m_queue_init(void *priv, struc=
+t
+> > > > > vb2_queue *src_vq,
+> > > > >       src_vq->io_modes =3D VB2_MMAP | VB2_USERPTR | VB2_DMABUF;
+> > > > >       src_vq->timestamp_flags =3D V4L2_BUF_FLAG_TIMESTAMP_COPY;
+> > > > >       src_vq->ops =3D &venc_vb2_ops;
+> > > > > -     src_vq->mem_ops =3D &vb2_dma_sg_memops;
+> > > > > +     src_vq->mem_ops =3D &vb2_dma_contig_memops;
+> > > > >       src_vq->drv_priv =3D inst;
+> > > > >       src_vq->buf_struct_size =3D sizeof(struct venus_buffer);
+> > > > >       src_vq->allow_zero_bytesused =3D 1;
+> > > > > @@ -1017,7 +1017,7 @@ static int m2m_queue_init(void *priv, struc=
+t
+> > > > > vb2_queue *src_vq,
+> > > > >       dst_vq->io_modes =3D VB2_MMAP | VB2_USERPTR | VB2_DMABUF;
+> > > > >       dst_vq->timestamp_flags =3D V4L2_BUF_FLAG_TIMESTAMP_COPY;
+> > > > >       dst_vq->ops =3D &venc_vb2_ops;
+> > > > > -     dst_vq->mem_ops =3D &vb2_dma_sg_memops;
+> > > > > +     dst_vq->mem_ops =3D &vb2_dma_contig_memops;
+> > > > >       dst_vq->drv_priv =3D inst;
+> > > > >       dst_vq->buf_struct_size =3D sizeof(struct venus_buffer);
+> > > > >       dst_vq->allow_zero_bytesused =3D 1;
+> > > > >
+> > > >
+> > > > --
+> > > > regards,
+> > > > Stan
+> >
+>
+>
