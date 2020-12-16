@@ -2,357 +2,138 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 1B9AF2DB995
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Dec 2020 04:17:04 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 89C472DBA63
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Dec 2020 06:23:49 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725768AbgLPDQ1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 15 Dec 2020 22:16:27 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49460 "EHLO
+        id S1725812AbgLPFXd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 16 Dec 2020 00:23:33 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40708 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725287AbgLPDQ1 (ORCPT
+        with ESMTP id S1725804AbgLPFXd (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 15 Dec 2020 22:16:27 -0500
-Received: from mail-ed1-x542.google.com (mail-ed1-x542.google.com [IPv6:2a00:1450:4864:20::542])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ACBFCC061793
-        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Dec 2020 19:15:46 -0800 (PST)
-Received: by mail-ed1-x542.google.com with SMTP id v22so23257278edt.9
-        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Dec 2020 19:15:46 -0800 (PST)
+        Wed, 16 Dec 2020 00:23:33 -0500
+Received: from mail-pl1-x644.google.com (mail-pl1-x644.google.com [IPv6:2607:f8b0:4864:20::644])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 156EBC061793
+        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Dec 2020 21:22:53 -0800 (PST)
+Received: by mail-pl1-x644.google.com with SMTP id x18so6183339pln.6
+        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Dec 2020 21:22:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=7YhBEvMLcraPjECfubD/zKXgMzKHmbovhHtVncgkxvk=;
-        b=acP7JO7driylDOCdRnDg3LIogbU7dIP7StVcnprwoo2FSoLOjlIdqrOFdpo6+IEIhd
-         5/tnad4OWBW6f/tw2U1pwjnWTYnwlIVpR1a1OWkb8l+PvC4yMWIIJ0wip5ieHjflnpAw
-         cRIdimpbqCZZqOr2uOZSrHO3uQylYoMfM+81w=
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=WYKEVZawJ7vm+napiANrAzGeTasmgoFDEm5LAhyGxFM=;
+        b=XPkJXHkaqQ+LNds9xcRhHOiZ3Iizr63B6iQNeiZ0n09SmRO7C39+/dtzYDGsDy0RTS
+         KsFdLDFyAsI7C2CzRqEkH1+l5jEDk/NJdWI2PaIeHk2byBKvpzcUGaVxwRgWHL6+tlVC
+         7u3EKJ5M7zI8/2TJv1p89+uRqJ4Bn8nR4XaB7HEQ9uLVLvhAvZXSdmAXuBrjosjKkI2C
+         nckAo67Cxysgum8BHLIHPqD8a5/CSaaDoO0dNvGCHWjWsah9Kz5vOp/LATqJJ8r+DbK+
+         aIoVGqfIDT8x0WpwuJu+FBTRk2jhkabWe0EQq6dg0x/nW1JnjUPK0lJG4wXBEmHtwENw
+         7kpw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=7YhBEvMLcraPjECfubD/zKXgMzKHmbovhHtVncgkxvk=;
-        b=N5KwLQNrgDeDwu+4yBbujROFgVPXMpwZRBiWBqP5Kah9HqqasoCzt2y8H3s7laKwWr
-         /RU2P4j/W34HaQPW2AMfLfZKtbKwqpni66FoJOybq5e+5RI9XJPVWUKdVvSgTGlxD+Bb
-         Xo69dp15JFUEdUIARbWj6/96D9c+LDoN0UxnacTSl+HPhPWMTCgprhM3UKsHit5l6+gV
-         LWas2Xy1SNojBetXtBeeL08QaVB1YYEI4NPCCf1Z9Iax1LfANHDvjlJmYJorKcFbwkW0
-         bgBIL8tpy8rEMDysbCvrV9Oq/0jtVYnJJycUc1USBzrOhTqAosCx/rMCUAv/6QZfH83G
-         iJ5w==
-X-Gm-Message-State: AOAM53030T+PohB5KhSQtcvNwxqwO6Nl0RIB+u5HHzIZndZERzvryVBW
-        CbAaix5cXzaWX+lD8lA0QaOBgJCLqXnJgQ==
-X-Google-Smtp-Source: ABdhPJxGXwZL0+FLKUenR0l5p6OTLWuD8LXslbrO0lJaxWdSYErYG2y+W8CQA3nt08KBCniP2tKnyA==
-X-Received: by 2002:a05:6402:310f:: with SMTP id dc15mr31964185edb.225.1608088544944;
-        Tue, 15 Dec 2020 19:15:44 -0800 (PST)
-Received: from mail-wm1-f46.google.com (mail-wm1-f46.google.com. [209.85.128.46])
-        by smtp.gmail.com with ESMTPSA id p22sm348867ejx.59.2020.12.15.19.15.44
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 15 Dec 2020 19:15:44 -0800 (PST)
-Received: by mail-wm1-f46.google.com with SMTP id q75so1042610wme.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Dec 2020 19:15:44 -0800 (PST)
-X-Received: by 2002:a7b:c773:: with SMTP id x19mr1184145wmk.127.1608088543507;
- Tue, 15 Dec 2020 19:15:43 -0800 (PST)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=WYKEVZawJ7vm+napiANrAzGeTasmgoFDEm5LAhyGxFM=;
+        b=ltMoRrmE9PgQuUTGHg2aYWi57TNfCa1rX6hK0v0edmPgXCJN90SBLi5x3K3+H9xaFd
+         2TjGqcv9hfz7ZtUZMBeo/h+eQ9TkPUa8am4w87joX1X9PY203NMMCCKKkAPx16B+KNjW
+         wiISxx+swKULvJHqrjBR9gzZGK+WUVNhyH5b5+LNdZzy9qzz4oGy96BhyUpvVo8yvTv7
+         AX4pa73UhRlrblQ/L2afemuR0RuUqGrnQ+W9IvViQ5BZm6/H1ayq0KCBU4RbpF2JuDza
+         NRHgRSBUPWpYtslGsWu/lYloem7tq/XFlXJOnV0z4T8w3hQeY3zTAnEFUyZj9t0kuPWo
+         n1Cg==
+X-Gm-Message-State: AOAM530Jh3JYdZTuVsASC7ZlMueAPsVZtvzpquG50+k9hVhMohmS9E7P
+        1AMTEklFpa+QiCrhZPjIEjWhMw==
+X-Google-Smtp-Source: ABdhPJyD1jRSGwcY6EF73cOOfS9VcklHkc4/nDf4NupmbLV/BMOgfKQcwqBFjSVCoyJpu1WksiQ3cw==
+X-Received: by 2002:a17:902:fe95:b029:da:fa53:666 with SMTP id x21-20020a170902fe95b02900dafa530666mr3161164plm.72.1608096172276;
+        Tue, 15 Dec 2020 21:22:52 -0800 (PST)
+Received: from localhost ([122.172.20.109])
+        by smtp.gmail.com with ESMTPSA id y5sm634786pjt.42.2020.12.15.21.22.50
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 15 Dec 2020 21:22:51 -0800 (PST)
+Date:   Wed, 16 Dec 2020 10:52:48 +0530
+From:   Viresh Kumar <viresh.kumar@linaro.org>
+To:     Rob Clark <robdclark@gmail.com>
+Cc:     Daniel Vetter <daniel@ffwll.ch>,
+        dri-devel <dri-devel@lists.freedesktop.org>,
+        Rob Clark <robdclark@chromium.org>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
+        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
+        <linux-arm-msm@vger.kernel.org>,
+        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
+        <freedreno@lists.freedesktop.org>,
+        open list <linux-kernel@vger.kernel.org>,
+        "Menon, Nishanth" <nm@ti.com>
+Subject: Re: [PATCH v2 07/22] drm/msm: Do rpm get sooner in the submit path
+Message-ID: <20201216052248.qi6fbo2dh6shw4rt@vireshk-i7>
+References: <20201103054715.4l5j57pyjz6zd6ed@vireshk-i7>
+ <CAF6AEGtgUVXm6Wwod0FC38g91Q8CotLFSoC4NmXx7GzcA=1mOA@mail.gmail.com>
+ <20201104030353.ny7zvakgb4fsye6r@vireshk-i7>
+ <CAF6AEGv215ixcAWmaOWs7UKAqmbMs=aFyTBBYLU-bt8XBnWb7g@mail.gmail.com>
+ <20201106071621.j732gt4nqifjrccd@vireshk-i7>
+ <CAF6AEGt_wbWuQA7gBw4yn4f2x0SVbfub4eRDX59PCvnd_0uFxg@mail.gmail.com>
+ <20201118052829.ugt7i7ac6eqsj4l6@vireshk-i7>
+ <CAF6AEGv=-h7GFj5LR97FkeBBn+gk6TNS5hZkwBwufpE4yO7GyA@mail.gmail.com>
+ <20201119060528.qscedvc4jlmxakqo@vireshk-i7>
+ <20201207061654.btlgobmsljdqbb2u@vireshk-i7>
 MIME-Version: 1.0
-References: <20201214125703.866998-1-acourbot@chromium.org>
- <5319c101-f4a4-9c99-b15d-4999366f7a63@linaro.org> <CAAFQd5AQ8VHiRYkzkd5ZJBPT5_5WO0tyQrwqBEfnMVKYiTugTA@mail.gmail.com>
- <b5d35bbd-ae50-7a09-9edf-ca23d1a4b168@linaro.org> <bc42c936d7a67609b9dc4212b5a34b0d761676ed.camel@ndufresne.ca>
-In-Reply-To: <bc42c936d7a67609b9dc4212b5a34b0d761676ed.camel@ndufresne.ca>
-From:   Tomasz Figa <tfiga@chromium.org>
-Date:   Wed, 16 Dec 2020 12:15:32 +0900
-X-Gmail-Original-Message-ID: <CAAFQd5BQv2vu_FSxJjVZLpgcuFi1WHVem_O-0x-vkG1KZJi0eA@mail.gmail.com>
-Message-ID: <CAAFQd5BQv2vu_FSxJjVZLpgcuFi1WHVem_O-0x-vkG1KZJi0eA@mail.gmail.com>
-Subject: Re: [PATCH] media: venus: use contig vb2 ops
-To:     Nicolas Dufresne <nicolas@ndufresne.ca>
-Cc:     Stanimir Varbanov <stanimir.varbanov@linaro.org>,
-        Alexandre Courbot <acourbot@chromium.org>,
-        Fritz Koenig <frkoenig@chromium.org>,
-        Linux Media Mailing List <linux-media@vger.kernel.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Robin Murphy <robin.murphy@arm.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20201207061654.btlgobmsljdqbb2u@vireshk-i7>
+User-Agent: NeoMutt/20180716-391-311a52
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Dec 16, 2020 at 4:21 AM Nicolas Dufresne <nicolas@ndufresne.ca> wro=
-te:
->
-> Le mardi 15 d=C3=A9cembre 2020 =C3=A0 15:54 +0200, Stanimir Varbanov a =
-=C3=A9crit :
-> > Hi Tomasz,
-> >
-> > On 12/15/20 1:47 PM, Tomasz Figa wrote:
-> > > On Tue, Dec 15, 2020 at 8:16 PM Stanimir Varbanov
-> > > <stanimir.varbanov@linaro.org> wrote:
+On 07-12-20, 11:46, Viresh Kumar wrote:
+> On 19-11-20, 11:35, Viresh Kumar wrote:
+> > On 18-11-20, 08:53, Rob Clark wrote:
+> > > On Tue, Nov 17, 2020 at 9:28 PM Viresh Kumar <viresh.kumar@linaro.org> wrote:
 > > > >
-> > > > Hi,
+> > > > On 17-11-20, 09:02, Rob Clark wrote:
+> > > > > With that on top of the previous patch,
 > > > >
-> > > > Cc: Robin
+> > > > Don't you still have this ? Which fixed the lockdep in the remove path.
 > > > >
-> > > > On 12/14/20 2:57 PM, Alexandre Courbot wrote:
-> > > > > This driver uses the SG vb2 ops, but effectively only ever access=
-es the
-> > > > > first entry of the SG table, indicating that it expects a flat la=
-yout.
-> > > > > Switch it to use the contiguous ops to make sure this expected in=
-variant
+> > > > https://lore.kernel.org/lkml/20201022080644.2ck4okrxygmkuatn@vireshk-i7/
 > > > >
-> > > > Under what circumstances the sg table will has nents > 1? I came do=
-wn to
-> > > > [1] but not sure I got it right.
+> > > > To make it clear you need these patches to fix the OPP stuff:
 > > > >
-> > > > I'm afraid that for systems with low amount of system memory and wh=
-en
-> > > > the memory become fragmented, the driver will not work. That's why =
-I
-> > > > started with sg allocator.
-> > >
-> > > It is exactly the opposite. The vb2-dma-contig allocator is "contig"
-> > > in terms of the DMA (aka IOVA) address space. In other words, it
-> > > guarantees that having one DMA address and length fully describes the
-> >
-> > Ahh, I missed that part. Looks like I misunderstood videobu2 contig
-> > allocator.
->
-> I'm learning everyday too, but I'm surprised I don't see a call to
-> vb2_dma_contig_set_max_seg_size() in this driver (I could also just have =
-missed
-> a patch when overlooking this thread) ?
->
-> The reason I'm asking, doc says it should be called by driver supporting =
-IOMMU,
-> which seems to be the case for such drivers (MFC, exynos4-is, exynos-gsc,=
- mtk-
-> mdp, s5p-g2d, hantro, rkvdec, zoran, ti-vpe, ..). I posting it, worst cas=
-e it's
-> all covered and we are good, otherwise perhaps a downstream patch didn't =
-make it
-> ?
->
-> /**
->  * vb2_dma_contig_set_max_seg_size() - configure DMA max segment size
->  * @dev:        device for configuring DMA parameters
->  * @size:       size of DMA max segment size to set
->  *
->  * To allow mapping the scatter-list into a single chunk in the DMA
->  * address space, the device is required to have the DMA max segment
->  * size parameter set to a value larger than the buffer size. Otherwise,
->  * the DMA-mapping subsystem will split the mapping into max segment
->  * size chunks. This function sets the DMA max segment size
->  * parameter to let DMA-mapping map a buffer as a single chunk in DMA
->  * address space.
->  * This code assumes that the DMA-mapping subsystem will merge all
->  * scatterlist segments if this is really possible (for example when
->  * an IOMMU is available and enabled).
->  * Ideally, this parameter should be set by the generic bus code, but it
->  * is left with the default 64KiB value due to historical litmiations in
->  * other subsystems (like limited USB host drivers) and there no good
->  * place to set it to the proper value.
->  * This function should be called from the drivers, which are known to
->  * operate on platforms with IOMMU and provide access to shared buffers
->  * (either USERPTR or DMABUF). This should be done before initializing
->  * videobuf2 queue.
->  */
+> > > > //From 5.10-rc3 (the one from the above link).
+> > > > commit e0df59de670b ("opp: Reduce the size of critical section in _opp_table_kref_release()")
+> > 
+> > This fixes debugfs stuff while the OPP table is removed.
+> > 
+> > > > //Below two from linux-next
+> > > > commit ef43f01ac069 ("opp: Always add entries in dev_list with opp_table->lock held")
+> > > > commit 27c09484dd3d ("opp: Allocate the OPP table outside of opp_table_lock")
+> > 
+> > This fixes debugfs stuff while the OPP table is added.
+> > 
+> > > > This matches the diff I gave you earlier.
+> > > >
+> > > 
+> > > no, I did not have all three, only "opp: Allocate the OPP table
+> > > outside of opp_table_lock" plus the fixup.  But with all three:
+> > 
+> > And looking at the lockdep you gave now, it looks like we have a
+> > problem with OPP table's internal lock (opp_table->lock) as well apart
+> > from the global opp_table_lock.
+> > 
+> > I wish there was a way for me to reproduce the lockdep :(
+> > 
+> > I know this is exhausting for both of us and I really want to be over
+> > with it as soon as possible, this really should be the last patch
+> > here, please try this along with other two. This fixes the debugfs
+> > thing while the OPPs in the OPP table are removed (they are already
+> > added without a lock around debugfs stuff).
+> > 
+> > AFAIU, there is no further debugfs stuff that happens from within the
+> > locks and so this really should be the last patch unless I missed
+> > something.
+> 
+> Rob, were you able to test this patch ?
 
-It does call dma_set_max_seg_size() directly:
-https://elixir.bootlin.com/linux/latest/source/drivers/media/platform/qcom/=
-venus/core.c#L230
+FWIW, this patch and everything else I had is merged into Linus's
+master. You can test 5.11-rc1 to see if you still see a lockdep or
+not.
 
-Actually, why do we even need a vb2 helper for this?
-
->
-> regards,
-> Nicolas
->
-> >
-> > > buffer. This seems to be the requirement of the hardware/firmware
-> > > handled by the venus driver. If the device is behind an IOMMU, which
-> > > is the case for the SoCs in question, the underlying DMA ops will
-> > > actually allocate a discontiguous set of pages, so it has nothing to
-> > > do to system memory amount or fragmentation. If for some reason the
-> > > IOMMU can't be used, there is no way around, the memory needs to be
-> > > contiguous because of the hardware/firmware/driver expectation.
-> > >
-> > > On the other hand, the vb2-dma-sg allocator doesn't have any
-> > > continuity guarantees for the DMA, or any other, address space. The
-> > > current code works fine, because it calls dma_map_sg() on the whole
-> > > set of pages and that ends up mapping it contiguously in the IOVA
-> > > space, but that's just an implementation detail, not an API guarantee=
-.
-> >
-> > It was good to know. Thanks for the explanation.
-> >
-> > >
-> > > Best regards,
-> > > Tomasz
-> > >
-> > > >
-> > > > [1]
-> > > > https://elixir.bootlin.com/linux/v5.10.1/source/drivers/iommu/dma-i=
-ommu.c#L782
-> > > >
-> > > > > is always enforced. Since the device is supposed to be behind an =
-IOMMU
-> > > > > this should have little to none practical consequences beyond mak=
-ing the
-> > > > > driver not rely on a particular behavior of the SG implementation=
-.
-> > > > >
-> > > > > Reported-by: Tomasz Figa <tfiga@chromium.org>
-> > > > > Signed-off-by: Alexandre Courbot <acourbot@chromium.org>
-> > > > > ---
-> > > > > Hi everyone,
-> > > > >
-> > > > > It probably doesn't hurt to fix this issue before some actual iss=
-ue
-> > > > > happens.
-> > > > > I have tested this patch on Chrome OS and playback was just as fi=
-ne as
-> > > > > with
-> > > > > the SG ops.
-> > > > >
-> > > > >  drivers/media/platform/Kconfig              | 2 +-
-> > > > >  drivers/media/platform/qcom/venus/helpers.c | 9 ++-------
-> > > > >  drivers/media/platform/qcom/venus/vdec.c    | 6 +++---
-> > > > >  drivers/media/platform/qcom/venus/venc.c    | 6 +++---
-> > > > >  4 files changed, 9 insertions(+), 14 deletions(-)
-> > > > >
-> > > > > diff --git a/drivers/media/platform/Kconfig
-> > > > > b/drivers/media/platform/Kconfig
-> > > > > index 35a18d388f3f..d9d7954111f2 100644
-> > > > > --- a/drivers/media/platform/Kconfig
-> > > > > +++ b/drivers/media/platform/Kconfig
-> > > > > @@ -533,7 +533,7 @@ config VIDEO_QCOM_VENUS
-> > > > >       depends on INTERCONNECT || !INTERCONNECT
-> > > > >       select QCOM_MDT_LOADER if ARCH_QCOM
-> > > > >       select QCOM_SCM if ARCH_QCOM
-> > > > > -     select VIDEOBUF2_DMA_SG
-> > > > > +     select VIDEOBUF2_DMA_CONTIG
-> > > > >       select V4L2_MEM2MEM_DEV
-> > > > >       help
-> > > > >         This is a V4L2 driver for Qualcomm Venus video accelerato=
-r
-> > > > > diff --git a/drivers/media/platform/qcom/venus/helpers.c
-> > > > > b/drivers/media/platform/qcom/venus/helpers.c
-> > > > > index 50439eb1ffea..859d260f002b 100644
-> > > > > --- a/drivers/media/platform/qcom/venus/helpers.c
-> > > > > +++ b/drivers/media/platform/qcom/venus/helpers.c
-> > > > > @@ -7,7 +7,7 @@
-> > > > >  #include <linux/mutex.h>
-> > > > >  #include <linux/slab.h>
-> > > > >  #include <linux/kernel.h>
-> > > > > -#include <media/videobuf2-dma-sg.h>
-> > > > > +#include <media/videobuf2-dma-contig.h>
-> > > > >  #include <media/v4l2-mem2mem.h>
-> > > > >  #include <asm/div64.h>
-> > > > >
-> > > > > @@ -1284,14 +1284,9 @@ int venus_helper_vb2_buf_init(struct vb2_b=
-uffer
-> > > > > *vb)
-> > > > >       struct venus_inst *inst =3D vb2_get_drv_priv(vb->vb2_queue)=
-;
-> > > > >       struct vb2_v4l2_buffer *vbuf =3D to_vb2_v4l2_buffer(vb);
-> > > > >       struct venus_buffer *buf =3D to_venus_buffer(vbuf);
-> > > > > -     struct sg_table *sgt;
-> > > > > -
-> > > > > -     sgt =3D vb2_dma_sg_plane_desc(vb, 0);
-> > > > > -     if (!sgt)
-> > > > > -             return -EFAULT;
-> > > > >
-> > > > >       buf->size =3D vb2_plane_size(vb, 0);
-> > > > > -     buf->dma_addr =3D sg_dma_address(sgt->sgl);
-> > > >
-> > > > Can we do it:
-> > > >
-> > > >         if (WARN_ON(sgt->nents > 1))
-> > > >                 return -EFAULT;
-> > > >
-> > > > I understand that logically using dma-sg when the flat layout is
-> > > > expected by the hardware is wrong, but I haven't seen issues until =
-now.
-> > > >
-> > > > > +     buf->dma_addr =3D vb2_dma_contig_plane_dma_addr(vb, 0);
-> > > > >
-> > > > >       if (vb->type =3D=3D V4L2_BUF_TYPE_VIDEO_CAPTURE_MPLANE)
-> > > > >               list_add_tail(&buf->reg_list, &inst->registeredbufs=
-);
-> > > > > diff --git a/drivers/media/platform/qcom/venus/vdec.c
-> > > > > b/drivers/media/platform/qcom/venus/vdec.c
-> > > > > index 8488411204c3..3fb277c81aca 100644
-> > > > > --- a/drivers/media/platform/qcom/venus/vdec.c
-> > > > > +++ b/drivers/media/platform/qcom/venus/vdec.c
-> > > > > @@ -13,7 +13,7 @@
-> > > > >  #include <media/v4l2-event.h>
-> > > > >  #include <media/v4l2-ctrls.h>
-> > > > >  #include <media/v4l2-mem2mem.h>
-> > > > > -#include <media/videobuf2-dma-sg.h>
-> > > > > +#include <media/videobuf2-dma-contig.h>
-> > > > >
-> > > > >  #include "hfi_venus_io.h"
-> > > > >  #include "hfi_parser.h"
-> > > > > @@ -1461,7 +1461,7 @@ static int m2m_queue_init(void *priv, struc=
-t
-> > > > > vb2_queue *src_vq,
-> > > > >       src_vq->io_modes =3D VB2_MMAP | VB2_DMABUF;
-> > > > >       src_vq->timestamp_flags =3D V4L2_BUF_FLAG_TIMESTAMP_COPY;
-> > > > >       src_vq->ops =3D &vdec_vb2_ops;
-> > > > > -     src_vq->mem_ops =3D &vb2_dma_sg_memops;
-> > > > > +     src_vq->mem_ops =3D &vb2_dma_contig_memops;
-> > > > >       src_vq->drv_priv =3D inst;
-> > > > >       src_vq->buf_struct_size =3D sizeof(struct venus_buffer);
-> > > > >       src_vq->allow_zero_bytesused =3D 1;
-> > > > > @@ -1475,7 +1475,7 @@ static int m2m_queue_init(void *priv, struc=
-t
-> > > > > vb2_queue *src_vq,
-> > > > >       dst_vq->io_modes =3D VB2_MMAP | VB2_DMABUF;
-> > > > >       dst_vq->timestamp_flags =3D V4L2_BUF_FLAG_TIMESTAMP_COPY;
-> > > > >       dst_vq->ops =3D &vdec_vb2_ops;
-> > > > > -     dst_vq->mem_ops =3D &vb2_dma_sg_memops;
-> > > > > +     dst_vq->mem_ops =3D &vb2_dma_contig_memops;
-> > > > >       dst_vq->drv_priv =3D inst;
-> > > > >       dst_vq->buf_struct_size =3D sizeof(struct venus_buffer);
-> > > > >       dst_vq->allow_zero_bytesused =3D 1;
-> > > > > diff --git a/drivers/media/platform/qcom/venus/venc.c
-> > > > > b/drivers/media/platform/qcom/venus/venc.c
-> > > > > index 1c61602c5de1..a09550cd1dba 100644
-> > > > > --- a/drivers/media/platform/qcom/venus/venc.c
-> > > > > +++ b/drivers/media/platform/qcom/venus/venc.c
-> > > > > @@ -10,7 +10,7 @@
-> > > > >  #include <linux/pm_runtime.h>
-> > > > >  #include <linux/slab.h>
-> > > > >  #include <media/v4l2-mem2mem.h>
-> > > > > -#include <media/videobuf2-dma-sg.h>
-> > > > > +#include <media/videobuf2-dma-contig.h>
-> > > > >  #include <media/v4l2-ioctl.h>
-> > > > >  #include <media/v4l2-event.h>
-> > > > >  #include <media/v4l2-ctrls.h>
-> > > > > @@ -1001,7 +1001,7 @@ static int m2m_queue_init(void *priv, struc=
-t
-> > > > > vb2_queue *src_vq,
-> > > > >       src_vq->io_modes =3D VB2_MMAP | VB2_USERPTR | VB2_DMABUF;
-> > > > >       src_vq->timestamp_flags =3D V4L2_BUF_FLAG_TIMESTAMP_COPY;
-> > > > >       src_vq->ops =3D &venc_vb2_ops;
-> > > > > -     src_vq->mem_ops =3D &vb2_dma_sg_memops;
-> > > > > +     src_vq->mem_ops =3D &vb2_dma_contig_memops;
-> > > > >       src_vq->drv_priv =3D inst;
-> > > > >       src_vq->buf_struct_size =3D sizeof(struct venus_buffer);
-> > > > >       src_vq->allow_zero_bytesused =3D 1;
-> > > > > @@ -1017,7 +1017,7 @@ static int m2m_queue_init(void *priv, struc=
-t
-> > > > > vb2_queue *src_vq,
-> > > > >       dst_vq->io_modes =3D VB2_MMAP | VB2_USERPTR | VB2_DMABUF;
-> > > > >       dst_vq->timestamp_flags =3D V4L2_BUF_FLAG_TIMESTAMP_COPY;
-> > > > >       dst_vq->ops =3D &venc_vb2_ops;
-> > > > > -     dst_vq->mem_ops =3D &vb2_dma_sg_memops;
-> > > > > +     dst_vq->mem_ops =3D &vb2_dma_contig_memops;
-> > > > >       dst_vq->drv_priv =3D inst;
-> > > > >       dst_vq->buf_struct_size =3D sizeof(struct venus_buffer);
-> > > > >       dst_vq->allow_zero_bytesused =3D 1;
-> > > > >
-> > > >
-> > > > --
-> > > > regards,
-> > > > Stan
-> >
->
->
+-- 
+viresh
