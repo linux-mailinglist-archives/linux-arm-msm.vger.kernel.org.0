@@ -2,92 +2,99 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 9BD202DBDCC
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Dec 2020 10:42:55 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E4D6E2DC077
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Dec 2020 13:47:41 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725917AbgLPJl5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 16 Dec 2020 04:41:57 -0500
-Received: from mail.kernel.org ([198.145.29.99]:51938 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725889AbgLPJl5 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 16 Dec 2020 04:41:57 -0500
-Date:   Wed, 16 Dec 2020 10:42:17 +0100
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-        s=korg; t=1608111676;
-        bh=wwOdbgunRq2eKqn6jEC3Bs80LYViiIT+qaz21Cqol+s=;
-        h=From:To:Cc:Subject:References:In-Reply-To:From;
-        b=U8xz+2kdTBlKXeI7J5SDrWW1/jaWVXq5kmxd/L7Hil33cr+Dn6ZWIs9+dXhF63c9j
-         jXxlCaGd+cMoN5x6Gi6iY49Bsopmneyw7GqLTpn9Or28wGhUx1PVzIWzrs4d1icDR1
-         +Y9MD0ribWJJi2xNTn8xF88+79NAblfBZ8MLeHs0=
-From:   Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To:     Loic Poulain <loic.poulain@linaro.org>
-Cc:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        Jakub Kicinski <kuba@kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Hemant Kumar <hemantk@codeaurora.org>,
-        open list <linux-kernel@vger.kernel.org>,
-        Jeffrey Hugo <jhugo@codeaurora.org>,
-        Bhaumik Bhatt <bbhatt@codeaurora.org>,
-        Network Development <netdev@vger.kernel.org>
-Subject: Re: [PATCH v18 0/3] userspace MHI client interface driver
-Message-ID: <X9nWeXZz7lh4JdCb@kroah.com>
-References: <1607715903-16442-1-git-send-email-hemantk@codeaurora.org>
- <CAMZdPi8=9OsoCH_eV_JZohmFbuXcLv2kWNPLFzQUAKUCUHYs5A@mail.gmail.com>
+        id S1725907AbgLPMrl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 16 Dec 2020 07:47:41 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52644 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725933AbgLPMrk (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 16 Dec 2020 07:47:40 -0500
+Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3B497C06179C
+        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Dec 2020 04:47:00 -0800 (PST)
+Received: by mail-lf1-x12d.google.com with SMTP id o17so45049949lfg.4
+        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Dec 2020 04:47:00 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=VOVajqeL58osbRPPaomgTK8n6oUgfCbxRdg+Fy/mnXs=;
+        b=i4hQCSzgyarWqSRx8lwW55w7AT8SqV+QL34hqfbK2tNFgrtNkuHa4lUZ5EZtsUhapF
+         wBSlb1/HKs4lWTrub+/WG9KZYknYDRJ1tpNK4ysCbZrhEfB2ChKXyoOpgiNpcYgK9Lcz
+         qE7O6CpmzUPvK1X/riZptbyzZtI8f1EqX5+i/ebuyHXyfJPNRcRXyDTD788s9+9G035L
+         rnc1jLJ75WIbpFq817pOLonid0xYqguLJkrGOwU78TJj8DJz2UtX0OuxYo843MGQeGe1
+         by6jGqr1SImmXps3YZhXbI9pqWCmteSDK19Gn/BMgdqdwqM0j2Zx/iRvQ1qItoPCaphm
+         alCg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=VOVajqeL58osbRPPaomgTK8n6oUgfCbxRdg+Fy/mnXs=;
+        b=sNK6AVg7Fpb0LuaIwafvXtwHRU3u5pox35b3azxzTezDUl77FHpS0mrO4eiPWMHiCu
+         e1pIP1fPbwrsXt6H7IsxE9oCl4LEKQgI6A8+C6nNUipKruAPcS8pS1o7G6j4rQIDuVE6
+         ki4/vCkK6qtKwJcCryqs9uNwE22kphU4hHJh6oYoTicgthonuJxj5Sn6tg498MOJXz27
+         JDY13+MoC9ypRA6j4bOsmdeqyyKoVL3CMTuC4U4ULzP7vJpI7bbYELfXexZYTbjl88qA
+         +w8V1udFcXc24zZwOFnbJt6xaoe9+htaIeR5s4b+qsfElQRiPmLtTH9xF8Y/vbQfrGQ4
+         aEIA==
+X-Gm-Message-State: AOAM530C1imGpI5Qq/9tgYIfOAdpDgv260iBRhZ3WLAZI+avZlUIUI2w
+        Db9+Oj1D4Xd2hbi7jbP/Ek34vImYCnrLxcdrbp7pyQ==
+X-Google-Smtp-Source: ABdhPJx/ESz87W3XJ6XGTijh+mpw6fi1H7wcl/u92ThLJDNcAiIGewSSl41QCClJfIgduJfJv7cNsCBzlSMsg4LFAMs=
+X-Received: by 2002:a19:8bc6:: with SMTP id n189mr2718938lfd.291.1608122818612;
+ Wed, 16 Dec 2020 04:46:58 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAMZdPi8=9OsoCH_eV_JZohmFbuXcLv2kWNPLFzQUAKUCUHYs5A@mail.gmail.com>
+References: <20201215170308.2037624-1-bjorn.andersson@linaro.org>
+In-Reply-To: <20201215170308.2037624-1-bjorn.andersson@linaro.org>
+From:   Linus Walleij <linus.walleij@linaro.org>
+Date:   Wed, 16 Dec 2020 13:46:47 +0100
+Message-ID: <CACRpkdZKKetFFm8AanVnzV9SyZhuurLHT_ZTak27-vGEdqVgEw@mail.gmail.com>
+Subject: Re: [PATCH] gpiolib: Allow name duplicates of "" and "NC"
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Bartosz Golaszewski <bgolaszewski@baylibre.com>,
+        "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+        MSM <linux-arm-msm@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Dec 16, 2020 at 10:17:30AM +0100, Loic Poulain wrote:
-> Hi Folks,
-> 
-> On Fri, 11 Dec 2020 at 20:45, Hemant Kumar <hemantk@codeaurora.org> wrote:
-> >
-> > This patch series adds support for UCI driver. UCI driver enables userspace
-> > clients to communicate to external MHI devices like modem. UCI driver probe
-> > creates standard character device file nodes for userspace clients to
-> > perform open, read, write, poll and release file operations. These file
-> > operations call MHI core layer APIs to perform data transfer using MHI bus
-> > to communicate with MHI device.
-> >
-> > This interface allows exposing modem control channel(s) such as QMI, MBIM,
-> > or AT commands to userspace which can be used to configure the modem using
-> > tools such as libqmi, ModemManager, minicom (for AT), etc over MHI. This is
-> > required as there are no kernel APIs to access modem control path for device
-> > configuration. Data path transporting the network payload (IP), however, is
-> > routed to the Linux network via the mhi-net driver. Currently driver supports
-> > QMI channel. libqmi is userspace MHI client which communicates to a QMI
-> > service using QMI channel. Please refer to
-> > https://www.freedesktop.org/wiki/Software/libqmi/ for additional information
-> > on libqmi.
-> >
-> > Patch is tested using arm64 and x86 based platform.
-> 
-> Are there any blockers or unadressed comments remaining on this
-> series? As far as I understand, the original blocker was the net/WiFi
-> mention in the commit message, that caused a legitimate concern from
-> network maintainer. It has been clarified now that this driver is not
-> for exposing any channel that could be otherwise handled properly by
-> an existing Linux subsystem/interface. It will be especially used as a
-> pipe for modem QMI channel (or AT commands) in the same way as the USB
-> CDC-WDM driver is doing (keeping userspace compatibility). Other MHI
-> channels, such as network data, QRTR, etc are not exposed and
-> correctly bound to the corresponding Linux subsystems.
-> 
-> The correlated worry was that it could be a userspace channel facility
-> for 'everything qualcomm', but we could say the same for other
-> existing busses with userspace shunt (/dev/bus/usb, /dev/i2c,
-> /dev/spidev, PCI UIO, UART...). Moreover, it is mitigated by the fact
-> that not all MHI channels are exposed by default, but only the allowed
-> ones (QMI in the initial version). For sure, special care must be
-> given to any further channel addition.
+On Tue, Dec 15, 2020 at 6:02 PM Bjorn Andersson
+<bjorn.andersson@linaro.org> wrote:
 
-It's the middle of the merge window, we can't do anything with new
-patches at all until 5.11-rc1 is out, so please be patient.
+> Not all GPIO pins are exposed to the world and this is typically
+> described by not giving these lines particular names, commonly "" or
+> "NC".
+>
+> With the recent introduction of '2cd64ae98f35 ("gpiolib: Disallow
+> identical line names in the same chip")' any gpiochip with multiple such
+> pins will refuse to probe.
+>
+> Fix this by treating "" and "NC" as "no name specified" in
+> gpio_name_to_desc()
+>
+> Fixes: 2cd64ae98f35 ("gpiolib: Disallow identical line names in the same chip")
+> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> ---
+>
+> The introduction of 2cd64ae98f35 breaks pretty much all Qualcomm boards and
+> grepping the DT tree indicates that other vendors will have the same problem.
+>
+> In addition to this the am335x-* boards will also needs "[NC]", "[ethernet]",
+> "[emmc"], "[i2c0]", "[SYSBOOT]" and "[JTAG]" added to this list to allow
+> booting v5.11 with the past and present dtb/dts files.
 
-thanks,
+I pushed this patch yesterday that fixes the obvious "(empty string)" problem:
+https://lore.kernel.org/linux-gpio/20201215123755.438369-1-linus.walleij@linaro.org/T/#u
 
-greg k-h
+But I see this is for device tree line naming only, right?
+
+I think I will conjure a patch allowing identical naming only for
+device property naming (like from device tree) but emitting a
+warning so that people fix it to something unique moving
+forward.
+
+Yours,
+Linus Walleij
