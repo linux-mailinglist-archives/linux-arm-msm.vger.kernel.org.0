@@ -2,99 +2,73 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E4D6E2DC077
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Dec 2020 13:47:41 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 81F952DC0C2
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Dec 2020 14:08:27 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725907AbgLPMrl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 16 Dec 2020 07:47:41 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52644 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725933AbgLPMrk (ORCPT
+        id S1725879AbgLPNHJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 16 Dec 2020 08:07:09 -0500
+Received: from szxga04-in.huawei.com ([45.249.212.190]:9214 "EHLO
+        szxga04-in.huawei.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725274AbgLPNHI (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 16 Dec 2020 07:47:40 -0500
-Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3B497C06179C
-        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Dec 2020 04:47:00 -0800 (PST)
-Received: by mail-lf1-x12d.google.com with SMTP id o17so45049949lfg.4
-        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Dec 2020 04:47:00 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=VOVajqeL58osbRPPaomgTK8n6oUgfCbxRdg+Fy/mnXs=;
-        b=i4hQCSzgyarWqSRx8lwW55w7AT8SqV+QL34hqfbK2tNFgrtNkuHa4lUZ5EZtsUhapF
-         wBSlb1/HKs4lWTrub+/WG9KZYknYDRJ1tpNK4ysCbZrhEfB2ChKXyoOpgiNpcYgK9Lcz
-         qE7O6CpmzUPvK1X/riZptbyzZtI8f1EqX5+i/ebuyHXyfJPNRcRXyDTD788s9+9G035L
-         rnc1jLJ75WIbpFq817pOLonid0xYqguLJkrGOwU78TJj8DJz2UtX0OuxYo843MGQeGe1
-         by6jGqr1SImmXps3YZhXbI9pqWCmteSDK19Gn/BMgdqdwqM0j2Zx/iRvQ1qItoPCaphm
-         alCg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=VOVajqeL58osbRPPaomgTK8n6oUgfCbxRdg+Fy/mnXs=;
-        b=sNK6AVg7Fpb0LuaIwafvXtwHRU3u5pox35b3azxzTezDUl77FHpS0mrO4eiPWMHiCu
-         e1pIP1fPbwrsXt6H7IsxE9oCl4LEKQgI6A8+C6nNUipKruAPcS8pS1o7G6j4rQIDuVE6
-         ki4/vCkK6qtKwJcCryqs9uNwE22kphU4hHJh6oYoTicgthonuJxj5Sn6tg498MOJXz27
-         JDY13+MoC9ypRA6j4bOsmdeqyyKoVL3CMTuC4U4ULzP7vJpI7bbYELfXexZYTbjl88qA
-         +w8V1udFcXc24zZwOFnbJt6xaoe9+htaIeR5s4b+qsfElQRiPmLtTH9xF8Y/vbQfrGQ4
-         aEIA==
-X-Gm-Message-State: AOAM530C1imGpI5Qq/9tgYIfOAdpDgv260iBRhZ3WLAZI+avZlUIUI2w
-        Db9+Oj1D4Xd2hbi7jbP/Ek34vImYCnrLxcdrbp7pyQ==
-X-Google-Smtp-Source: ABdhPJx/ESz87W3XJ6XGTijh+mpw6fi1H7wcl/u92ThLJDNcAiIGewSSl41QCClJfIgduJfJv7cNsCBzlSMsg4LFAMs=
-X-Received: by 2002:a19:8bc6:: with SMTP id n189mr2718938lfd.291.1608122818612;
- Wed, 16 Dec 2020 04:46:58 -0800 (PST)
+        Wed, 16 Dec 2020 08:07:08 -0500
+Received: from DGGEMS402-HUB.china.huawei.com (unknown [172.30.72.58])
+        by szxga04-in.huawei.com (SkyGuard) with ESMTP id 4CwwNJ5KvRzkq4d;
+        Wed, 16 Dec 2020 21:05:36 +0800 (CST)
+Received: from ubuntu.network (10.175.138.68) by
+ DGGEMS402-HUB.china.huawei.com (10.3.19.202) with Microsoft SMTP Server id
+ 14.3.498.0; Wed, 16 Dec 2020 21:06:18 +0800
+From:   Zheng Yongjun <zhengyongjun3@huawei.com>
+To:     <agross@kernel.org>, <bjorn.andersson@linaro.org>,
+        <dan.j.williams@intel.com>, <vkoul@kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <dmaengine@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+CC:     Zheng Yongjun <zhengyongjun3@huawei.com>
+Subject: [PATCH -next] qcom: bam_dma: Delete useless kfree code
+Date:   Wed, 16 Dec 2020 21:06:49 +0800
+Message-ID: <20201216130649.13979-1-zhengyongjun3@huawei.com>
+X-Mailer: git-send-email 2.22.0
 MIME-Version: 1.0
-References: <20201215170308.2037624-1-bjorn.andersson@linaro.org>
-In-Reply-To: <20201215170308.2037624-1-bjorn.andersson@linaro.org>
-From:   Linus Walleij <linus.walleij@linaro.org>
-Date:   Wed, 16 Dec 2020 13:46:47 +0100
-Message-ID: <CACRpkdZKKetFFm8AanVnzV9SyZhuurLHT_ZTak27-vGEdqVgEw@mail.gmail.com>
-Subject: Re: [PATCH] gpiolib: Allow name duplicates of "" and "NC"
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Bartosz Golaszewski <bgolaszewski@baylibre.com>,
-        "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-        MSM <linux-arm-msm@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7BIT
+Content-Type:   text/plain; charset=US-ASCII
+X-Originating-IP: [10.175.138.68]
+X-CFilter-Loop: Reflected
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Dec 15, 2020 at 6:02 PM Bjorn Andersson
-<bjorn.andersson@linaro.org> wrote:
+The parameter of kfree function is NULL, so kfree code is useless, delete it.
+Therefore, goto expression is no longer needed, so simplify it.
 
-> Not all GPIO pins are exposed to the world and this is typically
-> described by not giving these lines particular names, commonly "" or
-> "NC".
->
-> With the recent introduction of '2cd64ae98f35 ("gpiolib: Disallow
-> identical line names in the same chip")' any gpiochip with multiple such
-> pins will refuse to probe.
->
-> Fix this by treating "" and "NC" as "no name specified" in
-> gpio_name_to_desc()
->
-> Fixes: 2cd64ae98f35 ("gpiolib: Disallow identical line names in the same chip")
-> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-> ---
->
-> The introduction of 2cd64ae98f35 breaks pretty much all Qualcomm boards and
-> grepping the DT tree indicates that other vendors will have the same problem.
->
-> In addition to this the am335x-* boards will also needs "[NC]", "[ethernet]",
-> "[emmc"], "[i2c0]", "[SYSBOOT]" and "[JTAG]" added to this list to allow
-> booting v5.11 with the past and present dtb/dts files.
+Signed-off-by: Zheng Yongjun <zhengyongjun3@huawei.com>
+---
+ drivers/dma/qcom/bam_dma.c | 6 +-----
+ 1 file changed, 1 insertion(+), 5 deletions(-)
 
-I pushed this patch yesterday that fixes the obvious "(empty string)" problem:
-https://lore.kernel.org/linux-gpio/20201215123755.438369-1-linus.walleij@linaro.org/T/#u
+diff --git a/drivers/dma/qcom/bam_dma.c b/drivers/dma/qcom/bam_dma.c
+index 4eeb8bb27279..78df217b3f6c 100644
+--- a/drivers/dma/qcom/bam_dma.c
++++ b/drivers/dma/qcom/bam_dma.c
+@@ -630,7 +630,7 @@ static struct dma_async_tx_descriptor *bam_prep_slave_sg(struct dma_chan *chan,
+ 			     GFP_NOWAIT);
+ 
+ 	if (!async_desc)
+-		goto err_out;
++		return NULL;
+ 
+ 	if (flags & DMA_PREP_FENCE)
+ 		async_desc->flags |= DESC_FLAG_NWD;
+@@ -670,10 +670,6 @@ static struct dma_async_tx_descriptor *bam_prep_slave_sg(struct dma_chan *chan,
+ 	}
+ 
+ 	return vchan_tx_prep(&bchan->vc, &async_desc->vd, flags);
+-
+-err_out:
+-	kfree(async_desc);
+-	return NULL;
+ }
+ 
+ /**
+-- 
+2.22.0
 
-But I see this is for device tree line naming only, right?
-
-I think I will conjure a patch allowing identical naming only for
-device property naming (like from device tree) but emitting a
-warning so that people fix it to something unique moving
-forward.
-
-Yours,
-Linus Walleij
