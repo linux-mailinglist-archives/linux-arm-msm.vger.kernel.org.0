@@ -2,33 +2,34 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 824BD2DCD7D
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Dec 2020 09:17:23 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 84FD12DCD91
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Dec 2020 09:20:32 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727356AbgLQIPu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 17 Dec 2020 03:15:50 -0500
-Received: from so254-31.mailgun.net ([198.61.254.31]:56518 "EHLO
-        so254-31.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727275AbgLQIPt (ORCPT
+        id S1725468AbgLQITn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 17 Dec 2020 03:19:43 -0500
+Received: from m43-15.mailgun.net ([69.72.43.15]:49423 "EHLO
+        m43-15.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727820AbgLQITm (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 17 Dec 2020 03:15:49 -0500
+        Thu, 17 Dec 2020 03:19:42 -0500
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1608192926; h=Content-Transfer-Encoding: Content-Type:
- In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
- Subject: Sender; bh=Vl15HlNa4mtXvZ1I16t5kCLv5QtQ8BV4wsxKyd1mo5E=; b=KAvF6knA0On4i/Soxdfwy1QVFs4PxgHH3PRkW9TWqdDGIonmCFYNHGKgrDR5K/qUhYjwuR1g
- 9e6cvIN5wnv+TIauWZ2YknacqqH4rMLr+oW5SonJTbBqPD1u67qFo8nP8rbwzOjWxy2IGpwj
- tn8/oHeMv4qF02SB+pLg/p7VQac=
-X-Mailgun-Sending-Ip: 198.61.254.31
+ s=smtp; t=1608193156; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: References: Cc: To:
+ Subject: From: Sender; bh=q+gkjirX8bHiR8sRfJl8kJmFumhW7RL0znKrLM0wdfI=;
+ b=v4clFnhlmlD5GOR6lZJ1Ot+fVIi8h4zUgzOJcg6zzlKaCI9FnwUHoy2w0Ctq/enrUnpy/hd0
+ +Q+pEd5/fKYVmb1ZpsMwAGcCXA6vJN6Jhybao0Y6DIw+HEt+dncAuAjdt/QihZJ4wA3gf/GT
+ oqKFamNIgC/OBq2OAhATgZVJw1g=
+X-Mailgun-Sending-Ip: 69.72.43.15
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org
  (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n02.prod.us-east-1.postgun.com with SMTP id
- 5fdb1379944e4d244792fae4 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 17 Dec 2020 08:14:49
+ smtp-out-n04.prod.us-east-1.postgun.com with SMTP id
+ 5fdb1467253011a4b8b5aa3e (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 17 Dec 2020 08:18:47
  GMT
 Sender: srivasam=codeaurora.org@mg.codeaurora.org
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id A566BC43465; Thu, 17 Dec 2020 08:14:48 +0000 (UTC)
+        id 5B1C0C43463; Thu, 17 Dec 2020 08:18:46 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
@@ -38,11 +39,12 @@ Received: from [10.252.214.131] (unknown [202.46.23.19])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
         (Authenticated sender: srivasam)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id AF250C433C6;
-        Thu, 17 Dec 2020 08:14:43 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org AF250C433C6
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 810E7C433C6;
+        Thu, 17 Dec 2020 08:18:41 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 810E7C433C6
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=srivasam@codeaurora.org
+From:   Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
 Subject: Re: [PATCH v4 1/2] Partially revert ASoC: qcom: Fix enabling BCLK and
  LRCLK in LPAIF invalid state
 To:     Mark Brown <broonie@kernel.org>
@@ -60,10 +62,9 @@ References: <1606539559-4277-1-git-send-email-srivasam@codeaurora.org>
  <20201201175135.GO5239@sirena.org.uk>
  <89456f01-aa02-7a7d-a47b-bf1f26e66d4c@codeaurora.org>
  <20201214175009.GD4880@sirena.org.uk>
-From:   Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
 Organization: Qualcomm India Private Limited.
-Message-ID: <043ecf21-bf1c-8a32-f079-a526dfc90b6e@codeaurora.org>
-Date:   Thu, 17 Dec 2020 13:44:41 +0530
+Message-ID: <471379f0-0ab7-7c18-8c07-bd8a67615b3e@codeaurora.org>
+Date:   Thu, 17 Dec 2020 13:48:39 +0530
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
  Thunderbird/78.5.1
 MIME-Version: 1.0
@@ -95,7 +96,7 @@ On 12/14/2020 11:20 PM, Mark Brown wrote:
 > Your changelog talks about syncing the cache but neither the driver nor
 > your change actually does that.
 
-Yeah.. Now I posted v6 patch 
+Okay. Now I posted v6 patch 
 (https://lore.kernel.org/patchwork/patch/1354638/)
 
 with subject lines explaining actual changes.
