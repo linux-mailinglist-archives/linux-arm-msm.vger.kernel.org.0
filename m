@@ -2,108 +2,141 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 84FD12DCD91
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Dec 2020 09:20:32 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B30032DCEC8
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Dec 2020 10:48:26 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725468AbgLQITn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 17 Dec 2020 03:19:43 -0500
-Received: from m43-15.mailgun.net ([69.72.43.15]:49423 "EHLO
-        m43-15.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727820AbgLQITm (ORCPT
+        id S1727991AbgLQJq4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 17 Dec 2020 04:46:56 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49078 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727397AbgLQJq4 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 17 Dec 2020 03:19:42 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1608193156; h=Content-Transfer-Encoding: Content-Type:
- In-Reply-To: MIME-Version: Date: Message-ID: References: Cc: To:
- Subject: From: Sender; bh=q+gkjirX8bHiR8sRfJl8kJmFumhW7RL0znKrLM0wdfI=;
- b=v4clFnhlmlD5GOR6lZJ1Ot+fVIi8h4zUgzOJcg6zzlKaCI9FnwUHoy2w0Ctq/enrUnpy/hd0
- +Q+pEd5/fKYVmb1ZpsMwAGcCXA6vJN6Jhybao0Y6DIw+HEt+dncAuAjdt/QihZJ4wA3gf/GT
- oqKFamNIgC/OBq2OAhATgZVJw1g=
-X-Mailgun-Sending-Ip: 69.72.43.15
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n04.prod.us-east-1.postgun.com with SMTP id
- 5fdb1467253011a4b8b5aa3e (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 17 Dec 2020 08:18:47
- GMT
-Sender: srivasam=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 5B1C0C43463; Thu, 17 Dec 2020 08:18:46 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        NICE_REPLY_A,SPF_FAIL autolearn=no autolearn_force=no version=3.4.0
-Received: from [10.252.214.131] (unknown [202.46.23.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: srivasam)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 810E7C433C6;
-        Thu, 17 Dec 2020 08:18:41 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 810E7C433C6
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=srivasam@codeaurora.org
-From:   Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
-Subject: Re: [PATCH v4 1/2] Partially revert ASoC: qcom: Fix enabling BCLK and
- LRCLK in LPAIF invalid state
-To:     Mark Brown <broonie@kernel.org>
-Cc:     agross@kernel.org, bjorn.andersson@linaro.org, lgirdwood@gmail.com,
-        robh+dt@kernel.org, plai@codeaurora.org, bgoswami@codeaurora.org,
-        perex@perex.cz, tiwai@suse.com, srinivas.kandagatla@linaro.org,
-        rohitkr@codeaurora.org, linux-arm-msm@vger.kernel.org,
-        alsa-devel@alsa-project.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        V Sujith Kumar Reddy <vsujithk@codeaurora.org>
-References: <1606539559-4277-1-git-send-email-srivasam@codeaurora.org>
- <1606539559-4277-2-git-send-email-srivasam@codeaurora.org>
- <20201130124617.GC4756@sirena.org.uk>
- <966993b7-4720-bdd2-cf4d-cf5a7c11a0c1@codeaurora.org>
- <20201201175135.GO5239@sirena.org.uk>
- <89456f01-aa02-7a7d-a47b-bf1f26e66d4c@codeaurora.org>
- <20201214175009.GD4880@sirena.org.uk>
-Organization: Qualcomm India Private Limited.
-Message-ID: <471379f0-0ab7-7c18-8c07-bd8a67615b3e@codeaurora.org>
-Date:   Thu, 17 Dec 2020 13:48:39 +0530
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.5.1
+        Thu, 17 Dec 2020 04:46:56 -0500
+Received: from mail-ed1-x534.google.com (mail-ed1-x534.google.com [IPv6:2a00:1450:4864:20::534])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B70C7C06138C
+        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Dec 2020 01:46:15 -0800 (PST)
+Received: by mail-ed1-x534.google.com with SMTP id b2so27985829edm.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Dec 2020 01:46:15 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=qs9G1Hna8FkBf2U6+3PXrFWB1lYrYKjRbwLmbEVDCSA=;
+        b=N3vnIoF+/gaqAFgniw8NeEhMQDYOrBskumgwQ3O8y03aarMUdEz0RbfezB7KPfb2Nb
+         ORN1bAqwLGanHEXDeORKayuExhSAcVPyhxEFGJiRLr1hIUmQsZUYHGXWl2VTt2fDUTj2
+         Dp0BSJggXRG7zQrCXC+Gh1zl8COmTYJdGt37CC/04j00HL4T/eK3wy0PmMs/7Vevw+w2
+         q10EgBFo6oihBZBbNbbD9/ynB9Clt1dn1Pe0VN35GBRkgfE9ZGzWccOWy0SbF1gzHMNx
+         iFm+T7xBg4ci8Utf39+lMzZJ/kdZzu+UF3jE01UGlgcnWL+wIySdoUd4a4HK9ACeJsl2
+         saAA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=qs9G1Hna8FkBf2U6+3PXrFWB1lYrYKjRbwLmbEVDCSA=;
+        b=ArHSxNXWcWtOks40czdSuAVwmD8hz1NBDLMm2lhu2bgOYzJn0Qc3GwrYAcFIyP7p6w
+         uopYWvhVapoIqMftw14fKKC9sDCcYn105h7xlpP0TqYFSs+4RCnJzWt5qC7LcFlhKSqA
+         8vVP5gwJwVODO1iqYbuu1voXUBFbrnxEdHYD5ofdJrARXP55chbCYPriY8PAL8ygkOyn
+         tvHd5rwvMEr3j3H8n/0Ps/n+d30/ptUAj8hUJqJYpHl+XNgOBI4b9Jh+6XlfuKDPIc28
+         a5SeeWuGdBu3FWQfFDisJxnGDHEc1JM9fIBYhnvjZwrzE7QdLiONg1DiOgDrUBQzUX/s
+         4kBg==
+X-Gm-Message-State: AOAM533zdAl/yU2zpQCdDDwCRTZrWgGQACSnc3gjB41/cM0fMORUgki9
+        xHdMAEY8QeuM7Gppuw6iSqXHS1aYZ/8jXYt9
+X-Google-Smtp-Source: ABdhPJw+on5FbfMy9nXFFZmJV9Ud1VPuIkst7xacktXlp2wyTjB1+tQ7ayGqXSLZcGPk5aJRrF7ShQ==
+X-Received: by 2002:a05:6402:13d1:: with SMTP id a17mr37073638edx.202.1608198374469;
+        Thu, 17 Dec 2020 01:46:14 -0800 (PST)
+Received: from [192.168.0.3] (hst-221-81.medicom.bg. [84.238.221.81])
+        by smtp.googlemail.com with ESMTPSA id o13sm22683887edr.94.2020.12.17.01.46.12
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 17 Dec 2020 01:46:13 -0800 (PST)
+Subject: Re: [PATCH] media: venus: preserve DRC state across seeks
+To:     Alexandre Courbot <acourbot@chromium.org>,
+        Stanimir Varbanov <stanimir.varbanov@linaro.org>
+Cc:     linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20201202053424.3286774-1-acourbot@chromium.org>
+From:   Stanimir Varbanov <stanimir.varbanov@linaro.org>
+Message-ID: <02c8623d-66b6-b4d3-8bb2-43dc78c3d5d6@linaro.org>
+Date:   Thu, 17 Dec 2020 11:46:12 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.10.0
 MIME-Version: 1.0
-In-Reply-To: <20201214175009.GD4880@sirena.org.uk>
-Content-Type: text/plain; charset=windows-1252; format=flowed
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <20201202053424.3286774-1-acourbot@chromium.org>
+Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Thanks Mark for your Time!!!
+Hi Alex,
 
-On 12/14/2020 11:20 PM, Mark Brown wrote:
-> On Mon, Dec 14, 2020 at 06:13:22PM +0530, Srinivasa Rao Mandadapu wrote:
->> On 12/1/2020 11:21 PM, Mark Brown wrote:
->>>> Later from review comments by Srinivas kandagatla, I got to know
->>>>
->>>> about regcache sync APIs, which can be used  to sync cache after resume and
->>>>
->>>> HW registers can be updated with  original values. With that playback can be
->>>> continued.
->>>> So is the reason, I am reverting partial changes in the commit b1824968221c.
->>> I don't understand why a fix for the register cache not being in sync
->>> with the hardware doesn't involve syncing the register cache with the
->>> hardware.
->> I am sorry I couldn't understand your point. Could you please elaborate your
->> query?
-> Your changelog talks about syncing the cache but neither the driver nor
-> your change actually does that.
 
-Okay. Now I posted v6 patch 
-(https://lore.kernel.org/patchwork/patch/1354638/)
+On 12/2/20 7:34 AM, Alexandre Courbot wrote:
+> DRC events can happen virtually at anytime, including when we are
+> starting a seek. Should this happen, we must make sure to return to the
+> DRC state, otherwise the firmware will expect buffers of the new
+> resolution whereas userspace will still work with the old one.
+> 
+> Returning to the DRC state upon resume for seeking makes sure that the
+> client will get the DRC event and will reallocate the buffers to fit the
+> firmware's expectations.
+> 
+> Signed-off-by: Alexandre Courbot <acourbot@chromium.org>
+> ---
+>  drivers/media/platform/qcom/venus/vdec.c | 11 +++++++++--
+>  1 file changed, 9 insertions(+), 2 deletions(-)
+> 
+> diff --git a/drivers/media/platform/qcom/venus/vdec.c b/drivers/media/platform/qcom/venus/vdec.c
+> index 8488411204c3..e3d0df7fd765 100644
+> --- a/drivers/media/platform/qcom/venus/vdec.c
+> +++ b/drivers/media/platform/qcom/venus/vdec.c
+> @@ -972,7 +972,10 @@ static int vdec_start_output(struct venus_inst *inst)
+>  
+>  	if (inst->codec_state == VENUS_DEC_STATE_SEEK) {
+>  		ret = venus_helper_process_initial_out_bufs(inst);
+> -		inst->codec_state = VENUS_DEC_STATE_DECODING;
+> +		if (inst->next_buf_last)
+> +			inst->codec_state = VENUS_DEC_STATE_DRC;
+> +		else
+> +			inst->codec_state = VENUS_DEC_STATE_DECODING;
+>  		goto done;
+>  	}
+>  
+> @@ -1077,8 +1080,10 @@ static int vdec_stop_capture(struct venus_inst *inst)
+>  		ret = hfi_session_flush(inst, HFI_FLUSH_ALL, true);
+>  		fallthrough;
+>  	case VENUS_DEC_STATE_DRAIN:
+> -		vdec_cancel_dst_buffers(inst);
+>  		inst->codec_state = VENUS_DEC_STATE_STOPPED;
+> +		fallthrough;
+> +	case VENUS_DEC_STATE_SEEK:
+> +		vdec_cancel_dst_buffers(inst);
+>  		break;
+>  	case VENUS_DEC_STATE_DRC:
+>  		WARN_ON(1);
+> @@ -1102,6 +1107,7 @@ static int vdec_stop_output(struct venus_inst *inst)
+>  	case VENUS_DEC_STATE_DECODING:
+>  	case VENUS_DEC_STATE_DRAIN:
+>  	case VENUS_DEC_STATE_STOPPED:
+> +	case VENUS_DEC_STATE_DRC:
+>  		ret = hfi_session_flush(inst, HFI_FLUSH_ALL, true);
+>  		inst->codec_state = VENUS_DEC_STATE_SEEK;
+>  		break;
+> @@ -1371,6 +1377,7 @@ static void vdec_event_change(struct venus_inst *inst,
+>  			dev_dbg(dev, VDBGH "flush output error %d\n", ret);
+>  	}
+>  
+> +	inst->next_buf_last = true;
 
-with subject lines explaining actual changes.
+Setting next_buf_last unconditionally makes me think can we reuse
+inst->reconfig instead?
 
-could you please check  the same.
+>  	inst->reconfig = true;
+>  	v4l2_event_queue_fh(&inst->fh, &ev);
+>  	wake_up(&inst->reconf_wait);
+> 
 
 -- 
-Qualcomm India Private Limited, on behalf of Qualcomm Innovation Center, Inc.,
-is a member of Code Aurora Forum, a Linux Foundation Collaborative Project.
-
+regards,
+Stan
