@@ -2,80 +2,128 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 94D6C2DD216
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Dec 2020 14:26:13 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A93B72DD31C
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Dec 2020 15:40:19 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727147AbgLQNZ5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 17 Dec 2020 08:25:57 -0500
-Received: from mail.kernel.org ([198.145.29.99]:50976 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726999AbgLQNZ5 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 17 Dec 2020 08:25:57 -0500
-Date:   Thu, 17 Dec 2020 13:25:03 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1608211516;
-        bh=2BHOLfyP5LiOUzsGqn1+c3ME/USjr95Zwlnxezf0yF0=;
-        h=From:To:Cc:Subject:References:In-Reply-To:From;
-        b=U33sfdR49eAYe/BvQBNAdks32r9DG+Aq5lrEduhCr5+XKzb+MlHSelMVl1Jq20dGY
-         eR/bMmJf/NNBNhyJ3l+fMgDGneeWJL8koAejipEtW27p/LM2TltjyX3bWanspchtnf
-         yqiUuOIJbTSQPSRqzORf2oXl7RaF0zs64qSVbsC8NKjj/XHoZuxEQTRgcPjdZz4aan
-         M3i/5sCI52TVF1iUFxYtBAeaLlGPiPpwBfzBrUW2Tt8BP4cDv3pk4czuVIS4dI8yHv
-         nAX8omH12a3PvwsnTy08mAudzHMsdn0mwwUz6QOK0Hlp+OYJlkvTa8rbwdtjFbIKsA
-         7TWUyWn/uPpkA==
-From:   Mark Brown <broonie@kernel.org>
-To:     Stephen Boyd <swboyd@chromium.org>
-Cc:     Douglas Anderson <dianders@chromium.org>,
-        msavaliy@qti.qualcomm.com, akashast@codeaurora.org,
-        Roja Rani Yarubandi <rojay@codeaurora.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-spi@vger.kernel.org
-Subject: Re: [PATCH v2 3/4] spi: spi-geni-qcom: Don't try to set CS if an
- xfer is pending
-Message-ID: <20201217132503.GC4708@sirena.org.uk>
-References: <20201216144114.v2.1.I99ee04f0cb823415df59bd4f550d6ff5756e43d6@changeid>
- <20201216144114.v2.3.I07afdedcc49655c5d26880f8df9170aac5792378@changeid>
- <160817911850.1580929.16402785505110078436@swboyd.mtv.corp.google.com>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="Sr1nOIr3CvdE5hEN"
-Content-Disposition: inline
-In-Reply-To: <160817911850.1580929.16402785505110078436@swboyd.mtv.corp.google.com>
-X-Cookie: I'll eat ANYTHING that's BRIGHT BLUE!!
-User-Agent: Mutt/1.10.1 (2018-07-13)
+        id S1727632AbgLQOid (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 17 Dec 2020 09:38:33 -0500
+Received: from alexa-out.qualcomm.com ([129.46.98.28]:60663 "EHLO
+        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727015AbgLQOid (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 17 Dec 2020 09:38:33 -0500
+Received: from ironmsg09-lv.qualcomm.com ([10.47.202.153])
+  by alexa-out.qualcomm.com with ESMTP; 17 Dec 2020 06:37:52 -0800
+X-QCInternal: smtphost
+Received: from ironmsg01-blr.qualcomm.com ([10.86.208.130])
+  by ironmsg09-lv.qualcomm.com with ESMTP/TLS/AES256-SHA; 17 Dec 2020 06:37:50 -0800
+X-QCInternal: smtphost
+Received: from mdalam-linux.qualcomm.com ([10.201.2.71])
+  by ironmsg01-blr.qualcomm.com with ESMTP; 17 Dec 2020 20:07:28 +0530
+Received: by mdalam-linux.qualcomm.com (Postfix, from userid 466583)
+        id B1A7F219ED; Thu, 17 Dec 2020 20:07:26 +0530 (IST)
+From:   Md Sadre Alam <mdalam@codeaurora.org>
+To:     vkoul@kernel.org, corbet@lwn.net, agross@kernel.org,
+        bjorn.andersson@linaro.org, dan.j.williams@intel.com,
+        dmaengine@vger.kernel.org, linux-doc@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
+Cc:     mdalam@codeaurora.org, sricharan@codeaurora.org
+Subject: [PATCH] dmaengine: qcom: bam_dma: Add LOCK and UNLOCK flag bit support
+Date:   Thu, 17 Dec 2020 20:07:22 +0530
+Message-Id: <1608215842-15381-1-git-send-email-mdalam@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+This change will add support for LOCK & UNLOCK flag bit support
+on CMD descriptor.
 
---Sr1nOIr3CvdE5hEN
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+If DMA_PREP_LOCK flag passed in prep_slave_sg then requester of this
+transaction wanted to lock the DMA controller for this transaction so
+BAM driver should set LOCK bit for the HW descriptor.
 
-On Wed, Dec 16, 2020 at 08:25:18PM -0800, Stephen Boyd wrote:
+If DMA_PREP_UNLOCK flag passed in prep_slave_sg then requester of this
+transaction wanted to unlock the DMA controller.so BAM driver should set
+UNLOCK bit for the HW descriptor.
 
-> >         spin_lock_irq(&mas->lock);
-> > +       if (mas->cur_xfer) {
->=20
-> How is it possible that cs change happens when cur_xfer is non-NULL?
+Signed-off-by: Md Sadre Alam <mdalam@codeaurora.org>
+---
+ Documentation/driver-api/dmaengine/provider.rst | 9 +++++++++
+ drivers/dma/qcom/bam_dma.c                      | 9 +++++++++
+ include/linux/dmaengine.h                       | 5 +++++
+ 3 files changed, 23 insertions(+)
 
-We will set the initial chip select state during controller setup.
+diff --git a/Documentation/driver-api/dmaengine/provider.rst b/Documentation/driver-api/dmaengine/provider.rst
+index ddb0a81..d7516e2 100644
+--- a/Documentation/driver-api/dmaengine/provider.rst
++++ b/Documentation/driver-api/dmaengine/provider.rst
+@@ -599,6 +599,15 @@ DMA_CTRL_REUSE
+   - This flag is only supported if the channel reports the DMA_LOAD_EOT
+     capability.
+ 
++- DMA_PREP_LOCK
++
++  - If set , the client driver tells DMA controller I am locking you for
++    this transcation.
++
++- DMA_PREP_UNLOCK
++
++  - If set, the client driver will tells DMA controller I am releasing the lock
++
+ General Design Notes
+ ====================
+ 
+diff --git a/drivers/dma/qcom/bam_dma.c b/drivers/dma/qcom/bam_dma.c
+index 4eeb8bb..cdbe395 100644
+--- a/drivers/dma/qcom/bam_dma.c
++++ b/drivers/dma/qcom/bam_dma.c
+@@ -58,6 +58,8 @@ struct bam_desc_hw {
+ #define DESC_FLAG_EOB BIT(13)
+ #define DESC_FLAG_NWD BIT(12)
+ #define DESC_FLAG_CMD BIT(11)
++#define DESC_FLAG_LOCK BIT(10)
++#define DESC_FLAG_UNLOCK BIT(9)
+ 
+ struct bam_async_desc {
+ 	struct virt_dma_desc vd;
+@@ -644,6 +646,13 @@ static struct dma_async_tx_descriptor *bam_prep_slave_sg(struct dma_chan *chan,
+ 
+ 	/* fill in temporary descriptors */
+ 	desc = async_desc->desc;
++	if (flags & DMA_PREP_CMD) {
++		if (flags & DMA_PREP_LOCK)
++			desc->flags |= cpu_to_le16(DESC_FLAG_LOCK);
++		if (flags & DMA_PREP_UNLOCK)
++			desc->flags |= cpu_to_le16(DESC_FLAG_UNLOCK);
++	}
++
+ 	for_each_sg(sgl, sg, sg_len, i) {
+ 		unsigned int remainder = sg_dma_len(sg);
+ 		unsigned int curr_offset = 0;
+diff --git a/include/linux/dmaengine.h b/include/linux/dmaengine.h
+index dd357a7..79ccadb4 100644
+--- a/include/linux/dmaengine.h
++++ b/include/linux/dmaengine.h
+@@ -190,6 +190,9 @@ struct dma_interleaved_template {
+  *  transaction is marked with DMA_PREP_REPEAT will cause the new transaction
+  *  to never be processed and stay in the issued queue forever. The flag is
+  *  ignored if the previous transaction is not a repeated transaction.
++ * @DMA_PREP_LOCK: tell the driver that DMA HW engine going to be locked for this
++ *  transaction , until not seen DMA_PREP_UNLOCK flag set.
++ * @DMA_PREP_UNLOCK: tell the driver to unlock the DMA HW engine.
+  */
+ enum dma_ctrl_flags {
+ 	DMA_PREP_INTERRUPT = (1 << 0),
+@@ -202,6 +205,8 @@ enum dma_ctrl_flags {
+ 	DMA_PREP_CMD = (1 << 7),
+ 	DMA_PREP_REPEAT = (1 << 8),
+ 	DMA_PREP_LOAD_EOT = (1 << 9),
++	DMA_PREP_LOCK = (1 << 10),
++	DMA_PREP_UNLOCK = (1 << 11),
+ };
+ 
+ /**
+-- 
+2.7.4
 
---Sr1nOIr3CvdE5hEN
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAl/bXC4ACgkQJNaLcl1U
-h9BXbQf9GaJeTaO0e+0+/C2K9+1Y12kX+iDWcxv7W9slPCtYipRnE+z6xs34/s+u
-qjbTJ4CAWGRLCbSkLeVQOjKzYh4tR939DRAeqDZ2ah4avupleKDrB5BFdDA5GLDw
-Sp4QX+gLDybnHmNOLWn9JrXYtRTpsjNIngHCS73WClVrzlpUQaocz4KHJRQnxsdM
-uzzgdy4cAzcr7FDXAMSIY4cZV9u1fi4eeH8ULdY8oqCFqToERfrLcjtfFj3+Df7L
-f9ZnTmPhWdu82x43cIuC7J1r4vvLR8lZBIpJNoLXcPx0SvznAonQU+wDhyIc0irn
-AbxfHR4jpONu8R+PncW2hwJJlNDgHg==
-=CKmO
------END PGP SIGNATURE-----
-
---Sr1nOIr3CvdE5hEN--
