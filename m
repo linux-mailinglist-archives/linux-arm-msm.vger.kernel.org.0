@@ -2,154 +2,130 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E461B2DC929
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Dec 2020 23:44:24 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 485DD2DCB2C
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Dec 2020 04:05:08 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730260AbgLPWnv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 16 Dec 2020 17:43:51 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60318 "EHLO
+        id S1727287AbgLQDEw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 16 Dec 2020 22:04:52 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43976 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730261AbgLPWnu (ORCPT
+        with ESMTP id S1727231AbgLQDEw (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 16 Dec 2020 17:43:50 -0500
-Received: from mail-vs1-xe29.google.com (mail-vs1-xe29.google.com [IPv6:2607:f8b0:4864:20::e29])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 054B8C0611D0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Dec 2020 14:42:39 -0800 (PST)
-Received: by mail-vs1-xe29.google.com with SMTP id q10so13869887vsr.13
-        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Dec 2020 14:42:38 -0800 (PST)
+        Wed, 16 Dec 2020 22:04:52 -0500
+Received: from mail-pl1-x62f.google.com (mail-pl1-x62f.google.com [IPv6:2607:f8b0:4864:20::62f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CA001C061794
+        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Dec 2020 19:04:11 -0800 (PST)
+Received: by mail-pl1-x62f.google.com with SMTP id x18so8239552pln.6
+        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Dec 2020 19:04:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=0XaKi3pkn/qWGGL1OHbeKodqShSNHBJUEuwGVlhnD1I=;
-        b=IW0m6+gNe0u498pdoXwDRl5AhteMmcMqIqpySkBIHT/CsrxDkBj6MqBZqBQBC07ZpG
-         p/OWvZ7MC5yxIQry+BRZ8lb9BtCx7Y4Oaxdgxt3eqRvnzoRaS2YzD5Vq3/giZq6ufL3X
-         14Ty9izbJxcbI8ks4fR512B5w6HLoD01GYIG0=
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id;
+        bh=2OShYK3cxttn34XBpwf6upnK9s0bIYer5Kl6XYLdf3g=;
+        b=mtcwFqcGIhXVaOQzBmuoweU6wes3MKwesB6hNJhtfaGrUtHMulZK5oR1A1hAV7Pd4Y
+         qFnULivaUIKPeFOQzZoXf08RrBBSd++PBugZgCXPhiJLERPBsHWUj37gdNEStB0oPhv+
+         5laHL0h/jqNldFsbpx3FcYtJj0e4CXlLm5/a2LOS6e7jqwGC8Y8XXXp9uU/ydFf9ka2t
+         YdipjftiSutrDfKDfvx+UTCbf/ij6OTAllFGkEI35z1/dNEkqjaFlPgNJdkg3LQkt+x7
+         57scNyn4i7WJRE8p5T2/yUu4nBPe1d0ee3tFUvcz+OXJH+hGBFoHY1ecnpNokveJZEqv
+         fcuw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=0XaKi3pkn/qWGGL1OHbeKodqShSNHBJUEuwGVlhnD1I=;
-        b=emyVuYSmluuepaqInWG3Oi+BaYEwlKLmnoDQJfaQMMBuOs+YGYG5Dv0GInrELEM94J
-         JcLCmPcOBtprH+5i8enF2q7SjOb8RScuHhJNY/l4XVD8KXjyR48kOVWqoAcoGXJd0TKh
-         ERqFG3BsPHAahKoclRIXEIbqyt3R6zRpve9rt2zv3suUBn6Otp9u1trjYkeTpx+jiskf
-         Dc9TQROib9/ND/AgtIIH6Sm0tqVup3OokXsrZalbRbBx3oqez16mP7h4VRnY1AjMUL29
-         s0ap8xveHc9YnUwuJZIWCiHQH8Lv+/MDoQIK36EizdIYJOHn/RebZKunpblo8IEdzlEq
-         GPwg==
-X-Gm-Message-State: AOAM5312zFIt6txLf+1CoEYbn9gAKJuNpXb7LxWyACfJj91RjgtZ0+wc
-        HB4uSBQ7QbWegLEl5KawCurFufWoxRIAbw==
-X-Google-Smtp-Source: ABdhPJw1cKJse+v8iX85LnwBTKvMUW9atrE96Mx+A3TLM9KHkWZL+dzjB2vKCiSESsUNeh5VlFQAgQ==
-X-Received: by 2002:a67:c209:: with SMTP id i9mr34112675vsj.6.1608158557914;
-        Wed, 16 Dec 2020 14:42:37 -0800 (PST)
-Received: from mail-vs1-f48.google.com (mail-vs1-f48.google.com. [209.85.217.48])
-        by smtp.gmail.com with ESMTPSA id a66sm503390vka.23.2020.12.16.14.42.36
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 16 Dec 2020 14:42:36 -0800 (PST)
-Received: by mail-vs1-f48.google.com with SMTP id z16so13875628vsp.5
-        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Dec 2020 14:42:36 -0800 (PST)
-X-Received: by 2002:a67:bd01:: with SMTP id y1mr27690548vsq.49.1608158556188;
- Wed, 16 Dec 2020 14:42:36 -0800 (PST)
-MIME-Version: 1.0
-References: <20201214162937.1.I99ee04f0cb823415df59bd4f550d6ff5756e43d6@changeid>
- <160799937019.1580929.2975094455755766017@swboyd.mtv.corp.google.com>
-In-Reply-To: <160799937019.1580929.2975094455755766017@swboyd.mtv.corp.google.com>
-From:   Doug Anderson <dianders@chromium.org>
-Date:   Wed, 16 Dec 2020 14:42:24 -0800
-X-Gmail-Original-Message-ID: <CAD=FV=Wy_zmFrtG37pAPf5TBJc9ykffs4E-KLtytrOzv0nrXnw@mail.gmail.com>
-Message-ID: <CAD=FV=Wy_zmFrtG37pAPf5TBJc9ykffs4E-KLtytrOzv0nrXnw@mail.gmail.com>
-Subject: Re: [PATCH 1/2] spi: spi-geni-qcom: Fix geni_spi_isr() NULL
- dereference in timeout case
-To:     Stephen Boyd <swboyd@chromium.org>
-Cc:     Mark Brown <broonie@kernel.org>, msavaliy@qti.qualcomm.com,
-        Akash Asthana <akashast@codeaurora.org>,
-        Roja Rani Yarubandi <rojay@codeaurora.org>,
-        Alok Chauhan <alokc@codeaurora.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Girish Mahadevan <girishm@codeaurora.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        LKML <linux-kernel@vger.kernel.org>,
-        linux-spi <linux-spi@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=2OShYK3cxttn34XBpwf6upnK9s0bIYer5Kl6XYLdf3g=;
+        b=hXm9FIxnQni6dZTN48SQyo4luoC54g3y1DCemGivxjA0EjNWk898dCQqIG346dLSF9
+         YVHP91nKRMyUp2CzWSJqN4mZWIRowe1yE3s88FnpJXCoU/Ix0+qUhalfj2MEnVQ8IfwP
+         HZuwUPrUm+2wrbxwGCWhIyftx0xBcPHWkGRVmxVhQEZ/FoBRZAVjzxfGAO52pP6/xF97
+         U9i2ngO2RUFphbbgz/FEHy5kqe+r1PEHEBW/Q5oyq9CmS3asfMD2S+7cvh3XeclirMdt
+         vdmCF6x/ss5ozjed63Cmr4xqruJNsQTcbcsb/iFrRgisu0rEI8gPHBqt0O7DzLggaH5d
+         RhMg==
+X-Gm-Message-State: AOAM533FLHfRulhIPTY9IC40oS7U9wTa3pJpIpU/TqAdG8aDxKNrvWIW
+        Kb/B33INT67TQnZFbv4HeRXvQQ==
+X-Google-Smtp-Source: ABdhPJzjsGhTbXQUP6JIFv2xSVy9MTdU2w93YM+Nji7Dqa0++qRPapAO4Bk/Km/Fdxn3qmj6Nwe5Lw==
+X-Received: by 2002:a17:902:848e:b029:dc:1aa4:114d with SMTP id c14-20020a170902848eb02900dc1aa4114dmr4382311plo.18.1608174251173;
+        Wed, 16 Dec 2020 19:04:11 -0800 (PST)
+Received: from localhost.localdomain (80.251.214.228.16clouds.com. [80.251.214.228])
+        by smtp.gmail.com with ESMTPSA id 3sm3810675pfv.92.2020.12.16.19.04.08
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 16 Dec 2020 19:04:10 -0800 (PST)
+From:   Shawn Guo <shawn.guo@linaro.org>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Ohad Ben-Cohen <ohad@wizery.com>
+Cc:     linux-remoteproc@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        Shawn Guo <shawn.guo@linaro.org>
+Subject: [PATCH] remoteproc: qcom: add more help text qcom options
+Date:   Thu, 17 Dec 2020 11:04:00 +0800
+Message-Id: <20201217030400.6235-1-shawn.guo@linaro.org>
+X-Mailer: git-send-email 2.17.1
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+With these more help text added, hopefully it's easier to understand the
+distinctions of these qcom remoteproc drivers.
 
-On Mon, Dec 14, 2020 at 6:29 PM Stephen Boyd <swboyd@chromium.org> wrote:
->
-> Here's a shortened version:
->
->   CPU0                           CPU1
->   ----                           ----
->                                  setup_fifo_xfer()
->                                   geni_se_setup_m_cmd()
->                                  <hardware starts transfer>
->                                  <transfer completes in hardware>
->                                  <hardware sets M_RX_FIFO_WATERMARK_EN in m_irq>
->                                  ...
->                                  handle_fifo_timeout()
->                                   spin_lock_irq(mas->lock)
->                                   mas->cur_xfer = NULL
->                                   geni_se_cancel_m_cmd()
->                                   spin_unlock_irq(mas->lock)
->
->   geni_spi_isr()
->    spin_lock(mas->lock)
->    if (m_irq & M_RX_FIFO_WATERMARK_EN)
->     geni_spi_handle_rx()
->      mas->cur_xfer NULL dereference!
->
-> Two CPUs also don't really matter but I guess that's fine.
+Signed-off-by: Shawn Guo <shawn.guo@linaro.org>
+---
+ drivers/remoteproc/Kconfig | 20 ++++++++++++++------
+ 1 file changed, 14 insertions(+), 6 deletions(-)
 
-OK, replaced it with your version.
+diff --git a/drivers/remoteproc/Kconfig b/drivers/remoteproc/Kconfig
+index d99548fb5dde..062a990a7d19 100644
+--- a/drivers/remoteproc/Kconfig
++++ b/drivers/remoteproc/Kconfig
+@@ -150,7 +150,9 @@ config QCOM_Q6V5_ADSP
+ 	select QCOM_RPROC_COMMON
+ 	help
+ 	  Say y here to support the Peripheral Image Loader
+-	  for the Qualcomm Technology Inc. ADSP remote processors.
++	  for the non-TrustZone part of Qualcomm Technology Inc. ADSP and CDSP
++	  remote processors. The TrustZone part is handled by QCOM_Q6V5_PAS
++	  driver.
+ 
+ config QCOM_Q6V5_MSS
+ 	tristate "Qualcomm Hexagon V5 self-authenticating modem subsystem support"
+@@ -167,7 +169,8 @@ config QCOM_Q6V5_MSS
+ 	select QCOM_SCM
+ 	help
+ 	  Say y here to support the Qualcomm self-authenticating modem
+-	  subsystem based on Hexagon V5.
++	  subsystem based on Hexagon V5. The TrustZone based system is
++	  handled by QCOM_Q6V5_PAS driver.
+ 
+ config QCOM_Q6V5_PAS
+ 	tristate "Qualcomm Hexagon v5 Peripheral Authentication Service support"
+@@ -185,7 +188,9 @@ config QCOM_Q6V5_PAS
+ 	help
+ 	  Say y here to support the TrustZone based Peripherial Image Loader
+ 	  for the Qualcomm Hexagon v5 based remote processors. This is commonly
+-	  used to control subsystems such as ADSP, Compute and Sensor.
++	  used to control subsystems such as ADSP (Application DSP),
++	  CDSP (Compute DSP), MPSS (Modem Peripheral SubSystem), and
++	  SLPI (Sensor Low Power Island).
+ 
+ config QCOM_Q6V5_WCSS
+ 	tristate "Qualcomm Hexagon based WCSS Peripheral Image Loader"
+@@ -202,7 +207,8 @@ config QCOM_Q6V5_WCSS
+ 	select QCOM_SCM
+ 	help
+ 	  Say y here to support the Qualcomm Peripheral Image Loader for the
+-	  Hexagon V5 based WCSS remote processors.
++	  Hexagon V5 based WCSS remote processors on e.g. IPQ8074.  This is
++	  a non-TrustZone wireless subsystem.
+ 
+ config QCOM_SYSMON
+ 	tristate "Qualcomm sysmon driver"
+@@ -231,8 +237,10 @@ config QCOM_WCNSS_PIL
+ 	select QCOM_RPROC_COMMON
+ 	select QCOM_SCM
+ 	help
+-	  Say y here to support the Peripheral Image Loader for the Qualcomm
+-	  Wireless Connectivity Subsystem.
++	  Say y here to support the Peripheral Image Loader for loading WCNSS
++	  firmware and boot the core on e.g. MSM8974, MSM8916. The firmware is
++	  verified and booted with the help of the Peripheral Authentication
++	  System (PAS) in TrustZone.
+ 
+ config ST_REMOTEPROC
+ 	tristate "ST remoteproc support"
+-- 
+2.17.1
 
-
-> > Specifically it should be noted that the RX/TX interrupts are still
-> > shown asserted even when a CANCEL/ABORT interrupt has asserted.
->
-> Can we have 'TL;DR: Seriously delayed interrupts for RX/TX can lead to
-> timeout handling setting mas->cur_xfer to NULL.'?
-
-Sure, added this.  ...but made the super important change that "tl;dr"
-is more conventionally lower case.  :-P
-
-
-> > Let's check for the NULL transfer in the TX and RX cases.
->
-> and reset the watermark or clear out the fifo respectively to put the
-> hardware back into a sane state.
-
-Sure.
-
-
-> > @@ -396,6 +402,17 @@ static void geni_spi_handle_rx(struct spi_geni_master *mas)
-> >                 if (rx_last_byte_valid && rx_last_byte_valid < 4)
-> >                         rx_bytes -= bytes_per_fifo_word - rx_last_byte_valid;
-> >         }
-> > +
-> > +       /* Clear out the FIFO and bail if nowhere to put it */
-> > +       if (mas->cur_xfer == NULL) {
->
-> I think if (!mas->cur_xfer) is more kernel idiomatic, but sure.
-
-I've been yelled at both ways, but changed it to your way here.
-
-
-> > +               for (i = 0; i < words; i++)
->
->                 while (i++ < DIV_ROUND_UP(rx_bytes, bytes_per_fifo_word))
->                         readl(se->base + SE_GENI_RX_FIFOn);
-
-Sure, that's fine.  I was marginally worried that the compiler
-wouldn't know it could optimize the test and would do the divide every
-time, but I guess that's pretty dang unlikely and also not a place we
-really care about optimizing a lot.  I'm also not a huge fan of
-relying on loop counters being initted at the start of the function,
-but I guess it's OK.  Changed to your syntax.
-
-
-
--Doug
