@@ -2,128 +2,96 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A93B72DD31C
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Dec 2020 15:40:19 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C81C52DD3D8
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Dec 2020 16:13:27 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727632AbgLQOid (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 17 Dec 2020 09:38:33 -0500
-Received: from alexa-out.qualcomm.com ([129.46.98.28]:60663 "EHLO
-        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727015AbgLQOid (ORCPT
+        id S1728118AbgLQPNA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 17 Dec 2020 10:13:00 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43030 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726595AbgLQPM7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 17 Dec 2020 09:38:33 -0500
-Received: from ironmsg09-lv.qualcomm.com ([10.47.202.153])
-  by alexa-out.qualcomm.com with ESMTP; 17 Dec 2020 06:37:52 -0800
-X-QCInternal: smtphost
-Received: from ironmsg01-blr.qualcomm.com ([10.86.208.130])
-  by ironmsg09-lv.qualcomm.com with ESMTP/TLS/AES256-SHA; 17 Dec 2020 06:37:50 -0800
-X-QCInternal: smtphost
-Received: from mdalam-linux.qualcomm.com ([10.201.2.71])
-  by ironmsg01-blr.qualcomm.com with ESMTP; 17 Dec 2020 20:07:28 +0530
-Received: by mdalam-linux.qualcomm.com (Postfix, from userid 466583)
-        id B1A7F219ED; Thu, 17 Dec 2020 20:07:26 +0530 (IST)
-From:   Md Sadre Alam <mdalam@codeaurora.org>
-To:     vkoul@kernel.org, corbet@lwn.net, agross@kernel.org,
-        bjorn.andersson@linaro.org, dan.j.williams@intel.com,
-        dmaengine@vger.kernel.org, linux-doc@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Cc:     mdalam@codeaurora.org, sricharan@codeaurora.org
-Subject: [PATCH] dmaengine: qcom: bam_dma: Add LOCK and UNLOCK flag bit support
-Date:   Thu, 17 Dec 2020 20:07:22 +0530
-Message-Id: <1608215842-15381-1-git-send-email-mdalam@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
+        Thu, 17 Dec 2020 10:12:59 -0500
+Received: from mail-ej1-x636.google.com (mail-ej1-x636.google.com [IPv6:2a00:1450:4864:20::636])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5B640C061794
+        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Dec 2020 07:12:19 -0800 (PST)
+Received: by mail-ej1-x636.google.com with SMTP id j22so20389257eja.13
+        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Dec 2020 07:12:19 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=bsmxj4WXk4Q4NSFr6MB9LgmIGzcP4uZ3YJ5A+DlLg9E=;
+        b=gb3M5Uw2+fnPw987oP/ibgwGoGtabUek1i6UIEPlB+vpfzOA6d6LqZOWeLLOYm8+0r
+         YeM6Q1lPKF/omgdAaWz6ekd+8Om7F1WRXqZ200ICRcN2c7mWUimMGcCxcQUefCK1hsQ3
+         rQRDFNfCwIjo5zv7Z0SwxHGyFjQAMNsS5dYm3X8kmrMBTRmbS6izs/Wi1sgqVmIPrbKq
+         NRKV22qtDPM4Zyq+aWE9lMaGqdU/aONTqWznYMIQ3X7KVrNUxY6vLQtEtxtzPbXwbs25
+         V6MO7I7sk8Ayy5zYx6Z3EkwJP9VgaFuKuUiYU5KOgDnM8Le5Xk99EP8qPsVupw2p8j+c
+         tXWw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=bsmxj4WXk4Q4NSFr6MB9LgmIGzcP4uZ3YJ5A+DlLg9E=;
+        b=F0qmadhzQMvgSJW7XqOsrBHKsEO1xwIef4SXPoo9l9kmr4Ta2ZdA4HVAbjnSa3qsMf
+         SwzHxKA2/NpLUSQlrrVPxHg3eavfyBAC4Xoxe2LuuRNIG/sAxLSM/JZSkxBPPMWO2iIg
+         48hF7e6RdyjnK9yCcuZ9/gYVsOlUjKA5p/wREX+EzTPs06mCBSL4OKYkCelBjEteGDUI
+         uTsrkJPJmM4cE+eauNIUrv3OROkDYY7ZbenepT2o70tRDj3VmkUcjAqWjNntO0ZKNCDF
+         dMF0XQVj0hywFNKiyWs9t6uVT980wAbYRmsN8FpczLixv6Q2izc3xtMKQ6nQIO26o0Tc
+         /+2Q==
+X-Gm-Message-State: AOAM5300ojJiSPsWnPv9Oxy326d3o77juXmmDj8b+f/LyPnPBP09n93Y
+        qq7UpYZIdtcTAUAKgK0wCcSvQg==
+X-Google-Smtp-Source: ABdhPJwvTqroST8YwDqTK1rv4XcaZ5omqWIg0pGRgVbScNy/rP6f5+ATMOp3a3ZZfGf8wZJHYPRJtg==
+X-Received: by 2002:a17:906:43c5:: with SMTP id j5mr36863773ejn.530.1608217938104;
+        Thu, 17 Dec 2020 07:12:18 -0800 (PST)
+Received: from localhost.localdomain ([2a02:2450:102f:d6a:f0ff:2796:69b1:324])
+        by smtp.gmail.com with ESMTPSA id k21sm3915267ejv.80.2020.12.17.07.12.16
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 17 Dec 2020 07:12:17 -0800 (PST)
+From:   Robert Foss <robert.foss@linaro.org>
+To:     agross@kernel.org, bjorn.andersson@linaro.org, robh+dt@kernel.org,
+        robert.foss@linaro.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [PATCH v1] arm64: dts: qcom: sdm845-db845c: Fix reset-pin of ov8856 node
+Date:   Thu, 17 Dec 2020 16:12:00 +0100
+Message-Id: <20201217151200.1179555-1-robert.foss@linaro.org>
+X-Mailer: git-send-email 2.27.0
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This change will add support for LOCK & UNLOCK flag bit support
-on CMD descriptor.
+Switch reset pin of ov8856 node from GPIO_ACTIVE_HIGH to GPIO_ACTIVE_LOW,
+this issue prevented the ov8856 from probing properly as it does not respond
+to I2C messages.
 
-If DMA_PREP_LOCK flag passed in prep_slave_sg then requester of this
-transaction wanted to lock the DMA controller for this transaction so
-BAM driver should set LOCK bit for the HW descriptor.
+Fixes: d4919a44564b ("arm64: dts: qcom: sdm845-db845c: Add ov8856 & ov7251
+camera nodes")
 
-If DMA_PREP_UNLOCK flag passed in prep_slave_sg then requester of this
-transaction wanted to unlock the DMA controller.so BAM driver should set
-UNLOCK bit for the HW descriptor.
-
-Signed-off-by: Md Sadre Alam <mdalam@codeaurora.org>
+Signed-off-by: Robert Foss <robert.foss@linaro.org>
 ---
- Documentation/driver-api/dmaengine/provider.rst | 9 +++++++++
- drivers/dma/qcom/bam_dma.c                      | 9 +++++++++
- include/linux/dmaengine.h                       | 5 +++++
- 3 files changed, 23 insertions(+)
+ arch/arm64/boot/dts/qcom/sdm845-db845c.dts | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/Documentation/driver-api/dmaengine/provider.rst b/Documentation/driver-api/dmaengine/provider.rst
-index ddb0a81..d7516e2 100644
---- a/Documentation/driver-api/dmaengine/provider.rst
-+++ b/Documentation/driver-api/dmaengine/provider.rst
-@@ -599,6 +599,15 @@ DMA_CTRL_REUSE
-   - This flag is only supported if the channel reports the DMA_LOAD_EOT
-     capability.
+diff --git a/arch/arm64/boot/dts/qcom/sdm845-db845c.dts b/arch/arm64/boot/dts/qcom/sdm845-db845c.dts
+index 7cc236575ee2..a943b3f353ce 100644
+--- a/arch/arm64/boot/dts/qcom/sdm845-db845c.dts
++++ b/arch/arm64/boot/dts/qcom/sdm845-db845c.dts
+@@ -1112,11 +1112,11 @@ camera@10 {
+ 		reg = <0x10>;
  
-+- DMA_PREP_LOCK
-+
-+  - If set , the client driver tells DMA controller I am locking you for
-+    this transcation.
-+
-+- DMA_PREP_UNLOCK
-+
-+  - If set, the client driver will tells DMA controller I am releasing the lock
-+
- General Design Notes
- ====================
+ 		// CAM0_RST_N
+-		reset-gpios = <&tlmm 9 0>;
++		reset-gpios = <&tlmm 9 1>;
+ 		pinctrl-names = "default";
+ 		pinctrl-0 = <&cam0_default>;
+ 		gpios = <&tlmm 13 0>,
+-			<&tlmm 9 0>;
++			<&tlmm 9 1>;
  
-diff --git a/drivers/dma/qcom/bam_dma.c b/drivers/dma/qcom/bam_dma.c
-index 4eeb8bb..cdbe395 100644
---- a/drivers/dma/qcom/bam_dma.c
-+++ b/drivers/dma/qcom/bam_dma.c
-@@ -58,6 +58,8 @@ struct bam_desc_hw {
- #define DESC_FLAG_EOB BIT(13)
- #define DESC_FLAG_NWD BIT(12)
- #define DESC_FLAG_CMD BIT(11)
-+#define DESC_FLAG_LOCK BIT(10)
-+#define DESC_FLAG_UNLOCK BIT(9)
- 
- struct bam_async_desc {
- 	struct virt_dma_desc vd;
-@@ -644,6 +646,13 @@ static struct dma_async_tx_descriptor *bam_prep_slave_sg(struct dma_chan *chan,
- 
- 	/* fill in temporary descriptors */
- 	desc = async_desc->desc;
-+	if (flags & DMA_PREP_CMD) {
-+		if (flags & DMA_PREP_LOCK)
-+			desc->flags |= cpu_to_le16(DESC_FLAG_LOCK);
-+		if (flags & DMA_PREP_UNLOCK)
-+			desc->flags |= cpu_to_le16(DESC_FLAG_UNLOCK);
-+	}
-+
- 	for_each_sg(sgl, sg, sg_len, i) {
- 		unsigned int remainder = sg_dma_len(sg);
- 		unsigned int curr_offset = 0;
-diff --git a/include/linux/dmaengine.h b/include/linux/dmaengine.h
-index dd357a7..79ccadb4 100644
---- a/include/linux/dmaengine.h
-+++ b/include/linux/dmaengine.h
-@@ -190,6 +190,9 @@ struct dma_interleaved_template {
-  *  transaction is marked with DMA_PREP_REPEAT will cause the new transaction
-  *  to never be processed and stay in the issued queue forever. The flag is
-  *  ignored if the previous transaction is not a repeated transaction.
-+ * @DMA_PREP_LOCK: tell the driver that DMA HW engine going to be locked for this
-+ *  transaction , until not seen DMA_PREP_UNLOCK flag set.
-+ * @DMA_PREP_UNLOCK: tell the driver to unlock the DMA HW engine.
-  */
- enum dma_ctrl_flags {
- 	DMA_PREP_INTERRUPT = (1 << 0),
-@@ -202,6 +205,8 @@ enum dma_ctrl_flags {
- 	DMA_PREP_CMD = (1 << 7),
- 	DMA_PREP_REPEAT = (1 << 8),
- 	DMA_PREP_LOAD_EOT = (1 << 9),
-+	DMA_PREP_LOCK = (1 << 10),
-+	DMA_PREP_UNLOCK = (1 << 11),
- };
- 
- /**
+ 		clocks = <&clock_camcc CAM_CC_MCLK0_CLK>;
+ 		clock-names = "xvclk";
 -- 
-2.7.4
+2.27.0
 
