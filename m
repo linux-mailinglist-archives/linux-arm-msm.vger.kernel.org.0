@@ -2,119 +2,153 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A52F82DD8B9
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Dec 2020 19:51:52 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 329E52DDACA
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Dec 2020 22:23:56 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730138AbgLQSvW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 17 Dec 2020 13:51:22 -0500
-Received: from mail-ot1-f41.google.com ([209.85.210.41]:33037 "EHLO
-        mail-ot1-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727063AbgLQSvW (ORCPT
+        id S1727106AbgLQVWJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 17 Dec 2020 16:22:09 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43634 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728154AbgLQVWJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 17 Dec 2020 13:51:22 -0500
-Received: by mail-ot1-f41.google.com with SMTP id b24so10874799otj.0;
-        Thu, 17 Dec 2020 10:51:06 -0800 (PST)
+        Thu, 17 Dec 2020 16:22:09 -0500
+Received: from mail-vs1-xe33.google.com (mail-vs1-xe33.google.com [IPv6:2607:f8b0:4864:20::e33])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AD675C0617A7
+        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Dec 2020 13:21:28 -0800 (PST)
+Received: by mail-vs1-xe33.google.com with SMTP id s85so256788vsc.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Dec 2020 13:21:28 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=Rb4QRsrzHetcmVvjFenLb+xxlOjxCoQIDDaKT8olvy4=;
+        b=eYrjHAZUBdAwFqXOsQgOfJ3405lOCKr+wOjixZJ2LjI5r8W+85GaTLEOtN9ZIRp5Hc
+         toRNJQV5dByAv7/bgMj+44h94qcIXQwfMOxHanusirB8sAKW94E/7NeUPEj700eFBTne
+         Ywh9h21AgnWgJX87hpuOVuK4isj7cuU36cxog=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:in-reply-to:references:subject:date
-         :message-id;
-        bh=qlJFlB7HjjvTFCWg7/nxoqqPepj3Ubcj38fpiOs2Dd4=;
-        b=EsbUEFXnkDF0IDiSCZCKTtoB22AurbPUVo2hDkXC7Mr0nmmRA4YQa3KpjLWOuMC+dq
-         YvgW2U1CKUSgvYu218e5sDX0puMFA3W7ZZhA933ljhvIu0Fn7/ehBpnVPaXmVR28x9Q7
-         8ISVJeeZeP5njHZxXqqsztT3LyTic7Yo6TErEd6TVh675qnxM0CO2hf2cUIKgA7glxGO
-         2rPsWTOZQ/udh82It+bIszKwCTVGTtjx9kKjvB7wzi3GkG0S7KieROaLG8mp1eMOZ75D
-         +FWQ6O/qBGM6GCMsUDV7S0C6KSwFg7kRSDN8WRjelJqvu5xOsOH0mdE6nOS0zWirXa5o
-         jJ/A==
-X-Gm-Message-State: AOAM533f//SCcz6j5qRnW4Y/o6FGvfYnZm+PNWevrKX8Gv/OsLXwrt6f
-        yBMO/Pcdu6YvWtqGZOmniQ==
-X-Google-Smtp-Source: ABdhPJyBB3fAMa2TcDvusNcGTtyzOV+RpbnHLor10hqoZxQ/TC8vmfDN9oKSTYKoxW8AwCDlXAZ6TA==
-X-Received: by 2002:a9d:37c4:: with SMTP id x62mr214831otb.87.1608231041130;
-        Thu, 17 Dec 2020 10:50:41 -0800 (PST)
-Received: from xps15 (24-155-109-49.dyn.grandenetworks.net. [24.155.109.49])
-        by smtp.gmail.com with ESMTPSA id s139sm1247838oih.10.2020.12.17.10.50.39
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 17 Dec 2020 10:50:40 -0800 (PST)
-Received: (nullmailer pid 50651 invoked by uid 1000);
-        Thu, 17 Dec 2020 18:50:36 -0000
-From:   Rob Herring <robh@kernel.org>
-To:     Kiran Gunda <kgunda@codeaurora.org>
-Cc:     swboyd@chromium.org, linux-arm-msm@vger.kernel.org,
-        Stephen Boyd <sboyd@kernel.org>,
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=Rb4QRsrzHetcmVvjFenLb+xxlOjxCoQIDDaKT8olvy4=;
+        b=bMZNwjTwV2s0Z9ZZp/4+gMCgfZ4qRFmx3fHSs0SHaTGEBfqaF3NHu4a/1aZx5K7ss+
+         YZ6/v1sGvAXg68FiyF61sZniIQN1eszM4oItbDbe/Gw3JgJotQt2jqncyWnoQfqgiYxi
+         dQGflP1FSuBRJZEvphdvG+OdEuMksiDaut85YZ7zO4gJlLKlbKEj2a+s4/tFFO1E93NK
+         kUsH/HreAwE+MFV87pkjOvuhlX4EB81XcOqAVkcsnHDSwINDOMiijNBgMvshgmjzPule
+         GCDhVGi7zbsyhkpwhjocj6XR5boOm7k4OMEPivWGFylRaHEjpSSaTxLqF/VAxMnwdUz0
+         DzNg==
+X-Gm-Message-State: AOAM5302OmKAioJK3dhBPSYSBWoybG8sLtHzUtPafLwiQ4dXg78/QAby
+        wIou2ILwmdx/bRvGTNXLlcsSQ423Vxiz+g==
+X-Google-Smtp-Source: ABdhPJwJSMzvZpePp3CReBNi7ak4GqHTe0MDYjeXXMLGtQ/vY3vvhRGoSnhwohYAvbfasMO7zCeVhQ==
+X-Received: by 2002:a67:401:: with SMTP id 1mr1147945vse.51.1608240087475;
+        Thu, 17 Dec 2020 13:21:27 -0800 (PST)
+Received: from mail-vk1-f174.google.com (mail-vk1-f174.google.com. [209.85.221.174])
+        by smtp.gmail.com with ESMTPSA id u66sm963168vke.8.2020.12.17.13.21.26
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 17 Dec 2020 13:21:26 -0800 (PST)
+Received: by mail-vk1-f174.google.com with SMTP id w66so32360vka.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Dec 2020 13:21:26 -0800 (PST)
+X-Received: by 2002:a1f:3fc9:: with SMTP id m192mr1317831vka.17.1608240085900;
+ Thu, 17 Dec 2020 13:21:25 -0800 (PST)
+MIME-Version: 1.0
+References: <20201216144114.v2.1.I99ee04f0cb823415df59bd4f550d6ff5756e43d6@changeid>
+ <20201216144114.v2.3.I07afdedcc49655c5d26880f8df9170aac5792378@changeid> <160817911850.1580929.16402785505110078436@swboyd.mtv.corp.google.com>
+In-Reply-To: <160817911850.1580929.16402785505110078436@swboyd.mtv.corp.google.com>
+From:   Doug Anderson <dianders@chromium.org>
+Date:   Thu, 17 Dec 2020 13:21:14 -0800
+X-Gmail-Original-Message-ID: <CAD=FV=WcVpkpwrLYVaXcRZmQztpw8in6b42+krRbN1+a8LVt6Q@mail.gmail.com>
+Message-ID: <CAD=FV=WcVpkpwrLYVaXcRZmQztpw8in6b42+krRbN1+a8LVt6Q@mail.gmail.com>
+Subject: Re: [PATCH v2 3/4] spi: spi-geni-qcom: Don't try to set CS if an xfer
+ is pending
+To:     Stephen Boyd <swboyd@chromium.org>
+Cc:     Mark Brown <broonie@kernel.org>, msavaliy@qti.qualcomm.com,
+        Akash Asthana <akashast@codeaurora.org>,
+        Roja Rani Yarubandi <rojay@codeaurora.org>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        linux-kernel@vger.kernel.org, Lee Jones <lee.jones@linaro.org>,
-        Andy Gross <agross@kernel.org>, devicetree@vger.kernel.org,
-        Rob Herring <robh+dt@kernel.org>
-In-Reply-To: <1608205123-23119-2-git-send-email-kgunda@codeaurora.org>
-References: <1608205123-23119-1-git-send-email-kgunda@codeaurora.org> <1608205123-23119-2-git-send-email-kgunda@codeaurora.org>
-Subject: Re: [PATCH V3 1/2] mfd: qcom-spmi-pmic: Convert bindings to .yaml format
-Date:   Thu, 17 Dec 2020 12:50:36 -0600
-Message-Id: <1608231036.368473.50650.nullmailer@robh.at.kernel.org>
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        LKML <linux-kernel@vger.kernel.org>,
+        linux-spi <linux-spi@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 17 Dec 2020 17:08:42 +0530, Kiran Gunda wrote:
-> Convert the bindings from .txt to .yaml format.
-> 
-> Signed-off-by: Kiran Gunda <kgunda@codeaurora.org>
-> ---
->  .../devicetree/bindings/mfd/qcom,spmi-pmic.txt     |  80 -------------
->  .../devicetree/bindings/mfd/qcom,spmi-pmic.yaml    | 127 +++++++++++++++++++++
->  2 files changed, 127 insertions(+), 80 deletions(-)
->  delete mode 100644 Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.txt
->  create mode 100644 Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml
-> 
+Hi,
 
-My bot found errors running 'make dt_binding_check' on your patch:
+On Wed, Dec 16, 2020 at 8:25 PM Stephen Boyd <swboyd@chromium.org> wrote:
+>
+> Quoting Douglas Anderson (2020-12-16 14:41:51)
+> > If we get a timeout sending then this happens:
+> > * spi_transfer_wait() will get a timeout.
+> > * We'll set the chip select
+> > * We'll call handle_err() => handle_fifo_timeout().
+> >
+> > Unfortunately that won't work so well on geni.  If we got a timeout
+> > transferring then it's likely that our interrupt handler is blocked,
+> > but we need that same interrupt handler to adjust the chip select.
+> > Trying to set the chip select doesn't crash us but ends up confusing
+> > our state machine and leads to messages like:
+> >   Premature done. rx_rem = 32 bpw8
+> >
+> > Let's just drop the chip select request in this case.  Sure, we might
+> > leave the chip select in the wrong state but it's likely it was going
+> > to fail anyway and this avoids getting the driver even more confused
+> > about what it's doing.
+> >
+> > The SPI core in general assumes that setting chip select is a simple
+> > operation that doesn't fail.  Yet another reason to just reconfigure
+> > the chip select line as GPIOs.
+>
+> Indeed.
+>
+> >
+> > Signed-off-by: Douglas Anderson <dianders@chromium.org>
+> > ---
+> >
+> > Changes in v2:
+> > - ("spi: spi-geni-qcom: Don't try to set CS if an xfer is pending") new for v2.
+> >
+> >  drivers/spi/spi-geni-qcom.c | 9 +++++++--
+> >  1 file changed, 7 insertions(+), 2 deletions(-)
+> >
+> > diff --git a/drivers/spi/spi-geni-qcom.c b/drivers/spi/spi-geni-qcom.c
+> > index d988463e606f..0e4fa52ac017 100644
+> > --- a/drivers/spi/spi-geni-qcom.c
+> > +++ b/drivers/spi/spi-geni-qcom.c
+> > @@ -204,9 +204,14 @@ static void spi_geni_set_cs(struct spi_device *slv, bool set_flag)
+> >                 goto exit;
+> >         }
+> >
+> > -       mas->cs_flag = set_flag;
+> > -
+> >         spin_lock_irq(&mas->lock);
+> > +       if (mas->cur_xfer) {
+>
+> How is it possible that cs change happens when cur_xfer is non-NULL?
 
-yamllint warnings/errors:
-./Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml:39:1: [error] syntax error: found character '\t' that cannot start any token (syntax)
+I'll add this to the commit message:
 
-dtschema/dtc warnings/errors:
-make[1]: *** Deleting file 'Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.example.dts'
-Traceback (most recent call last):
-  File "/usr/local/bin/dt-extract-example", line 45, in <module>
-    binding = yaml.load(open(args.yamlfile, encoding='utf-8').read())
-  File "/usr/local/lib/python3.8/dist-packages/ruamel/yaml/main.py", line 343, in load
-    return constructor.get_single_data()
-  File "/usr/local/lib/python3.8/dist-packages/ruamel/yaml/constructor.py", line 111, in get_single_data
-    node = self.composer.get_single_node()
-  File "_ruamel_yaml.pyx", line 706, in _ruamel_yaml.CParser.get_single_node
-  File "_ruamel_yaml.pyx", line 724, in _ruamel_yaml.CParser._compose_document
-  File "_ruamel_yaml.pyx", line 775, in _ruamel_yaml.CParser._compose_node
-  File "_ruamel_yaml.pyx", line 889, in _ruamel_yaml.CParser._compose_mapping_node
-  File "_ruamel_yaml.pyx", line 775, in _ruamel_yaml.CParser._compose_node
-  File "_ruamel_yaml.pyx", line 889, in _ruamel_yaml.CParser._compose_mapping_node
-  File "_ruamel_yaml.pyx", line 775, in _ruamel_yaml.CParser._compose_node
-  File "_ruamel_yaml.pyx", line 889, in _ruamel_yaml.CParser._compose_mapping_node
-  File "_ruamel_yaml.pyx", line 775, in _ruamel_yaml.CParser._compose_node
-  File "_ruamel_yaml.pyx", line 889, in _ruamel_yaml.CParser._compose_mapping_node
-  File "_ruamel_yaml.pyx", line 775, in _ruamel_yaml.CParser._compose_node
-  File "_ruamel_yaml.pyx", line 889, in _ruamel_yaml.CParser._compose_mapping_node
-  File "_ruamel_yaml.pyx", line 773, in _ruamel_yaml.CParser._compose_node
-  File "_ruamel_yaml.pyx", line 850, in _ruamel_yaml.CParser._compose_sequence_node
-  File "_ruamel_yaml.pyx", line 775, in _ruamel_yaml.CParser._compose_node
-  File "_ruamel_yaml.pyx", line 889, in _ruamel_yaml.CParser._compose_mapping_node
-  File "_ruamel_yaml.pyx", line 731, in _ruamel_yaml.CParser._compose_node
-  File "_ruamel_yaml.pyx", line 904, in _ruamel_yaml.CParser._parse_next_event
-ruamel.yaml.scanner.ScannerError: while scanning for the next token
-found character that cannot start any token
-  in "<unicode string>", line 39, column 1
-make[1]: *** [Documentation/devicetree/bindings/Makefile:20: Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.example.dts] Error 1
-make[1]: *** Waiting for unfinished jobs....
-make[1]: *** [Documentation/devicetree/bindings/Makefile:59: Documentation/devicetree/bindings/processed-schema-examples.json] Error 123
-make: *** [Makefile:1364: dt_binding_check] Error 2
+spi_transfer_one_message()
+ ->transfer_one() AKA spi_geni_transfer_one()
+  setup_fifo_xfer()
+   mas->cur_xfer = non-NULL
+ spi_transfer_wait() => TIMES OUT
+ msg->status != -EINPROGRESS => goto out
+ if (ret != 0 ...)
+  spi_set_cs()
+   ->set_cs AKA spi_geni_set_cs()
+    # mas->cur_xfer is non-NULL
 
-See https://patchwork.ozlabs.org/patch/1417646
+Specifically the place where cur_xfer is usually made NULL is in the
+interrupt handler.  If that doesn't run then it will be non-NULL.
 
-This check can fail if there are any dependencies. The base for a patch
-series is generally the most recent rc1.
 
-If you already ran 'make dt_binding_check' and didn't see the above
-error(s), then make sure 'yamllint' is installed and dt-schema is up to
-date:
+> > +               dev_err(mas->dev, "Can't set CS when prev xfter running\n");
+>
+> xfer? or xfter?
 
-pip3 install dtschema --upgrade
+Will fix.
 
-Please check and re-submit.
 
+-Doug
