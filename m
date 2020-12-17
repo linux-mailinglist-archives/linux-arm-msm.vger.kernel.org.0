@@ -2,164 +2,85 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 810FF2DCBC8
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Dec 2020 05:55:50 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E2D2F2DCD61
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Dec 2020 09:11:05 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726571AbgLQEzc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 16 Dec 2020 23:55:32 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32784 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726396AbgLQEzb (ORCPT
+        id S1727167AbgLQIJ6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 17 Dec 2020 03:09:58 -0500
+Received: from so254-31.mailgun.net ([198.61.254.31]:34132 "EHLO
+        so254-31.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727190AbgLQIJ5 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 16 Dec 2020 23:55:31 -0500
-Received: from mail-pf1-x433.google.com (mail-pf1-x433.google.com [IPv6:2607:f8b0:4864:20::433])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 282EBC061794
-        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Dec 2020 20:54:51 -0800 (PST)
-Received: by mail-pf1-x433.google.com with SMTP id h186so7785790pfe.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Dec 2020 20:54:51 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:content-transfer-encoding:in-reply-to:references
-         :subject:from:cc:to:date:message-id:user-agent;
-        bh=RGWsO2xASpBiXhZOz0Bm5x2XJu6xcytDBXU8vp0kbtY=;
-        b=P2i13ZvYTtEMG+HaAg5v6BDYs4ilVIzVLiyIU6d4UlHfThAGlK5l4UW+rM//rFLebJ
-         7+kdK2YwrVdr9McAUw1Qd7Doik5GUQCK3y0fXEG5apfnKAHZVMb5w7Jchf0wcgwFGlfp
-         F1aKbR4IKmtsEyyUMw0dq5puhhIKp5M5Jx8KE=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:content-transfer-encoding
-         :in-reply-to:references:subject:from:cc:to:date:message-id
-         :user-agent;
-        bh=RGWsO2xASpBiXhZOz0Bm5x2XJu6xcytDBXU8vp0kbtY=;
-        b=B2gx3113EpNZLQgxfQqXy82xgOQNT4C3qiajIAy4/+zcfSLfrygMDkqZS9v0dspqRh
-         5Rta/O3wOZLXd7Lu4y8Jk+Dx+xiTKwWgGlUvBh7GEqrMssl1Gc4T44dOWiocXgh6CDT/
-         /RKnw+bieKchgIkrAxRsJtX0uxKvh460Y1HY7z3r2TcZ1r/SkYYGjSt8UTuhRdj/5Txo
-         f7JMvHSqMcKo8K5pFdhD2AEjGb8xSJNk+HZzH7cseUNHoVzX8YsYhwULkE6If9ieU8jw
-         Obza9aGiFeaYQjDBGpFrwGLx1pdUxmHpwVbSiUZEI1DWnQikWjdKnci9ucdgIUfg2lAg
-         iiIQ==
-X-Gm-Message-State: AOAM532/A0ZhM+TFGnAIR1rI0hEom/5WbtjCtdaOeg39DeoqpNVvSmmb
-        g3lEtuhojrXQgqLnyIV422hFwg==
-X-Google-Smtp-Source: ABdhPJwYM5PQZ/2gUquOdjbCWYuBeSwxrLSWvcIHmmM/LgfFe434huWTpVdsgyJoRQVXzIDkS1LbNQ==
-X-Received: by 2002:a63:5866:: with SMTP id i38mr4288937pgm.26.1608180890551;
-        Wed, 16 Dec 2020 20:54:50 -0800 (PST)
-Received: from chromium.org ([2620:15c:202:201:3e52:82ff:fe6c:83ab])
-        by smtp.gmail.com with ESMTPSA id z20sm3397734pjq.16.2020.12.16.20.54.49
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 16 Dec 2020 20:54:49 -0800 (PST)
-Content-Type: text/plain; charset="utf-8"
-MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <20201211141514.v4.3.I7cf3019783720feb57b958c95c2b684940264cd1@changeid>
-References: <20201211141514.v4.1.I2702919afc253e2a451bebc3b701b462b2d22344@changeid> <20201211141514.v4.3.I7cf3019783720feb57b958c95c2b684940264cd1@changeid>
-Subject: Re: [PATCH v4 3/4] pinctrl: qcom: Don't clear pending interrupts when enabling
-From:   Stephen Boyd <swboyd@chromium.org>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rajendra Nayak <rnayak@codeaurora.org>,
-        Maulik Shah <mkshah@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org,
-        Srinivas Ramana <sramana@codeaurora.org>,
-        Neeraj Upadhyay <neeraju@codeaurora.org>,
-        linux-gpio@vger.kernel.org,
-        Douglas Anderson <dianders@chromium.org>,
-        Andy Gross <agross@kernel.org>, linux-kernel@vger.kernel.org
-To:     Douglas Anderson <dianders@chromium.org>,
-        Jason Cooper <jason@lakedaemon.net>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Marc Zyngier <maz@kernel.org>,
-        Thomas Gleixner <tglx@linutronix.de>
-Date:   Wed, 16 Dec 2020 20:54:47 -0800
-Message-ID: <160818088793.1580929.1672018770454181938@swboyd.mtv.corp.google.com>
-User-Agent: alot/0.9.1
+        Thu, 17 Dec 2020 03:09:57 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1608192581; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=EggB7flYZ69QI0E4k3gpaLndzQcRQVNriX3sSPP+AFA=; b=Xdi3X1rx4lt8bm1nzOPb3tooEaUy8GNGTcxB1JK7/qhHPcAvj2XOJkaI4ynDnS117DLMPxpO
+ EiHI6Y1x1aOcRp3VIX+DWSKz1XDDsJr2tZwEeS7tY0OFambaP4QWrIpgOJI34Gl859qlKh9D
+ 2KTcPu8Dwhpj8wLrrMWMmYkiqc0=
+X-Mailgun-Sending-Ip: 198.61.254.31
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n10.prod.us-west-2.postgun.com with SMTP id
+ 5fdb121593a3d2b1cdac2f3a (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 17 Dec 2020 08:08:53
+ GMT
+Sender: srivasam=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 3AF01C43465; Thu, 17 Dec 2020 08:08:53 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL
+        autolearn=no autolearn_force=no version=3.4.0
+Received: from hyd-lnxbld210.qualcomm.com (unknown [202.46.22.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: srivasam)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 06C3FC433CA;
+        Thu, 17 Dec 2020 08:08:47 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 06C3FC433CA
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=srivasam@codeaurora.org
+From:   Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
+To:     agross@kernel.org, bjorn.andersson@linaro.org, lgirdwood@gmail.com,
+        broonie@kernel.org, robh+dt@kernel.org, plai@codeaurora.org,
+        bgoswami@codeaurora.org, perex@perex.cz, tiwai@suse.com,
+        srinivas.kandagatla@linaro.org, rohitkr@codeaurora.org,
+        linux-arm-msm@vger.kernel.org, alsa-devel@alsa-project.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Cc:     Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
+Subject: [PATCH v6 0/2] Platform driver update to support playback recover after resume
+Date:   Thu, 17 Dec 2020 13:38:32 +0530
+Message-Id: <1608192514-29695-1-git-send-email-srivasam@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Douglas Anderson (2020-12-11 14:15:37)
-> In Linux, if a driver does disable_irq() and later does enable_irq()
-> on its interrupt, I believe it's expecting these properties:
-> * If an interrupt was pending when the driver disabled then it will
->   still be pending after the driver re-enables.
-> * If an edge-triggered interrupt comes in while an interrupt is
->   disabled it should assert when the interrupt is re-enabled.
->=20
-> If you think that the above sounds a lot like the disable_irq() and
-> enable_irq() are supposed to be masking/unmasking the interrupt
-> instead of disabling/enabling it then you've made an astute
-> observation.  Specifically when talking about interrupts, "mask"
-> usually means to stop posting interrupts but keep tracking them and
-> "disable" means to fully shut off interrupt detection.  It's
-> unfortunate that this is so confusing, but presumably this is all the
-> way it is for historical reasons.
->=20
-> Perhaps more confusing than the above is that, even though clients of
-> IRQs themselves don't have a way to request mask/unmask
-> vs. disable/enable calls, IRQ chips themselves can implement both.
-> ...and yet more confusing is that if an IRQ chip implements
-> disable/enable then they will be called when a client driver calls
-> disable_irq() / enable_irq().
->=20
-> It does feel like some of the above could be cleared up.  However,
-> without any other core interrupt changes it should be clear that when
-> an IRQ chip gets a request to "disable" an IRQ that it has to treat it
-> like a mask of that IRQ.
->=20
-> In any case, after that long interlude you can see that the "unmask
-> and clear" can break things.  Maulik tried to fix it so that we no
-> longer did "unmask and clear" in commit 71266d9d3936 ("pinctrl: qcom:
-> Move clearing pending IRQ to .irq_request_resources callback"), but it
-> only handled the PDC case (it also had problems, but that's the
-> subject of another patch).  Let's fix this for the non-PDC case.
->=20
-> From my understanding the source of the phantom interrupt in the
-> non-PDC case was the one that could have been introduced in
-> msm_gpio_irq_set_type().  Let's handle that one and then get rid of
-> the clear.
->=20
-> Fixes: 4b7618fdc7e6 ("pinctrl: qcom: Add irq_enable callback for msm gpio=
-")
-> Signed-off-by: Douglas Anderson <dianders@chromium.org>
-> ---
+This patch set is to add support for playback recover after hard suspend and resume.
+It includes:
+1. Reverting part of previous commit, which is for handling registers invalid state
+after hard suspend.
+2. Adding pm ops in component driver and do regcache sync.
+Changes Since v1 and v2:
+  -- Subject lines changed
+Changes Since v3:
+  -- Patch is splitted into 2 patches
+Changes Since v4:
+  -- Subject lines changed
+Changes Since v5:
+  -- Removed redundant initialization of map variable in lpass-platform.c
 
-Reviewed-by: Stephen Boyd <swboyd@chromium.org>
+Srinivasa Rao Mandadapu (2):
+  ASoC: qcom: Fix incorrect volatile registers
+  ASoC: qcom: Add support for playback recover after resume
 
-One comment clarification below.
+ sound/soc/qcom/lpass-cpu.c      | 20 ++---------------
+ sound/soc/qcom/lpass-platform.c | 50 ++++++++++++++++++++++++++++-------------
+ 2 files changed, 37 insertions(+), 33 deletions(-)
 
-> I don't have lots of good test cases here, so hopefully someone from
-> Qualcomm can confirm that this works well for them and there isn't
-> some other phantom interrupt source that I'm not aware of.
->=20
-> Changes in v4:
-> - ("pinctrl: qcom: Don't clear pending interrupts when enabling") split f=
-or v4.
->=20
->  drivers/pinctrl/qcom/pinctrl-msm.c | 32 +++++++++++++-----------------
->  1 file changed, 14 insertions(+), 18 deletions(-)
->=20
-> diff --git a/drivers/pinctrl/qcom/pinctrl-msm.c b/drivers/pinctrl/qcom/pi=
-nctrl-msm.c
-> index 588df91274e2..f785646d1df7 100644
-> --- a/drivers/pinctrl/qcom/pinctrl-msm.c
-> +++ b/drivers/pinctrl/qcom/pinctrl-msm.c
-> @@ -1046,6 +1032,16 @@ static int msm_gpio_irq_set_type(struct irq_data *=
-d, unsigned int type)
->         }
->         msm_writel_intr_cfg(val, pctrl, g);
-> =20
-> +       /*
-> +        * The first time we set RAW_STATUS_EN it could trigger an interr=
-upt.
-> +        * Clear it.  This is safe because we have IRQCHIP_SET_TYPE_MASKE=
-D.
+-- 
+Qualcomm India Private Limited, on behalf of Qualcomm Innovation Center, Inc.,
+is a member of Code Aurora Forum, a Linux Foundation Collaborative Project.
 
-Clear the interrupt? 'it' is ambiguous.
-
-> +        */
-> +       if (!was_enabled) {
-> +               val =3D msm_readl_intr_status(pctrl, g);
-> +               val &=3D ~BIT(g->intr_status_bit);
-> +               msm_writel_intr_status(val, pctrl, g);
-> +       }
-> +
->         if (test_bit(d->hwirq, pctrl->dual_edge_irqs))
->                 msm_gpio_update_dual_edge_pos(pctrl, g, d);
->
