@@ -2,111 +2,110 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 745362DD091
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Dec 2020 12:40:51 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 8FE9D2DD168
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Dec 2020 13:19:54 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727454AbgLQLkX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 17 Dec 2020 06:40:23 -0500
-Received: from m43-15.mailgun.net ([69.72.43.15]:40722 "EHLO
-        m43-15.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727786AbgLQLkO (ORCPT
+        id S1728731AbgLQMTq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 17 Dec 2020 07:19:46 -0500
+Received: from smtp01.smtpout.orange.fr ([80.12.242.123]:56498 "EHLO
+        smtp.smtpout.orange.fr" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728708AbgLQMTq (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 17 Dec 2020 06:40:14 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1608205189; h=References: In-Reply-To: Message-Id: Date:
- Subject: Cc: To: From: Sender;
- bh=CgHSq++NLr2TaQFTh+d2Zw8b6UtAJXov/TwK1S6TAiA=; b=iM8dgKKS/McaVwYevZTi1lonDRMugSbLimQ//86YZBUUT/XxyPt4Eca9HqICEL3+xqU/6wHT
- mDL53r3TxykNsUO1GDoVVHBwDuR0SUsoKKgf6Qhqso50BMRd6ujx8bcUWav2p6iTV9mqEk4a
- ziWaLSj4UlE7bbjyVJOyIOcwvco=
-X-Mailgun-Sending-Ip: 69.72.43.15
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n07.prod.us-east-1.postgun.com with SMTP id
- 5fdb4369bfd08afb0d52d5e0 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 17 Dec 2020 11:39:21
- GMT
-Sender: kgunda=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id EE176C43462; Thu, 17 Dec 2020 11:39:20 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
-        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
-Received: from kgunda-linux.qualcomm.com (unknown [202.46.22.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: kgunda)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 18601C43463;
-        Thu, 17 Dec 2020 11:39:16 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 18601C43463
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=kgunda@codeaurora.org
-From:   Kiran Gunda <kgunda@codeaurora.org>
-To:     swboyd@chromium.org, robh@kernel.org,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Lee Jones <lee.jones@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Stephen Boyd <sboyd@kernel.org>, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Cc:     Kiran Gunda <kgunda@codeaurora.org>
-Subject: [PATCH V3 2/2] mfd: qcom-spmi-pmic: Add support for pm6150 and pm6150l
-Date:   Thu, 17 Dec 2020 17:08:43 +0530
-Message-Id: <1608205123-23119-3-git-send-email-kgunda@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1608205123-23119-1-git-send-email-kgunda@codeaurora.org>
-References: <1608205123-23119-1-git-send-email-kgunda@codeaurora.org>
+        Thu, 17 Dec 2020 07:19:46 -0500
+Received: from localhost.localdomain ([92.131.12.169])
+        by mwinf5d48 with ME
+        id 5QHz2400L3eqQsk03QJ0QR; Thu, 17 Dec 2020 13:18:01 +0100
+X-ME-Helo: localhost.localdomain
+X-ME-Auth: Y2hyaXN0b3BoZS5qYWlsbGV0QHdhbmFkb28uZnI=
+X-ME-Date: Thu, 17 Dec 2020 13:18:01 +0100
+X-ME-IP: 92.131.12.169
+From:   Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+To:     stanimir.varbanov@linaro.org, agross@kernel.org,
+        bjorn.andersson@linaro.org, mchehab@kernel.org,
+        georgi.djakov@linaro.org
+Cc:     linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, kernel-janitors@vger.kernel.org,
+        Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+Subject: [PATCH] media: venus: core: Fix a resource leak in error handling paths of the probe function
+Date:   Thu, 17 Dec 2020 13:17:25 +0100
+Message-Id: <20201217121725.156649-1-christophe.jaillet@wanadoo.fr>
+X-Mailer: git-send-email 2.27.0
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add the compatibles and PMIC ids for pm6150 and pm6150l PMICs
-found on SC7180 based platforms.
+Add 2 missing 'icc_put()' calls in the error handling path of the probe
+function, as already done in the remove function.
 
-Signed-off-by: Kiran Gunda <kgunda@codeaurora.org>
+Fixes: 32f0a6ddc8c9 ("media: venus: Use on-chip interconnect API")
+Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
 ---
- Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml | 2 ++
- drivers/mfd/qcom-spmi-pmic.c                              | 4 ++++
- 2 files changed, 6 insertions(+)
+ drivers/media/platform/qcom/venus/core.c | 31 +++++++++++++++++-------
+ 1 file changed, 22 insertions(+), 9 deletions(-)
 
-diff --git a/Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml b/Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml
-index 0b3e440..92cf7e9 100644
---- a/Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml
-+++ b/Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml
-@@ -58,6 +58,8 @@ patternProperties:
-               - qcom,pm8005
- 	      - qcom,pm660l
- 	      - qcom,pm660
-+	      - qcom,pm6150l
-+	      - qcom,pm6150
+diff --git a/drivers/media/platform/qcom/venus/core.c b/drivers/media/platform/qcom/venus/core.c
+index bdd293faaad0..2e6ce215740b 100644
+--- a/drivers/media/platform/qcom/venus/core.c
++++ b/drivers/media/platform/qcom/venus/core.c
+@@ -200,27 +200,35 @@ static int venus_probe(struct platform_device *pdev)
+ 		return PTR_ERR(core->video_path);
  
-           - enum:
-               - qcom,spmi-pmic
-diff --git a/drivers/mfd/qcom-spmi-pmic.c b/drivers/mfd/qcom-spmi-pmic.c
-index a35d5cf..6d8b688 100644
---- a/drivers/mfd/qcom-spmi-pmic.c
-+++ b/drivers/mfd/qcom-spmi-pmic.c
-@@ -38,6 +38,8 @@
- #define PM8005_SUBTYPE		0x18
- #define PM660L_SUBTYPE		0x1A
- #define PM660_SUBTYPE		0x1B
-+#define PM6150L_SUBTYPE		0x1F
-+#define PM6150_SUBTYPE		0x28
+ 	core->cpucfg_path = of_icc_get(dev, "cpu-cfg");
+-	if (IS_ERR(core->cpucfg_path))
+-		return PTR_ERR(core->cpucfg_path);
++	if (IS_ERR(core->cpucfg_path)) {
++		ret = PTR_ERR(core->cpucfg_path);
++		goto err_video_path_put;
++	}
  
- static const struct of_device_id pmic_spmi_id_table[] = {
- 	{ .compatible = "qcom,spmi-pmic", .data = (void *)COMMON_SUBTYPE },
-@@ -61,6 +63,8 @@ static const struct of_device_id pmic_spmi_id_table[] = {
- 	{ .compatible = "qcom,pm8005",    .data = (void *)PM8005_SUBTYPE },
- 	{ .compatible = "qcom,pm660l",    .data = (void *)PM660L_SUBTYPE },
- 	{ .compatible = "qcom,pm660",     .data = (void *)PM660_SUBTYPE },
-+	{ .compatible = "qcom,pm6150l",   .data = (void *)PM6150L_SUBTYPE },
-+	{ .compatible = "qcom,pm6150",    .data = (void *)PM6150_SUBTYPE },
- 	{ }
- };
+ 	core->irq = platform_get_irq(pdev, 0);
+-	if (core->irq < 0)
+-		return core->irq;
++	if (core->irq < 0) {
++		ret = core->irq;
++		goto err_cpucfg_path_put;
++	}
+ 
+ 	core->res = of_device_get_match_data(dev);
+-	if (!core->res)
+-		return -ENODEV;
++	if (!core->res) {
++		ret = -ENODEV;
++		goto err_cpucfg_path_put;
++	}
+ 
+ 	mutex_init(&core->pm_lock);
+ 
+ 	core->pm_ops = venus_pm_get(core->res->hfi_version);
+-	if (!core->pm_ops)
+-		return -ENODEV;
++	if (!core->pm_ops) {
++		ret = -ENODEV;
++		goto err_cpucfg_path_put;
++	}
+ 
+ 	if (core->pm_ops->core_get) {
+ 		ret = core->pm_ops->core_get(dev);
+ 		if (ret)
+-			return ret;
++			goto err_cpucfg_path_put;
+ 	}
+ 
+ 	ret = dma_set_mask_and_coherent(dev, core->res->dma_mask);
+@@ -305,6 +313,11 @@ static int venus_probe(struct platform_device *pdev)
+ err_core_put:
+ 	if (core->pm_ops->core_put)
+ 		core->pm_ops->core_put(dev);
++err_cpucfg_path_put:
++	icc_put(core->cpucfg_path);
++err_video_path_put:
++	icc_put(core->video_path);
++
+ 	return ret;
+ }
  
 -- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
- a Linux Foundation Collaborative Project
+2.27.0
 
