@@ -2,49 +2,49 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id DF90C2DDB65
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Dec 2020 23:32:14 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C22DD2DDB67
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Dec 2020 23:32:15 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732051AbgLQWaQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 17 Dec 2020 17:30:16 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54100 "EHLO
+        id S1732101AbgLQWaS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 17 Dec 2020 17:30:18 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54110 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731957AbgLQWaQ (ORCPT
+        with ESMTP id S1732046AbgLQWaR (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 17 Dec 2020 17:30:16 -0500
-Received: from mail-pg1-x52a.google.com (mail-pg1-x52a.google.com [IPv6:2607:f8b0:4864:20::52a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C98BAC061794
-        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Dec 2020 14:29:35 -0800 (PST)
-Received: by mail-pg1-x52a.google.com with SMTP id n16so85655pgm.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Dec 2020 14:29:35 -0800 (PST)
+        Thu, 17 Dec 2020 17:30:17 -0500
+Received: from mail-pf1-x42b.google.com (mail-pf1-x42b.google.com [IPv6:2607:f8b0:4864:20::42b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5DA16C06138C
+        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Dec 2020 14:29:37 -0800 (PST)
+Received: by mail-pf1-x42b.google.com with SMTP id d2so300943pfq.5
+        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Dec 2020 14:29:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=v7xCKWj505XOK8pmaVepIcbXuQ+piHeDyFLhHQR5U2Q=;
-        b=MUIEHvh95AUP6V1mzbTcu2YJqrE/3xPIlBC0YJsbKW3ewh99f5g1nMnI0mXabiEg/B
-         UroJpxJF6AzkjbS43C706tVZONxmo4K8NmNtdSn1RIU0XCnO0qFM4j4bY2tcd8IJt4z3
-         WF6i2QGXLrhaI3qashWV5StE1S7SDu8OKFN0M=
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=CBG392X/fqmC2FSSXnmbfDW/za8PCEWVRQmenaYl98s=;
+        b=bxppXRLfzJvnGAGc3fb6OnIE3ujPsvT95MFOws56MX/JbWAlK5gzLVxiZNFCFaoPra
+         nxX6xV731je5sR5ERkvOu+PfYaYkFH+m/pDhjX5uINXic1eTb+Q/X1ySdvlzpnaRv0Su
+         bnu2f2U5pNb0ZPqxh27TQqg+1Hs2gsKSk1SK0=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=v7xCKWj505XOK8pmaVepIcbXuQ+piHeDyFLhHQR5U2Q=;
-        b=CkNuYCX8KQuPbdE7lEYBjMRejCHZvLYj/jtVyePMLP5GrD2Mt9gcWGcddiqFdy38Q2
-         BHFb3/6cdDu8auNHCidKspiwk3OYbhwuR9B651H/FXetMYvHcpqvkxkPkIYfLzfiRU9+
-         reFCNWLcqfZ0dtzWbRhrdYHpQ8Z++G0cYqRonhJfMr9lepV7+mEh7vQVWa2vr5mWrmfg
-         3SPhbDHxyrJQbBhBP88S5fPeqN/TEMTUe+abmdbFyvXz7Rwb8hTdMfEk82tC55QG5NX0
-         sKvj14PKNaYmKX9vNiFCDDO1wj9kPONCQ9BgxXDFfwxrgDUSgQ4k/WlYO0fJ2HO4BTPm
-         qr+Q==
-X-Gm-Message-State: AOAM5332buCu8cNby0yAcfS26LGMiy1FsbywNo31drgUZVQ2baNwBwap
-        FcjXoqF/GPqh1gYlIIzHJVtRFg==
-X-Google-Smtp-Source: ABdhPJz6Dtc4cRRUFyl0u5B3TKJYZN6oBuUE1DwLdrGi6ti46ehE1k4YtBfuwM8sp2oD3Q2patXwcg==
-X-Received: by 2002:aa7:93b0:0:b029:19d:e625:2062 with SMTP id x16-20020aa793b00000b029019de6252062mr1320109pff.47.1608244175337;
-        Thu, 17 Dec 2020 14:29:35 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=CBG392X/fqmC2FSSXnmbfDW/za8PCEWVRQmenaYl98s=;
+        b=SankqjjNTXh+MdWEAs+Rn/+CNU/8qrXatKqozwcLX8VbqTCuAgH0nhUGDvhIdrTNqa
+         s23g6wrbpLrwTsjywfzDZQIxShWjA4b9rRKykN65+VXVxlqu37Xtvu0La0/HSApPr/Kf
+         triwMIXlSgEoiTog9r5pes+tRWryCn4AuRnv99r7zzOQUrXzR9Q49M6WMBJZPZZKqBAX
+         IS9QT8ipyxyZM3fUjyfqm686ITRtq0cBlveh1W8yGwHPuKqjZNmqR+Kv3et6t0X+BMeO
+         TUGZTrxJCykGjEz59ZB8SkPygN+5lALqw1CB7Qegxuh2UxwHfKELM1YB1w72nbWhzZw5
+         ip1g==
+X-Gm-Message-State: AOAM532gJ4uGnN3bIX/hcE6L5BzoWaWscFX5qJ8yqVHa8L/W2IOCV9l6
+        b72m/O8vJwLUbZb/7MwaMIRa/P66n4RzmQ==
+X-Google-Smtp-Source: ABdhPJwFi9/LiWzp30bFETjaBqAuGxtXVQg8FuhDxbCnWrm4vKWfvuxAT/6hNRSeijaYpd23S3WT9g==
+X-Received: by 2002:a63:1521:: with SMTP id v33mr1375689pgl.30.1608244176903;
+        Thu, 17 Dec 2020 14:29:36 -0800 (PST)
 Received: from tictac2.mtv.corp.google.com ([2620:15c:202:1:42b0:34ff:fe3d:58e6])
-        by smtp.gmail.com with ESMTPSA id gm18sm5805850pjb.55.2020.12.17.14.29.33
+        by smtp.gmail.com with ESMTPSA id gm18sm5805850pjb.55.2020.12.17.14.29.35
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 17 Dec 2020 14:29:34 -0800 (PST)
+        Thu, 17 Dec 2020 14:29:36 -0800 (PST)
 From:   Douglas Anderson <dianders@chromium.org>
 To:     Mark Brown <broonie@kernel.org>
 Cc:     msavaliy@qti.qualcomm.com, Stephen Boyd <swboyd@chromium.org>,
@@ -55,108 +55,163 @@ Cc:     msavaliy@qti.qualcomm.com, Stephen Boyd <swboyd@chromium.org>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
         Dilip Kota <dkota@codeaurora.org>,
-        Girish Mahadevan <girishm@codeaurora.org>,
         linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
         linux-spi@vger.kernel.org
-Subject: [PATCH v3 1/4] spi: spi-geni-qcom: Fix geni_spi_isr() NULL dereference in timeout case
-Date:   Thu, 17 Dec 2020 14:29:11 -0800
-Message-Id: <20201217142842.v3.1.I99ee04f0cb823415df59bd4f550d6ff5756e43d6@changeid>
+Subject: [PATCH v3 2/4] spi: spi-geni-qcom: Fail new xfers if xfer/cancel/abort pending
+Date:   Thu, 17 Dec 2020 14:29:12 -0800
+Message-Id: <20201217142842.v3.2.Ibade998ed587e070388b4bf58801f1107a40eb53@changeid>
 X-Mailer: git-send-email 2.29.2.684.gfbc64c5ab5-goog
+In-Reply-To: <20201217142842.v3.1.I99ee04f0cb823415df59bd4f550d6ff5756e43d6@changeid>
+References: <20201217142842.v3.1.I99ee04f0cb823415df59bd4f550d6ff5756e43d6@changeid>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-In commit 7ba9bdcb91f6 ("spi: spi-geni-qcom: Don't keep a local state
-variable") we changed handle_fifo_timeout() so that we set
-"mas->cur_xfer" to NULL to make absolutely sure that we don't mess
-with the buffers from the previous transfer in the timeout case.
+If we got a timeout when trying to send an abort command then it means
+that we just got 3 timeouts in a row:
 
-Unfortunately, this caused the IRQ handler to dereference NULL in some
-cases.  One case:
+1. The original timeout that caused handle_fifo_timeout() to be
+   called.
+2. A one second timeout waiting for the cancel command to finish.
+3. A one second timeout waiting for the abort command to finish.
 
-  CPU0                           CPU1
-  ----                           ----
-                                 setup_fifo_xfer()
-                                  geni_se_setup_m_cmd()
-                                 <hardware starts transfer>
-                                 <transfer completes in hardware>
-                                 <hardware sets M_RX_FIFO_WATERMARK_EN in m_irq>
-                                 ...
-                                 handle_fifo_timeout()
-                                  spin_lock_irq(mas->lock)
-                                  mas->cur_xfer = NULL
-                                  geni_se_cancel_m_cmd()
-                                  spin_unlock_irq(mas->lock)
+SPI is clocked by the controller, so nothing (aside from a hardware
+fault or a totally broken sequencer) should be causing the actual
+commands to fail in hardware.  However, even though the hardware
+itself is not expected to fail (and it'd be hard to predict how we
+should handle things if it did), it's easy to hit the timeout case by
+simply blocking our interrupt handler from running for a long period
+of time.  Obviously the system is in pretty bad shape if a interrupt
+handler is blocked for > 2 seconds, but there are certainly bugs (even
+bugs in other unrelated drivers) that can make this happen.
 
-  geni_spi_isr()
-   spin_lock(mas->lock)
-   if (m_irq & M_RX_FIFO_WATERMARK_EN)
-    geni_spi_handle_rx()
-     mas->cur_xfer NULL dereference!
-
-tl;dr: Seriously delayed interrupts for RX/TX can lead to timeout
-handling setting mas->cur_xfer to NULL.
-
-Let's check for the NULL transfer in the TX and RX cases and reset the
-watermark or clear out the fifo respectively to put the hardware back
-into a sane state.
-
-NOTE: things still could get confused if we get timeouts all the way
-through handle_fifo_timeout() and then start a new transfer because
-interrupts from the old transfer / cancel / abort could still be
-pending.  A future patch will help this corner case.
+Let's make things a bit more robust against this case.  If we fail to
+abort we'll set a flag and then we'll block all future transfers until
+we have no more interrupts pending.
 
 Fixes: 561de45f72bd ("spi: spi-geni-qcom: Add SPI driver support for GENI based QUP")
 Signed-off-by: Douglas Anderson <dianders@chromium.org>
-Reviewed-by: Stephen Boyd <swboyd@chromium.org>
 ---
 
 Changes in v3:
-- (ptr == NULL) => (!ptr), take 2.
-- while loop => for loop
+- spin the lock in spi_geni_is_abort_still_pending() if abort pending.
 
 Changes in v2:
-- (ptr == NULL) => (!ptr).
-- Addressed loop nits in geni_spi_handle_rx().
-- Commit message rewording from Stephen.
+- Make this just about the failed abort.
 
- drivers/spi/spi-geni-qcom.c | 14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+ drivers/spi/spi-geni-qcom.c | 59 +++++++++++++++++++++++++++++++++++--
+ 1 file changed, 57 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/spi/spi-geni-qcom.c b/drivers/spi/spi-geni-qcom.c
-index 25810a7eef10..6939c6cabe91 100644
+index 6939c6cabe91..cf3db40ae5ba 100644
 --- a/drivers/spi/spi-geni-qcom.c
 +++ b/drivers/spi/spi-geni-qcom.c
-@@ -354,6 +354,12 @@ static bool geni_spi_handle_tx(struct spi_geni_master *mas)
- 	unsigned int bytes_per_fifo_word = geni_byte_per_fifo_word(mas);
- 	unsigned int i = 0;
+@@ -83,6 +83,7 @@ struct spi_geni_master {
+ 	spinlock_t lock;
+ 	int irq;
+ 	bool cs_flag;
++	bool abort_failed;
+ };
  
-+	/* Stop the watermark IRQ if nothing to send */
-+	if (!mas->cur_xfer) {
-+		writel(0, se->base + SE_GENI_TX_WATERMARK_REG);
+ static int get_spi_clk_cfg(unsigned int speed_hz,
+@@ -141,8 +142,49 @@ static void handle_fifo_timeout(struct spi_master *spi,
+ 	spin_unlock_irq(&mas->lock);
+ 
+ 	time_left = wait_for_completion_timeout(&mas->abort_done, HZ);
+-	if (!time_left)
++	if (!time_left) {
+ 		dev_err(mas->dev, "Failed to cancel/abort m_cmd\n");
++
++		/*
++		 * No need for a lock since SPI core has a lock and we never
++		 * access this from an interrupt.
++		 */
++		mas->abort_failed = true;
++	}
++}
++
++static bool spi_geni_is_abort_still_pending(struct spi_geni_master *mas)
++{
++	struct geni_se *se = &mas->se;
++	u32 m_irq, m_irq_en;
++
++	if (!mas->abort_failed)
 +		return false;
++
++	/*
++	 * The only known case where a transfer times out and then a cancel
++	 * times out then an abort times out is if something is blocking our
++	 * interrupt handler from running.  Avoid starting any new transfers
++	 * until that sorts itself out.
++	 */
++	spin_lock_irq(&mas->lock);
++	m_irq = readl(se->base + SE_GENI_M_IRQ_STATUS);
++	m_irq_en = readl(se->base + SE_GENI_M_IRQ_EN);
++	spin_unlock_irq(&mas->lock);
++
++	if (m_irq & m_irq_en) {
++		dev_err(mas->dev, "Interrupts pending after abort: %#010x\n",
++			m_irq & m_irq_en);
++		return true;
 +	}
 +
- 	max_bytes = (mas->tx_fifo_depth - mas->tx_wm) * bytes_per_fifo_word;
- 	if (mas->tx_rem_bytes < max_bytes)
- 		max_bytes = mas->tx_rem_bytes;
-@@ -396,6 +402,14 @@ static void geni_spi_handle_rx(struct spi_geni_master *mas)
- 		if (rx_last_byte_valid && rx_last_byte_valid < 4)
- 			rx_bytes -= bytes_per_fifo_word - rx_last_byte_valid;
- 	}
++	/*
++	 * If we're here the problem resolved itself so no need to check more
++	 * on future transfers.
++	 */
++	mas->abort_failed = false;
 +
-+	/* Clear out the FIFO and bail if nowhere to put it */
-+	if (!mas->cur_xfer) {
-+		for (i = 0; i < DIV_ROUND_UP(rx_bytes, bytes_per_fifo_word); i++)
-+			readl(se->base + SE_GENI_RX_FIFOn);
-+		return;
-+	}
-+
- 	if (mas->rx_rem_bytes < rx_bytes)
- 		rx_bytes = mas->rx_rem_bytes;
++	return false;
+ }
  
+ static void spi_geni_set_cs(struct spi_device *slv, bool set_flag)
+@@ -158,9 +200,15 @@ static void spi_geni_set_cs(struct spi_device *slv, bool set_flag)
+ 	if (set_flag == mas->cs_flag)
+ 		return;
+ 
++	pm_runtime_get_sync(mas->dev);
++
++	if (spi_geni_is_abort_still_pending(mas)) {
++		dev_err(mas->dev, "Can't set chip select\n");
++		goto exit;
++	}
++
+ 	mas->cs_flag = set_flag;
+ 
+-	pm_runtime_get_sync(mas->dev);
+ 	spin_lock_irq(&mas->lock);
+ 	reinit_completion(&mas->cs_done);
+ 	if (set_flag)
+@@ -173,6 +221,7 @@ static void spi_geni_set_cs(struct spi_device *slv, bool set_flag)
+ 	if (!time_left)
+ 		handle_fifo_timeout(spi, NULL);
+ 
++exit:
+ 	pm_runtime_put(mas->dev);
+ }
+ 
+@@ -280,6 +329,9 @@ static int spi_geni_prepare_message(struct spi_master *spi,
+ 	int ret;
+ 	struct spi_geni_master *mas = spi_master_get_devdata(spi);
+ 
++	if (spi_geni_is_abort_still_pending(mas))
++		return -EBUSY;
++
+ 	ret = setup_fifo_params(spi_msg->spi, spi);
+ 	if (ret)
+ 		dev_err(mas->dev, "Couldn't select mode %d\n", ret);
+@@ -509,6 +561,9 @@ static int spi_geni_transfer_one(struct spi_master *spi,
+ {
+ 	struct spi_geni_master *mas = spi_master_get_devdata(spi);
+ 
++	if (spi_geni_is_abort_still_pending(mas))
++		return -EBUSY;
++
+ 	/* Terminate and return success for 0 byte length transfer */
+ 	if (!xfer->len)
+ 		return 0;
 -- 
 2.29.2.684.gfbc64c5ab5-goog
 
