@@ -2,29 +2,29 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 5D8062DE2A5
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Dec 2020 13:18:28 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id DD2442DE2A2
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Dec 2020 13:18:26 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726254AbgLRMRa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 18 Dec 2020 07:17:30 -0500
-Received: from mail.kernel.org ([198.145.29.99]:57698 "EHLO mail.kernel.org"
+        id S1725903AbgLRMRZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 18 Dec 2020 07:17:25 -0500
+Received: from mail.kernel.org ([198.145.29.99]:57630 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725894AbgLRMRa (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 18 Dec 2020 07:17:30 -0500
+        id S1725894AbgLRMRZ (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 18 Dec 2020 07:17:25 -0500
 From:   Mark Brown <broonie@kernel.org>
 Authentication-Results: mail.kernel.org; dkim=permerror (bad message/signature format)
 To:     alsa-devel@alsa-project.org, tiwai@suse.com,
         Srinivasa Rao Mandadapu <srivasam@codeaurora.org>,
         plai@codeaurora.org, devicetree@vger.kernel.org,
         rohitkr@codeaurora.org, lgirdwood@gmail.com,
-        linux-kernel@vger.kernel.org, srinivas.kandagatla@linaro.org,
-        bjorn.andersson@linaro.org, agross@kernel.org, robh+dt@kernel.org,
-        linux-arm-msm@vger.kernel.org, bgoswami@codeaurora.org,
-        perex@perex.cz
-In-Reply-To: <1608192514-29695-1-git-send-email-srivasam@codeaurora.org>
-References: <1608192514-29695-1-git-send-email-srivasam@codeaurora.org>
-Subject: Re: [PATCH v6 0/2] Platform driver update to support playback recover after resume
-Message-Id: <160829377017.10885.961383820010560969.b4-ty@kernel.org>
+        linux-kernel@vger.kernel.org, bjorn.andersson@linaro.org,
+        srinivas.kandagatla@linaro.org, agross@kernel.org,
+        robh+dt@kernel.org, linux-arm-msm@vger.kernel.org,
+        bgoswami@codeaurora.org, perex@perex.cz
+In-Reply-To: <1606929748-16828-1-git-send-email-srivasam@codeaurora.org>
+References: <1606929748-16828-1-git-send-email-srivasam@codeaurora.org>
+Subject: Re: [PATCH v5 0/2] Platform driver update to support playback recover after resume
+Message-Id: <160829377016.10885.14131365889928811294.b4-ty@kernel.org>
 Date:   Fri, 18 Dec 2020 12:16:10 +0000
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
@@ -33,7 +33,7 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 17 Dec 2020 13:38:32 +0530, Srinivasa Rao Mandadapu wrote:
+On Wed, 2 Dec 2020 22:52:26 +0530, Srinivasa Rao Mandadapu wrote:
 > This patch set is to add support for playback recover after hard suspend and resume.
 > It includes:
 > 1. Reverting part of previous commit, which is for handling registers invalid state
@@ -45,8 +45,6 @@ On Thu, 17 Dec 2020 13:38:32 +0530, Srinivasa Rao Mandadapu wrote:
 >   -- Patch is splitted into 2 patches
 > Changes Since v4:
 >   -- Subject lines changed
-> Changes Since v5:
->   -- Removed redundant initialization of map variable in lpass-platform.c
 > 
 > [...]
 
