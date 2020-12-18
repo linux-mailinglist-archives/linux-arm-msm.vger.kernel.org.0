@@ -2,84 +2,95 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 3B6ED2DDD12
+	by mail.lfdr.de (Postfix) with ESMTP id 8C6822DDD13
 	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Dec 2020 03:52:53 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731514AbgLRCwg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 17 Dec 2020 21:52:36 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37944 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727079AbgLRCwf (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 17 Dec 2020 21:52:35 -0500
-Received: from mail-pf1-x42b.google.com (mail-pf1-x42b.google.com [IPv6:2607:f8b0:4864:20::42b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A5441C0617B0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Dec 2020 18:51:55 -0800 (PST)
-Received: by mail-pf1-x42b.google.com with SMTP id w6so662391pfu.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Dec 2020 18:51:55 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:content-transfer-encoding:in-reply-to:references
-         :subject:from:cc:to:date:message-id:user-agent;
-        bh=ul+JQXSNam3Jh6+49O94MwvKAzXGAJzUccEcBcdHWAs=;
-        b=G42IndBReRqVZg+a2MKBCb1Kt4lvbF/WksJWYeKee00AmCVPkhoe12N+igTMnPs45K
-         MuUMt7Et/HKLyEo+4sPBXph5sJD74t1/+Iw+f6zebD11w1O6iabrgvphBzxkxe4kyFef
-         nc9nRW4sg0ffad3/Ol1YKAhOt2Ycpb8gAek78=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:content-transfer-encoding
-         :in-reply-to:references:subject:from:cc:to:date:message-id
-         :user-agent;
-        bh=ul+JQXSNam3Jh6+49O94MwvKAzXGAJzUccEcBcdHWAs=;
-        b=pwL1ebaYyTqKUB+/5dgYHM2astmy0J3tkXDi11GrKSXaEU5xZiaoWJFii+VCCuU0jM
-         douXYWEOxiFsOt9NYqAR8bTjrIY5/W9xhoYvVO8zEk2Ut2vZXW9wrY2GcvidTktOmwTz
-         bu2eZKbev6C6SBLNpAXnxzYW0kp8JMKdOcVokTrAa7SvO5TZLshbGwBkLxjoJZ5HBj6D
-         dYgWnebVFexVMqM28G6KQ7tmabI4sdzWXI6ozPZtZnSlFcR4xfHryzKkNgy1ZDuSf5hM
-         iCcSZzKH4MKW+i/Mh/LI5G8aA7S5X1Xs0QJyy90dNPMvzMpn+K5UyA9SluMnpfKwsfHv
-         tk4A==
-X-Gm-Message-State: AOAM533Hpc1tNnwUhqPaaDa+Kk0rPtCDCZqW/9DnfYr4AoO/zsGON/I4
-        osHvF2SdXx/CfL0ChTO1F+fxPA==
-X-Google-Smtp-Source: ABdhPJwg5+G+1UyV/hGw2/rBQu+naxSAN5HNPZscRDaWeHpeyp1drWCU5fDXVg/R//PgykEOZubs6g==
-X-Received: by 2002:a62:1617:0:b029:1a3:c265:a50c with SMTP id 23-20020a6216170000b02901a3c265a50cmr2150152pfw.77.1608259915209;
-        Thu, 17 Dec 2020 18:51:55 -0800 (PST)
-Received: from chromium.org ([2620:15c:202:201:3e52:82ff:fe6c:83ab])
-        by smtp.gmail.com with ESMTPSA id u9sm6943347pfl.143.2020.12.17.18.51.54
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 17 Dec 2020 18:51:54 -0800 (PST)
-Content-Type: text/plain; charset="utf-8"
-MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <CAD=FV=XBMYpxLMqEDEwnpVGjtL+iUvCCmXWDrdwngMa-BWGM+w@mail.gmail.com>
-References: <20201216144114.v2.1.I99ee04f0cb823415df59bd4f550d6ff5756e43d6@changeid> <20201216144114.v2.3.I07afdedcc49655c5d26880f8df9170aac5792378@changeid> <160817939232.1580929.12113046418592056259@swboyd.mtv.corp.google.com> <CAD=FV=XBMYpxLMqEDEwnpVGjtL+iUvCCmXWDrdwngMa-BWGM+w@mail.gmail.com>
-Subject: Re: [PATCH v2 3/4] spi: spi-geni-qcom: Don't try to set CS if an xfer is pending
-From:   Stephen Boyd <swboyd@chromium.org>
-Cc:     Mark Brown <broonie@kernel.org>, msavaliy@qti.qualcomm.com,
-        Akash Asthana <akashast@codeaurora.org>,
-        Roja Rani Yarubandi <rojay@codeaurora.org>,
+        id S1732147AbgLRCws (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 17 Dec 2020 21:52:48 -0500
+Received: from mail.kernel.org ([198.145.29.99]:38984 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727196AbgLRCws (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 17 Dec 2020 21:52:48 -0500
+Date:   Thu, 17 Dec 2020 18:52:06 -0800
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1608259928;
+        bh=glTni2yTCAf7pO5CWMTAn773citvpvX44WaT6+KZheg=;
+        h=From:To:Cc:Subject:References:In-Reply-To:From;
+        b=J9Dz65ZH8ugz3R0xddaHBSP0u5WZ3I31gIUvvxQxiAeLigOmwFRkw8EY8pDOVuLbP
+         VHOTjNHsCTDQQ62grA1nt0f7AZWE6qeV2uXtO8+KSbOCGoEDy/oyglmb2GwdmpSW+W
+         +fCzHZPINwY8IxnjLPb147RgtoEe8SZ/vgyaJkBxoWCWiJlkx67o80ictuIbXGvbH4
+         Mpgell7WjI4+rU6h/kS6nJzNWkbqZ/pv9bMJ+gVqQisLYv714eDvt7QNhS+UnojZ2n
+         e8fYKntXlZhmGeERYfuzhX4aTCpFhv9U5cuNxbDT6vaHTYS6mEDXd4ZrVwvRF9Iim8
+         E5Y0ywykRGA7A==
+From:   Eric Biggers <ebiggers@kernel.org>
+To:     "Peng.Zhou" <peng.zhou@mediatek.com>
+Cc:     Adrian Hunter <adrian.hunter@intel.com>, linux-mmc@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-fscrypt@vger.kernel.org, Satya Tangirala <satyat@google.com>,
+        Ulf Hansson <ulf.hansson@linaro.org>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        LKML <linux-kernel@vger.kernel.org>,
-        linux-spi <linux-spi@vger.kernel.org>
-To:     Doug Anderson <dianders@chromium.org>
-Date:   Thu, 17 Dec 2020 18:51:52 -0800
-Message-ID: <160825991289.1580929.8225600641746583053@swboyd.mtv.corp.google.com>
-User-Agent: alot/0.9.1
+        Ritesh Harjani <riteshh@codeaurora.org>,
+        Asutosh Das <asutoshd@codeaurora.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Neeraj Soni <neersoni@codeaurora.org>,
+        Barani Muthukumaran <bmuthuku@codeaurora.org>,
+        Konrad Dybcio <konradybcio@gmail.com>,
+        kuohong.wang@mediatek.com, gray.jia@mediatek.com,
+        StanleyChu <stanley.chu@mediatek.com>,
+        peng zhou <peng.zhou@medaitek.com>
+Subject: Re: [PATCH 0/8] eMMC inline encryption support
+Message-ID: <X9wZVvOIH4diFqWn@sol.localdomain>
+References: <20201112194011.103774-1-ebiggers@kernel.org>
+ <X7gQ9Y44iIgkiM64@sol.localdomain>
+ <ea904bcc-3f01-d968-2a16-f9ff9f012968@intel.com>
+ <X7gcsC6IS80sUy4K@sol.localdomain>
+ <9010afea-1075-8f72-99c7-c471840685db@intel.com>
+ <X7xpbJf4gDcFdEc/@sol.localdomain>
+ <1606294991.31568.5.camel@mtkswgap22>
+ <1608196892.11508.0.camel@mbjsdccf07>
+ <X9uhVj080rvyhAVl@sol.localdomain>
+ <1608248441.2255.5.camel@mbjsdccf07>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1608248441.2255.5.camel@mbjsdccf07>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Doug Anderson (2020-12-17 13:35:08)
->=20
-> If we wanted to truly make this driver super robust against ridiculous
-> interrupt latencies then, presumably, we could handle the SPI timeout
-> ourselves but before timing out we could check to see if the
-> interrupts were pending.  Then we could disable our interrupts,
-> synchronize our interrupt handler, handle the interrupt directly, and
-> then re-enable interrupts.  If we did this then transfers could
-> continue to eek their way through even if interrupts were completely
-> blocked.  IMO, it's not worth it.  I'm satisfied with not crashing and
-> not getting the state machine too out-of-whack.
->=20
+On Fri, Dec 18, 2020 at 07:40:41AM +0800, Peng.Zhou wrote:
+> > > Hi Eric,
+> > > 
+> > > I also have a question about reprogramming keys scenarios, if some SoC
+> > > vensors' eMMC host will power down or something else like that keys will
+> > > be lost after runtime suspend, that means we must do reprogramming keys
+> > > in runtime resume, right? Do you think that we should add it in
+> > > cqhci-core layer(such as __cqhci_enable()) or every SoC vendor's host
+> > > driver resume path?
+> > > 
+> > 
+> > The keys should only be lost on reset, not on runtime suspend.  So I believe the
+> > code I've proposed is sufficient.
+> > 
+> > - Eric
+> 
+> That's a little too absolute for me...anyway that's my concern for much
+> more SoC vendors who want to be compatible with your framework in
+> future.Thank you for explanation.
 
-Ok that's fair. If it's not worth the effort then let's drop this idea.
+But the current approach works on all the hardware that's been tested so far,
+right?  And programming the keys can take a long time, so it shouldn't be done
+unnecessarily.  (I've heard it's fairly fast on Mediatek SoCs.  However, with
+Qualcomm ICE it takes longer.)
+
+It seems that host controller configuration typically doesn't get lost during
+runtime suspend, and the keyslots are no exception to that.
+
+And if (hypothetically) a host controller that adds crypto support in the future
+actually does need to restore the keys during runtime resume, it can just do it
+in its ->runtime_resume() method.
+
+So from what I can see, there isn't anything else we should do for now.
+
+- Eric
