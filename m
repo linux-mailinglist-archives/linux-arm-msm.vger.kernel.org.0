@@ -2,157 +2,227 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 474D12DDD2C
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Dec 2020 04:00:07 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 173A52DDE19
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Dec 2020 06:37:27 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727079AbgLRC7R (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 17 Dec 2020 21:59:17 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38978 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726851AbgLRC7R (ORCPT
+        id S1726045AbgLRFgn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 18 Dec 2020 00:36:43 -0500
+Received: from m43-15.mailgun.net ([69.72.43.15]:50963 "EHLO
+        m43-15.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726520AbgLRFgn (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 17 Dec 2020 21:59:17 -0500
-Received: from mail-pg1-x52d.google.com (mail-pg1-x52d.google.com [IPv6:2607:f8b0:4864:20::52d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1EF6CC0617A7
-        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Dec 2020 18:58:31 -0800 (PST)
-Received: by mail-pg1-x52d.google.com with SMTP id n10so431454pgl.10
-        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Dec 2020 18:58:31 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:content-transfer-encoding:in-reply-to:references
-         :subject:from:cc:to:date:message-id:user-agent;
-        bh=bC2VW5XkenWCusLOGpVQQXWwTeVsVyhtHMkwknNkbXw=;
-        b=V6CS0BH0oPFd0xTWJSqLiIG0UWvAkCLAt2cQYq4tNx9wr3hzqPuKND6R7ELv4LSbNL
-         H16fnhNv4MQy+Dfn7PhOOvS7EDUpX3roDAXn3NI14YdzDuipK9diyGsLO8b9gHqHfpaw
-         RIOqV/NYejFbFp6gFe0nrvsNy0CTLOHJrPS4k=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:content-transfer-encoding
-         :in-reply-to:references:subject:from:cc:to:date:message-id
-         :user-agent;
-        bh=bC2VW5XkenWCusLOGpVQQXWwTeVsVyhtHMkwknNkbXw=;
-        b=AbJWwkUL+C3FkpUJ3isxQCZ8BtWsqMtmp0yVtFrqnh4G81EuO/Ky1pjKoQlGvICxLN
-         HnSN4B+F2zok/wiDTK6sjoGgFpFefC2U8q7NJurX76zndjpXCyPFl4FShMWp/gnEPDAq
-         UOvONUPQ3/bjto4/IREbLxxfsKFwYU9BhZv4lnvNW8kCedMFhucEz3iJ8vybl4SXwt0G
-         dQPqAIFCjf6rSfCl65IZEWduUIfJkDW9V6g+PS3QOixeBps+wa33kZxt4PHmg5m1gyTa
-         VnUeeRR3OwZASJCqVapPC5HbJYrYfZrZ2/6GT/3HrpvYENVhbKz9Qra5VLThf7eGlksN
-         HpwQ==
-X-Gm-Message-State: AOAM530x/ZkbGbBNNXXy9EoOe3Q30bVP+ELxd0ZblSO4dipCvR/v+vYs
-        Dhq6hNxHb1iUviBm5iBcQuo1dAlxbkhmEg==
-X-Google-Smtp-Source: ABdhPJy+Lf4rt3mzo+VnrFMtjObNYgUw6ZqquOi3xGql9AKigxKAHBKiumSYe0Cipj01d4IwAW/Tng==
-X-Received: by 2002:a63:5845:: with SMTP id i5mr2119130pgm.355.1608260310682;
-        Thu, 17 Dec 2020 18:58:30 -0800 (PST)
-Received: from chromium.org ([2620:15c:202:201:3e52:82ff:fe6c:83ab])
-        by smtp.gmail.com with ESMTPSA id d10sm6830466pfn.218.2020.12.17.18.58.29
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 17 Dec 2020 18:58:29 -0800 (PST)
-Content-Type: text/plain; charset="utf-8"
+        Fri, 18 Dec 2020 00:36:43 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1608269777; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
+ Subject: Sender; bh=bIxzsvC8MsCGA55Fum83HNABdyD+z6GnK6PLUqTBqj0=; b=kqxu0bVLpT1OLC+r0MSNRdNxjp8ZdBVSsAWVy5UXz1eOMkGlpyQy2PIkAr9/Rhu5Kab9+PHA
+ f/FGRfknYs2PvlLGIRtlkgs28H0PVXi5cnNxQRqiHLh3jSoC+HAdc6fGykuTopstW9nSSAXP
+ e00EuAEtgEDgWoK/cVRWKeTkv+g=
+X-Mailgun-Sending-Ip: 69.72.43.15
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n08.prod.us-east-1.postgun.com with SMTP id
+ 5fdc3fb17549779c5b7930ad (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 18 Dec 2020 05:35:45
+ GMT
+Sender: rnayak=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 07A67C43465; Fri, 18 Dec 2020 05:35:44 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        NICE_REPLY_A,SPF_FAIL,URIBL_BLOCKED autolearn=no autolearn_force=no
+        version=3.4.0
+Received: from [192.168.0.120] (unknown [49.207.218.91])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: rnayak)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 88093C433C6;
+        Fri, 18 Dec 2020 05:35:38 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 88093C433C6
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=rnayak@codeaurora.org
+Subject: Re: [PATCH v4 3/4] pinctrl: qcom: Don't clear pending interrupts when
+ enabling
+To:     Douglas Anderson <dianders@chromium.org>,
+        Marc Zyngier <maz@kernel.org>,
+        Thomas Gleixner <tglx@linutronix.de>,
+        Jason Cooper <jason@lakedaemon.net>,
+        Linus Walleij <linus.walleij@linaro.org>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Maulik Shah <mkshah@codeaurora.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        linux-arm-msm@vger.kernel.org,
+        Srinivas Ramana <sramana@codeaurora.org>,
+        Neeraj Upadhyay <neeraju@codeaurora.org>,
+        linux-gpio@vger.kernel.org, Andy Gross <agross@kernel.org>,
+        linux-kernel@vger.kernel.org
+References: <20201211141514.v4.1.I2702919afc253e2a451bebc3b701b462b2d22344@changeid>
+ <20201211141514.v4.3.I7cf3019783720feb57b958c95c2b684940264cd1@changeid>
+From:   Rajendra Nayak <rnayak@codeaurora.org>
+Message-ID: <71a4e7da-59da-4a7c-aa4e-45ade8c5558b@codeaurora.org>
+Date:   Fri, 18 Dec 2020 11:05:35 +0530
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.5.1
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <13b88450f124129fd1fec586b6e8f33e@codeaurora.org>
-References: <1607670585-26438-1-git-send-email-mkrishn@codeaurora.org> <1607670585-26438-2-git-send-email-mkrishn@codeaurora.org> <160772619842.1580929.2107809673048637455@swboyd.mtv.corp.google.com> <13b88450f124129fd1fec586b6e8f33e@codeaurora.org>
-Subject: Re: [PATCH v9 2/2] dt-bindings: msm/dp: Add bindings of MSM DisplayPort controller
-From:   Stephen Boyd <swboyd@chromium.org>
-Cc:     Krishna Manikandan <mkrishn@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org, kalyan_t@codeaurora.org,
-        abhinavk@codeaurora.org, robdclark@gmail.com,
-        bjorn.andersson@linaro.org, vinod.koul@linaro.org,
-        rnayak@codeaurora.org, dianders@chromium.org, sibis@codeaurora.org,
-        Chandan Uddaraju <chandanu@codeaurora.org>,
-        Vara Reddy <varar@codeaurora.org>
-To:     Tanmay Shah <tanmay@codeaurora.org>
-Date:   Thu, 17 Dec 2020 18:58:28 -0800
-Message-ID: <160826030845.1580929.8191985658645644879@swboyd.mtv.corp.google.com>
-User-Agent: alot/0.9.1
+In-Reply-To: <20201211141514.v4.3.I7cf3019783720feb57b958c95c2b684940264cd1@changeid>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Tanmay Shah (2020-12-17 14:52:54)
-> On 2020-12-11 14:36, Stephen Boyd wrote:
-> > Quoting Krishna Manikandan (2020-12-10 23:09:45)
-> >> Changes in v10:
-> >> - Change title of this patch as it does not contain PLL bindings=20
-> >> anymore
-> >> - Remove redundant properties
-> >> - Remove use of IRQ flag
-> >> - Fix ports property
-> >>=20
-> >> Previous Change log:
-> >> https://lkml.kernel.org/lkml/1597066683-6044-2-git-send-email-mkrishn@=
-codeaurora.org/
-> >=20
-> > Why can't that be put in here instead of making me click the link?
-> >=20
->=20
-> Thanks Stephen for reviews.
->=20
-> I just wanted to use space efficiently. But if it helps in reviews,
-> I will bring all the previous change logs back.
 
-Or it can be left under the cut (---). This is probably going to merge
-through the binding tree so it doesn't follow drm practice of putting
-version history in the commit text.
+On 12/12/2020 3:45 AM, Douglas Anderson wrote:
+> In Linux, if a driver does disable_irq() and later does enable_irq()
+> on its interrupt, I believe it's expecting these properties:
+> * If an interrupt was pending when the driver disabled then it will
+>    still be pending after the driver re-enables.
+> * If an edge-triggered interrupt comes in while an interrupt is
+>    disabled it should assert when the interrupt is re-enabled.
+> 
+> If you think that the above sounds a lot like the disable_irq() and
+> enable_irq() are supposed to be masking/unmasking the interrupt
+> instead of disabling/enabling it then you've made an astute
+> observation.  Specifically when talking about interrupts, "mask"
+> usually means to stop posting interrupts but keep tracking them and
+> "disable" means to fully shut off interrupt detection.  It's
+> unfortunate that this is so confusing, but presumably this is all the
+> way it is for historical reasons.
+> 
+> Perhaps more confusing than the above is that, even though clients of
+> IRQs themselves don't have a way to request mask/unmask
+> vs. disable/enable calls, IRQ chips themselves can implement both.
+> ...and yet more confusing is that if an IRQ chip implements
+> disable/enable then they will be called when a client driver calls
+> disable_irq() / enable_irq().
+> 
+> It does feel like some of the above could be cleared up.  However,
+> without any other core interrupt changes it should be clear that when
+> an IRQ chip gets a request to "disable" an IRQ that it has to treat it
+> like a mask of that IRQ.
+> 
+> In any case, after that long interlude you can see that the "unmask
+> and clear" can break things.  Maulik tried to fix it so that we no
+> longer did "unmask and clear" in commit 71266d9d3936 ("pinctrl: qcom:
+> Move clearing pending IRQ to .irq_request_resources callback"), but it
+> only handled the PDC case (it also had problems, but that's the
+> subject of another patch).  Let's fix this for the non-PDC case.
+> 
+>  From my understanding the source of the phantom interrupt in the
+> non-PDC case was the one that could have been introduced in
+> msm_gpio_irq_set_type().  Let's handle that one and then get rid of
+> the clear.
+> 
+> Fixes: 4b7618fdc7e6 ("pinctrl: qcom: Add irq_enable callback for msm gpio")
+> Signed-off-by: Douglas Anderson <dianders@chromium.org>
+> ---
+> I don't have lots of good test cases here, so hopefully someone from
+> Qualcomm can confirm that this works well for them and there isn't
+> some other phantom interrupt source that I'm not aware of.
 
->=20
-> >> diff --git
-> >> a/Documentation/devicetree/bindings/display/msm/dp-controller.yaml
-> >> b/Documentation/devicetree/bindings/display/msm/dp-controller.yaml
-> >> new file mode 100644
-> >> index 0000000..bc80632
-> >> --- /dev/null
-> >> +++ b/Documentation/devicetree/bindings/display/msm/dp-controller.yaml
-[...]
-> >> +  - |
-> >> +    #include <dt-bindings/interrupt-controller/arm-gic.h>
-> >> +    #include <dt-bindings/clock/qcom,dispcc-sc7180.h>
-> >> +
-> >> +    mdss: mdss {
-> >=20
-> > Can drop the label. Also this node name is bad! Should be
-> > 'subsystem@<reg>' I guess? And then the reg can just be the first
-> > address in a reg property that is remapped for the children nodes.
-> >=20
->=20
-> I didn't get this part:
-> "And then the reg can just be the first address in a reg property that=20
-> is remapped for children nodes."
->=20
-> Does this mean, I should add reg property for mdss node as well? Node=20
-> mdss address is 0x0ae00000. So something like:
->=20
-> reg =3D <0 0x0ae00000 0 0x1000>;
->=20
+I currently don;t have access to any non-PDC hardware, so could not really do
+any real tests, but the changes seem sane, so
 
-Yes and then a ranges property so that child nodes can figure out their
-reg property appropriately.
+Reviewed-by: Rajendra Nayak <rnayak@codeaurora.org>
 
->=20
->=20
-> >> +      #address-cells =3D <2>;
-> >> +      #size-cells =3D <2>;
-> >> +      interrupt-controller;
-[...]
-> >> +                    remote-endpoint =3D <&dpu_intf0_out>;
-> >> +                };
-> >> +            };
-> >> +
-> >> +            port@1 {
-> >> +                reg =3D <1>;
-> >> +                dp_out: endpoint {
-> >=20
-> > Can drop the label and show some remote-endpoint connection?
-> >=20
->=20
-> I am not sure what should I include here as connection. IIRC, Robh=20
-> suggested It should connect to the Type-C connector through some sort of =
+> 
+> Changes in v4:
+> - ("pinctrl: qcom: Don't clear pending interrupts when enabling") split for v4.
+> 
+>   drivers/pinctrl/qcom/pinctrl-msm.c | 32 +++++++++++++-----------------
+>   1 file changed, 14 insertions(+), 18 deletions(-)
+> 
+> diff --git a/drivers/pinctrl/qcom/pinctrl-msm.c b/drivers/pinctrl/qcom/pinctrl-msm.c
+> index 588df91274e2..f785646d1df7 100644
+> --- a/drivers/pinctrl/qcom/pinctrl-msm.c
+> +++ b/drivers/pinctrl/qcom/pinctrl-msm.c
+> @@ -774,7 +774,7 @@ static void msm_gpio_irq_mask(struct irq_data *d)
+>   	raw_spin_unlock_irqrestore(&pctrl->lock, flags);
+>   }
+>   
+> -static void msm_gpio_irq_clear_unmask(struct irq_data *d, bool status_clear)
+> +static void msm_gpio_irq_unmask(struct irq_data *d)
+>   {
+>   	struct gpio_chip *gc = irq_data_get_irq_chip_data(d);
+>   	struct msm_pinctrl *pctrl = gpiochip_get_data(gc);
+> @@ -792,17 +792,6 @@ static void msm_gpio_irq_clear_unmask(struct irq_data *d, bool status_clear)
+>   
+>   	raw_spin_lock_irqsave(&pctrl->lock, flags);
+>   
+> -	if (status_clear) {
+> -		/*
+> -		 * clear the interrupt status bit before unmask to avoid
+> -		 * any erroneous interrupts that would have got latched
+> -		 * when the interrupt is not in use.
+> -		 */
+> -		val = msm_readl_intr_status(pctrl, g);
+> -		val &= ~BIT(g->intr_status_bit);
+> -		msm_writel_intr_status(val, pctrl, g);
+> -	}
+> -
+>   	val = msm_readl_intr_cfg(pctrl, g);
+>   	val |= BIT(g->intr_raw_status_bit);
+>   	val |= BIT(g->intr_enable_bit);
+> @@ -822,7 +811,7 @@ static void msm_gpio_irq_enable(struct irq_data *d)
+>   		irq_chip_enable_parent(d);
+>   
+>   	if (!test_bit(d->hwirq, pctrl->skip_wake_irqs))
+> -		msm_gpio_irq_clear_unmask(d, true);
+> +		msm_gpio_irq_unmask(d);
+>   }
+>   
+>   static void msm_gpio_irq_disable(struct irq_data *d)
+> @@ -837,11 +826,6 @@ static void msm_gpio_irq_disable(struct irq_data *d)
+>   		msm_gpio_irq_mask(d);
+>   }
+>   
+> -static void msm_gpio_irq_unmask(struct irq_data *d)
+> -{
+> -	msm_gpio_irq_clear_unmask(d, false);
+> -}
+> -
+>   /**
+>    * msm_gpio_update_dual_edge_parent() - Prime next edge for IRQs handled by parent.
+>    * @d: The irq dta.
+> @@ -936,6 +920,7 @@ static int msm_gpio_irq_set_type(struct irq_data *d, unsigned int type)
+>   	struct msm_pinctrl *pctrl = gpiochip_get_data(gc);
+>   	const struct msm_pingroup *g;
+>   	unsigned long flags;
+> +	bool was_enabled;
+>   	u32 val;
+>   
+>   	if (msm_gpio_needs_dual_edge_parent_workaround(d, type)) {
+> @@ -997,6 +982,7 @@ static int msm_gpio_irq_set_type(struct irq_data *d, unsigned int type)
+>   	 * could cause the INTR_STATUS to be set for EDGE interrupts.
+>   	 */
+>   	val = msm_readl_intr_cfg(pctrl, g);
+> +	was_enabled = val & BIT(g->intr_raw_status_bit);
+>   	val |= BIT(g->intr_raw_status_bit);
+>   	if (g->intr_detection_width == 2) {
+>   		val &= ~(3 << g->intr_detection_bit);
+> @@ -1046,6 +1032,16 @@ static int msm_gpio_irq_set_type(struct irq_data *d, unsigned int type)
+>   	}
+>   	msm_writel_intr_cfg(val, pctrl, g);
+>   
+> +	/*
+> +	 * The first time we set RAW_STATUS_EN it could trigger an interrupt.
+> +	 * Clear it.  This is safe because we have IRQCHIP_SET_TYPE_MASKED.
+> +	 */
+> +	if (!was_enabled) {
+> +		val = msm_readl_intr_status(pctrl, g);
+> +		val &= ~BIT(g->intr_status_bit);
+> +		msm_writel_intr_status(val, pctrl, g);
+> +	}
+> +
+>   	if (test_bit(d->hwirq, pctrl->dual_edge_irqs))
+>   		msm_gpio_update_dual_edge_pos(pctrl, g, d);
+>   
+> 
 
-> mixing node. However, I see only typec connector node at:=20
-> Documentation/devicetree/bindings/chrome/google,cros-ec-typec.yaml.=20
-> Should we use that directly or should we use ec node?
->=20
-> Can we do something like:
->=20
-> remote-endpoint =3D <&typec> or <&ec>
-
-Sure. I suppose <&typec> would work.
+-- 
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
+of Code Aurora Forum, hosted by The Linux Foundation
