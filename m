@@ -2,91 +2,80 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 7B87E2DE13C
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Dec 2020 11:43:43 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 5D8062DE2A5
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Dec 2020 13:18:28 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2389094AbgLRKmd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 18 Dec 2020 05:42:33 -0500
-Received: from szxga04-in.huawei.com ([45.249.212.190]:9631 "EHLO
-        szxga04-in.huawei.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725897AbgLRKmc (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 18 Dec 2020 05:42:32 -0500
-Received: from DGGEMS410-HUB.china.huawei.com (unknown [172.30.72.60])
-        by szxga04-in.huawei.com (SkyGuard) with ESMTP id 4Cy54j4mVcz15Zdt;
-        Fri, 18 Dec 2020 18:41:09 +0800 (CST)
-Received: from use12-sp2.huawei.com (10.67.189.174) by
- DGGEMS410-HUB.china.huawei.com (10.3.19.210) with Microsoft SMTP Server id
- 14.3.498.0; Fri, 18 Dec 2020 18:41:41 +0800
-From:   Xiaoming Ni <nixiaoming@huawei.com>
-To:     <vkoul@kernel.org>, <dmaengine@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <agross@kernel.org>, <bjorn.andersson@linaro.org>
-CC:     <nixiaoming@huawei.com>, <wangle6@huawei.com>
-Subject: [PATCH] dma/qcom/gpi: Fixes a format mismatch
-Date:   Fri, 18 Dec 2020 18:41:37 +0800
-Message-ID: <20201218104137.59200-1-nixiaoming@huawei.com>
-X-Mailer: git-send-email 2.27.0
+        id S1726254AbgLRMRa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 18 Dec 2020 07:17:30 -0500
+Received: from mail.kernel.org ([198.145.29.99]:57698 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725894AbgLRMRa (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 18 Dec 2020 07:17:30 -0500
+From:   Mark Brown <broonie@kernel.org>
+Authentication-Results: mail.kernel.org; dkim=permerror (bad message/signature format)
+To:     alsa-devel@alsa-project.org, tiwai@suse.com,
+        Srinivasa Rao Mandadapu <srivasam@codeaurora.org>,
+        plai@codeaurora.org, devicetree@vger.kernel.org,
+        rohitkr@codeaurora.org, lgirdwood@gmail.com,
+        linux-kernel@vger.kernel.org, srinivas.kandagatla@linaro.org,
+        bjorn.andersson@linaro.org, agross@kernel.org, robh+dt@kernel.org,
+        linux-arm-msm@vger.kernel.org, bgoswami@codeaurora.org,
+        perex@perex.cz
+In-Reply-To: <1608192514-29695-1-git-send-email-srivasam@codeaurora.org>
+References: <1608192514-29695-1-git-send-email-srivasam@codeaurora.org>
+Subject: Re: [PATCH v6 0/2] Platform driver update to support playback recover after resume
+Message-Id: <160829377017.10885.961383820010560969.b4-ty@kernel.org>
+Date:   Fri, 18 Dec 2020 12:16:10 +0000
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7BIT
-Content-Type:   text/plain; charset=US-ASCII
-X-Originating-IP: [10.67.189.174]
-X-CFilter-Loop: Reflected
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-drivers/dma/qcom/gpi.c:1419:3: warning: format '%lu' expects argument of
- type 'long unsigned int', but argument 8 has type 'size_t {aka unsigned
- int}' [-Wformat=]
-drivers/dma/qcom/gpi.c:1427:31: warning: format '%lu' expects argument of
- type 'long unsigned int', but argument 3 has type 'size_t {aka unsigned
- int}' [-Wformat=]
-drivers/dma/qcom/gpi.c:1447:3: warning: format '%llx' expects argument of
- type 'long long unsigned int', but argument 4 has type 'dma_addr_t {aka
- unsigned int}' [-Wformat=]
-drivers/dma/qcom/gpi.c:1447:3: warning: format '%llx' expects argument of
- type 'long long unsigned int', but argument 5 has type 'phys_addr_t {aka
- unsigned int}' [-Wformat=]
+On Thu, 17 Dec 2020 13:38:32 +0530, Srinivasa Rao Mandadapu wrote:
+> This patch set is to add support for playback recover after hard suspend and resume.
+> It includes:
+> 1. Reverting part of previous commit, which is for handling registers invalid state
+> after hard suspend.
+> 2. Adding pm ops in component driver and do regcache sync.
+> Changes Since v1 and v2:
+>   -- Subject lines changed
+> Changes Since v3:
+>   -- Patch is splitted into 2 patches
+> Changes Since v4:
+>   -- Subject lines changed
+> Changes Since v5:
+>   -- Removed redundant initialization of map variable in lpass-platform.c
+> 
+> [...]
 
-Signed-off-by: Xiaoming Ni <nixiaoming@huawei.com>
----
- drivers/dma/qcom/gpi.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+Applied to
 
-diff --git a/drivers/dma/qcom/gpi.c b/drivers/dma/qcom/gpi.c
-index d2334f535de2..556c070a514c 100644
---- a/drivers/dma/qcom/gpi.c
-+++ b/drivers/dma/qcom/gpi.c
-@@ -1416,7 +1416,7 @@ static int gpi_alloc_ring(struct gpi_ring *ring, u32 elements,
- 	len = 1 << bit;
- 	ring->alloc_size = (len + (len - 1));
- 	dev_dbg(gpii->gpi_dev->dev,
--		"#el:%u el_size:%u len:%u actual_len:%llu alloc_size:%lu\n",
-+		"#el:%u el_size:%u len:%u actual_len:%llu alloc_size:%zu\n",
- 		  elements, el_size, (elements * el_size), len,
- 		  ring->alloc_size);
- 
-@@ -1424,7 +1424,7 @@ static int gpi_alloc_ring(struct gpi_ring *ring, u32 elements,
- 					       ring->alloc_size,
- 					       &ring->dma_handle, GFP_KERNEL);
- 	if (!ring->pre_aligned) {
--		dev_err(gpii->gpi_dev->dev, "could not alloc size:%lu mem for ring\n",
-+		dev_err(gpii->gpi_dev->dev, "could not alloc size:%zu mem for ring\n",
- 			ring->alloc_size);
- 		return -ENOMEM;
- 	}
-@@ -1444,8 +1444,8 @@ static int gpi_alloc_ring(struct gpi_ring *ring, u32 elements,
- 	smp_wmb();
- 
- 	dev_dbg(gpii->gpi_dev->dev,
--		"phy_pre:0x%0llx phy_alig:0x%0llx len:%u el_size:%u elements:%u\n",
--		ring->dma_handle, ring->phys_addr, ring->len,
-+		"phy_pre:%pad phy_alig:%pa len:%u el_size:%u elements:%u\n",
-+		&ring->dma_handle, &ring->phys_addr, ring->len,
- 		ring->el_size, ring->elements);
- 
- 	return 0;
--- 
-2.27.0
+   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/sound.git for-next
 
+Thanks!
+
+[1/2] ASoC: qcom: Fix incorrect volatile registers
+      commit: 315fbe4cef98ee5fb6085bc54c7f25eb06466c70
+[2/2] ASoC: qcom: Add support for playback recover after resume
+      commit: 8d1bfc04c97407767559f6389a0f0fb060cbe25e
+
+All being well this means that it will be integrated into the linux-next
+tree (usually sometime in the next 24 hours) and sent to Linus during
+the next merge window (or sooner if it is a bug fix), however if
+problems are discovered then the patch may be dropped or reverted.
+
+You may get further e-mails resulting from automated or manual testing
+and review of the tree, please engage with people reporting problems and
+send followup patches addressing any issues that are reported if needed.
+
+If any updates are required or you are submitting further changes they
+should be sent as incremental updates against current git, existing
+patches will not be replaced.
+
+Please add any relevant lists and maintainers to the CCs when replying
+to this mail.
+
+Thanks,
+Mark
