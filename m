@@ -2,129 +2,81 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id DCF8D2DDEF7
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Dec 2020 08:17:53 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id AD0002DDF6E
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Dec 2020 09:16:22 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732943AbgLRHRF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 18 Dec 2020 02:17:05 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50094 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1732936AbgLRHRF (ORCPT
+        id S1730833AbgLRIQG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 18 Dec 2020 03:16:06 -0500
+Received: from m43-15.mailgun.net ([69.72.43.15]:47321 "EHLO
+        m43-15.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728223AbgLRIQF (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 18 Dec 2020 02:17:05 -0500
-Received: from mail-pl1-x629.google.com (mail-pl1-x629.google.com [IPv6:2607:f8b0:4864:20::629])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0EDBAC0617B0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Dec 2020 23:16:25 -0800 (PST)
-Received: by mail-pl1-x629.google.com with SMTP id g3so943063plp.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Dec 2020 23:16:25 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=ApqerofOaEIKVsWbd43tuQ+Rw2I8tWIcPWDX1I3W53A=;
-        b=UAJIKEGSbpSZkC/GgKXecPne8+PC5lwlixKKGZVu5LyQCxsHV+IMqv5fqFLMjh9vAg
-         OZTlDJoBuLvNqL6EZl2KHKhRN9BNqv92+iIoeedZJAdajhD5a24yUq9sHpBIgTK1ObNI
-         r8z3OwDRSTTJPg9BDvdOHnmx4czylI12E7QJjLtEd96+J7s/8MShT2syR1V4InehVVuM
-         zjPbea09Ef3w73FaW6HVRWPbiE0nVAruH0ORj15ArLqMuBWbePOYVhk7OqEPHmvzksZ4
-         4GinLVyg33Pm7dSLfhOjO3BeIIj9vrUrireY/e1HvK8B5hTYpdD4bfvWWzcqtn0dlKlb
-         quFw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=ApqerofOaEIKVsWbd43tuQ+Rw2I8tWIcPWDX1I3W53A=;
-        b=EKoN5mWb0qUlVgAUSTxmGRPRxJXqqiiKyzZOHxvRqrRZQpg4HhVMExf9zvld802FCm
-         Vl6DPXzraXWVpUoPAyGj5VV9l/lrFG+lOf59R40vbHBx7qOzIub2UGX4eG8j/9ntiQAD
-         eFUTQp4eqZ3m/sZU4kKJB1aZKxw9DwSloP5LlXqZOdZpwuMOl7UmwsD6P2fY71jSwsIX
-         6eLsHH6C6bJrj0i16U4bJuOhJoZl3CbBdXZdEIR8CA3Z9uojJTqufMdhEE4KiLqRjz1c
-         icIO+pT0l0bovkVasgD2Q2x8H7pNt5a0iLSalciVnRibgeKOvKXHgmWqdWqaVrC24uPJ
-         Srtw==
-X-Gm-Message-State: AOAM532ANV9/zcgulLroX+qsuIKRKxUUXE6tdpURYgIkJgfHTxGPSDSB
-        O3m0lJdMTJkziQpmWHjCAlQBZQ==
-X-Google-Smtp-Source: ABdhPJwwkdb1HZhf5VmdNZ4g8n96cGhrXc8cKebn9Z8gCoxJuUr7hL/V8at4qPDw1zBoKcKg0fmzpQ==
-X-Received: by 2002:a17:90a:9512:: with SMTP id t18mr3027950pjo.206.1608275784627;
-        Thu, 17 Dec 2020 23:16:24 -0800 (PST)
-Received: from localhost ([122.172.20.109])
-        by smtp.gmail.com with ESMTPSA id e5sm7794908pfc.76.2020.12.17.23.16.23
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 17 Dec 2020 23:16:23 -0800 (PST)
-Date:   Fri, 18 Dec 2020 12:46:21 +0530
-From:   Viresh Kumar <viresh.kumar@linaro.org>
-To:     bjorn.andersson@linaro.org,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>
-Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-pm@vger.kernel.org,
-        ulf.hansson@linaro.org, jorge.ramirez-ortiz@linaro.org,
-        broonie@kernel.org, lgirdwood@gmail.com, daniel.lezcano@linaro.org,
-        nks@flawful.org, agross@kernel.org, robh+dt@kernel.org,
-        rjw@rjwysocki.net, konrad.dybcio@somainline.org,
-        martin.botka@somainline.org, marijn.suijten@somainline.org,
-        phone-devel@vger.kernel.org
-Subject: Re: [PATCH 12/13] cpufreq: qcom-hw: Implement CPRh aware OSM
- programming
-Message-ID: <20201218071621.i6bc2xgn6kthvmuw@vireshk-i7>
-References: <20201126184559.3052375-1-angelogioacchino.delregno@somainline.org>
- <20201126184559.3052375-13-angelogioacchino.delregno@somainline.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20201126184559.3052375-13-angelogioacchino.delregno@somainline.org>
-User-Agent: NeoMutt/20180716-391-311a52
+        Fri, 18 Dec 2020 03:16:05 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1608279345; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=V3Rn9GiKs+Sqe/qXL6ZtUr/G35dJ4J1d1IxF3iceEHk=; b=WL+K/lb2N7FhrKpk2KDSGtuEmOXMVD8uOEZe003AaSvN6NTrrIwSABgnc3rN8k0WuB19UwEs
+ WyACc+pdx4AaURh0HKdM7vzQ9FZ/WI+5JX37YEyUVkX6F6d0CStWBdriu3expOMztMu7pcDV
+ QoYEKCoXNI08MzWnGquFHdAaMTE=
+X-Mailgun-Sending-Ip: 69.72.43.15
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n10.prod.us-east-1.postgun.com with SMTP id
+ 5fdc6511ca81d9e625bfea03 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 18 Dec 2020 08:15:13
+ GMT
+Sender: kgunda=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 93F3CC43462; Fri, 18 Dec 2020 08:15:12 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL
+        autolearn=no autolearn_force=no version=3.4.0
+Received: from kgunda-linux.qualcomm.com (unknown [202.46.22.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: kgunda)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id E0ADAC433CA;
+        Fri, 18 Dec 2020 08:15:07 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org E0ADAC433CA
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=kgunda@codeaurora.org
+From:   Kiran Gunda <kgunda@codeaurora.org>
+To:     robh@kernel.org, swboyd@chromium.org
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, Kiran Gunda <kgunda@codeaurora.org>
+Subject: [PATCH V4 0/2] Convert qcom,spmi-pmic bindings from .txt to .yaml
+Date:   Fri, 18 Dec 2020 13:44:50 +0530
+Message-Id: <1608279292-24760-1-git-send-email-kgunda@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 26-11-20, 19:45, AngeloGioacchino Del Regno wrote:
-> On new SoCs (SDM845 onwards) the Operating State Manager (OSM) is
-> being programmed in the bootloader and write-protected by the
-> hypervisor, leaving to the OS read-only access to some of its
-> registers (in order to read the Lookup Tables and also some
-> status registers) and write access to the p-state register, for
-> for the OS to request a specific performance state to trigger a
-> DVFS switch on the CPU through the OSM hardware.
-> 
-> On old SoCs though (MSM8998, SDM630/660 and variants), the
-> bootloader will *not* initialize the OSM (and the CPRh, as it
-> is a requirement for it) before booting the OS, making any
-> request to trigger a performance state change ineffective, as
-> the hardware doesn't have any Lookup Table, nor is storing any
-> parameter to trigger a DVFS switch. In this case, basically all
-> of the OSM registers are *not* write protected for the OS, even
-> though some are - but write access is granted through SCM calls.
-> 
-> This commit introduces support for OSM programming, which has to
-> be done on these old SoCs that were distributed (almost?) always
-> with a bootloader that does not do any CPRh nor OSM init before
-> booting the kernel.
-> In order to program the OSM on these SoCs, it is necessary to
-> fullfill a "special" requirement: the Core Power Reduction
-> Hardened (CPRh) hardware block must be initialized, as the OSM
-> is "talking" to it in order to perform the Voltage part of DVFS;
-> here, we are calling initialization of this through Linux generic
-> power domains, specifically by requesting a genpd attach from the
-> qcom-cpufreq-hw driver, which will give back voltages associated
-> to each CPU frequency that has been declared in the OPPs, scaled
-> and interpolated with the previous one, and will also give us
-> parameters for the Array Power Mux (APM) and mem-acc, in order
-> for this driver to be then able to generate the Lookup Tables
-> that will be finally programmed to the OSM hardware.
-> 
-> After writing the parameters to the OSM and enabling it, all the
-> programming work will never happen anymore until a OS reboot, so
-> all of the allocations and "the rest" will be disposed-of: this
-> is done mainly to leave the code that was referred only to the
-> new SoCs intact, as to also emphasize on the fact that the OSM
-> HW is, in the end, the exact same; apart some register offsets
-> that are slightly different, the entire logic is the same.
-> 
-> Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
-> ---
->  drivers/cpufreq/qcom-cpufreq-hw.c | 914 +++++++++++++++++++++++++++++-
->  1 file changed, 884 insertions(+), 30 deletions(-)
+This patch series does the following:
+ - converts the qcom,spmi-pmic bindings from .txt to .yaml format
+ - Sorted the compatible strings
+ - Adds PM6150 and PM6150L subtypes.
 
-This is a lot of code, I need someone from Qcom's team to review it
-and make sure it doesn't break anything for the existing platforms.
+Changes from V3:
+ - Fixed compilation error in .yaml file.
+
+Changes from V2:
+ - Addressed Stephen Boyd and Rob Herring comments.
+
+Kiran Gunda (2):
+  mfd: qcom-spmi-pmic: Convert bindings to .yaml format
+  mfd: qcom-spmi-pmic: Add support for pm6150 and pm6150l
+
+ .../devicetree/bindings/mfd/qcom,spmi-pmic.txt     |  80 -------------
+ .../devicetree/bindings/mfd/qcom,spmi-pmic.yaml    | 129 +++++++++++++++++++++
+ drivers/mfd/qcom-spmi-pmic.c                       |   4 +
+ 3 files changed, 133 insertions(+), 80 deletions(-)
+ delete mode 100644 Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.txt
+ create mode 100644 Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml
 
 -- 
-viresh
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+ a Linux Foundation Collaborative Project
+
