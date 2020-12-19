@@ -2,179 +2,346 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 115C52DECFA
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 19 Dec 2020 04:36:34 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C355B2DF248
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 20 Dec 2020 00:48:22 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726254AbgLSDgB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 18 Dec 2020 22:36:01 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39366 "EHLO
+        id S1726674AbgLSXsG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 19 Dec 2020 18:48:06 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54770 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725966AbgLSDgA (ORCPT
+        with ESMTP id S1726559AbgLSXsF (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 18 Dec 2020 22:36:00 -0500
-Received: from mail-qt1-x830.google.com (mail-qt1-x830.google.com [IPv6:2607:f8b0:4864:20::830])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 450F8C0617B0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Dec 2020 19:35:20 -0800 (PST)
-Received: by mail-qt1-x830.google.com with SMTP id z9so2906877qtn.4
-        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Dec 2020 19:35:20 -0800 (PST)
+        Sat, 19 Dec 2020 18:48:05 -0500
+Received: from mail-pj1-x1035.google.com (mail-pj1-x1035.google.com [IPv6:2607:f8b0:4864:20::1035])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D312AC061282
+        for <linux-arm-msm@vger.kernel.org>; Sat, 19 Dec 2020 15:47:24 -0800 (PST)
+Received: by mail-pj1-x1035.google.com with SMTP id lb18so3667208pjb.5
+        for <linux-arm-msm@vger.kernel.org>; Sat, 19 Dec 2020 15:47:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=XWIxnd1TBokkeQDQoDs2P8h6KNdDQQlPBRCQPqQe8vw=;
-        b=oT4McdXtX1VIEqC/VVrfo0fLp43cCBc3I5eiaj9ysuFEvUHHQvIi7jdhZ30CjQYwhm
-         5PfHpVTU8EMUWgRoXVY+IhUgByR6sbEQzsUjUSezQxTYBJA5i6MYybCK/QjmtzwO9Mhz
-         YGfjo66X6cNq1DYsVTfUk4QCRF4zftFk5BndhToeX5XBdfp+Y4LUd/hGBF6XziHM/Pkr
-         qX0LmYurv2QIwATyXDmABTbmO/7E9KJ3s1JUdrdCyO0PssTAfQdiPuwN5kBytSzr7Pe9
-         QohicqYEs+mpz+Hr9JF5QzDFQVYBgxIxMM0eb5rmeAqtqT9OZyxNsIGjtDnymKunXWtc
-         A+xQ==
+        d=chromium.org; s=google;
+        h=mime-version:content-transfer-encoding:in-reply-to:references
+         :subject:from:cc:to:date:message-id:user-agent;
+        bh=faCYXGNXT4iGBZboME4hSaXfQUHuq/UqJ24WhoWMqqc=;
+        b=UokGDTrcU8v5YIGe6y7VO2RM2aBMUko0fbpGS7GOJuSfke5R7iE3+up0DTXIet+P8k
+         NBreFlPNrnXlVaVGVxdPPGNLIkBwRYFSBz+z8FZSNdT58ZYVGg9lEDJ1x72HdXVXytdw
+         mx4Mvzl5VCzwcmQoMgHv0U5zvOIkZRRk62nLQ=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=XWIxnd1TBokkeQDQoDs2P8h6KNdDQQlPBRCQPqQe8vw=;
-        b=UMnqWZAsy8NB1Agul4Q1dgl4uogSw7DbDsPvYt+oLcIyrkt1MUgYmWWFgdEWLAUuKP
-         BSTVWm2za0BbNUbTAtt7g6haUXEJ6lF/R5U7ZVdZHgjH6BLB5+7VqGgA6Z5KgonOj5wG
-         w7IaBGw5/k2IoEma36pgzYPUcCD+TUv0uU+Z4g94vlmCitVSYZjRILe69xRdHE3pYuBX
-         pluA79Z8dDBblv6N24Slc/zPD2bRgOyvwmr7VmnBdvEdYBzxgqWwieFh5UpLCoPmY+70
-         DmzRmF5RQfFhQzrEdTABWtImyedVQrelA34H+8BwI1ahXBhScjqTtvbXDohAWOUmZvYQ
-         tkqA==
-X-Gm-Message-State: AOAM530fdZn1cp6508io9H+dMY5mNer1rzpRx7Hor/SJoVYH8BPiRofB
-        2Z0J9p+LPdsOgX4EWKi0Z1Uf6Q==
-X-Google-Smtp-Source: ABdhPJzaYoqA+UVM8mSoDAHP47OOIG2HtxFlJ6430vZVxDe776H3vaiKcHiP9+DgjxyAnlqWl7mMkA==
-X-Received: by 2002:ac8:464c:: with SMTP id f12mr7278436qto.272.1608348919450;
-        Fri, 18 Dec 2020 19:35:19 -0800 (PST)
-Received: from [192.168.1.93] (pool-71-163-245-5.washdc.fios.verizon.net. [71.163.245.5])
-        by smtp.gmail.com with ESMTPSA id s19sm3298501qta.35.2020.12.18.19.35.18
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 18 Dec 2020 19:35:18 -0800 (PST)
-Subject: Re: [PATCH] dmaengine: qcom: bam_dma: Add LOCK and UNLOCK flag bit
- support
-To:     Md Sadre Alam <mdalam@codeaurora.org>, vkoul@kernel.org,
-        corbet@lwn.net, agross@kernel.org, bjorn.andersson@linaro.org,
-        dan.j.williams@intel.com, dmaengine@vger.kernel.org,
-        linux-doc@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-Cc:     sricharan@codeaurora.org
-References: <1608215842-15381-1-git-send-email-mdalam@codeaurora.org>
-From:   Thara Gopinath <thara.gopinath@linaro.org>
-Message-ID: <6c85436d-e064-367e-736b-951af82256c8@linaro.org>
-Date:   Fri, 18 Dec 2020 22:35:17 -0500
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.10.0
+        h=x-gm-message-state:mime-version:content-transfer-encoding
+         :in-reply-to:references:subject:from:cc:to:date:message-id
+         :user-agent;
+        bh=faCYXGNXT4iGBZboME4hSaXfQUHuq/UqJ24WhoWMqqc=;
+        b=ZmHJGgYq01WFMY+2tfm/SLoXb0WPHOBOu9G7nk5Uu2DCoXK6FVh5MR0vx2uIhsLnI5
+         zIHHqNqWzsKNwvdfuvTrmCgRYgCLH/r5rH3oZuPQpENW0AtfJQazDxfugc0Gms3ToD4y
+         aWVTr1UGIF+QvgFT+eX1/Sj5sdP88sIALpivyQ6jAXpdc6RMlJL+xjrSmSFXhOK6GwC+
+         ORPnoKNmQAnjGH7QSNWPPeT1Jdhj9oFGphtwZz5v64FTvVu2gL0VaW3U7IBNr4F3sm3s
+         0j2cLJWRwRRJ6x0zRiI9OUG9ZG1hp5bvEzZW4WxJ0rw3o/LnCuC+asesqk/CvIlNRqnw
+         eDFw==
+X-Gm-Message-State: AOAM531R7XCGg0wKq/abwXZbyA1jlUqUshtvDnWgYMyluhezy3fhucH3
+        pDQf28pX4oOjxzpAn+SSAmapCw==
+X-Google-Smtp-Source: ABdhPJy0ZnF3E7W8xCjBT8SUdC7OSGI8CDrRqR91LprhaHWlPYIBpsHaGVhEgyI3uUoiT+0F19q+Fg==
+X-Received: by 2002:a17:902:ab8b:b029:da:f377:e7d7 with SMTP id f11-20020a170902ab8bb02900daf377e7d7mr10575415plr.4.1608421644095;
+        Sat, 19 Dec 2020 15:47:24 -0800 (PST)
+Received: from chromium.org ([2620:15c:202:201:3e52:82ff:fe6c:83ab])
+        by smtp.gmail.com with ESMTPSA id a19sm11865059pfi.130.2020.12.19.15.47.23
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 19 Dec 2020 15:47:23 -0800 (PST)
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-In-Reply-To: <1608215842-15381-1-git-send-email-mdalam@codeaurora.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <1608279292-24760-2-git-send-email-kgunda@codeaurora.org>
+References: <1608279292-24760-1-git-send-email-kgunda@codeaurora.org> <1608279292-24760-2-git-send-email-kgunda@codeaurora.org>
+Subject: Re: [PATCH V4 1/2] mfd: qcom-spmi-pmic: Convert bindings to .yaml format
+From:   Stephen Boyd <swboyd@chromium.org>
+Cc:     Kiran Gunda <kgunda@codeaurora.org>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Kiran Gunda <kgunda@codeaurora.org>,
+        Lee Jones <lee.jones@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        robh@kernel.org, swboyd@chromium.org
+Date:   Sat, 19 Dec 2020 15:47:21 -0800
+Message-ID: <160842164192.1580929.12823359876682723808@swboyd.mtv.corp.google.com>
+User-Agent: alot/0.9.1
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 12/17/20 9:37 AM, Md Sadre Alam wrote:
-> This change will add support for LOCK & UNLOCK flag bit support
-> on CMD descriptor.
-> 
-> If DMA_PREP_LOCK flag passed in prep_slave_sg then requester of this
-> transaction wanted to lock the DMA controller for this transaction so
-> BAM driver should set LOCK bit for the HW descriptor.
-> 
-> If DMA_PREP_UNLOCK flag passed in prep_slave_sg then requester of this
-> transaction wanted to unlock the DMA controller.so BAM driver should set
-> UNLOCK bit for the HW descriptor.
-Hi,
-
-This is a generic question. What is the point of LOCK/UNLOCK with 
-allocating LOCK groups to the individual dma channels? By default
-doesn't all channels fall in the same group. This would mean that
-a lock does not prevent the dma controller from not executing a
-transaction on the other channels.
-
--- 
-Warm Regards
-Thara
-
-> 
-> Signed-off-by: Md Sadre Alam <mdalam@codeaurora.org>
+Quoting Kiran Gunda (2020-12-18 00:14:51)
+> Convert the bindings from .txt to .yaml format.
+>=20
+> Signed-off-by: Kiran Gunda <kgunda@codeaurora.org>
 > ---
->   Documentation/driver-api/dmaengine/provider.rst | 9 +++++++++
->   drivers/dma/qcom/bam_dma.c                      | 9 +++++++++
->   include/linux/dmaengine.h                       | 5 +++++
->   3 files changed, 23 insertions(+)
-> 
-> diff --git a/Documentation/driver-api/dmaengine/provider.rst b/Documentation/driver-api/dmaengine/provider.rst
-> index ddb0a81..d7516e2 100644
-> --- a/Documentation/driver-api/dmaengine/provider.rst
-> +++ b/Documentation/driver-api/dmaengine/provider.rst
-> @@ -599,6 +599,15 @@ DMA_CTRL_REUSE
->     - This flag is only supported if the channel reports the DMA_LOAD_EOT
->       capability.
->   
-> +- DMA_PREP_LOCK
+>  .../devicetree/bindings/mfd/qcom,spmi-pmic.txt     |  80 -------------
+>  .../devicetree/bindings/mfd/qcom,spmi-pmic.yaml    | 127 +++++++++++++++=
+++++++
+>  2 files changed, 127 insertions(+), 80 deletions(-)
+>  delete mode 100644 Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.=
+txt
+>  create mode 100644 Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.=
+yaml
+>=20
+> diff --git a/Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.txt b/D=
+ocumentation/devicetree/bindings/mfd/qcom,spmi-pmic.txt
+> deleted file mode 100644
+> index 79367a4..0000000
+> --- a/Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.txt
+> +++ /dev/null
+> @@ -1,80 +0,0 @@
+> -          Qualcomm SPMI PMICs multi-function device bindings
+> -
+> -The Qualcomm SPMI series presently includes PM8941, PM8841 and PMA8084
+> -PMICs.  These PMICs use a QPNP scheme through SPMI interface.
+> -QPNP is effectively a partitioning scheme for dividing the SPMI extended
+> -register space up into logical pieces, and set of fixed register
+> -locations/definitions within these regions, with some of these regions
+> -specifically used for interrupt handling.
+> -
+> -The QPNP PMICs are used with the Qualcomm Snapdragon series SoCs, and are
+> -interfaced to the chip via the SPMI (System Power Management Interface) =
+bus.
+> -Support for multiple independent functions are implemented by splitting =
+the
+> -16-bit SPMI slave address space into 256 smaller fixed-size regions, 256=
+ bytes
+> -each. A function can consume one or more of these fixed-size register re=
+gions.
+> -
+> -Required properties:
+> -- compatible:      Should contain one of:
+> -                   "qcom,pm8941",
+> -                   "qcom,pm8841",
+> -                   "qcom,pma8084",
+> -                   "qcom,pm8019",
+> -                   "qcom,pm8226",
+> -                   "qcom,pm8110",
+> -                   "qcom,pma8084",
+> -                   "qcom,pmi8962",
+> -                   "qcom,pmd9635",
+> -                   "qcom,pm8994",
+> -                   "qcom,pmi8994",
+> -                   "qcom,pm8916",
+> -                   "qcom,pm8004",
+> -                   "qcom,pm8909",
+> -                   "qcom,pm8950",
+> -                   "qcom,pmi8950",
+> -                   "qcom,pm8998",
+> -                   "qcom,pmi8998",
+> -                   "qcom,pm8005",
+> -                   or generalized "qcom,spmi-pmic".
+> -- reg:             Specifies the SPMI USID slave address for this device.
+> -                   For more information see:
+> -                   Documentation/devicetree/bindings/spmi/spmi.yaml
+> -
+> -Required properties for peripheral child nodes:
+> -- compatible:      Should contain "qcom,xxx", where "xxx" is a periphera=
+l name.
+> -
+> -Optional properties for peripheral child nodes:
+> -- interrupts:      Interrupts are specified as a 4-tuple. For more infor=
+mation
+> -                   see:
+> -                   Documentation/devicetree/bindings/spmi/qcom,spmi-pmic=
+-arb.txt
+> -- interrupt-names: Corresponding interrupt name to the interrupts proper=
+ty
+> -
+> -Each child node of SPMI slave id represents a function of the PMIC. In t=
+he
+> -example below the rtc device node represents a peripheral of pm8941
+> -SID =3D 0. The regulator device node represents a peripheral of pm8941 S=
+ID =3D 1.
+> -
+> -Example:
+> -
+> -       spmi {
+> -               compatible =3D "qcom,spmi-pmic-arb";
+> -
+> -               pm8941@0 {
+> -                       compatible =3D "qcom,pm8941", "qcom,spmi-pmic";
+> -                       reg =3D <0x0 SPMI_USID>;
+> -
+> -                       rtc {
+> -                               compatible =3D "qcom,rtc";
+> -                               interrupts =3D <0x0 0x61 0x1 IRQ_TYPE_EDG=
+E_RISING>;
+> -                               interrupt-names =3D "alarm";
+> -                       };
+> -               };
+> -
+> -               pm8941@1 {
+> -                       compatible =3D "qcom,pm8941", "qcom,spmi-pmic";
+> -                       reg =3D <0x1 SPMI_USID>;
+> -
+> -                       regulator {
+> -                               compatible =3D "qcom,regulator";
+> -                               regulator-name =3D "8941_boost";
+> -                       };
+> -               };
+> -       };
+> diff --git a/Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml b/=
+Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml
+> new file mode 100644
+> index 0000000..e458dd1
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml
+> @@ -0,0 +1,127 @@
+> +# SPDX-License-Identifier: GPL-2.0
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/mfd/qcom,spmi-pmic.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
 > +
-> +  - If set , the client driver tells DMA controller I am locking you for
-> +    this transcation.
+> +title: Qualcomm SPMI PMICs multi-function device bindings
 > +
-> +- DMA_PREP_UNLOCK
-> +
-> +  - If set, the client driver will tells DMA controller I am releasing the lock
-> +
->   General Design Notes
->   ====================
->   
-> diff --git a/drivers/dma/qcom/bam_dma.c b/drivers/dma/qcom/bam_dma.c
-> index 4eeb8bb..cdbe395 100644
-> --- a/drivers/dma/qcom/bam_dma.c
-> +++ b/drivers/dma/qcom/bam_dma.c
-> @@ -58,6 +58,8 @@ struct bam_desc_hw {
->   #define DESC_FLAG_EOB BIT(13)
->   #define DESC_FLAG_NWD BIT(12)
->   #define DESC_FLAG_CMD BIT(11)
-> +#define DESC_FLAG_LOCK BIT(10)
-> +#define DESC_FLAG_UNLOCK BIT(9)
->   
->   struct bam_async_desc {
->   	struct virt_dma_desc vd;
-> @@ -644,6 +646,13 @@ static struct dma_async_tx_descriptor *bam_prep_slave_sg(struct dma_chan *chan,
->   
->   	/* fill in temporary descriptors */
->   	desc = async_desc->desc;
-> +	if (flags & DMA_PREP_CMD) {
-> +		if (flags & DMA_PREP_LOCK)
-> +			desc->flags |= cpu_to_le16(DESC_FLAG_LOCK);
-> +		if (flags & DMA_PREP_UNLOCK)
-> +			desc->flags |= cpu_to_le16(DESC_FLAG_UNLOCK);
-> +	}
-> +
->   	for_each_sg(sgl, sg, sg_len, i) {
->   		unsigned int remainder = sg_dma_len(sg);
->   		unsigned int curr_offset = 0;
-> diff --git a/include/linux/dmaengine.h b/include/linux/dmaengine.h
-> index dd357a7..79ccadb4 100644
-> --- a/include/linux/dmaengine.h
-> +++ b/include/linux/dmaengine.h
-> @@ -190,6 +190,9 @@ struct dma_interleaved_template {
->    *  transaction is marked with DMA_PREP_REPEAT will cause the new transaction
->    *  to never be processed and stay in the issued queue forever. The flag is
->    *  ignored if the previous transaction is not a repeated transaction.
-> + * @DMA_PREP_LOCK: tell the driver that DMA HW engine going to be locked for this
-> + *  transaction , until not seen DMA_PREP_UNLOCK flag set.
-> + * @DMA_PREP_UNLOCK: tell the driver to unlock the DMA HW engine.
->    */
->   enum dma_ctrl_flags {
->   	DMA_PREP_INTERRUPT = (1 << 0),
-> @@ -202,6 +205,8 @@ enum dma_ctrl_flags {
->   	DMA_PREP_CMD = (1 << 7),
->   	DMA_PREP_REPEAT = (1 << 8),
->   	DMA_PREP_LOAD_EOT = (1 << 9),
-> +	DMA_PREP_LOCK = (1 << 10),
-> +	DMA_PREP_UNLOCK = (1 << 11),
->   };
->   
->   /**
-> 
+> +maintainers:
+> +  - Stephen Boyd <sboyd@kernel.org>
 
+Someone at Qualcomm should be the maintainer here. Maybe you?
 
+> +
+> +description: |
+> +  The Qualcomm SPMI PMICs use a QPNP scheme through SPMI interface.
+
+What is QPNP?
+
+> +  QPNP is effectively a partitioning scheme for dividing the SPMI extend=
+ed
+> +  register space up into logical pieces, and set of fixed register
+> +  locations/definitions within these regions, with some of these regions
+> +  specifically used for interrupt handling.
+> +
+> +  The QPNP PMICs are used with the Qualcomm Snapdragon series SoCs, and =
+are
+> +  interfaced to the chip via the SPMI (System Power Management Interface=
+) bus.
+> +  Support for multiple independent functions are implemented by splittin=
+g the
+> +  16-bit SPMI slave address space into 256 smaller fixed-size regions, 2=
+56 bytes
+> +  each. A function can consume one or more of these fixed-size register =
+regions.
+> +
+> +properties:
+> +  spmi_bus:
+> +    type: object
+> +    description: SPMI bus node
+> +
+> +patternProperties:
+> +  "^pmic@[0-9]$":
+> +    description: Child PMIC nodes
+> +    type: object
+> +
+> +    properties:
+> +      compatible:
+> +        items:
+> +          - enum:
+> +              # Sorted based on subtype ID the device reports
+> +              - qcom,pm8941
+> +              - qcom,pm8841
+> +              - qcom,pma8084
+> +              - qcom,pm8019
+> +              - qcom,pm8226
+> +              - qcom,pm8110
+> +              - qcom,pma8084
+> +              - qcom,pmi8962
+> +              - qcom,pmd9635
+> +              - qcom,pm8994
+> +              - qcom,pmi8994
+> +              - qcom,pm8916
+> +              - qcom,pm8004
+> +              - qcom,pm8909
+> +              - qcom,pm8950
+> +              - qcom,pmi8950
+> +              - qcom,pm8998
+> +              - qcom,pmi8998
+> +              - qcom,pm8005
+> +              - qcom,pm660l
+> +              - qcom,pm660
+> +
+> +          - enum:
+> +              - qcom,spmi-pmic
+> +
+> +      reg:
+> +        maxItems: 1
+> +        description:
+> +          Specifies the SPMI USID slave address for this device.
+> +          For more information see bindings/spmi/spmi.txt
+> +
+> +    patternProperties:
+> +      "@[0-9a-f]$":
+
+Is that @ sign supposed to be a ^ sign? I thought the child nodes of a
+pmic node were [a-zA-Z0-9-] or some sort of regex like that. Certainly
+not an address that doesn't exist. They look to be things like 'rtc' or
+'regulator'.
+
+> +        description:
+> +          Each child node of SPMI slave id represents a function of the =
+PMIC.
+> +          In the example below the rtc device node represents a peripher=
+al of
+> +          pm8941 SID =3D 0. The regulator device node represents a perip=
+heral of
+> +          pm8941 SID =3D 1.
+> +        type: object
+> +
+> +        properties:
+> +          interrupts:
+> +            maxItems: 4
+> +            description:
+> +              Interrupts are specified as a 4-tuple. For more information
+
+Seems like minItems is also 4 though, so should be a const 4 instead?
+But then this is about how many interrupts there are, which would be 1
+or 2?  It really can't be known in case there are many interrupts for a
+child node so not sure we need to specify anything.
+
+> +              see bindings/spmi/qcom,spmi-pmic-arb.txt
+> +
+> +          interrupt-names:
+> +            description:
+> +              Corresponding interrupt name to the interrupts property
+
+I suspect we should drop these two properties and leave them up to the
+binding for the function, like rtc, or regualator, etc.
+
+> +
+> +    required:
+> +      - compatible
+> +      - reg
+> +
+> +additionalProperties: false
+> +
+> +examples:
+> +  - |
+> +    #include <dt-bindings/spmi/spmi.h>
+> +
+> +    spmi_bus {
+> +        compatible =3D "qcom,spmi-pmic-arb";
+> +        #address-cells =3D <2>;
+> +        #size-cells =3D <0>;
+> +
+> +        pmic@0 {
+> +         compatible =3D "qcom,pm8941";
+> +         reg =3D <0x0 SPMI_USID>;
+> +
+> +         rtc {
+> +           compatible =3D "qcom,rtc";
+> +           interrupts =3D <0x0 0x61 0x1 0x1>;
+> +           interrupt-names =3D "alarm";
+> +          };
+> +        };
+> +
+> +        pmic@1 {
+> +         compatible =3D "qcom,pm8941";
+> +         reg =3D <0x1 SPMI_USID>;
+> +
+> +         regulator {
+> +           compatible =3D "qcom,regulator";
+> +           regulator-name =3D "8941_boost";
+> +           };
+> +          };
+> +        };
+> +...
