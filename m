@@ -2,99 +2,145 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 035F32DFABE
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Dec 2020 11:06:56 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D4AA72DFAE9
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Dec 2020 11:15:06 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726302AbgLUKG1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 21 Dec 2020 05:06:27 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57928 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725972AbgLUKG1 (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 21 Dec 2020 05:06:27 -0500
-Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D0785C061285
-        for <linux-arm-msm@vger.kernel.org>; Mon, 21 Dec 2020 01:02:48 -0800 (PST)
-Received: by mail-wr1-x42e.google.com with SMTP id a12so10235965wrv.8
-        for <linux-arm-msm@vger.kernel.org>; Mon, 21 Dec 2020 01:02:48 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=9T79yJoOT1+QdV+mhYYSVVbCJJCbFg1PwQWJR6WlAbY=;
-        b=CrOk4paEcVPIbRLrtPVfsENnSeMvHYBK3tECGdTXy4b0hyhOnlQCD1Ha8huLL1YENp
-         HagRLuyeQJbly0u4rdxvf4yl/YBPMG4oI5VqPQJEbdnmGTZMVpgnIby4iDUG50dBfqgJ
-         Mve9OYb+esAAPwqe1+NiQ6NAoefDoGKfEBIRbr1oihubG6Aglpea32y0RriMDKW89KX/
-         WgtsKOyrHiALd9nDSOhywSa2e0oEHjMOxSHbMmLLvKcP8hHxqU0T2hkktTWDnlU1Q+6j
-         pg59z8o924n0QoIhtuH3upONhZSrCi5FKC2qXW9OLYiRp74DIiANaAD1gahOj09a7hGl
-         ZKRw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=9T79yJoOT1+QdV+mhYYSVVbCJJCbFg1PwQWJR6WlAbY=;
-        b=XhF3vDrfNEk7rAOvAoBUJmB04kvI4RoV9hkQFie+y7xn9kTUOTM5lBfvfDhe3la6zT
-         RYyogTudReendxpR8HO+9r81jitTdq/cDnB+v51g582dMhrI2MC45sFHdhRSMU1QBnhS
-         Z/oL1XoTbrR1MrffxPtrspd6+m2WtnQwwfbrltrA+9qMeeflRr3GrYTmzWW8AxKXhFSk
-         KptlUNhoPDuZc2YkvCd6sOH3fGIir/C409f6iETvT7YHdOM5NF75vWOSr0N3eCVV0JrB
-         UymKDuLYsl9DTY36axBBhGQep6TApK0oK7DJo80lltAamZPQwJgTg2tv9caGIIxLcg7N
-         61kA==
-X-Gm-Message-State: AOAM532TpbFPJxQ3G/lc7fGuZhGHAnTdB/3MUShOockG2Kf2mzboO+Fa
-        wC80CgHlOOCP5qKN8oFl+bXxng==
-X-Google-Smtp-Source: ABdhPJzusCr9B67aMTossxbYkFkGLR2hkvsmxy7JE4yImnR5q0WhgIPr1/aGMQrBdvFp2ptpvysl3w==
-X-Received: by 2002:a5d:6cad:: with SMTP id a13mr17302756wra.275.1608541367389;
-        Mon, 21 Dec 2020 01:02:47 -0800 (PST)
-Received: from dell ([91.110.221.144])
-        by smtp.gmail.com with ESMTPSA id j10sm24582598wmj.7.2020.12.21.01.02.46
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 21 Dec 2020 01:02:46 -0800 (PST)
-Date:   Mon, 21 Dec 2020 09:02:44 +0000
-From:   Lee Jones <lee.jones@linaro.org>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        linux-arm-msm@vger.kernel.org,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 2/4] mfd: qca639x: add support for QCA639x powerup
- sequence
-Message-ID: <20201221090244.GA53991@dell>
-References: <20201220165845.3712599-1-dmitry.baryshkov@linaro.org>
- <20201220165845.3712599-3-dmitry.baryshkov@linaro.org>
+        id S1726207AbgLUKO3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 21 Dec 2020 05:14:29 -0500
+Received: from mail.kernel.org ([198.145.29.99]:33602 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726196AbgLUKO3 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 21 Dec 2020 05:14:29 -0500
+Date:   Mon, 21 Dec 2020 14:53:55 +0530
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1608542640;
+        bh=JO4ab5ou5wn2IYemAu40S3kxk97Cbr2moLnttUGZi3k=;
+        h=From:To:Cc:Subject:References:In-Reply-To:From;
+        b=OliryD7qqLmTqyoCTX6dzKbEVI2tjG+ledbsd0RWvXKG8A/KHGORZlnpNDKWkv0Wg
+         9ECU3LxcuWvxzrUcVc7REh/qTu1UGETQSsCOa8Ii2YUXE8Xez/WK/nw7esWPl9Vq7j
+         VVPm4txLNd/Xn/u+tT+WUE6Y3ByL4N+a3JhJBrNGs2yROsTuhaBFGu/XfzJMWvok7i
+         sc0qmk+08Asn6kgIJ4wudG9n2URG9y/tDJKJgFZK6mUD5RRuJP2xGLZYWNFTWnzi77
+         pSUgqMmMJZ36iRCOfqfusv7qq+21JEJTvchTilRnH8iAn8yhE3xHEX7XafyKloTPCq
+         uwkgSKJRNoHsQ==
+From:   Vinod Koul <vkoul@kernel.org>
+To:     Md Sadre Alam <mdalam@codeaurora.org>
+Cc:     corbet@lwn.net, agross@kernel.org, bjorn.andersson@linaro.org,
+        dan.j.williams@intel.com, dmaengine@vger.kernel.org,
+        linux-doc@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, sricharan@codeaurora.org
+Subject: Re: [PATCH] dmaengine: qcom: bam_dma: Add LOCK and UNLOCK flag bit
+ support
+Message-ID: <20201221092355.GA3323@vkoul-mobl>
+References: <1608215842-15381-1-git-send-email-mdalam@codeaurora.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20201220165845.3712599-3-dmitry.baryshkov@linaro.org>
+In-Reply-To: <1608215842-15381-1-git-send-email-mdalam@codeaurora.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sun, 20 Dec 2020, Dmitry Baryshkov wrote:
+Hello,
 
-> Qualcomm QCA639x is a family of WiFi + Bluetooth SoCs, with BT part
-> being controlled through the UART and WiFi being present on PCIe
-> bus. Both blocks share common power sources. So add mfd device driver
-> handling power sequencing of QCA6390/1.
+On 17-12-20, 20:07, Md Sadre Alam wrote:
+> This change will add support for LOCK & UNLOCK flag bit support
+> on CMD descriptor.
 > 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> If DMA_PREP_LOCK flag passed in prep_slave_sg then requester of this
+> transaction wanted to lock the DMA controller for this transaction so
+> BAM driver should set LOCK bit for the HW descriptor.
+> 
+> If DMA_PREP_UNLOCK flag passed in prep_slave_sg then requester of this
+> transaction wanted to unlock the DMA controller.so BAM driver should set
+> UNLOCK bit for the HW descriptor.
+
+Can you explain why would we need to first lock and then unlock..? How
+would this be used in real world.
+
+I have read a bit of documentation but is unclear to me. Also should
+this be exposed as an API to users, sounds like internal to driver..?
+
+
+> 
+> Signed-off-by: Md Sadre Alam <mdalam@codeaurora.org>
 > ---
->  drivers/mfd/Kconfig        |  12 +++
->  drivers/mfd/Makefile       |   1 +
->  drivers/mfd/qcom-qca639x.c | 168 +++++++++++++++++++++++++++++++++++++
->  3 files changed, 181 insertions(+)
->  create mode 100644 drivers/mfd/qcom-qca639x.c
-
-This is not an MFD, since it utilised neither the MFD API nor
-of_platform_populate() to register child devices.
-
-Suggest you use drivers/power or similar to handle shared power
-sequencing requirements.
+>  Documentation/driver-api/dmaengine/provider.rst | 9 +++++++++
+>  drivers/dma/qcom/bam_dma.c                      | 9 +++++++++
+>  include/linux/dmaengine.h                       | 5 +++++
+>  3 files changed, 23 insertions(+)
+> 
+> diff --git a/Documentation/driver-api/dmaengine/provider.rst b/Documentation/driver-api/dmaengine/provider.rst
+> index ddb0a81..d7516e2 100644
+> --- a/Documentation/driver-api/dmaengine/provider.rst
+> +++ b/Documentation/driver-api/dmaengine/provider.rst
+> @@ -599,6 +599,15 @@ DMA_CTRL_REUSE
+>    - This flag is only supported if the channel reports the DMA_LOAD_EOT
+>      capability.
+>  
+> +- DMA_PREP_LOCK
+> +
+> +  - If set , the client driver tells DMA controller I am locking you for
+> +    this transcation.
+> +
+> +- DMA_PREP_UNLOCK
+> +
+> +  - If set, the client driver will tells DMA controller I am releasing the lock
+> +
+>  General Design Notes
+>  ====================
+>  
+> diff --git a/drivers/dma/qcom/bam_dma.c b/drivers/dma/qcom/bam_dma.c
+> index 4eeb8bb..cdbe395 100644
+> --- a/drivers/dma/qcom/bam_dma.c
+> +++ b/drivers/dma/qcom/bam_dma.c
+> @@ -58,6 +58,8 @@ struct bam_desc_hw {
+>  #define DESC_FLAG_EOB BIT(13)
+>  #define DESC_FLAG_NWD BIT(12)
+>  #define DESC_FLAG_CMD BIT(11)
+> +#define DESC_FLAG_LOCK BIT(10)
+> +#define DESC_FLAG_UNLOCK BIT(9)
+>  
+>  struct bam_async_desc {
+>  	struct virt_dma_desc vd;
+> @@ -644,6 +646,13 @@ static struct dma_async_tx_descriptor *bam_prep_slave_sg(struct dma_chan *chan,
+>  
+>  	/* fill in temporary descriptors */
+>  	desc = async_desc->desc;
+> +	if (flags & DMA_PREP_CMD) {
+> +		if (flags & DMA_PREP_LOCK)
+> +			desc->flags |= cpu_to_le16(DESC_FLAG_LOCK);
+> +		if (flags & DMA_PREP_UNLOCK)
+> +			desc->flags |= cpu_to_le16(DESC_FLAG_UNLOCK);
+> +	}
+> +
+>  	for_each_sg(sgl, sg, sg_len, i) {
+>  		unsigned int remainder = sg_dma_len(sg);
+>  		unsigned int curr_offset = 0;
+> diff --git a/include/linux/dmaengine.h b/include/linux/dmaengine.h
+> index dd357a7..79ccadb4 100644
+> --- a/include/linux/dmaengine.h
+> +++ b/include/linux/dmaengine.h
+> @@ -190,6 +190,9 @@ struct dma_interleaved_template {
+>   *  transaction is marked with DMA_PREP_REPEAT will cause the new transaction
+>   *  to never be processed and stay in the issued queue forever. The flag is
+>   *  ignored if the previous transaction is not a repeated transaction.
+> + * @DMA_PREP_LOCK: tell the driver that DMA HW engine going to be locked for this
+> + *  transaction , until not seen DMA_PREP_UNLOCK flag set.
+> + * @DMA_PREP_UNLOCK: tell the driver to unlock the DMA HW engine.
+>   */
+>  enum dma_ctrl_flags {
+>  	DMA_PREP_INTERRUPT = (1 << 0),
+> @@ -202,6 +205,8 @@ enum dma_ctrl_flags {
+>  	DMA_PREP_CMD = (1 << 7),
+>  	DMA_PREP_REPEAT = (1 << 8),
+>  	DMA_PREP_LOAD_EOT = (1 << 9),
+> +	DMA_PREP_LOCK = (1 << 10),
+> +	DMA_PREP_UNLOCK = (1 << 11),
+>  };
+>  
+>  /**
+> -- 
+> 2.7.4
 
 -- 
-Lee Jones [李琼斯]
-Senior Technical Lead - Developer Services
-Linaro.org │ Open source software for Arm SoCs
-Follow Linaro: Facebook | Twitter | Blog
+~Vinod
