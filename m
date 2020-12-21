@@ -2,159 +2,100 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A97972DFBF3
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Dec 2020 13:39:42 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 74A5E2E00B7
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Dec 2020 20:10:41 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726486AbgLUMj0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 21 Dec 2020 07:39:26 -0500
-Received: from alexa-out.qualcomm.com ([129.46.98.28]:8429 "EHLO
-        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726026AbgLUMj0 (ORCPT
+        id S1725931AbgLUTJt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 21 Dec 2020 14:09:49 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59128 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725818AbgLUTJt (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 21 Dec 2020 07:39:26 -0500
-Received: from ironmsg08-lv.qualcomm.com ([10.47.202.152])
-  by alexa-out.qualcomm.com with ESMTP; 21 Dec 2020 04:38:45 -0800
-X-QCInternal: smtphost
-Received: from ironmsg02-blr.qualcomm.com ([10.86.208.131])
-  by ironmsg08-lv.qualcomm.com with ESMTP/TLS/AES256-SHA; 21 Dec 2020 04:38:43 -0800
-X-QCInternal: smtphost
-Received: from c-rojay-linux.qualcomm.com ([10.206.21.80])
-  by ironmsg02-blr.qualcomm.com with ESMTP; 21 Dec 2020 18:08:09 +0530
-Received: by c-rojay-linux.qualcomm.com (Postfix, from userid 88981)
-        id B16231ADD; Mon, 21 Dec 2020 18:08:08 +0530 (IST)
-From:   Roja Rani Yarubandi <rojay@codeaurora.org>
-To:     wsa@kernel.org
-Cc:     swboyd@chromium.org, dianders@chromium.org,
-        saiprakash.ranjan@codeaurora.org, gregkh@linuxfoundation.org,
-        mka@chromium.org, akashast@codeaurora.org,
-        msavaliy@qti.qualcomm.com, skakit@codeaurora.org,
-        pyarlaga@codeaurora.org, rnayak@codeaurora.org, agross@kernel.org,
-        bjorn.andersson@linaro.org, linux-arm-msm@vger.kernel.org,
-        linux-i2c@vger.kernel.org, linux-kernel@vger.kernel.org,
-        sumit.semwal@linaro.org, linux-media@vger.kernel.org,
-        Roja Rani Yarubandi <rojay@codeaurora.org>
-Subject: [PATCH V7 2/2] i2c: i2c-qcom-geni: Add shutdown callback for i2c
-Date:   Mon, 21 Dec 2020 18:08:01 +0530
-Message-Id: <20201221123801.26643-3-rojay@codeaurora.org>
-X-Mailer: git-send-email 2.29.0
-In-Reply-To: <20201221123801.26643-1-rojay@codeaurora.org>
-References: <20201221123801.26643-1-rojay@codeaurora.org>
+        Mon, 21 Dec 2020 14:09:49 -0500
+Received: from mail-oi1-x22a.google.com (mail-oi1-x22a.google.com [IPv6:2607:f8b0:4864:20::22a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 374B1C0613D3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 21 Dec 2020 11:09:09 -0800 (PST)
+Received: by mail-oi1-x22a.google.com with SMTP id l200so12285466oig.9
+        for <linux-arm-msm@vger.kernel.org>; Mon, 21 Dec 2020 11:09:09 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=jXAyXLJC4KWo9rrWBVxmVGURyU5fnZ6Gi61AYM/JKV8=;
+        b=gTf7Se48gkxwcpAJYcv8cAaQz2UrvCH1s7isDCNIyq/X7hbr384PNOSxSUNWhv2Q0p
+         etVibyQQ5bANIQ3fISiKDr43FH+hMfWFU5OLgv9zzuD5TwskjyCCYQSHlHq07yn7WbfV
+         KqesUZBR9KTiIl4MGDvCjYHqI9yzryQHLD8hD9QdL75DK1CLTDmaIDorqsEiIdR71H9/
+         gldO+9NaO8nmINbNqyKaOSIXfJYnaFvqyAqrUza7GZRrpQXATjElCaDlnB5u7Nl3mvJ0
+         24b1gIdXMRABezhTx52lqRIXANS1QuWFUQAbVPGJ65fPeUsCoaFX/9aZCIOPDFUx30Ng
+         nNzA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=jXAyXLJC4KWo9rrWBVxmVGURyU5fnZ6Gi61AYM/JKV8=;
+        b=TEE9YL8sfIKeAWHguv2/LajiMCaepYPbsUx1dwfW6Bub7Gg5fbTMO9lfZnsR2nRRjk
+         SvzTDjVPJ2tw8IBp1JeGlA/ckZuU8UP+1jJX9siwxMH3rphCqMFGMbyCa4LmnvgqiGLm
+         viztga6yVnuwu2W6oksq62wqX/Y97yci0CTwNC5gS3yWjZI2p5aWSxkeh32bDlz+sR+P
+         7bpEuqObaP6/68k6oXNGET3XzEneSQeMAwvuLmq7kdXNm0u53YsFyU/s5jEGYHiaOwTS
+         iLK1eyEVOFt2Te2JYbIaAK+3lavXwGst2NFuSMCIF3g58UJ7TodQoNrkLLAcQjOIHuGV
+         QgBg==
+X-Gm-Message-State: AOAM531LM1/ywiXiG+tgzu3dgsyzoZipn+B5v/zkaAhVBqLzNp0zx2NQ
+        A1EM6wtoI8FhAbyFE8SrGTTODasdiEEb3TqFS3+5+A+uzCG95x/l
+X-Google-Smtp-Source: ABdhPJyAIUae1EOjHS0F39XAyUidcMrOP/DWQLvc/E6w8afke/ONJcTvldzORcQ/H7UJi2vVXDtIhyT6/bdVvcrpcW4=
+X-Received: by 2002:aca:cc01:: with SMTP id c1mr11288059oig.18.1608559736101;
+ Mon, 21 Dec 2020 06:08:56 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20201220165845.3712599-1-dmitry.baryshkov@linaro.org>
+ <20201220165845.3712599-3-dmitry.baryshkov@linaro.org> <20201221090244.GA53991@dell>
+In-Reply-To: <20201221090244.GA53991@dell>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Mon, 21 Dec 2020 17:08:44 +0300
+Message-ID: <CAA8EJpo7oHVdDWjhnoknt0vAPYHL0LsZsT8q6MpQs20a+OiCAQ@mail.gmail.com>
+Subject: Re: [PATCH 2/4] mfd: qca639x: add support for QCA639x powerup sequence
+To:     Lee Jones <lee.jones@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
+        <linux-arm-msm@vger.kernel.org>,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>,
+        open list <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-If the hardware is still accessing memory after SMMU translation
-is disabled (as part of smmu shutdown callback), then the
-IOVAs (I/O virtual address) which it was using will go on the bus
-as the physical addresses which will result in unknown crashes
-like NoC/interconnect errors.
+Hello,
 
-So, implement shutdown callback to i2c driver to stop on-going transfer
-and unmap DMA mappings during system "reboot" or "shutdown".
+On Mon, 21 Dec 2020 at 12:02, Lee Jones <lee.jones@linaro.org> wrote:
+>
+> On Sun, 20 Dec 2020, Dmitry Baryshkov wrote:
+>
+> > Qualcomm QCA639x is a family of WiFi + Bluetooth SoCs, with BT part
+> > being controlled through the UART and WiFi being present on PCIe
+> > bus. Both blocks share common power sources. So add mfd device driver
+> > handling power sequencing of QCA6390/1.
+> >
+> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> > ---
+> >  drivers/mfd/Kconfig        |  12 +++
+> >  drivers/mfd/Makefile       |   1 +
+> >  drivers/mfd/qcom-qca639x.c | 168 +++++++++++++++++++++++++++++++++++++
+> >  3 files changed, 181 insertions(+)
+> >  create mode 100644 drivers/mfd/qcom-qca639x.c
+>
+> This is not an MFD, since it utilised neither the MFD API nor
+> of_platform_populate() to register child devices.
 
-Fixes: 37692de5d523 ("i2c: i2c-qcom-geni: Add bus driver for the Qualcomm GENI I2C controller")
-Signed-off-by: Roja Rani Yarubandi <rojay@codeaurora.org>
----
-Changes in V2:
- - As per Stephen's comments added seperate function for stop transfer,
-   fixed minor nitpicks.
- - As per Stephen's comments, changed commit text.
+It would use them if the WiFi part was not on a discoverable bus.
 
-Changes in V3:
- - As per Stephen's comments, squashed patch 1 into patch 2, added Fixes tag.
- - As per Akash's comments, included FIFO case in stop_xfer, fixed minor nitpicks.
+> Suggest you use drivers/power or similar to handle shared power
+> sequencing requirements.
 
-Changes in V4:
- - As per Stephen's comments cleaned up geni_i2c_stop_xfer function,
-   added dma_buf in geni_i2c_dev struct to call i2c_put_dma_safe_msg_buf()
-   from other functions, removed "iova" check in geni_se_rx_dma_unprep()
-   and geni_se_tx_dma_unprep() functions.
- - Added two helper functions geni_i2c_rx_one_msg_done() and
-   geni_i2c_tx_one_msg_done() to unwrap the things after rx/tx FIFO/DMA
-   transfers, so that the same can be used in geni_i2c_stop_xfer() function
-   during shutdown callback. Updated commit text accordingly.
- - Checking whether it is tx/rx transfer using I2C_M_RD which is valid for both
-   FIFO and DMA cases, so dropped DMA_RX_ACTIVE and DMA_TX_ACTIVE bit checking
+What about drivers/soc/qcom? Or drivers/misc?
 
-Changes in V5:
- - As per Stephen's comments, added spin_lock_irqsave & spin_unlock_irqsave in
-   geni_i2c_stop_xfer() function.
-
-Changes in V6:
- - As per Stephen's comments, taken care of unsafe lock order in
-   geni_i2c_stop_xfer().
- - Moved spin_lock/unlock to geni_i2c_rx_msg_cleanup() and
-   geni_i2c_tx_msg_cleanup() functions.
-
-Changes in V7:
- - No changes 
-
- drivers/i2c/busses/i2c-qcom-geni.c | 35 ++++++++++++++++++++++++++++++
- 1 file changed, 35 insertions(+)
-
-diff --git a/drivers/i2c/busses/i2c-qcom-geni.c b/drivers/i2c/busses/i2c-qcom-geni.c
-index 214b4c913a13..7903e6145543 100644
---- a/drivers/i2c/busses/i2c-qcom-geni.c
-+++ b/drivers/i2c/busses/i2c-qcom-geni.c
-@@ -375,6 +375,33 @@ static void geni_i2c_tx_msg_cleanup(struct geni_i2c_dev *gi2c,
- 	}
- }
- 
-+static void geni_i2c_stop_xfer(struct geni_i2c_dev *gi2c)
-+{
-+	int ret;
-+	u32 geni_status;
-+	struct i2c_msg *cur;
-+
-+	/* Resume device, as runtime suspend can happen anytime during transfer */
-+	ret = pm_runtime_get_sync(gi2c->se.dev);
-+	if (ret < 0) {
-+		dev_err(gi2c->se.dev, "Failed to resume device: %d\n", ret);
-+		return;
-+	}
-+
-+	geni_status = readl_relaxed(gi2c->se.base + SE_GENI_STATUS);
-+	if (!(geni_status & M_GENI_CMD_ACTIVE))
-+		goto out;
-+
-+	cur = gi2c->cur;
-+	geni_i2c_abort_xfer(gi2c);
-+	if (cur->flags & I2C_M_RD)
-+		geni_i2c_rx_msg_cleanup(gi2c, cur);
-+	else
-+		geni_i2c_tx_msg_cleanup(gi2c, cur);
-+out:
-+	pm_runtime_put_sync_suspend(gi2c->se.dev);
-+}
-+
- static int geni_i2c_rx_one_msg(struct geni_i2c_dev *gi2c, struct i2c_msg *msg,
- 				u32 m_param)
- {
-@@ -650,6 +677,13 @@ static int geni_i2c_remove(struct platform_device *pdev)
- 	return 0;
- }
- 
-+static void  geni_i2c_shutdown(struct platform_device *pdev)
-+{
-+	struct geni_i2c_dev *gi2c = platform_get_drvdata(pdev);
-+
-+	geni_i2c_stop_xfer(gi2c);
-+}
-+
- static int __maybe_unused geni_i2c_runtime_suspend(struct device *dev)
- {
- 	int ret;
-@@ -714,6 +748,7 @@ MODULE_DEVICE_TABLE(of, geni_i2c_dt_match);
- static struct platform_driver geni_i2c_driver = {
- 	.probe  = geni_i2c_probe,
- 	.remove = geni_i2c_remove,
-+	.shutdown = geni_i2c_shutdown,
- 	.driver = {
- 		.name = "geni_i2c",
- 		.pm = &geni_i2c_pm_ops,
 -- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member 
-of Code Aurora Forum, hosted by The Linux Foundation
-
+With best wishes
+Dmitry
