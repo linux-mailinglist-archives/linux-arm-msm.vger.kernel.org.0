@@ -2,205 +2,122 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B26C22DFF05
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Dec 2020 18:36:50 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 9D2202DFF33
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Dec 2020 19:05:44 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725780AbgLUReb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 21 Dec 2020 12:34:31 -0500
-Received: from so254-31.mailgun.net ([198.61.254.31]:52038 "EHLO
-        so254-31.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725777AbgLUReb (ORCPT
+        id S1726320AbgLUSEp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 21 Dec 2020 13:04:45 -0500
+Received: from m43-15.mailgun.net ([69.72.43.15]:35550 "EHLO
+        m43-15.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726057AbgLUSEp (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 21 Dec 2020 12:34:31 -0500
+        Mon, 21 Dec 2020 13:04:45 -0500
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1608572051; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=LVlBGXTzBukiwVBxNOa2Ps3aJ/OPXjBHqjWMMrEzyd0=;
- b=MQTiiMfGcoqKiUN6Dib5zuZF3SbIFqPrVs3R8jUlgCTF/8WfjxpzFsTxclCw60t101fgSTxZ
- dVsF0qkRReb2ky/b3iFhS5uI3A6FnWBkrQDiOKw1Q4z8R3DVSfihCCd2Pl3OYk8O+6biyNxk
- XneRvoXuUxfikzZTbeno4YE8VIo=
-X-Mailgun-Sending-Ip: 198.61.254.31
+ s=smtp; t=1608573875; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=qtC1xnTwsZ/pq2bzAAmFHJGvkNgdm1UbjIJc3YraR48=; b=IYde+MpMVI7xv2DgUUVVBGKPIjHcLe9lepVELgvvu9yRzt86QEkBe29MHQIE3zRqHaBNLIed
+ dEhZnJGL4HZ+BoWjFBk1eXFvPqOzLNySvOI+UPtaQti9sKPV14soB9yCOAub+mQppxjbu3ZT
+ 1zH7uVEK9OxViywnEghp9w2G72c=
+X-Mailgun-Sending-Ip: 69.72.43.15
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org
  (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n08.prod.us-east-1.postgun.com with SMTP id
- 5fe0dc787bc801dc4fbf85a4 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 21 Dec 2020 17:33:44
+ smtp-out-n04.prod.us-east-1.postgun.com with SMTP id
+ 5fe0e3877036173f4f1290ca (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 21 Dec 2020 18:03:51
  GMT
-Sender: mdalam=codeaurora.org@mg.codeaurora.org
+Sender: tdas=codeaurora.org@mg.codeaurora.org
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 572A1C43462; Mon, 21 Dec 2020 17:33:43 +0000 (UTC)
+        id D5532C433ED; Mon, 21 Dec 2020 18:03:50 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
+        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+Received: from tdas-linux.qualcomm.com (unknown [202.46.22.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
         (No client certificate requested)
-        (Authenticated sender: mdalam)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 49C44C433C6;
-        Mon, 21 Dec 2020 17:33:42 +0000 (UTC)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Mon, 21 Dec 2020 23:03:42 +0530
-From:   mdalam@codeaurora.org
-To:     Vinod Koul <vkoul@kernel.org>
-Cc:     corbet@lwn.net, agross@kernel.org, bjorn.andersson@linaro.org,
-        dan.j.williams@intel.com, dmaengine@vger.kernel.org,
-        linux-doc@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, sricharan@codeaurora.org
-Subject: Re: [PATCH] dmaengine: qcom: bam_dma: Add LOCK and UNLOCK flag bit
- support
-In-Reply-To: <20201221092355.GA3323@vkoul-mobl>
-References: <1608215842-15381-1-git-send-email-mdalam@codeaurora.org>
- <20201221092355.GA3323@vkoul-mobl>
-Message-ID: <efcc74bbdf36b4ddbf764eb6b4ed99f2@codeaurora.org>
-X-Sender: mdalam@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+        (Authenticated sender: tdas)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 0D870C43461;
+        Mon, 21 Dec 2020 18:03:46 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 0D870C43461
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=tdas@codeaurora.org
+From:   Taniya Das <tdas@codeaurora.org>
+To:     Stephen Boyd <sboyd@kernel.org>,
+        =?UTF-8?q?Michael=20Turquette=20=C2=A0?= <mturquette@baylibre.com>
+Cc:     Rajendra Nayak <rnayak@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, linux-soc@vger.kernel.org,
+        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Taniya Das <tdas@codeaurora.org>
+Subject: [PATCH v1] clk: qcom: gcc-sc7180: Mark the camera abh clock always ON
+Date:   Mon, 21 Dec 2020 23:33:36 +0530
+Message-Id: <1608573816-1465-1-git-send-email-tdas@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2020-12-21 14:53, Vinod Koul wrote:
-> Hello,
-> 
-> On 17-12-20, 20:07, Md Sadre Alam wrote:
->> This change will add support for LOCK & UNLOCK flag bit support
->> on CMD descriptor.
->> 
->> If DMA_PREP_LOCK flag passed in prep_slave_sg then requester of this
->> transaction wanted to lock the DMA controller for this transaction so
->> BAM driver should set LOCK bit for the HW descriptor.
->> 
->> If DMA_PREP_UNLOCK flag passed in prep_slave_sg then requester of this
->> transaction wanted to unlock the DMA controller.so BAM driver should 
->> set
->> UNLOCK bit for the HW descriptor.
-> 
-> Can you explain why would we need to first lock and then unlock..? How
-> would this be used in real world.
-> 
-> I have read a bit of documentation but is unclear to me. Also should
-> this be exposed as an API to users, sounds like internal to driver..?
-> 
+The camera clock controller requires the AHB clock, the driver when
+moved to use the pm_runtime_get() API, the camera ahb clock failed turn
+on before access, thus mark it as always ON.
 
-IPQ5018 SoC having only one Crypto Hardware Engine. This Crypto Hardware 
-Engine
-will be shared between A53 core & ubi32 core. There is two separate 
-driver dedicated
-to A53 core and ubi32 core. So to use Crypto Hardware Engine parallelly 
-for encryption/description
-we need bam locking mechanism. if one driver will submit the request for 
-encryption/description
-to Crypto then first it has to set LOCK flag bit on command descriptor 
-so that other pipes will
-get locked.
+Reported-by: Stephen Boyd <sboyd@kernel.org>
+Fixes: 8d4025943e13 ("clk: qcom: camcc-sc7180: Use runtime PM ops instead of clk ones")
+Signed-off-by: Taniya Das <tdas@codeaurora.org>
+---
+ drivers/clk/qcom/gcc-sc7180.c | 21 +++------------------
+ 1 file changed, 3 insertions(+), 18 deletions(-)
 
-The Pipe Locking/Unlocking will be only on command-descriptor. Upon 
-encountering a command descriptor
-with LOCK bit set, The BAM will lock all other pipes not related to the 
-current pipe group, and keep
-handling the current pipe only until it sees the UNLOCK set then it will 
-release all locked pipes.
-locked pipe will not fetch new descriptors even if it got event/events 
-adding more descriptors for
-this pipe (locked pipe).
+diff --git a/drivers/clk/qcom/gcc-sc7180.c b/drivers/clk/qcom/gcc-sc7180.c
+index d82d725..b05901b 100644
+--- a/drivers/clk/qcom/gcc-sc7180.c
++++ b/drivers/clk/qcom/gcc-sc7180.c
+@@ -891,21 +891,6 @@ static struct clk_branch gcc_boot_rom_ahb_clk = {
+ 	},
+ };
 
-No need to expose as an API to user because its internal to driver, so 
-while preparing command descriptor
-just we have to update the LOCK/UNLOCK flag.
+-static struct clk_branch gcc_camera_ahb_clk = {
+-	.halt_reg = 0xb008,
+-	.halt_check = BRANCH_HALT,
+-	.hwcg_reg = 0xb008,
+-	.hwcg_bit = 1,
+-	.clkr = {
+-		.enable_reg = 0xb008,
+-		.enable_mask = BIT(0),
+-		.hw.init = &(struct clk_init_data){
+-			.name = "gcc_camera_ahb_clk",
+-			.ops = &clk_branch2_ops,
+-		},
+-	},
+-};
+-
+ static struct clk_branch gcc_camera_hf_axi_clk = {
+ 	.halt_reg = 0xb020,
+ 	.halt_check = BRANCH_HALT,
+@@ -2317,7 +2302,6 @@ static struct clk_regmap *gcc_sc7180_clocks[] = {
+ 	[GCC_AGGRE_UFS_PHY_AXI_CLK] = &gcc_aggre_ufs_phy_axi_clk.clkr,
+ 	[GCC_AGGRE_USB3_PRIM_AXI_CLK] = &gcc_aggre_usb3_prim_axi_clk.clkr,
+ 	[GCC_BOOT_ROM_AHB_CLK] = &gcc_boot_rom_ahb_clk.clkr,
+-	[GCC_CAMERA_AHB_CLK] = &gcc_camera_ahb_clk.clkr,
+ 	[GCC_CAMERA_HF_AXI_CLK] = &gcc_camera_hf_axi_clk.clkr,
+ 	[GCC_CAMERA_THROTTLE_HF_AXI_CLK] = &gcc_camera_throttle_hf_axi_clk.clkr,
+ 	[GCC_CAMERA_XO_CLK] = &gcc_camera_xo_clk.clkr,
+@@ -2519,11 +2503,12 @@ static int gcc_sc7180_probe(struct platform_device *pdev)
 
+ 	/*
+ 	 * Keep the clocks always-ON
+-	 * GCC_CPUSS_GNOC_CLK, GCC_VIDEO_AHB_CLK, GCC_DISP_AHB_CLK
+-	 * GCC_GPU_CFG_AHB_CLK
++	 * GCC_CPUSS_GNOC_CLK, GCC_VIDEO_AHB_CLK, GCC_CAMERA_AHB_CLK,
++	 * GCC_DISP_AHB_CLK, GCC_GPU_CFG_AHB_CLK
+ 	 */
+ 	regmap_update_bits(regmap, 0x48004, BIT(0), BIT(0));
+ 	regmap_update_bits(regmap, 0x0b004, BIT(0), BIT(0));
++	regmap_update_bits(regmap, 0x0b008, BIT(0), BIT(0));
+ 	regmap_update_bits(regmap, 0x0b00c, BIT(0), BIT(0));
+ 	regmap_update_bits(regmap, 0x71004, BIT(0), BIT(0));
 
-> 
->> 
->> Signed-off-by: Md Sadre Alam <mdalam@codeaurora.org>
->> ---
->>  Documentation/driver-api/dmaengine/provider.rst | 9 +++++++++
->>  drivers/dma/qcom/bam_dma.c                      | 9 +++++++++
->>  include/linux/dmaengine.h                       | 5 +++++
->>  3 files changed, 23 insertions(+)
->> 
->> diff --git a/Documentation/driver-api/dmaengine/provider.rst 
->> b/Documentation/driver-api/dmaengine/provider.rst
->> index ddb0a81..d7516e2 100644
->> --- a/Documentation/driver-api/dmaengine/provider.rst
->> +++ b/Documentation/driver-api/dmaengine/provider.rst
->> @@ -599,6 +599,15 @@ DMA_CTRL_REUSE
->>    - This flag is only supported if the channel reports the 
->> DMA_LOAD_EOT
->>      capability.
->> 
->> +- DMA_PREP_LOCK
->> +
->> +  - If set , the client driver tells DMA controller I am locking you 
->> for
->> +    this transcation.
->> +
->> +- DMA_PREP_UNLOCK
->> +
->> +  - If set, the client driver will tells DMA controller I am 
->> releasing the lock
->> +
->>  General Design Notes
->>  ====================
->> 
->> diff --git a/drivers/dma/qcom/bam_dma.c b/drivers/dma/qcom/bam_dma.c
->> index 4eeb8bb..cdbe395 100644
->> --- a/drivers/dma/qcom/bam_dma.c
->> +++ b/drivers/dma/qcom/bam_dma.c
->> @@ -58,6 +58,8 @@ struct bam_desc_hw {
->>  #define DESC_FLAG_EOB BIT(13)
->>  #define DESC_FLAG_NWD BIT(12)
->>  #define DESC_FLAG_CMD BIT(11)
->> +#define DESC_FLAG_LOCK BIT(10)
->> +#define DESC_FLAG_UNLOCK BIT(9)
->> 
->>  struct bam_async_desc {
->>  	struct virt_dma_desc vd;
->> @@ -644,6 +646,13 @@ static struct dma_async_tx_descriptor 
->> *bam_prep_slave_sg(struct dma_chan *chan,
->> 
->>  	/* fill in temporary descriptors */
->>  	desc = async_desc->desc;
->> +	if (flags & DMA_PREP_CMD) {
->> +		if (flags & DMA_PREP_LOCK)
->> +			desc->flags |= cpu_to_le16(DESC_FLAG_LOCK);
->> +		if (flags & DMA_PREP_UNLOCK)
->> +			desc->flags |= cpu_to_le16(DESC_FLAG_UNLOCK);
->> +	}
->> +
->>  	for_each_sg(sgl, sg, sg_len, i) {
->>  		unsigned int remainder = sg_dma_len(sg);
->>  		unsigned int curr_offset = 0;
->> diff --git a/include/linux/dmaengine.h b/include/linux/dmaengine.h
->> index dd357a7..79ccadb4 100644
->> --- a/include/linux/dmaengine.h
->> +++ b/include/linux/dmaengine.h
->> @@ -190,6 +190,9 @@ struct dma_interleaved_template {
->>   *  transaction is marked with DMA_PREP_REPEAT will cause the new 
->> transaction
->>   *  to never be processed and stay in the issued queue forever. The 
->> flag is
->>   *  ignored if the previous transaction is not a repeated 
->> transaction.
->> + * @DMA_PREP_LOCK: tell the driver that DMA HW engine going to be 
->> locked for this
->> + *  transaction , until not seen DMA_PREP_UNLOCK flag set.
->> + * @DMA_PREP_UNLOCK: tell the driver to unlock the DMA HW engine.
->>   */
->>  enum dma_ctrl_flags {
->>  	DMA_PREP_INTERRUPT = (1 << 0),
->> @@ -202,6 +205,8 @@ enum dma_ctrl_flags {
->>  	DMA_PREP_CMD = (1 << 7),
->>  	DMA_PREP_REPEAT = (1 << 8),
->>  	DMA_PREP_LOAD_EOT = (1 << 9),
->> +	DMA_PREP_LOCK = (1 << 10),
->> +	DMA_PREP_UNLOCK = (1 << 11),
->>  };
->> 
->>  /**
->> --
->> 2.7.4
+--
+Qualcomm INDIA, on behalf of Qualcomm Innovation Center, Inc.is a member
+of the Code Aurora Forum, hosted by the  Linux Foundation.
+
