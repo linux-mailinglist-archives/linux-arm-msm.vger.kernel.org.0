@@ -2,263 +2,220 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id DA0252DF746
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Dec 2020 01:30:52 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1F6EC2DF864
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Dec 2020 05:51:57 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727678AbgLUAam (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 20 Dec 2020 19:30:42 -0500
-Received: from out5-smtp.messagingengine.com ([66.111.4.29]:53303 "EHLO
-        out5-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726619AbgLUAal (ORCPT
+        id S1727658AbgLUEuZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 20 Dec 2020 23:50:25 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37954 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727219AbgLUEuZ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 20 Dec 2020 19:30:41 -0500
-Received: from compute2.internal (compute2.nyi.internal [10.202.2.42])
-        by mailout.nyi.internal (Postfix) with ESMTP id A37685C012C;
-        Sun, 20 Dec 2020 19:29:34 -0500 (EST)
-Received: from mailfrontend1 ([10.202.2.162])
-  by compute2.internal (MEProxy); Sun, 20 Dec 2020 19:29:34 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kdrag0n.dev; h=
-        from:to:cc:subject:date:message-id:in-reply-to:references
-        :mime-version:content-type:content-transfer-encoding; s=fm3; bh=
-        6NZcU0rk9Atsk8f+ku2gZv4pmTbxyFMMstlSQkIIexc=; b=ACqh7TZ8RHtOmPPo
-        TH/rQBvnyd3/aXiqIqdWZKR8VUUFQphubo3vioFOzEdiSCJgxPJRlRZrR9Wsj5Du
-        3ZTx3O2rheZ7YAuFTeSpJEFNSASjOFDnnv+rfoTzhiuyv2f83GugWrUUGixf9ski
-        RVf2Yauxjh8Kroz8392jBziwQWSqNFmFfqsByAPeisPTaJMjyO+8e6wq7OWDjeAJ
-        fp2F1p7ylcdkU8sNy/p0FV7DaUtLmaxYkAvemymjKBKRreoxavRGzgy5Xu4zjCz7
-        vGCVV7eyL6wcZcRIt/Og2+8SwoCuZooGTmJbQzlIuVF6QrPCzOSfy6sroUjRvp7i
-        IQBzYA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-        messagingengine.com; h=cc:content-transfer-encoding:content-type
-        :date:from:in-reply-to:message-id:mime-version:references
-        :subject:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
-        :x-sasl-enc; s=fm1; bh=6NZcU0rk9Atsk8f+ku2gZv4pmTbxyFMMstlSQkIIe
-        xc=; b=auRg2OjdW2OBXfFwO9mrEQHmd6vTOiwCS+KmA2guq2ZbK7MJDbCEjWpCr
-        UHUwh0+9RxA1E8O5hutQKbgQ3hEmkC2fhYkXs4gtvTnkOntBQ6SKC9u5DPIJOLLn
-        /DQvQrGoR2Zvq8pFDLPCrwifsW+XztznI4t6I4poLLwNpXqAgGAcMXObzlAjvw1p
-        /cwqH8k4oxhcLGUcoXWh4KIrLKvCcHv3l1UfhAgrshYMkPtsqs5aYDUdpvRwQucN
-        ETsi87WHONVJFoOWKs5Wb1V3t+BayYUlzlSJYqFgBGTwPLf1UJAIxgCFWCsTUUoh
-        DgB5f+yshV7fpyVPOqGvNtjLNqFng==
-X-ME-Sender: <xms:buzfX6y35EUv_rHgcocwCoXZSWdr5iTYl5RXOAi_QRqE4G-ZinkrVw>
-    <xme:buzfX2TY7AHJafAJ0S0gI99QOCpHCpbmrfUjeuoSqkarVEBvGuptKqxyR6flu0r6-
-    fw9JwvX1rr60KqnLv0>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedujedrvddtuddgvdegucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
-    hmihhsshhinhhgucfvqfcufhhivghlugculdeftddmnegoteeftdduqddtudculdduhedm
-    necujfgurhephffvufffkffojghfgggtgfesthekredtredtjeenucfhrhhomhepffgrnh
-    hnhicunfhinhcuoegurghnnhihsehkughrrghgtdhnrdguvghvqeenucggtffrrghtthgv
-    rhhnpedvkedvvdektdejjedtudefueekgfefvedttdfggefgvdetgeehvefgkedufeehue
-    enucffohhmrghinhepghhithhhuhgsrdgtohhmpdgvvghmsggtrdhorhhgnecukfhppedu
-    tdegrddvtddtrdduvdelrddvuddvnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrg
-    hmpehmrghilhhfrhhomhepuggrnhhnhieskhgurhgrghdtnhdruggvvh
-X-ME-Proxy: <xmx:buzfX8VS0sc21KEJcl0pfy3nS_CTNVC6gKn1xrXxNpUB82cnMB43og>
-    <xmx:buzfXwioaXOML61MDe2NnNaZ3inaCqGImbeGx6FFSwoi6vap74pk6Q>
-    <xmx:buzfX8B_lyTj99E-4BAaPflqx9Ahu5-rzM5PWHuVwu-Okzz_levXkw>
-    <xmx:buzfX_9WnC1HuROFxIB1TNSqv9O7aFJKnqkwkc1ei0io2xQFhtrm4w>
-Received: from pinwheel.localdomain (unknown [104.200.129.212])
-        by mail.messagingengine.com (Postfix) with ESMTPA id CE98E240062;
-        Sun, 20 Dec 2020 19:29:33 -0500 (EST)
-From:   Danny Lin <danny@kdrag0n.dev>
-Cc:     Danny Lin <danny@kdrag0n.dev>, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
+        Sun, 20 Dec 2020 23:50:25 -0500
+Received: from mail-ua1-x92a.google.com (mail-ua1-x92a.google.com [IPv6:2607:f8b0:4864:20::92a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ED6ECC061282
+        for <linux-arm-msm@vger.kernel.org>; Sun, 20 Dec 2020 20:49:44 -0800 (PST)
+Received: by mail-ua1-x92a.google.com with SMTP id 73so2933722uac.8
+        for <linux-arm-msm@vger.kernel.org>; Sun, 20 Dec 2020 20:49:44 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=tXhZpl/nrjd5elY+cgPhkIk6TXDo0n8ptV1A9qL9ff4=;
+        b=A1/lUel56LIWTo/i7+chJCk2/uQ81um5EdPufdOCiJ9eRyzpLP8OVfU5XLJvQgiNBh
+         JNnEmOz12XHIuMj7pmFJyQ4C77d1KfouYOjDhYZzNEp2bkIrZMopAnZZY9+rTdm+GGaG
+         CdNT0xdbTAaNtDYj7gTf8yPvAOZE+c1SxZBsvi3UEbPrJFKB+y2pM27j7SqvDIXyDMhp
+         Umbq+guH5u1aqeq5LriItgR9wcmvmttI9Q1UQtxiwnVbudPYughy+3024QFZYmc+1qWT
+         6tZEvodNagg30SRg9mySvV7MAeLGuYb0YN+twixwQDUX1QvEbtOgUaAWhxSJ7gzw3XXq
+         bPYg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=tXhZpl/nrjd5elY+cgPhkIk6TXDo0n8ptV1A9qL9ff4=;
+        b=eGex8fjiGZ1hsveWXpb3MgI44bKmXGDv4uh2N8VuJxtJ1YXyhUsawOOWoOKpj40FuL
+         079LlSMUUHu5CqFKoWfyTGipVfTB0qF+mX6tIhR0Xvor2/H7snPDJllbOh+tvtN31eDd
+         Ll7krnhgxD3k6oaddRj99vXj6hwh1M1oXTr8kLfPEV5A7tBwSqYEBmr2JotkwehGwHSo
+         MzLmy6jfvSg5G0sWI8O66uU+HyCexO1/D3p1FtkCkqKjngV6tJV0UWPtuDB0k0BkYTgY
+         SIUxg2smJCHh7/zMEgHa8b+QjhlMnbfnsygBegjIyx/BQVbGV+dzAI1lEzzUivLzv0ul
+         yp9g==
+X-Gm-Message-State: AOAM530RJOTadET4FONfAljcwcFhFjtVN6A0oDA8C5+0V5dARp9aCm2O
+        EoH1PdXkgOjZ2iW36u0cml822pClgC2mKA==
+X-Google-Smtp-Source: ABdhPJyIG0HDMlf+ODXFvv1pdnphzNcS6Dy5rYs9HhKZGRPMueRRmgAUTiJNwGkSDibU6TwDNnwVhg==
+X-Received: by 2002:a9d:2287:: with SMTP id y7mr10350287ota.137.1608522490944;
+        Sun, 20 Dec 2020 19:48:10 -0800 (PST)
+Received: from ripper (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
+        by smtp.gmail.com with ESMTPSA id h93sm3595016otb.29.2020.12.20.19.48.09
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 20 Dec 2020 19:48:10 -0800 (PST)
+Date:   Sun, 20 Dec 2020 19:48:54 -0800
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Danny Lin <danny@kdrag0n.dev>
+Cc:     Andy Gross <agross@kernel.org>, Rob Herring <robh+dt@kernel.org>,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org
-Subject: [PATCH 3/3] arm64: dts: qcom: sm8150: Add CPU capacities and energy model
-Date:   Sun, 20 Dec 2020 16:29:07 -0800
-Message-Id: <20201221002907.2870059-4-danny@kdrag0n.dev>
-X-Mailer: git-send-email 2.29.2
-In-Reply-To: <20201221002907.2870059-1-danny@kdrag0n.dev>
+Subject: Re: [PATCH 2/3] arm64: dts: qcom: sm8150: Add PSCI idle states
+Message-ID: <X+AbJvE7OGs3cRCw@ripper>
 References: <20201221002907.2870059-1-danny@kdrag0n.dev>
+ <20201221002907.2870059-3-danny@kdrag0n.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-To:     unlisted-recipients:; (no To-header on input)
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20201221002907.2870059-3-danny@kdrag0n.dev>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Power and performance measurements were made using my freqbench [1]
-benchmark coordinator, which isolates, offlines, and disables the timer
-tick on test CPUs to maximize accuracy. It uses EEMBC CoreMark [2] as
-the workload and measures power usage using the PM8150B PMIC's fuel
-gauge.
+On Sun 20 Dec 16:29 PST 2020, Danny Lin wrote:
 
-The energy model dynamic-power-coefficient values were calculated with
-    DPC = µW / MHz / V^2
-for each OPP, and averaged across all OPPs within each cluster for the
-final coefficient. Voltages were obtained from the qcom-cpufreq-hw
-driver that reads voltages from the OSM LUT programmed into the SoC.
+> Like other Qualcomm SoCs, sm8150 exposes CPU and cluster idle states
+> through PSCI. Define the idle states to save power when the CPU is not
+> in active use.
+> 
+> These idle states, latency, and residency values match the downstream
+> 4.14 kernel from Qualcomm as of LA.UM.8.1.r1-15600-sm8150.0.
+> 
+> It's worth noting that the CPU has an additional C3 power collapse idle
+> state between WFI and rail power collapse (with PSCI mode 0x40000003),
+> but it is not officially used in downstream kernels due to "thermal
+> throttling issues."
+> 
 
-Normalized DMIPS/MHz capacity scale values for each CPU were calculated
-from CoreMarks/MHz (CoreMark iterations per second per MHz), which
-serves the same purpose. For each CPU, the final capacity-dmips-mhz
-value is the C/MHz value of its maximum frequency normalized to
-SCHED_CAPACITY_SCALE (1024) for the fastest CPU in the system.
+Thanks Danny for this series, very happy to see this kind of additions.
+Just one small question about the cluster param below.
 
-An Asus ZenFone 6 device running a downstream Qualcomm 4.14 kernel
-(LA.UM.8.1.r1-15600-sm8150.0) was used for benchmarks to ensure proper
-frequency scaling and other low-level controls.
+> Signed-off-by: Danny Lin <danny@kdrag0n.dev>
+> ---
+>  arch/arm64/boot/dts/qcom/sm8150.dtsi | 50 ++++++++++++++++++++++++++++
+>  1 file changed, 50 insertions(+)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/sm8150.dtsi b/arch/arm64/boot/dts/qcom/sm8150.dtsi
+> index 75ed38ee5d88..edc1fe6d7f1b 100644
+> --- a/arch/arm64/boot/dts/qcom/sm8150.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sm8150.dtsi
+> @@ -50,6 +50,8 @@ CPU0: cpu@0 {
+>  			compatible = "qcom,kryo485";
+>  			reg = <0x0 0x0>;
+>  			enable-method = "psci";
+> +			cpu-idle-states = <&LITTLE_CPU_SLEEP_0
+> +					   &CLUSTER_SLEEP_0>;
+>  			next-level-cache = <&L2_0>;
+>  			qcom,freq-domain = <&cpufreq_hw 0>;
+>  			#cooling-cells = <2>;
+> @@ -67,6 +69,8 @@ CPU1: cpu@100 {
+>  			compatible = "qcom,kryo485";
+>  			reg = <0x0 0x100>;
+>  			enable-method = "psci";
+> +			cpu-idle-states = <&LITTLE_CPU_SLEEP_0
+> +					   &CLUSTER_SLEEP_0>;
+>  			next-level-cache = <&L2_100>;
+>  			qcom,freq-domain = <&cpufreq_hw 0>;
+>  			#cooling-cells = <2>;
+> @@ -82,6 +86,8 @@ CPU2: cpu@200 {
+>  			compatible = "qcom,kryo485";
+>  			reg = <0x0 0x200>;
+>  			enable-method = "psci";
+> +			cpu-idle-states = <&LITTLE_CPU_SLEEP_0
+> +					   &CLUSTER_SLEEP_0>;
+>  			next-level-cache = <&L2_200>;
+>  			qcom,freq-domain = <&cpufreq_hw 0>;
+>  			#cooling-cells = <2>;
+> @@ -96,6 +102,8 @@ CPU3: cpu@300 {
+>  			compatible = "qcom,kryo485";
+>  			reg = <0x0 0x300>;
+>  			enable-method = "psci";
+> +			cpu-idle-states = <&LITTLE_CPU_SLEEP_0
+> +					   &CLUSTER_SLEEP_0>;
+>  			next-level-cache = <&L2_300>;
+>  			qcom,freq-domain = <&cpufreq_hw 0>;
+>  			#cooling-cells = <2>;
+> @@ -110,6 +118,8 @@ CPU4: cpu@400 {
+>  			compatible = "qcom,kryo485";
+>  			reg = <0x0 0x400>;
+>  			enable-method = "psci";
+> +			cpu-idle-states = <&BIG_CPU_SLEEP_0
+> +					   &CLUSTER_SLEEP_0>;
+>  			next-level-cache = <&L2_400>;
+>  			qcom,freq-domain = <&cpufreq_hw 1>;
+>  			#cooling-cells = <2>;
+> @@ -124,6 +134,8 @@ CPU5: cpu@500 {
+>  			compatible = "qcom,kryo485";
+>  			reg = <0x0 0x500>;
+>  			enable-method = "psci";
+> +			cpu-idle-states = <&BIG_CPU_SLEEP_0
+> +					   &CLUSTER_SLEEP_0>;
+>  			next-level-cache = <&L2_500>;
+>  			qcom,freq-domain = <&cpufreq_hw 1>;
+>  			#cooling-cells = <2>;
+> @@ -138,6 +150,8 @@ CPU6: cpu@600 {
+>  			compatible = "qcom,kryo485";
+>  			reg = <0x0 0x600>;
+>  			enable-method = "psci";
+> +			cpu-idle-states = <&BIG_CPU_SLEEP_0
+> +					   &CLUSTER_SLEEP_0>;
+>  			next-level-cache = <&L2_600>;
+>  			qcom,freq-domain = <&cpufreq_hw 1>;
+>  			#cooling-cells = <2>;
+> @@ -152,6 +166,8 @@ CPU7: cpu@700 {
+>  			compatible = "qcom,kryo485";
+>  			reg = <0x0 0x700>;
+>  			enable-method = "psci";
+> +			cpu-idle-states = <&BIG_CPU_SLEEP_0
+> +					   &CLUSTER_SLEEP_0>;
+>  			next-level-cache = <&L2_700>;
+>  			qcom,freq-domain = <&cpufreq_hw 2>;
+>  			#cooling-cells = <2>;
+> @@ -196,6 +212,40 @@ core7 {
+>  				};
+>  			};
+>  		};
+> +
+> +		idle-states {
+> +			entry-method = "psci";
+> +
+> +			LITTLE_CPU_SLEEP_0: cpu-sleep-0-0 {
+> +				compatible = "arm,idle-state";
+> +				idle-state-name = "little-rail-power-collapse";
+> +				arm,psci-suspend-param = <0x40000004>;
+> +				entry-latency-us = <355>;
+> +				exit-latency-us = <909>;
+> +				min-residency-us = <3934>;
+> +				local-timer-stop;
+> +			};
+> +
+> +			BIG_CPU_SLEEP_0: cpu-sleep-1-0 {
+> +				compatible = "arm,idle-state";
+> +				idle-state-name = "big-rail-power-collapse";
+> +				arm,psci-suspend-param = <0x40000004>;
+> +				entry-latency-us = <241>;
+> +				exit-latency-us = <1461>;
+> +				min-residency-us = <4488>;
+> +				local-timer-stop;
+> +			};
+> +
+> +			CLUSTER_SLEEP_0: cluster-sleep-0 {
+> +				compatible = "arm,idle-state";
+> +				idle-state-name = "cluster-power-collapse";
+> +				arm,psci-suspend-param = <0x400000F4>;
 
-Raw benchmark results can be found in the freqbench repository [3].
-Below is a human-readable summary:
+How come this is 0xf4?
 
-Frequency domains: cpu1 cpu4 cpu7
-Offline CPUs: cpu1 cpu2 cpu3 cpu4 cpu5 cpu6 cpu7
-Baseline power usage: 1400 mW
+Isn't downstream saying that this should be either 0x1 << 4 or 0xc24 <<
+4, depending on how deep we want to go? Could we at least mention why
+this is 0xf4?
 
-===== CPU 1 =====
-Frequencies: 300 403 499 576 672 768 844 940 1036 1113 1209 1305 1382 1478 1555 1632 1708 1785
+Regards,
+Bjorn
 
- 300:  1114     3.7 C/MHz     52 mW   11.8 J   21.3 I/mJ   224.4 s
- 403:  1497     3.7 C/MHz     57 mW    9.5 J   26.2 I/mJ   167.0 s
- 499:  1854     3.7 C/MHz     73 mW    9.8 J   25.5 I/mJ   134.9 s
- 576:  2139     3.7 C/MHz     83 mW    9.7 J   25.8 I/mJ   116.9 s
- 672:  2495     3.7 C/MHz     65 mW    6.5 J   38.6 I/mJ   100.2 s
- 768:  2852     3.7 C/MHz     72 mW    6.3 J   39.4 I/mJ    87.7 s
- 844:  3137     3.7 C/MHz     77 mW    6.2 J   40.5 I/mJ    79.7 s
- 940:  3493     3.7 C/MHz     84 mW    6.0 J   41.8 I/mJ    71.6 s
-1036:  3850     3.7 C/MHz     91 mW    5.9 J   42.5 I/mJ    64.9 s
-1113:  4135     3.7 C/MHz     96 mW    5.8 J   43.2 I/mJ    60.5 s
-1209:  4491     3.7 C/MHz    102 mW    5.7 J   44.2 I/mJ    55.7 s
-1305:  4848     3.7 C/MHz    110 mW    5.7 J   44.0 I/mJ    51.6 s
-1382:  5133     3.7 C/MHz    114 mW    5.5 J   45.2 I/mJ    48.7 s
-1478:  5490     3.7 C/MHz    120 mW    5.5 J   45.7 I/mJ    45.5 s
-1555:  5775     3.7 C/MHz    126 mW    5.5 J   45.8 I/mJ    43.3 s
-1632:  6060     3.7 C/MHz    131 mW    5.4 J   46.1 I/mJ    41.3 s
-1708:  6345     3.7 C/MHz    137 mW    5.4 J   46.3 I/mJ    39.4 s
-1785:  6630     3.7 C/MHz    146 mW    5.5 J   45.5 I/mJ    37.7 s
-
-===== CPU 4 =====
-Frequencies: 710 825 940 1056 1171 1286 1401 1497 1612 1708 1804 1920 2016 2131 2227 2323 2419
-
- 710:  2765     3.9 C/MHz    126 mW   11.4 J   22.0 I/mJ    90.4 s
- 825:  6432     7.8 C/MHz    206 mW    8.0 J   31.2 I/mJ    38.9 s
- 940:  7331     7.8 C/MHz    227 mW    7.7 J   32.3 I/mJ    34.1 s
-1056:  8227     7.8 C/MHz    249 mW    7.6 J   33.0 I/mJ    30.4 s
-1171:  9127     7.8 C/MHz    261 mW    7.2 J   34.9 I/mJ    27.4 s
-1286: 10020     7.8 C/MHz    289 mW    7.2 J   34.6 I/mJ    25.0 s
-1401: 10918     7.8 C/MHz    311 mW    7.1 J   35.1 I/mJ    22.9 s
-1497: 11663     7.8 C/MHz    336 mW    7.2 J   34.7 I/mJ    21.4 s
-1612: 12546     7.8 C/MHz    375 mW    7.5 J   33.5 I/mJ    19.9 s
-1708: 13320     7.8 C/MHz    398 mW    7.5 J   33.5 I/mJ    18.8 s
-1804: 14069     7.8 C/MHz    456 mW    8.1 J   30.9 I/mJ    17.8 s
-1920: 14909     7.8 C/MHz    507 mW    8.5 J   29.4 I/mJ    16.8 s
-2016: 15706     7.8 C/MHz    558 mW    8.9 J   28.1 I/mJ    15.9 s
-2131: 16612     7.8 C/MHz    632 mW    9.5 J   26.3 I/mJ    15.1 s
-2227: 17349     7.8 C/MHz    698 mW   10.1 J   24.8 I/mJ    14.4 s
-2323: 18088     7.8 C/MHz    717 mW    9.9 J   25.2 I/mJ    13.8 s
-2419: 18835     7.8 C/MHz    845 mW   11.2 J   22.3 I/mJ    13.3 s
-
-===== CPU 7 =====
-Frequencies: 825 940 1056 1171 1286 1401 1497 1612 1708 1804 1920 2016 2131 2227 2323 2419 2534 2649 2745 2841
-
- 825:  3215     3.9 C/MHz    158 mW   12.3 J   20.3 I/mJ    77.8 s
- 940:  7330     7.8 C/MHz    269 mW    9.2 J   27.3 I/mJ    34.1 s
-1056:  8227     7.8 C/MHz    291 mW    8.8 J   28.2 I/mJ    30.4 s
-1171:  9125     7.8 C/MHz    316 mW    8.7 J   28.9 I/mJ    27.4 s
-1286: 10024     7.8 C/MHz    338 mW    8.4 J   29.6 I/mJ    25.0 s
-1401: 10922     7.8 C/MHz    365 mW    8.4 J   29.9 I/mJ    22.9 s
-1497: 11674     7.8 C/MHz    383 mW    8.2 J   30.4 I/mJ    21.4 s
-1612: 12564     7.8 C/MHz    406 mW    8.1 J   30.9 I/mJ    19.9 s
-1708: 13317     7.8 C/MHz    427 mW    8.0 J   31.2 I/mJ    18.8 s
-1804: 14062     7.8 C/MHz    446 mW    7.9 J   31.5 I/mJ    17.8 s
-1920: 14966     7.8 C/MHz    498 mW    8.3 J   30.1 I/mJ    16.7 s
-2016: 15711     7.8 C/MHz    513 mW    8.2 J   30.6 I/mJ    15.9 s
-2131: 16599     7.8 C/MHz    599 mW    9.0 J   27.7 I/mJ    15.1 s
-2227: 17353     7.8 C/MHz    622 mW    9.0 J   27.9 I/mJ    14.4 s
-2323: 18095     7.8 C/MHz    704 mW    9.7 J   25.7 I/mJ    13.8 s
-2419: 18849     7.8 C/MHz    738 mW    9.8 J   25.5 I/mJ    13.3 s
-2534: 19761     7.8 C/MHz    824 mW   10.4 J   23.9 I/mJ    12.7 s
-2649: 20658     7.8 C/MHz    882 mW   10.7 J   23.4 I/mJ    12.1 s
-2745: 21400     7.8 C/MHz   1003 mW   11.7 J   21.3 I/mJ    11.7 s
-2841: 22147     7.8 C/MHz   1092 mW   12.3 J   20.3 I/mJ    11.3 s
-
-[1] https://github.com/kdrag0n/freqbench
-[2] https://www.eembc.org/coremark/
-[3] https://github.com/kdrag0n/freqbench/tree/master/results/sm8150/main
-
-Signed-off-by: Danny Lin <danny@kdrag0n.dev>
----
- arch/arm64/boot/dts/qcom/sm8150.dtsi | 16 ++++++++++++++++
- 1 file changed, 16 insertions(+)
-
-diff --git a/arch/arm64/boot/dts/qcom/sm8150.dtsi b/arch/arm64/boot/dts/qcom/sm8150.dtsi
-index edc1fe6d7f1b..5cadab1e052a 100644
---- a/arch/arm64/boot/dts/qcom/sm8150.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8150.dtsi
-@@ -50,6 +50,8 @@ CPU0: cpu@0 {
- 			compatible = "qcom,kryo485";
- 			reg = <0x0 0x0>;
- 			enable-method = "psci";
-+			capacity-dmips-mhz = <488>;
-+			dynamic-power-coefficient = <232>;
- 			cpu-idle-states = <&LITTLE_CPU_SLEEP_0
- 					   &CLUSTER_SLEEP_0>;
- 			next-level-cache = <&L2_0>;
-@@ -69,6 +71,8 @@ CPU1: cpu@100 {
- 			compatible = "qcom,kryo485";
- 			reg = <0x0 0x100>;
- 			enable-method = "psci";
-+			capacity-dmips-mhz = <488>;
-+			dynamic-power-coefficient = <232>;
- 			cpu-idle-states = <&LITTLE_CPU_SLEEP_0
- 					   &CLUSTER_SLEEP_0>;
- 			next-level-cache = <&L2_100>;
-@@ -86,6 +90,8 @@ CPU2: cpu@200 {
- 			compatible = "qcom,kryo485";
- 			reg = <0x0 0x200>;
- 			enable-method = "psci";
-+			capacity-dmips-mhz = <488>;
-+			dynamic-power-coefficient = <232>;
- 			cpu-idle-states = <&LITTLE_CPU_SLEEP_0
- 					   &CLUSTER_SLEEP_0>;
- 			next-level-cache = <&L2_200>;
-@@ -102,6 +108,8 @@ CPU3: cpu@300 {
- 			compatible = "qcom,kryo485";
- 			reg = <0x0 0x300>;
- 			enable-method = "psci";
-+			capacity-dmips-mhz = <488>;
-+			dynamic-power-coefficient = <232>;
- 			cpu-idle-states = <&LITTLE_CPU_SLEEP_0
- 					   &CLUSTER_SLEEP_0>;
- 			next-level-cache = <&L2_300>;
-@@ -118,6 +126,8 @@ CPU4: cpu@400 {
- 			compatible = "qcom,kryo485";
- 			reg = <0x0 0x400>;
- 			enable-method = "psci";
-+			capacity-dmips-mhz = <1024>;
-+			dynamic-power-coefficient = <369>;
- 			cpu-idle-states = <&BIG_CPU_SLEEP_0
- 					   &CLUSTER_SLEEP_0>;
- 			next-level-cache = <&L2_400>;
-@@ -134,6 +144,8 @@ CPU5: cpu@500 {
- 			compatible = "qcom,kryo485";
- 			reg = <0x0 0x500>;
- 			enable-method = "psci";
-+			capacity-dmips-mhz = <1024>;
-+			dynamic-power-coefficient = <369>;
- 			cpu-idle-states = <&BIG_CPU_SLEEP_0
- 					   &CLUSTER_SLEEP_0>;
- 			next-level-cache = <&L2_500>;
-@@ -150,6 +162,8 @@ CPU6: cpu@600 {
- 			compatible = "qcom,kryo485";
- 			reg = <0x0 0x600>;
- 			enable-method = "psci";
-+			capacity-dmips-mhz = <1024>;
-+			dynamic-power-coefficient = <369>;
- 			cpu-idle-states = <&BIG_CPU_SLEEP_0
- 					   &CLUSTER_SLEEP_0>;
- 			next-level-cache = <&L2_600>;
-@@ -166,6 +180,8 @@ CPU7: cpu@700 {
- 			compatible = "qcom,kryo485";
- 			reg = <0x0 0x700>;
- 			enable-method = "psci";
-+			capacity-dmips-mhz = <1024>;
-+			dynamic-power-coefficient = <421>;
- 			cpu-idle-states = <&BIG_CPU_SLEEP_0
- 					   &CLUSTER_SLEEP_0>;
- 			next-level-cache = <&L2_700>;
--- 
-2.29.2
-
+> +				entry-latency-us = <3263>;
+> +				exit-latency-us = <6562>;
+> +				min-residency-us = <9987>;
+> +				local-timer-stop;
+> +			};
+> +		};
+>  	};
+>  
+>  	firmware {
+> -- 
+> 2.29.2
+> 
