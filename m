@@ -2,195 +2,330 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D00682DF980
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Dec 2020 08:37:43 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E90D62DF98E
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Dec 2020 08:43:58 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726239AbgLUHgd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 21 Dec 2020 02:36:33 -0500
-Received: from so254-31.mailgun.net ([198.61.254.31]:18737 "EHLO
-        so254-31.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726232AbgLUHgd (ORCPT
+        id S1726200AbgLUHnV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 21 Dec 2020 02:43:21 -0500
+Received: from alexa-out-tai-02.qualcomm.com ([103.229.16.227]:63454 "EHLO
+        alexa-out-tai-02.qualcomm.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1725908AbgLUHnV (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 21 Dec 2020 02:36:33 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1608536172; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=cIizDPRICPgg/bSArezwSPToM2+vbpPt0D05PpcHIg4=;
- b=M/7/Z8msxsHq+oSuHVfu1RxP52579StAdC/gTO3Ae0Hyl/WAOdqn9A86dCtRqtHcs/XgP5I/
- C9xVBAAWuF6nBKVzzTb1CPuiohFA2F+/232qu0ZglZUJq18ZLXW1iY+HeJQZgsRloAezsjt3
- aUSCCAgHJk8w7ru7X/6FuxriCis=
-X-Mailgun-Sending-Ip: 198.61.254.31
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n09.prod.us-east-1.postgun.com with SMTP id
- 5fe050520564dfefcd460bc0 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 21 Dec 2020 07:35:46
- GMT
-Sender: mdalam=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 9A31CC43464; Mon, 21 Dec 2020 07:35:45 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: mdalam)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 721FCC433CA;
-        Mon, 21 Dec 2020 07:35:44 +0000 (UTC)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Mon, 21 Dec 2020 13:05:44 +0530
-From:   mdalam@codeaurora.org
-To:     Thara Gopinath <thara.gopinath@linaro.org>
-Cc:     vkoul@kernel.org, corbet@lwn.net, agross@kernel.org,
-        bjorn.andersson@linaro.org, dan.j.williams@intel.com,
-        dmaengine@vger.kernel.org, linux-doc@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        sricharan@codeaurora.org
-Subject: Re: [PATCH] dmaengine: qcom: bam_dma: Add LOCK and UNLOCK flag bit
- support
-In-Reply-To: <6c85436d-e064-367e-736b-951af82256c8@linaro.org>
-References: <1608215842-15381-1-git-send-email-mdalam@codeaurora.org>
- <6c85436d-e064-367e-736b-951af82256c8@linaro.org>
-Message-ID: <9769c54acf54617a17346fea60ee38b6@codeaurora.org>
-X-Sender: mdalam@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+        Mon, 21 Dec 2020 02:43:21 -0500
+Received: from ironmsg01-tai.qualcomm.com ([10.249.140.6])
+  by alexa-out-tai-02.qualcomm.com with ESMTP; 21 Dec 2020 15:42:36 +0800
+X-QCInternal: smtphost
+Received: from cbsp-sh-gv.ap.qualcomm.com (HELO cbsp-sh-gv.qualcomm.com) ([10.231.249.68])
+  by ironmsg01-tai.qualcomm.com with ESMTP; 21 Dec 2020 15:42:04 +0800
+Received: by cbsp-sh-gv.qualcomm.com (Postfix, from userid 393357)
+        id 79AEF2991; Mon, 21 Dec 2020 15:42:03 +0800 (CST)
+From:   Ziqi Chen <ziqichen@codeaurora.org>
+To:     asutoshd@codeaurora.org, nguyenb@codeaurora.org,
+        cang@codeaurora.org, hongwus@codeaurora.org, rnayak@codeaurora.org,
+        vinholikatti@gmail.com, jejb@linux.vnet.ibm.com,
+        martin.petersen@oracle.com, linux-scsi@vger.kernel.org,
+        kernel-team@android.com, saravanak@google.com, salyzyn@google.com,
+        ziqichen@codeaurora.org, kwmad.kim@samsung.com,
+        stanley.chu@mediatek.com
+Cc:     Alim Akhtar <alim.akhtar@samsung.com>,
+        Avri Altman <avri.altman@wdc.com>,
+        "James E.J. Bottomley" <jejb@linux.ibm.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        Bean Huo <beanhuo@micron.com>,
+        Bart Van Assche <bvanassche@acm.org>,
+        Adrian Hunter <adrian.hunter@intel.com>,
+        Satya Tangirala <satyat@google.com>,
+        linux-mediatek@lists.infradead.org (moderated list:UNIVERSAL FLASH
+        STORAGE HOST CONTROLLER DRIVER...),
+        linux-kernel@vger.kernel.org (open list),
+        linux-arm-msm@vger.kernel.org (open list:ARM/QUALCOMM SUPPORT),
+        linux-arm-kernel@lists.infradead.org (moderated list:ARM/Mediatek SoC
+        support)
+Subject: [PATCH RFC v2 1/1] scsi: ufs: Fix ufs power down/on specs violation
+Date:   Mon, 21 Dec 2020 15:41:37 +0800
+Message-Id: <1608536504-76507-1-git-send-email-ziqichen@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2020-12-19 09:05, Thara Gopinath wrote:
-> On 12/17/20 9:37 AM, Md Sadre Alam wrote:
->> This change will add support for LOCK & UNLOCK flag bit support
->> on CMD descriptor.
->> 
->> If DMA_PREP_LOCK flag passed in prep_slave_sg then requester of this
->> transaction wanted to lock the DMA controller for this transaction so
->> BAM driver should set LOCK bit for the HW descriptor.
->> 
->> If DMA_PREP_UNLOCK flag passed in prep_slave_sg then requester of this
->> transaction wanted to unlock the DMA controller.so BAM driver should 
->> set
->> UNLOCK bit for the HW descriptor.
-> Hi,
-> 
-> This is a generic question. What is the point of LOCK/UNLOCK with
-> allocating LOCK groups to the individual dma channels? By default
-> doesn't all channels fall in the same group. This would mean that
-> a lock does not prevent the dma controller from not executing a
-> transaction on the other channels.
-> 
+As per specs, e.g, JESD220E chapter 7.2, while powering
+off/on the ufs device, RST_N signal and REF_CLK signal
+should be between VSS(Ground) and VCCQ/VCCQ2.
 
-The Pipe Locking/Unlocking will be only on command-descriptor.
-Upon encountering a command descriptor with LOCK bit set, the BAM
-will lock all other pipes not related to the current pipe group, and 
-keep
-handling the current pipe only until it sees the UNLOCK set then it will
-release all locked pipes.
+To flexibly control device reset line, re-name the function
+ufschd_vops_device_reset(sturct ufs_hba *hba) to ufshcd_
+vops_toggle_device_reset(sturct ufs_hba *hba, bool up). The
+new parameter "bool up" is used to separate device reset
+line pulling up from pulling down.
 
-The actual locking is done on the new descriptor fetching for 
-publishing,
-i.e. locked pipe will not fetch new descriptors even if it got 
-event/events
-adding more descriptors for this pipe (locked pipe).
+Cc: Kiwoong Kim <kwmad.kim@samsung.com>
+Cc: Stanley Chu <stanley.chu@mediatek.com>
+Signed-off-by: Ziqi Chen <ziqichen@codeaurora.org>
+---
+ drivers/scsi/ufs/ufs-mediatek.c | 27 +++++++++-----------------
+ drivers/scsi/ufs/ufs-qcom.c     | 22 ++++++++++-----------
+ drivers/scsi/ufs/ufshcd.c       | 43 ++++++++++++++++++++++++++++++-----------
+ drivers/scsi/ufs/ufshcd.h       | 10 +++++-----
+ 4 files changed, 56 insertions(+), 46 deletions(-)
 
-The bam LOCKING mechanism is needed where different cores needs to share
-same hardware block which use bam for their transaction. So if both 
-cores
-wanted to access the hardware block in parallel via bam, then locking 
-mechanism
-is needed for bam pipes.
+diff --git a/drivers/scsi/ufs/ufs-mediatek.c b/drivers/scsi/ufs/ufs-mediatek.c
+index 80618af..bff2c42 100644
+--- a/drivers/scsi/ufs/ufs-mediatek.c
++++ b/drivers/scsi/ufs/ufs-mediatek.c
+@@ -841,27 +841,18 @@ static int ufs_mtk_link_startup_notify(struct ufs_hba *hba,
+ 	return ret;
+ }
+ 
+-static int ufs_mtk_device_reset(struct ufs_hba *hba)
++static int ufs_mtk_toggle_device_reset(struct ufs_hba *hba, bool down)
+ {
+ 	struct arm_smccc_res res;
+ 
+-	ufs_mtk_device_reset_ctrl(0, res);
+-
+-	/*
+-	 * The reset signal is active low. UFS devices shall detect
+-	 * more than or equal to 1us of positive or negative RST_n
+-	 * pulse width.
+-	 *
+-	 * To be on safe side, keep the reset low for at least 10us.
+-	 */
+-	usleep_range(10, 15);
+-
+-	ufs_mtk_device_reset_ctrl(1, res);
+-
+-	/* Some devices may need time to respond to rst_n */
+-	usleep_range(10000, 15000);
++	if (down) {
++		ufs_mtk_device_reset_ctrl(0, res);
++	} else {
++		ufs_mtk_device_reset_ctrl(1, res);
+ 
+-	dev_info(hba->dev, "device reset done\n");
++		/* Some devices may need time to respond to rst_n */
++		usleep_range(10000, 15000);
++	}
+ 
+ 	return 0;
+ }
+@@ -1052,7 +1043,7 @@ static const struct ufs_hba_variant_ops ufs_hba_mtk_vops = {
+ 	.suspend             = ufs_mtk_suspend,
+ 	.resume              = ufs_mtk_resume,
+ 	.dbg_register_dump   = ufs_mtk_dbg_register_dump,
+-	.device_reset        = ufs_mtk_device_reset,
++	.toggle_device_reset        = ufs_mtk_toggle_device_reset,
+ 	.event_notify        = ufs_mtk_event_notify,
+ };
+ 
+diff --git a/drivers/scsi/ufs/ufs-qcom.c b/drivers/scsi/ufs/ufs-qcom.c
+index 2206b1e..c2ccaa5 100644
+--- a/drivers/scsi/ufs/ufs-qcom.c
++++ b/drivers/scsi/ufs/ufs-qcom.c
+@@ -1404,12 +1404,13 @@ static void ufs_qcom_dump_dbg_regs(struct ufs_hba *hba)
+ }
+ 
+ /**
+- * ufs_qcom_device_reset() - toggle the (optional) device reset line
++ * ufs_qcom_toggle_device_reset() - toggle the (optional) device reset line
+  * @hba: per-adapter instance
++ * @down: pull down or pull up device reset line
+  *
+  * Toggles the (optional) reset line to reset the attached device.
+  */
+-static int ufs_qcom_device_reset(struct ufs_hba *hba)
++static int ufs_qcom_toggle_device_reset(struct ufs_hba *hba, bool down)
+ {
+ 	struct ufs_qcom_host *host = ufshcd_get_variant(hba);
+ 
+@@ -1417,15 +1418,12 @@ static int ufs_qcom_device_reset(struct ufs_hba *hba)
+ 	if (!host->device_reset)
+ 		return -EOPNOTSUPP;
+ 
+-	/*
+-	 * The UFS device shall detect reset pulses of 1us, sleep for 10us to
+-	 * be on the safe side.
+-	 */
+-	gpiod_set_value_cansleep(host->device_reset, 1);
+-	usleep_range(10, 15);
+-
+-	gpiod_set_value_cansleep(host->device_reset, 0);
+-	usleep_range(10, 15);
++	if (down) {
++		gpiod_set_value_cansleep(host->device_reset, 1);
++	} else {
++		gpiod_set_value_cansleep(host->device_reset, 0);
++		usleep_range(10, 15);
++	}
+ 
+ 	return 0;
+ }
+@@ -1473,7 +1471,7 @@ static const struct ufs_hba_variant_ops ufs_hba_qcom_vops = {
+ 	.suspend		= ufs_qcom_suspend,
+ 	.resume			= ufs_qcom_resume,
+ 	.dbg_register_dump	= ufs_qcom_dump_dbg_regs,
+-	.device_reset		= ufs_qcom_device_reset,
++	.toggle_device_reset		= ufs_qcom_toggle_device_reset,
+ 	.config_scaling_param = ufs_qcom_config_scaling_param,
+ 	.program_key		= ufs_qcom_ice_program_key,
+ };
+diff --git a/drivers/scsi/ufs/ufshcd.c b/drivers/scsi/ufs/ufshcd.c
+index e221add..2ee905f 100644
+--- a/drivers/scsi/ufs/ufshcd.c
++++ b/drivers/scsi/ufs/ufshcd.c
+@@ -585,7 +585,20 @@ static void ufshcd_device_reset(struct ufs_hba *hba)
+ {
+ 	int err;
+ 
+-	err = ufshcd_vops_device_reset(hba);
++	err = ufshcd_vops_toggle_device_reset(hba, true);
++	if (err) {
++		dev_err(hba->dev, "device reset pulling down failure: %d\n", err);
++		return;
++	}
++
++	/*
++	 * The reset signal is active low. The UFS device
++	 * shall detect reset pulses of 1us, sleep for at
++	 * least 10us to be on the safe side.
++	 */
++	usleep_range(10, 15);
++
++	err = ufshcd_vops_toggle_device_reset(hba, false);
+ 
+ 	if (!err) {
+ 		ufshcd_set_ufs_dev_active(hba);
+@@ -593,7 +606,11 @@ static void ufshcd_device_reset(struct ufs_hba *hba)
+ 			hba->wb_enabled = false;
+ 			hba->wb_buf_flush_enabled = false;
+ 		}
++		dev_info(hba->dev, "device reset done\n");
++	} else {
++		dev_err(hba->dev, "device reset pulling up failure: %d\n", err);
+ 	}
++
+ 	if (err != -EOPNOTSUPP)
+ 		ufshcd_update_evt_hist(hba, UFS_EVT_DEV_RESET, err);
+ }
+@@ -8686,8 +8703,6 @@ static int ufshcd_suspend(struct ufs_hba *hba, enum ufs_pm_op pm_op)
+ 	if (ret)
+ 		goto set_dev_active;
+ 
+-	ufshcd_vreg_set_lpm(hba);
+-
+ disable_clks:
+ 	/*
+ 	 * Call vendor specific suspend callback. As these callbacks may access
+@@ -8703,6 +8718,9 @@ static int ufshcd_suspend(struct ufs_hba *hba, enum ufs_pm_op pm_op)
+ 	 */
+ 	ufshcd_disable_irq(hba);
+ 
++	if (ufshcd_is_link_off(hba))
++		ufshcd_vops_toggle_device_reset(hba, true);
++
+ 	ufshcd_setup_clocks(hba, false);
+ 
+ 	if (ufshcd_is_clkgating_allowed(hba)) {
+@@ -8711,6 +8729,8 @@ static int ufshcd_suspend(struct ufs_hba *hba, enum ufs_pm_op pm_op)
+ 					hba->clk_gating.state);
+ 	}
+ 
++	ufshcd_vreg_set_lpm(hba);
++
+ 	/* Put the host controller in low power mode if possible */
+ 	ufshcd_hba_vreg_set_lpm(hba);
+ 	goto out;
+@@ -8778,18 +8798,19 @@ static int ufshcd_resume(struct ufs_hba *hba, enum ufs_pm_op pm_op)
+ 	old_link_state = hba->uic_link_state;
+ 
+ 	ufshcd_hba_vreg_set_hpm(hba);
++
++	ret = ufshcd_vreg_set_hpm(hba);
++	if (ret)
++		goto out;
++
+ 	/* Make sure clocks are enabled before accessing controller */
+ 	ret = ufshcd_setup_clocks(hba, true);
+ 	if (ret)
+-		goto out;
++		goto disable_vreg;
+ 
+ 	/* enable the host irq as host controller would be active soon */
+ 	ufshcd_enable_irq(hba);
+ 
+-	ret = ufshcd_vreg_set_hpm(hba);
+-	if (ret)
+-		goto disable_irq_and_vops_clks;
+-
+ 	/*
+ 	 * Call vendor specific resume callback. As these callbacks may access
+ 	 * vendor specific host controller register space call them when the
+@@ -8797,7 +8818,7 @@ static int ufshcd_resume(struct ufs_hba *hba, enum ufs_pm_op pm_op)
+ 	 */
+ 	ret = ufshcd_vops_resume(hba, pm_op);
+ 	if (ret)
+-		goto disable_vreg;
++		goto disable_irq_and_vops_clks;
+ 
+ 	/* For DeepSleep, the only supported option is to have the link off */
+ 	WARN_ON(ufshcd_is_ufs_dev_deepsleep(hba) && !ufshcd_is_link_off(hba));
+@@ -8864,8 +8885,6 @@ static int ufshcd_resume(struct ufs_hba *hba, enum ufs_pm_op pm_op)
+ 	ufshcd_link_state_transition(hba, old_link_state, 0);
+ vendor_suspend:
+ 	ufshcd_vops_suspend(hba, pm_op);
+-disable_vreg:
+-	ufshcd_vreg_set_lpm(hba);
+ disable_irq_and_vops_clks:
+ 	ufshcd_disable_irq(hba);
+ 	if (hba->clk_scaling.is_allowed)
+@@ -8876,6 +8895,8 @@ static int ufshcd_resume(struct ufs_hba *hba, enum ufs_pm_op pm_op)
+ 		trace_ufshcd_clk_gating(dev_name(hba->dev),
+ 					hba->clk_gating.state);
+ 	}
++disable_vreg:
++	ufshcd_vreg_set_lpm(hba);
+ out:
+ 	hba->pm_op_in_progress = 0;
+ 	if (ret)
+diff --git a/drivers/scsi/ufs/ufshcd.h b/drivers/scsi/ufs/ufshcd.h
+index 9bb5f0e..dccc3eb 100644
+--- a/drivers/scsi/ufs/ufshcd.h
++++ b/drivers/scsi/ufs/ufshcd.h
+@@ -319,7 +319,7 @@ struct ufs_pwr_mode_info {
+  * @resume: called during host controller PM callback
+  * @dbg_register_dump: used to dump controller debug information
+  * @phy_initialization: used to initialize phys
+- * @device_reset: called to issue a reset pulse on the UFS device
++ * @toggle_device_reset: called to change logic level of reset gpio on the UFS device
+  * @program_key: program or evict an inline encryption key
+  * @event_notify: called to notify important events
+  */
+@@ -350,7 +350,7 @@ struct ufs_hba_variant_ops {
+ 	int     (*resume)(struct ufs_hba *, enum ufs_pm_op);
+ 	void	(*dbg_register_dump)(struct ufs_hba *hba);
+ 	int	(*phy_initialization)(struct ufs_hba *);
+-	int	(*device_reset)(struct ufs_hba *hba);
++	int	(*toggle_device_reset)(struct ufs_hba *hba, bool down);
+ 	void	(*config_scaling_param)(struct ufs_hba *hba,
+ 					struct devfreq_dev_profile *profile,
+ 					void *data);
+@@ -1216,10 +1216,10 @@ static inline void ufshcd_vops_dbg_register_dump(struct ufs_hba *hba)
+ 		hba->vops->dbg_register_dump(hba);
+ }
+ 
+-static inline int ufshcd_vops_device_reset(struct ufs_hba *hba)
++static inline int ufshcd_vops_toggle_device_reset(struct ufs_hba *hba, bool down)
+ {
+-	if (hba->vops && hba->vops->device_reset)
+-		return hba->vops->device_reset(hba);
++	if (hba->vops && hba->vops->toggle_device_reset)
++		return hba->vops->toggle_device_reset(hba, down);
+ 
+ 	return -EOPNOTSUPP;
+ }
+-- 
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
 
-> --
-> Warm Regards
-> Thara
-> 
->> 
->> Signed-off-by: Md Sadre Alam <mdalam@codeaurora.org>
->> ---
->>   Documentation/driver-api/dmaengine/provider.rst | 9 +++++++++
->>   drivers/dma/qcom/bam_dma.c                      | 9 +++++++++
->>   include/linux/dmaengine.h                       | 5 +++++
->>   3 files changed, 23 insertions(+)
->> 
->> diff --git a/Documentation/driver-api/dmaengine/provider.rst 
->> b/Documentation/driver-api/dmaengine/provider.rst
->> index ddb0a81..d7516e2 100644
->> --- a/Documentation/driver-api/dmaengine/provider.rst
->> +++ b/Documentation/driver-api/dmaengine/provider.rst
->> @@ -599,6 +599,15 @@ DMA_CTRL_REUSE
->>     - This flag is only supported if the channel reports the 
->> DMA_LOAD_EOT
->>       capability.
->>   +- DMA_PREP_LOCK
->> +
->> +  - If set , the client driver tells DMA controller I am locking you 
->> for
->> +    this transcation.
->> +
->> +- DMA_PREP_UNLOCK
->> +
->> +  - If set, the client driver will tells DMA controller I am 
->> releasing the lock
->> +
->>   General Design Notes
->>   ====================
->>   diff --git a/drivers/dma/qcom/bam_dma.c b/drivers/dma/qcom/bam_dma.c
->> index 4eeb8bb..cdbe395 100644
->> --- a/drivers/dma/qcom/bam_dma.c
->> +++ b/drivers/dma/qcom/bam_dma.c
->> @@ -58,6 +58,8 @@ struct bam_desc_hw {
->>   #define DESC_FLAG_EOB BIT(13)
->>   #define DESC_FLAG_NWD BIT(12)
->>   #define DESC_FLAG_CMD BIT(11)
->> +#define DESC_FLAG_LOCK BIT(10)
->> +#define DESC_FLAG_UNLOCK BIT(9)
->>     struct bam_async_desc {
->>   	struct virt_dma_desc vd;
->> @@ -644,6 +646,13 @@ static struct dma_async_tx_descriptor 
->> *bam_prep_slave_sg(struct dma_chan *chan,
->>     	/* fill in temporary descriptors */
->>   	desc = async_desc->desc;
->> +	if (flags & DMA_PREP_CMD) {
->> +		if (flags & DMA_PREP_LOCK)
->> +			desc->flags |= cpu_to_le16(DESC_FLAG_LOCK);
->> +		if (flags & DMA_PREP_UNLOCK)
->> +			desc->flags |= cpu_to_le16(DESC_FLAG_UNLOCK);
->> +	}
->> +
->>   	for_each_sg(sgl, sg, sg_len, i) {
->>   		unsigned int remainder = sg_dma_len(sg);
->>   		unsigned int curr_offset = 0;
->> diff --git a/include/linux/dmaengine.h b/include/linux/dmaengine.h
->> index dd357a7..79ccadb4 100644
->> --- a/include/linux/dmaengine.h
->> +++ b/include/linux/dmaengine.h
->> @@ -190,6 +190,9 @@ struct dma_interleaved_template {
->>    *  transaction is marked with DMA_PREP_REPEAT will cause the new 
->> transaction
->>    *  to never be processed and stay in the issued queue forever. The 
->> flag is
->>    *  ignored if the previous transaction is not a repeated 
->> transaction.
->> + * @DMA_PREP_LOCK: tell the driver that DMA HW engine going to be 
->> locked for this
->> + *  transaction , until not seen DMA_PREP_UNLOCK flag set.
->> + * @DMA_PREP_UNLOCK: tell the driver to unlock the DMA HW engine.
->>    */
->>   enum dma_ctrl_flags {
->>   	DMA_PREP_INTERRUPT = (1 << 0),
->> @@ -202,6 +205,8 @@ enum dma_ctrl_flags {
->>   	DMA_PREP_CMD = (1 << 7),
->>   	DMA_PREP_REPEAT = (1 << 8),
->>   	DMA_PREP_LOAD_EOT = (1 << 9),
->> +	DMA_PREP_LOCK = (1 << 10),
->> +	DMA_PREP_UNLOCK = (1 << 11),
->>   };
->>     /**
->> 
