@@ -2,23 +2,23 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E90D62DF98E
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Dec 2020 08:43:58 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4E3222DF997
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Dec 2020 08:52:51 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726200AbgLUHnV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 21 Dec 2020 02:43:21 -0500
-Received: from alexa-out-tai-02.qualcomm.com ([103.229.16.227]:63454 "EHLO
+        id S1726235AbgLUHwu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 21 Dec 2020 02:52:50 -0500
+Received: from alexa-out-tai-02.qualcomm.com ([103.229.16.227]:21325 "EHLO
         alexa-out-tai-02.qualcomm.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1725908AbgLUHnV (ORCPT
+        by vger.kernel.org with ESMTP id S1726200AbgLUHwu (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 21 Dec 2020 02:43:21 -0500
-Received: from ironmsg01-tai.qualcomm.com ([10.249.140.6])
-  by alexa-out-tai-02.qualcomm.com with ESMTP; 21 Dec 2020 15:42:36 +0800
+        Mon, 21 Dec 2020 02:52:50 -0500
+Received: from ironmsg02-tai.qualcomm.com ([10.249.140.7])
+  by alexa-out-tai-02.qualcomm.com with ESMTP; 21 Dec 2020 15:52:06 +0800
 X-QCInternal: smtphost
 Received: from cbsp-sh-gv.ap.qualcomm.com (HELO cbsp-sh-gv.qualcomm.com) ([10.231.249.68])
-  by ironmsg01-tai.qualcomm.com with ESMTP; 21 Dec 2020 15:42:04 +0800
+  by ironmsg02-tai.qualcomm.com with ESMTP; 21 Dec 2020 15:51:34 +0800
 Received: by cbsp-sh-gv.qualcomm.com (Postfix, from userid 393357)
-        id 79AEF2991; Mon, 21 Dec 2020 15:42:03 +0800 (CST)
+        id 8217E2993; Mon, 21 Dec 2020 15:51:33 +0800 (CST)
 From:   Ziqi Chen <ziqichen@codeaurora.org>
 To:     asutoshd@codeaurora.org, nguyenb@codeaurora.org,
         cang@codeaurora.org, hongwus@codeaurora.org, rnayak@codeaurora.org,
@@ -43,9 +43,9 @@ Cc:     Alim Akhtar <alim.akhtar@samsung.com>,
         linux-arm-msm@vger.kernel.org (open list:ARM/QUALCOMM SUPPORT),
         linux-arm-kernel@lists.infradead.org (moderated list:ARM/Mediatek SoC
         support)
-Subject: [PATCH RFC v2 1/1] scsi: ufs: Fix ufs power down/on specs violation
-Date:   Mon, 21 Dec 2020 15:41:37 +0800
-Message-Id: <1608536504-76507-1-git-send-email-ziqichen@codeaurora.org>
+Subject: [PATCH RFC v3 1/1] scsi: ufs: Fix ufs power down/on specs violation
+Date:   Mon, 21 Dec 2020 15:51:24 +0800
+Message-Id: <1608537091-78575-1-git-send-email-ziqichen@codeaurora.org>
 X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
@@ -57,9 +57,9 @@ should be between VSS(Ground) and VCCQ/VCCQ2.
 
 To flexibly control device reset line, re-name the function
 ufschd_vops_device_reset(sturct ufs_hba *hba) to ufshcd_
-vops_toggle_device_reset(sturct ufs_hba *hba, bool up). The
-new parameter "bool up" is used to separate device reset
-line pulling up from pulling down.
+vops_toggle_device_reset(sturct ufs_hba *hba, bool down). The
+new parameter "bool down" is used to separate device reset
+line pulling down from pulling up.
 
 Cc: Kiwoong Kim <kwmad.kim@samsung.com>
 Cc: Stanley Chu <stanley.chu@mediatek.com>
