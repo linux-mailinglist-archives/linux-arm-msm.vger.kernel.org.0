@@ -2,174 +2,127 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B5FA42E08A8
+	by mail.lfdr.de (Postfix) with ESMTP id BB8B82E08AB
 	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Dec 2020 11:17:43 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726196AbgLVKRO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 22 Dec 2020 05:17:14 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57394 "EHLO
+        id S1725994AbgLVKRK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 22 Dec 2020 05:17:10 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57380 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725811AbgLVKRN (ORCPT
+        with ESMTP id S1725897AbgLVKRJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 22 Dec 2020 05:17:13 -0500
-Received: from mail-ua1-x933.google.com (mail-ua1-x933.google.com [IPv6:2607:f8b0:4864:20::933])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E671EC06179C
-        for <linux-arm-msm@vger.kernel.org>; Tue, 22 Dec 2020 02:16:32 -0800 (PST)
-Received: by mail-ua1-x933.google.com with SMTP id f29so4221617uab.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 22 Dec 2020 02:16:32 -0800 (PST)
+        Tue, 22 Dec 2020 05:17:09 -0500
+Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5C621C0613D6
+        for <linux-arm-msm@vger.kernel.org>; Tue, 22 Dec 2020 02:16:29 -0800 (PST)
+Received: by mail-wm1-x32a.google.com with SMTP id x22so1386662wmc.5
+        for <linux-arm-msm@vger.kernel.org>; Tue, 22 Dec 2020 02:16:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=u5D4oaP+JyGDPSb5WD4EuJeM/Elf3dZ4EodFXX528gc=;
-        b=XHvHqeKa4f5S3ZMQwF+XbsSahoWji54NKrDKtC70gW9jpnAzV8KCOix9B6sAYkTFeu
-         qkXR7dC+xfiuzWUVi3cjABIyYirBlztXcul6mzc8iGE44nzw0YWC8DgU9KoUf66n729h
-         mHsWarTvF7tedEim39AkgFLTE3OBbAXfROriGw8lfuT5toIQqBTPpsloJfIyhEEIAdHd
-         LtxHe+FhIOrU0fBxrUBpsJRWNOxkDsCQM2ARsW30Baf+NuX+Mw7XW+6+UIzTcb3BbpMa
-         9zRAwcJ65vdO8bn+rPEkhC7dtHT7pQ+xbZ/6jdc8d/i/N6hC74JinJ3a7ttGItVfZ9ye
-         AFGA==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to;
+        bh=qSbfk2F0eLFvwitEVSRjmdfYajz3GYQ51dbqSno7+aM=;
+        b=WU6+4VMuyH/NBgUkks4ek4vv1jlVpt8LD/huC52vlmC4oVbZR74fqJJEkmCZDxCAbI
+         smz4IKQkpvxiuZog+NGbP7sjOqXnElCLEIt53X9SHCAec+1luZyktn4DjeSGFrXoF7dq
+         6mOnj8bppWCNR0DclEC29jqMIUqv2Xhh3dCEXU25c28BMDI7FZcYk6UsRVe65BvBfzcl
+         CupuHwCYNDq6NXg+kytlRxq3BIEJjMK1p9sT5gMfO8jhz/azkDhf/3fuqgtI4jRekQhi
+         sV/YdemtHs+MC4WNNJ0QxDB0/luQT7qqI88xNvc/pv/xFNw0SrEPawcpu/oSYZiwwFM9
+         9iNA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=u5D4oaP+JyGDPSb5WD4EuJeM/Elf3dZ4EodFXX528gc=;
-        b=OhDOA+LUEb1wWvjNdZbmjQr9YK/TnoLfRupEH15NaK9BELPduI1sTOP6FoYNaa9MVA
-         /TYDB9mnWvBQzGtfsAgKdsURFENnBao3cWOP+cdDDupSuI3Aune1ZKy10HWXKvmLP7lv
-         aziibHqh1LRRnn1YM9LkLFSghleGiAOtbrlkusQMIoSnM/pGWXfLsauqm4Cbpt1wxDbH
-         WFsSP5crmsin2Kk+BJGZu6RMWst66qIx/Ruf3/8pbmm4MPH4UVUoZ0sVQ7PzM1KQGMfx
-         g4NtlP2owFzQf8DoS1q6/sCAD3gzj74GuZD2pvY5hUToX3k2KgcB4szB8uEb0zVMZq7I
-         VdPA==
-X-Gm-Message-State: AOAM531zDN5p5hkCCpLIDvO9qlyyj9nVv3UhNEzoXhS9rdOJLSgmMsbK
-        CGZLUAh0QYd2VH2N67qV8QqXHSb7RvUXdZ7bTlj4tQ==
-X-Google-Smtp-Source: ABdhPJxiRcSJBC4CEnePGDAgwS/4NSlqkH6AzmAhcu5CZfPF7aE+ubk+PHahFP+ebjYTTVgdBUk3iEJFFBOkZ4f7+mo=
-X-Received: by 2002:a9f:2213:: with SMTP id 19mr14433313uad.15.1608632192033;
- Tue, 22 Dec 2020 02:16:32 -0800 (PST)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to;
+        bh=qSbfk2F0eLFvwitEVSRjmdfYajz3GYQ51dbqSno7+aM=;
+        b=L+lZHtbw5rI19oo/yemC14jB6EGthPAs75s8Rm+K7ulGw8/S6KNU1SwKJtL3ciFBxT
+         WafOWzqVfLSQA72JBufj6kBjZgEs/UwItgPDk3lg/ECobkgn9J0yxz+QO49fkpwkoOpH
+         S2XpIjRp8x8ePEopck4DAFqcDS1p8/EyQEEEaVmAFjTWUHxB0zJGjKZ30CbDTU6/6xsv
+         oDKWLRKQZvHEzmTFt5jqiXK3CbKskdvoF6s18Snf6odrqa/bQDEh82ouM7Qo1NPGY9re
+         EZAxk/e0Hz8SSTqA8LGdvhr9mZms/Zn438zdqSKGH5YLGDaCjoQnOKs0VMkt/a592XTr
+         XL/Q==
+X-Gm-Message-State: AOAM531l41U4nA9BLna4MUhPE4Tbi9qDhO8/K/uzHlQbBlFOZpKkfU8N
+        XIEEqkwHbEGO/uY6/i8z1RCzOg==
+X-Google-Smtp-Source: ABdhPJyOEK775E6e76t0lNQWsoM8ETC1I6bp/3ryi5wdBf4HfpttIEcevtqe5cht+mu6WmxyVT1MeQ==
+X-Received: by 2002:a1c:9a4d:: with SMTP id c74mr21589162wme.5.1608632187921;
+        Tue, 22 Dec 2020 02:16:27 -0800 (PST)
+Received: from dell ([91.110.221.175])
+        by smtp.gmail.com with ESMTPSA id m81sm26537823wmf.29.2020.12.22.02.16.26
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 22 Dec 2020 02:16:27 -0800 (PST)
+Date:   Tue, 22 Dec 2020 10:16:25 +0000
+From:   Lee Jones <lee.jones@linaro.org>
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
+        <linux-arm-msm@vger.kernel.org>,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>,
+        open list <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH 2/4] mfd: qca639x: add support for QCA639x powerup
+ sequence
+Message-ID: <20201222101625.GE53991@dell>
+References: <20201220165845.3712599-1-dmitry.baryshkov@linaro.org>
+ <20201220165845.3712599-3-dmitry.baryshkov@linaro.org>
+ <20201221090244.GA53991@dell>
+ <CAA8EJpo7oHVdDWjhnoknt0vAPYHL0LsZsT8q6MpQs20a+OiCAQ@mail.gmail.com>
 MIME-Version: 1.0
-References: <20201216175056.19554-1-ilina@codeaurora.org>
-In-Reply-To: <20201216175056.19554-1-ilina@codeaurora.org>
-From:   Ulf Hansson <ulf.hansson@linaro.org>
-Date:   Tue, 22 Dec 2020 11:15:55 +0100
-Message-ID: <CAPDyKFrdZTd0mWHYhk13uyNWoxqjkO_iSni_TC5uir-PpgxSpw@mail.gmail.com>
-Subject: Re: [PATCH] PM / Domains: allow domain idle states to be disabled
-To:     Lina Iyer <ilina@codeaurora.org>
-Cc:     "Rafael J. Wysocki" <rjw@rjwysocki.net>,
-        Linux PM <linux-pm@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAA8EJpo7oHVdDWjhnoknt0vAPYHL0LsZsT8q6MpQs20a+OiCAQ@mail.gmail.com>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, 16 Dec 2020 at 18:51, Lina Iyer <ilina@codeaurora.org> wrote:
->
-> In order to debug critical domain and device power issues, it may be
-> necessary to disallow certain idle states at runtime. Let the device
-> disallow a domain idle state before suspending.The domain governor shall
-> check for the 'disabled' flag while determining the domain idle state.
+On Mon, 21 Dec 2020, Dmitry Baryshkov wrote:
 
-For debug purposes, you might as well just set a dev PM Qos latency
-request that corresponds to the state you want to disable. This will
-then prevent the genpd governor from selecting the state.
+> Hello,
+> 
+> On Mon, 21 Dec 2020 at 12:02, Lee Jones <lee.jones@linaro.org> wrote:
+> >
+> > On Sun, 20 Dec 2020, Dmitry Baryshkov wrote:
+> >
+> > > Qualcomm QCA639x is a family of WiFi + Bluetooth SoCs, with BT part
+> > > being controlled through the UART and WiFi being present on PCIe
+> > > bus. Both blocks share common power sources. So add mfd device driver
+> > > handling power sequencing of QCA6390/1.
+> > >
+> > > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> > > ---
+> > >  drivers/mfd/Kconfig        |  12 +++
+> > >  drivers/mfd/Makefile       |   1 +
+> > >  drivers/mfd/qcom-qca639x.c | 168 +++++++++++++++++++++++++++++++++++++
+> > >  3 files changed, 181 insertions(+)
+> > >  create mode 100644 drivers/mfd/qcom-qca639x.c
+> >
+> > This is not an MFD, since it utilised neither the MFD API nor
+> > of_platform_populate() to register child devices.
+> 
+> It would use them if the WiFi part was not on a discoverable bus.
 
-Kind regards
-Uffe
+This is a can of worms that I do not wish to open right now.
 
->
-> Signed-off-by: Lina Iyer <ilina@codeaurora.org>
-> ---
->  drivers/base/power/domain.c          | 30 ++++++++++++++++++++++++++++
->  drivers/base/power/domain_governor.c |  3 +++
->  include/linux/pm_domain.h            |  7 +++++++
->  3 files changed, 40 insertions(+)
->
-> diff --git a/drivers/base/power/domain.c b/drivers/base/power/domain.c
-> index 191539a8e06d..e4e7ab75bdea 100644
-> --- a/drivers/base/power/domain.c
-> +++ b/drivers/base/power/domain.c
-> @@ -1926,6 +1926,36 @@ int pm_genpd_remove_subdomain(struct generic_pm_domain *genpd,
->  }
->  EXPORT_SYMBOL_GPL(pm_genpd_remove_subdomain);
->
-> +/**
-> + * dev_pm_genpd_disable_idle_state - Disallow a PM domain's idle state
-> + *
-> + * @dev: device attached to the PM domain
-> + * @idx: index of the PM domain's idle state to be disabled
-> + * @disable: enable/disable idle state
-> + *
-> + * Allow a PM domain's idle state to be disabled. Disabled idle states will
-> + * be ignored by the domain governor when entering idle. Devices would
-> + * invoke this before calling runtime suspend.
-> + */
-> +int dev_pm_genpd_disable_idle_state(struct device *dev, unsigned int idx, bool disable)
-> +{
-> +       struct generic_pm_domain *genpd;
-> +
-> +       genpd = dev_to_genpd_safe(dev);
-> +       if (!genpd)
-> +               return -ENODEV;
-> +
-> +       if (idx >= genpd->state_count)
-> +               return -EINVAL;
-> +
-> +       genpd_lock(genpd);
-> +       genpd->states[idx].disabled = disable;
-> +       genpd_unlock(genpd);
-> +
-> +       return 0;
-> +}
-> +EXPORT_SYMBOL_GPL(dev_pm_genpd_disable_idle_state);
-> +
->  static void genpd_free_default_power_state(struct genpd_power_state *states,
->                                            unsigned int state_count)
->  {
-> diff --git a/drivers/base/power/domain_governor.c b/drivers/base/power/domain_governor.c
-> index 2afb7fa90d5d..8decd17c5a6a 100644
-> --- a/drivers/base/power/domain_governor.c
-> +++ b/drivers/base/power/domain_governor.c
-> @@ -175,6 +175,9 @@ static bool __default_power_down_ok(struct dev_pm_domain *pd,
->         s64 min_off_time_ns;
->         s64 off_on_time_ns;
->
-> +       if (genpd->states[state].disabled)
-> +               return false;
-> +
->         off_on_time_ns = genpd->states[state].power_off_latency_ns +
->                 genpd->states[state].power_on_latency_ns;
->
-> diff --git a/include/linux/pm_domain.h b/include/linux/pm_domain.h
-> index a41aea9d1c06..3d251b5b461a 100644
-> --- a/include/linux/pm_domain.h
-> +++ b/include/linux/pm_domain.h
-> @@ -101,6 +101,7 @@ struct genpd_power_state {
->         struct fwnode_handle *fwnode;
->         ktime_t idle_time;
->         void *data;
-> +       bool disabled;
->  };
->
->  struct genpd_lock_ops;
-> @@ -233,6 +234,7 @@ int dev_pm_genpd_add_notifier(struct device *dev, struct notifier_block *nb);
->  int dev_pm_genpd_remove_notifier(struct device *dev);
->  void genpd_enable_next_wakeup(struct generic_pm_domain *genpd, bool enable);
->  int dev_pm_genpd_set_next_wakeup(struct device *dev, ktime_t next);
-> +int dev_pm_genpd_disable_idle_state(struct device *dev, unsigned int idx, bool disable);
->
->  extern struct dev_power_governor simple_qos_governor;
->  extern struct dev_power_governor pm_domain_always_on_gov;
-> @@ -300,6 +302,11 @@ static inline int dev_pm_genpd_set_next_wakeup(struct device *dev, ktime_t next)
->         return -EOPNOTSUPP;
->  }
->
-> +static inline int dev_pm_genpd_disable_idle_state(struct device *dev, unsigned int idx, bool disable)
-> +{
-> +       return -EOPNOTSUPP;
-> +}
-> +
->  #define simple_qos_governor            (*(struct dev_power_governor *)(NULL))
->  #define pm_domain_always_on_gov                (*(struct dev_power_governor *)(NULL))
->  #endif
-> --
-> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-> a Linux Foundation Collaborative Project
->
+However the TL;DR is:
+
+ MFD is currently only *meant* for non-discoverable platform devices.
+
+> > Suggest you use drivers/power or similar to handle shared power
+> > sequencing requirements.
+> 
+> What about drivers/soc/qcom? Or drivers/misc?
+
+These are 2 other subsystems, just like MFD, which are commonly used
+as dumping grounds for code which doesn't fit anywhere else.  However,
+I implore you to please try to find a suitable subsystem for this to
+fit into first.  If this driver only deals with power management,
+place it is a power related subsystem *before* considering drivers/soc
+or drivers/misc.
+
+-- 
+Lee Jones [李琼斯]
+Senior Technical Lead - Developer Services
+Linaro.org │ Open source software for Arm SoCs
+Follow Linaro: Facebook | Twitter | Blog
