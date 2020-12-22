@@ -2,238 +2,316 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 1239F2E0A5B
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Dec 2020 14:11:25 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4C80A2E0B22
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Dec 2020 14:51:18 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726868AbgLVNLK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 22 Dec 2020 08:11:10 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55756 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727121AbgLVNLJ (ORCPT
+        id S1727169AbgLVNvC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 22 Dec 2020 08:51:02 -0500
+Received: from alexa-out-tai-01.qualcomm.com ([103.229.16.226]:58757 "EHLO
+        alexa-out-tai-01.qualcomm.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726904AbgLVNvB (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 22 Dec 2020 08:11:09 -0500
-Received: from mail-vs1-xe2f.google.com (mail-vs1-xe2f.google.com [IPv6:2607:f8b0:4864:20::e2f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AE1FAC0613D6
-        for <linux-arm-msm@vger.kernel.org>; Tue, 22 Dec 2020 05:10:29 -0800 (PST)
-Received: by mail-vs1-xe2f.google.com with SMTP id b23so6961801vsp.9
-        for <linux-arm-msm@vger.kernel.org>; Tue, 22 Dec 2020 05:10:29 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=wORpCwP/PH7s5v92DGchLRrRHanaLYyHWLFD2f49ktc=;
-        b=ksk+439Sk7N6zd0mHMVvriWtabkZ/kswQIrKCA/dX+chsH7bcRYZO3Z5g3GJkeRgbV
-         rOzviJt3v+emac3wOKUgE0XDCjgtKHVLhOW2pYSq+1Iz3yfBKT75YPgygMY4aZDVpMGH
-         gFCbWJmnKodLoIAGgZhHMACf+XgGBju/u5ci1apGvOGaae+MVXFwO++iU8dwlqh5m2YG
-         AfJsuevFByOI9YKVAjs+Bwga1CfNcqOF6go9PD/mGtFe5vr8959Yxu2Hyt3DeD83mSb1
-         YJNWzuACBVWzhfKyk/leEbqyQgb2ZWJlYXOAUkalFajfWJz0XgVLPKxzkJnD5X2YQBy+
-         54bQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=wORpCwP/PH7s5v92DGchLRrRHanaLYyHWLFD2f49ktc=;
-        b=WtNhiUqRX8PjS0To/hXUbE/gTFmGjmV71VEx9S+Ge4Wqb6i0C4ZwRReosmYM5HvB3d
-         vXaFzTwgUZOSnKb7788DjCBQ9hM+zF+VRl3mbenkOgycogg0w+PjzhsWOBLOBbhbKZm9
-         LKN0rtQFNGu1T6kBfBG95fZIg9vGPbTgDfMejd2TzP7upwNjWVT3nJ3e/I3oSAAKhC+7
-         eQh1IKh3EnEqSbzE1xwRjBbpoxpsK1LeSkVKNEQsIY3C1KxBC0dhLuNtf9kPQotSH6W1
-         I+agf1cTNZ9Ink6THzIq0daE/8gsqa1ae4SL2KI6SnO4WvzXWERLAS6/cwCXSvhmwvIF
-         2Ofg==
-X-Gm-Message-State: AOAM531LhafzC0MYBNQ2GUuLRZlX3qGnVW377QeiR9W/B7sGeDu9AYh1
-        nvHO+gFA2wkfhJ3WGKj4qanjcSkDtf0zzS6LXTqvlA==
-X-Google-Smtp-Source: ABdhPJwas99cyWHLX7z53I4QehDGkR8rAswPZcKi5vG56Nm0h2QZcGL/wmcAMnou7UbgWcIit05vLDx5y/pxtHQ4rZc=
-X-Received: by 2002:a67:fe85:: with SMTP id b5mr14600149vsr.19.1608642628595;
- Tue, 22 Dec 2020 05:10:28 -0800 (PST)
-MIME-Version: 1.0
-References: <20201130225039.15981-1-ilina@codeaurora.org> <20201130225039.15981-3-ilina@codeaurora.org>
-In-Reply-To: <20201130225039.15981-3-ilina@codeaurora.org>
-From:   Ulf Hansson <ulf.hansson@linaro.org>
-Date:   Tue, 22 Dec 2020 14:09:52 +0100
-Message-ID: <CAPDyKFphczBOyDmSQBh3PE7YaUBYy4Y5uoozrv4QOf4pEbk-yg@mail.gmail.com>
-Subject: Re: [PATCH v6 2/3] PM / domains: inform PM domain of a device's next wakeup
-To:     Lina Iyer <ilina@codeaurora.org>
-Cc:     "Rafael J. Wysocki" <rjw@rjwysocki.net>,
-        Linux PM <linux-pm@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+        Tue, 22 Dec 2020 08:51:01 -0500
+Received: from ironmsg03-tai.qualcomm.com ([10.249.140.8])
+  by alexa-out-tai-01.qualcomm.com with ESMTP; 22 Dec 2020 21:50:16 +0800
+X-QCInternal: smtphost
+Received: from cbsp-sh-gv.ap.qualcomm.com (HELO cbsp-sh-gv.qualcomm.com) ([10.231.249.68])
+  by ironmsg03-tai.qualcomm.com with ESMTP; 22 Dec 2020 21:49:44 +0800
+Received: by cbsp-sh-gv.qualcomm.com (Postfix, from userid 393357)
+        id 85939276B; Tue, 22 Dec 2020 21:49:43 +0800 (CST)
+From:   Ziqi Chen <ziqichen@codeaurora.org>
+To:     asutoshd@codeaurora.org, nguyenb@codeaurora.org,
+        cang@codeaurora.org, hongwus@codeaurora.org, rnayak@codeaurora.org,
+        vinholikatti@gmail.com, jejb@linux.vnet.ibm.com,
+        martin.petersen@oracle.com, linux-scsi@vger.kernel.org,
+        kernel-team@android.com, saravanak@google.com, salyzyn@google.com,
+        ziqichen@codeaurora.org, kwmad.kim@samsung.com,
+        stanley.chu@mediatek.com
+Cc:     Alim Akhtar <alim.akhtar@samsung.com>,
+        Avri Altman <avri.altman@wdc.com>,
+        "James E.J. Bottomley" <jejb@linux.ibm.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        Bean Huo <beanhuo@micron.com>,
+        Bart Van Assche <bvanassche@acm.org>,
+        Adrian Hunter <adrian.hunter@intel.com>,
+        Satya Tangirala <satyat@google.com>,
+        linux-mediatek@lists.infradead.org (moderated list:UNIVERSAL FLASH
+        STORAGE HOST CONTROLLER DRIVER...),
+        linux-kernel@vger.kernel.org (open list),
+        linux-arm-msm@vger.kernel.org (open list:ARM/QUALCOMM SUPPORT),
+        linux-arm-kernel@lists.infradead.org (moderated list:ARM/Mediatek SoC
+        support)
+Subject: [PATCH RFC v4 1/1] scsi: ufs: Fix ufs power down/on specs violation
+Date:   Tue, 22 Dec 2020 21:49:33 +0800
+Message-Id: <1608644981-46267-1-git-send-email-ziqichen@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, 30 Nov 2020 at 23:51, Lina Iyer <ilina@codeaurora.org> wrote:
->
-> Some devices may have a predictable interrupt pattern while executing
-> usecases. An example would be the VSYNC interrupt associated with
-> display devices. A 60 Hz display could cause a interrupt every 16 ms. If
-> the device were in a PM domain, the domain would need to be powered up
-> for device to resume and handle the interrupt.
->
-> Entering a domain idle state saves power, only if the residency of the
-> idle state is met. Without knowing the idle duration of the domain, the
-> governor would just choose the deepest idle state that matches the QoS
-> requirements. The domain might be powered off just as the device is
-> expecting to wake up. If devices could inform PM frameworks of their
-> next event, the parent PM domain's idle duration can be determined.
->
-> So let's add the dev_pm_genpd_set_next_wakeup() API for the device to
-> inform PM domains of the impending wakeup. This information will be the
-> domain governor to determine the best idle state given the wakeup.
->
-> Signed-off-by: Lina Iyer <ilina@codeaurora.org>
-> ---
-> Changes in v6:
->         - Update documentation
-> Changes in v5:
->         - Fix commit text as pointed by Ulf
->         - Use -EOPNOTSUPP
-> Changes in v4:
->         - Use PM domain data to store next_wakeup
->         - Drop runtime PM documentation
-> Changes in v3:
->         - Fix unwanted change
-> Changes in v2:
->         - Update documentation
->         - Remove runtime PM enabled check
->         - Update commit text
-> ---
->  drivers/base/power/domain.c | 41 +++++++++++++++++++++++++++++++++++++
->  include/linux/pm_domain.h   |  8 ++++++++
->  2 files changed, 49 insertions(+)
->
-> diff --git a/drivers/base/power/domain.c b/drivers/base/power/domain.c
-> index 1e6c0bf1c945..191539a8e06d 100644
-> --- a/drivers/base/power/domain.c
-> +++ b/drivers/base/power/domain.c
-> @@ -408,6 +408,46 @@ int dev_pm_genpd_set_performance_state(struct device *dev, unsigned int state)
->  }
->  EXPORT_SYMBOL_GPL(dev_pm_genpd_set_performance_state);
->
-> +/**
-> + * dev_pm_genpd_set_next_wakeup - Notify PM framework of an impending wakeup.
-> + *
-> + * @dev: Device to handle
-> + * @next: impending interrupt/wakeup for the device
-> + *
-> + * Allow devices to inform of the next wakeup. But, if the domain were already
-> + * powered off, we will not wakeup the domain to recompute it's idle duration.
+As per specs, e.g, JESD220E chapter 7.2, while powering
+off/on the ufs device, RST_N signal and REF_CLK signal
+should be between VSS(Ground) and VCCQ/VCCQ2.
 
-How about clarifying this as:
+To flexibly control device reset line, refactor the function
+ufschd_vops_device_reset(sturct ufs_hba *hba) to ufshcd_
+vops_device_reset(sturct ufs_hba *hba, bool asserted). The
+new parameter "bool asserted" is used to separate device reset
+line pulling down from pulling up.
 
-"It's assumed that the users guarantee that the genpd wouldn't be
-detached while this routine is getting called. Additionally, it's also
-assumed that @dev isn't runtime suspended (RPM_SUSPENDED).
+Cc: Kiwoong Kim <kwmad.kim@samsung.com>
+Cc: Stanley Chu <stanley.chu@mediatek.com>
+Signed-off-by: Ziqi Chen <ziqichen@codeaurora.org>
+---
+ drivers/scsi/ufs/ufs-mediatek.c | 32 ++++++++++++++++----------------
+ drivers/scsi/ufs/ufs-qcom.c     | 24 +++++++++++++++---------
+ drivers/scsi/ufs/ufshcd.c       | 36 +++++++++++++++++++++++++-----------
+ drivers/scsi/ufs/ufshcd.h       |  8 ++++----
+ 4 files changed, 60 insertions(+), 40 deletions(-)
 
-> + * Although devices are expected to update the next_wakeup after the end of
-> + * their usecase as well, it is possible the devices themselves may not know
-> + * about that. Stale @next will be ignored when powering off the domain.
-> + */
-> +int dev_pm_genpd_set_next_wakeup(struct device *dev, ktime_t next)
-> +{
-> +       struct generic_pm_domain *genpd;
-> +       struct generic_pm_domain_data *gpd_data;
-> +       int ret = -EINVAL;
-> +
-> +       genpd = dev_to_genpd_safe(dev);
-> +       if (!genpd)
-> +               return -ENODEV;
-> +
-> +       if (WARN_ON(!dev->power.subsys_data ||
-> +                   !dev->power.subsys_data->domain_data))
-> +               return ret;
-> +
-> +       genpd_lock(genpd);
-> +       gpd_data = to_gpd_data(dev->power.subsys_data->domain_data);
-> +       if (ktime_before(ktime_get(), next)) {
-> +               gpd_data->next_wakeup = next;
-> +               genpd->flags |= GENPD_FLAG_GOV_NEXT_WAKEUP;
+diff --git a/drivers/scsi/ufs/ufs-mediatek.c b/drivers/scsi/ufs/ufs-mediatek.c
+index 80618af..072f4db 100644
+--- a/drivers/scsi/ufs/ufs-mediatek.c
++++ b/drivers/scsi/ufs/ufs-mediatek.c
+@@ -841,27 +841,27 @@ static int ufs_mtk_link_startup_notify(struct ufs_hba *hba,
+ 	return ret;
+ }
+ 
+-static int ufs_mtk_device_reset(struct ufs_hba *hba)
++static int ufs_mtk_device_reset(struct ufs_hba *hba, bool asserted)
+ {
+ 	struct arm_smccc_res res;
+ 
+-	ufs_mtk_device_reset_ctrl(0, res);
++	if (asserted) {
++		ufs_mtk_device_reset_ctrl(0, res);
+ 
+-	/*
+-	 * The reset signal is active low. UFS devices shall detect
+-	 * more than or equal to 1us of positive or negative RST_n
+-	 * pulse width.
+-	 *
+-	 * To be on safe side, keep the reset low for at least 10us.
+-	 */
+-	usleep_range(10, 15);
+-
+-	ufs_mtk_device_reset_ctrl(1, res);
+-
+-	/* Some devices may need time to respond to rst_n */
+-	usleep_range(10000, 15000);
++		/*
++		 * The reset signal is active low. UFS devices shall detect
++		 * more than or equal to 1us of positive or negative RST_n
++		 * pulse width.
++		 *
++		 * To be on safe side, keep the reset low for at least 10us.
++		 */
++		usleep_range(10, 15);
++	} else {
++		ufs_mtk_device_reset_ctrl(1, res);
+ 
+-	dev_info(hba->dev, "device reset done\n");
++		/* Some devices may need time to respond to rst_n */
++		usleep_range(10000, 15000);
++	}
+ 
+ 	return 0;
+ }
+diff --git a/drivers/scsi/ufs/ufs-qcom.c b/drivers/scsi/ufs/ufs-qcom.c
+index 2206b1e..fed10e5 100644
+--- a/drivers/scsi/ufs/ufs-qcom.c
++++ b/drivers/scsi/ufs/ufs-qcom.c
+@@ -1406,10 +1406,11 @@ static void ufs_qcom_dump_dbg_regs(struct ufs_hba *hba)
+ /**
+  * ufs_qcom_device_reset() - toggle the (optional) device reset line
+  * @hba: per-adapter instance
++ * @asserted: assert or deassert device reset line
+  *
+  * Toggles the (optional) reset line to reset the attached device.
+  */
+-static int ufs_qcom_device_reset(struct ufs_hba *hba)
++static int ufs_qcom_device_reset(struct ufs_hba *hba, bool asserted)
+ {
+ 	struct ufs_qcom_host *host = ufshcd_get_variant(hba);
+ 
+@@ -1417,15 +1418,20 @@ static int ufs_qcom_device_reset(struct ufs_hba *hba)
+ 	if (!host->device_reset)
+ 		return -EOPNOTSUPP;
+ 
+-	/*
+-	 * The UFS device shall detect reset pulses of 1us, sleep for 10us to
+-	 * be on the safe side.
+-	 */
+-	gpiod_set_value_cansleep(host->device_reset, 1);
+-	usleep_range(10, 15);
++	if (asserted) {
++		gpiod_set_value_cansleep(host->device_reset, 1);
+ 
+-	gpiod_set_value_cansleep(host->device_reset, 0);
+-	usleep_range(10, 15);
++		/*
++		 * The UFS device shall detect reset pulses of 1us, sleep for 10us to
++		 * be on the safe side.
++		 */
++		usleep_range(10, 15);
++	} else {
++		gpiod_set_value_cansleep(host->device_reset, 0);
++
++		 /* Some devices may need time to respond to rst_n */
++		usleep_range(10, 15);
++	}
+ 
+ 	return 0;
+ }
+diff --git a/drivers/scsi/ufs/ufshcd.c b/drivers/scsi/ufs/ufshcd.c
+index e221add..f2daac2 100644
+--- a/drivers/scsi/ufs/ufshcd.c
++++ b/drivers/scsi/ufs/ufshcd.c
+@@ -585,7 +585,13 @@ static void ufshcd_device_reset(struct ufs_hba *hba)
+ {
+ 	int err;
+ 
+-	err = ufshcd_vops_device_reset(hba);
++	err = ufshcd_vops_device_reset(hba, true);
++	if (err) {
++		dev_err(hba->dev, "asserting device reset failed: %d\n", err);
++		return;
++	}
++
++	err = ufshcd_vops_device_reset(hba, false);
+ 
+ 	if (!err) {
+ 		ufshcd_set_ufs_dev_active(hba);
+@@ -593,7 +599,11 @@ static void ufshcd_device_reset(struct ufs_hba *hba)
+ 			hba->wb_enabled = false;
+ 			hba->wb_buf_flush_enabled = false;
+ 		}
++		dev_dbg(hba->dev, "device reset done\n");
++	} else {
++		dev_err(hba->dev, "deasserting device reset failed: %d\n", err);
+ 	}
++
+ 	if (err != -EOPNOTSUPP)
+ 		ufshcd_update_evt_hist(hba, UFS_EVT_DEV_RESET, err);
+ }
+@@ -8686,8 +8696,6 @@ static int ufshcd_suspend(struct ufs_hba *hba, enum ufs_pm_op pm_op)
+ 	if (ret)
+ 		goto set_dev_active;
+ 
+-	ufshcd_vreg_set_lpm(hba);
+-
+ disable_clks:
+ 	/*
+ 	 * Call vendor specific suspend callback. As these callbacks may access
+@@ -8703,6 +8711,9 @@ static int ufshcd_suspend(struct ufs_hba *hba, enum ufs_pm_op pm_op)
+ 	 */
+ 	ufshcd_disable_irq(hba);
+ 
++	if (ufshcd_is_link_off(hba))
++		ufshcd_vops_device_reset(hba, true);
++
+ 	ufshcd_setup_clocks(hba, false);
+ 
+ 	if (ufshcd_is_clkgating_allowed(hba)) {
+@@ -8711,6 +8722,8 @@ static int ufshcd_suspend(struct ufs_hba *hba, enum ufs_pm_op pm_op)
+ 					hba->clk_gating.state);
+ 	}
+ 
++	ufshcd_vreg_set_lpm(hba);
++
+ 	/* Put the host controller in low power mode if possible */
+ 	ufshcd_hba_vreg_set_lpm(hba);
+ 	goto out;
+@@ -8778,18 +8791,19 @@ static int ufshcd_resume(struct ufs_hba *hba, enum ufs_pm_op pm_op)
+ 	old_link_state = hba->uic_link_state;
+ 
+ 	ufshcd_hba_vreg_set_hpm(hba);
++
++	ret = ufshcd_vreg_set_hpm(hba);
++	if (ret)
++		goto out;
++
+ 	/* Make sure clocks are enabled before accessing controller */
+ 	ret = ufshcd_setup_clocks(hba, true);
+ 	if (ret)
+-		goto out;
++		goto disable_vreg;
+ 
+ 	/* enable the host irq as host controller would be active soon */
+ 	ufshcd_enable_irq(hba);
+ 
+-	ret = ufshcd_vreg_set_hpm(hba);
+-	if (ret)
+-		goto disable_irq_and_vops_clks;
+-
+ 	/*
+ 	 * Call vendor specific resume callback. As these callbacks may access
+ 	 * vendor specific host controller register space call them when the
+@@ -8797,7 +8811,7 @@ static int ufshcd_resume(struct ufs_hba *hba, enum ufs_pm_op pm_op)
+ 	 */
+ 	ret = ufshcd_vops_resume(hba, pm_op);
+ 	if (ret)
+-		goto disable_vreg;
++		goto disable_irq_and_vops_clks;
+ 
+ 	/* For DeepSleep, the only supported option is to have the link off */
+ 	WARN_ON(ufshcd_is_ufs_dev_deepsleep(hba) && !ufshcd_is_link_off(hba));
+@@ -8864,8 +8878,6 @@ static int ufshcd_resume(struct ufs_hba *hba, enum ufs_pm_op pm_op)
+ 	ufshcd_link_state_transition(hba, old_link_state, 0);
+ vendor_suspend:
+ 	ufshcd_vops_suspend(hba, pm_op);
+-disable_vreg:
+-	ufshcd_vreg_set_lpm(hba);
+ disable_irq_and_vops_clks:
+ 	ufshcd_disable_irq(hba);
+ 	if (hba->clk_scaling.is_allowed)
+@@ -8876,6 +8888,8 @@ static int ufshcd_resume(struct ufs_hba *hba, enum ufs_pm_op pm_op)
+ 		trace_ufshcd_clk_gating(dev_name(hba->dev),
+ 					hba->clk_gating.state);
+ 	}
++disable_vreg:
++	ufshcd_vreg_set_lpm(hba);
+ out:
+ 	hba->pm_op_in_progress = 0;
+ 	if (ret)
+diff --git a/drivers/scsi/ufs/ufshcd.h b/drivers/scsi/ufs/ufshcd.h
+index 9bb5f0e..d5fbaba 100644
+--- a/drivers/scsi/ufs/ufshcd.h
++++ b/drivers/scsi/ufs/ufshcd.h
+@@ -319,7 +319,7 @@ struct ufs_pwr_mode_info {
+  * @resume: called during host controller PM callback
+  * @dbg_register_dump: used to dump controller debug information
+  * @phy_initialization: used to initialize phys
+- * @device_reset: called to issue a reset pulse on the UFS device
++ * @device_reset: called to assert or deassert device reset line
+  * @program_key: program or evict an inline encryption key
+  * @event_notify: called to notify important events
+  */
+@@ -350,7 +350,7 @@ struct ufs_hba_variant_ops {
+ 	int     (*resume)(struct ufs_hba *, enum ufs_pm_op);
+ 	void	(*dbg_register_dump)(struct ufs_hba *hba);
+ 	int	(*phy_initialization)(struct ufs_hba *);
+-	int	(*device_reset)(struct ufs_hba *hba);
++	int	(*device_reset)(struct ufs_hba *hba, bool asserted);
+ 	void	(*config_scaling_param)(struct ufs_hba *hba,
+ 					struct devfreq_dev_profile *profile,
+ 					void *data);
+@@ -1216,10 +1216,10 @@ static inline void ufshcd_vops_dbg_register_dump(struct ufs_hba *hba)
+ 		hba->vops->dbg_register_dump(hba);
+ }
+ 
+-static inline int ufshcd_vops_device_reset(struct ufs_hba *hba)
++static inline int ufshcd_vops_device_reset(struct ufs_hba *hba, bool asserted)
+ {
+ 	if (hba->vops && hba->vops->device_reset)
+-		return hba->vops->device_reset(hba);
++		return hba->vops->device_reset(hba, asserted);
+ 
+ 	return -EOPNOTSUPP;
+ }
+-- 
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
 
-I don't think we should set this here, but instead leave this to be
-set by the genpd provider at initialization.
-
-> +               ret = 0;
-> +       }
-> +       genpd_unlock(genpd);
-
-I would suggest to simplify the above into:
-
-gpd_data = to_gpd_data(dev->power.subsys_data->domain_data);
-gpd_data->next_wakeup = next;
-
-Then there is no need for locks because:
-*) We assume the device remains attached to the genpd.
-**) The device isn't runtime suspended, hence its corresponding genpd
-is powered on and thus the genpd governor can't be looking at
-"gpd_data->next_wakeup" simulantfsfulsy.
-
-Moreover, as we agreed to ignore stale values for "next", there is no
-reason to validate it against the current ktime, so let's just skip
-it.
-
-> +
-> +       return ret;
-> +}
-> +EXPORT_SYMBOL_GPL(dev_pm_genpd_set_next_wakeup);
-> +
-> +
->  static int _genpd_power_on(struct generic_pm_domain *genpd, bool timed)
->  {
->         unsigned int state_idx = genpd->state_idx;
-> @@ -1450,6 +1490,7 @@ static struct generic_pm_domain_data *genpd_alloc_dev_data(struct device *dev)
->         gpd_data->td.constraint_changed = true;
->         gpd_data->td.effective_constraint_ns = PM_QOS_RESUME_LATENCY_NO_CONSTRAINT_NS;
->         gpd_data->nb.notifier_call = genpd_dev_pm_qos_notifier;
-> +       gpd_data->next_wakeup = KTIME_MAX;
-
-When looking at patch3, I wonder if it perhaps could be easier to use
-"zero" as the default value? What do you think, just an idea?
-
->
->         spin_lock_irq(&dev->power.lock);
->
-> diff --git a/include/linux/pm_domain.h b/include/linux/pm_domain.h
-> index 1f359bd19f77..cc27d3d88849 100644
-> --- a/include/linux/pm_domain.h
-> +++ b/include/linux/pm_domain.h
-> @@ -9,6 +9,7 @@
->  #define _LINUX_PM_DOMAIN_H
->
->  #include <linux/device.h>
-> +#include <linux/ktime.h>
->  #include <linux/mutex.h>
->  #include <linux/pm.h>
->  #include <linux/err.h>
-> @@ -197,6 +198,7 @@ struct generic_pm_domain_data {
->         struct notifier_block *power_nb;
->         int cpu;
->         unsigned int performance_state;
-> +       ktime_t next_wakeup;
->         void *data;
->  };
->
-> @@ -229,6 +231,7 @@ int dev_pm_genpd_set_performance_state(struct device *dev, unsigned int state);
->  int dev_pm_genpd_add_notifier(struct device *dev, struct notifier_block *nb);
->  int dev_pm_genpd_remove_notifier(struct device *dev);
->  void genpd_enable_next_wakeup(struct generic_pm_domain *genpd, bool enable);
-> +int dev_pm_genpd_set_next_wakeup(struct device *dev, ktime_t next);
->
->  extern struct dev_power_governor simple_qos_governor;
->  extern struct dev_power_governor pm_domain_always_on_gov;
-> @@ -291,6 +294,11 @@ static void genpd_enable_next_wakeup(struct generic_pm_domain *genpd,
->                                      bool enable)
->  { }
->
-> +static inline int dev_pm_genpd_set_next_wakeup(struct device *dev, ktime_t next)
-> +{
-> +       return -EOPNOTSUPP;
-> +}
-> +
->  #define simple_qos_governor            (*(struct dev_power_governor *)(NULL))
->  #define pm_domain_always_on_gov                (*(struct dev_power_governor *)(NULL))
->  #endif
-> --
-> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-> a Linux Foundation Collaborative Project
->
-
-Kind regards
-Uffe
