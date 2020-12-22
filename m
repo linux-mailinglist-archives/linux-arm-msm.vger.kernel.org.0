@@ -2,99 +2,174 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id CF5B92E084F
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Dec 2020 10:52:53 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B5FA42E08A8
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Dec 2020 11:17:43 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725931AbgLVJwx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 22 Dec 2020 04:52:53 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53560 "EHLO
+        id S1726196AbgLVKRO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 22 Dec 2020 05:17:14 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57394 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725912AbgLVJww (ORCPT
+        with ESMTP id S1725811AbgLVKRN (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 22 Dec 2020 04:52:52 -0500
-Received: from mail-wm1-x329.google.com (mail-wm1-x329.google.com [IPv6:2a00:1450:4864:20::329])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 56D7DC0613D3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 22 Dec 2020 01:52:12 -0800 (PST)
-Received: by mail-wm1-x329.google.com with SMTP id e25so1580484wme.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 22 Dec 2020 01:52:12 -0800 (PST)
+        Tue, 22 Dec 2020 05:17:13 -0500
+Received: from mail-ua1-x933.google.com (mail-ua1-x933.google.com [IPv6:2607:f8b0:4864:20::933])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E671EC06179C
+        for <linux-arm-msm@vger.kernel.org>; Tue, 22 Dec 2020 02:16:32 -0800 (PST)
+Received: by mail-ua1-x933.google.com with SMTP id f29so4221617uab.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 22 Dec 2020 02:16:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=to:cc:references:from:subject:message-id:date:mime-version
-         :in-reply-to:content-language:content-transfer-encoding;
-        bh=s8FlNBJc1tOTzj1/5kq2UR+5JabDHOpPzaLRtEUB/HU=;
-        b=gvvTyEq3lOW77ADAiTItaTJnUGezfK5apmO7swllVcsQZSe06cTh2e4paz8ofAf3NO
-         h/mXiSo7GQuyKJTRTuvXIJJ3dvlXHXGsOA3Urs1IRfx/8ebdhXfp3fNJs2a4+KmVygK+
-         ROpDp4kq6Tqu2uv5FLLlRjd+RjubqcvcZZFfylmKIbCTCUoIrzacxiu6s2XD3Oow2y8V
-         LQFKgGJxJJzJocKRxmlMHwV9fAHAYNWkl2N9d2JY5+leOndLXq0+tNCybHERqWg75RFR
-         1/RWsCVpt8uxjA2DS4k7pfHkat8iJghci11Po6iEmFOmy+FThuqd/0wRFg5MNAo6Da/2
-         CL0Q==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=u5D4oaP+JyGDPSb5WD4EuJeM/Elf3dZ4EodFXX528gc=;
+        b=XHvHqeKa4f5S3ZMQwF+XbsSahoWji54NKrDKtC70gW9jpnAzV8KCOix9B6sAYkTFeu
+         qkXR7dC+xfiuzWUVi3cjABIyYirBlztXcul6mzc8iGE44nzw0YWC8DgU9KoUf66n729h
+         mHsWarTvF7tedEim39AkgFLTE3OBbAXfROriGw8lfuT5toIQqBTPpsloJfIyhEEIAdHd
+         LtxHe+FhIOrU0fBxrUBpsJRWNOxkDsCQM2ARsW30Baf+NuX+Mw7XW+6+UIzTcb3BbpMa
+         9zRAwcJ65vdO8bn+rPEkhC7dtHT7pQ+xbZ/6jdc8d/i/N6hC74JinJ3a7ttGItVfZ9ye
+         AFGA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:to:cc:references:from:subject:message-id:date
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=s8FlNBJc1tOTzj1/5kq2UR+5JabDHOpPzaLRtEUB/HU=;
-        b=a+YwHNFUujNr8BcC70fYxtz4f44kHYxUb0k+sM13ne8KdJTs+JdjvStddBnpLoMdUd
-         GvZO1NusRFJr+AJ8B2otx2i0M2lGUm3a3DVykRtT60ttJxs5+5j9N94+uPyAsvgyGEXv
-         ta4EFZmdai2e4HNpX+56kBznFP1spcpXQnZepqQk4D9ELgUQWFFrUAluoMi0l5xYH/mb
-         g9RFQ7GkZd6m3snyCbqIMoLXJp+Roh+YGiuymJx4pcH4ILXg5eCGFgGO3vmuwqUDd9vL
-         L2FZSswls8fsyGVIa6tVDtBd+96iVuxOzGD+nDd0YXxqbjs99sxqkujZMLfHZbw3HzFE
-         Ry5g==
-X-Gm-Message-State: AOAM533t7rdmHxv/abiQ8JoogZKD3KLS4WkSLCf/PHxGaXLWldhDtQ0I
-        UfeONF23biIU8rXMhUJfGV5DcasUE9qoKg==
-X-Google-Smtp-Source: ABdhPJyfs5ZpTygXxaGZ5j8GtWYGKD6uk7BkURU0CRMiJrejb6fOEpzfcrY5OfLnYg+fJAPxGXnicQ==
-X-Received: by 2002:a1c:5410:: with SMTP id i16mr21190404wmb.30.1608630730769;
-        Tue, 22 Dec 2020 01:52:10 -0800 (PST)
-Received: from [10.44.66.8] ([212.45.67.2])
-        by smtp.googlemail.com with ESMTPSA id s20sm25149033wmj.46.2020.12.22.01.52.09
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 22 Dec 2020 01:52:09 -0800 (PST)
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        Will Deacon <will@kernel.org>, Shawn Guo <shawnguo@kernel.org>,
-        Li Yang <leoyang.li@nxp.com>,
-        Geert Uytterhoeven <geert+renesas@glider.be>,
-        Arnd Bergmann <arnd@arndb.de>
-Cc:     linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-References: <20201222043745.3420447-1-bjorn.andersson@linaro.org>
-From:   Georgi Djakov <georgi.djakov@linaro.org>
-Subject: Re: [PATCH] arm64: defconfig: Make INTERCONNECT_QCOM_SDM845 builtin
-Message-ID: <41571e59-b9f4-3e59-e23b-d9fbda9bee18@linaro.org>
-Date:   Tue, 22 Dec 2020 11:52:13 +0200
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=u5D4oaP+JyGDPSb5WD4EuJeM/Elf3dZ4EodFXX528gc=;
+        b=OhDOA+LUEb1wWvjNdZbmjQr9YK/TnoLfRupEH15NaK9BELPduI1sTOP6FoYNaa9MVA
+         /TYDB9mnWvBQzGtfsAgKdsURFENnBao3cWOP+cdDDupSuI3Aune1ZKy10HWXKvmLP7lv
+         aziibHqh1LRRnn1YM9LkLFSghleGiAOtbrlkusQMIoSnM/pGWXfLsauqm4Cbpt1wxDbH
+         WFsSP5crmsin2Kk+BJGZu6RMWst66qIx/Ruf3/8pbmm4MPH4UVUoZ0sVQ7PzM1KQGMfx
+         g4NtlP2owFzQf8DoS1q6/sCAD3gzj74GuZD2pvY5hUToX3k2KgcB4szB8uEb0zVMZq7I
+         VdPA==
+X-Gm-Message-State: AOAM531zDN5p5hkCCpLIDvO9qlyyj9nVv3UhNEzoXhS9rdOJLSgmMsbK
+        CGZLUAh0QYd2VH2N67qV8QqXHSb7RvUXdZ7bTlj4tQ==
+X-Google-Smtp-Source: ABdhPJxiRcSJBC4CEnePGDAgwS/4NSlqkH6AzmAhcu5CZfPF7aE+ubk+PHahFP+ebjYTTVgdBUk3iEJFFBOkZ4f7+mo=
+X-Received: by 2002:a9f:2213:: with SMTP id 19mr14433313uad.15.1608632192033;
+ Tue, 22 Dec 2020 02:16:32 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <20201222043745.3420447-1-bjorn.andersson@linaro.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+References: <20201216175056.19554-1-ilina@codeaurora.org>
+In-Reply-To: <20201216175056.19554-1-ilina@codeaurora.org>
+From:   Ulf Hansson <ulf.hansson@linaro.org>
+Date:   Tue, 22 Dec 2020 11:15:55 +0100
+Message-ID: <CAPDyKFrdZTd0mWHYhk13uyNWoxqjkO_iSni_TC5uir-PpgxSpw@mail.gmail.com>
+Subject: Re: [PATCH] PM / Domains: allow domain idle states to be disabled
+To:     Lina Iyer <ilina@codeaurora.org>
+Cc:     "Rafael J. Wysocki" <rjw@rjwysocki.net>,
+        Linux PM <linux-pm@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 12/22/20 06:37, Bjorn Andersson wrote:
-> As of v5.11-rc1 the QUP nodes of SDM845 has got their interconnect
-> properties specified, this means that the relevant interconnect provider
-> needs to be builtin for the UART device to probe and the console to be
-> registered before userspace needs to access it.
-> 
-> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+On Wed, 16 Dec 2020 at 18:51, Lina Iyer <ilina@codeaurora.org> wrote:
+>
+> In order to debug critical domain and device power issues, it may be
+> necessary to disallow certain idle states at runtime. Let the device
+> disallow a domain idle state before suspending.The domain governor shall
+> check for the 'disabled' flag while determining the domain idle state.
 
-Reviewed-by: Georgi Djakov <georgi.djakov@linaro.org>
+For debug purposes, you might as well just set a dev PM Qos latency
+request that corresponds to the state you want to disable. This will
+then prevent the genpd governor from selecting the state.
 
+Kind regards
+Uffe
+
+>
+> Signed-off-by: Lina Iyer <ilina@codeaurora.org>
 > ---
->   arch/arm64/configs/defconfig | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/arch/arm64/configs/defconfig b/arch/arm64/configs/defconfig
-> index 838301650a79..3848ae99501c 100644
-> --- a/arch/arm64/configs/defconfig
-> +++ b/arch/arm64/configs/defconfig
-> @@ -1078,7 +1078,7 @@ CONFIG_INTERCONNECT=y
->   CONFIG_INTERCONNECT_QCOM=y
->   CONFIG_INTERCONNECT_QCOM_MSM8916=m
->   CONFIG_INTERCONNECT_QCOM_OSM_L3=m
-> -CONFIG_INTERCONNECT_QCOM_SDM845=m
-> +CONFIG_INTERCONNECT_QCOM_SDM845=y
->   CONFIG_INTERCONNECT_QCOM_SM8150=m
->   CONFIG_INTERCONNECT_QCOM_SM8250=m
->   CONFIG_EXT2_FS=y
-> 
+>  drivers/base/power/domain.c          | 30 ++++++++++++++++++++++++++++
+>  drivers/base/power/domain_governor.c |  3 +++
+>  include/linux/pm_domain.h            |  7 +++++++
+>  3 files changed, 40 insertions(+)
+>
+> diff --git a/drivers/base/power/domain.c b/drivers/base/power/domain.c
+> index 191539a8e06d..e4e7ab75bdea 100644
+> --- a/drivers/base/power/domain.c
+> +++ b/drivers/base/power/domain.c
+> @@ -1926,6 +1926,36 @@ int pm_genpd_remove_subdomain(struct generic_pm_domain *genpd,
+>  }
+>  EXPORT_SYMBOL_GPL(pm_genpd_remove_subdomain);
+>
+> +/**
+> + * dev_pm_genpd_disable_idle_state - Disallow a PM domain's idle state
+> + *
+> + * @dev: device attached to the PM domain
+> + * @idx: index of the PM domain's idle state to be disabled
+> + * @disable: enable/disable idle state
+> + *
+> + * Allow a PM domain's idle state to be disabled. Disabled idle states will
+> + * be ignored by the domain governor when entering idle. Devices would
+> + * invoke this before calling runtime suspend.
+> + */
+> +int dev_pm_genpd_disable_idle_state(struct device *dev, unsigned int idx, bool disable)
+> +{
+> +       struct generic_pm_domain *genpd;
+> +
+> +       genpd = dev_to_genpd_safe(dev);
+> +       if (!genpd)
+> +               return -ENODEV;
+> +
+> +       if (idx >= genpd->state_count)
+> +               return -EINVAL;
+> +
+> +       genpd_lock(genpd);
+> +       genpd->states[idx].disabled = disable;
+> +       genpd_unlock(genpd);
+> +
+> +       return 0;
+> +}
+> +EXPORT_SYMBOL_GPL(dev_pm_genpd_disable_idle_state);
+> +
+>  static void genpd_free_default_power_state(struct genpd_power_state *states,
+>                                            unsigned int state_count)
+>  {
+> diff --git a/drivers/base/power/domain_governor.c b/drivers/base/power/domain_governor.c
+> index 2afb7fa90d5d..8decd17c5a6a 100644
+> --- a/drivers/base/power/domain_governor.c
+> +++ b/drivers/base/power/domain_governor.c
+> @@ -175,6 +175,9 @@ static bool __default_power_down_ok(struct dev_pm_domain *pd,
+>         s64 min_off_time_ns;
+>         s64 off_on_time_ns;
+>
+> +       if (genpd->states[state].disabled)
+> +               return false;
+> +
+>         off_on_time_ns = genpd->states[state].power_off_latency_ns +
+>                 genpd->states[state].power_on_latency_ns;
+>
+> diff --git a/include/linux/pm_domain.h b/include/linux/pm_domain.h
+> index a41aea9d1c06..3d251b5b461a 100644
+> --- a/include/linux/pm_domain.h
+> +++ b/include/linux/pm_domain.h
+> @@ -101,6 +101,7 @@ struct genpd_power_state {
+>         struct fwnode_handle *fwnode;
+>         ktime_t idle_time;
+>         void *data;
+> +       bool disabled;
+>  };
+>
+>  struct genpd_lock_ops;
+> @@ -233,6 +234,7 @@ int dev_pm_genpd_add_notifier(struct device *dev, struct notifier_block *nb);
+>  int dev_pm_genpd_remove_notifier(struct device *dev);
+>  void genpd_enable_next_wakeup(struct generic_pm_domain *genpd, bool enable);
+>  int dev_pm_genpd_set_next_wakeup(struct device *dev, ktime_t next);
+> +int dev_pm_genpd_disable_idle_state(struct device *dev, unsigned int idx, bool disable);
+>
+>  extern struct dev_power_governor simple_qos_governor;
+>  extern struct dev_power_governor pm_domain_always_on_gov;
+> @@ -300,6 +302,11 @@ static inline int dev_pm_genpd_set_next_wakeup(struct device *dev, ktime_t next)
+>         return -EOPNOTSUPP;
+>  }
+>
+> +static inline int dev_pm_genpd_disable_idle_state(struct device *dev, unsigned int idx, bool disable)
+> +{
+> +       return -EOPNOTSUPP;
+> +}
+> +
+>  #define simple_qos_governor            (*(struct dev_power_governor *)(NULL))
+>  #define pm_domain_always_on_gov                (*(struct dev_power_governor *)(NULL))
+>  #endif
+> --
+> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+> a Linux Foundation Collaborative Project
+>
