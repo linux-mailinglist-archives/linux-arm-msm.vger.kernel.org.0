@@ -2,175 +2,198 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 91FA82E0A41
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Dec 2020 14:05:56 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E4B3A2E0A45
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Dec 2020 14:08:14 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726631AbgLVNFg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 22 Dec 2020 08:05:36 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54906 "EHLO
+        id S1726644AbgLVNH4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 22 Dec 2020 08:07:56 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55270 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726518AbgLVNFg (ORCPT
+        with ESMTP id S1725988AbgLVNHz (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 22 Dec 2020 08:05:36 -0500
-Received: from mail-lf1-x129.google.com (mail-lf1-x129.google.com [IPv6:2a00:1450:4864:20::129])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B3935C061793
-        for <linux-arm-msm@vger.kernel.org>; Tue, 22 Dec 2020 05:04:55 -0800 (PST)
-Received: by mail-lf1-x129.google.com with SMTP id o13so31811398lfr.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 22 Dec 2020 05:04:55 -0800 (PST)
+        Tue, 22 Dec 2020 08:07:55 -0500
+Received: from mail-vs1-xe2e.google.com (mail-vs1-xe2e.google.com [IPv6:2607:f8b0:4864:20::e2e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A6FFAC0613D6
+        for <linux-arm-msm@vger.kernel.org>; Tue, 22 Dec 2020 05:07:15 -0800 (PST)
+Received: by mail-vs1-xe2e.google.com with SMTP id z16so6975275vsp.5
+        for <linux-arm-msm@vger.kernel.org>; Tue, 22 Dec 2020 05:07:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=cYkvDM+JjtsHyuhPBxoKAqQnB1uujIDD73cQOpWHLB8=;
-        b=GIr1606Hi8p7LResTLRhR/y/hVYL30TsuwUx4zViJsDcCCLqS8INs8GYBvn0EtchFX
-         i26FLy+/6Y0OFffrdKTRgE4sxZb+Hjv4dVwPV5pvjA9d0GP1T0P/T9Unk8YF6qs/xsL4
-         e7lCSOwmFKbwdWDDGd/XTh1jF/9EeKEIud2Pw3blSBx1FPrtCCgBIwX9JCpyMimuNhbV
-         StCCarFE2kabxpDzLGrXc+c3vj6QDJESD8L5+eO3vbxegYlFylruV9JAg6lMeThG8djz
-         eT2Yz+4e0AMM10ZIQWMMO9inJ3q/9+Gjd20XfjJIoheTGKgxzSEa5S7vIRKffxCUm8cz
-         EdZg==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=oJdu5vDMCx/ujY8a+bGU6qSDx1c5AEdKsGzNSm0hWYM=;
+        b=ZOkedPHy4xDcFa7mDeWTvIVw1qhHj0i/j5RlW/oihYFku5fnb2+MKebLyfJpZG1Scs
+         p+8CM5tzMgX3cLenZdaj6q0KFsGKBX8othYLqNA8fVlvnCL2dFiy2uNP6nYAkKL3w90M
+         aynZZQjH9sGpf1h2EULcPKDcANWeKEBxNlbGetTNSUbe3e/6jc6NBSmwos8Uj6ZkZCyE
+         LzRpD1SZgCD0Gnsk3B8TB3qfbZ2neN/PAwBEuqsrEPCsYBvvFPlRxA5knGREyIe8avKw
+         hR/pG6BbKVC0zQDAUe9CYF8ttogPiE8piQjA9rLncF5Cw3GB9EuHFZzmnc+00BmWPXAE
+         hvIA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=cYkvDM+JjtsHyuhPBxoKAqQnB1uujIDD73cQOpWHLB8=;
-        b=MQIoDtLjpWUmxbBHe/Ag5gkqRJH+r4WiVjglyozO0YOfDcZb2J37vyD58CPOc4LQ1i
-         BlOLas6ZX4DVTRLhZJ2Frjkds2YEcdqX8IYExYndGoCGRhVgCxfNcqdG+5iez1b/F3vL
-         Fd+HTGXyhSUFLDjkmsGKjWzZD30rH7jBF3f6OHfK0zkK5FbqWtxDi04MYKli6HVBPX2E
-         1tbV1N8aOmrGNGPqnu+XQCxk1ZT4YtOATvUptGTNmlBF67se4+tUupPofGxAWhJojl1m
-         UbdbEM4gYsmjZGHfMUVI4K5BiUFEJZWNJ2B18C1Qi4rpVhjfdDyZHOPfJhRPebiSuNJP
-         Ra/g==
-X-Gm-Message-State: AOAM5309iuD31qekoWdKkqLfk0KwFCt4iL6xbCgo9XjMEA3UNbYvVF8q
-        3uKoKfCVQbBe9T+HdcUbmFpd2w==
-X-Google-Smtp-Source: ABdhPJzoHTdN/YbnLWjRAYOtmVOKMLcsARiq5nH8JwsmrZQGMLdFom25IEA04ntvoEKQ4PmtaMWp0A==
-X-Received: by 2002:a2e:a402:: with SMTP id p2mr9559714ljn.270.1608642294284;
-        Tue, 22 Dec 2020 05:04:54 -0800 (PST)
-Received: from eriador.lumag.spb.ru ([94.25.228.224])
-        by smtp.gmail.com with ESMTPSA id k18sm2864235ljb.80.2020.12.22.05.04.52
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 22 Dec 2020 05:04:53 -0800 (PST)
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org
-Subject: [PATCH 3/3] soc: qcom: socinfo: add info from PMIC models array
-Date:   Tue, 22 Dec 2020 16:04:48 +0300
-Message-Id: <20201222130448.4125297-3-dmitry.baryshkov@linaro.org>
-X-Mailer: git-send-email 2.29.2
-In-Reply-To: <20201222130448.4125297-1-dmitry.baryshkov@linaro.org>
-References: <20201222130448.4125297-1-dmitry.baryshkov@linaro.org>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=oJdu5vDMCx/ujY8a+bGU6qSDx1c5AEdKsGzNSm0hWYM=;
+        b=LEaqw5DPaUhqgoFOniJKrcG28AkKM/1ljDi4f4/Vho1GGE+Xq1W0FDMBuy//Uq/OJt
+         tLXAdjd2sQuMexGDNMV3I0TiAtoT9gHhZJjH3+EEqcZPmH14a3iln0tLnsnGopPbkidP
+         /l+vKA7zZ7WDQCfyr7AnBUhHJ9AH1jPPRVNip16vb2ZV0vefmprk9Apu8svVrBBQZ3/b
+         L1Ci3ENYoCj5G5EX9dWQNFajjHSyqkdNmxPFITB5GNt2CwTS8R2KLucF39rEUlarMBHv
+         luvyKOsXd/WWxPOfJQWVigopqLSexshasSOaqHu4LZu/ymb/SyGjrJC2xNHGHiu+m9wJ
+         4wKg==
+X-Gm-Message-State: AOAM531yGHzdsATlUphm42a4rpSb+wab38W9Bv+3wS2p3uj87ntmzJpo
+        6+jf0be5rm2+VOInCaqX6h+Hv3+wrdYzMvfBw2kTEQ==
+X-Google-Smtp-Source: ABdhPJwLLXzicnAhS9NdWV6aM8UTBiKQmmvSZ8pRvEydd7nXMyhANVh3BHf14B+GdIkx4jtUNgSs02f88RZkQvRYqow=
+X-Received: by 2002:a67:70c6:: with SMTP id l189mr14980585vsc.34.1608642434179;
+ Tue, 22 Dec 2020 05:07:14 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20201130225039.15981-1-ilina@codeaurora.org> <20201130225039.15981-2-ilina@codeaurora.org>
+In-Reply-To: <20201130225039.15981-2-ilina@codeaurora.org>
+From:   Ulf Hansson <ulf.hansson@linaro.org>
+Date:   Tue, 22 Dec 2020 14:06:38 +0100
+Message-ID: <CAPDyKFr0+Hzod+cq1gBN66O-Tvt5RAB2aK=rzcqGaPF41TMRnQ@mail.gmail.com>
+Subject: Re: [PATCH v6 1/3] PM / Domains: add domain feature flag for next wakeup
+To:     Lina Iyer <ilina@codeaurora.org>
+Cc:     "Rafael J. Wysocki" <rjw@rjwysocki.net>,
+        Linux PM <linux-pm@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add debugfs file showing information from PMIC model array.
+On Mon, 30 Nov 2020 at 23:51, Lina Iyer <ilina@codeaurora.org> wrote:
+>
+> PM domains may support entering multiple power down states when the
+> component devices and sub-domains are suspended. Also, they may specify
+> the residency value for an idle state, only after which the idle state
+> may provide power benefits. If the domain does not specify the residency
+> for any of its idle states, the governor's choice is much simplified.
+>
+> Let's make this optional with the use of a PM domain feature flag.
+>
+> Signed-off-by: Lina Iyer <ilina@codeaurora.org>
+> ---
+> Changes in v6:
+>         - New patch based on discussions on v5 of the series
+> ---
+>  drivers/base/power/domain.c | 18 ++++++++++++++++++
+>  include/linux/pm_domain.h   | 28 ++++++++++++++++++++++------
+>  2 files changed, 40 insertions(+), 6 deletions(-)
+>
+> diff --git a/drivers/base/power/domain.c b/drivers/base/power/domain.c
+> index 1b0c9ccbbe1f..1e6c0bf1c945 100644
+> --- a/drivers/base/power/domain.c
+> +++ b/drivers/base/power/domain.c
+> @@ -1748,6 +1748,24 @@ int dev_pm_genpd_remove_notifier(struct device *dev)
+>  }
+>  EXPORT_SYMBOL_GPL(dev_pm_genpd_remove_notifier);
+>
+> +/**
+> + * genpd_enable_next_wakeup - Enable genpd gov to use next_wakeup
+> + *
+> + * @genpd: The genpd to be updated
+> + * @enable: Enable/disable genpd gov to use next wakeup
+> + */
+> +void genpd_enable_next_wakeup(struct generic_pm_domain *genpd, bool enable)
+> +{
+> +       genpd_lock(genpd);
+> +       if (enable)
+> +               genpd->flags |= GENPD_FLAG_GOV_NEXT_WAKEUP;
+> +       else
+> +               genpd->flags &= ~GENPD_FLAG_GOV_NEXT_WAKEUP;
+> +       genpd->next_wakeup = KTIME_MAX;
+> +       genpd_unlock(genpd);
+> +}
+> +EXPORT_SYMBOL_GPL(genpd_enable_next_wakeup);
+> +
 
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
----
- drivers/soc/qcom/socinfo.c | 42 +++++++++++++++++++++++++++++++++++---
- 1 file changed, 39 insertions(+), 3 deletions(-)
+Please drop this, as I don't think we need a dedicated function to
+enable this feature.
 
-diff --git a/drivers/soc/qcom/socinfo.c b/drivers/soc/qcom/socinfo.c
-index 7229c3c04083..d255034a2b6f 100644
---- a/drivers/soc/qcom/socinfo.c
-+++ b/drivers/soc/qcom/socinfo.c
-@@ -15,6 +15,8 @@
- #include <linux/sys_soc.h>
- #include <linux/types.h>
- 
-+#include <asm/unaligned.h>
-+
- /*
-  * SoC version type with major number in the upper 16 bits and minor
-  * number in the lower 16 bits.
-@@ -294,6 +296,32 @@ static int qcom_show_pmic_model(struct seq_file *seq, void *p)
- 	return 0;
- }
- 
-+static int qcom_show_pmic_model_array(struct seq_file *seq, void *p)
-+{
-+	struct socinfo *socinfo = seq->private;
-+	unsigned int num_pmics = le32_to_cpu(socinfo->num_pmics);
-+	unsigned int pmic_array_offset = le32_to_cpu(socinfo->pmic_array_offset);
-+	int i;
-+	void *ptr = socinfo;
-+
-+	ptr += pmic_array_offset;
-+
-+	/* No need for bounds checking, it happened at socinfo_debugfs_init */
-+	for (i = 0; i < num_pmics; i++) {
-+		unsigned int model = SOCINFO_MINOR(get_unaligned_le32(ptr + 2 * i * sizeof(u32)));
-+		unsigned int die_rev = get_unaligned_le32(ptr + (2 * i + 1) * sizeof(u32));
-+
-+		if (model <= ARRAY_SIZE(pmic_models) && pmic_models[model])
-+			seq_printf(seq, "%s %u.%u\n", pmic_models[model],
-+					SOCINFO_MAJOR(le32_to_cpu(die_rev)),
-+					SOCINFO_MINOR(le32_to_cpu(die_rev)));
-+		else
-+			seq_printf(seq, "unknown (%d)\n", model);
-+	}
-+
-+	return 0;
-+}
-+
- static int qcom_show_pmic_die_revision(struct seq_file *seq, void *p)
- {
- 	struct socinfo *socinfo = seq->private;
-@@ -316,6 +344,7 @@ static int qcom_show_chip_id(struct seq_file *seq, void *p)
- 
- QCOM_OPEN(build_id, qcom_show_build_id);
- QCOM_OPEN(pmic_model, qcom_show_pmic_model);
-+QCOM_OPEN(pmic_model_array, qcom_show_pmic_model_array);
- QCOM_OPEN(pmic_die_rev, qcom_show_pmic_die_revision);
- QCOM_OPEN(chip_id, qcom_show_chip_id);
- 
-@@ -344,12 +373,14 @@ DEFINE_IMAGE_OPS(variant);
- DEFINE_IMAGE_OPS(oem);
- 
- static void socinfo_debugfs_init(struct qcom_socinfo *qcom_socinfo,
--				 struct socinfo *info)
-+				 struct socinfo *info, size_t info_size)
- {
- 	struct smem_image_version *versions;
- 	struct dentry *dentry;
- 	size_t size;
- 	int i;
-+	unsigned int num_pmics;
-+	unsigned int pmic_array_offset;
- 
- 	qcom_socinfo->dbg_root = debugfs_create_dir("qcom_socinfo", NULL);
- 
-@@ -405,6 +436,11 @@ static void socinfo_debugfs_init(struct qcom_socinfo *qcom_socinfo,
- 				   &qcom_socinfo->info.raw_device_num);
- 		fallthrough;
- 	case SOCINFO_VERSION(0, 11):
-+		num_pmics = le32_to_cpu(info->num_pmics);
-+		pmic_array_offset = le32_to_cpu(info->pmic_array_offset);
-+		if (pmic_array_offset + 2 * num_pmics * sizeof(u32) <= info_size)
-+			DEBUGFS_ADD(info, pmic_model_array);
-+		fallthrough;
- 	case SOCINFO_VERSION(0, 10):
- 	case SOCINFO_VERSION(0, 9):
- 		qcom_socinfo->info.foundry_id = __le32_to_cpu(info->foundry_id);
-@@ -482,7 +518,7 @@ static void socinfo_debugfs_exit(struct qcom_socinfo *qcom_socinfo)
- }
- #else
- static void socinfo_debugfs_init(struct qcom_socinfo *qcom_socinfo,
--				 struct socinfo *info)
-+				 struct socinfo *info, size_t info_size)
- {
- }
- static void socinfo_debugfs_exit(struct qcom_socinfo *qcom_socinfo) {  }
-@@ -522,7 +558,7 @@ static int qcom_socinfo_probe(struct platform_device *pdev)
- 	if (IS_ERR(qs->soc_dev))
- 		return PTR_ERR(qs->soc_dev);
- 
--	socinfo_debugfs_init(qs, info);
-+	socinfo_debugfs_init(qs, info, item_size);
- 
- 	/* Feed the soc specific unique data into entropy pool */
- 	add_device_randomness(info, item_size);
--- 
-2.29.2
+Instead, it seems like a better idea to let the genpd provider set it,
+before it calls pm_genpd_init(), along with its other genpd
+configurations.
 
+>  static int genpd_add_subdomain(struct generic_pm_domain *genpd,
+>                                struct generic_pm_domain *subdomain)
+>  {
+> diff --git a/include/linux/pm_domain.h b/include/linux/pm_domain.h
+> index 2ca919ae8d36..1f359bd19f77 100644
+> --- a/include/linux/pm_domain.h
+> +++ b/include/linux/pm_domain.h
+> @@ -55,13 +55,19 @@
+>   *
+>   * GENPD_FLAG_RPM_ALWAYS_ON:   Instructs genpd to always keep the PM domain
+>   *                             powered on except for system suspend.
+> + *
+> + * GENPD_FLAG_GOV_NEXT_WAKEUP: Enable the genpd governor to consider its
+> + *                             components' next wakeup when  determining the
+> + *                             optimal idle state. This is setup only if the
+> + *                             domain's idle state specifies a residency.
+>   */
+> -#define GENPD_FLAG_PM_CLK       (1U << 0)
+> -#define GENPD_FLAG_IRQ_SAFE     (1U << 1)
+> -#define GENPD_FLAG_ALWAYS_ON    (1U << 2)
+> -#define GENPD_FLAG_ACTIVE_WAKEUP (1U << 3)
+> -#define GENPD_FLAG_CPU_DOMAIN   (1U << 4)
+> -#define GENPD_FLAG_RPM_ALWAYS_ON (1U << 5)
+> +#define GENPD_FLAG_PM_CLK         (1U << 0)
+> +#define GENPD_FLAG_IRQ_SAFE       (1U << 1)
+> +#define GENPD_FLAG_ALWAYS_ON      (1U << 2)
+> +#define GENPD_FLAG_ACTIVE_WAKEUP   (1U << 3)
+> +#define GENPD_FLAG_CPU_DOMAIN     (1U << 4)
+> +#define GENPD_FLAG_RPM_ALWAYS_ON   (1U << 5)
+> +#define GENPD_FLAG_GOV_NEXT_WAKEUP (1U << 6)
+
+Nitpick.
+
+To me, the configuration is something that corresponds to the genpd,
+rather than the governor (even if it affects it in this case). That
+said, how about just naming the flag something like
+"GENPD_FLAG_MIN_RESIDENCY", as to indicate that the genpd's power off
+states have minimum residencies values that may deserve to be
+considered, while power off.
+
+>
+>  enum gpd_status {
+>         GENPD_STATE_ON = 0,     /* PM domain is on */
+> @@ -205,6 +211,11 @@ static inline struct generic_pm_domain_data *dev_gpd_data(struct device *dev)
+>         return to_gpd_data(dev->power.subsys_data->domain_data);
+>  }
+>
+> +static inline bool genpd_may_use_next_wakeup(struct generic_pm_domain *genpd)
+> +{
+> +       return genpd->flags & GENPD_FLAG_GOV_NEXT_WAKEUP;
+> +}
+
+This can probably be moved into drivers/base/power/domain_governor.c.
+
+> +
+>  int pm_genpd_add_device(struct generic_pm_domain *genpd, struct device *dev);
+>  int pm_genpd_remove_device(struct device *dev);
+>  int pm_genpd_add_subdomain(struct generic_pm_domain *genpd,
+> @@ -217,6 +228,7 @@ int pm_genpd_remove(struct generic_pm_domain *genpd);
+>  int dev_pm_genpd_set_performance_state(struct device *dev, unsigned int state);
+>  int dev_pm_genpd_add_notifier(struct device *dev, struct notifier_block *nb);
+>  int dev_pm_genpd_remove_notifier(struct device *dev);
+> +void genpd_enable_next_wakeup(struct generic_pm_domain *genpd, bool enable);
+>
+>  extern struct dev_power_governor simple_qos_governor;
+>  extern struct dev_power_governor pm_domain_always_on_gov;
+> @@ -275,6 +287,10 @@ static inline int dev_pm_genpd_remove_notifier(struct device *dev)
+>         return -EOPNOTSUPP;
+>  }
+>
+> +static void genpd_enable_next_wakeup(struct generic_pm_domain *genpd,
+> +                                    bool enable)
+> +{ }
+> +
+>  #define simple_qos_governor            (*(struct dev_power_governor *)(NULL))
+>  #define pm_domain_always_on_gov                (*(struct dev_power_governor *)(NULL))
+>  #endif
+> --
+> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+> a Linux Foundation Collaborative Project
+>
+
+Kind regards
+Uffe
