@@ -2,55 +2,55 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E4B3A2E0A45
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Dec 2020 14:08:14 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1239F2E0A5B
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Dec 2020 14:11:25 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726644AbgLVNH4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 22 Dec 2020 08:07:56 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55270 "EHLO
+        id S1726868AbgLVNLK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 22 Dec 2020 08:11:10 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55756 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725988AbgLVNHz (ORCPT
+        with ESMTP id S1727121AbgLVNLJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 22 Dec 2020 08:07:55 -0500
-Received: from mail-vs1-xe2e.google.com (mail-vs1-xe2e.google.com [IPv6:2607:f8b0:4864:20::e2e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A6FFAC0613D6
-        for <linux-arm-msm@vger.kernel.org>; Tue, 22 Dec 2020 05:07:15 -0800 (PST)
-Received: by mail-vs1-xe2e.google.com with SMTP id z16so6975275vsp.5
-        for <linux-arm-msm@vger.kernel.org>; Tue, 22 Dec 2020 05:07:15 -0800 (PST)
+        Tue, 22 Dec 2020 08:11:09 -0500
+Received: from mail-vs1-xe2f.google.com (mail-vs1-xe2f.google.com [IPv6:2607:f8b0:4864:20::e2f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AE1FAC0613D6
+        for <linux-arm-msm@vger.kernel.org>; Tue, 22 Dec 2020 05:10:29 -0800 (PST)
+Received: by mail-vs1-xe2f.google.com with SMTP id b23so6961801vsp.9
+        for <linux-arm-msm@vger.kernel.org>; Tue, 22 Dec 2020 05:10:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=oJdu5vDMCx/ujY8a+bGU6qSDx1c5AEdKsGzNSm0hWYM=;
-        b=ZOkedPHy4xDcFa7mDeWTvIVw1qhHj0i/j5RlW/oihYFku5fnb2+MKebLyfJpZG1Scs
-         p+8CM5tzMgX3cLenZdaj6q0KFsGKBX8othYLqNA8fVlvnCL2dFiy2uNP6nYAkKL3w90M
-         aynZZQjH9sGpf1h2EULcPKDcANWeKEBxNlbGetTNSUbe3e/6jc6NBSmwos8Uj6ZkZCyE
-         LzRpD1SZgCD0Gnsk3B8TB3qfbZ2neN/PAwBEuqsrEPCsYBvvFPlRxA5knGREyIe8avKw
-         hR/pG6BbKVC0zQDAUe9CYF8ttogPiE8piQjA9rLncF5Cw3GB9EuHFZzmnc+00BmWPXAE
-         hvIA==
+        bh=wORpCwP/PH7s5v92DGchLRrRHanaLYyHWLFD2f49ktc=;
+        b=ksk+439Sk7N6zd0mHMVvriWtabkZ/kswQIrKCA/dX+chsH7bcRYZO3Z5g3GJkeRgbV
+         rOzviJt3v+emac3wOKUgE0XDCjgtKHVLhOW2pYSq+1Iz3yfBKT75YPgygMY4aZDVpMGH
+         gFCbWJmnKodLoIAGgZhHMACf+XgGBju/u5ci1apGvOGaae+MVXFwO++iU8dwlqh5m2YG
+         AfJsuevFByOI9YKVAjs+Bwga1CfNcqOF6go9PD/mGtFe5vr8959Yxu2Hyt3DeD83mSb1
+         YJNWzuACBVWzhfKyk/leEbqyQgb2ZWJlYXOAUkalFajfWJz0XgVLPKxzkJnD5X2YQBy+
+         54bQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=oJdu5vDMCx/ujY8a+bGU6qSDx1c5AEdKsGzNSm0hWYM=;
-        b=LEaqw5DPaUhqgoFOniJKrcG28AkKM/1ljDi4f4/Vho1GGE+Xq1W0FDMBuy//Uq/OJt
-         tLXAdjd2sQuMexGDNMV3I0TiAtoT9gHhZJjH3+EEqcZPmH14a3iln0tLnsnGopPbkidP
-         /l+vKA7zZ7WDQCfyr7AnBUhHJ9AH1jPPRVNip16vb2ZV0vefmprk9Apu8svVrBBQZ3/b
-         L1Ci3ENYoCj5G5EX9dWQNFajjHSyqkdNmxPFITB5GNt2CwTS8R2KLucF39rEUlarMBHv
-         luvyKOsXd/WWxPOfJQWVigopqLSexshasSOaqHu4LZu/ymb/SyGjrJC2xNHGHiu+m9wJ
-         4wKg==
-X-Gm-Message-State: AOAM531yGHzdsATlUphm42a4rpSb+wab38W9Bv+3wS2p3uj87ntmzJpo
-        6+jf0be5rm2+VOInCaqX6h+Hv3+wrdYzMvfBw2kTEQ==
-X-Google-Smtp-Source: ABdhPJwLLXzicnAhS9NdWV6aM8UTBiKQmmvSZ8pRvEydd7nXMyhANVh3BHf14B+GdIkx4jtUNgSs02f88RZkQvRYqow=
-X-Received: by 2002:a67:70c6:: with SMTP id l189mr14980585vsc.34.1608642434179;
- Tue, 22 Dec 2020 05:07:14 -0800 (PST)
+        bh=wORpCwP/PH7s5v92DGchLRrRHanaLYyHWLFD2f49ktc=;
+        b=WtNhiUqRX8PjS0To/hXUbE/gTFmGjmV71VEx9S+Ge4Wqb6i0C4ZwRReosmYM5HvB3d
+         vXaFzTwgUZOSnKb7788DjCBQ9hM+zF+VRl3mbenkOgycogg0w+PjzhsWOBLOBbhbKZm9
+         LKN0rtQFNGu1T6kBfBG95fZIg9vGPbTgDfMejd2TzP7upwNjWVT3nJ3e/I3oSAAKhC+7
+         eQh1IKh3EnEqSbzE1xwRjBbpoxpsK1LeSkVKNEQsIY3C1KxBC0dhLuNtf9kPQotSH6W1
+         I+agf1cTNZ9Ink6THzIq0daE/8gsqa1ae4SL2KI6SnO4WvzXWERLAS6/cwCXSvhmwvIF
+         2Ofg==
+X-Gm-Message-State: AOAM531LhafzC0MYBNQ2GUuLRZlX3qGnVW377QeiR9W/B7sGeDu9AYh1
+        nvHO+gFA2wkfhJ3WGKj4qanjcSkDtf0zzS6LXTqvlA==
+X-Google-Smtp-Source: ABdhPJwas99cyWHLX7z53I4QehDGkR8rAswPZcKi5vG56Nm0h2QZcGL/wmcAMnou7UbgWcIit05vLDx5y/pxtHQ4rZc=
+X-Received: by 2002:a67:fe85:: with SMTP id b5mr14600149vsr.19.1608642628595;
+ Tue, 22 Dec 2020 05:10:28 -0800 (PST)
 MIME-Version: 1.0
-References: <20201130225039.15981-1-ilina@codeaurora.org> <20201130225039.15981-2-ilina@codeaurora.org>
-In-Reply-To: <20201130225039.15981-2-ilina@codeaurora.org>
+References: <20201130225039.15981-1-ilina@codeaurora.org> <20201130225039.15981-3-ilina@codeaurora.org>
+In-Reply-To: <20201130225039.15981-3-ilina@codeaurora.org>
 From:   Ulf Hansson <ulf.hansson@linaro.org>
-Date:   Tue, 22 Dec 2020 14:06:38 +0100
-Message-ID: <CAPDyKFr0+Hzod+cq1gBN66O-Tvt5RAB2aK=rzcqGaPF41TMRnQ@mail.gmail.com>
-Subject: Re: [PATCH v6 1/3] PM / Domains: add domain feature flag for next wakeup
+Date:   Tue, 22 Dec 2020 14:09:52 +0100
+Message-ID: <CAPDyKFphczBOyDmSQBh3PE7YaUBYy4Y5uoozrv4QOf4pEbk-yg@mail.gmail.com>
+Subject: Re: [PATCH v6 2/3] PM / domains: inform PM domain of a device's next wakeup
 To:     Lina Iyer <ilina@codeaurora.org>
 Cc:     "Rafael J. Wysocki" <rjw@rjwysocki.net>,
         Linux PM <linux-pm@vger.kernel.org>,
@@ -62,130 +62,170 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On Mon, 30 Nov 2020 at 23:51, Lina Iyer <ilina@codeaurora.org> wrote:
 >
-> PM domains may support entering multiple power down states when the
-> component devices and sub-domains are suspended. Also, they may specify
-> the residency value for an idle state, only after which the idle state
-> may provide power benefits. If the domain does not specify the residency
-> for any of its idle states, the governor's choice is much simplified.
+> Some devices may have a predictable interrupt pattern while executing
+> usecases. An example would be the VSYNC interrupt associated with
+> display devices. A 60 Hz display could cause a interrupt every 16 ms. If
+> the device were in a PM domain, the domain would need to be powered up
+> for device to resume and handle the interrupt.
 >
-> Let's make this optional with the use of a PM domain feature flag.
+> Entering a domain idle state saves power, only if the residency of the
+> idle state is met. Without knowing the idle duration of the domain, the
+> governor would just choose the deepest idle state that matches the QoS
+> requirements. The domain might be powered off just as the device is
+> expecting to wake up. If devices could inform PM frameworks of their
+> next event, the parent PM domain's idle duration can be determined.
+>
+> So let's add the dev_pm_genpd_set_next_wakeup() API for the device to
+> inform PM domains of the impending wakeup. This information will be the
+> domain governor to determine the best idle state given the wakeup.
 >
 > Signed-off-by: Lina Iyer <ilina@codeaurora.org>
 > ---
 > Changes in v6:
->         - New patch based on discussions on v5 of the series
+>         - Update documentation
+> Changes in v5:
+>         - Fix commit text as pointed by Ulf
+>         - Use -EOPNOTSUPP
+> Changes in v4:
+>         - Use PM domain data to store next_wakeup
+>         - Drop runtime PM documentation
+> Changes in v3:
+>         - Fix unwanted change
+> Changes in v2:
+>         - Update documentation
+>         - Remove runtime PM enabled check
+>         - Update commit text
 > ---
->  drivers/base/power/domain.c | 18 ++++++++++++++++++
->  include/linux/pm_domain.h   | 28 ++++++++++++++++++++++------
->  2 files changed, 40 insertions(+), 6 deletions(-)
+>  drivers/base/power/domain.c | 41 +++++++++++++++++++++++++++++++++++++
+>  include/linux/pm_domain.h   |  8 ++++++++
+>  2 files changed, 49 insertions(+)
 >
 > diff --git a/drivers/base/power/domain.c b/drivers/base/power/domain.c
-> index 1b0c9ccbbe1f..1e6c0bf1c945 100644
+> index 1e6c0bf1c945..191539a8e06d 100644
 > --- a/drivers/base/power/domain.c
 > +++ b/drivers/base/power/domain.c
-> @@ -1748,6 +1748,24 @@ int dev_pm_genpd_remove_notifier(struct device *dev)
+> @@ -408,6 +408,46 @@ int dev_pm_genpd_set_performance_state(struct device *dev, unsigned int state)
 >  }
->  EXPORT_SYMBOL_GPL(dev_pm_genpd_remove_notifier);
+>  EXPORT_SYMBOL_GPL(dev_pm_genpd_set_performance_state);
 >
 > +/**
-> + * genpd_enable_next_wakeup - Enable genpd gov to use next_wakeup
+> + * dev_pm_genpd_set_next_wakeup - Notify PM framework of an impending wakeup.
 > + *
-> + * @genpd: The genpd to be updated
-> + * @enable: Enable/disable genpd gov to use next wakeup
+> + * @dev: Device to handle
+> + * @next: impending interrupt/wakeup for the device
+> + *
+> + * Allow devices to inform of the next wakeup. But, if the domain were already
+> + * powered off, we will not wakeup the domain to recompute it's idle duration.
+
+How about clarifying this as:
+
+"It's assumed that the users guarantee that the genpd wouldn't be
+detached while this routine is getting called. Additionally, it's also
+assumed that @dev isn't runtime suspended (RPM_SUSPENDED).
+
+> + * Although devices are expected to update the next_wakeup after the end of
+> + * their usecase as well, it is possible the devices themselves may not know
+> + * about that. Stale @next will be ignored when powering off the domain.
 > + */
-> +void genpd_enable_next_wakeup(struct generic_pm_domain *genpd, bool enable)
+> +int dev_pm_genpd_set_next_wakeup(struct device *dev, ktime_t next)
 > +{
-> +       genpd_lock(genpd);
-> +       if (enable)
-> +               genpd->flags |= GENPD_FLAG_GOV_NEXT_WAKEUP;
-> +       else
-> +               genpd->flags &= ~GENPD_FLAG_GOV_NEXT_WAKEUP;
-> +       genpd->next_wakeup = KTIME_MAX;
-> +       genpd_unlock(genpd);
-> +}
-> +EXPORT_SYMBOL_GPL(genpd_enable_next_wakeup);
+> +       struct generic_pm_domain *genpd;
+> +       struct generic_pm_domain_data *gpd_data;
+> +       int ret = -EINVAL;
 > +
+> +       genpd = dev_to_genpd_safe(dev);
+> +       if (!genpd)
+> +               return -ENODEV;
+> +
+> +       if (WARN_ON(!dev->power.subsys_data ||
+> +                   !dev->power.subsys_data->domain_data))
+> +               return ret;
+> +
+> +       genpd_lock(genpd);
+> +       gpd_data = to_gpd_data(dev->power.subsys_data->domain_data);
+> +       if (ktime_before(ktime_get(), next)) {
+> +               gpd_data->next_wakeup = next;
+> +               genpd->flags |= GENPD_FLAG_GOV_NEXT_WAKEUP;
 
-Please drop this, as I don't think we need a dedicated function to
-enable this feature.
+I don't think we should set this here, but instead leave this to be
+set by the genpd provider at initialization.
 
-Instead, it seems like a better idea to let the genpd provider set it,
-before it calls pm_genpd_init(), along with its other genpd
-configurations.
+> +               ret = 0;
+> +       }
+> +       genpd_unlock(genpd);
 
->  static int genpd_add_subdomain(struct generic_pm_domain *genpd,
->                                struct generic_pm_domain *subdomain)
+I would suggest to simplify the above into:
+
+gpd_data = to_gpd_data(dev->power.subsys_data->domain_data);
+gpd_data->next_wakeup = next;
+
+Then there is no need for locks because:
+*) We assume the device remains attached to the genpd.
+**) The device isn't runtime suspended, hence its corresponding genpd
+is powered on and thus the genpd governor can't be looking at
+"gpd_data->next_wakeup" simulantfsfulsy.
+
+Moreover, as we agreed to ignore stale values for "next", there is no
+reason to validate it against the current ktime, so let's just skip
+it.
+
+> +
+> +       return ret;
+> +}
+> +EXPORT_SYMBOL_GPL(dev_pm_genpd_set_next_wakeup);
+> +
+> +
+>  static int _genpd_power_on(struct generic_pm_domain *genpd, bool timed)
 >  {
+>         unsigned int state_idx = genpd->state_idx;
+> @@ -1450,6 +1490,7 @@ static struct generic_pm_domain_data *genpd_alloc_dev_data(struct device *dev)
+>         gpd_data->td.constraint_changed = true;
+>         gpd_data->td.effective_constraint_ns = PM_QOS_RESUME_LATENCY_NO_CONSTRAINT_NS;
+>         gpd_data->nb.notifier_call = genpd_dev_pm_qos_notifier;
+> +       gpd_data->next_wakeup = KTIME_MAX;
+
+When looking at patch3, I wonder if it perhaps could be easier to use
+"zero" as the default value? What do you think, just an idea?
+
+>
+>         spin_lock_irq(&dev->power.lock);
+>
 > diff --git a/include/linux/pm_domain.h b/include/linux/pm_domain.h
-> index 2ca919ae8d36..1f359bd19f77 100644
+> index 1f359bd19f77..cc27d3d88849 100644
 > --- a/include/linux/pm_domain.h
 > +++ b/include/linux/pm_domain.h
-> @@ -55,13 +55,19 @@
->   *
->   * GENPD_FLAG_RPM_ALWAYS_ON:   Instructs genpd to always keep the PM domain
->   *                             powered on except for system suspend.
-> + *
-> + * GENPD_FLAG_GOV_NEXT_WAKEUP: Enable the genpd governor to consider its
-> + *                             components' next wakeup when  determining the
-> + *                             optimal idle state. This is setup only if the
-> + *                             domain's idle state specifies a residency.
->   */
-> -#define GENPD_FLAG_PM_CLK       (1U << 0)
-> -#define GENPD_FLAG_IRQ_SAFE     (1U << 1)
-> -#define GENPD_FLAG_ALWAYS_ON    (1U << 2)
-> -#define GENPD_FLAG_ACTIVE_WAKEUP (1U << 3)
-> -#define GENPD_FLAG_CPU_DOMAIN   (1U << 4)
-> -#define GENPD_FLAG_RPM_ALWAYS_ON (1U << 5)
-> +#define GENPD_FLAG_PM_CLK         (1U << 0)
-> +#define GENPD_FLAG_IRQ_SAFE       (1U << 1)
-> +#define GENPD_FLAG_ALWAYS_ON      (1U << 2)
-> +#define GENPD_FLAG_ACTIVE_WAKEUP   (1U << 3)
-> +#define GENPD_FLAG_CPU_DOMAIN     (1U << 4)
-> +#define GENPD_FLAG_RPM_ALWAYS_ON   (1U << 5)
-> +#define GENPD_FLAG_GOV_NEXT_WAKEUP (1U << 6)
-
-Nitpick.
-
-To me, the configuration is something that corresponds to the genpd,
-rather than the governor (even if it affects it in this case). That
-said, how about just naming the flag something like
-"GENPD_FLAG_MIN_RESIDENCY", as to indicate that the genpd's power off
-states have minimum residencies values that may deserve to be
-considered, while power off.
-
+> @@ -9,6 +9,7 @@
+>  #define _LINUX_PM_DOMAIN_H
 >
->  enum gpd_status {
->         GENPD_STATE_ON = 0,     /* PM domain is on */
-> @@ -205,6 +211,11 @@ static inline struct generic_pm_domain_data *dev_gpd_data(struct device *dev)
->         return to_gpd_data(dev->power.subsys_data->domain_data);
->  }
+>  #include <linux/device.h>
+> +#include <linux/ktime.h>
+>  #include <linux/mutex.h>
+>  #include <linux/pm.h>
+>  #include <linux/err.h>
+> @@ -197,6 +198,7 @@ struct generic_pm_domain_data {
+>         struct notifier_block *power_nb;
+>         int cpu;
+>         unsigned int performance_state;
+> +       ktime_t next_wakeup;
+>         void *data;
+>  };
 >
-> +static inline bool genpd_may_use_next_wakeup(struct generic_pm_domain *genpd)
-> +{
-> +       return genpd->flags & GENPD_FLAG_GOV_NEXT_WAKEUP;
-> +}
-
-This can probably be moved into drivers/base/power/domain_governor.c.
-
-> +
->  int pm_genpd_add_device(struct generic_pm_domain *genpd, struct device *dev);
->  int pm_genpd_remove_device(struct device *dev);
->  int pm_genpd_add_subdomain(struct generic_pm_domain *genpd,
-> @@ -217,6 +228,7 @@ int pm_genpd_remove(struct generic_pm_domain *genpd);
->  int dev_pm_genpd_set_performance_state(struct device *dev, unsigned int state);
+> @@ -229,6 +231,7 @@ int dev_pm_genpd_set_performance_state(struct device *dev, unsigned int state);
 >  int dev_pm_genpd_add_notifier(struct device *dev, struct notifier_block *nb);
 >  int dev_pm_genpd_remove_notifier(struct device *dev);
-> +void genpd_enable_next_wakeup(struct generic_pm_domain *genpd, bool enable);
+>  void genpd_enable_next_wakeup(struct generic_pm_domain *genpd, bool enable);
+> +int dev_pm_genpd_set_next_wakeup(struct device *dev, ktime_t next);
 >
 >  extern struct dev_power_governor simple_qos_governor;
 >  extern struct dev_power_governor pm_domain_always_on_gov;
-> @@ -275,6 +287,10 @@ static inline int dev_pm_genpd_remove_notifier(struct device *dev)
->         return -EOPNOTSUPP;
->  }
+> @@ -291,6 +294,11 @@ static void genpd_enable_next_wakeup(struct generic_pm_domain *genpd,
+>                                      bool enable)
+>  { }
 >
-> +static void genpd_enable_next_wakeup(struct generic_pm_domain *genpd,
-> +                                    bool enable)
-> +{ }
+> +static inline int dev_pm_genpd_set_next_wakeup(struct device *dev, ktime_t next)
+> +{
+> +       return -EOPNOTSUPP;
+> +}
 > +
 >  #define simple_qos_governor            (*(struct dev_power_governor *)(NULL))
 >  #define pm_domain_always_on_gov                (*(struct dev_power_governor *)(NULL))
