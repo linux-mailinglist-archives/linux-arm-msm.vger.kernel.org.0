@@ -2,236 +2,362 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 3E9002E1A99
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Dec 2020 10:42:15 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7F2D82E1C2F
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Dec 2020 13:20:08 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727973AbgLWJl6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 23 Dec 2020 04:41:58 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47314 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727876AbgLWJl5 (ORCPT
+        id S1728455AbgLWMSY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 23 Dec 2020 07:18:24 -0500
+Received: from so254-31.mailgun.net ([198.61.254.31]:31924 "EHLO
+        so254-31.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728394AbgLWMSX (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 23 Dec 2020 04:41:57 -0500
-Received: from mail-pf1-x42f.google.com (mail-pf1-x42f.google.com [IPv6:2607:f8b0:4864:20::42f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 56AE5C0613D3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 23 Dec 2020 01:41:17 -0800 (PST)
-Received: by mail-pf1-x42f.google.com with SMTP id t8so10061372pfg.8
-        for <linux-arm-msm@vger.kernel.org>; Wed, 23 Dec 2020 01:41:17 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=VSEvuO+6OzKmY5VVoWhUG218kcfFo+f/+qMVsBfmy/Q=;
-        b=sexPRHZPmgBCJelw62FPlM9uMQwQdBW4ry+Jwv5ZA+5VZt5TWhEZTfQX6W3+e/CzvN
-         WbB/jilEQeWGs0sORu3lN5ADnz80LAzZbodkX4mfnC/Dy0V17UyXHB+EHTgO2E0fWNjz
-         tSUuIaTKDs1l+yW0123D/8UEswHvmg2vnj2vOseMHtCbW6T+S+YALB2FZ0Epy3CbhCGj
-         Ny7oxPUS/INz5JlWB3LGtfi7sw88YZeXuqSC0EklYKmXSwEI/RWIgNk0f4CNDFawfrs8
-         BqD8ZoLXoKDpA4sE3AUb/DxT9ZQmYKKysnQxp9fYBPd6VuJgST2S+4JoNuhYmeu1yWxa
-         8uOA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=VSEvuO+6OzKmY5VVoWhUG218kcfFo+f/+qMVsBfmy/Q=;
-        b=bRePnEKwCYTrEmawpBQb9Iebx67l/BO+iLa6pRR8/Ow6ZpOD+Mx1Nw1vNv+enxX+tv
-         qnB0C+9zlKun0TeGVmnOFJinEUDLar70iO2Hooj3L1GDqSwfTCwpFORS3tVU6q4kNVmL
-         ySF5Wf5eLy6iTgh+f7QpRv8KwTPah8FhWkbxoi8UOlPHVsIMGAf1uB1imyn5dPIz/05S
-         VQR4IPx48cy+h+a7X2rJiG6fZZ/+CpMVTjyHx+x1/BIXoTvoj61DYHmv47BqskhCwY0h
-         DzdiN6Rk6Q63f3pNOqenmhMDH9k6rh+pU8v6Iy3ghyZkFAPtj6mwLEQ4jTy9/iv+rP/R
-         mJuw==
-X-Gm-Message-State: AOAM5329xignaH5R5CXJgSTyS/zG95k9vzyzG4sYv7XxUrcT6qg6Qs3M
-        KaslCyr+zSPh6rFtERQnpXQG
-X-Google-Smtp-Source: ABdhPJy+3Y7FHJ5Y0kictnfZo7tCzGwTBHw8/mXhpDmDC69wfoIEumVDF96RbwojeTxNlDoPsjG3oA==
-X-Received: by 2002:a62:19ca:0:b029:19d:cd0d:af83 with SMTP id 193-20020a6219ca0000b029019dcd0daf83mr23706594pfz.51.1608716476807;
-        Wed, 23 Dec 2020 01:41:16 -0800 (PST)
-Received: from thinkpad ([2409:4072:19b:2dd5:b19e:7f7d:7170:c975])
-        by smtp.gmail.com with ESMTPSA id g85sm23838258pfb.4.2020.12.23.01.41.13
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 23 Dec 2020 01:41:15 -0800 (PST)
-Date:   Wed, 23 Dec 2020 15:11:10 +0530
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     Loic Poulain <loic.poulain@linaro.org>
-Cc:     Hemant Kumar <hemantk@codeaurora.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Bhaumik Bhatt <bbhatt@codeaurora.org>
-Subject: Re: [PATCH v5 06/10] mhi: pci_generic: Add suspend/resume/recovery
- procedure
-Message-ID: <20201223094110.GA2644@thinkpad>
-References: <1607955937-26951-1-git-send-email-loic.poulain@linaro.org>
- <1607955937-26951-7-git-send-email-loic.poulain@linaro.org>
- <20201222170534.GA18587@work>
- <CAMZdPi8kDLwqKBUjjkA2mkBpnj=AB53itEU=nObVXDVK+2jqYg@mail.gmail.com>
+        Wed, 23 Dec 2020 07:18:23 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1608725877; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=1KTK9or5xKlLwp6/3i+0Z3wDLsS0tFkJkzTfKBY0x10=;
+ b=p5iRpOIUIystwe8oLcIlfU+kNtveCON/ZIxkD1P2cUTc/9QqlBvtKzamD2s9e3klWj8exnDv
+ wUcY+xq4FEqtC2QRzno4UsnK9kbFSFSjHeCDMbDYIMfALoHSSrTHNGzoSpCO8hk1FjUhN9BD
+ zC/Mua5BOstRIfKW09tu4Vk7ED0=
+X-Mailgun-Sending-Ip: 198.61.254.31
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n05.prod.us-west-2.postgun.com with SMTP id
+ 5fe3355bda47198188f3c026 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 23 Dec 2020 12:17:31
+ GMT
+Sender: cang=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 8C7A4C433CA; Wed, 23 Dec 2020 12:17:31 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: cang)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 029D0C433C6;
+        Wed, 23 Dec 2020 12:17:26 +0000 (UTC)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAMZdPi8kDLwqKBUjjkA2mkBpnj=AB53itEU=nObVXDVK+2jqYg@mail.gmail.com>
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Wed, 23 Dec 2020 20:17:26 +0800
+From:   Can Guo <cang@codeaurora.org>
+To:     Ziqi Chen <ziqichen@codeaurora.org>
+Cc:     asutoshd@codeaurora.org, nguyenb@codeaurora.org,
+        hongwus@codeaurora.org, rnayak@codeaurora.org,
+        vinholikatti@gmail.com, jejb@linux.vnet.ibm.com,
+        martin.petersen@oracle.com, linux-scsi@vger.kernel.org,
+        kernel-team@android.com, saravanak@google.com, salyzyn@google.com,
+        kwmad.kim@samsung.com, stanley.chu@mediatek.com,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        Avri Altman <avri.altman@wdc.com>,
+        "James E.J. Bottomley" <jejb@linux.ibm.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        Bean Huo <beanhuo@micron.com>,
+        Bart Van Assche <bvanassche@acm.org>,
+        Adrian Hunter <adrian.hunter@intel.com>,
+        Satya Tangirala <satyat@google.com>,
+        linux-mediatek@lists.infradead.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org
+Subject: Re: [PATCH RFC v4 1/1] scsi: ufs: Fix ufs power down/on specs
+ violation
+In-Reply-To: <1608644981-46267-1-git-send-email-ziqichen@codeaurora.org>
+References: <1608644981-46267-1-git-send-email-ziqichen@codeaurora.org>
+Message-ID: <2c355b51a35c7d7da6dd1ce995a4615a@codeaurora.org>
+X-Sender: cang@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Dec 23, 2020 at 09:25:37AM +0100, Loic Poulain wrote:
-> Hi Mani,
+On 2020-12-22 21:49, Ziqi Chen wrote:
+> As per specs, e.g, JESD220E chapter 7.2, while powering
+> off/on the ufs device, RST_N signal and REF_CLK signal
+> should be between VSS(Ground) and VCCQ/VCCQ2.
 > 
-> On Tue, 22 Dec 2020 at 18:05, Manivannan Sadhasivam
-> <manivannan.sadhasivam@linaro.org> wrote:
-> >
+> To flexibly control device reset line, refactor the function
+> ufschd_vops_device_reset(sturct ufs_hba *hba) to ufshcd_
+> vops_device_reset(sturct ufs_hba *hba, bool asserted). The
+> new parameter "bool asserted" is used to separate device reset
+> line pulling down from pulling up.
+> 
+> Cc: Kiwoong Kim <kwmad.kim@samsung.com>
+> Cc: Stanley Chu <stanley.chu@mediatek.com>
+> Signed-off-by: Ziqi Chen <ziqichen@codeaurora.org>
+> ---
+>  drivers/scsi/ufs/ufs-mediatek.c | 32 ++++++++++++++++----------------
+>  drivers/scsi/ufs/ufs-qcom.c     | 24 +++++++++++++++---------
+>  drivers/scsi/ufs/ufshcd.c       | 36 
+> +++++++++++++++++++++++++-----------
+>  drivers/scsi/ufs/ufshcd.h       |  8 ++++----
+>  4 files changed, 60 insertions(+), 40 deletions(-)
+> 
+> diff --git a/drivers/scsi/ufs/ufs-mediatek.c 
+> b/drivers/scsi/ufs/ufs-mediatek.c
+> index 80618af..072f4db 100644
+> --- a/drivers/scsi/ufs/ufs-mediatek.c
+> +++ b/drivers/scsi/ufs/ufs-mediatek.c
+> @@ -841,27 +841,27 @@ static int ufs_mtk_link_startup_notify(struct
+> ufs_hba *hba,
+>  	return ret;
+>  }
+> 
+> -static int ufs_mtk_device_reset(struct ufs_hba *hba)
+> +static int ufs_mtk_device_reset(struct ufs_hba *hba, bool asserted)
+>  {
+>  	struct arm_smccc_res res;
+> 
+> -	ufs_mtk_device_reset_ctrl(0, res);
+> +	if (asserted) {
+> +		ufs_mtk_device_reset_ctrl(0, res);
+> 
+> -	/*
+> -	 * The reset signal is active low. UFS devices shall detect
+> -	 * more than or equal to 1us of positive or negative RST_n
+> -	 * pulse width.
+> -	 *
+> -	 * To be on safe side, keep the reset low for at least 10us.
+> -	 */
+> -	usleep_range(10, 15);
+> -
+> -	ufs_mtk_device_reset_ctrl(1, res);
+> -
+> -	/* Some devices may need time to respond to rst_n */
+> -	usleep_range(10000, 15000);
+> +		/*
+> +		 * The reset signal is active low. UFS devices shall detect
+> +		 * more than or equal to 1us of positive or negative RST_n
+> +		 * pulse width.
+> +		 *
+> +		 * To be on safe side, keep the reset low for at least 10us.
+> +		 */
+> +		usleep_range(10, 15);
+> +	} else {
+> +		ufs_mtk_device_reset_ctrl(1, res);
+> 
+> -	dev_info(hba->dev, "device reset done\n");
+> +		/* Some devices may need time to respond to rst_n */
+> +		usleep_range(10000, 15000);
+> +	}
+> 
+>  	return 0;
+>  }
+> diff --git a/drivers/scsi/ufs/ufs-qcom.c b/drivers/scsi/ufs/ufs-qcom.c
+> index 2206b1e..fed10e5 100644
+> --- a/drivers/scsi/ufs/ufs-qcom.c
+> +++ b/drivers/scsi/ufs/ufs-qcom.c
+> @@ -1406,10 +1406,11 @@ static void ufs_qcom_dump_dbg_regs(struct 
+> ufs_hba *hba)
+>  /**
+>   * ufs_qcom_device_reset() - toggle the (optional) device reset line
+>   * @hba: per-adapter instance
+> + * @asserted: assert or deassert device reset line
+>   *
+>   * Toggles the (optional) reset line to reset the attached device.
+>   */
+> -static int ufs_qcom_device_reset(struct ufs_hba *hba)
+> +static int ufs_qcom_device_reset(struct ufs_hba *hba, bool asserted)
+>  {
+>  	struct ufs_qcom_host *host = ufshcd_get_variant(hba);
+> 
+> @@ -1417,15 +1418,20 @@ static int ufs_qcom_device_reset(struct ufs_hba 
+> *hba)
+>  	if (!host->device_reset)
+>  		return -EOPNOTSUPP;
+> 
+> -	/*
+> -	 * The UFS device shall detect reset pulses of 1us, sleep for 10us to
+> -	 * be on the safe side.
+> -	 */
+> -	gpiod_set_value_cansleep(host->device_reset, 1);
+> -	usleep_range(10, 15);
+> +	if (asserted) {
+> +		gpiod_set_value_cansleep(host->device_reset, 1);
+> 
+> -	gpiod_set_value_cansleep(host->device_reset, 0);
+> -	usleep_range(10, 15);
+> +		/*
+> +		 * The UFS device shall detect reset pulses of 1us, sleep for 10us 
+> to
+> +		 * be on the safe side.
+> +		 */
+> +		usleep_range(10, 15);
+> +	} else {
+> +		gpiod_set_value_cansleep(host->device_reset, 0);
+> +
+> +		 /* Some devices may need time to respond to rst_n */
+> +		usleep_range(10, 15);
+> +	}
+> 
+>  	return 0;
+>  }
+> diff --git a/drivers/scsi/ufs/ufshcd.c b/drivers/scsi/ufs/ufshcd.c
+> index e221add..f2daac2 100644
+> --- a/drivers/scsi/ufs/ufshcd.c
+> +++ b/drivers/scsi/ufs/ufshcd.c
+> @@ -585,7 +585,13 @@ static void ufshcd_device_reset(struct ufs_hba 
+> *hba)
+>  {
+>  	int err;
+> 
+> -	err = ufshcd_vops_device_reset(hba);
+> +	err = ufshcd_vops_device_reset(hba, true);
+> +	if (err) {
+> +		dev_err(hba->dev, "asserting device reset failed: %d\n", err);
+> +		return;
+> +	}
+> +
+> +	err = ufshcd_vops_device_reset(hba, false);
+> 
+>  	if (!err) {
+>  		ufshcd_set_ufs_dev_active(hba);
+> @@ -593,7 +599,11 @@ static void ufshcd_device_reset(struct ufs_hba 
+> *hba)
+>  			hba->wb_enabled = false;
+>  			hba->wb_buf_flush_enabled = false;
+>  		}
+> +		dev_dbg(hba->dev, "device reset done\n");
+> +	} else {
+> +		dev_err(hba->dev, "deasserting device reset failed: %d\n", err);
+>  	}
+> +
+>  	if (err != -EOPNOTSUPP)
+>  		ufshcd_update_evt_hist(hba, UFS_EVT_DEV_RESET, err);
+>  }
+> @@ -8686,8 +8696,6 @@ static int ufshcd_suspend(struct ufs_hba *hba,
+> enum ufs_pm_op pm_op)
+>  	if (ret)
+>  		goto set_dev_active;
+> 
+> -	ufshcd_vreg_set_lpm(hba);
+> -
+>  disable_clks:
+>  	/*
+>  	 * Call vendor specific suspend callback. As these callbacks may 
+> access
+> @@ -8703,6 +8711,9 @@ static int ufshcd_suspend(struct ufs_hba *hba,
+> enum ufs_pm_op pm_op)
+>  	 */
+>  	ufshcd_disable_irq(hba);
+> 
+> +	if (ufshcd_is_link_off(hba))
+> +		ufshcd_vops_device_reset(hba, true);
+> +
+>  	ufshcd_setup_clocks(hba, false);
+> 
+>  	if (ufshcd_is_clkgating_allowed(hba)) {
+> @@ -8711,6 +8722,8 @@ static int ufshcd_suspend(struct ufs_hba *hba,
+> enum ufs_pm_op pm_op)
+>  					hba->clk_gating.state);
+>  	}
+> 
+> +	ufshcd_vreg_set_lpm(hba);
+> +
+>  	/* Put the host controller in low power mode if possible */
+>  	ufshcd_hba_vreg_set_lpm(hba);
+>  	goto out;
+> @@ -8778,18 +8791,19 @@ static int ufshcd_resume(struct ufs_hba *hba,
+> enum ufs_pm_op pm_op)
+>  	old_link_state = hba->uic_link_state;
+> 
+>  	ufshcd_hba_vreg_set_hpm(hba);
+> +
+> +	ret = ufshcd_vreg_set_hpm(hba);
+> +	if (ret)
+> +		goto out;
+> +
+>  	/* Make sure clocks are enabled before accessing controller */
+>  	ret = ufshcd_setup_clocks(hba, true);
+>  	if (ret)
+> -		goto out;
+> +		goto disable_vreg;
+> 
+>  	/* enable the host irq as host controller would be active soon */
+>  	ufshcd_enable_irq(hba);
+> 
+> -	ret = ufshcd_vreg_set_hpm(hba);
+> -	if (ret)
+> -		goto disable_irq_and_vops_clks;
+> -
+>  	/*
+>  	 * Call vendor specific resume callback. As these callbacks may 
+> access
+>  	 * vendor specific host controller register space call them when the
+> @@ -8797,7 +8811,7 @@ static int ufshcd_resume(struct ufs_hba *hba,
+> enum ufs_pm_op pm_op)
+>  	 */
+>  	ret = ufshcd_vops_resume(hba, pm_op);
+>  	if (ret)
+> -		goto disable_vreg;
+> +		goto disable_irq_and_vops_clks;
+> 
+>  	/* For DeepSleep, the only supported option is to have the link off 
+> */
+>  	WARN_ON(ufshcd_is_ufs_dev_deepsleep(hba) && 
+> !ufshcd_is_link_off(hba));
+> @@ -8864,8 +8878,6 @@ static int ufshcd_resume(struct ufs_hba *hba,
+> enum ufs_pm_op pm_op)
+>  	ufshcd_link_state_transition(hba, old_link_state, 0);
+>  vendor_suspend:
+>  	ufshcd_vops_suspend(hba, pm_op);
+> -disable_vreg:
+> -	ufshcd_vreg_set_lpm(hba);
+>  disable_irq_and_vops_clks:
+>  	ufshcd_disable_irq(hba);
+>  	if (hba->clk_scaling.is_allowed)
+> @@ -8876,6 +8888,8 @@ static int ufshcd_resume(struct ufs_hba *hba,
+> enum ufs_pm_op pm_op)
+>  		trace_ufshcd_clk_gating(dev_name(hba->dev),
+>  					hba->clk_gating.state);
+>  	}
+> +disable_vreg:
+> +	ufshcd_vreg_set_lpm(hba);
+>  out:
+>  	hba->pm_op_in_progress = 0;
+>  	if (ret)
+> diff --git a/drivers/scsi/ufs/ufshcd.h b/drivers/scsi/ufs/ufshcd.h
+> index 9bb5f0e..d5fbaba 100644
+> --- a/drivers/scsi/ufs/ufshcd.h
+> +++ b/drivers/scsi/ufs/ufshcd.h
+> @@ -319,7 +319,7 @@ struct ufs_pwr_mode_info {
+>   * @resume: called during host controller PM callback
+>   * @dbg_register_dump: used to dump controller debug information
+>   * @phy_initialization: used to initialize phys
+> - * @device_reset: called to issue a reset pulse on the UFS device
+> + * @device_reset: called to assert or deassert device reset line
+>   * @program_key: program or evict an inline encryption key
+>   * @event_notify: called to notify important events
+>   */
+> @@ -350,7 +350,7 @@ struct ufs_hba_variant_ops {
+>  	int     (*resume)(struct ufs_hba *, enum ufs_pm_op);
+>  	void	(*dbg_register_dump)(struct ufs_hba *hba);
+>  	int	(*phy_initialization)(struct ufs_hba *);
+> -	int	(*device_reset)(struct ufs_hba *hba);
+> +	int	(*device_reset)(struct ufs_hba *hba, bool asserted);
+>  	void	(*config_scaling_param)(struct ufs_hba *hba,
+>  					struct devfreq_dev_profile *profile,
+>  					void *data);
+> @@ -1216,10 +1216,10 @@ static inline void
+> ufshcd_vops_dbg_register_dump(struct ufs_hba *hba)
+>  		hba->vops->dbg_register_dump(hba);
+>  }
+> 
+> -static inline int ufshcd_vops_device_reset(struct ufs_hba *hba)
+> +static inline int ufshcd_vops_device_reset(struct ufs_hba *hba, bool 
+> asserted)
+>  {
+>  	if (hba->vops && hba->vops->device_reset)
+> -		return hba->vops->device_reset(hba);
+> +		return hba->vops->device_reset(hba, asserted);
+> 
+>  	return -EOPNOTSUPP;
+>  }
 
-[...]
-
-> > > +
-> > > +     /* Check if we can recover without full reset */
-> > > +     pci_set_power_state(pdev, PCI_D0);
-> > > +     pci_load_saved_state(pdev, mhi_pdev->pci_state);
-> > > +     pci_restore_state(pdev);
-> >
-> > These pci state settings seems redundant with resume().
-> >
-> > In this function you should first check if MHI is alive, if yes then do
-> > power up. Else you should just exit.
-> 
-> Recovery is not only executed on a resume but also when a crash or
-> reboot is detected, that why we need to restore PCI state here.
-> Moreover, contrary to resume, the restored PCI state is not the one
-> saved in suspend, but the known working (and saved) initial pci state
-> (mhi_pdev->pci_state).
-> 
-
-Ah I missed it!
-
-> >
-> > > +
-> > > +     if (!mhi_pci_is_alive(mhi_cntrl))
-> > > +             goto err_try_reset;
-> > > +
-> > > +     err = mhi_prepare_for_power_up(mhi_cntrl);
-> > > +     if (err)
-> > > +             goto err_try_reset;
-> > > +
-> > > +     err = mhi_sync_power_up(mhi_cntrl);
-> > > +     if (err)
-> > > +             goto err_unprepare;
-> >
-> > Add a debug log for recovery success.
-> 
-> Yes, will do.
-> 
-> >
-> > > +
-> > > +     set_bit(MHI_PCI_DEV_STARTED, &mhi_pdev->status);
-> > > +     return;
-> > > +
-> > > +err_unprepare:
-> > > +     mhi_unprepare_after_power_down(mhi_cntrl);
-> > > +err_try_reset:
-> > > +     if (pci_reset_function(pdev))
-> >
-> > So if the device recovers, who will make sure reinitializing the MHI
-> > controller? That's why I think we should convey the recovery result to
-> > PM core. I don't think using workqueue here is a good idea.
-> 
-> The mhi controller is reinitialized in the recovery work itself.
-> Recovery can be a long process, and play with device
-> registering/deregistering. We can not do that synchronously in the
-> system resume path since it causes unexpected resume latency (this is
-> actually no more a resume but a complete reset), moving it
-> synchronously in resume cause hang on my side. However I agree that
-> the PM core should be informed about the resume failure, so instead of
-> unconditionally returning success in the resume callback I'm going to
-> forward the error to PM core (and trigger recovery in parallel).
-> 
-
-okay.
-
-> >
-> > > +             dev_err(&pdev->dev, "Recovery failed\n");
-> > > +}
-> > > +
-> > >  static int mhi_pci_probe(struct pci_dev *pdev, const struct pci_device_id *id)
-> > >  {
-> > >       const struct mhi_pci_dev_info *info = (struct mhi_pci_dev_info *) id->driver_data;
-> > > @@ -327,6 +371,8 @@ static int mhi_pci_probe(struct pci_dev *pdev, const struct pci_device_id *id)
-> > >       if (!mhi_pdev)
-> > >               return -ENOMEM;
-> > >
-> > > +     INIT_WORK(&mhi_pdev->recovery_work, mhi_pci_recovery_work);
-> > > +
-> > >       mhi_cntrl_config = info->config;
-> > >       mhi_cntrl = &mhi_pdev->mhi_cntrl;
-> > >
-> > > @@ -391,6 +437,8 @@ static void mhi_pci_remove(struct pci_dev *pdev)
-> > >       struct mhi_pci_device *mhi_pdev = pci_get_drvdata(pdev);
-> > >       struct mhi_controller *mhi_cntrl = &mhi_pdev->mhi_cntrl;
-> > >
-> > > +     cancel_work_sync(&mhi_pdev->recovery_work);
-> > > +
-> > >       if (test_and_clear_bit(MHI_PCI_DEV_STARTED, &mhi_pdev->status)) {
-> > >               mhi_power_down(mhi_cntrl, true);
-> > >               mhi_unprepare_after_power_down(mhi_cntrl);
-> > > @@ -456,12 +504,66 @@ static const struct pci_error_handlers mhi_pci_err_handler = {
-> > >       .reset_done = mhi_pci_reset_done,
-> > >  };
-> > >
-> > > +static int  __maybe_unused mhi_pci_suspend(struct device *dev)
-> > > +{
-> > > +     struct pci_dev *pdev = to_pci_dev(dev);
-> > > +     struct mhi_pci_device *mhi_pdev = dev_get_drvdata(dev);
-> > > +     struct mhi_controller *mhi_cntrl = &mhi_pdev->mhi_cntrl;
-> > > +
-> > > +     cancel_work_sync(&mhi_pdev->recovery_work);
-> > > +
-> > > +     /* Transition to M3 state */
-> > > +     mhi_pm_suspend(mhi_cntrl);
-> > > +
-> > > +     pci_save_state(pdev);
-> > > +     pci_disable_device(pdev);
-> > > +     pci_wake_from_d3(pdev, true);
-> > > +     pci_set_power_state(pdev, PCI_D3hot);
-> > > +
-> > > +     return 0;
-> > > +}
-> > > +
-> > > +static int __maybe_unused mhi_pci_resume(struct device *dev)
-> > > +{
-> > > +     struct pci_dev *pdev = to_pci_dev(dev);
-> > > +     struct mhi_pci_device *mhi_pdev = dev_get_drvdata(dev);
-> > > +     struct mhi_controller *mhi_cntrl = &mhi_pdev->mhi_cntrl;
-> > > +     int err;
-> > > +
-> > > +     pci_set_power_state(pdev, PCI_D0);
-> > > +     pci_restore_state(pdev);
-> > > +     pci_set_master(pdev);
-> > > +
-> > > +     err = pci_enable_device(pdev);
-> > > +     if (err)
-> > > +             goto err_recovery;
-> > > +
-> > > +     /* Exit M3, transition to M0 state */
-> > > +     err = mhi_pm_resume(mhi_cntrl);
-> > > +     if (err) {
-> > > +             dev_err(&pdev->dev, "failed to resume device: %d\n", err);
-> > > +             goto err_recovery;
-> > > +     }
-> > > +
-> > > +     return 0;
-> > > +
-> > > +err_recovery:
-> > > +     /* The device may have loose power or crashed, try recovering it */
-> >
-> > Did you actually hit this scenario? In the case of power loss or crash, can we
-> > access the MHI register space?
-> 
-> Yes I hit this scenario on my computer since PCI power is not
-> maintained, mhi_pm_resume behaves correctly whether the MHI register
-> space is available or not since it will hit and return an error moving
-> to M0 state:
-> mhi mhi0: Did not enter M0 state, MHI state: M3, PM state: M3->M0
-> 
-
-Okay. As long as you are returning the error code to PM core I'm fine.
-
-Thanks,
-Mani
-
-> 
-> Regards,
-> Loic
+Reviewed-by: Can Guo <cang@codeaurora.org>
