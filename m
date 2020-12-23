@@ -2,87 +2,207 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 696352E14E6
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Dec 2020 03:48:42 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id CB3B92E1797
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Dec 2020 04:12:18 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728815AbgLWCpd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 22 Dec 2020 21:45:33 -0500
-Received: from mailgw01.mediatek.com ([210.61.82.183]:33193 "EHLO
-        mailgw01.mediatek.com" rhost-flags-OK-FAIL-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1728717AbgLWCpY (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 22 Dec 2020 21:45:24 -0500
-X-UUID: 986f4e22eeab4c4295cd7f495d04f538-20201223
-X-UUID: 986f4e22eeab4c4295cd7f495d04f538-20201223
-Received: from mtkexhb02.mediatek.inc [(172.21.101.103)] by mailgw01.mediatek.com
-        (envelope-from <hsin-hsiung.wang@mediatek.com>)
-        (Cellopoint E-mail Firewall v4.1.14 Build 0819 with TLSv1.2 ECDHE-RSA-AES256-SHA384 256/256)
-        with ESMTP id 1163539267; Wed, 23 Dec 2020 10:44:35 +0800
-Received: from mtkcas11.mediatek.inc (172.21.101.40) by
- mtkmbs05n1.mediatek.inc (172.21.101.15) with Microsoft SMTP Server (TLS) id
- 15.0.1497.2; Wed, 23 Dec 2020 10:44:30 +0800
-Received: from mtksdaap41.mediatek.inc (172.21.77.4) by mtkcas11.mediatek.inc
- (172.21.101.73) with Microsoft SMTP Server id 15.0.1497.2 via Frontend
- Transport; Wed, 23 Dec 2020 10:44:34 +0800
-From:   Hsin-Hsiung Wang <hsin-hsiung.wang@mediatek.com>
-To:     Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh+dt@kernel.org>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        Geert Uytterhoeven <geert+renesas@glider.be>,
-        Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
-        Ulf Hansson <ulf.hansson@linaro.org>,
-        Mark Brown <broonie@kernel.org>
-CC:     Hsin-Hsiung Wang <hsin-hsiung.wang@mediatek.com>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-arm-kernel@lists.infradead.org>,
-        <linux-mediatek@lists.infradead.org>,
-        <linux-kernel@vger.kernel.org>, <srv_heupstream@mediatek.com>,
-        <Project_Global_Chrome_Upstream_Group@mediatek.com>
-Subject: [PATCH v5 4/4] arm64: dts: mt8192: add spmi node
-Date:   Wed, 23 Dec 2020 10:44:29 +0800
-Message-ID: <1608691469-20919-5-git-send-email-hsin-hsiung.wang@mediatek.com>
-X-Mailer: git-send-email 2.6.4
-In-Reply-To: <1608691469-20919-1-git-send-email-hsin-hsiung.wang@mediatek.com>
-References: <1608691469-20919-1-git-send-email-hsin-hsiung.wang@mediatek.com>
+        id S1727653AbgLWCR6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 22 Dec 2020 21:17:58 -0500
+Received: from mail.kernel.org ([198.145.29.99]:45510 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727612AbgLWCRy (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 22 Dec 2020 21:17:54 -0500
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 5F4C4225AC;
+        Wed, 23 Dec 2020 02:16:45 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1608689806;
+        bh=v0oZvUtokxvo39/NdM+fLn468wX5yHrFHPEcQw3Zl2U=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+        b=oxNQ7v1YSxh1C1Jh/fDOPHOJUvil3tGgR7nc8laYELaI+3yY+cRYd291AqkmHfadB
+         DgkviNIBpq8AqNTdH9ottx56C7AkXSJv135oE7YyDDCrr7I2lB1KXLBcyzSPBgFlF1
+         mSoVntPEqx9w4NgXaml/kxhB/QQtmLHtjFZHw6a2qy3OvtGi7CJzNNUR9fpwwLf+rR
+         eikQdptedpKYHiCTmg6qq9r+jhP2AWHAhh8wot51AC2j+X47g5kmghPLTKq28Z7t6z
+         1O+NFsEI4FOmGLpA2WIoiUrXEMqN20gJsnpMPQSPskBLzqINrDAiV6bd/B3UjOv3Dl
+         PT9ZlJSE3C5QA==
+From:   Sasha Levin <sashal@kernel.org>
+To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
+Cc:     Krishna Manikandan <mkrishn@codeaurora.org>,
+        Rob Clark <robdclark@gmail.com>,
+        Rob Clark <robdclark@chromium.org>,
+        Sasha Levin <sashal@kernel.org>, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org
+Subject: [PATCH AUTOSEL 5.10 015/217] drm/msm: Fix race condition in msm driver with async layer updates
+Date:   Tue, 22 Dec 2020 21:13:04 -0500
+Message-Id: <20201223021626.2790791-15-sashal@kernel.org>
+X-Mailer: git-send-email 2.27.0
+In-Reply-To: <20201223021626.2790791-1-sashal@kernel.org>
+References: <20201223021626.2790791-1-sashal@kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-MTK:  N
+X-stable: review
+X-Patchwork-Hint: Ignore
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add spmi node to SOC MT8192.
+From: Krishna Manikandan <mkrishn@codeaurora.org>
 
-Signed-off-by: Hsin-Hsiung Wang <hsin-hsiung.wang@mediatek.com>
+[ Upstream commit b3d91800d9ac35014e0349292273a6fa7938d402 ]
+
+When there are back to back commits with async cursor update,
+there is a case where second commit can program the DPU hw
+blocks while first didn't complete flushing config to HW.
+
+Synchronize the compositions such that second commit waits
+until first commit flushes the composition.
+
+This change also introduces per crtc commit lock, such that
+commits on different crtcs are not blocked by each other.
+
+Changes in v2:
+	- Use an array of mutexes in kms to handle commit
+	  lock per crtc. (Rob Clark)
+
+Changes in v3:
+	- Add wrapper functions to handle lock and unlock of
+	  commit_lock for each crtc. (Rob Clark)
+
+Signed-off-by: Krishna Manikandan <mkrishn@codeaurora.org>
+Reviewed-by: Rob Clark <robdclark@gmail.com>
+Signed-off-by: Rob Clark <robdclark@chromium.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/mediatek/mt8192.dtsi | 15 +++++++++++++++
- 1 file changed, 15 insertions(+)
+ drivers/gpu/drm/msm/msm_atomic.c | 37 +++++++++++++++++++++-----------
+ drivers/gpu/drm/msm/msm_kms.h    |  6 ++++--
+ 2 files changed, 28 insertions(+), 15 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/mediatek/mt8192.dtsi b/arch/arm64/boot/dts/mediatek/mt8192.dtsi
-index 69d45c7b31f1..6dc8aa97acc3 100644
---- a/arch/arm64/boot/dts/mediatek/mt8192.dtsi
-+++ b/arch/arm64/boot/dts/mediatek/mt8192.dtsi
-@@ -272,6 +272,21 @@
- 			clock-names = "clk13m";
- 		};
+diff --git a/drivers/gpu/drm/msm/msm_atomic.c b/drivers/gpu/drm/msm/msm_atomic.c
+index 561bfa48841c3..575e9af9b6fc9 100644
+--- a/drivers/gpu/drm/msm/msm_atomic.c
++++ b/drivers/gpu/drm/msm/msm_atomic.c
+@@ -55,16 +55,32 @@ static void vblank_put(struct msm_kms *kms, unsigned crtc_mask)
+ 	}
+ }
  
-+		spmi: spmi@10027000 {
-+			compatible = "mediatek,mt6873-spmi";
-+			reg = <0 0x10027000 0 0x000e00>,
-+			      <0 0x10029000 0 0x000100>;
-+			reg-names = "pmif", "spmimst";
-+			clocks = <&infracfg CLK_INFRA_PMIC_AP>,
-+				 <&infracfg CLK_INFRA_PMIC_TMR>,
-+				 <&topckgen CLK_TOP_SPMI_MST_SEL>;
-+			clock-names = "pmif_sys_ck",
-+				      "pmif_tmr_ck",
-+				      "spmimst_clk_mux";
-+			assigned-clocks = <&topckgen CLK_TOP_PWRAP_ULPOSC_SEL>;
-+			assigned-clock-parents = <&topckgen CLK_TOP_OSC_D10>;
-+		};
++static void lock_crtcs(struct msm_kms *kms, unsigned int crtc_mask)
++{
++	struct drm_crtc *crtc;
 +
- 		scp_adsp: syscon@10720000 {
- 			compatible = "mediatek,mt8192-scp_adsp", "syscon";
- 			reg = <0 0x10720000 0 0x1000>;
++	for_each_crtc_mask(kms->dev, crtc, crtc_mask)
++		mutex_lock(&kms->commit_lock[drm_crtc_index(crtc)]);
++}
++
++static void unlock_crtcs(struct msm_kms *kms, unsigned int crtc_mask)
++{
++	struct drm_crtc *crtc;
++
++	for_each_crtc_mask(kms->dev, crtc, crtc_mask)
++		mutex_unlock(&kms->commit_lock[drm_crtc_index(crtc)]);
++}
++
+ static void msm_atomic_async_commit(struct msm_kms *kms, int crtc_idx)
+ {
+ 	unsigned crtc_mask = BIT(crtc_idx);
+ 
+ 	trace_msm_atomic_async_commit_start(crtc_mask);
+ 
+-	mutex_lock(&kms->commit_lock);
++	lock_crtcs(kms, crtc_mask);
+ 
+ 	if (!(kms->pending_crtc_mask & crtc_mask)) {
+-		mutex_unlock(&kms->commit_lock);
++		unlock_crtcs(kms, crtc_mask);
+ 		goto out;
+ 	}
+ 
+@@ -79,7 +95,6 @@ static void msm_atomic_async_commit(struct msm_kms *kms, int crtc_idx)
+ 	 */
+ 	trace_msm_atomic_flush_commit(crtc_mask);
+ 	kms->funcs->flush_commit(kms, crtc_mask);
+-	mutex_unlock(&kms->commit_lock);
+ 
+ 	/*
+ 	 * Wait for flush to complete:
+@@ -90,9 +105,8 @@ static void msm_atomic_async_commit(struct msm_kms *kms, int crtc_idx)
+ 
+ 	vblank_put(kms, crtc_mask);
+ 
+-	mutex_lock(&kms->commit_lock);
+ 	kms->funcs->complete_commit(kms, crtc_mask);
+-	mutex_unlock(&kms->commit_lock);
++	unlock_crtcs(kms, crtc_mask);
+ 	kms->funcs->disable_commit(kms);
+ 
+ out:
+@@ -189,12 +203,11 @@ void msm_atomic_commit_tail(struct drm_atomic_state *state)
+ 	 * Ensure any previous (potentially async) commit has
+ 	 * completed:
+ 	 */
++	lock_crtcs(kms, crtc_mask);
+ 	trace_msm_atomic_wait_flush_start(crtc_mask);
+ 	kms->funcs->wait_flush(kms, crtc_mask);
+ 	trace_msm_atomic_wait_flush_finish(crtc_mask);
+ 
+-	mutex_lock(&kms->commit_lock);
+-
+ 	/*
+ 	 * Now that there is no in-progress flush, prepare the
+ 	 * current update:
+@@ -232,8 +245,7 @@ void msm_atomic_commit_tail(struct drm_atomic_state *state)
+ 		}
+ 
+ 		kms->funcs->disable_commit(kms);
+-		mutex_unlock(&kms->commit_lock);
+-
++		unlock_crtcs(kms, crtc_mask);
+ 		/*
+ 		 * At this point, from drm core's perspective, we
+ 		 * are done with the atomic update, so we can just
+@@ -260,8 +272,7 @@ void msm_atomic_commit_tail(struct drm_atomic_state *state)
+ 	 */
+ 	trace_msm_atomic_flush_commit(crtc_mask);
+ 	kms->funcs->flush_commit(kms, crtc_mask);
+-	mutex_unlock(&kms->commit_lock);
+-
++	unlock_crtcs(kms, crtc_mask);
+ 	/*
+ 	 * Wait for flush to complete:
+ 	 */
+@@ -271,9 +282,9 @@ void msm_atomic_commit_tail(struct drm_atomic_state *state)
+ 
+ 	vblank_put(kms, crtc_mask);
+ 
+-	mutex_lock(&kms->commit_lock);
++	lock_crtcs(kms, crtc_mask);
+ 	kms->funcs->complete_commit(kms, crtc_mask);
+-	mutex_unlock(&kms->commit_lock);
++	unlock_crtcs(kms, crtc_mask);
+ 	kms->funcs->disable_commit(kms);
+ 
+ 	drm_atomic_helper_commit_hw_done(state);
+diff --git a/drivers/gpu/drm/msm/msm_kms.h b/drivers/gpu/drm/msm/msm_kms.h
+index 1cbef6b200b70..2049847b66428 100644
+--- a/drivers/gpu/drm/msm/msm_kms.h
++++ b/drivers/gpu/drm/msm/msm_kms.h
+@@ -155,7 +155,7 @@ struct msm_kms {
+ 	 * For async commit, where ->flush_commit() and later happens
+ 	 * from the crtc's pending_timer close to end of the frame:
+ 	 */
+-	struct mutex commit_lock;
++	struct mutex commit_lock[MAX_CRTCS];
+ 	unsigned pending_crtc_mask;
+ 	struct msm_pending_timer pending_timers[MAX_CRTCS];
+ };
+@@ -165,7 +165,9 @@ static inline void msm_kms_init(struct msm_kms *kms,
+ {
+ 	unsigned i;
+ 
+-	mutex_init(&kms->commit_lock);
++	for (i = 0; i < ARRAY_SIZE(kms->commit_lock); i++)
++		mutex_init(&kms->commit_lock[i]);
++
+ 	kms->funcs = funcs;
+ 
+ 	for (i = 0; i < ARRAY_SIZE(kms->pending_timers); i++)
 -- 
-2.18.0
+2.27.0
 
