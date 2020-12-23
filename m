@@ -2,88 +2,94 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 790302E1FBC
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Dec 2020 18:09:23 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 6E26A2E202F
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Dec 2020 18:50:35 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726012AbgLWRIL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 23 Dec 2020 12:08:11 -0500
-Received: from mail.kernel.org ([198.145.29.99]:36004 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725950AbgLWRIK (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 23 Dec 2020 12:08:10 -0500
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 933182229C;
-        Wed, 23 Dec 2020 17:07:29 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1608743250;
-        bh=Tul9GE02D4kuMrXf8XkIEh/AjbOZAulo27rJPi4l0pI=;
-        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-        b=qSNp5/hyMYbmggWwtV0ksWzRu5UyjSAn6Amx3xwfbuiJjtoZuwPXAT5zOKaSXfMJQ
-         qlrqDtIpFK7FgTbWqTryBMexZ9B+uIJCHPYHOpcce2kVF1HXqyb6RR9xs3Ok5eqjbT
-         mLHpDO/cQHg8kkNYQ/PyKQMMdbCJhirvpPMr5hX9VMEPgxJzdIl6xn0nbjztwLcJSo
-         iOrIQIKoyyJcOdLCxHi0ogT0sVBRH5vsET9sCCOtXVfRzDquIK987fXcdW0zinKX/o
-         46pcNrW2nVX7b6Uuk+u4ARDPKpStgsYOmw+kE0GAUNGQoLP89Zc3foeKy+i0MvjLjH
-         AbNQkbpbHa3Aw==
-Date:   Wed, 23 Dec 2020 09:07:28 -0800
-From:   Jakub Kicinski <kuba@kernel.org>
-To:     Robert Marko <robert.marko@sartura.hr>
-Cc:     agross@kernel.org, bjorn.andersson@linaro.org, robh+dt@kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, davem@davemloft.net,
-        netdev@vger.kernel.org, andrew@lunn.ch, linux@armlinux.org.uk,
-        Luka Perkov <luka.perkov@sartura.hr>
-Subject: Re: [PATCH 3/4] net: phy: Add Qualcomm QCA807x driver
-Message-ID: <20201223090728.38fa059d@kicinski-fedora-pc1c0hjn.dhcp.thefacebook.com>
-In-Reply-To: <20201222222637.3204929-4-robert.marko@sartura.hr>
-References: <20201222222637.3204929-1-robert.marko@sartura.hr>
-        <20201222222637.3204929-4-robert.marko@sartura.hr>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+        id S1728306AbgLWRsu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 23 Dec 2020 12:48:50 -0500
+Received: from mail-ot1-f47.google.com ([209.85.210.47]:42890 "EHLO
+        mail-ot1-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726384AbgLWRst (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 23 Dec 2020 12:48:49 -0500
+Received: by mail-ot1-f47.google.com with SMTP id 11so15674556oty.9;
+        Wed, 23 Dec 2020 09:48:34 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:in-reply-to:references:subject:date
+         :message-id;
+        bh=NBaB9OjMijuFYsb2tvjMMoxL90yaFegnbgOp9iG8S6M=;
+        b=EEC55hmKR8zvfCBu2Bc7VE+QJzzJkp91+YrFILyqdvTVe7O+tSJXuL0MogdmouWrra
+         D7UsDlvrD1tPKQ1QnfZpi3a6OqB7GGpDYoX1TP4XuYdo0oECVSiL+63dcHl4pL1diqDl
+         jD0JA8Y6XhpVoJTNI/zCCQPfvNEFsQPjOQ4KcQxpRXJeu94uc9sQgCt7dKR32xqdGCSn
+         UZGbSWx701nUVEzJg+iJJZZvwS5k1rvINPPSm2XGOl5hguX5Shc2pqA3RFe4VKfhQByW
+         Y4fWDtRz8d5MfgDKUrlxJ+ahRR7YlrTB4XzPbr3LMO7WFtoNrkD2DIwi8LVqbVEnq/Vx
+         I36Q==
+X-Gm-Message-State: AOAM530MjHG4nUmuXZ5+1ZTZBPx+IvuNpEzRds976/M54Iib0lNIsNg6
+        PYDMgOOByJy1uB+h8Dzuv8jl6/AMGw==
+X-Google-Smtp-Source: ABdhPJxoWwcQacwQfDzYmYHALN0inf1lF38zJ2gBpVT5+u1qnAmMGIgV8+VGj0Yi7/asyEjmU3iMxA==
+X-Received: by 2002:a9d:39c8:: with SMTP id y66mr15195298otb.68.1608745688762;
+        Wed, 23 Dec 2020 09:48:08 -0800 (PST)
+Received: from robh.at.kernel.org ([64.188.179.253])
+        by smtp.gmail.com with ESMTPSA id a15sm5434563oii.50.2020.12.23.09.48.06
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 23 Dec 2020 09:48:07 -0800 (PST)
+Received: (nullmailer pid 762426 invoked by uid 1000);
+        Wed, 23 Dec 2020 17:47:58 -0000
+From:   Rob Herring <robh@kernel.org>
+To:     Hsin-Hsiung Wang <hsin-hsiung.wang@mediatek.com>
+Cc:     Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
+        Geert Uytterhoeven <geert+renesas@glider.be>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        Stephen Boyd <sboyd@kernel.org>, linux-kernel@vger.kernel.org,
+        Rob Herring <robh+dt@kernel.org>,
+        linux-arm-kernel@lists.infradead.org,
+        linux-mediatek@lists.infradead.org,
+        Ulf Hansson <ulf.hansson@linaro.org>,
+        Mark Brown <broonie@kernel.org>, srv_heupstream@mediatek.com,
+        Project_Global_Chrome_Upstream_Group@mediatek.com,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
+In-Reply-To: <1608691469-20919-3-git-send-email-hsin-hsiung.wang@mediatek.com>
+References: <1608691469-20919-1-git-send-email-hsin-hsiung.wang@mediatek.com> <1608691469-20919-3-git-send-email-hsin-hsiung.wang@mediatek.com>
+Subject: Re: [PATCH v5 2/4] dt-bindings: spmi: document binding for the Mediatek SPMI controller
+Date:   Wed, 23 Dec 2020 10:47:58 -0700
+Message-Id: <1608745678.796615.762425.nullmailer@robh.at.kernel.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, 22 Dec 2020 23:26:36 +0100 Robert Marko wrote:
-> This adds driver for the Qualcomm QCA8072 and QCA8075 PHY-s.
->=20
-> They are 2 or 5 port IEEE 802.3 clause 22 compliant
-> 10BASE-Te, 100BASE-TX and 1000BASE-T PHY-s.
->=20
-> They feature 2 SerDes, one for PSGMII or QSGMII connection with MAC,
-> while second one is SGMII for connection to MAC or fiber.
->=20
-> Both models have a combo port that supports 1000BASE-X and 100BASE-FX
-> fiber.
->=20
-> Each PHY inside of QCA807x series has 2 digitally controlled output only
-> pins that natively drive LED-s.
-> But some vendors used these to driver generic LED-s controlled by
-> user space, so lets enable registering each PHY as GPIO controller and
-> add driver for it.
->=20
-> This also adds the ability to specify DT properties so that 1000 Base-T
-> LED will also be lit up for 100 and 10 Base connections.
->=20
-> This is usually done by U-boot, but boards running mainline U-boot are
-> not configuring this yet.
->=20
-> These PHY-s are commonly used in Qualcomm IPQ40xx, IPQ60xx and IPQ807x
-> boards.
->=20
-> Signed-off-by: Robert Marko <robert.marko@sartura.hr>
-> Cc: Luka Perkov <luka.perkov@sartura.hr>
+On Wed, 23 Dec 2020 10:44:27 +0800, Hsin-Hsiung Wang wrote:
+> This adds documentation for the SPMI controller found on Mediatek SoCs.
+> 
+> Signed-off-by: Hsin-Hsiung Wang <hsin-hsiung.wang@mediatek.com>
+> ---
+>  .../bindings/spmi/mtk,spmi-mtk-pmif.yaml      | 74 +++++++++++++++++++
+>  1 file changed, 74 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/spmi/mtk,spmi-mtk-pmif.yaml
+> 
 
-You need to rebase this on a more current tree:
+My bot found errors running 'make dt_binding_check' on your patch:
 
-../drivers/net/phy/qca807x.c:770:4: error: =E2=80=98struct phy_driver=E2=80=
-=99 has no member named =E2=80=98ack_interrupt=E2=80=99; did you mean =E2=
-=80=98handle_interrupt=E2=80=99?
-  770 |   .ack_interrupt =3D qca807x_ack_intr,
-      |    ^~~~~~~~~~~~~
-      |    handle_interrupt
-../drivers/net/phy/qca807x.c:770:20: error: initialization of =E2=80=98irqr=
-eturn_t (*)(struct phy_device *)=E2=80=99 {aka =E2=80=98enum irqreturn (*)(=
-struct phy_device *)=E2=80=99} from incompatible pointer type =E2=80=98int =
-(*)(struct phy_device *)=E2=80=99 [-Werror=3Dincompatible-pointer-types]
-  770 |   .ack_interrupt =3D qca807x_ack_intr,
-      |                    ^~~~~~~~~~~~~~~~
+yamllint warnings/errors:
+
+dtschema/dtc warnings/errors:
+Documentation/devicetree/bindings/spmi/mtk,spmi-mtk-pmif.example.dts:19:18: fatal error: dt-bindings/clock/mt8192-clk.h: No such file or directory
+   19 |         #include <dt-bindings/clock/mt8192-clk.h>
+      |                  ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+compilation terminated.
+make[1]: *** [scripts/Makefile.lib:342: Documentation/devicetree/bindings/spmi/mtk,spmi-mtk-pmif.example.dt.yaml] Error 1
+make: *** [Makefile:1370: dt_binding_check] Error 2
+
+See https://patchwork.ozlabs.org/patch/1419576
+
+This check can fail if there are any dependencies. The base for a patch
+series is generally the most recent rc1.
+
+If you already ran 'make dt_binding_check' and didn't see the above
+error(s), then make sure 'yamllint' is installed and dt-schema is up to
+date:
+
+pip3 install dtschema --upgrade
+
+Please check and re-submit.
+
