@@ -2,557 +2,113 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E4A872E1DD4
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Dec 2020 16:17:20 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3AB902E1E52
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Dec 2020 16:40:12 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726207AbgLWPPt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 23 Dec 2020 10:15:49 -0500
-Received: from m43-15.mailgun.net ([69.72.43.15]:45151 "EHLO
-        m43-15.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726239AbgLWPPt (ORCPT
+        id S1726923AbgLWPjE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 23 Dec 2020 10:39:04 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45594 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728068AbgLWPjD (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 23 Dec 2020 10:15:49 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1608736523; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=SDlIibi7+8gDgWtsKot5qJpuZhnMzbyPpIrVHWi2a5s=;
- b=Cu5/UEZEWKQ9tMOqjSd0VAYpouVXsfGW7fFQDxFFx7Sm0loTUClWvt7SfCmVmQXBgQ7GMaKt
- VBXVwQP7DcXYRrEuEjSZxMw+YmqTOPB3nuLrJnKoVsIgTWXSCBPb50YKuuvE2CIGUbSyat23
- LSlXINb3OGzyutSobjX37IL1MM0=
-X-Mailgun-Sending-Ip: 69.72.43.15
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n09.prod.us-east-1.postgun.com with SMTP id
- 5fe35edfe61d77c971effd89 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 23 Dec 2020 15:14:39
- GMT
-Sender: isaacm=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id A2BA1C43464; Wed, 23 Dec 2020 15:14:38 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: isaacm)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 1FB90C433CA;
-        Wed, 23 Dec 2020 15:14:36 +0000 (UTC)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8;
- format=flowed
-Content-Transfer-Encoding: 8bit
-Date:   Wed, 23 Dec 2020 07:14:36 -0800
-From:   isaacm@codeaurora.org
-To:     Robin Murphy <robin.murphy@arm.com>
-Cc:     kernel-team@android.com, will@kernel.org, pdaly@codeaurora.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, iommu@lists.linux-foundation.org,
-        freedreno@lists.freedesktop.org,
-        linux-arm-kernel@lists.infradead.org, pratikp@codeaurora.org
+        Wed, 23 Dec 2020 10:39:03 -0500
+Received: from mail-wm1-x32f.google.com (mail-wm1-x32f.google.com [IPv6:2a00:1450:4864:20::32f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 191C2C06179C
+        for <linux-arm-msm@vger.kernel.org>; Wed, 23 Dec 2020 07:38:23 -0800 (PST)
+Received: by mail-wm1-x32f.google.com with SMTP id 190so5709704wmz.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 23 Dec 2020 07:38:22 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=subject:to:cc:references:from:message-id:date:mime-version
+         :in-reply-to:content-language:content-transfer-encoding;
+        bh=FLK03MoPTeVjiiFwNtS1OJi+2ld8fgev60+sqAPXpLo=;
+        b=aC3XOqzY6SoQTeia6KLuOxot8sYnDpr+WcX5Gf8TnqSRzAGywSgSslZ3koDvjM6ib3
+         Pdi8mTDstbmvSu74oQEOtEGOcaGapMdnt2guYjiyiuNyI9a0TublPIgvHTytVaRBjlZT
+         P6j/dMWOfY+mTZFcmLTsQreejEnkaqN7T3glvlvOKrKRJBytjK48P5nyy1ekeQIxEJAB
+         gda50nuPKtQTzYWtUjJf88582ql+s/mzHL29B5zze3o1y6CijcBcwgJuKKQ8+HjIiYYF
+         PGpvC72eJLuyXVCZV+q1RrmtxpKoco3/pXOVOVNIk2k/ntzBIAeEEqbwtGUoGa90XnNF
+         ZrPQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=FLK03MoPTeVjiiFwNtS1OJi+2ld8fgev60+sqAPXpLo=;
+        b=ueJn4KH2McwJlrIjT41m5R283UVA6BacoxIpUHGflsk/X4MrUFamj5MztwUavnX/lm
+         NjsB6WQEVNg3JVd0PB2aaGGzC40WBzpAaszO4qwI6hHdyofwjhFV/pTEKu0Llad6pXC7
+         45x49B6dAhCT3vKC/qVQmDVxWaKS2D/QxOP0ll2LWAi1CxROwwI3QTyP6AvhdZEZrIsH
+         v9cR0ScMjFUuH8XtziUqF7ZO+woFvo+D8+dKrDlQUiCgA1oWU27AopC0KOeX6LKmeP3D
+         9HtDQfb7aI3DnHWhbInAbsxi6rUY/PLYA3ZSYoHiw3uUZS6Y5GfevHQlBV+Gag2cDdnB
+         IEYQ==
+X-Gm-Message-State: AOAM533IBarly5ReuDqkcPH92h7z66gsVaLPUpLIHXbbWAj7LLP467JT
+        a1vSAI/PKJiftN3piBVL7w7Yg//Hs+t8rw==
+X-Google-Smtp-Source: ABdhPJytXmL1Uj/jup8IDzFLZKwpMK6mZxS/1lbVrDQSOq3KCd2Df1ttM6R0Ksfu/w1e0jCslBiSlA==
+X-Received: by 2002:a7b:cb93:: with SMTP id m19mr301307wmi.128.1608737901527;
+        Wed, 23 Dec 2020 07:38:21 -0800 (PST)
+Received: from MacBook-Pro.local ([212.45.64.13])
+        by smtp.googlemail.com with ESMTPSA id y11sm212109wmi.0.2020.12.23.07.38.20
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 23 Dec 2020 07:38:20 -0800 (PST)
 Subject: Re: [PATCH v2 1/7] iommu/io-pgtable: Introduce dynamic io-pgtable fmt
  registration
-In-Reply-To: <64657a85-e2d5-e13f-d6b5-9d68c4142b80@arm.com>
+To:     "Isaac J. Manjarres" <isaacm@codeaurora.org>,
+        iommu@lists.linux-foundation.org,
+        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+        freedreno@lists.freedesktop.org, dri-devel@lists.freedesktop.org,
+        linux-arm-msm@vger.kernel.org
+Cc:     will@kernel.org, joro@8bytes.org, pdaly@codeaurora.org,
+        pratikp@codeaurora.org, kernel-team@android.com,
+        robin.murphy@arm.com
 References: <1608597876-32367-1-git-send-email-isaacm@codeaurora.org>
  <1608597876-32367-2-git-send-email-isaacm@codeaurora.org>
- <4f388512-c3df-e9fc-ebd4-624ab36a6858@arm.com>
- <8b48b371811a170053e2ca810ab63abf@codeaurora.org>
- <64657a85-e2d5-e13f-d6b5-9d68c4142b80@arm.com>
-Message-ID: <69cfff0e339985a8c344533573471bf4@codeaurora.org>
-X-Sender: isaacm@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+From:   Georgi Djakov <georgi.djakov@linaro.org>
+Message-ID: <65b5382c-c7a9-0f18-96da-fe49e92e3b00@linaro.org>
+Date:   Wed, 23 Dec 2020 17:38:19 +0200
+MIME-Version: 1.0
+In-Reply-To: <1608597876-32367-2-git-send-email-isaacm@codeaurora.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2020-12-23 05:44, Robin Murphy wrote:
-> On 2020-12-22 19:54, isaacm@codeaurora.org wrote:
->> On 2020-12-22 11:27, Robin Murphy wrote:
->>> On 2020-12-22 00:44, Isaac J. Manjarres wrote:
->>>> The io-pgtable code constructs an array of init functions for each
->>>> page table format at compile time. This is not ideal, as this
->>>> increases the footprint of the io-pgtable code, as well as prevents
->>>> io-pgtable formats from being built as kernel modules.
->>>> 
->>>> In preparation for modularizing the io-pgtable formats, switch to a
->>>> dynamic registration scheme, where each io-pgtable format can 
->>>> register
->>>> their init functions with the io-pgtable code at boot or module
->>>> insertion time.
->>>> 
->>>> Signed-off-by: Isaac J. Manjarres <isaacm@codeaurora.org>
->>>> ---
->>>>   drivers/iommu/io-pgtable-arm-v7s.c | 34 +++++++++++++-
->>>>   drivers/iommu/io-pgtable-arm.c     | 90 
->>>> ++++++++++++++++++++++++++----------
->>>>   drivers/iommu/io-pgtable.c         | 94 
->>>> ++++++++++++++++++++++++++++++++------
->>>>   include/linux/io-pgtable.h         | 51 +++++++++++++--------
->>>>   4 files changed, 209 insertions(+), 60 deletions(-)
->>>> 
->>>> diff --git a/drivers/iommu/io-pgtable-arm-v7s.c 
->>>> b/drivers/iommu/io-pgtable-arm-v7s.c
->>>> index 1d92ac9..89aad2f 100644
->>>> --- a/drivers/iommu/io-pgtable-arm-v7s.c
->>>> +++ b/drivers/iommu/io-pgtable-arm-v7s.c
->>>> @@ -28,6 +28,7 @@
->>>>   #include <linux/iommu.h>
->>>>   #include <linux/kernel.h>
->>>>   #include <linux/kmemleak.h>
->>>> +#include <linux/module.h>
->>>>   #include <linux/sizes.h>
->>>>   #include <linux/slab.h>
->>>>   #include <linux/spinlock.h>
->>>> @@ -835,7 +836,8 @@ static struct io_pgtable 
->>>> *arm_v7s_alloc_pgtable(struct io_pgtable_cfg *cfg,
->>>>       return NULL;
->>>>   }
->>>>   -struct io_pgtable_init_fns io_pgtable_arm_v7s_init_fns = {
->>>> +static struct io_pgtable_init_fns io_pgtable_arm_v7s_init_fns = {
->>>> +    .fmt    = ARM_V7S,
->>>>       .alloc    = arm_v7s_alloc_pgtable,
->>>>       .free    = arm_v7s_free_pgtable,
->>>>   };
->>>> @@ -982,5 +984,33 @@ static int __init arm_v7s_do_selftests(void)
->>>>       pr_info("self test ok\n");
->>>>       return 0;
->>>>   }
->>>> -subsys_initcall(arm_v7s_do_selftests);
->>>> +#else
->>>> +static int arm_v7s_do_selftests(void)
->>>> +{
->>>> +    return 0;
->>>> +}
->>>>   #endif
->>>> +
->>>> +static int __init arm_v7s_init(void)
->>>> +{
->>>> +    int ret;
->>>> +
->>>> +    ret = io_pgtable_ops_register(&io_pgtable_arm_v7s_init_fns);
->>>> +    if (ret < 0) {
->>>> +        pr_err("Failed to register ARM V7S format\n");
->>> 
->>> Super-nit: I think "v7s" should probably be lowercase there. Also
->>> general consistency WRT to showing the error code and whether or not
->>> to abbreviate "format" would be nice.
->>> 
->> Ok, I can fix this accordingly.
->> 
->>>> +        return ret;
->>>> +    }
->>>> +
->>>> +    ret = arm_v7s_do_selftests();
->>>> +    if (ret < 0)
->>>> +        io_pgtable_ops_unregister(&io_pgtable_arm_v7s_init_fns);
->>>> +
->>>> +    return ret;
->>>> +}
->>>> +core_initcall(arm_v7s_init);
->>>> +
->>>> +static void __exit arm_v7s_exit(void)
->>>> +{
->>>> +    io_pgtable_ops_unregister(&io_pgtable_arm_v7s_init_fns);
->>>> +}
->>>> +module_exit(arm_v7s_exit);
->>>> diff --git a/drivers/iommu/io-pgtable-arm.c 
->>>> b/drivers/iommu/io-pgtable-arm.c
->>>> index 87def58..ff0ea2f 100644
->>>> --- a/drivers/iommu/io-pgtable-arm.c
->>>> +++ b/drivers/iommu/io-pgtable-arm.c
->>>> @@ -13,6 +13,7 @@
->>>>   #include <linux/bitops.h>
->>>>   #include <linux/io-pgtable.h>
->>>>   #include <linux/kernel.h>
->>>> +#include <linux/module.h>
->>>>   #include <linux/sizes.h>
->>>>   #include <linux/slab.h>
->>>>   #include <linux/types.h>
->>>> @@ -1043,29 +1044,32 @@ arm_mali_lpae_alloc_pgtable(struct 
->>>> io_pgtable_cfg *cfg, void *cookie)
->>>>       return NULL;
->>>>   }
->>>>   -struct io_pgtable_init_fns io_pgtable_arm_64_lpae_s1_init_fns = {
->>>> -    .alloc    = arm_64_lpae_alloc_pgtable_s1,
->>>> -    .free    = arm_lpae_free_pgtable,
->>>> -};
->>>> -
->>>> -struct io_pgtable_init_fns io_pgtable_arm_64_lpae_s2_init_fns = {
->>>> -    .alloc    = arm_64_lpae_alloc_pgtable_s2,
->>>> -    .free    = arm_lpae_free_pgtable,
->>>> -};
->>>> -
->>>> -struct io_pgtable_init_fns io_pgtable_arm_32_lpae_s1_init_fns = {
->>>> -    .alloc    = arm_32_lpae_alloc_pgtable_s1,
->>>> -    .free    = arm_lpae_free_pgtable,
->>>> -};
->>>> -
->>>> -struct io_pgtable_init_fns io_pgtable_arm_32_lpae_s2_init_fns = {
->>>> -    .alloc    = arm_32_lpae_alloc_pgtable_s2,
->>>> -    .free    = arm_lpae_free_pgtable,
->>>> -};
->>>> -
->>>> -struct io_pgtable_init_fns io_pgtable_arm_mali_lpae_init_fns = {
->>>> -    .alloc    = arm_mali_lpae_alloc_pgtable,
->>>> -    .free    = arm_lpae_free_pgtable,
->>>> +static struct io_pgtable_init_fns io_pgtable_arm_lpae_init_fns[] = 
->>>> {
->>>> +    {
->>>> +        .fmt    = ARM_32_LPAE_S1,
->>>> +        .alloc    = arm_32_lpae_alloc_pgtable_s1,
->>>> +        .free    = arm_lpae_free_pgtable,
->>>> +    },
->>>> +    {
->>>> +        .fmt    = ARM_32_LPAE_S2,
->>>> +        .alloc    = arm_32_lpae_alloc_pgtable_s2,
->>>> +        .free    = arm_lpae_free_pgtable,
->>>> +    },
->>>> +    {
->>>> +        .fmt    = ARM_64_LPAE_S1,
->>>> +        .alloc    = arm_64_lpae_alloc_pgtable_s1,
->>>> +        .free    = arm_lpae_free_pgtable,
->>>> +    },
->>>> +    {
->>>> +        .fmt    = ARM_64_LPAE_S2,
->>>> +        .alloc    = arm_64_lpae_alloc_pgtable_s2,
->>>> +        .free    = arm_lpae_free_pgtable,
->>>> +    },
->>>> +    {
->>>> +        .fmt    = ARM_MALI_LPAE,
->>>> +        .alloc    = arm_mali_lpae_alloc_pgtable,
->>>> +        .free    = arm_lpae_free_pgtable,
->>>> +    },
->>>>   };
->>>>     #ifdef CONFIG_IOMMU_IO_PGTABLE_LPAE_SELFTEST
->>>> @@ -1250,5 +1254,43 @@ static int __init arm_lpae_do_selftests(void)
->>>>       pr_info("selftest: completed with %d PASS %d FAIL\n", pass, 
->>>> fail);
->>>>       return fail ? -EFAULT : 0;
->>>>   }
->>>> -subsys_initcall(arm_lpae_do_selftests);
->>>> +#else
->>>> +static int __init arm_lpae_do_selftests(void)
->>>> +{
->>>> +    return 0;
->>>> +}
->>>>   #endif
->>>> +
->>>> +static int __init arm_lpae_init(void)
->>>> +{
->>>> +    int ret, i;
->>>> +
->>>> +    for (i = 0; i < ARRAY_SIZE(io_pgtable_arm_lpae_init_fns); i++) 
->>>> {
->>>> +        ret = 
->>>> io_pgtable_ops_register(&io_pgtable_arm_lpae_init_fns[i]);
->>>> +        if (ret < 0) {
->>>> +            pr_err("Failed to register ARM LPAE fmt: %d\n");
->>>> +            goto err_io_pgtable_register;
->>>> +        }
->>>> +    }
->>>> +
->>>> +    ret = arm_lpae_do_selftests();
->>>> +    if (ret < 0)
->>>> +        goto err_io_pgtable_register;
->>>> +
->>>> +    return 0;
->>>> +
->>>> +err_io_pgtable_register:
->>>> +    for (i = i - 1; i >= 0; i--)
->>> 
->>> Personally I find "while (i--)" a bit clearer for this kind of
->>> unwinding, but maybe post-decrement isn't to everyone's taste.
->>> 
->> I'm not particularly attached to the current approach, so a while loop
->> is okay with me :).
->> 
->>>> +        
->>>> io_pgtable_ops_unregister(&io_pgtable_arm_lpae_init_fns[i]);
->>>> +    return ret;
->>>> +}
->>>> +core_initcall(arm_lpae_init);
->>>> +
->>>> +static void __exit arm_lpae_exit(void)
->>>> +{
->>>> +    int i;
->>>> +
->>>> +    for (i = 0; i < ARRAY_SIZE(io_pgtable_arm_lpae_init_fns); i++)
->>>> +        
->>>> io_pgtable_ops_unregister(&io_pgtable_arm_lpae_init_fns[i]);
->>>> +}
->>>> +module_exit(arm_lpae_exit);
->>>> diff --git a/drivers/iommu/io-pgtable.c b/drivers/iommu/io-pgtable.c
->>>> index 94394c8..2c6eb2e 100644
->>>> --- a/drivers/iommu/io-pgtable.c
->>>> +++ b/drivers/iommu/io-pgtable.c
->>>> @@ -10,33 +10,45 @@
->>>>   #include <linux/bug.h>
->>>>   #include <linux/io-pgtable.h>
->>>>   #include <linux/kernel.h>
->>>> +#include <linux/rwlock.h>
->>>> +#include <linux/slab.h>
->>>>   #include <linux/types.h>
->>>>   -static const struct io_pgtable_init_fns *
->>>> -io_pgtable_init_table[IO_PGTABLE_NUM_FMTS] = {
->>>> -#ifdef CONFIG_IOMMU_IO_PGTABLE_LPAE
->>>> -    [ARM_32_LPAE_S1] = &io_pgtable_arm_32_lpae_s1_init_fns,
->>>> -    [ARM_32_LPAE_S2] = &io_pgtable_arm_32_lpae_s2_init_fns,
->>>> -    [ARM_64_LPAE_S1] = &io_pgtable_arm_64_lpae_s1_init_fns,
->>>> -    [ARM_64_LPAE_S2] = &io_pgtable_arm_64_lpae_s2_init_fns,
->>>> -    [ARM_MALI_LPAE] = &io_pgtable_arm_mali_lpae_init_fns,
->>>> -#endif
->>>> -#ifdef CONFIG_IOMMU_IO_PGTABLE_ARMV7S
->>>> -    [ARM_V7S] = &io_pgtable_arm_v7s_init_fns,
->>>> -#endif
->>>> +struct io_pgtable_init_fns_node {
->>>> +    struct io_pgtable_init_fns *fns;
->>>> +    struct list_head list;
->>>>   };
->>>>   +static LIST_HEAD(io_pgtable_init_fns_list);
->>>> +static DEFINE_RWLOCK(io_pgtable_init_fns_list_lock);
->>>> +
->>>> +static struct io_pgtable_init_fns *io_pgtable_get_init_fns(enum 
->>>> io_pgtable_fmt fmt)
->>>> +{
->>>> +    struct io_pgtable_init_fns_node *iter;
->>>> +    struct io_pgtable_init_fns *fns = NULL;
->>>> +
->>>> +    read_lock(&io_pgtable_init_fns_list_lock);
->>>> +    list_for_each_entry(iter, &io_pgtable_init_fns_list, list)
->>>> +        if (iter->fns->fmt == fmt) {
->>>> +            fns = iter->fns;
->>>> +            break;
->>>> +        }
->>>> +    read_unlock(&io_pgtable_init_fns_list_lock);
->>>> +
->>>> +    return fns;
->>>> +}
->>> 
->>> I think it would be a lot easier to stick with a simple array indexed
->>> by enum - that way you can just set/clear/test entries without 
->>> needing
->>> to worry about locking. Basically just remove the const and the
->>> initialisers from the existing one ;)
->>> 
->>> (and if you think you're concerned about memory, consider that just
->>> the list head plus lock is already half the size of the table)
->>> 
->>> Other than that, I think this all looks pretty promising - I'd 
->>> suggest
->>> sending a non-RFC after rc1 so that it gets everyone's proper
->>> attention.
->>> 
->>> Thanks,
->>> Robin.
->>> 
->> 
->> Thanks for all of the feedback! With respect to the comment about 
->> keeping the current array,
->> don't we need some sort of lock to protect access to the data 
->> structure (e.g. concurrent access
->> if adding two ops for the same format)? Or do you mean that we should 
->> use atomic operations to
->> handle this cleanly?
-> 
-> I don't think any races are realistically possible - built-in
-> initcalls should run sequentially, while module init should be
-> serialised by the module loader lock, so registrations should never be
-> able to race against each other. And if there could be a race between
-> registering a format and somebody trying to use it, then something's
-> fundamentally wrong anyway - sure we could use READ_ONCE/WRITE_ONCE
-> for accessing the table, but that would be basically be admitting that
-> we've failed at the primary purpose of making sure formats are loaded
-> *before* the users that depend on them.
-> 
-> With a directly-indexed table there's no contention between looking up
-> one format and registering another unrelated format, unlike with a
-> list.
-> 
-> Robin.
-> 
+Hi Isaac,
 
-Got it. I'll stick with the array as suggested. Thanks again for the 
-feedback.
-I'll be sending the version with your suggestions when 5.11-rc1 comes 
-out as
-a non-RFC.
+On 22.12.20 2:44, Isaac J. Manjarres wrote:
+> The io-pgtable code constructs an array of init functions for each
+> page table format at compile time. This is not ideal, as this
+> increases the footprint of the io-pgtable code, as well as prevents
+> io-pgtable formats from being built as kernel modules.
+> 
+> In preparation for modularizing the io-pgtable formats, switch to a
+> dynamic registration scheme, where each io-pgtable format can register
+> their init functions with the io-pgtable code at boot or module
+> insertion time.
+> 
+> Signed-off-by: Isaac J. Manjarres <isaacm@codeaurora.org>
+> ---
+>   drivers/iommu/io-pgtable-arm-v7s.c | 34 +++++++++++++-
+>   drivers/iommu/io-pgtable-arm.c     | 90 ++++++++++++++++++++++++++----------
+>   drivers/iommu/io-pgtable.c         | 94 ++++++++++++++++++++++++++++++++------
+>   include/linux/io-pgtable.h         | 51 +++++++++++++--------
+>   4 files changed, 209 insertions(+), 60 deletions(-)
+> 
+> diff --git a/drivers/iommu/io-pgtable-arm-v7s.c b/drivers/iommu/io-pgtable-arm-v7s.c
+> index 1d92ac9..89aad2f 100644
+> --- a/drivers/iommu/io-pgtable-arm-v7s.c
+> +++ b/drivers/iommu/io-pgtable-arm-v7s.c
+> @@ -28,6 +28,7 @@
+[..]
+> +static int __init arm_lpae_init(void)
+> +{
+> +	int ret, i;
+> +
+> +	for (i = 0; i < ARRAY_SIZE(io_pgtable_arm_lpae_init_fns); i++) {
+> +		ret = io_pgtable_ops_register(&io_pgtable_arm_lpae_init_fns[i]);
+> +		if (ret < 0) {
+> +			pr_err("Failed to register ARM LPAE fmt: %d\n");
 
---Isaac
->> 
->> Thanks,
->> Isaac
->>>> +
->>>>   struct io_pgtable_ops *alloc_io_pgtable_ops(enum io_pgtable_fmt 
->>>> fmt,
->>>>                           struct io_pgtable_cfg *cfg,
->>>>                           void *cookie)
->>>>   {
->>>>       struct io_pgtable *iop;
->>>> -    const struct io_pgtable_init_fns *fns;
->>>> +    struct io_pgtable_init_fns *fns;
->>>>         if (fmt >= IO_PGTABLE_NUM_FMTS)
->>>>           return NULL;
->>>>   -    fns = io_pgtable_init_table[fmt];
->>>> +    fns = io_pgtable_get_init_fns(fmt);
->>>>       if (!fns)
->>>>           return NULL;
->>>>   @@ -59,12 +71,64 @@ EXPORT_SYMBOL_GPL(alloc_io_pgtable_ops);
->>>>   void free_io_pgtable_ops(struct io_pgtable_ops *ops)
->>>>   {
->>>>       struct io_pgtable *iop;
->>>> +    struct io_pgtable_init_fns *fns;
->>>>         if (!ops)
->>>>           return;
->>>>         iop = io_pgtable_ops_to_pgtable(ops);
->>>>       io_pgtable_tlb_flush_all(iop);
->>>> -    io_pgtable_init_table[iop->fmt]->free(iop);
->>>> +    fns = io_pgtable_get_init_fns(iop->fmt);
->>>> +    if (fns)
->>>> +        fns->free(iop);
->>>>   }
->>>>   EXPORT_SYMBOL_GPL(free_io_pgtable_ops);
->>>> +
->>>> +int io_pgtable_ops_register(struct io_pgtable_init_fns *init_fns)
->>>> +{
->>>> +    struct io_pgtable_init_fns_node *iter, *fns_node;
->>>> +    int ret = 0;
->>>> +
->>>> +    if (!init_fns || init_fns->fmt >= IO_PGTABLE_NUM_FMTS ||
->>>> +        !init_fns->alloc || !init_fns->free)
->>>> +        return -EINVAL;
->>>> +
->>>> +    fns_node = kzalloc(sizeof(*fns_node), GFP_KERNEL);
->>>> +    if (!fns_node)
->>>> +        return -ENOMEM;
->>>> +
->>>> +    write_lock(&io_pgtable_init_fns_list_lock);
->>>> +    list_for_each_entry(iter, &io_pgtable_init_fns_list, list)
->>>> +        if (iter->fns->fmt == init_fns->fmt) {
->>>> +            ret = -EEXIST;
->>>> +            kfree(fns_node);
->>>> +            break;
->>>> +        }
->>>> +
->>>> +    if (!ret) {
->>>> +        fns_node->fns = init_fns;
->>>> +        INIT_LIST_HEAD(&fns_node->list);
->>>> +        list_add_tail(&fns_node->list, &io_pgtable_init_fns_list);
->>>> +    }
->>>> +    write_unlock(&io_pgtable_init_fns_list_lock);
->>>> +    return ret;
->>>> +}
->>>> +EXPORT_SYMBOL_GPL(io_pgtable_ops_register);
->>>> +
->>>> +void io_pgtable_ops_unregister(struct io_pgtable_init_fns 
->>>> *init_fns)
->>>> +{
->>>> +    struct io_pgtable_init_fns_node *iter, *tmp;
->>>> +
->>>> +    if (!init_fns)
->>>> +        return;
->>>> +
->>>> +    write_lock(&io_pgtable_init_fns_list_lock);
->>>> +    list_for_each_entry_safe(iter, tmp, &io_pgtable_init_fns_list, 
->>>> list)
->>>> +        if (iter->fns == init_fns) {
->>>> +            list_del(&iter->list);
->>>> +            kfree(iter);
->>>> +            break;
->>>> +        }
->>>> +    write_unlock(&io_pgtable_init_fns_list_lock);
->>>> +}
->>>> +EXPORT_SYMBOL_GPL(io_pgtable_ops_unregister);
->>>> diff --git a/include/linux/io-pgtable.h b/include/linux/io-pgtable.h
->>>> index ea727eb..45b367ce 100644
->>>> --- a/include/linux/io-pgtable.h
->>>> +++ b/include/linux/io-pgtable.h
->>>> @@ -163,6 +163,38 @@ struct io_pgtable_ops {
->>>>   };
->>>>     /**
->>>> + * struct io_pgtable_init_fns - Alloc/free a set of page tables for 
->>>> a
->>>> + *                              particular format.
->>>> + *
->>>> + * @fmt:   The page table format.
->>>> + * @alloc: Allocate a set of page tables described by cfg.
->>>> + * @free:  Free the page tables associated with iop.
->>>> + */
->>>> +struct io_pgtable_init_fns {
->>>> +    enum io_pgtable_fmt fmt;
->>>> +    struct io_pgtable *(*alloc)(struct io_pgtable_cfg *cfg, void 
->>>> *cookie);
->>>> +    void (*free)(struct io_pgtable *iop);
->>>> +};
->>>> +
->>>> +/**
->>>> + * io_pgtable_ops_register() - Register the page table routines for 
->>>> a page table
->>>> + *                             format.
->>>> + *
->>>> + * @init_fns: The functions for allocating and freeing the page 
->>>> tables of
->>>> + *            a particular format.
->>>> + */
->>>> +int io_pgtable_ops_register(struct io_pgtable_init_fns *init_fns);
->>>> +
->>>> +/**
->>>> + * io_pgtable_ops_unregister() - Unregister the page table routines 
->>>> for a page
->>>> + *                               table format.
->>>> + *
->>>> + * @init_fns: The functions for allocating and freeing the page 
->>>> tables of
->>>> + *            a particular format.
->>>> + */
->>>> +void io_pgtable_ops_unregister(struct io_pgtable_init_fns 
->>>> *init_fns);
->>>> +
->>>> +/**
->>>>    * alloc_io_pgtable_ops() - Allocate a page table allocator for 
->>>> use by an IOMMU.
->>>>    *
->>>>    * @fmt:    The page table format.
->>>> @@ -233,23 +265,4 @@ io_pgtable_tlb_add_page(struct io_pgtable *iop,
->>>>           iop->cfg.tlb->tlb_add_page(gather, iova, granule, 
->>>> iop->cookie);
->>>>   }
->>>>   -/**
->>>> - * struct io_pgtable_init_fns - Alloc/free a set of page tables for 
->>>> a
->>>> - *                              particular format.
->>>> - *
->>>> - * @alloc: Allocate a set of page tables described by cfg.
->>>> - * @free:  Free the page tables associated with iop.
->>>> - */
->>>> -struct io_pgtable_init_fns {
->>>> -    struct io_pgtable *(*alloc)(struct io_pgtable_cfg *cfg, void 
->>>> *cookie);
->>>> -    void (*free)(struct io_pgtable *iop);
->>>> -};
->>>> -
->>>> -extern struct io_pgtable_init_fns 
->>>> io_pgtable_arm_32_lpae_s1_init_fns;
->>>> -extern struct io_pgtable_init_fns 
->>>> io_pgtable_arm_32_lpae_s2_init_fns;
->>>> -extern struct io_pgtable_init_fns 
->>>> io_pgtable_arm_64_lpae_s1_init_fns;
->>>> -extern struct io_pgtable_init_fns 
->>>> io_pgtable_arm_64_lpae_s2_init_fns;
->>>> -extern struct io_pgtable_init_fns io_pgtable_arm_v7s_init_fns;
->>>> -extern struct io_pgtable_init_fns 
->>>> io_pgtable_arm_mali_lpae_init_fns;
->>>> -
->>>>   #endif /* __IO_PGTABLE_H */
->>>> 
->>> 
->>> _______________________________________________
->>> linux-arm-kernel mailing list
->>> linux-arm-kernel@lists.infradead.org
->>> http://lists.infradead.org/mailman/listinfo/linux-arm-kernel
->> _______________________________________________
->> iommu mailing list
->> iommu@lists.linux-foundation.org
->> https://lists.linuxfoundation.org/mailman/listinfo/iommu
+I guess we want to print the format here?
+
+Thanks,
+Georgi
