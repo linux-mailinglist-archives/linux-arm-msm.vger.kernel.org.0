@@ -2,156 +2,79 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id BF7B32E120A
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Dec 2020 03:20:46 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 132F62E14E1
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Dec 2020 03:48:40 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727902AbgLWCSR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 22 Dec 2020 21:18:17 -0500
-Received: from mail.kernel.org ([198.145.29.99]:45508 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727828AbgLWCSL (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 22 Dec 2020 21:18:11 -0500
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 8C951221E5;
-        Wed, 23 Dec 2020 02:17:11 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1608689832;
-        bh=yYA+MGHW/+TtHZWGYi2rBWDMZ0naSYSzdR8S3kuTsrE=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=Zx88YomxhB5Kw3zBAtaWmBB89/MDI996ICvSEIdBZOwjXIC0HGzfMjdtAY1NMb85g
-         igmGvEjO97wKIMgFBJ65iDmEeZaJoch8Kb08niOkvZPLHSNvBmTwrVaIGO4f+VtFG2
-         8jbWOA83UvJy0r7wWUkCBusH+todr5v/fwfPRzdAXehUYXWYu7W7BT5NS/AwA4Youz
-         1Nsysa+Gr/bEj9+Ro3L6ZpnL9ZD+qdykaulDcEvuwdLSzgaRoOU0ekbZnHIMzz6E4h
-         0C3tNJZVqC8VN3zNpjDGbIERrTMqJQNXp7SfpGS8No0gTfT/VuEUpcU/8IJwoehvcY
-         Tx1i+DMNRe/3Q==
-From:   Sasha Levin <sashal@kernel.org>
-To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
-Cc:     Adrian Hunter <adrian.hunter@intel.com>,
-        Asutosh Das <asutoshd@codeaurora.org>,
-        Stanley Chu <stanley.chu@mediatek.com>,
-        Bean huo <beanhuo@micron.com>, Can Guo <cang@codeaurora.org>,
-        "Martin K . Petersen" <martin.petersen@oracle.com>,
-        Sasha Levin <sashal@kernel.org>, linux-scsi@vger.kernel.org,
-        linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org
-Subject: [PATCH AUTOSEL 5.10 034/217] scsi: ufs: Allow an error return value from ->device_reset()
-Date:   Tue, 22 Dec 2020 21:13:23 -0500
-Message-Id: <20201223021626.2790791-34-sashal@kernel.org>
-X-Mailer: git-send-email 2.27.0
-In-Reply-To: <20201223021626.2790791-1-sashal@kernel.org>
-References: <20201223021626.2790791-1-sashal@kernel.org>
+        id S1729898AbgLWCpX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 22 Dec 2020 21:45:23 -0500
+Received: from mailgw02.mediatek.com ([210.61.82.184]:34304 "EHLO
+        mailgw02.mediatek.com" rhost-flags-OK-FAIL-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1728409AbgLWCpU (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 22 Dec 2020 21:45:20 -0500
+X-UUID: 2011929af47d491f966393e5298ed79e-20201223
+X-UUID: 2011929af47d491f966393e5298ed79e-20201223
+Received: from mtkcas06.mediatek.inc [(172.21.101.30)] by mailgw02.mediatek.com
+        (envelope-from <hsin-hsiung.wang@mediatek.com>)
+        (Cellopoint E-mail Firewall v4.1.14 Build 0819 with TLSv1.2 ECDHE-RSA-AES256-SHA384 256/256)
+        with ESMTP id 291148945; Wed, 23 Dec 2020 10:44:35 +0800
+Received: from mtkcas11.mediatek.inc (172.21.101.40) by
+ mtkmbs07n1.mediatek.inc (172.21.101.16) with Microsoft SMTP Server (TLS) id
+ 15.0.1497.2; Wed, 23 Dec 2020 10:44:35 +0800
+Received: from mtksdaap41.mediatek.inc (172.21.77.4) by mtkcas11.mediatek.inc
+ (172.21.101.73) with Microsoft SMTP Server id 15.0.1497.2 via Frontend
+ Transport; Wed, 23 Dec 2020 10:44:34 +0800
+From:   Hsin-Hsiung Wang <hsin-hsiung.wang@mediatek.com>
+To:     Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh+dt@kernel.org>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        Geert Uytterhoeven <geert+renesas@glider.be>,
+        Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
+        Ulf Hansson <ulf.hansson@linaro.org>,
+        Mark Brown <broonie@kernel.org>
+CC:     Hsin-Hsiung Wang <hsin-hsiung.wang@mediatek.com>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>,
+        <linux-mediatek@lists.infradead.org>,
+        <linux-kernel@vger.kernel.org>, <srv_heupstream@mediatek.com>,
+        <Project_Global_Chrome_Upstream_Group@mediatek.com>
+Subject: [PATCH v5 0/4] Add SPMI support for Mediatek MT6873/8192 SoC IC
+Date:   Wed, 23 Dec 2020 10:44:25 +0800
+Message-ID: <1608691469-20919-1-git-send-email-hsin-hsiung.wang@mediatek.com>
+X-Mailer: git-send-email 2.6.4
 MIME-Version: 1.0
-X-stable: review
-X-Patchwork-Hint: Ignore
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-MTK:  N
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Adrian Hunter <adrian.hunter@intel.com>
+This series adds support for new SoC MT6873/8192 to the spmi driver.
+This series is based on Weiyi's patches[1].
 
-[ Upstream commit 151f1b664ffbb847c7fbbce5a5b8580f1b9b1d98 ]
+[1] https://patchwork.kernel.org/project/linux-mediatek/patch/1608642587-15634-7-git-send-email-weiyi.lu@mediatek.com/
 
-It is simpler for drivers to provide a ->device_reset() callback
-irrespective of whether the GPIO, or firmware interface necessary to do the
-reset, is discovered during probe.
+changes since v4:
+- modify the constraint 'maxItems: 1' to 'minItems: 0'.
+- fix the error of the binding document.
+- refine the mtk spmi driver for the bettery quality.
+- add spmi node into MT8192 dtsi.
 
-Change ->device_reset() to return an error code.  Drivers that provide the
-callback, but do not do the reset operation should return -EOPNOTSUPP.
+Hsin-Hsiung Wang (4):
+  dt-bindings: spmi: modify the constraint 'maxItems' to 'minItems'
+  dt-bindings: spmi: document binding for the Mediatek SPMI controller
+  spmi: mediatek: Add support for MT6873/8192
+  arm64: dts: mt8192: add spmi node
 
-Link: https://lore.kernel.org/r/20201103141403.2142-3-adrian.hunter@intel.com
-Reviewed-by: Asutosh Das <asutoshd@codeaurora.org>
-Reviewed-by: Stanley Chu <stanley.chu@mediatek.com>
-Reviewed-by: Bean huo <beanhuo@micron.com>
-Reviewed-by: Can Guo <cang@codeaurora.org>
-Signed-off-by: Adrian Hunter <adrian.hunter@intel.com>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
----
- drivers/scsi/ufs/ufs-mediatek.c |  4 +++-
- drivers/scsi/ufs/ufs-qcom.c     |  6 ++++--
- drivers/scsi/ufs/ufshcd.h       | 11 +++++++----
- 3 files changed, 14 insertions(+), 7 deletions(-)
+ .../bindings/spmi/mtk,spmi-mtk-pmif.yaml      |  74 +++
+ .../devicetree/bindings/spmi/spmi.yaml        |   2 +-
+ arch/arm64/boot/dts/mediatek/mt8192.dtsi      |  15 +
+ drivers/spmi/Kconfig                          |   9 +
+ drivers/spmi/Makefile                         |   1 +
+ drivers/spmi/spmi-mtk-pmif.c                  | 504 ++++++++++++++++++
+ 6 files changed, 604 insertions(+), 1 deletion(-)
+ create mode 100644 Documentation/devicetree/bindings/spmi/mtk,spmi-mtk-pmif.yaml
+ create mode 100644 drivers/spmi/spmi-mtk-pmif.c
 
-diff --git a/drivers/scsi/ufs/ufs-mediatek.c b/drivers/scsi/ufs/ufs-mediatek.c
-index 8df73bc2f8cb2..914a827a93ee8 100644
---- a/drivers/scsi/ufs/ufs-mediatek.c
-+++ b/drivers/scsi/ufs/ufs-mediatek.c
-@@ -743,7 +743,7 @@ static int ufs_mtk_link_startup_notify(struct ufs_hba *hba,
- 	return ret;
- }
- 
--static void ufs_mtk_device_reset(struct ufs_hba *hba)
-+static int ufs_mtk_device_reset(struct ufs_hba *hba)
- {
- 	struct arm_smccc_res res;
- 
-@@ -764,6 +764,8 @@ static void ufs_mtk_device_reset(struct ufs_hba *hba)
- 	usleep_range(10000, 15000);
- 
- 	dev_info(hba->dev, "device reset done\n");
-+
-+	return 0;
- }
- 
- static int ufs_mtk_link_set_hpm(struct ufs_hba *hba)
-diff --git a/drivers/scsi/ufs/ufs-qcom.c b/drivers/scsi/ufs/ufs-qcom.c
-index f9d6ef3565407..a244c8ae1b4eb 100644
---- a/drivers/scsi/ufs/ufs-qcom.c
-+++ b/drivers/scsi/ufs/ufs-qcom.c
-@@ -1421,13 +1421,13 @@ static void ufs_qcom_dump_dbg_regs(struct ufs_hba *hba)
-  *
-  * Toggles the (optional) reset line to reset the attached device.
-  */
--static void ufs_qcom_device_reset(struct ufs_hba *hba)
-+static int ufs_qcom_device_reset(struct ufs_hba *hba)
- {
- 	struct ufs_qcom_host *host = ufshcd_get_variant(hba);
- 
- 	/* reset gpio is optional */
- 	if (!host->device_reset)
--		return;
-+		return -EOPNOTSUPP;
- 
- 	/*
- 	 * The UFS device shall detect reset pulses of 1us, sleep for 10us to
-@@ -1438,6 +1438,8 @@ static void ufs_qcom_device_reset(struct ufs_hba *hba)
- 
- 	gpiod_set_value_cansleep(host->device_reset, 0);
- 	usleep_range(10, 15);
-+
-+	return 0;
- }
- 
- #if IS_ENABLED(CONFIG_DEVFREQ_GOV_SIMPLE_ONDEMAND)
-diff --git a/drivers/scsi/ufs/ufshcd.h b/drivers/scsi/ufs/ufshcd.h
-index e0f00a42371c5..de97971e2d865 100644
---- a/drivers/scsi/ufs/ufshcd.h
-+++ b/drivers/scsi/ufs/ufshcd.h
-@@ -318,7 +318,7 @@ struct ufs_hba_variant_ops {
- 	int     (*resume)(struct ufs_hba *, enum ufs_pm_op);
- 	void	(*dbg_register_dump)(struct ufs_hba *hba);
- 	int	(*phy_initialization)(struct ufs_hba *);
--	void	(*device_reset)(struct ufs_hba *hba);
-+	int	(*device_reset)(struct ufs_hba *hba);
- 	void	(*config_scaling_param)(struct ufs_hba *hba,
- 					struct devfreq_dev_profile *profile,
- 					void *data);
-@@ -1181,9 +1181,12 @@ static inline void ufshcd_vops_dbg_register_dump(struct ufs_hba *hba)
- static inline void ufshcd_vops_device_reset(struct ufs_hba *hba)
- {
- 	if (hba->vops && hba->vops->device_reset) {
--		hba->vops->device_reset(hba);
--		ufshcd_set_ufs_dev_active(hba);
--		ufshcd_update_reg_hist(&hba->ufs_stats.dev_reset, 0);
-+		int err = hba->vops->device_reset(hba);
-+
-+		if (!err)
-+			ufshcd_set_ufs_dev_active(hba);
-+		if (err != -EOPNOTSUPP)
-+			ufshcd_update_reg_hist(&hba->ufs_stats.dev_reset, err);
- 	}
- }
- 
 -- 
-2.27.0
+2.18.0
 
