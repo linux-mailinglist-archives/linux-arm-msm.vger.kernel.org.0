@@ -2,37 +2,37 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 22CA82E1716
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Dec 2020 04:11:19 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 52F202E16C6
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Dec 2020 04:10:42 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729454AbgLWDFk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 22 Dec 2020 22:05:40 -0500
-Received: from mail.kernel.org ([198.145.29.99]:46410 "EHLO mail.kernel.org"
+        id S1728980AbgLWDCR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 22 Dec 2020 22:02:17 -0500
+Received: from mail.kernel.org ([198.145.29.99]:46404 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728512AbgLWCTJ (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 22 Dec 2020 21:19:09 -0500
-Received: by mail.kernel.org (Postfix) with ESMTPSA id CF66022D73;
-        Wed, 23 Dec 2020 02:18:21 +0000 (UTC)
+        id S1728716AbgLWCTj (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 22 Dec 2020 21:19:39 -0500
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 785AF225AB;
+        Wed, 23 Dec 2020 02:19:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1608689902;
-        bh=v0oZvUtokxvo39/NdM+fLn468wX5yHrFHPEcQw3Zl2U=;
+        s=k20201202; t=1608689948;
+        bh=PtJXlG+7otVt3v+1uuqmlPy/lhsqk23d0pMQ5jDpIjI=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=ERMGB+INolDH0LFM6an/mDK7Qc2PnpkcEYUzHJY79GUWN/BX/ofcuQOPSmlnItunH
-         Pa5PeOWgvqWLoRBMurNv15VQV7uKy4P1e8h+7nGVPZWUjnKBfJG3OuxKrsLZg3J8i7
-         ZNW80s6wlAJUGp7m/3QPI5B57FDR4QnMnCYpi0u7F7fGPfxMAGU2ewyCQsr/H/yklk
-         w4ckRUt/DFba+7w0QNg/mE59Jz1iFQD1Vqz2+JQpEg+NLOSlpkPD6GgONMPetdTw13
-         +eqKlSDAF4efgKx7L0d3jroAG1PvxlPeLsogrrUFJ7nhSSpE1GFUOl9pjzpK9n2aoo
-         6MVOXOH5Q3kgA==
+        b=k/UwJOPgC+gHV3LGv3b2Yy8iyDKyeSVOkUsoMp1xf8r8ffAw+wJvfwiDMNgQpCf0+
+         e4I9ojo5trxEUMZFCkB4l3T95ucVXLj5zMB0TY670Z/Tj6tbNUjhtGN3Ut7rIthCud
+         i2aq+mAIYAXYECaPepM28+QYgFJpNltYpLyCVmrMikVqsR6lmhFE02TTLDw9mOUZoh
+         oLyQqg2jiX5pH5VIWb4c9VWYRZXmFgpInweycYM1AC8lVAOKzV/iPD/RmHPbAn4vEl
+         CdA27Zt50LueR4q4zAjy1qpAVmXBTcmUeU0v0vQnlKpiicdzI17YluYgoWpHbBzV9b
+         KxNTD46MOaPDg==
 From:   Sasha Levin <sashal@kernel.org>
 To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
-Cc:     Krishna Manikandan <mkrishn@codeaurora.org>,
-        Rob Clark <robdclark@gmail.com>,
-        Rob Clark <robdclark@chromium.org>,
-        Sasha Levin <sashal@kernel.org>, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org
-Subject: [PATCH AUTOSEL 5.4 007/130] drm/msm: Fix race condition in msm driver with async layer updates
-Date:   Tue, 22 Dec 2020 21:16:10 -0500
-Message-Id: <20201223021813.2791612-7-sashal@kernel.org>
+Cc:     Mansur Alisha Shaik <mansur@codeaurora.org>,
+        Stanimir Varbanov <stanimir.varbanov@linaro.org>,
+        Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
+        Sasha Levin <sashal@kernel.org>, linux-media@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+Subject: [PATCH AUTOSEL 5.4 042/130] media: venus: handle use after free for iommu_map/iommu_unmap
+Date:   Tue, 22 Dec 2020 21:16:45 -0500
+Message-Id: <20201223021813.2791612-42-sashal@kernel.org>
 X-Mailer: git-send-email 2.27.0
 In-Reply-To: <20201223021813.2791612-1-sashal@kernel.org>
 References: <20201223021813.2791612-1-sashal@kernel.org>
@@ -44,165 +44,87 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Krishna Manikandan <mkrishn@codeaurora.org>
+From: Mansur Alisha Shaik <mansur@codeaurora.org>
 
-[ Upstream commit b3d91800d9ac35014e0349292273a6fa7938d402 ]
+[ Upstream commit de15e6231e6a3ca58d58d7e2c614a76c940dbb38 ]
 
-When there are back to back commits with async cursor update,
-there is a case where second commit can program the DPU hw
-blocks while first didn't complete flushing config to HW.
+In concurrency usecase and reboot scenario we are seeing muliple
+crashes related to iommu_map/iommu_unamp of core->fw.iommu_domain.
 
-Synchronize the compositions such that second commit waits
-until first commit flushes the composition.
+In one case we are seeing "Unable to handle kernel NULL pointer
+dereference at virtual address 0000000000000008" crash, this is
+because of core->fw.iommu_domain in venus_firmware_deinit() and
+trying to map in venus_boot() during venus_sys_error_handler()
 
-This change also introduces per crtc commit lock, such that
-commits on different crtcs are not blocked by each other.
+Call trace:
+ __iommu_map+0x4c/0x348
+ iommu_map+0x5c/0x70
+ venus_boot+0x184/0x230 [venus_core]
+ venus_sys_error_handler+0xa0/0x14c [venus_core]
+ process_one_work+0x210/0x3d0
+ worker_thread+0x248/0x3f4
+ kthread+0x11c/0x12c
+ ret_from_fork+0x10/0x18
 
-Changes in v2:
-	- Use an array of mutexes in kms to handle commit
-	  lock per crtc. (Rob Clark)
+In second case we are seeing "Unable to handle kernel paging request
+at virtual address 006b6b6b6b6b6b9b" crash, this is because of
+unmapping iommu domain which is already unmapped.
 
-Changes in v3:
-	- Add wrapper functions to handle lock and unlock of
-	  commit_lock for each crtc. (Rob Clark)
+Call trace:
+ venus_remove+0xf8/0x108 [venus_core]
+ venus_core_shutdown+0x1c/0x34 [venus_core]
+ platform_drv_shutdown+0x28/0x34
+ device_shutdown+0x154/0x1fc
+ kernel_restart_prepare+0x40/0x4c
+ kernel_restart+0x1c/0x64
+ __arm64_sys_reboot+0x190/0x238
+ el0_svc_common+0xa4/0x154
+ el0_svc_compat_handler+0x2c/0x38
+ el0_svc_compat+0x8/0x10
 
-Signed-off-by: Krishna Manikandan <mkrishn@codeaurora.org>
-Reviewed-by: Rob Clark <robdclark@gmail.com>
-Signed-off-by: Rob Clark <robdclark@chromium.org>
+Signed-off-by: Mansur Alisha Shaik <mansur@codeaurora.org>
+Signed-off-by: Stanimir Varbanov <stanimir.varbanov@linaro.org>
+Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/msm_atomic.c | 37 +++++++++++++++++++++-----------
- drivers/gpu/drm/msm/msm_kms.h    |  6 ++++--
- 2 files changed, 28 insertions(+), 15 deletions(-)
+ drivers/media/platform/qcom/venus/firmware.c | 17 +++++++++++++----
+ 1 file changed, 13 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/msm_atomic.c b/drivers/gpu/drm/msm/msm_atomic.c
-index 561bfa48841c3..575e9af9b6fc9 100644
---- a/drivers/gpu/drm/msm/msm_atomic.c
-+++ b/drivers/gpu/drm/msm/msm_atomic.c
-@@ -55,16 +55,32 @@ static void vblank_put(struct msm_kms *kms, unsigned crtc_mask)
- 	}
+diff --git a/drivers/media/platform/qcom/venus/firmware.c b/drivers/media/platform/qcom/venus/firmware.c
+index 33f70e1def943..9a9c0979e7bbb 100644
+--- a/drivers/media/platform/qcom/venus/firmware.c
++++ b/drivers/media/platform/qcom/venus/firmware.c
+@@ -172,9 +172,14 @@ static int venus_shutdown_no_tz(struct venus_core *core)
+ 
+ 	iommu = core->fw.iommu_domain;
+ 
+-	unmapped = iommu_unmap(iommu, VENUS_FW_START_ADDR, mapped);
+-	if (unmapped != mapped)
+-		dev_err(dev, "failed to unmap firmware\n");
++	if (core->fw.mapped_mem_size && iommu) {
++		unmapped = iommu_unmap(iommu, VENUS_FW_START_ADDR, mapped);
++
++		if (unmapped != mapped)
++			dev_err(dev, "failed to unmap firmware\n");
++		else
++			core->fw.mapped_mem_size = 0;
++	}
+ 
+ 	return 0;
  }
+@@ -289,7 +294,11 @@ void venus_firmware_deinit(struct venus_core *core)
+ 	iommu = core->fw.iommu_domain;
  
-+static void lock_crtcs(struct msm_kms *kms, unsigned int crtc_mask)
-+{
-+	struct drm_crtc *crtc;
+ 	iommu_detach_device(iommu, core->fw.dev);
+-	iommu_domain_free(iommu);
 +
-+	for_each_crtc_mask(kms->dev, crtc, crtc_mask)
-+		mutex_lock(&kms->commit_lock[drm_crtc_index(crtc)]);
-+}
-+
-+static void unlock_crtcs(struct msm_kms *kms, unsigned int crtc_mask)
-+{
-+	struct drm_crtc *crtc;
-+
-+	for_each_crtc_mask(kms->dev, crtc, crtc_mask)
-+		mutex_unlock(&kms->commit_lock[drm_crtc_index(crtc)]);
-+}
-+
- static void msm_atomic_async_commit(struct msm_kms *kms, int crtc_idx)
- {
- 	unsigned crtc_mask = BIT(crtc_idx);
++	if (core->fw.iommu_domain) {
++		iommu_domain_free(iommu);
++		core->fw.iommu_domain = NULL;
++	}
  
- 	trace_msm_atomic_async_commit_start(crtc_mask);
- 
--	mutex_lock(&kms->commit_lock);
-+	lock_crtcs(kms, crtc_mask);
- 
- 	if (!(kms->pending_crtc_mask & crtc_mask)) {
--		mutex_unlock(&kms->commit_lock);
-+		unlock_crtcs(kms, crtc_mask);
- 		goto out;
- 	}
- 
-@@ -79,7 +95,6 @@ static void msm_atomic_async_commit(struct msm_kms *kms, int crtc_idx)
- 	 */
- 	trace_msm_atomic_flush_commit(crtc_mask);
- 	kms->funcs->flush_commit(kms, crtc_mask);
--	mutex_unlock(&kms->commit_lock);
- 
- 	/*
- 	 * Wait for flush to complete:
-@@ -90,9 +105,8 @@ static void msm_atomic_async_commit(struct msm_kms *kms, int crtc_idx)
- 
- 	vblank_put(kms, crtc_mask);
- 
--	mutex_lock(&kms->commit_lock);
- 	kms->funcs->complete_commit(kms, crtc_mask);
--	mutex_unlock(&kms->commit_lock);
-+	unlock_crtcs(kms, crtc_mask);
- 	kms->funcs->disable_commit(kms);
- 
- out:
-@@ -189,12 +203,11 @@ void msm_atomic_commit_tail(struct drm_atomic_state *state)
- 	 * Ensure any previous (potentially async) commit has
- 	 * completed:
- 	 */
-+	lock_crtcs(kms, crtc_mask);
- 	trace_msm_atomic_wait_flush_start(crtc_mask);
- 	kms->funcs->wait_flush(kms, crtc_mask);
- 	trace_msm_atomic_wait_flush_finish(crtc_mask);
- 
--	mutex_lock(&kms->commit_lock);
--
- 	/*
- 	 * Now that there is no in-progress flush, prepare the
- 	 * current update:
-@@ -232,8 +245,7 @@ void msm_atomic_commit_tail(struct drm_atomic_state *state)
- 		}
- 
- 		kms->funcs->disable_commit(kms);
--		mutex_unlock(&kms->commit_lock);
--
-+		unlock_crtcs(kms, crtc_mask);
- 		/*
- 		 * At this point, from drm core's perspective, we
- 		 * are done with the atomic update, so we can just
-@@ -260,8 +272,7 @@ void msm_atomic_commit_tail(struct drm_atomic_state *state)
- 	 */
- 	trace_msm_atomic_flush_commit(crtc_mask);
- 	kms->funcs->flush_commit(kms, crtc_mask);
--	mutex_unlock(&kms->commit_lock);
--
-+	unlock_crtcs(kms, crtc_mask);
- 	/*
- 	 * Wait for flush to complete:
- 	 */
-@@ -271,9 +282,9 @@ void msm_atomic_commit_tail(struct drm_atomic_state *state)
- 
- 	vblank_put(kms, crtc_mask);
- 
--	mutex_lock(&kms->commit_lock);
-+	lock_crtcs(kms, crtc_mask);
- 	kms->funcs->complete_commit(kms, crtc_mask);
--	mutex_unlock(&kms->commit_lock);
-+	unlock_crtcs(kms, crtc_mask);
- 	kms->funcs->disable_commit(kms);
- 
- 	drm_atomic_helper_commit_hw_done(state);
-diff --git a/drivers/gpu/drm/msm/msm_kms.h b/drivers/gpu/drm/msm/msm_kms.h
-index 1cbef6b200b70..2049847b66428 100644
---- a/drivers/gpu/drm/msm/msm_kms.h
-+++ b/drivers/gpu/drm/msm/msm_kms.h
-@@ -155,7 +155,7 @@ struct msm_kms {
- 	 * For async commit, where ->flush_commit() and later happens
- 	 * from the crtc's pending_timer close to end of the frame:
- 	 */
--	struct mutex commit_lock;
-+	struct mutex commit_lock[MAX_CRTCS];
- 	unsigned pending_crtc_mask;
- 	struct msm_pending_timer pending_timers[MAX_CRTCS];
- };
-@@ -165,7 +165,9 @@ static inline void msm_kms_init(struct msm_kms *kms,
- {
- 	unsigned i;
- 
--	mutex_init(&kms->commit_lock);
-+	for (i = 0; i < ARRAY_SIZE(kms->commit_lock); i++)
-+		mutex_init(&kms->commit_lock[i]);
-+
- 	kms->funcs = funcs;
- 
- 	for (i = 0; i < ARRAY_SIZE(kms->pending_timers); i++)
+ 	platform_device_unregister(to_platform_device(core->fw.dev));
+ }
 -- 
 2.27.0
 
