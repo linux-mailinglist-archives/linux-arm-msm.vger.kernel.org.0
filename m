@@ -2,313 +2,181 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id CED3A2E27F0
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Dec 2020 16:36:21 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C19C62E296B
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Dec 2020 02:33:04 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728230AbgLXPgF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 24 Dec 2020 10:36:05 -0500
-Received: from m43-15.mailgun.net ([69.72.43.15]:63155 "EHLO
-        m43-15.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728043AbgLXPgF (ORCPT
+        id S1729067AbgLYBcs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 24 Dec 2020 20:32:48 -0500
+Received: from so254-31.mailgun.net ([198.61.254.31]:45460 "EHLO
+        so254-31.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729063AbgLYBcs (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 24 Dec 2020 10:36:05 -0500
+        Thu, 24 Dec 2020 20:32:48 -0500
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1608824145; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=VGluNjS3T/ZWqL505uMVq04VIUqXt/4P8rnllpXsAv0=;
- b=Y9uSgszAI9ydmAXvBlmbDCMyj1XXTibzYMcZeTfMf5IsinZH8z+4qj/Zr1Zbt9Wmi753lwTC
- +51mKq1PPYb79rB77AOiIsq8VNTuEy5sVFa2bG5sdNVpFmGpaKlfqMyjfPQnktk71eKeM8C6
- HuX9KlIQLVOlxmqUHq9G3C5/pUY=
-X-Mailgun-Sending-Ip: 69.72.43.15
+ s=smtp; t=1608859943; h=In-Reply-To: Content-Type: MIME-Version:
+ References: Message-ID: Subject: Cc: To: From: Date: Sender;
+ bh=Xsxf05wvDsw1c298k7ym33l28dv3ZAJY3RCoa5+YWXc=; b=Q1k2Vv7kIfjyEV7fgZDRoXeJKgXvjLXKdKoB9coWELMqvxDj3mYz042/Wbo7DsJ9YNWiAnN/
+ 0qsXBlq2Gb3apJPM+7xl7vDseELRjDSyV8wqKrpWD2TeLYMz/Nu6rtipPZFliaAD4ruBq45q
+ ith6dpkEqVT04EN77DfcgJzw3ew=
+X-Mailgun-Sending-Ip: 198.61.254.31
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org
  (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n10.prod.us-east-1.postgun.com with SMTP id
- 5fe4b5343ac69bd6b874f4ac (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 24 Dec 2020 15:35:16
+ smtp-out-n08.prod.us-west-2.postgun.com with SMTP id
+ 5fe5410bcfe5dd67dbb8e691 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 25 Dec 2020 01:31:55
  GMT
-Sender: ziqichen=codeaurora.org@mg.codeaurora.org
+Sender: ilina=codeaurora.org@mg.codeaurora.org
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 88AABC433ED; Thu, 24 Dec 2020 15:35:15 +0000 (UTC)
+        id 0C717C433CA; Fri, 25 Dec 2020 01:31:55 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
+        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+Received: from localhost (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        (Authenticated sender: ziqichen)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 18068C433C6;
-        Thu, 24 Dec 2020 15:35:13 +0000 (UTC)
+        (Authenticated sender: ilina)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id BFF27C433C6;
+        Fri, 25 Dec 2020 01:31:49 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org BFF27C433C6
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=ilina@codeaurora.org
+Date:   Thu, 24 Dec 2020 18:31:48 -0700
+From:   Lina Iyer <ilina@codeaurora.org>
+To:     Ulf Hansson <ulf.hansson@linaro.org>
+Cc:     "Rafael J. Wysocki" <rjw@rjwysocki.net>,
+        Linux PM <linux-pm@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>
+Subject: Re: [PATCH] PM / Domains: allow domain idle states to be disabled
+Message-ID: <X+VBBKZXZ2JW3ZDL@codeaurora.org>
+References: <20201216175056.19554-1-ilina@codeaurora.org>
+ <CAPDyKFrdZTd0mWHYhk13uyNWoxqjkO_iSni_TC5uir-PpgxSpw@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Thu, 24 Dec 2020 23:35:12 +0800
-From:   ziqichen@codeaurora.org
-To:     Avri Altman <Avri.Altman@wdc.com>
-Cc:     asutoshd@codeaurora.org, nguyenb@codeaurora.org,
-        cang@codeaurora.org, hongwus@codeaurora.org, rnayak@codeaurora.org,
-        vinholikatti@gmail.com, jejb@linux.vnet.ibm.com,
-        martin.petersen@oracle.com, linux-scsi@vger.kernel.org,
-        kernel-team@android.com, saravanak@google.com, salyzyn@google.com,
-        kwmad.kim@samsung.com, stanley.chu@mediatek.com,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        "James E.J. Bottomley" <jejb@linux.ibm.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        Bean Huo <beanhuo@micron.com>,
-        Bart Van Assche <bvanassche@acm.org>,
-        Adrian Hunter <adrian.hunter@intel.com>,
-        Satya Tangirala <satyat@google.com>,
-        "moderated list:UNIVERSAL FLASH STORAGE HOST CONTROLLER DRIVER..." 
-        <linux-mediatek@lists.infradead.org>,
-        open list <linux-kernel@vger.kernel.org>,
-        "open list:ARM/QUALCOMM SUPPORT" <linux-arm-msm@vger.kernel.org>,
-        "moderated list:ARM/Mediatek SoC support" 
-        <linux-arm-kernel@lists.infradead.org>
-Subject: Re: [PATCH RFC v4 1/1] scsi: ufs: Fix ufs power down/on specs
- violation
-In-Reply-To: <DM6PR04MB65751FC6D1ED61E569AC095EFCDE0@DM6PR04MB6575.namprd04.prod.outlook.com>
-References: <1608644981-46267-1-git-send-email-ziqichen@codeaurora.org>
- <DM6PR04MB65751FC6D1ED61E569AC095EFCDE0@DM6PR04MB6575.namprd04.prod.outlook.com>
-Message-ID: <da374355ecabc7b989882c5a503b916f@codeaurora.org>
-X-Sender: ziqichen@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Disposition: inline
+In-Reply-To: <CAPDyKFrdZTd0mWHYhk13uyNWoxqjkO_iSni_TC5uir-PpgxSpw@mail.gmail.com>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2020-12-24 04:45, Avri Altman wrote:
-> Hi,
->> 
->> As per specs, e.g, JESD220E chapter 7.2, while powering
->> off/on the ufs device, RST_N signal and REF_CLK signal
->> should be between VSS(Ground) and VCCQ/VCCQ2.
->> 
->> To flexibly control device reset line, refactor the function
->> ufschd_vops_device_reset(sturct ufs_hba *hba) to ufshcd_
->> vops_device_reset(sturct ufs_hba *hba, bool asserted). The
->> new parameter "bool asserted" is used to separate device reset
->> line pulling down from pulling up.
-> Sorry for my late response.
-> Please allow few more days to consult internally about this.
-> 
->> 
->> Cc: Kiwoong Kim <kwmad.kim@samsung.com>
->> Cc: Stanley Chu <stanley.chu@mediatek.com>
->> Signed-off-by: Ziqi Chen <ziqichen@codeaurora.org>
-> 
-> 
->> -static int ufs_qcom_device_reset(struct ufs_hba *hba)
->> +static int ufs_qcom_device_reset(struct ufs_hba *hba, bool asserted)
->>  {
->>         struct ufs_qcom_host *host = ufshcd_get_variant(hba);
->> 
->> @@ -1417,15 +1418,20 @@ static int ufs_qcom_device_reset(struct 
->> ufs_hba
->> *hba)
->>         if (!host->device_reset)
->>                 return -EOPNOTSUPP;
->> 
->> -       /*
->> -        * The UFS device shall detect reset pulses of 1us, sleep for 
->> 10us to
->> -        * be on the safe side.
->> -        */
->> -       gpiod_set_value_cansleep(host->device_reset, 1);
->> -       usleep_range(10, 15);
->> +       if (asserted) {
->> +               gpiod_set_value_cansleep(host->device_reset, 1);
->> 
->> -       gpiod_set_value_cansleep(host->device_reset, 0);
->> -       usleep_range(10, 15);
->> +               /*
->> +                * The UFS device shall detect reset pulses of 1us, 
->> sleep for 10us to
->> +                * be on the safe side.
->> +                */
->> +               usleep_range(10, 15);
->> +       } else {
->> +               gpiod_set_value_cansleep(host->device_reset, 0);
->> +
->> +                /* Some devices may need time to respond to rst_n */
->> +               usleep_range(10, 15);
-> Since sleep the same on assert/de-assert can move it outside the
-> if-else clause?
+On Tue, Dec 22 2020 at 03:16 -0700, Ulf Hansson wrote:
+>On Wed, 16 Dec 2020 at 18:51, Lina Iyer <ilina@codeaurora.org> wrote:
+>>
+>> In order to debug critical domain and device power issues, it may be
+>> necessary to disallow certain idle states at runtime. Let the device
+>> disallow a domain idle state before suspending.The domain governor shall
+>> check for the 'disabled' flag while determining the domain idle state.
+>
+>For debug purposes, you might as well just set a dev PM Qos latency
+>request that corresponds to the state you want to disable. This will
+>then prevent the genpd governor from selecting the state.
+>
+True, but it will also disable idle states deeper as well. Would like to
+avoid that.
 
-Hi Avri,
+--Lina
 
-Even though there is same delay on assert/de-assert, they have different 
-purposes. The delay
-on assert is for JEDEC requirement while the delay on de-assert is for 
-some devices requirement.
-The latter is just a empirical value and is still controversial among 
-SoC vendors. This value
-may be changed in the further. So I don't think we should move it 
-outside the if-else clause.
-
-> 
->> +       }
->> 
->>         return 0;
+>Kind regards
+>Uffe
+>
+>>
+>> Signed-off-by: Lina Iyer <ilina@codeaurora.org>
+>> ---
+>>  drivers/base/power/domain.c          | 30 ++++++++++++++++++++++++++++
+>>  drivers/base/power/domain_governor.c |  3 +++
+>>  include/linux/pm_domain.h            |  7 +++++++
+>>  3 files changed, 40 insertions(+)
+>>
+>> diff --git a/drivers/base/power/domain.c b/drivers/base/power/domain.c
+>> index 191539a8e06d..e4e7ab75bdea 100644
+>> --- a/drivers/base/power/domain.c
+>> +++ b/drivers/base/power/domain.c
+>> @@ -1926,6 +1926,36 @@ int pm_genpd_remove_subdomain(struct generic_pm_domain *genpd,
 >>  }
-> 
-> All the below changes, in suspend/resume, deserves some references in
-> your commit log,
-> And probably a separate patch.
-
-Below changes adjusted the sequence of CLK, Rst_n, VCC and VCCQ/VCCQ2, 
-These requirements
-are referred in JEDEC and already quoted in my commit log. We don't need 
-more descriptions.
-
-Below changes have also modified common callback interface, we'd better 
-keep implementation
-and caller changes in one patch.
-
-
-Best Regards,
-Ziqi Chen
-
-> 
-> Thanks,
-> Avri
-> 
->> @@ -8686,8 +8696,6 @@ static int ufshcd_suspend(struct ufs_hba *hba,
->> enum ufs_pm_op pm_op)
->>         if (ret)
->>                 goto set_dev_active;
->> 
->> -       ufshcd_vreg_set_lpm(hba);
->> -
->>  disable_clks:
->>         /*
->>          * Call vendor specific suspend callback. As these callbacks 
->> may access
->> @@ -8703,6 +8711,9 @@ static int ufshcd_suspend(struct ufs_hba *hba,
->> enum ufs_pm_op pm_op)
->>          */
->>         ufshcd_disable_irq(hba);
->> 
->> +       if (ufshcd_is_link_off(hba))
->> +               ufshcd_vops_device_reset(hba, true);
+>>  EXPORT_SYMBOL_GPL(pm_genpd_remove_subdomain);
+>>
+>> +/**
+>> + * dev_pm_genpd_disable_idle_state - Disallow a PM domain's idle state
+>> + *
+>> + * @dev: device attached to the PM domain
+>> + * @idx: index of the PM domain's idle state to be disabled
+>> + * @disable: enable/disable idle state
+>> + *
+>> + * Allow a PM domain's idle state to be disabled. Disabled idle states will
+>> + * be ignored by the domain governor when entering idle. Devices would
+>> + * invoke this before calling runtime suspend.
+>> + */
+>> +int dev_pm_genpd_disable_idle_state(struct device *dev, unsigned int idx, bool disable)
+>> +{
+>> +       struct generic_pm_domain *genpd;
 >> +
->>         ufshcd_setup_clocks(hba, false);
->> 
->>         if (ufshcd_is_clkgating_allowed(hba)) {
->> @@ -8711,6 +8722,8 @@ static int ufshcd_suspend(struct ufs_hba *hba,
->> enum ufs_pm_op pm_op)
->>                                         hba->clk_gating.state);
->>         }
->> 
->> +       ufshcd_vreg_set_lpm(hba);
+>> +       genpd = dev_to_genpd_safe(dev);
+>> +       if (!genpd)
+>> +               return -ENODEV;
 >> +
->>         /* Put the host controller in low power mode if possible */
->>         ufshcd_hba_vreg_set_lpm(hba);
->>         goto out;
->> @@ -8778,18 +8791,19 @@ static int ufshcd_resume(struct ufs_hba *hba,
->> enum ufs_pm_op pm_op)
->>         old_link_state = hba->uic_link_state;
->> 
->>         ufshcd_hba_vreg_set_hpm(hba);
+>> +       if (idx >= genpd->state_count)
+>> +               return -EINVAL;
 >> +
->> +       ret = ufshcd_vreg_set_hpm(hba);
->> +       if (ret)
->> +               goto out;
+>> +       genpd_lock(genpd);
+>> +       genpd->states[idx].disabled = disable;
+>> +       genpd_unlock(genpd);
 >> +
->>         /* Make sure clocks are enabled before accessing controller */
->>         ret = ufshcd_setup_clocks(hba, true);
->>         if (ret)
->> -               goto out;
->> +               goto disable_vreg;
->> 
->>         /* enable the host irq as host controller would be active soon 
->> */
->>         ufshcd_enable_irq(hba);
->> 
->> -       ret = ufshcd_vreg_set_hpm(hba);
->> -       if (ret)
->> -               goto disable_irq_and_vops_clks;
->> -
->>         /*
->>          * Call vendor specific resume callback. As these callbacks 
->> may access
->>          * vendor specific host controller register space call them 
->> when the
->> @@ -8797,7 +8811,7 @@ static int ufshcd_resume(struct ufs_hba *hba,
->> enum ufs_pm_op pm_op)
->>          */
->>         ret = ufshcd_vops_resume(hba, pm_op);
->>         if (ret)
->> -               goto disable_vreg;
->> +               goto disable_irq_and_vops_clks;
->> 
->>         /* For DeepSleep, the only supported option is to have the 
->> link off */
->>         WARN_ON(ufshcd_is_ufs_dev_deepsleep(hba) &&
->> !ufshcd_is_link_off(hba));
->> @@ -8864,8 +8878,6 @@ static int ufshcd_resume(struct ufs_hba *hba,
->> enum ufs_pm_op pm_op)
->>         ufshcd_link_state_transition(hba, old_link_state, 0);
->>  vendor_suspend:
->>         ufshcd_vops_suspend(hba, pm_op);
->> -disable_vreg:
->> -       ufshcd_vreg_set_lpm(hba);
->>  disable_irq_and_vops_clks:
->>         ufshcd_disable_irq(hba);
->>         if (hba->clk_scaling.is_allowed)
->> @@ -8876,6 +8888,8 @@ static int ufshcd_resume(struct ufs_hba *hba,
->> enum ufs_pm_op pm_op)
->>                 trace_ufshcd_clk_gating(dev_name(hba->dev),
->>                                         hba->clk_gating.state);
->>         }
->> +disable_vreg:
->> +       ufshcd_vreg_set_lpm(hba);
->>  out:
->>         hba->pm_op_in_progress = 0;
->>         if (ret)
->> diff --git a/drivers/scsi/ufs/ufshcd.h b/drivers/scsi/ufs/ufshcd.h
->> index 9bb5f0e..d5fbaba 100644
->> --- a/drivers/scsi/ufs/ufshcd.h
->> +++ b/drivers/scsi/ufs/ufshcd.h
->> @@ -319,7 +319,7 @@ struct ufs_pwr_mode_info {
->>   * @resume: called during host controller PM callback
->>   * @dbg_register_dump: used to dump controller debug information
->>   * @phy_initialization: used to initialize phys
->> - * @device_reset: called to issue a reset pulse on the UFS device
->> + * @device_reset: called to assert or deassert device reset line
->>   * @program_key: program or evict an inline encryption key
->>   * @event_notify: called to notify important events
->>   */
->> @@ -350,7 +350,7 @@ struct ufs_hba_variant_ops {
->>         int     (*resume)(struct ufs_hba *, enum ufs_pm_op);
->>         void    (*dbg_register_dump)(struct ufs_hba *hba);
->>         int     (*phy_initialization)(struct ufs_hba *);
->> -       int     (*device_reset)(struct ufs_hba *hba);
->> +       int     (*device_reset)(struct ufs_hba *hba, bool asserted);
->>         void    (*config_scaling_param)(struct ufs_hba *hba,
->>                                         struct devfreq_dev_profile 
->> *profile,
->>                                         void *data);
->> @@ -1216,10 +1216,10 @@ static inline void
->> ufshcd_vops_dbg_register_dump(struct ufs_hba *hba)
->>                 hba->vops->dbg_register_dump(hba);
->>  }
->> 
->> -static inline int ufshcd_vops_device_reset(struct ufs_hba *hba)
->> +static inline int ufshcd_vops_device_reset(struct ufs_hba *hba, bool
->> asserted)
+>> +       return 0;
+>> +}
+>> +EXPORT_SYMBOL_GPL(dev_pm_genpd_disable_idle_state);
+>> +
+>>  static void genpd_free_default_power_state(struct genpd_power_state *states,
+>>                                            unsigned int state_count)
 >>  {
->>         if (hba->vops && hba->vops->device_reset)
->> -               return hba->vops->device_reset(hba);
->> +               return hba->vops->device_reset(hba, asserted);
->> 
+>> diff --git a/drivers/base/power/domain_governor.c b/drivers/base/power/domain_governor.c
+>> index 2afb7fa90d5d..8decd17c5a6a 100644
+>> --- a/drivers/base/power/domain_governor.c
+>> +++ b/drivers/base/power/domain_governor.c
+>> @@ -175,6 +175,9 @@ static bool __default_power_down_ok(struct dev_pm_domain *pd,
+>>         s64 min_off_time_ns;
+>>         s64 off_on_time_ns;
+>>
+>> +       if (genpd->states[state].disabled)
+>> +               return false;
+>> +
+>>         off_on_time_ns = genpd->states[state].power_off_latency_ns +
+>>                 genpd->states[state].power_on_latency_ns;
+>>
+>> diff --git a/include/linux/pm_domain.h b/include/linux/pm_domain.h
+>> index a41aea9d1c06..3d251b5b461a 100644
+>> --- a/include/linux/pm_domain.h
+>> +++ b/include/linux/pm_domain.h
+>> @@ -101,6 +101,7 @@ struct genpd_power_state {
+>>         struct fwnode_handle *fwnode;
+>>         ktime_t idle_time;
+>>         void *data;
+>> +       bool disabled;
+>>  };
+>>
+>>  struct genpd_lock_ops;
+>> @@ -233,6 +234,7 @@ int dev_pm_genpd_add_notifier(struct device *dev, struct notifier_block *nb);
+>>  int dev_pm_genpd_remove_notifier(struct device *dev);
+>>  void genpd_enable_next_wakeup(struct generic_pm_domain *genpd, bool enable);
+>>  int dev_pm_genpd_set_next_wakeup(struct device *dev, ktime_t next);
+>> +int dev_pm_genpd_disable_idle_state(struct device *dev, unsigned int idx, bool disable);
+>>
+>>  extern struct dev_power_governor simple_qos_governor;
+>>  extern struct dev_power_governor pm_domain_always_on_gov;
+>> @@ -300,6 +302,11 @@ static inline int dev_pm_genpd_set_next_wakeup(struct device *dev, ktime_t next)
 >>         return -EOPNOTSUPP;
 >>  }
+>>
+>> +static inline int dev_pm_genpd_disable_idle_state(struct device *dev, unsigned int idx, bool disable)
+>> +{
+>> +       return -EOPNOTSUPP;
+>> +}
+>> +
+>>  #define simple_qos_governor            (*(struct dev_power_governor *)(NULL))
+>>  #define pm_domain_always_on_gov                (*(struct dev_power_governor *)(NULL))
+>>  #endif
 >> --
->> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora
->> Forum,
+>> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
 >> a Linux Foundation Collaborative Project
+>>
