@@ -2,59 +2,93 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 1A6442E2E5B
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 26 Dec 2020 15:13:49 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 6E4C12E31F4
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 27 Dec 2020 17:57:23 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726246AbgLZOLy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 26 Dec 2020 09:11:54 -0500
-Received: from relay05.th.seeweb.it ([5.144.164.166]:33277 "EHLO
-        relay05.th.seeweb.it" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726199AbgLZOLy (ORCPT
+        id S1726198AbgL0Q5H (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 27 Dec 2020 11:57:07 -0500
+Received: from mail-oi1-f175.google.com ([209.85.167.175]:36646 "EHLO
+        mail-oi1-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726032AbgL0Q5G (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 26 Dec 2020 09:11:54 -0500
-Received: from localhost.localdomain (abac131.neoplus.adsl.tpnet.pl [83.6.166.131])
-        by m-r2.th.seeweb.it (Postfix) with ESMTPA id 2F0A83F1D1;
-        Sat, 26 Dec 2020 15:11:11 +0100 (CET)
-From:   Konrad Dybcio <konrad.dybcio@somainline.org>
-To:     phone-devel@vger.kernel.org
-Cc:     ~postmarketos/upstreaming@lists.sr.ht,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Ohad Ben-Cohen <ohad@wizery.com>,
-        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: [PATCH RFC] remoteproc: qcom: wcnss: Adjust voltage requirements for Pronto v2
-Date:   Sat, 26 Dec 2020 15:11:00 +0100
-Message-Id: <20201226141100.90147-1-konrad.dybcio@somainline.org>
-X-Mailer: git-send-email 2.29.2
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+        Sun, 27 Dec 2020 11:57:06 -0500
+Received: by mail-oi1-f175.google.com with SMTP id 9so9379455oiq.3;
+        Sun, 27 Dec 2020 08:56:51 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:in-reply-to:references:subject:date
+         :message-id;
+        bh=EOlAg2v9iu08C98UhOwCODLFZ1ENz3Eke06f2dm8E8Q=;
+        b=V9G/MNhR0GCv5YS8CBQJzxhszjVGf//dtuA/WEd39j8f+srC7DlhFqXxxbvNinnZUJ
+         UYhZcWHyvdLavPsq2Rz2+HCOUxWRhVR1cFlzyvSlZMIBsMkCWXVZcztnHK5EyvaAB7ur
+         8Y87/glYS3a6+cAFy8dL9QZYtdequQtQkOkqpX7IR+BhKBmWWeKNPSjtcgFJu0MpUg0k
+         1BmCK/dri1NnxBiWFGA33zz9oScbOfhzKjjU0EHgKZVsofs5mgu3dKIZJ4qjrua03lKP
+         gDDttksrUvHhh2yGNZ9EYOjj7UYc/l6wLvUtXT2i+IGQtSPZMRfuFIV8vbK9s+LFmrN9
+         hrCg==
+X-Gm-Message-State: AOAM5302atC1dfMtkvxp15iYQx3PI+I2UwK5TI5OxSiirSUw5u2swp7L
+        XJ6hVOh5UghU3lkWpxWdnw==
+X-Google-Smtp-Source: ABdhPJyckCpwAtFyTjFjt97XOEQbjKZxOtNJYxYJDg96ts7gNmBlDpmT7nLsm27Xs+98jptq7Q72uQ==
+X-Received: by 2002:aca:c1d6:: with SMTP id r205mr9858213oif.37.1609088185709;
+        Sun, 27 Dec 2020 08:56:25 -0800 (PST)
+Received: from robh.at.kernel.org ([64.188.179.253])
+        by smtp.gmail.com with ESMTPSA id w5sm8209515oow.7.2020.12.27.08.56.22
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 27 Dec 2020 08:56:24 -0800 (PST)
+Received: (nullmailer pid 1338169 invoked by uid 1000);
+        Sun, 27 Dec 2020 16:56:21 -0000
+From:   Rob Herring <robh@kernel.org>
+To:     Roja Rani Yarubandi <rojay@codeaurora.org>
+Cc:     akashast@codeaurora.org, robh+dt@kernel.org,
+        bjorn.andersson@linaro.org, wsa@kernel.org, ulf.hansson@linaro.org,
+        parashar@codeaurora.org, dianders@chromium.org,
+        linux-kernel@vger.kernel.org, linux-i2c@vger.kernel.org,
+        agross@kernel.org, linux-pm@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, saiprakash.ranjan@codeaurora.org,
+        mka@chromium.org, rnayak@codeaurora.org, swboyd@chromium.org,
+        devicetree@vger.kernel.org, msavaliy@qti.qualcomm.com
+In-Reply-To: <20201224111210.1214-2-rojay@codeaurora.org>
+References: <20201224111210.1214-1-rojay@codeaurora.org> <20201224111210.1214-2-rojay@codeaurora.org>
+Subject: Re: [PATCH 1/3] dt-bindings: power: Introduce 'assigned-performance-states' property
+Date:   Sun, 27 Dec 2020 09:56:21 -0700
+Message-Id: <1609088181.474070.1338168.nullmailer@robh.at.kernel.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This is required for MSM8974 devices that cannot afford to push
-the regulators further.
+On Thu, 24 Dec 2020 16:42:08 +0530, Roja Rani Yarubandi wrote:
+> While most devices within power-domains which support performance states,
+> scale the performance state dynamically, some devices might want to
+> set a static/default performance state while the device is active.
+> These devices typically would also run off a fixed clock and not support
+> dynamically scaling the device's performance, also known as DVFS
+> techniques.
+> 
+> Add a property 'assigned-performance-states' which client devices can
+> use to set this default performance state on their power-domains.
+> 
+> Signed-off-by: Roja Rani Yarubandi <rojay@codeaurora.org>
+> ---
+>  .../bindings/power/power-domain.yaml          | 49 +++++++++++++++++++
+>  1 file changed, 49 insertions(+)
+> 
 
-Signed-off-by: Konrad Dybcio <konrad.dybcio@somainline.org>
----
- drivers/remoteproc/qcom_wcnss.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+My bot found errors running 'make dt_binding_check' on your patch:
 
-diff --git a/drivers/remoteproc/qcom_wcnss.c b/drivers/remoteproc/qcom_wcnss.c
-index e2573f79a137..71480be545e4 100644
---- a/drivers/remoteproc/qcom_wcnss.c
-+++ b/drivers/remoteproc/qcom_wcnss.c
-@@ -124,7 +124,7 @@ static const struct wcnss_data pronto_v2_data = {
- 	.spare_offset = 0x1088,
- 
- 	.vregs = (struct wcnss_vreg_info[]) {
--		{ "vddmx", 1287500, 1287500, 0 },
-+		{ "vddmx", 950000, 1150000, 0 },
- 		{ "vddcx", .super_turbo = true },
- 		{ "vddpx", 1800000, 1800000, 0 },
- 	},
--- 
-2.29.2
+yamllint warnings/errors:
+./Documentation/devicetree/bindings/power/power-domain.yaml:72:8: [warning] wrong indentation: expected 6 but found 7 (indentation)
+
+dtschema/dtc warnings/errors:
+
+See https://patchwork.ozlabs.org/patch/1420485
+
+This check can fail if there are any dependencies. The base for a patch
+series is generally the most recent rc1.
+
+If you already ran 'make dt_binding_check' and didn't see the above
+error(s), then make sure 'yamllint' is installed and dt-schema is up to
+date:
+
+pip3 install dtschema --upgrade
+
+Please check and re-submit.
 
