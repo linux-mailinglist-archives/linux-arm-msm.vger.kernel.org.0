@@ -2,93 +2,128 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 15FF82E33A5
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Dec 2020 03:31:53 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4D6EA2E42BD
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Dec 2020 16:28:27 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726360AbgL1Cbg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 27 Dec 2020 21:31:36 -0500
-Received: from so254-31.mailgun.net ([198.61.254.31]:18395 "EHLO
-        so254-31.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726340AbgL1Cbg (ORCPT
+        id S2406812AbgL1N5S (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 28 Dec 2020 08:57:18 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56286 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2406798AbgL1N5S (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 27 Dec 2020 21:31:36 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1609122671; h=In-Reply-To: Content-Type: MIME-Version:
- References: Message-ID: Subject: Cc: To: From: Date: Sender;
- bh=fnkZRhsvKBso4eHTrKPAGzTpdKug6mOe3cG9iKaqQJU=; b=vAtSpH+ljDG03VVtCEj6fH7cFnwuwJX1m4RUlQyHtwNNqFHgyd6MVVTLwc48YCadyiWOKNAm
- hv4Qbkq3heTkbtL7bLFctBks6ks5F6dALXjDdOAfOAOAxlMi3uwZskKhhbUBSWywL8cqvHka
- SoPxq/GCVVakquBlVlWmhLh1k10=
-X-Mailgun-Sending-Ip: 198.61.254.31
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n09.prod.us-east-1.postgun.com with SMTP id
- 5fe94351e61d77c971d29046 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 28 Dec 2020 02:30:41
- GMT
-Sender: ilina=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 0173FC433C6; Mon, 28 Dec 2020 02:30:41 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL
-        autolearn=no autolearn_force=no version=3.4.0
-Received: from localhost (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: ilina)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 03BD5C433CA;
-        Mon, 28 Dec 2020 02:30:39 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 03BD5C433CA
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=ilina@codeaurora.org
-Date:   Sun, 27 Dec 2020 19:30:39 -0700
-From:   Lina Iyer <ilina@codeaurora.org>
-To:     Ulf Hansson <ulf.hansson@linaro.org>
-Cc:     "Rafael J. Wysocki" <rjw@rjwysocki.net>,
-        Linux PM <linux-pm@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>
-Subject: Re: [PATCH] PM / Domains: allow domain idle states to be disabled
-Message-ID: <X+lDTxDqTS9ik9TR@codeaurora.org>
-References: <20201216175056.19554-1-ilina@codeaurora.org>
- <CAPDyKFrdZTd0mWHYhk13uyNWoxqjkO_iSni_TC5uir-PpgxSpw@mail.gmail.com>
- <X+VBBKZXZ2JW3ZDL@codeaurora.org>
- <CAPDyKFrAV5Af8WVTy==u1-Ak7zrwC+X7bWSRCc_RrwHoTKfVGw@mail.gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Disposition: inline
-In-Reply-To: <CAPDyKFrAV5Af8WVTy==u1-Ak7zrwC+X7bWSRCc_RrwHoTKfVGw@mail.gmail.com>
+        Mon, 28 Dec 2020 08:57:18 -0500
+Received: from mail-pg1-x534.google.com (mail-pg1-x534.google.com [IPv6:2607:f8b0:4864:20::534])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E2671C061795
+        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Dec 2020 05:56:37 -0800 (PST)
+Received: by mail-pg1-x534.google.com with SMTP id e2so7381578pgi.5
+        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Dec 2020 05:56:37 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id;
+        bh=0WLcNu+hxTOa3b5SWnh4NOUu0iEPtxtOIks4RijNX0I=;
+        b=o6w2Q9cd7GXLn/9m1R6ebQN3GTikz7mLVLbfqx7KYUqEWU9XUkXb3Wv9kxOX10gBIQ
+         MJfNC/i6aPFtev4EUEaWqyKQVXHAQmP6xCtROrOfAkQ+SVsirRNLWzy9vgoZ56MZ8HqQ
+         fLdL/mBBGUvqbVfSAk2ZuVUSzeqXDnW0V099l9Huphz0gik+YGYDdfDRMYwUS9Ln3Oku
+         JeQGz1ULfTHVB134LsVPewtkG7RR9uEP0ioFkySD7DUyezvjXmT644uZQsTUuofYY5Aj
+         IH48Rkg/zQMM1hF62dGnQnP0xGNT4D0WhZ/3UCnDgmqTuadoC5Jniqm8HbQuu7XW/K0H
+         +V0g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=0WLcNu+hxTOa3b5SWnh4NOUu0iEPtxtOIks4RijNX0I=;
+        b=eiPs/2U82wmbhjKmjTl3EgZZzr7ksggdKoXCi+caGHpvZ3OsVKFLtn7fhjYewotVUp
+         5qOdbPCMXlgko/+HrEsJQ0d55P0kTY6gR8qjTQg5Qte7FqrNWaGjYLKjP57U0MIG8K+V
+         7wex5dxVqcnmUwHUWKCLU7+hzE1aoW+xTBmIY7KeCz+H+3ZI3ifmzLdf0qEJdosIhzXK
+         /YSLCaEDN73TC45tHsxIdEbkj/rNrTXM1vshDbfThDHA9g/1tP1PEEPfWjWjioEOOaqL
+         EEzgEgqqa+/TaIcI0TEpX44qboDMolkKcG8d7ftPfmWqz1vF2VwiPhFJoX6XWMlZl51D
+         rayw==
+X-Gm-Message-State: AOAM530KcfvJClCLKd/lCZMqT3bdH1GahlFZYFy7rcoumtFYPwId1V05
+        GyYCuoexljZUgT7bClaB4rBJNc49pTRCSkTo
+X-Google-Smtp-Source: ABdhPJyRt+uOaiAJvdLg5Z7L3HX4UFThnsjLM74iZ4WkjFW2UuO+xSYzvnrZZZUvnh/txWIpC2G0Ug==
+X-Received: by 2002:aa7:843a:0:b029:19d:b279:73c9 with SMTP id q26-20020aa7843a0000b029019db27973c9mr22277846pfn.3.1609163797492;
+        Mon, 28 Dec 2020 05:56:37 -0800 (PST)
+Received: from localhost.localdomain (80.251.214.228.16clouds.com. [80.251.214.228])
+        by smtp.gmail.com with ESMTPSA id 197sm39461234pgg.43.2020.12.28.05.56.35
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 28 Dec 2020 05:56:36 -0800 (PST)
+From:   Shawn Guo <shawn.guo@linaro.org>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Andy Gross <agross@kernel.org>
+Cc:     Akash Asthana <akashast@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, Shawn Guo <shawn.guo@linaro.org>
+Subject: [PATCH] soc: qcom: geni: shield ICC calls for ACPI boot
+Date:   Mon, 28 Dec 2020 21:56:25 +0800
+Message-Id: <20201228135625.4971-1-shawn.guo@linaro.org>
+X-Mailer: git-send-email 2.17.1
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sat, Dec 26 2020 at 05:33 -0700, Ulf Hansson wrote:
->On Fri, 25 Dec 2020 at 02:31, Lina Iyer <ilina@codeaurora.org> wrote:
->>
->> On Tue, Dec 22 2020 at 03:16 -0700, Ulf Hansson wrote:
->> >On Wed, 16 Dec 2020 at 18:51, Lina Iyer <ilina@codeaurora.org> wrote:
->> >>
->> >> In order to debug critical domain and device power issues, it may be
->> >> necessary to disallow certain idle states at runtime. Let the device
->> >> disallow a domain idle state before suspending.The domain governor shall
->> >> check for the 'disabled' flag while determining the domain idle state.
->> >
->> >For debug purposes, you might as well just set a dev PM Qos latency
->> >request that corresponds to the state you want to disable. This will
->> >then prevent the genpd governor from selecting the state.
->> >
->> True, but it will also disable idle states deeper as well. Would like to
->> avoid that.
->
->I see. In any case, I am not so excited about adding an exported genpd
->interface for this that drivers can call, for example.
->
->Then I would rather see a proper debugfs interface, where userspace
->can both see the available states and choose which one to
->disable/enable. Would that work?
->
-Sure, that would work. Any recommendations for existing debugfs node
-that we can add this to or something new?
+Currently, GENI devices like i2c-qcom-geni fails to probe in ACPI boot,
+if interconnect support is enabled.  That's because interconnect driver
+only supports DT right now.  As interconnect is not necessarily required
+for basic function of GENI devices, let's shield those ICC calls to get
+GENI devices probe for ACPI boot.
 
---Lina
+Signed-off-by: Shawn Guo <shawn.guo@linaro.org>
+---
+ drivers/soc/qcom/qcom-geni-se.c | 15 +++++++++++++++
+ 1 file changed, 15 insertions(+)
+
+diff --git a/drivers/soc/qcom/qcom-geni-se.c b/drivers/soc/qcom/qcom-geni-se.c
+index f42954e2c98e..9feb1d78a5df 100644
+--- a/drivers/soc/qcom/qcom-geni-se.c
++++ b/drivers/soc/qcom/qcom-geni-se.c
+@@ -760,6 +760,9 @@ int geni_icc_get(struct geni_se *se, const char *icc_ddr)
+ 	int i, err;
+ 	const char *icc_names[] = {"qup-core", "qup-config", icc_ddr};
+ 
++	if (has_acpi_companion(se->dev))
++		return 0;
++
+ 	for (i = 0; i < ARRAY_SIZE(se->icc_paths); i++) {
+ 		if (!icc_names[i])
+ 			continue;
+@@ -785,6 +788,9 @@ int geni_icc_set_bw(struct geni_se *se)
+ {
+ 	int i, ret;
+ 
++	if (has_acpi_companion(se->dev))
++		return 0;
++
+ 	for (i = 0; i < ARRAY_SIZE(se->icc_paths); i++) {
+ 		ret = icc_set_bw(se->icc_paths[i].path,
+ 			se->icc_paths[i].avg_bw, se->icc_paths[i].avg_bw);
+@@ -803,6 +809,9 @@ void geni_icc_set_tag(struct geni_se *se, u32 tag)
+ {
+ 	int i;
+ 
++	if (has_acpi_companion(se->dev))
++		return;
++
+ 	for (i = 0; i < ARRAY_SIZE(se->icc_paths); i++)
+ 		icc_set_tag(se->icc_paths[i].path, tag);
+ }
+@@ -813,6 +822,9 @@ int geni_icc_enable(struct geni_se *se)
+ {
+ 	int i, ret;
+ 
++	if (has_acpi_companion(se->dev))
++		return 0;
++
+ 	for (i = 0; i < ARRAY_SIZE(se->icc_paths); i++) {
+ 		ret = icc_enable(se->icc_paths[i].path);
+ 		if (ret) {
+@@ -830,6 +842,9 @@ int geni_icc_disable(struct geni_se *se)
+ {
+ 	int i, ret;
+ 
++	if (has_acpi_companion(se->dev))
++		return 0;
++
+ 	for (i = 0; i < ARRAY_SIZE(se->icc_paths); i++) {
+ 		ret = icc_disable(se->icc_paths[i].path);
+ 		if (ret) {
+-- 
+2.17.1
+
