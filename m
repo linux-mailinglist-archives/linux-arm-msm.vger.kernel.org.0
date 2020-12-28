@@ -2,93 +2,93 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 6E4C12E31F4
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 27 Dec 2020 17:57:23 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 15FF82E33A5
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Dec 2020 03:31:53 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726198AbgL0Q5H (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 27 Dec 2020 11:57:07 -0500
-Received: from mail-oi1-f175.google.com ([209.85.167.175]:36646 "EHLO
-        mail-oi1-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726032AbgL0Q5G (ORCPT
+        id S1726360AbgL1Cbg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 27 Dec 2020 21:31:36 -0500
+Received: from so254-31.mailgun.net ([198.61.254.31]:18395 "EHLO
+        so254-31.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726340AbgL1Cbg (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 27 Dec 2020 11:57:06 -0500
-Received: by mail-oi1-f175.google.com with SMTP id 9so9379455oiq.3;
-        Sun, 27 Dec 2020 08:56:51 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:in-reply-to:references:subject:date
-         :message-id;
-        bh=EOlAg2v9iu08C98UhOwCODLFZ1ENz3Eke06f2dm8E8Q=;
-        b=V9G/MNhR0GCv5YS8CBQJzxhszjVGf//dtuA/WEd39j8f+srC7DlhFqXxxbvNinnZUJ
-         UYhZcWHyvdLavPsq2Rz2+HCOUxWRhVR1cFlzyvSlZMIBsMkCWXVZcztnHK5EyvaAB7ur
-         8Y87/glYS3a6+cAFy8dL9QZYtdequQtQkOkqpX7IR+BhKBmWWeKNPSjtcgFJu0MpUg0k
-         1BmCK/dri1NnxBiWFGA33zz9oScbOfhzKjjU0EHgKZVsofs5mgu3dKIZJ4qjrua03lKP
-         gDDttksrUvHhh2yGNZ9EYOjj7UYc/l6wLvUtXT2i+IGQtSPZMRfuFIV8vbK9s+LFmrN9
-         hrCg==
-X-Gm-Message-State: AOAM5302atC1dfMtkvxp15iYQx3PI+I2UwK5TI5OxSiirSUw5u2swp7L
-        XJ6hVOh5UghU3lkWpxWdnw==
-X-Google-Smtp-Source: ABdhPJyckCpwAtFyTjFjt97XOEQbjKZxOtNJYxYJDg96ts7gNmBlDpmT7nLsm27Xs+98jptq7Q72uQ==
-X-Received: by 2002:aca:c1d6:: with SMTP id r205mr9858213oif.37.1609088185709;
-        Sun, 27 Dec 2020 08:56:25 -0800 (PST)
-Received: from robh.at.kernel.org ([64.188.179.253])
-        by smtp.gmail.com with ESMTPSA id w5sm8209515oow.7.2020.12.27.08.56.22
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 27 Dec 2020 08:56:24 -0800 (PST)
-Received: (nullmailer pid 1338169 invoked by uid 1000);
-        Sun, 27 Dec 2020 16:56:21 -0000
-From:   Rob Herring <robh@kernel.org>
-To:     Roja Rani Yarubandi <rojay@codeaurora.org>
-Cc:     akashast@codeaurora.org, robh+dt@kernel.org,
-        bjorn.andersson@linaro.org, wsa@kernel.org, ulf.hansson@linaro.org,
-        parashar@codeaurora.org, dianders@chromium.org,
-        linux-kernel@vger.kernel.org, linux-i2c@vger.kernel.org,
-        agross@kernel.org, linux-pm@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, saiprakash.ranjan@codeaurora.org,
-        mka@chromium.org, rnayak@codeaurora.org, swboyd@chromium.org,
-        devicetree@vger.kernel.org, msavaliy@qti.qualcomm.com
-In-Reply-To: <20201224111210.1214-2-rojay@codeaurora.org>
-References: <20201224111210.1214-1-rojay@codeaurora.org> <20201224111210.1214-2-rojay@codeaurora.org>
-Subject: Re: [PATCH 1/3] dt-bindings: power: Introduce 'assigned-performance-states' property
-Date:   Sun, 27 Dec 2020 09:56:21 -0700
-Message-Id: <1609088181.474070.1338168.nullmailer@robh.at.kernel.org>
+        Sun, 27 Dec 2020 21:31:36 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1609122671; h=In-Reply-To: Content-Type: MIME-Version:
+ References: Message-ID: Subject: Cc: To: From: Date: Sender;
+ bh=fnkZRhsvKBso4eHTrKPAGzTpdKug6mOe3cG9iKaqQJU=; b=vAtSpH+ljDG03VVtCEj6fH7cFnwuwJX1m4RUlQyHtwNNqFHgyd6MVVTLwc48YCadyiWOKNAm
+ hv4Qbkq3heTkbtL7bLFctBks6ks5F6dALXjDdOAfOAOAxlMi3uwZskKhhbUBSWywL8cqvHka
+ SoPxq/GCVVakquBlVlWmhLh1k10=
+X-Mailgun-Sending-Ip: 198.61.254.31
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n09.prod.us-east-1.postgun.com with SMTP id
+ 5fe94351e61d77c971d29046 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 28 Dec 2020 02:30:41
+ GMT
+Sender: ilina=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 0173FC433C6; Mon, 28 Dec 2020 02:30:41 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL
+        autolearn=no autolearn_force=no version=3.4.0
+Received: from localhost (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: ilina)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 03BD5C433CA;
+        Mon, 28 Dec 2020 02:30:39 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 03BD5C433CA
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=ilina@codeaurora.org
+Date:   Sun, 27 Dec 2020 19:30:39 -0700
+From:   Lina Iyer <ilina@codeaurora.org>
+To:     Ulf Hansson <ulf.hansson@linaro.org>
+Cc:     "Rafael J. Wysocki" <rjw@rjwysocki.net>,
+        Linux PM <linux-pm@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>
+Subject: Re: [PATCH] PM / Domains: allow domain idle states to be disabled
+Message-ID: <X+lDTxDqTS9ik9TR@codeaurora.org>
+References: <20201216175056.19554-1-ilina@codeaurora.org>
+ <CAPDyKFrdZTd0mWHYhk13uyNWoxqjkO_iSni_TC5uir-PpgxSpw@mail.gmail.com>
+ <X+VBBKZXZ2JW3ZDL@codeaurora.org>
+ <CAPDyKFrAV5Af8WVTy==u1-Ak7zrwC+X7bWSRCc_RrwHoTKfVGw@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Disposition: inline
+In-Reply-To: <CAPDyKFrAV5Af8WVTy==u1-Ak7zrwC+X7bWSRCc_RrwHoTKfVGw@mail.gmail.com>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 24 Dec 2020 16:42:08 +0530, Roja Rani Yarubandi wrote:
-> While most devices within power-domains which support performance states,
-> scale the performance state dynamically, some devices might want to
-> set a static/default performance state while the device is active.
-> These devices typically would also run off a fixed clock and not support
-> dynamically scaling the device's performance, also known as DVFS
-> techniques.
-> 
-> Add a property 'assigned-performance-states' which client devices can
-> use to set this default performance state on their power-domains.
-> 
-> Signed-off-by: Roja Rani Yarubandi <rojay@codeaurora.org>
-> ---
->  .../bindings/power/power-domain.yaml          | 49 +++++++++++++++++++
->  1 file changed, 49 insertions(+)
-> 
+On Sat, Dec 26 2020 at 05:33 -0700, Ulf Hansson wrote:
+>On Fri, 25 Dec 2020 at 02:31, Lina Iyer <ilina@codeaurora.org> wrote:
+>>
+>> On Tue, Dec 22 2020 at 03:16 -0700, Ulf Hansson wrote:
+>> >On Wed, 16 Dec 2020 at 18:51, Lina Iyer <ilina@codeaurora.org> wrote:
+>> >>
+>> >> In order to debug critical domain and device power issues, it may be
+>> >> necessary to disallow certain idle states at runtime. Let the device
+>> >> disallow a domain idle state before suspending.The domain governor shall
+>> >> check for the 'disabled' flag while determining the domain idle state.
+>> >
+>> >For debug purposes, you might as well just set a dev PM Qos latency
+>> >request that corresponds to the state you want to disable. This will
+>> >then prevent the genpd governor from selecting the state.
+>> >
+>> True, but it will also disable idle states deeper as well. Would like to
+>> avoid that.
+>
+>I see. In any case, I am not so excited about adding an exported genpd
+>interface for this that drivers can call, for example.
+>
+>Then I would rather see a proper debugfs interface, where userspace
+>can both see the available states and choose which one to
+>disable/enable. Would that work?
+>
+Sure, that would work. Any recommendations for existing debugfs node
+that we can add this to or something new?
 
-My bot found errors running 'make dt_binding_check' on your patch:
-
-yamllint warnings/errors:
-./Documentation/devicetree/bindings/power/power-domain.yaml:72:8: [warning] wrong indentation: expected 6 but found 7 (indentation)
-
-dtschema/dtc warnings/errors:
-
-See https://patchwork.ozlabs.org/patch/1420485
-
-This check can fail if there are any dependencies. The base for a patch
-series is generally the most recent rc1.
-
-If you already ran 'make dt_binding_check' and didn't see the above
-error(s), then make sure 'yamllint' is installed and dt-schema is up to
-date:
-
-pip3 install dtschema --upgrade
-
-Please check and re-submit.
-
+--Lina
