@@ -2,41 +2,40 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 9E92F2E73B0
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Dec 2020 21:18:46 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 176D72E73B1
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Dec 2020 21:18:47 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726503AbgL2USE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        id S1726517AbgL2USE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
         Tue, 29 Dec 2020 15:18:04 -0500
-Received: from mail.kernel.org ([198.145.29.99]:60238 "EHLO mail.kernel.org"
+Received: from mail.kernel.org ([198.145.29.99]:60234 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726511AbgL2USE (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 29 Dec 2020 15:18:04 -0500
-Received: by mail.kernel.org (Postfix) with ESMTPS id 0128422CA1;
-        Tue, 29 Dec 2020 20:15:34 +0000 (UTC)
+        id S1726508AbgL2USD (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 29 Dec 2020 15:18:03 -0500
+Received: by mail.kernel.org (Postfix) with ESMTPS id DF8E4224D4;
+        Tue, 29 Dec 2020 20:15:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1609272934;
-        bh=IXk6EgzCgFrsUKpf69PqJHXxmn6MwjzkkilS/JDnrqI=;
+        s=k20201202; t=1609272933;
+        bh=KRvvDS3n82AblwRj7/BZMKxez6QlvPrDyeJqMQx+jLk=;
         h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-        b=SjYAF2MRHkhdfKWp5PItaRv0KXiKhe80SOpB592duAZyiiTj8t4QAWJOW0VUAd1jN
-         r3yiJMWdPGsgvRzUxJXENDzYrqtq8voovg2fX+Cp8HQAkLxTfIN7qQWPlEzI/hMtWu
-         mOGhi5lz7k+Z8/jx6fvOy/HNa2p9jK7TTz9P3JwJ9y6eFgP4cWDzXEKJk5MYCgLo/5
-         b9xdLvyiJQ3v4fmT+wqKU/HZizWXEkJgi8mDC+oMRcuFODNuEtMclIeB65Qi8418nH
-         orQH2r+0ZPfKC++cji4Yv/LW2GSKh9c9kUC18xN6azx9Bx1gG/n0W1bwfsR0FqYkq1
-         IxzHOSjy0Kv/Q==
+        b=fKKSNlgBqDeXDbmnxp/CJHDduwiCT96g9O/TSC7VsA+cli6zXCIIQIcDgbVJCLJJm
+         wYNVg8h2P3NrqJOsH0slPlQdOoBxJTGY63BrGF5gPHxnnoaxtfGIDb3SayGtd1GjKk
+         J5Os38iQhWUAC/FkO0cEIEdMlVceSmLtv9oh2OGKjSHi2yAm9O902NBweKxoEpdwfW
+         M42rHDUaVdC0gmOZdcunhTIDVmGwBj3k+gXAYnQ7BwWswFb7o60QhcuDH9p3ZS10nv
+         rZEqk8GCOdbqHkVhyJrF7UjwRVrDKJB169IbD5/IFijB55R9V9TXSKF1I2b7zs5PGf
+         4MtcTnEG7oScw==
 Received: from pdx-korg-docbuild-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-        by pdx-korg-docbuild-1.ci.codeaurora.org (Postfix) with ESMTP id F0C3E60626;
+        by pdx-korg-docbuild-1.ci.codeaurora.org (Postfix) with ESMTP id DB1A4604D7;
         Tue, 29 Dec 2020 20:15:33 +0000 (UTC)
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH v3 0/2] pinctrl: qcom: Add binding and driver for SDX55
- pincontrol
+Subject: Re: [PATCH v2 1/2] pinctrl: qcom: add pinctrl driver for msm8953
 From:   patchwork-bot+linux-arm-msm@kernel.org
-Message-Id: <160927293398.13751.2280973786499765340.git-patchwork-notify@kernel.org>
+Message-Id: <160927293389.13751.4796091153615788002.git-patchwork-notify@kernel.org>
 Date:   Tue, 29 Dec 2020 20:15:33 +0000
-References: <20201109062620.14566-1-vkoul@kernel.org>
-In-Reply-To: <20201109062620.14566-1-vkoul@kernel.org>
-To:     Vinod Koul <vkoul@kernel.org>
+References: <20201007160611.942754-1-junak.pub@gmail.com>
+In-Reply-To: <20201007160611.942754-1-junak.pub@gmail.com>
+To:     Vladimir Lypak <junak.pub@gmail.com>
 Cc:     linux-arm-msm@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
@@ -46,22 +45,21 @@ Hello:
 
 This series was applied to qcom/linux.git (refs/heads/for-next):
 
-On Mon,  9 Nov 2020 11:56:18 +0530 you wrote:
-> This series add device tree binding documentation and driver for SDX55 SOC
-> pincontroller.
+On Wed,  7 Oct 2020 19:06:11 +0300 you wrote:
+> Add inititial pinctrl driver for MSM8953 platform. Compatible SoCs are:
+> MSM8953, APQ8053, SDM(SDA)450, SDM(SDA)632.
+> Based off CAF implementation.
 > 
-> Changes in v3:
->  - Add ack by Bjorn
->  - Fix dt_binding_check errors
->  - Add gpio ranges in binding
+> Signed-off-by: Prasad Sodagudi <psodagud@codeaurora.org>
+> Signed-off-by: Vladimir Lypak <junak.pub@gmail.com>
 > 
 > [...]
 
 Here is the summary with links:
-  - [v3,1/2] dt-bindings: pinctrl: qcom: Add SDX55 pinctrl bindings
-    https://git.kernel.org/qcom/c/c82d4776a1dd
-  - [v3,2/2] pinctrl: qcom: Add SDX55 pincontrol driver
-    https://git.kernel.org/qcom/c/ac43c44a7a37
+  - [v2,1/2] pinctrl: qcom: add pinctrl driver for msm8953
+    https://git.kernel.org/qcom/c/0e74abf3a0a3
+  - [v2,2/2] dt-bindings: pinctrl: qcom: add msm8953 pinctrl bindings
+    https://git.kernel.org/qcom/c/3d417196e244
 
 You are awesome, thank you!
 --
