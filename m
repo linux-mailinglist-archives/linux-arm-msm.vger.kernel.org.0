@@ -2,41 +2,41 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A5FAE2E73B9
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Dec 2020 21:18:50 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 061C22E73BC
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Dec 2020 21:18:52 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726529AbgL2USL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 29 Dec 2020 15:18:11 -0500
-Received: from mail.kernel.org ([198.145.29.99]:60058 "EHLO mail.kernel.org"
+        id S1726551AbgL2USW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 29 Dec 2020 15:18:22 -0500
+Received: from mail.kernel.org ([198.145.29.99]:60234 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726536AbgL2USK (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 29 Dec 2020 15:18:10 -0500
-Received: by mail.kernel.org (Postfix) with ESMTPS id 976CF22D01;
+        id S1726537AbgL2UST (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 29 Dec 2020 15:18:19 -0500
+Received: by mail.kernel.org (Postfix) with ESMTPS id B7A5422D05;
         Tue, 29 Dec 2020 20:15:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
         s=k20201202; t=1609272934;
-        bh=cLBqINxly/N+lnoxe2Nh7VZMeFFxiE7tXS0jegthYhk=;
+        bh=f7+WjyJfa/yhQNDOrDOx4KEKkOk6IG691JH9GXlZSRs=;
         h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-        b=FoPuDEbeUPNaZgb3oDyWQR7uy1szIlo30mQZNSMbiHpxpsLwJ4ix4WAo+bkpXIMSF
-         HlfZaDJzzeVq0YCRQiOyAavtiy1kvJqfHI94BWWxhHCQ1yc0bJs60MqKtgVj9+JSOF
-         qT1vO5lObrqvFK/q5EhKfgFOXC0hsAzE1oXrGpVelj7EccbnC5XsaZ6Zq48/xSBzo2
-         ePQuobpsnCKy8cQf5TJFxgmYSNNQ1Vat8TOemtQiz44p/nncL6ir5f2MXt7cznv69M
-         cof6eVJ71EszwxZdh0ZNw9vBEnkGiQMocsqA9H3kFEiG7+v0iOG4fOekK8r22aE+6s
-         BPSVbunaHhmVA==
+        b=X0cGEvG6ltZ2Vz9d2iYM0HSH9dL3vJfGOlmwuCP+AYEbfvQq6HyrfmKFQgSW4WN1/
+         YxtwFlh9/y7HM6R8tmUuxeCeiXJmeprSsz5E2jnbQ8h7Wx0UXrjmr0fO0YY30OR13U
+         SAz6a8VGjIvIJRDVLc1ZtPuVLY6eFlVEqgvdItHQfieKVX4nhOSZ4MwtZrD3vngcMW
+         gExtnstoGVfdvR/6UnvxLAhPvpBJphYRL7+DyE3OtGyzefrSF0F2q5jLD8sX98FyeU
+         BX+OJpcTlR9eu0/CgaWx+mljEPoneA0/BnBDxbElsB7MAZkIFFsz5dmSUFzGXVOFjh
+         jEPpKJcQhpDvA==
 Received: from pdx-korg-docbuild-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-        by pdx-korg-docbuild-1.ci.codeaurora.org (Postfix) with ESMTP id 93CCB60626;
+        by pdx-korg-docbuild-1.ci.codeaurora.org (Postfix) with ESMTP id B417E60626;
         Tue, 29 Dec 2020 20:15:34 +0000 (UTC)
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH v2] drm/msm/dpu: update the qos remap only if the client type
- changes
+Subject: Re: [PATCH] interconnect: qcom: msm8916: Remove rpm-ids from non-RPM
+ nodes
 From:   patchwork-bot+linux-arm-msm@kernel.org
-Message-Id: <160927293460.13751.5592326037811381918.git-patchwork-notify@kernel.org>
+Message-Id: <160927293473.13751.12370600723190761291.git-patchwork-notify@kernel.org>
 Date:   Tue, 29 Dec 2020 20:15:34 +0000
-References: <20201201233855.13624-1-abhinavk@codeaurora.org>
-In-Reply-To: <20201201233855.13624-1-abhinavk@codeaurora.org>
-To:     Abhinav Kumar <abhinavk@codeaurora.org>
+References: <20201112105140.10092-1-georgi.djakov@linaro.org>
+In-Reply-To: <20201112105140.10092-1-georgi.djakov@linaro.org>
+To:     Georgi Djakov <georgi.djakov@linaro.org>
 Cc:     linux-arm-msm@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
@@ -46,20 +46,20 @@ Hello:
 
 This patch was applied to qcom/linux.git (refs/heads/for-next):
 
-On Tue,  1 Dec 2020 15:38:55 -0800 you wrote:
-> Update the qos remap only if the client type changes for the plane.
-> This will avoid unnecessary register programming and also avoid log
-> spam from the dpu_vbif_set_qos_remap() function.
+On Thu, 12 Nov 2020 12:51:40 +0200 you wrote:
+> Some nodes are incorrectly marked as RPM-controlled (they have RPM
+> master and slave ids assigned), but are actually controlled by the
+> application CPU instead. The RPM complains when we send requests for
+> resources that it can't control. Let's fix this by replacing the IDs,
+> with the default "-1" in which case no requests are sent.
 > 
-> changes in v2:
->  - get rid of the dirty flag and simplify the logic to call
->    _dpu_plane_set_qos_remap()
+> Signed-off-by: Georgi Djakov <georgi.djakov@linaro.org>
 > 
 > [...]
 
 Here is the summary with links:
-  - [v2] drm/msm/dpu: update the qos remap only if the client type changes
-    https://git.kernel.org/qcom/c/854f6f1c653b
+  - interconnect: qcom: msm8916: Remove rpm-ids from non-RPM nodes
+    https://git.kernel.org/qcom/c/c497f9322af9
 
 You are awesome, thank you!
 --
