@@ -2,40 +2,40 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 618B82E7375
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Dec 2020 21:18:19 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 89BEE2E7365
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Dec 2020 21:17:09 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726318AbgL2URX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 29 Dec 2020 15:17:23 -0500
-Received: from mail.kernel.org ([198.145.29.99]:60040 "EHLO mail.kernel.org"
+        id S1726278AbgL2URI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 29 Dec 2020 15:17:08 -0500
+Received: from mail.kernel.org ([198.145.29.99]:60050 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726290AbgL2URW (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 29 Dec 2020 15:17:22 -0500
-Received: by mail.kernel.org (Postfix) with ESMTPS id E840322472;
+        id S1726284AbgL2URH (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 29 Dec 2020 15:17:07 -0500
+Received: by mail.kernel.org (Postfix) with ESMTPS id 70607224B2;
         Tue, 29 Dec 2020 20:15:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
         s=k20201202; t=1609272931;
-        bh=m3IJdgoSjElNNkCwK9JmDCVzpEe6dvoJoPzw5sxtlSI=;
+        bh=Rs3ASFDQBJ5Ad43xFPsfz7rbmEhKv0xhqrQepORM/Gg=;
         h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-        b=ropnraY1Xgt6SvJLAJXshOsF6LmfFPc46AhyfutT8+4QTFWSu7056mh8au6bSprGu
-         hz1iKhzJ2ivFSWQrGh6Qbhg3iH/IjSH3tgRM3RoFijEKv277Ij/Q7U/hLuMMkyCnXb
-         qt2XSmX4rWAOUwtB9DmwPpoSlAONHXeoUB6uid4Kg/KwzfT41Ycs5xoPJiAX9L+KiJ
-         2G5Xq40aXC/OVlwZkoe+QH6YzXirwLIDhayPR43VRz9uCCkz/nJBUbMHbBvXr75keu
-         8fVaGZQgnbJ13Gsu7Ose0xkaA3Rjn630ZuTJ5orixotrPbwYejoN9la4sKWSe9Bg60
-         sJvu426D1o9Jw==
+        b=LF0BeB3Jot8PNQFefNh8O9XvQjbqAcxuHiV3EkZh/+juiSO1cAWnMatSQbteEpjX2
+         iMBevwUTkNsE+i9NNgekgpvGhhBt2+9Yea6kLda5JEh5Uls32o97LXEGRYPRiHrA8F
+         UVxD0Efm3T9MQ8jO+feFZ7yqXzuwkGkZ5+rtHX0ASIF5aoz8E+QSSrXmHq1rI+mUgy
+         NhrdmsxD8HmlJGUtsacXTLRQlyO+mt3j1mhK/FfI9hgqxNYHrQ4N8X15wI5ocrAXpK
+         Cep2FR5ckilrw66efrpgIFgSCOyqfF35yu0TJLpsu4naRw7LgKBNcbF6/novXwmXMX
+         54nCWastEadCw==
 Received: from pdx-korg-docbuild-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-        by pdx-korg-docbuild-1.ci.codeaurora.org (Postfix) with ESMTP id E4632604D7;
+        by pdx-korg-docbuild-1.ci.codeaurora.org (Postfix) with ESMTP id 6C62B600D9;
         Tue, 29 Dec 2020 20:15:31 +0000 (UTC)
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH v1 0/1] Fix 32 bit format for adau7002
+Subject: Re: [PATCH v2 0/7] Add support for SDM630/660 Camera Subsystem
 From:   patchwork-bot+linux-arm-msm@kernel.org
-Message-Id: <160927293192.13751.1781783783457995837.git-patchwork-notify@kernel.org>
+Message-Id: <160927293143.13751.15530047327349508037.git-patchwork-notify@kernel.org>
 Date:   Tue, 29 Dec 2020 20:15:31 +0000
-References: <20201118005858.123013-1-xuyuqing@huaqin.corp-partner.google.com>
-In-Reply-To: <20201118005858.123013-1-xuyuqing@huaqin.corp-partner.google.com>
-To:     xuyuqing <xuyuqing@huaqin.corp-partner.google.com>
+References: <20201022174706.8813-1-kholk11@gmail.com>
+In-Reply-To: <20201022174706.8813-1-kholk11@gmail.com>
+To:     AngeloGioacchino Del Regno <kholk11@gmail.com>
 Cc:     linux-arm-msm@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
@@ -43,23 +43,33 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 Hello:
 
-This patch was applied to qcom/linux.git (refs/heads/for-next):
+This series was applied to qcom/linux.git (refs/heads/for-next):
 
-On Wed, 18 Nov 2020 08:58:57 +0800 you wrote:
-> the microphone is attached to external codec(adau7002)
-> instead of rt5682.We need to always use 32 bit format on sc7180
-> to meet the clock requirement of adau7002:
-> The ADAU7002 requires a BCLK rate
-> that is a minimum of 64× the LRCLK sample rate
+On Thu, 22 Oct 2020 19:46:59 +0200 you wrote:
+> From: AngeloGioacchino Del Regno <kholk11@gmail.com>
 > 
-> xuyuqing (1):
->   ASoC: qcom: sc7180: fix 32 bit format for adau7002
+> This patch series implements support for the entire camera subsystem
+> found in SDM630/636/660 and SDA variants, including CSIPHY 3-Phase,
+> CSID v5.0, ISPIF 3.0 (though it didn't need any adaptation) and
+> VFE 4.8.
 > 
 > [...]
 
 Here is the summary with links:
-  - [v1,1/1] ASoC: qcom: sc7180: fix 32 bit format for adau7002
-    https://git.kernel.org/qcom/c/7f2c63d6ae07
+  - [v2,1/7] media: camss: ispif: Correctly reset based on the VFE ID
+    https://git.kernel.org/qcom/c/864ed874d74a
+  - [v2,2/7] media: camss: vfe-4-7: Rename get_ub_size, set_qos, set_ds, wm_enable
+    https://git.kernel.org/qcom/c/1786653aa2e3
+  - [v2,3/7] media: camss: vfe: Add support for VFE 4.8
+    https://git.kernel.org/qcom/c/40296e712cad
+  - [v2,4/7] media: camss: Add support for SDM630/636/660 camera subsystem
+    https://git.kernel.org/qcom/c/9e5d158189c6
+  - [v2,5/7] media: camss: csiphy-3ph: Add support for SDM630/660
+    https://git.kernel.org/qcom/c/e486781b74cc
+  - [v2,6/7] media: dt-bindings: media: qcom,camss: Add bindings for SDM660 camss
+    https://git.kernel.org/qcom/c/3cba9d22c358
+  - [v2,7/7] media: camss: csiphy: Set rate on csiX_phy clock on SDM630/660
+    https://git.kernel.org/qcom/c/4863b93cfd2d
 
 You are awesome, thank you!
 --
