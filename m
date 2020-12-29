@@ -2,40 +2,40 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id CCC862E73E6
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Dec 2020 21:19:10 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E6B3E2E73E4
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Dec 2020 21:19:09 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726209AbgL2USx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        id S1726600AbgL2USx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
         Tue, 29 Dec 2020 15:18:53 -0500
-Received: from mail.kernel.org ([198.145.29.99]:60232 "EHLO mail.kernel.org"
+Received: from mail.kernel.org ([198.145.29.99]:60228 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726610AbgL2USx (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 29 Dec 2020 15:18:53 -0500
-Received: by mail.kernel.org (Postfix) with ESMTPS id 9FCEC23105;
+        id S1726606AbgL2USw (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 29 Dec 2020 15:18:52 -0500
+Received: by mail.kernel.org (Postfix) with ESMTPS id 948EC23103;
         Tue, 29 Dec 2020 20:15:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
         s=k20201202; t=1609272936;
-        bh=jfHyZVoW3YlFycFES5nZcSLYm5ENg9f5D4KMfa30+sY=;
+        bh=QEnWd7m9tevWlqAdF50h/jk+En4e4UfYHkQ/rwaPywE=;
         h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-        b=dAoxnbPV6D3q0yT9Ml4c7yURM8H922Fi1idJF6RJnMs7m4S8S7LXnPvpiTRYzbYoH
-         YHj82szsflnyzdqFT30Cefy+VWtzhmK0PUzqsSEb0ovjjDB05pi+2rRQaLtwmGVhlt
-         3XZb4VmBLTsDWroBl6YolKBKjb9IxnaDaSfDKcU8kazXy0P4Ju4qvvnTl4DTRUEN/l
-         VXj7LK/4E7WqwaR7AcaTDmUevsHsyCQwJzDYfkQJ8dqfF+4Otp+z8iQAFWOKFuCYEI
-         UDV6Zru4QUNmWPkx+VixDkBm0f5dXvD7Hljo2e8t8cvN+u0di2q3A+hd0C2xbsON3Z
-         SO27yhYU1mFMA==
+        b=FdmE2FZutuuA410P0tXH80pHDCyB/PvLyYlN71tio5r73ZD8QDf0ahwBx2MR3iWpw
+         FJXfaeBrvM3px5L7VIDM/sxIFxvsTvu3uB3ie0Z5XWEipac0b+/EJmIHvFRj65ifhV
+         7c3h0WgkI8l7AqidzN12U/z9dO/YhCVJ5jZN4U8AL9P9x8iwKx0UqZcFPNWaHStaGe
+         OFh5JjWYETU8E4pkBKbFJAcLqNTsTIJzwbQ141Nmg7TimJdiZMpbOEh3DjtU6SD27q
+         /dhoIgyyfsd4QK9GWfkFbEfFA/VGRAlO8k8sP4289ywRGcGvpVJl6saF1r00Giulo7
+         5hUhmfAoCcSCg==
 Received: from pdx-korg-docbuild-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-        by pdx-korg-docbuild-1.ci.codeaurora.org (Postfix) with ESMTP id 9B98060626;
+        by pdx-korg-docbuild-1.ci.codeaurora.org (Postfix) with ESMTP id 8D78560591;
         Tue, 29 Dec 2020 20:15:36 +0000 (UTC)
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH v5] bus: mhi: core: Fix device hierarchy
+Subject: Re: [PATCH] drm/msm: Remove redundant null check
 From:   patchwork-bot+linux-arm-msm@kernel.org
-Message-Id: <160927293663.13751.1595473237609725100.git-patchwork-notify@kernel.org>
+Message-Id: <160927293657.13751.925872688847647756.git-patchwork-notify@kernel.org>
 Date:   Tue, 29 Dec 2020 20:15:36 +0000
-References: <1606310689-7189-1-git-send-email-loic.poulain@linaro.org>
-In-Reply-To: <1606310689-7189-1-git-send-email-loic.poulain@linaro.org>
-To:     Loic Poulain <loic.poulain@linaro.org>
+References: <1603087462-37505-1-git-send-email-tiantao6@hisilicon.com>
+In-Reply-To: <1603087462-37505-1-git-send-email-tiantao6@hisilicon.com>
+To:     Tian Tao <tiantao6@hisilicon.com>
 Cc:     linux-arm-msm@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
@@ -45,20 +45,18 @@ Hello:
 
 This patch was applied to qcom/linux.git (refs/heads/for-next):
 
-On Wed, 25 Nov 2020 14:24:49 +0100 you wrote:
-> This patch fixes the hierarchical structure of MHI devices. Indeed,
-> MHI client devices are directly 'enumerated' from the mhi controller
-> and therefore must be direct descendants/children of their mhi
-> controller device, in accordance with the Linux Device Model.
+On Mon, 19 Oct 2020 14:04:22 +0800 you wrote:
+> clk_prepare_enable() and clk_disable_unprepare() will check
+> NULL clock parameter, so It is not necessary to add additional checks.
 > 
-> Today both MHI clients and controller devices are at the same level,
-> this patch ensures that MHI controller is parent of its client devices.
-> 
-> [...]
+> Signed-off-by: Tian Tao <tiantao6@hisilicon.com>
+> ---
+>  drivers/gpu/drm/msm/msm_gpu.c | 7 ++-----
+>  1 file changed, 2 insertions(+), 5 deletions(-)
 
 Here is the summary with links:
-  - [v5] bus: mhi: core: Fix device hierarchy
-    https://git.kernel.org/qcom/c/10ea8bcda5ae
+  - drm/msm: Remove redundant null check
+    https://git.kernel.org/qcom/c/dd29bd41d4c6
 
 You are awesome, thank you!
 --
