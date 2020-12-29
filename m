@@ -2,40 +2,40 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 9DB3F2E739C
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Dec 2020 21:18:37 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2478F2E73A6
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Dec 2020 21:18:42 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726477AbgL2URu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 29 Dec 2020 15:17:50 -0500
-Received: from mail.kernel.org ([198.145.29.99]:60242 "EHLO mail.kernel.org"
+        id S1726507AbgL2URz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 29 Dec 2020 15:17:55 -0500
+Received: from mail.kernel.org ([198.145.29.99]:60052 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726419AbgL2URt (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 29 Dec 2020 15:17:49 -0500
-Received: by mail.kernel.org (Postfix) with ESMTPS id 47D8222BE9;
+        id S1726499AbgL2URy (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 29 Dec 2020 15:17:54 -0500
+Received: by mail.kernel.org (Postfix) with ESMTPS id 92AE122C7B;
         Tue, 29 Dec 2020 20:15:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
         s=k20201202; t=1609272933;
-        bh=JF69+u61+3O/y8S5MkMwF20HTF2R+1RJMaETnD9jkco=;
+        bh=IsxV+b3ah92jHvSOx5dM9JMGl1fnmctqDrEN6bah1Xg=;
         h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-        b=a+baYl6YNvMuc3loxQX6i5T+oeu93VdjcA1bYjpsstIm33uHgjoA5O5anBt9SppVl
-         8oyF6SxoSS+CLLyIOZKbva5yOmF0AyjI3qGKJ2lvMj2mqSi35lqB2fWn5F1451zk4W
-         Xt54126WQhXnAOVvaqMPaTIGINY1X5gY2HFwi8z4U5EXa/TTYNA+wTbKRBAuzGoJID
-         5Pacl7XPvcJdGil4jsV7TvEpl2DwkMOTJR+nkbWsuQLscbp59OLI7PL52DVHGGUQBU
-         xBz7cIAc/2MlBTwwmLAkN2nMOVdm0MVGuAD8V7qBKAf74ya0WDxpfp9HxLsxB/ymbq
-         /bhHe5YjeUXfg==
+        b=RecLbWmyF/hfNGsvGe4iQwhhP2ZoPB7bYyg3wTRSTC8SvaVBAQOSUiclq6DV/dCoq
+         1efrTN1oeijHYWBnlcFhNB0pr8jPGsAFxd1eMb8+jsELscMwWANYb7zrWeZ+4kHNR0
+         nj7oAfK+vqXFmp1rWV+ZTZmLaDYfLVLIpl+9hRRLajSp46BI7RS1BpxbJf5iH/r9VZ
+         UEsSqjqVpmjA4ACfR7NdeIbYXLM34pDBL9DdXXaQWo4KDmuxv6g+IaoGzRiFNuJUYU
+         5Ntmb7m2G0JJByGZEY90f1wOKRimM2mOrHOn+6pIU+fYBaA52kJhcSzEpHRE/xFH8W
+         y8AH+fGU76bXw==
 Received: from pdx-korg-docbuild-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-        by pdx-korg-docbuild-1.ci.codeaurora.org (Postfix) with ESMTP id 43D9360626;
+        by pdx-korg-docbuild-1.ci.codeaurora.org (Postfix) with ESMTP id 8EEE1600D9;
         Tue, 29 Dec 2020 20:15:33 +0000 (UTC)
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH v2 1/2] drm/msm: Implement shutdown callback for adreno
+Subject: Re: [PATCH] dmaengine: qcom: Fix ADM driver kerneldoc markup
 From:   patchwork-bot+linux-arm-msm@kernel.org
-Message-Id: <160927293327.13751.12029555301809883319.git-patchwork-notify@kernel.org>
+Message-Id: <160927293358.13751.12571363987977209630.git-patchwork-notify@kernel.org>
 Date:   Tue, 29 Dec 2020 20:15:33 +0000
-References: <1603895711-23755-1-git-send-email-akhilpo@codeaurora.org>
-In-Reply-To: <1603895711-23755-1-git-send-email-akhilpo@codeaurora.org>
-To:     Akhil P Oommen <akhilpo@codeaurora.org>
+References: <20201126184602.GA1008@earth.li>
+In-Reply-To: <20201126184602.GA1008@earth.li>
+To:     Jonathan McDowell <noodles@earth.li>
 Cc:     linux-arm-msm@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
@@ -43,23 +43,22 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 Hello:
 
-This series was applied to qcom/linux.git (refs/heads/for-next):
+This patch was applied to qcom/linux.git (refs/heads/for-next):
 
-On Wed, 28 Oct 2020 20:05:10 +0530 you wrote:
-> Implement the shutdown callback for adreno gpu platform device
-> to safely shutdown it before a system reboot. This helps to avoid
-> futher transactions from gpu after the smmu is moved to bypass mode.
+On Thu, 26 Nov 2020 18:46:02 +0000 you wrote:
+> Update the kerneldoc function headers to fix build warnings:
 > 
-> Signed-off-by: Akhil P Oommen <akhilpo@codeaurora.org>
-> ---
->  drivers/gpu/drm/msm/adreno/adreno_device.c | 6 ++++++
->  1 file changed, 6 insertions(+)
+> drivers/dma/qcom/qcom_adm.c:180: warning: Function parameter or member 'chan' not described in 'adm_free_chan'
+> drivers/dma/qcom/qcom_adm.c:190: warning: Function parameter or member 'burst' not described in 'adm_get_blksize'
+> drivers/dma/qcom/qcom_adm.c:466: warning: Function parameter or member 'chan' not described in 'adm_terminate_all'
+> drivers/dma/qcom/qcom_adm.c:466: warning: Excess function parameter 'achan' description in 'adm_terminate_all'
+> drivers/dma/qcom/qcom_adm.c:503: warning: Function parameter or member 'achan' not described in 'adm_start_dma'
+> 
+> [...]
 
 Here is the summary with links:
-  - [v2,1/2] drm/msm: Implement shutdown callback for adreno
-    https://git.kernel.org/qcom/c/a04c696c0a54
-  - [v2,2/2] drm/msm: Fix duplicate gpu node in icc summary
-    https://git.kernel.org/qcom/c/5785dd7a8ef0
+  - dmaengine: qcom: Fix ADM driver kerneldoc markup
+    https://git.kernel.org/qcom/c/4facce4c1263
 
 You are awesome, thank you!
 --
